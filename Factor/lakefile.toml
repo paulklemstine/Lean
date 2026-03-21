@@ -1,0 +1,155 @@
+name = "RequestProject"
+defaultTargets = ["Basic", "Berggren", "BerggrenTree", "CongruentNumber", "Extensions", "FermatFactor", "DriftFreeIMU", "Moonshine", "FLT4", "MillenniumConnections", "NewTheorems", "SL2Theory", "ArithmeticGeometry", "Applications", "GaussianIntegers", "QuadraticForms", "DescentTheory", "SpectralTheory", "QuantumGateSynthesis", "QuantumCompression", "QuantumCircuits", "CompressionTheory", "NewDirections", "Combinatorics", "GroupTheoryExploration", "AnalysisInequalities", "NumberTheoryDeep", "LinearAlgebraExploration", "TopologyDynamics", "PolynomialTheory", "SetTheoryLogic", "ProbabilityExploration", "CategoryRepresentation", "CryptographyApplications", "OptimizationConvexity", "AlgebraicStructures", "RealWorldApplications"]
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4.git"
+rev = "v4.28.0"
+
+[[lean_lib]]
+name = "Basic"
+globs = ["Basic"]
+
+[[lean_lib]]
+name = "Berggren"
+globs = ["Berggren"]
+
+[[lean_lib]]
+name = "BerggrenTree"
+globs = ["BerggrenTree"]
+
+[[lean_lib]]
+name = "CongruentNumber"
+globs = ["CongruentNumber"]
+
+[[lean_lib]]
+name = "Extensions"
+globs = ["Extensions"]
+
+[[lean_lib]]
+name = "FermatFactor"
+globs = ["FermatFactor"]
+
+[[lean_lib]]
+name = "DriftFreeIMU"
+globs = ["DriftFreeIMU"]
+
+[[lean_lib]]
+name = "Moonshine"
+globs = ["Moonshine"]
+
+[[lean_lib]]
+name = "FLT4"
+globs = ["FLT4"]
+
+[[lean_lib]]
+name = "MillenniumConnections"
+globs = ["MillenniumConnections"]
+
+[[lean_lib]]
+name = "NewTheorems"
+globs = ["NewTheorems"]
+
+[[lean_lib]]
+name = "SL2Theory"
+globs = ["SL2Theory"]
+
+[[lean_lib]]
+name = "ArithmeticGeometry"
+globs = ["ArithmeticGeometry"]
+
+[[lean_lib]]
+name = "Applications"
+globs = ["Applications"]
+
+[[lean_lib]]
+name = "GaussianIntegers"
+globs = ["GaussianIntegers"]
+
+[[lean_lib]]
+name = "QuadraticForms"
+globs = ["QuadraticForms"]
+
+[[lean_lib]]
+name = "DescentTheory"
+globs = ["DescentTheory"]
+
+[[lean_lib]]
+name = "SpectralTheory"
+globs = ["SpectralTheory"]
+
+[[lean_lib]]
+name = "QuantumGateSynthesis"
+globs = ["QuantumGateSynthesis"]
+
+[[lean_lib]]
+name = "QuantumCompression"
+globs = ["QuantumCompression"]
+
+[[lean_lib]]
+name = "QuantumCircuits"
+globs = ["QuantumCircuits"]
+
+[[lean_lib]]
+name = "CompressionTheory"
+globs = ["CompressionTheory"]
+
+[[lean_lib]]
+name = "NewDirections"
+globs = ["NewDirections"]
+
+[[lean_lib]]
+name = "Combinatorics"
+globs = ["Combinatorics"]
+
+[[lean_lib]]
+name = "GroupTheoryExploration"
+globs = ["GroupTheoryExploration"]
+
+[[lean_lib]]
+name = "AnalysisInequalities"
+globs = ["AnalysisInequalities"]
+
+[[lean_lib]]
+name = "NumberTheoryDeep"
+globs = ["NumberTheoryDeep"]
+
+[[lean_lib]]
+name = "LinearAlgebraExploration"
+globs = ["LinearAlgebraExploration"]
+
+[[lean_lib]]
+name = "TopologyDynamics"
+globs = ["TopologyDynamics"]
+
+[[lean_lib]]
+name = "PolynomialTheory"
+globs = ["PolynomialTheory"]
+
+[[lean_lib]]
+name = "SetTheoryLogic"
+globs = ["SetTheoryLogic"]
+
+[[lean_lib]]
+name = "ProbabilityExploration"
+globs = ["ProbabilityExploration"]
+
+[[lean_lib]]
+name = "CategoryRepresentation"
+globs = ["CategoryRepresentation"]
+
+[[lean_lib]]
+name = "CryptographyApplications"
+globs = ["CryptographyApplications"]
+
+[[lean_lib]]
+name = "OptimizationConvexity"
+globs = ["OptimizationConvexity"]
+
+[[lean_lib]]
+name = "AlgebraicStructures"
+globs = ["AlgebraicStructures"]
+
+[[lean_lib]]
+name = "RealWorldApplications"
+globs = ["RealWorldApplications"]
