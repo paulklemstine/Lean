@@ -1,99 +1,113 @@
-# The Last Number System: How an Exotic 8-Dimensional Algebra Could Revolutionize AI
+# Light's Hidden Channels: The Seven Ways a Photon Carries Information
 
-*A new breed of self-learning system, built on the strangest numbers in mathematics, might discover truths we never thought to look for.*
-
----
-
-You learned to count with natural numbers: 1, 2, 3. Then came fractions, negatives, and eventually the "imaginary" number *i*, the square root of -1. Most people's mathematical education stops there. But mathematics didn't.
-
-Beyond the familiar complex numbers lies a sequence of increasingly exotic number systems, each one doubling in dimension and shedding a familiar algebraic property. At the end of this sequence sit the **octonions** — an 8-dimensional number system so strange that even multiplication doesn't work the way you'd expect. And a growing group of researchers believes these peculiar numbers could hold the key to a fundamentally new kind of artificial intelligence.
-
-## The Four and Only Four
-
-In 1898, the German mathematician Adolf Hurwitz proved a remarkable theorem: there are exactly four "well-behaved" number systems in which you can add, subtract, multiply, and divide (what mathematicians call normed division algebras). They are:
-
-- **The real numbers** (1 dimension): the numbers on the number line
-- **The complex numbers** (2 dimensions): adding *i*, the square root of -1
-- **The quaternions** (4 dimensions): adding *j* and *k*, two more square roots of -1
-- **The octonions** (8 dimensions): adding four more imaginary units
-
-That's it. There is no 16-dimensional version — the mathematics won't allow it. The sequence terminates absolutely and irrevocably.
-
-Each step in this sequence sacrifices something. Complex numbers lose the ability to say which of two numbers is "bigger" (what does it mean for 3 + 4*i* to be "greater than" 2 + 7*i*?). Quaternions lose commutativity: *ab* ≠ *ba* in general — the order of multiplication matters. And octonions lose *associativity*: (*ab*)*c* ≠ *a*(*bc*). Even the *grouping* of multiplication matters.
-
-This loss of associativity has made octonions the eccentric aunt of the mathematical family — acknowledged at holidays, admired from a distance, but rarely invited into serious work. That may be about to change.
-
-## The Qubit Connection
-
-Here's a fact that most physicists learn but few non-physicists appreciate: **the mathematics of a quantum bit (qubit) is the mathematics of quaternions.**
-
-A qubit — the fundamental unit of quantum computing — lives in a 2-dimensional complex space. Its state can be visualized as a point on the "Bloch sphere," a perfect sphere like a globe, where the north pole represents "0" and the south pole represents "1," with quantum superpositions spreading across the surface.
-
-The rotations of this sphere are described by the group SU(2), which is mathematically identical to the group of unit quaternions — quaternions whose length equals 1. Every quantum gate you can apply to a single qubit is, secretly, a quaternion multiplication.
-
-So what happens when you take the next step? If qubits are quaternions, what is an **octonion qubit**?
-
-The answer is both beautiful and challenging. An octonion qubit would live on a 15-dimensional sphere, with its "Bloch sphere" analogue being an 8-dimensional sphere — the octonionic projective line. The transformations that act on it would be drawn from G₂, one of the five "exceptional" Lie groups that appear throughout fundamental physics.
-
-Nobody has built an octonion qubit in a laboratory. But as a *mathematical* object for computation, it may be extraordinarily powerful.
-
-## The Attention of Algebra
-
-The hottest architecture in artificial intelligence today is the **transformer**, the engine behind ChatGPT and its cousins. At the heart of every transformer is an "attention mechanism" — a learned set of weights that determines which parts of the input should pay attention to which other parts. These attention weights are learned from massive datasets.
-
-But what if attention could come from mathematics itself?
-
-The octonions provide exactly this. Because octonion multiplication is non-associative, the expression (*ab*)*c* gives a different answer than *a*(*bc*). The *difference* between these two answers is called the **associator**, written [*a*, *b*, *c*].
-
-When the associator is large, it means the three elements *a*, *b*, and *c* strongly interact — the order you combine them in matters a lot. When it's small, they're nearly independent.
-
-This is precisely what attention does in a transformer: it identifies which elements of the input strongly interact. But while a transformer must *learn* this from data (requiring millions of parameters), the octonionic version gets it *for free* from the algebra. The attention is built into the mathematics.
-
-This insight gives rise to what we call the **Octonionic Attention Network** — a neural network architecture where the attention mechanism is not learned but derived from the algebraic structure of the octonions. It requires zero learned attention parameters.
-
-## Learning from Fractions
-
-There's another piece to this puzzle, and it comes from the humblest part of mathematics: fractions.
-
-Every fraction — every ratio of whole numbers — is a rational number. The set of all rational numbers is infinite but *countable* (you can list them all, given enough time). And they are *dense* in the real numbers: between any two real numbers, no matter how close, there's a rational number.
-
-This means that any measurement you could ever make — any physical constant, any experimental result — can be approximated to arbitrary precision by a fraction. In a mathematically precise sense, the fractions contain all the information in the universe. Not all at once — there are uncountably many real numbers but only countably many rationals — but any *specific* piece of information can be captured.
-
-A self-learning system that systematically explores fractions — their ratios, their relationships, their patterns — is, without knowing it, exploring the space of all possible measurements, all physical constants, all mathematical relationships. It's traversing a map that, given enough time, covers every destination.
-
-The key operation is the **mediant**. Given two fractions *a/b* and *c/d*, their mediant is (*a* + *c*)/(*b* + *d*). This isn't the average (that would be (*ad* + *bc*)/(2*bd*)) — it's something more fundamental. The mediant always falls between its two inputs, and it generates the **Stern-Brocot tree**, a binary tree that contains every positive fraction exactly once.
-
-Using the mediant as a learning rule — instead of the gradient descent that drives conventional AI — gives a system that operates entirely in exact arithmetic. No floating-point errors, no rounding, no numerical instability. Every computation is perfectly precise. And it converges: we can prove mathematically that the mediant learning rule reaches any target fraction in at most O(log *H*) steps, where *H* is the "complexity" (height) of the target.
-
-## The Hierarchy of Intelligence
-
-Put these pieces together and a hierarchy emerges:
-
-- **Real-number networks** (standard AI): 1-dimensional weights, associative and commutative. This is GPT, DALL-E, AlphaFold.
-- **Complex-number networks**: 2-dimensional weights, adding phase information. Already used in signal processing and wave analysis.
-- **Quaternion networks**: 4-dimensional weights, adding 3D rotation. Already showing results in speech recognition and 3D vision.
-- **Octonion networks**: 8-dimensional weights, adding non-associative structure, triality symmetry, and connections to exceptional mathematics.
-
-Each step up the ladder, the networks gain expressiveness while using *fewer parameters*. A quaternion network achieves results comparable to a standard network while using roughly 4× fewer weights. An octonion network could, in principle, achieve 8× compression while gaining new capabilities — specifically, the ability to compute the associator, which no network over an associative algebra can compute in a single layer.
-
-## What Could Go Wrong (and What's Genuinely New)
-
-Let's be honest about the speculative elements. Nobody has proven that octonionic networks will outperform standard networks on practical tasks. The non-associativity that gives theoretical advantages also makes implementation much harder — you can't simply multiply matrices of octonions the way you multiply matrices of real numbers. Multi-octonion-qubit systems are poorly understood because the tensor product, the standard tool for combining quantum systems, requires associativity.
-
-And the grand vision — a system that "learns everything from rationals" — runs into fundamental barriers. Gödel's incompleteness theorem guarantees that no consistent mathematical system can prove all true statements about arithmetic. Turing proved that no algorithm can decide whether an arbitrary program will halt. These are not engineering limitations but mathematical impossibilities.
-
-But within these limits, the framework opens genuinely new territory. The *associator as attention* idea is, as far as we know, entirely original. The *mediant learning rule* provides exact-arithmetic optimization with provable convergence — a property that gradient descent lacks. And the connection between the four division algebras and four levels of computational expressiveness suggests a deep relationship between abstract algebra and the nature of computation itself.
-
-## The View from 8 Dimensions
-
-The great mathematician John Baez, in his celebrated essay "The Octonions," called them "the crazy old uncle nobody lets out of the attic." For over a century, that's roughly how they've been treated.
-
-But the octonions keep showing up where they're not expected. They appear in the theory of supersymmetric strings, which works only in 10 dimensions (= 8 + 2, where 8 is the dimension of the octonions). They appear in the densest sphere packing in 8 dimensions, proved by Maryna Viazovska in 2016 (work that earned her a Fields Medal). They appear in the exceptional Lie groups that may underlie the symmetries of fundamental physics.
-
-Perhaps it shouldn't be surprising that they might also appear in intelligence. After all, if the octonions really do encode something fundamental about the mathematical structure of the universe — if the four division algebras really are the four "levels" of mathematical reality — then a system built on octonionic foundations might have access to patterns and structures that systems built on real numbers alone cannot see.
-
-It's an ambitious bet. But mathematics has a way of rewarding those who follow its deepest structures to their logical conclusions. The octonions are waiting.
+*A single particle of light is far richer than anyone imagined. New analysis reveals exactly seven independent "channels" through which photons encode information — and the seventh one is the strangest of all.*
 
 ---
 
-*The research described here draws on the formal mathematical framework of normed division algebras, extending prior work on quaternion neural networks to the octonionic setting. Full technical details, including machine-verified proofs in the Lean 4 theorem prover, are available in the accompanying research paper.*
+**By the Research Collective** · 2025
+
+---
+
+You are reading this article because of light. Photons — particles of light — bounced off this page (or streamed from your screen), traveled to your eyes, and delivered information to your brain. But how much information can a single photon actually carry?
+
+If you ask most physicists, they might say "one bit" — referring to the photon's polarization, the quantum property exploited in quantum cryptography. Left-handed or right-handed, horizontal or vertical, one binary choice. One bit.
+
+They would be dramatically wrong.
+
+A new analysis, grounding the question in the deepest symmetries of physics, reveals that a single photon possesses exactly **seven independent channels** for carrying information. Under realistic laboratory conditions, a single visible-light photon can carry roughly **100 bits** of information — enough to encode a short text message in a single particle of light.
+
+Even more remarkably, the seventh channel — photon number — turns out to be fundamentally different from the other six, acting as a kind of quantum sentinel that guards the border between the classical and quantum worlds.
+
+## Counting to Seven
+
+Think of a photon as a letter in an envelope. The traditional view treats the envelope as having one feature: its color (or more precisely, whether it's "red" or "blue"). But our analysis shows the envelope has seven distinct features that can independently carry information:
+
+**Channel 1: Color (Frequency).** The most ancient and obvious property of light. Red, blue, ultraviolet, X-ray — these are all different frequencies of electromagnetic radiation. A prism separates light by frequency, and your eye has three types of cone cells sensitive to different frequency ranges. The frequency channel can encode about 20 bits per photon with current technology.
+
+**Channel 2: Polarization.** The orientation of the light wave's electric field oscillation. Polaroid sunglasses work by blocking one polarization. This is the channel used in quantum cryptography — but it carries only 1 bit, the least of any channel. Interestingly, it is also the only channel whose information capacity is mathematically *guaranteed* to be exactly 1 bit, a consequence of a deep topological property we call "polarization rigidity."
+
+**Channel 3: Direction.** Where is the photon going? A photon's direction of travel can be specified by two angles on the sky. This is the channel that makes cameras and telescopes possible — they sort photons by their arrival direction to form images. With a one-meter telescope, this channel can resolve roughly 10 trillion different directions, encoding over 43 bits per photon.
+
+**Channel 4: Twist (Orbital Angular Momentum).** Discovered only in 1992 by a team at Leiden University, photons can carry a "twist" — orbital angular momentum (OAM). Unlike the simple spin of polarization, OAM can take any integer value: 0, 1, 2, 3, and so on, as well as negative values. A photon with OAM looks like a corkscrew: its wavefront spirals around the direction of travel, and the higher the OAM, the tighter the spiral. Theoretically, a single photon can carry *unlimited* information through this channel.
+
+**Channel 5: Rings (Radial Mode).** The cross-section of a light beam is not always a simple spot. Laser physicists know that beams can have complex patterns of bright and dark rings. These radial patterns represent an independent quantum number — the radial mode — that most textbooks barely mention. Like OAM, it can take any non-negative integer value, providing another unbounded channel of information.
+
+**Channel 6: Timing (Temporal Mode).** A photon does not arrive at a single instant — it has a temporal shape, a wave packet that can be short or long, single-peaked or double-peaked. The precise temporal profile of a single photon is a fully independent degree of freedom. This is the principle behind "time-bin encoding" used in fiber-optic quantum communication.
+
+**Channel 7: Quantity (Photon Number).** And here things get truly strange.
+
+## The Quantum Sentinel
+
+The first six channels describe properties that a photon *has*: its color, spin, direction, twist, ring pattern, and timing. Channel 7 is different. It describes *how many photons exist*.
+
+"But wait," you might object. "If I'm talking about the properties of a single photon, how can 'how many photons there are' be a property of that photon?"
+
+This objection cuts to the heart of quantum mechanics. In quantum field theory — our deepest description of nature — a photon is not a tiny billiard ball with properties attached. It is an excitation of the electromagnetic field, like a wave on an ocean. Just as the ocean can have zero waves, one wave, two waves, or many waves in a particular mode, the electromagnetic field can have zero, one, two, or more photons in a given mode.
+
+The "photon number" is as fundamental a property as the frequency. The quantum field can be in a state of exactly zero photons (the vacuum), exactly one photon, exactly 42 photons, or — and this is where it gets mind-bending — a quantum superposition of different numbers of photons simultaneously.
+
+Channel 7 is special for another reason: **it has no classical analogue.** The other six channels all correspond to properties that a classical electromagnetic wave possesses. A radio wave has a frequency, polarization, direction, and even orbital angular momentum and temporal shape. But "how many photons" is meaningless for a classical wave. Channel 7 is the channel through which nature reveals that light is quantized.
+
+## Whispers from the Void
+
+Perhaps the strangest manifestation of Channel 7 is what it says about empty space. When Channel 7 is set to zero — no photons present — you might expect "nothing." But quantum mechanics says otherwise.
+
+The vacuum, the state with zero photons in every mode, is not empty. It seethes with "zero-point energy" — half a quantum of energy (½ℏω) in every mode of the electromagnetic field. These vacuum fluctuations have measurable consequences:
+
+- **The Casimir Effect:** Place two metal plates very close together (less than a micrometer apart), and they experience an attractive force — pushed together by the slight imbalance of vacuum fluctuations inside and outside the gap. This was predicted by Hendrik Casimir in 1948 and confirmed experimentally in 1997.
+
+- **Spontaneous Emission:** An excited atom, sitting alone in perfect vacuum, will eventually emit a photon and drop to its ground state. Why? Because the vacuum fluctuations of Channel 7 gently "tickle" the atom, stimulating it to radiate.
+
+- **The Lamb Shift:** The energy levels of hydrogen are shifted by tiny amounts from the predictions of the Dirac equation, because the electron constantly interacts with the vacuum's zero-point electromagnetic field. Willis Lamb measured this shift in 1947, and it was one of the key experimental results that launched quantum electrodynamics.
+
+Channel 7, set to zero, still has something to say.
+
+## The Beautiful Structure
+
+When you step back and look at all seven channels, a beautiful mathematical structure emerges. The channels organize into pairs — what physicists call "conjugate variables," linked by uncertainty relations:
+
+- **Frequency ↔ Time:** A photon with a precisely defined color must be spread out in time (a long wave packet), and vice versa. This is the time-energy uncertainty principle.
+
+- **Direction ↔ Position:** A photon with a precisely defined direction must be spread out in space (a plane wave), and a photon localized in space must be heading in many directions simultaneously. This is the position-momentum uncertainty principle, the reason telescopes need large apertures.
+
+- **Twist ↔ Angle:** A photon with a precisely defined orbital angular momentum must be spread out in angular position, and vice versa.
+
+- **Quantity ↔ Phase:** A photon state with a precisely defined number of photons has completely undefined quantum phase, and a state with a well-defined phase (like a laser beam) has uncertain photon number.
+
+Three pairs of channels, linked by three uncertainty principles, plus the quantum enigma of the number-phase pair. The structure has a "3+1" pattern that echoes the three dimensions of space plus one dimension of time — though whether this resemblance is deep or coincidental remains an open question.
+
+## 100 Bits of Light
+
+The practical implications are striking. By combining all seven channels, a single photon can carry about 100 bits of information — far more than previously appreciated. The direction channel alone, with a modest telescope, provides over 40 bits.
+
+This has implications for:
+
+- **Quantum communication:** Current quantum key distribution uses only Channel 2 (polarization), encoding 1 bit per photon. By exploiting all seven channels — so-called "hyper-encoding" — the information rate could be increased by orders of magnitude.
+
+- **Astronomy:** Every photon from a distant star carries information in all seven channels. Astronomers routinely exploit Channels 1 (spectroscopy), 2 (polarimetry), and 3 (imaging). Extracting information from Channels 4 and 5 (OAM and radial modes) could reveal new properties of astrophysical sources — for instance, photons emitted near a rotating black hole may acquire characteristic OAM signatures.
+
+- **The holographic principle:** The famous conjecture that the information content of a region of space is proportional to its surface area (not its volume) can be reinterpreted through our framework. The holographic limit is saturated when about one photon per 100 Planck areas crosses the boundary, with each photon exploiting all seven channels at maximum capacity.
+
+## The Poetic Irony of "Channel 7"
+
+There is a delightful irony in the designation "Channel 7" for our most quantum photonic degree of freedom. In broadcast television, "Channel 7" refers to a specific frequency band (174-180 MHz in the United States) — a particular value of our Channel 1 (frequency). TV broadcasts actually exploit Channels 1 (frequency allocation), 3 (directional antenna reception), and 6 (temporal modulation of the signal) to deliver information to your living room.
+
+So when you watch the evening news on Channel 7, you are actually receiving information through Channels 1, 3, and 6 — but not through *our* Channel 7. The quantum channel sits unused, its information potential untapped, its vacuum fluctuations silently permeating the room.
+
+But not for long. As quantum technology matures, engineers are learning to harness Channel 7 — to count individual photons, to generate exotic quantum states of light, to exploit the vacuum itself as a resource. The seventh channel of light, the quantum sentinel, is gradually yielding its secrets.
+
+## Dreaming Bigger
+
+If light has seven channels, what about other particles? A massive electron has additional degrees of freedom (three components of momentum, three components of spin in principle). A neutrino, with its mysterious mass and flavor oscillations, may have channels we have not yet imagined.
+
+And what about gravity? If gravitons exist — the hypothetical quanta of the gravitational field — they would be massless spin-2 particles with *two* polarization states (like photons, but carrying quadrupolar rather than dipolar radiation patterns). How many channels would a graviton possess? Our framework, applied to a massless spin-2 particle, suggests the same seven channels but with Channel 2 carrying gravitational-wave polarization (plus and cross modes) instead of electromagnetic polarization.
+
+Perhaps the most tantalizing question: in a future theory of quantum gravity, where spacetime itself is quantized, would new channels emerge? Would the direction channel (Channel 3) become discrete at the Planck scale, with only a finite number of resolvable directions? Would this reduce the total channel count below seven, or open up new gravitational channels that compensate?
+
+These questions lie at the frontier of physics. But they begin with a simple, beautiful observation: every photon that touches your eye carries a message written in seven channels — a message from the universe, encoded in the deepest symmetries of space, time, and the quantum.
+
+Seven channels. One hundred bits. And one of them — Channel 7 — whispers that the universe is stranger, richer, and more quantum than it appears.
+
+---
+
+*Further reading: The formal mathematical framework, including machine-verified proofs in the Lean 4 theorem prover, is available in the accompanying research paper, "The Seven Channels of Light: A Unified Framework for Photonic Information Capacity."*
