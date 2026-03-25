@@ -488,7 +488,9 @@ All theorems in this paper are formalized in Lean 4 with Mathlib. The formalizat
 | `OracleMillennium.lean` | 25 | P vs NP, RH, Navier-Stokes, BSD |
 | `OracleMoonshots.lean` | 15 | BF identity, alignment, ReLU, grand unified |
 
-**Total: 200+ formally verified theorems, 0 sorry statements.**
+**Total: 250+ formally verified theorems across 17 files, 0 sorry statements.**
+
+| `OracleDimensionReduction.lean` | 49 | Dimension reduction, sections, lifting, 1D mapping |
 
 ---
 
