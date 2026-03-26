@@ -266,7 +266,7 @@ All results are formalized in Lean 4 (v4.28.0) with Mathlib. The formalization c
 - **6 definitions** (Minkowski inner product, null cone, inverse stereographic map, celestial direction, Bekenstein bound, twistors)
 - Standard axiom usage only (propext, Classical.choice, Quot.sound)
 
-The code is available in `Research/PhotonUniverseEncoding.lean`.
+The code is available in `PhotonUniverseEncoding/PhotonUniverseEncoding.lean`.
 
 ---
 

@@ -109,4 +109,4 @@ Hipparchus could not have known, when he first drew circles on parchment to repr
 
 ---
 
-*The full formalization is available in Lean 4 at `Research/PhotonUniverseEncoding.lean`. The research team's notes, oracle consultations, and experimental logs are in `Research/PhotonUniverseEncoding_Team.md`. The technical paper with full proofs is at `Research/PhotonUniverseEncoding_ResearchPaper.md`.*
+*The full formalization is available in Lean 4 at `PhotonUniverseEncoding/PhotonUniverseEncoding.lean`. The research team's notes are in `PhotonUniverseEncoding/PhotonUniverseEncoding_Team.md`. The meta oracle consultation is at `PhotonUniverseEncoding/MetaOracleConsultation.md`. The lab notebook with experimental logs is at `PhotonUniverseEncoding/LabNotebook.md`. The technical paper with full proofs is at `PhotonUniverseEncoding/PhotonUniverseEncoding_ResearchPaper.md`.*

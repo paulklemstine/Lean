@@ -390,7 +390,7 @@ Second, verify inverseStereoNull u v ω = k using funext i, fin_cases i:
 Use field_simp and nlinarith/ring with the null condition (null_condition_rearranged).
 -/
 lemma inverseStereoNull_surj_standard (k : Fin 4 → ℝ)
-    (hnull : IsNull k) (hfut : IsFutureDirected k)
+    (hnull : IsNull k) (_hfut : IsFutureDirected k)
     (hsum : k 0 + k 3 > 0) :
     let u := k 1 / (k 0 + k 3)
     let v := k 2 / (k 0 + k 3)
