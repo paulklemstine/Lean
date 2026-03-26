@@ -122,7 +122,7 @@ The number of proper k-colorings of a complete graph on n vertices
 -/
 theorem complete_graph_colorings (n : ℕ) :
     Nat.factorial n ≤ n ^ n := by
-      exact?
+      exact factorial_le_pow n
 
 /-! ## §6: Entropy and Information Oracles -/
 

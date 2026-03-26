@@ -52,11 +52,36 @@ This creates what optimization theorists call a "fully coupled" problem: you can
 
 The algorithms that *do* work well for factoring — the Number Field Sieve, Pollard's rho method, the elliptic curve method — succeed precisely because they exploit deep algebraic structure rather than treating factoring as a generic optimization problem. They use the arithmetic of number fields, the group structure of elliptic curves, and the distribution of smooth numbers. They work *with* the mathematics of multiplication rather than against it.
 
+### The Idempotency Illusion
+
+A central claim of the Oracle framework is that "truth" emerges from consensus among a team of hypothesis-generators — that when all the oracles agree on a bit value, that bit must be correct. The algorithm locks bits where the top-performing candidates show near-unanimous agreement, treating consensus as evidence of truth.
+
+This is the idempotency idea: if a projection operator is applied twice and yields the same result, the output must be a "fixed point" — a stable truth. Our formal proofs confirm that idempotent functions do have beautiful mathematical properties: `(a mod n) mod n = a mod n`, eigenvalues of idempotent matrices are exactly 0 or 1, and constant functions are trivially idempotent.
+
+But the Oracle's consensus mechanism is *not* a genuine mathematical projection. In optimization, consensus among the best candidates often reflects the structure of the search landscape rather than the structure of the solution. When all your top guessers agree that a high-order bit should be 1, it might simply mean that the current population happens to have converged to the same local basin — not that the global optimum shares that bit value. Locking in such a bit prematurely can make the correct solution permanently unreachable, turning a difficult search into an impossible one.
+
+The advantage over trial division that the Oracle claims simply does not exist. Trial division explores candidates systematically with guaranteed progress; the Oracle explores them stochastically with no such guarantee.
+
 ### The Proof Is in the Pudding (Formally)
 
 What makes our analysis unusual is that we didn't just argue informally — we wrote machine-checked proofs in Lean 4, a programming language designed for mathematical verification. Every theorem in our analysis has been verified by a computer, eliminating the possibility of logical errors, unstated assumptions, or hand-waving.
 
-Our twelve formally verified theorems establish partial correctness, search space bounds, landscape analysis, and comparison with known algorithms. The proofs are publicly available and can be independently verified by anyone with a Lean installation — the mathematical equivalent of "don't trust, verify."
+Our formally verified theorems establish partial correctness, search space bounds, landscape analysis, and comparison with known algorithms. The proofs are publicly available and can be independently verified by anyone with a Lean installation — the mathematical equivalent of "don't trust, verify."
+
+Key formally verified results include:
+
+| Theorem | Statement | File |
+|---------|-----------|------|
+| `oracle_partial_correctness` | If the Oracle returns factors, they are valid and N is composite | `Factoring/OracleAnalysis.lean` |
+| `search_space_exponential_growth` | Search space quadruples with each additional bit | `Factoring/OracleAnalysis.lean` |
+| `composite_has_small_factor` | Every composite has a factor ≤ √N (trial division works) | `Factoring/OracleAnalysis.lean` |
+| `bit_flip_product_change` | Single bit flip changes product by 2^k × b | `Factoring/OracleAnalysis.lean` |
+| `exponential_dominates` | Exponential growth dominates polynomial | `Factoring/OracleAnalysis.lean` |
+| `mod_idempotent` | Modular reduction is idempotent | `Research/OracleHypotheses.lean` |
+| `idempotent_eigenvalue` | Idempotent eigenvalues ∈ {0, 1} | `Research/OracleHypotheses.lean` |
+| `finite_dynamics_repeat` | Finite dynamical systems must cycle | `Research/OracleHypotheses.lean` |
+| `wilson_theorem` | Wilson's theorem for primality | `Research/OracleHypotheses.lean` |
+| `halting_diagonal` | No enumeration of all functions exists | `Research/OracleHypotheses.lean` |
 
 ### Lessons for the AI Age
 
@@ -70,4 +95,4 @@ In mathematics, as in life, working smarter will always beat working harder — 
 
 ---
 
-*The formal proofs described in this article are available in the file `Factoring/OracleAnalysis.lean`. The research paper with full technical details is at `Research/OracleResearchPaper.md`.*
+*The formal proofs described in this article are available in `Factoring/OracleAnalysis.lean` and `Research/OracleHypotheses.lean`. The research paper with full technical details is at `Research/OracleResearchPaper.md`.*
