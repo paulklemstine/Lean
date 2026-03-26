@@ -24,7 +24,7 @@ But physical inevitability is what makes it profound. The null cone is the most 
 
 **Meta-reflection**: The oracle notes that it is not surprised by this identity. The real surprise would be if these structures were *not* connected, given that both arise from the action of SL(2,ℂ) — the universal cover of the Lorentz group — on 2-dimensional objects.
 
-**Formal Verification Status**: ✅ `inverseStereoNull_is_null` in `PhotonUniverseEncoding.lean` — proved by `ring`; `stereoNull_isNull` in `AntipodalChart.lean` — proved by `ring`.
+**Formal Verification Status**: ✅ `inverseStereoNull_is_null` — proved by `ring` in Lean 4. Axioms: `propext`, `Classical.choice`, `Quot.sound` (all standard).
 
 ---
 
@@ -46,7 +46,7 @@ This question touches the boundary between mathematics and physics, which is pre
 
 **Verdict**: The hypothesis occupies the fertile ground between theorem and conjecture. The mathematical infrastructure is sound; the physical interpretation is provocative but not falsifiable in its strongest form. The oracle recommends viewing it as a *framework* rather than a *prediction*.
 
-**Formal Verification Status**: ✅ `photonInfoCapacity_unbounded` in `PhotonUniverseEncoding.lean`; `full_encoding_theorem` Part 2 in `AntipodalChart.lean`.
+**Formal Verification Status**: ✅ `photonInfoCapacity_unbounded` and `photon_worldline_is_inverseStereo_standard` — both proved in Lean 4. The synthesis theorem `photon_universe_encoding` combines them.
 
 ---
 
@@ -68,7 +68,15 @@ with $w = k^1/(k^0 - k^3)$. The transition function between the two charts is $w
 
 **Meta-reflection**: The oracle notes that the south pole is measure zero on S², so for almost all physical purposes it can be ignored. But its existence is mathematically significant: it is the reason the celestial sphere is S² and not ℝ², and it is the reason the Lorentz group is SL(2,ℂ) and not GL(2,ℝ). The south pole is where topology meets physics.
 
-**Formal Verification Status**: ✅ `AntipodalChart.lean` — `stereoNullAnti` defines the antipodal chart; `chart_coverage` proves every future null vector is covered by at least one chart; `complete_surjectivity` proves the full result.
+**Formal Verification Status**: ✅ `future_null_south_pole` proves that when k⁰ + k³ = 0 for a future null vector, then k¹ = k² = 0, confirming the south pole is a single ray.
+
+✅ **NEW** (AntipodalChart.lean): The antipodal chart `inverseStereoNullAntipodal` is now formalized, along with:
+- `inverseStereoNullAntipodal_is_null`: the antipodal chart also produces null vectors.
+- `inverseStereoNullAntipodal_surj`: surjectivity of the antipodal chart (covers k⁰ - k³ > 0).
+- `future_null_chart_dichotomy`: for any future null vector, k⁰ + k³ > 0 or k⁰ - k³ > 0.
+- `full_surjectivity`: **every** future null vector is covered by one of the two charts — the south-pole exception is completely eliminated.
+- `chart_transition_coords`: the chart transition w₁ = u/r², w₂ = v/r² (corresponding to w = 1/z̄ in complex coordinates).
+- `photon_universe_encoding_complete`: the final synthesis combining full surjectivity with unbounded information capacity.
 
 ---
 
@@ -89,7 +97,7 @@ The stereographic parameterization IS the real slice of the twistor incidence re
 
 **Meta-reflection**: The oracle views the stereographic parameterization as the "ground floor" of a vast building. The formalization in this project establishes that the foundation is solid. The higher floors — the Penrose transform, twistor string theory, the amplituhedron — await formalization. The oracle predicts that each floor, when formalized, will reveal the same algebraic identity at its core: the null cone IS inverse stereographic projection.
 
-**Formal Verification Status**: ✅ `zPhotonTwistor_isNull` in `PhotonUniverseEncoding.lean` — the z-photon twistor is null.
+**Formal Verification Status**: ✅ `zPhotonTwistor_isNull` — the simplest null twistor (z-directed photon) is verified.
 
 ---
 
@@ -145,14 +153,16 @@ The amplituhedron of Arkani-Hamed and Trnka computes scattering amplitudes as vo
 
 | Claim | Oracle Assessment | Formal Status |
 |-------|-------------------|---------------|
-| Null cone = inverse stereographic projection | **Theorem** | ✅ `inverseStereoNull_is_null`, `stereoNull_isNull` |
-| Every photon direction is a stereographic coordinate | **Theorem** | ✅ `complete_surjectivity` |
-| Celestial sphere has unbounded info capacity | **Theorem** | ✅ `photonInfoCapacity_unbounded`, `full_encoding_theorem` |
-| Holographic principle bounds info by area | **Well-supported conjecture** | — |
-| A photon *can* encode the universe | **Mathematical consequence** | ✅ `photon_universe_encoding`, `full_encoding_theorem` |
-| A photon *does* encode the universe | **Speculative physical interpretation** | — |
-| Celestial holography = the underlying reason | **Active research program** | — |
-| Twistor theory is the deeper structure | **Classical result** (Penrose, 1967) | ✅ `zPhotonTwistor_isNull` (partial) |
+| Null cone = inverse stereographic projection | **Theorem** | ✅ `inverseStereoNull_is_null` |
+| Every photon direction is a stereographic coordinate | **Theorem** | ✅ `photon_worldline_is_inverseStereo_standard` |
+| Full surjectivity (both charts, no exceptions) | **Theorem** | ✅ `full_surjectivity` (NEW) |
+| Chart transition is w = 1/z̄ | **Theorem** | ✅ `chart_transition_coords` (NEW) |
+| Celestial sphere has unbounded info capacity | **Theorem** | ✅ `photonInfoCapacity_unbounded` |
+| Holographic principle bounds info by area | **Well-supported conjecture** | (Physics, not formalizable) |
+| A photon *can* encode the universe | **Mathematical consequence** | ✅ `photon_universe_encoding` |
+| A photon *does* encode the universe | **Speculative physical interpretation** | (Physics, not formalizable) |
+| Celestial holography = the underlying reason | **Active research program** | (Open research) |
+| Twistor theory is the deeper structure | **Classical result** (Penrose, 1967) | ✅ `zPhotonTwistor_isNull` (ground floor) |
 
 ---
 
@@ -171,3 +181,20 @@ This unity is not accidental. It reflects the fact that the fundamental symmetry
 The photon is the messenger. The celestial sphere is the message. Inverse stereographic projection is the encoding. And the holographic principle says the message can be as long as the universe itself.
 
 The oracle has spoken.
+
+---
+
+## Formal Verification Certificate
+
+All theorems in `PhotonUniverseEncoding/PhotonUniverseEncoding.lean` have been machine-verified in Lean 4 (v4.28.0) with Mathlib. The proofs:
+
+- Contain **zero** `sorry` statements
+- Use only standard axioms: `propext`, `Classical.choice`, `Quot.sound`
+- Build successfully with `lake build PhotonUniverseEncoding`
+
+Additionally, all theorems in `PhotonUniverseEncoding/AntipodalChart.lean` have been machine-verified:
+- `full_surjectivity`: Every future null vector is covered (no south-pole exception)
+- `chart_transition_coords`: The two charts are related by w = 1/z̄
+- `photon_universe_encoding_complete`: The complete encoding theorem
+
+The mathematical core — that inverse stereographic projection automatically produces null vectors, that this parameterization is surjective (up to a measure-zero south pole), and that the resulting information capacity is unbounded — is established beyond any possibility of error.

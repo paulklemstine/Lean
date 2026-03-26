@@ -6,7 +6,7 @@
   <title>The Pythagorean Cosmos — Paul Klemstine</title>
   <meta name="description" content="5,052+ machine-verified theorems in Lean 4. Zero sorry. A unified theory connecting number theory, quantum computing, neural architecture, and physics through the Pythagorean equation.">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>△</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpolygon points='50,5 63,35 95,35 69,57 79,90 50,70 21,90 31,57 5,35 37,35' fill='%23fbbf24'/%3E%3C/svg%3E">
 </head>
 <body>
   <div class="bg-ambient"></div>
@@ -14,7 +14,7 @@
   <!-- Navigation -->
   <nav class="nav">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo"><span class="logo-icon">△</span> Pythagorean Cosmos</a>
+      <a href="index.html" class="nav-logo"><span class="logo-icon">&#9733;</span> Pythagorean Cosmos</a>
       <ul class="nav-links">
         <li><a href="index.html" class="active">Home</a></li>
         <li><a href="pages/cosmos-theorems.html">Theorems</a></li>
@@ -31,17 +31,12 @@
   <!-- Hero -->
   <section class="hero">
     <div class="hero-content">
-      <div class="hero-badge"><span class="pulse"></span> Machine-Verified · Zero Sorry · Lean 4 + Mathlib</div>
+      <div class="hero-badge"><span class="pulse"></span> Machine-Verified &middot; Zero Sorry &middot; Lean 4 + Mathlib</div>
       <h1>The <span class="gradient-text">Pythagorean Cosmos</span></h1>
-      <p class="hero-subtitle">A formally verified unifying theory connecting number theory, quantum computing, neural architecture, and relativistic physics — all through the equation a² + b² = c².</p>
-      <div class="hero-stats">
-        <div class="hero-stat"><div class="number" data-count="5052" data-format="comma">0</div><div class="label">Verified Theorems</div></div>
-        <div class="hero-stat"><div class="number" data-count="263">0</div><div class="label">Source Files</div></div>
-        <div class="hero-stat"><div class="number">0</div><div class="label">Sorry</div></div>
-        <div class="hero-stat"><div class="number" data-count="40">0</div><div class="label">Domains</div></div>
-      </div>
+      <p class="hero-subtitle">A formally verified unifying theory connecting number theory, quantum computing, neural architecture, and relativistic physics &mdash; all through the equation a&sup2; + b&sup2; = c&sup2;.</p>
+      <canvas id="trippyCanvas" width="800" height="300" style="display:block;margin:2rem auto;border-radius:16px;max-width:100%"></canvas>
       <div class="hero-cta">
-        <a href="pages/cosmos-theorems.html" class="btn btn-primary">Explore 5,052 Theorems →</a>
+        <a href="pages/cosmos-theorems.html" class="btn btn-primary">Explore 5,052 Theorems &rarr;</a>
         <a href="pages/deep-dives/berggren-tree.html" class="btn btn-secondary">Interactive Deep Dives</a>
       </div>
     </div>
@@ -53,14 +48,14 @@
       <div class="section-header animate-in">
         <div class="overline">The Grand Unification</div>
         <h2>Five Pillars of Algebraic Light</h2>
-        <p>a² + b² = c² is simultaneously five different things — and a single formal proof in Lean shows they are all the same structure.</p>
+        <p>a&sup2; + b&sup2; = c&sup2; is simultaneously five different things &mdash; and a single formal proof in Lean shows they are all the same structure.</p>
       </div>
       <div class="card-grid">
         <div class="card animate-in">
           <div class="card-icon amber">💡</div>
           <h3>Pillar I: The Light Cone</h3>
-          <p>Every Pythagorean triple is a point on the integer light cone. The Berggren matrices ARE discrete Lorentz transformations preserving a² + b² − c² = 0.</p>
-          <div class="card-meta"><a href="pages/deep-dives/light-cone.html" style="font-size:0.85rem">Explore →</a></div>
+          <p>Every Pythagorean triple is a point on the integer light cone. The Berggren matrices ARE discrete Lorentz transformations preserving a&sup2; + b&sup2; &minus; c&sup2; = 0.</p>
+          <div class="card-meta"><a href="pages/deep-dives/light-cone.html" style="font-size:0.85rem">Explore &rarr;</a></div>
         </div>
         <div class="card animate-in">
           <div class="card-icon violet">🔮</div>
@@ -256,40 +251,13 @@
     </div>
   </section>
 
-  <!-- The Fundamental Barrier -->
-  <section class="section" id="barrier">
-    <div class="section-inner">
-      <div class="section-header animate-in">
-        <div class="overline">The Honest Conclusion</div>
-        <h2>The Fundamental Barrier</h2>
-        <p>After 350+ fields explored, every classical approach to factoring N = pq reduces to one of five families.</p>
-      </div>
-      <div style="overflow-x:auto" class="animate-in">
-        <table class="theorem-table">
-          <thead>
-            <tr><th>#</th><th>Family</th><th>Paradigm</th><th>Complexity</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>1</td><td class="theorem-name">Trial Division</td><td>Test individual candidates</td><td>O(√N)</td></tr>
-            <tr><td>2</td><td class="theorem-name">Birthday / Rho</td><td>Detect collisions in small space</td><td>O(N^{1/4})</td></tr>
-            <tr><td>3</td><td class="theorem-name">Group Order</td><td>Exploit group structure (p−1, ECM)</td><td>L[1/2]</td></tr>
-            <tr><td>4</td><td class="theorem-name">Congruence of Squares</td><td>Collect smooth relations (QS, NFS)</td><td>L[1/2] to L[1/3]</td></tr>
-            <tr><td>5</td><td class="theorem-name">Quantum Period-Finding</td><td>Shor's algorithm</td><td>O(poly(log N))</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="card animate-in" style="margin-top:var(--space-xl);border-left:3px solid var(--accent-rose)">
-        <p style="color:var(--accent-rose);font-weight:600">No paradigm shift escapes without quantum resources.</p>
-        <p>The mathematical structure of factoring is inescapable. No change of perspective alters the computation. But the journey revealed 5,052+ theorems that connect number theory to physics to consciousness — and that's worth more than any single algorithm.</p>
-      </div>
-    </div>
-  </section>
+
 
   <!-- Footer -->
   <footer class="footer">
     <div class="footer-inner">
       <div>
-        <div class="footer-brand">△ Pythagorean Cosmos</div>
+        <div class="footer-brand">&#9733; Pythagorean Cosmos</div>
         <p class="footer-desc">5,052+ machine-verified theorems. Zero sorry. A unified theory of mathematical structure, built by one independent researcher.</p>
       </div>
       <div class="footer-col">
@@ -321,11 +289,70 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>Verified with Lean 4 + Mathlib · Standard axioms only · Zero sorry</p>
+      <p>Verified with Lean 4 + Mathlib &middot; Standard axioms only &middot; Zero sorry</p>
       <p>© 2026 Paul Klemstine</p>
     </div>
   </footer>
 
   <script src="js/app.js"></script>
+  <script>
+  (function(){
+    const c=document.getElementById('trippyCanvas'),ctx=c.getContext('2d');
+    let t=0;
+    const triples=[];
+    for(let m=2;m<20;m++)for(let n=1;n<m;n++){
+      if((m-n)%2===0)continue;
+      let a=m*m-n*n,b=2*m*n,cc=m*m+n*n;
+      triples.push([a,b,cc]);
+    }
+    function draw(){
+      t+=0.008;
+      ctx.fillStyle='rgba(10,14,26,0.15)';
+      ctx.fillRect(0,0,c.width,c.height);
+      const cx=c.width/2,cy=c.height/2;
+      triples.forEach((tr,i)=>{
+        const [a,b,hyp]=tr;
+        const angle=t*(0.3+i*0.07)+i*0.4;
+        const r=30+hyp*0.6+Math.sin(t*2+i)*15;
+        const x=cx+Math.cos(angle)*r;
+        const y=cy+Math.sin(angle)*r*0.6;
+        const s=3+Math.sin(t*3+i*0.5)*2;
+        const rot=t+i*0.3;
+        ctx.save();ctx.translate(x,y);ctx.rotate(rot);
+        ctx.beginPath();
+        const sc=a/15;
+        ctx.moveTo(0,-sc);
+        ctx.lineTo(sc*0.866,sc*0.5);
+        ctx.lineTo(-sc*0.866,sc*0.5);
+        ctx.closePath();
+        const hue=(i*25+t*50)%360;
+        ctx.strokeStyle='hsla('+hue+',80%,65%,'+(0.4+Math.sin(t+i)*0.3)+')';
+        ctx.lineWidth=1.5;ctx.stroke();
+        ctx.beginPath();ctx.arc(0,-sc,s,0,Math.PI*2);
+        ctx.fillStyle='hsla('+hue+',90%,70%,'+(0.6+Math.sin(t*2+i)*0.3)+')';
+        ctx.fill();ctx.restore();
+        if(i>0&&i%3===0){
+          const prev=triples[i-1];
+          const pa=t*(0.3+(i-1)*0.07)+(i-1)*0.4;
+          const pr=30+prev[2]*0.6+Math.sin(t*2+(i-1))*15;
+          const px=cx+Math.cos(pa)*pr;
+          const py=cy+Math.sin(pa)*pr*0.6;
+          ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(px,py);
+          ctx.strokeStyle='hsla('+hue+',60%,50%,0.1)';
+          ctx.lineWidth=0.5;ctx.stroke();
+        }
+      });
+      const grd=ctx.createRadialGradient(cx,cy,0,cx,cy,60);
+      grd.addColorStop(0,'hsla('+((t*30)%360)+',80%,70%,0.15)');
+      grd.addColorStop(1,'transparent');
+      ctx.fillStyle=grd;ctx.fillRect(cx-60,cy-60,120,120);
+      ctx.fillStyle='hsla('+((t*20)%360)+',70%,80%,0.8)';
+      ctx.font='bold 14px JetBrains Mono, monospace';ctx.textAlign='center';
+      ctx.fillText('a\u00B2 + b\u00B2 = c\u00B2',cx,cy+5);
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
+  </script>
 </body>
 </html>

@@ -190,43 +190,137 @@ const THEOREM_DOMAINS = [
   { id: 'advanced', name: 'Advanced Topics', count: 348, icon: '🚀' },
 ];
 
-// ── Simple Markdown Renderer ──
+// ── Markdown Renderer (full-featured) ──
 function renderMarkdown(text) {
   if (!text) return '';
-  let html = text
+
+  // Normalize line endings
+  text = text.replace(/\r\n/g, '\n');
+
+  // Extract fenced code blocks to protect from further processing
+  const codeBlocks = [];
+  text = text.replace(/```(\w*)\n([\s\S]*?)```/g, (_, lang, code) => {
+    codeBlocks.push({ lang, code: code.replace(/</g, '&lt;').replace(/>/g, '&gt;') });
+    return `%%CODEBLOCK_${codeBlocks.length - 1}%%`;
+  });
+
+  // Split into lines for block-level processing
+  const lines = text.split('\n');
+  const blocks = [];
+  let i = 0;
+
+  while (i < lines.length) {
+    const line = lines[i];
+
+    // Blank line
+    if (line.trim() === '') { i++; continue; }
+
     // Headers
-    .replace(/^#### (.+)$/gm, '<h4>$1</h4>')
-    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
-    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
-    .replace(/^# (.+)$/gm, '<h1>$1</h1>')
-    // Bold & italic
+    const hMatch = line.match(/^(#{1,6})\s+(.+)$/);
+    if (hMatch) {
+      const lvl = hMatch[1].length;
+      blocks.push(`<h${lvl}>${inlineFormat(hMatch[2])}</h${lvl}>`);
+      i++; continue;
+    }
+
+    // Horizontal rule
+    if (/^(-{3,}|\*{3,}|_{3,})$/.test(line.trim())) {
+      blocks.push('<hr>');
+      i++; continue;
+    }
+
+    // Blockquote
+    if (line.startsWith('>')) {
+      let bqLines = [];
+      while (i < lines.length && (lines[i].startsWith('>') || (lines[i].trim() !== '' && bqLines.length > 0 && !lines[i].match(/^#{1,6}\s/)))) {
+        bqLines.push(lines[i].replace(/^>\s?/, ''));
+        i++;
+      }
+      blocks.push(`<blockquote>${renderMarkdown(bqLines.join('\n'))}</blockquote>`);
+      continue;
+    }
+
+    // Unordered list
+    if (/^\s*[-*+]\s/.test(line)) {
+      let listItems = [];
+      while (i < lines.length && /^\s*[-*+]\s/.test(lines[i])) {
+        listItems.push(lines[i].replace(/^\s*[-*+]\s+/, ''));
+        i++;
+      }
+      blocks.push('<ul>' + listItems.map(li => `<li>${inlineFormat(li)}</li>`).join('') + '</ul>');
+      continue;
+    }
+
+    // Ordered list
+    if (/^\s*\d+[.)]\s/.test(line)) {
+      let listItems = [];
+      while (i < lines.length && /^\s*\d+[.)]\s/.test(lines[i])) {
+        listItems.push(lines[i].replace(/^\s*\d+[.)]\s+/, ''));
+        i++;
+      }
+      blocks.push('<ol>' + listItems.map(li => `<li>${inlineFormat(li)}</li>`).join('') + '</ol>');
+      continue;
+    }
+
+    // Table
+    if (line.includes('|') && line.trim().startsWith('|')) {
+      let tableLines = [];
+      while (i < lines.length && lines[i].includes('|') && lines[i].trim().startsWith('|')) {
+        tableLines.push(lines[i]);
+        i++;
+      }
+      if (tableLines.length >= 2) {
+        let thead = '', tbody = '';
+        const headerCells = tableLines[0].split('|').filter(c => c.trim() !== '').map(c => c.trim());
+        thead = '<thead><tr>' + headerCells.map(c => `<th>${inlineFormat(c)}</th>`).join('') + '</tr></thead>';
+        const bodyStart = (tableLines[1] && /^[\s|:-]+$/.test(tableLines[1])) ? 2 : 1;
+        const bodyRows = tableLines.slice(bodyStart).map(row => {
+          const cells = row.split('|').filter(c => c.trim() !== '').map(c => c.trim());
+          return '<tr>' + cells.map(c => `<td>${inlineFormat(c)}</td>`).join('') + '</tr>';
+        }).join('');
+        tbody = `<tbody>${bodyRows}</tbody>`;
+        blocks.push(`<div class="table-wrapper"><table class="reader-table">${thead}${tbody}</table></div>`);
+        continue;
+      }
+    }
+
+    // Code block placeholder
+    if (line.startsWith('%%CODEBLOCK_')) {
+      blocks.push(line);
+      i++; continue;
+    }
+
+    // Paragraph: collect consecutive non-empty, non-special lines
+    let paraLines = [];
+    while (i < lines.length && lines[i].trim() !== '' && !lines[i].match(/^#{1,6}\s/) && !lines[i].match(/^(-{3,}|\*{3,}|_{3,})$/) && !lines[i].startsWith('>') && !/^\s*[-*+]\s/.test(lines[i]) && !/^\s*\d+[.)]\s/.test(lines[i]) && !lines[i].startsWith('%%CODEBLOCK_') && !(lines[i].includes('|') && lines[i].trim().startsWith('|'))) {
+      paraLines.push(lines[i]);
+      i++;
+    }
+    if (paraLines.length > 0) {
+      blocks.push(`<p>${inlineFormat(paraLines.join('\n'))}</p>`);
+    }
+  }
+
+  let html = blocks.join('\n');
+
+  // Restore code blocks
+  html = html.replace(/%%CODEBLOCK_(\d+)%%/g, (_, idx) => {
+    const cb = codeBlocks[parseInt(idx)];
+    return `<div class="reader-code"><div class="reader-code-header">${cb.lang || 'text'}</div><pre><code>${cb.code}</code></pre></div>`;
+  });
+
+  return html;
+}
+
+function inlineFormat(text) {
+  return text
     .replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.+?)\*/g, '<em>$1</em>')
-    // Code blocks
-    .replace(/```(\w*)\n([\s\S]*?)```/g, '<div class="code-block"><span class="lang-label">$1</span><pre>$2</pre></div>')
-    // Inline code
-    .replace(/`([^`]+)`/g, '<code style="background:rgba(129,140,248,0.1);padding:2px 6px;border-radius:4px;font-family:var(--font-mono);font-size:0.85em;color:var(--accent-indigo);">$1</code>')
-    // Tables
-    .replace(/^\|(.+)\|$/gm, (match, content) => {
-      const cells = content.split('|').map(c => c.trim());
-      if (cells.every(c => /^[-:]+$/.test(c))) return '<!--separator-->';
-      return '<tr>' + cells.map(c => `<td>${c}</td>`).join('') + '</tr>';
-    })
-    // Links
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
-    // Horizontal rules
-    .replace(/^---$/gm, '<hr style="border:none;border-top:1px solid var(--border-subtle);margin:2rem 0;">')
-    // Line breaks
-    .replace(/\n\n/g, '</p><p>')
+    .replace(/__(.+?)__/g, '<strong>$1</strong>')
+    .replace(/_(.+?)_/g, '<em>$1</em>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
+    .replace(/~~(.+?)~~/g, '<del>$1</del>')
     .replace(/\n/g, '<br>');
-
-  // Wrap in paragraphs
-  html = '<p>' + html + '</p>';
-
-  // Handle table wrapping
-  html = html.replace(/((?:<tr>.*?<\/tr>\s*)+)/g, '<table class="theorem-table">$1</table>');
-  html = html.replace(/<!--separator-->/g, '');
-
-  return html;
 }
