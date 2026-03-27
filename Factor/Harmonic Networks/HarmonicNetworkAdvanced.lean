@@ -14,7 +14,7 @@ This file extends the core formalization in `HarmonicNetwork.lean` with deeper r
 -/
 
 import Mathlib
-import HarmonicNetwork
+import HarmonicNetworks.HarmonicNetwork
 
 -- =====================================================================
 -- SECTION 1: ReLU PRESERVES RATIONALITY
