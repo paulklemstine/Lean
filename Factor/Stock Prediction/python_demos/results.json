@@ -1,0 +1,34 @@
+{
+  "config": {
+    "n_assets": 8,
+    "n_days": 500,
+    "tickers": [
+      "AAPL",
+      "GOOGL",
+      "MSFT",
+      "AMZN",
+      "META",
+      "NVDA",
+      "TSLA",
+      "JPM"
+    ]
+  },
+  "performance": {
+    "engine_wealth": 1.0230610395037136,
+    "equal_weight_wealth": 1.0410456162834163,
+    "best_stock_wealth": 1.362857758030206,
+    "best_crp_wealth": 1.3372011278097096,
+    "log_regret": 0.2826457877218019,
+    "theoretical_bound": 22.800447044300665
+  },
+  "final_portfolio": {
+    "AAPL": 0.09850145362942386,
+    "GOOGL": 0.10582668664888423,
+    "MSFT": 0.09850488673315255,
+    "AMZN": 0.3145039170038217,
+    "META": 0.09789278125510635,
+    "NVDA": 0.10380437416270437,
+    "TSLA": 0.07992842570701429,
+    "JPM": 0.10103747485989273
+  }
+}
