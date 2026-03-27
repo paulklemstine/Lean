@@ -1,0 +1,17 @@
+{
+  "established_facts": [],
+  "validated_hypotheses": [
+    "H2: \u0394\u03b8_max ~ c_max^-0.128 (slow gap closing)",
+    "H5: High-Q clustering (p = 0.0000)",
+    "H6: Coverage varies with r, highest at wall (0.0392)"
+  ],
+  "falsified_hypotheses": [
+    "H1: \u03b1 = 2.000 outside expected range (1,2)",
+    "H3: Weak correlation = 0.1472",
+    "H4: Significant asymmetry (spread = 155.37%)",
+    "H7: S/ln(N) not constant (spread = 80.85%)",
+    "H8: Residue = 0.0471, expected 0.1592"
+  ],
+  "open_questions": [],
+  "iteration": 3
+}
