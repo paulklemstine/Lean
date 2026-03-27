@@ -1,5 +1,5 @@
 import Mathlib
-import BerggrenTree
+import Core.BerggrenTree
 
 /-!
 # Parent Descent in the Berggren Pythagorean Triple Tree

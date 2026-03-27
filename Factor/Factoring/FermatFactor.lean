@@ -1,5 +1,5 @@
 import Mathlib
-import BerggrenTree
+import Core.BerggrenTree
 
 /-!
 # Fermat's Factorization Method via the Berggren Pythagorean Triple Tree

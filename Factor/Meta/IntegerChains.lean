@@ -8,9 +8,13 @@ The number of possible n values is bounded by the number of divisors of det = (1
 Let's systematically enumerate for small determinant values.
 -/
 import Mathlib
-import RequestProject.InverseStereoMobius
+import Stereographic.InverseStereoMobius
 
 open scoped Classical
+
+/-- Two-pole Möbius transformation: F_{a,b}(t) = ((ab+1)t + (b-a)) / ((a-b)t + (ab+1)) -/
+def twoPole (a b t : ℚ) : ℚ :=
+  ((a * b + 1) * t + (b - a)) / ((a - b) * t + (a * b + 1))
 
 /-! ## det = 2: Pole pairs with (1+a²)(1+b²) = 2
 

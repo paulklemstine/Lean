@@ -1,5 +1,5 @@
 import Mathlib
-import BerggrenTree
+import Core.BerggrenTree
 
 /-!
 # Inside-Out Factoring via Inverse Berggren Descent

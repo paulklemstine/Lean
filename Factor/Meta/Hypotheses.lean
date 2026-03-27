@@ -10,9 +10,13 @@ Pythagorean triple via the stereographic parametrization.
 The set of two-pole maps {F_{a,b} : a,b ∈ ℤ} forms a group under composition.
 -/
 import Mathlib
-import RequestProject.InverseStereoMobius
+import Stereographic.InverseStereoMobius
 
 open scoped Classical
+
+/-- Two-pole Möbius transformation: F_{a,b}(t) = ((ab+1)t + (b-a)) / ((a-b)t + (ab+1)) -/
+def twoPole (a b t : ℚ) : ℚ :=
+  ((a * b + 1) * t + (b - a)) / ((a - b) * t + (a * b + 1))
 
 /-! ## H2: Connection to Pythagorean Triples
 

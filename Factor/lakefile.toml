@@ -1,0 +1,135 @@
+name = "RequestProject"
+defaultTargets = ["Algebra", "Analysis", "Applications", "BlackHole", "Combinatorics", "Consciousness", "Core", "DivisionAlgebras", "Dynamics", "Factoring", "Geometry", "HarmonicNetworks", "HyperAgent", "Meta", "MetaOracles", "NumberTheory", "OpticalComputer", "OracleProjections", "OracleStereoSolver", "OracleTower", "PhotonEpistemicBridge2", "PhotonNetworks", "PhotonUniverseEncoding", "Probability", "Quantum", "Research", "SearchInformationDuality", "SearchInformationIsomorphism", "Stereographic", "Topology", "Tropical", "exotic"]
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4.git"
+rev = "v4.28.0"
+
+[[lean_lib]]
+name = "Algebra"
+globs = ["Algebra.+"]
+
+[[lean_lib]]
+name = "Analysis"
+globs = ["Analysis.+"]
+
+[[lean_lib]]
+name = "Applications"
+globs = ["Applications.+"]
+
+[[lean_lib]]
+name = "BlackHole"
+globs = ["BlackHole.+"]
+
+[[lean_lib]]
+name = "Combinatorics"
+globs = ["Combinatorics.+"]
+
+[[lean_lib]]
+name = "Consciousness"
+globs = ["Consciousness.+"]
+
+[[lean_lib]]
+name = "Core"
+globs = ["Core.+"]
+
+[[lean_lib]]
+name = "DivisionAlgebras"
+globs = ["DivisionAlgebras.+"]
+
+[[lean_lib]]
+name = "Dynamics"
+globs = ["Dynamics.+"]
+
+[[lean_lib]]
+name = "Factoring"
+globs = ["Factoring.+"]
+
+[[lean_lib]]
+name = "Geometry"
+globs = ["Geometry.+"]
+
+[[lean_lib]]
+name = "HarmonicNetworks"
+globs = ["HarmonicNetworks.+"]
+
+[[lean_lib]]
+name = "HyperAgent"
+globs = ["HyperAgent.+"]
+
+[[lean_lib]]
+name = "Meta"
+globs = ["Meta.+"]
+
+[[lean_lib]]
+name = "MetaOracles"
+globs = ["MetaOracles.+"]
+
+[[lean_lib]]
+name = "NumberTheory"
+globs = ["NumberTheory.+"]
+
+[[lean_lib]]
+name = "OpticalComputer"
+globs = ["OpticalComputer.+"]
+
+[[lean_lib]]
+name = "OracleProjections"
+globs = ["OracleProjections.+"]
+
+[[lean_lib]]
+name = "OracleStereoSolver"
+globs = ["OracleStereoSolver.+"]
+
+[[lean_lib]]
+name = "OracleTower"
+globs = ["OracleTower.+"]
+
+[[lean_lib]]
+name = "PhotonEpistemicBridge2"
+globs = ["PhotonEpistemicBridge2.+"]
+
+[[lean_lib]]
+name = "PhotonNetworks"
+globs = ["PhotonNetworks.+"]
+
+[[lean_lib]]
+name = "PhotonUniverseEncoding"
+globs = ["PhotonUniverseEncoding.+"]
+
+[[lean_lib]]
+name = "Probability"
+globs = ["Probability.+"]
+
+[[lean_lib]]
+name = "Quantum"
+globs = ["Quantum.+"]
+
+[[lean_lib]]
+name = "Research"
+globs = ["Research.+"]
+
+[[lean_lib]]
+name = "SearchInformationDuality"
+globs = ["SearchInformationDuality.+"]
+
+[[lean_lib]]
+name = "SearchInformationIsomorphism"
+globs = ["SearchInformationIsomorphism.+"]
+
+[[lean_lib]]
+name = "Stereographic"
+globs = ["Stereographic.+"]
+
+[[lean_lib]]
+name = "Topology"
+globs = ["Topology.+"]
+
+[[lean_lib]]
+name = "Tropical"
+globs = ["Tropical.+"]
+
+[[lean_lib]]
+name = "exotic"
+globs = ["exotic.+"]

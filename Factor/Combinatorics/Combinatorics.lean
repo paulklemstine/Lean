@@ -11,7 +11,7 @@ Formal proofs of combinatorial results connected to the compression framework:
 -/
 
 import Mathlib
-import SauerShelah
+import Combinatorics.SauerShelah
 
 open Finset Function
 

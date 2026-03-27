@@ -4,7 +4,7 @@
 Testing the hypotheses about four-channel integer signatures.
 -/
 
-import RequestProject.Defs
+import Core.Defs
 
 /-! ## Experiment 1: Compute signatures for small integers -/
 

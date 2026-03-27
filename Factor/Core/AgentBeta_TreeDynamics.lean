@@ -1,5 +1,5 @@
 import Mathlib
-import BerggrenTree
+import Core.BerggrenTree
 
 /-!
 # Agent Beta — Tree Dynamics of the Berggren Tree
