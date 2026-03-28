@@ -1,0 +1,84 @@
+{
+  "hypothesis": "H15",
+  "status": "PARTIALLY_SUPPORTED",
+  "benchmark": [
+    {
+      "N": 77,
+      "bits": 7,
+      "trial_ms": 0.0054540000746783335,
+      "bootstrap_ms": 0.08921599965105997,
+      "hybrid_ms": 0.07166999967012089,
+      "factors": [
+        7,
+        11
+      ]
+    },
+    {
+      "N": 221,
+      "bits": 8,
+      "trial_ms": 0.0025680001272121444,
+      "bootstrap_ms": 0.07856599995648139,
+      "hybrid_ms": 0.29813500032105367,
+      "factors": [
+        13,
+        17
+      ]
+    },
+    {
+      "N": 10403,
+      "bits": 14,
+      "trial_ms": 0.004101000286027556,
+      "bootstrap_ms": 0.10764199987534084,
+      "hybrid_ms": 0.44605299990507774,
+      "factors": [
+        101,
+        103
+      ]
+    },
+    {
+      "N": 1022117,
+      "bits": 20,
+      "trial_ms": 0.034978999792656396,
+      "bootstrap_ms": 3.2322940000995004,
+      "hybrid_ms": 12.055311000040092,
+      "factors": [
+        1009,
+        1013
+      ]
+    },
+    {
+      "N": 100160063,
+      "bits": 27,
+      "trial_ms": 0.3482150000309048,
+      "bootstrap_ms": 13.828908000050433,
+      "hybrid_ms": 11.79280899987134,
+      "factors": [
+        10007,
+        10009
+      ]
+    },
+    {
+      "N": 10002200057,
+      "bits": 34,
+      "trial_ms": 3.757926000162115,
+      "bootstrap_ms": 23.219589999825985,
+      "hybrid_ms": 28.996130999985326,
+      "factors": [
+        100003,
+        100019
+      ]
+    },
+    {
+      "N": 999962000357,
+      "bits": 40,
+      "trial_ms": 38.70968299997912,
+      "bootstrap_ms": 24.47783999969033,
+      "hybrid_ms": 31.56759100011186,
+      "factors": [
+        999979,
+        999983
+      ]
+    }
+  ],
+  "key_insight": "Bootstrap idempotent convergence = CRT decomposition search"
+}

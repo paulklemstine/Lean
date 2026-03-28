@@ -1,0 +1,47 @@
+{
+  "experiment_results": [
+    {
+      "name": "H13: Oracle Julia Set Dimension",
+      "script": "h13_julia_set.py",
+      "status": "SUCCESS",
+      "time_s": 1.853139877319336
+    },
+    {
+      "name": "H14: Phase Transition",
+      "script": "h14_phase_transition.py",
+      "status": "SUCCESS",
+      "time_s": 1.342836618423462
+    },
+    {
+      "name": "H15: Bootstrap Factoring",
+      "script": "h15_bootstrap_factoring.py",
+      "status": "SUCCESS",
+      "time_s": 0.4214346408843994
+    },
+    {
+      "name": "H16: N-Potent Category",
+      "script": "h16_npotent_category.py",
+      "status": "SUCCESS",
+      "time_s": 0.1619725227355957
+    },
+    {
+      "name": "H17: N-Potent Filtration",
+      "script": "h17_npotent_filtration.py",
+      "status": "SUCCESS",
+      "time_s": 0.780411958694458
+    }
+  ],
+  "hypothesis_verdicts": {
+    "H13": "SUPPORTED",
+    "H14": "PARTIALLY_SUPPORTED",
+    "H15": "PARTIALLY_SUPPORTED",
+    "H16": "SUPPORTED_WITH_REFINEMENT",
+    "H17": "SUPPORTED"
+  },
+  "formally_verified": [
+    "oracleBootstrap_fixedPoints",
+    "bootstrap_preserves_idempotent",
+    "npotent_divisibility",
+    "npotent_conjugation_invariant"
+  ]
+}
