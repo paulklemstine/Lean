@@ -259,7 +259,7 @@ ax.grid(True, alpha=0.3)
 fig.suptitle('N-Dimensional Pythagorean Geometry via Stereographic Projection',
             fontsize=18, fontweight='bold', y=1.02)
 
-plt.savefig('/workspace/request-project/Stereographic/Demos/demo6_nd_pythagorean.png',
+plt.savefig('/workspace/request-project/Stereographic/NDimensional/Demos/demo6_nd_pythagorean.png',
            dpi=150, bbox_inches='tight')
 plt.close()
 print("✓ Demo 6 saved: demo6_nd_pythagorean.png")

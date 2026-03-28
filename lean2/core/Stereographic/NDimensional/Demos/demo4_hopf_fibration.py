@@ -111,7 +111,7 @@ fig.suptitle('The Hopf Fibration via Stereographic Projection\n'
             'projected to ℝ³',
             fontsize=16, fontweight='bold', y=1.02)
 
-plt.savefig('/workspace/request-project/Stereographic/Demos/demo4_hopf_fibration.png',
+plt.savefig('/workspace/request-project/Stereographic/NDimensional/Demos/demo4_hopf_fibration.png',
            dpi=150, bbox_inches='tight')
 plt.close()
 print("✓ Demo 4 saved: demo4_hopf_fibration.png")
@@ -139,7 +139,7 @@ ax.set_title('Hopf Torus — 60 Linked Circles\nEach fiber links every other fib
             fontsize=14, fontweight='bold')
 ax.view_init(elev=20, azim=30)
 
-plt.savefig('/workspace/request-project/Stereographic/Demos/demo4_hopf_torus_closeup.png',
+plt.savefig('/workspace/request-project/Stereographic/NDimensional/Demos/demo4_hopf_torus_closeup.png',
            dpi=150, bbox_inches='tight')
 plt.close()
 print("✓ Demo 4 bonus saved: demo4_hopf_torus_closeup.png")

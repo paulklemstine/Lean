@@ -241,7 +241,7 @@ ax6.set_title("The Rigidity of Higher Dimensions", fontsize=13, fontweight='bold
 fig.suptitle('Möbius Transformations: The Symmetry Group of Stereographic Projection',
             fontsize=18, fontweight='bold', y=0.98)
 
-plt.savefig('/workspace/request-project/Stereographic/Demos/demo7_conformal_flow.png',
+plt.savefig('/workspace/request-project/Stereographic/NDimensional/Demos/demo7_conformal_flow.png',
            dpi=150, bbox_inches='tight')
 plt.close()
 print("✓ Demo 7 saved: demo7_conformal_flow.png")

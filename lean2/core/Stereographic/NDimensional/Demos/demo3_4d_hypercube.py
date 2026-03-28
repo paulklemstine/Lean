@@ -154,7 +154,7 @@ fig.suptitle('4D Polytopes via Stereographic Projection to ℝ³\n'
             'Hidden symmetries revealed by projecting from the fourth dimension',
             fontsize=18, fontweight='bold', y=1.02)
 
-plt.savefig('/workspace/request-project/Stereographic/Demos/demo3_4d_hypercube.png',
+plt.savefig('/workspace/request-project/Stereographic/NDimensional/Demos/demo3_4d_hypercube.png',
            dpi=150, bbox_inches='tight')
 plt.close()
 print("✓ Demo 3 saved: demo3_4d_hypercube.png")

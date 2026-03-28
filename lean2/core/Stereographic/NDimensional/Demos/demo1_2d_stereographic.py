@@ -158,7 +158,7 @@ ax4.set_title('Conformal Distortion Map\nHow stereographic projection stretches 
 fig.suptitle('N-Dimensional Stereographic Projection: Classical Foundations',
             fontsize=18, fontweight='bold', y=0.98)
 
-plt.savefig('/workspace/request-project/Stereographic/Demos/demo1_2d_stereographic.png',
+plt.savefig('/workspace/request-project/Stereographic/NDimensional/Demos/demo1_2d_stereographic.png',
            dpi=150, bbox_inches='tight')
 plt.close()
 print("✓ Demo 1 saved: demo1_2d_stereographic.png")

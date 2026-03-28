@@ -155,7 +155,7 @@ ax4.grid(True, alpha=0.2)
 fig.suptitle('Stereographic Projection: Circle-Preserving & Conformal',
             fontsize=18, fontweight='bold', y=0.98)
 
-plt.savefig('/workspace/request-project/Stereographic/Demos/demo2_3d_sphere_projection.png',
+plt.savefig('/workspace/request-project/Stereographic/NDimensional/Demos/demo2_3d_sphere_projection.png',
            dpi=150, bbox_inches='tight')
 plt.close()
 print("✓ Demo 2 saved: demo2_3d_sphere_projection.png")

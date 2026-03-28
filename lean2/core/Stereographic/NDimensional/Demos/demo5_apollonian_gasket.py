@@ -194,7 +194,7 @@ fig.suptitle('Apollonian Gaskets & Stereographic Projection\n'
             'Fractal circle packings bridge discrete groups and conformal geometry',
             fontsize=16, fontweight='bold', y=1.02)
 
-plt.savefig('/workspace/request-project/Stereographic/Demos/demo5_apollonian_gasket.png',
+plt.savefig('/workspace/request-project/Stereographic/NDimensional/Demos/demo5_apollonian_gasket.png',
            dpi=150, bbox_inches='tight')
 plt.close()
 print("✓ Demo 5 saved: demo5_apollonian_gasket.png")
