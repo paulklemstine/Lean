@@ -1,7 +1,5 @@
 \documentclass[12pt,a4paper,openany]{book}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\usepackage{fontspec}
 \usepackage[margin=1in]{geometry}
 \usepackage{hyperref}
 \usepackage{fancyhdr}
@@ -50,13 +48,13 @@
 
 \bigskip\hrule\bigskip
 
-\begin{quote}\textit{*"The equation a² + b² = c² is not one theorem. It is a portal."*}\end{quote}
+\begin{quote}\textit{\textit{"The equation a² + b² = c² is not one theorem. It is a portal."}}\end{quote}
 
 \bigskip\hrule\bigskip
 
 \section{How to Read This Catalog}
 
-Every theorem listed here compiles in Lean 4 with Mathlib. The checkmark (✓) is implicit — if it appears in this catalog, the computer verified it. The single exception is the Sauer–Shelah lemma, which is explicitly marked. Lean names in backticks (e.g., `stereo_on_circle`) are the exact identifiers in the source code. File names refer to `.lean` files in the project root.
+Every theorem listed here compiles in Lean 4 with Mathlib. The checkmark (✓) is implicit — if it appears in this catalog, the computer verified it. The single exception is the Sauer–Shelah lemma, which is explicitly marked. Lean names in backticks (e.g., \texttt{stereo\_on\_circle}) are the exact identifiers in the source code. File names refer to \texttt{.lean} files in the project root.
 
 \bigskip\hrule\bigskip
 
@@ -95,7 +93,7 @@ $$\sigma(t) = \left(\frac{1-t^2}{1+t^2},\;\frac{2t}{1+t^2}\right)$$
 | **Quantum Computing** | Unitarity $|\alpha|^2+|\beta|^2=1$; exact qubit gate |
 \end{verbatim}
 
-These are not analogies. They are the **same mathematical object** in different coordinate systems. Every claim is machine-checked.
+These are not analogies. They are the \textbf{same mathematical object} in different coordinate systems. Every claim is machine-checked.
 
 \bigskip\hrule\bigskip
 
@@ -148,7 +146,7 @@ These are not analogies. They are the **same mathematical object** in different 
 
 \section{Pillar I: The Universal Decoder}
 
-*The single formula that connects everything.*
+\textit{The single formula that connects everything.}
 
 \subsection{Foundation Theorems}
 
@@ -164,7 +162,7 @@ These are not analogies. They are the **same mathematical object** in different 
 | 7 | `ratRotation_det_one` | Rational rotation matrix has $\det = 1$ | `Basic` |
 \end{verbatim}
 
-\subsection{Decoder Channels (59 theorems in `UniversalDecoder.lean`)}
+\subsection{Decoder Channels (59 theorems in \texttt{UniversalDecoder.lean})}
 
 \begin{verbatim}
 | # | Lean Name | Statement | File |
@@ -176,7 +174,7 @@ These are not analogies. They are the **same mathematical object** in different 
 | 12 | `ford_circle_tangency` | Farey neighbors ↔ Ford circle tangency | `UniversalDecoder` |
 \end{verbatim}
 
-*Plus 47 additional decoder channel theorems.*
+\textit{Plus 47 additional decoder channel theorems.}
 
 \subsection{N-Dimensional Generalization}
 
@@ -194,7 +192,7 @@ These are not analogies. They are the **same mathematical object** in different 
 
 \section{Pillar II: The Berggren Tree}
 
-*The infinite ternary tree generating every primitive Pythagorean triple exactly once.*
+\textit{The infinite ternary tree generating every primitive Pythagorean triple exactly once.}
 
 \subsection{Tree Structure}
 
@@ -235,9 +233,9 @@ These are not analogies. They are the **same mathematical object** in different 
 
 \section{Pillar III: The Light Cone}
 
-*Pythagorean triples ARE photon momenta.*
+\textit{Pythagorean triples ARE photon momenta.}
 
-\subsection{Minkowski Fundamentals (42 theorems in `LightConeTheory.lean`)}
+\subsection{Minkowski Fundamentals (42 theorems in \texttt{LightConeTheory.lean})}
 
 \begin{verbatim}
 | # | Lean Name | Statement | File |
@@ -252,7 +250,7 @@ These are not analogies. They are the **same mathematical object** in different 
 | 39 | `doppler_redshift` | $E' = e^{-\varphi} E$ (backward) | `LightConeTheory` |
 \end{verbatim}
 
-\subsection{Photonic Frontier (53 theorems in `PhotonicFrontier.lean`)}
+\subsection{Photonic Frontier (53 theorems in \texttt{PhotonicFrontier.lean})}
 
 \begin{verbatim}
 | # | Lean Name | Statement | File |
@@ -270,7 +268,7 @@ These are not analogies. They are the **same mathematical object** in different 
 
 \section{Pillar IV: The Crystal}
 
-*Weights that crystallize onto the integer lattice.*
+\textit{Weights that crystallize onto the integer lattice.}
 
 \subsection{Crystallization Dynamics}
 
@@ -284,7 +282,7 @@ These are not analogies. They are the **same mathematical object** in different 
 | 51 | `tri_resonant_norm` | Tri-resonant combination preserves unit norm | `CrystallizerFormalization` |
 \end{verbatim}
 
-\subsection{Stability & Safety}
+\subsection{Stability \& Safety}
 
 \begin{verbatim}
 | # | Lean Name | Statement | File |
@@ -305,7 +303,7 @@ These are not analogies. They are the **same mathematical object** in different 
 
 \section{Pillar V: The Hurwitz Tower}
 
-*Division algebras in dimensions 1 → 2 → 4 → 8, and only those.*
+\textit{Division algebras in dimensions 1 → 2 → 4 → 8, and only those.}
 
 \subsection{Composition Identities}
 
@@ -336,7 +334,7 @@ These are not analogies. They are the **same mathematical object** in different 
 
 \section{Pillar VI: The Quantum Bridge}
 
-*From Pythagorean rationals to universal quantum gates.*
+\textit{From Pythagorean rationals to universal quantum gates.}
 
 \subsection{Gate Algebra}
 
@@ -438,31 +436,31 @@ Every arrow is a machine-verified theorem.
 \bigskip\hrule\bigskip
 
 
-*The remaining ~2,500 theorems span 40+ domains of pure and applied mathematics.*
+\textit{The remaining ~2,500 theorems span 40+ domains of pure and applied mathematics.}
 
 \subsection{Number Theory}
-`NumberTheory` · `NumberTheoryAdvanced` · `NumberTheoryDeep` · `FLT4` · `FermatFactor` · `CongruentNumber` · `DiophantineApproximation` · `AlgebraicNumberTheory`
+\texttt{NumberTheory} · \texttt{NumberTheoryAdvanced} · \texttt{NumberTheoryDeep} · \texttt{FLT4} · \texttt{FermatFactor} · \texttt{CongruentNumber} · \texttt{DiophantineApproximation} · \texttt{AlgebraicNumberTheory}
 
 \subsection{Algebra}
-`Algebra` · `AlgebraicStructures` · `GaloisTheory` · `LieAlgebras` · `RepresentationTheory` · `RepTheoryDeep` · `CommutativeAlgebra` · `GeometricAlgebra` · `SL2Theory`
+\texttt{Algebra} · \texttt{AlgebraicStructures} · \texttt{GaloisTheory} · \texttt{LieAlgebras} · \texttt{RepresentationTheory} · \texttt{RepTheoryDeep} · \texttt{CommutativeAlgebra} · \texttt{GeometricAlgebra} · \texttt{SL2Theory}
 
 \subsection{Analysis}
-`Analysis` · `AnalysisInequalities` · `FunctionalAnalysis` · `HarmonicAnalysis` · `DifferentialEquations` · `MeasureTheory` · `SpectralTheory` · `OperatorAlgebras` · `NumericalAnalysis`
+\texttt{Analysis} · \texttt{AnalysisInequalities} · \texttt{FunctionalAnalysis} · \texttt{HarmonicAnalysis} · \texttt{DifferentialEquations} · \texttt{MeasureTheory} · \texttt{SpectralTheory} · \texttt{OperatorAlgebras} · \texttt{NumericalAnalysis}
 
-\subsection{Topology & Geometry}
-`Topology` · `AlgebraicTopology` · `DifferentialGeometry` · `SymplecticGeometry` · `MetricGeometry` · `ConvexGeometry` · `KnotTheory` · `HodgeTheory`
+\subsection{Topology \& Geometry}
+\texttt{Topology} · \texttt{AlgebraicTopology} · \texttt{DifferentialGeometry} · \texttt{SymplecticGeometry} · \texttt{MetricGeometry} · \texttt{ConvexGeometry} · \texttt{KnotTheory} · \texttt{HodgeTheory}
 
-\subsection{Combinatorics & Graph Theory}
-`Combinatorics` *(1 sorry: Sauer–Shelah)* · `ExtremalGraphTheory` · `SpectralGraphTheory` · `RamseyTheory` · `AdditiveCombinatorics` · `ArithmeticCombinatorics` · `MatroidTheory` · `CodingTheory`
+\subsection{Combinatorics \& Graph Theory}
+\texttt{Combinatorics} \textit{(1 sorry: Sauer–Shelah)} · \texttt{ExtremalGraphTheory} · \texttt{SpectralGraphTheory} · \texttt{RamseyTheory} · \texttt{AdditiveCombinatorics} · \texttt{ArithmeticCombinatorics} · \texttt{MatroidTheory} · \texttt{CodingTheory}
 
-\subsection{Category Theory & Homological Algebra}
-`CategoryTheory` · `CategoryTheoryDeep` · `HomologicalAlgebra` · `AlgebraicKTheory`
+\subsection{Category Theory \& Homological Algebra}
+\texttt{CategoryTheory} · \texttt{CategoryTheoryDeep} · \texttt{HomologicalAlgebra} · \texttt{AlgebraicKTheory}
 
-\subsection{Logic & Foundations}
-`SetTheory` · `SetTheoryLogic` · `ModelTheory` · `ComputabilityTheory` · `DescriptiveSetTheory` · `Complexity`
+\subsection{Logic \& Foundations}
+\texttt{SetTheory} · \texttt{SetTheoryLogic} · \texttt{ModelTheory} · \texttt{ComputabilityTheory} · \texttt{DescriptiveSetTheory} · \texttt{Complexity}
 
 \subsection{Applied Mathematics}
-`Probability` · `StochasticProcesses` · `InformationGeometry` · `Entropy` · `OptimizationTheory` · `GameTheory` · `MathBiology` · `CryptographyFoundations` · `DriftFreeIMU` · `HomingMissile`
+\texttt{Probability} · \texttt{StochasticProcesses} · \texttt{InformationGeometry} · \texttt{Entropy} · \texttt{OptimizationTheory} · \texttt{GameTheory} · \texttt{MathBiology} · \texttt{CryptographyFoundations} · \texttt{DriftFreeIMU} · \texttt{HomingMissile}
 
 \bigskip\hrule\bigskip
 
@@ -510,14 +508,14 @@ Every arrow is a machine-verified theorem.
 \bigskip\hrule\bigskip
 
 
-\noindent$\bullet$ **159** Lean 4 source files\\
-\noindent$\bullet$ **25,650** lines of verified code\\
-\noindent$\bullet$ **2,637** machine-verified theorems and lemmas\\
-\noindent$\bullet$ **1** open challenge (Sauer–Shelah)\\
-\noindent$\bullet$ **0** non-standard axioms\\
-\noindent$\bullet$ Verified with **Lean 4.28.0** and **Mathlib v4.28.0**\\
+\noindent$\bullet$ \textbf{159} Lean 4 source files\\
+\noindent$\bullet$ \textbf{25,650} lines of verified code\\
+\noindent$\bullet$ \textbf{2,637} machine-verified theorems and lemmas\\
+\noindent$\bullet$ \textbf{1} open challenge (Sauer–Shelah)\\
+\noindent$\bullet$ \textbf{0} non-standard axioms\\
+\noindent$\bullet$ Verified with \textbf{Lean 4.28.0} and \textbf{Mathlib v4.28.0}\\
 
-*The Harmonic Number Theory Group*
+\textit{The Harmonic Number Theory Group}
 
 \clearpage
 
@@ -527,11 +525,11 @@ Every arrow is a machine-verified theorem.
 
 \section{Complete Catalog of 2,637 Machine-Verified Theorems}
 
-**Version 2.0 — Grand Unified Edition**
+\textbf{Version 2.0 — Grand Unified Edition}
 
 \bigskip\hrule\bigskip
 
-\begin{quote}\textit{*Every theorem in this catalog compiles in Lean 4 with Mathlib using only the standard axioms (propext, Classical.choice, Quot.sound). The single exception — the Sauer–Shelah lemma — is explicitly marked.*}\end{quote}
+\begin{quote}\textit{\textit{Every theorem in this catalog compiles in Lean 4 with Mathlib using only the standard axioms (propext, Classical.choice, Quot.sound). The single exception — the Sauer–Shelah lemma — is explicitly marked.}}\end{quote}
 
 \bigskip\hrule\bigskip
 
@@ -567,7 +565,7 @@ Every arrow is a machine-verified theorem.
 
 \bigskip\hrule\bigskip
 
-\section{I. THE DECODER — Stereographic Projection & Universal Channels}
+\section{I. THE DECODER — Stereographic Projection \& Universal Channels}
 
 *The single formula $t \mapsto \bigl(\tfrac{1-t^2}{1+t^2},\;\tfrac{2t}{1+t^2}\bigr)$ that connects everything.*
 
@@ -597,7 +595,7 @@ Every arrow is a machine-verified theorem.
 | 12 | `ford_circle_tangency` | Farey neighbors ↔ Ford circle tangency | `UniversalDecoder` |
 \end{verbatim}
 
-*+ 47 additional decoder channel theorems in `UniversalDecoder.lean` (59 total).*
+*+ 47 additional decoder channel theorems in \texttt{UniversalDecoder.lean} (59 total).*
 
 \subsection{C. N-Dimensional Generalization}
 
@@ -613,9 +611,9 @@ Every arrow is a machine-verified theorem.
 
 \bigskip\hrule\bigskip
 
-\section{II. THE TREE — Berggren Structure & Pythagorean Triples}
+\section{II. THE TREE — Berggren Structure \& Pythagorean Triples}
 
-*The infinite ternary tree generating every primitive Pythagorean triple exactly once.*
+\textit{The infinite ternary tree generating every primitive Pythagorean triple exactly once.}
 
 \subsection{A. Tree Structure}
 
@@ -654,9 +652,9 @@ Every arrow is a machine-verified theorem.
 
 \bigskip\hrule\bigskip
 
-\section{III. THE CRYSTAL — Neural Architecture & Intelligence Crystallizer}
+\section{III. THE CRYSTAL — Neural Architecture \& Intelligence Crystallizer}
 
-*Weights that crystallize onto the integer lattice.*
+\textit{Weights that crystallize onto the integer lattice.}
 
 \subsection{A. Crystallization Dynamics}
 
@@ -670,7 +668,7 @@ Every arrow is a machine-verified theorem.
 | 36 | `tri_resonant_norm` | Tri-resonant combination preserves unit norm | `CrystallizerFormalization` |
 \end{verbatim}
 
-\subsection{B. Stability & Safety}
+\subsection{B. Stability \& Safety}
 
 \begin{verbatim}
 | # | Theorem | Statement | File |
@@ -689,11 +687,11 @@ Every arrow is a machine-verified theorem.
 
 \bigskip\hrule\bigskip
 
-\section{IV. THE LIGHT CONE — Minkowski Geometry & Photon Physics}
+\section{IV. THE LIGHT CONE — Minkowski Geometry \& Photon Physics}
 
-*Pythagorean triples ARE photon momenta.*
+\textit{Pythagorean triples ARE photon momenta.}
 
-\subsection{A. Minkowski Fundamentals (42 theorems in `LightConeTheory.lean`)}
+\subsection{A. Minkowski Fundamentals (42 theorems in \texttt{LightConeTheory.lean})}
 
 \begin{verbatim}
 | # | Theorem | Statement | File |
@@ -708,7 +706,7 @@ Every arrow is a machine-verified theorem.
 | 54 | `doppler_redshift` | $E' = e^{-\varphi} E$ (backward) | `LightConeTheory` |
 \end{verbatim}
 
-\subsection{B. Photonic Frontier (53 theorems in `PhotonicFrontier.lean`)}
+\subsection{B. Photonic Frontier (53 theorems in \texttt{PhotonicFrontier.lean})}
 
 \begin{verbatim}
 | # | Theorem | Statement | File |
@@ -724,11 +722,11 @@ Every arrow is a machine-verified theorem.
 
 \bigskip\hrule\bigskip
 
-\section{V. THE TOWER — Gaussian Integers, Quaternions & Hurwitz Hierarchy}
+\section{V. THE TOWER — Gaussian Integers, Quaternions \& Hurwitz Hierarchy}
 
-*Division algebras in dimensions 1 → 2 → 4 → 8, and only those.*
+\textit{Division algebras in dimensions 1 → 2 → 4 → 8, and only those.}
 
-\subsection{A. Gaussian Integers & Two-Square Identity}
+\subsection{A. Gaussian Integers \& Two-Square Identity}
 
 \begin{verbatim}
 | # | Theorem | Statement | File |
@@ -740,7 +738,7 @@ Every arrow is a machine-verified theorem.
 | 66 | `hypotenuse_product_closure` | Pythagorean hypotenuses multiplicatively closed | `TeamResearch` |
 \end{verbatim}
 
-\subsection{B. Quaternions & Four-Square Identity}
+\subsection{B. Quaternions \& Four-Square Identity}
 
 \begin{verbatim}
 | # | Theorem | Statement | File |
@@ -751,7 +749,7 @@ Every arrow is a machine-verified theorem.
 | 70 | `hopf_fiber_south_pole` | Fibers are great circles | `TeamResearch` |
 \end{verbatim}
 
-\subsection{C. Octonions & The Hurwitz Theorem}
+\subsection{C. Octonions \& The Hurwitz Theorem}
 
 \begin{verbatim}
 | # | Theorem | Statement | File |
@@ -762,9 +760,9 @@ Every arrow is a machine-verified theorem.
 
 \bigskip\hrule\bigskip
 
-\section{VI. THE FACTORING ENGINE — Inside-Out Factoring & Landscapes}
+\section{VI. THE FACTORING ENGINE — Inside-Out Factoring \& Landscapes}
 
-*The Berggren tree as an integer-factoring algorithm.*
+\textit{The Berggren tree as an integer-factoring algorithm.}
 
 \subsection{A. IOF Core}
 
@@ -791,9 +789,9 @@ Every arrow is a machine-verified theorem.
 
 \bigskip\hrule\bigskip
 
-\section{VII. THE QUANTUM BRIDGE — Gates, Bloch Sphere & Computation}
+\section{VII. THE QUANTUM BRIDGE — Gates, Bloch Sphere \& Computation}
 
-*From Pythagorean rationals to universal quantum gates.*
+\textit{From Pythagorean rationals to universal quantum gates.}
 
 \subsection{A. Gate Algebra}
 
@@ -820,9 +818,9 @@ Every arrow is a machine-verified theorem.
 
 \bigskip\hrule\bigskip
 
-\section{VIII. THE MATHEMATICAL COSMOS — 40+ Domains of Pure & Applied Mathematics}
+\section{VIII. THE MATHEMATICAL COSMOS — 40+ Domains of Pure \& Applied Mathematics}
 
-*The remaining ~2,500 theorems span the following domains. Each file is a self-contained verified module.*
+\textit{The remaining ~2,500 theorems span the following domains. Each file is a self-contained verified module.}
 
 \subsection{Number Theory}
 \begin{verbatim}
@@ -868,7 +866,7 @@ Every arrow is a machine-verified theorem.
 | `NumericalAnalysis.lean` | Error bounds, stability |
 \end{verbatim}
 
-\subsection{Topology & Geometry}
+\subsection{Topology \& Geometry}
 \begin{verbatim}
 | File | Highlights |
 |------|------------|
@@ -882,7 +880,7 @@ Every arrow is a machine-verified theorem.
 | `HodgeTheory.lean` | Hodge decomposition concepts |
 \end{verbatim}
 
-\subsection{Combinatorics & Graph Theory}
+\subsection{Combinatorics \& Graph Theory}
 \begin{verbatim}
 | File | Highlights |
 |------|------------|
@@ -896,7 +894,7 @@ Every arrow is a machine-verified theorem.
 | `CodingTheory.lean` | Error-correcting codes |
 \end{verbatim}
 
-\subsection{Category Theory & Homological Algebra}
+\subsection{Category Theory \& Homological Algebra}
 \begin{verbatim}
 | File | Highlights |
 |------|------------|
@@ -906,7 +904,7 @@ Every arrow is a machine-verified theorem.
 | `AlgebraicKTheory.lean` | K-groups, Grothendieck |
 \end{verbatim}
 
-\subsection{Logic, Set Theory & Foundations}
+\subsection{Logic, Set Theory \& Foundations}
 \begin{verbatim}
 | File | Highlights |
 |------|------------|
@@ -938,7 +936,7 @@ Every arrow is a machine-verified theorem.
 
 \section{IX. THE ROSETTA STONE — Cross-Domain Bridge Theorems}
 
-*The theorems that reveal the deep unity.*
+\textit{The theorems that reveal the deep unity.}
 
 \subsection{Bridge Dictionary}
 
@@ -1015,8 +1013,8 @@ Hurwitz tower     Hopf fibration          Pauli/Clifford
 
 \bigskip\hrule\bigskip
 
-*Catalog generated from 159 Lean 4 source files · 25,650 lines · 2,637 theorems.*
-*Verified with Lean 4.28.0 + Mathlib v4.28.0. Standard axioms only.*
+\textit{Catalog generated from 159 Lean 4 source files · 25,650 lines · 2,637 theorems.}
+\textit{Verified with Lean 4.28.0 + Mathlib v4.28.0. Standard axioms only.}
 
 \clearpage
 
@@ -1026,38 +1024,38 @@ Hurwitz tower     Hopf fibration          Pauli/Clifford
 
 \section{The Pythagorean Cosmos: 3,158 Machine-Verified Theorems in Lean 4}
 
-**Project**: Pythagorean Cosmos Formal Mathematics Library  
-**Verification System**: Lean 4.28.0 with Mathlib  
-**Total Theorems/Lemmas**: 3,158 across 199 files (~33,700 lines of Lean)  
-**Sorry-Free**: All theorems fully machine-verified (1 open conjecture noted)  
+\textbf{Project}: Pythagorean Cosmos Formal Mathematics Library  
+\textbf{Verification System}: Lean 4.28.0 with Mathlib  
+\textbf{Total Theorems/Lemmas}: 3,158 across 199 files (~33,700 lines of Lean)  
+\textbf{Sorry-Free}: All theorems fully machine-verified (1 open conjecture noted)  
 
 \bigskip\hrule\bigskip
 
 \section{Table of Contents}
 
-1. [Pythagorean Triples & the Berggren Tree](#1-pythagorean-triples--the-berggren-tree)
-2. [Four-Channel Integer Signatures](#2-four-channel-integer-signatures)
-3. [Compression Theory & Information Limits](#3-compression-theory--information-limits)
-4. [Quantum Computing & Gate Synthesis](#4-quantum-computing--gate-synthesis)
-5. [Stereographic Projection & the Universal Decoder](#5-stereographic-projection--the-universal-decoder)
-6. [Fermat's Last Theorem (n=4) & Congruent Numbers](#6-fermats-last-theorem-n4--congruent-numbers)
-7. [Lorentz Geometry & Light Cone Theory](#7-lorentz-geometry--light-cone-theory)
-8. [Algebraic Structures & Cayley-Dickson Hierarchy](#8-algebraic-structures--cayley-dickson-hierarchy)
-9. [SL(2,ℤ) & Modular Group Theory](#9-sl2ℤ--modular-group-theory)
-10. [Number Theory (Classical & Advanced)](#10-number-theory-classical--advanced)
-11. [Combinatorics & Graph Theory](#11-combinatorics--graph-theory)
-12. [Topology & Dynamical Systems](#12-topology--dynamical-systems)
-13. [Category Theory & Representation Theory](#13-category-theory--representation-theory)
-14. [Möbius Transformations & Order Classification](#14-möbius-transformations--order-classification)
-15. [Crystallizer & Neural Architecture Theory](#15-crystallizer--neural-architecture-theory)
-16. [Applied Mathematics](#16-applied-mathematics)
-17. [Advanced Topics](#17-advanced-topics)
+1. [Pythagorean Triples \& the Berggren Tree](\#1-pythagorean-triples--the-berggren-tree)
+2. [Four-Channel Integer Signatures](\#2-four-channel-integer-signatures)
+3. [Compression Theory \& Information Limits](\#3-compression-theory--information-limits)
+4. [Quantum Computing \& Gate Synthesis](\#4-quantum-computing--gate-synthesis)
+5. [Stereographic Projection \& the Universal Decoder](\#5-stereographic-projection--the-universal-decoder)
+6. [Fermat's Last Theorem (n=4) \& Congruent Numbers](\#6-fermats-last-theorem-n4--congruent-numbers)
+7. [Lorentz Geometry \& Light Cone Theory](\#7-lorentz-geometry--light-cone-theory)
+8. [Algebraic Structures \& Cayley-Dickson Hierarchy](\#8-algebraic-structures--cayley-dickson-hierarchy)
+9. [SL(2,ℤ) \& Modular Group Theory](\#9-sl2ℤ--modular-group-theory)
+10. [Number Theory (Classical \& Advanced)](\#10-number-theory-classical--advanced)
+11. [Combinatorics \& Graph Theory](\#11-combinatorics--graph-theory)
+12. [Topology \& Dynamical Systems](\#12-topology--dynamical-systems)
+13. [Category Theory \& Representation Theory](\#13-category-theory--representation-theory)
+14. [Möbius Transformations \& Order Classification](\#14-möbius-transformations--order-classification)
+15. [Crystallizer \& Neural Architecture Theory](\#15-crystallizer--neural-architecture-theory)
+16. [Applied Mathematics](\#16-applied-mathematics)
+17. [Advanced Topics](\#17-advanced-topics)
 
 \bigskip\hrule\bigskip
 
-\section{1. Pythagorean Triples & the Berggren Tree}
+\section{1. Pythagorean Triples \& the Berggren Tree}
 
-*Files: `Basic.lean`, `Berggren.lean`, `BerggrenTree.lean`, `PythagoreanTriples.lean`, `PythagoreanPairing.lean`, `PythagoreanNeuralArch.lean`, `AgentAlpha_Invariants.lean`, `AgentBeta_TreeDynamics.lean`, `AgentEpsilon_Synthesis.lean`, `ParentDescent.lean`, `FermatFactor.lean`*
+*Files: \texttt{Basic.lean}, \texttt{Berggren.lean}, \texttt{BerggrenTree.lean}, \texttt{PythagoreanTriples.lean}, \texttt{PythagoreanPairing.lean}, \texttt{PythagoreanNeuralArch.lean}, \texttt{AgentAlpha\_Invariants.lean}, \texttt{AgentBeta\_TreeDynamics.lean}, \texttt{AgentEpsilon\_Synthesis.lean}, \texttt{ParentDescent.lean}, \texttt{FermatFactor.lean}*
 
 \subsection{Core Parametrization}
 \begin{verbatim}
@@ -1091,7 +1089,7 @@ Hurwitz tower     Hopf fibration          Pauli/Clifford
 | `hypotenuse_growth` | Hypotenuse grows strictly along branches | `BerggrenTree.lean` |
 \end{verbatim}
 
-\subsection{Tree Dynamics & Invariants}
+\subsection{Tree Dynamics \& Invariants}
 \begin{verbatim}
 | Theorem | Statement | File |
 |---------|-----------|------|
@@ -1101,7 +1099,7 @@ Hurwitz tower     Hopf fibration          Pauli/Clifford
 | `hyp_growth_B2` | Hypotenuse growth under B₂ transformation | `QuantumBerggren.lean` |
 \end{verbatim}
 
-\subsection{Pairing & Sum-of-Squares}
+\subsection{Pairing \& Sum-of-Squares}
 \begin{verbatim}
 | Theorem | Statement | File |
 |---------|-----------|------|
@@ -1115,7 +1113,7 @@ Hurwitz tower     Hopf fibration          Pauli/Clifford
 
 \section{2. Four-Channel Integer Signatures}
 
-*Files: `ChannelEntropy.lean`, `PrimeSignatures.lean`, `Multiplicativity.lean`, `Defs.lean`, `Computations.lean`, `Session2Theorems.lean`*
+*Files: \texttt{ChannelEntropy.lean}, \texttt{PrimeSignatures.lean}, \texttt{Multiplicativity.lean}, \texttt{Defs.lean}, \texttt{Computations.lean}, \texttt{Session2Theorems.lean}*
 
 \subsection{Channel Formulas for Primes}
 \begin{verbatim}
@@ -1129,7 +1127,7 @@ Hurwitz tower     Hopf fibration          Pauli/Clifford
 | `r8_gt_r4` | r₈(p) > r₄(p) for p ≥ 2 (channel dominance) | `ChannelEntropy.lean` |
 \end{verbatim}
 
-\subsection{Signature Classes & Gap Theorem}
+\subsection{Signature Classes \& Gap Theorem}
 \begin{verbatim}
 | Theorem | Statement | File |
 |---------|-----------|------|
@@ -1191,9 +1189,9 @@ Hurwitz tower     Hopf fibration          Pauli/Clifford
 
 \bigskip\hrule\bigskip
 
-\section{3. Compression Theory & Information Limits}
+\section{3. Compression Theory \& Information Limits}
 
-*Files: `Compression.lean`, `CompressionTheory.lean`, `CompressionExtensions.lean`, `CodingTheory.lean`, `Entropy.lean`*
+*Files: \texttt{Compression.lean}, \texttt{CompressionTheory.lean}, \texttt{CompressionExtensions.lean}, \texttt{CodingTheory.lean}, \texttt{Entropy.lean}*
 
 \subsection{Fundamental Impossibility}
 \begin{verbatim}
@@ -1223,9 +1221,9 @@ Hurwitz tower     Hopf fibration          Pauli/Clifford
 
 \bigskip\hrule\bigskip
 
-\section{4. Quantum Computing & Gate Synthesis}
+\section{4. Quantum Computing \& Gate Synthesis}
 
-*Files: `QuantumBerggren.lean`, `QuantumGateSynthesis.lean`, `QuantumCircuits.lean`, `QuantumGateAlgebra.lean`, `QuantumBerggrenResearch.lean`, `QuantumBerggrenGates.lean`, `QuantumCompression.lean`, `QuantumGates.lean`, `QuantumFoundations.lean`, `QuantumSimulation.lean`, `QuantumStructures.lean`, `QuantumTypeTheory.lean`*
+*Files: \texttt{QuantumBerggren.lean}, \texttt{QuantumGateSynthesis.lean}, \texttt{QuantumCircuits.lean}, \texttt{QuantumGateAlgebra.lean}, \texttt{QuantumBerggrenResearch.lean}, \texttt{QuantumBerggrenGates.lean}, \texttt{QuantumCompression.lean}, \texttt{QuantumGates.lean}, \texttt{QuantumFoundations.lean}, \texttt{QuantumSimulation.lean}, \texttt{QuantumStructures.lean}, \texttt{QuantumTypeTheory.lean}*
 
 \subsection{Berggren Gate Group}
 \begin{verbatim}
@@ -1273,9 +1271,9 @@ Hurwitz tower     Hopf fibration          Pauli/Clifford
 
 \bigskip\hrule\bigskip
 
-\section{5. Stereographic Projection & the Universal Decoder}
+\section{5. Stereographic Projection \& the Universal Decoder}
 
-*Files: `StereographicProjection.lean`, `StereographicDecoder.lean`, `StereographicRationals.lean`, `InverseStereoMobius.lean`, `InverseStereoMobiusNext.lean`, `InverseStereoResearch.lean`, `RosettaStone.lean`, `UniversalDecoder.lean`, `DimensionalProjection.lean`, `CMBLandscape.lean`, `SphericalCombination.lean`*
+*Files: \texttt{StereographicProjection.lean}, \texttt{StereographicDecoder.lean}, \texttt{StereographicRationals.lean}, \texttt{InverseStereoMobius.lean}, \texttt{InverseStereoMobiusNext.lean}, \texttt{InverseStereoResearch.lean}, \texttt{RosettaStone.lean}, \texttt{UniversalDecoder.lean}, \texttt{DimensionalProjection.lean}, \texttt{CMBLandscape.lean}, \texttt{SphericalCombination.lean}*
 
 \subsection{Core Properties}
 \begin{verbatim}
@@ -1297,9 +1295,9 @@ Hurwitz tower     Hopf fibration          Pauli/Clifford
 
 \bigskip\hrule\bigskip
 
-\section{6. Fermat's Last Theorem (n=4) & Congruent Numbers}
+\section{6. Fermat's Last Theorem (n=4) \& Congruent Numbers}
 
-*Files: `FLT4.lean`, `CongruentNumber.lean`*
+*Files: \texttt{FLT4.lean}, \texttt{CongruentNumber.lean}*
 
 \subsection{FLT4}
 \begin{verbatim}
@@ -1323,9 +1321,9 @@ Hurwitz tower     Hopf fibration          Pauli/Clifford
 
 \bigskip\hrule\bigskip
 
-\section{7. Lorentz Geometry & Light Cone Theory}
+\section{7. Lorentz Geometry \& Light Cone Theory}
 
-*Files: `LightCone.lean`, `LightConeTheory.lean`, `PhotonParity.lean`, `PhotonResearchRound2.lean`–`Round5.lean`, `PhotonicFrontier.lean`*
+*Files: \texttt{LightCone.lean}, \texttt{LightConeTheory.lean}, \texttt{PhotonParity.lean}, \texttt{PhotonResearchRound2.lean}–\texttt{Round5.lean}, \texttt{PhotonicFrontier.lean}*
 
 \subsection{Lorentz Structure}
 \begin{verbatim}
@@ -1360,9 +1358,9 @@ Hurwitz tower     Hopf fibration          Pauli/Clifford
 
 \bigskip\hrule\bigskip
 
-\section{8. Algebraic Structures & Cayley-Dickson Hierarchy}
+\section{8. Algebraic Structures \& Cayley-Dickson Hierarchy}
 
-*Files: `CayleyDickson.lean`, `DivisionAlgebras.lean`, `BrahmaguptaFibonacci.lean`, `Algebra.lean`, `AlgebraicStructures.lean`*
+*Files: \texttt{CayleyDickson.lean}, \texttt{DivisionAlgebras.lean}, \texttt{BrahmaguptaFibonacci.lean}, \texttt{Algebra.lean}, \texttt{AlgebraicStructures.lean}*
 
 \subsection{Composition Identities}
 \begin{verbatim}
@@ -1394,9 +1392,9 @@ Hurwitz tower     Hopf fibration          Pauli/Clifford
 
 \bigskip\hrule\bigskip
 
-\section{9. SL(2,ℤ) & Modular Group Theory}
+\section{9. SL(2,ℤ) \& Modular Group Theory}
 
-*Files: `SL2Theory.lean`, `Moonshine.lean`, `MillenniumConnections.lean`, `MillenniumDeep.lean`*
+*Files: \texttt{SL2Theory.lean}, \texttt{Moonshine.lean}, \texttt{MillenniumConnections.lean}, \texttt{MillenniumDeep.lean}*
 
 \subsection{SL(2) Structure}
 \begin{verbatim}
@@ -1419,9 +1417,9 @@ Hurwitz tower     Hopf fibration          Pauli/Clifford
 
 \bigskip\hrule\bigskip
 
-\section{10. Number Theory (Classical & Advanced)}
+\section{10. Number Theory (Classical \& Advanced)}
 
-*Files: `NumberTheory.lean`, `NumberTheoryAdvanced.lean`, `NumberTheoryDeep.lean`, `DeepResults.lean`, `GaussianIntegers.lean`, `QuadraticForms.lean`, `Extensions.lean`, `NewTheorems.lean`, `ArithmeticGeometry.lean`, `DiophantineApproximation.lean`*
+*Files: \texttt{NumberTheory.lean}, \texttt{NumberTheoryAdvanced.lean}, \texttt{NumberTheoryDeep.lean}, \texttt{DeepResults.lean}, \texttt{GaussianIntegers.lean}, \texttt{QuadraticForms.lean}, \texttt{Extensions.lean}, \texttt{NewTheorems.lean}, \texttt{ArithmeticGeometry.lean}, \texttt{DiophantineApproximation.lean}*
 
 \subsection{Euler's Totient}
 \begin{verbatim}
@@ -1481,9 +1479,9 @@ Hurwitz tower     Hopf fibration          Pauli/Clifford
 
 \bigskip\hrule\bigskip
 
-\section{11. Combinatorics & Graph Theory}
+\section{11. Combinatorics \& Graph Theory}
 
-*Files: `Combinatorics.lean`, `SauerShelah.lean`, `RamseyTheory.lean`, `ExtremalGraphTheory.lean`, `AdditiveCombinatorics.lean`, `SpectralGraphTheory.lean`, `GraphTheoryExploration.lean`, `MatroidTheory.lean`*
+*Files: \texttt{Combinatorics.lean}, \texttt{SauerShelah.lean}, \texttt{RamseyTheory.lean}, \texttt{ExtremalGraphTheory.lean}, \texttt{AdditiveCombinatorics.lean}, \texttt{SpectralGraphTheory.lean}, \texttt{GraphTheoryExploration.lean}, \texttt{MatroidTheory.lean}*
 
 \subsection{Ramsey Theory}
 \begin{verbatim}
@@ -1522,9 +1520,9 @@ Hurwitz tower     Hopf fibration          Pauli/Clifford
 
 \bigskip\hrule\bigskip
 
-\section{12. Topology & Dynamical Systems}
+\section{12. Topology \& Dynamical Systems}
 
-*Files: `Topology.lean`, `TopologyDynamics.lean`, `TopologyExploration.lean`, `DynamicalSystems.lean`, `ErgodicTheory.lean`, `AlgebraicTopology.lean`, `KnotTheory.lean`, `DifferentialGeometry.lean`, `SymplecticGeometry.lean`, `MetricGeometry.lean`, `ConvexGeometry.lean`*
+*Files: \texttt{Topology.lean}, \texttt{TopologyDynamics.lean}, \texttt{TopologyExploration.lean}, \texttt{DynamicalSystems.lean}, \texttt{ErgodicTheory.lean}, \texttt{AlgebraicTopology.lean}, \texttt{KnotTheory.lean}, \texttt{DifferentialGeometry.lean}, \texttt{SymplecticGeometry.lean}, \texttt{MetricGeometry.lean}, \texttt{ConvexGeometry.lean}*
 
 \subsection{Fixed Points}
 \begin{verbatim}
@@ -1545,9 +1543,9 @@ Hurwitz tower     Hopf fibration          Pauli/Clifford
 
 \bigskip\hrule\bigskip
 
-\section{13. Category Theory & Representation Theory}
+\section{13. Category Theory \& Representation Theory}
 
-*Files: `CategoryTheory.lean`, `CategoryTheoryDeep.lean`, `CategoryTheoryExploration.lean`, `CategoryRepresentation.lean`, `RepresentationTheory.lean`, `RepTheoryDeep.lean`, `HomologicalAlgebra.lean`*
+*Files: \texttt{CategoryTheory.lean}, \texttt{CategoryTheoryDeep.lean}, \texttt{CategoryTheoryExploration.lean}, \texttt{CategoryRepresentation.lean}, \texttt{RepresentationTheory.lean}, \texttt{RepTheoryDeep.lean}, \texttt{HomologicalAlgebra.lean}*
 
 \subsection{Functorial}
 \begin{verbatim}
@@ -1558,9 +1556,9 @@ Hurwitz tower     Hopf fibration          Pauli/Clifford
 
 \bigskip\hrule\bigskip
 
-\section{14. Möbius Transformations & Order Classification}
+\section{14. Möbius Transformations \& Order Classification}
 
-*Files: `OrderClassification.lean`, `IntegerChains.lean`, `Hypotheses.lean`, `InverseStereoMobius.lean`*
+*Files: \texttt{OrderClassification.lean}, \texttt{IntegerChains.lean}, \texttt{Hypotheses.lean}, \texttt{InverseStereoMobius.lean}*
 
 \subsection{Order Classification (Novel Results)}
 \begin{verbatim}
@@ -1574,9 +1572,9 @@ Hurwitz tower     Hopf fibration          Pauli/Clifford
 
 \bigskip\hrule\bigskip
 
-\section{15. Crystallizer & Neural Architecture Theory}
+\section{15. Crystallizer \& Neural Architecture Theory}
 
-*Files: `CrystallizerMath.lean`, `CrystallizerFormalization.lean`, `CrystallizerFrontier.lean`, `NeuralCrystallizerFrontier.lean`, `PythagoreanNeuralArch.lean`, `InsideOutFactor.lean`, `InsideOutResearch.lean`, `EnergyDescentResearch.lean`, `IOFCore.lean`, `IOFDynamical.lean`, `IOFExplorations.lean`*
+*Files: \texttt{CrystallizerMath.lean}, \texttt{CrystallizerFormalization.lean}, \texttt{CrystallizerFrontier.lean}, \texttt{NeuralCrystallizerFrontier.lean}, \texttt{PythagoreanNeuralArch.lean}, \texttt{InsideOutFactor.lean}, \texttt{InsideOutResearch.lean}, \texttt{EnergyDescentResearch.lean}, \texttt{IOFCore.lean}, \texttt{IOFDynamical.lean}, \texttt{IOFExplorations.lean}*
 
 \subsection{Energy Descent}
 \begin{verbatim}
@@ -1589,7 +1587,7 @@ Hurwitz tower     Hopf fibration          Pauli/Clifford
 
 \section{16. Applied Mathematics}
 
-*Files: `DriftFreeIMU.lean`, `HomingMissile.lean`, `ECDLP.lean`, `Applications.lean`, `RealWorldApplications.lean`, `CryptographyApplications.lean`, `CryptographyFoundations.lean`, `O1Impossibility.lean`, `NumericalAnalysis.lean`*
+*Files: \texttt{DriftFreeIMU.lean}, \texttt{HomingMissile.lean}, \texttt{ECDLP.lean}, \texttt{Applications.lean}, \texttt{RealWorldApplications.lean}, \texttt{CryptographyApplications.lean}, \texttt{CryptographyFoundations.lean}, \texttt{O1Impossibility.lean}, \texttt{NumericalAnalysis.lean}*
 
 \subsection{IMU Drift Correction}
 \begin{verbatim}
@@ -1611,7 +1609,7 @@ Hurwitz tower     Hopf fibration          Pauli/Clifford
 
 \section{17. Advanced Topics}
 
-*Files covering: Hodge theory, operator algebras, stochastic processes, information geometry, model theory, computability theory, tropical geometry, descriptive set theory, algebraic K-theory, geometric group theory*
+\textit{Files covering: Hodge theory, operator algebras, stochastic processes, information geometry, model theory, computability theory, tropical geometry, descriptive set theory, algebraic K-theory, geometric group theory}
 
 These files contain formalized foundations and key results in each area, totaling hundreds of additional theorems connecting to the core Pythagorean-quantum framework.
 
@@ -1646,15 +1644,15 @@ These files contain formalized foundations and key results in each area, totalin
 
 \section{Appendix: Duplicate Theorem Index}
 
-The following 118 theorem names appear in multiple files, representing independent proofs of the same statement in different mathematical contexts. The most duplicated theorem is `brahmagupta_fibonacci` (the Brahmagupta–Fibonacci two-square identity), appearing 16 times — reflecting its central role as the algebraic backbone connecting Pythagorean triples, Gaussian integers, photonic composition, and quantum gate synthesis.
+The following 118 theorem names appear in multiple files, representing independent proofs of the same statement in different mathematical contexts. The most duplicated theorem is \texttt{brahmagupta\_fibonacci} (the Brahmagupta–Fibonacci two-square identity), appearing 16 times — reflecting its central role as the algebraic backbone connecting Pythagorean triples, Gaussian integers, photonic composition, and quantum gate synthesis.
 
-**Top duplicates by count:**
-\noindent$\bullet$ `brahmagupta_fibonacci` — 16 occurrences\\
-\noindent$\bullet$ `gaussian_norm_multiplicative` — 8 occurrences\\
-\noindent$\bullet$ `brahmagupta_fibonacci'` — 6 occurrences\\
-\noindent$\bullet$ `brahmagupta_fibonacci_alt` — 5 occurrences\\
-\noindent$\bullet$ `four_square_identity`, `euler_four_square`, `two_square_identity` — 3 each\\
-\noindent$\bullet$ `incompressible_strings_lower_bound`, `am_gm_two`, `stereo_on_circle` — 3 each\\
+\textbf{Top duplicates by count:}
+\noindent$\bullet$ \texttt{brahmagupta\_fibonacci} — 16 occurrences\\
+\noindent$\bullet$ \texttt{gaussian\_norm\_multiplicative} — 8 occurrences\\
+\noindent$\bullet$ \texttt{brahmagupta\_fibonacci'} — 6 occurrences\\
+\noindent$\bullet$ \texttt{brahmagupta\_fibonacci\_alt} — 5 occurrences\\
+\noindent$\bullet$ \texttt{four\_square\_identity}, \texttt{euler\_four\_square}, \texttt{two\_square\_identity} — 3 each\\
+\noindent$\bullet$ \texttt{incompressible\_strings\_lower\_bound}, \texttt{am\_gm\_two}, \texttt{stereo\_on\_circle} — 3 each\\
 
 These duplications are not errors but rather demonstrate how the same algebraic identities recur across the project's different mathematical domains — a manifestation of the project's central thesis that a single algebraic thread (norm multiplicativity over the Cayley-Dickson hierarchy) unifies number theory, quantum computing, and mathematical physics.
 
