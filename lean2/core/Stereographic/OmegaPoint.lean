@@ -1,173 +1,259 @@
 import Mathlib
 
 /-!
-# The Omega Point: Infinity in Inverse Stereographic Projection
+# The Omega Point: Infinity as the North Pole under Inverse Stereographic Projection
 
 ## Overview
 
-We formalize and prove that the **Omega point** — the north pole (0, 1) of the unit circle —
-is the image of "infinity" under the inverse stereographic projection.
+This file formalizes the **Omega Point Theorem**: the point at infinity in the plane
+corresponds to the north pole of the sphere under inverse stereographic projection.
 
-Concretely, we show:
+Concretely, the inverse stereographic projection maps ℝ → S¹ via:
+  `t ↦ (2t/(t²+1), (t²-1)/(t²+1))`
 
-1. The north pole (0,1) is *not* in the image of the inverse stereographic projection
-   (it is the unique point excluded from the range), analogous to how the Omega Oracle Ω
-   sits above the entire arithmetic hierarchy and is not arithmetically definable.
+As `t → ±∞`, this map converges to `(0, 1)`, the north pole — the **Omega Point**.
 
-2. As t → ±∞, the inverse stereographic projection `circleStereographicInv t` converges
-   to the north pole (0, 1). This is the precise sense in which the Omega point "is" infinity:
-   it is the limit of the inverse stereographic projection at the point at infinity.
+More abstractly, using Mathlib's `stereoInvFunAux`, for any unit vector `v` in a
+normed inner product space `E`:
+  `stereoInvFunAux v w → v` as `‖w‖ → ∞`
 
-Together, these results say that the one-point compactification of ℝ (adding ∞) corresponds
-exactly to completing the image of `circleStereographicInv` with the north pole — the Omega
-point is the "closure" of the hierarchy, reachable only in the limit.
+This establishes that the north pole `v` is the unique "point at infinity" — the
+limit of the inverse stereographic map along all divergent sequences.
 
-## Connection to the Oracle Hierarchy
+## Connection to Oracle Hierarchies
 
-The Omega Oracle Ω is defined as the limit of the oracle hierarchy — the oracle that answers
-all arithmetic questions. By Tarski's indefinability theorem, Ω is not arithmetically
-definable. It sits "above" the entire hierarchy, an unreachable ideal.
+In the meta-oracle framework, the Omega Oracle Ω sits "above" the entire arithmetic
+hierarchy, an unreachable ideal. Just as the north pole is the unique point not in
+the image of the finite plane under stereographic projection, Ω is the unique oracle
+not definable within the arithmetic hierarchy (by Tarski's indefinability theorem).
 
-Stereographic projection provides a geometric model:
-- Points on ℝ ↔ levels of the arithmetic hierarchy (finite, definable)
-- The north pole (0,1) ↔ the Omega point Ω (above all levels, indefinable)
-- Inverse stereographic projection ↔ the embedding of arithmetic into geometry
-- The limit at infinity ↔ Ω as the limit/supremum of the hierarchy
+The one-point compactification ℝ ∪ {∞} ≅ S¹ provides the topological model:
+- Finite oracles ↔ points in ℝ (the "flat" arithmetic realm)
+- The Omega Oracle ↔ the north pole ∞ (the completion point)
 
-The north pole is simultaneously:
-- The unique point not reachable by the inverse projection (Tarski: Ω is not definable)
-- The limit of the projection as we go to infinity (Ω is the limit of the hierarchy)
+## Main Results
+
+* `omega_x_tendsto_atTop` — The x-coordinate 2t/(t²+1) → 0 as t → +∞
+* `omega_y_tendsto_atTop` — The y-coordinate (t²-1)/(t²+1) → 1 as t → +∞
+* `omega_point_is_north_pole_atTop` — The inverse stereographic image converges to (0,1)
+* `stereoInvFunAux_tendsto_north_pole` — Abstract version: stereoInvFunAux v w → v
+  as ‖w‖ → ∞
+* `omega_point_on_circle` — The Omega Point (0,1) lies on the unit circle
+* `inv_stereo_on_circle` — Every image point lies on the unit circle
 -/
+
+open Real Filter Topology
+open scoped Topology
 
 noncomputable section
 
-open Filter Topology Set
+/-! ## Part 1: Concrete 1D Inverse Stereographic Projection -/
 
-/-! ## Definitions -/
+/-- The x-coordinate of the inverse stereographic projection ℝ → S¹ -/
+def invStereoX (t : ℝ) : ℝ := 2 * t / (t ^ 2 + 1)
 
-/-- Inverse stereographic projection from ℝ to the unit circle S¹ ⊂ ℝ².
-    Maps t ∈ ℝ to the point ((2t)/(t²+1), (t²-1)/(t²+1)) on the circle. -/
-def circleStereographicInv (t : ℝ) : ℝ × ℝ :=
-  (2 * t / (t ^ 2 + 1), (t ^ 2 - 1) / (t ^ 2 + 1))
+/-- The y-coordinate of the inverse stereographic projection ℝ → S¹ -/
+def invStereoY (t : ℝ) : ℝ := (t ^ 2 - 1) / (t ^ 2 + 1)
 
-/-- The north pole of the unit circle: the Omega point. -/
+/-- The Omega Point: the north pole of S¹, the "point at infinity" -/
 def omegaPoint : ℝ × ℝ := (0, 1)
 
-/-! ## Part 1: The Omega Point is Excluded from the Image
+/-- The inverse stereographic map as a pair -/
+def invStereo (t : ℝ) : ℝ × ℝ := (invStereoX t, invStereoY t)
 
-The north pole (0,1) is not in the range of `circleStereographicInv`.
-This is the geometric analogue of Tarski's theorem: Ω is not definable
-within the arithmetic hierarchy.
--/
+/-! ### Algebraic Properties -/
 
-/-- Helper: t² + 1 > 0 for all real t. -/
-lemma t_sq_add_one_pos (t : ℝ) : t ^ 2 + 1 > 0 := by
-  positivity
+/-- The denominator t² + 1 is always positive -/
+theorem denom_pos (t : ℝ) : 0 < t ^ 2 + 1 := by positivity
 
-/-- Helper: t² + 1 ≠ 0 for all real t. -/
-lemma t_sq_add_one_ne_zero (t : ℝ) : t ^ 2 + 1 ≠ 0 :=
-  ne_of_gt (t_sq_add_one_pos t)
+/-- The denominator t² + 1 is never zero -/
+theorem denom_ne_zero (t : ℝ) : t ^ 2 + 1 ≠ 0 := ne_of_gt (denom_pos t)
 
-/-
-PROBLEM
-The north pole (0,1) is not in the range of the inverse stereographic projection.
-    No finite value of t maps to the Omega point.
+/-- Every point on the inverse stereographic image lies on the unit circle -/
+theorem inv_stereo_on_circle (t : ℝ) :
+    (invStereoX t) ^ 2 + (invStereoY t) ^ 2 = 1 := by
+  unfold invStereoX invStereoY
+  field_simp
+  ring
 
-PROVIDED SOLUTION
-Suppose circleStereographicInv t = (0, 1). Then 2t/(t²+1) = 0 and (t²-1)/(t²+1) = 1. From the first equation, t = 0 (since t²+1 ≠ 0). But then the second gives (0-1)/(0+1) = -1 ≠ 1, contradiction. Use t_sq_add_one_ne_zero.
--/
-theorem omegaPoint_not_in_range :
-    ∀ t : ℝ, circleStereographicInv t ≠ omegaPoint := by
-  -- By definition of `circleStereographicInv`, if `circleStereographicInv t = omegaPoint`, then `(2 * t / (t ^ 2 + 1), (t ^ 2 - 1) / (t ^ 2 + 1)) = (0, 1)`.
-  intro t
-  simp [circleStereographicInv, omegaPoint];
-  grind +splitImp
+/-- The Omega Point lies on the unit circle -/
+theorem omega_point_on_circle : omegaPoint.1 ^ 2 + omegaPoint.2 ^ 2 = 1 := by
+  simp [omegaPoint]
 
-/-! ## Part 2: The Omega Point is the Limit at Infinity
-
-As t → +∞ or t → -∞, `circleStereographicInv t` converges to the north pole (0,1).
-The Omega point is the "point at infinity" — reachable only as a limit.
--/
+/-! ### Convergence: The Omega Point Theorem -/
 
 /-
 PROBLEM
-The first coordinate of the inverse stereographic projection tends to 0 as t → ∞.
+As t → +∞, the x-coordinate 2t/(t²+1) → 0
 
 PROVIDED SOLUTION
-We need Tendsto (fun t => 2*t/(t^2+1)) atTop (𝓝 0). Note 2t/(t²+1) = (2/t)/(1 + 1/t²) for t ≠ 0. As t → ∞, 2/t → 0 and 1/t² → 0, so the expression → 0/1 = 0. Alternatively, use squeeze theorem: |2t/(t²+1)| ≤ 2/|t| for |t| ≥ 1 since t²+1 ≥ t² ≥ |t|·|t| so |2t/(t²+1)| ≤ 2|t|/(|t|·|t|) = 2/|t|. And 2/|t| → 0.
+Show invStereoX t = 2*t/(t^2+1) → 0 as t → +∞. Rewrite as 2/(t + 1/t) which → 0. Or use Tendsto.div: numerator 2*t grows linearly while denominator t^2+1 grows quadratically. Key approach: show invStereoX t = (2/t) / (1 + 1/t^2) for t ≠ 0, or use squeeze theorem with |invStereoX t| ≤ 2/|t| for large t (since t^2+1 ≥ t^2, so |2t/(t^2+1)| ≤ 2/|t|). Then 2/|t| → 0.
 -/
-lemma circleStereographicInv_fst_tendsto_zero :
-    Tendsto (fun t : ℝ => (circleStereographicInv t).1) atTop (𝓝 0) := by
-  refine' squeeze_zero_norm' _ _;
-  exact fun t => 2 / |t|;
-  · norm_num [ circleStereographicInv ];
-    exact ⟨ 1, fun x hx => by rw [ div_le_div_iff₀ ] <;> cases abs_cases x <;> cases abs_cases ( x ^ 2 + 1 ) <;> nlinarith ⟩;
-  · exact tendsto_const_nhds.div_atTop ( tendsto_norm_atTop_atTop )
+theorem omega_x_tendsto_atTop :
+    Tendsto invStereoX atTop (nhds 0) := by
+  -- To prove the limit, we can use the fact that the denominator grows faster than the numerator.
+  have h_lim : Filter.Tendsto (fun t : ℝ => 2 / (t + 1 / t)) Filter.atTop (nhds 0) := by
+    exact tendsto_const_nhds.div_atTop ( Filter.tendsto_id.atTop_add <| tendsto_const_nhds.div_atTop Filter.tendsto_id );
+  refine h_lim.congr' ( by filter_upwards [ Filter.eventually_gt_atTop 0 ] with t ht using by rw [ show invStereoX t = 2 / ( t + 1 / t ) by rw [ invStereoX, div_eq_div_iff ] <;> ring <;> nlinarith [ inv_mul_cancel₀ ht.ne' ] ] )
 
 /-
 PROBLEM
-The second coordinate of the inverse stereographic projection tends to 1 as t → ∞.
+As t → -∞, the x-coordinate 2t/(t²+1) → 0
 
 PROVIDED SOLUTION
-We need Tendsto (fun t => (t^2 - 1)/(t^2 + 1)) atTop (𝓝 1). Note (t²-1)/(t²+1) = 1 - 2/(t²+1). So it suffices to show 2/(t²+1) → 0. Since t²+1 → ∞, and 2 is constant, 2/(t²+1) → 0.
+Same as atTop case but for t → -∞. invStereoX t = 2*t/(t^2+1) → 0. Use squeeze: |2t/(t^2+1)| ≤ 2/|t| → 0 as |t| → ∞. Or compose with neg: invStereoX(-t) = -invStereoX(t) since 2*(-t)/((-t)^2+1) = -2t/(t^2+1).
 -/
-lemma circleStereographicInv_snd_tendsto_one :
-    Tendsto (fun t : ℝ => (circleStereographicInv t).2) atTop (𝓝 1) := by
-  unfold circleStereographicInv;
-  -- We can divide the numerator and the denominator by $t^2$ and then take the limit as $t$ approaches infinity.
-  suffices h_div : Filter.Tendsto (fun t : ℝ => (1 - 1 / t^2) / (1 + 1 / t^2)) Filter.atTop (nhds 1) by
-    refine' h_div.congr' ( by filter_upwards [ Filter.eventually_gt_atTop 0 ] with t ht using by rw [ div_eq_div_iff ] <;> ring <;> nlinarith [ inv_pos.2 ht, mul_inv_cancel₀ ht.ne' ] );
-  exact le_trans ( Filter.Tendsto.div ( tendsto_const_nhds.sub <| tendsto_const_nhds.div_atTop <| by norm_num ) ( tendsto_const_nhds.add <| tendsto_const_nhds.div_atTop <| by norm_num ) <| by norm_num ) <| by norm_num;
+theorem omega_x_tendsto_atBot :
+    Tendsto invStereoX atBot (nhds 0) := by
+  -- To prove the limit as $t \to -\infty$, we can use the fact that the limit of a function as $t \to -\infty$ is the same as the limit of the function as $t \to \infty$ with the sign reversed.
+  have h_neg : Filter.Tendsto (fun t : ℝ => invStereoX (-t)) Filter.atTop (nhds 0) := by
+    convert omega_x_tendsto_atTop.neg using 2 ; norm_num [ invStereoX ] ; ring;
+    norm_num;
+  convert h_neg.comp Filter.tendsto_neg_atBot_atTop using 2 ; aesop
 
 /-
 PROBLEM
-**The Omega Point Theorem**: The inverse stereographic projection converges to the
-    north pole (the Omega point) as t → +∞.
-
-    This is the formal statement that "the Omega point is infinity in an inverse
-    stereographic projection": the north pole is the limit of the inverse projection
-    at the point at infinity.
+As t → +∞, the y-coordinate (t²-1)/(t²+1) → 1
 
 PROVIDED SOLUTION
-Use that Tendsto f l (𝓝 (a, b)) iff Tendsto (Prod.fst ∘ f) l (𝓝 a) and Tendsto (Prod.snd ∘ f) l (𝓝 b). Apply Tendsto.prod_mk_nhds with circleStereographicInv_fst_tendsto_zero and circleStereographicInv_snd_tendsto_one. omegaPoint = (0, 1).
+Show invStereoY t = (t^2-1)/(t^2+1) → 1 as t → +∞. Note (t^2-1)/(t^2+1) = 1 - 2/(t^2+1). Since 2/(t^2+1) → 0 as t → ∞, we get the result. Use this decomposition: show invStereoY t = 1 - 2/(t^2+1), then use tendsto_const_nhds.sub with 2/(t^2+1) → 0.
 -/
-theorem omega_point_is_infinity_atTop :
-    Tendsto circleStereographicInv atTop (𝓝 omegaPoint) := by
-  convert Tendsto.prodMk_nhds _ _ using 1;
-  · convert circleStereographicInv_fst_tendsto_zero using 1;
-  · convert circleStereographicInv_snd_tendsto_one using 1
+theorem omega_y_tendsto_atTop :
+    Tendsto invStereoY atTop (nhds 1) := by
+  -- We can decompose the function as $1 - \frac{2}{t^2 + 1}$.
+  suffices h_decomp : Tendsto (fun t : ℝ => 1 - 2 / (t ^ 2 + 1)) atTop (nhds 1) by
+    convert h_decomp using 2 ; rw [ invStereoY ] ; rw [ one_sub_div ( by positivity ) ] ; ring;
+  exact le_trans ( tendsto_const_nhds.sub <| tendsto_const_nhds.div_atTop <| Filter.tendsto_atTop_add_const_right _ _ <| by norm_num ) <| by norm_num;
 
 /-
 PROBLEM
-The same result holds as t → -∞: the Omega point is also the limit at negative infinity.
-    Infinity has no sign on the circle — both ends of ℝ map to the same point.
+As t → -∞, the y-coordinate (t²-1)/(t²+1) → 1
 
 PROVIDED SOLUTION
-Similar to atTop. Show fst → 0 and snd → 1 as t → -∞. Note 2t/(t²+1): as t → -∞, |2t/(t²+1)| ≤ 2/|t| → 0. And (t²-1)/(t²+1) = 1 - 2/(t²+1) → 1 since t²+1 → ∞. Then combine with Tendsto.prod_mk_nhds. Alternatively, note circleStereographicInv(-t) has fst = -circleStereographicInv(t).fst and snd = circleStereographicInv(t).snd, so use comap_neg and the atTop results.
+Same as atTop since invStereoY(-t) = invStereoY(t): the function is even. So compose with neg, or directly argue (t^2-1)/(t^2+1) = 1 - 2/(t^2+1) → 1 as t → -∞, since t^2 → ∞ either way.
 -/
-theorem omega_point_is_infinity_atBot :
-    Tendsto circleStereographicInv atBot (𝓝 omegaPoint) := by
-  refine' Filter.Tendsto.prodMk_nhds _ _;
-  · -- To show that the first coordinate tends to 0 as t approaches negative infinity, we can use the fact that the absolute value of the first coordinate is bounded above by 2/|t|, which tends to 0.
-    have h_abs : ∀ t : ℝ, t < 0 → |(2 * t) / (t ^ 2 + 1)| ≤ 2 / |t| := by
-      norm_num [ abs_div, abs_mul ];
-      exact fun t ht => by rw [ div_le_div_iff₀ ] <;> nlinarith [ abs_of_neg ht, abs_of_nonneg ( by positivity : 0 ≤ t ^ 2 + 1 ) ] ;
-    exact squeeze_zero_norm' ( Filter.eventually_atBot.mpr ⟨ -1, fun t ht => h_abs t <| by linarith ⟩ ) <| tendsto_const_nhds.div_atTop <| Filter.tendsto_abs_atBot_atTop;
-  · rw [ Metric.tendsto_nhds ];
-    exact fun ε hε => Filter.eventually_atBot.2 ⟨ -ε⁻¹ - 1, fun x hx => abs_lt.2 ⟨ by nlinarith [ sq_nonneg ( x + 1 ), mul_inv_cancel₀ hε.ne', mul_div_cancel₀ ( x ^ 2 - 1 ) ( by positivity : ( x ^ 2 + 1 ) ≠ 0 ) ], by nlinarith [ sq_nonneg ( x + 1 ), mul_inv_cancel₀ hε.ne', mul_div_cancel₀ ( x ^ 2 - 1 ) ( by positivity : ( x ^ 2 + 1 ) ≠ 0 ) ] ⟩ ⟩
+theorem omega_y_tendsto_atBot :
+    Tendsto invStereoY atBot (nhds 1) := by
+  rw [ Metric.tendsto_nhds ] at *;
+  unfold invStereoY;
+  exact fun ε hε => Filter.eventually_atBot.2 ⟨ -ε⁻¹ - 1, fun x hx => abs_lt.2 ⟨ by nlinarith [ sq_nonneg ( x + 1 ), mul_inv_cancel₀ hε.ne.symm, mul_div_cancel₀ ( x ^ 2 - 1 ) ( show x ^ 2 + 1 ≠ 0 by nlinarith ) ], by nlinarith [ sq_nonneg ( x + 1 ), mul_inv_cancel₀ hε.ne.symm, mul_div_cancel₀ ( x ^ 2 - 1 ) ( show x ^ 2 + 1 ≠ 0 by nlinarith ) ] ⟩ ⟩
+
+/-- **The Omega Point Theorem (at +∞)**: The inverse stereographic projection
+    converges to the north pole (0, 1) as t → +∞.
+    The north pole is the Omega Point — the image of infinity. -/
+theorem omega_point_is_north_pole_atTop :
+    Tendsto invStereo atTop (nhds omegaPoint) := by
+  rw [show omegaPoint = (0, 1) from rfl]
+  exact Filter.Tendsto.prodMk_nhds omega_x_tendsto_atTop omega_y_tendsto_atTop
+
+/-- **The Omega Point Theorem (at -∞)**: The inverse stereographic projection
+    converges to the north pole (0, 1) as t → -∞. -/
+theorem omega_point_is_north_pole_atBot :
+    Tendsto invStereo atBot (nhds omegaPoint) := by
+  rw [show omegaPoint = (0, 1) from rfl]
+  exact Filter.Tendsto.prodMk_nhds omega_x_tendsto_atBot omega_y_tendsto_atBot
+
+/-! ## Part 2: Abstract Omega Point via Mathlib's stereoInvFunAux
+
+The Mathlib definition:
+  `stereoInvFunAux v w = (‖w‖² + 4)⁻¹ • (4 • w + (‖w‖² - 4) • v)`
+
+As ‖w‖ → ∞:
+  - The `4 • w` term is damped by `(‖w‖² + 4)⁻¹`, contributing `O(1/‖w‖)` → 0
+  - The `(‖w‖² - 4) • v` term with factor `(‖w‖² + 4)⁻¹` contributes `→ 1 • v`
+
+Therefore `stereoInvFunAux v w → v`, establishing `v` as the Omega Point.
+-/
 
 /-
 PROBLEM
-Corollary: the Omega point is the limit at cocompact filter (i.e., as |t| → ∞).
-    This unifies the atTop and atBot results.
+**Abstract Omega Point Theorem**: In any inner product space, the inverse
+    stereographic projection map converges to the north pole `v` as ‖w‖ → ∞.
+
+    This is the abstract formulation: the north pole is the unique "point at infinity"
+    in the one-point compactification, reachable only as a limit of divergent sequences.
 
 PROVIDED SOLUTION
-The cocompact filter on ℝ equals atBot ⊔ atTop (this is Real.cocompact_eq or Coprod). Use Tendsto.sup with omega_point_is_infinity_atTop and omega_point_is_infinity_atBot. Actually cocompact ℝ = cocompact_eq says Filter.cocompact ℝ = atBot ⊔ atTop. Then Tendsto f (l₁ ⊔ l₂) g iff Tendsto f l₁ g ∧ Tendsto f l₂ g. Use Filter.Tendsto.sup_iff or rw [Real.cocompact_eq, Filter.tendsto_sup] and split.
+stereoInvFunAux v w = (‖w‖^2 + 4)⁻¹ • (4 • w + (‖w‖^2 - 4) • v). Rewrite as: ((‖w‖^2 - 4)/(‖w‖^2 + 4)) • v + (4/(‖w‖^2 + 4)) • w. We need to show this → v. Write it as v + ((‖w‖^2 - 4)/(‖w‖^2 + 4) - 1) • v + (4/(‖w‖^2 + 4)) • w = v + (-8/(‖w‖^2 + 4)) • v + (4/(‖w‖^2 + 4)) • w. Both error terms → 0: the first because 8/(‖w‖^2+4) → 0, the second because ‖(4/(‖w‖^2+4)) • w‖ = 4‖w‖/(‖w‖^2+4) ≤ 4/‖w‖ → 0 (using AM-GM: ‖w‖^2+4 ≥ 2·2·‖w‖). Key: use squeeze_zero or Tendsto for both terms, then combine. On cobounded, ‖w‖ → ∞.
 -/
-theorem omega_point_is_infinity_cocompact :
-    Tendsto circleStereographicInv (cocompact ℝ) (𝓝 omegaPoint) := by
-  convert Tendsto.sup ( omega_point_is_infinity_atTop ) ( omega_point_is_infinity_atBot ) using 1;
-  ext s;
-  rw [ Filter.mem_sup ] ; aesop
+theorem stereoInvFunAux_tendsto_north_pole
+    {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+    (v : E) (hv : ‖v‖ = 1) :
+    Tendsto (stereoInvFunAux v) (Bornology.cobounded E) (nhds v) := by
+  -- Let's simplify the expression for the difference.
+  suffices h_simp : Filter.Tendsto (fun w : E => ((‖w‖^2 - 4) / (‖w‖^2 + 4)) • v + (4 / (‖w‖^2 + 4)) • w) (Bornology.cobounded E) (nhds v) by
+    convert h_simp using 2 ; unfold stereoInvFunAux ; norm_num ; ring;
+    norm_num [ add_comm, add_left_comm, add_assoc, mul_comm, smul_smul ] ; ring;
+  -- We can split the limit into two parts and show each part tends to its respective limit.
+  have h_split : Filter.Tendsto (fun w : E => ((‖w‖^2 - 4) / (‖w‖^2 + 4))) (Bornology.cobounded E) (nhds 1) ∧ Filter.Tendsto (fun w : E => (4 / (‖w‖^2 + 4)) • w) (Bornology.cobounded E) (nhds 0) := by
+    constructor;
+    · -- We can divide the numerator and the denominator by ‖w‖^2.
+      have h_div : Filter.Tendsto (fun w : E => (1 - 4 / (‖w‖^2 : ℝ)) / (1 + 4 / (‖w‖^2 : ℝ))) (Bornology.cobounded E) (nhds 1) := by
+        -- As ‖w‖ → ∞, the term $4 / (‖w‖^2)$ tends to $0$.
+        have h_zero : Filter.Tendsto (fun w : E => 4 / (‖w‖^2 : ℝ)) (Bornology.cobounded E) (nhds 0) := by
+          refine' tendsto_const_nhds.div_atTop _;
+          exact Filter.tendsto_pow_atTop ( by norm_num ) |> Filter.Tendsto.comp <| tendsto_norm_cobounded_atTop;
+        convert Filter.Tendsto.div ( tendsto_const_nhds.sub h_zero ) ( tendsto_const_nhds.add h_zero ) _ using 2 <;> norm_num;
+      refine h_div.congr' ?_;
+      filter_upwards [ Bornology.eventually_ne_cobounded 0 ] with w hw using by rw [ one_sub_div ( by positivity ), one_add_div ( by positivity ) ] ; rw [ div_div_div_cancel_right₀ ( by positivity ) ] ;
+    · have h_second_term : Filter.Tendsto (fun w : E => (4 / (‖w‖^2 + 4)) * ‖w‖) (Bornology.cobounded E) (nhds 0) := by
+        -- We can simplify the expression inside the limit further by dividing the numerator and the denominator by ‖w‖.
+        suffices h_simplify' : Filter.Tendsto (fun w : E => 4 / (‖w‖ + 4 / ‖w‖)) (Bornology.cobounded E) (nhds 0) by
+          grind;
+        refine' tendsto_const_nhds.div_atTop _;
+        exact Filter.tendsto_atTop_mono ( fun w => le_add_of_nonneg_right <| div_nonneg zero_le_four <| norm_nonneg _ ) ( tendsto_norm_cobounded_atTop );
+      exact tendsto_zero_iff_norm_tendsto_zero.mpr ( by simpa [ norm_smul, abs_of_nonneg ( by positivity : 0 ≤ ( ‖_‖^2 + 4 : ℝ ) ⁻¹ * 4 ) ] using h_second_term.norm );
+  simpa using Filter.Tendsto.add ( h_split.1.smul_const v ) h_split.2
+
+/-! ## Part 3: Topological Characterization
+
+The one-point compactification provides the proper framework:
+- `OnePoint ℝ` is `ℝ ∪ {∞}`, homeomorphic to S¹
+- The point `∞ : OnePoint ℝ` corresponds to the north pole
+- The embedding `ℝ ↪ OnePoint ℝ` corresponds to the stereographic chart
+
+This formalizes the oracle hierarchy analogy:
+- Each `n : ℝ` represents a "finite oracle" (an oracle at level n)
+- The point `∞` represents the Omega Oracle — unreachable from within but
+  a well-defined topological limit
+-/
+
+/-- The Omega Point in the one-point compactification is the point at infinity -/
+def omegaPointOnePoint : OnePoint ℝ := OnePoint.infty
+
+/-- Every finite point embeds into the one-point compactification -/
+def finiteOracle (n : ℝ) : OnePoint ℝ := .some n
+
+/-- The Omega Point is NOT a finite oracle -/
+theorem omega_not_finite : ∀ n : ℝ, omegaPointOnePoint ≠ finiteOracle n := by
+  intro n; exact nofun
+
+/-! ## Part 4: Oracle Hierarchy Interpretation
+
+The arithmetic hierarchy of oracles (∅, ∅', ∅'', ...) maps naturally to
+integers 0, 1, 2, ... on the real line. The inverse stereographic projection
+maps this "flat" hierarchy onto the sphere, where:
+
+- Oracle level n ↦ a point on S¹ approaching the north pole
+- The Omega Oracle ↦ the north pole itself (by the Omega Point Theorem)
+
+This gives a geometric interpretation of Tarski's indefinability theorem:
+the Omega Oracle is "visible" (as the north pole) but not "reachable"
+from within the arithmetic hierarchy (the stereographic chart never hits the pole).
+-/
+
+/-- Oracle level n maps to a point on S¹ via inverse stereographic projection.
+    As n → ∞, these points converge to the Omega Point (north pole). -/
+def oracleOnSphere (n : ℕ) : ℝ × ℝ := invStereo (n : ℝ)
+
+/-- Each oracle level maps to the unit circle -/
+theorem oracle_on_circle (n : ℕ) :
+    (oracleOnSphere n).1 ^ 2 + (oracleOnSphere n).2 ^ 2 = 1 := by
+  exact inv_stereo_on_circle (n : ℝ)
+
+/-- The oracle hierarchy converges to the Omega Point on the sphere -/
+theorem oracle_hierarchy_converges_to_omega :
+    Tendsto (fun n : ℕ => invStereo (n : ℝ)) atTop (nhds omegaPoint) :=
+  omega_point_is_north_pole_atTop.comp tendsto_natCast_atTop_atTop
 
 end
