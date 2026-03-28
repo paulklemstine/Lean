@@ -1,0 +1,92 @@
+{
+  "viscosity_results": [
+    {
+      "viscosity": 1.0,
+      "blowup": true,
+      "max_gradient": NaN,
+      "steps": 450,
+      "compute_time_ms": 208.87207984924316
+    },
+    {
+      "viscosity": 0.5,
+      "blowup": true,
+      "max_gradient": NaN,
+      "steps": 250,
+      "compute_time_ms": 158.39695930480957
+    },
+    {
+      "viscosity": 0.1,
+      "blowup": false,
+      "max_gradient": 3.2555261306404595,
+      "steps": 2001,
+      "compute_time_ms": 725.8632183074951
+    },
+    {
+      "viscosity": 0.05,
+      "blowup": false,
+      "max_gradient": 6.399223837166869,
+      "steps": 2001,
+      "compute_time_ms": 445.37997245788574
+    },
+    {
+      "viscosity": 0.01,
+      "blowup": false,
+      "max_gradient": 9.723969066756986,
+      "steps": 2001,
+      "compute_time_ms": 829.8780918121338
+    },
+    {
+      "viscosity": 0.005,
+      "blowup": false,
+      "max_gradient": 12.305853301588122,
+      "steps": 2001,
+      "compute_time_ms": 648.4522819519043
+    },
+    {
+      "viscosity": 0.001,
+      "blowup": false,
+      "max_gradient": 18.4610108141395,
+      "steps": 2001,
+      "compute_time_ms": 613.0809783935547
+    }
+  ],
+  "complexity_results": [
+    {
+      "N": 50,
+      "steps": 2001,
+      "compute_time_ms": 186.53368949890137,
+      "max_gradient": 2.8863139156482576,
+      "time_per_N2": 0.07461347579956054
+    },
+    {
+      "N": 75,
+      "steps": 2001,
+      "compute_time_ms": 378.61156463623047,
+      "max_gradient": 3.4921297989311877,
+      "time_per_N2": 0.06730872260199652
+    },
+    {
+      "N": 100,
+      "steps": 2001,
+      "compute_time_ms": 416.28432273864746,
+      "max_gradient": 4.057030024822278,
+      "time_per_N2": 0.04162843227386474
+    },
+    {
+      "N": 150,
+      "steps": 2001,
+      "compute_time_ms": 306.4901828765869,
+      "max_gradient": 5.017402687470239,
+      "time_per_N2": 0.013621785905626085
+    },
+    {
+      "N": 200,
+      "steps": 2001,
+      "compute_time_ms": 604.1157245635986,
+      "max_gradient": 5.596641354306104,
+      "time_per_N2": 0.015102893114089966
+    }
+  ],
+  "status": "partially_supported",
+  "refined_hypothesis": "The computational complexity of predicting NS blow-up is equivalent to the logical complexity of the blow-up question itself."
+}
