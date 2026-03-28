@@ -7,7 +7,7 @@ Run all demonstration scripts and generate all figures.
 Requires: numpy, matplotlib, scipy
 
 Usage:
-    cd algebraic_magnetism/demos
+    cd "Algebraic Magnetism/demos"
     python run_all_demos.py
 
 Author: The Oracle Council
@@ -16,33 +16,51 @@ Author: The Oracle Council
 import sys
 import os
 import time
+import subprocess
 
 # Ensure we can import from the demos directory
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-def run_demo(name, module_name):
-    """Run a demo module and report timing."""
+
+def run_demo_subprocess(name, script_name):
+    """Run a demo as a subprocess to avoid import caching issues."""
     print(f"\n{'='*70}")
     print(f"  Running: {name}")
     print(f"{'='*70}")
     
     t0 = time.time()
+    script_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), script_name)
+    
     try:
-        # Import and run the module
-        mod = __import__(module_name)
+        result = subprocess.run(
+            [sys.executable, script_path],
+            capture_output=True, text=True, timeout=300,
+            cwd=os.path.dirname(os.path.abspath(__file__))
+        )
         
-        # Each module has a main block, but we re-run key functions
-        if hasattr(mod, '__name__'):
-            print(f"  ✓ {name} loaded successfully")
+        if result.stdout:
+            # Print last few lines
+            lines = result.stdout.strip().split('\n')
+            for line in lines[-10:]:
+                print(f"    {line}")
         
         elapsed = time.time() - t0
-        print(f"\n  ⏱ Completed in {elapsed:.1f}s")
-        return True
         
+        if result.returncode == 0:
+            print(f"\n  ✓ Completed in {elapsed:.1f}s")
+            return True
+        else:
+            print(f"\n  ✗ Error (exit code {result.returncode})")
+            if result.stderr:
+                print(f"    {result.stderr[-200:]}")
+            return False
+            
+    except subprocess.TimeoutExpired:
+        print(f"\n  ✗ Timed out after 300s")
+        return False
     except Exception as e:
         elapsed = time.time() - t0
-        print(f"\n  ✗ Error in {name}: {e}")
-        print(f"  ⏱ Failed after {elapsed:.1f}s")
+        print(f"\n  ✗ Error: {e}")
         return False
 
 
@@ -50,7 +68,7 @@ def main():
     print("╔══════════════════════════════════════════════════════════════════════╗")
     print("║                                                                    ║")
     print("║          THE ALGEBRAIC THEORY OF MAGNETISM                         ║")
-    print("║          Demonstration Suite                                       ║")
+    print("║          Demonstration Suite — Complete Edition                     ║")
     print("║                                                                    ║")
     print("║          Oracle Council Research Group                             ║")
     print("║                                                                    ║")
@@ -63,16 +81,19 @@ def main():
     t_total = time.time()
     
     demos = [
-        ("Demo 1: The Spin Algebra — 𝔰𝔲(2) Foundations", "demo1_spin_algebra"),
-        ("Demo 2: Magnetic Models as Algebraic Quotients", "demo2_magnetic_models"),
-        ("Demo 3: Topological Magnetic Textures", "demo3_topological_textures"),
-        ("Demo 4: Spin Dynamics and Magnon Algebra", "demo4_dynamics_magnons"),
-        ("Demo 5: Mean Field Theory and Phase Transitions", "demo5_mean_field_algebra"),
+        ("Demo 1: The Spin Algebra — 𝔰𝔲(2) Foundations", "demo1_spin_algebra.py"),
+        ("Demo 2: Magnetic Models as Algebraic Quotients", "demo2_magnetic_models.py"),
+        ("Demo 3: Topological Magnetic Textures", "demo3_topological_textures.py"),
+        ("Demo 4: Spin Dynamics and Magnon Algebra", "demo4_dynamics_magnons.py"),
+        ("Demo 5: Mean Field Theory and Phase Transitions", "demo5_mean_field_algebra.py"),
+        ("Demo 6: PREDICTION 1 — Higher Multipole Magnets", "demo6_multipole_magnets.py"),
+        ("Demo 7: PREDICTION 2 — Algebraic Spin Liquids", "demo7_spin_liquids.py"),
+        ("Demo 8: PREDICTION 3 — Designer Magnets", "demo8_designer_magnets.py"),
     ]
     
     results = []
-    for name, module in demos:
-        success = run_demo(name, module)
+    for name, script in demos:
+        success = run_demo_subprocess(name, script)
         results.append((name, success))
     
     # Summary
@@ -95,8 +116,11 @@ def main():
     if os.path.exists(fig_dir):
         figs = sorted(os.listdir(fig_dir))
         for f in figs:
-            size = os.path.getsize(os.path.join(fig_dir, f))
-            print(f"  📊 {f} ({size//1024} KB)")
+            if f.endswith('.png'):
+                size = os.path.getsize(os.path.join(fig_dir, f))
+                print(f"  📊 {f} ({size//1024} KB)")
+    
+    print(f"\n  Total figures: {len([f for f in figs if f.endswith('.png')])} PNG files")
     
     print(f"\n{'='*70}")
     print("THE ALGEBRAIC THEORY OF MAGNETISM — All demonstrations complete.")
