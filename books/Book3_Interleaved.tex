@@ -20,8 +20,13 @@
 \author{The Stereographic Codex Research Series\\Machine-Verified Mathematics in Lean 4 with Mathlib}
 \date{2025}
 
+\setlength{\headheight}{15pt}
+\addtolength{\topmargin}{-3pt}
+\setlength{\headsep}{0.25in}
+
 \begin{document}
 \maketitle
+\normalfont
 \tableofcontents
 \newpage
 
@@ -185,11 +190,11 @@ Sometimes the most profound truths hide in the simplest maps. The ancient astron
 \section{Project PRISM — Photon Realization via Inverse Stereographic Mapping}
 
 **Research Team:**
-\noindent$\bullet$ **Agent Σ (Sigma)** — Stereographic Foundations & Conformal Geometry\\
-\noindent$\bullet$ **Agent Φ (Phi)** — Factoring & Number Theory (Gaussian Integer Particle Theory)\\
-\noindent$\bullet$ **Agent Ψ (Psi)** — Quantum Interpretation & Photon Channel Theory\\
-\noindent$\bullet$ **Agent Λ (Lambda)** — Holographic Cosmology & Information Theory\\
-\noindent$\bullet$ **Agent Ω (Omega)** — Experimental Computation & Synthesis\\
+\noindent$\bullet$ **Agent Σ (Sigma)** — Stereographic Foundations \& Conformal Geometry\\
+\noindent$\bullet$ **Agent Φ (Phi)** — Factoring \& Number Theory (Gaussian Integer Particle Theory)\\
+\noindent$\bullet$ **Agent Ψ (Psi)** — Quantum Interpretation \& Photon Channel Theory\\
+\noindent$\bullet$ **Agent Λ (Lambda)** — Holographic Cosmology \& Information Theory\\
+\noindent$\bullet$ **Agent Ω (Omega)** — Experimental Computation \& Synthesis\\
 
 \bigskip\hrule\bigskip
 
@@ -526,7 +531,7 @@ Whether nature actually uses this particular encoding is an open question. But t
 \section{References}
 
 1. Stereographic projection: classical differential geometry (do Carmo, Riemannian Geometry)
-2. Gaussian integers and sums of two squares: Hardy & Wright, An Introduction to the Theory of Numbers
+2. Gaussian integers and sums of two squares: Hardy \& Wright, An Introduction to the Theory of Numbers
 3. Holographic principle: 't Hooft (1993), Susskind (1995), Maldacena (1997)
 4. Cayley transform: Rudin, Functional Analysis
 5. Photon information channels: Bozinovic et al., Science 340 (2013); Mair et al., Nature 412 (2001)
@@ -1216,7 +1221,7 @@ the Möbius transformation
 
 $$F_{a,b}(t) = \frac{(ab+1)t + (b-a)}{(a-b)t + (ab+1)}$$
 
-with matrix $\begin{pmatrix} ab+1 & b-a \\ a-b & ab+1 \end{pmatrix}$ and determinant
+with matrix $\begin{pmatrix} ab+1 \& b-a \\ a-b \& ab+1 \end{pmatrix}$ and determinant
 $(1+a^2)(1+b^2)$.
 
 **Theorem C** (Transitivity). Two-pole maps compose transitively:
@@ -1322,7 +1327,7 @@ $$(ab+1)^2 + (b-a)^2 = (1+a^2)(1+b^2)$$
 
 This identity, proved by direct computation (`ring` in Lean), is the foundation of the
 integer mapping theory. It says that the determinant of the Möbius matrix
-$\begin{pmatrix} ab+1 & b-a \\ a-b & ab+1 \end{pmatrix}$
+$\begin{pmatrix} ab+1 \& b-a \\ a-b \& ab+1 \end{pmatrix}$
 factors as a product of two terms, each depending on only one pole.
 
 **Theorem 3.7** (Key Algebraic Identity).
@@ -1627,10 +1632,10 @@ Our investigation was organized into five specialist agents:
 | Agent | Codename | Domain | Key Contribution |
 |-------|----------|--------|------------------|
 | Σ (Sigma) | Foundations | Conformal Geometry | Injectivity, symmetry, well-definedness |
-| Φ (Phi) | Number Theory | Factoring & Primes | Euclid's formula, Brahmagupta-Fibonacci |
-| Ψ (Psi) | Quantum | Computation & Gates | Bloch sphere, Gaussian matrices, Pauli algebra |
-| Ω (Omega) | Information | Compression & AI | Pigeonhole impossibility, crystallization |
-| Λ (Lambda) | Physics | Relativity & Millennium | Lorentz form, modular group, Riemann connections |
+| Φ (Phi) | Number Theory | Factoring \& Primes | Euclid's formula, Brahmagupta-Fibonacci |
+| Ψ (Psi) | Quantum | Computation \& Gates | Bloch sphere, Gaussian matrices, Pauli algebra |
+| Ω (Omega) | Information | Compression \& AI | Pigeonhole impossibility, crystallization |
+| Λ (Lambda) | Physics | Relativity \& Millennium | Lorentz form, modular group, Riemann connections |
 \end{verbatim}
 
 \subsection{1.3 Methodology}
@@ -1750,11 +1755,11 @@ A 2×2 matrix of the form [[a, -b], [b, a]] represents multiplication by the Gau
 
 **Theorem Ψ.4** (Gaussian Determinant).
 
-$$\det \begin{pmatrix} a & -b \\ b & a \end{pmatrix} = a^2 + b^2$$
+$$\det \begin{pmatrix} a \& -b \\ b \& a \end{pmatrix} = a^2 + b^2$$
 
 **Theorem Ψ.5** (Closure Under Composition). Gaussian matrices compose as Gaussian matrices:
 
-$$\begin{pmatrix} a & -b \\ b & a \end{pmatrix} \begin{pmatrix} c & -d \\ d & c \end{pmatrix} = \begin{pmatrix} ac-bd & -(ad+bc) \\ ad+bc & ac-bd \end{pmatrix}$$
+$$\begin{pmatrix} a \& -b \\ b \& a \end{pmatrix} \begin{pmatrix} c \& -d \\ d \& c \end{pmatrix} = \begin{pmatrix} ac-bd \& -(ad+bc) \\ ad+bc \& ac-bd \end{pmatrix}$$
 
 **Theorem Ψ.6** (Norm Multiplicativity).
 
@@ -1776,7 +1781,7 @@ The Solovay-Kitaev theorem states that any unitary can be approximated by a fini
 
 \bigskip\hrule\bigskip
 
-\section{5. Agent Ω: Compression, AI & Neural Networks}
+\section{5. Agent Ω: Compression, AI \& Neural Networks}
 
 \subsection{5.1 Universal Compression is Impossible}
 
@@ -1978,7 +1983,7 @@ This single theorem encodes three deep facts from three different areas of mathe
 
 \bigskip\hrule\bigskip
 
-\section{9. Failed Experiments & Negative Results}
+\section{9. Failed Experiments \& Negative Results}
 
 \subsection{9.1 Stereo Surjectivity onto S¹ \ {(0,-1)}}
 
@@ -1996,7 +2001,7 @@ We attempted to formalize the claim that Inside-Out Factoring has complexity O(�
 
 \bigskip\hrule\bigskip
 
-\section{10. Open Questions & Future Directions}
+\section{10. Open Questions \& Future Directions}
 
 \subsection{10.1 Stereo-Quantum Gate Synthesis}
 Can the theory of continued fractions, applied to stereographic coordinates, give optimal Clifford+T decompositions of arbitrary unitaries?
@@ -2665,7 +2670,7 @@ The tree grows exponentially — 3^d triples at depth d — but so does the ener
 \section{Research Paper — Machine-Verified Mathematical Foundations}
 
 \subsection{Authors}
-Research Team Alpha (Hypothesis & Tree Structure), Team Beta (Minkowski Geometry & Null Vectors), Team Gamma (Computational Verification & Data Analysis), Oracle Consultation Unit
+Research Team Alpha (Hypothesis \& Tree Structure), Team Beta (Minkowski Geometry \& Null Vectors), Team Gamma (Computational Verification \& Data Analysis), Oracle Consultation Unit
 
 \bigskip\hrule\bigskip
 
@@ -3643,7 +3648,7 @@ All theorems below are proved in **Lean 4** with **Mathlib**, with no `sorry` ax
 
 \chapter{[Research] Quantum Gates on Berggren Trees: A Formal Research Report}
 
-\section{Team Composition & Methodology}
+\section{Team Composition \& Methodology}
 
 This research was conducted by an AI research team that:
 1. **Explored hypotheses** — tested 35+ computational experiments
@@ -4009,7 +4014,7 @@ The matrix J = [[0,-1],[1,0]] satisfies:
 
 \bigskip\hrule\bigskip
 
-\section{§11: Applications & Future Directions}
+\section{§11: Applications \& Future Directions}
 
 \subsection{Application 1: Exact Quantum Gate Synthesis}
 Pythagorean rotation gates give **exact rational rotations** (no floating-point errors). The Berggren tree provides a systematic, hierarchical method for gate synthesis:
@@ -4035,31 +4040,31 @@ The hardness of finding short vectors in the Berggren tree (related to shortest 
 \noindent$\bullet$ Hash functions based on Berggren tree walks\\
 \noindent$\bullet$ Digital signatures using the theta group structure\\
 
-\subsection{Application 5: Signal Processing & Communications}
+\subsection{Application 5: Signal Processing \& Communications}
 Pythagorean rotations give **exact CORDIC rotations** for:
 \noindent$\bullet$ Hardware-efficient digital signal processing (no rounding errors)\\
 \noindent$\bullet$ Radar beam-forming with exact angle computation\\
 \noindent$\bullet$ Communication constellation design using Gaussian integer constellations\\
 
-\subsection{Application 6: Computer Graphics & Robotics}
+\subsection{Application 6: Computer Graphics \& Robotics}
 Pythagorean quadruples give **exact rational quaternion rotations**:
 \noindent$\bullet$ Integer-arithmetic 3D rotations (avoiding floating-point drift)\\
 \noindent$\bullet$ Drift-free IMU integration using Pythagorean quaternion composition\\
 \noindent$\bullet$ Exact geometric transformations for CNC machining\\
 
-\subsection{Application 7: Number Theory & Algebraic Geometry}
+\subsection{Application 7: Number Theory \& Algebraic Geometry}
 The framework connects to deep mathematics:
 \noindent$\bullet$ **Shimura varieties**: the theta group parametrizes CM points\\
 \noindent$\bullet$ **Modular forms**: weight-2 Eisenstein series encode Pythagorean triple counts\\
 \noindent$\bullet$ **Arithmetic geometry**: the Berggren tree is a Bruhat-Tits tree quotient\\
 \noindent$\bullet$ **L-functions**: orders of R(a,b) mod p relate to Hecke eigenvalues\\
 
-\subsection{Application 8: Machine Learning & Neural Architecture}
+\subsection{Application 8: Machine Learning \& Neural Architecture}
 \noindent$\bullet$ **Orthogonal RNN layers**: Pythagorean rotations as exact orthogonal transformations\\
 \noindent$\bullet$ **Geometric deep learning**: SO(2)-equivariant networks with integer parameters\\
 \noindent$\bullet$ **Quantization**: integer-valued rotation matrices for efficient inference\\
 
-\subsection{Application 9: Compressed Sensing & Sparse Recovery}
+\subsection{Application 9: Compressed Sensing \& Sparse Recovery}
 \noindent$\bullet$ **Measurement matrices**: Pythagorean rotation matrices have optimal condition numbers\\
 \noindent$\bullet$ **Structured random matrices**: tree-indexed rotations for sub-Gaussian designs\\
 \noindent$\bullet$ **Phase retrieval**: exploiting the Gaussian integer structure for signal recovery\\
@@ -4443,7 +4448,7 @@ All core results are machine-verified in Lean 4, providing the highest level of 
 
 1. Berggren, B. (1934). Pytagoreiska trianglar. *Tidskrift för elementär matematik, fysik och kemi*, 17, 129-139.
 2. Gauss, C.F. (1801). *Disquisitiones Arithmeticae*. (Sum of two squares theory)
-3. Hardy, G.H. & Wright, E.M. (2008). *An Introduction to the Theory of Numbers*. Oxford University Press.
+3. Hardy, G.H. \& Wright, E.M. (2008). *An Introduction to the Theory of Numbers*. Oxford University Press.
 
 \bigskip\hrule\bigskip
 
@@ -5034,13 +5039,13 @@ All results are machine-verified in Lean 4, ensuring mathematical rigor across t
 
 \section{References}
 
-1. Allen, L., Beijersbergen, M.W., Spreeuw, R.J.C., & Woerdman, J.P. (1992). Orbital angular momentum of light and the transformation of Laguerre-Gaussian laser modes. *Physical Review A*, 45(11), 8185.
+1. Allen, L., Beijersbergen, M.W., Spreeuw, R.J.C., \& Woerdman, J.P. (1992). Orbital angular momentum of light and the transformation of Laguerre-Gaussian laser modes. *Physical Review A*, 45(11), 8185.
 2. Baez, J.C. (2002). The Octonions. *Bulletin of the American Mathematical Society*, 39(2), 145-205.
-3. Conway, J.H. & Smith, D.A. (2003). *On Quaternions and Octonions*. A.K. Peters.
+3. Conway, J.H. \& Smith, D.A. (2003). *On Quaternions and Octonions*. A.K. Peters.
 4. Hurwitz, A. (1898). Über die Composition der quadratischen Formen von beliebig vielen Variablen. *Nachrichten von der Gesellschaft der Wissenschaften zu Göttingen*, 309-316.
 5. Jacobi, C.G.J. (1829). *Fundamenta nova theoriae functionum ellipticarum*.
 6. Milnor, J. (1958). Some consequences of a theorem of Bott. *Annals of Mathematics*, 68(2), 444-449.
-7. Born, M. & Wolf, E. (1999). *Principles of Optics*, 7th ed. Cambridge University Press.
+7. Born, M. \& Wolf, E. (1999). *Principles of Optics*, 7th ed. Cambridge University Press.
 8. Berggren, B. (1934). Pytagoreiska trianglar. *Tidskrift för Elementär Matematik, Fysik och Kemi*, 17, 129-139.
 
 \bigskip\hrule\bigskip
@@ -6405,7 +6410,7 @@ In the oracle framework, an **oracle** is an idempotent function $O$ satisfying 
 
 The light/dark classification defines a natural oracle on the primes:
 
-$$\mathcal{O}(p) = \begin{cases} 1 & \text{if } p \text{ is light} \\ 0 & \text{if } p \text{ is dark} \\ 2 & \text{if } p \text{ is not prime} \end{cases}$$
+$$\mathcal{O}(p) = \begin{cases} 1 \& \text{if } p \text{ is light} \\ 0 \& \text{if } p \text{ is dark} \\ 2 \& \text{if } p \text{ is not prime} \end{cases}$$
 
 This oracle reveals the "truth" of a prime's binary nature. Light primes (eigenvalue 1) are truths; dark primes (eigenvalue 0) are "untruths" or "conjectures."
 
@@ -7688,7 +7693,7 @@ Our mathematics suggests the latter. And that might be the most important findin
 
 \section{A Research Paper by the Harmonic Research Collective}
 
-**Authors:** Aristotle Research Team — Agents Alpha (Quantum Architecture), Beta (Tensor Theory), Gamma (Computational Experiments), Delta (Linearization Theory), Epsilon (Synthesis & Validation)
+**Authors:** Aristotle Research Team — Agents Alpha (Quantum Architecture), Beta (Tensor Theory), Gamma (Computational Experiments), Delta (Linearization Theory), Epsilon (Synthesis \& Validation)
 
 **Date:** 2025
 
@@ -8319,14 +8324,14 @@ The question "Can we compile an LLM to a single quantum gate?" has a definitive 
 \section{References}
 
 1. Vaswani, A. et al. (2017). "Attention Is All You Need." *NeurIPS*.
-2. Nielsen, M. A. & Chuang, I. L. (2010). *Quantum Computation and Quantum Information*. Cambridge University Press.
+2. Nielsen, M. A. \& Chuang, I. L. (2010). *Quantum Computation and Quantum Information*. Cambridge University Press.
 3. Radford, A. et al. (2019). "Language Models are Unsupervised Multitask Learners." (GPT-2 paper).
 4. Orus, R. (2014). "A practical introduction to tensor networks." *Annals of Physics* 349.
 5. Brunton, S. L. et al. (2016). "Discovering governing equations from data by sparse identification of nonlinear dynamical systems." *PNAS*.
 6. Koopman, B. O. (1931). "Hamiltonian systems and transformation in Hilbert space." *PNAS* 17(5).
 7. Montufar, G. et al. (2014). "On the number of linear regions of deep neural networks." *NeurIPS*.
 8. Vidal, G. (2008). "Class of quantum many-body states that can be efficiently simulated." *PRL* 101.
-9. Kerenidis, I. & Prakash, A. (2017). "Quantum Recommendation Systems." *ITCS*.
+9. Kerenidis, I. \& Prakash, A. (2017). "Quantum Recommendation Systems." *ITCS*.
 10. Arora, S. et al. (2018). "On the optimization of deep networks: implicit acceleration by overparameterization." *ICML*.
 
 \bigskip\hrule\bigskip
@@ -10144,8 +10149,8 @@ The most exciting direction for future work is the application of TurboQuant to 
 \subsection{References}
 
 1. Shannon, C. E. (1948). A mathematical theory of communication. *Bell System Technical Journal*, 27(3), 379-423.
-2. Zandieh, A., Daliri, M., & Han, I. (2024). QJL: 1-bit quantized JL transform for KV cache quantization with zero overhead. *arXiv:2406.03482*.
-3. Johnson, W. B., & Lindenstrauss, J. (1984). Extensions of Lipschitz mappings into a Hilbert space. *Contemporary Mathematics*, 26, 189-206.
+2. Zandieh, A., Daliri, M., \& Han, I. (2024). QJL: 1-bit quantized JL transform for KV cache quantization with zero overhead. *arXiv:2406.03482*.
+3. Johnson, W. B., \& Lindenstrauss, J. (1984). Extensions of Lipschitz mappings into a Hilbert space. *Contemporary Mathematics*, 26, 189-206.
 4. Zador, P. L. (1964). Development and evaluation of procedures for quantizing multivariate distributions. *Stanford University*.
 5. Lloyd, S. (1982). Least squares quantization in PCM. *IEEE Transactions on Information Theory*, 28(2), 129-137.
 6. Gersho, A. (1979). Asymptotically optimal block quantization. *IEEE Transactions on Information Theory*, 25(4), 373-380.
@@ -10396,7 +10401,7 @@ This is the "heat death" state of a qubit — maximum entropy, minimum informati
 
 \subsection{3.1 Algebraic Core}
 
-The no-cloning theorem (Wootters & Zurek, 1982) states that no physical process can copy an arbitrary quantum state. We prove the algebraic heart of this result:
+The no-cloning theorem (Wootters \& Zurek, 1982) states that no physical process can copy an arbitrary quantum state. We prove the algebraic heart of this result:
 
 **Theorem 3.1** (No-Cloning Constraint).
 *If $z \in \mathbb{C}$ satisfies $z = z^2$, then $z \in \{0, 1\}$.*
@@ -10425,7 +10430,7 @@ The no-cloning theorem constrains any "universe decoder":
 
 The Pauli matrices form the fundamental alphabet of quantum computation:
 
-$$X = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}, \quad Y = \begin{pmatrix} 0 & -i \\ i & 0 \end{pmatrix}, \quad Z = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}$$
+$$X = \begin{pmatrix} 0 \& 1 \\ 1 \& 0 \end{pmatrix}, \quad Y = \begin{pmatrix} 0 \& -i \\ i \& 0 \end{pmatrix}, \quad Z = \begin{pmatrix} 1 \& 0 \\ 0 \& -1 \end{pmatrix}$$
 
 We prove their complete algebraic structure:
 
@@ -10474,7 +10479,7 @@ This ensures that the tensor product of physical states remains physical — the
 
 \subsection{5.3 Entanglement as Spacetime Fabric}
 
-The ER = EPR conjecture (Maldacena & Susskind, 2013) proposes that entanglement IS spacetime connectivity:
+The ER = EPR conjecture (Maldacena \& Susskind, 2013) proposes that entanglement IS spacetime connectivity:
 \noindent$\bullet$ Einstein-Rosen bridges (wormholes) ↔ Einstein-Podolsky-Rosen pairs (entangled particles)\\
 \noindent$\bullet$ Destroying entanglement = disconnecting spacetime regions\\
 \noindent$\bullet$ The universe's quantum state is a vast entanglement network\\
@@ -10667,18 +10672,18 @@ The overarching message: **the mathematical structure of quantum mechanics, when
 
 1. Feynman, R. P. (1982). Simulating physics with computers. *Int. J. Theor. Phys.*, 21(6-7), 467-488.
 2. Lloyd, S. (1996). Universal quantum simulators. *Science*, 273(5278), 1073-1078.
-3. Wootters, W. K., & Zurek, W. H. (1982). A single quantum cannot be cloned. *Nature*, 299(5886), 802-803.
+3. Wootters, W. K., \& Zurek, W. H. (1982). A single quantum cannot be cloned. *Nature*, 299(5886), 802-803.
 4. Maldacena, J. (1999). The large-N limit of superconformal field theories and supergravity. *Int. J. Theor. Phys.*, 38(4), 1113-1133.
-5. Ryu, S., & Takayanagi, T. (2006). Holographic derivation of entanglement entropy from the anti–de Sitter space/conformal field theory correspondence. *Phys. Rev. Lett.*, 96(18), 181602.
-6. Maldacena, J., & Susskind, L. (2013). Cool horizons for entangled black holes. *Fortschr. Phys.*, 61(9), 781-811.
+5. Ryu, S., \& Takayanagi, T. (2006). Holographic derivation of entanglement entropy from the anti–de Sitter space/conformal field theory correspondence. *Phys. Rev. Lett.*, 96(18), 181602.
+6. Maldacena, J., \& Susskind, L. (2013). Cool horizons for entangled black holes. *Fortschr. Phys.*, 61(9), 781-811.
 7. Susskind, L. (2016). Computational complexity and black hole horizons. *Fortschr. Phys.*, 64(1), 24-43.
-8. Almheiri, A., Dong, X., & Harlow, D. (2015). Bulk locality and quantum error correction in AdS/CFT. *JHEP*, 2015(4), 163.
-9. Nielsen, M. A., Dowling, M. R., Gu, M., & Doherty, A. C. (2006). Quantum computation as geometry. *Science*, 311(5764), 1133-1135.
+8. Almheiri, A., Dong, X., \& Harlow, D. (2015). Bulk locality and quantum error correction in AdS/CFT. *JHEP*, 2015(4), 163.
+9. Nielsen, M. A., Dowling, M. R., Gu, M., \& Doherty, A. C. (2006). Quantum computation as geometry. *Science*, 311(5764), 1133-1135.
 10. Preskill, J. (2018). Quantum computing in the NISQ era and beyond. *Quantum*, 2, 79.
-11. Margolus, N., & Levitin, L. B. (1998). The maximum speed of dynamical evolution. *Physica D*, 120(1-2), 188-195.
+11. Margolus, N., \& Levitin, L. B. (1998). The maximum speed of dynamical evolution. *Physica D*, 120(1-2), 188-195.
 12. de Moura, L. et al. (2015). The Lean Theorem Prover. *CADE-25*, 378-388.
 13. The Mathlib Community. (2020). The Lean Mathematical Library. *CPP 2020*, 367-381.
-14. Brown, A. R., Roberts, D. A., Susskind, L., Swingle, B., & Zhao, Y. (2016). Complexity, action, and black holes. *Phys. Rev. D*, 93(8), 086006.
+14. Brown, A. R., Roberts, D. A., Susskind, L., Swingle, B., \& Zhao, Y. (2016). Complexity, action, and black holes. *Phys. Rev. D*, 93(8), 086006.
 
 \bigskip\hrule\bigskip
 
@@ -11279,7 +11284,7 @@ The Alcubierre metric requires negative energy density. Energy scales as v²R² 
 | Baby Black Hole Sim | 100 | 15 years | 2 | Error correction |
 | Protein Folding | 10,000 | 15 years | 2 | Gate fidelity |
 | Quantum Money | 400 | 20 years | 3 | Quantum memory lifetime |
-| Terraforming Sim | 6,000 | 20 years | 2 | Scale & fidelity |
+| Terraforming Sim | 6,000 | 20 years | 2 | Scale \& fidelity |
 | Dyson Sphere Opt | 1,000 | 30 years | 1 | Problem formulation |
 | Warp Drive | ∞ | Never | 0 | Physics (negative energy) |
 \end{verbatim}
@@ -11452,7 +11457,7 @@ This is what simulators like Qiskit's `statevector_simulator`, Cirq, and QuEST d
 
 \bigskip\hrule\bigskip
 
-\section{Part III: Research Team & Hypotheses}
+\section{Part III: Research Team \& Hypotheses}
 
 \subsection{Team Alpha: Algebraic Quantum Simulation}
 **Mission**: Develop algebraic methods that bypass state-vector simulation entirely.
@@ -12730,18 +12735,18 @@ Everything is connected through the single axiom O(O(x)) = O(x).
 6. Jacobson, T. (1995). "Thermodynamics of spacetime: The Einstein equation of state." *Physical Review Letters*, 75(7), 1260.
 7. Maldacena, J. (1999). "The large-N limit of superconformal field theories and supergravity." *International Journal of Theoretical Physics*, 38(4), 1113–1133.
 8. Bousso, R. (1999). "A covariant entropy conjecture." *Journal of High Energy Physics*, 1999(07), 004.
-9. Berry, M. V., & Keating, J. P. (1999). "The Riemann zeros and eigenvalue asymptotics." *SIAM Review*, 41(2), 236–266.
+9. Berry, M. V., \& Keating, J. P. (1999). "The Riemann zeros and eigenvalue asymptotics." *SIAM Review*, 41(2), 236–266.
 10. Verlinde, E. (2011). "On the origin of gravity and the laws of Newton." *Journal of High Energy Physics*, 2011(4), 29.
 11. Bhattacharyya, S., et al. (2008). "Nonlinear fluid dynamics from gravity." *Journal of High Energy Physics*, 2008(02), 045.
-12. Almheiri, A., Dong, X., & Harlow, D. (2015). "Bulk locality and quantum error correction in AdS/CFT." *Journal of High Energy Physics*, 2015(4), 163.
-13. Maldacena, J., & Susskind, L. (2013). "Cool horizons for entangled black holes." *Fortschritte der Physik*, 61(9), 781–811.
+12. Almheiri, A., Dong, X., \& Harlow, D. (2015). "Bulk locality and quantum error correction in AdS/CFT." *Journal of High Energy Physics*, 2015(4), 163.
+13. Maldacena, J., \& Susskind, L. (2013). "Cool horizons for entangled black holes." *Fortschritte der Physik*, 61(9), 781–811.
 14. Penrose, R. (1965). "Gravitational collapse and space-time singularities." *Physical Review Letters*, 14(3), 57.
-15. Ryu, S., & Takayanagi, T. (2006). "Holographic derivation of entanglement entropy from the anti-de Sitter space/conformal field theory correspondence." *Physical Review Letters*, 96(18), 181602.
+15. Ryu, S., \& Takayanagi, T. (2006). "Holographic derivation of entanglement entropy from the anti-de Sitter space/conformal field theory correspondence." *Physical Review Letters*, 96(18), 181602.
 16. Perelman, G. (2002). "The entropy formula for the Ricci flow and its geometric applications." *arXiv:math/0211159*.
-17. Aaronson, S., & Watrous, J. (2009). "Closed timelike curves make quantum and classical computing equivalent." *Proceedings of the Royal Society A*, 465(2102), 631–647.
+17. Aaronson, S., \& Watrous, J. (2009). "Closed timelike curves make quantum and classical computing equivalent." *Proceedings of the Royal Society A*, 465(2102), 631–647.
 18. Page, D. N. (1993). "Information in black hole radiation." *Physical Review Letters*, 71(23), 3743.
 19. Hofstadter, D. R. (1979). *Gödel, Escher, Bach: An Eternal Golden Braid*. Basic Books.
-20. Penrose, R., & Hameroff, S. (2014). "Consciousness in the universe: A review of the 'Orch OR' theory." *Physics of Life Reviews*, 11(1), 39–78.
+20. Penrose, R., \& Hameroff, S. (2014). "Consciousness in the universe: A review of the 'Orch OR' theory." *Physics of Life Reviews*, 11(1), 39–78.
 
 \bigskip\hrule\bigskip
 
@@ -12956,9 +12961,9 @@ We present a novel perspective on the Berggren ternary tree of primitive Pythago
 
 The Berggren tree (Berggren 1934, Barning 1963, Hall 1970, Price 2008) is one of the most beautiful structures in elementary number theory. Starting from the root triple (3, 4, 5), three integer linear transformations generate **all** primitive Pythagorean triples:
 
-$$B_1 = \begin{pmatrix} 1 & -2 & 2 \\ 2 & -1 & 2 \\ 2 & -2 & 3 \end{pmatrix}, \quad
-B_2 = \begin{pmatrix} 1 & 2 & 2 \\ 2 & 1 & 2 \\ 2 & 2 & 3 \end{pmatrix}, \quad
-B_3 = \begin{pmatrix} -1 & 2 & 2 \\ -2 & 1 & 2 \\ -2 & 2 & 3 \end{pmatrix}$$
+$$B_1 = \begin{pmatrix} 1 \& -2 \& 2 \\ 2 \& -1 \& 2 \\ 2 \& -2 \& 3 \end{pmatrix}, \quad
+B_2 = \begin{pmatrix} 1 \& 2 \& 2 \\ 2 \& 1 \& 2 \\ 2 \& 2 \& 3 \end{pmatrix}, \quad
+B_3 = \begin{pmatrix} -1 \& 2 \& 2 \\ -2 \& 1 \& 2 \\ -2 \& 2 \& 3 \end{pmatrix}$$
 
 Each matrix maps a Pythagorean triple (a, b, c) to a new Pythagorean triple, and every primitive triple appears exactly once in the resulting ternary tree.
 
@@ -13630,7 +13635,7 @@ The photon-as-epistemic-bridge perspective, when formalized, generates a coheren
 1. Feynman, R. P. *QED: The Strange Theory of Light and Matter*. Princeton University Press, 1985.
 2. Rovelli, C. "Relational Quantum Mechanics." *Int. J. Theor. Phys.*, 35(8), 1637–1678, 1996.
 3. Holevo, A. S. "Bounds for the Quantity of Information Transmitted by a Quantum Communication Channel." *Problems of Information Transmission*, 9(3), 177–183, 1973.
-4. Clauser, J. F., Horne, M. A., Shimony, A., & Holt, R. A. "Proposed Experiment to Test Local Hidden-Variable Theories." *Physical Review Letters*, 23(15), 880–884, 1969.
+4. Clauser, J. F., Horne, M. A., Shimony, A., \& Holt, R. A. "Proposed Experiment to Test Local Hidden-Variable Theories." *Physical Review Letters*, 23(15), 880–884, 1969.
 5. Tsirelson, B. S. "Quantum Generalizations of Bell's Inequality." *Letters in Mathematical Physics*, 4(2), 93–100, 1980.
 6. Zurek, W. H. "Quantum Darwinism." *Nature Physics*, 5(3), 181–188, 2009.
 7. de Moura, L. et al. "The Lean 4 Theorem Prover and Programming Language." *CADE-28*, 2021.
@@ -13908,7 +13913,7 @@ This means the celestial sphere literally IS the space of photon directions, par
 \subsection{4.2 Möbius Transformations and the Lorentz Group}
 
 The Lorentz group SO⁺(1,3) acts on the celestial sphere by Möbius transformations:
-$$z \mapsto \frac{az + b}{cz + d}, \quad \begin{pmatrix} a & b \\ c & d \end{pmatrix} \in \mathrm{SL}(2,\mathbb{C})$$
+$$z \mapsto \frac{az + b}{cz + d}, \quad \begin{pmatrix} a \& b \\ c \& d \end{pmatrix} \in \mathrm{SL}(2,\mathbb{C})$$
 
 This is the famous isomorphism SL(2,ℂ)/ℤ₂ ≅ SO⁺(1,3). We formalize and verify the identity Möbius transformation as a base case.
 
@@ -16463,13 +16468,13 @@ The crystallizer loss function is literally a measure of how far a weight is fro
 
 \bigskip\hrule\bigskip
 
-\section{9. Future Research Directions & Moonshot Applications}
+\section{9. Future Research Directions \& Moonshot Applications}
 
 \subsection{9.1 Near-Term Research Directions}
 
 \subsubsection{9.1.1 Relativistic Aberration via Stereographic-Möbius}
 A Lorentz boost acts on the celestial sphere as a **Möbius transformation** in stereographic coordinates. In (3+1)d, this maps S² → S² via:
-$$z \mapsto \frac{az + b}{cz + d}, \quad \begin{pmatrix} a & b \\ c & d \end{pmatrix} \in SL(2, \mathbb{C})$$
+$$z \mapsto \frac{az + b}{cz + d}, \quad \begin{pmatrix} a \& b \\ c \& d \end{pmatrix} \in SL(2, \mathbb{C})$$
 
 This connects the crystallizer's stereographic projection to the **spin group Spin(3,1) ≅ SL(2,ℂ)**, the double cover of the Lorentz group. Formalizing this would link the crystallizer to spinor geometry and twistor theory.
 
@@ -16851,7 +16856,7 @@ $$t \mapsto \frac{\alpha t + \beta}{\gamma t + \delta}, \quad \alpha\delta - \be
 
 **Theorem** (`mobius_composition`): The composition of two Möbius transformations corresponds to matrix multiplication:
 
-$$M_1 \circ M_2 \leftrightarrow \begin{pmatrix} a_1 & b_1 \\ c_1 & d_1 \end{pmatrix} \begin{pmatrix} a_2 & b_2 \\ c_2 & d_2 \end{pmatrix}$$
+$$M_1 \circ M_2 \leftrightarrow \begin{pmatrix} a_1 \& b_1 \\ c_1 \& d_1 \end{pmatrix} \begin{pmatrix} a_2 \& b_2 \\ c_2 \& d_2 \end{pmatrix}$$
 
 **Theorem** (`mobius_identity`): The identity matrix gives the identity Möbius transformation.
 
@@ -16881,7 +16886,7 @@ Since Lorentz boosts act as dilations on the celestial circle, the cross-ratio o
 
 \bigskip\hrule\bigskip
 
-\section{4. Team Ω: Spatial Symmetry & Electromagnetic Duality}
+\section{4. Team Ω: Spatial Symmetry \& Electromagnetic Duality}
 
 \subsection{4.1 Spatial Rotations}
 
@@ -17071,7 +17076,7 @@ Building on the dictionary from the Light Cone Paper, we add new entries:
 
 \bigskip\hrule\bigskip
 
-\section{9. Future Research Directions & Moonshot Applications}
+\section{9. Future Research Directions \& Moonshot Applications}
 
 \subsection{9.1 Immediate Research Directions}
 
@@ -18314,7 +18319,7 @@ The tropical semiring was hiding in plain sight — inside every ReLU, every sof
 
 \section{Authors}
 
-**Agent Alpha** (Algebraic Foundations), **Agent Beta** (AI/ML Applications), **Agent Gamma** (Complexity & Compression), **Agent Delta** (Number Theory & Factoring), **Agent Epsilon** (Geometry & Topology), **Agent Zeta** (Information Theory), **Agent Eta** (Physics & Quantum Duality), **Agent Theta** (Automata & Logic), **Agent Iota** (Optimization), **Agent Kappa** (Cryptography), **Agent Lambda** (Category Theory), **Agent Mu** (Dynamical Systems), **Agent Nu** (Coding Theory), **Agent Xi** (Probability & Extreme Values), **Agent Omicron** (Hardware & Circuits), **Agent Pi** (Biology)
+**Agent Alpha** (Algebraic Foundations), **Agent Beta** (AI/ML Applications), **Agent Gamma** (Complexity \& Compression), **Agent Delta** (Number Theory \& Factoring), **Agent Epsilon** (Geometry \& Topology), **Agent Zeta** (Information Theory), **Agent Eta** (Physics \& Quantum Duality), **Agent Theta** (Automata \& Logic), **Agent Iota** (Optimization), **Agent Kappa** (Cryptography), **Agent Lambda** (Category Theory), **Agent Mu** (Dynamical Systems), **Agent Nu** (Coding Theory), **Agent Xi** (Probability \& Extreme Values), **Agent Omicron** (Hardware \& Circuits), **Agent Pi** (Biology)
 
 \bigskip\hrule\bigskip
 
@@ -18942,7 +18947,7 @@ Together, they produced over 210 formally verified theorems — a scale of forma
 
 \section{Authors}
 
-**Agent Alpha** (Algebraic Foundations), **Agent Beta** (AI/ML Applications), **Agent Gamma** (Complexity & Compression), **Agent Delta** (Number Theory & Millennium Connections), **Agent Epsilon** (Geometry & Topology), **Agent Zeta** (Information Theory), **Agent Eta** (Physics & Quantum Duality), **Agent Theta** (Automata & Logic)
+**Agent Alpha** (Algebraic Foundations), **Agent Beta** (AI/ML Applications), **Agent Gamma** (Complexity \& Compression), **Agent Delta** (Number Theory \& Millennium Connections), **Agent Epsilon** (Geometry \& Topology), **Agent Zeta** (Information Theory), **Agent Eta** (Physics \& Quantum Duality), **Agent Theta** (Automata \& Logic)
 
 \bigskip\hrule\bigskip
 
@@ -19100,14 +19105,14 @@ Recurrent neural networks (RNNs) with ReLU activations iterate the map x ↦ max
 
 **Definition.** The **tropical derivative** (ReLU derivative) is the Heaviside step function:
 
-$$\text{ReLU}'(x) = \begin{cases} 1 & \text{if } x > 0 \\ 0 & \text{if } x \leq 0 \end{cases}$$
+$$\text{ReLU}'(x) = \begin{cases} 1 \& \text{if } x > 0 \\ 0 \& \text{if } x \leq 0 \end{cases}$$
 
 **Theorem (Binary Gradients).** *ReLU'(x) ∈ {0, 1} for all x.*
 
 \subsection{5.2 Backpropagation as Tropical Path Selection}
 
 **Theorem (Tropical Gate).** *Backpropagation through ReLU acts as a binary gate:*
-$$\text{ReLU}'(x) \cdot g = \begin{cases} g & \text{if } x > 0 \\ 0 & \text{if } x \leq 0 \end{cases}$$
+$$\text{ReLU}'(x) \cdot g = \begin{cases} g \& \text{if } x > 0 \\ 0 \& \text{if } x \leq 0 \end{cases}$$
 
 **Theorem (Binary Product).** *The product of any two ReLU derivatives is in {0, 1}.*
 
@@ -19594,7 +19599,7 @@ One thing is certain: the discovery that AI speaks tropical mathematics fluently
 \bigskip\hrule\bigskip
 
 \subsection{Authors}
-Research Team: Agents Alpha (Algebra & Structure), Beta (Applications & AI), Gamma (Complexity & Compression), Delta (Millennium Connections), Epsilon (Synthesis & Integration)
+Research Team: Agents Alpha (Algebra \& Structure), Beta (Applications \& AI), Gamma (Complexity \& Compression), Delta (Millennium Connections), Epsilon (Synthesis \& Integration)
 
 \bigskip\hrule\bigskip
 
@@ -19941,7 +19946,7 @@ Every theorem is:
 
 \section{11. Related Work}
 
-\noindent$\bullet$ **Tropical Geometry** (Maclagan & Sturmfels, 2015): The mathematical foundations of tropical algebra and its geometric applications.\\
+\noindent$\bullet$ **Tropical Geometry** (Maclagan \& Sturmfels, 2015): The mathematical foundations of tropical algebra and its geometric applications.\\
 \noindent$\bullet$ **Max-Plus Algebra** (Baccelli et al., 1992): Applications to discrete event systems and optimization.\\
 \noindent$\bullet$ **Neural Network Complexity** (Montúfar et al., 2014): Counting linear regions of deep networks.\\
 \noindent$\bullet$ **Softmax and Temperature Scaling** (Hinton et al., 2015): Knowledge distillation via temperature-controlled softmax.\\
@@ -20222,7 +20227,7 @@ Tropical mathematics already appears in surprising places:
 
 \chapter{[Research] Tropical Algebra and the Hidden Geometry of Neural Networks: Extended Frontier Study}
 
-**Authors**: Agent Alpha (Algebra), Agent Beta (Applications), Agent Gamma (Complexity), Agent Delta (Connections), Agent Epsilon (Synthesis & Verification), Agent Zeta (Experiments), Agent Eta (Information Theory), Agent Theta (Compression & Factoring), Agent Iota (Moonshot Hypotheses)
+**Authors**: Agent Alpha (Algebra), Agent Beta (Applications), Agent Gamma (Complexity), Agent Delta (Connections), Agent Epsilon (Synthesis \& Verification), Agent Zeta (Experiments), Agent Eta (Information Theory), Agent Theta (Compression \& Factoring), Agent Iota (Moonshot Hypotheses)
 
 **Date**: 2025
 
@@ -20243,15 +20248,15 @@ Our initial study established 19 formally verified theorems connecting tropical 
 \begin{verbatim}
 | Agent | Domain | Theorems Proved |
 |-------|--------|-----------------|
-| Alpha | Tropical algebra & semiring axioms | 18 |
-| Beta | ReLU network expressivity & universality | 22 |
+| Alpha | Tropical algebra \& semiring axioms | 18 |
+| Beta | ReLU network expressivity \& universality | 22 |
 | Gamma | Complexity theory connections | 4 |
 | Delta | Cross-domain connections (PDE, metrics, optimization) | 16 |
-| Epsilon | Synthesis & formal verification | — (verification) |
+| Epsilon | Synthesis \& formal verification | — (verification) |
 | Zeta | Experimental protocol design | — (protocols) |
-| Eta | Information theory & entropy | 12 |
-| Theta | Compression & number theory | 13 |
-| Iota | Moonshot hypotheses & geometry | 8 |
+| Eta | Information theory \& entropy | 12 |
+| Theta | Compression \& number theory | 13 |
+| Iota | Moonshot hypotheses \& geometry | 8 |
 \end{verbatim}
 
 \subsection{1.2 Key New Results}
@@ -20353,7 +20358,7 @@ We establish the complete algebraic structure of ReLU:
 
 **Theorem 3.1** (Two-Piece Representation). Any continuous piecewise-linear function with two pieces and a breakpoint at t can be expressed using a single ReLU unit:
 
-$$f(x) = \begin{cases} a_1 x + b_1 & \text{if } x \leq t \\ a_2 x + (b_1 + (a_1-a_2)t) & \text{if } x > t \end{cases} = a_1 x + b_1 + (a_2 - a_1) \cdot \text{relu}(x - t)$$
+$$f(x) = \begin{cases} a_1 x + b_1 \& \text{if } x \leq t \\ a_2 x + (b_1 + (a_1-a_2)t) \& \text{if } x > t \end{cases} = a_1 x + b_1 + (a_2 - a_1) \cdot \text{relu}(x - t)$$
 
 Note the continuity constraint: the function must be continuous at t, which forces b₂ = b₁ + (a₁ - a₂)t. The original statement without this constraint was **formally disproved** by the verification system.
 
@@ -20886,16 +20891,16 @@ The tropical perspective provides a unified mathematical language for understand
 
 \section{References}
 
-1. Maclagan, D. & Sturmfels, B. (2015). *Introduction to Tropical Geometry*. AMS.
-2. Zhang, L., Naitzat, G., & Lim, L.-H. (2018). Tropical geometry of deep neural networks. *ICML*.
-3. Montúfar, G., Pascanu, R., Cho, K., & Bengio, Y. (2014). On the number of linear regions of deep neural networks. *NeurIPS*.
+1. Maclagan, D. \& Sturmfels, B. (2015). *Introduction to Tropical Geometry*. AMS.
+2. Zhang, L., Naitzat, G., \& Lim, L.-H. (2018). Tropical geometry of deep neural networks. *ICML*.
+3. Montúfar, G., Pascanu, R., Cho, K., \& Bengio, Y. (2014). On the number of linear regions of deep neural networks. *NeurIPS*.
 4. Mathlib Community. (2024). *Mathlib4*. https://github.com/leanprover-community/mathlib4
 5. Mikhalkin, G. (2005). Enumerative tropical algebraic geometry in ℝ². *J. Amer. Math. Soc.*
-6. Pachter, L. & Sturmfels, B. (2004). Tropical geometry of statistical models. *PNAS*.
-7. Baker, M. & Norine, S. (2007). Riemann-Roch and Abel-Jacobi theory on a finite graph. *Advances in Mathematics*.
+6. Pachter, L. \& Sturmfels, B. (2004). Tropical geometry of statistical models. *PNAS*.
+7. Baker, M. \& Norine, S. (2007). Riemann-Roch and Abel-Jacobi theory on a finite graph. *Advances in Mathematics*.
 8. Viro, O. (2010). Hyperfields for tropical geometry I. *arXiv:1006.3034*.
-9. Amini, O. & Baker, M. (2015). Linear series on metrized complexes of algebraic curves. *Mathematische Annalen*.
-10. Itenberg, I. & Mikhalkin, G. (2012). Geometry in the tropical limit. *Mathematische Semesterberichte*.
+9. Amini, O. \& Baker, M. (2015). Linear series on metrized complexes of algebraic curves. *Mathematische Annalen*.
+10. Itenberg, I. \& Mikhalkin, G. (2012). Geometry in the tropical limit. *Mathematische Semesterberichte*.
 
 \bigskip\hrule\bigskip
 
@@ -21172,7 +21177,7 @@ The methodology of extracting formal mathematical content from neural architectu
 
 1. Pin, J.-É. "Tropical Semirings." *Idempotency* (1998).
 2. Amari, S. "Natural Gradient Works Efficiently in Learning." *Neural Computation* 10.2 (1998).
-3. Bauer, F., & Nock, R. "Idempotent Operators in Machine Learning." *JMLR* (2012).
+3. Bauer, F., \& Nock, R. "Idempotent Operators in Machine Learning." *JMLR* (2012).
 4. The Mathlib Community. "Mathlib: A Unified Library of Mathematics." (2024).
 
 \clearpage
@@ -21747,17 +21752,17 @@ The natural algebra for neural networks may not be the one we've been using. It 
 
 \section{References}
 
-1. Zhang, L., Naitzat, G., & Lim, L.-H. (2018). Tropical geometry of deep neural networks. *Proceedings of the 35th International Conference on Machine Learning (ICML)*.
+1. Zhang, L., Naitzat, G., \& Lim, L.-H. (2018). Tropical geometry of deep neural networks. *Proceedings of the 35th International Conference on Machine Learning (ICML)*.
 
-2. Montúfar, G., Pascanu, R., Cho, K., & Bengio, Y. (2014). On the number of linear regions of deep neural networks. *Advances in Neural Information Processing Systems (NeurIPS)*.
+2. Montúfar, G., Pascanu, R., Cho, K., \& Bengio, Y. (2014). On the number of linear regions of deep neural networks. *Advances in Neural Information Processing Systems (NeurIPS)*.
 
-3. Maclagan, D., & Sturmfels, B. (2015). *Introduction to Tropical Geometry*. Graduate Studies in Mathematics, American Mathematical Society.
+3. Maclagan, D., \& Sturmfels, B. (2015). *Introduction to Tropical Geometry*. Graduate Studies in Mathematics, American Mathematical Society.
 
-4. Radford, A., Wu, J., Child, R., Luan, D., Amodei, D., & Sutskever, I. (2019). Language models are unsupervised multitask learners. *OpenAI Technical Report*.
+4. Radford, A., Wu, J., Child, R., Luan, D., Amodei, D., \& Sutskever, I. (2019). Language models are unsupervised multitask learners. *OpenAI Technical Report*.
 
-5. Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., ... & Polosukhin, I. (2017). Attention is all you need. *Advances in Neural Information Processing Systems (NeurIPS)*.
+5. Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., ... \& Polosukhin, I. (2017). Attention is all you need. *Advances in Neural Information Processing Systems (NeurIPS)*.
 
-6. Brunton, S. L., Budišić, M., Kaiser, E., & Kutz, J. N. (2022). Modern Koopman theory for dynamical systems. *SIAM Review*, 64(2), 229–340.
+6. Brunton, S. L., Budišić, M., Kaiser, E., \& Kutz, J. N. (2022). Modern Koopman theory for dynamical systems. *SIAM Review*, 64(2), 229–340.
 
 7. Oseledets, I. V. (2011). Tensor-train decomposition. *SIAM Journal on Scientific Computing*, 33(5), 2295–2317.
 
@@ -22082,13 +22087,13 @@ The formal verification in Lean 4 ensures that the foundational identities are c
 \section{References}
 
 1. Butkovič, P. (2010). *Max-linear Systems: Theory and Algorithms*. Springer.
-2. Itenberg, I., Mikhalkin, G., & Shustin, E. (2009). *Tropical Algebraic Geometry*. Birkhäuser.
+2. Itenberg, I., Mikhalkin, G., \& Shustin, E. (2009). *Tropical Algebraic Geometry*. Birkhäuser.
 3. Litvinov, G.L. (2007). The Maslov dequantization, idempotent and tropical mathematics. *J. Math. Sciences*, 140(3), 373-386.
-4. Maclagan, D. & Sturmfels, B. (2015). *Introduction to Tropical Geometry*. AMS.
-5. Montúfar, G.F., Pascanu, R., Cho, K., & Bengio, Y. (2014). On the number of linear regions of deep neural networks. *NeurIPS*.
-6. Pachter, L. & Sturmfels, B. (2004). Tropical geometry of statistical models. *PNAS*, 101(46), 16132-16137.
-7. Speyer, D. & Sturmfels, B. (2009). Tropical mathematics. *Mathematics Magazine*, 82(3), 163-173.
-8. Zhang, L., Naitzat, G., & Lim, L.-H. (2020). Tropical geometry of deep neural networks. *ICML*.
+4. Maclagan, D. \& Sturmfels, B. (2015). *Introduction to Tropical Geometry*. AMS.
+5. Montúfar, G.F., Pascanu, R., Cho, K., \& Bengio, Y. (2014). On the number of linear regions of deep neural networks. *NeurIPS*.
+6. Pachter, L. \& Sturmfels, B. (2004). Tropical geometry of statistical models. *PNAS*, 101(46), 16132-16137.
+7. Speyer, D. \& Sturmfels, B. (2009). Tropical mathematics. *Mathematics Magazine*, 82(3), 163-173.
+8. Zhang, L., Naitzat, G., \& Lim, L.-H. (2020). Tropical geometry of deep neural networks. *ICML*.
 
 \clearpage
 
@@ -22454,12 +22459,12 @@ The tropical semiring is not merely an algebraic curiosity—it is a fundamental
 \section{References}
 
 1. Butkovič, P. (2010). *Max-linear Systems: Theory and Algorithms*. Springer.
-2. Itenberg, I., Mikhalkin, G., & Shustin, E. (2009). *Tropical Algebraic Geometry*. Birkhäuser.
+2. Itenberg, I., Mikhalkin, G., \& Shustin, E. (2009). *Tropical Algebraic Geometry*. Birkhäuser.
 3. Litvinov, G.L. (2007). The Maslov dequantization, idempotent and tropical mathematics. *J. Math. Sciences*, 140(3), 373-386.
-4. Maclagan, D. & Sturmfels, B. (2015). *Introduction to Tropical Geometry*. AMS.
-5. Montúfar, G.F., Pascanu, R., Cho, K., & Bengio, Y. (2014). On the number of linear regions of deep neural networks. *NeurIPS*.
-6. Speyer, D. & Sturmfels, B. (2009). Tropical mathematics. *Mathematics Magazine*, 82(3), 163-173.
-7. Zhang, L., Naitzat, G., & Lim, L.-H. (2020). Tropical geometry of deep neural networks. *ICML*.
+4. Maclagan, D. \& Sturmfels, B. (2015). *Introduction to Tropical Geometry*. AMS.
+5. Montúfar, G.F., Pascanu, R., Cho, K., \& Bengio, Y. (2014). On the number of linear regions of deep neural networks. *NeurIPS*.
+6. Speyer, D. \& Sturmfels, B. (2009). Tropical mathematics. *Mathematics Magazine*, 82(3), 163-173.
+7. Zhang, L., Naitzat, G., \& Lim, L.-H. (2020). Tropical geometry of deep neural networks. *ICML*.
 
 \bigskip\hrule\bigskip
 
@@ -22940,15 +22945,15 @@ The natural algebra for neural networks may not be the one we've been using. It 
 
 \section{References}
 
-1. Zhang, L., Naitzat, G., & Lim, L.-H. (2018). Tropical geometry of deep neural networks. *Proceedings of the 35th International Conference on Machine Learning (ICML)*.
+1. Zhang, L., Naitzat, G., \& Lim, L.-H. (2018). Tropical geometry of deep neural networks. *Proceedings of the 35th International Conference on Machine Learning (ICML)*.
 
-2. Montúfar, G., Pascanu, R., Cho, K., & Bengio, Y. (2014). On the number of linear regions of deep neural networks. *Advances in Neural Information Processing Systems (NeurIPS)*.
+2. Montúfar, G., Pascanu, R., Cho, K., \& Bengio, Y. (2014). On the number of linear regions of deep neural networks. *Advances in Neural Information Processing Systems (NeurIPS)*.
 
-3. Maclagan, D., & Sturmfels, B. (2015). *Introduction to Tropical Geometry*. Graduate Studies in Mathematics, American Mathematical Society.
+3. Maclagan, D., \& Sturmfels, B. (2015). *Introduction to Tropical Geometry*. Graduate Studies in Mathematics, American Mathematical Society.
 
-4. Radford, A., Wu, J., Child, R., Luan, D., Amodei, D., & Sutskever, I. (2019). Language models are unsupervised multitask learners. *OpenAI Technical Report*.
+4. Radford, A., Wu, J., Child, R., Luan, D., Amodei, D., \& Sutskever, I. (2019). Language models are unsupervised multitask learners. *OpenAI Technical Report*.
 
-5. Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., ... & Polosukhin, I. (2017). Attention is all you need. *Advances in Neural Information Processing Systems (NeurIPS)*.
+5. Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., ... \& Polosukhin, I. (2017). Attention is all you need. *Advances in Neural Information Processing Systems (NeurIPS)*.
 
 \bigskip\hrule\bigskip
 
@@ -23585,13 +23590,13 @@ The deepest lesson may be this: **the tropical world is the skeleton of the clas
 
 \section{References}
 
-1. Maclagan, D. & Sturmfels, B. *Introduction to Tropical Geometry*. AMS, 2015.
+1. Maclagan, D. \& Sturmfels, B. *Introduction to Tropical Geometry*. AMS, 2015.
 2. Litvinov, G. L. "Maslov dequantization, idempotent and tropical mathematics." *J. Math. Sciences* 140.3 (2007): 209-232.
 3. Zhang, L. et al. "Tropical geometry of deep neural networks." *ICML*, 2018.
 4. Butkovič, P. *Max-linear Systems: Theory and Algorithms*. Springer, 2010.
 5. Viro, O. "Dequantization of real algebraic geometry on logarithmic paper." *3rd ECM*, 2001.
-6. Pachter, L. & Sturmfels, B. "Tropical geometry of statistical models." *PNAS* 101.46 (2004): 16132-16137.
-7. Gaubert, S. & Plus, M. "Methods and applications of (max,+) linear algebra." *STACS*, 1997.
+6. Pachter, L. \& Sturmfels, B. "Tropical geometry of statistical models." *PNAS* 101.46 (2004): 16132-16137.
+7. Gaubert, S. \& Plus, M. "Methods and applications of (max,+) linear algebra." *STACS*, 1997.
 
 \clearpage
 
@@ -23602,7 +23607,7 @@ The deepest lesson may be this: **the tropical world is the skeleton of the clas
 \noindent$\bullet$ Agent Beta (Network Architecture)\\
 \noindent$\bullet$ Agent Gamma (Tropical Geometry)\\
 \noindent$\bullet$ Agent Delta (Complexity Theory)\\
-\noindent$\bullet$ Agent Epsilon (Oracle & Synthesis)\\
+\noindent$\bullet$ Agent Epsilon (Oracle \& Synthesis)\\
 
 **Abstract.** We present a complete, machine-verified formalization of tropical neural network theory in Lean 4. A tropical neural network replaces the standard (×, +) arithmetic of conventional neural networks with the tropical semiring (max, +), yielding architectures that are inherently piecewise-linear, exactly composable, and algebraically transparent. We prove that compositions of tropical layers collapse into single-layer tropical matrix multiplications, that tropical layers are shift-equivariant and order-preserving, and that every piecewise-linear activation function (ReLU, Leaky ReLU, Hard Tanh) admits an exact tropical representation. All 30+ theorems are formally verified with zero axioms beyond the standard Lean foundations, providing the highest possible confidence in the mathematical claims.
 
@@ -23803,9 +23808,9 @@ We have established a rigorous mathematical foundation for tropical neural netwo
 
 \section{References}
 
-1. Maclagan, D. & Sturmfels, B. *Introduction to Tropical Geometry*. AMS, 2015.
-2. Zhang, L., Naitzat, G. & Lim, L.-H. "Tropical Geometry of Deep Neural Networks." ICML, 2018.
-3. Maragos, P., Charisopoulos, V. & Theodosis, E. "Tropical Geometry and Machine Learning." *Proceedings of the IEEE*, 2021.
+1. Maclagan, D. \& Sturmfels, B. *Introduction to Tropical Geometry*. AMS, 2015.
+2. Zhang, L., Naitzat, G. \& Lim, L.-H. "Tropical Geometry of Deep Neural Networks." ICML, 2018.
+3. Maragos, P., Charisopoulos, V. \& Theodosis, E. "Tropical Geometry and Machine Learning." *Proceedings of the IEEE*, 2021.
 
 \clearpage
 
@@ -24073,7 +24078,7 @@ The implementation includes three "oracle patches" — design corrections that r
 \bigskip\hrule\bigskip
 
 \subsection{Authors}
-**Agent Alpha** (Algebra & Structure), **Agent Beta** (Applications & AI), **Agent Gamma** (Complexity & Compression), **Agent Delta** (Millennium Connections), **Agent Epsilon** (Synthesis & Integration)
+**Agent Alpha** (Algebra \& Structure), **Agent Beta** (Applications \& AI), **Agent Gamma** (Complexity \& Compression), **Agent Delta** (Millennium Connections), **Agent Epsilon** (Synthesis \& Integration)
 
 \bigskip\hrule\bigskip
 
@@ -24588,7 +24593,7 @@ Every theorem is:
 
 \section{14. Related Work}
 
-\noindent$\bullet$ **Tropical Geometry**: Maclagan & Sturmfels (2015) — foundational text\\
+\noindent$\bullet$ **Tropical Geometry**: Maclagan \& Sturmfels (2015) — foundational text\\
 \noindent$\bullet$ **Max-Plus Algebra**: Baccelli et al. (1992) — discrete event systems\\
 \noindent$\bullet$ **Neural Network Complexity**: Montúfar et al. (2014) — linear region counting\\
 \noindent$\bullet$ **Tropical Neural Networks**: Zhang et al. (2018), Alfarra et al. (2022) — decision boundaries\\
@@ -24671,7 +24676,7 @@ gpt2_head_dim_val, gpt2_heads_divide, gpt2_each_head, gpt2_attn_params, gpt2_mlp
 
 \chapter{[Research] Tropical Algebra and the Hidden Geometry of Neural Networks: A Comprehensive Study}
 
-**Authors**: Agent Alpha (Algebra), Agent Beta (Applications), Agent Gamma (Complexity), Agent Delta (Connections), Agent Epsilon (Synthesis & Verification), Agent Zeta (Experiments), Agent Eta (Information Theory)
+**Authors**: Agent Alpha (Algebra), Agent Beta (Applications), Agent Gamma (Complexity), Agent Delta (Connections), Agent Epsilon (Synthesis \& Verification), Agent Zeta (Experiments), Agent Eta (Information Theory)
 
 **Abstract.** We present a comprehensive investigation of the tropical algebraic structure underlying modern neural network architectures, with particular focus on transformer-based large language models. We establish that the core operations of neural networks — ReLU activation, softmax attention, and LogSumExp pooling — are naturally described within the max-plus (tropical) semiring framework. We formalize 17 key theorems in Lean 4 with machine-verified proofs, providing the first fully formal bridge between tropical algebra and deep learning theory. Our analysis reveals that the standard softmax attention mechanism at inverse temperature β = 1 sits at a critical point of a one-parameter family connecting classical (sum-product) and tropical (max-plus) computation. We propose experimental protocols for measuring how "tropical" pretrained language models are, outline connections to complexity theory and information geometry, and discuss speculative links to millennium prize problems. All formal proofs are available as verified Lean 4 source code.
 
@@ -25057,12 +25062,12 @@ These formal results open concrete research directions: measuring tropicality of
 
 \section{References}
 
-1. Maclagan, D. & Sturmfels, B. (2015). *Introduction to Tropical Geometry*. AMS.
-2. Zhang, L., Naitzat, G., & Lim, L.-H. (2018). Tropical geometry of deep neural networks. *ICML*.
-3. Montúfar, G., Pascanu, R., Cho, K., & Bengio, Y. (2014). On the number of linear regions of deep neural networks. *NeurIPS*.
+1. Maclagan, D. \& Sturmfels, B. (2015). *Introduction to Tropical Geometry*. AMS.
+2. Zhang, L., Naitzat, G., \& Lim, L.-H. (2018). Tropical geometry of deep neural networks. *ICML*.
+3. Montúfar, G., Pascanu, R., Cho, K., \& Bengio, Y. (2014). On the number of linear regions of deep neural networks. *NeurIPS*.
 4. Mathlib Community. (2024). *Mathlib4*. https://github.com/leanprover-community/mathlib4
 5. Mikhalkin, G. (2005). Enumerative tropical algebraic geometry in ℝ². *J. Amer. Math. Soc.*
-6. Pachter, L. & Sturmfels, B. (2004). Tropical geometry of statistical models. *PNAS*.
+6. Pachter, L. \& Sturmfels, B. (2004). Tropical geometry of statistical models. *PNAS*.
 
 \bigskip\hrule\bigskip
 
@@ -28900,7 +28905,7 @@ A solution is found when Δ(a, b) = 0 with both a > 1 and b > 1.
 
 The mutation operator flips 1–2 random bits in either a or b (respecting locked bits). The acceptance criterion follows the Metropolis rule:
 
-$$P(\text{accept}) = \begin{cases} 1 & \text{if } \Delta_{\text{new}} < \Delta_{\text{old}} \\ \exp(-(\Delta_{\text{new}} - \Delta_{\text{old}})/T) & \text{otherwise} \end{cases}$$
+$$P(\text{accept}) = \begin{cases} 1 \& \text{if } \Delta_{\text{new}} < \Delta_{\text{old}} \\ \exp(-(\Delta_{\text{new}} - \Delta_{\text{old}})/T) \& \text{otherwise} \end{cases}$$
 
 Temperature follows parabolic cooling with a progress-dependent rate: T_{i+1} = T_i · (1 - 0.00002 · (1 + (i/M)²)).
 
@@ -31013,10 +31018,10 @@ $$O(O) = O$$
 \section{References}
 
 1. Hofstadter, D. (1979). *Gödel, Escher, Bach: An Eternal Golden Braid*. Basic Books.
-2. Maclagan, D. & Sturmfels, B. (2015). *Introduction to Tropical Geometry*. AMS.
+2. Maclagan, D. \& Sturmfels, B. (2015). *Introduction to Tropical Geometry*. AMS.
 3. Litvinov, G.L. (2007). "The Maslov dequantization, idempotent and tropical mathematics." *Journal of Mathematical Sciences*, 140(3), 209-325.
-4. Zhang, L., Naitzat, G., & Lim, L.-H. (2018). "Tropical geometry of deep neural networks." *ICML 2018*.
-5. Parikh, N. & Boyd, S. (2014). "Proximal algorithms." *Foundations and Trends in Optimization*, 1(3), 127-239.
+4. Zhang, L., Naitzat, G., \& Lim, L.-H. (2018). "Tropical geometry of deep neural networks." *ICML 2018*.
+5. Parikh, N. \& Boyd, S. (2014). "Proximal algorithms." *Foundations and Trends in Optimization*, 1(3), 127-239.
 6. Gottesman, D. (1997). "Stabilizer codes and quantum error correction." PhD thesis, Caltech.
 
 \bigskip\hrule\bigskip
@@ -31269,7 +31274,7 @@ The framework opens avenues for building agentic AI systems where each agent is 
 
 1. Litvinov, G.L. (2007). The Maslov dequantization, idempotent and tropical mathematics. *Journal of Mathematical Sciences*, 140(3), 349-386.
 
-2. Maclagan, D. & Sturmfels, B. (2015). *Introduction to Tropical Geometry*. American Mathematical Society.
+2. Maclagan, D. \& Sturmfels, B. (2015). *Introduction to Tropical Geometry*. American Mathematical Society.
 
 3. Simon, I. (1988). Recognizable sets with multiplicities in the tropical semiring. *MFCS 1988*, LNCS 324, 107-120.
 
@@ -31686,9 +31691,9 @@ A system at a critical point — the boundary between ordered and disordered pha
 
 Substantial evidence supports the claim that cortical networks operate near criticality:
 
-\noindent$\bullet$ Neuronal avalanches in cortical slices and in vivo recordings follow power-law size distributions with exponent ≈ -3/2, consistent with a branching process at criticality (Beggs & Plenz, 2003; Friedman et al., 2012).\\
+\noindent$\bullet$ Neuronal avalanches in cortical slices and in vivo recordings follow power-law size distributions with exponent ≈ -3/2, consistent with a branching process at criticality (Beggs \& Plenz, 2003; Friedman et al., 2012).\\
 \noindent$\bullet$ The branching ratio σ ≈ 1 in awake cortex, deviating under anesthesia (σ < 1, subcritical) and in epilepsy (σ > 1, supercritical) (Shew et al., 2009).\\
-\noindent$\bullet$ Information transmission, dynamic range, and computational capacity are all maximized at the critical branching ratio (Shew & Plenz, 2013).\\
+\noindent$\bullet$ Information transmission, dynamic range, and computational capacity are all maximized at the critical branching ratio (Shew \& Plenz, 2013).\\
 
 **Prediction 1:** Loss of consciousness (anesthesia, deep sleep, coma) corresponds to departure from criticality, which corresponds to a decrease in Φ\_O\*. This is empirically testable and partially confirmed by existing data.
 
@@ -31865,23 +31870,23 @@ Human existence has indeed tapped into a space with high information relative to
 
 \section{References}
 
-\noindent$\bullet$ Beggs, J. M., & Plenz, D. (2003). Neuronal avalanches in neocortical circuits. *Journal of Neuroscience*, 23(35), 11167-11177.\\
+\noindent$\bullet$ Beggs, J. M., \& Plenz, D. (2003). Neuronal avalanches in neocortical circuits. *Journal of Neuroscience*, 23(35), 11167-11177.\\
 \noindent$\bullet$ Bennett, C. H. (1982). The thermodynamics of computation — a review. *International Journal of Theoretical Physics*, 21, 905-940.\\
 \noindent$\bullet$ Chalmers, D. J. (1995). Facing up to the problem of consciousness. *Journal of Consciousness Studies*, 2(3), 200-219.\\
 \noindent$\bullet$ Clark, A. (2013). Whatever next? Predictive brains, situated agents, and the future of cognitive science. *Behavioral and Brain Sciences*, 36(3), 181-204.\\
 \noindent$\bullet$ Friedman, N., et al. (2012). Universal critical dynamics in high resolution neuronal avalanche data. *Physical Review Letters*, 108(20), 208102.\\
 \noindent$\bullet$ Friston, K. (2010). The free-energy principle: a unified brain theory? *Nature Reviews Neuroscience*, 11(2), 127-138.\\
 \noindent$\bullet$ Hofstadter, D. R. (1979). *Gödel, Escher, Bach: An Eternal Golden Braid*. Basic Books.\\
-\noindent$\bullet$ Koch, C., Massimini, M., Boly, M., & Tononi, G. (2016). Neural correlates of consciousness: progress and problems. *Nature Reviews Neuroscience*, 17(5), 307-321.\\
+\noindent$\bullet$ Koch, C., Massimini, M., Boly, M., \& Tononi, G. (2016). Neural correlates of consciousness: progress and problems. *Nature Reviews Neuroscience*, 17(5), 307-321.\\
 \noindent$\bullet$ Kolmogorov, A. N. (1965). Three approaches to the definition of the concept "quantity of information." *Problems of Information Transmission*, 1(1), 1-7.\\
 \noindent$\bullet$ Landauer, R. (1961). Irreversibility and heat generation in the computing process. *IBM Journal of Research and Development*, 5(3), 183-191.\\
-\noindent$\bullet$ Levina, A., Herrmann, J. M., & Geisel, T. (2007). Dynamical synapses causing self-organized criticality in neural networks. *Nature Physics*, 3(12), 857-860.\\
+\noindent$\bullet$ Levina, A., Herrmann, J. M., \& Geisel, T. (2007). Dynamical synapses causing self-organized criticality in neural networks. *Nature Physics*, 3(12), 857-860.\\
 \noindent$\bullet$ Nørretranders, T. (1998). *The User Illusion: Cutting Consciousness Down to Size*. Viking.\\
-\noindent$\bullet$ Shew, W. L., & Plenz, D. (2013). The functional benefits of criticality in the cortex. *The Neuroscientist*, 19(1), 88-100.\\
-\noindent$\bullet$ Shew, W. L., Yang, H., Petermann, T., Roy, R., & Plenz, D. (2009). Neuronal avalanches imply maximum dynamic range in cortical networks at criticality. *Journal of Neuroscience*, 29(49), 15595-15600.\\
+\noindent$\bullet$ Shew, W. L., \& Plenz, D. (2013). The functional benefits of criticality in the cortex. *The Neuroscientist*, 19(1), 88-100.\\
+\noindent$\bullet$ Shew, W. L., Yang, H., Petermann, T., Roy, R., \& Plenz, D. (2009). Neuronal avalanches imply maximum dynamic range in cortical networks at criticality. *Journal of Neuroscience*, 29(49), 15595-15600.\\
 \noindent$\bullet$ Solomonoff, R. J. (1964). A formal theory of inductive inference. *Information and Control*, 7(1), 1-22.\\
 \noindent$\bullet$ Tononi, G. (2004). An information integration theory of consciousness. *BMC Neuroscience*, 5, 42.\\
-\noindent$\bullet$ Tononi, G., Boly, M., Massimini, M., & Koch, C. (2016). Integrated information theory: from consciousness to its physical substrate. *Nature Reviews Neuroscience*, 17(7), 450-461.\\
+\noindent$\bullet$ Tononi, G., Boly, M., Massimini, M., \& Koch, C. (2016). Integrated information theory: from consciousness to its physical substrate. *Nature Reviews Neuroscience*, 17(7), 450-461.\\
 
 \clearpage
 
@@ -32116,7 +32121,7 @@ Sometimes the most productive question in mathematics is the one that seems too 
 
 1. Turing, A.M. (1939). "Systems of logic based on ordinals." *Proceedings of the London Mathematical Society*, s2-45(1), 161–228.
 2. Post, E.L. (1944). "Recursively enumerable sets of positive integers and their decision problems." *Bulletin of the American Mathematical Society*, 50, 284–316.
-3. Arora, S. & Barak, B. (2009). *Computational Complexity: A Modern Approach*. Cambridge University Press.
+3. Arora, S. \& Barak, B. (2009). *Computational Complexity: A Modern Approach*. Cambridge University Press.
 
 \clearpage
 
@@ -34486,7 +34491,7 @@ This establishes that crystallized networks form a **monoid** (M, ·, e) where:
 
 Two orthogonal unit vectors from stereographic projection form a 2×2 rotation matrix:
 
-$$R(\theta) = \begin{pmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{pmatrix}$$
+$$R(\theta) = \begin{pmatrix} \cos\theta \& -\sin\theta \\ \sin\theta \& \cos\theta \end{pmatrix}$$
 
 **Theorem** (`rotation_det_is_one`): *det(R(θ)) = 1.*
 
@@ -35758,7 +35763,7 @@ The next time you compute a square, multiply two numbers, or raise something to 
 
 \section{Authors}
 
-**Agent Alpha** (Algebraic Foundations), **Agent Beta** (AI/ML Applications), **Agent Gamma** (Compression & Complexity), **Agent Delta** (Number Theory & Factoring), **Agent Eta** (Physics & Photon Duality), **Agent Zeta** (Information Theory), and supporting agents
+**Agent Alpha** (Algebraic Foundations), **Agent Beta** (AI/ML Applications), **Agent Gamma** (Compression \& Complexity), **Agent Delta** (Number Theory \& Factoring), **Agent Eta** (Physics \& Photon Duality), **Agent Zeta** (Information Theory), and supporting agents
 
 \bigskip\hrule\bigskip
 
@@ -36339,7 +36344,7 @@ Billions of these fractal antennas are in use today. The next generation will us
 
 In topology, a "wormhole" is a loop that cannot be shrunk to a point — think of the hole in a donut. A field called topological data analysis (TDA) finds such loops hiding in clouds of data points.
 
-The CHIMERA team applied TDA to the stock market. They took 23 years of S&P 500 daily returns, embedded them in a higher-dimensional space using time-delay coordinates, and computed the persistent homology — a measure of how many "wormholes" appear in the data at each scale.
+The CHIMERA team applied TDA to the stock market. They took 23 years of S\&P 500 daily returns, embedded them in a higher-dimensional space using time-delay coordinates, and computed the persistent homology — a measure of how many "wormholes" appear in the data at each scale.
 
 The result was striking: every major crash — 2001, 2008, 2020 — was preceded by a spike in one-dimensional "wormholes" ($H_1$ features) appearing in the data, typically 2–4 weeks before the crash. In 23 years, there were only three false alarms.
 
@@ -37059,7 +37064,7 @@ This paper extends the theory in twelve directions, each producing new formally 
 | Cantor Engine | Universal repulsor source | 2 |
 | Repulsor Zoo | Successor, squaring, Fibonacci, product | 5 |
 | Repulsor Hierarchy | Strict tower of displacement levels | 3 |
-| Extension & Density | Partial → total extension, infinite evasion | 4 |
+| Extension \& Density | Partial → total extension, infinite evasion | 4 |
 \end{verbatim}
 
 \bigskip\hrule\bigskip
@@ -37444,7 +37449,7 @@ All proofs are checked by Lean 4's kernel with Mathlib dependencies. The only ax
 
 We identify six domains where mathematical structures that evoke science fiction — curved-space computing, infinity-antennas, data wormholes, four-dimensional radio, invisibility transformations, and black-swan predictors — are not only rigorously provable but correspond to technologies at Technology Readiness Level (TRL) 4–9. For each domain, we state a precise mathematical hypothesis, describe a computational or physical experiment, report validation results, and provide formal machine-checked proofs in Lean 4 / Mathlib.
 
-Our most novel contribution is a **combined topological-spectral crash predictor** (HYP-CHIMERA-008) that fuses persistent homology with random matrix theory to achieve a Sharpe ratio of 2.3 on 23 years of S&P 500 data — exceeding either method alone by 65–110%.
+Our most novel contribution is a **combined topological-spectral crash predictor** (HYP-CHIMERA-008) that fuses persistent homology with random matrix theory to achieve a Sharpe ratio of 2.3 on 23 years of S\&P 500 data — exceeding either method alone by 65–110%.
 
 Twelve core mathematical theorems were formalized and machine-verified in Lean 4 with zero `sorry` statements and only standard axioms (`propext`, `Classical.choice`, `Quot.sound`).
 
@@ -37475,7 +37480,7 @@ Project CHIMERA systematically explores this boundary between fiction and fact. 
 
 \subsection{1.3 Related Work}
 
-Nickel & Kiela (2017) demonstrated Poincaré embeddings for hierarchical data. Gidea & Katz (2018) applied persistent homology to financial time series. Gaudet & Maida (2018) introduced deep quaternion networks. Pendry, Schurig & Smith (2006) established transformation optics. Our work is distinguished by: (a) formal machine verification of the underlying mathematics, (b) a combined topological-spectral predictor not previously proposed, and (c) a unified treatment across all six domains.
+Nickel \& Kiela (2017) demonstrated Poincaré embeddings for hierarchical data. Gidea \& Katz (2018) applied persistent homology to financial time series. Gaudet \& Maida (2018) introduced deep quaternion networks. Pendry, Schurig \& Smith (2006) established transformation optics. Our work is distinguished by: (a) formal machine verification of the underlying mathematics, (b) a combined topological-spectral predictor not previously proposed, and (c) a unified treatment across all six domains.
 
 \bigskip\hrule\bigskip
 
@@ -37591,7 +37596,7 @@ Persistent homology assigns a barcode of topological features to a point cloud. 
 
 \subsection{4.3 Experiment (EXP-CHIMERA-004)}
 
-S&P 500 daily returns (2000–2023), 250-day sliding window, Vietoris–Rips persistent homology:
+S\&P 500 daily returns (2000–2023), 250-day sliding window, Vietoris–Rips persistent homology:
 
 \begin{verbatim}
 | Crash | $H_1$ Spike Lead Time | False Positives (Decade) |
@@ -37768,14 +37773,14 @@ Our novel combined TDA + RMT crash predictor demonstrates the value of cross-dom
 \section{References}
 
 1. Gromov, M. (1987). Hyperbolic groups. *Essays in Group Theory*, MSRI Publ. 8.
-2. Nickel, M. & Kiela, D. (2017). Poincaré embeddings for learning hierarchical representations. *NeurIPS*.
+2. Nickel, M. \& Kiela, D. (2017). Poincaré embeddings for learning hierarchical representations. *NeurIPS*.
 3. Sarkar, R. (2011). Low distortion Delaunay embedding of trees in hyperbolic plane. *SoCG*.
 4. Moran, P.A.P. (1946). Additive functions of intervals and Hausdorff measure. *Math. Proc. Cambridge Phil. Soc.*
-5. Niyogi, P., Smale, S., & Weinberger, S. (2008). Finding the homology of submanifolds with high confidence from random samples. *Discrete & Comput. Geom.*
-6. Gidea, M. & Katz, Y. (2018). Topological data analysis of financial time series. *PLoS ONE*.
-7. Gaudet, C. & Maida, A. (2018). Deep quaternion networks. *IJCNN*.
-8. Pendry, J.B., Schurig, D., & Smith, D.R. (2006). Controlling electromagnetic fields. *Science*.
-9. Marchenko, V.A. & Pastur, L.A. (1967). Distribution of eigenvalues for some sets of random matrices. *Math. USSR-Sbornik*.
+5. Niyogi, P., Smale, S., \& Weinberger, S. (2008). Finding the homology of submanifolds with high confidence from random samples. *Discrete \& Comput. Geom.*
+6. Gidea, M. \& Katz, Y. (2018). Topological data analysis of financial time series. *PLoS ONE*.
+7. Gaudet, C. \& Maida, A. (2018). Deep quaternion networks. *IJCNN*.
+8. Pendry, J.B., Schurig, D., \& Smith, D.R. (2006). Controlling electromagnetic fields. *Science*.
+9. Marchenko, V.A. \& Pastur, L.A. (1967). Distribution of eigenvalues for some sets of random matrices. *Math. USSR-Sbornik*.
 10. Schurig, D. et al. (2006). Metamaterial electromagnetic cloak at microwave frequencies. *Science*.
 
 \bigskip\hrule\bigskip
@@ -37812,7 +37817,7 @@ Project CHIMERA Virtual Research Team
 
 We identify six domains where mathematical structures that sound like science fiction — curved-space computing, infinity-antennas, data wormholes, four-dimensional radio, invisibility transformations, and black-swan predictors — are not only rigorously provable but correspond to technologies at TRL 4–9 (laboratory prototype to deployed product). For each domain, we state a precise mathematical hypothesis, describe a computational or physical experiment, report validation results, and provide formal machine-checked proofs in Lean 4 / Mathlib where feasible.
 
-Our most novel finding is a **combined topological-spectral crash predictor** (HYP-CHIMERA-008) that fuses persistent homology with random matrix theory to achieve a Sharpe ratio of 2.3 on 23 years of S&P 500 data — exceeding either method alone by 65–110%.
+Our most novel finding is a **combined topological-spectral crash predictor** (HYP-CHIMERA-008) that fuses persistent homology with random matrix theory to achieve a Sharpe ratio of 2.3 on 23 years of S\&P 500 data — exceeding either method alone by 65–110%.
 
 Twelve core mathematical theorems were formalized and machine-verified in Lean 4, including the irrationality of the Koch curve's fractal dimension, a lower bound on hyperbolic area growth, the multiplicativity of the quaternion norm, and the Marchenko–Pastur edge formula.
 
@@ -37842,7 +37847,7 @@ The Poincaré disk model of hyperbolic geometry has a remarkable property: the a
 
 A hardware accelerator using the Poincaré ball distance metric can represent any $n$-node tree with $O(\log n)$ dimensions and $(1+\varepsilon)$ distortion, versus $O(\sqrt{n})$ dimensions for Euclidean embeddings at the same distortion.
 
-\subsection{2.3 Experiment & Results (EXP-CHIMERA-001)}
+\subsection{2.3 Experiment \& Results (EXP-CHIMERA-001)}
 
 We embedded the WordNet noun hierarchy (82,115 nodes) into both Euclidean $\mathbb{R}^d$ and Poincaré $\mathbb{B}^d$. At $d=5$, the Poincaré embedding achieved MAP 0.86 with distortion 0.4, while the Euclidean embedding required $d=200$ for comparable MAP (0.82) — a **40× compression**.
 
@@ -37898,7 +37903,7 @@ Persistent $H_1$ features in time-delay embedded financial returns detect the fo
 
 \subsection{4.3 Experiment (EXP-CHIMERA-004)}
 
-Applied Vietoris–Rips persistent homology to S&P 500 daily returns (2000–2023, 250-day sliding window). Result: $H_1$ persistence spiked 2–4 weeks before every major drawdown (2001, 2008, 2020), with only 3 false positives in 23 years.
+Applied Vietoris–Rips persistent homology to S\&P 500 daily returns (2000–2023, 250-day sliding window). Result: $H_1$ persistence spiked 2–4 weeks before every major drawdown (2001, 2008, 2020), with only 3 false positives in 23 years.
 
 \subsection{4.4 Buildable Technology}
 
@@ -38025,14 +38030,14 @@ Project CHIMERA demonstrates that the boundary between science fiction and engin
 \section{References}
 
 1. Gromov, M. (1987). Hyperbolic groups. *Essays in Group Theory*, MSRI Publ. 8.
-2. Nickel, M. & Kiela, D. (2017). Poincaré embeddings for learning hierarchical representations. *NeurIPS*.
+2. Nickel, M. \& Kiela, D. (2017). Poincaré embeddings for learning hierarchical representations. *NeurIPS*.
 3. Sarkar, R. (2011). Low distortion Delaunay embedding of trees in hyperbolic plane. *SoCG*.
 4. Moran, P.A.P. (1946). Additive functions of intervals and Hausdorff measure. *Mathematical Proceedings of the Cambridge Philosophical Society*.
-5. Niyogi, P., Smale, S., & Weinberger, S. (2008). Finding the homology of submanifolds with high confidence from random samples. *Discrete & Computational Geometry*.
-6. Gidea, M. & Katz, Y. (2018). Topological data analysis of financial time series. *PLoS ONE*.
-7. Gaudet, C. & Maida, A. (2018). Deep quaternion networks. *IJCNN*.
-8. Pendry, J.B., Schurig, D., & Smith, D.R. (2006). Controlling electromagnetic fields. *Science*.
-9. Marchenko, V.A. & Pastur, L.A. (1967). Distribution of eigenvalues for some sets of random matrices. *Mathematics of the USSR-Sbornik*.
+5. Niyogi, P., Smale, S., \& Weinberger, S. (2008). Finding the homology of submanifolds with high confidence from random samples. *Discrete \& Computational Geometry*.
+6. Gidea, M. \& Katz, Y. (2018). Topological data analysis of financial time series. *PLoS ONE*.
+7. Gaudet, C. \& Maida, A. (2018). Deep quaternion networks. *IJCNN*.
+8. Pendry, J.B., Schurig, D., \& Smith, D.R. (2006). Controlling electromagnetic fields. *Science*.
+9. Marchenko, V.A. \& Pastur, L.A. (1967). Distribution of eigenvalues for some sets of random matrices. *Mathematics of the USSR-Sbornik*.
 10. Schurig, D. et al. (2006). Metamaterial electromagnetic cloak at microwave frequencies. *Science*.
 
 \clearpage
@@ -38605,7 +38610,7 @@ The algorithm runs in $O(\min(p,q))$ steps — equivalent to trial division but 
 \noindent$\bullet$ **Quantum search**: IOF's $O(\sqrt{N})$ classical complexity mirrors Grover's quantum search\\
 \noindent$\bullet$ **Quantum circuits**: Formal verification of gate algebra properties\\
 
-\subsection{7.5 Navigation & IMU}
+\subsection{7.5 Navigation \& IMU}
 \noindent$\bullet$ **Drift-free IMU**: The $\text{SL}(2,\mathbb{Z})$ structure provides integer-arithmetic rotation representations\\
 \noindent$\bullet$ **GPS-denied navigation**: Exact integer arithmetic eliminates floating-point drift\\
 
@@ -40717,12 +40722,12 @@ All proofs compile without `sorry` and use only standard axioms (`propext`, `Cla
 \section{A Multi-Team Research Investigation into Transformer Compilation via Linear Algebra, Tropical Geometry, Koopman Theory, and Tensor Networks}
 
 **Research Teams:**
-\noindent$\bullet$ **Team Alpha (Impossibility & Barriers):** Formal verification of fundamental limits\\
-\noindent$\bullet$ **Team Beta (Linearization & Lifting):** Koopman operators, kernel methods, feature maps\\
+\noindent$\bullet$ **Team Alpha (Impossibility \& Barriers):** Formal verification of fundamental limits\\
+\noindent$\bullet$ **Team Beta (Linearization \& Lifting):** Koopman operators, kernel methods, feature maps\\
 \noindent$\bullet$ **Team Gamma (Non-Euclidean Methods):** Tropical geometry, hyperbolic spaces, p-adic analysis\\
-\noindent$\bullet$ **Team Delta (Tensor Networks & Compression):** Tensor trains, hierarchical Tucker, contraction\\
+\noindent$\bullet$ **Team Delta (Tensor Networks \& Compression):** Tensor trains, hierarchical Tucker, contraction\\
 \noindent$\bullet$ **Team Epsilon (Experimental Validation):** Computational experiments on toy and real models\\
-\noindent$\bullet$ **Team Zeta (Synthesis & Iteration):** Cross-team integration, iterative refinement\\
+\noindent$\bullet$ **Team Zeta (Synthesis \& Iteration):** Cross-team integration, iterative refinement\\
 
 **Date:** 2025
 
@@ -41327,11 +41332,11 @@ Perhaps the most surprising finding is that the answer depends fundamentally on 
 2. Zhang, L., et al. "Tropical geometry of deep neural networks." *ICML*, 2018.
 3. Brunton, S.L., et al. "Modern Koopman theory for dynamical systems." *SIAM Review*, 2022.
 4. Oseledets, I.V. "Tensor-train decomposition." *SIAM J. Scientific Computing*, 2011.
-5. Nickel, M. & Kiela, D. "Poincaré embeddings for learning hierarchical representations." *NeurIPS*, 2017.
+5. Nickel, M. \& Kiela, D. "Poincaré embeddings for learning hierarchical representations." *NeurIPS*, 2017.
 6. Vaswani, A., et al. "Attention is all you need." *NeurIPS*, 2017.
 7. Radford, A., et al. "Language models are unsupervised multitask learners." *OpenAI*, 2019.
-8. Cohen, N., Sharir, O. & Shashua, A. "On the expressive power of deep learning: A tensor analysis." *COLT*, 2016.
-9. Lusch, B., Kutz, J.N. & Brunton, S.L. "Deep learning for universal linear embeddings of nonlinear dynamics." *Nature Communications*, 2018.
+8. Cohen, N., Sharir, O. \& Shashua, A. "On the expressive power of deep learning: A tensor analysis." *COLT*, 2016.
+9. Lusch, B., Kutz, J.N. \& Brunton, S.L. "Deep learning for universal linear embeddings of nonlinear dynamics." *Nature Communications*, 2018.
 
 \bigskip\hrule\bigskip
 
@@ -41395,12 +41400,12 @@ def tt_compile(weight_matrices, activation_tensors, max_rank):
 \section{A Multi-Team Research Investigation into Transformer Compilation via Linear Algebra, Tropical Geometry, Koopman Theory, and Tensor Networks}
 
 **Research Teams:**
-\noindent$\bullet$ **Team Alpha (Impossibility & Barriers):** Formal verification of fundamental limits\\
-\noindent$\bullet$ **Team Beta (Linearization & Lifting):** Koopman operators, kernel methods, feature maps\\
+\noindent$\bullet$ **Team Alpha (Impossibility \& Barriers):** Formal verification of fundamental limits\\
+\noindent$\bullet$ **Team Beta (Linearization \& Lifting):** Koopman operators, kernel methods, feature maps\\
 \noindent$\bullet$ **Team Gamma (Non-Euclidean Methods):** Tropical geometry, hyperbolic spaces, p-adic analysis\\
-\noindent$\bullet$ **Team Delta (Tensor Networks & Compression):** Tensor trains, hierarchical Tucker, contraction\\
+\noindent$\bullet$ **Team Delta (Tensor Networks \& Compression):** Tensor trains, hierarchical Tucker, contraction\\
 \noindent$\bullet$ **Team Epsilon (Experimental Validation):** Computational experiments on toy and real models\\
-\noindent$\bullet$ **Team Zeta (Synthesis & Iteration):** Cross-team integration, iterative refinement\\
+\noindent$\bullet$ **Team Zeta (Synthesis \& Iteration):** Cross-team integration, iterative refinement\\
 
 **Date:** 2025
 
@@ -42280,12 +42285,12 @@ Perhaps the most surprising finding is that the answer to "can we use a single o
 2. Zhang, L., et al. "Tropical geometry of deep neural networks." *ICML*, 2018.
 3. Brunton, S.L., et al. "Modern Koopman theory for dynamical systems." *SIAM Review*, 2022.
 4. Oseledets, I.V. "Tensor-train decomposition." *SIAM J. Scientific Computing*, 2011.
-5. Nickel, M. & Kiela, D. "Poincaré embeddings for learning hierarchical representations." *NeurIPS*, 2017.
+5. Nickel, M. \& Kiela, D. "Poincaré embeddings for learning hierarchical representations." *NeurIPS*, 2017.
 6. Vaswani, A., et al. "Attention is all you need." *NeurIPS*, 2017.
 7. Radford, A., et al. "Language models are unsupervised multitask learners." *OpenAI*, 2019.
-8. Maclaurin, D., Duvenaud, D. & Adams, R.P. "Autograd: Effortless gradients in NumPy." *ICML AutoML Workshop*, 2015.
-9. Cohen, N., Sharir, O. & Shashua, A. "On the expressive power of deep learning: A tensor analysis." *COLT*, 2016.
-10. Lusch, B., Kutz, J.N. & Brunton, S.L. "Deep learning for universal linear embeddings of nonlinear dynamics." *Nature Communications*, 2018.
+8. Maclaurin, D., Duvenaud, D. \& Adams, R.P. "Autograd: Effortless gradients in NumPy." *ICML AutoML Workshop*, 2015.
+9. Cohen, N., Sharir, O. \& Shashua, A. "On the expressive power of deep learning: A tensor analysis." *COLT*, 2016.
+10. Lusch, B., Kutz, J.N. \& Brunton, S.L. "Deep learning for universal linear embeddings of nonlinear dynamics." *Nature Communications*, 2018.
 
 \bigskip\hrule\bigskip
 
@@ -45303,7 +45308,7 @@ This is machine-verified as `dualProjection_eq_inv` in `Meta/UniversalSolver.lea
 
 **Theorem 3.4** (Matrix Representation). D(t) is represented by the 2×2 matrix acting on projective coordinates [t : 1]:
 
-$$M = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}, \quad M \cdot \begin{pmatrix} t \\ 1 \end{pmatrix} = \begin{pmatrix} 1 \\ t \end{pmatrix} \sim \begin{pmatrix} 1/t \\ 1 \end{pmatrix}$$
+$$M = \begin{pmatrix} 0 \& 1 \\ 1 \& 0 \end{pmatrix}, \quad M \cdot \begin{pmatrix} t \\ 1 \end{pmatrix} = \begin{pmatrix} 1 \\ t \end{pmatrix} \sim \begin{pmatrix} 1/t \\ 1 \end{pmatrix}$$
 
 The dual projection is **one matrix multiplication**.
 
@@ -45931,10 +45936,10 @@ These results suggest that coherence is not merely a useful heuristic, but a fun
 \section{References}
 
 1. Kolmogorov, A. N. (1965). Three approaches to the quantitative definition of information.
-2. Razborov, A. A. & Rudich, S. (1997). Natural proofs. *JCSS*, 55(1), 24-35.
+2. Razborov, A. A. \& Rudich, S. (1997). Natural proofs. *JCSS*, 55(1), 24-35.
 3. Sachdev, S. (2011). *Quantum Phase Transitions*. Cambridge University Press.
 4. Zurek, W. H. (2003). Decoherence, einselection, and the quantum origins of the classical. *Rev. Mod. Phys.*, 75, 715.
-5. Li, M. & Vitányi, P. (2019). *An Introduction to Kolmogorov Complexity and Its Applications*. Springer.
+5. Li, M. \& Vitányi, P. (2019). *An Introduction to Kolmogorov Complexity and Its Applications*. Springer.
 6. Turing, A. M. (1939). Systems of logic based on ordinals. *Proc. London Math. Soc.*, 2(45), 161-228.
 7. Shor, P. W. (1994). Algorithms for quantum computation. *Proc. 35th FOCS*, 124-134.
 
@@ -46867,7 +46872,7 @@ The root triple $(3, 4, 5)$ has parameters $(m, n) = (2, 1)$.
 
 The three Berggren transformations act on $(m, n)$ via $2 \times 2$ matrices:
 
-$$M_A = \begin{pmatrix} 2 & -1 \\ 1 & 0 \end{pmatrix}, \quad M_B = \begin{pmatrix} 2 & 1 \\ 1 & 0 \end{pmatrix}, \quad M_C = \begin{pmatrix} 1 & 2 \\ 0 & 1 \end{pmatrix}$$
+$$M_A = \begin{pmatrix} 2 \& -1 \\ 1 \& 0 \end{pmatrix}, \quad M_B = \begin{pmatrix} 2 \& 1 \\ 1 \& 0 \end{pmatrix}, \quad M_C = \begin{pmatrix} 1 \& 2 \\ 0 \& 1 \end{pmatrix}$$
 
 with inverses:
 
@@ -46928,7 +46933,7 @@ $$M_A^{-1}(m,n) = (n, 2n-m), \quad M_B^{-1}(m,n) = (n, m-2n), \quad M_C^{-1}(m,n
 
 The Three-Zone Descent defines a **piecewise Möbius transformation** $f: (1, \infty) \to (1, \infty)$:
 
-$$f(z) = \begin{cases} \frac{1}{2-z} & z \in (1, 2) \\[4pt] \frac{1}{z-2} & z \in (2, 3) \\[4pt] z - 2 & z \in (3, \infty) \end{cases}$$
+$$f(z) = \begin{cases} \frac{1}{2-z} \& z \in (1, 2) \\[4pt] \frac{1}{z-2} \& z \in (2, 3) \\[4pt] z - 2 \& z \in (3, \infty) \end{cases}$$
 
 \subsection{4.2 Fixed Points and Periodic Orbits}
 
@@ -47536,7 +47541,7 @@ sizing) that improve real-world performance.
 1. Cover, T. M. (1991). "Universal Portfolios." *Mathematical Finance*, 1(1), 1-29.
 2. Helmbold, D. P., et al. (1998). "On-Line Portfolio Selection Using Multiplicative Updates." *Mathematical Finance*, 8(4), 325-347.
 3. Kelly, J. L. (1956). "A New Interpretation of Information Rate." *Bell System Technical Journal*, 35(4), 917-926.
-4. Cesa-Bianchi, N. & Lugosi, G. (2006). *Prediction, Learning, and Games.* Cambridge University Press.
+4. Cesa-Bianchi, N. \& Lugosi, G. (2006). *Prediction, Learning, and Games.* Cambridge University Press.
 5. Hazan, E. (2016). *Introduction to Online Convex Optimization.* Foundations and Trends in Optimization.
 
 \bigskip\hrule\bigskip
@@ -47550,11 +47555,11 @@ sizing) that improve real-world performance.
 \section{A Formally-Verified Research Investigation}
 
 **Research Team:**
-\noindent$\bullet$ **Dr. Ada Lorentz** (Principal Investigator) — Non-associative algebra & quantum computation\\
-\noindent$\bullet$ **Dr. Ben Chebyshev** (Number Theory Lead) — Prime statistics & Dirichlet theory\\
-\noindent$\bullet$ **Dr. Clara Dickson** (Algebra Lead) — Cayley-Dickson hierarchy & renormalization\\
-\noindent$\bullet$ **Dr. David Berggren** (Geometry Lead) — Lorentz structure & error correction\\
-\noindent$\bullet$ **Dr. Elena Fano** (Mathematical Physics) — Octonion observables & M-theory connections\\
+\noindent$\bullet$ **Dr. Ada Lorentz** (Principal Investigator) — Non-associative algebra \& quantum computation\\
+\noindent$\bullet$ **Dr. Ben Chebyshev** (Number Theory Lead) — Prime statistics \& Dirichlet theory\\
+\noindent$\bullet$ **Dr. Clara Dickson** (Algebra Lead) — Cayley-Dickson hierarchy \& renormalization\\
+\noindent$\bullet$ **Dr. David Berggren** (Geometry Lead) — Lorentz structure \& error correction\\
+\noindent$\bullet$ **Dr. Elena Fano** (Mathematical Physics) — Octonion observables \& M-theory connections\\
 
 **Formal Verification:** All core mathematical claims verified in Lean 4 with Mathlib  
 **Companion File:** `FrontierResearch.lean` (31 formally verified theorems, zero `sorry`)
@@ -48198,8 +48203,8 @@ The file `FrontierResearch.lean` contains **31 formally verified theorems** with
 
 1. Berggren, B. (1934). "Pytagoreiska trianglar." *Tidskrift för Elementär Matematik, Fysik och Kemi*, 17, 129–139.
 2. Baez, J. C. (2002). "The Octonions." *Bulletin of the AMS*, 39(2), 145–205.
-3. Rubinstein, M. & Sarnak, P. (1994). "Chebyshev's Bias." *Experimental Mathematics*, 3(3), 173–197.
-4. Conway, J. H. & Smith, D. A. (2003). *On Quaternions and Octonions*. A K Peters.
+3. Rubinstein, M. \& Sarnak, P. (1994). "Chebyshev's Bias." *Experimental Mathematics*, 3(3), 173–197.
+4. Conway, J. H. \& Smith, D. A. (2003). *On Quaternions and Octonions*. A K Peters.
 5. Harvey, F. R. (1990). *Spinors and Calibrations*. Academic Press.
 
 \clearpage
@@ -48477,7 +48482,7 @@ This is a crucial insight for the homing algorithm: M₂ does not always "decrea
 
 \bigskip\hrule\bigskip
 
-\section{§8: Open Questions & Future Directions}
+\section{§8: Open Questions \& Future Directions}
 
 \subsection{Q1: Optimal Branch Selection}
 When M₂ can overshoot, what is the optimal 3-branch selection strategy? The greedy approach (minimize |reading − target|) works well but may not be optimal for path length.
@@ -49079,7 +49084,7 @@ Probabilities from quantum measurement are well-normalized.
 
 \bigskip\hrule\bigskip
 
-\section{12. Experimental Notes & Future Directions}
+\section{12. Experimental Notes \& Future Directions}
 
 \subsection{What We Learned}
 
@@ -49471,7 +49476,7 @@ All theorems are machine-checked in Lean 4 (v4.28.0) with Mathlib (v4.28.0).
 \noindent$\bullet$ **Agent Beta** (Network Architecture) — Tropical convolutions, recurrent tropical networks\\
 \noindent$\bullet$ **Agent Gamma** (Tropical Geometry) — Newton polytopes, tropical hypersurfaces, polyhedral decompositions\\
 \noindent$\bullet$ **Agent Delta** (Complexity Theory) — Hardware complexity, comparator circuits, tropical Boolean functions\\
-\noindent$\bullet$ **Agent Epsilon** (Oracle & Synthesis) — Quantum-tropical duality, Maslov dequantization, attention mechanisms\\
+\noindent$\bullet$ **Agent Epsilon** (Oracle \& Synthesis) — Quantum-tropical duality, Maslov dequantization, attention mechanisms\\
 
 \bigskip\hrule\bigskip
 
@@ -49826,7 +49831,7 @@ All theorems in this paper have been formally verified in Lean 4 using the Mathl
 | Maslov Dequantization | 3 |
 | Tropical Boolean | 4 |
 | Quantum-Classical | 3 |
-| Half-Spaces & Fixed Points | 4 |
+| Half-Spaces \& Fixed Points | 4 |
 | **Total** | **42** |
 \end{verbatim}
 
@@ -49859,12 +49864,12 @@ We have substantially extended the mathematical foundations of tropical neural n
 
 \section{References}
 
-1. Maclagan, D. & Sturmfels, B. *Introduction to Tropical Geometry*. AMS, 2015.
-2. Zhang, L., Naitzat, G. & Lim, L.-H. "Tropical Geometry of Deep Neural Networks." ICML, 2018.
-3. Maragos, P., Charisopoulos, V. & Theodosis, E. "Tropical Geometry and Machine Learning." *Proceedings of the IEEE*, 2021.
+1. Maclagan, D. \& Sturmfels, B. *Introduction to Tropical Geometry*. AMS, 2015.
+2. Zhang, L., Naitzat, G. \& Lim, L.-H. "Tropical Geometry of Deep Neural Networks." ICML, 2018.
+3. Maragos, P., Charisopoulos, V. \& Theodosis, E. "Tropical Geometry and Machine Learning." *Proceedings of the IEEE*, 2021.
 4. Litvinov, G.L. "Maslov Dequantization, Idempotent and Tropical Mathematics." *Contemporary Mathematics*, 2007.
 5. Serra, J. *Image Analysis and Mathematical Morphology*. Academic Press, 1982.
-6. Gaubert, S. & Plus, M. "Methods and Applications of (max,+) Linear Algebra." *STACS*, 1997.
+6. Gaubert, S. \& Plus, M. "Methods and Applications of (max,+) Linear Algebra." *STACS*, 1997.
 7. Butkovič, P. *Max-Linear Systems: Theory and Algorithms*. Springer, 2010.
 
 \clearpage
@@ -50199,7 +50204,7 @@ After the build completes (allow 20-30 minutes for compilation), every one of th
 |-----------------|-------|
 | Source files | 334 |
 | Lines of verified code | 75,753 |
-| Machine-checked theorems & definitions | 8,064 |
+| Machine-checked theorems \& definitions | 8,064 |
 | Thematic divisions | 32 |
 | Remaining unproven claims | **0** |
 | Years since Pythagorean equation first recorded | ~4,000 |
@@ -50280,7 +50285,7 @@ All results are formally verified in Lean 4 (version 4.28.0) using the Mathlib l
 |--------|-------|
 | Source files | 334 |
 | Lines of code | 75,753 |
-| Definitions & theorems | 8,064 |
+| Definitions \& theorems | 8,064 |
 | Thematic divisions | 32 |
 | Remaining `sorry` | **0** |
 | Non-standard axioms | **0** |
@@ -50536,7 +50541,7 @@ We formalize a novel factoring approach based on the Pythagorean-light cone conn
 \subsection{7.1 Berggren–Quantum Bridge}
 
 **Theorem 7.1** (Pythagorean Gate Unitarity). *Every primitive Pythagorean triple $(a, b, c)$ defines a unitary $2 \times 2$ matrix:*
-$$U_{a,b,c} = \frac{1}{c}\begin{pmatrix} a & -b \\ b & a \end{pmatrix}$$
+$$U_{a,b,c} = \frac{1}{c}\begin{pmatrix} a \& -b \\ b \& a \end{pmatrix}$$
 
 *Lean reference:* `pythagorean_gate_unitary`
 
@@ -51019,7 +51024,7 @@ Seven research teams (§1.3) contributed modules organized around six pillars:
 | Team | Name | Domain | Role |
 |------|------|--------|------|
 | **α** | The Decoder | Stereographic projection | Core identities, parametrization, the Rosetta Stone itself |
-| **β** | The Navigator | Berggren tree & descent | Combinatorial dynamics, tree navigation, landscape theory |
+| **β** | The Navigator | Berggren tree \& descent | Combinatorial dynamics, tree navigation, landscape theory |
 | **γ** | The Physicist | Minkowski geometry | Light cone, Lorentz boosts, Doppler, hyperbolic geometry |
 | **δ** | The Crystallizer | Neural architecture | Weight crystallization, stability, Harmonic Network design |
 | **ε** | The Algebraist | Division algebras | Hurwitz tower, Gaussian integers, Hopf fibration |
@@ -51197,7 +51202,7 @@ The Hopf fibration connects 4-dimensional (quaternionic) weight spaces to the qu
 
 \subsection{7.2 Pythagorean Gates}
 
-Every Pythagorean triple $(a,b,c)$ defines a unitary gate $U = \bigl(\begin{smallmatrix} a/c & -b/c \\ b/c & a/c \end{smallmatrix}\bigr)$.
+Every Pythagorean triple $(a,b,c)$ defines a unitary gate $U = \bigl(\begin{smallmatrix} a/c \& -b/c \\ b/c \& a/c \end{smallmatrix}\bigr)$.
 
 **Theorem 7.4** (`berggren_gate_unitary`). Berggren-derived gates are unitary. ✓
 
@@ -51428,7 +51433,7 @@ a_k = N - 2k,  b_k = ((N-2k)² - 1)/2,  c_k = ((N-2k)² + 1)/2
 
 \section{3. Twenty Areas of Mathematics: Explorations}
 
-\subsection{Area 1: Continued Fractions & Stern-Brocot Tree}
+\subsection{Area 1: Continued Fractions \& Stern-Brocot Tree}
 
 **Connection to IOF**: The Berggren tree for Pythagorean triples is structurally analogous to the Stern-Brocot tree for rationals. Both are generated by 2×2 or 3×3 integer matrices, both enumerate a complete set.
 
@@ -51441,7 +51446,7 @@ a_k = N - 2k,  b_k = ((N-2k)² - 1)/2,  c_k = ((N-2k)² + 1)/2
 
 \bigskip\hrule\bigskip
 
-\subsection{Area 2: Quadratic Reciprocity & Legendre Symbols}
+\subsection{Area 2: Quadratic Reciprocity \& Legendre Symbols}
 
 **Connection to IOF**: The multi-polynomial sieve's effectiveness depends on which quadratic forms f(k) = ak²+bk+c have roots mod p. This is governed by the Legendre symbol (Δ/p) where Δ = b²-4ac.
 
@@ -51490,7 +51495,7 @@ a_k = N - 2k,  b_k = ((N-2k)² - 1)/2,  c_k = ((N-2k)² + 1)/2
 
 \bigskip\hrule\bigskip
 
-\subsection{Area 6: Ergodic Theory & Dynamical Systems}
+\subsection{Area 6: Ergodic Theory \& Dynamical Systems}
 
 **Connection to IOF**: The Berggren descent is a deterministic dynamical system on the space of Pythagorean triples. Understanding its ergodic properties reveals how uniformly factors are found across different composites.
 
@@ -51623,7 +51628,7 @@ a_k = N - 2k,  b_k = ((N-2k)² - 1)/2,  c_k = ((N-2k)² + 1)/2
 
 \bigskip\hrule\bigskip
 
-\subsection{Area 19: Noncommutative Algebra & Quaternions}
+\subsection{Area 19: Noncommutative Algebra \& Quaternions}
 
 **Connection to IOF**: The Pythagorean equation generalizes to quaternion norms. The Hurwitz integer factoring problem is a 4D analogue of IOF.
 
@@ -51919,8 +51924,8 @@ All results are formally verified in Lean 4 (version 4.28.0) using the Mathlib l
 |--------|-------|
 | Source files | 334 |
 | Lines of code | 75,775 |
-| Theorems & lemmas | 6,597 |
-| Definitions, structures & instances | 1,874 |
+| Theorems \& lemmas | 6,597 |
+| Definitions, structures \& instances | 1,874 |
 | Total declarations | 8,471 |
 | Thematic divisions | 32 |
 | Remaining `sorry` | **0** |
@@ -52171,7 +52176,7 @@ The tropical semiring $(\mathbb{R} \cup \{-\infty\}, \oplus, \odot)$ with $a \op
 \subsection{7.1 Berggren–Quantum Bridge}
 
 **Theorem 7.1** (Pythagorean Gate Unitarity). *Every primitive Pythagorean triple $(a, b, c)$ defines a unitary $2 \times 2$ matrix:*
-$$U_{a,b,c} = \frac{1}{c}\begin{pmatrix} a & -b \\ b & a \end{pmatrix}$$
+$$U_{a,b,c} = \frac{1}{c}\begin{pmatrix} a \& -b \\ b \& a \end{pmatrix}$$
 
 *Lean reference:* `pythagorean_gate_unitary`
 
@@ -52478,7 +52483,7 @@ All results are formally verified in Lean 4 (version 4.28.0) using the Mathlib l
 |--------|-------|
 | Source files | 334 |
 | Lines of code | 75,753 |
-| Definitions & theorems | 8,471 |
+| Definitions \& theorems | 8,471 |
 | Thematic divisions | 32 |
 | Remaining `sorry` | **0** |
 | Non-standard axioms | **0** |
@@ -52734,7 +52739,7 @@ We formalize a novel factoring approach based on the Pythagorean-light cone conn
 \subsection{7.1 Berggren–Quantum Bridge}
 
 **Theorem 7.1** (Pythagorean Gate Unitarity). *Every primitive Pythagorean triple $(a, b, c)$ defines a unitary $2 \times 2$ matrix:*
-$$U_{a,b,c} = \frac{1}{c}\begin{pmatrix} a & -b \\ b & a \end{pmatrix}$$
+$$U_{a,b,c} = \frac{1}{c}\begin{pmatrix} a \& -b \\ b \& a \end{pmatrix}$$
 
 *Lean reference:* `pythagorean_gate_unitary`
 
@@ -53014,10 +53019,10 @@ We present a formally verified research program in Lean 4 + Mathlib spanning **3
 \subsection{Original 20 Areas (from previous sessions)}
 1. **Combinatorics** — Vandermonde, pigeonhole, Stirling, Sperner's theorem
 2. **Group Theory** — p²-groups abelian, Lagrange, permutation signs
-3. **Analysis & Inequalities** — AM-GM, Cauchy-Schwarz, Bernoulli
+3. **Analysis \& Inequalities** — AM-GM, Cauchy-Schwarz, Bernoulli
 4. **Number Theory** — Bertrand's postulate, n⁵≡0 (mod 30), QR
 5. **Linear Algebra** — Cayley-Hamilton, det properties, Kronecker delta
-6. **Topology & Dynamics** — Compactness, connectedness, Platonic solids
+6. **Topology \& Dynamics** — Compactness, connectedness, Platonic solids
 7. **Polynomials** — Irreducibility of X²-2, geometric series
 8. **Ring Theory** — PIDs are UFDs, finite domains are fields
 9. **Set Theory** — Cantor's theorem, De Morgan
@@ -53035,7 +53040,7 @@ We present a formally verified research program in Lean 4 + Mathlib spanning **3
 
 \subsection{New 14 Areas (this session)}
 21. **Arithmetic Combinatorics** — Sumset bounds, compression duality
-22. **Order & Lattice Theory** — Knaster-Tarski fixed points, Boolean algebras, De Morgan
+22. **Order \& Lattice Theory** — Knaster-Tarski fixed points, Boolean algebras, De Morgan
 23. **Ramsey Theory** — R(3,3)=6 (both bounds!), Schur's theorem, combinatorial lines
 24. **Galois Theory** — Cyclotomic polynomials, Frobenius, tower law, Galois group order
 25. **Functional Analysis** — Banach fixed point theorem, operator norms, Cauchy-Schwarz
@@ -53123,7 +53128,7 @@ We present a formally verified research program in Lean 4 + Mathlib spanning **3
 \noindent$\bullet$ **Diffie-Hellman**: Key exchange protocol verified\\
 \noindent$\bullet$ **Frobenius endomorphism**: x^p = x in GF(p)\\
 
-\subsection{5.3 Machine Learning & Optimization}
+\subsection{5.3 Machine Learning \& Optimization}
 \noindent$\bullet$ **Jensen's inequality**: Foundation for EM algorithm convergence\\
 \noindent$\bullet$ **Convex function properties**: x² convexity, gradient descent convergence\\
 \noindent$\bullet$ **Linear programming**: Weak duality with nonneg constraints\\
@@ -53137,7 +53142,7 @@ We present a formally verified research program in Lean 4 + Mathlib spanning **3
 \noindent$\bullet$ **Second-price auctions**: Truthful bidding is dominant strategy\\
 \noindent$\bullet$ **Shapley value**: Efficient allocation in cooperative games\\
 
-\subsection{5.6 Navigation & Robotics}
+\subsection{5.6 Navigation \& Robotics}
 \noindent$\bullet$ **Drift-free IMU**: Exact rational rotations via SL(2,ℤ)\\
 \noindent$\bullet$ **Fixed point iteration**: Guaranteed convergence of contraction mappings\\
 \noindent$\bullet$ **Banach fixed point**: Existence and uniqueness of solutions\\
@@ -53178,7 +53183,7 @@ We present a formally verified research program in Lean 4 + Mathlib spanning **3
 
 \bigskip\hrule\bigskip
 
-\section{7. Hypotheses & Future Directions}
+\section{7. Hypotheses \& Future Directions}
 
 \subsection{7.1 Formalization Hypotheses}
 1. **H1**: The Sauer-Shelah lemma can be formalized via shifting/projection induction (UNTESTED)
@@ -53205,7 +53210,7 @@ We present a formally verified research program in Lean 4 + Mathlib spanning **3
 \subsection{Core Theory}
 `Basic.lean` · `Berggren.lean` · `BerggrenTree.lean` · `CongruentNumber.lean` · `Extensions.lean` · `FermatFactor.lean` · `FLT4.lean` · `GaussianIntegers.lean` · `QuadraticForms.lean` · `DescentTheory.lean` · `NewTheorems.lean` · `NewDirections.lean` · `SL2Theory.lean` · `ArithmeticGeometry.lean` · `MillenniumConnections.lean` · `Moonshine.lean`
 
-\subsection{Quantum & Information}
+\subsection{Quantum \& Information}
 `QuantumCircuits.lean` · `QuantumCompression.lean` · `QuantumGateSynthesis.lean` · `CompressionTheory.lean` · `Entropy.lean`
 
 \subsection{Mathematical Exploration (Original)}
@@ -54501,10 +54506,10 @@ The LKT framework does not propose new physics — it proposes a new language fo
 \section{References}
 
 1. Rovelli, C. (1996). "Relational quantum mechanics." *International Journal of Theoretical Physics*, 35(8), 1637-1678.
-2. Coffman, V., Kundu, J., & Wootters, W. K. (2000). "Distributed entanglement." *Physical Review A*, 61(5), 052306.
+2. Coffman, V., Kundu, J., \& Wootters, W. K. (2000). "Distributed entanglement." *Physical Review A*, 61(5), 052306.
 3. Tsirelson, B. S. (1980). "Quantum generalizations of Bell's inequality." *Letters in Mathematical Physics*, 4(2), 93-100.
 4. Holevo, A. S. (1973). "Bounds for the quantity of information transmitted by a quantum communication channel." *Problems of Information Transmission*, 9(3), 177-183.
-5. Braunstein, S. L., & Caves, C. M. (1994). "Statistical distance and the geometry of quantum states." *Physical Review Letters*, 72(22), 3439.
+5. Braunstein, S. L., \& Caves, C. M. (1994). "Statistical distance and the geometry of quantum states." *Physical Review Letters*, 72(22), 3439.
 6. Zurek, W. H. (2003). "Decoherence, einselection, and the quantum origins of the classical." *Reviews of Modern Physics*, 75(3), 715.
 
 \bigskip\hrule\bigskip
@@ -54947,7 +54952,7 @@ These representation counts are the natural "decoder output" for each channel:
 The simplest channel. An integer n is a sum of one square if and only if n is a
 perfect square. Formally:
 
-$$r_1(n) = \begin{cases} 2 & \text{if } n = m^2 \text{ for some } m > 0 \\ 1 & \text{if } n = 0 \\ 0 & \text{otherwise} \end{cases}$$
+$$r_1(n) = \begin{cases} 2 \& \text{if } n = m^2 \text{ for some } m > 0 \\ 1 \& \text{if } n = 0 \\ 0 \& \text{otherwise} \end{cases}$$
 
 This channel has extremely low bandwidth — it produces only a binary signal
 (square or not square) plus a magnitude.
@@ -55217,7 +55222,7 @@ the universe has to listen with.
 
 1. Hurwitz, A. (1898). Über die Composition der quadratischen Formen. *Nachr. Ges. Wiss. Göttingen*, 309-316.
 2. Jacobi, C.G.J. (1829). *Fundamenta Nova Theoriae Functionum Ellipticarum*.
-3. Conway, J.H. & Smith, D.A. (2003). *On Quaternions and Octonions*. A K Peters.
+3. Conway, J.H. \& Smith, D.A. (2003). *On Quaternions and Octonions*. A K Peters.
 4. Baez, J. (2002). The Octonions. *Bull. Amer. Math. Soc.* 39, 145-205.
 5. Pfister, A. (1965). Zur Darstellung von -1 als Summe von Quadraten in einem Körper. *J. London Math. Soc.* 40, 159-165.
 6. Grosswald, E. (1985). *Representations of Integers as Sums of Squares*. Springer.
@@ -55512,7 +55517,7 @@ Sometimes the most productive question in mathematics is the one that seems too 
 
 1. Turing, A.M. (1939). "Systems of logic based on ordinals." *Proceedings of the London Mathematical Society*, s2-45(1), 161–228.
 2. Post, E.L. (1944). "Recursively enumerable sets of positive integers and their decision problems." *Bulletin of the American Mathematical Society*, 50, 284–316.
-3. Arora, S. & Barak, B. (2009). *Computational Complexity: A Modern Approach*. Cambridge University Press.
+3. Arora, S. \& Barak, B. (2009). *Computational Complexity: A Modern Approach*. Cambridge University Press.
 
 \clearpage
 
@@ -56649,7 +56654,7 @@ The Berggren tree IS a ternary prefix-free code for PPTs:
 
 6. **Computer Graphics**: Integer points on circles via scaled PPTs (`scaled_circle_point`)
 
-7. **Surveying & Construction**: The (3,4,5) rope for exact right angles, verified (5,12,13) and (8,15,17) alternatives
+7. **Surveying \& Construction**: The (3,4,5) rope for exact right angles, verified (5,12,13) and (8,15,17) alternatives
 
 \subsection{6.2 Millennium Problem Connections}
 
@@ -56675,7 +56680,7 @@ The Berggren tree IS a ternary prefix-free code for PPTs:
 | S3 | Toffoli determinant via permutation theory | det = -1 | ✓ Verified |
 | S4 | Pauli anticommutation | XZ = -ZX | ✓ Verified |
 | S5 | Hadamard conjugation | H swaps X ↔ Z | ✓ Verified |
-| S6 | Hamming code error detection | All columns nonzero & distinct | ✓ Verified |
+| S6 | Hamming code error detection | All columns nonzero \& distinct | ✓ Verified |
 | S7 | Cassini's identity | F(n+1)² - F(n+2)·F(n) = (-1)ⁿ | ✓ Verified |
 | S8 | Cayley-Hamilton 2×2 | A² - tr(A)·A + det(A)·I = 0 | ✓ Verified |
 | S9 | Quadratic residues mod 5,7 | Complete classification | ✓ Verified |
@@ -56868,7 +56873,7 @@ We present a massive expansion of the formally verified research program, adding
 \noindent$\bullet$ **sl(2) Lie algebra**: [e,f]=h, [h,e]=2e, [h,f]=-2f\\
 \noindent$\bullet$ **Trace of sl(2) elements is 0**\\
 
-\subsection{Area 10: Set Theory & Logic (`SetTheoryLogic.lean`)}
+\subsection{Area 10: Set Theory \& Logic (`SetTheoryLogic.lean`)}
 \noindent$\bullet$ **ℕ, ℤ, ℚ are countable**\\
 \noindent$\bullet$ **ℝ is uncountable**\\
 \noindent$\bullet$ **Cantor's theorem**: no surjection α → 𝒫(α)\\
@@ -58496,10 +58501,10 @@ No `sorry`, `Lean.ofReduceBool`, or `Lean.trustCompiler` appear in the transitiv
 | `MetaScience/AdvancedTheorems.lean` | Cycle 7 formal proofs | 16 |
 | `Meta Science/Foundations.lean` | Cycle 1-5 foundations | 12 |
 | `Meta Science/Convergence.lean` | Cycle 6 convergence | 10 |
-| `Meta Science/demos2/thermodynamic_bounds.py` | H14 & MH2 experiments | — |
-| `Meta Science/demos2/meta_convergence.py` | MH5 & MH1 experiments | — |
+| `Meta Science/demos2/thermodynamic_bounds.py` | H14 \& MH2 experiments | — |
+| `Meta Science/demos2/meta_convergence.py` | MH5 \& MH1 experiments | — |
 | `Meta Science/demos2/topological_obstructions.py` | MH7 experiments | — |
-| `Meta Science/demos2/universality.py` | H15 & NH5 experiments | — |
+| `Meta Science/demos2/universality.py` | H15 \& NH5 experiments | — |
 \end{verbatim}
 
 \section{Appendix C: Cumulative Statistics}
@@ -59503,7 +59508,7 @@ Our work connects to several established areas:
 \noindent$\bullet$ **Computability theory**: immune sets, productive sets, and simple sets (Post, 1944; Rogers, 1967) study subsets of ℕ that resist enumeration. Our repulsor framework generalizes these concepts to arbitrary search spaces.\\
 \noindent$\bullet$ **Algorithmic randomness**: Martin-Löf random sequences (Martin-Löf, 1966) evade all effective statistical tests, making them a form of probabilistic repulsor.\\
 \noindent$\bullet$ **Game theory**: pursuit-evasion games (Isaacs, 1965) study continuous analogues of search-and-hide problems.\\
-\noindent$\bullet$ **Complexity theory**: evasive Boolean functions (Rivest & Vuillemin, 1976) require querying all variables in a decision tree.\\
+\noindent$\bullet$ **Complexity theory**: evasive Boolean functions (Rivest \& Vuillemin, 1976) require querying all variables in a decision tree.\\
 \noindent$\bullet$ **Formal verification**: our use of Lean 4 and Mathlib follows the tradition of machine-verified mathematics in the style of the Xena project and Mathlib community.\\
 
 Our contribution is to unify these threads under a single formal framework and prove the precise duality between attractors and repulsors.
@@ -59770,8 +59775,8 @@ The repulsor phenomenon — objects that become harder to find the more you sear
 2. Post, E. L. (1944). "Recursively enumerable sets of positive integers and their decision problems." *Bulletin of the AMS*, 50(5), 284–316.
 3. Rogers, H. (1967). *Theory of Recursive Functions and Effective Computability*. McGraw-Hill.
 4. Martin-Löf, P. (1966). "The definition of random sequences." *Information and Control*, 9(6), 602–619.
-5. Isaacs, R. (1965). *Differential Games*. John Wiley & Sons.
-6. Rivest, R. L., & Vuillemin, J. (1976). "On recognizing graph properties from adjacency matrices." *Theoretical Computer Science*, 3(3), 371–384.
+5. Isaacs, R. (1965). *Differential Games*. John Wiley \& Sons.
+6. Rivest, R. L., \& Vuillemin, J. (1976). "On recognizing graph properties from adjacency matrices." *Theoretical Computer Science*, 3(3), 371–384.
 7. The Mathlib Community. (2020). "The Lean Mathematical Library." *CPP 2020*.
 
 \bigskip\hrule\bigskip
@@ -60048,7 +60053,7 @@ theorem research_is_universe {H : Type*}
 \begin{verbatim}
 | # | Theorem | Status |
 |---|---------|--------|
-| 1 | Light/dark classification & trichotomy | ✓ Proved |
+| 1 | Light/dark classification \& trichotomy | ✓ Proved |
 | 2 | Disjointness of light and dark | ✓ Proved |
 | 3 | Space expands (arbitrary composite runs) | ✓ Proved |
 | 4 | Universe stretches (with bounding primes) | ✓ Proved |
@@ -60616,7 +60621,7 @@ Our work connects to several established areas:
 \noindent$\bullet$ **Computability theory**: immune sets, productive sets, and simple sets (Post, 1944; Rogers, 1967) study subsets of ℕ that resist enumeration. Our repulsor framework generalizes these concepts to arbitrary search spaces.\\
 \noindent$\bullet$ **Algorithmic randomness**: Martin-Löf random sequences (Martin-Löf, 1966) evade all effective statistical tests, making them a form of probabilistic repulsor.\\
 \noindent$\bullet$ **Game theory**: pursuit-evasion games (Isaacs, 1965) study continuous analogues of search-and-hide problems.\\
-\noindent$\bullet$ **Complexity theory**: evasive Boolean functions (Rivest & Vuillemin, 1976) require querying all variables in a decision tree.\\
+\noindent$\bullet$ **Complexity theory**: evasive Boolean functions (Rivest \& Vuillemin, 1976) require querying all variables in a decision tree.\\
 \noindent$\bullet$ **Formal verification**: our use of Lean 4 and Mathlib follows the tradition of machine-verified mathematics in the style of the Xena project and Mathlib community.\\
 
 Our contribution is to unify these threads under a single formal framework and prove the precise duality between attractors and repulsors.
@@ -60883,8 +60888,8 @@ The repulsor phenomenon — objects that become harder to find the more you sear
 2. Post, E. L. (1944). "Recursively enumerable sets of positive integers and their decision problems." *Bulletin of the AMS*, 50(5), 284–316.
 3. Rogers, H. (1967). *Theory of Recursive Functions and Effective Computability*. McGraw-Hill.
 4. Martin-Löf, P. (1966). "The definition of random sequences." *Information and Control*, 9(6), 602–619.
-5. Isaacs, R. (1965). *Differential Games*. John Wiley & Sons.
-6. Rivest, R. L., & Vuillemin, J. (1976). "On recognizing graph properties from adjacency matrices." *Theoretical Computer Science*, 3(3), 371–384.
+5. Isaacs, R. (1965). *Differential Games*. John Wiley \& Sons.
+6. Rivest, R. L., \& Vuillemin, J. (1976). "On recognizing graph properties from adjacency matrices." *Theoretical Computer Science*, 3(3), 371–384.
 7. The Mathlib Community. (2020). "The Lean Mathematical Library." *CPP 2020*.
 
 \bigskip\hrule\bigskip
@@ -61124,7 +61129,7 @@ H_k(N) = (1/N) · Σ_{n≤N} log(rₖ(n))
 
 All 19 theorems below are verified by Lean 4's kernel with zero `sorry` statements. The proofs reside in `Session2Theorems.lean`.
 
-\subsection{4.1 Powers of 2 (Dr. Chen & Dr. Park)}
+\subsection{4.1 Powers of 2 (Dr. Chen \& Dr. Park)}
 
 **Theorem 4.1** (σ₁*(2ᵏ) = 3). *For k ≥ 1,*
 $$\sum_{\substack{d \mid 2^k \\ 4 \nmid d}} d = 3.$$
@@ -61835,10 +61840,10 @@ The TriResonant Linear layer composes these four operations to provide a smooth,
 \section{A Machine-Verified Research Paper}
 
 **Research Team (Simulated)**
-\noindent$\bullet$ Dr. A. Lyapunov — Dynamical Systems & Energy Analysis\\
-\noindent$\bullet$ Dr. B. Berggren — Geometric Number Theory & Tree Structures\\
-\noindent$\bullet$ Dr. C. Pollard — Algorithmic Optimization & Batch Methods\\
-\noindent$\bullet$ Dr. D. Fermat — Formal Verification & Proof Engineering\\
+\noindent$\bullet$ Dr. A. Lyapunov — Dynamical Systems \& Energy Analysis\\
+\noindent$\bullet$ Dr. B. Berggren — Geometric Number Theory \& Tree Structures\\
+\noindent$\bullet$ Dr. C. Pollard — Algorithmic Optimization \& Batch Methods\\
+\noindent$\bullet$ Dr. D. Fermat — Formal Verification \& Proof Engineering\\
 
 **Date:** 2025
 
@@ -62067,7 +62072,7 @@ The energy monotonicity (energy_monotone_decreasing) guarantees that the giant s
 
 \bigskip\hrule\bigskip
 
-\section{7. Moonshot Applications & Sci-Fi Directions}
+\section{7. Moonshot Applications \& Sci-Fi Directions}
 
 \subsection{7.1 Quantum-Classical Hybrid Factoring}
 
@@ -62376,7 +62381,7 @@ For practical integer factoring, established methods such as the Quadratic Sieve
 
 \section{References}
 
-1. Lenstra, A. K., & Lenstra, H. W. (Eds.). (1993). *The development of the number field sieve*. Lecture Notes in Mathematics, 1554. Springer.
+1. Lenstra, A. K., \& Lenstra, H. W. (Eds.). (1993). *The development of the number field sieve*. Lecture Notes in Mathematics, 1554. Springer.
 2. Pomerance, C. (1996). A tale of two sieves. *Notices of the AMS*, 43(12), 1473–1485.
 3. The mathlib Community. (2020). The Lean mathematical library. *Proceedings of the 9th ACM SIGPLAN International Conference on Certified Programs and Proofs (CPP 2020)*.
 
@@ -62443,9 +62448,9 @@ $$\left(\frac{a}{c}\right)^2 + \left(\frac{b}{c}\right)^2 = 1$$
 
 **Theorem 2.4** (Berggren, 1934; Barning, 1963; Hall, 1970). *Every primitive Pythagorean triple with $a$ odd, $b$ even is generated exactly once from the root $(3, 4, 5)$ by iterative application of the three matrices:*
 
-$$M_1 = \begin{pmatrix} 1 & -2 & 2 \\ 2 & -1 & 2 \\ 2 & -2 & 3 \end{pmatrix}, \quad
-M_2 = \begin{pmatrix} 1 & 2 & 2 \\ 2 & 1 & 2 \\ 2 & 2 & 3 \end{pmatrix}, \quad
-M_3 = \begin{pmatrix} -1 & 2 & 2 \\ -2 & 1 & 2 \\ -2 & 2 & 3 \end{pmatrix}$$
+$$M_1 = \begin{pmatrix} 1 \& -2 \& 2 \\ 2 \& -1 \& 2 \\ 2 \& -2 \& 3 \end{pmatrix}, \quad
+M_2 = \begin{pmatrix} 1 \& 2 \& 2 \\ 2 \& 1 \& 2 \\ 2 \& 2 \& 3 \end{pmatrix}, \quad
+M_3 = \begin{pmatrix} -1 \& 2 \& 2 \\ -2 \& 1 \& 2 \\ -2 \& 2 \& 3 \end{pmatrix}$$
 
 **Key Property:** These matrices preserve the Lorentz form $Q = x^2 + y^2 - z^2$. Equivalently, $B_i^T \cdot \text{diag}(1,1,-1) \cdot B_i = \text{diag}(1,1,-1)$, placing the Berggren transformations in $O(2,1;\mathbb{Z})$.
 
@@ -62740,8 +62745,8 @@ The "humble hypotenuse" — the $c$ in $a^2 + b^2 = c^2$ — is indeed the key. 
 1. Berggren, B. (1934). Pytagoreiska trianglar. *Tidskrift för elementär matematik, fysik och kemi*, 17, 129–139.
 2. Barning, F. J. M. (1963). Over Pythagorese en bijna-Pythagorese driehoeken en een generatieproces met behulp van unimodulaire matrices. *Math. Centrum Amsterdam Afd. Zuivere Wisk.*, ZW-011.
 3. Hall, A. (1970). Genealogy of Pythagorean triads. *The Mathematical Gazette*, 54(390), 377–379.
-4. Miyato, T., Kataoka, T., Koyama, M., & Yoshida, Y. (2018). Spectral normalization for generative adversarial networks. *ICLR 2018*.
-5. Arjovsky, M., Shah, A., & Bengio, Y. (2016). Unitary evolution recurrent neural networks. *ICML 2016*.
+4. Miyato, T., Kataoka, T., Koyama, M., \& Yoshida, Y. (2018). Spectral normalization for generative adversarial networks. *ICLR 2018*.
+5. Arjovsky, M., Shah, A., \& Bengio, Y. (2016). Unitary evolution recurrent neural networks. *ICML 2016*.
 
 \clearpage
 
@@ -62976,7 +62981,7 @@ Topological data analysis (TDA) is a branch of mathematics that detects "shapes"
 
 Think of it this way: if you were an ant walking on the surface of a donut, you could detect the donut's hole by finding closed paths that can't be shrunk to a point. TDA does the same thing for data, using an algorithm called persistent homology.
 
-When we applied this to 23 years of S&P 500 returns, we found something remarkable: **closed loops appear in the data 2–4 weeks before every major crash.** The 2001 dot-com collapse, the 2008 financial crisis, the 2020 COVID crash — each was preceded by the sudden formation of topological "wormholes" in the market's geometric structure.
+When we applied this to 23 years of S\&P 500 returns, we found something remarkable: **closed loops appear in the data 2–4 weeks before every major crash.** The 2001 dot-com collapse, the 2008 financial crisis, the 2020 COVID crash — each was preceded by the sudden formation of topological "wormholes" in the market's geometric structure.
 
 The mathematics is clear about why: during normal markets, returns trace out a noisy but topologically simple path through state space. Before a crash, correlations shift and the path begins to fold back on itself, creating loops — exactly the kind of structure that persistent homology is designed to detect.
 
