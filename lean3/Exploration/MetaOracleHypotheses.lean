@@ -121,13 +121,80 @@ def constellationRigidity : Prop :=
   let ρ := (primeCount n : ℝ) / n
   |G - α * n * ρ^2| < ε * n * ρ^2
 
-/-- **Hypothesis 4 (Approximation Universality):**
+/-
+PROBLEM
+**Hypothesis 4 (Approximation Universality):**
     Dense orbits in compact groups achieve all approximation targets.
 
     Formal version for the circle: For any irrational α and any target x ∈ [0,1),
-    the sequence {nα} gets arbitrarily close to x. -/
+    the sequence {nα} gets arbitrarily close to x.
+
+PROVIDED SOLUTION
+Use the equidistribution theorem / Weyl's theorem. For irrational α, the sequence {n*α} is dense in [0,1). Specifically, by the pigeonhole principle, for any ε > 0, there exist distinct integers m1, m2 such that |Int.fract(m1*α) - Int.fract(m2*α)| < ε. Let d = m1 - m2. Then Int.fract(d*α) is within ε of 0 or within ε of 1. The multiples {k*d*α} for k ∈ ℤ then form a subgroup of the circle that is ε-dense. So for any target x, there exists some k such that |Int.fract(k*d*α) - Int.fract(x)| < ε. Use AddCircle.denseRange_nsmul_of_irrational or similar Mathlib lemma about density of irrational rotations on the circle.
+-/
 theorem irrational_orbit_dense (α : ℝ) (hα : Irrational α) (x : ℝ) (ε : ℝ) (hε : ε > 0) :
-    ∃ n : ℤ, |Int.fract (n * α) - Int.fract x| < ε := by sorry
+    ∃ n : ℤ, |Int.fract (n * α) - Int.fract x| < ε := by
+      -- By the density of the sequence $\{n\alpha\}$ in $[0,1)$, there exists an $n$ such that $\{n\alpha\}$ is arbitrarily close to $x$.
+      have h_dense : ∀ δ > 0, ∃ n : ℤ, |Int.fract (n * α) - Int.fract x| < δ := by
+        intro δ hδ_pos
+        obtain ⟨n, hn⟩ : ∃ n : ℤ, |Int.fract (n * α) - Int.fract x| < δ := by
+          have h_dense : ∀ ε > 0, ∃ n : ℤ, |Int.fract (n * α)| < ε ∧ Int.fract (n * α) ≠ 0 := by
+            intro ε hε_pos
+            obtain ⟨n, hn⟩ : ∃ n : ℤ, 0 < Int.fract (n * α) ∧ Int.fract (n * α) < ε := by
+              -- By the pigeonhole principle, there exist integers $m$ and $n$ with $0 < m < n$ such that $\{m\alpha\}$ and $\{n\alpha\}$ fall into the same subinterval of length $\epsilon$.
+              obtain ⟨m, n, hmn, h_sub⟩ : ∃ m n : ℕ, 0 < m ∧ m < n ∧ |Int.fract (m * α) - Int.fract (n * α)| < ε := by
+                -- By the pigeonhole principle, since there are infinitely many $n$ and only finitely many intervals of length $\epsilon$, there must be some interval that contains at least two of the fractional parts $\{n\alpha\}$.
+                have h_pigeonhole : ∃ m n : ℕ, 0 < m ∧ m < n ∧ ⌊Int.fract (m * α) / ε⌋ = ⌊Int.fract (n * α) / ε⌋ := by
+                  have h_pigeonhole : Set.Finite (Set.range (fun n : ℕ => ⌊Int.fract (n * α) / ε⌋)) := by
+                    exact Set.Finite.subset ( Set.finite_Ico ( 0 : ℤ ) ( ⌈ε⁻¹⌉₊ : ℤ ) ) <| Set.range_subset_iff.mpr fun n => ⟨ Int.floor_nonneg.mpr <| div_nonneg ( Int.fract_nonneg _ ) hε_pos.le, Int.floor_lt.mpr <| by simpa using div_lt_iff₀ hε_pos |>.2 <| by nlinarith [ Nat.le_ceil ( ε⁻¹ ), Int.fract_lt_one ( ( n : ℝ ) * α ), mul_inv_cancel₀ hε_pos.ne' ] ⟩;
+                  contrapose! h_pigeonhole;
+                  exact Set.infinite_of_injective_forall_mem ( fun m n mn => le_antisymm ( not_lt.1 fun contra => h_pigeonhole _ _ ( by linarith ) ( by linarith ) mn.symm ) ( not_lt.1 fun contra => h_pigeonhole _ _ ( by linarith ) ( by linarith ) mn ) ) fun n => ⟨ n + 1, rfl ⟩;
+                obtain ⟨ m, n, hm, hn, h ⟩ := h_pigeonhole;
+                rw [ Int.floor_eq_iff ] at h;
+                exact ⟨ m, n, hm, hn, abs_lt.mpr ⟨ by nlinarith [ Int.floor_le ( Int.fract ( n * α ) / ε ), Int.lt_floor_add_one ( Int.fract ( n * α ) / ε ), mul_div_cancel₀ ( Int.fract ( m * α ) ) hε_pos.ne', mul_div_cancel₀ ( Int.fract ( n * α ) ) hε_pos.ne' ], by nlinarith [ Int.floor_le ( Int.fract ( n * α ) / ε ), Int.lt_floor_add_one ( Int.fract ( n * α ) / ε ), mul_div_cancel₀ ( Int.fract ( m * α ) ) hε_pos.ne', mul_div_cancel₀ ( Int.fract ( n * α ) ) hε_pos.ne' ] ⟩ ⟩;
+              cases' lt_trichotomy ( Int.fract ( m * α ) ) ( Int.fract ( n * α ) ) with h h <;> simp_all +decide [ abs_lt ];
+              · use n - m;
+                simp_all +decide [ sub_mul ];
+                rw [ Int.fract, Int.fract ] at *;
+                constructor <;> linarith [ show ( ⌊ ( n : ℝ ) * α - m * α⌋ : ℝ ) = ⌊ ( n : ℝ ) * α⌋ - ⌊ ( m : ℝ ) * α⌋ by exact_mod_cast Int.floor_eq_iff.mpr ⟨ by push_cast; linarith [ Int.floor_le ( ( n : ℝ ) * α ), Int.lt_floor_add_one ( ( n : ℝ ) * α ), Int.floor_le ( ( m : ℝ ) * α ), Int.lt_floor_add_one ( ( m : ℝ ) * α ) ], by push_cast; linarith [ Int.floor_le ( ( n : ℝ ) * α ), Int.lt_floor_add_one ( ( n : ℝ ) * α ), Int.floor_le ( ( m : ℝ ) * α ), Int.lt_floor_add_one ( ( m : ℝ ) * α ) ] ⟩ ];
+              · cases' h with h h <;> [ use n - m; use m - n ] <;> simp_all +decide [ Int.fract_eq_fract, sub_mul ];
+                · obtain ⟨ z, hz ⟩ := h; exact False.elim <| hα.ne_rat ( z / ( m - n ) ) <| by push_cast; rw [ eq_div_iff ] <;> nlinarith [ show ( m : ℝ ) < n by norm_cast ] ;
+                · rw [ Int.fract_pos ];
+                  constructor;
+                  · exact fun h' => hα.ne_rat ( ⌊ ( m : ℝ ) * α - n * α⌋ / ( m - n ) ) <| by push_cast; rw [ eq_div_iff ( sub_ne_zero_of_ne <| by norm_cast; linarith ) ] ; linarith;
+                  · rw [ Int.fract, Int.fract ] at *;
+                    linarith [ show ( ⌊ ( m : ℝ ) * α - ( n : ℝ ) * α⌋ : ℝ ) ≥ ⌊ ( m : ℝ ) * α⌋ - ⌊ ( n : ℝ ) * α⌋ by exact_mod_cast Int.le_floor.2 <| by push_cast; linarith [ Int.floor_le ( ( m : ℝ ) * α ), Int.lt_floor_add_one ( ( m : ℝ ) * α ), Int.floor_le ( ( n : ℝ ) * α ), Int.lt_floor_add_one ( ( n : ℝ ) * α ) ] ];
+            exact ⟨ n, by rw [ abs_of_pos hn.1 ] ; exact hn.2, hn.1.ne' ⟩
+          -- Let $d = \{n\alpha\}$ for some $n$ such that $|d| < \delta$ and $d \neq 0$.
+          obtain ⟨n, hn⟩ : ∃ n : ℤ, |Int.fract (n * α)| < δ ∧ Int.fract (n * α) ≠ 0 := h_dense δ hδ_pos
+          set d := Int.fract (n * α) with hd_def
+          have hd_abs : |d| < δ := by
+            exact hn.1
+          have hd_ne_zero : d ≠ 0 := by
+            exact hn.2;
+          -- Consider the sequence $\{kd\}$ for $k = 0, 1, 2, \ldots$. Since $|d| < \delta$, this sequence will cover the interval $[0,1)$ with steps of size less than $\delta$.
+          have h_seq : ∃ k : ℤ, |Int.fract (k * d) - Int.fract x| < δ := by
+            -- Since $|d| < \delta$, the sequence $\{kd\}$ will cover the interval $[0,1)$ with steps of size less than $\delta$.
+            have h_seq_cover : ∀ y : ℝ, 0 ≤ y ∧ y < 1 → ∃ k : ℤ, |Int.fract (k * d) - y| < δ := by
+              intros y hy
+              obtain ⟨k, hk⟩ : ∃ k : ℤ, k * d ≤ y ∧ y < (k + 1) * d := by
+                use Int.floor (y / d);
+                exact ⟨ by nlinarith [ Int.floor_le ( y / d ), show 0 < d from lt_of_le_of_ne ( Int.fract_nonneg _ ) ( Ne.symm hd_ne_zero ), mul_div_cancel₀ y hd_ne_zero ], by nlinarith [ Int.lt_floor_add_one ( y / d ), show 0 < d from lt_of_le_of_ne ( Int.fract_nonneg _ ) ( Ne.symm hd_ne_zero ), mul_div_cancel₀ y hd_ne_zero ] ⟩;
+              -- Since $|d| < \delta$, we have $|Int.fract (k * d) - y| \leq |d| < \delta$.
+              use k
+              have h_fract_kd : Int.fract (k * d) = k * d := by
+                norm_num [ Int.fract_eq_iff ];
+                constructor <;> nlinarith [ show ( k : ℝ ) ≥ 0 by exact_mod_cast Int.le_of_lt_add_one ( by { rw [ ← @Int.cast_lt ℝ ] ; push_cast; nlinarith [ abs_lt.mp hd_abs, Int.fract_nonneg ( ( n : ℝ ) * α ), Int.fract_lt_one ( ( n : ℝ ) * α ) ] } ), Int.fract_nonneg ( ( n : ℝ ) * α ), Int.fract_lt_one ( ( n : ℝ ) * α ) ] ;
+              rw [h_fract_kd]
+              exact abs_lt.mpr ⟨by linarith [abs_lt.mp hd_abs], by linarith [abs_lt.mp hd_abs]⟩;
+            exact h_seq_cover _ ⟨ Int.fract_nonneg _, Int.fract_lt_one _ ⟩;
+          obtain ⟨ k, hk ⟩ := h_seq; use k * n; simp_all +decide [ mul_assoc, Int.fract_eq_fract ] ;
+          convert hk using 1;
+          rw [ show ( k : ℝ ) * ( n * α ) = k * Int.fract ( n * α ) + k * ⌊ ( n : ℝ ) * α⌋ by rw [ Int.fract ] ; ring ] ; ring;
+          rw [ show ( k : ℝ ) * Int.fract ( n * α ) + k * ⌊ ( n : ℝ ) * α⌋ = k * Int.fract ( n * α ) + ⌊ ( k : ℝ ) * ⌊ ( n : ℝ ) * α⌋⌋ by norm_num [ show ⌊ ( k : ℝ ) * ⌊ ( n : ℝ ) * α⌋⌋ = k * ⌊ ( n : ℝ ) * α⌋ by exact_mod_cast Int.floor_intCast _ ] ] ; rw [ Int.fract ] ; ring; norm_num; ring;
+          rw [ show ( k : ℝ ) * Int.fract ( n * α ) + ( -⌊ ( k : ℝ ) * Int.fract ( n * α ) ⌋ - Int.fract x ) = -Int.fract x + Int.fract ( ( k : ℝ ) * Int.fract ( n * α ) ) by linarith [ Int.fract_add_floor ( ( k : ℝ ) * Int.fract ( n * α ) ) ] ];
+        use n;
+      exact h_dense ε hε
 
 /-
 PROBLEM
