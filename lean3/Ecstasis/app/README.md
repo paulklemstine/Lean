@@ -1,75 +1,76 @@
-# ECSTASIS — Infinite Algorithmic Dance Music Engine
+# ECSTASIS — Audio-Visual Psychedelic Transport System
 
-## Quick Start
+## Overview
 
-1. Open `index.html` in any modern web browser (Chrome, Firefox, Edge, Safari)
-2. Select a genre
-3. Press the ▶ play button
-4. Put on headphones for full effect
-5. The music never stops. Each moment is generated fresh.
+ECSTASIS is a browser-based system that combines algorithmic music generation with neuroscience-informed psychedelic visuals to create immersive altered-state experiences.
 
-## Features
+## Components
 
-### 🎵 10 Electronic Genres
-- **House** (120-130 BPM) — Warm, soulful, four-on-the-floor grooves
-- **Techno** (128-145 BPM) — Dark, hypnotic, machine-precision rhythms
-- **Dubstep** (140 BPM) — Heavy half-time bass, aggressive drops
-- **Phonk** (130-160 BPM) — Dark Memphis-influenced beats, cowbell-driven
-- **Wave** (140-160 BPM) — Ethereal, melancholic, reverb-drenched atmospheres
-- **EBM** (110-140 BPM) — Industrial, martial, motorik rhythms
-- **EDM** (126-132 BPM) — Festival-ready euphoric anthems
-- **Trance** (136-150 BPM) — Euphoric builds, transcendent melodies
-- **Drum & Bass** (170-180 BPM) — Breakbeat-derived high-energy patterns
-- **Ambient Techno** (100-122 BPM) — Gentle, cosmic, meditative pulses
+### `index.html` — The Audio Engine
+Infinite algorithmic electronic dance music generation across 10 genres using:
+- Euclidean rhythms (Bjorklund algorithm)
+- Markov chain melodies
+- Perlin noise automation
+- Psychoacoustic techniques (binaural beats, Shepard tones, entrainment)
 
-### 🎛 Real-Time Controls
-- **Filter** — Low-pass filter cutoff and resonance
-- **Effects** — Reverb, delay, distortion
-- **Mix** — Individual level control for kick, snare, hats, bass, melody, pads, arp, FX
-- **Swing** — Adjustable groove feel
-- **Complexity** — Controls density of arrangement
+### `visuals.html` — The Visual Transport System ✨ NEW
+Audio-reactive psychedelic visual engine with six modes:
 
-### 🧠 Psychoacoustic Features
-- **Binaural Beats** — Theta-range entrainment (7 Hz) for trance-state induction
-- **Shepard Tones** — Endlessly ascending pitch illusion during builds
-- **Brainwave Entrainment** — Rhythmic patterns calibrated to target neural frequencies
+| Mode | Inspiration | Visual Character |
+|------|------------|-----------------|
+| **LSD** | Breathing Room | Flowing conformal maps, rainbow cycling, organic warping |
+| **DMT** | Chrysanthemum Palace | Kaleidoscopic IFS, electric geometry, recursive embedding |
+| **Psilocybin** | Mycelial Network | Reaction-diffusion, organic growth, warm earth tones |
+| **Mescaline** | Crystal Desert | Angular tessellation, Voronoi crystallography, saturated color |
+| **Cosmic** | Space Ocean | Nebulae, gravitational lensing, star fields, warp tunnels |
+| **Geometry** | Pure Math | Conformal maps, Mandelbrot iteration, Möbius transformations |
 
-### 🎛 Auto DJ Mode
-Automatically transitions between genres, creating an infinite multi-genre journey.
+Features:
+- **Real-time WebGL rendering** at 60fps via GLSL fragment shaders
+- **Audio-reactive**: Connects to microphone, internal synth, or any audio source
+- **Feedback loop**: Ping-pong framebuffer for trails, echoes, visual persistence
+- **Neural entrainment**: Subtle alpha-frequency brightness oscillation
+- **Post-processing**: Bloom, chromatic aberration, vignette, film grain
+- **Hypnotic staging**: Designed for progressive deepening over 30-50 minute sessions
+- **Photosensitivity safeguards**: Warning screen, ESC emergency blackout
 
-## Technical Architecture
+### Controls
 
-### Algorithms Used
-- **Euclidean Rhythms** (Bjorklund algorithm) — All drum patterns
-- **Markov Chains** — Melodic generation with genre-specific transition probabilities
-- **Perlin Noise** — Continuous parameter automation (filter, effects)
-- **L-System inspired structures** — Section-level arrangement
-- **Probabilistic State Machine** — Song structure and section transitions
+| Key | Action |
+|-----|--------|
+| `1-6` | Switch visual mode |
+| `H` | Toggle UI visibility |
+| `F` | Toggle fullscreen |
+| `ESC` | Emergency blackout (instant) |
 
-### Music Theory
-- 14 scales/modes (minor, Dorian, Phrygian, Lydian, etc.)
-- 10 chord types (min, maj, min7, maj7, dom7, sus2, sus4, etc.)
-- Genre-specific chord progressions
-- Key modulation between sections
+Sliders:
+- **Intensity**: Visual complexity and effect strength
+- **Feedback**: Trail/echo persistence (higher = more psychedelic)
+- **Speed**: Animation rate
 
-### Synthesis
-- All sounds synthesized from scratch using Web Audio API
-- Kick: Sine oscillator with pitch envelope + noise transient
-- Snare: Filtered noise + triangle body
-- Hi-hat: Filtered noise with variable envelope
-- Bass: Oscillator through resonant filter with sub-bass layer
-- Melody: Detuned oscillator pair
-- Pads: Multi-voice detuned oscillators
-- Arp: Filtered sawtooth with envelope
+Audio sources:
+- **♪ Audio**: Internal drone synthesizer demo
+- **🎤 Mic**: Microphone input (for live music reactivity)
 
-### No Dependencies
-Zero external libraries. Pure JavaScript + Web Audio API.
-Runs entirely in the browser. No server required.
-No data collection. No accounts. Just math.
+## Usage
 
-## Research
+1. Open `visuals.html` in a modern browser (Chrome, Firefox, Edge)
+2. Accept the photosensitivity warning
+3. Click "♪ Audio" for built-in sound, or "🎤 Mic" to react to external music
+4. Select a visual mode
+5. Press `F` for fullscreen, then `H` to hide UI
+6. Surrender to the geometry
 
-See the `/research` directory for:
-- `00_oracle_council_notes.md` — Oracle Council research notes
-- `01_research_paper.md` — Full research paper
-- `02_scientific_american_article.md` — Popular science article
+## Best Practices
+
+- **Use headphones** for maximum audio-visual coupling
+- **Dim the room** for peripheral vision engagement
+- **Fullscreen only** for immersive effect
+- **30-50 minute sessions** for full hypnotic depth staging
+- **Let your gaze soften** — peripheral vision is the gateway
+
+## Technical Requirements
+
+- Modern browser with WebGL 2.0 support
+- GPU recommended (integrated graphics OK for most modes)
+- No installation, no dependencies, no server required
