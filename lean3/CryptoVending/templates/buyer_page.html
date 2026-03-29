@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>File Vending Machine</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --card: #12121a;
+    --accent: #6c5ce7;
+    --accent2: #a29bfe;
+    --green: #00b894;
+    --red: #d63031;
+    --text: #dfe6e9;
+    --muted: #636e72;
+    --border: #2d3436;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', 'SF Pro', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+  }
+  .container {
+    max-width: 560px;
+    width: 100%;
+  }
+  h1 {
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: .4rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .subtitle {
+    text-align: center;
+    color: var(--muted);
+    font-size: .85rem;
+    margin-bottom: 2rem;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.6rem;
+    margin-bottom: 1.2rem;
+  }
+  .card h2 {
+    font-size: 1rem;
+    margin-bottom: .8rem;
+    color: var(--accent2);
+  }
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: .45rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: .85rem;
+  }
+  .info-row:last-child { border-bottom: none; }
+  .info-label { color: var(--muted); }
+  .info-value {
+    font-family: 'JetBrains Mono', monospace;
+    word-break: break-all;
+    max-width: 60%;
+    text-align: right;
+  }
+  button {
+    width: 100%;
+    padding: .9rem;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white;
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(108,92,231,.4); }
+  .btn-primary:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none; }
+  .btn-secondary {
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent2);
+    margin-top: .6rem;
+  }
+  .status-bar {
+    padding: .7rem 1rem;
+    border-radius: 10px;
+    font-size: .82rem;
+    margin-bottom: 1rem;
+    display: none;
+  }
+  .status-bar.info    { display: block; background: rgba(108,92,231,.15); border: 1px solid var(--accent); }
+  .status-bar.success { display: block; background: rgba(0,184,148,.15);  border: 1px solid var(--green); color: var(--green); }
+  .status-bar.error   { display: block; background: rgba(214,48,49,.15);  border: 1px solid var(--red);   color: var(--red); }
+  .progress {
+    width: 100%;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: .6rem;
+    display: none;
+  }
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent), var(--green));
+    transition: width .4s ease;
+    border-radius: 3px;
+  }
+  .steps {
+    list-style: none;
+    padding: 0;
+  }
+  .steps li {
+    padding: .5rem 0;
+    padding-left: 1.8rem;
+    position: relative;
+    font-size: .85rem;
+    color: var(--muted);
+  }
+  .steps li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: .65rem;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+  }
+  .steps li.active { color: var(--text); }
+  .steps li.active::before { border-color: var(--accent); background: var(--accent); }
+  .steps li.done { color: var(--green); }
+  .steps li.done::before { border-color: var(--green); background: var(--green); }
+  .steps li.fail { color: var(--red); }
+  .steps li.fail::before { border-color: var(--red); background: var(--red); }
+  footer {
+    margin-top: 2rem;
+    text-align: center;
+    color: var(--muted);
+    font-size: .75rem;
+  }
+  footer a { color: var(--accent2); text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>🗄️ File Vending Machine</h1>
+  <p class="subtitle">Decentralised single-serving file sale · Ethereum + IPFS</p>
+
+  <!-- File Info -->
+  <div class="card">
+    <h2>File Details</h2>
+    <div class="info-row">
+      <span class="info-label">File CID</span>
+      <span class="info-value" id="fileCID">—</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Price</span>
+      <span class="info-value" id="priceDisplay">—</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Contract</span>
+      <span class="info-value" id="contractAddr">—</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Network</span>
+      <span class="info-value" id="networkName">—</span>
+    </div>
+  </div>
+
+  <!-- Status -->
+  <div class="status-bar" id="statusBar"></div>
+
+  <!-- Steps -->
+  <div class="card">
+    <h2>Purchase Progress</h2>
+    <ul class="steps" id="steps">
+      <li id="step0">Connect MetaMask wallet</li>
+      <li id="step1">Generate ECIES keypair</li>
+      <li id="step2">Send payment + public key</li>
+      <li id="step3">Wait for key delivery</li>
+      <li id="step4">Decrypt AES key</li>
+      <li id="step5">Download encrypted file from IPFS</li>
+      <li id="step6">Decrypt & save file</li>
+    </ul>
+    <div class="progress" id="progressBar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <button class="btn-primary" id="buyBtn" onclick="startPurchase()">
+    Connect Wallet & Buy
+  </button>
+  <button class="btn-secondary" id="downloadBtn" style="display:none"
+          onclick="downloadDecryptedFile()">
+    ⬇ Download Decrypted File
+  </button>
+</div>
+
+<footer>
+  Powered by Ethereum & IPFS &middot;
+  <a href="https://github.com" target="_blank">CryptoVending</a>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<script>
+// ── Configuration (injected at build time) ───────────────────────────
+const CONFIG = {
+  contractAddress: "{{CONTRACT_ADDRESS}}",
+  network:         "{{NETWORK}}",
+  chainId:         {{CHAIN_ID}},
+  rpcUrl:          "{{RPC_URL}}",
+  fileCID:         "{{FILE_CID}}",
+  priceWei:        "{{PRICE_WEI}}",
+  priceEth:        "{{PRICE_ETH}}",
+  ipfsGateway:     "{{IPFS_GATEWAY}}",
+  abi:              {{ABI_JSON}}
+};
+
+// ── State ────────────────────────────────────────────────────────────
+let provider, signer, contract;
+let buyerPrivateKey, buyerPublicKey;
+let decryptedFileBlob = null;
+let decryptedFileName = "downloaded_file";
+
+// ── UI helpers ───────────────────────────────────────────────────────
+function setStatus(msg, type="info") {
+  const bar = document.getElementById("statusBar");
+  bar.textContent = msg;
+  bar.className = "status-bar " + type;
+}
+function setStep(idx, state) {
+  document.getElementById("step" + idx).className = state;
+}
+function setProgress(pct) {
+  const pb = document.getElementById("progressBar");
+  pb.style.display = "block";
+  document.getElementById("progressFill").style.width = pct + "%";
+}
+
+// ── Init page ────────────────────────────────────────────────────────
+document.getElementById("fileCID").textContent =
+  CONFIG.fileCID.slice(0, 12) + "…" + CONFIG.fileCID.slice(-6);
+document.getElementById("priceDisplay").textContent =
+  CONFIG.priceEth + " ETH";
+document.getElementById("contractAddr").textContent =
+  CONFIG.contractAddress.slice(0, 8) + "…" + CONFIG.contractAddress.slice(-6);
+document.getElementById("networkName").textContent = CONFIG.network;
+
+// ── Crypto helpers (browser) ─────────────────────────────────────────
+// We use the SubtleCrypto API + a lightweight secp256k1 lib for ECIES.
+// For the demo, the ECIES keypair is generated in-browser using
+// noble-secp256k1 (loaded inline below).
+
+// Minimal AES-GCM decrypt in browser
+async function aesDecrypt(key, nonce, ciphertext) {
+  const cryptoKey = await crypto.subtle.importKey(
+    "raw", key, {name: "AES-GCM"}, false, ["decrypt"]);
+  return await crypto.subtle.decrypt(
+    {name: "AES-GCM", iv: nonce}, cryptoKey, ciphertext);
+}
+
+// ── Purchase flow ────────────────────────────────────────────────────
+async function startPurchase() {
+  const btn = document.getElementById("buyBtn");
+  btn.disabled = true;
+  btn.textContent = "Processing…";
+
+  try {
+    // Step 0 — Connect MetaMask
+    setStep(0, "active");
+    setStatus("Requesting MetaMask connection…");
+    if (!window.ethereum) throw new Error("MetaMask not detected. Please install it.");
+    provider = new ethers.BrowserProvider(window.ethereum);
+    await provider.send("eth_requestAccounts", []);
+    signer = await provider.getSigner();
+
+    // Check chain
+    const net = await provider.getNetwork();
+    if (Number(net.chainId) !== CONFIG.chainId) {
+      setStatus(`Wrong network — please switch to chain ID ${CONFIG.chainId}`, "error");
+      setStep(0, "fail");
+      btn.disabled = false;
+      btn.textContent = "Connect Wallet & Buy";
+      return;
+    }
+    setStep(0, "done");
+    setProgress(14);
+
+    // Step 1 — Generate ECIES keypair
+    setStep(1, "active");
+    setStatus("Generating ECIES keypair…");
+    const privBytes = crypto.getRandomValues(new Uint8Array(32));
+    buyerPrivateKey = privBytes;
+    // Get uncompressed public key (65 bytes: 0x04 || x || y)
+    buyerPublicKey = nobleSecp256k1.getPublicKey(privBytes, false);
+    setStep(1, "done");
+    setProgress(28);
+
+    // Step 2 — Send payment
+    setStep(2, "active");
+    setStatus("Sending payment transaction…");
+    contract = new ethers.Contract(CONFIG.contractAddress, CONFIG.abi, signer);
+    const tx = await contract.purchase(
+      "0x" + bytesToHex(buyerPublicKey),
+      { value: CONFIG.priceWei }
+    );
+    setStatus("Waiting for confirmation…");
+    const receipt = await tx.wait();
+    setStep(2, "done");
+    setProgress(42);
+
+    // Extract purchaseId from event
+    const iface = new ethers.Interface(CONFIG.abi);
+    let purchaseId = null;
+    for (const log of receipt.logs) {
+      try {
+        const parsed = iface.parseLog(log);
+        if (parsed && parsed.name === "PurchaseInitiated") {
+          purchaseId = parsed.args.purchaseId;
+          break;
+        }
+      } catch(_) {}
+    }
+    if (purchaseId === null) throw new Error("Could not find PurchaseInitiated event");
+
+    // Step 3 — Wait for key delivery
+    setStep(3, "active");
+    setStatus("Payment confirmed! Waiting for seller to deliver decryption key…");
+    let encryptedKey = null;
+    for (let attempt = 0; attempt < 120; attempt++) {
+      await sleep(3000);
+      const purchase = await contract.purchases(purchaseId);
+      if (purchase.keyDelivered) {
+        encryptedKey = await contract.getEncryptedKey(purchaseId);
+        break;
+      }
+      setStatus(`Waiting for key delivery… (${attempt * 3}s)`);
+    }
+    if (!encryptedKey) throw new Error("Key delivery timed out after 6 minutes.");
+    setStep(3, "done");
+    setProgress(57);
+
+    // Step 4 — Decrypt AES key using ECIES
+    setStep(4, "active");
+    setStatus("Decrypting AES key…");
+    const encKeyBytes = hexToBytes(encryptedKey.slice(2));
+    const aesKey = await eciesDecrypt(buyerPrivateKey, encKeyBytes);
+    setStep(4, "done");
+    setProgress(71);
+
+    // Step 5 — Download encrypted file from IPFS
+    setStep(5, "active");
+    setStatus("Downloading encrypted file from IPFS…");
+    const ipfsUrl = CONFIG.ipfsGateway + "/ipfs/" + CONFIG.fileCID;
+    const resp = await fetch(ipfsUrl);
+    if (!resp.ok) throw new Error("Failed to fetch from IPFS: " + resp.status);
+    const encFileData = new Uint8Array(await resp.arrayBuffer());
+    setStep(5, "done");
+    setProgress(85);
+
+    // Step 6 — Decrypt file
+    setStep(6, "active");
+    setStatus("Decrypting file…");
+    // Unpack: [4B name_len][name][12B nonce][ciphertext]
+    const nameLen = new DataView(encFileData.buffer).getUint32(0, true);
+    const nameBytes = encFileData.slice(4, 4 + nameLen);
+    decryptedFileName = new TextDecoder().decode(nameBytes);
+    const nonce = encFileData.slice(4 + nameLen, 4 + nameLen + 12);
+    const ciphertext = encFileData.slice(4 + nameLen + 12);
+    const plaintext = await aesDecrypt(aesKey, nonce, ciphertext);
+    decryptedFileBlob = new Blob([plaintext]);
+    setStep(6, "done");
+    setProgress(100);
+
+    setStatus("✓ File decrypted successfully! Click download below.", "success");
+    document.getElementById("downloadBtn").style.display = "block";
+    btn.textContent = "✓ Purchase Complete";
+
+  } catch (err) {
+    setStatus("Error: " + err.message, "error");
+    btn.disabled = false;
+    btn.textContent = "Retry Purchase";
+    console.error(err);
+  }
+}
+
+function downloadDecryptedFile() {
+  if (!decryptedFileBlob) return;
+  const url = URL.createObjectURL(decryptedFileBlob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = decryptedFileName;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+// ── Utilities ────────────────────────────────────────────────────────
+function bytesToHex(bytes) {
+  return Array.from(bytes).map(b => b.toString(16).padStart(2, "0")).join("");
+}
+function hexToBytes(hex) {
+  const bytes = new Uint8Array(hex.length / 2);
+  for (let i = 0; i < hex.length; i += 2)
+    bytes[i/2] = parseInt(hex.substring(i, i+2), 16);
+  return bytes;
+}
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+// ── Minimal ECIES decrypt (secp256k1 + AES-256-GCM) ─────────────────
+// Compatible with the Python `eciespy` library format:
+//   [65B ephemeral_pubkey][16B AES-GCM tag][...ciphertext]
+// The shared secret is ECDH(private, ephemeral_pub) → SHA-256 → AES key
+async function eciesDecrypt(privateKey, encrypted) {
+  // Parse ECIES ciphertext (eciespy format)
+  const ephPub = encrypted.slice(0, 65);
+  const iv = encrypted.slice(65, 65+16);
+  const tag = encrypted.slice(65+16, 65+16+16);
+  const ct = encrypted.slice(65+16+16);
+
+  // ECDH shared secret
+  const shared = nobleSecp256k1.getSharedSecret(privateKey, ephPub);
+  // Derive AES key via SHA-256 of x-coordinate (32 bytes)
+  const xCoord = shared.slice(1, 33);
+  const aesKeyBuf = await crypto.subtle.digest("SHA-256", xCoord);
+  const aesKey = new Uint8Array(aesKeyBuf);
+
+  // Decrypt with AES-256-GCM
+  // Tag is appended to ciphertext for SubtleCrypto
+  const ctWithTag = new Uint8Array(ct.length + tag.length);
+  ctWithTag.set(ct);
+  ctWithTag.set(tag, ct.length);
+
+  const cryptoKey = await crypto.subtle.importKey(
+    "raw", aesKey, {name: "AES-GCM"}, false, ["decrypt"]);
+  const plain = await crypto.subtle.decrypt(
+    {name: "AES-GCM", iv: iv}, cryptoKey, ctWithTag);
+  return new Uint8Array(plain);
+}
+</script>
+
+<!-- ethers.js v6 (UMD) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.1/ethers.umd.min.js"
+        integrity="sha512-mRJkZt8bXBCMjECMSb1pIRqNBMGLwBDCGqoQoSCMnq++II/L2ByRJsNF7V10ej3bVFfLogSRPpA5adJMB4JOg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<!-- noble-secp256k1 (lightweight, audited) -->
+<script src="https://cdn.jsdelivr.net/npm/@noble/secp256k1@1.7.1/lib/index.min.js"></script>
+<script>
+  // noble-secp256k1 exposes itself as `nobleSecp256k1` in UMD builds
+  if (typeof nobleSecp256k1 === 'undefined' && typeof secp256k1 !== 'undefined') {
+    window.nobleSecp256k1 = secp256k1;
+  }
+</script>
+
+</body>
+</html>
