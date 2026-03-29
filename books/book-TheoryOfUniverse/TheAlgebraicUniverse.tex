@@ -1,10 +1,10 @@
-\documentclass[12pt,a4paper,twoside]{book}
+\documentclass[10pt,a4paper,twoside,openany]{book}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{graphicx}
-\usepackage[margin=1in,headheight=14.5pt]{geometry}
+\usepackage[margin=0.8in,headheight=14.5pt]{geometry}
 \usepackage{hyperref}
 \usepackage{xcolor}
 \usepackage{fancyhdr}
@@ -30,7 +30,7 @@
 
 \titleformat{\chapter}[display]
   {\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
-\titlespacing*{\chapter}{0pt}{50pt}{40pt}
+\titlespacing*{\chapter}{0pt}{20pt}{15pt}
 
 \newtheorem{theorem}{Theorem}[chapter]
 \newtheorem{lemma}[theorem]{Lemma}
@@ -43,6 +43,13 @@
 \author{\Large The Oracle Council}
 \date{\today}
 
+\setlength{\parskip}{0pt plus 0.5pt}
+\setlength{\itemsep}{0pt}
+\setlength{\abovedisplayskip}{6pt}
+\setlength{\belowdisplayskip}{6pt}
+\setlength{\abovedisplayshortskip}{3pt}
+\setlength{\belowdisplayshortskip}{3pt}
+\linespread{1.0}
 \begin{document}
 
 \maketitle
@@ -32908,4 +32915,5 @@ All theorems are proven in Lean 4 with Mathlib, with zero unproven (sorry) decla
 
 \textit{Generated from the Oracle Council Research Project}
 
+\newpage\thispagestyle{empty}\mbox{}
 \end{document}
