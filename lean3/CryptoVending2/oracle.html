@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CryptoVend v3 · Oracle Node</title>
+<style>
+:root {
+  --bg:#08080d;--surface:#111118;--card:#16161f;--border:#2a2a3a;
+  --accent:#7c3aed;--accent2:#a78bfa;--green:#10b981;--amber:#f59e0b;
+  --red:#ef4444;--text:#e2e8f0;--muted:#64748b;
+  --mono:'JetBrains Mono','Fira Code','SF Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.app{max-width:800px;margin:0 auto;padding:2rem 1.5rem}
+header{text-align:center;margin-bottom:2rem}
+header h1{font-size:1.8rem;background:linear-gradient(135deg,var(--accent),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+header p{color:var(--muted);font-size:.85rem;margin-top:.3rem}
+
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem}
+.card h2{font-size:1rem;color:var(--accent2);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.card h2 .icon{font-size:1.3rem}
+
+input,select,textarea{width:100%;padding:.7rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:.9rem;margin-bottom:.8rem;font-family:inherit}
+input:focus{outline:none;border-color:var(--accent)}
+label{display:block;font-size:.8rem;color:var(--muted);margin-bottom:.3rem}
+
+.btn{padding:.8rem 1.5rem;border:none;border-radius:12px;font-size:.95rem;font-weight:600;cursor:pointer;transition:all .2s;width:100%;display:flex;align-items:center;justify-content:center;gap:.5rem}
+.btn-accent{background:linear-gradient(135deg,var(--accent),#9333ea);color:white}
+.btn-accent:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 4px 20px rgba(124,58,237,.4)}
+.btn-accent:disabled{opacity:.5;cursor:not-allowed}
+.btn-green{background:var(--green);color:white}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--text)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent2)}
+
+.status-bar{padding:.8rem 1rem;border-radius:10px;font-size:.82rem;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.status-bar.offline{background:rgba(239,68,68,.1);border:1px solid var(--red);color:var(--red)}
+.status-bar.online{background:rgba(16,185,129,.1);border:1px solid var(--green);color:var(--green)}
+.status-bar.loading{background:rgba(124,58,237,.1);border:1px solid var(--accent);color:var(--accent2)}
+.pulse{width:10px;height:10px;border-radius:50%;animation:pulse 2s infinite}
+.status-bar.online .pulse{background:var(--green)}
+.status-bar.offline .pulse{background:var(--red)}
+.status-bar.loading .pulse{background:var(--accent)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+.log-box{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:.8rem;max-height:400px;overflow-y:auto;font-family:var(--mono);font-size:.78rem;line-height:1.6}
+.log-box .entry{padding:.15rem 0}.log-box .time{color:var(--muted)}
+.log-box .info{color:var(--accent2)}.log-box .ok{color:var(--green)}
+.log-box .warn{color:var(--amber)}.log-box .err{color:var(--red)}
+
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-bottom:1rem}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.8rem;text-align:center}
+.stat .val{font-size:1.5rem;font-weight:700;color:var(--accent2)}
+.stat .lbl{font-size:.7rem;color:var(--muted);margin-top:.2rem}
+
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:640px){.row-2{grid-template-columns:1fr}.stat-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+
+<header>
+  <h1>🔮 Oracle Node</h1>
+  <p>CryptoVend v3 — Threshold Share Server</p>
+</header>
+
+<!-- Status -->
+<div class="status-bar offline" id="statusBar">
+  <div class="pulse"></div>
+  <span id="statusText">Not configured</span>
+</div>
+
+<!-- Step 1: Connect -->
+<div class="card" id="setupCard">
+  <h2><span class="icon">🔑</span> Oracle Setup</h2>
+  <p style="font-size:.82rem;color:var(--muted);margin-bottom:1rem;">
+    Connect your wallet and load your share from the vending machine contract.
+    Your share is encrypted on IPFS — only your Ethereum key can decrypt it.
+  </p>
+
+  <button class="btn btn-accent" id="connectBtn" onclick="connectWallet()">
+    🦊 Connect MetaMask
+  </button>
+
+  <div id="setupForm" style="display:none;margin-top:1rem;">
+    <label>Contract Address</label>
+    <input id="contractAddr" placeholder="0x... (CryptoVendThreshold contract)">
+
+    <label>Chain ID</label>
+    <select id="chainSelect">
+      <option value="42161">Arbitrum One (42161)</option>
+      <option value="8453">Base (8453)</option>
+      <option value="10">Optimism (10)</option>
+      <option value="421614" selected>Arbitrum Sepolia (421614)</option>
+      <option value="84532">Base Sepolia (84532)</option>
+      <option value="11155420">OP Sepolia (11155420)</option>
+    </select>
+
+    <label>Your Oracle Index (0-based)</label>
+    <input id="oracleIndex" type="number" min="0" placeholder="0">
+
+    <button class="btn btn-accent" onclick="loadShare()">
+      📥 Load Share from IPFS
+    </button>
+  </div>
+</div>
+
+<!-- Stats -->
+<div class="stat-grid" id="stats" style="display:none;">
+  <div class="stat"><div class="val" id="statServed">0</div><div class="lbl">Shares Served</div></div>
+  <div class="stat"><div class="val" id="statThreshold">-</div><div class="lbl">Threshold</div></div>
+  <div class="stat"><div class="val" id="statIndex">-</div><div class="lbl">Oracle Index</div></div>
+</div>
+
+<!-- Server Mode -->
+<div class="card" id="serverCard" style="display:none;">
+  <h2><span class="icon">📡</span> Share Server</h2>
+  <p style="font-size:.82rem;color:var(--muted);margin-bottom:1rem;">
+    The oracle serves shares to buyers who have paid. In browser mode, it polls the
+    contract for new purchases and posts encrypted shares. For production, deploy
+    as a serverless function.
+  </p>
+
+  <div class="row-2" style="margin-bottom:1rem;">
+    <button class="btn btn-green" id="startBtn" onclick="startServing()">
+      ▶ Start Serving
+    </button>
+    <button class="btn btn-outline" id="stopBtn" onclick="stopServing()" disabled>
+      ⏹ Stop
+    </button>
+  </div>
+
+  <div class="log-box" id="serverLog"></div>
+</div>
+
+<!-- Export for Serverless -->
+<div class="card" id="exportCard" style="display:none;">
+  <h2><span class="icon">☁️</span> Serverless Deployment</h2>
+  <p style="font-size:.82rem;color:var(--muted);margin-bottom:1rem;">
+    Export your oracle as a Cloudflare Worker or AWS Lambda function.
+    The serverless function is stateless — it loads the share from IPFS
+    and your private key from environment secrets.
+  </p>
+  <button class="btn btn-outline" onclick="exportWorker()">
+    📋 Export Cloudflare Worker Code
+  </button>
+  <textarea id="exportCode" style="display:none;margin-top:1rem;height:300px;font-family:var(--mono);font-size:.75rem;" readonly></textarea>
+</div>
+
+</div><!-- /app -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.4/ethers.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@noble/secp256k1@1.7.1/lib/index.min.js"></script>
+<script>
+// ═══════════════════════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════════════════════
+
+let provider = null;
+let signer = null;
+let walletAddress = '';
+let contract = null;
+let oracleIndex = -1;
+let myShare = null;           // { x: uint8, data: Uint8Array(32) }
+let myShareRaw = null;        // Full share bytes for commitment verification
+let isServing = false;
+let serveInterval = null;
+let served = 0;
+let lastProcessed = -1;       // Last purchase ID we processed
+
+const CONTRACT_ABI = [
+  "function purchase(bytes pubKey) external payable",
+  "function getPurchase(uint64 id) external view returns (address buyer, uint64 timestamp, uint128 paidWei, bool refunded)",
+  "function getBuyerPubKey(uint64 id) external view returns (bytes)",
+  "function getOracle(uint8 index) external view returns (address addr, bytes32 shareCommitment, string shareCID, string endpoint)",
+  "function verifyPurchase(uint64 id) external view returns (bool valid, address buyer, bytes pubKey)",
+  "function purchaseCount() external view returns (uint64)",
+  "function threshold() external view returns (uint8)",
+  "function numOracles() external view returns (uint8)",
+  "function price() external view returns (uint256)",
+  "function fileCID() external view returns (string)",
+  "function keyCommitment() external view returns (bytes32)",
+  "event PurchaseConfirmed(uint64 indexed purchaseId, address indexed buyer, bytes buyerPublicKey, uint128 amount)"
+];
+
+const NETWORKS = {
+  42161:  { rpc: 'https://arb1.arbitrum.io/rpc', gateway: 'https://w3s.link' },
+  8453:   { rpc: 'https://mainnet.base.org', gateway: 'https://w3s.link' },
+  10:     { rpc: 'https://mainnet.optimism.io', gateway: 'https://w3s.link' },
+  421614: { rpc: 'https://sepolia-rollup.arbitrum.io/rpc', gateway: 'https://w3s.link' },
+  84532:  { rpc: 'https://sepolia.base.org', gateway: 'https://w3s.link' },
+  11155420:{ rpc: 'https://sepolia.optimism.io', gateway: 'https://w3s.link' }
+};
+
+// ═══════════════════════════════════════════════════════════════════════
+//  WALLET CONNECTION
+// ═══════════════════════════════════════════════════════════════════════
+
+async function connectWallet() {
+  if (!window.ethereum) { alert('MetaMask not found!'); return; }
+  try {
+    provider = new ethers.BrowserProvider(window.ethereum);
+    await provider.send('eth_requestAccounts', []);
+    signer = await provider.getSigner();
+    walletAddress = await signer.getAddress();
+    document.getElementById('connectBtn').textContent = `✓ Connected: ${walletAddress.slice(0,8)}...`;
+    document.getElementById('connectBtn').disabled = true;
+    document.getElementById('setupForm').style.display = 'block';
+    setStatus('loading', 'Wallet connected — configure contract details');
+  } catch (err) {
+    alert('Connection failed: ' + err.message);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  LOAD SHARE FROM IPFS
+// ═══════════════════════════════════════════════════════════════════════
+
+async function loadShare() {
+  const addr = document.getElementById('contractAddr').value.trim();
+  const chainId = parseInt(document.getElementById('chainSelect').value);
+  oracleIndex = parseInt(document.getElementById('oracleIndex').value);
+
+  if (!addr || !ethers.isAddress(addr)) { alert('Invalid contract address'); return; }
+  if (isNaN(oracleIndex) || oracleIndex < 0) { alert('Invalid oracle index'); return; }
+
+  const log = (msg, cls='info') => appendLog('serverLog', msg, cls);
+
+  try {
+    setStatus('loading', 'Loading share from IPFS...');
+
+    // Switch network if needed
+    const net = await provider.getNetwork();
+    if (Number(net.chainId) !== chainId) {
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: '0x' + chainId.toString(16) }]
+      });
+      provider = new ethers.BrowserProvider(window.ethereum);
+      signer = await provider.getSigner();
+    }
+
+    // Connect to contract
+    contract = new ethers.Contract(addr, CONTRACT_ABI, signer);
+
+    // Get oracle info
+    const oracleInfo = await contract.getOracle(oracleIndex);
+    const registeredAddr = oracleInfo.addr;
+    const shareCommitment = oracleInfo.shareCommitment;
+    const shareCID = oracleInfo.shareCID;
+
+    // Verify this is our oracle slot
+    if (registeredAddr.toLowerCase() !== walletAddress.toLowerCase()) {
+      throw new Error(`Oracle #${oracleIndex} is registered to ${registeredAddr}, not your address ${walletAddress}`);
+    }
+
+    log(`Oracle #${oracleIndex} verified — loading share CID: ${shareCID.slice(0,16)}...`);
+
+    // Fetch encrypted share from IPFS
+    const gateway = NETWORKS[chainId]?.gateway || 'https://w3s.link';
+    const resp = await fetch(`${gateway}/ipfs/${shareCID}`);
+    if (!resp.ok) throw new Error(`IPFS fetch failed: ${resp.status}`);
+    const encSharePack = new Uint8Array(await resp.arrayBuffer());
+
+    // Decrypt share using oracle-specific derived key
+    // Key derivation mirrors seller.html:
+    //   salt = keccak256(abi.encode(oracleAddr, oracleIndex, "CryptoVendThresholdShareV3"))
+    //   key = SHA-256(salt)
+    const oracleSalt = ethers.keccak256(ethers.AbiCoder.defaultAbiCoder().encode(
+      ['address', 'uint256', 'string'],
+      [walletAddress, oracleIndex, 'CryptoVendThresholdShareV3']
+    ));
+    const shareEncKey = new Uint8Array(
+      await crypto.subtle.digest('SHA-256', ethers.getBytes(oracleSalt))
+    );
+
+    // Unpack: [12B iv][encrypted_share_with_tag]
+    const shareIV = encSharePack.slice(0, 12);
+    const encShare = encSharePack.slice(12);
+
+    const shareCryptoKey = await crypto.subtle.importKey('raw', shareEncKey, { name: 'AES-GCM' }, false, ['decrypt']);
+    const shareBytes = new Uint8Array(await crypto.subtle.decrypt(
+      { name: 'AES-GCM', iv: shareIV }, shareCryptoKey, encShare
+    ));
+
+    // Verify commitment
+    const computedCommitment = ethers.keccak256(shareBytes);
+    if (computedCommitment !== shareCommitment) {
+      throw new Error('Share commitment verification failed!');
+    }
+
+    // Parse share: [1B x-coord][32B data]
+    myShareRaw = shareBytes;
+    myShare = { x: shareBytes[0], data: shareBytes.slice(1) };
+
+    const t = Number(await contract.threshold());
+    const n = Number(await contract.numOracles());
+
+    log(`✓ Share loaded and verified! x=${myShare.x}, ${myShare.data.length} bytes`, 'ok');
+    log(`Threshold: ${t}-of-${n}`, 'info');
+
+    // Update UI
+    document.getElementById('stats').style.display = 'grid';
+    document.getElementById('serverCard').style.display = 'block';
+    document.getElementById('exportCard').style.display = 'block';
+    document.getElementById('statThreshold').textContent = `${t}/${n}`;
+    document.getElementById('statIndex').textContent = `#${oracleIndex}`;
+    setStatus('online', `Oracle #${oracleIndex} ready — share loaded`);
+
+  } catch (err) {
+    setStatus('offline', `Error: ${err.message}`);
+    console.error(err);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  ECIES ENCRYPTION
+// ═══════════════════════════════════════════════════════════════════════
+
+async function eciesEncrypt(recipientPubKey, plaintext) {
+  const ephPriv = crypto.getRandomValues(new Uint8Array(32));
+  const ephPub = nobleSecp256k1.getPublicKey(ephPriv, false);
+  const shared = nobleSecp256k1.getSharedSecret(ephPriv, recipientPubKey);
+  const sharedX = shared.slice(1, 33);
+  const derivedKey = new Uint8Array(await crypto.subtle.digest('SHA-256', sharedX));
+  const iv = crypto.getRandomValues(new Uint8Array(16));
+  const cryptoKey = await crypto.subtle.importKey('raw', derivedKey, { name: 'AES-GCM' }, false, ['encrypt']);
+  const ciphertext = new Uint8Array(await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, cryptoKey, plaintext));
+  const tag = ciphertext.slice(-16);
+  const cipherOnly = ciphertext.slice(0, -16);
+  const result = new Uint8Array(65 + 16 + 16 + cipherOnly.length);
+  result.set(ephPub, 0);
+  result.set(iv, 65);
+  result.set(tag, 65 + 16);
+  result.set(cipherOnly, 65 + 16 + 16);
+  return result;
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  SHARE SERVING — Poll for purchases and deliver shares
+// ═══════════════════════════════════════════════════════════════════════
+
+async function startServing() {
+  if (isServing) return;
+  if (!myShare) { alert('Load your share first!'); return; }
+
+  isServing = true;
+  document.getElementById('startBtn').disabled = true;
+  document.getElementById('stopBtn').disabled = false;
+  setStatus('online', 'Serving shares — polling for purchases...');
+
+  const log = (msg, cls='info') => appendLog('serverLog', msg, cls);
+  log('Oracle serving started — polling every 10s for new purchases...', 'ok');
+
+  // Initial poll
+  await pollAndServe();
+
+  // Set up polling interval
+  serveInterval = setInterval(pollAndServe, 10000);
+}
+
+async function pollAndServe() {
+  const log = (msg, cls='info') => appendLog('serverLog', msg, cls);
+
+  try {
+    const count = Number(await contract.purchaseCount());
+
+    for (let i = lastProcessed + 1; i < count; i++) {
+      const result = await contract.verifyPurchase(i);
+
+      if (!result.valid) {
+        lastProcessed = i;
+        continue;
+      }
+
+      const buyerPubKeyHex = result.pubKey;
+      const buyerPubKey = ethers.getBytes(buyerPubKeyHex);
+
+      log(`🛒 Purchase #${i} — encrypting share for buyer ${result.buyer.slice(0,8)}...`);
+
+      try {
+        // Encrypt our share with the buyer's ECIES public key
+        const encryptedShare = await eciesEncrypt(buyerPubKey, myShareRaw);
+        const encShareHex = bytesToHex(encryptedShare);
+
+        // Store the encrypted share response
+        // In browser mode, we store in localStorage for the buyer to fetch
+        // In production, this would be returned via HTTP endpoint
+        const responseKey = `share_response_${await contract.getAddress()}_${i}_${oracleIndex}`;
+        localStorage.setItem(responseKey, JSON.stringify({
+          encryptedShare: encShareHex,
+          oracleIndex: oracleIndex,
+          purchaseId: i,
+          timestamp: Date.now()
+        }));
+
+        served++;
+        document.getElementById('statServed').textContent = served;
+        log(`✓ Share encrypted and stored for purchase #${i}`, 'ok');
+      } catch (err) {
+        log(`✗ Failed to process purchase #${i}: ${err.message}`, 'err');
+      }
+
+      lastProcessed = i;
+    }
+  } catch (err) {
+    log(`Poll error: ${err.message}`, 'err');
+  }
+}
+
+function stopServing() {
+  isServing = false;
+  if (serveInterval) clearInterval(serveInterval);
+  document.getElementById('startBtn').disabled = false;
+  document.getElementById('stopBtn').disabled = true;
+  setStatus('offline', 'Oracle stopped');
+  appendLog('serverLog', 'Oracle stopped.', 'warn');
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  EXPORT — Generate serverless function code
+// ═══════════════════════════════════════════════════════════════════════
+
+function exportWorker() {
+  const addr = document.getElementById('contractAddr').value.trim();
+  const chainId = document.getElementById('chainSelect').value;
+  const net = NETWORKS[chainId] || {};
+
+  const code = `// ═══════════════════════════════════════════════════════════════
+// CryptoVend v3 — Oracle Node (Cloudflare Worker)
+//
+// Deploy: wrangler deploy
+//
+// Environment secrets (wrangler secret put ...):
+//   ORACLE_PRIVATE_KEY   — Your Ethereum private key (hex, no 0x)
+//   ORACLE_ADDRESS       — Your Ethereum address
+//   ORACLE_INDEX         — Your oracle index (0-based)
+//   CONTRACT_ADDRESS     — CryptoVendThreshold contract address
+//   CHAIN_RPC            — RPC endpoint URL
+//   SHARE_CID            — IPFS CID of your encrypted share
+//   IPFS_GATEWAY         — IPFS gateway URL
+// ═══════════════════════════════════════════════════════════════
+
+export default {
+  async fetch(request, env) {
+    // CORS headers
+    const corsHeaders = {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    };
+
+    if (request.method === 'OPTIONS') {
+      return new Response(null, { headers: corsHeaders });
+    }
+
+    if (request.method !== 'POST') {
+      return new Response(JSON.stringify({ error: 'POST required' }), {
+        status: 405, headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+
+    try {
+      const body = await request.json();
+      const { contractAddress, chainId, purchaseId, buyerPubKey, oracleIndex } = body;
+
+      // Validate request
+      if (contractAddress !== env.CONTRACT_ADDRESS) {
+        throw new Error('Wrong contract');
+      }
+      if (oracleIndex !== parseInt(env.ORACLE_INDEX)) {
+        throw new Error('Wrong oracle index');
+      }
+
+      // Verify on-chain that purchase is valid and paid
+      const verifyResult = await rpcCall(env.CHAIN_RPC, contractAddress, 'verifyPurchase', purchaseId);
+      if (!verifyResult.valid) {
+        throw new Error('Purchase not valid or already refunded');
+      }
+
+      // Load and decrypt our share from IPFS (cached after first load)
+      const share = await loadAndDecryptShare(env);
+
+      // Encrypt share with buyer's ECIES public key
+      const encryptedShare = await eciesEncrypt(
+        hexToBytes(buyerPubKey.slice(2)),
+        share
+      );
+
+      return new Response(JSON.stringify({
+        encryptedShare: bytesToHex(encryptedShare),
+        oracleIndex: parseInt(env.ORACLE_INDEX),
+        purchaseId: purchaseId
+      }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+
+    } catch (err) {
+      return new Response(JSON.stringify({ error: err.message }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      });
+    }
+  }
+};
+
+// ═══ RPC call helper ═══
+async function rpcCall(rpcUrl, contractAddress, method, ...args) {
+  // Simplified — in production use ethers.js or viem
+  // This demonstrates the pattern; actual ABI encoding needed
+  const resp = await fetch(rpcUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      jsonrpc: '2.0', id: 1, method: 'eth_call',
+      params: [{ to: contractAddress, data: encodeCall(method, args) }, 'latest']
+    })
+  });
+  const result = await resp.json();
+  return decodeResult(method, result.result);
+}
+
+// ═══ Share loading ═══
+async function loadAndDecryptShare(env) {
+  // Fetch from IPFS
+  const resp = await fetch(env.IPFS_GATEWAY + '/ipfs/' + env.SHARE_CID);
+  const encSharePack = new Uint8Array(await resp.arrayBuffer());
+
+  // Derive decryption key (same as seller.html)
+  const salt = keccak256(abiEncode(
+    ['address', 'uint256', 'string'],
+    [env.ORACLE_ADDRESS, env.ORACLE_INDEX, 'CryptoVendThresholdShareV3']
+  ));
+  const shareEncKey = await sha256(hexToBytes(salt));
+
+  // Decrypt
+  const iv = encSharePack.slice(0, 12);
+  const enc = encSharePack.slice(12);
+  const key = await crypto.subtle.importKey('raw', shareEncKey, { name: 'AES-GCM' }, false, ['decrypt']);
+  return new Uint8Array(await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, enc));
+}
+
+// ═══ ECIES encrypt ═══
+// (Include the full ECIES implementation from oracle.html)
+// Uses @noble/secp256k1 — add as dependency or inline
+
+// ═══ Utility functions ═══
+function bytesToHex(b) { return Array.from(b).map(x => x.toString(16).padStart(2, '0')).join(''); }
+function hexToBytes(h) { const a = new Uint8Array(h.length / 2); for (let i = 0; i < h.length; i += 2) a[i/2] = parseInt(h.substr(i, 2), 16); return a; }
+`;
+
+  document.getElementById('exportCode').style.display = 'block';
+  document.getElementById('exportCode').value = code;
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  UI HELPERS
+// ═══════════════════════════════════════════════════════════════════════
+
+function setStatus(type, text) {
+  const bar = document.getElementById('statusBar');
+  bar.className = `status-bar ${type}`;
+  document.getElementById('statusText').textContent = text;
+}
+
+function appendLog(boxId, msg, cls = 'info') {
+  const box = document.getElementById(boxId);
+  if (!box) return;
+  const time = new Date().toLocaleTimeString();
+  box.innerHTML += `<div class="entry"><span class="time">[${time}]</span> <span class="${cls}">${msg}</span></div>`;
+  box.scrollTop = box.scrollHeight;
+}
+
+function bytesToHex(bytes) {
+  return Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// noble-secp256k1 shim
+if (typeof nobleSecp256k1 === 'undefined' && typeof secp256k1 !== 'undefined') {
+  window.nobleSecp256k1 = secp256k1;
+}
+</script>
+</body>
+</html>

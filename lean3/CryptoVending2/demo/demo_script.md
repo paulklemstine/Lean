@@ -1,9 +1,9 @@
-# CryptoVend Demo Script
+# CryptoVend v3 Demo Script
 
-## Demo Solidarity: "Selling a File with No Server, No Intermediary, No Trust"
+## Demo: "Selling a File with No Server, No Intermediary, No Trust — and No Seller Online"
 
-*Duration: ~5 minutes*
-*Requirements: Chrome/Firefox with MetaMask, testnet ETH on Arbitrum Sepolia*
+*Duration: ~6 minutes*
+*Requirements: Chrome/Firefox with MetaMask, testnet ETH on Arbitrum Sepolia, 3 browser profiles (seller + 2 oracles)*
 
 ---
 
@@ -11,11 +11,9 @@
 
 **Narration:**
 
-> "Right now, if you want to sell a digital file — a dataset, an e-book, a song — you need a platform. Gumroad takes 10%. Apple takes 30%. They require your real identity, your bank account, and they can deplatform you at any time."
+> "In v2, CryptoVend let you sell files with no server — just two HTML pages and a smart contract. But there was an elephant in the room: the seller had to keep their browser open to deliver keys."
 >
-> "What if you could sell a file using nothing but your web browser?"
-
-**Visual:** Show comparison table of platform fees.
+> "v3 kills the elephant. Using threshold cryptography, the seller deploys once and goes offline forever."
 
 ---
 
@@ -23,124 +21,105 @@
 
 **Action:** Open `seller.html` in Chrome.
 
-1. **Connect MetaMask** → Click "Connect MetaMask" button
-   - Show: wallet address appears
-   - **Narration:** "First, I connect my crypto wallet. This is my identity — a cryptographic address, not my name."
+1. **Connect MetaMask** → Click "Connect MetaMask"
+   - **Narration:** "Connect your wallet — same as before."
 
-2. **Select a file** → Drag in a sample file (e.g., `sample_dataset.csv`)
-   - Show: filename and size appear
-   - **Narration:** "I drag in the file I want to sell. Could be anything — a dataset, a research paper, source code."
+2. **Select a file** → Drag in a sample file
+   - **Narration:** "Choose your file. Any format, any size."
 
-3. **Choose network** → Click "Arb Sepolia" (testnet)
-   - Show: network card highlights
-   - **Narration:** "I choose a Layer 2 network. Transaction costs are pennies instead of dollars."
+3. **Choose network** → Click "Arb Sepolia"
 
 4. **Set price** → Enter 0.001 ETH
-   - **Narration:** "I set my price. About $3 at current rates."
 
-5. **Click "Deploy"** → Watch the deployment log
-   - Show: Step-by-step log appearing:
+5. **Configure oracles** → Set threshold to 2-of-3
+   - Enter 3 oracle addresses (from MetaMask)
+   - Enter 3 endpoint URLs
+   - **Narration:** "Here's what's new: I configure an oracle network. Three independent nodes, any two can reconstruct the key. I enter their Ethereum addresses and their server endpoints."
+
+6. **Click "Deploy"** → Watch the log
+   - Show: New steps appearing:
      - "Encrypting file with AES-256-GCM..."
-     - "Uploading encrypted file to IPFS..."
-     - "Deploying contract..."
-     - "Generating buyer page..."
+     - "Splitting key into 3 shares (threshold=2)..."
+     - "✓ Shamir split verified: 2-of-3 reconstruction OK"
+     - "Encrypting shares for oracle nodes..."
+     - "Deploying CryptoVendThreshold contract..."
+     - "Registering oracle nodes on-chain..."
      - "Pinning buyer page to IPFS..."
-     - "🎉 VENDING MACHINE IS LIVE!"
-   - **Narration:** "Watch what happens: the browser encrypts the file, uploads it to IPFS, deploys a smart contract, and generates a buyer page — all automatically. No server. No backend. Just this HTML page."
+     - "🎉 THRESHOLD VENDING MACHINE IS LIVE!"
+   - **Narration:** "Watch: the browser splits the encryption key into three pieces using Shamir's Secret Sharing. Each piece is encrypted for its oracle and pinned to IPFS. The contract is deployed with commitment hashes for verification."
 
-6. **Show the IPFS link**
-   - **Narration:** "This link is the buyer page. It's hosted on IPFS — a decentralized network. I share this link, and anyone in the world can buy my file."
+7. **Close the tab**
+   - **Narration:** "And now... I close the page. The seller is done. Forever. No watcher. No background process. Nothing."
 
 ---
 
-## ACT 3: The Buyer (90 seconds)
+## ACT 3: The Oracles (60 seconds)
 
-**Action:** Open the buyer IPFS link in a different browser/profile (simulating a different person).
+**Action:** Open `oracle.html` in two different browser profiles.
+
+1. **Oracle #1:** Connect wallet, enter contract address, load share
+   - Show: "✓ Share loaded and verified! x=1, 32 bytes"
+   - Click "Start Serving"
+
+2. **Oracle #2:** Same process
+   - Show: "✓ Share loaded and verified! x=2, 32 bytes"
+   - Click "Start Serving"
+
+   - **Narration:** "Each oracle loads their share from IPFS using their Ethereum key. They're stateless — if they restart, they just reload from IPFS. In production, these would be serverless functions, not browser tabs."
+
+---
+
+## ACT 4: The Buyer (90 seconds)
+
+**Action:** Open the buyer IPFS link in yet another browser profile.
 
 1. **See the buyer page**
-   - Show: File info, price, "Connect & Buy" button
-   - **Narration:** "The buyer sees a clean page: file name, price, one button. That's it."
+   - Show: New "2-of-3 threshold" badge, share visualization grid
+   - **Narration:** "The buyer sees the same clean interface, but with a threshold indicator: 2-of-3."
 
 2. **Click "Connect & Buy"**
-   - Show: MetaMask pops up, asking to connect
-   - **Narration:** "They connect their wallet..."
+   - Approve MetaMask transaction
 
-3. **Approve the transaction**
-   - Show: MetaMask shows transaction details (amount, gas estimate)
-   - **Narration:** "...and approve the payment. On Arbitrum Sepolia, gas is free. On mainnet, it's about 2 cents."
+3. **Watch share collection**
+   - Show: Share dots lighting up: ■ ■ □
+     - "Requesting share from Oracle #1..."
+     - "Share #1 verified ✓ (1/2)"
+     - "Requesting share from Oracle #2..."
+     - "Share #2 verified ✓ (2/2)"
+   - **Narration:** "The buyer's page contacts each oracle. Each oracle checks on-chain that the payment is valid, then encrypts their share for this specific buyer. Two shares collected — that's enough."
 
-4. **Watch the purchase flow**
-   - Show: Progress steps lighting up:
-     - ✓ Connect MetaMask
-     - ✓ Generate encryption keypair
-     - ✓ Send payment
-     - ⏳ Wait for seller...
-   - **Narration:** "The browser generates a fresh encryption keypair and sends the payment plus the public key to the contract."
+4. **Watch reconstruction**
+   - Show: "Reconstructing AES key via Lagrange interpolation..."
+   - Show: "✓ Key reconstructed and verified against on-chain commitment"
+   - **Narration:** "The browser reconstructs the key using Lagrange interpolation over GF(256). Then it verifies the result against the on-chain commitment — proving the key is correct."
 
-5. **Key delivery** (automatic)
-   - Show: On seller's tab, watcher log shows "🛒 NEW PURCHASE" and "✓ Key delivered"
-   - Show: On buyer's page, remaining steps complete:
-     - ✓ Decrypt AES key
-     - ✓ Download & decrypt file
-   - **Narration:** "The seller's browser detects the payment, encrypts the key specifically for this buyer, and delivers it on-chain. The buyer decrypts everything locally. Total time: about 25 seconds."
-
-6. **Download the file**
-   - Show: "Download Decrypted File" button appears, click it
-   - **Narration:** "The buyer downloads the file. It's the original, unencrypted file. The sale is complete."
+5. **File decrypts and downloads**
+   - **Narration:** "File decrypted. Sale complete. The seller was never involved."
 
 ---
 
-## ACT 4: The Magic (30 seconds)
-
-**Action:** Switch back to seller's tab, show the dashboard.
-
-- Show: Sales counter shows "1", revenue shows "0.001 ETH"
-- **Narration:** "The seller's dashboard updates in real-time. One sale, 0.001 ETH revenue. And here's the thing: the vending machine stays live. The next buyer, and the one after that, get the same seamless experience. Infinite automated sales."
-
----
-
-## ACT 5: The Elephant (30 seconds)
+## ACT 5: The Significance (30 seconds)
 
 **Narration:**
 
-> "There's one honest limitation: the seller needs to keep this tab open. Their browser detects purchases and delivers keys. If the seller closes their laptop, the buyer waits — but after one hour, they can trigger an automatic refund. No money is lost."
+> "Let's recap what just happened:
+> - The seller deployed once and closed their browser
+> - Two independent oracle nodes held pieces of the key
+> - Neither oracle knew the full key
+> - The buyer paid, collected shares, reconstructed the key, and decrypted — all automatically
+> - If oracle #3 was offline, it didn't matter — only 2 were needed
+> - No server. No watcher. No single point of failure."
 >
-> "In the future, threshold cryptography could eliminate this requirement — splitting the key across independent nodes that collectively release it. But today, the simplicity is the point: two HTML files and a smart contract. That's the whole system."
-
----
-
-## CLOSING
-
-**Narration:**
-
-> "CryptoVend. No server. No intermediary. No trust. Just math."
-
-**Visual:** Show the three files side by side:
-- `seller.html` — the seller console
-- `buyer page` — generated and pinned to IPFS
-- `CryptoVendL2.sol` — the smart contract
-
----
-
-## Technical Demo: Encryption Verification
-
-For a more technical audience, add this segment:
-
-1. **Show the encrypted file on IPFS** — it's gibberish
-2. **Show the AES key commitment on the block explorer** — just a hash
-3. **Show the ECIES encrypted key on-chain** — encrypted specifically for the buyer
-4. **Show the decrypted file** — matches the original exactly
-
-**Narration:** "The AES key never appears on-chain in the clear. The buyer's ECIES private key never leaves their browser. The IPFS file is content-addressed — any modification changes the address. Every layer has its own cryptographic guarantee."
+> "CryptoVend v3: the vending machine that runs itself."
 
 ---
 
 ## Setup Checklist
 
 - [ ] Install MetaMask in Chrome
-- [ ] Create two MetaMask accounts (seller and buyer)
-- [ ] Get testnet ETH on Arbitrum Sepolia (faucet: https://www.alchemy.com/faucets/arbitrum-sepolia)
+- [ ] Create 4+ MetaMask accounts (seller, 3 oracles, buyer)
+- [ ] Get testnet ETH on Arbitrum Sepolia for all accounts
 - [ ] Open seller.html in one browser profile
-- [ ] Prepare a sample file (e.g., small CSV or text file)
-- [ ] Have a second browser profile ready for buyer
-- [ ] Optional: Web3.Storage API token for real IPFS pinning
+- [ ] Prepare oracle.html in two other profiles
+- [ ] Have a fourth profile ready for the buyer
+- [ ] Prepare a sample file (small CSV or text file)

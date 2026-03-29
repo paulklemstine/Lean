@@ -3,36 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Buy File · CryptoVend v3</title>
+<title>Buy File · CryptoVend</title>
 <!--
   ╔═══════════════════════════════════════════════════════════════════════╗
-  ║  BUYER PAGE TEMPLATE — v3 Threshold Edition                         ║
+  ║  BUYER PAGE TEMPLATE                                                ║
   ║                                                                     ║
   ║  This file is a reference template. The seller SAP (seller.html)    ║
   ║  generates the actual buyer page dynamically with embedded config.  ║
   ║                                                                     ║
-  ║  KEY CHANGES FROM v2:                                               ║
-  ║  • No seller needs to be online                                     ║
-  ║  • Buyer collects t-of-N key shares from oracle nodes               ║
-  ║  • Shares are verified against on-chain commitments                 ║
-  ║  • AES key is reconstructed via Lagrange interpolation in GF(256)   ║
-  ║  • Reconstructed key is verified against on-chain key commitment    ║
-  ║  • Everything is fully automated and serverless                     ║
-  ║                                                                     ║
   ║  The generated page is pinned to IPFS and works independently:      ║
-  ║  - No server needed (not even the seller)                           ║
+  ║  - No server needed                                                 ║
   ║  - Self-contained HTML + JS                                         ║
   ║  - Connects to L2 smart contract via MetaMask                       ║
-  ║  - ECIES key exchange with oracle nodes                             ║
-  ║  - Shamir's Secret Sharing reconstruction                           ║
+  ║  - ECIES key exchange for secure key delivery                       ║
   ║  - AES-256-GCM decryption in browser                                ║
+  ║  - Infinite sales supported                                         ║
+  ║                                                                     ║
+  ║  The seller must be online (running seller.html) to deliver keys.   ║
   ╚═══════════════════════════════════════════════════════════════════════╝
 -->
 <style>
 :root {
   --bg:#0a0a0f;--card:#12121a;--accent:#7c3aed;--accent2:#a78bfa;
-  --green:#10b981;--red:#ef4444;--amber:#f59e0b;
-  --text:#e2e8f0;--muted:#64748b;--border:#2a2a3a;
+  --green:#10b981;--red:#ef4444;--text:#e2e8f0;--muted:#64748b;--border:#2a2a3a;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);
@@ -62,26 +55,18 @@ button{width:100%;padding:.9rem;border:none;border-radius:12px;font-size:1rem;fo
 .steps li::before{content:'';position:absolute;left:0;top:.6rem;width:12px;height:12px;border-radius:50%;border:2px solid var(--border)}
 .steps li.on{color:var(--text)}.steps li.on::before{border-color:var(--accent);background:var(--accent)}
 .steps li.ok{color:var(--green)}.steps li.ok::before{border-color:var(--green);background:var(--green)}
-.steps li.no{color:var(--red)}.steps li.no::before{border-color:var(--red);background:var(--red)}
 .prog{width:100%;height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-top:.6rem;display:none}
 .prog-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--green));transition:width .4s;border-radius:3px}
 .file-info{background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.2);border-radius:10px;padding:1rem;margin-bottom:1rem}
 .file-info .fname{font-size:1.1rem;font-weight:600;margin-bottom:.3rem}
 .file-info .fmeta{font-size:.8rem;color:var(--muted)}
-/* Share visualization */
-.share-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(50px,1fr));gap:4px;margin-top:.5rem}
-.share-dot{width:100%;aspect-ratio:1;border-radius:6px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--muted)}
-.share-dot.ok{background:rgba(16,185,129,.2);border-color:var(--green);color:var(--green)}
-.share-dot.err{background:rgba(239,68,68,.2);border-color:var(--red);color:var(--red)}
-.share-dot.on{background:rgba(124,58,237,.2);border-color:var(--accent);color:var(--accent)}
-.threshold-badge{display:inline-block;background:rgba(124,58,237,.15);border:1px solid var(--accent);color:var(--accent2);font-size:.75rem;padding:2px 10px;border-radius:8px;margin-left:.5rem}
 footer{margin-top:2rem;text-align:center;color:var(--muted);font-size:.72rem}
 </style>
 </head>
 <body>
 <div class="container">
   <h1>⚡ CryptoVend</h1>
-  <p class="sub">Trustless file purchase · Threshold Crypto · No seller online needed</p>
+  <p class="sub">Trustless file purchase · Layer 2 · IPFS</p>
 
   <div class="file-info" id="fileInfo">
     <div class="fname">{{FILE_NAME}}</div>
@@ -93,7 +78,7 @@ footer{margin-top:2rem;text-align:center;color:var(--muted);font-size:.72rem}
     <div class="row"><span class="lbl">Price</span><span class="val">{{PRICE_ETH}} ETH</span></div>
     <div class="row"><span class="lbl">Network</span><span class="val">{{NETWORK_NAME}}</span></div>
     <div class="row"><span class="lbl">Contract</span><span class="val">{{CONTRACT_SHORT}}</span></div>
-    <div class="row"><span class="lbl">Security</span><span class="val">{{THRESHOLD}}-of-{{NUM_ORACLES}} threshold <span class="threshold-badge">🔑 {{THRESHOLD}}/{{NUM_ORACLES}}</span></span></div>
+    <div class="row"><span class="lbl">Encrypted File</span><span class="val">{{FILE_CID_SHORT}}</span></div>
   </div>
 
   <div class="status" id="status"></div>
@@ -104,19 +89,11 @@ footer{margin-top:2rem;text-align:center;color:var(--muted);font-size:.72rem}
       <li id="s0">Connect MetaMask wallet</li>
       <li id="s1">Generate ECIES encryption keypair</li>
       <li id="s2">Send payment to smart contract</li>
-      <li id="s3">Collect key shares from oracle network</li>
-      <li id="s4">Reconstruct AES key (Lagrange interpolation)</li>
+      <li id="s3">Wait for seller to deliver decryption key</li>
+      <li id="s4">Decrypt AES key with your private key</li>
       <li id="s5">Download encrypted file &amp; decrypt locally</li>
     </ul>
     <div class="prog" id="prog"><div class="prog-fill" id="progFill"></div></div>
-    <div id="shareViz" style="margin-top:.8rem;display:none">
-      <div style="font-size:.8rem;color:var(--muted);margin-bottom:.3rem">
-        Oracle shares: <span id="shareCount">0</span>/{{THRESHOLD}} needed
-      </div>
-      <div class="share-grid" id="shareGrid">
-        <!-- Share dots populated dynamically -->
-      </div>
-    </div>
   </div>
 
   <button class="btn-buy" id="buyBtn" onclick="buy()">
@@ -128,12 +105,12 @@ footer{margin-top:2rem;text-align:center;color:var(--muted);font-size:.72rem}
 </div>
 
 <footer>
-  Powered by Ethereum L2, IPFS &amp; Threshold Cryptography · CryptoVend v3
+  Powered by Ethereum L2 &amp; IPFS · CryptoVend
 </footer>
 
 <p style="text-align:center;color:var(--muted);font-size:0.7rem;margin-top:1rem;">
   This page is hosted on IPFS and requires no server.<br>
-  Oracle nodes deliver key shares automatically — no seller needs to be online.
+  The seller must be online to deliver the decryption key after purchase.
 </p>
 
 <!-- See seller.html generateBuyerPage() for the full working implementation -->
