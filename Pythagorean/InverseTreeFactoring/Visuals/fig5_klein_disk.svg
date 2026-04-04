@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+<defs>
+  <style>
+    .title { font: bold 18px 'Helvetica Neue', Arial, sans-serif; fill: #2c3e50; }
+    .subtitle { font: 14px 'Helvetica Neue', Arial, sans-serif; fill: #7f8c8d; }
+    .label { font: 11px 'Courier New', monospace; fill: #2c3e50; text-anchor: middle; }
+    .small-label { font: 9px 'Courier New', monospace; fill: #555; text-anchor: middle; }
+    .axis-label { font: 12px 'Helvetica Neue', Arial, sans-serif; fill: #2c3e50; }
+    .node-root { fill: #e74c3c; stroke: #c0392b; stroke-width: 2; }
+    .node-l1 { fill: #3498db; stroke: #2980b9; stroke-width: 1.5; }
+    .node-l2 { fill: #2ecc71; stroke: #27ae60; stroke-width: 1.5; }
+    .node-l3 { fill: #f39c12; stroke: #e67e22; stroke-width: 1.5; }
+    .node-l4 { fill: #9b59b6; stroke: #8e44ad; stroke-width: 1; }
+    .edge { stroke: #bdc3c7; stroke-width: 1.5; fill: none; }
+    .descent-edge { stroke: #e74c3c; stroke-width: 2.5; fill: none; stroke-dasharray: 5,3; }
+    .descent-node { fill: #e74c3c; stroke: #c0392b; stroke-width: 2; }
+    .factor-node { fill: #f1c40f; stroke: #f39c12; stroke-width: 3; }
+  </style>
+  <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+    <polygon points="0 0, 10 3.5, 0 7" fill="#e74c3c"/>
+  </marker>
+</defs>
+<text x="300" y="25" class="title" text-anchor="middle">Descent Geodesic in the Klein Disk</text>
+<text x="300" y="45" class="subtitle" text-anchor="middle">Pythagorean triples as points on the light cone boundary</text>
+<circle cx="300" cy="310" r="250" fill="#f8f9fa" stroke="#2c3e50" stroke-width="2"/>
+<line x1="50" y1="310" x2="550" y2="310" stroke="#ecf0f1" stroke-width="0.5"/>
+<line x1="300" y1="60" x2="300" y2="560" stroke="#ecf0f1" stroke-width="0.5"/>
+<line x1="306.5" y1="60.1" x2="306.7" y2="60.1" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="306.7" y1="60.1" x2="306.8" y2="60.1" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="306.8" y1="60.1" x2="307.0" y2="60.1" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="307.0" y1="60.1" x2="307.2" y2="60.1" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="307.2" y1="60.1" x2="307.5" y2="60.1" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="307.5" y1="60.1" x2="307.7" y2="60.1" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="307.7" y1="60.1" x2="307.9" y2="60.1" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="307.9" y1="60.1" x2="308.2" y2="60.1" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="308.2" y1="60.1" x2="308.5" y2="60.1" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="308.5" y1="60.1" x2="308.8" y2="60.2" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="308.8" y1="60.2" x2="309.1" y2="60.2" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="309.1" y1="60.2" x2="309.4" y2="60.2" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="309.4" y1="60.2" x2="309.8" y2="60.2" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="309.8" y1="60.2" x2="310.2" y2="60.2" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="310.2" y1="60.2" x2="310.6" y2="60.2" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="310.6" y1="60.2" x2="311.1" y2="60.2" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="311.1" y1="60.2" x2="311.6" y2="60.3" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="311.6" y1="60.3" x2="312.2" y2="60.3" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="312.2" y1="60.3" x2="312.8" y2="60.3" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="312.8" y1="60.3" x2="313.5" y2="60.4" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="313.5" y1="60.4" x2="314.3" y2="60.4" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="314.3" y1="60.4" x2="315.1" y2="60.5" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="315.1" y1="60.5" x2="316.1" y2="60.5" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="316.1" y1="60.5" x2="317.2" y2="60.6" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="317.2" y1="60.6" x2="318.5" y2="60.7" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="318.5" y1="60.7" x2="320.0" y2="60.8" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="320.0" y1="60.8" x2="321.7" y2="60.9" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="321.7" y1="60.9" x2="323.8" y2="61.1" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="323.8" y1="61.1" x2="326.2" y2="61.4" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="326.2" y1="61.4" x2="329.3" y2="61.7" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="329.3" y1="61.7" x2="333.2" y2="62.2" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="333.2" y1="62.2" x2="338.2" y2="62.9" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="338.2" y1="62.9" x2="345.1" y2="64.1" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="345.1" y1="64.1" x2="354.9" y2="66.1" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="354.9" y1="66.1" x2="370.0" y2="70.0" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="370.0" y1="70.0" x2="396.2" y2="79.2" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<line x1="396.2" y1="79.2" x2="450.0" y2="110.0" stroke="#e74c3c" stroke-width="1.5" opacity="0.7"/>
+<circle cx="306.5" cy="60.1" r="5" fill="#e74c3c"/>
+<circle cx="306.7" cy="60.1" r="3" fill="#3498db"/>
+<circle cx="306.8" cy="60.1" r="3" fill="#3498db"/>
+<circle cx="307.0" cy="60.1" r="3" fill="#3498db"/>
+<circle cx="307.2" cy="60.1" r="3" fill="#3498db"/>
+<circle cx="307.5" cy="60.1" r="3" fill="#3498db"/>
+<circle cx="307.7" cy="60.1" r="3" fill="#3498db"/>
+<circle cx="307.9" cy="60.1" r="3" fill="#3498db"/>
+<circle cx="308.2" cy="60.1" r="3" fill="#3498db"/>
+<circle cx="308.5" cy="60.1" r="3" fill="#3498db"/>
+<circle cx="308.8" cy="60.2" r="3" fill="#3498db"/>
+<circle cx="309.1" cy="60.2" r="3" fill="#3498db"/>
+<circle cx="309.4" cy="60.2" r="3" fill="#3498db"/>
+<circle cx="309.8" cy="60.2" r="3" fill="#3498db"/>
+<circle cx="310.2" cy="60.2" r="3" fill="#3498db"/>
+<circle cx="310.6" cy="60.2" r="3" fill="#3498db"/>
+<circle cx="311.1" cy="60.2" r="3" fill="#3498db"/>
+<circle cx="311.6" cy="60.3" r="3" fill="#3498db"/>
+<circle cx="312.2" cy="60.3" r="3" fill="#3498db"/>
+<circle cx="312.8" cy="60.3" r="3" fill="#3498db"/>
+<circle cx="313.5" cy="60.4" r="3" fill="#3498db"/>
+<circle cx="314.3" cy="60.4" r="3" fill="#3498db"/>
+<circle cx="315.1" cy="60.5" r="3" fill="#3498db"/>
+<circle cx="316.1" cy="60.5" r="3" fill="#3498db"/>
+<circle cx="317.2" cy="60.6" r="3" fill="#3498db"/>
+<circle cx="318.5" cy="60.7" r="3" fill="#3498db"/>
+<circle cx="320.0" cy="60.8" r="3" fill="#3498db"/>
+<circle cx="321.7" cy="60.9" r="3" fill="#3498db"/>
+<circle cx="323.8" cy="61.1" r="3" fill="#3498db"/>
+<circle cx="326.2" cy="61.4" r="3" fill="#3498db"/>
+<circle cx="329.3" cy="61.7" r="3" fill="#3498db"/>
+<circle cx="333.2" cy="62.2" r="3" fill="#3498db"/>
+<circle cx="338.2" cy="62.9" r="3" fill="#3498db"/>
+<circle cx="345.1" cy="64.1" r="3" fill="#3498db"/>
+<circle cx="354.9" cy="66.1" r="3" fill="#3498db"/>
+<circle cx="370.0" cy="70.0" r="3" fill="#3498db"/>
+<circle cx="396.2" cy="79.2" r="3" fill="#3498db"/>
+<circle cx="450.0" cy="110.0" r="5" fill="#2ecc71"/>
+<text x="306" y="50" class="small-label" fill="#e74c3c">Start: (77,2964,2965)</text>
+<text x="460" y="125" class="small-label" fill="#2ecc71">Root: (3,4,5)</text>
+<text x="50" y="580" class="small-label" text-anchor="start">Klein model: (a/c, b/c) ∈ D² — all Pythagorean triples map to the unit disk boundary</text>
+</svg>

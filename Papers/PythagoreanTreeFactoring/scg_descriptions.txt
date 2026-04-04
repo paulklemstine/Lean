@@ -1,0 +1,40 @@
+
+SCG Figure Descriptions (Text Fallback)
+========================================
+
+Figure 1: Berggren Ternary Tree Structure
+- Ternary tree rooted at (3,4,5)
+- Three branches labeled B₁ (blue), B₂ (green), B₃ (orange)
+- Depth 3 shows 40 nodes with triples labeled
+- Tree structure shows how PPTs are generated
+
+Figure 2: Complexity Scaling (Steps vs √N)
+- Left: Scatter plot of descent steps vs √N for semiprimes
+- Right: Bar chart of steps/√N ratio (bounded by ~1.5)
+- Confirms Θ(√N) complexity for balanced semiprimes
+
+Figure 3: Poincaré Disk Projection
+- Unit disk with PPTs projected via (a/c, b/c)
+- Color gradient: depth in tree ↔ distance from origin
+- Root (3/5, 4/5) marked with red star
+- Shows hyperbolic tiling structure
+
+Figure 4: Lattice Reduction Visualization
+- Left: Unreduced lattice with trivial basis (long vectors)
+- Right: Gauss-reduced lattice = tree descent result (short vectors)
+- Descent path shown in blue, connecting trivial to reduced basis
+
+Figure 5: Parallel Multi-Start Descent
+- Bar chart comparing single-start vs 4-way parallel descent
+- Speedup annotations (2-4×) on each bar
+- Validates theoretical linear speedup
+
+Figure 6: Euclid Parameter Space (m,n)
+- 2D lattice of coprime pairs (m,n) with m-n odd
+- Berggren orbit from root (2,1) marked in red
+- Shows the discrete geometry of the parameter space
+
+Figure 7: Branching Comparison (Triples vs Quadruples)
+- Left: Log-scale plot of 3ᵏ vs 4ᵏ nodes at depth k
+- Right: Ratio 4ᵏ/3ᵏ showing growing quadruple advantage
+- At depth 10: 4¹⁰/3¹⁰ ≈ 17.8× more nodes

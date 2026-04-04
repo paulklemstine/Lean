@@ -1,7 +1,0 @@
-{
-  "hypothesis": "H16",
-  "status": "SUPPORTED_WITH_REFINEMENT",
-  "refinement": "Correct poset is (N, |) with index shift n -> n-1",
-  "key_result": "NPot(m) \u2286 NPot(n) iff (m-1) | (n-1)",
-  "lattice_meet": "NPot(m) \u2229 NPot(n) = NPot(gcd(m-1,n-1)+1)"
-}

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+<defs>
+  <style>
+    .title { font: bold 18px 'Helvetica Neue', Arial, sans-serif; fill: #2c3e50; }
+    .subtitle { font: 14px 'Helvetica Neue', Arial, sans-serif; fill: #7f8c8d; }
+    .label { font: 11px 'Courier New', monospace; fill: #2c3e50; text-anchor: middle; }
+    .small-label { font: 9px 'Courier New', monospace; fill: #555; text-anchor: middle; }
+    .axis-label { font: 12px 'Helvetica Neue', Arial, sans-serif; fill: #2c3e50; }
+    .node-root { fill: #e74c3c; stroke: #c0392b; stroke-width: 2; }
+    .node-l1 { fill: #3498db; stroke: #2980b9; stroke-width: 1.5; }
+    .node-l2 { fill: #2ecc71; stroke: #27ae60; stroke-width: 1.5; }
+    .node-l3 { fill: #f39c12; stroke: #e67e22; stroke-width: 1.5; }
+    .node-l4 { fill: #9b59b6; stroke: #8e44ad; stroke-width: 1; }
+    .edge { stroke: #bdc3c7; stroke-width: 1.5; fill: none; }
+    .descent-edge { stroke: #e74c3c; stroke-width: 2.5; fill: none; stroke-dasharray: 5,3; }
+    .descent-node { fill: #e74c3c; stroke: #c0392b; stroke-width: 2; }
+    .factor-node { fill: #f1c40f; stroke: #f39c12; stroke-width: 3; }
+  </style>
+  <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+    <polygon points="0 0, 10 3.5, 0 7" fill="#e74c3c"/>
+  </marker>
+</defs>
+<text x="400" y="30" class="title" text-anchor="middle">Descent Path: Factoring N = 77 = 7 × 11</text>
+<text x="400" y="50" class="subtitle" text-anchor="middle">Climbing from trivial triple to root, GCD reveals factors</text>
+<line x1="80" y1="250" x2="97" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="80" cy="250" r="15" class="descent-node"/>
+<text x="80" y="220" class="small-label">d=0</text>
+<text x="80" y="290" class="small-label">(77,2964,2965)</text>
+<line x1="97" y1="250" x2="115" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="97" cy="250" r="15" class="descent-node"/>
+<text x="97" y="220" class="small-label">d=1</text>
+<text x="97" y="290" class="small-label">(75,2812,2813)</text>
+<line x1="115" y1="250" x2="132" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="115" cy="250" r="15" class="descent-node"/>
+<text x="115" y="220" class="small-label">d=2</text>
+<text x="115" y="290" class="small-label">(73,2664,2665)</text>
+<line x1="132" y1="250" x2="149" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="132" cy="250" r="20" class="factor-node"/>
+<text x="132" y="220" class="small-label">d=3</text>
+<text x="132" y="290" class="small-label">(71,2520,2521)</text>
+<text x="132" y="310" class="label" fill="#e74c3c">gcd = 7!</text>
+<line x1="149" y1="250" x2="166" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="149" cy="250" r="20" class="factor-node"/>
+<text x="149" y="220" class="small-label">d=4</text>
+<text x="149" y="290" class="small-label">(69,2380,2381)</text>
+<text x="149" y="310" class="label" fill="#e74c3c">gcd = 7!</text>
+<line x1="166" y1="250" x2="184" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="166" cy="250" r="20" class="factor-node"/>
+<text x="166" y="220" class="small-label">d=5</text>
+<text x="166" y="290" class="small-label">(67,2244,2245)</text>
+<text x="166" y="310" class="label" fill="#e74c3c">gcd = 11!</text>
+<line x1="184" y1="250" x2="201" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="184" cy="250" r="20" class="factor-node"/>
+<text x="184" y="220" class="small-label">d=6</text>
+<text x="184" y="290" class="small-label">(65,2112,2113)</text>
+<text x="184" y="310" class="label" fill="#e74c3c">gcd = 11!</text>
+<line x1="201" y1="250" x2="218" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="201" cy="250" r="20" class="factor-node"/>
+<text x="201" y="220" class="small-label">d=7</text>
+<text x="201" y="290" class="small-label">(63,1984,1985)</text>
+<text x="201" y="310" class="label" fill="#e74c3c">gcd = 7!</text>
+<line x1="218" y1="250" x2="236" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="218" cy="250" r="15" class="descent-node"/>
+<text x="218" y="220" class="small-label">d=8</text>
+<text x="218" y="290" class="small-label">(61,1860,1861)</text>
+<line x1="236" y1="250" x2="253" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="236" cy="250" r="15" class="descent-node"/>
+<text x="236" y="220" class="small-label">d=9</text>
+<text x="236" y="290" class="small-label">(59,1740,1741)</text>
+<line x1="253" y1="250" x2="270" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="253" cy="250" r="20" class="factor-node"/>
+<text x="253" y="220" class="small-label">d=10</text>
+<text x="253" y="290" class="small-label">(57,1624,1625)</text>
+<text x="253" y="310" class="label" fill="#e74c3c">gcd = 7!</text>
+<line x1="270" y1="250" x2="288" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="270" cy="250" r="20" class="factor-node"/>
+<text x="270" y="220" class="small-label">d=11</text>
+<text x="270" y="290" class="small-label">(55,1512,1513)</text>
+<text x="270" y="310" class="label" fill="#e74c3c">gcd = 11!</text>
+<line x1="288" y1="250" x2="305" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="288" cy="250" r="15" class="descent-node"/>
+<text x="288" y="220" class="small-label">d=12</text>
+<text x="288" y="290" class="small-label">(53,1404,1405)</text>
+<line x1="305" y1="250" x2="322" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="305" cy="250" r="15" class="descent-node"/>
+<text x="305" y="220" class="small-label">d=13</text>
+<text x="305" y="290" class="small-label">(51,1300,1301)</text>
+<line x1="322" y1="250" x2="339" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="322" cy="250" r="20" class="factor-node"/>
+<text x="322" y="220" class="small-label">d=14</text>
+<text x="322" y="290" class="small-label">(49,1200,1201)</text>
+<text x="322" y="310" class="label" fill="#e74c3c">gcd = 7!</text>
+<line x1="339" y1="250" x2="357" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="339" cy="250" r="15" class="descent-node"/>
+<text x="339" y="220" class="small-label">d=15</text>
+<text x="339" y="290" class="small-label">(47,1104,1105)</text>
+<line x1="357" y1="250" x2="374" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="357" cy="250" r="20" class="factor-node"/>
+<text x="357" y="220" class="small-label">d=16</text>
+<text x="357" y="290" class="small-label">(45,1012,1013)</text>
+<text x="357" y="310" class="label" fill="#e74c3c">gcd = 11!</text>
+<line x1="374" y1="250" x2="391" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="374" cy="250" r="15" class="descent-node"/>
+<text x="374" y="220" class="small-label">d=17</text>
+<text x="374" y="290" class="small-label">(43,924,925)</text>
+<line x1="391" y1="250" x2="409" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="391" cy="250" r="20" class="factor-node"/>
+<text x="391" y="220" class="small-label">d=18</text>
+<text x="391" y="290" class="small-label">(41,840,841)</text>
+<text x="391" y="310" class="label" fill="#e74c3c">gcd = 7!</text>
+<line x1="409" y1="250" x2="426" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="409" cy="250" r="15" class="descent-node"/>
+<text x="409" y="220" class="small-label">d=19</text>
+<text x="409" y="290" class="small-label">(39,760,761)</text>
+<line x1="426" y1="250" x2="443" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="426" cy="250" r="15" class="descent-node"/>
+<text x="426" y="220" class="small-label">d=20</text>
+<text x="426" y="290" class="small-label">(37,684,685)</text>
+<line x1="443" y1="250" x2="461" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="443" cy="250" r="20" class="factor-node"/>
+<text x="443" y="220" class="small-label">d=21</text>
+<text x="443" y="290" class="small-label">(35,612,613)</text>
+<text x="443" y="310" class="label" fill="#e74c3c">gcd = 7!</text>
+<line x1="461" y1="250" x2="478" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="461" cy="250" r="20" class="factor-node"/>
+<text x="461" y="220" class="small-label">d=22</text>
+<text x="461" y="290" class="small-label">(33,544,545)</text>
+<text x="461" y="310" class="label" fill="#e74c3c">gcd = 11!</text>
+<line x1="478" y1="250" x2="495" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="478" cy="250" r="15" class="descent-node"/>
+<text x="478" y="220" class="small-label">d=23</text>
+<text x="478" y="290" class="small-label">(31,480,481)</text>
+<line x1="495" y1="250" x2="512" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="495" cy="250" r="20" class="factor-node"/>
+<text x="495" y="220" class="small-label">d=24</text>
+<text x="495" y="290" class="small-label">(29,420,421)</text>
+<text x="495" y="310" class="label" fill="#e74c3c">gcd = 7!</text>
+<line x1="512" y1="250" x2="530" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="512" cy="250" r="20" class="factor-node"/>
+<text x="512" y="220" class="small-label">d=25</text>
+<text x="512" y="290" class="small-label">(27,364,365)</text>
+<text x="512" y="310" class="label" fill="#e74c3c">gcd = 7!</text>
+<line x1="530" y1="250" x2="547" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="530" cy="250" r="15" class="descent-node"/>
+<text x="530" y="220" class="small-label">d=26</text>
+<text x="530" y="290" class="small-label">(25,312,313)</text>
+<line x1="547" y1="250" x2="564" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="547" cy="250" r="20" class="factor-node"/>
+<text x="547" y="220" class="small-label">d=27</text>
+<text x="547" y="290" class="small-label">(23,264,265)</text>
+<text x="547" y="310" class="label" fill="#e74c3c">gcd = 11!</text>
+<line x1="564" y1="250" x2="582" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="564" cy="250" r="20" class="factor-node"/>
+<text x="564" y="220" class="small-label">d=28</text>
+<text x="564" y="290" class="small-label">(21,220,221)</text>
+<text x="564" y="310" class="label" fill="#e74c3c">gcd = 7!</text>
+<line x1="582" y1="250" x2="599" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="582" cy="250" r="15" class="descent-node"/>
+<text x="582" y="220" class="small-label">d=29</text>
+<text x="582" y="290" class="small-label">(19,180,181)</text>
+<line x1="599" y1="250" x2="616" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="599" cy="250" r="15" class="descent-node"/>
+<text x="599" y="220" class="small-label">d=30</text>
+<text x="599" y="290" class="small-label">(17,144,145)</text>
+<line x1="616" y1="250" x2="634" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="616" cy="250" r="20" class="factor-node"/>
+<text x="616" y="220" class="small-label">d=31</text>
+<text x="616" y="290" class="small-label">(15,112,113)</text>
+<text x="616" y="310" class="label" fill="#e74c3c">gcd = 7!</text>
+<line x1="634" y1="250" x2="651" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="634" cy="250" r="20" class="factor-node"/>
+<text x="634" y="220" class="small-label">d=32</text>
+<text x="634" y="290" class="small-label">(13,84,85)</text>
+<text x="634" y="310" class="label" fill="#e74c3c">gcd = 7!</text>
+<line x1="651" y1="250" x2="668" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="651" cy="250" r="20" class="factor-node"/>
+<text x="651" y="220" class="small-label">d=33</text>
+<text x="651" y="290" class="small-label">(11,60,61)</text>
+<text x="651" y="310" class="label" fill="#e74c3c">gcd = 11!</text>
+<line x1="668" y1="250" x2="685" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="668" cy="250" r="15" class="descent-node"/>
+<text x="668" y="220" class="small-label">d=34</text>
+<text x="668" y="290" class="small-label">(9,40,41)</text>
+<line x1="685" y1="250" x2="703" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="685" cy="250" r="20" class="factor-node"/>
+<text x="685" y="220" class="small-label">d=35</text>
+<text x="685" y="290" class="small-label">(7,24,25)</text>
+<text x="685" y="310" class="label" fill="#e74c3c">gcd = 7!</text>
+<line x1="703" y1="250" x2="720" y2="250" class="descent-edge" marker-end="url(#arrowhead)"/>
+<circle cx="703" cy="250" r="15" class="descent-node"/>
+<text x="703" y="220" class="small-label">d=36</text>
+<text x="703" y="290" class="small-label">(5,12,13)</text>
+<circle cx="720" cy="250" r="15" class="node-root"/>
+<text x="720" y="220" class="small-label">d=37</text>
+<text x="720" y="290" class="small-label">(3,4,5)</text>
+<rect x="50" y="380" width="15" height="15" class="descent-node"/>
+<text x="75" y="393" class="axis-label">Descent step</text>
+<rect x="200" y="380" width="15" height="15" class="factor-node"/>
+<text x="225" y="393" class="axis-label">Factor revealed by GCD</text>
+<rect x="400" y="380" width="15" height="15" class="node-root"/>
+<text x="425" y="393" class="axis-label">Root (3,4,5)</text>
+<text x="400" y="440" class="subtitle" text-anchor="middle">Direction of descent →</text>
+<text x="400" y="470" class="subtitle" text-anchor="middle">Hypotenuse: 2965 → ... → 5 (strictly decreasing)</text>
+</svg>
