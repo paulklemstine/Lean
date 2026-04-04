@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg11" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a1a4e;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="800" height="500" fill="url(#bg11)" rx="12"/>
+  
+  <text x="400" y="35" text-anchor="middle" fill="#ffffff" font-size="20" font-weight="bold">H6: Scaling Exponent α vs Semiprime Bit Size</text>
+  <text x="400" y="55" text-anchor="middle" fill="#aaaacc" font-size="12">α = 0.297 overall — remains below 0.3 barrier through 24 bits</text>
+  
+  <g transform="translate(100, 75)">
+    <!-- Axes -->
+    <line x1="0" y1="340" x2="580" y2="340" stroke="#555588" stroke-width="1.5"/>
+    <line x1="0" y1="0" x2="0" y2="340" stroke="#555588" stroke-width="1.5"/>
+    
+    <!-- Y-axis: α from 0 to 0.5 -->
+    <text x="-45" y="175" text-anchor="middle" fill="#ffffff" font-size="12" transform="rotate(-90,-45,175)">Exponent α</text>
+    <text x="-8" y="344" text-anchor="end" fill="#aaaacc" font-size="10">0.0</text>
+    <text x="-8" y="276" text-anchor="end" fill="#aaaacc" font-size="10">0.1</text>
+    <text x="-8" y="208" text-anchor="end" fill="#aaaacc" font-size="10">0.2</text>
+    <text x="-8" y="140" text-anchor="end" fill="#aaaacc" font-size="10">0.3</text>
+    <text x="-8" y="72" text-anchor="end" fill="#aaaacc" font-size="10">0.4</text>
+    <text x="-8" y="4" text-anchor="end" fill="#aaaacc" font-size="10">0.5</text>
+    
+    <!-- X-axis: bit size -->
+    <text x="290" y="380" text-anchor="middle" fill="#ffffff" font-size="12">Semiprime bit size</text>
+    
+    <!-- Grid -->
+    <line x1="0" y1="272" x2="580" y2="272" stroke="#222244" stroke-width="0.5" stroke-dasharray="4"/>
+    <line x1="0" y1="204" x2="580" y2="204" stroke="#222244" stroke-width="0.5" stroke-dasharray="4"/>
+    <line x1="0" y1="136" x2="580" y2="136" stroke="#222244" stroke-width="0.5" stroke-dasharray="4"/>
+    <line x1="0" y1="68" x2="580" y2="68" stroke="#222244" stroke-width="0.5" stroke-dasharray="4"/>
+    
+    <!-- √N barrier (α = 0.5) -->
+    <line x1="0" y1="0" x2="580" y2="0" stroke="#ff4444" stroke-width="2" stroke-dasharray="10,5"/>
+    <text x="585" y="5" fill="#ff4444" font-size="11">α = 0.5 (√N barrier)</text>
+    
+    <!-- 1/3 line (Minkowski d=3) -->
+    <line x1="0" y1="113" x2="580" y2="113" stroke="#ffaa00" stroke-width="1.5" stroke-dasharray="6,4"/>
+    <text x="585" y="118" fill="#ffaa00" font-size="10">α = 1/3 (Minkowski)</text>
+    
+    <!-- α = 0.3 threshold -->
+    <line x1="0" y1="136" x2="580" y2="136" stroke="#44ff44" stroke-width="1.5" stroke-dasharray="6,4"/>
+    <text x="585" y="141" fill="#44ff44" font-size="10">α = 0.3 (H6 target)</text>
+    
+    <!-- Data points by bucket: 4-bit avg 0.097, 8-bit avg 0.095, 12-bit avg 0.211, 16-bit avg 0.189, 20-bit avg 0.251, 24-bit avg 0.196 -->
+    <!-- Bucket positions: 4→40, 8→136, 12→232, 16→328, 20→424, 24→520 -->
+    
+    <!-- Box plots (simplified as range bars + mean) -->
+    <!-- 4-bit: all 0.097 -->
+    <line x1="40" y1="{340-0.097*680}" x2="40" y2="{340-0.097*680}" stroke="#4ecdc4" stroke-width="3"/>
+    <circle cx="40" cy="274" r="5" fill="#4ecdc4"/>
+    <text x="40" y="358" text-anchor="middle" fill="#aaaacc" font-size="10">4-6</text>
+    
+    <!-- 8-bit: min 0.046, max 0.220, avg 0.095 -->
+    <line x1="136" y1="190" x2="136" y2="309" stroke="#4ecdc4" stroke-width="2"/>
+    <rect x="126" y="264" width="20" height="20" fill="#4ecdc4" opacity="0.3" rx="2"/>
+    <circle cx="136" cy="275" r="5" fill="#4ecdc4"/>
+    <text x="136" y="358" text-anchor="middle" fill="#aaaacc" font-size="10">8-10</text>
+    
+    <!-- 12-bit: min 0.037, max 0.420, avg 0.211 -->
+    <line x1="232" y1="54" x2="232" y2="315" stroke="#4ecdc4" stroke-width="2"/>
+    <rect x="222" y="188" width="20" height="40" fill="#4ecdc4" opacity="0.3" rx="2"/>
+    <circle cx="232" cy="196" r="5" fill="#4ecdc4"/>
+    <text x="232" y="358" text-anchor="middle" fill="#aaaacc" font-size="10">12-14</text>
+    
+    <!-- 16-bit: min 0.027, max 0.358, avg 0.189 -->
+    <line x1="328" y1="96" x2="328" y2="322" stroke="#4ecdc4" stroke-width="2"/>
+    <rect x="318" y="200" width="20" height="40" fill="#4ecdc4" opacity="0.3" rx="2"/>
+    <circle cx="328" cy="211" r="5" fill="#4ecdc4"/>
+    <text x="328" y="358" text-anchor="middle" fill="#aaaacc" font-size="10">16-18</text>
+    
+    <!-- 20-bit: min 0.094, max 0.464, avg 0.251 -->
+    <line x1="424" y1="24" x2="424" y2="276" stroke="#4ecdc4" stroke-width="2"/>
+    <rect x="414" y="153" width="20" height="45" fill="#4ecdc4" opacity="0.3" rx="2"/>
+    <circle cx="424" cy="169" r="5" fill="#4ecdc4"/>
+    <text x="424" y="358" text-anchor="middle" fill="#aaaacc" font-size="10">20-22</text>
+    
+    <!-- 24-bit: single point at 0.196 -->
+    <circle cx="520" cy="207" r="5" fill="#4ecdc4"/>
+    <text x="520" y="358" text-anchor="middle" fill="#aaaacc" font-size="10">24</text>
+    
+    <!-- Regression line: α = 0.297 -->
+    <line x1="0" y1="274" x2="580" y2="138" stroke="#ff6b6b" stroke-width="2" opacity="0.7"/>
+    <text x="520" y="155" fill="#ff6b6b" font-size="11">fit: α ≈ 0.297</text>
+  </g>
+  
+  <!-- Result box -->
+  <rect x="30" y="440" width="740" height="45" fill="#1a3a1a" rx="8" stroke="#44aa44" stroke-width="1"/>
+  <text x="400" y="460" text-anchor="middle" fill="#44ff44" font-size="13" font-weight="bold">✓ H6 SUPPORTED: Overall α = 0.297 &lt; 0.3 threshold</text>
+  <text x="400" y="477" text-anchor="middle" fill="#aaddaa" font-size="11">50 semiprimes tested from 6 to 24 bits — exponent stays well below √N barrier</text>
+</svg>

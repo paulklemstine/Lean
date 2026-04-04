@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg12" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a1a4e;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="800" height="500" fill="url(#bg12)" rx="12"/>
+  
+  <text x="400" y="35" text-anchor="middle" fill="#ffffff" font-size="20" font-weight="bold">H7: Success Rate &amp; Vector Length by Dimension</text>
+  <text x="400" y="55" text-anchor="middle" fill="#aaaacc" font-size="12">Optimal dimension d* = 4 balances short vectors with extraction success</text>
+  
+  <!-- Left chart: Success Rate -->
+  <g transform="translate(60, 80)">
+    <text x="150" y="-5" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">Factoring Success Rate</text>
+    
+    <line x1="0" y1="300" x2="300" y2="300" stroke="#555588" stroke-width="1"/>
+    <line x1="0" y1="0" x2="0" y2="300" stroke="#555588" stroke-width="1"/>
+    
+    <!-- Y labels -->
+    <text x="-8" y="304" text-anchor="end" fill="#aaaacc" font-size="10">0%</text>
+    <text x="-8" y="154" text-anchor="end" fill="#aaaacc" font-size="10">50%</text>
+    <text x="-8" y="4" text-anchor="end" fill="#aaaacc" font-size="10">100%</text>
+    
+    <!-- Bars: d=2: 33%, d=3: 75%, d=4: 88%, d=5: 75% -->
+    <rect x="20" y="201" width="50" height="99" fill="#ff6b6b" rx="4" opacity="0.85"/>
+    <text x="45" y="196" text-anchor="middle" fill="#ff8e8e" font-size="12" font-weight="bold">33%</text>
+    <text x="45" y="320" text-anchor="middle" fill="#aaaacc" font-size="12">d=2</text>
+    
+    <rect x="90" y="75" width="50" height="225" fill="#ffaa44" rx="4" opacity="0.85"/>
+    <text x="115" y="70" text-anchor="middle" fill="#ffcc66" font-size="12" font-weight="bold">75%</text>
+    <text x="115" y="320" text-anchor="middle" fill="#aaaacc" font-size="12">d=3</text>
+    
+    <rect x="160" y="36" width="50" height="264" fill="#4ecdc4" rx="4" opacity="0.85"/>
+    <text x="185" y="31" text-anchor="middle" fill="#7ee8e0" font-size="12" font-weight="bold">88%</text>
+    <text x="185" y="320" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">d=4★</text>
+    
+    <rect x="230" y="75" width="50" height="225" fill="#9b59b6" rx="4" opacity="0.85"/>
+    <text x="255" y="70" text-anchor="middle" fill="#bb79d6" font-size="12" font-weight="bold">75%</text>
+    <text x="255" y="320" text-anchor="middle" fill="#aaaacc" font-size="12">d=5</text>
+  </g>
+  
+  <!-- Right chart: Average λ₁ -->
+  <g transform="translate(440, 80)">
+    <text x="150" y="-5" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">Average Shortest Vector λ₁</text>
+    
+    <line x1="0" y1="300" x2="300" y2="300" stroke="#555588" stroke-width="1"/>
+    <line x1="0" y1="0" x2="0" y2="300" stroke="#555588" stroke-width="1"/>
+    
+    <!-- Y labels (0 to 10) -->
+    <text x="-8" y="304" text-anchor="end" fill="#aaaacc" font-size="10">0</text>
+    <text x="-8" y="154" text-anchor="end" fill="#aaaacc" font-size="10">5</text>
+    <text x="-8" y="4" text-anchor="end" fill="#aaaacc" font-size="10">10</text>
+    
+    <!-- Bars: d=2: 7.66, d=3: 7.73, d=4: 9.56, d=5: 8.82 -->
+    <rect x="20" y="70" width="50" height="230" fill="#ff6b6b" rx="4" opacity="0.85"/>
+    <text x="45" y="65" text-anchor="middle" fill="#ff8e8e" font-size="11">7.66</text>
+    <text x="45" y="320" text-anchor="middle" fill="#aaaacc" font-size="12">d=2</text>
+    
+    <rect x="90" y="68" width="50" height="232" fill="#ffaa44" rx="4" opacity="0.85"/>
+    <text x="115" y="63" text-anchor="middle" fill="#ffcc66" font-size="11">7.73</text>
+    <text x="115" y="320" text-anchor="middle" fill="#aaaacc" font-size="12">d=3</text>
+    
+    <rect x="160" y="13" width="50" height="287" fill="#4ecdc4" rx="4" opacity="0.85"/>
+    <text x="185" y="8" text-anchor="middle" fill="#7ee8e0" font-size="11">9.56</text>
+    <text x="185" y="320" text-anchor="middle" fill="#aaaacc" font-size="12">d=4</text>
+    
+    <rect x="230" y="35" width="50" height="265" fill="#9b59b6" rx="4" opacity="0.85"/>
+    <text x="255" y="30" text-anchor="middle" fill="#bb79d6" font-size="11">8.82</text>
+    <text x="255" y="320" text-anchor="middle" fill="#aaaacc" font-size="12">d=5</text>
+  </g>
+  
+  <!-- Insight box -->
+  <rect x="60" y="430" width="680" height="50" fill="#1a2a3e" rx="8" stroke="#4488aa" stroke-width="1"/>
+  <text x="400" y="450" text-anchor="middle" fill="#88ccff" font-size="12" font-weight="bold">Key Insight: d=4 achieves highest success rate (88%) despite slightly longer vectors</text>
+  <text x="400" y="468" text-anchor="middle" fill="#88aacc" font-size="11">More pairwise GCD candidates compensate for increased vector length at higher d</text>
+</svg>

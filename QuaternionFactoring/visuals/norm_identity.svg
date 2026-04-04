@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgn" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#161b22"/>
+    </linearGradient>
+    <linearGradient id="quat1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FF6F00"/>
+      <stop offset="100%" stop-color="#E65100"/>
+    </linearGradient>
+    <linearGradient id="quat2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1565C0"/>
+      <stop offset="100%" stop-color="#0D47A1"/>
+    </linearGradient>
+    <linearGradient id="prod" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2E7D32"/>
+      <stop offset="100%" stop-color="#1B5E20"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="400" fill="url(#bgn)"/>
+
+  <text x="400" y="35" text-anchor="middle" fill="#E0E0E0" font-size="20" font-weight="bold">
+    Quaternion Norm Identity = Euler's Four-Square Identity
+  </text>
+  <text x="400" y="55" text-anchor="middle" fill="#90CAF9" font-size="12">
+    The algebraic foundation of quaternion factoring
+  </text>
+
+  <!-- q₁ box -->
+  <rect x="40" y="80" width="200" height="110" rx="12" fill="url(#quat1)" opacity="0.9"/>
+  <text x="140" y="105" text-anchor="middle" fill="white" font-size="14" font-weight="bold">q₁ = a₁ + b₁i + c₁j + d₁k</text>
+  <text x="140" y="130" text-anchor="middle" fill="#FFE0B2" font-size="12">N(q₁) = a₁² + b₁² + c₁² + d₁²</text>
+  <text x="140" y="155" text-anchor="middle" fill="#FFF3E0" font-size="16" font-weight="bold">= p (prime)</text>
+  <text x="140" y="175" text-anchor="middle" fill="#FFCC80" font-size="11">Example: 1 + i + j + 0k, N = 3</text>
+
+  <!-- × symbol -->
+  <text x="270" y="140" text-anchor="middle" fill="#FFD54F" font-size="28" font-weight="bold">×</text>
+
+  <!-- q₂ box -->
+  <rect x="300" y="80" width="200" height="110" rx="12" fill="url(#quat2)" opacity="0.9"/>
+  <text x="400" y="105" text-anchor="middle" fill="white" font-size="14" font-weight="bold">q₂ = a₂ + b₂i + c₂j + d₂k</text>
+  <text x="400" y="130" text-anchor="middle" fill="#BBDEFB" font-size="12">N(q₂) = a₂² + b₂² + c₂² + d₂²</text>
+  <text x="400" y="155" text-anchor="middle" fill="#E3F2FD" font-size="16" font-weight="bold">= q (prime)</text>
+  <text x="400" y="175" text-anchor="middle" fill="#90CAF9" font-size="11">Example: 2 + i + 0j + 0k, N = 5</text>
+
+  <!-- = symbol -->
+  <text x="530" y="140" text-anchor="middle" fill="#FFD54F" font-size="28" font-weight="bold">=</text>
+
+  <!-- product box -->
+  <rect x="560" y="80" width="210" height="110" rx="12" fill="url(#prod)" opacity="0.9"/>
+  <text x="665" y="105" text-anchor="middle" fill="white" font-size="14" font-weight="bold">q₁·q₂</text>
+  <text x="665" y="130" text-anchor="middle" fill="#C8E6C9" font-size="12">N(q₁·q₂) = N(q₁)·N(q₂)</text>
+  <text x="665" y="155" text-anchor="middle" fill="#E8F5E9" font-size="16" font-weight="bold">= p · q = N</text>
+  <text x="665" y="175" text-anchor="middle" fill="#A5D6A7" font-size="11">Example: N = 15 = 3 × 5</text>
+
+  <!-- The formula -->
+  <rect x="60" y="220" width="680" height="80" rx="10" fill="#1a1a3e" stroke="#FFD54F" stroke-width="1"/>
+  <text x="400" y="248" text-anchor="middle" fill="#FFD54F" font-size="14" font-weight="bold">
+    Euler's Four-Square Identity (1748)
+  </text>
+  <text x="400" y="275" text-anchor="middle" fill="#FFF9C4" font-size="12">
+    (a₁²+b₁²+c₁²+d₁²)(a₂²+b₂²+c₂²+d₂²) = (a₁a₂−b₁b₂−c₁c₂−d₁d₂)² + (a₁b₂+b₁a₂+c₁d₂−d₁c₂)² + ⋯
+  </text>
+
+  <!-- Bottom: factoring connection -->
+  <rect x="100" y="320" width="600" height="60" rx="10" fill="#1B0030" opacity="0.8" stroke="#CE93D8"/>
+  <text x="400" y="345" text-anchor="middle" fill="#CE93D8" font-size="13" font-weight="bold">
+    The Factoring Connection
+  </text>
+  <text x="400" y="365" text-anchor="middle" fill="#E1BEE7" font-size="11">
+    Factoring N = p·q ⟺ Finding quaternions q₁, q₂ with N(q₁) = p, N(q₂) = q, and q₁·q₂ has norm N
+  </text>
+</svg>
