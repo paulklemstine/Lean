@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0a2e"/>
+      <stop offset="100%" stop-color="#1a1a4e"/>
+    </linearGradient>
+    <linearGradient id="barrier" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ff4444" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#ff6666" stop-opacity="0.3"/>
+    </linearGradient>
+    <linearGradient id="escape" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#44ff44" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#44ffaa" stop-opacity="0.8"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="500" fill="url(#bg)"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" fill="#ffffff" font-family="Georgia, serif" font-size="22" font-weight="bold">The Dimensional Escape</text>
+  <text x="400" y="55" text-anchor="middle" fill="#aaaacc" font-family="Georgia, serif" font-size="13">From 2D Optimality to 3D Opportunity</text>
+  
+  <!-- Axes -->
+  <line x1="100" y1="420" x2="750" y2="420" stroke="#555577" stroke-width="1.5"/>
+  <line x1="100" y1="420" x2="100" y2="80" stroke="#555577" stroke-width="1.5"/>
+  <text x="425" y="460" text-anchor="middle" fill="#8888aa" font-family="monospace" font-size="12">log₂(N) — Number of bits</text>
+  <text x="55" y="250" text-anchor="middle" fill="#8888aa" font-family="monospace" font-size="12" transform="rotate(-90,55,250)">log₂(complexity)</text>
+  
+  <!-- Grid -->
+  <g stroke="#333355" stroke-width="0.5" stroke-dasharray="4,4">
+    <line x1="100" y1="350" x2="750" y2="350"/>
+    <line x1="100" y1="280" x2="750" y2="280"/>
+    <line x1="100" y1="210" x2="750" y2="210"/>
+    <line x1="100" y1="140" x2="750" y2="140"/>
+    <line x1="230" y1="420" x2="230" y2="80"/>
+    <line x1="360" y1="420" x2="360" y2="80"/>
+    <line x1="490" y1="420" x2="490" y2="80"/>
+    <line x1="620" y1="420" x2="620" y2="80"/>
+  </g>
+  
+  <!-- Axis labels -->
+  <text x="100" y="440" text-anchor="middle" fill="#8888aa" font-size="10">0</text>
+  <text x="230" y="440" text-anchor="middle" fill="#8888aa" font-size="10">256</text>
+  <text x="360" y="440" text-anchor="middle" fill="#8888aa" font-size="10">512</text>
+  <text x="490" y="440" text-anchor="middle" fill="#8888aa" font-size="10">1024</text>
+  <text x="620" y="440" text-anchor="middle" fill="#8888aa" font-size="10">2048</text>
+  
+  <!-- √N line (2D barrier) -->
+  <line x1="100" y1="420" x2="700" y2="120" stroke="#ff4444" stroke-width="2.5" filter="url(#glow)"/>
+  <text x="710" y="115" fill="#ff6666" font-family="monospace" font-size="13" font-weight="bold">N^{1/2}</text>
+  <text x="710" y="130" fill="#ff6666" font-family="monospace" font-size="10">2D barrier</text>
+  
+  <!-- N^{1/3} line (3D escape) -->
+  <line x1="100" y1="420" x2="700" y2="220" stroke="#44ff88" stroke-width="2.5" filter="url(#glow)"/>
+  <text x="710" y="215" fill="#44ff88" font-family="monospace" font-size="13" font-weight="bold">N^{1/3}</text>
+  <text x="710" y="230" fill="#44ff88" font-family="monospace" font-size="10">3D quadruples</text>
+  
+  <!-- N^{1/4} line (4D) -->
+  <line x1="100" y1="420" x2="700" y2="270" stroke="#4488ff" stroke-width="2" stroke-dasharray="8,4" filter="url(#glow)"/>
+  <text x="710" y="265" fill="#4488ff" font-family="monospace" font-size="13">N^{1/4}</text>
+  <text x="710" y="280" fill="#4488ff" font-family="monospace" font-size="10">Pollard ρ</text>
+  
+  <!-- Barrier zone -->
+  <rect x="100" y="80" width="600" height="40" fill="url(#barrier)" opacity="0.15"/>
+  <text x="400" y="97" text-anchor="middle" fill="#ff8888" font-family="Georgia, serif" font-size="11" font-style="italic">√N Barrier — Gauss optimal in 2D</text>
+  
+  <!-- Escape zone -->
+  <rect x="400" y="200" width="250" height="100" fill="url(#escape)" opacity="0.1" rx="10"/>
+  <text x="525" y="245" text-anchor="middle" fill="#88ffaa" font-family="Georgia, serif" font-size="11" font-style="italic">Dimensional Escape Zone</text>
+  
+  <!-- Key points -->
+  <circle cx="490" cy="270" r="6" fill="#ff4444" filter="url(#glow)"/>
+  <text x="505" y="275" fill="#ffaaaa" font-size="10">1024-bit: 2^512 ops</text>
+  
+  <circle cx="490" cy="320" r="6" fill="#44ff88" filter="url(#glow)"/>
+  <text x="505" y="325" fill="#aaffaa" font-size="10">1024-bit: 2^341 ops</text>
+  
+  <circle cx="490" cy="345" r="6" fill="#4488ff" filter="url(#glow)"/>
+  <text x="505" y="350" fill="#aaaaff" font-size="10">1024-bit: 2^256 ops</text>
+  
+  <!-- Legend -->
+  <rect x="120" y="85" width="200" height="75" fill="#0a0a2e" opacity="0.8" rx="5" stroke="#444466"/>
+  <line x1="130" y1="100" x2="160" y2="100" stroke="#ff4444" stroke-width="2"/>
+  <text x="170" y="104" fill="#ff6666" font-size="11">Trial division / Gauss 2D</text>
+  <line x1="130" y1="120" x2="160" y2="120" stroke="#44ff88" stroke-width="2"/>
+  <text x="170" y="124" fill="#44ff88" font-size="11">Quadruple lattice (d=3)</text>
+  <line x1="130" y1="140" x2="160" y2="140" stroke="#4488ff" stroke-width="2" stroke-dasharray="8,4"/>
+  <text x="170" y="144" fill="#4488ff" font-size="11">Higher dimensions (d≥4)</text>
+</svg>
