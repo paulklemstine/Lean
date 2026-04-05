@@ -1,5 +1,5 @@
 import Mathlib
-import Pythagorean.UniversalParent
+-- import Pythagorean.UniversalParent -- file naming mismatch, disabled
 
 /-!
 # Parent Descent Factoring: Computational Experiments
