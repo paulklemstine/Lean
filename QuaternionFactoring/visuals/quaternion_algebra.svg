@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 550" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0a2a"/>
+      <stop offset="100%" stop-color="#12122e"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <rect width="900" height="550" fill="url(#bg2)"/>
+
+  <!-- Title -->
+  <text x="450" y="40" text-anchor="middle" fill="#e0e0ff" font-size="22" font-weight="bold">
+    The Quaternion Norm Identity: Foundation of Factoring
+  </text>
+
+  <!-- Central identity -->
+  <rect x="100" y="65" width="700" height="80" rx="12" fill="#1a1a3e" stroke="#4444aa" stroke-width="2" filter="url(#shadow)"/>
+  <text x="450" y="95" text-anchor="middle" fill="#aaaaff" font-size="14">Euler's Four-Square Identity (1748)</text>
+  <text x="450" y="125" text-anchor="middle" fill="#ffffff" font-size="16" font-weight="bold">
+    (a₁² + b₁² + c₁² + d₁²) · (a₂² + b₂² + c₂² + d₂²) = A² + B² + C² + D²
+  </text>
+
+  <!-- Quaternion multiplication rules -->
+  <rect x="30" y="170" width="250" height="200" rx="10" fill="#1a2a1a" stroke="#44aa44" stroke-width="1.5"/>
+  <text x="155" y="195" text-anchor="middle" fill="#88ff88" font-size="14" font-weight="bold">Quaternion Product</text>
+  <text x="45" y="220" fill="#ccffcc" font-size="11">q = a + bi + cj + dk</text>
+  <text x="45" y="245" fill="#ccffcc" font-size="11">i² = j² = k² = ijk = −1</text>
+  <text x="45" y="270" fill="#aaffaa" font-size="11">ij = k,  jk = i,  ki = j</text>
+  <text x="45" y="295" fill="#aaffaa" font-size="11">ji = −k, kj = −i, ik = −j</text>
+  <text x="45" y="325" fill="#88dd88" font-size="10">Non-commutative! (ij ≠ ji)</text>
+  <text x="45" y="350" fill="#88dd88" font-size="10">But norm IS multiplicative ✓</text>
+
+  <!-- Product components -->
+  <rect x="320" y="170" width="260" height="200" rx="10" fill="#2a1a1a" stroke="#aa4444" stroke-width="1.5"/>
+  <text x="450" y="195" text-anchor="middle" fill="#ff8888" font-size="14" font-weight="bold">Product Components</text>
+  <text x="335" y="225" fill="#ffcccc" font-size="11">A = a₁a₂ − b₁b₂ − c₁c₂ − d₁d₂</text>
+  <text x="335" y="255" fill="#ffcccc" font-size="11">B = a₁b₂ + b₁a₂ + c₁d₂ − d₁c₂</text>
+  <text x="335" y="285" fill="#ffcccc" font-size="11">C = a₁c₂ − b₁d₂ + c₁a₂ + d₁b₂</text>
+  <text x="335" y="315" fill="#ffcccc" font-size="11">D = a₁d₂ + b₁c₂ − c₁b₂ + d₁a₂</text>
+  <text x="335" y="350" fill="#ff8888" font-size="10">Verified by ring in Lean 4 ✓</text>
+
+  <!-- Factoring connection -->
+  <rect x="620" y="170" width="250" height="200" rx="10" fill="#1a1a2a" stroke="#4444aa" stroke-width="1.5"/>
+  <text x="745" y="195" text-anchor="middle" fill="#8888ff" font-size="14" font-weight="bold">Factoring Connection</text>
+  <text x="635" y="225" fill="#ccccff" font-size="11">N = p · q  (semiprime)</text>
+  <text x="635" y="255" fill="#ccccff" font-size="11">p = a₁² + b₁² + c₁² + d₁²</text>
+  <text x="635" y="280" fill="#ccccff" font-size="11">  (Lagrange's theorem)</text>
+  <text x="635" y="310" fill="#ccccff" font-size="11">q = a₂² + b₂² + c₂² + d₂²</text>
+  <text x="635" y="340" fill="#aaaaff" font-size="11">⟹ N = N(q_p · q_q)</text>
+  <text x="635" y="360" fill="#8888ff" font-size="10">Factoring ↔ Quaternion splitting</text>
+
+  <!-- Example -->
+  <rect x="50" y="400" width="800" height="120" rx="12" fill="#1a1a2a" stroke="#6666cc" stroke-width="1.5"/>
+  <text x="450" y="428" text-anchor="middle" fill="#bbbbff" font-size="15" font-weight="bold">
+    Worked Example: 143 = 11 × 13
+  </text>
+
+  <text x="70" y="455" fill="#ccddff" font-size="12">
+    11 = 0² + 1² + 1² + 3²  →  q₁₁ = 0 + i + j + 3k
+  </text>
+  <text x="70" y="478" fill="#ccddff" font-size="12">
+    13 = 0² + 0² + 2² + 3²  →  q₁₃ = 0 + 0i + 2j + 3k
+  </text>
+  <text x="70" y="501" fill="#ffffff" font-size="12" font-weight="bold">
+    q₁₁ · q₁₃ = −11 − 3i − 3j + 2k    N(q₁₁ · q₁₃) = 121 + 9 + 9 + 4 = 143 ✓
+  </text>
+</svg>
