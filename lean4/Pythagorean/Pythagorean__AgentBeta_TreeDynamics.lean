@@ -1,5 +1,4 @@
 import Mathlib
--- import Core.BerggrenTree  -- [consolidated: module not available as separate import]
 
 /-!
 # Agent Beta — Tree Dynamics of the Berggren Tree
@@ -23,6 +22,29 @@ how quantities evolve along branches, growth rates, and structural properties.
    Pythagorean triples), making them elements of O(2,1;ℤ).
 -/
 
+/-! ## Tree Path type and Berggren triple computation -/
+
+/-- A path in the ternary Berggren tree. -/
+inductive TreePath : Type
+  | root : TreePath
+  | left : TreePath → TreePath
+  | mid : TreePath → TreePath
+  | right : TreePath → TreePath
+deriving Repr
+
+/-- Compute the Pythagorean triple at a given tree path. -/
+def berggrenTripleAux : TreePath → ℤ × ℤ × ℤ
+  | .root => (3, 4, 5)
+  | .left p =>
+    let (a, b, c) := berggrenTripleAux p
+    (a - 2*b + 2*c, 2*a - b + 2*c, 2*a - 2*b + 3*c)
+  | .mid p =>
+    let (a, b, c) := berggrenTripleAux p
+    (a + 2*b + 2*c, 2*a + b + 2*c, 2*a + 2*b + 3*c)
+  | .right p =>
+    let (a, b, c) := berggrenTripleAux p
+    (-a + 2*b + 2*c, -2*a + b + 2*c, -2*a + 2*b + 3*c)
+
 /-! ## Section 1: The Tree is Inflationary
 
 **BETA'S THEOREM**: All three Berggren transformations strictly increase the hypotenuse
@@ -39,17 +61,11 @@ theorem berggren_M1_hyp_increase (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0
 theorem berggren_M2_hyp_increase (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
     c < 2 * a + 2 * b + 3 * c := by linarith
 
-/-
-PROBLEM
-M₃ increases the hypotenuse.
-
-PROVIDED SOLUTION
-We need c < -2a + 2b + 3c, i.e., 2a < 2b + 2c, i.e., a < b + c. Since a²+b²=c², we have c² - a² = b² > 0, so c > a (since both positive), and b > 0, so a < c < b + c. Use nlinarith with sq_nonneg b and the Pythagorean equation.
--/
+/-- M₃ increases the hypotenuse. -/
 theorem berggren_M3_hyp_increase (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (h : a ^ 2 + b ^ 2 = c ^ 2) :
     c < -2 * a + 2 * b + 3 * c := by
-  nlinarith [ sq_nonneg ( b - a ) ]
+  nlinarith [sq_nonneg (b - a)]
 
 /-! ## Section 2: Positivity Preservation
 
@@ -65,8 +81,7 @@ theorem berggren_M2_pos_b (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
 theorem berggren_M2_pos_c (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
     0 < 2*a + 2*b + 3*c := by linarith
 
-/-- M₁ produces positive first component when a² + b² = c² and all positive.
-    Key insight: a - 2b + 2c > 0 because c ≥ b (from a²+b²=c² and a>0) so 2c-2b ≥ 0. -/
+/-- M₁ produces positive first component when a² + b² = c² and all positive. -/
 theorem berggren_M1_pos_a (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (h : a ^ 2 + b ^ 2 = c ^ 2) :
     0 < a - 2*b + 2*c := by nlinarith [sq_nonneg (a - b), sq_nonneg b]
@@ -97,16 +112,16 @@ def pathsAtDepth : ℕ → List TreePath
   | d + 1 => (pathsAtDepth d).flatMap fun p => [.left p, .mid p, .right p]
 
 /-
-PROBLEM
 The number of paths at depth d is 3^d.
-
-PROVIDED SOLUTION
-Induction on d. Base: length [.root] = 1 = 3^0. Step: pathsAtDepth (d+1) = flatMap over pathsAtDepth d, mapping each element to a list of length 3. So the total length is 3 * length(pathsAtDepth d) = 3 * 3^d = 3^(d+1). Use List.length_flatMap and show that every element maps to a list of length 3.
 -/
-theorem pathsAtDepth_length (d : ℕ) : (pathsAtDepth d).length = 3 ^ d := by
-  induction d <;> simp_all +decide [ pow_succ' ];
-  rename_i n ih;
-  rw [ ← ih, show pathsAtDepth ( n + 1 ) = List.flatMap ( fun p => [ TreePath.left p, TreePath.mid p, TreePath.right p ] ) ( pathsAtDepth n ) from rfl ] ; simp +decide [ mul_comm ] ;
+theorem pathsAtDepth_length : ∀ d : ℕ, (pathsAtDepth d).length = 3 ^ d := by
+  intro d; induction d with
+  | zero => simp [pathsAtDepth]
+  | succ n ih =>
+  -- By definition of `pathsAtDepth`, we have `pathsAtDepth (n + 1) = (pathsAtDepth n).flatMap fun p => [.left p, .mid p, .right p]`.
+  have h_flatMap : pathsAtDepth (n + 1) = (pathsAtDepth n).flatMap fun p => [.left p, .mid p, .right p] := by
+    exact?;
+  rw [ h_flatMap, List.length_flatMap, List.sum_eq_card_nsmul ] <;> aesop
 
 /-! ## Section 4: Hypotenuse Growth Bounds -/
 
@@ -118,7 +133,6 @@ def m2_branch : ℕ → ℤ × ℤ × ℤ
     (a + 2*b + 2*c, 2*a + b + 2*c, 2*a + 2*b + 3*c)
 
 -- The M₂ branch hypotenuses: 5, 29, 169, 985, ...
--- These grow roughly as (3 + 2√2)^n · 5 — faster than 3^n!
 #eval (m2_branch 0).2.2  -- 5
 #eval (m2_branch 1).2.2  -- 29
 #eval (m2_branch 2).2.2  -- 169
@@ -155,29 +169,17 @@ theorem children_perimeter_sum (a b c : ℤ) :
     let p3 := (-a + 2*b + 2*c) + (-2*a + b + 2*c) + (-2*a + 2*b + 3*c)
     p1 + p2 + p3 = 5*a + 5*b + 21*c := by ring
 
-/-! ## Section 6: M₂ Branch Recurrence
+/-! ## Section 6: M₂ Branch Recurrence -/
 
-The M₂ branch satisfies a linear recurrence. Let a_n, b_n, c_n be the triple
-at depth n along the M₂-only path. -/
-
-/-
-PROBLEM
-The M₂ hypotenuse recurrence: c_{n+2} = 6c_{n+1} - c_n.
-    This is because the M₂ matrix has characteristic polynomial λ² - 6λ + 1 = 0
-    (for the relevant eigenspace).
-
-PROVIDED SOLUTION
-Unfold m2_branch for steps n, n+1, n+2. Let (a,b,c) = m2_branch n. Then m2_branch(n+1) has hypotenuse c' = 2a+2b+3c, and legs a' = a+2b+2c, b' = 2a+b+2c. Then m2_branch(n+2) has hypotenuse c'' = 2a'+2b'+3c' = 2(a+2b+2c)+2(2a+b+2c)+3(2a+2b+3c) = 12a+12b+17c. And 6c' - c = 6(2a+2b+3c) - c = 12a+12b+17c. So c'' = 6c' - c. Prove by induction on n, unfolding m2_branch at each step, then use ring or omega/nlinarith on the resulting algebraic expressions. Key: just introduce, simp [m2_branch] to unfold both sides, then nlinarith or ring.
--/
+/-- The M₂ hypotenuse recurrence: c_{n+2} = 6c_{n+1} - c_n. -/
 theorem m2_hyp_recurrence :
     ∀ n : ℕ, (m2_branch (n + 2)).2.2 = 6 * (m2_branch (n + 1)).2.2 - (m2_branch n).2.2 := by
-  intro n;
-  induction' n with n ih <;> norm_num [ m2_branch ] at *;
-  linarith
+  intro n
+  induction n with
+  | zero => norm_num [m2_branch]
+  | succ n ih => simp only [m2_branch]; linarith
 
-/-! ## Section 7: The Perimeter Recursion
-
-**BETA'S INSIGHT**: Under M₂, the perimeter P = a+b+c also follows a linear recurrence. -/
+/-! ## Section 7: The Perimeter Recursion -/
 
 /-- The perimeter of the M₂ branch. -/
 def m2_perimeter (n : ℕ) : ℤ :=
@@ -189,14 +191,9 @@ def m2_perimeter (n : ℕ) : ℤ :=
 #eval m2_perimeter 2  -- 408
 #eval m2_perimeter 3  -- 2378
 
-/-! ## Section 8: The Depth Bound
+/-! ## Section 8: The Depth Bound -/
 
-**BETA'S THEOREM**: Any primitive Pythagorean triple with hypotenuse c appears at
-depth at most O(log c) in the Berggren tree. This follows from the fact that
-each step increases the hypotenuse by at least a factor of 3. -/
-
-/-- The minimum hypotenuse growth factor is > 1 for each transformation.
-    Specifically: c' ≥ c + 2 for any transformation when a,b,c > 0. -/
+/-- The minimum hypotenuse growth factor is > 1 for each transformation. -/
 theorem min_hyp_growth (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (h : a ^ 2 + b ^ 2 = c ^ 2) :
     c + 2 ≤ 2 * a + 2 * b + 3 * c := by linarith
@@ -216,6 +213,5 @@ theorem min_hyp_growth (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
 -- Verify hypotenuse sum: 25 + 73 + 53 = 151 = 2·5 + 2·12 + 9·13 ✓
 #eval 2*5 + 2*12 + 9*13  -- 151
 
--- Verify perimeter sum: P(7,24,25) + P(55,48,73) + P(45,28,53) = 56 + 176 + 126 = 358
--- = 5·5 + 5·12 + 21·13 = 25 + 60 + 273 = 358 ✓
+-- Verify perimeter sum: 5·5 + 5·12 + 21·13 = 25 + 60 + 273 = 358 ✓
 #eval 5*5 + 5*12 + 21*13

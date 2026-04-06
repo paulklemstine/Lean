@@ -1,5 +1,5 @@
 import Mathlib
-import Pythagorean.QuadrupleLattice.Basic
+import Pythagorean.Pythagorean__QuadrupleLattice__Basic
 
 /-!
 # Quadruple Lattice: Factoring Theory
