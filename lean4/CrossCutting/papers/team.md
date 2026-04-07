@@ -1,12 +1,10 @@
-# Cross-Cutting Themes Research Team
-
-## Organizational Structure for Advancing Cross-Domain Mathematical Research
-
----
+# Research Team: Cross-Cutting Mathematical Structures
 
 ## Mission
 
-To rigorously establish, formally verify, and practically apply the cross-cutting structural themes—idempotent collapse, tropical–quantum bridges, and universal tree structures—that connect disparate areas of mathematics, computer science, and physics.
+To identify, formalize, and apply cross-cutting structural themes in mathematics —
+with emphasis on idempotent collapse, tropical–quantum bridges, and universal tree
+structures — using machine-verified proofs as the foundation for all discoveries.
 
 ---
 
@@ -14,153 +12,61 @@ To rigorously establish, formally verify, and practically apply the cross-cuttin
 
 ### Core Research Groups
 
-#### Group 1: Idempotent Theory & Convergence (3–4 researchers)
-
-**Focus**: The equation f(f(x)) = f(x) across domains
-
-**Roles**:
-- **Lead**: Category theorist specializing in idempotent completion / Karoubi envelope
-- **Formal verification specialist**: Lean 4 / Mathlib expert for ongoing formalization
-- **Applied mathematician**: Connections to neural network convergence, optimization fixed points
-- **Quantum information theorist**: Projection operators, POVM measurements, quantum channels
-
-**Key deliverables**:
-- Complete formalization of idempotent splitting in arbitrary categories
-- Idempotent neural architecture prototypes with convergence guarantees
-- Survey paper on idempotent structures across mathematics
-
-#### Group 2: Tropical–Quantum Bridge (3–4 researchers)
-
-**Focus**: The ε-deformation from max-plus to classical arithmetic
+#### 1. Formal Verification Group
+**Focus**: Lean 4, Mathlib, proof automation, verified algorithms
 
 **Roles**:
-- **Lead**: Tropical geometer with background in valuations and non-Archimedean geometry
-- **Machine learning researcher**: LogSumExp, softmax, attention mechanisms
-- **Mathematical physicist**: Semiclassical limits, WKB approximation, path integrals
-- **Numerical analyst**: Stable computation of LogSumExp, temperature annealing algorithms
+- **Lead Formalist**: Oversees the Lean codebase, ensures all theorems compile without sorry
+- **Proof Engineer (2)**: Develops proofs, interacts with proof automation tools
+- **Library Developer**: Contributes new results upstream to Mathlib
 
-**Key deliverables**:
-- Extended formal verification of n-dimensional LogSumExp bounds
-- Tropical neural network verification toolkit
-- Paper on the ε-deformation as a unifying framework for dequantization
+**Deliverables**: Lean files with 100% formal coverage, no sorry, standard axioms only
 
-#### Group 3: Berggren Tree & Arithmetic Structures (3–4 researchers)
-
-**Focus**: The Pythagorean triple tree as universal organizing structure
+#### 2. Algebra and Number Theory Group
+**Focus**: Berggren tree, O(2,1;ℤ), Pythagorean triples, modular forms
 
 **Roles**:
-- **Lead**: Number theorist specializing in quadratic forms and arithmetic groups
-- **Computational algebraist**: Algorithms on the Berggren tree, lattice methods
-- **Quantum computing researcher**: Gate synthesis via arithmetic group decomposition
-- **Geometer**: Hyperbolic geometry, Lorentz group, discrete subgroups
+- **Number Theorist**: Studies the arithmetic of Pythagorean triples, tree enumeration
+- **Group Theorist**: Analyzes the Lorentz group structure, representation theory
+- **Postdoc**: Investigates tropical Langlands connections
 
-**Key deliverables**:
-- Complete formalization of Berggren tree completeness (surjectivity)
-- Berggren-based quantum gate synthesis algorithm
-- Connection to modular forms and automorphic representations
+**Key Questions**: Can the Berggren tree be extended to higher-dimensional quadratic forms? What is the spectral theory of the tree adjacency operator?
 
-#### Group 4: Formal Verification & Infrastructure (2–3 researchers)
-
-**Focus**: Maintaining and extending the Lean 4 formalization
+#### 3. Analysis and Tropical Geometry Group
+**Focus**: LogSumExp, tropical algebra, semiclassical limits
 
 **Roles**:
-- **Lead**: Lean 4 / Mathlib contributor with experience in large formalization projects
-- **Automation specialist**: Tactic development, proof search, LLM-assisted proving
-- **Documentation & pedagogy**: Making formal proofs accessible to domain experts
+- **Tropical Geometer**: Studies tropical varieties, Newton polytopes, tropical curves
+- **Analyst**: Proves asymptotic results about the ε → 0 limit
+- **Applied Mathematician**: Develops tropical optimization algorithms
 
-**Key deliverables**:
-- Mathlib-quality formalization of all cross-cutting results
-- Automated proof strategies for idempotent and tropical theorems
-- Interactive web-based proof explorer
+**Key Questions**: What is the tropical analogue of the Riemann–Hilbert correspondence? Can tropical methods improve quantum simulation?
 
-### Cross-Cutting Roles
+#### 4. Machine Learning and Applied Group
+**Focus**: Idempotent networks, ReLU analysis, VC dimension, convergence
 
-#### Integration Coordinator (1 person)
-- Ensures discoveries in one group propagate to others
-- Organizes monthly "cross-pollination" seminars
-- Maintains the unified theorem database
+**Roles**:
+- **ML Researcher (2)**: Designs and trains idempotent architectures, runs experiments
+- **Theorist**: Develops generalization bounds via Sauer–Shelah
+- **Engineer**: Builds production-grade tools and demos
 
-#### Experimental Physicist (1 person, part-time consultant)
-- Designs experiments to test physical predictions (photonic devices, quantum circuits)
-- Validates theoretical models against laboratory data
+**Key Questions**: What is the optimal trade-off between idempotent constraint strength and representational capacity? Can tropical network analysis improve pruning?
 
-#### Industry Liaison (1 person)
-- Connects research to applications in AI, cryptography, quantum computing
-- Manages technology transfer and intellectual property
+#### 5. Quantum Information Group
+**Focus**: Berggren gates, measurement theory, quantum simulation
+
+**Roles**:
+- **Quantum Theorist**: Analyzes gate universality, arithmetic quantum computing
+- **Experimentalist**: Tests quantum circuits based on Berggren decompositions
+- **Postdoc**: Studies the O(2,1;ℤ) → PSL₂(ℝ) connection
+
+**Key Questions**: Can Berggren-structured circuits achieve quantum advantage for specific problems? What is the circuit complexity of Pythagorean rotations?
 
 ---
 
-## Research Methodology
+## Advisory Board
 
-### Formal-First Approach
-Every conjecture must be:
-1. Stated precisely in natural language
-2. Formalized in Lean 4
-3. Attempted by automated theorem provers
-4. If not automatically provable, decomposed into lemmas and proved interactively
-5. Integrated into the project's theorem database
-
-### Cross-Domain Validation
-Every new result must be checked for connections to at least two other themes. The Integration Coordinator maintains a "connection matrix" tracking known and potential links.
-
-### Open Science
-All formalizations are maintained in a public repository. Papers include machine-checkable proof artifacts. Computational experiments are reproducible.
-
----
-
-## Collaboration Infrastructure
-
-### Weekly Activities
-- **Monday**: Group-specific research meetings (4 parallel sessions)
-- **Wednesday**: Cross-group "connections" seminar (all hands, 1 hour)
-- **Friday**: Lean formalization workshop (hands-on proving session)
-
-### Monthly Activities
-- **First Monday**: Research review and planning
-- **Third Wednesday**: External speaker seminar
-- **Last Friday**: Demo day (show working code, proofs, visualizations)
-
-### Quarterly Activities
-- Progress report and goal revision
-- External advisory board meeting
-- Public seminar / outreach event
-
----
-
-## Key Milestones
-
-### Year 1
-- [ ] Publish formal verification paper (65+ theorems, all machine-checked)
-- [ ] Extend idempotent theory to complete formalization of Karoubi envelope
-- [ ] Implement tropical neural network verification prototype
-- [ ] Prove Berggren tree completeness (all primitive triples reachable) in Lean
-- [ ] Establish LogSumExp bounds for n-dimensional case
-
-### Year 2
-- [ ] Demonstrate idempotent neural architectures with measurable convergence improvement
-- [ ] Complete the tropical–quantum bridge for matrix-valued operations
-- [ ] Publish Berggren-based quantum gate synthesis algorithm
-- [ ] Formalize Sauer–Shelah lemma and connect to VC dimension theory
-- [ ] First experimental validation of a theoretical prediction
-
-### Year 3
-- [ ] Comprehensive monograph: "The Idempotent Principle in Mathematics"
-- [ ] Production-ready software tools (verification, optimization, synthesis)
-- [ ] Extension to higher-dimensional analogues (Pythagorean quadruples, etc.)
-- [ ] Tropical Langlands program: first concrete results
-
----
-
-## Expertise Sought
-
-### Essential Skills (at least one team member each)
-- Lean 4 / Mathlib formalization
-- Tropical geometry and max-plus algebra
-- Deep learning theory (especially attention mechanisms, ReLU analysis)
-- Algebraic number theory (quadratic forms, arithmetic groups)
-- Quantum computing (gate synthesis, error correction)
-
-### Desirable Skills
+### Desired Expertise
 - Category theory (enriched categories, Karoubi envelope)
 - Mathematical physics (semiclassical analysis, path integrals)
 - Experimental physics (photonics, quantum optics)
@@ -169,13 +75,49 @@ All formalizations are maintained in a public repository. Papers include machine
 
 ---
 
+## Infrastructure
+
+### Computing Resources
+- **Proof Server**: Dedicated machine for continuous Lean builds and proof checking
+- **GPU Cluster**: For ML experiments on idempotent architectures
+- **Quantum Simulator**: Access to quantum cloud platforms for gate decomposition experiments
+
+### Collaboration Tools
+- **Version Control**: Git repository with CI/CD for Lean proof checking
+- **Documentation**: Auto-generated docs from Lean docstrings
+- **Communication**: Regular cross-group seminars, shared whiteboard sessions
+
+---
+
 ## Budget Priorities
 
 1. **Personnel** (70%): Researchers, postdocs, graduate students
-2. **Computing** (15%): GPU cluster for ML experiments, proof search computation
+2. **Computing** (15%): GPU cluster, proof search, quantum simulators
 3. **Travel** (10%): Conference attendance, collaboration visits
 4. **Equipment** (5%): Experimental validation (if applicable)
 
 ---
 
-*This team structure is designed to maximize cross-pollination between domains while maintaining deep expertise in each area. The formal verification infrastructure ensures all discoveries are built on bedrock.*
+## Milestones
+
+### Year 1
+- [ ] 150+ formally verified theorems
+- [ ] First idempotent neural architecture benchmark results
+- [ ] Berggren gate decomposition prototype
+- [ ] Full Sauer–Shelah formalization
+- [ ] Publication in top venue (LICS, FOCS, or ICML)
+
+### Year 2
+- [ ] Tropical Langlands program foundations
+- [ ] Production-grade tropical optimization library
+- [ ] Quantum circuit experiments on real hardware
+- [ ] Upstream contributions to Mathlib
+
+### Year 3
+- [ ] Resolution of open questions in idempotent network design
+- [ ] Comprehensive formal library (500+ theorems)
+- [ ] Cross-disciplinary textbook/monograph
+
+---
+
+*This team structure maximizes cross-pollination between domains while maintaining deep expertise in each area. The formal verification infrastructure ensures all discoveries are built on bedrock.*

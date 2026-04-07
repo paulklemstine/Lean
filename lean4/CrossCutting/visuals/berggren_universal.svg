@@ -1,92 +1,78 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" font-family="'Segoe UI', Arial, sans-serif">
-  <rect width="800" height="520" fill="#fffde7" rx="10"/>
-  
-  <text x="400" y="35" text-anchor="middle" font-size="22" font-weight="bold" fill="#e65100">
-    Berggren Tree: Universal Structure
-  </text>
-  <text x="400" y="56" text-anchor="middle" font-size="12" fill="#f57c00">
-    All primitive Pythagorean triples from three matrix transformations
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="#fafafa" rx="10"/>
+
+  <text x="400" y="40" text-anchor="middle" font-family="Arial, sans-serif"
+        font-size="22" font-weight="bold" fill="#2d3436">
+    The Berggren Tree: O(2,1;ℤ) Structure
   </text>
 
-  <!-- Tree visualization -->
+  <!-- Tree -->
   <!-- Root -->
-  <rect x="335" y="75" width="130" height="35" rx="10" fill="#fff" stroke="#e65100" stroke-width="2"/>
-  <text x="400" y="98" text-anchor="middle" font-size="13" font-weight="bold" fill="#e65100">(3, 4, 5)</text>
+  <circle cx="400" cy="100" r="30" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
+  <text x="400" y="96" text-anchor="middle" font-family="monospace" font-size="11" fill="white" font-weight="bold">(3,4,5)</text>
+  <text x="400" y="110" text-anchor="middle" font-family="monospace" font-size="9" fill="rgba(255,255,255,0.8)">c=5</text>
 
   <!-- Level 1 -->
-  <line x1="365" y1="110" x2="170" y2="140" stroke="#ff6b6b" stroke-width="2"/>
-  <line x1="400" y1="110" x2="400" y2="140" stroke="#2ed573" stroke-width="2"/>
-  <line x1="435" y1="110" x2="630" y2="140" stroke="#1e90ff" stroke-width="2"/>
+  <line x1="380" y1="128" x2="200" y2="180" stroke="#7f8c8d" stroke-width="1.5"/>
+  <line x1="400" y1="130" x2="400" y2="180" stroke="#7f8c8d" stroke-width="1.5"/>
+  <line x1="420" y1="128" x2="600" y2="180" stroke="#7f8c8d" stroke-width="1.5"/>
 
-  <rect x="100" y="140" width="140" height="30" rx="8" fill="#ffebee" stroke="#ff6b6b" stroke-width="1.5"/>
-  <text x="170" y="160" text-anchor="middle" font-size="11" font-weight="bold" fill="#c62828">(5, 12, 13)</text>
+  <!-- M1 child -->
+  <circle cx="200" cy="200" r="28" fill="#3498db" stroke="#2980b9" stroke-width="2"/>
+  <text x="200" y="196" text-anchor="middle" font-family="monospace" font-size="10" fill="white">(5,12,13)</text>
+  <text x="200" y="210" text-anchor="middle" font-family="monospace" font-size="8" fill="rgba(255,255,255,0.8)">M₁</text>
 
-  <rect x="330" y="140" width="140" height="30" rx="8" fill="#e8f5e9" stroke="#2ed573" stroke-width="1.5"/>
-  <text x="400" y="160" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e7d32">(21, 20, 29)</text>
+  <!-- M2 child -->
+  <circle cx="400" cy="200" r="28" fill="#e74c3c" stroke="#c0392b" stroke-width="2"/>
+  <text x="400" y="196" text-anchor="middle" font-family="monospace" font-size="10" fill="white">(21,20,29)</text>
+  <text x="400" y="210" text-anchor="middle" font-family="monospace" font-size="8" fill="rgba(255,255,255,0.8)">M₂</text>
 
-  <rect x="560" y="140" width="140" height="30" rx="8" fill="#e3f2fd" stroke="#1e90ff" stroke-width="1.5"/>
-  <text x="630" y="160" text-anchor="middle" font-size="11" font-weight="bold" fill="#1565c0">(15, 8, 17)</text>
+  <!-- M3 child -->
+  <circle cx="600" cy="200" r="28" fill="#9b59b6" stroke="#8e44ad" stroke-width="2"/>
+  <text x="600" y="196" text-anchor="middle" font-family="monospace" font-size="10" fill="white">(15,8,17)</text>
+  <text x="600" y="210" text-anchor="middle" font-family="monospace" font-size="8" fill="rgba(255,255,255,0.8)">M₃</text>
 
-  <!-- Labels -->
-  <text x="250" y="128" text-anchor="middle" font-size="10" fill="#ff6b6b" font-weight="bold">M₁</text>
-  <text x="380" y="128" text-anchor="middle" font-size="10" fill="#2ed573" font-weight="bold">M₂</text>
-  <text x="530" y="128" text-anchor="middle" font-size="10" fill="#1e90ff" font-weight="bold">M₃</text>
+  <!-- Level 2 (M1 children) -->
+  <line x1="185" y1="226" x2="100" y2="270" stroke="#7f8c8d" stroke-width="1"/>
+  <line x1="200" y1="228" x2="200" y2="270" stroke="#7f8c8d" stroke-width="1"/>
+  <line x1="215" y1="226" x2="300" y2="270" stroke="#7f8c8d" stroke-width="1"/>
 
-  <!-- Key Properties -->
-  <g transform="translate(30, 200)">
-    <rect x="0" y="0" width="355" height="130" rx="10" fill="#fff" stroke="#e65100" stroke-width="1.5"/>
-    <text x="177" y="22" text-anchor="middle" font-size="13" font-weight="bold" fill="#e65100">Verified Properties</text>
-    
-    <text x="15" y="45" font-size="11" fill="#333">✓ Pythagorean preservation: a'² + b'² = c'²</text>
-    <text x="15" y="63" font-size="11" fill="#333">✓ Quadratic form invariant: a²+b²−c² preserved</text>
-    <text x="15" y="81" font-size="11" fill="#333">✓ Hypotenuse growth: c' &gt; c strictly</text>
-    <text x="15" y="99" font-size="11" fill="#333">✓ Positivity: M₂ preserves a,b,c &gt; 0</text>
-    <text x="15" y="117" font-size="11" fill="#333">✓ Sum formulas: a'+b'+c' = linear in (a,b,c)</text>
-  </g>
+  <circle cx="100" cy="290" r="22" fill="#3498db" stroke="#2980b9" stroke-width="1.5" opacity="0.8"/>
+  <text x="100" y="286" text-anchor="middle" font-family="monospace" font-size="8" fill="white">(7,24,25)</text>
+  <text x="100" y="298" text-anchor="middle" font-family="monospace" font-size="7" fill="rgba(255,255,255,0.7)">LL</text>
 
-  <!-- Matrix definitions -->
-  <g transform="translate(415, 200)">
-    <rect x="0" y="0" width="355" height="130" rx="10" fill="#fff" stroke="#795548" stroke-width="1.5"/>
-    <text x="177" y="22" text-anchor="middle" font-size="13" font-weight="bold" fill="#795548">Berggren Matrices</text>
-    
-    <text x="15" y="47" font-size="10" fill="#555" font-family="monospace">M₁: (a−2b+2c, 2a−b+2c, 2a−2b+3c)</text>
-    <text x="15" y="69" font-size="10" fill="#555" font-family="monospace">M₂: (a+2b+2c, 2a+b+2c, 2a+2b+3c)</text>
-    <text x="15" y="91" font-size="10" fill="#555" font-family="monospace">M₃: (−a+2b+2c, −2a+b+2c, −2a+2b+3c)</text>
-    
-    <text x="15" y="117" font-size="10" fill="#795548" font-style="italic">Elements of O(2,1;ℤ) ≅ Lorentz group</text>
-  </g>
+  <circle cx="200" cy="290" r="22" fill="#3498db" stroke="#2980b9" stroke-width="1.5" opacity="0.8"/>
+  <text x="200" y="286" text-anchor="middle" font-family="monospace" font-size="8" fill="white">(55,48,73)</text>
+  <text x="200" y="298" text-anchor="middle" font-family="monospace" font-size="7" fill="rgba(255,255,255,0.7)">LM</text>
 
-  <!-- Cross-cutting connections -->
-  <g transform="translate(30, 350)">
-    <rect x="0" y="0" width="740" height="65" rx="10" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1.5"/>
-    <text x="370" y="20" text-anchor="middle" font-size="13" font-weight="bold" fill="#6a1b9a">Cross-Cutting Connections</text>
-    
-    <text x="130" y="45" text-anchor="middle" font-size="10" fill="#9c27b0">Quantum Gate Synthesis</text>
-    <text x="130" y="58" text-anchor="middle" font-size="9" fill="#ab47bc">SU(2) decomposition</text>
-    
-    <text x="310" y="45" text-anchor="middle" font-size="10" fill="#9c27b0">Modular Forms</text>
-    <text x="310" y="58" text-anchor="middle" font-size="9" fill="#ab47bc">Γ(2) ⊂ SL₂(ℤ)</text>
-    
-    <text x="490" y="45" text-anchor="middle" font-size="10" fill="#9c27b0">Spacetime Geometry</text>
-    <text x="490" y="58" text-anchor="middle" font-size="9" fill="#ab47bc">SO(2,1) Lorentz</text>
-    
-    <text x="650" y="45" text-anchor="middle" font-size="10" fill="#9c27b0">Error Correction</text>
-    <text x="650" y="58" text-anchor="middle" font-size="9" fill="#ab47bc">Tree path codes</text>
-  </g>
+  <circle cx="300" cy="290" r="22" fill="#3498db" stroke="#2980b9" stroke-width="1.5" opacity="0.8"/>
+  <text x="300" y="286" text-anchor="middle" font-family="monospace" font-size="8" fill="white">(45,28,53)</text>
+  <text x="300" y="298" text-anchor="middle" font-family="monospace" font-size="7" fill="rgba(255,255,255,0.7)">LR</text>
 
-  <!-- Growth illustration -->
-  <g transform="translate(30, 435)">
-    <rect x="0" y="0" width="740" height="60" rx="10" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5"/>
-    <text x="15" y="22" font-size="12" font-weight="bold" fill="#2e7d32">Hypotenuse Growth Along M₂ Path:</text>
-    
-    <text x="15" y="45" font-size="11" fill="#388e3c">
-      5 → 29 → 169 → 985 → 5741 → 33461 → 195025 → ...  (strictly increasing, verified ✓)
-    </text>
-  </g>
+  <!-- Dots for deeper levels -->
+  <text x="200" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#aaa">⋮</text>
+  <text x="400" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#aaa">⋮</text>
+  <text x="600" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" fill="#aaa">⋮</text>
 
-  <!-- Theorem count -->
-  <rect x="310" y="502" width="180" height="22" rx="11" fill="#e65100"/>
-  <text x="400" y="517" text-anchor="middle" font-size="11" fill="white" font-weight="bold">
-    17 theorems · 0 sorry
-  </text>
+  <!-- Matrix info boxes -->
+  <rect x="30" y="365" width="230" height="120" rx="8" fill="white" stroke="#3498db" stroke-width="1.5"/>
+  <text x="145" y="388" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#3498db">Matrix M₁ ∈ SO(2,1;ℤ)</text>
+  <text x="40" y="410" font-family="monospace" font-size="10" fill="#2d3436">det(M₁) = +1</text>
+  <text x="40" y="428" font-family="monospace" font-size="10" fill="#2d3436">tr(M₁) = 3</text>
+  <text x="40" y="446" font-family="monospace" font-size="10" fill="#2d3436">M₁ᵀ · Σ · M₁ = Σ  ✓</text>
+  <text x="40" y="464" font-family="monospace" font-size="10" fill="#2d3436">Σ = diag(1, 1, -1)</text>
+
+  <rect x="285" y="365" width="230" height="120" rx="8" fill="white" stroke="#e74c3c" stroke-width="1.5"/>
+  <text x="400" y="388" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#e74c3c">Matrix M₂ ∈ O(2,1;ℤ)\SO</text>
+  <text x="295" y="410" font-family="monospace" font-size="10" fill="#2d3436">det(M₂) = -1</text>
+  <text x="295" y="428" font-family="monospace" font-size="10" fill="#2d3436">tr(M₂) = 5</text>
+  <text x="295" y="446" font-family="monospace" font-size="10" fill="#2d3436">M₂ᵀ · Σ · M₂ = Σ  ✓</text>
+  <text x="295" y="464" font-family="monospace" font-size="10" fill="#2d3436">improper isometry</text>
+
+  <rect x="540" y="365" width="230" height="120" rx="8" fill="white" stroke="#9b59b6" stroke-width="1.5"/>
+  <text x="655" y="388" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#9b59b6">Matrix M₃ ∈ SO(2,1;ℤ)</text>
+  <text x="550" y="410" font-family="monospace" font-size="10" fill="#2d3436">det(M₃) = +1</text>
+  <text x="550" y="428" font-family="monospace" font-size="10" fill="#2d3436">tr(M₃) = 3</text>
+  <text x="550" y="446" font-family="monospace" font-size="10" fill="#2d3436">M₃ᵀ · Σ · M₃ = Σ  ✓</text>
+  <text x="550" y="464" font-family="monospace" font-size="10" fill="#2d3436">tr(M₁) = tr(M₃) but M₁ ≠ M₃</text>
 </svg>

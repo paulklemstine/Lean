@@ -1,99 +1,80 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" font-family="'Segoe UI', Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450">
   <defs>
-    <linearGradient id="tropical_grad" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#2196f3"/>
-      <stop offset="50%" stop-color="#9c27b0"/>
-      <stop offset="100%" stop-color="#ff9800"/>
-    </linearGradient>
-    <linearGradient id="bar_grad" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#e3f2fd"/>
-      <stop offset="100%" stop-color="#fff3e0"/>
+    <linearGradient id="tropical_grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#e74c3c;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#9b59b6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3498db;stop-opacity:1" />
     </linearGradient>
   </defs>
-  
-  <rect width="800" height="450" fill="#fafafa" rx="10"/>
-  
-  <text x="400" y="35" text-anchor="middle" font-size="22" font-weight="bold" fill="#4a148c">
+
+  <rect width="800" height="450" fill="#1a1a2e" rx="10"/>
+
+  <text x="400" y="40" text-anchor="middle" font-family="Arial, sans-serif"
+        font-size="22" font-weight="bold" fill="white">
     The Tropical–Quantum Bridge
   </text>
-  
-  <!-- The interpolation bar -->
-  <rect x="80" y="65" width="640" height="60" rx="30" fill="url(#bar_grad)" stroke="#999" stroke-width="1.5"/>
-  
-  <!-- ε scale -->
-  <text x="120" y="92" text-anchor="middle" font-size="14" font-weight="bold" fill="#1565c0">ε → 0⁺</text>
-  <text x="120" y="112" text-anchor="middle" font-size="11" fill="#2196f3">Tropical</text>
-  
-  <text x="400" y="92" text-anchor="middle" font-size="14" font-weight="bold" fill="#7b1fa2">ε = 1</text>
-  <text x="400" y="112" text-anchor="middle" font-size="11" fill="#9c27b0">Softmax / Attention</text>
-  
-  <text x="680" y="92" text-anchor="middle" font-size="14" font-weight="bold" fill="#e65100">ε → ∞</text>
-  <text x="680" y="112" text-anchor="middle" font-size="11" fill="#ff9800">Classical Average</text>
-
-  <!-- Arrow under bar -->
-  <line x1="100" y1="130" x2="700" y2="130" stroke="url(#tropical_grad)" stroke-width="3" marker-end="url(#arrow)"/>
-  <defs>
-    <marker id="arrow2" markerWidth="12" markerHeight="8" refX="12" refY="4" orient="auto">
-      <polygon points="0 0, 12 4, 0 8" fill="#ff9800"/>
-    </marker>
-  </defs>
-  
-  <!-- Key equation -->
-  <rect x="150" y="145" width="500" height="45" rx="8" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1.5"/>
-  <text x="400" y="165" text-anchor="middle" font-size="13" fill="#4a148c">
-    LSE_ε(x, y) = ε · ln( exp(x/ε) + exp(y/ε) )
-  </text>
-  <text x="400" y="182" text-anchor="middle" font-size="11" fill="#7b1fa2" font-style="italic">
-    Smooth interpolation between max and average
+  <text x="400" y="65" text-anchor="middle" font-family="Arial, sans-serif"
+        font-size="14" fill="#aaa">
+    LSE_ε(x,y) = ε · ln(exp(x/ε) + exp(y/ε))
   </text>
 
-  <!-- Sandwich bound -->
-  <rect x="100" y="205" width="600" height="50" rx="8" fill="#e8f5e9" stroke="#4caf50" stroke-width="1.5"/>
-  <text x="400" y="225" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e7d32">
-    Sandwich Theorem (Formally Verified):
+  <!-- Temperature axis -->
+  <rect x="80" y="100" width="640" height="8" rx="4" fill="url(#tropical_grad)"/>
+
+  <!-- Labels -->
+  <text x="80" y="130" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#e74c3c" font-weight="bold">ε → 0</text>
+  <text x="80" y="148" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#ccc">TROPICAL</text>
+  <text x="80" y="165" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#888">max(x,y)</text>
+
+  <text x="720" y="130" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#3498db" font-weight="bold">ε → ∞</text>
+  <text x="720" y="148" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#ccc">CLASSICAL</text>
+  <text x="720" y="165" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#888">(x+y)/2</text>
+
+  <!-- Piecewise linear function (tropical) -->
+  <g transform="translate(50, 200)">
+    <rect width="200" height="160" rx="8" fill="rgba(231,76,60,0.15)" stroke="#e74c3c" stroke-width="1"/>
+    <text x="100" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#e74c3c">Tropical World</text>
+
+    <!-- max(x,0) graph -->
+    <line x1="20" y1="130" x2="100" y2="130" stroke="#e74c3c" stroke-width="2.5"/>
+    <line x1="100" y1="130" x2="180" y2="50" stroke="#e74c3c" stroke-width="2.5"/>
+    <circle cx="100" cy="130" r="3" fill="#e74c3c"/>
+
+    <text x="100" y="152" text-anchor="middle" font-family="monospace" font-size="10" fill="#ccc">max(x, 0)</text>
+  </g>
+
+  <!-- Smooth function (LogSumExp) -->
+  <g transform="translate(300, 200)">
+    <rect width="200" height="160" rx="8" fill="rgba(155,89,182,0.15)" stroke="#9b59b6" stroke-width="1"/>
+    <text x="100" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#9b59b6">Bridge (ε = 1)</text>
+
+    <!-- Smooth approximation -->
+    <path d="M 20 120 Q 60 120 80 110 Q 100 95 120 70 Q 140 45 180 30" stroke="#9b59b6" stroke-width="2.5" fill="none"/>
+
+    <text x="100" y="152" text-anchor="middle" font-family="monospace" font-size="10" fill="#ccc">LSE_ε(x, 0)</text>
+  </g>
+
+  <!-- Classical function -->
+  <g transform="translate(550, 200)">
+    <rect width="200" height="160" rx="8" fill="rgba(52,152,219,0.15)" stroke="#3498db" stroke-width="1"/>
+    <text x="100" y="20" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#3498db">Classical World</text>
+
+    <!-- Linear function -->
+    <line x1="20" y1="130" x2="180" y2="50" stroke="#3498db" stroke-width="2.5"/>
+
+    <text x="100" y="152" text-anchor="middle" font-family="monospace" font-size="10" fill="#ccc">(x + 0)/2</text>
+  </g>
+
+  <!-- Arrows -->
+  <text x="265" y="290" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#aaa">→</text>
+  <text x="515" y="290" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#aaa">→</text>
+
+  <!-- Key bounds -->
+  <rect x="100" y="385" width="600" height="50" rx="8" fill="rgba(255,255,255,0.05)" stroke="#666" stroke-width="1"/>
+  <text x="400" y="415" text-anchor="middle" font-family="monospace" font-size="15" fill="#ffeaa7">
+    max(x,y)  ≤  LSE_ε(x,y)  ≤  max(x,y) + ε·ln(2)
   </text>
-  <text x="400" y="245" text-anchor="middle" font-size="13" fill="#388e3c">
-    max(x, y) ≤ LSE_ε(x, y) ≤ max(x, y) + ε · ln 2
-  </text>
-
-  <!-- Properties grid -->
-  <g transform="translate(50, 275)">
-    <rect x="0" y="0" width="220" height="80" rx="8" fill="#e3f2fd" stroke="#2196f3" stroke-width="1.5"/>
-    <text x="110" y="22" text-anchor="middle" font-size="12" font-weight="bold" fill="#1565c0">Tropical Properties</text>
-    <text x="110" y="42" text-anchor="middle" font-size="10" fill="#2196f3">max commutative ✓</text>
-    <text x="110" y="56" text-anchor="middle" font-size="10" fill="#2196f3">max associative ✓</text>
-    <text x="110" y="70" text-anchor="middle" font-size="10" fill="#2196f3">+ distributes over max ✓</text>
-  </g>
-
-  <g transform="translate(290, 275)">
-    <rect x="0" y="0" width="220" height="80" rx="8" fill="#f3e5f5" stroke="#9c27b0" stroke-width="1.5"/>
-    <text x="110" y="22" text-anchor="middle" font-size="12" font-weight="bold" fill="#7b1fa2">Bridge Properties</text>
-    <text x="110" y="42" text-anchor="middle" font-size="10" fill="#9c27b0">LSE symmetric ✓</text>
-    <text x="110" y="56" text-anchor="middle" font-size="10" fill="#9c27b0">LSE monotone ✓</text>
-    <text x="110" y="70" text-anchor="middle" font-size="10" fill="#9c27b0">LSE(x,x) = x + ε·ln2 ✓</text>
-  </g>
-
-  <g transform="translate(530, 275)">
-    <rect x="0" y="0" width="220" height="80" rx="8" fill="#fff3e0" stroke="#ff9800" stroke-width="1.5"/>
-    <text x="110" y="22" text-anchor="middle" font-size="12" font-weight="bold" fill="#e65100">Softmax Properties</text>
-    <text x="110" y="42" text-anchor="middle" font-size="10" fill="#ff9800">Probabilities sum to 1 ✓</text>
-    <text x="110" y="56" text-anchor="middle" font-size="10" fill="#ff9800">Each component ∈ [0,1] ✓</text>
-    <text x="110" y="70" text-anchor="middle" font-size="10" fill="#ff9800">exp(x)+exp(y) &gt; 0 ✓</text>
-  </g>
-
-  <!-- Applications -->
-  <g transform="translate(50, 375)">
-    <rect x="0" y="0" width="700" height="55" rx="8" fill="#fafafa" stroke="#bdbdbd" stroke-width="1"/>
-    <text x="350" y="20" text-anchor="middle" font-size="12" font-weight="bold" fill="#424242">Applications</text>
-    <text x="100" y="42" text-anchor="middle" font-size="10" fill="#757575">ReLU Networks</text>
-    <text x="250" y="42" text-anchor="middle" font-size="10" fill="#757575">Attention Mechanisms</text>
-    <text x="400" y="42" text-anchor="middle" font-size="10" fill="#757575">Simulated Annealing</text>
-    <text x="550" y="42" text-anchor="middle" font-size="10" fill="#757575">Viterbi ↔ Forward Alg</text>
-  </g>
-
-  <!-- Theorem count -->
-  <rect x="310" y="435" width="180" height="22" rx="11" fill="#4a148c"/>
-  <text x="400" y="450" text-anchor="middle" font-size="11" fill="white" font-weight="bold">
-    18 theorems · 0 sorry
+  <text x="400" y="430" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#888">
+    Formally verified sandwich bound — error at most ε·ln(2)
   </text>
 </svg>
