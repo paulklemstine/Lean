@@ -1,80 +1,93 @@
 # Research Team: Cross-Domain Bridges and the Langlands Program
 
-## Team Structure
+## Project Structure
 
-### Principal Investigators
+### Principal Investigator
+**Formalization Lead** — Responsible for the overall mathematical framework, proof architecture, and Lean 4 formalization. Oversees the bridge between informal mathematics and machine-verified proofs.
 
-**PI 1: Formalization Lead** — *Lean 4 / Mathlib Expert*
-- Responsible for all Lean 4 formalizations
-- Ensures proof hygiene (no sorry, no axioms, clean builds)
-- Maintains the LanglandsBridges library
-- Interfaces with the Mathlib community for upstream contributions
+### Research Areas and Roles
 
-**PI 2: Number Theory Lead** — *Langlands Program Specialist*
-- Provides mathematical direction for the Ihara zeta and L-function components
-- Guides the spectral reciprocity and Hecke operator formalizations
-- Validates connections between formal results and classical number theory
+#### 1. Number Theory & Ihara Zeta Functions
+- **Scope**: Graph-theoretic L-functions, Ramanujan graphs, spectral gap bounds
+- **Key outputs**: `IharaZeta.lean`, `SpectralReciprocity.lean`
+- **Skills needed**: Algebraic number theory, spectral graph theory, Lean 4
 
-**PI 3: Category Theory Lead** — *Categorical Bridges Architect*
-- Designs the adjunction-based bridge framework
-- Ensures categorical coherence of all bridge constructions
-- Develops the bridge hierarchy and composition theorems
+#### 2. Tropical Geometry & Chip-Firing
+- **Scope**: Tropical semirings, Baker-Norine theory, tropicalization functors
+- **Key outputs**: `ChipFiring.lean`, `TropicalLanglandsVarieties.lean`
+- **Skills needed**: Algebraic geometry, combinatorics, polyhedral geometry
 
-### Senior Researchers
+#### 3. Hilbert-Pólya & Spectral Theory
+- **Scope**: Self-adjoint operators, graph Laplacians, discrete Riemann Hypothesis analogues
+- **Key outputs**: `HilbertPolyaOperator.lean`
+- **Skills needed**: Functional analysis, spectral theory, random matrix theory
 
-**Researcher A: Tropical Geometry** — *Chip-Firing and Divisor Theory*
-- Formalizes Baker-Norine framework
-- Develops tropical Jacobian theory
-- Connects graph-theoretic results to algebraic geometry
+#### 4. Category Theory & Higher Structures
+- **Scope**: Adjunctions, 2-categories, simplicial types, derived categories
+- **Key outputs**: `CategoricalBridges.lean`, `HigherCategoricalBridges.lean`
+- **Skills needed**: Category theory, homotopy type theory, Lean 4 category library
 
-**Researcher B: Representation Theory** — *Idempotents and Hecke Algebras*
-- Develops the Karoubi envelope formalization
-- Formalizes Temperley-Lieb and Jones-Wenzl idempotents
-- Connects to quantum group representations
+#### 5. Quantum Information & Idempotents
+- **Scope**: Density matrices, quantum channels, Temperley-Lieb algebra
+- **Key outputs**: `IdempotentTheory.lean`, `QuantumIdempotent.lean`
+- **Skills needed**: Quantum information theory, operator algebras, Lean 4
 
-**Researcher C: Analysis** — *Spectral Theory and Convergence*
-- Proves analysis bridge theorems (Riemann sum convergence)
-- Develops spectral theory of graph Laplacians
-- Formalizes functional equations and root numbers
+#### 6. Machine Learning & Automorphic Forms
+- **Scope**: Modular forms, Hecke eigenvalues, neural network oracles, accuracy metrics
+- **Key outputs**: `AutomorphicOracles.lean`, Python demos
+- **Skills needed**: Automorphic forms, deep learning, computational number theory
 
-### Junior Researchers / Postdocs
+#### 7. Visualization & Outreach
+- **Scope**: SVG diagrams, Python demos, Scientific American article, applications document
+- **Key outputs**: All files in `output/`
+- **Skills needed**: Scientific communication, data visualization, mathematical exposition
 
-**Postdoc 1: Computational Number Theory**
-- Implements computational verification tools
-- Develops Python demos and visualization
-- Tests predictions from the formal framework
+### Collaboration Model
 
-**Postdoc 2: Machine Learning Applications**
-- Explores AI-assisted theorem proving strategies
-- Develops automorphic oracle models
-- Implements transfer learning applications of bridge composition
+The project follows a **hub-and-spoke** model:
+- The **hub** is the Lean 4 formalization, which serves as the single source of truth
+- Each **spoke** (research area) contributes definitions, lemmas, and theorems to the hub
+- Cross-domain connections are discovered through the formalization process itself
 
-### Graduate Students
+### Development Workflow
 
-**Student 1**: Extending the Ihara zeta to weighted/directed graphs
-**Student 2**: Formalizing the Selberg trace formula connection
-**Student 3**: Higher categorical bridges (∞-adjunctions)
+1. **Informal exploration**: Identify a potential bridge theorem through mathematical reasoning
+2. **Lean skeleton**: Write the formal statement with `sorry` placeholders
+3. **Proof search**: Use automated and interactive proof strategies to fill in proofs
+4. **Verification**: Build the entire project (`lake build`) to ensure consistency
+5. **Documentation**: Write docstrings, update research paper, create visualizations
+6. **Iteration**: Use formal feedback to discover new connections and refine statements
 
----
+### Project Statistics
 
-## Collaboration Protocol
+| Metric | Value |
+|--------|-------|
+| Lean files | 10 |
+| Total theorems proved | 40+ |
+| Sorry statements remaining | 0 |
+| Lean version | 4.28.0 |
+| Mathlib version | v4.28.0 |
+| Python demo scripts | 6 |
+| SVG visualizations | 7 |
+| Research documents | 3 (paper, article, applications) |
 
-1. **Weekly syncs**: Full team meeting to coordinate formalization efforts
-2. **Pair formalization**: Each theorem is formalized by one person and reviewed by another
-3. **CI pipeline**: All changes pass `lean_build` with zero errors before merging
-4. **Documentation**: Every definition and theorem has a docstring
-5. **Upstream contributions**: Results of general interest are PR'd to Mathlib
+### Key Dependencies
 
-## Timeline
+- **Lean 4** (v4.28.0): The proof assistant
+- **Mathlib**: The comprehensive mathematics library providing:
+  - `Mathlib.LinearAlgebra.Matrix.*`: Matrix theory, trace, determinants
+  - `Mathlib.CategoryTheory.*`: Categories, functors, adjunctions, monads
+  - `Mathlib.Topology.*`: Topological spaces, filters, limits
+  - `Mathlib.MeasureTheory.*`: Integration, Lebesgue measure
+  - `Mathlib.Analysis.*`: Continuous functions, real analysis
+- **Python** (≥3.8): For computational demos
+  - NumPy: Numerical computation
+  - Matplotlib: Visualization
 
-| Quarter | Milestone |
-|---|---|
-| Q1 | Core framework (Ihara, chip-firing, idempotents, bridges) ✅ |
-| Q2 | Selberg trace formula connection, Hecke algebra formalization |
-| Q3 | Tropical Langlands for varieties, ∞-categorical bridges |
-| Q4 | Machine learning applications, computational predictions |
+### Future Directions
 
-## Funding Sources
-- National Science Foundation (NSF) — Algebra and Number Theory
-- Simons Foundation — Collaboration on the Langlands Program
-- European Research Council (ERC) — Formalization of Mathematics
+1. **Expand Mathlib contributions**: Submit the most general lemmas to Mathlib
+2. **∞-category formalization**: Extend simplicial types to quasi-categories
+3. **Computational experiments**: Scale automorphic oracle training to LMFDB data
+4. **Physics applications**: Connect to gauge theory and mirror symmetry
+5. **Automated discovery**: Use formal methods to discover new bridge theorems
