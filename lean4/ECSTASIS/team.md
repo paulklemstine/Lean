@@ -2,7 +2,7 @@
 
 ## Team Structure
 
-The ECSTASIS project is organized into four working groups aligned with the framework's application domains, plus a cross-cutting formal methods group.
+The ECSTASIS project is organized into four working groups aligned with the framework's application domains, plus a cross-cutting formal methods group and a dedicated Quantum Phase Lattice working group.
 
 ---
 
@@ -34,7 +34,7 @@ The ECSTASIS project is organized into four working groups aligned with the fram
 **Mission:** Build the ECSTASIS Visual Framework for biofeedback-driven, gaze-responsive, immersive visual experiences.
 
 **Roles:**
-- **VR Systems Lead** — Unity/Unreal integration; $SE(3)$ pose tracking; rendering pipeline
+- **VR Systems Lead** — Unity/Unreal integration; SE(3) pose tracking; rendering pipeline
 - **Eye Tracking Specialist** — Gaze detection algorithms; gaze-to-parameter mapping via sigmoid bounds
 - **Biofeedback Visual Designer** — Designs visual content modulated by physiological signals
 - **Shader & GPU Compute Engineer** — Real-time visual synthesis on GPU; fractal generation, particle systems
@@ -68,16 +68,29 @@ The ECSTASIS project is organized into four working groups aligned with the fram
 
 ---
 
+### Quantum Phase Lattice Working Group
+**Mission:** Extend the ECSTASIS framework to quantum-mechanical settings, formalizing and verifying quantum phase lattice theory in Lean 4.
+
+**Roles:**
+- **Quantum Formalization Lead** — Designs the Lean formalization of quantum phase lattices; interfaces between physics and formal methods; maintains 40+ verified theorems across core and extended files
+- **Quantum Information Theorist** — Develops the mathematical theory connecting subspace lattices to quantum error correction and quantum channels; leads research on orthomodularity and non-distributivity
+- **Hilbert Space Specialist** — Expert on inner product spaces, orthogonal projections, and spectral theory in Mathlib; responsible for adjoint operator theorems and spectral decomposition
+- **Quantum Applications Researcher** — Identifies and develops applications in quantum computing, quantum sensing, quantum cryptography, and quantum machine learning
+- **Quantum Software Engineer** — Implements Python demos, visualizations, and numerical validation of formal results; maintains the demo suite and SVG visuals
+- **Tensor Product & Entanglement Researcher** — Formalizes tensor product lattice structure, studies entanglement via non-distributivity, develops monotonicity and distributivity theorems
+
+---
+
 ### Cross-Cutting Roles
 
 - **Project Director** — Strategic vision, cross-group coordination, external partnerships
-- **Technical Writer** — Documentation, papers, public communication
+- **Technical Writer** — Documentation, papers, public communication (research papers, Scientific American articles)
 - **DevOps & Infrastructure** — CI/CD for Lean builds, simulation clusters, sensor data pipelines
 - **Community Manager** — Open-source community engagement, contributor onboarding
 
 ---
 
-## Total Team Size: ~30 members
+## Total Team Size: ~36 members
 
 | Group | Headcount |
 |-------|-----------|
@@ -86,19 +99,8 @@ The ECSTASIS project is organized into four working groups aligned with the fram
 | Visual & VR | 6 |
 | AutoHeal | 6 |
 | Holographic | 5 |
+| Quantum Phase Lattice | 6 |
 | Cross-Cutting | 4 |
-
----
-
-### Quantum Phase Lattice Working Group
-**Mission:** Extend the ECSTASIS framework to quantum-mechanical settings, formalizing and verifying quantum phase lattice theory in Lean 4.
-
-**Roles:**
-- **Quantum Formalization Lead** — Designs the Lean formalization of quantum phase lattices; interfaces between physics and formal methods
-- **Quantum Information Theorist** — Develops the mathematical theory connecting subspace lattices to quantum error correction and quantum channels
-- **Hilbert Space Specialist** — Expert on inner product spaces, orthogonal projections, and spectral theory in Mathlib
-- **Quantum Applications Researcher** — Identifies and develops applications in quantum computing, quantum sensing, and quantum cryptography
-- **Quantum Software Engineer** — Implements Python demos, visualizations, and numerical validation of formal results
 
 ---
 
@@ -108,3 +110,4 @@ The ECSTASIS project is organized into four working groups aligned with the fram
 2. **Cross-pollination**: Weekly cross-group seminars where each team presents how they use the shared mathematical framework
 3. **Open source**: All code, proofs, and documentation are publicly available
 4. **Reproducibility**: Every experiment and demonstration is accompanied by runnable code and formal specifications
+5. **Machine verification**: No theorem is considered proven until it compiles with zero sorries and clean axioms

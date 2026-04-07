@@ -1,168 +1,94 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" font-family="'Segoe UI', Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
   <defs>
-    <linearGradient id="qgrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#1a0533;stop-opacity:1"/>
-      <stop offset="100%" style="stop-color:#0a1628;stop-opacity:1"/>
-    </linearGradient>
-    <linearGradient id="nodeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#7c3aed"/>
-      <stop offset="100%" style="stop-color:#4f46e5"/>
-    </linearGradient>
-    <linearGradient id="topGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#f59e0b"/>
-      <stop offset="100%" style="stop-color:#ef4444"/>
-    </linearGradient>
-    <linearGradient id="botGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#06b6d4"/>
-      <stop offset="100%" style="stop-color:#3b82f6"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" style="stop-color:#0a0a2e"/>
+      <stop offset="100%" style="stop-color:#1a1a4e"/>
     </linearGradient>
     <filter id="glow">
-      <feGaussianBlur stdDeviation="3" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
-    <filter id="softglow">
-      <feGaussianBlur stdDeviation="6" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6699cc"/>
+    </marker>
   </defs>
 
   <!-- Background -->
-  <rect width="900" height="700" fill="url(#qgrad1)"/>
+  <rect width="800" height="600" fill="url(#bg)"/>
 
   <!-- Title -->
-  <text x="450" y="45" text-anchor="middle" fill="#e0e7ff" font-size="24" font-weight="bold" filter="url(#glow)">
-    Quantum Phase Lattice — ℒ(ℋ)
+  <text x="400" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="#ffffff" font-weight="bold">
+    Quantum Phase Lattice: L(H)
   </text>
-  <text x="450" y="70" text-anchor="middle" fill="#94a3b8" font-size="13">
-    Complete Lattice of Closed Subspaces of a Hilbert Space
+  <text x="400" y="62" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#8899bb">
+    Complete Lattice of Closed Subspaces of Hilbert Space
   </text>
 
-  <!-- Lattice Diagram (left side) -->
-  <g transform="translate(220, 380)">
-    <!-- Edges -->
-    <line x1="0" y1="-200" x2="-120" y2="-80" stroke="#6366f1" stroke-width="2" opacity="0.6"/>
-    <line x1="0" y1="-200" x2="0" y2="-80" stroke="#6366f1" stroke-width="2" opacity="0.6"/>
-    <line x1="0" y1="-200" x2="120" y2="-80" stroke="#6366f1" stroke-width="2" opacity="0.6"/>
+  <!-- Lattice diagram -->
+  <!-- Top: H (whole space) -->
+  <circle cx="400" cy="110" r="20" fill="#4488ff" stroke="#6699ff" stroke-width="2" filter="url(#glow)"/>
+  <text x="400" y="115" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="white" font-weight="bold">H</text>
+  <text x="400" y="85" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#aabbdd">⊤ (top)</text>
 
-    <line x1="-120" y1="-80" x2="-120" y2="60" stroke="#6366f1" stroke-width="2" opacity="0.6"/>
-    <line x1="-120" y1="-80" x2="0" y2="60" stroke="#6366f1" stroke-width="2" opacity="0.6"/>
-    <line x1="0" y1="-80" x2="-120" y2="60" stroke="#6366f1" stroke-width="2" opacity="0.6"/>
-    <line x1="0" y1="-80" x2="0" y2="60" stroke="#6366f1" stroke-width="2" opacity="0.6"/>
-    <line x1="0" y1="-80" x2="120" y2="60" stroke="#6366f1" stroke-width="2" opacity="0.6"/>
-    <line x1="120" y1="-80" x2="0" y2="60" stroke="#6366f1" stroke-width="2" opacity="0.6"/>
-    <line x1="120" y1="-80" x2="120" y2="60" stroke="#6366f1" stroke-width="2" opacity="0.6"/>
+  <!-- Level 2: 2-dimensional subspaces -->
+  <circle cx="200" cy="220" r="16" fill="#3377dd" stroke="#5599ee" stroke-width="2" filter="url(#glow)"/>
+  <text x="200" y="225" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">K₁⊔K₂</text>
 
-    <line x1="-120" y1="60" x2="0" y2="180" stroke="#6366f1" stroke-width="2" opacity="0.6"/>
-    <line x1="0" y1="60" x2="0" y2="180" stroke="#6366f1" stroke-width="2" opacity="0.6"/>
-    <line x1="120" y1="60" x2="0" y2="180" stroke="#6366f1" stroke-width="2" opacity="0.6"/>
+  <circle cx="400" cy="220" r="16" fill="#3377dd" stroke="#5599ee" stroke-width="2" filter="url(#glow)"/>
+  <text x="400" y="225" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">K₁⊔K₃</text>
 
-    <!-- Top node: ℋ -->
-    <circle cx="0" cy="-200" r="22" fill="url(#topGrad)" filter="url(#glow)"/>
-    <text x="0" y="-195" text-anchor="middle" fill="white" font-size="16" font-weight="bold">ℋ</text>
+  <circle cx="600" cy="220" r="16" fill="#3377dd" stroke="#5599ee" stroke-width="2" filter="url(#glow)"/>
+  <text x="600" y="225" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">K₂⊔K₃</text>
 
-    <!-- Middle-upper nodes: 2D subspaces -->
-    <circle cx="-120" cy="-80" r="18" fill="url(#nodeGrad)" filter="url(#glow)"/>
-    <text x="-120" y="-75" text-anchor="middle" fill="white" font-size="11">K₁∨K₂</text>
+  <!-- Level 1: 1-dimensional subspaces -->
+  <circle cx="150" cy="340" r="16" fill="#2266bb" stroke="#4488dd" stroke-width="2" filter="url(#glow)"/>
+  <text x="150" y="345" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">K₁</text>
 
-    <circle cx="0" cy="-80" r="18" fill="url(#nodeGrad)" filter="url(#glow)"/>
-    <text x="0" y="-75" text-anchor="middle" fill="white" font-size="11">K₁∨K₃</text>
+  <circle cx="400" cy="340" r="16" fill="#2266bb" stroke="#4488dd" stroke-width="2" filter="url(#glow)"/>
+  <text x="400" y="345" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">K₂</text>
 
-    <circle cx="120" cy="-80" r="18" fill="url(#nodeGrad)" filter="url(#glow)"/>
-    <text x="120" y="-75" text-anchor="middle" fill="white" font-size="11">K₂∨K₃</text>
+  <circle cx="650" cy="340" r="16" fill="#2266bb" stroke="#4488dd" stroke-width="2" filter="url(#glow)"/>
+  <text x="650" y="345" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="white">K₃</text>
 
-    <!-- Middle-lower nodes: 1D subspaces (rays) -->
-    <circle cx="-120" cy="60" r="18" fill="url(#nodeGrad)" filter="url(#glow)"/>
-    <text x="-120" y="65" text-anchor="middle" fill="white" font-size="12">K₁</text>
+  <!-- Bottom: {0} -->
+  <circle cx="400" cy="450" r="20" fill="#1155aa" stroke="#3377cc" stroke-width="2" filter="url(#glow)"/>
+  <text x="400" y="455" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="white" font-weight="bold">{0}</text>
+  <text x="400" y="480" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#aabbdd">⊥ (bottom)</text>
 
-    <circle cx="0" cy="60" r="18" fill="url(#nodeGrad)" filter="url(#glow)"/>
-    <text x="0" y="65" text-anchor="middle" fill="white" font-size="12">K₂</text>
+  <!-- Edges -->
+  <line x1="400" y1="130" x2="200" y2="204" stroke="#6699cc" stroke-width="1.5" opacity="0.6"/>
+  <line x1="400" y1="130" x2="400" y2="204" stroke="#6699cc" stroke-width="1.5" opacity="0.6"/>
+  <line x1="400" y1="130" x2="600" y2="204" stroke="#6699cc" stroke-width="1.5" opacity="0.6"/>
 
-    <circle cx="120" cy="60" r="18" fill="url(#nodeGrad)" filter="url(#glow)"/>
-    <text x="120" y="65" text-anchor="middle" fill="white" font-size="12">K₃</text>
+  <line x1="200" y1="236" x2="150" y2="324" stroke="#6699cc" stroke-width="1.5" opacity="0.6"/>
+  <line x1="200" y1="236" x2="400" y2="324" stroke="#6699cc" stroke-width="1.5" opacity="0.6"/>
 
-    <!-- Bottom node: {0} -->
-    <circle cx="0" cy="180" r="22" fill="url(#botGrad)" filter="url(#glow)"/>
-    <text x="0" y="185" text-anchor="middle" fill="white" font-size="14" font-weight="bold">{0}</text>
+  <line x1="400" y1="236" x2="150" y2="324" stroke="#6699cc" stroke-width="1.5" opacity="0.6"/>
+  <line x1="400" y1="236" x2="650" y2="324" stroke="#6699cc" stroke-width="1.5" opacity="0.6"/>
 
-    <!-- Labels -->
-    <text x="-170" y="-195" text-anchor="end" fill="#94a3b8" font-size="11">⊤ (full space)</text>
-    <text x="-170" y="65" text-anchor="end" fill="#94a3b8" font-size="11">rays in ℙ(ℋ)</text>
-    <text x="-170" y="185" text-anchor="end" fill="#94a3b8" font-size="11">⊥ (zero)</text>
-  </g>
+  <line x1="600" y1="236" x2="400" y2="324" stroke="#6699cc" stroke-width="1.5" opacity="0.6"/>
+  <line x1="600" y1="236" x2="650" y2="324" stroke="#6699cc" stroke-width="1.5" opacity="0.6"/>
 
-  <!-- Interference diagram (right side) -->
-  <g transform="translate(620, 200)">
-    <text x="0" y="-20" text-anchor="middle" fill="#e0e7ff" font-size="16" font-weight="bold">
-      Quantum Interference
-    </text>
+  <line x1="150" y1="356" x2="400" y2="430" stroke="#6699cc" stroke-width="1.5" opacity="0.6"/>
+  <line x1="400" y1="356" x2="400" y2="430" stroke="#6699cc" stroke-width="1.5" opacity="0.6"/>
+  <line x1="650" y1="356" x2="400" y2="430" stroke="#6699cc" stroke-width="1.5" opacity="0.6"/>
 
-    <!-- Wave 1 -->
-    <path d="M-120,30 Q-90,0 -60,30 Q-30,60 0,30 Q30,0 60,30 Q90,60 120,30"
-          fill="none" stroke="#818cf8" stroke-width="2" opacity="0.8"/>
-    <text x="140" y="35" fill="#818cf8" font-size="11">ψ</text>
+  <!-- Annotations -->
+  <!-- Orthocomplement arrow -->
+  <path d="M 170 340 Q 80 280 170 220" fill="none" stroke="#ff6644" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <text x="60" y="280" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#ff6644">K₁ᗮ = K₂⊔K₃</text>
 
-    <!-- Wave 2 -->
-    <path d="M-120,70 Q-90,40 -60,70 Q-30,100 0,70 Q30,40 60,70 Q90,100 120,70"
-          fill="none" stroke="#34d399" stroke-width="2" opacity="0.8"/>
-    <text x="140" y="75" fill="#34d399" font-size="11">φ</text>
+  <!-- Properties box -->
+  <rect x="20" y="500" width="360" height="90" rx="8" fill="rgba(255,255,255,0.05)" stroke="#4488cc" stroke-width="1"/>
+  <text x="200" y="520" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#88bbee" font-weight="bold">Key Properties</text>
+  <text x="30" y="540" font-family="Arial, sans-serif" font-size="11" fill="#8899bb">• Complete: ∀S, ∃ ⋁S and ⋀S</text>
+  <text x="30" y="556" font-family="Arial, sans-serif" font-size="11" fill="#8899bb">• Orthomodular: K≤L ⟹ L = K ⊔ (L ⊓ Kᗮ)</text>
+  <text x="30" y="572" font-family="Arial, sans-serif" font-size="11" fill="#8899bb">• Non-distributive: A⊓(B⊔C) ≠ (A⊓B)⊔(A⊓C)</text>
 
-    <!-- Sum wave (constructive) -->
-    <path d="M-120,140 Q-90,80 -60,140 Q-30,200 0,140 Q30,80 60,140 Q90,200 120,140"
-          fill="none" stroke="#f59e0b" stroke-width="2.5" opacity="0.9"/>
-    <text x="140" y="145" fill="#f59e0b" font-size="11">ψ+φ</text>
-
-    <!-- Formula -->
-    <text x="0" y="235" text-anchor="middle" fill="#e0e7ff" font-size="12">
-      ‖ψ+φ‖² = ‖ψ‖² + ‖φ‖² + 2Re⟨ψ|φ⟩
-    </text>
-
-    <!-- Coherence bound -->
-    <rect x="-130" y="255" width="260" height="35" rx="6" fill="#1e1b4b" stroke="#4f46e5" stroke-width="1"/>
-    <text x="0" y="278" text-anchor="middle" fill="#c4b5fd" font-size="11">
-      |Re⟨ψ|φ⟩| ≤ ‖ψ‖·‖φ‖  (Coherence Bound)
-    </text>
-  </g>
-
-  <!-- Phase Invariance diagram -->
-  <g transform="translate(620, 480)">
-    <text x="0" y="0" text-anchor="middle" fill="#e0e7ff" font-size="16" font-weight="bold">
-      Projective Hilbert Space
-    </text>
-
-    <!-- Circle representing phase -->
-    <circle cx="0" cy="80" r="55" fill="none" stroke="#6366f1" stroke-width="1.5" opacity="0.5"/>
-
-    <!-- Rays -->
-    <line x1="0" y1="80" x2="55" y2="80" stroke="#f59e0b" stroke-width="2"/>
-    <line x1="0" y1="80" x2="39" y2="41" stroke="#34d399" stroke-width="2"/>
-    <line x1="0" y1="80" x2="-17" y2="28" stroke="#818cf8" stroke-width="2"/>
-    <line x1="0" y1="80" x2="-52" y2="63" stroke="#f472b6" stroke-width="2"/>
-
-    <!-- Phase arrow -->
-    <path d="M55,75 A55,55 0 0,1 39,36" fill="none" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3"/>
-    <text x="58" y="55" fill="#94a3b8" font-size="11">e^{iθ}</text>
-
-    <!-- Center dot -->
-    <circle cx="0" cy="80" r="3" fill="#e0e7ff"/>
-
-    <!-- Labels -->
-    <text x="0" y="160" text-anchor="middle" fill="#c4b5fd" font-size="11">
-      ‖e^{iθ}ψ‖ = ‖ψ‖
-    </text>
-    <text x="0" y="178" text-anchor="middle" fill="#94a3b8" font-size="10">
-      States = rays, not vectors
-    </text>
-  </g>
-
-  <!-- Key properties box -->
-  <g transform="translate(30, 610)">
-    <rect x="0" y="0" width="840" height="70" rx="10" fill="#1e1b4b" stroke="#4f46e5" stroke-width="1" opacity="0.8"/>
-    <text x="20" y="22" fill="#f59e0b" font-size="13" font-weight="bold">Key Properties (Formally Verified in Lean 4)</text>
-    <text x="20" y="42" fill="#e0e7ff" font-size="11">
-      ✓ Complete lattice  ✓ Modular (non-distributive)  ✓ Phase invariant  ✓ Born rule bounded
-    </text>
-    <text x="20" y="58" fill="#e0e7ff" font-size="11">
-      ✓ Projection norm ≤ 1  ✓ Parallelogram law  ✓ Contractive transport  ✓ 20 theorems, 0 sorries
-    </text>
-  </g>
+  <!-- Verified badge -->
+  <rect x="420" y="500" width="360" height="90" rx="8" fill="rgba(0,255,0,0.03)" stroke="#44cc88" stroke-width="1"/>
+  <text x="600" y="520" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#66ddaa" font-weight="bold">✓ Formally Verified in Lean 4</text>
+  <text x="430" y="540" font-family="Arial, sans-serif" font-size="11" fill="#8899bb">• 40 theorems, 0 sorries</text>
+  <text x="430" y="556" font-family="Arial, sans-serif" font-size="11" fill="#8899bb">• Axioms: propext, Classical.choice, Quot.sound</text>
+  <text x="430" y="572" font-family="Arial, sans-serif" font-size="11" fill="#8899bb">• Built on Mathlib (InnerProductSpace, Submodule)</text>
 </svg>

@@ -1,99 +1,79 @@
-# ECSTASIS Framework
+# ECSTASIS — Quantum Phase Lattices
 
-**Emergent Compositional Systems for Transport, Adaptation, Synthesis, and Intelligent Self-repair**
+**Extension of the ECSTASIS framework to quantum-mechanical superpositions in projective Hilbert space.**
 
-A formally verified mathematical framework unifying adaptive music synthesis, biofeedback-driven visual processing, self-repairing software, and coherent wavefront engineering for holographic projection.
+## Overview
 
----
+This module formalizes the theory of **quantum phase lattices** — the complete lattice of closed subspaces of a Hilbert space — and proves 40 theorems in Lean 4 with zero sorries. The formalization connects quantum mechanics to the ECSTASIS framework for signal processing, self-repair, and wavefront engineering.
 
-## Contents
+## Lean 4 Formalization
 
-### Lean 4 Formalizations (Formally Verified — Zero Sorries)
+### Core Theory (20 theorems): `QuantumPhaseLattice.lean`
+1. Quantum phase lattice completeness (submodule lattice)
+2. Superposition norm bounds (triangle inequality)
+3. Born rule non-negativity and Cauchy-Schwarz bounds
+4. Phase invariance of norm and inner product magnitude
+5. Quantum coherence bound and interference formula
+6. Projection norm decrease (measurement)
+7. Quantum state fidelity symmetry
+8. Modularity of the quantum lattice
+9. Phase sensitivity bounds
+10. Quantum channel Lipschitz and composition bounds
+11. Parallelogram law
+12. Quantum transport as contraction
 
-| File | Theorems | Status |
-|------|----------|--------|
-| `Speculative_and_Exploratory/ECSTASIS__Core.lean` | 6 core theorems | ✅ All proved |
-| `Speculative_and_Exploratory/ECSTASIS__Applications.lean` | 8 application theorems | ✅ All proved |
+### Extended Theory (20 theorems): `QuantumPhaseLatticeExtended.lean`
+13. Orthogonal complement antimonotonicity, double complement, decomposition, disjointness
+14. **Orthomodular law** — the characteristic axiom of quantum logic
+15. De Morgan for orthogonal complements
+16. Adjoint operator properties: inner product identity, involution, norm preservation, composition reversal
+17. Self-adjoint operators: real expectation values
+18. Quantum channel norm bounds, identity channel, contractive convergence
+19. Tensor product monotonicity and sup containment
+20. Spectral theory: eigenspace structure, real eigenvalues, eigenvector orthogonality
 
-**Total: 14 formally verified theorems** covering contraction mappings, Lipschitz composition, Knaster-Tarski fixed points, Shannon entropy, geometric convergence, convex consensus, binaural beats, Nyquist bounds, sigmoid boundedness, defect convergence, wavefront coherence, and more.
+### Verification Status
+- **40/40 theorems proven** with zero sorries
+- **Axioms used**: propext, Classical.choice, Quot.sound (standard)
+- **Built on**: Mathlib (InnerProductSpace, Submodule, ContinuousLinearMap)
 
-### Documents
+## Documentation
 
 | File | Description |
 |------|-------------|
-| `research_paper.md` | Full research paper with mathematical details |
-| `scientific_american_article.md` | Popular science article for general audience |
-| `applications.md` | 8 novel applications with mathematical foundations |
-| `team.md` | Research team structure (~30 members, 6 groups) |
+| `quantum_phase_lattice_paper.md` | Full research paper (40 theorems) |
+| `quantum_phase_lattice_sciam.md` | Scientific American-style article |
+| `quantum_applications.md` | Applications to QEC, sensing, computing, ML |
+| `team.md` | Research team structure (~36 members) |
 
-### Python Demos
+## Python Demos
 
-| File | Description |
-|------|-------------|
-| `python/demo_contraction_mapping.py` | 1D/2D contraction convergence, defect decay, wavefront coherence, sigmoid bounds |
-| `python/demo_adaptive_music.py` | Binaural beats, spatial audio (ambisonics), adaptive session simulation, collaborative generation |
-| `python/demo_autoheal.py` | Single-module repair, multi-module cross-file repair, formal verification in the loop |
-| `python/demo_holographic.py` | Phase lattice operations, coherence analysis, wavefront reconstruction, phase tolerance |
+All demos are in `python/` and can be run with `python3 <demo>.py`:
 
-### SVG Visuals
+| Demo | What it demonstrates |
+|------|---------------------|
+| `demo_quantum_phase_lattice.py` | Interference formula, phase invariance, Born rule, parallelogram law, projection |
+| `demo_quantum_lattice_visualization.py` | Lattice of C², orthomodular law, non-distributivity, spectral properties, contractive convergence |
+| `demo_quantum_error_correction.py` | 3-qubit bit-flip code as lattice self-repair, orthomodular law in QEC |
+| `demo_spectral_theory.py` | Real eigenvalues, eigenvector orthogonality, eigenspace structure, expectation values |
 
-| File | Description |
-|------|-------------|
-| `visuals/framework_overview.svg` | ECSTASIS framework architecture diagram |
-| `visuals/contraction_convergence.svg` | Geometric convergence visualization |
-| `visuals/phase_lattice.svg` | Topological phase lattice array with wavefront |
-| `visuals/autoheal_pipeline.svg` | AutoHeal self-repair pipeline diagram |
-| `visuals/music_feedback_loop.svg` | Adaptive music feedback loop architecture |
+## SVG Visuals
 
----
+All visuals are in `visuals/`:
 
-## Key Theorems
+| Visual | Content |
+|--------|---------|
+| `quantum_phase_lattice.svg` | Hasse diagram of the quantum phase lattice L(H) |
+| `quantum_interference.svg` | Interference formula with constructive/destructive visualization |
+| `quantum_projective_space.svg` | Bloch sphere, phase invariance, Born rule, spectral theory |
+| `orthomodular_law.svg` | The orthomodular law with subspace decomposition and lattice view |
+| `spectral_theory.svg` | Spectral decomposition of self-adjoint operators |
 
-1. **Adaptive Feedback Convergence**: Contraction mappings have unique fixed points (Banach)
-2. **Transport Composition**: Lipschitz composition preserves bounds (modular design)
-3. **Self-Repair Fixed Point**: Monotone operators on complete lattices have fixed points (Knaster-Tarski)
-4. **Shannon Entropy Non-negativity**: Entropy terms are non-negative for valid distributions
-5. **Iterative Refinement**: Geometric convergence bound for Lipschitz iterations
-6. **Collaborative Consensus**: Convex combinations lie in convex hull
-7. **Binaural Beat Bound**: Beat frequency bounded by sum of input frequencies
-8. **Nyquist Bound**: Sampling rate constraint for signal reconstruction
-9. **Stereoscopic Disparity**: Depth-dependent disparity is strictly decreasing
-10. **Sigmoid Boundedness**: Sigmoid maps reals to (0,1)
-11. **AutoHeal Defect Convergence**: Exponential defect reduction to zero
-12. **Verified Repair**: Specification satisfaction is preserved
-13. **Wavefront Coherence Bound**: Phasor sum magnitude ≤ number of elements
-14. **Phase Deformation Monotonicity**: Monotone maps preserve ordering
-
-## Quantum Phase Lattice Extension
-
-The quantum phase lattice extension (`ECSTASIS/QuantumPhaseLattice.lean`) extends the framework to quantum-mechanical superpositions in projective Hilbert space. It includes 20 formally verified theorems covering:
-
-15. **Quantum Phase Lattice Completeness**: Submodules form a complete lattice
-16. **Born Rule Bounds**: Cauchy-Schwarz and unit-vector probability bounds
-17. **Phase Invariance**: Norm and inner product magnitude invariant under global phase
-18. **Quantum Interference Formula**: ‖ψ+φ‖² = ‖ψ‖² + ‖φ‖² + 2Re⟨ψ|φ⟩
-19. **Quantum Coherence Bound**: |Re⟨ψ|φ⟩| ≤ ‖ψ‖·‖φ‖
-20. **Projection Norm Decrease**: ‖Pψ‖ ≤ ‖ψ‖
-21. **Quantum Lattice Modularity**: A≤C ⟹ A∨(B∧C) = (A∨B)∧C
-22. **Parallelogram Law**: ‖ψ+φ‖²+‖ψ-φ‖² = 2(‖ψ‖²+‖φ‖²)
-23. **Quantum Channel Contraction**: Norm-bounded channels are Lipschitz
-24. **And more**: Fidelity symmetry, phase sensitivity, channel composition
-
-See `quantum_phase_lattice_paper.md` for the full research paper and `quantum_applications.md` for applications.
-
-## Running
+## Building
 
 ```bash
-# Python demos (requires numpy)
-pip install numpy
-python ECSTASIS/python/demo_contraction_mapping.py
-python ECSTASIS/python/demo_adaptive_music.py
-python ECSTASIS/python/demo_autoheal.py
-python ECSTASIS/python/demo_holographic.py
-python ECSTASIS/python/demo_quantum_phase_lattice.py
-
-# Lean verification
-lake build Speculative_and_Exploratory.ECSTASIS__Core
-lake build Speculative_and_Exploratory.ECSTASIS__Applications
 lake build ECSTASIS.QuantumPhaseLattice
+lake build ECSTASIS.QuantumPhaseLatticeExtended
 ```
+
+Both should complete with zero errors and zero sorries.
