@@ -64,6 +64,23 @@ A formally verified mathematical framework unifying adaptive music synthesis, bi
 13. **Wavefront Coherence Bound**: Phasor sum magnitude ≤ number of elements
 14. **Phase Deformation Monotonicity**: Monotone maps preserve ordering
 
+## Quantum Phase Lattice Extension
+
+The quantum phase lattice extension (`ECSTASIS/QuantumPhaseLattice.lean`) extends the framework to quantum-mechanical superpositions in projective Hilbert space. It includes 20 formally verified theorems covering:
+
+15. **Quantum Phase Lattice Completeness**: Submodules form a complete lattice
+16. **Born Rule Bounds**: Cauchy-Schwarz and unit-vector probability bounds
+17. **Phase Invariance**: Norm and inner product magnitude invariant under global phase
+18. **Quantum Interference Formula**: ‖ψ+φ‖² = ‖ψ‖² + ‖φ‖² + 2Re⟨ψ|φ⟩
+19. **Quantum Coherence Bound**: |Re⟨ψ|φ⟩| ≤ ‖ψ‖·‖φ‖
+20. **Projection Norm Decrease**: ‖Pψ‖ ≤ ‖ψ‖
+21. **Quantum Lattice Modularity**: A≤C ⟹ A∨(B∧C) = (A∨B)∧C
+22. **Parallelogram Law**: ‖ψ+φ‖²+‖ψ-φ‖² = 2(‖ψ‖²+‖φ‖²)
+23. **Quantum Channel Contraction**: Norm-bounded channels are Lipschitz
+24. **And more**: Fidelity symmetry, phase sensitivity, channel composition
+
+See `quantum_phase_lattice_paper.md` for the full research paper and `quantum_applications.md` for applications.
+
 ## Running
 
 ```bash
@@ -73,8 +90,10 @@ python ECSTASIS/python/demo_contraction_mapping.py
 python ECSTASIS/python/demo_adaptive_music.py
 python ECSTASIS/python/demo_autoheal.py
 python ECSTASIS/python/demo_holographic.py
+python ECSTASIS/python/demo_quantum_phase_lattice.py
 
 # Lean verification
 lake build Speculative_and_Exploratory.ECSTASIS__Core
 lake build Speculative_and_Exploratory.ECSTASIS__Applications
+lake build ECSTASIS.QuantumPhaseLattice
 ```

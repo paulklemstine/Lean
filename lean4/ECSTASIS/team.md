@@ -90,6 +90,18 @@ The ECSTASIS project is organized into four working groups aligned with the fram
 
 ---
 
+### Quantum Phase Lattice Working Group
+**Mission:** Extend the ECSTASIS framework to quantum-mechanical settings, formalizing and verifying quantum phase lattice theory in Lean 4.
+
+**Roles:**
+- **Quantum Formalization Lead** — Designs the Lean formalization of quantum phase lattices; interfaces between physics and formal methods
+- **Quantum Information Theorist** — Develops the mathematical theory connecting subspace lattices to quantum error correction and quantum channels
+- **Hilbert Space Specialist** — Expert on inner product spaces, orthogonal projections, and spectral theory in Mathlib
+- **Quantum Applications Researcher** — Identifies and develops applications in quantum computing, quantum sensing, and quantum cryptography
+- **Quantum Software Engineer** — Implements Python demos, visualizations, and numerical validation of formal results
+
+---
+
 ## Collaboration Principles
 
 1. **Formal-first**: Every quantitative claim must be traceable to a Lean theorem

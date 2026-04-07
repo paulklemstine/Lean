@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e1b4b"/>
+    </linearGradient>
+    <filter id="glow2">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#bg2)"/>
+
+  <text x="400" y="35" text-anchor="middle" fill="#e0e7ff" font-size="20" font-weight="bold">
+    Quantum Interference Formula
+  </text>
+  <text x="400" y="58" text-anchor="middle" fill="#94a3b8" font-size="14">
+    ‖ψ + φ‖² = ‖ψ‖² + ‖φ‖² + 2·Re⟨ψ|φ⟩
+  </text>
+
+  <!-- Axes -->
+  <g transform="translate(100, 280)">
+    <line x1="0" y1="0" x2="600" y2="0" stroke="#475569" stroke-width="1"/>
+    <line x1="0" y1="-180" x2="0" y2="180" stroke="#475569" stroke-width="1"/>
+
+    <!-- Axis labels -->
+    <text x="300" y="30" text-anchor="middle" fill="#94a3b8" font-size="12">Relative phase θ</text>
+    <text x="-15" y="-170" text-anchor="middle" fill="#94a3b8" font-size="12" transform="rotate(-90, -15, -80)">‖ψ + e^{iθ}φ‖²</text>
+
+    <!-- Tick marks -->
+    <text x="0" y="18" text-anchor="middle" fill="#64748b" font-size="10">0</text>
+    <text x="150" y="18" text-anchor="middle" fill="#64748b" font-size="10">π/2</text>
+    <text x="300" y="18" text-anchor="middle" fill="#64748b" font-size="10">π</text>
+    <text x="450" y="18" text-anchor="middle" fill="#64748b" font-size="10">3π/2</text>
+    <text x="600" y="18" text-anchor="middle" fill="#64748b" font-size="10">2π</text>
+
+    <!-- Interference curve (cosine-like): ||psi+e^{itheta}phi||^2 for unit vectors -->
+    <!-- = 2 + 2cos(theta) for orthogonal unit vectors with <psi|phi>=1 -->
+    <!-- Let's use <psi|phi> = 0.7 (real): intensity = 2 + 2*0.7*cos(theta) = 2 + 1.4*cos(theta) -->
+    <!-- Scaled: 0 -> 3.4, pi -> 0.6, range [0.6, 3.4], map to [-140, 140] in y -->
+
+    <path d="M0,-140 Q37.5,-137 75,-120 Q112.5,-85 150,0 Q187.5,85 225,120
+             Q262.5,137 300,140 Q337.5,137 375,120 Q412.5,85 450,0
+             Q487.5,-85 525,-120 Q562.5,-137 600,-140"
+          fill="none" stroke="#f59e0b" stroke-width="3" filter="url(#glow2)"/>
+
+    <!-- Individual norm^2 level (constant = 2) -->
+    <line x1="0" y1="0" x2="600" y2="0" stroke="#818cf8" stroke-width="1" stroke-dasharray="5,5" opacity="0.5"/>
+    <text x="610" y="5" fill="#818cf8" font-size="10">‖ψ‖²+‖φ‖²</text>
+
+    <!-- Max interference -->
+    <line x1="0" y1="-140" x2="600" y2="-140" stroke="#34d399" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+    <text x="610" y="-135" fill="#34d399" font-size="9">max (constructive)</text>
+
+    <!-- Min interference -->
+    <line x1="0" y1="140" x2="600" y2="140" stroke="#ef4444" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+    <text x="610" y="145" fill="#ef4444" font-size="9">min (destructive)</text>
+
+    <!-- Annotations -->
+    <circle cx="0" cy="-140" r="5" fill="#34d399" opacity="0.8"/>
+    <text x="10" y="-148" fill="#34d399" font-size="10">θ=0: constructive</text>
+
+    <circle cx="300" cy="140" r="5" fill="#ef4444" opacity="0.8"/>
+    <text x="310" y="148" fill="#ef4444" font-size="10">θ=π: destructive</text>
+  </g>
+
+  <!-- Legend box -->
+  <g transform="translate(150, 420)">
+    <rect x="0" y="0" width="500" height="60" rx="8" fill="#1e1b4b" stroke="#4f46e5" stroke-width="1" opacity="0.8"/>
+    <text x="20" y="20" fill="#f59e0b" font-size="12">━━</text>
+    <text x="50" y="20" fill="#e0e7ff" font-size="11">Interference intensity (varies with relative phase)</text>
+    <text x="20" y="42" fill="#e0e7ff" font-size="11">
+      Coherence bound: |2·Re⟨ψ|φ⟩| ≤ 2‖ψ‖·‖φ‖  (formally verified)
+    </text>
+  </g>
+</svg>
