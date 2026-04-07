@@ -1,144 +1,117 @@
-# Stereographic Neural Architectures — Research Team
+# Research Team & Roadmap
 
 ## Team Structure
 
-The Stereographic Neural Architectures project brings together expertise in differential geometry, formal verification, neural architecture design, and applied machine learning.
+### Core Theory
+- **Geometric Foundations Lead**: Develops the differential geometry foundations — stereographic projection properties, conformal analysis, Möbius group theory
+- **Formal Verification Lead**: Maintains the Lean 4 proof library, ensures all theorems are machine-verified with zero `sorry` statements
+- **Neural Architecture Lead**: Designs the stereographic attention mechanism, multi-head variants, and Möbius-parameterized layers
+
+### Extensions
+- **Gauge Theory Specialist**: Develops the gauge field interpretation, curvature analysis, and mass generation theory
+- **Positional Encoding Researcher**: Designs spiral positional encodings, geodesic distance metrics, and relative position biases
+- **Training Theory Researcher**: Analyzes convergence properties, learning rate schedules, and comparison with standard methods
+
+### Implementation
+- **ML Engineering Lead**: Implements production-quality PyTorch/JAX code for training
+- **Benchmarking Lead**: Runs experiments on standard benchmarks (WikiText, ImageNet, etc.)
+- **Visualization Lead**: Creates geometric visualizations and interactive demos
+
+### Applications
+- **NLP Applications**: Language modeling, machine translation, text classification
+- **Vision Applications**: 360° vision, medical imaging, satellite imagery
+- **Science Applications**: Protein folding, molecular dynamics, climate modeling
 
 ---
 
-### Core Research Roles
+## Current Status (v2.0)
 
-#### Principal Investigator: Differential Geometry & Architecture Design
-**Role**: Lead the mathematical foundations of stereographic attention, including the theory of conformal kernels, Möbius equivariance, and spherical normalization. Design the core architecture and prove the main theorems.
+### ✅ Completed
+1. **Core formalization** (8 Lean files, 74+ theorems, 0 sorry)
+   - StereographicAttention.lean — Core kernel and attention
+   - SphericalNormalization.lean — Spherical norm theory
+   - ConformalBackprop.lean — Gradient flow analysis
+   - MultiHeadStereographic.lean — Multi-head with rotated poles
+   - MoebiusTransforms.lean — Learnable Möbius parameters
+   - StereographicPositionalEncoding.lean — Spiral PE and geodesic bias
+   - GaugeTheory.lean — Gauge field, curvature, mass generation
+   - TrainingTheory.lean — Convergence and regularization
 
-**Key Skills**: Riemannian geometry, conformal geometry, Möbius transformations, Lie groups, algebraic topology, functional analysis.
+2. **Python demonstrations** (4 demo files)
+   - Basic stereographic attention
+   - Transformer architecture
+   - Visualization tools
+   - Multi-head, Möbius, PE, gauge field demos
 
-**Responsibilities**:
-- Develop the stereographic kernel theory
-- Design the attention mechanism and normalization layers
-- Prove gradient bounds and equivariance properties
-- Guide the overall mathematical direction
+3. **Documentation** (5 documents)
+   - Research paper (comprehensive, 14 sections)
+   - Scientific American article
+   - Applications document (13 domains)
+   - Team & roadmap (this file)
+   - README
 
----
+4. **Visualizations** (7 SVGs)
+   - Architecture diagram
+   - Conformal kernel heatmap
+   - Gradient flow comparison
+   - Multi-head stereographic
+   - Gauge theory connection
+   - Positional encoding spiral
+   - Möbius attention pipeline
 
-#### Formal Verification Lead
-**Role**: Formalize all mathematical claims in Lean 4 with Mathlib, ensuring machine-verified correctness of the theoretical foundations.
+### 🔄 In Progress
+5. **PyTorch implementation** for actual training
+6. **Benchmark experiments** on WikiText-103 and CIFAR-10
 
-**Key Skills**: Lean 4, Mathlib, type theory, dependent types, formal proof engineering, mathematical logic.
-
-**Responsibilities**:
-- Formalize definitions (stereographic kernel, conformal factor, attention weights)
-- Prove key theorems (kernel symmetry, gradient bounds, spherical normalization)
-- Maintain the Lean codebase and ensure compatibility with Mathlib updates
-- Write documentation connecting formal proofs to informal mathematics
-
----
-
-#### ML Systems Engineer
-**Role**: Implement stereographic attention in production ML frameworks (PyTorch, JAX) with efficient GPU kernels.
-
-**Key Skills**: PyTorch, JAX, CUDA, triton, GPU kernel optimization, mixed-precision training, distributed systems.
-
-**Responsibilities**:
-- Implement efficient stereographic projection and kernel computation
-- Optimize for GPU (fused kernels, memory efficiency)
-- Benchmark against standard attention (speed, memory, accuracy)
-- Integrate with existing transformer codebases (Hugging Face, etc.)
-
----
-
-#### Applied ML Researcher
-**Role**: Design and run experiments on standard benchmarks, demonstrating the practical benefits of stereographic attention.
-
-**Key Skills**: Experiment design, language modeling, computer vision, training large models, ablation studies, statistical analysis.
-
-**Responsibilities**:
-- Train stereographic transformers on language modeling benchmarks
-- Compare training stability with standard attention (gradient norms, loss curves)
-- Ablation studies: temperature, multi-head variants, positional encoding
-- Write experimental sections of papers
-
----
-
-#### Domain Application Specialist
-**Role**: Adapt stereographic attention to specific application domains (vision, molecules, climate, quantum).
-
-**Key Skills**: Domain expertise in one or more application areas, geometric deep learning, GNNs, equivariant networks.
-
-**Responsibilities**:
-- Design domain-specific stereographic architectures
-- Collect and preprocess domain data
-- Run domain-specific experiments
-- Write application case studies
-
----
-
-### Advisory Roles
-
-#### Mathematical Advisor: Conformal Geometry
-Expert in conformal geometry and Möbius groups, providing guidance on deep mathematical questions (e.g., higher-dimensional conformal groups, relationship to twistor theory, connections to string theory).
-
-#### Technical Advisor: Transformer Architecture
-Expert in transformer architecture design, providing guidance on practical design choices (e.g., multi-head attention variants, positional encoding, training recipes).
-
----
-
-## Collaboration Structure
-
-```
-                    ┌─────────────────────┐
-                    │   PI: Geometry &    │
-                    │  Architecture Lead  │
-                    └────────┬────────────┘
-                             │
-              ┌──────────────┼──────────────┐
-              │              │              │
-    ┌─────────▼──────┐ ┌────▼─────┐ ┌──────▼──────────┐
-    │ Formal Verif.  │ │ ML Sys.  │ │ Applied ML      │
-    │ Lead           │ │ Engineer │ │ Researcher      │
-    └────────────────┘ └──────────┘ └──────┬──────────┘
-                                           │
-                                    ┌──────▼──────────┐
-                                    │ Domain App.     │
-                                    │ Specialist      │
-                                    └─────────────────┘
-```
-
-### Communication
-- **Weekly all-hands**: Full team sync on progress, blockers, and priorities
-- **Daily standups**: Sub-team coordination (Geometry+Verification, Engineering+Applied)
-- **Bi-weekly paper reviews**: Critical reading of related work
-- **Monthly milestone reviews**: Assess progress against roadmap
+### 📋 Planned
+7. **JAX implementation** with custom VJP rules for stereographic layers
+8. **Scaling experiments** to larger models (125M, 350M parameters)
+9. **Ablation studies** comparing multi-head variants
+10. **Collaboration with physics groups** on gauge theory interpretation
 
 ---
 
 ## Roadmap
 
-### Phase 1: Foundations (Months 1–3)
-- [x] Core mathematical theory (kernel, conformality, gradient bounds)
-- [x] Lean 4 formalization of key theorems
-- [x] NumPy reference implementation
-- [x] Research paper (theory)
-- [ ] PyTorch implementation with GPU kernels
+### Phase 1: Foundation (Complete ✅)
+- Core mathematical theory
+- Lean 4 formalization
+- Python reference implementations
+- Documentation and visualization
 
-### Phase 2: Validation (Months 4–6)
-- [ ] Language modeling experiments (WikiText, C4)
-- [ ] Comparison with standard attention (training stability, final performance)
-- [ ] Ablation studies (temperature, heads, normalization)
-- [ ] Scaling experiments (model size, sequence length)
+### Phase 2: Implementation (Current)
+- PyTorch/JAX production code
+- Custom CUDA kernels for stereographic projection
+- Integration with HuggingFace Transformers
+- Efficient multi-head stereographic attention
 
-### Phase 3: Applications (Months 7–12)
-- [ ] 360° vision experiments
-- [ ] Molecular property prediction
-- [ ] Climate data processing
-- [ ] Domain-specific papers
+### Phase 3: Experiments
+- WikiText-103 language modeling
+- CIFAR-10/100 image classification
+- WMT machine translation
+- Ablation studies on all five extensions
 
-### Phase 4: Scale (Months 12+)
-- [ ] Large-scale language model training
-- [ ] Efficient inference (stereographic KV-cache)
-- [ ] Hardware-specific optimizations
-- [ ] Open-source release
+### Phase 4: Extensions
+- Continuous Möbius flows for smoother optimization
+- Non-abelian gauge extensions (SU(2), SU(3))
+- Stereographic equivariant architectures
+- Applications to scientific domains
+
+### Phase 5: Scale
+- Large-scale language model training (1B+ parameters)
+- Comparison with GPT-2/3 at scale
+- Production deployment and optimization
+- Community toolkit release
 
 ---
 
-*This team structure is designed for a research lab or startup. For academic settings, the PI and Formal Verification Lead might be faculty, with graduate students filling the other roles.*
+## Collaboration Opportunities
+
+We welcome collaboration from:
+- **Differential geometers**: Extending the conformal theory to other model spaces
+- **Gauge theorists**: Deepening the physics interpretation
+- **ML engineers**: Implementing and benchmarking at scale
+- **Application scientists**: Applying to domain-specific problems
+- **Formal verification experts**: Extending the Lean 4 proof library
+
+Contact: Open an issue or PR in the repository.

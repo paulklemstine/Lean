@@ -26,21 +26,21 @@ open Tropical
 The tropical addition (min) is idempotent
 -/
 theorem tropical_add_idem (a : Tropical ℝ) : a + a = a := by
-  exact?
+  exact add_self a
 
 /-
 Min-plus identity: trop(a) + trop(b) = trop(min a b)
 -/
 theorem trop_add_eq_min (a b : ℝ) :
     (Tropical.trop a) + (Tropical.trop b) = Tropical.trop (min a b) := by
-      exact?
+      exact Eq.symm (trop_min a b)
 
 /-
 Product identity: trop(a) * trop(b) = trop(a + b)
 -/
 theorem trop_mul_eq_add (a b : ℝ) :
     (Tropical.trop a) * (Tropical.trop b) = Tropical.trop (a + b) := by
-      exact?
+      exact untrop_eq_iff_eq_trop.mp rfl
 
 /-! ## Tropical Polynomials -/
 
@@ -126,6 +126,6 @@ The key tropical "no counting" theorem:
 -/
 theorem tropical_no_counting (a b : Tropical ℝ) :
     a + a = a := by
-      exact?
+      exact tropical_add_idem a
 
 end TropicalCircuits
