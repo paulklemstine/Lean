@@ -24,7 +24,7 @@ def IsPythagoreanKTuple {k : ℕ} (v : Fin k → ℤ) (d : ℤ) : Prop :=
 For any component j of a k-tuple, (d - v j)(d + v j) = ∑_{i ≠ j} (v i)².
 -/
 theorem ktuple_factor_identity {k : ℕ} (v : Fin k → ℤ) (d : ℤ) (j : Fin k)
-    (h : IsPythagoreanKTuple v d) :
+    (_h : IsPythagoreanKTuple v d) :
     (d - v j) * (d + v j) = ∑ i ∈ Finset.univ.erase j, (v i)^2 := by
   simp_all +decide [ IsPythagoreanKTuple, mul_comm ];
   ring
@@ -35,7 +35,7 @@ theorem ktuple_factor_identity {k : ℕ} (v : Fin k → ℤ) (d : ℤ) (j : Fin 
 GCD extraction from k-tuple peel identity.
 -/
 theorem ktuple_gcd_extraction {k : ℕ} (v : Fin k → ℤ) (d : ℤ) (j : Fin k)
-    (h : IsPythagoreanKTuple v d) (N : ℤ) (hN : N = v j) :
+    (_h : IsPythagoreanKTuple v d) (N : ℤ) (hN : N = v j) :
     (Int.gcd (d - v j) N : ℤ) * (Int.gcd (d + v j) N : ℤ) ∣ N^2 := by
   convert mul_dvd_mul ( Int.gcd_dvd_right ( d - v j ) N ) ( Int.gcd_dvd_right ( d + v j ) N ) using 1 ; rw [ hN ] ; ring
 

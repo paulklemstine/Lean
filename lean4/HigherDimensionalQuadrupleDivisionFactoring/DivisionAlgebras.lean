@@ -71,9 +71,8 @@ Quadruple composition via Euler's identity:
     composing two quadruples gives a quadruple with product hypotenuse.
 -/
 theorem quadruple_composition (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℤ)
-    (ha : a₁^2 + a₂^2 + a₃^2 = a₄^2) (hb : b₁^2 + b₂^2 + b₃^2 = b₄^2) :
+    (_ha : a₁^2 + a₂^2 + a₃^2 = a₄^2) (_hb : b₁^2 + b₂^2 + b₃^2 = b₄^2) :
     ∃ c₁ c₂ c₃ : ℤ, c₁^2 + c₂^2 + c₃^2 = (a₄ * b₄)^2 := by
-  -- Set $c_1 = \pm a_4 b_4$, $c_2 = 0$, and $c_3 = 0$.
   exact ⟨a₄ * b₄, 0, 0, by simp⟩
 
 /-- Parametric form of Pythagorean quadruples via quaternion norms. -/

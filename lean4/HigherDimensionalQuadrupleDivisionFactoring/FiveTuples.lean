@@ -60,16 +60,16 @@ theorem five_tuple_multi_channel (a₁ a₂ a₃ a₄ a₅ : ℤ)
 Factor extraction: gcd(a₅ - a₄, a₁) · gcd(a₅ + a₄, a₁) divides a₁².
 -/
 theorem five_tuple_factor_extraction (a₁ a₂ a₃ a₄ a₅ : ℤ)
-    (h : IsPythagorean5Tuple a₁ a₂ a₃ a₄ a₅) :
+    (_h : IsPythagorean5Tuple a₁ a₂ a₃ a₄ a₅) :
     (Int.gcd (a₅ - a₄) a₁ : ℤ) * (Int.gcd (a₅ + a₄) a₁ : ℤ) ∣ a₁^2 := by
   convert mul_dvd_mul ( Int.gcd_dvd_right _ _ ) ( Int.gcd_dvd_right _ _ ) using 1;
   ring
 
 /-- The product (a₅ - aᵢ)(a₅ + aᵢ) always divides a₅² - aᵢ² = sum of other squares. -/
 theorem five_tuple_factor_identity (a₁ a₂ a₃ a₄ a₅ : ℤ)
-    (h : IsPythagorean5Tuple a₁ a₂ a₃ a₄ a₅) :
+    (_h : IsPythagorean5Tuple a₁ a₂ a₃ a₄ a₅) :
     a₅^2 - a₁^2 = a₂^2 + a₃^2 + a₄^2 := by
-  unfold IsPythagorean5Tuple at h; linarith
+  unfold IsPythagorean5Tuple at _h; linarith
 
 /-! ## Cross-Difference for Shared-Hypotenuse 5-Tuples -/
 
