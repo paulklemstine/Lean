@@ -86,7 +86,7 @@ For odd N in the trivial triple (N, (N²-1)/2, (N²+1)/2),
 -/
 theorem trivial_triple_hypotenuse (n : ℤ) (hn_odd : n % 2 = 1) (hn_pos : n > 0) :
     n ^ 2 + ((n ^ 2 - 1) / 2) ^ 2 = ((n ^ 2 + 1) / 2) ^ 2 := by
-  exact?
+  exact odd_trivial_triple n hn_odd
 
 /-! ## §4. Shared-Hypotenuse Collision Theorem -/
 
