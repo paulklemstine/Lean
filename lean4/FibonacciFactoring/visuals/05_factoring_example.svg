@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 680" width="950" height="680">
+  <defs>
+    <style>
+      .title { font: bold 22px 'Helvetica Neue', Arial, sans-serif; fill: #1a1a2e; }
+      .subtitle { font: 16px 'Helvetica Neue', Arial, sans-serif; fill: #4a4a6a; }
+      .label { font: 13px 'Courier New', monospace; fill: #2d2d2d; }
+      .label-sm { font: 11px 'Courier New', monospace; fill: #555; }
+      .bit-1 { fill: #e63946; stroke: #c1121f; stroke-width: 1.5; }
+      .bit-0 { fill: #f1faee; stroke: #a8dadc; stroke-width: 1.5; }
+      .bit-text { font: bold 16px 'Courier New', monospace; fill: white; text-anchor: middle; dominant-baseline: central; }
+      .bit-text-dark { font: bold 16px 'Courier New', monospace; fill: #333; text-anchor: middle; dominant-baseline: central; }
+      .carry-up { stroke: #2a9d8f; stroke-width: 2; fill: none; marker-end: url(#arrowGreen); }
+      .carry-down { stroke: #e76f51; stroke-width: 2; fill: none; marker-end: url(#arrowOrange); stroke-dasharray: 6,3; }
+      .partial { fill: #457b9d; stroke: #1d3557; stroke-width: 1; }
+      .partial-text { font: bold 14px 'Courier New', monospace; fill: white; text-anchor: middle; dominant-baseline: central; }
+      .accent { fill: #f4a261; stroke: #e76f51; stroke-width: 1.5; }
+      .fib-box { fill: #264653; stroke: #2a9d8f; stroke-width: 1.5; rx: 4; }
+      .fib-text { font: bold 12px 'Helvetica Neue', Arial, sans-serif; fill: white; text-anchor: middle; dominant-baseline: central; }
+      .connector { stroke: #ccc; stroke-width: 1; fill: none; }
+      .bracket { font: 14px 'Helvetica Neue', Arial, sans-serif; fill: #666; }
+    </style>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2a9d8f" />
+    </marker>
+    <marker id="arrowOrange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#e76f51" />
+    </marker>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#fefefe;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f0f4f8;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="950" height="680" fill="url(#bgGrad)" rx="8"/>
+  <text x="475" y="38" class="title" text-anchor="middle">Fibonacci-Base Factoring: 17 × 19 = 323</text>
+  <text x="50" y="80" class="subtitle">Factor representations:</text>
+  <text x="150" y="127" class="label" text-anchor="end">p = 17</text>
+  <rect x="160" y="110" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="176" y="126" class="bit-text-dark"> </text>
+  <rect x="194" y="110" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="210" y="126" class="bit-text-dark"> </text>
+  <rect x="228" y="110" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="244" y="126" class="bit-text-dark"> </text>
+  <rect x="262" y="110" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="278" y="126" class="bit-text-dark"> </text>
+  <rect x="296" y="110" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="312" y="126" class="bit-text-dark"> </text>
+  <rect x="330" y="110" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="346" y="126" class="bit-text-dark"> </text>
+  <rect x="364" y="110" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="380" y="126" class="bit-text-dark"> </text>
+  <rect x="398" y="110" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="414" y="126" class="bit-text-dark"> </text>
+  <rect x="432" y="110" width="32" height="32" class="bit-1" rx="4"/>
+  <text x="448" y="126" class="bit-text">1</text>
+  <rect x="466" y="110" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="482" y="126" class="bit-text-dark">0</text>
+  <rect x="500" y="110" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="516" y="126" class="bit-text-dark">0</text>
+  <rect x="534" y="110" width="32" height="32" class="bit-1" rx="4"/>
+  <text x="550" y="126" class="bit-text">1</text>
+  <rect x="568" y="110" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="584" y="126" class="bit-text-dark">0</text>
+  <rect x="602" y="110" width="32" height="32" class="bit-1" rx="4"/>
+  <text x="618" y="126" class="bit-text">1</text>
+  <text x="150" y="169" class="label" text-anchor="end">q = 19</text>
+  <rect x="160" y="152" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="176" y="168" class="bit-text-dark"> </text>
+  <rect x="194" y="152" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="210" y="168" class="bit-text-dark"> </text>
+  <rect x="228" y="152" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="244" y="168" class="bit-text-dark"> </text>
+  <rect x="262" y="152" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="278" y="168" class="bit-text-dark"> </text>
+  <rect x="296" y="152" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="312" y="168" class="bit-text-dark"> </text>
+  <rect x="330" y="152" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="346" y="168" class="bit-text-dark"> </text>
+  <rect x="364" y="152" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="380" y="168" class="bit-text-dark"> </text>
+  <rect x="398" y="152" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="414" y="168" class="bit-text-dark"> </text>
+  <rect x="432" y="152" width="32" height="32" class="bit-1" rx="4"/>
+  <text x="448" y="168" class="bit-text">1</text>
+  <rect x="466" y="152" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="482" y="168" class="bit-text-dark">0</text>
+  <rect x="500" y="152" width="32" height="32" class="bit-1" rx="4"/>
+  <text x="516" y="168" class="bit-text">1</text>
+  <rect x="534" y="152" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="550" y="168" class="bit-text-dark">0</text>
+  <rect x="568" y="152" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="584" y="168" class="bit-text-dark">0</text>
+  <rect x="602" y="152" width="32" height="32" class="bit-1" rx="4"/>
+  <text x="618" y="168" class="bit-text">1</text>
+  <text x="50" y="207" class="subtitle">Partial products (p × each Fibonacci component of q):</text>
+  <text x="150" y="249" class="label" text-anchor="end">p×F(2)=1</text>
+  <rect x="160" y="232" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="176" y="248" class="bit-text-dark"> </text>
+  <rect x="194" y="232" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="210" y="248" class="bit-text-dark"> </text>
+  <rect x="228" y="232" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="244" y="248" class="bit-text-dark"> </text>
+  <rect x="262" y="232" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="278" y="248" class="bit-text-dark"> </text>
+  <rect x="296" y="232" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="312" y="248" class="bit-text-dark"> </text>
+  <rect x="330" y="232" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="346" y="248" class="bit-text-dark"> </text>
+  <rect x="364" y="232" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="380" y="248" class="bit-text-dark"> </text>
+  <rect x="398" y="232" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="414" y="248" class="bit-text-dark"> </text>
+  <rect x="432" y="232" width="32" height="32" class="bit-1" rx="4"/>
+  <text x="448" y="248" class="bit-text">1</text>
+  <rect x="466" y="232" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="482" y="248" class="bit-text-dark">0</text>
+  <rect x="500" y="232" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="516" y="248" class="bit-text-dark">0</text>
+  <rect x="534" y="232" width="32" height="32" class="bit-1" rx="4"/>
+  <text x="550" y="248" class="bit-text">1</text>
+  <rect x="568" y="232" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="584" y="248" class="bit-text-dark">0</text>
+  <rect x="602" y="232" width="32" height="32" class="bit-1" rx="4"/>
+  <text x="618" y="248" class="bit-text">1</text>
+  <text x="150" y="287" class="label" text-anchor="end">p×F(5)=5</text>
+  <rect x="160" y="270" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="176" y="286" class="bit-text-dark"> </text>
+  <rect x="194" y="270" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="210" y="286" class="bit-text-dark"> </text>
+  <rect x="228" y="270" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="244" y="286" class="bit-text-dark"> </text>
+  <rect x="262" y="270" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="278" y="286" class="bit-text-dark"> </text>
+  <rect x="296" y="270" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="312" y="286" class="bit-text-dark"> </text>
+  <rect x="330" y="270" width="32" height="32" class="bit-1" rx="4"/>
+  <text x="346" y="286" class="bit-text">1</text>
+  <rect x="364" y="270" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="380" y="286" class="bit-text-dark">0</text>
+  <rect x="398" y="270" width="32" height="32" class="bit-1" rx="4"/>
+  <text x="414" y="286" class="bit-text">1</text>
+  <rect x="432" y="270" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="448" y="286" class="bit-text-dark">0</text>
+  <rect x="466" y="270" width="32" height="32" class="bit-1" rx="4"/>
+  <text x="482" y="286" class="bit-text">1</text>
+  <rect x="500" y="270" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="516" y="286" class="bit-text-dark">0</text>
+  <rect x="534" y="270" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="550" y="286" class="bit-text-dark">0</text>
+  <rect x="568" y="270" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="584" y="286" class="bit-text-dark">0</text>
+  <rect x="602" y="270" width="32" height="32" class="bit-1" rx="4"/>
+  <text x="618" y="286" class="bit-text">1</text>
+  <text x="150" y="325" class="label" text-anchor="end">p×F(7)=13</text>
+  <rect x="160" y="308" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="176" y="324" class="bit-text-dark"> </text>
+  <rect x="194" y="308" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="210" y="324" class="bit-text-dark"> </text>
+  <rect x="228" y="308" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="244" y="324" class="bit-text-dark"> </text>
+  <rect x="262" y="308" width="32" height="32" class="bit-1" rx="4"/>
+  <text x="278" y="324" class="bit-text">1</text>
+  <rect x="296" y="308" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="312" y="324" class="bit-text-dark">0</text>
+  <rect x="330" y="308" width="32" height="32" class="bit-1" rx="4"/>
+  <text x="346" y="324" class="bit-text">1</text>
+  <rect x="364" y="308" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="380" y="324" class="bit-text-dark">0</text>
+  <rect x="398" y="308" width="32" height="32" class="bit-1" rx="4"/>
+  <text x="414" y="324" class="bit-text">1</text>
+  <rect x="432" y="308" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="448" y="324" class="bit-text-dark">0</text>
+  <rect x="466" y="308" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="482" y="324" class="bit-text-dark">0</text>
+  <rect x="500" y="308" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="516" y="324" class="bit-text-dark">0</text>
+  <rect x="534" y="308" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="550" y="324" class="bit-text-dark">0</text>
+  <rect x="568" y="308" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="584" y="324" class="bit-text-dark">0</text>
+  <rect x="602" y="308" width="32" height="32" class="bit-1" rx="4"/>
+  <text x="618" y="324" class="bit-text">1</text>
+  <line x1="160" y1="361" x2="636" y2="361" stroke="#333" stroke-width="2"/>
+  <text x="646" y="366" class="label">+</text>
+  <text x="80" y="392" class="label" text-anchor="end">Column sums</text>
+  <rect x="262" y="376" width="32" height="32" class="bit-1" rx="4"/>
+  <text x="278" y="392" class="bit-text">1</text>
+  <rect x="296" y="376" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="312" y="392" class="bit-text-dark">0</text>
+  <rect x="330" y="376" width="32" height="32" class="accent" rx="4"/>
+  <text x="346" y="392" class="bit-text">2</text>
+  <rect x="364" y="376" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="380" y="392" class="bit-text-dark">0</text>
+  <rect x="398" y="376" width="32" height="32" class="accent" rx="4"/>
+  <text x="414" y="392" class="bit-text">2</text>
+  <rect x="432" y="376" width="32" height="32" class="bit-1" rx="4"/>
+  <text x="448" y="392" class="bit-text">1</text>
+  <rect x="466" y="376" width="32" height="32" class="bit-1" rx="4"/>
+  <text x="482" y="392" class="bit-text">1</text>
+  <rect x="500" y="376" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="516" y="392" class="bit-text-dark">0</text>
+  <rect x="534" y="376" width="32" height="32" class="bit-1" rx="4"/>
+  <text x="550" y="392" class="bit-text">1</text>
+  <rect x="568" y="376" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="584" y="392" class="bit-text-dark">0</text>
+  <rect x="602" y="376" width="32" height="32" class="accent" rx="4"/>
+  <text x="618" y="392" class="bit-text">3</text>
+  <text x="350" y="426" class="label" fill="#e76f51">↓ Normalize (bidirectional carries) ↓</text>
+  <text x="150" y="468" class="label" text-anchor="end">N = 323</text>
+  <rect x="160" y="451" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="176" y="467" class="bit-text-dark"> </text>
+  <rect x="194" y="451" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="210" y="467" class="bit-text-dark"> </text>
+  <rect x="228" y="451" width="32" height="32" class="bit-1" rx="4"/>
+  <text x="244" y="467" class="bit-text">1</text>
+  <rect x="262" y="451" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="278" y="467" class="bit-text-dark">0</text>
+  <rect x="296" y="451" width="32" height="32" class="bit-1" rx="4"/>
+  <text x="312" y="467" class="bit-text">1</text>
+  <rect x="330" y="451" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="346" y="467" class="bit-text-dark">0</text>
+  <rect x="364" y="451" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="380" y="467" class="bit-text-dark">0</text>
+  <rect x="398" y="451" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="414" y="467" class="bit-text-dark">0</text>
+  <rect x="432" y="451" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="448" y="467" class="bit-text-dark">0</text>
+  <rect x="466" y="451" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="482" y="467" class="bit-text-dark">0</text>
+  <rect x="500" y="451" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="516" y="467" class="bit-text-dark">0</text>
+  <rect x="534" y="451" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="550" y="467" class="bit-text-dark">0</text>
+  <rect x="568" y="451" width="32" height="32" class="bit-0" rx="4"/>
+  <text x="584" y="467" class="bit-text-dark">0</text>
+  <rect x="602" y="451" width="32" height="32" class="bit-1" rx="4"/>
+  <text x="618" y="467" class="bit-text">1</text>
+  <rect x="50" y="511" width="850" height="80" fill="#264653" rx="6" opacity="0.92"/>
+  <text x="475" y="531" class="fib-text" font-size="13" text-anchor="middle">INSIGHT: Column values ≥ 2 (shown in orange) trigger bidirectional carry propagation.</text>
+  <text x="475" y="553" class="fib-text" font-size="13" text-anchor="middle">Each carry sends +1 upward to position i+1 AND +1 downward to position i−2.</text>
+  <text x="475" y="575" class="fib-text" font-size="13" text-anchor="middle">This creates non-local constraints that couple distant digit positions of the factors.</text>
+</svg>
