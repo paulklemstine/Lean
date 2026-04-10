@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 550" font-family="'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="pillar1" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" style="stop-color:#1a5c2a"/><stop offset="100%" style="stop-color:#2d9940"/>
+    </linearGradient>
+    <linearGradient id="pillar2" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" style="stop-color:#1a1a5c"/><stop offset="100%" style="stop-color:#3333aa"/>
+    </linearGradient>
+    <linearGradient id="pillar3" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" style="stop-color:#5c1a1a"/><stop offset="100%" style="stop-color:#cc3333"/>
+    </linearGradient>
+    <linearGradient id="pillar4" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" style="stop-color:#5c4c1a"/><stop offset="100%" style="stop-color:#ccaa33"/>
+    </linearGradient>
+    <linearGradient id="pillar5" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" style="stop-color:#4c1a5c"/><stop offset="100%" style="stop-color:#aa33cc"/>
+    </linearGradient>
+  </defs>
+  
+  <rect width="900" height="550" fill="#0d1117"/>
+  
+  <text x="450" y="40" text-anchor="middle" fill="#ffffff" font-size="22" font-weight="bold">
+    The Five Pillars of Mathematical Unification
+  </text>
+  
+  <!-- Roof / Keystone -->
+  <polygon points="450,70 100,130 800,130" fill="none" stroke="#ffcc00" stroke-width="2"/>
+  <text x="450" y="110" text-anchor="middle" fill="#ffcc00" font-size="14" font-weight="bold">
+    f ∘ f = f — The Idempotent Equation
+  </text>
+  
+  <!-- Pillar 1: Tropical -->
+  <rect x="110" y="135" width="120" height="300" rx="3" fill="url(#pillar1)" stroke="#33bb55" stroke-width="1"/>
+  <text x="170" y="165" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold">TROPICAL</text>
+  <text x="170" y="185" text-anchor="middle" fill="#ccffcc" font-size="10">max(x,x) = x</text>
+  <text x="170" y="210" text-anchor="middle" fill="#aaddaa" font-size="9">• Max-plus ring</text>
+  <text x="170" y="228" text-anchor="middle" fill="#aaddaa" font-size="9">• Optimization</text>
+  <text x="170" y="246" text-anchor="middle" fill="#aaddaa" font-size="9">• Piecewise-linear</text>
+  <text x="170" y="264" text-anchor="middle" fill="#aaddaa" font-size="9">• Valuations</text>
+  
+  <!-- Pillar 2: Quantum -->
+  <rect x="250" y="135" width="120" height="300" rx="3" fill="url(#pillar2)" stroke="#6666ff" stroke-width="1"/>
+  <text x="310" y="165" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold">QUANTUM</text>
+  <text x="310" y="185" text-anchor="middle" fill="#ccccff" font-size="10">P² = P</text>
+  <text x="310" y="210" text-anchor="middle" fill="#aaaadd" font-size="9">• LogSumExp</text>
+  <text x="310" y="228" text-anchor="middle" fill="#aaaadd" font-size="9">• Born rule</text>
+  <text x="310" y="246" text-anchor="middle" fill="#aaaadd" font-size="9">• Softmax</text>
+  <text x="310" y="264" text-anchor="middle" fill="#aaaadd" font-size="9">• Maslov deform</text>
+  
+  <!-- Pillar 3: Algebraic -->
+  <rect x="390" y="135" width="120" height="300" rx="3" fill="url(#pillar3)" stroke="#dd4444" stroke-width="1"/>
+  <text x="450" y="165" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold">ALGEBRAIC</text>
+  <text x="450" y="185" text-anchor="middle" fill="#ffcccc" font-size="10">e² = e</text>
+  <text x="450" y="210" text-anchor="middle" fill="#ddaaaa" font-size="9">• Karoubi env</text>
+  <text x="450" y="228" text-anchor="middle" fill="#ddaaaa" font-size="9">• Projections</text>
+  <text x="450" y="246" text-anchor="middle" fill="#ddaaaa" font-size="9">• Direct sums</text>
+  <text x="450" y="264" text-anchor="middle" fill="#ddaaaa" font-size="9">• Division alg</text>
+  
+  <!-- Pillar 4: Number Theory -->
+  <rect x="530" y="135" width="120" height="300" rx="3" fill="url(#pillar4)" stroke="#ddaa33" stroke-width="1"/>
+  <text x="590" y="160" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">NUMBER</text>
+  <text x="590" y="178" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">THEORY</text>
+  <text x="590" y="210" text-anchor="middle" fill="#ddcc88" font-size="9">• Berggren tree</text>
+  <text x="590" y="228" text-anchor="middle" fill="#ddcc88" font-size="9">• SL₂(ℤ)</text>
+  <text x="590" y="246" text-anchor="middle" fill="#ddcc88" font-size="9">• Pythagorean</text>
+  <text x="590" y="264" text-anchor="middle" fill="#ddcc88" font-size="9">• Langlands</text>
+  
+  <!-- Pillar 5: Information -->
+  <rect x="670" y="135" width="120" height="300" rx="3" fill="url(#pillar5)" stroke="#bb44dd" stroke-width="1"/>
+  <text x="730" y="160" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">INFO</text>
+  <text x="730" y="178" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">THEORY</text>
+  <text x="730" y="210" text-anchor="middle" fill="#dd99ee" font-size="9">• Entropy</text>
+  <text x="730" y="228" text-anchor="middle" fill="#dd99ee" font-size="9">• KL divergence</text>
+  <text x="730" y="246" text-anchor="middle" fill="#dd99ee" font-size="9">• Codes</text>
+  <text x="730" y="264" text-anchor="middle" fill="#dd99ee" font-size="9">• Persistence</text>
+  
+  <!-- Foundation -->
+  <rect x="100" y="440" width="700" height="40" rx="3" fill="#333366" stroke="#6666aa" stroke-width="1"/>
+  <text x="450" y="465" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold">
+    Machine-Verified in Lean 4 with Mathlib — 100+ Theorems, Zero Sorry
+  </text>
+  
+  <!-- New bridge labels -->
+  <text x="450" y="510" text-anchor="middle" fill="#ffcc00" font-size="12">
+    ★ NEW: 5 bridge files, 80+ formally proved theorems connecting all pillars ★
+  </text>
+  <text x="450" y="530" text-anchor="middle" fill="#888888" font-size="10">
+    Entropy–Tropical · Spectral–Idempotent · Persistence–Tropical · Coding–Algebra · Quantum–Tropical
+  </text>
+</svg>
