@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="bg4" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#fafafa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f0f5f0;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="800" height="450" fill="url(#bg4)"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" fill="#222244" font-family="Georgia, serif" font-size="18" font-weight="bold">
+    Persistence Stability via the Tropical Metric
+  </text>
+  <text x="400" y="55" text-anchor="middle" fill="#666688" font-family="Georgia, serif" font-size="12">
+    d∞(I, J) = max(|b₁−b₂|, |d₁−d₂|) — The L∞ (tropical) bottleneck distance
+  </text>
+  
+  <!-- Left panel: Persistence diagram -->
+  <rect x="30" y="70" width="350" height="320" rx="5" fill="white" stroke="#ccc" stroke-width="1"/>
+  <text x="205" y="92" text-anchor="middle" fill="#333" font-family="Georgia, serif" font-size="13" font-weight="bold">Persistence Diagram</text>
+  
+  <!-- Diagonal line (birth = death) -->
+  <line x1="70" y1="360" x2="340" y2="90" stroke="#ddd" stroke-width="1.5"/>
+  <text x="310" y="108" fill="#aaa" font-size="9" transform="rotate(-45,310,108)">diagonal</text>
+  
+  <!-- Axes -->
+  <line x1="70" y1="360" x2="350" y2="360" stroke="#333" stroke-width="1"/>
+  <line x1="70" y1="360" x2="70" y2="90" stroke="#333" stroke-width="1"/>
+  <text x="210" y="390" text-anchor="middle" fill="#444" font-size="11">birth</text>
+  <text x="45" y="225" text-anchor="middle" fill="#444" font-size="11" transform="rotate(-90,45,225)">death</text>
+  
+  <!-- Original points (blue circles) -->
+  <circle cx="120" cy="180" r="8" fill="#4488ff" opacity="0.8"/>
+  <text x="133" y="176" fill="#4488ff" font-size="9">Significant</text>
+  
+  <circle cx="160" cy="240" r="7" fill="#4488ff" opacity="0.8"/>
+  <text x="173" y="236" fill="#4488ff" font-size="9">Medium</text>
+  
+  <circle cx="250" cy="300" r="5" fill="#4488ff" opacity="0.6"/>
+  <text x="263" y="296" fill="#4488ff" font-size="8">Noise</text>
+  
+  <circle cx="280" cy="320" r="4" fill="#4488ff" opacity="0.4"/>
+  
+  <!-- Perturbed points (red circles) -->
+  <circle cx="125" cy="185" r="6" fill="none" stroke="#cc3333" stroke-width="1.5"/>
+  <circle cx="155" cy="245" r="6" fill="none" stroke="#cc3333" stroke-width="1.5"/>
+  <circle cx="245" cy="310" r="5" fill="none" stroke="#cc3333" stroke-width="1.5"/>
+  
+  <!-- ε-balls -->
+  <circle cx="120" cy="180" r="18" fill="none" stroke="#cc3333" stroke-width="0.5" stroke-dasharray="3,3" opacity="0.5"/>
+  <circle cx="160" cy="240" r="18" fill="none" stroke="#cc3333" stroke-width="0.5" stroke-dasharray="3,3" opacity="0.5"/>
+  
+  <!-- Legend for left panel -->
+  <circle cx="90" y="375" r="5" fill="#4488ff"/>
+  <text x="100" y="379" fill="#444" font-size="9">Original</text>
+  <circle cx="170" y="375" r="5" fill="none" stroke="#cc3333" stroke-width="1.5"/>
+  <text x="180" y="379" fill="#444" font-size="9">Perturbed (ε)</text>
+  
+  <!-- Right panel: Stability theorem -->
+  <rect x="420" y="70" width="350" height="320" rx="5" fill="white" stroke="#ccc" stroke-width="1"/>
+  <text x="595" y="92" text-anchor="middle" fill="#333" font-family="Georgia, serif" font-size="13" font-weight="bold">Stability Theorem</text>
+  
+  <!-- Theorem statement -->
+  <rect x="440" y="110" width="310" height="100" rx="5" fill="#f0f5ff" stroke="#aaccff" stroke-width="1"/>
+  <text x="595" y="132" text-anchor="middle" fill="#334488" font-family="Georgia, serif" font-size="11" font-weight="bold">
+    Significant Feature Stability
+  </text>
+  <text x="595" y="152" text-anchor="middle" fill="#445588" font-family="monospace" font-size="10">
+    If lifetime(I) > t + 2ε
+  </text>
+  <text x="595" y="168" text-anchor="middle" fill="#445588" font-family="monospace" font-size="10">
+    and d∞(I, J) ≤ ε
+  </text>
+  <text x="595" y="188" text-anchor="middle" fill="#445588" font-family="monospace" font-size="10">
+    then lifetime(J) > t
+  </text>
+  
+  <!-- Visual explanation -->
+  <text x="595" y="235" text-anchor="middle" fill="#333" font-family="Georgia, serif" font-size="11">How it works:</text>
+  
+  <!-- Lifetime bar for I -->
+  <rect x="460" y="255" width="180" height="20" rx="3" fill="#4488ff" opacity="0.3"/>
+  <rect x="460" y="255" width="180" height="20" rx="3" fill="none" stroke="#4488ff" stroke-width="1.5"/>
+  <text x="450" y="269" text-anchor="end" fill="#4488ff" font-size="10">I:</text>
+  <line x1="640" y1="252" x2="640" y2="278" stroke="#666" stroke-width="0.5"/>
+  <text x="550" y="270" text-anchor="middle" fill="#334488" font-size="9">lifetime > t + 2ε</text>
+  
+  <!-- ε margins -->
+  <rect x="460" y="285" width="20" height="15" rx="2" fill="#ffcccc" opacity="0.5"/>
+  <text x="470" y="296" text-anchor="middle" fill="#cc3333" font-size="8">ε</text>
+  <rect x="620" y="285" width="20" height="15" rx="2" fill="#ffcccc" opacity="0.5"/>
+  <text x="630" y="296" text-anchor="middle" fill="#cc3333" font-size="8">ε</text>
+  
+  <!-- Lifetime bar for J -->
+  <rect x="480" y="310" width="140" height="20" rx="3" fill="#cc3333" opacity="0.2"/>
+  <rect x="480" y="310" width="140" height="20" rx="3" fill="none" stroke="#cc3333" stroke-width="1.5"/>
+  <text x="450" y="324" text-anchor="end" fill="#cc3333" font-size="10">J:</text>
+  <text x="550" y="325" text-anchor="middle" fill="#883333" font-size="9">lifetime > t ✓</text>
+  
+  <!-- Arrow showing guarantee -->
+  <line x1="595" y1="340" x2="595" y2="360" stroke="#009944" stroke-width="1.5"/>
+  <polygon points="590,360 600,360 595,368" fill="#009944"/>
+  <text x="595" y="383" text-anchor="middle" fill="#009944" font-family="Georgia, serif" font-size="11" font-weight="bold">Feature survives!</text>
+  
+  <!-- Verified badge -->
+  <rect x="290" y="418" width="220" height="22" rx="11" fill="#e8f5e9" stroke="#66bb6a" stroke-width="1"/>
+  <text x="400" y="433" text-anchor="middle" fill="#2e7d32" font-family="Georgia, serif" font-size="10">✓ Formally verified in Lean 4</text>
+</svg>
