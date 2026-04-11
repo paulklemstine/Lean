@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d1117;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#161b22;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#f9d923;stop-opacity:0.15" />
+      <stop offset="100%" style="stop-color:#f9d923;stop-opacity:0" />
+    </radialGradient>
+    <filter id="glow2">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  
+  <rect width="1200" height="900" fill="url(#bg)"/>
+  
+  <!-- Title -->
+  <text x="600" y="45" text-anchor="middle" fill="#f9d923" font-size="26" font-weight="bold">
+    Five Frontiers of the Unified Idempotent-Tropical-Quantum Framework
+  </text>
+  <text x="600" y="70" text-anchor="middle" fill="#8b949e" font-size="13">
+    Machine-verified theorems bridging AI, Physics, Topology, and Coding Theory
+  </text>
+  
+  <!-- Central hub: Idempotent Equation -->
+  <circle cx="600" cy="430" r="120" fill="url(#centerGlow)" stroke="none"/>
+  <circle cx="600" cy="430" r="80" fill="none" stroke="#f9d923" stroke-width="2.5" filter="url(#glow2)"/>
+  <text x="600" y="420" text-anchor="middle" fill="#f9d923" font-size="22" font-weight="bold">f ∘ f = f</text>
+  <text x="600" y="445" text-anchor="middle" fill="#ccc" font-size="12">Idempotent Core</text>
+  <text x="600" y="462" text-anchor="middle" fill="#888" font-size="10">Lean 4 verified</text>
+  
+  <!-- Frontier 1: Tropical NAS (top-left) -->
+  <g transform="translate(200, 180)">
+    <rect x="-150" y="-70" width="300" height="140" rx="15" fill="rgba(233,69,96,0.1)" stroke="#e94560" stroke-width="2"/>
+    <circle cx="-130" cy="-50" r="18" fill="#e94560" opacity="0.8"/>
+    <text x="-130" y="-45" text-anchor="middle" fill="white" font-size="16" font-weight="bold">1</text>
+    <text x="0" y="-38" text-anchor="middle" fill="#e94560" font-size="16" font-weight="bold">Tropical NAS</text>
+    <text x="0" y="-15" text-anchor="middle" fill="#ccc" font-size="11">Conv + Transformer + Residual</text>
+    <line x1="-120" y1="0" x2="120" y2="0" stroke="#e94560" stroke-width="0.5" opacity="0.3"/>
+    <text x="-130" y="18" fill="#aaa" font-size="10">• ReLU(ReLU(x)) = ReLU(x)</text>
+    <text x="-130" y="34" fill="#aaa" font-size="10">• rank ≤ h · d_k per layer</text>
+    <text x="-130" y="50" fill="#aaa" font-size="10">• regions ≤ rank^depth</text>
+  </g>
+  <line x1="340" y1="270" x2="530" y2="380" stroke="#e94560" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.5"/>
+  
+  <!-- Frontier 2: Quantum Annealing (top-right) -->
+  <g transform="translate(1000, 180)">
+    <rect x="-150" y="-70" width="300" height="140" rx="15" fill="rgba(83,52,131,0.15)" stroke="#a070e0" stroke-width="2"/>
+    <circle cx="-130" cy="-50" r="18" fill="#a070e0" opacity="0.8"/>
+    <text x="-130" y="-45" text-anchor="middle" fill="white" font-size="16" font-weight="bold">2</text>
+    <text x="0" y="-38" text-anchor="middle" fill="#a070e0" font-size="16" font-weight="bold">Quantum Annealing</text>
+    <text x="0" y="-15" text-anchor="middle" fill="#ccc" font-size="11">Optimal Cooling Schedules</text>
+    <line x1="-120" y1="0" x2="120" y2="0" stroke="#a070e0" stroke-width="0.5" opacity="0.3"/>
+    <text x="-130" y="18" fill="#aaa" font-size="10">• β(t) = c · log(1+t)</text>
+    <text x="-130" y="34" fill="#aaa" font-size="10">• Gap ≤ log(2)/β &lt; 1 bit</text>
+    <text x="-130" y="50" fill="#aaa" font-size="10">• max(x,x) = x idempotent</text>
+  </g>
+  <line x1="860" y1="270" x2="670" y2="380" stroke="#a070e0" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.5"/>
+  
+  <!-- Frontier 3: Persistent Homology (left) -->
+  <g transform="translate(140, 530)">
+    <rect x="-120" y="-70" width="240" height="140" rx="15" fill="rgba(64,144,255,0.1)" stroke="#4090ff" stroke-width="2"/>
+    <circle cx="-100" cy="-50" r="18" fill="#4090ff" opacity="0.8"/>
+    <text x="-100" y="-45" text-anchor="middle" fill="white" font-size="16" font-weight="bold">3</text>
+    <text x="10" y="-38" text-anchor="middle" fill="#4090ff" font-size="15" font-weight="bold">Persistent Homology</text>
+    <text x="10" y="-15" text-anchor="middle" fill="#ccc" font-size="11">Tropical Polynomial Time</text>
+    <line x1="-100" y1="0" x2="100" y2="0" stroke="#4090ff" stroke-width="0.5" opacity="0.3"/>
+    <text x="-100" y="18" fill="#aaa" font-size="10">• O(n³) column reduction</text>
+    <text x="-100" y="34" fill="#aaa" font-size="10">• Bottleneck = tropical metric</text>
+    <text x="-100" y="50" fill="#aaa" font-size="10">• max(|a|,|b|) idempotent</text>
+  </g>
+  <line x1="270" y1="500" x2="530" y2="440" stroke="#4090ff" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.5"/>
+  
+  <!-- Frontier 4: E8 Quantum Codes (bottom-center) -->
+  <g transform="translate(600, 720)">
+    <rect x="-150" y="-55" width="300" height="110" rx="15" fill="rgba(0,200,150,0.1)" stroke="#00c896" stroke-width="2"/>
+    <circle cx="-130" cy="-35" r="18" fill="#00c896" opacity="0.8"/>
+    <text x="-130" y="-30" text-anchor="middle" fill="white" font-size="16" font-weight="bold">4</text>
+    <text x="0" y="-25" text-anchor="middle" fill="#00c896" font-size="15" font-weight="bold">E8 Quantum LDPC Codes</text>
+    <text x="0" y="-2" text-anchor="middle" fill="#ccc" font-size="11">240 roots = 112 + 128</text>
+    <line x1="-120" y1="10" x2="120" y2="10" stroke="#00c896" stroke-width="0.5" opacity="0.3"/>
+    <text x="-130" y="28" fill="#aaa" font-size="10">• Self-dual → CSS construction</text>
+    <text x="-130" y="44" fill="#aaa" font-size="10">• π ∘ π = π lattice projection</text>
+  </g>
+  <line x1="600" y1="665" x2="600" y2="510" stroke="#00c896" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.5"/>
+  
+  <!-- Frontier 5: Leech Lattice (right) -->
+  <g transform="translate(1060, 530)">
+    <rect x="-120" y="-70" width="240" height="140" rx="15" fill="rgba(255,107,53,0.1)" stroke="#ff6b35" stroke-width="2"/>
+    <circle cx="-100" cy="-50" r="18" fill="#ff6b35" opacity="0.8"/>
+    <text x="-100" y="-45" text-anchor="middle" fill="white" font-size="16" font-weight="bold">5</text>
+    <text x="10" y="-38" text-anchor="middle" fill="#ff6b35" font-size="15" font-weight="bold">Leech Lattice</text>
+    <text x="10" y="-15" text-anchor="middle" fill="#ccc" font-size="11">dim 24 = 3 × 8, kissing 196560</text>
+    <line x1="-100" y1="0" x2="100" y2="0" stroke="#ff6b35" stroke-width="0.5" opacity="0.3"/>
+    <text x="-100" y="18" fill="#aaa" font-size="10">• Golay [24,12,8] code</text>
+    <text x="-100" y="34" fill="#aaa" font-size="10">• [[24,0,8]] quantum code</text>
+    <text x="-100" y="50" fill="#aaa" font-size="10">• Corrects 3 errors</text>
+  </g>
+  <line x1="950" y1="500" x2="670" y2="440" stroke="#ff6b35" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.5"/>
+  
+  <!-- Cross-connections -->
+  <line x1="340" y1="220" x2="850" y2="220" stroke="#ffffff" stroke-width="0.5" stroke-dasharray="2,6" opacity="0.15"/>
+  <line x1="270" y1="570" x2="940" y2="570" stroke="#ffffff" stroke-width="0.5" stroke-dasharray="2,6" opacity="0.15"/>
+  <line x1="600" y1="680" x2="270" y2="570" stroke="#ffffff" stroke-width="0.5" stroke-dasharray="2,6" opacity="0.1"/>
+  <line x1="600" y1="680" x2="940" y2="570" stroke="#ffffff" stroke-width="0.5" stroke-dasharray="2,6" opacity="0.1"/>
+  
+  <!-- Legend -->
+  <g transform="translate(60, 840)">
+    <text x="0" y="0" fill="#888" font-size="11">60+ machine-verified theorems</text>
+    <text x="300" y="0" fill="#888" font-size="11">•</text>
+    <text x="320" y="0" fill="#888" font-size="11">Lean 4 + Mathlib</text>
+    <text x="520" y="0" fill="#888" font-size="11">•</text>
+    <text x="540" y="0" fill="#888" font-size="11">Zero sorry statements</text>
+    <text x="740" y="0" fill="#888" font-size="11">•</text>
+    <text x="760" y="0" fill="#888" font-size="11">Standard axioms only</text>
+  </g>
+</svg>

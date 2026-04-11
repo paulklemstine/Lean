@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <linearGradient id="codeBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d1117;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#161b22;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="1000" height="600" fill="url(#codeBg)"/>
+  
+  <text x="500" y="40" text-anchor="middle" fill="#f9d923" font-size="22" font-weight="bold">
+    From E8 to Leech: The Lattice Code Ladder
+  </text>
+  
+  <!-- E8 box -->
+  <g transform="translate(170, 200)">
+    <rect x="-140" y="-110" width="280" height="220" rx="15" fill="rgba(0,200,150,0.08)" stroke="#00c896" stroke-width="2"/>
+    <text x="0" y="-82" text-anchor="middle" fill="#00c896" font-size="18" font-weight="bold">E8 Lattice</text>
+    
+    <!-- E8 Dynkin diagram (simplified) -->
+    <g transform="translate(-80, -50)">
+      <circle cx="0" cy="0" r="5" fill="#00c896"/>
+      <circle cx="25" cy="0" r="5" fill="#00c896"/>
+      <circle cx="50" cy="0" r="5" fill="#00c896"/>
+      <circle cx="75" cy="0" r="5" fill="#00c896"/>
+      <circle cx="100" cy="0" r="5" fill="#00c896"/>
+      <circle cx="125" cy="0" r="5" fill="#00c896"/>
+      <circle cx="150" cy="0" r="5" fill="#00c896"/>
+      <circle cx="100" cy="-25" r="5" fill="#00c896"/>
+      <line x1="5" y1="0" x2="20" y2="0" stroke="#00c896" stroke-width="1.5"/>
+      <line x1="30" y1="0" x2="45" y2="0" stroke="#00c896" stroke-width="1.5"/>
+      <line x1="55" y1="0" x2="70" y2="0" stroke="#00c896" stroke-width="1.5"/>
+      <line x1="80" y1="0" x2="95" y2="0" stroke="#00c896" stroke-width="1.5"/>
+      <line x1="105" y1="0" x2="120" y2="0" stroke="#00c896" stroke-width="1.5"/>
+      <line x1="130" y1="0" x2="145" y2="0" stroke="#00c896" stroke-width="1.5"/>
+      <line x1="100" y1="-5" x2="100" y2="-20" stroke="#00c896" stroke-width="1.5"/>
+    </g>
+    
+    <text x="-120" y="-10" fill="#aaa" font-size="12">dim = 8 = 2³</text>
+    <text x="-120" y="12" fill="#aaa" font-size="12">kissing = 240 = 112 + 128</text>
+    <text x="-120" y="34" fill="#aaa" font-size="12">min norm = 2</text>
+    <text x="-120" y="56" fill="#aaa" font-size="12">self-dual: E8 = E8⊥</text>
+    <text x="-120" y="78" fill="#aaa" font-size="12">quantum: [[8, 0, 4]]</text>
+    <text x="-120" y="95" fill="#888" font-size="11">→ corrects 1 error</text>
+  </g>
+  
+  <!-- Arrow E8 → E8×E8 -->
+  <g transform="translate(380, 200)">
+    <line x1="0" y1="0" x2="60" y2="0" stroke="#f9d923" stroke-width="2" marker-end="url(#arrowhead)"/>
+    <text x="30" y="-10" text-anchor="middle" fill="#f9d923" font-size="11">×2</text>
+  </g>
+  
+  <!-- E8×E8 box -->
+  <g transform="translate(530, 200)">
+    <rect x="-80" y="-70" width="160" height="140" rx="12" fill="rgba(160,112,224,0.1)" stroke="#a070e0" stroke-width="1.5"/>
+    <text x="0" y="-45" text-anchor="middle" fill="#a070e0" font-size="15" font-weight="bold">E8 × E8</text>
+    <text x="-60" y="-20" fill="#aaa" font-size="11">dim = 16</text>
+    <text x="-60" y="0" fill="#aaa" font-size="11">kissing = 4320</text>
+    <text x="-60" y="20" fill="#aaa" font-size="11">heterotic string</text>
+    <text x="-60" y="50" fill="#888" font-size="10">Barnes-Wall BW₁₆</text>
+  </g>
+  
+  <!-- Arrow → Leech -->
+  <g transform="translate(680, 200)">
+    <line x1="0" y1="0" x2="60" y2="0" stroke="#f9d923" stroke-width="2"/>
+    <text x="30" y="-10" text-anchor="middle" fill="#f9d923" font-size="11">×3</text>
+  </g>
+  
+  <!-- Leech box -->
+  <g transform="translate(830, 200)">
+    <rect x="-140" y="-110" width="280" height="220" rx="15" fill="rgba(255,107,53,0.08)" stroke="#ff6b35" stroke-width="2"/>
+    <text x="0" y="-82" text-anchor="middle" fill="#ff6b35" font-size="18" font-weight="bold">Leech Λ₂₄</text>
+    
+    <text x="-120" y="-50" fill="#aaa" font-size="12">dim = 24 = 3 × 8</text>
+    <text x="-120" y="-28" fill="#aaa" font-size="12">kissing = 196,560</text>
+    <text x="-120" y="-6" fill="#aaa" font-size="12">  = 97152 + 99360 + 48</text>
+    <text x="-120" y="16" fill="#aaa" font-size="12">min norm = 4 (no roots!)</text>
+    <text x="-120" y="38" fill="#aaa" font-size="12">Golay [24, 12, 8] code</text>
+    <text x="-120" y="60" fill="#aaa" font-size="12">quantum: [[24, 0, 8]]</text>
+    <text x="-120" y="82" fill="#ff6b35" font-size="12" font-weight="bold">→ corrects 3 errors</text>
+    <text x="-120" y="100" fill="#888" font-size="10">|Aut| ∋ 2²² = 4,194,304</text>
+  </g>
+  
+  <!-- Dimension ladder at bottom -->
+  <g transform="translate(500, 470)">
+    <text x="0" y="0" text-anchor="middle" fill="#f9d923" font-size="16" font-weight="bold">
+      The Dimension Ladder
+    </text>
+    
+    <!-- Steps -->
+    <g transform="translate(-300, 30)">
+      <rect x="0" y="0" width="80" height="40" rx="8" fill="rgba(0,200,150,0.2)" stroke="#00c896" stroke-width="1"/>
+      <text x="40" y="24" text-anchor="middle" fill="#00c896" font-size="14" font-weight="bold">8</text>
+    </g>
+    <text x="-180" y="56" fill="#888" font-size="10">+8</text>
+    <g transform="translate(-150, 30)">
+      <rect x="0" y="0" width="80" height="40" rx="8" fill="rgba(160,112,224,0.2)" stroke="#a070e0" stroke-width="1"/>
+      <text x="40" y="24" text-anchor="middle" fill="#a070e0" font-size="14" font-weight="bold">16</text>
+    </g>
+    <text x="-30" y="56" fill="#888" font-size="10">+8</text>
+    <g transform="translate(0, 30)">
+      <rect x="0" y="0" width="80" height="40" rx="8" fill="rgba(255,107,53,0.2)" stroke="#ff6b35" stroke-width="1"/>
+      <text x="40" y="24" text-anchor="middle" fill="#ff6b35" font-size="14" font-weight="bold">24</text>
+    </g>
+    
+    <text x="180" y="56" fill="#888" font-size="11">All multiples of 8 = dim(𝕆)</text>
+  </g>
+  
+  <!-- Golay code detail -->
+  <g transform="translate(500, 540)">
+    <rect x="-250" y="-18" width="500" height="36" rx="10" fill="rgba(249,217,35,0.05)" stroke="#f9d923" stroke-width="0.5"/>
+    <text x="0" y="2" text-anchor="middle" fill="#f9d923" font-size="12">
+      CSS Construction: Self-dual code C = C⊥  →  [[n, n-2k, d]] quantum code  →  corrects ⌊(d-1)/2⌋ errors
+    </text>
+  </g>
+  
+  <!-- Arrow marker -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#f9d923" />
+    </marker>
+  </defs>
+</svg>
