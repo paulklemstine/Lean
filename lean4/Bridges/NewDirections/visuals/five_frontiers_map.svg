@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a1a4e;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FFD700" />
+      <stop offset="100%" style="stop-color:#FFA500" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="700" fill="url(#bg)"/>
+
+  <!-- Title -->
+  <text x="500" y="45" text-anchor="middle" fill="url(#gold)" font-size="22" font-weight="bold" filter="url(#glow)">Five Frontiers of the Unified Framework</text>
+  <text x="500" y="68" text-anchor="middle" fill="#8888cc" font-size="13">Connected by the Idempotent Equation f ∘ f = f</text>
+
+  <!-- Central Hub -->
+  <circle cx="500" cy="350" r="65" fill="#1a1a3e" stroke="#FFD700" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="500" y="340" text-anchor="middle" fill="#FFD700" font-size="15" font-weight="bold">IDEMPOTENT</text>
+  <text x="500" y="358" text-anchor="middle" fill="#FFD700" font-size="14">f ∘ f = f</text>
+  <text x="500" y="378" text-anchor="middle" fill="#aaa" font-size="10">Im(f) = Fix(f)</text>
+
+  <!-- Frontier 1: Tropical Conv/Transformer NAS (top-left) -->
+  <line x1="440" y1="300" x2="240" y2="170" stroke="#00CED1" stroke-width="2" stroke-dasharray="6,3" opacity="0.7"/>
+  <rect x="100" y="100" width="280" height="130" rx="12" fill="#0d2d3d" stroke="#00CED1" stroke-width="2" filter="url(#shadow)"/>
+  <text x="240" y="125" text-anchor="middle" fill="#00CED1" font-size="14" font-weight="bold">§1 Tropical Conv &amp; Transformer NAS</text>
+  <text x="120" y="148" fill="#ccc" font-size="11">• Toeplitz matrices → tropical rank ≤ k</text>
+  <text x="120" y="166" fill="#ccc" font-size="11">• Attention: rank ≤ h × d_k</text>
+  <text x="120" y="184" fill="#ccc" font-size="11">• Expressiveness = rank^depth</text>
+  <text x="120" y="202" fill="#ccc" font-size="11">• Training-free: O(n³·L) vs O(training)</text>
+  <text x="120" y="220" fill="#8888cc" font-size="10">ReLU(ReLU(x)) = ReLU(x) — idempotent</text>
+
+  <!-- Frontier 2: Quantum Annealing (top-right) -->
+  <line x1="560" y1="300" x2="760" y2="170" stroke="#FF6B6B" stroke-width="2" stroke-dasharray="6,3" opacity="0.7"/>
+  <rect x="620" y="100" width="280" height="130" rx="12" fill="#3d0d0d" stroke="#FF6B6B" stroke-width="2" filter="url(#shadow)"/>
+  <text x="760" y="125" text-anchor="middle" fill="#FF6B6B" font-size="14" font-weight="bold">§2 Quantum Annealing Schedules</text>
+  <text x="640" y="148" fill="#ccc" font-size="11">• max ≤ LSE ≤ max + log(2)</text>
+  <text x="640" y="166" fill="#ccc" font-size="11">• β(t) = c·log(1+t) optimal</text>
+  <text x="640" y="184" fill="#ccc" font-size="11">• Gap ≤ log(n)/β → 0</text>
+  <text x="640" y="202" fill="#ccc" font-size="11">• Quantum-classical gap &lt; 1 bit</text>
+  <text x="640" y="220" fill="#8888cc" font-size="10">max(x,x) = x — idempotent</text>
+
+  <!-- Frontier 3: Persistent Homology (bottom-left) -->
+  <line x1="440" y1="400" x2="240" y2="510" stroke="#50C878" stroke-width="2" stroke-dasharray="6,3" opacity="0.7"/>
+  <rect x="100" y="470" width="280" height="130" rx="12" fill="#0d3d1d" stroke="#50C878" stroke-width="2" filter="url(#shadow)"/>
+  <text x="240" y="495" text-anchor="middle" fill="#50C878" font-size="14" font-weight="bold">§3 Tropical Persistent Homology</text>
+  <text x="120" y="518" fill="#ccc" font-size="11">• Bottleneck dist = L∞ = tropical</text>
+  <text x="120" y="536" fill="#ccc" font-size="11">• Column reduction: O(n³)</text>
+  <text x="120" y="554" fill="#ccc" font-size="11">• Stability: lifetime &gt; t+2ε survives</text>
+  <text x="120" y="572" fill="#ccc" font-size="11">• Barcode is tropical invariant</text>
+  <text x="120" y="590" fill="#8888cc" font-size="10">max(|a|,|b|) uses idempotent max</text>
+
+  <!-- Frontier 4: E8 Quantum LDPC (bottom-right) -->
+  <line x1="560" y1="400" x2="760" y2="510" stroke="#DA70D6" stroke-width="2" stroke-dasharray="6,3" opacity="0.7"/>
+  <rect x="620" y="470" width="280" height="130" rx="12" fill="#2d0d3d" stroke="#DA70D6" stroke-width="2" filter="url(#shadow)"/>
+  <text x="760" y="495" text-anchor="middle" fill="#DA70D6" font-size="14" font-weight="bold">§4 E8 Quantum LDPC Codes</text>
+  <text x="640" y="518" fill="#ccc" font-size="11">• 240 = 112 + 128 roots</text>
+  <text x="640" y="536" fill="#ccc" font-size="11">• Self-dual → CSS construction</text>
+  <text x="640" y="554" fill="#ccc" font-size="11">• Brahmagupta-Fibonacci identity</text>
+  <text x="640" y="572" fill="#ccc" font-size="11">• [[8, 0, 4]] quantum code</text>
+  <text x="640" y="590" fill="#8888cc" font-size="10">Lattice projection: π∘π = π</text>
+
+  <!-- Frontier 5: Leech Lattice (bottom center) -->
+  <line x1="500" y1="415" x2="500" y2="610" stroke="#FFD700" stroke-width="2" stroke-dasharray="6,3" opacity="0.7"/>
+  <rect x="360" y="620" width="280" height="70" rx="12" fill="#2d2d0d" stroke="#FFD700" stroke-width="2" filter="url(#shadow)"/>
+  <text x="500" y="647" text-anchor="middle" fill="#FFD700" font-size="14" font-weight="bold">§5 Leech Lattice (dim 24 = 3×8)</text>
+  <text x="380" y="668" fill="#ccc" font-size="11">Kissing 196560 • Golay [24,12,8] • [[24,0,8]] quantum</text>
+  <text x="380" y="682" fill="#8888cc" font-size="10">Cayley-Dickson: 1→2→4→8→16→24</text>
+
+  <!-- Cross-connections -->
+  <line x1="240" y1="230" x2="240" y2="470" stroke="#fff" stroke-width="1" stroke-dasharray="3,5" opacity="0.2"/>
+  <line x1="760" y1="230" x2="760" y2="470" stroke="#fff" stroke-width="1" stroke-dasharray="3,5" opacity="0.2"/>
+  <line x1="380" y1="165" x2="620" y2="165" stroke="#fff" stroke-width="1" stroke-dasharray="3,5" opacity="0.2"/>
+  <line x1="380" y1="535" x2="620" y2="535" stroke="#fff" stroke-width="1" stroke-dasharray="3,5" opacity="0.2"/>
+</svg>

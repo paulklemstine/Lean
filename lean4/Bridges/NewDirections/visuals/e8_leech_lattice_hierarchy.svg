@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 550" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a2e" />
+      <stop offset="100%" style="stop-color:#1a1a4e" />
+    </linearGradient>
+    <filter id="glow3">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="900" height="550" fill="url(#bg3)"/>
+
+  <!-- Title -->
+  <text x="450" y="40" text-anchor="middle" fill="#FFD700" font-size="20" font-weight="bold">The Lattice Code Hierarchy</text>
+  <text x="450" y="62" text-anchor="middle" fill="#8888cc" font-size="12">Cayley-Dickson Doubling → Division Algebras → Exceptional Lattices → Quantum Codes</text>
+
+  <!-- Row 1: Cayley-Dickson -->
+  <text x="60" y="110" fill="#aaa" font-size="13" font-weight="bold">Division</text>
+  <text x="60" y="126" fill="#aaa" font-size="13" font-weight="bold">Algebras</text>
+
+  <rect x="160" y="90" width="90" height="50" rx="8" fill="#1a2a3a" stroke="#00CED1" stroke-width="2"/>
+  <text x="205" y="112" text-anchor="middle" fill="#00CED1" font-size="13" font-weight="bold">ℝ</text>
+  <text x="205" y="130" text-anchor="middle" fill="#888" font-size="11">dim 1</text>
+
+  <text x="265" y="118" fill="#666" font-size="18">→</text>
+
+  <rect x="290" y="90" width="90" height="50" rx="8" fill="#1a2a3a" stroke="#00CED1" stroke-width="2"/>
+  <text x="335" y="112" text-anchor="middle" fill="#00CED1" font-size="13" font-weight="bold">ℂ</text>
+  <text x="335" y="130" text-anchor="middle" fill="#888" font-size="11">dim 2</text>
+
+  <text x="395" y="118" fill="#666" font-size="18">→</text>
+
+  <rect x="420" y="90" width="90" height="50" rx="8" fill="#1a2a3a" stroke="#00CED1" stroke-width="2"/>
+  <text x="465" y="112" text-anchor="middle" fill="#00CED1" font-size="13" font-weight="bold">ℍ</text>
+  <text x="465" y="130" text-anchor="middle" fill="#888" font-size="11">dim 4</text>
+
+  <text x="525" y="118" fill="#666" font-size="18">→</text>
+
+  <rect x="550" y="90" width="90" height="50" rx="8" fill="#1a2a3a" stroke="#FFD700" stroke-width="2.5" filter="url(#glow3)"/>
+  <text x="595" y="112" text-anchor="middle" fill="#FFD700" font-size="13" font-weight="bold">𝕆</text>
+  <text x="595" y="130" text-anchor="middle" fill="#FFD700" font-size="11">dim 8</text>
+
+  <!-- Hurwitz stop -->
+  <rect x="680" y="95" width="180" height="40" rx="5" fill="#3d0d0d" stroke="#FF6B6B" stroke-width="1"/>
+  <text x="770" y="112" text-anchor="middle" fill="#FF6B6B" font-size="11" font-weight="bold">Hurwitz Theorem</text>
+  <text x="770" y="127" text-anchor="middle" fill="#ccc" font-size="10">Only dims 1, 2, 4, 8</text>
+
+  <!-- Row 2: Lattices -->
+  <text x="60" y="220" fill="#aaa" font-size="13" font-weight="bold">Lattices</text>
+
+  <line x1="205" y1="140" x2="205" y2="190" stroke="#444" stroke-width="1" stroke-dasharray="3,3"/>
+  <rect x="160" y="195" width="90" height="60" rx="8" fill="#1a2a1a" stroke="#50C878" stroke-width="2"/>
+  <text x="205" y="216" text-anchor="middle" fill="#50C878" font-size="12" font-weight="bold">ℤ¹</text>
+  <text x="205" y="234" text-anchor="middle" fill="#888" font-size="10">kiss: 2</text>
+  <text x="205" y="248" text-anchor="middle" fill="#888" font-size="9">‖·‖²=1</text>
+
+  <text x="265" y="228" fill="#666" font-size="18">→</text>
+
+  <line x1="335" y1="140" x2="335" y2="190" stroke="#444" stroke-width="1" stroke-dasharray="3,3"/>
+  <rect x="290" y="195" width="90" height="60" rx="8" fill="#1a2a1a" stroke="#50C878" stroke-width="2"/>
+  <text x="335" y="216" text-anchor="middle" fill="#50C878" font-size="12" font-weight="bold">ℤ²</text>
+  <text x="335" y="234" text-anchor="middle" fill="#888" font-size="10">kiss: 4</text>
+  <text x="335" y="248" text-anchor="middle" fill="#888" font-size="9">‖·‖²=1</text>
+
+  <text x="395" y="228" fill="#666" font-size="18">→</text>
+
+  <line x1="465" y1="140" x2="465" y2="190" stroke="#444" stroke-width="1" stroke-dasharray="3,3"/>
+  <rect x="420" y="195" width="90" height="60" rx="8" fill="#1a2a1a" stroke="#50C878" stroke-width="2"/>
+  <text x="465" y="216" text-anchor="middle" fill="#50C878" font-size="12" font-weight="bold">D₄</text>
+  <text x="465" y="234" text-anchor="middle" fill="#888" font-size="10">kiss: 24</text>
+  <text x="465" y="248" text-anchor="middle" fill="#888" font-size="9">‖·‖²=2</text>
+
+  <text x="525" y="228" fill="#666" font-size="18">→</text>
+
+  <line x1="595" y1="140" x2="595" y2="190" stroke="#FFD700" stroke-width="1" stroke-dasharray="3,3"/>
+  <rect x="550" y="195" width="90" height="60" rx="8" fill="#2a2a0a" stroke="#FFD700" stroke-width="2.5" filter="url(#glow3)"/>
+  <text x="595" y="216" text-anchor="middle" fill="#FFD700" font-size="12" font-weight="bold">E₈</text>
+  <text x="595" y="234" text-anchor="middle" fill="#FFD700" font-size="10">kiss: 240</text>
+  <text x="595" y="248" text-anchor="middle" fill="#FFD700" font-size="9">‖·‖²=2</text>
+
+  <text x="655" y="228" fill="#666" font-size="18">→</text>
+
+  <rect x="680" y="195" width="90" height="60" rx="8" fill="#1a2a1a" stroke="#50C878" stroke-width="2"/>
+  <text x="725" y="216" text-anchor="middle" fill="#50C878" font-size="12" font-weight="bold">BW₁₆</text>
+  <text x="725" y="234" text-anchor="middle" fill="#888" font-size="10">kiss: 4320</text>
+  <text x="725" y="248" text-anchor="middle" fill="#888" font-size="9">‖·‖²=4</text>
+
+  <text x="785" y="228" fill="#666" font-size="18">→</text>
+
+  <rect x="800" y="195" width="90" height="60" rx="8" fill="#2a2a0a" stroke="#FFD700" stroke-width="2.5" filter="url(#glow3)"/>
+  <text x="845" y="216" text-anchor="middle" fill="#FFD700" font-size="12" font-weight="bold">Λ₂₄</text>
+  <text x="845" y="234" text-anchor="middle" fill="#FFD700" font-size="10">kiss: 196560</text>
+  <text x="845" y="248" text-anchor="middle" fill="#FFD700" font-size="9">‖·‖²=4</text>
+
+  <!-- Row 3: Classical Codes -->
+  <text x="60" y="330" fill="#aaa" font-size="13" font-weight="bold">Classical</text>
+  <text x="60" y="346" fill="#aaa" font-size="13" font-weight="bold">Codes</text>
+
+  <line x1="595" y1="255" x2="595" y2="300" stroke="#444" stroke-width="1" stroke-dasharray="3,3"/>
+  <rect x="540" y="305" width="110" height="50" rx="8" fill="#2d0d2d" stroke="#DA70D6" stroke-width="2"/>
+  <text x="595" y="326" text-anchor="middle" fill="#DA70D6" font-size="12" font-weight="bold">[8, 4, 4]</text>
+  <text x="595" y="346" text-anchor="middle" fill="#888" font-size="10">Hamming ext.</text>
+
+  <line x1="845" y1="255" x2="845" y2="300" stroke="#FFD700" stroke-width="1" stroke-dasharray="3,3"/>
+  <rect x="790" y="305" width="110" height="50" rx="8" fill="#2d2d0d" stroke="#FFD700" stroke-width="2"/>
+  <text x="845" y="326" text-anchor="middle" fill="#FFD700" font-size="12" font-weight="bold">[24, 12, 8]</text>
+  <text x="845" y="346" text-anchor="middle" fill="#888" font-size="10">Golay (perfect)</text>
+
+  <!-- Row 4: Quantum Codes -->
+  <text x="60" y="430" fill="#aaa" font-size="13" font-weight="bold">Quantum</text>
+  <text x="60" y="446" fill="#aaa" font-size="13" font-weight="bold">Codes</text>
+
+  <line x1="595" y1="355" x2="595" y2="395" stroke="#444" stroke-width="1" stroke-dasharray="3,3"/>
+  <rect x="540" y="400" width="110" height="55" rx="8" fill="#3d0d3d" stroke="#FF6B6B" stroke-width="2"/>
+  <text x="595" y="421" text-anchor="middle" fill="#FF6B6B" font-size="12" font-weight="bold">[[8, 0, 4]]</text>
+  <text x="595" y="439" text-anchor="middle" fill="#888" font-size="10">1-error correct</text>
+  <text x="595" y="450" text-anchor="middle" fill="#888" font-size="9">CSS from E8</text>
+
+  <line x1="845" y1="355" x2="845" y2="395" stroke="#FFD700" stroke-width="1" stroke-dasharray="3,3"/>
+  <rect x="790" y="400" width="110" height="55" rx="8" fill="#3d3d0d" stroke="#FFD700" stroke-width="2.5" filter="url(#glow3)"/>
+  <text x="845" y="421" text-anchor="middle" fill="#FFD700" font-size="12" font-weight="bold">[[24, 0, 8]]</text>
+  <text x="845" y="439" text-anchor="middle" fill="#FFD700" font-size="10">3-error correct</text>
+  <text x="845" y="450" text-anchor="middle" fill="#FFD700" font-size="9">CSS from Golay</text>
+
+  <!-- Bottom: Key identities -->
+  <rect x="100" y="480" width="700" height="55" rx="8" fill="#1a1a3a" stroke="#444" stroke-width="1"/>
+  <text x="450" y="500" text-anchor="middle" fill="#FFD700" font-size="13" font-weight="bold">Key Verified Identities</text>
+  <text x="200" y="520" text-anchor="middle" fill="#DA70D6" font-size="11">(a²+b²)(c²+d²) = (ac-bd)²+(ad+bc)²</text>
+  <text x="450" y="520" text-anchor="middle" fill="#FFD700" font-size="11">240 = 112 + 128</text>
+  <text x="700" y="520" text-anchor="middle" fill="#50C878" font-size="11">dim(A_k) = 2^k</text>
+</svg>
