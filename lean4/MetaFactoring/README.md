@@ -18,73 +18,110 @@ MetaFactoring synthesizes **seven complementary factoring paradigms** into a sin
 
 ## Project Structure
 
-### Lean 4 Formalizations (sorry-free, axiom-clean)
+### Lean 4 Formalizations (all sorry-free, axiom-clean)
+
 - **`Core.lean`** — Original formalization: 15+ theorems covering all seven lenses
 - **`NewTheorems.lean`** — New theorem candidates: 20+ theorems including Degen 8-square identity, Pisano periodicity, AM-GM for divisors, Euler's criterion, and more
+- **`BridgeTheorems.lean`** — Bridge theorems connecting lenses: Cassini's identity, Fibonacci addition formula, orbit size bounds, composite minimum factor bounds, Fibonacci ratio bounds, GCD properties
 
 ### Python Demonstrations
+
 - **`demo_metafactoring.py`** — Full MetaFactoring engine with 7 demos showing lens complementarity
 - **`demo_new_theorems.py`** — Computational exploration of 7 new theorem candidates
+- **`demo_bridge_theorems.py`** — Bridge theorem verification: Cassini's identity, Pisano periods, correlation matrix, constraint convergence, norm channels
 
-### SVG Visualizations (9 files in `visuals/`)
+### SVG Visualizations (15 files in `visuals/`)
+
+**Original Suite:**
 - `seven_lenses_architecture.svg` — Hub-and-spoke architecture diagram
 - `constraint_intersection.svg` — Progressive search space reduction
 - `hyperbola_divisors.svg` — Divisor pairs on xy = N
 - `fibonacci_carry_cascade.svg` — Bidirectional carry propagation
 - `norm_sphere_collision.svg` — Sum-of-squares collision geometry
 - `lens_effectiveness_radar.svg` — Radar chart of lens effectiveness
-- **`dimension_barrier.svg`** — Hurwitz dimension hierarchy (NEW)
-- **`pisano_spiral.svg`** — Pisano period structure (NEW)
-- **`bridge_network.svg`** — Inter-lens bridge theorem network (NEW)
+
+**New Theorem Visuals:**
+- `dimension_barrier.svg` — Hurwitz dimension hierarchy
+- `pisano_spiral.svg` — Pisano period structure
+- `bridge_network.svg` — Inter-lens bridge theorem network
+
+**Research Direction Visuals:**
+- `future_research_roadmap.svg` — 5-year research timeline with milestones
+- `correlation_matrix.svg` — 7×7 inter-lens independence matrix
+- `cayley_dickson_hierarchy.svg` — ℝ → ℂ → ℍ → 𝕆 norm channel tower
+- `quantum_extension.svg` — Quantum MetaFactoring (8th lens) diagram
+- `applications_map.svg` — Application landscape map
+- `constraint_convergence_chart.svg` — Bar chart of exponential reduction
 
 ### Written Content
+
 - **`research_paper.md`** — Full research paper with 10 sections including new theorem candidates
 - **`scientific_american_article.md`** — Popular science article for general audiences
 - **`applications_brainstorm.md`** — Extensive brainstorm of applications across domains
+- **`future_research_directions.md`** — Comprehensive 5-year research roadmap with 5 major thrusts
+- **`team_research_plan.md`** — Team formation plan with 7 roles, sprint schedule, and success metrics
+
+### Visual Generation Scripts
+
+- **`generate_visuals.py`** — Original visualization generator
+- **`generate_new_visuals.py`** — New theorem visualization generator
+- **`generate_all_visuals.py`** — Complete visual suite generator
 
 ## New Theorem Candidates
 
 Seven new theorem candidates extend the framework:
 
-1. **Inter-Lens Correlation Bound** — Correlation between lenses is O(1/√N) *(Conjecture)*
-2. **Fibonacci-Spectral Duality** — Pisano period relates to spectral gap *(Conjecture)*
-3. **Hyperbolic-Lattice Correspondence** — Divisor pairs ↔ short vectors *(Conjecture)*
-4. **Orbit-Norm Collision** — O(N^{1/4}) hybrid factoring *(Conjecture)*
-5. **Division Algebra Dimension Barrier** — No 16-square identity exists *(Theorem — PROVED)*
-6. **Zeckendorf Product Spread** — Fibonacci multiplication is Ω(log) non-local *(Conjecture)*
-7. **Seven-Lens Completeness** — Universal N^{1/4+ε} factoring bound *(Conjecture)*
+1. **Inter-Lens Correlation Bound** — Conjectured O(1/√N) decay makes lenses asymptotically independent
+2. **Fibonacci-Spectral Duality** — Pisano period π(m) related to spectral gap (Pisano periodicity formally proved)
+3. **Hyperbolic-Lattice Correspondence** — AM-GM bound 4N ≤ (d+N/d)² formally proved
+4. **Orbit-Norm Collision** — Two-representation norm square identity formally proved
+5. **Division Algebra Dimension Barrier** — Hurwitz's theorem; 2-, 4-, 8-square identities all formally proved
+6. **Zeckendorf Product Spread** — Fibonacci growth bounds (linear and exponential) formally proved
+7. **Seven-Lens Completeness** — Universal quartic-root factoring bound conjectured
 
-## Key Results (Formally Verified)
+## Bridge Theorems (NEW)
 
-All Lean proofs compile without `sorry` and use only standard axioms:
+Formally verified connections between lenses:
 
-- **Fibonacci search reduction**: `fib(k+2) < 2^k` for k ≥ 2
-- **Degen 8-square identity**: Product of sums of 8 squares = sum of 8 squares (octonion norm)
-- **Pisano periodicity**: Fibonacci mod m is periodic for any m ≥ 2
-- **AM-GM for divisors**: 4N ≤ (d + N/d)² for any divisor d
-- **Orbit collision gives factor**: mod-p collision with mod-N non-collision → nontrivial GCD
-- **Congruence of squares**: Full correctness theorem with both bounds
-- **Euler's criterion**: a^((p-1)/2) ∈ {1, -1} for odd prime p
-- **Wilson's theorem**: (p-1)! ≡ -1 (mod p) for prime p
-- **Exponential advantage**: For any ε > 0, enough lenses make the search space < ε
+- **Cassini's Identity** (Lens 1 ↔ Lens 6): F(n+1)·F(n-1) - F(n)² = (-1)^n
+- **Fibonacci Addition** (Lens 1 ↔ modular arithmetic): F(m+n) = F(m)·F(n+1) + F(m-1)·F(n)
+- **Fibonacci GCD** (Lens 1 ↔ divisibility): gcd(F(m), F(n)) = F(gcd(m,n))
+- **Euler Totient** (Lens 4 ↔ Lens 7): φ(pq) = φ(p)·φ(q) for coprime p,q
+- **Orbit Pigeonhole** (Lens 3): Orbit size ≤ domain size
+- **Composite Min Factor** (Lens 2): minFac(n) ≤ √n for composites
+- **Fibonacci Ratio** (Lens 1): F(n+1) ≤ 2·F(n), confirming φ < 2
 
-## Running
+## Future Research Directions
+
+Five major research thrusts identified:
+
+1. **Tightening Constraint Intersection** — Correlation bounds, Bayesian lens selection, new lenses
+2. **Fibonacci-Spectral Duality** — Proving the connection between Pisano periods and spectral gaps
+3. **Division Algebra Hierarchy** — Quaternionic factoring, Cayley-Dickson extensions, E₈ connections
+4. **Quantum MetaFactoring** — Shor's algorithm as 8th lens, hybrid protocols, Grover speedup
+5. **Formal Verification** — Jacobi's four-square theorem, quadratic sieve, ECM, NFS
+
+## Formal Verification Status
+
+All Lean 4 files compile without errors and contain **zero `sorry` statements**. All proofs use only standard axioms (`propext`, `Classical.choice`, `Quot.sound`).
+
+| File | Theorems | Status |
+|------|----------|--------|
+| `Core.lean` | 15+ | ✅ All proved |
+| `NewTheorems.lean` | 20+ | ✅ All proved |
+| `BridgeTheorems.lean` | 12+ | ✅ All proved |
+
+## Quick Start
 
 ```bash
-# Generate SVG visuals
-python3 MetaFactoring/generate_visuals.py
-python3 MetaFactoring/generate_new_visuals.py
+# Run Python demos
+python MetaFactoring/demo_metafactoring.py
+python MetaFactoring/demo_new_theorems.py
+python MetaFactoring/demo_bridge_theorems.py
 
-# Run the MetaFactoring engine demo
-python3 MetaFactoring/demo_metafactoring.py
+# Generate all SVG visuals
+python MetaFactoring/generate_all_visuals.py
 
-# Run the new theorem explorations
-python3 MetaFactoring/demo_new_theorems.py
-
-# Build and verify Lean formalizations
+# Build Lean formalizations
 lake build MetaFactoring
 ```
-
-## License
-
-Research project — all code and formalizations are provided for academic use.

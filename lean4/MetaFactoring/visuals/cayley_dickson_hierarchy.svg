@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgcd" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a2e" />
+      <stop offset="100%" style="stop-color:#1a1a4e" />
+    </linearGradient>
+    <filter id="glow2">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#bgcd)"/>
+
+  <text x="400" y="40" text-anchor="middle" fill="#ffffff" font-size="22" font-weight="bold">
+    Cayley-Dickson Hierarchy: The Norm Channel Tower
+  </text>
+  <text x="400" y="62" text-anchor="middle" fill="#aaaacc" font-size="12">
+    Hurwitz's Theorem: Normed division algebras exist only in dimensions 1, 2, 4, 8
+  </text>
+
+  <!-- Dimension 1: Reals -->
+  <rect x="100" y="400" width="130" height="70" rx="12" fill="#27ae60" opacity="0.9" filter="url(#glow2)"/>
+  <text x="165" y="425" text-anchor="middle" fill="#ffffff" font-size="16" font-weight="bold">ℝ</text>
+  <text x="165" y="445" text-anchor="middle" fill="#d5f5e3" font-size="11">Dim 1</text>
+  <text x="165" y="460" text-anchor="middle" fill="#d5f5e3" font-size="9">|a|·|b| = |ab|</text>
+
+  <!-- Dimension 2: Complex -->
+  <rect x="250" y="310" width="130" height="70" rx="12" fill="#2980b9" opacity="0.9" filter="url(#glow2)"/>
+  <text x="315" y="335" text-anchor="middle" fill="#ffffff" font-size="16" font-weight="bold">ℂ</text>
+  <text x="315" y="355" text-anchor="middle" fill="#d4e6f1" font-size="11">Dim 2</text>
+  <text x="315" y="370" text-anchor="middle" fill="#d4e6f1" font-size="9">a²+b² identity</text>
+
+  <!-- Dimension 4: Quaternions -->
+  <rect x="400" y="220" width="130" height="70" rx="12" fill="#8e44ad" opacity="0.9" filter="url(#glow2)"/>
+  <text x="465" y="245" text-anchor="middle" fill="#ffffff" font-size="16" font-weight="bold">ℍ</text>
+  <text x="465" y="265" text-anchor="middle" fill="#e8daef" font-size="11">Dim 4</text>
+  <text x="465" y="280" text-anchor="middle" fill="#e8daef" font-size="9">4-square identity</text>
+
+  <!-- Dimension 8: Octonions -->
+  <rect x="550" y="130" width="130" height="70" rx="12" fill="#e74c3c" opacity="0.9" filter="url(#glow2)"/>
+  <text x="615" y="155" text-anchor="middle" fill="#ffffff" font-size="16" font-weight="bold">𝕆</text>
+  <text x="615" y="175" text-anchor="middle" fill="#fadbd8" font-size="11">Dim 8</text>
+  <text x="615" y="190" text-anchor="middle" fill="#fadbd8" font-size="9">8-square identity</text>
+
+  <!-- Dimension 16: Sedenions (BARRIER) -->
+  <rect x="680" y="80" width="100" height="50" rx="8" fill="none" stroke="#ff4444" stroke-width="2" stroke-dasharray="6,3" opacity="0.7"/>
+  <text x="730" y="100" text-anchor="middle" fill="#ff4444" font-size="12" font-weight="bold">𝕊₁₆</text>
+  <text x="730" y="117" text-anchor="middle" fill="#ff6666" font-size="9">NO NORM!</text>
+
+  <!-- Barrier line -->
+  <line x1="670" y1="75" x2="670" y2="135" stroke="#ff4444" stroke-width="3" opacity="0.8"/>
+  <text x="670" y="70" text-anchor="middle" fill="#ff4444" font-size="10" font-weight="bold">HURWITZ BARRIER</text>
+
+  <!-- Connecting arrows -->
+  <line x1="200" y1="400" x2="280" y2="380" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
+  <line x1="350" y1="310" x2="430" y2="290" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
+  <line x1="500" y1="220" x2="580" y2="200" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
+  <line x1="650" y1="160" x2="685" y2="130" stroke="#ff4444" stroke-width="2" opacity="0.5" stroke-dasharray="4,4"/>
+
+  <!-- Properties lost at each step -->
+  <text x="240" y="395" fill="#f39c12" font-size="9" transform="rotate(-15, 240, 395)">Lose: ordering</text>
+  <text x="390" y="305" fill="#f39c12" font-size="9" transform="rotate(-15, 390, 305)">Lose: commutativity</text>
+  <text x="540" y="215" fill="#f39c12" font-size="9" transform="rotate(-15, 540, 215)">Lose: associativity</text>
+  <text x="660" y="150" fill="#ff4444" font-size="9" transform="rotate(-15, 660, 150)">Lose: NORM!</text>
+
+  <!-- Peel equations count -->
+  <text x="165" y="485" text-anchor="middle" fill="#27ae60" font-size="10">1 equation</text>
+  <text x="315" y="395" text-anchor="middle" fill="#2980b9" font-size="10">2 equations</text>
+  <text x="465" y="305" text-anchor="middle" fill="#8e44ad" font-size="10">4 equations</text>
+  <text x="615" y="215" text-anchor="middle" fill="#e74c3c" font-size="10">8 equations</text>
+
+  <!-- Bottom annotation -->
+  <rect x="60" y="440" width="320" height="40" rx="6" fill="#1a2a3a" opacity="0.8"/>
+  <text x="220" y="457" text-anchor="middle" fill="#4ecdc4" font-size="10">
+    ✓ Formally verified in Lean 4: 2-square, 4-square, 8-square
+  </text>
+  <text x="220" y="472" text-anchor="middle" fill="#4ecdc4" font-size="10">
+    identities proved by the ring tactic
+  </text>
+</svg>
