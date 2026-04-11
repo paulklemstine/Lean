@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 650" width="850" height="650">
+  <defs>
+    <filter id="glow2">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="850" height="650" fill="#0a0a2e" rx="15"/>
+
+  <text x="425" y="35" text-anchor="middle" fill="white" font-size="22"
+        font-family="Georgia, serif" font-weight="bold">
+    Bridge Theorem Network
+  </text>
+  <text x="425" y="58" text-anchor="middle" fill="#aaaacc" font-size="13"
+        font-family="Arial">
+    Theorems and conjectures connecting the seven lenses
+  </text>
+  <line x1="130" y1="150" x2="400" y2="90" stroke="#ff9999" stroke-width="2" opacity="0.6" />
+  <text x="265" y="112" text-anchor="middle" fill="#ff9999" font-size="10" font-family="Arial">Thm 4.3</text>
+  <text x="265" y="126" text-anchor="middle" fill="#ff9999" font-size="10" font-family="Arial">Hyp-Fib Bridge</text>
+  <line x1="670" y1="150" x2="750" y2="380" stroke="#99ff99" stroke-width="2" opacity="0.6" />
+  <text x="710" y="257" text-anchor="middle" fill="#99ff99" font-size="10" font-family="Arial">Thm 4.4</text>
+  <text x="710" y="271" text-anchor="middle" fill="#99ff99" font-size="10" font-family="Arial">Orbit-Spectral</text>
+  <line x1="620" y1="540" x2="100" y2="380" stroke="#9999ff" stroke-width="2" opacity="0.6" />
+  <text x="360" y="452" text-anchor="middle" fill="#9999ff" font-size="10" font-family="Arial">Thm 4.5</text>
+  <text x="360" y="466" text-anchor="middle" fill="#9999ff" font-size="10" font-family="Arial">Norm-CoS Bridge</text>
+  <line x1="400" y1="90" x2="280" y2="540" stroke="#ffcc99" stroke-width="2" opacity="0.6" stroke-dasharray="8,4"/>
+  <text x="340" y="307" text-anchor="middle" fill="#ffcc99" font-size="10" font-family="Arial">Conj 3</text>
+  <text x="340" y="321" text-anchor="middle" fill="#ffcc99" font-size="10" font-family="Arial">Hyp-Lattice</text>
+  <line x1="130" y1="150" x2="750" y2="380" stroke="#ff99cc" stroke-width="2" opacity="0.6" stroke-dasharray="8,4"/>
+  <text x="440" y="257" text-anchor="middle" fill="#ff99cc" font-size="10" font-family="Arial">Conj 2</text>
+  <text x="440" y="271" text-anchor="middle" fill="#ff99cc" font-size="10" font-family="Arial">Fib-Spectral</text>
+  <line x1="670" y1="150" x2="620" y2="540" stroke="#99ccff" stroke-width="2" opacity="0.6" stroke-dasharray="8,4"/>
+  <text x="645" y="337" text-anchor="middle" fill="#99ccff" font-size="10" font-family="Arial">Conj 4</text>
+  <text x="645" y="351" text-anchor="middle" fill="#99ccff" font-size="10" font-family="Arial">Orbit-Norm</text>
+  <line x1="280" y1="540" x2="100" y2="380" stroke="#cccccc" stroke-width="2" opacity="0.6" />
+  <text x="190" y="452" text-anchor="middle" fill="#cccccc" font-size="10" font-family="Arial">Classical</text>
+  <text x="190" y="466" text-anchor="middle" fill="#cccccc" font-size="10" font-family="Arial">LLL → CoS</text>
+  <circle cx="130" cy="150" r="35" fill="#E74C3C" opacity="0.8" filter="url(#glow2)"/>
+  <text x="130" y="145" text-anchor="middle" fill="white" font-size="11" font-family="Arial" font-weight="bold">Fibonacci</text>
+  <text x="130" y="159" text-anchor="middle" fill="white" font-size="11" font-family="Arial" font-weight="bold">Zeckendorf</text>
+  <text x="130" y="175" text-anchor="middle" fill="white" font-size="14" font-family="Georgia" opacity="0.7">L1</text>
+  <circle cx="400" cy="90" r="35" fill="#E67E22" opacity="0.8" filter="url(#glow2)"/>
+  <text x="400" y="85" text-anchor="middle" fill="white" font-size="11" font-family="Arial" font-weight="bold">Hyperbolic</text>
+  <text x="400" y="99" text-anchor="middle" fill="white" font-size="11" font-family="Arial" font-weight="bold">Geometry</text>
+  <text x="400" y="115" text-anchor="middle" fill="white" font-size="14" font-family="Georgia" opacity="0.7">L2</text>
+  <circle cx="670" cy="150" r="35" fill="#F1C40F" opacity="0.8" filter="url(#glow2)"/>
+  <text x="670" y="145" text-anchor="middle" fill="white" font-size="11" font-family="Arial" font-weight="bold">Orbit</text>
+  <text x="670" y="159" text-anchor="middle" fill="white" font-size="11" font-family="Arial" font-weight="bold">Dynamics</text>
+  <text x="670" y="175" text-anchor="middle" fill="white" font-size="14" font-family="Georgia" opacity="0.7">L3</text>
+  <circle cx="750" cy="380" r="35" fill="#2ECC71" opacity="0.8" filter="url(#glow2)"/>
+  <text x="750" y="375" text-anchor="middle" fill="white" font-size="11" font-family="Arial" font-weight="bold">Spectral</text>
+  <text x="750" y="389" text-anchor="middle" fill="white" font-size="11" font-family="Arial" font-weight="bold">Harmonic</text>
+  <text x="750" y="405" text-anchor="middle" fill="white" font-size="14" font-family="Georgia" opacity="0.7">L4</text>
+  <circle cx="620" cy="540" r="35" fill="#3498DB" opacity="0.8" filter="url(#glow2)"/>
+  <text x="620" y="535" text-anchor="middle" fill="white" font-size="11" font-family="Arial" font-weight="bold">Division</text>
+  <text x="620" y="549" text-anchor="middle" fill="white" font-size="11" font-family="Arial" font-weight="bold">Algebra</text>
+  <text x="620" y="565" text-anchor="middle" fill="white" font-size="14" font-family="Georgia" opacity="0.7">L5</text>
+  <circle cx="280" cy="540" r="35" fill="#9B59B6" opacity="0.8" filter="url(#glow2)"/>
+  <text x="280" y="535" text-anchor="middle" fill="white" font-size="11" font-family="Arial" font-weight="bold">Lattice</text>
+  <text x="280" y="549" text-anchor="middle" fill="white" font-size="11" font-family="Arial" font-weight="bold">Reduction</text>
+  <text x="280" y="565" text-anchor="middle" fill="white" font-size="14" font-family="Georgia" opacity="0.7">L6</text>
+  <circle cx="100" cy="380" r="35" fill="#1ABC9C" opacity="0.8" filter="url(#glow2)"/>
+  <text x="100" y="375" text-anchor="middle" fill="white" font-size="11" font-family="Arial" font-weight="bold">Congruence</text>
+  <text x="100" y="389" text-anchor="middle" fill="white" font-size="11" font-family="Arial" font-weight="bold">of Squares</text>
+  <text x="100" y="405" text-anchor="middle" fill="white" font-size="14" font-family="Georgia" opacity="0.7">L7</text>
+
+  <rect x="30" y="595" width="200" height="40" rx="5" fill="#1a1a3e" opacity="0.7"/>
+  <line x1="45" y1="610" x2="85" y2="610" stroke="#99ff99" stroke-width="2"/>
+  <text x="92" y="614" fill="#aaa" font-size="11" font-family="Arial">= Proved theorem</text>
+
+  <line x1="45" y1="625" x2="85" y2="625" stroke="#ffcc99" stroke-width="2" stroke-dasharray="8,4"/>
+  <text x="92" y="629" fill="#aaa" font-size="11" font-family="Arial">= Open conjecture</text>
+</svg>

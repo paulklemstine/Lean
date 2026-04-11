@@ -2,78 +2,89 @@
 
 ## Overview
 
-MetaFactoring synthesizes **seven complementary factoring paradigms** explored throughout this project into a single coherent framework. Each paradigm provides a different mathematical "lens" through which to view the factorization problem, and combining lenses multiplicatively constrains the search space.
+MetaFactoring synthesizes **seven complementary factoring paradigms** into a single coherent framework. The key insight: each paradigm provides a different "lens" through which to view the factorization problem, and **combining lenses multiplicatively constrains the search space** far more than any single method alone.
 
-### The Seven Lenses
+## The Seven Lenses
 
-| # | Lens | Mathematical Field | Key Mechanism |
-|---|------|-------------------|---------------|
-| 1 | **Fibonacci-Zeckendorf** | Combinatorics | Bidirectional carry constraints, non-adjacency |
-| 2 | **Hyperbolic-Geometric** | Algebraic Geometry | Divisor pairs on xy = N |
-| 3 | **Orbit-Dynamical** | Dynamical Systems | Pollard ρ collisions |
-| 4 | **Spectral-Harmonic** | Harmonic Analysis | Character sums, smooth number bias |
-| 5 | **Division-Algebra** | Abstract Algebra | Norm-multiplicativity (ℂ, ℍ, 𝕆) |
-| 6 | **Lattice-Reduction** | Geometry of Numbers | Short vectors via LLL |
-| 7 | **Congruence-of-Squares** | Number Theory | x² ≡ y² (mod N) endgame |
+| Lens | Paradigm | Key Identity | Formalized? |
+|------|----------|-------------|-------------|
+| 1 | Fibonacci-Zeckendorf | F(k+2) < 2^k | ✓ |
+| 2 | Hyperbolic Geometry | xy = N, AM-GM | ✓ |
+| 3 | Orbit Dynamics | Pollard rho collisions | ✓ |
+| 4 | Spectral Harmonic | Fermat's little theorem | ✓ |
+| 5 | Division Algebra | Brahmagupta/Euler/Degen | ✓ |
+| 6 | Lattice Reduction | Bézout's identity | ✓ |
+| 7 | Congruence of Squares | x²−y² = (x−y)(x+y) | ✓ |
 
-## Contents
+## Project Structure
 
-### Lean 4 Formalization (`Core.lean`)
-All core theorems are **formally verified** with zero sorry statements:
-- Fibonacci search space reduction (fib(k+2) < 2^k)
-- Bidirectional carry and adjacency identities
-- Divisor hyperbola correspondence
-- Orbit periodicity and collision factor extraction
-- Fermat's little theorem
-- Brahmagupta-Fibonacci and Euler four-square identities
-- Sum-of-squares collision factoring theorem
-- Bézout's identity and lattice structure
-- Congruence of squares factoring theorem
-- Unified correctness theorem
-- k-lens constraint reduction theorem
+### Lean 4 Formalizations (sorry-free, axiom-clean)
+- **`Core.lean`** — Original formalization: 15+ theorems covering all seven lenses
+- **`NewTheorems.lean`** — New theorem candidates: 20+ theorems including Degen 8-square identity, Pisano periodicity, AM-GM for divisors, Euler's criterion, and more
 
-### Python Demo (`demo_metafactoring.py`)
-Seven interactive demonstrations:
-1. Individual lens views of N = 10403 = 101 × 103
-2. Full MetaFactoring engine on diverse composites
-3. Progressive search space reduction visualization
-4. Fibonacci bidirectional carry cascades
-5. Division algebra norm collisions
-6. Seven-lens comparison table
-7. Timing comparison across difficulty levels
+### Python Demonstrations
+- **`demo_metafactoring.py`** — Full MetaFactoring engine with 7 demos showing lens complementarity
+- **`demo_new_theorems.py`** — Computational exploration of 7 new theorem candidates
 
-Run: `python3 demo_metafactoring.py`
-
-### SVG Visuals (`visuals/`)
-Six publication-quality SVG diagrams:
+### SVG Visualizations (9 files in `visuals/`)
 - `seven_lenses_architecture.svg` — Hub-and-spoke architecture diagram
 - `constraint_intersection.svg` — Progressive search space reduction
-- `hyperbola_divisors.svg` — Divisor pairs on xy = 210
-- `fibonacci_carry_cascade.svg` — Binary vs Fibonacci carry propagation
+- `hyperbola_divisors.svg` — Divisor pairs on xy = N
+- `fibonacci_carry_cascade.svg` — Bidirectional carry propagation
 - `norm_sphere_collision.svg` — Sum-of-squares collision geometry
-- `lens_effectiveness_radar.svg` — Radar chart of lens complementarity
+- `lens_effectiveness_radar.svg` — Radar chart of lens effectiveness
+- **`dimension_barrier.svg`** — Hurwitz dimension hierarchy (NEW)
+- **`pisano_spiral.svg`** — Pisano period structure (NEW)
+- **`bridge_network.svg`** — Inter-lens bridge theorem network (NEW)
 
-Generate: `python3 generate_visuals.py`
+### Written Content
+- **`research_paper.md`** — Full research paper with 10 sections including new theorem candidates
+- **`scientific_american_article.md`** — Popular science article for general audiences
+- **`applications_brainstorm.md`** — Extensive brainstorm of applications across domains
 
-### Research Paper (`research_paper.md`)
-Full academic paper with:
-- Mathematical framework and definitions
-- Individual lens analysis (7 sections)
-- Constraint Intersection Theorem
-- Bridge theorems connecting lenses
-- Formal verification methodology
-- Computational results
+## New Theorem Candidates
 
-### Scientific American Article (`scientific_american_article.md`)
-Accessible popular science article explaining MetaFactoring for a general audience.
+Seven new theorem candidates extend the framework:
 
-### Applications Brainstorm (`applications_brainstorm.md`)
-- Research team structure (4 teams)
-- 10 exciting cross-domain applications
-- 7 new theorem conjectures
-- 24-month research roadmap
-- Open questions
+1. **Inter-Lens Correlation Bound** — Correlation between lenses is O(1/√N) *(Conjecture)*
+2. **Fibonacci-Spectral Duality** — Pisano period relates to spectral gap *(Conjecture)*
+3. **Hyperbolic-Lattice Correspondence** — Divisor pairs ↔ short vectors *(Conjecture)*
+4. **Orbit-Norm Collision** — O(N^{1/4}) hybrid factoring *(Conjecture)*
+5. **Division Algebra Dimension Barrier** — No 16-square identity exists *(Theorem — PROVED)*
+6. **Zeckendorf Product Spread** — Fibonacci multiplication is Ω(log) non-local *(Conjecture)*
+7. **Seven-Lens Completeness** — Universal N^{1/4+ε} factoring bound *(Conjecture)*
 
-## Key Insight
+## Key Results (Formally Verified)
 
-> No single lens dominates across all composite types. MetaFactoring's power comes from the **complementarity** of paradigms: what one lens misses, another catches. The Constraint Intersection Theorem proves that k independent lenses reduce the search space by at least 2^k.
+All Lean proofs compile without `sorry` and use only standard axioms:
+
+- **Fibonacci search reduction**: `fib(k+2) < 2^k` for k ≥ 2
+- **Degen 8-square identity**: Product of sums of 8 squares = sum of 8 squares (octonion norm)
+- **Pisano periodicity**: Fibonacci mod m is periodic for any m ≥ 2
+- **AM-GM for divisors**: 4N ≤ (d + N/d)² for any divisor d
+- **Orbit collision gives factor**: mod-p collision with mod-N non-collision → nontrivial GCD
+- **Congruence of squares**: Full correctness theorem with both bounds
+- **Euler's criterion**: a^((p-1)/2) ∈ {1, -1} for odd prime p
+- **Wilson's theorem**: (p-1)! ≡ -1 (mod p) for prime p
+- **Exponential advantage**: For any ε > 0, enough lenses make the search space < ε
+
+## Running
+
+```bash
+# Generate SVG visuals
+python3 MetaFactoring/generate_visuals.py
+python3 MetaFactoring/generate_new_visuals.py
+
+# Run the MetaFactoring engine demo
+python3 MetaFactoring/demo_metafactoring.py
+
+# Run the new theorem explorations
+python3 MetaFactoring/demo_new_theorems.py
+
+# Build and verify Lean formalizations
+lake build MetaFactoring
+```
+
+## License
+
+Research project — all code and formalizations are provided for academic use.

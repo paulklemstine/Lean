@@ -144,4 +144,47 @@
 
 ---
 
+## New Applications from the Seven Theorem Candidates
+
+### From the Dimension Barrier (Theorem 5)
+- **Error-correcting codes:** The E₈ lattice (dim 8) provides optimal sphere packing. MetaFactoring’s norm channels could inspire new algebraic decoding algorithms for lattice codes.
+- **Quantum computing:** The 1-2-4-8 hierarchy mirrors qubit/qudit/quaternionic/octonionic quantum mechanics. Could norm channels provide new quantum error correction schemes?
+- **Machine learning:** Hypercomplex neural networks (quaternion/octonion networks) have shown promise. The dimension barrier suggests 8 is the sweet spot for representation richness.
+
+### From the Fibonacci-Spectral Bridge (Conjecture 2)
+- **Signal processing:** Fibonacci-modular filters could exploit Pisano periodicity for efficient spectral analysis of quasi-periodic signals.
+- **Random number generation:** Pisano periods provide deterministic sequences with spectral properties similar to random sequences — useful for quasi-Monte Carlo methods.
+- **DNA sequence analysis:** Fibonacci patterns appear in biological growth. The Fibonacci-spectral bridge could inform genomic periodicity analysis.
+
+### From the Hyperbolic-Lattice Correspondence (Conjecture 3)
+- **Post-quantum cryptography:** Understanding how hyperbolic geometry connects to lattice reduction could reveal new hardness results for lattice-based cryptosystems (NTRU, Kyber, Dilithium).
+- **Optimization:** The AM-GM bound at √N is a universal minimum — analogous structures in high-dimensional optimization could guide search algorithms.
+
+### From the Seven-Lens Completeness Conjecture
+- **Algorithm portfolios:** If lens completeness holds for factoring, analogous multi-paradigm portfolios could work for SAT solving, constraint satisfaction, and combinatorial optimization.
+- **Automated theorem proving:** Multiple proof strategies (analytic, algebraic, combinatorial, topological) could be run in parallel, with the first success accepted.
+
+### Cross-Cutting Applications
+- **Supply chain optimization:** Multiple constraint types (geographic, temporal, economic, regulatory) as "lenses" that multiplicatively narrow the feasible space.
+- **Drug discovery:** Molecular docking, ADME properties, toxicity, and synthetic accessibility as independent lenses on the candidate molecule space.
+- **Financial risk modeling:** Market risk, credit risk, operational risk, and liquidity risk as independent lenses that multiplicatively constrain portfolio allocation.
+
+---
+
+## Exciting New Research Directions
+
+1. **Octonionic Factoring Engine:** Build a practical implementation of the 8-square identity as a factoring channel. Can we efficiently find 8-square representations of large integers?
+
+2. **Pisano Period Database:** Compute π(m) for all m up to 10⁶ and analyze the statistical distribution. Are there patterns that could predict which primes are "easy" for Fibonacci-based methods?
+
+3. **Cross-Lens Boosting:** Implement a system where partial results from one lens (e.g., a failed Pollard-rho orbit) are fed as constraints to another lens (e.g., lattice reduction). This is the practical realization of the bridge theorems.
+
+4. **Quantum MetaFactoring:** Implement each lens as a quantum subroutine, then use Grover-style amplitude amplification across lenses. The completeness conjecture suggests this could achieve polynomial-time factoring even without Shor.
+
+5. **MetaFactoring for Discrete Logarithm:** Adapt the seven-lens framework to the discrete logarithm problem. Many of the lenses have direct analogues (index calculus ↔ smooth numbers, Pohlig-Hellman ↔ orbit dynamics).
+
+6. **Formal Verification Pipeline:** Extend the Lean 4 formalization to cover all seven conjectures as they are resolved. Goal: a fully machine-verified multi-paradigm factoring theory.
+
+---
+
 *This brainstorm document is a living resource. New applications, theorems, and research directions are added as the MetaFactoring framework develops.*
