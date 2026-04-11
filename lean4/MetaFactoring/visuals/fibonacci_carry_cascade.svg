@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <marker id="arrowR" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#e74c3c"/>
+    </marker>
+    <marker id="arrowB" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#3498db"/>
+    </marker>
+    <marker id="arrowG" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#aaa"/>
+    </marker>
+  </defs>
+
+  <rect width="800" height="450" fill="#0a0a2e" rx="15"/>
+
+  <text x="400" y="35" text-anchor="middle" fill="white" font-size="20"
+        font-family="Georgia, serif" font-weight="bold">
+    Fibonacci vs Binary: Carry Propagation
+  </text>
+
+  <!-- BINARY SECTION -->
+  <text x="400" y="75" text-anchor="middle" fill="#aaaacc" font-size="15"
+        font-family="Arial" font-weight="bold">Binary: Unidirectional →</text>
+  <rect x="80" y="105" width="40" height="30" rx="5" fill="#1a1a3e" stroke="#444466"/>
+  <text x="100" y="125" text-anchor="middle" fill="#888" font-size="12" font-family="monospace">2^9</text>
+  <rect x="140" y="105" width="40" height="30" rx="5" fill="#1a1a3e" stroke="#444466"/>
+  <text x="160" y="125" text-anchor="middle" fill="#888" font-size="12" font-family="monospace">2^8</text>
+  <rect x="200" y="105" width="40" height="30" rx="5" fill="#1a1a3e" stroke="#444466"/>
+  <text x="220" y="125" text-anchor="middle" fill="#888" font-size="12" font-family="monospace">2^7</text>
+  <rect x="260" y="105" width="40" height="30" rx="5" fill="#1a1a3e" stroke="#444466"/>
+  <text x="280" y="125" text-anchor="middle" fill="#888" font-size="12" font-family="monospace">2^6</text>
+  <rect x="320" y="105" width="40" height="30" rx="5" fill="#1a1a3e" stroke="#444466"/>
+  <text x="340" y="125" text-anchor="middle" fill="#888" font-size="12" font-family="monospace">2^5</text>
+  <rect x="380" y="105" width="40" height="30" rx="5" fill="#1a1a3e" stroke="#444466"/>
+  <text x="400" y="125" text-anchor="middle" fill="#888" font-size="12" font-family="monospace">2^4</text>
+  <rect x="440" y="105" width="40" height="30" rx="5" fill="#1a1a3e" stroke="#444466"/>
+  <text x="460" y="125" text-anchor="middle" fill="#888" font-size="12" font-family="monospace">2^3</text>
+  <rect x="500" y="105" width="40" height="30" rx="5" fill="#1a1a3e" stroke="#444466"/>
+  <text x="520" y="125" text-anchor="middle" fill="#888" font-size="12" font-family="monospace">2^2</text>
+  <rect x="560" y="105" width="40" height="30" rx="5" fill="#1a1a3e" stroke="#444466"/>
+  <text x="580" y="125" text-anchor="middle" fill="#888" font-size="12" font-family="monospace">2^1</text>
+  <rect x="620" y="105" width="40" height="30" rx="5" fill="#1a1a3e" stroke="#444466"/>
+  <text x="640" y="125" text-anchor="middle" fill="#888" font-size="12" font-family="monospace">2^0</text>
+  <line x1="180" y1="120" x2="85" y2="120" stroke="#aaa" stroke-width="2" marker-end="url(#arrowG)"/>
+  <line x1="240" y1="120" x2="145" y2="120" stroke="#aaa" stroke-width="2" marker-end="url(#arrowG)"/>
+  <line x1="300" y1="120" x2="205" y2="120" stroke="#aaa" stroke-width="2" marker-end="url(#arrowG)"/>
+  <line x1="360" y1="120" x2="265" y2="120" stroke="#aaa" stroke-width="2" marker-end="url(#arrowG)"/>
+  <line x1="420" y1="120" x2="325" y2="120" stroke="#aaa" stroke-width="2" marker-end="url(#arrowG)"/>
+  <line x1="480" y1="120" x2="385" y2="120" stroke="#aaa" stroke-width="2" marker-end="url(#arrowG)"/>
+  <line x1="540" y1="120" x2="445" y2="120" stroke="#aaa" stroke-width="2" marker-end="url(#arrowG)"/>
+  <text x="400" y="170" text-anchor="middle" fill="#888" font-size="12" font-family="Arial">Rule: 2·2ⁿ = 2ⁿ⁺¹ (carry only upward)</text>
+
+  <text x="400" y="215" text-anchor="middle" fill="#e67e22" font-size="15"
+        font-family="Arial" font-weight="bold">Fibonacci: Bidirectional ↔</text>
+  <rect x="80" y="255" width="40" height="30" rx="5" fill="#1a1a3e" stroke="#e67e22" stroke-opacity="0.5"/>
+  <text x="100" y="275" text-anchor="middle" fill="#e67e22" font-size="12" font-family="monospace">F(11)</text>
+  <rect x="140" y="255" width="40" height="30" rx="5" fill="#1a1a3e" stroke="#e67e22" stroke-opacity="0.5"/>
+  <text x="160" y="275" text-anchor="middle" fill="#e67e22" font-size="12" font-family="monospace">F(10)</text>
+  <rect x="200" y="255" width="40" height="30" rx="5" fill="#1a1a3e" stroke="#e67e22" stroke-opacity="0.5"/>
+  <text x="220" y="275" text-anchor="middle" fill="#e67e22" font-size="12" font-family="monospace">F(9)</text>
+  <rect x="260" y="255" width="40" height="30" rx="5" fill="#1a1a3e" stroke="#e67e22" stroke-opacity="0.5"/>
+  <text x="280" y="275" text-anchor="middle" fill="#e67e22" font-size="12" font-family="monospace">F(8)</text>
+  <rect x="320" y="255" width="40" height="30" rx="5" fill="#1a1a3e" stroke="#e67e22" stroke-opacity="0.5"/>
+  <text x="340" y="275" text-anchor="middle" fill="#e67e22" font-size="12" font-family="monospace">F(7)</text>
+  <rect x="380" y="255" width="40" height="30" rx="5" fill="#1a1a3e" stroke="#e67e22" stroke-opacity="0.5"/>
+  <text x="400" y="275" text-anchor="middle" fill="#e67e22" font-size="12" font-family="monospace">F(6)</text>
+  <rect x="440" y="255" width="40" height="30" rx="5" fill="#1a1a3e" stroke="#e67e22" stroke-opacity="0.5"/>
+  <text x="460" y="275" text-anchor="middle" fill="#e67e22" font-size="12" font-family="monospace">F(5)</text>
+  <rect x="500" y="255" width="40" height="30" rx="5" fill="#1a1a3e" stroke="#e67e22" stroke-opacity="0.5"/>
+  <text x="520" y="275" text-anchor="middle" fill="#e67e22" font-size="12" font-family="monospace">F(4)</text>
+  <rect x="560" y="255" width="40" height="30" rx="5" fill="#1a1a3e" stroke="#e67e22" stroke-opacity="0.5"/>
+  <text x="580" y="275" text-anchor="middle" fill="#e67e22" font-size="12" font-family="monospace">F(3)</text>
+  <rect x="620" y="255" width="40" height="30" rx="5" fill="#1a1a3e" stroke="#e67e22" stroke-opacity="0.5"/>
+  <text x="640" y="275" text-anchor="middle" fill="#e67e22" font-size="12" font-family="monospace">F(2)</text>
+  <line x1="180" y1="252" x2="85" y2="252" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrowR)"/>
+  <line x1="240" y1="252" x2="145" y2="252" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrowR)"/>
+  <line x1="300" y1="252" x2="205" y2="252" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrowR)"/>
+  <line x1="360" y1="252" x2="265" y2="252" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrowR)"/>
+  <line x1="420" y1="252" x2="325" y2="252" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrowR)"/>
+  <line x1="480" y1="252" x2="385" y2="252" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrowR)"/>
+  <line x1="540" y1="252" x2="445" y2="252" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrowR)"/>
+  <line x1="600" y1="252" x2="505" y2="252" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrowR)"/>
+  <line x1="80" y1="288" x2="235" y2="288" stroke="#3498db" stroke-width="2" marker-end="url(#arrowB)"/>
+  <line x1="140" y1="288" x2="295" y2="288" stroke="#3498db" stroke-width="2" marker-end="url(#arrowB)"/>
+  <line x1="200" y1="288" x2="355" y2="288" stroke="#3498db" stroke-width="2" marker-end="url(#arrowB)"/>
+  <line x1="260" y1="288" x2="415" y2="288" stroke="#3498db" stroke-width="2" marker-end="url(#arrowB)"/>
+  <line x1="320" y1="288" x2="475" y2="288" stroke="#3498db" stroke-width="2" marker-end="url(#arrowB)"/>
+  <line x1="380" y1="288" x2="535" y2="288" stroke="#3498db" stroke-width="2" marker-end="url(#arrowB)"/>
+  <line x1="440" y1="288" x2="595" y2="288" stroke="#3498db" stroke-width="2" marker-end="url(#arrowB)"/>
+
+  <text x="400" y="325" text-anchor="middle" fill="#888" font-size="12"
+        font-family="Arial">Rule: 2·F(n) = F(n+1) + F(n−2) (carries both up AND down)</text>
+
+  <!-- Legend -->
+  <line x1="200" y1="370" x2="240" y2="370" stroke="#e74c3c" stroke-width="2"
+        marker-end="url(#arrowR)"/>
+  <text x="250" y="375" fill="#e74c3c" font-size="12" font-family="Arial">
+    Upward carry (+1 position)</text>
+
+  <line x1="450" y1="370" x2="490" y2="370" stroke="#3498db" stroke-width="2"
+        marker-end="url(#arrowB)"/>
+  <text x="500" y="375" fill="#3498db" font-size="12" font-family="Arial">
+    Downward carry (−2 positions)</text>
+
+  <text x="400" y="420" text-anchor="middle" fill="#667eea" font-size="14"
+        font-family="Georgia, serif" font-style="italic">
+    Bidirectional carries create richer constraint networks for factoring
+  </text>
+</svg>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 650" width="700" height="650">
+  <rect width="700" height="650" fill="#0a0a2e" rx="15"/>
+
+  <text x="350" y="35" text-anchor="middle" fill="white" font-size="20"
+        font-family="Georgia, serif" font-weight="bold">
+    Norm Sphere Collisions: N = 325 = 5² × 13
+  </text>
+  <text x="350" y="58" text-anchor="middle" fill="#aaaacc" font-size="13"
+        font-family="Arial">
+    Multiple sum-of-squares representations reveal factors
+  </text>
+
+  <!-- Circle a² + b² = 325 -->
+  <circle cx="350" cy="330" r="220" fill="none" stroke="#3498db" stroke-width="2" opacity="0.4"/>
+
+  <!-- Axes -->
+  <line x1="100" y1="330" x2="600" y2="330" stroke="#333" stroke-width="1"/>
+  <line x1="350" y1="80" x2="350" y2="580" stroke="#333" stroke-width="1"/>
+  <text x="605" y="334" fill="#888" font-size="12">a</text>
+  <text x="354" y="78" fill="#888" font-size="12">b</text>
+  <circle cx="362" cy="110" r="8" fill="#e74c3c" opacity="0.9"/>
+  <text x="374" y="102" fill="#e74c3c" font-size="13" font-family="monospace" font-weight="bold">(1, 18)</text>
+  <text x="374" y="118" fill="#e74c3c" font-size="11" font-family="Arial">1²+18² = 325</text>
+  <line x1="362" y1="110" x2="362" y2="330" stroke="#e74c3c" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+  <line x1="362" y1="110" x2="350" y2="110" stroke="#e74c3c" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+  <circle cx="423" cy="123" r="8" fill="#2ecc71" opacity="0.9"/>
+  <text x="435" y="115" fill="#2ecc71" font-size="13" font-family="monospace" font-weight="bold">(6, 17)</text>
+  <text x="435" y="131" fill="#2ecc71" font-size="11" font-family="Arial">6²+17² = 325</text>
+  <line x1="423" y1="123" x2="423" y2="330" stroke="#2ecc71" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+  <line x1="423" y1="123" x2="350" y2="123" stroke="#2ecc71" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+  <circle cx="472" cy="147" r="8" fill="#f1c40f" opacity="0.9"/>
+  <text x="484" y="139" fill="#f1c40f" font-size="13" font-family="monospace" font-weight="bold">(10, 15)</text>
+  <text x="484" y="155" fill="#f1c40f" font-size="11" font-family="Arial">10²+15² = 325</text>
+  <line x1="472" y1="147" x2="472" y2="330" stroke="#f1c40f" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+  <line x1="472" y1="147" x2="350" y2="147" stroke="#f1c40f" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+
+  <!-- Factoring algebra -->
+  <rect x="30" y="530" width="640" height="90" rx="10" fill="#1a1a3e" opacity="0.8"/>
+  <text x="350" y="555" text-anchor="middle" fill="white" font-size="14"
+        font-family="monospace">
+    325 = 1² + 18² = 6² + 17²
+  </text>
+  <text x="350" y="578" text-anchor="middle" fill="#2ecc71" font-size="13"
+        font-family="monospace">
+    gcd(1·17 − 18·6, 325) = gcd(91, 325) = 13
+  </text>
+  <text x="350" y="598" text-anchor="middle" fill="#e74c3c" font-size="13"
+        font-family="monospace">
+    gcd(1·17 + 18·6, 325) = gcd(125, 325) = 25
+  </text>
+  <text x="350" y="616" text-anchor="middle" fill="#f1c40f" font-size="14"
+        font-family="Georgia, serif" font-weight="bold">
+    → 325 = 13 × 25  ✓
+  </text>
+</svg>
