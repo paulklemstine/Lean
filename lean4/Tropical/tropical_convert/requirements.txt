@@ -1,0 +1,10 @@
+torch>=2.1.0
+transformers>=4.36.0
+accelerate>=0.25.0
+safetensors>=0.4.0
+huggingface-hub>=0.20.0
+datasets>=2.16.0
+tqdm>=4.66.0
+rich>=13.7.0
+prompt-toolkit>=3.0.0
+pygments>=2.17.0
