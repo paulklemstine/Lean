@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 550" width="900" height="550">
+<defs>
+  <style>
+    .title { font: bold 20px sans-serif; fill: #1a1a2e; }
+    .subtitle { font: 14px sans-serif; fill: #16213e; }
+    .label { font: 11px monospace; fill: #333; }
+    .small { font: 9px sans-serif; fill: #666; }
+    .axis { stroke: #333; stroke-width: 1; }
+    .grid { stroke: #e0e0e0; stroke-width: 0.5; }
+    .node { stroke: #1a1a2e; stroke-width: 1.5; }
+    .edge { stroke: #4a4e69; stroke-width: 1; opacity: 0.6; }
+    .highlight { stroke: #e63946; stroke-width: 2; fill: #e63946; fill-opacity: 0.3; }
+    .factor { fill: #2a9d8f; stroke: #264653; stroke-width: 2; }
+    .energy-high { fill: #e76f51; }
+    .energy-mid { fill: #f4a261; }
+    .energy-low { fill: #2a9d8f; }
+  </style>
+  <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a4e69"/>
+  </marker>
+  <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+    <stop offset="0%" style="stop-color:#2a9d8f;stop-opacity:0.8"/>
+    <stop offset="100%" style="stop-color:#264653;stop-opacity:0"/>
+  </radialGradient>
+</defs>
+<rect width="900" height="550" fill="#faf9f6" rx="10"/>
+<text x="450" y="35" text-anchor="middle" class="title">Cross-Collision Factoring</text>
+<text x="450" y="55" text-anchor="middle" class="subtitle">Two representations with shared hypotenuse d reveal factors</text>
+<ellipse cx="450" cy="280" rx="150" ry="60.0" fill="none" stroke="#264653" stroke-width="1" stroke-dasharray="5,5"/>
+<circle cx="450" cy="280" r="150" fill="none" stroke="#264653" stroke-width="2"/>
+<text x="450" y="280" text-anchor="middle" fill="#264653" font-size="18" opacity="0.3">S²(d)</text>
+<circle cx="554" cy="173" r="8" fill="#e63946"/>
+<text x="539" y="158" fill="#e63946" font-size="12" font-weight="bold">(a₁,b₁,c₁)</text>
+<text x="539" y="193" fill="#e63946" font-size="10">a₁²+b₁²+c₁²=d²</text>
+<circle cx="581" cy="351" r="8" fill="#457b9d"/>
+<text x="596" y="336" fill="#457b9d" font-size="12" font-weight="bold">(a₂,b₂,c₂)</text>
+<text x="596" y="371" fill="#457b9d" font-size="10">a₂²+b₂²+c₂²=d²</text>
+<line x1="554" y1="173" x2="581" y2="351" stroke="#2a9d8f" stroke-width="2" stroke-dasharray="4,3"/>
+<text x="567" y="252" text-anchor="middle" fill="#2a9d8f" font-size="11" font-weight="bold">Cross-collision!</text>
+<rect x="50" y="460" width="800" height="70" fill="#f1faee" stroke="#a8dadc" rx="5"/>
+<text x="450" y="485" text-anchor="middle" class="label">a₁²−a₂² = (a₁−a₂)(a₁+a₂)  and  (b₂²−b₁²) + (c₂²−c₁²) = a₁²−a₂²</text>
+<text x="450" y="510" text-anchor="middle" class="small" fill="#e63946">→ gcd(a₁−a₂, N) and gcd(a₁+a₂, N) are candidate factors of N</text>
+</svg>
