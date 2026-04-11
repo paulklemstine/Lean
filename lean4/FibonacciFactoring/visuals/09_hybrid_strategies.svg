@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 550" width="850" height="550">
+  <defs>
+    <style>
+      .title { font: bold 18px 'Segoe UI', Arial, sans-serif; fill: #1a1a2e; }
+      .subtitle { font: 14px 'Segoe UI', Arial, sans-serif; fill: #4a4a6a; }
+      .label { font: 12px 'Courier New', monospace; fill: #333; }
+      .label-sm { font: 10px 'Courier New', monospace; fill: #555; }
+      .axis { font: 11px 'Segoe UI', Arial, sans-serif; fill: #666; }
+      .note { font: italic 11px 'Segoe UI', Arial, sans-serif; fill: #888; }
+    </style>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FFA500;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4A90D9;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2C5F8A;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4CAF50;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2E7D32;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="850" height="550" fill="#fafaf8" rx="8"/>
+  <text x="425" y="35" text-anchor="middle" class="title">Q2: Three Hybrid Strategies for Fibonacci-Enhanced Factoring</text>
+  <rect x="60" y="80" width="230" height="400" fill="white" stroke="#4A90D9" stroke-width="3" rx="12"/>
+  <rect x="60" y="80" width="230" height="55" fill="#4A90D9" rx="12"/>
+  <rect x="60" y="120" width="230" height="15" fill="#4A90D9"/>
+  <text x="175" y="105" text-anchor="middle" font-size="13" font-weight="bold" fill="white">Quadratic Sieve</text>
+  <text x="175" y="123" text-anchor="middle" font-size="13" font-weight="bold" fill="white">+ Pisano Filter</text>
+  <rect x="75" y="160" width="200" height="35" fill="#4A90D9" opacity="0.1" rx="6"/>
+  <text x="175" y="182" text-anchor="middle" class="label" fill="#4A90D9">Sieve for smooth</text>
+  <text x="175" y="212" text-anchor="middle" font-size="16" fill="#4A90D9">↓</text>
+  <rect x="75" y="225" width="200" height="35" fill="#4A90D9" opacity="0.1" rx="6"/>
+  <text x="175" y="247" text-anchor="middle" class="label" fill="#4A90D9">values x² - N</text>
+  <text x="175" y="277" text-anchor="middle" font-size="16" fill="#4A90D9">↓</text>
+  <rect x="75" y="290" width="200" height="35" fill="#4A90D9" opacity="0.1" rx="6"/>
+  <text x="175" y="312" text-anchor="middle" class="label" fill="#4A90D9">Apply Fibonacci</text>
+  <text x="175" y="342" text-anchor="middle" font-size="16" fill="#4A90D9">↓</text>
+  <rect x="75" y="355" width="200" height="35" fill="#4A90D9" opacity="0.1" rx="6"/>
+  <text x="175" y="377" text-anchor="middle" class="label" fill="#4A90D9">parity filter</text>
+  <text x="175" y="407" text-anchor="middle" font-size="16" fill="#4A90D9">↓</text>
+  <rect x="75" y="420" width="200" height="35" fill="#4A90D9" opacity="0.1" rx="6"/>
+  <text x="175" y="442" text-anchor="middle" class="label" fill="#4A90D9">→ Smaller matrix</text>
+  <rect x="320" y="80" width="230" height="400" fill="white" stroke="#E8A838" stroke-width="3" rx="12"/>
+  <rect x="320" y="80" width="230" height="55" fill="#E8A838" rx="12"/>
+  <rect x="320" y="120" width="230" height="15" fill="#E8A838"/>
+  <text x="435" y="105" text-anchor="middle" font-size="13" font-weight="bold" fill="white">Number Field Sieve</text>
+  <text x="435" y="123" text-anchor="middle" font-size="13" font-weight="bold" fill="white">+ ℤ[φ] Structure</text>
+  <rect x="335" y="160" width="200" height="35" fill="#E8A838" opacity="0.1" rx="6"/>
+  <text x="435" y="182" text-anchor="middle" class="label" fill="#E8A838">Work in ℤ[φ]</text>
+  <text x="435" y="212" text-anchor="middle" font-size="16" fill="#E8A838">↓</text>
+  <rect x="335" y="225" width="200" height="35" fill="#E8A838" opacity="0.1" rx="6"/>
+  <text x="435" y="247" text-anchor="middle" class="label" fill="#E8A838">where φ² = φ + 1</text>
+  <text x="435" y="277" text-anchor="middle" font-size="16" fill="#E8A838">↓</text>
+  <rect x="335" y="290" width="200" height="35" fill="#E8A838" opacity="0.1" rx="6"/>
+  <text x="435" y="312" text-anchor="middle" class="label" fill="#E8A838">Fibonacci-coord</text>
+  <text x="435" y="342" text-anchor="middle" font-size="16" fill="#E8A838">↓</text>
+  <rect x="335" y="355" width="200" height="35" fill="#E8A838" opacity="0.1" rx="6"/>
+  <text x="435" y="377" text-anchor="middle" class="label" fill="#E8A838">sieving</text>
+  <text x="435" y="407" text-anchor="middle" font-size="16" fill="#E8A838">↓</text>
+  <rect x="335" y="420" width="200" height="35" fill="#E8A838" opacity="0.1" rx="6"/>
+  <text x="435" y="442" text-anchor="middle" class="label" fill="#E8A838">→ Split primes</text>
+  <rect x="580" y="80" width="230" height="400" fill="white" stroke="#4CAF50" stroke-width="3" rx="12"/>
+  <rect x="580" y="80" width="230" height="55" fill="#4CAF50" rx="12"/>
+  <rect x="580" y="120" width="230" height="15" fill="#4CAF50"/>
+  <text x="695" y="105" text-anchor="middle" font-size="13" font-weight="bold" fill="white">ECM + Fibonacci</text>
+  <text x="695" y="123" text-anchor="middle" font-size="13" font-weight="bold" fill="white">Parameterization</text>
+  <rect x="595" y="160" width="200" height="35" fill="#4CAF50" opacity="0.1" rx="6"/>
+  <text x="695" y="182" text-anchor="middle" class="label" fill="#4CAF50">gcd(F(m),F(n))</text>
+  <text x="695" y="212" text-anchor="middle" font-size="16" fill="#4CAF50">↓</text>
+  <rect x="595" y="225" width="200" height="35" fill="#4CAF50" opacity="0.1" rx="6"/>
+  <text x="695" y="247" text-anchor="middle" class="label" fill="#4CAF50">= F(gcd(m,n))</text>
+  <text x="695" y="277" text-anchor="middle" font-size="16" fill="#4CAF50">↓</text>
+  <rect x="595" y="290" width="200" height="35" fill="#4CAF50" opacity="0.1" rx="6"/>
+  <text x="695" y="312" text-anchor="middle" class="label" fill="#4CAF50">Fibonacci-smooth</text>
+  <text x="695" y="342" text-anchor="middle" font-size="16" fill="#4CAF50">↓</text>
+  <rect x="595" y="355" width="200" height="35" fill="#4CAF50" opacity="0.1" rx="6"/>
+  <text x="695" y="377" text-anchor="middle" class="label" fill="#4CAF50">group orders</text>
+  <text x="695" y="407" text-anchor="middle" font-size="16" fill="#4CAF50">↓</text>
+  <rect x="595" y="420" width="200" height="35" fill="#4CAF50" opacity="0.1" rx="6"/>
+  <text x="695" y="442" text-anchor="middle" class="label" fill="#4CAF50">→ Better curves</text>
+  <text x="425" y="520" text-anchor="middle" class="note">Each strategy uses Fibonacci structure at a different algorithmic level.</text>
+  <text x="425" y="536" text-anchor="middle" class="note">The Pisano filter is simplest to implement; ℤ[φ] integration requires algebraic number theory.</text>
+</svg>

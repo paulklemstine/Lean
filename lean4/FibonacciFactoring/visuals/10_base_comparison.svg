@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="800" height="480">
+  <defs>
+    <style>
+      .title { font: bold 18px 'Segoe UI', Arial, sans-serif; fill: #1a1a2e; }
+      .subtitle { font: 14px 'Segoe UI', Arial, sans-serif; fill: #4a4a6a; }
+      .label { font: 12px 'Courier New', monospace; fill: #333; }
+      .label-sm { font: 10px 'Courier New', monospace; fill: #555; }
+      .axis { font: 11px 'Segoe UI', Arial, sans-serif; fill: #666; }
+      .note { font: italic 11px 'Segoe UI', Arial, sans-serif; fill: #888; }
+    </style>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FFA500;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4A90D9;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2C5F8A;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4CAF50;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2E7D32;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="800" height="480" fill="#fafaf8" rx="8"/>
+  <text x="400" y="35" text-anchor="middle" class="title">Q3: Constraint Tightness of Different Numeral Systems</text>
+  <line x1="80" y1="180" x2="720" y2="180" stroke="#333" stroke-width="2"/>
+  <text x="400" y="230" text-anchor="middle" class="axis">Search space per digit (lower = tighter constraints)</text>
+  <line x1="80.0" y1="175" x2="80.0" y2="185" stroke="#333" stroke-width="1"/>
+  <text x="80.0" y="200" text-anchor="middle" class="axis">1.0</text>
+  <line x1="186.66666666666666" y1="175" x2="186.66666666666666" y2="185" stroke="#333" stroke-width="1"/>
+  <text x="186.66666666666666" y="200" text-anchor="middle" class="axis">1.5</text>
+  <line x1="293.3333333333333" y1="175" x2="293.3333333333333" y2="185" stroke="#333" stroke-width="1"/>
+  <text x="293.3333333333333" y="200" text-anchor="middle" class="axis">2.0</text>
+  <line x1="400.0" y1="175" x2="400.0" y2="185" stroke="#333" stroke-width="1"/>
+  <text x="400.0" y="200" text-anchor="middle" class="axis">2.5</text>
+  <line x1="506.66666666666663" y1="175" x2="506.66666666666663" y2="185" stroke="#333" stroke-width="1"/>
+  <text x="506.66666666666663" y="200" text-anchor="middle" class="axis">3.0</text>
+  <line x1="613.3333333333334" y1="175" x2="613.3333333333334" y2="185" stroke="#333" stroke-width="1"/>
+  <text x="613.3333333333334" y="200" text-anchor="middle" class="axis">3.5</text>
+  <line x1="720.0" y1="175" x2="720.0" y2="185" stroke="#333" stroke-width="1"/>
+  <text x="720.0" y="200" text-anchor="middle" class="axis">4.0</text>
+  <circle cx="211.8472509333109" cy="180" r="10" fill="#FFD700" stroke="#333" stroke-width="1.5"/>
+  <line x1="211.8472509333109" y1="170" x2="211.8472509333109" y2="145" stroke="#FFD700" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="211.8472509333109" y="133" text-anchor="middle" font-size="12" font-weight="bold" fill="#FFD700">Fibonacci</text>
+  <text x="211.8472509333109" y="145" text-anchor="middle" class="label-sm" fill="#FFD700">φ ≈ 1.618</text>
+  <circle cx="258.9866666666667" cy="180" r="10" fill="#90EE90" stroke="#333" stroke-width="1.5"/>
+  <line x1="258.9866666666667" y1="170" x2="258.9866666666667" y2="120" stroke="#90EE90" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="258.9866666666667" y="108" text-anchor="middle" font-size="12" font-weight="bold" fill="#90EE90">Tribonacci</text>
+  <text x="258.9866666666667" y="120" text-anchor="middle" class="label-sm" fill="#90EE90">≈ 1.839</text>
+  <circle cx="293.3333333333333" cy="180" r="10" fill="#4A90D9" stroke="#333" stroke-width="1.5"/>
+  <line x1="293.3333333333333" y1="170" x2="293.3333333333333" y2="145" stroke="#4A90D9" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="293.3333333333333" y="133" text-anchor="middle" font-size="12" font-weight="bold" fill="#4A90D9">Binary</text>
+  <text x="293.3333333333333" y="145" text-anchor="middle" class="label-sm" fill="#4A90D9">2.000</text>
+  <circle cx="381.69889330626023" cy="180" r="10" fill="#FF6B6B" stroke="#333" stroke-width="1.5"/>
+  <line x1="381.69889330626023" y1="170" x2="381.69889330626023" y2="120" stroke="#FF6B6B" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="381.69889330626023" y="108" text-anchor="middle" font-size="12" font-weight="bold" fill="#FF6B6B">√2 Ostrowski</text>
+  <text x="381.69889330626023" y="120" text-anchor="middle" class="label-sm" fill="#FF6B6B">≈ 2.414</text>
+  <circle cx="662.8375056146938" cy="180" r="10" fill="#DDA0DD" stroke="#333" stroke-width="1.5"/>
+  <line x1="662.8375056146938" y1="170" x2="662.8375056146938" y2="145" stroke="#DDA0DD" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="662.8375056146938" y="133" text-anchor="middle" font-size="12" font-weight="bold" fill="#DDA0DD">√3 Ostrowski</text>
+  <text x="662.8375056146938" y="145" text-anchor="middle" class="label-sm" fill="#DDA0DD">≈ 3.732</text>
+  <rect x="80" y="177" width="131.8472509333109" height="6" fill="#FFD700" opacity="0.3"/>
+  <text x="145.92362546665544" y="215" text-anchor="middle" class="label-sm" fill="#B8860B">← Optimal zone</text>
+  <rect x="50" y="260" width="700" height="180" fill="#f5f5f0" rx="10" stroke="#ddd"/>
+  <text x="400" y="290" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">N-Adapted Ostrowski Representations</text>
+  <text x="400" y="315" text-anchor="middle" class="label">For specific N = pq, the continued fraction of √N creates a tailored numeral system:</text>
+  <text x="120" y="340" class="label" fill="#4A90D9">N = 143 = 11×13</text>
+  <text x="350" y="340" class="label">CF(√143) = [11; 1, 22, ...]</text>
+  <text x="650" y="340" class="label" fill="#888">period 2</text>
+  <text x="120" y="368" class="label" fill="#4A90D9">N = 1147 = 31×37</text>
+  <text x="350" y="368" class="label">CF(√1147) = [33; 1, 6, 1, 1, 5, ...]</text>
+  <text x="650" y="368" class="label" fill="#888">period 24</text>
+  <text x="120" y="396" class="label" fill="#4A90D9">N = 10403 = 101×103</text>
+  <text x="350" y="396" class="label">CF(√10403) = [101; 1, 202, ...]</text>
+  <text x="650" y="396" class="label" fill="#888">period 2</text>
+  <text x="400" y="430" text-anchor="middle" class="note">Short periods ↔ near-square factors. The CF encodes divisor structure!</text>
+</svg>
