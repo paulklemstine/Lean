@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a2e"/>
+      <stop offset="100%" style="stop-color:#1a1a4e"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ffd700"/>
+      <stop offset="100%" style="stop-color:#ffaa00"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#4488ff"/>
+      <stop offset="100%" style="stop-color:#2266dd"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#44dd88"/>
+      <stop offset="100%" style="stop-color:#22bb66"/>
+    </linearGradient>
+    <linearGradient id="purple" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#aa66ff"/>
+      <stop offset="100%" style="stop-color:#8844dd"/>
+    </linearGradient>
+    <linearGradient id="red" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ff6644"/>
+      <stop offset="100%" style="stop-color:#dd4422"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="900" fill="url(#bg)"/>
+
+  <!-- Title -->
+  <text x="600" y="50" text-anchor="middle" fill="url(#gold)" font-size="28" font-weight="bold" filter="url(#glow)">
+    Gravitational Factoring: Research Roadmap
+  </text>
+  <text x="600" y="78" text-anchor="middle" fill="#aabbcc" font-size="14">
+    Future Directions for Pythagorean k-Tuple Tree Factoring
+  </text>
+
+  <!-- Central Node -->
+  <circle cx="600" cy="300" r="70" fill="none" stroke="url(#gold)" stroke-width="3" filter="url(#glow)"/>
+  <text x="600" y="290" text-anchor="middle" fill="#ffd700" font-size="16" font-weight="bold">Gravitational</text>
+  <text x="600" y="310" text-anchor="middle" fill="#ffd700" font-size="16" font-weight="bold">Factoring</text>
+
+  <!-- Branch 1: Theoretical -->
+  <line x1="540" y1="260" x2="200" y2="150" stroke="#4488ff" stroke-width="2" opacity="0.6"/>
+  <rect x="80" y="100" width="240" height="100" rx="12" fill="#112244" stroke="url(#blue)" stroke-width="2"/>
+  <text x="200" y="130" text-anchor="middle" fill="#4488ff" font-size="16" font-weight="bold">I. Theoretical</text>
+  <text x="200" y="152" text-anchor="middle" fill="#8899bb" font-size="11">• Complexity classification</text>
+  <text x="200" y="168" text-anchor="middle" fill="#8899bb" font-size="11">• Representation density</text>
+  <text x="200" y="184" text-anchor="middle" fill="#8899bb" font-size="11">• Parity obstructions</text>
+
+  <!-- Branch 2: Algebraic -->
+  <line x1="660" y1="260" x2="1000" y2="150" stroke="#aa66ff" stroke-width="2" opacity="0.6"/>
+  <rect x="880" y="100" width="240" height="100" rx="12" fill="#221144" stroke="url(#purple)" stroke-width="2"/>
+  <text x="1000" y="130" text-anchor="middle" fill="#aa66ff" font-size="16" font-weight="bold">III. Algebraic</text>
+  <text x="1000" y="152" text-anchor="middle" fill="#9988bb" font-size="11">• Hurwitz quaternions</text>
+  <text x="1000" y="168" text-anchor="middle" fill="#9988bb" font-size="11">• Octonionic factoring</text>
+  <text x="1000" y="184" text-anchor="middle" fill="#9988bb" font-size="11">• Clifford algebras</text>
+
+  <!-- Branch 3: Algorithmic -->
+  <line x1="540" y1="340" x2="150" y2="450" stroke="#44dd88" stroke-width="2" opacity="0.6"/>
+  <rect x="30" y="400" width="240" height="100" rx="12" fill="#114422" stroke="url(#green)" stroke-width="2"/>
+  <text x="150" y="430" text-anchor="middle" fill="#44dd88" font-size="16" font-weight="bold">II. Algorithmic</text>
+  <text x="150" y="452" text-anchor="middle" fill="#88bb99" font-size="11">• Lattice reduction hybrid</text>
+  <text x="150" y="468" text-anchor="middle" fill="#88bb99" font-size="11">• Sieve-augmented search</text>
+  <text x="150" y="484" text-anchor="middle" fill="#88bb99" font-size="11">• Quantum tree exploration</text>
+
+  <!-- Branch 4: Computational -->
+  <line x1="660" y1="340" x2="1050" y2="450" stroke="#ff6644" stroke-width="2" opacity="0.6"/>
+  <rect x="930" y="400" width="240" height="100" rx="12" fill="#442211" stroke="url(#red)" stroke-width="2"/>
+  <text x="1050" y="430" text-anchor="middle" fill="#ff6644" font-size="16" font-weight="bold">IV. Computational</text>
+  <text x="1050" y="452" text-anchor="middle" fill="#bb8877" font-size="11">• Large-scale empirical study</text>
+  <text x="1050" y="468" text-anchor="middle" fill="#bb8877" font-size="11">• GPU tree traversal</text>
+  <text x="1050" y="484" text-anchor="middle" fill="#bb8877" font-size="11">• RL for tree navigation</text>
+
+  <!-- Branch 5: Cross-disciplinary -->
+  <line x1="600" y1="370" x2="600" y2="550" stroke="#ffd700" stroke-width="2" opacity="0.6"/>
+  <rect x="480" y="550" width="240" height="100" rx="12" fill="#332200" stroke="url(#gold)" stroke-width="2"/>
+  <text x="600" y="580" text-anchor="middle" fill="#ffd700" font-size="16" font-weight="bold">V. Cross-Disciplinary</text>
+  <text x="600" y="602" text-anchor="middle" fill="#bbaa77" font-size="11">• Statistical mechanics</text>
+  <text x="600" y="618" text-anchor="middle" fill="#bbaa77" font-size="11">• Information theory</text>
+  <text x="600" y="634" text-anchor="middle" fill="#bbaa77" font-size="11">• Topological data analysis</text>
+
+  <!-- Key Conjectures Box -->
+  <rect x="100" y="700" width="1000" height="150" rx="15" fill="#0d0d2d" stroke="#555588" stroke-width="1"/>
+  <text x="600" y="730" text-anchor="middle" fill="#aabbdd" font-size="18" font-weight="bold">Key Open Conjectures</text>
+
+  <text x="150" y="760" fill="#ffaa44" font-size="13">A. Density Conjecture:</text>
+  <text x="360" y="760" fill="#8899aa" font-size="12">δₖ(N) = Ω(1/√N) for k ≥ 4</text>
+
+  <text x="150" y="785" fill="#44aaff" font-size="13">B. Optimal Dimension:</text>
+  <text x="360" y="785" fill="#8899aa" font-size="12">k* = O(log N / log log N)</text>
+
+  <text x="600" y="760" fill="#aa66ff" font-size="13">C. Quaternion Equivalence:</text>
+  <text x="850" y="760" fill="#8899aa" font-size="12">Hurwitz factoring ≡ᴾ integer factoring</text>
+
+  <text x="600" y="785" fill="#ff6644" font-size="13">D. Octonionic Advantage:</text>
+  <text x="850" y="785" fill="#8899aa" font-size="12">Non-associativity → independent channels</text>
+
+  <!-- Channel Count Table -->
+  <rect x="380" y="800" width="440" height="40" rx="8" fill="#1a1a3e" stroke="#444466" stroke-width="1"/>
+  <text x="420" y="825" fill="#88aacc" font-size="12">k=2: 3ch</text>
+  <text x="500" y="825" fill="#88aacc" font-size="12">k=4: 10ch</text>
+  <text x="590" y="825" fill="#ffaa44" font-size="12" font-weight="bold">k=8: 36ch</text>
+  <text x="680" y="825" fill="#88aacc" font-size="12">k=16: 136ch</text>
+</svg>

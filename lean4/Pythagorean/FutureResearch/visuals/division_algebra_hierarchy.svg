@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#050520"/>
+      <stop offset="100%" style="stop-color:#101040"/>
+    </linearGradient>
+    <filter id="glow2">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1000" height="700" fill="url(#bg2)"/>
+
+  <text x="500" y="45" text-anchor="middle" fill="#ffd700" font-size="26" font-weight="bold">
+    Division Algebra Factoring Hierarchy
+  </text>
+  <text x="500" y="70" text-anchor="middle" fill="#8899aa" font-size="13">
+    Cayley–Dickson Construction: ℝ → ℂ → ℍ → 𝕆 → 𝕊
+  </text>
+
+  <!-- Level 1: Reals (k=1) -->
+  <rect x="420" y="95" width="160" height="70" rx="10" fill="#1a1a1a" stroke="#666" stroke-width="2"/>
+  <text x="500" y="120" text-anchor="middle" fill="#999" font-size="16" font-weight="bold">ℝ (k=1)</text>
+  <text x="500" y="140" text-anchor="middle" fill="#666" font-size="12">1 channel</text>
+  <text x="500" y="155" text-anchor="middle" fill="#555" font-size="10">trivial</text>
+
+  <!-- Level 2: Complex (k=2) -->
+  <line x1="500" y1="165" x2="500" y2="190" stroke="#4488ff" stroke-width="2"/>
+  <rect x="370" y="190" width="260" height="80" rx="10" fill="#112244" stroke="#4488ff" stroke-width="2"/>
+  <text x="500" y="218" text-anchor="middle" fill="#4488ff" font-size="18" font-weight="bold">ℂ (k=2)</text>
+  <text x="500" y="240" text-anchor="middle" fill="#6699cc" font-size="13">3 channels • Brahmagupta-Fibonacci</text>
+  <text x="500" y="258" text-anchor="middle" fill="#5588aa" font-size="11">(a²+b²)(c²+d²) = (ac-bd)²+(ad+bc)²</text>
+
+  <!-- Level 3: Quaternions (k=4) -->
+  <line x1="500" y1="270" x2="500" y2="300" stroke="#44dd88" stroke-width="2"/>
+  <rect x="330" y="300" width="340" height="90" rx="10" fill="#114422" stroke="#44dd88" stroke-width="2.5"/>
+  <text x="500" y="328" text-anchor="middle" fill="#44dd88" font-size="18" font-weight="bold">ℍ (k=4)</text>
+  <text x="500" y="352" text-anchor="middle" fill="#66bb88" font-size="13">10 channels • Euler 4-square identity</text>
+  <text x="500" y="372" text-anchor="middle" fill="#55aa77" font-size="11">Associative • Euclidean domain (Hurwitz)</text>
+  <text x="500" y="386" text-anchor="middle" fill="#44aa66" font-size="10">Lagrange: every n is a sum of 4 squares</text>
+
+  <!-- Level 4: Octonions (k=8) -->
+  <line x1="500" y1="390" x2="500" y2="420" stroke="#ffaa44" stroke-width="2"/>
+  <rect x="280" y="420" width="440" height="95" rx="12" fill="#332200" stroke="#ffaa44" stroke-width="3" filter="url(#glow2)"/>
+  <text x="500" y="448" text-anchor="middle" fill="#ffcc44" font-size="20" font-weight="bold">𝕆 (k=8)</text>
+  <text x="500" y="472" text-anchor="middle" fill="#ddaa44" font-size="14">36 channels • Degen 8-square identity</text>
+  <text x="500" y="492" text-anchor="middle" fill="#cc9933" font-size="12">Non-associative → multiple decompositions!</text>
+  <text x="500" y="508" text-anchor="middle" fill="#bb8822" font-size="10">12× improvement over ℂ • 3.6× over ℍ</text>
+
+  <!-- Level 5: Sedenions (k=16) -->
+  <line x1="500" y1="515" x2="500" y2="545" stroke="#ff4466" stroke-width="2" stroke-dasharray="6,3"/>
+  <rect x="310" y="545" width="380" height="80" rx="10" fill="#330022" stroke="#ff4466" stroke-width="2" stroke-dasharray="4,2"/>
+  <text x="500" y="572" text-anchor="middle" fill="#ff6688" font-size="16" font-weight="bold">𝕊 (k=16)</text>
+  <text x="500" y="592" text-anchor="middle" fill="#cc5566" font-size="12">136 channels • Zero divisors!</text>
+  <text x="500" y="610" text-anchor="middle" fill="#aa4455" font-size="10">Not a division algebra • Open: can zero divisors help factoring?</text>
+
+  <!-- Properties lost at each level -->
+  <text x="80" y="225" fill="#ff4444" font-size="11">Lost: ordering</text>
+  <text x="80" y="340" fill="#ff4444" font-size="11">Lost: commutativity</text>
+  <text x="80" y="460" fill="#ff4444" font-size="11">Lost: associativity</text>
+  <text x="80" y="580" fill="#ff4444" font-size="11">Lost: division</text>
+
+  <!-- Arrows -->
+  <text x="60" y="150" fill="#888" font-size="20">↓</text>
+  <text x="60" y="280" fill="#888" font-size="20">↓</text>
+  <text x="60" y="400" fill="#888" font-size="20">↓</text>
+  <text x="60" y="520" fill="#888" font-size="20">↓</text>
+
+  <!-- Properties gained -->
+  <text x="800" y="225" fill="#44ff44" font-size="11">+2 peel channels</text>
+  <text x="800" y="340" fill="#44ff44" font-size="11">+4 peel, +6 cross</text>
+  <text x="800" y="460" fill="#44ff44" font-size="11">+4 peel, +22 cross</text>
+  <text x="800" y="580" fill="#44ff44" font-size="11">+8 peel, +92 cross</text>
+
+  <!-- Bottom note -->
+  <text x="500" y="670" text-anchor="middle" fill="#6677aa" font-size="12" font-style="italic">
+    Hurwitz 1898: Bilinear sum-of-squares identities exist only in dimensions 1, 2, 4, and 8
+  </text>
+</svg>
