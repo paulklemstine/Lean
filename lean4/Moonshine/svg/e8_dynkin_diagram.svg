@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="800" height="400">
+  <defs>
+    <style>
+      .node { fill: #2563eb; stroke: #1e40af; stroke-width: 2; }
+      .node-label { font-family: 'Georgia', serif; font-size: 14px; fill: #1e293b; text-anchor: middle; }
+      .edge { stroke: #475569; stroke-width: 3; }
+      .title { font-family: 'Georgia', serif; font-size: 24px; fill: #0f172a; text-anchor: middle; font-weight: bold; }
+      .subtitle { font-family: 'Georgia', serif; font-size: 14px; fill: #64748b; text-anchor: middle; }
+      .annotation { font-family: 'Georgia', serif; font-size: 12px; fill: #6366f1; text-anchor: middle; font-style: italic; }
+      .math { font-family: 'Georgia', serif; font-size: 13px; fill: #334155; }
+      .highlight { fill: #dc2626; stroke: #991b1b; stroke-width: 2; }
+    </style>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="400" fill="#f8fafc" rx="8"/>
+  
+  <!-- Title -->
+  <text x="400" y="45" class="title">E₈ Dynkin Diagram</text>
+  <text x="400" y="70" class="subtitle">8 nodes, 7 edges — The exceptional Lie algebra</text>
+  
+  <!-- Main horizontal chain: α₁ - α₂ - α₃ - α₄ - α₅ - α₆ - α₇ -->
+  <!-- Positions: 100, 200, 300, 400, 500, 600, 700 at y=200 -->
+  
+  <!-- Edges (horizontal) -->
+  <line x1="100" y1="200" x2="200" y2="200" class="edge"/>
+  <line x1="200" y1="200" x2="300" y2="200" class="edge"/>
+  <line x1="300" y1="200" x2="400" y2="200" class="edge"/>
+  <line x1="400" y1="200" x2="500" y2="200" class="edge"/>
+  <line x1="500" y1="200" x2="600" y2="200" class="edge"/>
+  <line x1="600" y1="200" x2="700" y2="200" class="edge"/>
+  
+  <!-- Branch edge: α₃ to α₈ (vertical) -->
+  <line x1="300" y1="200" x2="300" y2="120" class="edge"/>
+  
+  <!-- Nodes -->
+  <circle cx="100" cy="200" r="16" class="node"/>
+  <circle cx="200" cy="200" r="16" class="node"/>
+  <circle cx="300" cy="200" r="16" class="node" filter="url(#glow)"/>
+  <circle cx="400" cy="200" r="16" class="node"/>
+  <circle cx="500" cy="200" r="16" class="node"/>
+  <circle cx="600" cy="200" r="16" class="node"/>
+  <circle cx="700" cy="200" r="16" class="node"/>
+  
+  <!-- Branch node (α₈) -->
+  <circle cx="300" cy="120" r="16" class="highlight" filter="url(#glow)"/>
+  
+  <!-- Node labels -->
+  <text x="100" y="240" class="node-label">α₁</text>
+  <text x="200" y="240" class="node-label">α₂</text>
+  <text x="300" y="240" class="node-label">α₃</text>
+  <text x="400" y="240" class="node-label">α₄</text>
+  <text x="500" y="240" class="node-label">α₅</text>
+  <text x="600" y="240" class="node-label">α₆</text>
+  <text x="700" y="240" class="node-label">α₇</text>
+  <text x="340" y="118" class="node-label" style="fill: #991b1b;">α₈</text>
+  
+  <!-- Annotations -->
+  <text x="300" y="95" class="annotation">Branch node (degree 3)</text>
+  <text x="300" y="280" class="annotation">This branching makes E₈ exceptional</text>
+  
+  <!-- Key facts -->
+  <text x="400" y="320" class="math" text-anchor="middle">
+    240 roots = 112 (±eᵢ ± eⱼ) + 128 ((±½)⁸, even # of −)
+  </text>
+  <text x="400" y="345" class="math" text-anchor="middle">
+    |W(E₈)| = 696,729,600 · det(Cartan) = 1 · Self-dual lattice
+  </text>
+  <text x="400" y="370" class="math" text-anchor="middle">
+    McKay: E₈ ↔ SL(2,𝔽₅) = binary icosahedral (order 120)
+  </text>
+</svg>
