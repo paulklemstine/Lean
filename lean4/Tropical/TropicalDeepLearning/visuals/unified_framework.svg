@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700">
+  <defs>
+    <linearGradient id="bg3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f0c29;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#302b63;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#24243e;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="4" flood-opacity="0.5"/>
+    </filter>
+    <filter id="glow4">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1000" height="700" fill="url(#bg3)"/>
+
+  <!-- Title -->
+  <text x="500" y="40" text-anchor="middle" fill="#ffffff" font-family="Georgia, serif" font-size="24" font-weight="bold">
+    Five Frontiers of the Unified Idempotent-Tropical-Quantum Framework
+  </text>
+  <text x="500" y="65" text-anchor="middle" fill="#a0a0cc" font-family="Georgia, serif" font-size="14">
+    All paths lead through f ∘ f = f
+  </text>
+
+  <!-- Central node: Idempotence -->
+  <circle cx="500" cy="350" r="70" fill="#1a1a3e" stroke="#ffd700" stroke-width="3" filter="url(#shadow)"/>
+  <text x="500" y="340" text-anchor="middle" fill="#ffd700" font-family="Georgia, serif" font-size="16" font-weight="bold">
+    f ∘ f = f
+  </text>
+  <text x="500" y="360" text-anchor="middle" fill="#ffd700" font-family="monospace" font-size="11">
+    IDEMPOTENCE
+  </text>
+  <text x="500" y="378" text-anchor="middle" fill="#cccc88" font-family="monospace" font-size="9">
+    Im(f) = Fix(f)
+  </text>
+
+  <!-- Frontier 1: Tropical NAS (top-left) -->
+  <g transform="translate(120, 120)">
+    <rect x="0" y="0" width="200" height="100" rx="12" fill="#1a2744" stroke="#4d96ff" stroke-width="2" filter="url(#shadow)"/>
+    <text x="100" y="22" text-anchor="middle" fill="#4d96ff" font-family="Georgia, serif" font-size="13" font-weight="bold">
+      Frontier 1
+    </text>
+    <text x="100" y="40" text-anchor="middle" fill="#ffffff" font-family="Georgia, serif" font-size="11">
+      Tropical NAS
+    </text>
+    <text x="100" y="58" text-anchor="middle" fill="#8899cc" font-family="monospace" font-size="9">
+      Conv · Transformer · ResNet
+    </text>
+    <text x="100" y="75" text-anchor="middle" fill="#6bcb77" font-family="monospace" font-size="9">
+      ReLU(ReLU(x)) = ReLU(x)
+    </text>
+    <text x="100" y="92" text-anchor="middle" fill="#aaaacc" font-family="monospace" font-size="8">
+      regions ≤ (tropical rank)^depth
+    </text>
+  </g>
+  <line x1="320" y1="170" x2="440" y2="310" stroke="#4d96ff" stroke-width="1.5" stroke-dasharray="6"/>
+
+  <!-- Frontier 2: Quantum Annealing (top-right) -->
+  <g transform="translate(680, 120)">
+    <rect x="0" y="0" width="200" height="100" rx="12" fill="#2a1a3e" stroke="#ff6b6b" stroke-width="2" filter="url(#shadow)"/>
+    <text x="100" y="22" text-anchor="middle" fill="#ff6b6b" font-family="Georgia, serif" font-size="13" font-weight="bold">
+      Frontier 2
+    </text>
+    <text x="100" y="40" text-anchor="middle" fill="#ffffff" font-family="Georgia, serif" font-size="11">
+      Quantum Annealing
+    </text>
+    <text x="100" y="58" text-anchor="middle" fill="#cc88aa" font-family="monospace" font-size="9">
+      β(t) = c · log(1+t)
+    </text>
+    <text x="100" y="75" text-anchor="middle" fill="#6bcb77" font-family="monospace" font-size="9">
+      max(x, x) = x
+    </text>
+    <text x="100" y="92" text-anchor="middle" fill="#aaaacc" font-family="monospace" font-size="8">
+      gap ≤ log(2)/β → 0
+    </text>
+  </g>
+  <line x1="680" y1="170" x2="560" y2="310" stroke="#ff6b6b" stroke-width="1.5" stroke-dasharray="6"/>
+
+  <!-- Frontier 3: Persistent Homology (left) -->
+  <g transform="translate(40, 310)">
+    <rect x="0" y="0" width="200" height="100" rx="12" fill="#1a3a2a" stroke="#6bcb77" stroke-width="2" filter="url(#shadow)"/>
+    <text x="100" y="22" text-anchor="middle" fill="#6bcb77" font-family="Georgia, serif" font-size="13" font-weight="bold">
+      Frontier 3
+    </text>
+    <text x="100" y="40" text-anchor="middle" fill="#ffffff" font-family="Georgia, serif" font-size="11">
+      Persistent Homology
+    </text>
+    <text x="100" y="58" text-anchor="middle" fill="#88ccaa" font-family="monospace" font-size="9">
+      Bottleneck = L∞ = tropical
+    </text>
+    <text x="100" y="75" text-anchor="middle" fill="#6bcb77" font-family="monospace" font-size="9">
+      max(|a|, |b|) uses max
+    </text>
+    <text x="100" y="92" text-anchor="middle" fill="#aaaacc" font-family="monospace" font-size="8">
+      O(n³) column reduction
+    </text>
+  </g>
+  <line x1="240" y1="360" x2="430" y2="350" stroke="#6bcb77" stroke-width="1.5" stroke-dasharray="6"/>
+
+  <!-- Frontier 4: E8 Codes (bottom-left) -->
+  <g transform="translate(180, 500)">
+    <rect x="0" y="0" width="200" height="100" rx="12" fill="#3a2a1a" stroke="#ffd93d" stroke-width="2" filter="url(#shadow)"/>
+    <text x="100" y="22" text-anchor="middle" fill="#ffd93d" font-family="Georgia, serif" font-size="13" font-weight="bold">
+      Frontier 4
+    </text>
+    <text x="100" y="40" text-anchor="middle" fill="#ffffff" font-family="Georgia, serif" font-size="11">
+      E8 Quantum Codes
+    </text>
+    <text x="100" y="58" text-anchor="middle" fill="#ccaa66" font-family="monospace" font-size="9">
+      240 = 112 + 128 roots
+    </text>
+    <text x="100" y="75" text-anchor="middle" fill="#6bcb77" font-family="monospace" font-size="9">
+      π ∘ π = π (projection)
+    </text>
+    <text x="100" y="92" text-anchor="middle" fill="#aaaacc" font-family="monospace" font-size="8">
+      [[8, 0, 4]] CSS code
+    </text>
+  </g>
+  <line x1="340" y1="520" x2="460" y2="400" stroke="#ffd93d" stroke-width="1.5" stroke-dasharray="6"/>
+
+  <!-- Frontier 5: Leech Lattice (bottom-right) -->
+  <g transform="translate(620, 500)">
+    <rect x="0" y="0" width="200" height="100" rx="12" fill="#2a1a3a" stroke="#cc66ff" stroke-width="2" filter="url(#shadow)"/>
+    <text x="100" y="22" text-anchor="middle" fill="#cc66ff" font-family="Georgia, serif" font-size="13" font-weight="bold">
+      Frontier 5
+    </text>
+    <text x="100" y="40" text-anchor="middle" fill="#ffffff" font-family="Georgia, serif" font-size="11">
+      Leech Lattice
+    </text>
+    <text x="100" y="58" text-anchor="middle" fill="#aa88cc" font-family="monospace" font-size="9">
+      dim 24 = 3 × 8, kiss 196560
+    </text>
+    <text x="100" y="75" text-anchor="middle" fill="#6bcb77" font-family="monospace" font-size="9">
+      Golay projection
+    </text>
+    <text x="100" y="92" text-anchor="middle" fill="#aaaacc" font-family="monospace" font-size="8">
+      [[24, 0, 8]] corrects 3 errors
+    </text>
+  </g>
+  <line x1="660" y1="520" x2="540" y2="400" stroke="#cc66ff" stroke-width="1.5" stroke-dasharray="6"/>
+
+  <!-- Right side: Quantum connection -->
+  <g transform="translate(760, 310)">
+    <rect x="0" y="0" width="200" height="100" rx="12" fill="#1a1a3e" stroke="#ff88cc" stroke-width="2" filter="url(#shadow)"/>
+    <text x="100" y="22" text-anchor="middle" fill="#ff88cc" font-family="Georgia, serif" font-size="13" font-weight="bold">
+      Frontier 6
+    </text>
+    <text x="100" y="40" text-anchor="middle" fill="#ffffff" font-family="Georgia, serif" font-size="11">
+      Tropical Deep Learning
+    </text>
+    <text x="100" y="58" text-anchor="middle" fill="#cc88aa" font-family="monospace" font-size="9">
+      Universal approximation
+    </text>
+    <text x="100" y="75" text-anchor="middle" fill="#6bcb77" font-family="monospace" font-size="9">
+      Tropical polynomials = PWL
+    </text>
+    <text x="100" y="92" text-anchor="middle" fill="#aaaacc" font-family="monospace" font-size="8">
+      Newton polytope ↔ architecture
+    </text>
+  </g>
+  <line x1="760" y1="360" x2="570" y2="350" stroke="#ff88cc" stroke-width="1.5" stroke-dasharray="6"/>
+
+  <!-- Footer -->
+  <text x="500" y="660" text-anchor="middle" fill="#555577" font-family="Georgia, serif" font-size="11">
+    60+ theorems · Lean 4 + Mathlib · Zero sorry · Machine-verified mathematical certainty
+  </text>
+  <text x="500" y="680" text-anchor="middle" fill="#444466" font-family="Georgia, serif" font-size="10">
+    Bridges/NewDirections/FiveFrontiers.lean · Bridges/NewDirections/TropicalDeepLearningTheory.lean
+  </text>
+</svg>
