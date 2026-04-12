@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgH" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0a2e"/>
+      <stop offset="100%" stop-color="#1a0a3e"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="450" fill="url(#bgH)"/>
+
+  <text x="400" y="35" text-anchor="middle" fill="#CC66FF" font-size="22" font-weight="bold">Hensel Lifting: Exponential Convergence</text>
+  <text x="400" y="58" text-anchor="middle" fill="#9966CC" font-size="13">p-adic precision doubles at each step: mod p → mod p² → mod p⁴ → ...</text>
+
+  <!-- Convergence chart -->
+  <rect x="80" y="80" width="640" height="300" rx="5" fill="#111133" stroke="#444" stroke-width="1"/>
+
+  <!-- Y axis -->
+  <text x="70" y="95" text-anchor="end" fill="#999" font-size="10">p⁶⁴</text>
+  <text x="70" y="143" text-anchor="end" fill="#999" font-size="10">p³²</text>
+  <text x="70" y="191" text-anchor="end" fill="#999" font-size="10">p¹⁶</text>
+  <text x="70" y="239" text-anchor="end" fill="#999" font-size="10">p⁸</text>
+  <text x="70" y="287" text-anchor="end" fill="#999" font-size="10">p⁴</text>
+  <text x="70" y="335" text-anchor="end" fill="#999" font-size="10">p²</text>
+  <text x="70" y="375" text-anchor="end" fill="#999" font-size="10">p</text>
+
+  <text x="40" y="230" text-anchor="middle" fill="#999" font-size="11" transform="rotate(-90, 40, 230)">Precision (mod p^k)</text>
+
+  <!-- X axis labels -->
+  <text x="130" y="395" text-anchor="middle" fill="#999" font-size="10">Step 0</text>
+  <text x="230" y="395" text-anchor="middle" fill="#999" font-size="10">Step 1</text>
+  <text x="330" y="395" text-anchor="middle" fill="#999" font-size="10">Step 2</text>
+  <text x="430" y="395" text-anchor="middle" fill="#999" font-size="10">Step 3</text>
+  <text x="530" y="395" text-anchor="middle" fill="#999" font-size="10">Step 4</text>
+  <text x="630" y="395" text-anchor="middle" fill="#999" font-size="10">Step 5</text>
+  <text x="400" y="420" text-anchor="middle" fill="#999" font-size="11">Hensel Lifting Steps</text>
+
+  <!-- Exponential growth curve -->
+  <polyline points="130,375 230,335 330,287 430,239 530,191 630,95"
+            fill="none" stroke="#CC66FF" stroke-width="3"/>
+
+  <!-- Data points -->
+  <circle cx="130" cy="375" r="6" fill="#CC66FF"/>
+  <circle cx="230" cy="335" r="6" fill="#CC66FF"/>
+  <circle cx="330" cy="287" r="6" fill="#CC66FF"/>
+  <circle cx="430" cy="239" r="6" fill="#CC66FF"/>
+  <circle cx="530" cy="191" r="6" fill="#CC66FF"/>
+  <circle cx="630" cy="95" r="6" fill="#CC66FF"/>
+
+  <!-- Annotations -->
+  <text x="145" y="370" fill="#DD99FF" font-size="10">1 digit</text>
+  <text x="245" y="330" fill="#DD99FF" font-size="10">2 digits</text>
+  <text x="345" y="282" fill="#DD99FF" font-size="10">4 digits</text>
+  <text x="445" y="234" fill="#DD99FF" font-size="10">8 digits</text>
+  <text x="545" y="186" fill="#DD99FF" font-size="10">16 digits</text>
+  <text x="645" y="90" fill="#DD99FF" font-size="10">64 digits!</text>
+
+  <!-- Key insight -->
+  <rect x="100" y="430" width="600" height="18" rx="3" fill="#1a0a3e"/>
+  <text x="400" y="444" text-anchor="middle" fill="#CC66FF" font-size="12" font-weight="bold">
+    Theorem: After k Hensel steps, precision = 2^k digits — formally verified!
+  </text>
+</svg>

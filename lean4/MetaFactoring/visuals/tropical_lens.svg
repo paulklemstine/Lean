@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgT" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a0a00"/>
+      <stop offset="100%" stop-color="#2a1a0a"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#bgT)"/>
+
+  <text x="400" y="35" text-anchor="middle" fill="#FF8800" font-size="22" font-weight="bold">The Tropical Lens (8th Lens)</text>
+  <text x="400" y="58" text-anchor="middle" fill="#CC8844" font-size="13">p-adic Valuations: v_p(ab) = v_p(a) + v_p(b)</text>
+
+  <!-- Factorization tree -->
+  <text x="400" y="100" text-anchor="middle" fill="#FFaa44" font-size="16" font-weight="bold">N = 2520 = 2³ × 3² × 5 × 7</text>
+
+  <!-- Valuation bars for N -->
+  <text x="100" y="145" fill="#FF8800" font-size="13" font-weight="bold">Tropical Profile of N:</text>
+
+  <!-- v_2 -->
+  <text x="120" y="175" fill="#FFCC88" font-size="12">v₂(N) = 3</text>
+  <rect x="220" y="162" width="120" height="18" rx="3" fill="#FF8800" opacity="0.7"/>
+  <rect x="220" y="162" width="120" height="18" rx="3" fill="none" stroke="#FF8800"/>
+
+  <!-- v_3 -->
+  <text x="120" y="200" fill="#FFCC88" font-size="12">v₃(N) = 2</text>
+  <rect x="220" y="187" width="80" height="18" rx="3" fill="#FF6600" opacity="0.7"/>
+  <rect x="220" y="187" width="80" height="18" rx="3" fill="none" stroke="#FF6600"/>
+
+  <!-- v_5 -->
+  <text x="120" y="225" fill="#FFCC88" font-size="12">v₅(N) = 1</text>
+  <rect x="220" y="212" width="40" height="18" rx="3" fill="#FF4400" opacity="0.7"/>
+  <rect x="220" y="212" width="40" height="18" rx="3" fill="none" stroke="#FF4400"/>
+
+  <!-- v_7 -->
+  <text x="120" y="250" fill="#FFCC88" font-size="12">v₇(N) = 1</text>
+  <rect x="220" y="237" width="40" height="18" rx="3" fill="#FF2200" opacity="0.7"/>
+  <rect x="220" y="237" width="40" height="18" rx="3" fill="none" stroke="#FF2200"/>
+
+  <!-- Factorization constraint -->
+  <text x="450" y="145" fill="#FF8800" font-size="13" font-weight="bold">Tropical Constraint:</text>
+  <text x="450" y="170" fill="#FFCC88" font-size="12">If N = a × b, then for every prime p:</text>
+  <text x="470" y="195" fill="#FFDD88" font-size="14" font-weight="bold">v_p(a) + v_p(b) = v_p(N)</text>
+
+  <!-- Example split -->
+  <text x="450" y="230" fill="#FFAA44" font-size="12">Example: N = 360 × 7</text>
+  <text x="470" y="252" fill="#FFCC88" font-size="11">v₂(360)=3, v₂(7)=0 → 3+0=3 ✓</text>
+  <text x="470" y="270" fill="#FFCC88" font-size="11">v₃(360)=2, v₃(7)=0 → 2+0=2 ✓</text>
+  <text x="470" y="288" fill="#FFCC88" font-size="11">v₅(360)=1, v₅(7)=0 → 1+0=1 ✓</text>
+  <text x="470" y="306" fill="#FFCC88" font-size="11">v₇(360)=0, v₇(7)=1 → 0+1=1 ✓</text>
+
+  <!-- Tropical semiring -->
+  <rect x="50" y="330" width="700" height="150" rx="10" fill="#1a1a0a" stroke="#FF8800" stroke-width="1.5" opacity="0.8"/>
+  <text x="400" y="358" text-anchor="middle" fill="#FF8800" font-size="15" font-weight="bold">The Tropical Semiring (ℕ, min, +)</text>
+
+  <text x="100" y="390" fill="#FFCC88" font-size="12">Classical algebra:  (×, +)  →  multiplication distributes over addition</text>
+  <text x="100" y="415" fill="#FFDD88" font-size="12">Tropical algebra:  (+, min) →  addition distributes over min</text>
+  <text x="100" y="445" fill="#FFCC88" font-size="12">Key identity:  min(a, b) + c = min(a + c, b + c)  — formally verified!</text>
+  <text x="100" y="468" fill="#88FF88" font-size="12" font-weight="bold">The p-adic valuation is the bridge: it's a tropical homomorphism</text>
+</svg>
