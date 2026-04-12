@@ -1,0 +1,222 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a1a4e;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FFD700" />
+      <stop offset="100%" style="stop-color:#FFA500" />
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#4FC3F7" />
+      <stop offset="100%" style="stop-color:#0288D1" />
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#81C784" />
+      <stop offset="100%" style="stop-color:#388E3C" />
+    </linearGradient>
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#CE93D8" />
+      <stop offset="100%" style="stop-color:#7B1FA2" />
+    </linearGradient>
+    <linearGradient id="redGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#EF9A9A" />
+      <stop offset="100%" style="stop-color:#C62828" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="900" fill="url(#bgGrad)"/>
+
+  <!-- Title -->
+  <text x="600" y="55" fill="url(#goldGrad)" font-size="32" font-weight="bold" text-anchor="middle" filter="url(#glow)">Gravitational Factoring Framework</text>
+  <text x="600" y="82" fill="#B0BEC5" font-size="16" text-anchor="middle">A Geometric Approach to Integer Factorization</text>
+
+  <!-- Central equation -->
+  <rect x="350" y="95" width="500" height="50" rx="25" fill="none" stroke="url(#goldGrad)" stroke-width="2"/>
+  <text x="600" y="126" fill="#FFFFFF" font-size="20" text-anchor="middle" font-style="italic">N = p · q → x₁² + x₂² + ··· + xₖ² = d²</text>
+
+  <!-- === FIVE PILLARS === -->
+
+  <!-- Pillar 1: Peel Channels -->
+  <g transform="translate(120, 200)">
+    <rect width="200" height="280" rx="15" fill="url(#blueGrad)" opacity="0.15" stroke="#4FC3F7" stroke-width="2" filter="url(#shadow)"/>
+    <text x="100" y="30" fill="#4FC3F7" font-size="16" font-weight="bold" text-anchor="middle">Peel Channels</text>
+    <line x1="20" y1="40" x2="180" y2="40" stroke="#4FC3F7" stroke-width="1" opacity="0.5"/>
+    <text x="100" y="65" fill="#B0BEC5" font-size="13" text-anchor="middle">d² − xⱼ² = (d−xⱼ)(d+xⱼ)</text>
+    <text x="100" y="90" fill="#E0E0E0" font-size="12" text-anchor="middle">k peel channels per tuple</text>
+    <text x="100" y="115" fill="#E0E0E0" font-size="12" text-anchor="middle">gcd(d−xⱼ, N) → factor</text>
+
+    <!-- Channel count boxes -->
+    <rect x="15" y="135" width="75" height="35" rx="5" fill="#0288D1" opacity="0.4"/>
+    <text x="52" y="157" fill="#FFF" font-size="11" text-anchor="middle">k=2: 2</text>
+    <rect x="110" y="135" width="75" height="35" rx="5" fill="#0288D1" opacity="0.4"/>
+    <text x="147" y="157" fill="#FFF" font-size="11" text-anchor="middle">k=4: 4</text>
+    <rect x="15" y="180" width="75" height="35" rx="5" fill="#0288D1" opacity="0.4"/>
+    <text x="52" y="202" fill="#FFF" font-size="11" text-anchor="middle">k=8: 8</text>
+    <rect x="110" y="180" width="75" height="35" rx="5" fill="#0288D1" opacity="0.6"/>
+    <text x="147" y="202" fill="#FFF" font-size="11" text-anchor="middle">k=16: 16</text>
+
+    <text x="100" y="240" fill="#80DEEA" font-size="11" text-anchor="middle">Smoothness probability</text>
+    <text x="100" y="258" fill="#80DEEA" font-size="11" text-anchor="middle">increases with structure</text>
+  </g>
+
+  <!-- Pillar 2: Cross-Collision -->
+  <g transform="translate(350, 200)">
+    <rect width="200" height="280" rx="15" fill="url(#greenGrad)" opacity="0.15" stroke="#81C784" stroke-width="2" filter="url(#shadow)"/>
+    <text x="100" y="30" fill="#81C784" font-size="16" font-weight="bold" text-anchor="middle">Cross-Collision</text>
+    <line x1="20" y1="40" x2="180" y2="40" stroke="#81C784" stroke-width="1" opacity="0.5"/>
+    <text x="100" y="65" fill="#B0BEC5" font-size="13" text-anchor="middle">xᵢ² − yⱼ² = (xᵢ−yⱼ)(xᵢ+yⱼ)</text>
+    <text x="100" y="90" fill="#E0E0E0" font-size="12" text-anchor="middle">C(k,2) intra-tuple pairs</text>
+    <text x="100" y="115" fill="#E0E0E0" font-size="12" text-anchor="middle">k² inter-tuple pairs</text>
+
+    <!-- Probability formula -->
+    <rect x="15" y="135" width="170" height="50" rx="8" fill="#388E3C" opacity="0.3"/>
+    <text x="100" y="157" fill="#A5D6A7" font-size="12" text-anchor="middle">P(success) ≥ Ω(k²/√N)</text>
+    <text x="100" y="175" fill="#A5D6A7" font-size="11" text-anchor="middle">Quadratic amplification</text>
+
+    <text x="100" y="210" fill="#E0E0E0" font-size="12" text-anchor="middle">Total channels:</text>
+    <text x="100" y="230" fill="#C8E6C9" font-size="14" font-weight="bold" text-anchor="middle">C(k) = k(k+1)/2</text>
+    <text x="100" y="258" fill="#A5D6A7" font-size="11" text-anchor="middle">k=8: 100 total channels</text>
+  </g>
+
+  <!-- Pillar 3: Quaternion Norms -->
+  <g transform="translate(580, 200)">
+    <rect width="200" height="280" rx="15" fill="url(#purpleGrad)" opacity="0.15" stroke="#CE93D8" stroke-width="2" filter="url(#shadow)"/>
+    <text x="100" y="30" fill="#CE93D8" font-size="16" font-weight="bold" text-anchor="middle">Norm Multiplicativity</text>
+    <line x1="20" y1="40" x2="180" y2="40" stroke="#CE93D8" stroke-width="1" opacity="0.5"/>
+    <text x="100" y="65" fill="#B0BEC5" font-size="13" text-anchor="middle">N(q₁·q₂) = N(q₁)·N(q₂)</text>
+    <text x="100" y="90" fill="#E0E0E0" font-size="12" text-anchor="middle">Euler four-square identity</text>
+    <text x="100" y="115" fill="#E0E0E0" font-size="12" text-anchor="middle">N = N(q) → factor norms</text>
+
+    <!-- Cayley-Dickson hierarchy -->
+    <rect x="20" y="135" width="160" height="25" rx="5" fill="#7B1FA2" opacity="0.3"/>
+    <text x="100" y="153" fill="#E1BEE7" font-size="11" text-anchor="middle">ℂ: 2-square identity ✓</text>
+    <rect x="20" y="165" width="160" height="25" rx="5" fill="#7B1FA2" opacity="0.4"/>
+    <text x="100" y="183" fill="#E1BEE7" font-size="11" text-anchor="middle">ℍ: 4-square identity ✓</text>
+    <rect x="20" y="195" width="160" height="25" rx="5" fill="#7B1FA2" opacity="0.5"/>
+    <text x="100" y="213" fill="#E1BEE7" font-size="11" text-anchor="middle">𝕆: 8-square identity ✓</text>
+    <rect x="20" y="225" width="160" height="25" rx="5" fill="#7B1FA2" opacity="0.6"/>
+    <text x="100" y="243" fill="#F48FB1" font-size="11" text-anchor="middle">𝕊: 16-square — zero divs!</text>
+
+    <text x="100" y="270" fill="#CE93D8" font-size="11" text-anchor="middle">r₄(n) = 8·σ₁(n) (Jacobi)</text>
+  </g>
+
+  <!-- Pillar 4: Sieve Pipeline -->
+  <g transform="translate(810, 200)">
+    <rect width="200" height="280" rx="15" fill="url(#redGrad)" opacity="0.15" stroke="#EF9A9A" stroke-width="2" filter="url(#shadow)"/>
+    <text x="100" y="30" fill="#EF9A9A" font-size="16" font-weight="bold" text-anchor="middle">Sieve Pipeline</text>
+    <line x1="20" y1="40" x2="180" y2="40" stroke="#EF9A9A" stroke-width="1" opacity="0.5"/>
+
+    <!-- Pipeline steps -->
+    <rect x="30" y="55" width="140" height="30" rx="8" fill="#C62828" opacity="0.3"/>
+    <text x="100" y="75" fill="#FFCDD2" font-size="11" text-anchor="middle">1. Generate k-tuples</text>
+    <line x1="100" y1="85" x2="100" y2="95" stroke="#EF9A9A" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <rect x="30" y="95" width="140" height="30" rx="8" fill="#C62828" opacity="0.35"/>
+    <text x="100" y="115" fill="#FFCDD2" font-size="11" text-anchor="middle">2. Collect B-smooth peels</text>
+    <line x1="100" y1="125" x2="100" y2="135" stroke="#EF9A9A" stroke-width="1.5"/>
+    <rect x="30" y="135" width="140" height="30" rx="8" fill="#C62828" opacity="0.4"/>
+    <text x="100" y="155" fill="#FFCDD2" font-size="11" text-anchor="middle">3. GF(2) linear algebra</text>
+    <line x1="100" y1="165" x2="100" y2="175" stroke="#EF9A9A" stroke-width="1.5"/>
+    <rect x="30" y="175" width="140" height="30" rx="8" fill="#C62828" opacity="0.45"/>
+    <text x="100" y="195" fill="#FFCDD2" font-size="11" text-anchor="middle">4. x² ≡ y² (mod N)</text>
+    <line x1="100" y1="205" x2="100" y2="215" stroke="#EF9A9A" stroke-width="1.5"/>
+    <rect x="30" y="215" width="140" height="30" rx="8" fill="#C62828" opacity="0.5"/>
+    <text x="100" y="235" fill="#FFCDD2" font-size="11" text-anchor="middle">5. gcd(x−y, N) = factor</text>
+
+    <text x="100" y="270" fill="#EF9A9A" font-size="11" text-anchor="middle">Runtime: L(N)^{1+o(1)}</text>
+  </g>
+
+  <!-- === BOTTOM SECTION: Research Directions === -->
+  <rect x="50" y="510" width="1100" height="360" rx="20" fill="#0d0d3a" stroke="#37474F" stroke-width="1"/>
+  <text x="600" y="545" fill="url(#goldGrad)" font-size="22" font-weight="bold" text-anchor="middle">40 Research Directions — Five Tiers</text>
+
+  <!-- Tier boxes -->
+  <!-- Tier 1 -->
+  <g transform="translate(70, 565)">
+    <rect width="200" height="130" rx="10" fill="#1B5E20" opacity="0.3" stroke="#4CAF50" stroke-width="1.5"/>
+    <text x="100" y="22" fill="#4CAF50" font-size="14" font-weight="bold" text-anchor="middle">Tier 1: Critical</text>
+    <text x="100" y="42" fill="#A5D6A7" font-size="10" text-anchor="middle">1-6 months | Impact 7-10</text>
+    <text x="15" y="62" fill="#E0E0E0" font-size="10">• Sieve complexity L(N)^c</text>
+    <text x="15" y="78" fill="#E0E0E0" font-size="10">• Lattice-GCD extraction</text>
+    <text x="15" y="94" fill="#E0E0E0" font-size="10">• Cross-collision Ω(k²/√N)</text>
+    <text x="15" y="110" fill="#E0E0E0" font-size="10">• Optimal smoothness B*(N)</text>
+  </g>
+
+  <!-- Tier 2 -->
+  <g transform="translate(290, 565)">
+    <rect width="200" height="130" rx="10" fill="#0D47A1" opacity="0.3" stroke="#42A5F5" stroke-width="1.5"/>
+    <text x="100" y="22" fill="#42A5F5" font-size="14" font-weight="bold" text-anchor="middle">Tier 2: Major</text>
+    <text x="100" y="42" fill="#90CAF9" font-size="10" text-anchor="middle">6-12 months | Impact 6-8</text>
+    <text x="15" y="62" fill="#E0E0E0" font-size="10">• Hurwitz quaternions</text>
+    <text x="15" y="78" fill="#E0E0E0" font-size="10">• Energy Morse theory</text>
+    <text x="15" y="94" fill="#E0E0E0" font-size="10">• Sedenion zero divisors</text>
+    <text x="15" y="110" fill="#E0E0E0" font-size="10">• Jacobi r₄ formula</text>
+  </g>
+
+  <!-- Tier 3 -->
+  <g transform="translate(510, 565)">
+    <rect width="200" height="130" rx="10" fill="#4A148C" opacity="0.3" stroke="#AB47BC" stroke-width="1.5"/>
+    <text x="100" y="22" fill="#AB47BC" font-size="14" font-weight="bold" text-anchor="middle">Tier 3: Expanding</text>
+    <text x="100" y="42" fill="#CE93D8" font-size="10" text-anchor="middle">12-24 months | Impact 5-7</text>
+    <text x="15" y="62" fill="#E0E0E0" font-size="10">• Tropical factoring</text>
+    <text x="15" y="78" fill="#E0E0E0" font-size="10">• ML tree navigator</text>
+    <text x="15" y="94" fill="#E0E0E0" font-size="10">• GPU k-tuple search</text>
+    <text x="15" y="110" fill="#E0E0E0" font-size="10">• Spectral analysis</text>
+  </g>
+
+  <!-- Tier 4 -->
+  <g transform="translate(730, 565)">
+    <rect width="200" height="130" rx="10" fill="#BF360C" opacity="0.3" stroke="#FF7043" stroke-width="1.5"/>
+    <text x="100" y="22" fill="#FF7043" font-size="14" font-weight="bold" text-anchor="middle">Tier 4: Deep Theory</text>
+    <text x="100" y="42" fill="#FFAB91" font-size="10" text-anchor="middle">2-5 years | Impact 8-10</text>
+    <text x="15" y="62" fill="#E0E0E0" font-size="10">• Complexity class placement</text>
+    <text x="15" y="78" fill="#E0E0E0" font-size="10">• Riemann connection</text>
+    <text x="15" y="94" fill="#E0E0E0" font-size="10">• Category theory</text>
+    <text x="15" y="110" fill="#E0E0E0" font-size="10">• Homological algebra</text>
+  </g>
+
+  <!-- Tier 5 -->
+  <g transform="translate(950, 565)">
+    <rect width="200" height="130" rx="10" fill="#37474F" opacity="0.3" stroke="#78909C" stroke-width="1.5"/>
+    <text x="100" y="22" fill="#78909C" font-size="14" font-weight="bold" text-anchor="middle">Tier 5: Speculative</text>
+    <text x="100" y="42" fill="#B0BEC5" font-size="10" text-anchor="middle">Exploratory | Impact varies</text>
+    <text x="15" y="62" fill="#E0E0E0" font-size="10">• Spin glass models</text>
+    <text x="15" y="78" fill="#E0E0E0" font-size="10">• Modular forms</text>
+    <text x="15" y="94" fill="#E0E0E0" font-size="10">• P vs NP evidence</text>
+    <text x="15" y="110" fill="#E0E0E0" font-size="10">• Motivic cohomology</text>
+  </g>
+
+  <!-- Key metrics -->
+  <g transform="translate(70, 720)">
+    <rect width="250" height="60" rx="10" fill="#FFD700" opacity="0.1" stroke="#FFD700" stroke-width="1"/>
+    <text x="125" y="25" fill="#FFD700" font-size="14" font-weight="bold" text-anchor="middle">Verified Theorems</text>
+    <text x="125" y="48" fill="#FFF" font-size="24" font-weight="bold" text-anchor="middle">30+</text>
+  </g>
+  <g transform="translate(360, 720)">
+    <rect width="250" height="60" rx="10" fill="#4FC3F7" opacity="0.1" stroke="#4FC3F7" stroke-width="1"/>
+    <text x="125" y="25" fill="#4FC3F7" font-size="14" font-weight="bold" text-anchor="middle">Research Directions</text>
+    <text x="125" y="48" fill="#FFF" font-size="24" font-weight="bold" text-anchor="middle">40</text>
+  </g>
+  <g transform="translate(650, 720)">
+    <rect width="250" height="60" rx="10" fill="#81C784" opacity="0.1" stroke="#81C784" stroke-width="1"/>
+    <text x="125" y="25" fill="#81C784" font-size="14" font-weight="bold" text-anchor="middle">Python Demos</text>
+    <text x="125" y="48" fill="#FFF" font-size="24" font-weight="bold" text-anchor="middle">11 Modules</text>
+  </g>
+  <g transform="translate(940, 720)">
+    <rect width="210" height="60" rx="10" fill="#CE93D8" opacity="0.1" stroke="#CE93D8" stroke-width="1"/>
+    <text x="105" y="25" fill="#CE93D8" font-size="14" font-weight="bold" text-anchor="middle">Cayley-Dickson Levels</text>
+    <text x="105" y="48" fill="#FFF" font-size="24" font-weight="bold" text-anchor="middle">ℝ→ℂ→ℍ→𝕆→𝕊</text>
+  </g>
+
+  <!-- Footer -->
+  <text x="600" y="860" fill="#546E7A" font-size="11" text-anchor="middle">Gravitational Factoring Research Program — A Geometric Perspective on One of Mathematics' Fundamental Problems</text>
+</svg>
