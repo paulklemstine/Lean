@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 550" font-family="Georgia, serif">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#161b22"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="550" fill="url(#bg2)"/>
+
+  <text x="400" y="40" text-anchor="middle" fill="#58a6ff" font-size="22" font-weight="bold">
+    Channel Hierarchy: The Dimensional Advantage
+  </text>
+  <text x="400" y="65" text-anchor="middle" fill="#8b949e" font-size="14">
+    Total channels = k + C(k,2) = k(k+1)/2
+  </text>
+
+  <!-- Bar chart -->
+  <g transform="translate(100, 90)">
+    <!-- Axes -->
+    <line x1="0" y1="380" x2="600" y2="380" stroke="#30363d" stroke-width="1"/>
+    <line x1="0" y1="0" x2="0" y2="380" stroke="#30363d" stroke-width="1"/>
+
+    <!-- Y axis labels -->
+    <text x="-10" y="380" text-anchor="end" fill="#8b949e" font-size="10">0</text>
+    <text x="-10" y="304" text-anchor="end" fill="#8b949e" font-size="10">20</text>
+    <text x="-10" y="228" text-anchor="end" fill="#8b949e" font-size="10">40</text>
+    <text x="-10" y="152" text-anchor="end" fill="#8b949e" font-size="10">60</text>
+    <text x="-10" y="76" text-anchor="end" fill="#8b949e" font-size="10">80</text>
+    <text x="-10" y="0" text-anchor="end" fill="#8b949e" font-size="10">100</text>
+
+    <!-- Grid lines -->
+    <line x1="0" y1="304" x2="600" y2="304" stroke="#21262d" stroke-width="1"/>
+    <line x1="0" y1="228" x2="600" y2="228" stroke="#21262d" stroke-width="1"/>
+    <line x1="0" y1="152" x2="600" y2="152" stroke="#21262d" stroke-width="1"/>
+    <line x1="0" y1="76" x2="600" y2="76" stroke="#21262d" stroke-width="1"/>
+
+    <!-- k=1: 1 channel -->
+    <rect x="10" y="376" width="50" height="4" fill="#238636" rx="2"/>
+    <text x="35" y="395" text-anchor="middle" fill="#8b949e" font-size="11">k=1</text>
+    <text x="35" y="370" text-anchor="middle" fill="#adbac7" font-size="10">1</text>
+
+    <!-- k=2: 3 channels -->
+    <rect x="80" y="369" width="50" height="11" fill="#1f6feb" rx="2"/>
+    <text x="105" y="395" text-anchor="middle" fill="#8b949e" font-size="11">k=2</text>
+    <text x="105" y="363" text-anchor="middle" fill="#adbac7" font-size="10">3</text>
+    <text x="105" y="410" text-anchor="middle" fill="#58a6ff" font-size="9">ℂ</text>
+
+    <!-- k=3: 6 channels -->
+    <rect x="150" y="357" width="50" height="23" fill="#1f6feb" rx="2"/>
+    <text x="175" y="395" text-anchor="middle" fill="#8b949e" font-size="11">k=3</text>
+    <text x="175" y="351" text-anchor="middle" fill="#adbac7" font-size="10">6</text>
+
+    <!-- k=4: 10 channels -->
+    <rect x="220" y="342" width="50" height="38" fill="#8957e5" rx="2"/>
+    <text x="245" y="395" text-anchor="middle" fill="#8b949e" font-size="11">k=4</text>
+    <text x="245" y="336" text-anchor="middle" fill="#adbac7" font-size="10">10</text>
+    <text x="245" y="410" text-anchor="middle" fill="#a371f7" font-size="9">ℍ</text>
+
+    <!-- k=5: 15 channels -->
+    <rect x="290" y="323" width="50" height="57" fill="#1f6feb" rx="2"/>
+    <text x="315" y="395" text-anchor="middle" fill="#8b949e" font-size="11">k=5</text>
+    <text x="315" y="317" text-anchor="middle" fill="#adbac7" font-size="10">15</text>
+
+    <!-- k=8: 36 channels -->
+    <rect x="360" y="243" width="50" height="137" fill="#f0883e" rx="2"/>
+    <text x="385" y="395" text-anchor="middle" fill="#8b949e" font-size="11">k=8</text>
+    <text x="385" y="237" text-anchor="middle" fill="#adbac7" font-size="10">36</text>
+    <text x="385" y="410" text-anchor="middle" fill="#f0883e" font-size="9">𝕆</text>
+
+    <!-- k=16: 136 channels -->
+    <rect x="430" y="(-136*3.8+380)" width="50" height="136" fill="#da3633" rx="2"/>
+    <text x="455" y="395" text-anchor="middle" fill="#8b949e" font-size="11">k=16</text>
+    <text x="455" y="(-136*3.8+380-6)" text-anchor="middle" fill="#adbac7" font-size="10">136</text>
+    <text x="455" y="410" text-anchor="middle" fill="#da3633" font-size="9">𝕊</text>
+
+    <!-- Quadratic curve -->
+    <path d="M 35,376 Q 175,350 245,342 Q 315,323 385,243 Q 455,100 550,0"
+          fill="none" stroke="#f0c040" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.5"/>
+  </g>
+
+  <!-- Formula box -->
+  <rect x="480" y="120" width="280" height="80" rx="8" fill="#161b22" stroke="#30363d" stroke-width="1"/>
+  <text x="620" y="148" text-anchor="middle" fill="#58a6ff" font-size="13" font-weight="bold">Key Formula</text>
+  <text x="620" y="172" text-anchor="middle" fill="white" font-size="16" font-style="italic">
+    2 · Total(k) = k(k+1)
+  </text>
+  <text x="620" y="192" text-anchor="middle" fill="#8b949e" font-size="11">
+    Marginal gain: Δ(k→k+1) = k+1
+  </text>
+
+  <text x="400" y="535" text-anchor="middle" fill="#484f58" font-size="11">
+    Formally verified in Lean 4 • Cayley-Dickson dimensions highlighted
+  </text>
+</svg>
