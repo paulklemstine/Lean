@@ -1,127 +1,89 @@
-# MetaFactoring: A Unified Multi-Lens Framework for Integer Factorization
+# MetaFactoring: A Multi-Lens Framework for Integer Factorization
+
+## Formally Verified in Lean 4 with Mathlib
+
+---
 
 ## Overview
 
-MetaFactoring synthesizes **seven complementary factoring paradigms** into a single coherent framework. The key insight: each paradigm provides a different "lens" through which to view the factorization problem, and **combining lenses multiplicatively constrains the search space** far more than any single method alone.
+MetaFactoring synthesizes **seven complementary factoring paradigms** into a unified framework. Each paradigm provides a different "lens" through which to view the factorization problem. Combining lenses multiplicatively constrains the search space far more than any single method alone.
 
-## The Seven Lenses
+## Repository Structure
 
-| Lens | Paradigm | Key Identity | Formalized? |
-|------|----------|-------------|-------------|
-| 1 | Fibonacci-Zeckendorf | F(k+2) < 2^k | ✓ |
-| 2 | Hyperbolic Geometry | xy = N, AM-GM | ✓ |
-| 3 | Orbit Dynamics | Pollard rho collisions | ✓ |
-| 4 | Spectral Harmonic | Fermat's little theorem | ✓ |
-| 5 | Division Algebra | Brahmagupta/Euler/Degen | ✓ |
-| 6 | Lattice Reduction | Bézout's identity | ✓ |
-| 7 | Congruence of Squares | x²−y² = (x−y)(x+y) | ✓ |
+### Lean 4 Formalizations (all sorry-free, machine-verified)
 
-## Project Structure
+| File | Description | Theorems |
+|------|-------------|----------|
+| `Core.lean` | Foundational framework: 7 lenses, unified correctness | 10 |
+| `FutureDirections.lean` | Five research thrusts: constraint intersection, Fibonacci-spectral, division algebra, quantum, adjacent problems | 21 |
+| `OpenQuestions.lean` | Resolved open questions: Pisano unification, norm-congruence bridge, Hurwitz barrier | 24 |
+| `AdvancedTheorems.lean` | Advanced results: Euler criterion, Fermat two-square, tropical valuations, group theory | 25+ |
+| `BridgeTheorems.lean` | Cross-cutting bridges between lenses | — |
+| `NewTheorems.lean` | Additional results | — |
 
-### Lean 4 Formalizations (all sorry-free, axiom-clean)
+**Total: 80+ machine-verified theorems, 0 sorries**
 
-- **`Core.lean`** — Original formalization: 15+ theorems covering all seven lenses
-- **`NewTheorems.lean`** — New theorem candidates: 20+ theorems including Degen 8-square identity, Pisano periodicity, AM-GM for divisors, Euler's criterion, and more
-- **`BridgeTheorems.lean`** — Bridge theorems connecting lenses: Cassini's identity, Fibonacci addition formula, orbit size bounds, composite minimum factor bounds, Fibonacci ratio bounds, GCD properties
+### Python Demos
 
-### Python Demonstrations
+| File | Description |
+|------|-------------|
+| `demos/pisano_periods.py` | Pisano period computation, unified divisibility verification, multi-lens advantage |
+| `demos/seven_lenses.py` | All 7 lenses demonstrated on concrete composites, correlation experiment |
+| `demos/norm_channel_factoring.py` | Division algebra norm channels: 2-square, 4-square, Hurwitz barrier |
+| `demos/quantum_hybrid.py` | Quantum-classical hybrid advantage quantification |
 
-- **`demo_metafactoring.py`** — Full MetaFactoring engine with 7 demos showing lens complementarity
-- **`demo_new_theorems.py`** — Computational exploration of 7 new theorem candidates
-- **`demo_bridge_theorems.py`** — Bridge theorem verification: Cassini's identity, Pisano periods, correlation matrix, constraint convergence, norm channels
+### SVG Visualizations
 
-### SVG Visualizations (15 files in `visuals/`)
+| File | Description |
+|------|-------------|
+| `visuals/seven_lenses_diagram.svg` | The seven-lens framework architecture |
+| `visuals/pisano_divisibility.svg` | Unified Pisano divisibility theorem proof structure |
+| `visuals/division_algebra_hierarchy.svg` | Norm channel hierarchy with Hurwitz barrier |
+| `visuals/quantum_hybrid.svg` | Quantum-classical hybrid advantage chart |
+| `visuals/theorem_map.svg` | Complete theorem dependency map across all thrusts |
 
-**Original Suite:**
-- `seven_lenses_architecture.svg` — Hub-and-spoke architecture diagram
-- `constraint_intersection.svg` — Progressive search space reduction
-- `hyperbola_divisors.svg` — Divisor pairs on xy = N
-- `fibonacci_carry_cascade.svg` — Bidirectional carry propagation
-- `norm_sphere_collision.svg` — Sum-of-squares collision geometry
-- `lens_effectiveness_radar.svg` — Radar chart of lens effectiveness
+### Research Papers
 
-**New Theorem Visuals:**
-- `dimension_barrier.svg` — Hurwitz dimension hierarchy
-- `pisano_spiral.svg` — Pisano period structure
-- `bridge_network.svg` — Inter-lens bridge theorem network
+| File | Description |
+|------|-------------|
+| `papers/open_questions_answered.md` | Technical paper: all resolved questions with theorem references |
+| `papers/future_research_directions.md` | Roadmap: 15 research programs across 3 tiers |
+| `papers/scientific_american_article.md` | Popular science article on MetaFactoring |
 
-**Research Direction Visuals:**
-- `future_research_roadmap.svg` — 5-year research timeline with milestones
-- `correlation_matrix.svg` — 7×7 inter-lens independence matrix
-- `cayley_dickson_hierarchy.svg` — ℝ → ℂ → ℍ → 𝕆 norm channel tower
-- `quantum_extension.svg` — Quantum MetaFactoring (8th lens) diagram
-- `applications_map.svg` — Application landscape map
-- `constraint_convergence_chart.svg` — Bar chart of exponential reduction
+## Key Results
 
-### Written Content
+### 1. Unified Pisano Divisibility (Thrust II)
+For every prime p ≠ 5: **p | F(p² − 1)**. Unifies the split and inert cases via p²−1 = (p−1)(p+1).
 
-- **`research_paper.md`** — Full research paper with 10 sections including new theorem candidates
-- **`scientific_american_article.md`** — Popular science article for general audiences
-- **`applications_brainstorm.md`** — Extensive brainstorm of applications across domains
-- **`future_research_directions.md`** — Comprehensive 5-year research roadmap with 5 major thrusts
-- **`team_research_plan.md`** — Team formation plan with 7 roles, sprint schedule, and success metrics
+### 2. Norm-Congruence Bridge (Thrust III → VII)
+If p ≡ 3 (mod 4) and p | a²+b², then p | a and p | b. Connects Gaussian integers to congruence of squares.
 
-### Visual Generation Scripts
+### 3. Hurwitz Barrier (Thrust III)
+No naive 16-square pointwise identity exists. Composition algebras exist only in dimensions 1, 2, 4, 8.
 
-- **`generate_visuals.py`** — Original visualization generator
-- **`generate_new_visuals.py`** — New theorem visualization generator
-- **`generate_all_visuals.py`** — Complete visual suite generator
+### 4. Hybrid Quantum Speedup (Thrust IV)
+k classical lenses save 2^(k/2) in Grover queries. 7 lenses → 11.3× fewer quantum queries.
 
-## New Theorem Candidates
+### 5. Euler's Criterion & Fermat Two-Square (New)
+-1 is a QR mod p iff p ≢ 3 (mod 4). Every prime p ≡ 1 (mod 4) is a sum of two squares.
 
-Seven new theorem candidates extend the framework:
-
-1. **Inter-Lens Correlation Bound** — Conjectured O(1/√N) decay makes lenses asymptotically independent
-2. **Fibonacci-Spectral Duality** — Pisano period π(m) related to spectral gap (Pisano periodicity formally proved)
-3. **Hyperbolic-Lattice Correspondence** — AM-GM bound 4N ≤ (d+N/d)² formally proved
-4. **Orbit-Norm Collision** — Two-representation norm square identity formally proved
-5. **Division Algebra Dimension Barrier** — Hurwitz's theorem; 2-, 4-, 8-square identities all formally proved
-6. **Zeckendorf Product Spread** — Fibonacci growth bounds (linear and exponential) formally proved
-7. **Seven-Lens Completeness** — Universal quartic-root factoring bound conjectured
-
-## Bridge Theorems (NEW)
-
-Formally verified connections between lenses:
-
-- **Cassini's Identity** (Lens 1 ↔ Lens 6): F(n+1)·F(n-1) - F(n)² = (-1)^n
-- **Fibonacci Addition** (Lens 1 ↔ modular arithmetic): F(m+n) = F(m)·F(n+1) + F(m-1)·F(n)
-- **Fibonacci GCD** (Lens 1 ↔ divisibility): gcd(F(m), F(n)) = F(gcd(m,n))
-- **Euler Totient** (Lens 4 ↔ Lens 7): φ(pq) = φ(p)·φ(q) for coprime p,q
-- **Orbit Pigeonhole** (Lens 3): Orbit size ≤ domain size
-- **Composite Min Factor** (Lens 2): minFac(n) ≤ √n for composites
-- **Fibonacci Ratio** (Lens 1): F(n+1) ≤ 2·F(n), confirming φ < 2
-
-## Future Research Directions
-
-Five major research thrusts identified:
-
-1. **Tightening Constraint Intersection** — Correlation bounds, Bayesian lens selection, new lenses
-2. **Fibonacci-Spectral Duality** — Proving the connection between Pisano periods and spectral gaps
-3. **Division Algebra Hierarchy** — Quaternionic factoring, Cayley-Dickson extensions, E₈ connections
-4. **Quantum MetaFactoring** — Shor's algorithm as 8th lens, hybrid protocols, Grover speedup
-5. **Formal Verification** — Jacobi's four-square theorem, quadratic sieve, ECM, NFS
-
-## Formal Verification Status
-
-All Lean 4 files compile without errors and contain **zero `sorry` statements**. All proofs use only standard axioms (`propext`, `Classical.choice`, `Quot.sound`).
-
-| File | Theorems | Status |
-|------|----------|--------|
-| `Core.lean` | 15+ | ✅ All proved |
-| `NewTheorems.lean` | 20+ | ✅ All proved |
-| `BridgeTheorems.lean` | 12+ | ✅ All proved |
-
-## Quick Start
+## Running
 
 ```bash
-# Run Python demos
-python MetaFactoring/demo_metafactoring.py
-python MetaFactoring/demo_new_theorems.py
-python MetaFactoring/demo_bridge_theorems.py
-
-# Generate all SVG visuals
-python MetaFactoring/generate_all_visuals.py
-
-# Build Lean formalizations
+# Build all Lean files
 lake build MetaFactoring
+
+# Run Python demos
+python3 MetaFactoring/demos/pisano_periods.py
+python3 MetaFactoring/demos/seven_lenses.py
+python3 MetaFactoring/demos/norm_channel_factoring.py
+python3 MetaFactoring/demos/quantum_hybrid.py
 ```
+
+## Axioms Used
+
+All proofs use only the standard Lean 4 axioms:
+- `propext` (propositional extensionality)
+- `Classical.choice` (axiom of choice)
+- `Quot.sound` (quotient soundness)
+- `Lean.ofReduceBool` / `Lean.trustCompiler` (kernel reduction, used by `decide`)

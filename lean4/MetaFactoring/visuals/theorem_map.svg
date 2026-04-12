@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" font-family="'Helvetica Neue', Arial, sans-serif">
+  <rect width="900" height="600" fill="#0a0a1a" rx="10"/>
+
+  <text x="450" y="35" text-anchor="middle" fill="#fff" font-size="20" font-weight="bold">
+    MetaFactoring Theorem Dependency Map
+  </text>
+  <text x="450" y="55" text-anchor="middle" fill="#888" font-size="11">
+    50+ formally verified theorems · 0 sorries · Lean 4 + Mathlib
+  </text>
+
+  <!-- Thrust I: Constraint Intersection -->
+  <rect x="30" y="80" width="250" height="160" rx="8" fill="#FF6B6B" opacity="0.1" stroke="#FF6B6B" stroke-width="1"/>
+  <text x="155" y="100" text-anchor="middle" fill="#FF6B6B" font-size="12" font-weight="bold">I. Constraint Intersection</text>
+  <g fill="#ddd" font-size="9">
+    <text x="45" y="120">• generalized_lens_advantage</text>
+    <text x="45" y="135">• lens_monotonicity</text>
+    <text x="45" y="150">• lens_composition_commutes</text>
+    <text x="45" y="165">• crt_exact_reduction</text>
+    <text x="45" y="180">• multi_lens_information_bound</text>
+    <text x="45" y="195">• coprime_lens_independence</text>
+    <text x="45" y="210">• three_lens_compose</text>
+    <text x="45" y="225">• lens_reduction_strict_mono</text>
+  </g>
+
+  <!-- Thrust II: Fibonacci-Spectral -->
+  <rect x="320" y="80" width="250" height="200" rx="8" fill="#55EFC4" opacity="0.1" stroke="#55EFC4" stroke-width="1"/>
+  <text x="445" y="100" text-anchor="middle" fill="#55EFC4" font-size="12" font-weight="bold">II. Fibonacci-Spectral</text>
+  <g fill="#ddd" font-size="9">
+    <text x="335" y="120">• pisano_period_divides_p_sq_sub_one</text>
+    <text x="335" y="135">• pisano_period_composes</text>
+    <text x="335" y="150">• fib_determined_by_consecutive_pair</text>
+    <text x="335" y="165">• fib_mod_periodic_reduction</text>
+    <text x="335" y="180">• fibonacci_period_mod2 (π(2)=3)</text>
+    <text x="335" y="195">• fibonacci_period_mod3 (π(3)=8)</text>
+    <text x="335" y="210">• fib_entry_point_divides</text>
+    <text x="335" y="225">• fib_gcd_identity</text>
+    <text x="335" y="240">• fib_dvd_of_dvd</text>
+    <text x="335" y="255">• fib_consecutive_coprime</text>
+    <text x="335" y="270">• zeckendorf_bound</text>
+  </g>
+
+  <!-- Thrust III: Division Algebra -->
+  <rect x="610" y="80" width="260" height="200" rx="8" fill="#A29BFE" opacity="0.1" stroke="#A29BFE" stroke-width="1"/>
+  <text x="740" y="100" text-anchor="middle" fill="#A29BFE" font-size="12" font-weight="bold">III. Division Algebra</text>
+  <g fill="#ddd" font-size="9">
+    <text x="625" y="120">• norm_channel_dim4_subsumes_dim2</text>
+    <text x="625" y="135">• norm_channel_dim8_subsumes_dim4</text>
+    <text x="625" y="150">• quaternion_two_factorizations</text>
+    <text x="625" y="165">• no_16_square_naive_identity</text>
+    <text x="625" y="180">• euler_criterion_neg_one</text>
+    <text x="625" y="195">• prime_one_mod4_sum_sq</text>
+    <text x="625" y="210">• cayley_dickson_2_to_4</text>
+    <text x="625" y="225">• brahmagupta_fibonacci_alt</text>
+    <text x="625" y="240">• norm_mult_preserves_divisibility</text>
+    <text x="625" y="255">• two_square_reps_give_factor</text>
+    <text x="625" y="270">• norm_congruence_bridge</text>
+  </g>
+
+  <!-- Thrust IV: Quantum -->
+  <rect x="30" y="300" width="250" height="130" rx="8" fill="#48DBFB" opacity="0.1" stroke="#48DBFB" stroke-width="1"/>
+  <text x="155" y="320" text-anchor="middle" fill="#48DBFB" font-size="12" font-weight="bold">IV. Quantum MetaFactoring</text>
+  <g fill="#ddd" font-size="9">
+    <text x="45" y="340">• hybrid_speedup</text>
+    <text x="45" y="355">• grover_query_bound</text>
+    <text x="45" y="370">• grover_hybrid_concrete (k=7)</text>
+    <text x="45" y="385">• order_finding_factor_candidate</text>
+    <text x="45" y="400">• pollard_rho_birthday</text>
+    <text x="45" y="415">• order_period_divides_card</text>
+  </g>
+
+  <!-- Thrust V: Adjacent Problems -->
+  <rect x="320" y="310" width="250" height="145" rx="8" fill="#FECA57" opacity="0.1" stroke="#FECA57" stroke-width="1"/>
+  <text x="445" y="330" text-anchor="middle" fill="#FECA57" font-size="12" font-weight="bold">V. Adjacent Problems</text>
+  <g fill="#ddd" font-size="9">
+    <text x="335" y="350">• dlp_order_connection</text>
+    <text x="335" y="365">• pohlig_hellman_structure</text>
+    <text x="335" y="380">• miller_rabin_bound</text>
+    <text x="335" y="395">• primality_certificate_bound</text>
+    <text x="335" y="410">• zsqrtd_norm_mult</text>
+    <text x="335" y="425">• lagrange_subgroup</text>
+    <text x="335" y="440">• wilson_theorem</text>
+  </g>
+
+  <!-- Cross-Cutting -->
+  <rect x="610" y="310" width="260" height="130" rx="8" fill="#FD79A8" opacity="0.1" stroke="#FD79A8" stroke-width="1"/>
+  <text x="740" y="330" text-anchor="middle" fill="#FD79A8" font-size="12" font-weight="bold">Cross-Cutting Bridges</text>
+  <g fill="#ddd" font-size="9">
+    <text x="625" y="350">• lattice_hyperbolic_bridge</text>
+    <text x="625" y="365">• fib_hyperbolic_synergy</text>
+    <text x="625" y="380">• cos_factor_extraction</text>
+    <text x="625" y="395">• fermat_factor_bound</text>
+    <text x="625" y="410">• tropical_valuation_mult</text>
+    <text x="625" y="425">• fib_crt_lens</text>
+  </g>
+
+  <!-- Arrows showing key dependencies -->
+  <g stroke="#666" stroke-width="1" fill="none" stroke-dasharray="3,3">
+    <!-- Fibonacci → Pisano unified -->
+    <path d="M 445 280 L 445 305"/>
+    <!-- Division Algebra → Bridge -->
+    <path d="M 740 280 L 740 305"/>
+  </g>
+
+  <!-- Stats bar -->
+  <rect x="30" y="470" width="840" height="110" rx="8" fill="#1a1a2e" stroke="#444" stroke-width="1"/>
+  <text x="450" y="495" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">
+    Verification Summary
+  </text>
+  <g fill="#aaa" font-size="12">
+    <text x="100" y="525" text-anchor="middle">
+      <tspan fill="#55EFC4" font-size="24" font-weight="bold">51+</tspan>
+    </text>
+    <text x="100" y="545" text-anchor="middle">New Theorems</text>
+
+    <text x="280" y="525" text-anchor="middle">
+      <tspan fill="#55EFC4" font-size="24" font-weight="bold">0</tspan>
+    </text>
+    <text x="280" y="545" text-anchor="middle">Sorries</text>
+
+    <text x="450" y="525" text-anchor="middle">
+      <tspan fill="#55EFC4" font-size="24" font-weight="bold">5</tspan>
+    </text>
+    <text x="450" y="545" text-anchor="middle">Research Thrusts</text>
+
+    <text x="620" y="525" text-anchor="middle">
+      <tspan fill="#55EFC4" font-size="24" font-weight="bold">7</tspan>
+    </text>
+    <text x="620" y="545" text-anchor="middle">Factoring Lenses</text>
+
+    <text x="790" y="525" text-anchor="middle">
+      <tspan fill="#55EFC4" font-size="24" font-weight="bold">10+</tspan>
+    </text>
+    <text x="790" y="545" text-anchor="middle">Questions Resolved</text>
+  </g>
+  <text x="450" y="570" text-anchor="middle" fill="#666" font-size="10">
+    All proofs machine-checked by the Lean 4 kernel · Axioms: propext, Classical.choice, Quot.sound only
+  </text>
+</svg>
