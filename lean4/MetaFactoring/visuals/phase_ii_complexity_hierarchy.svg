@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 550">
+  <defs>
+    <linearGradient id="bar_grad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" style="stop-color:#4466cc"/>
+      <stop offset="100%" style="stop-color:#aa44cc"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="550" fill="#0f0f1a"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" fill="#e0e0ff" font-size="22" font-weight="bold" text-anchor="middle" font-family="Arial">MF(k) Complexity Hierarchy — Strict Separation</text>
+  <text x="400" y="55" fill="#8888bb" font-size="13" text-anchor="middle" font-family="Arial">Each additional lens halves the search space (1 bit of information)</text>
+  
+  <!-- Axes -->
+  <line x1="100" y1="480" x2="750" y2="480" stroke="#555" stroke-width="2"/>
+  <line x1="100" y1="480" x2="100" y2="80" stroke="#555" stroke-width="2"/>
+  
+  <!-- Y-axis label -->
+  <text x="30" y="280" fill="#aaaacc" font-size="13" text-anchor="middle" font-family="Arial" transform="rotate(-90,30,280)">Search Space (S / 2^k)</text>
+  
+  <!-- X-axis label -->
+  <text x="425" y="520" fill="#aaaacc" font-size="13" text-anchor="middle" font-family="Arial">Number of Lenses (k)</text>
+  
+  <!-- Bars (S = 1024 = 2^10) -->
+  <!-- k=0: 1024 -->
+  <rect x="120" y="85" width="50" height="390" fill="#4466cc" opacity="0.8" rx="3"/>
+  <text x="145" y="78" fill="#6688ff" font-size="11" text-anchor="middle" font-family="Arial">1024</text>
+  <text x="145" y="500" fill="#aaaacc" font-size="12" text-anchor="middle" font-family="Arial">0</text>
+  
+  <!-- k=1: 512 -->
+  <rect x="180" y="280" width="50" height="195" fill="#5566cc" opacity="0.8" rx="3"/>
+  <text x="205" y="273" fill="#7788ff" font-size="11" text-anchor="middle" font-family="Arial">512</text>
+  <text x="205" y="500" fill="#aaaacc" font-size="12" text-anchor="middle" font-family="Arial">1</text>
+  
+  <!-- k=2: 256 -->
+  <rect x="240" y="377" width="50" height="98" fill="#6666cc" opacity="0.8" rx="3"/>
+  <text x="265" y="370" fill="#8888ff" font-size="11" text-anchor="middle" font-family="Arial">256</text>
+  <text x="265" y="500" fill="#aaaacc" font-size="12" text-anchor="middle" font-family="Arial">2</text>
+  
+  <!-- k=3: 128 -->
+  <rect x="300" y="426" width="50" height="49" fill="#7766cc" opacity="0.8" rx="3"/>
+  <text x="325" y="419" fill="#9988ff" font-size="11" text-anchor="middle" font-family="Arial">128</text>
+  <text x="325" y="500" fill="#aaaacc" font-size="12" text-anchor="middle" font-family="Arial">3</text>
+  
+  <!-- k=4: 64 -->
+  <rect x="360" y="451" width="50" height="24" fill="#8866cc" opacity="0.8" rx="3"/>
+  <text x="385" y="444" fill="#aa88ff" font-size="11" text-anchor="middle" font-family="Arial">64</text>
+  <text x="385" y="500" fill="#aaaacc" font-size="12" text-anchor="middle" font-family="Arial">4</text>
+  
+  <!-- k=5: 32 -->
+  <rect x="420" y="463" width="50" height="12" fill="#9966cc" opacity="0.8" rx="3"/>
+  <text x="445" y="456" fill="#bb88ff" font-size="10" text-anchor="middle" font-family="Arial">32</text>
+  <text x="445" y="500" fill="#aaaacc" font-size="12" text-anchor="middle" font-family="Arial">5</text>
+  
+  <!-- k=6: 16 -->
+  <rect x="480" y="469" width="50" height="6" fill="#aa66cc" opacity="0.8" rx="3"/>
+  <text x="505" y="462" fill="#cc88ff" font-size="10" text-anchor="middle" font-family="Arial">16</text>
+  <text x="505" y="500" fill="#aaaacc" font-size="12" text-anchor="middle" font-family="Arial">6</text>
+  
+  <!-- k=7: 8 (original) -->
+  <rect x="540" y="472" width="50" height="3" fill="#bb66aa" opacity="0.8" rx="2"/>
+  <text x="565" y="465" fill="#dd88cc" font-size="10" text-anchor="middle" font-family="Arial">8</text>
+  <text x="565" y="500" fill="#ccaacc" font-size="12" font-weight="bold" text-anchor="middle" font-family="Arial">7</text>
+  
+  <!-- k=8: 4 (NEW) -->
+  <rect x="600" y="474" width="50" height="2" fill="#00cc66" opacity="0.9" rx="2"/>
+  <text x="625" y="467" fill="#00ff88" font-size="10" text-anchor="middle" font-family="Arial">4</text>
+  <text x="625" y="500" fill="#00ff88" font-size="12" font-weight="bold" text-anchor="middle" font-family="Arial">8★</text>
+  
+  <!-- k=9: 2 (NEW) -->
+  <rect x="660" y="475" width="50" height="1" fill="#00ff88" opacity="0.9" rx="1"/>
+  <text x="685" y="468" fill="#00ff88" font-size="10" text-anchor="middle" font-family="Arial">2</text>
+  <text x="685" y="500" fill="#00ff88" font-size="12" font-weight="bold" text-anchor="middle" font-family="Arial">9★</text>
+  
+  <!-- Annotation: exponential decay -->
+  <path d="M 145,90 Q 400,100 685,475" fill="none" stroke="#ff6644" stroke-width="2" stroke-dasharray="6,4"/>
+  <text x="380" y="140" fill="#ff8866" font-size="12" text-anchor="middle" font-family="Arial">Exponential Decay: S/2^k</text>
+  
+  <!-- Legend -->
+  <rect x="520" y="100" width="230" height="90" rx="8" fill="#1a1a2a" stroke="#444" stroke-width="1"/>
+  <rect x="530" y="115" width="15" height="12" fill="#7766cc" rx="2"/>
+  <text x="552" y="126" fill="#bbbbdd" font-size="11" text-anchor="start" font-family="Arial">Original 7 lenses (128×)</text>
+  <rect x="530" y="138" width="15" height="12" fill="#00cc66" rx="2"/>
+  <text x="552" y="149" fill="#00ff88" font-size="11" text-anchor="start" font-family="Arial">★ Phase II new (512×)</text>
+  <text x="530" y="175" fill="#ff8866" font-size="11" text-anchor="start" font-family="Arial">— Exponential decay curve</text>
+</svg>
