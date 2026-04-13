@@ -1,96 +1,80 @@
-# MetaFactoring: New Research — Complete Formal Exploration
+# MetaFactoring: Future Research Directions — New Research
 
 ## Overview
 
-This directory contains the results of a comprehensive research exploration of the MetaFactoring open questions. All formal theorems are machine-verified in Lean 4 with Mathlib, with **zero remaining sorry statements**.
+This directory contains the extended formalization and exploration of the MetaFactoring research roadmap. All theorems are **machine-verified in Lean 4 with Mathlib** — zero `sorry` markers remain.
 
-## Key Achievement
+## Directory Structure
 
-**The Fibonacci entry point theorem is now formally proved**, eliminating the last remaining gap in the MetaFactoring formalization. The proof uses the algebraic closure of ZMod p to establish that for every prime p ≠ 5, either p | F(p-1) or p | F(p+1).
+### Lean Formalizations (7 files, 61 theorems, 0 sorry)
 
-## Contents
+| File | Theorems | Topics |
+|------|----------|--------|
+| `DickmanFunction.lean` | 10 | Dickman ρ(u), positivity, monotonicity, smooth numbers, L-notation |
+| `SubBinaryRecurrence.lean` | 10 | Fibonacci, Lucas, Tribonacci, Padovan < 2^n; general 2-term bound |
+| `IndependenceLenses.lean` | 8 | CRT independence, coprime primes, k-lens reduction |
+| `EllipticDivisibility.lean` | 6 | gcd(F_m,F_n)=F_{gcd(m,n)}, EDS structure, Pisano periods |
+| `TropicalFactoring.lean` | 8 | p-adic constraints, semiprime profile, smooth↔tropical, square detection |
+| `QuantumLensIntegration.lean` | 9 | Qubit savings, physical qubit costs, RSA-2048 analysis |
+| `ComplexityLowerBounds.lean` | 10 | Information-theoretic limits, polynomial speedup, RSA security |
 
-### Lean 4 Formal Proofs
-- **`AdvancedOpenQuestions.lean`** — 30+ new theorems covering:
-  - Lattice-based factoring bounds
-  - Elliptic curve constraints (Hasse interval)
-  - Information-theoretic limits
-  - Categorical lens theory (FactoringLens structure)
-  - Tropical geometry (valuation additivity)
-  - Quaternionic norm factoring (Euler & Brahmagupta-Fibonacci)
-  - Quantum-classical hybrid bounds
-  - Cross-collision theory (birthday paradox)
-  - Pisano period structure (Fibonacci gcd, rank of apparition)
-  - Smooth number theory (B-smoothness)
-  - Multi-lens complexity MLC(k)
-  - RSA security analysis
-  - Genus-2 curve independence
-  - LWE connections
-  - Sum-product phenomenon
-  - Analytic number theory
+### Python Demos (3 files)
 
-### Python Demos (`demos/`)
-- **`tropical_sieve_demo.py`** — Tropical sieve with 84-89% elimination rates
-- **`fibonacci_entry_point_demo.py`** — Computational verification for all primes up to 1000
-- **`multi_lens_demo.py`** — Lens-by-lens search space reduction + MLC analysis
-- **`quaternion_factoring_demo.py`** — Four-square representations and Euler identity
+| File | Description |
+|------|-------------|
+| `demos/demo_dickman_function.py` | Dickman function computation, smooth number counting, L-notation |
+| `demos/demo_sub_binary_recurrences.py` | Sequence comparison, growth ratios, search space reduction |
+| `demos/demo_independence_and_tropical.py` | CRT independence, tropical profiles, quantum integration |
 
-### SVG Visualizations (`visuals/`)
-- **`research_roadmap.svg`** — 4-tier research priority roadmap
-- **`theorem_network.svg`** — Dependency network of formal results
-- **`lens_reduction.svg`** — Exponential search space reduction chart
+### SVG Visualizations (5 files)
 
-### Papers and Articles
-- **`research_paper.md`** — Full research paper with all results
-- **`sciam_article.md`** — Scientific American-style popular article
-- **`future_research_recommendations.md`** — Prioritized research roadmap with answers to 14 key questions
+| File | Description |
+|------|-------------|
+| `visuals/dickman_function.svg` | The Dickman function curve with key properties |
+| `visuals/sub_binary_growth.svg` | Four sub-binary sequences vs 2^n |
+| `visuals/research_roadmap_v3.svg` | 12-direction research roadmap with status |
+| `visuals/quantum_lens_integration.svg` | Qubit budget analysis for RSA-2048 |
+| `visuals/tropical_profile.svg` | Tropical profile of a semiprime |
 
-## Running the Demos
+### Written Documents (4 files)
 
-```bash
-# Tropical sieve
-python3 demos/tropical_sieve_demo.py
+| File | Description |
+|------|-------------|
+| `research_paper.md` | Full research paper with all verified results |
+| `sciam_article.md` | Scientific American-style article |
+| `applications_brainstorm.md` | 20+ application ideas across 7 domains |
+| `future_research_recommendations.md` | Extended analysis of 12 research directions |
 
-# Fibonacci entry point verification
-python3 demos/fibonacci_entry_point_demo.py
+## Key Results
 
-# Multi-lens analysis
-python3 demos/multi_lens_demo.py
+1. **Dickman Function:** ρ(u) > 0 on (0,2], monotonically decreasing. Connected to smooth number counting Ψ(x,y) and GNFS complexity L[1/3, c].
 
-# Quaternion factoring
-python3 demos/quaternion_factoring_demo.py
-```
+2. **Sub-Binary Recurrences:** All four sequences (Fibonacci, Lucas, Tribonacci, Padovan) proved to grow slower than 2^n. General two-term recurrence bound established.
 
-## Building the Lean Proofs
+3. **9 Independent Lenses:** CRT proves independence. Combined with 9 coprime primes [2,3,5,7,11,13,17,19,23], giving 9 independent factoring constraints.
+
+4. **Tropical Factoring:** p-adic valuations provide orthogonal constraints. Semiprime profile theorem: exactly two spikes at height 1. Smooth numbers characterized tropically.
+
+5. **Quantum Savings:** 9 lenses save 5 logical qubits = 4,410 physical qubits for RSA-2048.
+
+6. **Security Preserved:** Multi-lens speedup is polynomial (2^9 = 512), negligible against 2^1024.
+
+## How to Verify
 
 ```bash
-lake build FutureResearchDirections.NewResearch.AdvancedOpenQuestions
-lake build FutureResearchDirections.OpenDirections
+# Build any individual file
+lake build FutureResearchDirections.NewResearch.DickmanFunction
+lake build FutureResearchDirections.NewResearch.SubBinaryRecurrence
+# ... etc.
+
+# Run Python demos
+python3 demos/demo_dickman_function.py
+python3 demos/demo_sub_binary_recurrences.py
+python3 demos/demo_independence_and_tropical.py
 ```
 
-## Theorem Summary
+## Dependencies
 
-| Category | Count | Status |
-|----------|-------|--------|
-| Fibonacci & Pisano | 8 | ✓ Complete |
-| Tropical Geometry | 5 | ✓ Complete |
-| Quaternionic Factoring | 4 | ✓ Complete |
-| Categorical Lens Theory | 5 | ✓ Complete |
-| Quantum-Classical | 4 | ✓ Complete |
-| Information Theory | 3 | ✓ Complete |
-| Smooth Numbers | 4 | ✓ Complete |
-| MLC Complexity | 4 | ✓ Complete |
-| RSA Security | 3 | ✓ Complete |
-| Lattice/ECM/Genus-2 | 8 | ✓ Complete |
-| Cross-Collision | 3 | ✓ Complete |
-| Other (DLP, Sum-Product, etc.) | 7+ | ✓ Complete |
-| **TOTAL** | **70+** | **✓ All Complete** |
-
-## Axiom Audit
-
-All proofs use only standard axioms:
-- `propext` (propositional extensionality)
-- `Classical.choice` (axiom of choice)
-- `Quot.sound` (quotient soundness)
-
-No `sorry`, no `axiom` declarations, no `@[implemented_by]`.
+- Lean 4.28.0
+- Mathlib (v4.28.0)
+- Python 3 (for demos, no external packages needed)
