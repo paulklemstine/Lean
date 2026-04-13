@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 480" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="stdGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#636e72"/>
+      <stop offset="100%" stop-color="#2d3436"/>
+    </linearGradient>
+    <linearGradient id="kanGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#a29bfe"/>
+      <stop offset="100%" stop-color="#6c5ce7"/>
+    </linearGradient>
+    <linearGradient id="emlGradB" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#00b894"/>
+      <stop offset="100%" stop-color="#00cec9"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1000" height="480" fill="#fafafa" rx="10"/>
+
+  <text x="500" y="35" text-anchor="middle" font-size="22" font-weight="bold" fill="#2d3436">
+    EML Networks vs KAN Networks vs Standard Neural Networks
+  </text>
+
+  <!-- Standard NN -->
+  <g transform="translate(20, 60)">
+    <rect width="300" height="390" rx="12" fill="white" stroke="#636e72" stroke-width="2"/>
+    <rect width="300" height="45" rx="12" fill="url(#stdGrad)"/>
+    <text x="150" y="30" text-anchor="middle" font-size="16" font-weight="bold" fill="white">Standard NN</text>
+
+    <text x="150" y="72" text-anchor="middle" font-size="12" fill="#333" font-weight="bold">Activation: ReLU / Sigmoid</text>
+
+    <!-- Neuron diagram -->
+    <circle cx="150" cy="120" r="25" fill="#dfe6e9" stroke="#636e72" stroke-width="2"/>
+    <text x="150" y="125" text-anchor="middle" font-size="10" fill="#333">σ(Σwᵢxᵢ+b)</text>
+
+    <text x="20" y="170" font-size="11" fill="#555">✗ Black-box weights</text>
+    <text x="20" y="190" font-size="11" fill="#555">✗ No symbolic readout</text>
+    <text x="20" y="210" font-size="11" fill="#555">✗ Millions of parameters</text>
+    <text x="20" y="230" font-size="11" fill="#555">✓ Well-studied training</text>
+    <text x="20" y="250" font-size="11" fill="#555">✓ GPU-optimized</text>
+    <text x="20" y="270" font-size="11" fill="#555">✗ Cannot extract formulas</text>
+    <text x="20" y="290" font-size="11" fill="#555">✗ Approximate universality</text>
+
+    <rect x="20" y="310" width="260" height="60" rx="6" fill="#dfe6e9"/>
+    <text x="150" y="332" text-anchor="middle" font-size="11" font-weight="bold" fill="#636e72">After Training:</text>
+    <text x="150" y="352" text-anchor="middle" font-size="11" fill="#636e72">"Matrix of numbers"</text>
+    <text x="150" y="367" text-anchor="middle" font-size="10" fill="#999">No insight into what was learned</text>
+  </g>
+
+  <!-- KAN Network -->
+  <g transform="translate(350, 60)">
+    <rect width="300" height="390" rx="12" fill="white" stroke="#6c5ce7" stroke-width="2"/>
+    <rect width="300" height="45" rx="12" fill="url(#kanGrad)"/>
+    <text x="150" y="30" text-anchor="middle" font-size="16" font-weight="bold" fill="white">KAN Network</text>
+
+    <text x="150" y="72" text-anchor="middle" font-size="12" fill="#333" font-weight="bold">Activation: B-splines</text>
+
+    <!-- Spline diagram -->
+    <rect x="100" y="95" width="100" height="50" rx="5" fill="#f0e6ff" stroke="#6c5ce7" stroke-width="1.5"/>
+    <polyline points="110,135 120,125 130,110 140,105 150,115 160,130 170,120 180,110 190,115"
+              fill="none" stroke="#6c5ce7" stroke-width="2"/>
+
+    <text x="20" y="170" font-size="11" fill="#555">△ Learnable activation shapes</text>
+    <text x="20" y="190" font-size="11" fill="#555">△ Visual interpretability</text>
+    <text x="20" y="210" font-size="11" fill="#555">✓ Fewer parameters</text>
+    <text x="20" y="230" font-size="11" fill="#555">△ Novel training methods</text>
+    <text x="20" y="250" font-size="11" fill="#555">✗ Not GPU-native</text>
+    <text x="20" y="270" font-size="11" fill="#555">△ Approximate formulas</text>
+    <text x="20" y="290" font-size="11" fill="#555">✓ Kolmogorov-Arnold theorem</text>
+
+    <rect x="20" y="310" width="260" height="60" rx="6" fill="#f0e6ff"/>
+    <text x="150" y="332" text-anchor="middle" font-size="11" font-weight="bold" fill="#6c5ce7">After Training:</text>
+    <text x="150" y="352" text-anchor="middle" font-size="11" fill="#6c5ce7">"Shaped spline curves"</text>
+    <text x="150" y="367" text-anchor="middle" font-size="10" fill="#999">Visual insight, not exact formulas</text>
+  </g>
+
+  <!-- EML Network -->
+  <g transform="translate(680, 60)">
+    <rect width="300" height="390" rx="12" fill="white" stroke="#00b894" stroke-width="3"/>
+    <rect width="300" height="45" rx="12" fill="url(#emlGradB)"/>
+    <text x="150" y="30" text-anchor="middle" font-size="16" font-weight="bold" fill="white">EML Network ★</text>
+
+    <text x="150" y="72" text-anchor="middle" font-size="12" fill="#333" font-weight="bold">Activation: exp(·) − ln(·)</text>
+
+    <!-- EML node -->
+    <rect x="80" y="90" width="140" height="55" rx="8" fill="#e0fff5" stroke="#00b894" stroke-width="2"/>
+    <text x="150" y="112" text-anchor="middle" font-size="10" fill="#00b894" font-weight="bold">exp(w₁x+b₁)</text>
+    <text x="150" y="127" text-anchor="middle" font-size="10" fill="#00b894" font-weight="bold">−ln(w₂x+b₂)</text>
+    <text x="150" y="140" text-anchor="middle" font-size="8" fill="#00b894">EML gate</text>
+
+    <text x="20" y="170" font-size="11" fill="#00b894" font-weight="bold">✓ Exact symbolic formula</text>
+    <text x="20" y="190" font-size="11" fill="#00b894" font-weight="bold">✓ Complete interpretability</text>
+    <text x="20" y="210" font-size="11" fill="#00b894" font-weight="bold">✓ Minimal parameters (4/neuron)</text>
+    <text x="20" y="230" font-size="11" fill="#555">✓ Differentiable training</text>
+    <text x="20" y="250" font-size="11" fill="#555">✓ Analog hardware native</text>
+    <text x="20" y="270" font-size="11" fill="#00b894" font-weight="bold">✓ EXACT formula extraction</text>
+    <text x="20" y="290" font-size="11" fill="#00b894" font-weight="bold">✓ GUARANTEED universality</text>
+
+    <rect x="20" y="310" width="260" height="60" rx="6" fill="#e0fff5"/>
+    <text x="150" y="332" text-anchor="middle" font-size="11" font-weight="bold" fill="#00b894">After Training:</text>
+    <text x="150" y="352" text-anchor="middle" font-size="11" fill="#00b894" font-weight="bold">"f(x) = 3.14·exp(2x) − ln(x+1)"</text>
+    <text x="150" y="367" text-anchor="middle" font-size="10" fill="#00b894">Exact symbolic formula!</text>
+  </g>
+</svg>
