@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgfp" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#16213e"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="900" height="500" fill="url(#bgfp)"/>
+
+  <!-- Title -->
+  <text x="450" y="35" text-anchor="middle" fill="#FFD700" font-size="22" font-weight="bold">
+    EML Fixed Point Analysis
+  </text>
+
+  <!-- Left panel: Logarithmic iteration g(z) = e - ln(z) -->
+  <rect x="30" y="60" width="410" height="400" rx="10" fill="rgba(255,255,255,0.03)" stroke="#333"/>
+  <text x="235" y="85" text-anchor="middle" fill="#00CED1" font-size="16" font-weight="bold">
+    Logarithmic Iteration
+  </text>
+  <text x="235" y="105" text-anchor="middle" fill="#888" font-size="13">g(z) = e − ln(z)</text>
+
+  <!-- Graph area -->
+  <rect x="70" y="120" width="330" height="200" fill="rgba(0,0,0,0.3)" stroke="#444"/>
+
+  <!-- Axes -->
+  <line x1="70" y1="320" x2="400" y2="320" stroke="#666" stroke-width="1"/>
+  <line x1="70" y1="120" x2="70" y2="320" stroke="#666" stroke-width="1"/>
+  <text x="235" y="340" text-anchor="middle" fill="#888" font-size="11">z</text>
+  <text x="55" y="220" text-anchor="middle" fill="#888" font-size="11" transform="rotate(-90 55 220)">g(z)</text>
+
+  <!-- y = z line -->
+  <line x1="70" y1="320" x2="400" y2="120" stroke="#555" stroke-width="1" stroke-dasharray="5,5"/>
+  <text x="385" y="135" fill="#555" font-size="10">y = z</text>
+
+  <!-- g(z) = e - ln(z) curve (approximate) -->
+  <path d="M 103 120 Q 136 190, 170 230 Q 230 275, 300 295 Q 350 305, 400 310"
+        fill="none" stroke="#00CED1" stroke-width="2"/>
+  <text x="135" y="145" fill="#00CED1" font-size="10">g(z) = e − ln(z)</text>
+
+  <!-- Fixed point -->
+  <circle cx="260" cy="256" r="6" fill="#FFD700" stroke="#fff" stroke-width="1.5"/>
+  <text x="275" y="250" fill="#FFD700" font-size="11" font-weight="bold">z* ≈ 1.763</text>
+
+  <!-- Convergence cobweb (simplified) -->
+  <polyline points="170,320 170,247 245,247 245,260 258,260 258,256"
+            fill="none" stroke="#FF6347" stroke-width="1" stroke-dasharray="3,2" opacity="0.7"/>
+
+  <!-- Info box -->
+  <text x="235" y="365" text-anchor="middle" fill="#fff" font-size="12">
+    Unique fixed point: z* ≈ 1.76322...
+  </text>
+  <text x="235" y="385" text-anchor="middle" fill="#8f8" font-size="11">
+    |g'(z*)| = |1/z*| ≈ 0.567 &lt; 1 → Stable ✓
+  </text>
+  <text x="235" y="405" text-anchor="middle" fill="#aaa" font-size="11">
+    Uniqueness: h(z) = ln(z) + z − e is strictly ↑
+  </text>
+  <text x="235" y="425" text-anchor="middle" fill="#aaa" font-size="11">
+    Existence: h(1) &lt; 0 &lt; h(e) → IVT
+  </text>
+  <text x="235" y="445" text-anchor="middle" fill="#8f8" font-size="11" font-weight="bold">
+    ✓ Proved in Lean 4
+  </text>
+
+  <!-- Right panel: Diagonal map f(z) = exp(z) - ln(z) -->
+  <rect x="460" y="60" width="410" height="400" rx="10" fill="rgba(255,255,255,0.03)" stroke="#333"/>
+  <text x="665" y="85" text-anchor="middle" fill="#FF6347" font-size="16" font-weight="bold">
+    Diagonal EML Map
+  </text>
+  <text x="665" y="105" text-anchor="middle" fill="#888" font-size="13">f(z) = exp(z) − ln(z)</text>
+
+  <!-- Graph area -->
+  <rect x="500" y="120" width="330" height="200" fill="rgba(0,0,0,0.3)" stroke="#444"/>
+
+  <!-- Axes -->
+  <line x1="500" y1="320" x2="830" y2="320" stroke="#666" stroke-width="1"/>
+  <line x1="500" y1="120" x2="500" y2="320" stroke="#666" stroke-width="1"/>
+  <text x="665" y="340" text-anchor="middle" fill="#888" font-size="11">z</text>
+
+  <!-- y = z line -->
+  <line x1="500" y1="320" x2="830" y2="120" stroke="#555" stroke-width="1" stroke-dasharray="5,5"/>
+  <text x="815" y="135" fill="#555" font-size="10">y = z</text>
+
+  <!-- f(z) = exp(z) - ln(z) curve -->
+  <path d="M 510 280 Q 550 265, 580 250 Q 630 220, 665 180 Q 700 140, 720 120"
+        fill="none" stroke="#FF6347" stroke-width="2"/>
+  <text x="580" y="240" fill="#FF6347" font-size="10">f(z) = eᶻ − ln(z)</text>
+
+  <!-- No real fixed point annotation -->
+  <text x="665" y="365" text-anchor="middle" fill="#fff" font-size="12">
+    No real fixed points!
+  </text>
+  <text x="665" y="385" text-anchor="middle" fill="#f88" font-size="11">
+    f(z) &gt; z for all z &gt; 0 (since eᶻ &gt; z + ln z)
+  </text>
+  <text x="665" y="410" text-anchor="middle" fill="#aaa" font-size="11">
+    Complex fixed points exist near
+  </text>
+  <text x="665" y="430" text-anchor="middle" fill="#FFD700" font-size="12" font-weight="bold">
+    z₀ ≈ 0.318 + 1.337i
+  </text>
+  <text x="665" y="450" text-anchor="middle" fill="#aaa" font-size="11">
+    (and its conjugate z̄₀)
+  </text>
+</svg>
