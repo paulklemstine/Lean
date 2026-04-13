@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 750" font-family="'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f0c29"/>
+      <stop offset="50%" style="stop-color:#302b63"/>
+      <stop offset="100%" style="stop-color:#24243e"/>
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#556688"/>
+    </marker>
+  </defs>
+  <rect width="1000" height="750" fill="url(#bg2)"/>
+  <text x="500" y="40" text-anchor="middle" fill="#ffffff" font-size="22" font-weight="bold">Theorem Dependency Network</text>
+  <text x="500" y="62" text-anchor="middle" fill="#8899aa" font-size="12">How formal results connect across research directions</text>
+
+  <!-- Connections (arrows) -->
+  <line x1="200" y1="140" x2="500" y2="280" stroke="#334466" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="500" y1="140" x2="500" y2="260" stroke="#334466" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="800" y1="140" x2="500" y2="280" stroke="#334466" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="500" y1="320" x2="300" y2="440" stroke="#446644" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="500" y1="320" x2="700" y2="440" stroke="#446644" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="300" y1="480" x2="500" y2="580" stroke="#664444" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="700" y1="480" x2="500" y2="580" stroke="#664444" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="200" y1="160" x2="150" y2="440" stroke="#334466" stroke-width="1" stroke-dasharray="4,4" marker-end="url(#arrow)"/>
+  <line x1="800" y1="160" x2="850" y2="440" stroke="#334466" stroke-width="1" stroke-dasharray="4,4" marker-end="url(#arrow)"/>
+
+  <!-- Tier 1 nodes -->
+  <circle cx="200" cy="130" r="45" fill="#0a2a0a" stroke="#00ff88" stroke-width="2"/>
+  <text x="200" y="125" text-anchor="middle" fill="#00ff88" font-size="10" font-weight="bold">Fibonacci</text>
+  <text x="200" y="140" text-anchor="middle" fill="#88ffaa" font-size="9">Entry Point</text>
+
+  <circle cx="500" cy="130" r="45" fill="#0a2a0a" stroke="#00ff88" stroke-width="2"/>
+  <text x="500" y="125" text-anchor="middle" fill="#00ff88" font-size="10" font-weight="bold">Tropical</text>
+  <text x="500" y="140" text-anchor="middle" fill="#88ffaa" font-size="9">Sieve</text>
+
+  <circle cx="800" cy="130" r="45" fill="#0a2a0a" stroke="#00ff88" stroke-width="2"/>
+  <text x="800" y="125" text-anchor="middle" fill="#00ff88" font-size="10" font-weight="bold">Multi-Lens</text>
+  <text x="800" y="140" text-anchor="middle" fill="#88ffaa" font-size="9">Framework</text>
+
+  <!-- Central hub -->
+  <circle cx="500" cy="300" r="55" fill="#1a1a4a" stroke="#6688ff" stroke-width="2.5"/>
+  <text x="500" y="293" text-anchor="middle" fill="#aabbff" font-size="11" font-weight="bold">RSA Totient</text>
+  <text x="500" y="308" text-anchor="middle" fill="#8899cc" font-size="9">φ(pq) = (p-1)(q-1)</text>
+
+  <!-- Tier 2 nodes -->
+  <circle cx="150" cy="460" r="40" fill="#1a0a2a" stroke="#aa66ff" stroke-width="2"/>
+  <text x="150" y="455" text-anchor="middle" fill="#cc88ff" font-size="10" font-weight="bold">Pisano</text>
+  <text x="150" y="470" text-anchor="middle" fill="#aa88cc" font-size="9">Period</text>
+
+  <circle cx="300" cy="460" r="40" fill="#1a0a2a" stroke="#aa66ff" stroke-width="2"/>
+  <text x="300" y="455" text-anchor="middle" fill="#cc88ff" font-size="10" font-weight="bold">Quaternion</text>
+  <text x="300" y="470" text-anchor="middle" fill="#aa88cc" font-size="9">Factoring</text>
+
+  <circle cx="500" cy="460" r="40" fill="#1a0a2a" stroke="#aa66ff" stroke-width="2"/>
+  <text x="500" y="455" text-anchor="middle" fill="#cc88ff" font-size="10" font-weight="bold">Smooth</text>
+  <text x="500" y="470" text-anchor="middle" fill="#aa88cc" font-size="9">Numbers</text>
+
+  <circle cx="700" cy="460" r="40" fill="#1a0a2a" stroke="#aa66ff" stroke-width="2"/>
+  <text x="700" y="455" text-anchor="middle" fill="#cc88ff" font-size="10" font-weight="bold">Quantum</text>
+  <text x="700" y="470" text-anchor="middle" fill="#aa88cc" font-size="9">Hybrid</text>
+
+  <circle cx="850" cy="460" r="40" fill="#1a0a2a" stroke="#aa66ff" stroke-width="2"/>
+  <text x="850" y="455" text-anchor="middle" fill="#cc88ff" font-size="10" font-weight="bold">Genus-2</text>
+  <text x="850" y="470" text-anchor="middle" fill="#aa88cc" font-size="9">Curves</text>
+
+  <!-- Grand challenge -->
+  <circle cx="500" cy="610" r="50" fill="#2a1a0a" stroke="#ffaa00" stroke-width="2.5"/>
+  <text x="500" y="603" text-anchor="middle" fill="#ffcc44" font-size="11" font-weight="bold">MLC(k)</text>
+  <text x="500" y="618" text-anchor="middle" fill="#cc9933" font-size="9">Complexity</text>
+
+  <!-- Legend -->
+  <rect x="30" y="670" width="940" height="60" rx="8" fill="#0d0d2a" stroke="#334466" stroke-width="1"/>
+  <circle cx="80" cy="700" r="10" fill="#0a2a0a" stroke="#00ff88" stroke-width="2"/>
+  <text x="100" y="704" fill="#88ffaa" font-size="11">Tier 1 (Complete)</text>
+  <circle cx="280" cy="700" r="10" fill="#1a0a2a" stroke="#aa66ff" stroke-width="2"/>
+  <text x="300" y="704" fill="#cc88ff" font-size="11">Tier 2 (In Progress)</text>
+  <circle cx="480" cy="700" r="10" fill="#2a1a0a" stroke="#ffaa00" stroke-width="2"/>
+  <text x="500" y="704" fill="#ffcc44" font-size="11">Grand Challenge</text>
+  <line x1="650" y1="695" x2="700" y2="695" stroke="#334466" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="710" y="700" fill="#88aacc" font-size="11">Depends on</text>
+  <line x1="800" y1="695" x2="850" y2="695" stroke="#334466" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="860" y="700" fill="#88aacc" font-size="11">Connects to</text>
+</svg>
