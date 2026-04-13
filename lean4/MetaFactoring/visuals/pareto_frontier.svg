@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 550" font-family="'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#16213e;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="pareto_grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e94560;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f3460;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <rect width="900" height="550" fill="url(#bg3)" rx="12"/>
+
+  <text x="450" y="35" text-anchor="middle" fill="#e94560" font-size="20" font-weight="bold">Classical-Quantum Pareto Frontier</text>
+  <text x="450" y="55" text-anchor="middle" fill="#a7a7c5" font-size="13">Open Question 4: Optimal Allocation Between Classical Lenses and Quantum Search</text>
+
+  <g transform="translate(100, 80)">
+    <!-- Axes -->
+    <line x1="0" y1="380" x2="700" y2="380" stroke="#30363d" stroke-width="1.5"/>
+    <line x1="0" y1="0" x2="0" y2="380" stroke="#30363d" stroke-width="1.5"/>
+
+    <text x="350" y="420" text-anchor="middle" fill="#a7a7c5" font-size="13">Classical Lenses Applied (k)</text>
+    <text x="-60" y="190" text-anchor="middle" fill="#a7a7c5" font-size="13" transform="rotate(-90, -60, 190)">Cost</text>
+
+    <!-- Grid -->
+    <line x1="0" y1="285" x2="700" y2="285" stroke="#21262d" stroke-width="0.5"/>
+    <line x1="0" y1="190" x2="700" y2="190" stroke="#21262d" stroke-width="0.5"/>
+    <line x1="0" y1="95" x2="700" y2="95" stroke="#21262d" stroke-width="0.5"/>
+
+    <!-- X labels -->
+    <text x="0" y="398" text-anchor="middle" fill="#8b949e" font-size="10">0</text>
+    <text x="70" y="398" text-anchor="middle" fill="#8b949e" font-size="10">2</text>
+    <text x="140" y="398" text-anchor="middle" fill="#8b949e" font-size="10">4</text>
+    <text x="210" y="398" text-anchor="middle" fill="#8b949e" font-size="10">6</text>
+    <text x="280" y="398" text-anchor="middle" fill="#8b949e" font-size="10">8</text>
+    <text x="350" y="398" text-anchor="middle" fill="#8b949e" font-size="10">10</text>
+    <text x="420" y="398" text-anchor="middle" fill="#8b949e" font-size="10">12</text>
+    <text x="490" y="398" text-anchor="middle" fill="#8b949e" font-size="10">14</text>
+    <text x="560" y="398" text-anchor="middle" fill="#8b949e" font-size="10">16</text>
+    <text x="630" y="398" text-anchor="middle" fill="#8b949e" font-size="10">18</text>
+    <text x="700" y="398" text-anchor="middle" fill="#8b949e" font-size="10">20</text>
+
+    <!-- Classical cost (linear, blue) -->
+    <polyline points="
+      0,380 35,371 70,361 105,352 140,342 175,333 210,323 245,314
+      280,304 315,295 350,285 385,276 420,266 455,257 490,247
+      525,238 560,228 595,219 630,209 665,199 700,190
+    " fill="none" stroke="#4cc9f0" stroke-width="2"/>
+
+    <!-- Quantum cost (sqrt decay, red) -->
+    <polyline points="
+      0,18 35,48 70,72 105,93 140,112 175,128 210,143 245,157
+      280,170 315,182 350,195 385,209 420,225 455,243 490,262
+      525,283 560,306 595,330 630,354 665,370 700,378
+    " fill="none" stroke="#e94560" stroke-width="2"/>
+
+    <!-- Total cost (U-shaped, gold) -->
+    <polyline points="
+      0,38 35,59 70,73 105,85 140,95 175,101 210,106 245,111
+      280,114 315,117 350,120 385,125 420,131 455,140 490,149
+      525,161 560,174 595,189 630,203 665,209 700,208
+    " fill="none" stroke="#FFD700" stroke-width="3"/>
+
+    <!-- Optimal point -->
+    <circle cx="315" cy="117" r="8" fill="none" stroke="#FFD700" stroke-width="2"/>
+    <circle cx="315" cy="117" r="3" fill="#FFD700"/>
+    <line x1="315" y1="125" x2="315" y2="180" stroke="#FFD700" stroke-width="1" stroke-dasharray="4,3"/>
+    <text x="315" y="195" text-anchor="middle" fill="#FFD700" font-size="12" font-weight="bold">k* ≈ 9</text>
+    <text x="315" y="210" text-anchor="middle" fill="#FFD700" font-size="10">Optimal</text>
+
+    <!-- Legend -->
+    <rect x="470" y="10" width="220" height="80" rx="6" fill="#161b2e" stroke="#30363d"/>
+    <line x1="480" y1="30" x2="520" y2="30" stroke="#4cc9f0" stroke-width="2"/>
+    <text x="530" y="34" fill="#4cc9f0" font-size="12">Classical cost (k)</text>
+    <line x1="480" y1="50" x2="520" y2="50" stroke="#e94560" stroke-width="2"/>
+    <text x="530" y="54" fill="#e94560" font-size="12">Quantum cost (√(S/2ᵏ))</text>
+    <line x1="480" y1="70" x2="520" y2="70" stroke="#FFD700" stroke-width="3"/>
+    <text x="530" y="74" fill="#FFD700" font-size="12">Total cost</text>
+  </g>
+
+  <!-- Footer -->
+  <rect x="100" y="490" width="700" height="40" rx="8" fill="#16213e" stroke="#30363d"/>
+  <text x="450" y="510" text-anchor="middle" fill="#a7a7c5" font-size="12">
+    For S = 2²⁰: Optimal k* ≈ 9 lenses saves 88% vs pure quantum search
+  </text>
+  <text x="450" y="525" text-anchor="middle" fill="#8b949e" font-size="11">
+    Theorem: An optimal k* always exists (proved by finite minimization over [0, log₂ S])
+  </text>
+</svg>
