@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <linearGradient id="bg3" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a2e"/>
+      <stop offset="100%" style="stop-color:#151540"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="900" height="600" fill="url(#bg3)"/>
+
+  <text x="450" y="35" text-anchor="middle" fill="#ffffff" font-size="22" font-weight="bold">
+    Dimension-Channel Scaling: The Gravitational Advantage
+  </text>
+  <text x="450" y="58" text-anchor="middle" fill="#8888cc" font-size="12">
+    How division algebra dimension amplifies factoring channels
+  </text>
+
+  <!-- Chart area -->
+  <rect x="100" y="80" width="700" height="400" rx="5" fill="#0a0a20" stroke="#333366" stroke-width="1"/>
+
+  <!-- Y axis -->
+  <text x="55" y="290" text-anchor="middle" fill="#aaaacc" font-size="12" transform="rotate(-90 55 290)">Channels per tuple pair</text>
+  <line x1="100" y1="80" x2="100" y2="480" stroke="#444466" stroke-width="1"/>
+
+  <!-- X axis -->
+  <text x="450" y="510" text-anchor="middle" fill="#aaaacc" font-size="12">Division Algebra Dimension k</text>
+  <line x1="100" y1="480" x2="800" y2="480" stroke="#444466" stroke-width="1"/>
+
+  <!-- Grid lines -->
+  <line x1="100" y1="400" x2="800" y2="400" stroke="#222244" stroke-width="0.5"/>
+  <line x1="100" y1="320" x2="800" y2="320" stroke="#222244" stroke-width="0.5"/>
+  <line x1="100" y1="240" x2="800" y2="240" stroke="#222244" stroke-width="0.5"/>
+  <line x1="100" y1="160" x2="800" y2="160" stroke="#222244" stroke-width="0.5"/>
+
+  <!-- Y axis labels -->
+  <text x="90" y="484" text-anchor="end" fill="#666688" font-size="10">0</text>
+  <text x="90" y="404" text-anchor="end" fill="#666688" font-size="10">100</text>
+  <text x="90" y="324" text-anchor="end" fill="#666688" font-size="10">200</text>
+  <text x="90" y="244" text-anchor="end" fill="#666688" font-size="10">300</text>
+  <text x="90" y="164" text-anchor="end" fill="#666688" font-size="10">400</text>
+  <text x="90" y="84" text-anchor="end" fill="#666688" font-size="10">500</text>
+
+  <!-- Bars: k=1, k=2, k=4, k=8, k=16 -->
+  <!-- k=1: channels = 1 -->
+  <rect x="140" y="479" width="80" height="1" rx="3" fill="#4444ff" opacity="0.8"/>
+  <text x="180" y="497" text-anchor="middle" fill="#aaaacc" font-size="11">k=1</text>
+  <text x="180" y="474" text-anchor="middle" fill="#4444ff" font-size="10">1</text>
+
+  <!-- k=2: channels = 3 -->
+  <rect x="260" y="477.6" width="80" height="2.4" rx="3" fill="#0088ff" opacity="0.8"/>
+  <text x="300" y="497" text-anchor="middle" fill="#aaaacc" font-size="11">k=2</text>
+  <text x="300" y="473" text-anchor="middle" fill="#0088ff" font-size="10">3</text>
+
+  <!-- k=4: channels = 10 -->
+  <rect x="380" y="472" width="80" height="8" rx="3" fill="#00ccff" opacity="0.8"/>
+  <text x="420" y="497" text-anchor="middle" fill="#aaaacc" font-size="11">k=4</text>
+  <text x="420" y="467" text-anchor="middle" fill="#00ccff" font-size="10">10</text>
+
+  <!-- k=8: channels = 36 -->
+  <rect x="500" y="451.2" width="80" height="28.8" rx="3" fill="#00ff88" opacity="0.8"/>
+  <text x="540" y="497" text-anchor="middle" fill="#aaaacc" font-size="11">k=8</text>
+  <text x="540" y="446" text-anchor="middle" fill="#00ff88" font-size="10">36</text>
+
+  <!-- k=16: channels = 136 -->
+  <rect x="620" y="371.2" width="80" height="108.8" rx="3" fill="#ffaa00" opacity="0.8"/>
+  <text x="660" y="497" text-anchor="middle" fill="#aaaacc" font-size="11">k=16</text>
+  <text x="660" y="366" text-anchor="middle" fill="#ffaa00" font-size="10">136</text>
+
+  <!-- k=32: channels = 528 (extrapolated) -->
+  <rect x="740" y="56.6" width="40" height="423.4" rx="3" fill="#ff4444" opacity="0.6"/>
+  <text x="760" y="497" text-anchor="middle" fill="#aaaacc" font-size="10">k=32</text>
+  <text x="760" y="52" text-anchor="middle" fill="#ff4444" font-size="10">528</text>
+
+  <!-- Curve: k(k+1)/2 -->
+  <path d="M 180,479 Q 300,477 420,472 Q 540,451 660,371 Q 760,57 780,50" stroke="#ffffff" stroke-width="2" fill="none" stroke-dasharray="4,4"/>
+  <text x="780" y="45" fill="#ffffff" font-size="10">k(k+1)/2</text>
+
+  <!-- Division algebra labels -->
+  <rect x="100" y="530" width="700" height="55" rx="8" fill="#111133" stroke="#333366" stroke-width="1"/>
+  <text x="180" y="548" text-anchor="middle" fill="#4444ff" font-size="10" font-weight="bold">ℝ</text>
+  <text x="180" y="565" text-anchor="middle" fill="#666688" font-size="8">Real</text>
+  <text x="300" y="548" text-anchor="middle" fill="#0088ff" font-size="10" font-weight="bold">ℂ</text>
+  <text x="300" y="565" text-anchor="middle" fill="#666688" font-size="8">Complex</text>
+  <text x="420" y="548" text-anchor="middle" fill="#00ccff" font-size="10" font-weight="bold">ℍ</text>
+  <text x="420" y="565" text-anchor="middle" fill="#666688" font-size="8">Quaternions</text>
+  <text x="540" y="548" text-anchor="middle" fill="#00ff88" font-size="10" font-weight="bold">𝕆</text>
+  <text x="540" y="565" text-anchor="middle" fill="#666688" font-size="8">Octonions</text>
+  <text x="660" y="548" text-anchor="middle" fill="#ffaa00" font-size="10" font-weight="bold">𝕊</text>
+  <text x="660" y="565" text-anchor="middle" fill="#666688" font-size="8">Sedenions</text>
+  <text x="760" y="548" text-anchor="middle" fill="#ff4444" font-size="10" font-weight="bold">?</text>
+  <text x="760" y="565" text-anchor="middle" fill="#666688" font-size="8">dim 32</text>
+
+  <!-- Properties lost -->
+  <text x="365" y="580" text-anchor="middle" fill="#ff6666" font-size="8">← commutativity lost</text>
+  <text x="480" y="580" text-anchor="middle" fill="#ff6666" font-size="8">← associativity lost</text>
+  <text x="600" y="580" text-anchor="middle" fill="#ff6666" font-size="8">← alternativity lost</text>
+  <text x="710" y="580" text-anchor="middle" fill="#ff6666" font-size="8">← division lost</text>
+</svg>

@@ -182,8 +182,8 @@ theorem sigma1_lower_bound (n : ℕ) (hn : 1 < n) : n + 1 ≤ sigma1 n := by
 theorem sigma1_multiplicative (m n : ℕ) (hm : 0 < m) (hn : 0 < n)
     (hcop : Nat.Coprime m n) :
     sigma1 (m * n) = sigma1 m * sigma1 n := by
-  unfold sigma1;
-  exact?
+  unfold sigma1
+  exact Coprime.sum_divisors_mul hcop
 
 /-- r₄(n) = 8 · σ₁(n) for odd n (Jacobi's formula).
     This gives abundant 4-square representations for factoring.
