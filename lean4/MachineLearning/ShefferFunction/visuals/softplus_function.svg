@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a1a4e;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="softplusGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ff6b35;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#ffd700;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00ff88;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="500" fill="url(#bg)" rx="10"/>
+  
+  <!-- Title -->
+  <text x="400" y="40" text-anchor="middle" fill="#ffd700" font-family="Georgia, serif" font-size="24" font-weight="bold">
+    The Softplus Sheffer Function
+  </text>
+  <text x="400" y="65" text-anchor="middle" fill="#aaaacc" font-family="Georgia, serif" font-size="16" font-style="italic">
+    σ(x) = log(1 + eˣ) — The Universal Activation
+  </text>
+  
+  <!-- Axes -->
+  <g transform="translate(100,80)">
+    <!-- Grid -->
+    <g stroke="#333366" stroke-width="0.5">
+      <line x1="0" y1="0" x2="600" y2="0"/>
+      <line x1="0" y1="75" x2="600" y2="75"/>
+      <line x1="0" y1="150" x2="600" y2="150"/>
+      <line x1="0" y1="225" x2="600" y2="225"/>
+      <line x1="0" y1="300" x2="600" y2="300"/>
+      <line x1="0" y1="375" x2="600" y2="375"/>
+      
+      <line x1="0" y1="0" x2="0" y2="375"/>
+      <line x1="100" y1="0" x2="100" y2="375"/>
+      <line x1="200" y1="0" x2="200" y2="375"/>
+      <line x1="300" y1="0" x2="300" y2="375"/>
+      <line x1="400" y1="0" x2="400" y2="375"/>
+      <line x1="500" y1="0" x2="500" y2="375"/>
+      <line x1="600" y1="0" x2="600" y2="375"/>
+    </g>
+    
+    <!-- Main axes -->
+    <line x1="0" y1="300" x2="600" y2="300" stroke="#6666aa" stroke-width="2"/>
+    <line x1="300" y1="0" x2="300" y2="375" stroke="#6666aa" stroke-width="2"/>
+    
+    <!-- Axis labels -->
+    <text x="300" y="395" text-anchor="middle" fill="#8888bb" font-family="monospace" font-size="12">0</text>
+    <text x="0" y="395" text-anchor="middle" fill="#8888bb" font-family="monospace" font-size="12">-6</text>
+    <text x="100" y="395" text-anchor="middle" fill="#8888bb" font-family="monospace" font-size="12">-4</text>
+    <text x="200" y="395" text-anchor="middle" fill="#8888bb" font-family="monospace" font-size="12">-2</text>
+    <text x="400" y="395" text-anchor="middle" fill="#8888bb" font-family="monospace" font-size="12">2</text>
+    <text x="500" y="395" text-anchor="middle" fill="#8888bb" font-family="monospace" font-size="12">4</text>
+    <text x="600" y="395" text-anchor="middle" fill="#8888bb" font-family="monospace" font-size="12">6</text>
+    
+    <text x="-15" y="304" text-anchor="end" fill="#8888bb" font-family="monospace" font-size="12">0</text>
+    <text x="-15" y="229" text-anchor="end" fill="#8888bb" font-family="monospace" font-size="12">1</text>
+    <text x="-15" y="229" text-anchor="end" fill="#8888bb" font-family="monospace" font-size="12">1</text>
+    <text x="-15" y="154" text-anchor="end" fill="#8888bb" font-family="monospace" font-size="12">2</text>
+    <text x="-15" y="79" text-anchor="end" fill="#8888bb" font-family="monospace" font-size="12">3</text>
+    <text x="-15" y="4" text-anchor="end" fill="#8888bb" font-family="monospace" font-size="12">4</text>
+    
+    <!-- Identity line y=x (dashed) -->
+    <line x1="300" y1="300" x2="600" y2="0" stroke="#4444aa" stroke-width="1.5" stroke-dasharray="8,4" opacity="0.6"/>
+    <text x="560" y="50" fill="#4444aa" font-family="monospace" font-size="11">y = x</text>
+    
+    <!-- Exponential e^x (dashed) -->
+    <!-- e^x at x=-6: 0.0025, x=-4: 0.018, x=-2: 0.135, x=0: 1, x=0.5: 1.65 -->
+    <path d="M 0,299.8 L 50,299.5 L 100,298.7 L 150,296 L 200,290 L 250,270 L 300,225 L 350,126 L 380,37" 
+          stroke="#ff4444" stroke-width="1.5" fill="none" stroke-dasharray="5,5" opacity="0.5"/>
+    <text x="385" y="32" fill="#ff4444" font-family="monospace" font-size="11">eˣ</text>
+    
+    <!-- SOFTPLUS CURVE -->
+    <!-- σ(x) = log(1+e^x) at key points:
+         x=-6: 0.0025, x=-5: 0.0067, x=-4: 0.018, x=-3: 0.049, x=-2: 0.127, x=-1: 0.313
+         x=0: 0.693, x=1: 1.313, x=2: 2.127, x=3: 3.049, x=4: 4.018, x=5: 5.007, x=6: 6.002
+         Scale: 1 unit = 75px, origin at (300, 300) -->
+    <path d="M 0,299.8 L 25,299.7 L 50,299.5 L 75,299 L 100,298.6 L 125,297.6 
+             L 150,296.3 L 175,294 L 200,290.5 L 225,285 L 250,277 L 275,266
+             L 300,248 L 325,202 L 350,141 L 375,71 L 400,3 L 425,-71
+             L 450,-146 L 475,-221 L 500,-296"
+          stroke="url(#softplusGrad)" stroke-width="3.5" fill="none" filter="url(#glow)"
+          stroke-linecap="round"/>
+    
+    <!-- Corrected softplus path using actual values -->
+    <!-- Redraw with proper values: σ(-6)≈0.0025, σ(-4)≈0.018, σ(-2)≈0.127, σ(0)=0.693, σ(2)=2.127, σ(4)=4.018, σ(6)=6.002 -->
+    <!-- y_pixel = 300 - value*75 -->
+    <path d="M 0,299.8 L 50,298.7 L 100,296.5 L 150,290.5 L 200,280.5 L 250,264
+             L 300,248.1 L 350,201.6 L 400,140.5 L 450,73.6 L 500,4.9 L 550,-75.5 L 600,-150.2"
+          stroke="url(#softplusGrad)" stroke-width="3.5" fill="none" filter="url(#glow)"
+          stroke-linecap="round"/>
+    
+    <!-- Label -->
+    <text x="480" y="120" fill="#ffd700" font-family="Georgia, serif" font-size="16" font-weight="bold">
+      σ(x)
+    </text>
+    
+    <!-- Log 2 marker at x=0 -->
+    <circle cx="300" cy="248" r="5" fill="#ffd700" stroke="#ffffff" stroke-width="1.5"/>
+    <text x="315" y="250" fill="#ffd700" font-family="monospace" font-size="11">σ(0) = ln 2</text>
+    
+    <!-- Regime annotations -->
+    <!-- Exponential regime -->
+    <rect x="20" y="270" width="140" height="25" rx="5" fill="#ff6b35" fill-opacity="0.15" stroke="#ff6b35" stroke-width="1"/>
+    <text x="90" y="287" text-anchor="middle" fill="#ff6b35" font-family="monospace" font-size="11">
+      σ(x) ≈ eˣ
+    </text>
+    
+    <!-- Linear regime -->
+    <rect x="430" y="30" width="140" height="25" rx="5" fill="#00ff88" fill-opacity="0.15" stroke="#00ff88" stroke-width="1"/>
+    <text x="500" y="47" text-anchor="middle" fill="#00ff88" font-family="monospace" font-size="11">
+      σ(x) ≈ x
+    </text>
+  </g>
+</svg>
