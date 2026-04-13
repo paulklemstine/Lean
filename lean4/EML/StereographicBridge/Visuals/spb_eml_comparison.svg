@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 550" font-family="Georgia, serif">
+  <defs>
+    <marker id="ar" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2c3e50"/>
+    </marker>
+  </defs>
+  
+  <rect width="800" height="550" fill="#fafafa" rx="10"/>
+  
+  <text x="400" y="35" text-anchor="middle" font-size="24" font-weight="bold" fill="#2c3e50">
+    EML vs SPB: Two Pillars of the Universal Bridge
+  </text>
+  
+  <!-- EML Column -->
+  <rect x="30" y="60" width="350" height="460" fill="#eaf2f8" rx="15" stroke="#2980b9" stroke-width="2"/>
+  <text x="205" y="90" text-anchor="middle" font-size="20" font-weight="bold" fill="#2980b9">EML</text>
+  <text x="205" y="115" text-anchor="middle" font-size="15" fill="#2c3e50">exp(x) − ln(y)</text>
+  <text x="205" y="135" text-anchor="middle" font-size="12" fill="#7f8c8d" font-style="italic">The Continuous Sheffer Stroke</text>
+  
+  <line x1="60" y1="150" x2="350" y2="150" stroke="#bdc3c7"/>
+  
+  <text x="70" y="175" font-size="13" fill="#2c3e50" font-weight="bold">Bridges:</text>
+  <text x="90" y="195" font-size="12" fill="#2c3e50">Addition ↔ Multiplication</text>
+  <text x="90" y="215" font-size="12" fill="#2c3e50">(ℝ, +) ↔ (ℝ₊, ×)</text>
+  
+  <text x="70" y="245" font-size="13" fill="#2c3e50" font-weight="bold">Key Identity:</text>
+  <text x="90" y="265" font-size="12" fill="#2c3e50">e = eml(1, 1)</text>
+  
+  <text x="70" y="295" font-size="13" fill="#2c3e50" font-weight="bold">Structure:</text>
+  <text x="90" y="315" font-size="12" fill="#2c3e50">Non-commutative</text>
+  <text x="90" y="335" font-size="12" fill="#2c3e50">Non-associative</text>
+  <text x="90" y="355" font-size="12" fill="#2c3e50">Generates ALL elementary functions</text>
+  
+  <text x="70" y="385" font-size="13" fill="#2c3e50" font-weight="bold">Applications:</text>
+  <text x="90" y="405" font-size="12" fill="#2c3e50">• Symbolic regression</text>
+  <text x="90" y="425" font-size="12" fill="#2c3e50">• Neural network design</text>
+  <text x="90" y="445" font-size="12" fill="#2c3e50">• Compiler optimization</text>
+  <text x="90" y="465" font-size="12" fill="#2c3e50">• Information theory</text>
+  
+  <text x="70" y="495" font-size="13" fill="#2c3e50" font-weight="bold">Discrete Analogue:</text>
+  <text x="90" y="510" font-size="12" fill="#2c3e50">NAND gate</text>
+  
+  <!-- SPB Column -->
+  <rect x="420" y="60" width="350" height="460" fill="#fef9e7" rx="15" stroke="#d35400" stroke-width="2"/>
+  <text x="595" y="90" text-anchor="middle" font-size="20" font-weight="bold" fill="#d35400">SPB</text>
+  <text x="595" y="115" text-anchor="middle" font-size="15" fill="#2c3e50">(x + y) / (1 − xy)</text>
+  <text x="595" y="135" text-anchor="middle" font-size="12" fill="#7f8c8d" font-style="italic">The Continuous Group Gate</text>
+  
+  <line x1="450" y1="150" x2="740" y2="150" stroke="#bdc3c7"/>
+  
+  <text x="460" y="175" font-size="13" fill="#2c3e50" font-weight="bold">Bridges:</text>
+  <text x="480" y="195" font-size="12" fill="#2c3e50">Euclidean ↔ Spherical/Hyperbolic</text>
+  <text x="480" y="215" font-size="12" fill="#2c3e50">(ℝ, spb) ↔ (S¹, ×)</text>
+  
+  <text x="460" y="245" font-size="13" fill="#2c3e50" font-weight="bold">Key Identity:</text>
+  <text x="480" y="265" font-size="12" fill="#2c3e50">tan(α+β) = spb(tan α, tan β)</text>
+  
+  <text x="460" y="295" font-size="13" fill="#2c3e50" font-weight="bold">Structure:</text>
+  <text x="480" y="315" font-size="12" fill="#2c3e50">Commutative ✓</text>
+  <text x="480" y="335" font-size="12" fill="#2c3e50">Associative ✓ (it's a group!)</text>
+  <text x="480" y="355" font-size="12" fill="#2c3e50">Generates circle group S¹</text>
+  
+  <text x="460" y="385" font-size="13" fill="#2c3e50" font-weight="bold">Applications:</text>
+  <text x="480" y="405" font-size="12" fill="#2c3e50">• Special relativity</text>
+  <text x="480" y="425" font-size="12" fill="#2c3e50">• Quantum mechanics (Bloch sphere)</text>
+  <text x="480" y="445" font-size="12" fill="#2c3e50">• Signal processing (phase)</text>
+  <text x="480" y="465" font-size="12" fill="#2c3e50">• Hyperbolic geometry</text>
+  
+  <text x="460" y="495" font-size="13" fill="#2c3e50" font-weight="bold">Discrete Analogue:</text>
+  <text x="480" y="510" font-size="12" fill="#2c3e50">XOR gate (mod-2 addition on ℤ₂)</text>
+</svg>

@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" font-family="Georgia, serif">
+  <rect width="900" height="600" fill="#fafafa" rx="10"/>
+  
+  <text x="450" y="35" text-anchor="middle" font-size="22" font-weight="bold" fill="#2c3e50">
+    SPB Applications Map
+  </text>
+  
+  <!-- Central node -->
+  <circle cx="450" cy="280" r="55" fill="#8e44ad" opacity="0.9"/>
+  <text x="450" y="275" text-anchor="middle" font-size="15" font-weight="bold" fill="white">SPB</text>
+  <text x="450" y="295" text-anchor="middle" font-size="11" fill="white">(x+y)/(1−xy)</text>
+  
+  <!-- Physics -->
+  <rect x="30" y="60" width="180" height="120" fill="#e74c3c" opacity="0.85" rx="10"/>
+  <text x="120" y="85" text-anchor="middle" font-size="14" font-weight="bold" fill="white">PHYSICS</text>
+  <text x="120" y="105" text-anchor="middle" font-size="11" fill="white">• Relativistic velocity</text>
+  <text x="120" y="120" text-anchor="middle" font-size="11" fill="white">• Lorentz boosts</text>
+  <text x="120" y="135" text-anchor="middle" font-size="11" fill="white">• Bloch sphere</text>
+  <text x="120" y="150" text-anchor="middle" font-size="11" fill="white">• Rapidity addition</text>
+  <line x1="210" y1="150" x2="400" y2="260" stroke="#e74c3c" stroke-width="2"/>
+  
+  <!-- Geometry -->
+  <rect x="690" y="60" width="180" height="120" fill="#3498db" opacity="0.85" rx="10"/>
+  <text x="780" y="85" text-anchor="middle" font-size="14" font-weight="bold" fill="white">GEOMETRY</text>
+  <text x="780" y="105" text-anchor="middle" font-size="11" fill="white">• Möbius transforms</text>
+  <text x="780" y="120" text-anchor="middle" font-size="11" fill="white">• Projective geometry</text>
+  <text x="780" y="135" text-anchor="middle" font-size="11" fill="white">• Poincaré disk model</text>
+  <text x="780" y="150" text-anchor="middle" font-size="11" fill="white">• Cross-ratio</text>
+  <line x1="690" y1="150" x2="500" y2="260" stroke="#3498db" stroke-width="2"/>
+  
+  <!-- Signal Processing -->
+  <rect x="30" y="350" width="180" height="120" fill="#27ae60" opacity="0.85" rx="10"/>
+  <text x="120" y="370" text-anchor="middle" font-size="13" font-weight="bold" fill="white">SIGNAL PROCESSING</text>
+  <text x="120" y="390" text-anchor="middle" font-size="11" fill="white">• Phase composition</text>
+  <text x="120" y="405" text-anchor="middle" font-size="11" fill="white">• All-pass filters</text>
+  <text x="120" y="420" text-anchor="middle" font-size="11" fill="white">• Schur parameters</text>
+  <text x="120" y="435" text-anchor="middle" font-size="11" fill="white">• Rational approx</text>
+  <line x1="210" y1="390" x2="400" y2="300" stroke="#27ae60" stroke-width="2"/>
+  
+  <!-- Number Theory -->
+  <rect x="690" y="350" width="180" height="120" fill="#f39c12" opacity="0.85" rx="10"/>
+  <text x="780" y="370" text-anchor="middle" font-size="13" font-weight="bold" fill="white">NUMBER THEORY</text>
+  <text x="780" y="390" text-anchor="middle" font-size="11" fill="white">• Continued fractions</text>
+  <text x="780" y="405" text-anchor="middle" font-size="11" fill="white">• Modular group</text>
+  <text x="780" y="420" text-anchor="middle" font-size="11" fill="white">• Farey sequences</text>
+  <text x="780" y="435" text-anchor="middle" font-size="11" fill="white">• Pythagorean triples</text>
+  <line x1="690" y1="390" x2="500" y2="300" stroke="#f39c12" stroke-width="2"/>
+  
+  <!-- Analysis -->
+  <rect x="270" y="480" width="160" height="100" fill="#9b59b6" opacity="0.85" rx="10"/>
+  <text x="350" y="505" text-anchor="middle" font-size="14" font-weight="bold" fill="white">ANALYSIS</text>
+  <text x="350" y="525" text-anchor="middle" font-size="11" fill="white">• Chebyshev polynomials</text>
+  <text x="350" y="540" text-anchor="middle" font-size="11" fill="white">• Fourier series</text>
+  <text x="350" y="555" text-anchor="middle" font-size="11" fill="white">• Harmonic analysis</text>
+  <line x1="350" y1="480" x2="430" y2="330" stroke="#9b59b6" stroke-width="2"/>
+  
+  <!-- Quantum Computing -->
+  <rect x="480" y="480" width="160" height="100" fill="#1abc9c" opacity="0.85" rx="10"/>
+  <text x="560" y="500" text-anchor="middle" font-size="13" font-weight="bold" fill="white">QUANTUM</text>
+  <text x="560" y="520" text-anchor="middle" font-size="11" fill="white">• Gate composition</text>
+  <text x="560" y="535" text-anchor="middle" font-size="11" fill="white">• Bloch sphere ops</text>
+  <text x="560" y="550" text-anchor="middle" font-size="11" fill="white">• SU(2) ↔ SO(3)</text>
+  <line x1="530" y1="480" x2="470" y2="330" stroke="#1abc9c" stroke-width="2"/>
+  
+  <!-- Operator Theory -->
+  <rect x="360" y="60" width="180" height="100" fill="#34495e" opacity="0.85" rx="10"/>
+  <text x="450" y="85" text-anchor="middle" font-size="13" font-weight="bold" fill="white">OPERATOR THEORY</text>
+  <text x="450" y="105" text-anchor="middle" font-size="11" fill="white">• Cayley transform</text>
+  <text x="450" y="120" text-anchor="middle" font-size="11" fill="white">• Self-adjoint ↔ Unitary</text>
+  <text x="450" y="135" text-anchor="middle" font-size="11" fill="white">• Spectral theory</text>
+  <line x1="450" y1="160" x2="450" y2="225" stroke="#34495e" stroke-width="2"/>
+</svg>
