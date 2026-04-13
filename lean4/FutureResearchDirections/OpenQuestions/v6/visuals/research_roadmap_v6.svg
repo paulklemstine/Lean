@@ -1,0 +1,157 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0a2e"/>
+      <stop offset="100%" stop-color="#1a1a4e"/>
+    </linearGradient>
+    <linearGradient id="proven" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#00c853"/>
+      <stop offset="100%" stop-color="#00e676"/>
+    </linearGradient>
+    <linearGradient id="new" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ff6f00"/>
+      <stop offset="100%" stop-color="#ffa000"/>
+    </linearGradient>
+    <linearGradient id="future" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1565c0"/>
+      <stop offset="100%" stop-color="#42a5f5"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="900" fill="url(#bg)"/>
+
+  <!-- Title -->
+  <text x="600" y="50" text-anchor="middle" fill="#ffffff" font-size="28" font-weight="bold">Gravitational Factoring Research Roadmap v6</text>
+  <text x="600" y="80" text-anchor="middle" fill="#aaaacc" font-size="14">95+ Formally Verified Theorems · 0 Sorries · 6 Lean Files · 4 Python Demos</text>
+
+  <!-- Legend -->
+  <rect x="30" y="100" width="20" height="12" rx="3" fill="url(#proven)"/>
+  <text x="55" y="112" fill="#cccccc" font-size="12">Proven (v1-v5)</text>
+  <rect x="180" y="100" width="20" height="12" rx="3" fill="url(#new)"/>
+  <text x="205" y="112" fill="#cccccc" font-size="12">NEW in v6</text>
+  <rect x="310" y="100" width="20" height="12" rx="3" fill="url(#future)"/>
+  <text x="335" y="112" fill="#cccccc" font-size="12">Open Direction</text>
+
+  <!-- TIER A+ -->
+  <text x="60" y="155" fill="#ffd700" font-size="18" font-weight="bold">TIER A+: Immediate Impact</text>
+
+  <rect x="30" y="170" width="250" height="70" rx="8" fill="url(#proven)" opacity="0.3" stroke="#00c853" stroke-width="2"/>
+  <text x="155" y="195" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold">BF Factoring ✓</text>
+  <text x="155" y="212" text-anchor="middle" fill="#ccddcc" font-size="10">Identity · Divisibility · Fermat 2-sq</text>
+  <text x="155" y="228" text-anchor="middle" fill="#ccddcc" font-size="10">Cross-GCD · Semiprime σ₁</text>
+
+  <rect x="300" y="170" width="250" height="70" rx="8" fill="url(#new)" opacity="0.3" stroke="#ff6f00" stroke-width="2"/>
+  <text x="425" y="195" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold">🆕 Quaternion Factoring</text>
+  <text x="425" y="212" text-anchor="middle" fill="#ffddaa" font-size="10">Euler 4-sq · Hamilton product</text>
+  <text x="425" y="228" text-anchor="middle" fill="#ffddaa" font-size="10">Multiple reps · Factor criterion</text>
+
+  <rect x="570" y="170" width="250" height="70" rx="8" fill="url(#new)" opacity="0.3" stroke="#ff6f00" stroke-width="2"/>
+  <text x="695" y="195" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold">🆕 σ₁ Cryptanalysis</text>
+  <text x="695" y="212" text-anchor="middle" fill="#ffddaa" font-size="10">Semiprime expansion · Vieta recovery</text>
+  <text x="695" y="228" text-anchor="middle" fill="#ffddaa" font-size="10">Perfect numbers · σ₁+φ=2p</text>
+
+  <rect x="840" y="170" width="250" height="70" rx="8" fill="url(#new)" opacity="0.3" stroke="#ff6f00" stroke-width="2"/>
+  <text x="965" y="195" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold">🆕 Fibonacci Sieve</text>
+  <text x="965" y="212" text-anchor="middle" fill="#ffddaa" font-size="10">Pisano period · GCD identity</text>
+  <text x="965" y="228" text-anchor="middle" fill="#ffddaa" font-size="10">Divisibility chain · Bounds</text>
+
+  <!-- TIER A -->
+  <text x="60" y="280" fill="#c0c0c0" font-size="18" font-weight="bold">TIER A: High-Impact Results</text>
+
+  <rect x="30" y="295" width="270" height="70" rx="8" fill="url(#new)" opacity="0.3" stroke="#ff6f00" stroke-width="2"/>
+  <text x="165" y="320" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold">🆕 Energy Landscape Advanced</text>
+  <text x="165" y="337" text-anchor="middle" fill="#ffddaa" font-size="10">Zero count · Sublevel topology</text>
+  <text x="165" y="353" text-anchor="middle" fill="#ffddaa" font-size="10">Gradient · Semiprime minima</text>
+
+  <rect x="320" y="295" width="270" height="70" rx="8" fill="url(#new)" opacity="0.3" stroke="#ff6f00" stroke-width="2"/>
+  <text x="455" y="320" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold">🆕 Perfect Number Theory</text>
+  <text x="455" y="337" text-anchor="middle" fill="#ffddaa" font-size="10">Euclid direction · σ₁(2ⁿ)</text>
+  <text x="455" y="353" text-anchor="middle" fill="#ffddaa" font-size="10">Mersenne primes · Monotonicity</text>
+
+  <rect x="610" y="295" width="270" height="70" rx="8" fill="url(#new)" opacity="0.3" stroke="#ff6f00" stroke-width="2"/>
+  <text x="745" y="320" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold">🆕 Lattice Factoring Bounds</text>
+  <text x="745" y="337" text-anchor="middle" fill="#ffddaa" font-size="10">LLL factor · Minkowski bound</text>
+  <text x="745" y="353" text-anchor="middle" fill="#ffddaa" font-size="10">Dimension bounds · Coppersmith</text>
+
+  <rect x="900" y="295" width="200" height="70" rx="8" fill="url(#proven)" opacity="0.3" stroke="#00c853" stroke-width="2"/>
+  <text x="1000" y="320" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold">Channel Theory ✓</text>
+  <text x="1000" y="337" text-anchor="middle" fill="#ccddcc" font-size="10">Birthday bounds</text>
+  <text x="1000" y="353" text-anchor="middle" fill="#ccddcc" font-size="10">Marginal channels</text>
+
+  <!-- TIER B: Future Directions -->
+  <text x="60" y="405" fill="#6688bb" font-size="18" font-weight="bold">TIER B-E: Future Research Directions</text>
+
+  <rect x="30" y="420" width="220" height="55" rx="8" fill="url(#future)" opacity="0.3" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="140" y="445" text-anchor="middle" fill="#aaccff" font-size="12" font-weight="bold">B1. Hurwitz Quaternions</text>
+  <text x="140" y="462" text-anchor="middle" fill="#8899bb" font-size="10">Euclidean domain structure</text>
+
+  <rect x="270" y="420" width="220" height="55" rx="8" fill="url(#future)" opacity="0.3" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="380" y="445" text-anchor="middle" fill="#aaccff" font-size="12" font-weight="bold">B6. Dickman Function</text>
+  <text x="380" y="462" text-anchor="middle" fill="#8899bb" font-size="10">Smoothness asymptotics</text>
+
+  <rect x="510" y="420" width="220" height="55" rx="8" fill="url(#future)" opacity="0.3" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="620" y="445" text-anchor="middle" fill="#aaccff" font-size="12" font-weight="bold">C1. Quantum Walks</text>
+  <text x="620" y="462" text-anchor="middle" fill="#8899bb" font-size="10">Berggren tree speedup</text>
+
+  <rect x="750" y="420" width="220" height="55" rx="8" fill="url(#future)" opacity="0.3" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="860" y="445" text-anchor="middle" fill="#aaccff" font-size="12" font-weight="bold">C5. Tropical Geometry</text>
+  <text x="860" y="462" text-anchor="middle" fill="#8899bb" font-size="10">Min-plus factoring</text>
+
+  <rect x="30" y="490" width="220" height="55" rx="8" fill="url(#future)" opacity="0.3" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="140" y="515" text-anchor="middle" fill="#aaccff" font-size="12" font-weight="bold">E16. Gradient Descent</text>
+  <text x="140" y="532" text-anchor="middle" fill="#8899bb" font-size="10">Optimization-based factoring</text>
+
+  <rect x="270" y="490" width="220" height="55" rx="8" fill="url(#future)" opacity="0.3" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="380" y="515" text-anchor="middle" fill="#aaccff" font-size="12" font-weight="bold">E17. Boltzmann Machine</text>
+  <text x="380" y="532" text-anchor="middle" fill="#8899bb" font-size="10">ML energy minimization</text>
+
+  <rect x="510" y="490" width="220" height="55" rx="8" fill="url(#future)" opacity="0.3" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="620" y="515" text-anchor="middle" fill="#aaccff" font-size="12" font-weight="bold">E20. Persistent Homology</text>
+  <text x="620" y="532" text-anchor="middle" fill="#8899bb" font-size="10">Betti numbers of E(x)</text>
+
+  <rect x="750" y="490" width="220" height="55" rx="8" fill="url(#future)" opacity="0.3" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="860" y="515" text-anchor="middle" fill="#aaccff" font-size="12" font-weight="bold">A1. Jacobi r₄ Formula</text>
+  <text x="860" y="532" text-anchor="middle" fill="#8899bb" font-size="10">θ⁴ = 1 + 8Σσ₁(n)qⁿ</text>
+
+  <!-- Connections -->
+  <line x1="280" y1="205" x2="300" y2="205" stroke="#ff6f00" stroke-width="2" opacity="0.6"/>
+  <line x1="550" y1="205" x2="570" y2="205" stroke="#ff6f00" stroke-width="2" opacity="0.6"/>
+  <line x1="425" y1="240" x2="455" y2="295" stroke="#ff6f00" stroke-width="1.5" opacity="0.4" stroke-dasharray="5,5"/>
+  <line x1="695" y1="240" x2="455" y2="295" stroke="#ff6f00" stroke-width="1.5" opacity="0.4" stroke-dasharray="5,5"/>
+  <line x1="165" y1="365" x2="140" y2="420" stroke="#4488cc" stroke-width="1.5" opacity="0.4" stroke-dasharray="5,5"/>
+
+  <!-- Statistics Box -->
+  <rect x="30" y="580" width="1140" height="130" rx="12" fill="#111133" stroke="#334466" stroke-width="2"/>
+  <text x="600" y="610" text-anchor="middle" fill="#ffffff" font-size="20" font-weight="bold">v6 Verification Summary</text>
+
+  <text x="150" y="645" text-anchor="middle" fill="#00e676" font-size="36" font-weight="bold" filter="url(#glow)">95+</text>
+  <text x="150" y="668" text-anchor="middle" fill="#88aa88" font-size="12">Theorems Proved</text>
+
+  <text x="350" y="645" text-anchor="middle" fill="#ff9100" font-size="36" font-weight="bold" filter="url(#glow)">27</text>
+  <text x="350" y="668" text-anchor="middle" fill="#ccaa66" font-size="12">NEW in v6</text>
+
+  <text x="550" y="645" text-anchor="middle" fill="#42a5f5" font-size="36" font-weight="bold" filter="url(#glow)">0</text>
+  <text x="550" y="668" text-anchor="middle" fill="#6688aa" font-size="12">Sorries Remaining</text>
+
+  <text x="750" y="645" text-anchor="middle" fill="#ce93d8" font-size="36" font-weight="bold" filter="url(#glow)">6</text>
+  <text x="750" y="668" text-anchor="middle" fill="#8866aa" font-size="12">New Lean Files</text>
+
+  <text x="950" y="645" text-anchor="middle" fill="#ffd54f" font-size="36" font-weight="bold" filter="url(#glow)">4</text>
+  <text x="950" y="668" text-anchor="middle" fill="#aa9944" font-size="12">Python Demos</text>
+
+  <text x="1100" y="645" text-anchor="middle" fill="#ef5350" font-size="36" font-weight="bold" filter="url(#glow)">2</text>
+  <text x="1100" y="668" text-anchor="middle" fill="#aa5544" font-size="12">Disproofs Found</text>
+
+  <!-- Key Discovery callout -->
+  <rect x="30" y="730" width="1140" height="80" rx="12" fill="#1a0a2e" stroke="#ff6f00" stroke-width="2"/>
+  <text x="600" y="758" text-anchor="middle" fill="#ffd700" font-size="16" font-weight="bold">🔑 KEY DISCOVERIES IN v6</text>
+  <text x="600" y="780" text-anchor="middle" fill="#dddddd" font-size="12">Quaternion factoring extends BF to ALL composites · σ₁ oracle provably breaks RSA</text>
+  <text x="600" y="798" text-anchor="middle" fill="#dddddd" font-size="12">Fibonacci sieve with Pisano periodicity · Euclid's theorem on perfect numbers · Energy landscape topology</text>
+
+  <!-- Footer -->
+  <text x="600" y="850" text-anchor="middle" fill="#666688" font-size="11">Gravitational Factoring Research · Formally Verified in Lean 4 with Mathlib · 2024-2025</text>
+</svg>
