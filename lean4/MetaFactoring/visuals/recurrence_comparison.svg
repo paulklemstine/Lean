@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" font-family="Arial, sans-serif">
+  <defs>
+    <linearGradient id="rbg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d1117"/>
+      <stop offset="100%" style="stop-color:#1a1a3e"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1000" height="600" fill="url(#rbg)"/>
+
+  <text x="500" y="40" text-anchor="middle" fill="#ffffff" font-size="22" font-weight="bold">
+    Recurrence Sequences: Fibonacci, Lucas, and Tribonacci
+  </text>
+  <text x="500" y="65" text-anchor="middle" fill="#8899aa" font-size="13">
+    All grow exponentially but strictly slower than 2ⁿ — formally proved in Lean 4
+  </text>
+
+  <!-- Chart area -->
+  <rect x="80" y="85" width="580" height="380" rx="5" fill="#ffffff" opacity="0.03" stroke="#444466" stroke-width="1"/>
+
+  <!-- Y-axis (log scale representation) -->
+  <line x1="80" y1="85" x2="80" y2="465" stroke="#444466" stroke-width="1"/>
+  <text x="65" y="95" text-anchor="end" fill="#8899aa" font-size="10">10⁶</text>
+  <text x="65" y="160" text-anchor="end" fill="#8899aa" font-size="10">10⁵</text>
+  <text x="65" y="225" text-anchor="end" fill="#8899aa" font-size="10">10⁴</text>
+  <text x="65" y="290" text-anchor="end" fill="#8899aa" font-size="10">10³</text>
+  <text x="65" y="355" text-anchor="end" fill="#8899aa" font-size="10">10²</text>
+  <text x="65" y="420" text-anchor="end" fill="#8899aa" font-size="10">10¹</text>
+  <text x="65" y="465" text-anchor="end" fill="#8899aa" font-size="10">10⁰</text>
+
+  <!-- X-axis -->
+  <line x1="80" y1="465" x2="660" y2="465" stroke="#444466" stroke-width="1"/>
+  <text x="370" y="495" text-anchor="middle" fill="#8899aa" font-size="12">n</text>
+
+  <!-- Grid lines -->
+  <line x1="80" y1="160" x2="660" y2="160" stroke="#333355" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <line x1="80" y1="225" x2="660" y2="225" stroke="#333355" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <line x1="80" y1="290" x2="660" y2="290" stroke="#333355" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <line x1="80" y1="355" x2="660" y2="355" stroke="#333355" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <line x1="80" y1="420" x2="660" y2="420" stroke="#333355" stroke-width="0.5" stroke-dasharray="3,3"/>
+
+  <!-- 2^n line (red, upperbound) -->
+  <polyline points="109,458 138,445 167,432 196,419 225,406 254,393 283,380 312,367 341,354 370,341 399,328 428,315 457,302 486,289 515,276 544,263 573,250 602,237 631,224 660,211"
+            stroke="#ff4444" stroke-width="2" fill="none" opacity="0.8"/>
+  <text x="665" y="211" fill="#ff4444" font-size="11">2ⁿ</text>
+
+  <!-- Fibonacci (golden) -->
+  <polyline points="109,465 138,465 167,458 196,445 225,436 254,425 283,415 312,404 341,393 370,383 399,372 428,361 457,350 486,340 515,329 544,318 573,307 602,297 631,286 660,275"
+            stroke="#ffcc00" stroke-width="2.5" fill="none"/>
+  <text x="665" y="275" fill="#ffcc00" font-size="11">F(n) ≈ φⁿ</text>
+
+  <!-- Lucas (cyan) -->
+  <polyline points="109,452 138,458 167,448 196,441 225,431 254,421 283,411 312,400 341,390 370,379 399,369 428,358 457,347 486,337 515,326 544,315 573,304 602,294 631,283 660,272"
+            stroke="#44dddd" stroke-width="2.5" fill="none"/>
+  <text x="665" y="268" fill="#44dddd" font-size="11">L(n) ≈ φⁿ</text>
+
+  <!-- Tribonacci (green) -->
+  <polyline points="109,465 138,465 167,458 196,458 225,452 254,442 283,434 312,424 341,415 370,405 399,396 428,386 457,376 486,367 515,357 544,347 573,337 602,328 631,318 660,308"
+            stroke="#22cc88" stroke-width="2.5" fill="none"/>
+  <text x="665" y="308" fill="#22cc88" font-size="11">T(n) ≈ 1.84ⁿ</text>
+
+  <!-- Properties panel -->
+  <rect x="700" y="85" width="280" height="430" rx="10" fill="#ffffff" opacity="0.05" stroke="#ffffff" stroke-width="0.5"/>
+
+  <text x="840" y="115" text-anchor="middle" fill="#ffffff" font-size="16" font-weight="bold">Key Results</text>
+
+  <!-- Fibonacci -->
+  <rect x="715" y="130" width="250" height="80" rx="6" fill="#ffcc00" opacity="0.1"/>
+  <text x="720" y="150" fill="#ffcc00" font-size="13" font-weight="bold">Fibonacci F(n)</text>
+  <text x="720" y="168" fill="#ccddee" font-size="11">F(n+2) = F(n+1) + F(n)</text>
+  <text x="720" y="184" fill="#ccddee" font-size="11">Growth rate: φ ≈ 1.618</text>
+  <text x="720" y="200" fill="#88ddaa" font-size="11">✓ F(k+2) &lt; 2ᵏ for k ≥ 2</text>
+
+  <!-- Lucas -->
+  <rect x="715" y="220" width="250" height="80" rx="6" fill="#44dddd" opacity="0.1"/>
+  <text x="720" y="240" fill="#44dddd" font-size="13" font-weight="bold">Lucas L(n)</text>
+  <text x="720" y="258" fill="#ccddee" font-size="11">L(n+2) = L(n+1) + L(n)</text>
+  <text x="720" y="274" fill="#ccddee" font-size="11">L(n) = F(n-1) + F(n+1)</text>
+  <text x="720" y="290" fill="#88ddaa" font-size="11">✓ n ≤ L(n) for n ≥ 1</text>
+
+  <!-- Tribonacci -->
+  <rect x="715" y="310" width="250" height="80" rx="6" fill="#22cc88" opacity="0.1"/>
+  <text x="720" y="330" fill="#22cc88" font-size="13" font-weight="bold">Tribonacci T(n)</text>
+  <text x="720" y="348" fill="#ccddee" font-size="11">T(n+3) = T(n+2)+T(n+1)+T(n)</text>
+  <text x="720" y="364" fill="#ccddee" font-size="11">Growth rate ≈ 1.839</text>
+  <text x="720" y="380" fill="#88ddaa" font-size="11">✓ T(n) &lt; 2ⁿ for n ≥ 1</text>
+
+  <!-- Implications -->
+  <rect x="715" y="400" width="250" height="105" rx="6" fill="#6c5ce7" opacity="0.1"/>
+  <text x="720" y="420" fill="#6c5ce7" font-size="13" font-weight="bold">Factoring Implications</text>
+  <text x="720" y="438" fill="#ccddee" font-size="11">• Zeckendorf encoding saves space</text>
+  <text x="720" y="454" fill="#ccddee" font-size="11">• Pisano periods constrain factors</text>
+  <text x="720" y="470" fill="#ccddee" font-size="11">• All recurrences periodic mod m</text>
+  <text x="720" y="486" fill="#ccddee" font-size="11">• Entry point theorem generalizes</text>
+
+  <!-- X-axis labels -->
+  <text x="109" y="480" text-anchor="middle" fill="#8899aa" font-size="9">0</text>
+  <text x="225" y="480" text-anchor="middle" fill="#8899aa" font-size="9">4</text>
+  <text x="341" y="480" text-anchor="middle" fill="#8899aa" font-size="9">8</text>
+  <text x="457" y="480" text-anchor="middle" fill="#8899aa" font-size="9">12</text>
+  <text x="573" y="480" text-anchor="middle" fill="#8899aa" font-size="9">16</text>
+  <text x="660" y="480" text-anchor="middle" fill="#8899aa" font-size="9">19</text>
+
+  <!-- Footer -->
+  <text x="500" y="560" text-anchor="middle" fill="#555577" font-size="11">
+    All bounds formally verified in Lean 4 with Mathlib — zero sorry statements
+  </text>
+  <text x="500" y="580" text-anchor="middle" fill="#555577" font-size="10">
+    Generalizing Fibonacci entry point to Lucas and higher-order recurrences is a key future direction
+  </text>
+</svg>

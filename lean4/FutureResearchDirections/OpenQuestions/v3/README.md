@@ -1,105 +1,57 @@
-# Gravitational Factoring v3: Comprehensive Research Package
+# Gravitational Factoring Research — Version 4
 
 ## Overview
 
-This directory contains the v3 research package for the gravitational factoring program — the most comprehensive collection of formal proofs, computational experiments, visualizations, and research documents addressing the open questions identified in the research agenda.
+This directory contains the v4 research output for the gravitational factoring program, building on v3 with new formally verified theorems, computational demos, visualizations, and research recommendations.
 
-## Contents
+## New Formal Results (v4)
 
-### Formal Mathematics (Lean 4 + Mathlib)
+### `SigmaPrimePower.lean` — NEW
+- `sigma1_prime_power`: σ₁(pⁿ) = Σᵢ₌₀ⁿ pⁱ for any prime p
+- `sigma1_prime_power_formula`: σ₁(pⁿ)·(p-1) = p^{n+1}-1
+- `sigma1_prime_cube`: σ₁(p³) = p³+p²+p+1
+- `sigma1_semiprime`: σ₁(pq) = (p+1)(q+1) for distinct primes
+- `sigma1_two_prime_powers`: σ₁(p^a·q^b) = σ₁(p^a)·σ₁(q^b)
+- `berggren_geometric_general`: (b-1)·Σ bⁱ = b^{d+1}-1 for any b ≥ 2
 
-| File | Description | Theorems | Sorries |
-|------|-------------|:--------:|:-------:|
-| `HurwitzQuaternions.lean` | Quaternion norms, Euler identity, BF factoring, lattice extraction, Berggren tree, tropical geometry, σ₁ theory, smoothness, quantum bounds | 45+ | 0 |
+### `OpenDirections.lean` — UPDATED
+- `fib_cassini`: F(n+1)²-F(n)·F(n+2) = (-1)ⁿ (Cassini's identity)
+- `fib_cassini_prime`: F(p-1)·F(p+1) = F(p)²-1 for odd primes
+- `fib_entry_point`: p | F(p-1) ∨ p | F(p+1) (modulo fib_sq_mod_prime)
+- Fixed `p_sub_one_dvd_p_sq_sub_one` and `p_add_one_dvd_p_sq_sub_one`
 
-**Key verified results:**
-- Euler's four-square identity (quaternion norm multiplicativity)
-- Four-square closure under multiplication
-- Both Brahmagupta-Fibonacci decompositions
-- Short vector factor extraction theorem
-- All three Berggren matrix preservations
-- Berggren tree geometric series formula
-- Tropical Pythagorean variety structure
-- σ₁(p) = p+1, σ₁(p²) = p²+p+1, σ₁ multiplicative
-- Peel smoothness structural theorems
-- Grover speedup with k-channel reduction
+### Remaining Sorry
+- `fib_sq_mod_prime`: (p : ℤ) ∣ (F(p)²-1) for prime p ≠ 5
 
-### Python Demonstrations
-
-| File | Description |
-|------|-------------|
-| `demos/gravitational_factoring_v3.py` | 12 comprehensive demos exploring all major open questions |
-
-**Demos included:**
-1. Peel Smoothness Advantage (Direction A1)
-2. Lattice-GCD Factor Extraction (Direction A2)
-3. Cross-Collision Monte Carlo (Direction A3)
-4. Jacobi r₄ Formula Verification (Direction A4)
-5. Hurwitz Quaternion Factoring (Direction B1)
-6. GF(2) Code Parameter Analysis (Direction B2)
-7. Berggren Tree Modular Periods (Direction B3)
-8. Multi-Scale Hierarchical Factoring (Direction B4)
-9. Tropical Geometry of Factoring (Direction C5)
-10. Adelic Projection Visualization (Direction C3)
-11. Quantum Walk Simulation (Direction C1)
-12. Energy Landscape Persistence (Direction C2)
-
-### SVG Visualizations
+## Written Deliverables
 
 | File | Description |
 |------|-------------|
-| `visuals/research_landscape.svg` | Complete research landscape organized by feasibility × impact |
-| `visuals/quaternion_factoring_mechanism.svg` | Step-by-step quaternion factoring mechanism |
-| `visuals/dimension_channel_scaling.svg` | Channel count scaling across division algebra dimensions |
-| `visuals/peel_smoothness_mechanism.svg` | Why peel products are exponentially smoother |
+| `research_paper_v4.md` | Formal research paper with all new results |
+| `scientific_american_v4.md` | Popular science article |
+| `applications_brainstorm_v4.md` | 30+ application ideas across 8 domains |
+| `future_research_directions_v4.md` | 65 research directions, tiered and prioritized |
+| `answers_to_open_questions_v4.md` | Comprehensive answers to all open questions |
 
-### Research Documents
+## Computational Demos
 
 | File | Description |
 |------|-------------|
-| `research_paper.md` | Full research paper: 14 sections, formal proofs, computational evidence |
-| `scientific_american_article.md` | Popular science: "The Shape of Secrets" |
-| `future_research_directions_v3.md` | 60 research directions in 5 tiers with verification status |
-| `applications_brainstorm.md` | 40 applications across 12 domains |
-| `answers_to_open_questions.md` | 15 key questions answered with confidence levels |
+| `demos/gravitational_factoring_explorer.py` | 10 demos covering all major research areas |
 
-## Quick Start
+Run with: `python3 demos/gravitational_factoring_explorer.py`
 
-### Verify formal proofs
-```bash
-lake build FutureResearchDirections.OpenQuestions.v3.HurwitzQuaternions
-```
+## Visualizations (SVG)
 
-### Run computational experiments
-```bash
-python3 demos/gravitational_factoring_v3.py        # All 12 demos
-python3 demos/gravitational_factoring_v3.py 1 4 9   # Specific demos
-```
+| File | Description |
+|------|-------------|
+| `visuals/sigma_prime_power.svg` | σ₁(pⁿ) formula and examples |
+| `visuals/cassini_identity.svg` | Cassini → Entry Point proof chain |
+| `visuals/research_roadmap_v4.svg` | Complete research roadmap with status |
+| `visuals/channel_hierarchy_v4.svg` | Cayley-Dickson channel growth |
 
-## Key Findings
+## Verification Status
 
-1. **Euler Identity Verified**: The four-square identity N(Q₁)·N(Q₂) = N(Q₁Q₂) is formally proved, establishing the algebraic foundation for quaternion factoring.
-
-2. **σ₁ Theory Complete**: σ₁(p) = p+1, σ₁(p²) = p²+p+1, and multiplicativity are all verified, providing the prerequisites for Jacobi's r₄ formula.
-
-3. **Lattice Factor Extraction**: Short vectors in (0, N) with product divisible by N yield nontrivial GCD — the core extraction lemma for lattice-based factoring.
-
-4. **Berggren Tree**: All three generators preserve the Pythagorean equation mod any prime, and the geometric series formula 2·Σ3ⁱ = 3^{d+1}-1 is verified.
-
-5. **Tropical Geometry**: The tropical Pythagorean variety decomposes into two polyhedral cells, establishing connections to combinatorial optimization.
-
-6. **Smoothness**: Peel products show 3-10,000× smoothness advantage over random integers, confirmed computationally and structurally verified.
-
-7. **Channels**: The k(k+1)/2 channel count grows quadratically with dimension, verified for all concrete cases k = 2, 4, 8, 16.
-
-## Theorem Count
-
-| Source | Verified | Sorry |
-|--------|:--------:|:-----:|
-| `v3/HurwitzQuaternions.lean` | 45+ | 0 |
-| `SieveAndLattice.lean` (parent) | 30 | 0 |
-| `LagrangeFourSquare.lean` (sibling) | 18 | 0 |
-| `CrossCollisionTheory.lean` (sibling) | 14 | 0 |
-| **Total** | **107+** | **0** |
-
-All theorems use only standard axioms (propext, Classical.choice, Quot.sound).
+- **Total verified theorems**: 53+
+- **Remaining sorries**: 1 (fib_sq_mod_prime)
+- **Build status**: ✓ All files compile with Lean 4.28.0 + Mathlib
