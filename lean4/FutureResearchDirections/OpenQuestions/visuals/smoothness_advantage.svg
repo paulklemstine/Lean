@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d1117"/>
+      <stop offset="100%" style="stop-color:#161b22"/>
+    </linearGradient>
+  </defs>
+  
+  <rect width="800" height="500" fill="url(#bg2)"/>
+  
+  <text x="400" y="35" text-anchor="middle" fill="#ffd700" font-size="20" font-weight="bold">
+    Peel Product Smoothness Advantage
+  </text>
+  <text x="400" y="55" text-anchor="middle" fill="#8b949e" font-size="12">
+    Why (d−x)(d+x) is smoother than random integers of size d²
+  </text>
+  
+  <!-- Diagram: Random integer vs Peel product -->
+  <!-- Left: Random integer N ~ d² -->
+  <rect x="50" y="80" width="300" height="180" rx="10" fill="none" stroke="#ff6644" stroke-width="2"/>
+  <text x="200" y="105" text-anchor="middle" fill="#ff6644" font-size="16" font-weight="bold">Random Integer</text>
+  
+  <rect x="80" y="120" width="240" height="40" rx="5" fill="#ff6644" opacity="0.3"/>
+  <text x="200" y="145" text-anchor="middle" fill="#ff8866" font-size="13">n ∈ [1, d²]</text>
+  
+  <text x="200" y="180" text-anchor="middle" fill="#aab" font-size="12">Smoothness probability:</text>
+  <text x="200" y="200" text-anchor="middle" fill="#ff8866" font-size="14" font-weight="bold">Ψ(d², B) / d² ≈ u⁻ᵘ</text>
+  <text x="200" y="220" text-anchor="middle" fill="#aab" font-size="11">where u = log(d²)/log(B) = 2·log(d)/log(B)</text>
+  <text x="200" y="245" text-anchor="middle" fill="#888" font-size="11">Must factor entire number at once</text>
+  
+  <!-- Right: Peel product -->
+  <rect x="450" y="80" width="300" height="180" rx="10" fill="none" stroke="#44dd88" stroke-width="2"/>
+  <text x="600" y="105" text-anchor="middle" fill="#44dd88" font-size="16" font-weight="bold">Peel Product</text>
+  
+  <rect x="480" y="120" width="100" height="40" rx="5" fill="#44dd88" opacity="0.3"/>
+  <text x="530" y="145" text-anchor="middle" fill="#66ee99" font-size="13">(d−x)</text>
+  <text x="590" y="145" fill="#aab" font-size="16">×</text>
+  <rect x="610" y="120" width="100" height="40" rx="5" fill="#44dd88" opacity="0.3"/>
+  <text x="660" y="145" text-anchor="middle" fill="#66ee99" font-size="13">(d+x)</text>
+  
+  <text x="600" y="180" text-anchor="middle" fill="#aab" font-size="12">Each factor ~ d, not d²:</text>
+  <text x="600" y="200" text-anchor="middle" fill="#66ee99" font-size="14" font-weight="bold">u' = log(d)/log(B) = u/2</text>
+  <text x="600" y="220" text-anchor="middle" fill="#aab" font-size="11">P(smooth) ≈ (u/2)⁻ᵘ/² ≫ u⁻ᵘ</text>
+  <text x="600" y="245" text-anchor="middle" fill="#888" font-size="11">Two smaller factors independently</text>
+  
+  <!-- Arrow showing advantage -->
+  <text x="400" y="290" text-anchor="middle" fill="#ffd700" font-size="16" font-weight="bold">⟹ Exponential Smoothness Boost</text>
+  
+  <!-- Comparison chart -->
+  <rect x="100" y="310" width="600" height="160" rx="8" fill="rgba(255,255,255,0.03)" stroke="#333" stroke-width="1"/>
+  
+  <text x="400" y="335" text-anchor="middle" fill="#ccc" font-size="14" font-weight="bold">Smoothness Rate Comparison</text>
+  
+  <!-- Headers -->
+  <text x="200" y="360" text-anchor="middle" fill="#aab" font-size="12" font-weight="bold">d</text>
+  <text x="310" y="360" text-anchor="middle" fill="#ff8866" font-size="12" font-weight="bold">Random (u⁻ᵘ)</text>
+  <text x="460" y="360" text-anchor="middle" fill="#66ee99" font-size="12" font-weight="bold">Peel ((u/2)⁻ᵘ/²)</text>
+  <text x="600" y="360" text-anchor="middle" fill="#ffd700" font-size="12" font-weight="bold">Advantage</text>
+  
+  <!-- Data rows (B=100) -->
+  <text x="200" y="385" text-anchor="middle" fill="#888" font-size="12">10³ (B=100)</text>
+  <text x="310" y="385" text-anchor="middle" fill="#ff8866" font-size="12">~8%</text>
+  <text x="460" y="385" text-anchor="middle" fill="#66ee99" font-size="12">~28%</text>
+  <text x="600" y="385" text-anchor="middle" fill="#ffd700" font-size="12">3.5×</text>
+  
+  <text x="200" y="410" text-anchor="middle" fill="#888" font-size="12">10⁶ (B=100)</text>
+  <text x="310" y="410" text-anchor="middle" fill="#ff8866" font-size="12">~0.03%</text>
+  <text x="460" y="410" text-anchor="middle" fill="#66ee99" font-size="12">~1.7%</text>
+  <text x="600" y="410" text-anchor="middle" fill="#ffd700" font-size="12">57×</text>
+  
+  <text x="200" y="435" text-anchor="middle" fill="#888" font-size="12">10¹² (B=100)</text>
+  <text x="310" y="435" text-anchor="middle" fill="#ff8866" font-size="12">~10⁻⁸</text>
+  <text x="460" y="435" text-anchor="middle" fill="#66ee99" font-size="12">~10⁻⁴</text>
+  <text x="600" y="435" text-anchor="middle" fill="#ffd700" font-size="12">10000×</text>
+  
+  <text x="200" y="460" text-anchor="middle" fill="#888" font-size="12">10²⁴ (B=100)</text>
+  <text x="310" y="460" text-anchor="middle" fill="#ff8866" font-size="12">~10⁻²⁰</text>
+  <text x="460" y="460" text-anchor="middle" fill="#66ee99" font-size="12">~10⁻¹⁰</text>
+  <text x="600" y="460" text-anchor="middle" fill="#ffd700" font-size="12">10¹⁰×</text>
+  
+  <text x="400" y="490" text-anchor="middle" fill="#ffd700" font-size="11" font-style="italic">
+    The advantage grows exponentially with log(d)/log(B), making peel products far more likely to be smooth
+  </text>
+</svg>

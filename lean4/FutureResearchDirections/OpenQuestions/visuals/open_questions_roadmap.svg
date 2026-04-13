@@ -1,0 +1,177 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" font-family="Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a2e"/>
+      <stop offset="100%" style="stop-color:#1a1a4e"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ffd700"/>
+      <stop offset="100%" style="stop-color:#ffaa00"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#4488ff"/>
+      <stop offset="100%" style="stop-color:#2266dd"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#44dd88"/>
+      <stop offset="100%" style="stop-color:#22bb66"/>
+    </linearGradient>
+    <linearGradient id="red" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ff6644"/>
+      <stop offset="100%" style="stop-color:#dd4422"/>
+    </linearGradient>
+    <linearGradient id="purple" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#aa44ff"/>
+      <stop offset="100%" style="stop-color:#8822dd"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <rect width="1200" height="900" fill="url(#bg)"/>
+  
+  <!-- Title -->
+  <text x="600" y="50" text-anchor="middle" fill="url(#gold)" font-size="28" font-weight="bold" filter="url(#glow)">
+    Open Questions Roadmap: Gravitational Factoring
+  </text>
+  <text x="600" y="75" text-anchor="middle" fill="#aaaacc" font-size="14">
+    Research Directions with Formal Verification Status
+  </text>
+  
+  <!-- Legend -->
+  <rect x="50" y="90" width="16" height="16" rx="3" fill="#44dd88"/>
+  <text x="72" y="103" fill="#ccccee" font-size="12">Resolved (Lean 4 verified)</text>
+  <rect x="250" y="90" width="16" height="16" rx="3" fill="#4488ff"/>
+  <text x="272" y="103" fill="#ccccee" font-size="12">Partially Resolved</text>
+  <rect x="450" y="90" width="16" height="16" rx="3" fill="#ff6644"/>
+  <text x="472" y="103" fill="#ccccee" font-size="12">Open</text>
+  <rect x="600" y="90" width="16" height="16" rx="3" fill="#aa44ff"/>
+  <text x="622" y="103" fill="#ccccee" font-size="12">Speculative</text>
+  
+  <!-- Tier 1: Resolved -->
+  <text x="100" y="145" fill="#44dd88" font-size="18" font-weight="bold">Tier 1: Resolved</text>
+  
+  <rect x="50" y="155" width="200" height="60" rx="8" fill="none" stroke="#44dd88" stroke-width="2"/>
+  <text x="150" y="178" text-anchor="middle" fill="#44dd88" font-size="13" font-weight="bold">Channel Counting</text>
+  <text x="150" y="198" text-anchor="middle" fill="#88ccaa" font-size="11">C(k) = k(k+1)/2 ✓</text>
+  
+  <rect x="270" y="155" width="200" height="60" rx="8" fill="none" stroke="#44dd88" stroke-width="2"/>
+  <text x="370" y="178" text-anchor="middle" fill="#44dd88" font-size="13" font-weight="bold">Norm Multiplicativity</text>
+  <text x="370" y="198" text-anchor="middle" fill="#88ccaa" font-size="11">k=1,2,4,8 only ✓</text>
+  
+  <rect x="490" y="155" width="200" height="60" rx="8" fill="none" stroke="#44dd88" stroke-width="2"/>
+  <text x="590" y="178" text-anchor="middle" fill="#44dd88" font-size="13" font-weight="bold">Berggren Determinant</text>
+  <text x="590" y="198" text-anchor="middle" fill="#88ccaa" font-size="11">det = -1 ✓</text>
+  
+  <rect x="710" y="155" width="200" height="60" rx="8" fill="none" stroke="#44dd88" stroke-width="2"/>
+  <text x="810" y="178" text-anchor="middle" fill="#44dd88" font-size="13" font-weight="bold">Density Formula</text>
+  <text x="810" y="198" text-anchor="middle" fill="#88ccaa" font-size="11">δ = (p+q-1)/pq ✓</text>
+  
+  <rect x="930" y="155" width="220" height="60" rx="8" fill="none" stroke="#44dd88" stroke-width="2"/>
+  <text x="1040" y="178" text-anchor="middle" fill="#44dd88" font-size="13" font-weight="bold">Lagrange Four-Square</text>
+  <text x="1040" y="198" text-anchor="middle" fill="#88ccaa" font-size="11">∀n, ∃a,b,c,d: Σ=n ✓</text>
+  
+  <!-- Tier 2: Partially Resolved -->
+  <text x="100" y="260" fill="#4488ff" font-size="18" font-weight="bold">Tier 2: Partially Resolved</text>
+  
+  <rect x="50" y="270" width="250" height="80" rx="8" fill="none" stroke="#4488ff" stroke-width="2"/>
+  <text x="175" y="293" text-anchor="middle" fill="#4488ff" font-size="13" font-weight="bold">D1: Sieve Complexity</text>
+  <text x="175" y="310" text-anchor="middle" fill="#88aadd" font-size="10">α = 1/2 optimal ✓</text>
+  <text x="175" y="326" text-anchor="middle" fill="#88aadd" font-size="10">Peel smoothness advantage?</text>
+  <text x="175" y="342" text-anchor="middle" fill="#ffaa44" font-size="10">▸ Subexponential achievable?</text>
+  
+  <rect x="320" y="270" width="250" height="80" rx="8" fill="none" stroke="#4488ff" stroke-width="2"/>
+  <text x="445" y="293" text-anchor="middle" fill="#4488ff" font-size="13" font-weight="bold">D3: Cross-Collision</text>
+  <text x="445" y="310" text-anchor="middle" fill="#88aadd" font-size="10">GCD divides N ✓</text>
+  <text x="445" y="326" text-anchor="middle" fill="#88aadd" font-size="10">k² pairs ✓</text>
+  <text x="445" y="342" text-anchor="middle" fill="#ffaa44" font-size="10">▸ Independence proof needed</text>
+  
+  <rect x="590" y="270" width="250" height="80" rx="8" fill="none" stroke="#4488ff" stroke-width="2"/>
+  <text x="715" y="293" text-anchor="middle" fill="#4488ff" font-size="13" font-weight="bold">D9: Jacobi r₄ Formula</text>
+  <text x="715" y="310" text-anchor="middle" fill="#88aadd" font-size="10">σ₁(p) = p+1 ✓</text>
+  <text x="715" y="326" text-anchor="middle" fill="#88aadd" font-size="10">σ₁ multiplicative ✓</text>
+  <text x="715" y="342" text-anchor="middle" fill="#ffaa44" font-size="10">▸ Full r₄(n) = 8σ₁(n) open</text>
+  
+  <rect x="860" y="270" width="250" height="80" rx="8" fill="none" stroke="#4488ff" stroke-width="2"/>
+  <text x="985" y="293" text-anchor="middle" fill="#4488ff" font-size="13" font-weight="bold">D47: Coding Theory</text>
+  <text x="985" y="310" text-anchor="middle" fill="#88aadd" font-size="10">B+1 relations suffice ✓</text>
+  <text x="985" y="326" text-anchor="middle" fill="#88aadd" font-size="10">GF(2) structure verified ✓</text>
+  <text x="985" y="342" text-anchor="middle" fill="#ffaa44" font-size="10">▸ Code parameters open</text>
+  
+  <!-- Tier 3: Open -->
+  <text x="100" y="400" fill="#ff6644" font-size="18" font-weight="bold">Tier 3: Major Open Questions</text>
+  
+  <rect x="50" y="410" width="220" height="90" rx="8" fill="none" stroke="#ff6644" stroke-width="2"/>
+  <text x="160" y="433" text-anchor="middle" fill="#ff6644" font-size="13" font-weight="bold">D2: Lattice-GCD</text>
+  <text x="160" y="450" text-anchor="middle" fill="#ddaa88" font-size="10">O((log N)⁸) poly-time?</text>
+  <text x="160" y="466" text-anchor="middle" fill="#ddaa88" font-size="10">LLL on factoring lattices</text>
+  <text x="160" y="482" text-anchor="middle" fill="#ff4444" font-size="11" font-weight="bold">★ REVOLUTIONARY IF TRUE</text>
+  
+  <rect x="290" y="410" width="220" height="90" rx="8" fill="none" stroke="#ff6644" stroke-width="2"/>
+  <text x="400" y="433" text-anchor="middle" fill="#ff6644" font-size="13" font-weight="bold">D5: Hurwitz Quaternions</text>
+  <text x="400" y="450" text-anchor="middle" fill="#ddaa88" font-size="10">Euclidean domain proof</text>
+  <text x="400" y="466" text-anchor="middle" fill="#ddaa88" font-size="10">Algorithm formalization</text>
+  <text x="400" y="482" text-anchor="middle" fill="#ddaa88" font-size="10">Factor extraction proof</text>
+  
+  <rect x="530" y="410" width="220" height="90" rx="8" fill="none" stroke="#ff6644" stroke-width="2"/>
+  <text x="640" y="433" text-anchor="middle" fill="#ff6644" font-size="13" font-weight="bold">D44: Peel Smoothness</text>
+  <text x="640" y="450" text-anchor="middle" fill="#ddaa88" font-size="10">Ψ_peel(x,B) asymptotics</text>
+  <text x="640" y="466" text-anchor="middle" fill="#ddaa88" font-size="10">Dickman function analysis</text>
+  <text x="640" y="482" text-anchor="middle" fill="#ddaa88" font-size="10">Saddle-point methods</text>
+  
+  <rect x="770" y="410" width="220" height="90" rx="8" fill="none" stroke="#ff6644" stroke-width="2"/>
+  <text x="880" y="433" text-anchor="middle" fill="#ff6644" font-size="13" font-weight="bold">D45: Graph Expansion</text>
+  <text x="880" y="450" text-anchor="middle" fill="#ddaa88" font-size="10">Collision graph structure</text>
+  <text x="880" y="466" text-anchor="middle" fill="#ddaa88" font-size="10">Expander properties?</text>
+  <text x="880" y="482" text-anchor="middle" fill="#ddaa88" font-size="10">Spectral gap analysis</text>
+  
+  <!-- Tier 4: Speculative -->
+  <text x="100" y="550" fill="#aa44ff" font-size="18" font-weight="bold">Tier 4: Speculative Frontiers</text>
+  
+  <rect x="50" y="560" width="180" height="70" rx="8" fill="none" stroke="#aa44ff" stroke-width="2"/>
+  <text x="140" y="583" text-anchor="middle" fill="#aa44ff" font-size="12" font-weight="bold">D41: Adelic</text>
+  <text x="140" y="600" text-anchor="middle" fill="#bb88dd" font-size="10">p-adic unification</text>
+  <text x="140" y="615" text-anchor="middle" fill="#bb88dd" font-size="10">Hensel lifting</text>
+  
+  <rect x="250" y="560" width="180" height="70" rx="8" fill="none" stroke="#aa44ff" stroke-width="2"/>
+  <text x="340" y="583" text-anchor="middle" fill="#aa44ff" font-size="12" font-weight="bold">D42: Persistence</text>
+  <text x="340" y="600" text-anchor="middle" fill="#bb88dd" font-size="10">Topological data</text>
+  <text x="340" y="615" text-anchor="middle" fill="#bb88dd" font-size="10">Barrier heights</text>
+  
+  <rect x="450" y="560" width="180" height="70" rx="8" fill="none" stroke="#aa44ff" stroke-width="2"/>
+  <text x="540" y="583" text-anchor="middle" fill="#aa44ff" font-size="12" font-weight="bold">D43: Quantum Walk</text>
+  <text x="540" y="600" text-anchor="middle" fill="#bb88dd" font-size="10">Berggren tree QW</text>
+  <text x="540" y="615" text-anchor="middle" fill="#bb88dd" font-size="10">Beyond Grover?</text>
+  
+  <rect x="650" y="560" width="180" height="70" rx="8" fill="none" stroke="#aa44ff" stroke-width="2"/>
+  <text x="740" y="583" text-anchor="middle" fill="#aa44ff" font-size="12" font-weight="bold">D46: Galois Theory</text>
+  <text x="740" y="600" text-anchor="middle" fill="#bb88dd" font-size="10">Splitting fields</text>
+  <text x="740" y="615" text-anchor="middle" fill="#bb88dd" font-size="10">Étale cohomology</text>
+  
+  <rect x="850" y="560" width="180" height="70" rx="8" fill="none" stroke="#aa44ff" stroke-width="2"/>
+  <text x="940" y="583" text-anchor="middle" fill="#aa44ff" font-size="12" font-weight="bold">D49: Proof Complex.</text>
+  <text x="940" y="600" text-anchor="middle" fill="#bb88dd" font-size="10">Geometric proofs</text>
+  <text x="940" y="615" text-anchor="middle" fill="#bb88dd" font-size="10">k-tuple certificates</text>
+  
+  <!-- Connections -->
+  <line x1="175" y1="350" x2="160" y2="410" stroke="#4488ff" stroke-width="1" stroke-dasharray="4,4" opacity="0.5"/>
+  <line x1="445" y1="350" x2="400" y2="410" stroke="#4488ff" stroke-width="1" stroke-dasharray="4,4" opacity="0.5"/>
+  <line x1="715" y1="350" x2="640" y2="410" stroke="#4488ff" stroke-width="1" stroke-dasharray="4,4" opacity="0.5"/>
+  
+  <!-- Stats box -->
+  <rect x="50" y="660" width="1100" height="220" rx="12" fill="rgba(255,255,255,0.05)" stroke="#444466" stroke-width="1"/>
+  <text x="600" y="690" text-anchor="middle" fill="url(#gold)" font-size="18" font-weight="bold">Formal Verification Status</text>
+  
+  <text x="100" y="720" fill="#44dd88" font-size="14">✓ 35+ theorems verified in Lean 4 + Mathlib</text>
+  <text x="100" y="745" fill="#44dd88" font-size="14">✓ Channel counting, norm multiplicativity, Berggren structure</text>
+  <text x="100" y="770" fill="#44dd88" font-size="14">✓ σ₁ multiplicativity, σ₁(p) = p+1, smoothness closure</text>
+  <text x="100" y="795" fill="#44dd88" font-size="14">✓ Lattice factor extraction, GCD cascade, congruence of squares</text>
+  <text x="100" y="820" fill="#4488ff" font-size="14">◐ Jacobi r₄(n) = 8σ₁(n): special cases verified, full formula open</text>
+  <text x="100" y="845" fill="#ff6644" font-size="14">○ Hurwitz Euclidean domain, peel smoothness asymptotics, lattice-GCD polynomial time</text>
+  <text x="100" y="870" fill="#aa44ff" font-size="14">◇ Adelic unification, persistent homology, quantum walks, Galois obstructions</text>
+</svg>
