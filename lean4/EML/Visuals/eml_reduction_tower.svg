@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 700" width="700" height="700">
+  <defs>
+    <style>
+      .level { stroke: #333; stroke-width: 2; rx: 8; }
+      .l0 { fill: #E8F5E9; }
+      .l1 { fill: #C8E6C9; }
+      .l2 { fill: #A5D6A7; }
+      .l3 { fill: #81C784; }
+      .l4 { fill: #66BB6A; }
+      .l5 { fill: #4CAF50; }
+      .l6 { fill: #43A047; }
+      .l7 { fill: #388E3C; }
+      .level-text { font-family: Arial, sans-serif; font-size: 14px; fill: #333; font-weight: bold; }
+      .detail-text { font-family: 'Courier New', monospace; font-size: 11px; fill: #555; }
+      .count-text { font-family: Arial, sans-serif; font-size: 13px; fill: #D32F2F; font-weight: bold; }
+      .title { font-family: Arial, sans-serif; font-size: 20px; fill: #1a1a1a; text-anchor: middle; font-weight: bold; }
+      .subtitle { font-family: Arial, sans-serif; font-size: 13px; fill: #666; text-anchor: middle; }
+      .arrow { fill: #666; stroke: #666; stroke-width: 1.5; }
+      .arrow-line { stroke: #666; stroke-width: 2; }
+    </style>
+  </defs>
+  
+  <!-- Title -->
+  <text x="350" y="30" class="title">The Reduction Tower: 36 → 3 Primitives</text>
+  <text x="350" y="50" class="subtitle">Progressive elimination of redundant mathematical operations</text>
+  
+  <!-- Level 0: Full Calculator (36) -->
+  <rect x="50" y="70" width="600" height="65" class="level l0"/>
+  <text x="70" y="92" class="level-text">Base-36: Full Scientific Calculator</text>
+  <text x="70" y="110" class="detail-text">π, e, i, -1, 1, 2, x, y | exp, ln, 1/x, -x, √, sin, cos, tan, ... | +, -, ×, /, ^, log</text>
+  <text x="610" y="105" class="count-text">36</text>
+  
+  <!-- Arrow -->
+  <line x1="350" y1="135" x2="350" y2="155" class="arrow-line"/>
+  <polygon points="345,155 355,155 350,165" class="arrow"/>
+  
+  <!-- Level 1: Wolfram (7) -->
+  <rect x="100" y="170" width="500" height="55" class="level l1"/>
+  <text x="120" y="192" class="level-text">Wolfram Mathematica Core</text>
+  <text x="120" y="210" class="detail-text">π, e, i | ln | +, ×, ^ </text>
+  <text x="560" y="200" class="count-text">7</text>
+  
+  <!-- Arrow -->
+  <line x1="350" y1="225" x2="350" y2="245" class="arrow-line"/>
+  <polygon points="345,245 355,245 350,255" class="arrow"/>
+  
+  <!-- Level 2: Calc 3 (6) -->
+  <rect x="120" y="260" width="460" height="55" class="level l3"/>
+  <text x="140" y="282" class="level-text">Calc 3: Self-generating constants</text>
+  <text x="140" y="300" class="detail-text">exp, ln, -x, 1/x | +</text>
+  <text x="540" y="290" class="count-text">6</text>
+  
+  <!-- Arrow -->
+  <line x1="350" y1="315" x2="350" y2="335" class="arrow-line"/>
+  <polygon points="345,335 355,335 350,345" class="arrow"/>
+  
+  <!-- Level 3: Calc 2 (4) -->
+  <rect x="150" y="350" width="400" height="55" class="level l4"/>
+  <text x="170" y="372" class="level-text">Calc 2: Minimal exp-log</text>
+  <text x="170" y="390" class="detail-text">exp, ln | −</text>
+  <text x="510" y="380" class="count-text">4</text>
+  
+  <!-- Arrow -->
+  <line x1="350" y1="405" x2="350" y2="425" class="arrow-line"/>
+  <polygon points="345,425 355,425 350,435" class="arrow"/>
+  
+  <!-- Level 4: Calc 1 (4) -->
+  <rect x="180" y="440" width="340" height="55" class="level l5"/>
+  <text x="200" y="462" class="level-text">Calc 1: Power-log approach</text>
+  <text x="200" y="480" class="detail-text">e (or π) | x^y, log_x(y)</text>
+  <text x="480" y="470" class="count-text">4</text>
+  
+  <!-- Arrow -->
+  <line x1="350" y1="495" x2="350" y2="515" class="arrow-line"/>
+  <polygon points="345,515 355,515 350,525" class="arrow"/>
+  
+  <!-- Level 5: Calc 0 (3) -->
+  <rect x="210" y="530" width="280" height="55" class="level l6"/>
+  <text x="230" y="552" class="level-text">Calc 0: Hybrid</text>
+  <text x="230" y="570" class="detail-text">exp | log_x(y)</text>
+  <text x="450" y="560" class="count-text">3</text>
+  
+  <!-- Arrow -->
+  <line x1="350" y1="585" x2="350" y2="605" class="arrow-line"/>
+  <polygon points="345,605 355,605 350,615" class="arrow"/>
+  
+  <!-- Level 6: EML (3) - Final -->
+  <rect x="230" y="620" width="240" height="60" class="level l7"/>
+  <text x="250" y="642" class="level-text" fill="white">★ EML: The End</text>
+  <text x="250" y="660" class="detail-text" fill="#E8F5E9">1 | eml(x,y) = eˣ - ln(y)</text>
+  <text x="430" y="650" class="count-text" style="fill: #FFEB3B; font-size: 16px;">3</text>
+  
+  <!-- Side annotation -->
+  <text x="680" y="370" font-family="Arial" font-size="12" fill="#999" transform="rotate(90, 680, 370)" text-anchor="middle">Increasing simplicity →</text>
+</svg>

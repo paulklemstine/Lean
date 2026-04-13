@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <style>
+      .node { fill: #2196F3; stroke: #1565C0; stroke-width: 2; }
+      .leaf { fill: #4CAF50; stroke: #2E7D32; stroke-width: 2; }
+      .edge { stroke: #333; stroke-width: 2; fill: none; }
+      .label { font-family: 'Courier New', monospace; font-size: 13px; fill: white; text-anchor: middle; dominant-baseline: central; }
+      .label-dark { font-family: 'Courier New', monospace; font-size: 11px; fill: #666; text-anchor: middle; }
+      .title { font-family: Arial, sans-serif; font-size: 16px; fill: #333; text-anchor: middle; font-weight: bold; }
+      .subtitle { font-family: Arial, sans-serif; font-size: 12px; fill: #666; text-anchor: middle; }
+      .formula { font-family: 'Times New Roman', serif; font-size: 16px; fill: #333; text-anchor: middle; font-style: italic; }
+    </style>
+  </defs>
+  
+  <!-- Title -->
+  <text x="300" y="25" class="title">EML Tree: ln(z)</text>
+  <text x="300" y="45" class="subtitle">Depth 3 — Natural logarithm from EML</text>
+  
+  <!-- Formula -->
+  <text x="300" y="365" class="formula">ln(z) = eml(1, eml(eml(1, z), 1))</text>
+  <text x="300" y="385" class="subtitle">RPN: 1 1 z E 1 E E  |  Leaf count: 7</text>
+  
+  <!-- Level 0: Root -->
+  <line x1="300" y1="85" x2="150" y2="155" class="edge"/>
+  <line x1="300" y1="85" x2="450" y2="155" class="edge"/>
+  <circle cx="300" cy="75" r="22" class="node"/>
+  <text x="300" y="75" class="label">EML</text>
+  
+  <!-- Level 1 Left: leaf 1 -->
+  <rect x="125" y="150" width="50" height="28" rx="5" class="leaf"/>
+  <text x="150" y="164" class="label">1</text>
+  
+  <!-- Level 1 Right: EML node -->
+  <line x1="450" y1="175" x2="350" y2="245" class="edge"/>
+  <line x1="450" y1="175" x2="550" y2="245" class="edge"/>
+  <circle cx="450" cy="165" r="22" class="node"/>
+  <text x="450" y="165" class="label">EML</text>
+  
+  <!-- Level 2 Left: EML node -->
+  <line x1="350" y1="265" x2="300" y2="315" class="edge"/>
+  <line x1="350" y1="265" x2="400" y2="315" class="edge"/>
+  <circle cx="350" cy="255" r="22" class="node"/>
+  <text x="350" y="255" class="label">EML</text>
+  
+  <!-- Level 2 Right: leaf 1 -->
+  <rect x="525" y="245" width="50" height="28" rx="5" class="leaf"/>
+  <text x="550" y="259" class="label">1</text>
+  
+  <!-- Level 3: leaves of inner EML -->
+  <rect x="275" y="310" width="50" height="28" rx="5" class="leaf"/>
+  <text x="300" y="324" class="label">1</text>
+  
+  <rect x="375" y="310" width="50" height="28" rx="5" class="leaf"/>
+  <text x="400" y="324" class="label">z</text>
+</svg>

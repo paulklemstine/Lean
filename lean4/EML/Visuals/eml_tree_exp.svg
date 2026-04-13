@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" width="400" height="250">
+  <defs>
+    <style>
+      .node { fill: #2196F3; stroke: #1565C0; stroke-width: 2; }
+      .leaf { fill: #4CAF50; stroke: #2E7D32; stroke-width: 2; }
+      .edge { stroke: #333; stroke-width: 2; fill: none; }
+      .label { font-family: 'Courier New', monospace; font-size: 14px; fill: white; text-anchor: middle; dominant-baseline: central; }
+      .label-dark { font-family: 'Courier New', monospace; font-size: 14px; fill: #333; text-anchor: middle; }
+      .title { font-family: Arial, sans-serif; font-size: 16px; fill: #333; text-anchor: middle; font-weight: bold; }
+      .subtitle { font-family: Arial, sans-serif; font-size: 12px; fill: #666; text-anchor: middle; }
+      .formula { font-family: 'Times New Roman', serif; font-size: 18px; fill: #333; text-anchor: middle; font-style: italic; }
+    </style>
+  </defs>
+  
+  <!-- Title -->
+  <text x="200" y="25" class="title">EML Tree: exp(x)</text>
+  <text x="200" y="45" class="subtitle">Depth 1 — Simplest non-trivial EML expression</text>
+  
+  <!-- Formula -->
+  <text x="200" y="225" class="formula">exp(x) = eml(x, 1)</text>
+  <text x="200" y="245" class="subtitle">RPN: x 1 E  |  Leaf count: 3</text>
+  
+  <!-- Edges -->
+  <line x1="200" y1="90" x2="120" y2="155" class="edge"/>
+  <line x1="200" y1="90" x2="280" y2="155" class="edge"/>
+  
+  <!-- Root node (EML) -->
+  <circle cx="200" cy="80" r="25" class="node"/>
+  <text x="200" y="80" class="label">EML</text>
+  
+  <!-- Left leaf (x) -->
+  <rect x="95" y="150" width="50" height="30" rx="5" class="leaf"/>
+  <text x="120" y="165" class="label">x</text>
+  
+  <!-- Right leaf (1) -->
+  <rect x="255" y="150" width="50" height="30" rx="5" class="leaf"/>
+  <text x="280" y="165" class="label">1</text>
+  
+  <!-- Arrow annotations -->
+  <text x="145" y="115" class="label-dark" font-size="11">exp</text>
+  <text x="255" y="115" class="label-dark" font-size="11">-ln</text>
+</svg>
