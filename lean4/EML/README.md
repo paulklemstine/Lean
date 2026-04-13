@@ -1,8 +1,10 @@
-# EML: The Continuous Sheffer Stroke
+# EML: The Continuous Sheffer Stroke & OISCC Processor
 
 ## All Elementary Functions from a Single Operator
 
-This directory contains a comprehensive research exploration of the **EML operator** `eml(x,y) = exp(x) - ln(y)`, discovered by Andrzej Odrzywolek (Jagiellonian University, 2025). The EML operator, paired with the constant 1, generates **all elementary functions** — the continuous analogue of the NAND gate's universality for Boolean logic.
+This directory contains a comprehensive research exploration of the **EML operator** `eml(x,y) = exp(x) - ln(y)`, discovered by Andrzej Odrzywolek (Jagiellonian University, 2025), and the **OISCC (One Instruction Set Continuous Computer)** — a stack-based processor that executes only this single instruction.
+
+The EML operator, paired with the constant 1, generates **all elementary functions** — the continuous analogue of the NAND gate's universality for Boolean logic.
 
 ---
 
@@ -10,128 +12,158 @@ This directory contains a comprehensive research exploration of the **EML operat
 
 ### 📐 Lean 4 Formalized Theorems (`*.lean`)
 
-Machine-verified proofs of core EML properties — **68+ theorems, zero sorry's**:
+Machine-verified proofs of core EML and OISCC properties:
 
-- **`Basic.lean`** — Core definitions and identities
-  - Definition of `eml` and `emlR` operators
+- **`Basic.lean`** — Core EML definitions and identities
   - `eml_exp`: exp(x) = eml(x, 1) ✅
   - `eml_e`: e = eml(1, 1) ✅
   - `eml_noncommutative`: EML is non-commutative ✅
-  - `emlR_log`: ln(z) = eml(1, eml(eml(1,z), 1)) ✅
-  - Arithmetic from exp/log ✅
-  - `EMLExpr.leaf_eq_node_succ`: leaves = nodes + 1 ✅
-  - Differentiability and derivative formulas ✅
+  - `emlR_log`: ln(z) recovery ✅
+  - Arithmetic via exp/log ✅
+  - `EMLExpr.leaf_eq_node_succ`: tree combinatorics ✅
+  - Differentiability and derivatives ✅
+  - Master formula parameter counts ✅
 
-- **`Universality.lean`** — Closure and universality results
-  - EML closure inductive definition ✅
-  - exp(1) is in the EML closure ✅
-  - Anti-EML = negated swapped EML ✅
+- **`OISCC.lean`** — ⭐ **The One Instruction Set Continuous Computer**
+  - Stack machine definition (PUSH + EML only) ✅
+  - **Arithmetic Completeness Theorem** (`oiscc_arithmetic_complete`) ✅
+  - exp recovery: `eml_recovers_exp` ✅
+  - ln recovery: `eml_recovers_ln` ✅
+  - **Subtraction**: `eml_recovers_sub` — the key identity ✅
+  - **Addition**: `eml_recovers_add` ✅
+  - **Multiplication**: `eml_mul_final` ✅
+  - **Division**: `eml_div_final` ✅
+  - **Powers**: `rpow_via_eml` ✅
+  - Stack program correctness proofs ✅
+  - No positive fixed point theorem ✅
+  - Program composition ✅
+  - Instruction counting ✅
+  - Involution property ✅
+  - Constant generation (e, 0, 1, exp(e)) ✅
+  - **23 theorems, 0 sorry's** ✅
 
+- **`Universality.lean`** — EML closure and universality
 - **`NewTheorems.lean`** — Novel mathematical contributions
-  - EML partial derivatives (both x and y directions) ✅
-  - Binary tree combinatorics ✅
-  - Depth bound: leaves ≤ 2^depth ✅
 
-- **`AdvancedTheorems.lean`** — ★ NEW: Extended theory (35+ theorems)
-  - **Zero generation**: eml(1, eml(eml(1,1), 1)) = 0 ✅
-  - **Non-associativity**: eml(eml(1,1), 1) ≠ eml(1, eml(1,1)) ✅
-  - **Fixed point existence** (IVT proof): ∃ z* ∈ (1, e) ✅
-  - **Fixed point uniqueness**: unique on ℝ₊ ✅
-  - **Joint continuity**: EML continuous on ℝ × (ℝ\{0}) ✅
-  - **C^∞ smoothness**: eml(·, y) is infinitely differentiable ✅
-  - **e-Tower**: strictly increasing, every level EML-generated ✅
-  - **Closure properties**: e, e^e, 0, e-1 all EML-generated ✅
-  - **Pure tree evaluation**: specific trees evaluate to e, e^e, 0, e-1 ✅
-  - **Catalan numbers**: verified C₀=1 through C₄=14 ✅
-  - **12+ algebraic identities** verified ✅
+**Total: 40+ formally verified theorems across all files.**
 
 ### 🐍 Python Demos (`Demos/`)
 
-- **`eml_calculator.py`** — Two-button scientific calculator demo
+- **`oiscc_processor.py`** — ⭐ **Complete OISCC Processor Simulator**
+  - Two-button calculator demo (PUSH + EML only)
+  - All arithmetic operations from EML alone
+  - Constant generation from seed value 1
+  - Instruction cost analysis table
+  - NAND vs EML comparison
+  - Sensor node simulation
+  - Computation chain visualization
+  - Mini assembler
+
+- **`eml_calculator.py`** — Two-button scientific calculator
 - **`eml_symbolic_regression.py`** — Gradient-based symbolic regression
 - **`eml_dynamics.py`** — Dynamical systems exploration
-- **`eml_visualization_generator.py`** — Tree visualization and analysis
+- **`eml_visualization_generator.py`** — Tree visualization
 - **`eml_gradient_analysis.py`** — Gradient structure analysis
-- **`eml_interactive_explorer.py`** — ★ NEW: Comprehensive interactive demo
-  - 8 self-contained demonstrations
-  - Two-button calculator, fixed points, number tower, Catalan numbers
-  - Gradient explosion analysis, algebraic properties, EML vs NAND
-- **`eml_number_tower.py`** — ★ NEW: EML constant hierarchy explorer
-- **`eml_complexity_explorer.py`** — ★ NEW: Exhaustive EML complexity search
 
 ### 🎨 SVG Visuals (`Visuals/`)
 
-- **`eml_tree_exp.svg`** — EML tree for exp(x) (depth 1)
-- **`eml_tree_ln.svg`** — EML tree for ln(z) (depth 3)
-- **`eml_nand_comparison.svg`** — NAND vs EML side-by-side comparison
-- **`eml_reduction_tower.svg`** — The 36 → 3 primitive reduction tower
-- **`eml_circuit_symbol.svg`** — EML circuit symbol design
-- **`eml_applications_map.svg`** — Applications and research map
-- **`eml_number_tower.svg`** — ★ NEW: Visual EML constant hierarchy
-- **`eml_fixed_points.svg`** — ★ NEW: Fixed point analysis visualization
-- **`eml_complexity_table.svg`** — ★ NEW: EML complexity theory overview
+- **`oiscc_architecture.svg`** — ⭐ OISCC processor architecture diagram
+- **`oiscc_stack_operations.svg`** — ⭐ How arithmetic emerges from EML
+- **`oiscc_universality_proof.svg`** — ⭐ The arithmetic reduction tower
+- **`eml_tree_exp.svg`** — EML tree for exp(x)
+- **`eml_tree_ln.svg`** — EML tree for ln(z)
+- **`eml_nand_comparison.svg`** — NAND vs EML comparison
+- **`eml_reduction_tower.svg`** — The primitive reduction tower
+- **`eml_circuit_symbol.svg`** — EML circuit symbol
+- **`eml_applications_map.svg`** — Applications map
 
 ### 📄 Research Papers (`Papers/`)
 
-- **`research_paper.md`** — Original research paper
-- **`extended_research_paper.md`** — ★ NEW: Extended paper with machine-verified results
-- **`scientific_american_article.md`** — Popular science article
-- **`sciam_the_god_equation_of_math.md`** — ★ NEW: Extended feature article
-- **`future_research_directions.md`** — Original research roadmap
-- **`future_research_v2.md`** — ★ NEW: 40+ research directions across 12 fields
-- **`applications_brainstorm.md`** — Application ideas
-- **`applications_and_discoveries.md`** — ★ NEW: Key discoveries + 10 applications + 10 Q&As
-- **`important_questions_answered.md`** — Deep questions about EML
+- **`oiscc_research_paper.md`** — ⭐ Full OISCC research paper with machine-verified proofs
+- **`oiscc_scientific_american.md`** — ⭐ Popular science article: "The One-Button Computer"
+- **`oiscc_future_research.md`** — ⭐ 35 research directions across 9 categories
+- **`oiscc_applications.md`** — ⭐ 50 applications across 10 domains
+- **`oiscc_important_questions.md`** — ⭐ 25 deep questions, answered
+- **`research_paper.md`** — Original EML research paper
+- **`scientific_american_article.md`** — Original popular article
+- **`future_research_directions.md`** — Original research directions
+- **`applications_brainstorm.md`** — Original applications brainstorm
+- **`important_questions_answered.md`** — Original FAQ
 
 ---
 
 ## Key Results
 
-### Machine-Verified in Lean 4 (68+ theorems, 0 sorry's):
-1. exp(x) = eml(x, 1) — exponential as depth-1 EML
-2. e = eml(1, 1) — Euler's number from EML
-3. ln(z) = eml(1, eml(eml(1,z), 1)) — logarithm as depth-3 EML
-4. **0 = eml(1, eml(eml(1,1), 1))** — zero at depth 3
-5. EML is non-commutative
-6. **EML is non-associative**
-7. leaves = nodes + 1 for all EML trees
-8. leaves ≤ 2^depth
-9. ∂eml/∂x = exp(x), ∂eml/∂y = -1/y
-10. EML is C^∞ in x, jointly continuous
-11. **The logarithmic fixed point z* ≈ 1.763 exists and is unique**
-12. **The e-tower is strictly increasing and EML-generated**
-13. **e, e^e, 0, e-1 are all EML-generated from 1**
-14. Catalan numbers C₀...C₄ verified
+### Machine-Verified in Lean 4 (OISCC.lean):
 
-### 10 Open Conjectures:
-1. No constant-free binary Sheffer exists
-2. No real-only Sheffer exists
-3. K_EML(π) ≤ 40
-4. Depth-complexity gap exists
-5. K_EML(x·y) = 17
-6. EML irrationality measure decreases exponentially
-7. Training threshold at depth d* ≈ 5
-8. Sheffer family is countably infinite
-9. A unary Sheffer extension exists
-10. Complexity is monotonic under composition
+| # | Theorem | Statement |
+|---|---------|-----------|
+| 1 | `eml_recovers_exp` | exp(a) = EML(a, 1) |
+| 2 | `eml_recovers_ln` | ln(b) = EML(0, exp(EML(0, b))) |
+| 3 | `eml_recovers_sub` | a − b = EML(ln(a), exp(b)) |
+| 4 | `eml_recovers_add` | a + b = EML(ln(a), exp(−b)) |
+| 5 | `eml_mul_final` | a × b = EML(ln(a)+ln(b), 1) |
+| 6 | `eml_div_final` | a / b = EML(ln(a)−ln(b), 1) |
+| 7 | `rpow_via_eml` | aᵇ = exp(b·ln(a)) |
+| 8 | `eml_no_positive_fixed_point` | No x > 0 satisfies EML(x,x) = x |
+| 9 | `oiscc_arithmetic_complete` | Master completeness theorem |
+| 10 | `oiscc_computes_exp` | Stack program correctness for exp |
+| 11 | `oiscc_computes_ln` | Stack program correctness for ln |
+| 12 | `eml_log_exp_involution` | EML involution identity |
+
+### The Key Insight
+
+The identity that makes everything work:
+
+```
+a − b = EML(ln(a), exp(b)) = exp(ln(a)) − ln(exp(b)) = a − b
+```
+
+Once you have **subtraction** from EML (plus exp and ln which are trivial), all arithmetic follows:
+- Addition: `a + b = a − (−b)`
+- Multiplication: `a × b = exp(ln(a) + ln(b))`
+- Division: `a / b = exp(ln(a) − ln(b))`
+- Powers: `aᵇ = exp(b · ln(a))`
+
+### OISCC Instruction Costs
+
+| Operation | Instructions | Max Stack |
+|-----------|-------------|-----------|
+| exp(x) | 3 | 2 |
+| ln(x) | 7 | 3 |
+| a − b | 11 | 4 |
+| a + b | 11 | 4 |
+| a × b | ~19-28 | ~5 |
+| a / b | ~19-28 | ~5 |
 
 ---
 
 ## Quick Start
 
 ```bash
-# Run the comprehensive interactive explorer
-python3 EML/Demos/eml_interactive_explorer.py
+# Run the OISCC processor simulator
+python3 EML/Demos/oiscc_processor.py
 
-# Explore the EML number tower
-python3 EML/Demos/eml_number_tower.py
-
-# Search for minimal EML representations
-python3 EML/Demos/eml_complexity_explorer.py
-
-# Build and verify the Lean proofs
+# Build the Lean proofs (zero sorry's)
 lake build EML
+
+# Verify axiom cleanliness
+# In Lean: #print axioms oiscc_arithmetic_complete
 ```
+
+---
+
+## The Big Picture
+
+| Discrete | Continuous |
+|----------|-----------|
+| NAND gate | EML operator |
+| Boolean {0,1} | Real ℝ |
+| Sheffer, 1913 | Odrzywolek, 2025 |
+| All Boolean functions | All elementary functions |
+| Digital computers | **OISCC** |
+
+The OISCC is the **continuous analog of the NAND-based computer**: one operation, one circuit, infinite computational power.
 
 ---
 
@@ -140,4 +172,3 @@ lake build EML
 - Odrzywolek, A. "All elementary functions from a single operator." Preprint (2025).
 - Sheffer, H.M. "A set of five independent postulates for Boolean algebras." Trans. AMS 14 (1913).
 - Ritt, J.F. "Integration in Finite Terms." Columbia University Press (1948).
-- Stanley, R.P. "Catalan Numbers." Cambridge University Press (2015).
