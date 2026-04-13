@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 900" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgT" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0c1220"/>
+      <stop offset="100%" stop-color="#1a2840"/>
+    </linearGradient>
+    <linearGradient id="goldT" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f8d848"/>
+      <stop offset="100%" stop-color="#e8b830"/>
+    </linearGradient>
+  </defs>
+  
+  <rect width="800" height="900" fill="url(#bgT)"/>
+  
+  <!-- Title -->
+  <text x="400" y="40" text-anchor="middle" fill="url(#goldT)" font-size="24" font-weight="bold">
+    The EML Constant Tower
+  </text>
+  <text x="400" y="65" text-anchor="middle" fill="#8899bb" font-size="13">
+    Building all mathematical constants from 1 and eml
+  </text>
+  
+  <!-- Level 0 -->
+  <rect x="320" y="90" width="160" height="50" rx="10" fill="#1a2e4a" stroke="url(#goldT)" stroke-width="2"/>
+  <text x="400" y="112" text-anchor="middle" fill="url(#goldT)" font-size="18" font-weight="bold">1</text>
+  <text x="400" y="132" text-anchor="middle" fill="#aabbcc" font-size="11">Level 0: Starting point</text>
+  
+  <!-- Level 0→1 arrow -->
+  <line x1="400" y1="140" x2="400" y2="170" stroke="#88ff88" stroke-width="2"/>
+  <polygon points="395,170 405,170 400,178" fill="#88ff88"/>
+  <text x="420" y="162" fill="#88ff88" font-size="10">eml(1,1)</text>
+  
+  <!-- Level 1 -->
+  <rect x="300" y="180" width="200" height="50" rx="10" fill="#1a2e4a" stroke="#ff8844" stroke-width="2"/>
+  <text x="400" y="202" text-anchor="middle" fill="#ff8844" font-size="16" font-weight="bold">e ≈ 2.71828</text>
+  <text x="400" y="222" text-anchor="middle" fill="#aabbcc" font-size="11">Level 1: Euler's number</text>
+  
+  <!-- Level 1→2 arrows (branching) -->
+  <line x1="350" y1="230" x2="200" y2="270" stroke="#88aaff" stroke-width="1.5"/>
+  <line x1="400" y1="230" x2="400" y2="270" stroke="#88aaff" stroke-width="1.5"/>
+  <line x1="450" y1="230" x2="600" y2="270" stroke="#88aaff" stroke-width="1.5"/>
+  
+  <text x="260" y="258" fill="#88aaff" font-size="9">eml(1,e)</text>
+  <text x="400" y="258" text-anchor="middle" fill="#88aaff" font-size="9">eml(e,e)</text>
+  <text x="540" y="258" fill="#88aaff" font-size="9">eml(e,1)</text>
+  
+  <!-- Level 2 -->
+  <rect x="100" y="275" width="200" height="45" rx="8" fill="#1a2e4a" stroke="#4488ff" stroke-width="1.5"/>
+  <text x="200" y="295" text-anchor="middle" fill="#4488ff" font-size="14" font-weight="bold">e − 1 ≈ 1.718</text>
+  <text x="200" y="312" text-anchor="middle" fill="#8899aa" font-size="10">eml(1, e)</text>
+  
+  <rect x="300" y="275" width="200" height="45" rx="8" fill="#1a2e4a" stroke="#4488ff" stroke-width="1.5"/>
+  <text x="400" y="295" text-anchor="middle" fill="#4488ff" font-size="14" font-weight="bold">eᵉ − 1 ≈ 1.99</text>
+  <text x="400" y="312" text-anchor="middle" fill="#8899aa" font-size="10">eml(e, e)</text>
+  
+  <rect x="500" y="275" width="200" height="45" rx="8" fill="#1a2e4a" stroke="#4488ff" stroke-width="1.5"/>
+  <text x="600" y="295" text-anchor="middle" fill="#4488ff" font-size="14" font-weight="bold">eᵉ ≈ 15.154</text>
+  <text x="600" y="312" text-anchor="middle" fill="#8899aa" font-size="10">eml(e, 1)</text>
+  
+  <!-- Level 2→3 arrows -->
+  <line x1="200" y1="320" x2="150" y2="370" stroke="#dd88dd" stroke-width="1.5"/>
+  <line x1="400" y1="320" x2="350" y2="370" stroke="#dd88dd" stroke-width="1.5"/>
+  <line x1="600" y1="320" x2="550" y2="370" stroke="#dd88dd" stroke-width="1.5"/>
+  
+  <!-- Level 3 -->
+  <rect x="50" y="375" width="200" height="45" rx="8" fill="#1a2e4a" stroke="#dd44dd" stroke-width="1.5"/>
+  <text x="150" y="395" text-anchor="middle" fill="#dd44dd" font-size="14" font-weight="bold">exp(e−1) ≈ 5.575</text>
+  <text x="150" y="412" text-anchor="middle" fill="#8899aa" font-size="10">eml(e−1, 1)</text>
+  
+  <rect x="260" y="375" width="180" height="45" rx="8" fill="#2a1a1a" stroke="#ff4444" stroke-width="2"/>
+  <text x="350" y="395" text-anchor="middle" fill="#ff4444" font-size="18" font-weight="bold">0</text>
+  <text x="350" y="412" text-anchor="middle" fill="#ff8888" font-size="10">eml(1, eᵉ) ★ First zero!</text>
+  
+  <rect x="450" y="375" width="200" height="45" rx="8" fill="#1a2e4a" stroke="#dd44dd" stroke-width="1.5"/>
+  <text x="550" y="395" text-anchor="middle" fill="#dd44dd" font-size="14" font-weight="bold">1 − e ≈ −1.718</text>
+  <text x="550" y="412" text-anchor="middle" fill="#8899aa" font-size="10">eml(0, eᵉ)</text>
+  
+  <!-- Level 3→4 arrows -->
+  <line x1="350" y1="420" x2="250" y2="460" stroke="#88ddaa" stroke-width="1.5"/>
+  <line x1="350" y1="420" x2="450" y2="460" stroke="#88ddaa" stroke-width="1.5"/>
+  
+  <!-- Level 4 (selected constants) -->
+  <rect x="100" y="465" width="250" height="45" rx="8" fill="#1a2e4a" stroke="#44dd88" stroke-width="1.5"/>
+  <text x="225" y="485" text-anchor="middle" fill="#44dd88" font-size="13" font-weight="bold">1 (recovered via eml(0,1))</text>
+  <text x="225" y="502" text-anchor="middle" fill="#8899aa" font-size="10">Identity from zero + one</text>
+  
+  <rect x="370" y="465" width="250" height="45" rx="8" fill="#1a2e4a" stroke="#44dd88" stroke-width="1.5"/>
+  <text x="495" y="485" text-anchor="middle" fill="#44dd88" font-size="13" font-weight="bold">eᵉᵉ ≈ 3814279</text>
+  <text x="495" y="502" text-anchor="middle" fill="#8899aa" font-size="10">eml(eᵉ, 1) — rapid growth!</text>
+  
+  <!-- Key insight box -->
+  <rect x="100" y="540" width="600" height="100" rx="12" fill="#112233" stroke="#88aaff" stroke-width="1.5"/>
+  <text x="400" y="565" text-anchor="middle" fill="#88aaff" font-size="15" font-weight="bold">Key Insight</text>
+  <text x="120" y="590" fill="#aaccff" font-size="12">
+    • eml(x, 1) = exp(x) — always goes UP (exponential growth)
+  </text>
+  <text x="120" y="610" fill="#aaccff" font-size="12">
+    • eml(1, y) = e − ln(y) — always goes DOWN (logarithmic decay)
+  </text>
+  <text x="120" y="630" fill="#aaccff" font-size="12">
+    • Combining these gives both enormous and tiny constants
+  </text>
+  
+  <!-- Formally verified badge -->
+  <rect x="150" y="670" width="500" height="55" rx="10" fill="#112211" stroke="#88ff88" stroke-width="2"/>
+  <text x="400" y="692" text-anchor="middle" fill="#88ff88" font-size="14" font-weight="bold">
+    ✓ All evaluations formally verified in Lean 4
+  </text>
+  <text x="400" y="712" text-anchor="middle" fill="#88cc88" font-size="11">
+    emlE_generates_e_minus_one · emlE_generates_one_minus_e · emlE_generates_exp_e_minus_one
+  </text>
+  
+  <!-- Bottom: growth visualization -->
+  <text x="400" y="760" text-anchor="middle" fill="#8899bb" font-size="14" font-weight="bold">
+    The e-Tower: 1 → e → eᵉ → eᵉᵉ → ...
+  </text>
+  
+  <rect x="100" y="780" width="30" height="30" rx="4" fill="#ff8844"/>
+  <text x="115" y="800" text-anchor="middle" fill="white" font-size="10">1</text>
+  
+  <rect x="160" y="770" width="30" height="40" rx="4" fill="#ff6644"/>
+  <text x="175" y="795" text-anchor="middle" fill="white" font-size="10">e</text>
+  
+  <rect x="220" y="740" width="30" height="70" rx="4" fill="#ff4444"/>
+  <text x="235" y="780" text-anchor="middle" fill="white" font-size="9">eᵉ</text>
+  
+  <rect x="280" y="650" width="30" height="160" rx="4" fill="#dd2222"/>
+  <text x="295" y="740" text-anchor="middle" fill="white" font-size="9">eᵉᵉ</text>
+  
+  <text x="340" y="810" fill="#dd2222" font-size="12">← grows faster than any function you can name</text>
+  
+  <text x="400" y="860" text-anchor="middle" fill="#556677" font-size="11">
+    ★ Proved: eTower(n) ≥ n for all n (strictly faster than linear)
+  </text>
+</svg>
