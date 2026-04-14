@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" font-family="Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a0a2e"/>
+      <stop offset="100%" stop-color="#1a1a4e"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="900" fill="url(#bg)"/>
+
+  <!-- Title -->
+  <text x="600" y="55" text-anchor="middle" fill="#fff" font-size="32" font-weight="bold">EML V8: Research Overview</text>
+  <text x="600" y="85" text-anchor="middle" fill="#aaa" font-size="16">eml(x, y) = exp(x) − ln(y) — The Continuous Sheffer Stroke</text>
+
+  <!-- Central formula -->
+  <rect x="400" y="100" width="400" height="60" rx="10" fill="#2a2a6e" stroke="#6366f1" stroke-width="2"/>
+  <text x="600" y="138" text-anchor="middle" fill="#e0e7ff" font-size="24" font-weight="bold">eml(x, y) = eˣ − ln y</text>
+
+  <!-- Branch 1: Algebra -->
+  <rect x="30" y="200" width="220" height="240" rx="8" fill="#1e1e3f" stroke="#f59e0b" stroke-width="2"/>
+  <text x="140" y="228" text-anchor="middle" fill="#f59e0b" font-size="16" font-weight="bold">Algebra</text>
+  <text x="45" y="255" fill="#fde68a" font-size="12">✓ Non-commutative</text>
+  <text x="45" y="275" fill="#fde68a" font-size="12">✓ Non-associative</text>
+  <text x="45" y="295" fill="#fde68a" font-size="12">✓ Not medial</text>
+  <text x="45" y="315" fill="#fde68a" font-size="12">✓ Not flexible</text>
+  <text x="45" y="335" fill="#fde68a" font-size="12">✓ Not left/right alternative</text>
+  <text x="45" y="355" fill="#fde68a" font-size="12">✓ No identity elements</text>
+  <text x="45" y="380" fill="#fbbf24" font-size="11" font-weight="bold">→ "Wild" magma structure</text>
+  <text x="45" y="400" fill="#fbbf24" font-size="11" font-weight="bold">→ No standard algebraic laws!</text>
+  <text x="45" y="425" fill="#78716c" font-size="10">V8: All failures machine-verified</text>
+
+  <!-- Branch 2: Analysis -->
+  <rect x="270" y="200" width="220" height="240" rx="8" fill="#1e1e3f" stroke="#10b981" stroke-width="2"/>
+  <text x="380" y="228" text-anchor="middle" fill="#10b981" font-size="16" font-weight="bold">Analysis &amp; Dynamics</text>
+  <text x="285" y="255" fill="#a7f3d0" font-size="12">✓ d(z) &gt; z (no fixed points)</text>
+  <text x="285" y="275" fill="#a7f3d0" font-size="12">✓ d(z) ≥ 2 for z &gt; 0</text>
+  <text x="285" y="295" fill="#a7f3d0" font-size="12">✓ Orbits strictly increasing</text>
+  <text x="285" y="315" fill="#a7f3d0" font-size="12">✓ Orbits diverge: dⁿ(z) ≥ z+n</text>
+  <text x="285" y="335" fill="#a7f3d0" font-size="12">✓ Diagonal convex on (0,∞)</text>
+  <text x="285" y="355" fill="#a7f3d0" font-size="12">✓ g-map attracting fixed pt</text>
+  <text x="285" y="380" fill="#34d399" font-size="11" font-weight="bold">→ Super-exponential orbits</text>
+  <text x="285" y="400" fill="#34d399" font-size="11" font-weight="bold">→ z* = W(eᵉ) ≈ 2.017</text>
+  <text x="285" y="425" fill="#78716c" font-size="10">V8: Orbit divergence formalized</text>
+
+  <!-- Branch 3: Geometry -->
+  <rect x="510" y="200" width="220" height="240" rx="8" fill="#1e1e3f" stroke="#8b5cf6" stroke-width="2"/>
+  <text x="620" y="228" text-anchor="middle" fill="#8b5cf6" font-size="16" font-weight="bold">Geometry &amp; Topology</text>
+  <text x="525" y="255" fill="#ddd6fe" font-size="12">✓ Gradient never vanishes</text>
+  <text x="525" y="275" fill="#ddd6fe" font-size="12">✓ Level sets = smooth curves</text>
+  <text x="525" y="295" fill="#ddd6fe" font-size="12">✓ Hessian → Riemannian metric</text>
+  <text x="525" y="315" fill="#ddd6fe" font-size="12">✓ Convex in x, convex in y</text>
+  <text x="525" y="335" fill="#ddd6fe" font-size="12">• Geodesic eqns derived</text>
+  <text x="525" y="355" fill="#ddd6fe" font-size="12">• Flat curvature (K = 0)</text>
+  <text x="525" y="380" fill="#a78bfa" font-size="11" font-weight="bold">→ ds² = eˣdx² + y⁻²dy²</text>
+  <text x="525" y="400" fill="#a78bfa" font-size="11" font-weight="bold">→ Warped product metric</text>
+  <text x="525" y="425" fill="#78716c" font-size="10">V8: Gradient theorem proved</text>
+
+  <!-- Branch 4: Identities -->
+  <rect x="750" y="200" width="220" height="240" rx="8" fill="#1e1e3f" stroke="#ef4444" stroke-width="2"/>
+  <text x="860" y="228" text-anchor="middle" fill="#ef4444" font-size="16" font-weight="bold">Key Identities</text>
+  <text x="765" y="255" fill="#fecaca" font-size="12">✓ eml(x, eʸ) = eˣ − y</text>
+  <text x="765" y="275" fill="#fecaca" font-size="12">✓ eml(n·x, 1) = (eˣ)ⁿ</text>
+  <text x="765" y="295" fill="#fecaca" font-size="12">✓ N(x) = eml(0,eˣ) = 1−x</text>
+  <text x="765" y="315" fill="#fecaca" font-size="12">✓ N(N(x)) = x (involution)</text>
+  <text x="765" y="335" fill="#fecaca" font-size="12">✓ Log-split: eml(x,yz)</text>
+  <text x="765" y="355" fill="#fecaca" font-size="12">✓ AM-GM: trace ≥ 2</text>
+  <text x="765" y="380" fill="#f87171" font-size="11" font-weight="bold">→ Legendre transform link</text>
+  <text x="765" y="400" fill="#f87171" font-size="11" font-weight="bold">→ Convex duality bridge</text>
+  <text x="765" y="425" fill="#78716c" font-size="10">V8: Legendre identity proved</text>
+
+  <!-- Branch 5: Applications -->
+  <rect x="990" y="200" width="185" height="240" rx="8" fill="#1e1e3f" stroke="#06b6d4" stroke-width="2"/>
+  <text x="1082" y="228" text-anchor="middle" fill="#06b6d4" font-size="16" font-weight="bold">Applications</text>
+  <text x="1005" y="255" fill="#cffafe" font-size="12">• Symbolic regression</text>
+  <text x="1005" y="275" fill="#cffafe" font-size="12">• Neural architectures</text>
+  <text x="1005" y="295" fill="#cffafe" font-size="12">• Hardware design</text>
+  <text x="1005" y="315" fill="#cffafe" font-size="12">• Interpretable ML</text>
+  <text x="1005" y="335" fill="#cffafe" font-size="12">• Signal processing</text>
+  <text x="1005" y="355" fill="#cffafe" font-size="12">• Cryptography</text>
+  <text x="1005" y="380" fill="#22d3ee" font-size="11" font-weight="bold">→ K_EML complexity</text>
+  <text x="1005" y="400" fill="#22d3ee" font-size="11" font-weight="bold">→ Two-button calc</text>
+  <text x="1005" y="425" fill="#78716c" font-size="10">V8: Monotonicity bounds</text>
+
+  <!-- Stats bar -->
+  <rect x="30" y="470" width="1140" height="80" rx="8" fill="#1a1a3e" stroke="#4b5563" stroke-width="1"/>
+  <text x="120" y="505" text-anchor="middle" fill="#fff" font-size="28" font-weight="bold" filter="url(#glow)">70+</text>
+  <text x="120" y="530" text-anchor="middle" fill="#9ca3af" font-size="13">V8 Theorems</text>
+  <text x="330" y="505" text-anchor="middle" fill="#fff" font-size="28" font-weight="bold" filter="url(#glow)">0</text>
+  <text x="330" y="530" text-anchor="middle" fill="#9ca3af" font-size="13">Sorries</text>
+  <text x="540" y="505" text-anchor="middle" fill="#fff" font-size="28" font-weight="bold" filter="url(#glow)">2</text>
+  <text x="540" y="530" text-anchor="middle" fill="#9ca3af" font-size="13">Lean Files</text>
+  <text x="750" y="505" text-anchor="middle" fill="#fff" font-size="28" font-weight="bold" filter="url(#glow)">10</text>
+  <text x="750" y="530" text-anchor="middle" fill="#9ca3af" font-size="13">New Demos</text>
+  <text x="960" y="505" text-anchor="middle" fill="#fff" font-size="28" font-weight="bold" filter="url(#glow)">25+</text>
+  <text x="960" y="530" text-anchor="middle" fill="#9ca3af" font-size="13">Research Directions</text>
+
+  <!-- Key V8 Discoveries -->
+  <text x="600" y="590" text-anchor="middle" fill="#fff" font-size="20" font-weight="bold">Key V8 Discoveries</text>
+
+  <rect x="30" y="610" width="360" height="120" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="1"/>
+  <text x="210" y="638" text-anchor="middle" fill="#3b82f6" font-size="15" font-weight="bold">Legendre Transform Bridge</text>
+  <text x="45" y="660" fill="#93c5fd" font-size="12">eml(x, eʸ) = eˣ − y reveals EML as a</text>
+  <text x="45" y="678" fill="#93c5fd" font-size="12">Legendre-like pairing. Connects to convex</text>
+  <text x="45" y="696" fill="#93c5fd" font-size="12">duality and optimization theory.</text>
+  <text x="45" y="720" fill="#60a5fa" font-size="11" font-weight="bold">Impact: Links EML to convex analysis</text>
+
+  <rect x="420" y="610" width="360" height="120" rx="8" fill="#1e293b" stroke="#a855f7" stroke-width="1"/>
+  <text x="600" y="638" text-anchor="middle" fill="#a855f7" font-size="15" font-weight="bold">Orbit Divergence Theorem</text>
+  <text x="435" y="660" fill="#d8b4fe" font-size="12">dⁿ(z) ≥ z + n: every orbit diverges at</text>
+  <text x="435" y="678" fill="#d8b4fe" font-size="12">least linearly. Actual growth is super-</text>
+  <text x="435" y="696" fill="#d8b4fe" font-size="12">exponential (faster than any tower).</text>
+  <text x="435" y="720" fill="#c084fc" font-size="11" font-weight="bold">Impact: Complete orbit classification</text>
+
+  <rect x="810" y="610" width="360" height="120" rx="8" fill="#1e293b" stroke="#f97316" stroke-width="1"/>
+  <text x="990" y="638" text-anchor="middle" fill="#f97316" font-size="15" font-weight="bold">Flat Riemannian Metric</text>
+  <text x="825" y="660" fill="#fed7aa" font-size="12">The Hessian ds² = eˣdx² + y⁻²dy²</text>
+  <text x="825" y="678" fill="#fed7aa" font-size="12">defines a flat (K=0) warped product</text>
+  <text x="825" y="696" fill="#fed7aa" font-size="12">metric connecting exp and hyperbolic geom.</text>
+  <text x="825" y="720" fill="#fb923c" font-size="11" font-weight="bold">Impact: Geometric structure of EML</text>
+
+  <!-- Bottom bar -->
+  <rect x="30" y="760" width="1140" height="120" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+  <text x="600" y="790" text-anchor="middle" fill="#fff" font-size="18" font-weight="bold">EML Complexity Table (V8 Update)</text>
+
+  <text x="80" y="820" fill="#cbd5e1" font-size="13">f(x)</text>
+  <text x="200" y="820" fill="#cbd5e1" font-size="13">K_EML</text>
+  <text x="350" y="820" fill="#cbd5e1" font-size="13">f(x)</text>
+  <text x="480" y="820" fill="#cbd5e1" font-size="13">K_EML</text>
+  <text x="650" y="820" fill="#cbd5e1" font-size="13">f(x)</text>
+  <text x="800" y="820" fill="#cbd5e1" font-size="13">K_EML</text>
+  <text x="950" y="820" fill="#cbd5e1" font-size="13">f(x)</text>
+  <text x="1080" y="820" fill="#cbd5e1" font-size="13">K_EML</text>
+
+  <text x="80" y="845" fill="#e2e8f0" font-size="12">x, 1</text>
+  <text x="200" y="845" fill="#22c55e" font-size="12" font-weight="bold">0 ✓</text>
+  <text x="350" y="845" fill="#e2e8f0" font-size="12">eˣ, e</text>
+  <text x="480" y="845" fill="#22c55e" font-size="12" font-weight="bold">1 ✓</text>
+  <text x="650" y="845" fill="#e2e8f0" font-size="12">eᵉ, e−1</text>
+  <text x="800" y="845" fill="#22c55e" font-size="12" font-weight="bold">2 ✓</text>
+  <text x="950" y="845" fill="#e2e8f0" font-size="12">0, e²</text>
+  <text x="1080" y="845" fill="#22c55e" font-size="12" font-weight="bold">3 ✓</text>
+
+  <text x="80" y="868" fill="#e2e8f0" font-size="12">ln(x)</text>
+  <text x="200" y="868" fill="#eab308" font-size="12" font-weight="bold">3–5 ?</text>
+  <text x="350" y="868" fill="#e2e8f0" font-size="12">x+y</text>
+  <text x="480" y="868" fill="#eab308" font-size="12" font-weight="bold">3–11 ?</text>
+  <text x="650" y="868" fill="#e2e8f0" font-size="12">x·y</text>
+  <text x="800" y="868" fill="#eab308" font-size="12" font-weight="bold">5–17 ?</text>
+  <text x="950" y="868" fill="#e2e8f0" font-size="12">sin(x)</text>
+  <text x="1080" y="868" fill="#eab308" font-size="12" font-weight="bold">5–53 ?</text>
+</svg>
