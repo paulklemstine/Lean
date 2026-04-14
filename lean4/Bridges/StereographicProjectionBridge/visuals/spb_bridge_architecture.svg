@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 650" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a1628"/>
+      <stop offset="100%" stop-color="#1a2a4a"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffd700"/>
+      <stop offset="100%" stop-color="#ff8c00"/>
+    </linearGradient>
+    <linearGradient id="trig" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4fc3f7"/>
+      <stop offset="100%" stop-color="#0288d1"/>
+    </linearGradient>
+    <linearGradient id="group" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#81c784"/>
+      <stop offset="100%" stop-color="#388e3c"/>
+    </linearGradient>
+    <linearGradient id="physics" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#e57373"/>
+      <stop offset="100%" stop-color="#c62828"/>
+    </linearGradient>
+    <linearGradient id="approx" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ce93d8"/>
+      <stop offset="100%" stop-color="#7b1fa2"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="650" fill="url(#bg)"/>
+
+  <!-- Title -->
+  <text x="450" y="45" text-anchor="middle" fill="url(#gold)" font-size="28" font-weight="bold" filter="url(#glow)">
+    Stereographic Projection Bridge
+  </text>
+  <text x="450" y="72" text-anchor="middle" fill="#aaa" font-size="14">
+    spb(x, y) = (x + y) / (1 − xy)
+  </text>
+
+  <!-- Central SPB Node -->
+  <circle cx="450" cy="310" r="70" fill="none" stroke="url(#gold)" stroke-width="3" filter="url(#glow)"/>
+  <circle cx="450" cy="310" r="65" fill="#1a2a4a" opacity="0.9"/>
+  <text x="450" y="300" text-anchor="middle" fill="#ffd700" font-size="20" font-weight="bold">SPB</text>
+  <text x="450" y="320" text-anchor="middle" fill="#ffd700" font-size="11">(x+y)/(1−xy)</text>
+  <text x="450" y="338" text-anchor="middle" fill="#aaa" font-size="10">Cayley: S¹ → ℝ</text>
+
+  <!-- Trigonometry Domain (Top Left) -->
+  <rect x="50" y="100" width="220" height="130" rx="15" fill="#0d2137" stroke="url(#trig)" stroke-width="2" filter="url(#shadow)"/>
+  <text x="160" y="128" text-anchor="middle" fill="#4fc3f7" font-size="16" font-weight="bold">Trigonometry</text>
+  <text x="160" y="152" text-anchor="middle" fill="#ccc" font-size="11">tan(α + β) = spb(tan α, tan β)</text>
+  <text x="160" y="172" text-anchor="middle" fill="#ccc" font-size="11">tan(2α) = spb(tan α, tan α)</text>
+  <text x="160" y="192" text-anchor="middle" fill="#ccc" font-size="11">tan(nα) = spb_iter(n, tan α)</text>
+  <text x="160" y="212" text-anchor="middle" fill="#888" font-size="10">Double/Triple angle formulas</text>
+
+  <!-- Group Theory Domain (Top Right) -->
+  <rect x="630" y="100" width="220" height="130" rx="15" fill="#0d2137" stroke="url(#group)" stroke-width="2" filter="url(#shadow)"/>
+  <text x="740" y="128" text-anchor="middle" fill="#81c784" font-size="16" font-weight="bold">Group Theory</text>
+  <text x="740" y="152" text-anchor="middle" fill="#ccc" font-size="11">Identity: spb(x, 0) = x</text>
+  <text x="740" y="172" text-anchor="middle" fill="#ccc" font-size="11">Inverse: spb(x, −x) = 0</text>
+  <text x="740" y="192" text-anchor="middle" fill="#ccc" font-size="11">Associative + Commutative</text>
+  <text x="740" y="212" text-anchor="middle" fill="#888" font-size="10">≅ (S¹, ·) via Cayley transform</text>
+
+  <!-- Special Relativity Domain (Bottom Left) -->
+  <rect x="50" y="420" width="220" height="130" rx="15" fill="#0d2137" stroke="url(#physics)" stroke-width="2" filter="url(#shadow)"/>
+  <text x="160" y="448" text-anchor="middle" fill="#e57373" font-size="16" font-weight="bold">Special Relativity</text>
+  <text x="160" y="472" text-anchor="middle" fill="#ccc" font-size="11">spbH(u,v) = (u+v)/(1+uv)</text>
+  <text x="160" y="492" text-anchor="middle" fill="#ccc" font-size="11">|u|,|v| &lt; 1 ⟹ |spbH| &lt; 1</text>
+  <text x="160" y="512" text-anchor="middle" fill="#ccc" font-size="11">Rapidity: tanh(φ₁+φ₂)</text>
+  <text x="160" y="532" text-anchor="middle" fill="#888" font-size="10">Light speed is a group barrier</text>
+
+  <!-- Approximation Theory Domain (Bottom Right) -->
+  <rect x="630" y="420" width="220" height="130" rx="15" fill="#0d2137" stroke="url(#approx)" stroke-width="2" filter="url(#shadow)"/>
+  <text x="740" y="448" text-anchor="middle" fill="#ce93d8" font-size="16" font-weight="bold">Approximation</text>
+  <text x="740" y="472" text-anchor="middle" fill="#ccc" font-size="11">SPB trees ≈ Chebyshev basis</text>
+  <text x="740" y="492" text-anchor="middle" fill="#ccc" font-size="11">Exponential convergence</text>
+  <text x="740" y="512" text-anchor="middle" fill="#ccc" font-size="11">K_SPB(tan nθ) = ⌊log₂n⌋+O(1)</text>
+  <text x="740" y="532" text-anchor="middle" fill="#888" font-size="10">Binary exp in SPB group</text>
+
+  <!-- Connecting Lines -->
+  <!-- Top Left → Center -->
+  <line x1="270" y1="180" x2="390" y2="280" stroke="#4fc3f7" stroke-width="2" opacity="0.6"/>
+  <circle cx="330" cy="230" r="3" fill="#4fc3f7"/>
+
+  <!-- Top Right → Center -->
+  <line x1="630" y1="180" x2="510" y2="280" stroke="#81c784" stroke-width="2" opacity="0.6"/>
+  <circle cx="570" cy="230" r="3" fill="#81c784"/>
+
+  <!-- Bottom Left → Center -->
+  <line x1="270" y1="460" x2="390" y2="360" stroke="#e57373" stroke-width="2" opacity="0.6"/>
+  <circle cx="330" cy="410" r="3" fill="#e57373"/>
+
+  <!-- Bottom Right → Center -->
+  <line x1="630" y1="460" x2="510" y2="360" stroke="#ce93d8" stroke-width="2" opacity="0.6"/>
+  <circle cx="570" cy="410" r="3" fill="#ce93d8"/>
+
+  <!-- Cross connections -->
+  <line x1="160" y1="230" x2="160" y2="420" stroke="#ffab40" stroke-width="1" stroke-dasharray="5,5" opacity="0.3"/>
+  <line x1="740" y1="230" x2="740" y2="420" stroke="#ffab40" stroke-width="1" stroke-dasharray="5,5" opacity="0.3"/>
+
+  <!-- Cayley Transform Arrow (Center) -->
+  <path d="M 420 260 Q 400 240 420 220" fill="none" stroke="#ffd700" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <text x="395" y="215" fill="#ffd700" font-size="9">Cayley</text>
+
+  <!-- Legend -->
+  <rect x="320" y="580" width="260" height="55" rx="10" fill="#0d2137" stroke="#555" stroke-width="1"/>
+  <text x="450" y="600" text-anchor="middle" fill="#aaa" font-size="11" font-weight="bold">Key Insight</text>
+  <text x="450" y="618" text-anchor="middle" fill="#ffd700" font-size="10">One formula unifies four domains of mathematics</text>
+  <text x="450" y="632" text-anchor="middle" fill="#888" font-size="9">Formally verified in Lean 4 with Mathlib</text>
+</svg>

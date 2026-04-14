@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 450" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#16213e"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="700" height="450" fill="url(#bg3)"/>
+
+  <text x="350" y="35" text-anchor="middle" fill="#e94560" font-size="22" font-weight="bold">
+    Einstein Velocity Addition = Hyperbolic SPB
+  </text>
+  <text x="350" y="55" text-anchor="middle" fill="#aaa" font-size="13">
+    spbH(u, v) = (u + v) / (1 + uv)   [c = 1 units]
+  </text>
+
+  <!-- Graph area -->
+  <g transform="translate(100, 80)">
+    <!-- Axes -->
+    <line x1="0" y1="300" x2="500" y2="300" stroke="#666" stroke-width="1.5"/>
+    <line x1="0" y1="0" x2="0" y2="300" stroke="#666" stroke-width="1.5"/>
+
+    <!-- Axis labels -->
+    <text x="250" y="340" text-anchor="middle" fill="#ccc" font-size="12">v₁ / c</text>
+    <text x="-40" y="150" text-anchor="middle" fill="#ccc" font-size="12" transform="rotate(-90, -40, 150)">
+      spbH(v₁, v₂) / c
+    </text>
+
+    <!-- Grid -->
+    <line x1="0" y1="0" x2="500" y2="0" stroke="#333" stroke-width="0.5" stroke-dasharray="3,3"/>
+    <line x1="0" y1="150" x2="500" y2="150" stroke="#333" stroke-width="0.5" stroke-dasharray="3,3"/>
+    <line x1="250" y1="0" x2="250" y2="300" stroke="#333" stroke-width="0.5" stroke-dasharray="3,3"/>
+    <line x1="500" y1="0" x2="500" y2="300" stroke="#333" stroke-width="0.5" stroke-dasharray="3,3"/>
+
+    <!-- Tick labels -->
+    <text x="0" y="315" text-anchor="middle" fill="#888" font-size="10">0</text>
+    <text x="250" y="315" text-anchor="middle" fill="#888" font-size="10">0.5</text>
+    <text x="500" y="315" text-anchor="middle" fill="#888" font-size="10">1.0</text>
+    <text x="-10" y="305" text-anchor="end" fill="#888" font-size="10">0</text>
+    <text x="-10" y="155" text-anchor="end" fill="#888" font-size="10">0.5</text>
+    <text x="-10" y="5" text-anchor="end" fill="#888" font-size="10">1.0</text>
+
+    <!-- Speed of light line -->
+    <line x1="0" y1="0" x2="500" y2="0" stroke="#e94560" stroke-width="2.5"/>
+    <text x="510" y="5" fill="#e94560" font-size="11" font-weight="bold">c</text>
+
+    <!-- Classical addition (v₂ = 0.5): v₁ + 0.5 (goes above c) -->
+    <line x1="0" y1="150" x2="250" y2="0" stroke="#888" stroke-width="1.5" stroke-dasharray="8,4"/>
+    <text x="130" y="55" fill="#888" font-size="10">Classical (v₁+0.5)</text>
+
+    <!-- Relativistic curves -->
+    <!-- v₂ = 0.1: spbH(v₁, 0.1) -->
+    <polyline points="0,270 50,246 100,222 150,198 200,174 250,150 300,128 350,106 400,86 450,66 500,48"
+              fill="none" stroke="#4fc3f7" stroke-width="2"/>
+    <text x="510" y="52" fill="#4fc3f7" font-size="10">v₂=0.1c</text>
+
+    <!-- v₂ = 0.3: spbH(v₁, 0.3) -->
+    <polyline points="0,210 50,192 100,174 150,156 200,138 250,120 300,104 350,88 400,74 450,60 500,48"
+              fill="none" stroke="#66bb6a" stroke-width="2"/>
+    <text x="510" y="35" fill="#66bb6a" font-size="10">v₂=0.3c</text>
+
+    <!-- v₂ = 0.5: spbH(v₁, 0.5) -->
+    <polyline points="0,150 50,138 100,126 150,114 200,102 250,90 300,78 350,66 400,56 450,46 500,36"
+              fill="none" stroke="#ffd54f" stroke-width="2"/>
+    <text x="510" y="22" fill="#ffd54f" font-size="10">v₂=0.5c</text>
+
+    <!-- v₂ = 0.9: spbH(v₁, 0.9) -->
+    <polyline points="0,30 50,28 100,26 150,24 200,22 250,20 300,18 350,16 400,14 450,12 500,10"
+              fill="none" stroke="#ff7043" stroke-width="2"/>
+    <text x="510" y="10" fill="#ff7043" font-size="10">v₂=0.9c</text>
+
+    <!-- Annotation -->
+    <rect x="280" y="200" width="200" height="80" rx="8" fill="#1a1a2e" stroke="#e94560" stroke-width="1" opacity="0.9"/>
+    <text x="380" y="220" text-anchor="middle" fill="#e94560" font-size="11" font-weight="bold">Light Speed Barrier</text>
+    <text x="380" y="240" text-anchor="middle" fill="#ccc" font-size="10">All curves stay below c = 1</text>
+    <text x="380" y="258" text-anchor="middle" fill="#ccc" font-size="10">|u|,|v| &lt; 1 ⟹ |spbH(u,v)| &lt; 1</text>
+    <text x="380" y="272" text-anchor="middle" fill="#888" font-size="9">Proven in Lean 4 ✓</text>
+  </g>
+
+  <!-- Bottom formula -->
+  <text x="350" y="420" text-anchor="middle" fill="#ffd700" font-size="14">
+    Rapidity addition: tanh(φ₁ + φ₂) = spbH(tanh φ₁, tanh φ₂)
+  </text>
+  <text x="350" y="440" text-anchor="middle" fill="#888" font-size="11">
+    The group structure of velocities is the same as the group structure of angles
+  </text>
+</svg>
