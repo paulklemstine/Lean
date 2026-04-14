@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 450" width="700" height="450">
+  <defs>
+    <linearGradient id="bg_it" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#16213e"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="700" height="450" fill="url(#bg_it)"/>
+
+  <!-- Title -->
+  <text x="350" y="35" text-anchor="middle" fill="#ffffff" font-size="20" font-weight="bold" font-family="Georgia">
+    Iterated Softplus: σⁿ(x) → ∞
+  </text>
+  <text x="350" y="55" text-anchor="middle" fill="#8899bb" font-size="12" font-family="Georgia" font-style="italic">
+    Every orbit escapes to infinity (σ(x) > x for all x)
+  </text>
+
+  <!-- Axes -->
+  <line x1="80" y1="380" x2="650" y2="380" stroke="#555577" stroke-width="1"/>
+  <line x1="350" y1="70" x2="350" y2="400" stroke="#555577" stroke-width="1"/>
+  <text x="660" y="385" fill="#555577" font-size="12" font-family="monospace">x</text>
+  <text x="355" y="80" fill="#555577" font-size="12" font-family="monospace">y</text>
+
+  <!-- Grid lines -->
+  <line x1="80" y1="310" x2="650" y2="310" stroke="#333355" stroke-width="0.5" stroke-dasharray="3,5"/>
+  <line x1="80" y1="240" x2="650" y2="240" stroke="#333355" stroke-width="0.5" stroke-dasharray="3,5"/>
+  <line x1="80" y1="170" x2="650" y2="170" stroke="#333355" stroke-width="0.5" stroke-dasharray="3,5"/>
+
+  <!-- Identity line y=x (the reference) -->
+  <line x1="100" y1="380" x2="590" y2="70" stroke="#444466" stroke-width="1" stroke-dasharray="5,5"/>
+  <text x="600" y="80" fill="#444466" font-size="10" font-family="monospace">y = x</text>
+
+  <!-- σ⁰(x) = x (identity, same as y=x) -->
+
+  <!-- σ¹(x) = softplus(x) ≈ smoothed ReLU -->
+  <!-- Approximate curve: goes from near 0 at x=-5 to near x at x=5 -->
+  <path d="M 100,375 Q 200,370 280,355 Q 320,340 350,310 Q 400,250 450,190 Q 520,120 590,85"
+        fill="none" stroke="#3498db" stroke-width="2.5"/>
+  <text x="600" y="90" fill="#3498db" font-size="11" font-family="monospace">σ¹</text>
+
+  <!-- σ²(x) = softplus(softplus(x)) -->
+  <path d="M 100,345 Q 200,340 280,330 Q 320,318 350,295 Q 400,240 450,180 Q 520,115 590,80"
+        fill="none" stroke="#2ecc71" stroke-width="2"/>
+  <text x="600" y="75" fill="#2ecc71" font-size="11" font-family="monospace">σ²</text>
+
+  <!-- σ³(x) -->
+  <path d="M 100,320 Q 200,318 280,310 Q 320,300 350,282 Q 400,232 450,172 Q 520,110 590,76"
+        fill="none" stroke="#e67e22" stroke-width="1.5"/>
+  <text x="618" y="78" fill="#e67e22" font-size="10" font-family="monospace">σ³</text>
+
+  <!-- σ⁵(x) -->
+  <path d="M 100,280 Q 200,278 280,272 Q 320,265 350,252 Q 400,215 450,163 Q 520,105 590,73"
+        fill="none" stroke="#e74c3c" stroke-width="1.5"/>
+  <text x="618" y="72" fill="#e74c3c" font-size="10" font-family="monospace">σ⁵</text>
+
+  <!-- σ¹⁰(x) -->
+  <path d="M 100,218 Q 200,216 280,213 Q 320,210 350,202 Q 400,178 450,143 Q 520,98 590,70"
+        fill="none" stroke="#9b59b6" stroke-width="1.5"/>
+  <text x="618" y="68" fill="#9b59b6" font-size="10" font-family="monospace">σ¹⁰</text>
+
+  <!-- Arrows showing divergence -->
+  <text x="110" y="410" fill="#888899" font-size="10" font-family="monospace">-5</text>
+  <text x="340" y="410" fill="#888899" font-size="10" font-family="monospace">0</text>
+  <text x="575" y="410" fill="#888899" font-size="10" font-family="monospace">5</text>
+
+  <!-- Info box -->
+  <rect x="85" y="85" width="220" height="95" rx="8" fill="rgba(0,0,0,0.5)" stroke="#555577" stroke-width="1"/>
+  <text x="195" y="108" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold" font-family="Georgia">Proved Properties</text>
+  <text x="95" y="128" fill="#88bbff" font-size="10" font-family="monospace">• σⁿ(x) &gt; 0 for n ≥ 1 ✓</text>
+  <text x="95" y="145" fill="#88bbff" font-size="10" font-family="monospace">• σⁿ strictly monotone ✓</text>
+  <text x="95" y="162" fill="#88bbff" font-size="10" font-family="monospace">• σⁿ ∈ Sheffer algebra ✓</text>
+  <text x="95" y="179" fill="#88bbff" font-size="10" font-family="monospace">• σ(σ(x)) &gt; σ(x) ✓</text>
+</svg>
