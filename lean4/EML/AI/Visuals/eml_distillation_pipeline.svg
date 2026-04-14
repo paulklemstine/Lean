@@ -1,152 +1,157 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 450" font-family="'Segoe UI', Arial, sans-serif">
   <defs>
-    <linearGradient id="bg4" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#0a0a2e"/>
-      <stop offset="100%" style="stop-color:#1a1a4e"/>
+    <linearGradient id="bg4" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d1117"/>
+      <stop offset="100%" style="stop-color:#161b22"/>
     </linearGradient>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#58a6ff"/>
+    </marker>
   </defs>
-  
-  <rect width="900" height="400" fill="url(#bg4)"/>
-  
-  <text x="450" y="35" text-anchor="middle" fill="#fff" font-size="20" font-weight="bold">
-    Neural Network → EML Distillation Pipeline
+
+  <rect width="900" height="450" fill="url(#bg4)" rx="12"/>
+
+  <!-- Title -->
+  <text x="450" y="35" text-anchor="middle" fill="#e6edf3" font-size="20" font-weight="bold">
+    EML Distillation Pipeline: Neural Network → Symbolic Formula
   </text>
-  
-  <!-- Step 1: Neural Network -->
-  <g transform="translate(30, 60)">
-    <rect width="150" height="120" rx="10" fill="#1a1a3e" stroke="#ff6b6b" stroke-width="2"/>
-    <text x="75" y="20" text-anchor="middle" fill="#ff6b6b" font-size="13" font-weight="bold">Step 1</text>
-    <text x="75" y="38" text-anchor="middle" fill="#ccc" font-size="11">Trained NN</text>
-    <!-- Mini NN diagram -->
-    <circle cx="40" cy="60" r="6" fill="#ff6b6b" opacity="0.5"/>
-    <circle cx="40" cy="80" r="6" fill="#ff6b6b" opacity="0.5"/>
-    <circle cx="40" cy="100" r="6" fill="#ff6b6b" opacity="0.5"/>
-    <circle cx="75" cy="65" r="6" fill="#ff6b6b" opacity="0.7"/>
-    <circle cx="75" cy="85" r="6" fill="#ff6b6b" opacity="0.7"/>
-    <circle cx="110" cy="75" r="6" fill="#ff6b6b"/>
-    <line x1="46" y1="60" x2="69" y2="65" stroke="#ff6b6b44" stroke-width="1"/>
-    <line x1="46" y1="80" x2="69" y2="65" stroke="#ff6b6b44" stroke-width="1"/>
-    <line x1="46" y1="100" x2="69" y2="85" stroke="#ff6b6b44" stroke-width="1"/>
-    <line x1="81" y1="65" x2="104" y2="75" stroke="#ff6b6b44" stroke-width="1"/>
-    <line x1="81" y1="85" x2="104" y2="75" stroke="#ff6b6b44" stroke-width="1"/>
-    <text x="75" y="115" text-anchor="middle" fill="#888" font-size="9">50,000 params</text>
+
+  <!-- Step 1: Black-box NN -->
+  <rect x="30" y="70" width="170" height="120" rx="10" fill="#161b22" stroke="#f85149" stroke-width="2"/>
+  <text x="115" y="95" text-anchor="middle" fill="#f85149" font-size="13" font-weight="bold">① Black-Box NN</text>
+
+  <!-- NN layers visualization -->
+  <g transform="translate(60, 105)">
+    <circle cx="20" cy="10" r="5" fill="#484f58"/>
+    <circle cx="20" cy="25" r="5" fill="#484f58"/>
+    <circle cx="20" cy="40" r="5" fill="#484f58"/>
+    <circle cx="55" cy="5" r="4" fill="#484f58"/>
+    <circle cx="55" cy="17" r="4" fill="#484f58"/>
+    <circle cx="55" cy="29" r="4" fill="#484f58"/>
+    <circle cx="55" cy="41" r="4" fill="#484f58"/>
+    <circle cx="90" cy="10" r="5" fill="#484f58"/>
+    <circle cx="90" cy="25" r="5" fill="#484f58"/>
+    <circle cx="90" cy="40" r="5" fill="#484f58"/>
+    <!-- connections (simplified) -->
+    <line x1="25" y1="10" x2="51" y2="5" stroke="#30363d" stroke-width="0.5"/>
+    <line x1="25" y1="10" x2="51" y2="17" stroke="#30363d" stroke-width="0.5"/>
+    <line x1="25" y1="25" x2="51" y2="17" stroke="#30363d" stroke-width="0.5"/>
+    <line x1="25" y1="25" x2="51" y2="29" stroke="#30363d" stroke-width="0.5"/>
+    <line x1="25" y1="40" x2="51" y2="29" stroke="#30363d" stroke-width="0.5"/>
+    <line x1="25" y1="40" x2="51" y2="41" stroke="#30363d" stroke-width="0.5"/>
+    <line x1="59" y1="5" x2="85" y2="10" stroke="#30363d" stroke-width="0.5"/>
+    <line x1="59" y1="17" x2="85" y2="25" stroke="#30363d" stroke-width="0.5"/>
+    <line x1="59" y1="29" x2="85" y2="25" stroke="#30363d" stroke-width="0.5"/>
+    <line x1="59" y1="41" x2="85" y2="40" stroke="#30363d" stroke-width="0.5"/>
   </g>
-  
+  <text x="115" y="178" text-anchor="middle" fill="#8b949e" font-size="10">50,500 params</text>
+
   <!-- Arrow 1 -->
-  <g transform="translate(185, 110)">
-    <line x1="0" y1="10" x2="50" y2="10" stroke="#555" stroke-width="2"/>
-    <polygon points="50,5 60,10 50,15" fill="#555"/>
-    <text x="30" y="0" text-anchor="middle" fill="#888" font-size="8">teacher</text>
-  </g>
-  
-  <!-- Step 2: Dense Data -->
-  <g transform="translate(250, 60)">
-    <rect width="140" height="120" rx="10" fill="#1a1a3e" stroke="#ffcc00" stroke-width="2"/>
-    <text x="70" y="20" text-anchor="middle" fill="#ffcc00" font-size="13" font-weight="bold">Step 2</text>
-    <text x="70" y="38" text-anchor="middle" fill="#ccc" font-size="11">Dense Data</text>
-    <!-- Data points -->
-    <g fill="#ffcc00" opacity="0.6">
-      <circle cx="30" cy="55" r="2"/><circle cx="40" cy="70" r="2"/>
-      <circle cx="50" cy="60" r="2"/><circle cx="60" cy="85" r="2"/>
-      <circle cx="70" cy="75" r="2"/><circle cx="80" cy="65" r="2"/>
-      <circle cx="90" cy="90" r="2"/><circle cx="100" cy="55" r="2"/>
-      <circle cx="35" cy="80" r="2"/><circle cx="55" cy="95" r="2"/>
-      <circle cx="75" cy="50" r="2"/><circle cx="95" cy="70" r="2"/>
-      <circle cx="45" cy="85" r="2"/><circle cx="85" cy="60" r="2"/>
-      <circle cx="65" cy="100" r="2"/><circle cx="105" cy="80" r="2"/>
+  <line x1="205" y1="130" x2="245" y2="130" stroke="#58a6ff" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Step 2: Grid Prediction -->
+  <rect x="250" y="70" width="150" height="120" rx="10" fill="#161b22" stroke="#d29922" stroke-width="2"/>
+  <text x="325" y="95" text-anchor="middle" fill="#d29922" font-size="13" font-weight="bold">② Grid Predict</text>
+
+  <!-- Grid dots -->
+  <g transform="translate(275, 110)">
+    <g fill="#d29922" opacity="0.6">
+      <circle cx="10" cy="10" r="2.5"/>
+      <circle cx="30" cy="10" r="2.5"/>
+      <circle cx="50" cy="10" r="2.5"/>
+      <circle cx="70" cy="10" r="2.5"/>
+      <circle cx="90" cy="10" r="2.5"/>
+      <circle cx="10" cy="25" r="2.5"/>
+      <circle cx="30" cy="25" r="2.5"/>
+      <circle cx="50" cy="25" r="2.5"/>
+      <circle cx="70" cy="25" r="2.5"/>
+      <circle cx="90" cy="25" r="2.5"/>
+      <circle cx="10" cy="40" r="2.5"/>
+      <circle cx="30" cy="40" r="2.5"/>
+      <circle cx="50" cy="40" r="2.5"/>
+      <circle cx="70" cy="40" r="2.5"/>
+      <circle cx="90" cy="40" r="2.5"/>
     </g>
-    <text x="70" y="115" text-anchor="middle" fill="#888" font-size="9">10,000 points</text>
   </g>
-  
+  <text x="325" y="178" text-anchor="middle" fill="#8b949e" font-size="10">n = 10,000 points</text>
+
   <!-- Arrow 2 -->
-  <g transform="translate(395, 110)">
-    <line x1="0" y1="10" x2="50" y2="10" stroke="#555" stroke-width="2"/>
-    <polygon points="50,5 60,10 50,15" fill="#555"/>
-    <text x="30" y="0" text-anchor="middle" fill="#888" font-size="8">MCTS</text>
+  <line x1="405" y1="130" x2="445" y2="130" stroke="#58a6ff" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Step 3: MCTS Search -->
+  <rect x="450" y="70" width="150" height="120" rx="10" fill="#161b22" stroke="#8957e5" stroke-width="2"/>
+  <text x="525" y="95" text-anchor="middle" fill="#bc8cff" font-size="13" font-weight="bold">③ MCTS Search</text>
+
+  <!-- Tree visualization -->
+  <g transform="translate(480, 105)">
+    <circle cx="45" cy="5" r="6" fill="#8957e5"/>
+    <text x="45" y="9" text-anchor="middle" fill="white" font-size="7">eml</text>
+    <line x1="39" y1="11" x2="25" y2="25" stroke="#8957e5" stroke-width="1.5"/>
+    <line x1="51" y1="11" x2="65" y2="25" stroke="#8957e5" stroke-width="1.5"/>
+    <circle cx="25" cy="30" r="6" fill="#8957e5"/>
+    <text x="25" y="34" text-anchor="middle" fill="white" font-size="7">eml</text>
+    <circle cx="65" cy="30" r="5" fill="#238636"/>
+    <text x="65" y="34" text-anchor="middle" fill="white" font-size="7">1</text>
+    <line x1="19" y1="36" x2="10" y2="48" stroke="#8957e5" stroke-width="1.5"/>
+    <line x1="31" y1="36" x2="40" y2="48" stroke="#8957e5" stroke-width="1.5"/>
+    <circle cx="10" cy="53" r="5" fill="#1f6feb"/>
+    <text x="10" y="57" text-anchor="middle" fill="white" font-size="7">x</text>
+    <circle cx="40" cy="53" r="5" fill="#238636"/>
+    <text x="40" y="57" text-anchor="middle" fill="white" font-size="7">c</text>
   </g>
-  
-  <!-- Step 3: EML Tree -->
-  <g transform="translate(460, 60)">
-    <rect width="150" height="120" rx="10" fill="#1a1a3e" stroke="#00ff88" stroke-width="2"/>
-    <text x="75" y="20" text-anchor="middle" fill="#00ff88" font-size="13" font-weight="bold">Step 3</text>
-    <text x="75" y="38" text-anchor="middle" fill="#ccc" font-size="11">EML Tree</text>
-    <!-- Mini tree -->
-    <circle cx="75" cy="55" r="8" fill="#00ff88" opacity="0.8"/>
-    <text x="75" y="58" text-anchor="middle" fill="#000" font-size="8">eml</text>
-    <line x1="67" y1="63" x2="50" y2="78" stroke="#00ff88" stroke-width="1.5"/>
-    <line x1="83" y1="63" x2="100" y2="78" stroke="#00ff88" stroke-width="1.5"/>
-    <circle cx="50" cy="82" r="6" fill="#00ff8866"/>
-    <text x="50" y="85" text-anchor="middle" fill="#fff" font-size="7">x</text>
-    <circle cx="100" cy="82" r="8" fill="#00ff88" opacity="0.8"/>
-    <text x="100" y="85" text-anchor="middle" fill="#000" font-size="8">eml</text>
-    <line x1="92" y1="90" x2="80" y2="100" stroke="#00ff88" stroke-width="1.5"/>
-    <line x1="108" y1="90" x2="120" y2="100" stroke="#00ff88" stroke-width="1.5"/>
-    <circle cx="80" cy="104" r="5" fill="#00ff8866"/>
-    <circle cx="120" cy="104" r="5" fill="#00ff8866"/>
-    <text x="75" y="115" text-anchor="middle" fill="#888" font-size="9">4 leaves = 196 bytes</text>
-  </g>
-  
+  <text x="525" y="178" text-anchor="middle" fill="#8b949e" font-size="10">topology search</text>
+
   <!-- Arrow 3 -->
-  <g transform="translate(615, 110)">
-    <line x1="0" y1="10" x2="50" y2="10" stroke="#555" stroke-width="2"/>
-    <polygon points="50,5 60,10 50,15" fill="#555"/>
-    <text x="30" y="0" text-anchor="middle" fill="#888" font-size="8">readout</text>
-  </g>
-  
-  <!-- Step 4: Formula -->
-  <g transform="translate(670, 60)">
-    <rect width="200" height="120" rx="10" fill="#1a1a3e" stroke="#00d4ff" stroke-width="2"/>
-    <text x="100" y="20" text-anchor="middle" fill="#00d4ff" font-size="13" font-weight="bold">Step 4</text>
-    <text x="100" y="38" text-anchor="middle" fill="#ccc" font-size="11">Exact Formula</text>
-    <text x="100" y="65" text-anchor="middle" fill="#00d4ff" font-size="14" font-weight="bold">
-      f(x) = e^(2.1x)
-    </text>
-    <text x="100" y="82" text-anchor="middle" fill="#00d4ff" font-size="14" font-weight="bold">
-      − ln(x + 0.5)
-    </text>
-    <text x="100" y="105" text-anchor="middle" fill="#888" font-size="9">Human-readable</text>
-    <text x="100" y="115" text-anchor="middle" fill="#888" font-size="9">Formally verifiable</text>
-  </g>
-  
-  <!-- Bottom: Compression stats -->
-  <g transform="translate(50, 210)">
-    <rect width="800" height="55" rx="8" fill="#111133" stroke="#333"/>
-    <text x="400" y="20" text-anchor="middle" fill="#ffcc00" font-size="14" font-weight="bold">
-      Compression: 50,000 NN parameters → 4 EML leaves = 250× reduction
-    </text>
-    <text x="400" y="40" text-anchor="middle" fill="#888" font-size="11">
-      80 KB neural network → 400 bytes EML tree | Exact formula | Deployable on any device
-    </text>
-  </g>
-  
-  <!-- Bottom: Benefits -->
-  <g transform="translate(50, 280)">
-    <rect x="0" y="0" width="180" height="100" rx="8" fill="#1a2a1e" stroke="#00ff88"/>
-    <text x="90" y="22" text-anchor="middle" fill="#00ff88" font-size="12" font-weight="bold">🔍 Interpretable</text>
-    <text x="90" y="42" text-anchor="middle" fill="#ccc" font-size="10">Read the formula</text>
-    <text x="90" y="57" text-anchor="middle" fill="#ccc" font-size="10">directly from the</text>
-    <text x="90" y="72" text-anchor="middle" fill="#ccc" font-size="10">trained tree</text>
-    <text x="90" y="90" text-anchor="middle" fill="#888" font-size="9">No black box</text>
-    
-    <rect x="205" y="0" width="180" height="100" rx="8" fill="#2a1a1e" stroke="#ff6b6b"/>
-    <text x="295" y="22" text-anchor="middle" fill="#ff6b6b" font-size="12" font-weight="bold">📦 Compressed</text>
-    <text x="295" y="42" text-anchor="middle" fill="#ccc" font-size="10">250-1000× fewer</text>
-    <text x="295" y="57" text-anchor="middle" fill="#ccc" font-size="10">parameters than</text>
-    <text x="295" y="72" text-anchor="middle" fill="#ccc" font-size="10">equivalent NN</text>
-    <text x="295" y="90" text-anchor="middle" fill="#888" font-size="9">Proved in Lean 4</text>
-    
-    <rect x="410" y="0" width="180" height="100" rx="8" fill="#1a1a2e" stroke="#00d4ff"/>
-    <text x="500" y="22" text-anchor="middle" fill="#00d4ff" font-size="12" font-weight="bold">✅ Verifiable</text>
-    <text x="500" y="42" text-anchor="middle" fill="#ccc" font-size="10">Formula can be</text>
-    <text x="500" y="57" text-anchor="middle" fill="#ccc" font-size="10">formally verified</text>
-    <text x="500" y="72" text-anchor="middle" fill="#ccc" font-size="10">in Lean 4</text>
-    <text x="500" y="90" text-anchor="middle" fill="#888" font-size="9">Machine-checked proofs</text>
-    
-    <rect x="615" y="0" width="180" height="100" rx="8" fill="#2a2a1e" stroke="#ffcc00"/>
-    <text x="705" y="22" text-anchor="middle" fill="#ffcc00" font-size="12" font-weight="bold">⚡ Deployable</text>
-    <text x="705" y="42" text-anchor="middle" fill="#ccc" font-size="10">Runs on IoT,</text>
-    <text x="705" y="57" text-anchor="middle" fill="#ccc" font-size="10">satellites, medical</text>
-    <text x="705" y="72" text-anchor="middle" fill="#ccc" font-size="10">devices (≤1 KB)</text>
-    <text x="705" y="90" text-anchor="middle" fill="#888" font-size="9">No GPU needed</text>
-  </g>
+  <line x1="605" y1="130" x2="645" y2="130" stroke="#58a6ff" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Step 4: Formula Readout -->
+  <rect x="650" y="70" width="220" height="120" rx="10" fill="#161b22" stroke="#238636" stroke-width="2"/>
+  <text x="760" y="95" text-anchor="middle" fill="#238636" font-size="13" font-weight="bold">④ Formula Readout</text>
+
+  <rect x="665" y="108" width="190" height="30" rx="5" fill="#0d1117" stroke="#238636"/>
+  <text x="760" y="128" text-anchor="middle" fill="#e6edf3" font-size="12" font-style="italic">
+    f(x) = exp(2.3x − 1.1)
+  </text>
+
+  <rect x="665" y="145" width="190" height="25" rx="5" fill="#0d1117" stroke="#238636"/>
+  <text x="760" y="163" text-anchor="middle" fill="#aaf0d1" font-size="11">
+    196 params — 250× smaller!
+  </text>
+  <text x="760" y="178" text-anchor="middle" fill="#8b949e" font-size="10">interpretable ✓</text>
+
+  <!-- Compression comparison -->
+  <rect x="30" y="220" width="840" height="100" rx="10" fill="#161b22" stroke="#30363d"/>
+  <text x="450" y="248" text-anchor="middle" fill="#e6edf3" font-size="15" font-weight="bold">
+    Compression Comparison (Formally Verified)
+  </text>
+
+  <!-- NN bar -->
+  <rect x="60" y="265" width="700" height="20" rx="4" fill="#f85149" opacity="0.3"/>
+  <rect x="60" y="265" width="700" height="20" rx="4" fill="none" stroke="#f85149"/>
+  <text x="410" y="280" text-anchor="middle" fill="#f85149" font-size="11" font-weight="bold">
+    Neural Network: 50,500 parameters (3,232,000 bits)
+  </text>
+
+  <!-- EML bar -->
+  <rect x="60" y="295" width="2.8" height="20" rx="2" fill="#238636"/>
+  <text x="80" y="310" fill="#238636" font-size="11" font-weight="bold">
+    EML Tree: 196 params (3,200 bits) — 1000× storage compression
+  </text>
+
+  <!-- Key benefits -->
+  <rect x="30" y="340" width="270" height="90" rx="8" fill="#161b22" stroke="#238636"/>
+  <text x="165" y="365" text-anchor="middle" fill="#238636" font-size="13" font-weight="bold">✓ Interpretable</text>
+  <text x="165" y="385" text-anchor="middle" fill="#e6edf3" font-size="11">Read the formula directly</text>
+  <text x="165" y="405" text-anchor="middle" fill="#e6edf3" font-size="11">No black box</text>
+
+  <rect x="315" y="340" width="270" height="90" rx="8" fill="#161b22" stroke="#1f6feb"/>
+  <text x="450" y="365" text-anchor="middle" fill="#58a6ff" font-size="13" font-weight="bold">✓ Verifiable</text>
+  <text x="450" y="385" text-anchor="middle" fill="#e6edf3" font-size="11">Formally prove safety</text>
+  <text x="450" y="405" text-anchor="middle" fill="#e6edf3" font-size="11">Lipschitz bounds, domain checks</text>
+
+  <rect x="600" y="340" width="270" height="90" rx="8" fill="#161b22" stroke="#d29922"/>
+  <text x="735" y="365" text-anchor="middle" fill="#d29922" font-size="13" font-weight="bold">✓ Efficient</text>
+  <text x="735" y="385" text-anchor="middle" fill="#e6edf3" font-size="11">250× parameter reduction</text>
+  <text x="735" y="405" text-anchor="middle" fill="#e6edf3" font-size="11">Fits on microcontrollers</text>
 </svg>
