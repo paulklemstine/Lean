@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" font-family="'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:0.3"/>
+      <stop offset="100%" style="stop-color:#FFD700;stop-opacity:0"/>
+    </radialGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.2"/>
+    </filter>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#666"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="900" fill="#f8f9fa"/>
+
+  <!-- Title -->
+  <text x="600" y="45" text-anchor="middle" font-size="28" font-weight="bold" fill="#1a1a2e">
+    The Stereographic Projection Bridge
+  </text>
+  <text x="600" y="72" text-anchor="middle" font-size="16" fill="#666">
+    spb(x, y) = (x + y) / (1 − xy) — One Formula, Four Worlds
+  </text>
+
+  <!-- Central SPB node with glow -->
+  <circle cx="600" cy="420" r="120" fill="url(#centerGlow)"/>
+  <circle cx="600" cy="420" r="80" fill="#1a1a2e" filter="url(#shadow)"/>
+  <text x="600" y="410" text-anchor="middle" font-size="18" font-weight="bold" fill="#FFD700">
+    spb(x, y)
+  </text>
+  <text x="600" y="435" text-anchor="middle" font-size="14" fill="#FFD700">
+    (x+y)/(1−xy)
+  </text>
+
+  <!-- Domain 1: Trigonometry (top-left) -->
+  <rect x="50" y="120" width="280" height="180" rx="15" fill="#e8f4f8" stroke="#2196F3" stroke-width="2" filter="url(#shadow)"/>
+  <text x="190" y="150" text-anchor="middle" font-size="18" font-weight="bold" fill="#1565C0">🔺 Trigonometry</text>
+  <text x="190" y="178" text-anchor="middle" font-size="13" fill="#333">tan(α + β) = spb(tan α, tan β)</text>
+  <text x="190" y="200" text-anchor="middle" font-size="12" fill="#555">• Double angle: spb(t, t) = 2t/(1−t²)</text>
+  <text x="190" y="220" text-anchor="middle" font-size="12" fill="#555">• Triple angle: spb(spb(t,t), t)</text>
+  <text x="190" y="240" text-anchor="middle" font-size="12" fill="#555">• n-fold: tan(nθ) = spb_pow(n, tan θ)</text>
+  <text x="190" y="262" text-anchor="middle" font-size="12" fill="#555">• Half-angle substitution</text>
+  <text x="190" y="284" text-anchor="middle" font-size="11" fill="#1565C0" font-style="italic">Proven: spb_tan_add, spb_double, spb_triple</text>
+
+  <!-- Domain 2: Group Theory (top-right) -->
+  <rect x="870" y="120" width="280" height="180" rx="15" fill="#f3e8f9" stroke="#9C27B0" stroke-width="2" filter="url(#shadow)"/>
+  <text x="1010" y="150" text-anchor="middle" font-size="18" font-weight="bold" fill="#7B1FA2">⭕ Circle Group</text>
+  <text x="1010" y="178" text-anchor="middle" font-size="13" fill="#333">cayley(spb(x,y)) = cayley(x)·cayley(y)</text>
+  <text x="1010" y="200" text-anchor="middle" font-size="12" fill="#555">• Cayley: x ↦ (1+ix)/(1−ix)</text>
+  <text x="1010" y="220" text-anchor="middle" font-size="12" fill="#555">• (ℝ, spb) ≅ (S¹, ·)</text>
+  <text x="1010" y="240" text-anchor="middle" font-size="12" fill="#555">• |cayley(x)| = 1 always</text>
+  <text x="1010" y="262" text-anchor="middle" font-size="12" fill="#555">• Over F_p: order p±1</text>
+  <text x="1010" y="284" text-anchor="middle" font-size="11" fill="#7B1FA2" font-style="italic">Proven: cayley_normSq, spb_cayley, spbF_assoc</text>
+
+  <!-- Domain 3: Relativity (bottom-left) -->
+  <rect x="50" y="560" width="280" height="180" rx="15" fill="#fef3e2" stroke="#FF9800" stroke-width="2" filter="url(#shadow)"/>
+  <text x="190" y="590" text-anchor="middle" font-size="18" font-weight="bold" fill="#E65100">⚡ Relativity</text>
+  <text x="190" y="618" text-anchor="middle" font-size="13" fill="#333">spbH(u,v) = (u+v)/(1+uv)</text>
+  <text x="190" y="640" text-anchor="middle" font-size="12" fill="#555">• Einstein velocity addition</text>
+  <text x="190" y="660" text-anchor="middle" font-size="12" fill="#555">• |u|,|v| &lt; 1 ⟹ |spbH(u,v)| &lt; 1</text>
+  <text x="190" y="680" text-anchor="middle" font-size="12" fill="#555">• Rapidity: tanh(φ₁+φ₂)</text>
+  <text x="190" y="700" text-anchor="middle" font-size="12" fill="#555">• Thomas precession via 3D SPB</text>
+  <text x="190" y="724" text-anchor="middle" font-size="11" fill="#E65100" font-style="italic">Proven: spbH_bounded, spbH_tanh_add</text>
+
+  <!-- Domain 4: Approximation Theory (bottom-right) -->
+  <rect x="870" y="560" width="280" height="180" rx="15" fill="#e8f5e9" stroke="#4CAF50" stroke-width="2" filter="url(#shadow)"/>
+  <text x="1010" y="590" text-anchor="middle" font-size="18" font-weight="bold" fill="#2E7D32">📐 Approximation</text>
+  <text x="1010" y="618" text-anchor="middle" font-size="13" fill="#333">SPB trees ↔ rational Chebyshev</text>
+  <text x="1010" y="640" text-anchor="middle" font-size="12" fill="#555">• tan(n·arctan(x)): rational basis</text>
+  <text x="1010" y="660" text-anchor="middle" font-size="12" fill="#555">• Exponential convergence</text>
+  <text x="1010" y="680" text-anchor="middle" font-size="12" fill="#555">• spb(x,ε) ≈ x + ε(1+x²)</text>
+  <text x="1010" y="700" text-anchor="middle" font-size="12" fill="#555">• Neural SPB activation</text>
+  <text x="1010" y="724" text-anchor="middle" font-size="11" fill="#2E7D32" font-style="italic">Proven: spb_approx_sum, spb_deriv_positive</text>
+
+  <!-- Connecting arrows -->
+  <!-- Center to Trigonometry -->
+  <line x1="530" y1="370" x2="330" y2="280" stroke="#2196F3" stroke-width="2.5" marker-end="url(#arrowhead)"/>
+  <text x="410" y="310" text-anchor="middle" font-size="11" fill="#2196F3" transform="rotate(-20, 410, 310)">tan addition</text>
+
+  <!-- Center to Group Theory -->
+  <line x1="670" y1="370" x2="870" y2="280" stroke="#9C27B0" stroke-width="2.5" marker-end="url(#arrowhead)"/>
+  <text x="790" y="310" text-anchor="middle" font-size="11" fill="#9C27B0" transform="rotate(20, 790, 310)">Cayley transform</text>
+
+  <!-- Center to Relativity -->
+  <line x1="530" y1="470" x2="330" y2="580" stroke="#FF9800" stroke-width="2.5" marker-end="url(#arrowhead)"/>
+  <text x="410" y="540" text-anchor="middle" font-size="11" fill="#FF9800" transform="rotate(20, 410, 540)">sign flip: −xy → +uv</text>
+
+  <!-- Center to Approximation -->
+  <line x1="670" y1="470" x2="870" y2="580" stroke="#4CAF50" stroke-width="2.5" marker-end="url(#arrowhead)"/>
+  <text x="790" y="540" text-anchor="middle" font-size="11" fill="#4CAF50" transform="rotate(-20, 790, 540)">iterated SPB trees</text>
+
+  <!-- Cross connections (dashed) -->
+  <line x1="330" y1="220" x2="870" y2="220" stroke="#999" stroke-width="1" stroke-dasharray="5,5"/>
+  <text x="600" y="215" text-anchor="middle" font-size="10" fill="#999">Weierstrass substitution</text>
+
+  <line x1="330" y1="660" x2="870" y2="660" stroke="#999" stroke-width="1" stroke-dasharray="5,5"/>
+  <text x="600" y="655" text-anchor="middle" font-size="10" fill="#999">rational function basis</text>
+
+  <line x1="190" y1="300" x2="190" y2="560" stroke="#999" stroke-width="1" stroke-dasharray="5,5"/>
+  <text x="175" y="435" text-anchor="middle" font-size="10" fill="#999" transform="rotate(-90, 175, 435)">Wick rotation</text>
+
+  <line x1="1010" y1="300" x2="1010" y2="560" stroke="#999" stroke-width="1" stroke-dasharray="5,5"/>
+  <text x="1025" y="435" text-anchor="middle" font-size="10" fill="#999" transform="rotate(90, 1025, 435)">finite field orbits</text>
+
+  <!-- Key properties box -->
+  <rect x="430" y="780" width="340" height="100" rx="10" fill="#fff3e0" stroke="#FF9800" stroke-width="1.5"/>
+  <text x="600" y="800" text-anchor="middle" font-size="14" font-weight="bold" fill="#E65100">Key Properties (All Formally Verified)</text>
+  <text x="600" y="820" text-anchor="middle" font-size="11" fill="#555">Commutative • Associative • Identity: 0 • Inverse: −x</text>
+  <text x="600" y="838" text-anchor="middle" font-size="11" fill="#555">Cocycle identity • Norm multiplicativity</text>
+  <text x="600" y="856" text-anchor="middle" font-size="11" fill="#555">Monotonicity • Positive derivative • Bounded (hyperbolic)</text>
+  <text x="600" y="874" text-anchor="middle" font-size="11" fill="#1565C0" font-weight="bold">40+ theorems proven in Lean 4 — zero sorry</text>
+</svg>

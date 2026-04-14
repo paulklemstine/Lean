@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#333"/>
+    </marker>
+  </defs>
+
+  <rect width="800" height="500" fill="#fff"/>
+  <text x="400" y="30" text-anchor="middle" font-size="20" font-weight="bold" fill="#1a1a2e">
+    The Cayley Transform: From Number Line to Circle
+  </text>
+
+  <!-- Left: Real line with SPB -->
+  <text x="180" y="65" text-anchor="middle" font-size="14" font-weight="bold" fill="#2196F3">(ℝ, spb)</text>
+
+  <!-- Number line -->
+  <line x1="30" y1="250" x2="350" y2="250" stroke="#333" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="360" y="255" font-size="12" fill="#333">x</text>
+
+  <!-- Tick marks -->
+  <line x1="60" y1="245" x2="60" y2="255" stroke="#333" stroke-width="1.5"/>
+  <text x="60" y="270" text-anchor="middle" font-size="11" fill="#555">−2</text>
+
+  <line x1="120" y1="245" x2="120" y2="255" stroke="#333" stroke-width="1.5"/>
+  <text x="120" y="270" text-anchor="middle" font-size="11" fill="#555">−1</text>
+
+  <line x1="180" y1="245" x2="180" y2="255" stroke="#333" stroke-width="1.5"/>
+  <text x="180" y="270" text-anchor="middle" font-size="11" fill="#555">0</text>
+
+  <line x1="240" y1="245" x2="240" y2="255" stroke="#333" stroke-width="1.5"/>
+  <text x="240" y="270" text-anchor="middle" font-size="11" fill="#555">1</text>
+
+  <line x1="300" y1="245" x2="300" y2="255" stroke="#333" stroke-width="1.5"/>
+  <text x="300" y="270" text-anchor="middle" font-size="11" fill="#555">2</text>
+
+  <!-- Points on line -->
+  <circle cx="180" cy="250" r="5" fill="#4CAF50"/>
+  <text x="180" y="295" text-anchor="middle" font-size="10" fill="#4CAF50" font-weight="bold">identity: 0</text>
+
+  <circle cx="240" cy="250" r="4" fill="#2196F3"/>
+  <circle cx="300" cy="250" r="4" fill="#9C27B0"/>
+
+  <!-- SPB operation shown -->
+  <text x="180" y="330" text-anchor="middle" font-size="12" fill="#E65100">
+    spb(x, y) = (x+y)/(1−xy)
+  </text>
+  <text x="180" y="350" text-anchor="middle" font-size="11" fill="#555">
+    Group operation on ℝ
+  </text>
+
+  <!-- Arrow: Cayley transform -->
+  <path d="M 370 200 C 420 100, 480 100, 530 200" fill="none" stroke="#FFD700" stroke-width="3" marker-end="url(#arr)"/>
+  <text x="450" y="120" text-anchor="middle" font-size="13" font-weight="bold" fill="#FFD700">Cayley</text>
+  <text x="450" y="140" text-anchor="middle" font-size="11" fill="#B8860B">x ↦ (1+ix)/(1−ix)</text>
+
+  <!-- Arrow back -->
+  <path d="M 530 300 C 480 400, 420 400, 370 300" fill="none" stroke="#FFD700" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arr)"/>
+  <text x="450" y="410" text-anchor="middle" font-size="11" fill="#B8860B">z ↦ (z−1)/(i(z+1))</text>
+
+  <!-- Right: Unit circle with multiplication -->
+  <text x="620" y="65" text-anchor="middle" font-size="14" font-weight="bold" fill="#9C27B0">(S¹, ·)</text>
+
+  <!-- Unit circle -->
+  <circle cx="620" cy="250" r="120" fill="none" stroke="#333" stroke-width="2"/>
+
+  <!-- Axes -->
+  <line x1="470" y1="250" x2="770" y2="250" stroke="#ddd" stroke-width="0.5"/>
+  <line x1="620" y1="100" x2="620" y2="400" stroke="#ddd" stroke-width="0.5"/>
+
+  <!-- Points on circle -->
+  <!-- 0 → 1 (east) -->
+  <circle cx="740" cy="250" r="5" fill="#4CAF50"/>
+  <text x="760" y="255" font-size="10" fill="#4CAF50" font-weight="bold">1</text>
+  <text x="760" y="270" font-size="9" fill="#4CAF50">(x=0)</text>
+
+  <!-- 1 → i (north) -->
+  <circle cx="620" cy="130" r="4" fill="#2196F3"/>
+  <text x="640" y="125" font-size="10" fill="#2196F3">i</text>
+  <text x="640" y="140" font-size="9" fill="#2196F3">(x=1)</text>
+
+  <!-- -1 → -i (south) -->
+  <circle cx="620" cy="370" r="4" fill="#FF9800"/>
+  <text x="640" y="378" font-size="10" fill="#FF9800">−i</text>
+  <text x="640" y="393" font-size="9" fill="#FF9800">(x=−1)</text>
+
+  <!-- ∞ → -1 (west) -->
+  <circle cx="500" cy="250" r="4" fill="#f44336"/>
+  <text x="480" y="246" font-size="10" fill="#f44336">−1</text>
+  <text x="480" y="261" font-size="9" fill="#f44336">(x=∞)</text>
+
+  <!-- 2 → (−3+4i)/5 -->
+  <circle cx="548" cy="154" r="4" fill="#9C27B0"/>
+
+  <!-- Key equation box -->
+  <rect x="450" y="430" width="300" height="50" rx="8" fill="#f8f9fa" stroke="#FFD700" stroke-width="2"/>
+  <text x="600" y="452" text-anchor="middle" font-size="13" font-weight="bold" fill="#1a1a2e">
+    cayley(spb(x,y)) = cayley(x) · cayley(y)
+  </text>
+  <text x="600" y="472" text-anchor="middle" font-size="11" fill="#666">
+    SPB on ℝ = multiplication on S¹
+  </text>
+
+  <!-- Properties list -->
+  <text x="180" y="400" text-anchor="middle" font-size="11" fill="#555">
+    • |cayley(x)| = 1  ∀x ∈ ℝ
+  </text>
+  <text x="180" y="420" text-anchor="middle" font-size="11" fill="#555">
+    • cayley(0) = 1 (identities match)
+  </text>
+  <text x="180" y="440" text-anchor="middle" font-size="11" fill="#555">
+    • cayley(−x) = cayley(x)⁻¹
+  </text>
+  <text x="180" y="460" text-anchor="middle" font-size="11" fill="#555">
+    • Continuous group isomorphism
+  </text>
+</svg>

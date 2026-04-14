@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 550" font-family="'Helvetica Neue', Arial, sans-serif">
+  <rect width="900" height="550" fill="#fafafa"/>
+
+  <text x="450" y="35" text-anchor="middle" font-size="22" font-weight="bold" fill="#1a1a2e">
+    SPB Dimensions Match Division Algebras
+  </text>
+  <text x="450" y="58" text-anchor="middle" font-size="13" fill="#666">
+    Hurwitz's Theorem: Division algebras exist only in dimensions 1, 2, 4, 8
+  </text>
+  <text x="450" y="78" text-anchor="middle" font-size="13" fill="#666">
+    SPB groups exist in dimensions 1, 3, 7 — exactly (algebra dim) − 1
+  </text>
+
+  <!-- Dimension 1: Reals / SPB -->
+  <rect x="50" y="110" width="180" height="400" rx="12" fill="#e3f2fd" stroke="#1976D2" stroke-width="2"/>
+  <text x="140" y="140" text-anchor="middle" font-size="16" font-weight="bold" fill="#1565C0">Dim 1</text>
+
+  <!-- Division algebra -->
+  <rect x="65" y="160" width="150" height="70" rx="8" fill="#bbdefb"/>
+  <text x="140" y="182" text-anchor="middle" font-size="13" font-weight="bold" fill="#0D47A1">ℝ (Reals)</text>
+  <text x="140" y="200" text-anchor="middle" font-size="11" fill="#333">Algebra dim: 1</text>
+  <text x="140" y="218" text-anchor="middle" font-size="11" fill="#333">Commutative ✓</text>
+
+  <!-- Arrow -->
+  <text x="140" y="250" text-anchor="middle" font-size="18" fill="#1976D2">↕</text>
+  <text x="140" y="268" text-anchor="middle" font-size="10" fill="#1976D2">stereographic</text>
+
+  <!-- SPB -->
+  <rect x="65" y="280" width="150" height="90" rx="8" fill="#e8f5e9" stroke="#4CAF50" stroke-width="1"/>
+  <text x="140" y="302" text-anchor="middle" font-size="13" font-weight="bold" fill="#2E7D32">SPB₁</text>
+  <text x="140" y="322" text-anchor="middle" font-size="11" fill="#333">(x+y)/(1−xy)</text>
+  <text x="140" y="342" text-anchor="middle" font-size="11" fill="#333">Commutative ✓</text>
+  <text x="140" y="358" text-anchor="middle" font-size="11" fill="#333">Associative ✓</text>
+
+  <!-- S^n -->
+  <rect x="65" y="390" width="150" height="50" rx="8" fill="#fff3e0"/>
+  <text x="140" y="412" text-anchor="middle" font-size="13" font-weight="bold" fill="#E65100">S¹ (Circle)</text>
+  <text x="140" y="430" text-anchor="middle" font-size="11" fill="#333">U(1) ≅ SO(2)</text>
+
+  <circle cx="140" y="480" r="25" fill="none" stroke="#E65100" stroke-width="2"/>
+  <circle cx="165" cy="480" r="3" fill="#E65100"/>
+
+  <!-- Dimension 3: Quaternions / SPB₃ -->
+  <rect x="280" y="110" width="180" height="400" rx="12" fill="#f3e5f5" stroke="#7B1FA2" stroke-width="2"/>
+  <text x="370" y="140" text-anchor="middle" font-size="16" font-weight="bold" fill="#7B1FA2">Dim 3</text>
+
+  <rect x="295" y="160" width="150" height="70" rx="8" fill="#e1bee7"/>
+  <text x="370" y="182" text-anchor="middle" font-size="13" font-weight="bold" fill="#4A148C">ℍ (Quaternions)</text>
+  <text x="370" y="200" text-anchor="middle" font-size="11" fill="#333">Algebra dim: 4</text>
+  <text x="370" y="218" text-anchor="middle" font-size="11" fill="#c62828">Non-commutative ✗</text>
+
+  <text x="370" y="250" text-anchor="middle" font-size="18" fill="#7B1FA2">↕</text>
+  <text x="370" y="268" text-anchor="middle" font-size="10" fill="#7B1FA2">stereographic</text>
+
+  <rect x="295" y="280" width="150" height="90" rx="8" fill="#e8f5e9" stroke="#4CAF50" stroke-width="1"/>
+  <text x="370" y="302" text-anchor="middle" font-size="13" font-weight="bold" fill="#2E7D32">SPB₃</text>
+  <text x="370" y="322" text-anchor="middle" font-size="10" fill="#333">(u+v+u×v)/(1−u·v)</text>
+  <text x="370" y="342" text-anchor="middle" font-size="11" fill="#c62828">Non-commutative ✗</text>
+  <text x="370" y="358" text-anchor="middle" font-size="11" fill="#333">Associative ✓</text>
+
+  <rect x="295" y="390" width="150" height="50" rx="8" fill="#fff3e0"/>
+  <text x="370" y="412" text-anchor="middle" font-size="13" font-weight="bold" fill="#E65100">S³ (3-sphere)</text>
+  <text x="370" y="430" text-anchor="middle" font-size="11" fill="#333">SU(2) ≅ Spin(3)</text>
+
+  <!-- Dimension 7: Octonions / SPB₇ -->
+  <rect x="510" y="110" width="180" height="400" rx="12" fill="#fce4ec" stroke="#C62828" stroke-width="2"/>
+  <text x="600" y="140" text-anchor="middle" font-size="16" font-weight="bold" fill="#C62828">Dim 7</text>
+
+  <rect x="525" y="160" width="150" height="70" rx="8" fill="#ffcdd2"/>
+  <text x="600" y="182" text-anchor="middle" font-size="13" font-weight="bold" fill="#B71C1C">𝕆 (Octonions)</text>
+  <text x="600" y="200" text-anchor="middle" font-size="11" fill="#333">Algebra dim: 8</text>
+  <text x="600" y="218" text-anchor="middle" font-size="11" fill="#c62828">Non-associative ✗</text>
+
+  <text x="600" y="250" text-anchor="middle" font-size="18" fill="#C62828">↕</text>
+  <text x="600" y="268" text-anchor="middle" font-size="10" fill="#C62828">stereographic</text>
+
+  <rect x="525" y="280" width="150" height="90" rx="8" fill="#e8f5e9" stroke="#4CAF50" stroke-width="1"/>
+  <text x="600" y="302" text-anchor="middle" font-size="13" font-weight="bold" fill="#2E7D32">SPB₇</text>
+  <text x="600" y="322" text-anchor="middle" font-size="10" fill="#333">octonion formula</text>
+  <text x="600" y="342" text-anchor="middle" font-size="11" fill="#c62828">Non-associative ✗</text>
+  <text x="600" y="358" text-anchor="middle" font-size="11" fill="#333">Alternative ✓</text>
+
+  <rect x="525" y="390" width="150" height="50" rx="8" fill="#fff3e0"/>
+  <text x="600" y="412" text-anchor="middle" font-size="13" font-weight="bold" fill="#E65100">S⁷ (7-sphere)</text>
+  <text x="600" y="430" text-anchor="middle" font-size="11" fill="#333">Exceptional</text>
+
+  <!-- Dimension n ≥ 8: No division algebra -->
+  <rect x="740" y="110" width="130" height="400" rx="12" fill="#f5f5f5" stroke="#999" stroke-width="2" stroke-dasharray="5,3"/>
+  <text x="805" y="140" text-anchor="middle" font-size="16" font-weight="bold" fill="#999">Dim ≥ 8</text>
+
+  <rect x="750" y="200" width="110" height="60" rx="8" fill="#eee"/>
+  <text x="805" y="225" text-anchor="middle" font-size="12" fill="#999">No division</text>
+  <text x="805" y="243" text-anchor="middle" font-size="12" fill="#999">algebra exists</text>
+
+  <text x="805" y="320" text-anchor="middle" font-size="40" fill="#ccc">✗</text>
+  <text x="805" y="360" text-anchor="middle" font-size="12" fill="#999">No SPB group</text>
+  <text x="805" y="380" text-anchor="middle" font-size="12" fill="#999">(Hurwitz)</text>
+
+  <!-- Bottom summary -->
+  <rect x="50" y="520" width="820" height="25" rx="5" fill="#1a1a2e"/>
+  <text x="450" y="538" text-anchor="middle" font-size="12" fill="#FFD700">
+    SPB dimension = Division algebra dimension − 1:  {1,3,7} = {1,2,4,8} − 1 = {0,1,3,7}
+  </text>
+</svg>

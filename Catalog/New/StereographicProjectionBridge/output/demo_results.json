@@ -1,0 +1,50 @@
+{
+  "core_algebra": {
+    "commutativity": "spb(0.3, 0.7) = 1.2658227848 = spb(0.7, 0.3)",
+    "identity": "spb(0.3, 0) = 0.3000000000 = 0.3",
+    "inverse": "spb(0.3, -0.3) = 0.0000000000e+00",
+    "associativity": "spb(spb(0.3,0.7),0.2) = 1.9627118644 = spb(0.3,spb(0.7,0.2))",
+    "tan_addition": "tan(0.5+0.8) = 3.6021024480 = spb(tan 0.5, tan 0.8)",
+    "double_angle": "tan(2\u00b70.5) = 1.5574077247 = spb(tan 0.5, tan 0.5)"
+  },
+  "cayley_transform": {
+    "unit_circle": "All cayley(x) have |cayley(x)| = 1 \u2713",
+    "homomorphism": "cayley(spb(0.3,0.7)) = cayley(0.3)\u00b7cayley(0.7) \u2713",
+    "identity_map": "cayley(0) = 1 \u2713",
+    "inverse_map": "cayley(-0.5) = conj(cayley(0.5)) \u2713"
+  },
+  "velocity_addition": {
+    "light_speed_barrier": "All spbH(v\u2081,v\u2082) < 1 for |v\u2081|,|v\u2082| < 1 \u2713",
+    "rapidity": "spbH(tanh(0.5), tanh(0.8)) = tanh(1.3) \u2713"
+  },
+  "finite_fields": {
+    "p_pm_1_law": "p\u00b11 law verified for 14 primes: ALL MATCH \u2713"
+  },
+  "spb_trees": {
+    "iteration": "spb_iter(n, x) = tan(n\u00b7arctan(x)) verified for n=1..10 \u2713",
+    "binary_exp": "Binary SPB exponentiation for n=13: error = 1.11e-16"
+  },
+  "thomas_precession": {
+    "non_commutativity": "||spb\u2083(u,v) - spb\u2083(v,u)|| = 0.138415",
+    "thomas_angle": "17.6883\u00b0",
+    "3d_group": "Identity (0) and inverse (-u) verified in 3D \u2713"
+  },
+  "spb_neuron": {
+    "monotone": "SPB monotonicity verified \u2713",
+    "bounded": "SPB outputs: [-1.1997, 1.2354]"
+  },
+  "continued_fraction": {
+    "machin": "Machin's formula verified via SPB \u2713"
+  },
+  "random_spb": {
+    "distribution": "Tail fraction: 0.1562 (Cauchy-like if > 0.10)"
+  },
+  "mobius_matrices": {
+    "matrix_composition": "M(a)\u00b7M(b) = (1-ab)\u00b7M(spb(a,b)) \u2713",
+    "determinant": "det(M(a)) = 1 + a\u00b2 \u2713"
+  },
+  "norm_multiplicativity": {
+    "norm_mult": "Norm multiplicativity verified for all test cases \u2713",
+    "brahmagupta": "(3\u00b2+4\u00b2)(5\u00b2+12\u00b2) = 4225 = 4225 \u2713"
+  }
+}
