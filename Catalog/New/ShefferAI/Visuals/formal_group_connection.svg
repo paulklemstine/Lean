@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <defs>
+    <linearGradient id="bg6" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a2a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2a0a2a;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="450" fill="url(#bg6)"/>
+
+  <text x="400" y="35" text-anchor="middle" fill="#ffffff" font-family="Georgia, serif" font-size="20" font-weight="bold">
+    The Formal Group Connection
+  </text>
+  <text x="400" y="55" text-anchor="middle" fill="#8899aa" font-family="Georgia, serif" font-size="12">
+    Softplus as the logarithm of the multiplicative formal group
+  </text>
+
+  <!-- Additive formal group -->
+  <rect x="50" y="80" width="200" height="130" rx="12" fill="#001133" fill-opacity="0.7" stroke="#0055aa" stroke-width="1.5"/>
+  <text x="150" y="105" text-anchor="middle" fill="#4488ff" font-family="Georgia, serif" font-size="14" font-weight="bold">Additive</text>
+  <text x="150" y="130" text-anchor="middle" fill="#6699cc" font-family="monospace" font-size="12">F_a(X,Y) = X + Y</text>
+  <text x="150" y="155" text-anchor="middle" fill="#5588bb" font-family="monospace" font-size="11">log_a = id</text>
+  <text x="150" y="180" text-anchor="middle" fill="#4477aa" font-family="monospace" font-size="11">σ_a(x) = x</text>
+  <text x="150" y="200" text-anchor="middle" fill="#336699" font-family="monospace" font-size="10">(trivial)</text>
+
+  <!-- Multiplicative formal group -->
+  <rect x="300" y="80" width="200" height="130" rx="12" fill="#113300" fill-opacity="0.7" stroke="#44aa00" stroke-width="2"/>
+  <text x="400" y="105" text-anchor="middle" fill="#66dd22" font-family="Georgia, serif" font-size="14" font-weight="bold">Multiplicative</text>
+  <text x="400" y="130" text-anchor="middle" fill="#88cc44" font-family="monospace" font-size="12">F_m(X,Y) = X+Y+XY</text>
+  <text x="400" y="155" text-anchor="middle" fill="#77bb33" font-family="monospace" font-size="11">log_m = log(1+X)</text>
+  <text x="400" y="180" text-anchor="middle" fill="#66aa22" font-family="monospace" font-size="11">σ_m(x) = log(1+eˣ)</text>
+  <text x="400" y="200" text-anchor="middle" fill="#559911" font-family="monospace" font-size="10">= SOFTPLUS ★</text>
+
+  <!-- Elliptic curve -->
+  <rect x="550" y="80" width="200" height="130" rx="12" fill="#220033" fill-opacity="0.7" stroke="#8833cc" stroke-width="1.5"/>
+  <text x="650" y="105" text-anchor="middle" fill="#aa55ff" font-family="Georgia, serif" font-size="14" font-weight="bold">Elliptic</text>
+  <text x="650" y="130" text-anchor="middle" fill="#9944dd" font-family="monospace" font-size="12">F_E(X,Y) = ?</text>
+  <text x="650" y="155" text-anchor="middle" fill="#8833cc" font-family="monospace" font-size="11">log_E = ∫ ω</text>
+  <text x="650" y="180" text-anchor="middle" fill="#7722bb" font-family="monospace" font-size="11">σ_E(x) = ???</text>
+  <text x="650" y="200" text-anchor="middle" fill="#6611aa" font-family="monospace" font-size="10">(OPEN QUESTION)</text>
+
+  <!-- Arrows between them -->
+  <line x1="250" y1="145" x2="300" y2="145" stroke="#ffffff" stroke-width="1" stroke-opacity="0.4"/>
+  <text x="275" y="140" text-anchor="middle" fill="#888888" font-size="16">→</text>
+  <line x1="500" y1="145" x2="550" y2="145" stroke="#ffffff" stroke-width="1" stroke-opacity="0.4"/>
+  <text x="525" y="140" text-anchor="middle" fill="#888888" font-size="16">→</text>
+
+  <!-- Connection diagram -->
+  <rect x="100" y="250" width="600" height="170" rx="12" fill="#000000" fill-opacity="0.4" stroke="#444466" stroke-width="1"/>
+
+  <text x="400" y="280" text-anchor="middle" fill="#ffffff" font-family="Georgia, serif" font-size="15" font-weight="bold">
+    The Chain of Insights
+  </text>
+
+  <text x="130" y="310" fill="#88aacc" font-family="monospace" font-size="12">
+    1. Formal group F_m:  F_m(X,Y) = X + Y + XY = (1+X)(1+Y) - 1
+  </text>
+  <text x="130" y="335" fill="#88aacc" font-family="monospace" font-size="12">
+    2. Logarithm:         log_m(X) = log(1 + X)
+  </text>
+  <text x="130" y="360" fill="#88aacc" font-family="monospace" font-size="12">
+    3. Sheffer function:  σ(x) = log_m(eˣ) = log(1 + eˣ)  [SOFTPLUS!]
+  </text>
+  <text x="130" y="385" fill="#88aacc" font-family="monospace" font-size="12">
+    4. Key identity:      e^σ(x) = 1 + eˣ    [= F_m(1, eˣ-1) + 1]
+  </text>
+  <text x="130" y="410" fill="#66ff88" font-family="monospace" font-size="12" font-weight="bold">
+    ⟹ Softplus is the bridge between additive and multiplicative structures!
+  </text>
+</svg>

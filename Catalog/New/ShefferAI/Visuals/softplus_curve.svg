@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a1a4e;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="softplus_grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00ccff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff6600;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="500" fill="url(#bg)"/>
+
+  <!-- Title -->
+  <text x="400" y="40" text-anchor="middle" fill="#ffffff" font-family="Georgia, serif" font-size="24" font-weight="bold">
+    The Softplus Function: σ(x) = log(1 + eˣ)
+  </text>
+  <text x="400" y="65" text-anchor="middle" fill="#aabbcc" font-family="Georgia, serif" font-size="14">
+    The Universal Sheffer Generator
+  </text>
+
+  <!-- Grid -->
+  <g stroke="#ffffff" stroke-opacity="0.1" stroke-width="0.5">
+    <!-- Vertical grid lines: x from -6 to 6, mapped to px 100-700 -->
+    <line x1="150" y1="80" x2="150" y2="420"/>
+    <line x1="200" y1="80" x2="200" y2="420"/>
+    <line x1="250" y1="80" x2="250" y2="420"/>
+    <line x1="300" y1="80" x2="300" y2="420"/>
+    <line x1="350" y1="80" x2="350" y2="420"/>
+    <line x1="400" y1="80" x2="400" y2="420"/>
+    <line x1="450" y1="80" x2="450" y2="420"/>
+    <line x1="500" y1="80" x2="500" y2="420"/>
+    <line x1="550" y1="80" x2="550" y2="420"/>
+    <line x1="600" y1="80" x2="600" y2="420"/>
+    <line x1="650" y1="80" x2="650" y2="420"/>
+    <line x1="700" y1="80" x2="700" y2="420"/>
+    <!-- Horizontal grid lines -->
+    <line x1="100" y1="120" x2="700" y2="120"/>
+    <line x1="100" y1="170" x2="700" y2="170"/>
+    <line x1="100" y1="220" x2="700" y2="220"/>
+    <line x1="100" y1="270" x2="700" y2="270"/>
+    <line x1="100" y1="320" x2="700" y2="320"/>
+    <line x1="100" y1="370" x2="700" y2="370"/>
+  </g>
+
+  <!-- Axes -->
+  <line x1="100" y1="370" x2="700" y2="370" stroke="#ffffff" stroke-opacity="0.4" stroke-width="1.5"/>
+  <line x1="400" y1="80" x2="400" y2="420" stroke="#ffffff" stroke-opacity="0.4" stroke-width="1.5"/>
+
+  <!-- Axis labels -->
+  <text x="710" y="375" fill="#888" font-family="monospace" font-size="12">x</text>
+  <text x="405" y="90" fill="#888" font-family="monospace" font-size="12">y</text>
+  <text x="150" y="388" fill="#666" font-family="monospace" font-size="10">-5</text>
+  <text x="250" y="388" fill="#666" font-family="monospace" font-size="10">-3</text>
+  <text x="350" y="388" fill="#666" font-family="monospace" font-size="10">-1</text>
+  <text x="450" y="388" fill="#666" font-family="monospace" font-size="10">1</text>
+  <text x="550" y="388" fill="#666" font-family="monospace" font-size="10">3</text>
+  <text x="650" y="388" fill="#666" font-family="monospace" font-size="10">5</text>
+
+  <!-- ReLU (dashed, for comparison) -->
+  <path d="M 100,370 L 400,370 L 700,70" stroke="#ff4444" stroke-opacity="0.4" stroke-width="2" stroke-dasharray="8,4" fill="none"/>
+
+  <!-- Identity line y=x (dashed) -->
+  <path d="M 100,670 L 700,-230" stroke="#ffff00" stroke-opacity="0.2" stroke-width="1" stroke-dasharray="4,4" fill="none" clip-path="url(#clip)"/>
+
+  <!-- Softplus curve: σ(x) = log(1 + exp(x))
+       x range: -6 to 6, mapped to px 100-700 (50px per unit)
+       y range: 0 to 6, mapped from 370 (y=0) upward, 50px per unit
+       Points computed: -->
+  <path d="M 100,367.6 L 110,367.4 L 120,367.1 L 130,366.8 L 140,366.3 L 150,365.7
+           L 160,364.9 L 170,363.9 L 180,362.7 L 190,361.3 L 200,359.5
+           L 210,357.4 L 220,354.9 L 230,352.0 L 240,348.7 L 250,344.9
+           L 260,340.8 L 270,336.4 L 280,331.6 L 290,326.6 L 300,321.4
+           L 310,316.0 L 320,310.5 L 330,305.0 L 340,299.4 L 350,293.7
+           L 360,288.1 L 370,282.4 L 380,276.8 L 390,271.1 L 400,265.4
+           L 410,259.6 L 420,253.6 L 430,247.5 L 440,241.2 L 450,234.8
+           L 460,228.2 L 470,221.4 L 480,214.4 L 490,207.3 L 500,200.0
+           L 510,192.6 L 520,185.0 L 530,177.3 L 540,169.5 L 550,161.5
+           L 560,153.5 L 570,145.3 L 580,137.1 L 590,128.8 L 600,120.4
+           L 610,112.0 L 620,103.5 L 630,95.0 L 640,86.4 L 650,77.8
+           L 660,69.1 L 670,60.4 L 680,51.7 L 690,42.9 L 700,34.2"
+        stroke="url(#softplus_grad)" stroke-width="3" fill="none" filter="url(#glow)"/>
+
+  <!-- Sigmoid curve (derivative), smaller scale -->
+  <path d="M 100,368.8 L 150,367.5 L 200,364.5 L 250,358.0 L 300,345.0
+           L 350,325.0 L 370,315.0 L 380,310.0 L 390,303.0 L 400,295.0
+           L 410,287.0 L 420,280.0 L 430,275.0 L 450,265.0 L 500,255.0
+           L 550,250.5 L 600,249.5 L 650,249.0 L 700,249.0"
+        stroke="#44ff88" stroke-width="2" fill="none" stroke-opacity="0.7"/>
+
+  <!-- Legend -->
+  <rect x="110" y="430" width="580" height="55" rx="8" fill="#000000" fill-opacity="0.5" stroke="#333" stroke-width="1"/>
+  <line x1="130" y1="450" x2="170" y2="450" stroke="url(#softplus_grad)" stroke-width="3"/>
+  <text x="180" y="454" fill="#cccccc" font-family="monospace" font-size="12">σ(x) = log(1 + eˣ)  [Softplus]</text>
+  <line x1="430" y1="450" x2="470" y2="450" stroke="#44ff88" stroke-width="2"/>
+  <text x="480" y="454" fill="#cccccc" font-family="monospace" font-size="12">σ'(x) [Sigmoid]</text>
+  <line x1="130" y1="472" x2="170" y2="472" stroke="#ff4444" stroke-opacity="0.4" stroke-width="2" stroke-dasharray="8,4"/>
+  <text x="180" y="476" fill="#cccccc" font-family="monospace" font-size="12">ReLU(x) = max(0,x)  [Non-smooth limit]</text>
+
+  <!-- Annotation: σ(0) = log(2) -->
+  <circle cx="400" cy="265" r="4" fill="#00ccff" filter="url(#glow)"/>
+  <line x1="404" y1="263" x2="440" y2="240" stroke="#00ccff" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="445" y="240" fill="#00ccff" font-family="monospace" font-size="11">σ(0) = ln 2 ≈ 0.693</text>
+</svg>
