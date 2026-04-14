@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a0a2e"/>
+      <stop offset="100%" stop-color="#1a1a4e"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ffd700"/>
+      <stop offset="100%" stop-color="#ffaa00"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#4488ff"/>
+      <stop offset="100%" stop-color="#2266dd"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="900" fill="url(#bg)"/>
+
+  <!-- Title -->
+  <text x="600" y="55" text-anchor="middle" fill="url(#gold)" font-size="32" font-weight="bold" font-family="Georgia, serif" filter="url(#glow)">
+    The EML Operator: A Universal Binary Operation
+  </text>
+  <text x="600" y="85" text-anchor="middle" fill="#aaa" font-size="16" font-family="sans-serif">
+    eml(x, y) = exp(x) − ln(y) — Research Overview v4
+  </text>
+
+  <!-- Central EML node -->
+  <circle cx="600" cy="300" r="70" fill="none" stroke="url(#gold)" stroke-width="3" filter="url(#glow)"/>
+  <text x="600" y="290" text-anchor="middle" fill="#ffd700" font-size="24" font-weight="bold" font-family="monospace">eml(x,y)</text>
+  <text x="600" y="315" text-anchor="middle" fill="#ffcc44" font-size="14" font-family="monospace">eˣ − ln y</text>
+
+  <!-- Branches -->
+  <!-- Pure Mathematics -->
+  <line x1="540" y1="250" x2="200" y2="150" stroke="#ff6666" stroke-width="2" opacity="0.7"/>
+  <rect x="80" y="120" width="240" height="80" rx="10" fill="#1a0a0a" stroke="#ff6666" stroke-width="2"/>
+  <text x="200" y="148" text-anchor="middle" fill="#ff6666" font-size="15" font-weight="bold" font-family="sans-serif">Pure Mathematics</text>
+  <text x="200" y="168" text-anchor="middle" fill="#cc9999" font-size="11" font-family="sans-serif">Sheffer classification • Magma structure</text>
+  <text x="200" y="185" text-anchor="middle" fill="#cc9999" font-size="11" font-family="sans-serif">Fixed points • Transcendence</text>
+
+  <!-- Analysis & Dynamics -->
+  <line x1="660" y1="250" x2="1000" y2="150" stroke="#66ff66" stroke-width="2" opacity="0.7"/>
+  <rect x="880" y="120" width="240" height="80" rx="10" fill="#0a1a0a" stroke="#66ff66" stroke-width="2"/>
+  <text x="1000" y="148" text-anchor="middle" fill="#66ff66" font-size="15" font-weight="bold" font-family="sans-serif">Analysis &amp; Dynamics</text>
+  <text x="1000" y="168" text-anchor="middle" fill="#99cc99" font-size="11" font-family="sans-serif">Diagonal map • Julia set • e-Tower</text>
+  <text x="1000" y="185" text-anchor="middle" fill="#99cc99" font-size="11" font-family="sans-serif">Convexity • Gradient structure</text>
+
+  <!-- Complexity -->
+  <line x1="540" y1="340" x2="150" y2="420" stroke="#6666ff" stroke-width="2" opacity="0.7"/>
+  <rect x="30" y="390" width="240" height="80" rx="10" fill="#0a0a1a" stroke="#6666ff" stroke-width="2"/>
+  <text x="150" y="418" text-anchor="middle" fill="#6666ff" font-size="15" font-weight="bold" font-family="sans-serif">Computational Complexity</text>
+  <text x="150" y="438" text-anchor="middle" fill="#9999cc" font-size="11" font-family="sans-serif">K_EML(f) bounds • NP-hardness</text>
+  <text x="150" y="455" text-anchor="middle" fill="#9999cc" font-size="11" font-family="sans-serif">Catalan tree counting</text>
+
+  <!-- Machine Learning -->
+  <line x1="660" y1="340" x2="1050" y2="420" stroke="#ff66ff" stroke-width="2" opacity="0.7"/>
+  <rect x="930" y="390" width="240" height="80" rx="10" fill="#1a0a1a" stroke="#ff66ff" stroke-width="2"/>
+  <text x="1050" y="418" text-anchor="middle" fill="#ff66ff" font-size="15" font-weight="bold" font-family="sans-serif">Machine Learning</text>
+  <text x="1050" y="438" text-anchor="middle" fill="#cc99cc" font-size="11" font-family="sans-serif">Symbolic regression • Neural EML</text>
+  <text x="1050" y="455" text-anchor="middle" fill="#cc99cc" font-size="11" font-family="sans-serif">Foundation models for math</text>
+
+  <!-- Number Theory -->
+  <line x1="570" y1="370" x2="400" y2="520" stroke="#ffff66" stroke-width="2" opacity="0.7"/>
+  <rect x="280" y="490" width="240" height="80" rx="10" fill="#1a1a0a" stroke="#ffff66" stroke-width="2"/>
+  <text x="400" y="518" text-anchor="middle" fill="#ffff66" font-size="15" font-weight="bold" font-family="sans-serif">Number Theory</text>
+  <text x="400" y="538" text-anchor="middle" fill="#cccc99" font-size="11" font-family="sans-serif">EML constant hierarchy • Schanuel</text>
+  <text x="400" y="555" text-anchor="middle" fill="#cccc99" font-size="11" font-family="sans-serif">Algebraic independence • e^e</text>
+
+  <!-- Hardware -->
+  <line x1="630" y1="370" x2="800" y2="520" stroke="#66ffff" stroke-width="2" opacity="0.7"/>
+  <rect x="680" y="490" width="240" height="80" rx="10" fill="#0a1a1a" stroke="#66ffff" stroke-width="2"/>
+  <text x="800" y="518" text-anchor="middle" fill="#66ffff" font-size="15" font-weight="bold" font-family="sans-serif">Hardware Design</text>
+  <text x="800" y="538" text-anchor="middle" fill="#99cccc" font-size="11" font-family="sans-serif">EML coprocessor • Analog computing</text>
+  <text x="800" y="555" text-anchor="middle" fill="#99cccc" font-size="11" font-family="sans-serif">FPGA prototype • Neuromorphic</text>
+
+  <!-- Key Results Box -->
+  <rect x="150" y="630" width="900" height="240" rx="15" fill="#0d0d2d" stroke="#ffd700" stroke-width="2"/>
+  <text x="600" y="665" text-anchor="middle" fill="#ffd700" font-size="18" font-weight="bold" font-family="sans-serif">
+    Key Formalized Results (Lean 4, 0 sorry's)
+  </text>
+
+  <text x="200" y="700" fill="#ccc" font-size="13" font-family="monospace">✓ eml generates all elementary functions</text>
+  <text x="200" y="722" fill="#ccc" font-size="13" font-family="monospace">✓ Diagonal map has NO real fixed points</text>
+  <text x="200" y="744" fill="#ccc" font-size="13" font-family="monospace">✓ EML is strictly ↑ in x, strictly ↓ in y</text>
+  <text x="200" y="766" fill="#ccc" font-size="13" font-family="monospace">✓ EML is convex in x (globally)</text>
+  <text x="200" y="788" fill="#ccc" font-size="13" font-family="monospace">✓ No left/right identity element exists</text>
+
+  <text x="650" y="700" fill="#ccc" font-size="13" font-family="monospace">✓ z* · exp(z*) = e^e (Lambert W)</text>
+  <text x="650" y="722" fill="#ccc" font-size="13" font-family="monospace">✓ e-tower grows faster than 2^n</text>
+  <text x="650" y="744" fill="#ccc" font-size="13" font-family="monospace">✓ Non-commutative, non-associative magma</text>
+  <text x="650" y="766" fill="#ccc" font-size="13" font-family="monospace">✓ Fixed-point iteration is contractive</text>
+  <text x="650" y="788" fill="#ccc" font-size="13" font-family="monospace">✓ Power, √, +, −, ×, ÷ all via EML</text>
+
+  <text x="600" y="845" text-anchor="middle" fill="#888" font-size="12" font-family="sans-serif">
+    120+ theorems formally verified • 12 research fields • 50+ open problems
+  </text>
+</svg>

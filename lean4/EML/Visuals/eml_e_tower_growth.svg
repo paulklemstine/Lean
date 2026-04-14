@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 550">
+  <defs>
+    <linearGradient id="bgTower" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0a2e"/>
+      <stop offset="100%" stop-color="#0a0a1e"/>
+    </linearGradient>
+    <linearGradient id="towerGrad" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#2244aa"/>
+      <stop offset="50%" stop-color="#44aaff"/>
+      <stop offset="100%" stop-color="#ff4444"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="900" height="550" fill="url(#bgTower)"/>
+
+  <text x="450" y="35" text-anchor="middle" fill="#ffd700" font-size="22" font-weight="bold" font-family="Georgia">
+    The e-Tower: Counting to Infinity with EML
+  </text>
+  <text x="450" y="58" text-anchor="middle" fill="#999" font-size="13" font-family="sans-serif">
+    e↑↑n = eml(eml(...eml(1,1)...,1),1) with n applications — Proved: e↑↑n ≥ 2ⁿ
+  </text>
+
+  <!-- Tower visualization -->
+  <!-- Each block represents one level of the e-tower -->
+
+  <!-- Level 0: 1 -->
+  <rect x="100" y="460" width="250" height="40" rx="5" fill="#1a3a6a" stroke="#4488ff" stroke-width="1.5"/>
+  <text x="225" y="485" text-anchor="middle" fill="white" font-size="14" font-weight="bold" font-family="monospace">n=0: e↑↑0 = 1</text>
+  <text x="380" y="485" fill="#888" font-size="12" font-family="monospace">= 1</text>
+
+  <!-- Level 1: e -->
+  <rect x="100" y="410" width="250" height="40" rx="5" fill="#2a4a7a" stroke="#5599ff" stroke-width="1.5"/>
+  <text x="225" y="435" text-anchor="middle" fill="white" font-size="14" font-weight="bold" font-family="monospace">n=1: e↑↑1 = e</text>
+  <text x="380" y="435" fill="#888" font-size="12" font-family="monospace">≈ 2.718</text>
+
+  <!-- Level 2: e^e -->
+  <rect x="100" y="360" width="250" height="40" rx="5" fill="#3a5a8a" stroke="#66aaff" stroke-width="1.5"/>
+  <text x="225" y="385" text-anchor="middle" fill="white" font-size="14" font-weight="bold" font-family="monospace">n=2: e↑↑2 = eᵉ</text>
+  <text x="380" y="385" fill="#888" font-size="12" font-family="monospace">≈ 15.15</text>
+
+  <!-- Level 3: e^e^e -->
+  <rect x="100" y="310" width="250" height="40" rx="5" fill="#4a6a9a" stroke="#77bbff" stroke-width="1.5"/>
+  <text x="225" y="335" text-anchor="middle" fill="white" font-size="14" font-weight="bold" font-family="monospace">n=3: e↑↑3 = eᵉᵉ</text>
+  <text x="380" y="335" fill="#888" font-size="12" font-family="monospace">≈ 3,814,279</text>
+
+  <!-- Level 4: overflow -->
+  <rect x="100" y="260" width="250" height="40" rx="5" fill="#5a7aaa" stroke="#88ccff" stroke-width="1.5"/>
+  <text x="225" y="285" text-anchor="middle" fill="white" font-size="14" font-weight="bold" font-family="monospace">n=4: e↑↑4</text>
+  <text x="380" y="285" fill="#888" font-size="12" font-family="monospace">≈ 10^1,656,520</text>
+
+  <!-- Level 5: way beyond -->
+  <rect x="100" y="210" width="250" height="40" rx="5" fill="#6a8aba" stroke="#99ddff" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <text x="225" y="235" text-anchor="middle" fill="white" font-size="14" font-weight="bold" font-family="monospace">n=5: e↑↑5</text>
+  <text x="380" y="235" fill="#ff8888" font-size="12" font-family="monospace">incomprehensibly large</text>
+
+  <!-- Arrows showing growth -->
+  <path d="M 85 480 Q 50 430 85 380" fill="none" stroke="#ffd700" stroke-width="1.5" marker-end="url(#arr)"/>
+  <path d="M 85 430 Q 50 380 85 330" fill="none" stroke="#ffd700" stroke-width="1.5"/>
+  <path d="M 85 380 Q 50 330 85 280" fill="none" stroke="#ffd700" stroke-width="1.5"/>
+
+  <!-- Comparison table -->
+  <rect x="530" y="200" width="340" height="300" rx="10" fill="#0d0d2e" stroke="#ffd700" stroke-width="1.5"/>
+  <text x="700" y="230" text-anchor="middle" fill="#ffd700" font-size="16" font-weight="bold" font-family="sans-serif">Growth Comparison</text>
+
+  <text x="550" y="260" fill="#aaa" font-size="13" font-family="monospace">n    2ⁿ       e↑↑n      Ratio</text>
+  <line x1="545" y1="265" x2="855" y2="265" stroke="#555" stroke-width="0.5"/>
+
+  <text x="550" y="285" fill="#ccc" font-size="13" font-family="monospace">0    1        1         1.0</text>
+  <text x="550" y="308" fill="#ccc" font-size="13" font-family="monospace">1    2        2.72      1.4</text>
+  <text x="550" y="331" fill="#ccc" font-size="13" font-family="monospace">2    4        15.2      3.8</text>
+  <text x="550" y="354" fill="#ccc" font-size="13" font-family="monospace">3    8        3.8M      476K</text>
+  <text x="550" y="377" fill="#ccc" font-size="13" font-family="monospace">4    16       10^1.7M   ∞</text>
+  <text x="550" y="400" fill="#ccc" font-size="13" font-family="monospace">5    32       ???       ∞</text>
+
+  <line x1="545" y1="410" x2="855" y2="410" stroke="#555" stroke-width="0.5"/>
+  <text x="700" y="435" text-anchor="middle" fill="#66ff66" font-size="12" font-family="sans-serif">
+    ✓ Proved: e↑↑n ≥ 2ⁿ for n ≥ 1
+  </text>
+  <text x="700" y="455" text-anchor="middle" fill="#66ff66" font-size="12" font-family="sans-serif">
+    ✓ Proved: e↑↑n is strictly increasing
+  </text>
+  <text x="700" y="475" text-anchor="middle" fill="#ffaa00" font-size="12" font-family="sans-serif">
+    Open: e↑↑n grows faster than any polynomial
+  </text>
+
+  <!-- EML tree for e-tower -->
+  <text x="450" y="530" text-anchor="middle" fill="#888" font-size="11" font-family="sans-serif">
+    Each e-tower level = one more eml(·, 1) application: eml(eml(eml(1,1),1),1) = e^(e^e)
+  </text>
+</svg>
