@@ -1,0 +1,1 @@
+import Catalog.Algebra.DivisionAlgebras.NormHierarchy
