@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 800" width="1100" height="800">
+  <defs>
+    <linearGradient id="bgLand" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d1117;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#161b22;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glowL">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  
+  <rect width="1100" height="800" fill="url(#bgLand)" rx="12"/>
+  
+  <!-- Title -->
+  <text x="550" y="40" text-anchor="middle" fill="#ffd700" font-family="Georgia, serif" font-size="28" font-weight="bold">
+    The Sheffer Function Research Landscape
+  </text>
+  <text x="550" y="68" text-anchor="middle" fill="#8899bb" font-family="Georgia, serif" font-size="15">
+    47 theorems proved · 10+ applications identified · 7+ open problems
+  </text>
+  
+  <!-- Central hub -->
+  <circle cx="550" cy="400" r="80" fill="#1a1a3e" stroke="#ffd700" stroke-width="3" filter="url(#glowL)"/>
+  <text x="550" y="385" text-anchor="middle" fill="#ffd700" font-family="Georgia, serif" font-size="18" font-weight="bold">σ(x)</text>
+  <text x="550" y="405" text-anchor="middle" fill="#ffd700" font-family="monospace" font-size="13">log(1+eˣ)</text>
+  <text x="550" y="425" text-anchor="middle" fill="#ccbb44" font-family="Georgia, serif" font-size="11">The Sheffer Function</text>
+  
+  <!-- Branch 1: Pure Math (top-left) -->
+  <g transform="translate(100, 120)">
+    <rect width="280" height="190" rx="12" fill="#1a2a1a" fill-opacity="0.7" stroke="#00ff88" stroke-width="2"/>
+    <text x="140" y="25" text-anchor="middle" fill="#00ff88" font-family="Georgia, serif" font-size="16" font-weight="bold">
+      Pure Mathematics
+    </text>
+    <g fill="#88ddaa" font-family="Georgia, serif" font-size="12">
+      <text x="15" y="50">✓ Polynomial Limitation Theorem</text>
+      <text x="15" y="70">✓ Non-Polynomial Proof</text>
+      <text x="15" y="90">✓ Convexity Theorem</text>
+      <text x="15" y="110">✓ Identity Extraction</text>
+      <text x="15" y="130">✓ Exponential Approximation</text>
+      <text x="15" y="150">○ Uniqueness Conjecture</text>
+      <text x="15" y="170">○ C^∞ Density Theorem</text>
+    </g>
+    <text x="265" y="180" text-anchor="end" fill="#44aa44" font-family="monospace" font-size="10">16+ theorems</text>
+  </g>
+  <line x1="380" y1="250" x2="480" y2="350" stroke="#00ff88" stroke-width="1.5" opacity="0.6"/>
+  
+  <!-- Branch 2: Approximation Theory (top-right) -->
+  <g transform="translate(720, 120)">
+    <rect width="280" height="190" rx="12" fill="#1a1a2a" fill-opacity="0.7" stroke="#4488ff" stroke-width="2"/>
+    <text x="140" y="25" text-anchor="middle" fill="#4488ff" font-family="Georgia, serif" font-size="16" font-weight="bold">
+      Approximation Theory
+    </text>
+    <g fill="#88aaee" font-family="Georgia, serif" font-size="12">
+      <text x="15" y="50">✓ ReLU Convergence (β → ∞)</text>
+      <text x="15" y="70">✓ Softplus ≥ ReLU bound</text>
+      <text x="15" y="90">✓ Upper bound σ(x) ≤ x + log2</text>
+      <text x="15" y="110">✓ Asymptotic σ(x) − x → 0</text>
+      <text x="15" y="130">○ Jackson-type theorem</text>
+      <text x="15" y="150">○ Optimal rates</text>
+      <text x="15" y="170">○ Separation theorem</text>
+    </g>
+    <text x="265" y="180" text-anchor="end" fill="#4466cc" font-family="monospace" font-size="10">5+ theorems</text>
+  </g>
+  <line x1="720" y1="250" x2="620" y2="350" stroke="#4488ff" stroke-width="1.5" opacity="0.6"/>
+  
+  <!-- Branch 3: ML & AI (middle-left) -->
+  <g transform="translate(30, 380)">
+    <rect width="280" height="180" rx="12" fill="#2a1a1a" fill-opacity="0.7" stroke="#ff6b35" stroke-width="2"/>
+    <text x="140" y="25" text-anchor="middle" fill="#ff6b35" font-family="Georgia, serif" font-size="16" font-weight="bold">
+      Machine Learning
+    </text>
+    <g fill="#ffaa77" font-family="Georgia, serif" font-size="12">
+      <text x="15" y="50">◇ Softplus vs GELU benchmarks</text>
+      <text x="15" y="70">◇ Sheffer Transformers</text>
+      <text x="15" y="90">◇ Symbolic extraction</text>
+      <text x="15" y="110">◇ Training stability</text>
+      <text x="15" y="130">◇ Temperature scheduling</text>
+      <text x="15" y="150">◇ Interpretability metrics</text>
+    </g>
+    <text x="265" y="165" text-anchor="end" fill="#cc6622" font-family="monospace" font-size="10">6 experiments</text>
+  </g>
+  <line x1="310" y1="470" x2="470" y2="400" stroke="#ff6b35" stroke-width="1.5" opacity="0.6"/>
+  
+  <!-- Branch 4: Scientific Discovery (middle-right) -->
+  <g transform="translate(790, 380)">
+    <rect width="280" height="180" rx="12" fill="#2a2a1a" fill-opacity="0.7" stroke="#ffaa00" stroke-width="2"/>
+    <text x="140" y="25" text-anchor="middle" fill="#ffaa00" font-family="Georgia, serif" font-size="16" font-weight="bold">
+      Scientific Discovery
+    </text>
+    <g fill="#ffcc66" font-family="Georgia, serif" font-size="12">
+      <text x="15" y="50">◇ Physics law discovery</text>
+      <text x="15" y="70">◇ Chemical equations</text>
+      <text x="15" y="90">◇ Climate parameterization</text>
+      <text x="15" y="110">◇ Drug design</text>
+      <text x="15" y="130">◇ Mathematical identities</text>
+      <text x="15" y="150">◇ Number theory conjectures</text>
+    </g>
+    <text x="265" y="165" text-anchor="end" fill="#cc8800" font-family="monospace" font-size="10">6 directions</text>
+  </g>
+  <line x1="790" y1="470" x2="630" y2="400" stroke="#ffaa00" stroke-width="1.5" opacity="0.6"/>
+  
+  <!-- Branch 5: Hardware (bottom-left) -->
+  <g transform="translate(100, 620)">
+    <rect width="280" height="140" rx="12" fill="#1a2a2a" fill-opacity="0.7" stroke="#00bcd4" stroke-width="2"/>
+    <text x="140" y="25" text-anchor="middle" fill="#00bcd4" font-family="Georgia, serif" font-size="16" font-weight="bold">
+      Hardware & Systems
+    </text>
+    <g fill="#66ddee" font-family="Georgia, serif" font-size="12">
+      <text x="15" y="50">◇ Analog VLSI softplus</text>
+      <text x="15" y="70">◇ Neuromorphic computing</text>
+      <text x="15" y="90">◇ Quantization analysis</text>
+      <text x="15" y="110">◇ Single-circuit activation</text>
+    </g>
+  </g>
+  <line x1="310" y1="660" x2="480" y2="470" stroke="#00bcd4" stroke-width="1.5" opacity="0.6"/>
+  
+  <!-- Branch 6: Algebra & Logic (bottom-right) -->
+  <g transform="translate(720, 620)">
+    <rect width="280" height="140" rx="12" fill="#2a1a2a" fill-opacity="0.7" stroke="#cc66ff" stroke-width="2"/>
+    <text x="140" y="25" text-anchor="middle" fill="#cc66ff" font-family="Georgia, serif" font-size="16" font-weight="bold">
+      Algebra & Structure
+    </text>
+    <g fill="#dd88ff" font-family="Georgia, serif" font-size="12">
+      <text x="15" y="50">✓ Sheffer expression type</text>
+      <text x="15" y="70">✓ Differentiability proof</text>
+      <text x="15" y="90">○ Normal form theory</text>
+      <text x="15" y="110">○ Decidability of equivalence</text>
+    </g>
+  </g>
+  <line x1="720" y1="660" x2="620" y2="470" stroke="#cc66ff" stroke-width="1.5" opacity="0.6"/>
+  
+  <!-- Legend -->
+  <g transform="translate(420, 720)">
+    <text x="0" y="15" fill="#00ff88" font-family="monospace" font-size="12">✓ = Proved in Lean 4</text>
+    <text x="170" y="15" fill="#ffaa00" font-family="monospace" font-size="12">○ = Open problem</text>
+    <text x="320" y="15" fill="#ff6b35" font-family="monospace" font-size="12">◇ = Proposed experiment</text>
+  </g>
+</svg>

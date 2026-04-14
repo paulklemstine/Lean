@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 650" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fafafa"/>
+      <stop offset="100%" style="stop-color:#e8e8e8"/>
+    </linearGradient>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+    </marker>
+  </defs>
+
+  <rect width="1000" height="650" fill="url(#bg4)"/>
+
+  <!-- Title -->
+  <text x="500" y="35" text-anchor="middle" fill="#222" font-size="22" font-weight="bold">
+    EML Computation Trees for Elementary Operations
+  </text>
+
+  <!-- ===== exp(x) ===== -->
+  <rect x="20" y="55" width="220" height="250" rx="10" fill="#fff" stroke="#2196f3" stroke-width="2"/>
+  <text x="130" y="80" text-anchor="middle" fill="#2196f3" font-size="16" font-weight="bold">exp(x)</text>
+  <text x="130" y="98" text-anchor="middle" fill="#666" font-size="12">3 instructions, depth 1</text>
+
+  <!-- EML node -->
+  <circle cx="130" cy="145" r="22" fill="#2196f3"/>
+  <text x="130" y="150" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">EML</text>
+
+  <!-- Leaves -->
+  <rect x="65" y="210" width="40" height="25" rx="5" fill="#e3f2fd" stroke="#2196f3"/>
+  <text x="85" y="227" text-anchor="middle" fill="#1565c0" font-size="11">x</text>
+  <rect x="155" y="210" width="40" height="25" rx="5" fill="#e3f2fd" stroke="#2196f3"/>
+  <text x="175" y="227" text-anchor="middle" fill="#1565c0" font-size="11">1</text>
+
+  <!-- Edges -->
+  <line x1="115" y1="165" x2="85" y2="210" stroke="#555" stroke-width="1.5"/>
+  <line x1="145" y1="165" x2="175" y2="210" stroke="#555" stroke-width="1.5"/>
+
+  <!-- Result -->
+  <text x="130" y="270" text-anchor="middle" fill="#333" font-size="11">= eˣ − ln(1) = eˣ</text>
+  <text x="130" y="290" text-anchor="middle" fill="#2196f3" font-size="13" font-weight="bold">Result: eˣ ✓</text>
+
+  <!-- ===== ln(x) ===== -->
+  <rect x="260" y="55" width="280" height="280" rx="10" fill="#fff" stroke="#4caf50" stroke-width="2"/>
+  <text x="400" y="80" text-anchor="middle" fill="#4caf50" font-size="16" font-weight="bold">ln(x)</text>
+  <text x="400" y="98" text-anchor="middle" fill="#666" font-size="12">7 instructions, depth 3</text>
+
+  <!-- Top EML -->
+  <circle cx="400" cy="130" r="18" fill="#4caf50"/>
+  <text x="400" y="135" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">EML</text>
+
+  <rect x="275" y="165" width="30" height="22" rx="4" fill="#e8f5e9" stroke="#4caf50"/>
+  <text x="290" y="180" text-anchor="middle" fill="#2e7d32" font-size="10">0</text>
+
+  <circle cx="465" cy="176" r="18" fill="#4caf50"/>
+  <text x="465" y="181" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">EML</text>
+
+  <line x1="385" y1="146" x2="290" y2="165" stroke="#555" stroke-width="1.5"/>
+  <line x1="415" y1="146" x2="465" y2="158" stroke="#555" stroke-width="1.5"/>
+
+  <!-- Middle EML + leaf -->
+  <circle cx="425" cy="225" r="18" fill="#4caf50"/>
+  <text x="425" y="230" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">EML</text>
+
+  <rect x="490" y="210" width="30" height="22" rx="4" fill="#e8f5e9" stroke="#4caf50"/>
+  <text x="505" y="225" text-anchor="middle" fill="#2e7d32" font-size="10">1</text>
+
+  <line x1="450" y1="192" x2="425" y2="207" stroke="#555" stroke-width="1.5"/>
+  <line x1="480" y1="192" x2="505" y2="210" stroke="#555" stroke-width="1.5"/>
+
+  <!-- Bottom leaves -->
+  <rect x="370" y="270" width="30" height="22" rx="4" fill="#e8f5e9" stroke="#4caf50"/>
+  <text x="385" y="285" text-anchor="middle" fill="#2e7d32" font-size="10">0</text>
+
+  <rect x="440" y="270" width="30" height="22" rx="4" fill="#e8f5e9" stroke="#4caf50"/>
+  <text x="455" y="285" text-anchor="middle" fill="#2e7d32" font-size="10">x</text>
+
+  <line x1="412" y1="241" x2="385" y2="270" stroke="#555" stroke-width="1.5"/>
+  <line x1="438" y1="241" x2="455" y2="270" stroke="#555" stroke-width="1.5"/>
+
+  <text x="400" y="320" text-anchor="middle" fill="#4caf50" font-size="13" font-weight="bold">Result: ln(x) ✓</text>
+
+  <!-- ===== subtraction ===== -->
+  <rect x="560" y="55" width="420" height="280" rx="10" fill="#fff" stroke="#ff9800" stroke-width="2"/>
+  <text x="770" y="80" text-anchor="middle" fill="#ff9800" font-size="16" font-weight="bold">a − b</text>
+  <text x="770" y="98" text-anchor="middle" fill="#666" font-size="12">11 instructions, depth 4</text>
+
+  <!-- Top EML -->
+  <circle cx="770" cy="130" r="18" fill="#ff9800"/>
+  <text x="770" y="135" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">EML</text>
+
+  <!-- Left subtree: ln(a) -->
+  <rect x="610" y="155" width="80" height="30" rx="8" fill="#fff3e0" stroke="#ff9800" stroke-dasharray="3,3"/>
+  <text x="650" y="175" text-anchor="middle" fill="#e65100" font-size="11">ln(a)</text>
+  <text x="650" y="200" text-anchor="middle" fill="#999" font-size="9">(7 instrs)</text>
+
+  <!-- Right subtree: exp(b) -->
+  <circle cx="890" cy="170" r="18" fill="#ff9800"/>
+  <text x="890" y="175" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">EML</text>
+
+  <rect x="845" y="210" width="30" height="22" rx="4" fill="#fff3e0" stroke="#ff9800"/>
+  <text x="860" y="225" text-anchor="middle" fill="#e65100" font-size="10">b</text>
+
+  <rect x="910" y="210" width="30" height="22" rx="4" fill="#fff3e0" stroke="#ff9800"/>
+  <text x="925" y="225" text-anchor="middle" fill="#e65100" font-size="10">1</text>
+
+  <line x1="755" y1="146" x2="650" y2="155" stroke="#555" stroke-width="1.5"/>
+  <line x1="785" y1="146" x2="890" y2="152" stroke="#555" stroke-width="1.5"/>
+  <line x1="875" y1="186" x2="860" y2="210" stroke="#555" stroke-width="1.5"/>
+  <line x1="905" y1="186" x2="925" y2="210" stroke="#555" stroke-width="1.5"/>
+
+  <text x="770" y="260" text-anchor="middle" fill="#333" font-size="11">EML(ln(a), exp(b))</text>
+  <text x="770" y="278" text-anchor="middle" fill="#333" font-size="11">= e^(ln a) − ln(e^b)</text>
+  <text x="770" y="296" text-anchor="middle" fill="#333" font-size="11">= a − b</text>
+  <text x="770" y="320" text-anchor="middle" fill="#ff9800" font-size="13" font-weight="bold">Result: a − b ✓</text>
+
+  <!-- ===== Bottom: Key insight ===== -->
+  <rect x="50" y="370" width="900" height="260" rx="12" fill="#263238" stroke="#455a64" stroke-width="2"/>
+  <text x="500" y="400" text-anchor="middle" fill="#fff" font-size="18" font-weight="bold">
+    The Key Insight: exp and ln Cancel Inside EML
+  </text>
+
+  <!-- Identity diagram -->
+  <text x="150" y="440" fill="#81d4fa" font-size="14">Identity 1:</text>
+  <text x="150" y="465" fill="#fff" font-size="13">EML(x, 1) = eˣ − ln(1) = eˣ</text>
+  <text x="150" y="488" fill="#b0bec5" font-size="11">exp costs 1 EML + 2 PUSHes = 3 instructions</text>
+
+  <text x="150" y="520" fill="#a5d6a7" font-size="14">Identity 2:</text>
+  <text x="150" y="545" fill="#fff" font-size="13">EML(ln(a), exp(b)) = e^(ln a) − ln(e^b) = a − b</text>
+  <text x="150" y="568" fill="#b0bec5" font-size="11">Subtraction costs 5 EMLs + 6 PUSHes = 11 instructions</text>
+
+  <text x="150" y="600" fill="#ffcc80" font-size="14">Identity 3:</text>
+  <text x="150" y="625" fill="#fff" font-size="13">EML(ln(a)+ln(b), 1) = e^(ln a + ln b) = a × b</text>
+
+  <!-- Arrows showing composition -->
+  <text x="700" y="440" fill="#ffd740" font-size="14" font-weight="bold">Composition Rule:</text>
+  <text x="700" y="470" fill="#fff" font-size="12">Any elementary function f</text>
+  <text x="700" y="495" fill="#fff" font-size="12">= finite composition of EML</text>
+  <text x="700" y="520" fill="#fff" font-size="12">= binary tree with 1 and vars at leaves</text>
+
+  <rect x="680" y="545" width="250" height="60" rx="8" fill="#1b5e20"/>
+  <text x="805" y="570" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">Proved in Lean 4:</text>
+  <text x="805" y="593" text-anchor="middle" fill="#a5d6a7" font-size="12">90+ machine-verified theorems</text>
+</svg>
