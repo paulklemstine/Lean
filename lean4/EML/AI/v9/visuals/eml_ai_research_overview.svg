@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0a2e"/>
+      <stop offset="100%" stop-color="#1a1a4e"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFD700"/>
+      <stop offset="100%" stop-color="#FFA500"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4FC3F7"/>
+      <stop offset="100%" stop-color="#0288D1"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#66BB6A"/>
+      <stop offset="100%" stop-color="#2E7D32"/>
+    </linearGradient>
+    <linearGradient id="purple" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#CE93D8"/>
+      <stop offset="100%" stop-color="#7B1FA2"/>
+    </linearGradient>
+    <linearGradient id="red" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#EF5350"/>
+      <stop offset="100%" stop-color="#C62828"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="900" fill="url(#bg)"/>
+
+  <!-- Title -->
+  <text x="600" y="55" text-anchor="middle" fill="url(#gold)" font-size="32" font-weight="bold" font-family="Arial" filter="url(#glow)">
+    EML × AI &amp; Machine Learning — Research Overview v9
+  </text>
+  <text x="600" y="82" text-anchor="middle" fill="#aaa" font-size="14" font-family="Arial">
+    Gravitational Factoring meets Neural Networks: 40+ verified theorems, 16 demos, 100 research directions
+  </text>
+
+  <!-- Central Hub -->
+  <circle cx="600" cy="430" r="80" fill="none" stroke="url(#gold)" stroke-width="3" filter="url(#glow)"/>
+  <text x="600" y="420" text-anchor="middle" fill="#FFD700" font-size="18" font-weight="bold" font-family="Arial">EML</text>
+  <text x="600" y="442" text-anchor="middle" fill="#FFD700" font-size="14" font-family="Arial">exp(x) − ln(y)</text>
+  <text x="600" y="460" text-anchor="middle" fill="#aaa" font-size="11" font-family="Arial">Universal Operator</text>
+
+  <!-- Branch 1: Energy Landscape (top-left) -->
+  <line x1="530" y1="380" x2="250" y2="200" stroke="#4FC3F7" stroke-width="2" opacity="0.6"/>
+  <rect x="120" y="140" width="260" height="120" rx="12" fill="#0288D1" fill-opacity="0.2" stroke="#4FC3F7" stroke-width="2"/>
+  <text x="250" y="170" text-anchor="middle" fill="#4FC3F7" font-size="16" font-weight="bold" font-family="Arial">Energy Landscape</text>
+  <text x="250" y="192" text-anchor="middle" fill="#ccc" font-size="11" font-family="Arial">E(k) = (N mod k)² — zeros at divisors</text>
+  <text x="250" y="210" text-anchor="middle" fill="#ccc" font-size="11" font-family="Arial">sin²(πN/x) — continuous relaxation</text>
+  <text x="250" y="228" text-anchor="middle" fill="#8f8" font-size="11" font-family="Arial">✓ energy_zero_iff_divisor</text>
+  <text x="250" y="246" text-anchor="middle" fill="#8f8" font-size="11" font-family="Arial">✓ trig_energy_le_one</text>
+
+  <!-- Branch 2: Neural Networks (top-right) -->
+  <line x1="670" y1="380" x2="950" y2="200" stroke="#CE93D8" stroke-width="2" opacity="0.6"/>
+  <rect x="820" y="140" width="260" height="120" rx="12" fill="#7B1FA2" fill-opacity="0.2" stroke="#CE93D8" stroke-width="2"/>
+  <text x="950" y="170" text-anchor="middle" fill="#CE93D8" font-size="16" font-weight="bold" font-family="Arial">EML Neural Networks</text>
+  <text x="950" y="192" text-anchor="middle" fill="#ccc" font-size="11" font-family="Arial">f(x) = exp(w₁x+b₁) − ln(w₂x+b₂)</text>
+  <text x="950" y="210" text-anchor="middle" fill="#ccc" font-size="11" font-family="Arial">4 params/neuron vs W²/layer (ReLU)</text>
+  <text x="950" y="228" text-anchor="middle" fill="#8f8" font-size="11" font-family="Arial">✓ eml_param_advantage (25× fewer)</text>
+  <text x="950" y="246" text-anchor="middle" fill="#8f8" font-size="11" font-family="Arial">✓ universal approximation</text>
+
+  <!-- Branch 3: Gradient Theory (left) -->
+  <line x1="530" y1="450" x2="200" y2="470" stroke="#66BB6A" stroke-width="2" opacity="0.6"/>
+  <rect x="40" y="400" width="260" height="130" rx="12" fill="#2E7D32" fill-opacity="0.2" stroke="#66BB6A" stroke-width="2"/>
+  <text x="170" y="425" text-anchor="middle" fill="#66BB6A" font-size="16" font-weight="bold" font-family="Arial">Gradient Theory</text>
+  <text x="170" y="447" text-anchor="middle" fill="#ccc" font-size="11" font-family="Arial">∇E = 2sin(θ)cos(θ) = sin(2θ)</text>
+  <text x="170" y="465" text-anchor="middle" fill="#ccc" font-size="11" font-family="Arial">Adam LR: η/(√v + ε)</text>
+  <text x="170" y="483" text-anchor="middle" fill="#8f8" font-size="11" font-family="Arial">✓ geom_decay_tendsto (→ 0)</text>
+  <text x="170" y="501" text-anchor="middle" fill="#8f8" font-size="11" font-family="Arial">✓ adam_lr_mono (variance ↑ ⟹ lr ↓)</text>
+  <text x="170" y="519" text-anchor="middle" fill="#8f8" font-size="11" font-family="Arial">✓ variance_mono (channels ↑)</text>
+
+  <!-- Branch 4: Channel Amplification (right) -->
+  <line x1="670" y1="450" x2="1000" y2="470" stroke="#EF5350" stroke-width="2" opacity="0.6"/>
+  <rect x="870" y="400" width="280" height="130" rx="12" fill="#C62828" fill-opacity="0.2" stroke="#EF5350" stroke-width="2"/>
+  <text x="1010" y="425" text-anchor="middle" fill="#EF5350" font-size="16" font-weight="bold" font-family="Arial">Channel Amplification</text>
+  <text x="1010" y="447" text-anchor="middle" fill="#ccc" font-size="11" font-family="Arial">ℂ: 3 │ ℍ: 10 │ 𝕆: 36 │ 𝕊: 136</text>
+  <text x="1010" y="465" text-anchor="middle" fill="#ccc" font-size="11" font-family="Arial">C(k) = k + C(k,2) = k(k+1)/2</text>
+  <text x="1010" y="483" text-anchor="middle" fill="#8f8" font-size="11" font-family="Arial">✓ channel_gaussian = 3</text>
+  <text x="1010" y="501" text-anchor="middle" fill="#8f8" font-size="11" font-family="Arial">✓ channel_octonion = 36</text>
+  <text x="1010" y="519" text-anchor="middle" fill="#8f8" font-size="11" font-family="Arial">✓ channel_sedenion = 136</text>
+
+  <!-- Branch 5: Learning Theory (bottom-left) -->
+  <line x1="550" y1="500" x2="300" y2="660" stroke="#FFD700" stroke-width="2" opacity="0.6"/>
+  <rect x="120" y="610" width="260" height="120" rx="12" fill="#FFA500" fill-opacity="0.15" stroke="#FFD700" stroke-width="2"/>
+  <text x="250" y="638" text-anchor="middle" fill="#FFD700" font-size="16" font-weight="bold" font-family="Arial">Learning Theory</text>
+  <text x="250" y="658" text-anchor="middle" fill="#ccc" font-size="11" font-family="Arial">VC dim ≤ 2k (k leaves)</text>
+  <text x="250" y="676" text-anchor="middle" fill="#ccc" font-size="11" font-family="Arial">PAC sample bound: O(k/ε)</text>
+  <text x="250" y="694" text-anchor="middle" fill="#8f8" font-size="11" font-family="Arial">✓ vc_dim_linear (monotone)</text>
+  <text x="250" y="712" text-anchor="middle" fill="#8f8" font-size="11" font-family="Arial">✓ eml_sample_advantage</text>
+
+  <!-- Branch 6: Quantum Hybrid (bottom-right) -->
+  <line x1="650" y1="500" x2="900" y2="660" stroke="#4FC3F7" stroke-width="2" opacity="0.6"/>
+  <rect x="770" y="610" width="260" height="120" rx="12" fill="#0288D1" fill-opacity="0.15" stroke="#4FC3F7" stroke-width="2"/>
+  <text x="900" y="638" text-anchor="middle" fill="#4FC3F7" font-size="16" font-weight="bold" font-family="Arial">Quantum Hybrid</text>
+  <text x="900" y="658" text-anchor="middle" fill="#ccc" font-size="11" font-family="Arial">Grover: √N queries (quadratic speedup)</text>
+  <text x="900" y="676" text-anchor="middle" fill="#ccc" font-size="11" font-family="Arial">EML + Grover amplitude amplification</text>
+  <text x="900" y="694" text-anchor="middle" fill="#8f8" font-size="11" font-family="Arial">✓ grover_speedup (√N ≤ N)</text>
+  <text x="900" y="712" text-anchor="middle" fill="#8f8" font-size="11" font-family="Arial">✓ grover_queries_sq (√N² ≤ N)</text>
+
+  <!-- Stats Bar -->
+  <rect x="100" y="790" width="1000" height="80" rx="10" fill="#111" fill-opacity="0.5" stroke="#444"/>
+  <text x="200" y="820" text-anchor="middle" fill="#FFD700" font-size="20" font-weight="bold" font-family="Arial">40+</text>
+  <text x="200" y="842" text-anchor="middle" fill="#aaa" font-size="12" font-family="Arial">Verified Theorems</text>
+  <text x="400" y="820" text-anchor="middle" fill="#4FC3F7" font-size="20" font-weight="bold" font-family="Arial">0</text>
+  <text x="400" y="842" text-anchor="middle" fill="#aaa" font-size="12" font-family="Arial">Remaining Sorries</text>
+  <text x="600" y="820" text-anchor="middle" fill="#66BB6A" font-size="20" font-weight="bold" font-family="Arial">16</text>
+  <text x="600" y="842" text-anchor="middle" fill="#aaa" font-size="12" font-family="Arial">Python Demos</text>
+  <text x="800" y="820" text-anchor="middle" fill="#CE93D8" font-size="20" font-weight="bold" font-family="Arial">100</text>
+  <text x="800" y="842" text-anchor="middle" fill="#aaa" font-size="12" font-family="Arial">Research Directions</text>
+  <text x="1000" y="820" text-anchor="middle" fill="#EF5350" font-size="20" font-weight="bold" font-family="Arial">6</text>
+  <text x="1000" y="842" text-anchor="middle" fill="#aaa" font-size="12" font-family="Arial">Lean 4 Files</text>
+</svg>

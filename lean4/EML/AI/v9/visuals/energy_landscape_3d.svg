@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#161b22"/>
+    </linearGradient>
+    <linearGradient id="well" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#00ff88"/>
+      <stop offset="100%" stop-color="#004422"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="50%" cy="50%">
+      <stop offset="0%" stop-color="#00ff88" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#00ff88" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow2">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1000" height="700" fill="url(#bg2)"/>
+
+  <!-- Title -->
+  <text x="500" y="40" text-anchor="middle" fill="#00ff88" font-size="24" font-weight="bold" font-family="monospace" filter="url(#glow2)">
+    Gravitational Factoring Energy Landscape
+  </text>
+  <text x="500" y="62" text-anchor="middle" fill="#888" font-size="13" font-family="monospace">
+    E(k) = (N mod k)² for N = 91 = 7 × 13 — Divisors are gravitational wells (E = 0)
+  </text>
+
+  <!-- Axes -->
+  <line x1="80" y1="580" x2="950" y2="580" stroke="#444" stroke-width="2"/>
+  <line x1="80" y1="580" x2="80" y2="100" stroke="#444" stroke-width="2"/>
+  <text x="500" y="620" text-anchor="middle" fill="#888" font-size="14" font-family="monospace">k (candidate factor)</text>
+  <text x="40" y="340" text-anchor="middle" fill="#888" font-size="14" font-family="monospace" transform="rotate(-90, 40, 340)">E(k) = (91 mod k)²</text>
+
+  <!-- Energy bars for N=91 -->
+  <!-- k=1: E=0 (divisor) -->
+  <rect x="110" y="575" width="35" height="5" fill="url(#well)" filter="url(#glow2)"/>
+  <circle cx="128" cy="577" r="6" fill="url(#glow1)"/>
+  <text x="128" y="600" text-anchor="middle" fill="#0f0" font-size="11" font-family="monospace">1✓</text>
+
+  <!-- k=2: E=1 -->
+  <rect x="160" y="572" width="35" height="8" fill="#ff6600" opacity="0.8"/>
+  <text x="178" y="600" text-anchor="middle" fill="#888" font-size="11" font-family="monospace">2</text>
+
+  <!-- k=3: E=1 -->
+  <rect x="210" y="572" width="35" height="8" fill="#ff6600" opacity="0.8"/>
+  <text x="228" y="600" text-anchor="middle" fill="#888" font-size="11" font-family="monospace">3</text>
+
+  <!-- k=4: E=9 -->
+  <rect x="260" y="508" width="35" height="72" fill="#ff4400" opacity="0.8"/>
+  <text x="278" y="600" text-anchor="middle" fill="#888" font-size="11" font-family="monospace">4</text>
+
+  <!-- k=5: E=1 -->
+  <rect x="310" y="572" width="35" height="8" fill="#ff6600" opacity="0.8"/>
+  <text x="328" y="600" text-anchor="middle" fill="#888" font-size="11" font-family="monospace">5</text>
+
+  <!-- k=6: E=1 -->
+  <rect x="360" y="572" width="35" height="8" fill="#ff6600" opacity="0.8"/>
+  <text x="378" y="600" text-anchor="middle" fill="#888" font-size="11" font-family="monospace">6</text>
+
+  <!-- k=7: E=0 (DIVISOR!) -->
+  <rect x="410" y="575" width="35" height="5" fill="url(#well)" filter="url(#glow2)"/>
+  <circle cx="428" cy="577" r="8" fill="url(#glow1)"/>
+  <text x="428" y="600" text-anchor="middle" fill="#0f0" font-size="11" font-weight="bold" font-family="monospace">7✓</text>
+  <text x="428" y="555" text-anchor="middle" fill="#00ff88" font-size="10" font-family="monospace" filter="url(#glow2)">FACTOR</text>
+
+  <!-- k=8: E=9 -->
+  <rect x="460" y="508" width="35" height="72" fill="#ff4400" opacity="0.8"/>
+  <text x="478" y="600" text-anchor="middle" fill="#888" font-size="11" font-family="monospace">8</text>
+
+  <!-- k=9: E=1 -->
+  <rect x="510" y="572" width="35" height="8" fill="#ff6600" opacity="0.8"/>
+  <text x="528" y="600" text-anchor="middle" fill="#888" font-size="11" font-family="monospace">9</text>
+
+  <!-- k=10: E=1 -->
+  <rect x="560" y="572" width="35" height="8" fill="#ff6600" opacity="0.8"/>
+  <text x="578" y="600" text-anchor="middle" fill="#888" font-size="11" font-family="monospace">10</text>
+
+  <!-- k=11: E=9 -->
+  <rect x="610" y="508" width="35" height="72" fill="#ff4400" opacity="0.8"/>
+  <text x="628" y="600" text-anchor="middle" fill="#888" font-size="11" font-family="monospace">11</text>
+
+  <!-- k=12: E=49 -->
+  <rect x="660" y="188" width="35" height="392" fill="#ff2200" opacity="0.8"/>
+  <text x="678" y="600" text-anchor="middle" fill="#888" font-size="11" font-family="monospace">12</text>
+
+  <!-- k=13: E=0 (DIVISOR!) -->
+  <rect x="710" y="575" width="35" height="5" fill="url(#well)" filter="url(#glow2)"/>
+  <circle cx="728" cy="577" r="8" fill="url(#glow1)"/>
+  <text x="728" y="600" text-anchor="middle" fill="#0f0" font-size="11" font-weight="bold" font-family="monospace">13✓</text>
+  <text x="728" y="555" text-anchor="middle" fill="#00ff88" font-size="10" font-family="monospace" filter="url(#glow2)">FACTOR</text>
+
+  <!-- k=14: E=49 -->
+  <rect x="760" y="188" width="35" height="392" fill="#ff2200" opacity="0.8"/>
+  <text x="778" y="600" text-anchor="middle" fill="#888" font-size="11" font-family="monospace">14</text>
+
+  <!-- k=15: E=1 -->
+  <rect x="810" y="572" width="35" height="8" fill="#ff6600" opacity="0.8"/>
+  <text x="828" y="600" text-anchor="middle" fill="#888" font-size="11" font-family="monospace">15</text>
+
+  <!-- Annotations -->
+  <rect x="100" y="640" width="800" height="50" rx="8" fill="#111" stroke="#333"/>
+  <text x="500" y="663" text-anchor="middle" fill="#00ff88" font-size="13" font-family="monospace">
+    Key Insight: Divisors of N create "gravitational wells" — the EML network learns to navigate toward them
+  </text>
+  <text x="500" y="680" text-anchor="middle" fill="#888" font-size="11" font-family="monospace">
+    Formally verified: energy_zero_iff_divisor, factor_detector_pos, factor_detector_le_one
+  </text>
+
+  <!-- Legend -->
+  <rect x="800" y="90" width="180" height="90" rx="6" fill="#111" stroke="#444"/>
+  <text x="890" y="112" text-anchor="middle" fill="#ccc" font-size="12" font-weight="bold" font-family="monospace">Legend</text>
+  <circle cx="820" cy="132" r="5" fill="#00ff88"/>
+  <text x="840" y="137" fill="#0f0" font-size="11" font-family="monospace">Divisor (E = 0)</text>
+  <rect x="815" y="150" width="10" height="10" fill="#ff4400"/>
+  <text x="840" y="160" fill="#ff6600" font-size="11" font-family="monospace">Non-divisor (E &gt; 0)</text>
+</svg>
