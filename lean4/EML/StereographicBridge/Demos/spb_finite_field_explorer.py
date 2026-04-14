@@ -1,150 +1,260 @@
 #!/usr/bin/env python3
 """
-SPB Finite Field Explorer
+SPB over Finite Fields — Detailed Explorer
 
-Explores the group structure of spb(x,y) = (x+y)/(1-xy) over finite fields F_p.
+Explores the group structure of (𝔽_p, spb) where spb(x,y) = (x+y)/(1-xy) mod p.
 
 Key discoveries:
-1. Fixed points exist iff p ≡ 1 (mod 4) iff -1 is a quadratic residue
-2. The SPB group order relates to p±1
-3. Orbit structure reveals connections to the projective line
+1. The SPB group over 𝔽_p is isomorphic to the multiplicative group of
+   norm-1 elements in 𝔽_{p²}.
+2. For p ≡ 3 (mod 4): |SPB group| = p + 1 (non-split case)
+   For p ≡ 1 (mod 4): |SPB group| = p - 1 (split case)
+3. The discrete logarithm in the SPB group reduces to DLP in 𝔽_{p²}*.
 
-Author: SPB Research Team
+This has implications for:
+- Cryptographic applications (or lack thereof — see analysis)
+- Computational number theory
+- Coding theory
 """
 
-import math
+import numpy as np
+from collections import defaultdict
+import os
+
+OUTPUT_DIR = os.path.dirname(os.path.abspath(__file__))
+
 
 def mod_inv(a, p):
-    """Modular inverse via Fermat's little theorem."""
+    """Modular inverse via Fermat's little theorem"""
+    if a % p == 0:
+        return None
     return pow(a, p - 2, p)
 
+
 def spb_mod(x, y, p):
-    """SPB over F_p: (x+y)/(1-xy) mod p. Returns None for poles."""
+    """SPB operation over Z/pZ"""
     denom = (1 - x * y) % p
-    if denom == 0:
-        return None  # Pole (infinity)
-    return ((x + y) * mod_inv(denom, p)) % p
+    inv = mod_inv(denom, p)
+    if inv is None:
+        return None  # pole
+    return ((x + y) * inv) % p
 
-def find_sqrt_neg1(p):
-    """Find square roots of -1 mod p, if they exist."""
-    neg1 = (p - 1) % p
-    roots = [x for x in range(p) if (x * x) % p == neg1]
-    return roots
 
-def orbit(start, a, p, max_iter=None):
-    """Compute the orbit of start under repeated SPB with a."""
-    if max_iter is None:
-        max_iter = 2 * p + 5
-    path = [start]
-    current = start
-    for _ in range(max_iter):
-        current = spb_mod(current, a, p)
-        if current is None:
-            path.append('∞')
-            return path, False  # Hit pole
-        if current == start:
-            return path, True  # Returned to start
-        path.append(current)
-    return path, False  # Didn't close
+def find_spb_group(p):
+    """Find all elements and structure of the SPB group over 𝔽_p"""
+    # Elements: all x ∈ 𝔽_p such that for all y in the group, 1-xy ≠ 0 mod p
+    # In practice, we include all elements and track where poles occur.
 
-def cayley_table(p):
-    """Print the full SPB Cayley table for F_p."""
-    print(f"\nSPB Cayley Table for F_{p}:")
-    header = "spb |" + " ".join(f"{i:3d}" for i in range(p))
-    print(header)
-    print("-" * len(header))
-    for x in range(p):
-        row = f" {x:2d} |"
-        for y in range(p):
-            result = spb_mod(x, y, p)
+    elements = set()
+    poles = set()
+
+    # Start with 0 (identity) and build up by closing under spb
+    frontier = {0}
+    elements = {0}
+
+    # Add all generators and close
+    for g in range(p):
+        # Check if g has finite order
+        val = 0
+        order = 0
+        valid = True
+        for k in range(1, 2 * p + 3):
+            result = spb_mod(g, val, p)
             if result is None:
-                row += "  ∞"
-            else:
-                row += f"{result:3d}"
-        print(row)
+                valid = False
+                break
+            val = result
+            if val == 0:
+                order = k
+                break
 
-def analyze_prime(p):
-    """Full analysis of SPB group over F_p."""
-    print(f"\n{'='*60}")
-    print(f"  Analysis of SPB over F_{p}  (p mod 4 = {p % 4})")
-    print(f"{'='*60}")
-    
-    # Quadratic residue check
-    qr_neg1 = find_sqrt_neg1(p)
-    print(f"\n  Square roots of -1 mod {p}: {qr_neg1 if qr_neg1 else 'NONE'}")
-    if qr_neg1:
-        print(f"  → -1 IS a quadratic residue (p ≡ 1 mod 4)")
-        print(f"  → SPB has fixed points at x = {qr_neg1}")
-        # Verify
-        for root in qr_neg1:
-            for a in range(1, min(p, 5)):
-                result = spb_mod(root, a, p)
-                if result is not None:
-                    fixed = (result == root)
-                    if fixed:
-                        print(f"    Verified: spb({root}, {a}) = {result} = {root} ✓")
-    else:
-        print(f"  → -1 is NOT a quadratic residue (p ≡ 3 mod 4)")
-        print(f"  → SPB acts freely (no fixed points)")
-    
-    # Find order of generator 1
-    print(f"\n  Orbit of 0 under spb(·, 1):")
-    orb, closed = orbit(0, 1, p)
-    if closed:
-        print(f"    Period: {len(orb) - 1}")
-    print(f"    Orbit: {' → '.join(str(x) for x in orb[:min(len(orb), 20)])}")
-    
-    # Count valid group elements (elements a such that spb(0, a) is defined)
-    valid = [a for a in range(p)]
-    print(f"\n  Group elements: {len(valid)} (= p = {p})")
-    
-    # All orbits
-    print(f"\n  All orbits of spb(·, 1):")
-    seen = set()
-    orbit_count = 0
-    for start in range(p):
-        if start in seen:
-            continue
-        orb, closed = orbit(start, 1, p)
-        orb_set = set(x for x in orb if x != '∞')
-        seen.update(orb_set)
-        orbit_count += 1
-        orbit_repr = ' → '.join(str(x) for x in orb[:min(len(orb), 15)])
-        period = len(orb) - 1 if closed else '?'
-        print(f"    Orbit {orbit_count}: {orbit_repr}  (period {period})")
-    
-    # Cayley table for small primes
-    if p <= 7:
-        cayley_table(p)
-    
-    return qr_neg1
+        if valid and order > 0:
+            # Add all powers
+            val = 0
+            for k in range(order):
+                val = spb_mod(g, val, p) if k > 0 else g
+                if val is not None:
+                    elements.add(val)
 
-def main():
-    print("█" * 60)
-    print("  SPB FINITE FIELD EXPLORER")
-    print("  spb(x, y) = (x + y) / (1 - xy)  mod p")
-    print("█" * 60)
-    
-    # Analyze primes up to 23
-    results = {}
-    for p in [3, 5, 7, 11, 13, 17, 19, 23]:
-        roots = analyze_prime(p)
-        results[p] = roots
-    
-    # Summary
-    print(f"\n{'='*60}")
-    print("  SUMMARY")
-    print(f"{'='*60}")
-    print(f"\n  {'p':>4} {'p mod 4':>8} {'-1 is QR':>10} {'√(-1)':>15}")
-    print(f"  {'-'*40}")
-    for p, roots in results.items():
-        is_qr = "YES" if roots else "NO"
-        root_str = str(roots) if roots else "—"
-        print(f"  {p:4d} {p%4:8d} {is_qr:>10} {root_str:>15}")
-    
-    print(f"\n  Pattern confirmed: √(-1) exists iff p ≡ 1 (mod 4)")
-    print(f"  This is a consequence of quadratic reciprocity!")
-    print(f"\n  Formally verified in Lean 4: spbField_fixed_point")
+    return elements
 
-if __name__ == "__main__":
-    main()
+
+def analyze_group(p):
+    """Full analysis of the SPB group over 𝔽_p"""
+    print(f"\n{'='*50}")
+    print(f"  SPB Group Analysis: 𝔽_{p}")
+    print(f"{'='*50}")
+
+    # Find orders of all elements
+    orders = {}
+    for g in range(p):
+        val = 0
+        order = None
+        for k in range(1, 2 * p + 3):
+            result = spb_mod(g, val, p)
+            if result is None:
+                order = None
+                break
+            val = result
+            if val == 0:
+                order = k
+                break
+        orders[g] = order
+
+    # Report
+    valid_elements = [g for g, o in orders.items() if o is not None]
+    max_order = max(o for o in orders.values() if o is not None)
+
+    print(f"\n  p mod 4 = {p % 4}")
+    print(f"  Number of elements with finite order: {len(valid_elements)}")
+    print(f"  Maximum element order: {max_order}")
+    print(f"  Expected group order: {'p+1=' + str(p+1) if p % 4 == 3 else 'p-1=' + str(p-1)}")
+
+    # Find generators (elements of maximum order)
+    generators = [g for g, o in orders.items() if o == max_order]
+    print(f"  Generators (elements of max order): {generators[:10]}{'...' if len(generators) > 10 else ''}")
+    print(f"  Number of generators: {len(generators)}")
+    print(f"  Euler φ({max_order}) = {euler_phi(max_order)} (should match)")
+
+    # Order distribution
+    order_dist = defaultdict(int)
+    for g, o in orders.items():
+        if o is not None:
+            order_dist[o] += 1
+
+    print(f"\n  Order distribution:")
+    for order in sorted(order_dist.keys()):
+        count = order_dist[order]
+        print(f"    Order {order:>4}: {count:>4} elements")
+
+    # Is it cyclic?
+    is_cyclic = max_order == len(valid_elements)
+    print(f"\n  Cyclic group? {'YES' if is_cyclic else 'NO'}")
+    if is_cyclic:
+        print(f"  ≅ ℤ/{max_order}ℤ")
+
+    return orders, valid_elements, max_order
+
+
+def euler_phi(n):
+    """Euler's totient function"""
+    result = n
+    p = 2
+    temp = n
+    while p * p <= temp:
+        if temp % p == 0:
+            while temp % p == 0:
+                temp //= p
+            result -= result // p
+        p += 1
+    if temp > 1:
+        result -= result // temp
+    return result
+
+
+def spb_cayley_table(p):
+    """Print the Cayley table for the SPB group over 𝔽_p"""
+    print(f"\n  Cayley table for SPB over 𝔽_{p}:")
+    elements = list(range(p))
+
+    # Header
+    print(f"  spb |", end="")
+    for y in elements:
+        print(f" {y:>3}", end="")
+    print()
+    print(f"  ----+" + "----" * p)
+
+    for x in elements:
+        print(f"  {x:>3} |", end="")
+        for y in elements:
+            r = spb_mod(x, y, p)
+            print(f" {str(r) if r is not None else '∞':>3}", end="")
+        print()
+
+
+def cryptographic_analysis(p):
+    """Analyze SPB group for cryptographic potential"""
+    print(f"\n{'='*50}")
+    print(f"  Cryptographic Analysis: 𝔽_{p}")
+    print(f"{'='*50}")
+
+    # Find a generator
+    for g in range(1, p):
+        val = 0
+        order = None
+        for k in range(1, 2 * p + 3):
+            result = spb_mod(g, val, p)
+            if result is None:
+                break
+            val = result
+            if val == 0:
+                order = k
+                break
+        if order is not None and order > p // 2:
+            break
+
+    if order is None:
+        print("  No suitable generator found.")
+        return
+
+    print(f"\n  Generator g = {g}, order = {order}")
+    print(f"\n  Diffie-Hellman analogue:")
+    print(f"    Public: p = {p}, g = {g}")
+
+    # Alice picks secret a
+    a = 7 % (order - 1) + 1
+    alice_public = 0
+    val = 0
+    for _ in range(a):
+        val = spb_mod(g, val, p)
+    alice_public = val
+    print(f"    Alice: secret a = {a}, public A = spb^{a}(g) = {alice_public}")
+
+    # Bob picks secret b
+    b = 11 % (order - 1) + 1
+    val = 0
+    for _ in range(b):
+        val = spb_mod(g, val, p)
+    bob_public = val
+    print(f"    Bob:   secret b = {b}, public B = spb^{b}(g) = {bob_public}")
+
+    # Shared secret
+    val = 0
+    for _ in range(a * b):
+        val = spb_mod(g, val, p)
+    shared = val
+    print(f"    Shared secret: spb^{a*b}(g) = {shared}")
+
+    # Verify via Alice's path
+    val = 0
+    for _ in range(a):
+        val = spb_mod(bob_public, val, p)
+        if val is None:
+            print("    ⚠ Verification failed (pole encountered)")
+            return
+    print(f"    Alice computes spb^a(B) = {val} {'✓' if val == shared else '✗'}")
+
+    print(f"\n  Security note:")
+    print(f"    The SPB DLP reduces to the standard DLP in 𝔽_{{p²}}*")
+    print(f"    via the Cayley transform. Therefore SPB-DH offers no")
+    print(f"    additional security over standard DH — but the")
+    print(f"    geometric interpretation is more natural.")
+
+
+if __name__ == '__main__':
+    print("╔" + "═" * 48 + "╗")
+    print("║  SPB OVER FINITE FIELDS — DETAILED EXPLORER   ║")
+    print("╚" + "═" * 48 + "╝")
+
+    # Small primes: detailed analysis
+    for p in [5, 7]:
+        spb_cayley_table(p)
+
+    # Analysis for several primes
+    for p in [5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]:
+        analyze_group(p)
+
+    # Cryptographic demo
+    cryptographic_analysis(47)
+
+    print("\n\nDone!")
