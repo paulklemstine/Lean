@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0a2e"/>
+      <stop offset="100%" stop-color="#1a1a4e"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffd700"/>
+      <stop offset="100%" stop-color="#ff8c00"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4fc3f7"/>
+      <stop offset="100%" stop-color="#0288d1"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#81c784"/>
+      <stop offset="100%" stop-color="#388e3c"/>
+    </linearGradient>
+    <linearGradient id="purple" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ce93d8"/>
+      <stop offset="100%" stop-color="#7b1fa2"/>
+    </linearGradient>
+    <linearGradient id="red" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ef9a9a"/>
+      <stop offset="100%" stop-color="#c62828"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="900" fill="url(#bg)"/>
+
+  <!-- Title -->
+  <text x="600" y="55" text-anchor="middle" fill="url(#gold)" font-size="36" font-weight="bold" filter="url(#glow)">
+    EML Operator — Version 7 Research Overview
+  </text>
+  <text x="600" y="82" text-anchor="middle" fill="#aaa" font-size="16">
+    eml(x, y) = eˣ − ln(y) · The Continuous Sheffer Stroke
+  </text>
+
+  <!-- Central node -->
+  <circle cx="600" cy="400" r="80" fill="none" stroke="url(#gold)" stroke-width="3" filter="url(#glow)"/>
+  <text x="600" y="390" text-anchor="middle" fill="#ffd700" font-size="22" font-weight="bold">eml(x,y)</text>
+  <text x="600" y="415" text-anchor="middle" fill="#ffc107" font-size="16">= eˣ − ln y</text>
+
+  <!-- Branch 1: Algebra (top-left) -->
+  <line x1="535" y1="345" x2="200" y2="180" stroke="#4fc3f7" stroke-width="2" opacity="0.6"/>
+  <rect x="80" y="130" width="240" height="120" rx="12" fill="#0d47a1" fill-opacity="0.7" stroke="url(#blue)" stroke-width="2"/>
+  <text x="200" y="158" text-anchor="middle" fill="url(#blue)" font-size="16" font-weight="bold">Universal Algebra</text>
+  <text x="200" y="180" text-anchor="middle" fill="#90caf9" font-size="12">✓ Non-commutative, Non-associative</text>
+  <text x="200" y="198" text-anchor="middle" fill="#90caf9" font-size="12">✓ Not medial, Not flexible</text>
+  <text x="200" y="216" text-anchor="middle" fill="#90caf9" font-size="12">✓ Not L/R alternative</text>
+  <text x="200" y="234" text-anchor="middle" fill="#90caf9" font-size="12">✓ No identity elements</text>
+
+  <!-- Branch 2: Analysis (top-right) -->
+  <line x1="665" y1="345" x2="1000" y2="180" stroke="#81c784" stroke-width="2" opacity="0.6"/>
+  <rect x="880" y="130" width="240" height="120" rx="12" fill="#1b5e20" fill-opacity="0.7" stroke="url(#green)" stroke-width="2"/>
+  <text x="1000" y="158" text-anchor="middle" fill="url(#green)" font-size="16" font-weight="bold">Analysis &amp; Dynamics</text>
+  <text x="1000" y="180" text-anchor="middle" fill="#a5d6a7" font-size="12">✓ d(z) > z — no fixed points</text>
+  <text x="1000" y="198" text-anchor="middle" fill="#a5d6a7" font-size="12">✓ d(z) ≥ 2 for z > 0</text>
+  <text x="1000" y="216" text-anchor="middle" fill="#a5d6a7" font-size="12">✓ Orbits strictly diverge</text>
+  <text x="1000" y="234" text-anchor="middle" fill="#a5d6a7" font-size="12">✓ Hessian positive definite</text>
+
+  <!-- Branch 3: Growth Theory (left) -->
+  <line x1="525" y1="410" x2="200" y2="420" stroke="#ce93d8" stroke-width="2" opacity="0.6"/>
+  <rect x="30" y="360" width="240" height="120" rx="12" fill="#4a148c" fill-opacity="0.7" stroke="url(#purple)" stroke-width="2"/>
+  <text x="150" y="388" text-anchor="middle" fill="url(#purple)" font-size="16" font-weight="bold">Growth Theory</text>
+  <text x="150" y="410" text-anchor="middle" fill="#e1bee7" font-size="12">✓ e↑↑n ≥ 2ⁿ</text>
+  <text x="150" y="428" text-anchor="middle" fill="#e1bee7" font-size="12">✓ e↑↑(n+2) ≥ exp(2ⁿ)</text>
+  <text x="150" y="446" text-anchor="middle" fill="#e1bee7" font-size="12">✓ e↑↑n ≥ n+1</text>
+  <text x="150" y="464" text-anchor="middle" fill="#e1bee7" font-size="12">✓ Unbounded tower</text>
+
+  <!-- Branch 4: Geometry (right) -->
+  <line x1="675" y1="410" x2="1000" y2="420" stroke="#ef9a9a" stroke-width="2" opacity="0.6"/>
+  <rect x="930" y="360" width="240" height="120" rx="12" fill="#b71c1c" fill-opacity="0.7" stroke="url(#red)" stroke-width="2"/>
+  <text x="1050" y="388" text-anchor="middle" fill="url(#red)" font-size="16" font-weight="bold">Riemannian Geometry</text>
+  <text x="1050" y="410" text-anchor="middle" fill="#ef9a9a" font-size="12">ds² = eˣdx² + y⁻²dy²</text>
+  <text x="1050" y="428" text-anchor="middle" fill="#ef9a9a" font-size="12">✓ No critical points</text>
+  <text x="1050" y="446" text-anchor="middle" fill="#ef9a9a" font-size="12">✓ Gradient norm > 0</text>
+  <text x="1050" y="464" text-anchor="middle" fill="#ef9a9a" font-size="12">✓ Level sets non-empty</text>
+
+  <!-- Branch 5: Tropical (bottom-left) -->
+  <line x1="545" y1="465" x2="250" y2="620" stroke="#ffab91" stroke-width="2" opacity="0.6"/>
+  <rect x="100" y="580" width="240" height="100" rx="12" fill="#bf360c" fill-opacity="0.7" stroke="#ff8a65" stroke-width="2"/>
+  <text x="220" y="608" text-anchor="middle" fill="#ffab91" font-size="16" font-weight="bold">Tropical Algebra</text>
+  <text x="220" y="630" text-anchor="middle" fill="#ffccbc" font-size="12">✓ trop(x,x) = |x|</text>
+  <text x="220" y="648" text-anchor="middle" fill="#ffccbc" font-size="12">✓ Recovers max, min</text>
+  <text x="220" y="666" text-anchor="middle" fill="#ffccbc" font-size="12">✓ trop(x,-x) = x</text>
+
+  <!-- Branch 6: Fixed Points (bottom-right) -->
+  <line x1="645" y1="465" x2="900" y2="620" stroke="#80cbc4" stroke-width="2" opacity="0.6"/>
+  <rect x="800" y="580" width="280" height="100" rx="12" fill="#004d40" fill-opacity="0.7" stroke="#80cbc4" stroke-width="2"/>
+  <text x="940" y="608" text-anchor="middle" fill="#80cbc4" font-size="16" font-weight="bold">Fixed Points &amp; AM-GM</text>
+  <text x="940" y="630" text-anchor="middle" fill="#b2dfdb" font-size="12">✓ z* unique on ℝ₊, |g'(z*)| &lt; 1</text>
+  <text x="940" y="648" text-anchor="middle" fill="#b2dfdb" font-size="12">✓ a+b−ln(a)−ln(b) ≥ 2</text>
+  <text x="940" y="666" text-anchor="middle" fill="#b2dfdb" font-size="12">✓ eml(ln a, b)+eml(ln b, a) bridge</text>
+
+  <!-- Branch 7: Constants (bottom center) -->
+  <line x1="600" y1="480" x2="600" y2="720" stroke="#fff176" stroke-width="2" opacity="0.6"/>
+  <rect x="430" y="720" width="340" height="100" rx="12" fill="#f57f17" fill-opacity="0.5" stroke="#fff176" stroke-width="2"/>
+  <text x="600" y="748" text-anchor="middle" fill="#fff176" font-size="16" font-weight="bold">EML Constants &amp; Composition</text>
+  <text x="600" y="770" text-anchor="middle" fill="#fff9c4" font-size="12">1 → e → e² → e^e → e^(e^e) → ...</text>
+  <text x="600" y="788" text-anchor="middle" fill="#fff9c4" font-size="12">✓ Power identity: eml(nx, 1) = exp(x)ⁿ</text>
+  <text x="600" y="806" text-anchor="middle" fill="#fff9c4" font-size="12">✓ Involution: x ↦ 1−x via eml(0, eˣ)</text>
+
+  <!-- Stats -->
+  <rect x="420" y="850" width="360" height="35" rx="8" fill="#ffd700" fill-opacity="0.15" stroke="#ffd700" stroke-width="1"/>
+  <text x="600" y="873" text-anchor="middle" fill="#ffd700" font-size="14" font-weight="bold">
+    V7: 50+ theorems · 0 sorry's · Lean 4 + Mathlib verified
+  </text>
+</svg>
