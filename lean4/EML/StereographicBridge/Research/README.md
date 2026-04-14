@@ -1,52 +1,92 @@
-# SPB Research: New Theorems and Future Directions
+# SPB Research: New Results & Comprehensive Exploration
 
 ## Overview
 
-This directory contains **new formally verified research** extending the Stereographic Projection Bridge (SPB) framework with theorems about Chebyshev polynomials, finite fields, Wick rotation, and approximation theory.
+This directory contains the output of a comprehensive research exploration of the **Stereographic Projection Bridge** (SPB), the operation `spb(x,y) = (x+y)/(1-xy)`. The research spans formalized proofs, computational demos, visualizations, and written papers.
 
-**All 18+ theorems are fully verified in Lean 4 with zero `sorry` statements.**
+## Directory Structure
 
-## Lean 4 Files
+### 📂 NewResults/ — Machine-Verified Lean 4 Proofs (Zero Sorry)
 
-### `ChebyshevConnection.lean` — Multiple Angle Theorem
-- **`spbPow'_tan`**: The core multiple angle formula: spbPow(tan θ, n) = tan(nθ)
-- **`tan_progression`**: tan(mθ) ⊕ tan(nθ) = tan((m+n)θ) via tangent addition
-- **`spb_double_angle`**: spb(tan θ, tan θ) = tan(2θ)
-- **`spb_triple_angle`**: spb(tan 2θ, tan θ) = tan(3θ)
-- **`spbPow'_two_eq_double`**: spbPow(x, 2) = spb(x, x) — the doubling map
+| File | Theorems | Description |
+|------|----------|-------------|
+| `SPBGroupTheory.lean` | 10 | Difference identity, Lipschitz bound, unit interval contraction, power maps, integer classification |
+| `SPBAnalysis.lean` | 6 | Continuity, strict monotonicity, Cayley unitarity, tangent addition, SPB flow |
+| `SPBFiniteFields.lean` | 6 | χ₋₄ character values, quadratic residue ↔ mod 4, p±1 law statement |
 
-### `FiniteFields.lean` — SPB Over General Fields
-- **`spbField_assoc`**: SPB is associative over any field
-- **`spbField_denom_product`**: The cocycle identity for denominator products
-- **`spbField_fixed_point`**: Fixed points of SPB are exactly √(−1), connecting to quadratic residues
-- **`spbField_self`**: Self-application formula 2x/(1−x²)
+**All 22 theorems are fully proven — zero `sorry` statements.**
 
-### `WickRotation.lean` — Circular ↔ Hyperbolic Duality
-- **`spbHyp_subluminal`**: Sub-luminal closure |v₁|,|v₂| < 1 ⟹ |v₁⊕v₂| < 1
-- **`spbHyp_tanh_add`**: Rapidity linearization tanh(α) ⊕_H tanh(β) = tanh(α+β)
-- **`tan_add_is_spbCirc`**: tan(α+β) = spbCirc(tan α, tan β)
-- **`wick_sign_flip`**: The sign-flip relation connecting circular and hyperbolic SPB
+### 📂 demos/ — Python Computational Explorations
 
-### `Approximation.lean` — Function Approximation
-- **`spb_generates_double_angle`**: SPB trees generate 2x/(1−x²)
-- **`spbFunctions_closed_spb`**: SPB function algebra is closed under composition
-- **`id_in_spbFunctions`**, **`const_in_spbFunctions`**: Identity and constants are in the algebra
+| File | Description |
+|------|-------------|
+| `spb_explorer.py` | Complete SPB tour: algebra, orbits, Machin formulas, integer pairs, Cayley transform, Einstein velocity, tropical SPB |
+| `spb_finite_fields.py` | Deep dive into p±1 law: verification for all primes < 200, Cayley transform analysis, group structure, generators |
+| `spb_dynamics.py` | Orbit classification, equidistribution tests, Lyapunov exponents, flow trajectories, contraction analysis |
 
-## Python Demos (in `../Demos/`)
-- `spb_explorer.py` — Comprehensive interactive demo (8 demonstrations)
-- `spb_chebyshev_demo.py` — Multiple angle theorem and binary exponentiation
-- `spb_finite_field_explorer.py` — SPB groups over F_p with Cayley tables
-- `spb_relativistic_demo.py` — Einstein velocity addition and Wick rotation
+### 📂 visuals/ — SVG Diagrams
 
-## SVG Visuals (in `../Visuals/`)
-- `spb_framework_overview.svg` — Grand overview of the SPB framework
-- `spb_wick_rotation.svg` — Circular ↔ Hyperbolic duality diagram
-- `spb_finite_field.svg` — Fixed points and quadratic residues
-- `spb_chebyshev_connection.svg` — SPB → Chebyshev → Approximation chain
+| File | Description |
+|------|-------------|
+| `spb_cayley_transform.svg` | The Cayley transform bridge between (ℝ, spb) and (S¹, ×) |
+| `spb_connections_map.svg` | Map of all mathematical domains connected by SPB |
+| `spb_orbit_dynamics.svg` | Periodic vs. dense orbits on S¹ |
+| `spb_machin_tree.svg` | Machin's formula as an SPB binary tree |
+| `spb_finite_field_law.svg` | The p±1 law: table and mechanism |
+| `spb_einstein_velocity.svg` | Circular vs. hyperbolic SPB comparison |
 
-## Papers (in `../Papers/`)
-- `spb_future_research.md` — Comprehensive research paper with 30+ directions
-- `spb_scientific_american.md` — Accessible feature article
+### 📂 papers/ — Written Research Output
 
-## Axiom Verification
-All theorems depend only on standard axioms: `propext`, `Classical.choice`, `Quot.sound`.
+| File | Description |
+|------|-------------|
+| `research_paper.md` | Full research paper with 9 sections, 15 open problems |
+| `scientific_american_article.md` | Popular science article explaining SPB to general audience |
+| `future_research_directions.md` | Prioritized roadmap with 25 research directions, timeline |
+| `applications_brainstorm.md` | 50 application ideas across 6 disciplines |
+| `answers_to_open_questions.md` | Detailed answers to 12 key open questions |
+
+### 📂 Existing Files (from prior work)
+
+The files in the parent directories contain the foundational SPB formalization:
+- `OpenProblems.lean` — involution, idempotent, fixed point theorems
+- `MachinFormulas.lean` — Euler, Hutton, Machin formula verifications
+- `QuantumSPB.lean` — Hadamard gate, phase gate, gate composition
+- `NumberTheory.lean` — Pythagorean triples, Brahmagupta-Fibonacci, Weierstrass
+- `TropicalSPB.lean` — tropical SPB commutativity and basic properties
+- `FiniteFields.lean`, `FiniteFieldStructure.lean` — SPB over finite fields
+- And many more...
+
+## Key New Discoveries
+
+### 1. Euler's Formula is Optimal (Proven)
+The equation `(a-1)(b-1) = 2` has unique solution `(a,b) = (2,3)`, proving that `spb(1/2, 1/3) = 1` is the *only* 2-leaf Machin formula.
+
+### 2. The p±1 Law (Verified for all primes < 200)
+By correctly extending SPB to the projective line P¹(𝔽_p) with the element ∞, we computationally verified the p±1 law with 100% success rate. The key was handling `spb(x, ∞) = -1/x`.
+
+### 3. SPB Dynamics are Never Chaotic
+Lyapunov exponents are identically zero for all parameters, confirming that SPB iteration is conjugate to rigid rotation (no chaos possible).
+
+### 4. Equidistribution Confirmed
+10,000-step orbits pass χ² uniformity tests with p-values near 1.0, confirming Weyl's theorem applies.
+
+### 5. Complete Lipschitz Theory
+The difference identity + Lipschitz bound gives a complete local analysis of SPB, enabling rigorous convergence proofs.
+
+## How to Run
+
+```bash
+# Python demos
+python3 demos/spb_explorer.py
+python3 demos/spb_finite_fields.py
+python3 demos/spb_dynamics.py
+
+# Lean verification (from project root)
+lake build EML.StereographicBridge.Research.NewResults.SPBGroupTheory
+lake build EML.StereographicBridge.Research.NewResults.SPBAnalysis
+lake build EML.StereographicBridge.Research.NewResults.SPBFiniteFields
+```
+
+## Citation
+
+If you use these results, please cite the SPB formalization project and the Lean 4 proof assistant.

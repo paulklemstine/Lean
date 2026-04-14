@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 450" width="700" height="450">
+  <defs>
+    <linearGradient id="bg4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fffbeb;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fefce8;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="700" height="450" rx="12" fill="url(#bg4)" stroke="#94a3b8"/>
+
+  <text x="350" y="35" text-anchor="middle" font-family="Georgia, serif" font-size="20" fill="#1e293b" font-weight="bold">Machin's Formula as an SPB Binary Tree</text>
+  <text x="350" y="55" text-anchor="middle" font-family="serif" font-size="13" fill="#64748b">4·arctan(1/5) − arctan(1/239) = π/4</text>
+
+  <!-- Tree structure -->
+  <!-- Level 0: Root = 1 = tan(π/4) -->
+  <circle cx="350" cy="100" r="25" fill="#dc2626" stroke="#991b1b" stroke-width="2" filter="url(#glow)"/>
+  <text x="350" y="105" text-anchor="middle" font-family="serif" font-size="14" fill="white" font-weight="bold">1</text>
+  <text x="350" y="82" text-anchor="middle" font-size="10" fill="#dc2626">= tan(π/4)</text>
+
+  <!-- Level 1: spb(120/119, -1/239) = 1 -->
+  <!-- Left child: 120/119 -->
+  <line x1="325" y1="120" x2="200" y2="180" stroke="#666" stroke-width="2"/>
+  <circle cx="200" cy="200" r="25" fill="#ea580c" stroke="#c2410c" stroke-width="2"/>
+  <text x="200" y="197" text-anchor="middle" font-family="serif" font-size="11" fill="white" font-weight="bold">120</text>
+  <text x="200" y="210" text-anchor="middle" font-family="serif" font-size="10" fill="white">119</text>
+  <line x1="192" y1="201" x2="208" y2="201" stroke="white" stroke-width="1"/>
+
+  <!-- Right child: -1/239 -->
+  <line x1="375" y1="120" x2="500" y2="180" stroke="#666" stroke-width="2"/>
+  <circle cx="500" cy="200" r="25" fill="#16a34a" stroke="#15803d" stroke-width="2"/>
+  <text x="500" y="195" text-anchor="middle" font-family="serif" font-size="11" fill="white" font-weight="bold">−1</text>
+  <text x="500" y="210" text-anchor="middle" font-family="serif" font-size="10" fill="white">239</text>
+  <line x1="490" y1="201" x2="510" y2="201" stroke="white" stroke-width="1"/>
+
+  <!-- SPB label on root edge -->
+  <text x="350" y="155" text-anchor="middle" font-size="11" fill="#666" font-style="italic">spb</text>
+
+  <!-- Level 2: spb(5/12, 5/12) = 120/119 -->
+  <!-- Left-left: 5/12 -->
+  <line x1="180" y1="220" x2="120" y2="280" stroke="#666" stroke-width="2"/>
+  <circle cx="120" cy="300" r="22" fill="#2563eb" stroke="#1d4ed8" stroke-width="2"/>
+  <text x="120" y="297" text-anchor="middle" font-family="serif" font-size="11" fill="white" font-weight="bold">5</text>
+  <text x="120" y="309" text-anchor="middle" font-family="serif" font-size="10" fill="white">12</text>
+  <line x1="112" y1="301" x2="128" y2="301" stroke="white" stroke-width="1"/>
+
+  <!-- Left-right: 5/12 -->
+  <line x1="220" y1="220" x2="280" y2="280" stroke="#666" stroke-width="2"/>
+  <circle cx="280" cy="300" r="22" fill="#2563eb" stroke="#1d4ed8" stroke-width="2"/>
+  <text x="280" y="297" text-anchor="middle" font-family="serif" font-size="11" fill="white" font-weight="bold">5</text>
+  <text x="280" y="309" text-anchor="middle" font-family="serif" font-size="10" fill="white">12</text>
+  <line x1="272" y1="301" x2="288" y2="301" stroke="white" stroke-width="1"/>
+
+  <!-- SPB label -->
+  <text x="200" y="260" text-anchor="middle" font-size="11" fill="#666" font-style="italic">spb</text>
+
+  <!-- Level 3: spb(1/5, 1/5) = 5/12 -->
+  <!-- Leaves for left-left -->
+  <line x1="105" y1="318" x2="65" y2="360" stroke="#666" stroke-width="1.5"/>
+  <circle cx="65" cy="375" r="18" fill="#7c3aed" stroke="#6d28d9" stroke-width="2"/>
+  <text x="65" y="373" text-anchor="middle" font-family="serif" font-size="11" fill="white" font-weight="bold">1</text>
+  <text x="65" y="384" text-anchor="middle" font-family="serif" font-size="10" fill="white">5</text>
+  <line x1="58" y1="376" x2="72" y2="376" stroke="white" stroke-width="1"/>
+
+  <line x1="135" y1="318" x2="175" y2="360" stroke="#666" stroke-width="1.5"/>
+  <circle cx="175" cy="375" r="18" fill="#7c3aed" stroke="#6d28d9" stroke-width="2"/>
+  <text x="175" y="373" text-anchor="middle" font-family="serif" font-size="11" fill="white" font-weight="bold">1</text>
+  <text x="175" y="384" text-anchor="middle" font-family="serif" font-size="10" fill="white">5</text>
+  <line x1="168" y1="376" x2="182" y2="376" stroke="white" stroke-width="1"/>
+
+  <!-- Leaves for left-right -->
+  <line x1="265" y1="318" x2="225" y2="360" stroke="#666" stroke-width="1.5"/>
+  <circle cx="225" cy="375" r="18" fill="#7c3aed" stroke="#6d28d9" stroke-width="2"/>
+  <text x="225" y="373" text-anchor="middle" font-family="serif" font-size="11" fill="white" font-weight="bold">1</text>
+  <text x="225" y="384" text-anchor="middle" font-family="serif" font-size="10" fill="white">5</text>
+  <line x1="218" y1="376" x2="232" y2="376" stroke="white" stroke-width="1"/>
+
+  <line x1="295" y1="318" x2="335" y2="360" stroke="#666" stroke-width="1.5"/>
+  <circle cx="335" cy="375" r="18" fill="#7c3aed" stroke="#6d28d9" stroke-width="2"/>
+  <text x="335" y="373" text-anchor="middle" font-family="serif" font-size="11" fill="white" font-weight="bold">1</text>
+  <text x="335" y="384" text-anchor="middle" font-family="serif" font-size="10" fill="white">5</text>
+  <line x1="328" y1="376" x2="342" y2="376" stroke="white" stroke-width="1"/>
+
+  <!-- SPB labels at leaves -->
+  <text x="120" y="345" text-anchor="middle" font-size="10" fill="#666" font-style="italic">spb</text>
+  <text x="280" y="345" text-anchor="middle" font-size="10" fill="#666" font-style="italic">spb</text>
+
+  <!-- Annotations -->
+  <text x="350" y="425" text-anchor="middle" font-family="serif" font-size="12" fill="#475569">5 leaves (four copies of 1/5, one copy of −1/239) × 4 SPB nodes = Machin's formula</text>
+  <text x="350" y="443" text-anchor="middle" font-family="serif" font-size="11" fill="#94a3b8" font-style="italic">Machine-verified: machin_full in Lean 4</text>
+</svg>
