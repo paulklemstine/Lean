@@ -1,52 +1,42 @@
-# SPB Research: New Theorems and Future Directions
+# SPB Research Extensions
 
-## Overview
+## New Lean 4 Formalizations
 
-This directory contains **new formally verified research** extending the Stereographic Projection Bridge (SPB) framework with theorems about Chebyshev polynomials, finite fields, Wick rotation, and approximation theory.
+| File | Description | Theorems | Status |
+|------|-------------|----------|--------|
+| `HyperbolicGeometry.lean` | SPB-based hyperbolic distance, Poincaré disk model, Klein model | 10+ | ✅ Zero sorries |
+| `MatrixRepresentation.lean` | 2×2 matrix encoding, determinant, scaled product identity | 8+ | ✅ Zero sorries |
+| `InvolutionTheory.lean` | Reflection identities, triple formula, conjugation theorem | 12+ | ✅ Zero sorries |
+| `FiniteFieldStructure.lean` | Extended p±1 law verification for 14 primes, positive & negative tests | 25+ | ✅ Zero sorries |
+| `TropicalSPB.lean` | First tropical SPB definition, commutativity, negative-input identity | 5+ | ✅ Zero sorries |
 
-**All 18+ theorems are fully verified in Lean 4 with zero `sorry` statements.**
+## Key Results
 
-## Lean 4 Files
+### Matrix Representation
+- `spbMatrix_det`: det M(a) = 1 + a² > 0
+- `spbMatrix_mul_entries`: M(a)·M(b) = [[1-ab, a+b], [-(a+b), 1-ab]]
+- `spbMatrix_mul_eq_scaled`: M(a)·M(b) = (1-ab)·M(spb(a,b))
+- `spbMatrix_det_mul`: det product = product of dets
 
-### `ChebyshevConnection.lean` — Multiple Angle Theorem
-- **`spbPow'_tan`**: The core multiple angle formula: spbPow(tan θ, n) = tan(nθ)
-- **`tan_progression`**: tan(mθ) ⊕ tan(nθ) = tan((m+n)θ) via tangent addition
-- **`spb_double_angle`**: spb(tan θ, tan θ) = tan(2θ)
-- **`spb_triple_angle`**: spb(tan 2θ, tan θ) = tan(3θ)
-- **`spbPow'_two_eq_double`**: spbPow(x, 2) = spb(x, x) — the doubling map
+### Involution Theory
+- `spb_conjugation_trivial`: spb(a, spb(x, -a)) = x
+- `spb_triple_expand`: symmetric triple formula
+- `spb_sum_reflection`: spb(x,y) + spb(x,-y) identity
+- `spb_product_reflection`: spb(x,y)·spb(x,-y) identity
 
-### `FiniteFields.lean` — SPB Over General Fields
-- **`spbField_assoc`**: SPB is associative over any field
-- **`spbField_denom_product`**: The cocycle identity for denominator products
-- **`spbField_fixed_point`**: Fixed points of SPB are exactly √(−1), connecting to quadratic residues
-- **`spbField_self`**: Self-application formula 2x/(1−x²)
+### Finite Fields
+- p±1 law verified for all primes 3 ≤ p ≤ 47
+- Negative verification: wrong periodicity confirmed to fail
 
-### `WickRotation.lean` — Circular ↔ Hyperbolic Duality
-- **`spbHyp_subluminal`**: Sub-luminal closure |v₁|,|v₂| < 1 ⟹ |v₁⊕v₂| < 1
-- **`spbHyp_tanh_add`**: Rapidity linearization tanh(α) ⊕_H tanh(β) = tanh(α+β)
-- **`tan_add_is_spbCirc`**: tan(α+β) = spbCirc(tan α, tan β)
-- **`wick_sign_flip`**: The sign-flip relation connecting circular and hyperbolic SPB
+### Hyperbolic Geometry
+- `hypDist_symm`, `hypDist_self`: metric axioms
+- `spbH_hyp_subluminal`: (-1,1) closure
 
-### `Approximation.lean` — Function Approximation
-- **`spb_generates_double_angle`**: SPB trees generate 2x/(1−x²)
-- **`spbFunctions_closed_spb`**: SPB function algebra is closed under composition
-- **`id_in_spbFunctions`**, **`const_in_spbFunctions`**: Identity and constants are in the algebra
+### Tropical SPB
+- `tropSPB_comm`: commutativity
+- `tropSPB_neg_neg`: for x,y < 0, tspb(x,y) = min(x,y)
 
-## Python Demos (in `../Demos/`)
-- `spb_explorer.py` — Comprehensive interactive demo (8 demonstrations)
-- `spb_chebyshev_demo.py` — Multiple angle theorem and binary exponentiation
-- `spb_finite_field_explorer.py` — SPB groups over F_p with Cayley tables
-- `spb_relativistic_demo.py` — Einstein velocity addition and Wick rotation
+## Python Demos
 
-## SVG Visuals (in `../Visuals/`)
-- `spb_framework_overview.svg` — Grand overview of the SPB framework
-- `spb_wick_rotation.svg` — Circular ↔ Hyperbolic duality diagram
-- `spb_finite_field.svg` — Fixed points and quadratic residues
-- `spb_chebyshev_connection.svg` — SPB → Chebyshev → Approximation chain
-
-## Papers (in `../Papers/`)
-- `spb_future_research.md` — Comprehensive research paper with 30+ directions
-- `spb_scientific_american.md` — Accessible feature article
-
-## Axiom Verification
-All theorems depend only on standard axioms: `propext`, `Classical.choice`, `Quot.sound`.
+- `spb_research_explorer.py` — 10 comprehensive demos
+- `spb_bloch_sphere.py` — Quantum computing connection

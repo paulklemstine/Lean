@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" font-family="Georgia, serif">
+  <defs>
+    <linearGradient id="bg4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a20"/>
+      <stop offset="100%" style="stop-color:#1a1a40"/>
+    </linearGradient>
+    <filter id="glow4">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  
+  <rect width="1000" height="700" fill="url(#bg4)"/>
+  
+  <text x="500" y="35" text-anchor="middle" fill="#FFD700" font-size="22" font-weight="bold">
+    SPB Open Problems Landscape
+  </text>
+  <text x="500" y="55" text-anchor="middle" fill="#aaa" font-size="12">
+    Color = difficulty (★ green → ★★★★ red) | Size = estimated impact | Shape = domain
+  </text>
+  
+  <!-- Axes labels -->
+  <text x="500" y="685" text-anchor="middle" fill="#666" font-size="12">Difficulty →</text>
+  <text x="25" y="370" text-anchor="middle" fill="#666" font-size="12" transform="rotate(-90, 25, 370)">Impact →</text>
+  
+  <!-- Grid -->
+  <line x1="80" y1="80" x2="80" y2="650" stroke="#222" stroke-width="1"/>
+  <line x1="80" y1="650" x2="950" y2="650" stroke="#222" stroke-width="1"/>
+  
+  <!-- Difficulty labels -->
+  <text x="220" y="670" text-anchor="middle" fill="#555" font-size="11">★ Easy</text>
+  <text x="430" y="670" text-anchor="middle" fill="#555" font-size="11">★★ Medium</text>
+  <text x="650" y="670" text-anchor="middle" fill="#555" font-size="11">★★★ Hard</text>
+  <text x="870" y="670" text-anchor="middle" fill="#555" font-size="11">★★★★ Open</text>
+  
+  <!-- SOLVED problems (checkmarks) -->
+  <g opacity="0.4">
+    <!-- Involutions -->
+    <circle cx="150" cy="500" r="15" fill="#2ecc71" filter="url(#glow4)"/>
+    <text x="150" y="504" text-anchor="middle" fill="white" font-size="10">✓</text>
+    <text x="150" y="525" text-anchor="middle" fill="#2ecc71" font-size="9">Involutions</text>
+    
+    <!-- Machin -->
+    <circle cx="200" cy="350" r="18" fill="#2ecc71" filter="url(#glow4)"/>
+    <text x="200" y="354" text-anchor="middle" fill="white" font-size="10">✓</text>
+    <text x="200" y="380" text-anchor="middle" fill="#2ecc71" font-size="9">Machin formulas</text>
+    
+    <!-- Weierstrass -->
+    <circle cx="250" cy="430" r="14" fill="#2ecc71" filter="url(#glow4)"/>
+    <text x="250" y="434" text-anchor="middle" fill="white" font-size="10">✓</text>
+    <text x="250" y="455" text-anchor="middle" fill="#2ecc71" font-size="9">Weierstrass</text>
+  </g>
+  
+  <!-- ALGEBRA domain (circles) -->
+  <!-- Automorphisms -->
+  <circle cx="400" cy="350" r="22" fill="none" stroke="#e67e22" stroke-width="2" filter="url(#glow4)"/>
+  <text x="400" y="354" text-anchor="middle" fill="#e67e22" font-size="10">Auto</text>
+  <text x="400" y="380" text-anchor="middle" fill="#888" font-size="8">SPB automorphisms</text>
+  
+  <!-- Quaternionic SPB -->
+  <circle cx="620" cy="200" r="28" fill="none" stroke="#e74c3c" stroke-width="2" filter="url(#glow4)"/>
+  <text x="620" y="195" text-anchor="middle" fill="#e74c3c" font-size="10">Quat</text>
+  <text x="620" y="210" text-anchor="middle" fill="#e74c3c" font-size="10">SPB</text>
+  <text x="620" y="238" text-anchor="middle" fill="#888" font-size="8">Higher-dim SPB</text>
+  
+  <!-- NUMBER THEORY domain (diamonds) -->
+  <!-- p±1 proof -->
+  <rect x="580" y="100" width="35" height="35" fill="none" stroke="#FFD700" stroke-width="2.5" transform="rotate(45, 597, 117)" filter="url(#glow4)"/>
+  <text x="597" y="122" text-anchor="middle" fill="#FFD700" font-size="9" font-weight="bold">p±1</text>
+  <text x="597" y="155" text-anchor="middle" fill="#888" font-size="8">Formal proof</text>
+  
+  <!-- SPB zeta -->
+  <rect x="700" y="150" width="30" height="30" fill="none" stroke="#e74c3c" stroke-width="2" transform="rotate(45, 715, 165)" filter="url(#glow4)"/>
+  <text x="715" y="170" text-anchor="middle" fill="#e74c3c" font-size="9">ζ_SPB</text>
+  <text x="715" y="200" text-anchor="middle" fill="#888" font-size="8">SPB zeta function</text>
+  
+  <!-- ANALYSIS domain (squares) -->
+  <!-- Equidistribution -->
+  <rect x="380" cy="200" width="40" height="40" fill="none" stroke="#3498db" stroke-width="2" x="370" y="180" filter="url(#glow4)"/>
+  <text x="390" y="205" text-anchor="middle" fill="#3498db" font-size="9">Equi-</text>
+  <text x="390" y="218" text-anchor="middle" fill="#3498db" font-size="9">dist</text>
+  <text x="390" y="235" text-anchor="middle" fill="#888" font-size="8">Weyl's thm</text>
+  
+  <!-- Neural networks -->
+  <rect x="360" y="270" width="35" height="35" fill="none" stroke="#e67e22" stroke-width="2" filter="url(#glow4)"/>
+  <text x="377" y="292" text-anchor="middle" fill="#e67e22" font-size="9">NN</text>
+  <text x="377" y="320" text-anchor="middle" fill="#888" font-size="8">Universal approx</text>
+  
+  <!-- Transport PDE -->
+  <rect x="650" y="280" width="40" height="40" fill="none" stroke="#e74c3c" stroke-width="2" filter="url(#glow4)"/>
+  <text x="670" y="305" text-anchor="middle" fill="#e74c3c" font-size="9">PDE</text>
+  <text x="670" y="335" text-anchor="middle" fill="#888" font-size="8">SPB transport</text>
+  
+  <!-- PHYSICS domain (pentagons approximated) -->
+  <!-- Thomas precession -->
+  <circle cx="640" cy="400" r="20" fill="none" stroke="#9b59b6" stroke-width="2" filter="url(#glow4)"/>
+  <text x="640" y="404" text-anchor="middle" fill="#9b59b6" font-size="9">Thomas</text>
+  <text x="640" y="430" text-anchor="middle" fill="#888" font-size="8">3D velocity</text>
+  
+  <!-- QUANTUM domain -->
+  <!-- Gate synthesis -->
+  <circle cx="470" cy="250" r="22" fill="none" stroke="#1abc9c" stroke-width="2" filter="url(#glow4)"/>
+  <text x="470" y="254" text-anchor="middle" fill="#1abc9c" font-size="9">Gates</text>
+  <text x="470" y="280" text-anchor="middle" fill="#888" font-size="8">SPB gate synthesis</text>
+  
+  <!-- COMPUTATION domain -->
+  <!-- CORDIC -->
+  <circle cx="180" cy="250" r="18" fill="none" stroke="#2ecc71" stroke-width="2" filter="url(#glow4)"/>
+  <text x="180" y="254" text-anchor="middle" fill="#2ecc71" font-size="9">CORDIC</text>
+  <text x="180" y="278" text-anchor="middle" fill="#888" font-size="8">Hardware impl</text>
+  
+  <!-- TROPICAL -->
+  <circle cx="480" cy="450" r="20" fill="none" stroke="#e67e22" stroke-width="2" filter="url(#glow4)"/>
+  <text x="480" y="454" text-anchor="middle" fill="#e67e22" font-size="9">Trop</text>
+  <text x="480" y="480" text-anchor="middle" fill="#888" font-size="8">Tropical SPB</text>
+  
+  <!-- SPB-EML -->
+  <circle cx="830" cy="120" r="30" fill="none" stroke="#e74c3c" stroke-width="2.5" filter="url(#glow4)"/>
+  <text x="830" y="115" text-anchor="middle" fill="#e74c3c" font-size="10">SPB-</text>
+  <text x="830" y="130" text-anchor="middle" fill="#e74c3c" font-size="10">EML</text>
+  <text x="830" y="160" text-anchor="middle" fill="#888" font-size="8">Universality conj</text>
+  
+  <!-- CFT -->
+  <circle cx="860" cy="250" r="25" fill="none" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="4,4" filter="url(#glow4)"/>
+  <text x="860" y="254" text-anchor="middle" fill="#e74c3c" font-size="10">CFT</text>
+  <text x="860" y="285" text-anchor="middle" fill="#888" font-size="8">Virasoro</text>
+  
+  <!-- p-adic -->
+  <rect x="730" y="375" width="30" height="30" fill="none" stroke="#e74c3c" stroke-width="2" transform="rotate(45, 745, 390)" filter="url(#glow4)"/>
+  <text x="745" y="394" text-anchor="middle" fill="#e74c3c" font-size="9">p-adic</text>
+  
+  <!-- Legend -->
+  <rect x="50" y="570" width="250" height="80" rx="8" fill="rgba(255,255,255,0.03)" stroke="#333"/>
+  <text x="175" y="590" text-anchor="middle" fill="#FFD700" font-size="12" font-weight="bold">Legend</text>
+  <circle cx="80" cy="610" r="6" fill="#2ecc71" opacity="0.4"/>
+  <text x="95" y="614" fill="#888" font-size="10">Solved (this session)</text>
+  <circle cx="80" cy="630" r="6" fill="none" stroke="#e67e22" stroke-width="1.5"/>
+  <text x="95" y="634" fill="#888" font-size="10">Open (★★ medium)</text>
+  <circle cx="200" cy="610" r="6" fill="none" stroke="#e74c3c" stroke-width="1.5"/>
+  <text x="215" y="614" fill="#888" font-size="10">Open (★★★ hard)</text>
+  <circle cx="200" cy="630" r="6" fill="none" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <text x="215" y="634" fill="#888" font-size="10">Speculative</text>
+</svg>

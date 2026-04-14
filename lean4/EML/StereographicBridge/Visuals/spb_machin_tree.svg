@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="Georgia, serif">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a2e"/>
+      <stop offset="100%" style="stop-color:#1a1a4e"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  
+  <rect width="800" height="500" fill="url(#bg)"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" fill="#FFD700" font-size="20" font-weight="bold">
+    Machin's Formula as an SPB Binary Tree
+  </text>
+  <text x="400" y="55" text-anchor="middle" fill="#aaa" font-size="13">
+    π/4 = 4·arctan(1/5) − arctan(1/239)  ⟹  spb(spb(spb(1/5, 1/5), spb(1/5, 1/5)), −1/239) = 1
+  </text>
+  
+  <!-- Tree structure -->
+  <!-- Level 0: Root = 1 -->
+  <circle cx="400" cy="100" r="28" fill="#2ecc71" opacity="0.9" filter="url(#glow)"/>
+  <text x="400" y="105" text-anchor="middle" fill="white" font-size="16" font-weight="bold">1</text>
+  <text x="400" y="80" text-anchor="middle" fill="#2ecc71" font-size="10">= tan(π/4)</text>
+  
+  <!-- Edges from root -->
+  <line x1="380" y1="125" x2="260" y2="175" stroke="#666" stroke-width="2"/>
+  <line x1="420" y1="125" x2="580" y2="175" stroke="#666" stroke-width="2"/>
+  
+  <!-- Level 1: Left = 120/119, Right = -1/239 -->
+  <circle cx="260" cy="195" r="28" fill="#3498db" opacity="0.9" filter="url(#glow)"/>
+  <text x="260" y="200" text-anchor="middle" fill="white" font-size="13" font-weight="bold">120/119</text>
+  <text x="260" y="175" text-anchor="middle" fill="#3498db" font-size="10">4·arctan(1/5)</text>
+  
+  <circle cx="580" cy="195" r="28" fill="#e74c3c" opacity="0.9" filter="url(#glow)"/>
+  <text x="580" y="200" text-anchor="middle" fill="white" font-size="13" font-weight="bold">−1/239</text>
+  <text x="580" y="175" text-anchor="middle" fill="#e74c3c" font-size="10">leaf</text>
+  
+  <!-- SPB label on root edge -->
+  <text x="320" y="155" text-anchor="middle" fill="#FFD700" font-size="11">spb</text>
+  <text x="500" y="155" text-anchor="middle" fill="#FFD700" font-size="11">spb</text>
+  
+  <!-- Edges from 120/119 -->
+  <line x1="235" y1="220" x2="160" y2="275" stroke="#666" stroke-width="2"/>
+  <line x1="285" y1="220" x2="360" y2="275" stroke="#666" stroke-width="2"/>
+  
+  <!-- Level 2: 5/12 and 5/12 -->
+  <circle cx="160" cy="295" r="28" fill="#9b59b6" opacity="0.9" filter="url(#glow)"/>
+  <text x="160" y="300" text-anchor="middle" fill="white" font-size="14" font-weight="bold">5/12</text>
+  <text x="160" y="275" text-anchor="middle" fill="#9b59b6" font-size="10">2·arctan(1/5)</text>
+  
+  <circle cx="360" cy="295" r="28" fill="#9b59b6" opacity="0.9" filter="url(#glow)"/>
+  <text x="360" y="300" text-anchor="middle" fill="white" font-size="14" font-weight="bold">5/12</text>
+  <text x="360" y="275" text-anchor="middle" fill="#9b59b6" font-size="10">2·arctan(1/5)</text>
+  
+  <text x="207" y="252" text-anchor="middle" fill="#FFD700" font-size="11">spb</text>
+  <text x="315" y="252" text-anchor="middle" fill="#FFD700" font-size="11">spb</text>
+  
+  <!-- Edges from 5/12 (left) -->
+  <line x1="138" y1="320" x2="100" y2="370" stroke="#666" stroke-width="2"/>
+  <line x1="182" y1="320" x2="220" y2="370" stroke="#666" stroke-width="2"/>
+  
+  <!-- Edges from 5/12 (right) -->
+  <line x1="338" y1="320" x2="300" y2="370" stroke="#666" stroke-width="2"/>
+  <line x1="382" y1="320" x2="420" y2="370" stroke="#666" stroke-width="2"/>
+  
+  <!-- Level 3: Four leaves of 1/5 -->
+  <circle cx="100" cy="390" r="24" fill="#e67e22" opacity="0.9" filter="url(#glow)"/>
+  <text x="100" y="395" text-anchor="middle" fill="white" font-size="14" font-weight="bold">1/5</text>
+  
+  <circle cx="220" cy="390" r="24" fill="#e67e22" opacity="0.9" filter="url(#glow)"/>
+  <text x="220" y="395" text-anchor="middle" fill="white" font-size="14" font-weight="bold">1/5</text>
+  
+  <circle cx="300" cy="390" r="24" fill="#e67e22" opacity="0.9" filter="url(#glow)"/>
+  <text x="300" y="395" text-anchor="middle" fill="white" font-size="14" font-weight="bold">1/5</text>
+  
+  <circle cx="420" cy="390" r="24" fill="#e67e22" opacity="0.9" filter="url(#glow)"/>
+  <text x="420" y="395" text-anchor="middle" fill="white" font-size="14" font-weight="bold">1/5</text>
+  
+  <text x="158" y="352" text-anchor="middle" fill="#FFD700" font-size="11">spb</text>
+  <text x="358" y="352" text-anchor="middle" fill="#FFD700" font-size="11">spb</text>
+  
+  <!-- Legend -->
+  <rect x="550" y="280" width="220" height="180" rx="10" fill="rgba(255,255,255,0.05)" stroke="#444"/>
+  <text x="660" y="305" text-anchor="middle" fill="#FFD700" font-size="14" font-weight="bold">Legend</text>
+  <circle cx="575" cy="325" r="8" fill="#e67e22"/>
+  <text x="595" y="330" fill="#ddd" font-size="12">Leaf: arctan value</text>
+  <circle cx="575" cy="350" r="8" fill="#9b59b6"/>
+  <text x="595" y="355" fill="#ddd" font-size="12">Internal: spb result</text>
+  <circle cx="575" cy="375" r="8" fill="#2ecc71"/>
+  <text x="595" y="380" fill="#ddd" font-size="12">Root: final value</text>
+  
+  <text x="660" y="410" text-anchor="middle" fill="#aaa" font-size="11">Each spb node computes</text>
+  <text x="660" y="425" text-anchor="middle" fill="#aaa" font-size="11">(x+y)/(1−xy)</text>
+  <text x="660" y="445" text-anchor="middle" fill="#aaa" font-size="11">= arctan addition!</text>
+  
+  <!-- Bottom annotation -->
+  <text x="400" y="480" text-anchor="middle" fill="#888" font-size="11">
+    Binary tree structure mirrors addition chain complexity of Machin formulas
+  </text>
+</svg>
