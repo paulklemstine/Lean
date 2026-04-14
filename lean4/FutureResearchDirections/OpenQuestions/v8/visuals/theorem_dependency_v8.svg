@@ -1,0 +1,197 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" font-family="Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d1117"/>
+      <stop offset="100%" style="stop-color:#161b22"/>
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#556688"/>
+    </marker>
+    <filter id="glow2">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="800" fill="url(#bg2)"/>
+
+  <text x="600" y="35" text-anchor="middle" font-size="22" font-weight="bold" fill="#e6edf3">
+    Theorem Dependency Graph — v8 Architecture
+  </text>
+
+  <!-- Layer 1: Foundations -->
+  <text x="30" y="80" font-size="14" fill="#8b949e">FOUNDATIONS</text>
+
+  <rect x="40" y="90" width="160" height="45" rx="8" fill="#1a3a2a" stroke="#2ea043"/>
+  <text x="120" y="110" text-anchor="middle" font-size="10" fill="#2ea043">Lagrange 4-Square</text>
+  <text x="120" y="125" text-anchor="middle" font-size="8" fill="#7ee787">Nat.sum_four_squares</text>
+
+  <rect x="220" y="90" width="160" height="45" rx="8" fill="#1a3a2a" stroke="#2ea043"/>
+  <text x="300" y="110" text-anchor="middle" font-size="10" fill="#2ea043">Fermat Little Thm</text>
+  <text x="300" y="125" text-anchor="middle" font-size="8" fill="#7ee787">fermat_little</text>
+
+  <rect x="400" y="90" width="160" height="45" rx="8" fill="#1a3a2a" stroke="#2ea043"/>
+  <text x="480" y="110" text-anchor="middle" font-size="10" fill="#2ea043">Wilson's Theorem</text>
+  <text x="480" y="125" text-anchor="middle" font-size="8" fill="#7ee787">wilson_theorem</text>
+
+  <rect x="580" y="90" width="160" height="45" rx="8" fill="#1a3a2a" stroke="#2ea043"/>
+  <text x="660" y="110" text-anchor="middle" font-size="10" fill="#2ea043">Fib Divisibility</text>
+  <text x="660" y="125" text-anchor="middle" font-size="8" fill="#7ee787">fib_dvd_fib_mul</text>
+
+  <rect x="760" y="90" width="160" height="45" rx="8" fill="#1a3a2a" stroke="#2ea043"/>
+  <text x="840" y="110" text-anchor="middle" font-size="10" fill="#2ea043">Norm Multiplicativity</text>
+  <text x="840" y="125" text-anchor="middle" font-size="8" fill="#7ee787">lipschitz_norm_mul</text>
+
+  <rect x="940" y="90" width="220" height="45" rx="8" fill="#1a3a2a" stroke="#2ea043"/>
+  <text x="1050" y="110" text-anchor="middle" font-size="10" fill="#2ea043">σ₁ Multiplicativity</text>
+  <text x="1050" y="125" text-anchor="middle" font-size="8" fill="#7ee787">sigma1_coprime_mul</text>
+
+  <!-- Layer 2: Core Results -->
+  <text x="30" y="175" font-size="14" fill="#8b949e">CORE RESULTS</text>
+
+  <rect x="40" y="185" width="180" height="55" rx="8" fill="#2a1a3a" stroke="#8957e5"/>
+  <text x="130" y="205" text-anchor="middle" font-size="10" fill="#8957e5">F(p)² ≡ 1 (mod p)</text>
+  <text x="130" y="220" text-anchor="middle" font-size="8" fill="#c4a5f0">fib_sq_mod_prime</text>
+  <text x="130" y="233" text-anchor="middle" font-size="7" fill="#8b949e">Quadratic residue theory</text>
+
+  <rect x="240" y="185" width="180" height="55" rx="8" fill="#2a1a3a" stroke="#8957e5"/>
+  <text x="330" y="205" text-anchor="middle" font-size="10" fill="#8957e5">σ₁ ↔ FACTORING</text>
+  <text x="330" y="220" text-anchor="middle" font-size="8" fill="#c4a5f0">sigma1_determines_factors</text>
+  <text x="330" y="233" text-anchor="middle" font-size="7" fill="#8b949e">Computational equivalence</text>
+
+  <rect x="440" y="185" width="180" height="55" rx="8" fill="#2a1a3a" stroke="#8957e5"/>
+  <text x="530" y="205" text-anchor="middle" font-size="10" fill="#8957e5">Euler Key Equation</text>
+  <text x="530" y="220" text-anchor="middle" font-size="8" fill="#c4a5f0">euler_key_equation</text>
+  <text x="530" y="233" text-anchor="middle" font-size="7" fill="#8b949e">Perfect number structure</text>
+
+  <rect x="640" y="185" width="180" height="55" rx="8" fill="#2a1a3a" stroke="#8957e5"/>
+  <text x="730" y="205" text-anchor="middle" font-size="10" fill="#8957e5">Pisano Period CRT</text>
+  <text x="730" y="220" text-anchor="middle" font-size="8" fill="#c4a5f0">pisano_coprime_lcm</text>
+  <text x="730" y="233" text-anchor="middle" font-size="7" fill="#8b949e">Multiplicative structure</text>
+
+  <rect x="840" y="185" width="180" height="55" rx="8" fill="#2a1a3a" stroke="#8957e5"/>
+  <text x="930" y="205" text-anchor="middle" font-size="10" fill="#8957e5">Energy Local Minima</text>
+  <text x="930" y="220" text-anchor="middle" font-size="8" fill="#c4a5f0">divisor_is_local_min</text>
+  <text x="930" y="233" text-anchor="middle" font-size="7" fill="#8b949e">Morse theory</text>
+
+  <!-- Arrows from foundations to core -->
+  <line x1="300" y1="135" x2="180" y2="185" stroke="#556688" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="480" y1="135" x2="330" y2="185" stroke="#556688" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="660" y1="135" x2="530" y2="185" stroke="#556688" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="1050" y1="135" x2="530" y2="185" stroke="#556688" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Layer 3: v8 NEW Results -->
+  <text x="30" y="290" font-size="14" fill="#d29922">NEW IN v8</text>
+
+  <rect x="40" y="300" width="200" height="60" rx="8" fill="#3a2a1a" stroke="#d29922" stroke-width="2" filter="url(#glow2)"/>
+  <text x="140" y="320" text-anchor="middle" font-size="10" font-weight="bold" fill="#d29922">Euler m = Mersenne</text>
+  <text x="140" y="335" text-anchor="middle" font-size="8" fill="#e3b341">euler_m_equals_mersenne</text>
+  <text x="140" y="350" text-anchor="middle" font-size="7" fill="#8b949e">Completes Euler direction</text>
+
+  <rect x="260" y="300" width="200" height="60" rx="8" fill="#3a2a1a" stroke="#d29922" stroke-width="2" filter="url(#glow2)"/>
+  <text x="360" y="320" text-anchor="middle" font-size="10" font-weight="bold" fill="#d29922">Mersenne Exp Prime</text>
+  <text x="360" y="335" text-anchor="middle" font-size="8" fill="#e3b341">mersenne_prime_exp_prime</text>
+  <text x="360" y="350" text-anchor="middle" font-size="7" fill="#8b949e">Divisibility argument</text>
+
+  <rect x="480" y="300" width="200" height="60" rx="8" fill="#3a2a1a" stroke="#d29922" stroke-width="2" filter="url(#glow2)"/>
+  <text x="580" y="320" text-anchor="middle" font-size="10" font-weight="bold" fill="#d29922">Quadratic Residues</text>
+  <text x="580" y="335" text-anchor="middle" font-size="8" fill="#e3b341">qr_mul_qr, fermat_diff_sq</text>
+  <text x="580" y="350" text-anchor="middle" font-size="7" fill="#8b949e">QS/NFS foundations</text>
+
+  <rect x="700" y="300" width="200" height="60" rx="8" fill="#3a2a1a" stroke="#d29922" stroke-width="2" filter="url(#glow2)"/>
+  <text x="800" y="320" text-anchor="middle" font-size="10" font-weight="bold" fill="#d29922">Wall-Sun-Sun</text>
+  <text x="800" y="335" text-anchor="middle" font-size="8" fill="#e3b341">wieferich_1093/3511</text>
+  <text x="800" y="350" text-anchor="middle" font-size="7" fill="#8b949e">FLT connection</text>
+
+  <rect x="920" y="300" width="240" height="60" rx="8" fill="#3a2a1a" stroke="#d29922" stroke-width="2" filter="url(#glow2)"/>
+  <text x="1040" y="320" text-anchor="middle" font-size="10" font-weight="bold" fill="#d29922">Lattice Factoring</text>
+  <text x="1040" y="335" text-anchor="middle" font-size="8" fill="#e3b341">factoring_lattice_exists</text>
+  <text x="1040" y="350" text-anchor="middle" font-size="7" fill="#8b949e">SVP connection</text>
+
+  <!-- Arrows core → new -->
+  <line x1="530" y1="240" x2="140" y2="300" stroke="#d29922" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="530" y1="240" x2="360" y2="300" stroke="#d29922" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="130" y1="240" x2="580" y2="300" stroke="#d29922" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="130" y1="240" x2="800" y2="300" stroke="#d29922" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="330" y1="240" x2="1040" y2="300" stroke="#d29922" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Layer 4: Applications -->
+  <text x="30" y="410" font-size="14" fill="#8b949e">APPLICATIONS</text>
+
+  <rect x="40" y="420" width="220" height="55" rx="8" fill="#1a2a3a" stroke="#388bfd"/>
+  <text x="150" y="440" text-anchor="middle" font-size="10" fill="#388bfd">Compositeness Testing</text>
+  <text x="150" y="455" text-anchor="middle" font-size="8" fill="#79c0ff">fib_composite_test</text>
+  <text x="150" y="468" text-anchor="middle" font-size="7" fill="#8b949e">F(n)² ≢ 1 ⇒ composite</text>
+
+  <rect x="280" y="420" width="220" height="55" rx="8" fill="#1a2a3a" stroke="#388bfd"/>
+  <text x="390" y="440" text-anchor="middle" font-size="10" fill="#388bfd">Factoring via σ₁</text>
+  <text x="390" y="455" text-anchor="middle" font-size="8" fill="#79c0ff">full_reduction_chain</text>
+  <text x="390" y="468" text-anchor="middle" font-size="7" fill="#8b949e">Oracle → factors in O(1)</text>
+
+  <rect x="520" y="420" width="220" height="55" rx="8" fill="#1a2a3a" stroke="#388bfd"/>
+  <text x="630" y="440" text-anchor="middle" font-size="10" fill="#388bfd">Energy Landscape</text>
+  <text x="630" y="455" text-anchor="middle" font-size="8" fill="#79c0ff">euler_char_zero</text>
+  <text x="630" y="468" text-anchor="middle" font-size="7" fill="#8b949e">Topology of E(x)</text>
+
+  <rect x="760" y="420" width="220" height="55" rx="8" fill="#1a2a3a" stroke="#388bfd"/>
+  <text x="870" y="440" text-anchor="middle" font-size="10" fill="#388bfd">Smooth Factoring</text>
+  <text x="870" y="455" text-anchor="middle" font-size="8" fill="#79c0ff">smooth_mul, prime_pow_smooth</text>
+  <text x="870" y="468" text-anchor="middle" font-size="7" fill="#8b949e">QS/NFS foundations</text>
+
+  <!-- Open Questions at bottom -->
+  <rect x="40" y="510" width="1120" height="270" rx="12" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.1)"/>
+  <text x="600" y="540" text-anchor="middle" font-size="16" font-weight="bold" fill="#e6edf3">
+    Answered Open Questions (v8)
+  </text>
+
+  <!-- Answered questions grid -->
+  <rect x="60" y="555" width="350" height="30" rx="5" fill="#1a3a2a" stroke="#2ea043"/>
+  <text x="235" y="575" text-anchor="middle" font-size="10" fill="#2ea043">✓ σ₁(N) computation ≡ factoring</text>
+
+  <rect x="60" y="590" width="350" height="30" rx="5" fill="#1a3a2a" stroke="#2ea043"/>
+  <text x="235" y="610" text-anchor="middle" font-size="10" fill="#2ea043">✓ F(p)² ≡ 1 mod p for all odd p ≠ 5</text>
+
+  <rect x="60" y="625" width="350" height="30" rx="5" fill="#1a3a2a" stroke="#2ea043"/>
+  <text x="235" y="645" text-anchor="middle" font-size="10" fill="#2ea043">✓ Pisano periods satisfy CRT</text>
+
+  <rect x="60" y="660" width="350" height="30" rx="5" fill="#1a3a2a" stroke="#2ea043"/>
+  <text x="235" y="680" text-anchor="middle" font-size="10" fill="#2ea043">✓ Divisors = local minima of E(x)</text>
+
+  <rect x="60" y="695" width="350" height="30" rx="5" fill="#1a3a2a" stroke="#2ea043"/>
+  <text x="235" y="715" text-anchor="middle" font-size="10" fill="#2ea043">✓ Even perfects have Euler form</text>
+
+  <rect x="430" y="555" width="350" height="30" rx="5" fill="#1a3a2a" stroke="#2ea043"/>
+  <text x="605" y="575" text-anchor="middle" font-size="10" fill="#2ea043">✓ m = 2^(k+1)-1 in Euler direction</text>
+
+  <rect x="430" y="590" width="350" height="30" rx="5" fill="#1a3a2a" stroke="#2ea043"/>
+  <text x="605" y="610" text-anchor="middle" font-size="10" fill="#2ea043">✓ Mersenne prime ⇒ exponent prime</text>
+
+  <rect x="430" y="625" width="350" height="30" rx="5" fill="#1a3a2a" stroke="#2ea043"/>
+  <text x="605" y="645" text-anchor="middle" font-size="10" fill="#2ea043">✓ 1093 and 3511 are Wieferich primes</text>
+
+  <rect x="430" y="660" width="350" height="30" rx="5" fill="#1a3a2a" stroke="#2ea043"/>
+  <text x="605" y="680" text-anchor="middle" font-size="10" fill="#2ea043">✓ QR product closure</text>
+
+  <rect x="430" y="695" width="350" height="30" rx="5" fill="#1a3a2a" stroke="#2ea043"/>
+  <text x="605" y="715" text-anchor="middle" font-size="10" fill="#2ea043">✓ Smooth number product closure</text>
+
+  <!-- Unanswered -->
+  <rect x="800" y="555" width="340" height="30" rx="5" fill="#3a1a1a" stroke="#f85149"/>
+  <text x="970" y="575" text-anchor="middle" font-size="10" fill="#f85149">✗ Odd perfect numbers?</text>
+
+  <rect x="800" y="590" width="340" height="30" rx="5" fill="#3a1a1a" stroke="#f85149"/>
+  <text x="970" y="610" text-anchor="middle" font-size="10" fill="#f85149">✗ Wall-Sun-Sun primes?</text>
+
+  <rect x="800" y="625" width="340" height="30" rx="5" fill="#3a1a1a" stroke="#f85149"/>
+  <text x="970" y="645" text-anchor="middle" font-size="10" fill="#f85149">✗ Poly-time lattice factoring?</text>
+
+  <rect x="800" y="660" width="340" height="30" rx="5" fill="#3a2a1a" stroke="#d29922"/>
+  <text x="970" y="680" text-anchor="middle" font-size="10" fill="#d29922">◐ Fibonacci pseudoprime density</text>
+
+  <rect x="800" y="695" width="340" height="30" rx="5" fill="#3a2a1a" stroke="#d29922"/>
+  <text x="970" y="715" text-anchor="middle" font-size="10" fill="#d29922">◐ Carmichael primitive divisor</text>
+
+  <text x="600" y="785" text-anchor="middle" font-size="10" fill="#8b949e">
+    Gravitational Factoring Research · v8 · 170+ Formally Verified Theorems
+  </text>
+</svg>
