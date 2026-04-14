@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d1117"/>
+      <stop offset="100%" style="stop-color:#161b22"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+  
+  <rect width="1000" height="700" fill="url(#bg2)"/>
+  
+  <text x="500" y="35" text-anchor="middle" fill="#ffffff" font-size="20" font-weight="bold">
+    Theorem Dependency Graph — Gravitational Factoring v9
+  </text>
+  <text x="500" y="55" text-anchor="middle" fill="#8b949e" font-size="13">
+    243+ formally verified theorems across 14 Lean files
+  </text>
+  
+  <!-- Layer 1: Foundations -->
+  <text x="50" y="100" fill="#ff7b72" font-size="13" font-weight="bold">FOUNDATIONS</text>
+  
+  <rect x="50" y="110" width="150" height="35" rx="6" fill="#1f2937" stroke="#00ff88" stroke-width="2" filter="url(#shadow)"/>
+  <text x="125" y="132" text-anchor="middle" fill="#00ff88" font-size="11">σ₁ multiplicative ✓</text>
+  
+  <rect x="220" y="110" width="130" height="35" rx="6" fill="#1f2937" stroke="#00ff88" stroke-width="2" filter="url(#shadow)"/>
+  <text x="285" y="132" text-anchor="middle" fill="#00ff88" font-size="11">quatNorm ≥ 0 ✓</text>
+  
+  <rect x="370" y="110" width="130" height="35" rx="6" fill="#1f2937" stroke="#00ff88" stroke-width="2" filter="url(#shadow)"/>
+  <text x="435" y="132" text-anchor="middle" fill="#00ff88" font-size="11">Fib divisibility ✓</text>
+  
+  <rect x="520" y="110" width="130" height="35" rx="6" fill="#1f2937" stroke="#00ff88" stroke-width="2" filter="url(#shadow)"/>
+  <text x="585" y="132" text-anchor="middle" fill="#00ff88" font-size="11">E(N,d) = 0 ✓</text>
+  
+  <rect x="670" y="110" width="130" height="35" rx="6" fill="#1f2937" stroke="#00ff88" stroke-width="2" filter="url(#shadow)"/>
+  <text x="735" y="132" text-anchor="middle" fill="#00ff88" font-size="11">QR closure ✓</text>
+  
+  <rect x="820" y="110" width="130" height="35" rx="6" fill="#1f2937" stroke="#00ff88" stroke-width="2" filter="url(#shadow)"/>
+  <text x="885" y="132" text-anchor="middle" fill="#00ff88" font-size="11">B-smooth ✓</text>
+  
+  <!-- Layer 2: Key Results -->
+  <text x="50" y="190" fill="#ff7b72" font-size="13" font-weight="bold">KEY RESULTS (v8-v9)</text>
+  
+  <rect x="50" y="200" width="170" height="35" rx="6" fill="#1f2937" stroke="#58a6ff" stroke-width="2" filter="url(#shadow)"/>
+  <text x="135" y="222" text-anchor="middle" fill="#58a6ff" font-size="11">σ₁(2^k) = 2^(k+1)-1 ✓</text>
+  
+  <rect x="240" y="200" width="160" height="35" rx="6" fill="#1f2937" stroke="#58a6ff" stroke-width="2" filter="url(#shadow)"/>
+  <text x="320" y="222" text-anchor="middle" fill="#58a6ff" font-size="11">Mersenne exp prime ✓</text>
+  
+  <rect x="420" y="200" width="150" height="35" rx="6" fill="#1f2937" stroke="#58a6ff" stroke-width="2" filter="url(#shadow)"/>
+  <text x="495" y="222" text-anchor="middle" fill="#58a6ff" font-size="11">Euler's criterion ✓</text>
+  
+  <rect x="590" y="200" width="140" height="35" rx="6" fill="#1f2937" stroke="#58a6ff" stroke-width="2" filter="url(#shadow)"/>
+  <text x="660" y="222" text-anchor="middle" fill="#58a6ff" font-size="11">Cassini identity ✓</text>
+  
+  <rect x="750" y="200" width="140" height="35" rx="6" fill="#1f2937" stroke="#58a6ff" stroke-width="2" filter="url(#shadow)"/>
+  <text x="820" y="222" text-anchor="middle" fill="#58a6ff" font-size="11">4-square identity ✓</text>
+  
+  <!-- Layer 3: Advanced -->
+  <text x="50" y="290" fill="#ff7b72" font-size="13" font-weight="bold">ADVANCED RESULTS (v9 NEW)</text>
+  
+  <rect x="50" y="300" width="180" height="35" rx="6" fill="#1f2937" stroke="#d2a8ff" stroke-width="2" filter="url(#shadow)"/>
+  <text x="140" y="322" text-anchor="middle" fill="#d2a8ff" font-size="11">Euclid perfect ✓</text>
+  
+  <rect x="250" y="300" width="180" height="35" rx="6" fill="#1f2937" stroke="#d2a8ff" stroke-width="2" filter="url(#shadow)"/>
+  <text x="340" y="322" text-anchor="middle" fill="#d2a8ff" font-size="11">Pisano π(p) | p²-1 ✓</text>
+  
+  <rect x="450" y="300" width="170" height="35" rx="6" fill="#1f2937" stroke="#d2a8ff" stroke-width="2" filter="url(#shadow)"/>
+  <text x="535" y="322" text-anchor="middle" fill="#d2a8ff" font-size="11">Hensel lifting ✓</text>
+  
+  <rect x="640" y="300" width="170" height="35" rx="6" fill="#1f2937" stroke="#d2a8ff" stroke-width="2" filter="url(#shadow)"/>
+  <text x="725" y="322" text-anchor="middle" fill="#d2a8ff" font-size="11">-1 QR ↔ p≡1(4) ✓</text>
+  
+  <rect x="830" y="300" width="140" height="35" rx="6" fill="#1f2937" stroke="#d2a8ff" stroke-width="2" filter="url(#shadow)"/>
+  <text x="900" y="322" text-anchor="middle" fill="#d2a8ff" font-size="11">WSS p≤97 ✓</text>
+  
+  <!-- Layer 4: Verification -->
+  <text x="50" y="390" fill="#ff7b72" font-size="13" font-weight="bold">COMPUTATIONAL VERIFICATION</text>
+  
+  <rect x="50" y="400" width="180" height="35" rx="6" fill="#1f2937" stroke="#ffa657" stroke-width="2" filter="url(#shadow)"/>
+  <text x="140" y="422" text-anchor="middle" fill="#ffa657" font-size="11">No odd perf &lt; 100 ✓</text>
+  
+  <rect x="250" y="400" width="180" height="35" rx="6" fill="#1f2937" stroke="#ffa657" stroke-width="2" filter="url(#shadow)"/>
+  <text x="340" y="422" text-anchor="middle" fill="#ffa657" font-size="11">Wieferich 1093, 3511 ✓</text>
+  
+  <rect x="450" y="400" width="170" height="35" rx="6" fill="#1f2937" stroke="#ffa657" stroke-width="2" filter="url(#shadow)"/>
+  <text x="535" y="422" text-anchor="middle" fill="#ffa657" font-size="11">2 QR mod 7, ¬QR mod 5 ✓</text>
+  
+  <rect x="640" y="400" width="170" height="35" rx="6" fill="#1f2937" stroke="#ffa657" stroke-width="2" filter="url(#shadow)"/>
+  <text x="725" y="422" text-anchor="middle" fill="#ffa657" font-size="11">Fermat factoring ✓</text>
+  
+  <rect x="830" y="400" width="140" height="35" rx="6" fill="#1f2937" stroke="#ffa657" stroke-width="2" filter="url(#shadow)"/>
+  <text x="900" y="422" text-anchor="middle" fill="#ffa657" font-size="11">6, 28, 496, 8128 ✓</text>
+  
+  <!-- Dependency arrows -->
+  <g stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arrow)">
+    <defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+      </marker>
+    </defs>
+    <!-- σ₁ mult → σ₁(2^k) -->
+    <line x1="125" y1="145" x2="135" y2="198"/>
+    <!-- σ₁ mult → Euclid perfect -->
+    <line x1="125" y1="145" x2="140" y2="298"/>
+    <!-- quatNorm → 4-square identity -->
+    <line x1="285" y1="145" x2="820" y2="198"/>
+    <!-- Fib div → Cassini -->
+    <line x1="435" y1="145" x2="660" y2="198"/>
+    <!-- Fib div → Pisano -->
+    <line x1="435" y1="145" x2="340" y2="298"/>
+    <!-- E(N,d)=0 → sublevel -->
+    <line x1="585" y1="145" x2="535" y2="298"/>
+    <!-- QR → Euler criterion -->
+    <line x1="735" y1="145" x2="495" y2="198"/>
+    <!-- QR → -1 QR -->
+    <line x1="735" y1="145" x2="725" y2="298"/>
+    <!-- Mersenne → Euclid -->
+    <line x1="320" y1="235" x2="140" y2="298"/>
+    <!-- smooth → WSS -->
+    <line x1="885" y1="145" x2="900" y2="298"/>
+  </g>
+  
+  <!-- Statistics -->
+  <rect x="50" y="480" width="900" height="100" rx="10" fill="#1f2937" fill-opacity="0.8" stroke="#30363d"/>
+  <text x="500" y="505" text-anchor="middle" fill="#ffffff" font-size="16" font-weight="bold">
+    v9 Statistics
+  </text>
+  <text x="150" y="535" text-anchor="middle" fill="#00ff88" font-size="28" font-weight="bold">243+</text>
+  <text x="150" y="555" text-anchor="middle" fill="#8b949e" font-size="12">theorems verified</text>
+  <text x="350" y="535" text-anchor="middle" fill="#58a6ff" font-size="28" font-weight="bold">0</text>
+  <text x="350" y="555" text-anchor="middle" fill="#8b949e" font-size="12">remaining sorries</text>
+  <text x="550" y="535" text-anchor="middle" fill="#d2a8ff" font-size="28" font-weight="bold">14</text>
+  <text x="550" y="555" text-anchor="middle" fill="#8b949e" font-size="12">Lean source files</text>
+  <text x="750" y="535" text-anchor="middle" fill="#ffa657" font-size="28" font-weight="bold">73+</text>
+  <text x="750" y="555" text-anchor="middle" fill="#8b949e" font-size="12">new in v9</text>
+</svg>

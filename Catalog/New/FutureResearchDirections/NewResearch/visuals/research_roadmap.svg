@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" font-family="'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a1628"/>
+      <stop offset="100%" style="stop-color:#1a2a4a"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1200" height="900" fill="url(#bg)"/>
+  <text x="600" y="55" text-anchor="middle" fill="#ffffff" font-size="28" font-weight="bold" filter="url(#glow)">MetaFactoring: Research Roadmap</text>
+  <text x="600" y="82" text-anchor="middle" fill="#88aacc" font-size="14">70+ Formally Verified Theorems · 0 Remaining Sorries · Lean 4 + Mathlib</text>
+
+  <!-- Tier 1 -->
+  <rect x="40" y="110" width="1120" height="170" rx="12" fill="none" stroke="#00c9ff" stroke-width="2" opacity="0.7"/>
+  <text x="60" y="138" fill="#92fe9d" font-size="18" font-weight="bold">TIER 1 — Complete ✓</text>
+  <rect x="60" y="150" width="340" height="110" rx="8" fill="#0d2b0d" stroke="#00c9ff" stroke-width="1.5"/>
+  <text x="80" y="175" fill="#00c9ff" font-size="14" font-weight="bold">Fibonacci Entry Point ✓</text>
+  <text x="80" y="195" fill="#aaddaa" font-size="11">p | F(p-1) ∨ p | F(p+1) for p prime</text>
+  <text x="80" y="212" fill="#88aa88" font-size="10">Proved via algebraic closure of 𝔽_p</text>
+  <text x="80" y="246" fill="#66ff66" font-size="10" font-weight="bold">STATUS: PROVED ✓</text>
+
+  <rect x="420" y="150" width="340" height="110" rx="8" fill="#0d2b0d" stroke="#00c9ff" stroke-width="1.5"/>
+  <text x="440" y="175" fill="#00c9ff" font-size="14" font-weight="bold">Tropical Sieve ✓</text>
+  <text x="440" y="195" fill="#aaddaa" font-size="11">v_p(ab) = v_p(a) + v_p(b)</text>
+  <text x="440" y="212" fill="#88aa88" font-size="10">84-89% elimination demonstrated</text>
+  <text x="440" y="246" fill="#66ff66" font-size="10" font-weight="bold">STATUS: PROVED + DEMO ✓</text>
+
+  <rect x="780" y="150" width="340" height="110" rx="8" fill="#0d2b0d" stroke="#00c9ff" stroke-width="1.5"/>
+  <text x="800" y="175" fill="#00c9ff" font-size="14" font-weight="bold">Multi-Lens Theory ✓</text>
+  <text x="800" y="195" fill="#aaddaa" font-size="11">Categorical framework + MLC(k)</text>
+  <text x="800" y="212" fill="#88aa88" font-size="10">Associativity, k halvings = S/2^k</text>
+  <text x="800" y="246" fill="#66ff66" font-size="10" font-weight="bold">STATUS: PROVED ✓</text>
+
+  <!-- Tier 2 -->
+  <rect x="40" y="300" width="1120" height="170" rx="12" fill="none" stroke="#6a82fb" stroke-width="2" opacity="0.7"/>
+  <text x="60" y="328" fill="#6a82fb" font-size="18" font-weight="bold">TIER 2 — Near-Term (1-2 Years)</text>
+  <rect x="60" y="340" width="260" height="110" rx="8" fill="#1a0d2b" stroke="#6a82fb" stroke-width="1.5"/>
+  <text x="80" y="365" fill="#fc5c7d" font-size="13" font-weight="bold">Quaternionic Factoring</text>
+  <text x="80" y="385" fill="#bb88cc" font-size="10">Euler 4-square ✓ BF identity ✓</text>
+  <text x="80" y="435" fill="#ffaa00" font-size="10">NEEDS: Benchmarking</text>
+
+  <rect x="340" y="340" width="260" height="110" rx="8" fill="#1a0d2b" stroke="#6a82fb" stroke-width="1.5"/>
+  <text x="360" y="365" fill="#fc5c7d" font-size="13" font-weight="bold">Quantum Hybrid</text>
+  <text x="360" y="385" fill="#bb88cc" font-size="10">Grover ✓ Qubit savings ✓</text>
+  <text x="360" y="435" fill="#ffaa00" font-size="10">NEEDS: Error correction</text>
+
+  <rect x="620" y="340" width="260" height="110" rx="8" fill="#1a0d2b" stroke="#6a82fb" stroke-width="1.5"/>
+  <text x="640" y="365" fill="#fc5c7d" font-size="13" font-weight="bold">Genus-2 Curves</text>
+  <text x="640" y="385" fill="#bb88cc" font-size="10">Dimension gap ✓ Jacobian ✓</text>
+  <text x="640" y="435" fill="#ffaa00" font-size="10">NEEDS: Experiments</text>
+
+  <rect x="900" y="340" width="220" height="110" rx="8" fill="#1a0d2b" stroke="#6a82fb" stroke-width="1.5"/>
+  <text x="920" y="365" fill="#fc5c7d" font-size="13" font-weight="bold">Smooth Numbers</text>
+  <text x="920" y="385" fill="#bb88cc" font-size="10">B-smooth theory ✓</text>
+  <text x="920" y="435" fill="#ffaa00" font-size="10">NEEDS: Density bounds</text>
+
+  <!-- Tier 3 -->
+  <rect x="40" y="490" width="1120" height="160" rx="12" fill="none" stroke="#f093fb" stroke-width="2" opacity="0.7"/>
+  <text x="60" y="518" fill="#f093fb" font-size="18" font-weight="bold">TIER 3 — Medium-Term (3-5 Years)</text>
+  <rect x="60" y="530" width="340" height="100" rx="8" fill="#2b0d1a" stroke="#f093fb" stroke-width="1.5"/>
+  <text x="80" y="555" fill="#f5576c" font-size="13" font-weight="bold">LWE Connection</text>
+  <text x="80" y="575" fill="#cc88aa" font-size="10">Lattice lens analogues</text>
+  <text x="80" y="615" fill="#ff6600" font-size="10">OPEN: Post-quantum implications</text>
+
+  <rect x="420" y="530" width="340" height="100" rx="8" fill="#2b0d1a" stroke="#f093fb" stroke-width="1.5"/>
+  <text x="440" y="555" fill="#f5576c" font-size="13" font-weight="bold">Formal ECM</text>
+  <text x="440" y="575" fill="#cc88aa" font-size="10">Hasse ✓ Trace bound ✓</text>
+  <text x="440" y="615" fill="#ff6600" font-size="10">OPEN: Full ECM in Lean</text>
+
+  <rect x="780" y="530" width="340" height="100" rx="8" fill="#2b0d1a" stroke="#f093fb" stroke-width="1.5"/>
+  <text x="800" y="555" fill="#f5576c" font-size="13" font-weight="bold">Analytic NT Lens</text>
+  <text x="800" y="575" fill="#cc88aa" font-size="10">L-functions, zero-free regions</text>
+  <text x="800" y="615" fill="#ff6600" font-size="10">OPEN: Complex analysis needed</text>
+
+  <!-- Tier 4 -->
+  <rect x="40" y="670" width="1120" height="160" rx="12" fill="none" stroke="#ffd89b" stroke-width="2" opacity="0.7"/>
+  <text x="60" y="698" fill="#ffd89b" font-size="18" font-weight="bold">TIER 4 — Grand Challenges (5-10+ Years)</text>
+  <rect x="60" y="710" width="520" height="100" rx="8" fill="#2b1a0d" stroke="#ffd89b" stroke-width="1.5"/>
+  <text x="80" y="735" fill="#ffd89b" font-size="13" font-weight="bold">Optimal Independence Conjecture</text>
+  <text x="80" y="755" fill="#aa8866" font-size="10">Max independent lenses = O(log log N)?</text>
+  <text x="80" y="795" fill="#ff3300" font-size="10">GRAND CHALLENGE</text>
+
+  <rect x="600" y="710" width="520" height="100" rx="8" fill="#2b1a0d" stroke="#ffd89b" stroke-width="1.5"/>
+  <text x="620" y="735" fill="#ffd89b" font-size="13" font-weight="bold">Universal MLC(k) Complexity</text>
+  <text x="620" y="755" fill="#aa8866" font-size="10">New complexity class for multi-lens</text>
+  <text x="620" y="795" fill="#ff3300" font-size="10">GRAND CHALLENGE</text>
+
+  <!-- Stats -->
+  <rect x="40" y="850" width="1120" height="35" rx="8" fill="#0d1628" stroke="#4466aa" stroke-width="1"/>
+  <text x="150" y="873" fill="#88aacc" font-size="12" text-anchor="middle">70+ Theorems</text>
+  <text x="350" y="873" fill="#88aacc" font-size="12" text-anchor="middle">0 Sorries</text>
+  <text x="550" y="873" fill="#88aacc" font-size="12" text-anchor="middle">4 Python Demos</text>
+  <text x="750" y="873" fill="#88aacc" font-size="12" text-anchor="middle">17 Research Directions</text>
+  <text x="1000" y="873" fill="#88aacc" font-size="12" text-anchor="middle">Lean 4 v4.28.0 + Mathlib</text>
+</svg>
