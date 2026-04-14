@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a1a4e;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="900" fill="url(#bg)"/>
+
+  <!-- Title -->
+  <text x="600" y="45" text-anchor="middle" fill="#FFD700" font-size="28" font-weight="bold" filter="url(#glow)">
+    OISCC Open Problems Map
+  </text>
+  <text x="600" y="72" text-anchor="middle" fill="#aab" font-size="14">
+    EML(a,b) = e^a − ln(b) — Research Frontiers
+  </text>
+
+  <!-- Central Node -->
+  <circle cx="600" cy="420" r="60" fill="#1a3a6a" stroke="#FFD700" stroke-width="3" filter="url(#shadow)"/>
+  <text x="600" y="410" text-anchor="middle" fill="#FFD700" font-size="16" font-weight="bold">EML</text>
+  <text x="600" y="432" text-anchor="middle" fill="#fff" font-size="12">e^a − ln(b)</text>
+
+  <!-- Tier 1: High Impact, Approachable (Green) -->
+  <g>
+    <!-- P1: Optimal Multiplication -->
+    <line x1="600" y1="360" x2="350" y2="180" stroke="#4ade80" stroke-width="2" opacity="0.5"/>
+    <rect x="220" y="130" width="260" height="100" rx="12" fill="#1a3a2a" stroke="#4ade80" stroke-width="2" filter="url(#shadow)"/>
+    <text x="350" y="155" text-anchor="middle" fill="#4ade80" font-size="14" font-weight="bold">P1: Optimal Multiplication</text>
+    <text x="350" y="175" text-anchor="middle" fill="#ccc" font-size="11">Min EML tree for a×b?</text>
+    <text x="350" y="195" text-anchor="middle" fill="#aaa" font-size="10">Current: 9 nodes. Lower bound?</text>
+    <text x="350" y="215" text-anchor="middle" fill="#4ade80" font-size="10">★ Circuit complexity approach</text>
+
+    <!-- P2: Stack Depth -->
+    <line x1="600" y1="360" x2="850" y2="180" stroke="#4ade80" stroke-width="2" opacity="0.5"/>
+    <rect x="720" y="130" width="260" height="100" rx="12" fill="#1a3a2a" stroke="#4ade80" stroke-width="2" filter="url(#shadow)"/>
+    <text x="850" y="155" text-anchor="middle" fill="#4ade80" font-size="14" font-weight="bold">P2: Stack Depth Tradeoff</text>
+    <text x="850" y="175" text-anchor="middle" fill="#ccc" font-size="11">Recomputation vs depth?</text>
+    <text x="850" y="195" text-anchor="middle" fill="#aaa" font-size="10">Conjecture: Ω(log n) for sum</text>
+    <text x="850" y="215" text-anchor="middle" fill="#4ade80" font-size="10">★ Pebbling game reduction</text>
+
+    <!-- P3: EML Complexity of π -->
+    <line x1="540" y1="400" x2="120" y2="350" stroke="#4ade80" stroke-width="2" opacity="0.5"/>
+    <rect x="20" y="300" width="220" height="100" rx="12" fill="#1a3a2a" stroke="#4ade80" stroke-width="2" filter="url(#shadow)"/>
+    <text x="130" y="325" text-anchor="middle" fill="#4ade80" font-size="14" font-weight="bold">P3: K_EML(π)</text>
+    <text x="130" y="345" text-anchor="middle" fill="#ccc" font-size="11">Min tree size for π?</text>
+    <text x="130" y="365" text-anchor="middle" fill="#aaa" font-size="10">Bounds: 5 ≤ K ≤ 40</text>
+    <text x="130" y="385" text-anchor="middle" fill="#4ade80" font-size="10">★ Transcendence theory</text>
+
+    <!-- P4: Error Propagation -->
+    <line x1="660" y1="400" x2="1060" y2="350" stroke="#4ade80" stroke-width="2" opacity="0.5"/>
+    <rect x="960" y="300" width="220" height="100" rx="12" fill="#1a3a2a" stroke="#4ade80" stroke-width="2" filter="url(#shadow)"/>
+    <text x="1070" y="325" text-anchor="middle" fill="#4ade80" font-size="14" font-weight="bold">P4: Error Bounds</text>
+    <text x="1070" y="345" text-anchor="middle" fill="#ccc" font-size="11">FP error growth?</text>
+    <text x="1070" y="365" text-anchor="middle" fill="#aaa" font-size="10">Conjecture: O(d·ε)</text>
+    <text x="1070" y="385" text-anchor="middle" fill="#4ade80" font-size="10">✓ Condition numbers proved</text>
+  </g>
+
+  <!-- Tier 2: High Impact, Challenging (Blue) -->
+  <g>
+    <!-- P5: Depth Hierarchy -->
+    <line x1="560" y1="460" x2="200" y2="560" stroke="#60a5fa" stroke-width="2" opacity="0.5"/>
+    <rect x="60" y="510" width="260" height="100" rx="12" fill="#1a2a4a" stroke="#60a5fa" stroke-width="2" filter="url(#shadow)"/>
+    <text x="190" y="535" text-anchor="middle" fill="#60a5fa" font-size="14" font-weight="bold">P5: Depth Hierarchy</text>
+    <text x="190" y="555" text-anchor="middle" fill="#ccc" font-size="11">EML-DEPTH(d) ⊊ EML-DEPTH(d+1)?</text>
+    <text x="190" y="575" text-anchor="middle" fill="#aaa" font-size="10">Conjecture: strict hierarchy</text>
+    <text x="190" y="595" text-anchor="middle" fill="#60a5fa" font-size="10">✓ Depth 1≠2 proved (Lean)</text>
+
+    <!-- P6: EML Monoid -->
+    <line x1="640" y1="460" x2="1000" y2="560" stroke="#60a5fa" stroke-width="2" opacity="0.5"/>
+    <rect x="880" y="510" width="260" height="100" rx="12" fill="#1a2a4a" stroke="#60a5fa" stroke-width="2" filter="url(#shadow)"/>
+    <text x="1010" y="535" text-anchor="middle" fill="#60a5fa" font-size="14" font-weight="bold">P6: EML Monoid</text>
+    <text x="1010" y="555" text-anchor="middle" fill="#ccc" font-size="11">Algebraic structure of closure</text>
+    <text x="1010" y="575" text-anchor="middle" fill="#aaa" font-size="10">Growth rate? Presentations?</text>
+    <text x="1010" y="595" text-anchor="middle" fill="#60a5fa" font-size="10">✓ No identity element (Lean)</text>
+
+    <!-- P7: Complex EML -->
+    <line x1="600" y1="480" x2="600" y2="680" stroke="#60a5fa" stroke-width="2" opacity="0.5"/>
+    <rect x="470" y="680" width="260" height="100" rx="12" fill="#1a2a4a" stroke="#60a5fa" stroke-width="2" filter="url(#shadow)"/>
+    <text x="600" y="705" text-anchor="middle" fill="#60a5fa" font-size="14" font-weight="bold">P7: Complex EML + Trig</text>
+    <text x="600" y="725" text-anchor="middle" fill="#ccc" font-size="11">EML(ix,1) = cos(x)+i·sin(x)</text>
+    <text x="600" y="745" text-anchor="middle" fill="#aaa" font-size="10">Liouvillian completeness?</text>
+    <text x="600" y="765" text-anchor="middle" fill="#60a5fa" font-size="10">✓ Euler formula proved (Lean)</text>
+  </g>
+
+  <!-- Tier 3: Visionary (Purple) -->
+  <g>
+    <!-- P8: Quantum OISCC -->
+    <line x1="560" y1="380" x2="200" y2="150" stroke="#c084fc" stroke-width="1.5" opacity="0.4" stroke-dasharray="5,5"/>
+    <rect x="50" y="130" width="180" height="60" rx="10" fill="#2a1a3a" stroke="#c084fc" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="140" y="155" text-anchor="middle" fill="#c084fc" font-size="12" font-weight="bold">P8: Quantum OISCC</text>
+    <text x="140" y="175" text-anchor="middle" fill="#aaa" font-size="10">Quantum EML speedup?</text>
+
+    <!-- P9: Tropical EML -->
+    <line x1="540" y1="450" x2="350" y2="680" stroke="#c084fc" stroke-width="1.5" opacity="0.4" stroke-dasharray="5,5"/>
+    <rect x="240" y="660" width="180" height="60" rx="10" fill="#2a1a3a" stroke="#c084fc" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="330" y="685" text-anchor="middle" fill="#c084fc" font-size="12" font-weight="bold">P9: Tropical EML</text>
+    <text x="330" y="705" text-anchor="middle" fill="#aaa" font-size="10">✓ tEML(a,b)=a−b (Lean)</text>
+
+    <!-- P10: Biochemical EML -->
+    <line x1="660" y1="450" x2="850" y2="680" stroke="#c084fc" stroke-width="1.5" opacity="0.4" stroke-dasharray="5,5"/>
+    <rect x="770" y="660" width="180" height="60" rx="10" fill="#2a1a3a" stroke="#c084fc" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="860" y="685" text-anchor="middle" fill="#c084fc" font-size="12" font-weight="bold">P10: Bio-EML</text>
+    <text x="860" y="705" text-anchor="middle" fill="#aaa" font-size="10">Enzyme kinetics EML?</text>
+  </g>
+
+  <!-- Legend -->
+  <rect x="30" y="810" width="400" height="80" rx="8" fill="#0d0d2d" stroke="#555" stroke-width="1"/>
+  <circle cx="60" cy="835" r="8" fill="#4ade80"/>
+  <text x="80" y="840" fill="#ccc" font-size="12">Tier 1: High Impact, Approachable</text>
+  <circle cx="60" cy="860" r="8" fill="#60a5fa"/>
+  <text x="80" y="865" fill="#ccc" font-size="12">Tier 2: High Impact, Challenging</text>
+  <circle cx="60" cy="885" r="8" fill="#c084fc"/>
+  <text x="80" y="890" fill="#ccc" font-size="12">Tier 3: Visionary / Speculative</text>
+
+  <!-- Status -->
+  <rect x="770" y="810" width="400" height="80" rx="8" fill="#0d0d2d" stroke="#555" stroke-width="1"/>
+  <text x="790" y="835" fill="#FFD700" font-size="13" font-weight="bold">Verified in Lean 4:</text>
+  <text x="790" y="855" fill="#ccc" font-size="11">✓ Depth hierarchy (1≠2)  ✓ No identity element</text>
+  <text x="790" y="875" fill="#ccc" font-size="11">✓ Euler formula   ✓ Tropical EML   ✓ Chain rule</text>
+  <text x="790" y="895" fill="#ccc" font-size="11">✓ Condition numbers   ✓ Sigmoid bounds</text>
+</svg>
