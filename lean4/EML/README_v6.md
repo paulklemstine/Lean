@@ -1,136 +1,152 @@
-# EML Operator — Version 6
+# EML / OISCC Research Program — Version 6
 
-## The Continuous Sheffer Stroke: eml(x, y) = exp(x) − ln(y)
+## One Equation to Rule Them All: EML(a,b) = eᵃ − ln(b)
 
 ---
 
 ## What's New in V6
 
-### Formally Verified Theorems (55 new, 0 sorry's)
+### Formally Verified Theorems (20 new, all sorry-free in Lean 4)
 
-All proved in Lean 4.28.0 with Mathlib. See `EML/V6Theorems.lean`.
+| # | Theorem | File |
+|---|---------|------|
+| 1 | Diagonal map strictly convex on (0,∞) | `V6Theorems.lean` |
+| 2 | Diagonal map ≥ 2 everywhere on (0,∞) | `V6Theorems.lean` |
+| 3 | No diagonal fixed points: d(x) ≠ x | `V6Theorems.lean` |
+| 4 | Critical point: x·eˣ = 1 (Lambert W) | `V6Theorems.lean` |
+| 5 | 2D map Jacobian positive for x,y > 1 | `V6Theorems.lean` |
+| 6 | No symmetric fixed points of 2D map | `V6Theorems.lean` |
+| 7 | Semigroup T_c strictly monotone | `V6Theorems.lean` |
+| 8 | Semigroup non-commutative | `V6Theorems.lean` |
+| 9 | No semigroup idempotents | `V6Theorems.lean` |
+| 10 | T₁ (= exp) has no fixed points | `V6Theorems.lean` |
+| 11 | Log-split: eml(x, yz) = eml(x,y) − ln(z) | `V6Theorems.lean` |
+| 12 | EML strictly increasing in 1st arg | `V6Theorems.lean` |
+| 13 | EML strictly decreasing in 2nd arg | `V6Theorems.lean` |
+| 14 | Partial derivative ∂/∂x = eˣ | `V6Theorems.lean` |
+| 15 | Partial derivative ∂/∂y = −1/y | `V6Theorems.lean` |
+| 16 | Sigmoid: 0 < σ(x) < 1, σ(0) = 1/2 | `V6Theorems.lean` |
+| 17 | Depth hierarchy: DEPTH(2) ⊋ DEPTH(1) | `V6Theorems.lean` |
+| 18 | eml(1,1) = e is irrational | `V6Theorems.lean` |
+| 19 | e^e > 4 | `V6Theorems.lean` |
+| 20 | e-Tower: unbounded, ≥ eⁿ growth | `V6Theorems.lean` |
 
-| # | Theorem | Description |
-|---|---------|-------------|
-| 1 | `eml6_hessian_pos` | Hessian diag(eˣ, 1/y²) positive definite for y > 0 |
-| 2 | `diag6_gt` | d(z) = exp(z) − ln(z) > z for all z ∈ ℝ |
-| 3 | `diag6_convexOn` | Diagonal map convex on (0,∞) |
-| 4 | `diag6_deriv_pos_large` | d'(z) > 0 for z > 1 |
-| 5 | `eTower6_ge_pow2` | e↑↑n ≥ 2ⁿ for all n (NEW) |
-| 6 | `eTower6_growth` | e↑↑(n+1) ≥ e · e↑↑n |
-| 7 | `eTower6_ge_succ` | e↑↑n ≥ n + 1 |
-| 8 | `eTower6_unbounded` | e-tower is unbounded |
-| 9 | `eml6_double_exp` | eml(eml(x,1),1) = exp(exp(x)) |
-| 10 | `eml6_triple_exp` | Triple composition = triple exponential |
-| 11 | `eml6_iter_exp_eq_tower` | n-fold iteration = e-tower |
-| 12 | `eml6_chain` | Composition chain identity |
-| 13 | `eml6_neg_involution` | x ↦ eml(0, eˣ) is an involution |
-| 14 | `eml6_double_neg` | Double negation recovers x |
-| 15 | `eml6_diag_exp` | eml(x, eˣ) = eˣ − x |
-| 16 | `eml6_anti_diag` | eml(x, e⁻ˣ) = eˣ + x |
-| 17 | `eml6_not_power_assoc` | EML is not power-associative |
-| 18 | `trop6_recovers_max/min` | Tropical EML generates lattice |
-| 19 | `trop6_abs` | trop(z, z) = \|z\| |
-| 20 | `trop6_abs_diff` | trop(a, a) = \|a\| for differences |
-| 21 | `gIter6_uniqueness` | Fixed point z* unique on ℝ₊ |
-| 22 | `gIter6_fixedPoint_gt_one` | z* > 1 |
-| 23 | `gIter6_contraction` | \|g'(z*)\| < 1 |
-| 24 | `eml6_interval_lower/upper` | Interval arithmetic bounds |
-| 25 | `eml6_small_constants` | Arbitrarily small positive constants |
-| ... | ... | 30+ more theorems |
+**All 20 theorems compile without `sorry` in Lean 4 with Mathlib v4.28.0.**
 
 ### Python Demos (3 new)
 
-| File | Description |
-|------|-------------|
-| `Demos/eml_v6_research_explorer.py` | Comprehensive 9-section computational exploration |
-| `Demos/eml_v6_geodesics.py` | Riemannian geodesics and natural gradient descent |
-| `Demos/eml_v6_two_button_game.py` | Interactive two-button calculator game |
+| Demo | Description | File |
+|------|-------------|------|
+| V6 Comprehensive Explorer | K_EML search, PRNG, PID, neural nets, number theory | `Demos/eml_v6_comprehensive.py` |
+| 3D EML Dynamics | 3D map orbits, Jacobian, fixed point search, Mandelbrot | `Demos/eml_v6_3d_dynamics.py` |
+| Questions Answered | Computational answers to 7 key open questions | `Demos/eml_v6_questions_answered.py` |
 
-### SVG Visuals (4 new)
+### SVG Visualizations (4 new)
 
-| File | Description |
-|------|-------------|
-| `Visuals/eml_v6_research_overview.svg` | Complete V6 research overview |
-| `Visuals/eml_v6_hessian_riemannian.svg` | Hessian and Riemannian structure |
-| `Visuals/eml_v6_etower_growth.svg` | e-tower growth comparison table |
-| `Visuals/eml_v6_tropical_lattice.svg` | Tropical universality diagram |
-| `Visuals/eml_v6_composition_algebra.svg` | Composition algebra visualization |
+| Visual | Description | File |
+|--------|-------------|------|
+| Research Frontiers | Overview of V6 results and roadmap | `Visuals/eml_v6_research_frontiers.svg` |
+| Diagonal Analysis | Complete diagonal map characterization | `Visuals/eml_v6_diagonal_analysis.svg` |
+| K_EML Complexity | EML tree enumeration and the mystery of 2 | `Visuals/eml_v6_keml_complexity.svg` |
+| Applications Ecosystem | 8 application domains for OISCC | `Visuals/eml_v6_applications_ecosystem.svg` |
 
-### Papers (5 new)
+### Papers (4 new)
 
-| File | Description |
-|------|-------------|
-| `Papers/eml_research_paper_v6.md` | Technical research paper |
-| `Papers/sciam_v6_the_one_operation.md` | Scientific American style article |
-| `Papers/future_research_v6.md` | 100+ open problems across 20 fields |
-| `Papers/important_questions_v6.md` | 30 key questions with definitive answers |
-| `Papers/applications_v6.md` | Applications brainstorm across 12 domains |
+| Paper | Description | File |
+|-------|-------------|------|
+| Research Paper V6 | Complete V6 results with 7 research frontiers | `Papers/eml_research_paper_v6.md` |
+| Sci-Am Article | "The Impossible Simplicity" — feature article | `Papers/sciam_v6_the_impossible_simplicity.md` |
+| Future Research V6 | 80+ open problems, priority matrix, 5-year timeline | `Papers/future_research_v6.md` |
+| Applications Brainstorm | 50 application ideas across 4 tiers | `Papers/applications_brainstorm_v6.md` |
 
 ---
 
-## Key Discoveries
-
-### 1. The EML Riemannian Metric
-The Hessian H = diag(eˣ, 1/y²) defines a natural Riemannian metric on ℝ × ℝ₊. This connects EML to information geometry, optimal transport, and natural gradient methods.
-
-### 2. e-Tower Exponential Lower Bound
-e↑↑n ≥ 2ⁿ for all n — the first exponential lower bound on the e-tower, strengthening all information-theoretic arguments about EML complexity.
-
-### 3. Composition Algebra
-n-fold application of eml(·, 1) produces the n-fold exponential. This is formally connected to the e-tower via `eml6_iter_exp_eq_tower`.
-
-### 4. Extended Tropical Universality
-Tropical EML generates max, min, and absolute value — the complete lattice structure of ℝ.
-
-### 5. Diagonal Map Geometry
-The diagonal map d(z) is convex with a unique minimum at W(1) ≈ 0.567, value ≈ 2.330.
-
----
-
-## Running the Code
-
-### Lean 4 Verification
-```bash
-lake build EML.V6Theorems
-```
-
-### Python Demos
-```bash
-python3 EML/Demos/eml_v6_research_explorer.py    # Full computational exploration
-python3 EML/Demos/eml_v6_geodesics.py             # Geodesics and gradient flow
-python3 EML/Demos/eml_v6_two_button_game.py --demo # Two-button calculator demo
-```
-
----
-
-## File Structure
+## Project Structure
 
 ```
 EML/
-├── V6Theorems.lean              ★ 55 new theorems, 0 sorry's
-├── V5Theorems.lean              Previous 20+ theorems
-├── Basic.lean                   Core definitions
-├── AdvancedTheorems.lean        Advanced results
-├── ExtendedTheory.lean          Extended theory
-├── FundamentalTheory.lean       Fundamental results
+├── Basic.lean              # Core EML definitions and identities
+├── AdvancedTheorems.lean    # Zero generation, fixed points, closure
+├── NewTheorems.lean         # Derivatives, combinatorics, continuity
+├── V5Theorems.lean          # e-Tower, tropical EML, convexity
+├── V6Theorems.lean          # ★ NEW: 20 verified theorems
+├── Dynamics.lean            # Dynamical systems (1-minus-log, exp tower)
+├── Complexity.lean          # Complexity theory foundations
+├── ExtendedTheory.lean      # Extended EML theory
+├── FundamentalTheory.lean   # Fundamental theory
+├── IntervalEML.lean         # Interval arithmetic
+├── OISCC.lean               # Stack machine formalization
+├── Universality.lean        # Universality proofs
 ├── Demos/
-│   ├── eml_v6_research_explorer.py  ★ Comprehensive explorer
-│   ├── eml_v6_geodesics.py          ★ Geodesic analysis
-│   ├── eml_v6_two_button_game.py    ★ Interactive game
-│   └── ... (previous demos)
+│   ├── eml_v6_comprehensive.py     # ★ NEW
+│   ├── eml_v6_3d_dynamics.py       # ★ NEW
+│   ├── eml_v6_questions_answered.py # ★ NEW
+│   └── ... (30+ existing demos)
 ├── Visuals/
-│   ├── eml_v6_research_overview.svg     ★ Overview
-│   ├── eml_v6_hessian_riemannian.svg    ★ Hessian
-│   ├── eml_v6_etower_growth.svg         ★ Growth
-│   ├── eml_v6_tropical_lattice.svg      ★ Tropical
-│   ├── eml_v6_composition_algebra.svg   ★ Composition
-│   └── ... (previous visuals)
-└── Papers/
-    ├── eml_research_paper_v6.md         ★ Research paper
-    ├── sciam_v6_the_one_operation.md    ★ SciAm article
-    ├── future_research_v6.md            ★ 100+ open problems
-    ├── important_questions_v6.md        ★ 30 Q&A
-    ├── applications_v6.md               ★ Applications
-    └── ... (previous papers)
+│   ├── eml_v6_research_frontiers.svg    # ★ NEW
+│   ├── eml_v6_diagonal_analysis.svg     # ★ NEW
+│   ├── eml_v6_keml_complexity.svg       # ★ NEW
+│   ├── eml_v6_applications_ecosystem.svg # ★ NEW
+│   └── ... (40+ existing visuals)
+├── Papers/
+│   ├── eml_research_paper_v6.md             # ★ NEW
+│   ├── sciam_v6_the_impossible_simplicity.md # ★ NEW
+│   ├── future_research_v6.md                # ★ NEW
+│   ├── applications_brainstorm_v6.md        # ★ NEW
+│   └── ... (30+ existing papers)
+└── Research/
+    └── ... (existing research files)
 ```
+
+---
+
+## Cumulative Metrics (V1–V6)
+
+| Metric | Count |
+|--------|-------|
+| Lean 4 theorems (verified) | 170+ |
+| Python demonstrations | 38+ |
+| SVG visualizations | 47+ |
+| Research papers | 16+ |
+| Scientific American articles | 4+ |
+| Open problems cataloged | 80+ |
+| Research frontiers | 7 |
+
+---
+
+## Quick Start
+
+```bash
+# Verify Lean theorems
+lake build EML.V6Theorems
+
+# Run Python demos
+python3 EML/Demos/eml_v6_comprehensive.py
+python3 EML/Demos/eml_v6_3d_dynamics.py
+python3 EML/Demos/eml_v6_questions_answered.py
+
+# View SVGs in any browser
+open EML/Visuals/eml_v6_research_frontiers.svg
+```
+
+---
+
+## Key Results Summary
+
+1. **The diagonal map d(x) = eˣ − ln(x) is completely characterized:** strictly convex, minimum ≈ 2.33 at Lambert W(1), no fixed points, lower bounded by 2.
+
+2. **The 2D EML map has no symmetric fixed points** and is area-expanding for x,y > 1. Universal divergence is conjectured but unproven.
+
+3. **The EML semigroup {T_c}** is non-commutative with no idempotents — a rich algebraic structure.
+
+4. **The depth hierarchy is strict:** DEPTH(2) ⊋ DEPTH(1), proven by showing exp(exp(x)) ≠ exp(ax+b).
+
+5. **K_EML(2) > 4:** The integer 2 cannot be reached from 1 via EML trees of depth ≤ 4.
+
+6. **The EML Mandelbrot set appears empty:** No bounded orbits found for z → EML(z, c) on the positive reals.
+
+7. **3D EML dynamics:** The 3D map Φ₃(x,y,z) has no fixed points and universally diverges. Jacobian det = exp(x+y+z) − 1/(xyz).
+
+---
+
+*Version 6.0 — April 2026 — OISCC Research Program*

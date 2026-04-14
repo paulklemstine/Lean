@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg_app" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a1628"/>
+      <stop offset="100%" stop-color="#1a0a38"/>
+    </linearGradient>
+    <filter id="glow_a">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  
+  <rect width="1000" height="700" fill="url(#bg_app)"/>
+  
+  <!-- Title -->
+  <text x="500" y="45" text-anchor="middle" fill="#FFD700" font-size="26" font-weight="bold" filter="url(#glow_a)">OISCC Application Ecosystem</text>
+  <text x="500" y="72" text-anchor="middle" fill="#aaa" font-size="14">One Instruction, Infinite Possibilities — EML(a,b) = eᵃ − ln(b)</text>
+  
+  <!-- Central hub -->
+  <circle cx="500" cy="370" r="65" fill="rgba(255,215,0,0.15)" stroke="#FFD700" stroke-width="2.5"/>
+  <text x="500" y="360" text-anchor="middle" fill="#FFD700" font-size="18" font-weight="bold">OISCC</text>
+  <text x="500" y="380" text-anchor="middle" fill="#FFD700" font-size="12">EML(a,b)</text>
+  <text x="500" y="395" text-anchor="middle" fill="#ffe680" font-size="10">= eᵃ − ln(b)</text>
+  
+  <!-- Application nodes - arranged in a circle -->
+  
+  <!-- 1. Finance (top) -->
+  <line x1="500" y1="305" x2="500" y2="165" stroke="#00CED1" stroke-width="1.5" opacity="0.5"/>
+  <circle cx="500" cy="150" r="50" fill="rgba(0,206,209,0.12)" stroke="#00CED1" stroke-width="2"/>
+  <text x="500" y="140" text-anchor="middle" fill="#00CED1" font-size="14" font-weight="bold">💰 Finance</text>
+  <text x="500" y="158" text-anchor="middle" fill="#7fdbda" font-size="10">Black-Scholes: 17 ops</text>
+  <text x="500" y="172" text-anchor="middle" fill="#7fdbda" font-size="10">6M options/sec</text>
+  
+  <!-- 2. AI/ML (top-right) -->
+  <line x1="555" y1="320" x2="720" y2="170" stroke="#8A2BE2" stroke-width="1.5" opacity="0.5"/>
+  <circle cx="740" cy="155" r="50" fill="rgba(138,43,226,0.12)" stroke="#8A2BE2" stroke-width="2"/>
+  <text x="740" y="140" text-anchor="middle" fill="#8A2BE2" font-size="14" font-weight="bold">🧠 AI/ML</text>
+  <text x="740" y="158" text-anchor="middle" fill="#c9a0dc" font-size="10">Sigmoid: 7 ops</text>
+  <text x="740" y="172" text-anchor="middle" fill="#c9a0dc" font-size="10">XOR: 42 ops</text>
+  
+  <!-- 3. Control Systems (right) -->
+  <line x1="565" y1="370" x2="770" y2="350" stroke="#FF6347" stroke-width="1.5" opacity="0.5"/>
+  <circle cx="800" cy="345" r="50" fill="rgba(255,99,71,0.12)" stroke="#FF6347" stroke-width="2"/>
+  <text x="800" y="335" text-anchor="middle" fill="#FF6347" font-size="14" font-weight="bold">⚙️ Control</text>
+  <text x="800" y="353" text-anchor="middle" fill="#ff9966" font-size="10">PID: 50 ops/cycle</text>
+  <text x="800" y="367" text-anchor="middle" fill="#ff9966" font-size="10">2 MHz bandwidth</text>
+  
+  <!-- 4. Signal Processing (bottom-right) -->
+  <line x1="545" y1="420" x2="720" y2="555" stroke="#32CD32" stroke-width="1.5" opacity="0.5"/>
+  <circle cx="740" cy="570" r="50" fill="rgba(50,205,50,0.12)" stroke="#32CD32" stroke-width="2"/>
+  <text x="740" y="558" text-anchor="middle" fill="#32CD32" font-size="14" font-weight="bold">📡 DSP</text>
+  <text x="740" y="576" text-anchor="middle" fill="#90ee90" font-size="10">Goertzel: 76 ops/bin</text>
+  <text x="740" y="590" text-anchor="middle" fill="#90ee90" font-size="10">24.3 MHz for 20-bin</text>
+  
+  <!-- 5. Cryptography (bottom) -->
+  <line x1="500" y1="435" x2="500" y2="555" stroke="#FF69B4" stroke-width="1.5" opacity="0.5"/>
+  <circle cx="500" cy="575" r="50" fill="rgba(255,105,180,0.12)" stroke="#FF69B4" stroke-width="2"/>
+  <text x="500" y="563" text-anchor="middle" fill="#FF69B4" font-size="14" font-weight="bold">🔐 Crypto</text>
+  <text x="500" y="581" text-anchor="middle" fill="#ffb6c1" font-size="10">Hash: smooth concern</text>
+  <text x="500" y="595" text-anchor="middle" fill="#ffb6c1" font-size="10">Avalanche: good ✓</text>
+  
+  <!-- 6. IoT/Edge (bottom-left) -->
+  <line x1="445" y1="420" x2="280" y2="555" stroke="#DDA0DD" stroke-width="1.5" opacity="0.5"/>
+  <circle cx="260" cy="570" r="50" fill="rgba(221,160,221,0.12)" stroke="#DDA0DD" stroke-width="2"/>
+  <text x="260" y="558" text-anchor="middle" fill="#DDA0DD" font-size="14" font-weight="bold">📱 IoT/Edge</text>
+  <text x="260" y="576" text-anchor="middle" fill="#e6cce6" font-size="10">Sub-µW power</text>
+  <text x="260" y="590" text-anchor="middle" fill="#e6cce6" font-size="10">TinyML native</text>
+  
+  <!-- 7. Robotics (left) -->
+  <line x1="435" y1="370" x2="230" y2="350" stroke="#20B2AA" stroke-width="1.5" opacity="0.5"/>
+  <circle cx="200" cy="345" r="50" fill="rgba(32,178,170,0.12)" stroke="#20B2AA" stroke-width="2"/>
+  <text x="200" y="335" text-anchor="middle" fill="#20B2AA" font-size="14" font-weight="bold">🤖 Robotics</text>
+  <text x="200" y="353" text-anchor="middle" fill="#7fdbda" font-size="10">Inv. kinematics</text>
+  <text x="200" y="367" text-anchor="middle" fill="#7fdbda" font-size="10">Trig via EML</text>
+  
+  <!-- 8. Scientific Computing (top-left) -->
+  <line x1="445" y1="320" x2="280" y2="170" stroke="#4169E1" stroke-width="1.5" opacity="0.5"/>
+  <circle cx="260" cy="155" r="50" fill="rgba(65,105,225,0.12)" stroke="#4169E1" stroke-width="2"/>
+  <text x="260" y="140" text-anchor="middle" fill="#4169E1" font-size="14" font-weight="bold">🔬 SciComp</text>
+  <text x="260" y="158" text-anchor="middle" fill="#8cacff" font-size="10">ODE/PDE solvers</text>
+  <text x="260" y="172" text-anchor="middle" fill="#8cacff" font-size="10">Partition functions</text>
+  
+  <!-- Performance bar chart at bottom -->
+  <rect x="60" y="640" width="880" height="45" rx="8" fill="rgba(255,255,255,0.03)" stroke="#444" stroke-width="1"/>
+  <text x="500" y="660" text-anchor="middle" fill="#888" font-size="12">EML Operation Counts: Sigmoid(7) • Tanh(11) • Softmax(15/class) • MatMul(19/elem) • PID(50/cycle) • FFT(76/bin)</text>
+  <text x="500" y="678" text-anchor="middle" fill="#666" font-size="10">All operations use only PUSH and EML instructions — no other hardware needed</text>
+  
+  <text x="970" y="695" text-anchor="end" fill="#444" font-size="9">OISCC V6 — April 2026</text>
+</svg>

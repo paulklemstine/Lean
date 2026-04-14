@@ -1,497 +1,291 @@
-# Future Research Directions for the EML Operator — Version 6
+# Future Research Directions for the OISCC Program — Version 6
 
-## 100+ Open Problems Across 20 Fields
-
-### April 2026
+## 80+ Open Problems Across Seven Frontiers
 
 ---
 
 ## Executive Summary
 
-The EML operator eml(x,y) = exp(x) − ln(y) opens research avenues across at least 20 distinct fields. This document catalogs 100+ specific research directions, incorporating all Version 5 results plus new V6 discoveries: the Riemannian metric structure, e-tower bound e↑↑n ≥ 2ⁿ, joint convexity theorem, and 50+ new formally verified theorems. Items marked ★ are new since V5.
+This document catalogs all known open problems and research directions for the OISCC (One Instruction Set Continuous Computer) program as of Version 6 (April 2026). Problems are organized into seven research frontiers, each ranked by estimated impact and feasibility. We highlight the 15 most impactful problems and propose a 5-year research timeline with milestones.
 
 ---
 
-## 1. Pure Mathematics
+## Frontier 1: Pure Mathematics (20 problems)
 
-### 1.1 Classification of Continuous Sheffer Operators
-**Priority: Critical | Difficulty: Very Hard | Impact: Foundational**
+### Tier 1: High Impact, Feasible
 
-- Classify all F(x,y) that, with some constant c, generate all elementary functions
-- Known examples: EML, EDL (exp(x)/ln(y)), anti-EML (ln(x) − exp(y))
-- The affine family a·exp(x) + b·ln(y) + c contains infinitely many Sheffer operators
-- ★ NEW V6: Is the space of Sheffer operators a topological group under a suitable composition?
-- ★ NEW V6: Use the joint convexity theorem to constrain the space of convex Sheffer operators
-- **Attack strategy**: Prove every Sheffer operator must contain exp and log subexpressions
+**P-M1: General Depth Hierarchy.** Prove DEPTH(d+1) ⊋ DEPTH(d) for all d ≥ 1. We have proven the d=1 case (Theorem 2.15 in V6). The general case likely requires showing that the d-fold iterated exponential exp^{(d+1)}(x) cannot be expressed using d levels of EML nesting.
 
-### 1.2 The Constant-Free Sheffer Problem
-**Priority: Critical | Difficulty: Very Hard | Impact: Landmark**
+*Suggested approach:* Growth-rate analysis. Functions in DEPTH(d) grow at most like iterated exponentials of height d, while exp^{(d+1)} grows strictly faster. Formalize this using Lean's `Filter.Tendsto` framework.
 
-Does there exist B(x,y) such that every elementary function is built from B alone (no constant needed)?
-- If B(x,x) = c for all x, then B is very constrained
-- If B(x,x) depends on x, no fixed constant is produced
-- Conjecture: No binary operator over ℂ generates all elementary functions without a distinguished constant
-- ★ NEW V6: Formalize the argument using the involution structure eml(0, exp(x)) = 1 − x
+**P-M2: EML Closure Density.** Is the EML closure of {1} dense in ℝ? In ℝ₊? The depth-4 enumeration shows 396 values with mean gap ~0.66 in (0, 100), suggesting increasing density with depth.
 
-### 1.3 EML Fixed Point Theory
-**Priority: High | Difficulty: Medium | Impact: Theoretical**
+*Suggested approach:* Show that for any interval (a, b) ⊂ ℝ₊ and any ε > 0, there exists a depth-d EML tree evaluating to a value in (a−ε, b+ε) for sufficiently large d. Use the log-split identity to construct fine-grained approximations.
 
-Proved in V5-V6:
-- d(z) has NO real fixed points (d(z) > z for all z)
-- g(z) = e − ln(z) has unique attracting fixed point z* ≈ 2.017
-- z* + ln(z*) = e, z* · exp(z*) = e^e
-- z* = W(e^e), z* > 1 (proved)
-- Uniqueness on ℝ₊ (proved)
-- |g'(z*)| = 1/z* < 1 (proved)
+**P-M3: EML Minimum Value (Closed Form).** Express min_{x>0} d(x) in closed form. We know x* = W(1) and d(x*) = 1/W(1) + 1 + ln(1/W(1)). Is d(x*) transcendental? Irrational?
 
-**Open:**
-- Prove z* = W(e^e) is transcendental
-- Characterize all complex fixed points of d(z) = exp(z) − log(z)
-- ★ NEW V6: Compute the Schwarzian derivative of d(z) and its implications for dynamics
-- ★ NEW V6: Study the basin of attraction of z* — is it all of (0,∞)?
-- ★ NEW V6: Relate z* to other constants involving the Lambert W function
+### Tier 2: Medium Impact
 
-### 1.4 EML-Generated Transcendentals
-**Priority: Medium | Difficulty: Hard | Impact: Number-theoretic**
+**P-M4: Higher EML Derivatives.** Formalize the n-th derivative of d(x). We have d'(x) = exp(x) − 1/x, d''(x) = exp(x) + 1/x². The pattern is d^{(n)}(x) = exp(x) + (−1)^n · (n−1)!/x^n for n ≥ 1.
 
-- Are the e-tower constants {e, e^e, e^(e^e), ...} algebraically independent?
-- Even e^e transcendental is an open problem
-- ★ NEW V6: With e↑↑n ≥ 2ⁿ proved, use growth rate arguments for irrationality measures
-- ★ NEW V6: Study the Liouville-Roth type of EML constants
+**P-M5: EML and Lambert W.** The Lambert W function satisfies W(x)·e^{W(x)} = x. Since critical points of the diagonal map satisfy x·e^x = 1, there is a deep connection. Formalize the relationship between EML critical points and Lambert W values.
 
-### 1.5 EML Magma Structure
-**Priority: Medium | Difficulty: Medium | Impact: Structural**
+**P-M6: EML Functional Equations.** Classify all functions f satisfying f(EML(x,y)) = EML(f(x), f(y)). These are "EML homomorphisms." Does any non-trivial one exist?
 
-Formalized:
-- Non-commutativity, Non-associativity
-- No left identity, No right identity
-- Not power-associative (V5)
-- ★ NEW V6: Not left-alternative, not right-alternative
+**P-M7: EML and Iteration Theory.** Study the fractional iterates of d(x). Does there exist a continuous function d^t(x) for real t ≥ 0 such that d^0 = id, d^1 = d, and d^{s+t} = d^s ∘ d^t? (Schröder's equation approach.)
 
-**Open:**
-- ★ NEW V6: Is the EML magma medial? (eml(eml(a,b), eml(c,d)) = eml(eml(a,c), eml(b,d)))
-- ★ NEW V6: Characterize the automorphism group
-- ★ NEW V6: Does the EML magma embed in a quasigroup?
-- ★ NEW V6: Define "EML varieties" in the sense of universal algebra
+**P-M8: EML Convex Conjugate.** The convex conjugate (Legendre transform) of d(x) is d*(p) = sup_x (px − d(x)). Compute d* and study its properties.
 
-### 1.6 ★ EML Differential Algebra (V6 Extension)
-**Priority: High | Difficulty: Hard | Impact: Foundational**
+### Tier 3: Exploratory
 
-- The EML operator defines a differential field extension of ℚ
-- ★ NEW V6: The Hessian structure constrains the differential Galois group
-- ★ NEW V6: Connection to Risch algorithm: is the EML closure closed under integration?
-- ★ NEW V6: Picard-Vessiot theory for EML-generated differential equations
+**P-M9: EML over p-adic Numbers.** Define EML over the p-adic numbers ℚ_p using the p-adic exponential and logarithm. Study the resulting p-adic EML trees.
 
-### 1.7 ★ EML and Model Theory (NEW V6)
-**Priority: Speculative | Difficulty: Very Hard | Impact: Deep**
+**P-M10: EML over Finite Fields.** In GF(p), define EML(a,b) = g^a − log_g(b) for a generator g. What is the structure of the resulting finite magma?
 
-- ★ NEW V6: Is the first-order theory of (ℝ, eml, 1) decidable?
-- ★ NEW V6: O-minimality: does the EML structure define an o-minimal expansion of the reals?
-- ★ NEW V6: Connection to Wilkie's theorem on exp
+**P-M11: EML and Modular Forms.** The Eisenstein series E_k(τ) = 1 − (2k/B_k)·Σ σ_{k-1}(n)·q^n involves exponentials (q = e^{2πiτ}). Can modular forms be efficiently evaluated on OISCC?
+
+**P-M12: EML Invariant Theory.** Under what transformations is the EML operator invariant? If T is an invertible map, when does T(EML(x,y)) = EML(T(x), T(y))?
+
+**P-M13: EML and Hyperasymptotics.** The asymptotic expansion of d(x) as x → ∞ is dominated by exp(x). What are the sub-dominant terms and their Stokes phenomena?
+
+**P-M14: EML Inverse Problem.** Given a target value v, find the EML tree of minimum depth that evaluates to v (or prove none exists). This is the computational version of K_EML.
+
+**P-M15: EML and Continued Fractions.** Study continued fraction expansions of EML-reachable values. Are there patterns in the continued fraction coefficients of the depth-d EML closure?
+
+**P-M16: EML Generating Functions.** Let a_d = |{values reachable at depth d}|. Study the generating function Σ a_d x^d. Is it rational? Algebraic? D-finite?
+
+**P-M17: EML and Diophantine Equations.** For which integers n does K_EML(n) < ∞? Conjecture: all integers are eventually reachable (K_EML(n) < ∞ for all n ∈ ℤ).
+
+**P-M18: EML Group Actions.** The EML semigroup {T_c : c > 0} is non-commutative with no idempotents. Does it embed into a group? What is its "enveloping group"?
+
+**P-M19: EML and Ergodic Theory.** Define the EML shift σ: Ω → Ω on the space Ω of bi-infinite EML tree sequences. Study its ergodic properties (mixing, entropy, invariant measures).
+
+**P-M20: EML Operads.** The EML operation defines a non-associative binary operation. Study the free operad generated by EML and its relation to dendriform algebras.
 
 ---
 
-## 2. Computational Complexity
+## Frontier 2: Complexity Theory (15 problems)
 
-### 2.1 EML Complexity Bounds (Updated V6)
+**P-C1: K_EML(2) Exact Value.** Determine the minimum depth EML tree from {1} that evaluates to 2. Current bound: K_EML(2) > 4.
 
-| Function | Upper | Lower | Exact? |
-|----------|-------|-------|--------|
-| x | 0 | 0 | ✓ |
-| 1 | 0 | 0 | ✓ |
-| exp(x) | 1 | 1 | ✓ |
-| e | 1 | 1 | ✓ |
-| e − 1 | 2 | 2 | ✓ |
-| exp(exp(x)) | 2 | 2 | ✓ |
-| e^e | 2 | 2 | ✓ |
-| 0 | 3 | 3 | ✓ |
-| e^e − e | 3 | 3 | ✓ |
-| ★ e − 1 − ln(e−1) | 3 | 3 | ✓ |
-| ln(x) | 5 | 3 | ? ← PRIORITY |
-| x + y | ≤11 | 3 | ? |
-| x · y | ≤17 | 5 | ? |
-| sin(x) | ≤53 | 5 | ? |
-| π | ≤53 | 5 | ? |
+**P-C2: Multiplication Lower Bound.** Prove K_EML(x·y) ≥ 9 for generic inputs x, y.
 
-### 2.2 ★ EML Information-Theoretic Lower Bounds (V6 Extension)
-**Priority: Critical | Difficulty: Very Hard | Impact: Foundational**
+**P-C3: Division Complexity.** Determine K_EML(x/y). Upper bound: 9 (via exp(ln(x) − ln(y))).
 
-- ★ NEW V6: With e↑↑n ≥ 2ⁿ, a k-node tree accesses at most 2^(k+1) − 1 leaves
-- ★ NEW V6: Information bottleneck: each EML node processes 2 reals into 1
-- ★ NEW V6: Shannon entropy bound: K_EML(f) ≥ H(f)/log₂(distinguishable outputs per node)
-- ★ NEW V6: Algebraic degree argument strengthened by the convexity theorem
+**P-C4: Power Complexity.** Determine K_EML(x^y) = K_EML(exp(y·ln(x))). Upper bound: ~13.
 
-### 2.3 ★ EML Circuit vs Tree Complexity (V6 Extension)
-**Priority: Medium | Difficulty: Hard | Impact: Theoretical**
+**P-C5: Trigonometric Complexity.** Determine K_EML(sin(x)), K_EML(cos(x)). These require complex exponentials or Taylor series truncation.
 
-- EML circuits allow fan-out (reuse intermediate values)
-- Circuit complexity ≤ tree complexity, but by how much?
-- ★ NEW V6: Is there an EML circuit for ln(x) with < 3 gates?
-- ★ NEW V6: Define EML depth complexity: what is the minimum depth tree for ln(x)?
-- ★ NEW V6: Parallel EML complexity classes
+**P-C6: EML Circuit Classes.** Define EML-P, EML-NP, EML-BPP and study their relationships.
+
+**P-C7: EML Communication Complexity.** Two-party EML communication model. Lower bounds for basic functions.
+
+**P-C8: Parallel EML Depth.** Define and study EML-NC hierarchy.
+
+**P-C9: EML Tree Optimization.** Is finding the minimum-depth EML tree for a given expression NP-hard?
+
+**P-C10: EML Approximation Complexity.** For a target value v and tolerance ε, what is the minimum-depth EML tree evaluating to a value within ε of v?
+
+**P-C11: EML Space Complexity.** What is the minimum stack depth needed to evaluate an EML tree of depth d?
+
+**P-C12: EML Randomized Complexity.** Can randomized EML trees (with random constants at leaves) compute functions with fewer expected nodes?
+
+**P-C13: EML Non-Uniform Complexity.** In the EML analogue of circuit complexity, what is the minimum size of EML circuits computing the n-th bit of π?
+
+**P-C14: EML Interactive Proofs.** Define EML-IP: interactive proofs where the verifier uses only EML operations.
+
+**P-C15: EML Derandomization.** Can EML-BPP = EML-P under plausible assumptions?
 
 ---
 
-## 3. Analysis and Dynamics
+## Frontier 3: Dynamical Systems (12 problems)
 
-### 3.1 EML Dynamical Systems (V6 Extension)
-**Priority: High | Difficulty: Medium-Hard | Impact: Theoretical**
+**P-D1: Universal Divergence of 2D EML Map.** Prove that Φ(x,y) = (EML(x,y), EML(y,x)) has no bounded orbits in ℝ²₊.
 
-Proved:
-- d(z) > z for all z (V5-V6)
-- d is convex on (0,∞) (V5-V6)
-- ★ NEW V6: d has a unique minimum at W(1) ≈ 0.567
+**P-D2: Lyapunov Exponents.** Compute rigorous bounds on the Lyapunov exponents of Φ.
 
-**Open:**
-- ★ NEW V6: Julia set topology — connected? Locally connected?
-- ★ NEW V6: Hausdorff dimension of Julia set
-- ★ NEW V6: Topological entropy of z ↦ exp(z) − log(z)
-- ★ NEW V6: Compute the escape radius for the filled Julia set
-- ★ NEW V6: Mañé-Sad-Sullivan decomposition
+**P-D3: Topological Entropy of Diagonal Map.** Compute h_{top}(d|_K) for suitable compact K.
 
-### 3.2 ★ EML Riemannian Geometry (NEW V6)
-**Priority: High | Difficulty: Medium | Impact: Novel**
+**P-D4: Modified EML Attractors.** Study x_{n+1} = frac(d(x_n)) for fractal/ergodic properties.
 
-- ★ NEW V6: H = diag(eˣ, 1/y²) defines a Riemannian metric on ℝ × ℝ₊
-- ★ NEW V6: Geodesic equations: x'' + ½(x')² = 0, y'' − (y')²/y = 0
-- ★ NEW V6: Gaussian curvature computation
-- ★ NEW V6: Connection to hyperbolic geometry (the y-component)
-- ★ NEW V6: Geodesic completeness — is the EML manifold geodesically complete?
-- ★ NEW V6: Volume growth and comparison theorems
+**P-D5: 3D EML Map.** Study Φ₃(x,y,z) = (EML(x,y), EML(y,z), EML(z,x)). Fixed points? Chaos?
 
-### 3.3 ★ EML and Optimal Transport (NEW V6)
-**Priority: Medium | Difficulty: Hard | Impact: Novel**
+**P-D6: One-Minus-Log Bifurcation.** Complete bifurcation analysis of g_c(x) = c − ln(x) as c varies.
 
-- ★ NEW V6: Use c(x,y) = eml(x,y) as a transport cost function
-- ★ NEW V6: The joint convexity guarantees existence of Kantorovich potentials
-- ★ NEW V6: Connection to the Monge-Ampère equation
-- ★ NEW V6: Wasserstein-EML distance between probability distributions
+**P-D7: EML Mandelbrot Set.** Define the EML Mandelbrot set as {c : the orbit of 1 under z → EML(z,c) is bounded}. Is it empty?
 
-### 3.4 Functional Equations (V6 Extension)
+**P-D8: EML Julia Sets.** For fixed c, study the Julia set of z → EML(z, c) in ℂ.
 
-Proved in V5-V6:
-- Double negation: eml(0, exp(eml(0, exp(x)))) = x
-- Chain identity for compositions
-- ★ NEW V6: The involution f(x) = 1 − x is generated by eml
-- ★ NEW V6: eml(x, eˣ) = eˣ − x (diagonal-exp identity)
-- ★ NEW V6: eml(x, e⁻ˣ) = eˣ + x (anti-diagonal identity)
+**P-D9: Symbolic Dynamics.** Define symbolic dynamics for the EML diagonal map with appropriate partition.
 
-**Open:**
-- ★ NEW V6: Classify ALL functional equations satisfied by eml
-- ★ NEW V6: Is there a "Baker-Campbell-Hausdorff" formula for eml?
+**P-D10: EML Shadowing.** Does the EML diagonal map have the shadowing property?
+
+**P-D11: Periodic Points of Modified Maps.** Find and classify periodic points of x → frac(d(x)).
+
+**P-D12: EML Horseshoe.** Does the 2D EML map contain a Smale horseshoe?
 
 ---
 
-## 4. Machine Learning and AI
+## Frontier 4: Hardware Design (10 problems)
 
-### 4.1 EML Symbolic Regression (V6 Update)
-**Priority: Critical | Difficulty: Medium | Impact: Very High**
+**P-H1: FPGA Prototype.** Implement OISCC on Xilinx/Lattice FPGA with CORDIC exp/ln.
 
-Search space: ℝ^(5·2ⁿ−6) instead of O(20^(2^n))
+**P-H2: ASIC Design.** Custom chip with IEEE 754 precision.
 
-**Next steps:**
-- Benchmark against PySR, AI Feynman, DSR on Strogatz dataset
-- ★ NEW V6: Use the convexity theorem to prove convergence of EML-based optimization
-- ★ NEW V6: Depth-annealing with Riemannian gradient descent
-- ★ NEW V6: Multi-objective: minimize both complexity and fitting error
+**P-H3: Precision Analysis.** Error propagation through depth-d EML trees.
 
-### 4.2 ★ EML-Augmented Transformers (NEW V6)
-**Priority: High | Difficulty: Medium | Impact: Transformative**
+**P-H4: Pipelined EML.** One-result-per-clock throughput design.
 
-- ★ NEW V6: Replace softmax(Qx · Ky) with eml-based attention
-- ★ NEW V6: EML position encodings (replacing sinusoidal)
-- ★ NEW V6: EML-based activation functions for scientific ML
+**P-H5: Memory Architecture.** Stack vs. register tradeoffs.
 
-### 4.3 ★ EML for Automated Theorem Proving (NEW V6)
-**Priority: Medium | Difficulty: Hard | Impact: Meta**
+**P-H6: Multi-Core OISCC.** Parallel OISCC with shared memory.
 
-- ★ NEW V6: Use EML trees to represent proof terms
-- ★ NEW V6: Symbolic distillation of neural theorem provers
-- ★ NEW V6: EML complexity as a proof complexity measure
+**P-H7: OISCC Instruction Extensions.** Minimal useful extensions (e.g., DUP, SWAP).
+
+**P-H8: EML Hardware Error Bounds.** Formal verification of CORDIC error in EML context.
+
+**P-H9: Power Optimization.** Sub-microwatt OISCC for IoT/implantables.
+
+**P-H10: Analog OISCC.** Fully analog implementation using operational amplifiers for exp/ln.
 
 ---
 
-## 5. Hardware Design
+## Frontier 5: Applications (12 problems)
 
-### 5.1 EML Coprocessor (V6 Update)
-**Priority: Medium | Difficulty: Medium | Impact: Practical**
+**P-A1: MNIST Classification.** Neural network on OISCC. Target: >95% accuracy.
 
-- Single hardware unit computing eml(x,y) = exp(x) − ln(y)
-- ★ NEW V6: The convexity theorem guarantees numerical stability
-- ★ NEW V6: Error propagation analysis using the Hessian
-- ★ NEW V6: FPGA prototype: estimate LUT count for 32-bit fixed-point EML
+**P-A2: EML Cryptographic Hash.** Design and analyze security.
 
-### 5.2 ★ Photonic EML (NEW V6)
-**Priority: Speculative | Difficulty: Very Hard | Impact: Novel**
+**P-A3: EML FFT.** Fast Fourier Transform using only EML operations.
 
-- ★ NEW V6: Nonlinear optical materials naturally compute exp
-- ★ NEW V6: Logarithmic detectors compute ln
-- ★ NEW V6: A single photonic EML circuit → universal analog computer
+**P-A4: EML Kalman Filter.** State estimation for embedded systems.
 
----
+**P-A5: EML PID on Real Hardware.** Physical demonstration of EML-based control.
 
-## 6. Number Theory
+**P-A6: EML Robotics.** 6-DOF inverse kinematics via EML.
 
-### 6.1 The EML Constant Hierarchy (V6 Update)
-**Priority: Medium | Difficulty: Hard | Impact: Theoretical**
+**P-A7: EML Audio Processing.** Real-time audio synthesis/filtering on OISCC.
 
-Computed: 118+ distinct constants from ≤ 6-node trees
-- ★ NEW V6: Extended to ≤ 7-node trees (400+ constants)
-- ★ NEW V6: Distribution analysis: are EML constants equidistributed mod 1?
-- ★ NEW V6: Smallest positive EML constant from ≤ n nodes
-- ★ NEW V6: Connection to Gel'fond-Schneider theory
+**P-A8: EML Scientific Computing.** ODE/PDE solvers using only EML.
 
-### 6.2 ★ EML and Continued Fractions (NEW V6)
-**Priority: Medium | Difficulty: Medium | Impact: Novel**
+**P-A9: EML Bioinformatics.** Sequence alignment scoring on OISCC.
 
-- ★ NEW V6: Continued fraction expansion of z* = W(eᵉ)
-- ★ NEW V6: Irrationality measure of EML constants
-- ★ NEW V6: Connection to Padé approximants for exp and log
+**P-A10: EML Weather Prediction.** Atmospheric model step function via EML.
+
+**P-A11: EML Quantum Simulation.** Quantum circuit simulation using EML arithmetic.
+
+**P-A12: EML Edge AI.** TinyML deployment on sub-milliwatt OISCC.
 
 ---
 
-## 7. Category Theory
+## Frontier 6: Formal Verification (6 problems)
 
-### 7.1 Operadic Structure (V6 Update)
-**Priority: Speculative | Difficulty: Hard | Impact: Theoretical**
+**P-V1: Compiler Correctness.** Lean 4 proof of EML-to-stack compiler correctness.
 
-- EML trees form a non-symmetric operad
-- ★ NEW V6: The composition algebra (eml6_chain) defines an operad multiplication
-- ★ NEW V6: Connection to Stasheff associahedra via the non-associativity
-- ★ NEW V6: EML as a colored operad with types ℝ and ℝ₊
+**P-V2: Precision Verification.** Floating-point error bounds formalized.
 
----
+**P-V3: Universality Formalization.** Complete formal proof of EML universality.
 
-## 8. Physics
+**P-V4: Decidability of EML Equality.** Is it decidable whether two EML trees compute the same function?
 
-### 8.1 Symbolic Discovery of Physical Laws (V6 Update)
-**Priority: High | Difficulty: Medium | Impact: Very High**
+**P-V5: EML Tree Canonicalization.** Define and verify a canonical form for EML trees.
 
-- ★ NEW V6: Benchmark: rediscover Kepler's third law T² ∝ a³
-- ★ NEW V6: EML regression for discovering effective potentials in molecular dynamics
-- ★ NEW V6: Connection to dimensional analysis via EML tree structure
-
-### 8.2 ★ EML and Thermodynamics (NEW V6)
-**Priority: Medium | Difficulty: Medium | Impact: Novel**
-
-- ★ NEW V6: Free energy F = U − TS has EML structure: eml(ln U, exp(TS))
-- ★ NEW V6: The diagonal map d(z) = exp(z) − ln(z) appears in partition function bounds
-- ★ NEW V6: EML convexity ↔ thermodynamic stability (convexity of free energy)
+**P-V6: Correctness of K_EML Algorithm.** Verify the tree enumeration algorithm produces all values.
 
 ---
 
-## 9. Formal Verification
+## Frontier 7: Cross-Domain Connections (10 problems)
 
-### 9.1 Lean 4 Formalization Status (V6)
-**Priority: High | Difficulty: Medium | Impact: Foundational**
+**P-X1: EML Category Theory.** Free EML magma as a category.
 
-Current status: ★ 200+ theorems, 0 sorry's
+**P-X2: EML Tropical Geometry.** Tropical limit of EML and connection to tropical varieties.
 
-**New in V6 (all proved):**
-- eml6_hessian_pos: Hessian positive definite
-- eml6_convexOn_joint: Joint strict convexity
-- diag6_gt: d(z) > z for all z
-- diag6_convexOn: d convex on (0,∞)
-- diag6_deriv_pos_large: d'(z) > 0 for z > 1
-- eTower6_ge_pow2: e↑↑n ≥ 2ⁿ
-- eTower6_growth: e↑↑(n+1) ≥ e · e↑↑n
-- eml6_double_exp: eml(eml(x,1),1) = exp(exp(x))
-- eml6_triple_exp: triple composition
-- eml6_iter_exp_eq_tower: iteration = e-tower
-- eml6_chain: composition chain identity
-- eml6_neg_involution: negation is involution
-- eml6_not_power_assoc: not power-associative
-- eml6_diag_exp / eml6_anti_diag: diagonal identities
-- trop6_abs / trop6_abs_diff: tropical absolute value
-- gIter6_uniqueness: fixed point uniqueness
+**P-X3: EML Information Theory.** Entropy computation on OISCC.
 
-**Next targets:**
-- ★ Prove K_EML(ln) ≥ 4
-- ★ Formalize the master formula parameter count
-- ★ Certify the constant enumeration
-- ★ Formalize geodesic equations for the EML metric
-- ★ Formalize the tropical semiring structure
+**P-X4: EML Statistical Mechanics.** Partition function computation.
+
+**P-X5: EML Neuroscience.** Biological neural circuit modeling.
+
+**P-X6: EML and Lie Theory.** The EML semigroup as a Lie semigroup. Infinitesimal generators.
+
+**P-X7: EML and Algebraic Geometry.** EML curves and surfaces in ℝ².
+
+**P-X8: EML and Number Theory.** Distribution of primes in K_EML values. Connection to Baker's theorem.
+
+**P-X9: EML and Automata Theory.** EML pushdown automata. Comparison to classical PDA.
+
+**P-X10: EML and Homotopy Type Theory.** EML paths in HoTT. Computational interpretation.
 
 ---
 
-## 10. Topology and Geometry
+## Proposed 5-Year Timeline
 
-### 10.1 ★ EML Manifold Theory (NEW V6)
-**Priority: Medium | Difficulty: Hard | Impact: Novel**
+### Year 1 (2026-2027): Foundation
+- [ ] FPGA prototype (P-H1)
+- [ ] K_EML depth-5 enumeration (P-C1)
+- [ ] MNIST on OISCC simulator (P-A1)
+- [ ] Lean formalization: 200+ theorems
+- [ ] EML cryptographic hash design (P-A2)
 
-- ★ NEW V6: The level sets eml(x,y) = c are smooth curves for each c
-- ★ NEW V6: These level curves foliate ℝ × ℝ₊
-- ★ NEW V6: The gradient flow of eml generates a one-parameter group
-- ★ NEW V6: Connection to Morse theory: eml has no critical points (∇eml = (eˣ, −1/y) ≠ 0 for y > 0)
+### Year 2 (2027-2028): Deepening
+- [ ] Multiplication lower bound attempt (P-C2)
+- [ ] Universal divergence proof attempt (P-D1)
+- [ ] Compiler correctness in Lean (P-V1)
+- [ ] ASIC design started (P-H2)
+- [ ] First real-world PID demo (P-A5)
 
-### 10.2 ★ EML and Hyperbolic Geometry (NEW V6)
-**Priority: Medium | Difficulty: Medium | Impact: Theoretical**
+### Year 3 (2028-2029): Maturation
+- [ ] General depth hierarchy (P-M1)
+- [ ] EML closure density result (P-M2)
+- [ ] Edge AI deployment demo (P-A12)
+- [ ] Lean formalization: 300+ theorems
+- [ ] First peer-reviewed journal publication
 
-- ★ NEW V6: The y-component of the EML metric ds² = dy²/y² is the Poincaré half-plane metric
-- ★ NEW V6: EML geodesics in the y-direction are exponential curves
-- ★ NEW V6: Connection to Möbius transformations
+### Year 4 (2029-2030): Impact
+- [ ] ASIC tape-out (P-H2)
+- [ ] Cryptographic security analysis complete (P-A2)
+- [ ] EML category theory framework (P-X1)
+- [ ] Multiple application demonstrations
+- [ ] Patent portfolio
 
----
-
-## 11. Information Theory
-
-### 11.1 ★ EML Kolmogorov Complexity (NEW V6)
-**Priority: Medium | Difficulty: Hard | Impact: Novel**
-
-- ★ NEW V6: K_EML(f) as an analogue of Kolmogorov complexity for real functions
-- ★ NEW V6: Is K_EML computable? (Likely not, by analogy with Kolmogorov complexity)
-- ★ NEW V6: Symmetry of information: K_EML(f,g) ≈ K_EML(f) + K_EML(g|f)?
-- ★ NEW V6: EML Minimum Description Length for model selection
-
-### 11.2 ★ EML and Rate-Distortion Theory (NEW V6)
-**Priority: Speculative | Difficulty: Hard | Impact: Novel**
-
-- ★ NEW V6: EML expressions as compressed representations of functions
-- ★ NEW V6: Rate-distortion tradeoff: K_EML(f_ε) vs ε for ε-approximations
-- ★ NEW V6: Connection to lossy compression of mathematical formulas
-
----
-
-## 12. Optimization and Control
-
-### 12.1 ★ Natural Gradient Methods (NEW V6)
-**Priority: High | Difficulty: Medium | Impact: Practical**
-
-- ★ NEW V6: EML Hessian as natural preconditioner
-- ★ NEW V6: Convergence guarantees from joint convexity
-- ★ NEW V6: Adam optimizer adapted to EML metric
-- ★ NEW V6: Connection to mirror descent with exp/log link
-
-### 12.2 ★ EML in Optimal Control (V6 Update)
-**Priority: Speculative | Difficulty: Hard | Impact: Novel**
-
-- ★ NEW V6: EML trees as interpretable control policies
-- ★ NEW V6: Hamilton-Jacobi-Bellman with EML value functions
-- ★ NEW V6: The convexity theorem guarantees HJB solution existence
+### Year 5 (2030-2031): Ecosystem
+- [ ] Commercial OISCC chip
+- [ ] Open-source OISCC toolchain
+- [ ] Universality formalization complete (P-V3)
+- [ ] 500+ verified theorems
+- [ ] OISCC adopted for niche applications
 
 ---
 
-## 13. Quantum Computing
+## Priority Matrix
 
-### 13.1 ★ Quantum EML (V6 Update)
-**Priority: Speculative | Difficulty: Very Hard | Impact: Novel**
-
-- Matrix exponential and matrix logarithm define quantum EML
-- ★ NEW V6: Connection to quantum signal processing (QSP)
-- ★ NEW V6: EML gates as primitive operations for quantum-classical hybrid algorithms
-
----
-
-## 14. Cryptography
-
-### 14.1 ★ EML One-Way Functions (V6 Update)
-**Priority: Speculative | Difficulty: Hard | Impact: Novel**
-
-- Given a value v, find an EML tree that evaluates to v
-- ★ NEW V6: The non-invertibility of exp and log makes this potentially hard
-- ★ NEW V6: Connection to discrete log problem via tropical EML
-
----
-
-## 15. Education
-
-### 15.1 The Two-Button Calculator (V6 Update)
-**Priority: High | Difficulty: Low | Impact: Educational**
-
-- ★ NEW V6: Gamification with difficulty levels
-- ★ NEW V6: "EML Golf": reach target constant in fewest operations
-- ★ NEW V6: Integration with proof assistants for verified computation
+| Priority | Problem | Frontier | Impact | Feasibility | Est. Time |
+|----------|---------|----------|--------|-------------|-----------|
+| 1 | FPGA Prototype | Hardware | ★★★★★ | ★★★★ | 6 mo |
+| 2 | Universal Divergence | Dynamics | ★★★★★ | ★★★ | 1 yr |
+| 3 | K_EML(2) | Complexity | ★★★★ | ★★★★ | 6 mo |
+| 4 | Mult. Lower Bound | Complexity | ★★★★★ | ★★ | 2 yr |
+| 5 | MNIST on OISCC | Applications | ★★★★ | ★★★★ | 3 mo |
+| 6 | Compiler Correctness | Verification | ★★★★ | ★★★ | 1 yr |
+| 7 | Depth Hierarchy | Pure Math | ★★★★★ | ★★ | 2+ yr |
+| 8 | Crypto Hash | Applications | ★★★ | ★★★ | 6 mo |
+| 9 | Category Theory | Cross-Domain | ★★★ | ★★★ | 1 yr |
+| 10 | Universality Proof | Verification | ★★★★ | ★★ | 2 yr |
+| 11 | EML Closure Density | Pure Math | ★★★★ | ★★★ | 1 yr |
+| 12 | Lyapunov Exponents | Dynamics | ★★★ | ★★★ | 6 mo |
+| 13 | Edge AI Demo | Applications | ★★★★ | ★★★ | 1 yr |
+| 14 | Lambert W Connection | Pure Math | ★★★ | ★★★★ | 3 mo |
+| 15 | EML Precision | Hardware | ★★★ | ★★★★ | 6 mo |
 
 ---
 
-## 16. Biology and Chemistry
+## Conclusion
 
-### 16.1 ★ EML in Systems Biology (V6 Update)
-**Priority: Speculative | Difficulty: Medium | Impact: Novel**
+The OISCC research program has 80+ open problems across seven frontiers, ranging from immediately feasible (FPGA prototype, K_EML depth-5 search) to deeply challenging (general depth hierarchy, multiplication lower bounds). The program's unique strength is its combination of theoretical depth, practical applications, and machine-verified foundations.
 
-- Michaelis-Menten kinetics involve exp and log
-- ★ NEW V6: EML regression for discovering rate laws
-- ★ NEW V6: Gene regulatory networks with EML-structured interactions
+The single equation EML(a, b) = e^a − ln(b) sits at the intersection of algebra, analysis, dynamics, complexity theory, and engineering. Exploring its full implications will keep mathematicians, computer scientists, and engineers busy for decades.
 
 ---
 
-## 17. ★ Probability and Statistics (NEW V6)
-
-### 17.1 ★ EML Distributions
-**Priority: Medium | Difficulty: Medium | Impact: Novel**
-
-- ★ NEW V6: The EML-generated constant density μ_n defines a sequence of probability distributions
-- ★ NEW V6: Are EML constants normally distributed for large n?
-- ★ NEW V6: Central limit theorem for EML tree evaluations
-- ★ NEW V6: EML as a link function for generalized linear models
-
----
-
-## 18. ★ Algebraic Geometry (NEW V6)
-
-### 18.1 ★ EML Varieties
-**Priority: Speculative | Difficulty: Very Hard | Impact: Deep**
-
-- ★ NEW V6: Level sets {eml(x,y) = c} are transcendental curves
-- ★ NEW V6: The moduli space of n-node EML trees
-- ★ NEW V6: Connection to periods via integrals of eml
-
----
-
-## 19. ★ Logic and Foundations (NEW V6)
-
-### 19.1 ★ EML Computability
-**Priority: Medium | Difficulty: Hard | Impact: Foundational**
-
-- ★ NEW V6: Is the EML word problem decidable?
-- ★ NEW V6: Is it decidable whether two EML trees evaluate to the same function?
-- ★ NEW V6: Connection to Richardson's theorem (undecidability of zero testing for exp-log expressions)
-- ★ NEW V6: Complexity of EML identity testing
-
----
-
-## 20. ★ Signal Processing (NEW V6)
-
-### 20.1 ★ EML Basis Functions
-**Priority: Medium | Difficulty: Medium | Impact: Practical**
-
-- ★ NEW V6: EML trees as adaptive basis functions for signal representation
-- ★ NEW V6: EML-Fourier connection via exp(ix)
-- ★ NEW V6: EML wavelets: exp-log modulated oscillations
-- ★ NEW V6: Compressed sensing with EML sparsity priors
-
----
-
-## Recommended Priority Order
-
-### Immediate (next 6 months):
-1. Close the ln(x) complexity gap: 3 ≤ K ≤ 5
-2. EML symbolic regression benchmarks vs PySR, KAN
-3. Complex Julia set computation and visualization
-4. ★ Formalize geodesic equations for EML metric
-5. ★ EML-augmented transformer experiments
-6. ★ Publish V6 research paper
-
-### Medium-term (6–18 months):
-7. Classification of Sheffer operators
-8. Close multiplication complexity gap: 5 ≤ K ≤ 17
-9. EML lower bound techniques
-10. Neural EML network experiments
-11. ★ Natural gradient descent implementation
-12. ★ Basin of attraction analysis for z*
-13. ★ Tropical EML semiring formalization
-14. ★ EML-based attention mechanisms
-
-### Long-term (1–5 years):
-15. Constant-free Sheffer conjecture
-16. ★ O-minimality of EML structure
-17. Foundation models for math expressions
-18. Algebraic independence of e-tower
-19. Complete EML complexity theory
-20. ★ Quantum EML circuits
-21. ★ EML optimal transport
-22. ★ Photonic EML hardware
-
----
-
-*All theorems referenced above are verified in Lean 4.28.0 with Mathlib. Source: `EML/V6Theorems.lean`.*
+*Version 6.0 — April 2026*
+*170+ verified theorems | 80+ open problems | 7 research frontiers*
