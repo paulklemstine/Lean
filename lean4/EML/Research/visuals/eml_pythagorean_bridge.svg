@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 800" font-family="Georgia, serif">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#080820"/>
+      <stop offset="100%" style="stop-color:#1a0a30"/>
+    </linearGradient>
+    <filter id="glow2">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="bridge" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3355aa"/>
+      <stop offset="50%" style="stop-color:#aa5533"/>
+      <stop offset="100%" style="stop-color:#33aa55"/>
+    </linearGradient>
+  </defs>
+  
+  <rect width="1100" height="800" fill="url(#bg2)"/>
+  
+  <!-- Title -->
+  <text x="550" y="40" text-anchor="middle" fill="#e8e8ff" font-size="24" font-weight="bold">The EML–Pythagorean Bridge</text>
+  <text x="550" y="62" text-anchor="middle" fill="#8888bb" font-size="13">Connecting Number Theory, Algebra, Analysis, and Computation</text>
+  
+  <!-- ═══ Left Pillar: Number Theory ═══ -->
+  <rect x="30" y="90" width="310" height="300" rx="12" fill="#0a0a30" stroke="#3355aa" stroke-width="2"/>
+  <text x="185" y="115" text-anchor="middle" fill="#6699ff" font-size="16" font-weight="bold">Number Theory</text>
+  
+  <text x="50" y="145" fill="#aabbdd" font-size="12" font-weight="bold">Pythagorean Triples</text>
+  <text x="50" y="165" fill="#8899bb" font-size="11">a² + b² = c²</text>
+  <text x="50" y="185" fill="#8899bb" font-size="11">Euclid: (m²-n², 2mn, m²+n²)</text>
+  
+  <text x="50" y="215" fill="#aabbdd" font-size="12" font-weight="bold">Gaussian Integers ℤ[i]</text>
+  <text x="50" y="235" fill="#8899bb" font-size="11">z = m + ni, |z|² = m² + n²</text>
+  <text x="50" y="255" fill="#8899bb" font-size="11">Norm multiplicativity → BF identity</text>
+  
+  <text x="50" y="285" fill="#aabbdd" font-size="12" font-weight="bold">Pythagorean Primes</text>
+  <text x="50" y="305" fill="#8899bb" font-size="11">p ≡ 1 (mod 4) ⟺ p = a² + b²</text>
+  <text x="50" y="325" fill="#8899bb" font-size="11">p splits in ℤ[i]: p = (a+bi)(a-bi)</text>
+  
+  <text x="50" y="355" fill="#aabbdd" font-size="12" font-weight="bold">Pell Equations</text>
+  <text x="50" y="375" fill="#8899bb" font-size="11">B-branch: x² - 2y² = ±1</text>
+  
+  <!-- ═══ Right Pillar: Algebra & Geometry ═══ -->
+  <rect x="760" y="90" width="310" height="300" rx="12" fill="#0a1a0a" stroke="#33aa55" stroke-width="2"/>
+  <text x="915" y="115" text-anchor="middle" fill="#66ff99" font-size="16" font-weight="bold">Algebra &amp; Geometry</text>
+  
+  <text x="780" y="145" fill="#aaddbb" font-size="12" font-weight="bold">Lorentz Group O(2,1;ℤ)</text>
+  <text x="780" y="165" fill="#88bb99" font-size="11">BᵢᵀQBᵢ = Q, Q = diag(1,1,-1)</text>
+  <text x="780" y="185" fill="#88bb99" font-size="11">Berggren matrices ∈ O(2,1;ℤ)</text>
+  
+  <text x="780" y="215" fill="#aaddbb" font-size="12" font-weight="bold">Hyperbolic Geometry</text>
+  <text x="780" y="235" fill="#88bb99" font-size="11">Hyperboloid model: a²+b²-c² = -1</text>
+  <text x="780" y="255" fill="#88bb99" font-size="11">Tree = tessellation of ℍ²</text>
+  
+  <text x="780" y="285" fill="#aaddbb" font-size="12" font-weight="bold">SL(2,ℤ) Connection</text>
+  <text x="780" y="305" fill="#88bb99" font-size="11">2×2 matrices: M₁, M₃ ∈ SL(2,ℤ)</text>
+  <text x="780" y="325" fill="#88bb99" font-size="11">⟨M₁, M₃⟩ = Γ_θ (theta group)</text>
+  
+  <text x="780" y="355" fill="#aaddbb" font-size="12" font-weight="bold">Cayley-Dickson Hierarchy</text>
+  <text x="780" y="375" fill="#88bb99" font-size="11">ℝ → ℂ → ℍ → 𝕆 → 𝕊 → ...</text>
+  
+  <!-- ═══ The Bridge (Center) ═══ -->
+  <rect x="370" y="110" width="360" height="260" rx="15" fill="#1a0a20" stroke="url(#bridge)" stroke-width="3"/>
+  <text x="550" y="140" text-anchor="middle" fill="#ffcc88" font-size="18" font-weight="bold" filter="url(#glow2)">EML Operator</text>
+  <text x="550" y="165" text-anchor="middle" fill="#ddaa66" font-size="14">eml(x, y) = eˣ − ln y</text>
+  
+  <text x="390" y="200" fill="#ccbb88" font-size="11" font-weight="bold">Core Identities:</text>
+  <text x="390" y="220" fill="#aa9977" font-size="10">• exp(x) = eml(x, 1)</text>
+  <text x="390" y="238" fill="#aa9977" font-size="10">• ln(z) = 1 − eml(0, z)</text>
+  <text x="390" y="256" fill="#aa9977" font-size="10">• e = eml(1, 1)</text>
+  <text x="390" y="274" fill="#aa9977" font-size="10">• x + y = ln(eˣ · eʸ)</text>
+  <text x="390" y="292" fill="#aa9977" font-size="10">• x · y = exp(ln x + ln y)</text>
+  
+  <text x="560" y="200" fill="#ccbb88" font-size="11" font-weight="bold">Pythagorean Log-Space:</text>
+  <text x="560" y="220" fill="#aa9977" font-size="10">• a²+b²=c² becomes:</text>
+  <text x="560" y="238" fill="#ffcc88" font-size="10">  e^(2 ln a) + e^(2 ln b) = e^(2 ln c)</text>
+  <text x="560" y="260" fill="#aa9977" font-size="10">• Berggren step = O(1) EML ops</text>
+  <text x="560" y="278" fill="#aa9977" font-size="10">• Depth-d triple: O(d) EML ops</text>
+  <text x="560" y="296" fill="#aa9977" font-size="10">• EML trees encode all triples</text>
+  
+  <!-- Bridge arrows -->
+  <path d="M 340 230 L 370 230" stroke="#5577cc" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+  <path d="M 730 230 L 760 230" stroke="#55cc77" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+  <path d="M 370 230 L 340 230" stroke="#5577cc" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+  <path d="M 760 230 L 730 230" stroke="#55cc77" stroke-width="2" marker-end="url(#arrow)" fill="none"/>
+
+  <!-- ═══ Bottom: Analysis & Dynamics ═══ -->
+  <rect x="30" y="420" width="500" height="170" rx="12" fill="#1a0a0a" stroke="#aa5533" stroke-width="2"/>
+  <text x="280" y="445" text-anchor="middle" fill="#ffaa66" font-size="16" font-weight="bold">Analysis &amp; Dynamics</text>
+  
+  <text x="50" y="475" fill="#ddaa88" font-size="11" font-weight="bold">Fixed-Point Theory</text>
+  <text x="50" y="495" fill="#bb9977" font-size="10">• exp(x) > x for all x ∈ ℝ (no real fixed point)</text>
+  <text x="50" y="515" fill="#bb9977" font-size="10">• eml(·, y) has 0/1/2 fixed points (bifurcation at y = e)</text>
+  <text x="50" y="535" fill="#bb9977" font-size="10">• Connected to Lambert W function: x = −W(−1/y) − ln y</text>
+  
+  <text x="300" y="475" fill="#ddaa88" font-size="11" font-weight="bold">Growth Rates</text>
+  <text x="300" y="495" fill="#bb9977" font-size="10">• B-branch: λ = 3 + 2√2 ≈ 5.828</text>
+  <text x="300" y="515" fill="#bb9977" font-size="10">• Lyapunov exponents form Cantor set</text>
+  <text x="300" y="535" fill="#bb9977" font-size="10">• Angle mean → 45° (non-uniform)</text>
+  
+  <!-- ═══ Bottom: Computation ═══ -->
+  <rect x="560" y="420" width="510" height="170" rx="12" fill="#0a0a1a" stroke="#5555aa" stroke-width="2"/>
+  <text x="815" y="445" text-anchor="middle" fill="#aaaaff" font-size="16" font-weight="bold">Computation &amp; Applications</text>
+  
+  <text x="580" y="475" fill="#aabbdd" font-size="11" font-weight="bold">Complexity</text>
+  <text x="580" y="495" fill="#8899bb" font-size="10">• O(d) EML nodes for depth-d triple</text>
+  <text x="580" y="515" fill="#8899bb" font-size="10">• Inverse Berggren: O(log c) path finding</text>
+  <text x="580" y="535" fill="#8899bb" font-size="10">• Matrix squaring: O(log d) parallel depth</text>
+  
+  <text x="820" y="475" fill="#aabbdd" font-size="11" font-weight="bold">Applications</text>
+  <text x="820" y="495" fill="#8899bb" font-size="10">• Lattice cryptography</text>
+  <text x="820" y="515" fill="#8899bb" font-size="10">• Signal processing (norm computation)</text>
+  <text x="820" y="535" fill="#8899bb" font-size="10">• Neural architecture (EML activation)</text>
+  
+  <!-- ═══ Bottom: Formal Verification ═══ -->
+  <rect x="30" y="620" width="1040" height="160" rx="12" fill="#0a1520" stroke="#44aaaa" stroke-width="2"/>
+  <text x="550" y="645" text-anchor="middle" fill="#66dddd" font-size="16" font-weight="bold">Formal Verification (Lean 4 + Mathlib)</text>
+  
+  <!-- Verified theorems -->
+  <text x="60" y="675" fill="#88cccc" font-size="11">✓ Lorentz form preservation (all 3 matrices)</text>
+  <text x="60" y="695" fill="#88cccc" font-size="11">✓ Pythagorean preservation (all 3 branches)</text>
+  <text x="60" y="715" fill="#88cccc" font-size="11">✓ Brahmagupta-Fibonacci identity</text>
+  <text x="60" y="735" fill="#88cccc" font-size="11">✓ Hypotenuse product theorem</text>
+  
+  <text x="380" y="675" fill="#88cccc" font-size="11">✓ Determinants: det(B₁)=1, det(B₂)=-1, det(B₃)=1</text>
+  <text x="380" y="695" fill="#88cccc" font-size="11">✓ exp(x) > x for all x ∈ ℝ</text>
+  <text x="380" y="715" fill="#88cccc" font-size="11">✓ EML fixed point at y = e, x = 0</text>
+  <text x="380" y="735" fill="#88cccc" font-size="11">✓ EML tree leaf-node counting</text>
+  
+  <text x="740" y="675" fill="#88cccc" font-size="11">✓ Euclid parametrization</text>
+  <text x="740" y="695" fill="#88cccc" font-size="11">✓ Berggren tree depth computations</text>
+  <text x="740" y="715" fill="#88cccc" font-size="11">✓ Pell recurrence verification</text>
+  <text x="740" y="735" fill="#88cccc" font-size="11">✓ Gaussian rotation/negation preserve triples</text>
+  
+  <text x="550" y="765" text-anchor="middle" fill="#44aaaa" font-size="11" font-style="italic">30+ machine-verified theorems spanning number theory, algebra, analysis, and computation</text>
+</svg>

@@ -1,142 +1,171 @@
-# EML Operator & OISCC Research Project
+# EML: The Continuous Sheffer Stroke
 
-## The One Instruction Set Continuous Computer
+## All Elementary Functions from a Single Operator
 
-**EML(a, b) = e^a − ln(b)** — a single binary operation that generates all elementary functions.
-
----
-
-## Overview
-
-The EML (Exp-Minus-Log) operator, combined with the constant 1, is sufficient to compute every elementary function: exp, ln, +, −, ×, ÷, powers, roots, and (via complex extension) all trigonometric functions. The OISCC (One Instruction Set Continuous Computer) is a stack-based processor that executes only PUSH and EML instructions — the simplest possible architecture for continuous computation.
-
-This project contains:
-- **100+ machine-verified theorems** in Lean 4 (Mathlib)
-- **Python demos**: compiler, neural networks, chaos analysis, Kalman filter, signal processing, neuromorphic computing, cryptographic hashing
-- **SVG visuals**: architecture diagrams, computation trees, research roadmap, algebraic structure, application ecosystem
-- **Research papers**: formal foundations, open problems, future directions, popular science articles
+This directory contains a comprehensive research exploration of the **EML operator** `eml(x,y) = exp(x) - ln(y)`, discovered by Andrzej Odrzywolek (Jagiellonian University, 2025). The EML operator, paired with the constant 1, generates **all elementary functions** — the continuous analogue of the NAND gate's universality for Boolean logic.
 
 ---
 
-## Lean 4 Formalization
+## Contents
 
-### Core Files (Sorry-Free ✓)
+### 📐 Lean 4 Formalized Theorems (`*.lean`)
 
-| File | Theorems | Contents |
-|------|----------|----------|
-| `Basic.lean` | 15+ | EML definition, exp/ln/arithmetic recovery, tree combinatorics, differentiability |
-| `OISCC.lean` | 20+ | Stack machine semantics, program execution, arithmetic completeness, fixed points |
-| `Universality.lean` | 8+ | Complex EML, closure properties, anti-EML, expression trees |
-| `NewTheorems.lean` | 10+ | Derivative structure, tree depth bounds, master formula parameters |
-| `AdvancedTheorems.lean` | 20+ | Zero generation, non-associativity, fixed point existence/uniqueness, e-tower |
-| `IntervalEML.lean` | 12+ | Monotonicity, interval enclosure theorem, diagonal map, value bounds |
-| `Dynamics.lean` | 10+ | One-minus-log iteration, exp-tower divergence, 2D EML map, Jacobian |
-| `Complexity.lean` | 12+ | Tree bounds, PUSH-EML relation, instruction counts |
-| **`OpenProblems.lean`** | **25+** | **NEW** — Complex EML trigonometry, depth hierarchy, no identity element, tropical EML, sigmoid bounds, chain rule, Catalan numbers, condition numbers |
+Machine-verified proofs of core EML properties and the EML–Pythagorean bridge:
 
-### Key New Results (OpenProblems.lean)
+- **`Basic.lean`** — Core definitions and identities
+  - Definition of `eml` and `emlR` operators
+  - `eml_exp`: exp(x) = eml(x, 1) ✅
+  - `eml_e`: e = eml(1, 1) ✅
+  - `eml_noncommutative`: EML is non-commutative ✅
+  - `emlR_log`: ln(z) = eml(1, eml(eml(1,z), 1)) ✅
+  - `sub_via_exp_log`, `add_via_exp_log`, `mul_via_exp_log`: arithmetic from exp/log ✅
+  - `EMLExpr.leaf_eq_node_succ`: leaves = nodes + 1 in any EML tree ✅
+  - `eml_differentiable_fst`: EML is differentiable in x ✅
+  - `eml_hasDerivAt_fst`: ∂eml/∂x = exp(x) ✅
+  - Master formula parameter counts verified ✅
 
-- **Complex EML = Trigonometry**: `ceml(ix, 1) = cos(x) + i·sin(x)` (Euler's formula via EML)
-- **Depth Hierarchy Strict**: `exp(exp(x)) ∉ {exp(ax+b)}` (depth 2 ⊋ depth 1)
-- **No Identity Element**: Neither left nor right identity exists for EML
-- **Tropical EML = Subtraction**: `tropicalEML(a,b) = a - b` with verified algebraic properties
-- **EML Chain Rule**: `d/dt EML(g(t),h(t)) = g'·exp(g) - h'/h`
-- **Sigmoid via EML**: `0 < σ(x) < 1` and `σ'(x) = σ(x)(1-σ(x))`
-- **Log-Split**: `EML(x, y·z) = EML(x,y) - ln(z)` for y, z > 0
-- **Catalan Tree Counting**: C(4) = 14 (number of EML tree shapes)
-- **Condition Numbers**: `κ_x(0,y) = 0` and `κ_x(x,1) = |x|`
+- **`Universality.lean`** — Closure and universality results
+  - EML closure inductive definition ✅
+  - exp(1) is in the EML closure ✅
+  - Anti-EML = negated swapped EML ✅
+
+- **`PythagoreanBridge.lean`** — EML–Pythagorean Tree Bridge (**NEW**)
+  - Pythagorean triples, quadruples, and N-tuples ✅
+  - Berggren tree transformations (M₁, M₂, M₃) preserve Pythagorean property ✅
+  - Every Berggren path produces a valid triple (inductive proof) ✅
+  - EML expression trees: leaves = nodes + 1, leaves ≤ 2^depth ✅
+  - Arithmetic via EML (add, sub, mul, square) ✅
+  - Triple → quadruple embedding ✅
+  - N-tuple generalization ✅
+  - Log-space Pythagorean constraint ✅
+  - Specific Berggren children verified: (5,12,13), (21,20,29), (15,8,17) ✅
+  - **All 25+ theorems fully proved — zero sorry's** ✅
+
+- **`NewTheorems.lean`** — Novel mathematical contributions
+  - EML partial derivatives (both x and y directions) ✅
+  - Binary tree combinatorics: leaves = nodes + 1 ✅
+  - Depth bound: leaves ≤ 2^depth ✅
+  - Anti-EML identity ✅
+  - Catalan number verification ✅
+  - Master formula parameter scaling ✅
+
+**All 19 theorems are fully proved — zero sorry's remaining.**
+
+### 🐍 Python Demos (`Demos/`)
+
+- **`eml_calculator.py`** — Two-button scientific calculator demo
+  - Generates constants (e, 0, i, π) from EML + 1
+  - Computes elementary functions via EML
+  - Displays Catalan numbers and master formula parameters
+  - NAND vs EML comparison
+
+- **`eml_symbolic_regression.py`** — Gradient-based symbolic regression
+  - EML master formula implementation
+  - Soft parameter selection via softmax
+  - Training with numerical gradient descent
+  - Exact formula recovery demonstration
+
+- **`eml_dynamics.py`** — Dynamical systems exploration
+  - Fixed points of diagonal EML map
+  - Orbit analysis (exponential, logarithmic, diagonal modes)
+  - 2D symmetric map analysis
+  - EML number tower (constants from small trees)
+
+- **`eml_visualization_generator.py`** — Tree visualization and analysis
+  - ASCII art EML trees
+  - Evaluation tables
+  - Pure constant enumeration
+  - Complexity statistics
+
+- **`eml_gradient_analysis.py`** — Gradient structure analysis
+  - Gradient magnitude across input space
+  - Chain gradient propagation (explosion/vanishing)
+  - Master formula gradient landscape
+  - Training recommendations
+
+- **`pythagorean_eml_bridge.py`** — EML–Pythagorean Bridge Explorer (**NEW**)
+  - Berggren tree generation with EML log-space coordinates
+  - EML angle encoding of Pythagorean triples
+  - Pythagorean quadruples and N-tuples in EML space
+  - Berggren-to-EML compilation analysis
+  - EML complexity growth analysis
+  - Discovery of EML-special triples
+
+### 🎨 SVG Visuals (`Visuals/`)
+
+- **`eml_tree_exp.svg`** — EML tree for exp(x) (depth 1)
+- **`eml_tree_ln.svg`** — EML tree for ln(z) (depth 3)
+- **`eml_nand_comparison.svg`** — NAND vs EML side-by-side comparison
+- **`eml_reduction_tower.svg`** — The 36 → 3 primitive reduction tower
+- **`eml_circuit_symbol.svg`** — EML circuit symbol design
+- **`eml_applications_map.svg`** — Applications and research map
+
+- **`pythagorean_eml_bridge.svg`** — EML–Pythagorean bridge diagram (**NEW**)
+- **`pythagorean_ntuple_hierarchy.svg`** — N-tuple dimensional hierarchy (**NEW**)
+
+### 📄 Research Papers (`Papers/`)
+
+- **`research_paper.md`** — Full research paper with new theorems, conjectures, and formal results
+- **`scientific_american_article.md`** — Accessible popular science article
+- **`future_research_directions.md`** — Comprehensive roadmap of 30+ research directions
+- **`applications_brainstorm.md`** — 50 application ideas across 10 categories
+- **`important_questions_answered.md`** — 20 deep questions about EML, answered
+- **`pythagorean_eml_bridge_paper.md`** — EML–Pythagorean bridge research paper (**NEW**)
+- **`pythagorean_eml_sciam.md`** — Scientific American-style article on the bridge (**NEW**)
+- **`pythagorean_eml_future.md`** — 30 future research directions for the bridge (**NEW**)
 
 ---
 
-## Python Demos
+## Key Results
 
-| Demo | Description |
-|------|-------------|
-| `eml_calculator.py` | Interactive OISCC simulator |
-| `eml_compiler.py` | Arithmetic expression → PUSH/EML compiler |
-| `eml_neural_network.py` | XOR network, softmax, PID controller on OISCC |
-| `eml_chaos_analysis.py` | Diagonal map orbits, Lyapunov exponents, randomness tests |
-| **`eml_kalman_filter.py`** | **NEW** — Scalar Kalman filter via EML operations |
-| **`eml_signal_processing.py`** | **NEW** — FM demod, wavelet transform, spectral analysis |
-| **`eml_neuromorphic_simulation.py`** | **NEW** — EML neurons, winner-take-all, spiking networks |
-| **`eml_cryptographic_hash.py`** | **NEW** — EML-based hash function with statistical analysis |
-| `eml_dynamics.py` | Dynamical systems visualization |
-| `eml_complexity_explorer.py` | Complexity analysis tools |
-| `eml_symbolic_regression.py` | Symbolic regression via EML trees |
-| `oiscc_processor.py` | Full OISCC processor simulation |
+### Proven in Lean 4:
+1. exp(x) = eml(x, 1) — exponential as depth-1 EML
+2. e = eml(1, 1) — Euler's number from EML
+3. ln(z) = eml(1, eml(eml(1,z), 1)) — logarithm as depth-3 EML
+4. EML is non-commutative
+5. leaves = nodes + 1 for all binary EML trees
+6. leaves ≤ 2^depth
+7. ∂eml/∂x = exp(x), ∂eml/∂y = -1/y
+8. EML is differentiable in x
+9. Master formula has 5·2ⁿ - 6 parameters
 
----
+### Discovered computationally:
+1. Diagonal EML map has complex fixed points near z ≈ 0.817 ± 1.059i
+2. Log iteration eml(1, z) converges to ≈ 2.0 from many starting points
+3. The EML number tower generates e, e-1, 0, exp(e), exp(e)-1, ... at depths 0-3
+4. Catalan numbers count EML tree shapes (verified C₀=1 through C₄=14)
 
-## SVG Visuals
-
-| Visual | Description |
-|--------|-------------|
-| **`eml_open_problems_map.svg`** | **NEW** — 10 open problems with status and connections |
-| **`oiscc_applications_ecosystem.svg`** | **NEW** — 6 application domains with specs |
-| **`eml_algebraic_structure.svg`** | **NEW** — Verified algebraic properties and hierarchy |
-| `eml_research_roadmap.svg` | Complete research roadmap (35 directions) |
-| `eml_interval_arithmetic.svg` | Interval enclosure theorem diagram |
-| `eml_dynamical_systems.svg` | Three EML maps comparison |
-| `eml_computation_graph.svg` | EML trees for exp, ln, subtraction |
-| `oiscc_architecture.svg` | Processor architecture diagram |
-
----
-
-## Research Papers
-
-| Paper | Description |
-|-------|-------------|
-| **`oiscc_open_problems_resolved.md`** | **NEW** — Resolved open problems with proofs |
-| **`sciam_the_equation_that_does_everything.md`** | **NEW** — Scientific American feature article |
-| **`future_research_directions_v4.md`** | **NEW** — 60+ open problems, team structure, timeline |
-| **`important_questions_v2.md`** | **NEW** — 15 deep Q&A with mathematical detail |
-| `oiscc_verified_foundations.md` | Comprehensive paper with verified results |
-| `sciam_one_equation_to_rule_them_all.md` | Scientific American–style feature |
-| `future_research_comprehensive.md` | 50+ open problems, hardware/software roadmap |
+### 10 New Conjectures:
+1. No constant-free binary Sheffer exists
+2. No real-only Sheffer exists
+3. K_EML(π) ≤ 40
+4. Depth-complexity gap exists
+5. K_EML(x·y) = 17
+6. EML irrationality measure decreases exponentially
+7. Training threshold at depth d* ≈ 5
+8. Sheffer family is countably infinite
+9. A unary Sheffer extension exists
+10. Complexity is monotonic under composition
 
 ---
 
 ## Quick Start
 
-### Lean 4
 ```bash
+# Run the two-button calculator demo
+python3 EML/Demos/eml_calculator.py
+
+# Explore EML dynamics
+python3 EML/Demos/eml_dynamics.py
+
+# Build the Lean proofs
 lake build EML
 ```
 
-### Python
-```bash
-python3 EML/Demos/eml_kalman_filter.py           # Kalman filter demo
-python3 EML/Demos/eml_signal_processing.py        # Signal processing demo
-python3 EML/Demos/eml_neuromorphic_simulation.py   # Neuromorphic demo
-python3 EML/Demos/eml_cryptographic_hash.py        # Hash function demo
-python3 EML/Demos/eml_compiler.py                  # Compiler demo
-python3 EML/Demos/eml_neural_network.py            # Neural network demo
-```
-
 ---
 
-## Instruction Count Table
+## References
 
-| Operation | EML ops | PUSH ops | Total |
-|-----------|---------|----------|-------|
-| exp(x)    | 1       | 2        | **3** |
-| ln(x)     | 3       | 4        | **7** |
-| x − y     | 5       | 6        | **11** |
-| x + y     | 5       | 6        | **11** |
-| x × y     | ~9      | ~10      | **~19** |
-| x / y     | ~7      | ~8       | **~15** |
-| σ(x)      | ~7      | ~8       | **~15** |
-
----
-
-## Key Identity
-
-> **EML(ln(a), exp(b)) = e^(ln a) − ln(e^b) = a − b**
-
-Because exp and ln cancel inside EML, the single operation EML captures all of arithmetic.
-
----
-
-## Citation
-
-Based on: Odrzywolek, A. (2025). "All elementary functions from a single operator."
+- Odrzywolek, A. "All elementary functions from a single operator." Preprint (2025).
+- Sheffer, H.M. "A set of five independent postulates for Boolean algebras." Trans. AMS 14 (1913).
+- Ritt, J.F. "Integration in Finite Terms." Columbia University Press (1948).
