@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="qbg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a1e"/>
+      <stop offset="100%" style="stop-color:#1a0a2e"/>
+    </linearGradient>
+    <filter id="qglow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1000" height="600" fill="url(#qbg)"/>
+
+  <text x="500" y="35" text-anchor="middle" fill="#ce93d8" font-size="22" font-weight="bold" filter="url(#qglow)">
+    Quantum EML Circuit Architecture
+  </text>
+  <text x="500" y="55" text-anchor="middle" fill="#9c27b0aa" font-size="12">
+    Grover-Enhanced Factor Discovery with EML Oracle
+  </text>
+
+  <!-- Qubit lines -->
+  <line x1="80" y1="120" x2="920" y2="120" stroke="#666" stroke-width="1"/>
+  <line x1="80" y1="180" x2="920" y2="180" stroke="#666" stroke-width="1"/>
+  <line x1="80" y1="240" x2="920" y2="240" stroke="#666" stroke-width="1"/>
+  <line x1="80" y1="300" x2="920" y2="300" stroke="#666" stroke-width="1"/>
+
+  <!-- Qubit labels -->
+  <text x="40" y="124" fill="#aaa" font-size="13">|q₀⟩</text>
+  <text x="40" y="184" fill="#aaa" font-size="13">|q₁⟩</text>
+  <text x="40" y="244" fill="#aaa" font-size="13">|q₂⟩</text>
+  <text x="40" y="304" fill="#aaa" font-size="13">|q₃⟩</text>
+
+  <!-- Stage 1: Hadamard gates (superposition) -->
+  <text x="160" y="90" text-anchor="middle" fill="#4fc3f7" font-size="12" font-weight="bold">Superposition</text>
+  <rect x="140" y="105" width="40" height="30" rx="3" fill="rgba(79,195,247,0.2)" stroke="#4fc3f7" stroke-width="1.5"/>
+  <text x="160" y="124" text-anchor="middle" fill="#4fc3f7" font-size="13" font-weight="bold">H</text>
+  <rect x="140" y="165" width="40" height="30" rx="3" fill="rgba(79,195,247,0.2)" stroke="#4fc3f7" stroke-width="1.5"/>
+  <text x="160" y="184" text-anchor="middle" fill="#4fc3f7" font-size="13" font-weight="bold">H</text>
+  <rect x="140" y="225" width="40" height="30" rx="3" fill="rgba(79,195,247,0.2)" stroke="#4fc3f7" stroke-width="1.5"/>
+  <text x="160" y="244" text-anchor="middle" fill="#4fc3f7" font-size="13" font-weight="bold">H</text>
+  <rect x="140" y="285" width="40" height="30" rx="3" fill="rgba(79,195,247,0.2)" stroke="#4fc3f7" stroke-width="1.5"/>
+  <text x="160" y="304" text-anchor="middle" fill="#4fc3f7" font-size="13" font-weight="bold">H</text>
+
+  <!-- Stage 2: EML Oracle -->
+  <text x="330" y="90" text-anchor="middle" fill="#ff9800" font-size="12" font-weight="bold">EML Oracle</text>
+  <rect x="260" y="100" width="140" height="220" rx="8" fill="rgba(255,152,0,0.1)" stroke="#ff9800" stroke-width="2"/>
+  <text x="330" y="155" text-anchor="middle" fill="#ff9800" font-size="11">exp(−α·E(k))</text>
+  <text x="330" y="180" text-anchor="middle" fill="#ffcc80" font-size="10">E(k) = (N mod k)²</text>
+  <text x="330" y="210" text-anchor="middle" fill="#ffcc80" font-size="10">Marks |k⟩ if</text>
+  <text x="330" y="230" text-anchor="middle" fill="#ffcc80" font-size="10">E(k) = 0</text>
+  <text x="330" y="260" text-anchor="middle" fill="#ffcc80" font-size="10">⟹ k | N</text>
+  <text x="330" y="290" text-anchor="middle" fill="#ff9800" font-size="10" font-weight="bold">3 gates/neuron</text>
+
+  <!-- Stage 3: Diffusion -->
+  <text x="500" y="90" text-anchor="middle" fill="#81c784" font-size="12" font-weight="bold">Diffusion</text>
+  <rect x="460" y="100" width="80" height="220" rx="8" fill="rgba(129,199,132,0.1)" stroke="#81c784" stroke-width="2"/>
+  <text x="500" y="140" text-anchor="middle" fill="#81c784" font-size="11">2|ψ⟩⟨ψ|−I</text>
+  <text x="500" y="170" text-anchor="middle" fill="#a5d6a7" font-size="10">Amplitude</text>
+  <text x="500" y="190" text-anchor="middle" fill="#a5d6a7" font-size="10">amplification</text>
+  <text x="500" y="230" text-anchor="middle" fill="#a5d6a7" font-size="10">Grover</text>
+  <text x="500" y="250" text-anchor="middle" fill="#a5d6a7" font-size="10">operator</text>
+
+  <!-- Repeat bracket -->
+  <text x="420" y="340" text-anchor="middle" fill="#ffd700" font-size="12">⟵ Repeat O(√N) times ⟶</text>
+  <line x1="260" y1="330" x2="260" y2="350" stroke="#ffd70066" stroke-width="1"/>
+  <line x1="540" y1="330" x2="540" y2="350" stroke="#ffd70066" stroke-width="1"/>
+  <line x1="260" y1="350" x2="540" y2="350" stroke="#ffd70066" stroke-width="1" stroke-dasharray="4"/>
+
+  <!-- Stage 4: Measurement -->
+  <text x="640" y="90" text-anchor="middle" fill="#ce93d8" font-size="12" font-weight="bold">Measure</text>
+  <rect x="615" y="105" width="50" height="30" rx="3" fill="rgba(206,147,216,0.2)" stroke="#ce93d8" stroke-width="1.5"/>
+  <text x="640" y="124" text-anchor="middle" fill="#ce93d8" font-size="11">M</text>
+  <rect x="615" y="165" width="50" height="30" rx="3" fill="rgba(206,147,216,0.2)" stroke="#ce93d8" stroke-width="1.5"/>
+  <text x="640" y="184" text-anchor="middle" fill="#ce93d8" font-size="11">M</text>
+  <rect x="615" y="225" width="50" height="30" rx="3" fill="rgba(206,147,216,0.2)" stroke="#ce93d8" stroke-width="1.5"/>
+  <text x="640" y="244" text-anchor="middle" fill="#ce93d8" font-size="11">M</text>
+  <rect x="615" y="285" width="50" height="30" rx="3" fill="rgba(206,147,216,0.2)" stroke="#ce93d8" stroke-width="1.5"/>
+  <text x="640" y="304" text-anchor="middle" fill="#ce93d8" font-size="11">M</text>
+
+  <!-- Classical output -->
+  <line x1="665" y1="120" x2="740" y2="120" stroke="#888" stroke-width="2" stroke-dasharray="3"/>
+  <line x1="665" y1="180" x2="740" y2="180" stroke="#888" stroke-width="2" stroke-dasharray="3"/>
+  <line x1="665" y1="240" x2="740" y2="240" stroke="#888" stroke-width="2" stroke-dasharray="3"/>
+  <line x1="665" y1="300" x2="740" y2="300" stroke="#888" stroke-width="2" stroke-dasharray="3"/>
+
+  <!-- Result box -->
+  <rect x="740" y="150" width="180" height="120" rx="10" fill="rgba(255,215,0,0.1)" stroke="#ffd700" stroke-width="2"/>
+  <text x="830" y="180" text-anchor="middle" fill="#ffd700" font-size="14" font-weight="bold">Factor Found!</text>
+  <text x="830" y="205" text-anchor="middle" fill="#ffcc00" font-size="12">k = classical bits</text>
+  <text x="830" y="230" text-anchor="middle" fill="#ffcc00" font-size="12">Verify: k | N</text>
+  <text x="830" y="255" text-anchor="middle" fill="#ffcc00" font-size="11">N / k = other factor</text>
+
+  <!-- Complexity comparison -->
+  <rect x="50" y="390" width="900" height="190" rx="10" fill="rgba(255,255,255,0.03)" stroke="#ffffff22" stroke-width="1"/>
+  <text x="500" y="420" text-anchor="middle" fill="#ffd700" font-size="16" font-weight="bold">Complexity Comparison (Formally Verified)</text>
+
+  <!-- Classical -->
+  <rect x="80" y="440" width="250" height="60" rx="5" fill="rgba(239,154,154,0.1)" stroke="#ef9a9a" stroke-width="1"/>
+  <text x="205" y="462" text-anchor="middle" fill="#ef9a9a" font-size="13" font-weight="bold">Classical Trial Division</text>
+  <text x="205" y="482" text-anchor="middle" fill="#ffcdd2" font-size="12">O(N) queries</text>
+
+  <!-- Grover -->
+  <rect x="375" y="440" width="250" height="60" rx="5" fill="rgba(129,199,132,0.1)" stroke="#81c784" stroke-width="1"/>
+  <text x="500" y="462" text-anchor="middle" fill="#81c784" font-size="13" font-weight="bold">Grover Search</text>
+  <text x="500" y="482" text-anchor="middle" fill="#a5d6a7" font-size="12">O(√N) queries</text>
+
+  <!-- Grover-EML -->
+  <rect x="670" y="440" width="250" height="60" rx="5" fill="rgba(206,147,216,0.1)" stroke="#ce93d8" stroke-width="1"/>
+  <text x="795" y="462" text-anchor="middle" fill="#ce93d8" font-size="13" font-weight="bold">Grover-EML Hybrid</text>
+  <text x="795" y="482" text-anchor="middle" fill="#e1bee7" font-size="12">O(√N) queries, 3n gates</text>
+
+  <!-- Arrows -->
+  <text x="350" y="475" text-anchor="middle" fill="#4caf50" font-size="18">→</text>
+  <text x="350" y="465" text-anchor="middle" fill="#4caf50" font-size="10">√N ×</text>
+  <text x="645" y="475" text-anchor="middle" fill="#ce93d8" font-size="18">→</text>
+  <text x="645" y="465" text-anchor="middle" fill="#ce93d8" font-size="10">n/3 ×</text>
+
+  <!-- Example -->
+  <text x="500" y="540" text-anchor="middle" fill="#aaa" font-size="12">
+    Example: N = 2¹⁰²⁴ → Classical: 2¹⁰²⁴ ops | Grover-EML: 2⁵¹² ops with O(n) gates
+  </text>
+  <text x="500" y="560" text-anchor="middle" fill="#666" font-size="11">
+    Theorems: grover_eml_speedup, eml_gate_advantage, eml_ansatz_advantage · All verified ✓
+  </text>
+</svg>
