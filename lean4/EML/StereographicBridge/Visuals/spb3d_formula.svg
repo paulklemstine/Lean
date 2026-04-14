@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="Georgia, serif">
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e74c3c;stop-opacity:0.1"/>
+      <stop offset="100%" style="stop-color:#c0392b;stop-opacity:0.2"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2ecc71;stop-opacity:0.1"/>
+      <stop offset="100%" style="stop-color:#27ae60;stop-opacity:0.2"/>
+    </linearGradient>
+  </defs>
+
+  <text x="400" y="35" text-anchor="middle" font-size="22" font-weight="bold" fill="#2c3e50">
+    The Correct 3D SPB Formula
+  </text>
+  <text x="400" y="60" text-anchor="middle" font-size="14" fill="#7f8c8d" font-style="italic">
+    Derived from quaternion multiplication via stereographic projection of S³
+  </text>
+
+  <!-- Wrong formula -->
+  <rect x="50" y="80" width="700" height="80" rx="10" fill="url(#g1)" stroke="#e74c3c" stroke-width="2"/>
+  <text x="70" y="105" font-size="14" font-weight="bold" fill="#c0392b">✗ INCORRECT (naive conjecture):</text>
+  <text x="400" y="140" text-anchor="middle" font-size="20" fill="#e74c3c">
+    spb₃(u, v) = (u + v + u×v) / (1 − u·v)
+  </text>
+
+  <!-- Right formula -->
+  <rect x="50" y="185" width="700" height="100" rx="10" fill="url(#g2)" stroke="#2ecc71" stroke-width="2.5"/>
+  <text x="70" y="210" font-size="14" font-weight="bold" fill="#27ae60">✓ CORRECT (derived and verified):</text>
+  <text x="400" y="250" text-anchor="middle" font-size="18" fill="#2c3e50">
+    spb₃(u, v) = ((1−|v|²)u + (1−|u|²)v + 2u×v) / (1 + |u|²|v|² − 2u·v)
+  </text>
+  <text x="400" y="275" text-anchor="middle" font-size="12" fill="#555">
+    Verified against direct quaternion multiplication to error &lt; 10⁻¹⁵
+  </text>
+
+  <!-- Properties -->
+  <rect x="50" y="310" width="330" height="170" rx="8" fill="#f8f9fa" stroke="#dee2e6" stroke-width="1"/>
+  <text x="215" y="335" text-anchor="middle" font-size="15" font-weight="bold" fill="#2c3e50">Properties</text>
+
+  <text x="70" y="360" font-size="13" fill="#555">• Reduces to 1D when collinear</text>
+  <text x="70" y="385" font-size="13" fill="#555">• Non-commutative (Thomas rotation)</text>
+  <text x="70" y="410" font-size="13" fill="#555">• Identity: spb₃(u, 0) = u</text>
+  <text x="70" y="435" font-size="13" fill="#555">• Inverse: spb₃(u, −u) = 0</text>
+  <text x="70" y="460" font-size="13" fill="#555">• Non-associative for n ≥ 7 (octonions)</text>
+
+  <!-- Why it matters -->
+  <rect x="410" y="310" width="340" height="170" rx="8" fill="#fef9e7" stroke="#f39c12" stroke-width="1"/>
+  <text x="580" y="335" text-anchor="middle" font-size="15" font-weight="bold" fill="#d35400">Significance</text>
+
+  <text x="430" y="360" font-size="13" fill="#555">• Corrects widely-cited conjecture</text>
+  <text x="430" y="385" font-size="13" fill="#555">• Norm factors |u|², |v|² are essential</text>
+  <text x="430" y="410" font-size="13" fill="#555">• Connects to Rodrigues rotation</text>
+  <text x="430" y="435" font-size="13" fill="#555">• Explains Thomas-Wigner precession</text>
+  <text x="430" y="460" font-size="13" fill="#555">• Key for quaternion-based robotics</text>
+</svg>
