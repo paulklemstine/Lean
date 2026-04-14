@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg5" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#16213e"/>
+    </linearGradient>
+    <linearGradient id="neuronGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e94560"/>
+      <stop offset="100%" stop-color="#0f3460"/>
+    </linearGradient>
+    <filter id="neonGlow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="800" height="450" fill="url(#bg5)"/>
+
+  <text x="400" y="35" text-anchor="middle" fill="#e94560" font-size="22" font-weight="bold" filter="url(#neonGlow)">
+    SPB Neural Network Architecture
+  </text>
+  <text x="400" y="58" text-anchor="middle" fill="#aaa" font-size="12">
+    Monotonic, self-normalizing neurons with circle group structure
+  </text>
+
+  <!-- Input layer -->
+  <text x="80" y="85" text-anchor="middle" fill="#4fc3f7" font-size="13" font-weight="bold">Inputs</text>
+  <circle cx="80" cy="120" r="20" fill="#0f3460" stroke="#4fc3f7" stroke-width="2"/>
+  <text x="80" y="125" text-anchor="middle" fill="#4fc3f7" font-size="12">x₁</text>
+
+  <circle cx="80" cy="190" r="20" fill="#0f3460" stroke="#4fc3f7" stroke-width="2"/>
+  <text x="80" y="195" text-anchor="middle" fill="#4fc3f7" font-size="12">x₂</text>
+
+  <circle cx="80" cy="260" r="20" fill="#0f3460" stroke="#4fc3f7" stroke-width="2"/>
+  <text x="80" y="265" text-anchor="middle" fill="#4fc3f7" font-size="12">x₃</text>
+
+  <circle cx="80" cy="330" r="20" fill="#0f3460" stroke="#4fc3f7" stroke-width="2"/>
+  <text x="80" y="335" text-anchor="middle" fill="#4fc3f7" font-size="12">x₄</text>
+
+  <!-- Weight annotations -->
+  <line x1="100" y1="120" x2="210" y2="155" stroke="#4fc3f7" stroke-width="1.5" opacity="0.6"/>
+  <text x="145" y="128" fill="#4fc3f7" font-size="9">w₁</text>
+  <line x1="100" y1="190" x2="210" y2="175" stroke="#4fc3f7" stroke-width="1.5" opacity="0.6"/>
+  <text x="145" y="178" fill="#4fc3f7" font-size="9">w₂</text>
+  <line x1="100" y1="260" x2="210" y2="195" stroke="#4fc3f7" stroke-width="1.5" opacity="0.6"/>
+  <text x="145" y="233" fill="#4fc3f7" font-size="9">w₃</text>
+  <line x1="100" y1="330" x2="210" y2="215" stroke="#4fc3f7" stroke-width="1.5" opacity="0.6"/>
+  <text x="145" y="283" fill="#4fc3f7" font-size="9">w₄</text>
+
+  <!-- SPB Neuron (detailed) -->
+  <rect x="200" y="130" width="200" height="110" rx="15" fill="#1a1a3e" stroke="#e94560" stroke-width="2" filter="url(#neonGlow)"/>
+  <text x="300" y="155" text-anchor="middle" fill="#e94560" font-size="14" font-weight="bold">SPB Neuron</text>
+
+  <!-- Internal SPB tree -->
+  <text x="300" y="178" text-anchor="middle" fill="#ccc" font-size="10">
+    spb(w₁x₁, spb(w₂x₂, spb(w₃x₃, w₄x₄)))
+  </text>
+
+  <!-- Mini tree diagram -->
+  <text x="245" y="200" fill="#e94560" font-size="10">spb</text>
+  <line x1="260" y1="200" x2="245" y2="210" stroke="#e94560" stroke-width="1" opacity="0.5"/>
+  <line x1="260" y1="200" x2="290" y2="205" stroke="#e94560" stroke-width="1" opacity="0.5"/>
+  <text x="295" y="210" fill="#e94560" font-size="10">spb</text>
+  <line x1="310" y1="210" x2="300" y2="220" stroke="#e94560" stroke-width="1" opacity="0.5"/>
+  <line x1="310" y1="210" x2="340" y2="215" stroke="#e94560" stroke-width="1" opacity="0.5"/>
+  <text x="345" y="220" fill="#e94560" font-size="10">spb</text>
+
+  <text x="300" y="235" text-anchor="middle" fill="#888" font-size="9">
+    Right-associative binary tree
+  </text>
+
+  <!-- Arrow to output -->
+  <line x1="400" y1="185" x2="450" y2="185" stroke="#e94560" stroke-width="2"/>
+  <polygon points="450,180 460,185 450,190" fill="#e94560"/>
+
+  <!-- Properties box -->
+  <rect x="470" y="90" width="310" height="240" rx="12" fill="#0f1a30" stroke="#333" stroke-width="1"/>
+  <text x="625" y="118" text-anchor="middle" fill="#ffd700" font-size="14" font-weight="bold">Key Properties</text>
+
+  <text x="490" y="145" fill="#4caf50" font-size="12">✓ Monotone</text>
+  <text x="490" y="165" fill="#999" font-size="10">d/dx spb(x,y) = (1+y²)/(1-xy)² &gt; 0</text>
+
+  <text x="490" y="192" fill="#4caf50" font-size="12">✓ Self-Normalizing</text>
+  <text x="490" y="212" fill="#999" font-size="10">Circle group: outputs bounded by compactness</text>
+
+  <text x="490" y="239" fill="#4caf50" font-size="12">✓ Periodic-Aware</text>
+  <text x="490" y="259" fill="#999" font-size="10">Generates tan(n·arctan(x)) naturally</text>
+
+  <text x="490" y="286" fill="#4caf50" font-size="12">✓ Algebraic Gradient</text>
+  <text x="490" y="306" fill="#999" font-size="10">Clean backprop: no vanishing/exploding</text>
+
+  <!-- Comparison -->
+  <rect x="100" y="370" width="600" height="60" rx="8" fill="#0f1a30" stroke="#333" stroke-width="1"/>
+  <text x="400" y="392" text-anchor="middle" fill="#ccc" font-size="11">
+    Standard neuron: σ(w₁x₁ + w₂x₂ + w₃x₃ + w₄x₄)  →  linear then nonlinear
+  </text>
+  <text x="400" y="415" text-anchor="middle" fill="#e94560" font-size="11" font-weight="bold">
+    SPB neuron: spb(w₁x₁, spb(w₂x₂, spb(w₃x₃, w₄x₄)))  →  inherently nonlinear algebra
+  </text>
+</svg>
