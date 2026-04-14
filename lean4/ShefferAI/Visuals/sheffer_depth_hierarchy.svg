@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <linearGradient id="bg3" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a1a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a0a2a;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="600" fill="url(#bg3)"/>
+
+  <text x="400" y="40" text-anchor="middle" fill="#ffffff" font-family="Georgia, serif" font-size="22" font-weight="bold">
+    Sheffer Depth Hierarchy
+  </text>
+  <text x="400" y="65" text-anchor="middle" fill="#8899aa" font-family="Georgia, serif" font-size="13">
+    Functions classified by minimum softplus composition depth
+  </text>
+
+  <!-- Depth 0 -->
+  <rect x="50" y="90" width="700" height="75" rx="10" fill="#001133" fill-opacity="0.6" stroke="#0044aa" stroke-width="1.5"/>
+  <text x="80" y="115" fill="#0088ff" font-family="Georgia, serif" font-size="16" font-weight="bold">Depth 0: Affine</text>
+  <text x="80" y="140" fill="#6699cc" font-family="monospace" font-size="12">f(x) = ax + b</text>
+  <text x="350" y="140" fill="#4477aa" font-family="monospace" font-size="11">Examples: x, 2x+3, constants</text>
+
+  <!-- Depth 1 -->
+  <rect x="50" y="180" width="700" height="95" rx="10" fill="#002233" fill-opacity="0.6" stroke="#00aa66" stroke-width="1.5"/>
+  <text x="80" y="205" fill="#00dd88" font-family="Georgia, serif" font-size="16" font-weight="bold">Depth 1: Single Layer</text>
+  <text x="80" y="230" fill="#66bb99" font-family="monospace" font-size="12">f(x) = Σᵢ wᵢ σ(aᵢx + bᵢ) + c</text>
+  <text x="80" y="255" fill="#448866" font-family="monospace" font-size="11">Examples: σ(x), eˣ, log(x), sigmoid, tanh, approx sin(x)</text>
+
+  <!-- Depth 2 -->
+  <rect x="50" y="290" width="700" height="95" rx="10" fill="#332200" fill-opacity="0.6" stroke="#ffaa00" stroke-width="1.5"/>
+  <text x="80" y="315" fill="#ffcc44" font-family="Georgia, serif" font-size="16" font-weight="bold">Depth 2: Two Layers</text>
+  <text x="80" y="340" fill="#cc9933" font-family="monospace" font-size="12">f(x) = Σᵢ wᵢ σ(Σⱼ vⱼ σ(aⱼx + bⱼ) + cᵢ) + d</text>
+  <text x="80" y="365" fill="#997722" font-family="monospace" font-size="11">Examples: xⁿ, p(x)/q(x), Γ(x), ζ(x), exact sin(x), Bessel fns</text>
+
+  <!-- Depth 3+ -->
+  <rect x="50" y="400" width="700" height="85" rx="10" fill="#330022" fill-opacity="0.6" stroke="#ff4488" stroke-width="1.5"/>
+  <text x="80" y="425" fill="#ff6699" font-family="Georgia, serif" font-size="16" font-weight="bold">Depth 3+: Deep Compositions</text>
+  <text x="80" y="450" fill="#cc4477" font-family="monospace" font-size="12">Iterated function systems, fractal-like functions</text>
+  <text x="80" y="470" fill="#993355" font-family="monospace" font-size="11">Examples: exp(exp(x)), tetration, Ackermann-like growth</text>
+
+  <!-- Arrow showing inclusion -->
+  <text x="770" y="165" fill="#ffffff" font-family="serif" font-size="20">⊂</text>
+  <text x="770" y="275" fill="#ffffff" font-family="serif" font-size="20">⊂</text>
+  <text x="770" y="385" fill="#ffffff" font-family="serif" font-size="20">⊂</text>
+
+  <!-- Bottom theorem box -->
+  <rect x="100" y="510" width="600" height="70" rx="10" fill="#111122" stroke="#555577" stroke-width="1"/>
+  <text x="400" y="540" text-anchor="middle" fill="#ffffff" font-family="Georgia, serif" font-size="14" font-weight="bold">
+    Theorem (Sheffer Completeness):
+  </text>
+  <text x="400" y="562" text-anchor="middle" fill="#aabbcc" font-family="Georgia, serif" font-size="13">
+    ∀ f ∈ C∞(K), ∀ ε > 0, ∃ depth d, width n: ‖f − Sheffer(d,n)‖∞ &lt; ε
+  </text>
+</svg>

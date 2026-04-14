@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" width="900" height="700">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d1117;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#161b22;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow2">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <rect width="900" height="700" fill="url(#bg2)"/>
+
+  <!-- Title -->
+  <text x="450" y="45" text-anchor="middle" fill="#ffffff" font-family="Georgia, serif" font-size="26" font-weight="bold">
+    The Sheffer Algebra: One Function Generates All
+  </text>
+  <text x="450" y="72" text-anchor="middle" fill="#8899aa" font-family="Georgia, serif" font-size="14">
+    How σ(x) = log(1 + eˣ) builds all of mathematical analysis
+  </text>
+
+  <!-- Central node: Softplus -->
+  <circle cx="450" cy="200" r="60" fill="#0066cc" fill-opacity="0.3" stroke="#00aaff" stroke-width="2" filter="url(#glow2)"/>
+  <text x="450" y="195" text-anchor="middle" fill="#00ddff" font-family="Georgia, serif" font-size="16" font-weight="bold">σ(x)</text>
+  <text x="450" y="215" text-anchor="middle" fill="#88ccff" font-family="monospace" font-size="11">log(1 + eˣ)</text>
+
+  <!-- Arrow style -->
+  <!-- Level 1: Direct derivatives -->
+
+  <!-- Sigmoid -->
+  <line x1="390" y1="200" x2="200" y2="160" stroke="#44ff88" stroke-width="1.5" stroke-opacity="0.6"/>
+  <circle cx="170" cy="155" r="40" fill="#004422" fill-opacity="0.4" stroke="#44ff88" stroke-width="1.5"/>
+  <text x="170" y="150" text-anchor="middle" fill="#44ff88" font-family="monospace" font-size="12">S(x)</text>
+  <text x="170" y="168" text-anchor="middle" fill="#33bb66" font-family="monospace" font-size="9">eˣ/(1+eˣ)</text>
+  <text x="280" y="168" fill="#44ff88" font-family="monospace" font-size="9">σ'(x) = S(x)</text>
+
+  <!-- Exp -->
+  <line x1="510" y1="200" x2="700" y2="160" stroke="#ff8844" stroke-width="1.5" stroke-opacity="0.6"/>
+  <circle cx="730" cy="155" r="40" fill="#442200" fill-opacity="0.4" stroke="#ff8844" stroke-width="1.5"/>
+  <text x="730" y="150" text-anchor="middle" fill="#ff8844" font-family="monospace" font-size="12">eˣ</text>
+  <text x="730" y="168" text-anchor="middle" fill="#cc6633" font-family="monospace" font-size="9">e^σ(x) - 1</text>
+
+  <!-- Log -->
+  <line x1="450" y1="260" x2="250" y2="320" stroke="#ffcc00" stroke-width="1.5" stroke-opacity="0.6"/>
+  <circle cx="220" cy="330" r="40" fill="#332200" fill-opacity="0.4" stroke="#ffcc00" stroke-width="1.5"/>
+  <text x="220" y="325" text-anchor="middle" fill="#ffcc00" font-family="monospace" font-size="12">log(x)</text>
+  <text x="220" y="343" text-anchor="middle" fill="#cc9900" font-family="monospace" font-size="9">σ(log(x))</text>
+
+  <!-- Identity -->
+  <line x1="450" y1="260" x2="450" y2="320" stroke="#ff44ff" stroke-width="1.5" stroke-opacity="0.6"/>
+  <circle cx="450" cy="350" r="35" fill="#220022" fill-opacity="0.4" stroke="#ff44ff" stroke-width="1.5"/>
+  <text x="450" y="348" text-anchor="middle" fill="#ff44ff" font-family="monospace" font-size="12">x</text>
+  <text x="450" y="365" text-anchor="middle" fill="#cc33cc" font-family="monospace" font-size="9">σ(x)-σ(-x)</text>
+
+  <!-- Power functions -->
+  <line x1="450" y1="260" x2="680" y2="320" stroke="#ff4488" stroke-width="1.5" stroke-opacity="0.6"/>
+  <circle cx="710" cy="330" r="40" fill="#220011" fill-opacity="0.4" stroke="#ff4488" stroke-width="1.5"/>
+  <text x="710" y="325" text-anchor="middle" fill="#ff4488" font-family="monospace" font-size="12">xⁿ</text>
+  <text x="710" y="343" text-anchor="middle" fill="#cc3366" font-family="monospace" font-size="9">exp(n·log(x))</text>
+
+  <!-- Level 3: Advanced functions -->
+
+  <!-- Trig -->
+  <line x1="220" y1="370" x2="120" y2="450" stroke="#44aaff" stroke-width="1" stroke-opacity="0.4"/>
+  <circle cx="100" cy="475" r="38" fill="#001133" fill-opacity="0.4" stroke="#44aaff" stroke-width="1.5"/>
+  <text x="100" y="470" text-anchor="middle" fill="#44aaff" font-family="monospace" font-size="12">sin(x)</text>
+  <text x="100" y="488" text-anchor="middle" fill="#3388cc" font-family="monospace" font-size="9">(e^ix-e^-ix)/2i</text>
+
+  <!-- Polynomials -->
+  <line x1="450" y1="385" x2="350" y2="460" stroke="#88ff44" stroke-width="1" stroke-opacity="0.4"/>
+  <circle cx="330" cy="480" r="38" fill="#113300" fill-opacity="0.4" stroke="#88ff44" stroke-width="1.5"/>
+  <text x="330" y="475" text-anchor="middle" fill="#88ff44" font-family="monospace" font-size="12">Σaₖxᵏ</text>
+  <text x="330" y="493" text-anchor="middle" fill="#66cc33" font-family="monospace" font-size="9">polynomials</text>
+
+  <!-- Rational -->
+  <line x1="710" y1="370" x2="580" y2="460" stroke="#ffaa44" stroke-width="1" stroke-opacity="0.4"/>
+  <circle cx="560" cy="480" r="38" fill="#332200" fill-opacity="0.4" stroke="#ffaa44" stroke-width="1.5"/>
+  <text x="560" y="475" text-anchor="middle" fill="#ffaa44" font-family="monospace" font-size="12">p(x)/q(x)</text>
+  <text x="560" y="493" text-anchor="middle" fill="#cc8833" font-family="monospace" font-size="9">rational fns</text>
+
+  <!-- All C∞ -->
+  <line x1="710" y1="370" x2="790" y2="460" stroke="#ff6666" stroke-width="1" stroke-opacity="0.4"/>
+  <circle cx="790" cy="480" r="38" fill="#330011" fill-opacity="0.4" stroke="#ff6666" stroke-width="1.5"/>
+  <text x="790" y="475" text-anchor="middle" fill="#ff6666" font-family="monospace" font-size="12">C∞(ℝ)</text>
+  <text x="790" y="493" text-anchor="middle" fill="#cc4444" font-family="monospace" font-size="9">all smooth</text>
+
+  <!-- Bottom summary box -->
+  <rect x="100" y="560" width="700" height="110" rx="12" fill="#000000" fill-opacity="0.4" stroke="#334455" stroke-width="1"/>
+  <text x="450" y="590" text-anchor="middle" fill="#ffffff" font-family="Georgia, serif" font-size="16" font-weight="bold">
+    Key Insight: Computational Universality
+  </text>
+  <text x="450" y="615" text-anchor="middle" fill="#aabbcc" font-family="Georgia, serif" font-size="13">
+    Every smooth function is a composition of affine maps and softplus.
+  </text>
+  <text x="450" y="640" text-anchor="middle" fill="#8899aa" font-family="Georgia, serif" font-size="13">
+    Softplus is to smooth analysis what NAND is to Boolean logic.
+  </text>
+  <text x="450" y="660" text-anchor="middle" fill="#667788" font-family="monospace" font-size="11">
+    f ∈ C∞(ℝ)  ⟹  f = lim_{n→∞} Σ wᵢ σ(aᵢx + bᵢ)  (uniform on compacts)
+  </text>
+</svg>
