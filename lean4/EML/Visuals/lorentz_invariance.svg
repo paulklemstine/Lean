@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 420" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e" />
+      <stop offset="100%" style="stop-color:#16213e" />
+    </linearGradient>
+  </defs>
+
+  <rect width="700" height="420" fill="url(#bg3)"/>
+
+  <text x="350" y="35" text-anchor="middle" fill="#e94560" font-size="18" font-weight="bold">
+    Lorentz Invariance of the Berggren Tree
+  </text>
+  <text x="350" y="55" text-anchor="middle" fill="#aaa" font-size="11">
+    Q(a,b,c) = a² + b² − c² is preserved by all Berggren matrices
+  </text>
+
+  <!-- Quadratic form diagram -->
+  <rect x="50" y="75" width="600" height="60" rx="8" fill="rgba(233,69,96,0.1)" stroke="#e94560" stroke-width="1"/>
+  <text x="350" y="100" text-anchor="middle" fill="#fff" font-size="14">
+    Lorentz Form: Q(a,b,c) = a² + b² − c²
+  </text>
+  <text x="350" y="122" text-anchor="middle" fill="#aaa" font-size="11">
+    Pythagorean triples ⟺ Q = 0 (null cone of the Lorentz metric)
+  </text>
+
+  <!-- Tree showing Q=0 at every node -->
+  <circle cx="350" cy="180" r="22" fill="rgba(233,69,96,0.2)" stroke="#e94560" stroke-width="2"/>
+  <text x="350" y="176" text-anchor="middle" fill="#fff" font-size="9">(3,4,5)</text>
+  <text x="350" y="189" text-anchor="middle" fill="#e94560" font-size="8" font-weight="bold">Q=0</text>
+
+  <line x1="332" y1="200" x2="180" y2="245" stroke="#e94560" stroke-width="1.5" opacity="0.6"/>
+  <line x1="350" y1="202" x2="350" y2="245" stroke="#e94560" stroke-width="1.5" opacity="0.6"/>
+  <line x1="368" y1="200" x2="520" y2="245" stroke="#e94560" stroke-width="1.5" opacity="0.6"/>
+
+  <text x="245" y="218" text-anchor="middle" fill="#ffab00" font-size="9">M₁</text>
+  <text x="350" y="222" text-anchor="middle" fill="#ffab00" font-size="9">M₂</text>
+  <text x="445" y="218" text-anchor="middle" fill="#ffab00" font-size="9">M₃</text>
+
+  <circle cx="180" cy="265" r="22" fill="rgba(233,69,96,0.15)" stroke="#e94560" stroke-width="1.5"/>
+  <text x="180" y="261" text-anchor="middle" fill="#fff" font-size="8">(5,12,13)</text>
+  <text x="180" y="274" text-anchor="middle" fill="#e94560" font-size="8" font-weight="bold">Q=0</text>
+
+  <circle cx="350" cy="265" r="22" fill="rgba(233,69,96,0.15)" stroke="#e94560" stroke-width="1.5"/>
+  <text x="350" y="261" text-anchor="middle" fill="#fff" font-size="8">(21,20,29)</text>
+  <text x="350" y="274" text-anchor="middle" fill="#e94560" font-size="8" font-weight="bold">Q=0</text>
+
+  <circle cx="520" cy="265" r="22" fill="rgba(233,69,96,0.15)" stroke="#e94560" stroke-width="1.5"/>
+  <text x="520" y="261" text-anchor="middle" fill="#fff" font-size="8">(15,8,17)</text>
+  <text x="520" y="274" text-anchor="middle" fill="#e94560" font-size="8" font-weight="bold">Q=0</text>
+
+  <!-- Verification computation -->
+  <rect x="50" y="310" width="290" height="95" rx="6" fill="rgba(255,255,255,0.04)" stroke="#555" stroke-width="1"/>
+  <text x="195" y="330" text-anchor="middle" fill="#e94560" font-size="12" font-weight="bold">Verification</text>
+  <text x="65" y="350" fill="#ccc" font-size="10">Q(3,4,5)   = 9 + 16 − 25  = 0 ✓</text>
+  <text x="65" y="368" fill="#ccc" font-size="10">Q(5,12,13) = 25+144−169 = 0 ✓</text>
+  <text x="65" y="386" fill="#ccc" font-size="10">Q(21,20,29)= 441+400−841= 0 ✓</text>
+  <text x="65" y="398" fill="#aaa" font-size="9">Proven ∀ v : M_i preserves Q(v)</text>
+
+  <!-- Group theory box -->
+  <rect x="360" y="310" width="290" height="95" rx="6" fill="rgba(255,255,255,0.04)" stroke="#555" stroke-width="1"/>
+  <text x="505" y="330" text-anchor="middle" fill="#ffab00" font-size="12" font-weight="bold">Group Theory</text>
+  <text x="375" y="350" fill="#ccc" font-size="10">M₁, M₂, M₃ ∈ O(2,1; ℤ)</text>
+  <text x="375" y="368" fill="#ccc" font-size="10">Orthogonal group of signature (2,1)</text>
+  <text x="375" y="386" fill="#ccc" font-size="10">M₁⁻¹ · M₁ = I (verified in Lean)</text>
+  <text x="375" y="398" fill="#aaa" font-size="9">Discrete subgroup of Lorentz group</text>
+</svg>

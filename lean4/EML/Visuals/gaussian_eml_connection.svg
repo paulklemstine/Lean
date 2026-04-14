@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d1117;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#161b22;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow2">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="800" height="500" fill="url(#bg2)"/>
+
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" fill="#e6db74" font-size="20" font-weight="bold" filter="url(#glow2)">
+    Gaussian Integer–EML–Pythagorean Triangle
+  </text>
+
+  <!-- Three domains -->
+  <!-- Top: Gaussian Integers -->
+  <rect x="250" y="60" width="300" height="90" rx="12" fill="rgba(102,217,239,0.1)" stroke="#66d9ef" stroke-width="1.5"/>
+  <text x="400" y="82" text-anchor="middle" fill="#66d9ef" font-size="14" font-weight="bold">Gaussian Integers ℤ[i]</text>
+  <text x="400" y="102" text-anchor="middle" fill="#ccc" font-size="11">z = a + bi, |z|² = a² + b²</text>
+  <text x="400" y="120" text-anchor="middle" fill="#ccc" font-size="11">z₁ · z₂ ↔ Brahmagupta–Fibonacci</text>
+  <text x="400" y="138" text-anchor="middle" fill="#888" font-size="10">(a²+b²)(c²+d²) = (ac−bd)² + (ad+bc)²</text>
+
+  <!-- Left: Pythagorean Triples -->
+  <rect x="40" y="230" width="280" height="90" rx="12" fill="rgba(166,226,46,0.1)" stroke="#a6e22e" stroke-width="1.5"/>
+  <text x="180" y="252" text-anchor="middle" fill="#a6e22e" font-size="14" font-weight="bold">Pythagorean Triples</text>
+  <text x="180" y="272" text-anchor="middle" fill="#ccc" font-size="11">a² + b² = c²</text>
+  <text x="180" y="292" text-anchor="middle" fill="#ccc" font-size="11">Berggren Tree: M₁, M₂, M₃</text>
+  <text x="180" y="308" text-anchor="middle" fill="#888" font-size="10">All primitives from (3,4,5)</text>
+
+  <!-- Right: EML Framework -->
+  <rect x="480" y="230" width="280" height="90" rx="12" fill="rgba(253,151,31,0.1)" stroke="#fd971f" stroke-width="1.5"/>
+  <text x="620" y="252" text-anchor="middle" fill="#fd971f" font-size="14" font-weight="bold">EML Operator</text>
+  <text x="620" y="272" text-anchor="middle" fill="#ccc" font-size="11">eml(x,y) = eˣ − ln(y)</text>
+  <text x="620" y="292" text-anchor="middle" fill="#ccc" font-size="11">Log-variety: e²ᵅ + e²ᵝ = e²ᵞ</text>
+  <text x="620" y="308" text-anchor="middle" fill="#888" font-size="10">Universal: generates all elem. functions</text>
+
+  <!-- Connecting arrows -->
+  <!-- Gaussian → Pythagorean -->
+  <path d="M 300 150 Q 240 190 220 230" stroke="#66d9ef" stroke-width="2" fill="none" marker-end="url(#arr1)"/>
+  <text x="230" y="195" text-anchor="middle" fill="#66d9ef" font-size="10" transform="rotate(-35 230 195)">|z|² = c²</text>
+
+  <!-- Gaussian → EML -->
+  <path d="M 500 150 Q 560 190 580 230" stroke="#fd971f" stroke-width="2" fill="none" marker-end="url(#arr2)"/>
+  <text x="565" y="190" text-anchor="middle" fill="#fd971f" font-size="10" transform="rotate(35 565 190)">exp(log|z|)</text>
+
+  <!-- Pythagorean ↔ EML -->
+  <path d="M 320 275 L 480 275" stroke="#e6db74" stroke-width="2.5" fill="none" marker-end="url(#arr3)" filter="url(#glow2)"/>
+  <text x="400" y="268" text-anchor="middle" fill="#e6db74" font-size="11" font-weight="bold">THE BRIDGE</text>
+
+  <defs>
+    <marker id="arr1" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#66d9ef"/>
+    </marker>
+    <marker id="arr2" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#fd971f"/>
+    </marker>
+    <marker id="arr3" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#e6db74"/>
+    </marker>
+  </defs>
+
+  <!-- Key Results Box -->
+  <rect x="80" y="360" width="640" height="120" rx="10" fill="rgba(230,219,116,0.06)" stroke="#e6db74" stroke-width="1"/>
+  <text x="400" y="385" text-anchor="middle" fill="#e6db74" font-size="14" font-weight="bold">Formally Verified Results (Lean 4)</text>
+
+  <text x="110" y="408" fill="#a6e22e" font-size="11">✓ Berggren matrices preserve Lorentz form Q(a,b,c) = a²+b²−c²</text>
+  <text x="110" y="426" fill="#66d9ef" font-size="11">✓ Brahmagupta–Fibonacci: Pythagorean hypotenuse products are Pythagorean</text>
+  <text x="110" y="444" fill="#fd971f" font-size="11">✓ Log-variety embedding: positive triples → exp(2 log a) + exp(2 log b) = exp(2 log c)</text>
+  <text x="110" y="462" fill="#f92672" font-size="11">✓ EML has no real fixed point: exp(x) &gt; x for all x ∈ ℝ</text>
+
+  <text x="400" y="495" text-anchor="middle" fill="#555" font-size="9">
+    Machine-verified with Lean 4.28.0 + Mathlib
+  </text>
+</svg>

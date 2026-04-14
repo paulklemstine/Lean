@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 650" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a0a3e;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ffd700" />
+      <stop offset="100%" style="stop-color:#ffaa00" />
+    </linearGradient>
+    <linearGradient id="cyan" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00e5ff" />
+      <stop offset="100%" style="stop-color:#00b8d4" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="650" fill="url(#bg)"/>
+
+  <!-- Title -->
+  <text x="450" y="40" text-anchor="middle" fill="url(#gold)" font-size="22" font-weight="bold" filter="url(#glow)">
+    The EML–Pythagorean Bridge
+  </text>
+  <text x="450" y="62" text-anchor="middle" fill="#aaa" font-size="12">
+    From Ancient Triples to Universal Operators
+  </text>
+
+  <!-- LEFT: Berggren Tree -->
+  <text x="200" y="95" text-anchor="middle" fill="url(#cyan)" font-size="16" font-weight="bold">Berggren Tree</text>
+
+  <!-- Root (3,4,5) -->
+  <circle cx="200" cy="140" r="28" fill="none" stroke="#00e5ff" stroke-width="2" filter="url(#glow)"/>
+  <text x="200" y="136" text-anchor="middle" fill="#fff" font-size="11">(3,4,5)</text>
+  <text x="200" y="150" text-anchor="middle" fill="#aaa" font-size="9">c=5</text>
+
+  <!-- Level 1 -->
+  <line x1="178" y1="165" x2="80" y2="210" stroke="#00e5ff" stroke-width="1" opacity="0.5"/>
+  <line x1="200" y1="168" x2="200" y2="210" stroke="#00e5ff" stroke-width="1" opacity="0.5"/>
+  <line x1="222" y1="165" x2="320" y2="210" stroke="#00e5ff" stroke-width="1" opacity="0.5"/>
+
+  <circle cx="80" cy="230" r="24" fill="none" stroke="#4dd0e1" stroke-width="1.5"/>
+  <text x="80" y="226" text-anchor="middle" fill="#fff" font-size="9">(5,12,13)</text>
+  <text x="80" y="238" text-anchor="middle" fill="#aaa" font-size="8">M₁</text>
+
+  <circle cx="200" cy="230" r="24" fill="none" stroke="#4dd0e1" stroke-width="1.5"/>
+  <text x="200" y="226" text-anchor="middle" fill="#fff" font-size="9">(21,20,29)</text>
+  <text x="200" y="238" text-anchor="middle" fill="#aaa" font-size="8">M₂</text>
+
+  <circle cx="320" cy="230" r="24" fill="none" stroke="#4dd0e1" stroke-width="1.5"/>
+  <text x="320" y="226" text-anchor="middle" fill="#fff" font-size="9">(15,8,17)</text>
+  <text x="320" y="238" text-anchor="middle" fill="#aaa" font-size="8">M₃</text>
+
+  <!-- Level 2 (partial) -->
+  <line x1="65" y1="253" x2="35" y2="285" stroke="#4dd0e1" stroke-width="0.8" opacity="0.3"/>
+  <line x1="80" y1="254" x2="80" y2="285" stroke="#4dd0e1" stroke-width="0.8" opacity="0.3"/>
+  <line x1="95" y1="253" x2="125" y2="285" stroke="#4dd0e1" stroke-width="0.8" opacity="0.3"/>
+
+  <circle cx="35" cy="300" r="18" fill="none" stroke="#26c6da" stroke-width="1" opacity="0.6"/>
+  <text x="35" y="297" text-anchor="middle" fill="#ccc" font-size="7">(7,24,25)</text>
+  <circle cx="80" cy="300" r="18" fill="none" stroke="#26c6da" stroke-width="1" opacity="0.6"/>
+  <text x="80" y="297" text-anchor="middle" fill="#ccc" font-size="7">(55,48,73)</text>
+  <circle cx="125" cy="300" r="18" fill="none" stroke="#26c6da" stroke-width="1" opacity="0.6"/>
+  <text x="125" y="297" text-anchor="middle" fill="#ccc" font-size="7">(45,28,53)</text>
+
+  <!-- Properties box -->
+  <rect x="30" y="340" width="340" height="120" rx="8" fill="rgba(0,229,255,0.08)" stroke="#00e5ff" stroke-width="1" opacity="0.7"/>
+  <text x="200" y="360" text-anchor="middle" fill="#00e5ff" font-size="12" font-weight="bold">Key Properties</text>
+  <text x="45" y="380" fill="#ccc" font-size="10">• Ternary tree: 3 children per node</text>
+  <text x="45" y="398" fill="#ccc" font-size="10">• Preserves Lorentz form: a²+b²-c² = 0</text>
+  <text x="45" y="416" fill="#ccc" font-size="10">• Generates ALL primitive Pythagorean triples</text>
+  <text x="45" y="434" fill="#ccc" font-size="10">• Matrices ∈ O(2,1;ℤ): orthogonal group</text>
+  <text x="45" y="452" fill="#ccc" font-size="10">• Hypotenuse strictly increases at each step</text>
+
+  <!-- BRIDGE ARROW -->
+  <path d="M 395 200 C 420 180, 480 180, 505 200" stroke="url(#gold)" stroke-width="3" fill="none" filter="url(#glow)" marker-end="url(#arrowhead)"/>
+  <path d="M 505 240 C 480 260, 420 260, 395 240" stroke="url(#gold)" stroke-width="3" fill="none" filter="url(#glow)" marker-end="url(#arrowhead2)"/>
+
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ffd700"/>
+    </marker>
+    <marker id="arrowhead2" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ffd700"/>
+    </marker>
+  </defs>
+
+  <text x="450" y="195" text-anchor="middle" fill="#ffd700" font-size="11" font-weight="bold">EML Bridge</text>
+  <text x="450" y="215" text-anchor="middle" fill="#ffcc00" font-size="9">log-space</text>
+  <text x="450" y="250" text-anchor="middle" fill="#ffcc00" font-size="9">exp encoding</text>
+
+  <!-- RIGHT: EML Framework -->
+  <text x="700" y="95" text-anchor="middle" fill="url(#gold)" font-size="16" font-weight="bold">EML Framework</text>
+
+  <!-- EML Tree diagram -->
+  <circle cx="700" cy="140" r="20" fill="none" stroke="#ffd700" stroke-width="2" filter="url(#glow)"/>
+  <text x="700" y="144" text-anchor="middle" fill="#ffd700" font-size="12" font-weight="bold">eml</text>
+
+  <line x1="685" y1="157" x2="645" y2="190" stroke="#ffd700" stroke-width="1.5"/>
+  <line x1="715" y1="157" x2="755" y2="190" stroke="#ffd700" stroke-width="1.5"/>
+
+  <circle cx="645" cy="205" r="16" fill="none" stroke="#ffab00" stroke-width="1.5"/>
+  <text x="645" y="209" text-anchor="middle" fill="#ffab00" font-size="10">eml</text>
+
+  <circle cx="755" cy="205" r="16" fill="none" stroke="#ffab00" stroke-width="1.5"/>
+  <text x="755" y="209" text-anchor="middle" fill="#ffab00" font-size="10">1</text>
+
+  <line x1="633" y1="219" x2="610" y2="245" stroke="#ffab00" stroke-width="1"/>
+  <line x1="657" y1="219" x2="680" y2="245" stroke="#ffab00" stroke-width="1"/>
+
+  <circle cx="610" cy="258" r="14" fill="none" stroke="#ff8f00" stroke-width="1"/>
+  <text x="610" y="262" text-anchor="middle" fill="#ff8f00" font-size="9">x</text>
+
+  <circle cx="680" cy="258" r="14" fill="none" stroke="#ff8f00" stroke-width="1"/>
+  <text x="680" y="262" text-anchor="middle" fill="#ff8f00" font-size="9">1</text>
+
+  <!-- EML Definition -->
+  <text x="700" y="305" text-anchor="middle" fill="#ffd700" font-size="14" font-weight="bold">
+    eml(x, y) = eˣ − ln(y)
+  </text>
+
+  <!-- EML Properties box -->
+  <rect x="530" y="340" width="340" height="120" rx="8" fill="rgba(255,215,0,0.08)" stroke="#ffd700" stroke-width="1" opacity="0.7"/>
+  <text x="700" y="360" text-anchor="middle" fill="#ffd700" font-size="12" font-weight="bold">EML Universality</text>
+  <text x="545" y="380" fill="#ccc" font-size="10">• exp(x) = eml(x, 1)</text>
+  <text x="545" y="398" fill="#ccc" font-size="10">• log(x) = 1 − eml(0, x)</text>
+  <text x="545" y="416" fill="#ccc" font-size="10">• Generates ALL elementary functions</text>
+  <text x="545" y="434" fill="#ccc" font-size="10">• Binary tree structure ↔ computation</text>
+  <text x="545" y="452" fill="#ccc" font-size="10">• O(d) EML nodes per depth-d path</text>
+
+  <!-- Bottom: The Bridge Equation -->
+  <rect x="100" y="485" width="700" height="80" rx="10" fill="rgba(255,255,255,0.05)" stroke="url(#gold)" stroke-width="2"/>
+  <text x="450" y="510" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">
+    The Bridge Equation
+  </text>
+  <text x="450" y="535" text-anchor="middle" fill="#ffd700" font-size="16" font-weight="bold">
+    a² + b² = c²  ←→  exp(2 log a) + exp(2 log b) = exp(2 log c)
+  </text>
+  <text x="450" y="555" text-anchor="middle" fill="#aaa" font-size="11">
+    Pythagorean triples live on the EML log-variety: points where the Lorentz form vanishes
+  </text>
+
+  <!-- Footer -->
+  <text x="450" y="635" text-anchor="middle" fill="#666" font-size="10">
+    Formally verified in Lean 4 with Mathlib • All 30+ theorems machine-checked
+  </text>
+</svg>
