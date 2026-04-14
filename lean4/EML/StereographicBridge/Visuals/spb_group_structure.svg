@@ -1,118 +1,87 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" font-family="'Georgia', serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" font-family="Georgia, serif">
   <defs>
-    <linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#0d1117"/>
-      <stop offset="100%" stop-color="#161b22"/>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d1b2a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1b2838;stop-opacity:1" />
     </linearGradient>
   </defs>
 
-  <rect width="900" height="700" fill="url(#bg2)"/>
+  <rect width="1000" height="700" fill="url(#bg2)"/>
 
-  <!-- Title -->
-  <text x="450" y="40" text-anchor="middle" fill="#ffd700" font-size="24" font-weight="bold">
-    SPB Group Structure: (ℝ, spb) ≅ (S¹, ·)
+  <text x="500" y="45" text-anchor="middle" fill="#ffd700" font-size="26" font-weight="bold">
+    SPB Group Structure over Finite Fields 𝔽_p
+  </text>
+  <text x="500" y="75" text-anchor="middle" fill="#aaccff" font-size="14">
+    Theorem 3.1: Complete Classification of SPB Groups
   </text>
 
-  <!-- Left side: Real line with SPB -->
-  <g transform="translate(220, 350)">
-    <!-- Real line -->
-    <line x1="-180" y1="0" x2="180" y2="0" stroke="#4488cc" stroke-width="2"/>
-    <text x="0" y="-120" text-anchor="middle" fill="#66aaff" font-size="18" font-weight="bold">
-      (ℝ ∪ {∞}, spb)
-    </text>
-    <text x="0" y="-95" text-anchor="middle" fill="#8899bb" font-size="13">
-      The Real Line with SPB Operation
-    </text>
-
-    <!-- Points on real line -->
-    <circle cx="-150" cy="0" r="5" fill="#ff6644"/>
-    <text x="-150" y="22" text-anchor="middle" fill="#ff8866" font-size="12">−tan α</text>
-    <circle cx="0" cy="0" r="6" fill="#44ff44"/>
-    <text x="0" y="22" text-anchor="middle" fill="#66ff66" font-size="12">0 (identity)</text>
-    <circle cx="100" cy="0" r="5" fill="#4488ff"/>
-    <text x="100" y="22" text-anchor="middle" fill="#66aaff" font-size="12">tan α</text>
-    <circle cx="150" cy="0" r="5" fill="#ff44ff"/>
-    <text x="150" y="22" text-anchor="middle" fill="#ff66ff" font-size="12">tan β</text>
-
-    <!-- SPB operation shown -->
-    <path d="M 100,-10 Q 125,-40 150,-10" fill="none" stroke="#ffdd44" stroke-width="1.5"/>
-    <text x="125" y="-45" text-anchor="middle" fill="#ffdd44" font-size="11">spb</text>
-
-    <!-- Group axioms -->
-    <g transform="translate(0, 80)">
-      <text x="-160" y="0" fill="#ffffff" font-size="13">✓ Commutative: spb(x,y) = spb(y,x)</text>
-      <text x="-160" y="22" fill="#ffffff" font-size="13">✓ Identity: spb(x, 0) = x</text>
-      <text x="-160" y="44" fill="#ffffff" font-size="13">✓ Inverse: spb(x, −x) = 0</text>
-      <text x="-160" y="66" fill="#ffffff" font-size="13">✓ Associative: spb(spb(x,y), z) = spb(x, spb(y,z))</text>
-    </g>
-  </g>
-
-  <!-- Right side: Unit circle -->
-  <g transform="translate(680, 330)">
-    <!-- Circle -->
-    <circle cx="0" cy="0" r="120" fill="none" stroke="#44cc88" stroke-width="2"/>
-    <text x="0" y="-145" text-anchor="middle" fill="#66ffaa" font-size="18" font-weight="bold">
-      (S¹, ·)
-    </text>
-    <text x="0" y="-128" text-anchor="middle" fill="#88bbaa" font-size="13">
-      The Unit Circle
-    </text>
-
-    <!-- Points on circle -->
-    <circle cx="120" cy="0" r="6" fill="#44ff44"/>
-    <text x="140" y="5" fill="#66ff66" font-size="12">1</text>
-
-    <!-- Point at angle alpha -->
-    <circle cx="84.85" cy="-84.85" r="5" fill="#4488ff"/>
-    <text x="98" y="-90" fill="#66aaff" font-size="12">e^{iα}</text>
-
-    <!-- Point at angle beta -->
-    <circle cx="0" cy="-120" r="5" fill="#ff44ff"/>
-    <text x="15" y="-125" fill="#ff66ff" font-size="12">e^{iβ}</text>
-
-    <!-- Point at angle alpha+beta -->
-    <circle cx="-84.85" cy="-84.85" r="5" fill="#ffdd44"/>
-    <text x="-105" y="-90" fill="#ffdd44" font-size="12">e^{i(α+β)}</text>
-
-    <!-- Angle arc for alpha -->
-    <path d="M 40,0 A 40,40 0 0 0 28.28,-28.28" fill="none" stroke="#4488ff" stroke-width="1.5"/>
-    <text x="45" y="-15" fill="#4488ff" font-size="10">α</text>
-
-    <!-- Multiplication shown -->
-    <text x="0" y="155" text-anchor="middle" fill="#aaaacc" font-size="12">
-      Multiplication on S¹ = angle addition
-    </text>
-  </g>
-
-  <!-- Cayley Transform Arrow -->
-  <g transform="translate(450, 280)">
-    <line x1="-60" y1="0" x2="60" y2="0" stroke="#ffd700" stroke-width="2.5" marker-end="url(#arrow)"/>
-    <text x="0" y="-15" text-anchor="middle" fill="#ffd700" font-size="15" font-weight="bold">
-      Cayley Transform
-    </text>
-    <text x="0" y="20" text-anchor="middle" fill="#ddbb44" font-size="12">
-      C(x) = (1+ix)/(1−ix)
-    </text>
-    <text x="0" y="40" text-anchor="middle" fill="#ddbb44" font-size="12">
-      |C(x)| = 1 ∀ x ∈ ℝ
-    </text>
-  </g>
-
-  <!-- Intertwining property -->
-  <rect x="280" y="560" width="340" height="60" rx="10" fill="#1a2a1a" stroke="#44cc88" stroke-width="2"/>
-  <text x="450" y="585" text-anchor="middle" fill="#ffffff" font-size="16" font-weight="bold">
-    C(spb(x, y)) = C(x) · C(y)
+  <!-- Case 1: p ≡ 3 (mod 4) -->
+  <rect x="30" y="100" width="450" height="250" rx="15" fill="#1a2a3a" stroke="#4a9eff" stroke-width="2"/>
+  <text x="255" y="135" text-anchor="middle" fill="#4a9eff" font-size="20" font-weight="bold">
+    Case: p ≡ 3 (mod 4)
   </text>
-  <text x="450" y="607" text-anchor="middle" fill="#88ccaa" font-size="13">
-    Group Homomorphism (Intertwining Property)
+  <text x="255" y="165" text-anchor="middle" fill="#cce0ff" font-size="14">
+    −1 is a quadratic non-residue mod p
+  </text>
+  <text x="255" y="190" text-anchor="middle" fill="#fff" font-size="16">
+    i ∉ 𝔽_p → 𝔽_p(i) = 𝔽_{p²}
+  </text>
+  <text x="255" y="220" text-anchor="middle" fill="#ffd700" font-size="18" font-weight="bold">
+    Group Order = p + 1
+  </text>
+  <text x="255" y="250" text-anchor="middle" fill="#7fff7f" font-size="14">
+    ≅ ℤ/(p+1)ℤ  (cyclic)
   </text>
 
-  <!-- Verified badge -->
-  <g transform="translate(450, 660)">
-    <rect x="-130" y="-15" width="260" height="30" rx="15" fill="#1a3a1a" stroke="#44cc44" stroke-width="1"/>
-    <text x="0" y="5" text-anchor="middle" fill="#44ff44" font-size="13">
-      ✓ All properties formally verified in Lean 4
-    </text>
-  </g>
+  <!-- Examples -->
+  <text x="60" y="280" fill="#aaa" font-size="12">p=3: order 4  ·  p=7: order 8  ·  p=11: order 12  ·  p=19: order 20</text>
+  <text x="60" y="300" fill="#aaa" font-size="12">p=23: order 24  ·  p=31: order 32  ·  p=43: order 44  ·  p=47: order 48</text>
+
+  <!-- Case 2: p ≡ 1 (mod 4) -->
+  <rect x="520" y="100" width="450" height="250" rx="15" fill="#2a1a1a" stroke="#ff6b6b" stroke-width="2"/>
+  <text x="745" y="135" text-anchor="middle" fill="#ff6b6b" font-size="20" font-weight="bold">
+    Case: p ≡ 1 (mod 4)
+  </text>
+  <text x="745" y="165" text-anchor="middle" fill="#ffcccc" font-size="14">
+    −1 is a quadratic residue mod p
+  </text>
+  <text x="745" y="190" text-anchor="middle" fill="#fff" font-size="16">
+    i ∈ 𝔽_p → Cayley degenerates to 𝔽_p×
+  </text>
+  <text x="745" y="220" text-anchor="middle" fill="#ffd700" font-size="18" font-weight="bold">
+    Group Order = p − 1
+  </text>
+  <text x="745" y="250" text-anchor="middle" fill="#7fff7f" font-size="14">
+    ≅ ℤ/(p−1)ℤ  (cyclic)
+  </text>
+
+  <text x="550" y="280" fill="#aaa" font-size="12">p=5: order 4  ·  p=13: order 12  ·  p=17: order 16  ·  p=29: order 28</text>
+  <text x="550" y="300" fill="#aaa" font-size="12">p=37: order 36  ·  p=41: order 40</text>
+
+  <!-- The Proof -->
+  <rect x="100" y="380" width="800" height="200" rx="15" fill="#1a1a2a" stroke="#ffd700" stroke-width="2"/>
+  <text x="500" y="415" text-anchor="middle" fill="#ffd700" font-size="18" font-weight="bold">
+    Proof via the Cayley Transform
+  </text>
+
+  <!-- Step 1 -->
+  <text x="140" y="450" fill="#fff" font-size="13">Step 1: The Cayley transform C'(x) = (1+ix)/(1−ix) maps SPB elements to norm-1 elements of 𝔽_{p²}.</text>
+
+  <!-- Step 2 -->
+  <text x="140" y="480" fill="#fff" font-size="13">Step 2: When p ≡ 3 (mod 4), i ∉ 𝔽_p, so the norm-1 subgroup of 𝔽_{p²}× has order (p²−1)/(p−1) = p+1.</text>
+
+  <!-- Step 3 -->
+  <text x="140" y="510" fill="#fff" font-size="13">Step 3: When p ≡ 1 (mod 4), i ∈ 𝔽_p, the Cayley map degenerates to 𝔽_p×, giving order p−1.</text>
+
+  <!-- Step 4 -->
+  <text x="140" y="540" fill="#7fff7f" font-size="13">Step 4: Both groups are cyclic (subgroups of cyclic groups). ∎</text>
+
+  <!-- Verification -->
+  <rect x="200" y="610" width="600" height="60" rx="10" fill="#0a2a0a" stroke="#7fff7f" stroke-width="2"/>
+  <text x="500" y="640" text-anchor="middle" fill="#7fff7f" font-size="16" font-weight="bold">
+    ✓ Computationally verified for all primes p &lt; 50
+  </text>
+  <text x="500" y="660" text-anchor="middle" fill="#aaffaa" font-size="12">
+    Formally verified for p ∈ {3, 5, 7, 11, 13} in Lean 4 with native_decide
+  </text>
 </svg>

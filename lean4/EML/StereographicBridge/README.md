@@ -1,137 +1,134 @@
-# Stereographic Projection Bridge (SPB): The Continuous Group Gate
+# Stereographic Projection Bridge (SPB)
 
-## A Comprehensive Research Framework
+## The Formula That Connects Everything
 
-The **Stereographic Projection Bridge (SPB)** operator `spb(x,y) = (x+y)/(1-xy)` encodes the circle group S¹ as a single rational operation on the real line ℝ. The SPB-adapted Cayley transform `C'(x) = (1+ix)/(1-ix)` serves as the **unitary operator** bridging ℝ and S¹.
+```
+spb(x, y) = (x + y) / (1 - xy)
+```
 
----
+This single formula simultaneously **is**:
+- The **tangent addition** law: `tan(α+β) = spb(tan α, tan β)`
+- The **circle group** transferred to ℝ via stereographic projection
+- A **Möbius transformation**: `z ↦ (z + a)/(-az + 1)`
+- (With sign flip) **Einstein's velocity addition**: `spbH(v₁,v₂) = (v₁+v₂)/(1+v₁v₂)`
 
-## Contents
+## Directory Structure
 
-### 📐 Lean 4 Formalized Theorems
+### Lean 4 Formalizations (25+ Theorems, Zero Sorries)
+| File | Contents | Status |
+|------|----------|--------|
+| `Basic.lean` | Core SPB definitions, group axioms, tangent connection, derivatives, expression trees | ✅ Verified |
+| `CayleyTransform.lean` | Cayley unitarity, intertwining property, real/imaginary parts, differentiability | ✅ Verified |
+| `Applications.lean` | Einstein velocity addition, Möbius transformations, cross-ratio invariance | ✅ Verified |
+| `ChebyshevConnection.lean` | Multiple angle formulas, iterated SPB, Chebyshev recurrence | ✅ Verified |
+| `FiniteFields.lean` | SPB over ZMod p, computational verification of periodicity | ✅ Verified |
+| `WickRotation.lean` | Circular-hyperbolic duality, rapidity addition theorem | ✅ Verified |
+| `SPBIteration.lean` | **NEW** Multiple angle theorem (spb^n(tan θ) = tan(nθ)), power law, Cauchy density | ✅ Verified |
+| `AdvancedTheorems.lean` | **NEW** Sub-luminal closure, fixed points, arctangent addition, algebraic identities | ✅ Verified |
+| `EMLSPBBridge.lean` | **NEW** EML-SPB dual operator system, tanh homomorphism, Weierstrass substitution | ✅ Verified |
 
-**All 40+ theorems fully proved, zero sorries**, machine-verified in Lean 4 with Mathlib.
+### Python Demos (`Demos/`)
+- `spb_demo.py` — Comprehensive demonstration suite (8 demos with visualizations)
+- `spb_finite_field_explorer.py` — Detailed analysis of SPB groups over finite fields
+- `spb_advanced_research.py` — **NEW** 10 advanced research demos:
+  - SPB iteration = tan(nθ) verification
+  - Finite field group structure (p±1 law)
+  - Cauchy distribution invariance
+  - SPB approximation theorem (density in C[-1,1])
+  - Addition chain complexity
+  - Rapidity addition
+  - Wick rotation visualization
+  - Fixed point analysis
+  - EML-SPB duality
+  - Stereographic projection & Cayley transform
 
-#### Core Files (`*.lean`)
+### SVG Visuals (`Visuals/`)
+- `spb_unified_framework.svg` — The SPB as a nexus connecting 7 mathematical domains
+- `spb_wick_rotation.svg` — Circular ↔ Hyperbolic duality diagram
+- `spb_chebyshev_tree.svg` — SPB expression trees and Chebyshev polynomials
+- `spb_einstein_velocity.svg` — Einstein velocity addition visualization
+- `spb_stereographic_geometry.svg` — Geometric stereographic projection
+- `spb_research_roadmap.svg` — **NEW** Complete research roadmap with 30+ problems
+- `spb_group_structure.svg` — **NEW** Finite field group structure classification
 
-- **`Basic.lean`** — Core SPB definitions and group structure
-  - SPB/SPBh definitions, commutativity, identity, inverse, associativity ✅
-  - Wick duality, tangent addition = SPB ✅
-  - SPB expression trees, binary tree identity ✅
-  - Differentiability: ∂spb/∂x = (1+y²)/(1-xy)², monotonicity ✅
-  - Double angle: spb(x,x) = 2x/(1-x²) ✅
+### Research Papers (`Papers/`)
+- `SPB_Research_Paper.md` — **NEW** Comprehensive research paper (14 sections)
+- `SPB_Future_Research_Directions.md` — **UPDATED** 40+ open problems, priority rankings
+- `SPB_Scientific_American.md` — **UPDATED** Popular science article
 
-- **`CayleyTransform.lean`** — The Cayley transform bridge ℝ → S¹
-  - SPB-Cayley unitarity: ‖C(x)‖ = 1 ✅
-  - **Intertwining**: C(spb(x,y)) = C(x)·C(y) ✅
-  - Real/imaginary parts of Cayley transform ✅
-  - Differentiability of complex Cayley transform ✅
+## Key Results
 
-- **`ChebyshevConnection.lean`** — Multiple angle formulas
-  - SPB iteration: spbIter(tan θ, n) = tan(nθ) ✅
-  - Double and triple angle via SPB ✅
+### Formalized in Lean 4 (Machine-Verified)
 
-- **`FiniteFields.lean`** — SPB over finite fields F_p
-  - SPB over ZMod p: commutativity, identity, inverse ✅
-  - Computational verification over F₃, F₅, F₇, F₁₁, F₁₃ ✅
-  - Period verification for p ≡ 1, 3 (mod 4) ✅
+**Core Algebra:**
+1. SPB is commutative, associative, has identity 0, inverse -x
+2. SPB expression tree leaf-node identity
 
-- **`WickRotation.lean`** — Circular ↔ Hyperbolic duality
-  - Sign flip relation ✅
-  - Rapidity addition: tanh(a+b) = spbH(tanh a, tanh b) ✅
+**Cayley Transform:**
+3. Cayley unitarity: |C'(x)| = 1 for all real x
+4. Cayley intertwining: C'(spb(x,y)) = C'(x) · C'(y)
+5. Real and imaginary parts of the Cayley transform
 
-- **`Applications.lean`** — Physics and geometry
-  - Einstein velocity addition: commutativity, identity, associativity ✅
-  - Light speed invariance: 1 ⊕ v = 1 ✅
-  - **Sub-luminal closure**: |v₁|,|v₂| < 1 ⟹ |v₁⊕v₂| < 1 ✅
-  - Möbius transform / cross-ratio invariance ✅
+**Trigonometry:**
+6. Tangent addition: tan(α+β) = spb(tan α, tan β)
+7. **Multiple angle formula: spb^n(tan θ) = tan(nθ)** ← NEW
+8. **SPB power law: spb^(m+n) = spb(spb^m, spb^n)** ← NEW
+9. Double and triple angle formulas
+10. **Arctangent addition: arctan(spb(x,y)) = arctan(x) + arctan(y)** ← NEW
 
-#### Research Files (`Research/*.lean`)
+**Special Relativity:**
+11. Einstein velocity addition: commutative, associative
+12. **Sub-luminal closure: |v₁|,|v₂| < 1 ⟹ |spbH(v₁,v₂)| < 1** ← NEW
+13. Light speed invariance: spbH(1, v) = 1
+14. Rapidity addition: tanh(a+b) = spbH(tanh a, tanh b)
 
-- **`Research/AdvancedTheorems.lean`** — **NEW** advanced results
-  - SPB involution (cancellation): spb(spb(x,y), -y) = x ✅
-  - SPB associativity (composition law) ✅
-  - SPB derivative formula ✅
-  - **arctan homomorphism**: arctan(spb(x,y)) = arctan(x) + arctan(y) ✅
-  - **Weierstrass substitution**: cos θ = (1-t²)/(1+t²), sin θ = 2t/(1+t²) ✅
-  - **Cauchy distribution invariance**: f(spb(x,a)) · |spb'(x)| = f(x) ✅
-  - Denominator positivity for small arguments ✅
-  - Rational closure of SPB ✅
-  - **Multiple angle**: spbPow(tan θ, n) = tan(nθ) ✅
-  - Derivative positivity ✅
+**Analysis:**
+15. Monotonicity: ∂spb/∂x = (1+y²)/(1-xy)² > 0
+16. **No fixed points: spb(x, a) ≠ x when a ≠ 0** ← NEW
+17. **Cauchy density positivity** ← NEW
 
-- **`Research/Approximation.lean`** — SPB approximation theory ✅
-- **`Research/ChebyshevConnection.lean`** — Extended Chebyshev results ✅
-- **`Research/FiniteFields.lean`** — General field SPB ✅
-- **`Research/WickRotation.lean`** — Extended Wick rotation results ✅
+**Algebraic Identities:** ← NEW
+18. **Product rule: spb(x,y) · spb(x,-y) = (x²-y²)/(1-x²y²)**
+19. **Difference rule: spb(x,y) - spb(x,-y) = 2y(1+x²)/(1-x²y²)**
 
-### 🐍 Python Demos (`Demos/`)
+**EML-SPB Bridge:** ← NEW
+20. **tanh homomorphism from (ℝ,+) to ((-1,1), spbH)**
+21. **Weierstrass substitution via hyperbolic SPB**
+22. **EML-SPB associativity with cross-denominator conditions**
 
-- **`spb_comprehensive_demo.py`** — 11 demonstrations covering all SPB properties
-- **`spb_neural_network_demo.py`** — SPB neural network prototype with 5 demos
-- **`spb_demo.py`** — Original interactive demo
-- **`spb_chebyshev_demo.py`** — Chebyshev connection demo
-- **`spb_relativistic_demo.py`** — Einstein velocity addition
-- **`spb_dynamics.py`** — Dynamical system exploration
-- **`spb_finite_field_explorer.py`** — Finite field SPB
-- **`spb_visualization.py`** — Visualization generator
+**Geometry:**
+23. SPB as Möbius transformation
+24. Cross-ratio invariance under Möbius transformations
 
-### 🎨 SVG Visuals (`Visuals/`)
+**Finite Fields:**
+25. SPB over ZMod p — computational verification of group orders
 
-- **`spb_master_diagram.svg`** — **NEW** unified diagram: "One Formula, Five Worlds"
-- **`spb_group_structure.svg`** — **NEW** group isomorphism (ℝ, spb) ≅ (S¹, ·)
-- **`spb_research_roadmap.svg`** — **NEW** 30+ research directions with priorities
-- **`spb_cauchy_invariance.svg`** — **NEW** Cauchy distribution as SPB measure
-- **`spb_framework_overview.svg`** — Original framework overview
-- **`spb_cayley_bridge.svg`** — Cayley transform bridge
-- **`spb_chebyshev_connection.svg`** — Chebyshev polynomial connection
-- **`spb_einstein_velocity.svg`** — Einstein velocity addition
-- **`spb_wick_rotation.svg`** — Wick rotation duality
-- **`spb_finite_field.svg`** — Finite field structure
-- **`spb_unified_framework.svg`** — Unified framework
+### Computationally Verified
+- Finite field group orders for all primes p < 50
+- SPB iteration accuracy to machine precision
+- Cauchy distribution invariance under SPB dynamics
 
-### 📄 Papers (`Papers/`)
+## How to Build
 
-- **`SPB_Comprehensive_Research_Paper.md`** — **NEW** full research paper with 40+ verified theorems
-- **`SPB_SciAm_Article.md`** — **NEW** Scientific American style article
-- **`SPB_Future_Research_Comprehensive.md`** — **NEW** 35 ranked research directions
-- **`SPB_Important_Questions_Answered.md`** — **NEW** 25 key questions answered in depth
-- **`research_paper.md`** — Original research paper
-- **`scientific_american_article.md`** — Original popular article
-- **`future_research_directions.md`** — Original future directions
-- **`applications_brainstorm.md`** — Applications brainstorm
-
----
-
-## Quick Start
-
-### Verify the Lean proofs:
 ```bash
 lake build EML.StereographicBridge.Basic
-lake build EML.StereographicBridge.Research.AdvancedTheorems
+lake build EML.StereographicBridge.CayleyTransform
+lake build EML.StereographicBridge.Applications
+lake build EML.StereographicBridge.ChebyshevConnection
+lake build EML.StereographicBridge.FiniteFields
+lake build EML.StereographicBridge.WickRotation
+lake build EML.StereographicBridge.SPBIteration
+lake build EML.StereographicBridge.AdvancedTheorems
+lake build EML.StereographicBridge.EMLSPBBridge
 ```
 
-### Run the Python demos:
-```bash
-python3 EML/StereographicBridge/Demos/spb_comprehensive_demo.py
-python3 EML/StereographicBridge/Demos/spb_neural_network_demo.py
+## Citation
+
+If you use this work, please cite:
 ```
-
----
-
-## Key Insight
-
-The SPB formula `(x+y)/(1-xy)` is a central node in mathematics, simultaneously:
-
-| Interpretation | Formula |
-|---|---|
-| Tangent addition | tan(α+β) = spb(tan α, tan β) |
-| Circle group | C(spb(x,y)) = C(x)·C(y) |
-| Einstein addition | v₁ ⊕ v₂ = (v₁+v₂)/(1+v₁v₂) |
-| Chebyshev iteration | spbⁿ(tan θ) = tan(nθ) |
-| Möbius transform | z ↦ (z+a)/(1-az) |
-| arctan homomorphism | arctan(spb(x,y)) = arctan(x)+arctan(y) |
-| Cauchy invariance | f(spb(x,a))·|spb'(x)| = f(x) |
-| Weierstrass sub. | cos θ = (1-t²)/(1+t²) via Cayley |
-
-All verified in Lean 4. Zero sorries.
+@software{spb_framework,
+  title = {The Stereographic Projection Bridge: A Universal Algebraic Gate},
+  year = {2025},
+  description = {Machine-verified formalization of the SPB framework in Lean 4},
+}
+```
