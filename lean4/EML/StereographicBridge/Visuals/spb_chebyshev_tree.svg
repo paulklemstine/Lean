@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700">
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fafafa"/>
+      <stop offset="100%" stop-color="#e8e8e8"/>
+    </linearGradient>
+    <filter id="nodeShadow">
+      <feDropShadow dx="1" dy="1" stdDeviation="2" flood-color="#000" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <rect width="1000" height="700" fill="url(#bg3)"/>
+
+  <!-- Title -->
+  <text x="500" y="35" text-anchor="middle" font-family="Georgia" font-size="22" fill="#333">
+    SPB Expression Trees Generate Chebyshev Polynomials
+  </text>
+  <text x="500" y="55" text-anchor="middle" font-family="Georgia" font-size="13" fill="#777" font-style="italic">
+    spb^n(x) = tan(n · arctan(x)) — a rational function of degree n
+  </text>
+
+  <!-- ═══ Tree for tan(2θ) ═══ -->
+  <g transform="translate(150, 100)">
+    <text x="0" y="0" text-anchor="middle" font-family="Georgia" font-size="16" fill="#1565C0" font-weight="bold">tan(2θ)</text>
+    <text x="0" y="18" text-anchor="middle" font-family="monospace" font-size="12" fill="#555">= 2x/(1-x²)</text>
+
+    <!-- Root node -->
+    <circle cx="0" cy="60" r="22" fill="#1565C0" filter="url(#nodeShadow)"/>
+    <text x="0" y="65" text-anchor="middle" font-family="monospace" font-size="13" fill="white">spb</text>
+
+    <!-- Edges -->
+    <line x1="-15" y1="80" x2="-50" y2="120" stroke="#1565C0" stroke-width="2"/>
+    <line x1="15" y1="80" x2="50" y2="120" stroke="#1565C0" stroke-width="2"/>
+
+    <!-- Leaves -->
+    <circle cx="-50" cy="140" r="18" fill="#42A5F5" filter="url(#nodeShadow)"/>
+    <text x="-50" y="145" text-anchor="middle" font-family="monospace" font-size="14" fill="white">x</text>
+    <circle cx="50" cy="140" r="18" fill="#42A5F5" filter="url(#nodeShadow)"/>
+    <text x="50" y="145" text-anchor="middle" font-family="monospace" font-size="14" fill="white">x</text>
+
+    <text x="0" y="185" text-anchor="middle" font-family="Georgia" font-size="11" fill="#777">1 SPB operation</text>
+  </g>
+
+  <!-- ═══ Tree for tan(3θ) ═══ -->
+  <g transform="translate(400, 100)">
+    <text x="0" y="0" text-anchor="middle" font-family="Georgia" font-size="16" fill="#2E7D32" font-weight="bold">tan(3θ)</text>
+    <text x="0" y="18" text-anchor="middle" font-family="monospace" font-size="12" fill="#555">= (3x-x³)/(1-3x²)</text>
+
+    <circle cx="0" cy="60" r="22" fill="#2E7D32" filter="url(#nodeShadow)"/>
+    <text x="0" y="65" text-anchor="middle" font-family="monospace" font-size="13" fill="white">spb</text>
+
+    <line x1="-15" y1="80" x2="-60" y2="120" stroke="#2E7D32" stroke-width="2"/>
+    <line x1="15" y1="80" x2="60" y2="120" stroke="#2E7D32" stroke-width="2"/>
+
+    <!-- Left child: x -->
+    <circle cx="-60" cy="140" r="18" fill="#66BB6A" filter="url(#nodeShadow)"/>
+    <text x="-60" y="145" text-anchor="middle" font-family="monospace" font-size="14" fill="white">x</text>
+
+    <!-- Right child: spb(x,x) -->
+    <circle cx="60" cy="140" r="22" fill="#2E7D32" filter="url(#nodeShadow)"/>
+    <text x="60" y="145" text-anchor="middle" font-family="monospace" font-size="13" fill="white">spb</text>
+
+    <line x1="45" y1="158" x2="20" y2="195" stroke="#2E7D32" stroke-width="2"/>
+    <line x1="75" y1="158" x2="100" y2="195" stroke="#2E7D32" stroke-width="2"/>
+
+    <circle cx="20" cy="215" r="18" fill="#66BB6A" filter="url(#nodeShadow)"/>
+    <text x="20" y="220" text-anchor="middle" font-family="monospace" font-size="14" fill="white">x</text>
+    <circle cx="100" cy="215" r="18" fill="#66BB6A" filter="url(#nodeShadow)"/>
+    <text x="100" y="220" text-anchor="middle" font-family="monospace" font-size="14" fill="white">x</text>
+
+    <text x="0" y="260" text-anchor="middle" font-family="Georgia" font-size="11" fill="#777">2 SPB operations</text>
+  </g>
+
+  <!-- ═══ Tree for tan(4θ) ═══ -->
+  <g transform="translate(750, 100)">
+    <text x="0" y="0" text-anchor="middle" font-family="Georgia" font-size="16" fill="#C62828" font-weight="bold">tan(4θ)</text>
+    <text x="0" y="18" text-anchor="middle" font-family="monospace" font-size="11" fill="#555">= (4x-4x³)/(1-6x²+x⁴)</text>
+
+    <circle cx="0" cy="60" r="22" fill="#C62828" filter="url(#nodeShadow)"/>
+    <text x="0" y="65" text-anchor="middle" font-family="monospace" font-size="13" fill="white">spb</text>
+
+    <line x1="-15" y1="80" x2="-70" y2="120" stroke="#C62828" stroke-width="2"/>
+    <line x1="15" y1="80" x2="70" y2="120" stroke="#C62828" stroke-width="2"/>
+
+    <!-- Left: spb(x,x) -->
+    <circle cx="-70" cy="140" r="22" fill="#C62828" filter="url(#nodeShadow)"/>
+    <text x="-70" y="145" text-anchor="middle" font-family="monospace" font-size="13" fill="white">spb</text>
+
+    <line x1="-85" y1="158" x2="-110" y2="195" stroke="#C62828" stroke-width="2"/>
+    <line x1="-55" y1="158" x2="-30" y2="195" stroke="#C62828" stroke-width="2"/>
+
+    <circle cx="-110" cy="215" r="18" fill="#EF5350" filter="url(#nodeShadow)"/>
+    <text x="-110" y="220" text-anchor="middle" font-family="monospace" font-size="14" fill="white">x</text>
+    <circle cx="-30" cy="215" r="18" fill="#EF5350" filter="url(#nodeShadow)"/>
+    <text x="-30" y="220" text-anchor="middle" font-family="monospace" font-size="14" fill="white">x</text>
+
+    <!-- Right: spb(x,x) -->
+    <circle cx="70" cy="140" r="22" fill="#C62828" filter="url(#nodeShadow)"/>
+    <text x="70" y="145" text-anchor="middle" font-family="monospace" font-size="13" fill="white">spb</text>
+
+    <line x1="55" y1="158" x2="30" y2="195" stroke="#C62828" stroke-width="2"/>
+    <line x1="85" y1="158" x2="110" y2="195" stroke="#C62828" stroke-width="2"/>
+
+    <circle cx="30" cy="215" r="18" fill="#EF5350" filter="url(#nodeShadow)"/>
+    <text x="30" y="220" text-anchor="middle" font-family="monospace" font-size="14" fill="white">x</text>
+    <circle cx="110" cy="215" r="18" fill="#EF5350" filter="url(#nodeShadow)"/>
+    <text x="110" y="220" text-anchor="middle" font-family="monospace" font-size="14" fill="white">x</text>
+
+    <text x="0" y="260" text-anchor="middle" font-family="Georgia" font-size="11" fill="#777">2 SPB operations (doubling!)</text>
+  </g>
+
+  <!-- Complexity Table -->
+  <g transform="translate(50, 420)">
+    <text x="0" y="0" font-family="Georgia" font-size="18" fill="#333" font-weight="bold">SPB Complexity of tan(nθ)</text>
+
+    <rect x="0" y="15" width="400" height="30" fill="#333" rx="5"/>
+    <text x="50" y="35" font-family="monospace" font-size="13" fill="white">n</text>
+    <text x="130" y="35" font-family="monospace" font-size="13" fill="white">K_SPB</text>
+    <text x="230" y="35" font-family="monospace" font-size="13" fill="white">⌈log₂n⌉</text>
+    <text x="330" y="35" font-family="monospace" font-size="13" fill="white">Method</text>
+
+    <g font-family="monospace" font-size="12" fill="#444">
+      <text x="50" y="63">1</text><text x="140" y="63">0</text><text x="240" y="63">0</text><text x="310" y="63">identity</text>
+      <text x="50" y="83">2</text><text x="140" y="83">1</text><text x="240" y="83">1</text><text x="310" y="83">double</text>
+      <text x="50" y="103">3</text><text x="140" y="103">2</text><text x="240" y="103">2</text><text x="310" y="103">2+1</text>
+      <text x="50" y="123">4</text><text x="140" y="123">2</text><text x="240" y="123">2</text><text x="310" y="123">2×2</text>
+      <text x="50" y="143">5</text><text x="140" y="143">3</text><text x="240" y="143">3</text><text x="310" y="143">4+1</text>
+      <text x="50" y="163">8</text><text x="140" y="163">3</text><text x="240" y="163">3</text><text x="310" y="163">2×2×2</text>
+      <text x="50" y="183">16</text><text x="140" y="183">4</text><text x="240" y="183">4</text><text x="310" y="183">2⁴</text>
+      <text x="50" y="203">100</text><text x="140" y="203">7</text><text x="240" y="203">7</text><text x="310" y="203">addition chain</text>
+    </g>
+  </g>
+
+  <!-- Key Insight Box -->
+  <rect x="500" y="420" width="450" height="230" rx="10" fill="#FFF8E1" stroke="#FFB300" stroke-width="2"/>
+  <text x="725" y="450" text-anchor="middle" font-family="Georgia" font-size="16" fill="#E65100" font-weight="bold">Key Insight</text>
+
+  <text x="520" y="480" font-family="Georgia" font-size="13" fill="#333">
+    Computing tan(nθ) from tan(θ) requires only
+  </text>
+  <text x="520" y="500" font-family="Georgia" font-size="13" fill="#333">
+    ⌈log₂ n⌉ SPB operations — the same as repeated
+  </text>
+  <text x="520" y="520" font-family="Georgia" font-size="13" fill="#333">
+    squaring for exponentiation.
+  </text>
+
+  <text x="520" y="555" font-family="Georgia" font-size="13" fill="#333">
+    This is because SPB IS multiplication on S¹:
+  </text>
+  <text x="540" y="580" font-family="monospace" font-size="14" fill="#1565C0">
+    C(spb^n(x)) = C(x)^n
+  </text>
+  <text x="520" y="605" font-family="Georgia" font-size="13" fill="#333">
+    So SPB "powers" have the same complexity as
+  </text>
+  <text x="520" y="625" font-family="Georgia" font-size="13" fill="#333">
+    integer powers — the addition chain problem!
+  </text>
+
+  <!-- Bottom -->
+  <text x="500" y="685" text-anchor="middle" font-family="Georgia" font-size="11" fill="#999" font-style="italic">
+    Conjecture: K_SPB(tan(nθ)) = length of shortest addition chain for n = ⌈log₂ n⌉ + ν(n) where ν(n) counts extra additions
+  </text>
+</svg>

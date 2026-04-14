@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a0a2e"/>
+      <stop offset="100%" stop-color="#1a1a4e"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FFD700"/>
+      <stop offset="100%" stop-color="#FFA500"/>
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4FC3F7"/>
+      <stop offset="100%" stop-color="#0288D1"/>
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#81C784"/>
+      <stop offset="100%" stop-color="#388E3C"/>
+    </linearGradient>
+    <linearGradient id="pinkGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F48FB1"/>
+      <stop offset="100%" stop-color="#C2185B"/>
+    </linearGradient>
+    <linearGradient id="purpleGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#CE93D8"/>
+      <stop offset="100%" stop-color="#7B1FA2"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="900" fill="url(#bgGrad)"/>
+
+  <!-- Title -->
+  <text x="600" y="50" text-anchor="middle" font-family="Georgia, serif" font-size="32" fill="url(#goldGrad)" filter="url(#glow)">
+    The Stereographic Projection Bridge
+  </text>
+  <text x="600" y="80" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#aaa" font-style="italic">
+    One Formula, Many Worlds
+  </text>
+
+  <!-- Central Formula -->
+  <rect x="400" y="100" width="400" height="70" rx="15" fill="#1a1a3e" stroke="url(#goldGrad)" stroke-width="3" filter="url(#shadow)"/>
+  <text x="600" y="128" text-anchor="middle" font-family="monospace" font-size="28" fill="url(#goldGrad)" filter="url(#glow)">
+    spb(x, y) = (x+y)/(1-xy)
+  </text>
+  <text x="600" y="158" text-anchor="middle" font-family="Georgia" font-size="13" fill="#ccc">
+    The tangent addition formula as a universal algebraic gate
+  </text>
+
+  <!-- Central Circle (S¹) -->
+  <circle cx="600" cy="420" r="120" fill="none" stroke="url(#goldGrad)" stroke-width="2" opacity="0.6"/>
+  <circle cx="600" cy="420" r="3" fill="#FFD700"/>
+  <text x="600" y="415" text-anchor="middle" font-family="Georgia" font-size="14" fill="#FFD700">S¹</text>
+  <text x="600" y="435" text-anchor="middle" font-family="Georgia" font-size="11" fill="#aaa">Circle Group</text>
+
+  <!-- Real Line (bottom of circle) -->
+  <line x1="440" y1="540" x2="760" y2="540" stroke="#4FC3F7" stroke-width="2" opacity="0.6"/>
+  <text x="600" y="560" text-anchor="middle" font-family="Georgia" font-size="12" fill="#4FC3F7">ℝ (with SPB operation)</text>
+
+  <!-- Cayley Transform Arrow -->
+  <path d="M 560 535 Q 540 480 570 440" fill="none" stroke="#FFD700" stroke-width="2" marker-end="url(#arrowGold)"/>
+  <text x="520" y="490" text-anchor="middle" font-family="Georgia" font-size="11" fill="#FFD700" transform="rotate(-60 520 490)">Cayley</text>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- Branch 1: Trigonometry (top-left) -->
+  <rect x="40" y="200" width="260" height="140" rx="12" fill="#1a1a3e" stroke="url(#blueGrad)" stroke-width="2" filter="url(#shadow)"/>
+  <text x="170" y="225" text-anchor="middle" font-family="Georgia" font-size="16" fill="url(#blueGrad)" font-weight="bold">Trigonometry</text>
+  <text x="170" y="250" text-anchor="middle" font-family="monospace" font-size="13" fill="#4FC3F7">tan(α+β) = spb(tan α, tan β)</text>
+  <text x="170" y="275" text-anchor="middle" font-family="Georgia" font-size="11" fill="#aaa">• Multiple angle formulas</text>
+  <text x="170" y="295" text-anchor="middle" font-family="Georgia" font-size="11" fill="#aaa">• Chebyshev polynomials</text>
+  <text x="170" y="315" text-anchor="middle" font-family="Georgia" font-size="11" fill="#aaa">• spb^n(tan θ) = tan(nθ)</text>
+  <line x1="300" y1="300" x2="480" y2="400" stroke="url(#blueGrad)" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- Branch 2: Special Relativity (top-right) -->
+  <rect x="900" y="200" width="260" height="140" rx="12" fill="#1a1a3e" stroke="url(#pinkGrad)" stroke-width="2" filter="url(#shadow)"/>
+  <text x="1030" y="225" text-anchor="middle" font-family="Georgia" font-size="16" fill="url(#pinkGrad)" font-weight="bold">Special Relativity</text>
+  <text x="1030" y="250" text-anchor="middle" font-family="monospace" font-size="12" fill="#F48FB1">v₁⊕v₂ = (v₁+v₂)/(1+v₁v₂)</text>
+  <text x="1030" y="275" text-anchor="middle" font-family="Georgia" font-size="11" fill="#aaa">• Einstein velocity addition</text>
+  <text x="1030" y="295" text-anchor="middle" font-family="Georgia" font-size="11" fill="#aaa">• Rapidity is additive</text>
+  <text x="1030" y="315" text-anchor="middle" font-family="Georgia" font-size="11" fill="#aaa">• c is invariant: 1⊕v = 1</text>
+  <line x1="900" y1="300" x2="720" y2="400" stroke="url(#pinkGrad)" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- Wick Rotation Arrow between Trig and Relativity -->
+  <path d="M 310 250 L 890 250" fill="none" stroke="#FF6F00" stroke-width="2" stroke-dasharray="8,4" opacity="0.7"/>
+  <text x="600" y="240" text-anchor="middle" font-family="Georgia" font-size="13" fill="#FF6F00">Wick Rotation: 1-xy ↔ 1+xy</text>
+
+  <!-- Branch 3: Möbius Geometry (left) -->
+  <rect x="40" y="400" width="260" height="140" rx="12" fill="#1a1a3e" stroke="url(#greenGrad)" stroke-width="2" filter="url(#shadow)"/>
+  <text x="170" y="425" text-anchor="middle" font-family="Georgia" font-size="16" fill="url(#greenGrad)" font-weight="bold">Conformal Geometry</text>
+  <text x="170" y="450" text-anchor="middle" font-family="monospace" font-size="12" fill="#81C784">z ↦ (z+a)/(-az+1)</text>
+  <text x="170" y="475" text-anchor="middle" font-family="Georgia" font-size="11" fill="#aaa">• Möbius transformations</text>
+  <text x="170" y="495" text-anchor="middle" font-family="Georgia" font-size="11" fill="#aaa">• Cross-ratio invariance</text>
+  <text x="170" y="515" text-anchor="middle" font-family="Georgia" font-size="11" fill="#aaa">• Poincaré disk model</text>
+  <line x1="300" y1="470" x2="480" y2="430" stroke="url(#greenGrad)" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- Branch 4: Quantum Mechanics (right) -->
+  <rect x="900" y="400" width="260" height="140" rx="12" fill="#1a1a3e" stroke="url(#purpleGrad)" stroke-width="2" filter="url(#shadow)"/>
+  <text x="1030" y="425" text-anchor="middle" font-family="Georgia" font-size="16" fill="url(#purpleGrad)" font-weight="bold">Quantum Mechanics</text>
+  <text x="1030" y="450" text-anchor="middle" font-family="monospace" font-size="12" fill="#CE93D8">C(H) = (H-iI)/(H+iI)</text>
+  <text x="1030" y="475" text-anchor="middle" font-family="Georgia" font-size="11" fill="#aaa">• Cayley: self-adjoint → unitary</text>
+  <text x="1030" y="495" text-anchor="middle" font-family="Georgia" font-size="11" fill="#aaa">• Bloch sphere stereography</text>
+  <text x="1030" y="515" text-anchor="middle" font-family="Georgia" font-size="11" fill="#aaa">• Quantum gate composition</text>
+  <line x1="900" y1="470" x2="720" y2="430" stroke="url(#purpleGrad)" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- Branch 5: Finite Fields (bottom-left) -->
+  <rect x="40" y="620" width="260" height="140" rx="12" fill="#1a1a3e" stroke="#FF7043" stroke-width="2" filter="url(#shadow)"/>
+  <text x="170" y="645" text-anchor="middle" font-family="Georgia" font-size="16" fill="#FF7043" font-weight="bold">Number Theory</text>
+  <text x="170" y="670" text-anchor="middle" font-family="monospace" font-size="12" fill="#FF8A65">spb(x,y) mod p</text>
+  <text x="170" y="695" text-anchor="middle" font-family="Georgia" font-size="11" fill="#aaa">• SPB group over 𝔽_p</text>
+  <text x="170" y="715" text-anchor="middle" font-family="Georgia" font-size="11" fill="#aaa">• |G| = p±1 (depends on QR)</text>
+  <text x="170" y="735" text-anchor="middle" font-family="Georgia" font-size="11" fill="#aaa">• Projective line ℙ¹(𝔽_p)</text>
+  <line x1="300" y1="670" x2="480" y2="520" stroke="#FF7043" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- Branch 6: Neural Networks (bottom-right) -->
+  <rect x="900" y="620" width="260" height="140" rx="12" fill="#1a1a3e" stroke="#26C6DA" stroke-width="2" filter="url(#shadow)"/>
+  <text x="1030" y="645" text-anchor="middle" font-family="Georgia" font-size="16" fill="#26C6DA" font-weight="bold">Machine Learning</text>
+  <text x="1030" y="670" text-anchor="middle" font-family="monospace" font-size="12" fill="#4DD0E1">σ_SPB(x,w) = (x+w)/(1-xw)</text>
+  <text x="1030" y="695" text-anchor="middle" font-family="Georgia" font-size="11" fill="#aaa">• Monotonic activation</text>
+  <text x="1030" y="715" text-anchor="middle" font-family="Georgia" font-size="11" fill="#aaa">• No vanishing gradient</text>
+  <text x="1030" y="735" text-anchor="middle" font-family="Georgia" font-size="11" fill="#aaa">• Natural for periodic data</text>
+  <line x1="900" y1="670" x2="720" y2="520" stroke="#26C6DA" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- Branch 7: Dynamical Systems (bottom-center) -->
+  <rect x="470" y="620" width="260" height="140" rx="12" fill="#1a1a3e" stroke="#AED581" stroke-width="2" filter="url(#shadow)"/>
+  <text x="600" y="645" text-anchor="middle" font-family="Georgia" font-size="16" fill="#AED581" font-weight="bold">Dynamics &amp; Ergodic Theory</text>
+  <text x="600" y="670" text-anchor="middle" font-family="monospace" font-size="12" fill="#C5E1A5">x_{n+1} = spb(x_n, a)</text>
+  <text x="600" y="695" text-anchor="middle" font-family="Georgia" font-size="11" fill="#aaa">• Rational rotation → periodic</text>
+  <text x="600" y="715" text-anchor="middle" font-family="Georgia" font-size="11" fill="#aaa">• Irrational rotation → dense</text>
+  <text x="600" y="735" text-anchor="middle" font-family="Georgia" font-size="11" fill="#aaa">• Haar measure pushforward</text>
+  <line x1="600" y1="620" x2="600" y2="545" stroke="#AED581" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- EML Connection -->
+  <rect x="400" y="810" width="400" height="50" rx="10" fill="#1a1a3e" stroke="#FFD700" stroke-width="1.5" stroke-dasharray="5,3" opacity="0.8"/>
+  <text x="600" y="840" text-anchor="middle" font-family="Georgia" font-size="14" fill="#FFD700">
+    EML(x,y) = eˣ - ln(y) bridges arithmetic | SPB bridges geometry
+  </text>
+
+  <!-- Small decorative dots on the circle -->
+  <g opacity="0.7">
+    <circle cx="720" cy="420" r="4" fill="#FFD700"/>
+    <circle cx="600" cy="300" r="4" fill="#4FC3F7"/>
+    <circle cx="480" cy="420" r="4" fill="#81C784"/>
+    <circle cx="600" cy="540" r="4" fill="#F48FB1"/>
+    <circle cx="685" cy="316" r="4" fill="#CE93D8"/>
+    <circle cx="515" cy="316" r="4" fill="#FF7043"/>
+    <circle cx="685" cy="524" r="4" fill="#26C6DA"/>
+    <circle cx="515" cy="524" r="4" fill="#AED581"/>
+  </g>
+
+  <!-- Copyright -->
+  <text x="600" y="885" text-anchor="middle" font-family="Georgia" font-size="10" fill="#555">
+    The Stereographic Projection Bridge — A Unified Mathematical Framework
+  </text>
+</svg>
