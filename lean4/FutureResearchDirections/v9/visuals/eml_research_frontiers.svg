@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d0d2b"/>
+      <stop offset="100%" style="stop-color:#1a1a4a"/>
+    </linearGradient>
+    <filter id="gl">
+      <feGaussianBlur stdDeviation="2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  
+  <rect width="1000" height="700" fill="url(#bgGrad)"/>
+  
+  <!-- Title -->
+  <text x="500" y="40" text-anchor="middle" fill="#f0c040" font-size="26" font-weight="bold" filter="url(#gl)">
+    OISCC Research Frontiers — 80+ Open Problems
+  </text>
+  <text x="500" y="62" text-anchor="middle" fill="#8899bb" font-size="13">
+    EML(a,b) = eᵃ − ln(b) : Seven Domains of Investigation
+  </text>
+  
+  <!-- Central hub -->
+  <circle cx="500" cy="350" r="60" fill="#1a2255" stroke="#f0c040" stroke-width="3" filter="url(#gl)"/>
+  <text x="500" y="340" text-anchor="middle" fill="#f0c040" font-size="18" font-weight="bold">EML</text>
+  <text x="500" y="360" text-anchor="middle" fill="#ccaa44" font-size="13">eᵃ − ln(b)</text>
+  <text x="500" y="378" text-anchor="middle" fill="#998833" font-size="10">80+ problems</text>
+  
+  <!-- Frontier 1: Pure Mathematics -->
+  <line x1="500" y1="290" x2="500" y2="155" stroke="#4488ff" stroke-width="2" opacity="0.6"/>
+  <ellipse cx="500" cy="130" rx="120" ry="40" fill="#112244" stroke="#4488ff" stroke-width="2"/>
+  <text x="500" y="125" text-anchor="middle" fill="#88bbff" font-size="14" font-weight="bold">Pure Mathematics</text>
+  <text x="500" y="143" text-anchor="middle" fill="#6699cc" font-size="10">20 problems: Hierarchy, Density, W</text>
+  
+  <!-- Frontier 2: Complexity Theory -->
+  <line x1="548" y1="308" x2="700" y2="170" stroke="#ff6644" stroke-width="2" opacity="0.6"/>
+  <ellipse cx="735" cy="150" rx="110" ry="40" fill="#221122" stroke="#ff6644" stroke-width="2"/>
+  <text x="735" y="145" text-anchor="middle" fill="#ff8866" font-size="14" font-weight="bold">Complexity Theory</text>
+  <text x="735" y="163" text-anchor="middle" fill="#cc6644" font-size="10">15 problems: K_EML, bounds</text>
+  
+  <!-- Frontier 3: Dynamical Systems -->
+  <line x1="555" y1="330" x2="780" y2="310" stroke="#44cc88" stroke-width="2" opacity="0.6"/>
+  <ellipse cx="830" cy="310" rx="120" ry="40" fill="#112233" stroke="#44cc88" stroke-width="2"/>
+  <text x="830" y="305" text-anchor="middle" fill="#88ffbb" font-size="14" font-weight="bold">Dynamical Systems</text>
+  <text x="830" y="323" text-anchor="middle" fill="#66cc99" font-size="10">12 problems: Orbits, chaos, entropy</text>
+  
+  <!-- Frontier 4: Hardware Design -->
+  <line x1="548" y1="392" x2="740" y2="490" stroke="#ff44aa" stroke-width="2" opacity="0.6"/>
+  <ellipse cx="775" cy="500" rx="110" ry="40" fill="#221133" stroke="#ff44aa" stroke-width="2"/>
+  <text x="775" y="495" text-anchor="middle" fill="#ff88cc" font-size="14" font-weight="bold">Hardware Design</text>
+  <text x="775" y="513" text-anchor="middle" fill="#cc4488" font-size="10">10 problems: FPGA, ASIC, power</text>
+  
+  <!-- Frontier 5: Applications -->
+  <line x1="470" y1="405" x2="400" y2="540" stroke="#ffaa33" stroke-width="2" opacity="0.6"/>
+  <ellipse cx="380" cy="560" rx="120" ry="40" fill="#222211" stroke="#ffaa33" stroke-width="2"/>
+  <text x="380" y="555" text-anchor="middle" fill="#ffcc66" font-size="14" font-weight="bold">Applications</text>
+  <text x="380" y="573" text-anchor="middle" fill="#cc9933" font-size="10">12 problems: ML, crypto, DSP, control</text>
+  
+  <!-- Frontier 6: Formal Verification -->
+  <line x1="445" y1="390" x2="230" y2="470" stroke="#44aaff" stroke-width="2" opacity="0.6"/>
+  <ellipse cx="190" cy="485" rx="120" ry="40" fill="#111133" stroke="#44aaff" stroke-width="2"/>
+  <text x="190" y="480" text-anchor="middle" fill="#88ccff" font-size="14" font-weight="bold">Formal Verification</text>
+  <text x="190" y="498" text-anchor="middle" fill="#6699cc" font-size="10">6 problems: Lean 4, correctness</text>
+  
+  <!-- Frontier 7: Cross-Domain -->
+  <line x1="445" y1="330" x2="220" y2="270" stroke="#aa44ff" stroke-width="2" opacity="0.6"/>
+  <ellipse cx="180" cy="250" rx="130" ry="40" fill="#221144" stroke="#aa44ff" stroke-width="2"/>
+  <text x="180" y="245" text-anchor="middle" fill="#cc88ff" font-size="14" font-weight="bold">Cross-Domain</text>
+  <text x="180" y="263" text-anchor="middle" fill="#9966cc" font-size="10">10 problems: Category, tropical, Lie</text>
+  
+  <!-- Top 5 Problems callout -->
+  <rect x="30" y="600" width="940" height="80" rx="10" fill="#0d0d1a" stroke="#334466" stroke-width="1"/>
+  <text x="500" y="622" text-anchor="middle" fill="#f0c040" font-size="14" font-weight="bold">★ Top 5 Open Problems ★</text>
+  <text x="130" y="648" text-anchor="middle" fill="#88bbff" font-size="11">P-M1: Depth Hierarchy</text>
+  <text x="310" y="648" text-anchor="middle" fill="#ff8866" font-size="11">P-C1: K_EML(2)</text>
+  <text x="500" y="648" text-anchor="middle" fill="#88ffbb" font-size="11">P-D1: Divergence</text>
+  <text x="680" y="648" text-anchor="middle" fill="#ff88cc" font-size="11">P-H1: FPGA Proto</text>
+  <text x="870" y="648" text-anchor="middle" fill="#ffcc66" font-size="11">P-M2: Density</text>
+  <text x="130" y="668" text-anchor="middle" fill="#6699aa" font-size="9">★★★★★ Impact</text>
+  <text x="310" y="668" text-anchor="middle" fill="#6699aa" font-size="9">★★★★ Feasible</text>
+  <text x="500" y="668" text-anchor="middle" fill="#6699aa" font-size="9">★★★★★ Impact</text>
+  <text x="680" y="668" text-anchor="middle" fill="#6699aa" font-size="9">★★★★★ Impact</text>
+  <text x="870" y="668" text-anchor="middle" fill="#6699aa" font-size="9">★★★★ Impact</text>
+</svg>
