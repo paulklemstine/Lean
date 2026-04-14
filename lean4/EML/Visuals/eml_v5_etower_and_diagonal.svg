@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0a2e"/>
+      <stop offset="100%" stop-color="#1a1a4e"/>
+    </linearGradient>
+    <linearGradient id="tower_grad" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#4CAF50"/>
+      <stop offset="100%" stop-color="#FFC107"/>
+    </linearGradient>
+    <filter id="glow2">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="700" fill="url(#bg2)"/>
+
+  <!-- Title -->
+  <text x="600" y="40" text-anchor="middle" fill="#FFD700" font-size="26" font-weight="bold" filter="url(#glow2)">
+    EML V5: e-Tower Growth &amp; Diagonal Map Analysis
+  </text>
+
+  <!-- ===== LEFT PANEL: e-Tower ===== -->
+  <rect x="30" y="60" width="560" height="600" rx="15" fill="#111133" stroke="#333366" stroke-width="1"/>
+  <text x="310" y="95" text-anchor="middle" fill="#4FC3F7" font-size="20" font-weight="bold">
+    The e-Tower: e↑↑n
+  </text>
+
+  <!-- Tower visualization -->
+  <g transform="translate(80, 120)">
+    <!-- Level 0 -->
+    <rect x="0" y="400" width="100" height="50" rx="8" fill="#1B5E20" opacity="0.8"/>
+    <text x="50" y="430" text-anchor="middle" fill="white" font-size="14" font-weight="bold">e↑↑0 = 1</text>
+
+    <!-- Level 1 -->
+    <rect x="110" y="350" width="100" height="100" rx="8" fill="#2E7D32" opacity="0.8"/>
+    <text x="160" y="395" text-anchor="middle" fill="white" font-size="13" font-weight="bold">e↑↑1</text>
+    <text x="160" y="415" text-anchor="middle" fill="#ddd" font-size="11">= e ≈ 2.72</text>
+
+    <!-- Level 2 -->
+    <rect x="220" y="250" width="100" height="200" rx="8" fill="#43A047" opacity="0.8"/>
+    <text x="270" y="340" text-anchor="middle" fill="white" font-size="13" font-weight="bold">e↑↑2</text>
+    <text x="270" y="360" text-anchor="middle" fill="#ddd" font-size="11">= eᵉ ≈ 15.15</text>
+
+    <!-- Level 3 -->
+    <rect x="330" y="50" width="100" height="400" rx="8" fill="url(#tower_grad)" opacity="0.8"/>
+    <text x="380" y="240" text-anchor="middle" fill="white" font-size="13" font-weight="bold">e↑↑3</text>
+    <text x="380" y="260" text-anchor="middle" fill="#333" font-size="10">= eᵉᵉ</text>
+    <text x="380" y="278" text-anchor="middle" fill="#333" font-size="10">≈ 3,814,279</text>
+
+    <!-- Arrow indicating continuation -->
+    <text x="440" y="30" fill="#FFC107" font-size="24" font-weight="bold">↑</text>
+    <text x="455" y="35" fill="#FFC107" font-size="12">e↑↑4 &gt; 10^1656520</text>
+  </g>
+
+  <!-- Growth bounds box -->
+  <rect x="50" y="550" width="520" height="100" rx="10" fill="#0d0d2a" stroke="#4FC3F7" stroke-width="1"/>
+  <text x="310" y="575" text-anchor="middle" fill="#4FC3F7" font-size="15" font-weight="bold">
+    ★ Proved Growth Bounds (V5)
+  </text>
+  <text x="70" y="600" fill="#9f9" font-size="12">✓ e↑↑(n+1) ≥ e · e↑↑n (superexponential)</text>
+  <text x="70" y="620" fill="#9f9" font-size="12">✓ e↑↑n ≥ eⁿ (exponential lower bound)</text>
+  <text x="70" y="640" fill="#9f9" font-size="12">✓ ∀k, eventually e↑↑n &gt; nᵏ (dominates all polynomials)</text>
+  <text x="360" y="600" fill="#9f9" font-size="12">✓ e-tower unbounded</text>
+  <text x="360" y="620" fill="#9f9" font-size="12">✓ ∀ε&gt;0, ∃n: exp(−e↑↑n) &lt; ε</text>
+  <text x="360" y="640" fill="#9f9" font-size="12">✓ Strict monotonicity</text>
+
+  <!-- ===== RIGHT PANEL: Diagonal Map ===== -->
+  <rect x="610" y="60" width="560" height="600" rx="15" fill="#111133" stroke="#333366" stroke-width="1"/>
+  <text x="890" y="95" text-anchor="middle" fill="#FF7043" font-size="20" font-weight="bold">
+    Diagonal Map: d(z) = eᶻ − ln(z)
+  </text>
+
+  <!-- Graph area -->
+  <g transform="translate(660, 110)">
+    <!-- Axes -->
+    <line x1="0" y1="350" x2="450" y2="350" stroke="#555" stroke-width="1"/>
+    <line x1="50" y1="0" x2="50" y2="370" stroke="#555" stroke-width="1"/>
+    <text x="450" y="370" fill="#777" font-size="11">z</text>
+    <text x="35" y="15" fill="#777" font-size="11">d(z)</text>
+
+    <!-- Grid lines -->
+    <line x1="50" y1="300" x2="450" y2="300" stroke="#333" stroke-width="0.5" stroke-dasharray="4"/>
+    <line x1="50" y1="250" x2="450" y2="250" stroke="#333" stroke-width="0.5" stroke-dasharray="4"/>
+    <line x1="50" y1="200" x2="450" y2="200" stroke="#333" stroke-width="0.5" stroke-dasharray="4"/>
+    <line x1="50" y1="150" x2="450" y2="150" stroke="#333" stroke-width="0.5" stroke-dasharray="4"/>
+    <line x1="50" y1="100" x2="450" y2="100" stroke="#333" stroke-width="0.5" stroke-dasharray="4"/>
+
+    <!-- Tick labels -->
+    <text x="40" y="354" fill="#777" font-size="10" text-anchor="end">0</text>
+    <text x="40" y="304" fill="#777" font-size="10" text-anchor="end">1</text>
+    <text x="40" y="254" fill="#777" font-size="10" text-anchor="end">2</text>
+    <text x="40" y="204" fill="#777" font-size="10" text-anchor="end">3</text>
+    <text x="40" y="154" fill="#777" font-size="10" text-anchor="end">4</text>
+    <text x="40" y="104" fill="#777" font-size="10" text-anchor="end">5</text>
+    <text x="150" y="367" fill="#777" font-size="10" text-anchor="middle">1</text>
+    <text x="250" y="367" fill="#777" font-size="10" text-anchor="middle">2</text>
+    <text x="350" y="367" fill="#777" font-size="10" text-anchor="middle">3</text>
+
+    <!-- Identity line y = z -->
+    <line x1="50" y1="350" x2="400" y2="0" stroke="#555" stroke-width="1" stroke-dasharray="6,3"/>
+    <text x="390" y="20" fill="#777" font-size="10">y = z</text>
+
+    <!-- d(z) curve (approximate) -->
+    <!-- Points: z=0.1 → d≈3.41, z=0.3 → d≈2.55, z=0.567 → d≈2.33 (min), z=1 → d≈2.72, z=2 → d≈6.70, z=3 → d≈19 -->
+    <path d="M 60,10 Q 70,60 78,100 Q 85,140 95,170 Q 105,190 115,195 Q 130,195 140,185 Q 160,165 180,145 Q 200,110 220,50 Q 230,25 240,5"
+          fill="none" stroke="#FF7043" stroke-width="2.5" filter="url(#glow2)"/>
+
+    <!-- Minimum point -->
+    <circle cx="107" cy="233" r="5" fill="#FFC107" stroke="white" stroke-width="1"/>
+    <text x="130" y="245" fill="#FFC107" font-size="10">min ≈ 2.33</text>
+    <text x="130" y="258" fill="#FFC107" font-size="9">at z = W(1) ≈ 0.567</text>
+
+    <!-- d(z) > z annotation -->
+    <text x="300" y="130" fill="#FF7043" font-size="13" font-weight="bold">d(z) &gt; z always!</text>
+    <text x="300" y="150" fill="#aaa" font-size="10">No fixed points</text>
+  </g>
+
+  <!-- Properties box -->
+  <rect x="630" y="500" width="520" height="150" rx="10" fill="#0d0d2a" stroke="#FF7043" stroke-width="1"/>
+  <text x="890" y="525" text-anchor="middle" fill="#FF7043" font-size="15" font-weight="bold">
+    ★ Proved Properties (V5)
+  </text>
+  <text x="650" y="550" fill="#9f9" font-size="12">✓ d(z) &gt; z for all z ∈ ℝ (no fixed points)</text>
+  <text x="650" y="570" fill="#9f9" font-size="12">✓ d convex on (0, ∞)</text>
+  <text x="650" y="590" fill="#9f9" font-size="12">✓ d(z) → ∞ as z → ∞</text>
+  <text x="650" y="610" fill="#9f9" font-size="12">✓ Iterated d is strictly increasing</text>
+  <text x="920" y="550" fill="#9f9" font-size="12">✓ d'(z) = eᶻ − 1/z</text>
+  <text x="920" y="570" fill="#9f9" font-size="12">✓ d''(z) = eᶻ + 1/z² &gt; 0</text>
+  <text x="920" y="590" fill="#ff9" font-size="12">? Julia set in ℂ</text>
+  <text x="920" y="610" fill="#ff9" font-size="12">? Hausdorff dimension</text>
+
+  <!-- Footer -->
+  <text x="600" y="685" text-anchor="middle" fill="#666" font-size="10">
+    All results formally verified in Lean 4 with Mathlib · 0 sorries · April 2026
+  </text>
+</svg>

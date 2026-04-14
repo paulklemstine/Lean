@@ -1,0 +1,205 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0a2e"/>
+      <stop offset="100%" stop-color="#1a1a4e"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFD700"/>
+      <stop offset="100%" stop-color="#FFA500"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4FC3F7"/>
+      <stop offset="100%" stop-color="#0288D1"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#81C784"/>
+      <stop offset="100%" stop-color="#388E3C"/>
+    </linearGradient>
+    <linearGradient id="purple" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#CE93D8"/>
+      <stop offset="100%" stop-color="#7B1FA2"/>
+    </linearGradient>
+    <linearGradient id="red" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#EF9A9A"/>
+      <stop offset="100%" stop-color="#C62828"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="900" fill="url(#bg)"/>
+
+  <!-- Title -->
+  <text x="600" y="55" text-anchor="middle" fill="url(#gold)" font-size="32" font-weight="bold" filter="url(#glow)">
+    EML Research Overview — Version 5
+  </text>
+  <text x="600" y="82" text-anchor="middle" fill="#aaa" font-size="16">
+    eml(x, y) = exp(x) − ln(y) · The Continuous Sheffer Stroke
+  </text>
+
+  <!-- Central formula -->
+  <rect x="380" y="95" width="440" height="50" rx="25" fill="none" stroke="url(#gold)" stroke-width="2"/>
+  <text x="600" y="127" text-anchor="middle" fill="url(#gold)" font-size="24" font-weight="bold">
+    eml(x, y) = eˣ − ln(y)
+  </text>
+
+  <!-- Theorem count badge -->
+  <rect x="930" y="100" width="200" height="40" rx="20" fill="url(#green)" opacity="0.9"/>
+  <text x="1030" y="126" text-anchor="middle" fill="white" font-size="16" font-weight="bold">
+    160+ Theorems, 0 sorry
+  </text>
+
+  <!-- ===== CATEGORY BOXES ===== -->
+
+  <!-- 1. Core Identity -->
+  <g transform="translate(50, 160)">
+    <rect width="260" height="150" rx="12" fill="#1a1a3e" stroke="url(#gold)" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="130" y="25" text-anchor="middle" fill="url(#gold)" font-size="15" font-weight="bold">🔑 Core Identities</text>
+    <text x="15" y="50" fill="#ccc" font-size="11">exp(x) = eml(x, 1)</text>
+    <text x="15" y="68" fill="#ccc" font-size="11">e = eml(1, 1)</text>
+    <text x="15" y="86" fill="#ccc" font-size="11">0 = eml(1, eml(eml(1,1), 1))</text>
+    <text x="15" y="104" fill="#ccc" font-size="11">a − b = eml(ln a, exp b)</text>
+    <text x="15" y="122" fill="#ccc" font-size="11">a + b = eml(ln a, exp(−b))</text>
+    <text x="15" y="140" fill="#9f9" font-size="10">★ Double negation: eml∘eml = id</text>
+  </g>
+
+  <!-- 2. Magma Structure -->
+  <g transform="translate(330, 160)">
+    <rect width="260" height="150" rx="12" fill="#1a1a3e" stroke="url(#blue)" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="130" y="25" text-anchor="middle" fill="url(#blue)" font-size="15" font-weight="bold">🔷 Algebraic Structure</text>
+    <text x="15" y="50" fill="#ccc" font-size="11">✓ Non-commutative</text>
+    <text x="15" y="68" fill="#ccc" font-size="11">✓ Non-associative</text>
+    <text x="15" y="86" fill="#ccc" font-size="11">✓ No left identity</text>
+    <text x="15" y="104" fill="#ccc" font-size="11">✓ No right identity</text>
+    <text x="15" y="122" fill="#9f9" font-size="11">★ Not power-associative</text>
+    <text x="15" y="140" fill="#ff9" font-size="10">Open: Is the EML magma free?</text>
+  </g>
+
+  <!-- 3. Diagonal Map -->
+  <g transform="translate(610, 160)">
+    <rect width="260" height="150" rx="12" fill="#1a1a3e" stroke="url(#green)" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="130" y="25" text-anchor="middle" fill="url(#green)" font-size="15" font-weight="bold">📈 Diagonal Map d(z)</text>
+    <text x="15" y="50" fill="#ccc" font-size="11">✓ d(z) > z for all z ∈ ℝ</text>
+    <text x="15" y="68" fill="#ccc" font-size="11">✓ No real fixed points</text>
+    <text x="15" y="86" fill="#ccc" font-size="11">✓ d(z) → ∞ as z → ∞</text>
+    <text x="15" y="104" fill="#9f9" font-size="11">★ d convex on (0, ∞)</text>
+    <text x="15" y="122" fill="#ccc" font-size="11">min d ≈ 2.330 at z ≈ W(1)</text>
+    <text x="15" y="140" fill="#ff9" font-size="10">Open: Julia set structure in ℂ</text>
+  </g>
+
+  <!-- 4. e-Tower -->
+  <g transform="translate(890, 160)">
+    <rect width="260" height="150" rx="12" fill="#1a1a3e" stroke="url(#purple)" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="130" y="25" text-anchor="middle" fill="url(#purple)" font-size="15" font-weight="bold">🗼 e-Tower Growth</text>
+    <text x="15" y="50" fill="#ccc" font-size="11">✓ Strictly monotone</text>
+    <text x="15" y="68" fill="#ccc" font-size="11">✓ e↑↑n ≥ 2ⁿ for n ≥ 1</text>
+    <text x="15" y="86" fill="#9f9" font-size="11">★ e↑↑(n+1) ≥ e · e↑↑n</text>
+    <text x="15" y="104" fill="#9f9" font-size="11">★ e↑↑n ≥ eⁿ for all n</text>
+    <text x="15" y="122" fill="#9f9" font-size="11">★ Dominates all polynomials</text>
+    <text x="15" y="140" fill="#9f9" font-size="11">★ Generates arb. small ε > 0</text>
+  </g>
+
+  <!-- 5. Fixed Point -->
+  <g transform="translate(50, 330)">
+    <rect width="260" height="150" rx="12" fill="#1a1a3e" stroke="url(#red)" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="130" y="25" text-anchor="middle" fill="url(#red)" font-size="15" font-weight="bold">🎯 Fixed Point z*</text>
+    <text x="15" y="50" fill="#ccc" font-size="11">z* ≈ 2.01678 = W(eᵉ)</text>
+    <text x="15" y="68" fill="#ccc" font-size="11">✓ z* + ln(z*) = e</text>
+    <text x="15" y="86" fill="#ccc" font-size="11">✓ z*·exp(z*) = eᵉ</text>
+    <text x="15" y="104" fill="#9f9" font-size="11">★ z* > 1 (proved)</text>
+    <text x="15" y="122" fill="#9f9" font-size="11">★ Unique on (0, ∞) (proved)</text>
+    <text x="15" y="140" fill="#ff9" font-size="10">Open: Is z* transcendental?</text>
+  </g>
+
+  <!-- 6. Tropical -->
+  <g transform="translate(330, 330)">
+    <rect width="260" height="150" rx="12" fill="#1a1a3e" stroke="#00BCD4" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="130" y="25" text-anchor="middle" fill="#00BCD4" font-size="15" font-weight="bold">🌴 Tropical EML</text>
+    <text x="15" y="50" fill="#ccc" font-size="11">trop(x,y) = max(x, −y)</text>
+    <text x="15" y="68" fill="#ccc" font-size="11">✓ Recovers max and min</text>
+    <text x="15" y="86" fill="#9f9" font-size="11">★ trop(z, z) = |z|</text>
+    <text x="15" y="104" fill="#9f9" font-size="11">★ Commutative on negated args</text>
+    <text x="15" y="122" fill="#ff9" font-size="10">Open: Tropical universality?</text>
+    <text x="15" y="140" fill="#ff9" font-size="10">Open: Connection to optimal transport</text>
+  </g>
+
+  <!-- 7. Complexity -->
+  <g transform="translate(610, 330)">
+    <rect width="260" height="150" rx="12" fill="#1a1a3e" stroke="#FF9800" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="130" y="25" text-anchor="middle" fill="#FF9800" font-size="15" font-weight="bold">⚡ EML Complexity</text>
+    <text x="15" y="50" fill="#ccc" font-size="11">K(exp) = 1, K(e) = 1</text>
+    <text x="15" y="68" fill="#ccc" font-size="11">K(0) = 3, K(e−1) = 2</text>
+    <text x="15" y="86" fill="#ff9" font-size="11">3 ≤ K(ln) ≤ 5</text>
+    <text x="15" y="104" fill="#ff9" font-size="11">5 ≤ K(x·y) ≤ 17</text>
+    <text x="15" y="122" fill="#9f9" font-size="11">★ Interval bounds proved</text>
+    <text x="15" y="140" fill="#ff9" font-size="10">Open: Close the ln gap</text>
+  </g>
+
+  <!-- 8. Applications -->
+  <g transform="translate(890, 330)">
+    <rect width="260" height="150" rx="12" fill="#1a1a3e" stroke="#E91E63" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="130" y="25" text-anchor="middle" fill="#E91E63" font-size="15" font-weight="bold">🚀 Applications</text>
+    <text x="15" y="50" fill="#ccc" font-size="11">• Symbolic regression (vs PySR)</text>
+    <text x="15" y="68" fill="#ccc" font-size="11">• Neural EML networks</text>
+    <text x="15" y="86" fill="#ccc" font-size="11">• EML coprocessor design</text>
+    <text x="15" y="104" fill="#ccc" font-size="11">• Two-button calculator</text>
+    <text x="15" y="122" fill="#ccc" font-size="11">• Information geometry</text>
+    <text x="15" y="140" fill="#9f9" font-size="10">★ Program synthesis + Lean 4</text>
+  </g>
+
+  <!-- ===== NEW V5 RESULTS SECTION ===== -->
+  <rect x="50" y="500" width="1100" height="180" rx="15" fill="#0d0d2a" stroke="url(#gold)" stroke-width="2" filter="url(#shadow)"/>
+  <text x="600" y="530" text-anchor="middle" fill="url(#gold)" font-size="20" font-weight="bold">★ New in Version 5 — Key Breakthroughs</text>
+
+  <!-- Column 1 -->
+  <text x="100" y="560" fill="#9f9" font-size="13" font-weight="bold">Proved Theorems</text>
+  <text x="100" y="582" fill="#ccc" font-size="11">• exp(x) ≥ e·x for x > 0</text>
+  <text x="100" y="600" fill="#ccc" font-size="11">• e↑↑n dominates all polynomials</text>
+  <text x="100" y="618" fill="#ccc" font-size="11">• Diagonal map is convex on ℝ₊</text>
+  <text x="100" y="636" fill="#ccc" font-size="11">• EML not power-associative</text>
+  <text x="100" y="654" fill="#ccc" font-size="11">• Fixed point unique on (0,∞)</text>
+  <text x="100" y="672" fill="#ccc" font-size="11">• Fixed point z* > 1</text>
+
+  <!-- Column 2 -->
+  <text x="450" y="560" fill="#9f9" font-size="13" font-weight="bold">New Identities</text>
+  <text x="450" y="582" fill="#ccc" font-size="11">• Double negation: eml∘eml = id</text>
+  <text x="450" y="600" fill="#ccc" font-size="11">• Trace: Σ = exp(x)+exp(y)−ln(x)−ln(y)</text>
+  <text x="450" y="618" fill="#ccc" font-size="11">• EML chain rule composition</text>
+  <text x="450" y="636" fill="#ccc" font-size="11">• Interval arithmetic bounds</text>
+  <text x="450" y="654" fill="#ccc" font-size="11">• e^e − e from 3 EML nodes</text>
+  <text x="450" y="672" fill="#ccc" font-size="11">• Arbitrarily small constants</text>
+
+  <!-- Column 3 -->
+  <text x="800" y="560" fill="#9f9" font-size="13" font-weight="bold">Computational</text>
+  <text x="800" y="582" fill="#ccc" font-size="11">• Constant density μ₆ = 0.583</text>
+  <text x="800" y="600" fill="#ccc" font-size="11">• d_min ≈ 2.330 at W(1)</text>
+  <text x="800" y="618" fill="#ccc" font-size="11">• z* ≈ 2.01678 convergence</text>
+  <text x="800" y="636" fill="#ccc" font-size="11">• 118 distinct constants (≤6 nodes)</text>
+  <text x="800" y="654" fill="#ccc" font-size="11">• Verified all interval bounds</text>
+  <text x="800" y="672" fill="#ccc" font-size="11">• Complete tree enumeration</text>
+
+  <!-- ===== OPEN PROBLEMS ===== -->
+  <rect x="50" y="700" width="1100" height="90" rx="15" fill="#1a0a0a" stroke="#ff4444" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="600" y="728" text-anchor="middle" fill="#ff6666" font-size="18" font-weight="bold">🔓 Priority Open Problems</text>
+  <text x="100" y="755" fill="#ffaaaa" font-size="12">1. Close ln(x) complexity gap (3 ≤ K ≤ 5)</text>
+  <text x="400" y="755" fill="#ffaaaa" font-size="12">2. Julia set structure in ℂ</text>
+  <text x="700" y="755" fill="#ffaaaa" font-size="12">3. Is z* = W(eᵉ) transcendental?</text>
+  <text x="100" y="778" fill="#ffaaaa" font-size="12">4. Constant-free Sheffer conjecture</text>
+  <text x="400" y="778" fill="#ffaaaa" font-size="12">5. Algebraic independence of e-tower</text>
+  <text x="700" y="778" fill="#ffaaaa" font-size="12">6. EML circuit complexity theory</text>
+
+  <!-- Footer -->
+  <text x="600" y="850" text-anchor="middle" fill="#666" font-size="11">
+    EML Research Project · April 2026 · All theorems formally verified in Lean 4 with Mathlib
+  </text>
+  <text x="600" y="870" text-anchor="middle" fill="#666" font-size="11">
+    160+ theorems · 0 sorries · 14 research domains · 60+ open problems
+  </text>
+</svg>
