@@ -1,0 +1,217 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" font-family="'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a2e;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#1a1a4e;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f0c040"/>
+      <stop offset="100%" style="stop-color:#e8a020"/>
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#4080ff"/>
+      <stop offset="100%" style="stop-color:#2060dd"/>
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#40c060"/>
+      <stop offset="100%" style="stop-color:#20a040"/>
+    </linearGradient>
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#a050e0"/>
+      <stop offset="100%" style="stop-color:#8030c0"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="900" fill="url(#bgGrad)"/>
+
+  <!-- Title -->
+  <text x="600" y="50" text-anchor="middle" fill="url(#goldGrad)" font-size="32" font-weight="bold" filter="url(#glow)">
+    EML Operator Research Roadmap
+  </text>
+  <text x="600" y="75" text-anchor="middle" fill="#8899bb" font-size="14">
+    eml(x, y) = eˣ − ln(y) — A Sheffer Operator for Elementary Functions
+  </text>
+
+  <!-- Timeline axis -->
+  <line x1="100" y1="130" x2="1100" y2="130" stroke="#445577" stroke-width="2"/>
+  <text x="200" y="120" text-anchor="middle" fill="#aabbdd" font-size="12" font-weight="bold">0-6 MONTHS</text>
+  <text x="500" y="120" text-anchor="middle" fill="#aabbdd" font-size="12" font-weight="bold">6-18 MONTHS</text>
+  <text x="850" y="120" text-anchor="middle" fill="#aabbdd" font-size="12" font-weight="bold">1-5 YEARS</text>
+  <circle cx="100" cy="130" r="4" fill="#f0c040"/>
+  <circle cx="400" cy="130" r="4" fill="#4080ff"/>
+  <circle cx="700" cy="130" r="4" fill="#a050e0"/>
+  <circle cx="1100" cy="130" r="4" fill="#ff4060"/>
+
+  <!-- Phase 1: Immediate (Gold) -->
+  <g transform="translate(50, 150)" filter="url(#shadow)">
+    <rect width="320" height="70" rx="10" fill="#1a1a3e" stroke="#f0c040" stroke-width="2"/>
+    <text x="16" y="24" fill="#f0c040" font-size="14" font-weight="bold">🔬 Complexity Problem</text>
+    <text x="16" y="42" fill="#ccddee" font-size="11">Prove K_EML(ln x) ≥ 4</text>
+    <text x="16" y="58" fill="#889999" font-size="10">Exhaustive case analysis of 3-op trees</text>
+  </g>
+
+  <g transform="translate(50, 230)" filter="url(#shadow)">
+    <rect width="320" height="70" rx="10" fill="#1a1a3e" stroke="#f0c040" stroke-width="2"/>
+    <text x="16" y="24" fill="#f0c040" font-size="14" font-weight="bold">📊 Symbolic Regression Benchmark</text>
+    <text x="16" y="42" fill="#ccddee" font-size="11">EML vs PySR, AI Feynman, DSR, KAN</text>
+    <text x="16" y="58" fill="#889999" font-size="10">Physics datasets: sweet spot identification</text>
+  </g>
+
+  <g transform="translate(50, 310)" filter="url(#shadow)">
+    <rect width="320" height="70" rx="10" fill="#1a1a3e" stroke="#f0c040" stroke-width="2"/>
+    <text x="16" y="24" fill="#f0c040" font-size="14" font-weight="bold">🌀 Complex Julia Set</text>
+    <text x="16" y="42" fill="#ccddee" font-size="11">Julia set of d(z) = eᶻ − log z</text>
+    <text x="16" y="58" fill="#889999" font-size="10">Hausdorff dimension, connectedness</text>
+  </g>
+
+  <g transform="translate(50, 390)" filter="url(#shadow)">
+    <rect width="320" height="70" rx="10" fill="#1a1a3e" stroke="#f0c040" stroke-width="2"/>
+    <text x="16" y="24" fill="#f0c040" font-size="14" font-weight="bold">🎯 Basin of Attraction</text>
+    <text x="16" y="42" fill="#ccddee" font-size="11">g(z) = e − ln(z) attracts all of (0,∞)</text>
+    <text x="16" y="58" fill="#889999" font-size="10">Lean formalization target ✓</text>
+  </g>
+
+  <g transform="translate(50, 470)" filter="url(#shadow)">
+    <rect width="320" height="70" rx="10" fill="#1a1a3e" stroke="#f0c040" stroke-width="2"/>
+    <text x="16" y="24" fill="#f0c040" font-size="14" font-weight="bold">📐 Geodesic Equations</text>
+    <text x="16" y="42" fill="#ccddee" font-size="11">EML Hessian → Riemannian geometry</text>
+    <text x="16" y="58" fill="#889999" font-size="10">K = −eˣ/(4y²) — hyperbolic!</text>
+  </g>
+
+  <!-- Phase 2: Medium-term (Blue) -->
+  <g transform="translate(400, 150)" filter="url(#shadow)">
+    <rect width="320" height="70" rx="10" fill="#1a1a3e" stroke="#4080ff" stroke-width="2"/>
+    <text x="16" y="24" fill="#4080ff" font-size="14" font-weight="bold">🏗️ Sheffer Classification</text>
+    <text x="16" y="42" fill="#ccddee" font-size="11">Classify all Sheffer operators F: ℝ²→ℝ</text>
+    <text x="16" y="58" fill="#889999" font-size="10">Group structure? Topological space?</text>
+  </g>
+
+  <g transform="translate(400, 230)" filter="url(#shadow)">
+    <rect width="320" height="70" rx="10" fill="#1a1a3e" stroke="#4080ff" stroke-width="2"/>
+    <text x="16" y="24" fill="#4080ff" font-size="14" font-weight="bold">🔗 Quasigroup Embedding</text>
+    <text x="16" y="42" fill="#ccddee" font-size="11">(ℝ, eml) → quasigroup extension</text>
+    <text x="16" y="58" fill="#889999" font-size="10">Right division ✓, left needs b+ln(a)&gt;0</text>
+  </g>
+
+  <g transform="translate(400, 310)" filter="url(#shadow)">
+    <rect width="320" height="70" rx="10" fill="#1a1a3e" stroke="#4080ff" stroke-width="2"/>
+    <text x="16" y="24" fill="#4080ff" font-size="14" font-weight="bold">📏 Approximation Theory</text>
+    <text x="16" y="42" fill="#ccddee" font-size="11">Stone-Weierstrass for EML closure</text>
+    <text x="16" y="58" fill="#889999" font-size="10">Dense in C(K)? Contains polynomials?</text>
+  </g>
+
+  <g transform="translate(400, 390)" filter="url(#shadow)">
+    <rect width="320" height="70" rx="10" fill="#1a1a3e" stroke="#4080ff" stroke-width="2"/>
+    <text x="16" y="24" fill="#4080ff" font-size="14" font-weight="bold">🌴 Tropical EML Semiring</text>
+    <text x="16" y="42" fill="#ccddee" font-size="11">trop(x,y) = max(x,−y) algebraic structure</text>
+    <text x="16" y="58" fill="#889999" font-size="10">Skew semiring / near-semiring framework</text>
+  </g>
+
+  <g transform="translate(400, 470)" filter="url(#shadow)">
+    <rect width="320" height="70" rx="10" fill="#1a1a3e" stroke="#4080ff" stroke-width="2"/>
+    <text x="16" y="24" fill="#4080ff" font-size="14" font-weight="bold">🧠 EML Attention Mechanisms</text>
+    <text x="16" y="42" fill="#ccddee" font-size="11">Replace softmax with EML in transformers</text>
+    <text x="16" y="58" fill="#889999" font-size="10">Reduces to exp-attention when y = 1</text>
+  </g>
+
+  <!-- Phase 3: Long-term (Purple) -->
+  <g transform="translate(750, 150)" filter="url(#shadow)">
+    <rect width="320" height="70" rx="10" fill="#1a1a3e" stroke="#a050e0" stroke-width="2"/>
+    <text x="16" y="24" fill="#a050e0" font-size="14" font-weight="bold">🔮 Constant-Free Conjecture</text>
+    <text x="16" y="42" fill="#ccddee" font-size="11">No B: ℂ²→ℂ generates all elem. functions</text>
+    <text x="16" y="58" fill="#889999" font-size="10">without a distinguished constant</text>
+  </g>
+
+  <g transform="translate(750, 230)" filter="url(#shadow)">
+    <rect width="320" height="70" rx="10" fill="#1a1a3e" stroke="#a050e0" stroke-width="2"/>
+    <text x="16" y="24" fill="#a050e0" font-size="14" font-weight="bold">🔢 Algebraic Independence</text>
+    <text x="16" y="42" fill="#ccddee" font-size="11">e, eᵉ, eᵉᵉ algebraically independent / ℚ</text>
+    <text x="16" y="58" fill="#889999" font-size="10">Even eᵉ transcendence is open!</text>
+  </g>
+
+  <g transform="translate(750, 310)" filter="url(#shadow)">
+    <rect width="320" height="70" rx="10" fill="#1a1a3e" stroke="#a050e0" stroke-width="2"/>
+    <text x="16" y="24" fill="#a050e0" font-size="14" font-weight="bold">📐 O-Minimality</text>
+    <text x="16" y="42" fill="#ccddee" font-size="11">(ℝ, +, ×, &lt;, eml) o-minimal structure</text>
+    <text x="16" y="58" fill="#889999" font-size="10">Corollary of Wilkie's theorem (1996)</text>
+  </g>
+
+  <g transform="translate(750, 390)" filter="url(#shadow)">
+    <rect width="320" height="70" rx="10" fill="#1a1a3e" stroke="#a050e0" stroke-width="2"/>
+    <text x="16" y="24" fill="#a050e0" font-size="14" font-weight="bold">🧮 Normal Forms &amp; Decidability</text>
+    <text x="16" y="42" fill="#ccddee" font-size="11">Canonical form for EML expressions</text>
+    <text x="16" y="58" fill="#889999" font-size="10">Restricted Richardson's theorem?</text>
+  </g>
+
+  <g transform="translate(750, 470)" filter="url(#shadow)">
+    <rect width="320" height="70" rx="10" fill="#1a1a3e" stroke="#a050e0" stroke-width="2"/>
+    <text x="16" y="24" fill="#a050e0" font-size="14" font-weight="bold">🔐 Cryptographic Applications</text>
+    <text x="16" y="42" fill="#ccddee" font-size="11">One-way functions from iterated EML</text>
+    <text x="16" y="58" fill="#889999" font-size="10">Non-algebraic structure → security?</text>
+  </g>
+
+  <!-- Applications bar at bottom -->
+  <rect x="50" y="570" width="1100" height="120" rx="12" fill="#0d0d2a" stroke="#40c060" stroke-width="2" filter="url(#shadow)"/>
+  <text x="600" y="595" text-anchor="middle" fill="#40c060" font-size="18" font-weight="bold">🚀 Applications &amp; Engineering</text>
+
+  <g transform="translate(70, 610)">
+    <rect width="190" height="65" rx="8" fill="#152035" stroke="#3a6a4a" stroke-width="1"/>
+    <text x="95" y="22" text-anchor="middle" fill="#60e080" font-size="12" font-weight="bold">Scientific Discovery</text>
+    <text x="95" y="38" text-anchor="middle" fill="#99bbaa" font-size="10">Particle physics, climate,</text>
+    <text x="95" y="52" text-anchor="middle" fill="#99bbaa" font-size="10">astrophysics, proteins</text>
+  </g>
+
+  <g transform="translate(280, 610)">
+    <rect width="190" height="65" rx="8" fill="#152035" stroke="#3a6a4a" stroke-width="1"/>
+    <text x="95" y="22" text-anchor="middle" fill="#60e080" font-size="12" font-weight="bold">Hardware Coprocessor</text>
+    <text x="95" y="38" text-anchor="middle" fill="#99bbaa" font-size="10">FPGA/ASIC for eˣ − ln y</text>
+    <text x="95" y="52" text-anchor="middle" fill="#99bbaa" font-size="10">Target: 10 GHz throughput</text>
+  </g>
+
+  <g transform="translate(490, 610)">
+    <rect width="190" height="65" rx="8" fill="#152035" stroke="#3a6a4a" stroke-width="1"/>
+    <text x="95" y="22" text-anchor="middle" fill="#60e080" font-size="12" font-weight="bold">EML Language</text>
+    <text x="95" y="38" text-anchor="middle" fill="#99bbaa" font-size="10">Functional PL with EML</text>
+    <text x="95" y="52" text-anchor="middle" fill="#99bbaa" font-size="10">as sole primitive</text>
+  </g>
+
+  <g transform="translate(700, 610)">
+    <rect width="190" height="65" rx="8" fill="#152035" stroke="#3a6a4a" stroke-width="1"/>
+    <text x="95" y="22" text-anchor="middle" fill="#60e080" font-size="12" font-weight="bold">Education</text>
+    <text x="95" y="38" text-anchor="middle" fill="#99bbaa" font-size="10">EML Golf, Lean games,</text>
+    <text x="95" y="52" text-anchor="middle" fill="#99bbaa" font-size="10">visualization suite</text>
+  </g>
+
+  <g transform="translate(910, 610)">
+    <rect width="190" height="65" rx="8" fill="#152035" stroke="#3a6a4a" stroke-width="1"/>
+    <text x="95" y="22" text-anchor="middle" fill="#60e080" font-size="12" font-weight="bold">ML / Transformers</text>
+    <text x="95" y="38" text-anchor="middle" fill="#99bbaa" font-size="10">EML-attention, activation</text>
+    <text x="95" y="52" text-anchor="middle" fill="#99bbaa" font-size="10">functions, neural ODEs</text>
+  </g>
+
+  <!-- Stats footer -->
+  <rect x="50" y="720" width="1100" height="80" rx="10" fill="#0a0a20" stroke="#334466" stroke-width="1"/>
+  <text x="200" y="750" text-anchor="middle" fill="#f0c040" font-size="24" font-weight="bold">280+</text>
+  <text x="200" y="770" text-anchor="middle" fill="#8899aa" font-size="12">Verified Theorems</text>
+  <text x="420" y="750" text-anchor="middle" fill="#4080ff" font-size="24" font-weight="bold">50</text>
+  <text x="420" y="770" text-anchor="middle" fill="#8899aa" font-size="12">Research Directions</text>
+  <text x="640" y="750" text-anchor="middle" fill="#40c060" font-size="24" font-weight="bold">20+</text>
+  <text x="640" y="770" text-anchor="middle" fill="#8899aa" font-size="12">Applications</text>
+  <text x="860" y="750" text-anchor="middle" fill="#a050e0" font-size="24" font-weight="bold">∞</text>
+  <text x="860" y="770" text-anchor="middle" fill="#8899aa" font-size="12">Potential Impact</text>
+  <text x="1050" y="750" text-anchor="middle" fill="#ff6080" font-size="24" font-weight="bold">Lean 4</text>
+  <text x="1050" y="770" text-anchor="middle" fill="#8899aa" font-size="12">Formal Verification</text>
+
+  <!-- Version -->
+  <text x="600" y="860" text-anchor="middle" fill="#445566" font-size="11">
+    EML Research Roadmap V12 — Formally Verified in Lean 4.28.0 with Mathlib
+  </text>
+</svg>

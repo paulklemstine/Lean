@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 550" font-family="'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f0f4f8"/>
+      <stop offset="100%" style="stop-color:#e0e8f0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="900" height="550" fill="url(#bg4)"/>
+
+  <text x="450" y="35" text-anchor="middle" fill="#222" font-size="22" font-weight="bold">
+    EML Quasi-Division: Right vs Left
+  </text>
+
+  <!-- Right Division -->
+  <rect x="30" y="60" width="400" height="210" rx="12" fill="white" stroke="#33aa55" stroke-width="2"/>
+  <text x="230" y="90" text-anchor="middle" fill="#33aa55" font-size="18" font-weight="bold">✓ Right Division</text>
+  <text x="230" y="115" text-anchor="middle" fill="#222" font-size="14">Solve: eml(a, x) = b for x</text>
+
+  <text x="230" y="145" text-anchor="middle" fill="#444" font-size="13">eᵃ − ln(x) = b</text>
+  <text x="230" y="165" text-anchor="middle" fill="#444" font-size="13">ln(x) = eᵃ − b</text>
+  <rect x="120" y="178" width="220" height="30" rx="8" fill="#e8f8ee" stroke="#33aa55" stroke-width="1"/>
+  <text x="230" y="198" text-anchor="middle" fill="#228844" font-size="16" font-weight="bold">x = exp(eᵃ − b)</text>
+
+  <text x="230" y="235" text-anchor="middle" fill="#33aa55" font-size="12" font-weight="bold">
+    Always solvable! Unique positive solution for all a, b ∈ ℝ
+  </text>
+  <text x="230" y="255" text-anchor="middle" fill="#66aa77" font-size="11">
+    Lean-verified: eml_right_division, eml_right_division_unique
+  </text>
+
+  <!-- Left Division -->
+  <rect x="470" y="60" width="400" height="210" rx="12" fill="white" stroke="#cc6633" stroke-width="2"/>
+  <text x="670" y="90" text-anchor="middle" fill="#cc6633" font-size="18" font-weight="bold">⚠ Left Division</text>
+  <text x="670" y="115" text-anchor="middle" fill="#222" font-size="14">Solve: eml(x, a) = b for x</text>
+
+  <text x="670" y="145" text-anchor="middle" fill="#444" font-size="13">eˣ − ln(a) = b</text>
+  <text x="670" y="165" text-anchor="middle" fill="#444" font-size="13">eˣ = b + ln(a)</text>
+  <rect x="560" y="178" width="220" height="30" rx="8" fill="#fff0e8" stroke="#cc6633" stroke-width="1"/>
+  <text x="670" y="198" text-anchor="middle" fill="#aa4422" font-size="16" font-weight="bold">x = ln(b + ln a)</text>
+
+  <text x="670" y="235" text-anchor="middle" fill="#cc6633" font-size="12" font-weight="bold">
+    Requires b + ln(a) &gt; 0 — fails on boundary curve!
+  </text>
+  <text x="670" y="255" text-anchor="middle" fill="#cc9966" font-size="11">
+    Lean-verified: eml_left_division, eml_left_division_domain
+  </text>
+
+  <!-- Consequence box -->
+  <rect x="30" y="290" width="840" height="90" rx="12" fill="#2a2a4a" stroke="#6666cc" stroke-width="2"/>
+  <text x="450" y="320" text-anchor="middle" fill="#aabbff" font-size="16" font-weight="bold">
+    Algebraic Consequence
+  </text>
+  <text x="450" y="345" text-anchor="middle" fill="#ccddff" font-size="14">
+    (ℝ₊, eml) is a RIGHT quasigroup but NOT a full quasigroup
+  </text>
+  <text x="450" y="365" text-anchor="middle" fill="#8899cc" font-size="12">
+    The obstruction curve b = −ln(a) divides the (a,b)-plane into solvable and unsolvable regions
+  </text>
+
+  <!-- Domain diagram -->
+  <rect x="30" y="400" width="400" height="130" rx="10" fill="white" stroke="#888" stroke-width="1"/>
+  <text x="230" y="425" text-anchor="middle" fill="#444" font-size="14" font-weight="bold">Left Division Domain (a &gt; 0)</text>
+
+  <!-- Coordinate axes -->
+  <line x1="80" y1="510" x2="400" y2="510" stroke="#888" stroke-width="1"/>
+  <line x1="80" y1="510" x2="80" y2="440" stroke="#888" stroke-width="1"/>
+  <text x="400" y="525" text-anchor="end" fill="#888" font-size="10">a →</text>
+  <text x="75" y="445" text-anchor="end" fill="#888" font-size="10">b ↑</text>
+
+  <!-- Boundary curve b = -ln(a) -->
+  <path d="M 85 440 Q 150 490 200 500 Q 300 510 380 515" stroke="#cc3333" stroke-width="2" fill="none" stroke-dasharray="5,3"/>
+  <text x="300" y="490" fill="#cc3333" font-size="11">b = −ln(a)</text>
+
+  <!-- Solvable region -->
+  <rect x="100" y="440" width="280" height="30" rx="5" fill="#e8ffe8" opacity="0.5"/>
+  <text x="240" y="458" text-anchor="middle" fill="#228844" font-size="11">Solvable: b + ln(a) &gt; 0</text>
+
+  <!-- Examples -->
+  <rect x="470" y="400" width="400" height="130" rx="10" fill="white" stroke="#888" stroke-width="1"/>
+  <text x="670" y="425" text-anchor="middle" fill="#444" font-size="14" font-weight="bold">Examples</text>
+
+  <text x="490" y="450" fill="#228844" font-size="12">✓ eml(x, e) = 1 → x = ln(1+1) = ln 2</text>
+  <text x="490" y="472" fill="#228844" font-size="12">✓ eml(x, 1) = 2 → x = ln(2+0) = ln 2</text>
+  <text x="490" y="494" fill="#cc3333" font-size="12">✗ eml(x, 1) = −1 → need −1+0 = −1 &gt; 0 ✗</text>
+  <text x="490" y="516" fill="#cc3333" font-size="12">✗ eml(x, e⁻²) = 0 → need 0+(−2) = −2 &gt; 0 ✗</text>
+</svg>
