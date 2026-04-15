@@ -23,10 +23,23 @@ theorem EML_diagonal_quadratic_bound (x : ℝ) (hx : 0 < x) :
   unfold EML_new
   nlinarith [quadratic_le_exp_of_nonneg hx.le, Real.log_le_sub_one_of_pos hx]
 
-/-- The diagonal map is strictly increasing on [1, ∞). -/
+/-
+The diagonal map is strictly increasing on [1, ∞).
+-/
 theorem EML_diagonal_strictMono_ge_one :
     StrictMonoOn (fun x => EML_new x x) (Set.Ici 1) := by
-  sorry
+  -- To prove strict monotonicity, we show that the derivative of $EML_new x x$ is positive for $x \geq 1$.
+  have h_deriv_pos : ∀ x : ℝ, 1 ≤ x → deriv (fun x => Real.exp x - Real.log x) x > 0 := by
+    intro x hx; norm_num [ Real.differentiableAt_exp, Real.differentiableAt_log, ne_of_gt ( zero_lt_one.trans_le hx ) ];
+    nlinarith [ Real.add_one_le_exp x, mul_inv_cancel₀ ( ne_of_gt ( zero_lt_one.trans_le hx ) ) ];
+  -- Apply the fact that if the derivative of a function is positive on an interval, then the function is strictly increasing on that interval.
+  have h_strict_mono : StrictMonoOn (fun x => Real.exp x - Real.log x) (Set.Ici 1) := by
+    have : ∀ x ∈ Set.Ici 1, deriv (fun x => Real.exp x - Real.log x) x > 0 := h_deriv_pos
+    apply_rules [ strictMonoOn_of_deriv_pos ];
+    · exact convex_Ici _;
+    · exact continuousOn_of_forall_continuousAt fun x hx => ContinuousAt.sub ( Real.continuous_exp.continuousAt ) ( Real.continuousAt_log ( by linarith [ hx.out ] ) );
+    · exact fun x hx => this x <| interior_subset hx;
+  exact fun x hx y hy hxy => h_strict_mono hx hy hxy
 
 def EML_divergence (x y : ℝ) : ℝ := EML_new x y + EML_new y x - 2
 

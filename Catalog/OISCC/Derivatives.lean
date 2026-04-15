@@ -37,6 +37,10 @@ theorem EML_gradient_norm_sq (a b : ℝ) (hb : 0 < b) :
     (Real.exp a) ^ 2 + (b⁻¹) ^ 2 > 0 := by positivity
 
 theorem diag_convex_on : ConvexOn ℝ (Set.Ioi 0) diag_calc := by
-  sorry
+  apply ConvexOn.sub;
+  · have h_convex : ConvexOn ℝ Set.univ Real.exp := by
+      exact convexOn_exp;
+    exact h_convex.subset ( Set.subset_univ _ ) ( convex_Ioi _ );
+  · exact ( StrictConcaveOn.concaveOn <| strictConcaveOn_log_Ioi )
 
 end

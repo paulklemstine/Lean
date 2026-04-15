@@ -64,8 +64,14 @@ theorem diagIter_strictly_increasing (n : ℕ) (x : ℝ) (hx : 0 < x) :
     · exact diagMap_pos _ ih;
   exact diagMap_gt_id _ ( h_diagIter_pos _ )
 
-/-- d is strictly convex on (0, ∞). -/
+/-
+d is strictly convex on (0, ∞).
+-/
 theorem diagMap_convex : ConvexOn ℝ (Set.Ioi 0) diagMap := by
-  sorry
+  apply ConvexOn.sub;
+  · have h_convex_exp : ConvexOn ℝ (Set.univ : Set ℝ) Real.exp := by
+      exact convexOn_exp;
+    exact h_convex_exp.subset ( Set.subset_univ _ ) ( convex_Ioi _ );
+  · exact ( StrictConcaveOn.concaveOn <| strictConcaveOn_log_Ioi )
 
 end

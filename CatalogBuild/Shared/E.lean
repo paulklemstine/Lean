@@ -1,0 +1,13 @@
+/-! # CatalogBuild.Shared.E
+
+Auto-generated from theorem catalog database.
+Domain: FutureResearch
+Declarations: 1
+-/
+
+import Mathlib
+
+/-- The factoring energy function. -/
+def E (N x : ℕ) : ℕ := N % x
+
+/-- Energy is zero iff x divides N. -/

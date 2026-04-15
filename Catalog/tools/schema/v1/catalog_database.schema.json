@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://catalog.local/schema/v1/catalog_database",
+  "title": "CatalogDatabase",
+  "description": "Master theorem database — single source of truth for the catalog build system",
+  "type": "object",
+  "required": ["metadata", "entries", "domains", "duplicate_groups"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["schema_version", "generated_at", "lean_version", "mathlib_version"],
+      "properties": {
+        "schema_version": { "type": "string", "const": "1.0.0" },
+        "generated_at": { "type": "string", "format": "date-time" },
+        "lean_version": { "type": "string" },
+        "mathlib_version": { "type": "string" },
+        "total_files": { "type": "integer" },
+        "total_declarations": { "type": "integer" },
+        "total_theorems": { "type": "integer" },
+        "total_defs": { "type": "integer" },
+        "total_structures": { "type": "integer" },
+        "total_lines": { "type": "integer" },
+        "total_sorry": { "type": "integer" },
+        "total_duplicate_groups": { "type": "integer" },
+        "total_canonical": { "type": "integer" },
+        "extraction_duration_seconds": { "type": "number" }
+      }
+    },
+    "entries": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/catalog_entry" }
+    },
+    "domains": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/domain_info" }
+    },
+    "duplicate_groups": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/duplicate_group" }
+    },
+    "import_graph": {
+      "type": "object",
+      "properties": {
+        "nodes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["module", "domain"],
+            "properties": {
+              "module": { "type": "string" },
+              "domain": { "type": "string" }
+            }
+          }
+        },
+        "edges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["source", "target", "edge_type"],
+            "properties": {
+              "source": { "type": "string" },
+              "target": { "type": "string" },
+              "edge_type": { "enum": ["internal", "mathlib", "external"] }
+            }
+          }
+        }
+      }
+    },
+    "bridge_index": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["bridge_file", "domains_connected"],
+        "properties": {
+          "bridge_file": { "type": "string" },
+          "domains_connected": { "type": "array", "items": { "type": "string" } },
+          "key_concepts": { "type": "array", "items": { "type": "string" } },
+          "theorem_count": { "type": "integer" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "catalog_entry": {
+      "type": "object",
+      "required": ["id", "name", "kind", "source_file", "module_path", "line_number", "domain", "canonical"],
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier" },
+        "name": { "type": "string", "description": "Declaration name as it appears in source" },
+        "qualified_name": { "type": "string", "description": "Namespace-qualified name" },
+        "kind": {
+          "type": "string",
+          "enum": ["theorem", "lemma", "def", "noncomputable_def", "structure", "class", "inductive", "instance", "axiom", "abbrev", "notation"]
+        },
+        "namespace": { "type": "string", "description": "Enclosing namespace, empty string if top-level" },
+        "source_file": { "type": "string", "description": "Relative path from Catalog root" },
+        "module_path": { "type": "string", "description": "Lean module path e.g. Catalog.Bridges.UnifiedFramework" },
+        "line_number": { "type": "integer", "description": "1-indexed start line" },
+        "end_line": { "type": "integer", "description": "End line of declaration body" },
+        "type_signature": { "type": "string", "description": "Full type signature as Lean source text" },
+        "doc_comment": { "type": ["string", "null"], "description": "Doc comment from /-- ... -/" },
+        "body": { "type": "string", "description": "Full declaration source text including signature and proof" },
+        "domain": { "type": "string", "description": "Primary domain from directory" },
+        "subdomain": { "type": ["string", "null"], "description": "Subdomain if applicable" },
+        "imports": { "type": "array", "items": { "type": "string" }, "description": "All import statements in the file" },
+        "internal_imports": { "type": "array", "items": { "type": "string" }, "description": "Only Catalog.* imports" },
+        "proof_tactics": { "type": "array", "items": { "type": "string" } },
+        "sorry_count": { "type": "integer", "default": 0 },
+        "proof_length_lines": { "type": "integer", "default": 0 },
+        "is_noncomputable": { "type": "boolean", "default": false },
+        "canonical": { "type": "boolean", "description": "True if this is the canonical instance" },
+        "duplicate_of": { "type": ["string", "null"], "description": "ID of the canonical entry if this is a duplicate" },
+        "duplicate_group_id": { "type": ["string", "null"], "description": "ID of the duplicate group" },
+        "source_provenance": { "type": "string", "description": "Original file path before consolidation" }
+      }
+    },
+    "domain_info": {
+      "type": "object",
+      "required": ["display_name", "file_count"],
+      "properties": {
+        "display_name": { "type": "string" },
+        "parent_domain": { "type": ["string", "null"] },
+        "file_count": { "type": "integer" },
+        "declaration_count": { "type": "integer" },
+        "theorem_count": { "type": "integer" },
+        "def_count": { "type": "integer" },
+        "structure_count": { "type": "integer" },
+        "line_count": { "type": "integer" },
+        "sorry_count": { "type": "integer" },
+        "subdomains": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "duplicate_group": {
+      "type": "object",
+      "required": ["group_id", "name", "occurrence_count", "entries"],
+      "properties": {
+        "group_id": { "type": "string" },
+        "name": { "type": "string" },
+        "occurrence_count": { "type": "integer" },
+        "entries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["entry_id", "source_file", "canonical"],
+            "properties": {
+              "entry_id": { "type": "string" },
+              "source_file": { "type": "string" },
+              "qualified_name": { "type": "string" },
+              "type_signature": { "type": "string" },
+              "canonical": { "type": "boolean" },
+              "signature_match": { "type": "boolean" }
+            }
+          }
+        },
+        "all_signatures_identical": { "type": "boolean" },
+        "recommendation": {
+          "type": "string",
+          "enum": ["extract_to_shared", "keep_all", "merge_into_best", "flag_for_review"]
+        }
+      }
+    }
+  }
+}
