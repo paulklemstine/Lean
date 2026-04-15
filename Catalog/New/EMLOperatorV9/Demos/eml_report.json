@@ -1,0 +1,43 @@
+{
+  "EML Operator Summary": {
+    "Definition": "eml(x, y) = exp(x) - ln(y)",
+    "Domain": "\u211d \u00d7 (0, \u221e)",
+    "Range": "\u211d"
+  },
+  "Key Constants": {
+    "eml(0, 1) = 1": 1.0,
+    "eml(1, 1) = e": 2.718281828459045,
+    "eml(1, e^e) = 0": 0.0,
+    "eml(e, e) = e^e - 1": 14.154262241479262,
+    "Self-pairing min \u03c3(0)": 1.0
+  },
+  "Fixed Points": {
+    "d(z) fixed points": "NONE (d(z) > z for all z \u2208 \u211d)",
+    "g-map fixed point z*": 2.0167646497282705,
+    "g'(z*) = -1/z*": -0.4958436772157502
+  },
+  "Algebraic Properties": {
+    "Commutative": false,
+    "Associative": false,
+    "Has identity": false,
+    "Idempotent elements": "NONE",
+    "Power-associative": false,
+    "Flexible": false,
+    "Medial": false
+  },
+  "Orbit Divergence (z\u2080 = 1.0)": {
+    "d^0(1)": 1.0,
+    "d^1(1)": 2.718281828459045,
+    "d^2(1)": 14.154262241479262,
+    "d^3(1)": 1403192.2155152997
+  },
+  "Convexity": {
+    "Convex in x (fixed y)": true,
+    "Convex in y on (0,\u221e) (fixed x)": true,
+    "Self-pairing \u03c3 strictly convex": true,
+    "\u03c3 minimum": {
+      "x": 0,
+      "value": 1
+    }
+  }
+}

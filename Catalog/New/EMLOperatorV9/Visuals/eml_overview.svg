@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" font-family="'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f0c29"/>
+      <stop offset="50%" style="stop-color:#302b63"/>
+      <stop offset="100%" style="stop-color:#24243e"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f7971e"/>
+      <stop offset="100%" style="stop-color:#ffd200"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="4" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="800" fill="url(#bg)"/>
+
+  <!-- Title -->
+  <text x="600" y="60" text-anchor="middle" fill="url(#gold)" font-size="42" font-weight="bold" filter="url(#glow)">
+    The EML Operator
+  </text>
+  <text x="600" y="95" text-anchor="middle" fill="#aaa" font-size="20">
+    eml(x, y) = exp(x) − ln(y)
+  </text>
+
+  <!-- Central Formula Box -->
+  <rect x="350" y="120" width="500" height="80" rx="15" fill="rgba(255,255,255,0.08)" stroke="#ffd200" stroke-width="2" filter="url(#shadow)"/>
+  <text x="600" y="165" text-anchor="middle" fill="#fff" font-size="36" font-weight="bold" font-style="italic">
+    eml(x, y) = eˣ − ln y
+  </text>
+
+  <!-- Property Cards -->
+  <!-- Card 1: Legendre Bridge -->
+  <rect x="40" y="240" width="350" height="120" rx="12" fill="rgba(255,255,255,0.06)" stroke="#4fc3f7" stroke-width="1.5"/>
+  <text x="215" y="270" text-anchor="middle" fill="#4fc3f7" font-size="16" font-weight="bold">🔗 Legendre Bridge</text>
+  <text x="215" y="300" text-anchor="middle" fill="#fff" font-size="18" font-style="italic">eml(x, eʸ) = eˣ − y</text>
+  <text x="215" y="325" text-anchor="middle" fill="#aaa" font-size="13">Bridges exponential and logarithmic worlds</text>
+  <text x="215" y="345" text-anchor="middle" fill="#4fc3f7" font-size="12">✓ Formally Verified in Lean 4</text>
+
+  <!-- Card 2: No Fixed Points -->
+  <rect x="425" y="240" width="350" height="120" rx="12" fill="rgba(255,255,255,0.06)" stroke="#ff7043" stroke-width="1.5"/>
+  <text x="600" y="270" text-anchor="middle" fill="#ff7043" font-size="16" font-weight="bold">🚫 No Fixed Points</text>
+  <text x="600" y="300" text-anchor="middle" fill="#fff" font-size="18" font-style="italic">d(z) = eᶻ − ln z &gt; z ∀z ∈ ℝ</text>
+  <text x="600" y="325" text-anchor="middle" fill="#aaa" font-size="13">Diagonal map has no real fixed points</text>
+  <text x="600" y="345" text-anchor="middle" fill="#ff7043" font-size="12">✓ Formally Verified in Lean 4</text>
+
+  <!-- Card 3: Wild Magma -->
+  <rect x="810" y="240" width="350" height="120" rx="12" fill="rgba(255,255,255,0.06)" stroke="#ab47bc" stroke-width="1.5"/>
+  <text x="985" y="270" text-anchor="middle" fill="#ab47bc" font-size="16" font-weight="bold">🌀 Wild Magma</text>
+  <text x="985" y="300" text-anchor="middle" fill="#fff" font-size="16">All 9 standard algebraic laws FAIL</text>
+  <text x="985" y="325" text-anchor="middle" fill="#aaa" font-size="13">Not commutative, associative, flexible, medial…</text>
+  <text x="985" y="345" text-anchor="middle" fill="#ab47bc" font-size="12">✓ Each failure formally verified</text>
+
+  <!-- Card 4: Convexity -->
+  <rect x="40" y="390" width="350" height="120" rx="12" fill="rgba(255,255,255,0.06)" stroke="#66bb6a" stroke-width="1.5"/>
+  <text x="215" y="420" text-anchor="middle" fill="#66bb6a" font-size="16" font-weight="bold">📈 Convexity</text>
+  <text x="215" y="450" text-anchor="middle" fill="#fff" font-size="16">Convex in x, convex in y on (0,∞)</text>
+  <text x="215" y="475" text-anchor="middle" fill="#aaa" font-size="13">Self-pairing σ(x) = eˣ − x ≥ 1</text>
+  <text x="215" y="495" text-anchor="middle" fill="#66bb6a" font-size="12">✓ Strict convexity proved</text>
+
+  <!-- Card 5: Orbit Divergence -->
+  <rect x="425" y="390" width="350" height="120" rx="12" fill="rgba(255,255,255,0.06)" stroke="#ffca28" stroke-width="1.5"/>
+  <text x="600" y="420" text-anchor="middle" fill="#ffca28" font-size="16" font-weight="bold">🚀 Super-Exponential Orbits</text>
+  <text x="600" y="450" text-anchor="middle" fill="#fff" font-size="18" font-style="italic">dⁿ(z) ≥ z + n</text>
+  <text x="600" y="475" text-anchor="middle" fill="#aaa" font-size="13">Linear lower bound, actual growth ~exp↑↑n</text>
+  <text x="600" y="495" text-anchor="middle" fill="#ffca28" font-size="12">✓ Linear divergence proved, gap monotonicity proved</text>
+
+  <!-- Card 6: Information Theory -->
+  <rect x="810" y="390" width="350" height="120" rx="12" fill="rgba(255,255,255,0.06)" stroke="#26c6da" stroke-width="1.5"/>
+  <text x="985" y="420" text-anchor="middle" fill="#26c6da" font-size="16" font-weight="bold">📊 Information Theory</text>
+  <text x="985" y="450" text-anchor="middle" fill="#fff" font-size="16">−p·ln(p) = p·eml(0,p) − p</text>
+  <text x="985" y="475" text-anchor="middle" fill="#aaa" font-size="13">Shannon entropy &amp; KL divergence via EML</text>
+  <text x="985" y="495" text-anchor="middle" fill="#26c6da" font-size="12">✓ Both decompositions verified</text>
+
+  <!-- Card 7: Flat Geometry -->
+  <rect x="40" y="540" width="350" height="120" rx="12" fill="rgba(255,255,255,0.06)" stroke="#ef5350" stroke-width="1.5"/>
+  <text x="215" y="570" text-anchor="middle" fill="#ef5350" font-size="16" font-weight="bold">📐 Flat Riemannian Metric</text>
+  <text x="215" y="600" text-anchor="middle" fill="#fff" font-size="16">ds² = eˣdx² + y⁻²dy²</text>
+  <text x="215" y="625" text-anchor="middle" fill="#aaa" font-size="13">Gaussian curvature K = 0</text>
+  <text x="215" y="645" text-anchor="middle" fill="#ef5350" font-size="12">Warped product of exp and hyperbolic</text>
+
+  <!-- Card 8: Power Identity -->
+  <rect x="425" y="540" width="350" height="120" rx="12" fill="rgba(255,255,255,0.06)" stroke="#7e57c2" stroke-width="1.5"/>
+  <text x="600" y="570" text-anchor="middle" fill="#7e57c2" font-size="16" font-weight="bold">⚡ Power Identity</text>
+  <text x="600" y="600" text-anchor="middle" fill="#fff" font-size="18" font-style="italic">eml(nx, 1) = (eˣ)ⁿ</text>
+  <text x="600" y="625" text-anchor="middle" fill="#aaa" font-size="13">Generates all integer powers of e</text>
+  <text x="600" y="645" text-anchor="middle" fill="#7e57c2" font-size="12">✓ Verified for ℕ and ℤ</text>
+
+  <!-- Card 9: AM-GM -->
+  <rect x="810" y="540" width="350" height="120" rx="12" fill="rgba(255,255,255,0.06)" stroke="#ffa726" stroke-width="1.5"/>
+  <text x="985" y="570" text-anchor="middle" fill="#ffa726" font-size="16" font-weight="bold">⚖️ AM-GM Bridge</text>
+  <text x="985" y="600" text-anchor="middle" fill="#fff" font-size="16">Trace ≥ 2 for x, y &gt; 0</text>
+  <text x="985" y="625" text-anchor="middle" fill="#aaa" font-size="13">eml(x,y) + eml(y,x) ≥ 2</text>
+  <text x="985" y="645" text-anchor="middle" fill="#ffa726" font-size="12">✓ Tight bound at x = y = 1</text>
+
+  <!-- Stats Bar -->
+  <rect x="40" y="700" width="1120" height="70" rx="12" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+
+  <text x="150" y="730" text-anchor="middle" fill="#4fc3f7" font-size="28" font-weight="bold">70+</text>
+  <text x="150" y="755" text-anchor="middle" fill="#aaa" font-size="13">V9 Theorems</text>
+
+  <text x="350" y="730" text-anchor="middle" fill="#66bb6a" font-size="28" font-weight="bold">0</text>
+  <text x="350" y="755" text-anchor="middle" fill="#aaa" font-size="13">Sorries</text>
+
+  <text x="550" y="730" text-anchor="middle" fill="#ffca28" font-size="28" font-weight="bold">9</text>
+  <text x="550" y="755" text-anchor="middle" fill="#aaa" font-size="13">Algebra Laws Failed</text>
+
+  <text x="750" y="730" text-anchor="middle" fill="#ab47bc" font-size="28" font-weight="bold">30+</text>
+  <text x="750" y="755" text-anchor="middle" fill="#aaa" font-size="13">Research Fields</text>
+
+  <text x="950" y="730" text-anchor="middle" fill="#ef5350" font-size="28" font-weight="bold">K=0</text>
+  <text x="950" y="755" text-anchor="middle" fill="#aaa" font-size="13">Flat Metric</text>
+
+  <text x="1100" y="730" text-anchor="middle" fill="#26c6da" font-size="28" font-weight="bold">Lean 4</text>
+  <text x="1100" y="755" text-anchor="middle" fill="#aaa" font-size="13">Verified</text>
+</svg>

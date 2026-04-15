@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" font-family="'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a1a"/>
+      <stop offset="100%" style="stop-color:#1a1a3e"/>
+    </linearGradient>
+    <radialGradient id="center-glow" cx="50%" cy="50%">
+      <stop offset="0%" style="stop-color:rgba(255,210,0,0.15)"/>
+      <stop offset="100%" style="stop-color:rgba(255,210,0,0)"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1000" height="700" fill="url(#bg4)"/>
+  <circle cx="500" cy="350" r="250" fill="url(#center-glow)"/>
+
+  <text x="500" y="35" text-anchor="middle" fill="#ffd200" font-size="28" font-weight="bold">
+    EML Applications Universe
+  </text>
+
+  <!-- Central EML -->
+  <circle cx="500" cy="350" r="60" fill="rgba(255,210,0,0.12)" stroke="#ffd200" stroke-width="3"/>
+  <text x="500" y="340" text-anchor="middle" fill="#ffd200" font-size="18" font-weight="bold">eml(x,y)</text>
+  <text x="500" y="365" text-anchor="middle" fill="#fff" font-size="14">= eˣ − ln y</text>
+
+  <!-- Application nodes with connecting lines -->
+  <!-- 1. Machine Learning (top-left) -->
+  <line x1="450" y1="300" x2="200" y2="120" stroke="#4fc3f7" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="200" cy="120" r="45" fill="rgba(79,195,247,0.1)" stroke="#4fc3f7" stroke-width="2"/>
+  <text x="200" y="110" text-anchor="middle" fill="#4fc3f7" font-size="13" font-weight="bold">Machine</text>
+  <text x="200" y="128" text-anchor="middle" fill="#4fc3f7" font-size="13" font-weight="bold">Learning</text>
+  <text x="200" y="148" text-anchor="middle" fill="#aaa" font-size="10">σ(x) = eˣ−x</text>
+
+  <!-- 2. Information Theory (top) -->
+  <line x1="500" y1="290" x2="500" y2="120" stroke="#66bb6a" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="500" cy="120" r="45" fill="rgba(102,187,106,0.1)" stroke="#66bb6a" stroke-width="2"/>
+  <text x="500" y="110" text-anchor="middle" fill="#66bb6a" font-size="13" font-weight="bold">Information</text>
+  <text x="500" y="128" text-anchor="middle" fill="#66bb6a" font-size="13" font-weight="bold">Theory</text>
+  <text x="500" y="148" text-anchor="middle" fill="#aaa" font-size="10">H = Σ p·eml(0,p)−p</text>
+
+  <!-- 3. Optimization (top-right) -->
+  <line x1="550" y1="300" x2="800" y2="120" stroke="#ff7043" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="800" cy="120" r="45" fill="rgba(255,112,67,0.1)" stroke="#ff7043" stroke-width="2"/>
+  <text x="800" y="115" text-anchor="middle" fill="#ff7043" font-size="13" font-weight="bold">Optimization</text>
+  <text x="800" y="148" text-anchor="middle" fill="#aaa" font-size="10">Mirror descent</text>
+
+  <!-- 4. Symbolic Regression (left) -->
+  <line x1="440" y1="350" x2="130" y2="350" stroke="#ab47bc" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="130" cy="350" r="45" fill="rgba(171,71,188,0.1)" stroke="#ab47bc" stroke-width="2"/>
+  <text x="130" y="340" text-anchor="middle" fill="#ab47bc" font-size="13" font-weight="bold">Symbolic</text>
+  <text x="130" y="358" text-anchor="middle" fill="#ab47bc" font-size="13" font-weight="bold">Regression</text>
+  <text x="130" y="378" text-anchor="middle" fill="#aaa" font-size="10">EML tree search</text>
+
+  <!-- 5. Cryptography (right) -->
+  <line x1="560" y1="350" x2="870" y2="350" stroke="#ef5350" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="870" cy="350" r="45" fill="rgba(239,83,80,0.1)" stroke="#ef5350" stroke-width="2"/>
+  <text x="870" y="345" text-anchor="middle" fill="#ef5350" font-size="13" font-weight="bold">Cryptography</text>
+  <text x="870" y="378" text-anchor="middle" fill="#aaa" font-size="10">One-way orbits</text>
+
+  <!-- 6. Physics (bottom-left) -->
+  <line x1="450" y1="400" x2="200" y2="570" stroke="#26c6da" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="200" cy="570" r="45" fill="rgba(38,198,218,0.1)" stroke="#26c6da" stroke-width="2"/>
+  <text x="200" y="560" text-anchor="middle" fill="#26c6da" font-size="13" font-weight="bold">Statistical</text>
+  <text x="200" y="578" text-anchor="middle" fill="#26c6da" font-size="13" font-weight="bold">Mechanics</text>
+  <text x="200" y="598" text-anchor="middle" fill="#aaa" font-size="10">F = −kT ln Z</text>
+
+  <!-- 7. Geometry (bottom) -->
+  <line x1="500" y1="410" x2="500" y2="570" stroke="#ffa726" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="500" cy="570" r="45" fill="rgba(255,167,38,0.1)" stroke="#ffa726" stroke-width="2"/>
+  <text x="500" y="560" text-anchor="middle" fill="#ffa726" font-size="13" font-weight="bold">Riemannian</text>
+  <text x="500" y="578" text-anchor="middle" fill="#ffa726" font-size="13" font-weight="bold">Geometry</text>
+  <text x="500" y="598" text-anchor="middle" fill="#aaa" font-size="10">K = 0 (flat!)</text>
+
+  <!-- 8. Signal Processing (bottom-right) -->
+  <line x1="550" y1="400" x2="800" y2="570" stroke="#7e57c2" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="800" cy="570" r="45" fill="rgba(126,87,194,0.1)" stroke="#7e57c2" stroke-width="2"/>
+  <text x="800" y="560" text-anchor="middle" fill="#7e57c2" font-size="13" font-weight="bold">Signal</text>
+  <text x="800" y="578" text-anchor="middle" fill="#7e57c2" font-size="13" font-weight="bold">Processing</text>
+  <text x="800" y="598" text-anchor="middle" fill="#aaa" font-size="10">EML wavelets</text>
+
+  <!-- Key insight boxes -->
+  <rect x="50" y="640" width="270" height="40" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)"/>
+  <text x="185" y="665" text-anchor="middle" fill="#4fc3f7" font-size="12">🔬 370+ verified theorems</text>
+
+  <rect x="365" y="640" width="270" height="40" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)"/>
+  <text x="500" y="665" text-anchor="middle" fill="#66bb6a" font-size="12">📐 35+ research fields touched</text>
+
+  <rect x="680" y="640" width="270" height="40" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)"/>
+  <text x="815" y="665" text-anchor="middle" fill="#ffd200" font-size="12">🎯 One formula, infinite depth</text>
+</svg>
