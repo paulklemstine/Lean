@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 550">
+  <defs>
+    <filter id="shadow2">
+      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <rect width="900" height="550" fill="#fafbfc" rx="10"/>
+
+  <!-- Title -->
+  <text x="450" y="35" text-anchor="middle" font-family="Georgia, serif" font-size="22" fill="#1a237e" font-weight="bold">
+    The Three-Barrier Exclusion System (v5)
+  </text>
+  <text x="450" y="58" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#546e7a">
+    ShefferAlg ⊆ C∞(ℝ) ∩ Lip(ℝ) ∩ ???  — Three independent structural barriers
+  </text>
+
+  <!-- Barrier 1: Lipschitz -->
+  <rect x="30" y="90" width="260" height="380" rx="10" fill="#fff3e0" stroke="#e65100" stroke-width="2.5" filter="url(#shadow2)"/>
+  <text x="160" y="120" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#e65100" font-weight="bold">
+    Barrier 1: Lipschitz
+  </text>
+  <text x="160" y="142" text-anchor="middle" font-family="monospace" font-size="11" fill="#bf360c">
+    ∃C≥0: |f(x)-f(y)| ≤ C|x-y|
+  </text>
+
+  <line x1="50" y1="155" x2="270" y2="155" stroke="#e65100" stroke-width="1"/>
+
+  <!-- Excluded by Lipschitz -->
+  <text x="160" y="178" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#333" font-weight="bold">Excludes:</text>
+
+  <rect x="55" y="190" width="200" height="28" rx="5" fill="#ffccbc"/>
+  <text x="155" y="209" text-anchor="middle" font-family="monospace" font-size="12" fill="#bf360c">eˣ (derivative unbounded)</text>
+
+  <rect x="55" y="225" width="200" height="28" rx="5" fill="#ffccbc"/>
+  <text x="155" y="244" text-anchor="middle" font-family="monospace" font-size="12" fill="#bf360c">x² (slope grows linearly)</text>
+
+  <rect x="55" y="260" width="200" height="28" rx="5" fill="#ffccbc"/>
+  <text x="155" y="279" text-anchor="middle" font-family="monospace" font-size="12" fill="#bf360c">sinh(x), cosh(x)</text>
+
+  <rect x="55" y="295" width="200" height="28" rx="5" fill="#ffccbc"/>
+  <text x="155" y="314" text-anchor="middle" font-family="monospace" font-size="12" fill="#bf360c">x³, xⁿ for n≥2</text>
+
+  <rect x="55" y="330" width="200" height="28" rx="5" fill="#ffccbc"/>
+  <text x="155" y="349" text-anchor="middle" font-family="monospace" font-size="12" fill="#bf360c">tan(x), log(x)</text>
+
+  <text x="160" y="385" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#e65100" font-style="italic">
+    Proved in v2
+  </text>
+  <text x="160" y="403" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#e65100" font-style="italic">
+    (sheffer_expr_lipschitz)
+  </text>
+
+  <!-- Status badge -->
+  <rect x="110" y="420" width="100" height="26" rx="13" fill="#4caf50"/>
+  <text x="160" y="438" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="white" font-weight="bold">✓ Verified</text>
+
+  <!-- Barrier 2: C∞ Smoothness (upgraded from C¹) -->
+  <rect x="320" y="90" width="260" height="380" rx="10" fill="#e8f5e9" stroke="#1b5e20" stroke-width="2.5" filter="url(#shadow2)"/>
+  <text x="450" y="120" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#1b5e20" font-weight="bold">
+    Barrier 2: C∞ Smooth
+  </text>
+  <text x="450" y="142" text-anchor="middle" font-family="monospace" font-size="11" fill="#1b5e20">
+    ContDiff ℝ ⊤ f
+  </text>
+
+  <line x1="340" y1="155" x2="560" y2="155" stroke="#1b5e20" stroke-width="1"/>
+
+  <text x="450" y="178" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#333" font-weight="bold">Excludes:</text>
+
+  <rect x="345" y="190" width="200" height="28" rx="5" fill="#c8e6c9"/>
+  <text x="445" y="209" text-anchor="middle" font-family="monospace" font-size="12" fill="#1b5e20">|x| (kink at 0)</text>
+
+  <rect x="345" y="225" width="200" height="28" rx="5" fill="#c8e6c9"/>
+  <text x="445" y="244" text-anchor="middle" font-family="monospace" font-size="12" fill="#1b5e20">ReLU = max(0,x)</text>
+
+  <rect x="345" y="260" width="200" height="28" rx="5" fill="#c8e6c9"/>
+  <text x="445" y="279" text-anchor="middle" font-family="monospace" font-size="12" fill="#1b5e20">sign(x), step(x)</text>
+
+  <rect x="345" y="295" width="200" height="28" rx="5" fill="#c8e6c9"/>
+  <text x="445" y="314" text-anchor="middle" font-family="monospace" font-size="12" fill="#1b5e20">⌊x⌋ (floor function)</text>
+
+  <rect x="345" y="330" width="200" height="28" rx="5" fill="#c8e6c9"/>
+  <text x="445" y="349" text-anchor="middle" font-family="monospace" font-size="12" fill="#1b5e20">x·|x| (C¹ not C²)</text>
+
+  <text x="450" y="385" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#1b5e20" font-style="italic">
+    Upgraded v4→v5:
+  </text>
+  <text x="450" y="403" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#1b5e20" font-style="italic">
+    C¹ → C∞ (all derivatives!)
+  </text>
+
+  <rect x="400" y="420" width="100" height="26" rx="13" fill="#4caf50"/>
+  <text x="450" y="438" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="white" font-weight="bold">✓ Verified</text>
+
+  <!-- Barrier 3: ??? (Conjectured) -->
+  <rect x="610" y="90" width="260" height="380" rx="10" fill="#e3f2fd" stroke="#0d47a1" stroke-width="2.5" stroke-dasharray="6,3" filter="url(#shadow2)"/>
+  <text x="740" y="120" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#0d47a1" font-weight="bold">
+    Barrier 3: ???
+  </text>
+  <text x="740" y="142" text-anchor="middle" font-family="monospace" font-size="11" fill="#0d47a1">
+    (Conjectured, Q21)
+  </text>
+
+  <line x1="630" y1="155" x2="850" y2="155" stroke="#0d47a1" stroke-width="1"/>
+
+  <text x="740" y="178" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#333" font-weight="bold">Would exclude:</text>
+
+  <rect x="635" y="190" width="200" height="28" rx="5" fill="#bbdefb"/>
+  <text x="735" y="209" text-anchor="middle" font-family="monospace" font-size="12" fill="#0d47a1">sin(x) (oscillates)</text>
+
+  <rect x="635" y="225" width="200" height="28" rx="5" fill="#bbdefb"/>
+  <text x="735" y="244" text-anchor="middle" font-family="monospace" font-size="12" fill="#0d47a1">cos(x) (oscillates)</text>
+
+  <rect x="635" y="260" width="200" height="28" rx="5" fill="#bbdefb"/>
+  <text x="735" y="279" text-anchor="middle" font-family="monospace" font-size="12" fill="#0d47a1">tanh(x) (?)</text>
+
+  <rect x="635" y="295" width="200" height="28" rx="5" fill="#bbdefb"/>
+  <text x="735" y="314" text-anchor="middle" font-family="monospace" font-size="12" fill="#0d47a1">arctan(x) (?)</text>
+
+  <text x="740" y="365" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#0d47a1" font-style="italic">
+    Candidates:
+  </text>
+  <text x="740" y="383" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#0d47a1">
+    • Monotone-at-∞
+  </text>
+  <text x="740" y="401" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#0d47a1">
+    • Real-analytic of order ≤1
+  </text>
+  <text x="740" y="419" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#0d47a1">
+    • Composition closure
+  </text>
+
+  <rect x="690" y="432" width="100" height="26" rx="13" fill="#ff9800"/>
+  <text x="740" y="450" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="white" font-weight="bold">? Open</text>
+
+  <!-- Bottom summary -->
+  <rect x="100" y="490" width="700" height="45" rx="8" fill="#263238" filter="url(#shadow2)"/>
+  <text x="450" y="512" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#e8f5e9" font-weight="bold">
+    ShefferAlg ⊆ C∞(ℝ) ∩ Lip(ℝ) ⊊ {all smooth Lipschitz functions}
+  </text>
+  <text x="450" y="528" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#b0bec5">
+    100+ theorems • Zero sorry statements • Lean 4 verified
+  </text>
+</svg>

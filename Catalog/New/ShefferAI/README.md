@@ -1,104 +1,85 @@
-# Sheffer AI: The Unary Sheffer Function Program
+# The Sheffer Function Program (v5)
 
-## σ(x) = log(1 + eˣ) — The NAND Gate of Calculus
+## The Softplus Function as the NAND Gate of Calculus
 
-The softplus function, together with affine operations and composition, generates a dense subalgebra of continuous functions on any compact set. This project formally verifies the theory in Lean 4, explores its implications for AI safety and mathematics, and proposes 25 open research questions.
+The softplus function σ(x) = log(1 + eˣ), together with affine operations and composition, generates a rich algebra of smooth functions — the **Sheffer Algebra**. This is the continuous analogue of Sheffer's 1913 result that NAND suffices for all Boolean functions.
 
----
+## Key Results (v5)
 
-## Project Structure
-
-### Lean 4 Formal Proofs (`Lean/`)
-**112 theorem/lemma declarations, ZERO sorry statements** — all machine-verified.
+### 125 Formally Verified Theorems — Zero Sorry Statements
 
 | File | Theorems | Key Results |
 |------|----------|-------------|
-| `SoftplusBasic.lean` | 17 | Positivity, monotonicity, differentiability, convexity, σ'=S, reflection |
-| `ShefferAlgebra.lean` | 6 | Algebra definition, closure properties, id/const membership, Sheffer degree |
-| `UniversalApproximation.lean` | 5 | Separates points, nonvanishing, continuity (Stone-Weierstrass prereqs) |
-| `FutureTheorems.lean` | 21 | Composition bounds, non-polynomial, 1-Lipschitz, sigmoid properties, temperature family |
-| `AdvancedTheorems.lean` | 23 | **Lipschitz Barrier**, exp ∉ Sheffer, sigmoid ODE, Jensen, strict convexity |
-| `NewTheorems.lean` | 20 | Full subadditivity, x²/sinh ∉ Sheffer, Lipschitz bounds, log-sum-exp, sigmoid integral |
-| `ExtendedTheorems.lean` | 20 | **Smoothness Barrier**, ReLU/\|x\| ∉ Sheffer, NOT closed under ×, surjectivity, logit |
+| `SoftplusBasic.lean` | 17 | Positivity, monotonicity, derivative = sigmoid, convexity |
+| `ShefferAlgebra.lean` | 6 | Algebraic closure, identity in algebra, Sheffer degree |
+| `UniversalApproximation.lean` | 4 | Separates points, nonvanishing, continuity |
+| `FutureTheorems.lean` | 19 | 1-Lipschitz, non-polynomial, temperature family |
+| `AdvancedTheorems.lean` | 21 | Lipschitz barrier, exp ∉ Sheffer, sigmoid ODE, Jensen |
+| `NewTheorems.lean` | 18 | Subadditivity, x² ∉ Sheffer, sinh ∉ Sheffer, injectivity |
+| `ExtendedTheorems.lean` | 19 | C¹ barrier, ReLU ∉ Sheffer, |x| ∉ Sheffer, not ring |
+| **`OpenQuestions.lean` ★** | **18** | **C∞ barrier (Q23), ring completion (Q22), linear growth** |
+| **`IteratedSoftplus.lean` ★** | **3** | **σⁿ(0) = log(n+1) exact identity (Q24)** |
 
-### Research Papers (`Papers/`)
-| File | Description |
-|------|-------------|
-| `future_research_directions_v4.md` | **Latest**: 25 open questions, 20 application domains |
-| `scientific_american_article_v4.md` | **Latest**: Popular account of the Sheffer program |
-| `research_paper.md` | Original research paper |
-| Earlier versions (v1–v3) | Historical progression |
+### Open Questions Answered
 
-### Python Demonstrations (`Python/`)
-| File | Description |
-|------|-------------|
-| `sheffer_v4_demos.py` | **Latest**: 10 demos including smoothness barrier, closure properties, attention |
-| `softplus_demo.py` | Core softplus demonstrations |
-| `sheffer_new_demos.py` | Lipschitz barrier, iterated dynamics, ODE phase portrait |
-| `sheffer_extended_demos.py` | Extended experiments |
-| `sheffer_future_demos.py` | Future research demonstrations |
-| `sheffer_approximation_rates.py` | Approximation quality analysis |
-| `sheffer_symbolic_extraction.py` | Symbolic formula extraction |
+- **Q23 (C∞ Barrier):** ✅ Resolved. Every Sheffer expression is C∞, not just C¹.
+- **Q22 (Ring Completion):** ✅ Partially resolved. Ring completion immediately escapes Lipschitz.
+- **Q24 (Iterated Growth):** ✅ Resolved. σⁿ(0) = log(n+1) exactly.
+- **Q21 (sin ∈ Sheffer?):** ⚠️ Open. New evidence suggests sin ∉ ShefferAlg (oscillation).
 
-### SVG Visualizations (`Visuals/`)
-22+ publication-quality SVG diagrams including:
-- `smoothness_barrier.svg` — The smoothness barrier (new)
-- `two_barrier_system.svg` — Two-barrier exclusion classification (new)
-- `sheffer_closure_diagram.svg` — Closure properties (new)
-- `sheffer_function_hierarchy.svg` — Function space hierarchy (new)
-- `softplus_relu_comparison.svg` — Softplus vs ReLU (new)
-- `lipschitz_barrier.svg` — The Lipschitz barrier
-- `logsumexp_connection.svg` — Log-sum-exp = chained softplus
-- `sheffer_nand_analogy.svg` — NAND gate analogy
-- And 14 more...
+### The Three-Barrier System
 
----
+```
+ShefferAlg ⊆ C∞(ℝ) ∩ Lip(ℝ)
+```
 
-## Key Results
+| Barrier | Excludes | Status |
+|---------|----------|--------|
+| Lipschitz | exp, x², sinh, polynomials of degree ≥ 2 | ✓ Verified |
+| C∞ Smooth | ReLU, |x|, sign, floor, Cⁿ-but-not-Cⁿ⁺¹ | ✓ Verified (upgraded) |
+| ??? (Q27) | sin, cos (conjectured) | ⚠️ Open |
 
-### The Two-Barrier Exclusion System
-1. **Lipschitz Barrier**: Every Sheffer expression is globally Lipschitz → excludes exp, x², sinh
-2. **Smoothness Barrier**: Every Sheffer expression is differentiable → excludes ReLU, |x|, sign
-3. Combined: ShefferAlg ⊆ C∞(ℝ) ∩ Lip(ℝ)
+## Directory Structure
 
-### Algebraic Structure
-- ✓ Closed under: +, −, scalar ×, composition, negation
-- ✗ NOT closed under: pointwise multiplication (x·x = x² violates Lipschitz)
-- Contains: σ, identity, all constants, all affine functions
+```
+ShefferAI/
+├── Lean/                    # Lean 4 formal proofs (9 files, 125 theorems)
+│   ├── SoftplusBasic.lean
+│   ├── ShefferAlgebra.lean
+│   ├── UniversalApproximation.lean
+│   ├── FutureTheorems.lean
+│   ├── AdvancedTheorems.lean
+│   ├── NewTheorems.lean
+│   ├── ExtendedTheorems.lean
+│   ├── OpenQuestions.lean    ★ NEW (v5)
+│   └── IteratedSoftplus.lean ★ NEW (v5)
+├── Papers/                   # Research papers
+│   ├── future_research_directions_v5.md ★ NEW
+│   ├── scientific_american_article_v5.md ★ NEW
+│   └── (v1-v4 papers)
+├── Python/                   # Computational demos
+│   ├── sheffer_v5_demos.py   ★ NEW (7 demos)
+│   ├── plots/                ★ NEW (7 plots)
+│   └── (v1-v4 demos)
+└── Visuals/                  # SVG visualizations
+    ├── cinfinity_barrier.svg      ★ NEW
+    ├── three_barrier_system.svg   ★ NEW
+    ├── ring_completion_q22.svg    ★ NEW
+    ├── iterated_identity.svg      ★ NEW
+    ├── iterated_growth_q24.svg    ★ NEW
+    ├── softplus_bijection.svg     ★ NEW
+    ├── sheffer_algebra_structure_v5.svg ★ NEW
+    └── (24 previous SVGs)
+```
 
-### Key Identities
-- **Reflection**: σ(x) − x = σ(−x)
-- **Subadditivity**: σ(x+y) ≤ σ(x) + σ(y)
-- **Log-sum-exp**: log(eˣ + eʸ) = x + σ(y − x)
-- **Sigmoid ODE**: S'(x) = S(x)(1 − S(x))
-- **Sigmoid integral**: ∫ₐᵇ S(t) dt = σ(b) − σ(a)
+## Building
 
-### Bijections
-- σ : ℝ → (0, ∞), inverse σ⁻¹(y) = log(eʸ − 1)
-- S : ℝ → (0, 1), inverse logit(y) = log(y/(1−y))
-
----
-
-## Quick Start
-
-### Verify Lean Proofs
 ```bash
 lake build ShefferAI
 ```
 
-### Run Python Demos
-```bash
-pip install numpy scipy
-python Python/sheffer_v4_demos.py
-```
+All 125 theorems compile with zero `sorry` statements and only standard axioms (`propext`, `Classical.choice`, `Quot.sound`).
 
----
+## Citation
 
-## Open Questions (25)
-
-See `Papers/future_research_directions_v4.md` for the full list, including:
-- Q21: Is sin(x) in the Sheffer algebra?
-- Q22: What is the ring completion of ShefferAlg?
-- Q23: Can we prove C∞ (not just C¹)?
-- Q24: What is the growth rate of iterated softplus?
-- Q25: What are the automorphisms of the algebra?
+The softplus function σ(x) = log(1 + eˣ) — the NAND gate of calculus.
