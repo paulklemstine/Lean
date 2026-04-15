@@ -1,60 +1,24 @@
-import Mathlib
+/-! # CatalogBuild.Speculative.Forbidden.BrokenMirror
 
-/-!
-# 🪞 The Broken Mirror Theorems
-
-## Symmetry Breaking, Imperfect Reflections, and the Impossibility of Perfect Self-Knowledge
-
-The "Broken Mirror" is a meta-theorem about symmetry breaking: perfect symmetry
-is generically *unstable*. Small perturbations shatter it. This connects to:
-
-- **Physics**: Spontaneous symmetry breaking (Higgs mechanism, crystallization)
-- **Logic**: Gödel's incompleteness (no system can perfectly mirror itself)
-- **Topology**: The hairy ball theorem (no continuous nonvanishing tangent field on S²)
-- **Algebra**: No division algebra structure in most dimensions (only 1, 2, 4, 8)
-
-## Core Insight
-
-A "mirror" is a self-map. A "perfect mirror" is an involution (f ∘ f = id).
-The broken mirror theorem says: in most structured contexts, involutions must
-have fixed points — places where the mirror "sticks" and cannot reflect.
-
-## Key Results Formalized
-
-1. Every involution on a finite set of odd cardinality has a fixed point
-2. The parity obstruction: involutions preserve parity of non-fixed elements
-3. Brouwer-style: continuous self-maps of [0,1] always have fixed points
-4. The diagonal shattering lemma: no surjection X → (X → Bool)
+Auto-generated from theorem catalog database.
+Domain: Speculative/Forbidden
+Declarations: 9
 -/
 
-open Set Function Finset
+import Mathlib
 
 noncomputable section
-
-/-! ## §1: The Involution Fixed-Point Theorem (Broken Mirror Core) -/
-
-/-- An involution on a type. The mathematical "mirror". -/
-structure Mirror (α : Type*) where
-  reflect : α → α
-  involution : ∀ x, reflect (reflect x) = x
 
 /-- The set of fixed points of a mirror — where the reflection "sticks" -/
 def Mirror.fixedPoints {α : Type*} (m : Mirror α) : Set α :=
   {x | m.reflect x = x}
 
+
 /-- The set of "shattered" points — those moved by the mirror -/
 def Mirror.shatteredPoints {α : Type*} (m : Mirror α) : Set α :=
   {x | m.reflect x ≠ x}
 
-/-
-PROBLEM
-Every involution on a finite type of odd cardinality must have a fixed point.
-    This is the "Broken Mirror Theorem": you cannot have a perfect reflection
-    without at least one point that maps to itself.
 
-PROVIDED SOLUTION
-The shattered (non-fixed) points pair up: if reflect(x) ≠ x, then reflect(x) is also shattered, and they form a pair {x, reflect(x)}. Since the involution is its own inverse, these pairs partition the shattered points, so there are an even number of shattered points. If the total number of elements is odd, the number of fixed points = total - shattered must be odd, hence at least 1.
--/
 theorem broken_mirror_odd_fixed_point {α : Type*} [Fintype α] [DecidableEq α]
     (m : Mirror α) (h_odd : Odd (Fintype.card α)) :
     ∃ x, m.reflect x = x := by
@@ -70,13 +34,7 @@ theorem broken_mirror_odd_fixed_point {α : Type*} [Fintype α] [DecidableEq α]
   simp_all +decide [ Finset.ext_iff ];
   exact absurd h_card_even ( by rw [ show ( S.biUnion id : Finset α ) = Finset.univ from Finset.eq_univ_of_forall fun x => by obtain ⟨ s, hs₁, hs₂ ⟩ := hS_partition.2.2 x; exact Finset.mem_biUnion.2 ⟨ s, hs₁, hs₂ ⟩ ] ; simpa using h_odd )
 
-/-
-PROBLEM
-The shattered points always come in pairs (each paired with its image)
 
-PROVIDED SOLUTION
-The shattered points pair up under the involution: if reflect(x) ≠ x, then {x, reflect(x)} is a pair of distinct shattered points. The involution restricted to shattered points is a fixed-point-free involution, which means shattered points come in pairs, giving an even count.
--/
 theorem mirror_shattered_even {α : Type*} [Fintype α] [DecidableEq α]
     (m : Mirror α) :
     Even (Finset.card (Finset.univ.filter (fun x => m.reflect x ≠ x))) := by
@@ -91,16 +49,7 @@ theorem mirror_shattered_even {α : Type*} [Fintype α] [DecidableEq α]
   obtain ⟨ S, hS₁, hS₂, hS₃ ⟩ := h_partition; rw [ hS₃, Finset.card_biUnion ] ; aesop;
   exact fun s hs t ht hst => hS₂ s hs t ht hst
 
-/-! ## §2: The Diagonal Shattering — Cantor's Broken Mirror -/
 
-/-
-PROBLEM
-Cantor's theorem as a "broken mirror": no function can perfectly reflect
-    a set into its power set. The mirror is always incomplete.
-
-PROVIDED SOLUTION
-The diagonal function d(a,b) = (a = b) maps to Prop not Set α, but we need to show it's not surjective to (α → Prop). Consider the "anti-diagonal" set S = {a | ¬(a = a)} = ∅. Actually this is always false so S = ∅. But the range of (fun a b => a = b) maps each a to the singleton predicate (· = a). So we need a predicate not of this form. The predicate (fun b => True) works: if it equals (fun b => a = b) for some a, then True = (a = b) for all b, but picking b ≠ a gives True = False. Actually we need to handle the case α is empty. If α is empty, then Surjective means ∀ t : α → Prop, ∃ a, ... but there are no a's, and there is the empty function as target, so this might be vacuously false. Let me think... if α is empty, then (α → Prop) has exactly one element (the empty function), and there are no elements in α to map from, so the function has empty range, and it's not surjective. Use Cantor-style diagonal or handle cases.
--/
 theorem cantor_broken_mirror (α : Type*) : ¬ Surjective (fun (a : α) (b : α) => a = b) := by
   by_contra h_surjective
   obtain ⟨x, hx⟩ : ∃ x : α → Prop, ¬∃ a : α, x = fun b => a = b := by
@@ -108,30 +57,14 @@ theorem cantor_broken_mirror (α : Type*) : ¬ Surjective (fun (a : α) (b : α)
     exact ⟨ fun _ => False, fun a => ⟨ a, by simp +decide ⟩ ⟩;
   obtain ⟨ a, ha ⟩ := h_surjective x; exact hx ⟨ a, ha.symm ⟩ ;
 
-/-
-PROBLEM
-The deeper version: no surjection from any type to its function space to Bool
 
-PROVIDED SOLUTION
-Classic Cantor diagonal: define g(x) = !(f(x)(x)). Then g cannot be in the range of f, since f(a) = g would mean f(a)(a) = g(a) = !(f(a)(a)), contradiction.
--/
 theorem diagonal_shattering (α : Type*) (f : α → (α → Bool)) : ¬ Surjective f := by
   intro h;
   -- Define a new function g that differs from each f(a) at least at one point.
   set g : α → Bool := fun a => if f a a = Bool.true then Bool.false else Bool.true;
   cases' h g with a ha ; replace ha := congr_fun ha a ; aesop
 
-/-! ## §3: Interval Fixed Points — The Mirror Must Touch Ground -/
 
-/-
-PROBLEM
-The discrete intermediate value theorem for ℤ-valued functions:
-    if g(0) > 0 and g(n) < 0, then g has a zero in {0,...,n}.
-    A discrete version of the IVT / Brouwer.
-
-PROVIDED SOLUTION
-By strong induction on n. g(0) > 0 and g(n) < 0, and consecutive values differ by at most 1. So g must cross zero somewhere. Use well-founded induction: consider the smallest k in {0,...,n} with g(k) ≤ 0. Then g(k-1) > 0 and g(k) ≤ 0. Since |g(k) - g(k-1)| ≤ 1 and g(k-1) ≥ 1, g(k) ≥ 0. So g(k) = 0.
--/
 theorem discrete_ivt (g : ℤ → ℤ) (n : ℕ) (hn : 0 < n)
     (h0 : 0 < g 0) (hn' : g n < 0)
     (h_step : ∀ k : ℤ, |g (k + 1) - g k| ≤ 1) :
@@ -145,34 +78,14 @@ theorem discrete_ivt (g : ℤ → ℤ) (n : ℕ) (hn : 0 < n)
     · exact lt_of_le_of_ne ( by linarith [ abs_le.mp ( h_step k ), ih ( Nat.le_of_lt hk ) ] ) ( Ne.symm ( h_contra _ ( by linarith ) ( by linarith ) ) );
   linarith [ h_pos n ( Finset.mem_range.mpr ( Nat.lt_succ_self n ) ) ])
 
-/-! ## §4: The Self-Knowledge Impossibility -/
 
-/-
-PROBLEM
-No decidable predicate can decide its own halting behavior.
-    The mirror cannot see itself completely.
-
-PROVIDED SOLUTION
-Suppose such halt exists. Define f(n) = !halt(f). Then halt(f) = true ↔ f(0) = halt(f) = true ↔ !halt(f) = true ↔ halt(f) = false, contradiction. Actually more carefully: let f be the constant function (fun _ => !(halt f)). We need to be careful about the self-reference... Actually, define f := (fun _ => true) and (fun _ => false) and derive a contradiction from the condition halt f = true ↔ f 0 = halt f, which becomes halt f = true ↔ true = halt f or halt f = true ↔ false = halt f depending on f. The key is that we can choose f based on halt f. Actually the simplest: instantiate with f = (fun _ => false). Then halt f = true ↔ false = halt f. If halt f = true, then false = true, contradiction. If halt f = false, then halt f = true ↔ false = false ↔ True, so halt f = true, contradiction.
--/
 theorem no_perfect_self_mirror :
     ¬ ∃ (halt : (ℕ → Bool) → Bool),
       ∀ f : ℕ → Bool, halt f = true ↔ f 0 = halt f := by
   by_contra h;
   cases' h with halt h; have := h ( fun _ => Bool.true ) ; have := h ( fun _ => Bool.false ) ; simp +decide at *;
 
-/-! ## §5: Symmetry Group Fixed-Point Theorem -/
 
-/-
-PROBLEM
-A p-group acting on a finite set: the number of fixed points is
-    congruent to the total number of elements modulo p.
-    We prove the simpler version: if an involution acts on a set,
-    the parity of fixed points equals the parity of the total set.
-
-PROVIDED SOLUTION
-Fintype.card α = |fixed points| + |non-fixed points|. The non-fixed points come in pairs {x, f(x)} (by the involution property and mirror_shattered_even), so |non-fixed| is even. Therefore Fintype.card α and |fixed points| have the same parity. Use mirror_shattered_even or reason directly: the filter complement has even cardinality, and card = fixed + non-fixed.
--/
 theorem involution_parity_fixed {α : Type*} [Fintype α] [DecidableEq α]
     (f : α → α) (hf : ∀ x, f (f x) = x) :
     Even (Fintype.card α) ↔
@@ -182,5 +95,6 @@ theorem involution_parity_fixed {α : Type*} [Fintype α] [DecidableEq α]
     convert mirror_shattered_even ⟨ f, hf ⟩ using 1;
   simp_all +decide [ Finset.filter_not, Finset.card_sdiff ];
   grind
+
 
 end

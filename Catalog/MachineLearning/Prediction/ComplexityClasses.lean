@@ -1,29 +1,18 @@
-/-
-  # Prediction Complexity Classes
+/-! # CatalogBuild.MachineLearning.Prediction.ComplexityClasses
 
-  A theory of computational complexity for prediction problems.
-  We classify prediction tasks by the resources required:
-  sample complexity, computational complexity, and information complexity.
-
-  ## Key Results
-  1. Prediction complexity hierarchy
-  2. Sample complexity lower bounds
-  3. The prediction-computation tradeoff
-  4. Reducibility between prediction problems
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/Prediction
+Declarations: 13
 -/
 
 import Mathlib
 
-open Set Function Finset
-
 noncomputable section
 
-/-! ## §1. Prediction Problems and Complexity -/
-
 /-- A prediction problem is characterized by:
-    - input space dimension
-    - required accuracy ε
-    - required confidence δ -/
+- input space dimension
+- required accuracy ε
+- required confidence δ -/
 structure PredictionProblem where
   dimension : ℕ
   accuracy : ℝ
@@ -32,9 +21,11 @@ structure PredictionProblem where
   confidence_pos : 0 < confidence
   confidence_lt_one : confidence < 1
 
+
 /-- Sample complexity: minimum samples needed to achieve (ε,δ)-prediction -/
 noncomputable def sampleComplexity (d : ℕ) (ε δ : ℝ) : ℝ :=
   d / (ε ^ 2) * Real.log (1 / δ)
+
 
 /-- VC dimension bound: sample complexity grows with VC dimension -/
 theorem vc_sample_complexity (d : ℕ) (ε δ : ℝ)
@@ -45,7 +36,6 @@ theorem vc_sample_complexity (d : ℕ) (ε δ : ℝ)
   · apply div_pos (by exact_mod_cast hd) (sq_pos_of_pos hε)
   · exact Real.log_pos (by rw [lt_div_iff₀ hδ]; linarith)
 
-/-! ## §2. The Prediction Complexity Hierarchy -/
 
 /-- Prediction complexity levels -/
 inductive PredComplexity
@@ -56,6 +46,7 @@ inductive PredComplexity
   | impossible  -- no finite sample suffices
   deriving DecidableEq
 
+
 /-- The hierarchy is strict -/
 def complexityOrder : PredComplexity → ℕ
   | .trivial => 0
@@ -64,20 +55,22 @@ def complexityOrder : PredComplexity → ℕ
   | .hard => 3
   | .impossible => 4
 
+
 theorem complexity_hierarchy_strict (c₁ c₂ : PredComplexity)
     (h : complexityOrder c₁ < complexityOrder c₂) :
     c₁ ≠ c₂ := by
   intro heq; rw [heq] at h; exact lt_irrefl _ h
 
-/-! ## §3. Reducibility Between Prediction Problems -/
 
 /-- Problem P₁ reduces to P₂ if solving P₂ suffices to solve P₁ -/
 def PredReducible (solve₁ solve₂ : ℕ → Bool) : Prop :=
   ∀ n, solve₂ n = true → solve₁ n = true
 
+
 /-- Reducibility is reflexive -/
 theorem pred_reducible_refl (solve : ℕ → Bool) : PredReducible solve solve :=
   fun _ h => h
+
 
 /-- Reducibility is transitive -/
 theorem pred_reducible_trans (s₁ s₂ s₃ : ℕ → Bool)
@@ -85,7 +78,6 @@ theorem pred_reducible_trans (s₁ s₂ s₃ : ℕ → Bool)
     PredReducible s₁ s₃ :=
   fun n h => h₁₂ n (h₂₃ n h)
 
-/-! ## §4. Sample Complexity Lower Bounds -/
 
 /-- Fano's method: sample complexity ≥ log(M)/(n·KL) for M hypotheses -/
 theorem fano_lower_bound (M : ℕ) (hM : 1 < M) (n : ℕ) (hn : 0 < n) (KL : ℝ) (hKL : 0 < KL) :
@@ -94,12 +86,12 @@ theorem fano_lower_bound (M : ℕ) (hM : 1 < M) (n : ℕ) (hn : 0 < n) (KL : ℝ
   · exact Real.log_pos (by exact_mod_cast hM)
   · exact mul_pos (by exact_mod_cast hn) hKL
 
+
 /-- Le Cam's two-point method: simplest lower bound technique -/
 theorem le_cam_two_point (TV : ℝ) (_hTV : 0 ≤ TV) (hTV1 : TV ≤ 1) :
     (1 - TV) / 2 ≥ 0 := by
   linarith
 
-/-! ## §5. The Computation-Prediction Tradeoff -/
 
 /-- More computation can sometimes substitute for more data -/
 theorem computation_data_tradeoff
@@ -109,9 +101,11 @@ theorem computation_data_tradeoff
     accuracy ≤ 1 / Real.sqrt n_samples + 1 / Real.sqrt compute_budget :=
   h_bound
 
+
 /-- The statistical query model: prediction from noisy statistics -/
 theorem sq_model_bound (d : ℕ) (hd : 0 < d) (τ : ℝ) (hτ : 0 < τ) (_hτ1 : τ < 1) :
     (d : ℝ) / τ ^ 2 > 0 := by
   exact div_pos (by exact_mod_cast hd) (sq_pos_of_pos hτ)
+
 
 end

@@ -1,26 +1,13 @@
-/-
-  # Uniswap v4 Hooks: Formal Verification of Custom Hook Logic
-  ## Extending AMM Models with Programmable Middleware
+/-! # CatalogBuild.Cryptography.Ethereum.UniswapV4Hooks
 
-  Uniswap v4 introduces "hooks" — smart contracts that execute custom logic
-  at specific points during pool operations. This file formalizes the hook
-  framework and proves key security properties.
-
-  ### Key Results:
-  - Hook composability: sequential hooks preserve pool invariants
-  - Fee override correctness: dynamic fees remain bounded
-  - TWAMM hooks reduce per-block price impact
-  - Higher fees produce less output
-
-  ### References:
-  - Uniswap v4 Whitepaper (Adams et al., 2023)
+Auto-generated from theorem catalog database.
+Domain: Cryptography/Ethereum
+Declarations: 18
 -/
 
 import Mathlib
 
-namespace Ethereum.UniswapV4Hooks
-
-/-! ## Pool Model with Hooks -/
+noncomputable section
 
 structure PoolV4 where
   reserveX : ℝ
@@ -31,10 +18,11 @@ structure PoolV4 where
   hFee0 : 0 ≤ baseFee
   hFee1 : baseFee < 1
 
+
 noncomputable def PoolV4.invariant (p : PoolV4) : ℝ := p.reserveX * p.reserveY
+
 noncomputable def PoolV4.spotPrice (p : PoolV4) : ℝ := p.reserveY / p.reserveX
 
-/-! ## Hook Interface -/
 
 structure Hook where
   adjustFee : ℝ → ℝ → ℝ → ℝ
@@ -43,16 +31,17 @@ structure Hook where
   fee_lt_one : ∀ bf dx sp, adjustFee bf dx sp < 1
   redist_nonneg : ∀ out, 0 ≤ afterSwapRedistribution out
 
+
 noncomputable def swapWithHook (p : PoolV4) (h : Hook) (dx : ℝ) : ℝ :=
   let effectiveFee := h.adjustFee p.baseFee dx p.spotPrice
   let effectiveDx := (1 - effectiveFee) * dx
   p.reserveY * effectiveDx / (p.reserveX + effectiveDx)
 
+
 noncomputable def swapNoHook (p : PoolV4) (dx : ℝ) : ℝ :=
   let effectiveDx := (1 - p.baseFee) * dx
   p.reserveY * effectiveDx / (p.reserveX + effectiveDx)
 
-/-! ## Identity Hook -/
 
 def identityHook (baseFee : ℝ) (hFee0 : 0 ≤ baseFee) (hFee1 : baseFee < 1) : Hook where
   adjustFee := fun _bf _dx _sp => baseFee
@@ -61,11 +50,11 @@ def identityHook (baseFee : ℝ) (hFee0 : 0 ≤ baseFee) (hFee1 : baseFee < 1) :
   fee_lt_one := fun _ _ _ => hFee1
   redist_nonneg := fun _ => le_refl _
 
+
 theorem identity_hook_preserves_output (p : PoolV4) (dx : ℝ) :
     swapWithHook p (identityHook p.baseFee p.hFee0 p.hFee1) dx = swapNoHook p dx := by
   unfold swapWithHook swapNoHook identityHook; simp
 
-/-! ## Dynamic Fee Bounds -/
 
 theorem dynamic_fee_bounded (minFee maxFee t : ℝ)
     (hMin : 0 ≤ minFee) (hOrder : minFee ≤ maxFee) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
@@ -75,7 +64,6 @@ theorem dynamic_fee_bounded (minFee maxFee t : ℝ)
   · linarith [mul_nonneg ht0 (sub_nonneg.mpr hOrder)]
   · nlinarith [mul_le_of_le_one_left (sub_nonneg.mpr hOrder) ht1]
 
-/-! ## Hook Composability -/
 
 def composeHooks (h₁ h₂ : Hook) : Hook where
   adjustFee := fun bf dx sp => h₂.adjustFee (h₁.adjustFee bf dx sp) dx sp
@@ -85,14 +73,15 @@ def composeHooks (h₁ h₂ : Hook) : Hook where
   fee_lt_one := fun bf dx sp => h₂.fee_lt_one _ _ _
   redist_nonneg := fun out => add_nonneg (h₁.redist_nonneg out) (h₂.redist_nonneg out)
 
-/-! ## TWAMM: Time-Weighted AMM Hook -/
 
 structure TWAMMHook where
   numBlocks : ℕ
   hBlocks : 0 < numBlocks
 
+
 noncomputable def TWAMMHook.perBlockAmount (tw : TWAMMHook) (totalDx : ℝ) : ℝ :=
   totalDx / tw.numBlocks
+
 
 theorem twamm_reduces_per_block (tw : TWAMMHook) (totalDx : ℝ)
     (htotal : 0 < totalDx) (hmulti : 1 < tw.numBlocks) :
@@ -101,32 +90,30 @@ theorem twamm_reduces_per_block (tw : TWAMMHook) (totalDx : ℝ)
   rw [div_lt_iff₀ (by exact_mod_cast tw.hBlocks : (0:ℝ) < tw.numBlocks)]
   nlinarith [show (1:ℝ) < tw.numBlocks by exact_mod_cast hmulti]
 
+
 theorem twamm_reduces_price_impact (reserveX dx₁ dx₂ : ℝ)
     (hRX : 0 < reserveX) (h1 : 0 < dx₁) (h2 : 0 < dx₂) (hle : dx₁ ≤ dx₂) :
     dx₁ / (reserveX + dx₁) ≤ dx₂ / (reserveX + dx₂) := by
   rw [div_le_div_iff₀ (by linarith) (by linarith)]
   nlinarith
 
-/-! ## Permission System -/
 
 structure HookPermissions where
   allowSwap : Bool
   allowAddLiquidity : Bool
   allowRemoveLiquidity : Bool
 
+
 def permissionedSwapAllowed (perms : HookPermissions) : Prop :=
   perms.allowSwap = true
+
 
 theorem no_swap_no_extraction (perms : HookPermissions)
     (h_blocked : perms.allowSwap = false) :
     ¬ permissionedSwapAllowed perms := by
   simp [permissionedSwapAllowed, h_blocked]
 
-/-! ## Fee Override Correctness -/
 
-/-
-Higher fees produce less swap output from constant-product formula
--/
 theorem higher_fee_less_output (reserveX reserveY dx fee₁ fee₂ : ℝ)
     (hRX : 0 < reserveX) (hRY : 0 < reserveY) (hdx : 0 < dx)
     (hf1 : 0 ≤ fee₁) (hf2 : 0 ≤ fee₂) (hf1_lt : fee₁ < 1) (hf2_lt : fee₂ < 1)
@@ -136,4 +123,5 @@ theorem higher_fee_less_output (reserveX reserveY dx fee₁ fee₂ : ℝ)
   field_simp;
   rw [ div_le_div_iff₀ ] <;> nlinarith [ mul_le_mul_of_nonneg_left hle hdx.le ]
 
-end Ethereum.UniswapV4Hooks
+
+end

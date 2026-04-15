@@ -1,58 +1,14 @@
-import Mathlib
+/-! # CatalogBuild.Speculative.Millennium.Foundations
 
-/-!
-# Millennium Prize Problems: Formal Foundations
-
-## Machine-Verified Structural Results
-
-This file contains formally verified theorems that illuminate the mathematical
-structure surrounding the Clay Millennium Prize Problems. While the problems
-themselves remain open, the theorems here establish rigorous foundations for
-the approaches described in the accompanying research paper.
-
-### Overview of Results
-
-1. **Riemann Hypothesis Foundations**
-   - Li's criterion: positivity structure for zeros on the critical line
-   - Spectral theory: self-adjoint operators have real eigenvalues
-
-2. **P vs NP Structural Results**
-   - Cantor diagonal theorem (template for separation arguments)
-   - Circuit complexity counting bounds
-
-3. **Yang-Mills & Gauge Theory**
-   - Lie bracket properties and Jacobi identity
-   - Energy positivity for quadratic forms
-
-4. **Navier-Stokes Analysis**
-   - Discrete Gronwall inequality and energy decay
-   - AM-GM inequality (Ladyzhenskaya structure)
-
-5. **Collatz Conjecture**
-   - Function definition and small case verification
-   - Trajectory analysis
-
-6. **Brocard's Problem & Erdős-Straus Conjecture**
-   - Known solutions verified computationally
+Auto-generated from theorem catalog database.
+Domain: Speculative/Millennium
+Declarations: 24
 -/
 
-open Finset BigOperators Complex Real Nat
+import Mathlib
 
 noncomputable section
 
-/-! ## Section 1: Riemann Hypothesis — Li's Criterion Structure
-
-Li's criterion (1997) states that the Riemann Hypothesis is equivalent to
-the non-negativity of a sequence λ_n defined via the Hadamard product of ξ.
-We formalize structural facts about zeros on vertical lines. -/
-
-/-
-**Key structural fact**: For any complex number ρ on the critical line
-    Re(ρ) = 1/2 with ρ ≠ 0, we have |1 - 1/ρ| ≤ 1.
-    This is because if ρ = 1/2 + it, then 1/ρ = (1/2 - it)/(1/4 + t²),
-    which has non-negative real part, so 1 - 1/ρ lies in the left half of
-    the unit disk.
--/
 theorem critical_line_implies_unit_disk (ρ : ℂ) (hρ : ρ.re = 1/2)
     (hρ_nonzero : ρ ≠ 0) :
     ‖1 - 1 / ρ‖ ≤ 1 := by
@@ -60,11 +16,7 @@ theorem critical_line_implies_unit_disk (ρ : ℂ) (hρ : ρ.re = 1/2)
   field_simp;
   nlinarith
 
-/-
-**Li coefficient positivity for finite sums**: If all roots lie on
-    Re(s) = 1/2, the Li-type sums are non-negative.
-    This is a consequence of |1 - 1/ρ| ≤ 1 for each root.
--/
+
 theorem li_positivity_from_critical_line (roots : Fin k → ℂ)
     (h_line : ∀ i, (roots i).re = 1/2)
     (h_nonzero : ∀ i, roots i ≠ 0)
@@ -78,30 +30,29 @@ theorem li_positivity_from_critical_line (roots : Fin k → ℂ)
     aesop;
   exact Finset.sum_nonneg fun i _ => h_re_nonneg i
 
-/-! ## Section 2: Spectral Theory — The Hilbert-Pólya Foundation -/
 
 /-- **Trace formula**: For a matrix, the trace equals the sum of
-    diagonal entries. This is the finite analog of the explicit formula
-    connecting ζ-zeros to primes. -/
+diagonal entries. This is the finite analog of the explicit formula
+connecting ζ-zeros to primes. -/
 theorem trace_eq_sum_diagonal {n : ℕ} (M : Matrix (Fin n) (Fin n) ℝ) :
     M.trace = ∑ i, M i i := by
   simp [Matrix.trace, Matrix.diag]
 
+
 /-- A real symmetric matrix trivially has eigenvalues in ℝ
-    (they are already real numbers). This is the finite-dimensional
-    version of the Hilbert-Pólya idea: self-adjointness forces reality. -/
+(they are already real numbers). This is the finite-dimensional
+version of the Hilbert-Pólya idea: self-adjointness forces reality. -/
 theorem real_symmetric_eigenvalue_real {n : ℕ}
     (M : Matrix (Fin n) (Fin n) ℝ) (hM : M.IsSymm)
     (μ : ℝ) (v : Fin n → ℝ) (hv : v ≠ 0)
     (hev : M.mulVec v = μ • v) :
     ∃ r : ℝ, μ = r := ⟨μ, rfl⟩
 
-/-! ## Section 3: P vs NP — Structural Complexity -/
 
 /-- **Cantor's diagonal theorem** (Boolean functions):
-    No surjection ℕ → (ℕ → Bool) exists. This is the template for
-    all diagonalization-based separation results in complexity theory,
-    including the time hierarchy theorem. -/
+No surjection ℕ → (ℕ → Bool) exists. This is the template for
+all diagonalization-based separation results in complexity theory,
+including the time hierarchy theorem. -/
 theorem cantor_diagonal_bool :
     ¬ ∃ f : ℕ → (ℕ → Bool), Function.Surjective f := by
   intro ⟨f, hf⟩
@@ -109,46 +60,25 @@ theorem cantor_diagonal_bool :
   have : f m m = !f m m := congr_fun hm m
   simp at this
 
+
 /-- **Padding time reduction**: The fundamental inequality behind
-    padding lemma arguments in complexity theory. -/
+padding lemma arguments in complexity theory. -/
 theorem padding_time_reduction (f g : ℕ → ℕ)
     (hf : ∀ n, 0 < f n) (hg : ∀ n, 0 < g n)
     (h_mono : ∀ n, g n ≤ f n) (n : ℕ) :
     f n / g n ≤ f n :=
   Nat.div_le_self (f n) (g n)
 
+
 /-- **Counting argument for circuit complexity (Shannon)**:
-    The number of Boolean functions on n bits is 2^{2^n}, while the
-    number of circuits of size s is at most (Cs)^s for some constant C.
-    When 2^{2^n} > (Cs)^s, some function requires circuits of size > s. -/
+The number of Boolean functions on n bits is 2^{2^n}, while the
+number of circuits of size s is at most (Cs)^s for some constant C.
+When 2^{2^n} > (Cs)^s, some function requires circuits of size > s. -/
 theorem boolean_function_count (n : ℕ) :
     Fintype.card (Fin (2^n) → Bool) = 2 ^ (2 ^ n) := by
   simp [Fintype.card_fun]
 
-/-! ## Section 4: Yang-Mills — Gauge Theory Algebra -/
 
-/-- **Lie bracket antisymmetry**: ⁅x, y⁆ = -⁅y, x⁆. -/
-theorem lie_bracket_antisymm {L : Type*} [LieRing L] (x y : L) :
-    ⁅x, y⁆ = -⁅y, x⁆ := by
-  rw [← lie_skew]
-
-/-- **Jacobi identity**: ⁅x, ⁅y, z⁆⁆ + ⁅y, ⁅z, x⁆⁆ + ⁅z, ⁅x, y⁆⁆ = 0. -/
-theorem jacobi_identity {L : Type*} [LieRing L] (x y z : L) :
-    ⁅x, ⁅y, z⁆⁆ + ⁅y, ⁅z, x⁆⁆ + ⁅z, ⁅x, y⁆⁆ = 0 :=
-  lie_jacobi x y z
-
-/-- **Lie bracket nilpotency**: ⁅x, x⁆ = 0. -/
-theorem lie_bracket_self_zero {L : Type*} [LieRing L] (x : L) :
-    ⁅x, x⁆ = 0 :=
-  lie_self x
-
-/-! ## Section 5: Navier-Stokes — Energy Estimates -/
-
-/-
-**Discrete Gronwall's inequality**: If a(n+1) ≤ (1+c) · a(n),
-    then a(n) ≤ (1+c)^n · a(0). This is the key tool for energy
-    estimates in fluid dynamics.
--/
 theorem discrete_gronwall (a : ℕ → ℝ) (c : ℝ) (hc : 0 ≤ c)
     (h : ∀ n, a (n + 1) ≤ (1 + c) * a n) (ha0 : 0 ≤ a 0)
     (n : ℕ) : a n ≤ (1 + c) ^ n * a 0 := by
@@ -156,10 +86,7 @@ theorem discrete_gronwall (a : ℕ → ℝ) (c : ℝ) (hc : 0 ≤ c)
   · norm_num;
   · convert le_trans ( h n ) ( mul_le_mul_of_nonneg_left ih ( by positivity ) ) using 1 ; ring
 
-/-
-**Energy decay**: If E(n+1) ≤ (1-ν) · E(n) with 0 < ν < 1,
-    then E(n) ≤ (1-ν)^n · E(0).
--/
+
 theorem energy_decay_discrete (E : ℕ → ℝ) (ν : ℝ) (hν : 0 < ν) (hν1 : ν < 1)
     (h : ∀ n, E (n + 1) ≤ (1 - ν) * E n)
     (hE0 : 0 ≤ E 0) (n : ℕ) :
@@ -169,42 +96,27 @@ theorem energy_decay_discrete (E : ℕ → ℝ) (ν : ℝ) (hν : 0 < ν) (hν1 
   · norm_num;
   · convert le_trans ( h n ) ( mul_le_mul_of_nonneg_left ih ( sub_nonneg.2 hν1.le ) ) using 1 ; ring
 
-/-- **AM-GM inequality**: a·b ≤ (a² + b²)/2 for non-negative reals.
-    This underlies interpolation inequalities like Ladyzhenskaya's. -/
-theorem am_gm_two (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) :
-    a * b ≤ (a ^ 2 + b ^ 2) / 2 := by
-  nlinarith [sq_nonneg (a - b)]
 
-/-
-**Young's inequality with epsilon**: For any ε > 0,
-    a·b ≤ ε/2 · a² + 1/(2ε) · b². Crucial for absorbing nonlinear terms.
--/
 theorem youngs_inequality_eps (a b ε : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) (hε : 0 < ε) :
     a * b ≤ ε / 2 * a ^ 2 + 1 / (2 * ε) * b ^ 2 := by
   nlinarith [ sq_nonneg ( a * ε - b ), mul_div_cancel₀ ( 1 : ℝ ) ( by positivity : ( 2 * ε ) ≠ 0 ) ]
 
-/-! ## Section 6: Collatz Conjecture -/
-
-/-- The Collatz function: n ↦ n/2 if even, 3n+1 if odd. -/
-def collatz (n : ℕ) : ℕ :=
-  if n % 2 = 0 then n / 2 else 3 * n + 1
 
 /-- Collatz iteration: apply the Collatz function k times. -/
 def collatzIter : ℕ → ℕ → ℕ
   | 0, n => n
   | k + 1, n => collatzIter k (collatz n)
 
+
 /-- **Collatz trajectory verification**: 1 → 4 → 2 → 1 is a cycle. -/
 theorem collatz_cycle : collatzIter 3 1 = 1 := by native_decide
+
 
 /-- **Even step reduces**: If n is even and n ≥ 2, then collatz(n) < n. -/
 theorem collatz_even_decreases (n : ℕ) (hn : n ≥ 2) (heven : n % 2 = 0) :
     collatz n < n := by
   unfold collatz; simp [heven]; omega
 
-/-- **Odd step analysis**: If n is odd, then 3n+1 is even. -/
-theorem collatz_odd_then_even (n : ℕ) (hodd : n % 2 = 1) :
-    (3 * n + 1) % 2 = 0 := by omega
 
 /-- **Two-step formula for odd n**: collatz(collatz(n)) = (3n+1)/2. -/
 theorem collatz_two_step (n : ℕ) (hodd : n % 2 = 1) :
@@ -213,13 +125,14 @@ theorem collatz_two_step (n : ℕ) (hodd : n % 2 = 1) :
   have h : (3 * n + 1) % 2 = 0 := by omega
   simp [h]
 
+
 /-- **Collatz reaches 1 starting from 27** (which has a long trajectory of 111 steps). -/
 theorem collatz_27 : collatzIter 111 27 = 1 := by native_decide
 
-/-! ## Section 7: Brocard's Problem -/
 
 /-- Brocard's equation: n! + 1 = m². -/
 def isBrocardSolution (n m : ℕ) : Prop := n.factorial + 1 = m ^ 2
+
 
 
 
@@ -227,35 +140,41 @@ def isBrocardSolution (n m : ℕ) : Prop := n.factorial + 1 = m ^ 2
 theorem brocard_4 : isBrocardSolution 4 5 := by
   unfold isBrocardSolution; norm_num [Nat.factorial]
 
+
 /-- n = 5, m = 11 is a Brocard solution: 5! + 1 = 121 = 11². -/
 theorem brocard_5 : isBrocardSolution 5 11 := by
   unfold isBrocardSolution; norm_num [Nat.factorial]
+
 
 /-- n = 7, m = 71 is a Brocard solution: 7! + 1 = 5041 = 71². -/
 theorem brocard_7 : isBrocardSolution 7 71 := by
   unfold isBrocardSolution; norm_num [Nat.factorial]
 
-/-! ## Section 8: Erdős-Straus Conjecture -/
 
 /-- Erdős-Straus decomposition: 4·x·y·z = n·(y·z + x·z + x·y),
-    which is equivalent to 4/n = 1/x + 1/y + 1/z for positive integers. -/
+which is equivalent to 4/n = 1/x + 1/y + 1/z for positive integers. -/
 def isErdosStrausDecomp (n x y z : ℕ) : Prop :=
   n > 0 ∧ x > 0 ∧ y > 0 ∧ z > 0 ∧ 4 * x * y * z = n * (y * z + x * z + x * y)
+
 
 /-- Erdős-Straus holds for n = 2: 4/2 = 1/1 + 1/2 + 1/2. -/
 theorem erdos_straus_2 : isErdosStrausDecomp 2 1 2 2 := by
   unfold isErdosStrausDecomp; omega
 
+
 /-- Erdős-Straus holds for n = 3: 4/3 = 1/1 + 1/4 + 1/12. -/
 theorem erdos_straus_3 : isErdosStrausDecomp 3 1 4 12 := by
   unfold isErdosStrausDecomp; omega
+
 
 /-- Erdős-Straus holds for n = 5: 4/5 = 1/2 + 1/4 + 1/20. -/
 theorem erdos_straus_5 : isErdosStrausDecomp 5 2 4 20 := by
   unfold isErdosStrausDecomp; omega
 
+
 /-- Erdős-Straus holds for n = 7: 4/7 = 1/2 + 1/15 + 1/210. -/
 theorem erdos_straus_7 : isErdosStrausDecomp 7 2 15 210 := by
   unfold isErdosStrausDecomp; omega
+
 
 end

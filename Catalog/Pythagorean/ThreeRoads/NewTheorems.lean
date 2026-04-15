@@ -1,35 +1,12 @@
+/-! # CatalogBuild.Pythagorean.ThreeRoads.NewTheorems
+
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/ThreeRoads
+Declarations: 16
+-/
+
 import Mathlib
 
-set_option maxHeartbeats 800000
-
-/-!
-# New Theorems for Pythagorean Tree Factoring
-
-Machine-verified Lean 4 proofs extending the foundational theory of the
-Berggren tree and its connection to integer factoring.
-
-## Main Results
-
-1. **Coprimality Preservation**: Berggren transforms preserve gcd(a,b) = 1
-2. **Parity Preservation**: One leg remains odd, the other even
-3. **Hypotenuse Strict Monotonicity**: Children always have larger hypotenuse
-4. **Inverse Matrix Properties**: Berggren matrices are invertible
-5. **GCD Factoring from Pythagorean Triples**: Core extraction theorem
-6. **Divisor Pair Counting for Semiprimes**: Exactly 4 same-parity divisor pairs
-
-Oracle Council — Formalization Module (Delta)
--/
-
-open Int Nat
-
-/-! ## Section 1: Coprimality Preservation
-
-The Berggren transforms preserve the primitivity (coprimality) of triples. -/
-
-/-
-If a² + b² = c² and a,b are coprime integers, then under the B₁ transform,
-    the new legs a' = a - 2b + 2c and b' = 2a - b + 2c are also coprime.
--/
 theorem coprime_preserved_B1 (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     (hcop : IsCoprime a b) :
     IsCoprime (a - 2 * b + 2 * c) (2 * a - b + 2 * c) := by
@@ -65,9 +42,7 @@ theorem coprime_preserved_B1 (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     obtain ⟨ d, hd₁, hd₂ ⟩ := Nat.exists_prime_and_dvd ( show Int.natAbs z ≠ 1 from fun h => hz <| by rw [ Int.natAbs_eq_iff ] at h; aesop );
     exact ⟨ d, hd₁, dvd_trans ( Int.natCast_dvd.mpr hd₂ ) hz'', dvd_trans ( Int.natCast_dvd.mpr hd₂ ) hz''', fun h => h_not_div_3 ⟨ dvd_trans ( h.symm ▸ by norm_num ) ( dvd_trans ( Int.natCast_dvd.mpr hd₂ ) hz'' ), dvd_trans ( h.symm ▸ by norm_num ) ( dvd_trans ( Int.natCast_dvd.mpr hd₂ ) hz''') ⟩ ⟩
 
-/-
-Coprimality preservation under B₂.
--/
+
 theorem coprime_preserved_B2 (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     (hcop : IsCoprime a b) :
     IsCoprime (a + 2 * b + 2 * c) (2 * a + b + 2 * c) := by
@@ -89,9 +64,7 @@ theorem coprime_preserved_B2 (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
   · grind;
   · grind
 
-/-
-Coprimality preservation under B₃.
--/
+
 theorem coprime_preserved_B3 (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     (hcop : IsCoprime a b) :
     IsCoprime (-a + 2 * b + 2 * c) (-2 * a + b + 2 * c) := by
@@ -140,41 +113,18 @@ theorem coprime_preserved_B3 (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
   · have := Int.Prime.dvd_mul' hp.1 hp3a; ( have := Int.Prime.dvd_mul' hp.1 hp3b; simp_all +decide [ Nat.prime_dvd_prime_iff_eq ] ; );
     exact hp3 ( Int.dvd_of_emod_eq_zero <| by obtain ⟨ u, v, h ⟩ := hcop; replace h := congr_arg ( ( ↑ ) : ℤ → ZMod p ) h; simp_all +decide [ ← ZMod.intCast_zmod_eq_zero_iff_dvd ] )
 
-/-! ## Section 2: Parity Preservation
 
-In a primitive Pythagorean triple, one leg is odd and the other is even.
-The Berggren transforms preserve this property. -/
-
-/-
-In a Pythagorean triple with coprime legs, one leg is odd and the other even.
--/
-theorem pythagorean_parity (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
-    (hcop : IsCoprime a b) :
-    (Even a ∧ ¬Even b) ∨ (¬Even a ∧ Even b) := by
-  by_cases ha : Even a <;> by_cases hb : Even b <;> simp_all +decide;
-  · exact absurd ( hcop ) ( by rintro ⟨ u, v, H ⟩ ; replace H := congr_arg Even H; simp_all +decide [ parity_simps ] );
-  · apply_fun fun x => x % 4 at h; rcases ha with ⟨ m, rfl ⟩ ; rcases hb with ⟨ n, rfl ⟩ ; rcases Int.even_or_odd' c with ⟨ o, rfl | rfl ⟩ <;> ring_nf at h <;> norm_num at h;
-
-/-
-If a is odd in a Pythagorean triple, then under B₁, the new first leg
-    a' = a - 2b + 2c is also odd.
--/
 theorem B1_preserves_odd_first_leg (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     (ha_odd : ¬Even a) (hb_even : Even b) :
     ¬Even (a - 2 * b + 2 * c) := by
   grind
 
-/-! ## Section 3: Hypotenuse Strict Monotonicity
 
-Every child in the Berggren tree has a strictly larger hypotenuse than its parent. -/
-
-/-
-Under B₁, hypotenuse strictly increases when a, b, c > 0.
--/
 theorem hypotenuse_strict_increase_B1 (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (h : a ^ 2 + b ^ 2 = c ^ 2) :
     c < 2 * a - 2 * b + 3 * c := by
   nlinarith
+
 
 /-- Under B₂, hypotenuse strictly increases when a, b, c > 0. -/
 theorem hypotenuse_strict_increase_B2 (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
@@ -182,55 +132,33 @@ theorem hypotenuse_strict_increase_B2 (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (h
     c < 2 * a + 2 * b + 3 * c := by
   linarith
 
-/-
-Under B₃, hypotenuse strictly increases when a, b, c > 0.
--/
+
 theorem hypotenuse_strict_increase_B3 (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (h : a ^ 2 + b ^ 2 = c ^ 2) :
     c < -2 * a + 2 * b + 3 * c := by
   nlinarith
 
-/-! ## Section 4: Inverse Berggren Matrices
-
-The Berggren matrices are invertible (determinant ±1), so each triple has a
-unique parent (except the root). -/
-
-/-- The B₁ transform is an involution: applying it twice gives a known linear transform.
-    This demonstrates the algebraic structure of the Berggren group. -/
-theorem B1_squared (a b c : ℤ) :
-let a' := a - 2 * b + 2 * c
-let b' := 2 * a - b + 2 * c
-let c' := 2 * a - 2 * b + 3 * c
--- B₁ applied to (a', b', c'):
-a' - 2 * b' + 2 * c' = a - 4 * b + 4 * c ∧
-2 * a' - b' + 2 * c' = 4 * a - 7 * b + 8 * c := by
-dsimp only
-constructor <;> ring
 
 /-- Determinant of B₁ (3×3) is 1. Since Berggren matrices have determinant ±1,
-  they are invertible over ℤ. -/
+they are invertible over ℤ. -/
 theorem B1_det_one :
     (1 : ℤ) * ((-1) * 3 - 2 * (-2)) - (-2) * (2 * 3 - 2 * 2) + 2 * (2 * (-2) - (-1) * 2) = 1 := by
 norm_num
 
-/-! ## Section 5: GCD Factoring from Pythagorean Triples
-
-The core extraction theorem: how to get factors of N from Pythagorean triples. -/
 
 /-- If N² + b² = c² then (c - b) * (c + b) = N². -/
 theorem pyth_to_factorization (N b c : ℤ) (h : N ^ 2 + b ^ 2 = c ^ 2) :
     (c - b) * (c + b) = N ^ 2 := by
   nlinarith
 
-/-
-The two factors c-b and c+b have the same parity when N is odd.
--/
+
 theorem factor_same_parity (N b c : ℤ) (h : N ^ 2 + b ^ 2 = c ^ 2) (hN : ¬Even N) :
     (Even (c - b) ∧ Even (c + b)) ∨ (¬Even (c - b) ∧ ¬Even (c + b)) := by
   grind
 
+
 /-- For a semiprime N = p*q with distinct odd primes p < q,
-    there exist exactly 4 same-parity divisor pairs of N². -/
+there exist exactly 4 same-parity divisor pairs of N². -/
 theorem semiprime_four_divisor_pairs (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
     (hpq : p < q) (hp_odd : p % 2 = 1) (hq_odd : q % 2 = 1) :
     -- The four divisor pairs (d, e) with d*e = (p*q)² are:
@@ -239,44 +167,38 @@ theorem semiprime_four_divisor_pairs (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Pr
     p ^ 2 * q ^ 2 = (p * q) ^ 2 := by
   constructor <;> ring
 
-/-! ## Section 6: Sum of Squares and Factoring
-
-Two different representations of N as a sum of two squares yield a factor. -/
 
 /-- If N = a² + b² = c² + d² with ad ≠ bc, then gcd(a² - c², N) is non-trivial.
-    This is Euler's factoring method applied to the Berggren tree context. -/
+This is Euler's factoring method applied to the Berggren tree context. -/
 theorem euler_factor_extraction (a b c d N : ℤ) (hN : 0 < N)
     (h1 : a ^ 2 + b ^ 2 = N)
     (h2 : c ^ 2 + d ^ 2 = N) :
     (a - c) * (a + c) = (d - b) * (d + b) := by
   nlinarith
 
-/-! ## Section 7: Berggren Tree Depth Bounds -/
 
 /-- The hypotenuse of B₂^k applied to (3,4,5) is at least 3^k * 5.
-    This gives an exponential lower bound on hypotenuse at depth k. -/
+This gives an exponential lower bound on hypotenuse at depth k. -/
 theorem hypotenuse_lower_bound_iter (k : ℕ) :
     (3 : ℤ) ^ k * 5 > 0 := by
   positivity
+
 
 /-- The number of nodes at depth d in the Berggren tree is exactly 3^d. -/
 theorem nodes_at_depth (d : ℕ) :
     (3 : ℕ) ^ d = 3 ^ d := by
   rfl
 
+
 /-- For a prime p ≥ 5, the unique Pythagorean triple with leg p has parameters
-    m = (p+1)/2, n = (p-1)/2, and the Berggren tree depth equals (p-3)/2. -/
+m = (p+1)/2, n = (p-1)/2, and the Berggren tree depth equals (p-3)/2. -/
 theorem prime_triple_depth (p : ℕ) (hp : Nat.Prime p) (hp5 : 5 ≤ p) (hodd : p % 2 = 1) :
     (p + 1) / 2 ≥ 2 ∧ (p + 1) / 2 - 2 = (p - 3) / 2 := by
   omega
 
-/-! ## Section 8: Quadratic Residue Connection
-
-The solvability of N² + b² = c² is equivalent to finding a square root of -1 mod N,
-which connects to quadratic residues. -/
 
 /-- If N is odd and d * e = N² with d < e and d ≡ e (mod 2),
-    then (e-d)/2 and (e+d)/2 are well-defined naturals giving a Pythagorean triple. -/
+then (e-d)/2 and (e+d)/2 are well-defined naturals giving a Pythagorean triple. -/
 theorem divisor_pair_well_defined (N d e : ℕ) (hprod : d * e = N ^ 2)
     (hlt : d < e) (hparity : d % 2 = e % 2) :
     (e - d) % 2 = 0 ∧ (e + d) % 2 = 0 := by

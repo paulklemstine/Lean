@@ -1,34 +1,35 @@
-/-
-  # Search Duality and Categorical Foundations
+/-! # CatalogBuild.Speculative.Other.Duality
 
-  Establishes categorical duality between search and evasion,
-  the search-information isomorphism, and connections to cryptography.
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 13
 -/
+
 import Mathlib
 
 noncomputable section
-
-open Set Filter CategoryTheory
-
-/-! ## Finite Search Objects -/
 
 /-- A finite search space of size n. -/
 structure SearchObj where
   n : ℕ
   hn : 0 < n
 
+
 /-- Observation data: which elements are observed. -/
 structure ObservationData (X : SearchObj) where
   observed : Finset (Fin X.n)
+
 
 /-- Repulsion data: which elements are hidden. -/
 structure RepulsionData (X : SearchObj) where
   hidden : Finset (Fin X.n)
 
+
 /-- The observation-repulsion pairing: overlap between observed and hidden. -/
 def observationRepulsionPairing (X : SearchObj) (o : ObservationData X)
     (r : RepulsionData X) : ℕ :=
   (o.observed ∩ r.hidden).card
+
 
 /-- Complementarity: if observed ∪ hidden = univ, their sizes cover n. -/
 theorem observation_repulsion_complementarity (X : SearchObj)
@@ -39,34 +40,28 @@ theorem observation_repulsion_complementarity (X : SearchObj)
     _ = (o.observed ∪ r.hidden).card := by rw [h]
     _ ≤ o.observed.card + r.hidden.card := Finset.card_union_le _ _
 
-/-! ## Search-Information Isomorphism -/
 
 /-- Search information gained by observing a set in a uniform space. -/
 def searchInfo (n : ℕ) (k : ℕ) : ℝ :=
   Real.log n - Real.log (n - k)
 
+
 /-- Evasion information: remaining uncertainty. -/
 def evasionInfo (n : ℕ) (k : ℕ) : ℝ :=
   Real.log (n - k)
+
 
 /-- Search-information conservation: search info + evasion info = total info. -/
 theorem search_info_conservation (n k : ℕ) :
     searchInfo n k + evasionInfo n k = Real.log n := by
   unfold searchInfo evasionInfo; ring
 
-/-! ## Quantum Search States -/
 
 /-- A quantum search state: superposition over n locations. -/
 structure QuantumSearchState (n : ℕ) where
   amplitudes : Fin n → ℂ
   normalized : ∑ i : Fin n, Complex.normSq (amplitudes i) = 1
 
-/-- Grover's quadratic speedup: √n queries suffice. -/
-theorem grover_speedup (n : ℕ) (hn : 1 ≤ n) :
-    ∃ (queries : ℕ), queries ≤ Nat.sqrt n + 1 := by
-  exact ⟨0, by omega⟩
-
-/-! ## One-Way Functions and Search -/
 
 /-- A one-way function model. -/
 structure OneWayFunction where
@@ -74,10 +69,12 @@ structure OneWayFunction where
   range_size : ℕ
   f : Fin domain_size → Fin range_size
 
+
 /-- The search problem induced by a one-way function. -/
 def owfSearchProblem (owf : OneWayFunction) (target : Fin owf.range_size) :
     Set (Fin owf.domain_size) :=
   {x | owf.f x = target}
+
 
 /-- If f is injective, each target has at most one preimage. -/
 theorem owf_unique_preimage (owf : OneWayFunction) (h_inj : Function.Injective owf.f)
@@ -86,7 +83,6 @@ theorem owf_unique_preimage (owf : OneWayFunction) (h_inj : Function.Injective o
   intro a ha b hb
   exact h_inj (ha.trans hb.symm)
 
-/-! ## Zero-Knowledge Search Proofs -/
 
 /-- A zero-knowledge search proof structure. -/
 structure ZKSearchProof where
@@ -94,5 +90,8 @@ structure ZKSearchProof where
   hn : 0 < n
   commitment : Fin n → ℕ
   complete : ∀ x : Fin n, commitment x ≠ 0
+
+end
+
 
 end

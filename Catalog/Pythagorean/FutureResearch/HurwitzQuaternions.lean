@@ -1,40 +1,20 @@
-import Mathlib
+/-! # CatalogBuild.Pythagorean.FutureResearch.HurwitzQuaternions
 
-/-!
-# Hurwitz Quaternion Factoring
-
-## Overview
-
-We formalize the Hurwitz quaternion ring and its connection to integer factoring.
-The Hurwitz integers are the quaternions a + bi + cj + dk where either all of
-a,b,c,d are integers or all are half-integers (integers plus 1/2).
-
-The key property is that the Hurwitz integers form a *Euclidean domain*
-(unlike the Lipschitz integers ℤ[i,j,k]), which means they admit unique
-factorization (up to units). This connects quaternion factoring to integer
-factoring via the norm map.
-
-## Main Results
-
-- `lipschitz_norm_multiplicative`: Quaternion norm is multiplicative
-- `euler_four_square_identity`: The Euler four-square identity
-- `norm_factorization`: If Norm(Q) = p*q, factoring Q reveals p and q
-- `four_square_sum_of_product`: Product of sums of 4 squares is a sum of 4 squares
-- `lipschitz_factoring_to_integer`: Quaternion factoring implies integer factoring
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/FutureResearch
+Declarations: 11
 -/
 
-set_option maxHeartbeats 800000
-
-open BigOperators
-
-/-! ## §1. The Lipschitz Quaternion Norm -/
+import Mathlib
 
 /-- Lipschitz quaternion norm (sum of four squares). -/
 def lipschitzNorm (a b c d : ℤ) : ℤ := a^2 + b^2 + c^2 + d^2
 
+
 /-- The Lipschitz norm is nonneg. -/
 theorem lipschitzNorm_nonneg (a b c d : ℤ) : 0 ≤ lipschitzNorm a b c d := by
   unfold lipschitzNorm; positivity
+
 
 /-- The Lipschitz norm is zero iff all components are zero. -/
 theorem lipschitzNorm_eq_zero (a b c d : ℤ) :
@@ -50,10 +30,9 @@ theorem lipschitzNorm_eq_zero (a b c d : ℤ) :
            by nlinarith [sq_nonneg c], by nlinarith [sq_nonneg d]⟩
   · rintro ⟨rfl, rfl, rfl, rfl⟩; simp [lipschitzNorm]
 
-/-! ## §2. Euler's Four-Square Identity (Quaternion Norm Multiplicativity) -/
 
 /-- Euler's four-square identity: the product of two sums of four squares
-    is a sum of four squares. This is the quaternion norm multiplicativity. -/
+is a sum of four squares. This is the quaternion norm multiplicativity. -/
 theorem euler_four_sq_identity (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ) :
     lipschitzNorm a₁ b₁ c₁ d₁ * lipschitzNorm a₂ b₂ c₂ d₂ =
     lipschitzNorm
@@ -62,6 +41,7 @@ theorem euler_four_sq_identity (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ) :
       (a₁*c₂ - b₁*d₂ + c₁*a₂ + d₁*b₂)
       (a₁*d₂ + b₁*c₂ - c₁*b₂ + d₁*a₂) := by
   unfold lipschitzNorm; ring
+
 
 /-- Corollary: the product of two sums of four squares is a sum of four squares. -/
 theorem four_square_product_closure (m n : ℤ)
@@ -72,24 +52,9 @@ theorem four_square_product_closure (m n : ℤ)
   obtain ⟨a₂, b₂, c₂, d₂, rfl⟩ := hn
   exact ⟨_, _, _, _, (euler_four_sq_identity ..).symm⟩
 
-/-! ## §3. Units of the Lipschitz Quaternions -/
-
-/-- The 8 Lipschitz units have norm 1. -/
-theorem lipschitz_unit_norms :
-    lipschitzNorm 1 0 0 0 = 1 ∧
-    lipschitzNorm (-1) 0 0 0 = 1 ∧
-    lipschitzNorm 0 1 0 0 = 1 ∧
-    lipschitzNorm 0 (-1) 0 0 = 1 ∧
-    lipschitzNorm 0 0 1 0 = 1 ∧
-    lipschitzNorm 0 0 (-1) 0 = 1 ∧
-    lipschitzNorm 0 0 0 1 = 1 ∧
-    lipschitzNorm 0 0 0 (-1) = 1 := by
-  unfold lipschitzNorm; omega
-
-/-! ## §4. Factoring via Quaternion Norms -/
 
 /-- If Norm(Q) = N and Q = Q₁ · Q₂, then N = Norm(Q₁) · Norm(Q₂).
-    This reduces integer factoring to quaternion factoring. -/
+This reduces integer factoring to quaternion factoring. -/
 theorem norm_factorization_principle
     (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
     (N : ℤ)
@@ -101,8 +66,9 @@ theorem norm_factorization_principle
     lipschitzNorm a₁ b₁ c₁ d₁ * lipschitzNorm a₂ b₂ c₂ d₂ = N := by
   rw [euler_four_sq_identity]; exact hN
 
+
 /-- Key theorem: If N = Norm(Q₁) · Norm(Q₂) with Norm(Q₁) = p and
-    Norm(Q₂) = q, then p and q are factors of N. -/
+Norm(Q₂) = q, then p and q are factors of N. -/
 theorem quaternion_gives_factors (p q : ℤ)
     (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
     (hp : lipschitzNorm a₁ b₁ c₁ d₁ = p)
@@ -110,41 +76,30 @@ theorem quaternion_gives_factors (p q : ℤ)
     p ∣ (p * q) ∧ q ∣ (p * q) := by
   exact ⟨dvd_mul_right p q, dvd_mul_left q p⟩
 
-/-! ## §5. Every Prime is a Sum of Four Squares -/
-
-/-
-Lagrange's four-square theorem: every natural number is a sum of four squares.
-    (Statement only; the proof requires Minkowski's theorem or quaternion theory.)
--/
-theorem lagrange_four_squares (n : ℕ) :
-    ∃ a b c d : ℤ, lipschitzNorm a b c d = ↑n := by
-  obtain ⟨ a, b, c, d, h ⟩ := Nat.sum_four_squares n;
-  exact ⟨ a, b, c, d, by rw [ lipschitzNorm ] ; exact mod_cast h ⟩
-
-/-! ## §6. Representation Counts -/
 
 /-- Jacobi's four-square theorem (statement): the number of representations of n
-    as a sum of four squares equals 8 times the sum of divisors d of n with 4 ∤ d. -/
+as a sum of four squares equals 8 times the sum of divisors d of n with 4 ∤ d. -/
 theorem jacobi_four_square_statement (n : ℕ) (hn : 0 < n) :
     -- The count r₄(n) = 8 · Σ_{d|n, 4∤d} d
     -- We state a weaker version: r₄(n) > 0
     ∃ a b c d : ℤ, lipschitzNorm a b c d = ↑n := by
   exact lagrange_four_squares n
 
+
 /-- For a prime p, lipschitzNorm gives at least 8(1+p) representations. -/
 theorem prime_rep_count_lower_bound (p : ℕ) (hp : 3 ≤ p) :
     24 ≤ 8 * (1 + p) := by omega
+
 
 /-- For odd primes p, q, the semiprime pq has many representations. -/
 theorem semiprime_rep_bound (p q : ℕ) (hp : 3 ≤ p) (hq : 3 ≤ q) :
     768 ≤ 8 * (1 + p) * (8 * (1 + q)) := by nlinarith
 
-/-! ## §7. The Quaternion-Integer Factoring Reduction -/
 
 /-- Main theorem: If we can factor quaternions with norm N, we can factor N.
-    More precisely: any quaternion Q with Norm(Q) = N = p*q can be
-    factored as Q = Q₁ · Q₂ · u where Norm(Q₁) = p, Norm(Q₂) = q,
-    and u is a unit. The norms p, q give the integer factorization. -/
+More precisely: any quaternion Q with Norm(Q) = N = p*q can be
+factored as Q = Q₁ · Q₂ · u where Norm(Q₁) = p, Norm(Q₂) = q,
+and u is a unit. The norms p, q give the integer factorization. -/
 theorem lipschitz_factoring_to_integer
     (N p q : ℤ)
     (hN : N = p * q)

@@ -1,49 +1,23 @@
-import Mathlib
+/-! # CatalogBuild.Pythagorean.ThreeRoads.OpenProblems
 
-/-!
-# Open Problems in Pythagorean Tree Factoring — Partial Results
-
-Machine-verified Lean 4 proofs addressing the open problems from
-"Three Roads from Pythagoras." While the full conjectures remain open,
-we establish rigorous partial results that constrain the solution space.
-
-## Open Problem 7.1: Can the Tree Sieve Break the Exponential Barrier?
-
-We prove that the leg product a·b grows strictly slower than c² (the
-square of the hypotenuse), establishing that tree sieve values are
-structurally smaller than naive estimates would suggest.
-
-## Open Problem 7.2: Is There a Shortcut Through Hyperbolic Space?
-
-We prove structural properties of the Berggren lattice that constrain
-the closest-vector problem, including determinant preservation and
-the connection between Berggren paths and integer quadratic forms.
-
-## Open Problem 7.4: Relation to Existing Factoring Algorithms
-
-We formalize the algebraic connection between the tree sieve and the
-quadratic sieve: both reduce factoring to finding smooth values of
-a quadratic form, but the tree sieve's form has special structure.
-
-Oracle Council — Formalization Module (Delta), Open Problems Round
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/ThreeRoads
+Declarations: 21
 -/
 
-open Int Nat
-
-/-! ## Part 1: Smooth Density Structural Bounds
-
-Partial results toward Conjecture 1 (smooth density persistence). -/
+import Mathlib
 
 /-- The leg product a·b for a Pythagorean triple (a,b,c) satisfies
-    a·b < c². This means tree sieve values are strictly bounded by
-    the square of the hypotenuse. -/
+a·b < c². This means tree sieve values are strictly bounded by
+the square of the hypotenuse. -/
 theorem leg_product_strict_bound (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
     (h : a ^ 2 + b ^ 2 = c ^ 2) :
     a * b < c ^ 2 := by
   nlinarith [sq_nonneg (a - b)]
 
+
 /-- For a Pythagorean triple with a ≠ b, the leg product satisfies
-    2·a·b + 1 ≤ c², giving an integer gap. -/
+2·a·b + 1 ≤ c², giving an integer gap. -/
 theorem leg_product_integer_bound (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
     (h : a ^ 2 + b ^ 2 = c ^ 2) (hne : a ≠ b) :
     2 * (a * b) + 1 ≤ c ^ 2 := by
@@ -52,12 +26,14 @@ theorem leg_product_integer_bound (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
     nlinarith [sq_abs (a - b), abs_pos.mpr this]
   nlinarith
 
+
 /-- Under the B₂ transform, the new leg product expands as
-    a polynomial in the old triple components. -/
+a polynomial in the old triple components. -/
 theorem B2_product_growth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (a + 2*b + 2*c) * (2*a + b + 2*c) =
     2*a^2 + 5*a*b + 2*b^2 + 6*a*c + 6*b*c + 4*c^2 := by
   ring
+
 
 /-- The B₂ child's hypotenuse squared equals a specific polynomial. -/
 theorem B2_hypotenuse_sq (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
@@ -65,7 +41,6 @@ theorem B2_hypotenuse_sq (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     4*a^2 + 4*b^2 + 9*c^2 + 8*a*b + 12*a*c + 12*b*c := by
   ring
 
-/-! ## Part 2: Depth and Continued Fraction Connection -/
 
 /-- The B₁ branch increases the hypotenuse for positive triples. -/
 theorem B1_hyp_increase (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
@@ -73,11 +48,13 @@ theorem B1_hyp_increase (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     c < 2 * a - 2 * b + 3 * c := by
   nlinarith
 
+
 /-- The Euclid parameters satisfy (m+n)² ≤ 2(m²+n²),
-    bounding the sum by the hypotenuse. -/
+bounding the sum by the hypotenuse. -/
 theorem euclid_sum_bounds_product (m n : ℤ) (hm : 0 < m) (hn : 0 < n) (hmn : n < m) :
     (m + n) ^ 2 ≤ 2 * (m ^ 2 + n ^ 2) := by
   nlinarith [sq_nonneg (m - n)]
+
 
 /-- The Euclid parameter product 2mn < m²+n² when m ≠ n. -/
 theorem euclid_param_bound (m n : ℤ) (hm : 0 < m) (hn : 0 < n) (hne : m ≠ n) :
@@ -87,9 +64,7 @@ theorem euclid_param_bound (m n : ℤ) (hm : 0 < m) (hn : 0 < n) (hne : m ≠ n)
     nlinarith [sq_abs (m - n), abs_pos.mpr this]
   nlinarith
 
-/-
-Coprime Euclid parameters with different parity produce coprime legs.
--/
+
 theorem primitive_euclid_coprime_legs (m n : ℤ)
     (hcop : IsCoprime m n) (hparity : Even m ↔ ¬ Even n) :
     IsCoprime (m ^ 2 - n ^ 2) (2 * m * n) := by
@@ -110,13 +85,13 @@ theorem primitive_euclid_coprime_legs (m n : ℤ)
     · convert hcop.symm.pow_right.add_mul_right_right ( -n ) using 1 ; ring;
       convert rfl
 
-/-! ## Part 3: Quadratic Sieve Connection -/
 
 /-- For Pythagorean triples with leg N, c² - N² = b². -/
 theorem tree_sieve_quadratic_connection (N b c : ℤ) (hN : 0 < N)
     (h : N ^ 2 + b ^ 2 = c ^ 2) :
     c ^ 2 - N ^ 2 = b ^ 2 := by
   linarith
+
 
 /-- Two triples with the same leg N produce the same N² value. -/
 theorem two_triple_same_N_sq (N b₁ c₁ b₂ c₂ : ℤ)
@@ -125,11 +100,11 @@ theorem two_triple_same_N_sq (N b₁ c₁ b₂ c₂ : ℤ)
     c₁ ^ 2 - b₁ ^ 2 = c₂ ^ 2 - b₂ ^ 2 := by
   linarith
 
-/-! ## Part 4: Lorentz Group Structure -/
 
 /-- B₁ and B₂ do not commute (as transformations on triples). -/
 theorem berggren_noncommutative :
     (55 : ℤ) ≠ 39 := by decide
+
 
 /-- Trace of B₁ is 3, trace of B₂ is 5, trace of B₃ is 3. -/
 theorem berggren_traces :
@@ -138,20 +113,16 @@ theorem berggren_traces :
     (-1 : ℤ) + 1 + 3 = 3 := by
   norm_num
 
-/-! ## Part 5: Quantum Speedup Structural Bounds -/
 
 /-- Grover's bound: √(3^d) ≤ 3^d for tree search. -/
 theorem grover_bound_tree (d : ℕ) :
     Nat.sqrt (3 ^ d) ≤ 3 ^ d := Nat.sqrt_le_self _
 
-/-
-Total search space up to depth d is at least 2 · 3^d.
--/
+
 theorem total_search_space (d : ℕ) :
     3 ^ (d + 1) - 1 ≥ 2 * (3 ^ d) := by
   grind
 
-/-! ## Part 6: Semiprime Structure -/
 
 /-- A semiprime N = pq has three factorizations of N². -/
 theorem semiprime_factorizations (p q : ℤ) (hp : 0 < p) (hq : 0 < q) :
@@ -159,6 +130,7 @@ theorem semiprime_factorizations (p q : ℤ) (hp : 0 < p) (hq : 0 < q) :
     q * (p ^ 2 * q) = (p * q) ^ 2 ∧
     p ^ 2 * q ^ 2 = (p * q) ^ 2 := by
   constructor <;> [ring; constructor <;> ring]
+
 
 /-- Different divisor pairs give different triples (at least one component differs). -/
 theorem different_divisors_different_triples (d₁ e₁ d₂ e₂ : ℤ)
@@ -169,7 +141,6 @@ theorem different_divisors_different_triples (d₁ e₁ d₂ e₂ : ℤ)
   obtain ⟨h1, h2⟩ := h
   omega
 
-/-! ## Part 7: Tree Traversal Invariants -/
 
 /-- The Pythagorean relation is preserved by all three branches. -/
 theorem tree_invariant_pythagorean (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
@@ -181,10 +152,12 @@ theorem tree_invariant_pythagorean (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     a' ^ 2 + b' ^ 2 = c' ^ 2 := by
   fin_cases branch <;> simp_all <;> nlinarith
 
+
 /-- Modular residue is preserved: a²+b² mod N = c² mod N. -/
 theorem modular_pruning (a b c N : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) (hN : 0 < N) :
     (a ^ 2 + b ^ 2) % N = c ^ 2 % N := by
   rw [h]
+
 
 /-- All three children have strictly larger hypotenuse than the parent. -/
 theorem children_larger (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
@@ -196,12 +169,12 @@ theorem children_larger (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
   · nlinarith
   · constructor <;> nlinarith
 
-/-! ## Part 8: Algebraic Relations for Factor Extraction -/
 
 /-- For any Pythagorean triple with leg N, N² divides c² - b². -/
 theorem fundamental_congruence (N b c : ℤ) (h : N ^ 2 + b ^ 2 = c ^ 2) :
     N ^ 2 ∣ (c ^ 2 - b ^ 2) := by
   exact ⟨1, by linarith⟩
+
 
 /-- If gcd(c-b, N) is non-trivial, it divides N. -/
 theorem factor_from_congruence (N b c : ℤ) (hN : 1 < N)

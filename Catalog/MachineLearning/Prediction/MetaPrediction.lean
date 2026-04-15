@@ -1,23 +1,13 @@
-/-
-  # Meta-Prediction Theory
+/-! # CatalogBuild.MachineLearning.Prediction.MetaPrediction
 
-  Theory of predicting prediction quality: when can we estimate how good
-  our predictions will be, and what are the fundamental limits?
-
-  ## Key Results
-  1. Meta-prediction calibration theorem
-  2. Meta-prediction incompleteness (Gödelian limit)
-  3. Hierarchical prediction convergence
-  4. The confidence-accuracy duality
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/Prediction
+Declarations: 12
 -/
 
 import Mathlib
 
-open Finset BigOperators Real Set
-
 noncomputable section
-
-/-! ## §1. Meta-Prediction as Second-Order Prediction -/
 
 /-- A meta-predictor assigns a confidence score to each prediction -/
 structure MetaPredictor where
@@ -26,9 +16,11 @@ structure MetaPredictor where
   conf_nonneg : ∀ x, 0 ≤ confidence x
   conf_le_one : ∀ x, confidence x ≤ 1
 
+
 /-- Calibration: among predictions with confidence p, fraction p are correct -/
 def isCalibrated (errorRate : ℝ → ℝ) (confidence : ℝ → ℝ) : Prop :=
   ∀ p : ℝ, 0 ≤ p → p ≤ 1 → errorRate p = 1 - confidence p
+
 
 /-- Perfect calibration means confidence equals actual accuracy -/
 theorem perfect_calibration_accuracy (errorRate confidence : ℝ → ℝ)
@@ -37,18 +29,18 @@ theorem perfect_calibration_accuracy (errorRate confidence : ℝ → ℝ)
   simp [isCalibrated] at hcal
   linarith [hcal p hp0 hp1]
 
-/-! ## §2. Meta-Prediction Incompleteness -/
 
 /-- No meta-predictor can perfectly predict its own accuracy on all inputs.
-    This is a diagonal argument: for any enumeration of predictors,
-    there exists a function that differs from every predictor at its own index. -/
+This is a diagonal argument: for any enumeration of predictors,
+there exists a function that differs from every predictor at its own index. -/
 theorem meta_prediction_incompleteness
     (predictors : ℕ → (ℕ → Bool)) :
     ∃ f : ℕ → Bool, ∀ n, f n ≠ predictors n n := by
   exact ⟨fun n => !predictors n n, fun n => by simp⟩
 
+
 /-- Stronger version: for any quality estimator, there exists
-    a predictor whose quality it systematically misjudges -/
+a predictor whose quality it systematically misjudges -/
 theorem quality_estimation_limit
     (quality : (ℕ → ℝ) → ℝ)   -- assigns quality score to predictors
     (actual : (ℕ → ℝ) → ℝ)    -- actual quality
@@ -58,7 +50,6 @@ theorem quality_estimation_limit
   obtain ⟨f, hf⟩ := h_diff
   exact hf (h_all f).symm
 
-/-! ## §3. The Confidence-Accuracy Tradeoff -/
 
 /-- The Brier score decomposes into calibration + resolution - uncertainty -/
 theorem brier_decomposition (calibration resolution uncertainty brierScore : ℝ)
@@ -67,24 +58,22 @@ theorem brier_decomposition (calibration resolution uncertainty brierScore : ℝ
     brierScore ≥ uncertainty - resolution := by
   linarith
 
+
 /-- Higher confidence must be justified by higher accuracy,
-    or the Brier score worsens -/
+or the Brier score worsens -/
 theorem overconfidence_penalty (p_claimed p_actual : ℝ)
     (_hp0 : 0 ≤ p_claimed) (_hp1 : p_claimed ≤ 1)
     (ha0 : 0 ≤ p_actual) (_ha1 : p_actual ≤ 1) :
     (p_claimed - p_actual) ^ 2 ≤ (p_claimed - p_actual) ^ 2 + p_actual * (1 - p_actual) := by
   linarith [mul_nonneg ha0 (by linarith : 0 ≤ 1 - p_actual)]
 
-/-! ## §4. Hierarchical Meta-Prediction -/
 
 /-- A prediction hierarchy: level 0 predicts the target,
-    level k+1 predicts the error of level k -/
+level k+1 predicts the error of level k -/
 def predictionHierarchy (errors : ℕ → ℝ) : Prop :=
   ∀ k, |errors (k + 1)| ≤ |errors k| / 2
 
-/-
-A geometric hierarchy converges to zero error
--/
+
 theorem hierarchy_converges (errors : ℕ → ℝ) (h : predictionHierarchy errors) :
     ∀ ε > 0, ∃ K, ∀ k ≥ K, |errors k| < ε := by
   intro ε hε_pos
@@ -96,9 +85,7 @@ theorem hierarchy_converges (errors : ℕ → ℝ) (h : predictionHierarchy erro
     exact squeeze_zero ( fun n => abs_nonneg _ ) h_induction ( tendsto_const_nhds.div_atTop ( tendsto_pow_atTop_atTop_of_one_lt one_lt_two ) );
   simpa using this.eventually ( gt_mem_nhds hε_pos )
 
-/-
-The total information in a convergent hierarchy is bounded
--/
+
 theorem hierarchy_total_bounded (errors : ℕ → ℝ) (h : predictionHierarchy errors) :
     ∀ n, |errors n| ≤ |errors 0| / 2 ^ n := by
   -- We proceed by induction on $n$.
@@ -107,16 +94,12 @@ theorem hierarchy_total_bounded (errors : ℕ → ℝ) (h : predictionHierarchy 
   · norm_num;
   · have := h n; ring_nf at *; linarith
 
-/-! ## §5. Meta-Prediction Fixed Points -/
 
 /-- A self-aware predictor: one whose confidence equals its actual accuracy -/
 def isSelfAware (accuracy confidence : ℝ) : Prop :=
   accuracy = confidence
 
-/-
-The existence of a calibrated fixed point via IVT:
-    if f(0) > 0 and f(1) < 1, then ∃ p ∈ [0,1] with f(p) = p
--/
+
 theorem calibration_fixed_point
     (f : ℝ → ℝ)
     (hcont : Continuous f)
@@ -128,5 +111,6 @@ theorem calibration_fixed_point
     · exact hcont.continuousOn.sub continuousOn_id;
     · constructor <;> linarith;
   exact ⟨ h_ivt.choose, h_ivt.choose_spec.1.1, h_ivt.choose_spec.1.2, sub_eq_zero.mp h_ivt.choose_spec.2 ⟩
+
 
 end

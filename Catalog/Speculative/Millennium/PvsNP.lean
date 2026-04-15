@@ -1,17 +1,15 @@
-import Mathlib
+/-! # CatalogBuild.Speculative.Millennium.PvsNP
 
-/-!
-# P vs NP — Formal Foundations
-
-We formalize key concepts related to computational complexity theory,
-including basic results about polynomial-time verification and search.
-
-While the P vs NP problem itself remains open, we can formally verify
-foundational results that any resolution must build upon.
+Auto-generated from theorem catalog database.
+Domain: Speculative/Millennium
+Declarations: 7
 -/
+
+import Mathlib
 
 /-- A decision problem is a subset of binary strings (modeled as lists of Bool). -/
 def DecisionProblem := List Bool → Prop
+
 
 /-- A witness-based problem: given input x, witness w proves x is a "yes" instance. -/
 structure WitnessProblem where
@@ -24,17 +22,14 @@ structure WitnessProblem where
   /-- Completeness: if x is in the language, there exists a valid witness -/
   complete : ∀ x, language x → ∃ w, verify x w
 
+
 /-- NP problems have polynomially-bounded witnesses. -/
 structure NPProblem extends WitnessProblem where
   /-- There is a polynomial bound on witness length -/
   witnessBound : ∃ (c : ℕ), ∀ x, language x →
     ∃ w, verify x w ∧ w.length ≤ x.length ^ c + c
 
-/-
-A key lemma: if we can enumerate all witnesses up to a bound,
-    then search reduces to verification. This is the core of the
-    P vs NP question — whether this enumeration can be done efficiently.
--/
+
 theorem witness_enumeration_finite (n k : ℕ) :
     Finite {w : List Bool | w.length ≤ k} := by
   -- The set of all binary strings of length up to $k$ is finite because there are only $2^k$ possible strings.
@@ -42,40 +37,18 @@ theorem witness_enumeration_finite (n k : ℕ) :
     exact?
   exact h_finite_strings.to_subtype
 
-/-
-PROBLEM
-The number of binary strings of length exactly n is 2^n.
-    This exponential growth is why brute-force search is infeasible.
 
-PROVIDED SOLUTION
-Use Fintype.card_fun and Fintype.card_bool
--/
 theorem binary_strings_count (n : ℕ) :
     Fintype.card (Fin n → Bool) = 2 ^ n := by
   norm_num +zetaDelta at *
 
-/-
-PROBLEM
-Composing polynomial-time reductions preserves polynomial bounds.
-    This is essential for NP-completeness theory.
 
-PROVIDED SOLUTION
-The composition of two polynomials is a polynomial. Use Polynomial.comp and show it evaluates correctly.
--/
 theorem poly_compose (p q : Polynomial ℕ) :
     ∃ r : Polynomial ℕ, ∀ n : ℕ, p.eval (q.eval n) ≤ r.eval n := by
   use p.comp q;
   aesop
 
-/-
-PROBLEM
-If a subset of a finite set has a certain property,
-    brute-force search finds an element or proves none exists.
-    This is the trivial upper bound: NP ⊆ EXPTIME.
 
-PROVIDED SOLUTION
-Use Fintype.exists_or_forall_not or Classical.em on ∃ x, P x. Since P is decidable and α is finite, this is decidable.
--/
 theorem brute_force_decides {α : Type*} [Fintype α] [DecidableEq α]
     (P : α → Prop) [DecidablePred P] :
     (∃ x, P x) ∨ (∀ x, ¬P x) := by

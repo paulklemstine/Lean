@@ -1,47 +1,13 @@
-import Mathlib
+/-! # CatalogBuild.Bridges.EntropyTropicalDuality
 
-/-!
-# Entropy–Tropical Duality: Information Theory Meets Max-Plus Algebra
-
-## Overview
-
-This file establishes a new bridge between **information theory** (Shannon entropy,
-KL divergence, softmax) and **tropical algebra** (max-plus semiring, idempotent
-analysis), mediated by the **LogSumExp function** as a smooth tropical deformation.
-
-## Key Results
-
-1. **LogSumExp as Free Energy**: LSE(x₁,...,xₙ) = max(xᵢ) + H_correction, where the
-   correction term is bounded by log(n).
-
-2. **Softmax–Argmax Duality**: Softmax is the gradient of LogSumExp; as temperature → 0,
-   softmax converges to argmax (one-hot).
-
-3. **Entropy Bounds**: Shannon entropy satisfies 0 ≤ H(p) ≤ log(n), and these bounds
-   are tight.
-
-4. **Legendre–Fenchel as Tropical Fourier**: The convex conjugate f*(y) = sup(xy - f(x))
-   is the tropical analogue of the Fourier transform.
-
-## Bridged Areas
-- `Tropical/` ↔ `InformationTheory/` via LogSumExp
-- `MachineLearning/` ↔ `Physics/` via Gibbs variational principle
-- `Analysis/` ↔ `Tropical/` via Legendre-Fenchel duality
+Auto-generated from theorem catalog database.
+Domain: Bridges
+Declarations: 30
 -/
 
+import Mathlib
+
 noncomputable section
-open Real BigOperators Finset Function Set
-
-namespace EntropyTropicalDuality
-
-/-! ## Part 1: LogSumExp — The Bridge Function -/
-
-/-- LogSumExp for two arguments. -/
-def lse2 (x y : ℝ) : ℝ := Real.log (Real.exp x + Real.exp y)
-
-/-- LogSumExp is symmetric. -/
-theorem lse2_comm (x y : ℝ) : lse2 x y = lse2 y x := by
-  simp [lse2, add_comm]
 
 /-- LogSumExp is associative. -/
 theorem lse2_assoc (x y z : ℝ) :
@@ -51,12 +17,14 @@ theorem lse2_assoc (x y z : ℝ) :
   rw [Real.exp_log (by positivity), Real.exp_log (by positivity)]
   ring
 
+
 /-- The fundamental lower bound: max ≤ LSE. -/
 theorem lse2_ge_max (x y : ℝ) : max x y ≤ lse2 x y := by
   rw [lse2, max_le_iff]
   constructor <;> rw [Real.le_log_iff_exp_le (by positivity)]
   · linarith [exp_pos y]
   · linarith [exp_pos x]
+
 
 /-- The fundamental upper bound: LSE ≤ max + log 2. -/
 theorem lse2_le_max_add_log2 (x y : ℝ) : lse2 x y ≤ max x y + Real.log 2 := by
@@ -66,6 +34,7 @@ theorem lse2_le_max_add_log2 (x y : ℝ) : lse2 x y ≤ max x y + Real.log 2 := 
   have hy := le_max_right x y
   linarith [Real.exp_le_exp.2 hx, Real.exp_le_exp.2 hy]
 
+
 /-- The tropical-entropy gap is bounded by [0, log 2]. -/
 theorem lse2_tropical_error (x y : ℝ) :
     0 ≤ lse2 x y - max x y ∧ lse2 x y - max x y ≤ Real.log 2 := by
@@ -73,18 +42,21 @@ theorem lse2_tropical_error (x y : ℝ) :
   · linarith [lse2_ge_max x y]
   · linarith [lse2_le_max_add_log2 x y]
 
-/-! ## Part 2: Softmax — Gradient of LogSumExp -/
 
 /-- Softmax function for two arguments. -/
 def softmax2_fst (x y : ℝ) : ℝ := Real.exp x / (Real.exp x + Real.exp y)
+
 def softmax2_snd (x y : ℝ) : ℝ := Real.exp y / (Real.exp x + Real.exp y)
+
 
 /-- Softmax components are non-negative. -/
 theorem softmax2_fst_nonneg (x y : ℝ) : 0 ≤ softmax2_fst x y :=
   div_nonneg (le_of_lt (exp_pos x)) (by positivity)
 
+
 theorem softmax2_snd_nonneg (x y : ℝ) : 0 ≤ softmax2_snd x y :=
   div_nonneg (le_of_lt (exp_pos y)) (by positivity)
+
 
 /-- Softmax components sum to 1. -/
 theorem softmax2_sum_one (x y : ℝ) :
@@ -92,17 +64,17 @@ theorem softmax2_sum_one (x y : ℝ) :
   simp only [softmax2_fst, softmax2_snd]
   rw [div_add_div_same, div_self (ne_of_gt (by positivity : (0:ℝ) < exp x + exp y))]
 
+
 /-- Softmax components are at most 1. -/
 theorem softmax2_fst_le_one (x y : ℝ) : softmax2_fst x y ≤ 1 := by
   rw [softmax2_fst, div_le_one (by positivity)]
   linarith [exp_pos y]
 
-/-
-When x ≤ y, softmax gives more weight to y.
--/
+
 theorem softmax2_monotone (x y : ℝ) (h : x ≤ y) :
     softmax2_fst x y ≤ softmax2_snd x y := by
   exact div_le_div_of_nonneg_right ( Real.exp_le_exp.mpr h ) ( by positivity )
+
 
 /-- At equal inputs, softmax gives uniform distribution. -/
 theorem softmax2_equal (x : ℝ) : softmax2_fst x x = 1 / 2 := by
@@ -110,71 +82,68 @@ theorem softmax2_equal (x : ℝ) : softmax2_fst x x = 1 / 2 := by
   rw [← two_mul]
   field_simp
 
-/-
-Softmax respects strict order.
--/
+
 theorem softmax_respects_order (x y : ℝ) (h : x < y) :
     softmax2_fst x y < softmax2_snd x y := by
   exact div_lt_div_iff_of_pos_right ( by positivity ) |>.2 ( Real.exp_lt_exp.2 h )
 
-/-! ## Part 3: Shannon Entropy Bounds -/
 
 /-- The self-information function: -x·log(x). -/
 def negXLogX (x : ℝ) : ℝ := -(x * Real.log x)
 
+
 /-- At p = 0, the self-information is 0. -/
 theorem negXLogX_zero : negXLogX 0 = 0 := by simp [negXLogX]
+
 
 /-- At p = 1, the self-information is 0. -/
 theorem negXLogX_one : negXLogX 1 = 0 := by simp [negXLogX]
 
-/-! ## Part 4: The Legendre–Fenchel Transform as Tropical Fourier -/
 
 /-- Young's inequality: x·y ≤ x²/2 + y²/2. -/
 theorem young_ineq_sq_half (x y : ℝ) :
     x * y ≤ x ^ 2 / 2 + y ^ 2 / 2 := by nlinarith [sq_nonneg (x - y)]
 
+
 /-- The conjugate of x²/2 is bounded by y²/2. -/
 theorem sq_half_self_dual_bound (x y : ℝ) :
     x * y - x ^ 2 / 2 ≤ y ^ 2 / 2 := by nlinarith [sq_nonneg (x - y)]
 
-/-! ## Part 5: Tropical Convexity Meets Information Geometry -/
 
 /-- A function is tropically convex if f(max(x,y)) ≤ max(f(x), f(y)). -/
 def TropicallyConvex (f : ℝ → ℝ) : Prop :=
   ∀ x y, f (max x y) ≤ max (f x) (f y)
 
-/-
-Monotone non-decreasing functions are tropically convex.
--/
+
 theorem monotone_tropically_convex {f : ℝ → ℝ} (hf : Monotone f) :
     TropicallyConvex f := by
   intro x y; cases le_total x y <;> simp +decide [ * ] ;
+
 
 /-- The identity function is tropically convex. -/
 theorem id_tropically_convex : TropicallyConvex id := by
   intro x y; simp
 
-/-
-Tropical convexity is preserved under composition with monotone functions.
--/
+
 theorem tropically_convex_comp {f g : ℝ → ℝ}
     (hf : TropicallyConvex f) (hg : Monotone g) :
     TropicallyConvex (g ∘ f) := by
   intro x y; cases max_cases x y <;> simp +decide [ * ] ;
 
-/-! ## Part 6: Temperature Scaling -/
 
 /-- Temperature-scaled LogSumExp. -/
 def lse2_temp (T : ℝ) (x y : ℝ) : ℝ := T * Real.log (Real.exp (x/T) + Real.exp (y/T))
+
 
 /-- At T = 1, temperature-scaled LSE reduces to standard LSE. -/
 theorem lse2_temp_one (x y : ℝ) : lse2_temp 1 x y = lse2 x y := by
   simp [lse2_temp, lse2]
 
+
 /-- Gibbs free energy for two states. -/
 def gibbsFreeEnergy (T : ℝ) (E₁ E₂ : ℝ) : ℝ :=
   -T * Real.log (Real.exp (-E₁/T) + Real.exp (-E₂/T))
+
 
 /-- Gibbs free energy at T=1 for equal energies: F = E - log 2. -/
 theorem gibbs_equal_energies (E : ℝ) :
@@ -183,27 +152,26 @@ theorem gibbs_equal_energies (E : ℝ) :
   rw [← two_mul, Real.log_mul (by positivity) (exp_pos (-E)).ne']
   rw [Real.log_exp]; ring
 
-/-! ## Part 7: Entropy–Idempotent Connection -/
 
 /-- Binary log is positive. -/
 theorem info_content_of_uniform_pair : Real.log 2 > 0 := Real.log_pos one_lt_two
 
-/-
-For n equally likely outcomes, entropy = log(n).
--/
+
 theorem uniform_entropy_eq_log (n : ℕ) (hn : 1 ≤ n) :
     (n : ℝ) * (-(1 / (n : ℝ)) * Real.log (1 / (n : ℝ))) = Real.log n := by
   simp +zetaDelta at *;
   rw [ ← mul_assoc, mul_inv_cancel₀ ( by positivity ), one_mul ]
+
 
 /-- The dequantization cost: the error from replacing quantum with tropical. -/
 theorem dequantization_cost (x y : ℝ) :
     0 ≤ lse2 x y - max x y ∧ lse2 x y - max x y ≤ Real.log 2 :=
   lse2_tropical_error x y
 
+
 /-- ReLU ∘ softmax preserves non-negativity. -/
 theorem relu_softmax_nonneg (x y : ℝ) :
     0 ≤ max (softmax2_fst x y) 0 := le_max_right _ _
 
-end EntropyTropicalDuality
+
 end

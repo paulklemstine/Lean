@@ -1,102 +1,69 @@
-/-
-# EML Future Research — New Theorems and Explorations (V12)
+/-! # CatalogBuild.EML.EMLFutureResearch
 
-## Formalizing key results from the Future Research Directions roadmap:
-1. Right quasi-division: unique solution to eml(a, x) = b
-2. Left quasi-division: solution to eml(x, a) = b (with domain constraint)
-3. Basin of attraction: g-map maps (0, ∞) into itself
-4. Convexity of the diagonal map
-5. EML Hessian metric properties
-6. Geodesic equation solutions
-7. Composition/iteration identities
-8. Approximation theory: EML generates affine functions
-9. Tropical EML algebraic properties
-10. EML complexity lower bounds
-
-All results machine-verified in Lean 4.28.0 with Mathlib.
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 40
 -/
 
 import Mathlib
 
 noncomputable section
 
-open Real Filter Topology Set
-
-/-! ## Core Definitions -/
-
 /-- The EML operator: eml(x, y) = exp(x) − ln(y). -/
 def eml (x y : ℝ) : ℝ := Real.exp x - Real.log y
+
 
 /-- The diagonal map: d(z) = exp(z) − ln(z). -/
 def emlDiag (z : ℝ) : ℝ := Real.exp z - Real.log z
 
+
 /-- The off-diagonal reflection map: g(z) = e − ln(z). -/
 def emlGmap (z : ℝ) : ℝ := Real.exp 1 - Real.log z
+
 
 /-- The e-tower: e↑↑n (iterated exponential). -/
 def emlETower : ℕ → ℝ
   | 0 => 1
   | n + 1 => Real.exp (emlETower n)
 
-/-- Iterated diagonal map: dⁿ(z). -/
-def emlDiagIter : ℕ → ℝ → ℝ
-  | 0, z => z
-  | n + 1, z => emlDiag (emlDiagIter n z)
 
 /-- Tropical EML: trop(x, y) = max(x, −y). -/
 def emlTrop (x y : ℝ) : ℝ := max x (-y)
 
+
 /-- The EML Hessian metric coefficient in the x-direction: exp(x). -/
 def emlHessXX (x : ℝ) : ℝ := Real.exp x
+
 
 /-- The EML Hessian metric coefficient in the y-direction: 1/y². -/
 def emlHessYY (y : ℝ) : ℝ := y⁻¹ ^ 2
 
-/-! ## Part 1: Quasi-Division (Quasigroup Structure) -/
 
-/-
-Right quasi-division: the equation eml(a, x) = b has the unique solution
-    x = exp(exp(a) − b). This works for all a, b ∈ ℝ.
--/
 theorem eml_right_division (a b : ℝ) :
     eml a (Real.exp (Real.exp a - b)) = b := by
   unfold eml; aesop;
 
-/-
-The right division solution is unique.
--/
+
 theorem eml_right_division_unique (a b x : ℝ) (hx : 0 < x) (h : eml a x = b) :
     x = Real.exp (Real.exp a - b) := by
   exact h ▸ by simp +decide [ ← h, Real.exp_log hx, eml ] ;
 
-/-
-Left quasi-division: eml(x, a) = b has solution x = ln(b + ln(a))
-    when a > 0 and b + ln(a) > 0.
--/
+
 theorem eml_left_division (a b : ℝ) (ha : 0 < a) (hba : 0 < b + Real.log a) :
     eml (Real.log (b + Real.log a)) a = b := by
   unfold eml; rw [ Real.exp_log hba ] ; ring;
 
-/-
-Left division domain constraint: eml(x, a) = b requires b + ln(a) > 0.
--/
+
 theorem eml_left_division_domain (a b x : ℝ) (ha : 0 < a) (h : eml x a = b) :
     0 < b + Real.log a := by
   exact h.symm ▸ by unfold eml; linarith [ Real.exp_pos x, Real.log_le_sub_one_of_pos ha ] ;
 
-/-! ## Part 2: Basin of Attraction for the g-Map -/
 
-/-
-The g-map maps (0, e^e) into (0, ∞).
--/
 theorem emlGmap_pos (z : ℝ) (hz : 0 < z) (hz2 : z < Real.exp (Real.exp 1)) :
     0 < emlGmap z := by
   exact sub_pos_of_lt ( Real.log_lt_iff_lt_exp hz |>.2 hz2 )
 
-/-
-The g-map has a unique fixed point z* satisfying e − ln(z*) = z*,
-    i.e., z* = e − ln(z*). The fixed point satisfies z* > 0.
--/
+
 theorem emlGmap_fixedpoint_equation :
     ∃ z : ℝ, 0 < z ∧ emlGmap z = z := by
   -- We'll use the intermediate value theorem to show there is a fixed point.
@@ -108,18 +75,12 @@ theorem emlGmap_fixedpoint_equation :
     exact h_ivt.imp fun x hx => ⟨ hx.1, by unfold emlGmap; linarith ⟩;
   exact h_ivt.imp fun x hx => ⟨ lt_trans zero_lt_one hx.1.1, hx.2 ⟩
 
-/-
-|g'(z)| = 1/z < 1 when z > 1, ensuring contraction near the fixed point.
--/
+
 theorem emlGmap_contraction (z : ℝ) (hz : 1 < z) :
     |(-z⁻¹ : ℝ)| < 1 := by
   rw [ abs_of_neg ] <;> nlinarith [ inv_mul_cancel₀ ( by linarith : z ≠ 0 ) ]
 
-/-! ## Part 3: Convexity of the Diagonal Map -/
 
-/-
-The diagonal map d(z) = exp(z) − ln(z) is strictly convex on (0, ∞).
--/
 theorem emlDiag_strictly_convex :
     StrictConvexOn ℝ (Ioi 0) (fun z => emlDiag z) := by
   apply strictConvexOn_of_deriv2_pos ( convex_Ioi 0 );
@@ -131,9 +92,7 @@ theorem emlDiag_strictly_convex :
       exact fun z hz => h_second_deriv z hz ▸ by norm_num [ Real.differentiableAt_exp, differentiableAt_inv, hz.ne' ] ;
     exact fun x hx => h_second_deriv x ( interior_subset hx ) ▸ add_pos_of_pos_of_nonneg ( Real.exp_pos x ) ( by positivity )
 
-/-
-The diagonal map has a unique minimum on (0, ∞).
--/
+
 theorem emlDiag_has_minimum :
     ∃ z₀ ∈ Ioi (0 : ℝ), ∀ z ∈ Ioi (0 : ℝ), emlDiag z₀ ≤ emlDiag z := by
   -- To find the critical points, we solve $d'(z) = 0$, which gives $z e^z = 1$.
@@ -150,9 +109,7 @@ theorem emlDiag_has_minimum :
   have := Real.log_le_sub_one_of_pos ( div_pos hz hz₀.1 );
   rw [ Real.log_div ] at this <;> nlinarith [ Real.exp_pos z, Real.exp_pos z₀, mul_div_cancel₀ ( Real.exp z ) ( ne_of_gt ( Real.exp_pos z₀ ) ), mul_div_cancel₀ ( z ) ( ne_of_gt hz₀.1 ) ]
 
-/-
-d(z) > z for all z ∈ ℝ (orbit always increases).
--/
+
 theorem emlDiag_gt (z : ℝ) : emlDiag z > z := by
   by_cases hz : z ≤ 0;
   · unfold emlDiag;
@@ -164,29 +121,17 @@ theorem emlDiag_gt (z : ℝ) : emlDiag z > z := by
     rw [ show z = 1 + ( z - 1 ) by ring, Real.exp_add ];
     nlinarith [ Real.add_one_le_exp 1, Real.log_le_sub_one_of_pos ( by linarith : 0 < 1 + ( z - 1 ) ) ]
 
-/-! ## Part 4: EML Hessian Metric -/
 
-/-
-The Hessian H = diag(exp(x), 1/y²) is positive definite for y > 0.
--/
 theorem emlHessian_pos_def (x y : ℝ) (hy : 0 < y) :
     0 < emlHessXX x ∧ 0 < emlHessYY y := by
   exact ⟨ Real.exp_pos x, sq_pos_of_pos <| inv_pos.mpr hy ⟩
 
-/-
-The Gaussian curvature K = −exp(x)/(4y²) is negative (hyperbolic geometry).
--/
+
 theorem eml_curvature_negative (x y : ℝ) (hy : 0 < y) :
     -(Real.exp x) / (4 * y ^ 2) < 0 := by
   exact div_neg_of_neg_of_pos ( neg_neg_of_pos ( Real.exp_pos x ) ) ( by positivity )
 
-/-! ## Part 5: Geodesic Equation Solutions -/
 
-/-
-The x-geodesic equation x'' + (1/2)(x')² = 0 has solution x(t) = 2·ln(at + b).
-    Verification: if x(t) = 2·ln(at + b), then x'(t) = 2a/(at+b), x''(t) = −2a²/(at+b)²,
-    so x'' + (1/2)(x')² = −2a²/(at+b)² + (1/2)·4a²/(at+b)² = 0. ✓
--/
 theorem eml_geodesic_x_verify (a b t : ℝ) (h : 0 < a * t + b) :
     let x := 2 * Real.log (a * t + b)
     let x' := 2 * a / (a * t + b)
@@ -194,11 +139,7 @@ theorem eml_geodesic_x_verify (a b t : ℝ) (h : 0 < a * t + b) :
     x'' + (1/2) * x' ^ 2 = 0 := by
   grind
 
-/-
-The y-geodesic equation y'' − (y')²/y = 0 has solution y(t) = C·exp(kt).
-    Verification: y' = Ck·exp(kt), y'' = Ck²·exp(kt),
-    y'' − (y')²/y = Ck²e^{kt} − C²k²e^{2kt}/(Ce^{kt}) = 0. ✓
--/
+
 theorem eml_geodesic_y_verify (C k t : ℝ) (hC : 0 < C) :
     let y := C * Real.exp (k * t)
     let y' := C * k * Real.exp (k * t)
@@ -206,39 +147,27 @@ theorem eml_geodesic_y_verify (C k t : ℝ) (hC : 0 < C) :
     y'' - y' ^ 2 / y = 0 := by
   grind
 
-/-! ## Part 6: Approximation Theory -/
 
-/-
-EML can produce any constant: eml(ln(c+1), 1) = c + 1 for c > -1.
--/
 theorem eml_produces_constants (c : ℝ) (hc : -1 < c) :
     eml (Real.log (c + 1)) 1 = c + 1 := by
   unfold eml; norm_num [ Real.exp_log ( by linarith : 0 < c + 1 ) ] ;
 
-/-
-The negation operation: 1 − x = eml(0, exp(x)).
--/
+
 theorem eml_negation (x : ℝ) :
     eml 0 (Real.exp x) = 1 - x := by
   unfold eml; norm_num;
 
-/-
-EML generates subtraction: a − b = eml(ln(a), exp(b)) for a > 0.
--/
+
 theorem eml_subtraction (a b : ℝ) (ha : 0 < a) :
     eml (Real.log a) (Real.exp b) = a - b := by
   unfold eml; rw [ Real.exp_log ha ] ; norm_num;
 
-/-
-The e-tower is strictly increasing.
--/
+
 theorem emlETower_strictMono : StrictMono emlETower := by
   refine' strictMono_nat_of_lt_succ _;
   exact fun n => Nat.recOn n ( by norm_num [ Real.exp_pos, emlETower ] ) fun n ih => by exact Real.exp_lt_exp.mpr ih;
 
-/-
-The e-tower grows faster than any exponential: e↑↑(n+2) ≥ e^(2^n).
--/
+
 theorem emlETower_superexp (n : ℕ) : emlETower (n + 2) ≥ Real.exp (2 ^ n) := by
   induction n <;> norm_num [ Real.exp_pos, pow_succ, emlETower ] at *;
   rename_i n hn;
@@ -246,103 +175,67 @@ theorem emlETower_superexp (n : ℕ) : emlETower (n + 2) ≥ Real.exp (2 ^ n) :=
   rw [ ← Real.log_le_log_iff ( by positivity ) ( by positivity ), Real.log_mul ( by positivity ) ( by positivity ), Real.log_exp, Real.log_exp ];
   linarith [ Real.log_le_sub_one_of_pos zero_lt_two, Real.add_one_le_exp ( emlETower n ) ]
 
-/-! ## Part 7: Tropical EML Properties -/
 
-/-
-Tropical EML is idempotent: trop(x, -x) = x for all x ≥ 0.
--/
 theorem emlTrop_idempotent_nonneg (x : ℝ) (hx : 0 ≤ x) :
     emlTrop x (-x) = x := by
   exact max_eq_left ( by linarith )
 
-/-
-Tropical EML is NOT commutative.
--/
+
 theorem emlTrop_not_comm : ∃ x y : ℝ, emlTrop x y ≠ emlTrop y x := by
   exact ⟨ 1, 2, by unfold emlTrop; norm_num ⟩
 
-/-
-Tropical EML satisfies max(x, -y) ≥ (x - y)/2 (averaging bound).
--/
+
 theorem emlTrop_avg_bound (x y : ℝ) :
     emlTrop x y ≥ (x - y) / 2 := by
   unfold emlTrop; cases max_cases x ( -y ) <;> linarith;
 
-/-! ## Part 8: Composition and Iteration -/
 
-/-
-Self-composition: eml(eml(x,y), z) = exp(exp(x) − ln(y)) − ln(z).
--/
 theorem eml_compose_left (x y z : ℝ) :
     eml (eml x y) z = Real.exp (Real.exp x - Real.log y) - Real.log z := by
   rfl
 
-/-
-The e-tower connects to iterated EML: e↑↑(n+1) = eml(e↑↑n, 1).
--/
+
 theorem emlETower_eml (n : ℕ) : emlETower (n + 1) = eml (emlETower n) 1 := by
   unfold eml; aesop;
 
-/-
-Iterated EML at (1,1): eml(eml(1,1), 1) = e^e.
--/
+
 theorem eml_iter_ee : eml (eml 1 1) 1 = Real.exp (Real.exp 1) := by
   unfold eml; norm_num;
 
-/-! ## Part 9: Fundamental Inequalities -/
 
-/-
-AM-GM bridge: eml(x, y) ≥ 2√(exp(x)/y) − ln(y) − 1 is NOT the cleanest form.
-    Instead: eml(x, y) = exp(x) − ln(y) ≥ 1 − ln(y) + x for all x (by exp(x) ≥ 1+x).
--/
 theorem eml_lower_bound (x y : ℝ) :
     eml x y ≥ 1 + x - Real.log y := by
   unfold eml;
   linarith [ Real.add_one_le_exp x ]
 
-/-
-eml(x, y) is strictly monotone increasing in x.
--/
+
 theorem eml_strictMono_fst (y : ℝ) : StrictMono (fun x => eml x y) := by
   exact fun x y hxy => sub_lt_sub_right ( Real.exp_lt_exp.2 hxy ) _
 
-/-
-eml(x, y) is strictly monotone decreasing in y for y > 0.
--/
+
 theorem eml_strictAnti_snd (x : ℝ) : StrictAntiOn (fun y => eml x y) (Ioi 0) := by
   exact fun y hy z hz hyz => sub_lt_sub_left ( Real.log_lt_log hy hyz ) _
 
-/-! ## Part 10: EML Complexity Lower Bounds -/
 
-/-
-EML complexity of exp: K_EML(exp) = 1, since exp(x) = eml(x, 1).
--/
 theorem eml_complexity_exp : eml x 1 = Real.exp x := by
   unfold eml; norm_num;
 
-/-
-EML complexity of (1-x): K_EML(1-x) = 2, since 1 - x = eml(0, exp(x)).
--/
+
 theorem eml_complexity_oneminus :
     ∀ x : ℝ, eml 0 (Real.exp x) = 1 - x := by
   exact fun x => by unfold eml; norm_num;
 
-/-
-EML generates e itself: eml(1, 1) = e.
--/
+
 theorem eml_generates_e : eml 1 1 = Real.exp 1 := by
   unfold eml; norm_num;
 
-/-
-EML generates 0: eml(0, e) = 0.
--/
+
 theorem eml_generates_zero : eml 0 (Real.exp 1) = 0 := by
   simp [eml]
 
-/-
-EML generates negative one: eml(0, e^2) = -1.
--/
+
 theorem eml_generates_neg_one : eml 0 (Real.exp 2) = -1 := by
   unfold eml; norm_num;
+
 
 end

@@ -1,100 +1,55 @@
-import Mathlib
+/-! # CatalogBuild.Computation.Oracles.Advanced
 
-/-!
-# Advanced Geodesic Oracle Theory
-
-## Higher-Dimensional Theory & Oracle Composition
-
-Extends the foundation with oracle lattice structure, meta-geodesic oracles,
-entropy-distance duality, convergence, and Möbius covariance.
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 16
 -/
 
-open Real Set Function
+import Mathlib
 
 noncomputable section
-
-/-! ═══════════════════════════════════════════════════════════════════════
-    §1: ORACLE LATTICE — Refinement Order
-    ═══════════════════════════════════════════════════════════════════════ -/
 
 /-- O₁ refines O₂ if every fixed point of O₁ is a fixed point of O₂. -/
 def OracleRefines {X : Type*} (O₁ O₂ : X → X) : Prop :=
   ∀ x, O₁ x = x → O₂ x = x
 
+
 theorem oracleRefines_refl {X : Type*} (O : X → X) : OracleRefines O O :=
   fun _ h => h
+
 
 theorem oracleRefines_trans {X : Type*} (O₁ O₂ O₃ : X → X)
     (h₁₂ : OracleRefines O₁ O₂) (h₂₃ : OracleRefines O₂ O₃) :
     OracleRefines O₁ O₃ :=
   fun x hx => h₂₃ x (h₁₂ x hx)
 
-/-! ═══════════════════════════════════════════════════════════════════════
-    §2: ORACLE COMPOSITION
-    ═══════════════════════════════════════════════════════════════════════ -/
 
 theorem idem_compose_self {X : Type*} (f : X → X) (hf : ∀ x, f (f x) = f x) :
     f ∘ f = f := funext hf
 
-/-! ═══════════════════════════════════════════════════════════════════════
-    §3: ENTROPY-DISTANCE DUALITY
-    ═══════════════════════════════════════════════════════════════════════ -/
 
-/-- Shannon binary entropy. -/
-def binaryEntropy (p : ℝ) : ℝ :=
-  if p ≤ 0 ∨ 1 ≤ p then 0
-  else -(p * logb 2 p + (1 - p) * logb 2 (1 - p))
-
-/-
-PROBLEM
-Binary entropy is non-negative for valid probabilities.
-
-PROVIDED SOLUTION
-Unfold binaryEntropy. Since 0 < p and p < 1, the condition p ≤ 0 ∨ 1 ≤ p is false, so binaryEntropy p = -(p * logb 2 p + (1-p) * logb 2 (1-p)). Since 0 < p < 1, logb 2 p < 0 and logb 2 (1-p) < 0. So p * logb 2 p ≤ 0 and (1-p) * logb 2 (1-p) ≤ 0. Their sum is ≤ 0, and negating gives ≥ 0. Use Real.logb_neg for log of values in (0,1).
--/
 theorem binaryEntropy_nonneg (p : ℝ) (hp0 : 0 < p) (hp1 : p < 1) :
     0 ≤ binaryEntropy p := by
   unfold binaryEntropy;
   split_ifs <;> nlinarith [ Real.logb_neg ( show 1 < 2 by norm_num ) hp0 hp1, Real.logb_neg ( show 1 < 2 by norm_num ) ( show 0 < 1 - p by linarith ) ( show 1 - p < 1 by linarith ) ]
 
-/-
-PROBLEM
-Binary entropy at p = 1/2 equals 1 bit.
 
-PROVIDED SOLUTION
-Unfold binaryEntropy. Since 1/2 > 0 and 1/2 < 1, the if-condition is false. So binaryEntropy (1/2) = -(1/2 * logb 2 (1/2) + 1/2 * logb 2 (1/2)) = -(logb 2 (1/2)) = -(- 1) = 1. Use logb_div or Real.logb_inv to show logb 2 (1/2) = -1.
--/
 theorem binaryEntropy_half : binaryEntropy (1/2 : ℝ) = 1 := by
   unfold binaryEntropy; norm_num;
   norm_num [ Real.logb_div ]
 
-/-! ═══════════════════════════════════════════════════════════════════════
-    §4: CONVERGENCE THEOREMS
-    ═══════════════════════════════════════════════════════════════════════ -/
 
 /-- A constant oracle has a unique fixed point. -/
 theorem constant_unique_fixed_point (c : ℝ) :
     ∃! x : ℝ, (fun _ => c) x = x :=
   ⟨c, rfl, fun y hy => hy.symm⟩
 
+
 /-- Idempotent maps converge in one step. -/
 theorem idem_one_step (f : ℝ → ℝ) (hf : ∀ x, f (f x) = f x) (x : ℝ) :
     f x = f (f x) := (hf x).symm
 
-/-! ═══════════════════════════════════════════════════════════════════════
-    §5: MÖBIUS COVARIANCE
-    ═══════════════════════════════════════════════════════════════════════ -/
 
-/-- Möbius transformation. -/
-def mobiusTransform (a b c d x : ℝ) : ℝ := (a * x + b) / (c * x + d)
-
-/-
-PROBLEM
-Möbius composition = matrix multiplication.
-
-PROVIDED SOLUTION
-Unfold mobiusTransform. We have mobiusTransform a₁ b₁ c₁ d₁ ((a₂*x+b₂)/(c₂*x+d₂)) = (a₁ * ((a₂*x+b₂)/(c₂*x+d₂)) + b₁) / (c₁ * ((a₂*x+b₂)/(c₂*x+d₂)) + d₁). Multiply numerator and denominator by (c₂*x+d₂) using h : c₂*x+d₂ ≠ 0. Use field_simp with hypotheses h and h' to clear denominators, then ring.
--/
 theorem mobius_compose (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ x : ℝ)
     (h : c₂ * x + d₂ ≠ 0)
     (h' : c₁ * mobiusTransform a₂ b₂ c₂ d₂ x + d₁ ≠ 0) :
@@ -104,9 +59,6 @@ theorem mobius_compose (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ x : ℝ)
   unfold mobiusTransform; simp_all +decide [ mul_comm, mul_assoc, mul_left_comm ] ; ring;
   grind
 
-/-! ═══════════════════════════════════════════════════════════════════════
-    §6: THE META-GEODESIC ORACLE
-    ═══════════════════════════════════════════════════════════════════════ -/
 
 /-- Meta-oracle: selects the best oracle from a family. -/
 structure MetaGeodesicOracle (α : Type*) where
@@ -114,9 +66,11 @@ structure MetaGeodesicOracle (α : Type*) where
   idem : ∀ i, ∀ x, family i (family i x) = family i x
   selectIdx : ℝ → α
 
+
 /-- Meta-oracle consultation. -/
 def MetaGeodesicOracle.consult {α : Type*} (M : MetaGeodesicOracle α) (x : ℝ) : ℝ :=
   M.family (M.selectIdx x) x
+
 
 /-- With constant selector, meta-oracle is a standard oracle. -/
 theorem MetaGeodesicOracle.constant_selector_is_oracle {α : Type*}
@@ -126,9 +80,6 @@ theorem MetaGeodesicOracle.constant_selector_is_oracle {α : Type*}
   simp only [MetaGeodesicOracle.consult, hsel]
   exact M.idem i _
 
-/-! ═══════════════════════════════════════════════════════════════════════
-    §7: N-DIMENSIONAL GENERALIZATION
-    ═══════════════════════════════════════════════════════════════════════ -/
 
 /-- N-dimensional inverse stereographic projection ℝⁿ → Sⁿ ⊂ ℝⁿ⁺¹. -/
 def invStereoN (n : ℕ) (x : Fin n → ℝ) : Fin (n + 1) → ℝ :=
@@ -139,13 +90,7 @@ def invStereoN (n : ℕ) (x : Fin n → ℝ) : Fin (n + 1) → ℝ :=
     else
       (s - 1) / (1 + s)
 
-/-
-PROBLEM
-The N-dimensional inverse stereo image lies on Sⁿ.
 
-PROVIDED SOLUTION
-Expand invStereoN. Split the sum over Fin (n+1) into the first n terms (where i.val < n) and the last term (where i.val = n). The first n terms contribute ∑ᵢ (2xᵢ/(1+s))² = 4s/(1+s)² where s = ∑xᵢ². The last term contributes ((s-1)/(1+s))² = (s-1)²/(1+s)². Total = (4s + (s-1)²)/(1+s)² = (4s + s² - 2s + 1)/(1+s)² = (s² + 2s + 1)/(1+s)² = (1+s)²/(1+s)² = 1. Use Fin.sum_univ_castSucc or similar to split the sum. The key identity is 4*s + (s-1)^2 = (1+s)^2 which is a pure ring identity.
--/
 theorem invStereoN_on_sphere (n : ℕ) (x : Fin n → ℝ) :
     ∑ i : Fin (n + 1), (invStereoN n x i) ^ 2 = 1 := by
   unfold invStereoN;
@@ -154,20 +99,18 @@ theorem invStereoN_on_sphere (n : ℕ) (x : Fin n → ℝ) :
   norm_num [ ← Finset.mul_sum _ _ _, ← Finset.sum_div ];
   rw [ ← add_div, div_eq_iff ] <;> nlinarith [ show 0 ≤ ∑ i, x i ^ 2 from Finset.sum_nonneg fun _ _ => sq_nonneg _ ]
 
-/-! ═══════════════════════════════════════════════════════════════════════
-    §8: HYPOTHESES — Validated & Updated
-    ═══════════════════════════════════════════════════════════════════════ -/
 
--- H1: Oracle Crystallization — True by idempotency definition ✓
 theorem hypothesis_crystallization (f : ℝ → ℝ) (hf : ∀ x, f (f x) = f x) (x : ℝ) :
     f (f x) = f x := hf x
 
 -- H4: Idempotent partition into fixed/non-fixed
+
 theorem idem_partition {α : Type*} [DecidableEq α] (f : α → α)
     (hf : ∀ x, f (f x) = f x) (x : α) :
     f x = x ∨ (f x ≠ x ∧ f (f x) = f x) := by
   by_cases h : f x = x
   · exact Or.inl h
   · exact Or.inr ⟨h, hf x⟩
+
 
 end

@@ -1,26 +1,13 @@
-/-
-  # Arbitrage Profit Theorems
-  ## Formal Verification of Cross-Pool Arbitrage
+/-! # CatalogBuild.Cryptography.Ethereum.ArbitrageProfit
 
-  This file formalizes the mathematics of arbitrage between two constant-product
-  AMM pools. We prove that when prices diverge between pools, a profitable
-  trade always exists, and we derive the optimal trade size.
-
-  ### Key Results:
-  - Price divergence implies profitable arbitrage (Fundamental Arbitrage Theorem)
-  - Optimal arbitrage trade size formula
-  - Profit bounds as a function of price divergence
-
-  ### Economic Significance:
-  Arbitrage is the primary mechanism keeping DEX prices aligned with market prices.
-  MEV searchers executing these trades earn ~$1M+ daily on Ethereum mainnet.
+Auto-generated from theorem catalog database.
+Domain: Cryptography/Ethereum
+Declarations: 11
 -/
 
 import Mathlib
 
-namespace Ethereum.Arbitrage
-
-/-! ## Two-Pool Arbitrage Model -/
+noncomputable section
 
 /-- A simplified pool with reserves (for cleaner arbitrage statements) -/
 structure SimplePool where
@@ -29,30 +16,21 @@ structure SimplePool where
   hx : 0 < x
   hy : 0 < y
 
+
 /-- Spot price of A in terms of B -/
 noncomputable def SimplePool.price (p : SimplePool) : ℝ := p.y / p.x
+
 
 /-- Output when buying B with amount `dx` of A (no fees) -/
 noncomputable def SimplePool.buyB (p : SimplePool) (dx : ℝ) : ℝ :=
   p.y * dx / (p.x + dx)
 
+
 /-- Output when buying A with amount `dy` of B (no fees) -/
 noncomputable def SimplePool.buyA (p : SimplePool) (dy : ℝ) : ℝ :=
   p.x * dy / (p.y + dy)
 
-/-
-PROBLEM
-**Fundamental Arbitrage Theorem (Buy-low-sell-high direction)**:
-    If pool1 has a lower price for A (in terms of B) than pool2,
-    then buying A from pool1 and selling to pool2 yields profit.
 
-    Specifically: buy `dx` of A from pool1 (paying in B), then sell that A
-    to pool2 (receiving B). If pool2's price > pool1's price, there exists
-    a trade size where you end with more B than you started.
-
-PROVIDED SOLUTION
-Use dx = 1 (or any small positive value). The key is that buyB dx = y*dx/(x+dx) > 0 for any positive dx. This is straightforward from positivity of pool reserves.
--/
 theorem arbitrage_profit_exists
     (pool1 pool2 : SimplePool)
     (h_price_diverge : pool1.price < pool2.price) :
@@ -62,21 +40,14 @@ theorem arbitrage_profit_exists
       0 < b_profit := by
   exact ⟨ 1, by norm_num, div_pos ( by linarith [ pool1.hx, pool1.hy, pool2.hx, pool2.hy ] ) ( by linarith [ pool1.hx, pool1.hy, pool2.hx, pool2.hy ] ) ⟩
 
+
 /-- **Arbitrage Revenue Formula**: When buying `dx` of token A in pool1 and
-    immediately selling in pool2, the gross revenue in token B is: -/
+immediately selling in pool2, the gross revenue in token B is: -/
 noncomputable def arbitrageRevenue (p1 p2 : SimplePool) (dx : ℝ) : ℝ :=
   let dy1 := p1.buyB dx     -- B spent to buy dx of A in pool1... actually
   p2.buyB dx - p1.buyB dx
 
-/-
-PROBLEM
-simplified: buy from cheap, sell to expensive
 
-If pool2 price > pool1 price, small trades are profitable
-
-PROVIDED SOLUTION
-The marginal rate at pool i is y_i/x_i = price_i. For small dx, buyB(dx) ≈ price * dx. So p2.buyB(dx) - p1.buyB(dx) ≈ (price2 - price1) * dx > 0. Formally, use the fact that as dx → 0+, buyB(dx)/dx → y/x = price. Since price2 > price1, for small enough ε, the difference is positive. Can use continuity or direct algebraic manipulation: p2.buyB(dx) - p1.buyB(dx) = p2.y*dx/(p2.x+dx) - p1.y*dx/(p1.x+dx). Factor out dx and show the coefficient is positive for small dx.
--/
 theorem small_trade_profitable
     (p1 p2 : SimplePool)
     (h_diverge : p1.price < p2.price) :
@@ -92,20 +63,12 @@ theorem small_trade_profitable
   rcases ( Metric.mem_nhdsWithin_iff.mp <| this ) with ⟨ ε, ε_pos, hε ⟩;
   exact ⟨ ε, ε_pos, fun dx dx_pos dx_lt => by have := hε ⟨ mem_ball_zero_iff.mpr ( abs_lt.mpr ⟨ by linarith, by linarith ⟩ ), dx_pos ⟩ ; rw [ Set.mem_setOf_eq, lt_div_iff₀ dx_pos ] at this; linarith ⟩
 
-/-! ## Cyclic Arbitrage -/
 
 /-- A three-pool cycle: A→B→C→A. Profit if the product of exchange rates > 1. -/
 noncomputable def cyclicProfitRate (p_ab p_bc p_ca : SimplePool) : ℝ :=
   p_ab.price * p_bc.price * p_ca.price
 
-/-
-PROBLEM
-**Cyclic Arbitrage Theorem**: If the product of marginal prices around a
-    cycle exceeds 1, there exists a profitable cyclic trade.
 
-PROVIDED SOLUTION
-Similar to small_trade_profitable. For small dx, buyB(dx) ≈ price * dx. So the cycle gives approximately price_ab * price_bc * price_ca * dx = cyclicProfitRate * dx > dx when cyclicProfitRate > 1. Use continuity argument or direct algebra for small enough dx.
--/
 theorem cyclic_arbitrage_exists
     (p_ab p_bc p_ca : SimplePool)
     (h_cycle : 1 < cyclicProfitRate p_ab p_bc p_ca) :
@@ -128,23 +91,15 @@ theorem cyclic_arbitrage_exists
     ext; norm_num [ div_eq_inv_mul, SimplePool.buyB ] ;
   have := h_limit.eventually ( lt_mem_nhds h_cycle ) ; have := this.and self_mem_nhdsWithin; obtain ⟨ x, hx₁, hx₂ ⟩ := this.exists; exact ⟨ x, hx₂, by rw [ div_eq_mul_inv ] at hx₁; nlinarith [ inv_mul_cancel₀ hx₂.ne' ] ⟩ ;
 
-/-! ## Optimal Trade Size -/
 
 /-- For two pools with different prices, the optimal trade size.
-    When p2 has higher price than p1, buying A from p1 and selling to p2 is profitable.
-    The optimal amount of A to trade is derived from setting the derivative of
-    profit to zero. -/
+When p2 has higher price than p1, buying A from p1 and selling to p2 is profitable.
+The optimal amount of A to trade is derived from setting the derivative of
+profit to zero. -/
 noncomputable def optimalTradeSize (p1 p2 : SimplePool) : ℝ :=
   Real.sqrt (p1.x * p2.x * p1.y * p2.y) / (p1.y + p2.y) - p1.x * p1.y / (p1.y + p2.y)
 
-/-
-PROBLEM
-The optimal trade size is positive when pool 2 has strictly higher price
-    AND the pool 2 invariant exceeds pool 1 invariant (sufficient liquidity).
 
-PROVIDED SOLUTION
-Unfold optimalTradeSize. Need sqrt(x1*x2*y1*y2)/(y1+y2) > x1*y1/(y1+y2). Since y1+y2 > 0, this reduces to sqrt(x1*x2*y1*y2) > x1*y1. Square both sides (both positive): x1*x2*y1*y2 > (x1*y1)^2 = x1^2*y1^2. Divide by x1*y1 > 0: x2*y2 > x1*y1. This is exactly hliq.
--/
 theorem optimal_size_pos (p1 p2 : SimplePool)
     (h : p1.price < p2.price)
     (hliq : p1.x * p1.y < p2.x * p2.y) :
@@ -153,4 +108,5 @@ theorem optimal_size_pos (p1 p2 : SimplePool)
   rw [ div_sub_div_same, lt_div_iff₀ ] <;> try nlinarith [ p1.hx, p1.hy, p2.hx, p2.hy ];
   rw [ lt_sub_iff_add_lt', Real.lt_sqrt ] <;> nlinarith [ p1.hx, p1.hy, p2.hx, p2.hy, mul_pos p1.hx p1.hy, mul_pos p2.hx p2.hy ]
 
-end Ethereum.Arbitrage
+
+end

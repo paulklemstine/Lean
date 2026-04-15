@@ -1,27 +1,13 @@
-/-
-  # Post-Quantum BLS Alternatives: Lattice-Based Signature Aggregation
-  ## Formalizing Security of Post-Quantum Signature Schemes
+/-! # CatalogBuild.Cryptography.QuantumSecurity.PostQuantumSignatures
 
-  BLS signatures enable efficient aggregation but rely on pairing-based
-  cryptography vulnerable to quantum attacks. This file formalizes
-  lattice-based alternatives and proves key security properties.
-
-  ### Key Results:
-  - Security reduction to SIS hardness
-  - BLS vs lattice signature size comparison
-  - Aggregation space efficiency
-  - Quantum resistance: lattice problems remain exponentially hard
-
-  ### References:
-  - Boneh & Kim, "One-Time and Interactive Aggregate Signatures from Lattices" (2022)
-  - NIST Post-Quantum Standardization (2022)
+Auto-generated from theorem catalog database.
+Domain: Cryptography/QuantumSecurity
+Declarations: 11
 -/
 
 import Mathlib
 
-namespace PostQuantumSignatures
-
-/-! ## Abstract Signature Scheme -/
+noncomputable section
 
 structure SignatureScheme (Message PublicKey SecretKey Signature : Type) where
   keygen : SecretKey → PublicKey
@@ -29,7 +15,6 @@ structure SignatureScheme (Message PublicKey SecretKey Signature : Type) where
   verify : PublicKey → Message → Signature → Prop
   correctness : ∀ sk m, verify (keygen sk) m (sign sk m)
 
-/-! ## Lattice Parameters -/
 
 structure LatticeParams where
   n : ℕ
@@ -39,11 +24,11 @@ structure LatticeParams where
   hq : 1 < q
   hβ : 0 < β
 
-/-! ## SIS Hardness -/
 
 structure SISHardness where
   sisAdvantage : ℕ → ℝ
   isHard : ∀ c : ℕ, ∃ N : ℕ, ∀ n : ℕ, N ≤ n → |sisAdvantage n| < (1 / (n : ℝ)) ^ c
+
 
 /-- Security of lattice signature reduces to SIS hardness -/
 theorem lattice_sig_security (sis : SISHardness)
@@ -59,10 +44,11 @@ theorem lattice_sig_security (sis : SISHardness)
     have h3 : (0:ℝ) ≤ (1 / (n : ℝ)) ^ c := by positivity
     linarith⟩
 
-/-! ## BLS vs Lattice Comparison -/
 
 noncomputable def blsSigSize : ℝ := 48
+
 noncomputable def latticeSigSize (n : ℕ) : ℝ := 2 * (n : ℝ)
+
 
 theorem bls_more_compact_small (n : ℕ) (hn : n < 24) :
     latticeSigSize n < blsSigSize := by
@@ -70,13 +56,13 @@ theorem bls_more_compact_small (n : ℕ) (hn : n < 24) :
   have : (n : ℝ) < 24 := by exact_mod_cast hn
   linarith
 
+
 theorem lattice_larger_for_security (n : ℕ) (hn : 24 ≤ n) :
     blsSigSize ≤ latticeSigSize n := by
   unfold latticeSigSize blsSigSize
   have : (24 : ℝ) ≤ (n : ℝ) := by exact_mod_cast hn
   linarith
 
-/-! ## Aggregation Space Efficiency -/
 
 theorem aggregation_space_saving (k : ℕ) (sigSize aggSize : ℝ)
     (hk : 1 < k) (hSig : 0 < sigSize)
@@ -85,12 +71,12 @@ theorem aggregation_space_saving (k : ℕ) (sigSize aggSize : ℝ)
   rw [div_lt_one (by positivity)]
   exact h_saving
 
-/-! ## Quantum Resistance -/
 
 theorem quantum_lattice_exponential (n : ℕ) (hn : 2 ≤ n) :
     (1 : ℝ) < 2 ^ n := by
   have : (1:ℝ) < 2 := by norm_num
   exact one_lt_pow₀ this (by omega)
+
 
 theorem bls_quantum_broken
     (blsBreakComplexity : ℕ → ℝ)
@@ -98,4 +84,5 @@ theorem bls_quantum_broken
     ∀ n : ℕ, blsBreakComplexity n ≤ (n : ℝ) ^ 3 :=
   h_shor
 
-end PostQuantumSignatures
+
+end

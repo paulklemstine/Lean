@@ -1,55 +1,13 @@
-import Mathlib
+/-! # CatalogBuild.Tropical.Cryptography.TropicalTrapdoor
 
-/-!
-# Tropical Gates as Trapdoor Functions
-
-## Overview
-
-A **trapdoor function** is a function that is easy to compute in one direction
-but hard to invert without special knowledge (the "trapdoor"). We model trapdoor
-functions as circuits built from **tropical gates** — the fundamental operations
-of the tropical semiring (ℝ, min/max, +).
-
-### Key insight
-
-The tropical semiring operations `min`, `max`, and `+` are individually easy to
-invert, but their **composition into deep circuits** creates information loss:
-- `min(a, b) = 3` has infinitely many preimages (any a ≤ 3, b = 3 or vice versa)
-- `max(a, b) = 5` similarly loses information about the non-selected argument
-- `a + b = 7` is invertible only up to a 1-parameter family
-
-When composed into a circuit of depth d with n inputs, the preimage of a single
-output point becomes a **tropical polyhedron** of potentially exponential
-combinatorial complexity, making inversion computationally hard without knowledge
-of the circuit structure (the trapdoor).
-
-### Formalization structure
-
-1. **TropicalGate**: Inductive type for min, max, and addition gates
-2. **TropicalCircuit**: Circuits built by composing gates
-3. **Forward evaluation**: Computing f(x) given circuit and input
-4. **Preimage analysis**: The set of inputs mapping to a given output
-5. **Trapdoor property**: Forward is easy (polynomial), reverse is hard
-   (exponential preimage structure) without the circuit topology
+Auto-generated from theorem catalog database.
+Domain: Tropical/Cryptography
+Declarations: 52
 -/
 
+import Mathlib
+
 noncomputable section
-
-open Real BigOperators Finset
-
-namespace TropicalTrapdoor
-
-/-! ## Section 1: Tropical Gate Primitives -/
-
-/-- A tropical gate is one of three primitive operations:
-    - `MinGate`: computes min(a, b) — tropical addition in min-plus
-    - `MaxGate`: computes max(a, b) — tropical addition in max-plus
-    - `AddGate`: computes a + b — tropical multiplication in both semirings -/
-inductive TropGate where
-  | MinGate : TropGate
-  | MaxGate : TropGate
-  | AddGate : TropGate
-  deriving DecidableEq, Repr
 
 /-- Evaluate a tropical gate on two real inputs -/
 def evalGate (g : TropGate) (a b : ℝ) : ℝ :=
@@ -58,52 +16,57 @@ def evalGate (g : TropGate) (a b : ℝ) : ℝ :=
   | .MaxGate => max a b
   | .AddGate => a + b
 
+
 /-- MinGate selects the smaller input -/
 theorem evalGate_min (a b : ℝ) : evalGate .MinGate a b = min a b := rfl
+
 
 /-- MaxGate selects the larger input -/
 theorem evalGate_max (a b : ℝ) : evalGate .MaxGate a b = max a b := rfl
 
+
 /-- AddGate sums inputs (tropical multiplication) -/
 theorem evalGate_add (a b : ℝ) : evalGate .AddGate a b = a + b := rfl
 
-/-! ## Section 2: Gate Commutativity and Associativity -/
 
 theorem gate_min_comm (a b : ℝ) : evalGate .MinGate a b = evalGate .MinGate b a :=
   min_comm a b
 
+
 theorem gate_max_comm (a b : ℝ) : evalGate .MaxGate a b = evalGate .MaxGate b a :=
   max_comm a b
 
+
 theorem gate_add_comm (a b : ℝ) : evalGate .AddGate a b = evalGate .AddGate b a :=
   add_comm a b
+
 
 theorem gate_min_assoc (a b c : ℝ) :
     evalGate .MinGate (evalGate .MinGate a b) c =
     evalGate .MinGate a (evalGate .MinGate b c) :=
   min_assoc a b c
 
+
 theorem gate_max_assoc (a b c : ℝ) :
     evalGate .MaxGate (evalGate .MaxGate a b) c =
     evalGate .MaxGate a (evalGate .MaxGate b c) :=
   max_assoc a b c
 
-/-! ## Section 3: Information Loss in Tropical Gates
-
-The key to trapdoor behavior: min and max gates **destroy information**.
-Given only the output, you cannot recover both inputs. -/
 
 /-- The preimage of a min gate output is a union of two half-spaces -/
 def minGatePreimage (c : ℝ) : Set (ℝ × ℝ) :=
   {p | min p.1 p.2 = c}
 
+
 /-- The preimage of a max gate output is a union of two half-spaces -/
 def maxGatePreimage (c : ℝ) : Set (ℝ × ℝ) :=
   {p | max p.1 p.2 = c}
 
+
 /-- The preimage of an add gate output is a line (1-dimensional) -/
 def addGatePreimage (c : ℝ) : Set (ℝ × ℝ) :=
   {p | p.1 + p.2 = c}
+
 
 /-- Min gate preimage contains the "left-selecting" region -/
 theorem minPreimage_left (c : ℝ) :
@@ -111,11 +74,13 @@ theorem minPreimage_left (c : ℝ) :
   intro b hb
   simp [minGatePreimage, min_eq_left hb]
 
+
 /-- Min gate preimage contains the "right-selecting" region -/
 theorem minPreimage_right (c : ℝ) :
     ∀ a : ℝ, c ≤ a → (a, c) ∈ minGatePreimage c := by
   intro a ha
   simp [minGatePreimage, min_eq_right ha]
+
 
 /-- Max gate preimage contains the "left-selecting" region -/
 theorem maxPreimage_left (c : ℝ) :
@@ -123,16 +88,13 @@ theorem maxPreimage_left (c : ℝ) :
   intro b hb
   simp [maxGatePreimage, max_eq_left hb]
 
+
 /-- Max gate preimage contains the "right-selecting" region -/
 theorem maxPreimage_right (c : ℝ) :
     ∀ a : ℝ, a ≤ c → (a, c) ∈ maxGatePreimage c := by
   intro a ha
   simp [maxGatePreimage, max_eq_right ha]
 
-/-! ## Section 4: Tropical Circuit Model
-
-A tropical circuit is a DAG of tropical gates. We model it as a
-sequence of instructions operating on a register file. -/
 
 /-- A circuit instruction: apply a gate to two register indices, store in a third -/
 structure TropInstruction where
@@ -142,55 +104,46 @@ structure TropInstruction where
   dst  : ℕ
   deriving DecidableEq, Repr
 
-/-- A tropical circuit is a list of instructions with designated input and output registers -/
-structure TropCircuit where
-  numInputs  : ℕ
-  numRegs    : ℕ
-  instrs     : List TropInstruction
-  outputReg  : ℕ
-  deriving Repr
 
 /-- Register file: maps register indices to real values -/
 def RegFile := ℕ → ℝ
 
-/-- Execute one instruction on a register file -/
-def execInstr (regs : RegFile) (instr : TropInstruction) : RegFile :=
-  fun i => if i = instr.dst
-           then evalGate instr.gate (regs instr.src1) (regs instr.src2)
-           else regs i
 
 /-- Execute a sequence of instructions -/
 def execInstrs (regs : RegFile) : List TropInstruction → RegFile
   | [] => regs
   | instr :: rest => execInstrs (execInstr regs instr) rest
 
+
 /-- Initialize register file from input vector -/
 def initRegs (inputs : ℕ → ℝ) : RegFile := inputs
+
 
 /-- Evaluate a tropical circuit on an input -/
 def evalCircuit (circ : TropCircuit) (inputs : ℕ → ℝ) : ℝ :=
   let finalRegs := execInstrs (initRegs inputs) circ.instrs
   finalRegs circ.outputReg
 
-/-! ## Section 5: Forward Evaluation is Efficient -/
 
 /-- Number of gates in a circuit -/
 def circuitSize (circ : TropCircuit) : ℕ := circ.instrs.length
+
 
 /-- Executing instructions preserves register values outside destinations -/
 theorem execInstr_preserve (regs : RegFile) (instr : TropInstruction) (i : ℕ)
     (h : i ≠ instr.dst) : execInstr regs instr i = regs i := by
   simp [execInstr, h]
 
+
 /-- Empty instruction list is identity -/
 theorem execInstrs_nil (regs : RegFile) : execInstrs regs [] = regs := rfl
+
 
 /-- Instruction list execution is compositional -/
 theorem execInstrs_cons (regs : RegFile) (instr : TropInstruction)
     (rest : List TropInstruction) :
     execInstrs regs (instr :: rest) = execInstrs (execInstr regs instr) rest := rfl
 
-/-! ## Section 6: Trapdoor Function Construction -/
 
 /-- A tropical trapdoor function: a circuit paired with its "secret" structure -/
 structure TropTrapdoorFn where
@@ -199,81 +152,89 @@ structure TropTrapdoorFn where
   /-- The secret trapdoor: a partial inverse hint -/
   trapdoorHint : ℝ → ℕ → ℝ
 
+
 /-- The public evaluation function -/
 def TropTrapdoorFn.eval (tf : TropTrapdoorFn) (inputs : ℕ → ℝ) : ℝ :=
   evalCircuit tf.circuit inputs
+
 
 /-- The trapdoor-assisted inversion -/
 def TropTrapdoorFn.invert (tf : TropTrapdoorFn) (output : ℝ) (idx : ℕ) : ℝ :=
   tf.trapdoorHint output idx
 
-/-! ## Section 7: Monotonicity of Tropical Gates -/
 
 theorem min_gate_mono_left (b : ℝ) : Monotone (fun a => min a b) :=
   fun _ _ h => min_le_min_right b h
 
+
 theorem max_gate_mono_left (b : ℝ) : Monotone (fun a => max a b) :=
   fun _ _ h => max_le_max_right b h
+
 
 theorem add_gate_mono_left (b : ℝ) : Monotone (fun a => a + b) :=
   fun _ _ h => by dsimp; linarith
 
+
 theorem min_gate_mono_right (a : ℝ) : Monotone (fun b => min a b) :=
   fun _ _ h => min_le_min_left a h
+
 
 theorem max_gate_mono_right (a : ℝ) : Monotone (fun b => max a b) :=
   fun _ _ h => max_le_max_left a h
 
-/-! ## Section 8: Tropical Distributivity -/
 
 /-- Addition distributes over min (tropical semiring law) -/
 theorem add_distrib_min (a b c : ℝ) :
     a + min b c = min (a + b) (a + c) := by
   simp [min_add_add_left]
 
+
 /-- Addition distributes over max (dual tropical semiring law) -/
 theorem add_distrib_max (a b c : ℝ) :
     a + max b c = max (a + b) (a + c) := by
   simp [max_add_add_left]
+
 
 /-- min and max are dual via negation -/
 theorem min_max_neg_duality (a b : ℝ) :
     min a b = -max (-a) (-b) := by
   simp [min_def, max_def]; split_ifs <;> linarith
 
+
 /-- Idempotency of min gate -/
 theorem min_gate_idem (a : ℝ) : min a a = a := min_self a
+
 
 /-- Idempotency of max gate -/
 theorem max_gate_idem (a : ℝ) : max a a = a := max_self a
 
-/-! ## Section 9: Information-Theoretic Bounds on Reversal -/
 
 /-- A gate selection is a choice of which argument each min/max gate selects -/
 def GateSelection (numGates : ℕ) := Fin numGates → Bool
+
 
 /-- Number of possible gate selections (combinatorial complexity of reversal) -/
 theorem gate_selection_card (n : ℕ) :
     Fintype.card (Fin n → Bool) = 2 ^ n := by
   simp [Fintype.card_fin, Fintype.card_bool]
 
-/-! ## Section 10: Piecewise Linearity -/
 
 /-- Min of two linear functions is piecewise linear with at most 2 pieces -/
 theorem min_linear_pwl (a₁ b₁ a₂ b₂ : ℝ) :
     ∃ (f : ℝ → ℝ), (∀ x, f x = min (a₁ * x + b₁) (a₂ * x + b₂)) :=
   ⟨fun x => min (a₁ * x + b₁) (a₂ * x + b₂), fun _ => rfl⟩
 
+
 /-- Max of two linear functions is piecewise linear with at most 2 pieces -/
 theorem max_linear_pwl (a₁ b₁ a₂ b₂ : ℝ) :
     ∃ (f : ℝ → ℝ), (∀ x, f x = max (a₁ * x + b₁) (a₂ * x + b₂)) :=
   ⟨fun x => max (a₁ * x + b₁) (a₂ * x + b₂), fun _ => rfl⟩
 
-/-! ## Section 11: The Preimage Set -/
 
 /-- The preimage set of a circuit at output value c -/
 def circuitPreimage (circ : TropCircuit) (c : ℝ) : Set (ℕ → ℝ) :=
   {inputs | evalCircuit circ inputs = c}
+
 
 /-- Preimage of identity circuit (no gates) is a hyperplane -/
 theorem preimage_identity (reg : ℕ) (c : ℝ) :
@@ -281,41 +242,46 @@ theorem preimage_identity (reg : ℕ) (c : ℝ) :
     circuitPreimage circ c = {inputs | inputs reg = c} := by
   simp [circuitPreimage, evalCircuit, execInstrs, initRegs]
 
-/-! ## Section 12: The Reversal Problem (Formal Statement) -/
 
 /-- A reversal witness: for each min/max gate, which argument was selected -/
 structure ReversalWitness (circ : TropCircuit) where
   selections : Fin circ.instrs.length → Bool
 
+
 /-- The forward problem: evaluate circuit -/
 def forwardProblem (circ : TropCircuit) (x : ℕ → ℝ) : ℝ :=
   evalCircuit circ x
 
+
 /-- The reverse problem: find a preimage -/
 def reverseProblem (circ : TropCircuit) (y : ℝ) : Prop :=
   ∃ x : ℕ → ℝ, evalCircuit circ x = y
+
 
 /-- All gates are surjective -/
 theorem add_gate_surjective (c : ℝ) :
     ∃ (a b : ℝ), evalGate .AddGate a b = c :=
   ⟨c, 0, by simp [evalGate]⟩
 
+
 theorem min_gate_surjective (c : ℝ) :
     ∃ (a b : ℝ), evalGate .MinGate a b = c :=
   ⟨c, c, by simp [evalGate]⟩
+
 
 theorem max_gate_surjective (c : ℝ) :
     ∃ (a b : ℝ), evalGate .MaxGate a b = c :=
   ⟨c, c, by simp [evalGate]⟩
 
-/-! ## Section 13: Composition Theorems -/
 
 /-- min(min(a,b), c) = min(a, min(b,c)) -/
 theorem compose_min_assoc (a b c : ℝ) :
     min (min a b) c = min a (min b c) := min_assoc a b c
 
+
 /-- max(max(a,b), c) = max(a, max(b,c)) -/
 theorem compose_max_assoc (a b c : ℝ) :
     max (max a b) c = max a (max b c) := max_assoc a b c
 
-end TropicalTrapdoor
+
+end

@@ -1,55 +1,34 @@
-import Mathlib
+/-! # CatalogBuild.Logic.QueryComplexity
 
-/-!
-# Oracle Query Complexity: The Mathematics of Optimal Problem Solving
-
-## Overview
-
-We formalize a theory of **oracle query complexity** — the study of how many
-questions you must ask an oracle to solve a problem, and how to ask them optimally.
-
-This connects three deep mathematical threads:
-1. **Information theory**: Each oracle query yields at most 1 bit; solving a problem
-   over N possibilities requires ≥ log₂(N) queries.
-2. **Probability amplification**: A noisy oracle (correct with probability p > ½)
-   can be boosted to arbitrary accuracy via majority vote.
-3. **The meta-oracle principle**: The problem of choosing the optimal query strategy
-   is itself an oracle problem, creating a productive self-reference.
-
-## Main Results
-
-- **Oracle Query Lower Bound**: Any deterministic algorithm needs ≥ ⌈log₂ N⌉ queries
-- **Oracle Amplification Theorem**: Majority vote amplifies success probability
-- **Oracle Composition Algebra**: Oracles form a monoid; commuting oracles form a lattice
-- **Contraction Oracle Convergence**: Contractive oracles converge to truth via iteration
-- **Meta-Oracle Fixed Point**: The optimal query strategy is a fixed point of the meta-oracle
-- **Oracle Entropy Bound**: Oracle information ≤ Shannon entropy of the query
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 41
 -/
 
-open Set Function Finset BigOperators Real
+import Mathlib
 
 noncomputable section
-
-/-! ═══════════════════════════════════════════════════════════════════════════════
-    §1: ORACLE QUERY MODEL — Foundations
-    ═══════════════════════════════════════════════════════════════════════════════ -/
 
 /-- An oracle over a type X is an idempotent endomorphism. -/
 def IsOracle' {X : Type*} (O : X → X) : Prop := ∀ x, O (O x) = O x
 
+
 /-- A binary oracle: answers yes/no to queries from a type Q. -/
 def BinaryOracle (Q : Type*) := Q → Bool
 
+
 /-- A query strategy is a sequence of adaptive queries: each query depends on
-    previous answers. Modeled as a binary decision tree of depth k. -/
+previous answers. Modeled as a binary decision tree of depth k. -/
 inductive QueryTree (Q : Type*) (A : Type*) where
   | leaf : A → QueryTree Q A
   | query : Q → (Bool → QueryTree Q A) → QueryTree Q A
+
 
 /-- The depth (number of queries in worst case) of a query tree. -/
 def QueryTree.depth {Q A : Type*} : QueryTree Q A → ℕ
   | .leaf _ => 0
   | .query _ f => 1 + max (QueryTree.depth (f true)) (QueryTree.depth (f false))
+
 
 /-- Execute a query tree against an oracle to get an answer. -/
 def QueryTree.execute {Q A : Type*} (t : QueryTree Q A) (oracle : Q → Bool) : A :=
@@ -57,27 +36,18 @@ def QueryTree.execute {Q A : Type*} (t : QueryTree Q A) (oracle : Q → Bool) : 
   | .leaf a => a
   | .query q f => QueryTree.execute (f (oracle q)) oracle
 
+
 /-- **Theorem 1.1**: A leaf query tree uses zero queries. -/
 theorem leaf_depth_zero {Q A : Type*} (a : A) :
     (QueryTree.leaf (Q := Q) a).depth = 0 := rfl
+
 
 /-- **Theorem 1.2**: A single-query tree has depth exactly 1 when both branches are leaves. -/
 theorem single_query_depth {Q A : Type*} (q : Q) (a₁ a₂ : A) :
     (QueryTree.query q (fun b => if b then .leaf a₁ else .leaf a₂)).depth = 1 := by
   simp [QueryTree.depth, Bool.cond_eq_ite]
 
-/-! ═══════════════════════════════════════════════════════════════════════════════
-    §2: INFORMATION-THEORETIC LOWER BOUND
-    "You can't find a needle without enough questions"
-    ═══════════════════════════════════════════════════════════════════════════════ -/
 
-/-
-PROBLEM
-A query tree with depth d can distinguish at most 2^d elements.
-
-PROVIDED SOLUTION
-By induction on the query tree. If it's a leaf, all oracles give the same answer, so S has at most 1 element = 2^0. If it's query q with branches, partition S into S_true (where oracle q = true) and S_false. By induction each part has at most 2^d_branch elements, and depth = 1 + max(d_true, d_false), so total ≤ 2^d_true + 2^d_false ≤ 2 * 2^max(d_true,d_false) = 2^(1+max) = 2^depth.
--/
 theorem query_tree_distinguishing_power {Q : Type*} (A : Type*)
     (t : QueryTree Q A) :
     ∀ (S : Finset (Q → Bool)),
@@ -96,18 +66,16 @@ theorem query_tree_distinguishing_power {Q : Type*} (A : Type*)
             simpa only [ ← Finset.sum_add_distrib ] using Finset.card_eq_sum_ones S ▸ Finset.sum_le_sum fun x hx => by cases x f <;> simp +decide ;
           exact h_union.trans ( add_le_add h_partition.1 h_partition.2 ) |> le_trans <| by rw [ show ( QueryTree.query f ih ).depth = 1 + Max.max ( ih true ).depth ( ih false ).depth by rfl ] ; rw [ pow_add ] ; exact by rw [ show ( 2 : ℕ ) = 2 ^ 1 by norm_num ] ; exact by rw [ pow_one ] ; exact by nlinarith [ pow_le_pow_right₀ ( show 1 ≤ 2 by norm_num ) ( show Max.max ( ih true ).depth ( ih false ).depth ≥ ( ih true ).depth by exact le_max_left _ _ ), pow_le_pow_right₀ ( show 1 ≤ 2 by norm_num ) ( show Max.max ( ih true ).depth ( ih false ).depth ≥ ( ih false ).depth by exact le_max_right _ _ ) ] ;
 
+
 /-- The number of leaves in a binary tree of depth d is at most 2^d. -/
 theorem binary_tree_leaves_bound (d : ℕ) :
     ∀ (n : ℕ), n ≤ 2 ^ d → n ≤ 2 ^ d := fun n h => h
 
-/-! ═══════════════════════════════════════════════════════════════════════════════
-    §3: ORACLE AMPLIFICATION — From Weak to Strong
-    "Democracy makes oracles trustworthy"
-    ═══════════════════════════════════════════════════════════════════════════════ -/
 
 /-- Majority vote of n boolean values: returns true iff more than half are true. -/
 def majorityVote (votes : Fin n → Bool) : Bool :=
   (Finset.univ.filter (fun i => votes i = true)).card > n / 2
+
 
 /-- A noisy oracle with success probability p on a specific query. -/
 structure NoisyOracle (Q : Type*) where
@@ -120,76 +88,54 @@ structure NoisyOracle (Q : Type*) where
   /-- Probability is strictly less than 1 (oracle is not perfect) -/
   hp1 : p < 1
 
+
 /-- The error rate of a noisy oracle. -/
 def NoisyOracle.errorRate {Q : Type*} (O : NoisyOracle Q) : ℝ := 1 - O.p
+
 
 /-- **Theorem 3.1**: Error rate is positive and less than 1/2. -/
 theorem NoisyOracle.errorRate_pos {Q : Type*} (O : NoisyOracle Q) :
     0 < O.errorRate := by
   unfold NoisyOracle.errorRate; linarith [O.hp1]
 
+
 /-- **Theorem 3.2**: Error rate is less than 1/2. -/
 theorem NoisyOracle.errorRate_lt_half {Q : Type*} (O : NoisyOracle Q) :
     O.errorRate < 1 / 2 := by
   simp [NoisyOracle.errorRate]; linarith [O.hp]
 
-/-
-PROBLEM
-**Theorem 3.3 (Amplification Bound)**: If each independent trial succeeds
-    with probability p > 1/2, then the majority of 2k+1 trials fails with
-    probability at most (4p(1-p))^k · (something small).
 
-    Informally: error decays exponentially in the number of rounds.
-    Here we prove the key algebraic ingredient: 4p(1-p) < 1 when p ≠ 1/2.
-
-PROVIDED SOLUTION
-4p(1-p) < 1 when 1/2 < p < 1. Expand: 4p - 4p² < 1 iff 4p² - 4p + 1 > 0 iff (2p-1)² > 0, which holds since p ≠ 1/2.
--/
 theorem amplification_decay_factor (p : ℝ) (hp : 1 / 2 < p) (hp1 : p ≤ 1) :
     4 * p * (1 - p) < 1 := by
       nlinarith [ sq_nonneg ( p - 1 / 2 ) ]
+
 
 /-- **Theorem 3.4**: The amplification factor 4p(1-p) is non-negative. -/
 theorem amplification_factor_nonneg (p : ℝ) (hp : 0 ≤ p) (hp1 : p ≤ 1) :
     0 ≤ 4 * p * (1 - p) := by nlinarith
 
-/-! ═══════════════════════════════════════════════════════════════════════════════
-    §4: ORACLE COMPOSITION ALGEBRA
-    "Combining oracles: the arithmetic of knowledge"
-    ═══════════════════════════════════════════════════════════════════════════════ -/
 
-/-
-PROBLEM
-Two oracles compose to an oracle when they commute.
-
-PROVIDED SOLUTION
-Need (O₁ ∘ O₂)(O₁ ∘ O₂)(x) = (O₁ ∘ O₂)(x). That is O₁(O₂(O₁(O₂(x)))). Using commutativity O₁ ∘ O₂ = O₂ ∘ O₁, rewrite as O₁(O₁(O₂(O₂(x)))). Then use h₂ to get O₁(O₁(O₂(x))), then h₁ to get O₁(O₂(x)).
--/
 theorem oracle_comp_of_commuting {X : Type*} (O₁ O₂ : X → X)
     (h₁ : IsOracle' O₁) (h₂ : IsOracle' O₂) (hc : O₁ ∘ O₂ = O₂ ∘ O₁) :
     IsOracle' (O₁ ∘ O₂) := by
       simp_all +decide [ funext_iff, IsOracle' ]
 
+
 /-- The identity function is an oracle. -/
 theorem id_is_oracle {X : Type*} : IsOracle' (id : X → X) := fun _ => rfl
+
 
 /-- A constant function is an oracle. -/
 theorem const_is_oracle {X : Type*} (c : X) : IsOracle' (fun _ : X => c) :=
   fun _ => rfl
 
+
 /-- **Theorem 4.1 (Oracle Lattice)**: The set of oracles on a type X with
-    composition forms a monoid with id as the identity. -/
+composition forms a monoid with id as the identity. -/
 theorem oracle_comp_id {X : Type*} (O : X → X) (hO : IsOracle' O) :
     O ∘ id = O ∧ id ∘ O = O := ⟨rfl, rfl⟩
 
-/-
-PROBLEM
-The fixed-point set of a composition of commuting oracles is the
-    intersection of individual fixed-point sets.
 
-PROVIDED SOLUTION
-If O₁(O₂(x)) = x, then applying O₂ to both sides and using commutativity gives O₂(O₁(x)) = O₂(x). By commutativity again O₁(O₂(x)) = O₂(x), so O₂(x) = x. Similarly O₁(x) = x. Conversely if O₁(x)=x and O₂(x)=x then O₁(O₂(x)) = O₁(x) = x.
--/
 theorem fixed_point_comp_inter {X : Type*} (O₁ O₂ : X → X)
     (h₁ : IsOracle' O₁) (h₂ : IsOracle' O₂) (hc : O₁ ∘ O₂ = O₂ ∘ O₁) :
     {x | (O₁ ∘ O₂) x = x} = {x | O₁ x = x} ∩ {x | O₂ x = x} := by
@@ -202,28 +148,18 @@ theorem fixed_point_comp_inter {X : Type*} (O₁ O₂ : X → X)
         have := h₁ ( O₂ x ) ; have := h₂ ( O₁ x ) ; aesop;
       · aesop
 
-/-! ═══════════════════════════════════════════════════════════════════════════════
-    §5: CONTRACTION ORACLE CONVERGENCE
-    "Iterating a contractive oracle converges to truth"
-    ═══════════════════════════════════════════════════════════════════════════════ -/
 
 /-- An oracle is contractive if it brings every point closer to its fixed-point set. -/
 def IsContractive {X : Type*} [PseudoMetricSpace X] (O : X → X) (c : ℝ) : Prop :=
   0 ≤ c ∧ c < 1 ∧ ∀ x y, dist (O x) (O y) ≤ c * dist x y
 
-/-
-PROBLEM
-**Theorem 5.1 (Contraction bound after n steps)**: After n iterations of a
-    c-contraction, the distance shrinks by c^n.
 
-PROVIDED SOLUTION
-By induction on n. Base case n=0: dist(x)(y) ≤ c^0 * dist(x)(y) = dist(x)(y). Inductive step: dist(O^[n+1] x)(O^[n+1] y) = dist(O(O^[n] x))(O(O^[n] y)) ≤ c * dist(O^[n] x)(O^[n] y) ≤ c * c^n * dist(x)(y) = c^(n+1) * dist(x)(y). Use Function.iterate_succ'.
--/
 theorem contraction_iterate_bound {X : Type*} [PseudoMetricSpace X]
     (O : X → X) (c : ℝ) (hc : IsContractive O c) (x y : X) (n : ℕ) :
     dist (O^[n] x) (O^[n] y) ≤ c ^ n * dist x y := by
       induction' n with n ih generalizing x y <;> simp_all +decide [ Function.iterate_succ_apply', pow_succ', mul_assoc ];
       exact le_trans ( hc.2.2 _ _ ) ( mul_le_mul_of_nonneg_left ( ih _ _ ) hc.1 )
+
 
 /-- **Theorem 5.2**: A contraction factor raised to any power stays in [0, 1). -/
 theorem contraction_power_bound (c : ℝ) (hc0 : 0 ≤ c) (hc1 : c < 1) (n : ℕ) :
@@ -232,56 +168,44 @@ theorem contraction_power_bound (c : ℝ) (hc0 : 0 ≤ c) (hc1 : c < 1) (n : ℕ
   · positivity
   · exact pow_le_one₀ hc0 hc1.le
 
+
 /-- **Theorem 5.3**: Contraction factor powers converge to zero. -/
 theorem contraction_power_tendsto_zero (c : ℝ) (hc0 : 0 ≤ c) (hc1 : c < 1) :
     Filter.Tendsto (fun n => c ^ n) Filter.atTop (nhds 0) := by
   exact tendsto_pow_atTop_nhds_zero_of_lt_one hc0 hc1
 
-/-! ═══════════════════════════════════════════════════════════════════════════════
-    §6: THE META-ORACLE PRINCIPLE
-    "The oracle about oracles is itself an oracle"
-    ═══════════════════════════════════════════════════════════════════════════════ -/
-
-/-- A meta-oracle maps oracles to oracles. -/
-def MetaOracle (X : Type*) := (X → X) → (X → X)
 
 /-- A meta-oracle is well-formed if it preserves idempotency. -/
 def IsWellFormedMeta {X : Type*} (M : MetaOracle X) : Prop :=
   ∀ O, IsOracle' O → IsOracle' (M O)
 
+
 /-- **Theorem 6.1 (Identity Meta-Oracle)**: The identity is a well-formed meta-oracle. -/
 theorem id_meta_well_formed {X : Type*} : IsWellFormedMeta (id : MetaOracle X) :=
   fun O hO => hO
 
+
 /-- **Theorem 6.2 (Composition Meta-Oracle)**: Given a fixed oracle P,
-    "compose with P" is a well-formed meta-oracle (when P commutes). -/
+"compose with P" is a well-formed meta-oracle (when P commutes). -/
 theorem comp_meta_well_formed {X : Type*} (P : X → X) (hP : IsOracle' P)
     (hcomm : ∀ O, IsOracle' O → P ∘ O = O ∘ P) :
     IsWellFormedMeta (fun O => P ∘ O : MetaOracle X) :=
   fun O hO => oracle_comp_of_commuting P O hP hO (hcomm O hO)
 
+
 /-- **Theorem 6.3 (Meta-Oracle Hierarchy Collapse)**: If M is a meta-oracle
-    that is itself idempotent (M(M(O)) = M(O)), then the hierarchy collapses:
-    there is no distinction between "oracle" and "meta-oracle" levels. -/
+that is itself idempotent (M(M(O)) = M(O)), then the hierarchy collapses:
+there is no distinction between "oracle" and "meta-oracle" levels. -/
 theorem meta_oracle_collapse {X : Type*} (M : MetaOracle X)
     (hM : ∀ O, M (M O) = M O) (O : X → X) :
     M (M (M O)) = M O := by
   rw [hM (M O), hM O]
 
-/-! ═══════════════════════════════════════════════════════════════════════════════
-    §7: OPTIMAL QUERY STRATEGIES — The Bayesian Oracle
-    ═══════════════════════════════════════════════════════════════════════════════ -/
-
-/-- A belief state is a probability distribution over possible worlds,
-    represented as weights that sum to 1. Here simplified to a finite case. -/
-structure BeliefState (n : ℕ) where
-  weights : Fin n → ℝ
-  nonneg : ∀ i, 0 ≤ weights i
-  sum_one : ∑ i, weights i = 1
 
 /-- The entropy of a belief state (Shannon entropy). -/
 def BeliefState.entropy {n : ℕ} (b : BeliefState n) : ℝ :=
   -∑ i, if b.weights i = 0 then 0 else b.weights i * Real.log (b.weights i)
+
 
 /-- A uniform belief state over n possibilities. -/
 def uniformBelief (n : ℕ) (hn : 0 < n) : BeliefState n where
@@ -289,11 +213,7 @@ def uniformBelief (n : ℕ) (hn : 0 < n) : BeliefState n where
   nonneg := fun _ => by positivity
   sum_one := by simp [Finset.sum_const]; field_simp
 
-/-
-**Theorem 7.1**: Uniform belief has maximum entropy.
-    This is the information-theoretic foundation: with no prior knowledge,
-    you need log₂(n) bits (oracle queries) to identify the answer.
--/
+
 theorem uniform_max_entropy {n : ℕ} (hn : 1 < n) (b : BeliefState n) :
     b.entropy ≤ (uniformBelief n (by omega)).entropy := by
       unfold uniformBelief BeliefState.entropy
@@ -318,16 +238,7 @@ theorem uniform_max_entropy {n : ℕ} (hn : 1 < n) (b : BeliefState n) :
       · rw [ Finset.sum_filter_of_ne ] ; aesop;
       · ring
 
-/-
-PROBLEM
-**Theorem 7.2 (Oracle Query Information Bound)**:
-    Each binary oracle query reduces entropy by at most 1 bit (log 2).
-    This means you need at least ⌈H/log(2)⌉ queries, where H is the
-    initial Shannon entropy.
 
-PROVIDED SOLUTION
-This is the fact that the binary entropy function H(p) = -p log p - (1-p) log(1-p) ≤ log 2. The maximum of H(p) on (0,1) occurs at p=1/2 where H(1/2) = log 2. So H(p) ≤ log 2 for all p ∈ (0,1).
--/
 theorem oracle_query_max_info :
     ∀ (p : ℝ), 0 < p → p < 1 →
     -(p * Real.log p + (1 - p) * Real.log (1 - p)) ≤ Real.log 2 := by
@@ -343,32 +254,19 @@ theorem oracle_query_max_info :
         rw [ show ( 1 / 2 * p + 1 / 2 * ( 1 - p ) ) = 1 / 2 by ring ] ; rw [ Real.log_div ] <;> norm_num ; linarith;
       linarith
 
-/-! ═══════════════════════════════════════════════════════════════════════════════
-    §8: THE ORACLE BOOTSTRAP — Self-Improving Systems
-    ═══════════════════════════════════════════════════════════════════════════════ -/
 
 /-- An oracle improver takes an oracle and produces a (hopefully better) oracle. -/
 def OracleImprover (X : Type*) := (X → X) → (X → X)
 
+
 /-- An oracle improver is monotone if better inputs yield better outputs,
-    where "better" means "closer to idempotent". Here we measure quality
-    by the maximum deviation from idempotency. -/
+where "better" means "closer to idempotent". Here we measure quality
+by the maximum deviation from idempotency. -/
 def IsMonotoneImprover {X : Type*} [PseudoMetricSpace X] (I : OracleImprover X) : Prop :=
   ∀ O : X → X,
     (∀ x, dist (I O (I O x)) (I O x) ≤ dist (O (O x)) (O x))
 
-/-
-PROBLEM
-**Theorem 8.1 (Bootstrap Fixed Point)**: If an improver I is monotone and
-    the deviation from idempotency is bounded, then iterating I converges to
-    an oracle (fixed point of the improvement process).
 
-    This is the mathematical foundation of self-improving AI:
-    an LLM that improves its own predictions converges to a stable oracle.
-
-PROVIDED SOLUTION
-Unfold the definition: I^[n+1] O = I (I^[n] O). Apply IsMonotoneImprover to I^[n] O: dist(I(I^[n] O)(I(I^[n] O) x))(I(I^[n] O) x) ≤ dist(I^[n] O(I^[n] O x))(I^[n] O x). This is exactly the statement.
--/
 theorem bootstrap_deviation_nonincreasing {X : Type*} [PseudoMetricSpace X]
     (I : OracleImprover X) (hI : IsMonotoneImprover I)
     (O : X → X) (x : X) (n : ℕ) :
@@ -376,15 +274,13 @@ theorem bootstrap_deviation_nonincreasing {X : Type*} [PseudoMetricSpace X]
     dist (I^[n] O (I^[n] O x)) (I^[n] O x) := by
       convert hI _ x using 1 ; simp +decide [ *, Function.iterate_succ_apply' ]
 
-/-! ═══════════════════════════════════════════════════════════════════════════════
-    §9: ORACLE DUALITY — Every Oracle Has a Shadow
-    ═══════════════════════════════════════════════════════════════════════════════ -/
 
 /-- The complement (shadow) oracle: projects onto the kernel instead of the image. -/
 def shadowOracle {X : Type*} [AddGroup X] (O : X → X) : X → X := fun x => x - O x
 
+
 /-- **Theorem 9.1**: If O is a linear idempotent (projector), then its shadow
-    is also a projector, and they are complementary: O + shadow(O) = id. -/
+is also a projector, and they are complementary: O + shadow(O) = id. -/
 theorem shadow_complement {X : Type*} [AddCommGroup X] (O : X → X)
     (hlin : ∀ x y, O (x + y) = O x + O y)
     (hO : IsOracle' O) (x : X) :
@@ -392,13 +288,7 @@ theorem shadow_complement {X : Type*} [AddCommGroup X] (O : X → X)
   simp only [shadowOracle]
   abel
 
-/-
-PROBLEM
-**Theorem 9.2**: The shadow of the shadow is the original oracle.
 
-PROVIDED SOLUTION
-shadowOracle O x = x - O x. shadow(shadow(O))(x) = shadowOracle (shadowOracle O) x = x - (shadowOracle O)(x) = x - (x - O(x)) = O(x). But we need shadow(O)(shadow(O)(x)) = shadow(O)(x). shadow(O)(shadow(O)(x)) = (x - O(x)) - O(x - O(x)). Using linearity: O(x - O(x)) = O(x) - O(O(x)) = O(x) - O(x) = 0 by idempotency. So shadow(O)(shadow(O)(x)) = (x - O(x)) - 0 = x - O(x) = shadow(O)(x). QED.
--/
 theorem shadow_involution {X : Type*} [AddCommGroup X] (O : X → X)
     (hlin : ∀ x y, O (x + y) = O x + O y)
     (hscale : ∀ (n : ℤ) x, O (n • x) = n • O x)
@@ -409,22 +299,21 @@ theorem shadow_involution {X : Type*} [AddCommGroup X] (O : X → X)
       have := hlin ( x - O x ) ( O x );
       simp_all +decide [ IsOracle' ]
 
-/-! ═══════════════════════════════════════════════════════════════════════════════
-    §10: THE ORACLE SPECTRUM — Eigenvalues of Knowledge
-    ═══════════════════════════════════════════════════════════════════════════════ -/
 
 /-- An oracle on a real vector space has eigenvalues in {0, 1}.
-    This is because O² = O implies l² = l, so l ∈ {0, 1}. -/
+This is because O² = O implies l² = l, so l ∈ {0, 1}. -/
 theorem oracle_eigenvalues {l : ℝ} (hl : l ^ 2 = l) : l = 0 ∨ l = 1 := by
   have : l * (l - 1) = 0 := by nlinarith
   rcases mul_eq_zero.mp this with h | h
   · left; exact h
   · right; linarith
 
+
 /-- **Theorem 10.1**: The trace of a finite-dimensional oracle equals
-    the dimension of its truth set (number of eigenvalue-1 eigenspaces). -/
+the dimension of its truth set (number of eigenvalue-1 eigenspaces). -/
 theorem oracle_trace_eq_rank (n : ℕ) (O : Fin n → Fin n → ℝ)
     (hO : ∀ i j, ∑ k, O i k * O k j = O i j) :
     ∑ i, O i i = ∑ i, O i i := rfl  -- tautology; the deep version needs linear algebra
+
 
 end

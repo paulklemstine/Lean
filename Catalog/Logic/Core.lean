@@ -1,50 +1,13 @@
-import Mathlib
+/-! # CatalogBuild.Logic.Core
 
-/-!
-# Black Hole–Photon Information Isomorphism
-
-## The Hypothesis
-
-**Is a black hole just a region of extremely high information density,
-isomorphic to an extremely high energy photon?**
-
-## Mathematical Investigation
-
-We formalize the key mathematical structures connecting black holes and photons,
-and prove that at the Planck scale, the geometric and information-theoretic
-descriptions converge. Specifically:
-
-1. The Schwarzschild radius r_s = 2GM/c² grows linearly with mass/energy
-2. The photon wavelength λ = hc/E shrinks inversely with energy
-3. These cross at the Planck energy E_P = √(ħc⁵/G), where r_s = λ
-4. The Bekenstein-Hawking entropy S = A/(4ℓ_P²) gives information content I = S/ln(2)
-5. At the crossing point, the black hole has minimal entropy (~4π kB)
-6. A single high-energy photon is a pure state (0 entropy)
-
-The "isomorphism" breaks down: a photon is a pure quantum state
-(zero von Neumann entropy) while a black hole carries positive
-Bekenstein-Hawking entropy. However, their GEOMETRIC descriptions merge at the
-Planck scale, and the holographic principle suggests a deep duality.
-
-## Key Results Proved
-
-- `schwarzschild_monotone`: r_s is monotone increasing in energy
-- `planck_crossing`: At the crossing energy, r_s = λ_compton
-- `bekenstein_hawking_simplified`: S_BH = 4πkGM²/(ħc)
-- `entropy_quadratic`: S_BH grows quadratically with mass
-- `isomorphism_at_crossing`: The isomorphism parameter = 1 at crossing
-- `subplanckian_photon_dominates`: Below Planck scale, photon description wins
-- `superplanckian_bh_dominates`: Above Planck scale, BH description wins
-- `planck_bh_entropy_simplified`: Planck-mass BH has entropy 4π·kB
-- `round_trip_scaling`: The photon↔BH map is NOT an isomorphism (scales by 4π²)
-- `black_hole_photon_quasi_isomorphism`: Main summary theorem
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 32
 -/
 
-open Real BigOperators
+import Mathlib
 
 noncomputable section
-
-/-! ## Part I: Fundamental Constants and Scales -/
 
 /-- A collection of fundamental physical constants. -/
 structure PhysicalConstants where
@@ -59,48 +22,54 @@ structure PhysicalConstants where
 
 variable (κ : PhysicalConstants)
 
+
 /-- Planck length: ℓ_P = √(ħG/c³) -/
 def planckLength : ℝ := Real.sqrt (κ.hbar * κ.G / κ.c ^ 3)
+
 
 /-- Planck mass: m_P = √(ħc/G) -/
 def planckMass : ℝ := Real.sqrt (κ.hbar * κ.c / κ.G)
 
+
 /-- Planck energy: E_P = √(ħc⁵/G) -/
 def planckEnergy : ℝ := Real.sqrt (κ.hbar * κ.c ^ 5 / κ.G)
 
-/-! ## Part II: Black Hole Geometry -/
 
 /-- Schwarzschild radius as a function of energy: r_s = 2GE/c⁴ -/
 def schwarzschildRadiusEnergy (E : ℝ) : ℝ := 2 * κ.G * E / κ.c ^ 4
 
+
 /-- Schwarzschild radius as a function of mass: r_s = 2GM/c² -/
 def schwarzschildRadius (M : ℝ) : ℝ := 2 * κ.G * M / κ.c ^ 2
 
+
 /-- Event horizon area: A = 4π r_s² -/
 def horizonArea (M : ℝ) : ℝ := 4 * π * (schwarzschildRadius κ M) ^ 2
+
 
 /-- Bekenstein-Hawking entropy: S_BH = kc³A/(4Għ) -/
 def bekensteinHawkingEntropy (M : ℝ) : ℝ :=
   κ.kB * κ.c ^ 3 * horizonArea κ M / (4 * κ.G * κ.hbar)
 
+
 /-- Information content in bits: I = S/(kB · ln 2) -/
 def blackHoleInformation (M : ℝ) : ℝ :=
   bekensteinHawkingEntropy κ M / (κ.kB * Real.log 2)
 
-/-! ## Part III: Photon Properties -/
 
 /-- Photon wavelength from energy: λ = 2πħc/E -/
 def photonWavelength (E : ℝ) : ℝ := 2 * π * κ.hbar * κ.c / E
 
+
 /-- Reduced Compton wavelength: λ̄ = ħc/E -/
 def comptonWavelength (E : ℝ) : ℝ := κ.hbar * κ.c / E
 
-/-! ## Part IV: Core Theorems — Geometric Convergence -/
 
 /-- The Schwarzschild radius is proportional to energy. -/
 theorem schwarzschild_linear (E : ℝ) :
     schwarzschildRadiusEnergy κ E = (2 * κ.G / κ.c ^ 4) * E := by
   unfold schwarzschildRadiusEnergy; ring
+
 
 /-- The Schwarzschild radius grows with energy. -/
 theorem schwarzschild_monotone :
@@ -109,8 +78,9 @@ theorem schwarzschild_monotone :
     (mul_le_mul_of_nonneg_left hxy <| mul_nonneg zero_le_two <| le_of_lt κ.hG_pos)
     (pow_nonneg (le_of_lt κ.hc_pos) 4)
 
+
 /-- **KEY THEOREM**: At the crossing energy E² = ħc⁵/(2G), the Schwarzschild
-    radius equals the reduced Compton wavelength. -/
+radius equals the reduced Compton wavelength. -/
 theorem planck_crossing (E : ℝ) (hE : 0 < E)
     (hcross : E ^ 2 = κ.hbar * κ.c ^ 5 / (2 * κ.G)) :
     schwarzschildRadiusEnergy κ E = comptonWavelength κ E := by
@@ -119,10 +89,9 @@ theorem planck_crossing (E : ℝ) (hE : 0 < E)
     try nlinarith [κ.hc_pos, κ.hG_pos, κ.hbar_pos, pow_pos κ.hc_pos 4]
   rw [eq_div_iff] at hcross <;> nlinarith [κ.hG_pos]
 
-/-! ## Part V: Information-Theoretic Properties -/
 
 /-- The Bekenstein-Hawking entropy simplifies to S = 4πk_B GM²/(ħc).
-    This is the standard physics formula. -/
+This is the standard physics formula. -/
 theorem bekenstein_hawking_simplified (M : ℝ) :
     bekensteinHawkingEntropy κ M =
     4 * π * κ.kB * κ.G * M ^ 2 / (κ.hbar * κ.c) := by
@@ -134,13 +103,7 @@ theorem bekenstein_hawking_simplified (M : ℝ) :
   field_simp
   ring
 
-/-
-PROBLEM
-Black hole entropy grows quadratically with mass.
 
-PROVIDED SOLUTION
-Rewrite both sides with bekenstein_hawking_simplified. We get 4πkBGM₁²/(ħc) ≤ 4πkBGM₂²/(ħc). The denominator ħc > 0 by positivity. The numerator coefficient 4πkBG > 0 by positivity. So it suffices to show M₁² ≤ M₂². This follows from 0 ≤ M₁ ≤ M₂ via sq_le_sq' (by linarith) hM2.
--/
 theorem entropy_quadratic (M₁ M₂ : ℝ) (hM : 0 ≤ M₁) (hM2 : M₁ ≤ M₂) :
     bekensteinHawkingEntropy κ M₁ ≤ bekensteinHawkingEntropy κ M₂ := by
   rw [ bekenstein_hawking_simplified, bekenstein_hawking_simplified ];
@@ -148,28 +111,14 @@ theorem entropy_quadratic (M₁ M₂ : ℝ) (hM : 0 ≤ M₁) (hM2 : M₁ ≤ M�
   · exact mul_nonneg κ.hbar_pos.le κ.hc_pos.le;
   · exact mul_nonneg ( mul_nonneg ( mul_nonneg zero_le_four Real.pi_pos.le ) κ.kB_pos.le ) κ.hG_pos.le
 
-/-
-PROBLEM
-Information content: I = 4πGM²/(ħc · ln 2)
 
-PROVIDED SOLUTION
-Unfold blackHoleInformation. Rewrite with bekenstein_hawking_simplified. The expression is (4πkBGM²/(ħc)) / (kB * ln2) = 4πGM²/(ħc * ln2). Use field_simp (need kB ≠ 0 from kB_pos, ħ ≠ 0 from hbar_pos, c ≠ 0 from hc_pos) and ring.
--/
 theorem information_content_formula (M : ℝ) :
     blackHoleInformation κ M =
     4 * π * κ.G * M ^ 2 / (κ.hbar * κ.c * Real.log 2) := by
   convert congr_arg ( fun x : ℝ => x / ( κ.kB * Real.log 2 ) ) ( bekenstein_hawking_simplified κ M ) using 1 ; ring;
   norm_num [ κ.kB_pos.ne' ]
 
-/-! ## Part VI: The Holographic Bound -/
 
-/-
-PROBLEM
-S_BH = kB · A / (4 ℓ_P²)
-
-PROVIDED SOLUTION
-Unfold bekensteinHawkingEntropy and planckLength. The RHS has (planckLength κ)² = (sqrt(ħG/c³))² = ħG/c³ by sq_sqrt (nonnegativity by positivity). So RHS = kB * horizonArea κ M / (4 * ħG/c³) = kB * horizonArea κ M * c³ / (4Għ) = LHS. Use field_simp and ring after sq_sqrt.
--/
 theorem entropy_area_planck (M : ℝ) :
     bekensteinHawkingEntropy κ M =
     κ.kB * horizonArea κ M / (4 * (planckLength κ) ^ 2) := by
@@ -177,20 +126,22 @@ theorem entropy_area_planck (M : ℝ) :
   field_simp;
   rw [ Real.sq_sqrt ( by exact div_nonneg ( mul_nonneg κ.hG_pos.le κ.hbar_pos.le ) ( pow_nonneg κ.hc_pos.le _ ) ), div_div_eq_mul_div ] ; ring
 
+
 /-- Each Planck area contributes one nat of entropy. -/
 def planckAreasOnHorizon (M : ℝ) : ℝ :=
   horizonArea κ M / (4 * (planckLength κ) ^ 2)
+
 
 theorem holographic_principle (M : ℝ) :
     bekensteinHawkingEntropy κ M = κ.kB * planckAreasOnHorizon κ M := by
   unfold planckAreasOnHorizon
   rw [entropy_area_planck, mul_div_assoc]
 
-/-! ## Part VII: The Isomorphism Question -/
 
 /-- Ratio of Schwarzschild radius to Compton wavelength. -/
 def isomorphismParameter (E : ℝ) : ℝ :=
   schwarzschildRadiusEnergy κ E / comptonWavelength κ E
+
 
 /-- The isomorphism parameter = 2GE²/(ħc⁵). -/
 theorem isomorphism_parameter_formula (E : ℝ) (hE : 0 < E) :
@@ -198,13 +149,7 @@ theorem isomorphism_parameter_formula (E : ℝ) (hE : 0 < E) :
   unfold isomorphismParameter schwarzschildRadiusEnergy comptonWavelength
   field_simp
 
-/-
-PROBLEM
-**CONVERGENCE**: Isomorphism parameter = 1 at the crossing energy.
 
-PROVIDED SOLUTION
-The goal after unfolding is (2*G*E/c⁴) / (ħc/E) = 1. This equals 2GE²/(ħc⁵). Use hcross: E² = ħc⁵/(2G). Then 2G*(ħc⁵/(2G))/(ħc⁵) = ħc⁵/ħc⁵ = 1. Use field_simp (with ne_of_gt for all denominators from positivity) and then nlinarith with hcross.
--/
 theorem isomorphism_at_crossing (E : ℝ) (hE : 0 < E)
     (hcross : E ^ 2 = κ.hbar * κ.c ^ 5 / (2 * κ.G)) :
     isomorphismParameter κ E = 1 := by
@@ -212,13 +157,7 @@ theorem isomorphism_at_crossing (E : ℝ) (hE : 0 < E)
   unfold schwarzschildRadiusEnergy comptonWavelength
   grind +revert
 
-/-
-PROBLEM
-Below the Planck energy, photon wavelength exceeds Schwarzschild radius.
 
-PROVIDED SOLUTION
-Use isomorphism_parameter_formula to get 2GE²/(ħc⁵) < 1. We need 2GE² < ħc⁵. From hsub, E² < ħc⁵/(2G), so 2G*E² < 2G*(ħc⁵/(2G)) = ħc⁵. Use rw [isomorphism_parameter_formula], then unfold the div_lt_one, then use have from hsub via rw [div_lt_iff] or similar.
--/
 theorem subplanckian_photon_dominates (E : ℝ) (hE : 0 < E)
     (hsub : E ^ 2 < κ.hbar * κ.c ^ 5 / (2 * κ.G)) :
     isomorphismParameter κ E < 1 := by
@@ -227,13 +166,7 @@ theorem subplanckian_photon_dominates (E : ℝ) (hE : 0 < E)
   · convert isomorphism_parameter_formula κ E hE using 1 ; ring;
   · exact mul_pos κ.hbar_pos ( pow_pos κ.hc_pos _ )
 
-/-
-PROBLEM
-Above the Planck energy, Schwarzschild radius exceeds Compton wavelength.
 
-PROVIDED SOLUTION
-Use isomorphism_parameter_formula to get 1 < 2GE²/(ħc⁵). We need ħc⁵ < 2GE². From hsup, ħc⁵/(2G) < E², so ħc⁵ < 2G*E².
--/
 theorem superplanckian_bh_dominates (E : ℝ) (hE : 0 < E)
     (hsup : κ.hbar * κ.c ^ 5 / (2 * κ.G) < E ^ 2) :
     1 < isomorphismParameter κ E := by
@@ -243,21 +176,14 @@ theorem superplanckian_bh_dominates (E : ℝ) (hE : 0 < E)
     rw [ div_lt_div_iff₀ ] <;> nlinarith [ pow_pos κ.hc_pos 4 ];
   · exact div_pos ( mul_pos ( κ.hbar_pos ) ( κ.hc_pos ) ) hE
 
-/-! ## Part VIII: The Entropy Gap -/
 
-/-
-PROBLEM
-Planck-mass BH entropy simplifies to 4π·kB.
-
-PROVIDED SOLUTION
-Use bekenstein_hawking_simplified. Unfold planckMass. The expression becomes 4πkBG*(sqrt(ħc/G))²/(ħc). Use sq_sqrt (le_of_lt h) to get (sqrt(ħc/G))² = ħc/G. Then 4πkBG*(ħc/G)/(ħc) = 4πkB*(ħc)/(ħc) = 4πkB. Use field_simp and ring.
--/
 theorem planck_bh_entropy_simplified
     (h : 0 < κ.hbar * κ.c / κ.G) :
     bekensteinHawkingEntropy κ (planckMass κ) = 4 * π * κ.kB := by
   rw [ @bekenstein_hawking_simplified ];
   unfold planckMass;
   grind
+
 
 /-- Black hole entropy is positive for positive mass. -/
 theorem bh_entropy_pos (M : ℝ) (hM : 0 < M) :
@@ -267,20 +193,22 @@ theorem bh_entropy_pos (M : ℝ) (hM : 0 < M) :
     (by have := κ.hG_pos; have := κ.kB_pos; have := κ.hc_pos; have := κ.hbar_pos; positivity)
     (by have := κ.hc_pos; have := κ.hbar_pos; positivity)
 
+
 /-- Schwarzschild radius is positive for positive mass. -/
 theorem schwarzschild_pos (M : ℝ) (hM : 0 < M) :
     0 < schwarzschildRadius κ M := by
   exact div_pos (mul_pos (mul_pos two_pos κ.hG_pos) hM) (sq_pos_of_pos κ.hc_pos)
 
-/-! ## Part IX: The Duality Map -/
 
 /-- Photon energy → BH mass with matching wavelength/radius: M = ħc³/(4πGE) -/
 def photonToBHMass (E : ℝ) : ℝ :=
   κ.hbar * κ.c ^ 3 / (4 * π * κ.G * E)
 
+
 /-- BH mass → photon energy with matching radius/wavelength: E = πħc³/(GM) -/
 def bhToPhotonEnergy (M : ℝ) : ℝ :=
   π * κ.hbar * κ.c ^ 3 / (κ.G * M)
+
 
 /-- The round trip photon→BH→photon scales energy by 4π². NOT an isomorphism! -/
 theorem round_trip_scaling (E : ℝ) (hE : 0 < E) :
@@ -291,16 +219,14 @@ theorem round_trip_scaling (E : ℝ) (hE : 0 < E) :
     (mul_ne_zero (ne_of_gt κ.hbar_pos) (ne_of_gt κ.hc_pos))
     (ne_of_gt κ.hG_pos)
 
-/-! ## Part X: Main Summary Theorem -/
 
 /-- **MAIN THEOREM**: At the Planck crossing energy:
-    1. Geometric convergence (r_s = λ_compton)
-    2. Isomorphism parameter = 1
-    3. Planck-mass BH still has 4π·kB entropy (not zero like a photon)
-
-    Conclusion: Black holes and photons are geometrically isomorphic at the
-    Planck scale but thermodynamically distinct. The "isomorphism" is a
-    quasi-isomorphism — exact in geometry, broken by entropy. -/
+1. Geometric convergence (r_s = λ_compton)
+2. Isomorphism parameter = 1
+3. Planck-mass BH still has 4π·kB entropy (not zero like a photon)
+Conclusion: Black holes and photons are geometrically isomorphic at the
+Planck scale but thermodynamically distinct. The "isomorphism" is a
+quasi-isomorphism — exact in geometry, broken by entropy. -/
 theorem black_hole_photon_quasi_isomorphism
     (E : ℝ) (hE : 0 < E)
     (hcross : E ^ 2 = κ.hbar * κ.c ^ 5 / (2 * κ.G))
@@ -311,5 +237,6 @@ theorem black_hole_photon_quasi_isomorphism
   exact ⟨planck_crossing κ E hE hcross,
          isomorphism_at_crossing κ E hE hcross,
          planck_bh_entropy_simplified κ hconst⟩
+
 
 end

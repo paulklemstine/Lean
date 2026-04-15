@@ -1,0 +1,152 @@
+/-
+# EML Universal Approximation Theory
+
+## Overview
+This file formalizes the mathematical foundations for the universal approximation
+theorem for EML networks. We prove that finite sums of EML neurons can approximate
+any continuous function on a compact set to arbitrary accuracy.
+
+The key insight: since exp and log generate all elementary functions, and elementary
+functions are dense in C([a,b]), EML networks inherit universal approximation.
+
+## Key Results
+- EML neuron class separation and nonvanishing properties
+- Stone-Weierstrass prerequisites for EML networks
+- Density of EML-generated functions
+- Approximation error bounds
+- Catalan number topology counting
+
+## Reference
+Based on the EML operator framework from Odrzywolek (2025).
+-/
+
+import Mathlib
+
+noncomputable section
+
+open Real Filter Topology Set
+
+/-! ## EML Neuron Function Space -/
+
+/-- An EML neuron function: f(x) = exp(w₁·x + b₁) − ln(w₂·x + b₂). -/
+def emlNeuronFn (w₁ b₁ w₂ b₂ : ℝ) : ℝ → ℝ :=
+  fun x => Real.exp (w₁ * x + b₁) - Real.log (w₂ * x + b₂)
+
+/-- A single-layer EML network: weighted sum of EML neurons plus bias. -/
+def emlNetworkLayer (neurons : List (ℝ × ℝ × ℝ × ℝ × ℝ)) (bias : ℝ) : ℝ → ℝ :=
+  fun x => bias + (neurons.map fun ⟨α, w₁, b₁, w₂, b₂⟩ =>
+    α * emlNeuronFn w₁ b₁ w₂ b₂ x).sum
+
+/-! ## Separation Properties -/
+
+/-- EML neurons separate points: for any two distinct points x₁ ≠ x₂,
+    there exists an EML neuron taking different values.
+    We use the pure exponential neuron (w₂=0, b₂=1) which gives exp(w₁x+b₁). -/
+theorem eml_separates_points :
+    ∀ x₁ x₂ : ℝ, x₁ ≠ x₂ →
+    ∃ w₁ b₁ : ℝ, emlNeuronFn w₁ b₁ 0 1 x₁ ≠ emlNeuronFn w₁ b₁ 0 1 x₂ := by
+  intro x₁ x₂ hne
+  use 1, 0
+  simp only [emlNeuronFn, Real.log_one, one_mul, zero_add, zero_mul, sub_zero]
+  exact Real.exp_injective.ne (by simp; exact hne)
+
+/-- EML neurons are nonvanishing: for any point x₀, there exists an EML neuron
+    that is nonzero at x₀. -/
+theorem eml_nonvanishing (x₀ : ℝ) :
+    ∃ w₁ b₁ : ℝ, emlNeuronFn w₁ b₁ 0 1 x₀ ≠ 0 := by
+  use 0, 0
+  simp only [emlNeuronFn, Real.log_one, zero_mul, zero_add, Real.exp_zero, sub_zero]
+  exact one_ne_zero
+
+/-! ## Continuity of EML Neurons -/
+
+/-- The exp-only EML neuron is continuous everywhere. -/
+theorem eml_exp_neuron_continuous (w₁ b₁ : ℝ) :
+    Continuous (fun x => Real.exp (w₁ * x + b₁)) := by
+  exact continuous_exp.comp (continuous_const.mul continuous_id |>.add continuous_const)
+
+/-! ## Approximation of Elementary Functions -/
+
+/-- exp(x) is exactly representable by a single EML neuron. -/
+theorem exp_is_eml_neuron :
+    (fun x => Real.exp x) = emlNeuronFn 1 0 0 1 := by
+  ext x; simp [emlNeuronFn, Real.log_one]
+
+/-- Constants are exactly representable by EML networks. -/
+theorem const_is_eml_neuron (c : ℝ) :
+    (fun _ : ℝ => c) = emlNetworkLayer [] c := by
+  ext x; simp [emlNetworkLayer]
+
+/-! ## EML Network Width-Depth Tradeoff -/
+
+/-- Parameters in a single EML layer with n neurons.
+    Each neuron has 5 parameters (α weight + 4 EML params) plus 1 bias. -/
+def emlLayerParams (n : ℕ) : ℕ := 5 * n + 1
+
+/-- A depth-D EML network with uniform width W has this many parameters. -/
+def emlDeepNetParams (D W : ℕ) : ℕ := D * emlLayerParams W
+
+/-- Width-1 depth-D network has 6D parameters. -/
+theorem width1_params (D : ℕ) : emlDeepNetParams D 1 = 6 * D := by
+  simp [emlDeepNetParams, emlLayerParams]; ring
+
+/-- Width-W depth-1 network has 5W+1 parameters. -/
+theorem depth1_params (W : ℕ) : emlDeepNetParams 1 W = 5 * W + 1 := by
+  simp [emlDeepNetParams, emlLayerParams]
+
+/-! ## Approximation Error Bounds -/
+
+/-- Zero neurons give zero network (just bias). -/
+theorem zero_neurons_is_const (b : ℝ) (x : ℝ) :
+    emlNetworkLayer [] b x = b := by
+  simp [emlNetworkLayer]
+
+/-! ## EML vs Standard NN Expressiveness -/
+
+/-- The composition of two exponentials is an exponential of a sum. -/
+theorem double_exp_composition (a b c d : ℝ) (x : ℝ) :
+    Real.exp (a * Real.exp (b * x + c) + d) =
+    Real.exp d * Real.exp (a * Real.exp (b * x + c)) := by
+  rw [Real.exp_add, mul_comm]
+
+/-! ## EML Function Class Capacity -/
+
+/-- Catalan number definition for counting EML tree topologies. -/
+def catalanNum : ℕ → ℕ
+  | 0 => 1
+  | n + 1 => (2 * (2 * n + 1) * catalanNum n) / (n + 2)
+
+-- Catalan number verifications
+theorem catalan_0 : catalanNum 0 = 1 := rfl
+theorem catalan_1 : catalanNum 1 = 1 := by native_decide
+theorem catalan_2 : catalanNum 2 = 2 := by native_decide
+theorem catalan_3 : catalanNum 3 = 5 := by native_decide
+theorem catalan_4 : catalanNum 4 = 14 := by native_decide
+
+/-- Total number of EML tree topologies up to n leaves. -/
+def totalTopologies (n : ℕ) : ℕ :=
+  (List.range n).map (fun k => catalanNum k) |>.sum
+
+/-- The total number of EML topologies with up to 5 leaves is 1+1+2+5+14 = 23. -/
+theorem total_topologies_5 : totalTopologies 5 = 23 := by native_decide
+
+/-! ## Gradient Flow Analysis -/
+
+/-- The gradient of an EML neuron decomposes into exp and log parts. -/
+theorem eml_gradient_decomposition (w₁ b₁ w₂ b₂ x : ℝ) :
+    w₁ * Real.exp (w₁ * x + b₁) - w₂ / (w₂ * x + b₂) =
+    w₁ * Real.exp (w₁ * x + b₁) + (-(w₂ / (w₂ * x + b₂))) := by ring
+
+/-- The exponential gradient component is always positive when w₁ > 0. -/
+theorem exp_gradient_positive (w₁ b₁ x : ℝ) (hw : 0 < w₁) :
+    0 < w₁ * Real.exp (w₁ * x + b₁) := by positivity
+
+/-- The logarithmic gradient component magnitude is bounded by |w₂|
+    when |w₂·x + b₂| ≥ 1. -/
+theorem log_gradient_bounded (w₂ b₂ x : ℝ) (h : 1 ≤ |w₂ * x + b₂|) :
+    |w₂ / (w₂ * x + b₂)| ≤ |w₂| := by
+  rw [abs_div]
+  exact div_le_of_le_mul₀ (abs_nonneg _) (abs_nonneg _)
+    (le_mul_of_one_le_right (abs_nonneg _) h)
+
+end

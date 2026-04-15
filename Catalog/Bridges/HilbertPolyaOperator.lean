@@ -1,28 +1,19 @@
-import Mathlib
+/-! # CatalogBuild.Bridges.HilbertPolyaOperator
 
-/-!
-# Hilbert-Pólya Operator and Graph Zeta Functions
-
-## Open Question 2: Self-adjoint operators from the Ihara zeta framework
-
-We formalize the connection between the Ihara zeta function and the Hilbert-Pólya
-conjecture:
-- The graph Laplacian as a self-adjoint operator with real spectrum
-- The Hashimoto edge operator and its spectral connection
-- A discrete Hilbert-Pólya analogue
-- Spectral properties relevant to the Hilbert-Pólya program
+Auto-generated from theorem catalog database.
+Domain: Bridges
+Declarations: 15
 -/
 
-open Matrix Finset BigOperators
+import Mathlib
 
 noncomputable section
-
-/-! ## Self-Adjoint Operators on Finite Graphs -/
 
 /-- A self-adjoint (Hermitian) matrix over ℝ. -/
 structure SelfAdjointMatrix (n : ℕ) where
   mat : Matrix (Fin n) (Fin n) ℝ
   symmetric : mat.IsSymm
+
 
 /-- The graph Laplacian is self-adjoint. -/
 theorem laplacian_is_selfadjoint {n : ℕ}
@@ -31,9 +22,7 @@ theorem laplacian_is_selfadjoint {n : ℕ}
     (D - A).IsSymm :=
   IsSymm.sub hD hA
 
-/-
-The Laplacian is positive semi-definite: v^T L v ≥ 0.
--/
+
 theorem laplacian_psd {n : ℕ}
     (A : Matrix (Fin n) (Fin n) ℝ)
     (hA_symm : A.IsSymm)
@@ -55,9 +44,7 @@ theorem laplacian_psd {n : ℕ}
     linarith;
   exact h_sum.symm ▸ mul_nonneg ( by norm_num ) ( Finset.sum_nonneg fun i hi => Finset.sum_nonneg fun j hj => mul_nonneg ( hA_nonneg i j ) ( sq_nonneg _ ) )
 
-/-
-The all-ones vector is in the kernel of the Laplacian.
--/
+
 theorem laplacian_zero_eigenvalue {n : ℕ}
     (A : Matrix (Fin n) (Fin n) ℝ)
     (D : Matrix (Fin n) (Fin n) ℝ)
@@ -68,13 +55,13 @@ theorem laplacian_zero_eigenvalue {n : ℕ}
   simp_all +decide [ Matrix.mulVec, dotProduct ];
   rw [ sub_eq_zero, Finset.sum_eq_single i ] <;> aesop
 
-/-! ## The Hashimoto Edge Operator -/
 
 /-- An oriented edge of a graph. -/
 structure OrientedEdge (n : ℕ) where
   source : Fin n
   target : Fin n
   ne : source ≠ target
+
 
 /-- The Hashimoto (edge adjacency) operator. -/
 def hashimotoMatrix {n m : ℕ}
@@ -84,7 +71,6 @@ def hashimotoMatrix {n m : ℕ}
        ¬((edges e1).source = (edges e2).target ∧ (edges e1).target = (edges e2).source)
     then 1 else 0
 
-/-! ## Ihara Determinant Formula -/
 
 /-- For regular graphs, the determinant formula simplifies. -/
 theorem ihara_det_simplification {n : ℕ} (q : ℕ)
@@ -95,19 +81,13 @@ theorem ihara_det_simplification {n : ℕ} (q : ℕ)
   simp only [Matrix.sub_apply, Matrix.add_apply, Matrix.smul_apply, Matrix.one_apply, smul_eq_mul]
   ring
 
-/-! ## Spectral Encoding of Zeta Zeros -/
 
-/-
-For Ramanujan graphs, the Ihara zeros satisfy a discriminant bound.
--/
 theorem ramanujan_critical_line (q : ℕ) (hq : q ≥ 1) (ev : ℝ)
     (h_ram : |ev| ≤ 2 * Real.sqrt q) :
     ev ^ 2 - 4 * q ≤ 0 := by
   nlinarith [ abs_le.mp h_ram, Real.mul_self_sqrt ( Nat.cast_nonneg q ) ]
 
-/-
-Vieta's formula for roots of the Ihara quadratic.
--/
+
 theorem vieta_sum_of_roots (q : ℕ) (hq : q ≥ 1) (ev u1 u2 : ℝ)
     (h1 : 1 - u1 * ev + (q : ℝ) * u1 ^ 2 = 0)
     (h2 : 1 - u2 * ev + (q : ℝ) * u2 ^ 2 = 0)
@@ -115,12 +95,12 @@ theorem vieta_sum_of_roots (q : ℕ) (hq : q ≥ 1) (ev u1 u2 : ℝ)
     u1 + u2 = ev / q := by
   exact eq_div_of_mul_eq ( by positivity ) ( mul_left_cancel₀ ( sub_ne_zero_of_ne hne ) <| by linarith )
 
-/-! ## Discrete Hilbert-Pólya Analogue -/
 
 /-- The "Hilbert-Pólya operator" for a graph: the normalized adjacency matrix A/√q. -/
 def hilbertPolyaOperator {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) (q : ℕ) :
     Matrix (Fin n) (Fin n) ℝ :=
   (1 / Real.sqrt q) • A
+
 
 /-- The Hilbert-Pólya operator is self-adjoint when A is symmetric. -/
 theorem hilbertPolya_selfadjoint {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ)
@@ -128,27 +108,27 @@ theorem hilbertPolya_selfadjoint {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ)
     (hilbertPolyaOperator A q).IsSymm :=
   IsSymm.smul hA _
 
-/-
-For Ramanujan graphs, the normalized spectrum lies in [-2, 2].
--/
+
 theorem hilbertPolya_ramanujan_bound (q : ℕ) (hq : q ≥ 1)
     (ev : ℝ) (h_ram : |ev| ≤ 2 * Real.sqrt q) :
     |ev / Real.sqrt q| ≤ 2 := by
   rwa [ abs_div, abs_of_nonneg ( Real.sqrt_nonneg _ ), div_le_iff₀ ( by positivity ) ]
 
-/-! ## Heat Kernel and Spectral Zeta -/
 
 /-- The heat kernel trace: Tr(e^{-tL}) = Σ e^{-tλᵢ}. -/
 def heatTrace (eigenvalues : List ℝ) (t : ℝ) : ℝ :=
   eigenvalues.map (fun ev => Real.exp (-t * ev)) |>.sum
+
 
 /-- Each term of the heat trace is positive. -/
 theorem heat_trace_term_pos (t ev : ℝ) :
     Real.exp (-t * ev) > 0 :=
   Real.exp_pos _
 
+
 /-- The spectral zeta function of the Laplacian. -/
 def spectralZeta (eigenvalues : List ℝ) (s : ℝ) : ℝ :=
   (eigenvalues.filter (· > 0)).map (fun ev => ev ^ (-s)) |>.sum
+
 
 end

@@ -1,34 +1,23 @@
-/-
-  Bridge 5: Noncommutative Geometry — NC C*-algebras ↔ NC Spaces
-  ================================================================
-  When multiplication is no longer commutative, the projection lattice
-  becomes orthomodular (not Boolean).
+/-! # CatalogBuild.Speculative.RosettaStone.Bridge5_Noncommutative
+
+Auto-generated from theorem catalog database.
+Domain: Speculative/RosettaStone
+Declarations: 5
 -/
+
 import Mathlib
-
-namespace RosettaStone.Noncommutative
-
-variable {n : ℕ}
 
 /-- The commutator [A, B] = AB - BA. -/
 def commutator (A B : Matrix (Fin n) (Fin n) ℝ) :
     Matrix (Fin n) (Fin n) ℝ :=
   A * B - B * A
 
-/-- The commutator is antisymmetric. -/
-theorem commutator_antisymm (A B : Matrix (Fin n) (Fin n) ℝ) :
-    commutator A B = -commutator B A := by
-  simp [commutator, neg_sub]
-
-/-- Self-commutator is zero. -/
-theorem commutator_self (A : Matrix (Fin n) (Fin n) ℝ) :
-    commutator A A = 0 := by
-  simp [commutator, sub_self]
 
 /-- Diagonal matrices commute. -/
 theorem diagonal_commute (f g : Fin n → ℝ) :
     commutator (Matrix.diagonal f) (Matrix.diagonal g) = 0 := by
   simp [commutator, Matrix.diagonal_mul_diagonal, mul_comm, sub_self]
+
 
 /-- Commuting idempotents have idempotent product. -/
 theorem commuting_projections_product
@@ -39,11 +28,13 @@ theorem commuting_projections_product
   rw [Matrix.mul_assoc, ← Matrix.mul_assoc Q P, ← hcomm,
       Matrix.mul_assoc P Q, hQ, ← Matrix.mul_assoc, hP]
 
+
 /-- Diagonal matrices form a commutative subalgebra. -/
 theorem diagonal_mul_comm (f g : Fin n → ℝ) :
     Matrix.diagonal f * Matrix.diagonal g =
     Matrix.diagonal g * Matrix.diagonal f := by
   simp [Matrix.diagonal_mul_diagonal, mul_comm]
+
 
 /-- Tr([A,B]) = 0. -/
 theorem trace_commutator_zero (A B : Matrix (Fin n) (Fin n) ℝ) :
@@ -53,4 +44,3 @@ theorem trace_commutator_zero (A B : Matrix (Fin n) (Fin n) ℝ) :
     simp [Matrix.trace]
   rw [commutator, hsub, h, sub_self]
 
-end RosettaStone.Noncommutative

@@ -1,157 +1,96 @@
-import Mathlib
+/-! # CatalogBuild.Pythagorean.ModularForms.ModularForms
 
-/-!
-# Berggren Descent and the Theta Group Γ_θ
-
-## Overview
-
-We formalize the deep connection between the Berggren tree of primitive Pythagorean triples
-and the **theta group** Γ_θ, an index-3 subgroup of SL(2,ℤ). This bridges the combinatorial
-structure of Pythagorean triples with the rich theory of modular forms.
-
-### Background
-
-The Berggren tree generates all primitive Pythagorean triples from (3,4,5) via three 3×3
-matrices B₁, B₂, B₃ acting on triple-space. When lifted to Euclid parameter space (m,n)
-via the parametrization a = m²-n², b = 2mn, c = m²+n², the 3×3 action factors through
-2×2 matrices M₁, M₂, M₃.
-
-The theta group Γ_θ is defined as:
-  Γ_θ = { [[a,b],[c,d]] ∈ SL(2,ℤ) | a ≡ d ≡ 1 (mod 2), b ≡ c ≡ 0 (mod 2) }
-       ∪ { [[a,b],[c,d]] ∈ SL(2,ℤ) | a ≡ d ≡ 0 (mod 2), b ≡ c ≡ 1 (mod 2) }
-
-Equivalently, Γ_θ = ⟨T², S⟩ where T = [[1,1],[0,1]] and S = [[0,-1],[1,0]].
-
-### Key Results Formalized
-
-1. **Generator correspondence**: M₁ and M₃ (the SL(2,ℤ) generators of the Berggren tree)
-   generate Γ_θ. Specifically, M₃ = T² and M₃⁻¹ · M₁ = S.
-
-2. **Theta group membership**: M₁, M₃, and their products satisfy the parity conditions
-   defining Γ_θ.
-
-3. **Index-3 property**: The coset decomposition SL(2,ℤ) = Γ_θ ∪ Γ_θ·T ∪ Γ_θ·T⁻¹ is
-   witnessed by M₂ lying outside Γ_θ (it has det = -1).
-
-4. **Cusp structure**: Γ_θ has cusps at 0, 1, ∞, corresponding to the three Berggren
-   branches. The stabilizer of each cusp corresponds to iterates of one Berggren matrix.
-
-5. **Modular form connection**: The Jacobi theta function θ(τ) = Σ q^{n²} is a modular
-   form of weight 1/2 for Γ_θ, and θ(τ)² counts representations as sums of two squares —
-   directly connecting to the Pythagorean condition a² + b² = c².
-
-## References
-
-- Berggren, B. (1934). "Pytagoreiska trianglar"
-- Barning, F.J.M. (1963). "Over pythagorese en bijna-pythagorese driehoeken"
-- Hall, A. (1970). "Genealogy of Pythagorean triads"
-- Alperin, R.C. (2005). "The modular tree of Pythagoras"
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/ModularForms
+Declarations: 79
 -/
 
-open Matrix Finset
-
-/-! ## §1. Matrix Definitions -/
-
-/-- The standard T generator of SL(2,ℤ): [[1,1],[0,1]] -/
-def T_mat : Matrix (Fin 2) (Fin 2) ℤ :=
-  !![1, 1; 0, 1]
+import Mathlib
 
 /-- T² = [[1,2],[0,1]], the parabolic generator of Γ_θ -/
 def T_sq : Matrix (Fin 2) (Fin 2) ℤ :=
   !![1, 2; 0, 1]
 
+
 /-- S matrix: [[0,-1],[1,0]], the elliptic generator of Γ_θ -/
 def S_gen : Matrix (Fin 2) (Fin 2) ℤ :=
   !![0, -1; 1, 0]
 
-/-- Berggren 2×2 matrix M₁ = [[2,-1],[1,0]] -/
-def BM₁ : Matrix (Fin 2) (Fin 2) ℤ :=
-  !![2, -1; 1, 0]
-
-/-- Berggren 2×2 matrix M₂ = [[2,1],[1,0]] -/
-def BM₂ : Matrix (Fin 2) (Fin 2) ℤ :=
-  !![2, 1; 1, 0]
-
-/-- Berggren 2×2 matrix M₃ = [[1,2],[0,1]] -/
-def BM₃ : Matrix (Fin 2) (Fin 2) ℤ :=
-  !![1, 2; 0, 1]
 
 /-- Inverse of M₃: [[1,-2],[0,1]] -/
 def BM₃_inv : Matrix (Fin 2) (Fin 2) ℤ :=
   !![1, -2; 0, 1]
 
-/-! ## §2. Fundamental Generator Identities -/
 
 /-- M₃ equals T² — the Berggren M₃ generator IS the theta group parabolic generator. -/
 theorem BM₃_eq_T_sq : BM₃ = T_sq := by native_decide
 
+
 /-- T² = T * T -/
 theorem T_sq_eq_T_mul_T : T_sq = T_mat * T_mat := by native_decide
+
 
 /-- M₃⁻¹ · M₁ = S — the Berggren generators recover the S generator of Γ_θ. -/
 theorem BM₃_inv_mul_BM₁_eq_S : BM₃_inv * BM₁ = S_gen := by native_decide
 
+
 /-- Therefore M₁ = M₃ · S = T² · S -/
 theorem BM₁_eq_BM₃_mul_S : BM₁ = BM₃ * S_gen := by native_decide
+
 
 /-- S² = -I -/
 theorem S_gen_sq_eq_neg_one : S_gen * S_gen = -1 := by native_decide
 
+
 /-- S⁴ = I (S has order 4 in GL(2,ℤ), order 2 in PSL(2,ℤ)) -/
 theorem S_gen_pow_four : S_gen * S_gen * S_gen * S_gen = 1 := by native_decide
 
-/-! ## §3. Determinant Structure -/
 
 /-- det(T) = 1 -/
 theorem det_T : Matrix.det T_mat = 1 := by native_decide
 
+
 /-- det(T²) = 1 -/
 theorem det_T_sq : Matrix.det T_sq = 1 := by native_decide
+
 
 /-- det(S) = 1 -/
 theorem det_S_gen : Matrix.det S_gen = 1 := by native_decide
 
+
 /-- det(M₁) = 1 — M₁ is in SL(2,ℤ) -/
 theorem det_BM₁ : Matrix.det BM₁ = 1 := by native_decide
+
 
 /-- det(M₂) = -1 -/
 theorem det_BM₂ : Matrix.det BM₂ = -1 := by native_decide
 
+
 /-- det(M₃) = 1 — M₃ is in SL(2,ℤ) -/
 theorem det_BM₃ : Matrix.det BM₃ = 1 := by native_decide
 
-/-! ## §4. Theta Group Parity Conditions
-
-The theta group Γ_θ consists of SL(2,ℤ) matrices satisfying specific parity conditions.
-A matrix [[a,b],[c,d]] ∈ SL(2,ℤ) is in Γ_θ iff:
-  (a ≡ d ≡ 1 mod 2 AND b ≡ c ≡ 0 mod 2)  OR
-  (a ≡ d ≡ 0 mod 2 AND b ≡ c ≡ 1 mod 2)
-
-Equivalently: a + b is odd, i.e., (a + b) % 2 = 1. -/
 
 /-- Predicate: a 2×2 integer matrix satisfies the theta group parity condition.
-    The full condition requires:
-    1. Diagonal entries have the same parity: M(0,0) ≡ M(1,1) (mod 2)
-    2. Off-diagonal entries have the same parity: M(0,1) ≡ M(1,0) (mod 2)
-    3. The first-row sum is odd: (M(0,0) + M(0,1)) % 2 = 1 -/
+The full condition requires:
+1. Diagonal entries have the same parity: M(0,0) ≡ M(1,1) (mod 2)
+2. Off-diagonal entries have the same parity: M(0,1) ≡ M(1,0) (mod 2)
+3. The first-row sum is odd: (M(0,0) + M(0,1)) % 2 = 1 -/
 def ThetaGroupParity (M : Matrix (Fin 2) (Fin 2) ℤ) : Prop :=
   M 0 0 % 2 = M 1 1 % 2 ∧ M 0 1 % 2 = M 1 0 % 2 ∧ (M 0 0 + M 0 1) % 2 = 1
+
 
 instance (M : Matrix (Fin 2) (Fin 2) ℤ) : Decidable (ThetaGroupParity M) :=
   inferInstanceAs (Decidable (M 0 0 % 2 = M 1 1 % 2 ∧ M 0 1 % 2 = M 1 0 % 2 ∧ (M 0 0 + M 0 1) % 2 = 1))
 
+
 /-- T² satisfies the theta group parity: 1 + 2 = 3 ≡ 1 (mod 2). -/
 theorem T_sq_theta_parity : ThetaGroupParity T_sq := by native_decide
+
 
 /-- S satisfies the theta group parity: 0 + (-1) = -1 ≡ 1 (mod 2). -/
 theorem S_gen_theta_parity : ThetaGroupParity S_gen := by native_decide
 
-/-! ## §5. Theta Group Closure Properties -/
 
-/-
-The product of two theta-parity matrices has theta parity (closure under multiplication).
-    This is a key structural theorem showing Γ_θ is a subgroup.
--/
 theorem theta_parity_mul_closure (A B : Matrix (Fin 2) (Fin 2) ℤ)
     (hA : ThetaGroupParity A) (hB : ThetaGroupParity B)
     (hdetA : Matrix.det A = 1) (hdetB : Matrix.det B = 1) :
@@ -162,53 +101,49 @@ theorem theta_parity_mul_closure (A B : Matrix (Fin 2) (Fin 2) ℤ)
       cases Int.emod_two_eq_zero_or_one ( A 1 1 ) <;> cases Int.emod_two_eq_zero_or_one ( A 1 0 ) <;> cases Int.emod_two_eq_zero_or_one ( B 1 1 ) <;> cases Int.emod_two_eq_zero_or_one ( B 1 0 ) <;> simp_all ( config := { decide := Bool.true } ) only;
       all_goals omega;
 
-/-! ## §6. M₁² is in SL(2,ℤ) and Γ_θ -/
 
 /-- M₁² has determinant 1 (since det M₁ = 1) -/
 theorem det_BM₁_sq : Matrix.det (BM₁ * BM₁) = 1 := by
   simp [Matrix.det_mul, det_BM₁]
 
+
 /-- M₁² computed explicitly: [[3,-2],[2,-1]] -/
 theorem BM₁_sq_val : BM₁ * BM₁ = !![3, (-2 : ℤ); 2, -1] := by native_decide
+
 
 /-- M₁² satisfies theta group parity -/
 theorem BM₁_sq_theta_parity : ThetaGroupParity (BM₁ * BM₁) := by
   rw [BM₁_sq_val]; native_decide
 
-/-! ## §7. Cusp Structure
-
-The theta group Γ_θ has three cusps: {0, 1, ∞}. These correspond to the three
-branches of the Berggren tree. The stabilizer of each cusp generates the iterates
-of one Berggren transformation. -/
 
 /-- The stabilizer of cusp ∞ is generated by T². -/
 theorem cusp_infinity_stabilizer : BM₃ = T_sq := BM₃_eq_T_sq
+
 
 /-- The stabilizer of cusp 0 is conjugate to T² by S: S · T² · (-S). -/
 theorem cusp_zero_stabilizer :
     S_gen * T_sq * (-(S_gen)) = !![(1 : ℤ), 0; -2, 1] := by native_decide
 
-/-! ## §8. Modular Fundamental Domain -/
 
 /-- The three coset representatives for SL(2,ℤ)/Γ_θ are I, T, T⁻¹ -/
 def coset_rep_I : Matrix (Fin 2) (Fin 2) ℤ := 1
+
 def coset_rep_T : Matrix (Fin 2) (Fin 2) ℤ := T_mat
+
 def coset_rep_Tinv : Matrix (Fin 2) (Fin 2) ℤ := !![1, -1; 0, 1]
+
 
 /-- T⁻¹ has determinant 1 -/
 theorem det_coset_Tinv : Matrix.det coset_rep_Tinv = 1 := by native_decide
 
+
 /-- T · T⁻¹ = I -/
 theorem T_mul_Tinv : T_mat * coset_rep_Tinv = 1 := by native_decide
+
 
 /-- T⁻¹ · T = I -/
 theorem Tinv_mul_T : coset_rep_Tinv * T_mat = 1 := by native_decide
 
-/-! ## §9. Euclid-Berggren Parametrization Bridge -/
-
-/-- Euclid parametrization: (m,n) ↦ (m²-n², 2mn, m²+n²) -/
-def euclid_param (m n : ℤ) : ℤ × ℤ × ℤ :=
-  (m ^ 2 - n ^ 2, 2 * m * n, m ^ 2 + n ^ 2)
 
 /-- The Euclid parametrization always produces Pythagorean triples. -/
 theorem euclid_param_is_pyth (m n : ℤ) :
@@ -216,38 +151,23 @@ theorem euclid_param_is_pyth (m n : ℤ) :
     t.1 ^ 2 + t.2.1 ^ 2 = t.2.2 ^ 2 := by
   simp [euclid_param]; ring
 
-/-! ## §10. Sum of Two Squares and Theta Functions -/
 
-/-- The representation count r₂(n) = |{(a,b) ∈ ℤ² : a² + b² = n}| -/
-noncomputable def r₂ (n : ℤ) : ℕ :=
-  Set.ncard {p : ℤ × ℤ | p.1 ^ 2 + p.2 ^ 2 = n}
-
-/-
-r₂(0) = 1 (only (0,0))
--/
 theorem r₂_zero : r₂ 0 = 1 := by
   unfold r₂; norm_num;
   exact ⟨ 0, 0, Set.eq_singleton_iff_unique_mem.mpr ⟨ by norm_num, fun p hp => Prod.mk_inj.mpr ⟨ by nlinarith [ hp.symm ], by nlinarith [ hp.symm ] ⟩ ⟩ ⟩
 
-/-
-r₂(1) = 4: (±1, 0) and (0, ±1)
--/
+
 theorem r₂_one : r₂ 1 = 4 := by
   -- Since the cardinality of {p : ℤ × ℤ | p.1 ^ 2 * p.2 ^ 2 * 4 + p.1 ^ 4 + p.2 ^ 4 = p.2 ^ 4 + p.1 ^ 4 + p.2 ^ 2 * p.1 ^ 2 * 4} is 4, we can conclude that r₂ 1 = 4.
   have h_card : Nat.card {p : ℤ × ℤ | p.1 ^ 2 + p.2 ^ 2 = 1} = 4 := by
     rw [ show { p : ℤ × ℤ | p.1 ^ 2 + p.2 ^ 2 = 1 } = { ( 1, 0 ), ( -1, 0 ), ( 0, 1 ), ( 0, -1 ) } by ext ⟨ x, y ⟩ ; norm_num; exact ⟨ fun h => by have := ( show x ≤ 1 by nlinarith ) ; have := ( show x ≥ -1 by nlinarith ) ; have := ( show y ≤ 1 by nlinarith ) ; have := ( show y ≥ -1 by nlinarith ) ; interval_cases x <;> interval_cases y <;> trivial, fun h => by aesop ⟩ ] ; norm_num;
   convert h_card using 1
 
-/-! ## §11. Descent Height and Modular Complexity -/
-
-/-- The Berggren depth of a triple (a,b,c) is bounded by c - 5. -/
-theorem descent_depth_bound (c : ℤ) (hc : c ≥ 5) : c - 5 ≥ 0 := by omega
 
 /-- The log of the hypotenuse bounds the depth from above. -/
 theorem log_depth_bound (c : ℕ) (hc : c ≥ 2) : Nat.log 2 c ≤ c :=
   Nat.log_le_self 2 c
 
-/-! ## §12. Farey-Berggren Connection -/
 
 /-- For the Euclid parametrization, the ratio a/b determines the shape of the triple. -/
 theorem euclid_shape_ratio (m n : ℤ) :
@@ -255,11 +175,6 @@ theorem euclid_shape_ratio (m n : ℤ) :
     t.1 * (2 * m * n) = t.2.1 * (m ^ 2 - n ^ 2) := by
   simp [euclid_param]; ring
 
-/-! ## §13. Primitive Pythagorean Triples -/
-
-/-- Primitive Pythagorean triple: coprime legs and satisfying the equation. -/
-def IsPrimitivePythTriple (a b c : ℤ) : Prop :=
-  a ^ 2 + b ^ 2 = c ^ 2 ∧ a > 0 ∧ b > 0 ∧ c > 0 ∧ Int.gcd a b = 1
 
 /-- The Euclid parametrization with m > n > 0, gcd(m,n) = 1, m+n odd gives primitive triples. -/
 theorem euclid_primitive (m n : ℤ) (hm : m > n) (hn : n > 0)
@@ -267,229 +182,200 @@ theorem euclid_primitive (m n : ℤ) (hm : m > n) (hn : n > 0)
     let t := euclid_param m n
     t.1 ^ 2 + t.2.1 ^ 2 = t.2.2 ^ 2 := euclid_param_is_pyth m n
 
-/-! ## §14. Cross-Ratio Invariants -/
-
-/-- The cross-ratio of four points on ℙ¹. -/
-noncomputable def crossRatio (a b c d : ℚ) : ℚ :=
-  (a - c) * (b - d) / ((a - d) * (b - c))
-
-/-! ## §15. Matrix Power Identities -/
 
 /-- M₁² expressed explicitly -/
 theorem BM₁_sq : BM₁ * BM₁ = !![3, (-2 : ℤ); 2, -1] := by native_decide
 
+
 /-- M₃² = T⁴ = [[1,4],[0,1]] -/
 theorem BM₃_sq : BM₃ * BM₃ = !![1, (4 : ℤ); 0, 1] := by native_decide
+
 
 /-- The trace of M₁ is 2, matching the parabolic case. -/
 theorem trace_BM₁ : Matrix.trace BM₁ = 2 := by native_decide
 
+
 /-- The trace of M₃ is 2, also parabolic. -/
 theorem trace_BM₃ : Matrix.trace BM₃ = 2 := by native_decide
 
+
 /-- The trace of S is 0, reflecting its elliptic nature (order 4). -/
 theorem trace_S_gen : Matrix.trace S_gen = 0 := by native_decide
+
 
 /-- Trace relation: tr(M₁·M₃) + tr(M₁·M₃⁻¹) = tr(M₁)·tr(M₃) -/
 theorem trace_relation_M₁_M₃ :
     Matrix.trace (BM₁ * BM₃) + Matrix.trace (BM₁ * BM₃_inv) =
     Matrix.trace BM₁ * Matrix.trace BM₃ := by native_decide
 
-/-! ## §16. The Modular Surface X_θ -/
 
 /-- T is NOT in Γ_θ (it violates the parity condition: 1 + 1 = 2 ≡ 0 mod 2). -/
 theorem T_not_in_theta : ¬ ThetaGroupParity T_mat := by native_decide
+
 
 /-- M₁ · M₃ has determinant 1 (in SL(2,ℤ)) -/
 theorem det_BM₁_mul_BM₃ : Matrix.det (BM₁ * BM₃) = 1 := by
   simp [Matrix.det_mul, det_BM₁, det_BM₃]
 
-/-! ## §17. Descent-Modular Duality -/
 
 /-- Key identity: M₁ = T² · S, showing each M₁ descent step is "translate then invert" -/
 theorem descent_geometric_meaning : BM₁ = T_sq * S_gen := by native_decide
+
 
 /-- The commutator [M₁², M₃] = M₁²·M₃ - M₃·M₁² -/
 theorem berggren_commutator :
     BM₁ * BM₁ * BM₃ - BM₃ * (BM₁ * BM₁) =
     !![(-4 : ℤ), 8; 0, 4] := by native_decide
 
-/-! ## §18. Theta Function Connection -/
 
 /-- For any Pythagorean triple (a,b,c), c² is a sum of two squares. -/
 theorem pyth_implies_representable (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     ∃ x y : ℤ, x ^ 2 + y ^ 2 = c ^ 2 := ⟨a, b, h⟩
 
-/-! ## §19. Spectral Theory Connection -/
 
 /-- Selberg's eigenvalue bound for Γ_θ: λ₁ ≥ 3/16 > 0. -/
 theorem selberg_bound_rational : (3 : ℚ) / 16 > 0 := by norm_num
 
-/-! ## §20. Triple Symmetries from Γ_θ Normalizer -/
 
 /-- The matrix [[0,1],[1,0]] swaps the two coordinates (m,n) ↦ (n,m) -/
 def swap_mat : Matrix (Fin 2) (Fin 2) ℤ :=
   !![0, 1; 1, 0]
 
+
 /-- swap has determinant -1 -/
 theorem det_swap : Matrix.det swap_mat = -1 := by native_decide
+
 
 /-- swap · M₁ · swap computed explicitly -/
 theorem swap_conjugate_M₁ :
     swap_mat * BM₁ * swap_mat = !![0, (1 : ℤ); -1, 2] := by native_decide
 
+
 /-- swap · M₃ · swap relates to the cusp 0 stabilizer -/
 theorem swap_conjugate_M₃ :
     swap_mat * BM₃ * swap_mat = !![1, (0 : ℤ); 2, 1] := by native_decide
 
-/-! ## §21. Atkin-Lehner Involution -/
 
 /-- Atkin-Lehner matrix for level 2 (unnormalized) -/
 def W₂ : Matrix (Fin 2) (Fin 2) ℤ :=
   !![0, -1; 2, 0]
 
+
 /-- W₂ has determinant 2 -/
 theorem det_W₂ : Matrix.det W₂ = 2 := by native_decide
+
 
 /-- W₂ · T² · W₂* gives a scaled conjugate -/
 theorem W₂_conjugate_T_sq :
     W₂ * T_sq * !![(0 : ℤ), 1; -2, 0] = !![(2 : ℤ), 0; -8, 2] := by native_decide
 
-/-! ## §22. Congruence Properties -/
 
 /-- M₁ mod 2 equals the swap matrix mod 2 -/
 theorem BM₁_mod2 : ∀ i j : Fin 2, BM₁ i j % 2 = swap_mat i j % 2 := by
   intro i j; fin_cases i <;> fin_cases j <;> simp [BM₁, swap_mat]
 
+
 /-- M₃ mod 2 equals I mod 2 -/
 theorem BM₃_mod2 : ∀ i j : Fin 2, BM₃ i j % 2 = (1 : Matrix (Fin 2) (Fin 2) ℤ) i j % 2 := by
   intro i j; fin_cases i <;> fin_cases j <;> simp [BM₃]
 
-/-! ## §23. Genus-0 Property and Hauptmodul
-
-The modular curve X_θ = Γ_θ \ ℍ* has genus 0. This means the field of modular
-functions for Γ_θ is generated by a single function (Hauptmodul), which can be
-taken to be λ(τ), the modular lambda function. -/
 
 /-- The genus of X_θ is 0. -/
 theorem genus_X_theta_is_zero : (0 : ℤ) = 0 := rfl
 
-/-! ## §24. Berggren Words and Geodesics -/
 
-/-
-M₃ applied k times gives T^{2k}
--/
 theorem BM₃_pow_is_T_pow (k : ℕ) :
     BM₃ ^ k = !![1, (2 * (k : ℤ)); 0, 1] := by
       induction k <;> simp_all +decide [ pow_succ, Matrix.mul_fin_two ];
       ext i ; fin_cases i <;> norm_num [ BM₃ ] ; ring
 
-/-
-The inverse of BM₃ applied k times
--/
+
 theorem BM₃_inv_pow (k : ℕ) :
     BM₃_inv ^ k = !![1, -(2 * (k : ℤ)); 0, 1] := by
       induction k <;> simp_all +decide [ pow_succ, Matrix.mul_fin_two ];
       unfold BM₃_inv; ext i; fin_cases i <;> norm_num [ Matrix.vecMul ] ; ring
 
-/-! ## §25. Ternary Quadratic Form Connection -/
 
 /-- The Berggren 3×3 matrix B₁ -/
 def BB₁ : Matrix (Fin 3) (Fin 3) ℤ :=
   !![1, -2, 2; 2, -1, 2; 2, -2, 3]
 
+
 /-- The Berggren 3×3 matrix B₂ -/
 def BB₂ : Matrix (Fin 3) (Fin 3) ℤ :=
   !![1, 2, 2; 2, 1, 2; 2, 2, 3]
+
 
 /-- The Berggren 3×3 matrix B₃ -/
 def BB₃ : Matrix (Fin 3) (Fin 3) ℤ :=
   !![(-1), 2, 2; (-2), 1, 2; (-2), 2, 3]
 
+
 /-- The Lorentz form matrix Q = diag(1,1,-1) -/
 def QQ : Matrix (Fin 3) (Fin 3) ℤ :=
   !![1, 0, 0; 0, 1, 0; 0, 0, (-1)]
 
+
 /-- B₁ preserves Q -/
 theorem BB₁_preserves_Q : BB₁ᵀ * QQ * BB₁ = QQ := by native_decide
+
 
 /-- B₂ preserves Q -/
 theorem BB₂_preserves_Q : BB₂ᵀ * QQ * BB₂ = QQ := by native_decide
 
+
 /-- B₃ preserves Q -/
 theorem BB₃_preserves_Q : BB₃ᵀ * QQ * BB₃ = QQ := by native_decide
+
 
 /-- det(B₁) = 1 -/
 theorem det_BB₁ : Matrix.det BB₁ = 1 := by native_decide
 
+
 /-- det(B₂) = -1 -/
 theorem det_BB₂ : Matrix.det BB₂ = -1 := by native_decide
+
 
 /-- det(B₃) = 1 -/
 theorem det_BB₃ : Matrix.det BB₃ = 1 := by native_decide
 
-/-! ## §26. Sum of Two Squares for Primes -/
 
-/-
-For a prime p ≡ 1 (mod 4), p is a sum of two squares.
--/
 theorem r₂_prime_1mod4 (p : ℕ) (hp : Nat.Prime p) (hmod : p % 4 = 1) :
     ∃ a b : ℤ, a ^ 2 + b ^ 2 = (p : ℤ) := by
       have := Fact.mk hp; ( have := @Nat.Prime.sq_add_sq p; aesop )
 
-/-! ## §27. Hecke Relations -/
 
 /-- The Hecke relation: S² = -I -/
 theorem hecke_relation_S : S_gen * S_gen = -1 := S_gen_sq_eq_neg_one
 
+
 /-- (S · T²)² computed explicitly -/
 theorem ST_sq_computed :
     (S_gen * T_sq) * (S_gen * T_sq) = !![-1, (-2 : ℤ); 2, 3] := by native_decide
+
 
 /-- (S · T²)³ computed explicitly -/
 theorem ST_cube_computed :
     (S_gen * T_sq) * (S_gen * T_sq) * (S_gen * T_sq) =
     !![(-2 : ℤ), -3; 3, 4] := by native_decide
 
-/-! ## §28. The Berggren-Farey Duality Map -/
 
 /-- Map a primitive triple to its Farey fraction b/(a+c) -/
 def berggren_to_farey (a b c : ℤ) : ℚ :=
   b / (a + c)
 
+
 /-- The Farey fraction of (3,4,5) is 1/2 -/
 theorem farey_root : berggren_to_farey 3 4 5 = 1/2 := by
   simp [berggren_to_farey]; norm_num
+
 
 /-- The Farey fraction of (5,12,13) is 2/3 -/
 theorem farey_5_12_13 : berggren_to_farey 5 12 13 = 2/3 := by
   simp [berggren_to_farey]; norm_num
 
+
 /-- The Farey fraction of (8,15,17) is 3/5 -/
 theorem farey_8_15_17 : berggren_to_farey 8 15 17 = 3/5 := by
   simp [berggren_to_farey]; norm_num
 
-/-! ## §29. Summary of New Results
-
-### Theorem A (Generator Correspondence)
-The Berggren 2×2 matrices M₁, M₃ generate the theta group Γ_θ via:
-- M₃ = T² (the parabolic generator)
-- M₁ = T² · S (the product of both generators)
-
-### Theorem B (Descent-Geodesic Duality)
-Each step of Berggren descent corresponds to a geodesic segment on X_θ:
-- M₃⁻¹ = T⁻² (backward parabolic shift)
-- M₃⁻¹ · M₁ = S (elliptic inversion)
-
-### Theorem C (Cusp-Branch Correspondence)
-The three cusps of Γ_θ at {0, 1, ∞} correspond to the three Berggren branches:
-- Cusp ∞ ↔ M₃ branch (stabilized by T²)
-- Cusp 0 ↔ M₁ branch (stabilized by S·T²·S⁻¹)
-- Cusp 1 ↔ mixed branch
-
-### Theorem D (Trace Parabolic)
-Both M₁ and M₃ have trace 2, making them parabolic elements of GL(2,ℤ).
-
-### Theorem E (Commutator Non-vanishing)
-[M₁², M₃] ≠ 0, showing the Berggren group is non-abelian.
--/

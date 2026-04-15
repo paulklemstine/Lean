@@ -1,49 +1,38 @@
-/-
-# Computational Extraction of the EML-SPB Dual-Agent Orchestrator
+/-! # CatalogBuild.EML.ComputationalExtraction
 
-## Overview
-This file defines the reference Python implementation of the EML-SPB
-model crystallization pipeline and agentic REPL loop as a Lean 4 string
-constant. Embedding the source text in Lean allows downstream proofs to
-reason over its Abstract Syntax Tree (AST), establishing that the
-executable artifact faithfully mirrors the mathematical specification
-formalized elsewhere in this project.
-
-## Key Components
-- `demo_orchestrator_python_code`: The complete Python reference script.
-- `orchestrator_is_well_formed`: Proof that the extraction is non-trivial
-  (the string is non-empty). This serves as a placeholder for deeper
-  AST-level well-formedness proofs.
-
-## Architecture Correspondence
-The *Crystallization* map in the Python script implements the
-Stereographic Projection Bridge (SPB) weight-compression transform:
-  W_crystal = SPB(W_base) = (W_base + Δ) / (I − W_base · Δ)
-where Δ encodes the low-rank adaptation. This mirrors the Lean
-definition `spb_bridge` from `EML.EMLSPBBridge`.
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 17
 -/
 
 import Lean
+import argparse
+import json
+import logging
+import math
+import numpy
+import os
+import shlex
+import subprocess
+import sys
+import torch
+import traceback
 
-/--
-The formal computational extraction of the EML-SPB Dual-Agent Orchestrator.
+/-- The formal computational extraction of the EML-SPB Dual-Agent Orchestrator.
 This string contains the complete reference Python implementation of the
 Hugging Face model crystallization and agentic loop.
-
 The script is self-contained and runnable with:
-  `pip install torch numpy transformers accelerate`
-
+`pip install torch numpy transformers accelerate`
 Mathematical invariants maintained by the code:
 1. **Crystallization bijectivity**: The SPB weight transform is invertible
-   (the inverse is the hyperbolic variant `spbH`), so no information is
-   lost during compression.
+(the inverse is the hyperbolic variant `spbH`), so no information is
+lost during compression.
 2. **EML activation semantics**: Every neuron computes
-   `exp(w₁·x + b₁) − ln(w₂·x + b₂)`, matching the Lean definition
-   `eml_neuron` from `EML.EMLNeuralNetworks`.
+`exp(w₁·x + b₁) − ln(w₂·x + b₂)`, matching the Lean definition
+`eml_neuron` from `EML.EMLNeuralNetworks`.
 3. **Tropical ViT scoring**: Attention scores use the tropical semiring
-   `(max, +)` instead of `(+, ×)`, corresponding to the formalization
-   in the `Tropical` library.
--/
+`(max, +)` instead of `(+, ×)`, corresponding to the formalization
+in the `Tropical` library. -/
 def demo_orchestrator_python_code : String :=
 "#!/usr/bin/env python3
 \"\"\"
@@ -105,6 +94,7 @@ MAX_REPL_HISTORY = 200          # sliding window for conversation state
 # 1. Mathematical Primitives
 # ---------------------------------------------------------------------------
 
+
 def spb(x: np.ndarray, delta: np.ndarray) -> np.ndarray:
     \"\"\"Stereographic Projection Bridge (additive form).
 
@@ -115,6 +105,7 @@ def spb(x: np.ndarray, delta: np.ndarray) -> np.ndarray:
     definition  spb_bridge  in  EML.EMLSPBBridge.
     \"\"\"
     return (x + delta) / (1.0 - x * delta + EML_EPSILON)
+
 
 
 def spb_inverse(y: np.ndarray, delta: np.ndarray) -> np.ndarray:
@@ -128,6 +119,7 @@ def spb_inverse(y: np.ndarray, delta: np.ndarray) -> np.ndarray:
     return (y - delta) / (1.0 + y * delta + EML_EPSILON)
 
 
+
 def eml(x: np.ndarray, y: np.ndarray) -> np.ndarray:
     \"\"\"EML operator: eml(x, y) = exp(x) - log(y).
 
@@ -136,9 +128,11 @@ def eml(x: np.ndarray, y: np.ndarray) -> np.ndarray:
     return np.exp(x) - np.log(np.maximum(y, EML_EPSILON))
 
 
+
 def tropical_max_plus(a: np.ndarray, b: np.ndarray) -> np.ndarray:
     \"\"\"Tropical addition in the (max, +) semiring.\"\"\"
     return np.maximum(a, b)
+
 
 
 def tropical_dot(a: np.ndarray, b: np.ndarray, axis: int = -1) -> np.ndarray:
@@ -149,6 +143,7 @@ def tropical_dot(a: np.ndarray, b: np.ndarray, axis: int = -1) -> np.ndarray:
 # ---------------------------------------------------------------------------
 # 2. Crystallization Engine
 # ---------------------------------------------------------------------------
+
 
 class CrystallizationEngine:
     \"\"\"Projects base-model weights into the SPB-compressed format.
@@ -247,6 +242,7 @@ class CrystallizationEngine:
 # 3. EML Neural Layer
 # ---------------------------------------------------------------------------
 
+
 class EMLLayer:
     \"\"\"A single EML neural layer.
 
@@ -277,6 +273,7 @@ class EMLLayer:
 # ---------------------------------------------------------------------------
 # 4. Tropical Vision Transformer (TropicalViT) Attention
 # ---------------------------------------------------------------------------
+
 
 class TropicalAttention:
     \"\"\"Tropical (max, +) attention mechanism.
@@ -329,6 +326,7 @@ class TropicalAttention:
 # 5. PythagoreanNeuralArch: Combined Model
 # ---------------------------------------------------------------------------
 
+
 class PythagoreanNeuralArch:
     \"\"\"Combines EML layers with Tropical attention into a small
     demonstration network.
@@ -357,6 +355,7 @@ class PythagoreanNeuralArch:
 # 6. Hugging Face Integration & Model Crystallization
 # ---------------------------------------------------------------------------
 
+
 def load_base_model(model_id: str, device: str = DEFAULT_DEVICE):
     \"\"\"Load a Hugging Face causal-LM and return its tokenizer and model.\"\"\"
     try:
@@ -375,6 +374,7 @@ def load_base_model(model_id: str, device: str = DEFAULT_DEVICE):
     model.eval()
     logger.info('Model loaded. Parameters: %s', sum(p.numel() for p in model.parameters()))
     return tokenizer, model
+
 
 
 def crystallize_model(model, rank: int = CRYSTALLIZATION_RANK) -> Dict[str, Any]:
@@ -409,6 +409,7 @@ def crystallize_model(model, rank: int = CRYSTALLIZATION_RANK) -> Dict[str, Any]
     return crystal_state
 
 
+
 def generate_with_base_model(tokenizer, model, prompt: str, max_new_tokens: int = 256) -> str:
     \"\"\"Generate text using the base Hugging Face model.\"\"\"
     import torch
@@ -428,6 +429,7 @@ def generate_with_base_model(tokenizer, model, prompt: str, max_new_tokens: int 
 # ---------------------------------------------------------------------------
 # 7. Tool Execution (for Agentic REPL)
 # ---------------------------------------------------------------------------
+
 
 class ToolExecutor:
     \"\"\"Executes shell commands in a sandboxed subprocess and captures output.\"\"\"
@@ -473,6 +475,7 @@ class ToolExecutor:
 # ---------------------------------------------------------------------------
 # 8. Agentic REPL Loop
 # ---------------------------------------------------------------------------
+
 
 class AgenticREPL:
     \"\"\"Interactive REPL that combines LLM inference with tool execution.
@@ -598,6 +601,7 @@ class AgenticREPL:
 # 9. Main Entry Point
 # ---------------------------------------------------------------------------
 
+
 def main() -> None:
     parser = argparse.ArgumentParser(description='EML-SPB Orchestrator')
     parser.add_argument('--model', type=str, default=DEFAULT_MODEL_ID,
@@ -631,7 +635,9 @@ if __name__ == '__main__':
     main()
 "
 
+
 /-- The reference implementation string is non-empty, witnessing that the
-    computational extraction is non-trivial. -/
+computational extraction is non-trivial. -/
 theorem orchestrator_is_well_formed : demo_orchestrator_python_code.length > 0 := by
   native_decide
+

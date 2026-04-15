@@ -1,35 +1,22 @@
-import Mathlib
+/-! # CatalogBuild.Geometry.Stereographic.GaugeTheory
 
-/-!
-# Gauge Theory Connection: Conformal Factor as a Gauge Field
-
-This file formalizes the connection between the **conformal factor** of
-stereographic projection and **gauge theory**.
-
-## Main Results
-
-* `gaugeField_positive` — The gauge field is always positive
-* `gaugeField_le_two` — The gauge field is bounded by 2
-* `gaugeInvariantKernel_symm` — The gauge-invariant kernel is symmetric
-* `gaugeConnection_parity` — The gauge connection has odd parity
-* `gaugeConnection_zero` — The gauge connection vanishes at origin
-* `gaugeCurvature_zero_origin` — Curvature vanishes at origin (off-diagonal)
-* `gaugeAction_nonneg` — The gauge action is non-negative
-* `effectiveMass_pos` — Effective mass is always positive
+Auto-generated from theorem catalog database.
+Domain: Geometry/Stereographic
+Declarations: 20
 -/
 
-open Real Finset BigOperators
+import Mathlib
 
 noncomputable section
-
-/-! ## Part 1: The Gauge Field (Conformal Factor) -/
 
 def gaugeField (n : ℕ) (x : Fin n → ℝ) : ℝ :=
   2 / (1 + ∑ i, (x i) ^ 2)
 
+
 theorem gaugeField_positive (n : ℕ) (x : Fin n → ℝ) :
     0 < gaugeField n x := by
   unfold gaugeField; positivity
+
 
 theorem gaugeField_le_two (n : ℕ) (x : Fin n → ℝ) :
     gaugeField n x ≤ 2 := by
@@ -37,15 +24,16 @@ theorem gaugeField_le_two (n : ℕ) (x : Fin n → ℝ) :
   exact div_le_self (by positivity)
     (le_add_of_nonneg_right (Finset.sum_nonneg fun _ _ => sq_nonneg _))
 
+
 theorem gaugeField_sq (n : ℕ) (x : Fin n → ℝ) :
     gaugeField n x ^ 2 = 4 / (1 + ∑ i, (x i) ^ 2) ^ 2 := by
   unfold gaugeField; field_simp; ring
 
-/-! ## Part 2: Gauge-Invariant Attention Kernel -/
 
 def gaugeInvariantKernel (n : ℕ) (x y : Fin n → ℝ) : ℝ :=
   gaugeField n x * gaugeField n y *
     (4 * ∑ i, x i * y i + (∑ i, (x i) ^ 2 - 1) * (∑ i, (y i) ^ 2 - 1))
+
 
 theorem gaugeInvariantKernel_symm (n : ℕ) (x y : Fin n → ℝ) :
     gaugeInvariantKernel n x y = gaugeInvariantKernel n y x := by
@@ -54,24 +42,25 @@ theorem gaugeInvariantKernel_symm (n : ℕ) (x y : Fin n → ℝ) :
     Finset.sum_congr rfl fun i _ => mul_comm (x i) (y i)
   rw [h1]; ring
 
-/-! ## Part 3: The Gauge Connection -/
 
 def gaugeConnection (n : ℕ) (x : Fin n → ℝ) (i : Fin n) : ℝ :=
   -2 * x i / (1 + ∑ j, (x j) ^ 2)
+
 
 theorem gaugeConnection_parity (n : ℕ) (x : Fin n → ℝ) (i : Fin n) :
     gaugeConnection n (fun j => -x j) i = -gaugeConnection n x i := by
   unfold gaugeConnection; simp [neg_sq]; ring
 
+
 theorem gaugeConnection_zero (n : ℕ) (i : Fin n) :
     gaugeConnection n (fun _ => 0) i = 0 := by
   unfold gaugeConnection; simp
 
-/-! ## Part 4: Gauge Curvature -/
 
 def gaugeCurvatureComponent (n : ℕ) (x : Fin n → ℝ) (i j : Fin n) : ℝ :=
   let D := 1 + ∑ k, (x k) ^ 2
   (if i = j then -2 * D + 4 * (x i) ^ 2 else 4 * x i * x j) / D ^ 2
+
 
 theorem gaugeCurvature_antisymm (n : ℕ) (x : Fin n → ℝ) (i j : Fin n)
     (hij : i ≠ j) :
@@ -80,15 +69,16 @@ theorem gaugeCurvature_antisymm (n : ℕ) (x : Fin n → ℝ) (i j : Fin n)
   simp [hij, Ne.symm hij]
   ring
 
+
 theorem gaugeCurvature_zero_origin (n : ℕ) (i j : Fin n) (hij : i ≠ j) :
     gaugeCurvatureComponent n (fun _ => 0) i j = 0 := by
   unfold gaugeCurvatureComponent; simp [hij]
 
-/-! ## Part 5: Gauge-Covariant Gradient -/
 
 def gaugeCovariantGrad (n : ℕ) (x : Fin n → ℝ)
     (grad : Fin n → ℝ) (fval : ℝ) : Fin n → ℝ :=
   fun i => grad i + gaugeConnection n x i * fval
+
 
 theorem gaugeCovariantGrad_bounded (n : ℕ) (x : Fin n → ℝ)
     (grad : Fin n → ℝ) (fval : ℝ) (i : Fin n)
@@ -105,11 +95,11 @@ theorem gaugeCovariantGrad_bounded (n : ℕ) (x : Fin n → ℝ)
         apply add_le_add hgrad
         exact mul_le_mul hconn hfval (abs_nonneg _) hC
 
-/-! ## Part 6: The Gauge Action -/
 
 def gaugeAction (seqLen n : ℕ) (X : Fin seqLen → Fin n → ℝ) : ℝ :=
   ∑ i : Fin seqLen, ∑ j : Fin seqLen,
     (gaugeField n (X i) * gaugeField n (X j)) ^ 2
+
 
 theorem gaugeAction_nonneg (seqLen n : ℕ) (X : Fin seqLen → Fin n → ℝ) :
     0 ≤ gaugeAction seqLen n X := by
@@ -117,23 +107,26 @@ theorem gaugeAction_nonneg (seqLen n : ℕ) (X : Fin seqLen → Fin n → ℝ) :
   exact Finset.sum_nonneg fun _ _ =>
     Finset.sum_nonneg fun _ _ => by positivity
 
-/-! ## Part 7: Gauge Symmetry Breaking and Mass Generation -/
 
 def effectiveMass (n : ℕ) (x : Fin n → ℝ) : ℝ :=
   1 / gaugeField n x
+
 
 theorem effectiveMass_formula (n : ℕ) (x : Fin n → ℝ) :
     effectiveMass n x = (1 + ∑ i, (x i) ^ 2) / 2 := by
   unfold effectiveMass gaugeField
   rw [one_div, inv_div]
 
+
 theorem effectiveMass_at_origin (n : ℕ) :
     effectiveMass n (fun _ => 0) = 1 / 2 := by
   unfold effectiveMass gaugeField; simp
+
 
 theorem effectiveMass_pos (n : ℕ) (x : Fin n → ℝ) :
     0 < effectiveMass n x := by
   unfold effectiveMass
   exact div_pos one_pos (gaugeField_positive n x)
+
 
 end

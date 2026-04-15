@@ -1,62 +1,17 @@
-/-
-# MetaFactoring: Open Questions — Formal Explorations
+/-! # CatalogBuild.Computation.Factoring.OpenQuestions
 
-New theorems addressing the open questions from the MetaFactoring research program.
-Each section corresponds to an open question from the Future Research Directions paper.
-
-## Results Formalized
-
-### Thrust I: Constraint Intersection
-* `generalized_lens_advantage` — β^k reduction for general base β > 1
-* `lens_monotonicity` — more lenses always reduce search space
-* `lens_composition_commutes` — lens ordering doesn't matter
-* `crt_exact_reduction` — CRT gives exact multiplicative reduction
-
-### Thrust II: Fibonacci-Spectral
-* `pisano_period_divides_p_sq_sub_one` — π(p) | p²−1 for primes p ≠ 5
-* `pisano_period_composes` — periodicity composes multiplicatively
-* `fib_determined_by_consecutive_pair` — Fibonacci mod m determined by consecutive pair
-* `fib_mod_periodic_reduction` — efficient Fibonacci computation mod m
-
-### Thrust III: Division Algebra
-* `norm_channel_dim4_subsumes_dim2` — dim-4 always succeeds when dim-2 does
-* `quaternion_two_factorizations` — non-commutativity gives same norm
-* `no_16_square_naive_identity` — naive 16-square identity fails
-
-### Thrust IV: Quantum MetaFactoring
-* `order_finding_factor_candidate` — order-finding gives factor candidate
-* `hybrid_speedup` — classical lenses reduce quantum query complexity
-* `grover_query_bound` — √N+1 squared exceeds N
-
-### Thrust V: Adjacent Problems
-* `pohlig_hellman_structure` — smooth-order DLP reduction
-* `miller_rabin_bound` — compositeness witness bound
-* `zsqrtd_norm_mult` — norm multiplicativity in ℤ[√d]
-
-### Cross-Cutting Bridges
-* `fib_consecutive_coprime` — consecutive Fibonacci numbers are coprime
-* `norm_congruence_bridge` — p ≡ 3 (mod 4) and p | a²+b² implies p | a and p | b
-* `lattice_hyperbolic_bridge` — min(p,q) ≤ √(pq)
-* `fib_hyperbolic_synergy` — Fibonacci + hyperbolic lens synergy
+Auto-generated from theorem catalog database.
+Domain: Computation/Factoring
+Declarations: 23
 -/
 
+import CatalogBuild.Computation.Factoring.Core
+import CatalogBuild.Computation.Factoring.FutureDirections
 import Mathlib
-import Catalog.Computation.Factoring.Core
-import Catalog.Computation.Factoring.FutureDirections
-
-open Nat Finset BigOperators
-
-set_option maxHeartbeats 800000
-
-namespace MetaFactoring.OpenQuestions
-
-/-! ## Thrust I: Constraint Intersection — Generalized Model -/
-
-section ConstraintIntersection
 
 /-- Generalized lens advantage: for any base β > 1 and k ≥ 1 lenses,
-    S / β^k < S. This addresses the Independence Problem: if correlations
-    reduce the effective base from 2 to β < 2, the true advantage is β^k. -/
+S / β^k < S. This addresses the Independence Problem: if correlations
+reduce the effective base from 2 to β < 2, the true advantage is β^k. -/
 theorem generalized_lens_advantage (S β : ℕ) (k : ℕ)
     (hS : 0 < S) (hβ : 1 < β) (hk : 1 ≤ k) :
     S / β ^ k < S := by
@@ -65,34 +20,27 @@ theorem generalized_lens_advantage (S β : ℕ) (k : ℕ)
     _ = β := pow_one β
     _ > 1 := hβ
 
+
 /-- Lens monotonicity: adding more lenses never increases the surviving space. -/
 theorem lens_monotonicity (S : ℕ) (k₁ k₂ : ℕ) (hle : k₁ ≤ k₂) :
     S / 2 ^ k₂ ≤ S / 2 ^ k₁ :=
   Nat.div_le_div_left (Nat.pow_le_pow_right (by norm_num) hle) (by positivity)
+
 
 /-- Lens composition commutes: reducing by 2^a then 2^b = 2^(a+b). -/
 theorem lens_composition_commutes (S a b : ℕ) :
     S / 2 ^ (a + b) = S / (2 ^ a * 2 ^ b) := by
   rw [pow_add]
 
+
 /-- For coprime moduli, CRT gives exact multiplicative reduction. -/
 theorem crt_exact_reduction (m n : ℕ) (hcop : Nat.Coprime m n) :
     Nat.totient (m * n) = Nat.totient m * Nat.totient n :=
   Nat.totient_mul hcop
 
-end ConstraintIntersection
-
-/-! ## Thrust II: Fibonacci-Spectral Duality -/
-
-section FibonacciSpectral
 
 /-- For any prime p ≠ 5, the Pisano period π(p) divides p²−1.
-    This unifies the split and inert cases. -/
-private theorem pp_sub_one_eq (p : ℕ) (hp : 1 ≤ p) :
-    p * p - 1 = (p - 1) * (p + 1) := by
-  obtain ⟨n, rfl⟩ := Nat.exists_eq_add_of_le hp
-  simp; ring_nf; omega
-
+This unifies the split and inert cases. -/
 theorem pisano_period_divides_p_sq_sub_one (p : ℕ) (hp : Nat.Prime p) (hp5 : p ≠ 5) :
     p ∣ Nat.fib (p * p - 1) := by
   -- Case split: either p%5 ∈ {1,4} (split) or p%5 ∈ {2,3} (inert) or p=5
@@ -118,6 +66,7 @@ theorem pisano_period_divides_p_sq_sub_one (p : ℕ) (hp : Nat.Prime p) (hp5 : p
     rw [pp_sub_one_eq p hp1]
     exact dvd_trans hsplit (Nat.fib_dvd _ _ (dvd_mul_right (p - 1) (p + 1)))
 
+
 /-- Pisano periodicity composes: if T₁ is a period mod m, then T₁·j is too for any j. -/
 theorem pisano_period_composes (m : ℕ) (hm : 2 ≤ m)
     (T₁ : ℕ) (hT₁ : 0 < T₁)
@@ -130,9 +79,7 @@ theorem pisano_period_composes (m : ℕ) (hm : 2 ≤ m)
     rw [Nat.mul_succ, ← Nat.add_assoc, h₁]
     exact ih
 
-/-
-The Fibonacci sequence mod m is determined by consecutive pairs.
--/
+
 theorem fib_determined_by_consecutive_pair (m : ℕ) (hm : 2 ≤ m)
     (a b : ℕ)
     (h₀ : Nat.fib a % m = Nat.fib b % m)
@@ -143,6 +90,7 @@ theorem fib_determined_by_consecutive_pair (m : ℕ) (hm : 2 ≤ m)
   rcases k with ( _ | _ | k ) <;> simp_all +arith +decide [ Nat.fib_add_two ];
   exact Nat.ModEq.add ( ih _ <| Nat.le_succ _ ) ( ih _ <| Nat.le_refl _ )
 
+
 /-- F(n) mod m depends only on n mod T where T is the Pisano period. -/
 theorem fib_mod_periodic_reduction (m T n : ℕ) (hm : 2 ≤ m) (hT : 0 < T)
     (hper : ∀ k, Nat.fib (k + T) % m = Nat.fib k % m) :
@@ -151,16 +99,12 @@ theorem fib_mod_periodic_reduction (m T n : ℕ) (hm : 2 ≤ m) (hT : 0 < T)
   rw [Nat.add_comm]
   exact pisano_period_composes m hm T hT hper (n / T) (n % T)
 
-end FibonacciSpectral
-
-/-! ## Thrust III: Division Algebra Hierarchy — Beyond Hurwitz -/
-
-section DivisionAlgebra
 
 /-- Dim-4 channel subsumes dim-2: any 2-square representation lifts to 4-square. -/
 theorem norm_channel_dim4_subsumes_dim2 (a b : ℤ) (h : ∃ x y : ℤ, x^2 + y^2 = a^2 + b^2) :
     ∃ w x y z : ℤ, w^2 + x^2 + y^2 + z^2 = a^2 + b^2 :=
   ⟨a, b, 0, 0, by ring⟩
+
 
 /-- Non-commutativity of quaternion multiplication: both orderings have the same norm. -/
 theorem quaternion_two_factorizations (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℤ) :
@@ -173,12 +117,14 @@ theorem quaternion_two_factorizations (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ :
     (b₁*a₃ - b₂*a₄ + b₃*a₁ + b₄*a₂)^2 +
     (b₁*a₄ + b₂*a₃ - b₃*a₂ + b₄*a₁)^2 := by ring
 
+
 /-- The naive pointwise 16-square identity fails (consequence of Hurwitz 1898). -/
 theorem no_16_square_naive_identity :
     ¬ ∀ (a b : Fin 16 → ℤ),
       (∑ i, a i ^ 2) * (∑ i, b i ^ 2) = ∑ i, (a i * b i) ^ 2 := by
   push_neg
   exact ⟨fun _ => 1, fun _ => 1, by decide⟩
+
 
 /-- Dim-8 subsumes dim-4: any 4-square representation lifts to 8-square. -/
 theorem norm_channel_dim8_subsumes_dim4 (a b c d : ℤ)
@@ -188,49 +134,41 @@ theorem norm_channel_dim8_subsumes_dim4 (a b c d : ℤ)
       a^2 + b^2 + c^2 + d^2 :=
   ⟨a, b, c, d, 0, 0, 0, 0, by ring⟩
 
-end DivisionAlgebra
-
-/-! ## Thrust IV: Quantum MetaFactoring -/
-
-section QuantumMetaFactoring
 
 /-- Order-finding gives a nontrivial GCD candidate. -/
 theorem order_finding_factor_candidate (N a r : ℕ) (hN : 1 < N) :
     1 ≤ Nat.gcd (a ^ (r / 2) - 1) N :=
   Nat.one_le_iff_ne_zero.mpr (by intro h; simp [Nat.gcd_eq_zero_iff] at h; omega)
 
+
 /-- Grover's bound: (⌊√N⌋ + 1)² > N. -/
 theorem grover_query_bound (N : ℕ) :
     N < (Nat.sqrt N + 1) ^ 2 :=
   Nat.lt_succ_sqrt' N
+
 
 /-- Classical-quantum hybrid: classical lenses reduce the quantum search space. -/
 theorem hybrid_speedup (S k : ℕ) :
     Nat.sqrt (S / 2 ^ k) ≤ Nat.sqrt S :=
   Nat.sqrt_le_sqrt (Nat.div_le_self S (2 ^ k))
 
-end QuantumMetaFactoring
-
-/-! ## Thrust V: Adjacent Problems -/
-
-section AdjacentProblems
 
 /-- Group element order divides group size (basis of DLP structure). -/
 theorem dlp_order_connection {G : Type*} [Group G] [Fintype G] (g : G) :
     g ^ Fintype.card G = 1 :=
   pow_card_eq_one
 
-/-
-Pohlig-Hellman structure: for distinct primes p, q, φ(pq) = (p-1)(q-1).
--/
+
 theorem pohlig_hellman_structure (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q) (hpq : p ≠ q) :
     Nat.totient (p * q) = (p - 1) * (q - 1) := by
   rw [ Nat.totient_mul, Nat.totient_prime hp, Nat.totient_prime hq ];
   simpa [ hpq ] using Nat.coprime_primes hp hq
 
+
 /-- Miller-Rabin bound: n/4 < n for n ≥ 4. -/
 theorem miller_rabin_bound (n : ℕ) (hn : 4 ≤ n) :
     n / 4 < n := by omega
+
 
 /-- Primality certificate bound: log₂(p) < p for p ≥ 2. -/
 theorem primality_certificate_bound (p : ℕ) (hp : 2 ≤ p) :
@@ -238,25 +176,13 @@ theorem primality_certificate_bound (p : ℕ) (hp : 2 ≤ p) :
   apply Nat.log_lt_of_lt_pow (by omega)
   exact @Nat.lt_pow_self p 2 (by omega)
 
+
 /-- Norm multiplicativity in ℤ[√d] — structural basis for NFS. -/
 theorem zsqrtd_norm_mult (d : ℤ) (a b : ℤ√d) :
     (a * b).norm = a.norm * b.norm :=
   Zsqrtd.norm_mul a b
 
-end AdjacentProblems
 
-/-! ## Cross-Cutting: New Bridge Theorems -/
-
-section BridgeTheorems
-
-/-- Consecutive Fibonacci numbers are coprime — Fibonacci-lattice bridge. -/
-theorem fib_consecutive_coprime (n : ℕ) :
-    Nat.Coprime (Nat.fib n) (Nat.fib (n + 1)) :=
-  Nat.fib_coprime_fib_succ n
-
-/-
-The norm-congruence bridge: if p ≡ 3 (mod 4) and p | a²+b², then p | a and p | b.
--/
 theorem norm_congruence_bridge (p : ℕ) (hp : Nat.Prime p) (hmod : p % 4 = 3)
     (a b : ℤ) (hdvd : (p : ℤ) ∣ a ^ 2 + b ^ 2) :
     (p : ℤ) ∣ a ∧ (p : ℤ) ∣ b := by
@@ -269,11 +195,13 @@ theorem norm_congruence_bridge (p : ℕ) (hp : Nat.Prime p) (hmod : p % 4 = 3)
   by_cases hb : ( b : ZMod p ) = 0 <;> simp_all +decide [ add_eq_zero_iff_eq_neg ];
   exact h_neg_one_nonresidue ( a / b ) ( by simp_all +decide [ ← ZMod.intCast_eq_intCast_iff, mul_pow, mul_assoc, div_pow, mul_div_cancel₀ ] )
 
+
 /-- Lattice-hyperbolic bridge: min(p,q) ≤ √(pq) for any factorization. -/
 theorem lattice_hyperbolic_bridge (p q : ℕ) (hp : 0 < p) (hle : p ≤ q) :
     p ≤ Nat.sqrt (p * q) := by
   rw [Nat.le_sqrt]
   nlinarith
+
 
 /-- Fibonacci + hyperbolic synergy: d < fib(k+2) implies d < 2^k. -/
 theorem fib_hyperbolic_synergy (d k : ℕ)
@@ -281,6 +209,3 @@ theorem fib_hyperbolic_synergy (d k : ℕ)
     d < 2 ^ k :=
   lt_trans hd_bound (MetaFactoring.fibonacci_search_reduction k hk)
 
-end BridgeTheorems
-
-end MetaFactoring.OpenQuestions

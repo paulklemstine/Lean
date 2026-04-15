@@ -1,28 +1,17 @@
-/-
-# Interval Arithmetic for EML and Monotonicity Properties
+/-! # CatalogBuild.EML.IntervalEML
 
-## Overview
-This file formalizes the monotonicity structure of the EML operator,
-which is the foundation for interval arithmetic on the OISCC.
-
-Key results:
-- EML is strictly increasing in x (first argument)
-- EML is strictly decreasing in y (second argument) on (0, ∞)
-- Interval enclosure theorem for EML
-- EML iteration bounds
-- Diagonal EML map properties
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 12
 -/
 
 import Mathlib
 
 noncomputable section
 
-open Real Set Filter Topology
-
 /-- The real EML operator: eml(x, y) = exp(x) - ln(y). -/
 def emlI (x y : ℝ) : ℝ := Real.exp x - Real.log y
 
-/-! ## Monotonicity in the First Argument -/
 
 /-- EML is strictly increasing in its first argument. -/
 theorem emlI_strictMono_fst (y : ℝ) : StrictMono (fun x => emlI x y) := by
@@ -30,11 +19,11 @@ theorem emlI_strictMono_fst (y : ℝ) : StrictMono (fun x => emlI x y) := by
   simp only [emlI]
   linarith [Real.exp_strictMono hab]
 
+
 /-- EML is monotone (non-decreasing) in its first argument. -/
 theorem emlI_mono_fst (y : ℝ) : Monotone (fun x => emlI x y) :=
   (emlI_strictMono_fst y).monotone
 
-/-! ## Monotonicity in the Second Argument -/
 
 /-- EML is strictly decreasing in its second argument on (0, ∞). -/
 theorem emlI_strictAnti_snd (x : ℝ) : StrictAntiOn (fun y => emlI x y) (Ioi 0) := by
@@ -42,12 +31,10 @@ theorem emlI_strictAnti_snd (x : ℝ) : StrictAntiOn (fun y => emlI x y) (Ioi 0)
   simp only [emlI]
   linarith [Real.log_lt_log (mem_Ioi.mp ha) hab]
 
-/-! ## Interval Enclosure -/
 
 /-- **Interval EML Theorem**: For x ∈ [x_lo, x_hi] and y ∈ [y_lo, y_hi] with y_lo > 0,
-    the EML output lies in [eml(x_lo, y_hi), eml(x_hi, y_lo)].
-
-    This is the foundation of verified interval arithmetic on the OISCC. -/
+the EML output lies in [eml(x_lo, y_hi), eml(x_hi, y_lo)].
+This is the foundation of verified interval arithmetic on the OISCC. -/
 theorem emlI_interval_enclosure
     {x x_lo x_hi y y_lo y_hi : ℝ}
     (hx_lo : x_lo ≤ x) (hx_hi : x ≤ x_hi)
@@ -65,7 +52,6 @@ theorem emlI_interval_enclosure
       Real.log_le_log hy_lo_pos hy_lo
     linarith
 
-/-! ## EML Value Bounds -/
 
 /-- EML(x, y) ≥ 1 + x - ln(y) (from exp(x) ≥ 1 + x). -/
 theorem emlI_lower_bound (x y : ℝ) :
@@ -73,33 +59,31 @@ theorem emlI_lower_bound (x y : ℝ) :
   simp only [emlI]
   linarith [Real.add_one_le_exp x]
 
+
 /-- For y ≥ 1, EML(0, y) ≤ 1. -/
 theorem emlI_zero_ge_one (y : ℝ) (hy : 1 ≤ y) :
     emlI 0 y ≤ 1 := by
   simp only [emlI, Real.exp_zero]
   linarith [Real.log_nonneg hy]
 
+
 /-- For any y, EML(0, y) = 1 - ln(y). -/
 theorem emlI_at_zero (y : ℝ) :
     emlI 0 y = 1 - Real.log y := by
   simp [emlI, Real.exp_zero]
 
-/-! ## EML Composition Properties -/
 
 /-- Double exp tower: eml(eml(x, 1), 1) = exp(exp(x)). -/
 theorem emlI_double_exp (x : ℝ) :
     emlI (emlI x 1) 1 = Real.exp (Real.exp x) := by
   simp [emlI, Real.log_one]
 
+
 /-- Triple exp tower: eml(eml(eml(x, 1), 1), 1) = exp(exp(exp(x))). -/
 theorem emlI_triple_exp (x : ℝ) :
     emlI (emlI (emlI x 1) 1) 1 = Real.exp (Real.exp (Real.exp x)) := by
   simp [emlI, Real.log_one]
 
-/-! ## Diagonal EML Map -/
-
-/-- The diagonal EML map: d(x) = eml(x, x) = exp(x) - ln(x). -/
-def emlDiag (x : ℝ) : ℝ := emlI x x
 
 /-- The diagonal map is bounded below by 1 for 0 < x ≤ 1. -/
 theorem emlDiag_ge_one (x : ℝ) (hx : 0 < x) (hx1 : x ≤ 1) :
@@ -109,16 +93,7 @@ theorem emlDiag_ge_one (x : ℝ) (hx : 0 < x) (hx1 : x ≤ 1) :
   have h2 : Real.log x ≤ 0 := Real.log_nonpos (le_of_lt hx) hx1
   linarith
 
-/-- The second derivative of the diagonal map is positive:
-    d''(x) = exp(x) + 1/x² > 0 for x > 0. -/
-theorem emlDiag_second_deriv_pos (x : ℝ) (hx : 0 < x) :
-    0 < Real.exp x + 1 / x ^ 2 := by
-  positivity
 
-/-
-The diagonal EML map has no fixed point on (0, ∞):
-    exp(x) - ln(x) > x for all x > 0.
--/
 theorem emlDiag_no_fixed_point (x : ℝ) (hx : 0 < x) :
     emlDiag x > x := by
   -- We need exp(x) - ln(x) > x for x > 0.
@@ -128,5 +103,6 @@ theorem emlDiag_no_fixed_point (x : ℝ) (hx : 0 < x) :
     rw [ show x = ( x - 1 ) + 1 by ring, Real.exp_add ];
     have := Real.exp_one_gt_d9.le ; norm_num1 at * ; nlinarith [ Real.log_le_sub_one_of_pos ( by linarith : 0 < x - 1 + 1 ) ];
   exact h_exp_ln_x_gt_x x hx
+
 
 end

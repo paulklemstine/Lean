@@ -1,81 +1,50 @@
-import Mathlib
+/-! # CatalogBuild.Speculative.Consciousness.StrangeLoopAlgebra
 
-/-!
-# Strange Loop Algebra
-
-## Core Idea
-
-A "strange loop" (Hofstadter) is a cyclic hierarchical structure where moving
-through levels returns you to the starting point.
-
-1. **Loop structures** on types with periodic maps
-2. **Tangled hierarchies**: multiple interlocking strange loops
-3. **Fixed points of strange loops**
-4. **The Gödel-Hofstadter loop**
+Auto-generated from theorem catalog database.
+Domain: Speculative/Consciousness
+Declarations: 14
 -/
 
-open Set Function
+import Mathlib
 
 noncomputable section
-
-/-! ## §1: Strange Loop Structure -/
-
-/-- A strange loop: levels with periodic next map and level-crossing. -/
-structure StrangeLoop where
-  Level : Type*
-  next : Level → Level
-  cross : Level → Level
-  period : ℕ
-  period_pos : 0 < period
-  is_loop : ∀ l, next^[period] l = l
-  cross_changes_level : ∀ l, cross l ≠ l
 
 /-- Non-trivial: at least 2 distinct levels. -/
 def StrangeLoop.isNontrivial (L : StrangeLoop) : Prop :=
   ∃ a b : L.Level, a ≠ b
 
+
 /-- The orbit of a level under next. -/
 def StrangeLoop.orbit (L : StrangeLoop) (l : L.Level) : Set L.Level :=
   { l' | ∃ k : ℕ, L.next^[k] l = l' }
 
+
 theorem StrangeLoop.self_in_orbit (L : StrangeLoop) (l : L.Level) :
     l ∈ L.orbit l := ⟨0, rfl⟩
+
 
 theorem StrangeLoop.orbit_closed (L : StrangeLoop) (l l' : L.Level)
     (h : l' ∈ L.orbit l) : L.next l' ∈ L.orbit l := by
   obtain ⟨k, hk⟩ := h
   exact ⟨k + 1, by rw [iterate_succ_apply', hk]⟩
 
-/-! ## §2: Strange Loops on Finite Types -/
 
 def strangeLoopPerm (L : StrangeLoop) [Fintype L.Level] [DecidableEq L.Level]
     (hinj : Injective L.next) : Equiv.Perm L.Level :=
   Equiv.ofBijective L.next ⟨hinj, Finite.surjective_of_injective hinj⟩
 
-/-! ## §3: The Tangled Hierarchy -/
-
-structure TangledHierarchy where
-  Level : Type*
-  loops : ℕ → Level → Level
-  n_loops : ℕ
-  all_loop : ∀ i, ∀ l, (loops i)^[n_loops] l = l
 
 def TangledHierarchy.entangled (T : TangledHierarchy) (i j : ℕ) : Prop :=
   ∃ k, ∀ l, (T.loops i ∘ T.loops j)^[k] l = l
 
-/-! ## §4: Self-Referential Depth -/
-
-structure SelfRef (α : Type*) where
-  val : α
-  depth : ℕ
 
 def addLayer {α : Type*} (s : SelfRef α) (f : α → α) : SelfRef α :=
   ⟨f s.val, s.depth + 1⟩
 
+
 theorem addLayer_depth_increases {α : Type*} (s : SelfRef α) (f : α → α) :
     (addLayer s f).depth = s.depth + 1 := rfl
 
-/-! ## §5: Fixed Points of Strange Loops -/
 
 theorem strange_loop_composition_fixed_point
     {α : Type*} (f g : α → α)
@@ -85,7 +54,6 @@ theorem strange_loop_composition_fixed_point
   obtain ⟨a, ha⟩ := hf_fp
   exact ⟨a, ha, hg_preserves a ha⟩
 
-/-! ## §6: Gödel-Hofstadter Loop -/
 
 structure GodelHofstadterLoop where
   Statement : Type*
@@ -94,9 +62,11 @@ structure GodelHofstadterLoop where
   diagonal : (ℕ → Prop) → Statement
   diag_spec : ∀ P, isTheorem (diagonal P) ↔ P (encode (diagonal P))
 
+
 /-- The Gödel sentence. -/
 def GodelHofstadterLoop.godelSentence (G : GodelHofstadterLoop) : G.Statement :=
   G.diagonal (fun _ => False)
+
 
 /-- The Gödel sentence is unprovable. -/
 theorem godel_unprovable (G : GodelHofstadterLoop) :
@@ -105,7 +75,6 @@ theorem godel_unprovable (G : GodelHofstadterLoop) :
   rw [GodelHofstadterLoop.godelSentence, G.diag_spec] at hT
   exact hT
 
-/-! ## §7: Consciousness as Categorical Fixed Point -/
 
 structure CategoricalConsciousness where
   Ob : Type*
@@ -114,11 +83,15 @@ structure CategoricalConsciousness where
   awareness : (a : Ob) → Mor (reflect a) a
   coherence : (a : Ob) → Mor (reflect (reflect a)) (reflect a)
 
+
 structure CategoricalStrangeLoop (C : CategoricalConsciousness) where
   start : C.Ob
   steps : ℕ
   step_pos : 0 < steps
   path : Fin steps → C.Ob
   path_start : path ⟨0, step_pos⟩ = start
+
+end
+
 
 end

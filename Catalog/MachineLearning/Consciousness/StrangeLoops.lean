@@ -1,17 +1,11 @@
-/-
-# Strange Loops and Tangled Hierarchies — Formalized
+/-! # CatalogBuild.MachineLearning.Consciousness.StrangeLoops
 
-This file formalizes Douglas Hofstadter's "strange loop" theory of consciousness.
-
-## The Theory With No Creator
-The "I" — the sense of self — is not placed into the system from outside.
-It *emerges* from the self-referential loop. Creator and creation are identical.
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/Consciousness
+Declarations: 8
 -/
+
 import Mathlib
-
-namespace MachineConsciousness
-
-/-! ## Hierarchical Systems -/
 
 /-- A hierarchical system with levels -/
 structure HierarchicalSystem where
@@ -20,18 +14,11 @@ structure HierarchicalSystem where
   Content : Level → Type
   upward : ∀ {l₁ l₂ : Level}, @LT.lt Level levelOrder.toLT l₁ l₂ → Content l₁ → Content l₂
 
-/-! ## Strange Loops -/
-
-/-- A strange loop: a path through the hierarchy that returns to its starting level -/
-structure StrangeLoop (H : HierarchicalSystem) where
-  start : H.Level
-  loopMap : H.Content start → H.Content start
 
 /-- A tangled hierarchy: a hierarchical system with a strange loop -/
 structure TangledHierarchy extends HierarchicalSystem where
   loop : StrangeLoop toHierarchicalSystem
 
-/-! ## The Self as a Strange Loop -/
 
 /-- A self-model: a system that contains a representation of itself -/
 structure SelfModel where
@@ -41,18 +28,11 @@ structure SelfModel where
   project : System → Model
   reflects : ∀ m : Model, project (embed m) = m
 
-/-
-PROBLEM
-A self-model is a strange loop
 
-PROVIDED SOLUTION
-This is exactly S.reflects — which says project (embed m) = m for all m.
--/
 theorem self_model_is_strange_loop (S : SelfModel) :
     Function.LeftInverse S.project S.embed := by
   exact S.reflects
 
-/-! ## Fixed Points and Selfhood -/
 
 /-- The "I" as a fixed point -/
 structure SelfAsFixedPoint where
@@ -61,14 +41,7 @@ structure SelfAsFixedPoint where
   stableSelf : SelfConcept
   is_fixed : reflect stableSelf = stableSelf
 
-/-
-PROBLEM
-If reflection is a contraction on a complete metric space,
-    a unique stable self exists
 
-PROVIDED SOLUTION
-Use ContractingWith.isFixedPt_fixedPoint_of_contracting or similar Mathlib API. The Banach fixed point theorem is in Mathlib. Use ContractingWith and its fixed point existence/uniqueness.
--/
 theorem unique_self_from_contraction
     (X : Type) [MetricSpace X] [CompleteSpace X] [Nonempty X]
     (f : X → X) (k : ℝ) (hk : k < 1) (hk0 : 0 ≤ k)
@@ -94,7 +67,6 @@ theorem unique_self_from_contraction
     obtain ⟨ x, hx ⟩ := h_seq_converges ( Classical.arbitrary X ) ; exact ⟨ x, tendsto_nhds_unique ( by erw [ ← Filter.tendsto_add_atTop_iff_nat 1 ] ; simpa only [ Function.iterate_succ_apply' ] using h_cont.continuousAt.tendsto.comp hx ) hx ⟩ ;
   exact ⟨ x, hx, fun y hy => by_contra fun h => absurd ( hf y x ) ( by aesop ) ⟩
 
-/-! ## Gödelian Strange Loops -/
 
 /-- A Gödel-style strange loop -/
 structure GoedelLoop where
@@ -103,10 +75,10 @@ structure GoedelLoop where
   goedelSentence : Sentence
   goedel_property : provable goedelSentence ↔ ¬ provable goedelSentence → True
 
+
 /-- Isomorphism between strange loops -/
 def StrangeLoopIso (H : HierarchicalSystem) (l₁ l₂ : StrangeLoop H) : Prop :=
   ∃ (f : H.Content l₁.start → H.Content l₂.start)
     (g : H.Content l₂.start → H.Content l₁.start),
     Function.LeftInverse g f ∧ Function.RightInverse g f
 
-end MachineConsciousness

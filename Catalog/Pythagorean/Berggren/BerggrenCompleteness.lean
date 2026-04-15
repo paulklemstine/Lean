@@ -1,131 +1,113 @@
-import Mathlib
+/-! # CatalogBuild.Pythagorean.Berggren.BerggrenCompleteness
 
-/-!
-# Berggren Tree Completeness: Parent Existence and Descent
-
-## Overview
-
-We formalize key steps toward proving that the Berggren tree generates ALL primitive
-Pythagorean triples. The central result is the **Parent Existence Lemma**: for every
-primitive Pythagorean triple (a,b,c) with a,b,c > 0, exactly one of the three inverse
-Berggren transforms produces a triple with all positive components.
-
-## Main Results
-
-- `parent_hyp_pos`: The parent hypotenuse 3c - 2a - 2b > 0 for any PPT with a,b,c > 0
-- `parent_hyp_lt`: The parent hypotenuse is strictly less than c
-- `invB2_pos_case`: invB₂ produces all-positive output when a+2b > 2c and 2a+b > 2c
-- `parent_exists`: At least one inverse branch yields a valid PPT parent
-- Descent verification for known triples
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Berggren
+Declarations: 33
 -/
 
-/-! ## Basic setup -/
-
-/-- A Pythagorean triple (a,b,c) satisfies a² + b² = c². -/
-def IsPT (a b c : ℤ) : Prop := a ^ 2 + b ^ 2 = c ^ 2
+import Mathlib
 
 /-- Apply inverse Berggren B₁⁻¹ -/
 def invB1 (a b c : ℤ) : ℤ × ℤ × ℤ :=
   (a + 2*b - 2*c, -2*a - b + 2*c, -2*a - 2*b + 3*c)
 
+
 /-- Apply inverse Berggren B₂⁻¹ -/
 def invB2 (a b c : ℤ) : ℤ × ℤ × ℤ :=
   (a + 2*b - 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
+
 
 /-- Apply inverse Berggren B₃⁻¹ -/
 def invB3 (a b c : ℤ) : ℤ × ℤ × ℤ :=
   (-a - 2*b + 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
 
+
 /-- Apply forward Berggren B₁ -/
 def fwdB1 (a b c : ℤ) : ℤ × ℤ × ℤ :=
   (a - 2*b + 2*c, 2*a - b + 2*c, 2*a - 2*b + 3*c)
+
 
 /-- Apply forward Berggren B₂ -/
 def fwdB2 (a b c : ℤ) : ℤ × ℤ × ℤ :=
   (a + 2*b + 2*c, 2*a + b + 2*c, 2*a + 2*b + 3*c)
 
+
 /-- Apply forward Berggren B₃ -/
 def fwdB3 (a b c : ℤ) : ℤ × ℤ × ℤ :=
   (-a + 2*b + 2*c, -2*a + b + 2*c, -2*a + 2*b + 3*c)
 
-/-! ## Forward-Inverse Cancellation -/
 
 theorem invB1_fwdB1 (a b c : ℤ) :
     invB1 (fwdB1 a b c).1 (fwdB1 a b c).2.1 (fwdB1 a b c).2.2 = (a, b, c) := by
   unfold invB1 fwdB1; ext <;> simp <;> ring
 
+
 theorem invB2_fwdB2 (a b c : ℤ) :
     invB2 (fwdB2 a b c).1 (fwdB2 a b c).2.1 (fwdB2 a b c).2.2 = (a, b, c) := by
   unfold invB2 fwdB2; ext <;> simp <;> ring
+
 
 theorem invB3_fwdB3 (a b c : ℤ) :
     invB3 (fwdB3 a b c).1 (fwdB3 a b c).2.1 (fwdB3 a b c).2.2 = (a, b, c) := by
   unfold invB3 fwdB3; ext <;> simp <;> ring
 
+
 theorem fwdB1_invB1 (a b c : ℤ) :
     fwdB1 (invB1 a b c).1 (invB1 a b c).2.1 (invB1 a b c).2.2 = (a, b, c) := by
   unfold invB1 fwdB1; ext <;> simp <;> ring
+
 
 theorem fwdB2_invB2 (a b c : ℤ) :
     fwdB2 (invB2 a b c).1 (invB2 a b c).2.1 (invB2 a b c).2.2 = (a, b, c) := by
   unfold invB2 fwdB2; ext <;> simp <;> ring
 
+
 theorem fwdB3_invB3 (a b c : ℤ) :
     fwdB3 (invB3 a b c).1 (invB3 a b c).2.1 (invB3 a b c).2.2 = (a, b, c) := by
   unfold invB3 fwdB3; ext <;> simp <;> ring
 
-/-! ## Inverse transforms preserve the Pythagorean property -/
 
 theorem invB1_preserves_pt (a b c : ℤ) (h : IsPT a b c) :
     IsPT (invB1 a b c).1 (invB1 a b c).2.1 (invB1 a b c).2.2 := by
   unfold IsPT invB1 at *; nlinarith [h, sq_nonneg a, sq_nonneg b, sq_nonneg c,
     sq_nonneg (a - b), sq_nonneg (a + b), sq_nonneg (a - c), sq_nonneg (b - c)]
 
+
 theorem invB2_preserves_pt (a b c : ℤ) (h : IsPT a b c) :
     IsPT (invB2 a b c).1 (invB2 a b c).2.1 (invB2 a b c).2.2 := by
   unfold IsPT invB2 at *; nlinarith [h, sq_nonneg a, sq_nonneg b, sq_nonneg c,
     sq_nonneg (a - b), sq_nonneg (a + b), sq_nonneg (a - c), sq_nonneg (b - c)]
+
 
 theorem invB3_preserves_pt (a b c : ℤ) (h : IsPT a b c) :
     IsPT (invB3 a b c).1 (invB3 a b c).2.1 (invB3 a b c).2.2 := by
   unfold IsPT invB3 at *; nlinarith [h, sq_nonneg a, sq_nonneg b, sq_nonneg c,
     sq_nonneg (a - b), sq_nonneg (a + b), sq_nonneg (a - c), sq_nonneg (b - c)]
 
-/-! ## Parent Hypotenuse Properties -/
-
-/-- The parent hypotenuse 3c - 2(a+b) is positive for any PPT with a,b,c > 0. -/
-theorem parent_hyp_pos (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
-    (hpt : IsPT a b c) : 0 < -2*a - 2*b + 3*c := by
-  unfold IsPT at hpt
-  nlinarith [sq_nonneg (3*c - 2*a - 2*b), sq_nonneg (a - b), mul_pos ha hb]
-
-/-- The parent hypotenuse is strictly less than c for any PPT with a,b > 0. -/
-theorem parent_hyp_lt (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
-    (hpt : IsPT a b c) : -2*a - 2*b + 3*c < c := by
-  unfold IsPT at hpt
-  nlinarith [sq_nonneg (a + b - c), sq_nonneg (a - b)]
-
-/-! ## Sign Analysis of Inverse Branches -/
 
 /-- The first components of invB1 and invB2 are equal -/
 theorem invB1_invB2_first_eq (a b c : ℤ) :
     (invB1 a b c).1 = (invB2 a b c).1 := by
   unfold invB1 invB2; ring
 
+
 /-- The first component of invB3 is the negation of invB1's first component -/
 theorem invB3_neg_invB1_first (a b c : ℤ) :
     (invB3 a b c).1 = -(invB1 a b c).1 := by
   unfold invB1 invB3; ring
+
 
 /-- The second component of invB1 is the negation of invB2's second component -/
 theorem invB1_neg_invB2_second (a b c : ℤ) :
     (invB1 a b c).2.1 = -(invB2 a b c).2.1 := by
   unfold invB1 invB2; ring
 
+
 /-- The second components of invB2 and invB3 are equal -/
 theorem invB2_invB3_second_eq (a b c : ℤ) :
     (invB2 a b c).2.1 = (invB3 a b c).2.1 := by
   unfold invB2 invB3; ring
+
 
 /-- All three inverse transforms share the same third component (hypotenuse) -/
 theorem inv_same_hyp (a b c : ℤ) :
@@ -133,7 +115,6 @@ theorem inv_same_hyp (a b c : ℤ) :
     (invB2 a b c).2.2 = (invB3 a b c).2.2 := by
   unfold invB1 invB2 invB3; exact ⟨rfl, rfl⟩
 
-/-! ## Case Analysis for Parent Existence -/
 
 /-- If a + 2b > 2c and 2a + b > 2c, then invB2 has all positive components -/
 theorem invB2_pos_case (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
@@ -144,6 +125,7 @@ theorem invB2_pos_case (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
   · show 0 < a + 2 * b - 2 * c; linarith
   · show 0 < 2 * a + b - 2 * c; linarith
 
+
 /-- If a + 2b > 2c and 2a + b < 2c, then invB1 has all positive components -/
 theorem invB1_pos_case (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (hpt : IsPT a b c)
@@ -153,6 +135,7 @@ theorem invB1_pos_case (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
   · show 0 < a + 2 * b - 2 * c; linarith
   · show 0 < -2 * a - b + 2 * c; linarith
 
+
 /-- If a + 2b < 2c and 2a + b > 2c, then invB3 has all positive components -/
 theorem invB3_pos_case (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (hpt : IsPT a b c)
@@ -161,6 +144,7 @@ theorem invB3_pos_case (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
   refine ⟨?_, ?_, parent_hyp_pos a b c ha hb hc hpt⟩
   · show 0 < -a - 2 * b + 2 * c; linarith
   · show 0 < 2 * a + b - 2 * c; linarith
+
 
 /-- The case 2a + b = 2c and a + 2b = 2c simultaneously is impossible for a PPT with a > 0 -/
 theorem no_simultaneous_zero (a b c : ℤ) (ha : 0 < a)
@@ -177,6 +161,7 @@ theorem no_simultaneous_zero (a b c : ℤ) (ha : 0 < a)
   have ha0 : a = 0 := pow_eq_zero_iff (n := 2) (by omega) |>.mp h6
   linarith
 
+
 /-- Both a+2b ≤ 2c and 2a+b ≤ 2c is impossible for a PPT with positive legs -/
 theorem not_both_neg (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
     (hpt : IsPT a b c)
@@ -185,6 +170,7 @@ theorem not_both_neg (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
   nlinarith [sq_nonneg (a - b), sq_nonneg a, sq_nonneg b, sq_nonneg (a + b - c),
     sq_nonneg (2*a + b - 2*c), sq_nonneg (a + 2*b - 2*c)]
 
+
 /-- For the root (3,4,5), no inverse branch gives all-positive components -/
 theorem root_no_parent :
     ¬(0 < (invB1 3 4 5).1 ∧ 0 < (invB1 3 4 5).2.1 ∧ 0 < (invB1 3 4 5).2.2) ∧
@@ -192,56 +178,26 @@ theorem root_no_parent :
     ¬(0 < (invB3 3 4 5).1 ∧ 0 < (invB3 3 4 5).2.1 ∧ 0 < (invB3 3 4 5).2.2) := by
   simp only [invB1, invB2, invB3]; omega
 
-/-
-Main parent existence: for every PPT with a,b,c > 0 and c > 5 (non-root),
-    at least one inverse transform produces all-positive components
--/
-theorem parent_exists (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
-    (hpt : IsPT a b c) (hc5 : c > 5) (hprim : Int.gcd a b = 1) :
-    (0 < (invB1 a b c).1 ∧ 0 < (invB1 a b c).2.1 ∧ 0 < (invB1 a b c).2.2) ∨
-    (0 < (invB2 a b c).1 ∧ 0 < (invB2 a b c).2.1 ∧ 0 < (invB2 a b c).2.2) ∨
-    (0 < (invB3 a b c).1 ∧ 0 < (invB3 a b c).2.1 ∧ 0 < (invB3 a b c).2.2) := by
-  by_cases h1 : a + 2 * b = 2 * c;
-  · -- If $a + 2b = 2c$, then substituting $c = \frac{a + 2b}{2}$ into $a^2 + b^2 = c^2$ gives $3a^2 = 4ab$, so $3a = 4b$ (since $a > 0$).
-    have h_eq : 3 * a = 4 * b := by
-      unfold IsPT at hpt; nlinarith;
-    -- Since $a$ and $b$ are coprime and $3a = 4b$, it follows that $a = 4k$ and $b = 3k$ for some integer $k$.
-    obtain ⟨k, rfl, rfl⟩ : ∃ k : ℤ, a = 4 * k ∧ b = 3 * k := by
-      exact ⟨ a / 4, by omega, by omega ⟩;
-    simp_all +decide [ Int.gcd_mul_left, Int.gcd_mul_right ];
-    grind;
-  · by_cases h2 : 2 * a + b = 2 * c;
-    · -- If $2a + b = 2c$, then substituting $c = (2a + b)/2$ into $a^2 + b^2 = c^2$ gives $3b^2 = 4ab$, so $3b = 4a$ (b>0). So $a = 3t$, $b = 4t$, $c = 5t$. Primitivity (gcd(a,b)=1) forces $t=1$, so $c=5$, contradicting $c > 5$.
-      obtain ⟨t, ht⟩ : ∃ t : ℤ, a = 3 * t ∧ b = 4 * t ∧ c = 5 * t := by
-        use a / 3;
-        have h_eq : 3 * b = 4 * a := by
-          nlinarith only [ ha, hb, hc, h2, hpt.symm ];
-        omega;
-      simp_all +decide [ Int.gcd_mul_left, Int.gcd_mul_right ];
-      grind;
-    · by_cases h3 : a + 2 * b > 2 * c <;> by_cases h4 : 2 * a + b > 2 * c;
-      · exact Or.inr <| Or.inl <| invB2_pos_case a b c ha hb hc hpt h3 h4;
-      · exact Or.inl <| invB1_pos_case a b c ha hb hc hpt h3 <| lt_of_le_of_ne ( le_of_not_gt h4 ) h2;
-      · exact Or.inr <| Or.inr <| invB3_pos_case a b c ha hb hc hpt ( lt_of_le_of_ne ( le_of_not_gt h3 ) h1 ) h4;
-      · exact False.elim <| not_both_neg a b c ha hb hpt ( le_of_not_gt h3 ) ( le_of_not_gt h4 )
-
-/-! ## Verification: Descent from Known Triples -/
 
 /-- (5,12,13) descends to (3,4,5) via invB1 -/
 theorem descent_5_12_13 : invB1 5 12 13 = (3, 4, 5) := by
   unfold invB1; norm_num
 
+
 /-- (21,20,29) descends to (3,4,5) via invB2 -/
 theorem descent_21_20_29 : invB2 21 20 29 = (3, 4, 5) := by
   unfold invB2; norm_num
+
 
 /-- (15,8,17) descends to (3,4,5) via invB3 -/
 theorem descent_15_8_17 : invB3 15 8 17 = (3, 4, 5) := by
   unfold invB3; norm_num
 
+
 /-- (7,24,25) descends to (5,12,13) via invB1 -/
 theorem descent_7_24_25 : invB1 7 24 25 = (5, 12, 13) := by
   unfold invB1; norm_num
+
 
 /-- Two-step descent: (7,24,25) → (5,12,13) → (3,4,5) -/
 theorem descent_7_24_25_full :
@@ -249,9 +205,11 @@ theorem descent_7_24_25_full :
     invB1 t1.1 t1.2.1 t1.2.2 = (3, 4, 5) := by
   unfold invB1; norm_num
 
+
 /-- (9,40,41) descends via invB1 -/
 theorem descent_9_40_41 : invB1 9 40 41 = (7, 24, 25) := by
   unfold invB1; norm_num
+
 
 /-- (119,120,169) descends via invB2 -/
 theorem descent_119_120_169 : invB2 119 120 169 = (21, 20, 29) := by

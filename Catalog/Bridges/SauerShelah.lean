@@ -1,43 +1,26 @@
-import Mathlib
+/-! # CatalogBuild.Bridges.SauerShelah
 
-/-!
-# Formal Sauer–Shelah and Idempotent Collapse Connection
-
-The Sauer–Shelah lemma bounds the maximum number of subsets of {1,...,n} that can
-be shattered by a family of sets with bounded VC dimension. We formalize:
-
-1. The restriction operator and its idempotent property
-2. Shattering monotonicity
-3. Binomial sum bounds
-
-## Open Problem Progress
-
-We formalize the structural connection: the "restriction" operation that
-restricts a family to a subset is idempotent, and the VC dimension measures
-how far the shattering operator is from collapsing to a trivial image.
+Auto-generated from theorem catalog database.
+Domain: Bridges
+Declarations: 12
 -/
 
-noncomputable section
-open Finset
+import Mathlib
 
-/-! ## Restriction Operator -/
+noncomputable section
 
 /-- The restriction of a family to a subset S -/
 def restrictFamily {α : Type*} [DecidableEq α]
     (F : Finset (Finset α)) (S : Finset α) : Finset (Finset α) :=
   F.image (· ∩ S)
 
-/-
-Restricting twice to the same set is idempotent
--/
+
 theorem restrictFamily_idempotent {α : Type*} [DecidableEq α]
     (F : Finset (Finset α)) (S : Finset α) :
     restrictFamily (restrictFamily F S) S = restrictFamily F S := by
   ext; simp +decide [ restrictFamily ]
 
-/-
-The restriction has at most 2^|S| elements
--/
+
 theorem restrictFamily_card_le_pow {α : Type*} [DecidableEq α]
     (F : Finset (Finset α)) (S : Finset α) :
     (restrictFamily F S).card ≤ 2 ^ S.card := by
@@ -45,53 +28,49 @@ theorem restrictFamily_card_le_pow {α : Type*} [DecidableEq α]
   · rw [ Finset.card_powerset ];
   · grind
 
-/-
-Restriction to empty gives {∅} for nonempty families
--/
+
 theorem restrict_empty {α : Type*} [DecidableEq α]
     (F : Finset (Finset α)) (hF : F.Nonempty) :
     restrictFamily F ∅ = {∅} := by
   unfold restrictFamily; aesop;
 
-/-! ## Shattering -/
 
 /-- A family F shatters S if every subset of S appears as a restriction -/
 def Shatters' {α : Type*} [DecidableEq α]
     (F : Finset (Finset α)) (S : Finset α) : Prop :=
   S.powerset ⊆ restrictFamily F S
 
-/-
-Shattering is monotone in the family
--/
+
 theorem shatters_mono' {α : Type*} [DecidableEq α]
     {F G : Finset (Finset α)} (h : F ⊆ G) {S : Finset α}
     (hF : Shatters' F S) : Shatters' G S := by
   exact Set.Subset.trans hF ( Finset.image_subset_image h )
 
-/-
-Every nonempty family shatters the empty set
--/
+
 theorem shatters_empty' {α : Type*} [DecidableEq α]
     (F : Finset (Finset α)) (hF : F.Nonempty) :
     Shatters' F ∅ := by
   simp +decide [ Shatters' ];
   exact Finset.mem_image.2 ⟨ hF.choose, hF.choose_spec, by simp +decide ⟩
 
-/-! ## Binomial Bounds -/
 
 /-- Sum of binomial coefficients up to d -/
 def binomialSum (n d : ℕ) : ℕ :=
   ∑ i ∈ Finset.range (d + 1), n.choose i
 
+
 theorem binomialSum_zero (n : ℕ) : binomialSum n 0 = 1 := by
   simp [binomialSum]
+
 
 theorem binomialSum_full (n : ℕ) : binomialSum n n = 2 ^ n := by
   rw [ ← Nat.sum_range_choose, binomialSum ]
 
+
 theorem binomialSum_mono_d {n d₁ d₂ : ℕ} (h : d₁ ≤ d₂) :
     binomialSum n d₁ ≤ binomialSum n d₂ := by
   exact Finset.sum_le_sum_of_subset ( Finset.range_mono ( by linarith ) )
+
 
 theorem binomialSum_le_pow (n d : ℕ) : binomialSum n d ≤ 2 ^ n := by
   -- We can prove this inequality using the fact that the sum of binomial coefficients up to $d$ is less than or equal to the sum of binomial coefficients up to $n$.
@@ -100,5 +79,6 @@ theorem binomialSum_le_pow (n d : ℕ) : binomialSum n d ≤ 2 ^ n := by
     · exact Finset.sum_le_sum_of_subset ( Finset.range_mono ( Nat.succ_le_succ h ) );
     · rw [ Finset.sum_subset ( Finset.range_mono ( Nat.succ_le_succ ( le_of_not_ge h ) ) ) fun x hx₁ hx₂ => by rw [ Nat.choose_eq_zero_of_lt ] ; aesop ];
   rw [ ← Nat.sum_range_choose ] ; exact h_binom_sum
+
 
 end

@@ -1,40 +1,17 @@
-/-
-  The Algebraic Theory of Space — Lean 4 Formalization
-  =====================================================
+/-! # CatalogBuild.Physics.AlgebraicPhysics.AlgebraicSpaceTheory
 
-  We formalize key results from the Algebraic Theory of Space,
-  demonstrating that spatial concepts emerge from algebraic structures.
-
-  Pillar I:   Points = Maximal ideals (via PrimeSpectrum in Mathlib)
-  Pillar II:  Topology = Zariski topology on Spec(R)
-  Pillar III: Dimension = Krull dimension
-  Pillar IV:  Continuity = Ring homomorphisms (contravariant)
-  Pillar V:   Curvature = Commutator of derivations
+Auto-generated from theorem catalog database.
+Domain: Physics/AlgebraicPhysics
+Declarations: 12
 -/
 
 import Mathlib
 
-open scoped TensorProduct
-
--- ============================================================================
--- PILLAR I: Points as Prime Ideals
--- ============================================================================
-
-section PillarI
-
-/-
-The spectrum functor is contravariant: a ring homomorphism A → B
-    induces a continuous map Spec(B) → Spec(A). This is the algebraic
-    formulation of "maps between spaces reverse in algebra."
--/
 theorem spec_contravariant {R S : Type*} [CommRing R] [CommRing S]
     (f : R →+* S) : Continuous (PrimeSpectrum.comap f) := by
   exact?
 
-/-
-For a field k, Spec(k) has exactly one point: the zero ideal.
-    Algebraically: a field has exactly one prime ideal.
--/
+
 theorem spec_field_unique (k : Type*) [Field k] :
     ∀ (p : PrimeSpectrum k), p = ⟨⊥, Ideal.isPrime_bot⟩ := by
   all_goals generalize_proofs at *;
@@ -44,99 +21,45 @@ theorem spec_field_unique (k : Type*) [Field k] :
   by_cases hx : x = 0 <;> simp +decide [ hx ];
   exact fun h => p.2.ne_top ( by rw [ Ideal.eq_top_iff_one ] ; simpa using p.asIdeal.mul_mem_left x⁻¹ h |> fun h' => by simpa [ hx ] using h' ));
 
-end PillarI
 
--- ============================================================================
--- PILLAR II: Topology from Ideals — The Galois Connection
--- ============================================================================
-
-section PillarII
-
-/-
-The zero locus V(I) is antitone: if I ⊆ J then V(J) ⊆ V(I).
-    Bigger ideals give smaller closed sets.
--/
 theorem zeroLocus_antitone (R : Type*) [CommRing R] (I J : Ideal R)
     (h : I ≤ J) :
     PrimeSpectrum.zeroLocus (J : Set R) ⊆ PrimeSpectrum.zeroLocus (I : Set R) := by
   intro p hp; intro x hx; exact hp (h hx) |> fun h => by aesop;
 
-/-
-The empty set is the zero locus of the whole ring.
--/
+
 theorem zeroLocus_top (R : Type*) [CommRing R] :
     PrimeSpectrum.zeroLocus (Set.univ : Set R) = ∅ := by
   ext ⟨ x, hx ⟩ ; aesop;
 
-end PillarII
 
--- ============================================================================
--- PILLAR III: Dimension from Prime Chains
--- ============================================================================
-
-section PillarIII
-
-/-
-A field has Krull dimension 0 (algebraic dimension of a point).
--/
 theorem krull_dim_field (k : Type*) [Field k] :
     ringKrullDim k = 0 := by
   rw [ eq_comm ] ; aesop;
 
-/-
-A PID that is not a field has Krull dimension 1 (algebraic dimension
-    of a line/curve). This captures the fact that ℤ and k[x] are
-    1-dimensional.
--/
+
 theorem krull_dim_pid (R : Type*) [CommRing R] [IsDomain R]
     [IsPrincipalIdealRing R] (h : ¬ IsField R) :
     ringKrullDim R = 1 := by
   exact?
 
-/-
-Isomorphic rings have equal Krull dimension — dimension is an
-    algebraic invariant.
--/
+
 theorem krull_dim_iso {R S : Type*} [CommRing R] [CommRing S]
     (e : R ≃+* S) : ringKrullDim R = ringKrullDim S := by
   exact?
 
-end PillarIII
 
--- ============================================================================
--- PILLAR IV: Continuity as Ring Homomorphism
--- ============================================================================
-
-section PillarIV
-
-/-
-Composition of ring homomorphisms corresponds to composition of
-    continuous maps on spectra (with reversal).
--/
 theorem spec_comp {R S T : Type*} [CommRing R] [CommRing S] [CommRing T]
     (f : R →+* S) (g : S →+* T) :
     PrimeSpectrum.comap (g.comp f) = (PrimeSpectrum.comap f) ∘ (PrimeSpectrum.comap g) := by
   exact?
 
-/-
-The identity ring homomorphism gives the identity map on Spec.
--/
+
 theorem spec_id (R : Type*) [CommRing R] :
     PrimeSpectrum.comap (RingHom.id R) = id := by
   aesop
 
-end PillarIV
 
--- ============================================================================
--- PILLAR V: Derivations and the Lie Algebra Structure
--- ============================================================================
-
-section PillarV
-
-/-
-A derivation satisfies the Leibniz rule — this is the algebraic
-    version of the product rule for differentiation.
--/
 theorem derivation_leibniz {R A M : Type*}
     [CommRing R] [CommRing A] [Algebra R A]
     [AddCommGroup M] [Module R M] [Module A M] [IsScalarTower R A M]
@@ -144,27 +67,12 @@ theorem derivation_leibniz {R A M : Type*}
     D (a * b) = a • D b + b • D a := by
   convert D.leibniz a b using 1
 
-end PillarV
 
--- ============================================================================
--- SYNTHESIS: Connected Components and Idempotents
--- ============================================================================
-
-section Synthesis
-
-/-
-An element e of a ring is idempotent iff e² = e. Idempotents
-    correspond to connected components of the spectrum: a space is
-    connected iff its ring has no nontrivial idempotents.
--/
 theorem isIdempotentElem_iff (R : Type*) [Ring R] (e : R) :
     IsIdempotentElem e ↔ e * e = e := by
   exact?
 
-/-
-In a connected ring (no nontrivial idempotents), the spectrum
-    is a connected topological space.
--/
+
 theorem spec_connected_of_no_idempotents (R : Type*) [CommRing R]
     [Nontrivial R]
     (h : ∀ e : R, IsIdempotentElem e → e = 0 ∨ e = 1) :
@@ -201,4 +109,3 @@ theorem spec_connected_of_no_idempotents (R : Type*) [CommRing R]
     exact?;
   cases h e he.1 <;> cases h f hf.1 <;> simp_all +decide [ Set.ext_iff ]
 
-end Synthesis

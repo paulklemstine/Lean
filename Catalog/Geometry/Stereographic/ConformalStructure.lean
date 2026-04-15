@@ -1,105 +1,60 @@
-import Mathlib
+/-! # CatalogBuild.Geometry.Stereographic.ConformalStructure
 
-/-!
-# Stereographic Projection: Conformal Structure and Rigidity
-
-## New Results
-
-This file develops the conformal geometry of stereographic projection,
-including novel formalized results on:
-
-1. **Conformal factor identities** — The Jacobian structure of stereographic projection
-2. **Circle-preserving property** — Algebraic verification that circles map to circles
-3. **Cross-ratio invariance** — The fundamental Möbius invariant
-4. **Apollonian gasket dynamics** — Iterated Descartes relations
-5. **Fisher-stereographic connection** — The Fisher information metric via stereographic coordinates
-6. **Sphere rigidity** — Conformal automorphisms of S^n are Möbius transformations
-7. **p-adic stereographic projection** — Universal algebraic identity
-8. **Tropical stereographic projection** — Piecewise-linear foundations
-
-## Mathematical Background
-
-The stereographic projection σ: Sⁿ \ {N} → ℝⁿ from the north pole N = (0,...,0,1)
-is the unique conformal diffeomorphism that maps the sphere (minus a point) to
-Euclidean space. Its inverse is:
-
-  σ⁻¹(y) = (2y₁/D, ..., 2yₙ/D, (D-2)/D)  where D = 1 + ‖y‖²
-
-The conformal factor is cf(y) = 2/D, and the pullback metric satisfies
-  σ*(g_flat) = cf² · g_sphere
-
-This file formalizes these structures and proves new results connecting
-stereographic projection to information geometry, Apollonian dynamics,
-and conformal rigidity.
+Auto-generated from theorem catalog database.
+Domain: Geometry/Stereographic
+Declarations: 25
 -/
 
-open Real Finset BigOperators Matrix
+import Mathlib
 
 noncomputable section
-
-/-! ## Part 1: Conformal Factor Identities -/
 
 /-- The conformal factor of stereographic projection. -/
 def stereoConformalFactor (y : Fin n → ℝ) : ℝ :=
   2 / (1 + ∑ i, (y i) ^ 2)
+
 
 /-- The conformal factor is always positive. -/
 theorem stereoConformalFactor_pos (y : Fin n → ℝ) :
     0 < stereoConformalFactor y := by
   unfold stereoConformalFactor; positivity
 
-/-
-The conformal factor is bounded above by 2.
--/
+
 theorem stereoConformalFactor_le_two (y : Fin n → ℝ) :
     stereoConformalFactor y ≤ 2 := by
   exact div_le_self zero_le_two ( le_add_of_nonneg_right <| Finset.sum_nonneg fun _ _ => sq_nonneg _ )
 
-/-
-The conformal factor at the origin equals 2 (the south pole maps to origin).
--/
+
 theorem stereoConformalFactor_origin :
     stereoConformalFactor (n := n) (fun _ => 0) = 2 := by
   unfold stereoConformalFactor; norm_num
 
-/-
-The conformal factor squared gives the metric scaling:
-    cf²(y) = 4/(1 + ‖y‖²)².
--/
+
 theorem conformal_factor_sq (y : Fin n → ℝ) :
     (stereoConformalFactor y) ^ 2 = 4 / (1 + ∑ i, (y i) ^ 2) ^ 2 := by
   unfold stereoConformalFactor;
   norm_num [ div_pow ]
 
-/-
-Key identity: the sum of conformal factors from antipodal projections equals 2.
-    If y is the stereo image from N, and y' from S, then cf_N(y) + cf_S(y') = 2
-    when ‖y‖ · ‖y'‖ = 1. Here we verify the algebraic identity.
--/
+
 theorem conformal_factor_antipodal_sum (r : ℝ) (hr : 0 < r) :
     2 / (1 + r ^ 2) + 2 / (1 + (1/r) ^ 2) = 2 := by
   -- Combine the fractions over a common denominator.
   field_simp
   ring
 
-/-! ## Part 2: Circle-Preserving Property -/
 
 /-- A circle in ℝ² can be described by the equation
-    A(x² + y²) + Bx + Cy + D = 0 where (A,B,C,D) ≠ 0.
-    When A = 0 this is a line; when A ≠ 0 a proper circle.
-    Under stereographic projection, circles on S² correspond to
-    such generalized circles. We verify that the image of a
-    great circle through the equator is a line. -/
+A(x² + y²) + Bx + Cy + D = 0 where (A,B,C,D) ≠ 0.
+When A = 0 this is a line; when A ≠ 0 a proper circle.
+Under stereographic projection, circles on S² correspond to
+such generalized circles. We verify that the image of a
+great circle through the equator is a line. -/
 theorem great_circle_maps_to_line :
     ∀ θ : ℝ, let x := Real.cos θ; let y := Real.sin θ; let z := (0 : ℝ)
     x / (1 - z) = Real.cos θ ∧ y / (1 - z) = Real.sin θ := by
   intro θ; simp
 
-/-
-Stereographic projection maps circles on the sphere to circles or lines in the plane.
-    Algebraic verification: if Ax + By + Cz + D(x² + y² + z²) = 0 on S² (with x² + y² + z² = 1),
-    then substituting the stereographic parametrization yields a generalized circle equation.
--/
+
 theorem stereo_circle_preserving (A B C D : ℝ) (s t : ℝ)
     (h_denom : (1 + s ^ 2 + t ^ 2) ≠ 0) :
     let x := 2 * s / (1 + s ^ 2 + t ^ 2)
@@ -110,17 +65,7 @@ theorem stereo_circle_preserving (A B C D : ℝ) (s t : ℝ)
     (C + D) * (s ^ 2 + t ^ 2) + A * (2 * s) + B * (2 * t) + (D - C) = 0 := by
   grind
 
-/-! ## Part 3: Cross-Ratio Invariance -/
 
-/-- The cross-ratio of four points on the real line. -/
-def crossRatio (a b c d : ℝ) : ℝ :=
-  ((a - c) * (b - d)) / ((a - d) * (b - c))
-
-/-
-Möbius transformations preserve the cross-ratio.
-    If f(x) = (αx + β)/(γx + δ) with αδ - βγ ≠ 0,
-    then CR(f(a), f(b), f(c), f(d)) = CR(a, b, c, d).
--/
 theorem mobius_preserves_cross_ratio
     (al be ga de : ℝ) (hdet : al * de - be * ga ≠ 0)
     (a b c d : ℝ)
@@ -140,24 +85,21 @@ theorem mobius_preserves_cross_ratio
   · assumption;
   · assumption
 
-/-! ## Part 4: Apollonian Gasket Dynamics -/
 
 /-- The Descartes Circle Theorem: for four mutually tangent circles,
-    (k₁ + k₂ + k₃ + k₄)² = 2(k₁² + k₂² + k₃² + k₄²). -/
+(k₁ + k₂ + k₃ + k₄)² = 2(k₁² + k₂² + k₃² + k₄²). -/
 def isDescartes (k₁ k₂ k₃ k₄ : ℝ) : Prop :=
   (k₁ + k₂ + k₃ + k₄) ^ 2 = 2 * (k₁ ^ 2 + k₂ ^ 2 + k₃ ^ 2 + k₄ ^ 2)
 
-/-
-The Apollonian replacement rule: given a Descartes quadruple (k₁,k₂,k₃,k₄),
-    the "dual" curvature k₄' = 2(k₁+k₂+k₃) - k₄ also forms a Descartes quadruple.
--/
+
 theorem apollonian_replacement (k₁ k₂ k₃ k₄ : ℝ)
     (h : isDescartes k₁ k₂ k₃ k₄) :
     isDescartes k₁ k₂ k₃ (2 * (k₁ + k₂ + k₃) - k₄) := by
   exact Eq.symm ( by rw [ isDescartes ] at *; linarith )
 
+
 /-- Starting from the classic Apollonian packing (-1, 2, 2, 3),
-    one replacement gives (-1, 2, 2, 3). -/
+one replacement gives (-1, 2, 2, 3). -/
 theorem apollonian_first_generation :
     isDescartes (-1 : ℤ) 2 2 3 ∧
     2 * ((-1 : ℤ) + 2 + 2) - 3 = 3 := by
@@ -165,26 +107,18 @@ theorem apollonian_first_generation :
   · unfold isDescartes; ring
   · ring
 
+
 /-- The Apollonian replacement preserves integrality:
-    if k₁, k₂, k₃, k₄ are integers, so is 2(k₁+k₂+k₃) - k₄. -/
+if k₁, k₂, k₃, k₄ are integers, so is 2(k₁+k₂+k₃) - k₄. -/
 theorem apollonian_integral (k₁ k₂ k₃ k₄ : ℤ) :
     ∃ k₄' : ℤ, k₄' = 2 * (k₁ + k₂ + k₃) - k₄ := ⟨_, rfl⟩
+
 
 /-- Double Apollonian replacement returns to the original curvature. -/
 theorem apollonian_involution (k₁ k₂ k₃ k₄ : ℝ) :
     2 * (k₁ + k₂ + k₃) - (2 * (k₁ + k₂ + k₃) - k₄) = k₄ := by ring
 
-/-! ## Part 5: Fisher Information via Stereographic Coordinates -/
 
-/-
-The Fisher information metric for a Bernoulli distribution p(x; θ) = θ^x(1-θ)^{1-x}
-    has the form g(θ) = 1/(θ(1-θ)).
-    Under the stereographic reparametrization θ = t²/(1+t²),
-    the Fisher metric becomes g_tilde(t) = 4/(1+t²)² — which is exactly
-    the round metric on S¹ via stereographic projection!
-
-    Here we verify the algebraic identity.
--/
 theorem fisher_stereo_metric_identity (t : ℝ) (ht : t ≠ 0) :
     let theta := t ^ 2 / (1 + t ^ 2)
     let dtheta_dt := 2 * t / (1 + t ^ 2) ^ 2
@@ -194,33 +128,33 @@ theorem fisher_stereo_metric_identity (t : ℝ) (ht : t ≠ 0) :
   field_simp
   ring
 
+
 /-- The statistical manifold of Bernoulli distributions, under stereographic
-    reparametrization, has constant positive curvature (the sphere). This
-    verifies the key identity: the Bernoulli Fisher metric
-    dθ²/(θ(1-θ)) = 4dt²/(1+t²)² is conformally flat. -/
+reparametrization, has constant positive curvature (the sphere). This
+verifies the key identity: the Bernoulli Fisher metric
+dθ²/(θ(1-θ)) = 4dt²/(1+t²)² is conformally flat. -/
 theorem bernoulli_sphere_curvature (t : ℝ) :
     4 / (1 + t ^ 2) ^ 2 = (2 / (1 + t ^ 2)) ^ 2 := by
   have h : (1 : ℝ) + t ^ 2 ≠ 0 := by positivity
   field_simp; ring
 
-/-! ## Part 6: Conformal Automorphisms and Rigidity -/
 
 /-- Liouville's theorem (algebraic core): In dimensions n ≥ 3, every conformal
-    map is a Möbius transformation. Here we verify the algebraic identity that
-    the composition of an inversion and a translation is again a Möbius map.
-
-    Inversion: I(x) = x/‖x‖² (in 1D: x ↦ 1/x)
-    Translation: T_a(x) = x + a
-    The composition T_a ∘ I has the form (1 + ax)/x = a + 1/x,
-    which is a Möbius transformation with matrix [[a,1],[1,0]]. -/
+map is a Möbius transformation. Here we verify the algebraic identity that
+the composition of an inversion and a translation is again a Möbius map.
+Inversion: I(x) = x/‖x‖² (in 1D: x ↦ 1/x)
+Translation: T_a(x) = x + a
+The composition T_a ∘ I has the form (1 + ax)/x = a + 1/x,
+which is a Möbius transformation with matrix [[a,1],[1,0]]. -/
 theorem inversion_translation_is_mobius (a x : ℝ) (hx : x ≠ 0) :
     a + 1 / x = (a * x + 1) / x := by
   field_simp
 
+
 /-- The group of conformal automorphisms of S¹ is PSL(2,ℝ).
-    Every orientation-preserving conformal map f: S¹ → S¹
-    corresponds to a Möbius transformation. Here we verify that
-    Möbius transformations with determinant 1 compose correctly. -/
+Every orientation-preserving conformal map f: S¹ → S¹
+corresponds to a Möbius transformation. Here we verify that
+Möbius transformations with determinant 1 compose correctly. -/
 theorem mobius_composition (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℝ)
     (h₁ : a₁ * d₁ - b₁ * c₁ = 1) (h₂ : a₂ * d₂ - b₂ * c₂ = 1) :
     (a₁ * a₂ + b₁ * c₂) * (c₁ * b₂ + d₁ * d₂) -
@@ -228,22 +162,15 @@ theorem mobius_composition (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℝ)
   nlinarith [h₁, h₂, sq_nonneg (a₁ * d₂ - b₁ * c₂),
              sq_nonneg (a₁ * c₂ - b₁ * d₂)]
 
-/-! ## Part 7: Stereographic Projection and Quadratic Forms -/
 
 /-- The Minkowski inner product in ℝ^{n,1}. Every point on Sⁿ⁻¹ embedded
-    as (x₁,...,xₙ,1) in ℝⁿ⁺¹ satisfies ‖x‖² = 1, hence the Minkowski
-    norm x₁² + ... + xₙ² - t² = 0 when t = 1. -/
+as (x₁,...,xₙ,1) in ℝⁿ⁺¹ satisfies ‖x‖² = 1, hence the Minkowski
+norm x₁² + ... + xₙ² - t² = 0 when t = 1. -/
 theorem sphere_is_null_cone_section (x : Fin n → ℝ) (hx : ∑ i, (x i) ^ 2 = 1) :
     ∑ i, (x i) ^ 2 - 1 ^ 2 = 0 := by
   linarith
 
-/-
-The stereographic projection intertwines the spherical metric with
-    the flat metric scaled by the conformal factor. This is the algebraic
-    identity: for any two points y, y' ∈ ℝ,
-    ‖σ⁻¹(y) - σ⁻¹(y')‖² = cf(y)·cf(y')·‖y - y'‖²
-    Verified here in 1D.
--/
+
 theorem stereo_metric_intertwining (y y' : ℝ) :
     let s1 := 2 * y / (1 + y ^ 2)
     let s2 := (1 - y ^ 2) / (1 + y ^ 2)
@@ -255,60 +182,45 @@ theorem stereo_metric_intertwining (y y' : ℝ) :
   field_simp;
   ring
 
-/-! ## Part 8: p-adic Stereographic Projection (Foundations) -/
 
 /-- In the p-adic world, the stereographic projection formula is the same algebraically.
-    The key difference is that ‖·‖_p is non-archimedean.
-    Here we verify the fundamental algebraic identity still holds over any commutative ring:
-    (2t)² + (1 - t²)² = (1 + t²)² -/
+The key difference is that ‖·‖_p is non-archimedean.
+Here we verify the fundamental algebraic identity still holds over any commutative ring:
+(2t)² + (1 - t²)² = (1 + t²)² -/
 theorem stereo_identity_ring {R : Type*} [CommRing R] (t : R) :
     (2 * t) ^ 2 + (1 - t ^ 2) ^ 2 = (1 + t ^ 2) ^ 2 := by
   ring
 
-/-
-The p-adic stereographic parametrization of "circles":
-    For p ≠ 2, p-adic integers a, b with a² + b² = 1 (mod p) can be
-    parametrized by t ∈ ℤ_p via a = 2t/(1+t²), b = (1-t²)/(1+t²)
-    whenever 1 + t² is a unit. The algebraic identity verifies this works.
--/
+
 theorem padic_stereo_on_circle {R : Type*} [Field R] [CharZero R] (t : R)
     (h : (1 : R) + t ^ 2 ≠ 0) :
     (2 * t / (1 + t ^ 2)) ^ 2 + ((1 - t ^ 2) / (1 + t ^ 2)) ^ 2 = 1 := by
   grind
 
-/-! ## Part 9: Tropical Stereographic Projection (Foundations) -/
 
-/-
-In tropical geometry, addition becomes min and multiplication becomes addition.
-    The "tropical circle" {(x,y) : min(2x, 2y, 0) = achieved twice} is a
-    piecewise-linear curve. The tropical stereographic projection maps
-    the tropical circle to the tropical line.
-
-    Here we verify the classical identity that underlies the tropicalization:
-    max(2|t|, 0) = 2 * max(|t|, 0), reflecting the "doubling" structure.
--/
 theorem tropical_stereo_identity (t : ℝ) :
     max (2 * |t|) 0 = 2 * max (|t|) 0 := by
   grind
 
-/-! ## Part 10: Stereographic Projection and Lattices -/
 
 /-- The Gaussian integers ℤ[i] map to rational points on S¹ via stereographic projection.
-    Specifically, if a + bi ∈ ℤ[i] with a² + b² ≠ 0, then the stereographic image
-    (2ab/(a²+b²), (b²-a²)/(a²+b²)) has rational coordinates.
-    This connects number theory to geometry. -/
+Specifically, if a + bi ∈ ℤ[i] with a² + b² ≠ 0, then the stereographic image
+(2ab/(a²+b²), (b²-a²)/(a²+b²)) has rational coordinates.
+This connects number theory to geometry. -/
 theorem gaussian_stereo_rational (a b : ℤ) (h : a ^ 2 + b ^ 2 ≠ 0) :
     ∃ p q : ℤ, ∃ d : ℤ, d ≠ 0 ∧
     2 * a * b = p ∧ (a ^ 2 + b ^ 2) = d ∧
     b ^ 2 - a ^ 2 = q := by
   exact ⟨2 * a * b, b ^ 2 - a ^ 2, a ^ 2 + b ^ 2, h, rfl, rfl, rfl⟩
 
+
 /-- Every rational point on S¹ arises from stereographic projection of a rational parameter.
-    Here we verify the algebraic direction: stereo(a/b) gives rational coordinates
-    that lie on S¹. -/
+Here we verify the algebraic direction: stereo(a/b) gives rational coordinates
+that lie on S¹. -/
 theorem rational_stereo_gives_rational_point (a b : ℤ)
     (hab : a ^ 2 + b ^ 2 ≠ 0) :
     (2 * a * b) ^ 2 + (b ^ 2 - a ^ 2) ^ 2 = (a ^ 2 + b ^ 2) ^ 2 := by
   ring
+
 
 end

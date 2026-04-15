@@ -1,25 +1,13 @@
-/-
-  # Full Homomorphic Encryption Oracles
-  ## Formalizing On-Chain FHE Computation
+/-! # CatalogBuild.Cryptography.QuantumSecurity.FHEOracles
 
-  FHE enables computation on encrypted data. When used as blockchain oracles,
-  FHE allows smart contracts to process private inputs without revealing them.
-
-  ### Key Results:
-  - Homomorphic property definitions
-  - Noise growth bounds and maximum circuit depth
-  - FHE prevents sandwich attacks by hiding trade size
-
-  ### References:
-  - Gentry, "Fully Homomorphic Encryption Using Ideal Lattices" (2009)
-  - fhEVM (Zama, 2023)
+Auto-generated from theorem catalog database.
+Domain: Cryptography/QuantumSecurity
+Declarations: 13
 -/
 
 import Mathlib
 
-namespace FHEOracles
-
-/-! ## Abstract FHE Scheme -/
+noncomputable section
 
 structure FHEScheme (Plaintext Ciphertext : Type) where
   encrypt : Plaintext → Ciphertext
@@ -28,19 +16,21 @@ structure FHEScheme (Plaintext Ciphertext : Type) where
   homMul : Ciphertext → Ciphertext → Ciphertext
   decrypt_encrypt : ∀ m, decrypt (encrypt m) = m
 
+
 def IsAdditivelyHomomorphic {P C : Type} [Add P]
     (fhe : FHEScheme P C) : Prop :=
   ∀ a b : P, fhe.decrypt (fhe.homAdd (fhe.encrypt a) (fhe.encrypt b)) = a + b
+
 
 def IsMultiplicativelyHomomorphic {P C : Type} [Mul P]
     (fhe : FHEScheme P C) : Prop :=
   ∀ a b : P, fhe.decrypt (fhe.homMul (fhe.encrypt a) (fhe.encrypt b)) = a * b
 
+
 def IsFullyHomomorphic {P C : Type} [Add P] [Mul P]
     (fhe : FHEScheme P C) : Prop :=
   IsAdditivelyHomomorphic fhe ∧ IsMultiplicativelyHomomorphic fhe
 
-/-! ## Noise Growth Model -/
 
 structure NoisyFHE where
   initialNoise : ℝ
@@ -49,16 +39,17 @@ structure NoisyFHE where
   hMaxNoise : 0 < maxNoise
   hInitial_lt_max : initialNoise < maxNoise
 
+
 theorem additive_noise_bound (nfhe : NoisyFHE) (k : ℕ) :
     0 ≤ (k : ℝ) * nfhe.initialNoise :=
   mul_nonneg (by exact_mod_cast k.zero_le) nfhe.hInitialNoise
+
 
 theorem max_depth_exists (nfhe : NoisyFHE) (hInit : 0 < nfhe.initialNoise) :
     ∃ d : ℕ, (d : ℝ) * nfhe.initialNoise ≥ nfhe.maxNoise := by
   obtain ⟨d, hd⟩ := exists_nat_ge (nfhe.maxNoise / nfhe.initialNoise)
   exact ⟨d, by rwa [ge_iff_le, ← div_le_iff₀ hInit]⟩
 
-/-! ## Private AMM Trade -/
 
 structure PrivateAMMTrade where
   actualAmount : ℝ
@@ -68,8 +59,10 @@ structure PrivateAMMTrade where
   hRY : 0 < poolReserveY
   hAmount : 0 < actualAmount
 
+
 noncomputable def privateTradeOutput (trade : PrivateAMMTrade) : ℝ :=
   trade.poolReserveY * trade.actualAmount / (trade.poolReserveX + trade.actualAmount)
+
 
 theorem private_trade_output_pos (trade : PrivateAMMTrade) :
     0 < privateTradeOutput trade := by
@@ -77,9 +70,7 @@ theorem private_trade_output_pos (trade : PrivateAMMTrade) :
   apply div_pos (mul_pos trade.hRY trade.hAmount)
   linarith [trade.hRX, trade.hAmount]
 
-/-
-FHE prevents sandwich attacks: wrong trade size guess → wrong output
--/
+
 theorem fhe_prevents_sandwich (trade : PrivateAMMTrade)
     (attacker_guess : ℝ) (h_wrong : attacker_guess ≠ trade.actualAmount)
     (hg_pos : 0 < attacker_guess) :
@@ -89,7 +80,6 @@ theorem fhe_prevents_sandwich (trade : PrivateAMMTrade)
   field_simp at h_wrong;
   rw [ eq_div_iff ] at h_wrong <;> nlinarith [ trade.hAmount ]
 
-/-! ## Threshold FHE -/
 
 structure ThresholdParams where
   n : ℕ
@@ -98,8 +88,10 @@ structure ThresholdParams where
   ht : 0 < t
   h_threshold : t ≤ n
 
+
 theorem threshold_security (tp : ThresholdParams) (colluders : Finset (Fin tp.n))
     (h_insufficient : colluders.card < tp.t) :
     colluders.card < tp.t := h_insufficient
 
-end FHEOracles
+
+end

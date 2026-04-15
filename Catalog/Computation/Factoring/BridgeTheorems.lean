@@ -1,64 +1,23 @@
-/-
-# MetaFactoring: Bridge Theorems and Advanced Results
+/-! # CatalogBuild.Computation.Factoring.BridgeTheorems
 
-Formalizations of deeper inter-lens bridge theorems and advanced results
-that connect the seven MetaFactoring lenses.
-
-## Results Formalized
-
-* **Fibonacci-Lattice Bridge:** Cassini's identity, Fibonacci addition formula
-* **Spectral Decomposition:** CRT-based character group decomposition
-* **Quadratic Residue Bridge:** Connecting spectral and norm lenses
-* **Orbit Analysis:** Pigeonhole bound for orbit periodicity
-* **Divisor Analysis:** Bounds on divisor counts
-* **Norm Channel Depth:** Algebraic identities for each norm dimension
-* **Fibonacci-GCD:** gcd(F(m), F(n)) = F(gcd(m,n))
+Auto-generated from theorem catalog database.
+Domain: Computation/Factoring
+Declarations: 9
 -/
 
 import Mathlib
 
-open Nat Finset BigOperators
-
-set_option maxHeartbeats 800000
-
-namespace MetaFactoring.Bridge
-
-/-! ## Fibonacci-Lattice Bridge
-
-The Fibonacci matrix [[1,1],[1,0]]^n has determinant (-1)^n,
-connecting Fibonacci arithmetic to lattice theory. -/
-
-/-
-Cassini's identity: F(n+1)·F(n-1) - F(n)² = (-1)^n.
-    This connects the Fibonacci lens to the lattice lens via determinants.
--/
 theorem cassini_identity (n : ℕ) (hn : 1 ≤ n) :
     (Nat.fib (n + 1) : ℤ) * Nat.fib (n - 1) - (Nat.fib n : ℤ) ^ 2 = (-1) ^ n := by
   rcases n with ( _ | _ | n ) <;> simp_all +decide [ Nat.fib_add_two ];
   induction n <;> norm_num [ pow_succ, Nat.fib_add_two ] at * ; linarith
 
-/-
-The Fibonacci addition formula: F(m+n) = F(m)·F(n+1) + F(m-1)·F(n) for m ≥ 1.
--/
-theorem fib_addition (m n : ℕ) (hm : 1 ≤ m) :
-    Nat.fib (m + n) = Nat.fib m * Nat.fib (n + 1) + Nat.fib (m - 1) * Nat.fib n := by
-  induction' n with n ih generalizing m <;> simp_all +decide [ Nat.fib_add, add_mul, mul_add, Nat.fib_add_two ];
-  convert ih ( m + 1 ) ( by linarith ) using 1 ; ring;
-  cases m <;> simp_all +decide [ Nat.fib_add_two ] ; linarith
-
-/-! ## Spectral Decomposition Bridge
-
-The CRT decomposition of (ℤ/Nℤ)* connects the spectral lens to factor extraction. -/
-
-/-- Euler's totient is multiplicative for coprime arguments. -/
-theorem totient_multiplicative (m n : ℕ) (hmn : Nat.Coprime m n) :
-    Nat.totient (m * n) = Nat.totient m * Nat.totient n :=
-  Nat.totient_mul hmn
 
 /-- For prime p, totient(p) = p - 1. -/
 theorem totient_prime (p : ℕ) (hp : Nat.Prime p) :
     Nat.totient p = p - 1 :=
   Nat.totient_prime hp
+
 
 /-- The order of (ℤ/pℤ)* is p-1 for prime p, connecting to spectral analysis. -/
 theorem units_card_prime (p : ℕ) [Fact (Nat.Prime p)] :
@@ -66,21 +25,12 @@ theorem units_card_prime (p : ℕ) [Fact (Nat.Prime p)] :
   rw [ZMod.card_units_eq_totient]
   exact Nat.totient_prime (Fact.out)
 
-/-! ## Orbit Analysis -/
 
-/-
-The number of distinct elements in any orbit of f : Fin n → Fin n
-    is at most n, establishing the pigeonhole bound for orbit periodicity.
--/
 theorem orbit_size_bound (n : ℕ) (hn : 0 < n) (f : Fin n → Fin n) (x : Fin n) :
     (Finset.image (fun k => f^[k] x) (Finset.range (n + 1))).card ≤ n := by
   exact le_trans ( Finset.card_le_univ _ ) ( by simpa )
 
-/-! ## Divisor Analysis -/
 
-/-
-The minimum factor of a composite n is at most √n.
--/
 theorem min_divisor_bound (n : ℕ) (hn : 1 < n) (hc : ¬ Nat.Prime n) :
     n.minFac ≤ Nat.sqrt n := by
   -- Since n is composite, there exists a factor p such that 1 < p < n. Let's consider the smallest such p.
@@ -89,25 +39,21 @@ theorem min_divisor_bound (n : ℕ) (hn : 1 < n) (hc : ¬ Nat.Prime n) :
   cases' hp₂.2 with q hq;
   exact Nat.le_sqrt.2 ( by nlinarith [ Nat.minFac_le_of_dvd ( by linarith ) ( dvd_of_mul_right_eq _ hq.symm ), Nat.minFac_le_of_dvd ( by nlinarith ) ( dvd_of_mul_left_eq _ hq.symm ) ] )
 
-/-! ## Golden Ratio and Search Reduction -/
 
-/-
-The ratio fib(n+1)/fib(n) is bounded: fib(n+1) ≤ 2 · fib(n) for n ≥ 1.
-    This shows the golden ratio φ ≈ 1.618 < 2.
--/
 theorem fib_ratio_bound (n : ℕ) (hn : 1 ≤ n) :
     Nat.fib (n + 1) ≤ 2 * Nat.fib n := by
   rcases n with ( _ | _ | n ) <;> simp_all +arith +decide [ Nat.fib_add_two ]
+
 
 /-- Fibonacci numbers satisfy the monotonicity property. -/
 theorem fib_monotone (n : ℕ) : Nat.fib n ≤ Nat.fib (n + 1) :=
   Nat.fib_mono (by omega)
 
-/-! ## Norm Channel Depth -/
 
 /-- In dimension 2, two representations give peel equations via the difference identity. -/
 theorem norm_channel_dim2 (a b c d : ℤ) :
     (a*d - b*c) * (a*d + b*c) = a^2 * d^2 - b^2 * c^2 := by ring
+
 
 /-- Quaternion norm is multiplicative (restated for bridge context). -/
 theorem quaternion_norm_multiplicative (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℤ) :
@@ -117,15 +63,3 @@ theorem quaternion_norm_multiplicative (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ 
     (a₁*b₃ - a₂*b₄ + a₃*b₁ + a₄*b₂)^2 +
     (a₁*b₄ + a₂*b₃ - a₃*b₂ + a₄*b₁)^2 := by ring
 
-/-! ## Connecting Fibonacci to Modular Arithmetic -/
-
-/-- The GCD property of Fibonacci: gcd(F(m), F(n)) = F(gcd(m, n)). -/
-theorem fib_gcd (m n : ℕ) : Nat.gcd (Nat.fib m) (Nat.fib n) = Nat.fib (Nat.gcd m n) :=
-  (Nat.fib_gcd m n).symm
-
-/-- Fibonacci divisibility: if n | m then F(n) | F(m). -/
-theorem fib_dvd_of_dvd (m n : ℕ) (h : n ∣ m) :
-    Nat.fib n ∣ Nat.fib m :=
-  Nat.fib_dvd n m h
-
-end MetaFactoring.Bridge

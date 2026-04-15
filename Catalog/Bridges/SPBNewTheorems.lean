@@ -1,37 +1,13 @@
-import Mathlib
+/-! # CatalogBuild.Bridges.SPBNewTheorems
 
-/-!
-# SPB — New Theorems: Extended Research Program
-
-## Overview
-
-This file establishes new results for the Stereographic Projection Bridge
-framework, extending the formalized theory into:
-
-1. **Continued fraction connections** — SPB iteration and Gregory–Leibniz
-2. **Functional equations** — SPB composition identities
-3. **Higher-order formulas** — n-fold angle formulas
-4. **SPB over ℤ/pℤ** — group structure of SPB over finite fields
-5. **SPB convexity** — second derivative and curvature
-6. **SPB conjugation** — similarity transforms
-7. **SPB and Pythagorean triples** — rational points on the circle
-8. **SPB power series** — formal Taylor expansion
-
-## References
-
-All results connect to the core SPB definition:
-  `spb(x, y) = (x + y) / (1 - x * y)`
+Auto-generated from theorem catalog database.
+Domain: Bridges
+Declarations: 26
 -/
 
+import Mathlib
+
 noncomputable section
-open Real
-
-namespace SPBResearch
-
-/-- The fundamental SPB operation. -/
-def spb (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
-
-/-! ## Section 1: New Algebraic Identities -/
 
 /-- SPB composition identity: spb(a, spb(b, c)) expanded algebraically. -/
 theorem spb_expand_right (a b c : ℝ) (hbc : b * c ≠ 1) (h : a * spb b c ≠ 1) :
@@ -41,6 +17,7 @@ theorem spb_expand_right (a b c : ℝ) (hbc : b * c ≠ 1) (h : a * spb b c ≠ 
   field_simp
   ring
 
+
 /-- The difference spb(x,ε) - x ≈ ε(1+x²) for small ε. Exact identity. -/
 theorem spb_linear_approx (x ε : ℝ) (hxε : x * ε ≠ 1) :
     spb x ε - x = ε * (1 + x^2) / (1 - x * ε) := by
@@ -48,6 +25,7 @@ theorem spb_linear_approx (x ε : ℝ) (hxε : x * ε ≠ 1) :
   have h : (1 - x * ε) ≠ 0 := sub_ne_zero.mpr (Ne.symm hxε)
   field_simp
   ring
+
 
 /-- SPB is anti-involutive: spb(x, y) + spb(-x, -y) = 0. -/
 theorem spb_anti_involution (x y : ℝ) :
@@ -57,37 +35,37 @@ theorem spb_anti_involution (x y : ℝ) :
   rw [this, div_add_div_same]
   simp [show x + y + (-x + -y) = 0 from by ring]
 
+
 /-- SPB satisfies the "cross-ratio" identity:
-    spb(a,b) * spb(-a,-b) = ... when well-defined -/
+spb(a,b) * spb(-a,-b) = ... when well-defined -/
 theorem spb_product_neg (a b : ℝ) (hab : a * b ≠ 1) :
     spb a b * spb (-a) (-b) = -((a + b) / (1 - a * b))^2 := by
   unfold spb
   simp [neg_mul, neg_neg]
   ring
 
-/-! ## Section 2: SPB and Pythagorean Triples -/
 
 /-- Every Pythagorean triple (a² + b² = c²) can be generated from SPB.
-    If t is rational, then ((1-t²)/(1+t²), 2t/(1+t²)) is a rational point
-    on the unit circle. -/
+If t is rational, then ((1-t²)/(1+t²), 2t/(1+t²)) is a rational point
+on the unit circle. -/
 theorem spb_pythagorean_triple (m n : ℤ) (hn : m^2 + n^2 ≠ 0) :
     (m^2 - n^2)^2 + (2 * m * n)^2 = (m^2 + n^2)^2 := by
   ring
 
+
 /-- The Weierstrass substitution: t = tan(θ/2) gives
-    cos θ = (1-t²)/(1+t²) and sin θ = 2t/(1+t²).
-    Sum of squares is 1. -/
+cos θ = (1-t²)/(1+t²) and sin θ = 2t/(1+t²).
+Sum of squares is 1. -/
 theorem weierstrass_unit_circle (t : ℝ) :
     ((1 - t^2) / (1 + t^2))^2 + (2 * t / (1 + t^2))^2 = 1 := by
   have h : (1 + t^2) ≠ 0 := by positivity
   field_simp
   ring
 
-/-! ## Section 3: SPB Composition Chains -/
 
 /-- SPB chain of three equal arguments:
-    spb(x, spb(x, x)) = (3x - x³)/(1 - 3x²) when well-defined.
-    This is the triple tangent formula. -/
+spb(x, spb(x, x)) = (3x - x³)/(1 - 3x²) when well-defined.
+This is the triple tangent formula. -/
 theorem spb_triple_chain (x : ℝ) (hx2 : x^2 ≠ 1) (hx3 : 3 * x^2 ≠ 1)
     (hx_spb : x * (2 * x / (1 - x^2)) ≠ 1) :
     spb x (2 * x / (1 - x^2)) = (3 * x - x^3) / (1 - 3 * x^2) := by
@@ -96,8 +74,9 @@ theorem spb_triple_chain (x : ℝ) (hx2 : x^2 ≠ 1) (hx3 : 3 * x^2 ≠ 1)
   field_simp
   ring
 
+
 /-- SPB chain of four equal arguments (quadruple angle):
-    tan(4θ) = 4t(1-t²)/((1-t²)² - 4t²). -/
+tan(4θ) = 4t(1-t²)/((1-t²)² - 4t²). -/
 theorem spb_quadruple_chain (t : ℝ) (ht : t^2 ≠ 1)
     (ht4 : (1 - t^2)^2 - 4 * t^2 ≠ 0) :
     let d := 2 * t / (1 - t^2)
@@ -107,12 +86,7 @@ theorem spb_quadruple_chain (t : ℝ) (ht : t^2 ≠ 1)
   field_simp
   ring
 
-/-! ## Section 4: SPB Second Derivative (Convexity) -/
 
-/-
-The second derivative of spb(·, y) at x.
-    d²/dx² [(x+y)/(1-xy)] = 2y(1+y²)/(1-xy)³
--/
 theorem spb_second_deriv (x y : ℝ) (hxy : x * y ≠ 1) :
     HasDerivAt (fun t => (1 + y ^ 2) / (1 - t * y) ^ 2)
       (2 * y * (1 + y ^ 2) / (1 - x * y) ^ 3) x := by
@@ -124,7 +98,6 @@ theorem spb_second_deriv (x y : ℝ) (hxy : x * y ≠ 1) :
     · exact?;
   exact h_chain ▸ hasDerivAt_deriv_iff.mpr ( by norm_num [ show ( 1 - x * y ) ≠ 0 by contrapose! hxy; linarith ] )
 
-/-! ## Section 5: SPB Conjugation -/
 
 /-- Conjugation in the SPB group: spb(a, spb(x, -a)) simplifies. -/
 theorem spb_conjugation (a x : ℝ) (hax : a * x ≠ 1) (ha2 : a^2 ≠ 1)
@@ -132,10 +105,9 @@ theorem spb_conjugation (a x : ℝ) (hax : a * x ≠ 1) (ha2 : a^2 ≠ 1)
     spb a (spb x (-a)) = spb a (spb x (-a)) := by
   rfl
 
-/-! ## Section 6: SPB Sum Telescoping -/
 
 /-- Telescoping product for SPB: the product ∏(1 - x_i * x_{i+1})
-    telescopes when the x_i form an SPB chain. -/
+telescopes when the x_i form an SPB chain. -/
 theorem spb_telescope_two (a b c : ℝ) (hab : a * b ≠ 1) (hbc : b * c ≠ 1) :
     (1 - a * b) * (1 - spb a b * c) =
     (1 - b * c) * (1 - a * spb b c) := by
@@ -145,41 +117,33 @@ theorem spb_telescope_two (a b c : ℝ) (hab : a * b ≠ 1) (hbc : b * c ≠ 1) 
   field_simp
   ring
 
-/-! ## Section 7: SPB and the Half-Angle Substitution -/
 
-/-
-The half-angle identity: if t = tan(θ/2), then
-    tan θ = spb(t, t) = 2t/(1-t²).
--/
 theorem spb_half_angle (t θ : ℝ) (ht : t = tan (θ / 2))
     (hcos : cos (θ / 2) ≠ 0) (hcos2 : cos θ ≠ 0) :
     tan θ = (2 * t) / (1 - t^2) := by
   rw [ ht, ← Real.tan_two_mul ] ; ring
 
-/-! ## Section 8: SPB Power Map -/
 
 /-- Define the n-th SPB power: repeated SPB of x with itself.
-    spb_pow 0 x = 0, spb_pow 1 x = x, spb_pow 2 x = 2x/(1-x²), etc.
-    This equals tan(n * arctan(x)) for x in the valid domain. -/
+spb_pow 0 x = 0, spb_pow 1 x = x, spb_pow 2 x = 2x/(1-x²), etc.
+This equals tan(n * arctan(x)) for x in the valid domain. -/
 def spb_pow : ℕ → ℝ → ℝ
   | 0, _ => 0
   | 1, x => x
   | n + 2, x => spb (spb_pow (n + 1) x) x
 
+
 theorem spb_pow_zero (x : ℝ) : spb_pow 0 x = 0 := rfl
+
 theorem spb_pow_one (x : ℝ) : spb_pow 1 x = x := rfl
+
 
 theorem spb_pow_two (x : ℝ) :
     spb_pow 2 x = (2 * x) / (1 - x * x) := by
   simp [spb_pow, spb]
   ring
 
-/-! ## Section 9: SPB Bounds for Small Arguments -/
 
-/-
-For small |x|, |y| with xy < 1, spb(x,y) is close to x+y.
-    Specifically: |spb(x,y) - (x+y)| ≤ |xy| * |x+y| / (1 - |xy|).
--/
 theorem spb_approx_sum (x y : ℝ) (hxy : |x * y| < 1) :
     |spb x y - (x + y)| ≤ |x * y| * |x + y| / (1 - |x * y|) := by
   rw [ spb ];
@@ -190,7 +154,6 @@ theorem spb_approx_sum (x y : ℝ) (hxy : |x * y| < 1) :
     · grind +splitIndPred;
   · linarith [ abs_lt.mp hxy ]
 
-/-! ## Section 10: SPB Fixed Point Characterization -/
 
 /-- The map z ↦ spb(a, z) has no real fixed points when a ≠ 0. -/
 theorem spb_no_fixed_point (a : ℝ) (ha : a ≠ 0) :
@@ -204,28 +167,29 @@ theorem spb_no_fixed_point (a : ℝ) (ha : a ≠ 0) :
   have : 1 + z^2 > 0 := by positivity
   exact ha (by nlinarith)
 
-/-! ## Section 11: SPB and Complex Numbers -/
 
 /-- SPB over the complex numbers. -/
 def spbC (z w : ℂ) : ℂ := (z + w) / (1 - z * w)
+
 
 /-- Complex SPB is commutative. -/
 theorem spbC_comm (z w : ℂ) : spbC z w = spbC w z := by
   unfold spbC; ring_nf
 
+
 /-- Complex SPB has identity 0. -/
 theorem spbC_zero (z : ℂ) : spbC z 0 = z := by
   unfold spbC; simp
+
 
 /-- Complex SPB inverse. -/
 theorem spbC_neg (z : ℂ) : spbC z (-z) = 0 := by
   unfold spbC; simp
 
-/-! ## Section 12: SPB Differential Equation -/
 
 /-- The ODE y' = 1 + y² has solution y = tan(x + C).
-    This means: d/dx[tan(x)] = 1 + tan²(x), which is the
-    infinitesimal generator of the SPB group. -/
+This means: d/dx[tan(x)] = 1 + tan²(x), which is the
+infinitesimal generator of the SPB group. -/
 theorem spb_ode_generator (x : ℝ) (hx : cos x ≠ 0) :
     HasDerivAt tan (1 + tan x ^ 2) x := by
   have h := Real.hasDerivAt_tan hx
@@ -235,26 +199,12 @@ theorem spb_ode_generator (x : ℝ) (hx : cos x ≠ 0) :
   field_simp
   linarith [sin_sq_add_cos_sq x]
 
-/-! ## Section 13: SPB Iteration and Gregory–Leibniz -/
 
-/-
-The Gregory–Leibniz connection: arctan(1) = π/4, and
-    tan(π/4) = 1. The SPB operation spb(1,0) = 1, spb(1,1) = ∞,
-    but partial SPB sums approach π/4 via the Leibniz formula.
-
-    Specifically: arctan(a) + arctan(b) = arctan(spb(a,b)) + kπ.
-    When both sides are in (-π/2, π/2), k = 0.
--/
 theorem arctan_spb_add (a b : ℝ) (hab : a * b < 1) :
     arctan a + arctan b = arctan (spb a b) := by
   have := @Real.arctan_add a b;
   exact this hab
 
-/-! ## Section 14: SPB Homomorphism Property (Reformulated) -/
-
-/-- The Cayley map is a group homomorphism from (ℝ, spb) to (S¹, ·).
-    Reformulated: cayley(spb(x,y)) = cayley(x) * cayley(y). -/
-def cayley (x : ℝ) : ℂ := (1 + x * Complex.I) / (1 - x * Complex.I)
 
 theorem cayley_spb_mul (x y : ℝ) (hxy : x * y ≠ 1) :
     cayley (spb x y) = cayley x * cayley y := by
@@ -262,20 +212,7 @@ theorem cayley_spb_mul (x y : ℝ) (hxy : x * y ≠ 1) :
   norm_num [ Complex.normSq, Complex.ext_iff ];
   grind +splitImp
 
-/-! ## Section 15: SPB Functional Equation -/
 
-/-
-SPB satisfies the functional equation:
-f(f(x,y),z) = f(x,f(y,z)) (associativity).
-Additionally, the unique continuous commutative associative
-operation with identity 0 and continuous inverse on ℝ
-that is a rational function of degree (1,1) is SPB.
-
-Any binary operation of the form (x+y)/(1+cxy) for c ∈ ℝ
-    is associative. The case c = -1 is SPB, c = 1 is spbH.
-
-Note: unique rational operation claim is a characterization theorem
--/
 theorem generalized_spb_assoc (c : ℝ) (x y z : ℝ)
     (hxy : 1 + c * x * y ≠ 0) (hyz : 1 + c * y * z ≠ 0)
     (hxyz : 1 + c * ((x + y) / (1 + c * x * y)) * z ≠ 0)
@@ -284,5 +221,5 @@ theorem generalized_spb_assoc (c : ℝ) (x y z : ℝ)
     (x + (y + z) / (1 + c * y * z)) / (1 + c * x * ((y + z) / (1 + c * y * z))) := by
   grind
 
-end SPBResearch
+
 end

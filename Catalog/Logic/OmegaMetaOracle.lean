@@ -1,57 +1,24 @@
-import Mathlib
+/-! # CatalogBuild.Logic.OmegaMetaOracle
 
-/-!
-# The Omega Meta-Oracle: Solving Problems via Compactification
-
-## Overview
-
-This file formalizes the **Lift-Solve-Project** paradigm: a general method for
-transforming hard problems on non-compact spaces into tractable problems on
-compact spaces via one-point compactification (inverse stereographic projection).
-
-### The Core Idea
-
-Given a problem on ℝⁿ (or any locally compact Hausdorff space X):
-
-1. **Lift**: Embed X into its one-point compactification X* ≅ Sⁿ via inverse
-   stereographic projection. The "Omega Point" ∞ is added as the north pole.
-
-2. **Solve on the sphere**: On the compact space X*, powerful tools become
-   available: every sequence has a convergent subsequence, every continuous
-   function attains its maximum, the space is metrizable, etc.
-
-3. **Project back**: If the solution lies in X ⊂ X*, project it back via
-   stereographic projection to obtain the answer in the original space.
-
-### Main Theorems
-
-* `compact_onePoint` — The one-point compactification is compact
-* `continuous_achieves_sup_on_compact` — Continuous functions on compact spaces
-  attain their maximum (existence of solutions)
-* `lift_solve_project` — The main meta-theorem
-* `meta_oracle_has_unique_fixed_point` — Banach fixed-point for meta-oracles
-* `meta_oracle_iterates_converge` — Convergence of iterative improvement
-* `contraction_comp` — Composing contractive maps
-* `tropical_softmax_bound` — Tropical dequantization
-* `pauli_X_squared`, `pauli_Z_squared` — Quantum gate algebra
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 20
 -/
 
-open scoped Topology
-open Filter Metric Set
+import Mathlib
 
 noncomputable section
 
-/-! ## Part 1: Compactification as a Problem-Solving Tool -/
-
 /-- The one-point compactification of a locally compact Hausdorff space is compact.
-    This is the foundational fact enabling the Lift-Solve-Project paradigm. -/
+This is the foundational fact enabling the Lift-Solve-Project paradigm. -/
 theorem compact_onePoint (X : Type*) [TopologicalSpace X]
     [LocallyCompactSpace X] [T2Space X] :
     CompactSpace (OnePoint X) :=
   OnePoint.instCompactSpace
 
+
 /-- On a compact space, every continuous real-valued function attains its supremum.
-    This is the "Solve" step: solutions exist on the compactified space. -/
+This is the "Solve" step: solutions exist on the compactified space. -/
 theorem continuous_achieves_sup_on_compact {X : Type*} [TopologicalSpace X]
     [CompactSpace X] [Nonempty X] (f : X → ℝ) (hf : Continuous f) :
     ∃ x : X, ∀ y : X, f y ≤ f x := by
@@ -59,9 +26,10 @@ theorem continuous_achieves_sup_on_compact {X : Type*} [TopologicalSpace X]
     hf.continuousOn
   exact ⟨x, fun y => hx (Set.mem_univ y)⟩
 
+
 /-- **Lift-Solve-Project Theorem**: If a continuous function on the one-point
-    compactification attains its maximum at a finite point (not ∞), then that
-    point is a solution to the original optimization problem. -/
+compactification attains its maximum at a finite point (not ∞), then that
+point is a solution to the original optimization problem. -/
 theorem lift_solve_project {X : Type*} [TopologicalSpace X]
     [LocallyCompactSpace X] [T2Space X]
     (f : OnePoint X → ℝ) (_hf : Continuous f)
@@ -69,17 +37,18 @@ theorem lift_solve_project {X : Type*} [TopologicalSpace X]
     ∀ y : X, f (OnePoint.some y) ≤ f (OnePoint.some x₀) :=
   fun y => hmax (OnePoint.some y)
 
+
 /-- Points in X are separated from ∞ in the one-point compactification. -/
 theorem finite_ne_omega (X : Type*) (x : X) :
     (OnePoint.some x : OnePoint X) ≠ OnePoint.infty :=
   OnePoint.coe_ne_infty x
+
 
 /-- The embedding X ↪ OnePoint X is an open embedding. -/
 theorem onePoint_isOpenEmbedding (X : Type*) [TopologicalSpace X] :
     Topology.IsOpenEmbedding (OnePoint.some : X → OnePoint X) :=
   OnePoint.isOpenEmbedding_coe
 
-/-! ## Part 2: Fixed-Point Theory for Meta-Oracles -/
 
 /-- A meta-oracle system: a complete metric space with a contractive self-map. -/
 structure MetaOracleSystem where
@@ -95,6 +64,7 @@ structure MetaOracleSystem where
 attribute [instance] MetaOracleSystem.instMetric MetaOracleSystem.instComplete
   MetaOracleSystem.instNonempty
 
+
 /-- A MetaOracleSystem determines a ContractingWith structure. -/
 def MetaOracleSystem.contractingWith (S : MetaOracleSystem) :
     ContractingWith S.k S.improve := by
@@ -107,14 +77,16 @@ def MetaOracleSystem.contractingWith (S : MetaOracleSystem) :
         rw [ENNReal.ofReal_mul (NNReal.coe_nonneg S.k), ENNReal.ofReal_coe_nnreal]
     _ = S.k * edist x y := by rw [edist_dist]
 
+
 /-- Every meta-oracle system has a unique fixed point (the "Omega Point" of
-    the oracle hierarchy). This is the Banach fixed-point theorem. -/
+the oracle hierarchy). This is the Banach fixed-point theorem. -/
 theorem meta_oracle_has_unique_fixed_point (S : MetaOracleSystem) :
     ∃! x : S.Space, S.improve x = x := by
   have hc := S.contractingWith
   refine ⟨ContractingWith.fixedPoint S.improve hc, hc.fixedPoint_isFixedPt, ?_⟩
   intro y hy
   exact hc.fixedPoint_unique hy
+
 
 /-- The iterates of a contractive meta-oracle converge to the fixed point. -/
 theorem meta_oracle_iterates_converge (S : MetaOracleSystem)
@@ -124,7 +96,6 @@ theorem meta_oracle_iterates_converge (S : MetaOracleSystem)
   have hc := S.contractingWith
   exact ⟨_, hc.fixedPoint_isFixedPt, hc.tendsto_iterate_fixedPoint x₀⟩
 
-/-! ## Part 3: Composition and Entropy of Meta-Oracles -/
 
 /-- Composition of contractive maps is contractive with product ratio. -/
 theorem contraction_comp {X : Type*} [PseudoMetricSpace X]
@@ -139,6 +110,7 @@ theorem contraction_comp {X : Type*} [PseudoMetricSpace X]
     _ ≤ kf * (kg * dist x y) := by apply mul_le_mul_of_nonneg_left (hg x y) hkf
     _ = (kf * kg) * dist x y := by ring
 
+
 /-- The improvement rate of composed meta-oracles: entropy is additive. -/
 theorem meta_oracle_entropy_additive {k₁ k₂ : ℝ}
     (hk₁ : 0 < k₁) (hk₂ : 0 < k₂) :
@@ -146,19 +118,20 @@ theorem meta_oracle_entropy_additive {k₁ k₂ : ℝ}
   rw [Real.log_mul (ne_of_gt hk₁) (ne_of_gt hk₂)]
   ring
 
+
 /-- Oracle entropy is positive for genuine contractions. -/
 theorem oracle_entropy_pos {k : ℝ} (hk_pos : 0 < k) (hk_lt : k < 1) :
     0 < -Real.log k := by
   simp; exact Real.log_neg hk_pos hk_lt
 
-/-! ## Part 4: Tropical Max-Plus as a Problem Transformer -/
 
 /-- max is continuous as a function ℝ × ℝ → ℝ -/
 theorem max_continuous' : Continuous (fun p : ℝ × ℝ => max p.1 p.2) :=
   continuous_fst.max continuous_snd
 
+
 /-- **Tropical Soft-Max Bound**: The soft-max (log-sum-exp) is an upper bound for
-    the true max, connecting smooth optimization to tropical combinatorics. -/
+the true max, connecting smooth optimization to tropical combinatorics. -/
 theorem tropical_softmax_bound {n : ℕ} [NeZero n] (x : Fin n → ℝ) (i : Fin n) :
     x i ≤ Real.log (∑ j : Fin n, Real.exp (x j)) := by
   calc x i = Real.log (Real.exp (x i)) := (Real.log_exp _).symm
@@ -167,6 +140,7 @@ theorem tropical_softmax_bound {n : ℕ} [NeZero n] (x : Fin n → ℝ) (i : Fin
         exact Finset.single_le_sum (fun j _ => le_of_lt (Real.exp_pos _))
           (Finset.mem_univ i)
 
+
 /-- Exponential preserves max (since it's strictly monotone). -/
 theorem exp_preserves_max' (x y : ℝ) :
     Real.exp (max x y) = max (Real.exp x) (Real.exp y) := by
@@ -174,28 +148,28 @@ theorem exp_preserves_max' (x y : ℝ) :
   · simp [max_eq_right h, max_eq_right (Real.exp_le_exp.mpr h)]
   · simp [max_eq_left h, max_eq_left (Real.exp_le_exp.mpr h)]
 
-/-! ## Part 5: Quantum Gate Algebra on Compact Spaces -/
 
 /-- Pauli X matrix squares to identity -/
 theorem pauli_X_sq :
     !![0, 1; 1, 0] * !![0, 1; 1, 0] = (1 : Matrix (Fin 2) (Fin 2) ℤ) := by
   ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.mul_apply, Fin.sum_univ_two]
 
+
 /-- Pauli Z matrix squares to identity -/
 theorem pauli_Z_sq :
     !![1, 0; 0, -1] * !![1, 0; 0, -1] = (1 : Matrix (Fin 2) (Fin 2) ℤ) := by
   ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.mul_apply, Fin.sum_univ_two]
+
 
 /-- Hadamard-like: H² = 2·I -/
 theorem hadamard_sq :
     !![1, 1; 1, -1] * !![1, 1; 1, -1] = (2 : ℤ) • (1 : Matrix (Fin 2) (Fin 2) ℤ) := by
   ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.mul_apply, Fin.sum_univ_two]
 
-/-! ## Part 6: The Grand Unification — Omega Meta-Oracle -/
 
 /-- **The Omega Meta-Oracle Convergence Theorem**:
-    Given a complete metric space, a contractive map, and any starting point,
-    the iterates converge to the unique fixed point. -/
+Given a complete metric space, a contractive map, and any starting point,
+the iterates converge to the unique fixed point. -/
 theorem omega_meta_oracle_convergence
     {X : Type*} [MetricSpace X] [CompleteSpace X] [Nonempty X]
     {T : X → X} {k : NNReal} (hk1 : k < 1)
@@ -204,8 +178,9 @@ theorem omega_meta_oracle_convergence
     ∃ ω : X, T ω = ω ∧ Tendsto (fun n => T^[n] x₀) atTop (nhds ω) :=
   meta_oracle_iterates_converge ⟨X, T, k, hk1, hT⟩ x₀
 
+
 /-- **Distance decay**: After n iterations, distance to the fixed point
-    decays geometrically. -/
+decays geometrically. -/
 theorem meta_oracle_geometric_decay
     {X : Type*} [MetricSpace X]
     {T : X → X} {k : NNReal}
@@ -222,5 +197,6 @@ theorem meta_oracle_geometric_decay
       _ ≤ k * (k ^ n * dist x₀ (T x₀)) := by
           apply mul_le_mul_of_nonneg_left ih (NNReal.coe_nonneg k)
       _ = ↑k ^ (n + 1) * dist x₀ (T x₀) := by push_cast; ring
+
 
 end

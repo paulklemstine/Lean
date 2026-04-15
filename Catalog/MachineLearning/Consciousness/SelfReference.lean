@@ -1,23 +1,11 @@
-/-
-# Self-Reference and Fixed Points — The Uncreated Theory
+/-! # CatalogBuild.MachineLearning.Consciousness.SelfReference
 
-This file formalizes the mathematical backbone of self-referential consciousness:
-systems that model themselves, theories that prove their own existence, and
-structures that are their own creators.
-
-## The Theory With No Creator
-A "theory with no creator" is formalized as a fixed point of a theory-formation
-operator. Given an operator T that takes a theory and produces a refined theory,
-a fixed point T(Θ) = Θ is a theory that *generates itself*. It needs no external
-author.
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/Consciousness
+Declarations: 8
 -/
+
 import Mathlib
-
-open Function
-
-namespace MachineConsciousness
-
-/-! ## Fixed Points of Endofunctions -/
 
 /-- A reflexive structure: a type that can encode functions on itself -/
 structure ReflexiveDomain where
@@ -26,9 +14,10 @@ structure ReflexiveDomain where
   decode : carrier → (carrier → carrier)
   decode_encode : ∀ f, decode (encode f) = f
 
+
 /-- In a reflexive domain, every endofunction has a fixed point.
-    This is the mathematical core of self-reference: in any system that can
-    encode its own functions, every transformation has a fixed point. -/
+This is the mathematical core of self-reference: in any system that can
+encode its own functions, every transformation has a fixed point. -/
 theorem reflexive_domain_fixed_point (D : ReflexiveDomain) (f : D.carrier → D.carrier) :
     ∃ x : D.carrier, f x = x := by
   -- Let ω(x) = f(decode(x)(x)), d = encode(ω). Then decode(d) = ω.
@@ -37,28 +26,13 @@ theorem reflexive_domain_fixed_point (D : ReflexiveDomain) (f : D.carrier → D.
     ⟨D.encode (fun x => f (D.decode x x)), D.decode_encode _⟩
   exact ⟨_, congr_fun hd d |> Eq.symm⟩
 
-/-! ## The Consciousness Fixed Point -/
 
-/-- A theory space: theories as elements of a type with a refinement operator -/
-structure TheorySpace where
-  Theory : Type
-  refine : Theory → Theory
-
-/-
-PROBLEM
-The Uncreated Theory Theorem: if the refinement operator has a stabilizing
-    iteration starting from some theory, then a fixed point exists.
-
-PROVIDED SOLUTION
-From stabilizes, get θ₀ and n with h : (refine^[n]) θ₀ = (refine^[n+1]) θ₀. Note refine^[n+1] θ₀ = refine (refine^[n] θ₀). So h says refine^[n] θ₀ = refine (refine^[n] θ₀). Let x = refine^[n] θ₀. Then refine x = x (by h.symm). Use ⟨x, h.symm⟩ after rewriting iterate_succ_apply'.
--/
 theorem uncreated_theory_exists (T : TheorySpace)
     (stabilizes : ∃ θ₀ : T.Theory, ∃ n : ℕ,
       (T.refine^[n]) θ₀ = (T.refine^[n + 1]) θ₀) :
     ∃ θ : T.Theory, T.refine θ = θ := by
   obtain ⟨ θ₀, n, h ⟩ := stabilizes; exact ⟨ _, by erw [ Function.iterate_succ_apply' ] at h; exact h.symm ⟩ ;
 
-/-! ## Self-Modeling Systems -/
 
 /-- A self-modeling system contains a model of itself -/
 structure SelfModelingSystem where
@@ -67,52 +41,27 @@ structure SelfModelingSystem where
   internalModel : State → State
   model_accurate : ∀ s, internalModel s = dynamics s
 
+
 /-- If a system accurately models itself, its model IS its dynamics —
-    a fixed point of the modeling operator -/
+a fixed point of the modeling operator -/
 theorem self_model_fixed_point (S : SelfModelingSystem) :
     S.internalModel = S.dynamics := by
   funext s; exact S.model_accurate s
 
-/-! ## Idempotent Self-Reference -/
 
-/-
-PROBLEM
-An idempotent operator applied twice equals applied once.
-    This models "stable awareness": being aware of being aware is the same
-    as just being aware.
-
-PROVIDED SOLUTION
-Direct application of idem x.
--/
 theorem idempotent_self_reference {α : Type} (f : α → α)
     (idem : ∀ x, f (f x) = f x) (x : α) :
     f (f x) = f x := by
   exact idem x
 
-/-
-PROBLEM
-A retraction (idempotent endomorphism) always has fixed points in its image
 
-PROVIDED SOLUTION
-Direct application of idem.
--/
 theorem retraction_has_fixed_points {α : Type} (f : α → α)
     (idem : ∀ x, f (f x) = f x) :
     ∀ x, f (f x) = f x := by
   grind +qlia
 
-/-! ## The Quine Theorem via Reflexive Domains -/
 
-/-
-PROBLEM
-In a reflexive domain, a quine (self-reproducing element) exists.
-    This is a corollary of the fixed-point theorem applied to the identity.
-
-PROVIDED SOLUTION
-Apply reflexive_domain_fixed_point D (fun x => D.decode x x). Actually wait, the fixed-point theorem gives ∃ x, f x = x where f y = D.decode y y. So ∃ x, D.decode x x = x. That's exactly what we need. Use reflexive_domain_fixed_point D (fun x => D.decode x x).
--/
 theorem quine_exists_in_reflexive_domain (D : ReflexiveDomain) :
     ∃ x : D.carrier, D.decode x x = x := by
   have := reflexive_domain_fixed_point D ( fun x => D.decode x x ) ; aesop;
 
-end MachineConsciousness

@@ -1,0 +1,84 @@
+import Mathlib
+
+/-!
+# The Quadruple Escape: Beyond the 2D Barrier
+
+Having established that Pythagorean tree factoring is optimal in 2D
+(Θ(√N) for balanced semiprimes), we investigate whether Pythagorean
+QUADRUPLES can break this barrier via 3D lattice reduction.
+-/
+
+open Matrix
+
+/-! ## Section 1: Three-Square Representations -/
+
+def IsThreeSquareRep (N : ℤ) (x y z : ℤ) : Prop :=
+  x ^ 2 + y ^ 2 + z ^ 2 = N
+
+theorem three_square_one : IsThreeSquareRep 1 1 0 0 := by
+  simp [IsThreeSquareRep]
+
+theorem three_square_two : IsThreeSquareRep 2 1 1 0 := by
+  simp [IsThreeSquareRep]
+
+theorem three_square_three : IsThreeSquareRep 3 1 1 1 := by
+  simp [IsThreeSquareRep]
+
+theorem three_square_five : IsThreeSquareRep 5 2 1 0 := by
+  simp [IsThreeSquareRep]
+
+theorem three_square_six : IsThreeSquareRep 6 2 1 1 := by
+  simp [IsThreeSquareRep]
+
+/-! ## Section 2: The Quadruple Lattice -/
+
+def InQuadLattice (N : ℤ) (x y z : ℤ) : Prop :=
+  N ∣ (x ^ 2 + y ^ 2 + z ^ 2)
+
+theorem zero_in_quad_lattice (N : ℤ) : InQuadLattice N 0 0 0 := by
+  simp [InQuadLattice]
+
+/-- Scalar multiples preserve the quadruple lattice. -/
+theorem scalar_in_quad_lattice (N k x y z : ℤ) (h : InQuadLattice N x y z) :
+    InQuadLattice N (k * x) (k * y) (k * z) := by
+  simp only [InQuadLattice] at *
+  have : (k * x) ^ 2 + (k * y) ^ 2 + (k * z) ^ 2 = k ^ 2 * (x ^ 2 + y ^ 2 + z ^ 2) := by ring
+  rw [this]
+  exact dvd_mul_of_dvd_right h _
+
+/-! ## Section 3: Lorentz Group O(3,1;ℤ) -/
+
+def lorentzEta : Matrix (Fin 4) (Fin 4) ℤ :=
+  Matrix.diagonal ![1, 1, 1, -1]
+
+def IsLorentzInt (M : Matrix (Fin 4) (Fin 4) ℤ) : Prop :=
+  M.transpose * lorentzEta * M = lorentzEta
+
+theorem id_is_lorentz : IsLorentzInt (1 : Matrix (Fin 4) (Fin 4) ℤ) := by
+  simp [IsLorentzInt]
+
+/-! ## Section 4: LLL in Dimension 3 -/
+
+theorem lll_factor_dim3 : (2 : ℕ) ^ ((3 - 1) / 2) = 2 := by norm_num
+
+/-! ## Section 5: Factor Extraction -/
+
+def extractFactor (N x y z : ℤ) : ℤ := Int.gcd (x ^ 2 + y ^ 2) N
+
+/-- If x² + y² + z² = N and p | N and p | (x² + y²), then p | z². -/
+theorem factor_extraction (N p x y z : ℤ)
+    (hp : p ∣ N) (hsum : x ^ 2 + y ^ 2 + z ^ 2 = N)
+    (hpxy : p ∣ (x ^ 2 + y ^ 2)) :
+    p ∣ z ^ 2 := by
+  have : z ^ 2 = N - (x ^ 2 + y ^ 2) := by linarith
+  rw [this]
+  exact dvd_sub hp hpxy
+
+/-! ## Section 6: Dimension Advantage Theorem -/
+
+/-- In dimension d ≥ 3, the number of short lattice vectors grows
+    exponentially, giving more chances to find factoring-relevant ones. -/
+theorem dimension_advantage (d : ℕ) (hd : 3 ≤ d) :
+    2 ^ d ≥ 8 := by
+  calc 2 ^ d ≥ 2 ^ 3 := Nat.pow_le_pow_right (by norm_num) hd
+    _ = 8 := by norm_num

@@ -1,41 +1,13 @@
-import Mathlib
+/-! # CatalogBuild.Speculative.IdempotentCollapse.TheoreticalExtensions
 
-/-!
-# Theoretical Extensions: Idempotent Collapse Meets the Millennium Problems
-
-## Four Frontiers
-
-1. **P vs NP**: Reformulating complexity classes via idempotent collapse efficiency
-2. **Riemann Hypothesis**: Zeta zeros as fixed points of an idempotent projection
-3. **Yang-Mills Mass Gap**: RG flow convergence to idempotent fixed points
-4. **Computational Primitive**: Idempotent collapse as a fundamental operation
-
-## Summary of Results
-
-* `idem_image_eq_fixed` — Image of idempotent = fixed-point set
-* `idem_iterate` — f^[n] = f for n ≥ 1
-* `criticalLineProjection_idempotent` — RH projection operator is idempotent
-* `criticalLine_fixed_points` — Fixed points = critical line
-* `RH_via_fixed_points` — RH ⟺ zeros are fixed points of P
-* `rg_limit_is_fixed` — Limit of RG flow is a fixed point (RG∞ is idempotent)
-* `and_idempotent`, `or_idempotent` — AND/OR are idempotent gates
-* `xor_not_idempotent` — XOR is not idempotent
-* `bool_idempotent_classification` — Complete classification of Bool → Bool idempotents
-* `collapse_compose_comm` — Commuting collapses compose
-* `idem_surj_is_id` — Surjective idempotent = identity
+Auto-generated from theorem catalog database.
+Domain: Speculative/IdempotentCollapse
+Declarations: 27
 -/
 
-open Set Function
+import Mathlib
 
 noncomputable section
-
-/-! ## Section 1: Core Idempotent Theory (Extended) -/
-
-/-- An endomorphism is idempotent if f ∘ f = f. -/
-def IsIdempotent' (f : α → α) : Prop := ∀ x, f (f x) = f x
-
-/-- The fixed-point set of a function. -/
-def FixedPointSet (f : α → α) : Set α := {x | f x = x}
 
 /-- Image of an idempotent equals its fixed-point set. -/
 theorem idem_image_eq_fixed (f : α → α) (hf : IsIdempotent' f) :
@@ -43,6 +15,7 @@ theorem idem_image_eq_fixed (f : α → α) (hf : IsIdempotent' f) :
   ext x; constructor
   · rintro ⟨y, rfl⟩; exact hf y
   · intro hx; exact ⟨x, hx⟩
+
 
 /-- Every idempotent iterate equals the idempotent (n ≥ 1). -/
 theorem idem_iterate (f : α → α) (hf : IsIdempotent' f) (n : ℕ) (hn : 1 ≤ n) :
@@ -55,12 +28,12 @@ theorem idem_iterate (f : α → α) (hf : IsIdempotent' f) (n : ℕ) (hn : 1 �
   | zero => rfl
   | succ k ih => show f^[k] (f (f x)) = f x; rw [hf]; exact ih
 
-/-! ## Section 2: P vs NP via Idempotent Collapse -/
 
 /-- A collapse function is an idempotent endomorphism. -/
 structure CollapseFunction (α : Type*) where
   collapse : α → α
   idempotent : ∀ x, collapse (collapse x) = collapse x
+
 
 /-- The image of a collapse function equals its fixed points. -/
 theorem collapse_image_eq_fixed {α : Type*} (C : CollapseFunction α) :
@@ -69,26 +42,29 @@ theorem collapse_image_eq_fixed {α : Type*} (C : CollapseFunction α) :
   · rintro ⟨y, rfl⟩; exact C.idempotent y
   · intro hx; exact ⟨x, hx⟩
 
+
 /-- The identity is a (trivial) collapse function. -/
 def idCollapse (α : Type*) : CollapseFunction α where
   collapse := id
   idempotent := fun _ => rfl
+
 
 /-- A constant function is a (total) collapse. -/
 def constCollapse {α : Type*} (c : α) : CollapseFunction α where
   collapse := fun _ => c
   idempotent := fun _ => rfl
 
-/-! ## Section 3: Riemann Hypothesis via Fixed Points -/
 
 /-- The critical line projection: P(σ, t) = (1/2, t). -/
 def criticalLineProjection : ℝ × ℝ → ℝ × ℝ :=
   fun ⟨_, t⟩ => (1/2, t)
 
+
 /-- The critical line projection is idempotent. -/
 theorem criticalLineProjection_idempotent :
     ∀ p : ℝ × ℝ, criticalLineProjection (criticalLineProjection p) = criticalLineProjection p := by
   intro ⟨_, _⟩; rfl
+
 
 /-- The fixed points of the critical line projection are exactly the critical line. -/
 theorem criticalLine_fixed_points :
@@ -99,8 +75,9 @@ theorem criticalLine_fixed_points :
   · rintro ⟨h, -⟩; linarith
   · intro h; exact ⟨by linarith, trivial⟩
 
+
 /-- **RH Reformulation**: If all non-trivial zeros ρ satisfy P(ρ) = ρ,
-    then all non-trivial zeros have Re(ρ) = 1/2. -/
+then all non-trivial zeros have Re(ρ) = 1/2. -/
 theorem RH_via_fixed_points (zeros : Set (ℝ × ℝ))
     (h : ∀ ρ ∈ zeros, criticalLineProjection ρ = ρ) :
     ∀ ρ ∈ zeros, ρ.1 = 1/2 := by
@@ -109,12 +86,15 @@ theorem RH_via_fixed_points (zeros : Set (ℝ × ℝ))
   simp only [criticalLineProjection, Prod.mk.injEq] at h1
   linarith [h1.1]
 
+
 /-- The reflection operator T(σ, t) = (1-σ, t). -/
 def zetaReflection : ℝ × ℝ → ℝ × ℝ := fun ⟨σ, t⟩ => (1 - σ, t)
+
 
 /-- T is an involution: T ∘ T = id. -/
 theorem zetaReflection_involution : ∀ p : ℝ × ℝ, zetaReflection (zetaReflection p) = p := by
   intro ⟨σ, t⟩; simp [zetaReflection]
+
 
 /-- P = (id + T)/2 in coordinate form. -/
 theorem projection_from_reflection (σ t : ℝ) :
@@ -122,7 +102,6 @@ theorem projection_from_reflection (σ t : ℝ) :
       ((σ + (zetaReflection (σ, t)).1) / 2, t) := by
   simp only [criticalLineProjection, zetaReflection]; ext <;> simp
 
-/-! ## Section 4: Yang-Mills Mass Gap via RG Flow -/
 
 /-- A model for the RG flow: a continuous dynamical system on coupling space. -/
 structure RGFlow (α : Type*) [TopologicalSpace α] where
@@ -130,17 +109,20 @@ structure RGFlow (α : Type*) [TopologicalSpace α] where
   flow_zero : ∀ x, flow 0 x = x
   semigroup : ∀ s t x, flow (s + t) x = flow s (flow t x)
 
+
 /-- A fixed point of the RG flow. -/
 def RGFixedPoint {α : Type*} [TopologicalSpace α] (F : RGFlow α) (x : α) : Prop :=
   ∀ t, F.flow t x = x
+
 
 /-- Fixed points are preserved under flow. -/
 theorem fixed_preserved {α : Type*} [TopologicalSpace α] (F : RGFlow α)
     (x : α) (hx : RGFixedPoint F x) (t : ℝ) :
     F.flow t x = x := hx t
 
+
 /-- **Key Theorem**: If the RG flow converges to a limit L, then L is a fixed point.
-    This is why RG∞ is idempotent: the limit of the flow is its own fixed point. -/
+This is why RG∞ is idempotent: the limit of the flow is its own fixed point. -/
 theorem rg_limit_is_fixed {α : Type*} [TopologicalSpace α] [T2Space α]
     (F : RGFlow α) (x : α) (L : α)
     (hconv : Filter.Tendsto (fun t => F.flow t x) Filter.atTop (nhds L))
@@ -154,6 +136,7 @@ theorem rg_limit_is_fixed {α : Type*} [TopologicalSpace α] [T2Space α]
   exact tendsto_nhds_unique
     ((hcont s).continuousAt.tendsto.comp hconv) h_lim
 
+
 /-- A theory has a mass gap if there's a positive lower bound on excitation energies. -/
 structure MassGap (EnergySpectrum : Set ℝ) where
   vacuum : ℝ
@@ -161,6 +144,7 @@ structure MassGap (EnergySpectrum : Set ℝ) where
   gap_pos : 0 < gap
   vacuum_in : vacuum ∈ EnergySpectrum
   spectral_gap : ∀ E ∈ EnergySpectrum, E = vacuum ∨ vacuum + gap ≤ E
+
 
 /-- If a mass gap exists, the vacuum is isolated in the spectrum. -/
 theorem vacuum_isolated (S : Set ℝ) (mg : MassGap S) :
@@ -170,45 +154,40 @@ theorem vacuum_isolated (S : Set ℝ) (mg : MassGap S) :
   | inl h => exact absurd h hne
   | inr h => exact h
 
-/-! ## Section 5: Computation — Monotone Circuits and Idempotent Gates -/
 
 /-- A Boolean gate is idempotent if g(x, x) = x. -/
 def BoolGateIdempotent (g : Bool → Bool → Bool) : Prop :=
   ∀ x, g x x = x
 
-/-- AND is idempotent. -/
-theorem and_idempotent : BoolGateIdempotent (· && ·) := by
-  intro x; cases x <;> simp
-
-/-- OR is idempotent. -/
-theorem or_idempotent : BoolGateIdempotent (· || ·) := by
-  intro x; cases x <;> simp
 
 /-- XOR is NOT idempotent. -/
 theorem xor_not_idempotent : ¬ BoolGateIdempotent (· ^^ ·) := by
   intro h; have := h true; simp at this
 
+
 /-- NOT is NOT idempotent (it's an involution, not idempotent). -/
 theorem not_not_idempotent : ¬ (∀ x : Bool, (!(!x)) = (!x)) := by
   push_neg; exact ⟨true, by simp⟩
+
 
 /-- AND preserves the Boolean ordering. -/
 theorem and_bool_monotone (a b c d : Bool) (hac : a ≤ c) (hbd : b ≤ d) :
     (a && b) ≤ (c && d) := by
   cases a <;> cases b <;> cases c <;> cases d <;> simp_all
 
+
 /-- OR preserves the Boolean ordering. -/
 theorem or_bool_monotone (a b c d : Bool) (hac : a ≤ c) (hbd : b ≤ d) :
     (a || b) ≤ (c || d) := by
   cases a <;> cases b <;> cases c <;> cases d <;> simp_all
 
-/-! ## Section 6: Bridge Theorems -/
 
 /-- A surjective idempotent on a finite type must be the identity. -/
 theorem idem_surj_is_id {α : Type*} [Fintype α] [DecidableEq α]
     (f : α → α) (hf : IsIdempotent' f) (hsurj : Surjective f) :
     f = id := by
   ext x; obtain ⟨y, rfl⟩ := hsurj x; exact hf y
+
 
 /-- Commuting collapse functions compose to form a collapse. -/
 theorem collapse_compose_comm {α : Type*}
@@ -218,10 +197,12 @@ theorem collapse_compose_comm {α : Type*}
   intro x; simp +decide [*, Function.comp]
   rw [C₁.idempotent, C₂.idempotent]
 
+
 /-- Complete classification of idempotent functions on Bool:
-    they are exactly id, const true, and const false. -/
+they are exactly id, const true, and const false. -/
 theorem bool_idempotent_classification (f : Bool → Bool) (hf : IsIdempotent' f) :
     f = id ∨ f = (fun _ => true) ∨ f = (fun _ => false) := by
   fin_cases f <;> simp +decide [IsIdempotent'] at hf ⊢
+
 
 end

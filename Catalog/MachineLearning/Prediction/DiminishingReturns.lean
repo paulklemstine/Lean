@@ -1,35 +1,21 @@
-/-
-  # Diminishing Returns Theorem for Oracle Councils
+/-! # CatalogBuild.MachineLearning.Prediction.DiminishingReturns
 
-  We prove that adding oracles to an ensemble yields diminishing marginal
-  improvement. Specifically, the marginal reduction in ensemble variance
-  decreases as the council grows, establishing an optimal ensemble size
-  beyond which additional oracles provide negligible benefit.
-
-  ## Key Results
-  1. Ensemble variance decreases monotonically with council size
-  2. The marginal improvement from the (n+1)-th oracle is bounded by O(1/n²)
-  3. The optimal ensemble size theorem
-  4. Diversity-adjusted diminishing returns
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/Prediction
+Declarations: 10
 -/
 
 import Mathlib
 
-open Finset BigOperators Real
-
 noncomputable section
 
-/-! ## §1. Ensemble Variance with Equal-Weight Oracles -/
-
 /-- The variance of an equal-weight ensemble of n i.i.d. predictors,
-    each with individual variance σ² and pairwise correlation ρ, is:
-    σ²/n + ρ·σ²·(n-1)/n -/
+each with individual variance σ² and pairwise correlation ρ, is:
+σ²/n + ρ·σ²·(n-1)/n -/
 noncomputable def ensembleVariance (σ_sq : ℝ) (ρ : ℝ) (n : ℕ) : ℝ :=
   σ_sq / n + ρ * σ_sq * (n - 1) / n
 
-/-
-As n → ∞, ensemble variance converges to ρ·σ² (the irreducible floor)
--/
+
 theorem ensemble_variance_limit (σ_sq : ℝ) (ρ : ℝ) (hσ : 0 < σ_sq) (hρ : 0 ≤ ρ) (hρ1 : ρ < 1) :
     Filter.Tendsto (fun n : ℕ => ensembleVariance σ_sq ρ (n + 1))
       Filter.atTop (nhds (ρ * σ_sq)) := by
@@ -42,23 +28,18 @@ theorem ensemble_variance_limit (σ_sq : ℝ) (ρ : ℝ) (hσ : 0 < σ_sq) (hρ 
     grind +splitImp;
   simpa [ h_decomp ] using tendsto_const_nhds.add ( h_tendsto_zero.comp tendsto_natCast_atTop_atTop |> Filter.Tendsto.mul_const _ )
 
-/-! ## §2. Marginal Improvement Bound -/
 
 /-- The marginal improvement from adding the (n+1)-th oracle to an
-    equally-weighted i.i.d. ensemble with zero correlation -/
+equally-weighted i.i.d. ensemble with zero correlation -/
 noncomputable def marginalImprovement (σ_sq : ℝ) (n : ℕ) : ℝ :=
   σ_sq / n - σ_sq / (n + 1)
 
-/-
-The marginal improvement equals σ²/(n(n+1))
--/
+
 theorem marginal_improvement_formula (σ_sq : ℝ) (n : ℕ) (hn : 0 < n) :
     marginalImprovement σ_sq n = σ_sq / (n * (n + 1)) := by
   unfold marginalImprovement; rw [ div_sub_div ] <;> ring <;> positivity;
 
-/-
-Marginal improvement is strictly decreasing
--/
+
 theorem marginal_improvement_decreasing (σ_sq : ℝ) (hσ : 0 < σ_sq) (n : ℕ) (hn : 0 < n) :
     marginalImprovement σ_sq (n + 1) < marginalImprovement σ_sq n := by
   rw [ marginalImprovement, marginalImprovement ];
@@ -66,45 +47,36 @@ theorem marginal_improvement_decreasing (σ_sq : ℝ) (hσ : 0 < σ_sq) (n : ℕ
   field_simp;
   norm_num; nlinarith;
 
-/-
-The marginal improvement is bounded by O(1/n²)
--/
+
 theorem marginal_improvement_bound (σ_sq : ℝ) (hσ : 0 < σ_sq) (n : ℕ) (hn : 0 < n) :
     marginalImprovement σ_sq n ≤ σ_sq / n ^ 2 := by
   convert div_le_div_of_nonneg_left hσ.le _ _ using 1 <;> norm_num [ mul_comm, sq, hn ];
   exacts [ marginal_improvement_formula σ_sq n hn, by norm_cast; nlinarith ]
 
-/-! ## §3. Optimal Ensemble Size -/
 
 /-- The cost of adding an oracle -/
 noncomputable def totalCost (σ_sq : ℝ) (costPerOracle : ℝ) (n : ℕ) : ℝ :=
   σ_sq / n + costPerOracle * n
 
-/-
-The optimal ensemble size minimizes total cost.
-    For cost c per oracle and variance σ², the optimum is near √(σ²/c).
--/
+
 theorem optimal_ensemble_size_bound (σ_sq c : ℝ) (hσ : 0 < σ_sq) (hc : 0 < c) :
     ∀ n : ℕ, 0 < n →
     totalCost σ_sq c n ≥ 2 * Real.sqrt (σ_sq * c) := by
   unfold totalCost;
   intro n hn; nlinarith [ sq_nonneg ( Real.sqrt ( σ_sq * c ) - σ_sq / n ), Real.mul_self_sqrt ( show 0 ≤ σ_sq * c by positivity ), show 0 < σ_sq / n by positivity, show 0 < c * n by positivity, mul_div_cancel₀ σ_sq ( show ( n : ℝ ) ≠ 0 by positivity ) ] ;
 
-/-! ## §4. Diminishing Returns with Diversity -/
 
-/-
-With correlated oracles (ρ > 0), the irreducible error floor is ρσ².
-    The *reducible* variance is (1-ρ)σ²/n, giving diminishing returns.
--/
 theorem correlated_ensemble_floor (σ_sq ρ : ℝ) (n : ℕ) (hn : 0 < n)
     (hρ : 0 ≤ ρ) (hρ1 : ρ ≤ 1) (hσ : 0 < σ_sq) :
     ensembleVariance σ_sq ρ n ≥ ρ * σ_sq := by
   unfold ensembleVariance;
   nlinarith [ show ( n : ℝ ) ≥ 1 by norm_cast, div_mul_cancel₀ ( σ_sq ) ( by positivity : ( n : ℝ ) ≠ 0 ), div_mul_cancel₀ ( ρ * σ_sq * ( n - 1 ) ) ( by positivity : ( n : ℝ ) ≠ 0 ) ]
 
+
 /-- The total improvement from n oracles over a single oracle is bounded -/
 theorem total_improvement_bounded (σ_sq : ℝ) (hσ : 0 < σ_sq) (n : ℕ) (hn : 0 < n) :
     σ_sq - σ_sq / n ≤ σ_sq := by
   linarith [div_nonneg (le_of_lt hσ) (Nat.cast_nonneg' n)]
+
 
 end

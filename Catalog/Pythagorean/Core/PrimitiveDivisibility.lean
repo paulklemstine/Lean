@@ -1,74 +1,33 @@
+/-! # CatalogBuild.Pythagorean.Core.PrimitiveDivisibility
+
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Core
+Declarations: 5
+-/
+
 import Mathlib
 
-/-!
-# The 60-Divisibility Theorem for Primitive Pythagorean Triples
-
-## Overview
-
-We prove that for every Pythagorean triple (a, b, c) with a² + b² = c²,
-the product abc is always divisible by 60. This strengthens the 12|abc
-result from `New__PythagoreanDensity.lean`.
-
-The key insight: in any Pythagorean triple, one of a, b, c is divisible by 5.
-Combined with 3|ab and 4|ab (proved earlier), this gives 60|abc.
-
-## The Divisibility-by-5 Theorem
-
-Squares mod 5 are in {0, 1, 4}. If 5 ∤ a and 5 ∤ b, then a² mod 5 ∈ {1,4}
-and b² mod 5 ∈ {1,4}. The possible values of a²+b² mod 5 are:
-  1+1=2, 1+4=0, 4+1=0, 4+4=3
-So a²+b² mod 5 ∈ {0, 2, 3}.
-For c² = a²+b², we need c² mod 5 ∈ {0, 1, 4}.
-The intersection is {0}, meaning 5|c. So if 5∤a and 5∤b, then 5|c.
-In all cases, 5 | abc.
--/
-
-open Int
-
-/-
-═══════════════════════════════════════════════════════════════════════════════
-§1: SQUARES MOD 5
-═══════════════════════════════════════════════════════════════════════════════
-
-Every square mod 5 is 0, 1, or 4.
--/
 theorem sq_mod5 (n : ℤ) : n ^ 2 % 5 = 0 ∨ n ^ 2 % 5 = 1 ∨ n ^ 2 % 5 = 4 := by
   rw [ sq, Int.mul_emod ] ; have := Int.emod_nonneg n ( by decide : ( 5 : ℤ ) ≠ 0 ) ; have := Int.emod_lt_of_pos n ( by decide : ( 5 : ℤ ) > 0 ) ; interval_cases n % 5 <;> trivial;
 
-/-
-═══════════════════════════════════════════════════════════════════════════════
-§2: 5 DIVIDES abc
-═══════════════════════════════════════════════════════════════════════════════
 
-In any Pythagorean triple, 5 divides at least one of a, b, or c.
--/
 theorem pyth_div5 {a b c : ℤ} (h : a ^ 2 + b ^ 2 = c ^ 2) :
     5 ∣ a ∨ 5 ∣ b ∨ 5 ∣ c := by
   exact Classical.or_iff_not_imp_left.2 fun ha => Classical.or_iff_not_imp_left.2 fun hb => by rw [ Int.dvd_iff_emod_eq_zero ] at *; have := congr_arg ( · % 5 ) h; norm_num [ sq, Int.add_emod, Int.mul_emod ] at this; have := Int.emod_nonneg a ( by decide : ( 5 : ℤ ) ≠ 0 ) ; have := Int.emod_nonneg b ( by decide : ( 5 : ℤ ) ≠ 0 ) ; have := Int.emod_nonneg c ( by decide : ( 5 : ℤ ) ≠ 0 ) ; have := Int.emod_lt_of_pos a ( by decide : ( 5 : ℤ ) > 0 ) ; have := Int.emod_lt_of_pos b ( by decide : ( 5 : ℤ ) > 0 ) ; have := Int.emod_lt_of_pos c ( by decide : ( 5 : ℤ ) > 0 ) ; interval_cases a % 5 <;> interval_cases b % 5 <;> interval_cases c % 5 <;> trivial;
 
-/-
-═══════════════════════════════════════════════════════════════════════════════
-§3: THE 60-DIVISIBILITY THEOREM
-═══════════════════════════════════════════════════════════════════════════════
 
-3 divides at least one of a or b in a Pythagorean triple.
--/
 theorem pyth_div3' {a b c : ℤ} (h : a ^ 2 + b ^ 2 = c ^ 2) :
     3 ∣ a ∨ 3 ∣ b := by
   rw [ Int.dvd_iff_emod_eq_zero, Int.dvd_iff_emod_eq_zero ];
   have := congr_arg ( · % 3 ) h; norm_num [ sq, Int.add_emod, Int.mul_emod ] at this; have := Int.emod_nonneg a three_pos.ne'; have := Int.emod_nonneg b three_pos.ne'; have := Int.emod_nonneg c three_pos.ne'; have := Int.emod_lt_of_pos a three_pos; have := Int.emod_lt_of_pos b three_pos; have := Int.emod_lt_of_pos c three_pos; interval_cases a % 3 <;> interval_cases b % 3 <;> interval_cases c % 3 <;> trivial
 
-/-
-2 divides at least one of a or b in a Pythagorean triple.
--/
+
 theorem pyth_div2 {a b c : ℤ} (h : a ^ 2 + b ^ 2 = c ^ 2) :
     2 ∣ a ∨ 2 ∣ b := by
   contrapose! h;
   exact ne_of_apply_ne ( · % 4 ) ( by rcases Int.even_or_odd' a with ⟨ k, rfl | rfl ⟩ <;> rcases Int.even_or_odd' b with ⟨ l, rfl | rfl ⟩ <;> rcases Int.even_or_odd' c with ⟨ m, rfl | rfl ⟩ <;> ring_nf <;> norm_num [ Int.add_emod, Int.mul_emod ] at * )
 
-/-
-In a Pythagorean triple, 60 divides abc.
--/
+
 theorem pyth_60_div_abc {a b c : ℤ} (h : a ^ 2 + b ^ 2 = c ^ 2) :
     60 ∣ a * b * c := by
   have h60 : 60 ∣ a * b * c := by

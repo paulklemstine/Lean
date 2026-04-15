@@ -1,136 +1,52 @@
-/-
-# MetaFactoring: Future Research Directions — Formal Foundations
+/-! # CatalogBuild.Computation.Factoring.FutureDirections
 
-Lean 4 formalization of key mathematical results underlying the five
-research thrusts of the MetaFactoring roadmap.
-
-## Formalized Results
-
-### Thrust I: Constraint Intersection
-* `multi_lens_advantage` — k lenses reduce search space by factor 2^k
-* `advantage_unbounded` — sufficient lenses reduce below any threshold
-* `seven_lens_factor` — 7 lenses give factor 128
-
-### Thrust II: Fibonacci-Spectral Duality
-* `pisano_period_exists` — Fibonacci is periodic mod m ≥ 2
-* `fib_sq_sum` — F(n)² + F(n+1)² = F(2n+1)
-* `cassini` — Cassini's identity
-* `fib_gcd_identity` — gcd(F(m), F(n)) = F(gcd(m,n))
-* `fib_divisibility` — m | n ⟹ F(m) | F(n)
-* `pisano_split_case` — π(p) | p-1 when (5/p) = 1
-* `pisano_inert_case` — π(p) | 2(p+1) when (5/p) = -1
-
-### Thrust III: Division Algebra Hierarchy
-* `brahmagupta_fibonacci` — 2-square identity
-* `euler_four_square` — 4-square identity
-* `two_reps_factoring` — two representations yield factors
-* `fermat_two_square` — primes p ≡ 1 (mod 4) are sums of two squares
-* `lagrange_four_squares` — every ℕ is sum of 4 squares
-
-### Thrust IV: Quantum MetaFactoring
-* `order_finding_factoring` — Shor core: order-finding gives factors
-* `birthday_bound` — pigeonhole/birthday paradox
-
-### Thrust V: Adjacent Problems
-* `order_divides_group_size` — group element order divides |G|
-* `wilson` — Wilson's theorem
-* `totient_mult` — Euler totient is multiplicative
+Auto-generated from theorem catalog database.
+Domain: Computation/Factoring
+Declarations: 19
 -/
 
 import Mathlib
 
-open Nat Finset BigOperators
-
-set_option maxHeartbeats 1600000
-
-namespace MetaFactoring.FutureDirections
-
-/-! ## Research Thrust I: Tightening the Constraint Intersection -/
-
-section ConstraintIntersection
-
 /-- The multi-lens advantage: k independent halving constraints reduce
-    the search space from S to S / 2^k. For k ≥ 1, this is a strict reduction. -/
+the search space from S to S / 2^k. For k ≥ 1, this is a strict reduction. -/
 theorem multi_lens_advantage (S : ℕ) (k : ℕ) (hS : 0 < S) (hk : 1 ≤ k) :
     S / 2 ^ k < S := Nat.div_lt_self hS (Nat.one_lt_two_pow_iff.mpr (by omega))
 
+
 /-- The advantage grows without bound: for any target ε > 0, sufficiently
-    many lenses reduce below ε. -/
+many lenses reduce below ε. -/
 theorem advantage_unbounded (S : ℕ) (hS : 0 < S) :
     ∀ ε : ℕ, 0 < ε → ∃ k : ℕ, S / 2 ^ k < ε := by
   intros ε hε
   obtain ⟨k, hk⟩ := pow_unbounded_of_one_lt (S / ε) one_lt_two
   exact ⟨k, Nat.div_lt_of_lt_mul (by nlinarith [Nat.div_add_mod S ε, Nat.mod_lt S hε])⟩
 
+
 /-- Information-theoretic bound: log₂(2^k) = k bits of information. -/
 theorem information_bound (k : ℕ) : Nat.log 2 (2 ^ k) = k :=
   Nat.log_pow (by norm_num) k
 
+
 /-- With 7 lenses (the MetaFactoring count), the reduction factor is 128. -/
 theorem seven_lens_factor : 2 ^ 7 = 128 := by norm_num
 
-end ConstraintIntersection
-
-/-! ## Research Thrust II: Fibonacci-Spectral Duality -/
-
-section FibonacciSpectral
-
-/-
-The Fibonacci sequence is periodic modulo any m ≥ 2 (Pisano periodicity).
-    Proved via pigeonhole on pairs (F(n) mod m, F(n+1) mod m).
--/
-theorem pisano_period_exists (m : ℕ) (hm : 2 ≤ m) :
-    ∃ T : ℕ, 0 < T ∧ ∀ n : ℕ, Nat.fib (n + T) % m = Nat.fib n % m := by
-  -- Consider the pairs $(F_n \mod m, F_{n+1} \mod m)$ and show that by the pigeonhole principle, there must be a repetition.
-  have h_pigeonhole : ∃ p q, p < q ∧ (fib p % m = fib q % m) ∧ (fib (p + 1) % m = fib (q + 1) % m) := by
-    by_contra h;
-    exact absurd ( Set.infinite_range_of_injective ( show Function.Injective fun n ↦ ( fib n % m, fib ( n + 1 ) % m ) from fun p q h ↦ le_antisymm ( not_lt.1 fun contra ↦ h.not_gt <| by aesop ) ( not_lt.1 fun contra ↦ h.not_lt <| by aesop ) ) ) ( Set.not_infinite.mpr <| Set.finite_iff_bddAbove.mpr ⟨ ( m, m ), by rintro x ⟨ n, rfl ⟩ ; exact ⟨ Nat.le_of_lt <| Nat.mod_lt _ <| by positivity, Nat.le_of_lt <| Nat.mod_lt _ <| by positivity ⟩ ⟩ );
-  obtain ⟨ p, q, hpq, hp, hq ⟩ := h_pigeonhole;
-  induction' p with p ih generalizing q;
-  · refine' ⟨ q, hpq, fun n => _ ⟩;
-    induction' n using Nat.strong_induction_on with n ih;
-    rcases n with ( _ | _ | n ) <;> simp_all +arith +decide [ Nat.fib_add ];
-    · norm_num [ ← hp ];
-    · norm_num [ ← hp ] at *;
-    · norm_num [ Nat.add_mod, Nat.mul_mod, ih n ( by linarith ), ih ( n + 1 ) ( by linarith ), hp.symm ];
-      norm_num [ ← hp, ← hq ];
-  · contrapose! ih;
-    refine' ⟨ q - 1, _, _, _, ih ⟩ <;> rcases q with ( _ | _ | q ) <;> simp_all +decide [ Nat.fib_add_two ];
-    simp_all +decide [ ← ZMod.natCast_eq_natCast_iff' ]
 
 /-- F(n)² + F(n+1)² = F(2n+1). Connects Fibonacci squares to doubled indices. -/
 theorem fib_sq_sum (n : ℕ) :
     (Nat.fib n) ^ 2 + (Nat.fib (n + 1)) ^ 2 = Nat.fib (2 * n + 1) := by
   rw [Nat.fib_two_mul_add_one]; ring
 
-/-
-Cassini's identity: F(n+1)·F(n-1) - F(n)² = (-1)^n for n ≥ 1.
--/
-theorem cassini (n : ℕ) (hn : 1 ≤ n) :
-    (Nat.fib (n + 1) : ℤ) * Nat.fib (n - 1) - (Nat.fib n : ℤ) ^ 2 = (-1) ^ n := by
-  induction hn <;> norm_num [ Nat.fib_add_two, pow_succ ] at *;
-  cases ‹1 ≤ _› <;> norm_num [ Nat.fib_add_two ] at * ; linarith!
-
-/-- The GCD of Fibonacci numbers: gcd(F(m), F(n)) = F(gcd(m, n)). -/
-theorem fib_gcd_identity (m n : ℕ) :
-    Nat.gcd (Nat.fib m) (Nat.fib n) = Nat.fib (Nat.gcd m n) :=
-  (Nat.fib_gcd m n).symm
 
 /-- Fibonacci divisibility: m | n implies F(m) | F(n). -/
 theorem fib_divisibility (m n : ℕ) (h : m ∣ n) :
     Nat.fib m ∣ Nat.fib n := Nat.fib_dvd m n h
 
-/-
-The golden ratio bound: F(n+1) ≤ 2·F(n) for n ≥ 1.
--/
+
 theorem golden_ratio_bound (n : ℕ) (hn : 1 ≤ n) :
     Nat.fib (n + 1) ≤ 2 * Nat.fib n := by
   rcases n with ( _ | _ | n ) <;> simp_all +arith +decide [ fib_add_two ]
 
-/-
-For p ≡ 1 or 4 (mod 5), we have p | F(p-1).
-    (5 is a quadratic residue mod p, so p splits in ℚ(√5).)
--/
+
 theorem pisano_split_case (p : ℕ) (hp : Nat.Prime p) (hp5 : p % 5 = 1 ∨ p % 5 = 4) :
     p ∣ Nat.fib (p - 1) := by
   haveI := Fact.mk hp ;
@@ -170,10 +86,7 @@ theorem pisano_split_case (p : ℕ) (hp : Nat.Prime p) (hp5 : p % 5 = 1 ∨ p % 
   simp_all +decide [ ← ZMod.natCast_eq_zero_iff ];
   rw [ ZMod.pow_card_sub_one_eq_one, ZMod.pow_card_sub_one_eq_one ] <;> aesop
 
-/-
-For p ≡ 2 or 3 (mod 5), we have p | F(p+1).
-    (5 is a quadratic non-residue mod p, so p is inert in ℚ(√5).)
--/
+
 theorem pisano_inert_case (p : ℕ) (hp : Nat.Prime p) (hp5 : p % 5 = 2 ∨ p % 5 = 3) :
     p ∣ Nat.fib (p + 1) := by
   haveI := Fact.mk hp; norm_num [ ← ZMod.natCast_eq_zero_iff, fib ] ;
@@ -258,60 +171,24 @@ theorem pisano_inert_case (p : ℕ) (hp : Nat.Prime p) (hp5 : p % 5 = 2 ∨ p % 
   rw [ ZMod.natCast_eq_zero_iff ];
   exact?
 
-/-
-Fibonacci grows at least linearly: F(k+2) ≥ k+1.
--/
+
 theorem fib_at_least_linear (k : ℕ) : k + 1 ≤ Nat.fib (k + 2) := by
   induction k <;> simp +arith +decide [ *, Nat.fib_add_two ];
   cases ‹ℕ› <;> norm_num [ fib_add_two ] at * ; linarith
 
-/-
-The Fibonacci search space reduction: fib(k+2) < 2^k for k ≥ 2.
--/
-theorem fibonacci_search_reduction (k : ℕ) (hk : 2 ≤ k) :
-    Nat.fib (k + 2) < 2 ^ k := by
-  rcases k with ( _ | _ | _ | _ | k ) <;> simp_all +arith +decide [ Nat.fib_add_two, pow_succ' ];
-  induction' k with k ih <;> norm_num [ Nat.fib_add_two, pow_succ' ] at * ; linarith [ fib_mono ( Nat.le_succ k ) ]
-
-end FibonacciSpectral
-
-/-! ## Research Thrust III: Division Algebra Hierarchy -/
-
-section DivisionAlgebra
-
-/-- Brahmagupta-Fibonacci identity (dimension 2 norm channel). -/
-theorem brahmagupta_fibonacci (a b c d : ℤ) :
-    (a ^ 2 + b ^ 2) * (c ^ 2 + d ^ 2) =
-    (a * c - b * d) ^ 2 + (a * d + b * c) ^ 2 := by ring
-
-/-- Euler four-square identity (dimension 4 norm channel). -/
-theorem euler_four_square (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℤ) :
-    (a₁^2 + a₂^2 + a₃^2 + a₄^2) * (b₁^2 + b₂^2 + b₃^2 + b₄^2) =
-    (a₁*b₁ - a₂*b₂ - a₃*b₃ - a₄*b₄)^2 +
-    (a₁*b₂ + a₂*b₁ + a₃*b₄ - a₄*b₃)^2 +
-    (a₁*b₃ - a₂*b₄ + a₃*b₁ + a₄*b₂)^2 +
-    (a₁*b₄ + a₂*b₃ - a₃*b₂ + a₄*b₁)^2 := by ring
 
 /-- Two sum-of-squares representations yield a factoring equation. -/
 theorem two_reps_factoring (a b c d N : ℤ)
     (h1 : a ^ 2 + b ^ 2 = N) (h2 : c ^ 2 + d ^ 2 = N) :
     (a - c) * (a + c) = (d - b) * (d + b) := by nlinarith
 
-/-
-Fermat's two-square theorem: primes p ≡ 1 (mod 4) are sums of two squares.
--/
+
 theorem fermat_two_square (p : ℕ) (hp : Nat.Prime p) (hmod : p % 4 = 1) :
     ∃ a b : ℕ, a ^ 2 + b ^ 2 = p := by
   have := Fact.mk hp;
   have := @Nat.Prime.sq_add_sq p;
   convert this ( by rw [ hmod ] ; decide )
 
-/-
-Lagrange's four-square theorem: every natural number is a sum of 4 squares.
--/
-theorem lagrange_four_squares (n : ℕ) :
-    ∃ a b c d : ℕ, a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 = n := by
-  have := @Nat.sum_four_squares n; tauto;
 
 /-- The Degen eight-square identity (dimension 8 norm channel). -/
 theorem degen_eight_square
@@ -328,53 +205,18 @@ theorem degen_eight_square
     (a₁*b₈ - a₂*b₇ + a₃*b₆ + a₄*b₅ - a₅*b₄ - a₆*b₃ + a₇*b₂ + a₈*b₁)^2 := by
   ring
 
+
 /-- AM-GM for divisor pairs: 4N ≤ (d + N/d)². -/
 theorem divisor_sum_am_gm (N d : ℕ) (hN : 0 < N) (hd : d ∣ N) (hd_pos : 0 < d) :
     4 * N ≤ (d + N / d) ^ 2 := by
   nlinarith [Nat.div_mul_cancel hd, sq_nonneg (N / d - d : ℤ)]
 
-end DivisionAlgebra
-
-/-! ## Research Thrust IV: Quantum MetaFactoring -/
-
-section QuantumMetaFactoring
-
-/-- The birthday bound via pigeonhole: n+1 elements mapped to n slots
-    must have a collision. This is the mathematical basis of Pollard-rho
-    and quantum collision-finding algorithms. -/
-theorem birthday_bound (n : ℕ) (f : Fin (n + 1) → Fin n) :
-    ∃ i j : Fin (n + 1), i ≠ j ∧ f i = f j := by
-  exact Fintype.exists_ne_map_eq_of_card_lt f (by simp)
-
-/-- Difference of squares factorization: the core of Shor's endgame. -/
-theorem diff_of_squares (x y : ℤ) : x ^ 2 - y ^ 2 = (x - y) * (x + y) := by ring
-
-/-
-The congruence of squares theorem: if n | x²-y² but n ∤ (x-y) and n ∤ (x+y),
-    then gcd(x-y, n) is a nontrivial factor.
--/
-theorem congruence_of_squares {n x y : ℤ} (hn : 1 < n)
-    (hcong : n ∣ x ^ 2 - y ^ 2)
-    (hne_sub : ¬ n ∣ x - y)
-    (hne_add : ¬ n ∣ x + y) :
-    1 < Int.gcd (x - y) n ∧ (Int.gcd (x - y) n : ℤ) < n := by
-  contrapose! hne_add;
-  have h_cases : Int.gcd (x - y) n = 1 ∨ Int.gcd (x - y) n = n := by
-    exact Classical.or_iff_not_imp_left.2 fun h => le_antisymm ( Int.le_of_dvd ( by positivity ) ( Int.gcd_dvd_right _ _ ) ) ( hne_add <| lt_of_le_of_ne ( Nat.succ_le_of_lt <| Nat.pos_of_ne_zero <| mt Int.gcd_eq_zero_iff.mp <| by aesop ) <| Ne.symm h );
-  cases h_cases <;> simp_all +decide;
-  · exact Int.dvd_of_dvd_mul_right_of_gcd_one ( by convert hcong using 1; ring ) ( Int.gcd_comm _ _ ▸ ‹Int.gcd ( x - y ) n = 1› );
-  · have := Int.gcd_dvd_left ( x - y ) n; simp_all +decide [ dvd_add_right, dvd_add_left, dvd_sub_right, dvd_sub_left ]
-
-end QuantumMetaFactoring
-
-/-! ## Research Thrust V: Adjacent Problems -/
-
-section AdjacentProblems
 
 /-- Any element of a finite group has order dividing |G|. -/
 theorem order_divides_group_size {G : Type*} [Group G] [Fintype G] (g : G) :
     g ^ Fintype.card G = 1 :=
   pow_card_eq_one
+
 
 /-- Wilson's theorem: (p-1)! ≡ -1 (mod p) for prime p. -/
 theorem wilson (p : ℕ) (hp : Nat.Prime p) :
@@ -382,54 +224,20 @@ theorem wilson (p : ℕ) (hp : Nat.Prime p) :
   haveI : Fact (Nat.Prime p) := ⟨hp⟩
   exact ZMod.wilsons_lemma p
 
-/-- Totient is multiplicative for coprime arguments. -/
-theorem totient_mult (m n : ℕ) (h : Nat.Coprime m n) :
-    Nat.totient (m * n) = Nat.totient m * Nat.totient n :=
-  Nat.totient_mul h
 
-/-- For prime p, φ(p) = p - 1. -/
-theorem totient_prime (p : ℕ) (hp : Nat.Prime p) :
-    Nat.totient p = p - 1 :=
-  Nat.totient_prime hp
-
-/-- Fermat's little theorem: a^p ≡ a (mod p) for prime p. -/
-theorem fermat_little (p : ℕ) (hp : Nat.Prime p) (a : ZMod p) :
-    a ^ p = a := by
-  haveI : Fact (Nat.Prime p) := ⟨hp⟩
-  exact ZMod.pow_card a
-
-/-
-Euler's criterion: a^((p-1)/2) ∈ {1, -1} mod p for odd prime p.
--/
 theorem euler_criterion (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2)
     (a : ZMod p) (ha : a ≠ 0) :
     a ^ ((p - 1) / 2) = 1 ∨ a ^ ((p - 1) / 2) = -1 := by
   haveI := Fact.mk hp; have h := FiniteField.pow_card_sub_one_eq_one a;
   cases Nat.Prime.odd_of_ne_two hp hp2 ; simp_all +decide [ pow_add, pow_mul' ]
 
-/-
-The minimum factor of a composite n is at most √n.
--/
-theorem min_factor_le_sqrt (n : ℕ) (hn : 1 < n) (hc : ¬Nat.Prime n) :
-    n.minFac ≤ Nat.sqrt n := by
-  obtain ⟨ m, hm ⟩ := Nat.exists_dvd_of_not_prime2 hn hc;
-  obtain ⟨ p, rfl ⟩ := hm.1;
-  rw [ Nat.le_sqrt ] ; nlinarith [ Nat.minFac_le_of_dvd ( by linarith ) hm.1, Nat.minFac_le_of_dvd ( by nlinarith ) ( dvd_mul_left p m ) ]
-
-end AdjacentProblems
-
-/-! ## Cross-Cutting: Modular Arithmetic Infrastructure -/
-
-section ModularInfrastructure
 
 /-- CRT cardinality: m·n = m·n (product structure). -/
 theorem crt_cardinality (m n : ℕ) : m * n = m * n := rfl
+
 
 /-- Bézout's identity: coprime integers generate ℤ. -/
 theorem bezout {a b : ℤ} (h : IsCoprime a b) :
     ∃ s t : ℤ, s * a + t * b = 1 := by
   obtain ⟨s, t, hst⟩ := h; exact ⟨s, t, hst⟩
 
-end ModularInfrastructure
-
-end MetaFactoring.FutureDirections

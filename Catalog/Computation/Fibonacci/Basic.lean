@@ -1,123 +1,87 @@
-/-
-  FibonacciFactoring/Basic.lean
+/-! # CatalogBuild.Computation.Fibonacci.Basic
 
-  Lean 4 formalization of core mathematical results underlying
-  Fibonacci-base (Zeckendorf) arithmetic for integer factoring.
-
-  Key results formalized:
-  1. The Fibonacci carry identity: 2·F(n) = F(n+1) + F(n-2)
-  2. The adjacency normalization identity: F(n) + F(n+1) = F(n+2)
-  3. Properties of Fibonacci products relevant to constraint analysis
-  4. The non-adjacency constraint and valid Zeckendorf representations
-  5. Search space reduction: valid Zeckendorf strings are counted by Fibonacci numbers
-  6. Cassini's identity (both parities)
-  7. Fibonacci product spread analysis
-  8. Pisano period properties
-  9. Fibonacci GCD and divisibility
-  10. Parity structure of Fibonacci numbers
+Auto-generated from theorem catalog database.
+Domain: Computation/Fibonacci
+Declarations: 21
 -/
 
 import Mathlib
-
-open Nat
-
-/-! ## Section 1: Fibonacci Identities for Carry Propagation -/
-
-/-- The adjacency normalization rule: F(n) + F(n+1) = F(n+2).
-    This is the rule used to eliminate adjacent 1s in Zeckendorf representations. -/
-theorem fib_adjacency_rule (n : ℕ) : Nat.fib n + Nat.fib (n + 1) = Nat.fib (n + 2) := by
-  exact Eq.symm fib_add_two
-
-/-- The bidirectional carry rule: 2·F(n+2) = F(n+3) + F(n).
-    This is the key identity that distinguishes Fibonacci-base arithmetic from binary:
-    carries propagate both upward (to position n+3) and downward (to position n). -/
-theorem fib_carry_rule (n : ℕ) : 2 * Nat.fib (n + 2) = Nat.fib (n + 3) + Nat.fib n := by
-  simp +arith +decide [ Nat.fib_add_two ]
 
 /-- Fibonacci numbers are positive for n ≥ 1. -/
 theorem fib_pos (n : ℕ) (hn : 1 ≤ n) : 0 < Nat.fib n := by
   exact Nat.fib_pos.mpr hn
 
-/-- Fibonacci numbers are strictly monotone for n ≥ 2. -/
-theorem fib_strict_mono {m n : ℕ} (hm : 2 ≤ m) (hmn : m < n) : Nat.fib m < Nat.fib n := by
-  induction hmn <;> simp_all +arith +decide [];
-  · rcases m with ( _ | _ | m ) <;> simp_all +arith +decide [ Nat.fib_add_two ];
-  · exact lt_trans ‹_› ( by erw [ Nat.fib_lt_fib ] <;> linarith )
 
-/-
-Fibonacci numbers grow at least linearly: n ≤ 2 * F(n) for n ≥ 1.
--/
 theorem fib_ge_half (n : ℕ) (hn : 1 ≤ n) : n ≤ 2 * Nat.fib n := by
   induction' n using Nat.strong_induction_on with n ih;
   rcases n with ( _ | _ | _ | _ | _ | _ | _ | n ) <;> simp +arith +decide [ Nat.fib_add_two ] at *;
   grind
 
-/-! ## Section 2: Zeckendorf Representation Basics -/
 
 /-- A Zeckendorf representation is a list of Fibonacci indices (≥ 2) such that
-    no two indices are consecutive. -/
+no two indices are consecutive. -/
 def IsValidZeckendorf (indices : List ℕ) : Prop :=
   (∀ i ∈ indices, 2 ≤ i) ∧
   (indices.Pairwise (· < ·)) ∧
   (∀ i ∈ indices, ∀ j ∈ indices, i + 1 ≠ j)
 
+
 /-- The value of a Zeckendorf representation is the sum of the corresponding
-    Fibonacci numbers. -/
+Fibonacci numbers. -/
 def zeckendorfValue (indices : List ℕ) : ℕ :=
   indices.foldl (fun acc i => acc + Nat.fib i) 0
 
+
 /-- The number of binary strings of length n with no two consecutive 1s
-    is exactly F(n+2), where F is the Fibonacci sequence. This is the
-    fundamental count underlying the search space reduction claim. -/
+is exactly F(n+2), where F is the Fibonacci sequence. This is the
+fundamental count underlying the search space reduction claim. -/
 def noAdjacentOnes : ℕ → ℕ
   | 0 => 1
   | 1 => 2
   | n + 2 => noAdjacentOnes (n + 1) + noAdjacentOnes n
 
+
 /-- The count of binary strings of length n with no two consecutive 1s
-    equals F(n+2). -/
+equals F(n+2). -/
 theorem noAdjacentOnes_eq_fib (n : ℕ) : noAdjacentOnes n = Nat.fib (n + 2) := by
   induction' n using Nat.strong_induction_on with n ih;
   rcases n with ( _ | _ | _ | n ) <;> simp +arith +decide [ *, Nat.fib_add_two ];
   erw [ show noAdjacentOnes ( n + 3 ) = noAdjacentOnes ( n + 2 ) + noAdjacentOnes ( n + 1 ) from rfl, ih _ <| Nat.lt_succ_self _, ih _ <| Nat.lt_succ_of_lt <| Nat.lt_succ_self _ ] ; simp +arith +decide [ *, Nat.fib_add_two ]
 
-/-! ## Section 3: Search Space Reduction -/
 
 /-- For all n ≥ 2, 2^n > F(n+2), i.e., the Zeckendorf search space is
-    strictly smaller than the binary search space. -/
+strictly smaller than the binary search space. -/
 theorem zeckendorf_search_space_smaller (n : ℕ) (hn : 2 ≤ n) :
     Nat.fib (n + 2) < 2 ^ n := by
   induction hn <;> simp_all +decide [ Nat.fib_add_two, pow_succ' ];
   grind
 
+
 /-- The ratio of valid Zeckendorf strings to binary strings decreases:
-    F(n+3) < 2^(n+1) for n ≥ 2. -/
+F(n+3) < 2^(n+1) for n ≥ 2. -/
 theorem zeckendorf_fraction_decreasing (n : ℕ) (hn : 2 ≤ n) :
     Nat.fib (n + 3) < 2 ^ (n + 1) := by
   have := zeckendorf_search_space_smaller n hn
   have := zeckendorf_search_space_smaller (n + 1) (by omega)
   linarith
 
-/-! ## Section 4: Fibonacci Product Identities -/
 
 /-- Cassini's identity (even case):
-    F(n)·F(n+2) + 1 = F(n+1)² when n is even. -/
+F(n)·F(n+2) + 1 = F(n+1)² when n is even. -/
 theorem cassini_even (n : ℕ) (hn : n % 2 = 0) :
     Nat.fib n * Nat.fib (n + 2) + 1 = Nat.fib (n + 1) ^ 2 := by
   rcases Nat.even_or_odd' n with ⟨ k, rfl | rfl ⟩ <;> simp_all +decide [ Nat.fib_add_two ];
   induction k <;> simp_all +decide [ Nat.fib_add_two, Nat.mul_succ ] ; linarith
 
+
 /-- Cassini's identity (odd case):
-    F(n+1)² + 1 = F(n)·F(n+2) when n is odd. -/
+F(n+1)² + 1 = F(n)·F(n+2) when n is odd. -/
 theorem cassini_odd (n : ℕ) (hn : n % 2 = 1) :
     Nat.fib (n + 1) ^ 2 + 1 = Nat.fib n * Nat.fib (n + 2) := by
   rcases Nat.even_or_odd' n with ⟨ k, rfl | rfl ⟩ <;> simp_all +arith +decide [ Nat.fib_add_two ];
   induction k <;> norm_num [ Nat.fib_add_two, Nat.mul_succ ] at * ; linarith
 
-/-
-The d'Ocagne identity (even case): for m ≥ n with n even,
-    F(m)·F(n+1) = F(m+1)·F(n) + F(m-n).
--/
+
 theorem fib_docagne_even (m n : ℕ) (hmn : n ≤ m) (hn : n % 2 = 0) :
     Nat.fib m * Nat.fib (n + 1) = Nat.fib (m + 1) * Nat.fib n + Nat.fib (m - n) := by
   -- We prove the general d'Ocagne identity by induction on $m - n$.
@@ -128,10 +92,7 @@ theorem fib_docagne_even (m n : ℕ) (hmn : n ≤ m) (hn : n % 2 = 0) :
   convert h_ind ( m - n ) n using 1 ; norm_num [ Nat.add_sub_of_le hmn ];
   rw [ ← Nat.mod_add_div n 2, hn ] ; norm_num [ pow_add, pow_mul ] ; norm_cast;
 
-/-
-The Vajda identity (even case): for n even,
-    F(n)·F(n+i+j) + F(i)·F(j) = F(n+i)·F(n+j).
--/
+
 theorem fib_vajda_even (n i j : ℕ) (hn : n % 2 = 0) :
     Nat.fib n * Nat.fib (n + i + j) + Nat.fib i * Nat.fib j =
     Nat.fib (n + i) * Nat.fib (n + j) := by
@@ -145,10 +106,7 @@ theorem fib_vajda_even (n i j : ℕ) (hn : n % 2 = 0) :
     · rename_i h; have := h ( i + 1 ) ( j + 1 ) ; simp_all +arith +decide [ Nat.fib_add_two ] ;
       grind
 
-/-
-The Vajda identity (odd case): for n odd,
-    F(n+i)·F(n+j) + F(i)·F(j) = F(n)·F(n+i+j).
--/
+
 theorem fib_vajda_odd (n i j : ℕ) (hn : n % 2 = 1) :
     Nat.fib (n + i) * Nat.fib (n + j) + Nat.fib i * Nat.fib j =
     Nat.fib n * Nat.fib (n + i + j) := by
@@ -160,181 +118,46 @@ theorem fib_vajda_odd (n i j : ℕ) (hn : n % 2 = 1) :
   norm_num [ mul_assoc, ← mul_pow ] ; ring;
   norm_num ; ring
 
-/-! ## Section 5: Product Spread Properties -/
-
-/-- Product spread examples: F(2k+1)² for small k.
-    Verified computationally to demonstrate the spread pattern. -/
--- spread(F(3)²) = 2: F(3)² = F(4) + F(2)
-example : Nat.fib 3 ^ 2 = Nat.fib 4 + Nat.fib 2 := by native_decide
--- spread(F(5)²) = 3: F(5)² = F(8) + F(4) + F(2)
-example : Nat.fib 5 ^ 2 = Nat.fib 8 + Nat.fib 4 + Nat.fib 2 := by native_decide
--- spread(F(7)²) = 4: F(7)² = F(12) + F(8) + F(4) + F(2)
-example : Nat.fib 7 ^ 2 = Nat.fib 12 + Nat.fib 8 + Nat.fib 4 + Nat.fib 2 := by native_decide
--- spread(F(9)²) = 5: F(9)² = F(16) + F(12) + F(8) + F(4) + F(2)
-example : Nat.fib 9 ^ 2 = Nat.fib 16 + Nat.fib 12 + Nat.fib 8 + Nat.fib 4 + Nat.fib 2 := by native_decide
-
-/-! ## Section 6: Carry Cascade Reach -/
 
 /-- The carry cascade from position n can reach position n-2 (downward carry).
-    This is the fundamental bidirectional carry property. -/
+This is the fundamental bidirectional carry property. -/
 theorem carry_reaches_down (n : ℕ) (hn : 4 ≤ n) :
     2 * Nat.fib n = Nat.fib (n + 1) + Nat.fib (n - 2) := by
   have : n = (n - 2) + 2 := by omega
   rw [this]
   exact fib_carry_rule (n - 2)
 
-/-
-The iterated carry rule: 3·F(n+2) = F(n+4) + F(n-1) for n ≥ 1.
-    A column value of 3 creates a spread of carries.
--/
+
 theorem fib_triple (n : ℕ) (hn : 2 ≤ n) :
     3 * Nat.fib n = Nat.fib (n + 2) + Nat.fib (n - 2) := by
   rcases n with ( _ | _ | n ) <;> simp_all +arith +decide [ Nat.fib_add_two ]
 
-/-- Carry cascade verification: from position 8, carries reach positions 6, 4, 2. -/
-example : 2 * Nat.fib 8 = Nat.fib 9 + Nat.fib 6 := by native_decide
-example : 2 * Nat.fib 6 = Nat.fib 7 + Nat.fib 4 := by native_decide
-example : 2 * Nat.fib 4 = Nat.fib 5 + Nat.fib 2 := by native_decide
 
-/-! ## Section 7: Pisano Period Properties -/
-
-/-- Fibonacci numbers modulo m are eventually periodic (Wall, 1960). -/
-theorem fib_mod_periodic (m : ℕ) (hm : 2 ≤ m) :
-    ∃ π : ℕ, 0 < π ∧ ∀ n : ℕ, Nat.fib (n + π) % m = Nat.fib n % m := by
-  by_contra! h;
-  have h_pigeonhole : ∃ i j, i < j ∧ (Nat.fib i % m = Nat.fib j % m ∧ Nat.fib (i + 1) % m = Nat.fib (j + 1) % m) := by
-    have h_pigeonhole : Set.Finite (Set.range (fun n => (Nat.fib n % m, Nat.fib (n + 1) % m))) := by
-      exact Set.finite_iff_bddAbove.mpr ⟨ ⟨ m - 1, m - 1 ⟩, by rintro a ⟨ n, rfl ⟩ ; exact ⟨ Nat.le_sub_one_of_lt ( Nat.mod_lt _ ( by positivity ) ), Nat.le_sub_one_of_lt ( Nat.mod_lt _ ( by positivity ) ) ⟩ ⟩;
-    by_cases h_eq : ∀ i j, i < j → (Nat.fib i % m, Nat.fib (i + 1) % m) ≠ (Nat.fib j % m, Nat.fib (j + 1) % m);
-    · exact False.elim <| h_pigeonhole.not_infinite <| Set.infinite_range_of_injective fun i j hij => le_antisymm ( le_of_not_gt fun hi => h_eq _ _ hi hij.symm ) ( le_of_not_gt fun hj => h_eq _ _ hj hij );
-    · aesop;
-  obtain ⟨ i, j, hij, hi, hj ⟩ := h_pigeonhole;
-  induction' i with i ih generalizing j;
-  · obtain ⟨ n, hn ⟩ := h j hij;
-    induction' n with n ih;
-    · grind;
-    · simp_all +decide [ add_right_comm, Nat.fib_add ];
-      norm_num [ ← hi, Nat.add_mod, Nat.mul_mod ] at hn;
-      norm_num [ ← hi, ← hj ] at hn;
-  · specialize ih ( j - 1 ) ( Nat.lt_pred_iff.mpr hij ) ; rcases j <;> simp_all +decide [ Nat.fib_add_two, Nat.add_mod ];
-    simp_all +decide [ ← ZMod.natCast_eq_natCast_iff' ]
-
-/-
-Pisano period of 2 is 3: F(n+3) ≡ F(n) (mod 2).
--/
-theorem pisano_period_2 (n : ℕ) : Nat.fib (n + 3) % 2 = Nat.fib n % 2 := by
-  rcases n with ( _ | _ | _ | n ) <;> simp +arith +decide [ *, Nat.fib_add_two ];
-  norm_num [ Nat.add_mod, Nat.mul_mod ]
-
-/-
-Pisano period of 3 is 8: F(n+8) ≡ F(n) (mod 3).
--/
-theorem pisano_period_3 (n : ℕ) : Nat.fib (n + 8) % 3 = Nat.fib n % 3 := by
-  exact Nat.recOn n ( by decide ) fun n ih => by revert ih; simp_all +arith +decide [ Nat.fib_add_two, Nat.add_mod, Nat.mul_mod ] ;
-
-/-
-Pisano period of 5 is 20: F(n+20) ≡ F(n) (mod 5).
--/
 theorem pisano_period_5 (n : ℕ) : Nat.fib (n + 20) % 5 = Nat.fib n % 5 := by
   norm_num [ Nat.fib_add, Nat.add_mod, Nat.mul_mod ]
 
-/-! ## Section 8: Parity Constraints -/
 
-/-
-F(3k) is even for all k ≥ 1. This follows from the Pisano period mod 2
-    being 3: the pattern is F(1)=1, F(2)=1, F(3)=2, repeating.
-    This means position 3k in Zeckendorf representation always contributes
-    an even amount, creating a parity constraint.
--/
 theorem fib_3k_even (k : ℕ) (hk : 1 ≤ k) : 2 ∣ Nat.fib (3 * k) := by
   exact Nat.dvd_of_mod_eq_zero ( by induction hk <;> simp_all +arith +decide [ Nat.mul_succ, Nat.fib_add_two, Nat.add_mod ] )
 
-/-
-F(3k+1) is odd.
--/
+
 theorem fib_3k1_odd (k : ℕ) : ¬ 2 ∣ Nat.fib (3 * k + 1) := by
   induction k <;> simp_all +arith +decide [ Nat.dvd_iff_mod_eq_zero, Nat.add_mod, Nat.mul_succ, Nat.fib_add_two ];
   norm_num [ Nat.mul_mod, ‹_› ]
 
-/-
-F(3k+2) is odd.
--/
+
 theorem fib_3k2_odd (k : ℕ) : ¬ 2 ∣ Nat.fib (3 * k + 2) := by
   induction ‹ℕ› <;> simp_all +arith +decide [ Nat.fib_add_two, Nat.mul_succ ];
   omega
 
-/-! ## Section 9: Fibonacci GCD Properties -/
 
-/-- gcd(F(m), F(n)) = F(gcd(m, n)). This is a classical identity that
-    connects Fibonacci arithmetic to the structure of the integers. -/
-theorem fib_gcd (m n : ℕ) : Nat.gcd (Nat.fib m) (Nat.fib n) = Nat.fib (Nat.gcd m n) := by
-  exact (Nat.fib_gcd m n).symm
-
-/-
-F(n) divides F(k·n) for all k.
-    This divisibility pattern is exploited in Pisano period analysis.
--/
-theorem fib_dvd_fib_mul (n k : ℕ) : Nat.fib n ∣ Nat.fib (k * n) := by
-  induction k <;> simp_all +decide [ Nat.succ_mul, Nat.fib_dvd ]
-
-/-! ## Section 10: Fibonacci Addition Formula -/
-
-/-
-The addition formula for Fibonacci: F(m+n+1) = F(m)·F(n) + F(m+1)·F(n+1).
-    This is the fundamental identity connecting Fibonacci multiplication to
-    position shifts in Zeckendorf representation.
--/
 theorem fib_add_formula (m n : ℕ) :
     Nat.fib (m + n + 1) = Nat.fib m * Nat.fib n + Nat.fib (m + 1) * Nat.fib (n + 1) := by
   exact fib_add m n
 
-/-! ## Section 11: Constraint Graph Properties -/
 
 /-- The constraint density advantage: F(i+2)·F(j+2) > 0 for all i, j,
-    meaning every pair of factor digits contributes to the product. -/
+meaning every pair of factor digits contributes to the product. -/
 theorem fib_product_positive (i j : ℕ) : 0 < Nat.fib (i + 2) * Nat.fib (j + 2) := by
   apply Nat.mul_pos <;> exact fib_pos _ (by omega)
 
-/-- For i,j ≥ 1, F(i+2)·F(j+2) requires at least 2 Zeckendorf digits.
-    Verified for the base case: F(3)·F(3) = 4 = F(4) + F(2), spread 2. -/
-example : Nat.fib 3 * Nat.fib 3 = Nat.fib 4 + Nat.fib 2 := by native_decide
-example : Nat.fib 4 * Nat.fib 3 = Nat.fib 5 + Nat.fib 2 := by native_decide
-example : Nat.fib 4 * Nat.fib 4 = Nat.fib 6 + Nat.fib 2 := by native_decide
-
-/-! ## Section 12: Concrete Verification Examples -/
-
-/-- Verify the carry rule for F(4) = 3: 2*3 = 5 + 1 = F(5) + F(2). -/
-example : 2 * Nat.fib 4 = Nat.fib 5 + Nat.fib 2 := by native_decide
-
-/-- Verify the carry rule for F(5) = 5: 2*5 = 8 + 2 = F(6) + F(3). -/
-example : 2 * Nat.fib 5 = Nat.fib 6 + Nat.fib 3 := by native_decide
-
-/-- Verify 143 = 11 * 13, our running example semiprime. -/
-example : 11 * 13 = 143 := by norm_num
-
-/-- Verify Zeckendorf representation of 143 = F(11) + F(9) + F(7) + F(5) + F(3)
-    = 89 + 34 + 13 + 5 + 2 = 143. -/
-example : Nat.fib 11 + Nat.fib 9 + Nat.fib 7 + Nat.fib 5 + Nat.fib 3 = 143 := by
-  native_decide
-
-/-- Verify that the product spread for F(5)^2 = 25 has Zeckendorf representation
-    F(8) + F(4) + F(2) = 21 + 3 + 1 = 25 (3 set bits). -/
-example : Nat.fib 5 ^ 2 = 25 := by native_decide
-example : Nat.fib 8 + Nat.fib 4 + Nat.fib 2 = 25 := by native_decide
-
-/-- Verify F(7)^2 = 169 = F(12) + F(8) + F(4) + F(2) = 144+21+3+1 (4 set bits). -/
-example : Nat.fib 7 ^ 2 = 169 := by native_decide
-example : Nat.fib 12 + Nat.fib 8 + Nat.fib 4 + Nat.fib 2 = 169 := by native_decide
-
-/-- Verify the factoring example: 17 × 19 = 323. -/
-example : 17 * 19 = 323 := by norm_num
-
-/-- Verify Zeckendorf representations used in the 17×19 example. -/
-example : Nat.fib 7 + Nat.fib 4 + Nat.fib 2 = 17 := by native_decide  -- 17 = 100101
-example : Nat.fib 7 + Nat.fib 5 + Nat.fib 2 = 19 := by native_decide  -- 19 = 101001
-
-/-- Zeckendorf representation of 7 = F(5) + F(3) = 5 + 2. -/
-example : Nat.fib 5 + Nat.fib 3 = 7 := by native_decide
-
-/-- Zeckendorf representation of 100 = F(11) + F(6) + F(4) = 89 + 8 + 3. -/
-example : Nat.fib 11 + Nat.fib 6 + Nat.fib 4 = 100 := by native_decide

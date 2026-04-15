@@ -1,23 +1,11 @@
-import Mathlib
+/-! # CatalogBuild.Pythagorean.TreeFactoring.Core
 
-/-!
-# Pythagorean Tree Factoring — Core Formalization
-
-This file contains the machine-verified mathematical foundations for
-factoring integers via descent in the Berggren Pythagorean triple tree.
-
-## Main Results
-
-1. **`trivial_triple_is_pyth`**: For any odd N, (N, (N²-1)/2, (N²+1)/2) is Pythagorean
-2. **`diff_of_squares`**: N² + b² = c²  ⟹  (c-b)(c+b) = N²
-3. **`parent_hyp_decrease`**: Inverse Berggren reduces hypotenuse: 0 < c' < c
-4. **`inv_B*_preserves`**: Inverse matrices preserve the Pythagorean property
-5. **`factor_from_gcd`**: Non-trivial gcd of leg with N yields factor of N
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/TreeFactoring
+Declarations: 15
 -/
 
-open Nat
-
-/-! ## Section 1: The Trivial Triple -/
+import Mathlib
 
 /-- For any odd N, the triple (N, (N²-1)/2, (N²+1)/2) satisfies the Pythagorean equation. -/
 theorem trivial_triple_is_pyth (N : ℤ) (hN : N % 2 = 1) :
@@ -30,53 +18,21 @@ theorem trivial_triple_is_pyth (N : ℤ) (hN : N % 2 = 1) :
     have := h1; omega
   nlinarith [Int.ediv_mul_cancel h1, Int.ediv_mul_cancel h2]
 
-/-! ## Section 2: Difference of Squares -/
-
-/-- The core algebraic identity: if N² + b² = c² then (c-b)(c+b) = N². -/
-theorem diff_of_squares (N b c : ℤ) (h : N ^ 2 + b ^ 2 = c ^ 2) :
-    (c - b) * (c + b) = N ^ 2 := by ring_nf; linarith
-
-/-
-Converse: a same-parity divisor pair gives a Pythagorean triple.
--/
-theorem divisor_pair_to_triple (N d e : ℤ) (hprod : d * e = N ^ 2)
-    (hparity : (2 : ℤ) ∣ (e - d)) :
-    N ^ 2 + ((e - d) / 2) ^ 2 = ((e + d) / 2) ^ 2 := by
-      cases abs_cases e <;> cases abs_cases d <;> nlinarith [ Int.ediv_mul_cancel hparity, Int.ediv_mul_cancel ( show 2 ∣ e + d from even_iff_two_dvd.mp ( by simpa [ ← parity_simps ] using hparity.even ) ) ]
-
-/-! ## Section 3: Inverse Berggren Matrices Preserve Pythagorean Property -/
 
 /-- B₁⁻¹ preserves the Pythagorean property. -/
 theorem inv_B1_preserves (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (a + 2*b - 2*c) ^ 2 + (-2*a - b + 2*c) ^ 2 = (-2*a - 2*b + 3*c) ^ 2 := by nlinarith
 
+
 /-- B₂⁻¹ preserves the Pythagorean property. -/
 theorem inv_B2_preserves (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (a + 2*b - 2*c) ^ 2 + (2*a + b - 2*c) ^ 2 = (-2*a - 2*b + 3*c) ^ 2 := by nlinarith
+
 
 /-- B₃⁻¹ preserves the Pythagorean property. -/
 theorem inv_B3_preserves (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (-a - 2*b + 2*c) ^ 2 + (2*a + b - 2*c) ^ 2 = (-2*a - 2*b + 3*c) ^ 2 := by nlinarith
 
-/-! ## Section 4: Descent Termination -/
-
-/-- The parent hypotenuse is strictly less than the child's. -/
-theorem parent_hyp_lt (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
-    (h : a ^ 2 + b ^ 2 = c ^ 2) :
-    -2*a - 2*b + 3*c < c := by nlinarith [sq_nonneg (a + b - c)]
-
-/-- The parent hypotenuse is strictly positive. -/
-theorem parent_hyp_pos (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
-    (h : a ^ 2 + b ^ 2 = c ^ 2) :
-    0 < -2*a - 2*b + 3*c := by nlinarith [sq_nonneg (a - b), sq_nonneg (3*c - 2*(a + b))]
-
-/-- Combined descent bound: 0 < c' < c. -/
-theorem parent_hyp_decrease (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
-    (h : a ^ 2 + b ^ 2 = c ^ 2) :
-    0 < -2*a - 2*b + 3*c ∧ -2*a - 2*b + 3*c < c :=
-  ⟨parent_hyp_pos a b c ha hb hc h, parent_hyp_lt a b c ha hb h⟩
-
-/-! ## Section 5: Forward-Inverse Round-Trip -/
 
 /-- B₁⁻¹ ∘ B₁ = Id (component-wise) -/
 theorem inv_B1_comp_B1 (a b c : ℤ) :
@@ -86,6 +42,7 @@ theorem inv_B1_comp_B1 (a b c : ℤ) :
     a' + 2*b' - 2*c' = a ∧ -2*a' - b' + 2*c' = b ∧ -2*a' - 2*b' + 3*c' = c :=
   ⟨by ring, by ring, by ring⟩
 
+
 /-- B₂⁻¹ ∘ B₂ = Id (component-wise) -/
 theorem inv_B2_comp_B2 (a b c : ℤ) :
     let a' := a + 2*b + 2*c
@@ -93,6 +50,7 @@ theorem inv_B2_comp_B2 (a b c : ℤ) :
     let c' := 2*a + 2*b + 3*c
     a' + 2*b' - 2*c' = a ∧ 2*a' + b' - 2*c' = b ∧ -2*a' - 2*b' + 3*c' = c :=
   ⟨by ring, by ring, by ring⟩
+
 
 /-- B₃⁻¹ ∘ B₃ = Id (component-wise) -/
 theorem inv_B3_comp_B3 (a b c : ℤ) :
@@ -102,7 +60,6 @@ theorem inv_B3_comp_B3 (a b c : ℤ) :
     (0 - a') - 2*b' + 2*c' = a ∧ 2*a' + b' - 2*c' = b ∧ (0 - 2*a') - 2*b' + 3*c' = c :=
   ⟨by ring, by ring, by ring⟩
 
-/-! ## Section 6: Factor Extraction via GCD -/
 
 /-- If gcd(d, N) is non-trivial, it's a factor of N. -/
 theorem factor_from_gcd (N d : ℕ) (_hN : 1 < N)
@@ -110,32 +67,32 @@ theorem factor_from_gcd (N d : ℕ) (_hN : 1 < N)
     Nat.gcd d N ∣ N ∧ 1 < Nat.gcd d N ∧ Nat.gcd d N < N :=
   ⟨Nat.gcd_dvd_right d N, hg_gt, hg_lt⟩
 
+
 /-- For a semiprime N = p*q, the divisor d = p gives gcd(d, N) = p. -/
 theorem semiprime_gcd (p q : ℕ) (_hp : Nat.Prime p) :
     Nat.gcd p (p * q) = p :=
   Nat.gcd_eq_left (dvd_mul_right p q)
 
-/-! ## Section 7: Parent Uniqueness -/
 
 /-- At most one inverse Berggren map produces positive first and second components. -/
 theorem inv_B1_B2_exclusive (a b c : ℤ)
     (h1 : 0 < -2*a - b + 2*c) (h2 : 0 < 2*a + b - 2*c) : False := by linarith
 
-/-! ## Section 8: Lorentz Form Preservation -/
 
 theorem inv_B1_lorentz (a b c : ℤ) :
     (a + 2*b - 2*c)^2 + (-2*a - b + 2*c)^2 - (-2*a - 2*b + 3*c)^2 =
     a^2 + b^2 - c^2 := by ring
 
+
 theorem inv_B2_lorentz (a b c : ℤ) :
     (a + 2*b - 2*c)^2 + (2*a + b - 2*c)^2 - (-2*a - 2*b + 3*c)^2 =
     a^2 + b^2 - c^2 := by ring
+
 
 theorem inv_B3_lorentz (a b c : ℤ) :
     (-a - 2*b + 2*c)^2 + (2*a + b - 2*c)^2 - (-2*a - 2*b + 3*c)^2 =
     a^2 + b^2 - c^2 := by ring
 
-/-! ## Section 9: Computational Algorithm -/
 
 /-- The parent-finding function: returns which branch and the parent triple. -/
 def findParent' (a b c : ℤ) : ℕ × ℤ × ℤ × ℤ :=
@@ -146,6 +103,7 @@ def findParent' (a b c : ℤ) : ℕ × ℤ × ℤ × ℤ :=
   else
     let (a3, b3, c3) := (-a - 2*b + 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
     (3, a3, b3, c3)
+
 
 /-- Factor N by tree descent with fuel. -/
 def factorDescent (N : ℕ) (fuel : ℕ) : Option (ℕ × ℕ) :=

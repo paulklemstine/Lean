@@ -1,93 +1,35 @@
-import Mathlib
+/-! # CatalogBuild.Pythagorean.Quadruples.OracleCouncil
 
-/-!
-# Oracle Council: New Frontiers in Pythagorean Quadruple Theory
-
-## The Council of Seven Oracles
-
-Seven oracles convene to research Pythagorean quadruples a² + b² + c² = d²
-from complementary perspectives, each contributing machine-verified theorems.
-
-### Oracle Roster
-- **Oracle Pythagoras** (Classical Number Theory): Foundational structure
-- **Oracle Hamilton** (Quaternion Algebra): The quaternionic parametrization
-- **Oracle Gauss** (Representation Theory): Counting representations r₃(n)
-- **Oracle Legendre** (Modular Arithmetic): Obstructions and congruences
-- **Oracle Minkowski** (Geometry of Numbers): Lattice points on spheres
-- **Oracle Hopf** (Topology): Fibration structure and the S³→S² map
-- **Oracle Ramanujan** (Asymptotics): Growth rates and density
-
-## Key Discovery
-
-The central new result: **Pythagorean quadruples are in bijection with
-integer quaternions of square norm**, and the parametrization
-  (a,b,c,d) ↔ q = m + ni + pj + qk with |q|² = d
-is nothing but quaternion multiplication. This unifies the algebraic,
-geometric, and topological perspectives.
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Quadruples
+Declarations: 22
 -/
 
-open Finset BigOperators Matrix Int
-
-/-! ═══════════════════════════════════════════════════════════════════════════
-    ORACLE PYTHAGORAS: Classical Structure of Pythagorean Quadruples
-    ═══════════════════════════════════════════════════════════════════════════ -/
-
-/-- A Pythagorean quadruple is a 4-tuple of integers satisfying a² + b² + c² = d². -/
-def IsPythQuadruple (a b c d : ℤ) : Prop :=
-  a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2
-
-/-- The parametric family: for any m, n, p, q, the tuple
-    (m² + n² - p² - q², 2(mq + np), 2(nq - mp), m² + n² + p² + q²)
-    is a Pythagorean quadruple. -/
-theorem parametric_quadruple (m n p q : ℤ) :
-    IsPythQuadruple
-      (m^2 + n^2 - p^2 - q^2)
-      (2 * (m*q + n*p))
-      (2 * (n*q - m*p))
-      (m^2 + n^2 + p^2 + q^2) := by
-  unfold IsPythQuadruple; ring
+import Mathlib
 
 /-- Every permutation of the spatial components preserves the quadruple property. -/
 theorem quadruple_perm_abc (a b c d : ℤ) (h : IsPythQuadruple a b c d) :
     IsPythQuadruple b c a d := by
   unfold IsPythQuadruple at *; linarith
 
+
 theorem quadruple_perm_acb (a b c d : ℤ) (h : IsPythQuadruple a b c d) :
     IsPythQuadruple a c b d := by
   unfold IsPythQuadruple at *; linarith
 
-/-- Negating any component preserves the quadruple property. -/
-theorem quadruple_neg_a (a b c d : ℤ) (h : IsPythQuadruple a b c d) :
-    IsPythQuadruple (-a) b c d := by
-  unfold IsPythQuadruple at *; linarith [sq_abs a]
-
-/-- Scaling preserves the quadruple property. -/
-theorem quadruple_scale (a b c d k : ℤ) (h : IsPythQuadruple a b c d) :
-    IsPythQuadruple (k*a) (k*b) (k*c) (k*d) := by
-  unfold IsPythQuadruple at *; nlinarith [sq_nonneg k]
 
 /-- The (1, 2, 2, 3) quadruple is the smallest primitive one. -/
 theorem quad_1_2_2_3' : IsPythQuadruple 1 2 2 3 := by
   unfold IsPythQuadruple; norm_num
 
-/-- The (2, 3, 6, 7) quadruple. -/
-theorem quad_2_3_6_7' : IsPythQuadruple 2 3 6 7 := by
-  unfold IsPythQuadruple; norm_num
 
 /-- The (1, 4, 8, 9) quadruple. -/
 theorem quad_1_4_8_9' : IsPythQuadruple 1 4 8 9 := by
   unfold IsPythQuadruple; norm_num
 
-/-- The (4, 4, 7, 9) quadruple. -/
-theorem quad_4_4_7_9' : IsPythQuadruple 4 4 7 9 := by
-  unfold IsPythQuadruple; norm_num
-
-/-! ═══════════════════════════════════════════════════════════════════════════
-    ORACLE HAMILTON: Quaternionic Structure
-    ═══════════════════════════════════════════════════════════════════════════ -/
 
 /-- Euler's four-square identity: the product of two sums of four squares
-    is a sum of four squares. This IS quaternion norm multiplicativity. -/
+is a sum of four squares. This IS quaternion norm multiplicativity. -/
 theorem euler_four_square' (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ) :
     (a₁^2 + b₁^2 + c₁^2 + d₁^2) * (a₂^2 + b₂^2 + c₂^2 + d₂^2) =
     (a₁*a₂ - b₁*b₂ - c₁*c₂ - d₁*d₂)^2 +
@@ -95,39 +37,25 @@ theorem euler_four_square' (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ) :
     (a₁*c₂ - b₁*d₂ + c₁*a₂ + d₁*b₂)^2 +
     (a₁*d₂ + b₁*c₂ - c₁*b₂ + d₁*a₂)^2 := by ring
 
-/-- The degenerate embedding: every sum of two squares gives a quadruple. -/
-theorem triple_embeds_in_quadruple (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
-    IsPythQuadruple a b 0 c := by
-  unfold IsPythQuadruple; linarith [sq_nonneg (0 : ℤ)]
 
-/-! ═══════════════════════════════════════════════════════════════════════════
-    ORACLE LEGENDRE: Modular Obstructions
-    ═══════════════════════════════════════════════════════════════════════════ -/
-
-/-
-d² mod 8 ∈ {0, 1, 4}: squares avoid residue 7 mod 8.
--/
 theorem square_mod_8' (d : ℤ) : d ^ 2 % 8 = 0 ∨ d ^ 2 % 8 = 1 ∨ d ^ 2 % 8 = 4 := by
   rw [ sq, Int.mul_emod ] ; have := Int.emod_nonneg d ( by decide : ( 8 : ℤ ) ≠ 0 ) ; have := Int.emod_lt_of_pos d ( by decide : ( 0 : ℤ ) < 8 ) ; interval_cases d % 8 <;> trivial;
 
-/-
-d² is never ≡ 7 (mod 8), so d² always avoids the simplest Legendre obstruction.
--/
+
 theorem square_avoids_legendre' (d : ℤ) : d ^ 2 % 8 ≠ 7 := by
   rw [ sq, Int.mul_emod ] ; have := Int.emod_nonneg d ( by decide : ( 8 : ℤ ) ≠ 0 ) ; have := Int.emod_lt_of_pos d ( by decide : ( 8 : ℤ ) > 0 ) ; interval_cases d % 8 <;> trivial;
 
-/-! ═══════════════════════════════════════════════════════════════════════════
-    ORACLE MINKOWSKI: Lattice Points on Spheres
-    ═══════════════════════════════════════════════════════════════════════════ -/
 
 /-- The integer lattice sphere of radius-squared R. -/
 def IntSphere (R : ℤ) : Set (ℤ × ℤ × ℤ) :=
   { v | v.1 ^ 2 + v.2.1 ^ 2 + v.2.2 ^ 2 = R }
 
+
 /-- Quadruples with hypotenuse d correspond to lattice points on IntSphere(d²). -/
 theorem quad_is_lattice_point (a b c d : ℤ) :
     IsPythQuadruple a b c d ↔ (a, b, c) ∈ IntSphere (d ^ 2) := by
   unfold IsPythQuadruple IntSphere; simp
+
 
 /-- The sphere IntSphere(0) has exactly one point: the origin. -/
 theorem int_sphere_zero : IntSphere 0 = {(0, 0, 0)} := by
@@ -146,19 +74,18 @@ theorem int_sphere_zero : IntSphere 0 = {(0, 0, 0)} := by
            pow_eq_zero_iff (by norm_num : 2 ≠ 0) |>.mp hc0⟩
   · rintro ⟨rfl, rfl, rfl⟩; simp
 
+
 /-- Rotational symmetry: swapping coordinates preserves membership. -/
 theorem sphere_rotation_symmetry (a b c R : ℤ) (h : (a, b, c) ∈ IntSphere R) :
     (b, a, c) ∈ IntSphere R := by
   simp [IntSphere] at *; linarith
 
-/-! ═══════════════════════════════════════════════════════════════════════════
-    ORACLE HOPF: The Hopf Fibration Connection
-    ═══════════════════════════════════════════════════════════════════════════ -/
 
 /-- The Hopf map components satisfy x² + y² + z² = (a² + b² + c² + d²)². -/
 theorem hopf_map_norm' (a b c d : ℤ) :
     (2*(a*c + b*d))^2 + (2*(b*c - a*d))^2 + (a^2 + b^2 - c^2 - d^2)^2 =
     (a^2 + b^2 + c^2 + d^2)^2 := by ring
+
 
 /-- The Hopf map sends an integer 3-sphere to an integer 2-sphere. -/
 theorem hopf_maps_sphere' (a b c d R : ℤ)
@@ -166,8 +93,9 @@ theorem hopf_maps_sphere' (a b c d R : ℤ)
     (2*(a*c + b*d))^2 + (2*(b*c - a*d))^2 + (a^2 + b^2 - c^2 - d^2)^2 = R^2 := by
   nlinarith [hopf_map_norm' a b c d]
 
+
 /-- Connection to quadruples: every integer point on S³ gives a Pythagorean quadruple
-    via the Hopf map. -/
+via the Hopf map. -/
 theorem hopf_generates_quadruple' (a b c d : ℤ) :
     IsPythQuadruple
       (2*(a*c + b*d))
@@ -176,17 +104,16 @@ theorem hopf_generates_quadruple' (a b c d : ℤ) :
       (a^2 + b^2 + c^2 + d^2) := by
   unfold IsPythQuadruple; ring
 
-/-! ═══════════════════════════════════════════════════════════════════════════
-    CROSS-ORACLE SYNTHESIS: The Quaternion-Quadruple-Hopf Triangle
-    ═══════════════════════════════════════════════════════════════════════════ -/
 
 /-- The sum of four squares is non-negative. -/
 theorem four_sq_nonneg' (a b c d : ℤ) : 0 ≤ a^2 + b^2 + c^2 + d^2 := by
   nlinarith [sq_nonneg a, sq_nonneg b, sq_nonneg c, sq_nonneg d]
 
+
 /-- A sum of three squares is a sum of four squares (with fourth = 0). -/
 theorem three_sq_is_four_sq' (a b c : ℤ) :
     a^2 + b^2 + c^2 = a^2 + b^2 + c^2 + 0^2 := by ring
+
 
 /-- Every Pythagorean quadruple hypotenuse squared is a sum of 3 squares. -/
 theorem quad_hypotenuse_is_three_sq (a b c d : ℤ)
@@ -194,16 +121,14 @@ theorem quad_hypotenuse_is_three_sq (a b c d : ℤ)
     d^2 = a^2 + b^2 + c^2 := by
   unfold IsPythQuadruple at h; linarith
 
-/-! ═══════════════════════════════════════════════════════════════════════════
-    DIVINE CONSULTATION
-    ═══════════════════════════════════════════════════════════════════════════ -/
 
 /-- The divine quaternion: every Pythagorean quadruple defines a quaternion
-    q = d + ai + bj + ck with |q|² = 2d². -/
+q = d + ai + bj + ck with |q|² = 2d². -/
 theorem divine_quaternion_norm' (a b c d : ℤ)
     (h : IsPythQuadruple a b c d) :
     d^2 + a^2 + b^2 + c^2 = 2 * d^2 := by
   unfold IsPythQuadruple at h; linarith
+
 
 /-- The converse: if |q|² = 2·(Re q)², then Im(q) forms a Pythagorean quadruple. -/
 theorem divine_converse' (a b c d : ℤ)
@@ -211,8 +136,9 @@ theorem divine_converse' (a b c d : ℤ)
     IsPythQuadruple a b c d := by
   unfold IsPythQuadruple; linarith
 
+
 /-- The product of two sums of three squares can be expressed as a sum of three squares
-    (using the quaternion trick: embed as 4-tuples with 0, multiply, project). -/
+(using the quaternion trick: embed as 4-tuples with 0, multiply, project). -/
 theorem three_sq_product (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ) :
     ∃ x y z w : ℤ,
     (a₁^2 + b₁^2 + c₁^2) * (a₂^2 + b₂^2 + c₂^2) = x^2 + y^2 + z^2 + w^2 := by
@@ -222,13 +148,15 @@ theorem three_sq_product (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ) :
          a₁*c₂ - b₁*0 + c₁*a₂ + 0*b₂,
          a₁*0 + b₁*c₂ - c₁*b₂ + 0*a₂, by ring⟩
 
+
 /-- Every positive integer is a sum of four squares (we state a key lemma:
-    1 is a sum of four squares). -/
+1 is a sum of four squares). -/
 theorem one_is_four_squares : ∃ a b c d : ℤ, a^2 + b^2 + c^2 + d^2 = 1 := by
   exact ⟨1, 0, 0, 0, by norm_num⟩
 
+
 /-- The compositional structure: if N₁ and N₂ are both sums of four squares,
-    then so is N₁ · N₂. -/
+then so is N₁ · N₂. -/
 theorem sum_four_sq_mul' (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ) :
     ∃ x₁ x₂ x₃ x₄ : ℤ,
     (a₁^2 + b₁^2 + c₁^2 + d₁^2) * (a₂^2 + b₂^2 + c₂^2 + d₂^2) =

@@ -1,39 +1,19 @@
-/-
-# IOF Complexity: Integer Orbit Factoring with Smooth Number Sieves
+/-! # CatalogBuild.Cryptography.Factoring.IOFComplexity
 
-## Overview
-
-**Integer Orbit Factoring (IOF)** is a factoring framework that exploits the
-orbit structure of the squaring map x ↦ x² in (ℤ/nℤ)*.
-
-For composite n = p · q, the squaring map's orbit structure reflects the
-factorization: orbits in (ℤ/nℤ)* decompose as products of orbits in
-(ℤ/pℤ)* × (ℤ/qℤ)* by CRT. When an orbit element's residue is B-smooth,
-we obtain a factoring relation. The key complexity question is:
-
-  **How many orbit steps are needed before we find enough smooth relations?**
-
-This file formalizes:
-1. Orbit structure of the squaring map modulo composites
-2. Smooth number properties relevant to orbit-based sieving
-3. The IOF-sieve combination: correctness of the factoring reduction
-4. Sub-exponential bounds via the Dickman function connection
-5. Polynomial-time verification of IOF relations
+Auto-generated from theorem catalog database.
+Domain: Cryptography/Factoring
+Declarations: 21
 -/
 
 import Mathlib
 
-open Finset BigOperators Nat ZMod
-
-/-! ## Part 1: Squaring Map Orbit Structure -/
-
-/-- The squaring map on ZMod n. -/
-def sqMap (n : ℕ) (x : ZMod n) : ZMod n := x ^ 2
+noncomputable section
 
 /-- The k-th iterate of the squaring map: x^(2^k) mod n. -/
 noncomputable def sqIter (n : ℕ) (x : ZMod n) : ℕ → ZMod n
   | 0 => x
   | k + 1 => sqMap n (sqIter n x k)
+
 
 /-- sqIter computes x^(2^k). -/
 theorem sqIter_eq_pow (n : ℕ) [NeZero n] (x : ZMod n) (k : ℕ) :
@@ -42,10 +22,7 @@ theorem sqIter_eq_pow (n : ℕ) [NeZero n] (x : ZMod n) (k : ℕ) :
   | zero => simp [sqIter]
   | succ k ih => simp [sqIter, sqMap, ih, pow_succ, pow_mul]
 
-/-
-The squaring orbit is eventually periodic: there exist ρ (tail length) and
-    period_len > 0 such that sqIter n x (ρ + period_len) = sqIter n x ρ.
--/
+
 theorem sqMap_eventually_periodic (n : ℕ) [NeZero n] (x : ZMod n) :
     ∃ rho period_len : ℕ, 0 < period_len ∧
       sqIter n x (rho + period_len) = sqIter n x rho := by
@@ -58,11 +35,11 @@ theorem sqMap_eventually_periodic (n : ℕ) [NeZero n] (x : ZMod n) :
     exact fun i j hij => le_antisymm ( le_of_not_gt fun hi => h_inj _ _ hi hij.symm ) ( le_of_not_gt fun hj => h_inj _ _ hj hij );
   exact ⟨ i, j - i, Nat.sub_pos_of_lt hij, by rw [ add_tsub_cancel_of_le hij.le, h_eq ] ⟩
 
-/-! ## Part 2: IOF Smooth Relations -/
 
 /-- B-smoothness as used in IOF: all prime factors ≤ B. -/
 def IOF.isSmooth (B : ℕ) (m : ℕ) : Prop :=
   ∀ p : ℕ, p.Prime → p ∣ m → p ≤ B
+
 
 /-- An IOF relation: a value a such that a² mod n is B-smooth. -/
 structure IOFRelation (n B : ℕ) where
@@ -71,42 +48,32 @@ structure IOFRelation (n B : ℕ) where
   h_residue : (a ^ 2 : ZMod n) = (residue : ZMod n)
   h_smooth : IOF.isSmooth B residue
 
+
 /-- The factor base for IOF. -/
 def IOF.factorBase (B : ℕ) : Finset ℕ :=
   (Finset.range (B + 1)).filter Nat.Prime
 
-/-
-Factor base cardinality is bounded by B.
--/
+
 theorem IOF.factorBase_card_le (B : ℕ) :
     (IOF.factorBase B).card ≤ B := by
   exact le_trans ( Finset.card_le_card ( show factorBase B ⊆ Finset.Ico 2 ( B + 1 ) from fun p hp => Finset.mem_Ico.mpr ⟨ Nat.Prime.two_le ( Finset.mem_filter.mp hp |>.2 ), by simpa using Finset.mem_range.mp ( Finset.mem_filter.mp hp |>.1 ) ⟩ ) ) ( by simp +arith +decide )
+
 
 /-- 1 is B-smooth for any B. -/
 theorem IOF.isSmooth_one (B : ℕ) : IOF.isSmooth B 1 := by
   intro p hp hd; exact absurd hd hp.not_dvd_one
 
-/-
-Product of smooth numbers is smooth.
--/
+
 theorem IOF.isSmooth_mul {B m k : ℕ} (hm : IOF.isSmooth B m) (hk : IOF.isSmooth B k) :
     IOF.isSmooth B (m * k) := by
   intro p pp dp; rcases pp.dvd_mul.mp dp with ( dp | dp ) <;> [ exact hm p pp dp; exact hk p pp dp ] ;
 
-/-
-A prime p is B-smooth iff p ≤ B.
--/
+
 theorem IOF.isSmooth_prime {B p : ℕ} (hp : p.Prime) :
     IOF.isSmooth B p ↔ p ≤ B := by
   exact ⟨ fun h => h p hp dvd_rfl, fun h q hq hqp => by rw [ Nat.prime_dvd_prime_iff_eq ] at hqp <;> aesop ⟩
 
-/-! ## Part 3: IOF Factoring Correctness -/
 
-/-
-Given sufficiently many IOF relations (more than |factor base|),
-    linear algebra over GF(2) produces a congruence of squares.
-    This is the core correctness theorem for IOF-based factoring.
--/
 theorem IOF_factoring_correctness
     {n : ℕ} (hn : 1 < n)
     (B : ℕ) (hB : 1 < B)
@@ -118,43 +85,20 @@ theorem IOF_factoring_correctness
       ∃ x y : ℤ, (↑n : ℤ) ∣ x ^ 2 - y ^ 2 := by
   exact ⟨ ∅, by aesop ⟩
 
-/-
-Verification of a single IOF relation is polynomial-time:
-    checking B-smoothness via trial division costs O(B · log(residue)).
--/
+
 theorem IOF_relation_verification_poly
     (B residue : ℕ) (hB : 0 < B) (hr : 0 < residue) :
     ∃ steps : ℕ, steps ≤ B * (Nat.log 2 residue + 1) := by
   exact ⟨ _, le_rfl ⟩
 
-/-! ## Part 4: Complexity Bounds for IOF-Sieve Combination -/
 
-/-- The L-notation: L_n[α, c] = exp(c · (ln n)^α · (ln ln n)^(1-α)).
-    We define a simplified version for stating complexity bounds. -/
-noncomputable def Lnotation (n : ℕ) (alpha c : ℝ) : ℝ :=
-  Real.exp (c * (Real.log n) ^ alpha * (Real.log (Real.log n)) ^ (1 - alpha))
-
-/-
-The probability that a random number ≤ x is B-smooth is approximately
-    ρ(u) where u = log(x)/log(B) and ρ is the Dickman function.
-    For B = L_n[1/2, 1/(2c)], we have ρ(u) ≈ L_n[1/2, -1/(4c)].
-    This gives the smooth number probability needed for IOF analysis.
--/
 theorem IOF_smooth_probability_bound
     (n : ℕ) (hn : 2 ≤ n) :
     ∃ B : ℕ, 1 < B ∧ B ≤ n ∧
     ∃ prob : ℝ, 0 < prob ∧ prob ≤ 1 := by
   exact ⟨ 2, by norm_num, hn, 1, by norm_num, by norm_num ⟩
 
-/-
-The total number of orbit steps in IOF to collect enough smooth relations
-    is sub-exponential in n: specifically O(L_n[1/2, c]) for optimal parameter
-    choice. This combines:
-    - Factor base size: π(B) ≈ B/ln(B)
-    - Smooth probability: ρ(u) for u = ln(n)/ln(B)
-    - Required relations: π(B) + 1
-    Optimizing B gives the L[1/2] complexity.
--/
+
 theorem IOF_subexponential_bound
     (n : ℕ) (hn : 2 ≤ n) :
     ∃ c : ℝ, 0 < c ∧
@@ -168,16 +112,7 @@ theorem IOF_subexponential_bound
     · positivity;
     · norm_num [ ← Real.sqrt_eq_rpow, Real.sqrt_eq_zero_of_nonpos ( le_of_not_ge h₂ ) ]
 
-/-
-For the IOF method, polynomial-time factoring would require L_n[0, c]
-    complexity. We show that the IOF orbit structure cannot achieve this
-    without additional structural assumptions (e.g., smooth number conjectures
-    stronger than what is currently known).
 
-    Specifically: the expected number of squaring steps to find a B-smooth
-    value is at least 1/ρ(u), and for B polynomial in log(n), this is
-    super-polynomial.
--/
 theorem IOF_not_polynomial_unconditional
     (n : ℕ) (hn : 100 ≤ n) :
     ∀ B : ℕ, B ≤ Nat.log 2 n →
@@ -195,13 +130,7 @@ theorem IOF_not_polynomial_unconditional
     aesop;
   exact absurd ( hi' ( Nat.find ( Nat.exists_infinite_primes ( B + 1 ) ) ) ( Nat.find_spec ( Nat.exists_infinite_primes ( B + 1 ) ) |>.2 ) ( by aesop ) ) ( by linarith [ Nat.find_spec ( Nat.exists_infinite_primes ( B + 1 ) ) |>.1 ] )
 
-/-! ## Part 5: CRT Decomposition of IOF Orbits -/
 
-/-
-For n = p * q with p, q coprime, the squaring orbit in ZMod n
-    decomposes as a product of orbits in ZMod p and ZMod q.
-    This is the structural fact that IOF exploits.
--/
 theorem IOF_orbit_CRT_decomposition
     (p q : ℕ) [NeZero p] [NeZero q] (hcoprime : Nat.Coprime p q)
     (x : ZMod (p * q)) (k : ℕ) :
@@ -210,10 +139,7 @@ theorem IOF_orbit_CRT_decomposition
   refine' Nat.recOn k _ _ <;> simp_all +decide [ sqIter ];
   unfold sqMap; aesop;
 
-/-
-The orbit period in ZMod (p*q) divides the lcm of the orbit periods in
-    ZMod p and ZMod q.
--/
+
 theorem IOF_orbit_period_divides_lcm
     (p q : ℕ) [NeZero p] [NeZero q] (hcoprime : Nat.Coprime p q)
     (x : ZMod (p * q))
@@ -253,37 +179,20 @@ theorem IOF_orbit_period_divides_lcm
       aesop;
   have := h_period_p ( Nat.lcm lp lq / lp ) ; have := h_period_q ( Nat.lcm lp lq / lq ) ; simp_all +decide [ Nat.div_mul_cancel ( Nat.dvd_lcm_left _ _ ), Nat.div_mul_cancel ( Nat.dvd_lcm_right _ _ ) ] ;
 
-/-! ## Part 6: IOF with Sieve Enhancement -/
 
-/-
-The sieve-enhanced IOF: instead of testing each orbit element for
-    smoothness individually, we sieve an interval around each orbit
-    element. The number of smooth values found in [a-M, a+M] for
-    a random a is approximately 2M · ρ(u).
--/
 theorem IOF_sieve_enhanced_relations
     (n M B : ℕ) (hn : 1 < n) (hM : 0 < M) (hB : 1 < B) :
     ∀ a : ℤ, ∃ count : ℕ,
       count ≤ 2 * M + 1 := by
   exact fun a => ⟨ _, le_rfl ⟩
 
-/-
-The key advantage of IOF over plain QS: orbit elements are correlated
-    through the squaring map, so smooth relations from consecutive orbit
-    elements can share prime factors.
--/
+
 theorem IOF_orbit_correlation
     {n : ℕ} [NeZero n] (x : ZMod n) (k : ℕ) :
     sqIter n x (k + 1) = (sqIter n x k) ^ 2 := by
   exact?
 
-/-! ## Part 7: GCD Extraction from IOF Relations -/
 
-/-
-Given a valid congruence x² ≡ y² (mod n) with x ≢ ±y,
-    gcd(x-y, n) is a nontrivial factor. This adapts the standard
-    congruence-of-squares result to the IOF setting.
--/
 theorem IOF_gcd_extraction
     {n : ℕ} (hn : 1 < n)
     (x y : ℤ)
@@ -300,12 +209,7 @@ theorem IOF_gcd_extraction
     exact hne_add ( Int.dvd_of_dvd_mul_right_of_gcd_one hdiv <| by simpa [ Int.gcd_comm ] using H );
   · exact lt_of_le_of_ne ( Nat.le_of_dvd hn.le ( Int.natCast_dvd_natCast.mp ( Int.gcd_dvd_right _ _ ) ) ) fun con => hne_sub <| con ▸ Int.natCast_dvd.mpr ( Nat.gcd_dvd_left _ _ )
 
-/-
-The probability that a random congruence of squares yields a
-    nontrivial factor is at least 1/2 when n has exactly 2 prime factors.
-    This bounds the expected number of GCD extraction attempts.
--/
-set_option maxHeartbeats 800000 in
+
 theorem IOF_gcd_success_probability
     (p q : ℕ) (hp : p.Prime) (hq : q.Prime) (hpq : p ≠ q)
     (n : ℕ) (hn : n = p * q) :
@@ -371,3 +275,5 @@ theorem IOF_gcd_success_probability
         intro h; haveI := Fact.mk ( show 1 < n from by nlinarith only [ hp.two_le, hq.two_le, hn ] ) ; rw [ ← ZMod.natCast_zmod_val x ] ; simp +decide [ h, Nat.cast_sub ( show 1 ≤ n from by nlinarith only [ hp.two_le, hq.two_le, hn ] ) ] ;
       exact h_contra h_eq;
     tauto
+
+end

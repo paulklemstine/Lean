@@ -1,48 +1,41 @@
-import Mathlib
+/-! # CatalogBuild.EML.EMLSPBBridge
 
-/-!
-# The EML-SPB Bridge: Unifying Arithmetic and Geometry
-
-The EML operator `eml(x,y) = exp(x) - ln(y)` bridges additive and multiplicative
-arithmetic. The SPB operator `spb(x,y) = (x+y)/(1-xy)` bridges Euclidean and
-spherical/hyperbolic geometry.
-
-Together they form a dual pair of "universal algebraic gates":
-- EML governs the arithmetic world (exp/log)
-- SPB governs the geometric world (angles/rotations/boosts)
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 12
 -/
+
+import Mathlib
 
 noncomputable section
 
-open Real
-
-/-! ## Definitions -/
-
-def eml (x y : ℝ) : ℝ := exp x - log y
 def spb_bridge (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
+
 def spbH_bridge (x y : ℝ) : ℝ := (x + y) / (1 + x * y)
 
-/-! ## EML Basic Properties -/
 
 theorem eml_generates_exp (x : ℝ) : eml x 1 = exp x := by
   simp [eml, Real.log_one]
 
+
 theorem eml_generates_neg_log (y : ℝ) : eml 0 y = 1 - log y := by
   simp [eml]
 
+
 theorem eml_identity : eml 0 1 = 1 := by simp [eml, Real.log_one]
 
-/-! ## SPB Basic Properties -/
 
 theorem spb_identity_bridge (x : ℝ) : spb_bridge x 0 = x := by simp [spb_bridge]
+
 theorem spb_inverse_bridge (x : ℝ) : spb_bridge x (-x) = 0 := by simp [spb_bridge]
+
 theorem spb_comm_bridge (x y : ℝ) : spb_bridge x y = spb_bridge y x := by
   simp [spb_bridge, add_comm, mul_comm]
 
-/-! ## Homomorphism Properties -/
 
 /-- exp is a homomorphism from (ℝ,+) to (ℝ₊,×). -/
 theorem exp_hom (x y : ℝ) : exp (x + y) = exp x * exp y := Real.exp_add x y
+
 
 /-- tanh is a homomorphism from (ℝ,+) to ((-1,1), spbH). -/
 theorem tanh_hom (a b : ℝ) :
@@ -51,14 +44,6 @@ theorem tanh_hom (a b : ℝ) :
       tanh_eq_sinh_div_cosh, tanh_eq_sinh_div_cosh]
   field_simp
 
-/-! ## The Weierstrass Substitution via SPB -/
-
-/-- With t = tan(θ/2), sin(θ) = 2t/(1+t²) = spbH(t, t). -/
-theorem weierstrass_sin (t : ℝ) :
-    spbH_bridge t t = 2 * t / (1 + t ^ 2) := by
-  unfold spbH_bridge; ring
-
-/-! ## SPB Associativity -/
 
 theorem spb_assoc_bridge (x y z : ℝ) (h1 : 1 - x * y ≠ 0) (h2 : 1 - y * z ≠ 0) :
     spb_bridge (spb_bridge x y) z = spb_bridge x (spb_bridge y z) := by
@@ -68,12 +53,9 @@ theorem spb_assoc_bridge (x y z : ℝ) (h1 : 1 - x * y ≠ 0) (h2 : 1 - y * z �
   · grind;
   · grind
 
-/-! ## SPB Double Angle -/
-
-theorem spb_double (x : ℝ) : spb_bridge x x = 2 * x / (1 - x ^ 2) := by
-  unfold spb_bridge; ring
 
 theorem spbH_double (x : ℝ) : spbH_bridge x x = 2 * x / (1 + x ^ 2) := by
   unfold spbH_bridge; ring
+
 
 end

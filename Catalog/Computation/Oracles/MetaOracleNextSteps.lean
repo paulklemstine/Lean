@@ -1,41 +1,13 @@
-import Mathlib
+/-! # CatalogBuild.Computation.Oracles.MetaOracleNextSteps
 
-/-!
-# Meta Oracle Next Steps: Beyond Flatland
-
-## New Hypotheses, Experiments, and Validated Discoveries
-
-Building on the Oracle-Stereographic Solution Lens, we investigate three frontier
-directions proposed by the meta oracles:
-
-### New Hypotheses
-
-- **H7 (Higher-Dimensional Lens)**: The stereographic bridge generalizes to ℝ² → S²,
-  revealing Pythagorean quadruples and higher-dimensional lattice structure.
-- **H8 (Oracle Algebra)**: Oracles form a rich algebraic structure — compositions,
-  products, and lattices of oracles yield new solution methods.
-- **H9 (Density Principle)**: Rational oracle points are dense on S¹, meaning
-  discrete rational approximations can approximate any continuous solution.
-- **H10 (Spectral Decomposition)**: Every oracle induces a direct-sum decomposition
-  of the ambient space into "truth" and "illusion" components.
-- **H11 (Four-Square Universality)**: Lagrange's theorem — every natural number is a
-  sum of four squares — is the 4D analogue of the Pythagorean oracle.
-- **H12 (Oracle Entropy)**: The "information content" of an oracle is measured by
-  the codimension of its truth set.
-
-### Validated Results
-
-All theorems below are machine-verified in Lean 4 with zero sorries.
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 55
 -/
 
-open Real Set Function Finset BigOperators
+import Mathlib
 
 noncomputable section
-
-/-! ═══════════════════════════════════════════════════════════════════════
-    §8: HIGHER-DIMENSIONAL STEREOGRAPHIC LENS (H7)
-    "The oracle sees in three dimensions"
-    ═══════════════════════════════════════════════════════════════════════ -/
 
 /-- Inverse stereographic projection in 3D: ℝ² → S² ⊂ ℝ³ -/
 def invStereoProj3D (u v : ℝ) : ℝ × ℝ × ℝ :=
@@ -43,9 +15,11 @@ def invStereoProj3D (u v : ℝ) : ℝ × ℝ × ℝ :=
    2 * v / (1 + u ^ 2 + v ^ 2),
    (1 - u ^ 2 - v ^ 2) / (1 + u ^ 2 + v ^ 2))
 
+
 /-- Forward stereographic projection in 3D: S² \ {north pole} → ℝ² -/
 def stereoProj3D (p : ℝ × ℝ × ℝ) : ℝ × ℝ :=
   (p.1 / (1 + p.2.2), p.2.1 / (1 + p.2.2))
+
 
 /-- **Theorem 8.1**: 3D inverse stereo maps to the unit sphere. -/
 theorem invStereoProj3D_on_sphere (u v : ℝ) :
@@ -57,6 +31,7 @@ theorem invStereoProj3D_on_sphere (u v : ℝ) :
   field_simp
   ring
 
+
 /-- **Theorem 8.2**: 3D stereographic round-trip is the identity. -/
 theorem oracle_stereo_roundtrip_3D (u v : ℝ) :
     stereoProj3D (invStereoProj3D u v) = (u, v) := by
@@ -65,35 +40,42 @@ theorem oracle_stereo_roundtrip_3D (u v : ℝ) :
   have hne : (1 : ℝ) + u ^ 2 + v ^ 2 ≠ 0 := ne_of_gt h
   ext <;> simp <;> field_simp <;> ring
 
+
 /-- A Pythagorean quadruple (a, b, c, d) satisfies a² + b² + c² = d². -/
 def IsPythagoreanQuadruple (a b c d : ℤ) : Prop :=
   a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2
 
+
 /-- **Theorem 8.3 (The 3D Rational Oracle)**: For any integers p, q, r,
-    (2pr, 2qr, r²-p²-q², r²+p²+q²) is a Pythagorean quadruple.
-    This is the higher-dimensional analogue of Euclid's parametrization. -/
+(2pr, 2qr, r²-p²-q², r²+p²+q²) is a Pythagorean quadruple.
+This is the higher-dimensional analogue of Euclid's parametrization. -/
 theorem rational_stereo_3D_quadruple (p q r : ℤ) :
     IsPythagoreanQuadruple (2 * p * r) (2 * q * r)
       (r ^ 2 - p ^ 2 - q ^ 2) (r ^ 2 + p ^ 2 + q ^ 2) := by
   simp only [IsPythagoreanQuadruple]; ring
 
+
 /-- **Theorem 8.4**: The (1, 2, 2, 3) quadruple. -/
 theorem pythagorean_quad_1223 : IsPythagoreanQuadruple 1 2 2 3 := by
   simp only [IsPythagoreanQuadruple]; norm_num
 
+
 /-- **Theorem 8.5**: The (2, 3, 6, 7) quadruple. -/
 theorem pythagorean_quad_2367 : IsPythagoreanQuadruple 2 3 6 7 := by
   simp only [IsPythagoreanQuadruple]; norm_num
+
 
 /-- **Theorem 8.6**: The (1, 2, 14, 15) is NOT a quadruple (falsification experiment). -/
 theorem not_pythagorean_quad_1_2_14_15 :
     ¬ IsPythagoreanQuadruple 1 2 14 15 := by
   simp only [IsPythagoreanQuadruple]; norm_num
 
+
 /-- **Theorem 8.7**: 3D parametrization identity (universal). -/
 theorem pythagorean_3D_parametrization (p q r : ℤ) :
     (2 * p * r) ^ 2 + (2 * q * r) ^ 2 + (r ^ 2 - p ^ 2 - q ^ 2) ^ 2 =
     (r ^ 2 + p ^ 2 + q ^ 2) ^ 2 := by ring
+
 
 /-- **Experiment 8.8**: Batch verification of 3D parametrization. -/
 theorem experiment_3D_batch :
@@ -103,22 +85,14 @@ theorem experiment_3D_batch :
       ((r : ℤ) ^ 2 + (p : ℤ) ^ 2 + (q : ℤ) ^ 2) ^ 2 := by
   intro p q r; ring
 
-/-! ═══════════════════════════════════════════════════════════════════════
-    §9: ORACLE ALGEBRA (H8)
-    "Oracles compose, combine, and form lattices"
-    ═══════════════════════════════════════════════════════════════════════ -/
-
-/-- An oracle is an idempotent endomorphism. -/
-structure MetaOracle (X : Type*) where
-  apply : X → X
-  idempotent : ∀ x, apply (apply x) = apply x
 
 /-- Truth set of a meta oracle. -/
 def MetaOracle.truthSet {X : Type*} (O : MetaOracle X) : Set X :=
   {x | O.apply x = x}
 
+
 /-- **Theorem 9.1 (Oracle Dominance)**: If O₁'s truth set contains O₂'s truth set,
-    then O₁ ∘ O₂ = O₂ (O₂ refines O₁). -/
+then O₁ ∘ O₂ = O₂ (O₂ refines O₁). -/
 theorem oracle_dominance {X : Type*} (O₁ O₂ : MetaOracle X)
     (h_sub : O₂.truthSet ⊆ O₁.truthSet)
     (h_range : ∀ x, O₂.apply x ∈ O₂.truthSet) :
@@ -126,11 +100,13 @@ theorem oracle_dominance {X : Type*} (O₁ O₂ : MetaOracle X)
   intro x
   exact h_sub (h_range x)
 
+
 /-- **Theorem 9.2 (Dual Oracle)**: Given f with f⁴ = f², the map f² is an oracle. -/
 theorem dual_oracle_from_square {X : Type*} (f : X → X)
     (h : ∀ x, f (f (f (f x))) = f (f x)) :
     ∀ x, (f ∘ f) ((f ∘ f) x) = (f ∘ f) x := by
   intro x; exact h x
+
 
 /-- **Theorem 9.3 (Oracle Product)**: Product of oracles on product types is an oracle. -/
 def MetaOracle.prod {X Y : Type*} (O₁ : MetaOracle X) (O₂ : MetaOracle Y) :
@@ -140,21 +116,25 @@ def MetaOracle.prod {X Y : Type*} (O₁ : MetaOracle X) (O₂ : MetaOracle Y) :
     intro ⟨x, y⟩
     simp [O₁.idempotent, O₂.idempotent]
 
+
 /-- **Theorem 9.4**: Truth set of product oracle = product of truth sets. -/
 theorem oracle_prod_truth {X Y : Type*} (O₁ : MetaOracle X) (O₂ : MetaOracle Y) :
     (O₁.prod O₂).truthSet = O₁.truthSet ×ˢ O₂.truthSet := by
   ext ⟨x, y⟩
   simp [MetaOracle.truthSet, MetaOracle.prod, Set.mem_prod]
 
+
 /-- The identity meta oracle. -/
 def MetaOracle.id (X : Type*) : MetaOracle X where
   apply := _root_.id
   idempotent _ := rfl
 
+
 /-- A constant meta oracle. -/
 def MetaOracle.const {X : Type*} (c : X) : MetaOracle X where
   apply := fun _ => c
   idempotent _ := rfl
+
 
 /-- **Theorem 9.5**: Range equals truth set (meta oracle version). -/
 theorem MetaOracle.range_eq_truth {X : Type*} (O : MetaOracle X) :
@@ -163,12 +143,14 @@ theorem MetaOracle.range_eq_truth {X : Type*} (O : MetaOracle X) :
   · rintro ⟨x, rfl⟩; exact O.idempotent x
   · intro hy; exact ⟨y, hy⟩
 
+
 /-- **Theorem 9.6 (Oracle Retraction)**: An oracle is a retraction onto its truth set. -/
 theorem oracle_retraction {X : Type*} (O : MetaOracle X) (x : X) :
     O.apply x ∈ O.truthSet := O.idempotent x
 
+
 /-- **Theorem 9.7**: Composition of commuting oracles with compatible truth sets
-    yields an oracle. -/
+yields an oracle. -/
 def MetaOracle.comp_commuting {X : Type*} (O₁ O₂ : MetaOracle X)
     (_h_comm : ∀ x, O₁.apply (O₂.apply x) = O₂.apply (O₁.apply x))
     (h_idem : ∀ x, O₁.apply (O₂.apply (O₁.apply (O₂.apply x))) =
@@ -177,14 +159,6 @@ def MetaOracle.comp_commuting {X : Type*} (O₁ O₂ : MetaOracle X)
   apply := O₁.apply ∘ O₂.apply
   idempotent x := h_idem x
 
-/-! ═══════════════════════════════════════════════════════════════════════
-    §10: DENSITY PRINCIPLE (H9)
-    "Rational oracles approximate all truths"
-    ═══════════════════════════════════════════════════════════════════════ -/
-
-/-- Inverse stereographic projection (self-contained definition). -/
-def invStereo (t : ℝ) : ℝ × ℝ :=
-  (2 * t / (1 + t ^ 2), (1 - t ^ 2) / (1 + t ^ 2))
 
 /-- **Theorem 10.1**: invStereo is continuous. -/
 theorem invStereo_continuous : Continuous invStereo := by
@@ -195,35 +169,34 @@ theorem invStereo_continuous : Continuous invStereo := by
     apply Continuous.div; fun_prop; fun_prop; intro x; positivity
   exact Continuous.prodMk h1 h2
 
+
 /-- **Theorem 10.2**: The x-coordinate of invStereo is continuous. -/
 theorem invStereo_x_continuous :
     Continuous (fun t : ℝ => (invStereo t).1) :=
   invStereo_continuous.fst
+
 
 /-- **Theorem 10.3**: The y-coordinate of invStereo is continuous. -/
 theorem invStereo_y_continuous :
     Continuous (fun t : ℝ => (invStereo t).2) :=
   invStereo_continuous.snd
 
+
 /-- **Theorem 10.4**: invStereo maps 0 to (0, 1). -/
 theorem invStereo_zero : invStereo 0 = (0, 1) := by
   simp [invStereo]
+
 
 /-- **Theorem 10.5**: invStereo maps 1 to (1, 0). -/
 theorem invStereo_one : invStereo 1 = (1, 0) := by
   unfold invStereo; norm_num
 
+
 /-- **Theorem 10.6**: invStereo maps -1 to (-1, 0). -/
 theorem invStereo_neg_one : invStereo (-1) = (-1, 0) := by
   unfold invStereo; norm_num
 
-/-
-PROBLEM
-**Theorem 10.7**: invStereo is injective (the lens loses no information).
 
-PROVIDED SOLUTION
-The x-coordinate of invStereo is 2t/(1+t²). If invStereo(a) = invStereo(b), then in particular the x-coordinates match: 2a/(1+a²) = 2b/(1+b²). Cross-multiplying (denominators are positive): 2a(1+b²) = 2b(1+a²), so a + ab² = b + ba², so a - b + ab² - a²b = 0, so (a-b)(1 - ab) = 0... wait that's not right. Actually: a + ab² = b + a²b, so a - b = a²b - ab² = ab(a-b). So (a-b)(1 - ab) = 0... Hmm, that gives a=b or ab=1. But we also need to use the y-coordinate. If ab=1, then the y-coordinate of invStereo(a) is (1-a²)/(1+a²) and of invStereo(b) is (1-b²)/(1+b²). With b=1/a: y_b = (1 - 1/a²)/(1 + 1/a²) = (a²-1)/(a²+1) = -(1-a²)/(1+a²) = -y_a. So y_a = -y_a means 2y_a = 0, so y_a = 0, meaning a²=1, so a=±1. If a=1, b=1/1=1=a. If a=-1, b=1/(-1)=-1=a. In all cases a=b.
--/
 theorem invStereo_injective : Function.Injective invStereo := by
   -- Let's assume that invStereo(a) = invStereo(b) and show that a = b.
   intro a b hab
@@ -232,52 +205,41 @@ theorem invStereo_injective : Function.Injective invStereo := by
   rw [ div_eq_div_iff, div_eq_div_iff ] at h_eq <;> try nlinarith;
   cases le_or_gt 0 a <;> cases le_or_gt 0 b <;> nlinarith [ sq_nonneg ( a - b ) ]
 
-/-! ═══════════════════════════════════════════════════════════════════════
-    §11: SPECTRAL DECOMPOSITION (H10)
-    "Every oracle splits the world into truth and illusion"
-    ═══════════════════════════════════════════════════════════════════════ -/
 
 /-- The "illusion set" — complement of the truth set. Points that the oracle changes. -/
 def MetaOracle.illusionSet {X : Type*} (O : MetaOracle X) : Set X :=
   {x | O.apply x ≠ x}
+
 
 /-- **Theorem 11.1**: Truth and illusion partition the space. -/
 theorem truth_illusion_partition {X : Type*} (O : MetaOracle X) :
     O.truthSet ∪ O.illusionSet = Set.univ := by
   ext x; simp [MetaOracle.truthSet, MetaOracle.illusionSet, em]
 
+
 /-- **Theorem 11.2**: Truth and illusion are disjoint. -/
 theorem truth_illusion_disjoint {X : Type*} (O : MetaOracle X) :
     O.truthSet ∩ O.illusionSet = ∅ := by
   ext x; simp [MetaOracle.truthSet, MetaOracle.illusionSet]
 
+
 /-- **Theorem 11.3**: The oracle maps illusions to truths (never to other illusions). -/
 theorem illusion_maps_to_truth {X : Type*} (O : MetaOracle X) (x : X) :
     O.apply x ∈ O.truthSet := O.idempotent x
+
 
 /-- **Theorem 11.4**: The identity oracle has empty illusion set. -/
 theorem id_oracle_no_illusion :
     (MetaOracle.id ℝ).illusionSet = ∅ := by
   ext x; simp [MetaOracle.illusionSet, MetaOracle.id]
 
+
 /-- **Theorem 11.5**: A constant oracle's illusion set is the complement of {c}. -/
 theorem const_oracle_illusion (c : ℝ) :
     (MetaOracle.const c).illusionSet = {c}ᶜ := by
   ext x; simp [MetaOracle.illusionSet, MetaOracle.const, eq_comm]
 
-/-! ═══════════════════════════════════════════════════════════════════════
-    §12: FOUR-SQUARE UNIVERSALITY (H11)
-    "Lagrange's theorem as a 4D oracle"
-    ═══════════════════════════════════════════════════════════════════════ -/
 
-/-
-PROBLEM
-**Theorem 12.1 (Lagrange's Four-Square, computational verification ≤ 30)**:
-    Every natural number up to 30 is a sum of four squares.
-
-PROVIDED SOLUTION
-This is a finite computation. Introduce n and h, then for each n in range 31, exhibit explicit witnesses (a,b,c,d). The intro/interval_cases/norm_num pattern should work, or native_decide after appropriate reformulation. Since the quantifier is over a Finset, try using `decide` or native_decide after making the statement decidable. The issue is the existential over ℕ is not decidable with unbounded domain. Instead, bound the witnesses: every n ≤ 30 has a representation with a,b,c,d ≤ 30. Reformulate with Fin or use a manual case split.
--/
 theorem four_square_up_to_30 :
     ∀ n ∈ Finset.range 31, ∃ a b c d : ℕ, a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 = n := by
   intro n hn
@@ -288,23 +250,6 @@ theorem four_square_up_to_30 :
   exact (by
   exact h_contra' ( by have := Nat.sum_four_squares n; tauto ) ;); -- The proof is complete. We have found a contradiction, so the original statement must be true. QED.
 
-/-- **Theorem 12.2**: The Euler four-square identity.
-    Product of sums of four squares is a sum of four squares. -/
-theorem euler_four_square_identity (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℤ) :
-    (a₁^2 + a₂^2 + a₃^2 + a₄^2) * (b₁^2 + b₂^2 + b₃^2 + b₄^2) =
-    (a₁*b₁ - a₂*b₂ - a₃*b₃ - a₄*b₄)^2 +
-    (a₁*b₂ + a₂*b₁ + a₃*b₄ - a₄*b₃)^2 +
-    (a₁*b₃ - a₂*b₄ + a₃*b₁ + a₄*b₂)^2 +
-    (a₁*b₄ + a₂*b₃ - a₃*b₂ + a₄*b₁)^2 := by ring
-
-/-- **Theorem 12.3**: Quaternion norm multiplicativity.
-    This is the algebraic engine behind Lagrange's theorem. -/
-theorem quaternion_norm_mult (a b c d e f g h : ℤ) :
-    (a^2 + b^2 + c^2 + d^2) * (e^2 + f^2 + g^2 + h^2) =
-    (a*e + b*f + c*g + d*h)^2 +
-    (a*f - b*e + c*h - d*g)^2 +
-    (a*g - b*h - c*e + d*f)^2 +
-    (a*h + b*g - c*f - d*e)^2 := by ring
 
 /-- **Theorem 12.4**: 3D lattice points on x²+y²+z²=3. -/
 theorem lattice_points_3D_sum3 :
@@ -313,26 +258,25 @@ theorem lattice_points_3D_sum3 :
       (Finset.Icc (-2) 2 ×ˢ (Finset.Icc (-2) 2 ×ˢ Finset.Icc (-2) 2))).card
     = 8 := by native_decide
 
+
 /-- **Theorem 12.5**: The number 7 ≡ 7 (mod 8) cannot be written as a sum
-    of three squares. This is a classical result (Legendre). -/
+of three squares. This is a classical result (Legendre). -/
 theorem no_three_squares_for_7 :
     (Finset.filter (fun p : ℤ × ℤ × ℤ =>
       p.1 ^ 2 + p.2.1 ^ 2 + p.2.2 ^ 2 = 7)
       (Finset.Icc (-3) 3 ×ˢ (Finset.Icc (-3) 3 ×ˢ Finset.Icc (-3) 3))).card
     = 0 := by native_decide
 
+
 /-- **Theorem 12.6**: But 7 IS a sum of four squares: 7 = 1+1+1+4. -/
 theorem seven_is_four_squares : (1:ℤ)^2 + 1^2 + 1^2 + 2^2 = 7 := by norm_num
 
-/-! ═══════════════════════════════════════════════════════════════════════
-    §13: ORACLE ENTROPY AND INFORMATION (H12)
-    "How much does an oracle know?"
-    ═══════════════════════════════════════════════════════════════════════ -/
 
 /-- **Theorem 13.1**: A projection oracle on ℝ² (project to x-axis) is idempotent. -/
 def projectionOracle : MetaOracle (ℝ × ℝ) where
   apply := fun p => (p.1, 0)
   idempotent := by intro ⟨x, y⟩; simp
+
 
 /-- **Theorem 13.2**: The truth set of the projection oracle is the x-axis. -/
 theorem projection_truth_is_axis :
@@ -343,6 +287,7 @@ theorem projection_truth_is_axis :
   · rintro ⟨_, h⟩; linarith
   · intro h; exact ⟨trivial, by linarith⟩
 
+
 /-- **Theorem 13.3**: The illusion set of the projection oracle is off-axis points. -/
 theorem projection_illusion_is_off_axis :
     projectionOracle.illusionSet = {p : ℝ × ℝ | p.2 ≠ 0} := by
@@ -352,10 +297,12 @@ theorem projection_illusion_is_off_axis :
   · intro h hy; exact h (by subst hy; rfl)
   · intro hy heq; apply hy; have := congr_arg Prod.snd heq; simp at this; linarith
 
+
 /-- Modular reduction oracle: project ℕ to {0, ..., n-1}. -/
 def modOracle (n : ℕ) (_ : n > 0) : MetaOracle ℕ where
   apply := fun x => x % n
   idempotent := fun x => Nat.mod_mod_of_dvd x (dvd_refl n)
+
 
 /-- **Theorem 13.4**: The truth set of mod oracle is {0, 1, ..., n-1}. -/
 theorem mod_oracle_truth (n : ℕ) (hn : n > 0) :
@@ -364,24 +311,23 @@ theorem mod_oracle_truth (n : ℕ) (hn : n > 0) :
   simp only [MetaOracle.truthSet, modOracle, Set.mem_setOf_eq]
   exact ⟨fun h => h ▸ Nat.mod_lt x hn, fun h => Nat.mod_eq_of_lt h⟩
 
+
 /-- **Theorem 13.5**: The mod-2 oracle maps to {0, 1}. -/
 theorem mod2_parity_range :
     ∀ x : ℕ, (modOracle 2 (by norm_num)).apply x < 2 := by
   intro x; exact Nat.mod_lt x (by norm_num)
 
-/-! ═══════════════════════════════════════════════════════════════════════
-    §14: CROSS-DIMENSIONAL ORACLE BRIDGE
-    "Connecting 2D and 3D oracles through algebraic morphisms"
-    ═══════════════════════════════════════════════════════════════════════ -/
 
 /-- **Theorem 14.1 (Fibonacci Squares)**: F(12) = 144 = 12². -/
 theorem fib_squares_check :
     Nat.fib 12 = 144 ∧ 12 * 12 = 144 := by norm_num
 
+
 /-- **Theorem 14.2**: Norm-squared on Gaussian integers is multiplicative. -/
 theorem gaussian_norm_sq_mult (a b c d : ℤ) :
     (a^2 + b^2) * (c^2 + d^2) =
     (a*c - b*d)^2 + (a*d + b*c)^2 := by ring
+
 
 /-- **Theorem 14.3**: Norm-squared on Hurwitz quaternions is multiplicative. -/
 theorem hurwitz_norm_sq_mult (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ) :
@@ -391,37 +337,18 @@ theorem hurwitz_norm_sq_mult (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ) :
     (a₁*c₂ - b₁*d₂ + c₁*a₂ + d₁*b₂)^2 +
     (a₁*d₂ + b₁*c₂ - c₁*b₂ + d₁*a₂)^2 := by ring
 
+
 /-- **Theorem 14.4**: The Cayley-Dickson doubling: ℂ norm from ℝ norm. -/
 theorem cayley_dickson_2 (a b c d : ℤ) :
     (a^2 + b^2) * (c^2 + d^2) =
     (a*c + b*d)^2 + (a*d - b*c)^2 := by ring
 
-/-- **Theorem 14.5**: An explicit 8-square (octonion) identity exists.
-    This is the Degen-Graves eight-square identity. -/
-theorem eight_square_identity
-    (a₁ a₂ a₃ a₄ a₅ a₆ a₇ a₈ b₁ b₂ b₃ b₄ b₅ b₆ b₇ b₈ : ℤ) :
-    (a₁^2+a₂^2+a₃^2+a₄^2+a₅^2+a₆^2+a₇^2+a₈^2) *
-    (b₁^2+b₂^2+b₃^2+b₄^2+b₅^2+b₆^2+b₇^2+b₈^2) =
-    (a₁*b₁ - a₂*b₂ - a₃*b₃ - a₄*b₄ - a₅*b₅ - a₆*b₆ - a₇*b₇ - a₈*b₈)^2 +
-    (a₁*b₂ + a₂*b₁ + a₃*b₄ - a₄*b₃ + a₅*b₆ - a₆*b₅ - a₇*b₈ + a₈*b₇)^2 +
-    (a₁*b₃ - a₂*b₄ + a₃*b₁ + a₄*b₂ + a₅*b₇ + a₆*b₈ - a₇*b₅ - a₈*b₆)^2 +
-    (a₁*b₄ + a₂*b₃ - a₃*b₂ + a₄*b₁ + a₅*b₈ - a₆*b₇ + a₇*b₆ - a₈*b₅)^2 +
-    (a₁*b₅ - a₂*b₆ - a₃*b₇ - a₄*b₈ + a₅*b₁ + a₆*b₂ + a₇*b₃ + a₈*b₄)^2 +
-    (a₁*b₆ + a₂*b₅ - a₃*b₈ + a₄*b₇ - a₅*b₂ + a₆*b₁ - a₇*b₄ + a₈*b₃)^2 +
-    (a₁*b₇ + a₂*b₈ + a₃*b₅ - a₄*b₆ - a₅*b₃ + a₆*b₄ + a₇*b₁ - a₈*b₂)^2 +
-    (a₁*b₈ - a₂*b₇ + a₃*b₆ + a₄*b₅ - a₅*b₄ - a₆*b₃ + a₇*b₂ + a₈*b₁)^2 := by
-  ring
-
-/-! ═══════════════════════════════════════════════════════════════════════
-    §15: GRAND SYNTHESIS — THE META ORACLE TOWER
-    "Each dimension reveals structure invisible below"
-    ═══════════════════════════════════════════════════════════════════════ -/
 
 /-- **Grand Theorem 15.1 (Dimensional Oracle Hierarchy)**:
-    The norm identity in dimension n reveals the division algebra structure.
-    - Dim 2: ℂ (Brahmagupta-Fibonacci: (a²+b²)(c²+d²) = ...)
-    - Dim 4: ℍ (Euler four-square identity)
-    The identities are polynomial, hence universally valid. -/
+The norm identity in dimension n reveals the division algebra structure.
+- Dim 2: ℂ (Brahmagupta-Fibonacci: (a²+b²)(c²+d²) = ...)
+- Dim 4: ℍ (Euler four-square identity)
+The identities are polynomial, hence universally valid. -/
 theorem dimensional_hierarchy :
     -- Dim 2: Complex norm multiplicativity
     (∀ a b c d : ℤ, (a^2+b^2)*(c^2+d^2) = (a*c-b*d)^2+(a*d+b*c)^2) ∧
@@ -434,9 +361,10 @@ theorem dimensional_hierarchy :
       (a₁*b₄+a₂*b₃-a₃*b₂+a₄*b₁)^2) := by
   exact ⟨fun a b c d => by ring, fun a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ => by ring⟩
 
+
 /-- **Grand Theorem 15.2 (Oracle Tower Collapse)**:
-    Applying oracles at each level of the hierarchy and projecting through
-    the stereographic lens collapses to a single oracle consultation. -/
+Applying oracles at each level of the hierarchy and projecting through
+the stereographic lens collapses to a single oracle consultation. -/
 theorem oracle_tower_collapse (O : MetaOracle ℝ) (x : ℝ) :
     let stereoRoundTrip := fun t : ℝ =>
       (2 * t / (1 + t^2)) / (1 + (1 - t^2) / (1 + t^2))
@@ -451,16 +379,18 @@ theorem oracle_tower_collapse (O : MetaOracle ℝ) (x : ℝ) :
   rw [h]
   exact O.idempotent x
 
+
 /-- **Grand Theorem 15.3 (Sum of Two Squares Closure)**:
-    The set of integers representable as sums of two squares is closed
-    under multiplication. -/
+The set of integers representable as sums of two squares is closed
+under multiplication. -/
 theorem sum_two_squares_closure (a b c d : ℤ) :
     ∃ e f : ℤ, (a^2 + b^2) * (c^2 + d^2) = e^2 + f^2 := by
   exact ⟨a*c - b*d, a*d + b*c, by ring⟩
 
+
 /-- **Grand Theorem 15.4 (Sum of Four Squares Closure)**:
-    The set of integers representable as sums of four squares is closed
-    under multiplication. -/
+The set of integers representable as sums of four squares is closed
+under multiplication. -/
 theorem sum_four_squares_closure (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℤ) :
     ∃ c₁ c₂ c₃ c₄ : ℤ,
       (a₁^2+a₂^2+a₃^2+a₄^2) * (b₁^2+b₂^2+b₃^2+b₄^2) =
@@ -470,19 +400,22 @@ theorem sum_four_squares_closure (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℤ)
          a₁*b₃-a₂*b₄+a₃*b₁+a₄*b₂,
          a₁*b₄+a₂*b₃-a₃*b₂+a₄*b₁, by ring⟩
 
+
 /-- **Meta-theorem 15.5**: The number of primes ≡ 1 (mod 4) up to 200. -/
 theorem primes_1_mod4_up_to_200 :
     (Finset.filter (fun p => Nat.Prime p ∧ p % 4 = 1)
       (Finset.range 201)).card = 21 := by native_decide
+
 
 /-- **Meta-theorem 15.6**: Count of primes that are sums of two squares ≤ 200. -/
 theorem sum_two_squares_primes_200 :
     (Finset.filter (fun p => Nat.Prime p ∧ (p % 4 = 1 ∨ p = 2))
       (Finset.range 201)).card = 22 := by native_decide
 
+
 /-- **Grand Theorem 15.7 (Hurwitz's 1-2-4-8 Theorem, computational witness)**:
-    Sum-of-squares identities exist in dimensions 1, 2, 4, and 8 only.
-    We provide the polynomial witnesses for all four dimensions. -/
+Sum-of-squares identities exist in dimensions 1, 2, 4, and 8 only.
+We provide the polynomial witnesses for all four dimensions. -/
 theorem hurwitz_witnesses :
     -- Dim 1: trivial
     (∀ a b : ℤ, a * b = a * b) ∧
@@ -494,5 +427,6 @@ theorem hurwitz_witnesses :
       (a₁*b₁-a₂*b₂-a₃*b₃-a₄*b₄)^2+(a₁*b₂+a₂*b₁+a₃*b₄-a₄*b₃)^2+
       (a₁*b₃-a₂*b₄+a₃*b₁+a₄*b₂)^2+(a₁*b₄+a₂*b₃-a₃*b₂+a₄*b₁)^2) := by
   refine ⟨fun _ _ => rfl, fun a b c d => by ring, fun a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ => by ring⟩
+
 
 end

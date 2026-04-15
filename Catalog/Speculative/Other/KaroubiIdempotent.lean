@@ -1,34 +1,18 @@
-import Mathlib
+/-! # CatalogBuild.Speculative.Other.KaroubiIdempotent
 
-/-!
-# Karoubi Envelope, Idempotent Completion, and Number Fields
-
-The Karoubi envelope (idempotent completion) of a category C freely adjoins
-splittings for all idempotent morphisms.
-
-## This File Formalizes
-1. Idempotent complement theorem
-2. Orthogonal idempotent systems and completeness
-3. Idempotents in matrix rings
-4. Hecke algebra idempotents (simplified model)
-5. Temperley-Lieb algebra connection to idempotent theory
-6. Karoubi envelope via Mathlib
-7. Physical predictions of the idempotent framework
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 13
 -/
 
+import Mathlib
+
 noncomputable section
-open CategoryTheory
-
-/-! ## Section 1: Abstract Idempotent Theory -/
-
-/-- If e is idempotent, then 1 - e is idempotent. -/
-theorem idem_complement {R : Type*} [Ring R] (e : R) (he : IsIdempotentElem e) :
-    IsIdempotentElem (1 - e) :=
-  he.one_sub
 
 /-- Two idempotents are orthogonal if ef = fe = 0. -/
 def AreOrthogonalIdempotents' {R : Type*} [Ring R] (e f : R) : Prop :=
   IsIdempotentElem e ∧ IsIdempotentElem f ∧ e * f = 0 ∧ f * e = 0
+
 
 /-- e and 1-e are orthogonal idempotents. -/
 theorem orthogonal_complement' {R : Type*} [Ring R] (e : R) (he : IsIdempotentElem e) :
@@ -37,12 +21,14 @@ theorem orthogonal_complement' {R : Type*} [Ring R] (e : R) (he : IsIdempotentEl
   · rw [mul_sub, mul_one, he.eq, sub_self]
   · rw [sub_mul, one_mul, he.eq, sub_self]
 
+
 /-- A complete set of orthogonal idempotents sums to 1. -/
 def IsCompleteIdempotentSystem' {R : Type*} [Ring R] {n : ℕ}
     (idemps : Fin n → R) : Prop :=
   (∀ i, IsIdempotentElem (idemps i)) ∧
   (∀ i j, i ≠ j → idemps i * idemps j = 0) ∧
   ∑ i, idemps i = 1
+
 
 /-- The trivial complete system: {1}. -/
 theorem trivial_complete_system' {R : Type*} [Ring R] :
@@ -51,28 +37,20 @@ theorem trivial_complete_system' {R : Type*} [Ring R] :
   · exact absurd (Fin.ext (by omega)) hij
   · simp
 
-/-! ## Section 2: Idempotents in Matrix Rings -/
-
-/-
-A diagonal matrix with 0/1 entries is idempotent.
--/
-theorem diagonal_01_idempotent {n : ℕ} (d : Fin n → ℝ)
-    (h01 : ∀ i, d i = 0 ∨ d i = 1) :
-    IsIdempotentElem (Matrix.diagonal d) := by
-  exact Matrix.ext fun i j => by by_cases hi : i = j <;> simp +decide [ hi, h01 i, h01 j ] ; rcases h01 i with ha | ha <;> rcases h01 j with hb | hb <;> norm_num [ ha, hb ] ;
-
-/-! ## Section 3: Hecke Algebra Idempotents -/
 
 /-- A Hecke algebra element (simplified diagonal model). -/
 structure HeckeElement' (n : ℕ) where
   coeffs : Fin n → ℝ
 
+
 instance {n : ℕ} : Mul (HeckeElement' n) :=
   ⟨fun a b => ⟨fun i => a.coeffs i * b.coeffs i⟩⟩
+
 
 /-- A Hecke algebra idempotent. -/
 def isHeckeIdempotent' {n : ℕ} (e : HeckeElement' n) : Prop :=
   e * e = e
+
 
 /-- The identity Hecke element is idempotent. -/
 theorem heckeIdentity_idempotent' (n : ℕ) :
@@ -80,7 +58,6 @@ theorem heckeIdentity_idempotent' (n : ℕ) :
   show (⟨fun i => 1 * 1⟩ : HeckeElement' n) = ⟨fun _ => 1⟩
   simp
 
-/-! ## Section 4: Tempered-Lieb Algebras -/
 
 /-- When δ = 2, TL generators are (rescaled) idempotents: (e/2)² = e/2. -/
 theorem tl_delta2_idempotent' (e_val : ℝ) (h : e_val * e_val = 2 * e_val) :
@@ -88,6 +65,7 @@ theorem tl_delta2_idempotent' (e_val : ℝ) (h : e_val * e_val = 2 * e_val) :
   simp [IsIdempotentElem]
   field_simp
   linarith
+
 
 /-- Jones-Wenzl idempotent existence bound. -/
 theorem jones_wenzl_bound' (n : ℕ) (hn : 0 < n) :
@@ -98,28 +76,13 @@ theorem jones_wenzl_bound' (n : ℕ) (hn : 0 < n) :
           nlinarith [Real.pi_pos, show (n : ℝ) ≥ 1 by norm_cast]
         : Real.pi / (n + 1) < Real.pi)]
 
-/-! ## Section 5: Karoubi Envelope via Mathlib -/
-
-/-- The Karoubi envelope: an object is a pair (X, e) with e idempotent. -/
-example (C : Type*) [Category C] [Preadditive C] (X : Idempotents.Karoubi C) :
-    X.p ≫ X.p = X.p :=
-  X.idem
-
-/-- The embedding functor sends X to (X, id). -/
-example (C : Type*) [Category C] [Preadditive C] :
-    C ⥤ Idempotents.Karoubi C :=
-  Idempotents.toKaroubi C
-
-/-! ## Section 6: Idempotent Collapse and Physics -/
 
 /-- Trace is additive for any matrices. -/
 theorem trace_additive_matrices {n : ℕ} (E F : Matrix (Fin n) (Fin n) ℝ) :
     (E + F).trace = E.trace + F.trace :=
   Matrix.trace_add E F
 
-/-
-For an idempotent real matrix E, trace(E) = trace(E * Eᵀ) ≥ 0.
--/
+
 theorem idempotent_trace_nonneg {n : ℕ} (E : Matrix (Fin n) (Fin n) ℝ)
     (hE : E * E = E) :
     0 ≤ E.trace := by
@@ -157,8 +120,9 @@ theorem idempotent_trace_nonneg {n : ℕ} (E : Matrix (Fin n) (Fin n) ℝ)
   convert congr_arg Complex.re h_trace_sum_eigenvalues using 1;
   induction ( Matrix.charpoly ( E.map ( algebraMap ℝ ℂ ) ) |> Polynomial.roots ) using Multiset.induction <;> aesop
 
+
 /-- Quantum observable bound: for a complete system of orthogonal projectors,
-    each projector has non-negative trace. -/
+each projector has non-negative trace. -/
 theorem quantum_observable_bound (n : ℕ) (projectors : Fin n → Matrix (Fin n) (Fin n) ℝ)
     (h_idem : ∀ i, projectors i * projectors i = projectors i)
     (h_ortho : ∀ i j, i ≠ j → projectors i * projectors j = 0)
@@ -166,5 +130,6 @@ theorem quantum_observable_bound (n : ℕ) (projectors : Fin n → Matrix (Fin n
     ∀ i, (projectors i).trace ≥ 0 := by
   intro i
   exact idempotent_trace_nonneg _ (h_idem i)
+
 
 end
