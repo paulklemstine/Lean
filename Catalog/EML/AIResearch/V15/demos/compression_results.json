@@ -1,0 +1,26 @@
+{
+  "architecture": {
+    "n_neurons": 8,
+    "eml_params": 41,
+    "dense_equiv_params": 72,
+    "compression_ratio": 1.7560975609756098
+  },
+  "crystallization": {
+    "total_weights": 41,
+    "total_l1_error": 6.5,
+    "avg_error": 0.15853658536585366,
+    "max_theoretical_error": 20.5,
+    "error_fraction": 0.3170731707317073
+  },
+  "compilation": {
+    "total_instructions": 24,
+    "eml_ops": 8,
+    "push_ops": 16,
+    "instructions_per_neuron": 3
+  },
+  "scaling": {
+    "d_1024_eml_params": 4096,
+    "d_1024_dense_params": 1049600,
+    "d_1024_compression": 256.25
+  }
+}
