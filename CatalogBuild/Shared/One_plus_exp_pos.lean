@@ -1,7 +1,7 @@
 /-! # CatalogBuild.Shared.One_plus_exp_pos
 
 Auto-generated from theorem catalog database.
-Domain: ShefferAI
+Domain: EML
 Declarations: 2
 -/
 

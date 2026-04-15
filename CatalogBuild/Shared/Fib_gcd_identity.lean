@@ -1,11 +1,11 @@
 /-! # CatalogBuild.Shared.Fib_gcd_identity
 
 Auto-generated from theorem catalog database.
-Domain: FutureResearch
+Domain: Speculative
 Declarations: 8
 -/
 
-import FutureResearch.PisanoPeriodFactoring
+import Speculative.PisanoPeriodFactoring
 import Mathlib
 
 /-- GCD identity: gcd(F(m), F(n)) = F(gcd(m,n)). -/
@@ -14,27 +14,24 @@ theorem fib_gcd_identity (m n : ℕ) :
   (Nat.fib_gcd m n).symm
 
 
-/-- Fibonacci divisibility: m | n implies F(m) | F(n). -/
-theorem fib_dvd_chain (m n : ℕ) (h : m ∣ n) : Nat.fib m ∣ Nat.fib n :=
-  Nat.fib_dvd _ _ h
-
-
-/-- [Section: ### Compositeness Witnesses] -/
-theorem fib_composite_test (n : ℕ) (hn : 1 < n) (hn2 : n ≠ 2) (hn5 : n ≠ 5)
-    (h : (Nat.fib n ^ 2) % n ≠ 1 % n) :
-    ¬Nat.Prime n := by
-  exact fun h' => h <| by have := fib_sq_mod_prime n h' hn2 hn5; simpa [ sq, Nat.mul_mod ] using this;
-
-
 /-- F(4) = 3. -/
 theorem fib_four_val : Nat.fib 4 = 3 := by native_decide
 
 
-/-- Carmichael's theorem (weak): For n ≥ 13, F(n) has a primitive prime divisor. -/
-theorem fib_primitive_divisor_existence :
-    ∀ n : ℕ, 13 ≤ n → ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
-      ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
-  sorry
+/-- F(n) ≤ 2^n for all n. -/
+theorem fib_exp_bound (n : ℕ) : Nat.fib n ≤ 2^n := by
+  induction n using Nat.strongRecOn with
+  | ind n ih =>
+    match n with
+    | 0 => simp
+    | 1 => simp [Nat.fib]
+    | n + 2 =>
+      rw [Nat.fib_add_two]
+      have h1 := ih (n+1) (by omega)
+      have h2 := ih n (by omega)
+      have : 2^n ≤ 2^(n+1) := Nat.pow_le_pow_right (by omega) (by omega)
+      linarith [show 2^(n+2) = 2^(n+1) + 2^(n+1) from by ring]
+
 
 /-- [Section: ### Fibonacci Primality Criterion] -/
 theorem fib_sq_mod_prime (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2) (hp5 : p ≠ 5) :
@@ -81,23 +78,26 @@ theorem fib_sq_mod_prime (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2) (hp5 : p �
   exact eq_or_eq_neg_of_sq_eq_sq _ _ <| by rw [ ← pow_mul', Nat.mul_div_cancel' <| even_iff_two_dvd.mp <| hp.even_sub_one hp2 ] ; aesop;
 
 
+/-- Fibonacci divisibility: m | n implies F(m) | F(n). -/
+theorem fib_dvd_chain (m n : ℕ) (h : m ∣ n) : Nat.fib m ∣ Nat.fib n :=
+  Nat.fib_dvd _ _ h
+
+
 /-- [Section: ### Fibonacci Bounds] -/
 theorem fib_linear_lower (n : ℕ) (hn : 6 ≤ n) : n ≤ Nat.fib n := by
   rcases n with ( _ | _ | _ | _ | _ | _ | _ | n ) <;> simp_all +arith +decide;
   exact Nat.recOn n ( by decide ) fun n ihn => by norm_num [ Nat.fib_add_two ] at * ; linarith
 
 
-/-- F(n) ≤ 2^n for all n. -/
-theorem fib_exp_bound (n : ℕ) : Nat.fib n ≤ 2^n := by
-  induction n using Nat.strongRecOn with
-  | ind n ih =>
-    match n with
-    | 0 => simp
-    | 1 => simp [Nat.fib]
-    | n + 2 =>
-      rw [Nat.fib_add_two]
-      have h1 := ih (n+1) (by omega)
-      have h2 := ih n (by omega)
-      have : 2^n ≤ 2^(n+1) := Nat.pow_le_pow_right (by omega) (by omega)
-      linarith [show 2^(n+2) = 2^(n+1) + 2^(n+1) from by ring]
+/-- [Section: ### Compositeness Witnesses] -/
+theorem fib_composite_test (n : ℕ) (hn : 1 < n) (hn2 : n ≠ 2) (hn5 : n ≠ 5)
+    (h : (Nat.fib n ^ 2) % n ≠ 1 % n) :
+    ¬Nat.Prime n := by
+  exact fun h' => h <| by have := fib_sq_mod_prime n h' hn2 hn5; simpa [ sq, Nat.mul_mod ] using this;
 
+
+/-- Carmichael's theorem (weak): For n ≥ 13, F(n) has a primitive prime divisor. -/
+theorem fib_primitive_divisor_existence :
+    ∀ n : ℕ, 13 ≤ n → ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
+      ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
+  sorry

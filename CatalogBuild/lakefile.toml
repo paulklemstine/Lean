@@ -1,5 +1,5 @@
 name = "CatalogBuild"
-defaultTargets = ["Algebra", "Analysis", "Bridges", "CategoryTheory", "Combinatorics", "ComplexityTheory", "Computation", "Cryptography", "EML", "FutureResearch", "Geometry", "GravitationalFactoringResearch", "InformationTheory", "Logic", "MachineLearning", "NeuralCompilation", "New", "NumberTheory", "OISCC", "Physics", "Probability", "Pythagorean", "SPBBridge", "Shared", "ShefferAI", "Speculative", "Topology", "Tropical"]
+defaultTargets = ["Algebra", "Bridges", "Computation", "Cryptography", "EML", "Geometry", "Logic", "MachineLearning", "Physics", "Pythagorean", "Shared", "Speculative", "Tropical"]
 
 [[require]]
 name = "mathlib"
@@ -11,24 +11,8 @@ name = "Algebra"
 globs = ["Algebra.+"]
 
 [[lean_lib]]
-name = "Analysis"
-globs = ["Analysis.+"]
-
-[[lean_lib]]
 name = "Bridges"
 globs = ["Bridges.+"]
-
-[[lean_lib]]
-name = "CategoryTheory"
-globs = ["CategoryTheory.+"]
-
-[[lean_lib]]
-name = "Combinatorics"
-globs = ["Combinatorics.+"]
-
-[[lean_lib]]
-name = "ComplexityTheory"
-globs = ["ComplexityTheory.+"]
 
 [[lean_lib]]
 name = "Computation"
@@ -43,20 +27,8 @@ name = "EML"
 globs = ["EML.+"]
 
 [[lean_lib]]
-name = "FutureResearch"
-globs = ["FutureResearch.+"]
-
-[[lean_lib]]
 name = "Geometry"
 globs = ["Geometry.+"]
-
-[[lean_lib]]
-name = "GravitationalFactoringResearch"
-globs = ["GravitationalFactoringResearch.+"]
-
-[[lean_lib]]
-name = "InformationTheory"
-globs = ["InformationTheory.+"]
 
 [[lean_lib]]
 name = "Logic"
@@ -67,52 +39,20 @@ name = "MachineLearning"
 globs = ["MachineLearning.+"]
 
 [[lean_lib]]
-name = "NeuralCompilation"
-globs = ["NeuralCompilation.+"]
-
-[[lean_lib]]
-name = "New"
-globs = ["New.+"]
-
-[[lean_lib]]
-name = "NumberTheory"
-globs = ["NumberTheory.+"]
-
-[[lean_lib]]
-name = "OISCC"
-globs = ["OISCC.+"]
-
-[[lean_lib]]
 name = "Physics"
 globs = ["Physics.+"]
-
-[[lean_lib]]
-name = "Probability"
-globs = ["Probability.+"]
 
 [[lean_lib]]
 name = "Pythagorean"
 globs = ["Pythagorean.+"]
 
 [[lean_lib]]
-name = "SPBBridge"
-globs = ["SPBBridge.+"]
-
-[[lean_lib]]
 name = "Shared"
 globs = ["Shared.+"]
 
 [[lean_lib]]
-name = "ShefferAI"
-globs = ["ShefferAI.+"]
-
-[[lean_lib]]
 name = "Speculative"
 globs = ["Speculative.+"]
-
-[[lean_lib]]
-name = "Topology"
-globs = ["Topology.+"]
 
 [[lean_lib]]
 name = "Tropical"

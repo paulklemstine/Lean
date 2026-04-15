@@ -1,0 +1,1 @@
+{"type":"config","name":"Factor large integer N using Catalog structural methods","metricName":"factor_time_ms","metricUnit":"ms","bestDirection":"lower"}

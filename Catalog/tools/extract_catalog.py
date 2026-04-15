@@ -106,11 +106,49 @@ def path_to_module(rel_path: str, prefix: str = "Catalog") -> str:
     return prefix + "." + ".".join(parts)
 
 
+# Domain consolidation: 28 original domains → 12 categories
+DOMAIN_MAP = {
+    'Algebra': 'Algebra',
+    'NumberTheory': 'Algebra',
+    'CategoryTheory': 'Algebra',
+    'Analysis': 'Algebra',
+    'Probability': 'Algebra',
+    'Combinatorics': 'Algebra',
+    'Topology': 'Algebra',
+    'Geometry': 'Geometry',
+    'GravitationalFactoring': 'Geometry',
+    'Logic': 'Logic',
+    'ComplexityTheory': 'Logic',
+    'Physics': 'Physics',
+    'GravitationalFactoringResearch': 'Physics',
+    'Computation': 'Computation',
+    'InformationTheory': 'Computation',
+    'OISCC': 'Computation',
+    'Cryptography': 'Cryptography',
+    'Bridges': 'Bridges',
+    'Pythagorean': 'Pythagorean',
+    'SPBBridge': 'Pythagorean',
+    'Tropical': 'Tropical',
+    'EML': 'EML',
+    'ShefferAI': 'EML',
+    'MachineLearning': 'MachineLearning',
+    'NeuralCompilation': 'MachineLearning',
+    'Speculative': 'Speculative',
+    'FutureResearch': 'Speculative',
+    'New': 'Speculative',
+}
+
+
 def path_to_domain(rel_path: str) -> tuple:
-    """Extract (domain, subdomain) from relative path."""
+    """Extract (domain, subdomain) from relative path.
+
+    Domains are consolidated into 12 categories via DOMAIN_MAP.
+    The subdomain preserves the original domain for granularity.
+    """
     parts = Path(rel_path).parts
-    domain = parts[0] if parts else ""
+    original_domain = parts[0] if parts else ""
     subdomain = parts[1] if len(parts) > 2 else None
+    domain = DOMAIN_MAP.get(original_domain, original_domain)
     return domain, subdomain
 
 

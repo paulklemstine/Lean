@@ -31,6 +31,12 @@ theorem eTower_pos (n : ℕ) : 0 < eTower n := by
   | succ n _ => exact Real.exp_pos _
 
 
+/-- The e-tower: e↑↑n. -/
+def eTower : ℕ → ℝ
+  | 0 => 1
+  | n + 1 => Real.exp (eTower n)
+
+
 /-- e-tower grows at least as fast as n. -/
 theorem eTower_ge_n (n : ℕ) : eTower n ≥ n := by
   induction n with
@@ -38,12 +44,6 @@ theorem eTower_ge_n (n : ℕ) : eTower n ≥ n := by
   | succ n ih =>
     simp [eTower]
     linarith [Real.add_one_le_exp (eTower n)]
-
-
-/-- The e-tower: e↑↑n. -/
-def eTower : ℕ → ℝ
-  | 0 => 1
-  | n + 1 => Real.exp (eTower n)
 
 
 end

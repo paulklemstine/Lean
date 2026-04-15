@@ -16,16 +16,16 @@ def chi4 (n : ℤ) : ℤ :=
   else -1
 
 
-/-- χ₄(3) = -1. -/
-theorem chi4_three : chi4 3 = -1 := by native_decide
-
-
 /-- [Section: ## The χ₄ Character] -/
 theorem chi4_mul_odd (a b : ℤ) (ha : a % 2 = 1) (hb : b % 2 = 1) :
     chi4 (a * b) = chi4 a * chi4 b := by
   unfold chi4;
   rw [ ← Int.emod_add_mul_ediv a 2, ← Int.emod_add_mul_ediv b 2, ha, hb ] ; ring_nf; norm_num;
   grind
+
+
+/-- χ₄(3) = -1. -/
+theorem chi4_three : chi4 3 = -1 := by native_decide
 
 
 /-- χ₄(1) = 1. -/

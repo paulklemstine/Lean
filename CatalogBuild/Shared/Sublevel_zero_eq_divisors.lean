@@ -1,7 +1,7 @@
 /-! # CatalogBuild.Shared.Sublevel_zero_eq_divisors
 
 Auto-generated from theorem catalog database.
-Domain: FutureResearch
+Domain: Speculative
 Declarations: 3
 -/
 

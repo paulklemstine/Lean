@@ -1,7 +1,7 @@
 /-! # CatalogBuild.Shared.Am_gm_two
 
 Auto-generated from theorem catalog database.
-Domain: Analysis
+Domain: Algebra
 Declarations: 1
 -/
 

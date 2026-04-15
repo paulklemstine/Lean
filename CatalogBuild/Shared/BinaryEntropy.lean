@@ -1,7 +1,7 @@
 /-! # CatalogBuild.Shared.BinaryEntropy
 
 Auto-generated from theorem catalog database.
-Domain: Probability
+Domain: Algebra
 Declarations: 1
 -/
 

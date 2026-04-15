@@ -13,9 +13,9 @@ noncomputable section
 def relu (x : ℝ) : ℝ := max x 0
 
 
-theorem relu_lipschitz (x y : ℝ) : |relu x - relu y| ≤ |x - y| := by
-  unfold relu;
-  grind
+/-- ReLU is idempotent: applying it twice equals applying it once. -/
+theorem relu_idempotent (x : ℝ) : relu (relu x) = relu x := by
+  simp [relu]
 
 
 /-- ReLU fixed-point characterization: fixed iff non-negative. -/
@@ -25,9 +25,9 @@ theorem relu_fixed_iff (x : ℝ) : relu x = x ↔ 0 ≤ x := by
   · intro h; simp [relu, max_eq_left h]
 
 
-/-- ReLU is idempotent: applying it twice equals applying it once. -/
-theorem relu_idempotent (x : ℝ) : relu (relu x) = relu x := by
-  simp [relu]
+theorem relu_lipschitz (x y : ℝ) : |relu x - relu y| ≤ |x - y| := by
+  unfold relu;
+  grind
 
 
 /-- ReLU is non-negative. -/

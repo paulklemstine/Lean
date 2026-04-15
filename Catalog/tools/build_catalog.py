@@ -14,10 +14,11 @@ import argparse
 import json
 import os
 import re
-import re
 from collections import defaultdict
 from pathlib import Path
 from typing import Optional
+
+from extract_catalog import DOMAIN_MAP
 
 
 # ── Module name helpers ─────────────────────────────────────────────
@@ -347,12 +348,18 @@ class CatalogBuilder:
         lines.append(f'Declarations: {len(entries)}')
         lines.append(f'-/')
 
-        # Imports — fix Catalog.* -> CatalogBuild.*
+        # Imports — fix Catalog.* -> CatalogBuild.* and remap old domain names
         if imports:
             lines.append('')
             for imp in imports:
                 if imp.startswith('Catalog.'):
                     imp = imp.replace('Catalog.', 'CatalogBuild.', 1)
+                # Remap old domain names to consolidated categories
+                for old_domain, new_domain in DOMAIN_MAP.items():
+                    if f'.{old_domain}.' in imp or imp.startswith(f'{old_domain}.'):
+                        imp = imp.replace(f'.{old_domain}.', f'.{new_domain}.')
+                        if imp.startswith(f'{old_domain}.'):
+                            imp = f'{new_domain}.{imp[len(old_domain)+1:]}'
                 lines.append(f'import {imp}')
 
         # Add noncomputable section if needed
@@ -397,6 +404,12 @@ class CatalogBuilder:
             for imp in imports:
                 if imp.startswith('Catalog.'):
                     imp = imp.replace('Catalog.', 'CatalogBuild.', 1)
+                # Remap old domain names to consolidated categories
+                for old_domain, new_domain in DOMAIN_MAP.items():
+                    if f'.{old_domain}.' in imp or imp.startswith(f'{old_domain}.'):
+                        imp = imp.replace(f'.{old_domain}.', f'.{new_domain}.')
+                        if imp.startswith(f'{old_domain}.'):
+                            imp = f'{new_domain}.{imp[len(old_domain)+1:]}'
                 lines.append(f'import {imp}')
 
         # Add noncomputable section if needed

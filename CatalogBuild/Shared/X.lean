@@ -1,7 +1,7 @@
 /-! # CatalogBuild.Shared.X
 
 Auto-generated from theorem catalog database.
-Domain: FutureResearch
+Domain: Speculative
 Declarations: 1
 -/
 

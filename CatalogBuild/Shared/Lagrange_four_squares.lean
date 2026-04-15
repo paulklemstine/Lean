@@ -1,7 +1,7 @@
 /-! # CatalogBuild.Shared.Lagrange_four_squares
 
 Auto-generated from theorem catalog database.
-Domain: FutureResearch
+Domain: Speculative
 Declarations: 1
 -/
 

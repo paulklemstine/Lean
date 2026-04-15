@@ -1,11 +1,11 @@
 /-! # CatalogBuild.Shared.IsSmooth
 
 Auto-generated from theorem catalog database.
-Domain: FutureResearch
+Domain: Speculative
 Declarations: 1
 -/
 
-import CatalogBuild.FutureResearch.OpenDirections
+import CatalogBuild.Speculative.OpenDirections
 import Mathlib
 
 /-- [Section: ## 10. Smooth Number Theory] -/

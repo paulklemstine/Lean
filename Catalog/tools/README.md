@@ -40,6 +40,12 @@ python3 tools/catalog.py rescan \
   --verbose
 ```
 
+Or use the shortcut:
+
+```bash
+tools/rescan [--verbose]
+```
+
 This only parses **new or modified** files (detected by file modification time), merges them into the database, and auto-rebuilds `CatalogBuild/`. Subsequent rescans after no changes take <1 second.
 
 ### Build — generate clean source tree from the database
@@ -89,8 +95,25 @@ python3 tools/catalog.py all \
    - `/-- ... -/` doc comments from the original source
    - `--` line comments immediately preceding the declaration
    - `/-! ... -/` section/module comments (attached to the first declaration after the section)
-5. **Hierarchy**: Files are organized by domain/subdomain matching the directory structure
+5. **Categories**: Files are organized into 12 top-level categories (see below)
 6. **Build config**: `lakefile.toml` and `lean-toolchain` are auto-generated
+
+## Categories (12)
+
+| Category | Original domains | Declarations |
+|----------|-----------------|--------------|
+| Algebra | Algebra, NumberTheory, CategoryTheory, Analysis, Probability, Combinatorics, Topology | ~1,475 |
+| Geometry | Geometry, GravitationalFactoring | ~1,103 |
+| Logic | Logic, ComplexityTheory | ~1,527 |
+| Physics | Physics, GravitationalFactoringResearch | ~3,095 |
+| Computation | Computation, InformationTheory, OISCC | ~3,473 |
+| Cryptography | Cryptography | ~720 |
+| Pythagorean | Pythagorean, SPBBridge | ~4,570 |
+| Tropical | Tropical | ~1,747 |
+| EML | EML, ShefferAI | ~3,570 |
+| MachineLearning | MachineLearning, NeuralCompilation | ~878 |
+| Bridges | Bridges | ~921 |
+| Speculative | Speculative, FutureResearch, New | ~6,513 |
 
 ## Output structure
 
@@ -99,17 +122,30 @@ CatalogBuild/
 ├── lakefile.toml
 ├── lean-toolchain
 ├── Algebra/
+│   ├── DivisionAlgebras/
+│   │   └── BrahmaguptaFibonacci.lean
 │   ├── Foundations/
 │   │   └── QuadraticForms.lean
-│   └── DivisionAlgebras/
-│       └── BrahmaguptaFibonacci.lean
+│   └── ...
 ├── Bridges/
 │   └── UnifiedFramework.lean
-├── Shared/
-│   ├── BrahmaguptaFibonacci.lean
-│   ├── ReLU.lean
-│   └── Oracle.lean
-└── ...
+├── Computation/
+│   ├── Oracles/
+│   ├── Factoring/
+│   └── ...
+├── EML/
+├── Geometry/
+├── Logic/
+├── MachineLearning/
+├── Physics/
+├── Pythagorean/
+├── Speculative/
+├── Tropical/
+├── Cryptography/
+└── Shared/
+    ├── BrahmaguptaFibonacci.lean
+    ├── ReLU.lean
+    └── Oracle.lean
 ```
 
 ## Files
