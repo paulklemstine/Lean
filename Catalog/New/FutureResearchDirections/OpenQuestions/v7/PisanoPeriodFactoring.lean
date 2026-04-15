@@ -159,12 +159,86 @@ theorem pisano_small_primes :
 
 /-! ### Order of Fibonacci in Multiplicative Group -/
 
-/-- For prime p ≠ 2, 5, the sequence F(n) mod p has period dividing p-1 or 2(p+1).
-    More precisely, π(p) | p - (p|5) where (p|5) is the Legendre symbol. -/
+/-
+For prime p ≠ 2, 5, the sequence F(n) mod p has period dividing p-1 or 2(p+1).
+    More precisely, π(p) | p - (p|5) where (p|5) is the Legendre symbol.
+-/
 theorem pisano_legendre_bound (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2) (hp5 : p ≠ 5) :
     ∃ T, 0 < T ∧ T ≤ 2 * (p + 1) ∧
     ∀ n, Nat.fib (n + T) % p = Nat.fib n % p := by
-  sorry
+  haveI := Fact.mk hp;
+  obtain ⟨α, β, h_roots, h_ne⟩ : ∃ α β : AlgebraicClosure (ZMod p), α + β = 1 ∧ α * β = -1 ∧ α ≠ β := by
+    -- Let α and β be the roots of the polynomial $x^2 - x - 1$ in the algebraic closure of $ZMod p$.
+    obtain ⟨α, hα⟩ : ∃ α : AlgebraicClosure (ZMod p), α^2 - α - 1 = 0 := by
+      -- By definition of algebraic closure, every non-constant polynomial over a field has a root in its algebraic closure.
+      have h_alg_closure : ∀ (f : Polynomial (ZMod p)), f.degree > 0 → ∃ α : AlgebraicClosure (ZMod p), Polynomial.eval α (Polynomial.map (algebraMap (ZMod p) (AlgebraicClosure (ZMod p))) f) = 0 := by
+        intro f hf; have := ( IsAlgClosed.exists_root ( Polynomial.map ( algebraMap ( ZMod p ) ( AlgebraicClosure ( ZMod p ) ) ) f ) ) ; aesop;
+      exact Exists.elim ( h_alg_closure ( Polynomial.X ^ 2 - Polynomial.X - 1 ) ( by erw [ Polynomial.degree_sub_eq_left_of_degree_lt ] <;> erw [ Polynomial.degree_sub_eq_left_of_degree_lt ] <;> norm_num ) ) fun x hx => ⟨ x, by simpa [ Polynomial.eval_map ] using hx ⟩;
+    refine' ⟨ α, 1 - α, _, _, _ ⟩ <;> norm_num;
+    · linear_combination -hα;
+    · intro h; rw [ eq_sub_iff_add_eq ] at h;
+      simp_all +decide [ ← two_mul ];
+      rw [ show α = 1 / 2 by rw [ eq_div_iff ( by aesop ) ] ; linear_combination' h ] at hα;
+      rw [ div_pow, div_sub_div, div_sub_one, div_eq_iff ] at hα <;> norm_num at *;
+      · erw [ CharP.cast_eq_zero_iff ( AlgebraicClosure ( ZMod p ) ) p ] at hα;
+        have := Nat.le_of_dvd ( by decide ) hα; interval_cases p <;> trivial;
+      · intro H; have := CharP.cast_eq_zero_iff ( AlgebraicClosure ( ZMod p ) ) p 8; simp_all +decide ;
+        have := Nat.le_of_dvd ( by decide ) this; interval_cases p <;> trivial;
+      · aesop;
+      · intro H; simp_all +decide [ show ( 4 : AlgebraicClosure ( ZMod p ) ) = 2 * 2 by norm_num ] ;
+      · grind;
+  -- Case split on whether α^p = α or α^p = β.
+  by_cases h_case : α^p = α;
+  · -- If $\alpha^p = \alpha$, then $\alpha^{p-1} = 1$.
+    have h_alpha_p_minus_1 : α ^ (p - 1) = 1 := by
+      cases p <;> simp_all +decide [ pow_succ' ];
+      exact mul_left_cancel₀ ( show α ≠ 0 from by aesop_cat ) ( by linear_combination' h_case );
+    -- Similarly, $\beta^{p-1} = 1$.
+    have h_beta_p_minus_1 : β ^ (p - 1) = 1 := by
+      have h_beta_p_minus_1 : β ^ p = β := by
+        rw [ eq_sub_of_add_eq' h_roots ] ; simp_all +decide [ sub_pow_char ] ;
+      rcases p with ( _ | _ | p ) <;> simp_all +decide [ pow_succ' ];
+      exact mul_left_cancel₀ ( show β ≠ 0 from by aesop_cat ) ( by linear_combination' h_beta_p_minus_1 );
+    -- Using the Binet formula, we have $F(n + p - 1) = \frac{\alpha^{n + p - 1} - \beta^{n + p - 1}}{\alpha - \beta}$.
+    have h_binet : ∀ n : ℕ, (Nat.fib (n + (p - 1)) : AlgebraicClosure (ZMod p)) = (α ^ (n + (p - 1)) - β ^ (n + (p - 1))) / (α - β) := by
+      intro n; induction' n + ( p - 1 ) using Nat.strong_induction_on with n ih; rcases n with ( _ | _ | n ) <;> simp_all +decide [ Nat.fib_add_two, pow_succ' ] ;
+      · rw [ div_self ( sub_ne_zero_of_ne h_ne.2 ) ];
+      · rw [ ← add_div ] ; ring;
+        rw [ show α ^ 2 = α + 1 by linear_combination' h_roots * α - h_ne.1, show β ^ 2 = β + 1 by linear_combination' h_roots * β - h_ne.1 ] ; ring;
+    refine' ⟨ p - 1, Nat.sub_pos_of_lt hp.one_lt, _, _ ⟩;
+    · omega;
+    · intro n; rw [ ← ZMod.natCast_eq_natCast_iff' ] ; simp_all +decide [ pow_add ] ;
+      have h_binet : ∀ n : ℕ, (Nat.fib n : AlgebraicClosure (ZMod p)) = (α ^ n - β ^ n) / (α - β) := by
+        intro n; induction' n using Nat.strong_induction_on with n ih; rcases n with ( _ | _ | n ) <;> simp_all +decide [ Nat.fib_add_two ] ;
+        · rw [ div_self ( sub_ne_zero_of_ne h_ne.2 ) ];
+        · rw [ ← add_div, div_eq_div_iff ] <;> simp_all +decide [ sub_eq_iff_eq_add, pow_succ' ];
+          linear_combination -h_roots * ( α ^ ( n + 1 ) - β ^ ( n + 1 ) ) + h_ne.1 * ( α ^ n - β ^ n );
+      erw [ ← RingHom.injective ( algebraMap ( ZMod p ) ( AlgebraicClosure ( ZMod p ) ) ) |>.eq_iff ] ; aesop;
+  · -- Since α^p ≠ α, we have α^p = β.
+    have h_case2 : α^p = β := by
+      have h_case2 : α^p + β^p = 1 ∧ α^p * β^p = -1 := by
+        simp_all +decide [ ← mul_pow, ← add_pow_char ];
+        exact by rw [ neg_one_pow_eq_pow_mod_two ] ; norm_num [ hp.eq_two_or_odd.resolve_left hp2 ] ;
+      exact mul_left_cancel₀ ( sub_ne_zero_of_ne h_case ) <| by linear_combination h_case2.1 * α ^ p - h_case2.2 - h_roots * α ^ p + h_ne.1;
+    -- Since $\alpha^p = \beta$, we have $\alpha^{2(p+1)} = 1$.
+    have h_order : α^(2 * (p + 1)) = 1 := by
+      have h_order : α^(p + 1) = -1 := by
+        rw [ pow_succ, h_case2, ← h_ne.1 ];
+        ring;
+      rw [ pow_mul', h_order ] ; norm_num;
+    -- Since $\alpha^{2(p+1)} = 1$, we have $F(n + 2(p+1)) = F(n)$ for all $n$ in the algebraic closure.
+    have h_period_alg : ∀ n, (Nat.fib (n + 2 * (p + 1)) : AlgebraicClosure (ZMod p)) = (Nat.fib n : AlgebraicClosure (ZMod p)) := by
+      have h_period_alg : ∀ n, (Nat.fib n : AlgebraicClosure (ZMod p)) = (α^n - β^n) / (α - β) := by
+        intro n; induction' n using Nat.strong_induction_on with n ih; rcases n with ( _ | _ | n ) <;> simp_all +decide [ Nat.fib_add_two ] ;
+        · rw [ div_self ( sub_ne_zero_of_ne h_ne.2 ) ];
+        · linear_combination -h_roots * ( α ^ ( n + 1 ) - β ^ ( n + 1 ) ) / ( α - β ) + h_ne.1 * ( α ^ n - β ^ n ) / ( α - β );
+      simp_all +decide [ pow_add ];
+      rw [ ← h_case2, ← pow_mul, mul_comm, pow_mul, h_order ];
+      norm_num;
+    refine' ⟨ 2 * ( p + 1 ), by linarith, by linarith, fun n => _ ⟩;
+    rw [ ← ZMod.natCast_eq_natCast_iff' ];
+    convert h_period_alg n using 1;
+    erw [ ← map_natCast ( algebraMap ( ZMod p ) ( AlgebraicClosure ( ZMod p ) ) ), ← map_natCast ( algebraMap ( ZMod p ) ( AlgebraicClosure ( ZMod p ) ) ) ] ; norm_cast
 
 /-
 The wall of a prime p: the rank of apparition α(p) is the smallest

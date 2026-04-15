@@ -72,12 +72,16 @@ def gradientDescent (N : ℕ) : ℕ → ℕ → ℕ
     if E N x = 0 then x
     else gradientDescent N (gradientStep N x) k
 
-/-- Gradient descent from any starting point reaches energy 0 (a divisor)
-    within N steps. -/
-theorem gradient_descent_reaches_divisor (N x : ℕ) (hN : 0 < N)
+/- COMMENTED OUT: This theorem is FALSE.
+   Counterexample: N = 11, x = 6.
+   E(11,6) = 5, gradientStep goes to 5.
+   E(11,5) = 1, gradientStep goes to 4.
+   E(11,4) = 3, gradientStep goes to 5.
+   The descent cycles between 4 and 5 forever, never reaching energy 0. -/
+/- theorem gradient_descent_reaches_divisor (N x : ℕ) (hN : 0 < N)
     (hx : 0 < x) (hxN : x ≤ N) :
     ∃ k, k ≤ N ∧ E N (gradientDescent N x k) = 0 := by
-  sorry
+  sorry -/
 
 /-! ### Sublevel Set Topology -/
 

@@ -88,12 +88,13 @@ theorem wieferich_iff_quotient (p : ℕ) (hp : Nat.Prime p) (hp3 : 3 ≤ p) :
 
 /-! ### Connection to ABC Conjecture -/
 
-/-- Silverman's result (statement): if ABC conjecture holds, then there are
-    infinitely many non-Wieferich primes.
-    We state this as: for any finite set S of primes, there exists a
-    non-Wieferich prime not in S. -/
-theorem silverman_abc_implies_infinite_non_wieferich
+/- COMMENTED OUT: As stated, this requires proving infinitely many non-Wieferich primes
+   exist unconditionally (the ABC hypothesis is `True`, a trivially true placeholder).
+   Silverman proved this CONDITIONALLY on ABC, but the unconditional statement is an
+   open problem in number theory. Only two Wieferich primes are known (1093 and 3511),
+   and it is widely believed (but unproven) that infinitely many non-Wieferich primes exist. -/
+/- theorem silverman_abc_implies_infinite_non_wieferich
     (ABC : True)  -- placeholder for ABC conjecture
     (S : Finset ℕ) :
     ∃ p, Nat.Prime p ∧ p ≥ 3 ∧ ¬ IsWieferich p ∧ p ∉ S := by
-  sorry
+  sorry -/

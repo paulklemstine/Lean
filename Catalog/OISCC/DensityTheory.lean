@@ -150,8 +150,11 @@ theorem e_irrational : Irrational (Real.exp 1) := by
   · exact absurd hm <| ne_of_gt <| lt_of_lt_of_le ( by positivity ) <| Summable.le_tsum ( by exact ( by simpa using Summable.mul_left _ <| Real.summable_pow_div_factorial 1 |> Summable.comp_injective <| by intros a b; aesop ) ) 0 <| by intros; positivity;
   · linarith [ show ( 0 : ℝ ) ≤ ∑' k : ℕ, ( q.factorial : ℝ ) / ( q + 1 + k ).factorial by exact tsum_nonneg fun _ => by positivity ]
 
-/-- exp(exp(1)) is irrational. -/
-theorem exp_e_irrational : Irrational (Real.exp (Real.exp 1)) := by
-  sorry
+/- COMMENTED OUT: The irrationality of e^e (= exp(exp(1))) is an open problem.
+   While e is known to be transcendental (Hermite, 1873), the irrationality of e^e
+   has not been established. It is not even known whether e^e is irrational, let alone
+   transcendental. This is related to Schanuel's conjecture. -/
+/- theorem exp_e_irrational : Irrational (Real.exp (Real.exp 1)) := by
+  sorry -/
 
 end

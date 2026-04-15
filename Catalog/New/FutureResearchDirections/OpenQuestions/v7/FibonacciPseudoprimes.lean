@@ -1,4 +1,5 @@
 import Mathlib
+import FutureResearch.PisanoPeriodFactoring
 
 /-!
 # Fibonacci Pseudoprimes and Compositeness Certificates (A+9, B8b)
@@ -105,7 +106,8 @@ theorem pisano_period_exists (m : ℕ) (hm : 0 < m) :
 /-- For prime p, the Pisano period divides p² - 1. -/
 theorem pisano_period_divides_prime_bound (p : ℕ) (hp : Nat.Prime p) (hp5 : p ≠ 5) :
     ∃ T : ℕ, 0 < T ∧ T ∣ (p^2 - 1) ∧ ∀ n, Nat.fib (n + T) % p = Nat.fib n % p := by
-  sorry
+  obtain ⟨T, hT_pos, hT_dvd, hT_period⟩ := pisano_factor_constraint p hp hp5
+  exact ⟨T, hT_pos, by rwa [sq], hT_period⟩
 
 /-! ### Compositeness Witnesses -/
 
@@ -143,13 +145,16 @@ theorem fib_linear_lower (n : ℕ) (hn : 6 ≤ n) : n ≤ Nat.fib n := by
   rcases n with ( _ | _ | _ | _ | _ | _ | _ | n ) <;> simp_all +arith +decide;
   exact Nat.recOn n ( by decide ) fun n ihn => by norm_num [ Nat.fib_add_two ] at * ; linarith
 
-/-- For factoring: if n = pq and we know the Pisano periods π(p) and π(q),
-    then F(n + T₁*T₂) ≡ F(n) (mod pq). -/
-theorem pisano_for_factoring (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q) :
+/- COMMENTED OUT: This theorem is FALSE when p = q.
+   Counterexample: p = q = 2, T₁ = T₂ = 3 (Pisano period of 2).
+   Then T₁ * T₂ = 9, fib(9) = 34, 34 % 4 = 2 ≠ 0 = fib(0) % 4.
+   The theorem would hold with an additional hypothesis `p ≠ q` (or `Nat.Coprime p q`),
+   since then p * q would be coprime and CRT applies. -/
+/- theorem pisano_for_factoring (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q) :
     ∀ T₁ T₂ : ℕ, (0 < T₁ ∧ ∀ n, Nat.fib (n + T₁) % p = Nat.fib n % p) →
     (0 < T₂ ∧ ∀ n, Nat.fib (n + T₂) % q = Nat.fib n % q) →
     ∀ n, Nat.fib (n + T₁ * T₂) % (p * q) = Nat.fib n % (p * q) := by
-  sorry
+  sorry -/
 
 /-- Carmichael's theorem (weak): For n ≥ 13, F(n) has a primitive prime divisor. -/
 theorem fib_primitive_divisor_existence :
