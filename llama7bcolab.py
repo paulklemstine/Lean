@@ -147,6 +147,9 @@ class LLaMAWeightLoader:
             from transformers import AutoModelForCausalLM, AutoTokenizer, AutoConfig
 
             model_path = self.local_path or self.model_name
+            # Auto-detect device
+            if self.device == "auto":
+                self.device = self._detect_device()
             print(f"  Loading {model_path}...")
             print(f"  Device: {self.device}")
 
@@ -154,13 +157,14 @@ class LLaMAWeightLoader:
             self.tokenizer = AutoTokenizer.from_pretrained(model_path)
 
             t0 = time.perf_counter()
+            use_cuda = (self.device != "cpu")
             self.model = AutoModelForCausalLM.from_pretrained(
                 model_path,
-                torch_dtype=torch.float16 if self.device != "cpu" else torch.float32,
-                device_map=self.device if self.device != "cpu" else None,
+                torch_dtype=torch.float16 if use_cuda else torch.float32,
+                device_map=self.device if use_cuda else None,
                 low_cpu_mem_usage=True,
             )
-            if self.device == "cpu":
+            if not use_cuda:
                 self.model = self.model.to("cpu")
             t1 = time.perf_counter()
             print(f"  Loaded in {t1 - t0:.1f}s")
@@ -609,7 +613,7 @@ class LLaMACompressionPipeline:
     def __init__(self, config: LLaMAConfig, use_real_weights: bool = True,
                  model_name: str = "meta-llama/Llama-2-7b-hf",
                  local_path: Optional[str] = None,
-                 device: str = "cpu"):
+                 device: str = "auto"):
         self.config = config
         self.eml_config = EMLLLaMAConfig(base=config)
         self.use_real_weights = use_real_weights
@@ -1057,7 +1061,7 @@ def run():
     parser.add_argument("--perplexity", action="store_true", default=MEASURE_PPL,
                         help="Measure perplexity on WikiText-2 (requires model)")
     parser.add_argument("--device", default=DEVICE,
-                        help="Device for model loading (cpu, cuda, cuda:0)")
+                        help="Device for model loading (auto, cpu, cuda, cuda:0)")
     parser.add_argument("--seed", type=int, default=SEED,
                         help="Random seed for reproducibility")
 
