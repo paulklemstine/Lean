@@ -7,6 +7,9 @@ Declarations: 4
 
 import Mathlib
 
+/-- [Section: ## Section 5.1: The Diagonal Argument
+The core technique behind the halting problem, Gödel's incompleteness,
+and the logical structure of many SF paradoxes.] -/
 theorem diagonal_nonsurjective {α : Type*} {β : Type*}
     (σ : β → β) (hσ : ∀ b, σ b ≠ b)
     (f : α → (α → β)) : ¬ Function.Surjective f := by
@@ -22,11 +25,16 @@ theorem cantor_nat_bool : ¬ ∃ f : ℕ → (ℕ → Bool), Function.Surjective
   exact absurd ( hf fun n => if f n n = Bool.true then Bool.false else Bool.true ) ( by rintro ⟨ n, hn ⟩ ; by_cases h : f n n = Bool.true <;> simpa [ h ] using congr_fun hn n )
 
 
+/-- [Section: ## Section 5.2: Gödel's Incompleteness (Consequences)
+While the full incompleteness theorems require substantial formalization
+of arithmetic, we can prove related diagonal results.] -/
 theorem no_complete_enumeration :
     ∀ (enum : ℕ → (ℕ → ℕ)), ∃ g : ℕ → ℕ, ∀ n, enum n ≠ g := by
   exact fun enum => ⟨ fun n => enum n n + 1, fun n => ne_of_apply_ne ( fun f => f n ) ( by norm_num ) ⟩
 
 
+/-- [Section: ## Self-Reference and AI Consciousness
+Can an AI fully model itself? The diagonal argument says no.] -/
 theorem self_reference_constraint {α : Type*} (f : α → α)
     (h : f ∘ f = id) : ∀ x, f (f x) = x := by
   exact congr_fun h

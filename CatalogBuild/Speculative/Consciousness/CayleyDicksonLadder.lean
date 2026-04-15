@@ -47,6 +47,7 @@ theorem properties_decrease_0 : propertiesAtLevel 1 ⊂ propertiesAtLevel 0 := b
   simp [propertiesAtLevel]; decide
 
 
+/-- [Section: ## §2: Properties Lost at Each Level] -/
 theorem properties_decrease_1 : propertiesAtLevel 2 ⊂ propertiesAtLevel 1 := by
   simp [propertiesAtLevel]; decide
 

@@ -31,6 +31,7 @@ theorem bootstrapT_fixed_one (T : ℝ) : bootstrapT T 1 = 1 := by
   unfold bootstrapT; ring
 
 
+/-- [Section: ## §1: The Generalized Bootstrap Map Family] -/
 theorem bootstrapT_critical_point (T : ℝ) (hT : -1 < T) :
     bootstrapT T (1 / (1 + T)) = 1 / (1 + T) := by
   unfold bootstrapT;
@@ -121,6 +122,7 @@ theorem bootstrap_derivative_at_half :
     (fun r : ℝ => 6 * r * (1 - r)) (1/2) = 3/2 := by ring
 
 
+/-- [Section: ## §4: Bootstrap Derivative and Convergence Rate] -/
 theorem quadratic_convergence_near_one (e : ℝ) (he0 : 0 ≤ e) (he1 : e ≤ 1) :
     1 - (3 * (1 - e) ^ 2 - 2 * (1 - e) ^ 3) ≤ 3 * e ^ 2 := by
   nlinarith [ sq_nonneg ( e - 1 ) ]
@@ -140,6 +142,7 @@ def cosineSim (n : ℕ) (u v : Fin n → ℝ) : ℝ :=
   (∑ i, u i * v i) / (Real.sqrt (∑ i, u i ^ 2) * Real.sqrt (∑ i, v i ^ 2))
 
 
+/-- [Section: ## §6: Cosine Similarity Quality Metric] -/
 theorem cosineSim_self (n : ℕ) (u : Fin n → ℝ)
     (hu : 0 < ∑ i, u i ^ 2) :
     cosineSim n u u = 1 := by
@@ -173,6 +176,7 @@ theorem bootstrap_maps_unit_interval (r : ℝ) (hr0 : 0 ≤ r) (hr1 : r ≤ 1) :
   constructor <;> nlinarith [sq_nonneg r, sq_nonneg (1 - r)]
 
 
+/-- [Section: ## §9: Bootstrap Preserves [0,1]] -/
 theorem bootstrap_iterates_in_unit (r : ℝ) (hr0 : 0 ≤ r) (hr1 : r ≤ 1) (n : ℕ) :
     0 ≤ (fun r => 3 * r ^ 2 - 2 * r ^ 3)^[n] r ∧
     (fun r => 3 * r ^ 2 - 2 * r ^ 3)^[n] r ≤ 1 := by

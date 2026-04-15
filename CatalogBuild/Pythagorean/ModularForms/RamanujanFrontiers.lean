@@ -41,6 +41,10 @@ theorem rfB₁_lorentz_mod5 :
   native_decide
 
 
+/-- [Section: ## §2. Quotient Graphs: Berggren Matrices Modulo N
+When we reduce the Berggren matrices modulo a prime p, we obtain matrices
+in GL(3, ℤ/pℤ). The orbit of (3,4,5) mod p under these matrices defines
+a finite graph — a candidate Ramanujan graph.] -/
 theorem rfB₂_lorentz_mod5 :
     (matMod 5 rfB₂)ᵀ * (matMod 5 rfQ) * (matMod 5 rfB₂) = matMod 5 rfQ := by
   native_decide

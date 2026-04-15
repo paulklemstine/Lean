@@ -30,6 +30,7 @@ theorem abc_quality_bound (a b c d : ℤ)
   refine ⟨by omega, by omega, by nlinarith⟩
 
 
+/-- [Section: ## §2. Modular Arithmetic Filters] -/
 theorem parity_propagation (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2)
     (hd : 2 ∣ d) (ha : ¬ 2 ∣ a) (hb : ¬ 2 ∣ b) :

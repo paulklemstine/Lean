@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## §1: Crystallization Regularizer] -/
 def entry_crystal_loss (p : ℝ) : ℝ := p * (1 - p)
 
 
@@ -50,6 +51,7 @@ theorem crystal_regularizer_zero_iff_binary {n : ℕ} (w : Fin n → ℝ)
     rcases h i with h1 | h1 <;> simp [entry_crystal_loss, h1]
 
 
+/-- [Section: ## §2: Temperature Annealing] -/
 def geometric_anneal (tau_0 alpha : ℝ) (t : ℕ) : ℝ := tau_0 * alpha ^ t
 
 
@@ -80,6 +82,7 @@ theorem anneal_converges (tau_0 alpha : ℝ) (htau : 0 < tau_0) (halpha0 : 0 < a
   simpa using h2
 
 
+/-- [Section: ## §3: Combined Loss] -/
 def combined_loss (L_task L_cryst lambda_reg : ℝ) : ℝ :=
   L_task + lambda_reg * L_cryst
 

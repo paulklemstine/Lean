@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## §1: Algebraic Properties of Idempotent Elements] -/
 theorem idempotent_pow_eq {M : Type*} [Monoid M] (e : M) (he : e * e = e) (n : ℕ) (hn : n ≥ 1) :
     e ^ n = e := by
       induction hn <;> simp_all +decide [ pow_succ' ]
@@ -39,6 +40,7 @@ def OracleKernel {X : Type*} (O : X → X) : X → X → Prop :=
   fun x y => O x = O y
 
 
+/-- [Section: ## §3: The Oracle Kernel] -/
 theorem oracle_kernel_refl {X : Type*} (O : X → X) : Reflexive (OracleKernel O) := by
   exact fun x => rfl
 
@@ -60,6 +62,7 @@ theorem oracle_kernel_equiv {X : Type*} (O : X → X) : Equivalence (OracleKerne
   · exact fun hxy hyz => hxy.trans hyz
 
 
+/-- [Section: ## §4: Fixed Point Structure] -/
 theorem fixedPoints_eq_range {X : Type*} (O : X → X) (hO : ∀ x, O (O x) = O x) :
     {x | O x = x} = range O := by
       grind +splitImp
@@ -76,6 +79,7 @@ theorem idempotent_injective_iff_surjective {n : ℕ} (O : Fin n → Fin n)
       exact?
 
 
+/-- [Section: ## §5: Oracle Lattice Properties] -/
 theorem oracle_lattice_inf_le {α : Type*} [CompleteLattice α] (S : Set α) (x : α) (hx : x ∈ S) :
     sInf S ≤ x := by
       exact?
@@ -98,6 +102,7 @@ theorem oracle_knaster_tarski {α : Type*} [CompleteLattice α] (f : α → α)
       use x
 
 
+/-- [Section: ## §6: Band Theory (Semigroup of Idempotents)] -/
 theorem rectangular_band_prop (n : ℕ) (hn : 0 < n) :
     ∀ (a : Fin n), a = a := by
       aesop

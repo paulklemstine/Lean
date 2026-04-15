@@ -31,6 +31,7 @@ structure TropicalHeckeEigensheaf (g : ℕ) where
     toFun (fun j => x j + if j = i then 1 else 0) = toFun x + eigenvalues i
 
 
+/-- [Section: ## Section 2: Tropical Hecke Eigensheaves] -/
 def linearEigensheaf (g : ℕ) (coeffs : Fin g → ℝ) : TropicalHeckeEigensheaf g where
   toFun := fun x => ∑ i : Fin g, coeffs i * x i
   eigenvalues := coeffs
@@ -61,6 +62,7 @@ def tropHitchinBase (n : ℕ) (eigenvalues : Fin n → ℝ) : ℝ :=
   ∑ i : Fin n, eigenvalues i
 
 
+/-- [Section: ## Section 4: Tropical Hitchin System] -/
 theorem tropHitchin_fiber_convex (n : ℕ) (target : ℝ) :
     Convex ℝ { x : Fin n → ℝ | ∑ i, x i = target } := by
   intro x hx y hy a b ha hb hab;

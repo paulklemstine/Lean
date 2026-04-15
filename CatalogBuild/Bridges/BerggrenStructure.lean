@@ -24,6 +24,7 @@ def berggrenM3 (a b c : ℤ) : ℤ × ℤ × ℤ :=
   (-a + 2*b + 2*c, -2*a + b + 2*c, -2*a + 2*b + 3*c)
 
 
+/-- [Section: ## Berggren Matrices and Pythagorean Preservation] -/
 theorem berggren_M1_preserves_pyth (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     let t := berggrenM1 a b c
     t.1^2 + t.2.1^2 = t.2.2^2 := by
@@ -42,6 +43,7 @@ theorem berggren_M3_preserves_pyth (a b c : ℤ) (h : a^2 + b^2 = c^2) :
   unfold berggrenM3; linarith
 
 
+/-- [Section: ## Quadratic Form Invariance] -/
 theorem berggren_M1_quad_form (a b c : ℤ) :
     let t := berggrenM1 a b c
     t.1^2 + t.2.1^2 - t.2.2^2 = a^2 + b^2 - c^2 := by
@@ -60,6 +62,7 @@ theorem berggren_M3_quad_form (a b c : ℤ) :
   unfold berggrenM3; ring;
 
 
+/-- [Section: ## Hypotenuse Growth] -/
 theorem berggren_M1_hyp_increase (a b c : ℤ)
     (h : a^2 + b^2 = c^2) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
     c < (berggrenM1 a b c).2.2 := by
@@ -79,6 +82,7 @@ theorem berggren_M3_hyp_increase (a b c : ℤ)
   nlinarith
 
 
+/-- [Section: ## Positivity] -/
 theorem berggren_M2_pos (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (h : a^2 + b^2 = c^2) :
     let t := berggrenM2 a b c
@@ -86,6 +90,7 @@ theorem berggren_M2_pos (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
   exact ⟨ by unfold berggrenM2; linarith, by unfold berggrenM2; linarith, by unfold berggrenM2; linarith ⟩
 
 
+/-- [Section: ## Sum and Trace Identities] -/
 theorem berggren_M1_sum (a b c : ℤ) :
     let t := berggrenM1 a b c
     t.1 + t.2.1 + t.2.2 = 5*a - 5*b + 7*c := by
@@ -104,6 +109,7 @@ theorem berggren_M3_sum (a b c : ℤ) :
   unfold berggrenM3; ring
 
 
+/-- [Section: ## The Root Triple] -/
 theorem root_is_pythagorean : (3 : ℤ)^2 + 4^2 = 5^2 := by
   norm_num
 

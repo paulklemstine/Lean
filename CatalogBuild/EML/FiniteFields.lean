@@ -32,6 +32,7 @@ def spbIterZMod (x : ZMod p) : ℕ → ZMod p
   | n + 1 => spbZMod x (spbIterZMod x n)
 
 
+/-- [Section: ## SPB over ZMod p] -/
 theorem spbIterZMod_one (x : ZMod p) : spbIterZMod x 1 = x := by
   simp [spbIterZMod, spbZMod]
 

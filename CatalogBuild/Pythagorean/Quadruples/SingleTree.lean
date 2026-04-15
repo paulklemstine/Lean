@@ -77,6 +77,7 @@ theorem QF_sum_three_sq_eq_one (a b c : ℤ)
   interval_cases a <;> interval_cases b <;> interval_cases c <;> simp_all
 
 
+/-- [Section: ## Section 5: Parity] -/
 theorem QF_descended_parity (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     (2 * d - a - b - c) % 2 = d % 2 := by
@@ -84,6 +85,7 @@ theorem QF_descended_parity (a b c d : ℤ)
   grind
 
 
+/-- [Section: ## Section 6: Primitivity Preservation] -/
 theorem QF_descent_preserves_prim (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2)
     (hprim : Int.gcd (Int.gcd a b) (Int.gcd c d) = 1) :
@@ -108,6 +110,7 @@ theorem QF_descent_preserves_prim (a b c d : ℤ)
   · intro ha hb hc hd; have := Nat.dvd_gcd ( Nat.dvd_gcd ha hb ) ( Nat.dvd_gcd hc hd ) ; aesop;
 
 
+/-- [Section: ## Section 7: Two Positive Components] -/
 theorem QF_sorted_has_two_pos (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2)
     (hprim : Int.gcd (Int.gcd a b) (Int.gcd c d) = 1)
@@ -207,6 +210,7 @@ theorem QF_component_bound (a b c d : ℤ)
   · nlinarith [sq_nonneg a, sq_nonneg b, sq_nonneg (c - d)]
 
 
+/-- [Section: ## Section 13: Generators of O(3,1;ℤ)] -/
 def QF_perm01 : Matrix (Fin 4) (Fin 4) ℤ :=
   !![0, 1, 0, 0; 1, 0, 0, 0; 0, 0, 1, 0; 0, 0, 0, 1]
 

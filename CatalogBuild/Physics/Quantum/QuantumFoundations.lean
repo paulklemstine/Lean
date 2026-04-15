@@ -7,6 +7,7 @@ Declarations: 5
 
 import Mathlib
 
+/-- [Section: ## Section 1: Norm Properties] -/
 theorem norm_triangle_pf {V : Type*} [SeminormedAddCommGroup V] (x y : V) :
     ‖x + y‖ ≤ ‖x‖ + ‖y‖ := by
       exact norm_add_le x y
@@ -17,6 +18,7 @@ theorem inner_mul_le_norm_pf {V : Type*} [SeminormedAddCommGroup V] [InnerProduc
       exact?
 
 
+/-- [Section: ## Section 2: Unitary Matrix Properties] -/
 theorem unitary_mul_unitary {n : Type*} [DecidableEq n] [Fintype n]
     (U V : Matrix n n ℂ) (hU : U * star U = 1) (hV : V * star V = 1) :
     (U * V) * star (U * V) = 1 := by
@@ -30,6 +32,7 @@ theorem unitary_inv_eq_star {n : Type*} [DecidableEq n] [Fintype n]
       rw [ ← mul_eq_one_comm, hU ]
 
 
+/-- [Section: ## Section 3: Quantum State Properties] -/
 theorem tensor_normalized (a b c d : ℂ)
     (h1 : Complex.normSq a + Complex.normSq b = 1)
     (h2 : Complex.normSq c + Complex.normSq d = 1) :

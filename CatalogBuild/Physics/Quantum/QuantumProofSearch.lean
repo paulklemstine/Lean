@@ -32,6 +32,8 @@ noncomputable def groverComplexity (N : ℕ) : ℕ :=
   Nat.sqrt N + 1
 
 
+/-- [Section: ## Section 2: Grover's Speedup for Proof Search
+Grover's algorithm searches N candidates in O(√N) queries.] -/
 theorem grover_quadratic_speedup (N : ℕ) (hN : 4 ≤ N) :
     groverComplexity N < N := by
   unfold groverComplexity;
@@ -52,6 +54,9 @@ def isUnitary {n : ℕ} (U : (Fin n → ℂ) → (Fin n → ℂ) × (Fin n → �
     ∑ i, starRingEnd ℂ (ψ i) * φ i
 
 
+/-- [Section: ## Section 3: No-Cloning Theorem
+The no-cloning theorem: there is no unitary that maps |ψ⟩|0⟩ → |ψ⟩|ψ⟩
+for all |ψ⟩. This is a fundamental limit that also enables quantum advantage.] -/
 theorem no_cloning {n : ℕ} (hn : 1 < n) :
     ¬∃ U : (Fin n → ℂ) → (Fin n → ℂ) × (Fin n → ℂ),
       isUnitary U ∧ isCloningMap U := by
@@ -65,6 +70,11 @@ def hasAlgebraicStructure (N : ℕ) (group_size : ℕ) : Prop :=
   group_size ∣ N ∧ 0 < group_size
 
 
+/-- [Section: ## Section 4: Quantum Advantage Structure
+The quantum advantage for proof search comes from:
+1. Amplitude amplification (Grover)
+2. Interference between proof strategies
+3. Entanglement-assisted search] -/
 theorem structured_quantum_advantage (N p : ℕ) (hN : 0 < N) (hp : 0 < p)
     (h_struct : hasAlgebraicStructure N p) :
     p ≤ N := by
@@ -77,11 +87,18 @@ theorem quantum_lower_bound (N : ℕ) (hN : 0 < N) :
   exact Nat.sqrt_le_self _
 
 
+/-- [Section: ## Section 5: Limits of Quantum Speedup (BBBV)
+The BBBV theorem shows Grover is optimal for unstructured search.
+Quantum computers cannot do better than √N for black-box proof search.] -/
 theorem classical_quantum_gap (N : ℕ) (hN : 4 ≤ N) :
     Nat.sqrt N < N := by
   nlinarith [ Nat.sqrt_le N ]
 
 
+/-- [Section: ## Section 6: Superposition of Proof Strategies
+**Key Hypothesis**: The real power of quantum proof search isn't just
+Grover speedup — it's the ability to maintain coherent superpositions
+of proof strategies that can interfere constructively.] -/
 theorem more_solutions_easier {n : ℕ} (O : QuantumOracle n)
     (k : ℕ) (hk : k = (Finset.univ.filter (fun i => O.isValid i = true)).card)
     (hk_pos : 0 < k) :

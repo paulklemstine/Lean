@@ -9,6 +9,9 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Sphere Chord vs. Arc Length
+The straight-line (chord) distance through the interior of a sphere
+is always ≤ the arc length on the surface — the "hyperspace shortcut."] -/
 theorem chord_distance_le_two {n : ℕ} (x y : EuclideanSpace ℝ (Fin n))
     (hx : ‖x‖ = 1) (hy : ‖y‖ = 1) : dist x y ≤ 2 := by
   linarith [ dist_le_norm_add_norm x y ]

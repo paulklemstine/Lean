@@ -21,6 +21,9 @@ theorem null_gaussian_product (a₁ b₁ c₁ a₂ b₂ c₂ : ℝ)
   unfold minkQ at *; nlinarith;
 
 
+/-- [Section: ## Experiment 2: Conjugate Photons (H4)
+**Hypothesis**: Negating one leg preserves the Pythagorean property.
+This is the "anti-photon" — the complex conjugate of the Gaussian integer.] -/
 theorem conjugate_photon (a b c : ℤ) (h : IsPythTriple a b c) :
     IsPythTriple a (-b) c := by
   unfold IsPythTriple at *; linarith [ pow_two_nonneg b ] ;
@@ -43,6 +46,8 @@ def gaussProd (t₁ t₂ : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
    t₁.2.2 * t₂.2.2)
 
 
+/-- [Section: ## Experiment 3: The Gaussian Product is Associative and Commutative
+The photon multiplication inherits associativity and commutativity from ℤ[i].] -/
 theorem gaussProd_comm (t₁ t₂ : ℤ × ℤ × ℤ) :
     gaussProd t₁ t₂ = gaussProd t₂ t₁ := by
   unfold gaussProd; ring;
@@ -63,23 +68,37 @@ theorem identity_is_triple : IsPythTriple 1 0 1 := by
   exact?
 
 
+/-- [Section: ## Experiment 5: Every Photon Squared is a Photon
+Squaring a Gaussian integer: (a + bi)² = (a² - b²) + 2abi.
+So if (a,b,c) is a triple, then (a²-b², 2ab, c²) is a triple.] -/
 theorem photon_squared (a b c : ℤ) (h : IsPythTriple a b c) :
     IsPythTriple (a ^ 2 - b ^ 2) (2 * a * b) (c ^ 2) := by
   unfold IsPythTriple at *; nlinarith;
 
 
+/-- [Section: ## Experiment 6: Minkowski Reverse Cauchy–Schwarz (H7)
+For timelike vectors, the "reverse Cauchy–Schwarz" inequality holds.
+For null vectors, it degenerates.] -/
 theorem null_inner_vanishes_product (a₁ b₁ c₁ a₂ b₂ c₂ : ℝ)
     (h₁ : IsNull a₁ b₁ c₁) (h₂ : IsNull a₂ b₂ c₂) :
     minkInner a₁ b₁ c₁ a₂ b₂ c₂ ^ 2 ≥ minkQ a₁ b₁ c₁ * minkQ a₂ b₂ c₂ := by
   unfold IsNull at *; unfold minkQ at *; unfold minkInner at *; nlinarith;
 
 
+/-- [Section: ## Experiment 7: Light Cone Intersections
+The intersection of two light cones centered at different spacetime points
+gives the set of events equidistant (in Minkowski sense) from both — a hyperboloid.] -/
 theorem light_cone_intersection (a b c dx dy dt : ℝ)
     (h₁ : IsNull a b c) (h₂ : IsNull (a - dx) (b - dy) (c - dt)) :
     2 * minkInner a b c dx dy dt = minkQ dx dy dt := by
   unfold IsNull minkInner minkQ at *; linarith;
 
 
+/-- [Section: ## Experiment 8: Photon Number Theory — Counting Representations
+The number of ways to write n as a sum of two squares is connected to
+the divisors of n. For the light cone: the number of integer points
+on the light cone with c = n equals 4 times the number of representations
+of n² as a sum of two squares.] -/
 theorem photon_345_squared :
     gaussProd (3, 4, 5) (3, 4, 5) = (-7, 24, 25) := by
   decide +kernel
@@ -100,6 +119,9 @@ theorem photon_product_is_triple :
   exact show ( -33 ) ^ 2 + 56 ^ 2 = 65 ^ 2 by norm_num;
 
 
+/-- [Section: ## Experiment 9: The Photon Energy Spectrum
+For primitive Pythagorean triples, the hypotenuse c must be of a specific form:
+c must be expressible as a product of primes ≡ 1 (mod 4).] -/
 theorem primitive_triple_odd_hypotenuse (a b c : ℤ)
     (h : IsPythTriple a b c) (ha : a % 2 = 1) (hb : b % 2 = 0) :
     c % 2 = 1 := by
@@ -111,6 +133,10 @@ theorem identity_preserves_minkQ (a b c : ℝ) :
     minkQ a b c = minkQ a b c := rfl
 
 
+/-- [Section: ## Experiment 10: Lorentz Group Structure
+The set of integer matrices preserving the Minkowski form on ℤ³
+is the discrete Lorentz group O(2,1;ℤ). The Berggren matrices
+generate a subgroup of index related to the structure of this group.] -/
 theorem comp_preserves_minkQ
     (f g : ℝ → ℝ → ℝ → ℝ × ℝ × ℝ)
     (hf : ∀ a b c, minkQ (f a b c).1 (f a b c).2.1 (f a b c).2.2 = minkQ a b c)
@@ -122,6 +148,9 @@ theorem comp_preserves_minkQ
   aesop
 
 
+/-- [Section: ## Experiment 11: Null Tetrad Construction
+In (2+1)d, we can construct a null basis: two null vectors and one spacelike vector
+that form a basis. This is the null tetrad (triad in 2+1d).] -/
 theorem null_basis_vectors :
     IsNull 1 0 1 ∧ IsNull 1 0 (-1) := by
   exact ⟨ by unfold IsNull; unfold minkQ; norm_num, by unfold IsNull; unfold minkQ; norm_num ⟩
@@ -139,6 +168,10 @@ theorem spacelike_basis :
   unfold minkQ; norm_num;
 
 
+/-- [Section: ## Experiment 12: Photon Helicity from Cross Product
+In (2+1)d, the "angular momentum" of a photon (a,b,c) can be measured by the
+quantity L = a·b, which represents the coupling between the two spatial components.
+For a photon moving purely in x (b=0), L = 0. For a photon with equal components, L is maximal.] -/
 theorem photon_helicity_bound (a b c : ℝ) (h : IsNull a b c) (hc : c ≠ 0) :
     |a * b| / c ^ 2 ≤ 1 / 2 := by
   rw [ div_le_iff₀ ] <;> norm_num [ IsNull ] at *;

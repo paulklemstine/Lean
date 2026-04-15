@@ -7,6 +7,8 @@ Declarations: 7
 
 import Mathlib
 
+/-- [Section: # Direction 8: Category-Theoretic Idempotents — The Karoubi Envelope
+An idempotent morphism e ∘ e = e can be split: e = ι ∘ r with r ∘ ι = id.] -/
 theorem idempotent_comp_closed' {α : Type*} (e₁ e₂ : α → α)
     (h₁ : ∀ x, e₁ (e₁ x) = e₁ x) (h₂ : ∀ x, e₂ (e₂ x) = e₂ x)
     (hcomm : ∀ x, e₁ (e₂ x) = e₂ (e₁ x)) :

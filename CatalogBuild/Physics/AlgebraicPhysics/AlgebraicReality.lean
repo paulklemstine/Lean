@@ -164,6 +164,7 @@ theorem quaternion_norm_sq_one : quaternion_norm_sq 1 = 1 := by
 /-- Each division algebra dimension is a power of 2. -/
 theorem dim_R_power_of_two : 1 = 2 ^ 0 := by norm_num
 
+/-- [Section: ## Section 11: The Division Algebra Dimensions are Powers of Two] -/
 theorem dim_C_power_of_two : 2 = 2 ^ 1 := by norm_num
 
 theorem dim_H_power_of_two : 4 = 2 ^ 2 := by norm_num

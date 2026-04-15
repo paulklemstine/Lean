@@ -128,6 +128,7 @@ theorem grand_unification_theorem {X : Type*} (G : GrandUnification X) :
   · rintro ⟨x, rfl⟩; exact G.oracle x
 
 
+/-- [Section: ## Part VII: The Answer to Life, the Universe, and Everything] -/
 theorem the_answer_factorization : 42 = 2 * 3 * 7 := by norm_num
 
 theorem the_answer_catalan : Nat.choose 10 5 / 6 = 42 := by native_decide

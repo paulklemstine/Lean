@@ -7,6 +7,10 @@ Declarations: 5
 
 import Mathlib
 
+/-- [Section: ## Core Algebraic Identity
+The main identity: if a² + b² = c², then
+4c²(b² - a²)² = c⁶ - 4a²b²c²
+This is the "64× scaled" version of y² = x³ - n²x.] -/
 theorem congruent_map_identity (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     c ^ 2 * (b ^ 2 - a ^ 2) ^ 2 = c ^ 6 - 4 * a ^ 2 * b ^ 2 * c ^ 2 := by
       grind +ring
@@ -34,6 +38,7 @@ theorem two_torsion_points (n : ℤ) :
   constructor <;> ring
 
 
+/-- [Section: ## Point Infinite Order Criterion] -/
 theorem pyth_a_ne_b (a b c : ℕ) (ha : 0 < a) (_hb : 0 < b) (hc : 0 < c)
     (h : a ^ 2 + b ^ 2 = c ^ 2) (_hcop : Nat.Coprime a b) : a ≠ b := by
       -- If $a = b$, then $a^2 + b^2 = 2a^2 = c^2$, which implies $c = a\sqrt{2}$. However, $c$ must be an integer, so this is impossible.

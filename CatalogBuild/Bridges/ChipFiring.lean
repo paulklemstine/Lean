@@ -39,6 +39,7 @@ theorem lin_equiv_refl (grL : GraphLapl n) (D : GraphDivisor n) :
     GraphLinEquiv grL D D := ⟨0, by simp⟩
 
 
+/-- [Section: # Chip-Firing and Tropical Jacobians] -/
 theorem lin_equiv_symm (grL : GraphLapl n) (D₁ D₂ : GraphDivisor n) :
     GraphLinEquiv grL D₁ D₂ → GraphLinEquiv grL D₂ D₁ := by
   rintro ⟨ f, hf ⟩;

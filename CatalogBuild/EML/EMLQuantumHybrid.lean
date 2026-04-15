@@ -37,6 +37,7 @@ def classicalSearch (N : ℕ) : ℕ := N
 def groverEMLSearch (N : ℕ) : ℕ := Nat.sqrt N + 1
 
 
+/-- [Section: ## §2. Grover-EML Oracle Complexity] -/
 theorem grover_eml_speedup (N : ℕ) (hN : 4 ≤ N) :
     groverEMLSearch N ≤ classicalSearch N := by
   unfold groverEMLSearch classicalSearch;
@@ -89,6 +90,7 @@ def emlAnsatzParams (qubits layers : ℕ) : ℕ := 3 * qubits * layers
 def hwAnsatzParams (qubits layers : ℕ) : ℕ := qubits * qubits * layers
 
 
+/-- [Section: ## §4. Variational Quantum EML] -/
 theorem eml_ansatz_advantage (q l : ℕ) (hq : 4 ≤ q) (hl : 0 < l) :
     emlAnsatzParams q l < hwAnsatzParams q l := by
   unfold emlAnsatzParams hwAnsatzParams; nlinarith [ mul_pos ( by linarith : 0 < q ) hl ] ;

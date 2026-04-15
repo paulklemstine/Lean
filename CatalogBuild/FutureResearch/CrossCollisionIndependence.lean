@@ -7,6 +7,8 @@ Declarations: 11
 
 import Mathlib
 
+/-- [Section: # Cross-Collision Independence and Channel Theory (A3, E2, E12)
+Multi-channel factoring via cross-collision theory.] -/
 theorem cross_channels (k : ℕ) : k * k = k ^ 2 := by ring
 
 

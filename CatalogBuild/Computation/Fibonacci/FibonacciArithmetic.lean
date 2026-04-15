@@ -44,6 +44,7 @@ theorem mediant_between (a b c d : ℕ) (hb : b > 0) (hd : d > 0)
   constructor <;> nlinarith
 
 
+/-- [Section: ## §6: Stern-Brocot Mediant] -/
 theorem mediant_coprime (a b c d : ℕ)
     (hab : Nat.gcd a b = 1) (hcd : Nat.gcd c d = 1)
     (hdet : a * d + 1 = b * c ∨ b * c + 1 = a * d) :
@@ -66,6 +67,7 @@ theorem mediant_coprime (a b c d : ℕ)
     ring_nf at h; aesop;
 
 
+/-- [Section: ## §7: Fibonacci Sum and Coprimality] -/
 theorem fib_sum (n : ℕ) :
     (Finset.range n).sum Nat.fib = Nat.fib (n + 1) - 1 := by
   exact eq_tsub_of_add_eq <| by induction n <;> simp_all +decide [ Finset.sum_range_succ, Nat.fib_add_two ] ; linarith

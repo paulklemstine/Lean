@@ -42,6 +42,7 @@ theorem stereoNullAnti_in_future_cone (u v ω : ℝ) (hω : ω > 0) :
   ⟨stereoNull_isNull u v ω, stereoNullAnti_future u v ω hω⟩
 
 
+/-- [Section: ## Part II: Surjectivity of the Antipodal Chart] -/
 lemma stereoNullAnti_surj (k : Fin 4 → ℝ)
     (hnull : IsNull k) (_hfut : IsFutureDirected k)
     (hsum : k 0 - k 3 > 0) :
@@ -53,6 +54,7 @@ lemma stereoNullAnti_surj (k : Fin 4 → ℝ)
   grind +suggestions
 
 
+/-- [Section: ## Part III: Chart Coverage] -/
 lemma future_null_k0_minus_k3_nonneg (k : Fin 4 → ℝ) (hk : k ∈ FutureNullCone) :
     k 0 - k 3 ≥ 0 := by
   -- From the null condition, we know that $(k 0)^2 = (k 1)^2 + (k 2)^2 + (k 3)^2$.
@@ -66,6 +68,7 @@ theorem chart_coverage (k : Fin 4 → ℝ) (hk : k ∈ FutureNullCone) :
   exact Classical.or_iff_not_imp_left.2 fun h => by linarith [ hk.2, show ( k 0 : ℝ ) > 0 from hk.2 ] ;
 
 
+/-- [Section: ## Part IV: Complete Surjectivity] -/
 theorem complete_surjectivity (k : Fin 4 → ℝ) (hk : k ∈ FutureNullCone) :
     (∃ u v ω : ℝ, ω > 0 ∧ inverseStereoNull u v ω = k) ∨
     (∃ u v ω : ℝ, ω > 0 ∧ stereoNullAnti u v ω = k) := by
@@ -90,6 +93,7 @@ theorem full_encoding_theorem :
   ⟨complete_surjectivity, photonInfoCapacity_unbounded⟩
 
 
+/-- [Section: ## Part V: The Full Encoding Theorem] -/
 theorem chart_transition_inversion (k : Fin 4 → ℝ) (hnull : IsNull k)
     (h1 : k 0 + k 3 > 0) (h2 : k 0 - k 3 > 0) :
     let z₁ := k 1 / (k 0 + k 3)

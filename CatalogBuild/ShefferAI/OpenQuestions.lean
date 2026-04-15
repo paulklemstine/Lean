@@ -116,6 +116,7 @@ theorem softplus_no_fixed_point : ∀ x : ℝ, softplus x ≠ x :=
   fun x => ne_of_gt (softplus_gt_id x)
 
 
+/-- [Section: ## Q22 Partial: Ring Completion Escapes Lipschitz] -/
 theorem ring_completion_not_lipschitz :
     ∃ f g : ℝ → ℝ, f ∈ ShefferAlgebra ∧ g ∈ ShefferAlgebra ∧
       ¬∃ C : ℝ, C ≥ 0 ∧ ∀ x y : ℝ, |(f x * g x) - (f y * g y)| ≤ C * |x - y| := by
@@ -158,6 +159,7 @@ theorem softplus_left_inverse (x : ℝ) :
 def logit (p : ℝ) : ℝ := Real.log (p / (1 - p))
 
 
+/-- [Section: ## Logit Function] -/
 theorem logit_sigmoid_inverse (x : ℝ) :
     logit (logisticSigmoid x) = x := by
   unfold logit logisticSigmoid; ring_nf;

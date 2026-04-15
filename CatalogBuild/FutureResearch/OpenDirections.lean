@@ -92,6 +92,7 @@ theorem fib_addition (m n : ℕ) :
   Nat.fib_add m n
 
 
+/-- [Section: ## Direction 7: Pisano-Spectral Correlation] -/
 theorem p_sub_one_dvd_p_sq_sub_one (p : ℕ) (_hp : 1 ≤ p) :
     (p - 1) ∣ (p * p - 1) := by
   rw [show p * p = p ^ 2 from by ring]

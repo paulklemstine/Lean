@@ -142,6 +142,7 @@ theorem ec_minus_x_a5 : traceOfFrobeniusVal 8 5 = -2 := by
 /-- Ramanujan tau values. -/
 theorem ramanujan_tau_2 : (-24 : ℤ) = -24 := rfl
 
+/-- [Section: ## Verified Arithmetic Computations] -/
 theorem ramanujan_tau_3 : (252 : ℤ) = 252 := rfl
 
 theorem ramanujan_tau_5 : (4830 : ℤ) = 4830 := rfl

@@ -29,6 +29,7 @@ theorem retraction_range' {α : Type*} {S : Set α} (r : Retraction' α S) :
   · intro hx; exact ⟨x, r.fixes_S x hx⟩
 
 
+/-- [Section: # Direction 4: Topological Collapse — Retractions and Deformation Retracts] -/
 theorem idempotent_almost_identity' {n : ℕ} (f : Fin (n+1) → Fin (n+1))
     (hf : ∀ x, f (f x) = f x)
     (h_image : Finset.card (Finset.image f Finset.univ) = n)

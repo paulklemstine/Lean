@@ -67,6 +67,7 @@ lemma future_null_chart_dichotomy (k : Fin 4 → ℝ) (hk : k ∈ FutureNullCone
   contrapose! h_pos; linarith
 
 
+/-- [Section: ## Full Surjectivity: Every Future Null Vector is Covered] -/
 theorem full_surjectivity (k : Fin 4 → ℝ) (hk : k ∈ FutureNullCone) :
     (∃ u v ω : ℝ, ω > 0 ∧ inverseStereoNull u v ω = k) ∨
     (∃ w₁ w₂ ω : ℝ, ω > 0 ∧ inverseStereoNullAntipodal w₁ w₂ ω = k) := by
@@ -75,6 +76,7 @@ theorem full_surjectivity (k : Fin 4 → ℝ) (hk : k ∈ FutureNullCone) :
   · exact Or.inr <| by rcases inverseStereoNullAntipodal_surj k hk.1 ( by simpa using hk.2 ) h with ⟨ h₁, h₂ ⟩ ; exact ⟨ _, _, _, h₁, h₂ ⟩ ;
 
 
+/-- [Section: ## Chart Transition Function] -/
 theorem chart_transition_coords (u v ω : ℝ) (hω : ω > 0)
     (hr : u ^ 2 + v ^ 2 ≠ 0) :
     let r2 := u ^ 2 + v ^ 2

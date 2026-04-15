@@ -22,6 +22,7 @@ def state (N : ℤ) (k : ℕ) : IOFState where
   c := ((N - 2 * k) ^ 2 + 1) / 2
 
 
+/-- [Section: ## Attractor Basin Theorem] -/
 theorem same_factor_same_step (p q₁ q₂ : ℕ) (hp : Nat.Prime p) (hp2 : 2 < p)
     (hq₁ : Nat.Prime q₁) (hq₂ : Nat.Prime q₂)
     (hle₁ : p ≤ q₁) (hle₂ : p ≤ q₂) :
@@ -30,6 +31,7 @@ theorem same_factor_same_step (p q₁ q₂ : ℕ) (hp : Nat.Prime p) (hp2 : 2 < 
       unfold state; norm_num [ mul_comm p, Int.add_emod, Int.sub_emod, Int.mul_emod ] ;
 
 
+/-- [Section: ## Energy Landscape Topology] -/
 theorem energy_at_factor (p q : ℕ) (hp : 2 < p) (hq : 2 < q) (hp_odd : p % 2 = 1) :
     let N : ℤ := ↑(p * q)
     let k := (p - 1) / 2
@@ -43,6 +45,7 @@ The velocity decreases linearly, meaning the system decelerates. -/
 def velocity (N : ℤ) (k : ℕ) : ℤ := 4 * (N - 2 * k - 1)
 
 
+/-- [Section: ## Convergence Rate] -/
 theorem velocity_positive (N : ℕ) (k : ℕ) (hk : 2 * k + 1 < N) :
     0 < velocity (↑N) k := by
       exact mul_pos zero_lt_four ( by linarith )
@@ -54,6 +57,7 @@ theorem constant_deceleration (N : ℤ) (k : ℕ) :
       push_cast; ring;
 
 
+/-- [Section: ## Parallel Descent Theorem] -/
 theorem multi_stride_gcd (N p : ℕ) (s : ℕ) (hs : 0 < s)
     (hp : Nat.Prime p) (hdvd : p ∣ N) (hp2 : p ≠ 2)
     (k : ℕ) (hk : k = (p - 1) / 2)
@@ -62,6 +66,7 @@ theorem multi_stride_gcd (N p : ℕ) (s : ℕ) (hs : 0 < s)
       aesop
 
 
+/-- [Section: ## Information-Theoretic Bound] -/
 theorem at_least_one_step (N p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
     (hN : N = p * q) (hp2 : 2 < p) (hle : p ≤ q) :
     0 < (p - 1) / 2 := by

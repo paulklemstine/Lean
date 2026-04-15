@@ -18,6 +18,7 @@ theorem mul_conj (q : IntQuaternion) :
   unfold IntQuaternion.conj; ring;
 
 
+/-- [Section: ## Section 4: GCD Factor Extraction] -/
 theorem gcd_extraction_nontrivial (N : ℕ) (hN : 1 < N)
     (x y z : ℤ) (k : ℤ) (hk : 0 < k) (hk2 : k < N)
     (hsum : x^2 + y^2 + z^2 = k * N) :

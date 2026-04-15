@@ -50,6 +50,9 @@ theorem markovMut₃_involution (a b c : ℤ) :
 /-- Similarly for mutations in coordinates 1 and 2 -/
 def markovMut₁ (a b c : ℤ) : ℤ × ℤ × ℤ := (3 * b * c - a, b, c)
 
+/-- [Section: ## §2. Vieta Involution
+Given a Markov triple (a,b,c), replacing c by c' = 3ab - c gives another
+Markov triple. This is the "mutation" operation.] -/
 def markovMut₂ (a b c : ℤ) : ℤ × ℤ × ℤ := (a, 3 * a * c - b, c)
 
 
@@ -69,6 +72,15 @@ theorem pyth_quadratic_in_c (a b c : ℤ) :
   unfold IsPythTriple'; omega
 
 
+/-- [Section: ## §3. Structural Parallels
+Both the Pythagorean and Markov equations can be written as
+quadratic forms on ℤ³:
+Pythagorean: Q_P(v) = a² + b² - c² = 0
+Markov:      Q_M(v) = a² + b² + c² - 3abc = 0
+The 1-parameter family Q_t(v) = a² + b² + (1-2t)c² - 3t·abc interpolates:
+t=0: a² + b² + c² = 0 (no real solutions)
+t=1: a² + b² + c² = 3abc (Markov)
+(a² + b² = c² corresponds to the null cone)] -/
 theorem markov_quadratic_in_c (a b c : ℤ) :
     IsMarkov a b c ↔ c ^ 2 - 3 * a * b * c + (a ^ 2 + b ^ 2) = 0 := by
   unfold IsMarkov; omega
@@ -86,5 +98,13 @@ example : bergA' 5 12 13 ≠ (3, 4, 5) := by native_decide
 /-- Some larger Markov triples for verification -/
 theorem markov_5_13_194 : IsMarkov 5 13 194 := by unfold IsMarkov; ring
 
+/-- [Section: ## §5. Both Trees Generate All Solutions
+Both the Berggren and Markov trees are conjectured/proven to generate
+all primitive solutions:
+- Berggren: Every primitive Pythagorean triple appears exactly once (theorem, proven classically)
+- Markov: Every Markov triple appears exactly once (OPEN - the Markov uniqueness conjecture)
+The Markov uniqueness conjecture is one of the oldest open problems in
+number theory (1879). The Berggren completeness is proven but not yet
+fully formalized in Lean.] -/
 theorem markov_2_29_169 : IsMarkov 2 29 169 := by unfold IsMarkov; ring
 

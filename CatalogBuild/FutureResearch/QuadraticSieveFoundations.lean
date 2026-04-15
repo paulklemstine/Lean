@@ -2,11 +2,12 @@
 
 Auto-generated from theorem catalog database.
 Domain: FutureResearch
-Declarations: 8
+Declarations: 9
 -/
 
 import Mathlib
 
+/-- [Section: ### Difference of Squares Factoring] -/
 theorem fermat_difference_of_squares (N a b : ℕ) (hN : 1 < N)
     (hab : a ^ 2 = N + b ^ 2) (hb : 0 < b) (haub : a + b < N) :
     (a - b) ∣ N ∧ 1 < a - b ∧ a - b < N := by
@@ -17,6 +18,23 @@ theorem fermat_difference_of_squares (N a b : ℕ) (hN : 1 < N)
   · omega
 
 
+/-- [Section: ### Congruence of Squares] -/
+theorem congruence_of_squares_factor (N x y : ℤ) (hN : 1 < N)
+    (hcong : (N : ℤ) ∣ (x ^ 2 - y ^ 2))
+    (hne_pos : ¬ (N : ℤ) ∣ (x - y))
+    (hne_neg : ¬ (N : ℤ) ∣ (x + y)) :
+    1 < Int.gcd (x - y) N ∧ Int.gcd (x - y) N < N.toNat := by
+  have h_gcd_pos : 1 < Int.gcd (x - y) N := by
+    -- Since $N$ divides $(x - y)(x + y)$ and $N$ does not divide $x - y$ or $x + y$, it follows that $\gcd(x - y, N) > 1$.
+    have h_gcd_pos : ¬(Int.gcd (x - y) N = 1) := by
+      contrapose! hne_neg;
+      exact Int.dvd_of_dvd_mul_right_of_gcd_one ( by convert hcong using 1; ring ) ( Int.gcd_comm _ _ ▸ hne_neg );
+    exact lt_of_le_of_ne ( Int.gcd_pos_of_ne_zero_right _ ( by linarith ) ) ( Ne.symm h_gcd_pos );
+  have h_gcd_lt_N : Int.gcd (x - y) N ≤ Int.natAbs N := by
+    exact Nat.le_of_dvd ( Int.natAbs_pos.mpr ( by linarith ) ) ( Nat.gcd_dvd_right _ _ );
+  cases abs_cases N <;> cases lt_or_gt_of_ne ( show N ≠ 0 by linarith ) <;> cases lt_or_gt_of_ne ( show Int.gcd ( x - y ) N ≠ N.natAbs from fun con => hne_pos <| Int.natAbs_dvd_natAbs.mp <| con ▸ Nat.gcd_dvd_left _ _ ) <;> omega;
+
+
 /-- A smooth relation: if Q(x) = (x + ⌊√N⌋)² - N is B-smooth,
 then we have a useful congruence. -/
 theorem smooth_relation_congruence (N x s : ℤ) (hN : 0 < N)
@@ -25,6 +43,7 @@ theorem smooth_relation_congruence (N x s : ℤ) (hN : 0 < N)
   ring
 
 
+/-- [Section: ### Smooth Number Relations] -/
 theorem smooth_product_square_congruence (N s : ℤ) (xs : List ℤ) (hN : 0 < N) :
     (N : ℤ) ∣ ((xs.map (fun x => (x + s) ^ 2)).prod -
                 (xs.map (fun x => (x + s) ^ 2 - N)).prod) := by
@@ -37,6 +56,7 @@ def IsFactorBase (N : ℕ) (B : Finset ℕ) : Prop :=
   ∀ p ∈ B, Nat.Prime p ∧ ∃ x : ZMod p, x ^ 2 = (N : ZMod p)
 
 
+/-- [Section: ### Factor Base Theory] -/
 theorem factor_base_15 : IsFactorBase 15 {2, 7} := by
   intro p hp; fin_cases hp <;> simp +decide ;
 

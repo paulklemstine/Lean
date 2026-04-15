@@ -7,6 +7,21 @@ Declarations: 5
 
 import Mathlib
 
+/-- [Section: # The 60-Divisibility Theorem for Primitive Pythagorean Triples
+## Overview
+We prove that for every Pythagorean triple (a, b, c) with a² + b² = c²,
+the product abc is always divisible by 60. This strengthens the 12|abc
+result from `New__PythagoreanDensity.lean`.
+The key insight: in any Pythagorean triple, one of a, b, c is divisible by 5.
+Combined with 3|ab and 4|ab (proved earlier), this gives 60|abc.
+## The Divisibility-by-5 Theorem
+Squares mod 5 are in {0, 1, 4}. If 5 ∤ a and 5 ∤ b, then a² mod 5 ∈ {1,4}
+and b² mod 5 ∈ {1,4}. The possible values of a²+b² mod 5 are:
+1+1=2, 1+4=0, 4+1=0, 4+4=3
+So a²+b² mod 5 ∈ {0, 2, 3}.
+For c² = a²+b², we need c² mod 5 ∈ {0, 1, 4}.
+The intersection is {0}, meaning 5|c. So if 5∤a and 5∤b, then 5|c.
+In all cases, 5 | abc.] -/
 theorem sq_mod5 (n : ℤ) : n ^ 2 % 5 = 0 ∨ n ^ 2 % 5 = 1 ∨ n ^ 2 % 5 = 4 := by
   rw [ sq, Int.mul_emod ] ; have := Int.emod_nonneg n ( by decide : ( 5 : ℤ ) ≠ 0 ) ; have := Int.emod_lt_of_pos n ( by decide : ( 5 : ℤ ) > 0 ) ; interval_cases n % 5 <;> trivial;
 

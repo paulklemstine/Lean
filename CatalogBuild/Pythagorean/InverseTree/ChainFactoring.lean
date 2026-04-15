@@ -86,6 +86,7 @@ def trivialPPT (N : ℤ) : ℤ × ℤ × ℤ :=
   (N, (N ^ 2 - 1) / 2, (N ^ 2 + 1) / 2)
 
 
+/-- [Section: ## Section 3: Factoring Connection] -/
 theorem trivial_ppt_is_pyth (N : ℤ) (hodd : N % 2 = 1) (hN : 1 < N) :
     let t := trivialPPT N
     t.1 ^ 2 + t.2.1 ^ 2 = t.2.2 ^ 2 := by
@@ -127,6 +128,7 @@ theorem invB1_lorentz_form (a b c : ℤ) :
   simp only [invB1]; ring
 
 
+/-- [Section: ## Section 6: Lorentz Form Preservation] -/
 theorem invB2_lorentz_form (a b c : ℤ) :
     let t := invB2 a b c
     t.1 ^ 2 + t.2.1 ^ 2 - t.2.2 ^ 2 = a ^ 2 + b ^ 2 - c ^ 2 := by
@@ -164,6 +166,7 @@ def chainGcdA (t : ℤ × ℤ × ℤ) (N : ℤ) (d : ℕ) : ℤ :=
   Int.gcd (chainF t d).1 N
 
 
+/-- [Section: ## Section 7: The Chain as a Factoring Oracle] -/
 def chainGcdB (t : ℤ × ℤ × ℤ) (N : ℤ) (d : ℕ) : ℤ :=
   Int.gcd (chainF t d).2.1 N
 

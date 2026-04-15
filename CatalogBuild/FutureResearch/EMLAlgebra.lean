@@ -110,6 +110,7 @@ theorem EMLExpr.leafCount_pos (e : EMLExpr) : 0 < e.leafCount := by
   have := e.leafCount_eq_nodeCount_succ; omega
 
 
+/-- [Section: ### Tree Combinatorics] -/
 theorem EMLExpr.leafCount_le_pow_depth (e : EMLExpr) :
     e.leafCount ≤ 2 ^ e.depth := by
   induction' e with l r ihl ihr;
@@ -125,6 +126,7 @@ theorem EMLExpr.leafCount_le_pow_depth (e : EMLExpr) :
     · linarith [ pow_le_pow_right₀ ( by norm_num : ( 1 : ℕ ) ≤ 2 ) ( by linarith : r.depth ≤ ihl.depth ) ]
 
 
+/-- [Section: ## 7. Master Formula Parameters] -/
 theorem masterParams_1 : masterParams 1 = 4 := by native_decide
 
 theorem masterParams_2 : masterParams 2 = 14 := by native_decide
@@ -227,6 +229,7 @@ theorem labeled_trees_2_2 : labeledEMLTrees 2 2 = 16 := by native_decide
 theorem labeled_trees_3_2 : labeledEMLTrees 3 2 = 80 := by native_decide
 
 
+/-- [Section: ## 12. Real-Only Periodicity Obstruction] -/
 theorem exp_exp_not_periodic :
     ¬ ∃ (p : ℝ), 0 < p ∧ ∀ x : ℝ, Real.exp (Real.exp x) = Real.exp (Real.exp (x + p)) := by
   norm_num +zetaDelta at *

@@ -156,6 +156,17 @@ theorem pyth_params_leg_diff (p : ℕ) (hp_odd : p % 2 = 1) (hp_ge : p ≥ 3) :
     (p + 1) / 2 - (p - 1) / 2 = 1 := by omega
 
 
+/-- [Section: # Geometric Navigation in the Berggren Tree
+## Question 2: Is the geometric shortcut possible?
+We formalize the zone descent algorithm, prove it terminates in O(log(m+n)) steps,
+and establish the connection to the Euclidean algorithm. We then formalize the
+hardness barrier: finding useful tree nodes is as hard as factoring.
+## Main Results
+1. `zoneA_energy_decreases` etc.: Zone descent terminates (energy decreases)
+2. `zone_sum_decreases_*`: Sum m+n decreases at each step
+3. `theta_group_identity`: M₃⁻¹ M₁ = S (the fundamental theta group relation)
+4. `factoring_from_pyth_params`: Finding useful nodes is ≥ as hard as factoring
+5. `S_pow_four`: S has order 4 in SL(2,ℤ)] -/
 theorem pyth_params_leg_sum (p : ℕ) (hp_odd : p % 2 = 1) (hp_ge : p ≥ 3) :
     (p + 1) / 2 + (p - 1) / 2 = p := by omega
 

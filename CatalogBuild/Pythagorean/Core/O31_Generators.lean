@@ -33,6 +33,7 @@ def is_pythagorean_quad (v : Fin 4 → ℤ) : Prop :=
   v 0 ^ 2 + v 1 ^ 2 + v 2 ^ 2 = v 3 ^ 2
 
 
+/-- [Section: ## Section 1: The Lorentz Form] -/
 theorem pythagorean_iff_null (v : Fin 4 → ℤ) :
     is_pythagorean_quad v ↔ lorentz_norm v = 0 := by
   unfold is_pythagorean_quad lorentz_norm; omega
@@ -111,6 +112,7 @@ def P12 : Matrix (Fin 4) (Fin 4) ℤ :=
      0, 0, 0, 1]
 
 
+/-- [Section: ## Section 3: Permutation Generators] -/
 theorem P01_involution : P01 * P01 = 1 := by unfold P01; native_decide
 
 theorem P02_involution : P02 * P02 = 1 := by unfold P02; native_decide
@@ -138,6 +140,7 @@ def S0 : Matrix (Fin 4) (Fin 4) ℤ :=
       0, 0, 0, 1]
 
 
+/-- [Section: ## Section 4: Sign Change Generators] -/
 theorem S0_involution : S0 * S0 = 1 := by unfold S0; native_decide
 
 
@@ -208,6 +211,7 @@ theorem generators_are_involutions :
 def R_swap01 : Matrix (Fin 4) (Fin 4) ℤ := P01 * R₁ * P01
 
 
+/-- [Section: ## Section 8: Composition Examples] -/
 theorem R_swap01_preserves_metric :
     R_swap01.transpose * lorentz_metric * R_swap01 = lorentz_metric := by
   unfold R_swap01; native_decide

@@ -31,6 +31,7 @@ noncomputable def SimplePool.buyA (p : SimplePool) (dy : ℝ) : ℝ :=
   p.x * dy / (p.y + dy)
 
 
+/-- [Section: ## Two-Pool Arbitrage Model] -/
 theorem arbitrage_profit_exists
     (pool1 pool2 : SimplePool)
     (h_price_diverge : pool1.price < pool2.price) :
@@ -69,6 +70,7 @@ noncomputable def cyclicProfitRate (p_ab p_bc p_ca : SimplePool) : ℝ :=
   p_ab.price * p_bc.price * p_ca.price
 
 
+/-- [Section: ## Cyclic Arbitrage] -/
 theorem cyclic_arbitrage_exists
     (p_ab p_bc p_ca : SimplePool)
     (h_cycle : 1 < cyclicProfitRate p_ab p_bc p_ca) :
@@ -100,6 +102,7 @@ noncomputable def optimalTradeSize (p1 p2 : SimplePool) : ℝ :=
   Real.sqrt (p1.x * p2.x * p1.y * p2.y) / (p1.y + p2.y) - p1.x * p1.y / (p1.y + p2.y)
 
 
+/-- [Section: ## Optimal Trade Size] -/
 theorem optimal_size_pos (p1 p2 : SimplePool)
     (h : p1.price < p2.price)
     (hliq : p1.x * p1.y < p2.x * p2.y) :

@@ -44,6 +44,10 @@ def projNormalize {n : ℕ} (hn : 0 < n) (x : Fin n → ℝ) : Fin n → ℝ :=
   fun i => x i - Finset.univ.sup' (Finset.univ_nonempty_iff.mpr ⟨⟨0, hn⟩⟩) x
 
 
+/-- [Section: ## Part III: Projective Normalization (Agent Delta)
+In the tropical projective space TP^{n-1}, vectors are equivalent up to
+adding a constant: x ~ x + c·1. Projective normalization x ↦ x - max(x)
+selects the canonical representative with max coordinate = 0.] -/
 theorem projNormalize_max_eq_zero {n : ℕ} (hn : 0 < n) (x : Fin n → ℝ) :
     Finset.univ.sup' (Finset.univ_nonempty_iff.mpr ⟨⟨0, hn⟩⟩) (projNormalize hn x) = 0 := by
       unfold projNormalize;
@@ -79,6 +83,10 @@ theorem tropical_residual_fixed_point (x : ℝ) (h : x ≥ y) :
 theorem tropical_residual_self (x : ℝ) : max x x = x := max_self x
 
 
+/-- [Section: ## Part V: Tropical Attention Properties (Agent Epsilon)
+The tropical attention mechanism computes:
+score_{ij} = max_k (Q_{ik} + K_{jk})   — "how much does query i attend to key j?"
+out_i = max_j (score_{ij} + V_j)        — "aggregate values by tropical weighting"] -/
 theorem tropical_attention_shift_equivariant
     (Q K : Fin s → Fin d → ℝ) (c : ℝ) (i j : Fin s) (hs : 0 < d) :
     Finset.univ.sup' (Finset.univ_nonempty_iff.mpr ⟨⟨0, hs⟩⟩)

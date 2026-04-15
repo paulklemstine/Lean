@@ -103,6 +103,7 @@ def dnfCircuit2 (v00 v01 v10 v11 : Bool) : NandCircuit 2 :=
     | _ => constTrue2
 
 
+/-- [Section: ## Part II: All 2-Input Boolean Functions from NAND] -/
 theorem dnfCircuit2_correct (v00 v01 v10 v11 : Bool) (assign : Fin 2 → Bool) :
     (dnfCircuit2 v00 v01 v10 v11).eval assign =
     match assign 0, assign 1 with
@@ -178,6 +179,7 @@ theorem MachZehnder.identity_compose (mz : MachZehnder) (i₁ i₂ : ℝ) :
   simp [MachZehnder.compose, MachZehnder.identity]
 
 
+/-- [Section: ## Part IV: Interferometer Mesh Properties] -/
 theorem MachZehnder.swap_swap (i₁ i₂ : ℝ) :
     (MachZehnder.mk Real.pi).compose (MachZehnder.mk Real.pi) i₁ i₂ = (i₁, i₂) := by
   unfold MachZehnder.compose; norm_num [ MachZehnder.swap_inputs ] ;

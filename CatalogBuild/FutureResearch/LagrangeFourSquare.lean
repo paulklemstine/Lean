@@ -34,6 +34,7 @@ theorem sigma1_pos (n : ℕ) (hn : 0 < n) : 0 < sigma1 n := by
   · exact Nat.nonempty_divisors.mpr (by omega)
 
 
+/-- [Section: ## §5. Norm Multiplicativity] -/
 theorem complex_norm_mult (a₁ b₁ a₂ b₂ : ℤ) :
     (a₁^2 + b₁^2) * (a₂^2 + b₂^2) =
     (a₁*a₂ - b₁*b₂)^2 + (a₁*b₂ + b₁*a₂)^2 := by ring
@@ -47,6 +48,7 @@ theorem quaternion_norm_mult (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ) :
     (a₁*d₂ + b₁*c₂ - c₁*b₂ + d₁*a₂)^2 := by ring
 
 
+/-- [Section: ## §6. Channel Hierarchy] -/
 theorem hurwitz_1248 : ({1, 2, 4, 8} : Finset ℕ).card = 4 := by decide
 
 
@@ -67,6 +69,7 @@ theorem lattice_short_vector_gcd_eq (x N m : ℤ) :
   rw [Int.neg_gcd]
 
 
+/-- [Section: ## §7. Lattice Reduction] -/
 theorem lattice_product_factor (v₁ v₂ N : ℕ)
     (hN : 1 < N) (hv1 : 0 < v₁) (hv2 : 0 < v₂)
     (hv1N : v₁ < N) (hv2N : v₂ < N) (hdvd : N ∣ v₁ * v₂) :
@@ -76,6 +79,7 @@ theorem lattice_product_factor (v₁ v₂ N : ℕ)
   exact absurd ( Nat.dvd_gcd ( show N ∣ v₂ from ( Nat.Coprime.symm ‹v₁.gcd N = 1› ) |> fun h => h.dvd_of_dvd_mul_left hdvd ) ( dvd_refl N ) ) ( by aesop )
 
 
+/-- [Section: ## §8. Berggren Tree] -/
 def berggrenA (a b c : ℤ) : ℤ × ℤ × ℤ :=
   (a - 2*b + 2*c, 2*a - b + 2*c, 2*a - 2*b + 3*c)
 
@@ -111,6 +115,7 @@ theorem quantum_fourth_root (N : ℕ) :
   Nat.sqrt_le_sqrt (Nat.sqrt_le_self N)
 
 
+/-- [Section: ## §11. Information Theory] -/
 theorem info_theoretic_lower_bound (total_bits channels : ℕ)
     (hc : 0 < channels) :
     total_bits / channels ≤ total_bits :=

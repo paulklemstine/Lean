@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Section 1: Tropical Quadratic and Symplectic Forms] -/
 def tropicalQuadraticForm (n : ℕ) (x : Fin n → ℝ) : ℝ :=
   ∑ i : Fin n, x i ^ 2
 
@@ -40,6 +41,7 @@ theorem quadraticForm_eq_zero_iff (n : ℕ) (x : Fin n → ℝ) :
   norm_num [ funext_iff, Finset.sum_eq_zero_iff_of_nonneg, sq_nonneg ]
 
 
+/-- [Section: ## Section 2: Tropical Theta Kernel] -/
 def tropicalThetaKernel (m n : ℕ) (a : Fin m → ℝ) (b : Fin n → ℝ) : ℝ :=
   ∑ i : Fin m, ∑ j : Fin n, a i * b j
 
@@ -66,6 +68,7 @@ theorem thetaKernel_comm (m n : ℕ) (a : Fin m → ℝ) (b : Fin n → ℝ) :
   exact Finset.sum_comm.trans ( Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => mul_comm _ _ )
 
 
+/-- [Section: ## Section 3: Tropical Theta Lift] -/
 def tropicalThetaLift (m n : ℕ) (f : (Fin m → ℝ) → ℝ)
     (b : Fin n → ℝ) (a : Fin m → ℝ) : ℝ :=
   f a + tropicalThetaKernel m n a b
@@ -85,6 +88,7 @@ theorem tropicalLValue_zero (n : ℕ) (p : LParam n) :
   simp [tropicalLValue]
 
 
+/-- [Section: ## Section 4: Tropical Howe Duality] -/
 structure TropicalDualPair where
   m : ℕ
   n : ℕ
@@ -107,6 +111,7 @@ theorem dualPair_size_swap (P : TropicalDualPair) :
   simp [TropicalDualPair.swap, TropicalDualPair.size, Nat.mul_comm]
 
 
+/-- [Section: ## Section 5: Tropical Weil Representation] -/
 def tropicalWeilAction (n : ℕ) (x : Fin n → ℝ) : Fin n → ℝ :=
   fun i => -x i
 
@@ -122,6 +127,7 @@ theorem weilAction_preserves_quadratic (n : ℕ) (x : Fin n → ℝ) :
   congr 1; ext i; ring
 
 
+/-- [Section: ## Section 6: See-Saw Duality] -/
 structure SeeSaw where
   pair1 : TropicalDualPair
   pair2 : TropicalDualPair

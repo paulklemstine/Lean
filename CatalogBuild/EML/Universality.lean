@@ -44,6 +44,7 @@ def edlU (x y : ℂ) : ℂ := Complex.exp x / Complex.log y
 def antiEmlU (x y : ℂ) : ℂ := Complex.log x - Complex.exp y
 
 
+/-- [Section: ## The anti-EML operator] -/
 theorem antiEml_eq_neg_eml_swap (x y : ℂ) :
     antiEmlU x y = -emlU y x := by
   unfold antiEmlU emlU ; ring

@@ -19,6 +19,15 @@ structure DivisorPair (n : ℕ) where
   same_parity : d % 2 = e % 2
 
 
+/-- [Section: # Pythagorean Triple Factoring
+## Main Results
+We formalize the connection between Pythagorean triples and integer factoring.
+Given an odd number `n > 1`, a Pythagorean triple `(n, b, c)` with `n² + b² = c²`
+corresponds to a factorization `(c - b)(c + b) = n²` where `d = c - b` and `e = c + b`.
+### Key Theorems:
+1. **Bijection**: Same-parity divisor pairs of `n²` biject with Pythagorean triples with leg `n`
+2. **Factoring**: Non-trivial divisor pairs reveal factors of `n` via GCD
+3. **Primality**: An odd number `n` is prime iff it has exactly one such triple] -/
 noncomputable def divisorPairToTriple {n : ℕ} (hn : 0 < n) (dp : DivisorPair n) :
     PythTriple n where
   b := (dp.e - dp.d) / 2

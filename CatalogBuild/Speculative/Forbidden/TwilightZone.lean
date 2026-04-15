@@ -14,11 +14,13 @@ theorem cantor_twilight : ¬ ∃ f : ℕ → ℝ, Surjective f := by
   exact absurd this ( by rw [ Cardinal.mk_real ] ; exact not_le_of_gt ( Cardinal.aleph0_lt_continuum ) )
 
 
+/-- [Section: ## §2: The Twilight Zone of Choice] -/
 theorem choice_gives_sections {α β : Type*} (f : α → β) (hf : Surjective f) :
     ∃ g : β → α, f ∘ g = id := by
   exact ⟨ fun b => Classical.choose ( hf b ), funext fun b => Classical.choose_spec ( hf b ) ⟩
 
 
+/-- [Section: ## §3: The Twilight Zone of Self-Reference] -/
 theorem no_liar : ¬ ∃ P : Prop, P ↔ ¬P := by
   tauto
 
@@ -28,6 +30,7 @@ theorem irrationals_dense (a b : ℚ) (hab : a < b) :
   exact exists_irrational_btwn ( mod_cast hab )
 
 
+/-- [Section: ## §5: The Twilight Zone of Computability] -/
 theorem almost_all_functions_uncomputable :
     ¬ ∃ f : ℕ → (ℕ → ℕ), Surjective f := by
   by_contra h_contra
@@ -36,12 +39,14 @@ theorem almost_all_functions_uncomputable :
   exact absurd ( h_surjective ( fun n => f n n + 1 ) ) ( by rintro ⟨ n, hn ⟩ ; have := congr_fun hn n; linarith )
 
 
+/-- [Section: ## §6: The Cantor-Bernstein Twilight] -/
 theorem cantor_bernstein {α β : Type*} (f : α → β) (g : β → α)
     (hf : Injective f) (hg : Injective g) :
     ∃ h : α → β, Bijective h := by
   exact?
 
 
+/-- [Section: ## §7: The Infinite Monkey Theorem (Finite Version)] -/
 theorem infinite_sequence_transition (f : ℕ → Bool)
     (h0 : ∀ k, ∃ m, m > k ∧ f m = true)
     (h1 : ∀ k, ∃ m, m > k ∧ f m = false) :

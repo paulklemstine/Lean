@@ -9,11 +9,13 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Core Definitions] -/
 def spb_adv (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
 
 def spbH_adv (x y : ℝ) : ℝ := (x + y) / (1 + x * y)
 
 
+/-- [Section: ## Sub-luminal Closure with Explicit Bound] -/
 theorem spbH_denom_pos (v₁ v₂ : ℝ) (h1 : |v₁| < 1) (h2 : |v₂| < 1) :
     1 + v₁ * v₂ > 0 := by
   nlinarith [ abs_lt.mp h1, abs_lt.mp h2 ]
@@ -43,6 +45,7 @@ theorem spb_as_mobius (a x : ℝ) :
   simp [spb_adv]; ring
 
 
+/-- [Section: ## SPB and Arctangent] -/
 theorem arctan_spb (x y : ℝ) (h : 1 - x * y > 0) :
     arctan (spb_adv x y) = arctan x + arctan y := by
   grind +suggestions
@@ -66,6 +69,7 @@ theorem spbH_self_eq (x : ℝ) : spbH_adv x x = 2 * x / (1 + x * x) := by
   unfold spbH_adv; ring
 
 
+/-- [Section: ## Algebraic Identities] -/
 theorem spb_product_identity (x y : ℝ) (h1 : 1 - x * y ≠ 0) (h2 : 1 + x * y ≠ 0) :
     spb_adv x y * spb_adv x (-y) = (x ^ 2 - y ^ 2) / (1 - x ^ 2 * y ^ 2) := by
   unfold spb_adv; rw [ div_mul_div_comm ] ; ring;

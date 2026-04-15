@@ -127,6 +127,7 @@ theorem exists_fermat_factorization (N : ℕ) (p q : ℕ)
     by positivity, by linarith, Nat.sub_eq_of_eq_add <| by ring⟩
 
 
+/-- [Section: ## Correctness theorems] -/
 theorem berggren_depth_covers (d : ℕ) :
     ∃ p : TreePath, p.depth = d ∧
     (berggrenC p : ℤ) ≥ (3 ^ d * 5 : ℤ) := by

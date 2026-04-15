@@ -157,6 +157,7 @@ def rot12 : Matrix (Fin 4) (Fin 4) ℤ :=
   !![0, (-1), 0, 0; 1, 0, 0, 0; 0, 0, 1, 0; 0, 0, 0, 1]
 
 
+/-- [Section: ## Section 10: SO(3,1;ℤ) — The Full Lorentz Group] -/
 theorem rot12_lorentz : isLorentz4 rot12 := by
   unfold isLorentz4 rot12 Q_lor4
   native_decide

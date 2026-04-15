@@ -63,6 +63,7 @@ theorem divisor_bound (a b n : ℤ)
   exact Int.natAbs_le_of_dvd_ne_zero hdvd (ne_of_gt hdet_pos)
 
 
+/-- [Section: ## Section 2: Finiteness of Integer-Mapping Set] -/
 theorem den_injective (a b : ℤ) (hab : a ≠ b) (n m : ℤ) :
     twoPole_den a b n = twoPole_den a b m → n = m := by
   exact fun h => mul_left_cancel₀ ( sub_ne_zero_of_ne hab ) <| by unfold twoPole_den at h; linarith;
@@ -84,6 +85,7 @@ def mobiusMatrix (a b : ℤ) : Matrix (Fin 2) (Fin 2) ℤ :=
   !![a * b + 1, b - a; a - b, a * b + 1]
 
 
+/-- [Section: ## Section 3: Matrix Representation] -/
 theorem mobius_matrix_det (a b : ℤ) :
     (mobiusMatrix a b).det = twoPole_det a b := by
   unfold mobiusMatrix twoPole_det; ring;
@@ -100,6 +102,7 @@ theorem mobius_elliptic (a b : ℤ) (hab : a ≠ b) :
   nlinarith [ mul_self_pos.2 ( sub_ne_zero.2 hab ) ]
 
 
+/-- [Section: ## Section 4: Orbit Theory] -/
 theorem orbit_pairing (a b n : ℤ)
     (hden1 : twoPole_den a b n ≠ 0)
     (hdvd : twoPole_den a b n ∣ twoPole_num a b n) :
@@ -139,6 +142,7 @@ theorem det_pos (a b : ℤ) : 0 < twoPole_det a b := by
   unfold twoPole_det; positivity
 
 
+/-- [Section: ## Section 5: Gaussian Integer Norm Theory] -/
 theorem det_eq_two (a b : ℤ) :
     twoPole_det a b = 2 ↔ (a = 0 ∧ (b = 1 ∨ b = -1)) ∨ (b = 0 ∧ (a = 1 ∨ a = -1)) := by
   unfold twoPole_det;
@@ -149,6 +153,7 @@ theorem det_eq_two (a b : ℤ) :
   · rintro ( ⟨ rfl, rfl | rfl ⟩ | ⟨ rfl, rfl | rfl ⟩ ) <;> norm_num
 
 
+/-- Some explicit evaluations -/
 theorem F01_at_0 : twoPole_num 0 1 0 / twoPole_den 0 1 0 = 1 := by
   unfold twoPole_num twoPole_den; norm_num
 

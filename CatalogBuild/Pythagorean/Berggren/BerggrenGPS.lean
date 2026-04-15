@@ -21,6 +21,7 @@ def zoneB_inv (m n : ℤ) : ℤ × ℤ := (n, m - 2 * n)
 def zoneC_inv (m n : ℤ) : ℤ × ℤ := (m - 2 * n, n)
 
 
+/-- [Section: ### Zone transforms produce valid parameters] -/
 theorem zoneA_valid (m n : ℤ) (hm_gt_n : m > n) (hn_pos : n > 0) (hm_lt : m < 2 * n) :
     let (m', n') := zoneA_inv m n
     m' > n' ∧ n' > 0 := by
@@ -39,6 +40,7 @@ theorem zoneC_valid (m n : ℤ) (hm_gt : m > 3 * n) (hn_pos : n > 0) :
   constructor <;> omega
 
 
+/-- [Section: ### Hypotenuse strictly decreases] -/
 theorem zoneA_hyp_decreases (m n : ℤ) (hm_gt_n : m > n) (hn_pos : n > 0) (hm_lt : m < 2 * n) :
     let (m', n') := zoneA_inv m n
     m' ^ 2 + n' ^ 2 < m ^ 2 + n ^ 2 := by
@@ -74,12 +76,14 @@ noncomputable def berggrenGauss (z : ℝ) : ℝ :=
   else z - 2
 
 
+/-- [Section: ### Fixed Point: The Silver Ratio 1 + √2] -/
 theorem silver_ratio_fixed_point :
     berggrenGauss (1 + Real.sqrt 2) = 1 + Real.sqrt 2 := by
   unfold berggrenGauss;
   rw [ if_neg, if_pos ] <;> try nlinarith [ Real.sqrt_nonneg 2, Real.sq_sqrt zero_le_two ] ; ; rw [ div_eq_iff ] <;> nlinarith [ Real.sqrt_nonneg 2, Real.sq_sqrt zero_le_two ] ;
 
 
+/-- [Section: ### 2-Cycle: The Golden Ratio] -/
 theorem golden_ratio_step1 :
     berggrenGauss ((1 + Real.sqrt 5) / 2) = (3 + Real.sqrt 5) / 2 := by
   unfold berggrenGauss;
@@ -98,6 +102,9 @@ theorem golden_ratio_two_cycle :
   rw [golden_ratio_step1, golden_ratio_step2]
 
 
+/-- [Section: ## §4. Zone Width Identity
+arctan(1/2) + arctan(1/3) = π/4
+This proves Zones A and C have equal angular width in the Gaussian GPS.] -/
 theorem arctan_half_plus_arctan_third :
     Real.arctan (1/2) + Real.arctan (1/3) = Real.pi / 4 := by
   rw [ ← eq_sub_iff_add_eq', Real.arctan_eq_of_tan_eq ];

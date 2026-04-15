@@ -90,6 +90,7 @@ def IsFermatTypePrime (n : ℕ) : Prop :=
   ∃ k : ℕ, 0 < k ∧ n = 2 ^ k + 1 ∧ Nat.Prime n
 
 
+/-- [Section: ## §8: The Luminosity Spectrum] -/
 theorem mersenne_primes_are_light (p : ℕ) (hp : Nat.Prime p)
     (hm : Nat.Prime (2 ^ p - 1)) (hp2 : 2 ≤ p) :
     IsLightPrime (2 ^ p - 1) := by

@@ -22,6 +22,9 @@ noncomputable def invStereo3D (u v : ℝ) : ℝ × ℝ × ℝ :=
 
 
 
+/-- [Section: ## Section 10: Higher-Dimensional Stereographic Projection
+We formalize the n-dimensional inverse stereographic projection and verify
+its fundamental properties.] -/
 theorem invStereo2D_on_circle (t : ℝ) :
     (invStereo2D t).1 ^ 2 + (invStereo2D t).2 ^ 2 = 1 := by
   -- By definition of $invStereo2D$, we know that its components are $2t/(1+t^2)$ and $(1-t^2)/(1+t^2)$.
@@ -63,6 +66,8 @@ def pythTriple (m n : ℤ) : ℤ × ℤ × ℤ :=
 
 
 
+/-- [Section: ## Section 11: Pythagorean Triples from Stereographic Projection
+The rational oracle: plug in rational t = p/q to get Pythagorean triples.] -/
 theorem pyth_triple_identity (m n : ℤ) :
     (2 * m * n)^2 + (m^2 - n^2)^2 = (m^2 + n^2)^2 := by
   ring

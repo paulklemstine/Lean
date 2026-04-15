@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## §1: Modular Form Shortcuts for Factoring] -/
 theorem fermat_sum_two_sq_5' : ∃ a b : ℕ, a ^ 2 + b ^ 2 = 5 := ⟨1, 2, by norm_num⟩
 
 theorem fermat_sum_two_sq_13' : ∃ a b : ℕ, a ^ 2 + b ^ 2 = 13 := ⟨2, 3, by norm_num⟩
@@ -28,6 +29,7 @@ theorem brahmagupta_fibonacci_v2 (a b c d : ℤ) :
     (a ^ 2 + b ^ 2) * (c ^ 2 + d ^ 2) = (a * c - b * d) ^ 2 + (a * d + b * c) ^ 2 := by ring
 
 
+/-- [Section: ## §2: Proof Mining and Attractor Proofs] -/
 theorem proof_compression_ratio' (n : ℕ) (k : ℕ) (hk : 0 < k) :
     (n : ℚ) / k ≤ n := by
   have : (1 : ℚ) ≤ k := by exact_mod_cast hk
@@ -36,6 +38,7 @@ theorem proof_compression_ratio' (n : ℕ) (k : ℕ) (hk : 0 < k) :
     _ = n := by simp
 
 
+/-- [Section: ## §3: AI Alignment as Oracle Agreement] -/
 def OraclesAgreeV2 {X : Type*} (O₁ O₂ : X → X) : Prop :=
   ∃ x, O₁ x = x ∧ O₂ x = x
 
@@ -53,6 +56,7 @@ theorem strong_agreement_compose' {X : Type*} (O₁ O₂ : X → X)
   rw [hagree] at this; exact this
 
 
+/-- [Section: ## §4: Semantic Compression Beyond Shannon] -/
 theorem truth_aware_compression' (n k : ℕ) (_hk : 0 < k) (hkn : k ≤ n) :
     Nat.log 2 k ≤ Nat.log 2 n := Nat.log_mono_right hkn
 
@@ -61,9 +65,11 @@ theorem sigmoid_positive (x b : ℝ) (_hx : 0 < x) (_hb : 0 < b) :
     0 < 1 / (1 + Real.exp (-b * x)) := by positivity
 
 
+/-- [Section: ## §6: Self-Consistent Mathematical Structures] -/
 theorem nat_self_consistent' : ∀ n : ℕ, n + 0 = n := Nat.add_zero
 
 
+/-- [Section: ## §7: The Grand Synthesis] -/
 theorem grand_unified_oracle' {n : ℕ} (_hn : 0 < n) (O : Fin n → Fin n)
     (_hO : ∀ x, O (O x) = O x) :
     (¬ Injective O) ↔ (Fintype.card (range O) < n) := by

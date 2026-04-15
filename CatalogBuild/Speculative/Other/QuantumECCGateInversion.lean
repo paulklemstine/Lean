@@ -34,6 +34,7 @@ theorem involution_product_invertible
   rw [Matrix.mul_assoc A B (B * A), ← Matrix.mul_assoc B B A, hB, Matrix.one_mul, hA]
 
 
+/-- [Section: ## §3: secp256k1 Parameter Properties] -/
 def secp256k1_a_param : ℕ := 0
 
 def secp256k1_b_param : ℕ := 7
@@ -52,6 +53,7 @@ def secp256k1_order : ℕ :=
 
 def secp256k1_cofactor : ℕ := 1
 
+/-- [Section: ## §4: Quantum Resource Estimates] -/
 def secp256k1_bits : ℕ := 256
 
 
@@ -77,6 +79,7 @@ theorem tgate_lower_bound :
   norm_num [secp256k1_bits]
 
 
+/-- [Section: ## §5: Circuit Composition Laws] -/
 theorem three_gate_inverse
     (A B C : Matrix (Fin 2) (Fin 2) ℤ)
     (hA : A * A = 1) (hB : B * B = 1) (hC : C * C = 1) :
@@ -91,6 +94,7 @@ theorem four_gate_inverse
   grind
 
 
+/-- [Section: ## §6: CNOT Gate Properties] -/
 def CNOT_gate : Matrix (Fin 4) (Fin 4) ℤ :=
   !![1, 0, 0, 0;
      0, 1, 0, 0;
@@ -103,6 +107,7 @@ theorem cnot_self_inverse : CNOT_gate * CNOT_gate = (1 : Matrix (Fin 4) (Fin 4) 
     simp [CNOT_gate, Matrix.mul_apply, Fin.sum_univ_four]
 
 
+/-- [Section: ## §7: Hasse Bound Verification] -/
 theorem hasse_check_11 : (12 - 7 : ℤ) ≤ 7 := by norm_num
 
 theorem hasse_check_23 : (24 - 21 : ℤ).natAbs ≤ 10 := by norm_num
@@ -110,6 +115,7 @@ theorem hasse_check_23 : (24 - 21 : ℤ).natAbs ≤ 10 := by norm_num
 theorem hasse_check_67 : (78 - 68 : ℤ).natAbs ≤ 17 := by norm_num
 
 
+/-- [Section: ## §8: General n-gate Inversion Theorem] -/
 theorem involution_list_inverse (gates : List (Matrix (Fin 2) (Fin 2) ℤ))
     (h : ∀ g ∈ gates, g * g = 1) :
     gates.prod * gates.reverse.prod = 1 := by

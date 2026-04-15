@@ -19,6 +19,7 @@ def N1 : Matrix (Fin 3) (Fin 3) ℤ := !![0, -2, 2; 2, -2, 2; 2, -2, 2]
 def N1sq : Matrix (Fin 3) (Fin 3) ℤ := !![0, 0, 0; 0, -4, 4; 0, -4, 4]
 
 
+/-- [Section: ## §1. Definitions] -/
 theorem N1_eq : N1 = B1 - 1 := by
   ext i j; fin_cases i <;> fin_cases j <;> simp [N1, B1]
 
@@ -41,6 +42,7 @@ def A_triple (n : ℕ) : ℤ × ℤ × ℤ :=
   (2 * n + 3, 2 * (n + 1) * (n + 2), 2 * n^2 + 6 * n + 5)
 
 
+/-- [Section: ## §3. Computational verifications] -/
 theorem B1pow_0 : B1pow 0 = 1 := rfl
 
 theorem B1pow_2 : B1pow 2 = !![1, (-4 : ℤ), 4; 4, -7, 8; 4, -8, 9] := by native_decide
@@ -50,6 +52,7 @@ theorem B1pow_3 : B1pow 3 = !![1, (-6 : ℤ), 6; 6, -17, 18; 6, -18, 19] := by n
 theorem B1pow_4 : B1pow 4 = !![1, (-8 : ℤ), 8; 8, -31, 32; 8, -32, 33] := by native_decide
 
 
+/-- [Section: ## §4. A-branch triple verification] -/
 def B1_applied (n : ℕ) : ℤ × ℤ × ℤ :=
   let M := B1pow n
   let v := M * !![(3 : ℤ); 4; 5]
@@ -78,22 +81,27 @@ theorem A_branch_pythagorean (n : ℕ) :
   ring
 
 
+/-- [Section: ## §6. A-branch near-consecutiveness: c - b = 1] -/
 theorem A_branch_consecutive (n : ℕ) :
     (2 * (n : ℤ)^2 + 6 * n + 5) - 2 * (↑n + 1) * (↑n + 2) = 1 := by
   ring
 
 
+/-- [Section: ## §7. A-branch first component is odd] -/
 theorem A_branch_first_odd (n : ℕ) : Odd (2 * n + 3) := ⟨n + 1, by omega⟩
 
 
+/-- [Section: ## §8. Pythagorean identity in the A_triple form] -/
 theorem A_triple_is_pythagorean (n : ℕ) :
     (A_triple n).1 ^ 2 + (A_triple n).2.1 ^ 2 = (A_triple n).2.2 ^ 2 := by
   simp only [A_triple]; ring
 
 
+/-- [Section: ## §9. B₁ power recurrence] -/
 theorem B1pow_succ (n : ℕ) : B1pow (n + 1) = B1 * B1pow n := rfl
 
 
+/-- [Section: ## §10. A-branch coprimality structure] -/
 theorem A_branch_gcd_structure (n : ℕ) :
     ∃ k : ℕ, (2 * (n : ℤ) + 3) = 2 * (k : ℤ) + 1 ∧
     ∃ m : ℤ, 2 * (↑n + 1) * (↑n + 2) = 2 * m :=

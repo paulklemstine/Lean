@@ -187,6 +187,7 @@ def alt_reflect_5 : Matrix (Fin 5) (Fin 5) ℤ :=
      -2, -2, 0, 0, 3]
 
 
+/-- [Section: ## Section 10: Alternative Approaches for k = 5] -/
 theorem alt_reflect_5_involution : alt_reflect_5 * alt_reflect_5 = 1 := by
   unfold alt_reflect_5; native_decide
 
@@ -200,6 +201,7 @@ theorem alt_reflect_5_isLorentz :
   unfold alt_reflect_5 eta5; native_decide
 
 
+/-- [Section: ## Section 11: Computational Exploration] -/
 def listPrimQuints (N : ℕ) : List (ℕ × ℕ × ℕ × ℕ × ℕ) := do
   let d ← List.range (N + 1)
   let e ← List.range (d + 1)

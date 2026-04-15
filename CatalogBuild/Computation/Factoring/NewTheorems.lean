@@ -35,6 +35,7 @@ theorem constraint_intersection_nat (S k : ℕ) (hS : 0 < S) (hk : 1 ≤ k) :
   exact Nat.one_lt_two_pow_iff.mpr (by omega)
 
 
+/-- [Section: ## Theorem 1: Inter-Lens Correlation Bound] -/
 theorem exponential_advantage_unbounded (S : ℕ) (hS : 0 < S) :
     ∀ ε : ℕ, 0 < ε → ∃ k : ℕ, S / 2 ^ k < ε := by
   -- Let's choose k such that 2^k > S / ε.
@@ -57,6 +58,7 @@ theorem two_reps_factor_identity (a b c d N : ℤ)
     (a - c) * (a + c) = (d - b) * (d + b) := by nlinarith
 
 
+/-- [Section: ## Theorem 6: Zeckendorf Spread] -/
 theorem fib_exponential_lower (n : ℕ) (hn : 2 ≤ n) :
     2 ^ (n / 2) ≤ Nat.fib (n + 1) := by
   rcases Nat.even_or_odd' n with ⟨ k, rfl | rfl ⟩;

@@ -83,6 +83,7 @@ theorem reflect_a (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
     (-a)^2 + b^2 + c^2 = d^2 := by rw [neg_sq]; exact h
 
 
+/-- [Section: ## §5. The Norm Form and Bilinear Decomposition] -/
 theorem reflect_b (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
     a^2 + (-b)^2 + c^2 = d^2 := by rw [neg_sq]; exact h
 
@@ -113,6 +114,7 @@ theorem channel_1 (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
     (d - c) * (d + c) = a^2 + b^2 := by nlinarith
 
 
+/-- [Section: ## §6. The Three Factoring Channels] -/
 theorem channel_2 (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
     (d - b) * (d + b) = a^2 + c^2 := by nlinarith
 
@@ -128,6 +130,7 @@ theorem triple_channel_sum (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
   nlinarith
 
 
+/-- [Section: ## §7. Iterated Quadruples and Factor Chains] -/
 theorem quadruple_sum_identity (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
     (h₁ : a₁^2 + b₁^2 + c₁^2 = d₁^2)
     (h₂ : a₂^2 + b₂^2 + c₂^2 = d₂^2) :
@@ -135,6 +138,7 @@ theorem quadruple_sum_identity (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
   linear_combination' h₁ * d₂ ^ 2
 
 
+/-- [Section: ## §8. The GCD Lattice on Spheres] -/
 theorem gcd_abc_divides_d_sq (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2)
     (g : ℤ) (hga : g ∣ a) (hgb : g ∣ b) (hgc : g ∣ c) :
     g^2 ∣ d^2 := by
@@ -148,6 +152,7 @@ theorem cross_channel_12 (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
   nlinarith
 
 
+/-- [Section: ## §9. Cross-Channel Factor Extraction] -/
 theorem cross_channel_13 (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
     (d-c)*(d+c) - (d-a)*(d+a) = a^2 - c^2 := by
   nlinarith

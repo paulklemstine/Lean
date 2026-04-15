@@ -57,6 +57,7 @@ def inverseStereo (u v : ℝ) : Fin 3 → ℝ := fun i =>
   | 2 => (r2 - 1) / (1 + r2)
 
 
+/-- [Section: ## Part III: The Celestial Sphere and Stereographic Coordinates] -/
 theorem inverseStereo_on_sphere (u v : ℝ) :
     IsOnSphere (inverseStereo u v 0) (inverseStereo u v 1) (inverseStereo u v 2) := by
       unfold inverseStereo IsOnSphere; ring_nf; norm_num;
@@ -100,6 +101,7 @@ def IsMobiusNormalized (a b c d : ℝ) : Prop :=
   a * d - b * c = 1
 
 
+/-- [Section: ## Part V: The Holographic Principle] -/
 theorem bekensteinBound_nonneg (area : ℝ) (h : area ≥ 0) :
     bekensteinBound area ≥ 0 := by
       exact div_nonneg h zero_le_four
@@ -167,10 +169,12 @@ def zPhotonTwistor : Twistor where
   pi := ![1, 0, 0, 0]
 
 
+/-- [Section: ## Part VI: The Twistor Incidence Relation] -/
 theorem zPhotonTwistor_isNull : zPhotonTwistor.isNull := by
   exact show ∑ i : Fin 4, ( if i.val = 0 then 0 else if i.val = 1 then 0 else if i.val = 2 then 0 else 0 ) * ( if i.val = 0 then 1 else if i.val = 1 then 0 else if i.val = 2 then 0 else 0 ) = 0 from by norm_num [ Fin.sum_univ_four ] ;
 
 
+/-- [Section: ## Part VII: Helper Lemmas for the Main Theorem] -/
 lemma future_null_k0_plus_k3_nonneg (k : Fin 4 → ℝ) (hk : k ∈ FutureNullCone) :
     k 0 + k 3 ≥ 0 := by
       -- From the null condition, we have (k 0)^2 = (k 1)^2 + (k 2)^2 + (k 3)^2. Since squares are non-negative, this implies that (k 0)^2 ≥ (k 3)^2. Taking square roots (and considering that k 0 is positive), we get k 0 ≥ |k 3|.
@@ -206,6 +210,7 @@ lemma inverseStereoNull_surj_standard (k : Fin 4 → ℝ)
       grind +locals
 
 
+/-- [Section: ## Part VIII: The Main Theorem — Synthesis] -/
 theorem photon_worldline_is_inverseStereo_standard :
     ∀ k : Fin 4 → ℝ, k ∈ FutureNullCone → k 0 + k 3 > 0 →
       ∃ u v ω : ℝ, ω > 0 ∧ inverseStereoNull u v ω = k := by

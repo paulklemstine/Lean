@@ -42,6 +42,7 @@ theorem quantum_speedup (n : ℕ) (hn : 0 < n) : n * n / n = n :=
 theorem qubit_space_dimension (k : ℕ) : 0 < 2 ^ k := by positivity
 
 
+/-- [Section: ## §3: Qubit Requirements] -/
 theorem exp_dominates_linear (k : ℕ) (hk : 1 ≤ k) : k < 2 ^ k := by
   exact Nat.lt_pow_self (by norm_num : 1 < 2)
 

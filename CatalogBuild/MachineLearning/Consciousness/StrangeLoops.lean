@@ -29,6 +29,7 @@ structure SelfModel where
   reflects : ∀ m : Model, project (embed m) = m
 
 
+/-- [Section: ## The Self as a Strange Loop] -/
 theorem self_model_is_strange_loop (S : SelfModel) :
     Function.LeftInverse S.project S.embed := by
   exact S.reflects
@@ -42,6 +43,7 @@ structure SelfAsFixedPoint where
   is_fixed : reflect stableSelf = stableSelf
 
 
+/-- [Section: ## Fixed Points and Selfhood] -/
 theorem unique_self_from_contraction
     (X : Type) [MetricSpace X] [CompleteSpace X] [Nonempty X]
     (f : X → X) (k : ℝ) (hk : k < 1) (hk0 : 0 ≤ k)

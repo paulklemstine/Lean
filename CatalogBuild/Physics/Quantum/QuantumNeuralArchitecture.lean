@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## §1: MERA Structure] -/
 theorem mera_depth_logarithmic (n : ℕ) :
     Nat.log 2 n ≤ n := Nat.log_le_self 2 n
 
@@ -23,6 +24,7 @@ theorem transformer_params (L d : ℕ) (hd : 0 < d) : L * d ^ 2 ≥ L := by
   have : d ^ 2 ≥ 1 := Nat.one_le_pow 2 d hd; nlinarith
 
 
+/-- [Section: ## §2: Attention] -/
 theorem attention_temperature_pos (d : ℕ) (hd : 0 < d) :
     Real.sqrt (d : ℝ) > 0 := Real.sqrt_pos_of_pos (Nat.cast_pos.mpr hd)
 
@@ -34,6 +36,7 @@ theorem softmax_sums_to_one' (n : ℕ) (x : Fin n → ℝ) (hn : 0 < n) :
     (Finset.univ_nonempty_iff.mpr ⟨⟨0, hn⟩⟩)))
 
 
+/-- [Section: ## §3: Barren Plateaus] -/
 theorem gradient_variance_bound' (n : ℕ) (hn : 0 < n) :
     (1 : ℝ) / 2 ^ n > 0 := by positivity
 
@@ -59,6 +62,7 @@ theorem local_cost_advantage' (n : ℕ) (hn : 5 ≤ n) : 2 ^ n > n ^ 2 := by
       _ ≥ (k + 1) ^ 2 := h2
 
 
+/-- [Section: ## §4: Quantum Tokenization] -/
 theorem phase_encoding_qubits' (V : ℕ) : Nat.log 2 V ≤ V := Nat.log_le_self 2 V
 
 
@@ -69,6 +73,7 @@ theorem amplitude_encoding_advantage' (V : ℕ) (hV : 4 ≤ V) :
       exact Nat.recOn V ( by norm_num ) fun n ihn => by norm_num [ Nat.pow_succ' ] at * ; linarith;
 
 
+/-- [Section: ## §5: Decoherence] -/
 theorem dfs_dimension' (n : ℕ) : n + 1 ≥ 1 := by omega
 
 
@@ -100,6 +105,7 @@ theorem decoherence_accumulation' (T : ℕ) (p : ℝ) (hp : 0 ≤ p) (hp1 : p �
       _ ≥ 1 - (↑(k + 1)) * p := by nlinarith [sq_nonneg p]
 
 
+/-- [Section: ## §6: Quantum Advantage Threshold] -/
 theorem quantum_crossover' (n : ℕ) (hn : 10 ≤ n) : 2 ^ n > n ^ 3 := by
   induction hn with
   | refl => norm_num

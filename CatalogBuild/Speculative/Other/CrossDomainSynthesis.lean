@@ -15,6 +15,31 @@ theorem minkQ_homogeneous (t : ℝ) (v : ℝ × ℝ × ℝ) :
   unfold minkQ; ring
 
 
+/-- [Section: # Cross-Domain Research Synthesis: Light × Algebra × AI × Factoring × Oracles
+## Virtual Research Team
+- **Agent α (Light-Oracle)**: Explores the light cone as an idempotent retraction
+- **Agent β (Tropical-Factoring)**: Connects tropical arithmetic to factoring
+- **Agent γ (Oracle-AI)**: Formalizes ReLU layers as oracle composition
+- **Agent δ (Light-Algebra)**: Algebraic structure of null vectors
+- **Agent ε (Factoring-Light)**: Sum-of-squares factoring through lattice light cones
+- **Agent ζ (Strange-Loop-AI)**: Self-referential structure of neural fixed points
+## Research Hypotheses (all verified below)
+1. **Light Cone Retraction Hypothesis**: Radial projection onto the light cone is an
+idempotent oracle — consulting it twice gives the same answer.
+2. **Tropical Factoring Hypothesis**: The tropical GCD (= min) is an idempotent oracle
+that mirrors classical GCD's role in factoring.
+3. **ReLU Oracle Chain Hypothesis**: Composition of ReLU oracles is itself an oracle,
+forming a band (idempotent semigroup).
+4. **Null Vector Subspace Hypothesis**: The set of light-like vectors, while not a
+subspace, has algebraic closure properties under specific operations.
+5. **Oracle Fixed Point Convergence**: Any contractive oracle on a complete metric
+space has a unique truth (fixed point) — Banach meets oracle theory.
+## Knowledge Gaps Filled
+- **Gap 1**: No prior theorem connecting the Minkowski form to oracle idempotency.
+- **Gap 2**: No formalization of tropical GCD as an oracle.
+- **Gap 3**: No proof that ReLU composition forms a band.
+- **Gap 4**: No bridge between Banach fixed-point theory and oracle truth sets.
+- **Gap 5**: No formalization of the "oracle discriminant" for causal classification.] -/
 theorem signOracle_values (x : ℝ) :
     signOracle x = -1 ∨ signOracle x = 0 ∨ signOracle x = 1 := by
   unfold signOracle; split_ifs <;> simp

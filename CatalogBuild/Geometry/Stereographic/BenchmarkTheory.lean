@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Part 1: Expressiveness Analysis] -/
 def stereoEffDim (d : ℕ) : ℕ := d + 1
 
 
@@ -32,6 +33,7 @@ theorem parameterRatio_le_two (d : ℕ) (hd : 1 ≤ d) :
   linarith
 
 
+/-- [Section: ## Part 2: Gradient Statistics] -/
 def gradientVarianceBound (_ : ℕ) (maxGrad : ℝ) : ℝ :=
   maxGrad ^ 2
 
@@ -57,6 +59,7 @@ theorem logSumExp_ge (seqLen : ℕ) (logits : Fin seqLen → ℝ) (j : Fin seqLe
         rw [Real.exp_log (Finset.sum_pos (fun i _ => exp_pos _) ⟨j, Finset.mem_univ _⟩)]
 
 
+/-- [Section: ## Part 4: Depth-Wise Gradient Analysis] -/
 def depthGradientProduct (L : ℕ) (factors : Fin L → ℝ) : ℝ :=
   ∏ i, factors i
 
@@ -78,6 +81,7 @@ theorem depth_gradient_product_bounded (L : ℕ) (factors : Fin L → ℝ)
     _ = 2 ^ L := by simp [Finset.prod_const, Finset.card_fin]
 
 
+/-- [Section: ## Part 5: Learning Rate Schedules] -/
 def warmupCosineLR (baseLR : ℝ) (warmupSteps totalSteps step : ℕ) : ℝ :=
   if step < warmupSteps then
     baseLR * (step : ℝ) / warmupSteps
@@ -109,6 +113,7 @@ theorem warmup_lr_monotone (baseLR : ℝ) (warmupSteps : ℕ) (s t : ℕ)
     (Nat.cast_nonneg warmupSteps)
 
 
+/-- [Section: ## Part 6: Benchmark Complexity Analysis] -/
 def stereoAttentionFLOPs (seqLen d : ℕ) : ℕ :=
   seqLen * seqLen * (d + 1)
 

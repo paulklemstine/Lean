@@ -7,6 +7,7 @@ Declarations: 8
 
 import Mathlib
 
+/-- [Section: ## Music & Audio Domain] -/
 theorem binaural_beat_bound (fL fR : ℝ) (hL : 0 < fL) (hR : 0 < fR) :
     |fL - fR| < fL + fR := by
   cases abs_cases ( fL - fR ) <;> linarith
@@ -17,6 +18,7 @@ theorem nyquist_bound (B fs : ℝ) (hB : 0 < B) (hfs : fs < 2 * B) :
   rwa [ div_lt_one ( by positivity ) ]
 
 
+/-- [Section: ## Visual Processing Domain] -/
 theorem stereoscopic_disparity_decreasing
     (d : ℝ) (hd : 0 < d) :
     StrictAntiOn (fun z => d / z) (Set.Ioi 0) := by
@@ -28,6 +30,7 @@ theorem sigmoid_range_bounded (x : ℝ) :
   exact ⟨ by positivity, by rw [ div_lt_iff₀ ] <;> linarith [ Real.exp_pos ( -x ) ] ⟩
 
 
+/-- [Section: ## AutoHeal Self-Repairing Software] -/
 theorem autoheal_defect_convergence
     (defect : ℕ → ℝ) (r : ℝ) (hr0 : 0 ≤ r) (hr1 : r < 1)
     (h_step : ∀ n, defect (n + 1) ≤ r * defect n)
@@ -47,6 +50,7 @@ theorem verified_repair_correct
   exact h_repair_meets_spec s
 
 
+/-- [Section: ## Holographic Projection] -/
 theorem wavefront_coherence_bound (n : ℕ) (phases : Fin n → ℝ) :
     ‖∑ i : Fin n, Complex.exp (↑(phases i) * Complex.I)‖ ≤ n := by
   exact le_trans ( norm_sum_le _ _ ) ( by simp +decide [ Complex.norm_exp ] )

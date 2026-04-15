@@ -7,6 +7,7 @@ Declarations: 96
 
 import Mathlib
 
+/-- [Section: ## §1. Berggren Matrices] -/
 def rfB₁' : Matrix (Fin 3) (Fin 3) ℤ := !![1, -2, 2; 2, -1, 2; 2, -2, 3]
 
 def rfB₂' : Matrix (Fin 3) (Fin 3) ℤ := !![1, 2, 2; 2, 1, 2; 2, 2, 3]
@@ -65,6 +66,7 @@ theorem trace_rfB₂'_fourth :
     Matrix.trace (rfB₂' * rfB₂' * rfB₂' * rfB₂') = 1155 := by native_decide
 
 
+/-- [Section: ## §3. Extended Modular Form Preservation] -/
 def matMod' (N : ℕ) [NeZero N] (M : Matrix (Fin 3) (Fin 3) ℤ) :
     Matrix (Fin 3) (Fin 3) (ZMod N) := M.map (Int.cast)
 
@@ -205,6 +207,9 @@ def rfK₆ : Matrix (Fin 5) (Fin 5) ℤ :=
 /-- All generators preserve the 5D Lorentz form. -/
 theorem rfK₁_lorentz : rfK₁ᵀ * rfQ5 * rfK₁ = rfQ5 := by native_decide
 
+/-- [Section: ## §5. 5D Generalization: Pythagorean Quintuples
+We construct six generators in O(4,1;ℤ) preserving a₁²+a₂²+a₃²+a₄²-d²=0.
+Each generator acts as a Berggren-type transformation in a 3D subspace.] -/
 theorem rfK₂_lorentz : rfK₂ᵀ * rfQ5 * rfK₂ = rfQ5 := by native_decide
 
 theorem rfK₃_lorentz : rfK₃ᵀ * rfQ5 * rfK₃ = rfQ5 := by native_decide
@@ -301,6 +306,7 @@ theorem spectralGap_full_monotone :
                sq_nonneg (Real.sqrt 2 - 1), sq_nonneg (Real.sqrt 5 - 2)]
 
 
+/-- [Section: ## §7. Lorentz Form Closure in 5D] -/
 theorem lorentz5_product_closure (M N : Matrix (Fin 5) (Fin 5) ℤ)
     (hM : Mᵀ * rfQ5 * M = rfQ5)
     (hN : Nᵀ * rfQ5 * N = rfQ5) :
@@ -337,6 +343,7 @@ def groverCoin5x : Matrix (Fin 5) (Fin 5) ℤ :=
      2, 2, 2, 2, (-3)]
 
 
+/-- [Section: ## §9. Quantum Walk: 5×5 Grover Coin] -/
 theorem groverCoin5x_symm : groverCoin5xᵀ = groverCoin5x := by native_decide
 
 
@@ -374,6 +381,7 @@ theorem three_pow_gt_two_pow (n : ℕ) (hn : n ≥ 1) : 3 ^ n > 2 ^ n := by
   exact Nat.pow_lt_pow_left (by omega) (by omega)
 
 
+/-- [Section: ## §11. Non-Commutativity of 4D Generators] -/
 def rfH₁' : Matrix (Fin 4) (Fin 4) ℤ := !![1, 0, -2, 2; 0, 1, 0, 0; 2, 0, -1, 2; 2, 0, -2, 3]
 
 def rfH₂' : Matrix (Fin 4) (Fin 4) ℤ := !![1, 0, 2, 2; 0, 1, 0, 0; 2, 0, 1, 2; 2, 0, 2, 3]

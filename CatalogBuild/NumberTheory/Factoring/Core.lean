@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: NumberTheory/Factoring
-Declarations: 13
+Declarations: 15
 -/
 
 import Mathlib
@@ -15,6 +15,7 @@ noncomputable def castToFactor (p q : ℕ) (hp : Fact (Nat.Prime p)) :
   ZMod.castHom (dvd_mul_right p q) (ZMod p)
 
 
+/-- [Section: ## Section 2: CRT Decomposition] -/
 theorem orbit_CRT_decomposition (p q : ℕ) (hp : Fact (Nat.Prime p))
     (x : ZMod (p * q)) (k : ℕ) :
     (castToFactor p q hp) (sqIter (p * q) x k) =
@@ -22,6 +23,7 @@ theorem orbit_CRT_decomposition (p q : ℕ) (hp : Fact (Nat.Prime p))
   induction k <;> simp_all +decide [ sqIter_eq_pow, pow_succ ]
 
 
+/-- [Section: ## Section 3: Period Structure] -/
 theorem orbit_period_divides_lcm (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
     (hcoprime : Nat.Coprime p q) (x : ZMod (p * q))
     (a b : ℕ)
@@ -46,12 +48,31 @@ theorem orbit_period_divides_lcm (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime 
   haveI := Fact.mk hp; haveI := Fact.mk hq; erw [ ← ZMod.intCast_eq_intCast_iff ] at *; aesop;))
 
 
+/-- [Section: ## Section 4: Smooth Numbers] -/
 instance (B m : ℕ) : Decidable (IsSmooth B m) :=
   inferInstanceAs (Decidable (∀ p ∈ m.primeFactors, p ≤ B))
 
 
+/-- The factor base: primes up to B. -/
+def factorBase (B : ℕ) : Finset ℕ :=
+  (Finset.range (B + 1)).filter Nat.Prime
+
+
 theorem factorBase_card_le (B : ℕ) : (factorBase B).card ≤ B := by
   exact le_trans ( Finset.card_le_card <| show factorBase B ⊆ Finset.Ico 1 ( B + 1 ) from fun x hx => Finset.mem_Ico.mpr ⟨ Nat.Prime.pos <| Finset.mem_filter.mp hx |>.2, Nat.lt_succ_of_le <| Finset.mem_range_succ_iff.mp <| Finset.mem_filter.mp hx |>.1 ⟩ ) ( by simpa )
+
+
+/-- [Section: ## Section 5: GCD Extraction and Factoring Correctness] -/
+theorem gcd_extraction (n x y : ℕ) (hn : 1 < n)
+    (hcong : n ∣ (x ^ 2 - y ^ 2))
+    (hne_sub : ¬ n ∣ (x - y))
+    (hne_add : ¬ n ∣ (x + y))
+    (hxy : y ≤ x) :
+    1 < Nat.gcd (x - y) n ∧ Nat.gcd (x - y) n < n := by
+  refine' ⟨ Nat.lt_of_le_of_ne ( Nat.gcd_pos_of_pos_right _ ( pos_of_gt hn ) ) ( Ne.symm _ ), Nat.lt_of_le_of_ne ( Nat.le_of_dvd ( pos_of_gt hn ) ( Nat.gcd_dvd_right _ _ ) ) _ ⟩;
+  · contrapose! hne_sub;
+    exact False.elim <| hne_add <| ( Nat.Coprime.symm hne_sub ) |> fun h => h.dvd_of_dvd_mul_left <| by convert hcong using 1; rw [ Nat.sq_sub_sq ] ; ring;
+  · exact fun h => hne_sub <| h ▸ Nat.gcd_dvd_left _ _
 
 
 theorem gcd_success_for_semiprime (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
@@ -91,6 +112,7 @@ theorem factoring_correctness (B : ℕ) (hB : 0 < B)
   exact ⟨ relations, Finset.Subset.refl _, Finset.card_pos.mp ( pos_of_gt hcount ) ⟩
 
 
+/-- [Section: ## Section 6: Complexity Bounds] -/
 theorem subexponential_bound (c : ℝ) (hc : 0 < c) (ε : ℝ) (hε : 0 < ε) :
     ∃ N : ℕ, ∀ n : ℕ, N ≤ n → Lnotation n (1/2) c < (n : ℝ) ^ ε := by
   -- We need: for large n, exp(c * sqrt(ln n) * sqrt(ln ln n)) < n^ε = exp(ε * ln n). This is equivalent to c * sqrt(ln n) * sqrt(ln ln n) < ε * ln n, i.e., c * sqrt(ln ln n) / sqrt(ln n) < ε, i.e., c * sqrt(ln ln n / ln n) < ε.
@@ -125,6 +147,7 @@ theorem relation_verification_poly (B m : ℕ) (hB : 0 < B) :
   exact ⟨ 0, by norm_num, fun p hp _ => em _ ⟩
 
 
+/-- [Section: ## Section 7: Orbit Correlations and Sieve Enhancement] -/
 theorem orbit_correlation (n : ℕ) (x : ZMod n) (k : ℕ) :
     sqIter n x (k + 1) = (sqIter n x k) ^ 2 := by
   rw [ sqIter ];

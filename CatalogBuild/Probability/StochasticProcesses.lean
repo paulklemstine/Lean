@@ -7,6 +7,7 @@ Declarations: 5
 
 import Mathlib
 
+/-- Stochastic matrix -/
 theorem stoch_rows (P : Matrix (Fin 2) (Fin 2) ℝ)
     (hP : ∀ i, ∑ j : Fin 2, P i j = 1) :
     P 0 0 + P 0 1 = 1 := by

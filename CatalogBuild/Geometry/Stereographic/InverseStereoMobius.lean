@@ -21,6 +21,7 @@ theorem pole_map_at_zero (t : ℝ) (ht : t ≠ 0) :
   simp [poleMap]
 
 
+/-- [Section: ## Agent Α: Generalized Pole Theory] -/
 theorem pole_map_involution (a t : ℝ) (ht : t ≠ a)
     (hmt : (a * t + 1) / (t - a) ≠ a) :
     poleMap a (poleMap a t) = t := by
@@ -41,6 +42,7 @@ def twoPoleMap (a b t : ℝ) : ℝ :=
   ((a * b + 1) * t + (b - a)) / ((a - b) * t + (a * b + 1))
 
 
+/-- [Section: ## Agent Β: Two-Pole Composition] -/
 theorem two_pole_same_is_id (a t : ℝ) :
     twoPoleMap a a t = t := by
   exact div_eq_iff ( by nlinarith [ sq_nonneg a ] ) |>.2 ( by ring )
@@ -105,6 +107,7 @@ theorem two_pole_composition_formula (a b c t : ℝ)
   grind
 
 
+/-- [Section: ## Agent Γ: Integer-to-Integer Mappings] -/
 theorem integer_map_necessary (a b n : ℤ) :
     (a - b) * n + (a * b + 1) ∣ (a * b + 1) * n + (b - a) →
     (a - b) * n + (a * b + 1) ∣ (1 + a ^ 2) * (1 + b ^ 2) := by
@@ -152,6 +155,7 @@ theorem one_plus_sq_pos_int (n : ℤ) : 0 < 1 + n ^ 2 := by positivity
 /-- F_{0,1}: numerator at n=2 is 3, denominator is -1, quotient is -3. -/
 theorem chain_01_2_num : (0 * 1 + 1) * 2 + (1 - 0) = (3 : ℤ) := by norm_num
 
+/-- [Section: ## Agent Δ: Computational Explorer — Integer Chains] -/
 theorem chain_01_2_den : (0 - 1) * 2 + (0 * 1 + 1) = (-1 : ℤ) := by norm_num
 
 theorem chain_01_2 : (3 : ℤ) / (-1) = -3 := by norm_num
@@ -209,6 +213,7 @@ theorem all_integer_poles_elliptic (a b : ℤ) :
   ring
 
 
+/-- [Section: ## Agent Ε: Synthesis] -/
 theorem two_pole_01_order_four (t : ℝ) (ht0 : t ≠ 0) (ht1 : t ≠ 1) (htm1 : t ≠ -1) :
     twoPoleMap 0 1 (twoPoleMap 0 1 (twoPoleMap 0 1 (twoPoleMap 0 1 t))) = t := by
   unfold twoPoleMap;

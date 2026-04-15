@@ -95,6 +95,7 @@ theorem lorentzian_at_resonance (omega_0 gamma : ℝ) (hg : gamma ≠ 0) :
   simp [sub_self]
 
 
+/-- [Section: ## Part 3: Resonant Amplification Theory] -/
 theorem lorentzian_peak (omega omega_0 gamma : ℝ) (hg : gamma > 0) :
     lorentzianResponse omega omega_0 gamma ≤ lorentzianResponse omega_0 omega_0 gamma := by
   exact one_div_le_one_div_of_le ( by positivity ) ( by nlinarith )
@@ -171,6 +172,7 @@ def partitionFunction (beta : ℝ) (hypotenuses : List ℝ) : ℝ :=
   (hypotenuses.map (fun c => Real.exp (-beta * c))).sum
 
 
+/-- [Section: ## Part 6: Partition Function on the Pythagorean Lattice] -/
 theorem partition_function_positive (beta : ℝ) (hyps : List ℝ) (hne : hyps ≠ []) :
     partitionFunction beta hyps > 0 := by
   -- Since the list is non-empty, there's at least one term, and each term is positive. Therefore, their sum must be positive.
@@ -204,6 +206,7 @@ theorem single_sensor_positive (theta theta_0 sigma : ℝ) :
   exact Real.exp_pos _
 
 
+/-- [Section: ## Part 7: Sensor Array Theory] -/
 theorem single_sensor_peak (theta theta_0 sigma : ℝ) (hs : sigma > 0) :
     singleSensorResponse theta theta_0 sigma ≤
     singleSensorResponse theta_0 theta_0 sigma := by
@@ -260,6 +263,7 @@ theorem lense_thirring_pos (G_const J c_light r : ℝ)
   positivity
 
 
+/-- [Section: ## Part 9: Lense-Thirring Precession] -/
 theorem lense_thirring_decay (G_const J c_light r₁ r₂ : ℝ)
     (hG : G_const > 0) (hJ : J > 0) (hc : c_light > 0)
     (hr₁ : r₁ > 0) (hr₂ : r₂ > 0) (hlt : r₁ < r₂) :

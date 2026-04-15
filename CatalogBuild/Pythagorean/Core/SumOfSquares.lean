@@ -32,6 +32,17 @@ theorem natS2S_five : NatSumTwoSq 5 := ⟨1, 2, by ring⟩
 theorem sq_is_natS2S (n : ℕ) : NatSumTwoSq (n ^ 2) := ⟨0, n, by ring⟩
 
 
+/-- [Section: # Sum of Squares: Closure, Density, and the Gaussian Connection
+## Overview
+This file formalizes key results about sums of two squares, connecting
+the classical number-theoretic characterization to Gaussian integers
+and quadratic forms.
+## Main Results
+1. **Brahmagupta-Fibonacci identity**: Product closure of sums of two squares.
+2. **Gaussian integer norm**: Connection to algebraic number theory.
+3. **Quadratic residue obstructions**: Numbers ≡ 3 (mod 4) are not S2S.
+4. **Characterization results**: Which small numbers are sums of two squares.
+5. **Connection to Pythagorean triples**: Hypotenuse characterization.] -/
 theorem not_natS2S_three : ¬ NatSumTwoSq 3 := by
   exact fun ⟨ a, b, h ⟩ => by nlinarith [ show a ≤ 1 by nlinarith, show b ≤ 1 by nlinarith ] ;
 

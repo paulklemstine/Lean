@@ -7,6 +7,7 @@ Declarations: 11
 
 import Mathlib
 
+/-- [Section: ## Section 1: Infinitude and Structure of Primes] -/
 theorem oracle_primes_infinite : ∀ n : ℕ, ∃ p, p > n ∧ Nat.Prime p := by
   exact fun n => Exists.imp ( by tauto ) ( Nat.exists_infinite_primes ( n + 1 ) )
 
@@ -15,6 +16,7 @@ theorem oracle_prime_successor (p : ℕ) (hp : Nat.Prime p) : ∃ q, Nat.Prime q
   exact Exists.imp ( by tauto ) ( Nat.exists_infinite_primes ( p + 1 ) )
 
 
+/-- [Section: ## Section 2: Divisibility and Factorization] -/
 theorem oracle_exists_prime_divisor (n : ℕ) (hn : n ≥ 2) :
     ∃ p, Nat.Prime p ∧ p ∣ n := by
   exact Nat.exists_prime_and_dvd ( Nat.ne_of_gt hn )
@@ -25,6 +27,7 @@ theorem oracle_euclid_lemma (p a b : ℕ) (hp : Nat.Prime p) (h : p ∣ a * b) :
   exact hp.dvd_mul.mp h
 
 
+/-- [Section: ## Section 3: Modular Arithmetic — Gateway to Riemann] -/
 theorem oracle_fermat_little (p : ℕ) (hp : Nat.Prime p) (a : ℕ) :
     a ^ p ≡ a [MOD p] := by
   haveI := Fact.mk hp; simp +decide [ ← ZMod.natCast_eq_natCast_iff ] ;
@@ -35,6 +38,7 @@ theorem oracle_wilson (p : ℕ) (hp : Nat.Prime p) :
   haveI := Fact.mk hp; simp +decide [ ← ZMod.natCast_eq_natCast_iff ] ;
 
 
+/-- [Section: ## Section 4: Prime Gaps — Toward Twin Primes] -/
 theorem oracle_large_prime_gaps (k : ℕ) :
     ∃ n, n ≥ 2 ∧ ∀ i, 1 ≤ i → i ≤ k → ¬ Nat.Prime (n + i) := by
   -- Let $n = (k+2)! + 2$. This number is greater than or equal to 2.
@@ -47,6 +51,7 @@ theorem oracle_bertrand (n : ℕ) (hn : n ≥ 1) :
   exact Nat.exists_prime_lt_and_le_two_mul n ( by linarith )
 
 
+/-- [Section: ## Section 5: Additive Structure — Toward Goldbach] -/
 theorem oracle_even_as_prime_sum (n : ℕ) (hn : n ≥ 1) :
     ∃ (primes : List ℕ), (∀ p, p ∈ primes → Nat.Prime p) ∧ primes.sum = 2 * n := by
   constructor;
@@ -59,6 +64,7 @@ theorem oracle_two_only_even_prime (p : ℕ) (hp : Nat.Prime p) (he : 2 ∣ p) :
   simp_all +decide [ Nat.Prime.dvd_iff_eq hp ]
 
 
+/-- [Section: ## Section 6: Quadratic Residues — Deep Structure] -/
 theorem oracle_euler_criterion (p : ℕ) (hp : Nat.Prime p) (hodd : p ≠ 2)
     (a : ℕ) (ha : ¬ p ∣ a) (hqr : ∃ x : ZMod p, x ^ 2 = (a : ZMod p)) :
     (a : ZMod p) ^ ((p - 1) / 2) = 1 := by

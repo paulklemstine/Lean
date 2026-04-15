@@ -7,6 +7,13 @@ Declarations: 11
 
 import Mathlib
 
+/-- [Section: # Category Theory and Representation Theory
+Explorations across:
+- Basic category theory (functors, natural transformations)
+- Representation theory of finite groups
+- Character theory
+- Maschke's theorem consequences
+- Module theory] -/
 theorem id_functor_comp {C : Type*} [Category C] (X Y : C) (f : X ⟶ Y) :
     (𝟭 C).map f = f := by
   rfl

@@ -7,6 +7,8 @@ Declarations: 7
 
 import Mathlib
 
+/-- [Section: # Fibonacci Entry Point and fib_sq_mod_prime (A+6)
+Cassini's identity, Fibonacci modular properties, and the entry point theorem.] -/
 theorem fib_cassini_int (n : ℕ) :
     (Nat.fib (n + 1) : ℤ) ^ 2 - (Nat.fib n : ℤ) * (Nat.fib (n + 2) : ℤ) = (-1) ^ n := by
   induction n <;> simp_all +decide [ pow_succ, fib_add_two ] ; linarith

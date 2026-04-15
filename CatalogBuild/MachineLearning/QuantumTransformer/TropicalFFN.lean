@@ -13,6 +13,7 @@ theorem tropical_add_identity (a neg_inf : ℝ) (h : neg_inf ≤ a) :
     max a neg_inf = a := max_eq_left h
 
 
+/-- [Section: ## §3: Piecewise Linearity Bounds] -/
 theorem single_layer_regions (d : ℕ) : d + 1 ≥ 1 := by omega
 
 
@@ -31,6 +32,7 @@ theorem deep_region_exponential (d L : ℕ) (hd : 2 ≤ d) (hL : 1 ≤ L) :
 def relu_crystal_loss (x : ℝ) : ℝ := 1 / (1 + x ^ 2)
 
 
+/-- [Section: ## §4: Crystallization of FFN] -/
 theorem relu_crystal_loss_pos (x : ℝ) : 0 < relu_crystal_loss x := by
   unfold relu_crystal_loss; positivity
 
@@ -49,6 +51,7 @@ theorem relu_crystal_loss_vanishes (x : ℝ) (hx : 1 ≤ |x|) :
   gcongr
 
 
+/-- [Section: ## §5: Tropical Monomials] -/
 def is_tropical_monomial (f : ℝ → ℝ) : Prop :=
   ∃ a b : ℝ, ∀ x, f x = a * x + b
 

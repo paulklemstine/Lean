@@ -35,6 +35,10 @@ def totalEnergy (beta : ℝ) (ev : Fin n → ℝ) : ℝ :=
   beta * coulombEnergy ev + confiningEnergy ev
 
 
+/-- [Section: ## Part II: Contact Repulsion — Eigenvalues Cannot Coincide
+The most fundamental manifestation of repulsion: the Vandermonde determinant
+(and hence the joint eigenvalue density) vanishes whenever two eigenvalues coincide.
+This is an infinite potential barrier in the Coulomb gas picture.] -/
 theorem repulsion_at_coincidence {n : ℕ} {beta : ℝ} (hbeta : 0 < beta) (ev : Fin n → ℝ)
     (i j : Fin n) (hij : i ≠ j) (heq : ev i = ev j) :
     repulsionFactor beta ev = 0 := by
@@ -52,6 +56,9 @@ theorem vandermonde_nonzero_iff_distinct {n : ℕ} (ev : Fin n → ℝ) :
       infer_instance
 
 
+/-- [Section: ## Part III: The Vandermonde-Coulomb Connection
+The deep structural theorem: the repulsion factor equals exp(-β × Coulomb energy).
+This is why eigenvalues behave as a Coulomb gas.] -/
 theorem repulsion_eq_exp_neg_coulomb {n : ℕ} {beta : ℝ} (_hbeta : 0 ≤ beta)
     (ev : Fin n → ℝ) (hdist : Function.Injective ev) :
     repulsionFactor beta ev = Real.exp (-beta * coulombEnergy ev) := by
@@ -68,6 +75,10 @@ theorem repulsionFactor_nonneg {n : ℕ} {beta : ℝ} (_hbeta : 0 ≤ beta)
       exact Real.rpow_nonneg ( abs_nonneg _ ) _
 
 
+/-- [Section: ## Part IV: Monotonicity of Repulsion — Closer Eigenvalues, Stronger Repulsion
+The repulsion grows stronger as eigenvalues approach each other.
+In the Coulomb gas picture, this is because the electrostatic force
+-d/dr log|r| = -1/r diverges as r → 0.] -/
 theorem two_point_repulsion (beta : ℝ) (_hbeta : 0 ≤ beta) (a b : ℝ) :
     repulsionFactor beta ![a, b] = |b - a| ^ beta := by
       unfold repulsionFactor; simp +decide [ Fin.prod_univ_succ ] ;
@@ -94,6 +105,9 @@ def DysonIndex.toReal : DysonIndex → ℝ
   | .GSE => 4
 
 
+/-- [Section: ## Part V: The β Parameter — Universality Classes
+The Dyson index β classifies the three classical random matrix ensembles
+by their symmetry under time reversal. Each gives a different strength of repulsion.] -/
 theorem DysonIndex.toReal_pos (d : DysonIndex) : 0 < d.toReal := by
   cases d <;> simp [DysonIndex.toReal]
 

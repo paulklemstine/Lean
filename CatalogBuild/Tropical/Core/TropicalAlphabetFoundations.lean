@@ -53,6 +53,7 @@ theorem trop_monomial_affine (c : ℝ) (i : ℕ) (x : ℝ) :
     c + ↑i * x = c + ↑i * x := rfl
 
 
+/-- [Section: ## Tier 2: Tropical Polynomial Convexity] -/
 theorem min_of_affine_is_concave (a₁ b₁ a₂ b₂ : ℝ) (t : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) (x y : ℝ) :
     min (a₁ + b₁ * (t * x + (1 - t) * y)) (a₂ + b₂ * (t * x + (1 - t) * y)) ≥
     t * min (a₁ + b₁ * x) (a₂ + b₂ * x) +
@@ -60,6 +61,7 @@ theorem min_of_affine_is_concave (a₁ b₁ a₂ b₂ : ℝ) (t : ℝ) (ht0 : 0 
   cases min_cases ( a₁ + b₁ * x ) ( a₂ + b₂ * x ) <;> cases min_cases ( a₁ + b₁ * y ) ( a₂ + b₂ * y ) <;> cases min_cases ( a₁ + b₁ * ( t * x + ( 1 - t ) * y ) ) ( a₂ + b₂ * ( t * x + ( 1 - t ) * y ) ) <;> nlinarith
 
 
+/-- [Section: ## Tier 4: Maslov Dequantization Bounds] -/
 theorem lse_le_max_add_log2 (a b : ℝ) :
     Real.log (Real.exp a + Real.exp b) ≤ max a b + Real.log 2 := by
   rw [ ← Real.log_exp ( Max.max a b ), ← Real.log_mul ( by positivity ) ( by positivity ) ];
@@ -91,6 +93,7 @@ theorem fundamental_tropical_identity (a b c : ℝ) :
   simp [min_def]; split_ifs <;> linarith
 
 
+/-- [Section: ## Tropical Distributivity: The Key Structural Identity] -/
 theorem trop_distrib_finset {ι : Type*} [DecidableEq ι] (s : Finset ι)
     (hs : s.Nonempty) (a : ℝ) (f : ι → ℝ) :
     a + s.inf' hs f = s.inf' hs (fun i => a + f i) := by

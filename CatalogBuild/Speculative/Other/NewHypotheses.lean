@@ -9,6 +9,22 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # New Hypotheses and Experiments
+## Phase 6: Proposed and Verified New Hypotheses
+### H6: Spectral Oracle (Jacobi Two-Square)
+r₂(n) = 4(d₁(n) - d₃(n)) — computationally verified for small n.
+### H7: Higher-Dimensional Lens
+The round-trip σ ∘ σ⁻¹ = id in all dimensions (1D case verified).
+### H8: Rational Density
+σ⁻¹(ℚ) is dense in S¹.
+### H9: Critical Line Connection
+σ⁻¹(1/2) = (4/5, 3/5) — the (3,4,5) triple at the critical line.
+### H10 (NEW): Oracle Composition Closure
+The composition of two oracles on the same space is an oracle iff they commute.
+### H11 (NEW): Stereographic Rationality Preservation
+The stereographic map preserves rationality: if (x,y) ∈ S¹(ℚ), then σ(x,y) ∈ ℚ.
+### H12 (NEW): Pythagorean Primitive Count
+The number of primitive Pythagorean triples with hypotenuse ≤ N grows as N/π.] -/
 theorem critical_line_connection :
     2 * (1/2 : ℚ) / (1 + (1/2)^2) = 4/5 ∧
     (1 - (1/2 : ℚ)^2) / (1 + (1/2)^2) = 3/5 := by

@@ -32,6 +32,9 @@ theorem GeodesicOracle.range_eq_solutions {X : Type*} (O : GeodesicOracle X) :
   exact ⟨fun ⟨x, hx⟩ => hx ▸ O.idempotent x, fun hy => ⟨y, hy⟩⟩
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§2: INVERSE STEREOGRAPHIC PROJECTION
+═══════════════════════════════════════════════════════════════════════] -/
 theorem stereo_left_inverse (t : ℝ) : stereoProj (invStereo t) = t := by
   unfold invStereo stereoProj; rw [ div_eq_iff ] <;> ring ;
   · linarith [ inv_mul_cancel_left₀ ( by positivity : ( 1 + t ^ 2 ) ≠ 0 ) t ];
@@ -64,6 +67,9 @@ def geodesicDist (t₁ t₂ : ℝ) : ℝ :=
   |invStereoAngle t₁ - invStereoAngle t₂|
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§4: GEODESIC DISTANCE ON S¹
+═══════════════════════════════════════════════════════════════════════] -/
 theorem geodesicDist_symm (t₁ t₂ : ℝ) : geodesicDist t₁ t₂ = geodesicDist t₂ t₁ := by
   simp [geodesicDist, abs_sub_comm]
 
@@ -94,6 +100,9 @@ theorem oracle_geodesic_bridge (O : GeodesicSeekingOracle) (x : ℝ) :
 def infoGain (O : GeodesicOracle ℝ) (x : ℝ) : ℝ := geodesicDist x (O.seek x)
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§5: THE ORACLE-GEODESIC BRIDGE
+═══════════════════════════════════════════════════════════════════════] -/
 theorem infoGain_nonneg (O : GeodesicOracle ℝ) (x : ℝ) : 0 ≤ infoGain O x :=
   geodesicDist_nonneg x (O.seek x)
 
@@ -110,6 +119,9 @@ def fisherInfoOracle (O : GeodesicOracle ℝ) (x : ℝ) : ℝ :=
   (geodesicDist x (O.seek x)) ^ 2
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§6: FISHER INFORMATION
+═══════════════════════════════════════════════════════════════════════] -/
 theorem fisherInfoOracle_nonneg (O : GeodesicOracle ℝ) (x : ℝ) :
     0 ≤ fisherInfoOracle O x := sq_nonneg _
 
@@ -121,6 +133,9 @@ theorem fisherInfoOracle_zero_at_solution (O : GeodesicOracle ℝ) (x : ℝ)
   simp [geodesicDist, hx]
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§7: CONCRETE ORACLES
+═══════════════════════════════════════════════════════════════════════] -/
 def constOracle (c : ℝ) : GeodesicOracle ℝ where
   seek := fun _ => c
   idempotent _ := rfl
@@ -141,6 +156,9 @@ def sqrtOracle (a : ℝ) : GeodesicOracle ℝ where
   idempotent _ := rfl
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§8: COMPACTIFICATION ADVANTAGE
+═══════════════════════════════════════════════════════════════════════] -/
 theorem geodesicDist_bounded (t₁ t₂ : ℝ) : geodesicDist t₁ t₂ < 2 * π := by
   unfold geodesicDist invStereoAngle;
   exact abs_lt.mpr ⟨ by linarith [ Real.neg_pi_div_two_lt_arctan t₁, Real.arctan_lt_pi_div_two t₁, Real.neg_pi_div_two_lt_arctan t₂, Real.arctan_lt_pi_div_two t₂ ], by linarith [ Real.neg_pi_div_two_lt_arctan t₁, Real.arctan_lt_pi_div_two t₁, Real.neg_pi_div_two_lt_arctan t₂, Real.arctan_lt_pi_div_two t₂ ] ⟩

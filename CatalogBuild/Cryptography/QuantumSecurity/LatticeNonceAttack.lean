@@ -12,6 +12,7 @@ def hnp_instance (d t a error : ZMod n) : Prop :=
   d * t = a + error
 
 
+/-- [Section: ## §1: Hidden Number Problem (HNP) Algebraic Framework] -/
 theorem ecdsa_to_hnp (d r s z k_known k_unknown : ZMod n)
     (hk : k_known + k_unknown ≠ 0)
     (hs : s = (k_known + k_unknown)⁻¹ * (z + r * d))
@@ -115,6 +116,7 @@ theorem grover_doublings :
     Nat.log 2 (grover_physical_qubits / 1200 + 1) = 4 := by native_decide
 
 
+/-- [Section: ## §3: Reduced-Qubit Attack Model] -/
 theorem grover_timeline_years :
     2 * Nat.log 2 (grover_physical_qubits / 1200 + 1) = 8 := by native_decide
 
@@ -171,6 +173,7 @@ structure NonceVulnerability where
   leaked_bits : ℕ
 
 
+/-- [Section: ## §5: Vulnerability Prevalence] -/
 def vuln_android_bitcoin : NonceVulnerability := ⟨"Android SecureRandom", 2013, 55000, 32⟩
 
 def vuln_yubikey : NonceVulnerability := ⟨"YubiKey ECDSA", 2019, 100000, 2⟩

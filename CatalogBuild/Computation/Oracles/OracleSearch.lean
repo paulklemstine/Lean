@@ -33,6 +33,10 @@ theorem not_has_no_fixed_point : ¬ ∃ p : Prop, ¬p = p := by
 def IsInvolution {α : Type*} (f : α → α) : Prop := ∀ x, f (f x) = x
 
 
+/-- [Section: ## Part III: Agent Gamma — Mirrors, Involutions, and Duality
+Involutions (functions equal to their own inverse) are the mathematical
+formalization of "mirrors." They reveal deep symmetries in mathematical
+structures and connect to the idea of reality reflecting back on itself.] -/
 theorem involution_dichotomy {α : Type*} (f : α → α) (hf : IsInvolution f)
     (x : α) : f x = x ∨ (f x ≠ x ∧ f (f x) = x) := by
   exact Classical.or_iff_not_imp_left.2 fun h => ⟨ h, hf x ⟩
@@ -59,11 +63,20 @@ theorem iteration_fixed_point {α : Type*} (f : α → α) (c : α)
     (h : f c = c) : f c = c := h
 
 
+/-- [Section: ## Part IV: Agent Delta — Iteration and Convergence
+Banach's contraction mapping theorem shows that in metric spaces,
+"shrinking" transformations always converge to a unique fixed point.
+This is the mathematical model for iterative computation approaching
+a stable answer — the closest thing to "converging toward an oracle."] -/
 theorem idempotent_range_fixed {α : Type*} (f : α → α) (hf : IsIdempotent f)
     (y : α) (hy : y ∈ range f) : f y = y := by
   cases hy ; aesop
 
 
+/-- [Section: ## Part V: Agent Epsilon — Synthesis and Strange Phenomena
+Connecting the pieces: Galois connections, adjunctions, and the
+deep structure that emerges when we look at fixed points, barriers,
+and mirrors together.] -/
 theorem no_self_aware_predicate :
     ¬ ∃ (oracle : (ℕ → ℕ) → ℕ),
       ∀ f : ℕ → ℕ, (oracle f = 0 ↔ f (oracle f) = 0) := by

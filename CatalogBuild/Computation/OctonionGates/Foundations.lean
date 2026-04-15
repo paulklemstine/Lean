@@ -16,6 +16,10 @@ structure OctGate.Oct where
 namespace OctGate.Oct
 
 
+/-- [Section: ## §1: The Octonion Algebra
+We represent octonions as vectors in ℝ⁸ with multiplication defined
+by the Fano plane. An octonion x = x₀ + x₁e₁ + ... + x₇e₇ where
+e₁,...,e₇ are the imaginary units.] -/
 theorem ext {x y : OctGate.Oct} (h : ∀ i, x.c i = y.c i) : x = y := by
   cases x; cases y; congr; ext i; exact h i
 
@@ -87,6 +91,12 @@ def signFlip (i : Fin 8) : OctGate where
     split_ifs <;> ring
 
 
+/-- [Section: ## §3: Gate Structures
+An **octonion gate** is a norm-preserving linear map on ℝ⁸.
+The key insight: in standard quantum computing, gates are unitary
+matrices (elements of U(n)). For octonion computation, gates come
+from the automorphism group G₂ and from left/right multiplication
+by unit octonions.] -/
 noncomputable def givensRotation (i j : Fin 8) (θ : ℝ) (hij : i ≠ j) :
     OctGate where
   toFun := fun v k =>
@@ -147,6 +157,11 @@ def trialityDim : TrialityRep → ℕ
   | _ => 8
 
 
+/-- [Section: ## §5: Triality and Spin(8)
+The octonions exhibit triality: Spin(8) has three inequivalent
+8-dimensional representations (vector, left-spinor, right-spinor)
+related by outer automorphisms. This gives rise to a "triple gate"
+structure unique to dimension 8.] -/
 theorem triality_all_dim_eight (r : TrialityRep) : trialityDim r = 8 := by
   cases r <;> rfl
 

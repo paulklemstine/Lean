@@ -19,11 +19,13 @@ theorem interior_idempotent [TopologicalSpace α] (S : Set α) :
   isOpen_interior.interior_eq
 
 
+/-- [Section: ### Convex Hull is Idempotent] -/
 theorem convex_hull_idempotent {V : Type*} [AddCommMonoid V] [Module ℝ V] (S : Set V) :
     convexHull ℝ (convexHull ℝ S : Set V) = convexHull ℝ S := by
   exact?
 
 
+/-- [Section: ### Linear Span is Idempotent] -/
 theorem span_idempotent {R M : Type*} [Semiring R] [AddCommMonoid M] [Module R M]
     (S : Set M) :
     Submodule.span R (Submodule.span R S : Set M) = Submodule.span R S := by
@@ -67,6 +69,7 @@ theorem galois_closure_idempotent {α β : Type*} [PartialOrder α] [Preorder β
   · exact gc.le_u_l (g (f x))
 
 
+/-- [Section: ### Composing Closures] -/
 theorem closure_comp_comm_is_closure {α : Type*} [PartialOrder α]
     (c₁ c₂ : ClosureOp α)
     (h_comm : ∀ x, c₁.cl (c₂.cl x) = c₂.cl (c₁.cl x)) :

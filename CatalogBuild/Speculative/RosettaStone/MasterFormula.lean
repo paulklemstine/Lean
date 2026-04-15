@@ -13,6 +13,7 @@ def idempotent_count (n : ℕ) [NeZero n] : ℕ :=
 
 -- Verified computations
 
+/-- [Section: ## Part 1: The Classical Idempotent Density] -/
 theorem density_2 : idempotent_count 2 = 2 := by native_decide
 
 theorem density_3 : idempotent_count 3 = 2 := by native_decide

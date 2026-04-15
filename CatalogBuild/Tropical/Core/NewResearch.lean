@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Part I: Max-Plus Arithmetic] -/
 theorem tropPow_zero (a : ℝ) : tropPow a 0 = 0 := by simp [tropPow]
 
 theorem tropPow_one (a : ℝ) : tropPow a 1 = a := by simp [tropPow]
@@ -52,6 +53,7 @@ abbrev TropMatrix (n : ℕ) := Fin n → Fin n → ℝ
 def tropMatLE {n : ℕ} (A B : TropMatrix n) : Prop := ∀ i j, A i j ≤ B i j
 
 
+/-- [Section: ## Part III: Tropical Matrix Algebra] -/
 theorem tropMatMul_mono_left {n : ℕ} [NeZero n] (A A' B : TropMatrix n)
     (h : tropMatLE A A') : tropMatLE (tropMatMul A B) (tropMatMul A' B) := by
   intro i j;
@@ -70,6 +72,7 @@ theorem tropMatMul_mono_right {n : ℕ} [NeZero n] (A B B' : TropMatrix n)
   · grind +locals
 
 
+/-- [Section: ## Part IV: ReLU-Tropical Correspondence] -/
 theorem max_eq_relu_form (a b : ℝ) : max a b = a + relu (b - a) := by
   unfold relu; cases max_cases a b <;> cases max_cases ( b - a ) 0 <;> linarith;
 
@@ -84,6 +87,7 @@ theorem relu_boundary (w b x : ℝ) :
 def tropHalfspace (c : ℝ) : Set ℝ := {x | x ≥ c}
 
 
+/-- [Section: ## Part VI: Tropical Convexity] -/
 theorem tropHalfspace_convex (c : ℝ) : Convex ℝ (tropHalfspace c) := by
   exact convex_Ici c
 
@@ -93,6 +97,7 @@ def tropExpectation {n : ℕ} [NeZero n] (logProb : Fin n → ℝ) (X : Fin n �
   Finset.sup' Finset.univ Finset.univ_nonempty (fun i => logProb i + X i)
 
 
+/-- [Section: ## Part VII: Tropical Probability Theory] -/
 theorem tropExpectation_mono {n : ℕ} [NeZero n] (logProb : Fin n → ℝ)
     (X Y : Fin n → ℝ) (h : ∀ i, X i ≤ Y i) :
     tropExpectation logProb X ≤ tropExpectation logProb Y := by
@@ -138,6 +143,7 @@ theorem logSumExpTemp_one {n : ℕ} [NeZero n] (v : Fin n → ℝ) :
   simp [logSumExpTemp, logSumExp]
 
 
+/-- [Section: ## Part IX: Tropical Circuit Complexity] -/
 theorem max_circuit_size (n : ℕ) (hn : 1 ≤ n) : n - 1 + 1 = n := by omega
 
 

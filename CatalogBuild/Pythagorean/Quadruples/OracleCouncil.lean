@@ -13,6 +13,9 @@ theorem quadruple_perm_abc (a b c d : ℤ) (h : IsPythQuadruple a b c d) :
   unfold IsPythQuadruple at *; linarith
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+ORACLE PYTHAGORAS: Classical Structure of Pythagorean Quadruples
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem quadruple_perm_acb (a b c d : ℤ) (h : IsPythQuadruple a b c d) :
     IsPythQuadruple a c b d := by
   unfold IsPythQuadruple at *; linarith
@@ -38,6 +41,9 @@ theorem euler_four_square' (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ) :
     (a₁*d₂ + b₁*c₂ - c₁*b₂ + d₁*a₂)^2 := by ring
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+ORACLE LEGENDRE: Modular Obstructions
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem square_mod_8' (d : ℤ) : d ^ 2 % 8 = 0 ∨ d ^ 2 % 8 = 1 ∨ d ^ 2 % 8 = 4 := by
   rw [ sq, Int.mul_emod ] ; have := Int.emod_nonneg d ( by decide : ( 8 : ℤ ) ≠ 0 ) ; have := Int.emod_lt_of_pos d ( by decide : ( 0 : ℤ ) < 8 ) ; interval_cases d % 8 <;> trivial;
 

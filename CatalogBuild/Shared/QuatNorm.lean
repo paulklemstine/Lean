@@ -11,6 +11,7 @@ import Mathlib
 def quatNorm (a b c d : ℤ) : ℤ := a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2
 
 
+/-- [Section: ### Quaternion Norm] -/
 theorem quatNorm_nonneg (a b c d : ℤ) : 0 ≤ quatNorm a b c d := by
   unfold quatNorm; positivity
 

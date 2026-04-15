@@ -7,6 +7,7 @@ Declarations: 8
 
 import Mathlib
 
+/-- [Section: ## I. Cantor's Theorem: No Surjection from a Set to Its Power Set] -/
 theorem cantor_no_surjection (α : Type*) : ¬ ∃ f : α → (α → Prop), Surjective f := by
   norm_num at *;
   intro f hf
@@ -21,6 +22,7 @@ theorem cantor_diagonal_not_in_range (α : Type*) (f : α → (α → Prop)) :
   rintro ⟨ a, ha ⟩ ; have := congr_fun ha a ; tauto;
 
 
+/-- [Section: ## II. Cantor's Theorem for Sets: |S| < |𝒫(S)|] -/
 theorem cantor_no_injection_powerset (α : Type*) :
     ¬ ∃ g : Set α → α, Injective g := by
   simp +zetaDelta at *;
@@ -33,6 +35,10 @@ theorem cantor_no_injection_powerset (α : Type*) :
   grind +revert
 
 
+/-- [Section: ## III. The Fixed Point Lemma (Diagonal Lemma)
+The diagonal lemma is the engine of Gödel's incompleteness theorem.
+Given any "representable" transformation, there exists a fixed point —
+a sentence that says something about itself.] -/
 theorem lawvere_fixed_point {α β : Type*} (f : α → (α → β)) (hf : Surjective f)
     (g : β → β) : ∃ x : β, g x = x := by
   -- Let h : α → β be defined by h(x) = g(f(x)(x)).
@@ -46,10 +52,16 @@ theorem cantor_via_lawvere (α : Type*) : ¬ ∃ f : α → (α → Prop), Surje
   apply cantor_no_surjection
 
 
+/-- [Section: ## IV. Russell's Paradox as Diagonal Argument
+Russell's paradox is Cantor's diagonal argument applied to the "set of all sets."
+We formalize it as a theorem about type-theoretic predicates.] -/
 theorem russell_paradox : ¬ ∃ (P : Prop), P ↔ ¬P := by
   grind
 
 
+/-- [Section: ## V. The Diagonal Method Generates All Impossibility
+We show that the diagonal argument pattern is *universal* — it captures
+the essence of every impossibility result about self-reference.] -/
 theorem no_universal_decider (α : Type*) (test : α → α → Prop) :
     ∃ P : α → Prop, ∀ a : α, P ≠ test a := by
   exact ⟨ fun a => ¬test a a, fun a => fun h => by simpa using congr_fun h a ⟩

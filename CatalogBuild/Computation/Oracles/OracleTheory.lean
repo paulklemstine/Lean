@@ -35,6 +35,21 @@ theorem empty_anti_universal : (empty : Oracle α).anti = universal := by
   ext x; simp [anti, empty, universal]
 
 
+/-- [Section: # Oracle Theory: Anti-Oracles, Inverse Oracles, and Oracle Duality
+This file formalizes new concepts in oracle theory, exploring the structure
+of anti-oracles (complement oracles), inverse oracles, and their algebraic properties.
+## Main Definitions
+* `Oracle` - A predicate (subset) modeling a computational oracle
+* `Oracle.anti` - The complement oracle (anti-oracle) that negates all answers
+* `InverseOracle` - An oracle for the preimage of a function
+* `OracleBoolAlg` - The Boolean algebra structure on oracles
+## Main Results
+* `anti_involution` - Applying anti-oracle twice returns the original
+* `anti_join` / `anti_meet` - De Morgan's laws for oracle operations
+* `pullback_anti` - Pullback commutes with anti-oracle
+* `pullback_comp` - Pullback is functorial
+* `contrarian_oracle_equiv` - A contrarian oracle is equivalent to a correct oracle
+* `oracle_info_equiv` - An oracle and its anti carry the same information] -/
 theorem universal_anti_empty : (universal : Oracle α).anti = empty := by
   ext x; simp [anti, empty, universal]
 

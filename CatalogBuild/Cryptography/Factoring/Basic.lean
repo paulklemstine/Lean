@@ -44,6 +44,7 @@ theorem pollardMap_commutes_with_castHom {n p : ℕ} (hp : p ∣ n)
   simp [pollardMap, map_add, map_mul]
 
 
+/-- [Section: ## Section 3: Factor from Collision] -/
 theorem factor_from_mod_collision {n p : ℕ} {x y : ℤ}
     (hn : 1 < n)
     (hp_dvd_n : (p : ℤ) ∣ (n : ℤ))
@@ -69,6 +70,7 @@ theorem factor_from_mod_collision_lt {n p : ℕ} {x y : ℤ}
   exact Int.dvd_trans ( by norm_num ) ( h ▸ Int.gcd_dvd_left _ _ )
 
 
+/-- [Section: ## Section 4: Eventual Periodicity and Pigeonhole] -/
 theorem collision_within_card {α : Type*} [Fintype α] [DecidableEq α]
     (f : α → α) (x₀ : α) :
     ∃ i j, i < j ∧ j ≤ Fintype.card α ∧ f^[i] x₀ = f^[j] x₀ := by
@@ -76,6 +78,7 @@ theorem collision_within_card {α : Type*} [Fintype α] [DecidableEq α]
   exact absurd ( Finset.card_le_univ ( Finset.image ( fun i => f^[i] x₀ ) ( Finset.range ( Fintype.card α + 1 ) ) ) ) ( by rw [ Finset.card_image_of_injOn fun i hi j hj hij => le_antisymm ( not_lt.mp fun hi' => h_contra ⟨ j, i, hi', by linarith [ Finset.mem_range.mp hi, Finset.mem_range.mp hj ], hij.symm ⟩ ) ( not_lt.mp fun hj' => h_contra ⟨ i, j, hj', by linarith [ Finset.mem_range.mp hi, Finset.mem_range.mp hj ], hij ⟩ ) ] ; simp +decide )
 
 
+/-- [Section: ## Section 5: Floyd's Cycle Detection] -/
 theorem floyd_detection {α : Type*} [Fintype α] [DecidableEq α]
     (f : α → α) (x₀ : α) :
     ∃ k, 0 < k ∧ k ≤ Fintype.card α ∧ f^[k] x₀ = f^[2 * k] x₀ := by
@@ -103,6 +106,7 @@ theorem floyd_detection {α : Type*} [Fintype α] [DecidableEq α]
   exact h_no_k ⟨ k', hk'.1, hk'.2.1, h_eq_k' ⟩
 
 
+/-- [Section: ## Section 6: Reduction preserves orbits] -/
 theorem orbit_map_commute {α β : Type*} (f : α → α) (g : β → β) (π : α → β)
     (hcomm : ∀ x, π (f x) = g (π x)) (x₀ : α) (n : ℕ) :
     π (f^[n] x₀) = g^[n] (π x₀) := by

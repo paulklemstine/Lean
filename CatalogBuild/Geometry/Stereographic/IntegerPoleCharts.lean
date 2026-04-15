@@ -39,6 +39,7 @@ theorem intPoleChart_det_ne_zero {n m : ℝ} (h : n ≠ m) : n - m ≠ 0 := by
   intro h'; exact h (by linarith)
 
 
+/-- [Section: ## Part III: Inverse Properties] -/
 theorem intPoleChart_inv_left (n m z : ℝ) (hz : z ≠ -1) (hnm : n ≠ m) :
     intPoleChartInv n m (intPoleChart n m z) = z := by
   unfold intPoleChartInv intPoleChart;
@@ -51,6 +52,7 @@ theorem intPoleChart_inv_right (n m w : ℝ) (hw : w ≠ n) (hnm : n ≠ m) :
   grind
 
 
+/-- [Section: ## Part IV: Transition Maps] -/
 theorem transition_is_affine (n₁ m₁ n₂ m₂ w : ℝ)
     (hw : w ≠ n₁) (h₁ : n₁ ≠ m₁) (h₂ : n₂ ≠ m₂) :
     intPoleChart n₂ m₂ (intPoleChartInv n₁ m₁ w) = chartTransition n₁ m₁ n₂ m₂ w := by
@@ -58,6 +60,7 @@ theorem transition_is_affine (n₁ m₁ n₂ m₂ w : ℝ)
   grind
 
 
+/-- [Section: ## Part V: Pole-Swap Duality] -/
 theorem pole_swap_involution (t : ℝ) (ht : t ≠ 0) : 1 / (1 / t) = t := by
   norm_num [ ht ]
 
@@ -109,6 +112,7 @@ theorem effectiveDenom_nonneg (n m w : ℝ) : 0 ≤ effectiveDenom n m w := by
   unfold effectiveDenom; positivity
 
 
+/-- [Section: ## Part VIII: Gaussian Integer Connection] -/
 theorem effectiveDenom_pos (n m w : ℝ) (hnm : n ≠ m) : 0 < effectiveDenom n m w := by
   exact add_pos_of_pos_of_nonneg ( sq_pos_of_ne_zero ( sub_ne_zero.mpr hnm ) ) ( sq_nonneg _ )
 
@@ -129,6 +133,7 @@ theorem transition_identity_scale (n m : ℝ) (hnm : n ≠ m) :
   field_simp
 
 
+/-- [Section: ## Part IX: Transition Group Properties] -/
 theorem transition_identity (n m w : ℝ) (hnm : n ≠ m) :
     chartTransition n m n m w = w := by
   grind +locals

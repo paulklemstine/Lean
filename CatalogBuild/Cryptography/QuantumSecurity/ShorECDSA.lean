@@ -17,6 +17,19 @@ def ecdsa_sign_equation (k z r d : ZMod n) : ZMod n :=
 /-- The ECDSA verification parameters. -/
 def ecdsa_verify_u1 (z s : ZMod n) : ZMod n := z * s⁻¹
 
+/-- [Section: ## §1: ECDSA Signature Scheme — Algebraic Structure
+ECDSA signing (simplified, in ZMod n where n is the curve group order):
+- Private key: d ∈ {1, ..., n-1}
+- Public key: Q = d·G
+- Sign message hash z:
+1. Choose random nonce k
+2. Compute R = k·G, let r = R.x mod n
+3. Compute s = k⁻¹ · (z + r·d) mod n
+4. Signature is (r, s)
+- Verify:
+1. Compute u₁ = z·s⁻¹, u₂ = r·s⁻¹
+2. Compute R' = u₁·G + u₂·Q
+3. Accept iff R'.x ≡ r (mod n)] -/
 def ecdsa_verify_u2 (r s : ZMod n) : ZMod n := r * s⁻¹
 
 
@@ -276,6 +289,7 @@ def quantum_preimage_security (hash_bits : ℕ) : ℕ := hash_bits / 2
 /-- Bitcoin address preimage security (RIPEMD-160 output). -/
 theorem bitcoin_address_classical : classical_preimage_security 160 = 160 := rfl
 
+/-- [Section: ## §7: Hash Preimage Quantum Security] -/
 theorem bitcoin_address_quantum : quantum_preimage_security 160 = 80 := by native_decide
 
 
@@ -303,6 +317,9 @@ theorem ecdlp_dominates_hash_attack :
 /-- Error suppression ratio Λ from Willow: Λ ≈ 2.14. -/
 def willow_lambda_numerator : ℕ := 214
 
+/-- [Section: ## §8: Timeline Model with Error Correction Scaling
+Google's Willow chip demonstrated that quantum error correction improves
+with scale (below threshold). We model the implications for attack timelines.] -/
 def willow_lambda_denominator : ℕ := 100
 
 
@@ -350,6 +367,7 @@ theorem accelerated_timeline :
 /-- Signature sizes for different schemes (bytes). -/
 def ecdsa_sig_size : ℕ := 72
 
+/-- [Section: ## §9: Post-Quantum Cryptocurrency Migration Analysis] -/
 def dilithium_sig_size : ℕ := 2420
 
 def falcon_sig_size : ℕ := 690

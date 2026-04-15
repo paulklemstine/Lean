@@ -7,6 +7,7 @@ Declarations: 11
 
 import Mathlib
 
+/-- [Section: ### Euler's Criterion] -/
 theorem euler_criterion_forward (p : ℕ) [Fact (Nat.Prime p)] (hodd : p ≠ 2)
     (a : ZMod p) (ha : a ≠ 0) (hx : ∃ x : ZMod p, x ^ 2 = a) :
     a ^ ((p - 1) / 2) = 1 := by
@@ -20,6 +21,7 @@ theorem legendreSym_mul' (p : ℕ) [Fact (Nat.Prime p)] (a b : ℤ) :
   legendreSym.mul p a b
 
 
+/-- [Section: ### Specific QR Results] -/
 theorem neg_one_qr_iff_one_mod_four (p : ℕ) [Fact (Nat.Prime p)] (hodd : p ≠ 2) :
     (∃ x : ZMod p, x ^ 2 = -1) ↔ p % 4 = 1 := by
   constructor <;> intro h;
@@ -56,6 +58,7 @@ theorem qr_one (n : ℕ) : ∃ x : ZMod n, x ^ 2 = (1 : ZMod n) :=
   ⟨1, by ring⟩
 
 
+/-- [Section: ### QR Closure Properties] -/
 theorem qr_mul' (n : ℕ) (a b : ZMod n)
     (ha : ∃ x : ZMod n, x ^ 2 = a)
     (hb : ∃ y : ZMod n, y ^ 2 = b) :
@@ -65,6 +68,7 @@ theorem qr_mul' (n : ℕ) (a b : ZMod n)
   exact ⟨x * y, by rw [mul_pow, hx, hy]⟩
 
 
+/-- 2 is a QR mod 7: 3² = 9 ≡ 2 (mod 7) -/
 theorem two_qr_mod_7 : ∃ x : ZMod 7, x ^ 2 = 2 := ⟨3, by decide⟩
 
 -- 2 is NOT a QR mod 5: check all residues

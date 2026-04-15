@@ -28,6 +28,7 @@ theorem spbF_neg_self {F : Type*} [Field F] (x : F) : spbF x (-x) = 0 := by
   simp [spbF]
 
 
+/-- [Section: ## Section 5: SPB over General Fields] -/
 theorem spbF_assoc {F : Type*} [Field F] (x y z : F)
     (hxy : x * y ≠ 1) (hyz : y * z ≠ 1)
     (hxyz : x * spbF y z ≠ 1) (hxyz' : spbF x y * z ≠ 1) :

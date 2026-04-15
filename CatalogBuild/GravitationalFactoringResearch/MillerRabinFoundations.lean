@@ -7,6 +7,17 @@ Declarations: 8
 
 import Mathlib
 
+/-- [Section: # Miller-Rabin Primality Test — Formal Foundations — v11
+## Overview
+We formalize the foundations of the Miller-Rabin probabilistic primality test,
+building on the Euler criterion and quadratic reciprocity from v10.
+## Main Results
+* `odd_decomp` — n - 1 = 2^s · d with d odd
+* `miller_rabin_witness` — Definition of strong witness
+* `prime_passes_miller_rabin` — Primes pass all Miller-Rabin tests
+* `fermat_pseudoprime_341` — 341 is a Fermat pseudoprime
+* `strong_pseudoprime_2047_base2` — 2047 is the smallest strong psp to base 2
+* `carmichael_561_witness` — Base 7 catches 561] -/
 theorem odd_decomp (n : ℕ) (hn : 2 < n) (hodd : ¬ 2 ∣ n) :
     ∃ s d : ℕ, 0 < s ∧ ¬ 2 ∣ d ∧ n - 1 = 2 ^ s * d := by
   -- Let $s$ be the 2-adic valuation of $n-1$, i.e., $s = \text{padicValNat } 2 (n-1)$.

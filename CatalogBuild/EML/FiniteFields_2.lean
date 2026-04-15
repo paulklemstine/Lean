@@ -28,6 +28,7 @@ theorem spbField_neg (x : F) : spbField x (-x) = 0 := by
   simp [spbField]
 
 
+/-- [Section: ## SPB over a general field] -/
 theorem spbField_assoc (x y z : F)
     (h1 : 1 - x * y ≠ 0) (h2 : 1 - y * z ≠ 0)
     (h3 : 1 - spbField x y * z ≠ 0) (h4 : 1 - x * spbField y z ≠ 0) :
@@ -36,12 +37,14 @@ theorem spbField_assoc (x y z : F)
   grind
 
 
+/-- [Section: ## The SPB Group Structure] -/
 theorem spbField_denom_product (x y z : F) (h1 : 1 - x * y ≠ 0) (h2 : 1 - y * z ≠ 0) :
     (1 - x * y) * (1 - spbField x y * z) = (1 - y * z) * (1 - x * spbField y z) := by
   unfold spbField;
   grind
 
 
+/-- [Section: ## SPB Fixed Points] -/
 theorem spbField_fixed_point (x a : F) (ha : a ≠ 0) (hd : 1 - x * a ≠ 0) :
     spbField x a = x ↔ x ^ 2 = -1 := by
   -- By definition of spbField, we have spbField x a = (x + a) / (1 - x * a).

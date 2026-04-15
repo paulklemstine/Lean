@@ -7,6 +7,10 @@ Declarations: 13
 
 import Mathlib
 
+/-- [Section: ## Part 1: Exponential Growth of Hilbert Space Dimension
+The fundamental source of quantum advantage: n qubits live in a
+2^n-dimensional Hilbert space, while n classical bits encode only n
+bits of information.] -/
 theorem hilbert_space_dim_exponential (n : ℕ) :
     (2 : ℕ) ^ n = Fintype.card (Fin (2 ^ n)) := by
       norm_num
@@ -22,6 +26,9 @@ theorem quantum_vs_classical_params (L : ℕ) (hL : 5 ≤ L) :
       exact Nat.le_induction ( by decide ) ( fun k hk ih => by norm_num [ Nat.pow_succ ] at * ; nlinarith ) L hL
 
 
+/-- [Section: ## Part 2: Entanglement Entropy Bounds
+Entanglement entropy grows at most linearly with the number of qubits,
+but this linear entropy indexes an exponentially large space.] -/
 theorem max_entropy_linear_bound (n : ℕ) :
     (n : ℝ) * Real.log 2 = Real.log (2 ^ n : ℝ) := by
       rw [Real.log_pow]
@@ -46,6 +53,10 @@ theorem superdense_coding_capacity (n : ℕ) :
     2 * n = n + n := by ring
 
 
+/-- [Section: ## Part 4: Quantum Channel Expressivity
+Quantum channels (CPTP maps) are strictly more expressive than
+classical stochastic maps. This is the core of the exponential
+advantage claim.] -/
 theorem channel_dimension_gap (d : ℕ) (hd : 2 ≤ d) :
     d ^ 4 - d ^ 2 > (d - 1) ^ 2 := by
       rcases d with ( _ | _ | d ) <;> norm_num at *;
@@ -59,6 +70,10 @@ theorem quantum_classical_expressivity_ratio (n : ℕ) (hn : 1 ≤ n) :
       rw [ Nat.cast_sub, Nat.cast_sub ] <;> norm_num [ pow_succ' ] <;> induction' n with n ih <;> norm_num [ pow_succ' ] at * <;> nlinarith [ pow_pos ( by decide : 0 < 2 ) n ]
 
 
+/-- [Section: ## Part 5: Decoherence Constraint
+The practical barrier: decoherence limits how many sequential
+quantum operations can be performed before the quantum state
+collapses into a classical mixture.] -/
 theorem decoherence_fidelity_bound (ε : ℝ) (T : ℕ)
     (hε_pos : 0 < ε) (hε_lt : ε < 1) :
     (1 - ε) ^ T > 0 := by

@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: FutureResearch
-Declarations: 44
+Declarations: 45
 -/
 
 import CatalogBuild.FutureResearch.OpenDirections
@@ -51,6 +51,7 @@ structure FactoringLens where
   reduces : ∀ N, apply N ≤ N
 
 
+/-- [Section: ## 4. Categorical Lens Theory] -/
 def idLens : FactoringLens where
   apply := id; reduces := fun _ => le_refl _
 
@@ -100,6 +101,15 @@ theorem tropical_crt (e₁ e₂ : ℕ) : (e₁ + 1) * (e₂ + 1) ≥ e₁ + e₂
 /-- Totient is multiplicative on coprimes. -/
 theorem totient_mult (m n : ℕ) (h : Nat.Coprime m n) :
     Nat.totient (m * n) = Nat.totient m * Nat.totient n := Nat.totient_mul h
+
+
+/-- Euler's four-square identity. -/
+theorem euler_four_square (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ) :
+    (a₁^2 + b₁^2 + c₁^2 + d₁^2) * (a₂^2 + b₂^2 + c₂^2 + d₂^2) =
+    (a₁*a₂ + b₁*b₂ + c₁*c₂ + d₁*d₂)^2 +
+    (a₁*b₂ - b₁*a₂ + c₁*d₂ - d₁*c₂)^2 +
+    (a₁*c₂ - c₁*a₂ + d₁*b₂ - b₁*d₂)^2 +
+    (a₁*d₂ - d₁*a₂ + b₁*c₂ - c₁*b₂)^2 := by ring
 
 
 /-- gcd(a, N) divides N. -/
@@ -180,6 +190,7 @@ theorem prime_count (B : ℕ) :
   (Finset.card_filter_le _ _).trans (by simp)
 
 
+/-- [Section: ## 11. Multi-Lens Complexity] -/
 theorem mlc_zero (N : ℕ) : N / 2 ^ 0 = N := by simp
 
 
@@ -207,22 +218,27 @@ theorem qr_bound (p q : ℕ) (hp : 2 < p) (hq : 2 < q) :
     _ ≤ p * q := Nat.mul_le_mul (by omega) (by omega)
 
 
+/-- [Section: ## 13. Genus-2 Independence] -/
 theorem genus2_size (p : ℕ) (hp : 2 ≤ p) : p < p ^ 2 := by nlinarith
 
 
 theorem genus_dim_total : 1 + 2 = 3 := by norm_num
 
 
+/-- [Section: ## 14. LWE Connection] -/
 theorem lwe_noise (q η : ℕ) (h : 2 * η < q) : η < q := by omega
 
 
+/-- [Section: ## 15. Sum-Product Constraint] -/
 theorem sum_product (p q : ℕ) (hp : 1 ≤ p) (hq : 1 ≤ q) :
     p + q ≤ p * q + 1 := by nlinarith
 
 
+/-- [Section: ## 16. Analytic Number Theory] -/
 theorem prime_le (n : ℕ) (hn : 2 ≤ n) : ∃ p, Nat.Prime p ∧ p ≤ n :=
   ⟨2, by decide, hn⟩
 
 
+/-- [Section: ## 17. Formal Verification] -/
 theorem proof_comp {A B C : Prop} (f : A → B) (g : B → C) : A → C := g ∘ f
 

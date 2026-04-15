@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Part I: The Tropical Semiring (Max-Plus Algebra)] -/
 theorem tAdd_comm (a b : ℝ) : tAdd a b = tAdd b a := max_comm a b
 
 theorem tAdd_assoc (a b c : ℝ) : tAdd (tAdd a b) c = tAdd a (tAdd b c) := max_assoc _ _ _
@@ -99,6 +100,7 @@ theorem sum_exp_pos {n : ℕ} (v : Fin (n + 1) → ℝ) :
   Finset.sum_pos (fun _ _ => exp_pos _) Finset.univ_nonempty
 
 
+/-- [Section: ## Part V: LogSumExp — The Soft Maximum] -/
 theorem logSumExp_le {n : ℕ} (v : Fin (n + 1) → ℝ) :
     logSumExp v ≤
     Finset.sup' Finset.univ ⟨0, Finset.mem_univ 0⟩ v + Real.log (↑(n + 1)) := by
@@ -145,6 +147,7 @@ noncomputable def layerNormMean {n : ℕ} [NeZero n] (x : Fin n → ℝ) : ℝ :
   (∑ i, x i) / n
 
 
+/-- [Section: ## Part VIII: Residual Connections] -/
 theorem layerNormMean_const {n : ℕ} [NeZero n] (c : ℝ) :
     layerNormMean (fun _ : Fin n => c) = c := by
   simp [layerNormMean, Finset.sum_const]
@@ -155,6 +158,7 @@ theorem layerNormMean_const {n : ℕ} [NeZero n] (c : ℝ) :
 def causalMask (i j : ℕ) : Prop := j ≤ i
 
 
+/-- [Section: ## Part IX: Causal Mask] -/
 theorem causalMask_refl (i : ℕ) : causalMask i i := le_refl i
 
 theorem causalMask_trans {i j k : ℕ} (hkj : causalMask k j) (hji : causalMask j i) :
@@ -167,6 +171,7 @@ theorem causal_attention_count (i : ℕ) :
   simp [Finset.filter_true_of_mem]
 
 
+/-- [Section: ## Part X: GPT-2 Architecture Constants] -/
 def gpt2_n_layer : ℕ := 12
 
 def gpt2_n_head : ℕ := 12
@@ -204,6 +209,7 @@ noncomputable def geluApprox (x : ℝ) : ℝ :=
   x * (1 / (1 + exp (-(1.702 * x))))
 
 
+/-- [Section: ## Part XI: GELU Properties] -/
 theorem geluApprox_zero : geluApprox 0 = 0 := by simp [geluApprox]
 
 

@@ -31,6 +31,7 @@ def eTow9 : ℕ → ℝ
   | n + 1 => Real.exp (eTow9 n)
 
 
+/-- [Section: ## Section 1: Basic EML Identities] -/
 theorem EML9_exp (x : ℝ) : EML9 x 1 = Real.exp x := by
   simp [EML9, Real.log_one]
 
@@ -95,6 +96,7 @@ theorem diagMap9_ge_two (x : ℝ) (hx : 0 < x) : diagMap9 x ≥ 2 := by
   linarith [Real.add_one_le_exp x, Real.log_le_sub_one_of_pos hx]
 
 
+/-- [Section: ## Section 2: Diagonal Map Properties] -/
 theorem diagMap9_no_fixed_point (x : ℝ) (hx : 0 < x) : diagMap9 x ≠ x := by
   -- Use that exp(x) ≥ 1 + x + x²/2 and ln(x) ≤ x - 1.
   have h_exp_ln : Real.exp x ≥ 1 + x + x^2 / 2 ∧ Real.log x ≤ x - 1 := by
@@ -135,6 +137,7 @@ theorem diagMap9_critical_equiv (x : ℝ) (hx : 0 < x) :
   · intro h; field_simp at h ⊢; linarith
 
 
+/-- [Section: ## Section 4: P-M1 — Depth Hierarchy Witnesses] -/
 theorem depth9_sep_exp_exp :
     ¬ ∃ a b : ℝ, ∀ x : ℝ, Real.exp (Real.exp x) = Real.exp (a * x + b) := by
   simp +zetaDelta at *;
@@ -221,12 +224,14 @@ theorem T9_one_no_fixed (x : ℝ) : T9 1 x > x := by
   linarith [Real.add_one_le_exp x]
 
 
+/-- [Section: ## Section 8: Semigroup Properties] -/
 theorem T9_noncomm : ∃ c₁ c₂ x : ℝ, T9 c₁ (T9 c₂ x) ≠ T9 c₂ (T9 c₁ x) := by
   unfold T9;
   refine' ⟨ 1, Real.exp 1, 0, _ ⟩ ; norm_num;
   linarith [ Real.add_one_lt_exp one_ne_zero ]
 
 
+/-- [Section: ## Section 9: e-Tower Properties] -/
 theorem eTow9_pos (n : ℕ) : 0 < eTow9 n := by
   induction n with
   | zero => simp [eTow9]
@@ -267,6 +272,7 @@ theorem diagMap9_compose (x : ℝ) :
   simp [diagMap9]
 
 
+/-- [Section: ## Section 11: Number Theory Connections] -/
 theorem exp_exp9_gt_four : Real.exp (Real.exp 1) > 4 := by
   rw [ show ( 4 : ℝ ) = ( Real.exp 1 ) * ( 4 / Real.exp 1 ) by rw [ mul_div_cancel₀ _ <| ne_of_gt <| Real.exp_pos _ ] ];
   have := Real.exp_one_gt_d9;
@@ -275,6 +281,7 @@ theorem exp_exp9_gt_four : Real.exp (Real.exp 1) > 4 := by
   exact lt_of_le_of_lt ( mul_le_mul_of_nonneg_left ( Real.log_two_lt_d9.le ) zero_le_two ) ( by norm_num; linarith )
 
 
+/-- [Section: ## Section 12: EML Non-Commutativity and Non-Associativity] -/
 theorem EML9_noncomm : ∃ x y : ℝ, EML9 x y ≠ EML9 y x := by
   unfold EML9;
   use 0, 1; norm_num;

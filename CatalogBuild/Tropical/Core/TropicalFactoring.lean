@@ -9,6 +9,9 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ================================================================
+PART I: P-ADIC VALUATIONS AS TROPICAL COORDINATES
+================================================================] -/
 theorem padic_val_mul_eq_add {p : ℕ} (hp : Nat.Prime p) {a b : ℕ}
     (ha : a ≠ 0) (hb : b ≠ 0) :
     padicValNat p (a * b) = padicValNat p a + padicValNat p b := by
@@ -36,6 +39,9 @@ theorem tropical_fundamental_theorem_of_arithmetic {a b : ℕ} (ha : 0 < a) (hb 
   · ext p; by_cases hp : Nat.Prime p <;> simp_all +decide [ Nat.factorization ] ;
 
 
+/-- [Section: ================================================================
+PART II: GCD AND LCM AS TROPICAL OPERATIONS
+================================================================] -/
 theorem padic_val_gcd {p : ℕ} (hp : Nat.Prime p) {a b : ℕ}
     (ha : 0 < a) (hb : 0 < b) :
     padicValNat p (Nat.gcd a b) = min (padicValNat p a) (padicValNat p b) := by
@@ -60,6 +66,9 @@ theorem tropical_gcd_lcm_identity {p : ℕ} (hp : Nat.Prime p) {a b : ℕ}
   have := @padic_val_lcm p hp a b ha hb; ( have := @padic_val_gcd p hp a b ha hb; aesop; )
 
 
+/-- [Section: ================================================================
+PART III: DIVISIBILITY AS TROPICAL ORDERING
+================================================================] -/
 theorem dvd_iff_padic_le {a b : ℕ} (ha : 0 < a) (hb : 0 < b) :
     a ∣ b ↔ ∀ p : ℕ, Nat.Prime p → padicValNat p a ≤ padicValNat p b := by
   rw [ ← Nat.factorization_le_iff_dvd ];
@@ -76,6 +85,9 @@ def IsTropicalFactoring (n a b : ℕ) : Prop :=
   a * b = n ∧ 1 < a ∧ 1 < b
 
 
+/-- [Section: ================================================================
+PART IV: TROPICAL FACTORING FRAMEWORK
+================================================================] -/
 theorem tropical_factoring_decomposition {n a b : ℕ} {p : ℕ} (hp : Nat.Prime p)
     (hf : IsTropicalFactoring n a b) :
     padicValNat p n = padicValNat p a + padicValNat p b := by
@@ -99,6 +111,9 @@ def totalTropicalWeight (n : ℕ) (primes : Finset ℕ) : ℕ :=
   primes.sum (fun p => padicValNat p n)
 
 
+/-- [Section: ================================================================
+PART VI: THE TROPICAL NORM AND FACTORING COMPLEXITY
+================================================================] -/
 theorem totalTropicalWeight_mul {a b : ℕ} (ha : a ≠ 0) (hb : b ≠ 0)
     (primes : Finset ℕ) (hprimes : ∀ p ∈ primes, Nat.Prime p) :
     totalTropicalWeight (a * b) primes =
@@ -115,6 +130,9 @@ theorem bigOmega_eq_tropical_weight (n : ℕ) (hn : 0 < n) :
   omega
 
 
+/-- [Section: ================================================================
+PART VII: TROPICAL PERSPECTIVE ON TRIAL DIVISION
+================================================================] -/
 theorem trial_division_clears_coordinate {n p : ℕ} (hp : Nat.Prime p)
     (hn : 0 < n) (hdvd : p ∣ n) :
     padicValNat p (n / p) + 1 = padicValNat p n := by
@@ -151,6 +169,9 @@ theorem birthday_bound_sqrt (n : ℕ) (hn : 1 < n) :
   exact Nat.le_sqrt.mpr this
 
 
+/-- [Section: ================================================================
+PART X: TROPICAL LATTICE STRUCTURE
+================================================================] -/
 theorem tropical_lattice_min_max (a b c : ℕ) :
     min a (max b c) = max (min a b) (min a c) := by
   grind
@@ -166,6 +187,9 @@ theorem tropical_absorption_max_min (a b : ℕ) :
   cases le_total a b <;> simp +decide [ * ]
 
 
+/-- [Section: ================================================================
+PART XI: NUMBER FIELD SIEVE — TROPICAL INTERPRETATION
+================================================================] -/
 theorem even_valuations_implies_square {n : ℕ} (_hn : 0 < n) :
     ∀ k : ℕ, n ^ (2 * k) = (n ^ k) ^ 2 := by
   exact fun k => by ring;

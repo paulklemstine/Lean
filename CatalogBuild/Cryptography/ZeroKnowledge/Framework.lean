@@ -57,6 +57,7 @@ noncomputable def schnorrExponent :
   verify stmt com ch resp := resp = com.1 + ch * stmt
 
 
+/-- [Section: ## Concrete Schnorr Sigma Protocol in ZMod q] -/
 theorem schnorrExponent_complete :
     IsComplete (schnorrExponent (q := q)) := by
   intro stmt wit hrel ch
@@ -80,6 +81,7 @@ def OrRelation {S₁ S₂ W₁ W₂ : Type}
   | Sum.inr w₂ => R₂ stmt.2 w₂
 
 
+/-- [Section: ## OR-Composition of Sigma Protocols] -/
 theorem or_relation_left {S₁ S₂ W₁ W₂ : Type}
     {R₁ : S₁ → W₁ → Prop} {R₂ : S₂ → W₂ → Prop}
     {s₁ : S₁} {s₂ : S₂} {w₁ : W₁}

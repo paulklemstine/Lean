@@ -12,6 +12,7 @@ theorem four_k_sq_sub_one_eq (k : ℤ) : 4 * k ^ 2 - 1 = (2 * k - 1) * (2 * k + 
   ring
 
 
+/-- [Section: ## Section 2: Soundness of the IOF criterion] -/
 theorem iof_soundness (N : ℕ) (k : ℤ) (d : ℕ)
     (hd_eq : d = Int.gcd (4 * k ^ 2 - 1) (↑N))
     (hd_gt : 1 < d)
@@ -20,6 +21,7 @@ theorem iof_soundness (N : ℕ) (k : ℤ) (d : ℕ)
   exact ⟨ hd_eq ▸ Int.natCast_dvd_natCast.mp ( Int.gcd_dvd_right _ _ ), hd_gt, hd_lt ⟩
 
 
+/-- [Section: ## Section 3: Existence of valid k values] -/
 theorem iof_factor_exists (p : ℕ) (hp : Nat.Prime p) (hp_odd : p ≠ 2) :
     ∃ k : ℤ, 0 < k ∧ k < p ∧ (↑p : ℤ) ∣ (4 * k ^ 2 - 1) := by
   -- By Fermat's Little Theorem, there exists an integer `k` such that `2k ≡ 1 (mod p)`.
@@ -35,6 +37,7 @@ theorem iof_gcd_nontrivial (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
   exact Nat.le_of_dvd ( Nat.pos_of_ne_zero ( mt Int.gcd_eq_zero_iff.mp ( by aesop ) ) ) ( Nat.dvd_gcd ( Int.natAbs_dvd_natAbs.mpr hdvd ) ( dvd_mul_right _ _ ) )
 
 
+/-- [Section: ## Section 4: Density analysis — the algorithm is equivalent to random search] -/
 theorem residues_2k_minus_one (p : ℕ) (hp : Nat.Prime p) (hp_odd : p ≠ 2) :
     ∃! r : ZMod p, (2 : ZMod p) * r = 1 := by
   -- Let's choose the unique solution $r \equiv 2^{-1} \pmod{p}$ to $2r \equiv 1 \pmod{p}$.

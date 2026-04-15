@@ -60,6 +60,7 @@ theorem expTower_strictMono_step (x : ℝ) (hx : 0 < x) (n : ℕ) :
     exact Real.exp_strictMono ih
 
 
+/-- [Section: ## The EML Exp-Tower] -/
 theorem expTower_unbounded (x : ℝ) (hx : 0 < x) :
     ∀ M : ℝ, ∃ n : ℕ, M < expTower x n := by
   -- By induction, we show that expTower x n ≥ n - 1 for all n.
@@ -77,6 +78,7 @@ def emlDiagIter (x₀ : ℝ) : ℕ → ℝ
   | n + 1 => Real.exp (emlDiagIter x₀ n) - Real.log (emlDiagIter x₀ n)
 
 
+/-- [Section: ## EML Diagonal Iteration] -/
 theorem emlDiag_increases (x : ℝ) (hx : 0 < x) :
     Real.exp x - Real.log x > x := by
   by_contra! h_contra;

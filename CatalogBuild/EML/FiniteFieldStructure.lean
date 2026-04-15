@@ -21,6 +21,11 @@ def spbIterF (x : ZMod p) : ℕ → ZMod p
   | n + 1 => spbF x (spbIterF x n)
 
 
+/-- [Section: # Deep Structure of SPB over Finite Fields
+The SPB group over 𝔽_p has a beautiful dichotomy:
+- p ≡ 1 (mod 4): group order divides p-1
+- p ≡ 3 (mod 4): group order divides p+1
+This file provides extensive computational verification of this structure.] -/
 theorem spbIterF_zero (x : ZMod p) : spbIterF x 0 = 0 := rfl
 
 theorem spbIterF_one (x : ZMod p) : spbIterF x 1 = x := by simp [spbIterF, spbF]

@@ -14,6 +14,8 @@ def collapseDisplacement {α : Type*} [Fintype α] [PseudoMetricSpace α] (f : �
   ∑ x : α, dist x (f x)
 
 
+/-- [Section: # Optimal Collapse: Nearest-Point Projections and Optimal Transport
+The "best" idempotent collapse moves each point as little as possible.] -/
 theorem zero_displacement_is_id {α : Type*} [Fintype α] [MetricSpace α]
     (f : α → α) (hf : ∀ x, f (f x) = f x)
     (hd : collapseDisplacement f = 0) : ∀ x, f x = x := by

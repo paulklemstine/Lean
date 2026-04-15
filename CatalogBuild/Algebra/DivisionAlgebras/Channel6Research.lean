@@ -82,6 +82,7 @@ theorem sed_zd_left_nonzero : ∃ i : Fin 16, sedenion_zd_left i ≠ 0 :=
   ⟨1, by simp [sedenion_zd_left]⟩
 
 
+/-- [Section: ## Part III: Zero Divisors in Higher Cayley-Dickson Algebras] -/
 theorem sed_zd_right_nonzero : ∃ i : Fin 16, sedenion_zd_right i ≠ 0 :=
   ⟨2, by simp [sedenion_zd_right]⟩
 
@@ -391,6 +392,7 @@ def catastropheCount : ℕ → ℕ
 /-- Catastrophes accumulate monotonically through Channel 6. -/
 theorem catastrophe_monotone_0 : catastropheCount 0 ≤ catastropheCount 1 := by decide
 
+/-- [Section: ## Part XVI: The Catastrophe Hierarchy] -/
 theorem catastrophe_monotone_1 : catastropheCount 1 ≤ catastropheCount 2 := by decide
 
 theorem catastrophe_monotone_2 : catastropheCount 2 ≤ catastropheCount 3 := by decide

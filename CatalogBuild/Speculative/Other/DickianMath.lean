@@ -7,6 +7,7 @@ Declarations: 11
 
 import Mathlib
 
+/-- ═══════════════════════════════════════════════════════════════════ § 1. REALITY LAYER ALGEBRAS — The Black Iron Prison ═══════════════════════════════════════════════════════════════════ -/
 theorem dickian_fixed_point_exists
     {L : Type*} [CompleteLattice L] (Φ : L →o L) :
     ∃ x : L, Φ x = x := by
@@ -31,6 +32,7 @@ theorem black_iron_prison_unique
   exact fun x hx => Classical.not_not.1 fun hx' => ne_of_lt ( h_deflate x hx' ) hx
 
 
+/-- ═══════════════════════════════════════════════════════════════════ § 2. ENTROPIC DECAY DYNAMICS — The Mathematics of Ubik ═══════════════════════════════════════════════════════════════════ -/
 theorem ubik_collapse_time_formula :
     (1 : ℝ) ^ ((1 : ℝ) - 2) / (1 * (2 - 1)) = 1 := by
   norm_num +zetaDelta at *
@@ -42,6 +44,7 @@ theorem ubik_stabilizer_formula (a C_target b : ℝ) (ha : 0 < a) (hC : 0 < C_ta
   ring
 
 
+/-- ═══════════════════════════════════════════════════════════════════ § 3. IDENTITY FRAGMENTATION TOPOLOGY — A Scanner Darkly ═══════════════════════════════════════════════════════════════════ -/
 theorem connected_image_connected
     {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]
     [ConnectedSpace X] (f : X → Y) (hf : Continuous f) (hfs : Function.Surjective f) :
@@ -64,6 +67,7 @@ theorem no_retraction_to_disconnected
   grind +qlia
 
 
+/-- ═══════════════════════════════════════════════════════════════════ § 4. PRE-COGNITIVE GAME THEORY — The Minority Report ═══════════════════════════════════════════════════════════════════ -/
 theorem perfect_precog_no_free_will
     {X Y : Type*} (act predict : X → Y)
     (h_perfect : ∀ x, predict x = act x) :
@@ -79,6 +83,7 @@ theorem minority_report_paradox
   grind +ring
 
 
+/-- ═══════════════════════════════════════════════════════════════════ § 5. EMPATHY NETWORKS — Mercerism Phase Transition ═══════════════════════════════════════════════════════════════════ -/
 theorem mercerism_instability_condition
     (decay spec_rad coupling : ℝ) (hd : 0 < decay) (hs : 0 < spec_rad)
     (hw : decay / spec_rad < coupling) :
@@ -93,6 +98,7 @@ theorem below_critical_stable
   nlinarith [ mul_div_cancel₀ decay hs.ne' ]
 
 
+/-- ═══════════════════════════════════════════════════════════════════ § 6. THE DICKIAN INFORMATION PRINCIPLE ═══════════════════════════════════════════════════════════════════ -/
 theorem self_reference_bound
     {α : Type*} [Fintype α] [DecidableEq α] (f : α → α)
     (h_not_id : f ≠ id) :

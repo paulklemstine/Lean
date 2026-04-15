@@ -7,6 +7,7 @@ Declarations: 5
 
 import Mathlib
 
+/-- [Section: ## Section 1: Determinant Properties] -/
 theorem det_mul_eq {n : Type*} [DecidableEq n] [Fintype n]
     (A B : Matrix n n ℝ) :
     (A * B).det = A.det * B.det := by
@@ -24,6 +25,7 @@ theorem det_transpose_pf {n : Type*} [DecidableEq n] [Fintype n]
       exact?
 
 
+/-- [Section: ## Section 2: Trace and Skew-Symmetry] -/
 theorem skew_symmetric_trace_zero {n : Type*} [DecidableEq n] [Fintype n]
     (A : Matrix n n ℝ) (hA : A.transpose = -A) :
     A.trace = 0 := by

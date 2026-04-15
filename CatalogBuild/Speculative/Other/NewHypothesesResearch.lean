@@ -19,6 +19,19 @@ theorem idem_meet_idempotent {X : Type*} (f g : X → X)
   rw [show g (f (g x)) = f (g (g x)) from (hcomm (g x)).symm, hg, hf]
 
 
+/-- [Section: # New Hypotheses, Experiments, and Validated Results
+## Research Agenda: The Idempotent Rosetta Stone
+This file proposes new mathematical hypotheses inspired by the cross-domain
+unification framework, experimentally validates them where possible, and
+proves them formally.
+### Hypotheses proposed:
+- **NH1**: Idempotent composition lattice properties
+- **NH2**: Tropical neural depth bound
+- **NH3**: Peirce decomposition uniqueness
+- **NH4**: Idempotent count multiplicativity
+- **NH5**: Photon direction parity
+- **NH6**: Gazing Pool periodicity
+- **NH7**: Idempotent entropy] -/
 theorem idem_meet_fixed {X : Type*} (f g : X → X)
     (hf : ∀ x, f (f x) = f x) (hg : ∀ x, g (g x) = g x)
     (hcomm : ∀ x, f (g x) = g (f x)) :
@@ -50,6 +63,7 @@ theorem tropical_peirce (x : ℝ) : x = max x 0 - max (-x) 0 := by
   · simp [max_eq_left h.le, max_eq_right (neg_nonpos.mpr h.le)]
 
 
+/-- ═══════════════════════════════════════════════════════════════════════════════ NH3: Peirce Decomposition Properties ═══════════════════════════════════════════════════════════════════════════════ -/
 theorem peirce_decomposition {R : Type*} [Ring R] (e : R) (he : e * e = e) (x : R) :
     x = e * x * e + e * x * (1 - e) + (1 - e) * x * e + (1 - e) * x * (1 - e) := by
   simp +decide [ mul_sub, sub_mul, ← mul_assoc, he ]
@@ -83,6 +97,7 @@ theorem idemCount_15 : idemCount 15 = 4 := by native_decide
 theorem idemCount_30 : idemCount 30 = 8 := by native_decide
 
 
+/-- ═══════════════════════════════════════════════════════════════════════════════ NH5: Photon Direction Parity (verified) ═══════════════════════════════════════════════════════════════════════════════ -/
 theorem photon_parity (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
     2 ∣ (a + b + c + d) := by
   exact even_iff_two_dvd.mp ( by apply_fun Even at *; simp_all +decide [ parity_simps ] )

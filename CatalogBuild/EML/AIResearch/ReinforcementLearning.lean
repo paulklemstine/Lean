@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## §1. Policy Network Efficiency] -/
 def stdPolicyParams (stateDim actionDim hiddenWidth : ℕ) : ℕ :=
   stateDim * hiddenWidth + hiddenWidth * hiddenWidth + hiddenWidth * actionDim
 
@@ -22,6 +23,7 @@ theorem eml_policy_compact (s a h : ℕ) (hh : 5 ≤ h) :
   unfold emlPolicyParams stdPolicyParams; nlinarith
 
 
+/-- [Section: ## §2. Value Function Approximation] -/
 def bellmanError (gamma : ℝ) (k : ℕ) (initError : ℝ) : ℝ := gamma ^ k * initError
 
 
@@ -46,6 +48,7 @@ theorem eml_value_converges_faster (d w n : ℕ) (hw : 5 ≤ w) (hn : 0 < n) :
   exact_mod_cast this
 
 
+/-- [Section: ## §3. Exploration Bonus] -/
 def explorationBonus (visits : ℕ) : ℝ := 1 / Real.sqrt ↑visits
 
 
@@ -54,6 +57,7 @@ theorem exploration_decays (v1 v2 : ℕ) (hv1 : 0 < v1) (h : v1 ≤ v2) :
   unfold explorationBonus; gcongr
 
 
+/-- [Section: ## §4. Multi-Agent Communication] -/
 def stdCommCost (stateDim : ℕ) : ℕ := stateDim
 
 def emlCommCost (stateDim comprRatio : ℕ) : ℕ := stateDim / comprRatio
@@ -64,6 +68,7 @@ theorem eml_comm_efficiency (s c : ℕ) :
   unfold emlCommCost stdCommCost; exact Nat.div_le_self s c
 
 
+/-- [Section: ## §5. Reward Shaping] -/
 def shapedReward (baseReward potential_diff gamma : ℝ) : ℝ :=
   baseReward + gamma * potential_diff
 
@@ -73,6 +78,7 @@ theorem shaping_zero_preserves (r gamma : ℝ) :
   unfold shapedReward; ring
 
 
+/-- [Section: ## §6. Sample Efficiency] -/
 def stdRLSamples (stateSpace actionSpace : ℕ) (eps : ℝ) : ℝ :=
   ↑(stateSpace * actionSpace) / eps ^ 2
 

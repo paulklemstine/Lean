@@ -21,6 +21,7 @@ theorem eisenstein_form_disc : form_discriminant 1 1 1 = -3 := by
   unfold form_discriminant; norm_num
 
 
+/-- [Section: ## Binary Quadratic Forms] -/
 theorem class_number_neg4 :
     ∀ a b c : ℤ, 0 < a → a ≤ c → -a < b → b ≤ a →
     form_discriminant a b c = -4 → a = 1 ∧ b = 0 ∧ c = 1 := by

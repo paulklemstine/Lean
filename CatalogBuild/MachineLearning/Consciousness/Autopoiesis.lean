@@ -21,6 +21,7 @@ structure AutopoieticSystem extends ProductionNetwork where
   operationally_closed : ∀ c₁ c₂, produces c₁ c₂ → ∃ c₃, produces c₃ c₁
 
 
+/-- [Section: ## Autopoietic Organization] -/
 theorem autopoietic_self_producing (A : AutopoieticSystem) :
     ∀ c : A.Component, ∃ c', A.produces c' c := by
   exact A.productive
@@ -31,6 +32,7 @@ def operationallyClosed (A : AutopoieticSystem) : Prop :=
   ∀ c₁ c₂ : A.Component, A.produces c₁ c₂ → ∃ c₃, A.produces c₃ c₁
 
 
+/-- [Section: ## Operational Closure] -/
 theorem autopoietic_implies_closed (A : AutopoieticSystem) :
     operationallyClosed A := by
   -- By definition of autopoietic system, we know that it has an operationally closed property.
@@ -46,6 +48,7 @@ structure StructuralCoupling where
     system.produces c₁ c₂ → system.produces (perturb env c₁) (perturb env c₂)
 
 
+/-- [Section: ## Structural Coupling] -/
 theorem structural_coupling_preserves (SC : StructuralCoupling) (env : SC.Environment) :
     ∀ c₁ c₂ : SC.system.Component,
       SC.system.produces c₁ c₂ →
@@ -62,6 +65,7 @@ structure AutopoieticFixedPoint where
   org_preserved : ∀ s, organization s → organization (dynamics s)
 
 
+/-- [Section: ## The Autopoietic Fixed Point] -/
 theorem organization_invariant (A : AutopoieticFixedPoint)
     (s : A.State) (h : A.organization s) (n : ℕ) :
     A.organization (A.dynamics^[n] s) := by
@@ -78,6 +82,7 @@ structure Enactivism where
   circular : ∀ o, shape (enact o) = o → enact (shape (enact o)) = enact o
 
 
+/-- [Section: ## Enactivism] -/
 theorem enactive_codetermination (E : Enactivism) (o : E.Organism)
     (h : E.shape (E.enact o) = o) :
     E.enact (E.shape (E.enact o)) = E.enact o := by

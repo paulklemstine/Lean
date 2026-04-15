@@ -111,6 +111,12 @@ def swap01 : Matrix (Fin 4) (Fin 4) ℤ :=
   !![0, 1, 0, 0; 1, 0, 0, 0; 0, 0, 1, 0; 0, 0, 0, 1]
 
 
+/-- [Section: ## Section 8: Key Structural Result
+The fundamental obstruction to generalizing the Berggren tree:
+O(3,1;ℤ) contains ℤ² as a subgroup, while free groups cannot contain ℤ².
+Therefore O(3,1;ℤ) is not virtually free, and no tree structure exists.
+We formalize a concrete witness: two commuting matrices in O(3,1;ℤ) that
+generate a copy of ℤ².] -/
 theorem swap01_preserves : swap01ᵀ * Q₄_matrix * swap01 = Q₄_matrix := by native_decide
 
 

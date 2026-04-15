@@ -7,6 +7,7 @@ Declarations: 3
 
 import Mathlib
 
+/-- [Section: ## The Halting Problem as a Diagonal Argument] -/
 theorem no_enumeration_of_functions (α : Type*) [Nonempty α] :
     ¬ ∃ f : α → (α → Bool), Function.Surjective f := by
   intro ⟨ f, hf ⟩;
@@ -14,10 +15,12 @@ theorem no_enumeration_of_functions (α : Type*) [Nonempty α] :
   have := congr_fun hg g; by_cases h : f g g = true <;> simp +decide [ h ] at this;
 
 
+/-- [Section: ## The Liar Paradox and Fixed Points of Negation] -/
 theorem negation_no_fixed_point : ¬ ∃ b : Bool, (!b) = b := by
   decide +revert
 
 
+/-- [Section: ## The Grandfather Paradox Formalized] -/
 theorem grandfather_paradox {α : Type*} (f : α → α)
     (h_no_fp : ∀ x, f x ≠ x) :
     ¬ ∃ x, f x = x := by

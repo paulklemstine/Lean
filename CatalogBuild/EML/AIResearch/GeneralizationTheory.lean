@@ -26,6 +26,7 @@ theorem eml_less_overfitting (d w : ℕ) (hw : 5 ≤ w) :
   exact Nat.pow_le_pow_right (by omega) (eml_lower_vc d w hw)
 
 
+/-- [Section: ## §2. Dropout Regularization] -/
 def effectiveParams (totalParams : ℕ) (keepRate : ℝ) : ℝ := ↑totalParams * keepRate
 
 
@@ -46,6 +47,7 @@ theorem eml_less_dropout_needed (d w : ℕ) (p_eml p_std : ℝ)
   unfold effectiveParams; nlinarith [ show ( emlVC d w:ℝ ) ≤ mlpVC d w by exact_mod_cast eml_lower_vc d w hw ] ;
 
 
+/-- [Section: ## §3. Weight Decay] -/
 def l2Penalty (lam : ℝ) (normSq : ℝ) : ℝ := lam * normSq
 
 
@@ -63,6 +65,7 @@ theorem stronger_reg_more_loss (L lam1 lam2 normSq : ℝ) (hn : 0 ≤ normSq) (h
   unfold regularizedLoss l2Penalty; nlinarith
 
 
+/-- [Section: ## §4. Bias-Variance Decomposition] -/
 def biasAtCapacity (baseCapacity modelCapacity : ℕ) : ℝ :=
   ↑baseCapacity / ↑modelCapacity
 
@@ -82,6 +85,7 @@ theorem more_data_less_variance (c n1 n2 : ℕ) (hn1 : 0 < n1) (hn : n1 ≤ n2) 
   gcongr
 
 
+/-- [Section: ## §5. Double Descent Modeling] -/
 def modernTestError (params data : ℕ) (noise : ℝ) : ℝ :=
   noise * ↑data / ↑params
 

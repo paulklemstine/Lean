@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: EML
-Declarations: 68
+Declarations: 69
 -/
 
 import Mathlib
@@ -141,6 +141,7 @@ def IsPythQuad' (a b c d : ℤ) : Prop := a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2
 /-- Basic quadruple examples. -/
 theorem quad_basic : IsPythQuad' 1 2 2 3 := by norm_num [IsPythQuad']
 
+/-- [Section: ## Section 10: Quadruple Generalizations] -/
 theorem quad_237 : IsPythQuad' 2 3 6 7 := by norm_num [IsPythQuad']
 
 theorem quad_1489 : IsPythQuad' 1 4 8 9 := by norm_num [IsPythQuad']
@@ -160,6 +161,10 @@ def lorentzForm4 (a b c d : ℤ) : ℤ := a ^ 2 + b ^ 2 + c ^ 2 - d ^ 2
 theorem quad_lorentz_zero (a b c d : ℤ) :
     IsPythQuad' a b c d ↔ lorentzForm4 a b c d = 0 := by
   unfold IsPythQuad' lorentzForm4; omega
+
+
+/-- A Berggren path is a list of steps. -/
+abbrev BPath := List BStep
 
 
 /-- Evaluate a path from the root (3, 4, 5). -/
@@ -231,6 +236,7 @@ theorem evalPath_root : evalPath [] = (3, 4, 5) := by rfl
 /-- First-generation children. -/
 theorem evalPath_A : evalPath [.A] = (5, 12, 13) := by native_decide
 
+/-- [Section: ## Section 12: Specific Berggren Computations] -/
 theorem evalPath_B : evalPath [.B] = (21, 20, 29) := by native_decide
 
 theorem evalPath_C : evalPath [.C] = (15, 8, 17) := by native_decide

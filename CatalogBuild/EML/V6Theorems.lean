@@ -49,6 +49,9 @@ theorem diag6_second_deriv_pos (x : ℝ) (hx : 0 < x) :
   positivity
 
 
+/-- [Section: ## Section 1: P-M13 — EML Diagonal Strict Convexity
+The diagonal map f(x) = exp(x) - ln(x) has f''(x) = exp(x) + 1/x² > 0
+for all x > 0, making it strictly convex on (0, ∞).] -/
 theorem diag6_convex_on : ConvexOn ℝ (Ioi 0) diag6 := by
   apply_rules [ StrictConvexOn.convexOn ];
   apply strictConvexOn_of_deriv2_pos ( convex_Ioi 0 );
@@ -61,6 +64,9 @@ theorem diag6_convex_on : ConvexOn ℝ (Ioi 0) diag6 := by
     exact fun x hx => h_second_deriv x ( interior_subset hx ) ▸ add_pos_of_pos_of_nonneg ( Real.exp_pos x ) ( by positivity )
 
 
+/-- [Section: ## Section 2: P-M14 — EML Minimum Value
+The minimum of diag6(x) = exp(x) - ln(x) on (0, ∞) occurs where
+exp(x) = 1/x, i.e., x·exp(x) = 1, which gives x = W(1) (Lambert W).] -/
 theorem diag6_critical_point (x : ℝ) (hx : 0 < x)
     (hcrit : Real.exp x - x⁻¹ = 0) :
     x * Real.exp x = 1 := by
@@ -88,6 +94,10 @@ theorem phi2D_jacobian_det (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
   rw [Real.exp_add]
 
 
+/-- [Section: ## Section 3: 2D EML Map — Jacobian and Area Expansion
+The Jacobian determinant of Φ(x,y) = (eml(x,y), eml(y,x)) is
+det J = exp(x+y) - 1/(xy), which is positive for all x, y > 0.
+This means the 2D EML map is orientation-preserving and area-expanding.] -/
 theorem phi2D_jacobian_pos (x y : ℝ) (hx : 1 < x) (hy : 1 < y) :
     Real.exp (x + y) - (x * y)⁻¹ > 0 := by
   field_simp;
@@ -104,6 +114,9 @@ theorem semiT_one (x : ℝ) : semiT 1 x = Real.exp x := by
   simp [semiT, Real.log_one]
 
 
+/-- [Section: ## Section 4: EML Semigroup Properties
+The family {T_c : c > 0} where T_c(x) = exp(x) - ln(c) forms a semigroup
+under composition.] -/
 theorem semiT_strictMono (c : ℝ) : StrictMono (semiT c) := by
   exact fun x y hxy => sub_lt_sub_right ( Real.exp_lt_exp.2 hxy ) _
 
@@ -131,6 +144,7 @@ theorem semiT_no_idempotent (c : ℝ) (hc : 0 < c) :
     rw [ ← Real.exp_log hc, show Real.log c = 1 by linarith ]
 
 
+/-- [Section: ## Section 5: Log-Split Identity and Algebraic Properties] -/
 theorem eml6_log_split (x y z : ℝ) (hy : 0 < y) (hz : 0 < z) :
     eml6 x (y * z) = eml6 x y - Real.log z := by
   unfold eml6; rw [ Real.log_mul hy.ne' hz.ne' ] ; ring;
@@ -157,6 +171,7 @@ theorem eml6_antisym_diff (x y : ℝ) :
   unfold eml6; ring
 
 
+/-- [Section: ## Section 6: EML Chain Rule] -/
 theorem eml6_hasDerivAt_fst (x y : ℝ) :
     HasDerivAt (fun x' => eml6 x' y) (Real.exp x) x := by
   convert HasDerivAt.sub ( Real.hasDerivAt_exp x ) ( hasDerivAt_const _ _ ) using 1;
@@ -168,6 +183,7 @@ theorem eml6_hasDerivAt_snd (x y : ℝ) (hy : 0 < y) :
   convert HasDerivAt.sub ( hasDerivAt_const _ _ ) ( Real.hasDerivAt_log ?_ ) using 1 <;> ring ; aesop
 
 
+/-- [Section: ## Section 7: Sigmoid Bounds via EML] -/
 theorem eml_sigmoid_pos (x : ℝ) : 0 < eml_sigmoid x := by
   exact one_div_pos.mpr ( by positivity )
 
@@ -181,6 +197,9 @@ theorem eml_sigmoid_zero : eml_sigmoid 0 = 1 / 2 := by
   simp [eml_sigmoid]; ring
 
 
+/-- [Section: ## Section 8: Depth Hierarchy (P-M1 strengthening)
+exp(exp(x)) cannot be written as exp(a·x + b) for any constants a, b ∈ ℝ.
+This proves EML-DEPTH(2) ⊋ EML-DEPTH(1).] -/
 theorem depth_hierarchy_2_gt_1 :
     ¬ ∃ a b : ℝ, ∀ x : ℝ, Real.exp (Real.exp x) = Real.exp (a * x + b) := by
   norm_num [ Real.exp_ne_zero ];
@@ -202,6 +221,7 @@ theorem eTow6_strictMono : StrictMono eTow6 := by
   linarith [Real.add_one_le_exp (eTow6 n)]
 
 
+/-- [Section: ## Section 9: e-Tower Properties] -/
 theorem eTow6_ge_exp_n (n : ℕ) : eTow6 n ≥ Real.exp 1 ^ n := by
   induction n <;> simp_all +decide [ pow_succ' ];
   · exact le_rfl;
@@ -246,6 +266,7 @@ theorem eml6_double_neg (x : ℝ) : eml6 0 (Real.exp (eml6 0 (Real.exp x))) = x 
   unfold eml6; simp [Real.log_exp]
 
 
+/-- [Section: ## Section 11: EML and Number Theory] -/
 theorem eml6_one_one_irrational : Irrational (eml6 1 1) := by
   -- By definition of $eml6$, we have $eml6 1 1 = exp 1 - ln 1$.
   simp [eml6];

@@ -7,6 +7,8 @@ Declarations: 9
 
 import Mathlib
 
+/-- [Section: # Brahmagupta-Fibonacci Factoring Algorithm Verification (A+2, E14)
+We formalize the core mathematical principle behind the BF factoring algorithm.] -/
 theorem bf_identity_1 (a b c d : ℤ) :
     (a ^ 2 + b ^ 2) * (c ^ 2 + d ^ 2) =
     (a * c - b * d) ^ 2 + (a * d + b * c) ^ 2 := by ring

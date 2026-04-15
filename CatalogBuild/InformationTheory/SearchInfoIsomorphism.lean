@@ -130,6 +130,9 @@ def binaryQueryEntropy (N : ℕ) (k : ℕ) : ℝ :=
   uniformEntropy N - k
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§3: SEARCH AS ENTROPY REDUCTION
+═══════════════════════════════════════════════════════════════════════] -/
 theorem full_search_collapses (N : ℕ) :
     binaryQueryEntropy N 0 = uniformEntropy N := by
   simp [binaryQueryEntropy]
@@ -156,6 +159,9 @@ def landauerCost (n_bits : ℝ) (kT : ℝ) : ℝ :=
   n_bits * kT * Real.log 2
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§4: LANDAUER'S BRIDGE — INFORMATION IS PHYSICAL
+═══════════════════════════════════════════════════════════════════════] -/
 theorem landauer_nonneg (n : ℝ) (kT : ℝ) (hn : 0 ≤ n) (hkT : 0 ≤ kT) :
     0 ≤ landauerCost n kT := by
   unfold landauerCost
@@ -185,6 +191,9 @@ theorem landauer_monotone (n₁ n₂ kT : ℝ) (hn : n₁ ≤ n₂) (hkT : 0 ≤
   · exact le_of_lt (Real.log_pos (by norm_num : (1:ℝ) < 2))
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§5: QUANTUM MEASUREMENT AS SEARCH COLLAPSE
+═══════════════════════════════════════════════════════════════════════] -/
 structure MeasurementScenario where
   N : ℕ
   hN : 0 < N
@@ -228,6 +237,9 @@ def uniformMeasurement (N : ℕ) (hN : 0 < N) : MeasurementScenario where
     rw [Finset.sum_const, Finset.card_fin, nsmul_eq_mul]; field_simp
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§6: THE ISOMORPHISM THEOREM
+═══════════════════════════════════════════════════════════════════════] -/
 structure SearchMeasurementInfo where
   search_work : ℕ → ℝ
   info_gained : ℕ → ℝ
@@ -256,6 +268,9 @@ theorem search_additivity (M N : ℕ) (hM : (M : ℝ) > 0) (hN : (N : ℝ) > 0) 
   ring
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§7: PRODUCT SPACES
+═══════════════════════════════════════════════════════════════════════] -/
 def CollapseOperator.product {X Y : Type*}
     (C₁ : CollapseOperator X) (C₂ : CollapseOperator Y) :
     CollapseOperator (X × Y) where
@@ -270,6 +285,9 @@ theorem product_collapsed_set {X Y : Type*}
   simp [CollapseOperator.collapsedSet, CollapseOperator.product, Set.mem_prod]
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§8: ITERATED SEARCH
+═══════════════════════════════════════════════════════════════════════] -/
 def CollapseOperator.iterate {X : Type*} (C : CollapseOperator X) : ℕ → X → X
   | 0 => id
   | n + 1 => C.collapse ∘ C.iterate n
@@ -290,6 +308,9 @@ theorem one_collapse_suffices {X : Type*} (C : CollapseOperator X) (x : X) :
   iterate_stabilizes C 1 x
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§9: THE PHOTON EPISTEMIC BRIDGE
+═══════════════════════════════════════════════════════════════════════] -/
 structure PhotonObservation where
   source_states : ℕ
   h_pos : 0 < source_states
@@ -312,6 +333,9 @@ theorem photon_collapse_theorem (obs : PhotonObservation) (state : Fin obs.sourc
 theorem no_photon_no_info : uniformEntropy 1 = 0 := entropy_one
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§10: EXPERIMENTAL VALIDATION
+═══════════════════════════════════════════════════════════════════════] -/
 theorem experiment_binary_8 : uniformEntropy 8 = 3 := by
   show Real.log (8 : ℝ) / Real.log 2 = 3
   rw [show (8 : ℝ) = 2 ^ 3 from by norm_num]; exact log_pow2_div 3
@@ -337,6 +361,9 @@ theorem experiment_landauer_byte :
   unfold landauerCost; ring
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§11: NEW HYPOTHESES
+═══════════════════════════════════════════════════════════════════════] -/
 theorem recursive_collapse (M N : ℕ) (hM : (M : ℝ) > 0) (hN : (N : ℝ) > 0) :
     uniformEntropy (M * N) = uniformEntropy M + uniformEntropy N :=
   search_additivity M N hM hN
@@ -370,6 +397,9 @@ theorem information_speed_limit (Δx Δt : ℝ) (h_causal : Δx ^ 2 ≤ Δt ^ 2)
       simpa only [ sq_le_sq ] using h_causal
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§12: GRAND SYNTHESIS
+═══════════════════════════════════════════════════════════════════════] -/
 structure GrandSynthesis where
   search_is_info : ∀ N, searchWork N = informationGain N
   collapse_once : ∀ (X : Type) (C : CollapseOperator X) (x : X),

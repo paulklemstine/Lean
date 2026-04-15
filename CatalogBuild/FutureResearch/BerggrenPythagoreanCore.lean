@@ -35,6 +35,7 @@ def invB (a b c : ℤ) : ℤ × ℤ × ℤ := (a + 2*b - 2*c, 2*a + b - 2*c, -2*
 def invC (a b c : ℤ) : ℤ × ℤ × ℤ := (-a - 2*b + 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
 
 
+/-- [Section: ## §2. Pythagorean Preservation] -/
 theorem bergA_pyth (a b c : ℤ) (h : IsPythag a b c) :
     IsPythag (bergA a b c).1 (bergA a b c).2.1 (bergA a b c).2.2 := by
   unfold IsPythag bergA at *; nlinarith [h]
@@ -50,6 +51,7 @@ theorem bergC_pyth (a b c : ℤ) (h : IsPythag a b c) :
   unfold IsPythag bergC at *; nlinarith [h]
 
 
+/-- [Section: ## §3. Lorentz Form Preservation (ring identity, no hypothesis needed)] -/
 theorem bergA_preserves_Q (a b c : ℤ) :
     lorentzQ (bergA a b c).1 (bergA a b c).2.1 (bergA a b c).2.2 = lorentzQ a b c := by
   unfold lorentzQ bergA; ring
@@ -65,6 +67,7 @@ theorem bergC_preserves_Q (a b c : ℤ) :
   unfold lorentzQ bergC; ring
 
 
+/-- [Section: ## §4. Determinant Structure (Direction #36)] -/
 def B₁_mat : Matrix (Fin 3) (Fin 3) ℤ := !![1, -2, 2; 2, -1, 2; 2, -2, 3]
 
 def B₂_mat : Matrix (Fin 3) (Fin 3) ℤ := !![1, 2, 2; 2, 1, 2; 2, 2, 3]
@@ -89,6 +92,7 @@ theorem B₁B₂B₃_lorentz :
   native_decide
 
 
+/-- [Section: ## §5. Forward-Inverse Cancellation] -/
 theorem fwd_inv_A (a b c : ℤ) :
     invA (bergA a b c).1 (bergA a b c).2.1 (bergA a b c).2.2 = (a, b, c) := by
   simp only [bergA, invA, Prod.mk.injEq]; exact ⟨by ring, by ring, by ring⟩
@@ -119,6 +123,7 @@ theorem inv_fwd_C (a b c : ℤ) :
   simp only [bergC, invC, Prod.mk.injEq]; exact ⟨by ring, by ring, by ring⟩
 
 
+/-- [Section: ## §6. Computational Verification] -/
 theorem bergA_root : bergA 3 4 5 = (5, 12, 13) := by native_decide
 
 theorem bergB_root : bergB 3 4 5 = (21, 20, 29) := by native_decide
@@ -138,6 +143,7 @@ theorem bergA_depth2 : bergA 5 12 13 = (7, 24, 25) := by native_decide
 theorem bergB_depth2 : bergB 21 20 29 = (119, 120, 169) := by native_decide
 
 
+/-- [Section: ## §7. Hypotenuse Growth] -/
 theorem bergA_hyp_increase (a b c : ℤ) (ha : 0 < a) (_ : 0 < b) (_ : 0 < c)
     (_ : a < c) (hbc : b < c) :
     c < (bergA a b c).2.2 := by
@@ -155,6 +161,10 @@ theorem bergC_hyp_increase (a b c : ℤ) (_ : 0 < a) (hb : 0 < b) (_ : 0 < c)
   unfold bergC; nlinarith
 
 
+/-- [Section: ## §8. Primitivity Preservation (Direction #3)
+Key insight: if p | gcd(a',b') for a child, then since the inverse matrix has integer
+entries and recovers (a,b,c), and since p | a' ∧ p | b' implies p² | a'²+b'² = c'²
+hence p | c', we get p | a ∧ p | b (from the integer inverse formula).] -/
 theorem dvd_sq_hyp_of_dvd_legs (a b c d : ℤ) (h : IsPythag a b c)
     (ha : d ∣ a) (hb : d ∣ b) : d ^ 2 ∣ c ^ 2 := by
   exact h ▸ dvd_add ( pow_dvd_pow_of_dvd ha 2 ) ( pow_dvd_pow_of_dvd hb 2 )
@@ -228,6 +238,7 @@ def bHyp : ℕ → ℤ
   | n + 2 => 6 * bHyp (n + 1) - bHyp n
 
 
+/-- [Section: ## §9. Pell Recurrence (Direction #38)] -/
 theorem bHyp_recurrence (n : ℕ) : bHyp (n + 2) = 6 * bHyp (n + 1) - bHyp n := rfl
 
 
@@ -267,6 +278,7 @@ theorem step_preserves_pyth (s : BerggrenStep) (a b c : ℤ) (h : IsPythag a b c
   · exact bergC_pyth a b c h
 
 
+/-- [Section: ## §10. Tree Path Correctness] -/
 theorem path_preserves_pyth (path : List BerggrenStep) :
     let t := applyPath path
     IsPythag t.1 t.2.1 t.2.2 := by
@@ -282,6 +294,7 @@ inductive BinTree (α : Type*) where
   | node : BinTree α → BinTree α → BinTree α
 
 
+/-- [Section: ## §11. Binary Tree Leaf Counting (Direction #39)] -/
 def BinTree.leaves : BinTree α → ℕ
   | .leaf _ => 1
   | .node l r => l.leaves + r.leaves
@@ -302,6 +315,7 @@ theorem bin_tree_leaf_count (t : BinTree α) : t.leaves = t.internals + 1 := by
 def euclid (m n : ℤ) : ℤ × ℤ × ℤ := (m ^ 2 - n ^ 2, 2 * m * n, m ^ 2 + n ^ 2)
 
 
+/-- [Section: ## §12. Euclid Parametrization] -/
 theorem euclid_is_pythag (m n : ℤ) :
     IsPythag (euclid m n).1 (euclid m n).2.1 (euclid m n).2.2 := by
   unfold IsPythag euclid; ring

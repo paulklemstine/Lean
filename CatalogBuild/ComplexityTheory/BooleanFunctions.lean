@@ -215,6 +215,7 @@ def parity {n : ℕ} (x : Fin n → Bool) : Bool :=
   (hammingWeight x) % 2 == 1
 
 
+/-- [Section: ## Parity Function] -/
 theorem parity_flipBit {n : ℕ} (x : Fin n → Bool) (i : Fin n) :
     parity (flipBit x i) ≠ parity x := by
   revert i;

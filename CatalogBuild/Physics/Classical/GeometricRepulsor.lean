@@ -16,6 +16,7 @@ theorem fermat_factor_correct (N x y : ℤ) (h : N = x ^ 2 - y ^ 2) :
     N = (x - y) * (x + y) := by linarith [fermat_diff_sq x y]
 
 
+/-- [Section: ## Part 2: Existence of Fermat representation for odd composites] -/
 theorem odd_fermat_rep (p q : ℤ) (hp : Odd p) (hq : Odd q) :
     p * q = ((p + q) / 2) ^ 2 - ((q - p) / 2) ^ 2 := by
   obtain ⟨ m, rfl ⟩ := hp; obtain ⟨ n, rfl ⟩ := hq; ring;
@@ -36,6 +37,11 @@ theorem sq_mod_eq (k m : ℤ) :
   rw [sq, Int.mul_emod, sq]
 
 
+/-- [Section: ## Part 3: Quadratic residue sieve correctness
+The sieve works because: if n = k², then n mod m = (k mod m)² mod m.
+So the set of quadratic residues mod m is exactly {k² mod m : k ∈ ℤ/mℤ}.
+The sieve only discards candidates that are NOT perfect squares, so it
+never produces false negatives.] -/
 theorem quad_residues_mod_64 (k : ℤ) :
     (k ^ 2) % 64 ∈ ({0, 1, 4, 9, 16, 17, 25, 33, 36, 41, 49, 57} : Set ℤ) := by
   rw [ sq, Int.mul_emod ] ; have := Int.emod_nonneg k ( by decide : ( 64 : ℤ ) ≠ 0 ) ; have := Int.emod_lt_of_pos k ( by decide : ( 64 : ℤ ) > 0 ) ; interval_cases k % 64 <;> trivial;

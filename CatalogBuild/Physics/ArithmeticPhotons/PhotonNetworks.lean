@@ -91,6 +91,7 @@ def gridAdj (dims : List ℕ) (u v : (i : Fin dims.length) → Fin (dims.get i +
     ∀ d' : Fin dims.length, d' ≠ d → u d' = v d'
 
 
+/-- [Section: ## Section 7: The Darkness Criterion] -/
 theorem sum_sq_mod4_obstruction (p : ℕ) (hp : Nat.Prime p) (hmod : p % 4 = 3)
     (a b : ℤ) (h : (p : ℤ) ∣ (a ^ 2 + b ^ 2)) :
     (p : ℤ) ∣ a ∧ (p : ℤ) ∣ b := by
@@ -162,6 +163,7 @@ theorem gaussian_prod_assoc (a₁ b₁ a₂ b₂ a₃ b₃ : ℤ) :
   simp [gaussianProd]; constructor <;> ring
 
 
+/-- [Section: ## Section 10: Photon Parity Conservation] -/
 theorem pyth_not_both_odd' (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     (ha : ¬ 2 ∣ a) (hb : ¬ 2 ∣ b) : False := by
   exact absurd ( congr_arg ( · % 4 ) h ) ( by rcases Int.even_or_odd' a with ⟨ k, rfl | rfl ⟩ <;> rcases Int.even_or_odd' b with ⟨ l, rfl | rfl ⟩ <;> rcases Int.even_or_odd' c with ⟨ m, rfl | rfl ⟩ <;> ring_nf <;> norm_num [ Int.add_emod, Int.mul_emod ] at * ) ;

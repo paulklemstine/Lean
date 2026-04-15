@@ -7,6 +7,7 @@ Declarations: 5
 
 import Mathlib
 
+/-- Fisher information for Bernoulli -/
 theorem bernoulli_fisher' (theta : ℝ) (h0 : 0 < theta) (h1 : theta < 1) :
     0 < 1 / (theta * (1 - theta)) := by
   apply div_pos one_pos; exact mul_pos h0 (by linarith)

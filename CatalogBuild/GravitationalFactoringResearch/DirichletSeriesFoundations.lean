@@ -37,6 +37,17 @@ noncomputable def dirichletConv (f g : ℕ → ℤ) (n : ℕ) : ℤ :=
 def dirichletId : ℕ → ℤ := fun n => if n = 1 then 1 else 0
 
 
+/-- [Section: # Dirichlet Series Foundations — v11
+## Overview
+We lay the groundwork for Dirichlet series ζ(s) = Σ n^{-s} and the Euler product,
+building on the Möbius inversion and multiplicative function theory from v10.
+## Main Results
+* `mobius_one` — μ(1) = 1
+* `mobius_prime'` — μ(p) = -1
+* `dirichletConv` — Dirichlet convolution
+* `prime_counting_10'` — π(10) = 4
+* `liouville_one` — λ(1) = 1
+* `liouville_prime'` — λ(p) = -1] -/
 theorem mobius_sum_eq_indicator (n : ℕ) (hn : 0 < n) :
     ∑ d ∈ n.divisors, mobiusFn d = if n = 1 then 1 else 0 := by
   -- By definition of mobiusFn, we know that mobiusFn(n) = μ(n), where μ(n) is the Möbius function.

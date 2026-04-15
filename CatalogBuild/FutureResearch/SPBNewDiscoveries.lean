@@ -38,6 +38,7 @@ theorem spbMat_mul_neg (n : ℤ) :
   rw [spbMat_mul]; ext i j; fin_cases i <;> fin_cases j <;> simp <;> ring
 
 
+/-- [Section: ## Section 3: SPB Arctan Characterization] -/
 theorem spb_arctan_add (x y : ℝ) (h : 0 < 1 - x * y) :
     arctan (spb x y) = arctan x + arctan y := by
   unfold spb
@@ -70,6 +71,7 @@ theorem deriv_cauchy_kernel (x : ℝ) :
   simpa [ div_eq_mul_inv ] using HasDerivAt.inv ( hasDerivAt_pow 2 x |> HasDerivAt.const_add ( 1 : ℝ ) ) ( by positivity )
 
 
+/-- [Section: ## Section 7: Norm Identities] -/
 theorem circular_norm (x y : ℝ) (h : 1 - x * y ≠ 0) :
     (1 - x * y) ^ 2 * (1 + spb x y ^ 2) = (1 + x ^ 2) * (1 + y ^ 2) := by
   unfold spb; field_simp; ring
@@ -85,6 +87,7 @@ theorem sum_of_squares_alt (a b c d : ℤ) :
       (a * c + b * d) ^ 2 + (a * d - b * c) ^ 2 := by ring
 
 
+/-- [Section: ## Section 9: SPB Projective Coordinates] -/
 def spbProj (x₁ x₂ y₁ y₂ : ℝ) : ℝ × ℝ :=
   (x₁ * y₂ + x₂ * y₁, x₂ * y₂ - x₁ * y₁)
 
@@ -118,6 +121,7 @@ theorem spbMat_elliptic (n : ℤ) (hn : n ≠ 0) :
   nlinarith
 
 
+/-- [Section: ## Section 11: SPB Cocycle Generating Function] -/
 theorem geometric_cocycle (x y : ℝ) (h : |x * y| < 1) :
     HasSum (fun n => (x * y) ^ n) (1 / (1 - x * y)) := by
   simpa using hasSum_geometric_of_abs_lt_one h

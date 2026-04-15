@@ -29,11 +29,19 @@ theorem ackermann_one (n : ℕ) : ackermann 1 n = n + 2 := by
   induction' n with n ih <;> simp +arith +decide [ *, ackermann ]
 
 
+/-- [Section: ### The Pigeonhole Apocalypse
+Any function from a larger finite type to a smaller one must have collisions.
+This innocent fact powers: the birthday attack (cryptography), the pumping
+lemma (formal languages), and Ramsey theory (combinatorics).] -/
 theorem pigeonhole_evil (n : ℕ) (f : Fin (n + 2) → Fin (n + 1)) :
     ¬ Injective f := by
   exact fun h => absurd ( Fintype.card_le_of_injective f h ) ( by simp +arith +decide )
 
 
+/-- [Section: ### The Infinite Ramsey Doom
+Among infinite disorder, order MUST emerge. You cannot escape pattern.
+Even pure randomness, given enough space, crystallizes into structure.
+This is the most terrifying theorem in combinatorics.] -/
 theorem infinite_pigeonhole (n : ℕ) (f : ℕ → Fin (n + 1)) :
     ∃ c : Fin (n + 1), ∀ N : ℕ, ∃ m : ℕ, m ≥ N ∧ f m = c := by
   by_contra h_contra;
@@ -43,6 +51,8 @@ theorem infinite_pigeonhole (n : ℕ) (f : ℕ → Fin (n + 1)) :
   exact Set.infinite_univ <| Set.Finite.subset ( Set.Finite.biUnion ( Set.toFinite ( Finset.univ : Finset ( Fin ( n + 1 ) ) ) ) fun c _ => h_finite c ) fun x hx => by aesop;
 
 
+/-- [Section: ### The Fixed Point Inevitability
+Some maps MUST have fixed points. You cannot escape yourself.] -/
 theorem involution_odd_fixed_point (n : ℕ) (f : Fin (2 * n + 1) → Fin (2 * n + 1))
     (hf : ∀ x, f (f x) = x) : ∃ x, f x = x := by
   by_contra h;

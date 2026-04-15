@@ -25,6 +25,7 @@ theorem simplexETFGram_off_diag (K : ℕ) (hK : 2 ≤ K) (i j : Fin K) (hij : i 
   unfold simplexETFGram; simp [hij]
 
 
+/-- [Section: ## §1: Simplex ETF Construction] -/
 theorem simplexETFGram_symmetric (K : ℕ) (hK : 2 ≤ K) :
     (simplexETFGram K hK).IsSymm := by
       exact Matrix.ext fun i j => by unfold simplexETFGram; aesop;
@@ -36,6 +37,7 @@ def frameOperator {d K : ℕ} (vectors : Fin K → Fin d → ℝ) :
   ∑ i, vecMulVec (vectors i) (vectors i)
 
 
+/-- [Section: ## §2: Frame Theory] -/
 theorem frameOperator_symmetric {d K : ℕ} (vectors : Fin K → Fin d → ℝ) :
     (frameOperator vectors).IsSymm := by
       ext i j;
@@ -48,6 +50,7 @@ def IsTightFrame {d K : ℕ} (vectors : Fin K → Fin d → ℝ) (c : ℝ) : Pro
   frameOperator vectors = c • (1 : Matrix (Fin d) (Fin d) ℝ)
 
 
+/-- [Section: ## §3: Neural Collapse Geometry] -/
 theorem simplex_etf_max_margin (K : ℕ) (hK : 2 ≤ K) :
     (1 : ℝ) + 1 / (K - 1 : ℝ) = K / (K - 1 : ℝ) := by
       rw [ one_add_div ] <;> ring ; linarith [ ( by norm_cast : ( 2 : ℝ ) ≤ K ) ]

@@ -46,6 +46,12 @@ theorem amplitude_singleton (a : ℤ) (θ : ℝ) :
   simp [diffractionAmplitude]
 
 
+/-- [Section: ## Section 2: The Two-Photon Experiment
+"Light up just 2 numbers on the number line and watch them interfere."
+For S = {a, b}, the diffraction intensity is:
+I(θ) = 2 + 2cos(2π(b-a)θ)
+This is Young's double-slit experiment on the integers!
+The fringe spacing is determined by the gap (b - a).] -/
 theorem intensity_singleton (a : ℤ) (θ : ℝ) :
     diffractionIntensity {a} θ = 1 := by
   unfold diffractionIntensity; norm_num [ Complex.normSq_eq_norm_sq, Complex.norm_exp ] ;
@@ -59,6 +65,7 @@ theorem amplitude_pair (a b : ℤ) (hab : a ≠ b) (θ : ℝ) :
   exact Finset.sum_pair hab
 
 
+/-- [Section: ## Section 3: Fundamental Properties of Diffraction] -/
 theorem intensity_nonneg (S : Finset ℤ) (θ : ℝ) :
     0 ≤ diffractionIntensity S θ := by
   exact Complex.normSq_nonneg _
@@ -85,6 +92,11 @@ def translateSet (S : Finset ℤ) (k : ℤ) : Finset ℤ :=
   S.map ⟨(· + k), add_left_injective k⟩
 
 
+/-- [Section: ## Section 4: Translation Invariance —
+"Shifting the grating doesn't change the fringes"
+This is a profound physical fact: the diffraction pattern depends only on
+the *relative positions* of the slits, not their absolute location.
+Mathematically: I_{S+k}(θ) = I_S(θ) for all k ∈ ℤ.] -/
 theorem amplitude_translate (S : Finset ℤ) (k : ℤ) (θ : ℝ) :
     diffractionAmplitude (translateSet S k) θ =
     Complex.exp (2 * Real.pi * k * θ * Complex.I) * diffractionAmplitude S θ := by
@@ -99,6 +111,13 @@ theorem intensity_translate (S : Finset ℤ) (k : ℤ) (θ : ℝ) :
   norm_num [ Complex.normSq_eq_norm_sq, Complex.norm_exp ]
 
 
+/-- [Section: ## Section 5: The Autocorrelation Encodes the Diffraction
+The fundamental theorem connecting algebra and optics:
+I_S(θ) = ∑_d c_S(d) · e^{2πidθ}
+where c_S(d) is the autocorrelation. This means:
+- The diffraction pattern is the Fourier transform of the autocorrelation
+- Two sets with the same autocorrelation have identical diffraction (homometric sets)
+- The diffraction pattern cannot in general distinguish a set from its "homometric twins"] -/
 theorem autocorrelation_zero (S : Finset ℤ) :
     autocorrelation S 0 = S.card := by
   unfold autocorrelation;
@@ -117,6 +136,13 @@ theorem autocorrelation_singleton_ne (a : ℤ) (d : ℤ) (hd : d ≠ 0) :
   unfold autocorrelation; aesop;
 
 
+/-- [Section: ## Section 6: Sidon Sets — Maximum Diffraction Flatness
+A Sidon set (B₂ set) has all pairwise differences distinct.
+In diffraction terms: the autocorrelation is as "flat" as possible —
+each nonzero difference appears exactly once. This means the diffraction
+pattern is maximally uniform, like white light.
+Sidon sets are the "anti-lasers" of integer diffraction: no frequency
+is preferentially amplified.] -/
 theorem sidon_singleton (a : ℤ) : IsSidonSet {a} := by
   -- For any d ≠ 0, the autocorrelation is zero, which is ≤ 1.
   intros d hd
@@ -137,6 +163,13 @@ def crossAmplitude (S T : Finset ℤ) (θ : ℝ) : ℂ :=
   ∑ s ∈ S, ∑ t ∈ T, Complex.exp (2 * Real.pi * (↑(s - t) : ℝ) * θ * Complex.I)
 
 
+/-- [Section: ## Section 7: Coherence and Decoherence
+When two sets S and T are "illuminated" simultaneously, the total
+diffraction is NOT simply I_S + I_T. There are interference terms:
+I_{S∪T} = I_S + I_T + 2·Re(∑_{s∈S,t∈T} e^{2πi(s-t)θ})
+The cross-term represents coherence between the two "light sources."
+**Coherence** (cross-term large): The sets have many common differences
+**Decoherence** (cross-term small): The differences are "incommensurable"] -/
 theorem amplitude_disjoint_union (S T : Finset ℤ) (h : Disjoint S T) (θ : ℝ) :
     diffractionAmplitude (S ∪ T) θ =
     diffractionAmplitude S θ + diffractionAmplitude T θ := by
@@ -148,6 +181,11 @@ def reflectSet (S : Finset ℤ) : Finset ℤ :=
   S.map ⟨fun x => -x, neg_injective⟩
 
 
+/-- [Section: ## Section 8: Reflection Symmetry
+The diffraction pattern of S equals that of -S (the reflection).
+Physically: a mirror image of the grating produces the same fringes.
+This is why diffraction cannot distinguish chirality — the
+"phase problem" of crystallography.] -/
 theorem intensity_reflect (S : Finset ℤ) (θ : ℝ) :
     diffractionIntensity (reflectSet S) θ = diffractionIntensity S θ := by
   unfold diffractionIntensity diffractionAmplitude reflectSet;
@@ -217,6 +255,10 @@ theorem homometric_trans {S T U : Finset ℤ} (h1 : IsHomometric S T)
   fun d => (h1 d).trans (h2 d)
 
 
+/-- [Section: ## Section 13: The Homometric Problem
+Two sets S and T are *homometric* if they have the same diffraction pattern
+(equivalently, the same autocorrelation). This is the mathematical version
+of the crystallographic phase problem.] -/
 theorem homometric_card {S T : Finset ℤ} (h : IsHomometric S T) :
     S.card = T.card := by
   -- By definition of homometricity, the autocorrelations at 0 are equal.

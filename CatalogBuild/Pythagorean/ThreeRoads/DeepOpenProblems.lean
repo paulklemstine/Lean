@@ -26,6 +26,7 @@ theorem B1_leg_sum (a b c : ℤ) :
     (a - 2*b + 2*c) + (2*a - b + 2*c) = 3*a - 3*b + 4*c := by ring
 
 
+/-- [Section: ## Section 1: Refined Smooth Density Bounds] -/
 theorem B2_leg_sum (a b c : ℤ) :
     (a + 2*b + 2*c) + (2*a + b + 2*c) = 3*a + 3*b + 4*c := by ring
 
@@ -81,6 +82,7 @@ theorem B2_eigenvalue_product :
   nlinarith
 
 
+/-- [Section: ## Section 4: Path Length and Tree Depth Bounds] -/
 theorem B2_hyp_growth_factor (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
     (h : a ^ 2 + b ^ 2 = c ^ 2) :
     3 * c ≤ 2*a + 2*b + 3*c := by nlinarith
@@ -99,12 +101,14 @@ theorem total_paths_bound (d : ℕ) : 3^(d+1) - 1 ≥ 2 * 3^d := by
   omega
 
 
+/-- [Section: ## Section 5: Continued Fraction Connection] -/
 theorem euclid_B1_transform (m n : ℤ) :
     let m' := 2*m - n
     let n' := m
     m' + n' = 3*m - n ∧ m' - n' = m - n := by constructor <;> ring
 
 
+/-- [Section: ## Section 6: Quantum Speedup] -/
 theorem grover_cost_bound (d : ℕ) : Nat.sqrt (3^d) ≤ 3^d := Nat.sqrt_le_self _
 
 
@@ -116,6 +120,7 @@ theorem classical_tree_search_lower (d : ℕ) : 3^d ≥ d + 1 := by
     omega
 
 
+/-- [Section: ## Section 7: Quadratic Sieve Connection] -/
 theorem qs_tree_sieve_bridge (N x : ℤ) :
     x^2 - N^2 = (x - N) * (x + N) := by ring
 
@@ -128,6 +133,7 @@ theorem tree_sieve_complement_divides (N b c : ℤ) (h : N^2 + b^2 = c^2) :
     (c + b) ∣ N^2 := ⟨c - b, by linarith⟩
 
 
+/-- [Section: ## Section 8: Density and Counting] -/
 theorem root_triple : (3 : ℤ)^2 + 4^2 = 5^2 := by norm_num
 
 
@@ -139,6 +145,7 @@ theorem level1_all_7_smooth :
     60 = 2^2 * 3 * 5 ∧ 420 = 2^2 * 3 * 5 * 7 ∧ 120 = 2^3 * 3 * 5 := by norm_num
 
 
+/-- [Section: ## Section 9: Free Monoid Structure] -/
 theorem berggren_B1_injective (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ)
     (h_a : a₁ - 2*b₁ + 2*c₁ = a₂ - 2*b₂ + 2*c₂)
     (h_b : 2*a₁ - b₁ + 2*c₁ = 2*a₂ - b₂ + 2*c₂)
@@ -166,6 +173,7 @@ theorem berggren_B3_injective (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ)
   constructor <;> linarith
 
 
+/-- [Section: ## Section 10: Poincaré Disk Model] -/
 theorem poincare_on_circle (a b c : ℤ) (hc : c ≠ 0)
     (h : a^2 + b^2 = c^2) :
     (a : ℚ)^2 / (c : ℚ)^2 + (b : ℚ)^2 / (c : ℚ)^2 = 1 := by
@@ -174,6 +182,7 @@ theorem poincare_on_circle (a b c : ℤ) (hc : c ≠ 0)
   exact_mod_cast h
 
 
+/-- [Section: ## Section 11: Concrete Factoring Examples] -/
 theorem berggren_from_root :
     (3 - 2*4 + 2*5 : ℤ) = 5 ∧ (2*3 - 4 + 2*5 : ℤ) = 12 ∧ (2*3 - 2*4 + 3*5 : ℤ) = 13 ∧
     (3 + 2*4 + 2*5 : ℤ) = 21 ∧ (2*3 + 4 + 2*5 : ℤ) = 20 ∧ (2*3 + 2*4 + 3*5 : ℤ) = 29 ∧

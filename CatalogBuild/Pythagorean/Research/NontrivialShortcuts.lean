@@ -7,6 +7,7 @@ Declarations: 8
 
 import Mathlib
 
+/-- [Section: ## Section 1: Divisor Pairs Give Triples] -/
 theorem divisor_pair_triple (N d e : ℤ) (hprod : d * e = N ^ 2)
     (hparity : (2 : ℤ) ∣ (e - d)) :
     N ^ 2 + ((e - d) / 2) ^ 2 = ((e + d) / 2) ^ 2 := by
@@ -22,6 +23,7 @@ theorem semiprime_shortcut (p q : ℕ) :
     Nat.gcd p (p * q) = p := Nat.gcd_eq_left (dvd_mul_right p q)
 
 
+/-- [Section: ## Section 3: The Circular Dependency] -/
 theorem nontrivial_pair_implies_factor (N d e : ℕ) (hN : 1 < N)
     (hprod : d * e = N ^ 2) (hd1 : 1 < d) (hdN : d < N) :
     1 < Nat.gcd d N := by

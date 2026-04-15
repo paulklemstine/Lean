@@ -7,10 +7,12 @@ Declarations: 12
 
 import Mathlib
 
+/-- [Section: ## Section 1: Lattice Determinant] -/
 theorem lattice_det_pos (d : ℕ) (hd : 1 ≤ d) (Δ : ℕ) (hΔ : 1 ≤ Δ) :
     1 ≤ Δ ^ d := Nat.one_le_pow d Δ hΔ
 
 
+/-- [Section: ## Section 2: Exponent Comparison] -/
 theorem minkowski_exponent_decreases : (2 : ℕ) < 3 := by norm_num
 
 

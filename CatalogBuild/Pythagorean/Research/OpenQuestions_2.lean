@@ -12,6 +12,7 @@ def Q6 (v : Fin 6 → ℤ) : ℤ :=
   v 0 ^ 2 + v 1 ^ 2 + v 2 ^ 2 + v 3 ^ 2 + v 4 ^ 2 - v 5 ^ 2
 
 
+/-- [Section: ## Part 1: k = 6 Descent — Toward the Single Tree Property] -/
 theorem null_cone_eta_even (v : Fin 6 → ℤ)
     (hNull : v 0 ^ 2 + v 1 ^ 2 + v 2 ^ 2 + v 3 ^ 2 + v 4 ^ 2 = v 5 ^ 2) :
     2 ∣ (v 0 + v 1 + v 2 + v 3 + v 4 - v 5) := by
@@ -55,6 +56,7 @@ theorem descent_terminates_k6 (a₁ a₂ a₃ a₄ a₅ : ℤ)
   have : a₁ ≤ 1 := Int.le_of_lt_add_one ( by nlinarith only [ h, h1, h2, h3, h4, h5 ] ) ; ( have : a₂ ≤ 1 := Int.le_of_lt_add_one ( by nlinarith only [ h, h1, h2, h3, h4, h5 ] ) ; ( have : a₃ ≤ 1 := Int.le_of_lt_add_one ( by nlinarith only [ h, h1, h2, h3, h4, h5 ] ) ; ( have : a₄ ≤ 1 := Int.le_of_lt_add_one ( by nlinarith only [ h, h1, h2, h3, h4, h5 ] ) ; ( have : a₅ ≤ 1 := Int.le_of_lt_add_one ( by nlinarith only [ h, h1, h2, h3, h4, h5 ] ) ; interval_cases a₁ <;> interval_cases a₂ <;> interval_cases a₃ <;> interval_cases a₄ <;> interval_cases a₅ <;> trivial; ) ) ) )
 
 
+/-- [Section: ## Part 2: k = 5 Alternative Descent Mechanisms] -/
 theorem k5_uniform_reflection_fails (a : ℤ) (ha : a ≠ 0) :
     ∃ v : Fin 5 → ℤ,
       v 0 ^ 2 + v 1 ^ 2 + v 2 ^ 2 + v 3 ^ 2 = v 4 ^ 2 ∧
@@ -136,6 +138,7 @@ theorem general_null_cone_parity_3 (a b d : ℤ) (h : a^2 + b^2 = d^2) :
   exact ⟨rd - ra - rb, by linarith⟩
 
 
+/-- [Section: ## Part 4: Mod-p Descent] -/
 theorem general_null_cone_parity_4 (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
     2 ∣ (a + b + c - d) := by
   obtain ⟨ra, hra⟩ := sq_sub_self_even' a
@@ -167,6 +170,7 @@ theorem general_null_cone_parity_6 (a₁ a₂ a₃ a₄ a₅ d : ℤ)
   exact ⟨rd - r₁ - r₂ - r₃ - r₄ - r₅, by linarith⟩
 
 
+/-- [Section: ## Part 5: The Divisibility Characterization] -/
 theorem k_minus_2_dvd_4_characterization (k : ℕ) (hk : 3 ≤ k) (hk' : k ≤ 100) :
     (↑(k - 2) : ℤ) ∣ 4 ↔ k = 3 ∨ k = 4 ∨ k = 6 := by
   interval_cases k <;> trivial

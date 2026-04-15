@@ -9,6 +9,9 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # The EML–SPB Unification: Two Faces of One Algebraic Structure
+Addition is the fundamental operation; multiplication, SPB, and hyperbolic SPB
+all arise through conjugation by exp, tan, and tanh respectively.] -/
 def spbU (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
 
 

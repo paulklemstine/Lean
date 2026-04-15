@@ -7,6 +7,7 @@ Declarations: 26
 
 import Mathlib
 
+/-- [Section: ## §1: sl(2) Lie Algebra] -/
 def sl2_e : Matrix (Fin 2) (Fin 2) ℤ := !![0, 1; 0, 0]
 
 def sl2_f : Matrix (Fin 2) (Fin 2) ℤ := !![0, 0; 1, 0]
@@ -47,6 +48,7 @@ theorem casimir_commutes (M : Matrix (Fin 2) (Fin 2) ℤ) :
   rw [sl2_casimir_value]; simp only [smul_one_mul, mul_smul_one]
 
 
+/-- [Section: ## §2: Symmetry-Aware Simulation] -/
 def is_symmetry (H S : Matrix (Fin 2) (Fin 2) ℤ) : Prop := H * S = S * H
 
 
@@ -65,6 +67,7 @@ theorem symmetry_mul (H S₁ S₂ : Matrix (Fin 2) (Fin 2) ℤ)
     _ = S₁ * S₂ * H := by rw [Matrix.mul_assoc]
 
 
+/-- [Section: ## §3: Jordan-Wigner and Bravyi-Kitaev] -/
 def jw_two_body_gates (p q : ℕ) (_ : p < q) : ℕ := 2 * (q - p) + 2
 
 
@@ -83,6 +86,7 @@ theorem bk_better_than_jw_16 : bk_two_body_gates 16 < jw_two_body_gates 0 16 (by
   native_decide
 
 
+/-- [Section: ## §4: VQE and MBQC Structure] -/
 structure VariationalAnsatz where
   n_qubits : ℕ
   n_params : ℕ
@@ -99,6 +103,7 @@ theorem cluster_square_gates (n : ℕ) (hn : 1 ≤ n) :
   | succ m => simp only [cluster_state_gates, Nat.succ_sub_one]; ring
 
 
+/-- [Section: ## §5: Quantum Advantage — Concrete Bounds] -/
 theorem grover_advantage (N : ℕ) (hN : 1 < N) : Nat.sqrt N < N :=
   Nat.sqrt_lt_self hN
 

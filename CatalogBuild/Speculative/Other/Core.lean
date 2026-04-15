@@ -7,6 +7,7 @@ Declarations: 6
 
 import Mathlib
 
+/-- [Section: ## Section 1: Signal Spaces and Contraction Mappings] -/
 theorem adaptive_feedback_convergence
     {α : Type*} [MetricSpace α] [CompleteSpace α] [Nonempty α]
     {K : ℝ≥0} (f : α → α) (hf : ContractingWith K f) :
@@ -22,6 +23,7 @@ theorem adaptive_feedback_convergence
   exact dist_le_zero.mp ( le_of_not_gt fun h => by nlinarith [ show ( K : ℝ ) < 1 from mod_cast hf.1, show ( 0 : ℝ ) ≤ dist x h_fixed_point.choose from dist_nonneg ] )
 
 
+/-- [Section: ## Section 2: Composition of Signal Transports] -/
 theorem transport_composition_lipschitz
     {α β γ : Type*} [PseudoEMetricSpace α] [PseudoEMetricSpace β] [PseudoEMetricSpace γ]
     (f : α → β) (g : β → γ) (Kf Kg : ℝ≥0)
@@ -30,6 +32,7 @@ theorem transport_composition_lipschitz
   exact hg.comp hf
 
 
+/-- [Section: ## Section 3: Self-Repair via Knaster-Tarski] -/
 theorem self_repair_fixed_point
     {α : Type*} [CompleteLattice α] (f : α →o α) :
     ∃ x : α, f x = x := by
@@ -43,11 +46,13 @@ theorem self_repair_fixed_point
     exact le_sInf fun x hx => f.monotone ( sInf_le hx ) |> le_trans <| hx
 
 
+/-- [Section: ## Section 4: Entropy Bounds for Signal Processing] -/
 theorem shannon_entropy_term_nonneg (p : ℝ) (hp0 : 0 ≤ p) (hp1 : p ≤ 1) :
     0 ≤ -(p * Real.log p) := by
   by_cases h : p = 0 <;> simpa [ h ] using by nlinarith [ Real.log_nonpos hp0 hp1 ] ;
 
 
+/-- [Section: ## Section 5: Convergence of Iterative Refinement] -/
 theorem iterative_refinement_geometric_convergence
     {α : Type*} [PseudoEMetricSpace α]
     (f : α → α) (K : ℝ≥0) (hf : LipschitzWith K f)
@@ -59,6 +64,7 @@ theorem iterative_refinement_geometric_convergence
   · simpa [ hfix, pow_succ', mul_assoc, Function.iterate_succ_apply', mul_left_comm ] using hf.edist_le_mul _ _ |> le_trans <| mul_le_mul_left' ih K
 
 
+/-- [Section: ## Section 6: Collaborative Generation — Consensus] -/
 theorem collaborative_convex_combination
     {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
     (n : ℕ) (agents : Fin n → V) (weights : Fin n → ℝ)

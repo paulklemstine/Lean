@@ -88,6 +88,7 @@ theorem isOracle_comp_comm {α : Type*} (O₁ O₂ : α → α)
   intro x; have := h₁ (O₂ x); have := h₂ (O₁ x); aesop
 
 
+/-- [Section: ## Part IV: Oracle Theory (Level 5)] -/
 theorem fixedPoints_comp_comm {α : Type*} (O₁ O₂ : α → α)
     (h₁ : IsOracle O₁) (h₂ : IsOracle O₂)
     (hcomm : ∀ x, O₁ (O₂ x) = O₂ (O₁ x)) :
@@ -115,6 +116,7 @@ theorem tropNOT_involutive (a : ℝ) : tropNOT (tropNOT a) = a := by
   unfold tropNOT; ring
 
 
+/-- [Section: ## Part V: Tropical Logic] -/
 theorem trop_deMorgan_or (a b : ℝ) :
     tropNOT (tropOR a b) = tropAND (tropNOT a) (tropNOT b) := by
   grind +locals

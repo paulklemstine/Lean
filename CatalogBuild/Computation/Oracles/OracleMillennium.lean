@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## §1: P vs NP — The Complexity Oracle] -/
 def isSatisfiable' {n : ℕ} (f : (Fin n → Bool) → Bool) : Prop :=
   ∃ x : Fin n → Bool, f x = true
 
@@ -24,6 +25,7 @@ theorem sat_fraction_bound' (n : ℕ) :
 theorem cook_levin_bound' (n : ℕ) : n ^ 3 ≤ (n + 1) ^ 3 := Nat.pow_le_pow_left (Nat.le_succ n) 3
 
 
+/-- [Section: ## §2: Riemann Hypothesis — The Spectral Oracle] -/
 theorem zeta_2_prefactor : (1 : ℚ) / 6 > 0 := by norm_num
 
 
@@ -41,6 +43,7 @@ theorem euler_product_check2 : (1 : ℚ) - 1/9 = 8/9 := by norm_num
 theorem euler_product_check3 : (1 : ℚ) - 1/25 = 24/25 := by norm_num
 
 
+/-- [Section: ## §3: Navier-Stokes — The Flow Oracle] -/
 theorem sobolev_critical_3d' : (3 : ℚ) / 2 - 3 / (2 * 3) = 1 := by norm_num
 
 
@@ -54,6 +57,7 @@ theorem energy_dissipation (E0 nu t : ℝ) (hnu : 0 < nu) (ht : 0 < t) (hE : 0 <
   nlinarith
 
 
+/-- [Section: ## §4: Yang-Mills — The Gauge Oracle] -/
 theorem su2_casimir' (j : ℕ) : (j : ℚ) * (j + 1) ≥ 0 := by positivity
 
 
@@ -62,6 +66,7 @@ theorem sun_dim_v2 (N : ℕ) (hN : 1 ≤ N) : N ^ 2 - 1 + 1 = N ^ 2 := by
   omega
 
 
+/-- [Section: ## §5: BSD Conjecture — The Rational Point Oracle] -/
 structure RatPoint' (a b : ℚ) where
   x : ℚ
   y : ℚ
@@ -78,6 +83,7 @@ theorem six_is_congruent' :
   ⟨-3, 9, by norm_num, by ring⟩
 
 
+/-- [Section: ## §6: Hodge Conjecture — The Algebraic Cycle Oracle] -/
 def genus_plane_curve' (d : ℕ) : ℕ := (d - 1) * (d - 2) / 2
 
 
@@ -90,6 +96,7 @@ theorem genus_cubic' : genus_plane_curve' 3 = 1 := rfl
 theorem genus_quartic' : genus_plane_curve' 4 = 3 := rfl
 
 
+/-- [Section: ## §7: Poincaré (Solved!) — Ricci Flow as Oracle] -/
 theorem s3_euler_char' : 1 - 0 + 0 - 1 = (0 : ℤ) := by norm_num
 
 

@@ -186,6 +186,7 @@ def IsPrimitiveQuad' (a b c d : ℤ) : Prop :=
   Int.gcd (Int.gcd a b) (Int.gcd c d) = 1
 
 
+/-- [Section: ## Section 12: Parity and Quaternion Structure] -/
 theorem quad_hyp_odd (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2)
     (hprim : IsPrimitiveQuad' a b c d) (hd_pos : 0 < d) :
     ¬ (2 ∣ d) := by

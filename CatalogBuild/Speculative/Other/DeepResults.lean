@@ -29,6 +29,7 @@ theorem totient_prime_sq (p : ℕ) (hp : p.Prime) :
 /-- Möbius function values. -/
 theorem mobius_1 : ArithmeticFunction.moebius 1 = 1 := by native_decide
 
+/-- [Section: ## §1: Multiplicative Number Theory] -/
 theorem mobius_2 : ArithmeticFunction.moebius 2 = -1 := by native_decide
 
 theorem mobius_4 : ArithmeticFunction.moebius 4 = 0 := by native_decide
@@ -98,6 +99,7 @@ theorem class_eq_s3 : 1 + 3 + 2 = (6 : ℕ) := by norm_num
 def eulerCharSfc (g : ℕ) : ℤ := 2 - 2 * g
 
 
+/-- [Section: ## §7: Topology] -/
 theorem euler_sphere : eulerCharSfc 0 = 2 := rfl
 
 theorem euler_torus : eulerCharSfc 1 = 0 := rfl
@@ -119,6 +121,7 @@ theorem gauss_bonnet_sp : (4 : ℚ) = 2 * 2 := by norm_num
 /-- Best rational approximations to √2: p² - 2q² = ±1. -/
 theorem sqrt2_a1 : 1^2 - 2 * 1^2 = -(1 : ℤ) := by norm_num
 
+/-- [Section: ## §8: Continued Fractions & Diophantine Approximation] -/
 theorem sqrt2_a2 : 3^2 - 2 * 2^2 = (1 : ℤ) := by norm_num
 
 theorem sqrt2_a3 : 7^2 - 2 * 5^2 = -(1 : ℤ) := by norm_num
@@ -172,6 +175,7 @@ theorem triangle_ineq_alg (a b : ℝ) : 2 * a * b ≤ a ^ 2 + b ^ 2 := by
   nlinarith [sq_nonneg (a - b)]
 
 
+/-- [Section: ## §10: Analytic Inequalities] -/
 theorem schur_degree1 (a b c : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) (hc : 0 ≤ c) :
     a * (a - b) * (a - c) + b * (b - a) * (b - c) + c * (c - a) * (c - b) ≥ 0 := by
   cases le_total a b <;> cases le_total a c <;> cases le_total b c <;> nlinarith [ sq_nonneg ( a - b ), sq_nonneg ( a - c ), sq_nonneg ( b - c ) ]

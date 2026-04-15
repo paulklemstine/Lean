@@ -7,6 +7,8 @@ Declarations: 10
 
 import Mathlib
 
+/-- [Section: ## Section 2: Quantum Gate Algebra
+Quantum gates form a group under composition.] -/
 theorem identity_gate_unitary (n : ℕ) : IsUnitaryGate (1 : Matrix (Fin n) (Fin n) ℂ) := by
   constructor <;> norm_num
 
@@ -31,6 +33,9 @@ def isEntangled {m n : ℕ} (ψ : Fin m × Fin n → ℂ) : Prop :=
   ¬isSeparable ψ
 
 
+/-- [Section: ## Section 3: Tensor Products and Entanglement
+Entanglement is the key quantum phenomenon. A state is entangled if it
+cannot be written as a tensor product of subsystem states.] -/
 theorem tensorProduct_separable {m n : ℕ} (α : Fin m → ℂ) (β : Fin n → ℂ) :
     isSeparable (fun ij => α ij.1 * β ij.2) := by
   exact ⟨ α, β, fun i j => rfl ⟩
@@ -41,6 +46,11 @@ def isLinearClone {n : ℕ} (clone : (Fin n → ℂ) → (Fin n × Fin n → ℂ
   ∀ (c : ℂ) (ψ : Fin n → ℂ), clone (c • ψ) = c • clone ψ
 
 
+/-- [Section: ## Section 4: No-Cloning Theorem (Type-Theoretic Version)
+The no-cloning theorem says there's no unitary that maps |ψ⟩|0⟩ → |ψ⟩|ψ⟩
+for all |ψ⟩. In type-theoretic terms: there's no natural transformation
+from the identity functor to the diagonal functor in the category of
+quantum states.] -/
 theorem no_cloning_simplified {n : ℕ} (hn : 0 < n) (clone : (Fin n → ℂ) → (Fin n × Fin n → ℂ))
     (hclone : isCloningMap clone)
     (ψ : Fin n → ℂ) (hψ : ∃ i, ψ i ≠ 0) :
@@ -49,6 +59,9 @@ theorem no_cloning_simplified {n : ℕ} (hn : 0 < n) (clone : (Fin n → ℂ) �
   replace hL := congr_fun hL ( i, i ) ; simp_all +decide [ two_smul, isCloningMap ] ; ring_nf at hL ; aesop ( simp_config := { singlePass := true } ) ;
 
 
+/-- [Section: ## Section 5: Quantum Channel Types
+A quantum channel (completely positive trace-preserving map) is the most
+general evolution of a quantum system. We define the type structure.] -/
 theorem id_channel_trace_preserving (n : ℕ) :
     ∀ ρ : Matrix (Fin n) (Fin n) ℂ, Matrix.trace (id ρ) = Matrix.trace ρ := by
   exact fun _ => rfl

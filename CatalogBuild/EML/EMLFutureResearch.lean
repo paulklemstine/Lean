@@ -39,6 +39,7 @@ def emlHessXX (x : ℝ) : ℝ := Real.exp x
 def emlHessYY (y : ℝ) : ℝ := y⁻¹ ^ 2
 
 
+/-- [Section: ## Part 1: Quasi-Division (Quasigroup Structure)] -/
 theorem eml_right_division (a b : ℝ) :
     eml a (Real.exp (Real.exp a - b)) = b := by
   unfold eml; aesop;
@@ -59,6 +60,7 @@ theorem eml_left_division_domain (a b x : ℝ) (ha : 0 < a) (h : eml x a = b) :
   exact h.symm ▸ by unfold eml; linarith [ Real.exp_pos x, Real.log_le_sub_one_of_pos ha ] ;
 
 
+/-- [Section: ## Part 2: Basin of Attraction for the g-Map] -/
 theorem emlGmap_pos (z : ℝ) (hz : 0 < z) (hz2 : z < Real.exp (Real.exp 1)) :
     0 < emlGmap z := by
   exact sub_pos_of_lt ( Real.log_lt_iff_lt_exp hz |>.2 hz2 )
@@ -81,6 +83,7 @@ theorem emlGmap_contraction (z : ℝ) (hz : 1 < z) :
   rw [ abs_of_neg ] <;> nlinarith [ inv_mul_cancel₀ ( by linarith : z ≠ 0 ) ]
 
 
+/-- [Section: ## Part 3: Convexity of the Diagonal Map] -/
 theorem emlDiag_strictly_convex :
     StrictConvexOn ℝ (Ioi 0) (fun z => emlDiag z) := by
   apply strictConvexOn_of_deriv2_pos ( convex_Ioi 0 );
@@ -122,6 +125,7 @@ theorem emlDiag_gt (z : ℝ) : emlDiag z > z := by
     nlinarith [ Real.add_one_le_exp 1, Real.log_le_sub_one_of_pos ( by linarith : 0 < 1 + ( z - 1 ) ) ]
 
 
+/-- [Section: ## Part 4: EML Hessian Metric] -/
 theorem emlHessian_pos_def (x y : ℝ) (hy : 0 < y) :
     0 < emlHessXX x ∧ 0 < emlHessYY y := by
   exact ⟨ Real.exp_pos x, sq_pos_of_pos <| inv_pos.mpr hy ⟩
@@ -132,6 +136,7 @@ theorem eml_curvature_negative (x y : ℝ) (hy : 0 < y) :
   exact div_neg_of_neg_of_pos ( neg_neg_of_pos ( Real.exp_pos x ) ) ( by positivity )
 
 
+/-- [Section: ## Part 5: Geodesic Equation Solutions] -/
 theorem eml_geodesic_x_verify (a b t : ℝ) (h : 0 < a * t + b) :
     let x := 2 * Real.log (a * t + b)
     let x' := 2 * a / (a * t + b)
@@ -148,6 +153,7 @@ theorem eml_geodesic_y_verify (C k t : ℝ) (hC : 0 < C) :
   grind
 
 
+/-- [Section: ## Part 6: Approximation Theory] -/
 theorem eml_produces_constants (c : ℝ) (hc : -1 < c) :
     eml (Real.log (c + 1)) 1 = c + 1 := by
   unfold eml; norm_num [ Real.exp_log ( by linarith : 0 < c + 1 ) ] ;
@@ -176,6 +182,7 @@ theorem emlETower_superexp (n : ℕ) : emlETower (n + 2) ≥ Real.exp (2 ^ n) :=
   linarith [ Real.log_le_sub_one_of_pos zero_lt_two, Real.add_one_le_exp ( emlETower n ) ]
 
 
+/-- [Section: ## Part 7: Tropical EML Properties] -/
 theorem emlTrop_idempotent_nonneg (x : ℝ) (hx : 0 ≤ x) :
     emlTrop x (-x) = x := by
   exact max_eq_left ( by linarith )
@@ -190,6 +197,7 @@ theorem emlTrop_avg_bound (x y : ℝ) :
   unfold emlTrop; cases max_cases x ( -y ) <;> linarith;
 
 
+/-- [Section: ## Part 8: Composition and Iteration] -/
 theorem eml_compose_left (x y z : ℝ) :
     eml (eml x y) z = Real.exp (Real.exp x - Real.log y) - Real.log z := by
   rfl
@@ -203,6 +211,7 @@ theorem eml_iter_ee : eml (eml 1 1) 1 = Real.exp (Real.exp 1) := by
   unfold eml; norm_num;
 
 
+/-- [Section: ## Part 9: Fundamental Inequalities] -/
 theorem eml_lower_bound (x y : ℝ) :
     eml x y ≥ 1 + x - Real.log y := by
   unfold eml;
@@ -217,6 +226,7 @@ theorem eml_strictAnti_snd (x : ℝ) : StrictAntiOn (fun y => eml x y) (Ioi 0) :
   exact fun y hy z hz hyz => sub_lt_sub_left ( Real.log_lt_log hy hyz ) _
 
 
+/-- [Section: ## Part 10: EML Complexity Lower Bounds] -/
 theorem eml_complexity_exp : eml x 1 = Real.exp x := by
   unfold eml; norm_num;
 

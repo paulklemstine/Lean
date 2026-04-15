@@ -12,6 +12,15 @@ theorem fib_dvd_of_dvd (m n : ℕ) (h : m ∣ n) : Nat.fib m ∣ Nat.fib n :=
   Nat.fib_dvd _ _ h
 
 
+/-- [Section: # Fibonacci Sieve and Primality Pre-Filter (B8, E18)
+We formalize the use of Fibonacci sequence properties for compositeness testing
+and factor sieving. The key insight: F(p)² ≡ 1 (mod p) for odd primes p ≠ 5,
+so if F(n)² ≢ 1 (mod n), then n is composite.
+## Main Results
+* `fib_sq_composite_test` — Compositeness test via Fibonacci squares
+* `fib_periodicity` — Pisano period properties
+* `fib_divisibility_chain` — m | n → F(m) | F(n)
+* `fib_gcd_identity` — gcd(F(m), F(n)) = F(gcd(m, n))] -/
 theorem fib_even_iff_three_dvd (n : ℕ) : 2 ∣ Nat.fib n ↔ 3 ∣ n := by
   induction' n using Nat.strong_induction_on with n ih;
   rcases n with ( _ | _ | _ | _ | _ | _ | n ) <;> simp_all +arith +decide [ Nat.ModEq, Nat.fib_add_two ];

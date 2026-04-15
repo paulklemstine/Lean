@@ -23,6 +23,7 @@ def oracleFalseCount (O : FinOracle' n) : ℕ :=
   ((Finset.univ : Finset (Fin n)).filter (fun i => O i = false)).card
 
 
+/-- [Section: ## §1: Oracle Cohomology — Simplicial Structure] -/
 theorem oracle_partition (O : FinOracle' n) :
     oracleTrueCount' O + oracleFalseCount O = n := by
       convert Finset.card_add_card_compl ( Finset.filter ( fun i => O i = true ) ( Finset.univ : Finset ( Fin n ) ) ) using 1 ; aesop;
@@ -67,6 +68,7 @@ def oracleDegree (n : ℕ) (O : FinOracle' (n + 1)) (i : Fin (n + 1)) : ℤ :=
   ∑ j : Fin (n + 1), oracleAdjWeight n O i j
 
 
+/-- [Section: ## §2: Oracle Laplacian Trace Theorem] -/
 theorem trace_oracle_laplacian (n : ℕ) (O : FinOracle' (n + 1)) :
     ∑ i : Fin (n + 1), oracleDegree n O i =
     2 * ↑(oracleTransitions' n O) := by
@@ -99,6 +101,7 @@ def graphOracleEnergy {n : ℕ} (edges : Finset (Fin n × Fin n))
   (edges.filter (fun e => O e.1 != O e.2)).card
 
 
+/-- [Section: ## §3: Higher-Dimensional Energy Formula] -/
 theorem general_energy_symmetry {n : ℕ} (edges : Finset (Fin n × Fin n))
     (O : Fin n → Bool) :
     graphOracleEnergy edges (fun i => !O i) = graphOracleEnergy edges O := by
@@ -124,6 +127,7 @@ def measureProb (ψ : QuantumOracleState n) (O : Fin n → Bool) : ℝ :=
   ‖ψ.amplitude O‖^2
 
 
+/-- [Section: ## §4: Quantum Oracle States] -/
 theorem measure_prob_nonneg (ψ : QuantumOracleState n) (O : Fin n → Bool) :
     0 ≤ measureProb ψ O := by
       exact sq_nonneg _
@@ -161,6 +165,7 @@ def zeroDiag (n : ℕ) (W : Fin n → Fin n → ℝ) : Prop :=
   ∀ i, W i i = 0
 
 
+/-- [Section: ## §5: Oracle Hopfield Energy] -/
 theorem hopfield_flip_energy_change (n : ℕ) (W : Fin n → Fin n → ℝ)
     (σ : Fin n → ℝ) (k : Fin n) (hW : isSymmetric n W) (hD : zeroDiag n W) :
     let σ' := fun i => if i = k then -σ k else σ i
@@ -177,6 +182,7 @@ def oracleMagnetization' (O : FinOracle' n) : ℝ :=
   ∑ i : Fin n, if O i then (1 : ℝ) else (-1 : ℝ)
 
 
+/-- [Section: ## §6: Oracle Information Inequalities] -/
 theorem magnetization_bound (O : FinOracle' n) :
     |oracleMagnetization' O| ≤ n := by
       exact le_trans ( Finset.abs_sum_le_sum_abs _ _ ) ( le_trans ( Finset.sum_le_sum fun i _ => show |if O i then ( 1 : ℝ ) else -1| ≤ 1 by split_ifs <;> norm_num ) ( by norm_num ) )
@@ -214,6 +220,7 @@ def subsetBoundary (n : ℕ) (S : Finset (Fin (n + 1))) : ℕ :=
     (⟨i.val, by omega⟩ ∈ S) ≠ (⟨i.val + 1, by omega⟩ ∈ S))).card
 
 
+/-- [Section: ## §7: Oracle Cheeger Inequality (Discrete Isoperimetric)] -/
 theorem boundary_complement (n : ℕ) (S : Finset (Fin (n + 1))) :
     subsetBoundary n S = subsetBoundary n Sᶜ := by
       exact congr_arg Finset.card ( Finset.filter_congr fun i hi => by by_cases hiS : ⟨ i.val, by linarith [ Fin.is_lt i ] ⟩ ∈ S <;> aesop )

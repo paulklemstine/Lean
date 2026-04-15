@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/ThreeRoads
-Declarations: 20
+Declarations: 21
 -/
 
 import Mathlib
@@ -56,6 +56,16 @@ theorem euclid_sum_bounds_product (m n : ℤ) (hm : 0 < m) (hn : 0 < n) (hmn : n
   nlinarith [sq_nonneg (m - n)]
 
 
+/-- The Euclid parameter product 2mn < m²+n² when m ≠ n. -/
+theorem euclid_param_bound (m n : ℤ) (hm : 0 < m) (hn : 0 < n) (hne : m ≠ n) :
+    2 * m * n < m ^ 2 + n ^ 2 := by
+  have : (m - n) ^ 2 ≥ 1 := by
+    have : m - n ≠ 0 := sub_ne_zero.mpr hne
+    nlinarith [sq_abs (m - n), abs_pos.mpr this]
+  nlinarith
+
+
+/-- [Section: ## Part 2: Depth and Continued Fraction Connection] -/
 theorem primitive_euclid_coprime_legs (m n : ℤ)
     (hcop : IsCoprime m n) (hparity : Even m ↔ ¬ Even n) :
     IsCoprime (m ^ 2 - n ^ 2) (2 * m * n) := by
@@ -110,6 +120,7 @@ theorem grover_bound_tree (d : ℕ) :
     Nat.sqrt (3 ^ d) ≤ 3 ^ d := Nat.sqrt_le_self _
 
 
+/-- [Section: ## Part 5: Quantum Speedup Structural Bounds] -/
 theorem total_search_space (d : ℕ) :
     3 ^ (d + 1) - 1 ≥ 2 * (3 ^ d) := by
   grind

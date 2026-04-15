@@ -18,6 +18,7 @@ theorem pedersen_binding_broken (v r g dlog : ZMod n) :
   simp [pedersen_commit]; ring
 
 
+/-- [Section: ## §1: Pedersen Commitment Quantum Break] -/
 theorem pedersen_forge_opening (v r g dlog v_target : ZMod n)
     (hdlog : dlog ≠ 0) :
     ∃ r', pedersen_commit v_target r' g (dlog * g) =
@@ -75,6 +76,7 @@ theorem monero_deanon_parallel :
 /-- ZK-SNARK curve parameters. -/
 def bn254_bits : ℕ := 254
 
+/-- [Section: ## §3: Groth16 / SNARK Quantum Vulnerability] -/
 def bls12_381_bits : ℕ := 255
 
 

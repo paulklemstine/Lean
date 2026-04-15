@@ -14,6 +14,7 @@ theorem cramer_rao_motivation (fisher_eigenval : ℝ) (hf : 0 < fisher_eigenval)
     0 < variance := by linarith [div_pos one_pos hf]
 
 
+/-- [Section: ## Part 2: Geodesic Parameter Updates] -/
 theorem geodesic_speedup (cond_s cond_n steps_s steps_n : ℝ)
     (hcs : 0 < cond_s)
     (hs : steps_n * cond_s ≤ steps_s * cond_n) :
@@ -21,6 +22,7 @@ theorem geodesic_speedup (cond_s cond_n steps_s steps_n : ℝ)
   rwa [ le_div_iff₀ hcs ]
 
 
+/-- [Section: ## Part 3: Tropical Attention — Sparse by Nature] -/
 theorem tropical_is_zero_temp_limit (a b : ℝ) (hab : a < b)
     (β : ℝ) (hβ : 0 < β) :
     b ≤ (1/β) * Real.log (Real.exp (β * a) + Real.exp (β * b)) := by
@@ -28,6 +30,7 @@ theorem tropical_is_zero_temp_limit (a b : ℝ) (hab : a < b)
   rw [ Real.le_log_iff_exp_le ] <;> nlinarith [ Real.exp_pos ( β * a ), Real.exp_pos ( β * b ), Real.exp_le_exp.2 ( mul_le_mul_of_nonneg_left hab.le hβ.le ) ]
 
 
+/-- [Section: ## Part 4: Conformal Compression — Spherical Weight Spaces] -/
 theorem conformal_factor_upper (x_norm_sq : ℝ) (hx : 0 ≤ x_norm_sq) :
     2 / (1 + x_norm_sq) ≤ 2 := by
   exact div_le_self ( by norm_num ) ( by linarith )
@@ -40,6 +43,7 @@ theorem spherical_compression_ratio (d : ℕ) (hd : 2 ≤ d) :
   exact sub_lt_self _ one_pos
 
 
+/-- [Section: ## Part 5: Idempotent Collapse of Deep Self-Attention] -/
 theorem attention_layer_bound (κ ε : ℝ) (hκ : 0 < κ) (hκ1 : κ < 1)
     (hε : 0 < ε) (init_dist : ℝ) (hd : 0 < init_dist) :
     ∃ N : ℕ, κ ^ N * init_dist < ε := by
@@ -74,6 +78,7 @@ theorem hyperbolic_tree_embedding (n : ℕ) (hn : 2 ≤ n) :
   apply Real.log_pos; exact_mod_cast hn
 
 
+/-- [Section: ## Part 7: Hyperbolic Embeddings for Token Hierarchies] -/
 theorem hyperbolic_dim_reduction (n : ℕ) (hn : 4 ≤ n) :
     Nat.log 2 n + 1 < n := by
   rcases n with ( _ | _ | _ | _ | _ | n ) <;> norm_num at *;
@@ -81,6 +86,7 @@ theorem hyperbolic_dim_reduction (n : ℕ) (hn : 4 ≤ n) :
   exact Nat.recOn n ( by norm_num ) fun n ihn => by norm_num [ Nat.pow_succ' ] at * ; linarith;
 
 
+/-- [Section: ## Part 8: Resource Complexity Bounds] -/
 theorem combined_compression (s l h c : ℝ)
     (hs : 0 < s) (hs1 : s < 1)
     (hl : 0 < l) (hl1 : l < 1)

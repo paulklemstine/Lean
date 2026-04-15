@@ -19,6 +19,7 @@ theorem metaOracleId_fixed {α : Type*} (f : (α → α) → (α → α))
   hf
 
 
+/-- [Section: ## Part 1: Meta-Oracle Algebra] -/
 theorem exists_fixed_quality_strict {n : ℕ} (hn : 0 < n)
     (M : Fin n → Fin n) (q : Fin n → ℝ)
     (h_strict : ∀ i, M i ≠ i → q i < q (M i)) :
@@ -89,6 +90,7 @@ def portfolioQuality {n : ℕ} (weights : Fin n → ℝ) (qualities : Fin n → 
   ∑ i, weights i * qualities i
 
 
+/-- [Section: ## Part 5: Weighted Portfolio of Meta-Oracles] -/
 theorem portfolio_quality_bounded {n : ℕ} (hn : 0 < n)
     (w : Fin n → ℝ) (q : Fin n → ℝ)
     (hw_nn : ∀ i, 0 ≤ w i)

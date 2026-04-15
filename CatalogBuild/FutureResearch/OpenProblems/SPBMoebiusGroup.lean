@@ -40,6 +40,7 @@ theorem spbM_self (x : ℝ) (h : 1 - x * x ≠ 0) :
   ring
 
 
+/-- [Section: ## Inverse and Involution Properties] -/
 theorem spbM_cancel_right (x a : ℝ) (h1 : 1 - x * a ≠ 0)
     (h2 : 1 - spbM x a * (-a) ≠ 0) :
     spbM (spbM x a) (-a) = x := by
@@ -47,6 +48,7 @@ theorem spbM_cancel_right (x a : ℝ) (h1 : 1 - x * a ≠ 0)
   grind
 
 
+/-- [Section: ## Fixed Points of SPB] -/
 theorem spbM_no_real_fixed_point (a x : ℝ) (ha : a ≠ 0) (h : 1 - x * a ≠ 0)
     (hfix : spbM x a = x) : False := by
   unfold spbM at hfix;

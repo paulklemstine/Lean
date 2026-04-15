@@ -29,6 +29,7 @@ theorem spbPow'_two (x : ℝ) : spbPow' x 2 = 2 * x / (1 - x * x) := by
   simp [spbPow', spb']; ring
 
 
+/-- [Section: ## The Multiple Angle Theorem] -/
 theorem spbPow'_tan (θ : ℝ) (n : ℕ)
     (hcos : ∀ k : ℕ, k ≤ n → Real.cos (k * θ) ≠ 0) :
     spbPow' (Real.tan θ) n = Real.tan (n * θ) := by
@@ -40,6 +41,7 @@ theorem spbPow'_tan (θ : ℝ) (n : ℕ)
     · refine Or.inl ⟨ fun k hk => hcos n ( by linarith ) ?_, fun l hl => hcos 1 ( by linarith ) ?_ ⟩ <;> simp_all +decide [ Real.cos_eq_zero_iff ]
 
 
+/-- [Section: ## SPB Generates the Tangent Sequence] -/
 theorem tan_progression (θ : ℝ) (m n : ℕ)
     (hm : Real.cos (m * θ) ≠ 0) (hn : Real.cos (n * θ) ≠ 0)
     (hmn : Real.cos ((m + n) * θ) ≠ 0)
@@ -49,6 +51,7 @@ theorem tan_progression (θ : ℝ) (m n : ℕ)
   grind +locals
 
 
+/-- [Section: ## Double and Triple Angle Formulas via SPB] -/
 theorem spb_double_angle (θ : ℝ) (hc : Real.cos θ ≠ 0) :
     spb' (Real.tan θ) (Real.tan θ) = Real.tan (2 * θ) := by
   rw [ Real.tan_two_mul, spb' ] ; ring
@@ -68,6 +71,7 @@ theorem spbPow'_two_eq_double (x : ℝ) : spbPow' x 2 = spb' x x := by
   simp [spbPow', spb']
 
 
+/-- The Weierstrass substitution t = tan(θ/2) gives: sin θ = 2t/(1+t²), cos θ = (1-t²)/(1+t²). This is equivalent to the SPB-Cayley transform! -/
 theorem weierstrass_is_cayley_re (t : ℝ) :
     (1 - t^2) / (1 + t^2) = (1 - t * t) / (1 + t * t) := by
   ring

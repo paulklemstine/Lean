@@ -14,6 +14,7 @@ in the complex plane: `cayley(x) = (1 + ix)/(1 - ix)`. -/
 def cayley (x : ℝ) : ℂ := (1 + x * Complex.I) / (1 - x * Complex.I)
 
 
+/-- [Section: ## Section 3: Cayley Transform and Circle Group] -/
 theorem cayley_normSq (x : ℝ) : Complex.normSq (cayley x) = 1 := by
   unfold cayley;
   norm_num [ Complex.normSq ];

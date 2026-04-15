@@ -20,6 +20,8 @@ theorem no_time_travel_strict_order {E : Type*} [PartialOrder E]
   exact absurd (le_antisymm (le_of_lt hab) h) (ne_of_lt hab)
 
 
+/-- [Section: ## Branching Time Structure
+The past is linear (totally ordered) but the future may branch.] -/
 theorem past_glb_exists {T : Type*} [ConditionallyCompleteLattice T]
     (a b : T) (h : BddBelow ({a, b} : Set T)) :
     ∃ c, c ≤ a ∧ c ≤ b ∧ ∀ d, d ≤ a → d ≤ b → d ≤ c := by

@@ -98,6 +98,7 @@ theorem hopf_maps_to_sphere (a b c d : ℝ)
              mul_self_nonneg (a^2 + b^2), mul_self_nonneg (c^2 + d^2)]
 
 
+/-- [Section: ## Section 6: Hopf Fibration] -/
 theorem hopf_fiber_on_sphere (θ φ t : ℝ) :
     let a := Real.cos (θ / 2) * Real.cos t
     let b := Real.cos (θ / 2) * Real.sin t
@@ -114,6 +115,7 @@ theorem stereo_lightlike_1d (t : ℝ) :
   rw [invStereo1_on_circle]; ring
 
 
+/-- [Section: ## Section 7: Lorentzian Structure] -/
 theorem stereo_lightlike_2d (u v : ℝ) :
     let p := invStereo2 u v
     p.1 ^ 2 + p.2.1 ^ 2 + p.2.2 ^ 2 - 1 = 0 := by
@@ -160,6 +162,7 @@ theorem stereo_third : invStereo1 (1/3) = (3/5, 4/5) := by
   unfold invStereo1; simp; constructor <;> norm_num
 
 
+/-- [Section: ## Section 10: Special Values and Verification] -/
 theorem stereo_at_zero : invStereo1 0 = (0, 1) := by
   simp [invStereo1]
 

@@ -118,6 +118,7 @@ theorem rcp_fully_polarized :
   simp [right_circular_stokes]
 
 
+/-- [Section: ## Part V: Photon Helicity and the Complex Channel] -/
 theorem lcp_fully_polarized :
     let s := left_circular_stokes
     s.1^2 = s.2.1^2 + s.2.2.1^2 + s.2.2.2^2 := by

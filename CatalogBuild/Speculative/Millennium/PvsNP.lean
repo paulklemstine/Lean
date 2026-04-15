@@ -30,6 +30,11 @@ structure NPProblem extends WitnessProblem where
     ∃ w, verify x w ∧ w.length ≤ x.length ^ c + c
 
 
+/-- [Section: # P vs NP — Formal Foundations
+We formalize key concepts related to computational complexity theory,
+including basic results about polynomial-time verification and search.
+While the P vs NP problem itself remains open, we can formally verify
+foundational results that any resolution must build upon.] -/
 theorem witness_enumeration_finite (n k : ℕ) :
     Finite {w : List Bool | w.length ≤ k} := by
   -- The set of all binary strings of length up to $k$ is finite because there are only $2^k$ possible strings.

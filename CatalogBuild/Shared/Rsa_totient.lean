@@ -8,6 +8,7 @@ Declarations: 1
 import CatalogBuild.FutureResearch.OpenDirections
 import Mathlib
 
+/-- [Section: ## 12. RSA Security] -/
 theorem rsa_totient (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q) (hpq : p ≠ q) :
     Nat.totient (p * q) = (p - 1) * (q - 1) := by
   have hcop : Nat.Coprime p q :=

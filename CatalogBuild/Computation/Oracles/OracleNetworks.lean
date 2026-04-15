@@ -20,6 +20,7 @@ def iterateOracle {n : ℕ} (f : (Fin n → ℝ) → (Fin n → ℝ)) (x₀ : Fi
   | k + 1 => f (iterateOracle f x₀ k)
 
 
+/-- [Section: ## §1: Oracle Iteration and Convergence] -/
 theorem contracting_oracle_cauchy {n : ℕ} (f : (Fin n → ℝ) → (Fin n → ℝ))
     (c : ℝ) (hc : IsContracting n f c) (x₀ : Fin n → ℝ) :
     ∀ k : ℕ, ‖iterateOracle f x₀ (k + 1) - iterateOracle f x₀ k‖ ≤
@@ -46,6 +47,7 @@ theorem variance_reduction (k : ℕ) (hk : 0 < k) (sigma_sq : ℝ) (hs : 0 ≤ s
   exact div_le_self hs (by exact_mod_cast hk)
 
 
+/-- [Section: ## §2: Oracle Council (Ensemble) Theory] -/
 theorem diminishing_returns (k : ℕ) (hk : 0 < k) (sigma_sq : ℝ) (hs : 0 < sigma_sq) :
     sigma_sq / k - sigma_sq / (k + 1) = sigma_sq / (k * (k + 1)) := by
       -- Combine the fractions over a common denominator.
@@ -63,6 +65,7 @@ theorem selfImprovementError_nonneg (e0 r : ℝ) (he : 0 ≤ e0) (hr : 0 ≤ r) 
   mul_nonneg he (pow_nonneg hr k)
 
 
+/-- [Section: ## §3: Information-Theoretic Self-Improvement Bounds] -/
 theorem selfImprovementError_decreasing (e0 r : ℝ) (he : 0 < e0) (hr : 0 < r) (hr1 : r < 1) :
     StrictAnti (fun k => selfImprovementError e0 r k) := by
       exact strictAnti_nat_of_succ_lt fun k => mul_lt_mul_of_pos_left ( pow_lt_pow_right_of_lt_one₀ hr hr1 k.lt_succ_self ) he
@@ -78,11 +81,13 @@ def councilCost (sigma c : ℝ) (k : ℕ) : ℝ :=
   sigma / Real.sqrt k + c * k
 
 
+/-- [Section: ## §4: Optimal Council Composition] -/
 theorem council_cost_grows (sigma c : ℝ) (hs : 0 < sigma) (hc : 0 < c) :
     Tendsto (fun k => councilCost sigma c k) atTop atTop := by
       exact Filter.tendsto_atTop_mono ( fun _ => le_add_of_nonneg_left <| by positivity ) <| tendsto_natCast_atTop_atTop.const_mul_atTop hc
 
 
+/-- [Section: ## §5: Oracle Phase Transition] -/
 theorem expected_degree_threshold (n : ℕ) (hn : 2 ≤ n) (p : ℝ) (hp : 0 ≤ p) (hp1 : p ≤ 1) :
     (n - 1 : ℝ) * p ≥ 1 ↔ p ≥ 1 / (n - 1 : ℝ) := by
       exact ⟨ fun h => by rw [ ge_iff_le, div_le_iff₀ ] <;> linarith [ show ( n : ℝ ) ≥ 2 by norm_cast ], fun h => by rw [ ge_iff_le, div_le_iff₀ ] at h <;> linarith [ show ( n : ℝ ) ≥ 2 by norm_cast ] ⟩

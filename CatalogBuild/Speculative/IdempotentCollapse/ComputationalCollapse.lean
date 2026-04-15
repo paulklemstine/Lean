@@ -7,6 +7,7 @@ Declarations: 17
 
 import Mathlib
 
+/-- [Section: ### Sorting is Idempotent] -/
 theorem sort_idempotent {α : Type*} [LinearOrder α] [DecidableLE α] (l : List α) :
     (l.mergeSort (· ≤ ·)).mergeSort (· ≤ ·) = l.mergeSort (· ≤ ·) := by
   grind +suggestions
@@ -77,6 +78,7 @@ theorem normal_forms_eq_fixed {α : Type*} (N : Normalizer α) :
   · rintro ⟨y, rfl⟩; exact N.idempotent y
 
 
+/-- [Section: ### Compiler Pass Convergence] -/
 theorem compiler_pass_convergence {α : Type*} (opt : α → α)
     (h_idem : ∀ x, opt (opt x) = opt x) (n : ℕ) (hn : 1 ≤ n) :
     opt^[n] = opt := by

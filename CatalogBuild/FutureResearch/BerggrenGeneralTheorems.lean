@@ -7,6 +7,7 @@ Declarations: 20
 
 import Mathlib
 
+/-- [Section: ## §1. B₂ iteration] -/
 def b2_step (t : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
   (t.1 + 2 * t.2.1 + 2 * t.2.2,
    2 * t.1 + t.2.1 + 2 * t.2.2,
@@ -18,6 +19,7 @@ def b2n : ℕ → ℤ × ℤ × ℤ
   | n + 1 => b2_step (b2n n)
 
 
+/-- [Section: ## §2. B₂ preserves Pythagorean equation for all n] -/
 theorem b2n_pythagorean : ∀ n : ℕ, (b2n n).1 ^ 2 + (b2n n).2.1 ^ 2 = (b2n n).2.2 ^ 2 := by
   intro n; induction n with
   | zero => native_decide
@@ -26,6 +28,7 @@ theorem b2n_pythagorean : ∀ n : ℕ, (b2n n).1 ^ 2 + (b2n n).2.1 ^ 2 = (b2n n)
     nlinarith [ih]
 
 
+/-- [Section: ## §3. B₂ leg difference alternates ±1] -/
 theorem b2n_leg_diff : ∀ n : ℕ, (b2n n).1 - (b2n n).2.1 = (-1) ^ (n + 1) := by
   intro n; induction n with
   | zero => native_decide
@@ -34,6 +37,7 @@ theorem b2n_leg_diff : ∀ n : ℕ, (b2n n).1 - (b2n n).2.1 = (-1) ^ (n + 1) := 
     grind
 
 
+/-- [Section: ## §4. Pell equation x² - 2y² = 1] -/
 def pellPair : ℕ → ℤ × ℤ
   | 0 => (1, 0)
   | n + 1 => (3 * (pellPair n).1 + 4 * (pellPair n).2,
@@ -48,6 +52,7 @@ theorem pell_equation_all (n : ℕ) : (pellPair n).1 ^ 2 - 2 * (pellPair n).2 ^ 
     nlinarith [ih]
 
 
+/-- [Section: ## §5. B₂ positivity for all n] -/
 theorem b2n_pos : ∀ n : ℕ, 0 < (b2n n).1 ∧ 0 < (b2n n).2.1 ∧ 0 < (b2n n).2.2 := by
   intro n; induction n with
   | zero => simp [b2n]
@@ -57,12 +62,14 @@ theorem b2n_pos : ∀ n : ℕ, 0 < (b2n n).1 ∧ 0 < (b2n n).2.1 ∧ 0 < (b2n n)
     exact ⟨by linarith, by linarith, by linarith⟩
 
 
+/-- [Section: ## §6. B₂ hypotenuse growth] -/
 theorem b2_hyp_growth (n : ℕ) : (b2n n).2.2 < (b2n (n + 1)).2.2 := by
   simp only [b2n, b2_step]
   obtain ⟨h1, h2, h3⟩ := b2n_pos n
   linarith
 
 
+/-- [Section: ## §7. Companion Pell sequence (B₂ hypotenuses)] -/
 def compPell : ℕ → ℤ
   | 0 => 5
   | 1 => 29
@@ -83,15 +90,18 @@ theorem compPell_mod4 : ∀ n : ℕ, compPell n % 4 = 1 := by
       omega
 
 
+/-- [Section: ## §8. B₂ preserves Pythagorean (general form)] -/
 theorem B2_preserves_pythagorean (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     (a + 2*b + 2*c)^2 + (2*a + b + 2*c)^2 = (2*a + 2*b + 3*c)^2 := by
   nlinarith [h]
 
 
+/-- [Section: ## §9. B₂ characteristic polynomial] -/
 theorem B2_char_poly_factored (x : ℤ) :
     x^3 - 5*x^2 - 5*x + 1 = (x + 1) * (x^2 - 6*x + 1) := by ring
 
 
+/-- [Section: ## §10. A-branch formulas] -/
 theorem a_branch_formula_pyth (n : ℕ) :
     (2 * (n : ℤ) + 3) ^ 2 + (2 * (↑n + 1) * (↑n + 2)) ^ 2 = (2 * ↑n ^ 2 + 6 * ↑n + 5) ^ 2 := by
   ring
@@ -107,6 +117,7 @@ theorem a_branch_odd (n : ℕ) : Odd (2 * n + 3) := ⟨n + 1, by omega⟩
 theorem a_branch_even (n : ℕ) : Even (2 * (n + 1) * (n + 2)) := ⟨(n + 1) * (n + 2), by ring⟩
 
 
+/-- [Section: ## §11. Pell recurrence for companion sequence] -/
 theorem compPell_recurrence (n : ℕ) :
     compPell (n + 2) = 6 * compPell (n + 1) - compPell n := by
   simp [compPell]
@@ -138,6 +149,7 @@ theorem compPell_pos_and_growth :
         linarith
 
 
+/-- [Section: ## §12. Pell sequence positivity and growth] -/
 theorem compPell_pos' : ∀ n : ℕ, 0 < compPell n := fun n => (compPell_pos_and_growth n).1
 
 

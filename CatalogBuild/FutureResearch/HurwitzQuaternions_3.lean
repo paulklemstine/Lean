@@ -19,6 +19,7 @@ theorem four_squares_identity (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ) :
   unfold quatNorm; ring
 
 
+/-- [Section: ### Sum of Two Squares] -/
 theorem sum_two_squares_prime_1mod4 (p : ℕ) (hp : Nat.Prime p) (hmod : p % 4 = 1) :
     ∃ a b : ℤ, (p : ℤ) = a ^ 2 + b ^ 2 := by
   have := Fact.mk hp; ( have := @Nat.Prime.sq_add_sq p; aesop )

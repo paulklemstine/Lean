@@ -61,6 +61,7 @@ theorem spbH_internal_op (u v : ℝ) (hu : -1 < u) (hu' : u < 1)
   · rw [div_lt_iff₀ hd]; nlinarith
 
 
+/-- [Section: ## Section 7: SPB Cancellation / Involution] -/
 theorem spb_right_cancel (x y : ℝ) (hxy : x * y ≠ 1) (hysq : y^2 ≠ 1) :
     ((x + y) / (1 - x * y) + (-y)) / (1 - (x + y) / (1 - x * y) * (-y)) = x := by
   rw [ div_eq_iff ];
@@ -70,6 +71,7 @@ theorem spb_right_cancel (x y : ℝ) (hxy : x * y ≠ 1) (hysq : y^2 ≠ 1) :
     cases lt_or_gt_of_ne hxy <;> cases lt_or_gt_of_ne hysq <;> nlinarith [ mul_div_cancel₀ ( y * ( x + y ) ) ( by linarith : ( 1 - x * y ) ≠ 0 ) ]
 
 
+/-- [Section: ## Section 8: SPB Derivative Positivity] -/
 theorem spb_deriv_positive (x y : ℝ) (hxy : x * y ≠ 1) :
     (1 + y^2) / (1 - x * y)^2 > 0 := by
   exact div_pos ( by positivity ) ( by contrapose! hxy; nlinarith )
@@ -105,6 +107,7 @@ theorem spb_quintuple_numerator (t : ℝ) :
     5 * t - 10 * t^3 + t^5 = t * (5 - 10 * t^2 + t^4) := by ring
 
 
+/-- [Section: ## Section 11: SPB Five-Fold Formula] -/
 theorem spb_quintuple_denominator (t : ℝ) :
     1 - 10 * t^2 + 5 * t^4 = 1 - 10 * t^2 + 5 * t^4 := by ring
 

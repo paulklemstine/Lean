@@ -7,6 +7,7 @@ Declarations: 5
 
 import Mathlib
 
+/-- [Section: ## Section 1: Group Theory Fundamentals] -/
 theorem lagrange_theorem {G : Type*} [Group G] [Fintype G]
     (H : Subgroup G) [Fintype H] :
     Fintype.card H ∣ Fintype.card G := by
@@ -19,6 +20,7 @@ theorem prime_order_cyclic {G : Type*} [Group G] [Fintype G]
       haveI := Fact.mk hp; exact isCyclic_of_prime_card ( by aesop ) ;
 
 
+/-- [Section: ## Section 2: Ring Theory and Factoring] -/
 theorem irreducible_is_prime_in_pid {R : Type*} [CommRing R] [IsDomain R]
     [IsPrincipalIdealRing R] {p : R} (hp : Irreducible p) : Prime p := by
       convert hp.prime
@@ -29,6 +31,7 @@ theorem crt_coprime (m n : ℕ) (hm : 0 < m) (hn : 0 < n) (hcoprime : Nat.Coprim
       have := Nat.chineseRemainder hcoprime a b; aesop;
 
 
+/-- [Section: ## Section 3: Polynomial Rings] -/
 theorem x_sq_plus_one_irreducible :
     Irreducible (Polynomial.X ^ 2 + 1 : Polynomial ℚ) := by
       -- We'll use that $x^2 + 1$ is the cyclotomic polynomial $\Phi_4(x)$.

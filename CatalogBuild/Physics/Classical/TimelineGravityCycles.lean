@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Physics/Classical
-Declarations: 55
+Declarations: 56
 -/
 
 import Mathlib
@@ -17,6 +17,15 @@ def isLightPrime' (p : ℕ) : Prop := p.Prime ∧ p % 4 = 1
 def isDarkPrime' (p : ℕ) : Prop := p.Prime ∧ p % 4 = 3
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+CYCLE 14: DIRICHLET'S THEOREM (PARTIAL) — EQUAL INFINITY OF LIGHT AND DARK
+═══════════════════════════════════════════════════════════════════════════
+Both light primes (≡ 1 mod 4) and dark primes (≡ 3 mod 4) are infinite.
+This is a special case of Dirichlet's theorem on primes in arithmetic
+progressions. The dark case has an elementary proof; the light case
+uses the fact that prime divisors of n² + 1 must be ≡ 1 (mod 4).
+Metaphor: The universe has infinite photons AND infinite dark matter.
+Neither can be exhausted — the duality persists forever.] -/
 theorem prime_div_sq_add_one_mod_four (p n : ℕ) (hp : p.Prime) (hp2 : p ≠ 2)
     (hdvd : p ∣ n ^ 2 + 1) : p % 4 = 1 := by
       haveI := Fact.mk hp; norm_num [ ← ZMod.natCast_eq_zero_iff ] at *;
@@ -78,9 +87,22 @@ theorem light_dark_count_200 :
   constructor <;> native_decide
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+CYCLE 15: FERMAT'S TWO-SQUARE THEOREM — WHY LIGHT PRIMES SPLIT
+═══════════════════════════════════════════════════════════════════════════
+Fermat's theorem: An odd prime p is a sum of two squares iff p ≡ 1 mod 4.
+Equivalently: light primes ARE exactly the primes that decompose as a² + b².
+In ℤ[i], this means light primes split: p = (a + bi)(a - bi).
+Dark primes remain inert — they don't factor in ℤ[i].
+Metaphor: Light primes carry internal structure (the a,b decomposition).
+Dark primes are structureless — they are the fabric of space itself.] -/
 theorem light_prime_is_sum_of_squares (p : ℕ) (hp : p.Prime) (hmod : p % 4 = 1) :
     ∃ a b : ℕ, a ^ 2 + b ^ 2 = p := by
       convert @Nat.Prime.sq_add_sq p ( Fact.mk hp ) ( by aesop ) using 1
+
+
+/-- The Gaussian norm: |a + bi|² = a² + b². -/
+def gaussianNormSq (a b : ℤ) : ℤ := a ^ 2 + b ^ 2
 
 
 /-- A Gaussian integer decomposition of a light prime. -/
@@ -267,6 +289,13 @@ theorem hcn_maximal_gravity (n : ℕ) (hn : IsHighlyComposite n) :
   hn.2
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+CYCLE 16: GRAVITATIONAL CLUSTERING — HIGHLY COMPOSITE GALAXIES
+═══════════════════════════════════════════════════════════════════════════
+Highly composite numbers have more divisors than any smaller number.
+On the integer timeline, these are "gravitational galaxies" — massive
+concentrations that attract structure around them.
+HCNs: 1, 2, 4, 6, 12, 24, 36, 48, 60, 120, 180, 240, 360, 720, ...] -/
 theorem hcn_even_or_one (n : ℕ) (hn : IsHighlyComposite n) (hn1 : n ≠ 1) :
     Even n := by
       by_contra h_odd;
@@ -389,6 +418,18 @@ theorem quadratic_reciprocity_law (p q : ℕ) [Fact p.Prime] [Fact q.Prime]
   legendreSym.quadratic_reciprocity hp2 hq2 hpq
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+CYCLE 19: QUADRATIC RECIPROCITY AS A LIGHT-DARK INTERACTION LAW
+═══════════════════════════════════════════════════════════════════════════
+Quadratic reciprocity governs how two odd primes p, q "see" each other:
+whether p is a square mod q depends on whether q is a square mod p,
+with a sign flip when both p ≡ q ≡ 3 mod 4 (both dark).
+In our metaphor: When two photons (light primes) interact, their
+quadratic residue relationship is symmetric. When a photon meets
+dark matter, it's still symmetric. But when two dark primes meet,
+the relationship FLIPS — this is the dark-dark repulsion law.
+Formally: (p/q)(q/p) = (-1)^((p-1)/2 · (q-1)/2)
+The sign is -1 exactly when both p, q ≡ 3 mod 4 (both dark).] -/
 theorem light_light_symmetric (p q : ℕ) [Fact p.Prime] [Fact q.Prime]
     (hp : p % 4 = 1) (hq : q % 4 = 1)
     (hp2 : p ≠ 2) (hq2 : q ≠ 2) (hpq : p ≠ q) :

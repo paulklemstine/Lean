@@ -51,6 +51,7 @@ def projSPB (x₁ x₂ y₁ y₂ : ℝ) : ℝ × ℝ :=
   (x₁ * y₂ + x₂ * y₁, x₂ * y₂ - x₁ * y₁)
 
 
+/-- [Section: ## 3. Projective SPB Associativity] -/
 theorem projSPB_assoc (a₁ a₂ b₁ b₂ c₁ c₂ : ℝ) :
     let ab := projSPB a₁ a₂ b₁ b₂
     let bc := projSPB b₁ b₂ c₁ c₂
@@ -63,6 +64,7 @@ theorem projSPB_inv (x₁ x₂ : ℝ) :
   unfold projSPB; ring;
 
 
+/-- [Section: ## 4. Hyperbolic SPB and Rapidity] -/
 theorem tanh_add_eq_spbH (φ ψ : ℝ) :
     Real.tanh (φ + ψ) = spbH (Real.tanh φ) (Real.tanh ψ) := by
   rw [ spbH, Real.tanh_eq_sinh_div_cosh, Real.tanh_eq_sinh_div_cosh, Real.tanh_eq_sinh_div_cosh, Real.sinh_add, Real.cosh_add ];
@@ -118,6 +120,7 @@ Here we prove the easier direction: SPB satisfies all these properties. -/
 theorem spb_functional_identity (x : ℝ) : spb x 0 = x := by simp [spb]
 
 
+/-- [Section: ## 7. SPB Functional Equation] -/
 theorem spb_functional_inverse (x : ℝ) : spb x (-x) = 0 := by simp [spb]
 
 
@@ -132,6 +135,7 @@ theorem spb_functional_assoc (x y z : ℝ)
 theorem spb_one_one_pole : (1 : ℝ) - 1 * 1 = 0 := by ring
 
 
+/-- [Section: ## 8. SPB and Special Values] -/
 theorem spb_sqrt3_sqrt3 : spb (Real.sqrt 3) (Real.sqrt 3) = -(Real.sqrt 3) := by
   unfold SPBAdvanced.spb;
   grind
@@ -151,6 +155,7 @@ theorem spbDist_symm (x y : ℝ) : spbDist x y = spbDist y x := by
   simp [spbDist, abs_sub_comm]
 
 
+/-- [Section: ## 9. SPB Metric Properties] -/
 theorem spbDist_translation_invariant (x y a : ℝ)
     (hx : x * a < 1) (hy : y * a < 1) :
     spbDist (spb x a) (spb y a) = spbDist x y := by
@@ -158,6 +163,7 @@ theorem spbDist_translation_invariant (x y a : ℝ)
   rw [ arctan_spb, arctan_spb ] <;> ring <;> nlinarith
 
 
+/-- [Section: ## 10. SPB Power Series] -/
 theorem spb_double_leading_term (x : ℝ) (hx : x * x ≠ 1) :
     spb x x - 2 * x = 2 * x ^ 3 / (1 - x * x) := by
   unfold spb; rw [ div_sub' ] <;> ring ; contrapose! hx ; nlinarith;

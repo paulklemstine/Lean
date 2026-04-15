@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/HyperbolicFactoring
-Declarations: 25
+Declarations: 27
 -/
 
 import Mathlib
@@ -23,6 +23,10 @@ def pathMatrix : BPath → Matrix (Fin 3) (Fin 3) ℤ
   | d :: ds => dirMatrix d * pathMatrix ds
 
 
+def root : Fin 3 → ℤ := ![3, 4, 5]
+
+
+/-- [Section: ## Lorentz Form Preservation] -/
 theorem dir_preserves_Q (d : BDir) : (dirMatrix d)ᵀ * Q * (dirMatrix d) = Q := by
   cases d <;> simp only [dirMatrix] <;> native_decide
 
@@ -50,6 +54,7 @@ theorem shortcut_det_abs (p : BPath) :
     simp only [pathMatrix, Matrix.det_mul, abs_mul, dir_det_abs, ih, one_mul]
 
 
+/-- [Section: ## Pythagorean Preservation] -/
 theorem B₁_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (a - 2*b + 2*c)^2 + (2*a - b + 2*c)^2 = (2*a - 2*b + 3*c)^2 := by nlinarith
 
@@ -92,6 +97,13 @@ theorem factoring_identity' (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (c - a) * (c + a) = b ^ 2 := by ring_nf; linarith
 
 
+/-- Factoring from a Pythagorean triple with leg N. -/
+theorem factoring_from_triple (N b c : ℤ)
+    (h : N ^ 2 + b ^ 2 = c ^ 2) :
+    (c - b) * (c + b) = N ^ 2 :=
+  factoring_identity N b c h
+
+
 /-- Path concatenation = matrix multiplication. -/
 theorem pathMatrix_append (p q : BPath) :
     pathMatrix (p ++ q) = pathMatrix p * pathMatrix q := by
@@ -100,6 +112,7 @@ theorem pathMatrix_append (p q : BPath) :
   | cons d ds ih => simp only [List.cons_append, pathMatrix, ih, Matrix.mul_assoc]
 
 
+/-- [Section: ## Shortcut Composition] -/
 theorem shortcut_preserves_information (p : BPath) :
     Function.Injective (pathMatrix p *ᵥ ·) := by
   have h_det : IsUnit (Matrix.det (pathMatrix p)) := by
@@ -122,6 +135,7 @@ theorem B₃_in_SO : Matrix.det B₃ = 1 := det_B₃
 theorem B₂_not_SO : Matrix.det B₂ = -1 := det_B₂
 
 
+/-- [Section: ## Lorentz Inner Product] -/
 def lorentzInner (u v : Fin 3 → ℤ) : ℤ := u 0 * v 0 + u 1 * v 1 - u 2 * v 2
 
 

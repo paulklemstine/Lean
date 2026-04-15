@@ -7,6 +7,7 @@ Declarations: 8
 
 import Mathlib
 
+/-- Trace equals sum of eigenvalues (example) -/
 theorem trace_eigenvalue_sum :
     (3 : ℤ) + 3 = 4 + 2 := by ring
 

@@ -1,5 +1,5 @@
 name = "CatalogBuild"
-defaultTargets = ["Algebra", "Analysis", "Best", "Bridges", "CategoryTheory", "Combinatorics", "ComplexityTheory", "Computation", "Cryptography", "EML", "FutureResearch", "Geometry", "GravitationalFactoringResearch", "InformationTheory", "Logic", "MachineLearning", "NeuralCompilation", "New", "NumberTheory", "OISCC", "Physics", "Probability", "Pythagorean", "SPBBridge", "Shared", "ShefferAI", "Speculative", "Topology", "Tropical"]
+defaultTargets = ["Algebra", "Analysis", "Bridges", "CategoryTheory", "Combinatorics", "ComplexityTheory", "Computation", "Cryptography", "EML", "FutureResearch", "Geometry", "GravitationalFactoringResearch", "InformationTheory", "Logic", "MachineLearning", "NeuralCompilation", "New", "NumberTheory", "OISCC", "Physics", "Probability", "Pythagorean", "SPBBridge", "Shared", "ShefferAI", "Speculative", "Topology", "Tropical"]
 
 [[require]]
 name = "mathlib"
@@ -13,10 +13,6 @@ globs = ["Algebra.+"]
 [[lean_lib]]
 name = "Analysis"
 globs = ["Analysis.+"]
-
-[[lean_lib]]
-name = "Best"
-globs = ["Best.+"]
 
 [[lean_lib]]
 name = "Bridges"

@@ -9,6 +9,10 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Part I: Agent R1 — Diagonal Evasion (The Engine of Avoidance)
+The diagonal argument is the *engine* of all repulsor constructions. Cantor
+showed that for any enumeration, there is always something that escapes.
+We generalize this into a family of evasion theorems.] -/
 theorem diagonal_evasion (enum : ℕ → (ℕ → ℕ)) :
     ∃ g : ℕ → ℕ, ∀ n, g n ≠ enum n n := by
   exact ⟨ fun n => enum n n + 1, fun n => by simp +decide ⟩
@@ -78,6 +82,10 @@ def remaining_positions (n : ℕ) (queries : Finset (Fin n)) : Finset (Fin n) :=
   Finset.univ \ queries
 
 
+/-- [Section: ## Part II: Agent R2 — Pursuit-Evasion Games
+We formalize adversarial search as a game between a Searcher and an Evader.
+The key insight: in information-asymmetric games, the evader gains advantage
+with each query because each query reveals the searcher's strategy.] -/
 theorem remaining_positions_card (n : ℕ) (queries : Finset (Fin n)) :
     (remaining_positions n queries).card = n - queries.card := by
   unfold remaining_positions; simp +decide [ Finset.card_sdiff ] ;
@@ -93,6 +101,9 @@ theorem evader_survives_linear (n : ℕ) (hn : 2 ≤ n) :
   exact ⟨ fun r => Classical.choose ( h_exists r ), fun r => Classical.choose_spec ( h_exists r ) ⟩
 
 
+/-- [Section: ## Part III: Agent R3 — Measure-Theoretic and Topological Evasion
+In measure theory and topology, "most" objects evade any particular search.
+A countable search can only find a measure-zero / meager set of targets.] -/
 theorem countable_search_misses_almost_all (S : Set ℝ) (hS : S.Countable) :
     MeasureTheory.MeasureSpace.volume S = 0 := by
   exact hS.measure_zero MeasureTheory.MeasureSpace.volume
@@ -118,6 +129,10 @@ theorem generic_evasion (targets : ℕ → Set ℝ)
   exact dense_iInter_of_isOpen ( fun n => isOpen_compl_iff.mpr ( h_closed n ) ) fun n => by rw [ ← interior_eq_empty_iff_dense_compl ] ; aesop;
 
 
+/-- [Section: ## Part IV: Agent R4 — Information-Theoretic Search Hardening
+Each query to an adversary reveals information about the searcher's strategy.
+The evader uses this information to move away. We formalize the
+information-theoretic advantage of evasion.] -/
 theorem remaining_uncertainty_lower_bound (n k : ℕ) (hk : k < n) :
     n - k ≥ 1 := by
   exact Nat.sub_pos_of_lt hk
@@ -138,6 +153,9 @@ theorem adaptive_evader_wins (n : ℕ) (budget : ℕ) (h : budget < n) :
   · exact not_forall.mp fun h' => h_card <| by simp [ show queries = Finset.univ from Finset.eq_univ_of_forall h' ]
 
 
+/-- [Section: ## Part V: Agent R5 — Computability-Theoretic Evasion
+The deepest repulsors arise in computability theory. Immune sets cannot be
+found by any algorithm; DNC functions avoid the diagonal of computation itself.] -/
 theorem existence_of_total_avoider (f : ℕ → ℕ) :
     ∃ g : ℕ → ℕ, ∀ n, g n ≠ f n := by
   exact ⟨ fun n => f n + 1, fun n => Nat.succ_ne_self _ ⟩
@@ -154,6 +172,10 @@ theorem infinite_evasion_finite_range (f : ℕ → ℕ) (hf : Set.Finite (Set.ra
   exact hf.infinite_compl
 
 
+/-- [Section: ## Part VI: The Oracle-Repulsor Duality Theorem
+The central theorem of our research: oracles and repulsors are dual phenomena.
+Every fixed-point theorem (oracle existence) has a corresponding anti-fixed-point
+theorem (repulsor existence) in a complementary structure.] -/
 theorem finite_repulsor {n : ℕ} (hn : 0 < n) (f : Fin n → Fin n)
     (hf : ∀ x, f x ≠ x) : ∀ x : Fin n, f x ≠ x := by
   assumption
@@ -182,6 +204,9 @@ theorem displacement_repulsor (f : ℕ → ℕ) (hf : StrictMono f) (h0 : 0 < f 
     exact le_antisymm ( Nat.le_of_lt_succ <| by linarith [ hf <| Nat.lt_succ_self n ] ) ( Nat.recOn n ( by linarith ) fun n ihn => by linarith [ hf <| Nat.lt_succ_self n ] )
 
 
+/-- [Section: ## Part VII: The Fundamental Theorem of Search Asymmetry
+Our main new contribution: a precise characterization of the asymmetry
+between finding (oracle) and avoiding (repulsor).] -/
 theorem search_asymmetry (n : ℕ) (hn : 0 < n) :
     -- Any n queries suffice to find the target
     (∀ target : Fin n, ∃ queries : Finset (Fin n), queries.card ≤ n ∧ target ∈ queries) ∧
@@ -217,6 +242,22 @@ theorem infinite_repulsor_exists (enum : ℕ → (ℕ → ℕ)) :
   exact ⟨ fun n => enum n n + 1, fun k i hi => by simp +decide ⟩
 
 
+/-- [Section: ## Part VIII: New Research Directions
+### Direction 1: Probabilistic Repulsors
+What if the evader uses randomness? A probabilistic repulsor randomizes
+its position, making the searcher's expected time maximal.
+### Direction 2: Quantum Evasion
+In quantum search (Grover's algorithm), search is quadratically faster.
+Does the repulsor also weaken? We conjecture the quantum repulsor evades
+O(√n) queries instead of O(n) queries.
+### Direction 3: Topological Repulsors
+Define a "repulsor" as a point x where every neighborhood contains an
+attractor (fixed point of some iterate of f) but x itself is never fixed.
+These are the "strange repulsors" — analogous to strange attractors.
+### Direction 4: Category-Theoretic Duality
+Formalize the oracle-repulsor duality as a categorical adjunction.
+The oracle functor (taking a system to its fixed points) should be
+adjoint to a repulsor functor (taking a system to its escaping orbits).] -/
 theorem prob_evasion_bound (n k : ℕ) (hk : k ≤ n) (hn : 0 < n) :
     n - k ≤ n := by
   exact Nat.sub_le _ _

@@ -33,6 +33,7 @@ theorem spbCayley_normSq_eq (x : ℝ) :
   simp [Complex.normSq_apply]
 
 
+/-- [Section: ## Unitarity: |C'(x)| = 1 for real x] -/
 theorem spbCayley_norm_eq_one (x : ℝ) : ‖spbCayley x‖ = 1 := by
   unfold spbCayley; norm_num [ Complex.norm_def, Complex.normSq ] ;
   exact ne_of_gt <| Real.sqrt_pos.mpr <| by nlinarith
@@ -60,6 +61,7 @@ theorem stdCayley_normSq_num_eq_denom (x : ℝ) :
   simp [Complex.normSq_apply]
 
 
+/-- [Section: ## Special Values] -/
 theorem stdCayley_norm_eq_one (x : ℝ) : ‖stdCayley x‖ = 1 := by
   norm_num [ stdCayley, Complex.norm_def, Complex.normSq ];
   exact ne_of_gt <| Real.sqrt_pos.mpr <| by nlinarith;
@@ -69,6 +71,7 @@ theorem stdCayley_norm_eq_one (x : ℝ) : ‖stdCayley x‖ = 1 := by
 def spbR (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
 
 
+/-- [Section: ## The Intertwining Property (Main Theorem)] -/
 theorem spbCayley_intertwines (x y : ℝ)
     (hx : 1 - x * I ≠ (0 : ℂ)) (hy : 1 - y * I ≠ (0 : ℂ))
     (hs : 1 - ↑(spbR x y) * I ≠ (0 : ℂ))
@@ -91,6 +94,7 @@ theorem stdCayley_im (x : ℝ) : (stdCayley x).im = -2 * x / (x ^ 2 + 1) := by
   norm_num [Complex.normSq, Complex.div_im]; ring
 
 
+/-- [Section: ## Real and Imaginary Parts of the SPB-Cayley] -/
 theorem spbCayley_re (x : ℝ) : (spbCayley x).re = (1 - x ^ 2) / (1 + x ^ 2) := by
   unfold spbCayley; norm_num [ Complex.normSq, Complex.div_re ] ; ring;
 
@@ -99,6 +103,7 @@ theorem spbCayley_im (x : ℝ) : (spbCayley x).im = 2 * x / (1 + x ^ 2) := by
   unfold spbCayley; norm_num [ Complex.normSq, Complex.div_im ] ; ring;
 
 
+/-- [Section: ## Relationship between the two conventions] -/
 theorem spbCayley_eq_neg_stdCayley (x : ℝ)
     (hx : (↑x : ℂ) + I ≠ 0) :
     spbCayley x = -stdCayley x := by

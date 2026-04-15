@@ -38,6 +38,7 @@ theorem euler_optimal (a b : ℤ) (ha : 2 ≤ a) (hb : 2 ≤ b) (hab : a ≤ b)
   constructor <;> nlinarith
 
 
+/-- [Section: ## Three-Leaf Classification] -/
 theorem three_leaf_2_4_13 : spb (spb (1/2 : ℝ) (1/4)) (1/13) = 1 := by
   unfold spb; norm_num
 

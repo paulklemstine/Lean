@@ -108,6 +108,7 @@ structure InstrCount where
   h_total : total = emlOps + pushOps
 
 
+/-- [Section: ## Instruction Count Records] -/
 def expCount : InstrCount := ⟨1, 2, 3, rfl⟩
 
 def lnCount : InstrCount := ⟨3, 4, 7, rfl⟩

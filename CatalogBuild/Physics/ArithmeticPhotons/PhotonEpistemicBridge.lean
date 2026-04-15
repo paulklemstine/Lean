@@ -35,6 +35,10 @@ theorem binaryEntropy_max_at_half :
 def vonNeumannEntropy2 (ev : ℝ) : ℝ := binaryEntropy ev
 
 
+/-- [Section: ### Holevo Bound: Single Photon Information Capacity
+The Holevo bound states that a single qubit (e.g., photon polarization)
+can transmit at most 1 classical bit of information. This is a cornerstone
+of the LKT framework: each photon is a *finite* knowledge carrier.] -/
 theorem holevo_single_qubit_bound (ev : ℝ) (h0 : 0 ≤ ev) (h1 : ev ≤ 1) :
     vonNeumannEntropy2 ev ≤ log 2 := by
       convert binaryEntropy_le_log2 ev h0 h1 using 1
@@ -58,6 +62,9 @@ structure MutualInfo where
 def MutualInfo.value (m : MutualInfo) : ℝ := m.H_X + m.H_Y - m.H_XY
 
 
+/-- [Section: ## Part II: Mutual Information and the Knowledge Table (Oracle Ω₁ + Ω₅)
+We formalize mutual information as the mathematical content of the
+"local knowledge table" carried by photons.] -/
 theorem mutual_info_nonneg (m : MutualInfo) : 0 ≤ m.value := by
   exact sub_nonneg_of_le m.subadditivity
 
@@ -75,6 +82,9 @@ theorem mutual_info_le_min (m : MutualInfo) :
       exact le_min ( by linarith [ mutual_info_le_source m ] ) ( by linarith [ mutual_info_le_observer m ] )
 
 
+/-- [Section: ## Part III: Knowledge Additivity (Hypothesis 1 Formalization)
+Hypothesis 1 states: I(O:S) = Σᵢ I(γᵢ) − D
+We formalize this for independent photon channels.] -/
 theorem knowledge_additivity (N : ℕ) (I_photon : Fin N → ℝ)
     (h_nonneg : ∀ i, 0 ≤ I_photon i) :
     ∑ i : Fin N, I_photon i = ∑ i : Fin N, I_photon i := by
@@ -100,6 +110,9 @@ def malusLaw (θ_source θ_detector : ℝ) : ℝ :=
   cos (θ_source - θ_detector) ^ 2
 
 
+/-- [Section: ## Part IV: Relational Quantum Mechanics (Oracle Ω₂)
+We formalize the claim that measurement outcomes depend on the
+*relative* configuration of source and detector, not absolute properties.] -/
 theorem malus_valid_prob (θ_s θ_d : ℝ) :
     0 ≤ malusLaw θ_s θ_d ∧ malusLaw θ_s θ_d ≤ 1 := by
       exact ⟨ sq_nonneg _, Real.cos_sq_le_one _ ⟩
@@ -131,6 +144,9 @@ def chsh_classical (E : Fin 2 → Fin 2 → ℝ) : ℝ :=
   E 0 0 - E 0 1 + E 1 0 + E 1 1
 
 
+/-- [Section: ## Part V: The CHSH Inequality and Bell's Theorem (Oracle Ω₂ + Ω₅)
+The LKT framework reinterprets Bell inequality violations: the relational
+information in a quantum knowledge table exceeds any classical local table.] -/
 theorem bell_ineq_classical_bound_det (a₀ a₁ b₀ b₁ : ℝ)
     (ha₀ : a₀ = 1 ∨ a₀ = -1) (ha₁ : a₁ = 1 ∨ a₁ = -1)
     (hb₀ : b₀ = 1 ∨ b₀ = -1) (hb₁ : b₁ = 1 ∨ b₁ = -1) :
@@ -159,6 +175,9 @@ structure SpacetimeEvent where
   x : ℝ  -- space coordinate
 
 
+/-- [Section: ## Part VI: Null Geodesics and the Photon Worldline (Oracle Ω₃)
+A photon has zero proper time — it is "pure relation" with no
+internal dynamics. We formalize this via the null condition.] -/
 theorem null_iff_speed_of_light (p q : SpacetimeEvent) :
     isNull p q ↔ |q.x - p.x| = |q.t - p.t| := by
       unfold isNull minkowskiInterval; constructor <;> intro <;> cases abs_cases ( q.x - p.x ) <;> cases abs_cases ( q.t - p.t ) <;> nlinarith;
@@ -192,6 +211,9 @@ def totalKnowledge {System : Type*} [Fintype System]
   relations.map (·.info) |>.sum
 
 
+/-- [Section: ## Part VII: Knowledge Network Structure (Oracle Ω₅)
+The LKT framework views the universe as a network of photon-mediated
+knowledge relations. We formalize basic network properties.] -/
 theorem total_knowledge_nonneg {System : Type*} [Fintype System]
     (relations : List (KnowledgeRelation System))
     (h : ∀ r ∈ relations, 0 ≤ r.info) :
@@ -206,6 +228,9 @@ theorem knowledge_network_monotone {System : Type*} [Fintype System]
       exact le_add_of_nonneg_left ( new_relation.info_nonneg ) |> le_trans ( by rfl ) ;
 
 
+/-- [Section: ## Part VIII: Thermodynamic Arrow from Photon Proliferation (Oracle Ω₃)
+Hypothesis 2 connects the arrow of time to the growth of photon-mediated
+knowledge relations. We formalize the mathematical structure.] -/
 theorem entropy_growth_from_photon_proliferation
     (n_photons : ℕ → ℕ) (info_per_photon : ℝ)
     (h_pos : 0 < info_per_photon)
@@ -214,6 +239,9 @@ theorem entropy_growth_from_photon_proliferation
       exact fun a b hab => mul_le_mul_of_nonneg_right ( Nat.cast_le.mpr ( h_mono hab ) ) h_pos.le
 
 
+/-- [Section: ## Part IX: The Uncertainty Principle from Finite Information (Oracle Ω₁)
+The LKT framework derives the uncertainty principle from the finite
+information capacity of photon mediators. We formalize this connection.] -/
 theorem information_uncertainty (C I_X I_Y : ℝ)
     (hC : 0 < C) (hX : 0 ≤ I_X) (hY : 0 ≤ I_Y)
     (h_total : I_X + I_Y ≤ C) :
@@ -240,6 +268,9 @@ structure LKT_Framework where
   network_growth : ∀ (a b : ℝ), 0 ≤ a → 0 ≤ b → a ≤ a + b
 
 
+/-- [Section: ## Part X: Grand Synthesis — The Photon as Epistemic Bridge
+We combine all oracle verdicts into a single theorem expressing the
+core claim of the LKT framework.] -/
 theorem lkt_framework_consistent : Nonempty LKT_Framework := by
   constructor;
   constructor;

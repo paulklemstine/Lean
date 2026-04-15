@@ -27,6 +27,9 @@ theorem zero_mem_differenceSet {S : Finset ℤ} (hS : S.Nonempty) :
   exact ⟨⟨x, x⟩, ⟨hx, hx⟩, sub_self x⟩
 
 
+/-- [Section: ## Section 1: The Difference Set and Its Properties
+The difference set Δ(S) = {s - t : s, t ∈ S} is the support of the autocorrelation.
+Its size measures the "additive complexity" of S.] -/
 theorem nonzero_diff_card_le (S : Finset ℤ) :
     (nonzeroDifferenceSet S).card ≤ S.card ^ 2 - S.card := by
   refine' le_trans ( Finset.card_le_card _ ) _;
@@ -61,6 +64,13 @@ def autocorrelationEnergy (S : Finset ℤ) : ℕ :=
   ∑ d ∈ differenceSet S, (autocorrelation S d) ^ 2
 
 
+/-- [Section: ## Section 2: The Autocorrelation Energy —
+A Quantitative Measure of Non-Randomness
+The "autocorrelation energy" E(S) = ∑_{d≠0} c_S(d)² measures how far
+the autocorrelation departs from flatness. For a Sidon set, c_S(d) ∈ {0,1}
+for d ≠ 0, so E(S) equals the number of nonzero differences.
+For a random set, E(S) is small relative to |S|⁴. Large E(S) indicates
+additive structure (repeated differences) — the set "coheres."] -/
 theorem autocorrelation_total_sum (S : Finset ℤ) :
     ∑ d ∈ differenceSet S, autocorrelation S d = S.card ^ 2 := by
   unfold differenceSet autocorrelation;
@@ -82,6 +92,11 @@ def sidonDefect (S : Finset ℤ) : ℕ :=
     (fun d => d ≠ 0 ∧ 1 < autocorrelation S d)).card
 
 
+/-- [Section: ## Section 3: The Sidon Defect —
+How Far Is a Set from Being Sidon?
+The Sidon defect counts the number of differences d ≠ 0 with c_S(d) ≥ 2.
+This is zero exactly for Sidon sets. For prime sets, we compute this
+concretely and compare light vs dark primes.] -/
 theorem sidon_iff_defect_zero (S : Finset ℤ) :
     IsSidonSet S ↔ sidonDefect S = 0 := by
   rw [ sidonDefect ];
@@ -182,6 +197,14 @@ def pairCorrelationCount (S : Finset ℤ) (d : ℤ) : ℕ :=
   ((S ×ˢ S).filter (fun p => p.1 - p.2 = d ∧ p.1 ≠ p.2)).card
 
 
+/-- [Section: ## Section 5: The Pair Correlation Function
+Montgomery's pair correlation conjecture concerns the two-point correlation
+function of the Riemann zeros. We define an analogous function for finite
+integer sets: the normalized pair correlation measures the statistical
+distribution of differences.
+For a set S of size n, define:
+R₂(S, α) = (1/n) · |{(s,t) ∈ S² : s ≠ t, (s-t)/L = α}|
+where L is a characteristic length scale. For primes up to N, L ~ log N.] -/
 theorem pairCorr_eq_autocorr (S : Finset ℤ) (d : ℤ) (hd : d ≠ 0) :
     pairCorrelationCount S d = autocorrelation S d := by
   exact congr_arg Finset.card ( Finset.filter_congr fun x hx => by aesop )
@@ -203,6 +226,11 @@ theorem total_pairCorr (S : Finset ℤ) :
     exact Exists.elim ( Finset.card_pos.mp ( Nat.pos_of_ne_zero ( by aesop_cat : S.card ≠ 0 ) ) ) fun x hx => ⟨ x, x, hx, hx, sub_self x ⟩
 
 
+/-- [Section: ## Section 6: Structural Theorems Connecting
+Pair Correlation to Diffraction Flatness
+These theorems formalize the key insight: if a set's pair correlations
+are "GUE-like" (repulsive at short range), then its diffraction pattern
+is flatter (more Sidon-like).] -/
 theorem bounded_autocorr_bounded_energy (S : Finset ℤ) (k : ℕ)
     (hk : ∀ d : ℤ, d ≠ 0 → autocorrelation S d ≤ k) :
     autocorrelationEnergy S ≤ S.card ^ 2 + k ^ 2 * (nonzeroDifferenceSet S).card := by
@@ -235,6 +263,13 @@ theorem autocorrelation_energy_is_sum_sq (S : Finset ℤ) :
   rfl
 
 
+/-- [Section: ## Section 8: Light Primes — Algebraic Source of Flatness
+The algebraic reason light primes might have flatter diffraction:
+**Fermat's theorem on sums of two squares**: A prime p is a sum of two
+squares if and only if p = 2 or p ≡ 1 (mod 4). The light primes are
+exactly the odd primes that split in ℤ[i]: p = (a + bi)(a - bi) = a² + b².
+This splitting creates a "two-dimensional" representation of each light
+prime, which distributes the additive structure more evenly.] -/
 theorem light_prime_sum_of_squares (p : ℕ) (hp : IsLightPrime p) :
     ∃ a b : ℕ, a ^ 2 + b ^ 2 = p := by
   obtain ⟨ hp₁, hp₂ ⟩ := hp;
@@ -286,6 +321,13 @@ theorem kflat_mono (S : Finset ℤ) (k : ℕ) (hk : IsKFlat S k) :
   exact le_trans (hk d hd) (Nat.le_succ k)
 
 
+/-- [Section: ## Section 10: The Pair Correlation Repulsion Principle
+In random matrix theory, eigenvalue repulsion means nearby eigenvalues
+are unlikely. Translated to primes: if Montgomery's conjecture holds,
+small prime gaps are rarer than Poisson would predict.
+For diffraction: repulsion in the "source" set (the primes) leads to
+more uniform difference distributions → flatter autocorrelation →
+more Sidon-like behavior.] -/
 theorem light4_is_2flat :
     IsKFlat ({5, 13, 17, 29} : Finset ℤ) 2 := by
   intro d hd_ne;
@@ -321,6 +363,10 @@ theorem light4_not_sidon :
   exists 12
 
 
+/-- [Section: ## Section 11: The Autocorrelation Symmetry
+A fundamental property: the autocorrelation is symmetric, c_S(-d) = c_S(d).
+This is the algebraic counterpart of the physical fact that diffraction
+intensity is an even function of the scattering angle.] -/
 theorem autocorrelation_symmetric (S : Finset ℤ) (d : ℤ) :
     autocorrelation S (-d) = autocorrelation S d := by
   fapply Finset.card_bij (fun p hp => (p.2, p.1));

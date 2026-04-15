@@ -149,6 +149,7 @@ theorem lorentz_form_on_stereo (t : ℝ) :
 This equals dim SO(N+1,1). Verify for small N. -/
 theorem mobius_dim_1 : (1 + 1) * (1 + 2) / 2 = (3 : ℕ) := by norm_num
 
+/-- [Section: ## Landscape 5: Lorentzian Structure] -/
 theorem mobius_dim_2 : (2 + 1) * (2 + 2) / 2 = (6 : ℕ) := by norm_num
 
 theorem mobius_dim_3 : (3 + 1) * (3 + 2) / 2 = (10 : ℕ) := by norm_num
@@ -156,6 +157,7 @@ theorem mobius_dim_3 : (3 + 1) * (3 + 2) / 2 = (10 : ℕ) := by norm_num
 theorem mobius_dim_4 : (4 + 1) * (4 + 2) / 2 = (15 : ℕ) := by norm_num
 
 
+/-- [Section: ## Landscape 6: Apollonian Geometry] -/
 theorem descartes_2d_form (k₁ k₂ k₃ k₄ : ℝ)
     (h : (k₁ + k₂ + k₃ + k₄)^2 = 2*(k₁^2 + k₂^2 + k₃^2 + k₄^2)) :
     k₄ = k₁ + k₂ + k₃ + 2 * Real.sqrt (k₁*k₂ + k₂*k₃ + k₃*k₁) ∨

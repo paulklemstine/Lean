@@ -19,6 +19,7 @@ theorem coprime_quotient_useless (p q k N : ℕ)
   exact Nat.Coprime.mul_right hkp hkq
 
 
+/-- [Section: ## Section 1: GCD-Based Factoring from Lattice Vectors] -/
 theorem factoring_works_iff (p q k : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
     (_hpq : p ≠ q) (hk : 0 < k) (_hkN : k < p * q) :
     1 < Nat.gcd k (p * q) ↔ (p ∣ k ∨ q ∣ k) := by

@@ -7,6 +7,12 @@ Declarations: 13
 
 import Mathlib
 
+/-- [Section: # Polynomial Theory and Algebraic Structures
+Explorations across:
+- Polynomial identities and factorizations
+- Irreducibility criteria
+- Finite field polynomial theory
+- Ring theory connections] -/
 theorem diff_of_squares_poly :
     (X ^ 2 - 1 : Polynomial ℤ) = (X - 1) * (X + 1) := by
   ring

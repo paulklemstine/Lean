@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Measure-Preserving Maps] -/
 theorem comp_measure_preserving' {α β γ : Type*}
     [MeasurableSpace α] [MeasurableSpace β] [MeasurableSpace γ]
     (μ : Measure α) (ν : Measure β) (ρ : Measure γ)
@@ -21,6 +22,7 @@ theorem id_measure_preserving' {α : Type*} [MeasurableSpace α] (μ : Measure �
     MeasurePreserving id μ μ := MeasurePreserving.id μ
 
 
+/-- [Section: ## Ergodic Averages] -/
 noncomputable def timeAverage' {α : Type*} (f : α → ℝ) (T : α → α) (x : α) (n : ℕ) : ℝ :=
   (1 / (n : ℝ)) * ∑ i ∈ Finset.range n, f (T^[i] x)
 
@@ -37,6 +39,7 @@ theorem timeAverage_add' {α : Type*} (f g : α → ℝ) (T : α → α) (x : α
   simp [timeAverage', Finset.sum_add_distrib, mul_add]
 
 
+/-- [Section: ## Orbit Properties] -/
 theorem orbit_finite' {n : ℕ} (f : Equiv.Perm (Fin n)) (x : Fin n) :
     ∃ k : ℕ, 0 < k ∧ (f ^ k) x = x := by
   exact ⟨orderOf f, orderOf_pos f, by

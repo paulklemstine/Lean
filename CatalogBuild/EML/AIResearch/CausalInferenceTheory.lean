@@ -17,6 +17,7 @@ def stdSEMParams (numParents outputDim : ℕ) : ℕ := numParents * outputDim
 def emlSEMParams (outputDim : ℕ) : ℕ := 4 * outputDim
 
 
+/-- [Section: ## §1. Structural Equation Efficiency] -/
 theorem eml_sem_compact (np od : ℕ) (hn : 4 ≤ np) :
     emlSEMParams od ≤ stdSEMParams np od := by
   unfold emlSEMParams stdSEMParams; exact Nat.mul_le_mul_right od hn
@@ -27,6 +28,7 @@ def interventionCost (numDescendants modelCostPerNode : ℕ) : ℕ :=
   numDescendants * modelCostPerNode
 
 
+/-- [Section: ## §2. Intervention Cost] -/
 theorem eml_intervention_cheaper (nd mc_eml mc_std : ℕ) (hm : mc_eml ≤ mc_std) :
     interventionCost nd mc_eml ≤ interventionCost nd mc_std := by
   unfold interventionCost; exact Nat.mul_le_mul_left nd hm
@@ -37,6 +39,7 @@ def ateSampleComplexity (modelDim : ℕ) (epsilon : ℝ) : ℝ :=
   ↑modelDim / epsilon ^ 2
 
 
+/-- [Section: ## §3. Treatment Effect Estimation] -/
 theorem eml_ate_sample_efficient (d_eml d_std : ℕ) (eps : ℝ) (_heps : 0 < eps)
     (hd : d_eml ≤ d_std) :
     ateSampleComplexity d_eml eps ≤ ateSampleComplexity d_std eps := by
@@ -50,6 +53,7 @@ def counterfactualCost (abductionCost interventionCost predictionCost : ℕ) : �
   abductionCost + interventionCost + predictionCost
 
 
+/-- [Section: ## §4. Counterfactual Computation] -/
 theorem eml_counterfactual_cheaper (a_eml a_std i_eml i_std p_eml p_std : ℕ)
     (ha : a_eml ≤ a_std) (hi : i_eml ≤ i_std) (hp : p_eml ≤ p_std) :
     counterfactualCost a_eml i_eml p_eml ≤ counterfactualCost a_std i_std p_std := by
@@ -61,6 +65,7 @@ def causalDiscoveryCost (numVariables scoringCost : ℕ) : ℕ :=
   numVariables * numVariables * scoringCost
 
 
+/-- [Section: ## §5. Causal Discovery] -/
 theorem eml_discovery_cheaper (n sc_eml sc_std : ℕ) (hs : sc_eml ≤ sc_std) :
     causalDiscoveryCost n sc_eml ≤ causalDiscoveryCost n sc_std := by
   unfold causalDiscoveryCost; exact Nat.mul_le_mul_left (n * n) hs
@@ -71,6 +76,7 @@ def ivEstimationCost (firstStageCost secondStageCost : ℕ) : ℕ :=
   firstStageCost + secondStageCost
 
 
+/-- [Section: ## §6. Instrumental Variable Estimation] -/
 theorem eml_iv_cheaper (fs_eml fs_std ss_eml ss_std : ℕ)
     (hf : fs_eml ≤ fs_std) (hs : ss_eml ≤ ss_std) :
     ivEstimationCost fs_eml ss_eml ≤ ivEstimationCost fs_std ss_std := by
@@ -82,6 +88,7 @@ def mediationCost (directEffectCost indirectEffectCost : ℕ) : ℕ :=
   directEffectCost + indirectEffectCost
 
 
+/-- [Section: ## §7. Mediation Analysis] -/
 theorem eml_mediation_cheaper (de_eml de_std ie_eml ie_std : ℕ)
     (hd : de_eml ≤ de_std) (hi : ie_eml ≤ ie_std) :
     mediationCost de_eml ie_eml ≤ mediationCost de_std ie_std := by
@@ -93,6 +100,7 @@ def sensitivityBound (effectEstimate confoundStrength : ℝ) : ℝ :=
   effectEstimate + confoundStrength
 
 
+/-- [Section: ## §8. Sensitivity Analysis] -/
 theorem stronger_confounding_weaker_bound (e c1 c2 : ℝ) (hc : c1 ≤ c2) :
     sensitivityBound e c1 ≤ sensitivityBound e c2 := by
   unfold sensitivityBound; linarith
@@ -105,6 +113,7 @@ theorem no_confounding_exact (e : ℝ) : sensitivityBound e 0 = e := by
 /-- Propensity score model: predict treatment from covariates -/
 def propensityModelParams (numCovariates hiddenDim : ℕ) : ℕ := numCovariates * hiddenDim
 
+/-- [Section: ## §9. Propensity Score Estimation] -/
 def emlPropensityParams (numCovariates : ℕ) : ℕ := 4 * numCovariates
 
 
@@ -120,6 +129,7 @@ def causalRepParams (inputDim numCausalVars hiddenDim : ℕ) : ℕ :=
   inputDim * hiddenDim + hiddenDim * numCausalVars
 
 
+/-- [Section: ## §10. Causal Representation Learning] -/
 def emlCausalRepParams (numCausalVars : ℕ) : ℕ := 4 * numCausalVars
 
 

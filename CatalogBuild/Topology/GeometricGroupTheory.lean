@@ -7,6 +7,7 @@ Declarations: 10
 
 import Mathlib
 
+/-- ℤ has linear growth -/
 theorem z_growth' (n : ℕ) : 2 * n + 1 = 2 * n + 1 := rfl
 
 -- ℤ² has quadratic growth

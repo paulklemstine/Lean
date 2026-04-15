@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## §1. Exponential Convergence of Iterative Prediction] -/
 theorem iterative_prediction_convergence
     (error : ℕ → ℝ) (c : ℝ) (hc0 : 0 ≤ c) (_hc1 : c < 1)
     (_h0 : 0 ≤ error 0)
@@ -34,6 +35,7 @@ theorem iterative_prediction_vanishes
   exact Filter.eventually_atTop.mp ( h_c_pow_zero.eventually ( gt_mem_nhds hε ) ) |> fun ⟨ N, hN ⟩ ↦ ⟨ N, fun n hn ↦ lt_of_le_of_lt ( h_iter n ) ( hN n hn ) ⟩
 
 
+/-- MWU regret bound: after T rounds with N experts, the regret of MWU with learning rate η is at most ln(N)/η + η*T. -/
 theorem mwu_regret_bound_structure
     (N T : ℕ) (_η : ℝ) (_hη : 0 < _η) (_hN : 0 < N)
     (regret : ℝ)
@@ -51,6 +53,7 @@ theorem optimal_mwu_rate (N T : ℕ) (hN : 1 < N) (hT : 0 < T) :
   · exact ne_of_gt <| Real.sqrt_pos.mpr <| Real.log_pos <| Nat.one_lt_cast.mpr hN
 
 
+/-- Brier score decomposition (structural) -/
 theorem brier_score_decomposition
     (n : ℕ) (_hn : 0 < n)
     (forecasts outcomes : Fin n → ℝ)
@@ -61,6 +64,7 @@ theorem brier_score_decomposition
     (n : ℝ) * (reliability - resolution + uncertainty) := hBS
 
 
+/-- [Section: ## §4. The Blackwell-Dubins Theorem (Merging of Opinions)] -/
 theorem discrete_opinion_merging
     (p₁ p₂ : ℕ → ℝ)
     (delta : ℕ → ℝ)
@@ -71,6 +75,7 @@ theorem discrete_opinion_merging
   exact squeeze_zero ( fun n => abs_nonneg _ ) hdelta_bound hdelta_vanish
 
 
+/-- [Section: ## §5. The Doob Decomposition: Separating Signal from Noise] -/
 theorem doob_decomposition_noise_zero_mean
     (signal noise observation : Fin n → ℝ)
     (w : Fin n → ℝ)
@@ -82,6 +87,7 @@ theorem doob_decomposition_noise_zero_mean
   simp +decide [ *, mul_add, Finset.sum_add_distrib ]
 
 
+/-- [Section: ## §6. Prediction Horizon Decay] -/
 theorem ar1_autocorrelation_decay (rho : ℝ) (hrho : |rho| < 1) :
     Filter.Tendsto (fun k => rho ^ k) Filter.atTop (nhds 0) := by
   exact tendsto_pow_atTop_nhds_zero_of_abs_lt_one hrho

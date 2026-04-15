@@ -70,6 +70,7 @@ theorem balanced_density_lower (p q : ℕ) (hp : 2 ≤ p) (hq : 2 ≤ q) :
     2 * min p q - 1 ≤ p + q - 1 := by omega
 
 
+/-- [Section: ## §5. The GCD Cascade] -/
 theorem gcd_cascade_terminates (N g : ℕ) (hN : 1 < N)
     (hg : g ∣ N) (hg1 : 1 < g) (_ : g < N) :
     N / g < N := Nat.div_lt_self (by omega) hg1
@@ -83,6 +84,7 @@ theorem single_success_suffices (N g : ℕ) (hN : 1 < N) (hg : g ∣ N)
     nlinarith [Nat.div_mul_cancel hg]⟩
 
 
+/-- [Section: ## §6. Congruence of Squares from Peels] -/
 theorem peel_product_eq (d x : ℤ) :
     (d - x) * (d + x) = d ^ 2 - x ^ 2 := by ring
 
@@ -93,12 +95,14 @@ theorem congruence_from_peels (d₁ x₁ d₂ x₂ y : ℤ)
   nlinarith [sq_nonneg (d₁ - x₁)]
 
 
+/-- [Section: ## §7. Short Vector GCD] -/
 theorem short_vector_gcd (N x m : ℤ) :
     Int.gcd (m * N - x) N = Int.gcd x N := by
   rw [show m * N - x = -x + m * N by ring]
   rw [Int.gcd_add_mul_right_left, Int.neg_gcd]
 
 
+/-- [Section: ## §8. Union Bound] -/
 theorem union_bound_channels (k : ℕ) :
     k ≤ k + Nat.choose k 2 := Nat.le_add_right k _
 

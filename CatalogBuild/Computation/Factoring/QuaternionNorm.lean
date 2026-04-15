@@ -19,6 +19,7 @@ def inQuadLattice (N : ℤ) (x y z : ℤ) : Prop :=
   N ∣ (x^2 + y^2 + z^2)
 
 
+/-- [Section: ## Section 5: The Lattice L₄(N)] -/
 theorem zero_in_quadLattice (N : ℤ) : inQuadLattice N 0 0 0 := by
   exact ⟨ 0, by simp +decide ⟩
 

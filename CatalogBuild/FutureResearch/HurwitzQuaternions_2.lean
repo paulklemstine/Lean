@@ -99,6 +99,7 @@ theorem prime_four_square_rep (p : ℕ) (hp : Nat.Prime p) :
   Nat.sum_four_squares p
 
 
+/-- [Section: ### Factor Extraction via Quaternion GCD] -/
 theorem composite_gcd_structure (N : ℕ) (hN : 1 < N) (hc : ¬Nat.Prime N) :
     ∃ a b : ℕ, 1 < a ∧ 1 < b ∧ N = a * b := by
   rcases Nat.exists_dvd_of_not_prime2 hN hc with ⟨ a, ha₁, ha₂ ⟩ ; exact ⟨ a, N/a, by nlinarith [ Nat.div_mul_cancel ha₁ ], by nlinarith [ Nat.div_mul_cancel ha₁ ], by rw [ Nat.mul_div_cancel' ha₁ ] ⟩

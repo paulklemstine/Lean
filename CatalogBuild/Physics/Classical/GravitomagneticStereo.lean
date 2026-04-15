@@ -48,6 +48,7 @@ theorem lense_thirring_positive (G J c r : ℝ)
   unfold lenseThirringRate; positivity
 
 
+/-- [Section: ### Lense-Thirring Effect] -/
 theorem lense_thirring_monotone (G J c r₁ r₂ : ℝ)
     (hG : G > 0) (hJ : J > 0) (hc : c > 0) (hr₁ : r₁ > 0) (hr₂ : r₂ > 0)
     (hr : r₁ < r₂) :
@@ -61,6 +62,7 @@ theorem stereo_conf_positive (p_sq : ℝ) (hp : p_sq ≥ 0) :
   unfold stereoConfFactor; positivity
 
 
+/-- [Section: ## Part 2: The Stereographic-Gravitational Bridge] -/
 theorem stereo_conf_le_four (p_sq : ℝ) (hp : p_sq ≥ 0) :
     stereoConfFactor p_sq ≤ 4 := by
   exact div_le_self ( by norm_num ) ( by nlinarith )
@@ -132,6 +134,7 @@ def gemRotate (F : GEMField) (α β : ℝ) : GEMField where
   B_g := -β * F.E_g + α * F.B_g
 
 
+/-- [Section: ### Berggren Rotations on GEM Fields] -/
 theorem berggren_preserves_gem_norm (F : GEMField) (α β : ℝ)
     (hαβ : α ^ 2 + β ^ 2 = 1) :
     (gemRotate F α β).normSq = F.normSq := by

@@ -7,6 +7,12 @@ Declarations: 6
 
 import Mathlib
 
+/-- [Section: # Navier-Stokes — Formal Foundations
+We formalize key mathematical results related to the Navier-Stokes equations,
+focusing on the energy estimates and function space properties that underlie
+the regularity theory.
+The central challenge is the "supercritical" scaling gap in 3D.
+We prove some foundational inequalities that appear in the theory.] -/
 theorem young_inequality {a b : ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b)
     {p q : ℝ} (hp : 1 < p) (hq : 1 < q) (hpq : 1/p + 1/q = 1) :
     a * b ≤ a ^ p / p + b ^ q / q := by

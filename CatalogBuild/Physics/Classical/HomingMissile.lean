@@ -151,6 +151,7 @@ def targetAcquired (N : ℤ) (a b c : ℤ) : Prop :=
   a ^ 2 + b ^ 2 = c ^ 2 ∧ c ∣ N
 
 
+/-- [Section: ## §8: Formal Theorems — Core Results] -/
 theorem compass_M3_lt_M2 (p : EuclidParams) :
     compassReading (berggren_M3 p) < compassReading (berggren_M2 p) := by
   unfold compassReading;

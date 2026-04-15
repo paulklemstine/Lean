@@ -7,6 +7,7 @@ Declarations: 12
 
 import Mathlib
 
+/-- [Section: ## §1: Complete Graph Properties] -/
 theorem complete_graph_edges_3 :
     Fintype.card (SimpleGraph.edgeSet (⊤ : SimpleGraph (Fin 3))) = 3 := by
   native_decide
@@ -22,6 +23,7 @@ theorem complete_graph_edges_5 :
   native_decide
 
 
+/-- [Section: ## §2: Euler's Formula for Polyhedra] -/
 theorem euler_tetrahedron : 4 - 6 + 4 = (2 : ℤ) := by norm_num
 
 theorem euler_cube : 8 - 12 + 6 = (2 : ℤ) := by norm_num
@@ -48,6 +50,7 @@ theorem schur_2' :
   native_decide
 
 
+/-- [Section: ## §4: Bipartite Graphs] -/
 theorem k23_vertices : 2 + 3 = (5 : ℕ) := by norm_num
 
 theorem k23_edges : 2 * 3 = (6 : ℕ) := by norm_num

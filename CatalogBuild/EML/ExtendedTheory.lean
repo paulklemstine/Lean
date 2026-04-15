@@ -17,6 +17,7 @@ def emlE (x y : ℝ) : ℝ := Real.exp x - Real.log y
 def emlDiagonal (z : ℝ) : ℝ := Real.exp z - Real.log z
 
 
+/-- [Section: ## Section 1: Diagonal Map Has No Real Fixed Points] -/
 theorem emlDiagonal_gt_of_pos (z : ℝ) (hz : 0 < z) : emlDiagonal z > z := by
   unfold emlDiagonal;
   have := @Real.exp_one_gt_d9.le;
@@ -37,6 +38,7 @@ theorem emlDiagonal_no_real_fixedPoint : ∀ z : ℝ, emlDiagonal z ≠ z := by
   · exact ne_of_gt ( emlDiagonal_gt_of_nonpos z ( le_of_not_gt hz ) )
 
 
+/-- [Section: ## Section 2: EML Monotonicity Structure] -/
 theorem emlE_strictMono_fst (y : ℝ) : StrictMono (fun x => emlE x y) := by
   exact fun x y hxy => sub_lt_sub_right ( Real.exp_lt_exp.mpr hxy ) _
 
@@ -66,11 +68,13 @@ theorem emlE_convexOn_snd (x : ℝ) : ConvexOn ℝ (Ioi 0) (fun y => emlE x y) :
     exact fun x hx => sq_nonneg x
 
 
+/-- [Section: ## Section 3: EML Lower Bound] -/
 theorem emlDiagonal_ge_one (z : ℝ) (hz : 0 < z) : emlDiagonal z ≥ 1 := by
   unfold emlDiagonal;
   linarith [ Real.add_one_le_exp z, Real.log_le_sub_one_of_pos hz ]
 
 
+/-- [Section: ## Section 4: Negation and Subtraction via EML] -/
 theorem emlE_zero_exp (x : ℝ) : emlE 0 (Real.exp x) = 1 - x := by
   unfold emlE; norm_num
 
@@ -85,6 +89,7 @@ theorem emlE_addition (a b : ℝ) (ha : 0 < a) :
   unfold emlE; rw [ Real.exp_log ha ] ; norm_num;
 
 
+/-- [Section: ## Section 5: Power Function via EML] -/
 theorem power_via_exp_log (a b : ℝ) (ha : 0 < a) :
     a ^ b = Real.exp (b * Real.log a) := by
   rw [ Real.rpow_def_of_pos ha, mul_comm ]
@@ -96,11 +101,13 @@ def eTowerE : ℕ → ℝ
   | n + 1 => Real.exp (eTowerE n)
 
 
+/-- [Section: ## Section 6: EML Iteration Bounds] -/
 theorem eTowerE_ge_n (n : ℕ) : eTowerE n ≥ n := by
   induction' n with n ih <;> norm_num [ eTowerE ] at *;
   linarith [ Real.add_one_le_exp ( eTowerE n ) ]
 
 
+/-- [Section: ## Section 7: EML-Generated Constants] -/
 theorem emlE_generates_e_minus_one : emlE 1 (Real.exp 1) = Real.exp 1 - 1 := by
   unfold emlE; norm_num;
 
@@ -115,6 +122,7 @@ theorem emlE_generates_exp_e_minus_one :
   norm_num
 
 
+/-- [Section: ## Section 8: Lambert W Connection] -/
 theorem fixedPoint_lambert_connection (z : ℝ) (hz : 0 < z)
     (hfp : Real.exp 1 - Real.log z = z) :
     z + Real.log z = Real.exp 1 := by
@@ -134,6 +142,7 @@ def catalanNum : ℕ → ℕ
   | n + 1 => (2 * (2 * n + 1) * catalanNum n) / (n + 2)
 
 
+/-- [Section: ## Section 9: Catalan Numbers] -/
 theorem catalanNum_zero : catalanNum 0 = 1 := by rfl
 
 theorem catalanNum_one : catalanNum 1 = 1 := by native_decide
@@ -155,6 +164,7 @@ theorem catalanNum_seven : catalanNum 7 = 429 := by native_decide
 def masterParams (n : ℕ) : ℕ := 5 * 2^n - 6
 
 
+/-- [Section: ## Section 10: Master Formula Growth] -/
 theorem masterParams_double_approx (n : ℕ) (hn : n ≥ 2) :
     masterParams (n + 1) > 2 * masterParams n := by
   unfold masterParams;
@@ -166,6 +176,7 @@ def emlSymmetricMap (p : ℝ × ℝ) : ℝ × ℝ :=
   (emlE p.1 p.2, emlE p.2 p.1)
 
 
+/-- [Section: ## Section 11: 2D EML Dynamical System] -/
 theorem emlSymmetricMap_trace (x y : ℝ) :
     (emlSymmetricMap (x, y)).1 + (emlSymmetricMap (x, y)).2 =
     (Real.exp x + Real.exp y) - (Real.log x + Real.log y) := by
@@ -185,6 +196,7 @@ theorem emlSymmetricMap_diagonal (z : ℝ) :
   exact?
 
 
+/-- [Section: ## Section 12: Fundamental Inequalities] -/
 theorem exp_ge_one_add (x : ℝ) : Real.exp x ≥ 1 + x := by
   linarith [ Real.add_one_le_exp x ]
 

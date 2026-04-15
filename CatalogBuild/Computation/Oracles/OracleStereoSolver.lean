@@ -46,6 +46,10 @@ theorem SolverOracle.range_eq_truth {X : Type*} (O : SolverOracle X) :
   · intro hy; exact ⟨y, hy⟩
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§1: ORACLE FOUNDATIONS
+"Ask the meta oracles how to formulate a problem"
+═══════════════════════════════════════════════════════════════════════] -/
 theorem SolverOracle.iterate_stable {X : Type*} (O : SolverOracle X)
     (n : ℕ) (hn : 1 ≤ n) : O.apply^[n] = O.apply := by
   induction hn <;> simp_all +decide [ Function.iterate_succ_apply' ];
@@ -91,6 +95,10 @@ theorem invStereo_y_le_one (t : ℝ) : (invStereoProj t).2 ≤ 1 := by
   linarith [sq_nonneg t]
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§2: THE STEREOGRAPHIC BRIDGE
+"Inverse stereo project that problem into the solution space"
+═══════════════════════════════════════════════════════════════════════] -/
 theorem invStereo_y_ge_neg_one (t : ℝ) : -1 ≤ (invStereoProj t).2 := by
   exact ( by rw [ invStereoProj ] ; rw [ le_div_iff₀ ] <;> nlinarith )
 
@@ -191,6 +199,9 @@ theorem mobius_identity (x : ℝ) : mobiusTransform 1 0 0 1 x = x := by
   simp [mobiusTransform]
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§6: MÖBIUS COVARIANCE
+═══════════════════════════════════════════════════════════════════════] -/
 theorem mobius_inversion_involution (x : ℝ) (hx : x ≠ 0) :
     mobiusTransform 0 1 1 0 (mobiusTransform 0 1 1 0 x) = x := by
   unfold mobiusTransform; aesop;
@@ -230,6 +241,9 @@ theorem mod_oracle_idempotent (x n : ℕ) : (x % n) % n = x % n :=
 theorem parity_oracle_idempotent (x : ℕ) : (x % 2) % 2 = x % 2 := by omega
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§7: APPLICATIONS & GRAND SYNTHESIS
+═══════════════════════════════════════════════════════════════════════] -/
 theorem gcd_oracle_idempotent (a b : ℕ) :
     Nat.gcd (Nat.gcd a b) b = Nat.gcd a b := by
   rw [ Nat.gcd_assoc, Nat.gcd_self ]

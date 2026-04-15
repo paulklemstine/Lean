@@ -94,6 +94,7 @@ def gate_8_15_17 : BerggrenGate := ⟨8, 15, 17, by norm_num, by norm_num⟩
 def gate_7_24_25 : BerggrenGate := ⟨7, 24, 25, by norm_num, by norm_num⟩
 
 
+/-- [Section: ## §4: Rotation Composition Examples] -/
 def R_345 : Matrix (Fin 2) (Fin 2) ℤ := pythRotation 3 4
 
 

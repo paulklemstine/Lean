@@ -9,6 +9,10 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Section 1: Riemann Hypothesis — Li's Criterion Structure
+Li's criterion (1997) states that the Riemann Hypothesis is equivalent to
+the non-negativity of a sequence λ_n defined via the Hadamard product of ξ.
+We formalize structural facts about zeros on vertical lines.] -/
 theorem critical_line_implies_unit_disk (ρ : ℂ) (hρ : ρ.re = 1/2)
     (hρ_nonzero : ρ ≠ 0) :
     ‖1 - 1 / ρ‖ ≤ 1 := by
@@ -79,6 +83,7 @@ theorem boolean_function_count (n : ℕ) :
   simp [Fintype.card_fun]
 
 
+/-- [Section: ## Section 5: Navier-Stokes — Energy Estimates] -/
 theorem discrete_gronwall (a : ℕ → ℝ) (c : ℝ) (hc : 0 ≤ c)
     (h : ∀ n, a (n + 1) ≤ (1 + c) * a n) (ha0 : 0 ≤ a 0)
     (n : ℕ) : a n ≤ (1 + c) ^ n * a 0 := by

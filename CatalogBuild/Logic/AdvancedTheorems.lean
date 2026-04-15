@@ -44,6 +44,10 @@ def bEntropy {n : ℕ} (b : BState n) : ℝ :=
   -∑ i : Fin n, if b i = 0 then 0 else b i * Real.log (b i)
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§12: BELIEF SIMPLEX CONTRACTION
+"Each experiment shrinks the space of viable hypotheses"
+═══════════════════════════════════════════════════════════════════════] -/
 theorem uniform_likelihood_identity {n : ℕ} (hn : 0 < n) (b : BState n)
     (hb : BState.Valid b) (c : ℝ) (hc : 0 < c) :
     bUpdate b (fun _ => c) = b := by

@@ -37,6 +37,9 @@ theorem Oracle.one_query {X : Type*} (O : Oracle X) (x : X) :
   ⟨O.output_is_truth x, fun n hn => O.iterate_eq n hn x⟩
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+RESEARCH CYCLE 1: Compression
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem identity_no_compression {X : Type*} :
     (⟨id, fun _ => rfl⟩ : Oracle X).truthSet = Set.univ := by
   ext x; simp [Oracle.truthSet]
@@ -53,6 +56,9 @@ theorem Oracle.truth_set_le_input {X : Type*} [Fintype X] [DecidableEq X]
   Fintype.card_subtype_le _
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+RESEARCH CYCLE 2: Light Cone Geometry
+═══════════════════════════════════════════════════════════════════════════] -/
 structure MinkowskiEvent where
   x : ℝ
   y : ℝ
@@ -95,6 +101,9 @@ theorem sum_null_iff_orthogonal (e₁ e₂ : MinkowskiEvent)
   constructor <;> intro h <;> nlinarith
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+RESEARCH CYCLE 3: Entropic Gravity
+═══════════════════════════════════════════════════════════════════════════] -/
 structure BlackHole where
   mass : ℝ
   mass_pos : 0 < mass
@@ -151,6 +160,9 @@ theorem redshift_positive (M r : ℝ) (hr : 0 < r) (hMr : 2 * M < r) :
   rw [sub_pos, div_lt_one hr]; linarith
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+RESEARCH CYCLE 4: Oracle Algebra
+═══════════════════════════════════════════════════════════════════════════] -/
 def Oracle.commutes {X : Type*} (O₁ O₂ : Oracle X) : Prop :=
   ∀ x, O₁.op (O₂.op x) = O₂.op (O₁.op x)
 
@@ -168,6 +180,9 @@ def Oracle.setoid {X : Type*} (O : Oracle X) : Setoid X where
   iseqv := ⟨fun _ => rfl, fun h => h.symm, fun h1 h2 => h1.trans h2⟩
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+RESEARCH CYCLE 5: Geodesic Gradient Descent — Gravity for AI
+═══════════════════════════════════════════════════════════════════════════] -/
 def vanillaStep (eta grad theta : ℝ) : ℝ := theta - eta * grad
 
 def naturalStep (eta grad g theta : ℝ) : ℝ := theta - eta * (grad / g)
@@ -187,6 +202,9 @@ theorem geodesic_oracle_at_critical (eta g theta : ℝ) :
   simp [naturalStep]
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+RESEARCH CYCLE 6: Holographic Neural Networks
+═══════════════════════════════════════════════════════════════════════════] -/
 structure TwoLayerNet (input hidden output : ℕ) where
   layer1 : Fin input → Fin hidden
   layer2 : Fin hidden → Fin output
@@ -204,6 +222,9 @@ theorem bottleneck_compression {i h o : ℕ} (net : TwoLayerNet i h o) :
   · exact Finset.card_image_le.trans ( by simpa )
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+RESEARCH CYCLE 7: The Numbers-Light-Gravity Triangle
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem numbers_to_light (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (⟨(a : ℝ), (b : ℝ), (c : ℝ)⟩ : MinkowskiEvent).isNull := by
   rw [null_iff_pythagorean]; push_cast; exact_mod_cast h
@@ -239,6 +260,9 @@ theorem holographic_beats_volume (R : ℝ) (hR : 3 < R) :
   nlinarith [ Real.pi_pos, mul_le_mul_of_nonneg_left hR.le Real.pi_pos.le, pow_pos ( sub_pos.mpr hR ) 2 ]
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+RESEARCH CYCLE 9: Fixed Point Theory — Strange Loop
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem universe_fixed_point {X : Type*} (O : Oracle X) (U : X)
     (hU : U ∈ O.truthSet) : O.op U = U := hU
 
@@ -281,6 +305,9 @@ theorem double_oracle_same_truth {X : Type*} (O : Oracle X) :
     rw [h, h]
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+RESEARCH CYCLE 10: Gravitational Factoring
+═══════════════════════════════════════════════════════════════════════════] -/
 def isSumOfTwoSquares (n : ℕ) : Prop := ∃ a b : ℕ, a ^ 2 + b ^ 2 = n
 
 
@@ -312,6 +339,9 @@ theorem degenerate_light_cone (n : ℕ) :
   simp [MinkowskiEvent.isNull, MinkowskiEvent.quadForm]
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+RESEARCH CYCLE 11: Discrete Ricci Flow
+═══════════════════════════════════════════════════════════════════════════] -/
 structure WeightedGraph (n : ℕ) where
   weight : Fin n → Fin n → ℝ
   weight_nonneg : ∀ i j, 0 ≤ weight i j
@@ -332,6 +362,9 @@ theorem WeightedGraph.totalWeight_eq_sum_degree {n : ℕ} (G : WeightedGraph n) 
   simp [WeightedGraph.degree]
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+RESEARCH CYCLE 12: Oracle Metrics
+═══════════════════════════════════════════════════════════════════════════] -/
 def compressionDistortion {n : ℕ} (O : Oracle (Fin n)) (d : Fin n → Fin n → ℝ) : ℝ :=
   (∑ i : Fin n, d i (O.op i)) / n
 
@@ -348,6 +381,9 @@ theorem identity_zero_distortion {n : ℕ} (d : Fin n → Fin n → ℝ)
   simp [compressionDistortion, hd]
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+RESEARCH CYCLE 13: Gravitational Lensing
+═══════════════════════════════════════════════════════════════════════════] -/
 def deflectionAngle (M b : ℝ) : ℝ := 4 * M / b
 
 
@@ -390,6 +426,9 @@ theorem measurement_binary {K : Type*} [Field K] {V : Type*}
   · right; exact ⟨h, by rw [heig, h, one_smul]⟩
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+RESEARCH CYCLE 15: Iterate Forever — The Meta-Oracle
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem meta_oracle_stable {X : Type*} (O : Oracle X) :
     ∀ x, O.op (O.op (O.op x)) = O.op x := by
   intro x; rw [O.idem (O.op x)]; exact O.idem x

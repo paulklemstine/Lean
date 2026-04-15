@@ -32,6 +32,10 @@ theorem factor_symmetry (N a b : ℕ) (h : a * b = N) : b * a = N := by
   rw [mul_comm]; exact h
 
 
+/-- [Section: ## The Tropical Action for Factoring
+The "tropical action" (cost function) for the factoring problem is
+S(a, b) = |N - a * b|
+A valid factorization is a zero of this action.] -/
 theorem nontrivial_factor_bound (N a b : ℕ) (hN : 1 < N) (hab : a * b = N)
     (ha : 1 < a) (hb : 1 < b) : a < N := by
   nlinarith
@@ -68,6 +72,10 @@ def satCost {n : ℕ} (clauses : List (List (SATLiteral n))) (assignment : Fin n
   (clauses.filter (fun c => !clauseSatisfied c assignment)).length
 
 
+/-- [Section: ## Boolean Satisfiability
+A SAT instance is a list of clauses, each clause a list of literals.
+A literal is a variable index paired with a polarity (positive or negative).
+The cost function counts unsatisfied clauses.] -/
 theorem sat_cost_zero_iff {n : ℕ} (clauses : List (List (SATLiteral n)))
     (assignment : Fin n → Bool) :
     satCost clauses assignment = 0 ↔ ∀ c ∈ clauses, clauseSatisfied c assignment = true := by
@@ -133,6 +141,10 @@ theorem compose_commuting_oracles {α : Type*} (O₁ O₂ : α → α)
     _ = O₁ (O₂ x) := by rw [h₂]
 
 
+/-- [Section: ## Idempotent Oracle Framework
+The universal oracle framework: an oracle is an idempotent map O : α → α.
+Its fixed points are the "truths" — consulting the oracle twice yields the
+same answer as consulting once.] -/
 theorem compose_oracle_fixedPoints {α : Type*} (O₁ O₂ : α → α)
     (h₁ : IsOracleIdempotent O₁) (h₂ : IsOracleIdempotent O₂)
     (hcomm : ∀ x, O₁ (O₂ x) = O₂ (O₁ x)) :
@@ -166,6 +178,10 @@ theorem metropolis_zero_temp_greedy (c_old c_new : ℝ) (r : ℝ) (hr : 0 < r)
   · linarith
 
 
+/-- [Section: ## Simulated Annealing Properties
+The Python implementation uses simulated annealing to search for factorizations.
+We formalize the key invariant: the acceptance criterion ensures that the algorithm
+always accepts improvements and probabilistically accepts worse states.] -/
 theorem metropolis_monotone_acceptance (c_old c1 c2 T : ℝ) (hT : 0 < T)
     (h12 : c1 ≤ c2) :
     Real.exp (-(c2 - c_old) / T) ≤ Real.exp (-(c1 - c_old) / T) := by
@@ -182,6 +198,9 @@ def bitsToNat : List Bool → ℕ
   | b :: bs => (if b then 1 else 0) * 2 ^ bs.length + bitsToNat bs
 
 
+/-- [Section: ## Bit-Vector Encoding
+The Python code represents candidate factors as bit-vectors.
+We formalize the encoding and its properties.] -/
 theorem bitsToNat_lt_pow (bits : List Bool) :
     bitsToNat bits < 2 ^ bits.length := by
   induction' bits with b bits ih <;> simp +arith +decide [ *, pow_succ' ];
@@ -199,6 +218,9 @@ theorem search_space_size (n : ℕ) :
 -- ============================================================================
 
 
+/-- [Section: ## The Fundamental Asymmetry: Searching vs Verifying
+The key insight: VERIFICATION of a solution is computationally easy (polynomial),
+even when FINDING the solution is hard. This is the P vs NP gap.] -/
 theorem composite_has_nontrivial_factors (N : ℕ) (hN : 1 < N) (hc : ¬ Nat.Prime N) :
     ∃ a b, 1 < a ∧ 1 < b ∧ a * b = N := by
   rcases Nat.exists_dvd_of_not_prime2 hN hc with ⟨ k, hk₁, hk₂ ⟩ ; exact ⟨ k, N / k, by nlinarith, by nlinarith [ Nat.div_mul_cancel hk₁ ], by rw [ Nat.mul_div_cancel' hk₁ ] ⟩
@@ -223,6 +245,9 @@ theorem prime_or_composite (N : ℕ) (hN : 2 ≤ N) :
 def geometricTemp (T₀ α : ℝ) (k : ℕ) : ℝ := T₀ * α ^ k
 
 
+/-- [Section: ## Geometric Cooling
+The Python implementation uses geometric cooling: T_{k+1} = α · T_k where α < 1.
+We prove that this converges to zero.] -/
 theorem geometric_cooling_converges (T₀ : ℝ) (α : ℝ) (hT : 0 < T₀)
     (hα1 : 0 < α) (hα2 : α < 1) :
     Filter.Tendsto (geometricTemp T₀ α) Filter.atTop (nhds 0) := by

@@ -7,6 +7,7 @@ Declarations: 12
 
 import Mathlib
 
+/-- PILLAR I: Points as Prime Ideals -/
 theorem spec_contravariant {R S : Type*} [CommRing R] [CommRing S]
     (f : R →+* S) : Continuous (PrimeSpectrum.comap f) := by
   exact?
@@ -22,6 +23,7 @@ theorem spec_field_unique (k : Type*) [Field k] :
   exact fun h => p.2.ne_top ( by rw [ Ideal.eq_top_iff_one ] ; simpa using p.asIdeal.mul_mem_left x⁻¹ h |> fun h' => by simpa [ hx ] using h' ));
 
 
+/-- PILLAR II: Topology from Ideals — The Galois Connection -/
 theorem zeroLocus_antitone (R : Type*) [CommRing R] (I J : Ideal R)
     (h : I ≤ J) :
     PrimeSpectrum.zeroLocus (J : Set R) ⊆ PrimeSpectrum.zeroLocus (I : Set R) := by
@@ -33,6 +35,7 @@ theorem zeroLocus_top (R : Type*) [CommRing R] :
   ext ⟨ x, hx ⟩ ; aesop;
 
 
+/-- PILLAR III: Dimension from Prime Chains -/
 theorem krull_dim_field (k : Type*) [Field k] :
     ringKrullDim k = 0 := by
   rw [ eq_comm ] ; aesop;
@@ -49,6 +52,7 @@ theorem krull_dim_iso {R S : Type*} [CommRing R] [CommRing S]
   exact?
 
 
+/-- PILLAR IV: Continuity as Ring Homomorphism -/
 theorem spec_comp {R S T : Type*} [CommRing R] [CommRing S] [CommRing T]
     (f : R →+* S) (g : S →+* T) :
     PrimeSpectrum.comap (g.comp f) = (PrimeSpectrum.comap f) ∘ (PrimeSpectrum.comap g) := by
@@ -60,6 +64,7 @@ theorem spec_id (R : Type*) [CommRing R] :
   aesop
 
 
+/-- PILLAR V: Derivations and the Lie Algebra Structure -/
 theorem derivation_leibniz {R A M : Type*}
     [CommRing R] [CommRing A] [Algebra R A]
     [AddCommGroup M] [Module R M] [Module A M] [IsScalarTower R A M]
@@ -68,6 +73,7 @@ theorem derivation_leibniz {R A M : Type*}
   convert D.leibniz a b using 1
 
 
+/-- SYNTHESIS: Connected Components and Idempotents -/
 theorem isIdempotentElem_iff (R : Type*) [Ring R] (e : R) :
     IsIdempotentElem e ↔ e * e = e := by
   exact?

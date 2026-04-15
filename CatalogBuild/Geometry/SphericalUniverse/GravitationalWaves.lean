@@ -200,6 +200,7 @@ t₂ - t₁ = 2(πR - χ)/c
 t₃ - t₁ = 2πR/c  (independent of source position!) -/
 def directSignalTime (χ c : ℝ) : ℝ := χ / c
 
+/-- [Section: ## Part VII: Multi-Messenger Astronomy] -/
 def antipodalEchoTime (R χ c : ℝ) : ℝ := (2 * Real.pi * R - χ) / c
 
 def fullCircuitEchoTime (R χ c : ℝ) : ℝ := (2 * Real.pi * R + χ) / c

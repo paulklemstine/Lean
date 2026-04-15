@@ -73,6 +73,7 @@ theorem spectral_trace_one {n : ℕ} (S : SpectralDecomposition n)
     _ = 1 := S.eigenvalues_sum_one
 
 
+/-- [Section: ## Purity Bounds] -/
 theorem purity_lower_bound_from_spectrum (k : ℕ) (hk : k > 0)
     (p : Fin k → ℝ) (hp_nonneg : ∀ i, p i ≥ 0) (hp_sum : ∑ i, p i = 1) :
     ∑ i, (p i) ^ 2 ≥ 1 / (k : ℝ) := by

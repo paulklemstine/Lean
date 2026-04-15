@@ -65,6 +65,7 @@ noncomputable def ensemblePrediction {n : ℕ} (predictions : Fin n → ℝ)
   ∑ i, weights i * predictions i
 
 
+/-- [Section: ## Section 4: Ensemble Prediction and Diversity] -/
 theorem ambiguity_decomposition {n : ℕ} (predictions : Fin n → ℝ)
     (weights : Fin n → ℝ) (hw_sum : ∑ i, weights i = 1) (y : ℝ) :
     (ensemblePrediction predictions weights - y) ^ 2 =

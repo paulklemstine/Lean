@@ -7,6 +7,7 @@ Declarations: 6
 
 import Mathlib
 
+/-- [Section: ## Section 1: Euclidean Geometry] -/
 theorem dist_symm_real (x y : ℝ) : dist x y = dist y x := by
   exact dist_comm x y
 
@@ -16,6 +17,7 @@ theorem triangle_ineq_R2 (a b c : EuclideanSpace ℝ (Fin 2)) :
       exact dist_triangle _ _ _
 
 
+/-- [Section: ## Section 2: Rotation Properties] -/
 theorem rotation_det_one (θ : ℝ) :
     Matrix.det !![Real.cos θ, -Real.sin θ; Real.sin θ, Real.cos θ] = 1 := by
       norm_num [ Real.cos_sq' ];
@@ -29,6 +31,7 @@ theorem rotation_compose (α β : ℝ) :
       ext i j ; fin_cases i <;> fin_cases j <;> simpa [ Real.cos_add, Real.sin_add ] using by ring;
 
 
+/-- [Section: ## Section 3: Isometry Properties] -/
 theorem isometry_preserves_dist {X Y : Type*} [PseudoMetricSpace X] [PseudoMetricSpace Y]
     (f : X → Y) (hf : Isometry f) (a b : X) :
     dist (f a) (f b) = dist a b := by

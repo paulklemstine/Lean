@@ -7,11 +7,13 @@ Declarations: 7
 
 import Mathlib
 
+/-- [Section: ## Bézout's Identity] -/
 theorem bezout_identity_explicit (a b : ℤ) :
     ∃ x y : ℤ, a * x + b * y = Int.gcd a b := by
   exact Int.gcd_eq_gcd_ab a b ▸ ⟨ _, _, rfl ⟩
 
 
+/-- [Section: ## The Fundamental Theorem] -/
 theorem linear_diophantine_solvable_iff (a b c : ℤ) :
     (∃ x y : ℤ, a * x + b * y = c) ↔ (↑(Int.gcd a b) : ℤ) ∣ c := by
   constructor;
@@ -19,6 +21,7 @@ theorem linear_diophantine_solvable_iff (a b c : ℤ) :
   · exact fun h => by rcases h with ⟨ k, rfl ⟩ ; exact ⟨ k * Int.gcdA a b, k * Int.gcdB a b, by rw [ Int.gcd_eq_gcd_ab ] ; ring ⟩ ;
 
 
+/-- [Section: ## Solution Structure] -/
 theorem linear_diophantine_family (a b c x₀ y₀ k : ℤ) (g : ℤ)
     (hg_def : g = Int.gcd a b)
     (h : a * x₀ + b * y₀ = c) :
@@ -34,6 +37,7 @@ theorem linear_diophantine_homogeneous (a b : ℤ) :
     a * b + b * (-a) = 0 := by ring
 
 
+/-- [Section: ## Homogeneous Case] -/
 theorem linear_diophantine_difference (a b c x₁ y₁ x₂ y₂ : ℤ)
     (h₁ : a * x₁ + b * y₁ = c)
     (h₂ : a * x₂ + b * y₂ = c) :
@@ -41,6 +45,7 @@ theorem linear_diophantine_difference (a b c x₁ y₁ x₂ y₂ : ℤ)
   linear_combination h₁ - h₂
 
 
+/-- [Section: ## Special Cases] -/
 theorem linear_diophantine_coprime (a b c : ℤ)
     (hcop : Int.gcd a b = 1) :
     ∃ x y : ℤ, a * x + b * y = c := by

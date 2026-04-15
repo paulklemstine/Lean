@@ -36,6 +36,16 @@ theorem tspb_zero_nonneg (x : ℝ) (hx : 0 ≤ x) : tspb x 0 = 0 := by
   unfold tspb; grind
 
 
+/-- [Section: # Tropical SPB: Structure and Properties
+The tropicalization of spb(x,y) = (x+y)/(1-xy) gives
+tspb(x,y) = max(x,y) - max(0, x+y).
+## Main Results
+- Commutativity of tropical SPB
+- For nonneg inputs: tspb = -min
+- For nonpos inputs: tspb = max
+- Partial idempotency for nonpositive inputs
+- No global identity element exists
+- tspb(x, 0) = 0 for all x ≥ 0 (so 0 is NOT a global identity)] -/
 theorem tspb_zero_absorb (x : ℝ) : tspb x 0 = 0 := by
   unfold tspb;
   grind

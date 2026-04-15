@@ -7,12 +7,14 @@ Declarations: 13
 
 import Mathlib
 
+/-- [Section: ## Reentrancy Safety] -/
 theorem reentrancy_guard_sound (postLocked : Bool)
     (h_guarded : postLocked = false)
     (h_reenter : postLocked = true) : False := by
   rw [h_guarded] at h_reenter; exact Bool.false_ne_true h_reenter
 
 
+/-- [Section: ## Invariant Preservation] -/
 def Invariant (S : Type) := S → Prop
 
 
@@ -32,11 +34,13 @@ theorem id_preserves {S : Type} (inv : Invariant S) : preservesInvariant inv id 
   fun _ hs => hs
 
 
+/-- [Section: ## Slippage Protection] -/
 theorem tighter_slippage_less_mev (output min₁ min₂ : ℝ)
     (hle : min₁ ≤ min₂) :
     output - min₂ ≤ output - min₁ := by linarith
 
 
+/-- [Section: ## Access Control] -/
 def hasPermission (roles : ℕ → Finset ℕ) (requiredRole addr : ℕ) : Prop :=
   requiredRole ∈ roles addr
 
@@ -46,6 +50,7 @@ theorem access_control_blocks (roles : ℕ → Finset ℕ) (requiredRole addr : 
     ¬ hasPermission roles requiredRole addr := h_no_role
 
 
+/-- [Section: ## Swap Specification] -/
 structure SwapSpec where
   reserveX : ℝ
   reserveY : ℝ

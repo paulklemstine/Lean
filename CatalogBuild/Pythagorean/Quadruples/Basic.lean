@@ -162,6 +162,7 @@ theorem basis_vec1_mem (N r₁ r₂ : ℤ) :
   simp [sumThreeSqLattice]
 
 
+/-- [Section: ## Section 5: Lattice Basis for the 3D Construction] -/
 theorem basis_vec2_mem (N r₁ r₂ : ℤ) :
     ((0 : ℤ), N, (0 : ℤ)) ∈ sumThreeSqLattice N r₁ r₂ := by
   simp [sumThreeSqLattice]

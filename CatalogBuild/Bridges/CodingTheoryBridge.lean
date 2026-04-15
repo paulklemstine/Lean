@@ -39,6 +39,7 @@ theorem four_square_special_case :
 /-- Verified instances of Fermat's two-squares theorem. -/
 theorem fermat_sum_two_squares_5 : (5 : ℤ) = 1^2 + 2^2 := by norm_num
 
+/-- [Section: ## Part 2: Sum-of-Squares Identities and Code Composition] -/
 theorem fermat_sum_two_squares_13 : (13 : ℤ) = 2^2 + 3^2 := by norm_num
 
 theorem fermat_sum_two_squares_17 : (17 : ℤ) = 1^2 + 4^2 := by norm_num
@@ -94,6 +95,7 @@ theorem eisensteinNorm_nonneg (a b : ℤ) : 0 ≤ eisensteinNorm a b := by
   simp [eisensteinNorm]; nlinarith [sq_nonneg (2*a - b), sq_nonneg b]
 
 
+/-- [Section: ## Part 3: Lattice Codes from Division Algebras] -/
 theorem eisensteinNorm_eq_zero (a b : ℤ) :
     eisensteinNorm a b = 0 ↔ a = 0 ∧ b = 0 := by
   constructor <;> intro h;
@@ -135,6 +137,7 @@ theorem codeRate_le_one (k n : ℕ) (hn : 0 < n) (hkn : k ≤ n) :
 /-- E8 lattice properties. -/
 theorem e8_kissing_number_val : 240 = (240 : ℕ) := rfl
 
+/-- [Section: ## Part 5: Coding-Algebra-Geometry Triangle] -/
 theorem leech_dimension_decomp : 24 = 3 * 8 := by norm_num
 
 theorem e8_density_denom : 384 = 2^7 * 3 := by norm_num

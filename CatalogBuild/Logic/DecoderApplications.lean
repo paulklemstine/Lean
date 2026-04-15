@@ -34,6 +34,7 @@ theorem gaussian_lattice_neighbors (a b : ℤ) :
   · rintro (⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩) <;> norm_num
 
 
+/-- [Section: ## Section 2: Hexagonal lattice (Eisenstein integers)] -/
 theorem hex_lattice_neighbors (a b : ℤ) :
     a ^ 2 + a * b + b ^ 2 = 1 ↔
     (a = 1 ∧ b = 0) ∨ (a = -1 ∧ b = 0) ∨
@@ -83,6 +84,7 @@ theorem syntonic_comma :
     (3 : ℚ) ^ 4 / (2 ^ 4 * 5) = 81 / 80 := by norm_num
 
 
+/-- [Section: ## Section 7: Timelike / Lightlike Classification] -/
 theorem timelike_positive (a b c : ℤ) (h : a ^ 2 + b ^ 2 < c ^ 2) :
     c ^ 2 - a ^ 2 - b ^ 2 > 0 := by omega
 
@@ -91,13 +93,16 @@ theorem lightlike_zero (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     c ^ 2 - a ^ 2 - b ^ 2 = 0 := by omega
 
 
+/-- [Section: ## Section 8: Quantum Dimension Recursion] -/
 theorem quantum_dim_recursion (d : ℝ) (hd : d ^ 2 = d + 1) :
     d ^ 3 = 2 * d + 1 := by nlinarith
 
 
+/-- [Section: ## Section 9: AdS/CFT Conformal Factor] -/
 theorem ads_conformal_factor (L z : ℝ) (hz : z ≠ 0) :
     (L / z) ^ 2 * z ^ 2 = L ^ 2 := by field_simp
 
 
+/-- [Section: ## Section 10: Legendre Polynomial Identity] -/
 theorem legendre_P1_identity (x : ℝ) :
     x ^ 2 + (1 - x ^ 2) = 1 := by ring

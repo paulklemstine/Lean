@@ -2,12 +2,20 @@
 
 Auto-generated from theorem catalog database.
 Domain: Computation/Factoring
-Declarations: 19
+Declarations: 20
 -/
 
 import Mathlib
 
 noncomputable section
+
+/-- Smooth numbers are upward-closed in the smoothness parameter:
+B-smooth implies B'-smooth for B ≤ B'. -/
+theorem isSmooth_mono {B B' n : ℕ} (hBB : B ≤ B') (hn : IsSmooth B n) :
+    IsSmooth B' n := by
+  intro p hp hpd
+  exact le_trans (hn p hp hpd) hBB
+
 
 /-- Any divisor of a B-smooth number is B-smooth. -/
 theorem isSmooth_of_dvd {B n d : ℕ} (hn : IsSmooth B n) (hd : d ∣ n) (hn0 : n ≠ 0) :
@@ -112,12 +120,18 @@ theorem tropical_constraint (N a b ℓ : ℕ) (ha : a ≠ 0) (hb : b ≠ 0) (hN 
   exact tropical_additivity ℓ a b ha hb
 
 
+/-- [Section: ## Section 6: Orbit Periodicity — Cross-Collision Structure
+The pigeonhole principle forces orbits in Fin(n) to be eventually periodic.
+Cross-collisions between orbits mod p and mod q reveal factors.] -/
 theorem orbit_periodicity {n : ℕ} (hn : 0 < n) (f : Fin n → Fin n) (x : Fin n) :
     ∃ i j : ℕ, i < j ∧ j ≤ n ∧ f^[i] x = f^[j] x := by
   by_contra! h;
   exact absurd ( Finset.card_le_univ ( Finset.image ( fun i => f^[i] x ) ( Finset.Iic n ) ) ) ( by rw [ Finset.card_image_of_injOn ( fun i hi j hj hij => le_antisymm ( not_lt.mp fun hi' => h _ _ hi' ( by aesop ) hij.symm ) ( not_lt.mp fun hj' => h _ _ hj' ( by aesop ) hij ) ) ] ; simpa )
 
 
+/-- [Section: ## Section 7: Recurrence Bound Generalization
+For linear recurrences with dominant root λ < 2, we have a_n < 2^n
+for sufficiently large n. This generalizes the Fibonacci lens.] -/
 theorem fib_lt_pow_two (n : ℕ) (hn : 2 ≤ n) : Nat.fib (n + 2) < 2 ^ n := by
   induction hn <;> simp_all +arith +decide [ Nat.fib_add_two, pow_succ' ];
   grind

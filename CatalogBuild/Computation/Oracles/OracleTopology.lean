@@ -21,6 +21,7 @@ theorem oracle_fixedPoints_closed {X : Type*} [TopologicalSpace X] [T2Space X]
       exact isClosed_eq hO continuous_id
 
 
+/-- [Section: ## §2: Retraction Theory] -/
 theorem retraction_identity_on_image {X : Type*} (O : X → X) (hO : ∀ x, O (O x) = O x)
     (y : X) (hy : y ∈ range O) : O y = y := by
       grind
@@ -36,6 +37,7 @@ theorem idempotent_range_identity {X : Type*} (O : X → X) (hO : ∀ x, O (O x)
       exact hO x
 
 
+/-- [Section: ## §3: Convergence and Stability] -/
 theorem oracle_sequence_eventually_const {X : Type*} (O : X → X) (hO : ∀ x, O (O x) = O x)
     (x : X) : ∀ n m : ℕ, n ≥ 1 → m ≥ 1 → O^[n] x = O^[m] x := by
       intro n m hn hm; induction' hn with n hn ih <;> induction' hm with m hm ih <;> simp_all +decide [ Function.iterate_succ_apply' ] ;
@@ -47,6 +49,7 @@ theorem oracle_preimage_contains_fixedpoint {X : Type*} (O : X → X) (hO : ∀ 
       aesop
 
 
+/-- [Section: ## §4: Topological Dynamics] -/
 theorem oracle_fixedPoints_compact {X : Type*} [TopologicalSpace X] [T2Space X]
     [CompactSpace X] (O : X → X) (hO_cont : Continuous O) (hO_idem : ∀ x, O (O x) = O x) :
     IsCompact {x : X | O x = x} := by

@@ -28,6 +28,7 @@ theorem triangle_identity_left {C D : Type*}
   adj.left_triangle_components X
 
 
+/-- [Section: ## 2-Categorical Adjunction Theory] -/
 theorem triangle_identity_right {C D : Type*}
     [Category C] [Category D]
     {F : C ⥤ D} {G : D ⥤ C}

@@ -30,6 +30,13 @@ theorem gravWeight_12_gt_7 : gravWeight 12 > gravWeight 7 := by native_decide
 theorem gravWeight_6 : gravWeight 6 = 4 := by native_decide
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+TEAM ALPHA: NUMBER LINE GRAVITY — Reading the Map
+═══════════════════════════════════════════════════════════════════════════
+HYPOTHESIS α1: The number line has intrinsic "gravitational structure" —
+the density of divisors at each point creates a natural weight field.
+Mass = arithmetic complexity. Primes are "light" (few divisors), highly
+composite numbers are "heavy" (many divisors).] -/
 theorem gravWeight_prime (p : ℕ) (hp : p.Prime) : gravWeight p = 2 := by
   unfold gravWeight;
   rw [ hp.divisors, Finset.card_insert_of_notMem ] <;> aesop
@@ -152,6 +159,7 @@ theorem attractor_12 : isGravAttractor 12 := by
 def isDivisorStable (n : ℕ) : Prop := gravWeight (gravWeight n) ≤ gravWeight n
 
 
+/-- [Section: ### Research Cycle 2: Divisor Stability] -/
 theorem divisor_stable_1 : isDivisorStable 1 := by unfold isDivisorStable; native_decide
 
 theorem divisor_stable_2 : isDivisorStable 2 := by unfold isDivisorStable; native_decide
@@ -257,6 +265,9 @@ theorem gravWeight_gravWeight_le (n : ℕ) (hn : 1 ≤ n) (hn' : n ≤ 30) :
   interval_cases n <;> native_decide
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+SYNTHESIS: The Grand Loop — All Teams Converge
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem euler_product_connection (p q : ℕ) (hp : p.Prime) (hq : q.Prime) (hpq : p ≠ q) :
     gravWeight (p * q) = gravWeight p * gravWeight q := by
   apply gravWeight_multiplicative p q hp.pos hq.pos (Nat.coprime_iff_gcd_eq_one.mpr <| by have := Nat.coprime_primes hp hq; tauto)

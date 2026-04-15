@@ -28,6 +28,7 @@ theorem spb_reachable_id (x : ℝ) : SPBReachable x x := SPBReachable.seed
 /-- Constants are SPB-reachable. -/
 theorem spb_reachable_zero (x : ℝ) : SPBReachable x 0 := SPBReachable.zero
 
+/-- [Section: ## SPB Generates Key Rational Functions] -/
 theorem spb_reachable_one (x : ℝ) : SPBReachable x 1 := SPBReachable.one
 
 

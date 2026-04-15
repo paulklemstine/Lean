@@ -86,6 +86,7 @@ theorem id_is_idempotent {α : Type*} : IsIdempotentFn (id : α → α) := by
   intro x; rfl
 
 
+/-- [Section: ## Part IV: The Universe as a Retraction — Why It Works] -/
 theorem id_image_univ {α : Type*} [Nonempty α] : range (id : α → α) = univ := by
   aesop
 
@@ -98,6 +99,7 @@ theorem diagonal_fixed {α : Type*} (f : α → α) (hf : IsIdempotentFn f) (a :
   hf a
 
 
+/-- [Section: ## Part V: Self-Reference and the Diagonal — Why the Universe IS the Meta-Oracle] -/
 theorem meta_oracle_sequence_constant {α : Type*} (f : α → α)
     (hf : IsIdempotentFn f) (n m : ℕ) (hn : n ≥ 1) (hm : m ≥ 1) :
     f^[n] = f^[m] := by

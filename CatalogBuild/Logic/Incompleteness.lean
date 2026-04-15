@@ -33,6 +33,9 @@ def HasDiagonalProperty {S : Type*} (F : FormalSystem S) : Prop :=
   ∀ P : S → Prop, ∃ s : S, F.true_in_model s ↔ P s
 
 
+/-- [Section: ## II. The Diagonal Lemma (Gödel's Fixed Point Lemma)
+The key to incompleteness: for any property expressible in the system,
+there is a sentence that asserts that property of itself.] -/
 theorem godel_first_incompleteness {S : Type*} (F : FormalSystem S)
     (hdiag : HasDiagonalProperty F) : ¬ F.Complete := by
   intro h_complete
@@ -50,6 +53,9 @@ theorem godel_sentence_true_but_unprovable {S : Type*} (F : FormalSystem S)
   · use s
 
 
+/-- [Section: ## III. Tarski's Undefinability of Truth
+Tarski (1936) proved that truth cannot be defined within a sufficiently
+powerful formal system. This is closely related to the Liar Paradox.] -/
 theorem tarski_undefinability {S : Type*} (F : FormalSystem S)
     (hdiag : HasDiagonalProperty F) :
     ¬ ∃ T : S → Prop, ∀ s, T s ↔ F.true_in_model s := by
@@ -62,6 +68,10 @@ theorem tarski_undefinability {S : Type*} (F : FormalSystem S)
   simp_all +decide
 
 
+/-- [Section: ## IV. Löb's Theorem — The Surprise of Self-Provability
+Löb's theorem is one of the most surprising results in mathematical logic:
+if a system can prove "if I am provable, then I am true," then the system
+can already prove the statement outright.] -/
 theorem lob_theorem {S : Type*} (F : FormalSystem S)
     (hdiag : HasDiagonalProperty F)
     (hcomplete_provability : ∀ s, F.provable s → F.true_in_model s)
@@ -77,6 +87,9 @@ def AssertsOwnConsistency {S : Type*} (F : FormalSystem S) : Prop :=
     (¬ ∃ s, F.provable s ∧ ¬ F.true_in_model s)
 
 
+/-- [Section: ## V. The Second Incompleteness Theorem (Informal Core)
+Gödel's second incompleteness theorem says that no consistent system
+can prove its own consistency. We formalize the logical core.] -/
 theorem godel_second_incompleteness {S : Type*} (F : FormalSystem S)
     (hdiag : HasDiagonalProperty F)
     (hcons : ¬ ∃ s, F.provable s ∧ ¬ F.true_in_model s)

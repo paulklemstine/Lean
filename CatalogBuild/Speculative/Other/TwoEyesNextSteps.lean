@@ -154,6 +154,10 @@ theorem attention_inversion_duality (t : ℝ) (ht : t ≠ 0) :
 /-- **H18.2–5**: Concrete Pythagorean triples. -/
 theorem pythag_345 : IsPythTriple 3 4 5 := by unfold IsPythTriple; norm_num
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§6: HYPOTHESIS H18 — THE RATIONAL SPHERE ORACLE
+"Number theory on the circle: Pythagorean triples from stereography"
+═══════════════════════════════════════════════════════════════════════] -/
 theorem pythag_5_12_13 : IsPythTriple 5 12 13 := by unfold IsPythTriple; norm_num
 
 theorem pythag_8_15_17 : IsPythTriple 8 15 17 := by unfold IsPythTriple; norm_num
@@ -169,6 +173,10 @@ theorem rational_stereo_identity (p q : ℤ) :
 /-- The four Möbius symmetries of the stereographic self-gaze. -/
 def mobiusId (t : ℝ) : ℝ := t
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§7: HYPOTHESIS H19 — THE KLEIN FOUR-GROUP
+"Four ways to look: identity, inversion, negation, antipodal"
+═══════════════════════════════════════════════════════════════════════] -/
 def mobiusInv (t : ℝ) : ℝ := 1 / t
 
 def mobiusNeg (t : ℝ) : ℝ := -t

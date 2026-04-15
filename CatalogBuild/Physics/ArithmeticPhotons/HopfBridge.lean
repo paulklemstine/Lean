@@ -54,6 +54,7 @@ theorem hopfMap_d_eq_sqNorm (m n p q : ℤ) :
   simp only [hopfMap, IntQuaternion.sqNorm]
 
 
+/-- [Section: ## Part 3: Fiber Structure] -/
 def sameDirection (m₁ n₁ p₁ q₁ m₂ n₂ p₂ q₂ : ℤ) : Prop :=
   let ⟨a₁, b₁, c₁, d₁⟩ := hopfMap m₁ n₁ p₁ q₁
   let ⟨a₂, b₂, c₂, d₂⟩ := hopfMap m₂ n₂ p₂ q₂
@@ -73,6 +74,7 @@ theorem neg_params_same (m n p q : ℤ) :
   simp only [hopfMap]; ext <;> simp
 
 
+/-- [Section: ## Part 4: Specific Hopf Fibers] -/
 theorem hopf_1_0_0_0 : hopfMap 1 0 0 0 = (1, 0, 0, 1) := by
   simp [hopfMap]
 
@@ -88,6 +90,7 @@ theorem exists_primitive_divisor (a b c d : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 = d 
   ⟨1, a, b, c, d, one_ne_zero, by ring, by ring, by ring, by ring, h⟩
 
 
+/-- [Section: ## Part 6: Norm Form] -/
 def pureQuatNorm (a b c : ℤ) : ℤ :=
   a ^ 2 + b ^ 2 + c ^ 2
 

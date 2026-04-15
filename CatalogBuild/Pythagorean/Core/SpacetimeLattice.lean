@@ -17,6 +17,7 @@ def IsDiscreteSet (S : Set (ℝ × ℝ)) : Prop :=
   ∀ p ∈ S, ∃ ε > 0, ∀ q ∈ S, q ≠ p → dist p q ≥ ε
 
 
+/-- [Section: ## Part 1: The Integer Lattice is Discrete] -/
 theorem intLattice2_discrete : IsDiscreteSet IntLattice2 := by
   intro p hp
   obtain ⟨a, b, hp_eq⟩ := hp
@@ -70,11 +71,13 @@ def PhotonReachable (p : ℤ × ℤ) : Prop :=
   ∃ a b c : ℤ, IsPythTriple a b c ∧ p = (a, b) ∧ 0 < c
 
 
+/-- [Section: ## Part 5: The Photon Graph — Spacetime Connectivity] -/
 theorem photon_reach_from_triple {a b c : ℤ} (h : IsPythTriple a b c) (hc : 0 < c) :
     PhotonReachable (a, b) := by
       simpa using ⟨ a, b, |c|, by simpa [ abs_of_pos hc ] using h, rfl, abs_pos.mpr hc.ne' ⟩
 
 
+/-- [Section: ## Part 6: Null-Cone Structure] -/
 theorem pythagorean_is_null_cone (a b c : ℤ) :
     IsPythTriple a b c ↔ (a, b, c) ∈ NullCone := by
       unfold IsPythTriple NullCone; aesop;
@@ -99,10 +102,12 @@ def PythSet : Set (ℤ × ℤ × ℤ) :=
   { t | IsPythTriple t.1 t.2.1 t.2.2 }
 
 
+/-- [Section: ## Part 7: Discreteness of the Pythagorean Set] -/
 theorem pythSet_countable : Set.Countable PythSet := by
   refine Set.countable_range ( fun t : ℤ × ℤ × ℤ => t ) |> Set.Countable.mono fun t ht => ?_ ; aesop
 
 
+/-- [Section: ## Part 9: Key Structural Theorems] -/
 theorem lattice_min_distance (p q : ℤ × ℤ) (hne : p ≠ q) :
     (1 : ℤ) ≤ (p.1 - q.1) ^ 2 + (p.2 - q.2) ^ 2 := by
       exact not_lt.1 fun contra => hne <| Prod.ext ( by nlinarith ) ( by nlinarith )

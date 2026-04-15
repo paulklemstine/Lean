@@ -45,6 +45,9 @@ noncomputable def givensMatrix (n : ℕ) (p q : Fin n) (θ : ℝ) :
     else 0
 
 
+/-- [Section: ## §2: Givens Rotation Decomposition
+Any element of SO(n) can be written as a product of at most n(n-1)/2
+Givens rotations, each acting in a single coordinate plane.] -/
 theorem givens_orthogonal (p q : Fin 8) (θ : ℝ) (hpq : p ≠ q) :
     (givensMatrix 8 p q θ) * (givensMatrix 8 p q θ)ᵀ = 1 := by
   ext i j;
@@ -77,6 +80,10 @@ theorem fano_line_size : ∀ l : Fin 7, ∀ i : Fin 3, (fanoLines l i).val < 7 :
 theorem fano_num_lines : Fintype.card (Fin 7) = 7 := by simp
 
 
+/-- [Section: ## §3: Fano Plane Gates
+The Fano plane has 7 lines, each defining a quaternionic sub-algebra
+of the octonions. Each line gives a family of rotation gates that
+respect the octonionic multiplication structure.] -/
 theorem fano_point_on_three_lines (p : Fin 7) :
     (Finset.univ.filter (fun l : Fin 7 =>
       ∃ i : Fin 3, fanoLines l i = p)).card = 3 := by

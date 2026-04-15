@@ -22,6 +22,7 @@ theorem grover_hash_lower_bound (n : ℕ) :
 /-- SHA-256 security parameters -/
 def sha256_output_bits : ℕ := 256
 
+/-- [Section: ## §2: SHA-256 Preimage Attack] -/
 def sha256_classical_preimage : ℕ := 256  -- 2^256 expected evaluations
 
 def sha256_quantum_preimage : ℕ := 128    -- 2^128 Grover evaluations
@@ -53,6 +54,7 @@ theorem quantum_hash_rate_gap :
     10^13 / 10^6 = (10 : ℕ)^7 := by norm_num
 
 
+/-- [Section: ## §3: Keccak-256 Preimage Attack (Ethereum)] -/
 def keccak256_output_bits : ℕ := 256
 
 def keccak256_quantum_preimage : ℕ := 128
@@ -171,6 +173,7 @@ theorem bht_marginal : bht_collision_bits 256 < 112 := by
 theorem sha384_bht_adequate : bht_collision_bits 384 = 128 := by native_decide
 
 
+/-- [Section: ## §6: Quantum Collision Attacks (BHT Algorithm)] -/
 theorem sha512_bht_adequate : bht_collision_bits 512 = 170 := by native_decide
 
 
@@ -194,6 +197,7 @@ def ecdsa_shor_attack : QuantumAttack :=
   ⟨"Shor ECDLP", "ECDSA signatures", 128, 0, true⟩
 
 
+/-- [Section: ## §7: Comparative Attack Analysis] -/
 def sha256_preimage_grover : QuantumAttack :=
   ⟨"Grover preimage", "SHA-256", 256, 128, false⟩
 

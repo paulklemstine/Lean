@@ -24,6 +24,12 @@ theorem chebyT_zero : chebyT 0 = 1 := by rfl
 theorem chebyT_one : chebyT 1 = Polynomial.X := by rfl
 
 
+/-- [Section: ## Section 1: The Chebyshev Polynomial Connection
+Chebyshev polynomials Tₙ satisfy Tₙ(cos θ) = cos(nθ).
+Under the substitution cos θ = (1-t²)/(1+t²), they become
+rational functions of t — the "decoded" versions of angular multiplication.
+This means: **Integer multiplication of angles becomes polynomial
+evaluation in the stereographic coordinate.**] -/
 theorem chebyT_degree (n : ℕ) (hn : 1 ≤ n) :
     (chebyT n).natDegree = n := by
       induction' n using Nat.strong_induction_on with n ih; rcases n with _|_|n; simp_all +decide [ Polynomial.natDegree_sub_eq_left_of_natDegree_lt ] ;
@@ -89,6 +95,13 @@ def PellSolution.compose (D : ℤ) (s₁ s₂ : PellSolution D) : PellSolution D
                        sq_nonneg (s₁.x * s₂.y - s₁.y * s₂.x)]
 
 
+/-- [Section: ## Section 2: The Pell Equation Connection
+The Pell equation x² - Dy² = 1 is the "hyperbolic cousin" of x² + y² = 1.
+While x² + y² = 1 parameterizes the circle (compact),
+x² - Dy² = 1 parameterizes a hyperbola (non-compact).
+The stereographic projection of the circle uses t ↦ (1-t²)/(1+t²).
+The "hyperbolic stereographic projection" uses t ↦ (1+t²)/(1-t²).
+Same formula, different sign — switching between circular and hyperbolic!] -/
 theorem pell_compose_assoc (D : ℤ) (s₁ s₂ s₃ : PellSolution D) :
     PellSolution.compose D (PellSolution.compose D s₁ s₂) s₃ =
     PellSolution.compose D s₁ (PellSolution.compose D s₂ s₃) := by
@@ -102,6 +115,13 @@ theorem pell_compose_trivial_left (D : ℤ) (s : PellSolution D) :
       cases s ; unfold PellSolution.trivial PellSolution.compose ; aesop
 
 
+/-- [Section: ## Section 3: Sum of Two Squares and the Decoder
+Fermat's theorem: a prime p can be written as a² + b² iff p = 2 or p ≡ 1 (mod 4).
+In decoder language: a prime p has a "circular factorization" (it corresponds
+to a Gaussian prime split) iff p ≡ 1 (mod 4). The primes ≡ 3 (mod 4) are
+"circular primes" — they cannot be decoded into the circle.
+This is reflected in the fact that -1 is a quadratic residue mod p
+iff p ≡ 1 (mod 4).] -/
 theorem sum_two_sq_mod (p : ℕ) (hp : Nat.Prime p) (hp4 : p % 4 = 1) :
     ∃ a : ZMod p, a^2 = -1 := by
       haveI := Fact.mk hp;
@@ -109,6 +129,13 @@ theorem sum_two_sq_mod (p : ℕ) (hp : Nat.Prime p) (hp4 : p % 4 = 1) :
       exact Exists.elim ( hx ( by rw [ hp4 ] ; decide ) ) fun a ha => ⟨ a, by rw [ sq, ha ] ⟩
 
 
+/-- [Section: ## Section 6: The p-adic Decoder — Alternative Number Lines
+The p-adic numbers ℚₚ provide an alternative "completion" of ℚ.
+While ℝ completes ℚ using the archimedean absolute value,
+ℚₚ completes ℚ using the p-adic absolute value.
+Ostrowski's theorem says these are ALL the completions:
+**the real line and the p-adic lines are ALL the ways to
+"complete" the rational decoder.**] -/
 theorem padic_val_add_ge_min (p a b : ℕ) (hp : Nat.Prime p)
     (ha : 0 < a) (hb : 0 < b) :
     padicValNat p (a + b) ≥ min (padicValNat p a) (padicValNat p b) ∨

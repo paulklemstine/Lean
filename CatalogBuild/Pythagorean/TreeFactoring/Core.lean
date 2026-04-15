@@ -79,6 +79,7 @@ theorem inv_B1_B2_exclusive (a b c : ℤ)
     (h1 : 0 < -2*a - b + 2*c) (h2 : 0 < 2*a + b - 2*c) : False := by linarith
 
 
+/-- [Section: ## Section 8: Lorentz Form Preservation] -/
 theorem inv_B1_lorentz (a b c : ℤ) :
     (a + 2*b - 2*c)^2 + (-2*a - b + 2*c)^2 - (-2*a - 2*b + 3*c)^2 =
     a^2 + b^2 - c^2 := by ring

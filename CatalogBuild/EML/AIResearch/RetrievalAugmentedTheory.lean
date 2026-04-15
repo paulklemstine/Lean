@@ -17,6 +17,7 @@ def stdEmbeddingParams (d_text d_embed : ℕ) : ℕ := d_text * d_embed
 def emlEmbeddingParams (d_embed : ℕ) : ℕ := 4 * d_embed
 
 
+/-- [Section: ## §1. Retriever Embedding Efficiency] -/
 theorem eml_embedding_compact (d_text d_embed : ℕ) (ht : 4 ≤ d_text) :
     emlEmbeddingParams d_embed ≤ stdEmbeddingParams d_text d_embed := by
   unfold emlEmbeddingParams stdEmbeddingParams; exact Nat.mul_le_mul_right d_embed ht
@@ -25,6 +26,7 @@ theorem eml_embedding_compact (d_text d_embed : ℕ) (ht : 4 ≤ d_text) :
 /-- Query transformation: project query to retrieval space -/
 def stdQueryProjParams (d_query d_retrieval : ℕ) : ℕ := d_query * d_retrieval
 
+/-- [Section: ## §2. Query Projection] -/
 def emlQueryProjParams (d_retrieval : ℕ) : ℕ := 4 * d_retrieval
 
 
@@ -36,6 +38,7 @@ theorem eml_query_proj_cheaper (dq dr : ℕ) (hq : 4 ≤ dq) :
 /-- Multi-layer document encoder -/
 def stdDocEncoderParams (numLayers d_model : ℕ) : ℕ := numLayers * d_model * d_model
 
+/-- [Section: ## §3. Document Encoder] -/
 def emlDocEncoderParams (numLayers d_model : ℕ) : ℕ := numLayers * 4 * d_model
 
 
@@ -51,6 +54,7 @@ def stdCrossAttnParams (d_model d_key numHeads : ℕ) : ℕ :=
   3 * d_model * d_key * numHeads + d_model * d_model
 
 
+/-- [Section: ## §4. Cross-Attention Reader] -/
 def emlCrossAttnParams (d_model numHeads : ℕ) : ℕ :=
   12 * numHeads + 4 * d_model
 
@@ -74,6 +78,7 @@ def emlIndexMemory (numDocs d_embed bitsPerFloat comprRatio : ℕ) : ℕ :=
   numDocs * d_embed * bitsPerFloat / comprRatio
 
 
+/-- [Section: ## §5. Index Memory] -/
 theorem eml_index_smaller (n d b r : ℕ) :
     emlIndexMemory n d b r ≤ indexMemory n d b := by
   unfold emlIndexMemory indexMemory; exact Nat.div_le_self _ _
@@ -83,6 +88,7 @@ theorem eml_index_smaller (n d b r : ℕ) :
 def retrievalLatency (encoderCost searchCost : ℕ) : ℕ := encoderCost + searchCost
 
 
+/-- [Section: ## §6. Retrieval Latency] -/
 theorem eml_retrieval_faster (enc_eml enc_std search : ℕ) (he : enc_eml ≤ enc_std) :
     retrievalLatency enc_eml search ≤ retrievalLatency enc_std search := by
   unfold retrievalLatency; omega
@@ -91,6 +97,7 @@ theorem eml_retrieval_faster (enc_eml enc_std search : ℕ) (he : enc_eml ≤ en
 /-- Cross-encoder re-ranker: scores query-document pairs -/
 def stdRerankerParams (d_model numLayers : ℕ) : ℕ := numLayers * d_model * d_model
 
+/-- [Section: ## §7. Re-Ranker Efficiency] -/
 def emlRerankerParams (d_model numLayers : ℕ) : ℕ := numLayers * 4 * d_model
 
 
@@ -106,6 +113,7 @@ def chunkEmbedCost (numChunks avgChunkLen encoderCostPerToken : ℕ) : ℕ :=
   numChunks * avgChunkLen * encoderCostPerToken
 
 
+/-- [Section: ## §8. Chunk Embedding] -/
 theorem eml_chunk_embed_cheaper (nc acl ect_eml ect_std : ℕ) (he : ect_eml ≤ ect_std) :
     chunkEmbedCost nc acl ect_eml ≤ chunkEmbedCost nc acl ect_std := by
   unfold chunkEmbedCost; exact Nat.mul_le_mul_left (nc * acl) he
@@ -115,12 +123,14 @@ theorem eml_chunk_embed_cheaper (nc acl ect_eml ect_std : ℕ) (he : ect_eml ≤
 def ragCost (retrieverCost readerCost : ℕ) : ℕ := retrieverCost + readerCost
 
 
+/-- [Section: ## §9. End-to-End RAG Cost] -/
 theorem eml_rag_cheaper (ret_eml ret_std read_eml read_std : ℕ)
     (hr : ret_eml ≤ ret_std) (hrd : read_eml ≤ read_std) :
     ragCost ret_eml read_eml ≤ ragCost ret_std read_std := by
   unfold ragCost; omega
 
 
+/-- [Section: ## §10. Cosine Similarity Properties] -/
 theorem cosine_sim_zero_if_orthogonal (n1 n2 : ℝ) (_hn1 : 0 < n1) (_hn2 : 0 < n2) :
     cosineSim 0 n1 n2 = 0 := by
   unfold cosineSim; simp

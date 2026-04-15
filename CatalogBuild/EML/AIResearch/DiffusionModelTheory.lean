@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## §1. Noise Schedule Theory] -/
 def noiseSchedule (beta t : ℝ) : ℝ := Real.exp (-beta * t)
 
 
@@ -30,6 +31,7 @@ theorem noise_schedule_initial (beta : ℝ) : noiseSchedule beta 0 = 1 := by
   unfold noiseSchedule; simp
 
 
+/-- [Section: ## §2. Denoising Network Efficiency] -/
 def stdDenoiserParams (channels depth : ℕ) : ℕ := depth * channels * channels
 
 def emlDenoiserParams (channels depth : ℕ) : ℕ := depth * 4 * channels
@@ -42,6 +44,7 @@ theorem eml_denoiser_efficiency (c d : ℕ) (hc : 4 ≤ c) :
   exact Nat.mul_le_mul_right c this
 
 
+/-- [Section: ## §3. Score Network Efficiency] -/
 def stdScoreParams (dataDim hiddenDim : ℕ) : ℕ := 2 * dataDim * hiddenDim
 
 def emlScoreParams (dataDim : ℕ) : ℕ := 4 * dataDim
@@ -52,6 +55,7 @@ theorem eml_score_efficiency (d h : ℕ) (hh : 2 ≤ h) :
   unfold emlScoreParams stdScoreParams; nlinarith
 
 
+/-- [Section: ## §4. Sampling Efficiency] -/
 def ddpmSamplingCost (numSteps networkCost : ℕ) : ℕ := numSteps * networkCost
 
 def emlSamplingCost (numSteps networkCost : ℕ) : ℕ := numSteps * networkCost
@@ -63,6 +67,7 @@ theorem eml_sampling_cheaper (steps_eml steps_std cost_eml cost_std : ℕ)
   unfold emlSamplingCost ddpmSamplingCost; exact Nat.mul_le_mul hs hc
 
 
+/-- [Section: ## §5. Classifier-Free Guidance] -/
 def cfgCost (networkParams : ℕ) : ℕ := 2 * networkParams
 
 def emlCFGCost (networkParams guidanceDim : ℕ) : ℕ := networkParams + 4 * guidanceDim
@@ -73,6 +78,7 @@ theorem eml_cfg_cheaper (p g : ℕ) (hg : 4 * g ≤ p) :
   unfold emlCFGCost cfgCost; omega
 
 
+/-- [Section: ## §6. Signal-to-Noise Ratio] -/
 def snr (alpha_t : ℝ) : ℝ := alpha_t / (1 - alpha_t)
 
 
@@ -83,6 +89,7 @@ theorem snr_monotone (a1 a2 : ℝ) (h0 : 0 < a1) (h1 : a1 ≤ a2) (h2 : a2 < 1) 
   nlinarith
 
 
+/-- [Section: ## §7. Latent Diffusion Compression] -/
 def stdEncoderParams (inputDim latentDim : ℕ) : ℕ := inputDim * latentDim
 
 def emlEncoderParams (latentDim : ℕ) : ℕ := 4 * latentDim
@@ -93,6 +100,7 @@ theorem eml_encoder_efficiency (inputDim latentDim : ℕ) (h : 4 ≤ inputDim) :
   unfold emlEncoderParams stdEncoderParams; exact Nat.mul_le_mul_right latentDim h
 
 
+/-- [Section: ## §8. ELBO Tightness] -/
 def reconstructionBound (encoderError decoderError : ℝ) : ℝ := encoderError + decoderError
 
 
@@ -106,6 +114,7 @@ theorem better_decoder_better_elbo (e d1 d2 : ℝ) (hd : d1 ≤ d2) :
   unfold reconstructionBound; linarith
 
 
+/-- [Section: ## §9. Consistency Distillation] -/
 def consistencyDistillCost (teacherCost studentCost numPairs : ℕ) : ℕ :=
   numPairs * (teacherCost + studentCost)
 
@@ -119,6 +128,7 @@ theorem eml_consistency_cheaper (tCost sCost_eml sCost_std n : ℕ)
   unfold emlConsistencyCost consistencyDistillCost; exact Nat.mul_le_mul_left n (by omega)
 
 
+/-- [Section: ## §10. Noise Prediction] -/
 def noisePredCost (d_model : ℕ) : ℕ := d_model * d_model
 
 def emlNoisePredCost (d_model : ℕ) : ℕ := 4 * d_model
@@ -129,6 +139,7 @@ theorem eml_noise_pred_cheaper (d : ℕ) (hd : 4 ≤ d) :
   unfold emlNoisePredCost noisePredCost; nlinarith
 
 
+/-- [Section: ## §11. Variance Schedule Interpolation] -/
 def linearSchedule (beta_min beta_max t : ℝ) : ℝ := beta_min + t * (beta_max - beta_min)
 
 

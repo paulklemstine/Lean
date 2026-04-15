@@ -14,6 +14,7 @@ def IsIdempotentOp {α : Type*} (f : α → α → α) : Prop :=
   ∀ x, f x x = x
 
 
+/-- [Section: ## Idempotent Operations] -/
 theorem min_idempotent : IsIdempotentOp (min : ℕ → ℕ → ℕ) := by
   exact fun x => min_self x
 
@@ -65,6 +66,7 @@ def resolve (c1 c2 : Clause) (v : ℤ) (hv : v ∈ c1) (hnv : -v ∈ c2) : Claus
   (c1.erase v) ∪ (c2.erase (-v))
 
 
+/-- [Section: ## Resolution] -/
 theorem resolve_width_bound (c1 c2 : Clause) (v : ℤ)
     (hv : v ∈ c1) (hnv : -v ∈ c2) :
     clauseWidth (resolve c1 c2 v hv hnv) ≤ clauseWidth c1 + clauseWidth c2 - 1 := by
@@ -83,6 +85,7 @@ def IsIdempotentUnary {α : Type*} (f : α → α) : Prop :=
   f ∘ f = f
 
 
+/-- [Section: ## Idempotent Polymorphisms and CSP] -/
 theorem idem_compose {α : Type*} (f g : α → α)
     (hf : f ∘ f = f) (hg : g ∘ g = g) (hfg : f ∘ g = g ∘ f) :
     (f ∘ g) ∘ (f ∘ g) = f ∘ g := by
@@ -94,6 +97,7 @@ noncomputable def interpolate (t : ℝ) (a b : ℝ) : ℝ :=
   (1 - t) * a + t * b
 
 
+/-- [Section: ## Monotone Interpolation] -/
 theorem interpolate_zero (a b : ℝ) : interpolate 0 a b = a := by
   unfold interpolate; ring;
 
@@ -113,6 +117,7 @@ def IsAbsorbing {α : Type*} (f : α → α → α) : Prop :=
   ∀ x y, f x (f x y) = f x y
 
 
+/-- [Section: ## Absorption and Idempotent Lattice Properties] -/
 theorem min_absorbing : IsAbsorbing (min : ℕ → ℕ → ℕ) := by
   exact fun x y => by simp +decide [ min_assoc ] ;
 

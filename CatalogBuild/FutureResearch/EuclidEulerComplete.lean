@@ -31,6 +31,7 @@ theorem perfect_8128 : IsPerfect 8128 := by
   refine ⟨by omega, ?_⟩; native_decide
 
 
+/-- [Section: ### Euclid's Direction] -/
 theorem euclid_perfect (p : ℕ) (hp : 1 < p) (hm : Nat.Prime (2 ^ p - 1)) :
     IsPerfect (2 ^ (p - 1) * (2 ^ p - 1)) := by
   -- By definition of $sigma1$, we know that if $p$ and $q$ are coprime, then $\sigma_1(pq) = \sigma_1(p) \sigma_1(q)$.
@@ -45,6 +46,7 @@ theorem euclid_perfect (p : ℕ) (hp : 1 < p) (hm : Nat.Prime (2 ^ p - 1)) :
   · simpa [ Nat.one_le_iff_ne_zero, parity_simps ]
 
 
+/-- [Section: ### Euler's Direction] -/
 theorem even_perfect_euler_form (n : ℕ) (hperf : IsPerfect n) (heven : 2 ∣ n) :
     ∃ p : ℕ, Nat.Prime p ∧ Nat.Prime (2 ^ p - 1) ∧ n = 2 ^ (p - 1) * (2 ^ p - 1) := by
   -- Let's write n as 2^k * m where m is odd.
@@ -94,6 +96,7 @@ theorem even_perfect_euler_form (n : ℕ) (hperf : IsPerfect n) (heven : 2 ∣ n
     nlinarith [ Nat.sub_add_cancel ( Nat.one_le_pow ( k + 1 ) 2 zero_lt_two ), Nat.sub_add_cancel ( Nat.one_le_iff_ne_zero.mpr ( show 2 ^ ( k + 1 ) - 1 ≠ 0 from Nat.sub_ne_zero_of_lt ( by norm_num ) ) ), Nat.pos_of_ne_zero ( show q ≠ 0 from by aesop_cat ) ]
 
 
+/-- [Section: ### Euclid-Euler Complete Biconditional] -/
 theorem euclid_euler_iff (n : ℕ) (heven : 2 ∣ n) :
     IsPerfect n ↔
     ∃ p : ℕ, Nat.Prime p ∧ Nat.Prime (2 ^ p - 1) ∧ n = 2 ^ (p - 1) * (2 ^ p - 1) := by
@@ -103,6 +106,7 @@ theorem euclid_euler_iff (n : ℕ) (heven : 2 ∣ n) :
     convert euclid_perfect p hp₁.one_lt hp₂ using 1
 
 
+/-- [Section: ### Odd Perfect Number Bounds] -/
 theorem no_small_odd_perfect_10000 (n : ℕ) (hn : 0 < n) (hodd : ¬ 2 ∣ n)
     (hsmall : n < 10000) (hperf : sigma1 n = 2 * n) : False := by
   -- By checking all odd numbers less than 10000, we can verify none of them are perfect.
@@ -118,6 +122,7 @@ theorem perfect_not_prime (n : ℕ) (hn : 1 < n) (hperf : sigma1 n = 2 * n)
   omega
 
 
+/-- [Section: ### Perfect Number Properties] -/
 theorem perfect_ge_6 (n : ℕ) (hperf : IsPerfect n) : 6 ≤ n := by
   rcases n with ( _ | _ | _ | _ | _ | _ | _ | n ) <;> simp_all +arith +decide [ IsPerfect ]
 

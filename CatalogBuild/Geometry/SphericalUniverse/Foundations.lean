@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Part I: Topological Properties of Spheres] -/
 theorem sphere_compact_euclidean (n : ℕ) :
     IsCompact (Metric.sphere (0 : EuclideanSpace ℝ (Fin n)) 1) := by
   exact isCompact_sphere _ _
@@ -55,6 +56,7 @@ theorem invStereo_derivative_magnitude (t : ℝ) :
   ring
 
 
+/-- [Section: ## Part IV: The Omega Point — Infinity Maps to the North Pole] -/
 theorem invStereo_x_tendsto_zero :
     Tendsto (fun t => (invStereo t).1) atTop (nhds 0) := by
   rw [ Metric.tendsto_nhds ];
@@ -70,6 +72,7 @@ theorem invStereo_y_tendsto_one :
   exact le_trans ( tendsto_const_nhds.sub <| tendsto_const_nhds.div_atTop <| tendsto_const_nhds.add_atTop <| by norm_num ) <| by norm_num;
 
 
+/-- [Section: ## Part V: Sphere Volumes] -/
 theorem sphere_area_S2 (R : ℝ) (hR : 0 < R) :
     4 * π * R ^ 2 > 0 := by
   positivity

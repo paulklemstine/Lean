@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Part I: Matrix Spectral Theory] -/
 theorem spbM_trace (a : ℝ) : (spbM a).trace = 2 := by
   norm_num [ spbM, Matrix.trace ]
 
@@ -86,6 +87,7 @@ theorem spb_sum_neg_first (x y : ℝ) (h1 : 1 - x * y ≠ 0) (h2 : 1 + x * y ≠
   ring
 
 
+/-- [Section: ## Part IX: Weierstrass Substitution] -/
 theorem weierstrass_spb (θ : ℝ) (_hcos : cos (θ / 2) ≠ 0) (_hcos2 : cos θ ≠ 0) :
     spb (tan (θ / 2)) (tan (θ / 2)) = tan θ := by
   rw [ show θ = 2 * ( θ / 2 ) by ring, Real.tan_two_mul ];

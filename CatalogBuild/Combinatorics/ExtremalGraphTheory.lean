@@ -7,6 +7,7 @@ Declarations: 13
 
 import Mathlib
 
+/-- Turán number computations -/
 theorem turan_3_2 : (1 - (1 : ℚ) / 2) * 3 ^ 2 / 2 = 9 / 4 := by norm_num
 
 theorem turan_4_2 : (4 : ℕ) ≤ 4 * (4 - 1) / 2 := by norm_num

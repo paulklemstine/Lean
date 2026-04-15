@@ -7,6 +7,7 @@ Declarations: 10
 
 import Mathlib
 
+/-- Simply connected spaces -/
 theorem real_sc : SimplyConnectedSpace ℝ := inferInstance
 
 theorem rn_sc (n : ℕ) : SimplyConnectedSpace (Fin n → ℝ) := inferInstance

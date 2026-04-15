@@ -53,6 +53,7 @@ theorem sin_no_limit_atTop :
   linarith [abs_lt.mp h3, abs_lt.mp h4]
 
 
+/-- [Section: ## Helper: Sigmoid Limits] -/
 theorem logisticSigmoid_tendsto_one :
     Tendsto logisticSigmoid atTop (nhds 1) := by
   refine' ( Metric.tendsto_nhds.mpr _ );
@@ -68,6 +69,7 @@ theorem logisticSigmoid_tendsto_zero :
   · exact Real.tendsto_exp_atBot
 
 
+/-- [Section: ## Helper: Derivative bounded → product with zero limit is zero] -/
 theorem deriv_comp_tendsto_zero {f g : ℝ → ℝ}
     (hf_diff : Differentiable ℝ f) (hg_diff : Differentiable ℝ g)
     (hf_lip : ∃ C : ℝ, ∀ x, |deriv f x| ≤ C)
@@ -76,6 +78,7 @@ theorem deriv_comp_tendsto_zero {f g : ℝ → ℝ}
   exact squeeze_zero_norm ( fun x => by simpa [ abs_mul ] using mul_le_mul_of_nonneg_right ( hf_lip.choose_spec ( g x ) ) ( abs_nonneg ( deriv g x ) ) ) ( by simpa using hg_zero.abs.const_mul _ )
 
 
+/-- [Section: ## Helper: Positive derivative limit implies divergence] -/
 theorem tendsto_atTop_of_deriv_pos_limit {f : ℝ → ℝ}
     (hf : Differentiable ℝ f)
     {L : ℝ} (hL : L > 0) (hf' : Tendsto (deriv f) atTop (nhds L)) :
@@ -109,6 +112,7 @@ theorem tendsto_atBot_of_deriv_neg_limit {f : ℝ → ℝ}
   exact Filter.tendsto_atTop_atBot.mpr fun b => ⟨ x₀ + ⌈ ( b - f x₀ ) / ( L / 2 ) ⌉₊ + 1, fun x hx => by nlinarith [ Nat.le_ceil ( ( b - f x₀ ) / ( L / 2 ) ), h_lim_neg_inf x ( by linarith ), mul_div_cancel₀ ( b - f x₀ ) ( by linarith : ( L / 2 ) ≠ 0 ) ] ⟩
 
 
+/-- [Section: ## Main Structural Lemma] -/
 theorem sheffer_expr_deriv_tendsto_both (e : ShefferExpr) :
     (∃ L : ℝ, Tendsto (deriv e.eval) atTop (nhds L)) ∧
     (∃ L : ℝ, Tendsto (deriv e.eval) atBot (nhds L)) := by

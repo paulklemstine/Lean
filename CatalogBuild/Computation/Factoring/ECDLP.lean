@@ -210,6 +210,8 @@ theorem insufficient_qubits_theorem (available : ℕ)
   simp [shor_ecdlp_logical_qubits] at h; omega
 
 
+/-- [Section: ## §7: Why Current Quantum Computers Cannot Break secp256k1
+We formalize several impossibility arguments for near-term quantum attacks.] -/
 theorem quantum_volume_cubic (n : ℕ) :
     shor_ecdlp_total_gates n ≥ n^3 := by
   unfold shor_ecdlp_total_gates point_mult_gates point_add_gates mod_mult_gates qft_gate_count
@@ -258,6 +260,8 @@ theorem fermat_inverse_mod7 :
 /-- Wilson's theorem for small primes: (p-1)! ≡ -1 (mod p). -/
 theorem wilson_5 : Nat.factorial 4 % 5 = 4 := by native_decide
 
+/-- [Section: ## §9: Modular Arithmetic Foundations
+Key lemmas about modular arithmetic used in elliptic curve operations.] -/
 theorem wilson_7 : Nat.factorial 6 % 7 = 6 := by native_decide
 
 theorem wilson_11 : Nat.factorial 10 % 11 = 10 := by native_decide

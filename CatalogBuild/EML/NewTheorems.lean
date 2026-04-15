@@ -17,6 +17,7 @@ def emlN (x y : ℂ) : ℂ := Complex.exp x - Complex.log y
 def emlNR (x y : ℝ) : ℝ := Real.exp x - Real.log y
 
 
+/-- [Section: ## EML Derivative Structure] -/
 theorem emlNR_partial_x (x y : ℝ) (hy : 0 < y) :
     HasDerivAt (fun x' => emlNR x' y) (Real.exp x) x := by
   convert HasDerivAt.sub ( Real.hasDerivAt_exp x ) ( hasDerivAt_const _ _ ) using 1;
@@ -46,6 +47,7 @@ def EMLTree.depth : EMLTree → ℕ
   | .node l r => 1 + max l.depth r.depth
 
 
+/-- [Section: ## EML Tree Combinatorics] -/
 theorem EMLTree.leaves_eq_nodes_succ (t : EMLTree) :
     t.leaves = t.nodes + 1 := by
   -- We will prove this by induction on EML trees.
@@ -66,6 +68,7 @@ theorem EMLTree.leaves_le_pow_depth (t : EMLTree) :
     rw [ pow_succ' ] ; linarith [ pow_le_pow_right₀ ( by decide : 1 ≤ 2 ) ( le_max_left l.depth r.depth ), pow_le_pow_right₀ ( by decide : 1 ≤ 2 ) ( le_max_right l.depth r.depth ) ] ;
 
 
+/-- [Section: ## EML and the anti-EML] -/
 theorem antiEml_eq_neg_swap (x y : ℂ) :
     (Complex.log x - Complex.exp y) = -(emlN y x) := by
   unfold emlN; ring;

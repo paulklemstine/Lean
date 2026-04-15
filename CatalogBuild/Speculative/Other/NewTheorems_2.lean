@@ -19,6 +19,7 @@ theorem ppt_c_gt_a (a b c : ℤ) (hb : 0 < b) (hc : 0 < c)
   nlinarith [sq_nonneg b, sq_nonneg (c - a)]
 
 
+/-- [Section: ## Number Theory of PPTs] -/
 theorem ppt_c_gt_b (a b c : ℤ) (ha : 0 < a) (hc : 0 < c)
     (h : a ^ 2 + b ^ 2 = c ^ 2) : b < c := by
   nlinarith [sq_nonneg a, sq_nonneg (c - b)]
@@ -54,6 +55,7 @@ theorem infinite_pythagorean_triples (n : ℕ) :
   ring
 
 
+/-- [Section: ## Modular Arithmetic Structure] -/
 theorem pyth_mod8_structure (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     (ha : Odd a) (hb : Even b) : c ^ 2 % 8 = 1 := by
       replace h := congr_arg ( · % 8 ) h; obtain ⟨ m, rfl ⟩ := ha; obtain ⟨ n, rfl ⟩ := hb; ring_nf at *; norm_num [ Int.add_emod, Int.mul_emod ] at *;
@@ -86,6 +88,7 @@ theorem gaussian_norm_eq_zero (a b : ℤ) : a ^ 2 + b ^ 2 = 0 ↔ a = 0 ∧ b = 
   · rintro ⟨rfl, rfl⟩; ring
 
 
+/-- [Section: ## Descent Theory] -/
 theorem ppt_hypotenuse_lower_bound (a b c : ℕ) (ha : 0 < a) (hb : 0 < b)
     (h : a ^ 2 + b ^ 2 = c ^ 2) (hcop : Nat.Coprime a b) :
     5 ≤ c := by

@@ -7,6 +7,7 @@ Declarations: 24
 
 import Mathlib
 
+/-- [Section: ### Fibonacci Identities] -/
 theorem fib_cassini (n : ℕ) (hn : 0 < n) :
     (Nat.fib (n + 1) * Nat.fib (n - 1) : ℤ) - (Nat.fib n : ℤ) ^ 2 = (-1) ^ n := by
   rcases n with ( _ | _ | n ) <;> simp_all +decide [ Nat.fib_add_two ];
@@ -23,6 +24,7 @@ theorem fib_double (n : ℕ) :
   convert fib_two_mul n using 1
 
 
+/-- [Section: ### Fibonacci Divisibility] -/
 theorem fib_prime_odd (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2) (hp3 : p ≠ 3) :
     ¬ 2 ∣ Nat.fib p := by
   -- By definition of Fibonacci sequence, we know that F(p) is even if and only if 3 divides p.
@@ -31,6 +33,7 @@ theorem fib_prime_odd (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2) (hp3 : p ≠ 
   rw [ Nat.dvd_iff_mod_eq_zero, h_fib_even_iff_three_dvd ] ; exact fun h => hp3 <| by have := Nat.prime_dvd_prime_iff_eq Nat.prime_three hp; tauto;
 
 
+/-- [Section: ### Pisano Period Properties] -/
 theorem pisano_divides_p_sq_sub_one (p : ℕ) (hp : Nat.Prime p) (hp5 : p ≠ 5)
     (hmod : p % 5 = 1 ∨ p % 5 = 4) :
     ∃ π_p : ℕ, 0 < π_p ∧ (∀ n, Nat.fib (n + π_p) % p = Nat.fib n % p) ∧ π_p ∣ p ^ 2 - 1 := by
@@ -73,6 +76,7 @@ theorem pisano_divides_p_sq_sub_one (p : ℕ) (hp : Nat.Prime p) (hp5 : p ≠ 5)
   rw [ show p ^ 2 - 1 = ( p - 1 ) * ( p + 1 ) by convert Nat.sq_sub_sq p 1 using 1; ring ] ; simp +decide [ pow_mul, ZMod.pow_card_sub_one_eq_one, show α ≠ 0 from by aesop_cat, show β ≠ 0 from by aesop_cat ] ;
 
 
+/-- [Section: ### Extended Wall-Sun-Sun Verification] -/
 theorem wss_check_31 : ¬(31 ^ 2 ∣ Nat.fib 30 * Nat.fib 32) := by native_decide
 
 theorem wss_check_37 : ¬(37 ^ 2 ∣ Nat.fib 36 * Nat.fib 38) := by native_decide
@@ -108,6 +112,7 @@ theorem wss_check_97 : ¬(97 ^ 2 ∣ Nat.fib 96 * Nat.fib 98) := by native_decid
 where p is the Legendre symbol. This is the basis for the Fibonacci compositeness test. -/
 theorem fib_composite_test_5 : Nat.fib 4 % 4 ≠ 0 ∧ ¬ Nat.Prime 4 := by decide
 
+/-- [Section: ### Fibonacci Compositeness Test] -/
 theorem fib_composite_test_9 : ¬ Nat.Prime 9 := by decide
 
 theorem fib_composite_test_15 : ¬ Nat.Prime 15 := by decide

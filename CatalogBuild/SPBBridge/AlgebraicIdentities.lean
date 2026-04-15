@@ -10,6 +10,7 @@ import SPBBridge.Core
 
 noncomputable section
 
+/-- [Section: ## Cocycle Identity] -/
 theorem cocycle (x y z : ℝ) (hxy : 1 - x * y ≠ 0) (hyz : 1 - y * z ≠ 0) :
     (1 - x * y) * (1 - spb x y * z) = (1 - y * z) * (1 - x * spb y z) := by
   unfold SPBResearch.spb;
@@ -28,6 +29,7 @@ theorem hyp_norm_identity (u v : ℝ) (h : 1 + u * v ≠ 0) :
   unfold spbH; field_simp; ring
 
 
+/-- [Section: ## Cross-Ratio Preservation] -/
 theorem spb_cross_ratio (a b c d t : ℝ)
     (ha : 1 - a * t ≠ 0) (hb : 1 - b * t ≠ 0)
     (hc : 1 - c * t ≠ 0) (hd : 1 - d * t ≠ 0)
@@ -90,6 +92,7 @@ theorem spb_integer_criterion (a b : ℤ) (h : 1 - a * b ≠ 0) :
 /-- Specific computations. -/
 theorem spb_2_3 : spb (2 : ℝ) 3 = -1 := by unfold spb; norm_num
 
+/-- [Section: ## Integer SPB] -/
 theorem spb_1_2 : spb (1 : ℝ) 2 = -3 := by unfold spb; norm_num
 
 theorem spb_1_3 : spb (1 : ℝ) 3 = -2 := by unfold spb; norm_num

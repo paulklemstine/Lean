@@ -48,6 +48,10 @@ theorem single_query_depth {Q A : Type*} (q : Q) (a₁ a₂ : A) :
   simp [QueryTree.depth, Bool.cond_eq_ite]
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════════
+§2: INFORMATION-THEORETIC LOWER BOUND
+"You can't find a needle without enough questions"
+═══════════════════════════════════════════════════════════════════════════════] -/
 theorem query_tree_distinguishing_power {Q : Type*} (A : Type*)
     (t : QueryTree Q A) :
     ∀ (S : Finset (Q → Bool)),
@@ -105,6 +109,10 @@ theorem NoisyOracle.errorRate_lt_half {Q : Type*} (O : NoisyOracle Q) :
   simp [NoisyOracle.errorRate]; linarith [O.hp]
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════════
+§3: ORACLE AMPLIFICATION — From Weak to Strong
+"Democracy makes oracles trustworthy"
+═══════════════════════════════════════════════════════════════════════════════] -/
 theorem amplification_decay_factor (p : ℝ) (hp : 1 / 2 < p) (hp1 : p ≤ 1) :
     4 * p * (1 - p) < 1 := by
       nlinarith [ sq_nonneg ( p - 1 / 2 ) ]
@@ -115,6 +123,10 @@ theorem amplification_factor_nonneg (p : ℝ) (hp : 0 ≤ p) (hp1 : p ≤ 1) :
     0 ≤ 4 * p * (1 - p) := by nlinarith
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════════
+§4: ORACLE COMPOSITION ALGEBRA
+"Combining oracles: the arithmetic of knowledge"
+═══════════════════════════════════════════════════════════════════════════════] -/
 theorem oracle_comp_of_commuting {X : Type*} (O₁ O₂ : X → X)
     (h₁ : IsOracle' O₁) (h₂ : IsOracle' O₂) (hc : O₁ ∘ O₂ = O₂ ∘ O₁) :
     IsOracle' (O₁ ∘ O₂) := by
@@ -154,6 +166,10 @@ def IsContractive {X : Type*} [PseudoMetricSpace X] (O : X → X) (c : ℝ) : Pr
   0 ≤ c ∧ c < 1 ∧ ∀ x y, dist (O x) (O y) ≤ c * dist x y
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════════
+§5: CONTRACTION ORACLE CONVERGENCE
+"Iterating a contractive oracle converges to truth"
+═══════════════════════════════════════════════════════════════════════════════] -/
 theorem contraction_iterate_bound {X : Type*} [PseudoMetricSpace X]
     (O : X → X) (c : ℝ) (hc : IsContractive O c) (x y : X) (n : ℕ) :
     dist (O^[n] x) (O^[n] y) ≤ c ^ n * dist x y := by
@@ -214,6 +230,9 @@ def uniformBelief (n : ℕ) (hn : 0 < n) : BeliefState n where
   sum_one := by simp [Finset.sum_const]; field_simp
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════════
+§7: OPTIMAL QUERY STRATEGIES — The Bayesian Oracle
+═══════════════════════════════════════════════════════════════════════════════] -/
 theorem uniform_max_entropy {n : ℕ} (hn : 1 < n) (b : BeliefState n) :
     b.entropy ≤ (uniformBelief n (by omega)).entropy := by
       unfold uniformBelief BeliefState.entropy
@@ -267,6 +286,9 @@ def IsMonotoneImprover {X : Type*} [PseudoMetricSpace X] (I : OracleImprover X) 
     (∀ x, dist (I O (I O x)) (I O x) ≤ dist (O (O x)) (O x))
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════════
+§8: THE ORACLE BOOTSTRAP — Self-Improving Systems
+═══════════════════════════════════════════════════════════════════════════════] -/
 theorem bootstrap_deviation_nonincreasing {X : Type*} [PseudoMetricSpace X]
     (I : OracleImprover X) (hI : IsMonotoneImprover I)
     (O : X → X) (x : X) (n : ℕ) :
@@ -289,6 +311,9 @@ theorem shadow_complement {X : Type*} [AddCommGroup X] (O : X → X)
   abel
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════════
+§9: ORACLE DUALITY — Every Oracle Has a Shadow
+═══════════════════════════════════════════════════════════════════════════════] -/
 theorem shadow_involution {X : Type*} [AddCommGroup X] (O : X → X)
     (hlin : ∀ x y, O (x + y) = O x + O y)
     (hscale : ∀ (n : ℤ) x, O (n • x) = n • O x)

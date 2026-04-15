@@ -162,6 +162,7 @@ theorem invB1_lorentz_invariant (a b c : ℤ) :
     a^2 + b^2 - c^2 := by ring
 
 
+/-- [Section: ## Part 3: Key Theorems] -/
 theorem invB2_lorentz_invariant (a b c : ℤ) :
     (a + 2*b - 2*c)^2 + (2*a + b - 2*c)^2 - (-2*a - 2*b + 3*c)^2 =
     a^2 + b^2 - c^2 := by ring
@@ -281,6 +282,7 @@ theorem fermat_at_each_step (m n : ℤ) :
     m ^ 2 - n ^ 2 = (m - n) * (m + n) := by ring
 
 
+/-- Branch encoding: which branches are taken during descent? -/
 def branchEncoding : ℤ × ℤ × ℤ → ℕ → List ℕ
   | _, 0 => []
   | (a, b, c), n + 1 =>
@@ -376,6 +378,7 @@ theorem gcd_factor_principle (N a : ℤ) :
   exact_mod_cast Int.gcd_dvd_right a N
 
 
+/-- [Section: ## Part 9: Parity Analysis for Factoring] -/
 theorem ppt_parity_sum (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     (ha_odd : a % 2 = 1) (hb_even : b % 2 = 0) :
     (a + b + c) % 2 = 0 := by

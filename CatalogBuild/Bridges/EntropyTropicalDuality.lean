@@ -46,6 +46,7 @@ theorem lse2_tropical_error (x y : ℝ) :
 /-- Softmax function for two arguments. -/
 def softmax2_fst (x y : ℝ) : ℝ := Real.exp x / (Real.exp x + Real.exp y)
 
+/-- [Section: ## Part 2: Softmax — Gradient of LogSumExp] -/
 def softmax2_snd (x y : ℝ) : ℝ := Real.exp y / (Real.exp x + Real.exp y)
 
 
@@ -115,6 +116,7 @@ def TropicallyConvex (f : ℝ → ℝ) : Prop :=
   ∀ x y, f (max x y) ≤ max (f x) (f y)
 
 
+/-- [Section: ## Part 5: Tropical Convexity Meets Information Geometry] -/
 theorem monotone_tropically_convex {f : ℝ → ℝ} (hf : Monotone f) :
     TropicallyConvex f := by
   intro x y; cases le_total x y <;> simp +decide [ * ] ;
@@ -157,6 +159,7 @@ theorem gibbs_equal_energies (E : ℝ) :
 theorem info_content_of_uniform_pair : Real.log 2 > 0 := Real.log_pos one_lt_two
 
 
+/-- [Section: ## Part 7: Entropy–Idempotent Connection] -/
 theorem uniform_entropy_eq_log (n : ℕ) (hn : 1 ≤ n) :
     (n : ℝ) * (-(1 / (n : ℝ)) * Real.log (1 / (n : ℝ))) = Real.log n := by
   simp +zetaDelta at *;

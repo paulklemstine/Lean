@@ -43,6 +43,7 @@ structure HeckeElement' (n : ℕ) where
   coeffs : Fin n → ℝ
 
 
+/-- [Section: ## Section 3: Hecke Algebra Idempotents] -/
 instance {n : ℕ} : Mul (HeckeElement' n) :=
   ⟨fun a b => ⟨fun i => a.coeffs i * b.coeffs i⟩⟩
 
@@ -83,6 +84,7 @@ theorem trace_additive_matrices {n : ℕ} (E F : Matrix (Fin n) (Fin n) ℝ) :
   Matrix.trace_add E F
 
 
+/-- [Section: ## Section 6: Idempotent Collapse and Physics] -/
 theorem idempotent_trace_nonneg {n : ℕ} (E : Matrix (Fin n) (Fin n) ℝ)
     (hE : E * E = E) :
     0 ≤ E.trace := by

@@ -56,6 +56,13 @@ theorem rapidity_multiplicative (u v : ℝ)
 def dopplerFactor (v : ℝ) : ℝ := (1 + v) / (1 - v)
 
 
+/-- [Section: # SPB and Lorentz Factor: Relativistic Identities
+Deep connections between SPB/spbH and special relativity.
+## Main Results
+- Lorentz factor factorization: γ(spbH(u,v)) = γ(u)·γ(v)·(1+uv)
+- Proper velocity composition
+- Rapidity additivity
+- Light cone invariance] -/
 theorem doppler_multiplicative (u v : ℝ)
     (hu : u ≠ 1) (hv : v ≠ 1) (huv : 1 + u * v ≠ 0) (hs : spbH u v ≠ 1) :
     dopplerFactor (spbH u v) = dopplerFactor u * dopplerFactor v := by

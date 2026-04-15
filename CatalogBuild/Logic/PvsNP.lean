@@ -14,6 +14,7 @@ def SubsetSum (weights : List ℤ) (target : ℤ) : Prop :=
     (∑ i ∈ S, weights.get i) = target
 
 
+/-- [Section: ## Subset Sum: Definition and Basic Properties] -/
 instance SubsetSum.instDecidable (weights : List ℤ) (target : ℤ) :
     Decidable (SubsetSum weights target) :=
   inferInstanceAs (Decidable (∃ S : Finset (Fin weights.length), _))
@@ -47,6 +48,9 @@ theorem berggren_nodes_at_depth (d : ℕ) : 3 ^ d ≥ 1 :=
   Nat.one_le_pow d 3 (by omega)
 
 
+/-- [Section: ## Berggren Tree: Exponential Branching
+The Berggren tree has branching factor 3, so depth d yields 3^d nodes.
+This is exponential, not polynomial.] -/
 theorem berggren_superpolynomial (k : ℕ) : ∃ N, ∀ d, N ≤ d → d ^ k < 3 ^ d := by
   -- We can use the fact that exponential functions grow faster than any polynomial function. Specifically, for any fixed $k$, $3^d$ will eventually outpace $d^k$ as $d$ increases.
   have h_exp_growth : Filter.Tendsto (fun d : ℕ => (d ^ k : ℝ) / 3 ^ d) Filter.atTop (nhds 0) := by
@@ -67,6 +71,7 @@ theorem subset_enumeration_exponential (n : ℕ) :
   num_subsets n
 
 
+/-- [Section: ## Why Mapping Doesn't Help] -/
 theorem no_poly_covering (k : ℕ) :
     ∃ N, ∀ n, N ≤ n → n ^ k < 2 ^ n := by
   -- We can use the fact that exponential functions grow faster than polynomial functions.

@@ -20,6 +20,16 @@ def coherenceMeasure (H_spectral : ℝ) (n : ℕ) (hn : 0 < n) : ℝ :=
   1 - H_spectral / n
 
 
+/-- [Section: # Coherence Theory — Formal Foundations
+We formalize the basic definitions and properties of the coherence measure
+for Boolean functions, defined via Fourier analysis on the Boolean hypercube.
+## Main Definitions
+- `SpectralEntropy`: The Shannon entropy of the squared Fourier coefficients
+- `coherence`: The coherence measure C(f) = 1 - H(spectral distribution) / n
+## Main Results
+- `coherence_nonneg`: Coherence is nonneg (C ≥ 0)
+- `coherence_le_one`: Coherence is at most 1
+- `coherence_add_landscape_eq_one`: The duality identity C + L = 1] -/
 theorem coherence_add_landscape_eq_one (H_spectral : ℝ) (n : ℕ) (hn : 0 < n) :
     coherenceMeasure H_spectral n hn + landscapeEntropy H_spectral n hn = 1 := by
   -- By definition of coherenceMeasure and landscapeEntropy, we have:

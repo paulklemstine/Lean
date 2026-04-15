@@ -38,6 +38,7 @@ noncomputable def flashLoanProfit (fl : FlashLoanParams) (s : Strategy) : ℝ :=
   s.execute fl.amount - fl.repayment
 
 
+/-- [Section: ## Flash Loan Model] -/
 theorem flash_loan_profitable_iff (fl : FlashLoanParams) (s : Strategy) :
     0 < flashLoanProfit fl s ↔ fl.repayment < s.execute fl.amount := by
   unfold flashLoanProfit; aesop;
@@ -65,6 +66,7 @@ noncomputable def ArbOpportunity.spreadPerUnit (arb : ArbOpportunity) : ℝ :=
   arb.sellPrice - arb.buyPrice
 
 
+/-- [Section: ## Flash Loan Arbitrage] -/
 theorem flash_arb_profitable
     (fl : FlashLoanParams) (arb : ArbOpportunity)
     (h_spread_exceeds_fee : fl.feeRate * arb.buyPrice < arb.spreadPerUnit) :
@@ -76,6 +78,7 @@ theorem flash_arb_profitable
   rw [ div_mul_eq_mul_div, lt_div_iff₀ ] <;> nlinarith [ fl.hAmount, fl.hFee0, fl.hFee1, arb.hBuy, arb.hSell, show fl.repayment = fl.amount * ( 1 + fl.feeRate ) from rfl ]
 
 
+/-- [Section: ## Composability] -/
 theorem strategy_composition
     (fl : FlashLoanParams)
     (s₁ s₂ : Strategy)

@@ -7,6 +7,14 @@ Declarations: 14
 
 import Mathlib
 
+/-- [Section: # Real-World Applications of Formal Mathematics
+Connecting formal mathematics to engineering and science:
+- Signal processing
+- Control theory
+- Machine learning
+- Physics
+- Economics
+- Algorithm correctness] -/
 theorem dft2_squared :
     !![1, 1; 1, -1] * !![1, 1; 1, -1] = (2 : ℤ) • (1 : Matrix (Fin 2) (Fin 2) ℤ) := by
   ext i j ; fin_cases i <;> fin_cases j <;> norm_num [ Matrix.mul_apply ]

@@ -23,6 +23,9 @@ theorem sigma_X_mul_Z : σX * σZ = σXZ := by
     simp [σX, σZ, σXZ, Matrix.mul_apply, Fin.sum_univ_two]
 
 
+/-- [Section: ## §1: Extended Pauli Algebra
+The full single-qubit Pauli algebra over ℤ, exploring all products
+and the group structure.] -/
 theorem sigma_Z_mul_X : σZ * σX = -σXZ := by
   ext i j; fin_cases i <;> fin_cases j <;>
     simp [σX, σZ, σXZ, Matrix.mul_apply, Fin.sum_univ_two, Matrix.neg_apply]
@@ -72,6 +75,7 @@ def kron2 (A B : Matrix (Fin 2) (Fin 2) ℤ) : Matrix (Fin 4) (Fin 4) ℤ :=
     B (Fin.mk (i.val % 2) (by omega)) (Fin.mk (j.val % 2) (by omega))
 
 
+/-- [Section: ## §2: Tensor Product Gates — Multi-Qubit Operations] -/
 def X_tensor_I : Matrix (Fin 4) (Fin 4) ℤ := kron2 σX I₂
 
 def I_tensor_X : Matrix (Fin 4) (Fin 4) ℤ := kron2 I₂ σX
@@ -95,6 +99,7 @@ theorem det_X_tensor_I : Matrix.det X_tensor_I = 1 := by native_decide
 theorem det_X_tensor_X : Matrix.det X_tensor_X = 1 := by native_decide
 
 
+/-- [Section: ## §3: CNOT and Controlled Gate Algebra] -/
 def CNOT₂ : Matrix (Fin 4) (Fin 4) ℤ :=
   !![1, 0, 0, 0; 0, 1, 0, 0; 0, 0, 0, 1; 0, 0, 1, 0]
 
@@ -182,9 +187,11 @@ theorem T_count_append (c₁ c₂ : List Bool) :
   simp [T_count, List.count_append]
 
 
+/-- [Section: ## §5: Gate Synthesis Metrics] -/
 theorem T_count_nil : T_count [] = 0 := rfl
 
 
+/-- [Section: ## §6: Quantum Walk Structure] -/
 structure QuantumWalk where
   n : ℕ
   hn : 0 < n
@@ -201,6 +208,7 @@ theorem grover_coin_sq : grover_coin_scaled * grover_coin_scaled = (2 : ℤ) •
     simp [grover_coin_scaled, Matrix.mul_apply, Fin.sum_univ_two, Matrix.smul_apply]
 
 
+/-- [Section: ## §7: Stabilizer Formalism] -/
 inductive PauliType where
   | I | X | Z | XZ
   deriving Repr, DecidableEq
@@ -255,6 +263,7 @@ def hadamard_conjugate : PauliType → PauliType
   | .XZ => .XZ
 
 
+/-- [Section: ## §8: Clifford Group Actions] -/
 theorem hadamard_conjugate_involutive : Function.Involutive hadamard_conjugate := by
   intro p; cases p <;> rfl
 
@@ -272,6 +281,7 @@ theorem S_conjugate_order :
   intro p; cases p <;> rfl
 
 
+/-- [Section: ## §9: Hamiltonian Structure] -/
 structure HamiltonianTerm (n : ℕ) where
   coefficient : ℤ
   paulis : Fin n → PauliType
@@ -308,6 +318,7 @@ theorem quantum_exceeds_classical_CHSH : (2 : ℚ) ^ 2 < 8 := by norm_num
 def SWAP_from_CNOT : Matrix (Fin 4) (Fin 4) ℤ := CNOT₂ * CNOT_rev * CNOT₂
 
 
+/-- [Section: ## §11: Circuit Identities] -/
 theorem SWAP_decomposition : SWAP_from_CNOT = !![1,0,0,0; 0,0,1,0; 0,1,0,0; 0,0,0,1] := by
   native_decide
 
@@ -336,6 +347,7 @@ theorem det_matrix_pow_2k (U : Matrix (Fin 2) (Fin 2) ℤ) (hU : Matrix.det U = 
   | succ k ih => simp [matrix_pow_2k, det_mul, ih]
 
 
+/-- [Section: ## §13: Quantum Complexity] -/
 theorem hilbert_space_dimension (n : ℕ) : 2 ^ n ≥ 1 :=
   Nat.one_le_pow n 2 (by norm_num)
 
@@ -353,6 +365,7 @@ theorem quantum_parallelism_advantage (n : ℕ) (hn : 1 ≤ n) :
     · push_neg at hk; interval_cases k; norm_num
 
 
+/-- [Section: ## §14: CSS Error Correction Codes] -/
 structure CSSCode where
   n : ℕ
   k₁ : ℕ

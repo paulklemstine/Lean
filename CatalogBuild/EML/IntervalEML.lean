@@ -94,6 +94,7 @@ theorem emlDiag_ge_one (x : ℝ) (hx : 0 < x) (hx1 : x ≤ 1) :
   linarith
 
 
+/-- [Section: ## Diagonal EML Map] -/
 theorem emlDiag_no_fixed_point (x : ℝ) (hx : 0 < x) :
     emlDiag x > x := by
   -- We need exp(x) - ln(x) > x for x > 0.

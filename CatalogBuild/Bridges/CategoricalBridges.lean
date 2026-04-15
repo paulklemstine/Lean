@@ -59,6 +59,7 @@ def riemannSum (f : ℝ → ℝ) (n : ℕ) : ℝ :=
   (1 / (n : ℝ)) * ∑ k ∈ Finset.range n, f ((k : ℝ) / (n : ℝ))
 
 
+/-- [Section: ## Riemann Sum Bridge] -/
 theorem riemann_sum_converges (f : ℝ → ℝ) (hf : Continuous f) :
     Filter.Tendsto (fun n => riemannSum f (n + 1))
       Filter.atTop (nhds (∫ x in Set.Icc 0 1, f x)) := by

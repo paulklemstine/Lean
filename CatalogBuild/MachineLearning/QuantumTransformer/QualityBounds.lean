@@ -38,6 +38,7 @@ theorem tv_le_one {n : ℕ} (p q : Fin n → ℝ)
   linarith [ show ∑ i : Fin n, |p i - q i| ≤ 2 by exact le_trans ( Finset.sum_le_sum fun _ _ => show |p _ - q _| ≤ p _ + q _ by cases abs_cases ( p ‹_› - q ‹_› ) <;> linarith [ hp ‹_›, hq ‹_› ] ) ( by norm_num [ Finset.sum_add_distrib, hp_sum, hq_sum ] ) ]
 
 
+/-- [Section: ## §2: Pinsker-type Bounds] -/
 theorem crystal_loss_bounds_tv_sq (p : ℝ) (hp0 : 0 ≤ p) (hp1 : p ≤ 1) :
     min p (1 - p) ^ 2 ≤ p * (1 - p) := by
   cases min_cases p ( 1 - p ) <;> nlinarith
@@ -48,6 +49,7 @@ theorem pinsker_via_crystal_loss (p : ℝ) (hp0 : 0 ≤ p) (hp1 : p ≤ 1) :
   exact Real.le_sqrt_of_sq_le ( by cases min_cases p ( 1 - p ) <;> nlinarith )
 
 
+/-- [Section: ## §3: Row Crystallization Bounds] -/
 theorem row_crystallization_error {n : ℕ} (w : Fin n → ℝ)
     (hw_nn : ∀ i, 0 ≤ w i) (hw_sum : ∑ i, w i = 1) :
     ∑ i, w i * (1 - w i) ≤ 1 := by

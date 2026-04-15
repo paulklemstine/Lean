@@ -47,6 +47,7 @@ structure ChaoticSystem where
   lyapunov_pos : 0 < lyapunov
 
 
+/-- [Section: ## Section 2: Chaos Theory Limits] -/
 theorem chaos_prediction_error_grows (S : ChaoticSystem)
     (δ : ℝ) (hδ : 0 < δ) (threshold : ℝ) :
     ∃ n : ℕ, δ * Real.exp (S.lyapunov * n) > threshold := by
@@ -56,6 +57,7 @@ theorem chaos_prediction_error_grows (S : ChaoticSystem)
   exact ( h_exp_lim.eventually_gt_atTop threshold ) |> fun h => h.exists
 
 
+/-- [Section: ## Section 3: Information-Theoretic Limits] -/
 theorem fano_inequality_simplified (H_cond : ℝ) (n : ℕ) (hn : 2 < n)
     (error_prob : ℝ) (he : 0 ≤ error_prob)
     (h_fano : H_cond ≤ error_prob * Real.log (↑n - 1) + Real.log 2) :

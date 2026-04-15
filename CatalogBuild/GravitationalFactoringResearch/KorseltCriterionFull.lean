@@ -45,6 +45,7 @@ theorem korselt_561_divs_full :
   exact ⟨⟨280, by norm_num⟩, ⟨56, by norm_num⟩, ⟨35, by norm_num⟩⟩
 
 
+/-- [Section: ### Computational verification of Korselt for specific numbers] -/
 theorem korselt_1105_divs :
     (4 ∣ 1104) ∧ (12 ∣ 1104) ∧ (16 ∣ 1104) := by
   exact ⟨⟨276, by norm_num⟩, ⟨92, by norm_num⟩, ⟨69, by norm_num⟩⟩
@@ -70,6 +71,7 @@ theorem korselt_8911_divs :
   exact ⟨⟨1485, by norm_num⟩, ⟨495, by norm_num⟩, ⟨135, by norm_num⟩⟩
 
 
+/-- [Section: ### All 7 Carmichael numbers up to 10000 with full factorizations] -/
 theorem all_carmichael_to_10000 :
     561 = 3 * 11 * 17 ∧
     1105 = 5 * 13 * 17 ∧
@@ -81,6 +83,7 @@ theorem all_carmichael_to_10000 :
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_⟩ <;> norm_num
 
 
+/-- [Section: ### Structural properties] -/
 theorem carmichael_odd (n : ℕ) (hc : IsCarmichaelNum n) : ¬ Even n := by
   rcases hc with ⟨ hn₁, hn₂, hn₃ ⟩;
   -- If $n$ is even, then $n-1$ is odd, so $(-1)^{n-1} = -1$.

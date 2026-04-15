@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Section 1: The Cayley Transform — Stereographic Projection in Disguise] -/
 noncomputable def cayley_real_part (t : ℝ) : ℝ := (t ^ 2 - 1) / (t ^ 2 + 1)
 
 noncomputable def cayley_imag_part (t : ℝ) : ℝ := (2 * t) / (t ^ 2 + 1)
@@ -22,6 +23,7 @@ theorem rotation_preserves_circle (x₁ y₁ x₂ y₂ : ℝ)
              sq_nonneg x₁, sq_nonneg y₁, sq_nonneg x₂, sq_nonneg y₂]
 
 
+/-- [Section: ## Section 3: Fermat's Christmas Theorem — Which primes have decodings?] -/
 theorem fermat_christmas_5 : ∃ a b : ℤ, a ^ 2 + b ^ 2 = 5 := ⟨1, 2, by norm_num⟩
 
 theorem fermat_christmas_13 : ∃ a b : ℤ, a ^ 2 + b ^ 2 = 13 := ⟨2, 3, by norm_num⟩
@@ -44,6 +46,7 @@ theorem pell_product (x₁ y₁ x₂ y₂ : ℤ) (D : ℤ)
              sq_nonneg x₁, sq_nonneg y₁, sq_nonneg x₂, sq_nonneg y₂]
 
 
+/-- [Section: ## Section 6: The Cross-Ratio — Universal Projective Invariant] -/
 noncomputable def cross_ratio (a b c d : ℝ) : ℝ :=
   ((a - c) * (b - d)) / ((a - d) * (b - c))
 
@@ -58,6 +61,7 @@ theorem stereo_double_angle (t : ℝ) :
   ring
 
 
+/-- [Section: ## Section 8: Golden Ratio Connection] -/
 theorem golden_ratio_property (φ : ℝ) (hφ : φ ^ 2 = φ + 1) :
     φ ^ 4 = 3 * φ + 2 := by nlinarith [sq_nonneg φ]
 

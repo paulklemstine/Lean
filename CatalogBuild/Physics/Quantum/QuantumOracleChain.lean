@@ -25,6 +25,7 @@ def OracleChain.empty (α : Type*) : OracleChain α :=
   ⟨[], by simp⟩
 
 
+/-- [Section: ## §1: Oracle Chain — The Computational Pipeline] -/
 theorem OracleChain.empty_apply {α : Type*} (x : α) :
     (OracleChain.empty α).apply x = x := by
   simp [OracleChain.apply, OracleChain.empty]
@@ -105,6 +106,7 @@ theorem QGate.compose_id {n : ℕ} (g : QGate n) :
   simp [QGate.compose, QGate.id']
 
 
+/-- [Section: ## §3: Quantum Gates as Oracle Building Blocks] -/
 theorem QGate.id_compose {n : ℕ} (g : QGate n) :
     ((QGate.id' n).compose g).mat = g.mat := by
   simp [QGate.compose, QGate.id']
@@ -134,6 +136,7 @@ theorem deutschJozsa_constant_sum {n : ℕ} (f : BoolFn n)
   simp [deutschJozsaSign, hf]
 
 
+/-- [Section: ## §4: The Deutsch-Jozsa Oracle] -/
 theorem deutschJozsa_balanced_sum {n : ℕ} (f : BoolFn n)
     (hbal : f.isBalanced) :
     ∑ x : Fin (2^n), deutschJozsaSign f x = 0 := by
@@ -250,6 +253,7 @@ def StabilizerCode.codeProjector {n k : ℕ} (code : StabilizerCode n k) :
 theorem classical_search_bound (N : ℕ) : N / 2 ≤ N := Nat.div_le_self N 2
 
 
+/-- [Section: ## §11: Quantum Speedup Theorems] -/
 theorem quantum_search_speedup (N : ℕ) (hN : 16 ≤ N) :
     Nat.sqrt N < N / 2 := by
   exact Nat.le_div_iff_mul_le zero_lt_two |>.2 ( by nlinarith [ Nat.sqrt_le N ] )

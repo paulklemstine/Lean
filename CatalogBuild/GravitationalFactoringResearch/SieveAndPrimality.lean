@@ -7,6 +7,7 @@ Declarations: 14
 
 import Mathlib
 
+/-- [Section: ### Trial division] -/
 theorem trial_division_correct (n : ℕ) (hn : 1 < n) :
     Nat.Prime n ↔ ∀ d : ℕ, 1 < d → d * d ≤ n → ¬ d ∣ n := by
   constructor;
@@ -112,6 +113,7 @@ theorem sieve_count_500 :
   native_decide
 
 
+/-- [Section: ### Sieve of Eratosthenes correctness] -/
 theorem sieve_count_1000 :
     ((Finset.Icc 2 1000).filter Nat.Prime).card = 168 := by
   native_decide

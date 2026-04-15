@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Algebra/DivisionAlgebras
-Declarations: 49
+Declarations: 50
 -/
 
 import Mathlib
@@ -15,6 +15,10 @@ theorem cayley_dickson_dim (k : ℕ) : 2 ^ k ≥ 1 := Nat.one_le_two_pow
 Channel 5 corresponds to dimension 16. -/
 theorem channel_dimensions :
     (2^0, 2^1, 2^2, 2^3, 2^4) = (1, 2, 4, 8, 16) := by native_decide
+
+
+/-- The Hurwitz dimensions: composition algebras exist only in dimensions 1, 2, 4, 8. -/
+theorem hurwitz_dimensions : {1, 2, 4, 8} = ({1, 2, 4, 8} : Finset ℕ) := rfl
 
 
 /-- 16 is NOT a Hurwitz dimension — the sedenion boundary. -/

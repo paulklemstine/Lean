@@ -43,6 +43,7 @@ theorem tropSPB_self_nonneg (x : ℝ) (hx : 0 ≤ x) : tropSPB x x = x := by
   rw [tropSPB_nonneg x x hx hx, min_self]
 
 
+/-- [Section: ## Alternative Tropical Formulation] -/
 theorem tropSPB_alt (x y : ℝ) :
     tropSPB x y = min x y + max 0 (-(x + y)) := by
   simp [tropSPB]

@@ -79,6 +79,7 @@ theorem pythQuad_perm_ab (a b c d : ℤ) (h : IsPythQuad a b c d) :
   unfold IsPythQuad at *; linarith
 
 
+/-- [Section: ## Part 6: Symmetries] -/
 theorem pythQuad_perm_ac (a b c d : ℤ) (h : IsPythQuad a b c d) :
     IsPythQuad c b a d := by
   unfold IsPythQuad at *; linarith

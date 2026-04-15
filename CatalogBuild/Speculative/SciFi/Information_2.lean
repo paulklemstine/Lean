@@ -14,6 +14,8 @@ def gaussianCapacity (W SNR : ℝ) : ℝ :=
   W * Real.log (1 + SNR) / Real.log 2
 
 
+/-- [Section: ## Channel Capacity and Interstellar Communication
+The capacity of a Gaussian channel: C = W log₂(1 + SNR).] -/
 theorem gaussianCapacity_nonneg (W SNR : ℝ) (hW : 0 ≤ W) (hSNR : 0 ≤ SNR) :
     0 ≤ gaussianCapacity W SNR := by
   exact div_nonneg ( mul_nonneg hW ( Real.log_nonneg ( by linarith ) ) ) ( Real.log_nonneg ( by norm_num ) )

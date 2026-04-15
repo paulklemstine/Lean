@@ -79,6 +79,7 @@ theorem A_after_invA (a b c : ℤ) :
   ext <;> ring
 
 
+/-- [Section: ## Section 2: Inverse Matrices — The Backward Branches] -/
 theorem B_after_invB (a b c : ℤ) :
     let t := invBerggrenB a b c
     berggrenB' t.1 t.2.1 t.2.2 = (a, b, c) := by
@@ -248,6 +249,7 @@ theorem berggren_sum_mod2_A' (a b c : ℤ) :
   simp only [berggrenA']; omega
 
 
+/-- [Section: ## Section 8: The Parity Invariants] -/
 theorem berggren_sum_mod2_B' (a b c : ℤ) :
     ((berggrenB' a b c).1 + (berggrenB' a b c).2.1 + (berggrenB' a b c).2.2) % 2 =
     (a + b + c) % 2 := by
@@ -286,6 +288,7 @@ theorem photon_round_trip_A' (a b c : ℤ) :
     absorbed = (a, b, c) := invA_after_A a b c
 
 
+/-- [Section: ## Section 10: The Round-Trip Theorem] -/
 theorem photon_round_trip_B' (a b c : ℤ) :
     let emitted := berggrenB' a b c
     let absorbed := invBerggrenB emitted.1 emitted.2.1 emitted.2.2

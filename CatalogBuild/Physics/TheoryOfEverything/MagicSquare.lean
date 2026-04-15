@@ -177,6 +177,8 @@ theorem so10_dim : 10 * 9 / 2 = 45 := by omega
 /-- SU(n) dimension: n²-1 -/
 theorem su5_dim : 5^2 - 1 = 24 := by omega
 
+/-- [Section: ## Part 4: The Symmetry Breaking Chain
+E₈ ⊃ E₇ ⊃ E₆ ⊃ SO(10) ⊃ SU(5) ⊃ SU(3)×SU(2)×U(1)] -/
 theorem su3_dim : 3^2 - 1 = 8 := by omega
 
 /-- Critical spacetime dimension for each division algebra -/

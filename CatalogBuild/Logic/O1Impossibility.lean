@@ -47,6 +47,7 @@ theorem factor_condition' (N k p : ℤ) (hp : p ∣ N) :
 theorem four_k_sq_factored (k : ℤ) : 4 * k ^ 2 - 1 = (2 * k - 1) * (2 * k + 1) := by ring
 
 
+/-- [Section: ## §2: The Closed-Form Does Not Bypass Search] -/
 theorem no_shortcut_before_p (p : ℕ) (hp : Nat.Prime p) (hodd : p ≠ 2)
     (k : ℕ) (hk_pos : 0 < k) (hk_lt : k < (p - 1) / 2) :
     ¬((p : ℤ) ∣ (4 * (k : ℤ) ^ 2 - 1)) := by

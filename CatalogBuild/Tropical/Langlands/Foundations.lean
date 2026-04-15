@@ -24,6 +24,9 @@ def tropInvertible (n : ℕ) (A : Fin n → Fin n → ℝ) : Prop :=
   tropDet n A ≠ 0
 
 
+/-- [Section: ## Section 3: Tropical Characters
+A tropical character is a piecewise-linear function χ : ℝ^n → ℝ that is
+a tropical homomorphism (preserving min and +).] -/
 theorem tropChar_determined_by_one (χ : TropicalCharacter) (n : ℤ) :
     χ.toFun n = n * χ.toFun 1 := by
   induction n using Int.induction_on <;> simp_all +decide;
@@ -60,6 +63,10 @@ def trivialValuation (K : Type*) [Field K] [DecidableEq K] : TropicalValuation K
         · simp [ha, hb]
 
 
+/-- [Section: ## Section 5: Tropical L-Functions
+Classical L-functions are Euler products L(s,π) = ∏_p L_p(s,π).
+The tropical analogue replaces products with sums (tropical products)
+and uses piecewise-linear functions.] -/
 theorem tropicalL_convex
     (localFactors : ℕ → ℝ → ℝ)
     (primes : Finset ℕ)
@@ -79,6 +86,10 @@ def tropConvolution (f g : ℤ → ℝ) (n : ℤ) : ℝ :=
   ⨅ k : ℤ, f k + g (n - k)
 
 
+/-- [Section: ## Section 6: Tropical Hecke Algebra
+The classical Hecke algebra is the convolution algebra of compactly supported
+functions on G(F)\G(𝔸)/K. The tropical Hecke algebra replaces convolution
+(integral of f*g) with tropical convolution (inf of f ⊕_trop g).] -/
 theorem tropConv_comm (f g : ℤ → ℝ) (n : ℤ) :
     tropConvolution f g n = tropConvolution g f n := by
   unfold tropConvolution;
@@ -120,6 +131,14 @@ theorem tropReciprocity_invol (n : ℕ) (aut : TropicalAutomorphicDatum n) :
   simp [tropReciprocity]
 
 
+/-- [Section: ## Section 8: Tropical Reciprocity — The Main Conjecture
+The heart of the Langlands program is reciprocity: automorphic representations
+↔ Galois representations. Our tropical analogue states:
+**Tropical Reciprocity Conjecture**: There is a bijection between
+- Tropical automorphic forms (piecewise-linear functions on the tropical building)
+- Tropical Galois representations (piecewise-linear actions on tropical modules)
+such that tropical L-functions match.
+We formalize a finite version of this.] -/
 theorem tropReciprocity_L_match (n : ℕ) (aut : TropicalAutomorphicDatum n)
     (localFactors : Fin n → ℝ → ℝ)
     (hfactors : ∀ i : Fin n, ∀ s : ℝ, localFactors i s = s - aut.slopes i) :
@@ -133,6 +152,10 @@ def legendreFenchel (f : ℝ → ℝ) (p : ℝ) : ℝ :=
   ⨆ x : ℝ, p * x - f x
 
 
+/-- [Section: ## Section 9: Tropical Langlands Duality
+For a reductive group G, Langlands duality produces the dual group Ĝ.
+In the tropical world, duality manifests through the duality of
+tropical polytopes and the Legendre-Fenchel transform.] -/
 theorem legendreFenchel_convex (f : ℝ → ℝ)
     (hbdd : ∀ p : ℝ, BddAbove (Set.range fun x => p * x - f x)) :
     ∀ p q : ℝ, ∀ t : ℝ, 0 ≤ t → t ≤ 1 →
@@ -193,6 +216,10 @@ def weylAction (n : ℕ) (sigma : Equiv.Perm (Fin n)) (x : TropicalApartment n) 
   fun i => x (sigma i)
 
 
+/-- [Section: ## Section 10: Connections to Buildings and Bruhat-Tits Theory
+The Bruhat-Tits building of GL_n over a local field is a simplicial complex
+whose apartments are copies of ℝ^(n-1). Tropicalization naturally maps to
+the building, providing the geometric backbone of tropical Langlands.] -/
 theorem weylAction_mul (n : ℕ) (sigma tau : Equiv.Perm (Fin n))
     (x : TropicalApartment n) :
     weylAction n (sigma * tau) x = weylAction n tau (weylAction n sigma x) := by

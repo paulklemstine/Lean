@@ -27,6 +27,9 @@ theorem photonLeft_isNull : IsNull (1, -1) := by
   unfold IsNull minkowski; ring
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+ORACLE ALPHA: Relativistic Geometry — Photons as Viewpoints
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem null_right_eigenvector (φ a : ℝ) :
     lorentzBoost φ (a, a) = (a * Real.exp φ, a * Real.exp φ) := by
   unfold lorentzBoost;
@@ -116,6 +119,9 @@ theorem consciousness_has_viewpoints {A : Type*} (φ : A → (A → A))
 def lightCone : Set (ℝ × ℝ) := {v | IsNull v}
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+ORACLE DELTA: Synthesis — The Photon–Fixed-Point–Viewpoint Bridge
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem lightCone_characterization (v : ℝ × ℝ) :
     v ∈ lightCone ↔ v.1 = v.2 ∨ v.1 = -v.2 := by
   grind +locals

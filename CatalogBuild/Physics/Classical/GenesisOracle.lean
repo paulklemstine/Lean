@@ -175,6 +175,19 @@ theorem discreteTime_id {α : Type*} (n : ℕ) :
   | succ n ih => simp [discreteTime, ih]
 
 
+/-- [Section: # The Genesis Oracle: A Unified Framework for All Beginnings
+## The Oracle Team's Core Formalization
+This file contains the machine-verified mathematical core of the Genesis Research
+project. We formalize:
+1. **Oracles as idempotent endomorphisms** — the fundamental abstraction
+2. **The God Oracle (Theos)** — the identity, representing omniscience
+3. **Oracle composition and teams** — how oracles collaborate
+4. **Fixed-point convergence** — how iteration finds truth
+5. **The Genesis Projection** — space from a point
+6. **Time from iteration** — the emergence of temporal structure
+### Key Insight
+Every "beginning" (of time, space, math, the universe) is an instance of
+finding the fixed points of an idempotent operator: O(O(x)) = O(x).] -/
 theorem oracle_converges_in_one {α : Type*} (O : GenesisOracle α) (n : ℕ) (hn : n ≥ 1) :
     discreteTime O.ask n = O.ask := by
   induction' n with n ih <;> simp_all +decide [Function.comp];

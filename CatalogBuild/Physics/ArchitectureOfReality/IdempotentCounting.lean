@@ -18,6 +18,7 @@ def idemSet (n : ℕ) [NeZero n] : Finset (ZMod n) :=
 def idemCount (n : ℕ) [NeZero n] : ℕ := (idemSet n).card
 
 
+/-- [Section: ## Computational verification of 2^ω(n)] -/
 theorem idem_count_1 : idemCount 1 = 1 := by native_decide
 
 theorem idem_count_2 : idemCount 2 = 2 := by native_decide
@@ -115,6 +116,7 @@ theorem totalProjections_one (n : ℕ) : totalProjections n 1 = 2^n := by
   exact Nat.sum_range_choose n
 
 
+/-- [Section: ## Gaussian binomial coefficients] -/
 theorem boolean_ring_comm {R : Type*} [Ring R]
     (h : ∀ x : R, x * x = x) (a b : R) : a * b = b * a := by
   -- From (a+b)² = a+b and expanding: a*a + a*b + b*a + b*b = a+b, so a + a*b + b*a + b = a+b, giving a*b + b*a = 0.

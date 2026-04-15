@@ -19,6 +19,7 @@ def Mirror.shatteredPoints {α : Type*} (m : Mirror α) : Set α :=
   {x | m.reflect x ≠ x}
 
 
+/-- [Section: ## §1: The Involution Fixed-Point Theorem (Broken Mirror Core)] -/
 theorem broken_mirror_odd_fixed_point {α : Type*} [Fintype α] [DecidableEq α]
     (m : Mirror α) (h_odd : Odd (Fintype.card α)) :
     ∃ x, m.reflect x = x := by
@@ -50,6 +51,7 @@ theorem mirror_shattered_even {α : Type*} [Fintype α] [DecidableEq α]
   exact fun s hs t ht hst => hS₂ s hs t ht hst
 
 
+/-- [Section: ## §2: The Diagonal Shattering — Cantor's Broken Mirror] -/
 theorem cantor_broken_mirror (α : Type*) : ¬ Surjective (fun (a : α) (b : α) => a = b) := by
   by_contra h_surjective
   obtain ⟨x, hx⟩ : ∃ x : α → Prop, ¬∃ a : α, x = fun b => a = b := by
@@ -65,6 +67,7 @@ theorem diagonal_shattering (α : Type*) (f : α → (α → Bool)) : ¬ Surject
   cases' h g with a ha ; replace ha := congr_fun ha a ; aesop
 
 
+/-- [Section: ## §3: Interval Fixed Points — The Mirror Must Touch Ground] -/
 theorem discrete_ivt (g : ℤ → ℤ) (n : ℕ) (hn : 0 < n)
     (h0 : 0 < g 0) (hn' : g n < 0)
     (h_step : ∀ k : ℤ, |g (k + 1) - g k| ≤ 1) :
@@ -79,6 +82,7 @@ theorem discrete_ivt (g : ℤ → ℤ) (n : ℕ) (hn : 0 < n)
   linarith [ h_pos n ( Finset.mem_range.mpr ( Nat.lt_succ_self n ) ) ])
 
 
+/-- [Section: ## §4: The Self-Knowledge Impossibility] -/
 theorem no_perfect_self_mirror :
     ¬ ∃ (halt : (ℕ → Bool) → Bool),
       ∀ f : ℕ → Bool, halt f = true ↔ f 0 = halt f := by
@@ -86,6 +90,7 @@ theorem no_perfect_self_mirror :
   cases' h with halt h; have := h ( fun _ => Bool.true ) ; have := h ( fun _ => Bool.false ) ; simp +decide at *;
 
 
+/-- [Section: ## §5: Symmetry Group Fixed-Point Theorem] -/
 theorem involution_parity_fixed {α : Type*} [Fintype α] [DecidableEq α]
     (f : α → α) (hf : ∀ x, f (f x) = x) :
     Even (Fintype.card α) ↔

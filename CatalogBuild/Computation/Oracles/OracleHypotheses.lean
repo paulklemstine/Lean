@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## §1: Oracle Density] -/
 theorem oracle_density_2 :
     (Finset.filter (fun f : Fin 2 → Fin 2 => ∀ x, f (f x) = f x) Finset.univ).card = 3 := by
       native_decide +revert
@@ -23,6 +24,7 @@ theorem const_always_idempotent {n : ℕ} (c : Fin n) :
       norm_num +zetaDelta at *
 
 
+/-- [Section: ## §2: Spectral Theory of Oracles] -/
 theorem idempotent_eigenvalue (lam : ℝ) (h : lam * lam = lam) : lam = 0 ∨ lam = 1 := by
   cases le_or_gt lam 0 <;> [ left; right ] <;> nlinarith
 
@@ -37,6 +39,7 @@ theorem idempotent_real_01 (x : ℝ) (hx : x ^ 2 = x) : x = 0 ∨ x = 1 := by
   exact or_iff_not_imp_left.mpr fun h => mul_left_cancel₀ h <| by linarith;
 
 
+/-- [Section: ## §3: Modular Arithmetic Oracles] -/
 theorem mod_idempotent (a n : ℕ) : (a % n) % n = a % n := by
   rw [ Nat.mod_mod ]
 
@@ -58,6 +61,7 @@ theorem exists_prime_factor (n : ℕ) (hn : 2 ≤ n) : ∃ p, Nat.Prime p ∧ p 
   exact ⟨ Nat.minFac n, Nat.minFac_prime ( by linarith ), Nat.minFac_dvd n ⟩
 
 
+/-- [Section: ## §5: Graph Oracles] -/
 theorem coloring_bound (n k : ℕ) (hk : k ≤ n) : k ≤ n := by
   assumption
 
@@ -72,6 +76,7 @@ theorem binary_entropy_bound (p : ℝ) (hp0 : 0 ≤ p) (hp1 : p ≤ 1) :
       linarith [ sq_nonneg ( p - 1 / 2 ) ]
 
 
+/-- [Section: ## §7: The Halting Oracle and Undecidability] -/
 theorem halting_diagonal : ¬ ∃ (e : ℕ → (ℕ → Bool)), Surjective e := by
   norm_num +zetaDelta at *;
   exact fun f hf => by have := hf ( fun n => if f n n = Bool.true then Bool.false else Bool.true ) ; rcases this with ⟨ n, hn ⟩ ; replace hn := congr_fun hn n ; simp +decide at hn;
@@ -84,6 +89,7 @@ theorem cantor_functions (X : Type*) [Nonempty X] :
       simpa using congr_fun hf f
 
 
+/-- [Section: ## §8: Moonshot — The Oracle Convergence Conjecture] -/
 theorem finite_dynamics_repeat {n : ℕ} (hn : 0 < n) (f : Fin n → Fin n) (x : Fin n) :
     ∃ k m : ℕ, k < m ∧ m ≤ n ∧ f^[k] x = f^[m] x := by
       have h_pigeonhole : Finset.card (Finset.image (fun i => f^[i] x) (Finset.range (n+1))) ≤ n := by

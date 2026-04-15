@@ -19,6 +19,7 @@ def kinetic_energy (q : PythQuadruple) : ℤ := q.a ^ 2 + q.b ^ 2 + q.c ^ 2
 theorem triple_peel_advantage : (3 : ℕ) = 3 * 1 := by norm_num
 
 
+/-- [Section: ## §3. Cross-Collision Channels] -/
 theorem cross_channel_ab (q : PythQuadruple) :
     q.a ^ 2 + q.b ^ 2 = (q.d - q.c) * (q.d + q.c) := by
   have h := q.eq; nlinarith
@@ -61,10 +62,12 @@ theorem lift_to_quadruple (m n p : ℤ) :
     (m^2 + n^2 + p^2) ^ 2 := by ring
 
 
+/-- [Section: ## §6. Energy Ascent: Parametric Lifting Operators] -/
 def lebesgue_param (m n p : ℤ) : ℤ × ℤ × ℤ × ℤ :=
   (m^2 + n^2 - p^2, 2*m*p, 2*n*p, m^2 + n^2 + p^2)
 
 
+/-- [Section: ## §8. Quantum Search on the 2-Sphere] -/
 theorem grover_on_sphere : ∀ n : ℕ, n * n = n ^ 2 := fun n => by ring
 
 
@@ -77,6 +80,7 @@ theorem e8_vs_3sphere_growth :
     480 * 1 < 480 * 9 ∧ 480 * 9 < 480 * 91 := by omega
 
 
+/-- [Section: ## §12. Concrete Examples] -/
 def quad_example_1 : PythQuadruple where
   a := 1; b := 2; c := 2; d := 3; eq := by norm_num
 
@@ -104,11 +108,13 @@ theorem collision_example_d9 :
   constructor <;> [norm_num; constructor <;> norm_num]
 
 
+/-- [Section: ## §13. Channel Counts] -/
 theorem single_triple_channels : 1 + 1 + 1 = 3 := by norm_num
 
 theorem quadruple_to_triple_ratio : 9 / 3 = 3 := by norm_num
 
 
+/-- [Section: ## §14. Euler's Four-Square Identity] -/
 theorem quadruple_euler_lift (q₁ q₂ : PythQuadruple) :
     q₁.d ^ 2 * q₂.d ^ 2 = (q₁.d * q₂.d) ^ 2 := by ring
 

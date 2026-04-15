@@ -20,6 +20,7 @@ theorem spbRandomIter_one (a : ℕ → ℝ) : spbRandomIter a 1 = a 0 := by
   simp [spbRandomIter, spbR]
 
 
+/-- [Section: ## n-fold Random SPB Iteration] -/
 theorem spbRandomIter_angle_sum (a : ℕ → ℝ) (n : ℕ)
     (h : ∀ k < n, 0 < 1 - spbRandomIter a k * a k) :
     arctan (spbRandomIter a n) = ∑ i ∈ Finset.range n, arctan (a i) := by
@@ -42,6 +43,7 @@ theorem cauchyPDF_pos (x : ℝ) : 0 < cauchyPDF x := by
   positivity
 
 
+/-- [Section: ## Cauchy Invariance] -/
 theorem cauchyPDF_integral_one :
     ∫ x, cauchyPDF x = 1 := by
       unfold cauchyPDF;

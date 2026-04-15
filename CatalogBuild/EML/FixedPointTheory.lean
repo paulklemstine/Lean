@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## exp Has No Real Fixed Point] -/
 theorem exp_gt_id (x : ℝ) : Real.exp x > x := by
   linarith [ Real.add_one_le_exp x ]
 
@@ -53,6 +54,7 @@ theorem exp_deriv_at_zero : HasDerivAt Real.exp 1 0 := by
   exact this
 
 
+/-- [Section: ## Monotonicity and Convexity] -/
 theorem exp_strict_mono' : StrictMono Real.exp := Real.exp_strictMono
 
 
@@ -65,6 +67,7 @@ def emlIterate (y : ℝ) : ℕ → ℝ → ℝ
   | n + 1, z => Real.exp (emlIterate y n z) - Real.log y
 
 
+/-- [Section: ## Iteration Dynamics] -/
 theorem emlIterate_one (y z : ℝ) :
     emlIterate y 1 z = Real.exp z - Real.log y := rfl
 

@@ -9,6 +9,9 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Part I: Fourier Mode Orthogonality (Foundation for OAM)
+The azimuthal modes e^{i l φ} form an orthonormal basis on [0, 2π].
+This is the mathematical foundation for OAM multiplexing.] -/
 theorem fourier_mode_integral_zero {n : ℤ} (hn : n ≠ 0) :
     ∫ φ : ℝ in (0 : ℝ)..2 * π, Complex.exp (↑(n * φ) * Complex.I) = 0 := by
   -- We use the fact that the integral of $e^{i n \varphi}$ over $[0, 2\pi)$ is zero for $n \neq 0$, which can be shown using Euler's formula and the reverse อย่างไร.
@@ -23,6 +26,9 @@ theorem fourier_mode_integral_id :
   simp +decide [ mul_comm ]
 
 
+/-- [Section: ## Part II: OAM Mode Orthogonality
+Two OAM modes with topological charges l and m are orthogonal when l ≠ m.
+This follows directly from the Fourier orthogonality of exp(i·l·φ) and exp(i·m·φ).] -/
 theorem oam_orthogonality {l m : ℤ} (hlm : l ≠ m) :
     ∫ φ : ℝ in (0 : ℝ)..2 * π,
       Complex.exp (↑(l * φ) * Complex.I) * Complex.exp (↑(-(m * φ)) * Complex.I) = 0 := by
@@ -36,6 +42,9 @@ theorem oam_orthogonality {l m : ℤ} (hlm : l ≠ m) :
 def shannonCapacity (B : ℝ) (SNR : ℝ) : ℝ := B * Real.log (1 + SNR) / Real.log 2
 
 
+/-- [Section: ## Part III: Channel Capacity Multiplication
+Shannon's channel capacity formula: C = B · log₂(1 + SNR)
+With N orthogonal modes (e.g., OAM modes), the total capacity is N · C.] -/
 theorem shannonCapacity_nonneg {B SNR : ℝ} (hB : 0 ≤ B) (hSNR : 0 ≤ SNR) :
     0 ≤ shannonCapacity B SNR := by
   exact div_nonneg ( mul_nonneg hB ( Real.log_nonneg ( by linarith ) ) ) ( Real.log_nonneg ( by norm_num ) )
@@ -124,6 +133,11 @@ theorem circular_orthogonal :
   simp [stokesInnerProduct, rightCircular, leftCircular]
 
 
+/-- [Section: ## Part V: Polarization State Space — The Poincaré Sphere
+The polarization state of fully polarized light lives on the Poincaré sphere (S²).
+This gives polarization a rich geometric structure:
+- Great circles = polarization transformations by wave plates
+- Solid angle on the sphere = Berry (geometric) phase] -/
 theorem stokes_ip_bounded (a b : StokesVector) :
     -1 ≤ stokesInnerProduct a b ∧ stokesInnerProduct a b ≤ 1 := by
   constructor <;> unfold stokesInnerProduct <;> nlinarith [ sq_nonneg ( a.s1 - b.s1 ), sq_nonneg ( a.s1 + b.s1 ), sq_nonneg ( a.s2 - b.s2 ), sq_nonneg ( a.s2 + b.s2 ), sq_nonneg ( a.s3 - b.s3 ), sq_nonneg ( a.s3 + b.s3 ), a.on_sphere, b.on_sphere ]
@@ -197,6 +211,11 @@ def bs5050 : BSMatrix where
   d := 1 / Complex.ofReal (Real.sqrt 2)
 
 
+/-- [Section: ## Part X: No-Cloning and Secure Communication
+The no-cloning theorem (a consequence of linearity of quantum mechanics)
+makes it impossible to copy an unknown quantum state. This is the foundation
+of quantum key distribution (QKD).
+We formalize this as: there is no linear map that clones all states.] -/
 def qubitPlus : Qubit := ⟨1 / Complex.ofReal (Real.sqrt 2),
   1 / Complex.ofReal (Real.sqrt 2), by
   norm_num [ Complex.normSq ]⟩

@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Section 1: Fundamental Identities] -/
 theorem eml_def (x y : ℝ) : eml x y = Real.exp x - Real.log y := rfl
 
 
@@ -90,6 +91,7 @@ theorem emlDiag_orbit_strictMono (z : ℝ) : StrictMono (fun n => emlDiagIter n 
   intro n; simp only [emlDiagIter]; exact emlDiag_gt _
 
 
+/-- [Section: ## Section 5: Monotonicity] -/
 theorem eml_strictMono_x (y : ℝ) : StrictMono (fun x => eml x y) := by
   intro a b hab; simp only [eml]; linarith [Real.exp_lt_exp.mpr hab]
 
@@ -99,6 +101,7 @@ theorem eml_strictAnti_y (x : ℝ) : StrictAntiOn (fun y => eml x y) (Set.Ioi 0)
   linarith [Real.log_lt_log (Set.mem_Ioi.mp ha) hab]
 
 
+/-- [Section: ## Section 6: Magma Properties] -/
 theorem eml_noncomm : ∃ x y : ℝ, eml x y ≠ eml y x := by
   use 0, 1; simp [eml]; exact Ne.symm (by norm_num)
 
@@ -139,6 +142,7 @@ theorem eml_unique_legendre {F : ℝ → ℝ → ℝ}
   have h := hF x (Real.log y); rw [Real.exp_log hy] at h; rw [h]; simp [eml]
 
 
+/-- [Section: ## Section 9: Trace Theory] -/
 theorem eml_trace (x y : ℝ) :
     eml x y + eml y x = Real.exp x + Real.exp y - Real.log x - Real.log y := by
   unfold eml; ring
@@ -184,6 +188,7 @@ theorem bregman_as_eml (x y : ℝ) :
   simp [eml, Real.log_one]
 
 
+/-- [Section: ## Section 14: Level Sets and Zero Set] -/
 theorem eml_level_nonempty (c : ℝ) : ∃ x y : ℝ, 0 < y ∧ eml x y = c := by
   use 0, Real.exp (1 - c)
   exact ⟨Real.exp_pos _, by simp [eml, Real.log_exp]⟩

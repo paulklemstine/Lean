@@ -44,6 +44,7 @@ def taproot_output_key {n : ℕ} [Fact (Nat.Prime n)]
   internal_key + tweak
 
 
+/-- [Section: ## §2: Taproot Output Structure and Quantum Exposure] -/
 theorem taproot_internal_key_recovery {n : ℕ} [Fact (Nat.Prime n)]
     (internal_key tweak output_key : ZMod n)
     (h : output_key = taproot_output_key internal_key tweak) :

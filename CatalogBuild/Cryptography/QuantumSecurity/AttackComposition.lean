@@ -232,6 +232,7 @@ theorem targeted_attack_top100 :
     long_range_total_time 100 335 = 33500 := by native_decide
 
 
+/-- [Section: ## §5: Attack 4 — Long-Range Retrospective Attack] -/
 theorem targeted_attack_hours :
     33500 / 3600 = 9 := by native_decide
 

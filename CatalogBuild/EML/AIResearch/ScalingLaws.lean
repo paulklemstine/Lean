@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## §1. Power-Law Scaling] -/
 def scalingLaw (A alpha L_inf : ℝ) (N : ℕ) : ℝ := A * (↑N : ℝ) ^ (-alpha) + L_inf
 
 
@@ -19,6 +20,7 @@ theorem loss_bounded_below (A alpha L_inf : ℝ) (N : ℕ) (hA : 0 ≤ A) (hN : 
   linarith [mul_nonneg hA (rpow_nonneg (by positivity : (0 : ℝ) ≤ ↑N) (-alpha))]
 
 
+/-- [Section: ## §2. Compute-Optimal Training] -/
 def totalCompute (N D : ℕ) : ℕ := 6 * N * D
 
 def chinchillaData (N : ℕ) : ℕ := 20 * N
@@ -40,6 +42,7 @@ theorem compute_linear_N (N1 N2 D : ℕ) (h : N1 ≤ N2) :
   unfold totalCompute; nlinarith
 
 
+/-- [Section: ## §3. Emergent Capabilities] -/
 def capabilityThreshold (taskComplexity : ℕ) : ℕ := 2 ^ taskComplexity
 
 
@@ -58,6 +61,7 @@ theorem eml_capacity_advantage (d w : ℕ) (hd : 2 ≤ d) (hw : 1 ≤ w) :
   exact Nat.mul_le_mul_right _ ( Nat.le_of_lt ( Nat.recOn d ( by norm_num ) fun n ihn => by norm_num [ Nat.pow_succ ] at * ; nlinarith ) )
 
 
+/-- [Section: ## §4. Efficiency Frontiers] -/
 def dominates (accA accB : ℝ) (paramsA paramsB : ℕ) : Prop :=
   accB ≤ accA ∧ paramsA ≤ paramsB
 
@@ -78,6 +82,7 @@ theorem eml_flop_efficiency (d w : ℕ) (hw : 5 ≤ w) (hd : 0 < d) :
   exact Nat.le_of_not_lt fun h => by unfold emlFlops mlpFlops at h; nlinarith [ mul_le_mul_left' hw d ] ;
 
 
+/-- [Section: ## §5. Data Efficiency] -/
 def standardSamples (params : ℕ) (targetAcc : ℝ) : ℝ := ↑params / targetAcc
 
 

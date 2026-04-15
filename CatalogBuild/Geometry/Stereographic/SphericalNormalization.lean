@@ -30,6 +30,22 @@ def stereoSphericalNorm (n : ℕ) (v : Fin n → ℝ) : Fin (n + 1) → ℝ := f
     (vecSqNorm n v - 1) / D
 
 
+/-- [Section: # Spherical Normalization via Stereographic Projection
+This file formalizes **spherical normalization**, a novel normalization technique
+for neural networks that replaces LayerNorm/BatchNorm with stereographic projection
+to the unit sphere.
+## Key Ideas
+Standard normalization (LayerNorm, RMSNorm) centers and scales activations.
+Spherical normalization instead projects activations onto the unit sphere via
+inverse stereographic projection, providing:
+1. **Guaranteed unit norm** — outputs always lie on Sⁿ
+2. **Conformal gradients** — gradient flow respects the spherical geometry
+3. **Möbius-equivariant** — compatible with stereographic attention
+## Main Results
+* `spherical_norm_unit` — Output of spherical normalization has unit norm
+* `spherical_norm_continuous` — Spherical normalization is continuous
+* `spherical_norm_lipschitz` — Lipschitz bound for spherical normalization
+* `spherical_norm_equivariant` — Equivariance under orthogonal transformations] -/
 theorem stereo_spherical_norm_unit (n : ℕ) (v : Fin n → ℝ) :
     ∑ i, (stereoSphericalNorm n v i) ^ 2 = 1 := by
   unfold stereoSphericalNorm;
@@ -66,6 +82,7 @@ def expMapNorm (θ : ℝ) (v : Fin 2 → ℝ) : Fin 3 → ℝ := fun i =>
   | ⟨2, _⟩ => Real.cos (θ * norm_v)
 
 
+/-- [Section: ## The Exponential Map Normalization] -/
 theorem expMapNorm_unit (θ : ℝ) (v : Fin 2 → ℝ) :
     (expMapNorm θ v 0) ^ 2 + (expMapNorm θ v 1) ^ 2 + (expMapNorm θ v 2) ^ 2 = 1 := by
   by_cases h : Real.sqrt ( ( v 0 ) ^ 2 + ( v 1 ) ^ 2 ) = 0 <;> simp_all +decide [ expMapNorm ];

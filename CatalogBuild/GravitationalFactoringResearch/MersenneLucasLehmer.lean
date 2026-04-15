@@ -48,6 +48,7 @@ theorem mersenne_composite_11 : ¬ Nat.Prime (mersenne 11) ∧ mersenne 11 = 23 
   constructor <;> native_decide
 
 
+/-- [Section: ### Mersenne primes verification] -/
 theorem mersenne_prime_exponent_prime'' (n : ℕ) (hn : 2 ≤ n)
     (hm : Nat.Prime (mersenne n)) : Nat.Prime n := by
   grind +suggestions
@@ -82,6 +83,7 @@ theorem fermat_F5_composite : ¬ Nat.Prime (fermatNum 5) ∧ fermatNum 5 = 641 *
   constructor <;> native_decide
 
 
+/-- [Section: ### Mersenne-Perfect connection] -/
 theorem mersenne_prime_gives_perfect (p : ℕ) (hp : 2 ≤ p)
     (hm : Nat.Prime (2 ^ p - 1)) :
     Nat.Perfect (2 ^ (p - 1) * (2 ^ p - 1)) := by
@@ -96,6 +98,7 @@ theorem mersenne_prime_gives_perfect (p : ℕ) (hp : 2 ≤ p)
   exact ⟨ by rw [ Nat.sum_divisors_eq_sum_properDivisors_add_self ] at h_sigma; linarith, Nat.mul_pos ( pow_pos ( by decide ) _ ) hm.pos ⟩
 
 
+/-- [Section: ### Primorial values] -/
 theorem primorial_values' :
     primorial 2 = 2 ∧
     primorial 3 = 6 ∧

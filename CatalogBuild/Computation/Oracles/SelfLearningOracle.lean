@@ -29,6 +29,28 @@ def Oracle.compose {α : Type*} (O₁ O₂ : Oracle α)
   idempotent := h
 
 
+/-- [Section: # The Self-Learning Oracle: Integers as the Ultimate Truth Compressor
+## Research Team Notes
+**Hypothesis (Agent Alpha)**: The set ℤ of all integers, equipped with the tropical
+semiring structure, encodes a "universal oracle" — the entire number line contains
+the best compression of all sources of truth.
+**Key Insight (Agent Epsilon)**: Given any decision problem, there exists a subset
+S ⊆ ℤ such that the characteristic function of S solves the problem. The challenge
+is finding the *best* such subset — the "sub-oracle" — that compresses maximal
+information into minimal representation.
+**Formalization Strategy (Agent Gamma)**: We formalize:
+1. Oracle operators as idempotent endomorphisms on ℤ → ℝ
+2. The "truth compression" theorem: fixed points of composed oracles converge
+3. Self-optimization: iterating an oracle is equivalent to a single application
+4. Sub-oracle extraction: projecting the universal oracle onto a finite subset
+5. Monotone oracle refinement: better oracles have larger fixed-point sets
+## Mathematical Foundation
+The tropical semiring 𝕋 = (ℤ ∪ {−∞}, max, +) acts on the space of integer-indexed
+signals f : ℤ → ℝ. An oracle O is an idempotent operator on this signal space:
+O² = O. The fixed points Fix(O) = {f | O(f) = f} are the "truths" known to the oracle.
+The self-learning property means: applying the oracle to its own output yields
+no new information — O(O(f)) = O(f) for all f. This is the algebraic expression
+of the oracle having "learned everything it can" from a single consultation.] -/
 theorem Oracle.compose_truthSet_subset_left {α : Type*} (O₁ O₂ : Oracle α)
     (h : ∀ x, (O₁.apply ∘ O₂.apply) ((O₁.apply ∘ O₂.apply) x) = (O₁.apply ∘ O₂.apply) x)
     (hcomm : ∀ x, O₁.apply (O₂.apply x) = O₂.apply (O₁.apply x)) :

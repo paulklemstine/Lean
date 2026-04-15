@@ -56,6 +56,7 @@ def complexityOrder : PredComplexity → ℕ
   | .impossible => 4
 
 
+/-- [Section: ## §2. The Prediction Complexity Hierarchy] -/
 theorem complexity_hierarchy_strict (c₁ c₂ : PredComplexity)
     (h : complexityOrder c₁ < complexityOrder c₂) :
     c₁ ≠ c₂ := by

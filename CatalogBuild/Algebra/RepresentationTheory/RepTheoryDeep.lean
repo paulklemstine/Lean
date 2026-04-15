@@ -7,6 +7,7 @@ Declarations: 5
 
 import Mathlib
 
+/-- Sum of squares of irrep dimensions = |G| for S₃ -/
 theorem dim_sq_sum : 1 ^ 2 + 1 ^ 2 + 2 ^ 2 = (6 : ℕ) := by norm_num
 
 -- Abelian irreps are 1-dimensional

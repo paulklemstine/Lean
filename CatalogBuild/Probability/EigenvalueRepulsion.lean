@@ -7,6 +7,7 @@ Declarations: 9
 
 import Mathlib
 
+/-- The Vandermonde determinant equals the product of all pairwise differences. -/
 theorem vandermonde_det_eq_prod_diff {n : ℕ} (v : Fin n → ℝ) :
     (vandermonde v).det = ∏ i : Fin n, ∏ j ∈ Ioi i, (v j - v i) :=
   Matrix.det_vandermonde v

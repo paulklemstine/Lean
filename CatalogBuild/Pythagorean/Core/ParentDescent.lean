@@ -2,10 +2,25 @@
 
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/Core
-Declarations: 33
+Declarations: 36
 -/
 
 import Mathlib
+
+/-- Inverse Berggren matrix B₁⁻¹ -/
+def B₁_inv : Matrix (Fin 3) (Fin 3) ℤ :=
+  !![1, 2, -2; -2, -1, 2; -2, -2, 3]
+
+
+/-- Inverse Berggren matrix B₂⁻¹ -/
+def B₂_inv : Matrix (Fin 3) (Fin 3) ℤ :=
+  !![1, 2, -2; 2, 1, -2; -2, -2, 3]
+
+
+/-- Inverse Berggren matrix B₃⁻¹ -/
+def B₃_inv : Matrix (Fin 3) (Fin 3) ℤ :=
+  !![-1, -2, 2; 2, 1, -2; -2, -2, 3]
+
 
 /-- Apply B₁⁻¹ to a triple -/
 def applyInvB1 (a b c : ℤ) : ℤ × ℤ × ℤ :=

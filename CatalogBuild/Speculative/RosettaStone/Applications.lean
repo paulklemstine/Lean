@@ -35,6 +35,7 @@ noncomputable def code_dimension {n : ℕ} (C : QECC n) : ℂ :=
   Matrix.trace C.projection
 
 
+/-- [Section: ## Application 3: Quantum Error Correction] -/
 theorem complement_code {n : ℕ} (C : QECC n) :
     (1 - C.projection) * (1 - C.projection) = 1 - C.projection := by
   norm_num [ sub_mul, mul_sub, C.is_projection ]

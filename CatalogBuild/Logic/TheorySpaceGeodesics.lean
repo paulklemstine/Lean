@@ -43,6 +43,7 @@ def isMetricMidpoint {T : Type*} [PseudoMetricSpace T] (m a b : T) : Prop :=
   dist a m = dist m b ∧ dist a m + dist m b = dist a b
 
 
+/-- [Section: ## Section 3: Midpoint Theories] -/
 theorem midpoint_half_dist {T : Type*} [PseudoMetricSpace T] {m a b : T}
     (h : isMetricMidpoint m a b) :
     dist a m = dist a b / 2 := by
@@ -81,6 +82,9 @@ noncomputable def interpolationLength {T : Type*} [PseudoMetricSpace T]
   dist interp.source interp.target
 
 
+/-- [Section: ## Section 4: Theory Interpolation
+Given two theories T₁ and T₂, we construct an interpolating family
+parameterized by λ ∈ [0,1] that smoothly transitions between them.] -/
 theorem interpolation_length_bound {T : Type*} [PseudoMetricSpace T]
     (interp : TheoryInterpolation T) :
     dist interp.source interp.target ≤ interpolationLength interp := by
@@ -92,6 +96,9 @@ noncomputable def metricTriangleDefect {T : Type*} [PseudoMetricSpace T] (a b c 
   (dist a b + dist b c) - dist a c
 
 
+/-- [Section: ## Section 5: Curvature Obstructions to Midpoints
+In negatively curved spaces, midpoints always exist but may not be unique.
+In positively curved spaces, midpoints may be unique but require convexity.] -/
 theorem metricTriangleDefect_nonneg {T : Type*} [PseudoMetricSpace T] (a b c : T) :
     0 ≤ metricTriangleDefect a b c := by
   exact sub_nonneg_of_le ( dist_triangle a b c )
@@ -126,6 +133,9 @@ theorem theoryDist_nonneg (t₁ t₂ : PhysicalTheory) : 0 ≤ theoryDist t₁ t
   exact Real.sqrt_nonneg _
 
 
+/-- [Section: ## Section 6: Application to GR-QFT Unification
+**Key Hypothesis**: Quantum gravity is the geodesic midpoint between
+General Relativity and Quantum Field Theory in theory space.] -/
 theorem theoryDist_self (t : PhysicalTheory) : theoryDist t t = 0 := by
   exact Real.sqrt_eq_zero_of_nonpos ( by norm_num )
 

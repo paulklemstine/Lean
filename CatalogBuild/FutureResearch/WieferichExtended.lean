@@ -7,10 +7,18 @@ Declarations: 34
 
 import Mathlib
 
+/-- [Section: # Wieferich Prime Theory — Extended Verification — v10
+## Main Results
+* Extended non-Wieferich verification to all primes p ≤ 200
+* `wieferich_density_heuristic` — Heuristic: ~ln ln x Wieferich primes ≤ x
+* `fermat_quotient_properties` — Fermat quotient q_p(a) = (a^(p-1) - 1)/p
+* `wieferich_abc_connection` — Wieferich primes and the ABC conjecture (statement)
+* `wieferich_criteria` — Equivalent characterizations of Wieferich primes] -/
 def IsWieferich (p : ℕ) : Prop :=
   Nat.Prime p ∧ p ≥ 3 ∧ 2 ^ (p - 1) % (p ^ 2) = 1
 
 
+/-- Primes ≤ 200 that are not Wieferich -/
 theorem non_wieferich_53 : ¬ IsWieferich 53 := by intro ⟨_, _, h⟩; revert h; native_decide
 
 theorem non_wieferich_59 : ¬ IsWieferich 59 := by intro ⟨_, _, h⟩; revert h; native_decide
@@ -79,6 +87,7 @@ def fermatQuotient (a p : ℕ) : ℤ :=
   ((a : ℤ) ^ (p - 1) - 1) / p
 
 
+/-- [Section: ### Fermat Quotient] -/
 theorem wieferich_iff_quotient (p : ℕ) (hp : Nat.Prime p) (hp3 : 3 ≤ p) :
     IsWieferich p ↔ (p : ℤ) ∣ fermatQuotient 2 p := by
   constructor <;> intro h;

@@ -21,6 +21,10 @@ structure InvolMirror (α : Type*) where
   invol : ∀ x, reflect (reflect x) = x
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+CYCLE 1: ORACLE SPECTRA — Mirror Foundations
+"A mirror looks once and is done. Two mirrors create infinity."
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem InvolMirror.injective {α : Type*} (R : InvolMirror α) :
     Injective R.reflect := by
   -- Let's unfold the definition of InvolMirror.
@@ -60,6 +64,7 @@ theorem id_unique_both {α : Type*} (f : α → α)
 def mirrorFixed {α : Type*} (f : α → α) : Set α := {x | f x = x}
 
 
+/-- [Section: ## §1.2: Mirror Eigenspaces] -/
 theorem idem_range_eq_fixed {α : Type*} (P : IdemMirror α) :
     range P.reflect = mirrorFixed P.reflect := by
   exact Set.ext fun x => ⟨ fun ⟨ y, hy ⟩ => hy ▸ P.idem _, fun hx => ⟨ x, hx ⟩ ⟩
@@ -92,6 +97,10 @@ def MirrorChainComp.empty (α : Type*) : MirrorChainComp α :=
 
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+CYCLE 2: ORACLE COMPOSE — Categorical Structure
+"Individual mirrors are trivial. Composition creates computation."
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem MirrorChainComp.empty_exec {α : Type*} (x : α) :
     (MirrorChainComp.empty α).exec x = x := rfl
 
@@ -128,6 +137,7 @@ def negInvolMirror (n : ℕ) [NeZero n] : InvolMirror (ZMod n) where
   invol := fun x => by simp
 
 
+/-- [Section: ## §2.2: The Involution Monoid] -/
 theorem two_invol_compose_periodic {α : Type*} [Fintype α]
     (R S : InvolMirror α) :
     ∃ n : ℕ, 0 < n ∧ ∀ x, ((R.reflect ∘ S.reflect)^[n]) x = x := by
@@ -155,6 +165,10 @@ def MatMirror.complement {n : ℕ} (P : MatMirror n) : MatMirror n where
     simp [map_sub, Matrix.conjTranspose_one, P.herm]
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+CYCLE 3: ORACLE CARTAN — Matrix Mirrors
+"Every symmetry is a product of reflections."
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem MatMirror.orthogonal_complement {n : ℕ} (P : MatMirror n) :
     P.mat * (1 - P.mat) = 0 := by
   simp +decide [ mul_sub, P.idem ]
@@ -178,6 +192,10 @@ theorem householder_herm (n : ℕ) (v : Fin n → ℂ) :
   norm_num
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+CYCLE 4: ORACLE FIXED — Fixed Point Theory
+"What survives when all mirrors have spoken?"
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem idem_fixed_nonempty {α : Type*} [Nonempty α] (P : IdemMirror α) :
     (mirrorFixed P.reflect).Nonempty := by
   exact ⟨ _, P.idem ( Classical.arbitrary α ) ⟩
@@ -201,6 +219,10 @@ theorem grover_sqrt_bound (N : ℕ) (hN : 0 < N) :
   Nat.sqrt_le N
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+CYCLE 5: ORACLE GROVER — Quantum Speedup from Mirrors
+"Two mirrors facing each other create a hall of computation."
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem quantum_classical_gap (N : ℕ) (hN : 16 ≤ N) :
     Nat.sqrt N < N / 2 := by
   exact Nat.le_div_iff_mul_le zero_lt_two |>.2 ( by nlinarith [ Nat.sqrt_le N ] )
@@ -213,6 +235,10 @@ theorem invol_compose_isometry {α : Type*} [PseudoMetricSpace α]
   hR.comp hS
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+CYCLE 6: META ORACLE — Synthesis and Emergence
+"The whole is more than the sum of its mirrors."
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem bool_mirror_universality :
     ∀ f : Bool → Bool,
       f = id ∨ f = not ∨ f = (fun _ => true) ∨ f = (fun _ => false) := by

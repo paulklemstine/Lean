@@ -7,6 +7,7 @@ Declarations: 12
 
 import Mathlib
 
+/-- [Section: ## Key formulas for primes] -/
 lemma sum_divisors_not_div4_prime (p : ℕ) (hp : Nat.Prime p) (hodd : p % 2 = 1) :
     ∑ d ∈ (Nat.divisors p).filter (fun d => ¬(4 ∣ d)), (d : ℤ) = (p : ℤ) + 1 := by
   rw [ hp.divisors, Finset.sum_eq_add_sum_diff_singleton ] <;> norm_num ; ring;
@@ -67,6 +68,10 @@ theorem r2_prime_3mod4 (p : ℕ) (hp : Nat.Prime p) (hmod : p % 4 = 3) :
   norm_num [ ← Nat.mod_mod_of_dvd p ( by decide : 2 ∣ 4 ), hmod ]
 
 
+/-- [Section: ## The Channel Dominance Theorem
+Main result: For any odd prime p ≥ 3, we have r₈(p) > r₄(p) > r₂(p) ≥ 0.
+The channels form a strict hierarchy where higher-dimensional algebras provide
+more representations.] -/
 theorem r4_pos (p : ℕ) : 0 < 8 * ((p : ℤ) + 1) := by
   positivity
 

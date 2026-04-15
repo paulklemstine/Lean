@@ -7,6 +7,7 @@ Declarations: 4
 
 import Mathlib
 
+/-- [Section: ## Section 1: Functorial Properties] -/
 theorem functor_preserves_iso {C D : Type*} [Category C] [Category D]
     (F : C ⥤ D) {X Y : C} (f : X ≅ Y) :
     IsIso (F.map f.hom) := by
@@ -24,6 +25,7 @@ theorem id_functor_map {C : Type*} [Category C] {X Y : C} (f : X ⟶ Y) :
       grind
 
 
+/-- [Section: ## Section 2: Composition Laws] -/
 theorem functor_comp_assoc {A B C D : Type*}
     [Category A] [Category B] [Category C] [Category D]
     (F : A ⥤ B) (G : B ⥤ C) (H : C ⥤ D) :

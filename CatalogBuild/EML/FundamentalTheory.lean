@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: EML
-Declarations: 32
+Declarations: 27
 -/
 
 import Mathlib
@@ -15,12 +15,6 @@ def eml_fun (x y : ℝ) : ℝ := Real.exp x - Real.log y
 
 /-- The diagonal map: d(z) = exp(z) - ln(z). -/
 def eml_diag (z : ℝ) : ℝ := Real.exp z - Real.log z
-
-
-/-- The e-tower: e↑↑n. -/
-def eTower : ℕ → ℝ
-  | 0 => 1
-  | n + 1 => Real.exp (eTower n)
 
 
 /-- eml(0, exp(x)) = 1 - x for all x. -/
@@ -50,6 +44,7 @@ theorem eml_not_comm : ∃ x y : ℝ, eml_fun x y ≠ eml_fun y x := by
   linarith [Real.one_lt_exp_iff.mpr (by linarith : (0:ℝ) < 1)]
 
 
+/-- [Section: ## Section 2: EML Magma Structure] -/
 theorem eml_not_assoc : ∃ a b c : ℝ,
     eml_fun (eml_fun a b) c ≠ eml_fun a (eml_fun b c) := by
   -- Let's choose $a = 0$, $b = 1$, and $c = 1$.
@@ -97,6 +92,7 @@ theorem eml_continuousOn_y (x : ℝ) : ContinuousOn (fun y => eml_fun x y) (Ioi 
   exact Real.continuousOn_log.mono (fun y hy => ne_of_gt hy)
 
 
+/-- [Section: ## Section 4: EML Diagonal Map — Deeper Analysis] -/
 theorem eml_diag_gt (z : ℝ) : eml_diag z > z := by
   unfold eml_diag;
   by_cases hz : z ≤ 0;
@@ -124,36 +120,6 @@ theorem eml_diag_tendsto_top : Tendsto eml_diag atTop atTop := by
 theorem eml_diag_ge_one_pos (z : ℝ) (hz : 0 < z) : eml_diag z ≥ 1 := by
   unfold eml_diag
   linarith [Real.add_one_le_exp z, Real.log_le_sub_one_of_pos hz]
-
-
-/-- The e-tower is strictly positive. -/
-theorem eTower_pos (n : ℕ) : 0 < eTower n := by
-  induction n with
-  | zero => simp [eTower]
-  | succ n _ => exact Real.exp_pos _
-
-
-theorem eTower_strictMono : StrictMono eTower := by
-  refine' strictMono_nat_of_lt_succ _;
-  intro n;
-  exact Real.add_one_le_exp _ |> lt_of_lt_of_le ( by linarith )
-
-
-/-- e-tower grows at least as fast as n. -/
-theorem eTower_ge_n (n : ℕ) : eTower n ≥ n := by
-  induction n with
-  | zero => simp [eTower]
-  | succ n ih =>
-    simp [eTower]
-    linarith [Real.add_one_le_exp (eTower n)]
-
-
-theorem eTower_ge_pow2 (n : ℕ) (hn : 1 ≤ n) : eTower n ≥ 2^n := by
-  induction' hn with n hn ih <;> simp_all +decide [ pow_succ', eTower ];
-  · linarith [ Real.add_one_le_exp 1 ];
-  · have h_exp_growth : Real.exp (2^n) ≥ 2 * 2^n := by
-      exact?;
-    exact le_trans h_exp_growth ( Real.exp_le_exp.mpr ih )
 
 
 /-- The tropical EML operator: trop_eml(x,y) = max(x, -y). -/

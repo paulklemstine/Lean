@@ -66,6 +66,7 @@ theorem su2Generator_trace_zero_X : pauliX.trace = 0 := by
   unfold pauliX Mat2x2.trace; ring
 
 
+/-- [Section: ## Part 1: SU(2) Lie Algebra Generators (Pauli Matrices)] -/
 theorem su2Generator_trace_zero_Z : pauliZ.trace = 0 := by
   unfold pauliZ Mat2x2.trace; ring
 
@@ -113,6 +114,7 @@ def Mat2x2.frobSq (M : Mat2x2) : ℝ :=
   M.a11 ^ 2 + M.a12 ^ 2 + M.a21 ^ 2 + M.a22 ^ 2
 
 
+/-- [Section: ## Part 3: Yang-Mills Action] -/
 theorem Mat2x2.frobSq_nonneg (M : Mat2x2) : 0 ≤ M.frobSq := by
   unfold frobSq; positivity
 
@@ -138,6 +140,7 @@ def gaugeCovKernel (d : ℕ) (x y : Fin d → ℝ)
   ax * ay * (4 * ∑ i, x i * y i + (∑ i, (x i) ^ 2 - 1) * (∑ i, (y i) ^ 2 - 1))
 
 
+/-- [Section: ## Part 4: Gauge-Covariant Attention Kernel] -/
 theorem gaugeCovKernel_symmetric (d : ℕ) (x y : Fin d → ℝ) (ax ay : ℝ) :
     gaugeCovKernel d x y ax ay = gaugeCovKernel d y x ay ax := by
   unfold gaugeCovKernel
@@ -154,6 +157,7 @@ def nonAbelianMass (n : ℕ) (x : Fin n → ℝ) (su2_coeffs : Fin 3 → ℝ) : 
   1 / (nonAbelianGaugeField n x su2_coeffs).frobSq.sqrt + 1
 
 
+/-- [Section: ## Part 5: Non-Abelian Mass Generation] -/
 theorem nonAbelianMass_pos (n : ℕ) (x : Fin n → ℝ) (su2_coeffs : Fin 3 → ℝ) :
     0 < nonAbelianMass n x su2_coeffs := by
   unfold nonAbelianMass

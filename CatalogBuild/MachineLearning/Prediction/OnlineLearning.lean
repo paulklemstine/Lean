@@ -43,6 +43,7 @@ theorem multiplicative_weights_regret (n T : ℕ) (η : ℝ)
   · apply div_nonneg (mul_nonneg (le_of_lt hη) (Nat.cast_nonneg' T)) (by norm_num)
 
 
+/-- [Section: ## §2. Regret Bounds] -/
 theorem optimal_learning_rate (n T : ℕ) (hn : 1 < n) (hT : 0 < T) :
     let η_opt := Real.sqrt (8 * Real.log n / T)
     Real.log n / η_opt + η_opt * T / 8 =
@@ -76,6 +77,7 @@ theorem online_to_batch (T : ℕ) (_hT : 0 < T) (regret bestError : ℝ)
   havg
 
 
+/-- [Section: ## §4. Online-to-Batch Conversion] -/
 theorem online_to_batch_converges (bestError C : ℝ) (hC : 0 < C) :
     Filter.Tendsto (fun T : ℕ => bestError + C / Real.sqrt T)
       Filter.atTop (nhds bestError) := by

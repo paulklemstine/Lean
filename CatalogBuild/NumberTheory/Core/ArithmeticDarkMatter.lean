@@ -46,6 +46,9 @@ def massIsRealized (m_sq : ℤ) : Prop :=
   ∃ a b c : ℤ, 0 < a ∧ 0 < b ∧ 0 < c ∧ c ^ 2 - a ^ 2 - b ^ 2 = m_sq
 
 
+/-- [Section: ## Section 2: The Mass Spectrum
+The "mass spectrum" of arithmetic spacetime is discrete: m² ∈ ℤ.
+Each integer mass-squared defines a hyperboloid orbit.] -/
 theorem every_nonneg_mass_realized (m_sq : ℕ) :
     massIsRealized (m_sq : ℤ) := by
   by_contra h;
@@ -77,6 +80,12 @@ def berggren_B2 (a b c : ℤ) : ℤ × ℤ × ℤ :=
   (a + 2*b + 2*c, 2*a + b + 2*c, 2*a + 2*b + 3*c)
 
 
+/-- [Section: ## Section 3: The Berggren Action on Mass Shells
+The Berggren matrices, which generate the tree of Pythagorean triples (photons),
+also act on massive particles. But they do NOT preserve the mass shell!
+A Berggren matrix preserves Q = 0 but generically maps Q = -m² to Q = -m'²
+with m' ≠ m. This means massive particles "change mass" under the tree action.
+Only the FULL Lorentz group SO(2,1;ℤ) preserves each mass shell.] -/
 theorem B2_preserves_Q (a b c : ℤ) :
     Q_form (berggren_B2 a b c).1 (berggren_B2 a b c).2.1 (berggren_B2 a b c).2.2
     = Q_form a b c := by

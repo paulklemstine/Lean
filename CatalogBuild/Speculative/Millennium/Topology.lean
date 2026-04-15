@@ -7,6 +7,10 @@ Declarations: 9
 
 import Mathlib
 
+/-- [Section: # Poincaré Conjecture — Formal Foundations
+We formalize key topological results related to the (now proved) Poincaré Conjecture
+and the Hodge Conjecture, focusing on results about fundamental groups,
+simply connected spaces, and topological manifolds.] -/
 theorem real_simply_connected : SimplyConnectedSpace ℝ := by
   infer_instance
 

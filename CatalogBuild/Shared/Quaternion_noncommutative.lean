@@ -15,6 +15,13 @@ theorem quaternion_noncommutative :
   norm_num
 
 
+/-- The quaternion norm is multiplicative: N(ab) = N(a)·N(b).
+This is the algebraic foundation of quaternion-based factoring. -/
+theorem quaternion_norm_sq_mul (a b : Quaternion ℝ) :
+    Quaternion.normSq (a * b) = Quaternion.normSq a * Quaternion.normSq b :=
+  map_mul Quaternion.normSq a b
+
+
 /-- The explicit formula for quaternion multiplication. -/
 theorem quaternion_mul_components (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℝ) :
     (⟨a₁, a₂, a₃, a₄⟩ : Quaternion ℝ) * ⟨b₁, b₂, b₃, b₄⟩ =
@@ -23,13 +30,6 @@ theorem quaternion_mul_components (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℝ
      a₁*b₃ - a₂*b₄ + a₃*b₁ + a₄*b₂,
      a₁*b₄ + a₂*b₃ - a₃*b₂ + a₄*b₁⟩ := by
   ext <;> simp <;> ring
-
-
-/-- The quaternion norm is multiplicative: N(ab) = N(a)·N(b).
-This is the algebraic foundation of quaternion-based factoring. -/
-theorem quaternion_norm_sq_mul (a b : Quaternion ℝ) :
-    Quaternion.normSq (a * b) = Quaternion.normSq a * Quaternion.normSq b :=
-  map_mul Quaternion.normSq a b
 
 
 /-- Quaternion norm is non-negative. -/

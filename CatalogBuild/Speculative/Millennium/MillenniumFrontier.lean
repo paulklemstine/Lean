@@ -7,6 +7,7 @@ Declarations: 13
 
 import Mathlib
 
+/-- [Section: ## Section 2: Legendre-adjacent — Primes exist in intervals] -/
 theorem prime_between_2_4 : ∃ p, 2 < p ∧ p < 4 ∧ Nat.Prime p := by
   exists 3
 
@@ -23,6 +24,7 @@ theorem legendre_n3 : ∃ p, 9 < p ∧ p < 16 ∧ Nat.Prime p := by
   exists 11
 
 
+/-- [Section: ## Section 3: Collatz Base Cases] -/
 theorem collatz_one : collatz 1 = 4 := by
   rfl
 
@@ -46,6 +48,7 @@ theorem erdos_straus_4 : ∃ x y z : ℕ+, (4 : ℚ) / 4 = 1 / x + 1 / y + 1 / z
   norm_num
 
 
+/-- [Section: ## Section 5: Twin Prime Examples] -/
 theorem twin_primes_3_5 : Nat.Prime 3 ∧ Nat.Prime 5 ∧ 5 - 3 = 2 := by
   norm_num
 
@@ -58,6 +61,7 @@ theorem twin_primes_41_43 : Nat.Prime 41 ∧ Nat.Prime 43 ∧ 43 - 41 = 2 := by
   native_decide +revert
 
 
+/-- [Section: ## Section 8: Fermat's Last Theorem for n=3,4 (toward Beal)] -/
 theorem flt_4_no_solution : ¬ ∃ (a b c : ℕ), 0 < a ∧ 0 < b ∧ 0 < c ∧ a ^ 4 + b ^ 4 = c ^ 4 := by
   simp +zetaDelta at *;
   intro x hx y hy z hz H; have := fermatLastTheoremFour; aesop;

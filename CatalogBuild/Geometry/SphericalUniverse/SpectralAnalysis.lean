@@ -72,6 +72,7 @@ theorem degeneracy_as_sum_of_odds (l : ℕ) :
 def totalModes (l : ℕ) : ℕ := ∑ i ∈ range (l + 1), degeneracyS3 i
 
 
+/-- [Section: ## Part III: Total Mode Count] -/
 theorem total_modes_formula (l : ℕ) :
     6 * totalModes l = (l + 1) * (l + 2) * (2 * l + 3) := by
       induction l <;> simp_all +arith +decide [ Finset.sum_range_succ, totalModes ] ; ring;

@@ -51,6 +51,7 @@ theorem invStereo_conformal_factor_pos (t : ℝ) :
   unfold invStereo_conformal_factor; positivity
 
 
+/-- [Section: ## Oracle Ω₂: Conformal Oracle — Angle Preservation] -/
 theorem invStereo_conformal_bounded (t : ℝ) :
     invStereo_conformal_factor t ≤ 2 := by
   exact div_le_self ( by norm_num ) ( by nlinarith )
@@ -114,6 +115,7 @@ lemma null_rearranged (k : Fin 4 → ℝ) (hn : isNull k) :
   unfold isNull minkInner at hn; nlinarith
 
 
+/-- [Section: ## Oracle Ω₃: Null-Cone Oracle — Relativistic Photons] -/
 theorem null_cone_surjectivity (k : Fin 4 → ℝ)
     (hn : isNull k) (_hf : isFuture k) (hsum : k 0 + k 3 > 0) :
     ∃ u v ω : ℝ, ω > 0 ∧ invStereoNull u v ω = k := by
@@ -143,6 +145,7 @@ theorem stereo_denom_gaussian_norm (p q : ℤ) :
 /-- **Ω₄.3**: Integer encodings produce specific particle energies. -/
 theorem vacuum_energy : stereoDenom 0 1 = 1 := by simp [stereoDenom]
 
+/-- [Section: ## Oracle Ω₄: Arithmetic Oracle — Gaussian Integer Factorization] -/
 theorem photon_energy : stereoDenom 1 1 = 2 := by simp [stereoDenom]
 
 theorem prime_particle : stereoDenom 2 1 = 5 := by simp [stereoDenom]
@@ -171,6 +174,7 @@ theorem photonCapacity_nonneg (r : ℝ) : photonCapacity r ≥ 0 := by
   exact mul_nonneg (le_of_lt pi_pos) (sq_nonneg r)
 
 
+/-- [Section: ## Oracle Ω₅: Information Oracle — Holographic Capacity] -/
 theorem photon_capacity_unbounded : ∀ M : ℝ, ∃ r : ℝ, photonCapacity r > M := by
   unfold photonCapacity;
   unfold holographicBound sphereArea;
@@ -218,6 +222,7 @@ theorem photon_is_universe :
    meta_oracle_consensus⟩
 
 
+/-- [Section: ## The Idempotence Theorem: Iterating Forever] -/
 theorem iterate_forever_is_identity (t : ℝ) (n : ℕ) :
     (fun x => stereoFwd₁ (invStereo₁ x))^[n] t = t := by
   induction n <;> simp_all +decide [ Function.iterate_succ_apply' ];

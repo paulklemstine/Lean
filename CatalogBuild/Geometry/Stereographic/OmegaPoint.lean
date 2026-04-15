@@ -34,6 +34,7 @@ theorem omega_point_on_circle : omegaPoint.1 ^ 2 + omegaPoint.2 ^ 2 = 1 := by
   simp [omegaPoint]
 
 
+/-- [Section: ### Convergence: The Omega Point Theorem] -/
 theorem omega_x_tendsto_atTop :
     Tendsto invStereoX atTop (nhds 0) := by
   -- To prove the limit, we can use the fact that the denominator grows faster than the numerator.
@@ -83,6 +84,13 @@ theorem omega_point_is_north_pole_atBot :
   exact Filter.Tendsto.prodMk_nhds omega_x_tendsto_atBot omega_y_tendsto_atBot
 
 
+/-- [Section: ## Part 2: Abstract Omega Point via Mathlib's stereoInvFunAux
+The Mathlib definition:
+`stereoInvFunAux v w = (‖w‖² + 4)⁻¹ • (4 • w + (‖w‖² - 4) • v)`
+As ‖w‖ → ∞:
+- The `4 • w` term is damped by `(‖w‖² + 4)⁻¹`, contributing `O(1/‖w‖)` → 0
+- The `(‖w‖² - 4) • v` term with factor `(‖w‖² + 4)⁻¹` contributes `→ 1 • v`
+Therefore `stereoInvFunAux v w → v`, establishing `v` as the Omega Point.] -/
 theorem stereoInvFunAux_tendsto_north_pole
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
     (v : E) (hv : ‖v‖ = 1) :

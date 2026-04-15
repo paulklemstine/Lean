@@ -68,6 +68,9 @@ def supDist (M : MDP) (V₁ V₂ : ValueFn M) : ℝ :=
   Finset.sup' Finset.univ Finset.univ_nonempty (fun s => |V₁ s - V₂ s|)
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+§3: THE SUP-NORM AND CONTRACTION
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem supDist_nonneg (M : MDP) (V₁ V₂ : ValueFn M) : 0 ≤ supDist M V₁ V₂ := by
   exact Finset.le_sup' ( fun s => |V₁ s - V₂ s| ) ( Finset.mem_univ ( Classical.arbitrary M.State ) ) |> le_trans ( abs_nonneg _ )
 
@@ -112,6 +115,9 @@ def isBellmanFixedPoint (M : MDP) (V : ValueFn M) : Prop :=
   bellmanOp M V = V
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+§4: FIXED POINT UNIQUENESS
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem bellman_fixedPoint_unique (M : MDP) (V₁ V₂ : ValueFn M)
     (h₁ : isBellmanFixedPoint M V₁) (h₂ : isBellmanFixedPoint M V₂) :
     V₁ = V₂ := by
@@ -125,12 +131,18 @@ theorem bellman_fixedPoint_unique (M : MDP) (V₁ V₂ : ValueFn M)
   exact absurd ( bellman_contraction M V₁ V₂ ) ( by rw [ h₁, h₂ ] ; nlinarith [ M.gamma_nonneg, M.gamma_lt_one ] ))
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+§5: THE ORACLE CONNECTION — Idempotency at the Fixed Point
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem bellman_idempotent_at_fixedPoint (M : MDP) (V : ValueFn M)
     (hV : isBellmanFixedPoint M V) :
     bellmanOp M (bellmanOp M V) = bellmanOp M V := by
   unfold isBellmanFixedPoint at hV; aesop;
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+§6: DISCOUNT FACTOR ANALYSIS
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem gamma_pow_tendsto_zero (M : MDP) :
     Tendsto (fun n => M.gamma ^ n) atTop (nhds 0) := by
   exact tendsto_pow_atTop_nhds_zero_of_lt_one M.gamma_nonneg M.gamma_lt_one
@@ -143,6 +155,9 @@ theorem principle_of_optimality (M : MDP) (n : ℕ) :
   rfl
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+§7: VALUE ITERATION
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem valueIteration_error_bound (M : MDP) (V_star : ValueFn M)
     (hV : isBellmanFixedPoint M V_star) (n : ℕ) :
     supDist M (valueIteration M n) V_star ≤

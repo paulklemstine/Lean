@@ -32,6 +32,7 @@ theorem bottleneckPointDist_nonneg (I J : PersistenceInterval) :
   le_max_of_le_left (abs_nonneg _)
 
 
+/-- [Section: ## Part 2: The Bottleneck Distance (L∞ = Tropical Metric)] -/
 theorem bottleneckPointDist_eq_zero_iff (I J : PersistenceInterval) :
     bottleneckPointDist I J = 0 ↔ I.birth = J.birth ∧ I.death = J.death := by
   unfold bottleneckPointDist;
@@ -52,6 +53,7 @@ theorem persistence_stability_single (b₁ d₁ b₂ d₂ ε : ℝ)
   simp [bottleneckPointDist]; exact ⟨hb, hd⟩
 
 
+/-- [Section: ## Part 3: Stability Theorem (Tropical Lipschitz)] -/
 theorem lifetime_lipschitz (I J : PersistenceInterval) :
     |I.lifetime - J.lifetime| ≤ 2 * bottleneckPointDist I J := by
   unfold bottleneckPointDist;
@@ -107,6 +109,7 @@ theorem diagonal_projection_trivial (I : PersistenceInterval) :
   simp [diagonalProjection, PersistenceInterval.lifetime]
 
 
+/-- [Section: ## Part 5: Diagonal Projection] -/
 theorem projection_distance (I : PersistenceInterval) :
     bottleneckPointDist I (diagonalProjection I) = diagonalDist I := by
   unfold bottleneckPointDist diagonalDist;
@@ -126,6 +129,7 @@ theorem significance_monotone (I J : PersistenceInterval)
   simp [significance, PersistenceInterval.lifetime, hb]; linarith
 
 
+/-- [Section: ## Part 6: TDA–Neural Network Bridge] -/
 theorem topological_simplification_bound (I : PersistenceInterval) (ε : ℝ)
     (hε : 0 < ε) (hsmall : I.lifetime < ε) :
     bottleneckPointDist I (diagonalProjection I) < ε := by

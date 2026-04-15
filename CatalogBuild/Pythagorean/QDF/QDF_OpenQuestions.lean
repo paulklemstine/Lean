@@ -13,6 +13,7 @@ theorem quadruple_exists_trivial (d : ℤ) :
   exact ⟨d, 0, 0, by ring⟩
 
 
+/-- [Section: ## §1. Complexity Bounds (Open Question 1)] -/
 theorem trivial_gcd_coprime (N c d : ℤ)
     (h1 : Int.gcd (d - c) N = 1) (h2 : Int.gcd (d + c) N = 1) :
     Int.gcd ((d - c) * (d + c)) N = 1 := by
@@ -162,6 +163,7 @@ theorem bridge_can_decrease (a b c d : ℤ)
     e ^ 2 ≤ d ^ 2 := by nlinarith [sq_nonneg c]
 
 
+/-- [Section: ## §6. New Theorems: Parity, Quaternion Norm, Division] -/
 theorem even_hyp_parity (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2)
     (hd : 2 ∣ d) (ha : ¬2 ∣ a) (hb : ¬2 ∣ b) :

@@ -51,11 +51,19 @@ theorem pyth_triangle_strict (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c
   nlinarith [sq_nonneg (a - b)]
 
 
+/-- [Section: ## Section 2: Inradius — The Hidden Gem
+The inradius r = (a + b − c)/2 is one of the most beautiful invariants.
+For a right triangle with legs a, b and hypotenuse c:
+- a + b − c is always even (so r is an integer)
+- r = n(m − n) for Euclid triples
+- r is always positive for primitive triples with m > n > 0
+**Mind-blowing fact**: The inradius encodes the "gap" between Euclid parameters!] -/
 theorem pyth_inradius_even (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     2 ∣ (a + b - c) := by
   exact even_iff_two_dvd.mp ( by apply_fun Even at *; simp_all +decide [ parity_simps ] )
 
 
+/-- [Section: ## Section 3: Divisibility Properties of Euclid Triples] -/
 theorem consecutive_even (k : ℤ) : 2 ∣ k * (k + 1) := by
   exact even_iff_two_dvd.mp ( by simp +arith +decide [ mul_add, parity_simps ] )
 
@@ -109,6 +117,7 @@ theorem children_inradius_sum (a b c : ℤ) :
     (a - b + c) + (a + b + c) + (-a + b + c) = a + b + 3*c := by ring
 
 
+/-- [Section: ## Section 5: Mind-Blowing Algebraic Identities] -/
 theorem children_inradius_product (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     (a - b + c) * (a + b + c) * (-a + b + c) = 2 * a * b * (a + b + c) := by
   grind +ring

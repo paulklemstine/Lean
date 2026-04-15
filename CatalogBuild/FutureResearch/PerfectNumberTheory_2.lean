@@ -7,6 +7,7 @@ Declarations: 4
 
 import Mathlib
 
+/-- [Section: ### Mersenne Prime Properties] -/
 theorem mersenne_prime_exponent_prime' (p : ℕ) (hp : 1 < p)
     (hm : Nat.Prime (2 ^ p - 1)) : Nat.Prime p := by
   -- By contradiction, assume $p$ is composite. Then $p = ab$ for some $a, b > 1$.

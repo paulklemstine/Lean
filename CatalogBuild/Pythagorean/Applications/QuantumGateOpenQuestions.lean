@@ -46,6 +46,7 @@ theorem iqNorm_conj (a : IQuat) : iqNorm (iqConj a) = iqNorm a := by
 def iqOne : IQuat := ![1, 0, 0, 0]
 
 
+/-- [Section: ## Quaternion Arithmetic (shared infrastructure)] -/
 theorem iqNorm_one : iqNorm iqOne = 1 := by native_decide
 
 
@@ -142,6 +143,11 @@ def norm6 (v : IVec6) : ℤ := ∑ i : Fin 6, v i ^ 2
 def plueckerDim : ℕ := Nat.choose 4 2
 
 
+/-- [Section: ================================================================
+## Open Question 2: Multi-Qubit Extension (SU(4) via SO(6))
+================================================================
+For two-qubit gates, SU(4) ≅ Spin(6) → SO(6).
+We formalize the relevant algebraic structures.] -/
 theorem pluecker_dim_eq : plueckerDim = 6 := by native_decide
 
 
@@ -291,6 +297,11 @@ theorem cost_comparison_100 :
 to enable native_decide) -/
 def sc_T_cost : ℕ := 10
 
+/-- [Section: ================================================================
+## Open Question 4: Physical Cost Optimization
+================================================================
+A cost model balancing gate count against implementation difficulty.
+Different primes p have different physical costs per non-Clifford gate.] -/
 def sc_V_cost : ℕ := 20
 
 
@@ -318,6 +329,11 @@ structure LLLReduced (B : LatticeBasis) where
   lovasz : ∀ i : Fin 4, 0 < iqNorm (B i)
 
 
+/-- [Section: ================================================================
+## Open Question 5: Lattice Sieving Algorithms
+================================================================
+Use LLL / BKZ to find the closest integer quaternion to a target,
+enabling practical gate synthesis for large d.] -/
 theorem lll_approx_4d : lll_approx_factor 4 = 4 := by native_decide
 
 

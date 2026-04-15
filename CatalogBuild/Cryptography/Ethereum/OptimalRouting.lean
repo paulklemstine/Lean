@@ -48,6 +48,7 @@ noncomputable def priceImpact (p : Pool) (dx : ℝ) (hdx : 0 < dx) : ℝ :=
   1 - swapOut p dx hdx / (dx * (p.y / p.x))
 
 
+/-- [Section: ## Price Impact] -/
 theorem price_impact_nonneg (p : Pool) (dx : ℝ) (hdx : 0 < dx) :
     0 ≤ priceImpact p dx hdx := by
   unfold priceImpact;
@@ -74,6 +75,7 @@ structure Routing (n : ℕ) where
   nonneg : ∀ i, 0 ≤ amounts i
 
 
+/-- [Section: ## Multi-Pool Routing] -/
 noncomputable def Pool.output (p : Pool) (dx : ℝ) : ℝ :=
   if dx ≤ 0 then 0 else p.y * dx / (p.x + dx)
 

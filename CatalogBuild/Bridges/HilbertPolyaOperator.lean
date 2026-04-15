@@ -23,6 +23,7 @@ theorem laplacian_is_selfadjoint {n : ℕ}
   IsSymm.sub hD hA
 
 
+/-- [Section: ## Self-Adjoint Operators on Finite Graphs] -/
 theorem laplacian_psd {n : ℕ}
     (A : Matrix (Fin n) (Fin n) ℝ)
     (hA_symm : A.IsSymm)
@@ -82,6 +83,7 @@ theorem ihara_det_simplification {n : ℕ} (q : ℕ)
   ring
 
 
+/-- [Section: ## Spectral Encoding of Zeta Zeros] -/
 theorem ramanujan_critical_line (q : ℕ) (hq : q ≥ 1) (ev : ℝ)
     (h_ram : |ev| ≤ 2 * Real.sqrt q) :
     ev ^ 2 - 4 * q ≤ 0 := by
@@ -109,6 +111,7 @@ theorem hilbertPolya_selfadjoint {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ)
   IsSymm.smul hA _
 
 
+/-- [Section: ## Discrete Hilbert-Pólya Analogue] -/
 theorem hilbertPolya_ramanujan_bound (q : ℕ) (hq : q ≥ 1)
     (ev : ℝ) (h_ram : |ev| ≤ 2 * Real.sqrt q) :
     |ev / Real.sqrt q| ≤ 2 := by

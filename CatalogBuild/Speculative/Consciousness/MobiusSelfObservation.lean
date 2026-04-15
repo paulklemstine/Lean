@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## §1: Möbius Transformations] -/
 structure MobiusTrans where
   a : ℂ
   b : ℂ
@@ -31,6 +32,7 @@ def MobiusTrans.inv (m : MobiusTrans) : MobiusTrans where
   det_ne_zero := by simp [mul_comm]; exact m.det_ne_zero
 
 
+/-- [Section: ## §2: Fixed Points] -/
 def MobiusTrans.isFixedPoint (m : MobiusTrans) (z : ℂ) : Prop :=
   m.apply z = z
 
@@ -43,6 +45,7 @@ theorem mobius_fixed_point_equation (m : MobiusTrans) (z : ℂ)
   grind
 
 
+/-- [Section: ## §4: Self-Observation Model] -/
 structure BinocularSelfObserver where
   left_eye : MobiusTrans
   right_eye : MobiusTrans
@@ -57,6 +60,7 @@ theorem depth_zero_when_identical (m : MobiusTrans) (z : ℂ) :
   simp [BinocularSelfObserver.depth, sub_self]
 
 
+/-- [Section: ## §5: Möbius Symmetries] -/
 def awarenessSymmetries (awareness : Set ℂ) : Set MobiusTrans :=
   { m | ∀ z ∈ awareness, m.apply z ∈ awareness }
 
@@ -68,6 +72,7 @@ theorem id_preserves_awareness (awareness : Set ℂ) :
   simp [MobiusTrans.apply, MobiusTrans.one, zero_mul, zero_add, div_one]
 
 
+/-- [Section: ## §6: Stereographic Projection] -/
 def stereographicProj (x y z : ℝ) (hz : z ≠ 1) : ℂ :=
   ⟨x / (1 - z), y / (1 - z)⟩
 

@@ -30,6 +30,7 @@ theorem energy_bound (N x : ℕ) (hx : 0 < x) : E N x < x :=
   Nat.mod_lt N hx
 
 
+/-- [Section: ### Energy Properties] -/
 theorem energy_pos_of_not_dvd (N x : ℕ) (hx : 0 < x) (hnd : ¬(x ∣ N)) :
     0 < E N x := by
   exact Nat.pos_of_ne_zero fun h => hnd <| Nat.dvd_of_mod_eq_zero h

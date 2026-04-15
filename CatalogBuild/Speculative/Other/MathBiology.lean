@@ -7,6 +7,7 @@ Declarations: 6
 
 import Mathlib
 
+/-- Logistic fixed point -/
 theorem logistic_fp (r K : ℝ) (hr : r ≠ 0) (hK : K ≠ 0) :
     let P := K * (1 - 1 / r)
     r * P * (1 - P / K) = P := by simp only; field_simp; ring

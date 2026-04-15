@@ -7,6 +7,7 @@ Declarations: 4
 
 import Mathlib
 
+/-- Adjunction properties -/
 theorem equivalence_is_adjunction {C D : Type*} [Category C] [Category D]
     (e : C ≌ D) : Nonempty (e.functor ⊣ e.inverse) :=
   ⟨e.toAdjunction⟩

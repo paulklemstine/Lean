@@ -37,6 +37,7 @@ theorem full_class_vc_bound (k : ℕ) :
   simp [emlFullClassVCDim, emlVCDim]; ring
 
 
+/-- [Section: ## PAC-Learning Sample Complexity] -/
 theorem pac_monotone_complexity (d₁ d₂ inv_eps inv_delta : ℕ) (h : d₁ ≤ d₂) :
     pacSampleBound d₁ inv_eps inv_delta ≤ pacSampleBound d₂ inv_eps inv_delta := by
   simp only [pacSampleBound]
@@ -101,6 +102,7 @@ theorem topology_count_monotone (n₁ n₂ : ℕ) (h : n₁ ≤ n₂) :
   exact Nat.pow_le_pow_right (by omega) h
 
 
+/-- [Section: ## Catalan Number Topology Counting] -/
 theorem topology_log_linear (n : ℕ) : Nat.log 2 (topologyCount n) = 2 * n := by
   rw [ Nat.log_eq_iff ] <;> norm_num [ topologyCount ];
   norm_num [ pow_add, pow_mul ]

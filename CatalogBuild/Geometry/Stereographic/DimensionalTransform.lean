@@ -45,6 +45,7 @@ def kFoldInvStereo (N : ℕ) : (K : ℕ) → (Fin N → ℝ) → (Fin (N + K) �
       exact invStereoN (N + K) (kFoldInvStereo N K y)
 
 
+/-- [Section: ## K-fold Iterated Stereographic Embedding] -/
 theorem kFoldInvStereo_on_sphere (N : ℕ) (K : ℕ) (hK : 0 < K) (y : Fin N → ℝ) :
     ∑ i : Fin (N + K), (kFoldInvStereo N K y i) ^ 2 = 1 := by
   induction hK <;> simp_all +decide [ Fin.sum_univ_castSucc, kFoldInvStereo ];
@@ -59,6 +60,7 @@ def suspensionEmbed (N : ℕ) (x : Fin (N + 1) → ℝ) : Fin (N + 2) → ℝ :=
   if h : (i : ℕ) < N + 1 then x ⟨i, h⟩ else 0
 
 
+/-- [Section: ## Suspension Map] -/
 theorem suspensionEmbed_on_sphere (N : ℕ) (x : Fin (N + 1) → ℝ)
     (hx : ∑ i : Fin (N + 1), (x i) ^ 2 = 1) :
     ∑ i : Fin (N + 2), (suspensionEmbed N x i) ^ 2 = 1 := by
@@ -75,6 +77,7 @@ def hopfMapCoord (x : Fin 4 → ℝ) : Fin 3 → ℝ := fun i =>
   | ⟨2, _⟩ => (x ⟨0, by omega⟩)^2 + (x ⟨1, by omega⟩)^2 - (x ⟨2, by omega⟩)^2 - (x ⟨3, by omega⟩)^2
 
 
+/-- [Section: ## Hopf Fibration: S³ → S²] -/
 theorem hopfMapCoord_preserves_sphere (x : Fin 4 → ℝ)
     (hx : ∑ i : Fin 4, (x i) ^ 2 = 1) :
     ∑ i : Fin 3, (hopfMapCoord x i) ^ 2 = 1 := by
@@ -94,6 +97,7 @@ def stereoLift2to3 (y : Fin 2 → ℝ) : Fin 3 → ℝ :=
     (1 - on_S3 ⟨3, by omega⟩)
 
 
+/-- [Section: ## Composition: ℝ² →[stereo] S² →[suspend] S³ →[stereo⁻¹] ℝ³] -/
 theorem stereoLift2to3_denom_ne_zero (y : Fin 2 → ℝ) :
     1 - suspensionEmbed 2 (invStereoN 2 y) ⟨3, by omega⟩ ≠ 0 := by
   unfold suspensionEmbed; norm_num

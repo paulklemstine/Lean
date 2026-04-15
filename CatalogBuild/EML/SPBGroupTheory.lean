@@ -40,6 +40,7 @@ theorem spbPower_one (x : ℝ) : spbPower 1 x = x := by
   simp [spbPower, Real.tan_arctan]
 
 
+/-- [Section: ## SPB Lipschitz Bound] -/
 theorem spb_lipschitz_bound (a b c : ℝ) (r : ℝ) (hr : 0 < r) (hr1 : r < 1)
     (ha : |a| < r) (hb : |b| < r) (hc : |c| < r) :
     |spbG a b - spbG a c| ≤ (1 + r ^ 2) / (1 - r ^ 2) ^ 2 * |b - c| := by
@@ -65,6 +66,7 @@ theorem spb_lipschitz_bound (a b c : ℝ) (r : ℝ) (hr : 0 < r) (hr1 : r < 1)
 def spbHG (x y : ℝ) : ℝ := (x + y) / (1 + x * y)
 
 
+/-- [Section: ## SPB Contraction on Unit Interval] -/
 theorem spbH_unit_interval (a x : ℝ) (ha : |a| < 1) (hx : |x| < 1) :
     |spbHG a x| < 1 := by
   exact abs_lt.mpr ⟨ by rw [ spbHG ] ; rw [ lt_div_iff₀ ] <;> cases abs_cases a <;> cases abs_cases x <;> nlinarith, by rw [ spbHG ] ; rw [ div_lt_iff₀ ] <;> cases abs_cases a <;> cases abs_cases x <;> nlinarith ⟩

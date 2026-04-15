@@ -53,6 +53,7 @@ theorem fg_derivative_y_origin : HasDerivAt (fun y => spb 0 y) 1 0 := by
   rw [this]; exact hasDerivAt_id 0
 
 
+/-- [Section: ## Formal Group Logarithm] -/
 theorem fg_log_is_arctan (x y : ℝ) (hxy : x * y < 1) :
     arctan (spb x y) = arctan x + arctan y := by
   rw [ spb ];
@@ -83,6 +84,7 @@ theorem fg_two_series (x : ℝ) (h : x ^ 2 ≠ 1) :
 
 -- The [3]-series via triple formula
 
+/-- [Section: ## Height of the Formal Group] -/
 theorem fg_three_series (x : ℝ) (h1 : x ^ 2 ≠ 1) (h2 : 1 - 3 * x ^ 2 ≠ 0)
     (h3 : 1 - 2 * x / (1 - x ^ 2) * x ≠ 0) :
     spb (spb x x) x = (3 * x - x ^ 3) / (1 - 3 * x ^ 2) := by

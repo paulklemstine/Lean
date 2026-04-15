@@ -43,11 +43,13 @@ theorem sphere_is_quadric (x : Fin (n + 1) → ℝ) (hx : ∑ i, (x i) ^ 2 = 1) 
   linarith
 
 
+/-- [Section: ## Part 2: Stereographic Universality] -/
 theorem conic_stereo_parametrization (t : ℝ) :
     ((1 - t ^ 2) / (1 + t ^ 2)) ^ 2 + (2 * t / (1 + t ^ 2)) ^ 2 = 1 := by
   rw [ div_pow, div_pow, ← add_div, div_eq_iff ] <;> nlinarith
 
 
+/-- [Section: ## Part 3: Schottky Groups and Limit Sets] -/
 theorem schottky_loxodromic_growth (k : ℝ) (hk : 1 < k) (z : ℝ) (hz : 0 < z) :
     Filter.Tendsto (fun n : ℕ => k ^ (2 * n) * z) Filter.atTop Filter.atTop := by
   exact Filter.Tendsto.atTop_mul_const hz ( tendsto_pow_atTop_atTop_of_one_lt ( by nlinarith ) |> Filter.Tendsto.comp <| Filter.tendsto_id.nsmul_atTop two_pos )
@@ -63,6 +65,7 @@ def apollonianReflect (k : Fin 4 → ℝ) (j : Fin 4) : Fin 4 → ℝ :=
   fun i => if i = j then 2 * (∑ l, k l) - 3 * k j else k i
 
 
+/-- [Section: ## Part 4: Integral Apollonian Packings] -/
 theorem apollonian_preserves_descartes (k : Fin 4 → ℝ) (j : Fin 4)
     (h : descartesForm k = 0) :
     descartesForm (apollonianReflect k j) = 0 := by
@@ -74,6 +77,7 @@ theorem apollonian_preserves_descartes (k : Fin 4 → ℝ) (j : Fin 4)
   · linarith
 
 
+/-- [Section: ## Part 5: Bloch Sphere and Quantum Codes] -/
 theorem bloch_fidelity_stereo (t s : ℝ) :
     (1 + t * s) ^ 2 / ((1 + t ^ 2) * (1 + s ^ 2)) =
     -- This should equal (1 + cos α)/2 where cos α is the inner product
@@ -88,6 +92,7 @@ theorem bloch_fidelity_stereo (t s : ℝ) :
   ring
 
 
+/-- [Section: ## Part 6: Stereographic Attention Mechanism] -/
 theorem stereo_chordal_sq (t s : ℝ) :
     let d_sq := 4 * (t - s) ^ 2 / ((1 + t ^ 2) * (1 + s ^ 2))
     -- This equals 2 - 2·cos(angle), where cos(angle) is the dot product of unit vectors
@@ -109,6 +114,7 @@ theorem stereo_kernel_symmetric (t s : ℝ) :
   ring_nf
 
 
+/-- [Section: ## Part 7: Lorentz-Equivariant Structure] -/
 theorem lorentz_boost_identity (η : ℝ) :
     Real.cosh η ^ 2 - Real.sinh η ^ 2 = 1 := by
   exact Real.cosh_sq_sub_sinh_sq η

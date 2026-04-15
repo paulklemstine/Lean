@@ -78,6 +78,7 @@ theorem gaussian_norm_one_plus_i : (1 : ℤ) ^ 2 + 1 ^ 2 = 2 := by norm_num
 /-- Primes ≡ 1 mod 4 that split in ℤ[i] — birefringent primes. -/
 theorem prime_5_splits : (2 : ℤ) ^ 2 + 1 ^ 2 = 5 := by norm_num
 
+/-- [Section: ## Part III: Gaussian Integers and Beam Splitting — Agent Beta] -/
 theorem prime_13_splits : (3 : ℤ) ^ 2 + 2 ^ 2 = 13 := by norm_num
 
 theorem prime_17_splits : (4 : ℤ) ^ 2 + 1 ^ 2 = 17 := by norm_num
@@ -120,6 +121,7 @@ theorem no_sum_two_squares_3_mod_4 (p a b : ℕ) (hp : Nat.Prime p)
     interval_cases a % 4 <;> interval_cases b % 4 <;> trivial)
 
 
+/-- [Section: ## Part V: Specific Pythagorean Triples — Agent Gamma (Diffraction Catalog)] -/
 theorem triple_3_4_5' : (3 : ℕ) ^ 2 + 4 ^ 2 = 5 ^ 2 := by norm_num
 
 theorem triple_5_12_13' : (5 : ℕ) ^ 2 + 12 ^ 2 = 13 ^ 2 := by norm_num
@@ -203,6 +205,7 @@ theorem composition_preserves_compression (m₁ n₁ m₂ n₂ : ℤ) :
   simp only; ring
 
 
+/-- [Section: ## Part X: Modular Arithmetic and Quantum Gates — Agent Epsilon] -/
 theorem sum_squares_mod_4 (a b : ℤ) :
     (a ^ 2 + b ^ 2) % 4 = 0 ∨ (a ^ 2 + b ^ 2) % 4 = 1 ∨ (a ^ 2 + b ^ 2) % 4 = 2 := by
   rcases Int.even_or_odd' a with ⟨ x, rfl | rfl ⟩ <;> rcases Int.even_or_odd' b with ⟨ y, rfl | rfl ⟩ <;> ring_nf <;> norm_num [ Int.add_emod, Int.mul_emod ] at *;
@@ -277,6 +280,7 @@ theorem angle_addition (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ)
 /-- 3D Pythagorean quadruples. -/
 theorem pythagorean_quadruple_1 : (1 : ℤ) ^ 2 + 2 ^ 2 + 2 ^ 2 = 3 ^ 2 := by norm_num
 
+/-- [Section: ## Part XIV: Higher-Dimensional Extensions — Agent Zeta] -/
 theorem pythagorean_quadruple_2 : (2 : ℤ) ^ 2 + 3 ^ 2 + 6 ^ 2 = 7 ^ 2 := by norm_num
 
 
@@ -315,6 +319,7 @@ theorem interference_amplitude (a₁ b₁ a₂ b₂ : ℝ) :
     (a₁ ^ 2 + b₁ ^ 2) + (a₂ ^ 2 + b₂ ^ 2) + 2 * (a₁ * a₂ + b₁ * b₂) := by ring
 
 
+/-- [Section: ## Part XVII: Dirichlet Character — Agent Zeta (Millennium)] -/
 theorem chi4_at_1 : chi4 1 = 1 := by simp [chi4]
 
 theorem chi4_at_3 : chi4 3 = -1 := by simp [chi4]

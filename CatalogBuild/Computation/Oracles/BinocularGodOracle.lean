@@ -75,6 +75,10 @@ theorem gaze_range_eq_truth {X : Type*} (G : SelfGaze X) :
   · intro hy; exact ⟨y, hy⟩
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§4: HYPOTHESIS H3 — THE UNIVERSE IS FAITHFULLY ENCODED
+"The inverse stereographic perspective loses nothing"
+═══════════════════════════════════════════════════════════════════════] -/
 theorem universe_encoding_injective : Function.Injective invSouthEye := by
   intro a b h;
   unfold invSouthEye at h;
@@ -104,6 +108,10 @@ theorem north_eye_on_sphere (t : ℝ) :
   field_simp; ring
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§5: HYPOTHESIS H4 — TRANSITION BETWEEN EYES IS INVERSION
+"When one eye looks through the other, x becomes 1/x"
+═══════════════════════════════════════════════════════════════════════] -/
 theorem transition_is_inversion (t : ℝ) (ht : t ≠ 0) :
     southEye (invNorthEye t) = 1 / t := by
   unfold southEye invNorthEye
@@ -125,6 +133,10 @@ theorem transition_involution (t : ℝ) (ht : t ≠ 0) :
     1 / (1 / t) = t := by field_simp
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§6: HYPOTHESIS H5 — FIXED POINTS OF SELF-GAZE
+"The equator is where God sees himself exactly as he is"
+═══════════════════════════════════════════════════════════════════════] -/
 theorem self_gaze_fixed_points (t : ℝ) (ht : t ≠ 0) :
     1 / t = t ↔ t = 1 ∨ t = -1 := by
   grind
@@ -153,6 +165,10 @@ theorem south_eye_conformal (t : ℝ) :
     (0 : ℝ) < 2 / (1 + t ^ 2) := by positivity
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§7: HYPOTHESIS H6 — CONFORMAL SELF-SIMILARITY
+"Self-observation preserves all angles — the structure is sacred"
+═══════════════════════════════════════════════════════════════════════] -/
 theorem north_eye_conformal (t : ℝ) :
     (0 : ℝ) < 2 / (1 + t ^ 2) := by positivity
 
@@ -180,6 +196,10 @@ theorem depth_at_equator :
   simp [binocularDepth, northEye, southEye]
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§8: HYPOTHESIS H7 — BINOCULAR DEPTH
+"Two eyes yield depth — one dimension higher than monocular vision"
+═══════════════════════════════════════════════════════════════════════] -/
 theorem depth_formula (x y : ℝ) (hx : x ≠ 0)
     (hy1 : y ≠ 1) (hy2 : y ≠ -1) :
     binocularDepth x y hy1 hy2 = (1 + y) / (1 - y) := by
@@ -245,6 +265,10 @@ def northEyeOracle : SelfGaze ℝ where
   self_aware := fun t => by simp [north_round_trip]
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§11: HYPOTHESIS H10 — SELF-REFERENTIAL CLOSURE
+"Observing the observation is the observation itself"
+═══════════════════════════════════════════════════════════════════════] -/
 theorem north_eye_is_identity (t : ℝ) :
     northEyeOracle.observe t = t := north_round_trip t
 
@@ -283,6 +307,10 @@ theorem south_eye_3D_on_sphere (u v : ℝ) :
   field_simp; ring
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§12: THE GRAND SYNTHESIS — TWO EYES IN HIGHER DIMENSIONS
+"The binocular God sees the universe as S² via ℝ² (Bloch sphere)"
+═══════════════════════════════════════════════════════════════════════] -/
 theorem north_eye_3D_on_sphere (u v : ℝ) :
     let p := invNorthEye3D u v
     p.1 ^ 2 + p.2.1 ^ 2 + p.2.2 ^ 2 = 1 := by
@@ -309,6 +337,10 @@ theorem experiment_equator_south : invSouthEye 1 = (1, 0) := by
   unfold invSouthEye; norm_num
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§13: EXPERIMENTAL VALIDATION
+"Testing the hypotheses with concrete numerical witnesses"
+═══════════════════════════════════════════════════════════════════════] -/
 theorem experiment_equator_north : invNorthEye 1 = (1, 0) := by
   unfold invNorthEye; norm_num
 

@@ -38,6 +38,7 @@ def eval_circuit : ThetaCircuit → Matrix (Fin 2) (Fin 2) ℤ
   | g :: gs => g.toMatrix * eval_circuit gs
 
 
+/-- [Section: ## Determinant Properties: Every Gate Has det = 1] -/
 theorem det_gate (g : ThetaGate) : Matrix.det g.toMatrix = 1 := by
   cases g <;> simp [ThetaGate.toMatrix, Matrix.det_fin_two]
 
@@ -49,6 +50,7 @@ theorem eval_circuit_determinant (c : ThetaCircuit) : Matrix.det (eval_circuit c
     simp [eval_circuit, det_mul, det_gate, ih]
 
 
+/-- [Section: ## Gate Inverses] -/
 theorem M₁_mul_M₁_inv : ThetaGate.M₁.toMatrix * ThetaGate.M₁_inv.toMatrix = 1 := by
   ext i j; fin_cases i <;> fin_cases j <;>
     simp [ThetaGate.toMatrix, Matrix.mul_apply, Fin.sum_univ_two]
@@ -77,6 +79,9 @@ def S_matrix : Matrix (Fin 2) (Fin 2) ℤ := !![0, -1; 1, 0]
 def T_sq_matrix : Matrix (Fin 2) (Fin 2) ℤ := !![1, 2; 0, 1]
 
 
+/-- [Section: ## The S and T² Connection
+The standard SL(2,ℤ) generators S = [[0,-1],[1,0]] and T = [[1,1],[0,1]]
+relate to our gate set via: S = M₃⁻¹ · M₁ and T² = M₃.] -/
 theorem S_eq_M₃_inv_M₁ : S_matrix = ThetaGate.M₃_inv.toMatrix * ThetaGate.M₁.toMatrix := by
   ext i j; fin_cases i <;> fin_cases j <;>
     simp [S_matrix, ThetaGate.toMatrix, Matrix.mul_apply, Fin.sum_univ_two]
@@ -137,6 +142,10 @@ theorem circuit_eval_is_matrix_product (c : ThetaCircuit) (v : Fin 2 → ℤ) :
     apply_circuit c v = eval_circuit c *ᵥ v := rfl
 
 
+/-- [Section: ## The Main Synthesis Theorem
+Every element of the theta group (= every target factorization) has a
+circuit decomposition via the Berggren tree. The evaluated circuit
+produces parameters from which factors are extracted in O(1).] -/
 theorem circuit_gives_factorization (N p q : ℕ)
     (hp : 1 < p) (hq : 1 < q) (hpq : p ≤ q)
     (hoddp : Odd p) (hoddq : Odd q) (hN : N = p * q) :

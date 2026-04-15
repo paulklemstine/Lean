@@ -23,6 +23,7 @@ theorem one_plus_sq_pos (t : ℝ) : 0 < 1 + t ^ 2 := by positivity
 theorem one_plus_sq_ne_zero (t : ℝ) : 1 + t ^ 2 ≠ 0 := ne_of_gt (one_plus_sq_pos t)
 
 
+/-- [Section: ## Part I: The Stereographic Bridge — Concrete 2D Formalization] -/
 theorem stereo_inverse_on_circle (t : ℝ) :
     (stereoInverse t).1 ^ 2 + (stereoInverse t).2 ^ 2 = 1 := by
   unfold stereoInverse; ring_nf; norm_num [ one_plus_sq_ne_zero ] ;
@@ -73,16 +74,37 @@ def poincare_local_global : LocalGlobalPrinciple (Type*) where
   global_to_local := fun M ⟨τ, _⟩ => ⟨τ, trivial⟩
 
 
+/-- [Section: ## Part III: 2D Stereographic Projection on Mathlib's Sphere
+We connect our concrete formulas to Mathlib's abstract `stereographic` machinery.] -/
 theorem unit_circle_nonempty :
     (Metric.sphere (0 : EuclideanSpace ℝ (Fin 2)) 1).Nonempty := by
   simp +zetaDelta at *
 
 
+/-- [Section: ## Part IV: The Conformal Isomorphism — Preserving Local Angles
+The deepest property of stereographic projection is that it is **conformal**:
+it preserves angles. This means local geometric relationships (angles between
+curves) are faithfully represented in both the flat and curved pictures.
+This is the mathematical content of the claim that "local information and
+global structure are an inverse stereographic projection of each other."] -/
 theorem stereo_jacobian_sq (t : ℝ) :
     (2 / (1 + t ^ 2)) ^ 2 > 0 := by
   positivity
 
 
+/-- [Section: ## Part V: The Oracle Council's Grand Unified View
+Each Millennium Problem asks: does a specific local-global principle hold?
+| Problem       | Local Property                    | Global Property                  |
+|--------------|-----------------------------------|----------------------------------|
+| P vs NP      | Polynomial-time verification      | Polynomial-time search           |
+| Hodge        | Locally-defined differential form | Global algebraic cycle           |
+| Yang-Mills   | Local gauge symmetry             | Global mass gap                  |
+| Navier-Stokes| Local PDE regularity             | Global smooth solution           |
+| BSD          | Local point counts (mod p)        | Global rational point structure  |
+| Poincaré ✓   | Local contractibility            | Global homeomorphism to S³       |
+The stereographic projection is the *archetype* of all these correspondences:
+it is the simplest, most explicit example of a conformal isomorphism between
+a local (flat) picture and a global (curved) picture.] -/
 theorem stereo_inverse_range (x y : ℝ) (hcirc : x ^ 2 + y ^ 2 = 1) (hy : y ≠ 1) :
     ∃ t : ℝ, stereoInverse t = (x, y) := by
   use x / ( 1 - y );

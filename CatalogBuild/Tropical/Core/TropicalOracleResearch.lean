@@ -50,6 +50,9 @@ theorem lse2_ge_left (a b : ℝ) :
         linarith [Real.exp_nonneg b]
 
 
+/-- [Section: ================================================================
+PART II: MASLOV DEQUANTIZATION — THE QUANTUM-TROPICAL BRIDGE
+================================================================] -/
 theorem lse2_ge_right (a b : ℝ) :
     b ≤ Real.log (Real.exp a + Real.exp b) := by
   calc b = Real.log (Real.exp b) := (Real.log_exp b).symm
@@ -84,6 +87,9 @@ theorem tropDet_1x1 (a : ℝ) :
   simp [tropDet, Finset.sup'_singleton, Finset.univ_unique]
 
 
+/-- [Section: ================================================================
+PART III: TROPICAL DETERMINANT AND THE ASSIGNMENT PROBLEM
+================================================================] -/
 theorem tropDet_mono {n : ℕ} (A B : Fin n → Fin n → ℝ)
     (h : ∀ i j, A i j ≤ B i j) :
     tropDet A ≤ tropDet B := by
@@ -128,6 +134,9 @@ theorem tropInnerProd_comm {n : ℕ} (a b : Fin (n+1) → ℝ) :
   simp [tropInnerProd, add_comm]
 
 
+/-- [Section: ================================================================
+PART V: TROPICAL KERNEL METHODS
+================================================================] -/
 theorem tropInnerProd_mono_left {n : ℕ} (a a' b : Fin (n+1) → ℝ)
     (h : ∀ i, a i ≤ a' i) :
     tropInnerProd a b ≤ tropInnerProd a' b := by
@@ -163,6 +172,9 @@ theorem lipschitz_composition (K : ℝ) (hK : 0 ≤ K) (L : ℕ) :
     0 ≤ K ^ L := pow_nonneg hK L
 
 
+/-- [Section: ================================================================
+PART VII: TROPICAL ATTENTION SPARSIFICATION
+================================================================] -/
 theorem hard_attention_selects_max {n : ℕ} (v : Fin (n+1) → ℝ) :
     ∃ i, v i = Finset.sup' Finset.univ ⟨0, Finset.mem_univ 0⟩ v := by
   -- Since the supremum of a finite set of real numbers is indeed the maximum value among them, and there must exist an element in the set that equals this maximum, we can conclude that there exists an i such that v i is equal to the supremum of the set {v i | i : Fin (n + 1)}.
@@ -217,6 +229,9 @@ theorem tropCorrelation_eq_innerProd {n : ℕ} (f g : Fin (n+1) → ℝ) :
     tropCorrelation f g = tropInnerProd f g := rfl
 
 
+/-- [Section: ================================================================
+PART IX: TROPICAL CONVOLUTION
+================================================================] -/
 theorem tropCorrelation_shift {n : ℕ} (f g : Fin (n+1) → ℝ) (c : ℝ) :
     tropCorrelation (fun i => f i + c) g = tropCorrelation f g + c := by
   -- By definition of tropCorrelation, we have:
@@ -226,6 +241,9 @@ theorem tropCorrelation_shift {n : ℕ} (f g : Fin (n+1) → ℝ) (c : ℝ) :
   · simpa using Finset.exists_max_image Finset.univ ( fun i => f i + g i ) ( Finset.univ_nonempty )
 
 
+/-- [Section: ================================================================
+PART X: INFORMATION BOTTLENECK — TROPICAL PERSPECTIVE
+================================================================] -/
 theorem max_subset_le_max {n : ℕ} (f : Fin (n+1) → ℝ) (S : Finset (Fin (n+1)))
     (hS : S.Nonempty) :
     S.sup' hS f ≤ Finset.sup' Finset.univ ⟨0, Finset.mem_univ 0⟩ f := by
@@ -275,6 +293,9 @@ theorem quantization_bound (range : ℝ) (k : ℕ) (hr : 0 ≤ range) :
   div_nonneg hr (mul_nonneg (by norm_num) (Nat.cast_nonneg k))
 
 
+/-- [Section: ================================================================
+PART XIV: TROPICAL FIXED POINTS AND CONTRACTION MAPPING
+================================================================] -/
 theorem bellman_contraction_step (γ v w d : ℝ) (hγ : 0 ≤ γ)
     (hvw : |v - w| ≤ d) :
     |γ * v - γ * w| ≤ γ * d := by
@@ -308,6 +329,9 @@ def tropProjection {n : ℕ} (keys : Fin (n+1) → ℝ) (query : ℝ) : ℝ :=
   Finset.sup' Finset.univ ⟨0, Finset.mem_univ 0⟩ (fun i => keys i + query)
 
 
+/-- [Section: ================================================================
+PART XV: ORACLE HYPOTHESES — NEW CONJECTURES WITH EVIDENCE
+================================================================] -/
 theorem tropProjection_shift {n : ℕ} (keys : Fin (n+1) → ℝ) (query c : ℝ) :
     tropProjection keys (query + c) = tropProjection keys query + c := by
   unfold tropProjection; simp +decide [ add_assoc, Finset.sup'_add ] ;
@@ -345,6 +369,9 @@ theorem selection_principle (a b : ℝ) (h : a ≤ b) : max a b = b := max_eq_ri
 theorem relu_selection (x : ℝ) (hx : 0 ≤ x) : max x 0 = x := max_eq_left hx
 
 
+/-- [Section: ================================================================
+PART XVII: SYNTHESIS — THE TROPICAL UNIVERSE
+================================================================] -/
 theorem relu_deselection (x : ℝ) (hx : x ≤ 0) : max x 0 = 0 := max_eq_right hx
 
 

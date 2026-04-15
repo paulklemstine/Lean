@@ -304,6 +304,7 @@ theorem channel_product_expanded (a b c d : ℤ) :
     d^6 - d^4*(a^2+b^2+c^2) + d^2*(a^2*b^2+a^2*c^2+b^2*c^2) - a^2*b^2*c^2 := by ring
 
 
+/-- [Section: ## §18. Channel Product Expansion] -/
 theorem channel_product_simplified (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
     (d^2-a^2)*(d^2-b^2)*(d^2-c^2) =
     d^2*(a^2*b^2+a^2*c^2+b^2*c^2) - a^2*b^2*c^2 := by

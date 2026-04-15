@@ -73,6 +73,9 @@ def algAssociator [Ring α] (a b c : α) : α :=
   (a * b) * c - a * (b * c)
 
 
+/-- [Section: ## The Associator
+The associator [a, b, c] = (a * b) * c - a * (b * c) measures non-associativity.
+It is identically zero for associative algebras and non-zero for octonions.] -/
 theorem algAssociator_eq_zero [Ring α] (a b c : α) :
     algAssociator a b c = 0 := by
   exact sub_eq_zero_of_eq ( mul_assoc a b c )

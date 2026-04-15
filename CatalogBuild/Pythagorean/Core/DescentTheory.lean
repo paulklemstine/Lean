@@ -88,6 +88,7 @@ theorem five_not_crystalline : ¬ isCrystalline 5 := by
   simp +decide [isCrystalline]
 
 
+/-- [Section: ## 4. Quantum-Specific Descent: Dimensional Reduction] -/
 theorem crystalline_sparse (n : ℕ) (hn : 24 < n) :
     (Finset.filter (fun d => d ∈ ({2, 3, 4, 6, 8, 12, 24} : Finset ℕ))
       (Finset.range (n + 1))).card = 7 := by
@@ -95,6 +96,7 @@ theorem crystalline_sparse (n : ℕ) (hn : 24 < n) :
   simp +arith +decide [ Finset.filter_eq', Finset.filter_or ]
 
 
+/-- [Section: ## 5. Lattice Rank Preservation] -/
 theorem descent_rank_bound {α β : Type*} [Fintype α] [Fintype β]
     [Preorder α] [Preorder β] (D : DescentDatum α β)
     (hα : Fintype.card α > 0) :
@@ -106,6 +108,7 @@ theorem descent_rank_bound {α β : Type*} [Fintype α] [Fintype β]
   exact h_contra.elim ( D.descend a )
 
 
+/-- [Section: ## 6. The Fundamental Theorem of Quantum Descent] -/
 theorem quantum_descent_pow_dvd (d₁ d₂ : ℕ) (hdvd : d₁ ∣ d₂) (n : ℕ) :
     d₁^n ∣ d₂^n := by
   exact pow_dvd_pow_of_dvd hdvd _

@@ -17,6 +17,7 @@ def stereoNorth (x y : ℝ) : ℝ := x / (1 - y)
 def stereoSouth (x y : ℝ) : ℝ := x / (1 + y)
 
 
+/-- [Section: ## Section 2: Both projections land on S¹] -/
 theorem invStereoNorth_on_circle (t : ℝ) :
     (invStereoNorth' t).1 ^ 2 + (invStereoNorth' t).2 ^ 2 = 1 := by
   simp only [invStereoNorth']

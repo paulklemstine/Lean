@@ -76,6 +76,7 @@ theorem cunningham_chain_41 :
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩ <;> first | native_decide | norm_num
 
 
+/-- [Section: ### Sophie Germain prime counts] -/
 theorem sg_count_200 :
     ((Finset.range 200).filter (fun p => Nat.Prime p ∧ Nat.Prime (2 * p + 1))).card = 15 := by
   native_decide

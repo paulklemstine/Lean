@@ -17,6 +17,7 @@ def minkowski3 (a b c : ℤ) : ℤ :=
   a ^ 2 + b ^ 2 - c ^ 2
 
 
+/-- [Section: ## Section 1: Lattice Null Vectors and Discrete Light Cones] -/
 theorem lattice_null_minkowski_zero (a b c : ℤ) (h : IsLatticeNull a b c) :
     minkowski3 a b c = 0 := by
   unfold IsLatticeNull at h; unfold minkowski3; linarith;
@@ -37,6 +38,7 @@ theorem lattice_null_scale (a b c : ℤ) (k : ℤ) (hk : k ≠ 0) (h : IsLattice
   exact ⟨ by linear_combination' h.1 * k ^ 2, by exact Or.imp ( fun ha => by aesop ) ( fun hb => by aesop ) h.2 ⟩
 
 
+/-- [Section: ## Section 2: Euclid's Formula and Parametric Families] -/
 theorem euclid_is_lattice_null (m n : ℤ) (hmn : m ≠ n) :
     IsLatticeNull (m ^ 2 - n ^ 2) (2 * m * n) (m ^ 2 + n ^ 2) := by
   -- By definition of IsLatticeNull, we need to show that (m^2 - n^2)^2 + (2mn)^2 = (m^2 + n^2)^2 and that m^2 - n^2 ≠ 0 or 2mn ≠ 0.
@@ -55,6 +57,7 @@ theorem euclid_identity (m n : ℤ) :
   ring
 
 
+/-- [Section: ## Section 3: Berggren Tree Growth Bounds] -/
 theorem berggren_B_hypotenuse_growth (a b c : ℤ)
     (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
     3 * c < 2 * a + 2 * b + 3 * c := by
@@ -67,6 +70,7 @@ theorem berggren_A_hypotenuse_bound (a b c : ℤ)
   nlinarith only [ ha, hb, hc, hpyth ]
 
 
+/-- [Section: ## Section 4: Gaussian Integers and Optical Superposition] -/
 theorem brahmagupta_fibonacci_explicit (a b c d : ℤ) :
     (a ^ 2 + b ^ 2) * (c ^ 2 + d ^ 2) =
     (a * c - b * d) ^ 2 + (a * d + b * c) ^ 2 := by
@@ -79,6 +83,7 @@ theorem hypotenuse_product_is_sum_of_squares
   exact ⟨ c * d, 0, by ring ⟩
 
 
+/-- [Section: ## Section 5: Pythagorean Quadruples and 3D Light Cones] -/
 theorem quad_param_valid (m n p q : ℤ) :
     IsPythQuadruple
       (m^2 + n^2 - p^2 - q^2)
@@ -109,6 +114,7 @@ theorem quad_scale (a b c d k : ℤ) (h : IsPythQuadruple a b c d) :
   unfold IsPythQuadruple at h ⊢; linear_combination' k ^ 2 * h;
 
 
+/-- [Section: ## Section 6: Dispersion Relation Properties] -/
 theorem lattice_dispersion_correction_sign (p a : ℝ) (hp : 0 < p) (ha : 0 < a) :
     Real.sin (p * a / 2) ≤ p * a / 2 := by
   exact le_of_lt ( Real.sin_lt <| by positivity )
@@ -133,6 +139,7 @@ theorem dispersion_small_momentum (x : ℝ) (hx : 0 ≤ x) (hx1 : x ≤ 1) :
   exact h_sin_approx x hx hx1
 
 
+/-- [Section: ## Section 7: Number-Theoretic Properties of the Lattice] -/
 theorem pyth_triple_div_3 (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     3 ∣ a ∨ 3 ∣ b := by
   -- Consider the equation modulo 3. The possible values for squares modulo 3 are 0 or 1.
@@ -171,6 +178,7 @@ theorem smallest_primitive_triple (a b c : ℕ)
   interval_cases c <;> norm_num at * <;> have := Nat.le_of_lt_succ ( show a < 6 by nlinarith only [ h ] ) <;> have := Nat.le_of_lt_succ ( show b < 6 by nlinarith only [ h ] ) <;> interval_cases a <;> interval_cases b <;> trivial
 
 
+/-- [Section: ## Section 8: Infinitude and Density Results] -/
 theorem arbitrarily_large_triples (N : ℕ) :
     ∃ a b c : ℕ, a ^ 2 + b ^ 2 = c ^ 2 ∧ 0 < a ∧ 0 < b ∧ N < c := by
   exact ⟨ 3 * ( N + 1 ), 4 * ( N + 1 ), 5 * ( N + 1 ), by ring, by positivity, by positivity, by linarith ⟩
@@ -186,6 +194,7 @@ theorem euclid_density (m₁ m₂ : ℕ) (hm : m₁ < m₂) :
   exact ⟨ 0, m₁ ^ 2 + 1, m₁ ^ 2 + 1, by ring, by nlinarith, by nlinarith ⟩
 
 
+/-- [Section: ## Section 9: Conservation Laws on the Lattice] -/
 theorem berggren_A_preserves_norm (a b c : ℤ) :
     minkowski3 (a - 2*b + 2*c) (2*a - b + 2*c) (2*a - 2*b + 3*c) =
     minkowski3 a b c := by

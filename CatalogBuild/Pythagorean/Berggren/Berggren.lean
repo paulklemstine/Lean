@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/Berggren
-Declarations: 10
+Declarations: 13
 -/
 
 import Mathlib
@@ -40,6 +40,23 @@ theorem B₂_preserves_lorentz : B₂ᵀ * Q_lorentz * B₂ = Q_lorentz := by
 /-- B₃ preserves the Lorentz form: B₃ᵀ Q B₃ = Q -/
 theorem B₃_preserves_lorentz : B₃ᵀ * Q_lorentz * B₃ = Q_lorentz := by
   native_decide
+
+
+/-- [Section: ## Pythagorean Preservation
+The key property: if (a,b,c) is a Pythagorean triple, then B_i · (a,b,c) is too.] -/
+theorem B₁_preserves_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
+    (a - 2*b + 2*c) ^ 2 + (2*a - b + 2*c) ^ 2 = (2*a - 2*b + 3*c) ^ 2 := by
+      linarith
+
+
+theorem B₂_preserves_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
+    (a + 2*b + 2*c) ^ 2 + (2*a + b + 2*c) ^ 2 = (2*a + 2*b + 3*c) ^ 2 := by
+      linarith [ sq_nonneg ( a - b ), sq_nonneg ( a + b ), sq_nonneg ( a - c ), sq_nonneg ( a + c ), sq_nonneg ( b - c ), sq_nonneg ( b + c ) ]
+
+
+theorem B₃_preserves_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
+    (-a + 2*b + 2*c) ^ 2 + (-2*a + b + 2*c) ^ 2 = (-2*a + 2*b + 3*c) ^ 2 := by
+      grind
 
 
 /-- S matrix (the standard generator of SL(2,ℤ)) -/

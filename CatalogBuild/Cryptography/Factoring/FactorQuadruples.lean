@@ -55,11 +55,13 @@ theorem lattice_point_on_hyperbola {n d : ℕ} (hd : d ∣ n) :
   Nat.mul_div_cancel' hd
 
 
+/-- [Section: ## Section 3: Lattice Interpretation] -/
 theorem lattice_points_eq_divisor_count (n : ℕ) (hn : 0 < n) :
     (Finset.filter (fun d => d ∣ n) (Finset.Icc 1 n)).card = n.divisors.card := by
   exact congr_arg _ ( by ext x; exact ⟨ fun hx => Nat.mem_divisors.mpr ⟨ by aesop, by aesop ⟩, fun hx => Finset.mem_filter.mpr ⟨ Finset.mem_Icc.mpr ⟨ Nat.pos_of_mem_divisors hx, Nat.le_of_dvd hn ( Nat.dvd_of_mem_divisors hx ) ⟩, by aesop ⟩ ⟩ )
 
 
+/-- [Section: ## Section 4: Fermat's Method as Quadruple Search] -/
 theorem fermat_factoring_from_difference_of_squares {n x y : ℕ}
     (hxy : y < x) (heq : x ^ 2 - y ^ 2 = n) (hn : 0 < n) :
     (x - y) * (x + y) = n := by

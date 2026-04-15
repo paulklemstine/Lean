@@ -16,6 +16,7 @@ structure TropicalRootSystem (n : ℕ) where
   zero_not_root : (fun _ => (0 : ℝ)) ∉ roots
 
 
+/-- [Section: ## Section 1: Abstract Tropical Root System Properties] -/
 theorem root_count_even (n : ℕ) (Φ : TropicalRootSystem n) :
     Even Φ.roots.card := by
   -- Let $S$ be the set of roots of $\Phi$.
@@ -59,6 +60,7 @@ theorem origin_in_dominantChamber (n : ℕ) (posRoots : Finset (Fin n → ℝ)) 
   exact fun α _ => by simp +decide ;
 
 
+/-- [Section: ## Section 2: E₆ Root System Properties] -/
 def E6_rank : ℕ := 6
 
 def E6_num_roots : ℕ := 72
@@ -77,6 +79,7 @@ theorem E6_positive_roots_count : 2 * E6_num_positive_roots = E6_num_roots := by
 theorem E6_weyl_factorization : E6_weyl_order = 2^7 * 3^4 * 5 := by native_decide
 
 
+/-- [Section: ## Section 3: E₇ Root System Properties] -/
 def E7_rank : ℕ := 7
 
 def E7_num_roots : ℕ := 126
@@ -95,6 +98,7 @@ theorem E7_positive_roots_count : 2 * E7_num_positive_roots = E7_num_roots := by
 theorem E7_weyl_factorization : E7_weyl_order = 2^10 * 3^4 * 5 * 7 := by native_decide
 
 
+/-- [Section: ## Section 4: E₈ Root System Properties] -/
 def E8_rank : ℕ := 8
 
 def E8_num_roots : ℕ := 240
@@ -113,6 +117,7 @@ theorem E8_positive_roots_count : 2 * E8_num_positive_roots = E8_num_roots := by
 theorem E8_weyl_factorization : E8_weyl_order = 2^14 * 3^5 * 5^2 * 7 := by native_decide
 
 
+/-- [Section: ## Section 5: Exceptional Langlands Duality] -/
 inductive LanglandsDualType
   | SelfDual
   | ExchangeDual
@@ -132,6 +137,7 @@ theorem exceptional_E_self_dual :
   ⟨rfl, rfl, rfl⟩
 
 
+/-- [Section: ## Section 6: Tropical Satake Parameters] -/
 structure TropicalSatakeParam (n : ℕ) where
   param : Fin n → ℝ
   sorted : ∀ i j : Fin n, i ≤ j → param i ≥ param j
@@ -146,6 +152,7 @@ theorem tropicalLFunction_zero (n : ℕ) (sp : TropicalSatakeParam n) :
   simp [tropicalLFunction]
 
 
+/-- [Section: ## Section 7: Tropical Weyl Character Formula] -/
 def tropicalWeylCharacter (n : ℕ) (wt x : Fin n → ℝ) : ℝ :=
   ∑ i : Fin n, wt i * x i
 
@@ -177,6 +184,7 @@ theorem innerProduct_zero_right (n : ℕ) (x : Fin n → ℝ) :
   simp [innerProduct]
 
 
+/-- [Section: ## Section 9: Tropical Casselman-Shalika Formula] -/
 def tropicalCasselmanShalika (n : ℕ) (wt rho : Fin n → ℝ) : ℝ :=
   innerProduct n wt rho
 

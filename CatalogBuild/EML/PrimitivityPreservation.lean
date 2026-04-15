@@ -11,6 +11,7 @@ import Mathlib
 def lorentzForm (a b c : ℤ) : ℤ := a ^ 2 + b ^ 2 - c ^ 2
 
 
+/-- [Section: ## Lorentz Form Preservation] -/
 theorem lorentz_M1 (a b c : ℤ) :
     lorentzForm (a - 2*b + 2*c) (2*a - b + 2*c) (2*a - 2*b + 3*c) = lorentzForm a b c := by
   unfold lorentzForm; ring
@@ -26,6 +27,7 @@ theorem lorentz_M3 (a b c : ℤ) :
   unfold lorentzForm; ring
 
 
+/-- [Section: ## Pythagorean Preservation] -/
 theorem pyth_iff_lorentz_null (a b c : ℤ) :
     IsPythTriple' a b c ↔ lorentzForm a b c = 0 := by
   unfold IsPythTriple' lorentzForm; omega
@@ -46,6 +48,7 @@ theorem M3_preserves_pyth (a b c : ℤ) (h : IsPythTriple' a b c) :
   rw [pyth_iff_lorentz_null] at h ⊢; rw [lorentz_M3]; exact h
 
 
+/-- [Section: ## Hypotenuse Growth] -/
 theorem M2_hyp_increases (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 ≤ c) :
     c < 2*a + 2*b + 3*c := by omega
 

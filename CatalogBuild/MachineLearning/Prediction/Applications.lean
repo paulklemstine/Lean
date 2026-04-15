@@ -9,6 +9,9 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## §1. Prediction Markets: Prices as Probabilities
+A prediction market aggregates beliefs into prices. We prove that
+market prices satisfy the axioms of probability under no-arbitrage.] -/
 theorem market_prices_probability
     (n : ℕ) (prices : Fin n → ℝ)
     (h_nonneg : ∀ i, 0 ≤ prices i)
@@ -22,6 +25,7 @@ theorem lmsr_loss_bound (n : ℕ) (hn : 1 < n) :
   exact Real.log_pos <| Nat.one_lt_cast.mpr hn
 
 
+/-- [Section: ## §2. Epidemic Prediction: Self-Fulfilling and Self-Defeating Prophecies] -/
 theorem epidemic_prediction_equilibrium
     (response : ℝ → ℝ)  -- R_eff as function of predicted R_eff
     (c : ℝ) (hc0 : 0 ≤ c) (hc1 : c < 1)
@@ -32,6 +36,7 @@ theorem epidemic_prediction_equilibrium
   exact ⟨ p, q, by cases abs_cases ( p - q ) <;> cases abs_cases ( response p - response q ) <;> cases lt_or_gt_of_ne hcontract <;> nlinarith ⟩
 
 
+/-- [Section: ## §3. Portfolio Prediction: Kelly Criterion] -/
 theorem kelly_criterion_optimal
     (p b : ℝ) (hp : 0 < p) (hp1 : p < 1) (hb : 0 < b)
     (f_star : ℝ) (hf : f_star = p - (1 - p) / b)
@@ -54,6 +59,10 @@ def ppi_estimator (θ_gold μ_pred_all μ_pred_gold : ℝ) : ℝ :=
   θ_gold + (μ_pred_all - μ_pred_gold)
 
 
+/-- [Section: ## §4. Prediction-Powered Inference (PPI)
+A breakthrough framework: use a large set of cheap ML predictions
+plus a small set of expensive gold-standard labels to get valid
+confidence intervals that are strictly tighter than either alone.] -/
 theorem ppi_unbiased
     (θ_true θ_gold μ_pred_all μ_pred_gold : ℝ)
     (h_gold_unbiased : θ_gold = θ_true + (μ_pred_gold - μ_pred_all)) :
@@ -70,6 +79,9 @@ theorem ppi_variance_reduction
   linarith
 
 
+/-- [Section: ## §5. Quantum Prediction Advantage
+Quantum entanglement provides a prediction advantage in certain
+correlation games. Bell's inequality violation proves this.] -/
 theorem chsh_classical_bound
     (E₁₁ E₁₂ E₂₁ E₂₂ : ℝ)
     (h₁₁ : |E₁₁| ≤ 1) (h₁₂ : |E₁₂| ≤ 1)
@@ -86,6 +98,9 @@ theorem tsirelson_bound_statement
     S_quantum ≤ 2 * Real.sqrt 2 := h
 
 
+/-- [Section: ## §6. Temporal Discounting: The Value of Future Predictions
+A prediction's value decays with the time horizon.
+The optimal discount rate balances precision decay with decision urgency.] -/
 theorem prediction_value_decay
     (V₀ r : ℝ) (hV : 0 < V₀) (hr : 0 < r)
     (t : ℕ) :

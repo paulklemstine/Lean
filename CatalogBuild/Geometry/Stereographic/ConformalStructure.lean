@@ -20,6 +20,7 @@ theorem stereoConformalFactor_pos (y : Fin n → ℝ) :
   unfold stereoConformalFactor; positivity
 
 
+/-- [Section: ## Part 1: Conformal Factor Identities] -/
 theorem stereoConformalFactor_le_two (y : Fin n → ℝ) :
     stereoConformalFactor y ≤ 2 := by
   exact div_le_self zero_le_two ( le_add_of_nonneg_right <| Finset.sum_nonneg fun _ _ => sq_nonneg _ )
@@ -55,6 +56,7 @@ theorem great_circle_maps_to_line :
   intro θ; simp
 
 
+/-- [Section: ## Part 2: Circle-Preserving Property] -/
 theorem stereo_circle_preserving (A B C D : ℝ) (s t : ℝ)
     (h_denom : (1 + s ^ 2 + t ^ 2) ≠ 0) :
     let x := 2 * s / (1 + s ^ 2 + t ^ 2)
@@ -66,6 +68,7 @@ theorem stereo_circle_preserving (A B C D : ℝ) (s t : ℝ)
   grind
 
 
+/-- [Section: ## Part 3: Cross-Ratio Invariance] -/
 theorem mobius_preserves_cross_ratio
     (al be ga de : ℝ) (hdet : al * de - be * ga ≠ 0)
     (a b c d : ℝ)
@@ -92,6 +95,7 @@ def isDescartes (k₁ k₂ k₃ k₄ : ℝ) : Prop :=
   (k₁ + k₂ + k₃ + k₄) ^ 2 = 2 * (k₁ ^ 2 + k₂ ^ 2 + k₃ ^ 2 + k₄ ^ 2)
 
 
+/-- [Section: ## Part 4: Apollonian Gasket Dynamics] -/
 theorem apollonian_replacement (k₁ k₂ k₃ k₄ : ℝ)
     (h : isDescartes k₁ k₂ k₃ k₄) :
     isDescartes k₁ k₂ k₃ (2 * (k₁ + k₂ + k₃) - k₄) := by
@@ -119,6 +123,7 @@ theorem apollonian_involution (k₁ k₂ k₃ k₄ : ℝ) :
     2 * (k₁ + k₂ + k₃) - (2 * (k₁ + k₂ + k₃) - k₄) = k₄ := by ring
 
 
+/-- [Section: ## Part 5: Fisher Information via Stereographic Coordinates] -/
 theorem fisher_stereo_metric_identity (t : ℝ) (ht : t ≠ 0) :
     let theta := t ^ 2 / (1 + t ^ 2)
     let dtheta_dt := 2 * t / (1 + t ^ 2) ^ 2
@@ -171,6 +176,7 @@ theorem sphere_is_null_cone_section (x : Fin n → ℝ) (hx : ∑ i, (x i) ^ 2 =
   linarith
 
 
+/-- [Section: ## Part 7: Stereographic Projection and Quadratic Forms] -/
 theorem stereo_metric_intertwining (y y' : ℝ) :
     let s1 := 2 * y / (1 + y ^ 2)
     let s2 := (1 - y ^ 2) / (1 + y ^ 2)
@@ -192,12 +198,14 @@ theorem stereo_identity_ring {R : Type*} [CommRing R] (t : R) :
   ring
 
 
+/-- [Section: ## Part 8: p-adic Stereographic Projection (Foundations)] -/
 theorem padic_stereo_on_circle {R : Type*} [Field R] [CharZero R] (t : R)
     (h : (1 : R) + t ^ 2 ≠ 0) :
     (2 * t / (1 + t ^ 2)) ^ 2 + ((1 - t ^ 2) / (1 + t ^ 2)) ^ 2 = 1 := by
   grind
 
 
+/-- [Section: ## Part 9: Tropical Stereographic Projection (Foundations)] -/
 theorem tropical_stereo_identity (t : ℝ) :
     max (2 * |t|) 0 = 2 * max (|t|) 0 := by
   grind

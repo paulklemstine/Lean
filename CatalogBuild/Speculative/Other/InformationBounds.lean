@@ -31,6 +31,7 @@ theorem minimax_detection_value {n : ℕ} (hn : 2 ≤ n) :
     (1 : ℝ) / n > 0 := by positivity
 
 
+/-- [Section: ## Infinite-Horizon Analysis] -/
 theorem infinite_horizon_optimal {n : ℕ} (hn : 2 ≤ n) (d : ProbDist n) :
     ∃ target : Fin n, 1 - d.prob target ≥ 1 - 1 / (n : ℝ) := by
   by_contra h;

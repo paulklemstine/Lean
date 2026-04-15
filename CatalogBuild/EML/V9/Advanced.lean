@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Definitions] -/
 def emlA (x y : ℝ) : ℝ := Real.exp x - Real.log y
 
 def diagA (z : ℝ) : ℝ := Real.exp z - Real.log z
@@ -21,6 +22,7 @@ def diagIterA : ℕ → ℝ → ℝ
   | n + 1, z => diagA (diagIterA n z)
 
 
+/-- [Section: ## Section 1: Enhanced Diagonal Bounds] -/
 theorem diagA_gt_z (z : ℝ) : diagA z > z := by
   unfold diagA;
   nontriviality;
@@ -118,6 +120,7 @@ theorem eml_power_snd (x y : ℝ) (n : ℕ) (hy : 0 < y) :
   simp [emlA, Real.log_pow]; ring
 
 
+/-- [Section: ## Section 5: Integral Identities] -/
 theorem eml_integral_log :
     ∫ t in (1:ℝ)..Real.exp 1, emlA 0 t = Real.exp 1 - 2 := by
       norm_num [ emlA ];
@@ -167,6 +170,7 @@ theorem diagA_ge_two (z : ℝ) (hz : 0 < z) : diagA z ≥ 2 := by
   linarith
 
 
+/-- [Section: ## Section 11: Tropical EML] -/
 theorem tropEml_noncomm : ∃ x y : ℝ, tropEml x y ≠ tropEml y x := by
   use 0, 1; simp [tropEml]
 

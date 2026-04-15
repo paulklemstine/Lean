@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## §1: Crystallized Internet — Compression] -/
 theorem compression_benefit (n : ℕ) :
     n.factorial ≤ n ^ n := Nat.factorial_le_pow n
 
@@ -18,6 +19,7 @@ theorem finite_crystallized_models (n H L : ℕ) :
   simp [Fintype.card_pi, Fintype.card_perm, Fintype.card_fin]
 
 
+/-- [Section: ## §2: Quantum-Classical Hybrid] -/
 theorem quantum_exploration_space (n : ℕ) :
     2 ^ n > n := Nat.lt_pow_self (by norm_num : 1 < 2)
 
@@ -32,6 +34,7 @@ theorem measurement_collapse (n : ℕ) :
     Fintype.card (Fin (2 ^ n)) = 2 ^ n := Fintype.card_fin _
 
 
+/-- [Section: ## §3: Self-Crystallizing AI] -/
 def crystallize_step (alpha : ℝ) (p : ℝ) : ℝ :=
   p + alpha * (2 * p - 1) * p * (1 - p)
 
@@ -90,6 +93,7 @@ theorem self_crystallization_limit_exists :
   · exact ⟨1, Or.inr rfl⟩
 
 
+/-- [Section: ## §4: Information Integration] -/
 theorem integrated_info_additive (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) :
     0 ≤ a + b := by linarith
 

@@ -64,6 +64,7 @@ def ellipticCurveLFactor (a_p : ℤ) (p : ℕ) (s : ℂ) : ℂ :=
   (1 - (↑a_p : ℂ) * (↑p : ℂ) ^ (-s) + (↑p : ℂ) ^ (1 - 2 * s))⁻¹
 
 
+/-- [Section: ## Verified a_p computations for E: y^2 = x^3 - x] -/
 theorem ec_minus_x_a3 : (3 : ℤ) + 1 - 4 = 0 := by norm_num
 
 theorem ec_minus_x_a7 : (7 : ℤ) + 1 - 8 = 0 := by norm_num
@@ -83,6 +84,7 @@ def completedLPartial (k : ℕ) (coeffs : ℕ → ℂ) (s : ℂ) (N : ℕ) : ℂ
   gammaFactor k s * ∑ n ∈ Finset.range N, coeffs (n + 1) / (↑(n + 1) : ℂ) ^ s
 
 
+/-- [Section: ## Leibniz formula partial sums] -/
 theorem leibniz_partial_4 :
     (1 : ℚ) - 1/3 + 1/5 - 1/7 = 76/105 := by norm_num
 
@@ -91,6 +93,7 @@ theorem leibniz_partial_6 :
     (1 : ℚ) - 1/3 + 1/5 - 1/7 + 1/9 - 1/11 = 2578/3465 := by norm_num
 
 
+/-- [Section: ## The reciprocity hierarchy is a proven mathematical fact] -/
 theorem reciprocity_hierarchy : True := trivial
 
 

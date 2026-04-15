@@ -9,6 +9,11 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════
+TEAM ALPHA: THE NONLINEARITY BARRIER
+Proving that linear maps fundamentally cannot capture nonlinear
+activation functions used in neural networks.
+═══════════════════════════════════════════════════════════════════] -/
 theorem alpha_relu_not_linear :
     ¬ ∃ (f : ℝ →ₗ[ℝ] ℝ), ∀ x : ℝ, f x = relu x := by
   simp +zetaDelta at *;
@@ -57,6 +62,11 @@ noncomputable def koopmanLinearMap {α : Type*} [Fintype α] [DecidableEq α]
   map_smul' r v := by ext; simp
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════
+TEAM BETA: KOOPMAN LIFTING
+Any nonlinear function can be made linear by lifting to a
+sufficiently high-dimensional space.
+═══════════════════════════════════════════════════════════════════] -/
 theorem beta_koopman_finite_lift {α : Type*} [Fintype α] [DecidableEq α] [Nonempty α]
     (f : α → α) :
     ∃ (L : (α → ℝ) →ₗ[ℝ] (α → ℝ)) (embed : α → (α → ℝ)) (project : (α → ℝ) → α),
@@ -86,6 +96,10 @@ theorem beta_quadratic_lifting_dim (n : ℕ) :
   norm_num [ Nat.choose_two_right ]
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════
+TEAM GAMMA: TROPICAL ALGEBRA
+In the tropical semiring (max, +), ReLU becomes a linear operation!
+═══════════════════════════════════════════════════════════════════] -/
 theorem gamma_trop_add_comm (a b : ℝ) : tropAdd a b = tropAdd b a := by
   exact max_comm a b
 
@@ -139,6 +153,11 @@ theorem gamma_two_layer_relu {n : ℕ}
   bound
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════
+TEAM DELTA: THE COMPILATION TRILEMMA
+You cannot simultaneously achieve: (1) Exactness (2) Compactness
+(3) Generality when compiling a nonlinear network into one operation.
+═══════════════════════════════════════════════════════════════════] -/
 theorem delta_exact_compact_not_general :
     ∀ (a : ℝ), ∃ x : ℝ, a * x ≠ max x 0 := by
   exact fun a => ⟨ if a = 0 then 1 else -1, by aesop ⟩
@@ -172,6 +191,11 @@ theorem epsilon_any_function_is_matrix {n m : ℕ} (f : Fin n → Fin m → ℝ)
   ⟨fun j i => f i j, fun _ _ => rfl⟩
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════
+TEAM EPSILON: FINITE DOMAIN COMPILATION
+On finite domains (the actual setting for LLMs), any function
+CAN be compiled into a single matrix multiplication.
+═══════════════════════════════════════════════════════════════════] -/
 theorem epsilon_onehot_selects_column {n m : ℕ} (M : Matrix (Fin m) (Fin n) ℝ) (i : Fin n) :
     M.mulVec (fun j => if j = i then 1 else 0) = fun k => M k i := by
   ext k; rw [ Matrix.mulVec, dotProduct ] ; aesop;
@@ -192,6 +216,10 @@ theorem epsilon_function_count (n m : ℕ) :
   norm_num +zetaDelta at *
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════
+SYNTHESIS: Cross-Team Results
+Combining insights from all teams into unified theorems.
+═══════════════════════════════════════════════════════════════════] -/
 theorem synthesis_compilation_landscape (n : ℕ) (_hn : 0 < n) :
     (∀ f : Fin n → Fin n → ℝ, ∃ M : Matrix (Fin n) (Fin n) ℝ, ∀ i j, M j i = f i j) ∧
     (¬ ∃ (f : ℝ →ₗ[ℝ] ℝ), ∀ x, f x = max x 0) := by

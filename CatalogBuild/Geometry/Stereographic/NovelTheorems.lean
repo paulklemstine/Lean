@@ -10,6 +10,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Conformal Factor] -/
 theorem conformal_factor_eq_one_minus_last (N : ℕ) (y : Fin N → ℝ) :
     2 / stereoDenom N y =
     1 - invStereoN N y ⟨N, Nat.lt_succ_iff.mpr le_rfl⟩ := by
@@ -27,6 +28,7 @@ theorem conformal_factor_sq_times_sqNorm (N : ℕ) (y : Fin N → ℝ) :
   exact Finset.sum_congr rfl fun _ _ => by ring;
 
 
+/-- [Section: ## Antipodal Symmetry] -/
 theorem invStereoN_neg_first_coords (N : ℕ) (y : Fin N → ℝ) (i : Fin (N + 1))
     (hi : (i : ℕ) < N) :
     invStereoN N (fun j => -(y j)) i = -(invStereoN N y i) := by
@@ -42,6 +44,7 @@ theorem invStereoN_neg_last_coord (N : ℕ) (y : Fin N → ℝ) :
   unfold stereoDenom sqNorm; norm_num [ Finset.sum_neg_distrib ] ;
 
 
+/-- [Section: ## Scaling Behavior] -/
 theorem invStereoN_scale_last (N : ℕ) (y : Fin N → ℝ) (r : ℝ) :
     invStereoN N (fun j => r * y j) ⟨N, Nat.lt_succ_iff.mpr le_rfl⟩ =
     (r ^ 2 * sqNorm N y - 1) / (1 + r ^ 2 * sqNorm N y) := by
@@ -50,6 +53,7 @@ theorem invStereoN_scale_last (N : ℕ) (y : Fin N → ℝ) (r : ℝ) :
   simp only [mul_pow, sqNorm, Finset.mul_sum _ _ _]
 
 
+/-- [Section: ## Energy Identity] -/
 theorem energy_partition (N : ℕ) (y : Fin N → ℝ) :
     (∑ i : Fin N, (invStereoN N y ⟨i, Nat.lt_succ_of_lt i.isLt⟩) ^ 2) +
     (invStereoN N y ⟨N, Nat.lt_succ_iff.mpr le_rfl⟩) ^ 2 = 1 := by
@@ -64,6 +68,7 @@ theorem pythagorean_stereo_general (N : ℕ) (y : Fin N → ℝ) :
   unfold sqNorm; ring
 
 
+/-- [Section: ## Composition Identity] -/
 theorem rotation_preserves_sqNorm (N : ℕ) (R : Fin N → Fin N → ℝ)
     (hR : ∀ i j : Fin N, ∑ k, R i k * R j k = if i = j then 1 else 0)
     (y : Fin N → ℝ) :
@@ -86,6 +91,7 @@ theorem rotation_preserves_sqNorm (N : ℕ) (R : Fin N → Fin N → ℝ)
   exact Finset.sum_congr rfl fun _ _ => sq _
 
 
+/-- [Section: ## Inversion Formula] -/
 theorem invStereoN_inversion_last (N : ℕ) (y : Fin N → ℝ)
     (hy : sqNorm N y ≠ 0) :
     invStereoN N (fun j => y j / sqNorm N y) ⟨N, Nat.lt_succ_iff.mpr le_rfl⟩ =

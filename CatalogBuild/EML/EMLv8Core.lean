@@ -121,6 +121,7 @@ theorem eml8_log_ratio (x y z : ℝ) (hy : 0 < y) (hz : 0 < z) :
   unfold eml8; rw [Real.log_div hy.ne' hz.ne']; ring
 
 
+/-- [Section: ## Section 7: Diagonal Map Properties] -/
 theorem diag8_gt (z : ℝ) : diag8 z > z := by
   by_cases hz : z ≤ 0;
   · unfold diag8;
@@ -163,6 +164,7 @@ theorem eml8_gradient_nonzero (x y : ℝ) (hy : 0 < y) :
   exact ⟨Real.exp_pos x, inv_pos.mpr hy⟩
 
 
+/-- [Section: ## Section 9: Non-commutativity and Non-associativity] -/
 theorem eml8_noncomm : ∃ x y : ℝ, eml8 x y ≠ eml8 y x := by
   -- Let's calculate the values of `eml8 0 1` and `eml8 1 0`.
   use 0, 1
@@ -176,6 +178,7 @@ theorem eml8_nonassoc : ∃ x y z : ℝ, eml8 (eml8 x y) z ≠ eml8 x (eml8 y z)
   have := h 0 0 0; norm_num at this
 
 
+/-- [Section: ## Section 10: No Identity Elements] -/
 theorem eml8_no_left_identity : ¬ ∃ e₀ : ℝ, ∀ x : ℝ, eml8 e₀ x = x := by
   simp +zetaDelta at *;
   intro x;

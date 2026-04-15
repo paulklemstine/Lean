@@ -33,6 +33,8 @@ noncomputable def edgeDensity (n m : ℕ) (hn : 2 ≤ n) : ℝ :=
   (m : ℝ) / (n * (n - 1) / 2 : ℝ)
 
 
+/-- [Section: ## Section 2: Entanglement from Dependency Graph
+We define a normalized entanglement measure based on edge density.] -/
 theorem zero_edges_zero_density (n : ℕ) (hn : 2 ≤ n) :
     edgeDensity n 0 hn = 0 := by
   exact mul_eq_zero_of_left ( Nat.cast_zero ) _
@@ -63,6 +65,9 @@ theorem independent_search_additive {k : ℕ} (sizes : Fin k → ℕ)
   rfl
 
 
+/-- [Section: ## Section 3: Difficulty Lower Bounds from Entanglement
+**Key Hypothesis**: High entanglement implies high proof difficulty because
+entangled proofs cannot be decomposed into independently-solvable subproblems.] -/
 theorem entangled_harder_than_independent {k : ℕ} (hk : 0 < k)
     (searches : Fin k → ℕ) (h_pos : ∀ i, 2 ≤ searches i) :
     ∑ i, searches i ≤ ∏ i, searches i := by
@@ -89,6 +94,8 @@ def chainDependency (n : ℕ) : Fin n → Fin n → Prop :=
   fun i j => i.val = j.val + 1
 
 
+/-- [Section: ## Section 5: Experimental Validation Framework
+We define concrete proof families and compute their entanglement.] -/
 theorem chain_edge_count (n : ℕ) (hn : 1 ≤ n) :
     (Finset.univ.filter (fun p : Fin n × Fin n => p.1.val = p.2.val + 1)).card = n - 1 := by
   -- We can simplify the sum by changing variables to $j = i.2$.
@@ -122,6 +129,7 @@ theorem complete_edge_count (n : ℕ) :
     exact Finset.sum_congr rfl fun i hi => by rw [ show Finset.filter ( fun x_1 => x_1 < i ) Finset.univ = Finset.Iio i by ext; simp +decide ] ; simp +decide ;
 
 
+/-- [Section: ## Section 6: Main Theorem — Entanglement-Difficulty Correlation] -/
 theorem decomposition_speedup {k : ℕ} (hk : 0 < k)
     (component_sizes : Fin k → ℕ)
     (monolithic_search : ℕ)

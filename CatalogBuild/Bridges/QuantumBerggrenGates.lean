@@ -29,6 +29,7 @@ def sigMat : Matrix (Fin 3) (Fin 3) ℤ :=
   !![1, 0, 0; 0, 1, 0; 0, 0, -1]
 
 
+/-- [Section: ## Quadratic Form Preservation] -/
 theorem berggrenMat1_preserves_sig :
     berggrenMat1ᵀ * sigMat * berggrenMat1 = sigMat := by native_decide
 
@@ -41,6 +42,7 @@ theorem berggrenMat3_preserves_sig :
     berggrenMat3ᵀ * sigMat * berggrenMat3 = sigMat := by native_decide
 
 
+/-- [Section: ## Determinants] -/
 theorem berggrenMat1_det : berggrenMat1.det = 1 := by native_decide
 
 theorem berggrenMat2_det : berggrenMat2.det = -1 := by native_decide
@@ -55,6 +57,7 @@ theorem berggrenMat1_in_SO : berggrenMat1.det = 1 := berggrenMat1_det
 theorem berggrenMat3_in_SO : berggrenMat3.det = 1 := berggrenMat3_det
 
 
+/-- [Section: ## Products] -/
 theorem berggrenMat12_det : (berggrenMat1 * berggrenMat2).det = -1 := by native_decide
 
 theorem berggrenMat23_det : (berggrenMat2 * berggrenMat3).det = -1 := by native_decide
@@ -69,6 +72,7 @@ theorem berggrenMat2_sq_det : (berggrenMat2 * berggrenMat2).det = 1 := by native
 theorem berggrenMat3_sq_det : (berggrenMat3 * berggrenMat3).det = 1 := by native_decide
 
 
+/-- [Section: ## Composition preserves quadratic form] -/
 theorem sig_preserved_mul {A B : Matrix (Fin 3) (Fin 3) ℤ}
     (hA : Aᵀ * sigMat * A = sigMat) (hB : Bᵀ * sigMat * B = sigMat) :
     (A * B)ᵀ * sigMat * (A * B) = sigMat := by
@@ -76,6 +80,7 @@ theorem sig_preserved_mul {A B : Matrix (Fin 3) (Fin 3) ℤ}
   simp_all +decide [ ← Matrix.mul_assoc ]
 
 
+/-- [Section: ## Root vector] -/
 def rootVec : Fin 3 → ℤ := ![3, 4, 5]
 
 
@@ -86,6 +91,7 @@ theorem berggrenMat2_root : berggrenMat2 *ᵥ rootVec = ![21, 20, 29] := by nati
 theorem berggrenMat3_root : berggrenMat3 *ᵥ rootVec = ![15, 8, 17] := by native_decide
 
 
+/-- [Section: ## Distinctness] -/
 theorem berggrenMat1_ne_2 : berggrenMat1 ≠ berggrenMat2 := by native_decide
 
 theorem berggrenMat1_ne_3 : berggrenMat1 ≠ berggrenMat3 := by native_decide
@@ -99,6 +105,7 @@ theorem berggrenMat2_ne_one : berggrenMat2 ≠ (1 : Matrix (Fin 3) (Fin 3) ℤ) 
 theorem berggrenMat3_ne_one : berggrenMat3 ≠ (1 : Matrix (Fin 3) (Fin 3) ℤ) := by native_decide
 
 
+/-- [Section: ## Traces] -/
 theorem berggrenMat1_trace : berggrenMat1.trace = 3 := by native_decide
 
 theorem berggrenMat2_trace : berggrenMat2.trace = 5 := by native_decide

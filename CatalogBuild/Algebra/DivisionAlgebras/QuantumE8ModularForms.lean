@@ -55,6 +55,7 @@ peel channels (k) + cross-collision channels C(k,2). -/
 def total_channels (k : ℕ) : ℕ := k + Nat.choose k 2
 
 
+/-- [Section: ## §4: E₈ Lattice Geometry] -/
 theorem total_channels_dim2 : total_channels 2 = 3 := by decide
 
 theorem total_channels_dim4 : total_channels 4 = 10 := by decide
@@ -73,6 +74,7 @@ noncomputable def divisor_sum (k n : ℕ) : ℕ :=
   ∑ d ∈ (Nat.divisors n), d ^ k
 
 
+/-- [Section: ## §5: Modular Forms and Representation Counts] -/
 theorem divisor_sum_pos (k n : ℕ) (hn : 1 ≤ n) : 1 ≤ divisor_sum k n := by
   exact Finset.sum_pos ( fun x hx => pow_pos ( Nat.pos_of_mem_divisors hx ) _ ) ⟨ 1, by aesop ⟩
 
@@ -105,6 +107,7 @@ theorem r8_positive (n : ℕ) (hn : 1 ≤ n) :
   omega
 
 
+/-- [Section: ## §6: Collision Factor Extraction] -/
 theorem cross_term_factor_bound (a b c d N : ℤ)
     (h1 : a^2 + b^2 = N) (h2 : c^2 + d^2 = N)
     (hne : a*c + b*d ≠ 0) :

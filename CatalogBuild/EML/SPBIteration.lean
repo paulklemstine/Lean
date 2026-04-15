@@ -15,6 +15,15 @@ def spbN (x : ℝ) : ℕ → ℝ
   | n + 1 => spbOp x (spbN x n)
 
 
+/-- [Section: # SPB Iteration and the Multiple Angle Formula
+## Main Result
+`spbN(tan θ, n) = tan(n · θ)` — the n-fold iterated SPB applied to tan(θ)
+equals tan(nθ), provided all intermediate cosines are nonzero.
+This is Theorem 3.2 from the SPB research roadmap.
+## Consequences
+- SPB iteration generates all Chebyshev polynomial evaluations
+- The rational function spbN(x, n) = Pₙ(x)/Qₙ(x) satisfies a linear recurrence
+- SPB complexity of tan(nθ) equals the shortest addition chain length for n] -/
 theorem spbN_zero (x : ℝ) : spbN x 0 = 0 := rfl
 
 theorem spbN_succ (x : ℝ) (n : ℕ) : spbN x (n + 1) = spbOp x (spbN x n) := rfl
@@ -84,6 +93,7 @@ theorem spbN_tan_add (θ : ℝ) (m n : ℕ)
 def cauchyDensity (x : ℝ) : ℝ := 1 / (Real.pi * (1 + x ^ 2))
 
 
+/-- [Section: ## Cauchy Distribution as Invariant Measure] -/
 theorem cauchyDensity_pos (x : ℝ) : cauchyDensity x > 0 := by
   exact one_div_pos.mpr ( mul_pos Real.pi_pos ( by positivity ) )
 

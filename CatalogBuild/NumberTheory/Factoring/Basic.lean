@@ -20,6 +20,7 @@ noncomputable def reductionMap {n p : ℕ} (hp : p ∣ n) [NeZero n] [NeZero p] 
   ZMod.castHom hp (ZMod p)
 
 
+/-- [Section: ## Part IV: Orbit Period and Factorization Structure] -/
 theorem pollardMap_commutes_with_reduction {n p : ℕ} (hp : p ∣ n)
     [NeZero n] [NeZero p] (c : ZMod n) (x : ZMod n) :
     reductionMap hp (pollardMap n c x) =
@@ -41,6 +42,7 @@ theorem orbit_period_projects {n p : ℕ} (hp : p ∣ n) [NeZero n] [NeZero p]
   exact fun i hi => h_ind i ▸ h_ind ( i + per_n ) ▸ hperiod_n i hi ▸ rfl
 
 
+/-- [Section: ## Part VI: GCD Accumulation Theorem] -/
 theorem gcd_of_product_dvd {n : ℕ} (hn : 1 < n)
     (vals : Fin k → ℤ) (p : ℕ) (hp : Nat.Prime p) (hpn : p ∣ n)
     (j : Fin k) (hdvd : (p : ℤ) ∣ vals j) :

@@ -46,6 +46,7 @@ theorem orthogonal_complement_disjoint
   Submodule.orthogonal_disjoint K
 
 
+/-- [Section: ## Part 1: Orthocomplementation] -/
 theorem orthomodular_law
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]
     (K L : Submodule ℂ E) [K.HasOrthogonalProjection]
@@ -81,6 +82,7 @@ theorem adjoint_inner_left'
   ContinuousLinearMap.adjoint_inner_left A x y
 
 
+/-- [Section: ## Part 2: Density Operators and Self-Adjoint Maps] -/
 theorem adjoint_adjoint'
     {E F : Type*} [NormedAddCommGroup E] [NormedAddCommGroup F]
     [InnerProductSpace ℂ E] [InnerProductSpace ℂ F]
@@ -131,6 +133,7 @@ theorem identity_channel_norm
   ContinuousLinearMap.norm_id
 
 
+/-- [Section: ## Part 3: Quantum Channels] -/
 theorem contractive_channel_convergence
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]
     (T : E →L[ℂ] E) (hT : ‖T‖ < 1) (v : E) :
@@ -154,6 +157,7 @@ theorem adjoint_comp'
   ext x y; simp +decide [ adjoint_inner_right ] ;
 
 
+/-- [Section: ## Part 4: Tensor Products and Entanglement] -/
 theorem tensor_submodule_monotone
     {V W : Type*} [AddCommGroup V] [AddCommGroup W]
     [Module ℂ V] [Module ℂ W]
@@ -184,6 +188,7 @@ theorem tensor_sup_contains
   · exact tensor_submodule_monotone _ _ _ _ le_sup_right le_rfl
 
 
+/-- [Section: ## Part 5: Spectral Theory Connections] -/
 theorem eigenspace_is_submodule
     {E : Type*} [AddCommGroup E] [Module ℂ E]
     (T : E →ₗ[ℂ] E) (mu : ℂ) :

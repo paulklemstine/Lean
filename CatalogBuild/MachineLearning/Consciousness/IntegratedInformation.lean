@@ -55,6 +55,7 @@ def isDecomposable (S : InfoSystem) (P : BiPartition S) (s : S.State) : Prop :=
   informationLoss S P s = 0
 
 
+/-- [Section: ## Fundamental Theorems] -/
 theorem earthMoverDistance_nonneg {α : Type} [Fintype α] (p q : α → ℝ) :
     0 ≤ earthMoverDistance p q := by
   exact Finset.sum_nonneg fun _ _ => abs_nonneg _
@@ -81,6 +82,7 @@ structure ConsciousSystem extends InfoSystem where
     0 < informationLoss toInfoSystem P s
 
 
+/-- [Section: ## The Self-Witnessing Theorem] -/
 theorem conscious_not_decomposable (C : ConsciousSystem)
     (P : BiPartition C.toInfoSystem) (s : C.toInfoSystem.State) :
     ¬ isDecomposable C.toInfoSystem P s := by

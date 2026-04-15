@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/TreeFactoring
-Declarations: 42
+Declarations: 44
 -/
 
 import Mathlib
@@ -22,6 +22,18 @@ theorem triple_channel_right_product (a b c d : ℤ)
     (d + a) * (d + b) * (d + c) =
     d^3 + d^2*(a+b+c) + d*(a*b + a*c + b*c) + a*b*c := by
   ring
+
+
+/-- **Channel Product Identity**: The product of all six channel factors
+(d-a)(d+a)(d-b)(d+b)(d-c)(d+c) relates to a product of sums of squares. -/
+theorem full_channel_product (a b c d : ℤ)
+    (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
+    (d - a) * (d + a) * ((d - b) * (d + b)) * ((d - c) * (d + c)) =
+    (b^2 + c^2) * (a^2 + c^2) * (a^2 + b^2) := by
+  have h1 : (d - a) * (d + a) = b^2 + c^2 := by nlinarith
+  have h2 : (d - b) * (d + b) = a^2 + c^2 := by nlinarith
+  have h3 : (d - c) * (d + c) = a^2 + b^2 := by nlinarith
+  rw [h1, h2, h3]
 
 
 /-- **Channel Sum**: Sum of all three channels equals 2d². -/
@@ -129,6 +141,7 @@ theorem quint_channel_ab (q : PythagoreanQuintuple) :
   have := q.quint_eq; nlinarith
 
 
+/-- [Section: ## §6. Higher-Dimensional Extensions: Quintuples] -/
 theorem quint_channel_cd (q : PythagoreanQuintuple) :
     (q.e - q.c) * (q.e + q.c) = q.a^2 + q.b^2 + q.d^2 := by
   have := q.quint_eq; nlinarith
@@ -172,6 +185,7 @@ theorem quint_six_channel_sum (a b c d e : ℤ) (h : a^2 + b^2 + c^2 + d^2 = e^2
   linarith
 
 
+/-- [Section: ## §7. The Representation Count and Factor Structure] -/
 theorem primitive_parity (a b c d : ℤ)
     (h : a^2 + b^2 + c^2 = d^2)
     (ha : 2 ∣ a) (hb : 2 ∣ b) (hc : 2 ∣ c) :
@@ -197,6 +211,7 @@ theorem cross_rep_gcd_constraint (c₁ c₂ d g : ℤ)
   exact dvd_sub hg1 hg2
 
 
+/-- [Section: ## §8. The Balanced Channel Theorem] -/
 theorem no_balanced_quadruple (a d : ℤ) (ha : a ≠ 0)
     (h : a^2 + a^2 + a^2 = d^2) : False := by
   have h3 : 3 * a^2 = d^2 := by linarith
@@ -270,12 +285,24 @@ theorem multi_channel_congruence_c (c d p : ℤ)
   exact dvd_sub hp_d hp_dc
 
 
+/-- [Section: ## §11. Congruence Systems from Multiple Channels] -/
 theorem multi_channel_congruence_c' (c d p : ℤ)
     (hp_d : p ∣ d) (hp_dc : p ∣ (d + c)) :
     p ∣ c := by
   have : c = (d + c) - d := by ring
   rw [this]
   exact dvd_sub hp_dc hp_d
+
+
+/-- **Strengthened Factor Dichotomy**: If p | d and p is prime, then for
+channel 1, we know p² | (d-c)(d+c) = a²+b². Since p | d, we have:
+- If p | c: then p | (d-c) AND p | (d+c), so p² | (d-c)(d+c)
+- If p ∤ c: then p ∤ (d-c) and p ∤ (d+c), but p² | (d-c)(d+c) -/
+theorem strengthened_dichotomy (a b c d p : ℤ)
+    (h : a^2 + b^2 + c^2 = d^2)
+    (hp : p ∣ d) (hpc : p ∣ c) :
+    p ∣ (d - c) ∧ p ∣ (d + c) := by
+  exact ⟨dvd_sub hp hpc, dvd_add hp hpc⟩
 
 
 /-- **Norm Map**: Define N(a,b,c) = a²+b²+c² as the "quadruple norm".
@@ -309,6 +336,7 @@ def repInnerProduct (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ) : ℤ :=
   a₁*a₂ + b₁*b₂ + c₁*c₂
 
 
+/-- [Section: ## §13. Inner Product and Angle Between Representations] -/
 theorem inner_product_sq_bound (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
     (h₁ : a₁^2 + b₁^2 + c₁^2 = d^2)
     (h₂ : a₂^2 + b₂^2 + c₂^2 = d^2) :

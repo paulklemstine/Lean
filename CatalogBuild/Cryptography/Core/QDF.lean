@@ -37,6 +37,7 @@ theorem gram_diagonal (a b c d : ℤ) (h : IsPythQuad a b c d) :
   unfold IsPythQuad at h; linarith
 
 
+/-- [Section: ## Section 2: Lattice-Based Cryptography] -/
 theorem cauchy_schwarz_qdf (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
     (h₁ : IsPythQuad a₁ b₁ c₁ d₁) (h₂ : IsPythQuad a₂ b₂ c₂ d₂) :
     (a₁*a₂ + b₁*b₂ + c₁*c₂)^2 ≤ d₁^2 * d₂^2 := by
@@ -96,6 +97,7 @@ theorem additive_cross_term (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
   unfold IsPythQuad at *; nlinarith
 
 
+/-- [Section: ## Section 3: Homomorphic Encryption] -/
 theorem exact_homomorphism (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
     (h₁ : IsPythQuad a₁ b₁ c₁ d₁) (h₂ : IsPythQuad a₂ b₂ c₂ d₂) :
     IsPythQuad (a₁ + a₂) (b₁ + b₂) (c₁ + c₂) (d₁ + d₂) ↔
@@ -109,6 +111,7 @@ theorem crt_compatibility (a b c d m₁ m₂ : ℤ) (h : IsPythQuad a b c d) :
   unfold IsPythQuad at h; rw [h]
 
 
+/-- [Section: ## Section 4: Quantum Error Correction] -/
 theorem rational_bloch_sphere (a b c d : ℤ) (hd : d ≠ 0) (h : IsPythQuad a b c d) :
     (a : ℚ)^2 / (d : ℚ)^2 + (b : ℚ)^2 / (d : ℚ)^2 + (c : ℚ)^2 / (d : ℚ)^2 = 1 := by
   rw [ ← add_div, ← add_div, div_eq_iff ] <;> norm_cast ; aesop;
@@ -145,6 +148,7 @@ theorem tda_distance_formula (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
   unfold IsPythQuad at *; nlinarith
 
 
+/-- [Section: ## Section 5: Topological Data Analysis] -/
 theorem max_distance (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
     (h₁ : IsPythQuad a₁ b₁ c₁ d) (h₂ : IsPythQuad a₂ b₂ c₂ d) :
     (a₁ - a₂)^2 + (b₁ - b₂)^2 + (c₁ - c₂)^2 ≤ 4 * d^2 := by
@@ -256,6 +260,7 @@ theorem residue_class (n : ℤ) :
   use (n + 1); ring
 
 
+/-- [Section: ## Section 6: Automated Theorem Proving / New Identities] -/
 theorem fidelity_bound (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
     (h₁ : IsPythQuad a₁ b₁ c₁ d₁) (h₂ : IsPythQuad a₂ b₂ c₂ d₂)
     (hd₁ : d₁ ≠ 0) (hd₂ : d₂ ≠ 0)
@@ -281,6 +286,7 @@ theorem midpoint_identity (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
   unfold IsPythQuad at *; nlinarith
 
 
+/-- [Section: ## Noise Growth Theorems for FHE Application] -/
 theorem noise_bounded_by_hypotenuse_product (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
     (h₁ : IsPythQuad a₁ b₁ c₁ d₁) (h₂ : IsPythQuad a₂ b₂ c₂ d₂)
     (hCS : (a₁*a₂ + b₁*b₂ + c₁*c₂)^2 ≤ d₁^2 * d₂^2) :

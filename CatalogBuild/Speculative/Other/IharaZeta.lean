@@ -38,6 +38,7 @@ def iharaMatrix {n : ℕ} (G : IharaGraph n) (u : ℝ) : Matrix (Fin n) (Fin n) 
   1 - u • G.adjMatrix + u^2 • (G.degMatrix - 1)
 
 
+/-- [Section: ## Section 2: The Ihara Determinant Formula] -/
 theorem ihara_matrix_regular {n : ℕ} (G : IharaGraph n) (q : ℕ) (u : ℝ)
     (hreg : G.isRegular q) :
     iharaMatrix G u = (1 + (q : ℝ) * u^2) • (1 : Matrix (Fin n) (Fin n) ℝ) - u • G.adjMatrix := by
@@ -49,6 +50,7 @@ theorem ihara_matrix_regular {n : ℕ} (G : IharaGraph n) (q : ℕ) (u : ℝ)
     unfold IharaGraph.degMatrix; aesop;
 
 
+/-- [Section: ## Section 3: Eigenvalue Characterization] -/
 theorem regular_graph_eigenvalue_bound {n : ℕ} (G : IharaGraph n) (q : ℕ)
     (hreg : G.isRegular q)
     (hadj_nn : ∀ i j, 0 ≤ G.adj i j)  -- adjacency entries are non-negative
@@ -89,6 +91,7 @@ def IharaGraph.graphRank {n : ℕ} (G : IharaGraph n) : ℝ :=
   G.numEdges - n + 1
 
 
+/-- [Section: ## Section 4: Number of Edges and Euler Characteristic] -/
 theorem regular_graph_edges {n : ℕ} (G : IharaGraph n) (q : ℕ) (hreg : G.isRegular q) :
     G.numEdges = (n : ℝ) * (q + 1 : ℝ) / 2 := by
   convert congr_arg ( fun x : ℝ => x / 2 ) ( Finset.sum_congr rfl fun i _ => hreg i ) using 1 ; simp +decide [ Finset.sum_add_distrib, Matrix.mulVec, dotProduct ];

@@ -64,6 +64,7 @@ theorem spb_denom_product (x y z : ℝ)
     1 - y * (x + z) + x * y ^ 2 * z := by ring
 
 
+/-- [Section: ## SPB Derivative Product Rule] -/
 theorem spb_compose_deriv (x a b : ℝ)
     (ha : 1 - x * a ≠ 0) (hb : 1 - spb' x a * b ≠ 0) :
     HasDerivAt (fun t => spb' (spb' t a) b)
@@ -97,6 +98,7 @@ theorem spb_pos_of_pos (x y : ℝ) (hx : 0 < x) (hy : 0 < y) (hxy : x * y < 1) :
   · linarith
 
 
+/-- [Section: ## SPB Order Theory] -/
 theorem spb_strictMono_fst (y : ℝ) (hd : ∀ x, 1 - x * y ≠ 0) :
     StrictMono (fun x => spb' x y) := by
   contrapose! hd;
@@ -110,6 +112,7 @@ theorem spb_difference (a b c : ℝ)
   unfold spb'; field_simp; ring
 
 
+/-- [Section: ## SPB and Logarithmic Derivative] -/
 theorem log_deriv_one_plus_sq (x : ℝ) :
     HasDerivAt (fun t => Real.log (1 + t ^ 2)) (2 * x / (1 + x ^ 2)) x := by
   convert HasDerivAt.log ( HasDerivAt.add ( hasDerivAt_const _ _ ) ( hasDerivAt_pow 2 x ) ) _ using 1 <;> norm_num ; ring ; positivity

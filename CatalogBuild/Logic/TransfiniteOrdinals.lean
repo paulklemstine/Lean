@@ -9,6 +9,9 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Non-commutativity of ordinal addition
+Rucker emphasizes that transfinite arithmetic breaks many "obvious" rules.
+The most striking example: 1 + ω = ω, but ω + 1 > ω.] -/
 theorem one_add_omega : 1 + ω = ω := by
   rw [ Ordinal.one_add_omega0 ]
 
@@ -21,6 +24,9 @@ theorem ordinal_add_not_comm : (1 : Ordinal) + ω ≠ ω + 1 := by
   exact ne_of_lt ( by simp +decide [ Ordinal.one_lt_omega0 ] )
 
 
+/-- [Section: ## Non-commutativity of ordinal multiplication
+Similarly, 2 · ω ≠ ω · 2. Rucker uses this to show that
+"order matters" in a profound way for infinite operations.] -/
 theorem two_mul_omega : 2 * ω = ω := by
   rw [ Ordinal.mul_omega0 ];
   · norm_num +zetaDelta at *;
@@ -35,6 +41,10 @@ theorem ordinal_mul_not_comm : (2 : Ordinal) * ω ≠ ω * 2 := by
   exact ne_of_lt ( by rw [ two_mul_omega ] ; exact omega_mul_two_gt )
 
 
+/-- [Section: ## The epsilon numbers — ordinal fixed points
+Rucker discusses ε₀ as the first ordinal satisfying ω^ε₀ = ε₀.
+These "epsilon numbers" are fundamental in proof theory and
+represent a key milestone in the ordinal hierarchy.] -/
 theorem epsilon_zero_fixed_point : omega0 ^ Ordinal.epsilon 0 = Ordinal.epsilon 0 := by
   exact?
 
@@ -62,6 +72,9 @@ noncomputable def omegaTower : ℕ → Ordinal
   | n + 1 => omega0 ^ omegaTower n
 
 
+/-- [Section: ## The tower of omegas converges to ε₀
+Rucker beautifully describes how ε₀ arises as the limit of the sequence:
+ω, ω^ω, ω^(ω^ω), ω^(ω^(ω^ω)), ...] -/
 theorem omegaTower_lt_epsilon_zero (n : ℕ) : omegaTower n < Ordinal.epsilon 0 := by
   induction' n with n ih;
   · exact Rucker.TransfiniteOrdinals.omega_lt_epsilon_zero;
@@ -78,6 +91,8 @@ theorem omegaTower_strictMono : StrictMono omegaTower := by
   exacts [ 1, by norm_num, by norm_num ]
 
 
+/-- [Section: ## Ordinal exponentiation properties
+Key properties that Rucker uses in his exposition.] -/
 theorem omega_pow_zero : omega0 ^ (0 : Ordinal) = 1 := by
   norm_num +zetaDelta at *
 

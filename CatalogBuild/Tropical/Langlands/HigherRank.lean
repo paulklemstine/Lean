@@ -82,6 +82,7 @@ def tropParabolicInduction (n₁ n₂ : ℕ)
   Fin.addCases params1 params2
 
 
+/-- [Section: ## Section 6: Tropical Parabolic Induction] -/
 theorem tropL_parabolic_additive (n₁ n₂ : ℕ)
     (params1 : Fin n₁ → ℝ) (params2 : Fin n₂ → ℝ) (s : ℝ) :
     ∑ i : Fin (n₁ + n₂), (s - tropParabolicInduction n₁ n₂ params1 params2 i) =

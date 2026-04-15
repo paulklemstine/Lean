@@ -17,6 +17,9 @@ def tropGrad_left (a b : ℝ) : ℝ := if a ≥ b then 1 else 0
 def tropGrad_right (a b : ℝ) : ℝ := if b > a then 1 else 0
 
 
+/-- [Section: ================================================================
+SECTION 1: TROPICAL BACKPROPAGATION (Agent Alpha)
+================================================================] -/
 theorem tropGrad_partition (a b : ℝ) (hab : a ≠ b) :
     tropGrad_left a b + tropGrad_right a b = 1 := by
   unfold tropGrad_left tropGrad_right; split_ifs <;> cases lt_or_gt_of_ne hab <;> linarith;
@@ -54,6 +57,11 @@ def tropMM {m p n : ℕ} [NeZero p] (A : Fin m → Fin p → ℝ) (B : Fin p →
   fun i j => Finset.sup' Finset.univ Finset.univ_nonempty (fun k => A i k + B k j)
 
 
+/-- [Section: ================================================================
+SECTION 2: TROPICAL CONVOLUTIONS & MATHEMATICAL MORPHOLOGY (Agent Beta)
+Dilation by a structuring element B is tropical convolution:
+(f ⊕_B)(i) = max_j (f(j) + B(i-j))
+================================================================] -/
 theorem tropMV_mono_input {m n : ℕ} [NeZero n]
     (W : Fin m → Fin n → ℝ) (f f' : Fin n → ℝ) (hle : ∀ j, f j ≤ f' j)
     (i : Fin m) : tropMV W f i ≤ tropMV W f' i := by
@@ -99,6 +107,11 @@ def tropRNNState {n : ℕ} [NeZero n] (W : Fin n → Fin n → ℝ) (s₀ : Fin 
   tropMV (tropMatPow W t) s₀
 
 
+/-- [Section: ================================================================
+SECTION 3: TROPICAL RECURRENT NETWORKS (Agent Beta + Alpha)
+A tropical RNN computes s_{t+1} = W ⊙ s_t via iterated tropical
+matrix-vector multiplication.
+================================================================] -/
 theorem tropRNN_mono_init {n : ℕ} [NeZero n]
     (W : Fin n → Fin n → ℝ) (s₀ s₀' : Fin n → ℝ)
     (hle : ∀ j, s₀ j ≤ s₀' j) (t : ℕ) (i : Fin n) :
@@ -120,6 +133,11 @@ def minAdd (a b : ℝ) : ℝ := min a b
 def minMul (a b : ℝ) : ℝ := a + b
 
 
+/-- [Section: ================================================================
+SECTION 4: MIN-PLUS DUALITY & SHORTEST PATHS (Agent Alpha + Delta)
+The min-plus semiring (ℝ, min, +) is the order-dual of max-plus.
+Where max-plus computes longest paths, min-plus computes shortest paths.
+================================================================] -/
 theorem minAdd_comm (a b : ℝ) : minAdd a b = minAdd b a := min_comm a b
 
 theorem minMul_comm (a b : ℝ) : minMul a b = minMul b a := add_comm a b
@@ -175,6 +193,10 @@ def tropLayerGates (m n : ℕ) : ℕ := m * n + m * (n - 1)
 def stdLayerEnergy (m n mulCost : ℕ) : ℕ := m * n * mulCost + m * (n - 1)
 
 
+/-- [Section: ================================================================
+SECTION 5: HARDWARE-EFFICIENT TROPICAL COMPUTING (Agent Delta)
+Tropical operations need only comparators and adders, never multipliers.
+================================================================] -/
 theorem tropLayer_cheaper (m n mulCost : ℕ) (hm : 0 < m) (hn : 1 < n)
     (hcost : 2 ≤ mulCost) :
     tropLayerGates m n ≤ stdLayerEnergy m n mulCost := by
@@ -204,6 +226,10 @@ def tropPoly1d {k : ℕ} (coeffs exponents : Fin (k+1) → ℝ) (x : ℝ) : ℝ 
     (fun i : Fin (k+1) => coeffs i + exponents i * x)
 
 
+/-- [Section: ================================================================
+SECTION 6: TROPICAL NEWTON POLYTOPES (Agent Gamma)
+A tropical polynomial p(x) = max_i (c_i + e_i * x) is piecewise linear.
+================================================================] -/
 theorem tropPoly1d_pwl {k : ℕ} (coeffs exponents : Fin (k+1) → ℝ) (x : ℝ) :
     ∃ i : Fin (k+1), tropPoly1d coeffs exponents x = coeffs i + exponents i * x := by
   -- The supremum of a finite set of real numbers is attained by some element of the set.
@@ -239,6 +265,11 @@ theorem maslov_at_one (a b : ℝ) :
   simp [maslovDeform]
 
 
+/-- [Section: ================================================================
+SECTION 7: MASLOV DEQUANTIZATION (Agent Epsilon — Oracle)
+The tropical semiring is the classical limit of quantum mechanics!
+lim_{ε→0+} ε · log(exp(a/ε) + exp(b/ε)) = max(a, b)
+================================================================] -/
 theorem maslov_ge_max (a b : ℝ) (ε : ℝ) (hε : 0 < ε) :
     max a b ≤ maslovDeform ε a b := by
   unfold maslovDeform;
@@ -261,6 +292,10 @@ theorem maslov_gap_bound (a b : ℝ) (ε : ℝ) (hε : 0 < ε) :
   nlinarith [ mul_div_cancel₀ a hε.ne' ]
 
 
+/-- [Section: ================================================================
+SECTION 8: TROPICAL BOOLEAN FUNCTIONS (Agent Delta)
+Over {0, 1}: max = OR, min = AND, 1-x = NOT
+================================================================] -/
 theorem trop_max_is_or (a b : Bool) :
     max (if a then (1:ℤ) else 0) (if b then 1 else 0) =
     if (a || b) then 1 else 0 := by
@@ -285,6 +320,11 @@ theorem bool_fn_encoded (f : Bool → Bool → Bool) :
   exact ⟨ fun x y => if x = 1 ∧ y = 1 then if f Bool.true Bool.true then 1 else 0 else if x = 1 ∧ y = 0 then if f Bool.true Bool.false then 1 else 0 else if x = 0 ∧ y = 1 then if f Bool.false Bool.true then 1 else 0 else if x = 0 ∧ y = 0 then if f Bool.false Bool.false then 1 else 0 else 2, by intro a b; cases a <;> cases b <;> simp +decide ⟩
 
 
+/-- [Section: ================================================================
+SECTION 9: QUANTUM-TROPICAL CORRESPONDENCE (Agent Epsilon — Oracle)
+LogSumExp sandwiches between max and max + log(n), providing
+a smooth interpolation between quantum and tropical.
+================================================================] -/
 theorem quantum_classical_sandwich (a b : ℝ) :
     max a b ≤ Real.log (Real.exp a + Real.exp b) ∧
     Real.log (Real.exp a + Real.exp b) ≤ max a b + Real.log 2 := by
@@ -311,6 +351,11 @@ def tropHalfSpace {n : ℕ} [NeZero n] (w w' : Fin n → ℝ) : Set (Fin n → �
        tropMV (fun (_ : Fin 1) j => w' j) x ⟨0, by omega⟩}
 
 
+/-- [Section: ================================================================
+SECTION 10: TROPICAL HALF-SPACES AND DECISION BOUNDARIES
+A tropical half-space is {x : max_j(w_j + x_j) ≥ max_j(w'_j + x_j)}.
+Decision boundaries of tropical classifiers are tropical hypersurfaces.
+================================================================] -/
 theorem tropHalfSpace_shift_invariant {n : ℕ} [NeZero n]
     (w w' : Fin n → ℝ) (x : Fin n → ℝ) (c : ℝ) :
     x ∈ tropHalfSpace w w' ↔ (fun j => x j + c) ∈ tropHalfSpace w w' := by
@@ -324,6 +369,11 @@ def IsTropFixedPoint {n : ℕ} [NeZero n] (W : Fin n → Fin n → ℝ) (x : Fin
   ∀ i, tropMV W x i = lam + x i
 
 
+/-- [Section: ================================================================
+SECTION 11: TROPICAL FIXED POINTS AND DYNAMICS
+Iterated tropical matrix-vector multiplication converges to a
+tropical eigenspace. The fixed point satisfies W ⊙ x = λ + x.
+================================================================] -/
 theorem tropFixedPoint_diag_bound {n : ℕ} [NeZero n]
     (W : Fin n → Fin n → ℝ) (x : Fin n → ℝ) (lam : ℝ)
     (hfp : IsTropFixedPoint W x lam) (i : Fin n) :

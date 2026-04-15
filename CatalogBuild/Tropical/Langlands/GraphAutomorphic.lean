@@ -19,6 +19,7 @@ def isHarmonic (n : ℕ) (A : Fin n → Fin n → ℝ) (f : Fin n → ℝ) : Pro
   ∀ v : Fin n, ∑ w : Fin n, graphLaplacian n A v w * f w = 0
 
 
+/-- [Section: ## Section 1: Graph Laplacian and Harmonic Functions] -/
 theorem graphLaplacian_symmetric (n : ℕ) (A : Fin n → Fin n → ℝ)
     (hA : ∀ i j, A i j = A j i) :
     ∀ i j, graphLaplacian n A i j = graphLaplacian n A j i := by

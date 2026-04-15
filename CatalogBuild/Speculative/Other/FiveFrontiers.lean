@@ -134,6 +134,7 @@ theorem goldbach_100 : ∃ p q : ℕ, Nat.Prime p ∧ Nat.Prime q ∧ 100 = p + 
   ⟨3, 97, by decide, by decide, by omega⟩
 
 
+/-- PART IV: QUANTUM ALGEBRAIC FOUNDATIONS -/
 theorem unitary_mul {n : Type*} [DecidableEq n] [Fintype n]
     (U V : Matrix n n ℂ) (hU : U * star U = 1) (hV : V * star V = 1) :
     (U * V) * star (U * V) = 1 := by

@@ -104,6 +104,7 @@ theorem PhotonEventGraph.causallyConnected_trans (G : PhotonEventGraph)
   | step a b c hstep _ ih => exact .step a b e₃ hstep (ih h₂₃)
 
 
+/-- [Section: ## Section 4: Causal Order and Acyclicity] -/
 theorem PhotonEventGraph.time_monotone (G : PhotonEventGraph)
     (e₁ e₂ : SpacetimeEvent)
     (hconn : G.causallyConnected e₁ e₂)
@@ -141,6 +142,12 @@ noncomputable def PhotonEventGraph.absorptionDegree (G : PhotonEventGraph) (e : 
   (G.photons.filter (fun p => p.absorption = e)).card
 
 
+/-- [Section: ## Section 5: Vertex Degree Structure
+In the photon event graph, the degree of each vertex tells us about
+the physical process at that event:
+- Out-degree = number of photons emitted
+- In-degree = number of photons absorbed
+- Conservation laws constrain these degrees] -/
 theorem PhotonEventGraph.total_emission_count (G : PhotonEventGraph) :
     G.photons.card = ∑ e ∈ G.events, G.emissionDegree e := by
   unfold PhotonEventGraph.emissionDegree;
@@ -160,6 +167,7 @@ structure EntangledPair where
     photon1.momentum.2 + photon2.momentum.2 = 0
 
 
+/-- [Section: ## Section 6: Entangled Photon Pairs] -/
 theorem EntangledPair.equal_energy (ep : EntangledPair) :
     ep.photon1.energy = ep.photon2.energy := by
   -- By the on-shell condition, we have that for both photons, their energy squared is equal to the sum of the squares of their momentum components.

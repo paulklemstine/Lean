@@ -14,6 +14,7 @@ def spb_bridge (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
 def spbH_bridge (x y : ℝ) : ℝ := (x + y) / (1 + x * y)
 
 
+/-- [Section: ## EML Basic Properties] -/
 theorem eml_generates_exp (x : ℝ) : eml x 1 = exp x := by
   simp [eml, Real.log_one]
 
@@ -25,6 +26,7 @@ theorem eml_generates_neg_log (y : ℝ) : eml 0 y = 1 - log y := by
 theorem eml_identity : eml 0 1 = 1 := by simp [eml, Real.log_one]
 
 
+/-- [Section: ## SPB Basic Properties] -/
 theorem spb_identity_bridge (x : ℝ) : spb_bridge x 0 = x := by simp [spb_bridge]
 
 theorem spb_inverse_bridge (x : ℝ) : spb_bridge x (-x) = 0 := by simp [spb_bridge]
@@ -45,6 +47,7 @@ theorem tanh_hom (a b : ℝ) :
   field_simp
 
 
+/-- [Section: ## SPB Associativity] -/
 theorem spb_assoc_bridge (x y z : ℝ) (h1 : 1 - x * y ≠ 0) (h2 : 1 - y * z ≠ 0) :
     spb_bridge (spb_bridge x y) z = spb_bridge x (spb_bridge y z) := by
   by_cases h3 : 1 - ( x + y ) / ( 1 - x * y ) * z = 0 <;> by_cases h4 : 1 - ( y + z ) / ( 1 - y * z ) * x = 0 <;> simp +decide [ *, spb_bridge ] at *;

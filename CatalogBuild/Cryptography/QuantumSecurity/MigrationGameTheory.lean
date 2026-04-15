@@ -63,6 +63,7 @@ theorem sndl_irreversible (d : StorableData) :
 /-- New transactions per day across Bitcoin and Ethereum. -/
 def new_bitcoin_txns_per_day : ℕ := 300000
 
+/-- [Section: ## §2: Store-Now-Decrypt-Later (SNDL) Attack] -/
 def new_ethereum_txns_per_day : ℕ := 1000000
 
 def daily_sndl_growth : ℕ := new_bitcoin_txns_per_day + new_ethereum_txns_per_day
@@ -182,6 +183,7 @@ theorem must_start_by :
 /-- Bitcoin market cap (billions USD). -/
 def btc_market_cap_billion : ℕ := 1700
 
+/-- [Section: ## §6: Economic Impact Analysis] -/
 def at_risk_pct : ℕ := 57
 
 

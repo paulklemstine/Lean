@@ -7,6 +7,7 @@ Declarations: 14
 
 import Mathlib
 
+/-- [Section: ## Section 1: Three-Square Representations] -/
 def IsThreeSquareRep (N : ℤ) (x y z : ℤ) : Prop :=
   x ^ 2 + y ^ 2 + z ^ 2 = N
 
@@ -31,6 +32,7 @@ theorem three_square_six : IsThreeSquareRep 6 2 1 1 := by
   simp [IsThreeSquareRep]
 
 
+/-- [Section: ## Section 2: The Quadruple Lattice] -/
 def InQuadLattice (N : ℤ) (x y z : ℤ) : Prop :=
   N ∣ (x ^ 2 + y ^ 2 + z ^ 2)
 
@@ -48,6 +50,7 @@ theorem scalar_in_quad_lattice (N k x y z : ℤ) (h : InQuadLattice N x y z) :
   exact dvd_mul_of_dvd_right h _
 
 
+/-- [Section: ## Section 3: Lorentz Group O(3,1;ℤ)] -/
 def lorentzEta : Matrix (Fin 4) (Fin 4) ℤ :=
   Matrix.diagonal ![1, 1, 1, -1]
 
@@ -56,9 +59,11 @@ def IsLorentzInt (M : Matrix (Fin 4) (Fin 4) ℤ) : Prop :=
   M.transpose * lorentzEta * M = lorentzEta
 
 
+/-- [Section: ## Section 4: LLL in Dimension 3] -/
 theorem lll_factor_dim3 : (2 : ℕ) ^ ((3 - 1) / 2) = 2 := by norm_num
 
 
+/-- [Section: ## Section 5: Factor Extraction] -/
 def extractFactor (N x y z : ℤ) : ℤ := Int.gcd (x ^ 2 + y ^ 2) N
 
 

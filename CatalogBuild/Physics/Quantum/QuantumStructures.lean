@@ -7,6 +7,7 @@ Declarations: 10
 
 import Mathlib
 
+/-- [Section: ## 1. Qubit State Space Foundations] -/
 theorem qubit_hilbert_dim (n : ℕ) : Fintype.card (Fin (2^n)) = 2^n := by
   simp +decide [ Fintype.card_fin ]
 
@@ -23,6 +24,7 @@ theorem pauliX_det : Matrix.det pauliX = -1 := by
   unfold pauliX; norm_num;
 
 
+/-- [Section: ## 3. Multi-Qubit Systems: Kronecker Product] -/
 theorem kronecker_id_2 :
     Matrix.kroneckerMap (· * ·)
       (1 : Matrix (Fin 2) (Fin 2) ℂ) (1 : Matrix (Fin 2) (Fin 2) ℂ) =
@@ -38,6 +40,7 @@ def gaussianBinomial (q n k : ℕ) : ℕ :=
   else (q^n - 1) / (q^k - 1) * gaussianBinomial q (n-1) (k-1)
 
 
+/-- [Section: ## 4. Crystallizer Lattice Elements] -/
 theorem gaussianBinomial_zero (q n : ℕ) : gaussianBinomial q n 0 = 1 := by
   unfold gaussianBinomial; aesop;
 
@@ -46,6 +49,7 @@ theorem gaussianBinomial_gt (q n k : ℕ) (h : k > n) : gaussianBinomial q n k =
   unfold gaussianBinomial; aesop;
 
 
+/-- [Section: ## 5. Novel: Quantum Lattice Rank Theorem] -/
 theorem crystallizer_lattice_bound (q n : ℕ) (hq : 2 ≤ q) (hn : 1 ≤ n) :
     q ^ (n * (n-1) / 2) ≤ q ^ (n * n) := by
   exact pow_le_pow_right₀ ( by linarith ) ( Nat.div_le_of_le_mul <| by nlinarith [ Nat.sub_le n 1 ] )

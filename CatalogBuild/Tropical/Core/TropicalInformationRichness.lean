@@ -130,6 +130,9 @@ theorem discrete_exp_mod_bound (g x p : ℕ) (hp : 0 < p) :
     g ^ x % p < p := Nat.mod_lt _ hp
 
 
+/-- [Section: ================================================================
+PART VI: EXPONENTIATION AND ONE-WAY FUNCTIONS
+================================================================] -/
 theorem fermat_little_period (a p : ℕ) (hp : Nat.Prime p) (ha : ¬p ∣ a) :
     a ^ (p - 1) ≡ 1 [MOD p] := by
       exact Nat.totient_prime hp ▸ Nat.ModEq.pow_totient ( Nat.coprime_comm.mp <| hp.coprime_iff_not_dvd.mpr ha )
@@ -169,6 +172,9 @@ def tetration : ℕ → ℕ → ℕ
   | a, n + 1 => a ^ tetration a n
 
 
+/-- [Section: ================================================================
+PART VII: THE INFORMATION HIERARCHY OF OPERATIONS
+================================================================] -/
 theorem tetration_dominates_exp (n : ℕ) : tetration 2 n ≥ n := by
   induction n with
   | zero => simp [tetration]

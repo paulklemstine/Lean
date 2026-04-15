@@ -7,6 +7,7 @@ Declarations: 11
 
 import Mathlib
 
+/-- Hodge numbers: curve of genus g -/
 theorem curve_hodge' (g : ℤ) :
     1 - (g + g) + 1 = 2 - 2 * g := by ring
 

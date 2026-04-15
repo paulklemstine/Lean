@@ -13,6 +13,7 @@ theorem pythagorean_parametrization (m n : ℤ) :
   ring
 
 
+/-- [Section: ## 3. Unit Circle / Polarization States] -/
 theorem unit_circle_rational_point (m n : ℚ) (h : m ^ 2 + n ^ 2 ≠ 0) :
     ((m ^ 2 - n ^ 2) / (m ^ 2 + n ^ 2)) ^ 2 +
     (2 * m * n / (m ^ 2 + n ^ 2)) ^ 2 = 1 := by
@@ -25,6 +26,7 @@ theorem gaussian_norm_multiplicative (a b c d : ℤ) :
   exact ⟨a * c - b * d, a * d + b * c, by ring⟩
 
 
+/-- [Section: ## 5. Fermat's Two-Square Theorem (Easy Direction)] -/
 theorem fermat_two_square_easy_direction (p a b : ℕ) (hp : Nat.Prime p)
     (hab : a ^ 2 + b ^ 2 = p) (ha : 0 < a) (hb : 0 < b) :
     p = 2 ∨ p % 4 = 1 := by
@@ -34,6 +36,7 @@ theorem fermat_two_square_easy_direction (p a b : ℕ) (hp : Nat.Prime p)
     lia
 
 
+/-- [Section: ## 6. Infinitude of Pythagorean Triples] -/
 theorem infinitely_many_pythagorean_triples :
     ∀ N : ℕ, ∃ a b c : ℕ, N < c ∧ a ^ 2 + b ^ 2 = c ^ 2 ∧ 0 < a ∧ 0 < b := by
   intro N
@@ -88,6 +91,7 @@ theorem multiple_representations_50 :
   constructor <;> norm_num
 
 
+/-- [Section: ## 11. Parity and Modular Structure] -/
 theorem sum_two_squares_mod4 (a b : ℤ) : (a ^ 2 + b ^ 2) % 4 ≠ 3 := by
   rcases Int.even_or_odd' a with ⟨ a, rfl | rfl ⟩ <;> rcases Int.even_or_odd' b with ⟨ b, rfl | rfl ⟩ <;> ring_nf <;> norm_num
 
@@ -108,6 +112,7 @@ theorem triple_8_15_17 : (8 : ℤ) ^ 2 + 15 ^ 2 = 17 ^ 2 := by norm_num
 theorem triple_7_24_25 : (7 : ℤ) ^ 2 + 24 ^ 2 = 25 ^ 2 := by norm_num
 
 
+/-- [Section: ## 13. Polarization Angle Density] -/
 theorem polarization_density :
     ∀ p q : ℕ, 0 < p → p < q →
     ∃ m n : ℕ, 0 < n ∧ n < m ∧
@@ -115,6 +120,7 @@ theorem polarization_density :
   exact fun p q hp hq => ⟨ 2, 1, by norm_num, by norm_num, by norm_num ⟩
 
 
+/-- [Section: ## 15. Wave-Particle Duality (Fourier)] -/
 theorem wave_particle_complementarity (a b c : ℤ) (hc : c ≠ 0) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (a : ℚ) ^ 2 / (c : ℚ) ^ 2 + (b : ℚ) ^ 2 / (c : ℚ) ^ 2 = 1 := by
   rw [ ← add_div, div_eq_iff ] <;> norm_cast <;> aesop

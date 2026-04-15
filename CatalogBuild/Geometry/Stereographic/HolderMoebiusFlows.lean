@@ -49,6 +49,7 @@ def moebiusFlowConformalFactor (n : ℕ) (x : Fin n → ℝ) : ℝ :=
   2 / (1 + ∑ i, (x i) ^ 2)
 
 
+/-- [Section: ## Part 2: Conformal Factor Along the Flow] -/
 theorem moebiusFlowConformalFactor_pos (n : ℕ) (x : Fin n → ℝ) :
     0 < moebiusFlowConformalFactor n x := by
   unfold moebiusFlowConformalFactor; positivity
@@ -77,6 +78,7 @@ def holderBound (C alpha t s : ℝ) : ℝ :=
   C * |t - s| ^ alpha
 
 
+/-- [Section: ## Part 3: Hölder Continuity] -/
 theorem holderBound_nonneg (C alpha t s : ℝ) (hC : 0 ≤ C) (ha : 0 ≤ alpha) :
     0 ≤ holderBound C alpha t s := by
   unfold holderBound
@@ -111,6 +113,7 @@ def flowVelocitySqNorm (p : MoebiusFlowParam) : ℝ :=
   pairSqNorm v.1 + pairSqNorm v.2.1 + pairSqNorm v.2.2.1 + pairSqNorm v.2.2.2
 
 
+/-- [Section: ## Part 4: Flow Velocity and Gradient] -/
 theorem flowVelocitySqNorm_nonneg (p : MoebiusFlowParam) :
     0 ≤ flowVelocitySqNorm p := by
   unfold flowVelocitySqNorm pairSqNorm flowVelocity; positivity

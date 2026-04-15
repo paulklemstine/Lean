@@ -50,6 +50,7 @@ theorem spectral_eigenvalues (ev : ℝ) (h : ev * ev = ev) :
   · exact Or.inr (by linarith)
 
 
+/-- [Section: ## §2: Matrix Oracle — The Spectral Construction] -/
 theorem complement_oracle_idem {n : ℕ} (P : Matrix (Fin n) (Fin n) ℝ) (hP : P * P = P) :
     (1 - P) * (1 - P) = 1 - P := by
   simp_all +decide [ sub_mul, mul_sub ] ;
@@ -111,6 +112,7 @@ def gcdSpectralOracle (N : ℕ) : SpectralOracle ℕ where
 theorem gcd_oracle_divides (N x : ℕ) : Nat.gcd x N ∣ N := Nat.gcd_dvd_right x N
 
 
+/-- [Section: ## §4: The Factoring Oracle] -/
 theorem factoring_semiprime (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q) (hpq : p ≠ q) :
     ∃ x, 1 < Nat.gcd x (p * q) ∧ Nat.gcd x (p * q) < p * q := by
   use p;
@@ -122,6 +124,7 @@ theorem factoring_semiprime (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q) (h
 def primeCount' (n : ℕ) : ℕ := ((Finset.range (n + 1)).filter Nat.Prime).card
 
 
+/-- [Section: ## §5: Riemann Connection — The Spectral Bridge] -/
 theorem primeCount'_10 : primeCount' 10 = 4 := by native_decide
 
 theorem primeCount'_100 : primeCount' 100 = 25 := by native_decide
@@ -196,6 +199,7 @@ theorem reck_count (n : ℕ) : n * (n - 1) / 2 ≤ n * n := by
   omega
 
 
+/-- [Section: ## §8: Oracle Composition] -/
 theorem oracle_comp_idem {n : ℕ}
     (P Q : Matrix (Fin n) (Fin n) ℝ)
     (hP : P * P = P) (hQ : Q * Q = Q) (hPQ : P * Q = Q * P) :
@@ -207,6 +211,7 @@ theorem oracle_comp_idem {n : ℕ}
 theorem pvnp_bound (n k : ℕ) (hk : 0 < k) : n / k ≤ n := Nat.div_le_self n k
 
 
+/-- [Section: ## §9: Millennium Problem Connections] -/
 theorem yang_mills_gap (eigenvalues : List ℝ)
     (hpos : ∀ ev ∈ eigenvalues, ev = 0 ∨ 0 < ev)
     (hne : ∃ ev ∈ eigenvalues, 0 < ev) :
@@ -238,6 +243,7 @@ theorem spectral_fixed_point {α : Type*} (O : SpectralOracle α) :
     Set.range O.map = {x | O.map x = x} := spectral_range_eq_fixed O
 
 
+/-- [Section: ## §11: Grover + Spectral Oracle] -/
 theorem grover_spectral_speedup (N : ℕ) (hN : 4 ≤ N) :
     Nat.sqrt N < N := by
   exact Nat.sqrt_lt_self <| by linarith;

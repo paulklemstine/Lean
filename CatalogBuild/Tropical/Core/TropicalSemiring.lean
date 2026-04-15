@@ -17,6 +17,10 @@ theorem relu_relu (x : ℝ) : relu (relu x) = relu x := by
   unfold relu; aesop;
 
 
+/-- [Section: ## Section 2: LogSumExp Bounds
+LogSumExp(x₁, ..., xₙ) = log(∑ exp(xᵢ)) satisfies:
+max(xᵢ) ≤ LogSumExp ≤ max(xᵢ) + log(n)
+This is the key inequality connecting standard and tropical computations.] -/
 theorem le_logSumExp {ι : Type*} {s : Finset ι} {f : ι → ℝ} {i : ι}
     (hi : i ∈ s) : f i ≤ logSumExp s f := by
   exact Real.le_log_iff_exp_le ( Finset.sum_pos ( fun _ _ => Real.exp_pos _ ) ⟨ i, hi ⟩ ) |>.2 ( Finset.single_le_sum ( fun j _ => Real.exp_nonneg ( f j ) ) hi )
@@ -58,6 +62,11 @@ theorem exp_add_eq_mul (x y : ℝ) :
   Real.exp_add x y
 
 
+/-- [Section: ## Section 4: Exponential as Semiring Homomorphism
+The map exp : (ℝ, max, +) → (ℝ₊, +, ×) preserves the algebraic structure.
+We prove the two key homomorphism properties:
+exp(x + y) = exp(x) · exp(y)   [additive → multiplicative]
+exp(max(x, y)) = max(exp(x), exp(y))  [max-preserving, since exp is monotone]] -/
 theorem exp_max_eq_max (x y : ℝ) :
     Real.exp (max x y) = max (Real.exp x) (Real.exp y) := by
   -- Since the exponential function is strictly increasing, we have `exp (max x y) = max (exp x) (exp y)`.
@@ -75,6 +84,12 @@ theorem exp_pos_forall (x : ℝ) : 0 < Real.exp x :=
   Real.exp_pos x
 
 
+/-- [Section: ## Section 5: Piecewise Linear Functions and Tropical Polynomials
+Key facts for the "Grand Unification":
+- ReLU networks compute piecewise-linear functions
+- Every continuous piecewise-linear function ℝ → ℝ can be written as a
+finite combination of max and affine functions
+- max and affine functions are tropical polynomial operations] -/
 theorem max_affine_is_relu_computable (a b c d : ℝ) :
     ∀ x : ℝ, max (a * x + b) (c * x + d) =
       relu (a * x + b - (c * x + d)) + (c * x + d) := by
@@ -89,6 +104,10 @@ theorem relu_as_max_affine (x : ℝ) : relu x = max (1 * x + 0) (0 * x + 0) := b
   rfl
 
 
+/-- [Section: ## Section 7: Tropical Convexity
+A function f : ℝ → ℝ is tropically convex if
+f(max(x,y)) ≤ max(f(x), f(y))
+Monotone functions are tropically convex.] -/
 theorem monotone_preserves_max {f : ℝ → ℝ} (hf : Monotone f) (x y : ℝ) :
     f (max x y) = max (f x) (f y) := by
   cases le_total x y <;> aesop

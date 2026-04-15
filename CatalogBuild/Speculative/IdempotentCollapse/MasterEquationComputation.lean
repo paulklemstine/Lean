@@ -63,6 +63,7 @@ theorem error_correction_idempotent {α : Type*} (valid : Set α)
   fun x => h_fixes (correct x) (h_into x)
 
 
+/-- [Section: ## 8. The Master Equation: One Step Suffices] -/
 theorem master_equation_one_step {α : Type*} (f : α → α)
     (hf : ∀ x, f (f x) = f x) (x : α) (n : ℕ) (hn : 0 < n) :
     f^[n] x = f x := by
@@ -94,6 +95,7 @@ theorem commuting_idempotent_computations {α : Type*}
   rw [hcomm, hf, hcomm, hg]
 
 
+/-- [Section: ## 9. Computational Convergence: The Fixed-Point Theorem] -/
 theorem finite_iteration_periodic {α : Type*} [Fintype α]
     (f : α → α) : ∃ n m : ℕ, 0 < n ∧ n < m ∧ f^[n] = f^[m] := by
   by_contra! h_contra;

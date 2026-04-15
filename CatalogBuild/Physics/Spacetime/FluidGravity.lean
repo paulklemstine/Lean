@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Part I: Navier-Stokes Dissipation] -/
 theorem kinetic_energy_nonneg (rho v : ℝ) (hrho : rho > 0) :
     rho * v ^ 2 / 2 ≥ 0 := by positivity
 
@@ -30,6 +31,7 @@ theorem kolmogorov_decay (C eps k1 k2 : ℝ)
   gcongr
 
 
+/-- [Section: ## Part II: Holographic Dictionary] -/
 theorem kss_bound_positive : (1 : ℝ) / (4 * Real.pi) > 0 := by positivity
 
 theorem diffusion_positive (eta rhoP : ℝ) (heta : eta > 0) (hrhoP : rhoP > 0) :
@@ -40,6 +42,7 @@ theorem dominant_energy (T00 T0i : ℝ) (h : T00 ≥ |T0i|) : T00 ≥ 0 := by
   linarith [abs_nonneg T0i]
 
 
+/-- [Section: ## Part III: Entanglement Entropy] -/
 theorem rt_entropy_positive (area GN : ℝ) (ha : area > 0) (hG : GN > 0) :
     area / (4 * GN) > 0 := by positivity
 
@@ -48,6 +51,7 @@ theorem strong_subadditivity (SABC SB SAB SBC : ℝ) (h : SABC + SB ≤ SAB + SB
     SABC - SAB ≤ SBC - SB := by linarith
 
 
+/-- [Section: ## Part IV: Information and Complexity] -/
 theorem bekenstein_bound_scales (R1 R2 E : ℝ) (hE : E > 0) (h : R1 < R2) :
     2 * Real.pi * R1 * E < 2 * Real.pi * R2 * E := by
   have hpi := Real.pi_pos
@@ -65,6 +69,7 @@ theorem scrambling_time_positive (T S : ℝ) (hT : T > 0) (hS : S > 1) :
 theorem lloyd_bound (M : ℝ) (hM : M > 0) : 2 * M / Real.pi > 0 := by positivity
 
 
+/-- [Section: ## Part V: Page Curve] -/
 def pageEntropy (t S_BH : ℝ) : ℝ := min t (S_BH - t)
 
 
@@ -83,6 +88,7 @@ theorem page_nonneg (t S_BH : ℝ) (ht : 0 ≤ t) (hS : t ≤ S_BH) :
   simp only [pageEntropy, ge_iff_le, le_min_iff]; constructor <;> linarith
 
 
+/-- [Section: ## Part VI: Blackening Factor] -/
 def blackeningFactor (r rH : ℝ) (d : ℕ) : ℝ := 1 - (rH / r) ^ d
 
 

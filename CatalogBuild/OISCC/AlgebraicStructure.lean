@@ -21,6 +21,7 @@ theorem EMLa_noncomm : ∃ a b : ℝ, EMLa a b ≠ EMLa b a := by
   linarith [Real.exp_one_gt_d9]
 
 
+/-- [Section: ## Section 1: Basic Algebraic Properties] -/
 theorem EMLa_nonassoc :
     ∃ a b c : ℝ, EMLa (EMLa a b) c ≠ EMLa a (EMLa b c) := by
   use 0, 1, 1;
@@ -79,6 +80,7 @@ theorem Tc_compose (c₁ c₂ x : ℝ) :
   simp [Tc, EMLa]
 
 
+/-- [Section: ## Section 3: The T_c Action] -/
 theorem Tc_noncomm : ∃ c₁ c₂ : ℝ, ∃ x : ℝ,
     Tc c₁ (Tc c₂ x) ≠ Tc c₂ (Tc c₁ x) := by
   use 1, Real.exp 1, 0;
@@ -120,6 +122,7 @@ def EMLTower : ℕ → ℝ
   | n + 1 => EMLa (EMLTower n) 1
 
 
+/-- [Section: ## Section 6: Power Towers via EML] -/
 theorem EMLTower_eq_exp (n : ℕ) : EMLTower (n + 1) = Real.exp (EMLTower n) := by
   simp [EMLTower, EMLa, Real.log_one]
 

@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/Core
-Declarations: 21
+Declarations: 23
 -/
 
 import Mathlib
@@ -22,6 +22,11 @@ theorem param_is_pythagorean (m n : ℤ) :
 
 /-- (3, 4, 5) is a Pythagorean triple. -/
 theorem pyth_3_4_5 : IsPythagoreanTriple 3 4 5 := by
+  unfold IsPythagoreanTriple; norm_num
+
+
+/-- (5, 12, 13) is a Pythagorean triple. -/
+theorem pyth_5_12_13 : IsPythagoreanTriple 5 12 13 := by
   unfold IsPythagoreanTriple; norm_num
 
 
@@ -131,6 +136,10 @@ theorem infinitely_many_primitive_pyth :
       a ^ 2 + b ^ 2 = c ^ 2 := by
   intro N
   refine ⟨3 * (N + 1), 4 * (N + 1), 5 * (N + 1), by omega, by omega, by omega, by ring⟩
+
+
+theorem sq_mod4 (n : ℤ) : n ^ 2 % 4 = 0 ∨ n ^ 2 % 4 = 1 := by
+  rcases Int.even_or_odd' n with ⟨ k, rfl | rfl ⟩ <;> ring_nf <;> norm_num
 
 
 theorem sq_mod3 (n : ℤ) : n ^ 2 % 3 = 0 ∨ n ^ 2 % 3 = 1 := by

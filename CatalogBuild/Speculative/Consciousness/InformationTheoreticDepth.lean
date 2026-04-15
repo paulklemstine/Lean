@@ -74,6 +74,7 @@ structure ConsciousnessThreshold where
   threshold_pos : 0 < threshold
 
 
+/-- [Section: ## §5: Consciousness Threshold] -/
 def isConscious (ct : ConsciousnessThreshold)
     (partitions : Set SystemPartition) (hne : partitions.Nonempty) : Prop :=
   ct.threshold ≤ integratedInformation partitions hne

@@ -120,6 +120,7 @@ theorem sauer_shelah' {n d : ℕ} (𝒜 : Finset (Finset (Fin n)))
   linarith [SauerShelah.sauer_shelah n d 𝒜 hvc]
 
 
+/-- [Section: ## LYM Inequality] -/
 theorem lym_inequality (n : ℕ) (𝒜 : Finset (Finset (Fin n)))
     (hanti : ∀ A ∈ 𝒜, ∀ B ∈ 𝒜, A ≠ B → ¬(A ⊆ B)) :
     ∑ A ∈ 𝒜, (1 : ℚ) / Nat.choose n A.card ≤ 1 := by

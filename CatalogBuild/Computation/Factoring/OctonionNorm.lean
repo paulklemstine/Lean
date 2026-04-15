@@ -19,6 +19,7 @@ theorem quadruple_from_params_valid (m n p q : ℤ) :
     a^2 + b^2 + c^2 = d^2 := by ring
 
 
+/-- [Section: ## The Pell Obstacle] -/
 theorem pell_obstacle (l m : ℤ) (h : l^2 - m^2 = 1) : m = 0 := by
   -- Factor the difference of squares: $(l - m)(l + m) = 1$.
   have h_factor : (l - m) * (l + m) = 1 := by
@@ -57,6 +58,7 @@ theorem quaternion_factoring_principle
   subst hp; subst hq; exact quatNorm_mul a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂
 
 
+/-- [Section: ## Dimensional Advantage] -/
 theorem dimensional_advantage {N : ℝ} (hN : 2 ≤ N) :
     N ^ ((1:ℝ)/3) ≤ N ^ ((1:ℝ)/2) := by
       exact Real.rpow_le_rpow_of_exponent_le ( by linarith ) ( by norm_num )

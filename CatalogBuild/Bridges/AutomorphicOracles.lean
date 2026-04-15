@@ -121,6 +121,7 @@ def oracleAccuracy (k : ℕ) (predictions ground_truth : Fin k → ℂ) (eps : �
   ((Finset.univ.filter (fun i => ‖predictions i - ground_truth i‖ < eps)).card : ℝ) / k
 
 
+/-- [Section: ## Oracle Framework] -/
 theorem perfect_accuracy (k : ℕ) (hk : k > 0) (f : Fin k → ℂ) (eps : ℝ) (heps : eps > 0) :
     oracleAccuracy k f f eps = 1 := by
   unfold oracleAccuracy; aesop;

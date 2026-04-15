@@ -7,6 +7,7 @@ Declarations: 3
 
 import Mathlib
 
+/-- Cantor's diagonal -/
 theorem cantor_diag {α : Type*} (f : α → Set α) : ¬ Function.Surjective f :=
   Function.cantor_surjective f
 

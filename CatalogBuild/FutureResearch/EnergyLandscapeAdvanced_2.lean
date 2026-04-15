@@ -7,6 +7,13 @@ Declarations: 9
 
 import Mathlib
 
+/-- [Section: # Advanced Energy Landscape Analysis (A7b, C15, NEW)
+## Main Results
+* `energy_at_divisor'` — E(N,d) = 0 when d | N
+* `energy_max_between_divisors'` — Maximum between divisors
+* `sublevel_zero_eq_divisors` — Level-0 sublevel = divisors
+* `morse_index_zero_at_divisor'` — Morse index 0 at divisors
+* `energy_sum_upper` — Σ E(N,x) ≤ N²] -/
 def E' (N x : ℕ) : ℕ := N % x
 
 
@@ -23,6 +30,7 @@ theorem energy_pos_nondivisor (N x : ℕ) (hx : 0 < x) (hnd : ¬(x ∣ N)) :
   Nat.pos_of_ne_zero fun h => hnd (Nat.dvd_of_mod_eq_zero h)
 
 
+/-- [Section: ### Sublevel Sets] -/
 def sublevel' (N t : ℕ) : Finset ℕ :=
   (Finset.Icc 1 N).filter (fun x => E' N x ≤ t)
 
@@ -34,6 +42,7 @@ theorem sublevel_antitone (N s t : ℕ) (hst : s ≤ t) :
   exact ⟨hx.1, le_trans hx.2 hst⟩
 
 
+/-- [Section: ### Critical Points] -/
 theorem energy_max_between_divisors' (N d₁ d₂ : ℕ) (hlt : d₁ < d₂) :
     ∃ x, d₁ ≤ x ∧ x ≤ d₂ ∧ ∀ y, d₁ ≤ y → y ≤ d₂ → E' N y ≤ E' N x := by
   have hne : (Finset.Icc d₁ d₂).Nonempty :=
@@ -51,6 +60,7 @@ theorem energy_global_min_at_divisor (N d y : ℕ) (hd : d ∣ N) :
   exact Nat.zero_le _
 
 
+/-- [Section: ### Energy Sum] -/
 theorem energy_sum_upper (N : ℕ) (hN : 0 < N) :
     ∑ x ∈ Finset.Icc 1 N, E' N x ≤ N * N := by
   calc ∑ x ∈ Finset.Icc 1 N, E' N x

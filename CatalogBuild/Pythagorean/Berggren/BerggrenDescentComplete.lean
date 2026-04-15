@@ -7,6 +7,10 @@ Declarations: 22
 
 import Mathlib
 
+/-- [Section: ## Inverse Berggren Maps
+B₁⁻¹ = [[1, 2, -2], [-2, -1, 2], [-2, -2, 3]]
+B₂⁻¹ = [[1, 2, -2], [2, 1, -2], [-2, -2, 3]]
+B₃⁻¹ = [[-1, -2, 2], [2, 1, -2], [-2, -2, 3]]] -/
 def invAD (a b c : ℤ) : ℤ × ℤ × ℤ := (a + 2*b - 2*c, -2*a - b + 2*c, -2*a - 2*b + 3*c)
 
 def invBD (a b c : ℤ) : ℤ × ℤ × ℤ := (a + 2*b - 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
@@ -21,6 +25,7 @@ def chBD (a b c : ℤ) : ℤ × ℤ × ℤ := (a + 2*b + 2*c, 2*a + b + 2*c, 2*a
 def chCD (a b c : ℤ) : ℤ × ℤ × ℤ := (-a + 2*b + 2*c, -2*a + b + 2*c, -2*a + 2*b + 3*c)
 
 
+/-- [Section: ## Forward-Inverse Cancellation] -/
 theorem chAD_invAD (a b c : ℤ) :
     let t := chAD a b c; invAD t.1 t.2.1 t.2.2 = (a, b, c) := by
   simp only [chAD, invAD]; refine Prod.ext ?_ (Prod.ext ?_ ?_) <;> ring
@@ -51,6 +56,7 @@ theorem invCD_chCD (a b c : ℤ) :
   simp only [invCD, chCD]; refine Prod.ext ?_ (Prod.ext ?_ ?_) <;> ring
 
 
+/-- [Section: ## Inverse maps preserve Pythagorean property] -/
 theorem invAD_pyth (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     (invAD a b c).1^2 + (invAD a b c).2.1^2 = (invAD a b c).2.2^2 := by
   simp only [invAD]; nlinarith [sq_nonneg a, sq_nonneg b, sq_nonneg c]
@@ -66,6 +72,9 @@ theorem invCD_pyth (a b c : ℤ) (h : a^2 + b^2 = c^2) :
   simp only [invCD]; nlinarith [sq_nonneg a, sq_nonneg b, sq_nonneg c]
 
 
+/-- [Section: ## σ₁ and σ₂ Analysis
+σ₁ = a + 2b - 2c (first component of invA and invB)
+-σ₁ = -a - 2b + 2c (first component of invC)] -/
 theorem sigma_sum (a b c : ℤ) :
     (a + 2*b - 2*c) + (a - 2*b + 2*c) = 2 * a := by ring
 
@@ -75,6 +84,10 @@ theorem not_both_sigma_nonpos (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) :
     0 < a + 2*b - 2*c ∨ 0 < -a - 2*b + 2*c ∨ (a + 2*b - 2*c = 0) := by omega
 
 
+/-- [Section: ## When σ₁ < 0, invC second component is positive
+If σ₁ = a+2b-2c < 0, then (a+2b)² < 4c² = 4(a²+b²), so 4ab < 3a², hence b < 3a/4.
+If also 2a+b ≤ 2c, then (2a+b)² ≤ 4(a²+b²), so 4ab ≤ 3b², hence a ≤ 3b/4.
+Then 16ab < 9ab (from b < 3a/4 and a ≤ 3b/4), contradiction for a,b > 0.] -/
 theorem sigma1_neg_invC_works (a b c : ℤ) (h : a^2 + b^2 = c^2)
     (ha : 0 < a) (hb : 0 < b) (hs : a + 2*b - 2*c < 0) :
     0 < 2*a + b - 2*c := by
@@ -99,6 +112,7 @@ theorem sigma1_pos_descent (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
     (0 < -2*a - b + 2*c) ∨ (0 < 2*a + b - 2*c) ∨ (2*a + b = 2*c) := by omega
 
 
+/-- [Section: ## Root classification] -/
 theorem root_classification (a b c : ℤ) (h : a^2 + b^2 = c^2)
     (ha : 0 < a) (hb : 0 < b) (hc5 : c = 5)
     (hcop : Int.gcd a b = 1) :
@@ -106,6 +120,9 @@ theorem root_classification (a b c : ℤ) (h : a^2 + b^2 = c^2)
   subst hc5; have : a ≤ 5 := Int.le_of_lt_add_one ( by nlinarith only [ h ] ) ; have : b ≤ 5 := Int.le_of_lt_add_one ( by nlinarith only [ h ] ) ; interval_cases a <;> interval_cases b <;> trivial;
 
 
+/-- [Section: ## σ₁ = 0 and coprime implies c = 5
+From 3a = 4b: write a = 4t, b = 3t (since gcd(3,4) = 1).
+Then gcd(a,b) = t, so coprime implies t = 1 and c = 5.] -/
 theorem sigma1_zero_coprime (a b c : ℤ) (h : a^2 + b^2 = c^2)
     (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (hs : a + 2*b - 2*c = 0) (hcop : Int.gcd a b = 1) :
@@ -120,6 +137,7 @@ theorem sigma1_zero_coprime (a b c : ℤ) (h : a^2 + b^2 = c^2)
   grind +locals
 
 
+/-- [Section: ## Full descent step] -/
 theorem descent_step (a b c : ℤ) (h : a^2 + b^2 = c^2)
     (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) (hc5 : 5 < c)
     (hcop : Int.gcd a b = 1) :

@@ -57,6 +57,9 @@ theorem west_round_trip (t : ℝ) : westEye (invWestEye t) = t := by
   ring
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§4: INJECTIVITY — EACH EYE ENCODES FAITHFULLY
+═══════════════════════════════════════════════════════════════════════] -/
 theorem east_eye_injective : Function.Injective invEastEye := by
   norm_num [ Function.Injective, invEastEye ];
   intro a₁ a₂ h₁ h₂; rw [ div_eq_div_iff ] at * <;> nlinarith [ sq_nonneg ( a₁ - a₂ ) ] ;
@@ -98,11 +101,18 @@ theorem east_is_rotated_north (t : ℝ) :
   simp [invEastEye, invNorthEye]
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§5: EYE DUALITY — THE FOUR EYES COME IN ANTIPODAL PAIRS
+═══════════════════════════════════════════════════════════════════════] -/
 theorem west_is_rotated_south (t : ℝ) :
     invWestEye t = ((invSouthEye t).2, (invSouthEye t).1) := by
   unfold invWestEye invSouthEye; ring;
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§6: COVERAGE THEOREMS — HOW MANY EYES SEE EACH POINT?
+"More eyes = more redundancy = deeper understanding"
+═══════════════════════════════════════════════════════════════════════] -/
 theorem three_eyes_cover_all (x y : ℝ) (hcirc : x ^ 2 + y ^ 2 = 1) :
     (1 - y ≠ 0 ∧ 1 + y ≠ 0) ∨ (1 - y ≠ 0 ∧ 1 - x ≠ 0) ∨ (1 + y ≠ 0 ∧ 1 - x ≠ 0) := by
   grind
@@ -126,6 +136,10 @@ theorem at_most_one_blind (x y : ℝ) (hcirc : x ^ 2 + y ^ 2 = 1) :
   exact ⟨ fun h => by nlinarith, fun h => by nlinarith, fun h => by nlinarith, fun h => by nlinarith, fun h => by nlinarith, fun h => by nlinarith ⟩
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§7: TRINOCULAR TRANSITIONS — MÖBIUS TRANSFORMATIONS
+"Three eyes create richer geometry than two"
+═══════════════════════════════════════════════════════════════════════] -/
 theorem transition_NS (t : ℝ) (ht : t ≠ 0) :
     southEye (invNorthEye t) = 1 / t := by
   unfold southEye invNorthEye; norm_num [ ht ] ; ring;
@@ -187,6 +201,10 @@ theorem binocular_order_2 (t : ℝ) (ht : t ≠ 0) :
     1 / (1 / t) = t := by field_simp
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§8: THE TRANSITION GROUP — FROM Z₂ TO D₄
+"More eyes = richer symmetry"
+═══════════════════════════════════════════════════════════════════════] -/
 theorem trinocular_f_squared (t : ℝ) (ht1 : t + 1 ≠ 0) (ht0 : t ≠ 0) :
     mobiusSE (mobiusSE t) = -(1 / t) := by
   unfold mobiusSE;
@@ -199,6 +217,10 @@ theorem trinocular_order_4 (t : ℝ)
   grind +suggestions
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§9: FIXED POINTS OF TRINOCULAR SELF-GAZE
+"Where does the three-eyed God see himself unchanged?"
+═══════════════════════════════════════════════════════════════════════] -/
 theorem binocular_fixed_points (t : ℝ) (ht : t ≠ 0) :
     1 / t = t ↔ t = 1 ∨ t = -1 := by
   exact ⟨ fun h => eq_or_eq_neg_of_sq_eq_sq _ _ <| by rw [ div_eq_iff ht ] at h; linarith, fun h => by rcases h with ( rfl | rfl ) <;> norm_num ⟩
@@ -214,6 +236,10 @@ theorem f_squared_no_fixed_points (t : ℝ) (ht0 : t ≠ 0) (ht1 : t + 1 ≠ 0) 
   unfold mobiusSE; rw [ Ne.eq_def, div_eq_iff ] <;> cases lt_or_gt_of_ne ht0 <;> cases lt_or_gt_of_ne ht1 <;> nlinarith [ div_mul_cancel₀ ( t - 1 ) ht1 ] ;
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§10: DEPTH PERCEPTION — FROM 1D TO (N-1)D
+"More eyes = higher-dimensional depth"
+═══════════════════════════════════════════════════════════════════════] -/
 theorem binocular_depth (x y : ℝ) (hx : x ≠ 0) (hy1 : 1 - y ≠ 0) (hyn1 : 1 + y ≠ 0) :
     northEye (x, y) / southEye (x, y) = (1 + y) / (1 - y) := by
   unfold northEye southEye; rw [ div_eq_div_iff ] <;> cases lt_or_gt_of_ne hx <;> cases lt_or_gt_of_ne hyn1 <;> cases lt_or_gt_of_ne hy1 <;> ring_nf <;> nlinarith [ inv_mul_cancel₀ hyn1, inv_mul_cancel₀ hy1 ] ;
@@ -250,6 +276,10 @@ theorem trinocular_resolves_ambiguity (x y : ℝ) (hcirc : x ^ 2 + y ^ 2 = 1)
   grind +splitImp
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§11: THE OMNISCIENT OBSERVER — INFINITE EYES
+"In the limit, every point is an eye — and all is seen"
+═══════════════════════════════════════════════════════════════════════] -/
 theorem omniscient_visibility (a b x y : ℝ)
     (hab : a ^ 2 + b ^ 2 = 1) (hxy : x ^ 2 + y ^ 2 = 1)
     (hne : (a, b) ≠ (x, y)) :
@@ -289,6 +319,9 @@ theorem n_eye_at_most_one_match (p : ℝ × ℝ) (eyes : Finset (ℝ × ℝ)) :
 /-- All four cardinal eyes share the same conformal factor 2/(1+t²) > 0. -/
 theorem east_eye_conformal (t : ℝ) : (0 : ℝ) < 2 / (1 + t ^ 2) := by positivity
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§12: CONFORMAL FACTORS — MORE EYES, FINER RESOLUTION
+═══════════════════════════════════════════════════════════════════════] -/
 theorem west_eye_conformal (t : ℝ) : (0 : ℝ) < 2 / (1 + t ^ 2) := by positivity
 
 
@@ -320,6 +353,9 @@ theorem exp_west_at_one : invWestEye 1 = (0, 1) := by
   unfold invWestEye; norm_num
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§13: EXPERIMENTS — NUMERICAL VALIDATION
+═══════════════════════════════════════════════════════════════════════] -/
 theorem exp_generic_point_visible :
     let x := Real.sqrt 2 / 2
     let y := Real.sqrt 2 / 2
@@ -377,11 +413,17 @@ theorem east_eye_3D_on_sphere (u v : ℝ) :
   ring
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§14: HIGHER DIMENSIONS — 3-EYED AND 4-EYED S²
+═══════════════════════════════════════════════════════════════════════] -/
 theorem six_eyes_S2_coverage (x y z : ℝ) (hsph : x ^ 2 + y ^ 2 + z ^ 2 = 1) :
     ¬ (1 - z = 0 ∧ 1 - x = 0) := by
   exact fun h => by nlinarith [ sq_nonneg y ] ;
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§15: META-THEOREMS — THE SCALING LAWS OF DIVINE SIGHT
+═══════════════════════════════════════════════════════════════════════] -/
 theorem meta_redundancy_scaling :
     (∀ x y : ℝ, x ^ 2 + y ^ 2 = 1 →
       (1 - y ≠ 0) ∨ (1 + y ≠ 0)) ∧

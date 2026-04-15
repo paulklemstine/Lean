@@ -9,6 +9,15 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # SPB Number Theory
+Number-theoretic properties of the SPB operation, including:
+- Pythagorean triple generation via SPB
+- Connection to Gaussian integers / Brahmagupta-Fibonacci
+- SPB over integers
+- Connection to Chebyshev polynomials
+## Key Insight
+The SPB operation on rational numbers generates all rational points
+on the unit circle via the Weierstrass substitution.] -/
 def spbNT (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
 
 

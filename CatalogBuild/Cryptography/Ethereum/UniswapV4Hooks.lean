@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Pool Model with Hooks] -/
 structure PoolV4 where
   reserveX : ℝ
   reserveY : ℝ
@@ -24,6 +25,7 @@ noncomputable def PoolV4.invariant (p : PoolV4) : ℝ := p.reserveX * p.reserveY
 noncomputable def PoolV4.spotPrice (p : PoolV4) : ℝ := p.reserveY / p.reserveX
 
 
+/-- [Section: ## Hook Interface] -/
 structure Hook where
   adjustFee : ℝ → ℝ → ℝ → ℝ
   afterSwapRedistribution : ℝ → ℝ
@@ -43,6 +45,7 @@ noncomputable def swapNoHook (p : PoolV4) (dx : ℝ) : ℝ :=
   p.reserveY * effectiveDx / (p.reserveX + effectiveDx)
 
 
+/-- [Section: ## Identity Hook] -/
 def identityHook (baseFee : ℝ) (hFee0 : 0 ≤ baseFee) (hFee1 : baseFee < 1) : Hook where
   adjustFee := fun _bf _dx _sp => baseFee
   afterSwapRedistribution := fun _ => 0
@@ -56,6 +59,7 @@ theorem identity_hook_preserves_output (p : PoolV4) (dx : ℝ) :
   unfold swapWithHook swapNoHook identityHook; simp
 
 
+/-- [Section: ## Dynamic Fee Bounds] -/
 theorem dynamic_fee_bounded (minFee maxFee t : ℝ)
     (hMin : 0 ≤ minFee) (hOrder : minFee ≤ maxFee) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
     minFee ≤ minFee + t * (maxFee - minFee) ∧
@@ -65,6 +69,7 @@ theorem dynamic_fee_bounded (minFee maxFee t : ℝ)
   · nlinarith [mul_le_of_le_one_left (sub_nonneg.mpr hOrder) ht1]
 
 
+/-- [Section: ## Hook Composability] -/
 def composeHooks (h₁ h₂ : Hook) : Hook where
   adjustFee := fun bf dx sp => h₂.adjustFee (h₁.adjustFee bf dx sp) dx sp
   afterSwapRedistribution := fun out =>
@@ -74,6 +79,7 @@ def composeHooks (h₁ h₂ : Hook) : Hook where
   redist_nonneg := fun out => add_nonneg (h₁.redist_nonneg out) (h₂.redist_nonneg out)
 
 
+/-- [Section: ## TWAMM: Time-Weighted AMM Hook] -/
 structure TWAMMHook where
   numBlocks : ℕ
   hBlocks : 0 < numBlocks
@@ -98,6 +104,7 @@ theorem twamm_reduces_price_impact (reserveX dx₁ dx₂ : ℝ)
   nlinarith
 
 
+/-- [Section: ## Permission System] -/
 structure HookPermissions where
   allowSwap : Bool
   allowAddLiquidity : Bool
@@ -114,6 +121,7 @@ theorem no_swap_no_extraction (perms : HookPermissions)
   simp [permissionedSwapAllowed, h_blocked]
 
 
+/-- [Section: ## Fee Override Correctness] -/
 theorem higher_fee_less_output (reserveX reserveY dx fee₁ fee₂ : ℝ)
     (hRX : 0 < reserveX) (hRY : 0 < reserveY) (hdx : 0 < dx)
     (hf1 : 0 ≤ fee₁) (hf2 : 0 ≤ fee₂) (hf1_lt : fee₁ < 1) (hf2_lt : fee₂ < 1)

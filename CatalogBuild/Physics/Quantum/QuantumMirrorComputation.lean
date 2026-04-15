@@ -30,6 +30,7 @@ def zeroMirror (n : ℕ) : QuantumMirror n where
   selfAdj := by simp [Matrix.conjTranspose_zero]
 
 
+/-- [Section: ## §1: Quantum Mirror Foundations] -/
 theorem mirror_complement_idem_qm {n : ℕ} (P : QuantumMirror n) :
     (1 - P.proj) * (1 - P.proj) = (1 - P.proj) := by
   -- Expand the left-hand side using the distributive property.
@@ -85,6 +86,7 @@ theorem empty_chain_is_identity_qm (n : ℕ) :
   simp [QuantumMirrorChain.execute]
 
 
+/-- [Section: ## §2: Mirror Chains] -/
 theorem commuting_mirrors_compose_qm {n : ℕ}
     (P Q : Matrix (Fin n) (Fin n) ℂ)
     (hP : P * P = P) (hQ : Q * Q = Q) (hcomm : P * Q = Q * P) :
@@ -92,6 +94,7 @@ theorem commuting_mirrors_compose_qm {n : ℕ}
   grind
 
 
+/-- [Section: ## §3: Grover's Algorithm as a Mirror Chain] -/
 theorem reflection_squared_qm {n : ℕ} (P : Matrix (Fin n) (Fin n) ℂ)
     (hP : P * P = P) :
     (2 • P - 1) * (2 • P - 1) = 1 := by

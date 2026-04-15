@@ -37,6 +37,7 @@ structure Ignition (n : ℕ) where
   global_access : ∀ i : Fin n, True
 
 
+/-- [Section: ## Competition and Selection] -/
 theorem broadcasting_theorem {n : ℕ} (ign : Ignition n) (i : Fin n) :
     ign.global_access i = trivial := by
   rfl
@@ -50,6 +51,7 @@ structure Spotlight where
   nonempty : ∃ c, inSpotlight c
 
 
+/-- [Section: ## The Theater Metaphor] -/
 theorem spotlight_always_on (sp : Spotlight) : ∃ c, sp.inSpotlight c := by
   exact sp.nonempty
 

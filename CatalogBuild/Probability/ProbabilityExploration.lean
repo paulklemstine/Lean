@@ -7,6 +7,11 @@ Declarations: 7
 
 import Mathlib
 
+/-- [Section: # Probability Theory and Information Theory
+Explorations across:
+- Counting and combinatorial probability
+- Expectation and variance
+- Information theory connections] -/
 theorem dice_complement_1 : 1 - (5 : ℚ) / 6 = 1 / 6 := by norm_num
 
 theorem dice_complement_2 : 1 - (5 : ℚ) / 6 * (5 / 6) = 11 / 36 := by norm_num

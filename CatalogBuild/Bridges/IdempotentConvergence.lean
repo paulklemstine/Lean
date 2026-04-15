@@ -15,6 +15,7 @@ theorem idempotent_annihilating_poly (f : V →ₗ[K] V) (hf : f.comp f = f) :
   rwa [sub_eq_zero]
 
 
+/-- [Section: ## Complementary Projection] -/
 theorem idempotent_complement (f : V →ₗ[K] V) (hf : f.comp f = f) :
     (LinearMap.id - f).comp (LinearMap.id - f) = LinearMap.id - f := by
   simp_all +decide [ LinearMap.ext_iff, LinearMap.comp_apply ]
@@ -60,6 +61,7 @@ theorem idempotent_comm_preserves_fixed (f g : α → α) (hf : f ∘ f = f)
   rwa [hx] at this
 
 
+/-- [Section: ## Linear Idempotent Properties] -/
 theorem idempotent_projection_error (f : V →ₗ[K] V) (hf : f.comp f = f) (v : V) :
     f (v - f v) = 0 := by
   simp +decide [ ← LinearMap.comp_apply, hf ]
@@ -82,6 +84,7 @@ theorem idempotent_full_range_is_id {β : Type*} [Fintype β] [DecidableEq β]
   exact funext fun x => by have := congr_fun hf ( h_surj x |> Classical.choose ) ; have := h_surj x |> Classical.choose_spec; aesop;
 
 
+/-- [Section: ## Composition of Commuting Idempotent Linear Maps] -/
 theorem commuting_idempotent_comp (f g : V →ₗ[K] V)
     (hf : f.comp f = f) (hg : g.comp g = g) (hcomm : f.comp g = g.comp f) :
     (f.comp g).comp (f.comp g) = f.comp g := by

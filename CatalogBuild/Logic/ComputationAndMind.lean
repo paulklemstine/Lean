@@ -7,6 +7,10 @@ Declarations: 8
 
 import Mathlib
 
+/-- [Section: ## Decidability and Its Limits
+Rucker discusses how some mathematical questions are fundamentally
+undecidable — not because we're not clever enough, but because
+no algorithm can answer them.] -/
 theorem most_sets_uncomputable :
     ¬ ∃ f : ℕ → Set ℕ, Surjective f := by
       -- Assume for contradiction that there exists a surjective function $f$ from $\mathbb{N}$ to the power set of $\mathbb{N}$.
@@ -17,6 +21,10 @@ theorem most_sets_uncomputable :
       obtain ⟨ n, hn ⟩ := hf_surj S; have := Set.ext_iff.mp hn n; tauto;
 
 
+/-- [Section: ## Fixed-Point Combinators — The Y Combinator of Logic
+Rucker discusses fixed-point constructions as the mathematical
+analog of self-awareness. The existence of fixed points in
+various settings mirrors consciousness reflecting on itself.] -/
 theorem lfp_is_fixed {α : Type*} [CompleteLattice α]
     (f : α → α) (hf : Monotone f) :
     f (sInf {x | f x ≤ x}) = sInf {x | f x ≤ x} := by
@@ -27,12 +35,20 @@ theorem lfp_is_fixed {α : Type*} [CompleteLattice α]
       exact sInf_le ( hf h_ex )
 
 
+/-- [Section: ## The Pigeonhole Principle — Finite Incompressibility
+Rucker discusses the pigeonhole principle as the finite analog
+of Cantor's theorem: you can't compress without losing information.] -/
 theorem finite_pigeonhole (n : ℕ) :
     ¬ ∃ f : Fin (n + 1) → Fin n, Injective f := by
       simp +zetaDelta at *;
       exact fun f hf => absurd ( Fintype.card_le_of_injective f hf ) ( by simp +arith +decide )
 
 
+/-- [Section: ## The Countable Chain Condition
+Rucker discusses how the structure of the real line reflects
+deep set-theoretic properties. The reals satisfy the countable
+chain condition (ccc), meaning any family of disjoint open sets
+is countable.] -/
 theorem nat_prod_countable : Cardinal.mk (ℕ × ℕ) = Cardinal.mk ℕ := by
   simp +decide [ Cardinal.mk_prod ]
 
@@ -41,6 +57,9 @@ theorem rationals_dense : Dense (Set.range (fun q : ℚ => (q : ℝ))) := by
   exact Rat.isDenseEmbedding_coe_real.dense
 
 
+/-- [Section: ## Infinity Arithmetic Paradoxes
+Rucker loves presenting the "paradoxes" of infinite arithmetic
+that challenge our finite intuitions.] -/
 theorem hilbert_hotel : ∃ f : ℕ → {n : ℕ | n ≠ 0}, Bijective f := by
   fconstructor;
   exact fun n => ⟨ n + 1, Nat.succ_ne_zero n ⟩;

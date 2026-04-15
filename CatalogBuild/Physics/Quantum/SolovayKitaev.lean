@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## §1: Approximation Theory] -/
 theorem sk_recursion_convergence (ε : ℝ) (hε : 0 < ε) (hε1 : ε < 1) :
     ε ^ 2 < ε := by nlinarith [sq_abs ε]
 
@@ -24,6 +25,7 @@ theorem sk_exponent_bound : (5 : ℝ) > (3 / 2) ^ 3 := by norm_num
 theorem sk_improved_bound : (5 : ℝ) > (3 / 2) ^ 2 := by norm_num
 
 
+/-- [Section: ## §2: Group Commutator Structure] -/
 def skCommutator {G : Type*} [Group G] (u v : G) : G := u * v * u⁻¹ * v⁻¹
 
 
@@ -46,6 +48,7 @@ theorem skCommutator_conjugate {G : Type*} [Group G] (g u v : G) :
   simp [skCommutator, mul_assoc]; group
 
 
+/-- [Section: ## §3: Cayley Ball] -/
 def skCayleyBall {G : Type*} [Group G] (S : Set G) (n : ℕ) : Set G :=
   {g | ∃ (words : List G), (∀ w ∈ words, w ∈ S ∨ w⁻¹ ∈ S) ∧
     words.length ≤ n ∧ words.prod = g}
@@ -62,6 +65,7 @@ theorem sk_one_mem_cayleyBall {G : Type*} [Group G] (S : Set G) (n : ℕ) :
   ⟨[], by simp, Nat.zero_le n, by simp⟩
 
 
+/-- [Section: ## §4: Circuit Depth Bounds] -/
 theorem sk_log_inv_pos (ε : ℝ) (hε : 0 < ε) (hε1 : ε < 1) :
     Real.log (1 / ε) > 0 := by
   apply Real.log_pos; rw [one_div]; exact one_lt_inv_iff₀.mpr ⟨hε, hε1⟩

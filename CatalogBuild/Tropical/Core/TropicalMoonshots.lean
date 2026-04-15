@@ -112,6 +112,7 @@ def tropicalMatAdd (A B : Fin 2 → Fin 2 → ℝ) (i j : Fin 2) : ℝ :=
   max (A i j) (B i j)
 
 
+/-- [Section: ## Section 4: Entropy-Regularized Optimization] -/
 theorem regularization_gap_nonneg (a b : ℝ) :
     max a b ≤ Real.log (Real.exp a + Real.exp b) := by
   cases max_cases a b <;> linarith [ Real.log_exp a, Real.log_exp b, Real.log_le_log ( by positivity ) ( by linarith [ Real.exp_pos a, Real.exp_pos b ] : Real.exp a ≤ Real.exp a + Real.exp b ), Real.log_le_log ( by positivity ) ( by linarith [ Real.exp_pos a, Real.exp_pos b ] : Real.exp b ≤ Real.exp a + Real.exp b ) ]
@@ -155,6 +156,7 @@ theorem hilbertDist_zero_of_eq (a₁ a₂ b₁ b₂ : ℝ) (h : a₁ - b₁ = a�
     hilbertDist a₁ a₂ b₁ b₂ = 0 := by simp [hilbertDist, h]
 
 
+/-- [Section: ## Section 5: Tropical Metric Spaces] -/
 theorem hilbertDist_symm (a₁ a₂ b₁ b₂ : ℝ) :
     hilbertDist a₁ a₂ b₁ b₂ = hilbertDist b₁ b₂ a₁ a₂ := by
   grind +locals
@@ -184,6 +186,7 @@ theorem tropical_young_conv (a₁ a₂ b₁ b₂ : ℝ) :
     simp [max_def] <;> split_ifs <;> linarith
 
 
+/-- [Section: ## Section 7: Galois Connection Between Classical and Tropical] -/
 theorem galois_max_le_lse (a b : ℝ) :
     max a b ≤ Real.log (Real.exp a + Real.exp b) := by
   exact regularization_gap_nonneg a b
@@ -213,6 +216,7 @@ theorem log_classical_product (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
 def tropSign (x : ℝ) : ℝ := if 0 < x then 1 else if x < 0 then -1 else 0
 
 
+/-- [Section: ## Section 8: Neural ODE and Gradient Flow] -/
 theorem tropSign_pos (x : ℝ) (hx : 0 < x) : tropSign x = 1 := by simp [tropSign, hx]
 
 theorem tropSign_neg (x : ℝ) (hx : x < 0) : tropSign x = -1 := by
@@ -302,6 +306,7 @@ theorem multihead_independent {n : ℕ} (v₁ v₂ : Fin n → ℝ)
   rw [← Finset.sum_add_distrib]
 
 
+/-- [Section: ## Section 13: Tropical Geometry of Attention Patterns] -/
 theorem attention_convex_bound {n : ℕ} [NeZero n] (w v : Fin n → ℝ)
     (hw_nn : ∀ i, 0 ≤ w i) (hw_sum : ∑ i, w i = 1) :
     ∑ i, w i * v i ≤ Finset.sup' Finset.univ Finset.univ_nonempty v := by
@@ -331,6 +336,7 @@ theorem klBernoulli_self (p : ℝ) (hp0 : 0 < p) (hp1 : p < 1) :
   simp [klBernoulli, div_self (ne_of_gt hp0), div_self (ne_of_gt (show 0 < 1 - p by linarith))]
 
 
+/-- [Section: ## Section 14: Information-Geometric Connections] -/
 theorem softmax_jacobian_diag (a b : ℝ) :
     let s := Real.exp a / (Real.exp a + Real.exp b)
     s * (1 - s) = Real.exp a * Real.exp b / (Real.exp a + Real.exp b) ^ 2 := by
@@ -445,6 +451,7 @@ theorem neuron_boundary_codim1 (w b : ℝ) (hw : w ≠ 0) :
   · intro y hy; field_simp at *; linarith
 
 
+/-- [Section: ## Section 20: Moonshot — Neural Network = Tropical Variety] -/
 theorem binary_entropy_nonneg (p : ℝ) (hp0 : 0 < p) (hp1 : p < 1) :
     0 ≤ -(p * Real.log p + (1 - p) * Real.log (1 - p)) := by
   nlinarith [ Real.log_le_sub_one_of_pos hp0, Real.log_le_sub_one_of_pos ( by linarith : 0 < 1 - p ) ]

@@ -115,6 +115,7 @@ theorem apply_scaling (s : ℚ_[p]) (hs : s ≠ 0) (z : ℚ_[p])
   unfold apply scaling; simp
 
 
+/-- [Section: ## Section 3: Fixed Point Theory] -/
 theorem fixed_point_equation (M : PadicMobius p) (z : ℚ_[p]) (h : M.c * z + M.d ≠ 0) :
     IsFixedPoint M z h ↔ M.c * z ^ 2 + (M.d - M.a) * z - M.b = 0 := by
   unfold PadicMobius.IsFixedPoint;
@@ -152,6 +153,7 @@ theorem parabolic_iff_trace (M : PadicMobius p) :
   · intro h; exact sub_eq_zero.mpr h
 
 
+/-- [Section: ## Section 4: Ultrametric Properties] -/
 theorem padic_ultrametric (x y : ℚ_[p]) :
     ‖x + y‖ ≤ max ‖x‖ ‖y‖ := by
   exact Padic.nonarchimedean x y
@@ -189,6 +191,7 @@ def padicDisk (center : ℚ_[p]) (r : ℝ) : Set ℚ_[p] :=
   {z | ‖z - center‖ ≤ r}
 
 
+/-- [Section: ## Section 5: P-adic Disks and Limit Sets] -/
 theorem padic_disk_dichotomy (a b : ℚ_[p]) (r s : ℝ) (hr : 0 < r) (hs : 0 < s) :
     Disjoint (padicDisk a r) (padicDisk b s) ∨
     padicDisk a r ⊆ padicDisk b s ∨
@@ -220,6 +223,7 @@ noncomputable def derivative (M : PadicMobius p) (z : ℚ_[p])
   M.det / (M.c * z + M.d) ^ 2
 
 
+/-- [Section: ## Section 6: Conformality and the Derivative] -/
 theorem derivative_comp (M N : PadicMobius p) (z : ℚ_[p])
     (hN : N.c * z + N.d ≠ 0)
     (hMN : (comp M N).c * z + (comp M N).d ≠ 0)
@@ -267,6 +271,7 @@ def BTAdjacent (v w : BTVertex p) : Prop :=
   ‖v.center - w.center‖ ≤ (p : ℝ) ^ (-min v.level w.level)
 
 
+/-- [Section: ## Section 7: The Bruhat-Tits Tree Connection] -/
 theorem mobius_preserves_bt_adjacency (M : PadicMobius p)
     (v w : BTVertex p) (hadj : BTAdjacent v w)
     (hv : M.c * v.center + M.d ≠ 0) (hw : M.c * w.center + M.d ≠ 0) :

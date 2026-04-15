@@ -7,6 +7,11 @@ Declarations: 10
 
 import Mathlib
 
+/-- [Section: # Optimization and Convexity Theory
+Explorations across:
+- Convex sets and functions
+- Game theory
+- Optimization] -/
 theorem convex_inter_sets {E : Type*} [AddCommMonoid E] [Module ℝ E]
     (S T : Set E) (hS : Convex ℝ S) (hT : Convex ℝ T) :
     Convex ℝ (S ∩ T) := by

@@ -89,6 +89,12 @@ def interestingQueries {n : ℕ} (f : Fin n → Fin n) : Finset (Fin n) :=
   Finset.univ.filter (fun x => f x ≠ x)
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+EXPERIMENT 6: Meta Oracle Guidance — Optimal Decompositions
+The meta oracle tells us: the interesting questions are the non-fixed
+points. For an oracle with k fixed points on Fin n, there are n - k
+interesting questions.
+═══════════════════════════════════════════════════════════════════════] -/
 theorem partition_queries {n : ℕ} (f : Fin n → Fin n) :
     (Finset.univ.filter (fun x => f x = x)).card +
     (interestingQueries f).card = n := by

@@ -13,6 +13,7 @@ noncomputable section
 def tropSPB' (x y : ℝ) : ℝ := min x y - max 0 (x + y)
 
 
+/-- [Section: ## Key Identity: tropSPB = -max(|·|, |·|)] -/
 theorem tropSPB_eq_neg_max_abs (a b : ℝ) :
     tropSPB' a b = -max (|a|) (|b|) := by
   unfold tropSPB';
@@ -34,6 +35,7 @@ theorem tropSPB_zero_pos (x : ℝ) (hx : 0 < x) : tropSPB' x 0 = -x := by
   simp [tropSPB', min_eq_right (le_of_lt hx), max_eq_right (le_of_lt hx)]
 
 
+/-- [Section: ## Consequences of the simplification] -/
 theorem tropSPB_no_identity : ¬∃ e : ℝ, ∀ x : ℝ, tropSPB' x e = x := by
   intro h
   obtain ⟨e, he⟩ := h

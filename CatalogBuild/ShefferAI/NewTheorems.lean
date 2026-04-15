@@ -13,12 +13,14 @@ import ShefferAI.Lean.SoftplusBasic
 
 noncomputable section
 
+/-- [Section: ## Full Subadditivity] -/
 theorem softplus_subadditive (x y : ℝ) :
     softplus (x + y) ≤ softplus x + softplus y := by
   unfold softplus;
   rw [ ← Real.log_mul, Real.log_le_log_iff ] <;> first | positivity | rw [ Real.exp_add ] ; nlinarith [ Real.exp_pos x, Real.exp_pos y ] ;
 
 
+/-- [Section: ## Lipschitz Barrier Corollaries] -/
 theorem sq_not_mem_sheffer : (fun x : ℝ => x ^ 2) ∉ ShefferAlgebra := by
   intro h
   obtain ⟨e, he⟩ := h;
@@ -55,6 +57,7 @@ theorem softplus_injective : Function.Injective softplus :=
   softplus_strictMono.injective
 
 
+/-- [Section: ## Asymptotic Behavior] -/
 theorem softplus_sub_id_tendsto_zero :
     Filter.Tendsto (fun x => softplus x - x) Filter.atTop (nhds 0) := by
   -- Rewrite σ(x) - x using the reflection identity: σ(x) - x = σ(-x).
@@ -95,6 +98,7 @@ theorem linear_mem_sheffer (a : ℝ) : (fun x : ℝ => a * x) ∈ ShefferAlgebra
   ext x; ring
 
 
+/-- [Section: ## Sigmoid Bounds] -/
 theorem sigmoid_product_le_quarter (x : ℝ) :
     logisticSigmoid x * (1 - logisticSigmoid x) ≤ 1 / 4 := by
   linarith [ sq_nonneg ( logisticSigmoid x - 1 / 2 ) ]
@@ -107,6 +111,7 @@ theorem sigmoid_product_max_at_zero :
   norm_num
 
 
+/-- [Section: ## Softplus Iterated Chain] -/
 theorem softplus_iter_strictly_increasing (n : ℕ) (x : ℝ) :
     softplus_iter (n + 1) x > softplus_iter n x := by
   exact softplus_gt_id _
@@ -121,6 +126,7 @@ def ShefferExpr.lipschitzBound : ShefferExpr → ℝ
   | .comp e₁ e₂ => e₁.lipschitzBound * e₂.lipschitzBound
 
 
+/-- [Section: ## Softplus Lipschitz Constant Computation] -/
 theorem sheffer_lipschitz_bound_nonneg (e : ShefferExpr) : e.lipschitzBound ≥ 0 := by
   induction e;
   · exact zero_le_one;
@@ -159,6 +165,7 @@ theorem softplus_eq_logsumexp (x : ℝ) :
   simp [softplus, exp_zero]
 
 
+/-- [Section: ## Softplus and Log-Sum-Exp] -/
 theorem logsumexp_two (x y : ℝ) :
     Real.log (Real.exp x + Real.exp y) = x + softplus (y - x) := by
   unfold softplus; rw [ ← Real.log_exp x ] ; rw [ ← Real.log_mul ( by positivity ) ( by positivity ) ] ; ring;
@@ -170,6 +177,7 @@ theorem sheffer_base_monotone : Monotone ShefferExpr.base.eval :=
   softplus_mono
 
 
+/-- [Section: ## Softplus Integral Properties] -/
 theorem sigmoid_integral (a b : ℝ) :
     ∫ t in a..b, logisticSigmoid t = softplus b - softplus a := by
   rw [ intervalIntegral.integral_deriv_eq_sub' ];

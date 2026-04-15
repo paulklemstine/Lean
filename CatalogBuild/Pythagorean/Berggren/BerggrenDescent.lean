@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/Berggren
-Declarations: 41
+Declarations: 42
 -/
 
 import Mathlib
@@ -22,6 +22,7 @@ def invBerggren3 (a b c : ℤ) : ℤ × ℤ × ℤ :=
   (-a - 2*b + 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
 
 
+/-- [Section: ## §3. Inverse Transforms Preserve the Pythagorean Property] -/
 theorem invBerggren1_preserves (a b c : ℤ) (h : IsPythTriple a b c) :
     IsPythTriple (invBerggren1 a b c).1 (invBerggren1 a b c).2.1 (invBerggren1 a b c).2.2 := by
   unfold IsPythTriple invBerggren1 at *; nlinarith [h]
@@ -226,6 +227,13 @@ theorem hyp_pos_of_legs_pos (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
   rcases (hc.lt_or_eq) with h | h
   · exact h
   · exfalso; exact hyp_ne_zero a b c ha hb hpyth (by linarith)
+
+
+/-- For a PPT, c > a when b > 0. -/
+theorem hyp_gt_leg (a b c : ℤ) (ha : 0 ≤ a) (hb : 0 < b) (hc : 0 < c)
+    (hpyth : IsPythTriple a b c) : c > a := by
+  unfold IsPythTriple at hpyth
+  nlinarith [sq_nonneg b, sq_nonneg (c - a), sq_nonneg (c + a)]
 
 
 /-- Key identity: applying B₂⁻¹ and equating the hypotenuse to 5 gives

@@ -58,6 +58,11 @@ theorem oracle_is_strange_loop {X : Type*}
     IsStrangeLoop O.improve := O.idem
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════════
+§3. CONVERGENCE AND FIXED-POINT THEOREMS
+═══════════════════════════════════════════════════════════════════════════════
+We prove that bounded self-improvement must converge, and connect this to
+the Knaster-Tarski and Lawvere fixed-point theorems.] -/
 theorem monotone_bounded_convergence {Agent : Type*}
     (improve : Agent → Agent) (eval : Agent → ℕ)
     (bound : ℕ)
@@ -169,6 +174,12 @@ noncomputable def improvement_at_k {Agent : Type*}
     (fun i => eval (improve^[i] a₀)) - eval a₀
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════════
+§5. CROSS-DOMAIN TRANSFER
+═══════════════════════════════════════════════════════════════════════════════
+We formalize the key empirical finding of Zhang et al.: meta-level improvements
+transfer across domains. This is because oracle structure is preserved by
+natural transformations between agent spaces.] -/
 theorem improvement_monotone_k {Agent : Type*}
     (improve : Agent → Agent) (eval : Agent → ℝ)
     (a₀ : Agent) (k : ℕ) :
@@ -177,6 +188,11 @@ theorem improvement_monotone_k {Agent : Type*}
   exact fun i hi => Finset.le_sup' ( fun i => eval ( improve^[i] a₀ ) ) ( Finset.mem_range.mpr ( Nat.lt_succ_of_lt ( Finset.mem_range.mp hi ) ) )
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════════
+§6. GÖDELIAN LIMITATIONS ON SELF-IMPROVEMENT
+═══════════════════════════════════════════════════════════════════════════════
+No hyperagent can be universally self-improving across all evaluation
+functions. This is the diagonal argument applied to agent spaces.] -/
 theorem no_universal_improver (Agent : Type*) [Nonempty Agent]
     (h_many : ∃ a b : Agent, a ≠ b) :
     ∀ improve : Agent → Agent,

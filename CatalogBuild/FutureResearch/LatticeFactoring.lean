@@ -13,6 +13,14 @@ noncomputable section
 noncomputable def lll_approx_factor (n : ℕ) : ℝ := (2 : ℝ) ^ ((n - 1 : ℝ) / 2)
 
 
+/-- [Section: # Lattice-Based Factoring Bounds (A2, E1)
+We formalize dimension bounds and hardness results for lattice-based
+approaches to integer factoring, connecting LLL reduction to the
+factoring problem.
+## Main Results
+* `lattice_dimension_bound` — Minimum lattice dimension for factoring
+* `lll_output_bound` — LLL approximation factor
+* `short_vector_factor_criterion` — When short vectors yield factors] -/
 theorem lll_approx_ge_one (n : ℕ) (hn : 1 ≤ n) : 1 ≤ lll_approx_factor n := by
   refine' le_trans _ ( Real.one_le_rpow _ _ ) <;> norm_num;
   linarith [ show ( n : ℝ ) ≥ 1 by norm_cast ]

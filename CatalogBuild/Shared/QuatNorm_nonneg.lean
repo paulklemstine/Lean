@@ -7,6 +7,7 @@ Declarations: 3
 
 import Mathlib
 
+/-- [Section: ### Quaternion Norm] -/
 theorem quatNorm_nonneg (a b c d : ℤ) : 0 ≤ quatNorm a b c d := by
   unfold quatNorm; positivity
 

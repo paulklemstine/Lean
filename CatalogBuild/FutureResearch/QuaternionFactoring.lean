@@ -35,6 +35,16 @@ theorem quat_norm_mul (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℤ) :
   unfold quat_norm; ring
 
 
+/-- [Section: # Quaternion Factoring Extension (A+7, A4)
+We formalize the mathematical foundations for extending the Brahmagupta-Fibonacci
+factoring algorithm to ALL composites via Lagrange's four-square theorem and
+the Euler four-square identity. This addresses research direction A+7.
+## Main Results
+* `euler_four_square_identity` — The Euler four-square identity
+* `quaternion_norm_mul` — Quaternion norm is multiplicative
+* `four_square_cross_term` — Cross-term extraction for quaternion factoring
+* `lagrange_four_square_representation` — Every positive integer is a sum of four squares
+* `quaternion_factor_criterion` — GCD criterion for extracting factors] -/
 theorem four_square_hamilton_product (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℤ)
     (h : a₁^2 + a₂^2 + a₃^2 + a₄^2 = b₁^2 + b₂^2 + b₃^2 + b₄^2) :
     (a₁^2 + a₂^2 + a₃^2 + a₄^2)^2 =

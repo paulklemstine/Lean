@@ -166,6 +166,7 @@ theorem mobilenet_rank (k c : ℕ) (hk : 1 ≤ k) (hc : 1 ≤ c) :
 def LSE_two (beta x y : ℝ) : ℝ := (1 / beta) * Real.log (Real.exp (beta * x) + Real.exp (beta * y))
 
 
+/-- [Section: ## Part IV: LogSumExp Temperature Bridge] -/
 theorem lse_ge_max (beta x y : ℝ) (hbeta : 0 < beta) :
     max x y ≤ LSE_two beta x y := by
   unfold LSE_two

@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Part 1: Möbius Transform Parameters] -/
 structure MoebiusParams where
   a : ℝ × ℝ
   b : ℝ × ℝ
@@ -35,6 +36,7 @@ def applyMoebius (p : MoebiusParams) (z : ℝ × ℝ) : ℝ × ℝ :=
    (num.2 * den.1 - num.1 * den.2) / den_sq)
 
 
+/-- [Section: ## Part 2: Composition of Möbius Transforms] -/
 def composeMoebius (p q : MoebiusParams) : MoebiusParams where
   a := (p.a.1 * q.a.1 - p.a.2 * q.a.2 + p.b.1 * q.c.1 - p.b.2 * q.c.2,
         p.a.1 * q.a.2 + p.a.2 * q.a.1 + p.b.1 * q.c.2 + p.b.2 * q.c.1)
@@ -64,6 +66,7 @@ theorem idMoebius_det : moebiusDet idMoebius = (1, 0) := by
   unfold moebiusDet idMoebius; norm_num
 
 
+/-- [Section: ## Part 3: Conformal Factor of Möbius Transforms] -/
 def moebiusConfFactor (p : MoebiusParams) (z : ℝ × ℝ) : ℝ :=
   let den := (p.c.1 * z.1 - p.c.2 * z.2 + p.d.1,
               p.c.1 * z.2 + p.c.2 * z.1 + p.d.2)
@@ -79,6 +82,7 @@ theorem moebiusConfFactor_nonneg (p : MoebiusParams) (z : ℝ × ℝ) :
   · positivity
 
 
+/-- [Section: ## Part 4: Möbius-Parameterized Attention] -/
 def moebiusAttentionHead (seqLen : ℕ) (T : ℝ)
     (pQ pK : MoebiusParams)
     (X : Fin seqLen → ℝ × ℝ)
@@ -96,6 +100,7 @@ def moebiusAttentionHead (seqLen : ℕ) (T : ℝ)
      ∑ j : Fin seqLen, (weights j / totalWeight) * (V j).2)
 
 
+/-- [Section: ## Part 5: Learnable Parameterization] -/
 def learnableMoebiusParams (params : Fin 8 → ℝ) : MoebiusParams where
   a := (params 0, params 1)
   b := (params 2, params 3)

@@ -8,12 +8,14 @@ Declarations: 7
 import CatalogBuild.Cryptography.Factoring.Basic
 import Mathlib
 
+/-- [Section: ## Collision Pigeonhole Bound] -/
 theorem collision_pigeonhole {α : Type*} [Fintype α] [DecidableEq α]
     (f : α → α) (x₀ : α) :
     ∃ i j, i < j ∧ j ≤ Fintype.card α ∧ orbitSeq f x₀ i = orbitSeq f x₀ j := by
   exact collision_within_card f x₀
 
 
+/-- [Section: ## Brent's Cycle Detection] -/
 theorem brent_detection {α : Type*} [Fintype α] [DecidableEq α]
     (f : α → α) (x₀ : α) :
     ∃ k, 0 < k ∧ k ≤ 3 * Fintype.card α ∧
@@ -22,6 +24,7 @@ theorem brent_detection {α : Type*} [Fintype α] [DecidableEq α]
   exact ⟨ j, by linarith, by linarith, i, hij, h ⟩
 
 
+/-- [Section: ## Period-LCM under CRT] -/
 theorem orbit_period_lcm_coprime {α β : Type*}
     (f : α → α) (g : β → β) (x₀ : α) (y₀ : β)
     (per₁ per₂ : ℕ)
@@ -41,6 +44,7 @@ theorem orbit_period_lcm_coprime {α β : Type*}
   grind
 
 
+/-- [Section: ## Multi-Start Probability Bound] -/
 theorem multi_start_probability_bound {p_succ : ℝ} {k : ℕ}
     (hp : 0 ≤ p_succ) (hp1 : p_succ ≤ 1) :
     (1 - p_succ) ^ k ≤ 1 := by
@@ -53,12 +57,14 @@ theorem multi_start_exponential_decay {p_succ : ℝ} {k : ℕ}
   exact pow_lt_one₀ ( by linarith ) ( by linarith ) ( by linarith )
 
 
+/-- [Section: ## Order-Period Connection] -/
 theorem pow_eq_one_of_order_dvd {n : ℕ} [NeZero n] (a : ZMod n)
     (d : ℕ) (hd : orderOf a ∣ d) :
     a ^ d = 1 := by
   rw [ ← orderOf_dvd_iff_pow_eq_one ] ; aesop
 
 
+/-- [Section: ## Period Divisibility under Reduction] -/
 theorem period_dvd_of_commute {α β : Type*}
     (f : α → α) (g : β → β) (π : α → β)
     (hcomm : ∀ x, π (f x) = g (π x))

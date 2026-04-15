@@ -93,6 +93,7 @@ theorem berggrenB₁_invertible : IsUnit (Matrix.det berggrenB₁) := by
   rw [det_berggrenB₁]; exact isUnit_one
 
 
+/-- [Section: ## §5. Determinant Properties] -/
 theorem berggrenB₂_invertible : IsUnit (Matrix.det berggrenB₂) := by
   rw [det_berggrenB₂]; exact isUnit_neg_one
 
@@ -295,6 +296,7 @@ theorem trace_B₂B₃ : Matrix.trace (berggrenB₂ * berggrenB₃) = 17 := by n
 /-- Product determinants. -/
 theorem det_B₁B₂ : Matrix.det (berggrenB₁ * berggrenB₂) = -1 := by native_decide
 
+/-- [Section: ## §13. Products of Berggren Matrices] -/
 theorem det_B₁B₃ : Matrix.det (berggrenB₁ * berggrenB₃) = 1 := by native_decide
 
 theorem det_B₂B₃ : Matrix.det (berggrenB₂ * berggrenB₃) = -1 := by native_decide

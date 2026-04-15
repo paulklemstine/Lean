@@ -37,6 +37,10 @@ def grandparent_B2B2 (a b c : ℤ) : ℤ × ℤ × ℤ :=
   invB2 p.1 p.2.1 p.2.2
 
 
+/-- [Section: ## §5. Grandparent: Composition of Two Parent Transforms
+The grandparent via B₂⁻¹ ∘ B₂⁻¹ has the explicit formula:
+(9a + 8b - 12c, 8a + 9b - 12c, -12a - 12b + 17c)
+This is verified by direct computation.] -/
 theorem grandparent_B2B2_explicit (a b c : ℤ) :
     grandparent_B2B2 a b c =
       (9*a + 8*b - 12*c, 8*a + 9*b - 12*c, -12*a - 12*b + 17*c) := by
@@ -65,6 +69,7 @@ theorem root_via_B2_hypotenuse (N u h : ℤ)
   simp [invB2] at h_root; linarith [h_root.2.2]
 
 
+/-- [Section: ## §7. The Root Equation System] -/
 theorem root_via_B2_quadratic (N u h : ℤ)
     (hp : N ^ 2 + u ^ 2 = h ^ 2)
     (h_root : invB2 N u h = (3, 4, 5)) :
@@ -97,6 +102,7 @@ theorem parent_first_leg_structure (N u h : ℤ) :
   simp [invB2]
 
 
+/-- [Section: ## §10. Core Algebraic Identities] -/
 theorem parent_leg_gcd_simplify (N u h : ℤ) :
     Int.gcd (N + (2*u - 2*h)) N = Int.gcd (2*u - 2*h) N := by
   refine' Nat.dvd_antisymm _ _;

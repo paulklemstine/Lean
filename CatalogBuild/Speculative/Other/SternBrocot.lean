@@ -2,10 +2,15 @@
 
 Auto-generated from theorem catalog database.
 Domain: Speculative/Other
-Declarations: 9
+Declarations: 10
 -/
 
 import Mathlib
+
+/-- Left and right directions in the tree. -/
+inductive Dir | L | R
+  deriving DecidableEq, Repr
+
 
 /-- A path in the Stern-Brocot tree is a list of directions. -/
 abbrev Path := List Dir

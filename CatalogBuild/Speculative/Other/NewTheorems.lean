@@ -66,6 +66,7 @@ theorem peirce_full_decomp {n : ℕ} (sys : CompleteOrthogonalSystem n R) (x : R
   exact h_expand.trans ( by simp +decide [ Finset.sum_mul _ _ _, Finset.mul_sum, mul_assoc ] )
 
 
+/-- ═══════════════════════════════════════════════════════════════════════════════ §4: Tropical Idempotency ═══════════════════════════════════════════════════════════════════════════════ -/
 theorem tropical_max_idem (a : ℝ) : max a a = a := max_self a
 
 theorem tropical_min_idem (a : ℝ) : min a a = a := min_self a
@@ -97,6 +98,7 @@ theorem reluFn_master : range reluFn = {x : ℝ | reluFn x = x} := by
   · intro hy; exact ⟨y, hy⟩
 
 
+/-- ═══════════════════════════════════════════════════════════════════════════════ §5: Vandermonde and Eigenvalue Repulsion ═══════════════════════════════════════════════════════════════════════════════ -/
 def vandermondeProd (n : ℕ) (v : Fin n → ℝ) : ℝ :=
   ∏ i : Fin n, ∏ j ∈ (Finset.univ.filter (· > i)), (v j - v i)
 
@@ -125,6 +127,7 @@ theorem gue_nonneg (n : ℕ) (v : Fin n → ℝ) : 0 ≤ gueJointDensity n v :=
   mul_nonneg (sq_nonneg _) (le_of_lt (Real.exp_pos _))
 
 
+/-- ═══════════════════════════════════════════════════════════════════════════════ §6: Categorified Bridge Structure ═══════════════════════════════════════════════════════════════════════════════ -/
 structure MathBridge' (C D : Type*) [Category C] [Category D] where
   fwd : C ⥤ D
   bwd : D ⥤ C
@@ -150,6 +153,7 @@ theorem mathbridge_id_idempotent (C : Type*) [Category C] :
   ⟨Functor.leftUnitor _⟩
 
 
+/-- ═══════════════════════════════════════════════════════════════════════════════ §7: Karoubi Envelope ═══════════════════════════════════════════════════════════════════════════════ -/
 structure KaroubiObj (C : Type*) [Category C] where
   obj : C
   idem : obj ⟶ obj

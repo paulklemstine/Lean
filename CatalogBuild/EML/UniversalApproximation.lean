@@ -91,6 +91,7 @@ theorem double_exp_composition (a b c d : ℝ) (x : ℝ) :
   rw [Real.exp_add, mul_comm]
 
 
+/-- [Section: ## EML Function Class Capacity] -/
 theorem catalan_0 : catalanNum 0 = 1 := rfl
 
 theorem catalan_1 : catalanNum 1 = 1 := by native_decide

@@ -57,6 +57,7 @@ def composedPrivacy (eps : ℝ) (k : ℕ) : ℝ := eps * ↑k
 def advancedComposition (eps : ℝ) (k : ℕ) : ℝ := Real.sqrt ↑k * eps
 
 
+/-- [Section: ## §2. Differential Privacy] -/
 theorem advanced_better (eps : ℝ) (k : ℕ) (heps : 0 < eps) (hk : 4 ≤ k) :
     advancedComposition eps k < composedPrivacy eps k := by
   -- By definition of $advancedComposition$ and $composedPrivacy$, we need to show that $\sqrt{k} \cdot \epsilon < \epsilon \cdot k$.
@@ -165,6 +166,7 @@ theorem nist_level5 : nistLevel 256 = 5 := by simp [nistLevel]
 def commCost (params bits : ℕ) : ℕ := params * bits
 
 
+/-- [Section: ## §7. Federated EML Learning] -/
 theorem eml_comm_advantage (d w bits : ℕ) (hd : 0 < d) (hw : 5 ≤ w) (hb : 0 < bits) :
     commCost (4 * d * w) bits < commCost (d * w * (w + 1)) bits := by
   unfold commCost;

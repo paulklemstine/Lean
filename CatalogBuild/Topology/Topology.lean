@@ -7,6 +7,7 @@ Declarations: 8
 
 import Mathlib
 
+/-- [Section: ## Section 1: Compactness] -/
 theorem unit_interval_compact : IsCompact (Set.Icc (0 : ℝ) 1) := by
   exact CompactIccSpace.isCompact_Icc
 
@@ -24,6 +25,7 @@ theorem compact_attains_max {X : Type*} [TopologicalSpace X]
       convert hK.exists_isMaxOn hne hf
 
 
+/-- [Section: ## Section 2: Connectedness] -/
 theorem ivt {f : ℝ → ℝ} {a b : ℝ} (hab : a ≤ b)
     (hf : ContinuousOn f (Set.Icc a b))
     {v : ℝ} (hva : f a ≤ v) (hvb : v ≤ f b) :
@@ -36,6 +38,7 @@ theorem real_connected : ConnectedSpace ℝ := by
   infer_instance
 
 
+/-- [Section: ## Section 3: Fixed Point Theorems] -/
 theorem brouwer_1d (f : ℝ → ℝ) (hf : ContinuousOn f (Set.Icc 0 1))
     (hf_range : ∀ x ∈ Set.Icc (0:ℝ) 1, f x ∈ Set.Icc (0:ℝ) 1) :
     ∃ x ∈ Set.Icc (0:ℝ) 1, f x = x := by
@@ -50,6 +53,7 @@ theorem brouwer_1d (f : ℝ → ℝ) (hf : ContinuousOn f (Set.Icc 0 1))
       exact h_contra _ h_ivt.choose_spec.1 <| sub_eq_zero.mp h_ivt.choose_spec.2
 
 
+/-- [Section: ## Section 4: Metric Topology] -/
 theorem compact_metric_complete {X : Type*} [MetricSpace X] [CompactSpace X] :
     CompleteSpace X := by
       exact?

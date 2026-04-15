@@ -12,6 +12,7 @@ theorem fib_pos (n : ℕ) (hn : 1 ≤ n) : 0 < Nat.fib n := by
   exact Nat.fib_pos.mpr hn
 
 
+/-- [Section: ## Section 1: Fibonacci Identities for Carry Propagation] -/
 theorem fib_ge_half (n : ℕ) (hn : 1 ≤ n) : n ≤ 2 * Nat.fib n := by
   induction' n using Nat.strong_induction_on with n ih;
   rcases n with ( _ | _ | _ | _ | _ | _ | _ | n ) <;> simp +arith +decide [ Nat.fib_add_two ] at *;
@@ -82,6 +83,7 @@ theorem cassini_odd (n : ℕ) (hn : n % 2 = 1) :
   induction k <;> norm_num [ Nat.fib_add_two, Nat.mul_succ ] at * ; linarith
 
 
+/-- [Section: ## Section 4: Fibonacci Product Identities] -/
 theorem fib_docagne_even (m n : ℕ) (hmn : n ≤ m) (hn : n % 2 = 0) :
     Nat.fib m * Nat.fib (n + 1) = Nat.fib (m + 1) * Nat.fib n + Nat.fib (m - n) := by
   -- We prove the general d'Ocagne identity by induction on $m - n$.
@@ -128,6 +130,7 @@ theorem carry_reaches_down (n : ℕ) (hn : 4 ≤ n) :
   exact fib_carry_rule (n - 2)
 
 
+/-- [Section: ## Section 6: Carry Cascade Reach] -/
 theorem fib_triple (n : ℕ) (hn : 2 ≤ n) :
     3 * Nat.fib n = Nat.fib (n + 2) + Nat.fib (n - 2) := by
   rcases n with ( _ | _ | n ) <;> simp_all +arith +decide [ Nat.fib_add_two ]
@@ -137,6 +140,7 @@ theorem pisano_period_5 (n : ℕ) : Nat.fib (n + 20) % 5 = Nat.fib n % 5 := by
   norm_num [ Nat.fib_add, Nat.add_mod, Nat.mul_mod ]
 
 
+/-- [Section: ## Section 8: Parity Constraints] -/
 theorem fib_3k_even (k : ℕ) (hk : 1 ≤ k) : 2 ∣ Nat.fib (3 * k) := by
   exact Nat.dvd_of_mod_eq_zero ( by induction hk <;> simp_all +arith +decide [ Nat.mul_succ, Nat.fib_add_two, Nat.add_mod ] )
 
@@ -151,6 +155,7 @@ theorem fib_3k2_odd (k : ℕ) : ¬ 2 ∣ Nat.fib (3 * k + 2) := by
   omega
 
 
+/-- [Section: ## Section 10: Fibonacci Addition Formula] -/
 theorem fib_add_formula (m n : ℕ) :
     Nat.fib (m + n + 1) = Nat.fib m * Nat.fib n + Nat.fib (m + 1) * Nat.fib (n + 1) := by
   exact fib_add m n

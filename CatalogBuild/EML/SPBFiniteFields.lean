@@ -28,6 +28,7 @@ theorem spb_group_order_mod4_statement (p : ℕ) [Fact (Nat.Prime p)] (hp : p > 
   ⟨fun _ => trivial, fun _ => trivial⟩
 
 
+/-- [Section: ## Quadratic Residue Connection] -/
 theorem neg_one_qr_iff_mod4 (p : ℕ) [hp : Fact (Nat.Prime p)] (hp2 : p ≠ 2) :
     IsSquare (-1 : ZMod p) ↔ p % 4 = 1 := by
   rw [ ZMod.isSquare_neg_one_iff ];

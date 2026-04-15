@@ -77,6 +77,7 @@ theorem n210_divisor_pair_product (d : ℕ) (hd : d ∈ Nat.divisors 210) :
   exact Nat.mul_div_cancel' hd.1
 
 
+/-- [Section: ## Section 5: Dirichlet's Hyperbola Method] -/
 theorem divisor_pair_sqrt_bound {n d : ℕ} (hn : 0 < n) (hd : d ∣ n) :
     d ≤ Nat.sqrt n ∨ n / d ≤ Nat.sqrt n := by
   exact Classical.or_iff_not_imp_left.2 fun h => by nlinarith [ Nat.lt_succ_sqrt n, Nat.div_mul_cancel hd ] ;
@@ -104,6 +105,7 @@ theorem rectangle_area_invariant {n d : ℕ} (hd : d ∣ n) :
   Nat.mul_div_cancel' hd
 
 
+/-- [Section: ## Section 7: Geometric Structure for Algorithmic Exploitation] -/
 theorem hyperbola_strictly_decreasing {n d₁ d₂ : ℕ}
     (hn : 0 < n) (hd₁ : d₁ ∣ n) (hd₂ : d₂ ∣ n)
     (hlt : d₁ < d₂) (hd₁_pos : 0 < d₁) :

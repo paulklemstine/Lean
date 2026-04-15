@@ -23,6 +23,7 @@ theorem sqIter_eq_pow (n : ℕ) [NeZero n] (x : ZMod n) (k : ℕ) :
   | succ k ih => simp [sqIter, sqMap, ih, pow_succ, pow_mul]
 
 
+/-- [Section: ## Part 1: Squaring Map Orbit Structure] -/
 theorem sqMap_eventually_periodic (n : ℕ) [NeZero n] (x : ZMod n) :
     ∃ rho period_len : ℕ, 0 < period_len ∧
       sqIter n x (rho + period_len) = sqIter n x rho := by
@@ -54,6 +55,7 @@ def IOF.factorBase (B : ℕ) : Finset ℕ :=
   (Finset.range (B + 1)).filter Nat.Prime
 
 
+/-- [Section: ## Part 2: IOF Smooth Relations] -/
 theorem IOF.factorBase_card_le (B : ℕ) :
     (IOF.factorBase B).card ≤ B := by
   exact le_trans ( Finset.card_le_card ( show factorBase B ⊆ Finset.Ico 2 ( B + 1 ) from fun p hp => Finset.mem_Ico.mpr ⟨ Nat.Prime.two_le ( Finset.mem_filter.mp hp |>.2 ), by simpa using Finset.mem_range.mp ( Finset.mem_filter.mp hp |>.1 ) ⟩ ) ) ( by simp +arith +decide )
@@ -74,6 +76,7 @@ theorem IOF.isSmooth_prime {B p : ℕ} (hp : p.Prime) :
   exact ⟨ fun h => h p hp dvd_rfl, fun h q hq hqp => by rw [ Nat.prime_dvd_prime_iff_eq ] at hqp <;> aesop ⟩
 
 
+/-- [Section: ## Part 3: IOF Factoring Correctness] -/
 theorem IOF_factoring_correctness
     {n : ℕ} (hn : 1 < n)
     (B : ℕ) (hB : 1 < B)
@@ -92,6 +95,7 @@ theorem IOF_relation_verification_poly
   exact ⟨ _, le_rfl ⟩
 
 
+/-- [Section: ## Part 4: Complexity Bounds for IOF-Sieve Combination] -/
 theorem IOF_smooth_probability_bound
     (n : ℕ) (hn : 2 ≤ n) :
     ∃ B : ℕ, 1 < B ∧ B ≤ n ∧
@@ -131,6 +135,7 @@ theorem IOF_not_polynomial_unconditional
   exact absurd ( hi' ( Nat.find ( Nat.exists_infinite_primes ( B + 1 ) ) ) ( Nat.find_spec ( Nat.exists_infinite_primes ( B + 1 ) ) |>.2 ) ( by aesop ) ) ( by linarith [ Nat.find_spec ( Nat.exists_infinite_primes ( B + 1 ) ) |>.1 ] )
 
 
+/-- [Section: ## Part 5: CRT Decomposition of IOF Orbits] -/
 theorem IOF_orbit_CRT_decomposition
     (p q : ℕ) [NeZero p] [NeZero q] (hcoprime : Nat.Coprime p q)
     (x : ZMod (p * q)) (k : ℕ) :
@@ -180,6 +185,7 @@ theorem IOF_orbit_period_divides_lcm
   have := h_period_p ( Nat.lcm lp lq / lp ) ; have := h_period_q ( Nat.lcm lp lq / lq ) ; simp_all +decide [ Nat.div_mul_cancel ( Nat.dvd_lcm_left _ _ ), Nat.div_mul_cancel ( Nat.dvd_lcm_right _ _ ) ] ;
 
 
+/-- [Section: ## Part 6: IOF with Sieve Enhancement] -/
 theorem IOF_sieve_enhanced_relations
     (n M B : ℕ) (hn : 1 < n) (hM : 0 < M) (hB : 1 < B) :
     ∀ a : ℤ, ∃ count : ℕ,
@@ -193,6 +199,7 @@ theorem IOF_orbit_correlation
   exact?
 
 
+/-- [Section: ## Part 7: GCD Extraction from IOF Relations] -/
 theorem IOF_gcd_extraction
     {n : ℕ} (hn : 1 < n)
     (x y : ℤ)

@@ -80,6 +80,7 @@ theorem bij_comp' {α β γ : Type*} (f : α → β) (g : β → γ)
     Function.Bijective (g ∘ f) := hg.comp hf
 
 
+/-- [Section: ## §6: Ergodic Theory & Dynamical Systems] -/
 theorem finite_recurrence' {α : Type*} [Fintype α] [DecidableEq α]
     (f : α → α) (hf : Function.Bijective f) (x : α) :
     ∃ n : ℕ, 0 < n ∧ f^[n] x = x := by
@@ -179,6 +180,7 @@ theorem space_hierarchy' (n : ℕ) : Nat.log 2 (2 ^ n) = n := Nat.log_pow (by no
 /-- Factorial bounds -/
 theorem factorial_lower_5' : 120 ≤ Nat.factorial 5 := by norm_num
 
+/-- [Section: ## §15: Computational Complexity] -/
 theorem factorial_lower_10' : 3628800 ≤ Nat.factorial 10 := by norm_num
 
 
@@ -207,6 +209,7 @@ theorem four_square_identity' (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ) :
 theorem four_squares_7' : ∃ a b c d : ℕ, a^2 + b^2 + c^2 + d^2 = 7 :=
   ⟨1, 1, 1, 2, by norm_num⟩
 
+/-- [Section: ## §19: Noncommutative Algebra & Quaternions] -/
 theorem four_squares_15' : ∃ a b c d : ℕ, a^2 + b^2 + c^2 + d^2 = 15 :=
   ⟨1, 1, 2, 3, by norm_num⟩
 

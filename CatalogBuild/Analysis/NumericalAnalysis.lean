@@ -7,6 +7,7 @@ Declarations: 3
 
 import Mathlib
 
+/-- Newton quadratic convergence -/
 theorem newton_qc (e : ℕ → ℝ) (C : ℝ) (h : ∀ n, e (n + 1) ≤ C * e n ^ 2) :
     e 1 ≤ C * e 0 ^ 2 := h 0
 

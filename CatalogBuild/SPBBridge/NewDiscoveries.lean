@@ -58,6 +58,7 @@ theorem spb_parity (x y : ℝ) : spb (-x) (-y) = -(spb x y) := by
   unfold spb; ring
 
 
+/-- [Section: ## 5. SPB Symmetries] -/
 theorem spb_inversion (x y : ℝ) (hx : x ≠ 0) (hy : y ≠ 0) (h : x * y ≠ 1) :
     spb (1/x) (1/y) = -(spb x y) := by
   unfold spb;
@@ -80,6 +81,7 @@ theorem pythagorean_spb (a b : ℝ) (hb : b ≠ 0) :
   unfold spb; field_simp; ring
 
 
+/-- [Section: ## 6. Pythagorean Triple Connections] -/
 theorem pythagorean_345 : spb (3/4 : ℝ) (3/4) = 24/7 := by
   unfold spb; norm_num
 
@@ -88,6 +90,7 @@ theorem pythagorean_5_12_13 : spb (5/12 : ℝ) (5/12) = 120/119 := by
   unfold spb; norm_num
 
 
+/-- [Section: ## 7. SPB Sign and Bounds] -/
 theorem spb_neg_example : spb (2 : ℝ) 3 = -1 := by
   unfold spb; norm_num
 

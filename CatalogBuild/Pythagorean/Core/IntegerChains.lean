@@ -7,6 +7,14 @@ Declarations: 17
 
 import Mathlib
 
+/-- [Section: ## det = 2: Pole pairs with (1+a²)(1+b²) = 2
+Only possibility: 1+a² = 1, 1+b² = 2 or vice versa.
+a = 0, b = ±1 (or a = ±1, b = 0). det = 2.
+For (a,b) = (0,1): F(t) = (t+1)/(1-t), det = 2.
+Divisors of 2: ±1, ±2.
+Denominator = -t+1, so -t+1 ∈ {±1, ±2} gives t ∈ {0, 2, -1, 3}.
+Check: F(0) = 1 ✓, F(2) = -3 ✓, F(-1) = 0 ✓, F(3) = -2 ✓.
+So exactly 4 integers map to integers!] -/
 theorem chain_01_complete : ∀ n : ℤ,
     ((-(n : ℚ) + 1) ≠ 0 ∧ ∃ m : ℤ, twoPole 0 1 (n : ℚ) = (m : ℚ)) ↔
     (n = 0 ∨ n = 2 ∨ n = -1 ∨ n = 3) := by
@@ -25,6 +33,19 @@ theorem chain_01_complete : ∀ n : ℤ,
       · rcases hn with ( rfl | rfl | rfl | rfl ) <;> norm_num [ twoPole ] <;> tauto
 
 
+/-- [Section: ## det = 4: Pole pairs with (1+a²)(1+b²) = 4
+Options: (1+a²,1+b²) = (1,4) or (2,2) or (4,1)
+- (1,4): a=0, b=±√3 — not integer
+- (2,2): a=±1, b=±1
+- (4,1): a=±√3, b=0 — not integer
+So only (a,b) with a,b ∈ {-1,1} and a≠b, i.e. (1,-1) or (-1,1).
+For (1,-1): F(t) = (0·t + (-2))/(2t + 0) = -1/t.
+Denominator = 2t, must divide 4. So t ∈ {±1, ±2}.
+F(1) = -1, F(-1) = 1, F(2) = -1/2 (not integer!).
+Wait, the full criterion: 2t | (-2) since num = 0·t+(-2) = -2.
+Actually we need 2t | det = 4, so t | 2: t ∈ {±1, ±2}.
+But also need 2t | (0·t-2) = -2. 2t | -2 means t | 1, so t = ±1.
+Check: F(1) = -1 ✓, F(-1) = 1 ✓. Only 2 inputs work.] -/
 theorem chain_1_neg1_complete (n : ℤ) (hn : (n : ℚ) ≠ 0) :
     (∃ m : ℤ, twoPole 1 (-1) (n : ℚ) = (m : ℚ)) ↔ (n = 1 ∨ n = -1) := by
       unfold twoPole;
@@ -35,6 +56,16 @@ theorem chain_1_neg1_complete (n : ℤ) (hn : (n : ℚ) ≠ 0) :
       · rintro ( rfl | rfl ) <;> [ exact ⟨ -1, by norm_num ⟩ ; exact ⟨ 1, by norm_num ⟩ ]
 
 
+/-- [Section: ## det = 5: Pole pairs with (1+a²)(1+b²) = 5
+Options: (1,5) or (5,1). So a=0,b=±2 or a=±2,b=0.
+For (0,2): F(t) = (1·t+2)/(-2t+1) = (t+2)/(1-2t).
+Denominator = 1-2t. Must have (1-2t) | 5.
+1-2t ∈ {±1, ±5} → t ∈ {0, 1, -2, 3}.
+Check numerator: F(0) = 2/1 = 2 ✓
+F(1) = 3/(-1) = -3 ✓
+F(-2) = 0/5 = 0 ✓
+F(3) = 5/(-5) = -1 ✓
+All 4 work! So the chain is: 0→2, 1→-3, -2→0, 3→-1.] -/
 theorem twoPole_02_at_0 : twoPole 0 2 0 = 2 := by
   norm_num [ twoPole ]
 
@@ -51,6 +82,23 @@ theorem twoPole_02_at_3 : twoPole 0 2 3 = -1 := by
   unfold twoPole; norm_num;
 
 
+/-- [Section: ## det = 10: Pole pairs with (1+a²)(1+b²) = 10
+Options: (1,10),(2,5),(5,2),(10,1).
+- (1,10): a=0,b²=9, b=±3
+- (2,5): a=±1,b=±2
+- (5,2): a=±2,b=±1
+- (10,1): a²=9,a=±3,b=0
+For (0,3): F(t) = (1·t+3)/(-3t+1) = (t+3)/(1-3t).
+det = 10, divisors: ±1,±2,±5,±10.
+1-3t ∈ {±1,±2,±5,±10}
+t = 0: 1-0=1|10 ✓, F(0)=3 ✓
+t = -1: 1+3=4, 4|10? No.
+t = 2: 1-6=-5|10 ✓, F(2)=5/(-5)=-1 ✓
+t = -3: 1+9=10|10 ✓, F(-3)=0/10=0 ✓
+t = 1: 1-3=-2|10 ✓, F(1)=4/(-2)=-2 ✓
+t = 3: 1-9=-8, 8|10? No.
+t = -1/3: not integer.
+So for (0,3): t ∈ {0,2,-3,1} → F values {3,-1,0,-2}. 4 integer maps.] -/
 theorem twoPole_03_at_0 : twoPole 0 3 0 = 3 := by
   decide +kernel
 
@@ -67,6 +115,22 @@ theorem twoPole_03_at_1 : twoPole 0 3 1 = -2 := by
   decide +kernel
 
 
+/-- [Section: ## det = 10: Pole pair (1,2)
+For (1,2): F(t) = (3t+1)/(-t+3) = (3t+1)/(3-t).
+det = 2·5 = 10.
+Denominator = 3-t. Must have (3-t) | 10.
+3-t ∈ {±1,±2,±5,±10}
+t = 2: 3-2=1|10, F(2) = 7/1 = 7 ✓
+t = 4: 3-4=-1|10, F(4) = 13/(-1) = -13 ✓
+t = 1: 3-1=2|10, F(1) = 4/2 = 2 ✓
+Wait, F(1) = (3+1)/(3-1) = 4/2 = 2? But earlier we said F_{1,2}(1) = 2. ✓
+t = 5: 3-5=-2|10, F(5) = 16/(-2) = -8 ✓
+t = -2: 3+2=5|10, F(-2) = (-5)/5 = -1 ✓
+t = 8: 3-8=-5|10, F(8) = 25/(-5) = -5 ✓
+t = -7: 3+7=10|10, F(-7) = (-20)/10 = -2 ✓
+t = 13: 3-13=-10|10, F(13) = 40/(-10) = -4 ✓
+So for (1,2): 8 integer inputs! {-7,-2,1,2,4,5,8,13} → {-2,-1,2,7,-13,-8,-5,-4}
+The divisor count of 10 is 8, and we get exactly 8 inputs. ✓] -/
 theorem twoPole_12_at_2 : twoPole 1 2 2 = 7 := by
   -- Let's simplify the expression for $F_{1,2}(2)$.
   norm_num [twoPole]

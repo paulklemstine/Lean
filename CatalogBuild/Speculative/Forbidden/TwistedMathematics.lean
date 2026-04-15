@@ -25,6 +25,10 @@ theorem well_ordering_exists (α : Type*) :
   exact ⟨WellOrderingRel, inferInstance⟩
 
 
+/-- [Section: ### The Drinker's Paradox
+In every pub, there exists a person such that IF that person drinks,
+THEN everyone in the pub drinks. This sounds absurd but is classically
+true. It's a consequence of the law of excluded middle.] -/
 theorem drinkers_paradox [Nonempty α] (drinks : α → Prop) :
     ∃ person : α, drinks person → ∀ x, drinks x := by
   by_contra h;
@@ -32,6 +36,12 @@ theorem drinkers_paradox [Nonempty α] (drinks : α → Prop) :
   exact h ( Classical.arbitrary α ) |>.2.elim fun x hx => hx ( h x |>.1 )
 
 
+/-- [Section: ### The Vitali Set Nightmare (Statement Only)
+Using the Axiom of Choice, we can construct a subset of [0,1]
+that has no Lebesgue measure. It's not zero-measure. It's not
+full-measure. It has NO measure. The concept of "size" breaks.
+We can't fully formalize the Vitali set here without measure theory
+machinery, but we can state the key consequence.] -/
 theorem not_all_sets_measurable :
     ¬ ∀ (s : Set ℝ), MeasurableSet s := by
   by_contra! h_all_measurable
@@ -83,6 +93,11 @@ theorem not_all_sets_measurable :
   exact absurd h_measurable_card ( not_le_of_gt ( Cardinal.cantor _ ) )
 
 
+/-- [Section: ### The Infinite Hotel
+Hilbert's Hotel: a hotel with infinitely many rooms, all full,
+can accommodate any finite number of new guests, countably many
+new guests, or even uncountably many — wait, not that last one.
+But it CAN accommodate countably many coaches of countably many guests.] -/
 theorem hilbert_hotel_one_guest :
     ∃ f : ℕ → ℕ, Injective f ∧ 0 ∉ Set.range f := by
   -- Define a function that is injective and does not contain zero in its range.
@@ -97,6 +112,10 @@ theorem hilbert_hotel_countable :
   exact ⟨ _, h_countable.some.bijective ⟩
 
 
+/-- [Section: ### The Bizarre Self-Similarity of ℕ
+ℕ is isomorphic to one of its proper subsets.
+This is the DEFINITION of Dedekind-infinite.
+Finite sets can't do this. Infinity is self-similar.] -/
 theorem nat_self_similar :
     ∃ f : ℕ → ℕ, Injective f ∧ ¬ Surjective f := by
   exact ⟨ fun n => 2 * n, fun n m h => by linarith, fun h => by have := h ( 1 : ℕ ) ; obtain ⟨ n, hn ⟩ := this; linarith [ show n = 0 by linarith ] ⟩

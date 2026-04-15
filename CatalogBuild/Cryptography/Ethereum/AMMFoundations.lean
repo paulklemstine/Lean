@@ -45,6 +45,7 @@ noncomputable def Pool.afterSwapXtoY (p : Pool) (dx : ℝ) (hdx : 0 < dx) : Pool
   hY := by exact div_pos (mul_pos p.hX p.hY) (by linarith [p.hX])
 
 
+/-- [Section: ## Fundamental Theorems] -/
 theorem invariant_preserved (p : Pool) (dx : ℝ) (hdx : 0 < dx) :
     (p.afterSwapXtoY dx hdx).invariant = p.invariant := by
   unfold Pool.invariant Pool.afterSwapXtoY;

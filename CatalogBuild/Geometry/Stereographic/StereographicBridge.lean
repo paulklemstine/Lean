@@ -17,6 +17,16 @@ def stereoX (t : ℝ) : ℝ := 2 * t / (1 + t ^ 2)
 def stereoY (t : ℝ) : ℝ := (1 - t ^ 2) / (1 + t ^ 2)
 
 
+/-- [Section: # Stereographic Bridge
+The inverse stereographic projection σ⁻¹ : ℝ → S¹ ⊂ ℝ² is defined by:
+σ⁻¹(t) = (2t/(1+t²), (1-t²)/(1+t²))
+## Main Results
+- `stereo_inv_on_circle`: σ⁻¹(t) lies on the unit circle
+- `stereo_round_trip`: σ(σ⁻¹(t)) = t
+- `stereo_y_upper_bound`: y(t) ≤ 1
+- `stereo_y_lower_bound`: -1 ≤ y(t)
+- `stereo_at_zero`: σ⁻¹(0) = (0, 1)
+- `stereo_at_one`: σ⁻¹(1) = (1, 0)] -/
 theorem stereo_inv_on_circle (t : ℝ) :
     stereoX t ^ 2 + stereoY t ^ 2 = 1 := by
       unfold stereoX stereoY; rw [ div_pow, div_pow ] ; rw [ ← add_div, div_eq_iff ] <;> nlinarith [ one_plus_sq_ne_zero t ] ;

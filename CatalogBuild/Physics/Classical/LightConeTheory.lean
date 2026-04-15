@@ -314,6 +314,7 @@ theorem crystallizer_to_celestial (m n : ℝ) (h : m ^ 2 + n ^ 2 ≠ 0) :
   field_simp; ring
 
 
+/-- [Section: ## Part VII: The Crystallizer-Photon Dictionary] -/
 theorem crystallizer_loss_measures_photon_deviation (m : ℝ) :
     sin (π * m) ^ 2 = 0 ↔ ∃ n : ℤ, m = ↑n := by
   norm_num +zetaDelta at *;

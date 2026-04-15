@@ -46,6 +46,7 @@ theorem lifting_dim_linear (n : ℕ) : Nat.choose (n + 1) 1 = n + 1 :=
   Nat.choose_one_right (n + 1)
 
 
+/-- [Section: ## §2: Minimal Lifting Dimension] -/
 theorem lifting_dim_quadratic (n : ℕ) :
     Nat.choose (n + 2) 2 = (n + 2) * (n + 1) / 2 := by
   rw [ Nat.choose_two_right ];

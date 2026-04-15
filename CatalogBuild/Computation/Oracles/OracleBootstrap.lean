@@ -91,6 +91,7 @@ theorem oracle_zero_contraction {X : Type*} [MetricSpace X]
   exact oracle_retraction P hP y hy
 
 
+/-- [Section: ## §4: Banach Contraction and Convergence] -/
 theorem contraction_iterate {X : Type*} [MetricSpace X]
     (f : X → X) (c : ℝ) (hc : 0 ≤ c)
     (hf : ∀ x y, dist (f x) (f y) ≤ c * dist x y) :
@@ -99,6 +100,7 @@ theorem contraction_iterate {X : Type*} [MetricSpace X]
   exact le_trans ( hf _ _ ) ( mul_le_mul_of_nonneg_left ( IH _ _ ) hc )
 
 
+/-- [Section: ## §5: The Master Equation: Truth = Compression] -/
 theorem master_equation {α : Type*} [Fintype α] [DecidableEq α]
     (P : α → α) (hP : IsOracle P) :
     Finset.card (Finset.filter (fun x => P x = x) Finset.univ) =

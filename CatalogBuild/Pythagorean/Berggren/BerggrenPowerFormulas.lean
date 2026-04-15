@@ -22,6 +22,7 @@ def NPF₁sq : Matrix (Fin 3) (Fin 3) ℤ :=
   !![0, 0, 0; 0, -4, 4; 0, -4, 4]
 
 
+/-- [Section: ## Nilpotent Verification] -/
 theorem NPF₁_eq_B₁_sub_I : NPF₁ = BPF₁ - 1 := by
   ext i j; fin_cases i <;> fin_cases j <;> simp [NPF₁, BPF₁]
 
@@ -35,6 +36,7 @@ theorem NPF₁_sq_ne_zero : NPF₁ * NPF₁ ≠ 0 := by native_decide
 theorem NPF₁_cubed_eq_zero : NPF₁ * NPF₁ * NPF₁ = 0 := by native_decide
 
 
+/-- [Section: ## A-branch is always Pythagorean] -/
 theorem A_triple_pythagorean (n : ℕ) :
     (A_triple n).1 ^ 2 + (A_triple n).2.1 ^ 2 = (A_triple n).2.2 ^ 2 := by
   simp only [A_triple]; ring
@@ -49,6 +51,7 @@ theorem A_triple_2 : A_triple 2 = (7, 24, 25) := by simp [A_triple]
 theorem A_triple_3 : A_triple 3 = (9, 40, 41) := by simp [A_triple]
 
 
+/-- [Section: ## A-branch growth] -/
 theorem A_hyp_growth (n : ℕ) : (A_triple n).2.2 < (A_triple (n + 1)).2.2 := by
   simp only [A_triple]; push_cast; nlinarith [n.zero_le]
 

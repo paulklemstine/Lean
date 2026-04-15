@@ -14,6 +14,7 @@ def StrangeLoop.meaningSet {X : Type*} (L : StrangeLoop X) : Set X :=
   {x | (L.down ∘ L.up) x = x}
 
 
+/-- [Section: ## §1: Strange Loops as Idempotent Compositions] -/
 theorem StrangeLoop.output_in_meaning {X : Type*} (L : StrangeLoop X) (x : X) :
     (L.down ∘ L.up) x ∈ L.meaningSet := by
       exact L.loop_idem x
@@ -31,11 +32,13 @@ structure SelfRef (X : Type*) where
   roundtrip : ∀ x, decode (encode x) = x
 
 
+/-- [Section: ## §2: Self-Reference Formalized] -/
 theorem selfref_is_oracle {X : Type*} (S : SelfRef X) :
     ∀ x, (S.decode ∘ S.encode) ((S.decode ∘ S.encode) x) = (S.decode ∘ S.encode) x := by
       haveI := S.roundtrip; aesop;
 
 
+/-- [Section: ## §3: The Gödelian Strange Loop] -/
 theorem godel_diagonal_abstract {X : Type*} (f : X → X) :
     ∃ S : Set X, ∀ x ∈ S, f x ∈ S := by
       exact ⟨ ∅, by simp +decide ⟩
@@ -51,6 +54,7 @@ theorem tarski_diagonal {X : Type*} (f : X → (X → Prop)) :
       cases' h ( fun x => ¬f x x ) with x hx ; replace hx := congr_fun hx x ; tauto
 
 
+/-- [Section: ## §4: The MU Puzzle Strange Loop] -/
 theorem mu_invariant (k : ℕ) : 2 ^ k % 3 ≠ 0 := by
   exact fun h => by have := Nat.dvd_of_mod_eq_zero h; exact absurd ( Nat.prime_three.dvd_of_dvd_pow this ) ( by decide ) ;
 
@@ -68,6 +72,7 @@ theorem mu_subtract_preserves (n : ℕ) (h : n % 3 ≠ 0) (hn : n ≥ 3) :
 def IsQuine {X : Type*} (transform : X → X) (q : X) : Prop := transform q = q
 
 
+/-- [Section: ## §5: Quine Theory (Self-Reproducing Programs)] -/
 theorem idempotent_produces_quines {X : Type*} (O : X → X) (hO : ∀ x, O (O x) = O x)
     (x : X) : IsQuine O (O x) := by
       exact hO x
@@ -78,6 +83,7 @@ theorem quines_eq_range {X : Type*} (O : X → X) (hO : ∀ x, O (O x) = O x) :
       aesop_cat
 
 
+/-- [Section: ## §6: Tangled Hierarchies] -/
 theorem tangled_hierarchy_collapse {X : Type*} (levels : ℕ → (X → X))
     (h_idem : ∀ n, ∀ x, levels n (levels n x) = levels n x)
     (h_comm : ∀ n m, levels n ∘ levels m = levels m ∘ levels n)

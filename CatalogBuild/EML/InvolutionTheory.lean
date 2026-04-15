@@ -9,6 +9,13 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # SPB Involutions and Functional Equations
+This file studies the involutive properties of SPB and related functional equations.
+## Main Results
+- The half-angle SPB formula
+- Triple product identity
+- SPB conjugation
+- SPB reflection identities] -/
 def spb_inv (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
 
 
@@ -40,12 +47,14 @@ theorem spb_triple_denom_symmetric (x y z : ℝ) :
     1 - x * y - x * z - y * z = 1 - y * z - y * x - z * x := by ring
 
 
+/-- [Section: ## SPB Conjugation] -/
 theorem spb_conjugation_trivial (a x : ℝ)
     (h1 : 1 + a * x ≠ 0) (h2 : 1 - a * spb_inv x (-a) ≠ 0) :
     spb_inv a (spb_inv x (-a)) = x := by
   grind +locals
 
 
+/-- [Section: ## SPB Reflection Identities] -/
 theorem spb_sum_reflection (x y : ℝ) (h1 : 1 - x * y ≠ 0) (h2 : 1 + x * y ≠ 0) :
     spb_inv x y + spb_inv x (-y) =
     2 * x * (1 + y ^ 2) / ((1 - x * y) * (1 + x * y)) := by

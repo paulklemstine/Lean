@@ -47,6 +47,7 @@ theorem oracleBootstrap_deriv_half : oracleBootstrap_deriv (1/2 : ℝ) = 3/2 := 
   simp [oracleBootstrap_deriv]; ring
 
 
+/-- [Section: ## §1: H13 — Oracle Bootstrap Fixed Points and Dynamics] -/
 theorem oracleBootstrap_fixedPoints :
     {x : ℝ | oracleBootstrap x = x} = {0, 1/2, 1} := by
   ext x
@@ -54,6 +55,7 @@ theorem oracleBootstrap_fixedPoints :
   grind +ring
 
 
+/-- [Section: ## §2: H15 — Bootstrap Preserves Idempotents] -/
 theorem bootstrap_preserves_idempotent {R : Type*} [CommRing R] (e : R)
     (he : e * e = e) : 3 * e ^ 2 - 2 * e ^ 3 = e := by
   grind +ring
@@ -70,6 +72,7 @@ theorem idempotent_iff_2_potent {M : Type*} [Monoid M] (a : M) :
   simp [IsNPotent]
 
 
+/-- [Section: ## §3: H16 — N-Potent Hierarchy and Divisibility] -/
 theorem npotent_divisibility {M : Type*} [Monoid M] (a : M) (m n : ℕ)
     (hm : 1 ≤ m) (hn : 1 ≤ n)
     (hdiv : (m - 1) ∣ (n - 1))
@@ -100,6 +103,7 @@ theorem nPotentSet_monotone {M : Type*} [Monoid M] (m n : ℕ)
   exact npotent_divisibility a m n hm hn hdiv ha
 
 
+/-- [Section: ## §4: H17 — N-Potent Filtration is Basis-Independent] -/
 theorem npotent_conjugation_invariant {G : Type*} [Group G] (a g : G) (n : ℕ) :
     IsNPotent a n ↔ IsNPotent (g * a * g⁻¹) n := by
   unfold IsNPotent; aesop;

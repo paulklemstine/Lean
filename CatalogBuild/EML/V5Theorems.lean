@@ -27,6 +27,7 @@ def eTowerV : ℕ → ℝ
 def tropV (x y : ℝ) : ℝ := max x (-y)
 
 
+/-- [Section: ## Section 1: EML Generates Key Constants] -/
 theorem emlV_e : emlV 1 1 = Real.exp 1 := by
   simp [emlV, Real.log_one]
 
@@ -54,6 +55,7 @@ theorem emlV_produces_negative : emlV 0 (Real.exp (Real.exp 1)) < 0 := by
   unfold emlV; simp
 
 
+/-- [Section: ## Section 2: e-Tower Growth] -/
 theorem eTowerV_pos (n : ℕ) : 0 < eTowerV n := by
   induction n with
   | zero => simp [eTowerV]
@@ -100,6 +102,7 @@ theorem eTowerV_dominates_poly (k : ℕ) :
   exact hn.trans_le ( mod_cast eTowerV_ge_exp_n n )
 
 
+/-- [Section: ## Section 3: Diagonal Map Analysis] -/
 theorem diagV_gt (z : ℝ) : diagV z > z := by
   unfold diagV;
   by_cases hz : z ≤ 0;
@@ -150,6 +153,7 @@ inductive PureTree where
   deriving Repr, DecidableEq
 
 
+/-- [Section: ## Section 4: EML Complexity Theory] -/
 def PureTree.nodeCount : PureTree → ℕ
   | .leaf => 0
   | .node l r => 1 + l.nodeCount + r.nodeCount
@@ -209,6 +213,7 @@ theorem zero_complexity_three :
     (PureTree.node .leaf (.node (.node .leaf .leaf) .leaf)).nodeCount = 3 := by rfl
 
 
+/-- [Section: ## Section 5: Tropical EML] -/
 theorem tropV_max (x y : ℝ) : tropV x (-y) = max x y := by
   unfold tropV; simp
 
@@ -229,6 +234,7 @@ theorem tropV_comm_max (x y : ℝ) : tropV x (-y) = tropV y (-x) := by
   unfold tropV; simp [max_comm]
 
 
+/-- [Section: ## Section 6: EML Trace and Difference] -/
 theorem emlV_trace (x y : ℝ) :
     emlV x y + emlV y x = Real.exp x + Real.exp y - Real.log x - Real.log y := by
   unfold emlV; ring
@@ -244,6 +250,7 @@ theorem emlV_diag_double (z : ℝ) :
   unfold emlV diagV; ring
 
 
+/-- [Section: ## Section 7: EML Interval Arithmetic] -/
 theorem emlV_interval_lower (x y a d : ℝ)
     (hx1 : a ≤ x) (hy2 : y ≤ d) (hy_pos : 0 < y) :
     Real.exp a - Real.log d ≤ emlV x y := by
@@ -262,12 +269,14 @@ theorem emlV_interval_upper (x y b c : ℝ)
   linarith
 
 
+/-- [Section: ## Section 8: EML Power-Associativity Failure] -/
 theorem emlV_not_power_assoc : ∃ x : ℝ,
     emlV x (emlV x x) ≠ emlV (emlV x x) x := by
   use 0; norm_num [ emlV ] ;
   exact Ne.symm <| by norm_num;
 
 
+/-- [Section: ## Section 9: EML Generates Arbitrarily Large Constants] -/
 theorem eTowerV_step_growth (n : ℕ) : eTowerV (n + 1) ≥ eTowerV n + 1 := by
   simp [eTowerV]; linarith [Real.add_one_le_exp (eTowerV n)]
 
@@ -294,6 +303,7 @@ theorem emlV_small_constants : ∀ ε : ℝ, ε > 0 → ∃ n : ℕ,
     rwa [Real.exp_log hε] at this⟩
 
 
+/-- [Section: ## Section 10: Complex EML] -/
 def emlVC (x y : ℂ) : ℂ := Complex.exp x - Complex.log y
 
 
@@ -305,6 +315,7 @@ theorem emlVC_differentiable_fst (y : ℂ) :
   Complex.differentiable_exp.sub (differentiable_const _)
 
 
+/-- [Section: ## Section 11: Fixed Point Iteration] -/
 def gIterV (z : ℝ) : ℝ := Real.exp 1 - Real.log z
 
 

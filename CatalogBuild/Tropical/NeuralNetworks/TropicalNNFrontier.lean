@@ -23,6 +23,7 @@ theorem tropical_distrib_sum {ι : Type*} (s : Finset ι) (a : ℝ) (f : ι → 
       · aesop
 
 
+/-- [Section: ## Part II: ReLU Network Expressivity (Agent Beta)] -/
 theorem relu_compose_represents_max3 (a₁ b₁ a₂ b₂ a₃ b₃ : ℝ) (x : ℝ) :
     max (max (a₁ * x + b₁) (a₂ * x + b₂)) (a₃ * x + b₃) =
     relu (max (a₁ * x + b₁) (a₂ * x + b₂) - (a₃ * x + b₃)) + (a₃ * x + b₃) := by
@@ -65,6 +66,7 @@ def softmax_beta {n : ℕ} (β : ℝ) (x : Fin n → ℝ) (i : Fin n) : ℝ :=
   Real.exp (β * x i) / ∑ j, Real.exp (β * x j)
 
 
+/-- [Section: ## Part III: Softmax Temperature Theory (Agent Eta)] -/
 theorem softmax_beta_zero {n : ℕ} [NeZero n] (x : Fin n → ℝ) (i : Fin n) :
     softmax_beta 0 x i = 1 / (n : ℝ) := by
       unfold softmax_beta; aesop;
@@ -102,6 +104,7 @@ def logSumExp' {ι : Type*} (s : Finset ι) (f : ι → ℝ) : ℝ :=
   Real.log (∑ i ∈ s, Real.exp (f i))
 
 
+/-- [Section: ## Part IV: LogSumExp Advanced Theory (Agent Delta)] -/
 theorem logSumExp_shift {ι : Type*} (s : Finset ι) (f : ι → ℝ) (c : ℝ)
     (hs : s.Nonempty) :
     logSumExp' s (fun i => f i + c) = logSumExp' s f + c := by
@@ -132,6 +135,7 @@ theorem tropicality_gap_nonneg {ι : Type*} {s : Finset ι} {f : ι → ℝ}
       intro i hi; exact Real.le_log_iff_exp_le ( Finset.sum_pos ( fun _ _ => Real.exp_pos _ ) hs ) |>.2 ( Finset.single_le_sum ( fun x _ => Real.exp_nonneg ( f x ) ) hi ) ;
 
 
+/-- [Section: ## Part V: Exponential Map Deep Properties (Agent Alpha)] -/
 theorem exp_ge_one_plus (x : ℝ) : Real.exp x ≥ 1 + x := by
   linarith [ Real.add_one_le_exp x ]
 
@@ -201,6 +205,7 @@ theorem uniform_entropy {n : ℕ} [NeZero n] :
       rw [ ← mul_assoc, mul_inv_cancel₀ ( NeZero.ne _ ), one_mul ]
 
 
+/-- [Section: ## Part VII: Compression Theory (Agent Theta)] -/
 theorem pwl_parameter_bound (k : ℕ) :
     2 * k + 1 ≥ k + (k + 1) := by
       grind +locals
@@ -220,6 +225,7 @@ theorem compression_gap_bound (n : ℕ) (hn : 1 ≤ n) :
       positivity
 
 
+/-- [Section: ## Part VIII: Convex Optimization & Legendre-Fenchel (Agent Delta)] -/
 theorem tropical_young_inequality (a : ℝ) (b : ℝ) (hb : 0 < b) :
     a * b ≤ Real.exp a + b * Real.log b - b := by
       -- Apply the inequality $y \geq \log(y) + 1$ with $y = \exp(a - \log(b))$.
@@ -246,6 +252,7 @@ def tropicalPoly (coeffs : Fin (n + 1) → ℝ) (x : ℝ) : ℝ :=
   Finset.univ.sup' ⟨⟨0, Nat.zero_lt_succ n⟩, Finset.mem_univ _⟩ (fun i => coeffs i + (i : ℕ) * x)
 
 
+/-- [Section: ## Part IX: Tropical Polynomial Algebra (Agent Alpha)] -/
 theorem tropicalPoly_pwl (coeffs : Fin (n + 1) → ℝ) (x : ℝ) :
     ∃ i : Fin (n + 1), tropicalPoly coeffs x = coeffs i + (i : ℕ) * x := by
       obtain ⟨ i, hi ⟩ := Finset.exists_max_image Finset.univ ( fun i : Fin ( n + 1 ) => coeffs i + i * x ) ⟨ ( ⟨ 0, Nat.zero_lt_succ n ⟩ : Fin ( n + 1 ) ), Finset.mem_univ _ ⟩;
@@ -264,6 +271,7 @@ theorem tropical_monomial_mul (a b : ℝ) (d₁ d₂ : ℕ) (x : ℝ) :
       push_cast; ring;
 
 
+/-- [Section: ## Part X: Metric Geometry of Attention (Agent Delta)] -/
 theorem softmax_diff_bounded {n : ℕ} [NeZero n] (x y : Fin n → ℝ) (i : Fin n) :
     |Real.exp (x i) / ∑ j, Real.exp (x j) -
      Real.exp (y i) / ∑ j, Real.exp (y j)| ≤ 2 := by
@@ -287,6 +295,7 @@ theorem exp_lipschitz_local (x y : ℝ) (h : |x - y| ≤ 1) :
         constructor <;> nlinarith [ Real.exp_pos x, Real.exp_pos y, Real.exp_le_exp.2 ( by linarith : x ≤ y ), Real.exp_sub x y, Real.add_one_le_exp ( y - x ), Real.add_one_le_exp ( x - y ), mul_div_cancel₀ ( Real.exp x ) ( ne_of_gt ( Real.exp_pos y ) ) ]
 
 
+/-- [Section: ## Part XI: Complexity Theory Connections (Agent Gamma)] -/
 theorem tropical_matmul_2x2
     (a₁₁ a₁₂ a₂₁ a₂₂ b₁₁ b₁₂ b₂₁ b₂₂ : ℝ) :
     -- (A ⊙ B)₁₁ = max(a₁₁ + b₁₁, a₁₂ + b₂₁)
@@ -323,6 +332,7 @@ theorem prime_val_independent (p q : ℕ) [hp : Fact p.Prime] [hq : Fact q.Prime
       exact?
 
 
+/-- [Section: ## Part XIV: Advanced ReLU Algebra (Agent Beta)] -/
 theorem relu_abs_identity (x : ℝ) : relu x + relu (-x) = |x| := by
   exact?
 
@@ -364,6 +374,7 @@ def tropicalDot {n : ℕ} (a b : Fin n → ℝ) : ℝ :=
   else 0
 
 
+/-- [Section: ## Part XV: Tropical Linear Algebra (Agent Alpha)] -/
 theorem tropicalDot_comm {n : ℕ} (hn : 0 < n) (a b : Fin n → ℝ) :
     tropicalDot a b = tropicalDot b a := by
       unfold tropicalDot;
@@ -380,6 +391,7 @@ theorem tropicalDot_zero_left {n : ℕ} (hn : 0 < n) (b : Fin n → ℝ) :
 -- in the β → ∞ limit.
 
 
+/-- [Section: ## Part XVI: Universality and Approximation (Agent Beta)] -/
 theorem linear_interp_bound (a b x : ℝ) (h0 : 0 ≤ x) (h1 : x ≤ 1) :
     (1 - x) * a + x * b ≤ max a b := by
       cases max_cases a b <;> nlinarith
@@ -396,6 +408,7 @@ theorem two_piece_relu_continuous (a₁ a₂ b₁ t : ℝ) (x : ℝ) :
       rw [ max_eq_left ] <;> linarith
 
 
+/-- [Section: ## Part XVII: Tropical Geometry Connections (Agent Iota)] -/
 theorem tropical_line_vertex (x y c : ℝ) :
     max (max x y) c = max x (max y c) := by
       grind
@@ -417,6 +430,7 @@ theorem tropical_root_degree1 (a b : ℝ) :
       ring
 
 
+/-- [Section: ## Part XVIII: Monotone Function Theory (Agent Alpha)] -/
 theorem strictMono_preserves_max {f : ℝ → ℝ} (hf : StrictMono f) (x y : ℝ) :
     f (max x y) = max (f x) (f y) := by
       cases le_total x y <;> simp +decide [ *, hf.le_iff_le ]
@@ -437,6 +451,7 @@ theorem strictMono_comp {f g : ℝ → ℝ} (hf : StrictMono f) (hg : StrictMono
       exact hf.comp hg
 
 
+/-- [Section: ## Part XIX: Attention Mechanism Analysis (Agent Beta)] -/
 theorem one_hot_selects {n : ℕ} [NeZero n] (v : Fin n → ℝ) (k : Fin n) :
     ∑ i, (if i = k then (1 : ℝ) else 0) * v i = v k := by
       simp +decide [ Finset.sum_ite_eq' ]
@@ -457,6 +472,9 @@ theorem attention_in_range {n : ℕ} [NeZero n] (w v : Fin n → ℝ)
       exact le_trans ( Finset.sum_le_sum fun i _ => h_weighted_sum_le_max i ) ( by simp +decide [ ← Finset.sum_mul, hw_sum ] )
 
 
+/-- [Section: ## Part XX: Moonshot Theorems (Agent Iota)
+These are speculative but formally precise statements that, if fully developed,
+could connect tropical neural network theory to deep mathematical structures.] -/
 theorem neg_log_one_minus_bound (x : ℝ) (hx0 : 0 < x) (hx1 : x < 1) :
     -Real.log (1 - x) ≥ x := by
       linarith [ Real.log_le_sub_one_of_pos ( by linarith : 0 < 1 - x ) ]

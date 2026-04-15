@@ -238,6 +238,7 @@ theorem quantum_observer_fixed (P : QuantumGazingPool)
   simp [hv]
 
 
+/-- [Section: ## §9: Quantum Gazing — Observer-Dependent Reality] -/
 theorem quantum_idempotence (P : QuantumGazingPool) (v : Fin P.dim → ℂ) :
     P.proj.mulVec (P.proj.mulVec v) = P.proj.mulVec v := by
   -- Using the fact that projection is idempotent, we have $P(Pv) = (P*P)v = Pv$.

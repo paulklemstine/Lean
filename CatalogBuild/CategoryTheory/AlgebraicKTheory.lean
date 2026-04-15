@@ -7,6 +7,7 @@ Declarations: 6
 
 import Mathlib
 
+/-- K₁(ℤ) ≅ {±1} -/
 theorem z_units' : ∀ n : ℤ, IsUnit n → n = 1 ∨ n = -1 := by
   intro n hn; exact Int.isUnit_iff.mp hn
 

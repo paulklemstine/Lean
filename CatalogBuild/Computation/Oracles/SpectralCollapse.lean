@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## §1: Core Spectral Collapse] -/
 theorem spectral_collapse_sq {T : V →ₗ[K] V} (hT : T ∘ₗ T = T)
     {v : V} {mu : K} (hv : v ≠ 0) (heig : T v = mu • v) :
     mu ^ 2 = mu := by
@@ -35,6 +36,7 @@ theorem idempotent_range_eigenspace {T : V →ₗ[K] V} (hT : T ∘ₗ T = T) (v
       exact ⟨ fun ⟨ y, hy ⟩ => by simp [ ← hy, ← LinearMap.comp_apply, hT ], fun h => ⟨ v, h ⟩ ⟩
 
 
+/-- [Section: ## §2: Complementary Projections] -/
 theorem complementary_idempotent {T : V →ₗ[K] V} (hT : T ∘ₗ T = T) :
     (LinearMap.id - T) ∘ₗ (LinearMap.id - T) = LinearMap.id - T := by
       simp_all +decide [ sub_mul, mul_sub, LinearMap.ext_iff ]
@@ -63,6 +65,7 @@ theorem idempotent_trace_sq (M : Matrix n n K) (hM : M.IsIdempotent) :
   rw [hM]
 
 
+/-- [Section: ## §3: Matrix-Level Results] -/
 theorem idempotent_det_sq (M : Matrix n n K) (hM : M.IsIdempotent) :
     M.det ^ 2 = M.det := by
       rw [ sq, ← Matrix.det_mul, hM ]
@@ -76,6 +79,7 @@ theorem idempotent_det_zero_or_one (M : Matrix n n K) (hM : M.IsIdempotent) :
       grobner
 
 
+/-- [Section: ## §4: Convergence to Idempotency] -/
 theorem iterate_to_idempotent {T : V →ₗ[K] V} {m : ℕ} (hm : 1 ≤ m)
     (hT : T ^ (m + 1) = T) :
     (T ^ m) ∘ₗ (T ^ m) = T ^ m := by

@@ -17,6 +17,7 @@ theorem idempotent_mul (e f : R) (he : e * e = e) (hf : f * f = f) :
   rw [mul_mul_mul_comm, he, hf]
 
 
+/-- [Section: ## Discovery 2: Boolean Algebra Structure of Idempotents] -/
 theorem idempotent_join (e f : R) (he : e * e = e) (hf : f * f = f) :
     (e + f - e * f) * (e + f - e * f) = e + f - e * f := by
   grind

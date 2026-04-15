@@ -18,6 +18,7 @@ def stdPatchEmbedParams (patchSize channels d_model : ℕ) : ℕ :=
 def emlPatchEmbedParams (d_model : ℕ) : ℕ := 4 * d_model
 
 
+/-- [Section: ## §1. Patch Embedding] -/
 theorem eml_patch_embed_compact (p c dm : ℕ) (_hp : 1 ≤ p) (_hc : 1 ≤ c) (hpc : 4 ≤ p * p * c) :
     emlPatchEmbedParams dm ≤ stdPatchEmbedParams p c dm := by
   unfold emlPatchEmbedParams stdPatchEmbedParams
@@ -36,6 +37,7 @@ def stdPosEncParams (numPatches d_model : ℕ) : ℕ := numPatches * d_model
 def emlPosEncParams (d_model : ℕ) : ℕ := 4 * d_model
 
 
+/-- [Section: ## §2. Position Encoding] -/
 theorem eml_pos_enc_compact (np dm : ℕ) (hn : 4 ≤ np) :
     emlPosEncParams dm ≤ stdPosEncParams np dm := by
   unfold emlPosEncParams stdPosEncParams; exact Nat.mul_le_mul_right dm hn
@@ -49,6 +51,7 @@ def stdSelfAttnParams (d_model : ℕ) : ℕ := 4 * d_model * d_model
 def emlSelfAttnParams (d_model : ℕ) : ℕ := 16 * d_model
 
 
+/-- [Section: ## §3. Self-Attention] -/
 theorem eml_self_attn_compact (dm : ℕ) (hd : 4 ≤ dm) :
     emlSelfAttnParams dm ≤ stdSelfAttnParams dm := by
   unfold emlSelfAttnParams stdSelfAttnParams; nlinarith
@@ -58,6 +61,7 @@ theorem eml_self_attn_compact (dm : ℕ) (hd : 4 ≤ dm) :
 def stdFFNParams (d_model expandRatio : ℕ) : ℕ := 2 * d_model * (expandRatio * d_model)
 
 
+/-- [Section: ## §4. FFN Layer] -/
 theorem eml_ffn_compact (dm er : ℕ) (hd : 4 ≤ dm) :
     emlFFNParams dm er ≤ stdFFNParams dm er := by
   unfold emlFFNParams stdFFNParams
@@ -75,6 +79,7 @@ def stdClassHeadParams (d_model numClasses : ℕ) : ℕ := d_model * numClasses
 def emlClassHeadParams (numClasses : ℕ) : ℕ := 4 * numClasses
 
 
+/-- [Section: ## §5. Classification Head] -/
 theorem eml_class_head_compact (dm nc : ℕ) (hd : 4 ≤ dm) :
     emlClassHeadParams nc ≤ stdClassHeadParams dm nc := by
   unfold emlClassHeadParams stdClassHeadParams; exact Nat.mul_le_mul_right nc hd
@@ -99,6 +104,7 @@ theorem smaller_window_cheaper (nw ws1 ws2 dm : ℕ) (hw : ws1 ≤ ws2) :
 /-- Feature pyramid: features at multiple scales -/
 def multiScaleParams (numScales d_model : ℕ) : ℕ := numScales * d_model * d_model
 
+/-- [Section: ## §7. Multi-Scale Features] -/
 def emlMultiScaleParams (numScales d_model : ℕ) : ℕ := numScales * 4 * d_model
 
 
@@ -112,6 +118,7 @@ theorem eml_multiscale_cheaper (ns dm : ℕ) (hd : 4 ≤ dm) :
 /-- Swin-style patch merging: combine 4 patches into 1 -/
 def patchMergeParams (d_in d_out : ℕ) : ℕ := 4 * d_in * d_out
 
+/-- [Section: ## §8. Patch Merging] -/
 def emlPatchMergeParams (d_out : ℕ) : ℕ := 4 * d_out
 
 
@@ -128,6 +135,7 @@ def totalViTParams (L dm er nc np : ℕ) : ℕ :=
   L * (stdSelfAttnParams dm + stdFFNParams dm er) + stdClassHeadParams dm nc
 
 
+/-- [Section: ## §9. Total ViT Model] -/
 def totalEMLViTParams (L dm er nc : ℕ) : ℕ :=
   emlPatchEmbedParams dm + emlPosEncParams dm +
   L * (emlSelfAttnParams dm + emlFFNParams dm er) + emlClassHeadParams nc

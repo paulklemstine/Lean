@@ -34,6 +34,7 @@ def OracleEquiv {alpha beta : Type*} (A : OracleDecision alpha) (B : OracleDecis
   OracleReducesTo A B ∧ OracleReducesTo B A
 
 
+/-- [Section: ## §1: Oracle Reductions] -/
 theorem oracle_equiv_refl {alpha : Type*} (A : OracleDecision alpha) :
     OracleEquiv A A := ⟨oracle_reduces_refl A, oracle_reduces_refl A⟩
 
@@ -48,6 +49,7 @@ theorem oracle_equiv_trans {alpha beta gamma : Type*}
   fun ⟨h1, h2⟩ ⟨h3, h4⟩ => ⟨oracle_reduces_trans A B C h1 h3, oracle_reduces_trans C B A h4 h2⟩
 
 
+/-- [Section: ## §2: Oracle Query Complexity] -/
 theorem query_bound_card (k : ℕ) :
     Fintype.card (Fin k → Bool) = 2 ^ k := by
       norm_num +zetaDelta at *
@@ -71,6 +73,7 @@ def OracleComp {alpha : Type*} (f g : OracleDecision alpha → OracleDecision al
     OracleDecision alpha → OracleDecision alpha := f ∘ g
 
 
+/-- [Section: ## §3: Oracle Composition Algebra] -/
 theorem oracle_comp_assoc {alpha : Type*}
     (f g h : OracleDecision alpha → OracleDecision alpha) :
     OracleComp f (OracleComp g h) = OracleComp (OracleComp f g) h := rfl
@@ -87,6 +90,7 @@ theorem oracle_comp_id_right {alpha : Type*} (f : OracleDecision alpha → Oracl
     OracleComp f OracleIdentity = f := rfl
 
 
+/-- [Section: ## §4: Oracle Entropy Bounds] -/
 theorem oracle_entropy_finite_bound (n : ℕ) :
     Fintype.card (OracleDecision (Fin n)) = 2 ^ n := by
       convert query_bound_card n using 1

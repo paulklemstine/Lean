@@ -140,6 +140,7 @@ def mixedOracleRepulsor (enum : ℕ → (ℕ → ℕ)) : ℕ → ℕ :=
   fun i => if i % 2 = 0 then enum i i else enum i i + 1
 
 
+/-- [Section: ## Part V: Mixed Oracle-Repulsor Objects] -/
 theorem mixed_oracle_even (enum : ℕ → (ℕ → ℕ)) (i : ℕ) (hi : i % 2 = 0) :
     mixedOracleRepulsor enum i = enum i i := by
   simp [mixedOracleRepulsor, hi]
@@ -235,6 +236,7 @@ theorem doubling_iterate' (x n : ℕ) : (· * 2)^[n] x = x * 2 ^ n := by
   | succ n ih => rw [iterate_succ', comp_apply, ih]; ring
 
 
+/-- [Section: ## Part VIII: Dynamical Repulsors] -/
 theorem doubling_wandering' (x : ℕ) (hx : 0 < x) :
     IsWandering' (· * 2) x := by
   intro B;
@@ -264,6 +266,7 @@ theorem cantor_repulsor' (enum : ℕ → (ℕ → Bool)) :
   ⟨fun i => !(enum i i), fun i => by simp⟩
 
 
+/-- [Section: ## Part X: The Repulsor Zoo] -/
 theorem zoo_successor : IsFixedPointFree' (fun n : ℕ => n + 1) := by
   intro n; dsimp; omega
 
@@ -348,6 +351,7 @@ theorem derangement_total {n : ℕ} (σ : Equiv.Perm (Fin n))
     (hσ : ∀ x, σ x ≠ x) : IsFixedPointFree' σ := hσ
 
 
+/-- [Section: ## Part XIV: Monotone Oracle Existence (Finite Knaster-Tarski)] -/
 theorem monotone_fin_fixed_point' (n : ℕ) (f : Fin (n + 1) → Fin (n + 1))
     (hf : Monotone f) : ∃ x, IsOracle' f x := by
   by_contra h_no_fixed_point;

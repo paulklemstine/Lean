@@ -7,6 +7,12 @@ Declarations: 14
 
 import Mathlib
 
+/-- [Section: # Cryptography and Coding Theory Applications
+Real-world applications connecting number theory to:
+- RSA cryptosystem correctness
+- Diffie-Hellman key exchange
+- Error-correcting codes
+- Lattice cryptography foundations] -/
 theorem rsa_key_ex1 : (3 * 3 : ℤ) % 8 = 1 := by norm_num
 
 theorem rsa_correct_15 : ∀ m : ZMod 15, m ^ 9 = m := by decide

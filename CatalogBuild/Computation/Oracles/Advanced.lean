@@ -14,6 +14,9 @@ def OracleRefines {X : Type*} (O₁ O₂ : X → X) : Prop :=
   ∀ x, O₁ x = x → O₂ x = x
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§1: ORACLE LATTICE — Refinement Order
+═══════════════════════════════════════════════════════════════════════] -/
 theorem oracleRefines_refl {X : Type*} (O : X → X) : OracleRefines O O :=
   fun _ h => h
 
@@ -24,10 +27,16 @@ theorem oracleRefines_trans {X : Type*} (O₁ O₂ O₃ : X → X)
   fun x hx => h₂₃ x (h₁₂ x hx)
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§2: ORACLE COMPOSITION
+═══════════════════════════════════════════════════════════════════════] -/
 theorem idem_compose_self {X : Type*} (f : X → X) (hf : ∀ x, f (f x) = f x) :
     f ∘ f = f := funext hf
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§3: ENTROPY-DISTANCE DUALITY
+═══════════════════════════════════════════════════════════════════════] -/
 theorem binaryEntropy_nonneg (p : ℝ) (hp0 : 0 < p) (hp1 : p < 1) :
     0 ≤ binaryEntropy p := by
   unfold binaryEntropy;
@@ -50,6 +59,9 @@ theorem idem_one_step (f : ℝ → ℝ) (hf : ∀ x, f (f x) = f x) (x : ℝ) :
     f x = f (f x) := (hf x).symm
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§5: MÖBIUS COVARIANCE
+═══════════════════════════════════════════════════════════════════════] -/
 theorem mobius_compose (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ x : ℝ)
     (h : c₂ * x + d₂ ≠ 0)
     (h' : c₁ * mobiusTransform a₂ b₂ c₂ d₂ x + d₁ ≠ 0) :
@@ -91,6 +103,9 @@ def invStereoN (n : ℕ) (x : Fin n → ℝ) : Fin (n + 1) → ℝ :=
       (s - 1) / (1 + s)
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§7: N-DIMENSIONAL GENERALIZATION
+═══════════════════════════════════════════════════════════════════════] -/
 theorem invStereoN_on_sphere (n : ℕ) (x : Fin n → ℝ) :
     ∑ i : Fin (n + 1), (invStereoN n x i) ^ 2 = 1 := by
   unfold invStereoN;
@@ -100,6 +115,7 @@ theorem invStereoN_on_sphere (n : ℕ) (x : Fin n → ℝ) :
   rw [ ← add_div, div_eq_iff ] <;> nlinarith [ show 0 ≤ ∑ i, x i ^ 2 from Finset.sum_nonneg fun _ _ => sq_nonneg _ ]
 
 
+/-- H1: Oracle Crystallization — True by idempotency definition ✓ -/
 theorem hypothesis_crystallization (f : ℝ → ℝ) (hf : ∀ x, f (f x) = f x) (x : ℝ) :
     f (f x) = f x := hf x
 

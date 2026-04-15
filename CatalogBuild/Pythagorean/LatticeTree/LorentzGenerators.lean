@@ -15,6 +15,7 @@ theorem perm_12 {a b c d : ℤ} (h : IsPythQuad a b c d) : IsPythQuad b a c d :=
   unfold IsPythQuad at *; linarith
 
 
+/-- [Section: ## Section 2: Spatial Symmetries (Finite Subgroup)] -/
 theorem perm_13 {a b c d : ℤ} (h : IsPythQuad a b c d) : IsPythQuad c b a d := by
   unfold IsPythQuad at *; linarith
 
@@ -66,6 +67,7 @@ theorem sl2z_action_preserves (m n p q : ℤ) :
 def InQuadLat (N x y z : ℤ) : Prop := N ∣ (x ^ 2 + y ^ 2 + z ^ 2)
 
 
+/-- [Section: ## Section 5: The Quadruple Lattice] -/
 theorem origin_in_L4 (N : ℤ) : InQuadLat N 0 0 0 := ⟨0, by ring⟩
 
 
@@ -96,6 +98,7 @@ theorem prime_dvd_sq {p z : ℤ} (hp : Prime p) (h : p ∣ z ^ 2) : p ∣ z := b
   rw [sq] at h; exact (hp.dvd_or_dvd h).elim id id
 
 
+/-- [Section: ## Section 7: Cauchy-Schwarz for Quadruples] -/
 theorem quad_cauchy_schwarz (a b c d m n p q : ℤ)
     (h1 : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2)
     (h2 : m ^ 2 + n ^ 2 + p ^ 2 = q ^ 2) :

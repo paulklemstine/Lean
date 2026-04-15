@@ -7,6 +7,7 @@ Declarations: 16
 
 import Mathlib
 
+/-- [Section: ## Basic Integer SPB Values] -/
 theorem spb_neg_integer (a : ℤ) : (1 - a * (-a)) ∣ (a + (-a)) := by simp
 
 theorem spb_zero_left_integer (b : ℤ) : (1 - 0 * b) ∣ (0 + b) := by simp
@@ -43,6 +44,7 @@ Key: 120·239 - 119 = 119·239 + 120. -/
 theorem machin_spb_one : (120 * 239 - 119 : ℤ) = 119 * 239 + 120 := by ring
 
 
+/-- [Section: ## Machin-Type Identities] -/
 theorem machin_denominator_check : 12 * 12 - 5 * 5 = (119 : ℤ) := by ring
 
 theorem machin_final_den : (119 : ℤ) ^ 2 - 120 ^ 2 = -239 := by ring

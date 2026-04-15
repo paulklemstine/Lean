@@ -185,6 +185,7 @@ theorem min_affine_conditional (a₁ b₁ a₂ b₂ x : ℝ) :
   simp only [min_def]
 
 
+/-- [Section: ## Section 8: Boundary Points] -/
 theorem max_boundary_point (a₁ b₁ a₂ b₂ : ℝ) (hne : a₁ ≠ a₂) :
     ∃! x : ℝ, a₁ * x + b₁ = a₂ * x + b₂ := by
       exact ⟨ ( b₂ - b₁ ) / ( a₁ - a₂ ), by linarith [ mul_div_cancel₀ ( b₂ - b₁ ) ( sub_ne_zero_of_ne hne ) ], by intro x hx; rw [ eq_div_iff ( sub_ne_zero_of_ne hne ) ] at *; linarith ⟩

@@ -79,6 +79,7 @@ theorem scaledSoftmax_sum_one {n : ℕ} [NeZero n] (β : ℝ) (v : Fin n → ℝ
   exact div_self (ne_of_gt (Finset.sum_pos (fun _ _ => Real.exp_pos _) Finset.univ_nonempty))
 
 
+/-- [Section: ## Part V: Softmax for General Architectures] -/
 theorem softmax_eq_scaled_one {n : ℕ} (v : Fin n → ℝ) (i : Fin n) :
     softmax v i = scaledSoftmax 1 v i := by
   simp [softmax, scaledSoftmax]
@@ -118,6 +119,7 @@ def tropicalRank (f : ℝ → ℝ) (k : ℕ) : Prop :=
       (fun i : Fin (k+1) => coeffs i + slopes i * x)
 
 
+/-- [Section: ## Part VIII: General Network Compilation Complexity Bounds] -/
 theorem relu_tropical_rank_le2 : tropicalRank relu 1 := by
   refine ⟨![0, 0], ![1, 0], fun x => ?_⟩
   simp only [relu]

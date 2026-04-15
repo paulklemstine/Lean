@@ -34,6 +34,7 @@ theorem emlDiag_second_deriv_pos (z : ℝ) (hz : 0 < z) :
   positivity
 
 
+/-- [Section: ## Section 1: EML Diagonal Map Convexity (P-M13)] -/
 theorem emlDiag_convex : ConvexOn ℝ (Ioi 0) emlDiag := by
   apply_rules [ convexOn_of_deriv2_nonneg, convex_Ioi ];
   · exact ContinuousOn.sub ( Real.continuousOn_exp ) ( Real.continuousOn_log.mono fun x hx => ne_of_gt hx );
@@ -48,6 +49,7 @@ theorem emlDiag_convex : ConvexOn ℝ (Ioi 0) emlDiag := by
     exact fun x hx => h_second_deriv x ( interior_subset hx ) ▸ add_nonneg ( Real.exp_nonneg _ ) ( one_div_nonneg.mpr ( sq_nonneg _ ) )
 
 
+/-- [Section: ## Section 2: Diagonal Map Bounds (P-M14)] -/
 theorem emlDiag_gt_id (z : ℝ) (hz : 0 < z) : emlDiag z > z := by
   unfold emlDiag;
   -- We'll use the fact that $e^z \geq 1 + z + \frac{z^2}{2}$ for all $z \geq 0$.
@@ -104,6 +106,7 @@ theorem oml_at_inv_e : oml (Real.exp (-1)) = 2 := by
   simp [oml, Real.log_exp]; ring
 
 
+/-- [Section: ## Section 3: One-Minus-Log Iteration (P-M10)] -/
 theorem oml_unique_fixed_point (x : ℝ) (hx : 0 < x) (hfx : oml x = x) : x = 1 := by
   by_contra hx_ne_one;
   -- Since $x \neq 1$, we have $x > 1$ or $x < 1$.
@@ -123,6 +126,7 @@ theorem emlT_exp (c x : ℝ) : emlT (Real.exp c) x = Real.exp x - c := by
   simp [emlT, Real.log_exp]
 
 
+/-- [Section: ## Section 4: Semigroup Structure (P-M3)] -/
 theorem emlT_noncomm : ∃ x : ℝ, emlT 1 (emlT (Real.exp 1) x) ≠ emlT (Real.exp 1) (emlT 1 x) := by
   use 0; norm_num [ emlT ];
   exact ne_of_lt ( by have := Real.exp_one_gt_d9.le; norm_num1 at *; linarith )
@@ -139,6 +143,7 @@ theorem emlT_one_no_fixed_point (x : ℝ) : emlT 1 x ≠ x := by
   exact fun hx => by have := Real.exp_pos x; unfold emlT at hx; norm_num at hx; linarith [ Real.add_one_le_exp x ] ;
 
 
+/-- [Section: ## Section 5: 2D EML Map (P-M11)] -/
 theorem emlPhi_no_symmetric_fixed (x : ℝ) (hx : 0 < x) :
     emlPhi (x, x) ≠ (x, x) := by
       exact ne_of_apply_ne Prod.fst ( ne_of_gt <| by simpa [ emlF, emlDiag ] using emlDiag_gt_id x hx )
@@ -149,6 +154,7 @@ theorem emlPhi_fst_pos (x y : ℝ) (hx : 0 ≤ x) (hy : 0 < y) (hy1 : y ≤ 1) :
       exact sub_pos.mpr <| lt_of_le_of_lt ( Real.log_le_sub_one_of_pos hy ) <| by linarith [ Real.add_one_le_exp x ] ;
 
 
+/-- [Section: ## Section 6: Depth Hierarchy (P-M1)] -/
 theorem triple_exp_not_depth2 :
     ∀ a b c d : ℝ,
     (fun x => Real.exp (a * Real.exp (b * x + c) + d)) ≠
@@ -222,6 +228,7 @@ theorem emlF_translate_first (x c y : ℝ) :
   simp [emlF, Real.exp_add, mul_comm]
 
 
+/-- [Section: ## Section 8: EML Functional Equations] -/
 theorem emlF_zero_reciprocal (y : ℝ) (_hy : 0 < y) :
     emlF 0 y + emlF 0 (y⁻¹) = 2 := by
       unfold emlF
@@ -255,6 +262,7 @@ theorem emlF_strictMono_fst (y : ℝ) : StrictMono (fun x => emlF x y) := by
   linarith [Real.exp_strictMono hab]
 
 
+/-- [Section: ## Section 10: EML Monotonicity Properties] -/
 theorem emlF_strictAnti_snd (x : ℝ) : StrictAntiOn (fun y => emlF x y) (Ioi 0) := by
   exact fun y hy z hz hyz => sub_lt_sub_left ( Real.log_lt_log hy hyz ) _
 

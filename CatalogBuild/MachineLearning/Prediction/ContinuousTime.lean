@@ -33,6 +33,7 @@ noncomputable def steadyStateVariance (model : DiffusionModel) : ℝ :=
   (model.observation ^ 2)
 
 
+/-- [Section: ## §1. Continuous-Time Prediction Setup] -/
 theorem steady_state_is_equilibrium (model : DiffusionModel)
     (_hH : model.observation ≠ 0) :
     let P_ss := steadyStateVariance model
@@ -61,6 +62,7 @@ theorem stable_prediction_bounded (A σ : ℝ) (hA : A < 0) (hσ : 0 < σ) :
   exact mul_pos (by norm_num) (abs_pos.mpr (ne_of_lt hA))
 
 
+/-- [Section: ## §3. Prediction Horizon Theory] -/
 theorem unstable_prediction_grows (A : ℝ) (hA : 0 < A) (σ : ℝ) (hσ : 0 < σ) :
     ∀ M : ℝ, ∃ h : ℝ, h > 0 ∧ σ ^ 2 * Real.exp (2 * A * h) > M := by
   -- Since σ² * exp(2Ah) tends to infinity as h tends to infinity, for any M, there exists an h such that σ² * exp(2Ah) > M.

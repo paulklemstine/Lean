@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Part 1: General Stereographic Projection from Arbitrary Poles] -/
 def generalStereoDenom (n : ℕ) (y : Fin n → ℝ) : ℝ :=
   1 + ∑ i, (y i) ^ 2
 
@@ -35,6 +36,7 @@ theorem generalInvStereo_on_sphere (n : ℕ) (y : Fin n → ℝ) :
       simpa only [ ← Finset.sum_mul _ _ _ ] using by ring;
 
 
+/-- [Section: ## Part 2: Multi-Head Stereographic Kernel] -/
 def headKernel (n : ℕ) (x y : Fin n → ℝ) : ℝ :=
   ∑ i, generalInvStereo n x i * generalInvStereo n y i
 
@@ -64,6 +66,7 @@ theorem multiHeadKernel_symmetric (numHeads n : ℕ)
   exact headKernel_symmetric n _ _
 
 
+/-- [Section: ## Part 3: Multi-Head Attention Mechanism] -/
 def headSoftmaxWeight (n : ℕ) (T : ℝ)
     (R : Fin n → Fin n → ℝ) (q k : Fin n → ℝ) : ℝ :=
   Real.exp (headKernel n (rotatedInput n R q) (rotatedInput n R k) / T)
@@ -95,6 +98,7 @@ theorem multihead_weight_sum_pos (seqLen d : ℕ) (T : ℝ)
     ⟨i, Finset.mem_univ _⟩
 
 
+/-- [Section: ## Part 4: Theoretical Properties] -/
 def headConformalFactor (n : ℕ) (y : Fin n → ℝ) : ℝ :=
   2 / generalStereoDenom n y
 

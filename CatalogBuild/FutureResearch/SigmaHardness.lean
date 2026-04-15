@@ -7,6 +7,7 @@ Declarations: 12
 
 import Mathlib
 
+/-- [Section: ### The Forward Reduction: σ₁ → FACTORING] -/
 theorem sigma1_determines_factors (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
     (hpq : p < q) (p' q' : ℕ) (hp' : Nat.Prime p') (hq' : Nat.Prime q')
     (hpq' : p' < q')
@@ -70,6 +71,7 @@ theorem discriminant_is_square (p q : ℤ) :
     (p + q)^2 - 4 * (p * q) = (p - q)^2 := by ring
 
 
+/-- [Section: ### Approximation Lower Bounds] -/
 theorem sigma1_semiprime_bounds (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
     (hpq : p ≠ q) :
     p + q < σ₁ (p * q) := by

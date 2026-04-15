@@ -56,6 +56,10 @@ def tropSymPower (n : ℕ) : (Fin 2 → ℝ) → (Fin (n + 1) → ℝ) :=
     (n - i.val) * a + i.val * b
 
 
+/-- [Section: ## Section 2: Tropical Functoriality
+Classical Langlands functoriality predicts that an L-homomorphism
+rho : G_dual -> H_dual induces a transfer of automorphic representations.
+Tropically, this becomes a piecewise-linear map between tropical parameter spaces.] -/
 theorem tropSymPower_ordered (n : ℕ) (params : Fin 2 → ℝ)
     (hord : params 0 ≤ params 1) (i j : Fin (n + 1)) (hij : i ≤ j) :
     tropSymPower n params i ≤ tropSymPower n params j := by
@@ -88,6 +92,13 @@ def tropEquivalent (G : MetricGraph) (D1 D2 : TropicalLineBundle G) : Prop :=
       ∑ w : Fin G.vertices, (if (G.edges v w).isSome then f v - f w else 0)
 
 
+/-- [Section: ## Section 4: Tropical Geometric Langlands
+The geometric Langlands program studies D-modules (or l-adic sheaves) on
+the moduli stack Bun_G of G-bundles on a curve X.
+Tropically:
+- X becomes a metric graph Gamma
+- Bun_G becomes the space of tropical G-bundles (divisors on Gamma)
+- D-modules become "tropical sheaves" = constructible functions on tropical spaces] -/
 theorem tropEquiv_same_degree (G : MetricGraph) (D1 D2 : TropicalLineBundle G)
     (h : tropEquivalent G D1 D2) :
     TropicalLineBundle.degree G D1 = TropicalLineBundle.degree G D2 := by
@@ -113,6 +124,14 @@ def kantorovichDual (n m : ℕ) (phi : Fin n → ℝ) (psi : Fin m → ℝ)
   ∑ i : Fin n, phi i * mu i + ∑ j : Fin m, psi j * nu j
 
 
+/-- [Section: ## Section 5: Connection to Optimal Transport (Kantorovich Duality)
+A surprising connection: the Kantorovich duality theorem in optimal transport
+is a tropical analogue of the Langlands reciprocity!
+Kantorovich: inf_{coupling} integral c d(pi) = sup_{(phi,psi)} integral phi d(mu) + integral psi d(nu)
+where phi(x) + psi(y) <= c(x,y)
+This is tropical Fenchel-Rockafellar duality, connecting:
+- "Automorphic side" = optimal transport cost (primal)
+- "Galois side" = Kantorovich potential (dual)] -/
 theorem kantorovich_weak_duality
     (n m : ℕ) (c : Fin n → Fin m → ℝ) (mu : Fin n → ℝ) (nu : Fin m → ℝ)
     (coupling : Fin n → Fin m → ℝ)
@@ -134,6 +153,7 @@ def tropNormMap (d : ℕ) (f : Fin d → ℝ) : ℝ :=
   ∑ i : Fin d, f i
 
 
+/-- [Section: ## Section 6: Tropical Base Change] -/
 theorem tropNormMap_additive (d : ℕ) (f g : Fin d → ℝ) :
     tropNormMap d (fun i => f i + g i) = tropNormMap d f + tropNormMap d g := by
   exact Finset.sum_add_distrib
@@ -159,6 +179,9 @@ def chipFireLaplacian (n : ℕ) (f : Fin n → ℝ) : Fin n → ℝ :=
   fun v => (n - 1) * f v - ∑ w : Fin n, if v = w then 0 else f w
 
 
+/-- [Section: ## Section 8: Tropical Automorphic Forms and the Laplacian
+On a metric graph, the "tropical Laplacian" is the chip-firing operator.
+Tropical automorphic forms are eigenvectors of this Laplacian.] -/
 theorem chipFire_constant_kernel (n : ℕ) (c : ℝ) :
     chipFireLaplacian n (fun _ => c) = fun _ => 0 := by
   funext v; simp [chipFireLaplacian];

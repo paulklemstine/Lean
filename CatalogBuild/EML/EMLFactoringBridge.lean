@@ -90,6 +90,7 @@ theorem sigma1_twentyeight : sigma1_v9 28 = 56 := by native_decide
 def channelSignal (k : ℕ) : ℕ := k + Nat.choose k 2
 
 
+/-- [Section: ## §5. Channel Amplification] -/
 theorem channel_gaussian : channelSignal 2 = 3 := by native_decide
 
 theorem channel_quaternion : channelSignal 4 = 10 := by native_decide

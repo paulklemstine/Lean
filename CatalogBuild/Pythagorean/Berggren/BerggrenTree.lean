@@ -62,6 +62,13 @@ def treeTriplesAtDepth (d : ℕ) : Set (ℤ × ℤ × ℤ) :=
   { t | ∃ p : TreePath, p.depth ≤ d ∧ berggrenTripleAux p = t }
 
 
+/-- [Section: ## Key algebraic properties of the Berggren transformations
+The Berggren matrices preserve:
+1. The Pythagorean property (proved above)
+2. Primitivity (gcd(a,b,c) = 1)
+3. Positivity of all components (when starting from positive triples)
+The tree is **complete**: every primitive Pythagorean triple with a odd, b even
+appears exactly once.] -/
 theorem berggren_A_iff (a b c : ℤ) :
     (a - 2 * b + 2 * c) ^ 2 + (2 * a - b + 2 * c) ^ 2 =
     (2 * a - 2 * b + 3 * c) ^ 2 ↔ a ^ 2 + b ^ 2 = c ^ 2 := by

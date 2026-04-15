@@ -23,6 +23,7 @@ def berggren_M₁_inv' : Matrix (Fin 2) (Fin 2) ℤ := !![0, 1; -1, 2]
 def berggren_M₃_inv' : Matrix (Fin 2) (Fin 2) ℤ := !![1, -2; 0, 1]
 
 
+/-- [Section: ## Section 2: Determinant Proofs — SL(2,ℤ) Membership] -/
 theorem berggren_M₁'_det : Matrix.det berggren_M₁' = 1 := by
   simp [berggren_M₁', Matrix.det_fin_two]
 
@@ -31,6 +32,7 @@ theorem berggren_M₃'_det : Matrix.det berggren_M₃' = 1 := by
   simp [berggren_M₃', Matrix.det_fin_two]
 
 
+/-- [Section: ## Section 3: Inverse Verification] -/
 theorem berggren_M₁'_mul_inv :
     berggren_M₁' * berggren_M₁_inv' = (1 : Matrix (Fin 2) (Fin 2) ℤ) := by
   ext i j; fin_cases i <;> fin_cases j <;>

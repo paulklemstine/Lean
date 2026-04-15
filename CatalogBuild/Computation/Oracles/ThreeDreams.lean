@@ -28,6 +28,18 @@ def emergentContent {α : Type*} (D : DeductiveSystem α) (T₁ T₂ : Set α) :
   D.cl (T₁ ∪ T₂) \ (D.cl T₁ ∪ D.cl T₂)
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+DREAM 6: THE INTERFERENCE PRINCIPLE
+"When two theories are combined, emergent truths arise that are
+provable from neither theory alone."
+We formalize theories as closure operators on a set of propositions.
+The "emergent content" of combining T₁ and T₂ is:
+E(T₁,T₂) = Cl(T₁ ∪ T₂) \ (Cl(T₁) ∪ Cl(T₂))
+Key results:
+• Emergent content is always a subset of the combined closure.
+• Under natural conditions, emergent content is nonempty.
+• A counting theorem: emergent truths grow with shared vocabulary size.
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem emergent_subset_combined {α : Type*} (D : DeductiveSystem α) (T₁ T₂ : Set α) :
     emergentContent D T₁ T₂ ⊆ D.cl (T₁ ∪ T₂) := by
   exact Set.diff_subset
@@ -88,6 +100,7 @@ def interferenceRatio (p : FiniteTheoryPair) : ℚ :=
   else p.emergentCount / (p.size₁ + p.size₂ + p.emergentCount)
 
 
+/-- [Section: ### Interference Counting Theorem] -/
 theorem interferenceRatio_nonneg (p : FiniteTheoryPair) :
     0 ≤ interferenceRatio p := by
   unfold interferenceRatio; positivity;
@@ -98,6 +111,12 @@ V(d) = d^α · exp(-β·d) -/
 def theoremValue (a b d : ℝ) : ℝ := d ^ a * Real.exp (-b * d)
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+DREAM 7: THE DEPTH-VALUE DUALITY
+"The most valuable theorems live at intermediate depth."
+We model theorem value as V(d) = d^α · e^{-βd}, a Gamma-like distribution.
+The unique maximum occurs at d* = α/β, the "sweet spot."
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem value_zero_at_origin (a b : ℝ) (ha : 0 < a) :
     theoremValue a b 0 = 0 := by
   unfold theoremValue; norm_num [ ha.ne' ]
@@ -177,6 +196,13 @@ structure ExplorationSystem where
   uncertainty : breadth * depth ≤ budget
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+DREAM 8: THE ORACLE UNCERTAINTY PRINCIPLE
+"No system can simultaneously maximize both breadth and depth."
+We formalize a tradeoff: for a system with total resource budget R,
+Breadth × Depth ≤ R.
+This is analogous to Heisenberg's ΔxΔp ≥ ℏ/2.
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem breadth_depth_tradeoff (E : ExplorationSystem)
     (b' : ℝ) (hb' : E.breadth < b') :
     E.budget / b' < E.budget / E.breadth := by

@@ -30,6 +30,7 @@ theorem linearEquiv_refl {n : ℕ} (L : Matrix (Fin n) (Fin n) ℤ) (D : GraphDi
   exact ⟨0, by ext; simp [Matrix.mulVec, dotProduct]⟩
 
 
+/-- [Section: ## Section 1: Divisors on Graphs] -/
 theorem linearEquiv_symm {n : ℕ} (L : Matrix (Fin n) (Fin n) ℤ) (D₁ D₂ : GraphDivisor n) :
     linearEquiv L D₁ D₂ → linearEquiv L D₂ D₁ := by
   rintro h;
@@ -57,6 +58,7 @@ theorem principal_degree_zero {n : ℕ} (L : Matrix (Fin n) (Fin n) ℤ)
   rw [ Finset.sum_comm ] ; simp +decide [ ← Finset.sum_mul, hcol ]
 
 
+/-- [Section: ## Section 2: Chip-Firing Moves] -/
 theorem chipFire_equiv {n : ℕ} (L : Matrix (Fin n) (Fin n) ℤ)
     (hL_symm : L.transpose = L)
     (v : Fin n) (D : GraphDivisor n) :
@@ -67,6 +69,7 @@ theorem chipFire_equiv {n : ℕ} (L : Matrix (Fin n) (Fin n) ℤ)
   rw [ ← Matrix.ext_iff ] at hL_symm ; aesop
 
 
+/-- [Section: ## Section 3: Baker-Norine (Graph Riemann-Roch)] -/
 theorem canonical_degree {n : ℕ} (degrees : Fin n → ℤ) (numEdges : ℕ)
     (hdeg_sum : ∑ i, degrees i = 2 * (numEdges : ℤ)) :
     divisorDegree (canonicalDivisor degrees) =

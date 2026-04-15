@@ -7,6 +7,16 @@ Declarations: 17
 
 import Mathlib
 
+/-- [Section: # Unipotent Power Formula for B₁ and B₃
+B₁ and B₃ are unipotent of index 3: (B-I)³ = 0 but (B-I)² ≠ 0.
+This gives an exact polynomial formula:
+B₁ⁿ = I + n·(B₁-I) + n(n-1)/2 · (B₁-I)²
+The matrix entries of B₁ⁿ are therefore quadratic polynomials in n.
+## Main Results
+1. (B₁ - I)³ = 0, (B₁ - I)² ≠ 0 (nilpotency index exactly 3)
+2. B₁ⁿ·(3,4,5) produces the depth-n A-branch triple
+3. B₃ = S·B₁·S, so B₃ shares the same nilpotent structure
+4. The A-branch produces triples (2n+3, 2(n+1)(n+2), 2n²+6n+5)] -/
 def BM1_u : Matrix (Fin 3) (Fin 3) ℤ := !![1, -2, 2; 2, -1, 2; 2, -2, 3]
 
 def BM3_u : Matrix (Fin 3) (Fin 3) ℤ := !![(-1), 2, 2; (-2), 1, 2; (-2), 2, 3]
@@ -38,6 +48,7 @@ theorem B3_minus_I_sq_ne_zero :
   native_decide
 
 
+/-- [Section: ## Explicit Powers] -/
 theorem B1_sq : BM1_u * BM1_u = !![1, (-4 : ℤ), 4; 4, -7, 8; 4, -8, 9] := by native_decide
 
 
@@ -64,6 +75,7 @@ theorem ppt_7_24_25 : (7:ℤ)^2 + 24^2 = 25^2 := by norm_num
 theorem ppt_9_40_41 : (9:ℤ)^2 + 40^2 = 41^2 := by norm_num
 
 
+/-- [Section: ## Conjugacy: B₃ = S·B₁·S] -/
 theorem B3_conj_u : Sswap_u * BM1_u * Sswap_u = BM3_u := by native_decide
 
 theorem S_involution_u : Sswap_u * Sswap_u = (1 : Matrix (Fin 3) (Fin 3) ℤ) := by native_decide

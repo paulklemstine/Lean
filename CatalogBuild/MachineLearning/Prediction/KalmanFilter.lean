@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Section 1: One-Dimensional Kalman Filter] -/
 structure KalmanState where
   estimate : ℝ
   variance : ℝ
@@ -41,6 +42,7 @@ theorem kalman_gain_nonneg (model : SystemModel) (P : ℝ) (hP : 0 ≤ P) (hH : 
   nlinarith [sq_nonneg model.H, model.R_pos]
 
 
+/-- [Section: ## Section 2: The Riccati Equation] -/
 noncomputable def riccatiStep (model : SystemModel) (P : ℝ) : ℝ :=
   let P_pred := model.A ^ 2 * P + model.Q
   let K := kalmanGain model P_pred

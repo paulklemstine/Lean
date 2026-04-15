@@ -9,6 +9,14 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # SPB and Machin-like Formulas
+The identity arctan(spb(x,y)) = arctan(x) + arctan(y) translates
+classical Machin-like formulas for π into SPB algebra.
+## Main Results
+- Machin's formula verified via SPB arithmetic
+- Euler's formula: π/4 = arctan(1/2) + arctan(1/3)
+- Hutton's formula: π/4 = 2·arctan(1/3) + arctan(1/7)
+- Rational points on the unit circle via SPB] -/
 def spbM (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
 
 
@@ -59,6 +67,7 @@ theorem stormer_step1 : spbM (1/8) (1/8) = 16/63 := by
   unfold spbM; norm_num
 
 
+/-- [Section: ## SPB Representation of Common Angles] -/
 theorem arctan_sum_spb (a b : ℝ) (hab : a * b < 1) :
     Real.arctan a + Real.arctan b = Real.arctan (spbM a b) := by
   unfold spbM;

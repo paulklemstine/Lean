@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Section 1: The Stereographic Map on ℚ] -/
 theorem stereo_on_circle (t : ℚ) : (stereoX t)^2 + (stereoY t)^2 = 1 := by
   -- By definition of $stereoX$ and $stereoY$, we know that $(stereoX t)^2 + (stereoY t)^2 = \frac{(1-t^2)^2 + (2t)^2}{(1+t^2)^2}$.
   have h_def : (stereoX t)^2 + (stereoY t)^2 = ((1 - t^2)^2 + (2 * t)^2) / (1 + t^2)^2 := by
@@ -44,6 +45,7 @@ def pythagorean_from_params (p q : ℤ) : ℤ × ℤ × ℤ :=
   (q^2 - p^2, 2 * p * q, q^2 + p^2)
 
 
+/-- [Section: ## Section 2: Pythagorean Triples from the Decoder] -/
 theorem pythagorean_triple_parametric (p q : ℤ) :
     let (a, b, c) := pythagorean_from_params p q
     a^2 + b^2 = c^2 := by
@@ -56,6 +58,11 @@ noncomputable def circleAdd (t₁ t₂ : ℚ) (h : t₁ * t₂ ≠ 1) : ℚ :=
   (t₁ + t₂) / (1 - t₁ * t₂)
 
 
+/-- [Section: ## Section 3: The Group Law Decoder
+The unit circle S¹(ℚ) forms an abelian group under the "angle addition" operation.
+Under stereographic projection, this group law becomes a rational operation on ℚ:
+t₁ ⊕ t₂ = (t₁ + t₂) / (1 - t₁·t₂)
+This is exactly the tangent addition formula! The number line encodes angular addition.] -/
 theorem circle_add_stereo_x (t₁ t₂ : ℚ) (h : t₁ * t₂ ≠ 1) :
     stereoX (circleAdd t₁ t₂ h) =
     stereoX t₁ * stereoX t₂ - stereoY t₁ * stereoY t₂ := by
@@ -78,6 +85,12 @@ noncomputable def ratRotation (t : ℚ) : Matrix (Fin 2) (Fin 2) ℚ :=
   !![stereoX t, -(stereoY t); stereoY t, stereoX t]
 
 
+/-- [Section: ## Section 4: Rational Rotations and the Decoder
+Every rational point on the circle determines a rational rotation matrix:
+R(t) = [[x, -y], [y, x]] where (x,y) = stereo(t)
+These are EXACTLY the matrices in SO(2,ℚ) — the rational rotation group.
+The stereographic map is a group isomorphism (ℚ, ⊕) ≅ SO(2, ℚ).
+This means: **The rational number line IS the rational rotation group, written linearly.**] -/
 theorem ratRotation_det_one (t : ℚ) :
     Matrix.det (ratRotation t) = 1 := by
       convert stereo_on_circle t using 1 ; unfold ratRotation ; norm_num [ Matrix.det_fin_two ] ; ring
@@ -88,6 +101,14 @@ def mediant (p₁ q₁ p₂ q₂ : ℤ) (hq : q₁ + q₂ ≠ 0) : ℚ :=
   (p₁ + p₂ : ℤ) / (q₁ + q₂ : ℤ)
 
 
+/-- [Section: ## Section 5: The Mediant and Farey Structure
+The mediant of two fractions a/b and c/d is (a+c)/(b+d).
+This operation generates the Stern-Brocot tree, which contains every
+positive rational exactly once. The mediant is the "grammar" of the
+rational number language — it tells us how new rationals are born
+from existing ones.
+**Key insight**: The mediant corresponds to a geometric operation
+on the circle via stereographic projection.] -/
 theorem farey_neighbor_det (a b c d : ℤ) (hab : 0 < b) (hcd : 0 < d)
     (hneighbor : b * c - a * d = 1) :
     (a : ℚ) / b < (a + c : ℚ) / (b + d) ∧

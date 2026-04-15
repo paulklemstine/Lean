@@ -7,11 +7,13 @@ Declarations: 17
 
 import Mathlib
 
+/-- [Section: ## §1: The Thin Euclid Triple] -/
 theorem euclid_thin_triple (a : ℤ) (hodd : a % 2 = 1) :
     a ^ 2 + ((a ^ 2 - 1) / 2) ^ 2 = ((a ^ 2 + 1) / 2) ^ 2 := by
   nlinarith [ Int.ediv_mul_cancel ( show 2 ∣ a^2 - 1 from Int.dvd_of_emod_eq_zero ( by norm_num [ sq, Int.mul_emod, Int.sub_emod, hodd ] ) ), Int.ediv_mul_cancel ( show 2 ∣ a^2 + 1 from Int.dvd_of_emod_eq_zero ( by norm_num [ sq, Int.mul_emod, Int.add_emod, hodd ] ) ) ]
 
 
+/-- [Section: ## §2: Core Divisibility — The Factor Condition] -/
 theorem factor_condition (N k p : ℤ) (hp : p ∣ N) :
     p ∣ ((N - 2*k)^2 - 1) ↔ p ∣ (4*k^2 - 1) := by
   obtain ⟨d, rfl⟩ := hp
@@ -61,6 +63,7 @@ theorem invB3_preserves_pyth (a b c : ℤ) (h : a^2 + b^2 = c^2) :
   nlinarith [h]
 
 
+/-- [Section: ## §4: Lorentz Form Invariance] -/
 theorem lorentz_invariant_B1 (a b c : ℤ) :
     (a + 2*b - 2*c)^2 + (-2*a - b + 2*c)^2 - (-2*a - 2*b + 3*c)^2 =
     a^2 + b^2 - c^2 := by ring
@@ -89,6 +92,7 @@ theorem gcd_factor_detection (bk N : ℕ) (h1 : 1 < Nat.gcd bk N) (h2 : Nat.gcd 
   exact ⟨Nat.gcd_dvd_right bk N, h1⟩
 
 
+/-- [Section: ## §6: GCD Factor Detection] -/
 theorem semiprime_divisor (N p q : ℕ) (hN : N = p * q)
     (hp : Nat.Prime p) (hq : Nat.Prime q)
     (d : ℕ) (hd : d ∣ N) (h1 : 1 < d) (h2 : d < N) :

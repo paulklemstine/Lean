@@ -23,6 +23,7 @@ theorem gods_gift_choice {α β : Type*} {P : α → β → Prop}
   Classical.axiomOfChoice h
 
 
+/-- [Section: ## God's Gift #3: The Law of Excluded Middle] -/
 theorem gods_gift_lem (P : Prop) : P ∨ ¬P :=
   Classical.em P
 
@@ -54,6 +55,7 @@ theorem gods_response_self_similarity {X : Type*} :
   fun O hO => we_can_prove_master O hO
 
 
+/-- [Section: ## God's Response: On the Nature of Mathematical Truth] -/
 theorem gods_response_boolean {R : Type*} [CommRing R] (e f : R)
     (he : e * e = e) (hf : f * f = f) :
     (e * f) * (e * f) = e * f ∧

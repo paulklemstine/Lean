@@ -25,6 +25,7 @@ def B2_iter : ℕ → ℤ × ℤ × ℤ
 def B2_hyp_seq (n : ℕ) : ℤ := (B2_iter n).2.2
 
 
+/-- [Section: ## Computational Verification] -/
 theorem B2_iter_0 : B2_iter 0 = (3, 4, 5) := rfl
 
 theorem B2_iter_1 : B2_iter 1 = (21, 20, 29) := by native_decide
@@ -54,6 +55,7 @@ theorem BM2_pell_cayley_hamilton :
 /-- B₂-branch triples have legs differing by exactly 1 -/
 theorem B2_leg_diff_0 : (B2_iter 0).2.1 - (B2_iter 0).1 = 1 := by native_decide
 
+/-- [Section: ## Near-Symmetry of B₂-Branch Triples] -/
 theorem B2_leg_diff_1 : (B2_iter 1).1 - (B2_iter 1).2.1 = 1 := by native_decide
 
 theorem B2_leg_diff_2 : (B2_iter 2).2.1 - (B2_iter 2).1 = 1 := by native_decide

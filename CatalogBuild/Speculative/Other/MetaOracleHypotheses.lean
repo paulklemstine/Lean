@@ -25,6 +25,7 @@ noncomputable def fracDist (x : ℝ) : ℝ :=
 noncomputable def lonelyRunnerBound (n : ℕ) : ℝ := 1 / (n + 1 : ℝ)
 
 
+/-- [Section: ## Lonely Runner] -/
 theorem lonely_runner_two : ∃ t : ℝ, fracDist t ≥ 1/3 ∧ fracDist (2 * t) ≥ 1/3 := by
   -- Consider $t = 1/3$.
   use 1 / 3;
@@ -49,6 +50,7 @@ theorem erdos_straus_seven : isErdosStrausDecomp 7 2 28 28 := by
   norm_num
 
 
+/-- [Section: ## Egyptian Fractions and Erdős-Straus] -/
 theorem erdos_straus_even (k : ℕ) (hk : 0 < k) :
     isErdosStrausDecomp (2 * k) k (2 * k) (2 * k) := by
       constructor <;> try linarith;
@@ -69,6 +71,7 @@ theorem primeCount_one : primeCount 1 = 0 := by
   native_decide
 
 
+/-- [Section: ## Prime Counting] -/
 theorem primeCount_two : primeCount 2 = 1 := by
   decide +revert
 
@@ -87,6 +90,7 @@ def constellationRigidity : Prop :=
   |G - α * n * ρ^2| < ε * n * ρ^2
 
 
+/-- [Section: ## Formal Statement of Main Hypotheses] -/
 theorem irrational_orbit_dense (α : ℝ) (hα : Irrational α) (x : ℝ) (ε : ℝ) (hε : ε > 0) :
     ∃ n : ℤ, |Int.fract (n * α) - Int.fract x| < ε := by
       -- By the density of the sequence $\{n\alpha\}$ in $[0,1)$, there exists an $n$ such that $\{n\alpha\}$ is arbitrarily close to $x$.

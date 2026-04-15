@@ -20,6 +20,7 @@ structure EntanglementMatching (n : ℕ) where
   no_self : ∀ i, partner i ≠ i
 
 
+/-- [Section: ## Section 1: Entanglement as a Matching] -/
 theorem entanglement_requires_even (n : ℕ) (M : EntanglementMatching n) :
     Even n := by
   -- The set of photons can be partitioned into pairs, where each pair is of the form `{i, partner i}`.
@@ -92,6 +93,7 @@ noncomputable def chshQuantity {n : ℕ} (L : LocalModel n) (i j : Fin n)
   localCorrelation L s₁ i j + localCorrelation L s₂ i j
 
 
+/-- [Section: ## Section 2: Measurement Outcomes and Bell Correlations] -/
 theorem bell_chsh_bound {n : ℕ} (L : LocalModel n) (i j : Fin n)
     (s₁ s₂ : MeasurementSetup n) :
     |chshQuantity L i j s₁ s₂| ≤ 4 := by
@@ -190,6 +192,10 @@ def cantorUnpair (n : ℕ) : ℕ × ℕ :=
   (w - (n - t), n - t)
 
 
+/-- [Section: ## Section 5: Reading Entanglement from the Number Line
+The key synthesis: entangled photon pairs correspond to pairs (n, n̄) on ℤ[i],
+which can be encoded as pairs of natural numbers. The entanglement relation
+is then a computable function on ℕ.] -/
 noncomputable def entangledPartnerCode (n : ℕ) : ℕ :=
   let pair := cantorUnpair n
   let re := zigzagDecode pair.1

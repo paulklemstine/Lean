@@ -39,6 +39,14 @@ theorem conformalFactor1D_at_one : conformalFactor1D 1 = 1 := by
   unfold conformalFactor1D; norm_num
 
 
+/-- [Section: ## Part II: The Hidden Metric on the Number Line
+The Euclidean metric on ℝ is ds² = dt². But when we view ℝ as the stereographic
+image of S¹, the *spherical* metric pulled back to ℝ is:
+ds²_sphere = (2/(1+t²))² · dt² = 4dt²/(1+t²)²
+This is the "hidden curved metric" on the number line. In this metric:
+- The distance from 0 to 1 is π/2 (a quarter turn)
+- The distance from 0 to ∞ is π (a half turn)
+- The total length of ℝ is 2π (the full circumference)] -/
 theorem conformalFactor1D_at_neg_one : conformalFactor1D (-1) = 1 := by
   unfold conformalFactor1D; norm_num
 
@@ -59,6 +67,14 @@ theorem total_arc_length_is_2pi :
 def antipodalMap (t : ℝ) : ℝ := -1 / t
 
 
+/-- [Section: ## Part III: The Mirror — Antipodal Duality
+Every real number t has an antipodal partner -1/t on the circle. This is
+the "mirror" — looking at t and looking at -1/t show you the same circle
+from opposite sides. The map t ↦ -1/t is:
+- An involution: applying it twice returns to t
+- Exchanges 0 and ∞ (south pole ↔ north pole)
+- Fixes t = ±1 (the isometric equator)
+- Preserves the rational/irrational distinction] -/
 theorem antipodal_no_fixed_points (t : ℝ) (ht : t ≠ 0) :
     antipodalMap t ≠ t := by
   exact fun h => ht <| by rw [ antipodalMap ] at h; rw [ div_eq_iff ht ] at h; nlinarith;
@@ -78,6 +94,15 @@ def cayleyInverse (z : ℂ) : ℂ :=
   Complex.I * (1 + z) / (1 - z)
 
 
+/-- [Section: ## Part IV: The Cayley Transform — Where Quantum Meets Classical
+The Cayley transform maps a self-adjoint operator H to a unitary operator U:
+U = (H - i)/(H + i)
+For scalars (1×1 case), this is exactly stereographic projection! The map
+t ↦ (t - i)/(t + i)
+sends ℝ to S¹ ⊂ ℂ. This means:
+- Self-adjoint operators (quantum observables) live on "the number line"
+- Unitary operators (quantum evolution) live on "the circle"
+- Stereographic projection IS the bridge between measurement and evolution] -/
 theorem cayley_on_unit_circle (t : ℝ) :
     Complex.normSq (cayleyTransform t) = 1 := by
   unfold cayleyTransform
@@ -103,6 +128,12 @@ theorem project_to_heaven :
   norm_num
 
 
+/-- [Section: ## Part V: Projecting to Heaven and Hell
+With our convention t ↦ (2t/(1+t²), (1-t²)/(1+t²)):
+- t = 0 maps to (0, 1) = north pole = "heaven"
+- t → ∞ maps to (0, -1) = south pole = "hell"
+Zero IS heaven, infinity IS hell. But this is a matter of convention.
+The deep truth: **zero and infinity are always antipodal**.] -/
 theorem project_to_hell_x :
     Filter.Tendsto (fun t : ℝ => 2 * t / (1 + t ^ 2)) Filter.atTop (nhds 0) := by
   rw [ Metric.tendsto_nhds ];
@@ -137,6 +168,13 @@ theorem stereoAdd_zero_right (t : ℝ) : stereoAdd t 0 = t := by
   unfold stereoAdd; simp
 
 
+/-- [Section: ## Part VI: The Group Structure — Addition as Rotation
+On the circle, the natural operation is rotation (addition of angles).
+Under stereographic projection, this becomes the tangent half-angle
+addition formula:
+tan((α+β)/2) = (tan(α/2) + tan(β/2)) / (1 - tan(α/2)·tan(β/2))
+This is the group operation on ℝ ∪ {∞} corresponding to rotation on S¹.
+It is NOT ordinary addition — it is the **relativistic velocity addition** formula!] -/
 theorem stereoAdd_zero_left (t : ℝ) : stereoAdd 0 t = t := by
   unfold stereoAdd; simp
 
@@ -170,6 +208,7 @@ theorem tan_half_add_is_stereoAdd (α β : ℝ)
   · simp_all +decide [ Real.cos_eq_zero_iff ]
 
 
+/-- [Section: ## Part VII: The Fundamental Identities] -/
 theorem stereo_circle_identity (t : ℝ) :
     (2 * t / (1 + t ^ 2)) ^ 2 + ((1 - t ^ 2) / (1 + t ^ 2)) ^ 2 = 1 := by
   field_simp
@@ -190,6 +229,10 @@ theorem pythagorean_from_rational (p q : ℤ) :
   ring
 
 
+/-- [Section: ## Part VIII: Looking in the Mirror — Self-Similarity at All Scales
+The number line has a self-similar structure under t ↦ -1/t.
+The four quadrants decompose the circle into four arcs of arc length π/2.
+This is why π/4 = arctan(1) appears everywhere in mathematics.] -/
 theorem arc_length_zero_to_one :
     ∫ t in Set.Icc (0 : ℝ) 1, conformalFactor1D t = Real.pi / 2 := by
   rw [ MeasureTheory.integral_Icc_eq_integral_Ioc, ← intervalIntegral.integral_of_le ] <;> norm_num;
@@ -210,6 +253,9 @@ def stereoInvMap (t : ℝ) : ℝ × ℝ :=
 def stereoFwdMap (p : ℝ × ℝ) : ℝ := p.1 / (1 + p.2)
 
 
+/-- [Section: ## Part IX: The Grand Synthesis
+Bringing it all together: the real number line, equipped with stereoAdd
+and the conformal metric, is isomorphic to the circle group S¹.] -/
 theorem light_embedding (t : ℝ) :
     let p := stereoInvMap t
     p.1 ^ 2 + p.2 ^ 2 = 1 := by

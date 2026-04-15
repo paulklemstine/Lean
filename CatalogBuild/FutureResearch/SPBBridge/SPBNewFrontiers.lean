@@ -16,6 +16,7 @@ theorem spb_functional_eq (f : ℝ → ℝ) (hf : ∀ x y, f (spb x y) = spb (f 
   rfl
 
 
+/-- [Section: ## Part I: SPB Functional Equations] -/
 theorem spb_arctan_hom (x y : ℝ) (hx : |x| < 1) (hy : |y| < 1)
     (hxy : |x * y| < 1) :
     arctan (spb x y) = arctan x + arctan y := by
@@ -61,6 +62,7 @@ theorem spbH_inverse (u : ℝ) : spbH u (-u) = 0 := by
   unfold spbH; simp
 
 
+/-- [Section: ## Part III: Hyperbolic SPB Geometry] -/
 theorem spbH_trivial_bound (u v : ℝ) (hu : |u| < 1) (hv : |v| < 1)
     (h : 1 + u * v > 0) :
     |spbH u v| ≤ (|u| + |v|) / (1 - |u| * |v|) := by
@@ -90,6 +92,7 @@ theorem spbMatrix_recovers_spb (a b : ℝ) (h : 1 - a * b ≠ 0) :
   unfold spb; ring
 
 
+/-- [Section: ## Part VI: SPB Fixed-Point Theory] -/
 theorem spb_fixed_point_free (x a : ℝ) (ha : a ≠ 0) (h : 1 - x * a ≠ 0) :
     spb x a ≠ x := by
   exact fun H => ha <| mul_left_cancel₀ ( show x ^ 2 + 1 ≠ 0 from by positivity ) ( by rw [ spb ] at H; rw [ div_eq_iff h ] at H; linarith )
@@ -131,6 +134,7 @@ theorem machin_formula_Q :
   unfold spbQ; norm_num
 
 
+/-- [Section: ## Part X: SPB Algebraic Structure Theorems] -/
 theorem spb_zero_iff (x y : ℝ) (h : 1 - x * y ≠ 0) :
     spb x y = 0 ↔ x = -y := by
   exact ⟨ fun hxy => by rw [ spb, div_eq_iff h ] at hxy; linarith, fun hxy => by rw [ spb, hxy ] ; ring ⟩

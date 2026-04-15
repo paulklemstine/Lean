@@ -33,6 +33,7 @@ and F(324) ≡ 0 (mod 323). Verified computationally in Python demo. -/
 theorem composite_exists : 17 * 19 = 323 := by ring
 
 
+/-- [Section: ### Lucas Numbers] -/
 theorem lucas_fib_relation (n : ℕ) (hn : 0 < n) :
     lucas n = Nat.fib (n - 1) + Nat.fib (n + 1) := by
   induction' n using Nat.strong_induction_on with n ih;

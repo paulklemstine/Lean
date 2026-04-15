@@ -23,6 +23,7 @@ def gaussianRVT (a b : ℤ) : RVT :=
   else RVT.T
 
 
+/-- [Section: ## The RVT Classification and Arithmetic] -/
 theorem gauss_norm_mod_four (a b : ℤ) :
     (a^2 + b^2) % 4 = 0 ∨ (a^2 + b^2) % 4 = 1 ∨ (a^2 + b^2) % 4 = 2 := by
   rcases Int.even_or_odd' a with ⟨ a, rfl | rfl ⟩ <;> rcases Int.even_or_odd' b with ⟨ b, rfl | rfl ⟩ <;> ring_nf <;> norm_num
@@ -33,6 +34,7 @@ theorem conformal_pos (t : ℝ) : conformalFactor t > 0 := by
   unfold conformalFactor; positivity
 
 
+/-- [Section: ## The Conformal Factor] -/
 theorem conformal_max (t : ℝ) : conformalFactor t ≤ 4 := by
   exact div_le_self ( by norm_num ) ( by nlinarith )
 

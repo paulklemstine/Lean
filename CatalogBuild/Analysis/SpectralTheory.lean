@@ -21,6 +21,7 @@ theorem M₃_det_mod (p : ℕ) :
   simp [Matrix.det_fin_two]
 
 
+/-- [Section: ## Graph Regularity] -/
 theorem M₁_ne_inv : !![( 2 : ℤ), -1; 1, 0] ≠ !![( 0 : ℤ), 1; -1, 2] := by
   intro h; have := congr_fun (congr_fun h 0) 0; simp at this
 
@@ -29,6 +30,7 @@ theorem M₃_ne_inv : !![( 1 : ℤ), 2; 0, 1] ≠ !![( 1 : ℤ), -2; 0, 1] := by
   intro h; have := congr_fun (congr_fun h 0) 1; simp at this
 
 
+/-- [Section: ## Ramanujan Bound] -/
 theorem ramanujan_bound_lt_degree : 2 * Real.sqrt 3 < 4 := by
   nlinarith [ Real.sq_sqrt ( show 0 ≤ 3 by norm_num ) ]
 
@@ -38,6 +40,7 @@ theorem ramanujan_gap_pos : (4 : ℝ) - 2 * Real.sqrt 3 > 0 := by
   linarith [ramanujan_bound_lt_degree]
 
 
+/-- [Section: ## Matrix Computations] -/
 theorem M₃_squared :
     !![( 1 : ℤ), 2; 0, 1] * !![( 1 : ℤ), 2; 0, 1] = !![( 1 : ℤ), 4; 0, 1] := by
   ext i j; fin_cases i <;> fin_cases j <;>

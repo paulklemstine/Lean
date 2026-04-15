@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## H-TN1: Maslov Sandwich] -/
 theorem maslov_lower (a b : ℝ) : max a b ≤ Real.log (Real.exp a + Real.exp b) := by
   rw [ Real.le_log_iff_exp_le ( by positivity ) ];
   cases max_cases a b <;> simp +decide [ * ] <;> linarith [ Real.exp_pos a, Real.exp_pos b ]
@@ -63,6 +64,7 @@ theorem relu_idempotent_nonneg (x : ℝ) (hx : 0 ≤ x) : relu' (relu' x) = relu
   simp [relu', max_eq_left hx]
 
 
+/-- [Section: ## Parity Constraint for Pythagorean Quadruples] -/
 theorem quadruple_parity (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
     Even (a + b + c + d) := by
   apply_fun Even at h; simp_all +decide [ parity_simps ] ;

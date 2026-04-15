@@ -9,6 +9,9 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # Dickman Function Formalization
+The Dickman function ρ(u) satisfies the delay DE u·ρ'(u) = -ρ(u-1) for u > 1,
+with ρ(u) = 1 for 0 < u ≤ 1. We formalize the base case, smooth numbers, and L-notation.] -/
 noncomputable def dickman_base (u : ℝ) : ℝ :=
   if u ≤ 1 then 1 else 1 - Real.log u
 
@@ -40,6 +43,7 @@ theorem dickman_base_antitone {u₁ u₂ : ℝ} (hu₁ : 0 < u₁) (_hu₂ : u�
   · gcongr
 
 
+/-- [Section: ## Smooth Numbers] -/
 def IsSmooth (n y : ℕ) : Prop := ∀ p : ℕ, p.Prime → p ∣ n → p ≤ y
 
 
@@ -59,6 +63,7 @@ theorem IsSmooth.mono {n y₁ y₂ : ℕ} (hn : IsSmooth n y₁) (h : y₁ ≤ y
   fun p hp hpn => le_trans (hn p hp hpn) h
 
 
+/-- [Section: ## L-notation] -/
 noncomputable def L_notation (n : ℝ) (α c : ℝ) : ℝ :=
   Real.exp (c * n ^ α * (Real.log n) ^ (1 - α))
 

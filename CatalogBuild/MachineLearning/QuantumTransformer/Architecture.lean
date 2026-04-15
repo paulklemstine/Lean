@@ -44,6 +44,7 @@ structure QuantumTransformer (n num_layers num_heads vocab_size : ℕ) where
   measurement_basis : Fin (2 ^ n) → Fin vocab_size
 
 
+/-- [Section: ## Expressivity Theorems] -/
 theorem quantum_attention_params_exceed_classical (n : ℕ) (hn : 2 ≤ n) :
     (2 ^ n * 2 ^ n) ^ 2 > (2 ^ n) ^ 2 := by
       gcongr ; nlinarith [ Nat.pow_le_pow_right two_pos hn ]

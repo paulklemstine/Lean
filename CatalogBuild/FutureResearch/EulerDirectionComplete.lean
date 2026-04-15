@@ -9,14 +9,23 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # Complete Euler Direction for Even Perfect Numbers (A+11, E35)
+## Main Results
+* `mersenne_prime_exponent_prime` — If 2^p - 1 prime, then p prime
+* `euler_m_equals_mersenne` — m = 2^(k+1) - 1
+* `sigma1'_prime` — σ₁(p) = p + 1
+* `sigma1'_ge_one_plus` — σ₁(n) ≥ 1 + n for n > 1
+* `triangular_formula` — Σ_{i=0}^n i = n(n+1)/2] -/
 noncomputable def σ₁' (n : ℕ) : ℕ := ∑ d ∈ n.divisors, d
 
 
+/-- [Section: ### Mersenne Prime Properties] -/
 theorem mersenne_prime_exponent_prime (n : ℕ) (hn : 1 < n)
     (hm : Nat.Prime (2 ^ n - 1)) : Nat.Prime n := by
   exact?
 
 
+/-- [Section: ### σ₁ Properties] -/
 theorem sigma1'_prime (p : ℕ) (hp : Nat.Prime p) : σ₁' p = p + 1 := by
   simp [σ₁', hp.sum_divisors, add_comm]
 
@@ -28,6 +37,7 @@ theorem sigma1'_ge_one_plus (n : ℕ) (hn : 1 < n) : 1 + n ≤ σ₁' n := by
   exact le_trans ( by rw [ Finset.sum_pair ( by linarith ) ] ) ( Finset.sum_le_sum_of_subset h_subset )
 
 
+/-- [Section: ### Euler m = Mersenne] -/
 theorem euler_m_equals_mersenne (k m : ℕ) (hk : 0 < k) (hm : 0 < m)
     (hm_odd : ¬(2 ∣ m))
     (heq : (2 ^ (k + 1) - 1) * σ₁' m = 2 ^ (k + 1) * m)
@@ -51,6 +61,7 @@ theorem euler_m_equals_mersenne (k m : ℕ) (hk : 0 < k) (hm : 0 < m)
   nlinarith [ Nat.sub_add_cancel ( Nat.one_le_pow ( k + 1 ) 2 zero_lt_two ), pow_pos ( zero_lt_two' ℕ ) k, pow_succ' 2 k, mul_pos ( Nat.sub_pos_of_lt ( one_lt_pow₀ one_lt_two ( by linarith : k + 1 ≠ 0 ) ) ) ( zero_lt_two' ℕ ) ]
 
 
+/-- [Section: ### Perfect Number Examples] -/
 theorem six_is_perfect' : σ₁' 6 = 2 * 6 := by unfold σ₁'; native_decide
 
 theorem twentyeight_is_perfect' : σ₁' 28 = 2 * 28 := by unfold σ₁'; native_decide

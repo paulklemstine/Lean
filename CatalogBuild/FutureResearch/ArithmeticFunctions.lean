@@ -20,6 +20,7 @@ theorem totient_multiplicative' (m n : ℕ) (hcop : Nat.Coprime m n) :
   Nat.totient_mul hcop
 
 
+/-- [Section: ### Euler's Totient Function] -/
 theorem totient_prime_pow (p k : ℕ) (hp : Nat.Prime p) (hk : 0 < k) :
     Nat.totient (p ^ k) = p ^ k - p ^ (k - 1) := by
   rw [ Nat.totient_prime_pow hp hk ];
@@ -40,6 +41,7 @@ theorem tau_one : tau 1 = 1 := by
   simp [tau]
 
 
+/-- [Section: ### Divisor Count Function] -/
 theorem tau_prime_pow (p k : ℕ) (hp : Nat.Prime p) :
     tau (p ^ k) = k + 1 := by
   simp +decide [ tau, Nat.divisors_prime_pow hp ]
@@ -52,6 +54,7 @@ theorem tau_multiplicative (m n : ℕ) (hm : 0 < m) (hn : 0 < n)
   exact?
 
 
+/-- [Section: ### Möbius Function] -/
 theorem mobius_at_prime (p : ℕ) (hp : Nat.Prime p) :
     ArithmeticFunction.moebius p = -1 := by
   rw [ ArithmeticFunction.moebius_apply_prime hp ]
@@ -132,6 +135,7 @@ theorem prime_deficient (p : ℕ) (hp : Nat.Prime p) : IsDeficient p := by
   · simp [hp.sum_divisors]; have := hp.one_lt; omega
 
 
+/-- [Section: ### Abundancy] -/
 theorem smallest_abundant : ∀ n, 0 < n → n < 12 → ¬ IsAbundant n := by
   -- By definition of IsAbundant, we need to show that for any n < 12, the sum of its divisors is not greater than 2n.
   intros n hn_pos hn_lt_12

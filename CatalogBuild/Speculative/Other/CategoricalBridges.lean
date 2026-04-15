@@ -58,6 +58,7 @@ theorem analysis_bridge_unique (b₁ b₂ : AnalysisBridge)
   exact tendsto_nhds_unique h1 h2
 
 
+/-- [Section: ## Section 5: Analysis Bridges (Limits and Integrals)] -/
 theorem riemann_sum_bridge (f : ℝ → ℝ) (hf : Continuous f) :
     Filter.Tendsto
       (fun n : ℕ => (∑ k ∈ Finset.range n, f ((k + 1 : ℝ) / n)) / n)

@@ -133,6 +133,7 @@ theorem mul_via_eml (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
   rw [Real.exp_add, Real.exp_log hx, Real.exp_log hy]
 
 
+/-- [Section: ## Section 5: Arithmetic via EML] -/
 theorem sq_via_eml (x : ℝ) (hx : 0 < x) :
     Real.exp (2 * Real.log x) = x ^ 2 := by
       rw [ mul_comm, Real.exp_mul, Real.exp_log ] <;> norm_cast

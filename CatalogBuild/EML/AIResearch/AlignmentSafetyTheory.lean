@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## §1. Interpretability] -/
 def stdInterpretCost (numNeurons probeDim : ℕ) : ℕ := numNeurons * probeDim
 
 def emlInterpretCost (numNeurons : ℕ) : ℕ := 4 * numNeurons
@@ -21,6 +22,7 @@ theorem eml_interpret_cheaper (n p : ℕ) (hp : 4 ≤ p) :
     _ ≤ n * p := Nat.mul_le_mul_left n hp
 
 
+/-- [Section: ## §2. Reward Model Efficiency] -/
 def stdRewardParams (d_model numLayers : ℕ) : ℕ := numLayers * d_model * d_model
 
 def emlRewardParams (d_model numLayers : ℕ) : ℕ := numLayers * 4 * d_model
@@ -33,6 +35,7 @@ theorem eml_reward_compact (d L : ℕ) (hd : 4 ≤ d) :
   exact Nat.mul_le_mul_right d this
 
 
+/-- [Section: ## §3. Safety Constraint Verification] -/
 def emlLayerLipschitz (expBound : ℝ) : ℝ := Real.exp expBound
 
 
@@ -43,6 +46,7 @@ theorem eml_lipschitz_bounded (b1 b2 : ℝ) (h : b1 ≤ b2) :
     emlLayerLipschitz b1 ≤ emlLayerLipschitz b2 := Real.exp_le_exp.mpr h
 
 
+/-- [Section: ## §4. Alignment Tax] -/
 def alignmentTax (basePerf safetyPenalty : ℝ) : ℝ := basePerf - safetyPenalty
 
 
@@ -51,6 +55,7 @@ theorem eml_lower_alignment_tax (p pen_eml pen_std : ℝ) (h : pen_eml ≤ pen_s
   unfold alignmentTax; linarith
 
 
+/-- [Section: ## §5. Corrigibility] -/
 def corrigibilityMargin (paramCount updateCost : ℕ) : ℕ := paramCount * updateCost
 
 
@@ -59,6 +64,7 @@ theorem eml_more_corrigible (p_eml p_std u : ℕ) (hp : p_eml ≤ p_std) :
   unfold corrigibilityMargin; exact Nat.mul_le_mul_right u hp
 
 
+/-- [Section: ## §6. Value Learning] -/
 def valueSamples (featureDim complexity : ℕ) (eps : ℝ) : ℝ :=
   ↑(featureDim * complexity) / eps ^ 2
 
@@ -71,6 +77,7 @@ theorem eml_value_sample_efficient (f_eml f_std c : ℕ) (eps : ℝ)
   exact_mod_cast Nat.mul_le_mul_right c hf
 
 
+/-- [Section: ## §7. Scalable Oversight] -/
 def oversightCost (behaviors reviewCostPerBehavior : ℕ) : ℕ := behaviors * reviewCostPerBehavior
 
 def emlOversightCost (behaviors emlAnalysisCost : ℕ) : ℕ := behaviors * emlAnalysisCost
@@ -81,6 +88,7 @@ theorem eml_oversight_cheaper (b c_eml c_std : ℕ) (hc : c_eml ≤ c_std) :
   unfold emlOversightCost oversightCost; exact Nat.mul_le_mul_left b hc
 
 
+/-- [Section: ## §8. Deceptive Alignment Resistance] -/
 def activationComplexity (numParams : ℕ) : ℕ := numParams
 
 
@@ -88,6 +96,7 @@ theorem eml_less_deception_capacity (p_eml p_std : ℕ) (hp : p_eml ≤ p_std) :
     activationComplexity p_eml ≤ activationComplexity p_std := hp
 
 
+/-- [Section: ## §9. Constitutional AI Verification] -/
 def constitutionalCost (numConstraints verificationCost : ℕ) : ℕ :=
   numConstraints * verificationCost
 
@@ -97,6 +106,7 @@ theorem eml_constitutional_cheaper (n v_eml v_std : ℕ) (hv : v_eml ≤ v_std) 
   unfold constitutionalCost; exact Nat.mul_le_mul_left n hv
 
 
+/-- [Section: ## §10. Anomaly Detection] -/
 def anomalyDetectorParams (inputDim latentDim : ℕ) : ℕ := 2 * inputDim * latentDim
 
 def emlAnomalyParams (inputDim : ℕ) : ℕ := 8 * inputDim
@@ -107,6 +117,7 @@ theorem eml_anomaly_cheaper (d l : ℕ) (hl : 4 ≤ l) :
   unfold emlAnomalyParams anomalyDetectorParams; nlinarith
 
 
+/-- [Section: ## §11. Gradient-Based Safety Monitoring] -/
 def gradientMonitorCost (numParams batchSize : ℕ) : ℕ := numParams * batchSize
 
 def emlGradMonitorCost (emlParams batchSize : ℕ) : ℕ := emlParams * batchSize

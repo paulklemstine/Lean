@@ -7,6 +7,7 @@ Declarations: 7
 
 import Mathlib
 
+/-- [Section: ## Section 1: Metric Space and Convergence] -/
 theorem convergent_is_cauchy {X : Type*} [MetricSpace X] {f : ℕ → X}
     (hf : ∃ x, Filter.Tendsto f Filter.atTop (nhds x)) :
     CauchySeq f := by
@@ -29,6 +30,7 @@ theorem contraction_has_fixed_point {X : Type*} [MetricSpace X] [CompleteSpace X
       use x₀, tendsto_nhds_unique ( by erw [ ← Filter.tendsto_add_atTop_iff_nat 1 ] ; simpa only [ Function.iterate_succ_apply' ] using Filter.Tendsto.comp ( show Filter.Tendsto f _ _ from Metric.tendsto_nhds_nhds.2 fun ε εpos => ⟨ ε, εpos, by intros y hy; exact lt_of_le_of_lt ( hf _ _ ) <| by nlinarith ⟩ ) hx₀ ) hx₀;
 
 
+/-- [Section: ## Section 2: Calculus Fundamentals] -/
 theorem mean_value_theorem (f f' : ℝ → ℝ) {a b : ℝ} (hab : a < b)
     (hf : ContinuousOn f (Set.Icc a b))
     (hf' : ∀ x ∈ Set.Ioo a b, HasDerivAt f (f' x) x) :
@@ -46,6 +48,7 @@ theorem ftc_eval {f : ℝ → ℝ} {a b : ℝ} (hab : a ≤ b)
       · exact hf'.intervalIntegrable_of_Icc hab
 
 
+/-- [Section: ## Section 3: Stability Theory (relevant to IMU drift)] -/
 theorem exponential_decay_tendsto (C α : ℝ) (hα : 0 < α) :
     Filter.Tendsto (fun t => C * Real.exp (-α * t)) Filter.atTop (nhds 0) := by
       simpa using tendsto_const_nhds.mul ( Real.tendsto_exp_atBot.comp <| Filter.tendsto_neg_atTop_atBot.comp <| Filter.tendsto_id.const_mul_atTop hα )

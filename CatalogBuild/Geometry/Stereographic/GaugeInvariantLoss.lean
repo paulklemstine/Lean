@@ -16,6 +16,7 @@ def geodesicLoss (seqLen : ℕ)
   ∑ i, (pred i - target i) ^ 2
 
 
+/-- [Section: ## Part 1: Geodesic Distance Loss] -/
 theorem geodesicLoss_nonneg (seqLen : ℕ) (pred target : Fin seqLen → ℝ) :
     0 ≤ geodesicLoss seqLen pred target := by
   unfold geodesicLoss
@@ -47,6 +48,7 @@ def conformalWeightedLoss (seqLen d : ℕ)
   ∑ i, confFactor d (X i) * losses i
 
 
+/-- [Section: ## Part 2: Conformal-Weighted Loss] -/
 theorem confFactor_pos (d : ℕ) (x : Fin d → ℝ) :
     0 < confFactor d x := by
   unfold confFactor; positivity
@@ -73,6 +75,7 @@ def gaugeInvariantCE (seqLen : ℕ) (logits : Fin seqLen → ℝ)
   Real.log (∑ i, Real.exp (shifted i)) - shifted target
 
 
+/-- [Section: ## Part 3: Gauge-Invariant Cross-Entropy] -/
 theorem gaugeInvariantCE_nonneg (seqLen : ℕ) (logits : Fin seqLen → ℝ)
     (target : Fin seqLen) (hseq : 0 < seqLen) :
     0 ≤ gaugeInvariantCE seqLen logits target := by
@@ -98,6 +101,7 @@ def conformalDistance (d : ℕ) (x y : Fin d → ℝ) : ℝ :=
   confFactor d x * confFactor d y * ∑ i, (x i - y i) ^ 2
 
 
+/-- [Section: ## Part 5: Conformally-Equivariant Distance] -/
 theorem conformalDistance_nonneg (d : ℕ) (x y : Fin d → ℝ) :
     0 ≤ conformalDistance d x y := by
   unfold conformalDistance

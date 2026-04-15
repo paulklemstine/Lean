@@ -69,6 +69,10 @@ theorem card_bool_matrix (m n : ℕ) :
   ring
 
 
+/-- [Section: ## Growth Functions and VC Theory
+The growth function (or shatter function) Π_F(m) counts the maximum number
+of distinct labelings a concept class F can produce on m points.
+By Sauer-Shelah, if VC-dim = d, then Π_F(m) ≤ ∑_{i≤d} C(m,i).] -/
 theorem sauer_shelah_weak_bound (m d : ℕ) (hd : 1 ≤ d) (hm : d ≤ m) :
     binomialPartialSum m d ≤ (m + 1) ^ d := by
   -- By definition of growth function, $\Pi_F(m) \leq \sum_{i=0}^d \binom{m}{i}$.
@@ -80,6 +84,7 @@ theorem sauer_shelah_weak_bound (m d : ℕ) (hd : 1 ≤ d) (hm : d ≤ m) :
   exact le_trans ( Nat.choose_le_pow _ _ ) ( Nat.le_mul_of_pos_right _ ( Nat.choose_pos ( by linarith ) ) )
 
 
+/-- [Section: ## Counting Subsets] -/
 theorem card_subsets_size_k (n k : ℕ) :
     ((Finset.univ : Finset (Finset (Fin n))).filter (fun s => s.card = k)).card = n.choose k := by
   norm_num
@@ -91,6 +96,7 @@ theorem card_powerset_fin (n : ℕ) :
   simp [Fintype.card_finset]
 
 
+/-- [Section: ## Probabilistic Method Basics] -/
 theorem exists_ge_average {α : Type*} [Fintype α] [Nonempty α]
     (f : α → ℚ) (hf : ∀ a, 0 ≤ f a) :
     ∃ a : α, (∑ b : α, f b) / Fintype.card α ≤ f a := by

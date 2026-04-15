@@ -9,12 +9,14 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## §1: The Trace-Determinant Conspiracy] -/
 theorem matrix_reality_criterion (a b c d : ℝ) :
     (a + d)^2 ≥ 4 * (a * d - b * c) ↔
     (a - d)^2 + 4 * b * c ≥ 0 := by
   constructor <;> intro h <;> linarith
 
 
+/-- [Section: ## §2: Matrix Powers and Stability] -/
 theorem trace_sq_symmetric (n : ℕ) (A : Matrix (Fin n) (Fin n) ℝ)
     (hA : A.IsSymm) :
     Matrix.trace (A * A) = ∑ i : Fin n, ∑ j : Fin n, A i j * A i j := by
@@ -23,21 +25,25 @@ theorem trace_sq_symmetric (n : ℕ) (A : Matrix (Fin n) (Fin n) ℝ)
   exact Finset.sum_congr rfl fun i hi => Finset.sum_congr rfl fun j hj => by rw [ ← hA.apply ] ;
 
 
+/-- [Section: ## §3: Commutator Trace Vanishing] -/
 theorem commutator_traceless (n : ℕ) (A B : Matrix (Fin n) (Fin n) ℝ) :
     Matrix.trace (A * B - B * A) = 0 := by
   rw [ Matrix.trace_sub, Matrix.trace_mul_comm, sub_self ]
 
 
+/-- [Section: ## §4: The Characteristic Polynomial Identity] -/
 theorem cayley_hamilton_1x1 (a : ℝ) :
     !![a] - a • (1 : Matrix (Fin 1) (Fin 1) ℝ) = 0 := by
   ext i j ; fin_cases i ; fin_cases j ; norm_num
 
 
+/-- [Section: ## §5: Determinant Multiplicativity — The Matrix Composition Law] -/
 theorem det_composition (n : ℕ) (A B : Matrix (Fin n) (Fin n) ℝ) :
     Matrix.det (A * B) = Matrix.det A * Matrix.det B := by
   exact Matrix.det_mul A B
 
 
+/-- [Section: ## §6: The Projection Theorem (Exiting the Matrix)] -/
 theorem idempotent_trace_eq_rank_nat (n : ℕ) (P : Matrix (Fin n) (Fin n) ℚ)
     (hP : P * P = P) :
     ∃ k : ℕ, Matrix.trace P = (k : ℚ) := by
@@ -66,11 +72,13 @@ theorem idempotent_trace_eq_rank_nat (n : ℕ) (P : Matrix (Fin n) (Fin n) ℚ)
   rw [ eq_comm ]
 
 
+/-- [Section: ## §7: The Transpose Symmetry] -/
 theorem det_transpose_eq (n : ℕ) (A : Matrix (Fin n) (Fin n) ℝ) :
     Matrix.det A.transpose = Matrix.det A := by
   apply Matrix.det_transpose
 
 
+/-- [Section: ## §8: Trace Linearity] -/
 theorem trace_additive (n : ℕ) (A B : Matrix (Fin n) (Fin n) ℝ) :
     Matrix.trace (A + B) = Matrix.trace A + Matrix.trace B := by
   exact?

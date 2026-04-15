@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/InverseTree
-Declarations: 14
+Declarations: 15
 -/
 
 import Mathlib
@@ -11,6 +11,13 @@ import Mathlib
 def invB1' (v : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
   (v.1 + 2 * v.2.1 - 2 * v.2.2,
    -2 * v.1 - v.2.1 + 2 * v.2.2,
+   -2 * v.1 - 2 * v.2.1 + 3 * v.2.2)
+
+
+/-- Inverse Berggren B₂⁻¹ as a function on integer triples. -/
+def invB2' (v : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
+  (v.1 + 2 * v.2.1 - 2 * v.2.2,
+   2 * v.1 + v.2.1 - 2 * v.2.2,
    -2 * v.1 - 2 * v.2.1 + 3 * v.2.2)
 
 

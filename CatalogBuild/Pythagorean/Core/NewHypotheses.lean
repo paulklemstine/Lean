@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/Core
-Declarations: 24
+Declarations: 25
 -/
 
 import Mathlib
@@ -21,6 +21,11 @@ theorem quadruple_null_cone {a b c d : ℤ} (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) 
 theorem fundamental_quadruple : (1 : ℤ) ^ 2 + 2 ^ 2 + 2 ^ 2 = 3 ^ 2 := by norm_num
 
 
+/-- Scaling preserves quadruples -/
+theorem quadruple_scaling (a b c d k : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
+    (k * a) ^ 2 + (k * b) ^ 2 + (k * c) ^ 2 = (k * d) ^ 2 := by nlinarith [sq_nonneg k]
+
+
 /-- Pell numbers: P(0)=0, P(1)=1, P(n+2)=2P(n+1)+P(n) -/
 def pellNum : ℕ → ℤ
   | 0 => 0
@@ -35,6 +40,7 @@ def pellComp : ℕ → ℤ
   | (n + 2) => 2 * pellComp (n + 1) + pellComp n
 
 
+/-- [Section: ## Section 2: Pell Numbers and √2 Approximation (§7.6)] -/
 theorem pellNum_0 : pellNum 0 = 0 := rfl
 
 theorem pellNum_1 : pellNum 1 = 1 := rfl
@@ -68,6 +74,7 @@ theorem trivial_ppt_identity (N : ℤ) :
     (2 * N) ^ 2 + (N ^ 2 - 1) ^ 2 = (N ^ 2 + 1) ^ 2 := by ring
 
 
+/-- [Section: ## Section 3: Short Triple Bounds (§7.1)] -/
 theorem hypotenuse_exceeds_leg (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     (hb : b ≠ 0) : a ^ 2 < c ^ 2 := by
       nlinarith [ mul_self_pos.2 hb ]

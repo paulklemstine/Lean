@@ -104,6 +104,9 @@ theorem master_equation_algebraic (e : R) (he : IsIdempotentElem e) :
   intro r; rw [← mul_assoc]; exact congr_arg (· * r) he
 
 
+/-- [Section: ## The Master Equation Bridge
+The Master Equation f ∘ f = f, translated through the Rosetta Stone:
+**connected components = fixed points of the idempotent-splitting process**.] -/
 theorem orthogonal_idempotents_commute (e₁ e₂ : R)
     (_he₁ : IsIdempotentElem e₁) (_he₂ : IsIdempotentElem e₂)
     (horth : e₁ * e₂ = 0) : e₂ * e₁ = 0 := by

@@ -7,6 +7,14 @@ Declarations: 4
 
 import Mathlib
 
+/-- [Section: ## The Prime Signature Dichotomy
+Every odd prime falls into exactly one of two signature classes:
+Class A (p ≡ 1 mod 4): Σ(p) = (p, 8, 8(p+1), 16(1+p³))
+Class B (p ≡ 3 mod 4): Σ(p) = (p, 0, 8(p+1), 16(1+p³))
+The ONLY difference is in Channel 2! Channels 3 and 4 are identical
+for all odd primes regardless of residue class. This means:
+- Channel 2 is a "parity detector" for primes mod 4
+- Channels 3 and 4 are "residue-blind" for primes] -/
 theorem r4_prime_uniform (p : ℕ) (hp : Nat.Prime p) (hodd : Odd p) :
     (∑ d ∈ (Nat.divisors p).filter (fun d => ¬(4 ∣ d)), (d : ℤ)) = (p : ℤ) + 1 := by
   rw [ Finset.sum_eq_add ] <;> norm_num [ hp.ne_zero, hp.ne_one ] ; aesop;

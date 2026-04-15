@@ -7,6 +7,10 @@ Declarations: 3
 
 import Mathlib
 
+/-- [Section: ## The Halting Problem and AI Safety
+There is no algorithm that determines whether an arbitrary program halts.
+This implies there is no general algorithm to determine whether an AI system
+will remain within specified behavioral bounds.] -/
 theorem no_surjection_to_powerset (A : Type*) : ¬ ∃ f : A → Set A, Surjective f := by
   rintro ⟨ f, hf ⟩;
   obtain ⟨ g, hg ⟩ := hf ( { a : A | a ∉ f a } );
@@ -23,6 +27,9 @@ theorem rice_abstract {F : Type*} (P : F → Prop)
   exact ⟨f₁, f₂, hf₁, hf₂⟩
 
 
+/-- [Section: ## Gödel's Incompleteness (Abstract Formulation)
+No consistent formal system capable of expressing basic arithmetic
+can prove its own consistency.] -/
 theorem abstract_incompleteness {Stmt : Type*} (True' : Stmt → Prop)
     (Provable : Stmt → Prop)
     (h_sound : ∀ s, Provable s → True' s)

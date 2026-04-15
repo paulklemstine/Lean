@@ -13,6 +13,7 @@ noncomputable section
 def IsIdempotentElem' {R : Type*} [Mul R] (e : R) : Prop := e * e = e
 
 
+/-- [Section: ## Part 1: Idempotent Spectral Theory] -/
 theorem idempotent_trace_in_set {a b c d : ℝ}
     (h1 : a * a + b * c = a)
     (h2 : a * b + b * d = b)

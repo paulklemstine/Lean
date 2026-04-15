@@ -51,6 +51,7 @@ theorem exhaustive_search_catches {n : ℕ}
   exact ⟨t, by omega, heq⟩
 
 
+/-- [Section: ## Finite Search-Evasion Games] -/
 theorem evasion_lower_bound (n : ℕ) (hn : 2 ≤ n) :
     ∀ (search : AdaptiveSearch n),
       ∃ (target : Fin n), ¬catches n search target (n - 2) := by
@@ -69,6 +70,7 @@ structure TransfiniteEvasion (α : Type*) where
   evasion_depth : Ordinal
 
 
+/-- [Section: ## Transfinite Evasion] -/
 theorem transfinite_evasion_finite_bound {n : ℕ} (hn : 0 < n)
     (e : TransfiniteEvasion (Fin n)) :
     ∃ (search : Ordinal → Fin n), ∃ t : Ordinal, t < Ordinal.omega0 ∧

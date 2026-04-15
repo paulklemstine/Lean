@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## §1. Learning Rate Scheduling] -/
 def constLR (eta : ℝ) (_ : ℕ) : ℝ := eta
 
 
@@ -36,6 +37,7 @@ theorem warmup_reaches_target (eta : ℝ) (W : ℕ) (hW : 0 < W) :
   simp [warmupLR, le_refl]; field_simp
 
 
+/-- [Section: ## §2. Momentum Accumulation] -/
 def momentumUpdate (beta v g : ℝ) : ℝ := beta * v + g
 
 
@@ -45,6 +47,7 @@ theorem higher_momentum_more_velocity (beta1 beta2 v g : ℝ) (hv : 0 ≤ v) (hg
   unfold momentumUpdate; nlinarith
 
 
+/-- [Section: ## §3. Gradient Clipping] -/
 def clipGrad (g tau : ℝ) : ℝ := min (|g|) tau
 
 
@@ -63,6 +66,7 @@ theorem clip_reduces_large (g tau : ℝ) (h : tau ≤ |g|) :
   unfold clipGrad; exact min_eq_right h
 
 
+/-- [Section: ## §4. Loss Landscape Smoothness] -/
 def optimalStepSize (L : ℝ) : ℝ := 1 / L
 
 
@@ -70,6 +74,7 @@ theorem optimal_step_pos (L : ℝ) (hL : 0 < L) : 0 < optimalStepSize L := by
   unfold optimalStepSize; positivity
 
 
+/-- [Section: ## §5. EML-Specific Optimization Properties] -/
 def emlCurvatureBound (maxWeight : ℝ) : ℝ := maxWeight ^ 2
 
 

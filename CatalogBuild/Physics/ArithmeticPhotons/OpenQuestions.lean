@@ -7,6 +7,7 @@ Declarations: 31
 
 import Mathlib
 
+/-- [Section: ## Section 1: The Parity Constraint (Q1)] -/
 theorem photon_parity_constraint (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     Even (a + b + c + d) := by
@@ -110,6 +111,7 @@ theorem null_sum_expansion (a b c d a' b' c' d' : ℤ)
 /-- The Lorentz form in various dimensions -/
 def lorentzForm1 (a d : ℤ) : ℤ := a ^ 2 - d ^ 2
 
+/-- [Section: ## Section 4: Spectral Invariants (Q4)] -/
 def lorentzForm2 (a b d : ℤ) : ℤ := a ^ 2 + b ^ 2 - d ^ 2
 
 def lorentzForm3 (a b c d : ℤ) : ℤ := a ^ 2 + b ^ 2 + c ^ 2 - d ^ 2

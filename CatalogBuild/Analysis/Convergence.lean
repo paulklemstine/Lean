@@ -13,6 +13,13 @@ noncomputable section
 def Beliefs (n : ℕ) := Fin n → ℝ
 
 
+/-- [Section: # The Mathematics of Scientific Discovery — Convergence Theorems
+We prove convergence results about the scientific method:
+1. **Finite Elimination**: Bayesian updating eliminates false hypotheses.
+2. **L¹ Metric on Beliefs**: The space of beliefs is a metric space.
+3. **Geometric Convergence**: Contraction sequences converge geometrically.
+4. **Idempotent Updates**: Deterministic updates are idempotent.
+5. **Scientific Method Completeness**: There always exist discriminating experiments.] -/
 theorem dead_hypothesis_stays_dead {n : ℕ} (b : Beliefs n) (l : Fin n → ℝ)
     (hl : ∀ i, 0 ≤ l i) (i : Fin n) (hi : b i = 0)
     (e : ℝ) (he_def : e = ∑ j : Fin n, b j * l j) :

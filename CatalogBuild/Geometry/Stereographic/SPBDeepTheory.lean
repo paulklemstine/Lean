@@ -35,6 +35,7 @@ theorem cocycle_coboundary_simplified (x y : ℝ) (hxy : x * y ≠ 1) :
   ring
 
 
+/-- [Section: ## Section 3: Sum and Product Identities] -/
 theorem spb_sum_conjugate (x y : ℝ) (hxy : x * y ≠ 1) (hxy' : x * y ≠ -1) :
     spb x y + spb x (-y) = 2 * x * (1 + y^2) / ((1 - x*y) * (1 + x*y)) := by
   unfold spb;
@@ -46,11 +47,13 @@ theorem spb_prod_conjugate (x y : ℝ) (hxy : x * y ≠ 1) (hxy' : x * y ≠ -1)
   unfold spb; rw [ div_mul_div_comm ] ; ring;
 
 
+/-- [Section: ## Section 5: Hyperbolic SPB] -/
 theorem spbH_internal (u v : ℝ) (hu : |u| < 1) (hv : |v| < 1) :
     |spbH u v| < 1 := by
   exact abs_lt.mpr ⟨ by rw [ spbH ] ; rw [ lt_div_iff₀ ] <;> nlinarith [ abs_lt.mp hu, abs_lt.mp hv ], by rw [ spbH ] ; rw [ div_lt_iff₀ ] <;> nlinarith [ abs_lt.mp hu, abs_lt.mp hv ] ⟩
 
 
+/-- [Section: ## Section 7: Composition and Cancellation] -/
 theorem spb_of_spb_expanded (a b c d : ℝ) (hab : a * b ≠ 1) (hcd : c * d ≠ 1)
     (_h : spb a b * spb c d ≠ 1) :
     spb (spb a b) (spb c d) =

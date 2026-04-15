@@ -42,6 +42,7 @@ theorem spbHA_self (x : ℝ) : spbHA x x = 2 * x / (1 + x * x) := by
   unfold spbHA; ring
 
 
+/-- [Section: ## SPB and the Unit Circle Parametrization] -/
 theorem weierstrass_cos (θ : ℝ) (h : cos (θ / 2) ≠ 0) :
     cos θ = (1 - tan (θ / 2) ^ 2) / (1 + tan (θ / 2) ^ 2) := by
   rw [ ← eq_comm, Real.tan_eq_sin_div_cos ];
@@ -66,6 +67,7 @@ theorem spbPowA_two (x : ℝ) : spbPowA x 2 = spbA x x := by
   simp [spbPowA, spbA]
 
 
+/-- [Section: ## SPB Iteration Preserves Tangent] -/
 theorem spbPowA_tan (θ : ℝ) (n : ℕ) (hcos : ∀ k : ℕ, k ≤ n → cos (k * θ) ≠ 0) :
     spbPowA (tan θ) n = tan (n * θ) := by
   -- Let's prove the auxiliary result that spbA(tan θ, tan kθ) = tan((k+1)θ) for any k ≤ n.
@@ -79,6 +81,7 @@ theorem spbPowA_tan (θ : ℝ) (n : ℕ) (hcos : ∀ k : ℕ, k ≤ n → cos (k
   grind +splitIndPred
 
 
+/-- [Section: ## The Cauchy Distribution Connection] -/
 theorem cauchy_spb_invariance (x a : ℝ) (h : 1 - x * a ≠ 0) :
     (1 + spbA x a ^ 2)⁻¹ * ((1 + a ^ 2) / (1 - x * a) ^ 2) =
     (1 + x ^ 2)⁻¹ := by

@@ -16,6 +16,9 @@ theorem tropMatVec_ge_component {m n : ℕ} [NeZero n]
   exact Finset.le_sup' (fun j => W i j + x j) (Finset.mem_univ j)
 
 
+/-- [Section: ## Part III: The Composition Theorem (Agent Beta + Agent Epsilon)
+**Main Theorem**: Composing two tropical layers is equivalent to a single tropical
+layer with the tropical matrix product of the weight matrices.] -/
 theorem tropLayer_comp {l m n : ℕ} [NeZero m] [NeZero n]
     (W₁ : Fin m → Fin n → ℝ) (W₂ : Fin l → Fin m → ℝ) (x : Fin n → ℝ)
     (i : Fin l) :
@@ -54,6 +57,7 @@ def tropClassify {m n : ℕ} [NeZero n] (W : Fin m → Fin n → ℝ) (x : Fin n
     Fin m → ℝ := tropMatVec W x
 
 
+/-- [Section: ## Part VII: Tropical Classification (Agent Beta + Gamma)] -/
 theorem tropClassify_eq_tropMatVec {m n : ℕ} [NeZero n]
     (W : Fin m → Fin n → ℝ) (x : Fin n → ℝ) :
     tropClassify W x = tropMatVec W x := rfl
@@ -66,6 +70,7 @@ def IsPiecewiseLinear1d (f : ℝ → ℝ) : Prop :=
       (fun i : Fin (k+1) => slopes i * x + intercepts i)
 
 
+/-- [Section: ## Part VIII: Piecewise Linearity (Agent Delta)] -/
 theorem max_affine_pwl (a₁ b₁ a₂ b₂ : ℝ) :
     IsPiecewiseLinear1d (fun x => max (a₁ * x + b₁) (a₂ * x + b₂)) := by
       use 1;
@@ -78,6 +83,7 @@ theorem relu_pwl : IsPiecewiseLinear1d (fun x => max x 0) := by
   norm_num [ Fin.univ_succ ]
 
 
+/-- [Section: ## Part IX: Identity Layer (Agent Alpha)] -/
 theorem identity_second_layer {n : ℕ} [NeZero n]
     (W : Fin n → Fin n → ℝ) (x : Fin n → ℝ)
     (hW : ∀ i : Fin n, W i i = 0)
@@ -120,6 +126,7 @@ def IsTropRep (f : ℝ → ℝ) : Prop :=
       (fun i => a i * x + b i)
 
 
+/-- [Section: ## Part XIV: Tropical Representability (Agent Epsilon)] -/
 theorem relu_isTropRep : IsTropRep relu := by
   refine' ⟨ 1, fun i => if i = 0 then 1 else 0, fun i => if i = 0 then 0 else 0, _ ⟩ ; simp +decide [ relu ];
   exact?
@@ -135,6 +142,7 @@ def IsTropEigenvalue {n : ℕ} [NeZero n] (A : Fin n → Fin n → ℝ) (lam : �
   ∃ x : Fin n → ℝ, ∀ i, tropMatVec A x i = lam + x i
 
 
+/-- [Section: ## Part XV: Tropical Eigenvalues (Agent Alpha)] -/
 theorem tropEigenvalue_diag_bound {n : ℕ} [NeZero n]
     (A : Fin n → Fin n → ℝ) (lam : ℝ) (hlam : IsTropEigenvalue A lam) (i : Fin n) :
     A i i ≤ lam := by
@@ -152,6 +160,10 @@ def hasTropRank {m n k : ℕ} [NeZero k] (A : Fin m → Fin n → ℝ) : Prop :=
     ∀ i j, A i j = tropMatMul B C i j
 
 
+/-- [Section: ## Part XVII: The Oracle's Theorem (Agent Epsilon)
+Every continuous piecewise-linear function ℝ → ℝ with finitely many breakpoints
+can be written as a tropical polynomial. This establishes that tropical neural
+networks are universal approximators for piecewise-linear functions.] -/
 theorem tropPoly_universal_1d (f : ℝ → ℝ)
     (h : IsPiecewiseLinear1d f) :
     ∃ (k : ℕ) (a b : Fin (k+1) → ℝ),
@@ -166,6 +178,7 @@ theorem tropPoly_universal_1d (f : ℝ → ℝ)
       exact ⟨ i, le_antisymm ( hs x ▸ Finset.sup'_le _ _ fun j _ => hi j ) ( hs x ▸ Finset.le_sup' ( fun j => slopes j * x + intercepts j ) ( Finset.mem_univ i ) ) ⟩
 
 
+/-- [Section: ## Part XVIII: Summary] -/
 theorem theorem_count : 0 < 30 := by omega
 
 

@@ -27,6 +27,7 @@ theorem compilationError_zero_of_eq (f_true f_compiled : ℝ → ℝ) (x : ℝ)
   simp [compilationError, h]
 
 
+/-- [Section: ## §1: Adaptive Compilation — Dynamic Mode Switching] -/
 theorem compilationError_triangle (f_true f1 f2 : ℝ → ℝ) (x : ℝ) :
     compilationError f_true f2 x ≤
     compilationError f_true f1 x + compilationError f1 f2 x := by
@@ -249,6 +250,7 @@ def identityCompilation : CompilationScheme :=
   ⟨fun l => l.forward⟩
 
 
+/-- [Section: ## §7: Categorical Compilation Framework] -/
 theorem identityCompilation_compositional :
     identityCompilation.IsCompositional := by
   intro l₁ l₂

@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Section 1: Gaussian Integer Norm and SPB] -/
 theorem gaussian_norm_of_spb (n : ℤ) :
     (⟨1, n⟩ : GaussianInt).norm = 1 + n ^ 2 := by
   simp +decide [ sq, Zsqrtd.norm ]

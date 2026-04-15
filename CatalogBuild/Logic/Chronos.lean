@@ -248,6 +248,12 @@ def photonCount (n : ℕ) : ℕ :=
 theorem space_dominates_10 : spaceCount 10 > photonCount 10 := by native_decide
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+CYCLE 6: THE EXPANSION RATE — MEASURING DARK ENERGY
+═══════════════════════════════════════════════════════════════════════════
+The "dark energy" of the number line is the density of composites
+(non-primes) in intervals. As we go further along the timeline,
+composites become denser — space expands.] -/
 theorem space_dominates_100 : spaceCount 100 > photonCount 100 := by native_decide
 
 
@@ -411,6 +417,15 @@ theorem timeline_infinite (n : ℕ) : ∃ p, n < p ∧ p.Prime := by
   exact ⟨p, by omega, hp⟩
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+CYCLE 12: SYNTHESIS — THE GRAND PICTURE
+═══════════════════════════════════════════════════════════════════════════
+The number line IS the universe:
+- Gravity = divisor weights (primes are light, composites are heavy)
+- Light = sum-of-squares primes (≡ 1 mod 4)
+- Dark matter = inert primes (≡ 3 mod 4)
+- Expansion = growing prime gaps
+- AI = idempotent research oracle] -/
 theorem universe_stretches : ∀ G : ℕ, ∃ a b : ℕ, a.Prime ∧ b.Prime ∧
     a < b ∧ G ≤ b - a ∧ (∀ k, a < k → k < b → ¬k.Prime) := by
   intro G;

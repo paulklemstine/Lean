@@ -22,6 +22,7 @@ def extendFn {α β : Type*} (f : α → β) (default : β) :
   | .infinity => default
 
 
+/-- [Section: ## One-Point Compactification Model] -/
 theorem extendFn_finite {α β : Type*} (f : α → β) (d : β) (a : α) :
     extendFn f d (.finite a) = f a := by
       rfl
@@ -42,6 +43,7 @@ noncomputable def stereoInverse (t : ℝ) : ℝ × ℝ :=
   (2 * t / (1 + t^2), (t^2 - 1) / (1 + t^2))
 
 
+/-- [Section: ## Stereographic Projection] -/
 theorem stereoInverse_on_circle (t : ℝ) :
     let p := stereoInverse t
     p.1 ^ 2 + p.2 ^ 2 = 1 := by
@@ -73,6 +75,7 @@ def Kernel.isLinear (ker : Kernel) : Prop :=
   ∃ c, ∀ k, ker.bound k ≤ c * k + c
 
 
+/-- [Section: ## Parameter Space Compactification] -/
 theorem linear_implies_poly (ker : Kernel) (h : ker.isLinear) : ker.isPoly := by
   exact ⟨ h.choose, 1, fun k => le_trans ( h.choose_spec k ) ( by ring_nf; norm_num ) ⟩
 
@@ -83,12 +86,14 @@ noncomputable def coveringNumber (n : ℕ) (radius : ℝ) : ℕ :=
   else Nat.ceil ((1 / radius) ^ n)
 
 
+/-- [Section: ## Covering Number Arguments] -/
 theorem covering_number_pos (n : ℕ) (ε : ℝ) (hε : 0 < ε) :
     0 < coveringNumber (n + 1) ε := by
       unfold coveringNumber;
       split_ifs <;> [ linarith; exact Nat.ceil_pos.mpr ( pow_pos ( one_div_pos.mpr hε ) _ ) ]
 
 
+/-- [Section: ## FPT via Compactification] -/
 theorem const_param_in_P (time : ℕ → ℕ → ℕ) (hfpt : IsFPT time) (k₀ : ℕ) :
     ∃ c' : ℕ, ∀ n, time n k₀ ≤ c' * n ^ c' + c' := by
       obtain ⟨ f, c, h ⟩ := hfpt;
@@ -125,6 +130,7 @@ noncomputable def stereoDistance (k₁ k₂ : ℕ) : ℝ :=
   |Real.arctan (k₁ : ℝ) - Real.arctan (k₂ : ℝ)|
 
 
+/-- [Section: ## Stereographic Distance on Parameters] -/
 theorem stereoDistance_comm (k₁ k₂ : ℕ) :
     stereoDistance k₁ k₂ = stereoDistance k₂ k₁ := by
       exact abs_sub_comm _ _

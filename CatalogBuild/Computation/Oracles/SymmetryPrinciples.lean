@@ -7,26 +7,31 @@ Declarations: 6
 
 import Mathlib
 
+/-- [Section: ## Section 1: AM-GM for Two Numbers] -/
 theorem am_gm_two_nat (a b : ℕ) : (a + b) ^ 2 ≥ 4 * (a * b) := by
   linarith [ sq_nonneg ( a - b : ℤ ) ]
 
 
+/-- [Section: ## Section 2: Cauchy-Schwarz for Finite Sums] -/
 theorem cauchy_schwarz_discrete (n : ℕ) (a b : ℕ → ℤ) :
     (∑ i ∈ range n, a i * b i) ^ 2 ≤
     (∑ i ∈ range n, a i ^ 2) * (∑ i ∈ range n, b i ^ 2) := by
       exact?
 
 
+/-- [Section: ## Section 3: The QM-AM-GM-HM Chain for Two Numbers] -/
 theorem am_ge_gm (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) :
     (a + b) ^ 2 ≥ 4 * (a * b) := by
       linarith [ sq_nonneg ( a - b ) ]
 
 
+/-- [Section: ## Section 4: Schur's Inequality] -/
 theorem schur_ineq (a b c : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) (hc : 0 ≤ c) :
     a * (a - b) * (a - c) + b * (b - a) * (b - c) + c * (c - a) * (c - b) ≥ 0 := by
       cases le_total a b <;> cases le_total a c <;> cases le_total b c <;> nlinarith [ sq_nonneg ( a - b ), sq_nonneg ( a - c ), sq_nonneg ( b - c ) ]
 
 
+/-- [Section: ## Section 5: The Handshake Lemma] -/
 theorem sum_degrees_even (n : ℕ) (R : Fin n → Fin n → Prop) [DecidableRel R]
     (hsymm : ∀ i j, R i j → R j i) (hirrefl : ∀ i, ¬R i i) :
     2 ∣ ((univ : Finset (Fin n × Fin n)).filter fun p => R p.1 p.2).card := by
@@ -42,6 +47,7 @@ theorem sum_degrees_even (n : ℕ) (R : Fin n → Fin n → Prop) [DecidableRel 
       convert hS_even using 2 ; ext ; aesop
 
 
+/-- [Section: ## Section 6: The Pigeonhole Principle — Existence from Counting] -/
 theorem pigeonhole_simple (n : ℕ) (f : Fin (n + 2) → Fin (n + 1)) :
     ∃ i j, i ≠ j ∧ f i = f j := by
       by_contra! h;

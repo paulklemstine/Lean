@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Section 1: Discrete Martingales] -/
 def isSupermartingale (X : ℕ → ℝ) : Prop :=
   ∀ n, X (n + 1) ≤ X n
 
@@ -40,6 +41,7 @@ theorem supermartingale_value_decreases (X : ℕ → ℝ) (hX : isSupermartingal
   | succ n ih => exact le_trans (hX n) ih
 
 
+/-- [Section: ## Section 2: Prediction Markets] -/
 structure PredictionMarket where
   price : ℝ
   price_nonneg : 0 ≤ price
@@ -59,6 +61,7 @@ theorem efficient_market_constant (history : MarketHistory)
   martingale_constant_value _ h n
 
 
+/-- [Section: ## Section 3: The Doob Decomposition] -/
 structure DoobDecomposition (X : ℕ → ℝ) where
   martingalePart : ℕ → ℝ
   predictablePart : ℕ → ℝ
@@ -75,6 +78,7 @@ noncomputable def doobDecompose (X : ℕ → ℝ) : DoobDecomposition X where
   decomposition := fun _ => by ring
 
 
+/-- [Section: ## Section 4: Bounded Differences] -/
 def hasBoundedIncrements (X : ℕ → ℝ) (c : ℝ) : Prop :=
   ∀ n, |X (n + 1) - X n| ≤ c
 
@@ -87,6 +91,7 @@ theorem bounded_increments_total_bound (X : ℕ → ℝ) (c : ℝ) (hc : 0 ≤ c
   · exact abs_le.mpr ⟨ by push_cast; linarith [ abs_le.mp ih, abs_le.mp ( hX n ) ], by push_cast; linarith [ abs_le.mp ih, abs_le.mp ( hX n ) ] ⟩
 
 
+/-- [Section: ## Section 5: Prediction Convergence] -/
 def predictionsConverge (predictions : ℕ → ℝ) (truth : ℝ) : Prop :=
   Filter.Tendsto predictions Filter.atTop (nhds truth)
 

@@ -47,6 +47,17 @@ noncomputable def bornProbability (n : ℕ) (ψ φ : UnitSphere n) : ℝ :=
   (innerProduct n ψ.val φ.val) ^ 2
 
 
+/-- [Section: # Octonion Qubit Foundations
+This file formalizes the mathematical foundations for octonion qubits,
+including:
+- The 7-sphere S⁷ as the state space of a single octonion (Definition 1)
+- The inner product structure on 𝕆²
+- Rational points on spheres and their density
+## Key Definitions
+An **octonion qubit** (Definition 1) is a unit vector in ℝ⁸, i.e., a point on S⁷.
+We work over ℝ⁸ = (Fin 8 → ℝ) rather than using a dedicated octonion type.
+An **octonion qubit** (Definition 2) would be a unit vector in 𝕆², but this
+requires the full octonion multiplication structure.] -/
 theorem born_probability_nonneg (n : ℕ) (ψ φ : UnitSphere n) :
     0 ≤ bornProbability n ψ φ := by
   exact sq_nonneg _
@@ -71,6 +82,10 @@ noncomputable def stereoProj (n : ℕ) (t : Fin n → ℝ) : Fin (n + 1) → ℝ
       (s - 1) / (1 + s)
 
 
+/-- [Section: ## Stereographic Projection and Rational Points
+Stereographic projection from the north pole maps ℝⁿ⁻¹ → Sⁿ⁻¹ \ {north pole}.
+When restricted to ℚⁿ⁻¹, it produces rational points on the sphere.
+This gives a parameterization of (most) rational points on Sⁿ⁻¹.] -/
 theorem stereoProj_on_sphere (n : ℕ) (t : Fin n → ℝ) :
     ∑ i, stereoProj n t i ^ 2 = 1 := by
   simp +decide [ Fin.sum_univ_castSucc, stereoProj ];

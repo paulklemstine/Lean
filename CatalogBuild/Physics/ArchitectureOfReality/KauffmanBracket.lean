@@ -20,6 +20,7 @@ deriving DecidableEq, Fintype
 def KnotState (n : ℕ) := Fin n → Smoothing
 
 
+/-- [Section: ## Section 1: State Sum Framework] -/
 instance (n : ℕ) : Fintype (KnotState n) := inferInstanceAs (Fintype (Fin n → Smoothing))
 
 
@@ -42,6 +43,7 @@ theorem smoothing_count_sum {n : ℕ} (s : KnotState n) :
 def writhe (crossingSigns : List ℤ) : ℤ := crossingSigns.sum
 
 
+/-- [Section: ## Section 2: Writhe] -/
 theorem trefoil_writhe : writhe [-1, -1, -1] = -3 := by decide
 
 theorem unknot_writhe : writhe [] = 0 := by decide
@@ -58,6 +60,7 @@ theorem TL_at_delta_one {R : Type*} [Ring R] (e : R)
   unfold IsTLIdempotent at h; rwa [one_smul] at h
 
 
+/-- [Section: ## Section 4: Number of states for n crossings is 2^n] -/
 theorem smoothing_card : Fintype.card Smoothing = 2 := by decide
 
 

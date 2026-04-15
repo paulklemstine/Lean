@@ -9,6 +9,9 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Section 1: Fibonacci-Zeckendorf Lens
+The Zeckendorf non-adjacency constraint reduces the k-digit search space
+from 2^k to fib(k+2) ≈ φ^k.] -/
 theorem fibonacci_search_reduction (k : ℕ) (hk : 2 ≤ k) :
     Nat.fib (k + 2) < 2 ^ k := by
   rcases k with ( _ | _ | k ) <;> simp_all +arith +decide [ Nat.pow_succ' ];
@@ -42,6 +45,9 @@ theorem factor_bounded {N d : ℕ} (hN : 0 < N) (hd : d ∣ N) :
 noncomputable def sqMap (n : ℕ) : ZMod n → ZMod n := fun x => x * x
 
 
+/-- [Section: ## Section 3: Orbit-Dynamical Lens
+Iterated squaring on ℤ/Nℤ produces eventually periodic orbits.
+Collisions modulo a prime factor reveal the factorization.] -/
 theorem sq_iter_eq_pow (n : ℕ) [NeZero n] (x : ZMod n) (k : ℕ) :
     (sqMap n)^[k] x = x ^ (2 ^ k) := by
   induction k <;> simp_all +decide [ pow_succ, pow_mul, Function.iterate_succ_apply' ];
@@ -114,6 +120,8 @@ theorem divisor_vector_product {n d : ℕ} (hd : d ∣ n) :
 theorem diff_of_squares (x y : ℤ) : x ^ 2 - y ^ 2 = (x - y) * (x + y) := by ring
 
 
+/-- [Section: ## Section 7: Congruence-of-Squares Endgame
+The universal endgame: x² ≡ y² (mod N) with x ≢ ±y yields a factor.] -/
 theorem congruence_of_squares {n x y : ℤ} (hn : 1 < n)
     (hcong : (n : ℤ) ∣ x ^ 2 - y ^ 2)
     (hne_sub : ¬ (n : ℤ) ∣ x - y)

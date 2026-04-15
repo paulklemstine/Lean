@@ -34,6 +34,7 @@ def chordalDistSq (u₁ v₁ u₂ v₂ : ℝ) : ℝ :=
   (p₁.1 - p₂.1) ^ 2 + (p₁.2.1 - p₂.2.1) ^ 2 + (p₁.2.2 - p₂.2.2) ^ 2
 
 
+/-- [Section: ## Part 3: Geodesic Distance] -/
 theorem chordal_distance_formula (u₁ v₁ u₂ v₂ : ℝ) :
     chordalDistSq u₁ v₁ u₂ v₂ =
       4 * ((u₁ - u₂) ^ 2 + (v₁ - v₂) ^ 2) /
@@ -58,6 +59,7 @@ def photonConformalEnergy (p : PISPDPhoton) : ℝ :=
   p.intensity * conformalFactor p.u p.v
 
 
+/-- [Section: ## Part 5: The Algebraic Identity] -/
 theorem pispd_fundamental_identity (u v : ℝ) :
     (2 * u) ^ 2 + (2 * v) ^ 2 + (u ^ 2 + v ^ 2 - 1) ^ 2 =
       (u ^ 2 + v ^ 2 + 1) ^ 2 := by

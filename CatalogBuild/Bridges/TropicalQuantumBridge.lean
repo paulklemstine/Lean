@@ -15,6 +15,7 @@ def logsumexp (ε : ℝ) (x y : ℝ) : ℝ :=
   ε * Real.log (Real.exp (x / ε) + Real.exp (y / ε))
 
 
+/-- [Section: ## LogSumExp Function and Basic Properties] -/
 theorem logsumexp_symmetric (ε : ℝ) (x y : ℝ) :
     logsumexp ε x y = logsumexp ε y x := by
   unfold logsumexp;
@@ -45,6 +46,7 @@ theorem logsumexp_le_max_add (ε : ℝ) (hε : 0 < ε) (x y : ℝ) :
     cases max_cases x y <;> [ left; right ] <;> nlinarith [ mul_inv_cancel_left₀ hε.ne' ( max x y ) ]
 
 
+/-- [Section: ## Tropical Semiring Axioms] -/
 theorem tropical_add_comm (x y : ℝ) : max x y = max y x := by
   exact max_comm x y
 
@@ -65,6 +67,7 @@ theorem tropical_mul_distrib_right (x y a : ℝ) : max x y + a = max (x + a) (y 
   grind
 
 
+/-- [Section: ## Connections: LogSumExp as Smooth Max] -/
 theorem exp_sum_pos (x y : ℝ) : 0 < Real.exp x + Real.exp y := by
   positivity
 

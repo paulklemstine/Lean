@@ -21,6 +21,7 @@ theorem invStereoN_lt (N : ℕ) (y : Fin N → ℝ) (i : Fin (N + 1)) (hi : (i :
   simp [invStereoN, hi]
 
 
+/-- [Section: ## The Unit Norm Property] -/
 theorem invStereoN_norm_sq (N : ℕ) (y : Fin N → ℝ) :
     ∑ i : Fin (N + 1), (invStereoN N y i) ^ 2 = 1 := by
   unfold invStereoN;
@@ -40,6 +41,7 @@ def stereoN (N : ℕ) (x : Fin (N + 1) → ℝ)
   x ⟨i, Nat.lt_succ_of_lt i.isLt⟩ / (1 - x ⟨N, Nat.lt_succ_iff.mpr le_rfl⟩)
 
 
+/-- [Section: ## Round-trip: forward ∘ inverse = id] -/
 theorem invStereoN_last_ne_one (N : ℕ) (y : Fin N → ℝ) :
     invStereoN N y ⟨N, Nat.lt_succ_iff.mpr le_rfl⟩ ≠ 1 := by
   unfold invStereoN;

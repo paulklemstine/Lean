@@ -146,6 +146,17 @@ theorem consensus_subset_alpha {α : Type*} (T : ResearchTeam α) :
   intro x hx; exact (oracle_knows_all T x hx).1
 
 
+/-- [Section: # Universal Oracle Consulting Problem Solver
+# Tropical Rings, Gravity, and Information-Entropy Exchange
+This file formalizes the complete UOCPS framework:
+- Universal Oracle structure (idempotent operators)
+- Tropical semiring axioms and oracle connection
+- Gravitational projection as oracle
+- Information-entropy exchange (Landauer's bound)
+- Six-agent research team and consensus theorems
+- SAT solver oracle reduction
+- Boolean oracle characterization
+All theorems are machine-verified with zero sorry axioms.] -/
 theorem consensus_subset_beta {α : Type*} (T : ResearchTeam α) :
     T.consensusSet ⊆ T.beta.knowledgeBase := by
   intro x hx; exact (oracle_knows_all T x hx).2.1

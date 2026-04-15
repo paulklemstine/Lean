@@ -7,6 +7,7 @@ Declarations: 15
 
 import Mathlib
 
+/-- Crossing numbers -/
 theorem unknot_crossing_number : (0 : ℕ) = 0 := rfl
 
 theorem trefoil_crossing_number : (3 : ℕ) ≥ 3 := le_refl _

@@ -31,6 +31,7 @@ theorem competition_drives_bids (b₁ b₂ : Builder) (totalMEV : ℝ)
   exact ⟨ ( b₁.efficiency * totalMEV - b₁.cost + b₂.efficiency * totalMEV - b₂.cost ) / 2, by linarith, by linarith [ show builderProfit b₂ totalMEV ( ( b₁.efficiency * totalMEV - b₁.cost + b₂.efficiency * totalMEV - b₂.cost ) / 2 ) = b₂.efficiency * totalMEV - b₂.cost - ( ( b₁.efficiency * totalMEV - b₁.cost + b₂.efficiency * totalMEV - b₂.cost ) / 2 ) by exact rfl ] ⟩
 
 
+/-- [Section: ## Builder Specialization] -/
 structure SpecializedBuilder extends Builder where
   specialtyFraction : ℝ
   specialtyEfficiency : ℝ
@@ -56,6 +57,7 @@ theorem specialization_beneficial (sb : SpecializedBuilder)
   nlinarith [ mul_nonneg hMEV ( show 0 ≤ sb.specialtyFraction by linarith [ sb.hSpecFrac0 ] ), mul_nonneg hMEV ( show 0 ≤ sb.efficiency by linarith [ sb.hEff0 ] ),sb.hSpecEff, sb.hEff0, sb.hEff1 ]
 
 
+/-- [Section: ## MEV-Share] -/
 noncomputable def mevShareUserReturn (totalMEV userShare : ℝ) : ℝ :=
   userShare * totalMEV
 
@@ -72,11 +74,13 @@ theorem mev_share_tradeoff (totalMEV s₁ s₂ : ℝ)
   nlinarith
 
 
+/-- [Section: ## Relay Model] -/
 theorem multi_relay_correctness (bid₁ bid₂ : ℝ) :
     max bid₁ bid₂ ≥ bid₁ ∧ max bid₁ bid₂ ≥ bid₂ :=
   ⟨le_max_left _ _, le_max_right _ _⟩
 
 
+/-- [Section: ## Timing Games] -/
 noncomputable def lateMevGain (baseMEV delayMs mevGrowthRate : ℝ) : ℝ :=
   baseMEV + delayMs * mevGrowthRate
 

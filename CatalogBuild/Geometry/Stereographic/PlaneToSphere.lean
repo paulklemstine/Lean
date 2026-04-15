@@ -21,6 +21,7 @@ theorem plane_image_on_sphere (N : ℕ) (p u v : Fin N → ℝ) (s t : ℝ) :
   invStereoN_norm_sq N _
 
 
+/-- [Section: ## The 2D concrete case: ℝ² plane maps to S²] -/
 theorem invStereoN_2_surj_on_sphere (x : Fin 3 → ℝ)
     (hx_norm : ∑ i : Fin 3, (x i) ^ 2 = 1)
     (hx_np : x ⟨2, by omega⟩ ≠ 1) :
@@ -37,6 +38,7 @@ theorem invStereoN_2_surj_on_sphere (x : Fin 3 → ℝ)
   · grind
 
 
+/-- [Section: ## Key structural theorem: affine constraints are preserved] -/
 theorem hyperplane_image_characterization (N : ℕ) (a : Fin N → ℝ) (c : ℝ)
     (y : Fin N → ℝ) (hy : ∑ i, a i * y i = c) :
     ∑ i : Fin N, a i * invStereoN N y ⟨i, Nat.lt_succ_of_lt i.isLt⟩ =
@@ -52,6 +54,7 @@ def northPole (N : ℕ) : Fin (N + 1) → ℝ := fun i =>
   if (i : ℕ) = N then 1 else 0
 
 
+/-- [Section: ## Topological characterization] -/
 theorem invStereoN_image_eq (N : ℕ) :
     Set.range (invStereoN N) =
     {x : Fin (N + 1) → ℝ | ∑ i, (x i) ^ 2 = 1} \ {northPole N} := by

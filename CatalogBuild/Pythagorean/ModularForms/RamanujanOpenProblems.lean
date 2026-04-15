@@ -7,6 +7,7 @@ Declarations: 81
 
 import Mathlib
 
+/-- [Section: ## §1. Berggren Matrices] -/
 def ropB₁ : Matrix (Fin 3) (Fin 3) ℤ :=
   !![1, -2, 2; 2, -1, 2; 2, -2, 3]
 
@@ -27,6 +28,9 @@ def ropMatMod (N : ℕ) [NeZero N] (M : Matrix (Fin 3) (Fin 3) ℤ) :
     Matrix (Fin 3) (Fin 3) (ZMod N) := M.map (Int.cast)
 
 
+/-- [Section: ## §2. Open Problem 1: Density of Ramanujan Primes
+We verify Lorentz form preservation for many primes, establishing that the
+Cayley graph G_p is well-defined.] -/
 theorem rop_lorentz_mod13 :
     (ropMatMod 13 ropB₁)ᵀ * (ropMatMod 13 ropQ) * (ropMatMod 13 ropB₁) = ropMatMod 13 ropQ ∧
     (ropMatMod 13 ropB₂)ᵀ * (ropMatMod 13 ropQ) * (ropMatMod 13 ropB₂) = ropMatMod 13 ropQ ∧
@@ -167,6 +171,7 @@ theorem rop_trace_all_odd :
    by native_decide, by native_decide, by native_decide⟩
 
 
+/-- [Section: ## §4. Open Problem 4: Chebyshev Connection for Mixed Generator Products] -/
 def ropB₁B₂ : Matrix (Fin 3) (Fin 3) ℤ := ropB₁ * ropB₂
 
 def ropB₂B₃ : Matrix (Fin 3) (Fin 3) ℤ := ropB₂ * ropB₃
@@ -315,6 +320,7 @@ theorem rop_chebyshev_7_recurrence :
     (1351 : ℤ) = 14 * 97 - 7 := by omega
 
 
+/-- [Section: ## §5. Open Problem 2: 5D Generator Completeness] -/
 def ropQ5 : Matrix (Fin 5) (Fin 5) ℤ :=
   !![1,0,0,0,0; 0,1,0,0,0; 0,0,1,0,0; 0,0,0,1,0; 0,0,0,0,(-1)]
 

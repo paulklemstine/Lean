@@ -16,6 +16,7 @@ noncomputable def ensembleVariance (σ_sq : ℝ) (ρ : ℝ) (n : ℕ) : ℝ :=
   σ_sq / n + ρ * σ_sq * (n - 1) / n
 
 
+/-- [Section: ## §1. Ensemble Variance with Equal-Weight Oracles] -/
 theorem ensemble_variance_limit (σ_sq : ℝ) (ρ : ℝ) (hσ : 0 < σ_sq) (hρ : 0 ≤ ρ) (hρ1 : ρ < 1) :
     Filter.Tendsto (fun n : ℕ => ensembleVariance σ_sq ρ (n + 1))
       Filter.atTop (nhds (ρ * σ_sq)) := by
@@ -35,6 +36,7 @@ noncomputable def marginalImprovement (σ_sq : ℝ) (n : ℕ) : ℝ :=
   σ_sq / n - σ_sq / (n + 1)
 
 
+/-- [Section: ## §2. Marginal Improvement Bound] -/
 theorem marginal_improvement_formula (σ_sq : ℝ) (n : ℕ) (hn : 0 < n) :
     marginalImprovement σ_sq n = σ_sq / (n * (n + 1)) := by
   unfold marginalImprovement; rw [ div_sub_div ] <;> ring <;> positivity;
@@ -59,6 +61,7 @@ noncomputable def totalCost (σ_sq : ℝ) (costPerOracle : ℝ) (n : ℕ) : ℝ 
   σ_sq / n + costPerOracle * n
 
 
+/-- [Section: ## §3. Optimal Ensemble Size] -/
 theorem optimal_ensemble_size_bound (σ_sq c : ℝ) (hσ : 0 < σ_sq) (hc : 0 < c) :
     ∀ n : ℕ, 0 < n →
     totalCost σ_sq c n ≥ 2 * Real.sqrt (σ_sq * c) := by
@@ -66,6 +69,7 @@ theorem optimal_ensemble_size_bound (σ_sq c : ℝ) (hσ : 0 < σ_sq) (hc : 0 < 
   intro n hn; nlinarith [ sq_nonneg ( Real.sqrt ( σ_sq * c ) - σ_sq / n ), Real.mul_self_sqrt ( show 0 ≤ σ_sq * c by positivity ), show 0 < σ_sq / n by positivity, show 0 < c * n by positivity, mul_div_cancel₀ σ_sq ( show ( n : ℝ ) ≠ 0 by positivity ) ] ;
 
 
+/-- [Section: ## §4. Diminishing Returns with Diversity] -/
 theorem correlated_ensemble_floor (σ_sq ρ : ℝ) (n : ℕ) (hn : 0 < n)
     (hρ : 0 ≤ ρ) (hρ1 : ρ ≤ 1) (hσ : 0 < σ_sq) :
     ensembleVariance σ_sq ρ n ≥ ρ * σ_sq := by

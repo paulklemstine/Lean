@@ -42,6 +42,7 @@ theorem softplus_iter_mem_sheffer (n : ℕ) : (softplus_iter n) ∈ ShefferAlgeb
     convert this using 1
 
 
+/-- [Section: ## Sigmoid Derivative Properties] -/
 theorem logisticSigmoid_differentiable : Differentiable ℝ logisticSigmoid := by
   exact fun x => DifferentiableAt.div ( Real.differentiableAt_exp ) ( by norm_num ) ( by positivity )
 
@@ -53,6 +54,7 @@ theorem sigmoid_deriv_eq (x : ℝ) :
   norm_num [ Real.differentiableAt_exp, ne_of_gt ( add_pos zero_lt_one ( Real.exp_pos x ) ) ] ; ring
 
 
+/-- [Section: ## Softplus Functional Inequalities] -/
 theorem softplus_subadditive_nonneg (x y : ℝ) (_hx : x ≥ 0) (_hy : y ≥ 0) :
     softplus (x + y) ≤ softplus x + softplus y := by
   unfold softplus;
@@ -97,6 +99,7 @@ theorem softplus_double_exp (x : ℝ) :
   rw [softplus_exp_identity, softplus_exp_identity]
 
 
+/-- [Section: ## Sheffer Algebra Contains Key Functions] -/
 theorem sheffer_expr_lipschitz (e : ShefferExpr) :
     ∃ C : ℝ, C ≥ 0 ∧ ∀ x y : ℝ, |e.eval x - e.eval y| ≤ C * |x - y| := by
   induction' e with e ih e₁ e₂ ih₁ ih₂ e₁ e₂ ih₁ ih₂;
@@ -166,6 +169,7 @@ theorem sheffer_depth_pos (e : ShefferExpr) : e.depth ≥ 1 := by
   | comp e₁ e₂ ih₁ ih₂ => simp [ShefferExpr.depth]; omega
 
 
+/-- [Section: ## Temperature Family Additional Properties] -/
 theorem softplus_temp_strictMono {β : ℝ} (hβ : β > 0) :
     StrictMono (softplus_temp β) := by
   intro x y hxy;

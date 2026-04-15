@@ -9,6 +9,12 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Part I: Agent α — The Measure-Theoretic Gap
+The first question: how "big" are the gaps vs. the addresses?
+ℕ ⊂ ℝ has Lebesgue measure zero. Therefore the "unoccupied" set ℝ \ ℕ
+has full measure. In a measure-theoretic sense, the gaps contain "everything"
+and the photon addresses contain "nothing."
+This is a striking metaphor: **light occupies zero volume; matter fills all of space.**] -/
 theorem photon_addresses_measure_zero :
     MeasureTheory.volume (Set.range (Nat.cast : ℕ → ℝ)) = 0 := by
       rw [ Set.countable_range _ |> Set.Countable.measure_zero ]
@@ -40,6 +46,13 @@ def stokesMinkowskiForm (S₀ S₁ S₂ S₃ : ℝ) : ℝ :=
   S₀^2 - S₁^2 - S₂^2 - S₃^2
 
 
+/-- [Section: ## Part II: Agent β — Stokes-Minkowski Geometry of Gaps
+The Stokes parameters (S₀, S₁, S₂, S₃) describe polarization. The Minkowski
+form η(S,S) = S₀² - S₁² - S₂² - S₃² classifies states:
+- **Null** (η = 0): fully polarized light (photons)
+- **Timelike** (η > 0): partially polarized light (has "mass")
+- **The gap**: between any two null states, convex combinations are timelike
+This is the mathematical content of "polarized light has mass-like properties."] -/
 theorem mixing_creates_mass
     (S₁ S₂ S₃ T₁ T₂ T₃ I : ℝ)
     (hI : I > 0)
@@ -72,6 +85,13 @@ theorem timelike_ball_positive_measure :
           rw [ Real.sqrt_lt' ] at this <;> norm_num [ Fin.sum_univ_three ] at * ; nlinarith
 
 
+/-- [Section: ## Part III: Agent γ — Gap Interpolation and the Mass Profile
+**Key Hypothesis**: When we linearly interpolate between two consecutive
+"photon addresses" n and n+1 on the number line, and decode the intermediate
+real values as Stokes vectors, the resulting states are generically massive.
+We model this abstractly: given two null Stokes vectors (the "photon states"
+at addresses n and n+1), the parameterized path between them passes through
+the timelike region.] -/
 theorem gap_interpolation_massive
     (S₁ S₂ S₃ T₁ T₂ T₃ I : ℝ)
     (hI : I > 0)
@@ -253,6 +273,10 @@ theorem mass_zero_iff_fully_polarized (S₀ S₁ S₂ S₃ : ℝ)
   unfold stokesMinkowskiForm; constructor <;> intro h <;> nlinarith
 
 
+/-- [Section: ## Part VIII: Information-Theoretic Gap Analysis
+The gaps between integer addresses contain uncountably many reals.
+This has information-theoretic significance: the "dark" gaps carry
+strictly more information than the "bright" photon addresses.] -/
 theorem gaps_uncountable : ¬ Set.Countable (Set.range (Nat.cast : ℕ → ℝ))ᶜ := by
   intro h;
   have := h.union ( Set.countable_range ( Nat.cast : ℕ → ℝ ) );

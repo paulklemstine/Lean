@@ -98,6 +98,9 @@ def NumberLineOracle.and (O₁ O₂ : NumberLineOracle) : NumberLineOracle where
   truthValue n := O₁.truthValue n && O₂.truthValue n
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§4: THE NUMBER LINE BIJECTION — PROBLEMS ↔ POINTS
+═══════════════════════════════════════════════════════════════════════] -/
 def NumberLineOracle.or (O₁ O₂ : NumberLineOracle) : NumberLineOracle where
   truthValue n := O₁.truthValue n || O₂.truthValue n
 

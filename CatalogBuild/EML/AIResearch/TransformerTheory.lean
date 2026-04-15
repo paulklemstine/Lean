@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## §1. Feed-Forward Network Replacement] -/
 def transformerFFNParams (d_model : ℕ) : ℕ := 2 * d_model * (4 * d_model)
 
 def emlFFNParams (d_model : ℕ) : ℕ := 4 * d_model * 4
@@ -25,6 +26,7 @@ def ffnCompressionRatio (d_model : ℕ) : ℕ := transformerFFNParams d_model / 
 theorem ffn_compression_512 : 16 ≤ ffnCompressionRatio 512 := by native_decide
 
 
+/-- [Section: ## §2. Mixture of Experts Routing] -/
 def moeGatingParams (d_model numExperts : ℕ) : ℕ := d_model * numExperts
 
 def emlMoeGatingParams (numExperts : ℕ) : ℕ := 4 * numExperts
@@ -35,6 +37,7 @@ theorem eml_moe_routing_efficiency (d_model numExperts : ℕ) (hd : 4 ≤ d_mode
   unfold emlMoeGatingParams moeGatingParams; exact Nat.mul_le_mul_right numExperts hd
 
 
+/-- [Section: ## §3. Inference Cost] -/
 def stdInferenceFLOPs (d_model : ℕ) : ℕ :=
   2 * d_model * d_model + 2 * d_model * (4 * d_model)
 
@@ -58,6 +61,7 @@ def transformerLayerParams (numHeads d_model d_k : ℕ) : ℕ :=
   numHeads * 4 * d_model * d_k + transformerFFNParams d_model + 2 * d_model
 
 
+/-- [Section: ## §4. Transformer Layer Comparison] -/
 theorem eml_transformer_layer_efficiency (numHeads d_model d_k : ℕ) (hd : 2 ≤ d_model) :
     emlTransformerLayerParams numHeads d_model d_k ≤ transformerLayerParams numHeads d_model d_k := by
   unfold emlTransformerLayerParams transformerLayerParams;
@@ -65,6 +69,7 @@ theorem eml_transformer_layer_efficiency (numHeads d_model d_k : ℕ) (hd : 2 �
   nlinarith [ Nat.mul_le_mul_left numHeads ( show 8 ≤ 4 * d_model by linarith ) ]
 
 
+/-- [Section: ## §5. Total Model Size] -/
 def stdTransformerTotal (numLayers d_model numHeads d_k vocabSize : ℕ) : ℕ :=
   numLayers * transformerLayerParams numHeads d_model d_k + vocabSize * d_model
 
@@ -81,6 +86,7 @@ theorem eml_transformer_total_efficiency (numLayers d_model numHeads d_k vocabSi
   exact eml_transformer_layer_efficiency numHeads d_model d_k hd
 
 
+/-- [Section: ## §6. KV-Cache] -/
 def stdKVCacheMem (numLayers seqLen d_k numHeads : ℕ) : ℕ :=
   2 * numLayers * seqLen * d_k * numHeads
 

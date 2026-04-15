@@ -66,6 +66,9 @@ structure BulkSearch where
   search_exp : ∃ b : ℕ, 1 < b ∧ ∀ n, n ≤ searchSpace n
 
 
+/-- [Section: ## Section 3: Boundary-Based Search Strategy
+**Key Insight**: Instead of searching the exponential bulk (proof tree),
+search the polynomial boundary (certificate space).] -/
 theorem boundary_faster_than_bulk (cert_size proof_size : ℕ)
     (verify_time : ℕ) (search_time : ℕ)
     (h_cert : cert_size ≤ proof_size)
@@ -84,6 +87,9 @@ structure EntanglementWedge (n m : ℕ) where
   reconstructible : Finset (Fin n)
 
 
+/-- [Section: ## Section 4: Entanglement Wedge Reconstruction
+In AdS/CFT, a boundary region can reconstruct operators in its "entanglement wedge."
+For proofs: knowing a subset of interface lemmas reconstructs a sub-proof.] -/
 theorem wedge_monotone {n m : ℕ}
     (W : Finset (Fin m) → Finset (Fin n))
     (h_mono : ∀ S₁ S₂ : Finset (Fin m), S₁ ⊆ S₂ → W S₁ ⊆ W S₂)
@@ -107,6 +113,10 @@ def isResilient (n k : ℕ) (essential : Finset (Fin n)) : Prop :=
       essential ⊆ surviving ∧ surviving.card ≥ n - k
 
 
+/-- [Section: ## Section 5: Holographic Error Correction for Proofs
+In AdS/CFT, the bulk is protected by quantum error correction.
+For proofs: a proof can tolerate some "errors" (removed lemmas) if the
+remaining structure still supports the conclusion.] -/
 theorem zero_resilient (n : ℕ) (essential : Finset (Fin n))
     (h : essential.card ≤ n) :
     isResilient n 0 essential := by

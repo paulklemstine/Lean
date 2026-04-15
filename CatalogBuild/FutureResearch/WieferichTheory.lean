@@ -15,6 +15,7 @@ theorem wieferich_iff_mod (p : ℕ) (hp : Nat.Prime p) (hp3 : 3 ≤ p) :
   · intro h; exact ⟨hp, hp3, h⟩
 
 
+/-- [Section: ### Known Wieferich Primes] -/
 theorem wieferich_1093_verified : IsWieferich 1093 := by
   refine ⟨by native_decide, by omega, ?_⟩
   native_decide
@@ -25,6 +26,7 @@ theorem wieferich_3511_verified : IsWieferich 3511 := by
   native_decide
 
 
+/-- [Section: ### Non-Wieferich Primes] -/
 theorem non_wieferich_3 : ¬ IsWieferich 3 := by
   intro ⟨_, _, h⟩; revert h; native_decide
 
@@ -81,6 +83,7 @@ theorem non_wieferich_47 : ¬ IsWieferich 47 := by
   intro ⟨_, _, h⟩; revert h; native_decide
 
 
+/-- [Section: ### Fermat Quotient] -/
 theorem wieferich_iff_p_dvd_quotient (p : ℕ) (hp : Nat.Prime p) (hp3 : 3 ≤ p) :
     IsWieferich p ↔ (p : ℤ) ∣ fermatQuotient 2 p := by
   constructor <;> intro h;

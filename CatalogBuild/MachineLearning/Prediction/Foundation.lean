@@ -18,6 +18,7 @@ theorem bayes_preserves_total (p₁ p₂ pB₁ pB₂ pB : ℝ)
   rw [div_add_div_same, htotal, div_self hB]
 
 
+/-- Average squared error of individual predictors -/
 def avgIndividualError (predictions : Fin n → ℝ) (truth : ℝ) (w : Fin n → ℝ) : ℝ :=
   ∑ i, w i * (predictions i - truth) ^ 2
 
@@ -42,6 +43,7 @@ theorem diversity_theorem (n : ℕ) (predictions : Fin n → ℝ)
   · exact hw_sum
 
 
+/-- [Section: ## §3. The Self-Defeating Prophecy] -/
 theorem self_consistent_prediction_unique
     (f : ℝ → ℝ) (c : ℝ) (_hc0 : 0 ≤ c) (hc1 : c < 1)
     (hf : ∀ x y, |f x - f y| ≤ c * |x - y|)
@@ -49,6 +51,7 @@ theorem self_consistent_prediction_unique
   exact le_antisymm ( le_of_not_gt fun h => by cases abs_cases ( p - q ) <;> cases abs_cases ( f p - f q ) <;> nlinarith [ hf p q ] ) ( le_of_not_gt fun h => by cases abs_cases ( p - q ) <;> cases abs_cases ( f p - f q ) <;> nlinarith [ hf p q ] )
 
 
+/-- [Section: ## §4. Prediction as Projection] -/
 theorem prediction_pythagorean {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
     (proj : E →L[ℝ] E)
     (_hproj : ∀ x, proj (proj x) = proj x)
@@ -61,6 +64,7 @@ theorem prediction_pythagorean {E : Type*} [NormedAddCommGroup E] [InnerProductS
   specialize hsa x x ; aesop
 
 
+/-- [Section: ## §5. The Law of Total Prediction] -/
 theorem tower_property_finite (n : ℕ) (x w : Fin n → ℝ)
     (_hw_nonneg : ∀ i, 0 ≤ w i)
     (hw_sum : ∑ i, w i = 1) :

@@ -66,6 +66,12 @@ theorem annihilation_is_triple (a b c : ℤ) (h : IsPythTriple' a b c) :
   unfold IsPythTriple' at *; nlinarith [sq_nonneg (a^2 + b^2)]
 
 
+/-- [Section: ### Prime Photon Factorization
+A "prime photon" is a primitive Pythagorean triple that cannot be decomposed
+further via the Gaussian product. By the theory of Gaussian integers, the
+prime photons correspond exactly to Gaussian primes.
+**Fermat's Two-Square Theorem**: A prime p is the sum of two squares iff p = 2
+or p ≡ 1 (mod 4). Each such prime gives a unique primitive photon.] -/
 theorem fermat_two_square_photon (p : ℕ) (hp : Nat.Prime p) (hmod : p % 4 = 1) :
     ∃ a b : ℤ, a ^ 2 + b ^ 2 = ↑p := by
       have := Fact.mk hp; have := @Nat.Prime.sq_add_sq p; aesop;
@@ -203,6 +209,8 @@ theorem null_sum_null_iff_orthogonal (a₁ b₁ c₁ a₂ b₂ c₂ : ℝ)
   constructor <;> intro h <;> nlinarith
 
 
+/-- [Section: ## Part V: Photon Number Theory
+### Primitive Photon Counting and Parity] -/
 theorem photon_parity_conservation (a b c : ℤ)
     (h : a ^ 2 + b ^ 2 = c ^ 2) (ha : a % 2 = 1) (hb : b % 2 = 0) :
     c % 2 = 1 := by
@@ -251,6 +259,9 @@ theorem gaussian_norm_is_sum_sq (a b : ℤ) :
   simp [Zsqrtd.norm]; ring
 
 
+/-- [Section: ## Part VI: The Hierarchy of Lost Properties
+At each step of the Cayley-Dickson construction, a property is lost.
+This hierarchy determines what kind of "gates" each channel supports.] -/
 theorem complex_not_ordered_field :
     ¬ ∃ (le : ℂ → ℂ → Prop),
       (∀ a, le a a) ∧

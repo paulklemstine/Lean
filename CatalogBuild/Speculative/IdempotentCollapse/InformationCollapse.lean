@@ -40,6 +40,7 @@ theorem idempotent_image_card_le {α : Type*} [Fintype α] [DecidableEq α]
   exact Finset.card_image_le.trans (le_of_eq Finset.card_univ)
 
 
+/-- [Section: ### Rank Decreases Under Idempotent Maps] -/
 theorem idempotent_full_image_is_id {α : Type*} [Fintype α] [DecidableEq α]
     (f : α → α) (hf : ∀ x, f (f x) = f x)
     (h_full : Finset.card (Finset.image f Finset.univ) = Fintype.card α) :
@@ -49,6 +50,7 @@ theorem idempotent_full_image_is_id {α : Type*} [Fintype α] [DecidableEq α]
   exact ne_of_lt ( lt_of_lt_of_le ( Finset.card_lt_card ( Finset.ssubset_iff_subset_ne.mpr ⟨ Finset.image_subset_iff.mpr fun x _ => Finset.mem_univ _, fun h' => h ( Finite.injective_iff_surjective.mpr <| by simpa [ Finset.ext_iff ] using h' ) ⟩ ) ) ( by simp +decide ) ) ;
 
 
+/-- [Section: ### Data Processing Inequality (Combinatorial Version)] -/
 theorem compose_idempotent_image_le {α : Type*} [Fintype α] [DecidableEq α]
     (f g : α → α)
     (hf : ∀ x, f (f x) = f x) (hg : ∀ x, g (g x) = g x) :

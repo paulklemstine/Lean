@@ -11,6 +11,7 @@ theorem factor_channel_dim2 (a N : ℤ) :
     (N - a) * (N + a) = N ^ 2 - a ^ 2 := by ring
 
 
+/-- [Section: ## Section 2: Collision-Based Factoring] -/
 theorem collision_identity (a b c d N : ℤ)
     (h1 : a ^ 2 + b ^ 2 = N) (h2 : c ^ 2 + d ^ 2 = N) :
     a ^ 2 - c ^ 2 = d ^ 2 - b ^ 2 := by linarith
@@ -21,6 +22,7 @@ theorem collision_product (a b c d N : ℤ)
     (a - c) * (a + c) = (d - b) * (d + b) := by nlinarith
 
 
+/-- [Section: ## Section 3: Norm Multiplicativity] -/
 theorem norm_mult_dim2 (a b c d : ℤ) :
     (a ^ 2 + b ^ 2) * (c ^ 2 + d ^ 2) = (a * c - b * d) ^ 2 + (a * d + b * c) ^ 2 := by ring
 
@@ -37,6 +39,7 @@ theorem norm_mult_dim4 (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℤ) :
     (a₁*b₄ + a₂*b₃ - a₃*b₂ + a₄*b₁) ^ 2 := by ring
 
 
+/-- [Section: ## Section 4: Composition Identities] -/
 theorem two_compositions_equal_norm (a b c d : ℤ) :
     (a * c - b * d) ^ 2 + (a * d + b * c) ^ 2 =
     (a * c + b * d) ^ 2 + (a * d - b * c) ^ 2 := by ring
@@ -46,6 +49,7 @@ theorem composition_collision_factor (a b c d : ℤ) :
     (a * c - b * d) ^ 2 - (a * c + b * d) ^ 2 = -4 * a * b * c * d := by ring
 
 
+/-- [Section: ## Section 5: GCD Cascade] -/
 theorem gcd_cascade_zero (a b c d N : ℤ)
     (h1 : a ^ 2 + b ^ 2 = N) (h2 : c ^ 2 + d ^ 2 = N) :
     (a - c) * (a + c) + (b - d) * (b + d) = 0 := by nlinarith
@@ -74,6 +78,7 @@ theorem hypotenuse_dominates (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c
       constructor <;> nlinarith
 
 
+/-- [Section: ## Section 10: Dimension 4 — Four Peel Channels] -/
 theorem dim4_four_channels (a b c d N : ℤ)
     (_h : a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 = N) :
     N ^ 2 - a ^ 2 = (N - a) * (N + a) ∧
@@ -89,6 +94,7 @@ theorem dim4_factor_sum (a b c d N : ℤ)
     (N - c) * (N + c) + (N - d) * (N + d) = 4 * N ^ 2 - N := by nlinarith
 
 
+/-- [Section: ## Section 11: Hierarchy Theorems] -/
 def divAlgDims : Finset ℕ := {1, 2, 4, 8}
 
 

@@ -33,6 +33,9 @@ theorem field_idempotent_iff {F : Type*} [Field F] (e : F) :
 theorem prime_two_idempotents_2 :
     (Finset.univ.filter (fun e : ZMod 2 => e * e = e)).card = 2 := by decide
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+§1: CRT Bridge — Idempotents via Chinese Remainder Theorem (Bridge 1↔9)
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem prime_two_idempotents_3 :
     (Finset.univ.filter (fun e : ZMod 3 => e * e = e)).card = 2 := by decide
 
@@ -99,6 +102,9 @@ theorem trace_sum {n : ℕ} (P Q : Matrix (Fin n) (Fin n) ℝ) :
   simp [Matrix.trace, Matrix.add_apply, Finset.sum_add_distrib]
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+§3: Trace-Rank Bridge (Bridge 5↔6↔8)
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem trace_complement {n : ℕ} (P : Matrix (Fin n) (Fin n) ℝ) :
     P.trace + (1 - P).trace = (n : ℝ) := by
       norm_num [ Matrix.trace_sub ]
@@ -161,6 +167,9 @@ theorem spectral_orthogonality {R : Type*} [Ring R] {n : ℕ}
   rw [← mul_assoc, csoi.orthogonal i j hij, zero_mul]
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+§5: Spectral Decomposition Universality (Bridge 3↔8↔9)
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem csoi_two_is_complement {R : Type*} [Ring R]
     (csoi : CSOI R 2) :
     csoi.proj 1 = 1 - csoi.proj 0 := by
@@ -188,6 +197,9 @@ def csoi_from_idempotent {R : Type*} [Ring R] (e : R) (he : e * e = e)
     simp [Fin.sum_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one]
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+§6: Oracle-Module Bridge (Cross↔Bridge 6)
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem range_eq_ker_complement (e : W →ₗ[K] W) (he : e ∘ₗ e = e) :
     LinearMap.range e = LinearMap.ker (LinearMap.id - e) := by
       ext x;
@@ -209,6 +221,9 @@ theorem linear_oracle_identity (e : W →ₗ[K] W) (he : e ∘ₗ e = e)
   obtain ⟨y, rfl⟩ := hx; exact LinearMap.congr_fun he y
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+§7: Idempotent Zeta Function (Bridge 1↔9)
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem idem_p2 : idemCount 2 = 2 := by native_decide
 
 theorem idem_p3 : idemCount 3 = 2 := by native_decide
@@ -292,6 +307,9 @@ theorem interior_via_closure (X : Type*) [TopologicalSpace X] (s : Set X) :
     interior s = (closure sᶜ)ᶜ := by rw [closure_compl, compl_compl]
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+§9: The Grand Unification — All Bridges Share e ∘ e = e
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem bridge1_instance {R : Type*} [Ring R] (e : R) (he : e * e = e) : IsIdem e := he
 
 theorem bridge2_instance {α : Type*} [SemilatticeInf α] (a : α) :
@@ -308,6 +326,9 @@ noncomputable def idemEntropy (k : ℕ) : ℝ :=
   if k = 0 then 0 else Real.log k
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+§10: Idempotent Entropy — A New Invariant
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem field_idem_entropy : idemEntropy 2 = Real.log 2 := by simp [idemEntropy]
 
 theorem zmod6_idem_entropy : idemEntropy 4 = Real.log 4 := by simp [idemEntropy]

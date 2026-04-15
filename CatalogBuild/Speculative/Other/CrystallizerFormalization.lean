@@ -15,6 +15,7 @@ theorem stereo_fundamental_identity (S b : ℝ) :
     4 * S * b ^ 2 + (b ^ 2 - S) ^ 2 = (S + b ^ 2) ^ 2 := by ring
 
 
+/-- [Section: ## Section 1: Core Stereographic Projection Identity] -/
 theorem stereo_proj_nd_unit_norm (S m_N c : ℝ) (hc : c ≠ 0) (hc_def : c = S + m_N ^ 2) :
     4 * S * m_N ^ 2 / c ^ 2 + ((m_N ^ 2 - S) / c) ^ 2 = 1 := by
   grind
@@ -60,6 +61,7 @@ theorem total_crystallization_bound (k : ℕ) (params : Fin k → ℝ) :
     _ = k := by simp
 
 
+/-- [Section: ## Section 2: Crystallization Loss Properties] -/
 theorem crystallization_zero_iff_integer (m : ℝ) :
     crystallizationLoss m = 0 ↔ ∃ n : ℤ, m = n := by
   unfold crystallizationLoss;
@@ -80,6 +82,7 @@ def gramSchmidtProj (v w : ℝ × ℝ) : ℝ × ℝ :=
   (w.1 - inner2 v w * v.1, w.2 - inner2 v w * v.2)
 
 
+/-- [Section: ## Section 3: Gram-Schmidt on the Sphere (2D case)] -/
 theorem gram_schmidt_orthogonal (v w : ℝ × ℝ) (hv : normSq2 v = 1) :
     inner2 v (gramSchmidtProj v w) = 0 := by
   -- Expand the inner product using the definition of `gramSchmidtProj`.
@@ -87,6 +90,7 @@ theorem gram_schmidt_orthogonal (v w : ℝ × ℝ) (hv : normSq2 v = 1) :
   unfold normSq2 at hv; linear_combination' -hv * ( v.1 * w.1 + v.2 * w.2 ) ;
 
 
+/-- [Section: ## Section 4: Spherical Interpolation] -/
 theorem spherical_interp_unit (w1 w2 : ℝ × ℝ) (θ : ℝ)
     (hw1 : normSq2 w1 = 1) (hw2 : normSq2 w2 = 1) (horth : inner2 w1 w2 = 0) :
     normSq2 (cos θ * w1.1 + sin θ * w2.1, cos θ * w1.2 + sin θ * w2.2) = 1 := by

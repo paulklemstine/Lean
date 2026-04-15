@@ -7,6 +7,7 @@ Declarations: 10
 
 import Mathlib
 
+/-- [Section: ## Part 1: Divisor Function and Egyptian Fractions] -/
 theorem divisor_count_multiplicative (m n : ℕ) (hm : 0 < m) (hn : 0 < n)
     (hcoprime : Nat.Coprime m n) :
     (Nat.divisors (m * n)).card = (Nat.divisors m).card * (Nat.divisors n).card := by
@@ -55,6 +56,7 @@ def heat_equation_blowup_decidable
   never_blowup_decidable blows_up maximum_principle
 
 
+/-- [Section: ## Part 3: Spectral Gap Properties] -/
 theorem spectral_gap_positive (l0 l1 : ℝ) (h : l0 < l1) :
     0 < l1 - l0 := by
   linarith
@@ -66,11 +68,13 @@ theorem thooft_scaling_to_zero {f : ℕ → ℝ} {L : ℝ}
   simpa using hf.div_atTop ( by exact Filter.tendsto_pow_atTop ( by norm_num ) |> Filter.Tendsto.comp <| tendsto_natCast_atTop_atTop )
 
 
+/-- [Section: ## Part 4: Sub-Multiplicativity (New Hypothesis)] -/
 theorem egyptian_two_term_exists (n : ℕ) (hn : 2 ≤ n) :
     ∃ a b : ℕ, a < b ∧ (1 : ℚ) / n = 1 / a + 1 / b := by
   exact ⟨ n + 1, n * ( n + 1 ), by nlinarith, by push_cast; rw [ div_add_div, div_eq_div_iff ] <;> ring <;> positivity ⟩
 
 
+/-- [Section: ## Part 5: Convergence Characterization] -/
 theorem mass_gap_subquadratic {delta : ℕ → ℝ} {f : ℝ → ℝ}
     (_hdelta : ∀ N, 0 < delta N)
     (_hf_mono : Monotone f)

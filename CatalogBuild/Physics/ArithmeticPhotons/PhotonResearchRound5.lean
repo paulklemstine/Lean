@@ -21,6 +21,7 @@ structure Oct where
 
 @[ext]
 
+/-- [Section: ## Part I: Octonion Algebra (Explicit Construction)] -/
 theorem Oct.ext' {a b : Oct} (h0 : a.c0 = b.c0) (h1 : a.c1 = b.c1) (h2 : a.c2 = b.c2)
     (h3 : a.c3 = b.c3) (h4 : a.c4 = b.c4) (h5 : a.c5 = b.c5) (h6 : a.c6 = b.c6)
     (h7 : a.c7 = b.c7) : a = b := by
@@ -230,6 +231,7 @@ theorem triple_345_primitive : Int.gcd 3 4 = 1 := by native_decide
 theorem triple_6810_not_primitive : Int.gcd 6 8 ≠ 1 := by native_decide
 
 
+/-- [Section: ## Part VII: Octonion Fano Plane Verification] -/
 theorem fano_e1e2 : Oct.mul Oct.e1 Oct.e2 = Oct.e3 := by decide
 
 theorem fano_e2e4 : Oct.mul Oct.e2 Oct.e4 = Oct.e6 := by decide

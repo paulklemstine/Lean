@@ -19,6 +19,7 @@ theorem grover_iterations (N : ℕ) (hN : 1 ≤ N) :
       exact Nat.sqrt_le_self _
 
 
+/-- [Section: ## §2: Quantum Measurement as Oracle] -/
 theorem projection_idempotent {n : ℕ} (P : Matrix (Fin n) (Fin n) ℝ) (hP : P * P = P) :
     P * (P * P) = P * P := by
       rw [ ← Matrix.mul_assoc, hP ];
@@ -34,6 +35,7 @@ theorem measurement_idempotent (measure : ℝ → ℝ) (hm : ∀ x, measure (mea
       aesop
 
 
+/-- [Section: ## §3: Quantum Zeno Effect as Oracle Iteration] -/
 theorem zeno_effect (n : ℕ) (dt : ℝ) (hdt : 0 < dt) :
     n * dt = ↑n * dt := by
       rfl
@@ -45,6 +47,7 @@ theorem repeated_projection_converges {X : Type*} (P : X → X) (hP : ∀ x, P (
       induction hn <;> simp +decide [ *, Function.iterate_succ_apply' ]
 
 
+/-- [Section: ## §4: Quantum Oracle Complexity] -/
 theorem classical_search_lower_bound (N : ℕ) (hN : 2 ≤ N) :
     N / 2 ≥ 1 := by
       exact Nat.div_pos hN ( by decide )
@@ -59,6 +62,7 @@ theorem bqp_in_pspace_bound (n : ℕ) : 2 ^ n ≥ n + 1 := by
   exact Nat.recOn n ( by norm_num ) fun n ih => by rw [ pow_succ' ] ; linarith;
 
 
+/-- [Section: ## §5: Entanglement and Oracle Correlation] -/
 theorem bell_classical_bound (a b c d : ℝ) (ha : |a| ≤ 1) (hb : |b| ≤ 1)
     (hc : |c| ≤ 1) (hd : |d| ≤ 1) :
     |a * b + a * d + c * b - c * d| ≤ 4 := by

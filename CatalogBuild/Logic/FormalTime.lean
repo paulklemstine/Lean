@@ -197,6 +197,12 @@ def lorentzBoost (v : ℝ) (e : Event1) : Event1 where
   x := lorentzGamma v * (e.x - v * e.t)
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+CYCLE 6: TIME DILATION (Agent Λ)
+═══════════════════════════════════════════════════════════════════════════
+The Lorentz boost with velocity v (|v| < 1 in natural units):
+t' = γ(t - vx),  x' = γ(x - vt)
+where γ = 1/√(1-v²).] -/
 theorem lorentzGamma_ge_one {v : ℝ} (hv : |v| < 1) : 1 ≤ lorentzGamma v := by
   exact one_le_one_div ( Real.sqrt_pos.mpr ( by nlinarith [ abs_lt.mp hv ] ) ) ( Real.sqrt_le_iff.mpr ⟨ by nlinarith [ abs_lt.mp hv ], by nlinarith [ abs_lt.mp hv ] ⟩ )
 
@@ -286,6 +292,9 @@ theorem DiscreteTimeDynamics.fixedPoint_isPeriodic {X : Type*}
   exact hx
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+CYCLE 8: DISCRETE TIME AND DYNAMICS (Agent Ω)
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem periodic_orbit_finite {X : Type*} (d : DiscreteTimeDynamics X) (x : X)
     (p : ℕ) (hp : d.isPeriodic x p) :
     Set.Finite (Set.range (d.evolve x)) := by
@@ -354,6 +363,10 @@ theorem int_countable : Countable ℤ := inferInstance
 theorem real_uncountable : ¬ Countable ℝ := not_countable
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+CYCLE 11: THE CLOCK IMPOSSIBILITY THEOREM (Agent Φ + Agent τ)
+═══════════════════════════════════════════════════════════════════════════
+No discrete clock can perfectly track continuous time.] -/
 theorem clock_impossibility : ¬ ∃ f : ℤ → ℝ, Surjective f := by
   -- By contradiction, assume there exists a surjective function from ℤ to ℝ.
   by_contra h_surj

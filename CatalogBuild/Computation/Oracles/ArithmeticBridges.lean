@@ -7,6 +7,7 @@ Declarations: 10
 
 import Mathlib
 
+/-- [Section: ## Section 1: Sum Identities — The Discrete Foundation] -/
 theorem oracle_gauss_sum (n : ℕ) :
     2 * ∑ i ∈ range (n + 1), i = n * (n + 1) := by
   induction' n with n ih <;> norm_num [ Finset.sum_range_succ ] at * ; linarith
@@ -22,11 +23,13 @@ theorem oracle_nicomachus (n : ℕ) :
   induction n <;> norm_num [ Finset.sum_range_succ ] at * ; linarith
 
 
+/-- [Section: ## Section 2: Geometric Series — Bridge to Analysis] -/
 theorem oracle_geometric_sum (r : ℤ) (n : ℕ) (hr : r ≠ 1) :
     (r - 1) * ∑ i ∈ range (n + 1), r ^ i = r ^ (n + 1) - 1 := by
   rw [ mul_comm, geom_sum_mul ]
 
 
+/-- [Section: ## Section 3: Modular Arithmetic Bridges] -/
 theorem oracle_chinese_remainder (m n a b : ℕ) (hm : m > 0) (hn : n > 0)
     (hcoprime : Nat.Coprime m n) :
     ∃ x, x % m = a % m ∧ x % n = b % n := by
@@ -39,6 +42,7 @@ theorem oracle_totient_multiplicative (m n : ℕ) (hcoprime : Nat.Coprime m n) :
   exact Nat.totient_mul hcoprime
 
 
+/-- [Section: ## Section 4: Divisor Sum Identities] -/
 theorem oracle_divisors_of_prime (p : ℕ) (hp : Nat.Prime p) :
     Nat.divisors p = {1, p} := by
   exact hp.divisors
@@ -49,6 +53,7 @@ theorem oracle_divisor_sum_prime (p : ℕ) (hp : Nat.Prime p) :
   rw [ hp.sum_divisors, add_comm ]
 
 
+/-- [Section: ## Section 5: Binomial Theorem — The Combinatorial Bridge] -/
 theorem oracle_pascal (n k : ℕ) (hk : k ≤ n) (hk0 : k ≥ 1) :
     Nat.choose (n + 1) k = Nat.choose n k + Nat.choose n (k - 1) := by
   cases k <;> simp_all +arith +decide [ Nat.choose ]

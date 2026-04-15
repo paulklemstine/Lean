@@ -104,6 +104,7 @@ theorem bekenstein_hawking_simplified (M : ℝ) :
   ring
 
 
+/-- [Section: ## Part V: Information-Theoretic Properties] -/
 theorem entropy_quadratic (M₁ M₂ : ℝ) (hM : 0 ≤ M₁) (hM2 : M₁ ≤ M₂) :
     bekensteinHawkingEntropy κ M₁ ≤ bekensteinHawkingEntropy κ M₂ := by
   rw [ bekenstein_hawking_simplified, bekenstein_hawking_simplified ];
@@ -119,6 +120,7 @@ theorem information_content_formula (M : ℝ) :
   norm_num [ κ.kB_pos.ne' ]
 
 
+/-- [Section: ## Part VI: The Holographic Bound] -/
 theorem entropy_area_planck (M : ℝ) :
     bekensteinHawkingEntropy κ M =
     κ.kB * horizonArea κ M / (4 * (planckLength κ) ^ 2) := by
@@ -150,6 +152,7 @@ theorem isomorphism_parameter_formula (E : ℝ) (hE : 0 < E) :
   field_simp
 
 
+/-- [Section: ## Part VII: The Isomorphism Question] -/
 theorem isomorphism_at_crossing (E : ℝ) (hE : 0 < E)
     (hcross : E ^ 2 = κ.hbar * κ.c ^ 5 / (2 * κ.G)) :
     isomorphismParameter κ E = 1 := by
@@ -177,6 +180,7 @@ theorem superplanckian_bh_dominates (E : ℝ) (hE : 0 < E)
   · exact div_pos ( mul_pos ( κ.hbar_pos ) ( κ.hc_pos ) ) hE
 
 
+/-- [Section: ## Part VIII: The Entropy Gap] -/
 theorem planck_bh_entropy_simplified
     (h : 0 < κ.hbar * κ.c / κ.G) :
     bekensteinHawkingEntropy κ (planckMass κ) = 4 * π * κ.kB := by

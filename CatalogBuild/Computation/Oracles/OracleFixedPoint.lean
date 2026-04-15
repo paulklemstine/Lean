@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## §1: Oracle as Zero-Contraction] -/
 theorem oracle_contraction_on_range {X : Type*} [MetricSpace X]
     (O : X → X) (hO : ∀ x, O (O x) = O x) (y : X) (hy : y ∈ range O) :
     dist (O y) y = 0 := by
@@ -26,6 +27,7 @@ theorem banach_unique_fixed_point {X : Type*} [MetricSpace X] [CompleteSpace X]
       exact dist_le_zero.mp ( by norm_num [ hx, hy ] at this; linarith )
 
 
+/-- [Section: ## §2: Lattice-Theoretic Fixed Points] -/
 theorem knaster_tarski_fixed_point {α : Type*} [CompleteLattice α] (f : α → α)
     (hf : Monotone f) : ∃ x : α, f x = x := by
       -- By the Knaster-Tarski theorem, since $f$ is monotone, the set of fixed points of $f$ is nonempty.
@@ -60,6 +62,7 @@ theorem russell_paradox_analog : ¬ ∃ (f : Set ℕ → Prop), ∀ S : Set ℕ,
   exact fun ⟨ f, hf ⟩ => by simpa using hf Set.univ;
 
 
+/-- [Section: ## §4: Fixed-Point Combinators] -/
 theorem y_combinator_prop {X : Type*} (f : X → X) (y : X) (hy : f y = y) :
     f y = y := by
       bv_omega

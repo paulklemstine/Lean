@@ -26,6 +26,7 @@ theorem sheffer_composition_depth_bound (e_f e_g : ShefferExpr) :
   ⟨ShefferExpr.comp e_f e_g, fun _ => rfl, le_refl _⟩
 
 
+/-- [Section: ## Theorem E: Softplus is Non-Polynomial] -/
 theorem softplus_tendsto_zero_atBot :
     Filter.Tendsto softplus Filter.atBot (nhds 0) := by
   convert Filter.Tendsto.log ( tendsto_const_nhds.add ( Real.tendsto_exp_atBot ) ) _ using 2 <;> norm_num
@@ -45,6 +46,7 @@ theorem softplus_not_polynomial' :
     exact absurd ( hp 0 ) ( by have := hp ( -1 ) ; have := hp 1 ; norm_num [ softplus ] at * ; linarith [ Real.log_pos one_lt_two, Real.log_lt_log ( by positivity ) ( by linarith [ Real.add_one_le_exp 1, Real.add_one_le_exp ( -1 ) ] : ( 1 + Real.exp 1 ) > 2 ) ] )
 
 
+/-- [Section: ## Softplus Lipschitz Properties] -/
 theorem softplus_lipschitz : LipschitzWith 1 softplus := by
   have h_deriv : ∀ x, deriv softplus x = logisticSigmoid x := by
     exact?;
@@ -60,6 +62,7 @@ theorem sigmoid_complement (x : ℝ) : logisticSigmoid x + logisticSigmoid (-x) 
   linarith
 
 
+/-- [Section: ## Sigmoid Additional Properties] -/
 theorem sigmoid_strictMono : StrictMono logisticSigmoid := by
   intro a b hab;
   rw [ logisticSigmoid, logisticSigmoid, div_lt_div_iff₀ ] <;> nlinarith [ Real.exp_pos a, Real.exp_lt_exp.2 hab ]
@@ -99,6 +102,7 @@ theorem softplus_sheffer_degree_le : shefferDegree softplus ≤ 1 := by
   simp [ShefferExpr.depth]
 
 
+/-- [Section: ## Continuous Properties] -/
 theorem softplus_uniformContinuous : UniformContinuous softplus := by
   convert softplus_lipschitz.uniformContinuous using 1
 

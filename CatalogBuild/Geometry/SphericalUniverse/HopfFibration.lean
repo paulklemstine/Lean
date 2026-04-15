@@ -17,6 +17,7 @@ def hopfMap (z : ℂ × ℂ) : Fin 3 → ℝ :=
     Complex.normSq z.1 - Complex.normSq z.2]
 
 
+/-- [Section: ## Part I: The Hopf Map] -/
 theorem hopf_map_norm_identity (z : ℂ × ℂ) :
     (hopfMap z 0) ^ 2 + (hopfMap z 1) ^ 2 + (hopfMap z 2) ^ 2 =
     (Complex.normSq z.1 + Complex.normSq z.2) ^ 2 := by
@@ -36,6 +37,7 @@ def u1Action (θ : ℝ) (z : ℂ × ℂ) : ℂ × ℂ :=
   (Complex.exp (θ * Complex.I) * z.1, Complex.exp (θ * Complex.I) * z.2)
 
 
+/-- [Section: ## Part II: Fiber Structure — U(1) Gauge Symmetry] -/
 theorem u1_action_preserves_norm (θ : ℝ) (z : ℂ × ℂ) :
     Complex.normSq (u1Action θ z).1 + Complex.normSq (u1Action θ z).2 =
     Complex.normSq z.1 + Complex.normSq z.2 := by
@@ -105,6 +107,7 @@ theorem s3_parallelizable_dimensions : ({0, 1, 3, 7} : Set ℕ) =
 /-- Two Hopf fibers have linking number 1. -/
 def linkingNumberHopfFibers : ℤ := 1
 
+/-- [Section: ## Part V: Linking Number and Helicity] -/
 theorem linking_number_is_one : linkingNumberHopfFibers = 1 := rfl
 
 

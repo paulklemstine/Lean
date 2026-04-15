@@ -54,6 +54,7 @@ theorem lorentz_preserves_null (phi : ℝ) (v : Fin 4 → ℝ)
   simp [isNull] at *; rw [lorentz_boost_preserves_inner]; exact h
 
 
+/-- [Section: ## Part III: Gravitational Wave Properties] -/
 theorem strain_decay_monotone (h₀ r₁ r₂ : ℝ)
     (hh : h₀ > 0) (hr1 : r₁ > 0) (hr2 : r₂ > 0) (hr : r₁ < r₂) :
     h₀ / r₂ < h₀ / r₁ :=
@@ -68,6 +69,7 @@ theorem gw_energy_nonneg (coeff hdot : ℝ) (hcoeff : coeff ≥ 0) :
     coeff * hdot ^ 2 ≥ 0 := mul_nonneg hcoeff (sq_nonneg _)
 
 
+/-- [Section: ## Part IV: Causal Diamonds and Holographic Bounds] -/
 theorem causal_diamond_scaling (tau1 tau2 k : ℝ)
     (hk : k > 0) (ht1 : tau1 > 0) (h : tau2 > tau1) :
     k * tau2 ^ 4 > k * tau1 ^ 4 := by
@@ -78,6 +80,7 @@ theorem bekenstein_hawking_positive (A lP : ℝ) (hA : A > 0) (hlP : lP > 0) :
     A / (4 * lP ^ 2) > 0 := by positivity
 
 
+/-- [Section: ## Part V: Gravitational Lensing] -/
 theorem deflection_positive (G M c b : ℝ)
     (hG : G > 0) (hM : M > 0) (hc : c > 0) (hb : b > 0) :
     4 * G * M / (c ^ 2 * b) > 0 := by positivity
@@ -97,6 +100,7 @@ theorem gravitational_time_dilation (phi1 phi2 : ℝ)
   Real.sqrt_lt_sqrt (by linarith) (by linarith)
 
 
+/-- [Section: ## Part VI: Cosmological Observables] -/
 theorem cosmological_redshift_positive (a_obs a_emit : ℝ)
     (he : a_emit > 0) (h : a_obs > a_emit) :
     a_obs / a_emit - 1 > 0 := by

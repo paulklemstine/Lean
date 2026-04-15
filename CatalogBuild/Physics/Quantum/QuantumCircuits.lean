@@ -231,6 +231,8 @@ def QuantumCircuit.identity (G : Type*) (n : ℕ) : QuantumCircuit G n where
   gates := []
 
 
+/-- [Section: ## §10: Circuit Composition and Depth
+Formalizing circuit depth and composition for complexity analysis.] -/
 theorem QuantumCircuit.depth_identity (G : Type*) (n : ℕ) :
     (QuantumCircuit.identity G n).depth = 0 := rfl
 

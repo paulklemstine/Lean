@@ -7,6 +7,7 @@ Declarations: 8
 
 import Mathlib
 
+/-- [Section: ### Quadratic Residues] -/
 def IsQuadraticResidue (a n : ℕ) : Prop :=
   ∃ x : ℕ, x ^ 2 % n = a % n
 
@@ -26,6 +27,7 @@ theorem qr_mul_qr (a b n : ℕ) (ha : IsQuadraticResidue a n) (hb : IsQuadraticR
   exact ⟨x * y, by rw [mul_pow]; simp [Nat.mul_mod, hx, hy]⟩
 
 
+/-- [Section: ### Difference of Squares] -/
 theorem fermat_factoring_identity (a b : ℤ) :
     4 * (a * b) = (a + b) ^ 2 - (b - a) ^ 2 := by ring
 

@@ -14,6 +14,7 @@ def stereoConfFactor' (d : ℕ) (x : Fin d → ℝ) : ℝ :=
   2 / (1 + ∑ i, (x i) ^ 2)
 
 
+/-- [Section: ## Part 2: SGD Convergence Bound] -/
 def stereoLearningRate (baseRate : ℝ) (step : ℕ) : ℝ :=
   baseRate / Real.sqrt (1 + step)
 
@@ -34,6 +35,7 @@ theorem stereoLearningRate_decreasing (baseRate : ℝ) (s t : ℕ)
   · exact Real.sqrt_le_sqrt (by exact_mod_cast Nat.add_le_add_left hst 1)
 
 
+/-- [Section: ## Part 3: Capacity and Expressiveness] -/
 def stereoEffectiveDim (n : ℕ) : ℕ := n + 1
 
 
@@ -45,6 +47,7 @@ theorem stereo_capacity_lower_bound (n : ℕ) :
     stereoEffectiveDim n = n + 1 := rfl
 
 
+/-- [Section: ## Part 4: Comparison with Standard Training] -/
 def standardGradMagnitude (qNorm kNorm sqrtD : ℝ) : ℝ :=
   qNorm * kNorm / sqrtD
 
@@ -66,6 +69,7 @@ theorem standard_gradient_unbounded (R : ℝ) (hR : 1 ≤ R) :
   exact ⟨R, 1, le_refl _, hR, by unfold standardGradMagnitude; simp⟩
 
 
+/-- [Section: ## Part 5: Regularization via Spherical Geometry] -/
 def sphericalRegularizer (seqLen d : ℕ) (X : Fin seqLen → Fin d → ℝ)
     (invStereo : (Fin d → ℝ) → Fin (d + 1) → ℝ) : ℝ :=
   let meanKernel := (∑ i : Fin seqLen, ∑ j : Fin seqLen,

@@ -183,6 +183,7 @@ theorem fermat_identity_landscape (x y : ℤ) :
     x ^ 2 - y ^ 2 = (x - y) * (x + y) := by ring
 
 
+/-- [Section: ## §10: Fermat's Method Connection] -/
 theorem fermat_from_factors (p q : ℤ) (hp : Odd p) (hq : Odd q) :
     p * q = ((p + q) / 2) ^ 2 - ((q - p) / 2) ^ 2 := by
   obtain ⟨ m, rfl ⟩ := hp; obtain ⟨ n, rfl ⟩ := hq; ring;
@@ -215,6 +216,10 @@ theorem lorentz_preservation_M1 (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
   nlinarith
 
 
+/-- [Section: ## §11: Berggren M₂ Eigenvalue Discovery
+The dominant eigenvalue of M₂ is 3 + 2√2 = (1+√2)² ≈ 5.828.
+This explains the exponential growth of hypotenuses along the all-mid path.
+We verify the characteristic polynomial identity.] -/
 theorem lorentz_preservation_M2 (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (a + 2*b + 2*c)^2 + (2*a + b + 2*c)^2 - (2*a + 2*b + 3*c)^2 = 0 := by
   nlinarith

@@ -15,6 +15,7 @@ def restrictFamily {α : Type*} [DecidableEq α]
   F.image (· ∩ S)
 
 
+/-- [Section: ## Restriction Operator] -/
 theorem restrictFamily_idempotent {α : Type*} [DecidableEq α]
     (F : Finset (Finset α)) (S : Finset α) :
     restrictFamily (restrictFamily F S) S = restrictFamily F S := by
@@ -41,6 +42,7 @@ def Shatters' {α : Type*} [DecidableEq α]
   S.powerset ⊆ restrictFamily F S
 
 
+/-- [Section: ## Shattering] -/
 theorem shatters_mono' {α : Type*} [DecidableEq α]
     {F G : Finset (Finset α)} (h : F ⊆ G) {S : Finset α}
     (hF : Shatters' F S) : Shatters' G S := by
@@ -59,6 +61,7 @@ def binomialSum (n d : ℕ) : ℕ :=
   ∑ i ∈ Finset.range (d + 1), n.choose i
 
 
+/-- [Section: ## Binomial Bounds] -/
 theorem binomialSum_zero (n : ℕ) : binomialSum n 0 = 1 := by
   simp [binomialSum]
 

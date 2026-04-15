@@ -22,6 +22,7 @@ theorem stereographic_parametrization (t : ℚ) (ht : 1 + t ^ 2 ≠ 0) :
   ring
 
 
+/-- [Section: ## Section 2: Rational Points on the Unit Circle] -/
 theorem stereographic_euclid (m n : ℤ) (hm : m ≠ 0) (hmn : m^2 + n^2 ≠ 0) :
     let t : ℚ := (n : ℚ) / m
     (1 - t^2) / (1 + t^2) = (m^2 - n^2 : ℤ) / (m^2 + n^2 : ℤ) := by
@@ -96,6 +97,7 @@ theorem pythagorean_hyp_largest_a (a b c : ℤ) (hb : 0 < b) (hc : 0 < c)
   nlinarith [sq_nonneg b]
 
 
+/-- [Section: ## Section 6: The Triangle Inequality for Pythagorean Triples] -/
 theorem pythagorean_hyp_largest_b (a b c : ℤ) (ha : 0 < a) (hc : 0 < c)
     (h : a^2 + b^2 = c^2) : b < c := by
   nlinarith [sq_nonneg a]
@@ -114,6 +116,10 @@ theorem two_representations (a b c d : ℤ) :
 5, 13, 17, 25, 29, 37, 41, ... -/
 theorem hyp_5_mod4 : 5 % 4 = 1 := by decide
 
+/-- [Section: ## Section 8: Primitive Triples and Prime Factorization
+Every primitive Pythagorean triple (a,b,c) has c as a product of primes ≡ 1 (mod 4).
+This is because c = m² + n² and a prime divides a sum of two squares iff it's 2 or ≡ 1 (mod 4).
+The Berggren tree thus organizes ALL products of primes ≡ 1 (mod 4)!] -/
 theorem hyp_13_mod4 : 13 % 4 = 1 := by decide
 
 theorem hyp_17_mod4 : 17 % 4 = 1 := by decide

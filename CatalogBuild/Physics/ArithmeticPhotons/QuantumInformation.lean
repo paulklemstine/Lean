@@ -254,6 +254,18 @@ def IsRatRotation (M : Matrix (Fin 3) (Fin 3) ℚ) : Prop :=
   Mᵀ * M = 1 ∧ Matrix.det M = 1
 
 
+/-- [Section: ## Part 11: Magic States and Beyond-Clifford Arithmetic
+Non-Clifford gates (like the T gate) take rational Bloch points to
+irrational ones. The T gate rotates by π/4 about Z, mapping
+(x,y,z) ↦ (x cos π/4 - y sin π/4, x sin π/4 + y cos π/4, z).
+Since cos(π/4) = 1/√2, this generically produces irrational coordinates.
+"Magic states" — the resource states for universal quantum computation —
+are precisely the NON-arithmetic qubits that cannot be described by
+Pythagorean quadruples.
+This gives a beautiful information-theoretic interpretation:
+- Clifford computation = arithmetic (rational Bloch sphere)
+- Universal computation = beyond arithmetic (irrational Bloch sphere)
+- The T gate is the "door" from number theory to analysis] -/
 theorem rat_rotation_preserves_rational (M : Matrix (Fin 3) (Fin 3) ℚ)
     (hM : IsRatRotation M) (p : RatSpherePoint) :
     let v : Fin 3 → ℚ := ![p.x, p.y, p.z]
@@ -274,6 +286,19 @@ theorem rat_rotation_preserves_rational (M : Matrix (Fin 3) (Fin 3) ℚ)
     rw [ horth ] ; norm_num [ vecHead, vecTail ] ; linarith! [ p.on_sphere ]
 
 
+/-- [Section: ## Part 12: Summary of the Quantum-Arithmetic Bridge
+The arithmetic photon paradigm reveals a deep structure in quantum
+information theory:
+1. **Qubit states ↔ Photon directions**: Both parametrized by S²
+2. **Clifford group ↔ Integer Lorentz group**: Both preserve rationality
+3. **Stabilizer states ↔ Axis-aligned photons**: The 6 Pauli eigenstates
+4. **Magic states ↔ Irrational photons**: Beyond arithmetic
+5. **Hopf fibration ↔ Quaternion parametrization**: SU(2) ↔ unit quaternions
+6. **Error correction ↔ Lattice symmetry**: Stabilizer codes ↔ integer symmetries
+The Gottesman-Knill theorem (Clifford circuits are classically simulable)
+becomes: "Integer arithmetic on the null cone is computationally easy."
+Universal quantum computation requires going beyond integers — to the
+irrational, transcendental points on the Bloch sphere.] -/
 theorem rational_bloch_from_quadruple (p : RatSpherePoint) :
     ∃ (a b c d : ℤ), d ≠ 0 ∧ a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2 ∧
     (a : ℚ) / d = p.x ∧ (b : ℚ) / d = p.y ∧ (c : ℚ) / d = p.z := by

@@ -46,6 +46,7 @@ theorem norm_mul (q₁ q₂ : IntQuaternion) :
   ring
 
 
+/-- [Section: ## Integer Quaternion Structure] -/
 theorem norm_eq_zero_iff (q : IntQuaternion) :
     q.norm = 0 ↔ q = ⟨0, 0, 0, 0⟩ := by
       constructor <;> intro h <;> simp_all +decide [ IntQuaternion.norm ];

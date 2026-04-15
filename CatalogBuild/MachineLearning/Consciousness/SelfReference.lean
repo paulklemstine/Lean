@@ -27,6 +27,7 @@ theorem reflexive_domain_fixed_point (D : ReflexiveDomain) (f : D.carrier → D.
   exact ⟨_, congr_fun hd d |> Eq.symm⟩
 
 
+/-- [Section: ## The Consciousness Fixed Point] -/
 theorem uncreated_theory_exists (T : TheorySpace)
     (stabilizes : ∃ θ₀ : T.Theory, ∃ n : ℕ,
       (T.refine^[n]) θ₀ = (T.refine^[n + 1]) θ₀) :
@@ -49,6 +50,7 @@ theorem self_model_fixed_point (S : SelfModelingSystem) :
   funext s; exact S.model_accurate s
 
 
+/-- [Section: ## Idempotent Self-Reference] -/
 theorem idempotent_self_reference {α : Type} (f : α → α)
     (idem : ∀ x, f (f x) = f x) (x : α) :
     f (f x) = f x := by
@@ -61,6 +63,7 @@ theorem retraction_has_fixed_points {α : Type} (f : α → α)
   grind +qlia
 
 
+/-- [Section: ## The Quine Theorem via Reflexive Domains] -/
 theorem quine_exists_in_reflexive_domain (D : ReflexiveDomain) :
     ∃ x : D.carrier, D.decode x x = x := by
   have := reflexive_domain_fixed_point D ( fun x => D.decode x x ) ; aesop;

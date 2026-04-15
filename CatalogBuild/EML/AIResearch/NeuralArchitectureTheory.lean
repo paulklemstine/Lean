@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## §1. Architecture Space Cardinality] -/
 def archSpace (d w : ℕ) : ℕ := w ^ d
 
 def emlArchSpace (d : ℕ) : ℕ := 3 ^ d
@@ -31,6 +32,7 @@ theorem eml_vs_standard_nas (d : ℕ) :
   eml_search_reduction d 10 (by omega)
 
 
+/-- [Section: ## §2. Depth-Width Tradeoffs] -/
 def denseParams (layers width : ℕ) : ℕ := layers * width * width
 
 theorem eml_param_efficiency (d w : ℕ) (hd : 0 < d) (hw : 5 ≤ w) :
@@ -43,6 +45,7 @@ theorem eml_depth_cheaper_than_width (d w : ℕ) (hd : 1 ≤ d) (hw : 2 ≤ w) :
   unfold emlParams; nlinarith
 
 
+/-- [Section: ## §3. Skip Connections and Residual EML] -/
 def gradientFlow (r : ℝ) (d : ℕ) : ℝ := r ^ d
 
 def residualGradientFlow (r : ℝ) (d : ℕ) : ℝ := 1 + r ^ d
@@ -58,6 +61,7 @@ theorem skip_prevents_vanishing (r : ℝ) (d : ℕ) :
   unfold gradientFlow residualGradientFlow; linarith
 
 
+/-- [Section: ## §4. Architecture Scoring] -/
 def archScore (accuracy : ℝ) (params : ℕ) : ℝ := accuracy / Real.sqrt ↑params
 
 
@@ -73,6 +77,7 @@ theorem score_mono_params (a : ℝ) (p1 p2 : ℕ) (ha : 0 ≤ a) (hp1 : 0 < p1) 
   unfold archScore; gcongr;
 
 
+/-- [Section: ## §5. EML Layer Composition] -/
 def emlExpressivity (d : ℕ) : ℕ := 3 ^ d
 
 

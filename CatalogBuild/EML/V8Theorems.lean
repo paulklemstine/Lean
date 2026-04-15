@@ -19,6 +19,7 @@ def eTower8 : ℕ → ℝ
 def tropEml8 (x y : ℝ) : ℝ := max x (-y)
 
 
+/-- [Section: ## Section 1: New Algebraic Identities] -/
 theorem eml8_not_idempotent : ∃ x : ℝ, eml8 x x ≠ x := by
   -- Use x=0: eml8(0,0) = exp(0) - log(0) = 1 - 0 = 1 ≠ 0 (since log(0) = 0 in Lean/Mathlib).
   use 0
@@ -89,6 +90,7 @@ theorem diag8_lower_bound_large (z : ℝ) (hz : 1 ≤ z) :
   linarith [ h_exp_ge_two_z z hz, Real.log_le_sub_one_of_pos ( zero_lt_one.trans_le hz ) ]
 
 
+/-- [Section: ## Section 3: E-Tower Advanced Properties] -/
 theorem eTower8_pos (n : ℕ) : 0 < eTower8 n := by
   induction' n with n ih;
   · exact zero_lt_one;
@@ -109,6 +111,7 @@ theorem eTower8_ge_n (n : ℕ) : eTower8 n ≥ n := by
   linarith [ Real.add_one_le_exp ( eTower8 n ) ]
 
 
+/-- [Section: ## Section 4: Inequalities and Bounds] -/
 theorem eml8_am_gm (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
     a + b - Real.log a - Real.log b ≥ 2 := by
   linarith [ Real.log_le_sub_one_of_pos ha, Real.log_le_sub_one_of_pos hb ]
@@ -134,6 +137,7 @@ theorem eml8_quadratic_bound (x y : ℝ) (hx : 0 ≤ x) :
   unfold eml8; linarith
 
 
+/-- [Section: ## Section 5: Composition and Functional Equations] -/
 theorem eml8_double_exp (x : ℝ) : eml8 (eml8 x 1) 1 = Real.exp (Real.exp x) := by
   unfold eml8; norm_num;
 
@@ -157,6 +161,7 @@ theorem eml8_log_exp (a b : ℝ) (ha : 0 < a) :
   unfold eml8; simp +decide [ Real.exp_log ha ] ;
 
 
+/-- [Section: ## Section 6: Tropical EML Properties] -/
 theorem tropEml8_not_comm : ∃ x y : ℝ, tropEml8 x y ≠ tropEml8 y x := by
   exact ⟨ 1, -1, by unfold tropEml8; norm_num ⟩
 
@@ -170,6 +175,7 @@ theorem tropEml8_zero_right (x : ℝ) : tropEml8 x 0 = max x 0 := by
   simp [tropEml8]
 
 
+/-- [Section: ## Section 7: Sign Classification] -/
 theorem eml8_pos_region (x y : ℝ) (hx : 0 < x) (hy1 : 0 < y) (hy2 : y ≤ 1) :
     eml8 x y > 0 := by
   exact sub_pos.mpr ( lt_of_le_of_lt ( Real.log_le_sub_one_of_pos hy1 ) ( by linarith [ Real.add_one_le_exp x ] ) )
@@ -188,6 +194,7 @@ theorem eml8_power (x : ℝ) (n : ℕ) : eml8 (n * x) 1 = (Real.exp x) ^ n := by
   norm_num [ ← Real.exp_nat_mul ]
 
 
+/-- [Section: ## Section 8: Continuity and Differentiability] -/
 theorem eml8_continuousOn : ContinuousOn (fun p : ℝ × ℝ => eml8 p.1 p.2) (Set.univ ×ˢ Set.Ioi 0) := by
   exact ContinuousOn.sub ( ContinuousOn.rexp continuousOn_fst ) ( ContinuousOn.log continuousOn_snd fun x hx => ne_of_gt hx.2 )
 

@@ -11,6 +11,7 @@ import Mathlib
 def harmonicQ' (n : ℕ) : ℚ := ∑ k ∈ Finset.range n, 1 / ((k : ℚ) + 1)
 
 
+/-- [Section: ## §1: Riemann Hypothesis — Analytic Number Theory] -/
 theorem harmonicQ'_zero : harmonicQ' 0 = 0 := by simp [harmonicQ']
 
 theorem harmonicQ'_one : harmonicQ' 1 = 1 := by simp [harmonicQ']
@@ -48,6 +49,7 @@ def parityB (n : ℕ) (x : Fin n → Bool) : Bool :=
   (Finset.univ.filter (fun i => x i = true)).card % 2 == 1
 
 
+/-- [Section: ## §2: P vs NP — Boolean Complexity] -/
 theorem parity_false (n : ℕ) : parityB n (fun _ => false) = false := by simp [parityB]
 
 
@@ -132,6 +134,7 @@ theorem ns_scale : (3 : ℚ) / 2 - 1 = 1/2 := by norm_num
 /-- Serrin exponent pairs (p,q) with 2/p + 3/q = 1. -/
 theorem serrin_46 : (2 : ℚ) / 4 + 3 / 6 = 1 := by norm_num
 
+/-- [Section: ## §4: Navier-Stokes — Energy Estimates] -/
 theorem serrin_84 : (2 : ℚ) / 8 + 3 / 4 = 1 := by norm_num
 
 
@@ -153,6 +156,7 @@ theorem adj_su (n : ℕ) (hn : 1 ≤ n) : n ^ 2 - 1 + 1 = n ^ 2 := by
   have : 1 ≤ n ^ 2 := by nlinarith
   omega
 
+/-- [Section: ## §5: Yang-Mills — Gauge Theory] -/
 theorem adj_su2 : 2 ^ 2 - 1 = (3 : ℕ) := by norm_num
 
 theorem adj_su3 : 3 ^ 2 - 1 = (8 : ℕ) := by norm_num
@@ -187,6 +191,7 @@ theorem dynkin_su2 : ((4 : ℚ) - 1) / (2 * 4) = 3/8 := by norm_num
 def bettiP (n k : ℕ) : ℕ := if k % 2 = 0 ∧ k ≤ 2 * n then 1 else 0
 
 
+/-- [Section: ## §6: Hodge Conjecture — Algebraic Geometry] -/
 theorem betti_p1 : (List.range 3).map (bettiP 1) = [1, 0, 1] := by decide
 
 theorem betti_p2 : (List.range 5).map (bettiP 2) = [1, 0, 1, 0, 1] := by decide
@@ -244,6 +249,7 @@ def goldbachOK (n : ℕ) : Bool :=
   (Finset.range (n+1) |>.filter (fun p => p.Prime ∧ (n - p).Prime ∧ p ≤ n/2)).card > 0
 
 
+/-- [Section: ## §7: Novel Cross-Domain Theorems] -/
 theorem goldbach_verified : ∀ k : Fin 49, goldbachOK (2 * (k.val + 2)) = true := by
   native_decide
 
@@ -283,6 +289,7 @@ def collatzR1 : ℕ → ℕ → Bool
 /-- Berggren matrices. -/
 def B₁r : Matrix (Fin 3) (Fin 3) ℤ := !![1, -2, 2; 2, -1, 2; 2, -2, 3]
 
+/-- [Section: ## §8: Berggren–Millennium Connections] -/
 def B₂r : Matrix (Fin 3) (Fin 3) ℤ := !![1, 2, 2; 2, 1, 2; 2, 2, 3]
 
 def B₃r : Matrix (Fin 3) (Fin 3) ℤ := !![-1, 2, 2; -2, 1, 2; -2, 2, 3]
@@ -301,6 +308,7 @@ def twinPrimeN (n : ℕ) : ℕ :=
   ((Finset.range n).filter (fun p => p.Prime ∧ (p + 2).Prime)).card
 
 
+/-- [Section: ## §9: Experimental Number Theory] -/
 theorem twin_100 : twinPrimeN 100 = 8 := by native_decide
 
 
@@ -330,6 +338,7 @@ theorem abundancy_perf (n : ℕ) (hn : 0 < n) (hp : sigD n = 2 * n) :
 def catN (n : ℕ) : ℕ := Nat.choose (2 * n) n / (n + 1)
 
 
+/-- [Section: ## §10: Catalan & Stirling Numbers] -/
 theorem cat_0 : catN 0 = 1 := by norm_num [catN]
 
 theorem cat_1 : catN 1 = 1 := by norm_num [catN]

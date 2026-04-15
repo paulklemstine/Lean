@@ -7,6 +7,7 @@ Declarations: 10
 
 import Mathlib
 
+/-- [Section: ## Boolean Functions and Basic Combinatorics] -/
 theorem hammingWeight_le {n : ℕ} (x : BoolFn n) : hammingWeight x ≤ n := by
   exact le_trans ( Finset.card_filter_le _ _ ) ( by norm_num )
 
@@ -24,6 +25,7 @@ theorem hammingDist_eq_zero_iff {n : ℕ} (x y : BoolFn n) :
       simp +decide [ hammingDist, funext_iff ]
 
 
+/-- [Section: ## Certificate Complexity] -/
 theorem empty_certificate_of_const {n : ℕ} (f : BoolFn n → Bool) (x : BoolFn n)
     (hconst : ∀ y, f y = f x) : IsCertificate f x ∅ := by
       exact fun y hy => hconst y
@@ -39,6 +41,7 @@ def boolLE {n : ℕ} (x y : BoolFn n) : Prop :=
   ∀ i : Fin n, x i = true → y i = true
 
 
+/-- [Section: ## Monotone Boolean Functions] -/
 theorem boolLE_refl {n : ℕ} (x : BoolFn n) : boolLE x x := by
   exact fun i hi => hi
 
@@ -57,6 +60,7 @@ theorem boolLE_antisymm {n : ℕ} (x y : BoolFn n) :
       · cases h : x i <;> cases h' : y i <;> simp_all +decide [ boolLE ]
 
 
+/-- [Section: ## Influence of Variables] -/
 theorem influence_const {n : ℕ} (b : Bool) (i : Fin n) :
     influence (fun _ : BoolFn n => b) i = 0 := by
       unfold influence; aesop;

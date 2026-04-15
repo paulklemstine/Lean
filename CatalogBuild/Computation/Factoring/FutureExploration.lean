@@ -41,6 +41,7 @@ theorem smooth_monotone (B B' n : ℕ) (hBB : B ≤ B') (hn : IsSmooth B n) :
 theorem lucas_recurrence (n : ℕ) : lucas (n + 2) = lucas (n + 1) + lucas n := rfl
 
 
+/-- [Section: ## II. Recurrence Sequences] -/
 theorem lucas_val_0 : lucas 0 = 2 := rfl
 
 theorem lucas_val_1 : lucas 1 = 1 := rfl
@@ -71,6 +72,7 @@ theorem birthday_collision (n : ℕ) (f : Fin (n + 1) → Fin n) :
   Fintype.exists_ne_map_eq_of_card_lt f (by simp)
 
 
+/-- [Section: ## III. Cross-Collision and Birthday Bounds] -/
 theorem orbit_eventually_periodic (n : ℕ) (_hn : 0 < n) (f : Fin n → Fin n)
     (x : Fin n) :
     ∃ i j : ℕ, i < j ∧ j ≤ n ∧ f^[i] x = f^[j] x := by
@@ -137,6 +139,7 @@ theorem wilson_zmod (p : ℕ) [Fact (Nat.Prime p)] :
     ((p - 1)! : ZMod p) = -1 := ZMod.wilsons_lemma p
 
 
+/-- [Section: ## VII. Multi-Lens Complexity Classes] -/
 theorem mlc_strict_hierarchy (S k : ℕ) (hS : 2 ^ (k + 1) ≤ S) :
     S / 2 ^ (k + 1) < S / 2 ^ k := by
   refine' Nat.div_lt_of_lt_mul _;
@@ -171,6 +174,7 @@ theorem qubit_savings_bound (S k : ℕ) :
   Nat.sqrt_le_sqrt (Nat.div_le_self S _)
 
 
+/-- [Section: ## VIII. Quantum Preprocessing Bounds] -/
 theorem nine_lens_qubit_savings (S : ℕ) (hS : 512 ≤ S) :
     Nat.sqrt (S / 512) < Nat.sqrt S := by
   rw [ Nat.sqrt_lt ];

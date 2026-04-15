@@ -18,6 +18,7 @@ theorem child_key_from_parent (parent_key offset : ZMod n) :
     bip32_child_key parent_key offset = parent_key + offset := rfl
 
 
+/-- [Section: ## §1: BIP-32 Key Derivation Algebraic Model] -/
 theorem parent_key_from_child (parent_key child_key offset : ZMod n)
     (h : child_key = bip32_child_key parent_key offset) :
     parent_key = child_key - offset := by
@@ -93,6 +94,7 @@ inductive DerivationType where
   deriving DecidableEq, Repr
 
 
+/-- [Section: ## §3: Hardened vs Non-Hardened Security Boundary] -/
 theorem nonhardened_upward_attack {n : ℕ} [Fact (Nat.Prime n)]
     (parent_priv child_priv offset : ZMod n)
     (h_derive : child_priv = parent_priv + offset) :

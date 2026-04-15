@@ -7,6 +7,9 @@ Declarations: 9
 
 import Mathlib
 
+/-- [Section: ## Fibonacci-Lattice Bridge
+The Fibonacci matrix [[1,1],[1,0]]^n has determinant (-1)^n,
+connecting Fibonacci arithmetic to lattice theory.] -/
 theorem cassini_identity (n : ℕ) (hn : 1 ≤ n) :
     (Nat.fib (n + 1) : ℤ) * Nat.fib (n - 1) - (Nat.fib n : ℤ) ^ 2 = (-1) ^ n := by
   rcases n with ( _ | _ | n ) <;> simp_all +decide [ Nat.fib_add_two ];
@@ -26,11 +29,13 @@ theorem units_card_prime (p : ℕ) [Fact (Nat.Prime p)] :
   exact Nat.totient_prime (Fact.out)
 
 
+/-- [Section: ## Orbit Analysis] -/
 theorem orbit_size_bound (n : ℕ) (hn : 0 < n) (f : Fin n → Fin n) (x : Fin n) :
     (Finset.image (fun k => f^[k] x) (Finset.range (n + 1))).card ≤ n := by
   exact le_trans ( Finset.card_le_univ _ ) ( by simpa )
 
 
+/-- [Section: ## Divisor Analysis] -/
 theorem min_divisor_bound (n : ℕ) (hn : 1 < n) (hc : ¬ Nat.Prime n) :
     n.minFac ≤ Nat.sqrt n := by
   -- Since n is composite, there exists a factor p such that 1 < p < n. Let's consider the smallest such p.
@@ -40,6 +45,7 @@ theorem min_divisor_bound (n : ℕ) (hn : 1 < n) (hc : ¬ Nat.Prime n) :
   exact Nat.le_sqrt.2 ( by nlinarith [ Nat.minFac_le_of_dvd ( by linarith ) ( dvd_of_mul_right_eq _ hq.symm ), Nat.minFac_le_of_dvd ( by nlinarith ) ( dvd_of_mul_left_eq _ hq.symm ) ] )
 
 
+/-- [Section: ## Golden Ratio and Search Reduction] -/
 theorem fib_ratio_bound (n : ℕ) (hn : 1 ≤ n) :
     Nat.fib (n + 1) ≤ 2 * Nat.fib n := by
   rcases n with ( _ | _ | n ) <;> simp_all +arith +decide [ Nat.fib_add_two ]

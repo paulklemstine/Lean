@@ -23,6 +23,9 @@ def ellipticDiscriminant (a b : ℤ) : ℤ := -16 * (4 * a ^ 3 + 27 * b ^ 2)
 def isEllipticCurve (a b : ℤ) : Prop := ellipticDiscriminant a b ≠ 0
 
 
+/-- [Section: # Birch and Swinnerton-Dyer — Formal Foundations
+We formalize key results about elliptic curves that underlie the BSD conjecture,
+including the Hasse bound on point counting and basic properties of the group law.] -/
 theorem curve_minus_x_is_elliptic : isEllipticCurve (-1) 0 := by
   -- We need to show that the discriminant is non-zero.
   unfold isEllipticCurve

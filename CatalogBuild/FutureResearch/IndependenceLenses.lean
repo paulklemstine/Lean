@@ -7,6 +7,8 @@ Declarations: 10
 
 import Mathlib
 
+/-- [Section: # Independence of Factoring Lenses
+CRT independence of residue lenses, k-lens reduction, and prime counting.] -/
 def residueLens (p ℓ : ℕ) : ℕ := p % ℓ
 
 

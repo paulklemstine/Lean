@@ -14,6 +14,7 @@ theorem proj_id_right (x₁ x₂ : ℝ) : proj x₁ x₂ 0 1 = (x₁, x₂) := b
   simp [proj]
 
 
+/-- [Section: ## Section 1: Projective SPB Group] -/
 theorem proj_id_left (x₁ x₂ : ℝ) : proj 0 1 x₁ x₂ = (x₁, x₂) := by
   simp [proj]
 
@@ -46,6 +47,7 @@ theorem proj_norm_mul (x₁ x₂ y₁ y₂ : ℝ) :
   simp only [proj]; ring
 
 
+/-- [Section: ## Section 2: Connection to Affine SPB] -/
 theorem proj_to_affine (x y : ℝ) (h : 1 - x * y ≠ 0) :
     (proj x 1 y 1).1 / (proj x 1 y 1).2 = spb x y := by
   unfold proj spb; aesop;
@@ -79,6 +81,7 @@ def projIter (x₁ x₂ : ℝ) : ℕ → ℝ × ℝ
   | n + 1 => proj x₁ x₂ (projIter x₁ x₂ n).1 (projIter x₁ x₂ n).2
 
 
+/-- [Section: ## Section 4: n-fold Projective SPB] -/
 theorem projIter_zero (x₁ x₂ : ℝ) : projIter x₁ x₂ 0 = (0, 1) := rfl
 
 

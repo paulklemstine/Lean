@@ -19,6 +19,7 @@ theorem eml_student_compact (L d : ℕ) (hd : 4 ≤ d) :
   exact Nat.mul_le_mul_right d this
 
 
+/-- [Section: ## §2. Distillation Temperature] -/
 def softTarget (logit T : ℝ) : ℝ := Real.exp (logit / T)
 
 
@@ -32,6 +33,7 @@ theorem temp_one_standard (z : ℝ) : softTarget z 1 = Real.exp z := by
   unfold softTarget; simp
 
 
+/-- [Section: ## §3. Feature Distillation] -/
 def featureProjectionParams (teacherDim studentDim : ℕ) : ℕ := teacherDim * studentDim
 
 def emlFeatureProjectionParams (studentDim : ℕ) : ℕ := 4 * studentDim
@@ -43,6 +45,7 @@ theorem eml_feature_projection_efficient (dt ds : ℕ) (hdt : 4 ≤ dt) :
   exact Nat.mul_le_mul_right ds hdt
 
 
+/-- [Section: ## §4. Layer-Wise Distillation] -/
 def layerDistillCost (numLayers projCostPerLayer : ℕ) : ℕ := numLayers * projCostPerLayer
 
 
@@ -51,6 +54,7 @@ theorem eml_layer_distill_cheaper (L proj_eml proj_std : ℕ) (hp : proj_eml ≤
   unfold layerDistillCost; exact Nat.mul_le_mul_left L hp
 
 
+/-- [Section: ## §5. Self-Distillation] -/
 def selfDistillPerf (basePerf gain : ℝ) (rounds : ℕ) : ℝ := basePerf + gain * ↑rounds
 
 
@@ -59,6 +63,7 @@ theorem more_self_distill_better (p g : ℝ) (r1 r2 : ℕ) (hg : 0 ≤ g) (hr : 
   unfold selfDistillPerf; nlinarith [Nat.cast_le (α := ℝ).mpr hr]
 
 
+/-- [Section: ## §6. Progressive Distillation] -/
 def progressiveSteps (initialSteps round : ℕ) : ℕ := initialSteps / 2 ^ round
 
 
@@ -69,6 +74,7 @@ theorem progressive_fewer_steps (s r1 r2 : ℕ) (hr : r1 ≤ r2) :
     (Nat.pos_of_ne_zero (by positivity))
 
 
+/-- [Section: ## §7. Multi-Teacher Ensemble] -/
 def ensembleDistillCost (numTeachers teacherCost studentFwdCost : ℕ) : ℕ :=
   numTeachers * teacherCost + studentFwdCost
 
@@ -81,6 +87,7 @@ theorem eml_ensemble_cheaper (n tc sc_eml sc_std : ℕ) (hs : sc_eml ≤ sc_std)
   unfold emlEnsembleDistillCost ensembleDistillCost; omega
 
 
+/-- [Section: ## §8. Distillation Loss Decomposition] -/
 def distillLoss (alpha hardLoss T softLoss : ℝ) : ℝ :=
   alpha * hardLoss + (1 - alpha) * T ^ 2 * softLoss
 
@@ -107,6 +114,7 @@ theorem smaller_student_more_compression (t s1 s2 : ℕ) (hs1 : 0 < s1) (hs : s1
   unfold compressionRatio; exact Nat.div_le_div_left hs hs1
 
 
+/-- [Section: ## §10. EML Distillation Speedup] -/
 def distillEpochs (teacherSize studentSize : ℕ) : ℕ := teacherSize / studentSize
 
 

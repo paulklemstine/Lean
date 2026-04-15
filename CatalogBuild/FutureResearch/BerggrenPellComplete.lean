@@ -25,6 +25,7 @@ def B2iter : ℕ → ℤ × ℤ × ℤ
 def B2hyp (n : ℕ) : ℤ := (B2iter n).2.2
 
 
+/-- [Section: ## §2. Computational verification] -/
 theorem B2iter_0 : B2iter 0 = (3, 4, 5) := rfl
 
 theorem B2iter_1 : B2iter 1 = (21, 20, 29) := by native_decide
@@ -47,6 +48,7 @@ theorem B2hyp_3 : B2hyp 3 = 985 := by native_decide
 theorem B2hyp_4 : B2hyp 4 = 5741 := by native_decide
 
 
+/-- [Section: ## §3. Pell recurrence: computational verification] -/
 theorem pell_rec_0 : B2hyp 2 = 6 * B2hyp 1 - B2hyp 0 := by native_decide
 
 theorem pell_rec_1 : B2hyp 3 = 6 * B2hyp 2 - B2hyp 1 := by native_decide
@@ -54,6 +56,7 @@ theorem pell_rec_1 : B2hyp 3 = 6 * B2hyp 2 - B2hyp 1 := by native_decide
 theorem pell_rec_2 : B2hyp 4 = 6 * B2hyp 3 - B2hyp 2 := by native_decide
 
 
+/-- Computational verification -/
 theorem B2hyp_mod4_0 : B2hyp 0 % 4 = 1 := by native_decide
 
 theorem B2hyp_mod4_1 : B2hyp 1 % 4 = 1 := by native_decide
@@ -71,11 +74,13 @@ theorem B2_leg_diff_even (n : ℕ) (hn : n % 2 = 0) (hn_lt : n < 5) :
   interval_cases n <;> simp_all <;> native_decide
 
 
+/-- [Section: ## §5. Leg difference property] -/
 theorem B2_leg_diff_odd (n : ℕ) (hn : n % 2 = 1) (hn_lt : n < 5) :
     (B2iter n).1 - (B2iter n).2.1 = 1 := by
   interval_cases n <;> simp_all <;> native_decide
 
 
+/-- [Section: ## §6. B₂ preserves Pythagorean property] -/
 theorem B2iter_pyth_0 : (B2iter 0).1^2 + (B2iter 0).2.1^2 = (B2iter 0).2.2^2 := by native_decide
 
 theorem B2iter_pyth_1 : (B2iter 1).1^2 + (B2iter 1).2.1^2 = (B2iter 1).2.2^2 := by native_decide
@@ -106,6 +111,7 @@ def pellSeq : ℕ → ℤ × ℤ
               2 * (pellSeq n).1 + 3 * (pellSeq n).2)
 
 
+/-- [Section: ## §9. Pell equation connection] -/
 theorem pell_0 : pellSeq 0 = (1, 0) := rfl
 
 theorem pell_1 : pellSeq 1 = (3, 2) := by native_decide

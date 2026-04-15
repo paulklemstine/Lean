@@ -27,6 +27,7 @@ noncomputable def maximinValue (n m : ℕ) (losses : Fin n → Fin m → ℝ) : 
   ⨆ j, ⨅ i, losses i j
 
 
+/-- [Section: ## §1. The Prediction Game] -/
 theorem weak_duality (n m : ℕ) [NeZero n] [NeZero m]
     (losses : Fin n → Fin m → ℝ) :
     maximinValue n m losses ≤ minimaxValue n m losses := by
@@ -47,6 +48,7 @@ theorem expert_regret_bound_nonneg (n T : ℕ) (hn : 0 < n) (hT : 0 < T) :
   Real.sqrt_nonneg _
 
 
+/-- [Section: ## §2. Regret Theory] -/
 theorem average_regret_vanishes (n : ℕ) (hn : 0 < n) :
     Filter.Tendsto (fun T : ℕ => Real.sqrt (Real.log n / (2 * T)))
       Filter.atTop (nhds 0) := by

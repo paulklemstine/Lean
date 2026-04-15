@@ -80,6 +80,9 @@ def Oracle'.knowsAtLeast {X : Type*} (O₁ O₂ : Oracle' X) : Prop :=
   O₂.truthSet ⊆ O₁.truthSet
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+PART II: THE ORACLE LATTICE
+═══════════════════════════════════════════════════════════════════════] -/
 theorem knows_refl' {X : Type*} (O : Oracle' X) : O.knowsAtLeast O :=
   Subset.rfl
 
@@ -120,6 +123,9 @@ theorem spectral_decomposition' (P : LinearOracle' F V) :
   simp [LinearMap.mem_ker, P.idem_apply]
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+PART III: SPECTRAL TRUTH — LINEAR ORACLES
+═══════════════════════════════════════════════════════════════════════] -/
 theorem truth_illusion_trivial' (P : LinearOracle' F V) :
     LinearMap.ker P.proj ⊓ LinearMap.range P.proj = ⊥ := by
   simp +decide [ Submodule.eq_bot_iff ];
@@ -170,6 +176,9 @@ def Oracle'.iterate' {X : Type*} (O : Oracle' X) : ℕ → X → X
   | n + 1 => O.map ∘ O.iterate' n
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+PART V: ORACLE DYNAMICS
+═══════════════════════════════════════════════════════════════════════] -/
 theorem oracle_iterate_stabilizes' {X : Type*} (O : Oracle' X) :
     ∀ n, O.iterate' (n + 1) = O.map := by
   intro n; induction n <;> simp_all +decide [ funext_iff, Oracle'.iterate' ] ;
@@ -204,6 +213,9 @@ def compressionRatio' (n : ℕ) (O : Oracle' (Fin n)) : ℚ :=
   else (Finset.filter (fun x => O.map x = x) Finset.univ).card / n
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+PART VI: THE MASTER EQUATION
+═══════════════════════════════════════════════════════════════════════] -/
 theorem compression_ratio_le_one' {n : ℕ} (hn : 0 < n) (O : Oracle' (Fin n)) :
     compressionRatio' n O ≤ 1 := by
   unfold compressionRatio';

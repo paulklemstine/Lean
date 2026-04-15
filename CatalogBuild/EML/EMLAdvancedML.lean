@@ -55,6 +55,7 @@ theorem eml_sample_complexity (d w k : ℕ) (eps : ℝ) :
   ring
 
 
+/-- [Section: ## §2. PAC-Learning Sample Complexity] -/
 theorem eml_sample_depth_mono (d1 d2 w k : ℕ) (eps : ℝ)
     (hw : 0 < w) (hk : 0 < k) (h : d1 ≤ d2) :
     pacSampleBound (emlVCDim d1 w) eps k ≤ pacSampleBound (emlVCDim d2 w) eps k := by
@@ -82,6 +83,7 @@ def studentParams (depth width : ℕ) : ℕ := 4 * depth * width
 def compressionRatio (teacher student : ℕ) : ℕ := teacher / student
 
 
+/-- [Section: ## §3. Knowledge Distillation] -/
 theorem distillation_compression (tl tw sd sw : ℕ)
     (htw : 5 ≤ tw) (hsd : 0 < sd)
     (h : sd * sw ≤ tl * tw) :
@@ -122,6 +124,7 @@ def emlNormBound (depth width : ℕ) (maxWeight : ℝ) : ℝ :=
   maxWeight ^ 2 * (4 * ↑depth * ↑width)
 
 
+/-- [Section: ## §4. Regularization Theory] -/
 theorem eml_norm_advantage (depth width : ℕ) (maxW : ℝ)
     (hd : 0 < depth) (hw : 5 ≤ width) (hmw : 0 < maxW) :
     emlNormBound depth width maxW < maxW ^ 2 * (↑depth * ↑width * (↑width + 1)) := by
@@ -198,6 +201,7 @@ theorem feature_coalitions_growth (d : ℕ) :
 def emlFeatureCount (d : ℕ) : ℕ := 4 * d
 
 
+/-- [Section: ## §7. EML Feature Importance] -/
 theorem eml_feature_tractable (d : ℕ) (hd : 5 ≤ d) :
     emlFeatureCount d < featureCoalitions d := by
   simp +arith +decide [ emlFeatureCount, featureCoalitions ];

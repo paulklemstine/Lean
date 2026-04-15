@@ -53,6 +53,7 @@ theorem euclidean_complete' (n : ℕ) : CompleteSpace (EuclideanSpace ℝ (Fin n
   inferInstance
 
 
+/-- [Section: ## Banach Fixed Point Theorem] -/
 theorem banach_fixed_point' {X : Type*} [MetricSpace X] [CompleteSpace X]
     [Nonempty X] (f : X → X) (k : ℝ) (hk0 : 0 ≤ k) (hk1 : k < 1)
     (hf : ∀ x y, dist (f x) (f y) ≤ k * dist x y) :

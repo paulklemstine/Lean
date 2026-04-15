@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: FutureResearch
-Declarations: 38
+Declarations: 39
 -/
 
 import Mathlib
@@ -49,6 +49,12 @@ theorem four_square_mul_closure (n₁ n₂ : ℤ)
   exact ⟨_, _, _, _, (euler_four_square_identity a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂).symm⟩
 
 
+/-- Second BF decomposition. -/
+theorem brahmagupta_fibonacci' (a b c d : ℤ) :
+    (a ^ 2 + b ^ 2) * (c ^ 2 + d ^ 2) =
+    (a * c + b * d) ^ 2 + (a * d - b * c) ^ 2 := by ring
+
+
 /-- If N has two representations as sum of two squares, the cross-terms
 produce factor candidates. -/
 theorem bf_gcd_factor_principle (a b c d N : ℤ)
@@ -58,6 +64,7 @@ theorem bf_gcd_factor_principle (a b c d N : ℤ)
   constructor <;> linarith [brahmagupta_fibonacci a b c d, brahmagupta_fibonacci' a b c d]
 
 
+/-- [Section: ## §3. Lattice Factor Extraction] -/
 theorem short_vector_pair_factor (v w N : ℕ) (hN : 1 < N)
     (hv : 0 < v) (hw : 0 < w) (hvN : v < N) (hwN : w < N)
     (hdvd : N ∣ v * w) :
@@ -87,6 +94,7 @@ theorem within_tuple_channels (k : ℕ) :
 /-- Concrete channel counts for various k. -/
 theorem channels_k2 : Nat.choose 2 2 + 2 ^ 2 = 5 := by decide
 
+/-- [Section: ## §4. Cross-Collision Theory] -/
 theorem channels_k4 : Nat.choose 4 2 + 4 ^ 2 = 22 := by decide
 
 theorem channels_k8 : Nat.choose 8 2 + 8 ^ 2 = 92 := by decide
@@ -135,6 +143,7 @@ theorem berggren_tree_count (d : ℕ) : 3 ^ d ≥ 1 := Nat.one_le_pow d 3 (by om
 We verify for concrete small values. -/
 theorem berggren_tree_total_0 : ∑ i ∈ range 1, 3 ^ i = 1 := by decide
 
+/-- [Section: ## §5. Berggren Tree] -/
 theorem berggren_tree_total_1 : ∑ i ∈ range 2, 3 ^ i = 4 := by decide
 
 theorem berggren_tree_total_2 : ∑ i ∈ range 3, 3 ^ i = 13 := by decide
@@ -162,6 +171,7 @@ theorem tropical_variety_cases (a b c : ℤ) (h : min a b = c) :
   · exact Or.inr ⟨not_le.mp hab, h.symm⟩
 
 
+/-- [Section: ## §7. Channel Capacity] -/
 theorem channel_quadratic (k : ℕ) (hk : 2 ≤ k) :
     k ≤ k * (k + 1) / 2 := by
   rw [ Nat.le_div_iff_mul_le ] <;> nlinarith

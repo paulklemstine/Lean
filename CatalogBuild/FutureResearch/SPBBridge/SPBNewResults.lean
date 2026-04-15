@@ -22,16 +22,19 @@ theorem euler_machin_unique (a b : ℤ) (ha : 2 ≤ a) (hb : 2 ≤ b) (hab : a �
   constructor <;> nlinarith
 
 
+/-- [Section: ## Section 4: Three-Leaf Machin Formulas] -/
 theorem hutton_formula : spb (spb (1/3 : ℝ) (1/3)) (1/7) = 1 := by
   unfold spb; norm_num
 
 
+/-- [Section: ## Section 5: SPB Derivative] -/
 theorem spb_hasDerivAt (a x₀ : ℝ) (h : 1 - x₀ * a ≠ 0) :
     HasDerivAt (fun x => spb x a) ((1 + a ^ 2) / (1 - x₀ * a) ^ 2) x₀ := by
   convert HasDerivAt.div ( HasDerivAt.add ( hasDerivAt_id x₀ ) ( hasDerivAt_const _ _ ) ) ( HasDerivAt.sub ( hasDerivAt_const _ _ ) ( HasDerivAt.mul ( hasDerivAt_id x₀ ) ( hasDerivAt_const _ _ ) ) ) h using 1 ; ring;
   norm_num ; ring
 
 
+/-- [Section: ## Section 10: Quadratic Residue Connection (p±1 Law Foundation)] -/
 theorem neg_one_square_iff_mod4 (p : ℕ) [hp : Fact (Nat.Prime p)] (hp2 : p ≠ 2) :
     IsSquare (-1 : ZMod p) ↔ p % 4 = 1 := by
   rw [ FiniteField.isSquare_neg_one_iff ];

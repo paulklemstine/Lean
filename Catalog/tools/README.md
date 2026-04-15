@@ -85,8 +85,12 @@ python3 tools/catalog.py all \
 1. **Deduplication**: Only canonical declarations are emitted (one per duplicate group)
 2. **Shared modules**: High-frequency duplicates (e.g., `brahmagupta_fibonacci` in 63 files) get extracted to `Shared/` modules
 3. **Import fixup**: All `import` statements are recalculated — removed declarations are replaced by imports to their canonical location
-4. **Hierarchy**: Files are organized by domain/subdomain matching the directory structure
-5. **Build config**: `lakefile.toml` and `lean-toolchain` are auto-generated
+4. **Descriptions**: Each declaration gets a `/-- ... -/` doc comment in the build output, sourced from (in priority order):
+   - `/-- ... -/` doc comments from the original source
+   - `--` line comments immediately preceding the declaration
+   - `/-! ... -/` section/module comments (attached to the first declaration after the section)
+5. **Hierarchy**: Files are organized by domain/subdomain matching the directory structure
+6. **Build config**: `lakefile.toml` and `lean-toolchain` are auto-generated
 
 ## Output structure
 
@@ -113,6 +117,7 @@ CatalogBuild/
 | File | Purpose |
 |------|---------|
 | `catalog.py` | Unified CLI entry point (extract, rescan, build, validate, all) |
+| `rescan` | Shell alias for `catalog.py rescan` with default paths |
 | `extract_catalog.py` | Extraction logic — scans .lean files into DB |
 | `build_catalog.py` | Build logic — generates source from DB |
 | `validate_catalog.py` | Validation — checks build integrity |

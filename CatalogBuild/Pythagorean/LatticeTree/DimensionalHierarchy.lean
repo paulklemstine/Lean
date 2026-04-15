@@ -57,6 +57,7 @@ theorem pell_minus_trivial (l mu : ℤ) (h : l^2 - mu^2 = 1) : mu = 0 := by
   omega
 
 
+/-- [Section: ## Section 3: Generalized No-Boost Theorem] -/
 theorem pell_minus_lambda_unit (l mu : ℤ) (h : l^2 - mu^2 = 1) :
     l = 1 ∨ l = -1 := by
       have mu_zero : mu = 0 := pell_minus_trivial l mu h;
@@ -172,6 +173,7 @@ theorem factor_extraction_sound (N g : ℤ) (hN : 1 < N) (hg : g ∣ N)
   nlinarith
 
 
+/-- [Section: ## Section 9: New Proposed Theorems] -/
 theorem minkowski_exponent_gap (d₁ d₂ : ℕ) (h1 : 1 ≤ d₁) (h2 : d₁ < d₂) :
     (1 : ℚ) / d₂ < 1 / d₁ := by
       gcongr

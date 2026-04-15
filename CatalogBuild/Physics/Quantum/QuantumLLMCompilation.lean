@@ -43,6 +43,7 @@ theorem linearization_dimension_lower_bound (n regions : ℕ) (hr : 0 < regions)
 theorem qubit_dimension (k : ℕ) : 0 < 2 ^ k := by positivity
 
 
+/-- [Section: ## Part 3: Logarithmic Qubit Bound] -/
 theorem exponential_compression (k : ℕ) (hk : 0 < k) : k < 2 ^ k := by
   exact?
 

@@ -40,6 +40,7 @@ structure HeckeOperator (n : ℕ) where
   is_prime : Nat.Prime prime
 
 
+/-- [Section: # Spectral Reciprocity and New Bridge Theorems] -/
 theorem ramanujan_gap_explicit (q : ℕ) (hq : q ≥ 1) :
     (q : ℝ) + 1 - 2 * Real.sqrt q ≥ ((Real.sqrt q : ℝ) - 1) ^ 2 := by
   linarith [ Real.mul_self_sqrt ( Nat.cast_nonneg q ) ]

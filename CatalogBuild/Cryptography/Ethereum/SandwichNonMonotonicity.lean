@@ -28,6 +28,7 @@ noncomputable def netSandwichProfit (x y v f : ℝ) : ℝ :=
   sandwichGain x y v f - y * f ^ 2 / (x * (x + f))
 
 
+/-- [Section: ## Core Theorems] -/
 theorem sandwich_gain_at_zero (x y v : ℝ) :
     sandwichGain x y v 0 = 0 := by
   unfold sandwichGain; ring
@@ -68,6 +69,7 @@ theorem sandwich_nonmonotone (x y v : ℝ)
     exact lt_of_sub_pos ( by ring_nf; positivity )
 
 
+/-- [Section: ## Optimal Front-Run Size] -/
 noncomputable def optimalFrontRun (x v : ℝ) : ℝ :=
   Real.sqrt (x * (x + v)) - x
 
@@ -79,6 +81,7 @@ theorem optimal_front_run_pos (x v : ℝ) (hx : 0 < x) (hv : 0 < v) :
   exact sub_pos_of_lt (Real.lt_sqrt_of_sq_lt (by nlinarith))
 
 
+/-- [Section: ## Composability Under Flash Loans] -/
 noncomputable def flashSandwichProfit (x y v f γ : ℝ) : ℝ :=
   netSandwichProfit x y v f - γ * f
 

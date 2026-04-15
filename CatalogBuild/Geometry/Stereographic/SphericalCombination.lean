@@ -12,6 +12,7 @@ theorem cos_sq_add_sin_sq_eq_one' (θ : ℝ) : cos θ ^ 2 + sin θ ^ 2 = 1 := by
   have := sin_sq_add_cos_sq θ; linarith
 
 
+/-- [Section: ### Spherical Combination Norm] -/
 theorem spherical_combination_norm_sq (θ φ : ℝ) :
     (cos φ) ^ 2 * ((cos θ) ^ 2 + (sin θ) ^ 2) + (sin φ) ^ 2 = 1 := by
   norm_num [ Real.cos_sq_add_sin_sq ]
@@ -22,6 +23,7 @@ theorem spherical_combination_expanded (θ φ : ℝ) :
   convert spherical_combination_norm_sq θ φ using 1 ; ring
 
 
+/-- [Section: ### Gram-Schmidt Orthogonality] -/
 theorem gram_schmidt_orthogonality (a : ℝ) : a - a * 1 = 0 := by
   ring
 

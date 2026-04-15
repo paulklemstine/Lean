@@ -14,6 +14,7 @@ theorem spbHyp_def (x y : ℝ) :
     spbHyp x y = (x + y) / (1 + x * y) := rfl
 
 
+/-- [Section: ## Shared Algebraic Structure] -/
 theorem spbCirc_identity (x : ℝ) : spbCirc x 0 = x := by simp [spbCirc]
 
 theorem spbHyp_identity (x : ℝ) : spbHyp x 0 = x := by simp [spbHyp]

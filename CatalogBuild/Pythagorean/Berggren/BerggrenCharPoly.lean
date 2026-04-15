@@ -100,6 +100,7 @@ theorem B1_B2_product : BM₁ * BM₂ = !![1, 4, 4; 4, 7, 8; 4, 8, 9] := by
   native_decide
 
 
+/-- [Section: ## Direction #42: Commutator Analysis] -/
 theorem B2_B1_product : BM₂ * BM₁ = !![9, (-8), 12; 8, (-9), 12; 12, (-12), 17] := by
   native_decide
 

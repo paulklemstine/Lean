@@ -62,6 +62,7 @@ theorem independence_ceiling (S : ℕ) (hS : 0 < S) (k : ℕ)
     (Nat.pow_le_pow_right (by norm_num) hk)
 
 
+/-- [Section: ## Open Question 3: Lens Independence Bound] -/
 theorem strict_lens_improvement (S k : ℕ) (hS : 2 ^ (k + 1) ≤ S) :
     S / 2 ^ (k + 1) < S / 2 ^ k := by
   refine' Nat.div_lt_of_lt_mul _;
@@ -110,6 +111,7 @@ theorem grover_bound (N : ℕ) : N < (Nat.sqrt N + 1) ^ 2 :=
   Nat.lt_succ_sqrt' N
 
 
+/-- [Section: ## Discovery 3: Cross-Collision Structure] -/
 theorem orbit_revisit (n : ℕ) (hn : 0 < n) (f : Fin n → Fin n) (x : Fin n) :
     ∃ i j : ℕ, i < j ∧ j ≤ n ∧ f^[i] x = f^[j] x := by
   have h_pigeonhole : ∃ i j : ℕ, i < j ∧ j ≤ n ∧ f^[i] x = f^[j] x := by
@@ -159,6 +161,7 @@ theorem mlc_grade_characterization (S k : ℕ) (hS : 0 < S) (hk : 1 ≤ k) :
   Nat.div_lt_self hS (Nat.one_lt_two_pow_iff.mpr (by omega))
 
 
+/-- [Section: ## Cryptographic Application: Lens Resistance] -/
 theorem rsa_resists_small_lenses (p q m : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
     (hpm : m < p) (hqm : m < q) (hm : 1 < m) :
     ¬(m ∣ p * q) := by

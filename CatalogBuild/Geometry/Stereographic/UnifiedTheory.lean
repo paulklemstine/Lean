@@ -45,6 +45,7 @@ theorem pole_map_is_involution (a t : ℝ) (ht : t ≠ a)
   grind +ring
 
 
+/-- [Section: ## Part I: The Mirror — Involutions and Self-Reflection] -/
 theorem pole_map_fixed_point_equation (a t : ℝ) (ht : t ≠ a) :
     poleM a t = t ↔ t ^ 2 - 2 * a * t - 1 = 0 := by
   -- By definition of poleM, we have poleM a t = (a * t + 1) / (t - a).
@@ -97,6 +98,7 @@ theorem west_point_neg_unity : sigmaInv (-1) = (-1, 0) := by
   unfold sigmaInv; norm_num
 
 
+/-- [Section: ## Part II: Heaven and Hell — The Poles of Infinity] -/
 theorem heaven_and_back (t : ℝ) : sigma (sigmaInv t) = t := by
   unfold sigma sigmaInv; ring_nf ;
   -- Simplify the expression to get $t$.
@@ -157,6 +159,7 @@ theorem integer_poles_elliptic_nonpos (a b : ℝ) :
   rw [integer_poles_elliptic]; nlinarith [sq_nonneg (a - b)]
 
 
+/-- [Section: ## Part III: Light Connects Fixed Points] -/
 theorem hyperbolic_two_fixed_points (a b c d : ℝ) (hc : c ≠ 0)
     (hΔ : 0 < moebiusDiscriminant a b c d) :
     ∃ t₁ t₂ : ℝ, t₁ ≠ t₂ ∧
@@ -182,6 +185,7 @@ theorem fixed_point_iff (a b c d t : ℝ) (hd : c * t + d ≠ 0) :
   unfold moebius; rw [ div_eq_iff hd ] ; constructor <;> intros <;> linarith;
 
 
+/-- [Section: ## Part IV: The Cross-Ratio — The Invariant of Light] -/
 theorem moebius_difference (a b c d z₁ z₂ : ℝ)
     (h₁ : c * z₁ + d ≠ 0) (h₂ : c * z₂ + d ≠ 0) :
     moebius a b c d z₁ - moebius a b c d z₂ =
@@ -209,6 +213,7 @@ theorem det_is_gaussian_product (a b : ℝ) :
   ring
 
 
+/-- [Section: ## Part V: The Grand Synthesis] -/
 theorem composition_transitivity (a b c t : ℝ)
     (h1 : (a - b) * t + (a * b + 1) ≠ 0)
     (h2 : (b - c) * moebiusF a b t + (b * c + 1) ≠ 0) :

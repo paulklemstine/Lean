@@ -20,6 +20,7 @@ theorem volume_quotient_pos (R : ℝ) (hR : 0 < R) (g : ℕ) (hg : 0 < g) :
   unfold volumeQuotient; positivity
 
 
+/-- [Section: ## Part I: General Theory of Spherical Space Forms] -/
 theorem volume_quotient_lt (R : ℝ) (hR : 0 < R) (g : ℕ) (hg : 1 < g) :
     volumeQuotient R g < volumeQuotient R 1 := by
       -- Rewrite this inequality in terms of the volume formula.
@@ -88,6 +89,7 @@ theorem pds_no_octupole : 3 ∉ pdsAllowedModes := by decide
 theorem pds_first_mode : pdsAllowedModes[1]! = 6 := by decide
 
 
+/-- [Section: ## Part IV: Other Spherical Space Forms] -/
 def binaryTetrahedralOrder : ℕ := 24
 
 def binaryOctahedralOrder : ℕ := 48

@@ -35,6 +35,8 @@ theorem berggren_M2_pos_a (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
     0 < a + 2*b + 2*c := by linarith
 
 
+/-- [Section: ## Section 2: Positivity Preservation
+For the tree to work, we need all three children to have positive components.] -/
 theorem berggren_M2_pos_b (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
     0 < 2*a + b + 2*c := by linarith
 
@@ -73,6 +75,9 @@ def pathsAtDepth : ℕ → List TreePath
   | d + 1 => (pathsAtDepth d).flatMap fun p => [.left p, .mid p, .right p]
 
 
+/-- [Section: ## Section 3: Node Counting
+The Berggren tree is a complete ternary tree: each node has exactly 3 children.
+Therefore depth d contains exactly 3^d nodes.] -/
 theorem pathsAtDepth_length : ∀ d : ℕ, (pathsAtDepth d).length = 3 ^ d := by
   intro d; induction d with
   | zero => simp [pathsAtDepth]

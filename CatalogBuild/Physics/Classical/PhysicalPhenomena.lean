@@ -13,6 +13,7 @@ noncomputable section
 def sphereSurfaceArea (R : ℝ) : ℝ := 4 * Real.pi * R ^ 2
 
 
+/-- [Section: ## Part I: Holographic Principle] -/
 theorem holographic_subvolumetric (R : ℝ) (hR : 1 < R) :
     sphereSurfaceArea R < sphereVolume R * 3 := by
   unfold sphereSurfaceArea sphereVolume;
@@ -38,6 +39,7 @@ theorem born_prob_sum_one {n : ℕ} (ψ : QuantumState n) :
   exact ψ.normalized
 
 
+/-- [Section: ## Part II: Quantum Measurement as Oracle Query] -/
 theorem measurement_is_oracle_query {n : ℕ} (ψ : QuantumState n)
     (i : Fin n) (hi : 0 < bornProb ψ i) :
     0 ≤ -Real.logb 2 (bornProb ψ i) := by
@@ -54,6 +56,7 @@ def blackHoleEntropy (G M c ℏ : ℝ) : ℝ :=
   A / (4 * l_P_sq)
 
 
+/-- [Section: ## Part III: Black Hole Information] -/
 theorem bh_entropy_quadratic (G c ℏ : ℝ) (hG : 0 < G) (hc : 0 < c) (hℏ : 0 < ℏ)
     (M : ℝ) (hM : 0 < M) :
     blackHoleEntropy G (2 * M) c ℏ = 4 * blackHoleEntropy G M c ℏ := by
@@ -74,6 +77,7 @@ in time t is at most 2Et / (π ℏ). -/
 def lloydBound (E t ℏ : ℝ) : ℝ := 2 * E * t / (Real.pi * ℏ)
 
 
+/-- [Section: ## Part IV: The Universe as a Computation] -/
 theorem lloyd_nonneg (E t ℏ : ℝ) (hE : 0 ≤ E) (ht : 0 ≤ t) (hℏ : 0 < ℏ) :
     0 ≤ lloydBound E t ℏ := by
   exact div_nonneg ( mul_nonneg ( mul_nonneg zero_le_two hE ) ht ) ( mul_nonneg Real.pi_pos.le hℏ.le )
@@ -94,6 +98,7 @@ def universalComputationBound (surfaceArea k_B T ℏ : ℝ) : ℝ :=
   maxOpsPerSec
 
 
+/-- [Section: ## Part V: The Meta-Physical Theorem] -/
 theorem universal_bound_nonneg (A k_B T ℏ : ℝ)
     (hA : 0 ≤ A) (hk : 0 < k_B) (hT : 0 < T) (hℏ : 0 < ℏ) :
     0 ≤ universalComputationBound A k_B T ℏ := by

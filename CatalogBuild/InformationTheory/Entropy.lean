@@ -70,6 +70,7 @@ lemma kl_term_bound {p q : ℝ} (hp : 0 < p) (hq : 0 < q) :
   linarith
 
 
+/-- [Section: ## Gibbs' Inequality] -/
 theorem gibbs_inequality {α : Type*} [Fintype α] (p q : α → ℝ)
     (hp_nonneg : ∀ x, 0 ≤ p x) (hq_nonneg : ∀ x, 0 ≤ q x)
     (hq_pos : ∀ x, p x > 0 → q x > 0)
@@ -88,6 +89,7 @@ theorem gibbs_inequality {α : Type*} [Fintype α] (p q : α → ℝ)
   · split_ifs <;> [ exact h_term x; exact div_le_iff₀ ( Real.log_pos one_lt_two ) |>.2 ( by nlinarith [ hp_nonneg x, hq_nonneg x, hq_pos x, show q x ≥ 0 from hq_nonneg x ] ) ]
 
 
+/-- [Section: ## Maximum Entropy] -/
 theorem entropy_le_log_card {α : Type*} [Fintype α] [Nonempty α]
     (p : α → ℝ) (hp_nonneg : ∀ x, 0 ≤ p x)
     (hp_sum : ∑ x : α, p x = 1) :
@@ -114,6 +116,7 @@ theorem entropy_le_log_card {α : Type*} [Fintype α] [Nonempty α]
   exact h_max_entropy p hp_nonneg hp_sum
 
 
+/-- [Section: ## Source Coding Lower Bound] -/
 theorem source_coding_lower_bound {α : Type*} [Fintype α]
     (p : α → ℝ) (ℓ : α → ℕ)
     (hp_nonneg : ∀ x, 0 ≤ p x)

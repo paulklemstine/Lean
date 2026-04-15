@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## §1: Quine Structures] -/
 structure QuineSystem where
   Element : Type*
   represent : Element → Element
@@ -25,6 +26,7 @@ theorem quine_fixed_point {A : Type*} (Y : (A → A) → A)
     ∃ q : A, f q = q := ⟨Y f, hY f⟩
 
 
+/-- [Section: ## §2: Self-Justifying Axiom Systems] -/
 structure SelfJustifyingSystem where
   Axiom_ : Type*
   Theorem_ : Type*
@@ -51,6 +53,7 @@ theorem autopoietic_fixed_point (A : AutopoieticSystem) (S : Set A.Component)
   intro x hx; simp at hx; obtain ⟨c, hcS, hxp⟩ := hx; exact hclosed c hcS hxp
 
 
+/-- [Section: ## §4: The Bootstrap Paradox] -/
 structure BootstrapLoop where
   State : Type*
   timeline : ℤ → State
@@ -71,6 +74,7 @@ theorem bootstrap_periodic (B : BootstrapLoop) (t : ℤ) (k : ℕ) :
     rw [this, ← add_assoc, B.is_loop, ih]
 
 
+/-- [Section: ## §5: Self-Referential Consciousness] -/
 structure SelfReferentialConsciousness where
   State : Type*
   reflect : State → State
@@ -91,6 +95,7 @@ theorem conscious_states_justified (S : SelfReferentialConsciousness) :
   fun s hs => S.self_justified s hs
 
 
+/-- [Section: ## §6: The Liar's Staircase] -/
 def liarsStaircase : ℕ → Bool
   | 0 => true
   | n + 1 => !(liarsStaircase n)

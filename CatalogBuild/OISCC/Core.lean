@@ -136,6 +136,7 @@ theorem EML_no_right_id : ¬ ∃ e : ℝ, ∀ x, EML x e = x := by
   linarith [Real.exp_one_gt_d9]
 
 
+/-- [Section: ## Section 3: Algebraic Non-Properties] -/
 theorem EML_no_left_id : ¬ ∃ e : ℝ, ∀ x, EML e x = x := by
   -- Assume for contradiction that such an $e$ exists.
   by_contra h

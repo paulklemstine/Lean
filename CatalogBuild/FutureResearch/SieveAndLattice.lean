@@ -2,10 +2,25 @@
 
 Auto-generated from theorem catalog database.
 Domain: FutureResearch
-Declarations: 27
+Declarations: 29
 -/
 
 import Mathlib
+
+/-- 1 is trivially B-smooth for any B. -/
+theorem isSmooth_one (B : ℕ) : IsSmooth 1 B := by
+  intro p hp hpd
+  exact absurd (hp.one_lt) (not_lt.mpr (Nat.le_of_dvd one_pos hpd))
+
+
+/-- Products of B-smooth numbers are B-smooth. -/
+theorem isSmooth_mul {a b B : ℕ} (ha : IsSmooth a B) (hb : IsSmooth b B) :
+    IsSmooth (a * b) B := by
+  intro p hp hpd
+  rcases hp.dvd_mul.mp hpd with h | h
+  · exact ha p hp h
+  · exact hb p hp h
+
 
 /-- Peel products are differences of squares: d² - x² = (d-x)(d+x). -/
 theorem peel_is_diff_of_squares (d x : ℤ) :

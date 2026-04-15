@@ -95,6 +95,7 @@ theorem cayley_dickson_norm_two (a b c d : ℤ) :
     (a^2 + b^2) * (c^2 + d^2) = (a*c + b*d)^2 + (a*d - b*c)^2 := by ring
 
 
+/-- [Section: ## §6. Sum-of-Divisors] -/
 theorem sigma1_mult_coprime (a b : ℕ) (ha : 0 < a) (hb : 0 < b)
     (h : Nat.Coprime a b) :
     sigma1 (a * b) = sigma1 a * sigma1 b := by
@@ -128,6 +129,7 @@ theorem berggrenA_preserves_pythagorean (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     (a - 2*b + 2*c)^2 + (2*a - b + 2*c)^2 = (2*a - 2*b + 3*c)^2 := by nlinarith
 
 
+/-- [Section: ## §7. Berggren Tree Structure] -/
 theorem berggrenB_preserves_pythagorean (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     (a + 2*b + 2*c)^2 + (2*a + b + 2*c)^2 = (2*a + 2*b + 3*c)^2 := by nlinarith
 

@@ -52,6 +52,14 @@ theorem berggren_eq_theta : Subgroup.closure {M1_SL2, M3_SL2} = GammaTheta := by
     · exact Subgroup.subset_closure (by right; ext i j; fin_cases i <;> fin_cases j <;> rfl)
 
 
+/-- [Section: ## ADE Tower: Group Orders
+The orders |SL(2,𝔽_p)| for small primes connect to the ADE classification
+via the McKay correspondence:
+- p = 2: |SL(2,𝔽₂)| = 6  (S₃, related to A₂)
+- p = 3: |SL(2,𝔽₃)| = 24 (binary tetrahedral = Ẽ₆)
+- p = 5: |SL(2,𝔽₅)| = 120 (binary icosahedral = Ẽ₈)
+- p = 7: |SL(2,𝔽₇)| = 336
+- p = 11: |SL(2,𝔽₁₁)| = 1320 (contains M₁₁ connection)] -/
 theorem SL2_F2_card :
     Fintype.card (Matrix.SpecialLinearGroup (Fin 2) (ZMod 2)) = 6 := by native_decide
 
@@ -80,6 +88,9 @@ theorem SL2_order_formula_p3 : 3 * (3 ^ 2 - 1) = 24 := by norm_num
 theorem SL2_order_formula_p5 : 5 * (5 ^ 2 - 1) = 120 := by norm_num
 
 
+/-- [Section: ## M₁₁ Connection
+PSL(2,𝔽₁₁) has order 660 = 1320/2 and embeds into the Mathieu group M₁₁
+of order 7920, acting on P¹(𝔽₁₁) = 12 points.] -/
 theorem PSL2_F11_order : 1320 / 2 = 660 := by norm_num
 
 theorem M11_order : 7920 = 2 ^ 4 * 3 ^ 2 * 5 * 11 := by norm_num

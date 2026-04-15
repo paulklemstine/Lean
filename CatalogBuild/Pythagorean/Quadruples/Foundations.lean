@@ -79,6 +79,7 @@ theorem signFlip0_isLorentz : IsLorentz4 signFlip0 := by
   unfold IsLorentz4 signFlip0 eta4; native_decide
 
 
+/-- [Section: ## Section 5: Null Cone Preservation] -/
 theorem R1111_preserves_Q4 (a b c d : ℤ) :
     Q4 (R1111.mulVec ![a, b, c, d]) = Q4 ![a, b, c, d] := by
   unfold Q4; simp +decide [ Matrix.mulVec ] ; ring;
@@ -108,6 +109,7 @@ theorem descent_strict_decrease (a b c d : ℤ)
   · linarith [sum_gt_hyp a b c d h ha hb hc hd]
 
 
+/-- [Section: ## Section 7: The Explicit Descent Action] -/
 theorem R1111_action (a b c d : ℤ) :
     R1111.mulVec ![a, b, c, d] = ![d - b - c, d - a - c, d - a - b, 2*d - a - b - c] := by
   ext i; fin_cases i <;> simp [R1111] <;> ring!;
@@ -144,6 +146,7 @@ def eulerParam (m n p q : ℤ) : Fin 4 → ℤ := fun i =>
   | 3 => m ^ 2 + n ^ 2 + p ^ 2 + q ^ 2
 
 
+/-- [Section: ## Section 9: The Euler Parametrization] -/
 theorem eulerParam_null (m n p q : ℤ) : IsNullQ4 (eulerParam m n p q) := by
   unfold IsNullQ4 Q4 eulerParam; ring;
 
@@ -160,6 +163,7 @@ theorem sameOrbit_refl (v : Fin 4 → ℤ) : SameOrbit v v := by
   · ext i; fin_cases i <;> simp [Matrix.mulVec, dotProduct, Matrix.one_apply]
 
 
+/-- [Section: ## Section 10: Orbit Structure] -/
 theorem sameOrbit_trans {u v w : Fin 4 → ℤ}
     (huv : SameOrbit u v) (hvw : SameOrbit v w) : SameOrbit u w := by
   -- By definition of SameOrbit, there exist matrices M₁ and M₂ such that M₁v = u and M₂w = v.
@@ -171,6 +175,7 @@ theorem sameOrbit_trans {u v w : Fin 4 → ℤ}
   simp +decide [ ← hM₁.2, ← hM₂.2, Matrix.mulVec_mulVec ]
 
 
+/-- [Section: ## Section 11: The Algebraic Identity] -/
 theorem descent_identity (a b c d : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     (d - b - c) ^ 2 + (d - a - c) ^ 2 + (d - a - b) ^ 2 = (2*d - a - b - c) ^ 2 := by
   linarith
@@ -185,6 +190,10 @@ def berggrenR111 : Matrix (Fin 3) (Fin 3) ℤ :=
 def Q3 (v : Fin 3 → ℤ) : ℤ := v 0 ^ 2 + v 1 ^ 2 - v 2 ^ 2
 
 
+/-- [Section: ## Section 12: Contrast with Pythagorean Triples
+For Pythagorean triples, the Berggren reflection through (1,1,1) gives descent.
+The analogue for quadruples is the reflection through (1,1,1,1).
+Both are reflections through the "all-ones" vector in their respective signatures.] -/
 theorem berggrenR111_preserves_Q3 : ∀ v : Fin 3 → ℤ,
     Q3 (berggrenR111.mulVec v) = Q3 v := by
   intro v;

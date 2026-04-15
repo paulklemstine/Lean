@@ -12,6 +12,7 @@ def collatz (n : ℕ) : ℕ :=
   if n % 2 = 0 then n / 2 else 3 * n + 1
 
 
+/-- [Section: ## Section 1: The Collatz Function] -/
 theorem collatz_even (n : ℕ) (h : 2 ∣ n) : collatz n = n / 2 := by
   exact if_pos ( Nat.mod_eq_zero_of_dvd h )
 
@@ -20,6 +21,7 @@ theorem collatz_odd (n : ℕ) (h : ¬ 2 ∣ n) : collatz n = 3 * n + 1 := by
   unfold collatz; aesop;
 
 
+/-- [Section: ## Section 2: Structural Properties] -/
 theorem collatz_pos (n : ℕ) (hn : n > 0) : collatz n > 0 := by
   exact Nat.pos_of_ne_zero ( by unfold collatz; split_ifs <;> omega )
 
@@ -28,6 +30,7 @@ theorem collatz_power_of_two (k : ℕ) : collatz (2 ^ (k + 1)) = 2 ^ k := by
   unfold collatz; norm_num [ pow_succ' ] ;
 
 
+/-- [Section: ## Section 3: Descent Lemma] -/
 theorem collatz_even_descent (n : ℕ) (hn : n > 0) (he : 2 ∣ n) :
     collatz n < n := by
   obtain ⟨ k, hk ⟩ := he;
@@ -40,6 +43,7 @@ theorem collatz_odd_then_even (n : ℕ) (hn : n > 0) (ho : ¬ 2 ∣ n) :
   norm_num [ Nat.dvd_iff_mod_eq_zero, Nat.add_mod, Nat.mul_mod, ho ]
 
 
+/-- [Section: ## Section 4: Modular Analysis] -/
 theorem collatz_mod2_zero (n : ℕ) (hn : n > 0) (h : n % 2 = 0) :
     collatz n < n := by
   exact collatz_even_descent n hn ( Nat.dvd_of_mod_eq_zero h )
@@ -51,6 +55,7 @@ theorem collatz_two_steps_odd (n : ℕ) (hn : n > 0) (ho : ¬ 2 ∣ n) :
   grind
 
 
+/-- [Section: ## Section 5: The 2-adic Valuation Connection] -/
 theorem collatz_descent_engine (n : ℕ) (hn : n > 0) (ho : n % 2 = 1) :
     ∃ k, k ≥ 1 ∧ (3 * n + 1) = 2 ^ k * ((3 * n + 1) / 2 ^ k) ∧
     ¬ 2 ∣ ((3 * n + 1) / 2 ^ k) := by

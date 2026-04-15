@@ -39,6 +39,7 @@ theorem BB2d_preserves : BB2dᵀ * Q21d * BB2d = Q21d := by native_decide
 theorem BB3d_preserves : BB3dᵀ * Q21d * BB3d = Q21d := by native_decide
 
 
+/-- [Section: ## Part 1: SO(3,1;ℤ) Descent for Pythagorean Quadruples] -/
 theorem det_BB1d : Matrix.det BB1d = 1 := by native_decide
 
 theorem det_BB2d : Matrix.det BB2d = -1 := by native_decide
@@ -158,6 +159,7 @@ theorem fund_domain_area : 3 * (Real.pi / 3) = Real.pi := by ring
 theorem ppt_counting_pos : (0 : ℝ) < 1 / (2 * Real.pi) := by positivity
 
 
+/-- [Section: ## Part 3: The r₂ Formula and Dirichlet Characters] -/
 theorem chi4_zero : chi4 0 = 0 := by simp [chi4]
 
 theorem chi4_two : chi4 2 = 0 := by simp [chi4]
@@ -239,6 +241,7 @@ def QM3 : Matrix (Fin 2) (Fin 2) ℤ := !![1, 2; 0, 1]
 def QS : Matrix (Fin 2) (Fin 2) ℤ := !![0, -1; 1, 0]
 
 
+/-- [Section: ## Part 4: Quantum Codes from Berggren Group] -/
 theorem det_QM1 : Matrix.det QM1 = 1 := by native_decide
 
 theorem det_QM3 : Matrix.det QM3 = 1 := by native_decide
@@ -368,6 +371,7 @@ theorem lambda_leading : (16 : ℤ) = 2 ^ 4 := by norm_num
 theorem gauss_bonnet : 3 * (Real.pi / 3) = Real.pi := by ring
 
 
+/-- [Section: ## Part 5: Hauptmodul — The Modular Lambda Function] -/
 theorem area_positive : Real.pi > 0 := Real.pi_pos
 
 
@@ -375,6 +379,7 @@ theorem area_positive : Real.pi > 0 := Real.pi_pos
 def berggrenFarey (a b c : ℤ) : ℚ := (b : ℚ) / (a + c)
 
 
+/-- [Section: ## Part 6: Cross-Cutting Connections] -/
 theorem farey_345 : berggrenFarey 3 4 5 = 1 / 2 := by simp [berggrenFarey]; norm_num
 
 theorem farey_51213 : berggrenFarey 5 12 13 = 2 / 3 := by simp [berggrenFarey]; norm_num

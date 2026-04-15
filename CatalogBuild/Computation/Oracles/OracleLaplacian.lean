@@ -20,6 +20,7 @@ def OracleProjection.anti (P : OracleProjection R M) : M →ₗ[R] M :=
   LinearMap.id - P.toLinearMap
 
 
+/-- [Section: ## §1: The Dialectical Operator] -/
 theorem anti_idempotent (P : OracleProjection R M) :
     P.anti ∘ₗ P.anti = P.anti := by
       ext x; exact (by
@@ -52,6 +53,7 @@ def oracleTransitions (n : ℕ) (O : FinOracle (n + 1)) : ℕ :=
     O ⟨i.val, by omega⟩ != O ⟨i.val + 1, by omega⟩)).card
 
 
+/-- [Section: ## §2: Oracle on Finite Types — Boundaries] -/
 theorem constant_oracle_no_transitions (n : ℕ) (b : Bool) :
     oracleTransitions n (fun (_ : Fin (n + 1)) => b) = 0 := by
       unfold oracleTransitions; aesop;
@@ -109,6 +111,7 @@ def blindSpotSize (O : ConfidentOracle n) (threshold : ℕ) : ℕ :=
   ((Finset.univ : Finset (Fin n)).filter (fun i => O.confidence i < threshold)).card
 
 
+/-- [Section: ## §4: Anti-Meta Oracle] -/
 theorem blind_spot_monotone (O : ConfidentOracle n) {t₁ t₂ : ℕ} (h : t₁ ≤ t₂) :
     blindSpotSize O t₁ ≤ blindSpotSize O t₂ := by
       exact Finset.card_le_card fun x hx => Finset.mem_filter.mpr ⟨ Finset.mem_univ _, lt_of_lt_of_le ( Finset.mem_filter.mp hx |>.2 ) h ⟩
@@ -156,6 +159,7 @@ def oracleHamming (O₁ O₂ : FinOracle n) : ℕ :=
   ((Finset.univ : Finset (Fin n)).filter (fun i => O₁ i != O₂ i)).card
 
 
+/-- [Section: ## §6: Oracle Information Geometry] -/
 theorem hamming_symm (O₁ O₂ : FinOracle n) :
     oracleHamming O₁ O₂ = oracleHamming O₂ O₁ := by
       -- The condition O₁ i != O₂ i is symmetric, so the sets of indices where they differ are the same.
@@ -190,6 +194,7 @@ def oracleTensorOr (O₁ : FinOracle n₁) (O₂ : FinOracle n₂) :
     Fin n₁ → Fin n₂ → Bool := fun i j => O₁ i || O₂ j
 
 
+/-- [Section: ## §7: Oracle Tensor Products] -/
 theorem tensor_de_morgan (O₁ : FinOracle n₁) (O₂ : FinOracle n₂)
     (i : Fin n₁) (j : Fin n₂) :
     !(oracleTensorAnd O₁ O₂ i j) = oracleTensorOr O₁.anti O₂.anti i j := by
@@ -217,6 +222,7 @@ def oracleMagnetization (O : FinOracle n) : ℤ :=
   ∑ i : Fin n, oracleToSpin O i
 
 
+/-- [Section: ## §8: Oracle Spin / Magnetization] -/
 theorem anti_magnetization (O : FinOracle n) :
     oracleMagnetization O.anti = -oracleMagnetization O := by
       unfold oracleMagnetization;

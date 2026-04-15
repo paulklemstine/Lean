@@ -28,6 +28,7 @@ def bleg_product (N : ℤ) (start len : ℕ) : ℤ :=
   (Finset.range len).prod (fun i => (N - 2 * (↑start + ↑i)) ^ 2 - 1)
 
 
+/-- [Section: ## Batch GCD Optimization] -/
 theorem factor_step_divides_bleg (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
     (hp2 : p ≠ 2) (hq2 : q ≠ 2) (hle : p ≤ q) :
     (↑p : ℤ) ∣ (↑(p * q) - 2 * ↑((p - 1) / 2)) ^ 2 - 1 := by
@@ -78,6 +79,7 @@ theorem cumulative_energy_drop (N : ℤ) (K : ℕ) :
   unfold energy_at; ring
 
 
+/-- [Section: ## Quadratic Residue Filter] -/
 theorem factor_square_condition (N p : ℕ) (k : ℕ) (hp : Nat.Prime p) (hdvd : p ∣ N)
     (hp2 : p ≠ 2) :
     (↑p : ℤ) ∣ ((↑N - 2 * ↑k) ^ 2 - 1) →

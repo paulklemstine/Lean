@@ -100,6 +100,7 @@ def totalInfo (I₀ Gamma t : ℝ) : ℝ :=
   mutualInfoDecay I₀ Gamma t + (I₀ - mutualInfoDecay I₀ Gamma t)
 
 
+/-- [Section: ## Part III: Experiment 2 — Decoherence ↔ Knowledge Loss] -/
 theorem totalInfo_conserved (I₀ Gamma t : ℝ) :
     totalInfo I₀ Gamma t = I₀ := by
   unfold totalInfo; ring

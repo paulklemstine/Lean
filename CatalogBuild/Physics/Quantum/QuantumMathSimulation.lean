@@ -21,6 +21,7 @@ def IsUnitaryGate {d : ℕ} (U : Matrix (Fin d) (Fin d) ℂ) : Prop :=
   U.conjTranspose * U = 1
 
 
+/-- [Section: ## Section 2: Unitarity Preserves Quantum States] -/
 theorem identity_is_unitary (d : ℕ) : IsUnitaryGate (1 : Matrix (Fin d) (Fin d) ℂ) := by
   -- The identity matrix is unitary because its conjugate transpose is itself, and multiplying it by itself gives the identity matrix.
   simp [IsUnitaryGate]
@@ -60,6 +61,9 @@ noncomputable def bellState : Fin 2 → Fin 2 → ℂ := fun i j =>
   if i = j then (↑(1 / Real.sqrt 2) : ℂ) else 0
 
 
+/-- [Section: ## Section 4: Entanglement — A Purely Mathematical Property
+A state ψ ∈ ℂ^(d₁ × d₂) is separable if it can be written as a ⊗ b.
+Otherwise it is entangled.] -/
 theorem bell_state_entangled : QEntangled bellState := by
   rintro ⟨ a, b, h ⟩;
   unfold bellState at h; aesop;
@@ -87,6 +91,7 @@ noncomputable def circuitUnitary {d : ℕ}
   gates.foldl (fun acc U => U * acc) 1
 
 
+/-- [Section: ## Section 5: Quantum Circuit Simulation is Matrix Multiplication] -/
 theorem circuit_composition {d : ℕ} (gates : List (Matrix (Fin d) (Fin d) ℂ))
     (ψ : Fin d → ℂ) :
     applyCircuit gates ψ = (circuitUnitary gates).mulVec ψ := by
@@ -102,6 +107,7 @@ theorem circuit_composition {d : ℕ} (gates : List (Matrix (Fin d) (Fin d) ℂ)
     simp +decide [ applyGate, Matrix.mulVec_mulVec ]
 
 
+/-- [Section: ## Section 6: The Exponential Barrier] -/
 theorem state_space_exponential (n : ℕ) :
     Fintype.card (Fin (2^n)) = 2^n := by
   convert Fintype.card_fin ( 2 ^ n )
@@ -122,6 +128,7 @@ noncomputable def hadamardGate : Matrix (Fin 2) (Fin 2) ℂ :=
   (↑(1 / Real.sqrt 2) : ℂ) • !![1, 1; 1, -1]
 
 
+/-- [Section: ## Section 7: Clifford Group — Efficiently Simulable Quantum Computation] -/
 theorem pauliX_unitary : IsUnitaryGate pauliX := by
   ext i j; fin_cases i <;> fin_cases j <;> norm_num [ Matrix.mul_apply, pauliX ] ;
 
@@ -153,6 +160,9 @@ theorem hadamard_conjugation :
   · norm_num [ ← Complex.ofReal_pow ]
 
 
+/-- [Section: ## Section 8: No-Cloning Theorem
+One of the most important results in quantum information: you cannot copy
+an unknown quantum state. This is a direct consequence of linearity.] -/
 theorem no_cloning_inner_product {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
     (ψ φ : V) (_hψ : ‖ψ‖ = 1) (_hφ : ‖φ‖ = 1)
     (h_clone : @inner ℂ V _ ψ φ = (@inner ℂ V _ ψ φ) ^ 2) :
@@ -160,6 +170,7 @@ theorem no_cloning_inner_product {V : Type*} [NormedAddCommGroup V] [InnerProduc
   exact eq_zero_or_one_of_sq_eq_self (id (Eq.symm h_clone))
 
 
+/-- [Section: ## Section 9: Quantum is Linear Algebra] -/
 theorem quantum_is_linear_algebra {d : ℕ} (U : Matrix (Fin d) (Fin d) ℂ)
     (ψ₁ ψ₂ : Fin d → ℂ) (h : ψ₁ = ψ₂) :
     U.mulVec ψ₁ = U.mulVec ψ₂ := by

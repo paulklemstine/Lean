@@ -102,6 +102,7 @@ theorem zeckendorf_bound (n k : ℕ) (hk : 2 ≤ k) (hn : n < Nat.fib (k + 2)) :
   lt_trans hn (MetaFactoring.fibonacci_search_reduction k hk)
 
 
+/-- [Section: ## Section 7: Fermat's Two-Square Theorem Application] -/
 theorem prime_one_mod4_sum_sq (p : ℕ) (hp : Nat.Prime p) (hmod : p % 4 = 1) :
     ∃ a b : ℤ, a ^ 2 + b ^ 2 = p := by
   have := Fact.mk hp;

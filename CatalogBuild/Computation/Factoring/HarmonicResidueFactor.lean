@@ -7,11 +7,13 @@ Declarations: 11
 
 import Mathlib
 
+/-- [Section: ## Part 1: The Difference of Squares Identity] -/
 theorem diff_sq_eq_factor (a b : ℤ) :
     a ^ 2 - b ^ 2 = (a - b) * (a + b) := by
   grind
 
 
+/-- [Section: ## Part 2: Fermat Factorization Correctness] -/
 theorem fermat_factor_nontrivial (N a b : ℤ) (hN : N = a ^ 2 - b ^ 2)
     (ha : a > 0) (hb : b > 0) (hab : a - b > 1) (hab2 : a > b) :
     (a - b > 1) ∧ (a + b > 1) ∧ N = (a - b) * (a + b) := by
@@ -23,6 +25,7 @@ theorem fermat_factor_divides (N a b : ℤ) (hN : N = a ^ 2 - b ^ 2) :
   exact ⟨ hN ▸ ⟨ a + b, by ring ⟩, hN ▸ ⟨ a - b, by ring ⟩ ⟩
 
 
+/-- [Section: ## Part 3: Existence of Difference-of-Squares Representations] -/
 theorem odd_composite_diff_sq (p q : ℤ) (hp : p > 1) (hq : q > 1)
     (hpodd : ¬ 2 ∣ p) (hqodd : ¬ 2 ∣ q) :
     ∃ a b : ℤ, a > b ∧ b ≥ 0 ∧ p * q = a ^ 2 - b ^ 2 := by
@@ -41,6 +44,7 @@ theorem diff_sq_construction (p q : ℤ) (hpodd : ∃ k, p = 2 * k + 1)
   norm_num [ Int.neg_ediv_of_dvd, dvd_mul_right ] ; ring
 
 
+/-- [Section: ## Part 4: Quadratic Residue Sieve Filter] -/
 theorem residue_sieve_filter (N a b m : ℤ) (hm : m > 0)
     (hN : N = a ^ 2 - b ^ 2) :
     (a ^ 2 - N) % m = (b ^ 2) % m := by
@@ -53,12 +57,14 @@ theorem residue_sieve_contrapositive (N a m : ℤ) (hm : m > 0)
   grind +qlia
 
 
+/-- [Section: ## Part 5: Multi-modulus Sieve (Chinese Remainder Acceleration)] -/
 theorem multi_sieve_elimination (N a : ℤ) (moduli : List ℤ)
     (h : ∃ m ∈ moduli, m > 0 ∧ ¬ ∃ c : ℤ, (c ^ 2) % m = (a ^ 2 - N) % m) :
     ¬ ∃ b : ℤ, N = a ^ 2 - b ^ 2 := by
   obtain ⟨ m, hm₁, hm₂, hm₃ ⟩ := h; exact fun ⟨ b, hb ⟩ => hm₃ ⟨ b, by rw [ hb ] ; ring ⟩ ;
 
 
+/-- [Section: ## Part 6: Bound on the Search Space] -/
 theorem fermat_search_bound (N p q : ℤ) (hp : p ≥ 1) (hq : q ≥ 1)
     (hN : N = p * q) (hpq : p ≤ q) :
     (p + q) / 2 ≤ (N + p) / 2 := by
@@ -71,6 +77,7 @@ theorem fermat_search_lower_bound (p q : ℤ) (hp : p ≥ 1) (hq : q ≥ 1)
   omega
 
 
+/-- [Section: ## Part 7: Compositeness Certificate] -/
 theorem compositeness_certificate (N a b : ℤ) (hN_pos : N > 0)
     (hN : N = a ^ 2 - b ^ 2) (hb_pos : b > 0)
     (h_lower : a - b > 1) (h_upper : a + b < N) :

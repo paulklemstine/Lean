@@ -7,6 +7,12 @@ Declarations: 35
 
 import Mathlib
 
+/-- [Section: ## Avenue 1: Fibonacci–Berggren Correspondence
+The Fibonacci sequence connects to Pythagorean triples: for any four consecutive
+Fibonacci numbers F_n, F_{n+1}, F_{n+2}, F_{n+3}, the triple
+(F_n · F_{n+3}, 2 · F_{n+1} · F_{n+2}, F_{n+1}² + F_{n+2}²)
+is a Pythagorean triple. We prove the underlying algebraic identity and
+key Fibonacci properties that enable this bridge.] -/
 theorem fibonacci_pythagorean_identity (a b : ℤ) :
     let p := a + b
     let q := b + p
@@ -37,6 +43,11 @@ theorem trace_B₁_sq : Matrix.trace (B₁' * B₁') = 3 := by
   native_decide +revert
 
 
+/-- [Section: ## Avenue 3: Hyperbolic/Lorentz Structure
+The Berggren matrices live in O(2,1,ℤ), preserving the Lorentz form
+Q(x,y,z) = x² + y² - z². We prove determinant and form-preservation
+properties that establish the Berggren group as a discrete subgroup of
+the Lorentz group.] -/
 theorem B₁_in_SO21 : Matrix.det B₁' = 1 ∧ B₁'ᵀ * Q_lor * B₁' = Q_lor := by
   native_decide +revert
 
@@ -57,6 +68,10 @@ theorem det_triple_product : Matrix.det (B₁' * B₂' * B₃') = -1 := by
   native_decide +revert
 
 
+/-- [Section: ## Avenue 4: 6-Divisibility of PPT Areas
+For any Pythagorean triple a² + b² = c², the product a·b is divisible by 6.
+Since the area of the right triangle is a·b/2, this means the area is always
+divisible by 3. For primitive triples (gcd = 1), the area is divisible by 6.] -/
 theorem pyth_prod_even (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     2 ∣ a * b := by
   rw [ Int.dvd_iff_emod_eq_zero ] ; replace h := congr_arg ( · % 4 ) h ; rcases Int.even_or_odd' a with ⟨ k, rfl | rfl ⟩ <;> rcases Int.even_or_odd' b with ⟨ l, rfl | rfl ⟩ <;> rcases Int.even_or_odd' c with ⟨ m, rfl | rfl ⟩ <;> ring_nf at * <;> norm_num [ Int.add_emod, Int.mul_emod ] at *;
@@ -80,6 +95,10 @@ theorem area_5_12_13 : 5 * 12 / 2 = (30 : ℤ) := by
   native_decide +revert
 
 
+/-- [Section: ## Avenue 5: Descent and Energy Functions
+The Inside-Out Factoring (IOF) energy function provides a descent on natural
+numbers. We formalize key properties of descent functions and prove that
+certain quadratic energy functions have finite critical points.] -/
 theorem quadratic_descent_positive (n : ℕ) (hn : 2 ≤ n) : 0 < n ^ 2 - n := by
   exact Nat.sub_pos_of_lt ( by nlinarith )
 
@@ -92,6 +111,9 @@ theorem elliptic_positivity (x n : ℤ) (hn : 0 < n) (hx : n < x) : 0 < x := by
   grind
 
 
+/-- [Section: ## Avenue 6: Spectral Properties / Cayley–Hamilton for Berggren Matrices
+The 2×2 Berggren matrices satisfy Cayley–Hamilton. We compute their
+characteristic polynomials and verify the eigenvalue structure.] -/
 theorem M₁_cayley_hamilton :
     let M : Matrix (Fin 2) (Fin 2) ℤ := !![2, -1; 1, 0]
     M * M - 2 • M + 1 = 0 := by
@@ -128,6 +150,9 @@ theorem tropical_det_M₁ : min (2 + 0) ((-1) + 1) = (0 : ℤ) := by
   decide +revert
 
 
+/-- [Section: ## Avenue 9: p-adic / Modular Pythagorean Triples
+We study Pythagorean triples modulo primes, establishing which primes
+can divide hypotenuses and what the mod-p structure looks like.] -/
 theorem pyth_mod_any (p : ℕ) : (3 ^ 2 + 4 ^ 2) % p = 5 ^ 2 % p := by
   rfl
 
@@ -156,6 +181,8 @@ theorem norm_mul_assoc (a₁ b₁ a₂ b₂ a₃ b₃ : ℤ) :
   ring
 
 
+/-- [Section: ## Cross-Avenue Synthesis Theorems
+These theorems connect multiple avenues, revealing the deep unity of the theory.] -/
 theorem berggren_345_child : B₁' *ᵥ ![3, 4, 5] = ![5, 12, 13] := by
   native_decide +revert
 

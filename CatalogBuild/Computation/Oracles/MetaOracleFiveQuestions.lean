@@ -91,6 +91,7 @@ structure ContractionMap (X : Type*) [MetricSpace X] where
   contract : ∀ x y, dist (f x) (f y) ≤ k * dist x y
 
 
+/-- [Section: ## Question 5: Finite Omega Approximation] -/
 theorem ContractionMap.iterate_dist_le {X : Type*} [MetricSpace X]
     (C : ContractionMap X) (x y : X) (n : ℕ) :
     dist (C.f^[n] x) (C.f^[n] y) ≤ C.k ^ n * dist x y := by

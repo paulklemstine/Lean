@@ -7,6 +7,7 @@ Declarations: 32
 
 import Mathlib
 
+/-- [Section: ## §1: Quantum Teleportation Networks] -/
 def teleportation_network_ebits (n : ℕ) : ℕ := n * (n - 1) / 2
 
 def star_network_ebits (n : ℕ) : ℕ := n - 1
@@ -21,6 +22,7 @@ theorem star_more_efficient (n : ℕ) (hn : 3 ≤ n) :
   rw [h1]; omega
 
 
+/-- [Section: ## §2: Black Hole Simulation] -/
 def black_hole_qubits (n_planck_masses : ℕ) : ℕ := n_planck_masses ^ 2
 
 
@@ -31,10 +33,12 @@ theorem stellar_black_hole_impossible : black_hole_qubits (10^38) = 10^76 := by
   simp [black_hole_qubits, ← pow_mul]
 
 
+/-- [Section: ## §4: Quantum Money Security] -/
 theorem quantum_money_security (n : ℕ) (hn : 1 ≤ n) : 3 ^ n < 4 ^ n :=
   Nat.pow_lt_pow_left (by norm_num : 3 < 4) (by omega : n ≠ 0)
 
 
+/-- [Section: ## §5: Quantum Chemistry / Terraforming] -/
 def chemistry_qubits (m_basis : ℕ) : ℕ := m_basis
 
 def co2_qubits_accurate : ℕ := chemistry_qubits 60
@@ -47,9 +51,11 @@ theorem terraforming_qubits : 100 * co2_qubits_accurate = 6000 := by
 theorem classical_chemistry_intractable : (2 : ℕ) ^ 60 > 10 ^ 17 := by norm_num
 
 
+/-- [Section: ## §6: Quantum ML Advantages] -/
 theorem quantum_kernel_advantage (n : ℕ) : n < 2 ^ n := Nat.lt_two_pow_self
 
 
+/-- [Section: ## §7: Protein Folding] -/
 def protein_interactions (L : ℕ) : ℕ := L * (L - 1) / 2
 
 def protein_folding_qubits (L : ℕ) : ℕ := L * L
@@ -64,6 +70,7 @@ theorem levinthal_paradox (L : ℕ) : L < 3 ^ L := by
     _ ≤ 3 ^ L := Nat.pow_le_pow_left (by norm_num) L
 
 
+/-- [Section: ## §8: Dyson Sphere Optimization] -/
 def dyson_configs (n : ℕ) : ℕ := Nat.factorial n
 
 
@@ -72,6 +79,7 @@ theorem dyson_20_configs : dyson_configs 20 > 10^18 := by native_decide
 theorem dyson_quantum_tractable : Nat.sqrt (dyson_configs 20) < 10^10 := by native_decide
 
 
+/-- [Section: ## §9: Quantum Error Correction at Scale] -/
 def concatenated_qubits (d k : ℕ) : ℕ := d ^ k
 
 
@@ -93,6 +101,7 @@ theorem surface_code_d21 : surface_code_qubits 21 = 841 := by
 theorem million_qubit_logical : 1000000 / surface_code_qubits 21 = 1189 := by native_decide
 
 
+/-- [Section: ## §10: Feasibility Assessments] -/
 inductive TRL where
   | level1 | level2 | level3 | level4 | level5
   | level6 | level7 | level8 | level9

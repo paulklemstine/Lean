@@ -7,6 +7,7 @@ Declarations: 62
 
 import Mathlib
 
+/-- [Section: ## §1: Core Definitions] -/
 inductive TPath' where
   | root : TPath'
   | left  : TPath' → TPath'
@@ -44,6 +45,11 @@ def isPythagorean (t : ℤ × ℤ × ℤ) : Prop :=
   t.1 ^ 2 + t.2.1 ^ 2 = t.2.2 ^ 2
 
 
+/-- [Section: ## §2: Lorentz Form Preservation
+The Berggren matrices preserve the Lorentz quadratic form x² + y² − z².
+This is the fundamental invariant connecting Pythagorean geometry to
+special relativity and hyperbolic geometry. For Pythagorean triples,
+the Lorentz form equals zero.] -/
 theorem bM1_preserves_lorentz (t : ℤ × ℤ × ℤ) :
     lorentzForm (bM1 t) = lorentzForm t := by
   simp only [lorentzForm, bM1]; ring
@@ -77,6 +83,10 @@ theorem pTree_pythagorean_of_root (root : ℤ × ℤ × ℤ) (h : isPythagorean 
   simp only [lorentzForm] at this; linarith
 
 
+/-- [Section: ## §3: The (0,1,1) Fixed-Point — Identity of the Meta Oracle
+(0,1,1) is the degenerate Pythagorean triple: the "identity element"
+analogous to the identity oracle. Its key property: it is a fixed point
+of M₁, and this fixed point is unique among non-negative triples with a=0.] -/
 theorem seed_is_pythagorean : isPythagorean (0, 1, 1) := by simp [isPythagorean]
 
 
@@ -123,6 +133,9 @@ theorem fund_not_M2_fixed : bM2 (3, 4, 5) ≠ (3, 4, 5) := by simp [bM2]
 theorem fund_not_M3_fixed : bM3 (3, 4, 5) ≠ (3, 4, 5) := by simp [bM3]
 
 
+/-- [Section: ## §4: Meta-to-Oracle Generation
+The meta oracle generates the oracle: applying M₂ or M₃ to (0,1,1)
+produces (4,3,5), a permutation of the fundamental triple (3,4,5).] -/
 theorem seed_M2_generates : bM2 (0, 1, 1) = (4, 3, 5) := by simp [bM2]
 
 theorem seed_M3_generates : bM3 (0, 1, 1) = (4, 3, 5) := by simp [bM3]
@@ -161,6 +174,10 @@ theorem oracle_embeds_in_meta (p : TPath') :
   | right p ih => simp only [embedMid, pTree]; rw [ih]
 
 
+/-- [Section: ## §5: Tree Embedding — The Oracle Inside the Meta Oracle
+The (4,3,5) Berggren tree embeds into the (0,1,1) tree. The embedding
+prepends a `.mid` (or `.right`) step at the root and preserves the tree
+structure above. This formalizes: the oracle is a subtree of the meta oracle.] -/
 theorem embedMid_injective : Function.Injective embedMid := by
   intro a b h;
   induction' a with a ih generalizing b;
@@ -208,6 +225,7 @@ theorem meta_oracle_left_iterates (n : ℕ) :
   | succ n ih => simp [leftN, pTree, bM1, ih]
 
 
+/-- [Section: ## §6: Hypotenuse Growth — Oracle Complexity Increases] -/
 theorem bM2_hypotenuse_growth (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
     (bM2 (a, b, c)).2.2 > c := by
   simp only [bM2]; nlinarith
@@ -219,6 +237,9 @@ theorem bM3_hypotenuse_growth (a b c : ℤ) (ha : 0 ≤ a) (hb : 0 < b) (hc : 0 
   simp only [bM3]; nlinarith
 
 
+/-- [Section: ## §7: Berggren Inverse Maps — Parent Recovery
+The Berggren matrices are invertible (det M₁ = 1, det M₂ = −1, det M₃ = 1).
+The inverses allow recovering the parent triple from any child.] -/
 def bM1_inv (t : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
   (t.1 + 2 * t.2.1 - 2 * t.2.2,
    -2 * t.1 - t.2.1 + 2 * t.2.2,
@@ -277,6 +298,10 @@ theorem descent_roundtrip : bM2 (bM2_inv (4, 3, 5)) = (4, 3, 5) := by
   rw [bM2_inv_right]
 
 
+/-- [Section: ## §8: Ternary Algebra Formalization
+The Berggren matrices define a ternary algebra: a set equipped with three
+endomorphisms. Both the (0,1,1) and (3,4,5) trees arise from the SAME algebra
+applied to different roots.] -/
 structure TernaryAlgebra (α : Type*) where
   op₁ : α → α
   op₂ : α → α
@@ -334,6 +359,9 @@ def lorentzHom : TernaryHom berggrenAlgebra trivialAlgebra where
   map_op₃ := fun t => by simp [berggrenAlgebra, trivialAlgebra, bM3_preserves_lorentz]
 
 
+/-- [Section: ## §9: Determinant Structure
+M₁ and M₃ have determinant 1; M₂ has determinant −1. All are invertible
+over ℤ and preserve the integer lattice.] -/
 theorem bM1_det : (1 : ℤ) * ((-1) * 3 - 2 * (-2)) - (-2) * (2 * 3 - 2 * 2) +
     2 * (2 * (-2) - (-1) * 2) = 1 := by norm_num
 
@@ -346,6 +374,7 @@ theorem bM3_det : (-1 : ℤ) * (1 * 3 - 2 * 2) - 2 * ((-2) * 3 - 2 * (-2)) +
     2 * ((-2) * 2 - 1 * (-2)) = 1 := by norm_num
 
 
+/-- [Section: ## §10: The Grand Isomorphism Theorem] -/
 theorem metaTree_pythagorean (p : TPath') :
     isPythagorean (pTree (0, 1, 1) p) :=
   pTree_pythagorean_of_root _ (by simp [isPythagorean]) p

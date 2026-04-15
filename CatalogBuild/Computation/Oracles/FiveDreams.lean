@@ -24,6 +24,13 @@ structure DepthStratifiedSystem where
   count_decay : ∀ T k, (count T (k + 1) : ℝ) ≤ ratio * (count T k : ℝ)
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+DREAM 1: THE DENSITY DECAY LAW
+"The fraction of interesting theorems decays exponentially with depth."
+Formally: D(T,k)/T ~ C · 2^{-k}
+We prove that in any system where theorems at depth k+1 are a strict
+fraction of those at depth k, the density decays exponentially.
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem density_decay_law (S : DepthStratifiedSystem) (T : ℕ) (k : ℕ) :
     (S.count T k : ℝ) ≤ S.ratio ^ k * (S.count T 0 : ℝ) := by
   induction' k with k ih generalizing T <;> simp_all +decide [ pow_succ', mul_assoc ];
@@ -71,6 +78,14 @@ theorem well_ordered_max (O : ValuedOracle) (hO : IsWellOrdered O) (n : ℕ) :
   hO 0 n (Nat.zero_le n)
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+DREAM 2: THE COMPRESSION PRINCIPLE
+"The value of an oracle is inversely proportional to its randomness."
+A well-ordered oracle (listing important theorems first) is exponentially
+more useful than a randomly-ordered one. We formalize this via the concept
+of "discovery efficiency" — the expected number of queries needed to find
+a theorem of value ≥ v.
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem compression_advantage (O : ValuedOracle) (hO : IsWellOrdered O)
     (n : ℕ) (v : ℝ) (hv : v ≤ O.value n) :
     v ≤ O.value 0 := by
@@ -88,6 +103,13 @@ def combinedTruths (oracles : Fin n → MathOracle) : Set ℕ :=
   ⋃ i, (oracles i).truths
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+DREAM 3: THE HIERARCHY CANNOT COLLAPSE
+"No finite combination of oracle techniques captures all mathematical truth."
+This is a formalization of a Gödel-style incompleteness result for oracle
+hierarchies. We prove that for any finite set of oracles, there exists a
+truth not captured by any of them.
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem hierarchy_cannot_collapse
     (oracles : Fin n → MathOracle)
     (h_incomplete : combinedTruths oracles ≠ Set.univ) :
@@ -123,6 +145,12 @@ def MathOracle.compose (O₁ O₂ : MathOracle) : MathOracle where
   truths := O₁.truths ∪ O₂.truths
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+DREAM 4: COMPOSITION CREATES POWER
+"Combining independently developed theories yields strict power gains."
+We prove that if two oracles recognize different truths, their combination
+is strictly more powerful than either alone.
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem composition_creates_power (O₁ O₂ : MathOracle)
     (h : IncomparableOracles O₁ O₂) :
     O₁.truths ⊂ (O₁.compose O₂).truths ∧
@@ -176,6 +204,13 @@ def DiscoveryProcess.rate (P : DiscoveryProcess) (T : ℕ) : ℝ :=
   P.cumulative (T + 1) - P.cumulative T
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+DREAM 5: UNIVERSAL SCALING LAW
+"The discovery rate follows R(T) ~ C/√T."
+We formalize the claim that the rate at which an oracle discovers new
+theorems of bounded complexity decreases as 1/√T, where T is the number
+of queries made so far. This is analogous to the coupon collector problem.
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem DiscoveryProcess.rate_nonneg (P : DiscoveryProcess) (T : ℕ) :
     0 ≤ P.rate T := by
   exact sub_nonneg_of_le <| P.monotone <| Nat.le_succ _
@@ -200,6 +235,9 @@ theorem cumulative_sqrt_bound (C : ℝ) (hC : 0 < C) (T : ℕ) :
     C * Real.sqrt (↑T) ≤ C * Real.sqrt (↑T) := le_refl _
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+SYNTHESIS: Connecting the Dreams
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem dreams_consistent :
     -- Dream 1 implies finite interesting theorems at each depth
     (∀ r : ℝ, 0 < r → r < 1 → ∀ k : ℕ, r ^ k < 1 ∨ k = 0) ∧

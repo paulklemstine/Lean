@@ -40,6 +40,7 @@ theorem fidelity_nonneg {n : ℕ} (ψ φ : ProofVector n) :
   exact norm_nonneg _
 
 
+/-- [Section: ## Section 3: Metric Properties] -/
 theorem self_fidelity_normalized {n : ℕ} (ψ : ProofVector n) (h : isNormalized ψ) :
     proofFidelity ψ ψ = proofNormSq ψ := by
   unfold proofFidelity proofNormSq proofInnerProduct;
@@ -68,6 +69,10 @@ def areOrthogonal {n : ℕ} (ψ φ : ProofVector n) : Prop :=
   proofInnerProduct ψ φ = 0
 
 
+/-- [Section: ## Section 4: Proof-Theoretic Interpretation
+Key insight: Two proofs are at Fubini-Study distance 0 iff they are
+the "same proof" up to a global phase (i.e., trivial refactoring).
+Orthogonal proofs (d = π/2) use completely disjoint techniques.] -/
 theorem orthogonal_zero_fidelity {n : ℕ} (ψ φ : ProofVector n)
     (h : areOrthogonal ψ φ) : proofFidelity ψ φ = 0 := by
   unfold proofFidelity; aesop;
@@ -80,6 +85,10 @@ structure ProofRefactoring (n : ℕ) where
     proofInnerProduct (transform ψ) (transform φ) = proofInnerProduct ψ φ
 
 
+/-- [Section: ## Section 5: Unitary Invariance (Proof Refactoring)
+A "proof refactoring" is a unitary transformation on proof space.
+The Fubini-Study metric is invariant under such transformations,
+meaning equivalent proofs have the same distance relationships.] -/
 theorem refactoring_preserves_fidelity {n : ℕ} (U : ProofRefactoring n)
     (ψ φ : ProofVector n) :
     proofFidelity (U.transform ψ) (U.transform φ) = proofFidelity ψ φ := by
@@ -98,6 +107,10 @@ noncomputable def proofSuperposition {n : ℕ} (α β : ℂ) (ψ φ : ProofVecto
   fun i => α * ψ i + β * φ i
 
 
+/-- [Section: ## Section 6: Proof Superposition Principle
+A proof in superposition represents uncertainty about which proof strategy
+to pursue. The "measurement" (choosing a strategy) collapses the superposition.
+This formalizes quantum proof search.] -/
 theorem superposition_norm {n : ℕ} (α β : ℂ) (ψ φ : ProofVector n) :
     proofNormSq (proofSuperposition α β ψ φ) =
     ‖α‖^2 * proofNormSq ψ + ‖β‖^2 * proofNormSq φ +

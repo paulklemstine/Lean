@@ -7,6 +7,10 @@ Declarations: 9
 
 import Mathlib
 
+/-- [Section: ## Section 9.1: The Lorentz Factor
+The Lorentz factor γ = 1/√(1 - v²/c²) governs time dilation and length
+contraction. Its properties determine the fundamental limits of relativistic
+travel.] -/
 theorem lorentz_denominator_pos (v c : ℝ) (hc : 0 < c) (hv : 0 ≤ v)
     (hsub : v < c) : 0 < 1 - (v / c) ^ 2 := by
   exact sub_pos_of_lt ( by rw [ div_pow, div_lt_iff₀ ] <;> nlinarith )
@@ -27,6 +31,9 @@ theorem lorentz_at_light_speed (c : ℝ) (hc : 0 < c) :
   norm_num [ hc.ne' ]
 
 
+/-- [Section: ## Section 9.2: Time Dilation and the Twin Paradox
+Time dilation means the traveling twin ages less. The ratio of elapsed
+times equals the Lorentz factor.] -/
 theorem time_dilation_factor_bound (v c : ℝ) (hc : 0 < c)
     (hv : 0 ≤ v) (hsub : v < c) :
     0 < Real.sqrt (1 - (v / c) ^ 2) ∧ Real.sqrt (1 - (v / c) ^ 2) ≤ 1 := by
@@ -38,6 +45,9 @@ theorem no_time_dilation_at_rest (c : ℝ) (hc : 0 < c) :
   norm_num
 
 
+/-- [Section: ## The Speed of Light is the Ultimate Speed Limit
+No massive object can reach or exceed the speed of light.
+This is a mathematical consequence of the Lorentz transformation.] -/
 theorem relativistic_velocity_addition_subluminal
     (v₁ v₂ c : ℝ) (hc : 0 < c)
     (hv₁ : 0 ≤ v₁) (hv₁c : v₁ < c)
@@ -47,6 +57,9 @@ theorem relativistic_velocity_addition_subluminal
   nlinarith
 
 
+/-- [Section: ## Energy-Mass Equivalence
+E = mc² is the most famous equation in physics and the power source
+for most science fiction technologies.] -/
 theorem energy_mass_proportional (m c : ℝ) (hc : 0 < c) (hm : 0 < m) :
     0 < m * c ^ 2 := by
   positivity

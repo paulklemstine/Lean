@@ -129,6 +129,7 @@ theorem universal_vs_adaptive_worst_case :
   intro ε hε; exact ⟨1/ε + 1, by linarith⟩
 
 
+/-- [Section: ## §10: Bit-Width Specific Distortion Values] -/
 theorem small_bitwidth_below_general_bound :
     (0.36 : ℝ) ≤ turboQuantGapFactor / 4^1 ∧
     (0.117 : ℝ) ≤ turboQuantGapFactor / 4^2 ∧

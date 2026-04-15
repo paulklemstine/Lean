@@ -2,12 +2,16 @@
 
 Auto-generated from theorem catalog database.
 Domain: Physics/ArithmeticPhotons
-Declarations: 56
+Declarations: 57
 -/
 
 import Mathlib
 
 noncomputable section
+
+/-- The Minkowski quadratic form Q(a,b,c) = a² + b² - c² in (2+1)d. -/
+def Q (a b c : ℝ) : ℝ := a ^ 2 + b ^ 2 - c ^ 2
+
 
 /-- The Minkowski bilinear form ⟨u,v⟩_η = a₁a₂ + b₁b₂ - c₁c₂. -/
 def eta (a₁ b₁ c₁ a₂ b₂ c₂ : ℝ) : ℝ := a₁ * a₂ + b₁ * b₂ - c₁ * c₂
@@ -90,6 +94,13 @@ theorem hyperboloid_self_inner (a b c : ℝ) (h : OnHyperboloid a b c) :
   simp [eta, Q] at *; nlinarith
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+TEAM Φ: HYPERBOLIC GEOMETRY INSIDE THE LIGHT CONE
+═══════════════════════════════════════════════════════════════════════
+The unit hyperboloid H² = {(a,b,c) : Q(a,b,c) = -1, c > 0} is the
+**hyperboloid model** of the hyperbolic plane. It sits inside the
+future light cone. Light rays are the "points at infinity" of
+hyperbolic space.] -/
 theorem hyperboloid_c_ge_one (a b c : ℝ) (h : OnHyperboloid a b c) :
     1 ≤ c := by
   -- By definition of $OnHyperboloid$, we know that $Q a b c = -1$ and $0 < c$.
@@ -240,6 +251,9 @@ theorem kelvin_inversion_form (a b c : ℝ) (hQ : Q a b c ≠ 0) :
   field_simp
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+TEAM Λ: CONFORMAL STRUCTURE & INVERSIONS
+═══════════════════════════════════════════════════════════════════════] -/
 theorem translation_Q (a₁ b₁ c₁ a₂ b₂ c₂ : ℝ) (t : ℝ) :
     Q (a₁ + t * a₂) (b₁ + t * b₂) (c₁ + t * c₂) =
       Q a₁ b₁ c₁ + 2 * t * eta a₁ b₁ c₁ a₂ b₂ c₂ + t ^ 2 * Q a₂ b₂ c₂ := by
@@ -261,6 +275,9 @@ theorem primitive_345 : Nat.Coprime 3 5 ∧ Nat.Coprime 4 5 := by
   constructor <;> decide
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+TEAM Ξ: LIGHT CONE QUANTIZATION & DISCRETE STRUCTURE
+═══════════════════════════════════════════════════════════════════════] -/
 theorem energy_dominates_momentum (a b c : ℕ) (hpyth : a ^ 2 + b ^ 2 = c ^ 2)
     (_ha : 0 < a) (_hb : 0 < b) : a ≤ c ∧ b ≤ c := by
   exact ⟨ by nlinarith only [ hpyth ], by nlinarith only [ hpyth ] ⟩
@@ -329,6 +346,9 @@ theorem forward_blueshift (φ : ℝ) :
   simp [cos_zero, cosh_eq, sinh_eq]; ring
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+SYNTHESIS: DEEP CONNECTIONS
+═══════════════════════════════════════════════════════════════════════] -/
 theorem backward_redshift (φ : ℝ) :
     cos π * sinh φ + cosh φ = exp (-φ) := by
   norm_num [ Real.sinh_eq, Real.cosh_eq ] ; ring;

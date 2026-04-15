@@ -86,6 +86,7 @@ theorem lyapV_growth (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
   rw [exp_EML_formula x y hy, exp_EML_formula y x hx]
 
 
+/-- [Section: ## Section 4: Phi Has No Fixed Points] -/
 theorem Phi_no_fixed_point (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
     Phi (x, y) ≠ (x, y) := by
   -- Assume Φ(x,y) = (x,y). Then EML(x,y)=x and EML(y,x)=y.
@@ -99,6 +100,7 @@ theorem Phi_no_fixed_point (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
   nlinarith [ h_exp_bound x hx.le, h_exp_bound y hy.le, Real.log_le_sub_one_of_pos hx, Real.log_le_sub_one_of_pos hy ]
 
 
+/-- [Section: ## Section 5: Divergence Results] -/
 theorem max_coord_growth (x y : ℝ) (hx : 0 < x) (hy : 0 < y)
     (hbig : max x y ≥ 2) :
     max (EMLv x y) (EMLv y x) > max x y := by

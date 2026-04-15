@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Cross-Chain Pool Model] -/
 structure ChainPool where
   x : ℝ
   y : ℝ
@@ -63,6 +64,7 @@ theorem larger_trades_easier (bridge : BridgeParams) (d₁ d₂ : ℝ)
   exact div_le_div_of_nonneg_left bridge.hFee hd₁ hle
 
 
+/-- [Section: ## Price Convergence Under Arbitrage] -/
 noncomputable def priceGap (pA pB : ℝ) : ℝ := |pA - pB|
 
 
@@ -77,12 +79,14 @@ theorem arbitrage_reduces_gap (pA pB : ℝ) (hA : 0 < pA) (hB : 0 < pB)
   linarith
 
 
+/-- [Section: ## Latency Risk] -/
 theorem safe_arbitrage_condition (profit maxLoss : ℝ) (hprofit : 0 < profit)
     (hloss : 0 ≤ maxLoss) :
     0 < profit - maxLoss ↔ maxLoss < profit := by
   constructor <;> intro h <;> linarith
 
 
+/-- [Section: ## Triangular Arbitrage] -/
 noncomputable def triangularProfit (rateAB rateBC rateCA : ℝ) (amount : ℝ) : ℝ :=
   amount * rateAB * rateBC * rateCA - amount
 

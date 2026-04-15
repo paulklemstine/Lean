@@ -33,6 +33,7 @@ def diagIter7 : ℕ → ℝ → ℝ
 def tropEml7 (x y : ℝ) : ℝ := max x (-y)
 
 
+/-- [Section: ## Section 1: Monotonicity] -/
 theorem eml7_strictMono_fst (y : ℝ) : StrictMono (fun x => eml7 x y) := by
   exact fun x y hxy => sub_lt_sub_right ( Real.exp_lt_exp.2 hxy ) _
 
@@ -52,6 +53,7 @@ theorem eml7_injective_snd (x : ℝ) {a b : ℝ} (ha : 0 < a) (hb : 0 < b)
   exact (eml7_strictAnti_snd x).injOn (mem_Ioi.mpr ha) (mem_Ioi.mpr hb) h
 
 
+/-- [Section: ## Section 2: Universal Algebra — Failure of Standard Identities] -/
 theorem eml7_not_comm : ∃ x y : ℝ, eml7 x y ≠ eml7 y x := by
   unfold eml7;
   refine' ⟨ 0, 1, _ ⟩ ; norm_num;
@@ -149,6 +151,7 @@ theorem eTower7_zero : eTower7 0 = 1 := rfl
 theorem eTower7_succ (n : ℕ) : eTower7 (n + 1) = Real.exp (eTower7 n) := rfl
 
 
+/-- [Section: ## Section 4: E-Tower and Superexponential Growth] -/
 theorem eTower7_pos (n : ℕ) : 0 < eTower7 n := by
   induction n <;> [ exact zero_lt_one; exact Real.exp_pos _ ]
 
@@ -165,6 +168,7 @@ theorem eTower7_superexp (n : ℕ) : eTower7 (n + 2) ≥ Real.exp (2 ^ n) := by
   nlinarith [ h_exp_bound ( Real.exp ( eTower7 n ) ) ( Real.exp_nonneg _ ), Real.add_one_le_exp ( eTower7 n ), Real.add_one_le_exp ( Real.exp ( eTower7 n ) ), pow_le_pow_right₀ ( by norm_num : ( 1 : ℝ ) ≤ 2 ) n.zero_le ]
 
 
+/-- [Section: ## Section 5: Diagonal Map Theory] -/
 theorem diag7_gt (z : ℝ) : diag7 z > z := by
   by_cases hz : z > 0;
   · unfold diag7;
@@ -190,6 +194,7 @@ theorem diag7_no_fixed_point (z : ℝ) : diag7 z ≠ z := by
   exact ne_of_gt (diag7_gt z)
 
 
+/-- [Section: ## Section 6: AM-GM Bridge] -/
 theorem eml7_am_gm_connection (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
     a + b - Real.log a - Real.log b ≥ 2 := by
   linarith [ Real.log_le_sub_one_of_pos ha, Real.log_le_sub_one_of_pos hb ]
@@ -200,6 +205,7 @@ theorem eml7_t_minus_log_ge_one (t : ℝ) (ht : 0 < t) :
   linarith [ Real.log_le_sub_one_of_pos ht ]
 
 
+/-- [Section: ## Section 7: Level Sets and Regional Bounds] -/
 theorem eml7_level_set_nonempty (c : ℝ) :
     ∃ x : ℝ, ∃ y : ℝ, 0 < y ∧ eml7 x y = c := by
   exact ⟨ c, Real.exp ( Real.exp c - c ), Real.exp_pos _, sub_eq_iff_eq_add'.mpr <| by norm_num ⟩

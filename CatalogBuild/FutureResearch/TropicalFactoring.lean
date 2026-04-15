@@ -7,6 +7,8 @@ Declarations: 7
 
 import Mathlib
 
+/-- [Section: # Tropical Geometry and Factoring
+The tropical lens uses p-adic valuations as constraints on factorization.] -/
 theorem padic_val_mul' (p : ℕ) [Fact p.Prime] {a b : ℕ} (ha : a ≠ 0) (hb : b ≠ 0) :
     padicValNat p (a * b) = padicValNat p a + padicValNat p b :=
   padicValNat.mul ha hb

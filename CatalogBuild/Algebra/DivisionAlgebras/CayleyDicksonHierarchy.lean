@@ -112,6 +112,7 @@ theorem sigma7_mult_2_3' : sigma_k' 7 6 = sigma_k' 7 2 * sigma_k' 7 3 := by nati
 def hurwitzDims' : Finset ℕ := {1, 2, 4, 8}
 
 
+/-- [Section: ## Section 5: The Hurwitz Dimensions] -/
 theorem hurwitz_card' : hurwitzDims'.card = 4 := by decide
 
 
@@ -137,6 +138,7 @@ theorem hurwitz_prod' : hurwitzDims'.prod id = 64 := by decide
 def cdDim' (n : ℕ) : ℕ := 2 ^ n
 
 
+/-- [Section: ## Section 6: Cayley-Dickson Dimension Theory] -/
 theorem cdDim_pos' (n : ℕ) : cdDim' n > 0 := by simp [cdDim']
 
 
@@ -222,6 +224,7 @@ theorem two_sq_no_zero_div' (a b c d : ℤ)
   exact mul_ne_zero h1 h2
 
 
+/-- [Section: ## Section 10: Bott Periodicity (Dimension Level)] -/
 theorem bott_period' (n : ℕ) : 2^(n + 8) = 2^n * 256 := by ring
 
 
@@ -240,6 +243,7 @@ def cuspSpaceDim' : ℕ → ℕ
   | _ => 0
 
 
+/-- [Section: ## Section 11: Cusp Space Dimension Analysis] -/
 theorem cusp_trivial_low' : cuspSpaceDim' 2 = 0 ∧ cuspSpaceDim' 4 = 0 := ⟨rfl, rfl⟩
 
 theorem cusp_barrier' : cuspSpaceDim' 8 = 1 := rfl
@@ -268,6 +272,7 @@ structure CayleyDicksonLevel' where
   deriving DecidableEq, Repr
 
 
+/-- [Section: ## Section 13: The Complete Cayley-Dickson Hierarchy] -/
 def cdLevel' : ℕ → CayleyDicksonLevel'
   | 0 => ⟨0, 1, true, 0⟩    -- ℝ
   | 1 => ⟨1, 2, true, 0⟩    -- ℂ
@@ -336,6 +341,7 @@ theorem zero_divisors_propagate' (n : ℕ) (hn : n ≥ 4) :
 def r4_prime' (p : ℕ) : ℕ := 8 * (p + 1)
 
 
+/-- [Section: ## Section 16: The Representation Count Scaling] -/
 theorem r4_of_5' : r4_prime' 5 = 48 := by norm_num [r4_prime']
 
 theorem r4_of_7' : r4_prime' 7 = 64 := by norm_num [r4_prime']

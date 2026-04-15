@@ -49,6 +49,7 @@ theorem einstein_light_invariance (v : ℝ) (hv : 1 + v ≠ 0) :
   exact div_self hv
 
 
+/-- [Section: ## 1. Relativistic Velocity Addition] -/
 theorem einstein_subluminal (v₁ v₂ : ℝ) (h1 : |v₁| < 1) (h2 : |v₂| < 1) :
     |einsteinVelocityAdd v₁ v₂| < 1 := by
   rw [ abs_lt ] at *;
@@ -77,6 +78,7 @@ def crossRatio (z₁ z₂ z₃ z₄ : ℂ) : ℂ :=
   ((z₁ - z₃) * (z₂ - z₄)) / ((z₁ - z₄) * (z₂ - z₃))
 
 
+/-- [Section: ## 2. Möbius Transformations] -/
 theorem crossRatio_mobius_invariant (a b c d : ℂ) (hdet : a * d - b * c ≠ 0)
     (z₁ z₂ z₃ z₄ : ℂ) (h1 : c * z₁ + d ≠ 0) (h2 : c * z₂ + d ≠ 0)
     (h3 : c * z₃ + d ≠ 0) (h4 : c * z₄ + d ≠ 0) :

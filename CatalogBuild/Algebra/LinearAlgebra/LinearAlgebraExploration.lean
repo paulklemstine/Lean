@@ -7,6 +7,14 @@ Declarations: 24
 
 import Mathlib
 
+/-- [Section: # Linear Algebra Exploration
+Deep explorations including:
+- Determinant properties and identities
+- Eigenvalue theory
+- Matrix decompositions
+- Trace identities
+- Rank-nullity connections
+- Special matrices (orthogonal, symmetric, nilpotent)] -/
 theorem det_mul_comm (n : ℕ) (A B : Matrix (Fin n) (Fin n) ℤ) :
     Matrix.det (A * B) = Matrix.det A * Matrix.det B := by
   exact Matrix.det_mul A B

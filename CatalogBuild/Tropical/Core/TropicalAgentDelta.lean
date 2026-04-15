@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Tropical Zeta Functions] -/
 theorem tropZeta_nonpos (s : ℝ) (hs : 0 < s) (n : ℕ) (hn : 1 ≤ n) :
     -s * Real.log n ≤ 0 := by
   nlinarith [Real.log_nonneg (by exact_mod_cast hn : (1 : ℝ) ≤ n)]
@@ -19,6 +20,7 @@ theorem dirichlet_term_exp (s : ℝ) (n : ℕ) (hn : 0 < n) :
       rw [ Real.rpow_def_of_pos ( by positivity ), mul_comm ]
 
 
+/-- [Section: ## Tropical Dynamics] -/
 theorem lax_oleinik_monotone {n : ℕ} (S₀ T₀ : Fin (n+1) → ℝ)
     (h : ∀ i, S₀ i ≤ T₀ i) (cost : Fin (n+1) → ℝ) :
     Finset.sup' Finset.univ ⟨0, Finset.mem_univ 0⟩ (fun i => S₀ i + cost i) ≤
@@ -30,6 +32,7 @@ theorem lax_oleinik_monotone {n : ℕ} (S₀ T₀ : Fin (n+1) → ℝ)
       exact ⟨ b, fun i => by linarith [ h i, hb i ] ⟩
 
 
+/-- [Section: ## Tropical Gauge Theory] -/
 theorem tropical_gauge_abelian (A dl : ℝ) : A + dl = dl + A := add_comm A dl
 
 
@@ -37,6 +40,7 @@ theorem tropical_yang_mills_linear (dA A : ℝ) :
     dA + max A A = dA + A := by rw [max_self]
 
 
+/-- [Section: ## Log-Concavity] -/
 def IsLogConcave (a : ℕ → ℝ) (n : ℕ) : Prop :=
   ∀ k, 1 ≤ k → k + 1 ≤ n → a k ^ 2 ≥ a (k - 1) * a (k + 1)
 
@@ -54,6 +58,7 @@ theorem geometric_log_concave (r : ℝ) (n : ℕ) :
   linarith [this]
 
 
+/-- [Section: ## Information Geometry] -/
 noncomputable def fisherBernoulli (p : ℝ) : ℝ := 1 / (p * (1 - p))
 
 
@@ -64,10 +69,12 @@ theorem fisher_bernoulli_pos (p : ℝ) (hp : 0 < p) (hp1 : p < 1) :
   exact mul_pos hp (by linarith)
 
 
+/-- [Section: ## Wasserstein] -/
 theorem l_inf_triangle (x y z : ℝ) : abs (x - z) ≤ abs (x - y) + abs (y - z) := by
   exact abs_sub_le x y z
 
 
+/-- [Section: ## Factorial growth] -/
 theorem factorial_superpolynomial (d : ℕ) :
     ∃ n₀, ∀ n, n₀ ≤ n → n ^ d < Nat.factorial n := by
       -- Choose $n₀ = \max(2, 2(d+1))$.

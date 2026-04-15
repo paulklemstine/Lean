@@ -46,6 +46,7 @@ theorem spb_cauchy_jacobian (x a : ℝ) (h : 1 - x * a ≠ 0) :
   unfold spbIG; field_simp; ring
 
 
+/-- [Section: ## SPB as Cauchy Location Shift] -/
 theorem cauchy_spb_change_of_vars (x a : ℝ) (h : 1 - x * a ≠ 0) :
     stdCauchyDensity (spbIG x a) * spbJacobian x a =
     1 / (Real.pi * (1 + x ^ 2)) := by

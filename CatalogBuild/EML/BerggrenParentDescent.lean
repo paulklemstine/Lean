@@ -7,6 +7,7 @@ Declarations: 27
 
 import Mathlib
 
+/-- [Section: ## §1. Definitions] -/
 def IsPT' (a b c : ℤ) : Prop := a ^ 2 + b ^ 2 = c ^ 2
 
 
@@ -26,6 +27,7 @@ def pB' (a b c : ℤ) : ℤ × ℤ × ℤ := (a + 2*b - 2*c, 2*a + b - 2*c, -2*a
 def pC' (a b c : ℤ) : ℤ × ℤ × ℤ := (-a - 2*b + 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
 
 
+/-- [Section: ## §2. Forward-Inverse Cancellation] -/
 theorem chA_pA_cancel' (a b c : ℤ) :
     pA' (chA' a b c).1 (chA' a b c).2.1 (chA' a b c).2.2 = (a, b, c) := by
   simp only [chA', pA']; ext <;> ring
@@ -56,6 +58,7 @@ theorem pC_chC_cancel' (a b c : ℤ) :
   simp only [chC', pC']; ext <;> ring
 
 
+/-- [Section: ## §3. Inverse Maps Preserve Pythagorean Property] -/
 theorem pA_pyth' (a b c : ℤ) (h : IsPT' a b c) :
     IsPT' (pA' a b c).1 (pA' a b c).2.1 (pA' a b c).2.2 := by
   unfold IsPT' pA' at *; nlinarith
@@ -71,6 +74,7 @@ theorem pC_pyth' (a b c : ℤ) (h : IsPT' a b c) :
   unfold IsPT' pC' at *; nlinarith
 
 
+/-- [Section: ## §4. Child preserves Pythagorean property] -/
 theorem chA_pyth' (a b c : ℤ) (h : IsPT' a b c) :
     IsPT' (chA' a b c).1 (chA' a b c).2.1 (chA' a b c).2.2 := by
   unfold IsPT' chA' at *; nlinarith
@@ -86,6 +90,7 @@ theorem chC_pyth' (a b c : ℤ) (h : IsPT' a b c) :
   unfold IsPT' chC' at *; nlinarith
 
 
+/-- [Section: ## §5. Hypotenuse Growth for Children] -/
 theorem chA_hyp_growth' (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : a < c) (hbc : b < c) :
     c < (chA' a b c).2.2 := by
   unfold chA'; nlinarith
@@ -107,6 +112,7 @@ theorem parent_hyp_uniform' (a b c : ℤ) :
   unfold pA' pB' pC'; constructor <;> ring
 
 
+/-- [Section: ## §6. Parent Hypotenuse Properties] -/
 theorem parent_hyp_descent' (a b c : ℤ) (h : IsPT' a b c) (ha : 0 < a) (hb : 0 < b)
     (hc : 0 < c) :
     (pA' a b c).2.2 < c := by
@@ -128,6 +134,7 @@ theorem branches_distinct_at_root' :
   native_decide
 
 
+/-- [Section: ## §8. Branch Injectivity] -/
 theorem root_children' :
     chA' 3 4 5 = (5, 12, 13) ∧ chB' 3 4 5 = (21, 20, 29) ∧ chC' 3 4 5 = (15, 8, 17) := by
   native_decide

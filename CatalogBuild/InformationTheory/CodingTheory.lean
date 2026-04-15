@@ -78,6 +78,7 @@ theorem hamming_bound_abstract (q n t : ℕ)
   exact Nat.le_div_iff_mul_le hV |>.mpr hpacking
 
 
+/-- [Section: ## The Plotkin Bound] -/
 theorem plotkin_bound (n d : ℕ) (hd : n < 2 * d)
     (C : Finset (Fin n → Bool))
     (hmin_dist : ∀ x ∈ C, ∀ y ∈ C, x ≠ y → d ≤ hammingDist' x y)

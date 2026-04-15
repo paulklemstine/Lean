@@ -128,6 +128,7 @@ theorem eml_fixed_point_equiv (x : ℝ) :
   · intro h; linarith
 
 
+/-- [Section: ## EML Fixed Points] -/
 theorem eml_no_positive_fixed_point (x : ℝ) (hx : 0 < x) :
     ¬ isEMLFixedPoint x := by
       -- By definition of $isEMLFixedPoint$, we need to show that $x$ is not a solution to $e^x - \ln x = x$.

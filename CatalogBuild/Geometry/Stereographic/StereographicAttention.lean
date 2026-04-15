@@ -30,6 +30,7 @@ def stereoDenom (n : ℕ) (y : Fin n → ℝ) : ℝ :=
   1 + sqNorm n y
 
 
+/-- [Section: ## Part 1: The Stereographic Kernel] -/
 theorem stereoDenom_pos (n : ℕ) (y : Fin n → ℝ) : 0 < stereoDenom n y := by
   unfold stereoDenom sqNorm
   positivity
@@ -39,6 +40,7 @@ theorem stereoDenom_ne_zero (n : ℕ) (y : Fin n → ℝ) : stereoDenom n y ≠ 
   exact ne_of_gt (stereoDenom_pos n y)
 
 
+/-- [Section: ## Part 2: Kernel Properties] -/
 theorem stereoKernel_rational (n : ℕ) (x y : Fin n → ℝ) :
     stereoKernel n x y * (stereoDenom n x * stereoDenom n y) =
     4 * innerProd n x y + (sqNorm n x - 1) * (sqNorm n y - 1) := by
@@ -99,6 +101,7 @@ theorem stereoAttention_weights_nonneg (d : ℕ) (T : ℝ) (q k : Fin d → ℝ)
   le_of_lt (stereoSoftmaxWeight_pos d T q k)
 
 
+/-- [Section: ## Part 5: The Stereographic Attention Layer] -/
 theorem stereoAttention_weight_sum_pos (seqLen d : ℕ) (T : ℝ)
     (Q : Fin seqLen → Fin d → ℝ) (K : Fin seqLen → Fin d → ℝ)
     (i : Fin seqLen) (hLen : 0 < seqLen) :
@@ -106,6 +109,7 @@ theorem stereoAttention_weight_sum_pos (seqLen d : ℕ) (T : ℝ)
   exact Finset.sum_pos ( fun _ _ => Real.exp_pos _ ) ⟨ i, Finset.mem_univ _ ⟩
 
 
+/-- [Section: ## Part 6: Bounded Attention Scores] -/
 theorem stereoKernel_bounded (n : ℕ) (x y : Fin n → ℝ) :
     |stereoKernel n x y| ≤ n + 1 := by
   have h_norm_sq : ∀ y : Fin n → ℝ, ∑ i : Fin (n + 1), (invStereo n y i) ^ 2 = 1 := by

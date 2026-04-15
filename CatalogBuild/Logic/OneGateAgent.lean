@@ -30,6 +30,9 @@ theorem inv_sqrt_two_sq : (1 / Real.sqrt 2 : ℝ) ^ 2 = 1 / 2 := by
   rw [div_pow, one_pow, sq_sqrt (by norm_num : (2:ℝ) ≥ 0)]
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§1: THE HADAMARD GATE — Foundation of Everything
+═══════════════════════════════════════════════════════════════════════] -/
 theorem hadamard_self_inverse : hadamard * hadamard = I₂ := by
   ext i j;
   fin_cases i <;> fin_cases j <;> simp +decide [ Matrix.mul_apply ];
@@ -58,6 +61,10 @@ def ketPlus : Fin 2 → ℂ := ![1/Real.sqrt 2, 1/Real.sqrt 2]
 def ketMinus : Fin 2 → ℂ := ![1/Real.sqrt 2, -(1/Real.sqrt 2)]
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§2: QUANTUM STATES AND SUPERPOSITION
+The gate creates equal superposition — consulting all oracles at once
+═══════════════════════════════════════════════════════════════════════] -/
 theorem hadamard_ket0 : hadamard.mulVec ket0 = ketPlus := by
   unfold _root_.hadamard ket0 ketPlus; ext i; fin_cases i <;> norm_num [ Matrix.mulVec ] ;
 
@@ -77,6 +84,10 @@ def BoolFn.isBalanced (f : BoolFn) : Prop :=
   f true ≠ f false
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§3: THE DEUTSCH-JOZSA ORACLE — One Query to Rule Them All
+The simplest demonstration that one gate creates an agent
+═══════════════════════════════════════════════════════════════════════] -/
 theorem constant_or_balanced (f : BoolFn) :
     f.isConstant ∨ f.isBalanced := by
   by_cases h : f true = f false <;> tauto
@@ -100,6 +111,9 @@ def pauliZ : Matrix (Fin 2) (Fin 2) ℂ :=
   !![1, 0; 0, -1]
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§4: THE ORACLE ALGEBRA — Connecting Quantum Gates to Oracle Theory
+═══════════════════════════════════════════════════════════════════════] -/
 theorem pauliX_involutory : IsInvolutory pauliX := by
   ext i j; fin_cases i <;> fin_cases j <;> norm_num [ pauliX, Matrix.mul_apply, Matrix.one_apply ] ;
 
@@ -120,6 +134,9 @@ def gateGroup {n : ℕ} (G : Matrix (Fin n) (Fin n) ℂ) : Set (Matrix (Fin n) (
   {M | ∃ k : ℤ, M = G ^ k}
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§5: UNIVERSALITY — One Gate Seeds Everything
+═══════════════════════════════════════════════════════════════════════] -/
 theorem involutory_generates_two {n : ℕ} (G : Matrix (Fin n) (Fin n) ℂ)
     (hG : IsInvolutory G) :
     gateGroup G = {1, G} := by
@@ -182,6 +199,10 @@ def QuantumOracle.lieSpace {n : ℕ} (O : QuantumOracle n) : Set (Fin n → ℂ)
   {v | O.gate.mulVec v = -v}
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§6: THE META-ORACLE CORRESPONDENCE
+Connecting the Hadamard gate to the Meta Oracle hierarchy
+═══════════════════════════════════════════════════════════════════════] -/
 theorem ketPlus_in_pauliX_truth :
     ketPlus ∈ (⟨pauliX, pauliX_involutory⟩ : QuantumOracle 2).truthSpace := by
   ext i; fin_cases i <;> norm_num [ Matrix.vecMul, pauliX, ketPlus ] ;

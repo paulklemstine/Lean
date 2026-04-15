@@ -10,6 +10,7 @@ import Mathlib
 def isPerfect (n : ℕ) : Prop := σ₁ n = 2 * n
 
 
+/-- [Section: ### Properties of Perfect Numbers] -/
 theorem perfect_ge_six (n : ℕ) (hn : isPerfect n) (hn1 : 1 < n) : 6 ≤ n := by
   exact le_of_not_gt fun h : n < 6 => by revert hn; interval_cases n <;> simp_all +decide [ isPerfect ] ;
 
@@ -21,6 +22,7 @@ theorem no_small_odd_perfect :
   interval_cases n <;> simp_all +decide [isPerfect]
 
 
+/-- [Section: ### σ₁ for Powers of 2] -/
 theorem sigma1_two_pow (k : ℕ) : σ₁ (2 ^ k) = 2 ^ (k + 1) - 1 := by
   unfold σ₁;
   norm_num [ Nat.geomSum_eq ]
@@ -32,6 +34,7 @@ theorem sigma1_coprime_mul (a b : ℕ) (h : Nat.Coprime a b) :
   exact?
 
 
+/-- [Section: ### The Euclid Direction (already proved in v6, strengthened here)] -/
 theorem euclid_direction (p : ℕ) (hp : 2 ≤ p) (hm : Nat.Prime (2 ^ p - 1)) :
     isPerfect (2 ^ (p - 1) * (2 ^ p - 1)) := by
   unfold isPerfect;
@@ -42,6 +45,7 @@ theorem euclid_direction (p : ℕ) (hp : 2 ≤ p) (hm : Nat.Prime (2 ^ p - 1)) :
   · exact Nat.Coprime.pow_left _ ( Nat.prime_two.coprime_iff_not_dvd.mpr <| by simpa [ ← even_iff_two_dvd, Nat.one_le_iff_ne_zero, parity_simps ] using by linarith )
 
 
+/-- [Section: ### Toward the Euler Direction] -/
 theorem even_decomposition (n : ℕ) (hn : 0 < n) (heven : 2 ∣ n) :
     ∃ k m : ℕ, 0 < k ∧ ¬(2 ∣ m) ∧ 0 < m ∧ n = 2 ^ k * m := by
   exact ⟨ Nat.factorization n 2, n / 2 ^ Nat.factorization n 2, Nat.pos_of_ne_zero fun con => by simp_all +decide [ Nat.factorization ], Nat.not_dvd_ordCompl ( by decide ) ( by aesop ), Nat.div_pos ( Nat.le_of_dvd hn ( Nat.ordProj_dvd _ _ ) ) ( pow_pos ( by decide ) _ ), by rw [ Nat.mul_div_cancel' ( Nat.ordProj_dvd _ _ ) ] ⟩

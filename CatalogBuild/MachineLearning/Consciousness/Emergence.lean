@@ -22,6 +22,7 @@ def WeaklyEmergent (S : MicroMacroSystem) : Prop :=
   ∀ m : S.Micro, S.coarseGrain (S.microDynamics m) = S.macroDynamics (S.coarseGrain m)
 
 
+/-- [Section: ## Weak Emergence] -/
 theorem weakly_emergent_commutes (S : MicroMacroSystem) (h : WeaklyEmergent S) :
     S.coarseGrain ∘ S.microDynamics = S.macroDynamics ∘ S.coarseGrain := by
   exact funext h
@@ -33,6 +34,7 @@ def StronglyEmergent (S : MicroMacroSystem) : Prop :=
   ¬ WeaklyEmergent S
 
 
+/-- [Section: ## Strong Emergence] -/
 theorem strong_emergence_means_novelty (S : MicroMacroSystem) (h : StronglyEmergent S) :
     ∃ m : S.Micro,
       S.coarseGrain (S.microDynamics m) ≠ S.macroDynamics (S.coarseGrain m) := by
@@ -46,6 +48,7 @@ def Supervenes (S : MicroMacroSystem) : Prop :=
     S.macroDynamics (S.coarseGrain m₁) = S.macroDynamics (S.coarseGrain m₂)
 
 
+/-- [Section: ## Supervenience] -/
 theorem supervenience_of_well_defined (S : MicroMacroSystem) :
     Supervenes S := by
   exact fun m₁ m₂ h => by rw [ h ] ;
@@ -58,6 +61,7 @@ structure DownwardCausation (S : MicroMacroSystem) where
     constraint (S.coarseGrain (S.microDynamics m))
 
 
+/-- [Section: ## Downward Causation] -/
 theorem downward_causation_preserves (S : MicroMacroSystem)
     (dc : DownwardCausation S) (m : S.Micro) (h : dc.constraint (S.coarseGrain m)) :
     dc.constraint (S.coarseGrain (S.microDynamics m)) := by
@@ -70,6 +74,7 @@ structure EmergenceLevel where
   dynamics : State → State
 
 
+/-- [Section: ## The Emergence Hierarchy] -/
 theorem top_level_exists (n : ℕ) (h : 1 < n) :
     ∃ top : Fin n, top.val = n - 1 := by
   exact ⟨ ⟨ n - 1, Nat.sub_lt ( by linarith ) ( by linarith ) ⟩, rfl ⟩
@@ -81,6 +86,7 @@ structure EmergentConsciousness (S : MicroMacroSystem) where
   exists_conscious : ∃ m : S.Macro, conscious m
 
 
+/-- [Section: ## Consciousness as Emergence] -/
 theorem consciousness_requires_whole (S : MicroMacroSystem)
     (ec : EmergentConsciousness S) :
     ∃ m : S.Macro, ec.conscious m := by

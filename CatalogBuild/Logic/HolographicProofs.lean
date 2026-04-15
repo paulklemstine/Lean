@@ -27,6 +27,9 @@ def isHolographic (P : ModularProof) (bound : ℕ) : Prop :=
   P.interfaceSteps ≤ bound ∧ bound < P.totalSteps
 
 
+/-- [Section: ## Section 2: Area Law for Proof Complexity
+The holographic principle says entropy ≤ Area/4. We prove an analogous bound:
+the information content of a proof's boundary bounds the information in the bulk.] -/
 theorem area_law_proof {n : ℕ} (hn : 4 ≤ n) :
     Nat.sqrt n ≤ n := by
   exact Nat.sqrt_le_self _
@@ -54,6 +57,9 @@ theorem modular_interface_bound (k b : ℕ) :
   rfl
 
 
+/-- [Section: ## Section 3: Bulk-Boundary Correspondence for Proofs
+**Novel Theorem**: We define a "bulk-boundary map" that compresses a proof
+to its interface, and show this map preserves essential information.] -/
 theorem holographic_compression_bound {interface internal : ℕ}
     (hi : 0 < interface) (hin : 0 < internal) :
     0 < interface * internal := by
@@ -80,6 +86,10 @@ def ProofTranslation.isHolographicCompression (T : ProofTranslation) : Prop :=
   ∃ C : ℕ, ∀ n, T.targetSize n ≤ C * Nat.sqrt (T.sourceSize n)
 
 
+/-- [Section: ## Section 4: AdS/CFT Analog for Proofs
+**Novel Hypothesis**: Complex proofs in one formal system may correspond to
+simpler proofs in a "dual" system, analogous to AdS/CFT duality.
+We formalize this through proof translation maps.] -/
 theorem compressing_compose {f g : ℕ → ℕ}
     (hf : ∀ n, f n ≤ n) (hg : ∀ n, g n ≤ n) :
     ∀ n, f (g n) ≤ n := by
@@ -94,6 +104,11 @@ def hasWedgeReconstruction (total interface : ℕ) (dependsOn : Fin total → Fi
       ∀ step ∈ W, ∀ dep : Fin interface, dependsOn step dep → dep ∈ S
 
 
+/-- [Section: ## Section 5: Entanglement Wedge Reconstruction for Proofs
+**Novel Hypothesis**: In holographic duality, subregions of the boundary can
+reconstruct corresponding "entanglement wedges" in the bulk. For proofs,
+this means: knowing a subset of the interface lemmas lets you reconstruct
+the proof steps that depend only on those lemmas.] -/
 theorem monotone_wedge_reconstruction (n m : ℕ) (hn : 0 < n) (hm : 0 < m)
     (dep : Fin n → Fin m → Prop)
     (hmono : ∀ (i : Fin n) (j : Fin m), dep i j → j.val ≤ i.val) :

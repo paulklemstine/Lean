@@ -14,6 +14,7 @@ noncomputable def sigma1_no4 (n : ℕ) : ℕ :=
   ∑ d ∈ (n.divisors.filter (fun d => ¬(4 ∣ d))), d
 
 
+/-- [Section: ### σ₁ Connection] -/
 theorem sigma1_no4_odd (n : ℕ) (hn : ¬(2 ∣ n)) :
     sigma1_no4 n = σ₁ n := by
   exact Finset.sum_congr ( Finset.filter_true_of_mem fun x hx => by exact fun h => hn <| dvd_trans ( by decide ) ( h.trans <| Nat.dvd_of_mem_divisors hx ) ) fun _ _ => rfl

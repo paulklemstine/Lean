@@ -14,6 +14,7 @@ This is the supremum of the omega tower and satisfies ω^(ε₀) = ε₀. -/
 noncomputable def epsilon0 : Ordinal.{0} := Ordinal.nfp (omega0 ^ ·) 0
 
 
+/-- [Section: ## Basic Values] -/
 theorem omegaTower_one : omegaTower 1 = omega0 := by simp [opow_one]
 
 theorem omegaTower_two : omegaTower 2 = omega0 ^ omega0 := by simp

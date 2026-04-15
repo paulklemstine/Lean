@@ -21,6 +21,7 @@ lemma sigma1_star_one : sigma1_star 1 = 1 := by
   decide
 
 
+/-- [Section: ## Restricted divisor sum σ₁*(n)] -/
 lemma sigma1_star_odd_prime (p : ℕ) (hp : Nat.Prime p) (hodd : Odd p) :
     sigma1_star p = (p : ℤ) + 1 := by
   unfold sigma1_star;
@@ -37,6 +38,7 @@ noncomputable def sigma3_pm (n : ℕ) : ℤ :=
   ∑ d ∈ Nat.divisors n, ((-1 : ℤ) ^ (n + d) * (d : ℤ) ^ 3)
 
 
+/-- [Section: ## The signed cubic divisor sum σ₃±(n)] -/
 lemma sigma3_pm_one : sigma3_pm 1 = 1 := by
   unfold sigma3_pm; norm_num;
 

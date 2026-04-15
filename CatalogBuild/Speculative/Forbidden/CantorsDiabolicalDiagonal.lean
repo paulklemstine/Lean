@@ -21,6 +21,9 @@ theorem antiDiagonal_not_in_range (f : α → Set α) :
   unfold antiDiagonal at ha; replace ha := Set.ext_iff.mp ha a; aesop;
 
 
+/-- [Section: ### Theorem 2: The Injection That Cannot Be Reversed
+There is an injection ℕ ↪ ℝ but no surjection ℕ → ℝ.
+The reals mock our attempts to enumerate them.] -/
 theorem naturals_inject_but_cannot_surject :
     (∃ f : ℕ → ℝ, Injective f) ∧ (¬ ∃ f : ℕ → ℝ, Surjective f) := by
   refine' ⟨ ⟨ _, Nat.cast_injective ⟩, _ ⟩;
@@ -31,6 +34,10 @@ theorem naturals_inject_but_cannot_surject :
   contrapose! h_card; aesop;
 
 
+/-- [Section: ### Theorem 3: Strict Cardinality Growth
+For any type α, there are strictly more subsets than elements.
+The powerset is always bigger. Always. This is the engine of mathematical evil:
+hierarchies of infinity that never terminate.] -/
 theorem injection_to_powerset : ∃ f : α → Set α, Injective f := by
   exact ⟨ fun x => { x }, fun x y h => by simpa using h ⟩
 
@@ -45,6 +52,10 @@ theorem powerset_strictly_dominates :
     exact?
 
 
+/-- [Section: ### Theorem 4: The Diagonal Operator — Applied Evil
+The diagonal argument generalizes: for ANY two-argument function,
+the diagonal function `fun x => f x x` captures the "self-referential"
+behavior that breaks systems.] -/
 theorem diagonal_defeats_enumeration (enum : ℕ → (ℕ → Prop)) :
     ∃ g : ℕ → Prop, ∀ n, g ≠ enum n := by
   exact ⟨ fun n => ¬( enum n ) n, fun n => fun h => by have := congr_fun h n; tauto ⟩

@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Landscape 7: Conformal Dynamics — The Stereographic Attractor] -/
 theorem stereo_radial_map (r : ℝ) (hr : 0 ≤ r) :
     2 * r / (1 + r ^ 2) ≤ 1 := by
       rw [ div_le_iff₀ ] <;> nlinarith [ sq_nonneg ( r - 1 ) ]
@@ -87,11 +88,13 @@ theorem fisher_metric_at_origin :
     16 / (1 + (0 : ℝ) ^ 2) ^ 2 = 16 := by norm_num
 
 
+/-- [Section: ## Landscape 9: Information Geometry — The Fisher-Stereo Metric] -/
 theorem fisher_metric_bounded (r : ℝ) :
     16 / (1 + r ^ 2) ^ 2 ≤ 16 := by
       exact div_le_self ( by norm_num ) ( by nlinarith )
 
 
+/-- [Section: ## Landscape 10: Spectral Geometry] -/
 theorem spectral_eigenvalue_nonpositive (l N : ℕ) (hN : 1 ≤ N) :
     (l : ℤ) * (l + N - 1) ≥ 0 := by
       exact mul_nonneg ( Nat.cast_nonneg _ ) ( by linarith [ show ( N : ℝ ) ≥ 1 by norm_cast ] )

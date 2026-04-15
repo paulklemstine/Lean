@@ -2,11 +2,14 @@
 
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/HyperbolicFactoring
-Declarations: 18
+Declarations: 19
 -/
 
 import Mathlib
 
+/-- [Section: ## §1. Trivial Pythagorean Triple Construction
+Given odd N, the triple (N, (N² − 1)/2, (N² + 1)/2) is always Pythagorean.
+This is the "seed" triple from which we begin tree navigation.] -/
 theorem trivial_triple_pyth (N : ℤ) (hN : N % 2 = 1) :
     N ^ 2 + ((N ^ 2 - 1) / 2) ^ 2 = ((N ^ 2 + 1) / 2) ^ 2 := by
   obtain ⟨ k, hk ⟩ := Int.odd_iff.2 hN;
@@ -24,6 +27,9 @@ theorem trivial_triple_even (k : ℤ) :
   ring
 
 
+/-- [Section: ## §2. Factor Extraction via GCD
+The fundamental observation: if we have any value `a` and compute gcd(a, N),
+a nontrivial result immediately yields a factor of N.] -/
 theorem nontrivial_factor_from_gcd (a N : ℤ) (hN : 0 < N)
     (h1 : 1 < Int.gcd a N) (h2 : Int.gcd a N < N.natAbs) :
     (Int.gcd a N : ℤ) ∣ N ∧ 1 < (Int.gcd a N : ℤ) := by
@@ -41,6 +47,7 @@ def is_on_light_cone (v : Fin 3 → ℤ) : Prop :=
   v 0 ^ 2 + v 1 ^ 2 - v 2 ^ 2 = 0
 
 
+/-- [Section: ## §4. Berggren Matrices Preserve the Pythagorean Property] -/
 theorem berggren_B1_preserves_pyth {a b c : ℤ} (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (a - 2*b + 2*c) ^ 2 + (2*a - b + 2*c) ^ 2 = (2*a - 2*b + 3*c) ^ 2 := by
   grind
@@ -53,6 +60,13 @@ theorem berggren_B2_preserves_pyth {a b c : ℤ} (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 theorem berggren_B3_preserves_pyth {a b c : ℤ} (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (-a + 2*b + 2*c) ^ 2 + (-2*a + b + 2*c) ^ 2 = (-2*a + 2*b + 3*c) ^ 2 := by
+  linarith
+
+
+/-- [Section: ## §5. Hypotenuse Growth and Skip-Ahead Bounds] -/
+theorem hypotenuse_growth_B2 {a b c : ℤ} (h : a ^ 2 + b ^ 2 = c ^ 2)
+    (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
+    c < 2*a + 2*b + 3*c := by
   linarith
 
 
@@ -82,6 +96,7 @@ theorem uniform_path_is_power (b : Branch) (k : ℕ) :
   grind +locals
 
 
+/-- [Section: ## §7. Determinant Properties] -/
 theorem det_B2 : Matrix.det B₂ = -1 := by
   native_decide +revert
 
@@ -94,6 +109,7 @@ theorem det_B3 : Matrix.det B₃ = 1 := by
   native_decide
 
 
+/-- [Section: ## §8. The Complete Factoring Framework] -/
 theorem factoring_completeness (N p : ℕ) (hN : 1 < N) (hp : Nat.Prime p) (hdvd : p ∣ N)
     (hlt : p < N) :
     ∃ (a b c : ℤ), a ^ 2 + b ^ 2 = c ^ 2 ∧ (p : ℤ) ∣ a := by

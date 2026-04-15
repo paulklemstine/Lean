@@ -45,6 +45,7 @@ theorem trop_div_cancel (a b : ℝ) : (a + b) - b = a := by ring
 theorem trop_semiring_comm : ∀ a b : ℝ, min a b = min b a := min_comm
 
 
+/-- [Section: ## Idempotent semiring axioms, collected] -/
 theorem trop_semiring_assoc : ∀ a b c : ℝ, min (min a b) c = min a (min b c) :=
   fun a b c => min_assoc a b c
 
@@ -84,6 +85,7 @@ theorem trop_zerosumfree {a b : ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b)
   constructor <;> linarith
 
 
+/-- [Section: ## Concavity of min of multiple affine functions] -/
 theorem min3_concave (a₁ b₁ a₂ b₂ a₃ b₃ : ℝ) (t : ℝ)
     (ht0 : 0 ≤ t) (ht1 : t ≤ 1) (x y : ℝ) :
     min (min (a₁ + b₁ * (t * x + (1 - t) * y)) (a₂ + b₂ * (t * x + (1 - t) * y)))
@@ -94,6 +96,7 @@ theorem min3_concave (a₁ b₁ a₂ b₂ a₃ b₃ : ℝ) (t : ℝ)
   split_ifs <;> nlinarith
 
 
+/-- [Section: ## Tropical matrix multiplication is associative] -/
 theorem trop_matmul_assoc_2x2
     (a₁₁ a₁₂ a₂₁ a₂₂ b₁₁ b₁₂ b₂₁ b₂₂ c₁₁ c₁₂ c₂₁ c₂₂ : ℝ) :
     -- ((A⊗B)⊗C)₁₁ = (A⊗(B⊗C))₁₁

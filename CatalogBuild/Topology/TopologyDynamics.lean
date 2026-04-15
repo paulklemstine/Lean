@@ -7,6 +7,13 @@ Declarations: 20
 
 import Mathlib
 
+/-- [Section: # Topology and Dynamical Systems
+Explorations including:
+- Topological properties of metric spaces
+- Compactness and connectedness
+- Fixed point theorems
+- Dynamical systems and iteration
+- Euler characteristic] -/
 theorem metric_hausdorff (X : Type*) [MetricSpace X] : T2Space X := by
   infer_instance
 

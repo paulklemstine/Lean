@@ -74,6 +74,7 @@ def predictionHierarchy (errors : ℕ → ℝ) : Prop :=
   ∀ k, |errors (k + 1)| ≤ |errors k| / 2
 
 
+/-- [Section: ## §4. Hierarchical Meta-Prediction] -/
 theorem hierarchy_converges (errors : ℕ → ℝ) (h : predictionHierarchy errors) :
     ∀ ε > 0, ∃ K, ∀ k ≥ K, |errors k| < ε := by
   intro ε hε_pos
@@ -100,6 +101,7 @@ def isSelfAware (accuracy confidence : ℝ) : Prop :=
   accuracy = confidence
 
 
+/-- [Section: ## §5. Meta-Prediction Fixed Points] -/
 theorem calibration_fixed_point
     (f : ℝ → ℝ)
     (hcont : Continuous f)

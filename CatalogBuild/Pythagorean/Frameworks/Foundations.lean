@@ -219,6 +219,7 @@ theorem channel_count_formula (k : ℕ) (_hk : k ≥ 2) :
 /-- Channel counts for specific dimensions. -/
 theorem channel_count_k2 : 2 + Nat.choose 2 2 + 2 = 5 := by native_decide
 
+/-- [Section: ## Additional Verification] -/
 theorem channel_count_k3 : 3 + Nat.choose 3 2 + 3 = 9 := by native_decide
 
 theorem channel_count_k4 : 4 + Nat.choose 4 2 + 4 = 14 := by native_decide

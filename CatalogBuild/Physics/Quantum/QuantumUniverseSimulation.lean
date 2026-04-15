@@ -32,11 +32,15 @@ noncomputable def maximally_mixed_qubit : Matrix (Fin 2) (Fin 2) ℂ :=
   (1 / 2 : ℂ) • (1 : Matrix (Fin 2) (Fin 2) ℂ)
 
 
+/-- [Section: ## §2: Density Matrices] -/
 theorem maximally_mixed_trace :
     (maximally_mixed_qubit).trace = 1 := by
   simp [maximally_mixed_qubit, Matrix.trace, Matrix.diag, Fin.sum_univ_two, mul_comm]
 
 
+/-- [Section: ## §3: The No-Cloning Theorem
+If a linear map clones two states |ψ⟩ and |φ⟩, their inner product
+satisfies ⟨ψ|φ⟩ = ⟨ψ|φ⟩², so ⟨ψ|φ⟩ ∈ {0, 1}.] -/
 theorem no_cloning_inner_product_constraint (z : ℂ)
     (h : z = z * z) : z = 0 ∨ z = 1 := by
       grind +ring
@@ -82,6 +86,7 @@ theorem circuit_depth_bound (n : ℕ) :
     4 ^ n / n ≤ 4 ^ n := Nat.div_le_self _ _
 
 
+/-- [Section: ## §6: Simulation Complexity Bounds] -/
 theorem k_local_terms_bound (n k : ℕ) (hk : k ≤ n) :
     Nat.choose n k ≤ n ^ k := by
       exact?
@@ -92,15 +97,18 @@ theorem holographic_entropy_bound (n k : ℕ) (h : 4 * k ≤ n) :
     k ≤ n / 4 := by omega
 
 
+/-- [Section: ## §8: Computational Universality] -/
 theorem simulation_gate_count (n : ℕ) :
     n ^ 2 ≤ n ^ 2 + n + 1 := by omega
 
 
+/-- [Section: ## §9: Quantum Entropy] -/
 noncomputable def binary_entropy (p : ℝ) : ℝ :=
   if p = 0 ∨ p = 1 then 0
   else -(p * Real.log p + (1 - p) * Real.log (1 - p))
 
 
+/-- [Section: ## §10: Complexity Geometry] -/
 def gate_complexity_lower_bound (n : ℕ) : ℕ := 4 ^ n / (3 * n + 1)
 
 
@@ -115,6 +123,7 @@ theorem strong_subadditivity_consequence (sB sAB sBC sABC : ℝ)
     sABC - sAB ≤ sBC - sB := by linarith
 
 
+/-- [Section: ## §12: The Quantum Church-Turing Thesis] -/
 theorem universal_decomposition_bound (n : ℕ) :
     ∃ bound : ℕ, bound = 4 ^ n ∧ ∀ m : ℕ, m ≤ bound → m ≤ 4 ^ n := by
   exact ⟨4 ^ n, rfl, fun m h => h⟩
@@ -131,6 +140,7 @@ theorem quantum_simulation_feasibility (n : ℕ) (hn : 1 ≤ n) :
   linarith [show n ^ 3 * n = n ^ 4 from by ring, show n ^ 3 * 1 = n ^ 3 from by ring]
 
 
+/-- [Section: ## §13: Quantum Simulation Feasibility] -/
 theorem unitary_preserves_trace {n : Type*} [DecidableEq n] [Fintype n]
     (U : Matrix n n ℂ) (ρ : Matrix n n ℂ) (hU : U * star U = 1) :
     (U * ρ * star U).trace = ρ.trace := by

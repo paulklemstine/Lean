@@ -96,6 +96,7 @@ noncomputable def DutchAuction.outputAt (da : DutchAuction) (block : ℕ) : ℝ 
     da.startOutput - progress * (da.startOutput - da.endOutput)
 
 
+/-- [Section: ## Dutch Auction Mechanism (UniswapX)] -/
 theorem dutch_auction_nonincreasing (da : DutchAuction) (b₁ b₂ : ℕ)
     (hle : b₁ ≤ b₂) :
     da.outputAt b₂ ≤ da.outputAt b₁ := by

@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## The 1-Square Identity (Dimension 1: Real numbers)] -/
 theorem one_square_identity (a b : ℤ) :
     a^2 * b^2 = (a * b)^2 := by
   ring

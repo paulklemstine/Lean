@@ -7,6 +7,8 @@ Declarations: 16
 
 import Mathlib
 
+/-- [Section: ## Section 1: Coprimality Preservation
+The Berggren transforms preserve the primitivity (coprimality) of triples.] -/
 theorem coprime_preserved_B1 (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     (hcop : IsCoprime a b) :
     IsCoprime (a - 2 * b + 2 * c) (2 * a - b + 2 * c) := by
@@ -120,6 +122,8 @@ theorem B1_preserves_odd_first_leg (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
   grind
 
 
+/-- [Section: ## Section 3: Hypotenuse Strict Monotonicity
+Every child in the Berggren tree has a strictly larger hypotenuse than its parent.] -/
 theorem hypotenuse_strict_increase_B1 (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (h : a ^ 2 + b ^ 2 = c ^ 2) :
     c < 2 * a - 2 * b + 3 * c := by
@@ -152,6 +156,8 @@ theorem pyth_to_factorization (N b c : ℤ) (h : N ^ 2 + b ^ 2 = c ^ 2) :
   nlinarith
 
 
+/-- [Section: ## Section 5: GCD Factoring from Pythagorean Triples
+The core extraction theorem: how to get factors of N from Pythagorean triples.] -/
 theorem factor_same_parity (N b c : ℤ) (h : N ^ 2 + b ^ 2 = c ^ 2) (hN : ¬Even N) :
     (Even (c - b) ∧ Even (c + b)) ∨ (¬Even (c - b) ∧ ¬Even (c + b)) := by
   grind

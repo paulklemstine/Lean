@@ -219,6 +219,7 @@ theorem cascade_timelike (a b c d : ℤ) (hc : c ≠ 0)
   linarith
 
 
+/-- [Section: ## Section 12: Composition of Arithmetic Photons] -/
 theorem photon_composition (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
     (h₁ : a₁ ^ 2 + b₁ ^ 2 + c₁ ^ 2 = d₁ ^ 2)
     (h₂ : a₂ ^ 2 + b₂ ^ 2 + c₂ ^ 2 = d₂ ^ 2) :

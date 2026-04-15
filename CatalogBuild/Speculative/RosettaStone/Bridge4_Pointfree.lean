@@ -57,6 +57,7 @@ theorem clopen_iff_interior_eq_closure_eq (s : Set X) :
     exact ⟨closure_eq_iff_isClosed.mp hcl, hint ▸ isOpen_interior⟩
 
 
+/-- [Section: ## Open sets form a frame (complete lattice with infinite distributivity)] -/
 theorem open_inter {U V : Set X} (hU : IsOpen U) (hV : IsOpen V) :
     IsOpen (U ∩ V) := hU.inter hV
 

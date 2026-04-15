@@ -23,6 +23,7 @@ theorem const_is_idempotent {α : Type*} (c : α) : IsIdempotent (fun _ => c) :=
   intro x; rfl
 
 
+/-- [Section: ## Stage 4: Idempotent Projections] -/
 theorem idempotent_composition {α : Type*} (f g : α → α)
     (hf : IsIdempotent f) (hg : IsIdempotent g)
     (hcomm : ∀ x, f (g x) = g (f x)) :
@@ -37,6 +38,7 @@ theorem idempotent_fixed_point_iff {α : Type*} (f : α → α)
   aesop
 
 
+/-- [Section: ## Stage 3: Stereographic Parametrization] -/
 theorem stereographic_on_circle (t : ℚ) (h : 1 + t ^ 2 ≠ 0) :
     ((1 - t ^ 2) / (1 + t ^ 2)) ^ 2 + (2 * t / (1 + t ^ 2)) ^ 2 = 1 := by
   grind +revert

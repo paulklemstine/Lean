@@ -183,6 +183,7 @@ theorem two_reps_factoring (a b c d N : ℤ)
     (a - c) * (a + c) = (d - b) * (d + b) := by nlinarith
 
 
+/-- [Section: ## Research Thrust III: Division Algebra Hierarchy] -/
 theorem fermat_two_square (p : ℕ) (hp : Nat.Prime p) (hmod : p % 4 = 1) :
     ∃ a b : ℕ, a ^ 2 + b ^ 2 = p := by
   have := Fact.mk hp;
@@ -225,6 +226,7 @@ theorem wilson (p : ℕ) (hp : Nat.Prime p) :
   exact ZMod.wilsons_lemma p
 
 
+/-- [Section: ## Research Thrust V: Adjacent Problems] -/
 theorem euler_criterion (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2)
     (a : ZMod p) (ha : a ≠ 0) :
     a ^ ((p - 1) / 2) = 1 ∨ a ^ ((p - 1) / 2) = -1 := by

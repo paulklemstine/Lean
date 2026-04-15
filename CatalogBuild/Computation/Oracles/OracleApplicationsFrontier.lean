@@ -92,6 +92,12 @@ theorem relu_tropical_polynomial (a b c : ℝ) :
 theorem proj_nonneg_is_relu (x : ℝ) : max x 0 = relu x := rfl
 
 
+/-- [Section: ## §3: Proximal Operators as Oracles
+The proximal operator prox_f(x) = argmin_y {f(y) + ½‖y-x‖²} is an oracle
+when f is the indicator function of a convex set C: it reduces to projection
+onto C, which is idempotent. Every convex optimization problem can be
+"tropicalized" by replacing smooth objectives with piecewise-linear
+approximations, then solved by the oracle's one-step convergence.] -/
 theorem proj_interval_idempotent (a b x : ℝ) (hab : a ≤ b) :
     max a (min b (max a (min b x))) = max a (min b x) := by
   cases max_cases a ( min b x ) <;> cases min_cases b ( max a ( min b x ) ) <;> cases max_cases a ( min b ( max a ( min b x ) ) ) <;> cases min_cases b x <;> linarith;

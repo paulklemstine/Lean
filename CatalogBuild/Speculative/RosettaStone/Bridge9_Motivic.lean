@@ -36,6 +36,7 @@ def zero_correspondence (α : Type*) [CorrespondenceAlgebra α] :
   idem := mul_zero 0
 
 
+/-- [Section: ## Part 1: Idempotent Correspondences] -/
 theorem complement_idem_corr {α : Type*} [CorrespondenceAlgebra α]
     (p : IdempotentCorrespondence α) :
     (1 - p.corr) * (1 - p.corr) = 1 - p.corr := by
@@ -122,6 +123,7 @@ theorem genus_zero_density : curve_motivic_density 0 = 3 / 2 := by
   simp [curve_motivic_density]
 
 
+/-- [Section: ## Part 5: The Motivic Idempotent Density] -/
 theorem motivic_density_vanishes :
     ∀ ε : ℚ, 0 < ε → ∃ N : ℕ, ∀ g : ℕ, N ≤ g → curve_motivic_density g < ε := by
   intro ε hε

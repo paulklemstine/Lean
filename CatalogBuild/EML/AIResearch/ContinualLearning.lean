@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## §1. Catastrophic Forgetting Bounds] -/
 def standardForgetting (overlap : ℝ) (taskDifficulty : ℕ) : ℝ :=
   overlap * ↑taskDifficulty
 
@@ -25,6 +26,7 @@ theorem eml_less_forgetting (overlap invFactor : ℝ) (td : ℕ)
   nlinarith [mul_nonneg hoverlap htd]
 
 
+/-- [Section: ## §2. Elastic Weight Consolidation] -/
 def ewcPenalty (fisher paramShift : ℝ) : ℝ := fisher * paramShift ^ 2
 
 
@@ -44,6 +46,7 @@ theorem eml_cheaper_ewc (d w : ℕ) (f s : ℝ) (hw : 5 ≤ w) (hf : 0 ≤ f) :
   exact_mod_cast h1
 
 
+/-- [Section: ## §3. Task Capacity] -/
 def taskCapacity (totalParams paramsPerTask : ℕ) : ℕ := totalParams / paramsPerTask
 
 
@@ -53,6 +56,7 @@ theorem eml_more_tasks (totalParams emlPerTask stdPerTask : ℕ)
   unfold taskCapacity; exact Nat.div_le_div_left h heml
 
 
+/-- [Section: ## §4. Memory Replay Buffer] -/
 def replayBufferSize (paramsPerTask numTasks : ℕ) : ℕ := paramsPerTask * numTasks
 
 
@@ -62,6 +66,7 @@ theorem eml_smaller_replay (d w numTasks : ℕ) (hw : 5 ≤ w) :
   nlinarith [mul_le_mul_of_nonneg_left hw (Nat.zero_le d)]
 
 
+/-- [Section: ## §5. Progressive Network Growth] -/
 def emlGrowthCost (newWidth : ℕ) : ℕ := 4 * newWidth
 
 def stdGrowthCost (existingWidth newWidth : ℕ) : ℕ := existingWidth * newWidth
@@ -72,6 +77,7 @@ theorem eml_cheaper_growth (existingWidth newWidth : ℕ) (hw : 4 ≤ existingWi
   unfold emlGrowthCost stdGrowthCost; exact Nat.mul_le_mul_right newWidth hw
 
 
+/-- [Section: ## §6. Knowledge Transfer] -/
 def transferBenefit (sharedFraction : ℝ) (baseCost : ℕ) : ℝ :=
   (1 - sharedFraction) * ↑baseCost
 

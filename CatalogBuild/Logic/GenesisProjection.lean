@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Inverse Stereographic Projection in ℝ¹ → S¹] -/
 theorem invStereo1_on_circle (y : ℝ) :
     (invStereo1 y).1 ^ 2 + (invStereo1 y).2 ^ 2 = 1 := by
   unfold invStereo1; ring;
@@ -28,6 +29,7 @@ theorem invStereo1_limit_north :
   exact ( Metric.tendsto_atTop.mpr <| fun ε εpos ↦ ⟨ ε⁻¹ + 1, fun y hy ↦ abs_lt.mpr <| by constructor <;> nlinarith [ inv_pos.mpr εpos, mul_inv_cancel₀ ( ne_of_gt εpos ), sq_nonneg ( y - 1 ), mul_div_cancel₀ ( y ^ 2 - 1 ) ( by nlinarith [ inv_pos.mpr εpos ] : ( 1 + y ^ 2 ) ≠ 0 ) ] ⟩ ));
 
 
+/-- [Section: ## Inverse Stereographic Projection in ℝ² → S²] -/
 theorem invStereo2_on_sphere (y : Fin 2 → ℝ) :
     (invStereo2 y) 0 ^ 2 + (invStereo2 y) 1 ^ 2 + (invStereo2 y) 2 ^ 2 = 1 := by
   -- Expand the squares of the coordinates and simplify.
@@ -41,6 +43,7 @@ theorem invStereo2_on_sphere (y : Fin 2 → ℝ) :
 def conformalFactor (y : ℝ) : ℝ := 2 / (1 + y ^ 2)
 
 
+/-- [Section: ## The Conformal Factor] -/
 theorem conformalFactor_pos (y : ℝ) : 0 < conformalFactor y := by
   exact div_pos zero_lt_two ( by positivity )
 
@@ -62,6 +65,7 @@ theorem conformalFactor_le_two (y : ℝ) : conformalFactor y ≤ 2 := by
   exact div_le_self ( by norm_num ) ( by nlinarith )
 
 
+/-- [Section: ## The Denominator is Always Positive] -/
 theorem sq_add_one_pos (y : ℝ) : 0 < y ^ 2 + 1 := by
   positivity
 
@@ -76,6 +80,7 @@ def sphereVolume : ℕ → ℝ
   | (n + 4) => 2 * π / (n + 3 : ℝ) * sphereVolume (n + 2)
 
 
+/-- [Section: ## The Dimensional Cascade: Volume of Sⁿ] -/
 theorem sphereVolume_zero : sphereVolume 0 = 2 := by
   rfl
 

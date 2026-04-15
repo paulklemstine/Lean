@@ -7,6 +7,7 @@ Declarations: 13
 
 import Mathlib
 
+/-- [Section: ### Full Quadratic Reciprocity] -/
 theorem quadratic_reciprocity_legendre (p q : ℕ) [Fact (Nat.Prime p)] [Fact (Nat.Prime q)]
     (hp2 : p ≠ 2) (hq2 : q ≠ 2) (hpq : p ≠ q) :
     legendreSym p q * legendreSym q p =
@@ -24,6 +25,7 @@ theorem quadratic_reciprocity_legendre (p q : ℕ) [Fact (Nat.Prime p)] [Fact (N
   · assumption
 
 
+/-- [Section: ### Legendre Symbol Special Values] -/
 theorem legendre_sym_neg_one_val (p : ℕ) [Fact (Nat.Prime p)] (hp : p ≠ 2) :
     legendreSym p (-1) = (-1) ^ ((p - 1) / 2) := by
   rw [ legendreSym.at_neg_one ];
@@ -60,6 +62,7 @@ theorem legendre_sym_two_val (p : ℕ) [Fact (Nat.Prime p)] (hp : p ≠ 2) :
   · exact Nat.Prime.odd_of_ne_two Fact.out hp
 
 
+/-- [Section: ### Sum of Legendre Symbols] -/
 theorem sum_legendre_zero (p : ℕ) [hp : Fact (Nat.Prime p)] (hodd : p ≠ 2) :
     ∑ a ∈ Finset.range (p - 1), legendreSym p ((a : ℤ) + 1) = 0 := by
   simp +decide only [legendreSym];
@@ -109,6 +112,7 @@ theorem qr_qnr_product_is_qnr (p : ℕ) [hp : Fact (Nat.Prime p)]
   rw [legendreSym.mul p a b, ha, hb]; ring
 
 
+/-- [Section: ### Supplements to Quadratic Reciprocity] -/
 theorem first_supplement (p : ℕ) [hp : Fact (Nat.Prime p)] (hodd : p ≠ 2) :
     legendreSym p (-1) = 1 ↔ p % 4 = 1 := by
   rw [ legendreSym.at_neg_one ];

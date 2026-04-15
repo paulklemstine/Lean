@@ -17,11 +17,17 @@ This is the "rebel set" that cannot be in the range of f. -/
 def diagonalSet (f : α → Set α) : Set α := {x | x ∉ f x}
 
 
+/-- [Section: ## The Diagonal Argument
+Rucker explains the diagonal argument as a fundamentally creative act:
+"You look at what everyone else is doing, and you do something different."] -/
 theorem diagonal_not_in_range (f : α → Set α) : diagonalSet f ∉ Set.range f := by
   by_contra! h_contra;
   obtain ⟨ a, ha ⟩ := h_contra ; have := Set.ext_iff.mp ha a ; tauto;
 
 
+/-- [Section: ## The Hierarchy of Infinities
+Rucker describes the "Absolute Infinite" as the class of all ordinals,
+and shows how each level of infinity begets a higher one.] -/
 theorem aleph0_eq_nat_card : ℵ₀ = #ℕ := by
   aesop
 
@@ -34,6 +40,9 @@ theorem cardinal_pow_gt (κ : Cardinal) : κ < 2 ^ κ := by
   exact?
 
 
+/-- [Section: ## Countability and Uncountability
+Rucker devotes much discussion to the boundary between
+countable and uncountable — the "first great divide" in infinity.] -/
 theorem nat_countably_infinite : #ℕ = ℵ₀ := by
   exact Cardinal.mk_nat
 
@@ -65,6 +74,9 @@ theorem konig_cofinality : ℵ₀ < ((2 : Cardinal) ^ ℵ₀).ord.cof := by
   exact absurd (lt_of_lt_of_le h2 (h3.trans h5.le)) (not_lt.mpr le_rfl)
 
 
+/-- [Section: ## The Schröder-Bernstein Theorem
+Rucker presents this as the "conservation law" of cardinality:
+if A injects into B and B injects into A, they have the same size.] -/
 theorem schroder_bernstein {α β : Type*}
     (f : α → β) (g : β → α) (hf : Injective f) (hg : Injective g) :
     ∃ h : α → β, Bijective h := by

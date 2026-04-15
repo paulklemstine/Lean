@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/Research
-Declarations: 14
+Declarations: 15
 -/
 
 import Mathlib
@@ -17,6 +17,12 @@ theorem descent_reduces_hyp_by_2 (a b c : ℤ) (ha : 1 ≤ a) (hb : 1 ≤ b)
 theorem descent_hyp_lt (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
     (hpyth : a ^ 2 + b ^ 2 = c ^ 2) :
     -2*a - 2*b + 3*c < c := by nlinarith [sq_nonneg (a + b - c)]
+
+
+/-- The parent hypotenuse is positive. -/
+theorem descent_hyp_pos (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
+    (hpyth : a ^ 2 + b ^ 2 = c ^ 2) :
+    0 < -2*a - 2*b + 3*c := by nlinarith [sq_nonneg (a - b), sq_nonneg (3*c - 2*(a + b))]
 
 
 /-- For balanced triples (a = b), the descent formula. -/

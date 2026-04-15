@@ -13,6 +13,7 @@ noncomputable section
 noncomputable def pythagorean_energy_density (a b c : ℝ) : ℝ := a * b / (2 * c ^ 2)
 
 
+/-- [Section: ## Section 1: Pythagorean Energy Density] -/
 theorem pythagorean_energy_density_bound (a b c : ℝ) (hc : c ≠ 0)
     (hpyth : a ^ 2 + b ^ 2 = c ^ 2) :
     pythagorean_energy_density a b c ≤ 1 / 4 := by
@@ -57,6 +58,7 @@ noncomputable def pythagorean_rational_point (m n : ℝ) : ℝ × ℝ :=
   ((m ^ 2 - n ^ 2) / (m ^ 2 + n ^ 2), 2 * m * n / (m ^ 2 + n ^ 2))
 
 
+/-- [Section: ## Section 3: The Stereographic-Pythagorean Correspondence] -/
 theorem stereo_pyth_correspondence (m n : ℝ) (hm : m ≠ 0) (hsum : m ^ 2 + n ^ 2 ≠ 0) :
     pythagorean_rational_point m n = inverse_stereo_1d (n / m) := by
   unfold pythagorean_rational_point inverse_stereo_1d;
@@ -76,6 +78,7 @@ noncomputable def energy_ratio (t : ℝ) : ℝ :=
   t * (1 - t ^ 2) / (1 + t ^ 2) ^ 2
 
 
+/-- [Section: ## Section 4: Energy Density Analysis] -/
 theorem energy_euclid_eq_ratio (m n : ℝ) (hm : m ≠ 0) (hsum : m ^ 2 + n ^ 2 ≠ 0) :
     energy_euclid m n = m ^ 4 * energy_ratio (n / m) / (m ^ 2 + n ^ 2) ^ 2 *
       (m ^ 2 + n ^ 2) ^ 2 / m ^ 4 := by
@@ -97,6 +100,7 @@ noncomputable def silver_ratio : ℝ := 1 + Real.sqrt 2
 noncomputable def optimal_ratio : ℝ := Real.sqrt 2 - 1
 
 
+/-- [Section: ## Section 5: The Silver Ratio Connection] -/
 theorem optimal_ratio_eq_inv_silver :
     optimal_ratio * silver_ratio = 1 := by
   exact show ( Real.sqrt 2 - 1 ) * ( 1 + Real.sqrt 2 ) = 1 from by ring_nf; norm_num;

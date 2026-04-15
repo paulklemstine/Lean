@@ -33,6 +33,7 @@ theorem zero_negligible : IsNegligible (fun _ => 0) := by
   exact pow_pos (by positivity) c
 
 
+/-- [Section: ## Security Games Framework] -/
 theorem const_not_negligible (ε : ℝ) (hε : 0 < ε) :
     ¬ IsNegligible (fun _ => ε) := by
   intro h
@@ -64,6 +65,7 @@ theorem games_indist_symm (adv : Advantage) (h : IsNegligible adv) :
   exact ⟨N, fun n hn => by rw [abs_neg]; exact hN n hn⟩
 
 
+/-- [Section: ## Advantage Composition] -/
 theorem advantage_triangle (adv₁ adv₂ : Advantage)
     (h₁ : IsNegligible adv₁) (h₂ : IsNegligible adv₂) :
     IsNegligible (fun n => adv₁ n + adv₂ n) := by
@@ -95,6 +97,7 @@ structure DLogAssumption where
   isHard : IsNegligible dlogAdvantage
 
 
+/-- [Section: ## Discrete Log Hardness and Sigma Protocol Soundness] -/
 theorem schnorr_soundness_reduction
     (dlog : DLogAssumption) (cheatingAdvantage : Advantage)
     (challengeSpace : ℕ) (hcs : 1 < challengeSpace)
@@ -118,6 +121,7 @@ structure ComputationalZK where
   isZK : IsNegligible zkAdvantage
 
 
+/-- [Section: ## Simulation-Based Security] -/
 theorem sequential_zk_composition
     (zk₁ zk₂ : ComputationalZK)
     (composedAdvantage : Advantage)

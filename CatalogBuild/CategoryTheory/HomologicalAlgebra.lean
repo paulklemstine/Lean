@@ -46,6 +46,7 @@ theorem genus_euler_char (g : ℤ) : (1 : ℤ) - 2 * g + 1 = 2 - 2 * g := by rin
 theorem rp2_euler_char' : (1 : ℤ) - 0 + 0 = 1 := by ring
 
 
+/-- [Section: ## Short Exact Sequences] -/
 theorem ses_rank_nullity' {K : Type*} [Field K]
     {A B C : Type*} [AddCommGroup A] [AddCommGroup B] [AddCommGroup C]
     [Module K A] [Module K B] [Module K C]

@@ -36,6 +36,7 @@ theorem trop_char_pow {G : Type*} [Group G] (χ : G → ℝ) (hχ : IsTropChar �
   | succ n ih => rw [pow_succ, hχ.2, ih]; push_cast; ring
 
 
+/-- [Section: ## Section 1: Tropical Characters] -/
 theorem trop_char_finite_trivial {G : Type*} [Group G] [Fintype G]
     (χ : G → ℝ) (hχ : IsTropChar χ) (g : G) : χ g = 0 := by
   simp_all +decide [ IsTropChar ];

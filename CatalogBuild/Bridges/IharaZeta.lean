@@ -16,6 +16,7 @@ structure IharaGraph (n : ℕ) where
   no_self_loops : ∀ i : Fin n, adj i i = 0
 
 
+/-- [Section: # Ihara Zeta Function and Graph Spectral Theory] -/
 def IharaGraph.degree {n : ℕ} (G : IharaGraph n) (i : Fin n) : ℝ :=
   ∑ j : Fin n, G.adj i j
 

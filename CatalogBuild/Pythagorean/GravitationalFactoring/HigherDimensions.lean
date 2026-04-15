@@ -81,6 +81,7 @@ theorem semiprime_r4_lower_bound (p q : ℕ) (hp : 3 ≤ p) (hq : 3 ≤ q) :
 def cayleyDicksonDims : List ℕ := [1, 2, 4, 8]
 
 
+/-- [Section: ## §7. The Division Algebra Hierarchy] -/
 theorem cayley_dickson_dims_correct :
     cayleyDicksonDims = [1, 2, 4, 8] := rfl
 
@@ -92,6 +93,7 @@ theorem octonionic_factoring_advantage :
   unfold factoringChannels'; decide
 
 
+/-- [Section: ## §8. The Octonionic Advantage] -/
 theorem oct_vs_gauss :
     factoringChannels' 8 / factoringChannels' 2 = 12 := by
   unfold factoringChannels'; decide

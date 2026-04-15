@@ -126,6 +126,17 @@ theorem tropicalHadamard_ge_left (a b : ℝ) :
     a ≤ (tropicalHadamard a b).1 := le_max_left a b
 
 
+/-- [Section: # Tropical Quantum Gates for Neural Computation
+This file formalizes the core mathematical framework of **Tropical Quantum Gate Theory**:
+the tropicalization of quantum gates and their correspondence with neural computation.
+## Key Results
+1. **Tropical Semiring**: (ℝ, max, +) satisfies semiring-like axioms
+2. **ReLU = Tropical Addition**: ReLU(x) = max(x, 0) = x ⊕ 0
+3. **Tropical Hadamard Gate**: H_T(a,b) = (max(a,b), max(a,b)) — idempotent
+4. **Tropical CNOT Gate**: CNOT_T(a,b) = (a, a+b) — NOT self-inverse
+5. **Tropical Phase Gate**: P_T(φ)(a) = a + φ — synaptic weight
+6. **Maslov Sandwich**: max(a,b) ≤ LogSumExp(a,b) ≤ max(a,b) + log(2)
+7. **Winner-Take-All = Tropical Projection**: WTA ∘ WTA = WTA] -/
 theorem tropicalHadamard_ge_right (a b : ℝ) :
     b ≤ (tropicalHadamard a b).1 := le_max_right a b
 

@@ -40,6 +40,7 @@ def paramMatrix (m n : ℤ) : Matrix (Fin 2) (Fin 2) ℤ :=
   !![m, -n; n, m]
 
 
+/-- [Section: ## §2. The 2×2 Parametrization and SL₂(ℤ)] -/
 theorem paramMatrix_det (m n : ℤ) :
     Matrix.det (paramMatrix m n) = m ^ 2 + n ^ 2 := by
   simp [paramMatrix, Matrix.det_fin_two]; ring
@@ -131,6 +132,7 @@ theorem B₃_inv_preserves (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (-a + 2*b + 2*c)^2 + (-2*a + b + 2*c)^2 = (-2*a + 2*b + 3*c)^2 := by nlinarith
 
 
+/-- [Section: ## §5. Power Preservation] -/
 theorem power_preserves_Q (d : Matrix (Fin 3) (Fin 3) ℤ) (k : ℕ) (hd : dᵀ * Q * d = Q) :
     (d ^ k)ᵀ * Q * (d ^ k) = Q := by
   induction k with
@@ -172,6 +174,7 @@ theorem hypotenuse_largest_b (a b c : ℤ)
     c > b := by nlinarith [sq_nonneg a]
 
 
+/-- [Section: ## §6. Number-Theoretic Properties of Tree Triples] -/
 theorem primitive_not_both_even (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     (hprim : Int.gcd a b = 1) : ¬ (2 ∣ a ∧ 2 ∣ b) := by
   exact fun h' => absurd ( Int.dvd_coe_gcd h'.left h'.right ) ( by norm_num [ hprim ] )

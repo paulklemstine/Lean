@@ -18,6 +18,7 @@ def fib_local : ℕ → ℤ
 def IsSumTwoSq (n : ℤ) : Prop := ∃ a b : ℤ, a ^ 2 + b ^ 2 = n
 
 
+/-- [Section: ## §4: Wilson's Theorem Verifications] -/
 theorem wilson_5' : 24 % 5 = 4 := by norm_num
 
 theorem wilson_7' : 720 % 7 = 6 := by norm_num
@@ -55,6 +56,7 @@ theorem trace_cyclic_2x2 (A B : Matrix (Fin 2) (Fin 2) ℤ) :
   simp [Matrix.trace, Matrix.diag, Matrix.mul_apply, Fin.sum_univ_two]; ring
 
 
+/-- [Section: ## §6: Matrix Identities] -/
 theorem cayley_hamilton_2x2 (A : Matrix (Fin 2) (Fin 2) ℤ) :
     A * A - (Matrix.trace A) • A + (Matrix.det A) • (1 : Matrix (Fin 2) (Fin 2) ℤ) = 0 := by
   ext i j ; fin_cases i <;> fin_cases j <;> simp +decide [ Matrix.mul_apply, Matrix.trace, Matrix.det_fin_two ] <;> ring;
@@ -105,6 +107,7 @@ theorem four_regular_edges' (n : ℕ) : n * 4 / 2 = 2 * n := by omega
 /-- Fermat's little theorem: a^p ≡ a (mod p) for small primes. -/
 theorem fermat_little_3 : ∀ a : ZMod 3, a ^ 3 = a := by decide
 
+/-- [Section: ## §9: Number Theory] -/
 theorem fermat_little_5 : ∀ a : ZMod 5, a ^ 5 = a := by decide
 
 theorem fermat_little_7 : ∀ a : ZMod 7, a ^ 7 = a := by decide

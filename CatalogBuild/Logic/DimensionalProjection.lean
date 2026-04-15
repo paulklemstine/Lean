@@ -36,6 +36,7 @@ theorem stereo_round_trip_from_R (t : ℝ) :
   field_simp; ring
 
 
+/-- [Section: ### Step 1: S¹ → ℝ (Forward Stereographic Projection from the Circle)] -/
 theorem stereo_round_trip_from_S1_fst (x y : ℝ) (hunit : x ^ 2 + y ^ 2 = 1) (hy : 1 + y ≠ 0) :
     (invStereo1 (stereoForward1 x y)).1 = x := by
   simp [stereoForward1, invStereo1] at *;
@@ -162,6 +163,7 @@ theorem three_squares_from_pythagorean (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     (c ^ 2 + a ^ 2 + b ^ 2) ^ 2 := by nlinarith [sq_nonneg a, sq_nonneg b, sq_nonneg c]
 
 
+/-- [Section: ## Part V: The Hopf Fibration via Stereographic Projection] -/
 theorem hopf_map_on_sphere (a b c d : ℝ) (h : a^2 + b^2 + c^2 + d^2 = 1) :
     (2*(a*c + b*d))^2 + (2*(b*c - a*d))^2 + (a^2 + b^2 - c^2 - d^2)^2 = 1 := by
   grind +ring
@@ -201,6 +203,7 @@ theorem north_pole_not_in_image :
   nlinarith [sq_nonneg t]
 
 
+/-- [Section: ## Part VII: Compactification and Missing Points] -/
 theorem every_non_north_pole_in_image (x y : ℝ) (hunit : x ^ 2 + y ^ 2 = 1) (hy : y ≠ -1) :
     ∃ t : ℝ, invStereo1 t = (x, y) := by
   unfold invStereo1;
@@ -223,6 +226,7 @@ theorem stereo_rotation_at_east (α : ℝ) (h : 1 + sin α ≠ 0) :
   simp [stereoForward1]
 
 
+/-- [Section: ## Part VIII: Dimensional Interplay and New Identities] -/
 theorem inv_stereo_1d_injective : Function.Injective invStereo1 := by
   intros t1 t2 h_eq
   have h_comp : 2 * t1 / (1 + t1 ^ 2) = 2 * t2 / (1 + t2 ^ 2) ∧ (1 - t1 ^ 2) / (1 + t1 ^ 2) = (1 - t2 ^ 2) / (1 + t2 ^ 2) := by

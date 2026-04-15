@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: EML/V9
-Declarations: 22
+Declarations: 18
 -/
 
 import Mathlib
@@ -25,6 +25,7 @@ theorem eml_power (x : ℝ) (n : ℕ) : eml (n * x) 1 = (Real.exp x) ^ n := by
   simp [eml, Real.log_one, Real.exp_nat_mul]
 
 
+/-- [Section: ## Section 2: Double Negation and Involution] -/
 theorem emlNeg_involution (x : ℝ) : emlNeg (emlNeg x) = x := by
   simp [emlNeg]
 
@@ -38,17 +39,11 @@ theorem eml_double_neg (x : ℝ) :
   simp [eml, Real.log_exp]
 
 
-/-- The self-pairing has a unique minimum at x = 0 with value σ(0) = 1. -/
-theorem emlSelfPair_min : ∀ x : ℝ, emlSelfPair x ≥ 1 := by
-  intro x
-  unfold emlSelfPair
-  linarith [Real.add_one_le_exp x]
-
-
 theorem emlSelfPair_min_achieved : emlSelfPair 0 = 1 := by
   simp [emlSelfPair]
 
 
+/-- [Section: ## Section 6: Derivatives and Calculus] -/
 theorem eml_hasDerivAt_x (x y : ℝ) :
     HasDerivAt (fun x' => eml x' y) (Real.exp x) x := by
   unfold eml
@@ -63,16 +58,7 @@ theorem eml_hasDerivAt_y (x y : ℝ) (hy : 0 < y) :
   simp only [zero_sub] at h; exact h
 
 
-/-- The second derivative ∂²eml/∂x² = exp(x) > 0 (convexity). -/
-theorem eml_second_deriv_x_pos (x : ℝ) : Real.exp x > 0 :=
-  Real.exp_pos x
-
-
-/-- The second derivative ∂²eml/∂y² = 1/y² > 0 for y > 0 (convexity). -/
-theorem eml_second_deriv_y_pos (y : ℝ) (hy : 0 < y) : y⁻¹ ^ 2 > 0 := by
-  positivity
-
-
+/-- [Section: ## Section 8: Log-Split Identities] -/
 theorem eml_log_split (x y z : ℝ) (hy : 0 < y) (hz : 0 < z) :
     eml x (y * z) = eml x y - Real.log z := by
   unfold eml; rw [Real.log_mul hy.ne' hz.ne']; ring
@@ -98,11 +84,6 @@ theorem eml_generates_e2 : eml 2 1 = Real.exp 2 := by simp [eml, Real.log_one]
 
 theorem eml_generates_eee : eml (eml (eml 1 1) 1) 1 = Real.exp (Real.exp (Real.exp 1)) := by
   simp [eml, Real.log_one]
-
-
-/-- The EML zero: eml(1, e^e) = 0. -/
-theorem eml_zero : eml 1 (Real.exp (Real.exp 1)) = 0 := by
-  simp [eml, Real.log_exp]
 
 
 /-- EML generates addition via double application. -/

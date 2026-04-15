@@ -22,6 +22,8 @@ class TheorySpace (T : Type*) where
   simCost_triangle : ∀ a b c, simCost a c ≤ simCost a b + simCost b c
 
 
+/-- [Section: ## Section 1: Abstract Simulation Cost as a Pseudometric
+We define a simulation cost function and prove it satisfies pseudometric axioms.] -/
 theorem simCost_is_pseudometric {T : Type*} [TheorySpace T] :
     ∀ a b c : T,
       TheorySpace.simCost a a = 0 ∧
@@ -35,6 +37,9 @@ def isDual {T : Type*} [TheorySpace T] (a b : T) : Prop :=
   TheorySpace.simCost a b = 0 ∧ TheorySpace.simCost b a = 0
 
 
+/-- [Section: ## Section 2: Duality Equivalence
+Two theories are "dual" if they can simulate each other at zero cost.
+This is an equivalence relation.] -/
 theorem isDual_refl {T : Type*} [TheorySpace T] (a : T) : isDual a a := by
   constructor <;> exact ( ‹TheorySpace T›.simCost_self a )
 
@@ -72,6 +77,9 @@ def isMidpoint {T : Type*} [TheorySpace T] (m a b : T) : Prop :=
   TheorySpace.simCost a m + TheorySpace.simCost m b = TheorySpace.simCost a b
 
 
+/-- [Section: ## Section 3: Geodesics in Theory Space
+A "geodesic" between two theories is a path that minimizes total simulation cost.
+We formalize the concept that quantum gravity is a geodesic midpoint between GR and QFT.] -/
 theorem midpoint_optimal {T : Type*} [TheorySpace T] {m a b : T}
     (h : isMidpoint m a b) :
     TheorySpace.simCost a m + TheorySpace.simCost m b = TheorySpace.simCost a b := by
@@ -85,6 +93,9 @@ theorem midpoint_half_distance {T : Type*} [TheorySpace T] {m a b : T}
   linarith [ h.1, h.2 ]
 
 
+/-- [Section: ## Section 4: Novel Theorem — Simulation Cost Bounds
+**Hypothesis**: The simulation cost between two theories is related to the
+difference in their "expressiveness" (number of distinguishable states).] -/
 theorem simulation_cost_from_expressiveness
     {states_A states_B : ℕ} (hA : 0 < states_A) (hB : 0 < states_B)
     (h : states_A ≤ states_B) :
@@ -105,6 +116,10 @@ noncomputable def triangleDefect {T : Type*} [TheorySpace T] (a b c : T) : ℝ :
   (TheorySpace.simCost a b + TheorySpace.simCost b c) - TheorySpace.simCost a c
 
 
+/-- [Section: ## Section 5: Theory Space Curvature
+**Novel Hypothesis**: The "curvature" of theory space encodes how difficult
+it is to interpolate between theories. Negative curvature means interpolation
+is harder than expected (theories are "far apart" in a non-linear way).] -/
 theorem triangleDefect_nonneg {T : Type*} [TheorySpace T] (a b c : T) :
     0 ≤ triangleDefect a b c := by
   exact sub_nonneg_of_le ( by exact ( ‹TheorySpace T›.simCost_triangle a b c ) )

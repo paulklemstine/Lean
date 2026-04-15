@@ -39,6 +39,7 @@ theorem subalgebra_chain_dimensions :
     3 < 8 ∧ 8 < 10 ∧ 10 < 15 ∧ 15 < 25 ∧ 25 < 36 := by omega
 
 
+/-- [Section: ## Section 2: Hilbert Space Dimension] -/
 theorem boson_hilbert_dim (N : ℕ) :
     Nat.choose (N + 5) 5 = Nat.choose (N + 5) N := by
   rw [ Nat.choose_symm_add ]
@@ -85,6 +86,7 @@ theorem casimir_U5_eq_O6_form (n : ℕ) : casimir_U5 n = casimir_O6 n := by
 /-- Casimir eigenvalue examples for verification. -/
 theorem casimir_U5_example : casimir_U5 2 = 12 := by native_decide
 
+/-- [Section: ## Section 3: Casimir Operator Eigenvalues] -/
 theorem casimir_SU3_example : casimir_SU3 6 0 = 54 := by native_decide
 
 theorem casimir_O6_example : casimir_O6 6 = 60 := by native_decide
@@ -137,6 +139,7 @@ def shell_degeneracy (n : ℕ) : ℕ := (n + 1) * (n + 2)
 /-- The first few shell degeneracies. -/
 theorem shell_deg_0 : shell_degeneracy 0 = 2 := by native_decide
 
+/-- [Section: ## Section 5: Magic Numbers] -/
 theorem shell_deg_1 : shell_degeneracy 1 = 6 := by native_decide
 
 theorem shell_deg_2 : shell_degeneracy 2 = 12 := by native_decide
@@ -240,6 +243,7 @@ def pairing_sign (A Z : ℕ) : Int :=
   else -1
 
 
+/-- [Section: ## Section 7: Binding Energy — Isospin Algebra] -/
 theorem pairing_even_even : pairing_sign 56 26 = 1 := by native_decide  -- ⁵⁶Fe
 
 theorem pairing_odd_odd : pairing_sign 14 7 = -1 := by native_decide     -- ¹⁴N

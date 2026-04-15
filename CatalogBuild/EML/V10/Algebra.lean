@@ -112,6 +112,7 @@ theorem eml_range_fst_lower_bound (y x : ℝ) : eml x y > -Real.log y := by
   unfold eml; linarith [Real.exp_pos x]
 
 
+/-- [Section: ## Section 4: Depth-2 Identity Failures] -/
 theorem eml_depth2_fail_assoc : ∃ a b c : ℝ,
     eml a (eml b c) ≠ eml (eml a b) c := by
   exact ⟨0, 0, 0, by unfold eml; simp; linarith [Real.exp_one_gt_d9]⟩

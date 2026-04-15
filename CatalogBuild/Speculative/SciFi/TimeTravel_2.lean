@@ -9,6 +9,9 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Contraction Mappings and Fixed Points
+If the universe's evolution operator is a contraction, then a self-consistent
+time loop must exist and be unique (Novikov self-consistency principle).] -/
 theorem contraction_has_fixedPoint {X : Type*} [MetricSpace X] [CompleteSpace X]
     [Nonempty X] {f : X → X} {q : ℝ} (hq : q ∈ Set.Ico (0 : ℝ) 1)
     (hf : ∀ x y, dist (f x) (f y) ≤ q * dist x y) :
@@ -33,6 +36,7 @@ theorem contraction_fixedPoint_unique {X : Type*} [MetricSpace X]
   exact ⟨ x₁, x₂, by simp [ * ] ⟩
 
 
+/-- [Section: ## Knaster-Tarski: Monotone functions on complete lattices have fixed points] -/
 theorem monotone_has_lfp {L : Type*} [CompleteLattice L] {f : L → L}
     (hf : Monotone f) : ∃ x, f x = x ∧ ∀ y, f y = y → x ≤ y := by
   refine' ⟨ sInf { x | f x ≤ x }, _, _ ⟩;
@@ -44,6 +48,10 @@ theorem monotone_has_lfp {L : Type*} [CompleteLattice L] {f : L → L}
   · exact fun y hy => sInf_le hy.le
 
 
+/-- [Section: ## Brouwer-style: continuous self-maps of compact convex sets have fixed points
+This guarantees that if the space of possible universe-states is "ball-like"
+(compact and convex) and the evolution is continuous, then at least one
+self-consistent timeline exists.] -/
 theorem interval_fixedPoint {f : ℝ → ℝ} {a b : ℝ} (hab : a ≤ b)
     (hf : ContinuousOn f (Set.Icc a b))
     (hfa : a ≤ f a) (hfb : f b ≤ b)

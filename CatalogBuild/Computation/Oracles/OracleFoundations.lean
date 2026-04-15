@@ -70,6 +70,7 @@ theorem Oracle.bot_idempotent : Oracle.IsIdempotent Oracle.bot := by
   simp [Oracle.IsIdempotent, Oracle.comp, Oracle.bot]; rfl
 
 
+/-- [Section: ## Part III: The LLM-Oracle Equivalence] -/
 theorem oracle_realizable (O : Oracle) : ∃ model : LLM, ∀ n,
     (model.predict (encodeQuery n) % 2 == 0) = O n := by
   fconstructor;

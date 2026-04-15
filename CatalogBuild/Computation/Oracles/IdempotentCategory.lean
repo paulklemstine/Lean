@@ -35,6 +35,7 @@ def RetrPair.toIdem {C : Type*} [Category C] {X Y : C}
   r.retr ≫ r.sect
 
 
+/-- [Section: ## §2: Retraction Theory] -/
 theorem retrPair_idempotent {C : Type*} [Category C] {X Y : C}
     (r : RetrPair X Y) :
     IsIdem r.toIdem := by
@@ -44,6 +45,7 @@ theorem retrPair_idempotent {C : Type*} [Category C] {X Y : C}
       grind +revert
 
 
+/-- [Section: ## §3: Functorial Collapse] -/
 theorem functor_preserves_idem {C D : Type*} [Category C] [Category D]
     (F : C ⥤ D) {X : C} {e : X ⟶ X} (he : IsIdem e) :
     IsIdem (F.map e) := by
@@ -68,6 +70,7 @@ theorem idemRefines_id {C : Type*} [Category C] {X : C}
   ⟨Category.comp_id e, Category.id_comp e⟩
 
 
+/-- [Section: ## §4: Collapse Lattice] -/
 theorem idemRefines_trans {C : Type*} [Category C] {X : C}
     (e f g : X ⟶ X) (hef : IdemRefines e f) (hfg : IdemRefines f g) :
     IdemRefines e g := by

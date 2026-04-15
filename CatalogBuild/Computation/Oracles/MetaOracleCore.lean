@@ -129,6 +129,7 @@ structure OracleTask where
   best : ℝ
 
 
+/-- [Section: ## Part 5: Bounded Improvement (No-Free-Lunch for Meta-Oracles)] -/
 theorem no_free_lunch_avg {n : ℕ} (hn : 0 < n)
     (σ : Fin n → Fin n) (hσ : Function.Bijective σ)
     (q : Fin n → ℝ) :

@@ -7,6 +7,7 @@ Declarations: 5
 
 import Mathlib
 
+/-- [Section: ## §1: Convexity] -/
 theorem sq_convex (a b : ℝ) (t : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
     (t * a + (1 - t) * b) ^ 2 ≤ t * a ^ 2 + (1 - t) * b ^ 2 := by
   nlinarith [ sq_nonneg ( a - b ), mul_nonneg ht0 ( sub_nonneg_of_le ht1 ) ] ;

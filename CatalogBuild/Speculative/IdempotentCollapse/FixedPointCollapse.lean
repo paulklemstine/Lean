@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ### Iteration of Maps] -/
 theorem limit_of_iteration_idempotent {α : Type*} [TopologicalSpace α] [T2Space α]
     (f : α → α) (L : α → α) (hf_cont : Continuous f)
     (hconv : ∀ x, Tendsto (fun n => f^[n] x) atTop (nhds (L x))) :
@@ -29,6 +30,7 @@ theorem monotone_idempotent_determined_by_fixed {α : Type*} [PartialOrder α]
   intro x; simp; exact hf_idem x
 
 
+/-- [Section: ### Fixed Points of Monotone Maps] -/
 theorem monotone_iterate_stabilizes {n : ℕ} (f : Fin n → Fin n)
     (hf_mono : Monotone f) :
     ∃ k, ∀ x, f^[k] (f^[k] x) = f^[k] x := by
@@ -38,6 +40,7 @@ theorem monotone_iterate_stabilizes {n : ℕ} (f : Fin n → Fin n)
   obtain ⟨ k, hk ⟩ := h 0 ; simp_all +decide [ Function.iterate_fixed ]
 
 
+/-- [Section: ### Kleene's Fixed-Point Theorem] -/
 theorem kleene_fixed_point_exists {α : Type*} [CompleteLattice α]
     (f : α → α) (hf : Monotone f) :
     ∃ x, f x = x := by
@@ -53,6 +56,7 @@ theorem kleene_fixed_point_exists {α : Type*} [CompleteLattice α]
   exact h_knaster_tarski f hf
 
 
+/-- [Section: ### Banach Contraction as Collapse] -/
 theorem contraction_total_collapse {α : Type*} [MetricSpace α] [CompleteSpace α]
     [Nonempty α] (f : α → α)
     (hf : ∃ k : ℝ, 0 ≤ k ∧ k < 1 ∧ ∀ x y, dist (f x) (f y) ≤ k * dist x y) :

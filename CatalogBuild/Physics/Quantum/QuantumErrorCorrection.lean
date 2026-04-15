@@ -30,6 +30,7 @@ theorem code_rate_bound (n k : ℕ) (hn : 0 < n) (hk : k ≤ n) :
   exact Nat.cast_le.mpr hk
 
 
+/-- [Section: ## §2: Pythagorean Triple Properties] -/
 theorem base_triple' : IsPythTriple' 3 4 5 := by unfold IsPythTriple'; ring
 
 /-- The Lorentz form Q(a,b,c) = a² + b² - c² -/
@@ -49,6 +50,7 @@ theorem single_error_detectable' (a b c δ : ℤ) (hδ : δ ≠ 0)
   simp [qecLorentzForm, IsPythTriple'] at *; nlinarith
 
 
+/-- [Section: ## §3: Lorentz Form = Error Detection] -/
 theorem syndrome_determines_error' (a δ₁ δ₂ : ℤ)
     (ha : a > 0)
     (h : 2 * a * δ₁ + δ₁ ^ 2 = 2 * a * δ₂ + δ₂ ^ 2)

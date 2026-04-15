@@ -222,6 +222,10 @@ def AgentAlpha.toOracle {α : Type*} (agent : AgentAlpha α) : UniversalOracle �
   ⟨agent.hypothesize, agent.generates_hypotheses⟩
 
 
+/-- [Section: ## Agent Formalization
+Each agent is modeled as a specialized oracle that operates on a different
+aspect of the problem space. The team's collective oracle is the composition
+of all six agents — and we prove this composition is itself an oracle.] -/
 def AgentBeta.toOracle {α : Type*} (agent : AgentBeta α) : UniversalOracle α :=
   ⟨agent.apply_to_world, agent.application_stable⟩
 

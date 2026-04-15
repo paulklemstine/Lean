@@ -9,6 +9,9 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # 3D SPB and Quaternions (Open Problem 2.2 / H4)
+The 3D SPB operator spb₃(u, v) = (u + v + u × v) / (1 - u · v)
+recovers quaternion multiplication under the 3D Cayley transform.] -/
 def dot3 (u v : Fin 3 → ℝ) : ℝ := ∑ i, u i * v i
 
 

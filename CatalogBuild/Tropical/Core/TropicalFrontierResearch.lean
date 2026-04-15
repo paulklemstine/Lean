@@ -21,6 +21,9 @@ theorem trop_eigen_1x1 (a : ℝ) :
   intro i; simp [tropMatVec, Finset.sup'_singleton]
 
 
+/-- [Section: ================================================================
+PART I: TROPICAL EIGENVALUE THEORY
+================================================================] -/
 theorem tropMatVec_mono {n : ℕ} (A : Fin (n+1) → Fin (n+1) → ℝ)
     (x y : Fin (n+1) → ℝ) (h : ∀ j, x j ≤ y j) :
     ∀ i, tropMatVec A x i ≤ tropMatVec A y i := by
@@ -57,6 +60,9 @@ theorem deep_relu_tropical_terms (w L : ℕ) (hw : 1 ≤ w) :
     1 ≤ (2 * w) ^ L := Nat.one_le_pow L (2 * w) (by omega)
 
 
+/-- [Section: ================================================================
+PART III: TROPICAL FIXED-POINT THEORY
+================================================================] -/
 theorem tropMatVec_nonexpansion {n : ℕ} (A : Fin (n+1) → Fin (n+1) → ℝ)
     (x y : Fin (n+1) → ℝ) :
     ∀ i, tropMatVec A x i - tropMatVec A y i ≤
@@ -114,6 +120,9 @@ theorem selector_product_binary (a b : ℝ) :
     simp [ha, hb]
 
 
+/-- [Section: ================================================================
+PART V: TROPICAL GRADIENT FLOW
+================================================================] -/
 theorem gradient_path_binary (n : ℕ) (xs : Fin n → ℝ) :
     (∏ i, reluDeriv (xs i)) = 0 ∨ (∏ i, reluDeriv (xs i)) = 1 := by
   induction' n with n ih <;> simp_all +decide [ Fin.prod_univ_succ ];
@@ -141,6 +150,9 @@ theorem temperature_scaling (β x : ℝ) :
     Real.log (Real.exp (β * x)) = β * x := Real.log_exp (β * x)
 
 
+/-- [Section: ================================================================
+PART VI: TROPICAL INFORMATION THEORY
+================================================================] -/
 theorem shannon_ge_minEntropy {n : ℕ} (p : Fin (n+1) → ℝ)
     (hp_pos : ∀ i, 0 < p i) (hp_sum : ∑ i, p i = 1)
     (hmax : Finset.sup' Finset.univ ⟨0, Finset.mem_univ 0⟩ p ≤ 1) :
@@ -157,6 +169,9 @@ theorem region_count_lower (w L : ℕ) (hw : 2 ≤ w) :
     4 ^ L ≤ (2 * w) ^ L := Nat.pow_le_pow_left (by omega) L
 
 
+/-- [Section: ================================================================
+PART VII: TROPICAL RANK AND COMPRESSION
+================================================================] -/
 theorem compression_ratio_bound (w L : ℕ) (hw : 2 ≤ w) :
     w * L ≤ (2 * w) ^ L := by
   -- We proceed by induction on $L$.
@@ -211,6 +226,9 @@ theorem padic_tropical_mul (p a b : ℕ) (hp : Nat.Prime p) (ha : a ≠ 0) (hb :
   exact padicValNat.mul ha hb
 
 
+/-- [Section: ================================================================
+PART IX: P-ADIC TROPICAL BRIDGE
+================================================================] -/
 theorem tropical_fundamental_arithmetic (a b : ℕ) (ha : 0 < a) (hb : 0 < b)
     (h : ∀ p : ℕ, Nat.Prime p → padicValNat p a = padicValNat p b) :
     a = b := by
@@ -262,6 +280,9 @@ theorem scaledSoftmax_sum {n : ℕ} (β : ℝ) (v : Fin (n+1) → ℝ) :
   exact div_self (ne_of_gt (Finset.sum_pos (fun j _ => Real.exp_pos _) Finset.univ_nonempty))
 
 
+/-- [Section: ================================================================
+PART XI: TROPICAL ATTENTION — DEEP ANALYSIS
+================================================================] -/
 theorem scaledSoftmax_le_one {n : ℕ} (β : ℝ) (v : Fin (n+1) → ℝ) (i : Fin (n+1)) :
     scaledSoftmax β v i ≤ 1 := by
   exact div_le_one_of_le₀ ( Finset.single_le_sum ( fun a _ => Real.exp_nonneg ( β * v a ) ) ( Finset.mem_univ i ) ) ( Finset.sum_nonneg fun a _ => Real.exp_nonneg ( β * v a ) )
@@ -293,6 +314,9 @@ def tropBellman {n : ℕ} (R : Fin (n+1) → Fin (n+1) → ℝ) (γ_coeff : ℝ)
   Finset.sup' Finset.univ ⟨s, Finset.mem_univ s⟩ (fun a => R s a + γ_coeff * V a)
 
 
+/-- [Section: ================================================================
+PART XII: TROPICAL BELLMAN EQUATIONS
+================================================================] -/
 theorem tropBellman_mono {n : ℕ} (R : Fin (n+1) → Fin (n+1) → ℝ) (γ_coeff : ℝ)
     (hγ : 0 ≤ γ_coeff) (V W : Fin (n+1) → ℝ) (h : ∀ i, V i ≤ W i) :
     ∀ s, tropBellman R γ_coeff V s ≤ tropBellman R γ_coeff W s := by
@@ -339,6 +363,9 @@ theorem layernorm_is_affine (γ β_param μ σ : ℝ) (x : ℝ) :
     γ * (x - μ) / σ + β_param = (γ / σ) * x + (β_param - γ * μ / σ) := by ring
 
 
+/-- [Section: ================================================================
+PART XVI: EXPERIMENTAL PREDICTIONS
+================================================================] -/
 theorem pruning_error_bound {n : ℕ} (w x : Fin n → ℝ)
     (ε : ℝ) (hε : 0 < ε) (hw : ∀ i, |w i| < ε) :
     |∑ i, w i * x i| ≤ ε * ∑ i, |x i| := by
@@ -356,6 +383,9 @@ theorem compilation_error_vanishes (β : ℝ) (hβ : 0 < β) (n : ℕ) (hn : 2 �
   div_pos (Real.log_pos (by exact_mod_cast hn)) hβ
 
 
+/-- [Section: ================================================================
+PART XVII: EXPRESSIVENESS BARRIERS
+================================================================] -/
 theorem relu_not_polynomial : ¬∃ (p : Polynomial ℝ), ∀ x : ℝ, p.eval x = max x 0 := by
   -- Assume for contradiction that there exists a polynomial $p$ such that $p.eval x = \max(x, 0)$ for all $x$.
   by_contra h

@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Computation/Factoring
-Declarations: 16
+Declarations: 17
 -/
 
 import Mathlib
@@ -62,6 +62,18 @@ theorem factor_extraction_correct {N m : ℕ} (hN : 1 < N) (hm1 : 1 < m)
   exact ⟨k, hk, by nlinarith⟩
 
 
+/-- The GCD method: if gcd(m, N) ∉ {1, N}, it's a non-trivial factor. -/
+theorem gcd_nontrivial_factor {N m : ℕ} (hN : 1 < N)
+    (hg1 : Nat.gcd m N ≠ 1) (hgN : Nat.gcd m N ≠ N) :
+    1 < Nat.gcd m N ∧ Nat.gcd m N ∣ N := by
+  refine ⟨?_, Nat.gcd_dvd_right m N⟩
+  have h0 : 0 < Nat.gcd m N := by positivity
+  by_contra h
+  push_neg at h
+  have : Nat.gcd m N = 0 ∨ Nat.gcd m N = 1 := by omega
+  rcases this with h | h <;> [exact absurd h (by omega); exact absurd h hg1]
+
+
 /-- The determinant of the quaternion factoring lattice equals N. -/
 theorem lattice_det_eq_N (N : ℤ) :
     (1 : ℤ) * 1 * 1 * 1 * N = N := by ring
@@ -81,6 +93,7 @@ theorem sum_two_sq_nonneg (a b : ℤ) : 0 ≤ a^2 + b^2 := by positivity
 theorem sum_four_sq_nonneg (a b c d : ℤ) : 0 ≤ a^2 + b^2 + c^2 + d^2 := by positivity
 
 
+/-- [Section: ## Section 10: Sum of Squares Properties] -/
 theorem not_sum_two_sq_of_3_mod_4 (n : ℕ) (hn : n % 4 = 3) :
     ¬ ∃ a b : ℕ, a^2 + b^2 = n := by
   rintro ⟨ a, b, rfl ⟩ ; exact absurd ( congr_arg ( · % 4 ) hn ) ( by norm_num [ Nat.add_mod, Nat.pow_mod ] ; have := Nat.mod_lt a zero_lt_four; have := Nat.mod_lt b zero_lt_four; interval_cases a % 4 <;> interval_cases b % 4 <;> trivial )

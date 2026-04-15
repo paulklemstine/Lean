@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/HyperbolicFactoring
-Declarations: 43
+Declarations: 44
 -/
 
 import Mathlib
@@ -58,6 +58,7 @@ def η₄ : Matrix (Fin 4) (Fin 4) ℤ :=
   !![1, 0, 0, 0; 0, 1, 0, 0; 0, 0, 1, 0; 0, 0, 0, (-1)]
 
 
+/-- [Section: ## §4. Higher-Dimensional Analogues] -/
 theorem η₄_involution : η₄ * η₄ = 1 := by native_decide
 
 
@@ -126,6 +127,7 @@ theorem quad_branching (k : ℕ) : 4 ^ k ≥ 3 ^ k :=
   Nat.pow_le_pow_left (by norm_num : 3 ≤ 4) k
 
 
+/-- [Section: ## §5. Lattice-Based Cryptography Connections] -/
 theorem berggren_lattice_automorphism (d : BDir) :
     IsUnit (Matrix.det (dirMatrix d)) := by
   cases d <;> simp [dirMatrix, B₁, B₂, B₃] <;> native_decide
@@ -186,6 +188,7 @@ theorem quantum_walk_step_preserves (d : BDir) (p : BPath) :
   exact pathMatrix_preserves_Q (d :: p)
 
 
+/-- [Section: ## §7. Determinant Parity and Structural Theorems] -/
 def countM : BPath → ℕ
   | [] => 0
   | .M :: ds => 1 + countM ds
@@ -234,4 +237,7 @@ theorem shortcut_injective (p : BPath) :
   cases' h_det with h_det h_det;
   · exact fun v w h => by simpa [ h_det ] using congr_arg ( fun v => ( pathMatrix p ) ⁻¹.mulVec v ) h;
   · exact fun v w h => by simpa [ h_det ] using congr_arg ( fun v => ( pathMatrix p ) ⁻¹.mulVec v ) h;
+
+
+theorem root_null : lorentzInner root root = 0 := by simp [lorentzInner, root]
 

@@ -15,6 +15,7 @@ def spb_mobius_matrix (a : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
   !![1, a; -a, 1]
 
 
+/-- [Section: ## Section 1: SPB as Möbius Transformation] -/
 theorem spb_mobius_det (a : ℝ) :
     Matrix.det (spb_mobius_matrix a) = 1 + a ^ 2 := by
   unfold spb_mobius_matrix;
@@ -53,6 +54,7 @@ theorem spb_iter_one (x : ℝ) : spb_iter 1 x = x := by
   rfl
 
 
+/-- [Section: ## Section 3: SPB Monotonicity] -/
 theorem spb_strict_mono_right (x : ℝ) (y₁ y₂ : ℝ)
     (hy : y₁ < y₂) (h1 : x * y₁ < 1) (h2 : x * y₂ < 1) :
     (x + y₁) / (1 - x * y₁) < (x + y₂) / (1 - x * y₂) := by
@@ -64,12 +66,14 @@ theorem spb_pos (x y : ℝ) (hx : 0 < x) (hy : 0 < y) (hxy : x * y < 1) :
   exact div_pos ( add_pos hx hy ) ( sub_pos.mpr hxy )
 
 
+/-- [Section: ## Section 4: Hyperbolic SPB and Rapidity] -/
 theorem spbH_tanh_add (φ₁ φ₂ : ℝ) :
     (tanh φ₁ + tanh φ₂) / (1 + tanh φ₁ * tanh φ₂) = tanh (φ₁ + φ₂) := by
   rw [ eq_comm, Real.tanh_eq_sinh_div_cosh, Real.tanh_eq_sinh_div_cosh, Real.tanh_eq_sinh_div_cosh, Real.sinh_add, Real.cosh_add ];
   field_simp
 
 
+/-- [Section: ## Section 5: SPB Fixed Points] -/
 theorem spb_no_real_fixed_point (a z : ℝ) (ha : a ≠ 0) (haz : a * z ≠ 1) :
     (a + z) / (1 - a * z) ≠ z := by
   -- Assume for contradiction that $(a + z) / (1 - a * z) = z$.
@@ -78,6 +82,7 @@ theorem spb_no_real_fixed_point (a z : ℝ) (ha : a ≠ 0) (haz : a * z ≠ 1) :
   exact ha ( by nlinarith [ sq_nonneg z ] )
 
 
+/-- [Section: ## Section 6: SPB Derivative] -/
 theorem spb_deriv_fst (x y : ℝ) (hxy : x * y ≠ 1) :
     HasDerivAt (fun t => (t + y) / (1 - t * y)) ((1 + y ^ 2) / (1 - x * y) ^ 2) x := by
   convert HasDerivAt.div ( HasDerivAt.add ( hasDerivAt_id x ) ( hasDerivAt_const _ _ ) ) ( HasDerivAt.sub ( hasDerivAt_const _ _ ) ( hasDerivAt_mul_const _ ) ) _ using 1 <;> norm_num [ hxy ];
@@ -85,6 +90,7 @@ theorem spb_deriv_fst (x y : ℝ) (hxy : x * y ≠ 1) :
   · exact sub_ne_zero_of_ne hxy.symm
 
 
+/-- [Section: ## Section 7: SPB and Angle Geometry] -/
 theorem spb_slope_composition (α β : ℝ) (ha : cos α ≠ 0) (hb : cos β ≠ 0)
     (hab : cos (α + β) ≠ 0) :
     tan (α + β) = (tan α + tan β) / (1 - tan α * tan β) := by

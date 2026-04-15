@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- ═══════════════════════════════════════════════════════════════════════ Row 1: Points ↔ Prime / Maximal Ideals ═══════════════════════════════════════════════════════════════════════ -/
 theorem point_is_prime_ideal (R : Type*) [CommRing R]
     (x : PrimeSpectrum R) : x.asIdeal.IsPrime :=
   by
@@ -33,6 +34,10 @@ theorem maximal_ideal_is_closed_point (R : Type*) [CommRing R]
 -- ═══════════════════════════════════════════════════════════════════════
 
 
+/-- [Section: ## Row 2 · Open Sets ↔ Elements (Basic Opens)
+The basic open set D(a) = {p ∈ Spec(R) | a ∉ p} gives a dictionary
+between elements of the ring and distinguished open subsets of the
+spectrum.  Every open set is a union of basic opens.] -/
 theorem basic_open_is_complement_of_vanishing (R : Type*) [CommRing R]
     (a : R) : (basicOpen a : Set (PrimeSpectrum R)) = (zeroLocus {a})ᶜ :=
   by
@@ -70,6 +75,11 @@ theorem basic_open_zero (R : Type*) [CommRing R] :
 -- ═══════════════════════════════════════════════════════════════════════
 
 
+/-- [Section: ## Row 3 · Continuous Maps ↔ Ring Homomorphisms (Arrow Reversal!)
+This is the **contravariance** at the heart of algebraic geometry.
+A ring homomorphism φ : R → S induces a continuous map
+Spec(S) → Spec(R) going the other way.  Functoriality says this
+assignment preserves identities and reverses composition.] -/
 theorem ring_hom_induces_continuous_map (R S : Type*) [CommRing R] [CommRing S]
     (φ : R →+* S) : Continuous (PrimeSpectrum.comap φ) :=
   by
@@ -103,6 +113,10 @@ theorem comap_preimage_basic_open (R S : Type*) [CommRing R] [CommRing S]
 -- ═══════════════════════════════════════════════════════════════════════
 
 
+/-- [Section: ## Row 4 · Closed Subspaces ↔ Ideals
+Closed subsets of Spec(R) in the Zariski topology are exactly the
+vanishing sets V(I) = {p | I ⊆ p}.  Radical ideals biject with closed
+subsets: V and I form a Galois connection.] -/
 theorem vanishing_set_is_closed (R : Type*) [CommRing R] (I : Ideal R) :
     IsClosed (zeroLocus (I : Set R)) :=
   by
@@ -148,6 +162,10 @@ theorem vanishing_of_intersection_eq_union (R : Type*) [CommRing R]
 -- ═══════════════════════════════════════════════════════════════════════
 
 
+/-- [Section: ## Row 5 · Dimension ↔ Krull Dimension
+The Krull dimension of a commutative ring R is the supremum of lengths
+of chains of prime ideals — the algebraic counterpart of geometric
+dimension.  A field has Krull dimension 0; ℤ and k[x] have dimension 1.] -/
 theorem krull_dim_eq_spectrum_dim (R : Type*) [CommRing R] :
     ringKrullDim R = Order.krullDim (PrimeSpectrum R) :=
   by
@@ -194,6 +212,11 @@ theorem universal_property_of_kahler (R S M : Type*) [CommRing R] [CommRing S]
 -- ═══════════════════════════════════════════════════════════════════════
 
 
+/-- [Section: ## Row 7 · Connected Components ↔ Idempotents
+An idempotent e² = e determines a decomposition A ≅ eA × (1-e)A,
+corresponding to a clopen decomposition of Spec(A).  Idempotents biject
+with clopen subsets of the spectrum.  No nontrivial idempotents means
+the spectrum is connected.] -/
 theorem idempotent_gives_clopen (R : Type*) [CommRing R]
     (e : R) (he : IsIdempotentElem e) :
     IsClopen (basicOpen e : Set (PrimeSpectrum R)) :=
@@ -264,6 +287,10 @@ theorem connected_implies_no_nontrivial_idempotents (R : Type*) [CommRing R]
 -- ═══════════════════════════════════════════════════════════════════════
 
 
+/-- [Section: ## Row 8 · Bundles ↔ Projective Modules (Serre–Swan)
+The Serre–Swan theorem: for compact Hausdorff X, vector bundles over X
+≃ finitely generated projective modules over C(X, ℝ).
+We state the algebraic characterisation of projectivity.] -/
 theorem projective_iff_surjection_splits (R M : Type*) [Ring R]
     [AddCommGroup M] [Module R M] :
     Module.Projective R M ↔
@@ -287,6 +314,10 @@ theorem free_module_is_projective (R M : Type*) [Ring R]
 -- ═══════════════════════════════════════════════════════════════════════
 
 
+/-- [Section: ## The Spec Functor
+Pulling it all together: Spec is a contravariant functor from
+CommRing to TopologicalSpaces.  It preserves identity and reverses
+composition — the two axioms of a contravariant functor.] -/
 theorem spec_is_contravariant_functor :
     (∀ (R : Type*) [CommRing R],
       PrimeSpectrum.comap (RingHom.id R) = id) ∧
@@ -302,6 +333,11 @@ theorem spec_is_contravariant_functor :
 -- ═══════════════════════════════════════════════════════════════════════
 
 
+/-- [Section: ## Bonus · Gelfand Duality
+For compact Hausdorff spaces X, the evaluation map gives a
+homeomorphism X ≃ₜ characterSpace 𝕜 C(X, 𝕜).  This is the
+functional-analytic twin of Spec: the space of *characters*
+(algebra homomorphisms to the ground field) recovers X.] -/
 def gelfand_duality (X : Type*) (𝕜 : Type*) [TopologicalSpace X]
     [CompactSpace X] [T2Space X] [RCLike 𝕜] :
     X ≃ₜ WeakDual.characterSpace 𝕜 C(X, 𝕜) :=
@@ -312,6 +348,10 @@ def gelfand_duality (X : Type*) (𝕜 : Type*) [TopologicalSpace X]
 -- ═══════════════════════════════════════════════════════════════════════
 
 
+/-- [Section: ## Bonus · Hilbert's Nullstellensatz
+For an algebraically closed field k, the maximal ideals of k[x₁,…,xₙ]
+correspond bijectively to points of kⁿ.  This is the classical
+concrete incarnation of Row 1 for polynomial rings.] -/
 theorem weak_nullstellensatz (k : Type*) [Field k] [IsAlgClosed k]
     (I : Ideal (Polynomial k))
     (hI : (zeroLocus (I : Set (Polynomial k)) : Set (PrimeSpectrum (Polynomial k))) = ∅) :

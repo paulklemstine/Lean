@@ -39,6 +39,19 @@ def IsColossallyAbundant (n : ℕ) : Prop :=
     (sigma1' n : ℝ) / (n : ℝ) ^ (1 + ε) ≥ (sigma1' m : ℝ) / (m : ℝ) ^ (1 + ε)
 
 
+/-- [Section: # Robin's Inequality and Abundancy Bounds — v11
+## Overview
+Robin's inequality states that σ₁(n) < e^γ · n · ln(ln n) for all n ≥ 5041,
+assuming the Riemann Hypothesis. We formalize computable bounds on σ₁(n)/n
+(the abundancy index) and verify Robin's inequality for small values.
+## Main Results
+* `sigma1'_one` — σ₁(1) = 1
+* `sigma1'_prime` — σ₁(p) = p + 1 for prime p
+* `sigma1_upper_bound_prime` — σ₁(p) < 2p for prime p
+* `robin_check_12` — σ₁(12) = 28
+* `robin_check_60` — σ₁(60) = 168
+* `sigma1_5040` — σ₁(5040) = 19344
+* `sigma1'_multiplicative` — σ₁(mn) = σ₁(m)σ₁(n) for coprime m,n] -/
 theorem sigma1_ge_n_plus_one (n : ℕ) (hn : 2 ≤ n) : sigma1' n ≥ n + 1 := by
   rw [ sigma1' ];
   rw [ Nat.sum_divisors_eq_sum_properDivisors_add_self ];

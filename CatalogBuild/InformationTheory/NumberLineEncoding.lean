@@ -50,6 +50,7 @@ theorem encodeGaussian_injective : Function.Injective encodeGaussian := by
   exact Prod.ext ( zigzagEncode_injective <| by aesop ) ( zigzagEncode_injective <| by aesop )
 
 
+/-- [Section: ## Section 2: Encoding Photon States on ℕ] -/
 theorem encodeGaussian_surjective : Function.Surjective encodeGaussian := by
   intro n
   obtain ⟨a, b, hab⟩ : ∃ a b : ℕ, cantorPair a b = n := by
@@ -182,6 +183,15 @@ def PhotonHistory.nonDegenerate (h : PhotonHistory) : Prop :=
   ∀ N : ℕ, ∃ n ≥ N, h n = false
 
 
+/-- [Section: ### IMPORTANT NEGATIVE RESULT: Binary Encoding Is Not Injective
+We proved that `encodeHistory` is NOT injective on all of `PhotonHistory`.
+The counterexample: the all-true history (every event occurs) encodes to
+∑ 1/2^(n+1) = 1, but shifting one bit also gives 1 due to the identity
+0.111...₂ = 1.000...₂.
+This is a fundamental limitation of binary encoding:
+**The number line cannot distinguish certain "boundary" histories.**
+The fix: restrict to histories that are not eventually all-true.
+These form the standard Cantor space, which DOES embed injectively in [0,1].] -/
 theorem encodeHistory_injective_nonDegenerate :
     ∀ h₁ h₂ : PhotonHistory,
     h₁.nonDegenerate → h₂.nonDegenerate →
@@ -225,6 +235,16 @@ theorem encodeHistory_injective_nonDegenerate :
     rw [ Finset.sum_congr rfl fun i hi => by rw [ hn i ( Finset.mem_range.mp hi ) ] ] at h_split_sum ; linarith [ show ( 0 : ℝ ) ≤ ∑' m : ℕ, ( if h₁ ( m + n + 1 ) = true then ( 2 ^ ( m + n + 2 ) ) ⁻¹ else 0 ) from tsum_nonneg fun _ => by positivity ]
 
 
+/-- [Section: ### IMPORTANT NEGATIVE RESULT: ℕ-Encoded Photons Are Discrete, Not Dense
+We proved that the ℕ-encoded photon states are NOT dense in ℝ.
+The counterexample: r = 1/2, ε = 1/4. No natural number is within
+1/4 of 1/2. This is because ℕ ⊂ ℝ is discrete (every point is isolated).
+**The number line "between integers" contains no photon codes.**
+However, the photon states DO biject with ℕ, so every integer position
+on the number line IS occupied by exactly one photon state. The correct
+mental model is: photon states live at integer "addresses" on the number line,
+like houses on a street — you can look up any photon by its address,
+but there are gaps between addresses.] -/
 theorem photon_codes_surjective :
     ∀ n : ℕ, ∃ z : ℤ × ℤ, encodeGaussian z = n := by
   intro n;

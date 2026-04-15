@@ -26,6 +26,7 @@ def newtonPolygonDistance (n : ℕ) (s₁ s₂ : Fin n → ℝ) : ℝ :=
   ∑ i : Fin n, |s₁ i - s₂ i|
 
 
+/-- [Section: ## Section 2: Newton Polygon Metric] -/
 theorem newtonPolygon_triangle (n : ℕ) (s₁ s₂ s₃ : Fin n → ℝ) :
     newtonPolygonDistance n s₁ s₃ ≤
     newtonPolygonDistance n s₁ s₂ + newtonPolygonDistance n s₂ s₃ := by

@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Tropical Semiring Properties] -/
 theorem tropical_add_idem (a : Tropical ℝ) : a + a = a := by
   exact add_self a
 
@@ -61,6 +62,7 @@ noncomputable def minPlusMul {n : ℕ} [NeZero n] (A B : Fin n → Fin n → ℝ
     (fun k => A i k + B k j)
 
 
+/-- [Section: ## Min-Plus Matrix Multiplication] -/
 theorem minPlusMul_assoc {n : ℕ} [NeZero n] (A B C : Fin n → Fin n → ℝ) :
     minPlusMul (minPlusMul A B) C = minPlusMul A (minPlusMul B C) := by
       ext i j; simp +decide [ minPlusMul ] ;
@@ -87,6 +89,7 @@ theorem tropical_circuit_monomial_bound (s : ℕ) :
     ∀ k : ℕ, k ≤ 2^s → k ≤ 2^s := fun _ h => h
 
 
+/-- [Section: ## Idempotent Semiring Properties for Complexity] -/
 theorem tropical_no_counting (a b : Tropical ℝ) :
     a + a = a := by
       exact tropical_add_idem a

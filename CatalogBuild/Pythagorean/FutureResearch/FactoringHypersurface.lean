@@ -35,6 +35,7 @@ theorem semiprime_factoring_channels (p q x : ℤ) :
     exact dvd_sub this h
 
 
+/-- [Section: ## §3. Density Bounds] -/
 theorem exists_revealing_value (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
     (hpq : p ≠ q) :
     ∃ x : ℤ, revealsFactorVia x (↑(p * q)) := by
@@ -49,6 +50,7 @@ theorem gcd_divides_N' (x N : ℤ) : ↑(Int.gcd (N - x) N) ∣ N :=
   Int.gcd_dvd_right _ _
 
 
+/-- [Section: ## §4. GCD Properties] -/
 theorem prime_divides_gcd (p : ℤ) (x N : ℤ)
     (hp_div_x : p ∣ x) (hp_div_N : p ∣ N) :
     p ∣ ↑(Int.gcd (N - x) N) := by

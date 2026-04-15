@@ -45,6 +45,13 @@ theorem gaussian_composition_preserves_pyth (a b c d e f : ℤ)
   nlinarith [mul_pow c f 2]
 
 
+/-- [Section: ## §3: Gaussian Integer Composition
+The product of two Gaussian integers (a + bi)(d + ei) = (ad - be) + (ae + bd)i
+preserves the norm-squared property. If a² + b² = c² and d² + e² = f², then
+(ad - be)² + (ae + bd)² = (cf)².
+This is the **Brahmagupta–Fibonacci identity**, and it means:
+- Composing two Pythagorean layers yields another Pythagorean layer
+- The network's Pythagorean structure is closed under composition] -/
 theorem gaussian_composition_unit_circle (a b c d e f : ℤ)
     (h1 : a ^ 2 + b ^ 2 = c ^ 2) (h2 : d ^ 2 + e ^ 2 = f ^ 2)
     (hc : c ≠ 0) (hf : f ≠ 0) :
@@ -133,6 +140,10 @@ theorem berggren_tree_exponential_growth (d : ℕ) :
   ring
 
 
+/-- [Section: ## §8: The Pythagorean Activation Function
+Instead of standard ReLU or sigmoid, we define a Pythagorean activation
+that maps values to the nearest point on the unit circle arc.
+Key property: the Pythagorean activation is 1-Lipschitz.] -/
 theorem clamp_lipschitz (x y : ℝ) :
     |max (-1) (min 1 x) - max (-1) (min 1 y)| ≤ |x - y| := by
   cases max_cases ( -1 ) ( Min.min 1 x ) <;> cases max_cases ( -1 ) ( Min.min 1 y ) <;> cases min_cases 1 x <;> cases min_cases 1 y <;> cases abs_cases ( x - y ) <;> cases abs_cases ( Max.max ( -1 ) ( Min.min 1 x ) - Max.max ( -1 ) ( Min.min 1 y ) ) <;> linarith

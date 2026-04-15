@@ -17,6 +17,10 @@ theorem euler_theorem (a n : ℕ) (hn : 0 < n) (hcoprime : Nat.Coprime a n) :
       exact?
 
 
+/-- [Section: ## Section 3: "Inside-Out" Factoring Perspective
+The idea of "inside-out factoring" can be interpreted as examining the
+internal algebraic structure of a composite number to reveal its factors.
+We formalize key structural results.] -/
 theorem factor_from_sum_diff (p q : ℕ) (hp : 0 < p) (hq : 0 < q) (hpq : q ≤ p) :
     p * q = ((p + q) ^ 2 - (p - q) ^ 2) / 4 := by
       exact Eq.symm ( Nat.div_eq_of_eq_mul_left zero_lt_four ( Nat.sub_eq_of_eq_add <| by nlinarith only [ Nat.sub_add_cancel hpq ] ) )
@@ -32,6 +36,7 @@ theorem prime_gaps_unbounded : ∀ k : ℕ, ∃ n : ℕ,
       use Nat.factorial ( k + 1 ) + 1
 
 
+/-- [Section: ## Section 4: Quadratic Residues and Legendre Symbol] -/
 theorem neg_one_qr_iff (p : ℕ) (hp : p.Prime) (hp2 : p ≠ 2) :
     (∃ x : ZMod p, x ^ 2 = -1) ↔ p % 4 = 1 := by
       constructor <;> intro h;

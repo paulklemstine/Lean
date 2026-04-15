@@ -18,6 +18,7 @@ def spiralPos (freq : ℝ) (pos : ℕ) : Fin 3 → ℝ := fun i =>
   | ⟨2, _⟩ => Real.cos t
 
 
+/-- [Section: ## Part 1: Spiral Positional Embedding on the Sphere] -/
 theorem spiralPos_on_sphere (freq : ℝ) (pos : ℕ) :
     (spiralPos freq pos 0) ^ 2 + (spiralPos freq pos 1) ^ 2 +
     (spiralPos freq pos 2) ^ 2 = 1 := by
@@ -31,6 +32,7 @@ theorem spiralPos_on_sphere_sum (freq : ℝ) (pos : ℕ) :
   exact spiralPos_on_sphere freq pos
 
 
+/-- [Section: ## Part 2: Geodesic Distance on the Sphere] -/
 def sphereInnerProd (p q : Fin 3 → ℝ) : ℝ :=
   ∑ i, p i * q i
 
@@ -41,6 +43,7 @@ theorem geodesicDist_le_pi (p q : Fin 3 → ℝ) :
   exact Real.arccos_le_pi _
 
 
+/-- [Section: ## Part 3: Stereographic Positional Encoding] -/
 def stereoPosEnc (freq : ℝ) (pos1 pos2 : ℕ) : ℝ :=
   sphereInnerProd (spiralPos freq pos1) (spiralPos freq pos2)
 
@@ -58,6 +61,7 @@ theorem stereoPosEnc_self (freq : ℝ) (pos : ℕ) :
   exact spiralPos_on_sphere_sum freq pos
 
 
+/-- [Section: ## Part 4: Relative Positional Encoding via Geodesic Distance] -/
 def relativePosBias (freq decay : ℝ) (pos1 pos2 : ℕ) : ℝ :=
   Real.exp (-decay * geodesicDist (spiralPos freq pos1) (spiralPos freq pos2))
 

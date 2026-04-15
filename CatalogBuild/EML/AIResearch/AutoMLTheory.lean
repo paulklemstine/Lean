@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## §1. Search Space Reduction] -/
 def stdSearchSpace (opsPerEdge numEdges : ℕ) : ℕ := opsPerEdge ^ numEdges
 
 def emlSearchSpace (numEdges : ℕ) : ℕ := 4 ^ numEdges
@@ -19,6 +20,7 @@ theorem eml_smaller_search_space (ops edges : ℕ) (hops : 4 ≤ ops) :
   unfold emlSearchSpace stdSearchSpace; exact Nat.pow_le_pow_left hops edges
 
 
+/-- [Section: ## §2. Architecture Evaluation] -/
 def stdEvalCost (archParams epochs batchCost : ℕ) : ℕ := archParams * epochs * batchCost
 
 def emlEvalCost (emlParams epochs batchCost : ℕ) : ℕ := emlParams * epochs * batchCost
@@ -31,6 +33,7 @@ theorem eml_eval_faster (p_eml p_std e b : ℕ) (hp : p_eml ≤ p_std) :
   exact Nat.mul_le_mul_right b this
 
 
+/-- [Section: ## §3. Supernet Training] -/
 def supernetParams (numPaths pathWidth depth : ℕ) : ℕ := numPaths * depth * pathWidth * pathWidth
 
 def emlSupernetParams (numPaths pathWidth depth : ℕ) : ℕ := numPaths * depth * 4 * pathWidth
@@ -43,6 +46,7 @@ theorem eml_supernet_smaller (n w d : ℕ) (hw : 4 ≤ w) :
   exact Nat.mul_le_mul_right w this
 
 
+/-- [Section: ## §4. Hyperparameter Sensitivity] -/
 def hparamSensitivity (lipschitzConst perturbation : ℝ) : ℝ := lipschitzConst * perturbation
 
 
@@ -55,6 +59,7 @@ theorem zero_perturbation_stable (L : ℝ) : hparamSensitivity L 0 = 0 := by
   unfold hparamSensitivity; ring
 
 
+/-- [Section: ## §5. Transfer NAS] -/
 def transferNASCost (sourceSearchCost targetFinetuneCost : ℕ) : ℕ :=
   sourceSearchCost + targetFinetuneCost
 
@@ -67,6 +72,7 @@ theorem eml_transfer_cheaper (s ft_eml ft_std : ℕ) (hft : ft_eml ≤ ft_std) :
   unfold emlTransferNASCost transferNASCost; omega
 
 
+/-- [Section: ## §6. Zero-Shot NAS Proxy] -/
 def zeroShotCost (numCandidates proxyCost : ℕ) : ℕ := numCandidates * proxyCost
 
 def emlZeroShotCost (numCandidates emlProxyCost : ℕ) : ℕ := numCandidates * emlProxyCost
@@ -77,6 +83,7 @@ theorem eml_zero_shot_cheaper (n c_eml c_std : ℕ) (hc : c_eml ≤ c_std) :
   unfold emlZeroShotCost zeroShotCost; exact Nat.mul_le_mul_left n hc
 
 
+/-- [Section: ## §7. Multi-Objective Optimization] -/
 def paretoEfficiency (accuracy : ℝ) (params : ℕ) : ℝ := accuracy / ↑params
 
 
@@ -87,6 +94,7 @@ theorem eml_pareto_better (acc : ℝ) (p_eml p_std : ℕ) (hacc : 0 < acc)
   exact div_le_div_of_nonneg_left (by linarith) (by positivity) (by exact_mod_cast hp)
 
 
+/-- [Section: ## §8. Architecture Scaling] -/
 def compoundScale (baseParams widthMult depthMult : ℕ) : ℕ :=
   baseParams * widthMult * widthMult * depthMult
 
@@ -101,6 +109,7 @@ theorem eml_scales_better (b w d : ℕ) (hw : 1 ≤ w) :
   exact Nat.mul_le_mul_right d this
 
 
+/-- [Section: ## §9. Early Stopping] -/
 def nasWithEarlyStopping (numCandidates avgEpochs costPerEpoch : ℕ) : ℕ :=
   numCandidates * avgEpochs * costPerEpoch
 
@@ -112,6 +121,7 @@ theorem eml_nas_early_stopping (n e_eml e_std c : ℕ) (he : e_eml ≤ e_std) :
   exact Nat.mul_le_mul_right c this
 
 
+/-- [Section: ## §10. Weight Sharing] -/
 def stdWeightSharingParams (numOps dim : ℕ) : ℕ := numOps * dim * dim
 
 def emlWeightSharingParams (numOps dim : ℕ) : ℕ := numOps * 4 * dim

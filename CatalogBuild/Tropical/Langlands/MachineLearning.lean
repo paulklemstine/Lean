@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Section 1: ReLU as a Tropical Operation] -/
 theorem relu_convex (x y t : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
     relu (t * x + (1 - t) * y) ≤ t * relu x + (1 - t) * relu y := by
   unfold relu;
@@ -37,6 +38,7 @@ theorem dualLayer_involution (n m : ℕ) (W : Fin m → Fin n → ℝ) :
   ext i j; simp [dualLayer]
 
 
+/-- [Section: ## Section 3: Network Duality] -/
 theorem dual_preserves_tropDet (n : ℕ) (W : Fin n → Fin n → ℝ) :
     (⨅ σ : Equiv.Perm (Fin n), ∑ i, W i (σ i)) =
     (⨅ σ : Equiv.Perm (Fin n), ∑ i, (dualLayer n n W) i (σ i)) := by
@@ -56,6 +58,7 @@ theorem tropicalLoss_nonneg (n : ℕ) (target output : Fin n → ℝ) :
   Finset.sum_nonneg fun i _ => abs_nonneg _
 
 
+/-- [Section: ## Section 4: Tropical Loss Functions] -/
 theorem tropicalLoss_zero_iff (n : ℕ) (target output : Fin n → ℝ) :
     tropicalLoss n target output = 0 ↔ target = output := by
   constructor <;> intro h <;> simp_all +decide [ funext_iff, Finset.sum_eq_zero_iff_of_nonneg, abs_nonneg ];
@@ -74,6 +77,7 @@ def tropPolynomial (n : ℕ) (coeffs offsets : Fin n → ℝ) (x : ℝ) : ℝ :=
   ⨆ i : Fin n, coeffs i * x + offsets i
 
 
+/-- [Section: ## Section 5: Tropical Polynomials] -/
 theorem tropPolynomial_convex (n : ℕ) [hn : Nonempty (Fin n)]
     (coeffs offsets : Fin n → ℝ)
     (x y t : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :

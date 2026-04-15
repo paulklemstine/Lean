@@ -29,6 +29,7 @@ theorem evalGate_max (a b : ℝ) : evalGate .MaxGate a b = max a b := rfl
 theorem evalGate_add (a b : ℝ) : evalGate .AddGate a b = a + b := rfl
 
 
+/-- [Section: ## Section 2: Gate Commutativity and Associativity] -/
 theorem gate_min_comm (a b : ℝ) : evalGate .MinGate a b = evalGate .MinGate b a :=
   min_comm a b
 
@@ -163,6 +164,7 @@ def TropTrapdoorFn.invert (tf : TropTrapdoorFn) (output : ℝ) (idx : ℕ) : ℝ
   tf.trapdoorHint output idx
 
 
+/-- [Section: ## Section 7: Monotonicity of Tropical Gates] -/
 theorem min_gate_mono_left (b : ℝ) : Monotone (fun a => min a b) :=
   fun _ _ h => min_le_min_right b h
 
@@ -264,6 +266,7 @@ theorem add_gate_surjective (c : ℝ) :
   ⟨c, 0, by simp [evalGate]⟩
 
 
+/-- [Section: ## Section 12: The Reversal Problem (Formal Statement)] -/
 theorem min_gate_surjective (c : ℝ) :
     ∃ (a b : ℝ), evalGate .MinGate a b = c :=
   ⟨c, c, by simp [evalGate]⟩

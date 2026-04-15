@@ -7,6 +7,7 @@ Declarations: 67
 
 import Mathlib
 
+/-- [Section: ## §1. Berggren Matrices] -/
 def rf3B₁ : Matrix (Fin 3) (Fin 3) ℤ :=
   !![1, -2, 2; 2, -1, 2; 2, -2, 3]
 
@@ -23,6 +24,7 @@ def rf3Q : Matrix (Fin 3) (Fin 3) ℤ :=
   !![1, 0, 0; 0, 1, 0; 0, 0, (-1)]
 
 
+/-- [Section: ## §2. Question 1: Eigenvalue Bounds for Quotient Graphs G_p] -/
 def rf3matMod (N : ℕ) [NeZero N] (M : Matrix (Fin 3) (Fin 3) ℤ) :
     Matrix (Fin 3) (Fin 3) (ZMod N) := M.map (Int.cast)
 
@@ -74,6 +76,11 @@ theorem rf3B₁_unipotent :
     (rf3B₁ - 1) ^ 3 = (0 : Matrix (Fin 3) (Fin 3) ℤ) := by native_decide
 
 
+/-- [Section: ## §3. Question 2: Characteristic Polynomial of B₂
+The characteristic polynomial of B₂ is λ³ - 5λ² - 5λ + 1 = 0,
+which factors as -(λ + 1)(λ² - 6λ + 1).
+Eigenvalues: -1, 3 - 2√2, 3 + 2√2.
+Trace formula: tr(B₂ⁿ) = (-1)ⁿ + 2·T_n(3) where T_n is Chebyshev-I.] -/
 theorem rf3B₁_nilindex_3 :
     (rf3B₁ - 1) ^ 2 ≠ (0 : Matrix (Fin 3) (Fin 3) ℤ) := by native_decide
 
@@ -228,6 +235,7 @@ theorem rf3_children_pythagorean :
   norm_num
 
 
+/-- [Section: ## §7. Question 4: 5D Completeness] -/
 def rf3Q5 : Matrix (Fin 5) (Fin 5) ℤ :=
   !![1,0,0,0,0; 0,1,0,0,0; 0,0,1,0,0; 0,0,0,1,0; 0,0,0,0,(-1)]
 
@@ -240,6 +248,7 @@ theorem root_quintuple_1_1_1_1_2 : (1:ℤ)^2 + 1^2 + 1^2 + 1^2 = 2^2 := by norm_
 theorem quintuple_1_2_2_0_3 : (1:ℤ)^2 + 2^2 + 2^2 + 0^2 = 3^2 := by norm_num
 
 
+/-- [Section: ## §8. 5D Generators] -/
 def rf3K₁ : Matrix (Fin 5) (Fin 5) ℤ :=
   !![(-1),0,0,2,2; 0,1,0,0,0; 0,0,1,0,0; (-2),0,0,1,2; (-2),0,0,2,3]
 
@@ -342,6 +351,7 @@ theorem spectral_gap_pos_d6 : (6:ℝ) - 2 * Real.sqrt 5 > 0 := by
   nlinarith [Real.sqrt_nonneg 5, sq_nonneg (Real.sqrt 5 - 3)]
 
 
+/-- [Section: ## §9. Question 5: Asymptotic Spectral Gap] -/
 theorem spectral_gap_pos_d8 : (8:ℝ) - 2 * Real.sqrt 7 > 0 := by
   have h7 : Real.sqrt 7 ^ 2 = 7 := Real.sq_sqrt (by norm_num : (7:ℝ) ≥ 0)
   nlinarith [Real.sqrt_nonneg 7, sq_nonneg (Real.sqrt 7 - 4)]
@@ -428,6 +438,8 @@ theorem lorentz3_product_closure (M N : Matrix (Fin 3) (Fin 3) ℤ)
   rw [this, hM, hN]
 
 
+/-- [Section: ## §12. Cayley-Hamilton Consequences
+From B₂³ = 5B₂² + 5B₂ - I, all higher powers are determined by B₂, B₂².] -/
 theorem rf3B₂_pow5_from_CH :
     rf3B₂ ^ 5 = 5 • rf3B₂ ^ 4 + 5 • rf3B₂ ^ 3 - rf3B₂ ^ 2 := by
   native_decide

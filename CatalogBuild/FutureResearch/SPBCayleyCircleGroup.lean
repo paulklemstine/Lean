@@ -51,6 +51,7 @@ theorem cayleyInv_cayley (x : ℝ) :
   norm_num
 
 
+/-- [Section: ## SPB via Cayley: Computational Checks] -/
 theorem cayley_neg_one : cayley (-1) = -I := by
   unfold cayley;
   rw [ div_eq_iff ] <;> norm_num [ Complex.ext_iff ]

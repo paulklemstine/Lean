@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## The Logarithmic Bridge Identity] -/
 theorem log_spb_norm (x y : ℝ) (h : 1 - x * y ≠ 0) :
     log (1 + (spb x y) ^ 2) =
     log (1 + x ^ 2) + log (1 + y ^ 2) - 2 * log |1 - x * y| := by
@@ -30,6 +31,7 @@ theorem wick_rotation (x y : ℝ) :
   unfold spb; ring_nf
 
 
+/-- [Section: ## Cauchy Entropy] -/
 def cauchyEntropy (x : ℝ) : ℝ := log (1 + x ^ 2)
 
 

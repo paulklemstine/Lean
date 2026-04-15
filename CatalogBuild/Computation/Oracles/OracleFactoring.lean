@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## §1: The GCD Oracle] -/
 theorem gcd_idempotent_on_self (n : ℕ) : Nat.gcd n n = n := by
   grind
 
@@ -31,6 +32,7 @@ theorem sixty_five_two_reps :
       decide +revert
 
 
+/-- [Section: ## §3: Fermat's Method as Oracle] -/
 theorem fermat_factoring (x y : ℤ) :
     x^2 - y^2 = (x + y) * (x - y) := by
       ring
@@ -41,11 +43,13 @@ theorem fermat_gives_factors (N x y : ℤ) (hN : N = x^2 - y^2) :
       exact hN.trans ( by ring )
 
 
+/-- [Section: ## §4: Pythagorean Triple Oracle] -/
 theorem pythagorean_parametrize (m n : ℤ) :
     (m^2 - n^2)^2 + (2*m*n)^2 = (m^2 + n^2)^2 := by
       ring
 
 
+/-- [Section: ## §5: The Factoring Oracle Landscape] -/
 theorem composite_has_factor {n : ℕ} (hn : ¬ Nat.Prime n) (hn2 : 2 ≤ n) :
     ∃ d, 1 < d ∧ d < n ∧ d ∣ n := by
       exact Exists.imp ( by aesop ) ( Nat.exists_dvd_of_not_prime2 hn2 hn )

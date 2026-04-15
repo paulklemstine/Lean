@@ -7,6 +7,8 @@ Declarations: 4
 
 import Mathlib
 
+/-- [Section: ## Experiment 16: The signature of Fibonacci numbers
+Do Fibonacci numbers have distinctive signatures?] -/
 def fib : ℕ → ℕ
   | 0 => 0
   | 1 => 1
@@ -22,6 +24,7 @@ def fib : ℕ → ℕ
   return results
 
 
+/-- Simple integer log2 approximation -/
 def ilog2 (n : ℕ) : ℕ :=
   if n ≤ 1 then 0
   else 1 + ilog2 (n / 2)
@@ -45,6 +48,7 @@ def ilog2 (n : ℕ) : ℕ :=
   return s!"N={N}: avg_log2(r₂|visible)={avg_r2}, avg_log2(r₄)={avg_r4}, avg_log2(r₈)={avg_r8}, r₂_visible={count_r2}/{N}"
 
 
+/-- Naive primality test -/
 def isPrime (n : ℕ) : Bool :=
   if n < 2 then false
   else Id.run do

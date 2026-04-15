@@ -46,6 +46,7 @@ theorem sqrt2_irrational' : Irrational (Real.sqrt 2) :=
   irrational_sqrt_two
 
 
+/-- [Section: ## §3: Field Extensions] -/
 theorem sqrt3_irrational : Irrational (Real.sqrt 3) := by
   exact Nat.prime_three.irrational_sqrt
 

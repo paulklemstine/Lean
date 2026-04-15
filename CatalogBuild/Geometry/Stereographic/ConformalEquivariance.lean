@@ -36,6 +36,7 @@ def stereoKernel' (n : ℕ) (x y : Fin n → ℝ) : ℝ :=
   ((1 + vecSqNorm' n x) * (1 + vecSqNorm' n y))
 
 
+/-- [Section: ## Part 2: Kernel Invariance Under Rotations] -/
 theorem rotation_preserves_sqnorm (n : ℕ) (R : Fin n → Fin n → ℝ) (x : Fin n → ℝ)
     (hR : ∀ i j, ∑ k, R k i * R k j = if i = j then 1 else 0) :
     vecSqNorm' n (rotationAction n R x) = vecSqNorm' n x := by

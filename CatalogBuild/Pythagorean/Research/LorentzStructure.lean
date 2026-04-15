@@ -15,6 +15,7 @@ def η_mat : Matrix (Fin 3) (Fin 3) ℤ := !![1, 0, 0; 0, 1, 0; 0, 0, -1]
 theorem η_squared : η_mat * η_mat = 1 := by native_decide
 
 
+/-- [Section: ## Section 2: Berggren Matrices] -/
 def B1_mat : Matrix (Fin 3) (Fin 3) ℤ := !![1, -2, 2; 2, -1, 2; 2, -2, 3]
 
 def B2_mat : Matrix (Fin 3) (Fin 3) ℤ := !![1, 2, 2; 2, 1, 2; 2, 2, 3]
@@ -42,6 +43,7 @@ theorem B3_3x3_det : Matrix.det B3_mat = 1 := by native_decide
 theorem B2_sq_proper : Matrix.det (B2_mat * B2_mat) = 1 := by native_decide
 
 
+/-- [Section: ## Section 5: 2×2 Parameter Matrices] -/
 def M1_2x2' : Matrix (Fin 2) (Fin 2) ℤ := !![2, -1; 1, 0]
 
 def M2_2x2' : Matrix (Fin 2) (Fin 2) ℤ := !![2, 1; 1, 0]

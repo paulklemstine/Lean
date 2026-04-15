@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Part 1: The Gauge Field (Conformal Factor)] -/
 def gaugeField (n : ℕ) (x : Fin n → ℝ) : ℝ :=
   2 / (1 + ∑ i, (x i) ^ 2)
 
@@ -30,6 +31,7 @@ theorem gaugeField_sq (n : ℕ) (x : Fin n → ℝ) :
   unfold gaugeField; field_simp; ring
 
 
+/-- [Section: ## Part 2: Gauge-Invariant Attention Kernel] -/
 def gaugeInvariantKernel (n : ℕ) (x y : Fin n → ℝ) : ℝ :=
   gaugeField n x * gaugeField n y *
     (4 * ∑ i, x i * y i + (∑ i, (x i) ^ 2 - 1) * (∑ i, (y i) ^ 2 - 1))
@@ -43,6 +45,7 @@ theorem gaugeInvariantKernel_symm (n : ℕ) (x y : Fin n → ℝ) :
   rw [h1]; ring
 
 
+/-- [Section: ## Part 3: The Gauge Connection] -/
 def gaugeConnection (n : ℕ) (x : Fin n → ℝ) (i : Fin n) : ℝ :=
   -2 * x i / (1 + ∑ j, (x j) ^ 2)
 
@@ -57,6 +60,7 @@ theorem gaugeConnection_zero (n : ℕ) (i : Fin n) :
   unfold gaugeConnection; simp
 
 
+/-- [Section: ## Part 4: Gauge Curvature] -/
 def gaugeCurvatureComponent (n : ℕ) (x : Fin n → ℝ) (i j : Fin n) : ℝ :=
   let D := 1 + ∑ k, (x k) ^ 2
   (if i = j then -2 * D + 4 * (x i) ^ 2 else 4 * x i * x j) / D ^ 2
@@ -75,6 +79,7 @@ theorem gaugeCurvature_zero_origin (n : ℕ) (i j : Fin n) (hij : i ≠ j) :
   unfold gaugeCurvatureComponent; simp [hij]
 
 
+/-- [Section: ## Part 5: Gauge-Covariant Gradient] -/
 def gaugeCovariantGrad (n : ℕ) (x : Fin n → ℝ)
     (grad : Fin n → ℝ) (fval : ℝ) : Fin n → ℝ :=
   fun i => grad i + gaugeConnection n x i * fval
@@ -96,6 +101,7 @@ theorem gaugeCovariantGrad_bounded (n : ℕ) (x : Fin n → ℝ)
         exact mul_le_mul hconn hfval (abs_nonneg _) hC
 
 
+/-- [Section: ## Part 6: The Gauge Action] -/
 def gaugeAction (seqLen n : ℕ) (X : Fin seqLen → Fin n → ℝ) : ℝ :=
   ∑ i : Fin seqLen, ∑ j : Fin seqLen,
     (gaugeField n (X i) * gaugeField n (X j)) ^ 2
@@ -108,6 +114,7 @@ theorem gaugeAction_nonneg (seqLen n : ℕ) (X : Fin seqLen → Fin n → ℝ) :
     Finset.sum_nonneg fun _ _ => by positivity
 
 
+/-- [Section: ## Part 7: Gauge Symmetry Breaking and Mass Generation] -/
 def effectiveMass (n : ℕ) (x : Fin n → ℝ) : ℝ :=
   1 / gaugeField n x
 

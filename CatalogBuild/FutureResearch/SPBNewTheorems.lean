@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Section 2: Automorphism Group (Klein Four-Group)] -/
 theorem spb_neg_inv_auto (x y : ℝ) (hx : x ≠ 0) (hy : y ≠ 0) :
     spb (-1/x) (-1/y) = spb x y := by
   unfold spb; ring;
@@ -21,6 +22,7 @@ theorem spb_inv_anti (x y : ℝ) (hx : x ≠ 0) (hy : y ≠ 0) :
   grind
 
 
+/-- [Section: ## Section 3: Cancellation Law] -/
 theorem spb_cancel (x y : ℝ) (h1 : 1 - x * y ≠ 0) :
     spb (spb x y) (-y) = x := by
   unfold SPBNew.spb;
@@ -51,6 +53,7 @@ theorem spb_conj_prod (x y : ℝ) (h1 : 1 - x * y ≠ 0) (h2 : 1 + x * y ≠ 0) 
   rw [h3]; field_simp; ring
 
 
+/-- [Section: ## Section 10: Einstein Velocity Bound] -/
 theorem einstein_velocity_bound (u v : ℝ) (hu : |u| < 1) (hv : |v| < 1) :
     |spbH u v| < 1 := by
   exact abs_lt.mpr ⟨ by rw [ spbH ] ; rw [ lt_div_iff₀ ] <;> cases abs_cases u <;> cases abs_cases v <;> nlinarith, by rw [ spbH ] ; rw [ div_lt_iff₀ ] <;> cases abs_cases u <;> cases abs_cases v <;> nlinarith ⟩
@@ -72,6 +75,7 @@ def cayleyReal (x : ℝ) : ℝ × ℝ :=
   ((1 - x ^ 2) / (1 + x ^ 2), 2 * x / (1 + x ^ 2))
 
 
+/-- [Section: ## Section 15: Cayley Transform] -/
 theorem cayley_on_circle (x : ℝ) :
     (cayleyReal x).1 ^ 2 + (cayleyReal x).2 ^ 2 = 1 := by
   unfold cayleyReal; ring;

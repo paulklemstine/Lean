@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Tropical Linear Maps] -/
 theorem translation_preserves_max (c a b : ℝ) :
     max a b + c = max (a + c) (b + c) :=
   (max_add_add_right a b c).symm
@@ -21,6 +22,7 @@ theorem nonneg_scale_preserves_max (c : ℝ) (hc : 0 ≤ c) (a b : ℝ) :
   · rw [max_eq_left h, max_eq_left (mul_le_mul_of_nonneg_left h hc)]
 
 
+/-- [Section: ## Partition Function] -/
 theorem partition_function_bound {n : ℕ} (E : Fin (n+1) → ℝ) (β : ℝ) :
     exp (β * Finset.sup' Finset.univ ⟨0, Finset.mem_univ 0⟩ (fun i => -E i))
     ≤ ∑ i, exp (β * (-E i)) := by
@@ -33,6 +35,7 @@ theorem partition_function_bound {n : ℕ} (E : Fin (n+1) → ℝ) (β : ℝ) :
       rw [ h_sup_eq ] ; exact le_trans ( by norm_num ) ( Finset.single_le_sum ( fun i _ => Real.exp_nonneg _ ) ( Finset.mem_univ k ) ) ;
 
 
+/-- [Section: ## Self-Learning Agent] -/
 theorem successive_updates (logPrior : ℝ) (xs : List ℝ) :
     logPrior + xs.sum = (logPrior :: xs).sum := by
   induction xs with
@@ -45,6 +48,7 @@ theorem learning_rate_sum_pos (N : ℕ) (hN : 0 < N) :
   exact Finset.sum_pos (fun k _ => by positivity) (Finset.nonempty_range_iff.mpr (by omega))
 
 
+/-- [Section: ## Universal Approximation] -/
 theorem max_preserves_convexity (f g : ℝ → ℝ)
     (hf : ConvexOn ℝ Set.univ f) (hg : ConvexOn ℝ Set.univ g) :
     ConvexOn ℝ Set.univ (fun x => max (f x) (g x)) := by
@@ -65,6 +69,7 @@ theorem affine_convex (a b : ℝ) : ConvexOn ℝ Set.univ (fun x => a * x + b) :
   exact ⟨ convex_univ, fun x y a b ha hb hab => by rw [ ← eq_sub_iff_add_eq' ] at hab; subst hab; nlinarith ⟩
 
 
+/-- [Section: ## Tropical Tensor Contraction] -/
 noncomputable def tropContract {m n p : ℕ}
     (A : Fin (m+1) → Fin (p+1) → ℝ) (B : Fin (p+1) → Fin (n+1) → ℝ) :
     Fin (m+1) → Fin (n+1) → ℝ :=
@@ -81,6 +86,7 @@ theorem tropContract_mono {m n p : ℕ}
       grind
 
 
+/-- [Section: ## Architecture Search Metrics] -/
 def tropHamming {n : ℕ} (a b : Fin n → ℝ) : ℝ :=
   ∑ i : Fin n, |a i - b i|
 
@@ -101,6 +107,7 @@ theorem tropHamming_eq_zero {n : ℕ} (a b : Fin n → ℝ) :
       simp +decide only [sub_eq_zero]
 
 
+/-- [Section: ## Tropical Entropy] -/
 noncomputable def tropEntropy {n : ℕ} [NeZero n] (v : Fin n → ℝ) : ℝ :=
   Finset.sup' Finset.univ ⟨0, Finset.mem_univ 0⟩ v - (∑ i, v i) / n
 

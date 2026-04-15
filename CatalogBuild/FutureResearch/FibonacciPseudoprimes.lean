@@ -8,6 +8,7 @@ Declarations: 2
 import FutureResearch.PisanoPeriodFactoring
 import Mathlib
 
+/-- [Section: ### Pisano Period Theory] -/
 theorem pisano_period_exists (m : ℕ) (hm : 0 < m) :
     ∃ T : ℕ, 0 < T ∧ ∀ n, Nat.fib (n + T) % m = Nat.fib n % m := by
   -- By the pigeonhole principle, since there are only $m^2$ possible pairs $(F(n) \mod m, F(n+1) \mod m)$, there must exist indices $i < j$ such that $(F(i) \mod m, F(i+1) \mod m) = (F(j) \mod m, F(j+1) \mod m)$.

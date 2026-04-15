@@ -89,6 +89,7 @@ theorem EMLd_shift (x c : ℝ) :
   simp [EMLd, Real.log_one, Real.exp_add, mul_comm]
 
 
+/-- [Section: ## Section 5: Irrationality of EML Values] -/
 theorem e_irrational : Irrational (Real.exp 1) := by
   by_contra h;
   -- Assume that $e$ is rational, so there exist positive integers $p$ and $q$ such that $e = p/q$.

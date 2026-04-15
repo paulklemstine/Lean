@@ -12,6 +12,7 @@ theorem trace_sum_eq_11 :
     Matrix.trace B₁' + Matrix.trace B₂' + Matrix.trace B₃' = 11 := by native_decide
 
 
+/-- [Section: ## §1: Trace–Modular Form Correspondence] -/
 theorem trace_B₁_B₂ : Matrix.trace (B₁' * B₂') = 17 := by native_decide
 
 theorem trace_B₁_B₃ : Matrix.trace (B₁' * B₃') = 15 := by native_decide
@@ -60,6 +61,7 @@ theorem trace_B1_eq_B3_powers :
     Matrix.trace (B₁' ^ 4) = Matrix.trace (B₃' ^ 4) := by native_decide
 
 
+/-- [Section: ## §2: Berggren–BSD Functor] -/
 theorem congruent_from_345 : 3 * 4 / 2 = (6 : ℤ) := by norm_num
 
 theorem congruent_from_5_12_13 : 5 * 12 / 2 = (30 : ℤ) := by norm_num
@@ -87,6 +89,7 @@ theorem area_growth (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
     a * b < (a + 2*b + 2*c) * (2*a + b + 2*c) := by nlinarith
 
 
+/-- [Section: ## §3: Pythagorean Density and RH] -/
 theorem primes_1mod4_count :
     ((Finset.range 101).filter (fun p => Nat.Prime p ∧ p % 4 = 1)).card = 11 := by
   native_decide
@@ -107,6 +110,7 @@ theorem sum_two_sq_count_25 :
   native_decide
 
 
+/-- [Section: ## §5: 6-Divisibility] -/
 theorem six_divides_abc (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (6 : ℤ) ∣ a * b * c := by
       -- We'll use that $a \equiv 0 \pmod{2}$ or $b \equiv 0 \pmod{2}$ or $c \equiv 0 \pmod{2}$ to show $2 \mid a * b * c$.
@@ -126,6 +130,7 @@ theorem unique_ppt_5 :
   interval_cases a <;> interval_cases b <;> omega
 
 
+/-- [Section: ## §6: Berggren as Discrete Yang–Mills] -/
 theorem berggren_nonabelian_12 : B₁' * B₂' ≠ B₂' * B₁' := by native_decide
 
 theorem berggren_nonabelian_13 : B₁' * B₃' ≠ B₃' * B₁' := by native_decide

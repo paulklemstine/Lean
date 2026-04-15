@@ -7,6 +7,7 @@ Declarations: 8
 
 import Mathlib
 
+/-- √2 convergents -/
 theorem pell_c0 : (1 : ℤ) ^ 2 - 2 * 1 ^ 2 = -1 := by norm_num
 
 theorem pell_c1 : (3 : ℤ) ^ 2 - 2 * 2 ^ 2 = 1 := by norm_num

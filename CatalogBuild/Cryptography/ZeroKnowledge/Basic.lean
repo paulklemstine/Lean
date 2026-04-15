@@ -33,6 +33,9 @@ theorem schnorr_completeness_mod (x r c : ZMod q) (s : ZMod q)
     s = r + c * x := hs
 
 
+/-- [Section: ## Part 1: The Schnorr Protocol in an Abstract Cyclic Group
+We work in a cyclic group of prime order q, formalizing the Schnorr identification
+protocol. The key insight: all arithmetic on exponents happens in ZMod q.] -/
 theorem schnorr_extraction (x r c₁ c₂ s₁ s₂ : ZMod q)
     (hc : c₁ ≠ c₂)
     (hs₁ : s₁ = r + c₁ * x)
@@ -52,6 +55,9 @@ theorem zmod_cancel_sub (a b x : ZMod q) (h : a ≠ b) :
   rw [ mul_right_comm, mul_inv_cancel₀ ( sub_ne_zero_of_ne h ), one_mul ]
 
 
+/-- [Section: ## Part 2: Ali Baba Cave — Soundness Bound
+We formalize the probability bound for the Ali Baba cave protocol:
+after n rounds, a faker's probability of passing is (1/2)^n.] -/
 theorem cave_faker_bound (n : ℕ) : (1 : ℚ) / 2 ^ n ≤ 1 := by
   bound
 

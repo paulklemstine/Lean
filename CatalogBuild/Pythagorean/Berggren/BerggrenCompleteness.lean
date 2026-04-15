@@ -37,6 +37,7 @@ def fwdB3 (a b c : ℤ) : ℤ × ℤ × ℤ :=
   (-a + 2*b + 2*c, -2*a + b + 2*c, -2*a + 2*b + 3*c)
 
 
+/-- [Section: ## Forward-Inverse Cancellation] -/
 theorem invB1_fwdB1 (a b c : ℤ) :
     invB1 (fwdB1 a b c).1 (fwdB1 a b c).2.1 (fwdB1 a b c).2.2 = (a, b, c) := by
   unfold invB1 fwdB1; ext <;> simp <;> ring
@@ -67,6 +68,7 @@ theorem fwdB3_invB3 (a b c : ℤ) :
   unfold invB3 fwdB3; ext <;> simp <;> ring
 
 
+/-- [Section: ## Inverse transforms preserve the Pythagorean property] -/
 theorem invB1_preserves_pt (a b c : ℤ) (h : IsPT a b c) :
     IsPT (invB1 a b c).1 (invB1 a b c).2.1 (invB1 a b c).2.2 := by
   unfold IsPT invB1 at *; nlinarith [h, sq_nonneg a, sq_nonneg b, sq_nonneg c,

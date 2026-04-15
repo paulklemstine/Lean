@@ -17,6 +17,7 @@ noncomputable def impermanentLossFactor (r : ℝ) (hr : 0 < r) : ℝ :=
   2 * Real.sqrt r / (1 + r) - 1
 
 
+/-- [Section: ## Impermanent Loss] -/
 theorem il_nonpositive (r : ℝ) (hr : 0 < r) :
     impermanentLossFactor r hr ≤ 0 := by
   exact sub_nonpos_of_le ( by rw [ div_le_iff₀ <| by positivity ] ; nlinarith [ sq_nonneg ( r - 1 ), Real.mul_self_sqrt hr.le ] )
@@ -57,6 +58,7 @@ noncomputable def lpValue (lp : LPPosition) : ℝ :=
   lp.initialValue * lp.feeAPR * lp.holdingPeriod
 
 
+/-- [Section: ## LP Profitability] -/
 theorem lp_profitable_iff_fees_exceed_il (lp : LPPosition) :
     hodlValue lp < lpValue lp ↔
     lp.feeAPR * lp.holdingPeriod >
@@ -82,6 +84,7 @@ noncomputable def capitalEfficiency (cp : ConcentratedPosition) : ℝ :=
   Real.sqrt (cp.pUpper / cp.pLower)
 
 
+/-- [Section: ## Concentrated Liquidity (Uniswap v3)] -/
 theorem capital_efficiency_gt_one (cp : ConcentratedPosition) :
     1 < capitalEfficiency cp := by
   exact Real.lt_sqrt_of_sq_lt ( by rw [ lt_div_iff₀ ] <;> linarith [ cp.hLower, cp.hUpper, cp.hRange ] )

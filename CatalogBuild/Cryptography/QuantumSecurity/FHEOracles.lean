@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Abstract FHE Scheme] -/
 structure FHEScheme (Plaintext Ciphertext : Type) where
   encrypt : Plaintext → Ciphertext
   decrypt : Ciphertext → Plaintext
@@ -32,6 +33,7 @@ def IsFullyHomomorphic {P C : Type} [Add P] [Mul P]
   IsAdditivelyHomomorphic fhe ∧ IsMultiplicativelyHomomorphic fhe
 
 
+/-- [Section: ## Noise Growth Model] -/
 structure NoisyFHE where
   initialNoise : ℝ
   maxNoise : ℝ
@@ -51,6 +53,7 @@ theorem max_depth_exists (nfhe : NoisyFHE) (hInit : 0 < nfhe.initialNoise) :
   exact ⟨d, by rwa [ge_iff_le, ← div_le_iff₀ hInit]⟩
 
 
+/-- [Section: ## Private AMM Trade] -/
 structure PrivateAMMTrade where
   actualAmount : ℝ
   poolReserveX : ℝ
@@ -81,6 +84,7 @@ theorem fhe_prevents_sandwich (trade : PrivateAMMTrade)
   rw [ eq_div_iff ] at h_wrong <;> nlinarith [ trade.hAmount ]
 
 
+/-- [Section: ## Threshold FHE] -/
 structure ThresholdParams where
   n : ℕ
   t : ℕ

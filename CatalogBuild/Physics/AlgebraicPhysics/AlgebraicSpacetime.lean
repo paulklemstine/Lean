@@ -81,6 +81,7 @@ def lorentzBoost2D (φ : ℝ) : Matrix (Fin 3) (Fin 3) ℝ :=
      0, Real.sinh φ, Real.cosh φ]
 
 
+/-- [Section: ## Part II: Lorentz Boosts] -/
 theorem lorentz_boost_preserves_Q (φ : ℝ) (v : Fin 3 → ℝ) :
     minkowskiQ (lorentzBoost2D φ *ᵥ v) = minkowskiQ v := by
   unfold minkowskiQ lorentzBoost2D;
@@ -162,6 +163,7 @@ def EMField.dualRotate (F : EMField) (α : ℝ) : EMField where
   B := -F.E * Real.sin α + F.B * Real.cos α
 
 
+/-- [Section: ## Part IV: The Electromagnetic Bivector] -/
 theorem EMField.dualRotate_preserves_energy (F : EMField) (α : ℝ) :
     (F.dualRotate α).energyDensity = F.energyDensity := by
   unfold EMField.dualRotate EMField.energyDensity; ring; norm_num [ Real.sin_sq, Real.cos_sq ] ; ring;

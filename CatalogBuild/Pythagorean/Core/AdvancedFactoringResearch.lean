@@ -76,6 +76,14 @@ theorem lift_channel_cb (a b c : ℤ) :
     ↑(Int.gcd (c - b) c) ∣ c := Int.gcd_dvd_right _ _
 
 
+/-- [Section: ## §2. The Lifting-Descent Correspondence
+### Key Insight
+Given a Pythagorean triple (a,b,c), we can:
+1. **Berggren-descend** directly, getting parent components that are linear in a,b,c
+2. **Lift** to quadruple (a,b,0,c) and then **R₁₁₁₁-descend**, getting
+R₁₁₁₁(a,b,0,c) = (c-b, c-a, c-a-b, 2c-a-b)
+These two operations produce DIFFERENT algebraic expressions in a,b,c, giving
+COMPLEMENTARY factoring channels.] -/
 theorem lift_channel_ca (a b c : ℤ) :
     ↑(Int.gcd (c - a) c) ∣ c := Int.gcd_dvd_right _ _
 
@@ -219,6 +227,7 @@ theorem gcd_berggren_reduction (a b c N : ℤ) :
   congr 1; ring
 
 
+/-- [Section: ## §8. The GCD Stability Theorem] -/
 theorem gcd_mod_N (a N k : ℤ) : Int.gcd (a + k * N) N = Int.gcd a N := by
   exact Int.gcd_add_mul_right_left N a k
 

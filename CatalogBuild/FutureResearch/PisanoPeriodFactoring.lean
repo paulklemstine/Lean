@@ -14,12 +14,14 @@ theorem fib_matrix_base :
     Nat.fib 2 = Nat.fib 1 + Nat.fib 0 := by simp [Nat.fib]
 
 
+/-- [Section: ### Matrix Fibonacci Formulation] -/
 theorem fib_add (m n : ℕ) (hm : 0 < m) :
     Nat.fib (m + n) = Nat.fib m * Nat.fib (n + 1) + Nat.fib (m - 1) * Nat.fib n := by
   rcases m with ⟨ ⟩ <;> simp_all +arith +decide [ Nat.fib_add ];
   ring
 
 
+/-- [Section: ### Pisano Period Properties] -/
 theorem fib_mod_periodic (m : ℕ) (hm : 2 ≤ m) :
     ∃ T : ℕ, 0 < T ∧ T ≤ m * m ∧
     ∀ n, Nat.fib (n + T) % m = Nat.fib n % m := by
@@ -72,6 +74,7 @@ theorem pisano_coprime_lcm (m₁ m₂ : ℕ) (hm1 : 2 ≤ m₁) (hm2 : 2 ≤ m�
   assumption
 
 
+/-- [Section: ### Factoring via Pisano Periods] -/
 theorem pisano_factor_constraint (p : ℕ) (hp : Nat.Prime p) (hp5 : p ≠ 5) :
     ∃ T, 0 < T ∧ T ∣ (p * p - 1) ∧
     ∀ n, Nat.fib (n + T) % p = Nat.fib n % p := by
@@ -126,6 +129,7 @@ theorem pisano_small_primes :
   grind
 
 
+/-- [Section: ### Order of Fibonacci in Multiplicative Group] -/
 theorem pisano_legendre_bound (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2) (hp5 : p ≠ 5) :
     ∃ T, 0 < T ∧ T ≤ 2 * (p + 1) ∧
     ∀ n, Nat.fib (n + T) % p = Nat.fib n % p := by

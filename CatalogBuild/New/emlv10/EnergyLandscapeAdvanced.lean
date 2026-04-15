@@ -39,6 +39,7 @@ def gradientDescent (N : ℕ) : ℕ → ℕ → ℕ
     else gradientDescent N (gradientStep N x) k
 
 
+/-- [Section: ### Critical Point Counting] -/
 theorem critical_thresholds_count (N : ℕ) (hN : 0 < N) :
     ∃ S : Finset ℕ, S.card ≤ N ∧
       ∀ t, t ∉ S → sublevel N t = sublevel N (t + 1) ∨ t ≥ N := by

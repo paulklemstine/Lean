@@ -21,6 +21,10 @@ theorem deformedAdd_one (a b : ℝ) :
   simp [deformedAdd]
 
 
+/-- [Section: ## Part I: Tropical Semiring as Degeneration (Maslov Dequantization)
+The key insight: the tropical semiring arises as a limit of the standard
+semiring under logarithmic rescaling. This is Maslov's "dequantization"
+of real arithmetic, analogous to ℏ → 0 in quantum mechanics.] -/
 theorem lse2_le_max_log2 (a b : ℝ) :
     Real.log (Real.exp a + Real.exp b) ≤ max a b + Real.log 2 := by
   rw [ ← Real.log_exp ( max a b ), ← Real.log_mul ( by positivity ) ( by positivity ), Real.log_le_log_iff ] <;> cases max_cases a b <;> nlinarith [ Real.exp_pos a, Real.exp_pos b, Real.exp_le_exp.2 ( le_max_left a b ), Real.exp_le_exp.2 ( le_max_right a b ) ]

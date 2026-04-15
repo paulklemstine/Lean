@@ -64,6 +64,7 @@ theorem composedGradScale_pos (L : ℕ) (lambdas : Fin L → ℝ)
   exact Finset.prod_pos fun i _ => hpos i
 
 
+/-- [Section: ## Part 2: Layer Composition Gradient Bounds] -/
 theorem composedGradScale_bounded (L : ℕ) (lambdas : Fin L → ℝ)
     (hbound : ∀ i, lambdas i ≤ 2) (hpos : ∀ i, 0 ≤ lambdas i) :
     composedGradScale L lambdas ≤ 2 ^ L := by

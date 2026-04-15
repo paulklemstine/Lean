@@ -38,6 +38,9 @@ theorem image_eq_fixed : {x | P.toFun x = x} = Set.range P.toFun := by
   · rintro ⟨y, rfl⟩; exact P.idem y
 
 
+/-- [Section: # Quantum Measurement as Idempotent Collapse
+Measurement operators are orthogonal projections (P² = P, P* = P).
+The Born rule emerges from the geometry of idempotent collapse.] -/
 theorem norm_le (x : V) : ‖P.toFun x‖ ≤ ‖x‖ := by
   -- By the properties of the inner product and the definition of a projection, we have ‖P(x)‖² = ⟨P(x), P(x)⟩ = ⟨x, P²(x)⟩ = ⟨x, P(x)⟩.
   have h_inner : ‖P.toFun x‖^2 = inner ℝ x (P.toFun x) := by

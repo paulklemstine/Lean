@@ -67,6 +67,9 @@ theorem padic_val_mul_tropical {p : ℕ} (hp : Nat.Prime p)
   exact padicValNat.mul ha hb
 
 
+/-- [Section: ================================================================
+PART IV: TROPICAL LANGLANDS BRIDGE (Newton Polygons)
+================================================================] -/
 theorem padic_val_gcd_eq_min {p : ℕ} (hp : Nat.Prime p)
     {a b : ℕ} (ha : a ≠ 0) (hb : b ≠ 0) :
     padicValNat p (Nat.gcd a b) = min (padicValNat p a) (padicValNat p b) := by
@@ -82,6 +85,9 @@ theorem permanent_region_lower_bound (n : ℕ) :
     1 ≤ n.factorial := Nat.one_le_iff_ne_zero.mpr (Nat.factorial_ne_zero n)
 
 
+/-- [Section: ================================================================
+PART VI: TROPICAL FACTORING BARRIER
+================================================================] -/
 theorem tropical_factoring_barrier {p n : ℕ} (hp : Nat.Prime p)
     (hn : n ≠ 0) :
     1 ≤ padicValNat p n ↔ p ∣ n := by

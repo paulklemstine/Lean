@@ -18,6 +18,7 @@ theorem peel_identity_sum {k : ℕ} (legs : Fin k → ℤ) (d : ℤ) (j : Fin k)
   nlinarith [peel_product_eq d (legs j)]
 
 
+/-- [Section: ## §3. Density of Factoring-Revealing Residues (Open Question 2.1)] -/
 theorem density_formula_primes (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
     (hne : p ≠ q) :
     (Finset.filter (fun x => ¬ Nat.Coprime x (p * q))

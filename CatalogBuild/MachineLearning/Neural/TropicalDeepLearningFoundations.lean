@@ -19,6 +19,7 @@ theorem tropMul_tropAdd_distrib (a b c : ℝ) :
   simp [tropMul, tropAdd, max_add_add_left]
 
 
+/-- [Section: ## Part I: Tropical Semiring & ReLU] -/
 theorem tropAdd_tropMul_distrib (a b c : ℝ) :
     tropMul (tropAdd a b) c = tropAdd (tropMul a c) (tropMul b c) := by
   unfold tropMul tropAdd;
@@ -103,6 +104,7 @@ theorem maslov_homomorphism (a b : ℝ) :
   exact (Real.log_exp (a + b)).symm
 
 
+/-- [Section: ## Part IV: LogSumExp Bridge] -/
 theorem max_le_logsumexp (a b : ℝ) :
     max a b ≤ Real.log (Real.exp a + Real.exp b) := by
   rw [ le_log_iff_exp_le ];
@@ -110,6 +112,7 @@ theorem max_le_logsumexp (a b : ℝ) :
   · positivity
 
 
+/-- [Section: ## Part V: Activation Barrier Results] -/
 theorem activation_barrier (f : ℝ → ℝ) (h0 : f 0 = 0) (h1 : f 1 = 1) (hm1 : f (-1) = 0) :
     ¬ ∃ (a b : ℝ), ∀ x, f x = a * x + b := by
   exact fun ⟨ a, b, h ⟩ => by linarith [ h 0, h 1, h ( -1 ) ] ;

@@ -9,6 +9,12 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Part I: Spectral Theory — The Hilbert-Pólya Foundation
+The Hilbert-Pólya conjecture asserts that there exists a self-adjoint operator H
+whose eigenvalues are the imaginary parts of the non-trivial zeros of ζ(s).
+If such an operator exists, its self-adjointness would automatically force all
+eigenvalues to be real, proving Re(ρ) = 1/2.
+We formalize the key spectral-theoretic fact that makes this approach work.] -/
 theorem hermitian_eigenvalues_real {n : ℕ} (M : Matrix (Fin n) (Fin n) ℂ)
     (hM : M.IsHermitian) (μ : ℂ) (v : Fin n → ℂ) (hv : v ≠ 0)
     (hev : M.mulVec v = μ • v) : μ.im = 0 := by
@@ -36,6 +42,10 @@ theorem prime_ge_three_odd (p : ℕ) (hp : Nat.Prime p) (hp3 : p ≥ 3) : ¬ 2 �
   rw [ hp.dvd_iff_eq ] <;> linarith
 
 
+/-- [Section: ## Part III: Random Matrix Theory — Eigenvalue Repulsion
+The GUE connection: Riemann zeros have the same spacing statistics as
+eigenvalues of random Hermitian matrices. The Vandermonde determinant
+is the engine of eigenvalue repulsion.] -/
 theorem vandermonde_vanishes_at_collision {n : ℕ} (v : Fin n → ℂ)
     (i j : Fin n) (hij : i ≠ j) (hv : v i = v j) :
     Matrix.det (Matrix.vandermonde v) = 0 := by

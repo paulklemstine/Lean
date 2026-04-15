@@ -23,6 +23,7 @@ theorem one_plus_sq_pos_sk (t : ℝ) : (0 : ℝ) < 1 + t ^ 2 := by positivity
 theorem one_plus_sq_ne_zero_sk (t : ℝ) : (1 : ℝ) + t ^ 2 ≠ 0 := by positivity
 
 
+/-- [Section: ## §1: Agent Σ — Inverse Stereographic Projection Core] -/
 theorem inverseStereoSK_on_circle (t : ℝ) :
     (inverseStereoSK t).1 ^ 2 + (inverseStereoSK t).2 ^ 2 = 1 := by
   unfold inverseStereoSK ; ring;
@@ -74,6 +75,7 @@ theorem stereo_pythagorean_sk (p q : ℤ) :
     (2 * p * q) ^ 2 + (q ^ 2 - p ^ 2) ^ 2 = (q ^ 2 + p ^ 2) ^ 2 := by ring
 
 
+/-- [Section: ## §2: Agent Κ — Rational Points and Pythagorean Triples] -/
 theorem pythagorean_to_circle_sk (a b c : ℤ) (hc : (c : ℝ) ≠ 0)
     (hpyth : a ^ 2 + b ^ 2 = c ^ 2) :
     ((a : ℝ) / c) ^ 2 + ((b : ℝ) / c) ^ 2 = 1 := by
@@ -118,6 +120,7 @@ theorem negation_is_involution_sk (y : ℝ) : -(-y) = y := by ring
 theorem secp256k1_nonsingular_sk : 4 * (0 : ℤ) ^ 3 + 27 * 7 ^ 2 ≠ 0 := by norm_num
 
 
+/-- [Section: ## §4: Agent Ω — Cryptographic Mirror Chain Analysis] -/
 theorem ecdsa_mirror_chain_length_sk (k : ℕ) (hk : k < 2 ^ 256) :
     Nat.log 2 k ≤ 256 := by
   exact Nat.le_trans ( Nat.log_mono_right hk.le ) ( by norm_num )
@@ -140,6 +143,7 @@ def circleMultiplySK (p₁ p₂ : ℝ × ℝ) : ℝ × ℝ :=
   (p₁.1 * p₂.2 + p₁.2 * p₂.1, p₁.2 * p₂.2 - p₁.1 * p₂.1)
 
 
+/-- [Section: ## §5: The Grand Synthesis] -/
 theorem stereo_group_homomorphism_sk (t₁ t₂ : ℝ) (h : 1 - t₁ * t₂ ≠ 0) :
     inverseStereoSK (mobiusAddSK t₁ t₂) =
     circleMultiplySK (inverseStereoSK t₁) (inverseStereoSK t₂) := by

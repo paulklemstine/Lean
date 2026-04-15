@@ -17,6 +17,7 @@ theorem quaternion_norm_eq_zero (q : Quaternion ℝ) :
   exact ⟨ fun h => ⟨ by nlinarith, by nlinarith, by nlinarith, by nlinarith ⟩, fun h => by simp +decide [ h ] ⟩
 
 
+/-- [Section: ## Section 3: Gaussian Integer Norm and Sum-of-Two-Squares] -/
 theorem gaussian_norm_conj_product (a b : ℤ) :
     (⟨a, b⟩ : GaussianInt) * ⟨a, -b⟩ = ⟨a^2 + b^2, 0⟩ := by
   ext <;> simp +decide [ sq ];
@@ -29,6 +30,7 @@ theorem gaussian_norm_divides (z : GaussianInt) (p : ℤ) (hp : 0 < p)
   rw [ hnorm ]
 
 
+/-- [Section: ## Section 6: Hurwitz Order Properties] -/
 theorem lipschitz_unit_norm_one :
     Quaternion.normSq (⟨1, 0, 0, 0⟩ : Quaternion ℝ) = 1 ∧
     Quaternion.normSq (⟨-1, 0, 0, 0⟩ : Quaternion ℝ) = 1 ∧
@@ -44,6 +46,7 @@ theorem hurwitz_half_unit_norm :
   norm_num [ Quaternion.normSq, Complex.ext_iff ]
 
 
+/-- [Section: ## Section 7: Scaling Exponent Bounds] -/
 theorem balanced_factor_bound (N p q : ℝ)
     (hN : 0 < N) (hp : 0 < p) (hq : 0 < q)
     (hpq : N = p * q) (hle : p ≤ q) :
@@ -77,6 +80,7 @@ theorem norm_factor_divides (q₁ q₂ : Quaternion ℤ) :
   ring
 
 
+/-- [Section: ## Section 10: Norm Factoring Principle] -/
 theorem norm_factoring_gives_divisor (q₁ q₂ : Quaternion ℤ) (N : ℤ)
     (hN : Quaternion.normSq (q₁ * q₂) = N) :
     Quaternion.normSq q₁ ∣ N := by

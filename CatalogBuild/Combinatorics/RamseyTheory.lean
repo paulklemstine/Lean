@@ -7,6 +7,7 @@ Declarations: 6
 
 import Mathlib
 
+/-- [Section: ## Party Problem: R(3,3) = 6] -/
 theorem ramsey_3_3_upper :
     ∀ (f : Fin 6 → Fin 6 → Bool),
       (∀ i j, f i j = f j i) →
@@ -37,6 +38,7 @@ theorem ramsey_3_3_lower :
   convert h_contra ( fun i j => if ( i - j : Fin 5 ) = 1 ∨ ( j - i : Fin 5 ) = 1 ∨ ( i - j : Fin 5 ) = 4 ∨ ( j - i : Fin 5 ) = 4 then Bool.true else Bool.false ) ?_ ?_ using 1 <;> simp +decide
 
 
+/-- [Section: ## Schur's Theorem] -/
 theorem schur_two_colors :
     ∀ (f : Fin 5 → Bool),
       ∃ x y z : Fin 5, f x = f y ∧ f y = f z ∧
@@ -44,6 +46,7 @@ theorem schur_two_colors :
   native_decide +revert
 
 
+/-- [Section: ## Pigeonhole Ramsey-Type Results] -/
 theorem pigeonhole_mod (n : ℕ) (hn : 0 < n) (f : Fin (n + 1) → ℤ) :
     ∃ i j : Fin (n + 1), i ≠ j ∧ f i % n = f j % n := by
   by_contra! h;
@@ -56,6 +59,7 @@ theorem five_ints_mod4 (f : Fin 5 → ℤ) :
   exact pigeonhole_mod 4 (by omega) f
 
 
+/-- [Section: ## Hales-Jewett Consequence] -/
 theorem combinatorial_line_exists (n : ℕ) (hn : 2 ≤ n) :
     ∀ (f : (Fin n → Bool) → Bool),
       ∃ i : Fin n, ∀ b : Bool,

@@ -7,6 +7,7 @@ Declarations: 10
 
 import Mathlib
 
+/-- Brahmagupta–Fibonacci -/
 theorem bf_identity1 (a b c d : ℤ) :
     (a ^ 2 + b ^ 2) * (c ^ 2 + d ^ 2) =
     (a * c - b * d) ^ 2 + (a * d + b * c) ^ 2 := by ring

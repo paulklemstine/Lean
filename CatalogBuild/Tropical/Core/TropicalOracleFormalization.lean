@@ -7,6 +7,7 @@ Declarations: 15
 
 import Mathlib
 
+/-- [Section: ## Section 1: Idempotent Oracles — Core Theory] -/
 theorem truthSet_eq_range {α : Type*} (O : α → α) (hO : IsIdempotent O) :
     TruthSet O = range O := by
       -- To prove equality of sets, we show each set is a subset of the other.
@@ -38,6 +39,7 @@ theorem tropicalGate_of_pos {x : ℝ} (hx : 0 < x) : tropicalGate x = 0 := by
   exact min_eq_right hx.le
 
 
+/-- [Section: ## Section 3: Compression — Idempotent Image Cardinality] -/
 theorem compression_of_noninjective {α : Type*} [Fintype α] [DecidableEq α]
     (O : α → α) (hO : IsIdempotent O) (hninj : ¬ Injective O) :
     Fintype.card (range O) < Fintype.card α := by
@@ -78,6 +80,7 @@ theorem idempotent_self_comp {α : Type*} (O : α → α) (hO : IsIdempotent O) 
       exact funext hO
 
 
+/-- [Section: ## Section 5: Geodesic Gradient Descent — Metric Properties] -/
 theorem fisher_metric_nonneg (grad_sq : ℝ) (hgrad : 0 ≤ grad_sq) :
     0 ≤ 0.99 * 0 + 0.01 * grad_sq := by
       norm_num; positivity;
@@ -94,6 +97,7 @@ theorem effective_lr_bounded (η : ℝ) (hη : 0 < η) (g_accum : ℝ) (hg : 0 �
       gcongr ; linarith [ Real.sqrt_nonneg g_accum ]
 
 
+/-- [Section: ## Section 6: Holographic Bottleneck — Dimension Reduction] -/
 theorem rank_composition_bound {m n p : ℕ}
     (A : Matrix (Fin m) (Fin n) ℝ) (B : Matrix (Fin n) (Fin p) ℝ) :
     (A * B).rank ≤ min A.rank B.rank := by

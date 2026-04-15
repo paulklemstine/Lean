@@ -7,6 +7,7 @@ Declarations: 32
 
 import Mathlib
 
+/-- [Section: ## §1. Definitions] -/
 inductive BerggrenStep' | A | B | C
   deriving DecidableEq
 
@@ -23,6 +24,7 @@ def parentTriple' : BerggrenStep' → ℤ × ℤ × ℤ → ℤ × ℤ × ℤ
   | .C, (a, b, c) => (-a - 2*b + 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
 
 
+/-- [Section: ## §2. Forward-inverse cancellation] -/
 theorem child_parent_cancel_A' (a b c : ℤ) :
     parentTriple' .A (childTriple' .A (a, b, c)) = (a, b, c) := by
   simp only [childTriple', parentTriple']; ext1; ring; ext1 <;> ring
@@ -53,6 +55,7 @@ theorem parent_child_cancel_C' (a b c : ℤ) :
   simp only [childTriple', parentTriple']; ext1; ring; ext1 <;> ring
 
 
+/-- [Section: ## §3. Parent hypotenuse properties] -/
 theorem parent_hyp_shared'' (a b c : ℤ) (s : BerggrenStep') :
     (parentTriple' s (a, b, c)).2.2 = -2*a - 2*b + 3*c := by
   cases s <;> simp [parentTriple']
@@ -70,6 +73,7 @@ theorem parent_hyp_strict_decrease' (a b c : ℤ) (h : a^2 + b^2 = c^2)
   nlinarith [mul_pos ha hb]
 
 
+/-- [Section: ## §4. All transforms preserve the Pythagorean equation] -/
 theorem childA_preserves_pyth' (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     (a - 2*b + 2*c)^2 + (2*a - b + 2*c)^2 = (2*a - 2*b + 3*c)^2 := by nlinarith [h]
 
@@ -94,6 +98,7 @@ theorem parentC_preserves_pyth' (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     (-a - 2*b + 2*c)^2 + (2*a + b - 2*c)^2 = (-2*a - 2*b + 3*c)^2 := by nlinarith [h]
 
 
+/-- [Section: ## §5. Sign analysis] -/
 def sigma1' (a b c : ℤ) : ℤ := a + 2*b - 2*c
 
 def sigma2' (a b c : ℤ) : ℤ := 2*a + b - 2*c
@@ -106,6 +111,7 @@ theorem not_both_sigma_nonpos' (a b c : ℤ) (h : a^2 + b^2 = c^2)
   nlinarith [sq_nonneg (a - b), mul_pos ha hb]
 
 
+/-- [Section: ## §6. Root classification] -/
 theorem root_classification' (a b : ℤ) (h : a^2 + b^2 = 25)
     (ha : 0 < a) (hb : 0 < b) (hcop : Int.gcd a b = 1) :
     (a = 3 ∧ b = 4) ∨ (a = 4 ∧ b = 3) := by
@@ -166,6 +172,7 @@ theorem sigma2_zero_forces (a b c : ℤ) (h : a^2 + b^2 = c^2)
   nlinarith [sq_nonneg (4*a - 3*b)]
 
 
+/-- [Section: ## §8. σ₁ = 0 or σ₂ = 0 forces non-primitive triple] -/
 theorem sigma1_nonzero_primitive (a b c : ℤ) (h : a^2 + b^2 = c^2)
     (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) (hc5 : 5 < c)
     (hcop : Int.gcd a b = 1) :
@@ -236,12 +243,14 @@ theorem descent_step_primitive (a b c : ℤ) (h : a^2 + b^2 = c^2)
         linarith [parent_hyp_strict_decrease' a b c h ha hb]⟩
 
 
+/-- [Section: ## §10. Legs less than hypotenuse] -/
 theorem legs_lt_hyp' (a b c : ℤ) (h : a^2 + b^2 = c^2)
     (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
     a < c ∧ b < c := by
   constructor <;> nlinarith [sq_nonneg b, sq_nonneg a]
 
 
+/-- [Section: ## §11. c ≥ 5 for coprime triples] -/
 theorem hyp_ge_5' (a b c : ℤ) (h : a^2 + b^2 = c^2)
     (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) (hcop : Int.gcd a b = 1)
     (hab : a ≠ b) :

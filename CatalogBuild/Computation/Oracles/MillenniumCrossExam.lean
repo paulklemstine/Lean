@@ -7,6 +7,10 @@ Declarations: 11
 
 import Mathlib
 
+/-- [Section: ## Cross-Examination 1: Theorems Adjacent to P vs NP
+The P vs NP problem asks whether every problem whose solution can be
+quickly VERIFIED can also be quickly SOLVED. We prove structural results
+about the nature of verification and search.] -/
 theorem oracle_p_subset_np (P : ℕ → Prop) [DecidablePred P] :
     ∀ n, P n ∨ ¬ P n := by
   exact fun n => em _
@@ -20,6 +24,9 @@ theorem oracle_pigeonhole {α β : Type*} [DecidableEq β]
   exact Finset.card_le_card ( show Finset.image f s ⊆ t from Finset.image_subset_iff.2 hf ) |> fun h => h.trans' ( by rw [ Finset.card_image_of_injOn fun a ha b hb hab => not_imp_not.1 ( hst a ha b hb ) hab ] )
 
 
+/-- [Section: ## Cross-Examination 2: Theorems Adjacent to Riemann Hypothesis
+The RH states that all non-trivial zeros of ζ(s) have real part 1/2.
+We prove theorems about the arithmetic functions that RH controls.] -/
 theorem oracle_mobius_squared_bound (n : ℕ) (hn : n > 0) :
     Int.natAbs (ArithmeticFunction.moebius n) ≤ 1 := by
   unfold ArithmeticFunction.moebius;
@@ -41,6 +48,8 @@ theorem oracle_totient_prime_pow (p : ℕ) (hp : Nat.Prime p) (k : ℕ) (hk : k 
   rw [ pow_succ, mul_tsub, mul_one ]
 
 
+/-- [Section: ## Cross-Examination 3: Theorems About Algebraic Structure
+These support the Birch and Swinnerton-Dyer conjecture and Langlands program.] -/
 theorem oracle_bezout (a b : ℤ) :
     ∃ x y : ℤ, a * x + b * y = Int.gcd a b := by
   exact Int.gcd_eq_gcd_ab a b ▸ ⟨ _, _, rfl ⟩
@@ -56,6 +65,8 @@ theorem oracle_frobenius (p : ℕ) (hp : Nat.Prime p) (a b : ZMod p) :
   haveI := Fact.mk hp; simp +decide [ add_pow_char ] ;
 
 
+/-- [Section: ## Cross-Examination 4: Combinatorial Structures
+Connection to complexity theory and the nature of mathematical proof.] -/
 theorem oracle_powerset_card (α : Type*) [Fintype α] [DecidableEq α] :
     Fintype.card (Finset α) = 2 ^ Fintype.card α := by
   convert Set.toFinset_card;

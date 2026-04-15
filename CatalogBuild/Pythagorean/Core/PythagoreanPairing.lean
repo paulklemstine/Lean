@@ -204,6 +204,17 @@ def findPairedTriples (m n : Nat) : List (Nat × Nat × Nat × Nat) := Id.run do
 #eval findPairedTriples 11 10 -- Triple (21, 220, 221): should find pair with factor 13 or 17
 
 
+/-- [Section: ## Part X: Quantitative Results
+The number of Pythagorean triples sharing a hypotenuse c is related to the number of
+sum-of-squares representations of c, which in turn depends on the prime factorization.
+**Theorem** (Jacobi): The number of representations r₂(n) = #{(a,b) ∈ ℤ² : a²+b²=n}
+equals 4·∑_{d|n} χ(d), where χ is the non-principal character mod 4.
+**Corollary**: If n = 2^e₀ · ∏(pᵢ^eᵢ) · ∏(qⱼ^fⱼ) where pᵢ ≡ 1 (mod 4) and qⱼ ≡ 3 (mod 4),
+then r₂(n) > 0 iff all fⱼ are even, and the number of essentially distinct representations
+(up to sign and order) is ∏(eᵢ + 1) / 2 when this is nonzero.
+For a PPT hypotenuse c (which must have all prime factors ≡ 1 mod 4), the number of
+distinct sum-of-squares representations of c equals ∏(eᵢ + 1) where c = ∏(pᵢ^eᵢ)
+with each pᵢ ≡ 1 (mod 4).] -/
 theorem fermat_sum_two_squares_1mod4 (p : ℕ) (hp : Nat.Prime p) (hmod : p % 4 = 1) :
     ∃ a b : ℕ, a ^ 2 + b ^ 2 = p := by
   have := Fact.mk hp; have := @Nat.Prime.sq_add_sq p; aesop;

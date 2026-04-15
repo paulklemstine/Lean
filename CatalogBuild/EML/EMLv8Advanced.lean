@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Definitions] -/
 def eml8a (x y : ℝ) : ℝ := Real.exp x - Real.log y
 
 def diag8a (z : ℝ) : ℝ := Real.exp z - Real.log z
@@ -29,6 +30,7 @@ def diagIter8a : ℕ → ℝ → ℝ
 def trop8a (x y : ℝ) : ℝ := max x (-y)
 
 
+/-- [Section: ## Section 1: E-Tower Properties] -/
 theorem eTow8a_pos (n : ℕ) : 0 < eTow8a n := by
   induction n with
   | zero => simp [eTow8a]
@@ -41,6 +43,7 @@ theorem eTow8a_strict_mono : StrictMono eTow8a := by
   linarith [Real.add_one_le_exp (eTow8a n)]
 
 
+/-- [Section: ## Section 2: Orbit Divergence] -/
 theorem diag8a_gt (z : ℝ) : diag8a z > z := by
   cases' lt_trichotomy z 0 with hz hz;
   · unfold diag8a;
@@ -75,6 +78,7 @@ theorem diag8a_orbit_diverge (z : ℝ) (n : ℕ) :
     linarith! [ ih z, h_diag8a_def ( diagIter8a n z ) ]
 
 
+/-- [Section: ## Section 3: g-Map Properties] -/
 theorem gmap8a_strictAnti : StrictAntiOn gmap8a (Ioi 0) := by
   intro a ha b _ hab
   simp only [gmap8a]
@@ -96,6 +100,7 @@ theorem gmap8a_deriv (z : ℝ) (hz : 0 < z) :
   simp only [zero_sub] at h; exact h
 
 
+/-- [Section: ## Section 4: Magma Failures] -/
 theorem eml8a_not_medial :
     ∃ a b c d : ℝ, eml8a (eml8a a b) (eml8a c d) ≠ eml8a (eml8a a c) (eml8a b d) := by
   unfold eml8a;
@@ -122,6 +127,7 @@ theorem eml8a_not_right_alt :
   unfold eml8a; use 0, 1; norm_num;
 
 
+/-- [Section: ## Section 5: Double Negation Involution] -/
 theorem eml8a_negation (x : ℝ) : eml8a 0 (Real.exp x) = 1 - x := by
   simp [eml8a, Real.log_exp]
 
@@ -131,6 +137,7 @@ theorem eml8a_double_neg (x : ℝ) :
   simp [eml8a, Real.log_exp]
 
 
+/-- [Section: ## Section 6: Tropical EML] -/
 theorem trop8a_diag (x : ℝ) : trop8a x x = |x| := by
   simp only [trop8a, abs_eq_max_neg]
 
@@ -139,6 +146,7 @@ theorem trop8a_noncomm : ∃ x y : ℝ, trop8a x y ≠ trop8a y x := by
   exact ⟨ 0, 1, by unfold trop8a; norm_num ⟩
 
 
+/-- [Section: ## Section 7: Composition Identities] -/
 theorem eml8a_ee : eml8a (eml8a 1 1) 1 = Real.exp (Real.exp 1) := by
   simp [eml8a, Real.log_one]
 
@@ -152,6 +160,7 @@ theorem eml8a_diag_compose (x : ℝ) :
   unfold eml8a diag8a; ring
 
 
+/-- [Section: ## Section 8: Subtraction and Addition via EML] -/
 theorem eml8a_subtraction (a b : ℝ) (ha : 0 < a) :
     eml8a (Real.log a) (Real.exp b) = a - b := by
   unfold eml8a; rw [Real.exp_log ha, Real.log_exp]
@@ -169,6 +178,7 @@ theorem eml8a_trace_ge_two (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
   linarith [Real.log_le_sub_one_of_pos ha, Real.log_le_sub_one_of_pos hb]
 
 
+/-- [Section: ## Section 9: EML Bounds] -/
 theorem eml8a_exp_exp_gt4 : Real.exp (Real.exp 1) > 4 := by
   -- Since $\exp(1) > 2$, we have $\exp(\exp(1)) > \exp(2)$.
   have h_exp_exp1_gt_exp2 : Real.exp (Real.exp 1) > Real.exp 2 := by

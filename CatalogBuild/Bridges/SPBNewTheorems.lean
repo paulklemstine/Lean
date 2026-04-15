@@ -87,6 +87,7 @@ theorem spb_quadruple_chain (t : ℝ) (ht : t^2 ≠ 1)
   ring
 
 
+/-- [Section: ## Section 4: SPB Second Derivative (Convexity)] -/
 theorem spb_second_deriv (x y : ℝ) (hxy : x * y ≠ 1) :
     HasDerivAt (fun t => (1 + y ^ 2) / (1 - t * y) ^ 2)
       (2 * y * (1 + y ^ 2) / (1 - x * y) ^ 3) x := by
@@ -118,6 +119,7 @@ theorem spb_telescope_two (a b c : ℝ) (hab : a * b ≠ 1) (hbc : b * c ≠ 1) 
   ring
 
 
+/-- [Section: ## Section 7: SPB and the Half-Angle Substitution] -/
 theorem spb_half_angle (t θ : ℝ) (ht : t = tan (θ / 2))
     (hcos : cos (θ / 2) ≠ 0) (hcos2 : cos θ ≠ 0) :
     tan θ = (2 * t) / (1 - t^2) := by
@@ -133,6 +135,7 @@ def spb_pow : ℕ → ℝ → ℝ
   | n + 2, x => spb (spb_pow (n + 1) x) x
 
 
+/-- [Section: ## Section 8: SPB Power Map] -/
 theorem spb_pow_zero (x : ℝ) : spb_pow 0 x = 0 := rfl
 
 theorem spb_pow_one (x : ℝ) : spb_pow 1 x = x := rfl
@@ -144,6 +147,7 @@ theorem spb_pow_two (x : ℝ) :
   ring
 
 
+/-- [Section: ## Section 9: SPB Bounds for Small Arguments] -/
 theorem spb_approx_sum (x y : ℝ) (hxy : |x * y| < 1) :
     |spb x y - (x + y)| ≤ |x * y| * |x + y| / (1 - |x * y|) := by
   rw [ spb ];
@@ -200,12 +204,14 @@ theorem spb_ode_generator (x : ℝ) (hx : cos x ≠ 0) :
   linarith [sin_sq_add_cos_sq x]
 
 
+/-- [Section: ## Section 13: SPB Iteration and Gregory–Leibniz] -/
 theorem arctan_spb_add (a b : ℝ) (hab : a * b < 1) :
     arctan a + arctan b = arctan (spb a b) := by
   have := @Real.arctan_add a b;
   exact this hab
 
 
+/-- [Section: ## Section 14: SPB Homomorphism Property (Reformulated)] -/
 theorem cayley_spb_mul (x y : ℝ) (hxy : x * y ≠ 1) :
     cayley (spb x y) = cayley x * cayley y := by
   unfold cayley spb; norm_num [ Complex.ext_iff ] ; ring;
@@ -213,6 +219,7 @@ theorem cayley_spb_mul (x y : ℝ) (hxy : x * y ≠ 1) :
   grind +splitImp
 
 
+/-- [Section: ## Section 15: SPB Functional Equation] -/
 theorem generalized_spb_assoc (c : ℝ) (x y z : ℝ)
     (hxy : 1 + c * x * y ≠ 0) (hyz : 1 + c * y * z ≠ 0)
     (hxyz : 1 + c * ((x + y) / (1 + c * x * y)) * z ≠ 0)

@@ -41,6 +41,9 @@ def distanceToTarget (g : OGDGoal) : ℝ :=
   |g.position - g.target|
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+§2: FUNDAMENTAL PROPERTIES
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem kineticEnergy_nonneg (g : OGDGoal) : 0 ≤ kineticEnergy g := by
   exact mul_nonneg ( mul_nonneg ( by norm_num ) g.mass_pos.le ) ( sq_nonneg _ )
 
@@ -79,6 +82,9 @@ def isFixedPoint {S : Type} (B : PlanningOperator S) (V : S → ℝ) : Prop :=
   B V = V
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+§3: THE PLANNING OPERATOR (Connection to Bellman)
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem id_fixedPoint {S : Type} (V : S → ℝ) : isFixedPoint (id : PlanningOperator S) V := by
   exact?
 
@@ -88,6 +94,9 @@ theorem fixedPoint_idempotent {S : Type} (B : PlanningOperator S) (V : S → ℝ
   exact?
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+§4: CONTRACTION AND CONVERGENCE
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem synergy_reduces_distance (d₁ d₂ G : ℝ) (hd₁ : 0 < d₁) (hd₂ : 0 < d₂) (hG : 0 < G)
     (hsmall : G < min d₁ d₂) :
     (d₁ - G) + (d₂ - G) < d₁ + d₂ := by
@@ -105,6 +114,9 @@ def goalFrequency (k : ℝ) (g : OGDGoal) : ℝ :=
   Real.sqrt (k / g.mass)
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+§5: THE RESONANCE CONDITION
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem equal_mass_equal_freq (k : ℝ) (g₁ g₂ : OGDGoal) (hm : g₁.mass = g₂.mass) :
     goalFrequency k g₁ = goalFrequency k g₂ := by
   unfold goalFrequency; aesop;
@@ -115,6 +127,9 @@ theorem equal_mass_resonance (k : ℝ) (g₁ g₂ : OGDGoal) (hm : g₁.mass = g
   exact ⟨ 1, 1, by norm_num, by norm_num, by norm_num, by rw [ equal_mass_equal_freq k g₁ g₂ hm ] ⟩
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════════
+§6: THE GOD ORACLE — Optimal Plan is a Fixed Point
+═══════════════════════════════════════════════════════════════════════════] -/
 theorem god_oracle_uniqueness {S : Type} [Fintype S] [Nonempty S]
     (B : PlanningOperator S) (γ : ℝ)
     (hc : IsContraction B γ) (V₁ V₂ : S → ℝ)

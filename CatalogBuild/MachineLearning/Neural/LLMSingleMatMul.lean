@@ -48,6 +48,10 @@ theorem linear_rep_implies_additive {R M N : Type*} [Semiring R]
   map_add f x y
 
 
+/-- [Section: ## Section 2: The Nonlinearity Barrier
+The fundamental obstruction: any function representable as a single matrix
+multiplication (linear map) must be linear. Since LLMs compute nonlinear
+functions, exact compilation is impossible.] -/
 theorem relu_not_linear :
     ¬ ∃ (f : ℝ →ₗ[ℝ] ℝ), ∀ x : ℝ, f x = max x 0 := by
   norm_num +zetaDelta at *;
@@ -63,6 +67,10 @@ theorem finite_domain_is_matmul {n m : ℕ} (f : Fin n → Fin m → ℝ) :
   exact ⟨fun j i => f i j, fun i j => rfl⟩
 
 
+/-- [Section: ## Section 3: The Finite Domain Compilation Theorem
+On a FINITE domain (which is the actual setting for LLMs with finite
+vocabulary and bounded context), ANY function can be represented as a
+matrix multiplication via one-hot encoding. This is the key positive result.] -/
 theorem onehot_matmul_lookup (n m : ℕ) (f : Fin n → Fin m → ℝ) :
     ∃ (M : Matrix (Fin m) (Fin n) ℝ),
       ∀ (i : Fin n),
@@ -116,6 +124,9 @@ theorem tensor_contraction_order (p q k : ℕ) (hk : k ≤ p) (hk' : k ≤ q) :
     p + q - 2 * k + 2 * k = p + q := by omega
 
 
+/-- [Section: ## Section 8: The Compilation-Accuracy-Size Trilemma
+The fundamental trade-off theorem: you can have at most two of:
+(1) Single operation, (2) Small representation, (3) High accuracy] -/
 theorem compilation_trilemma_linear_case :
     ∀ (f : ℝ → ℝ), (∀ x, f x = max x 0) →
     ¬ ∃ (a b : ℝ), ∀ x, f x = a * x + b := by

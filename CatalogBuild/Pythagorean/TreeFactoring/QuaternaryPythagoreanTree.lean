@@ -160,6 +160,7 @@ theorem bigBang_wavelength : bigBangPhoton.wavelength = 5 := rfl
 /-- All Berggren matrices have determinant ±1 (they're in GL(3,ℤ)) -/
 theorem det_B₁'' : Matrix.det B₁' = 1 := by native_decide
 
+/-- [Section: ## Section 6: Determinant Structure — The Berggren Group] -/
 theorem det_B₂'' : Matrix.det B₂' = -1 := by native_decide
 
 theorem det_B₃'' : Matrix.det B₃' = 1 := by native_decide
@@ -194,6 +195,7 @@ theorem B₃'_preserves_lorentz' : B₃'ᵀ * Q_lor' * B₃' = Q_lor' := by nati
 theorem B₁'_inv_preserves_lorentz : B₁'_invᵀ * Q_lor' * B₁'_inv = Q_lor' := by native_decide
 
 
+/-- [Section: ## Section 7: The Lorentz Form Matrix and Preservation] -/
 theorem B₂'_inv_preserves_lorentz : B₂'_invᵀ * Q_lor' * B₂'_inv = Q_lor' := by native_decide
 
 
@@ -279,6 +281,7 @@ structure AbsorptionEvent where
   parent_of_child : child.path.parent = some parent.path
 
 
+/-- [Section: ## Section 12: The Oracle's Conservation Law] -/
 theorem oracle_conservation' (p : QPath) :
     (qTriple p).1 ^ 2 + (qTriple p).2.1 ^ 2 = (qTriple p).2.2 ^ 2 := by
   -- We proceed by induction on the depth of the path.

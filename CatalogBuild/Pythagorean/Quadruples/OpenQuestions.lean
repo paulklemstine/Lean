@@ -94,6 +94,7 @@ def branchingNumber (d : ℕ) : ℕ :=
         Nat.gcd (Nat.gcd a b) (Nat.gcd c d) = 1).card > 0).card > 0).card
 
 
+/-- [Section: ## Part 4: Hurwitz vs. Lipschitz Descent (Question 2)] -/
 theorem lipschitz_division_exists (α β : LipschitzInt) (hβ : β ≠ LipschitzInt.zero) :
     ∃ γ ρ : LipschitzInt, α = (β.mul γ).add ρ ∧ ρ.sqNorm ≤ β.sqNorm := by
   by_contra! h_contra;

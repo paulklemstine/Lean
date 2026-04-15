@@ -19,6 +19,7 @@ def emlValueParams (hiddenDim numLayers : ℕ) : ℕ :=
   4 * hiddenDim + numLayers * 4 * hiddenDim + 4
 
 
+/-- [Section: ## §2. Value Function Efficiency] -/
 theorem eml_value_compact (sd hd nL : ℕ) (hs : 4 ≤ sd) (hh : 4 ≤ hd) :
     emlValueParams hd nL ≤ stdValueParams sd hd nL := by
   unfold emlValueParams stdValueParams
@@ -33,6 +34,7 @@ theorem eml_value_compact (sd hd nL : ℕ) (hs : 4 ≤ sd) (hh : 4 ≤ hd) :
 def discountedReward (gamma reward : ℝ) (step : ℕ) : ℝ := gamma ^ step * reward
 
 
+/-- [Section: ## §3. Discount Factor Properties] -/
 theorem discount_decays (g r : ℝ) (k1 k2 : ℕ) (hg0 : 0 ≤ g) (hg1 : g ≤ 1)
     (hr : 0 ≤ r) (hk : k1 ≤ k2) :
     discountedReward g r k2 ≤ discountedReward g r k1 := by
@@ -54,6 +56,7 @@ theorem zero_discount_immediate (r : ℝ) :
 def stdActorCriticParams (policyP valueP : ℕ) : ℕ := policyP + valueP
 
 
+/-- [Section: ## §4. Actor-Critic Architecture] -/
 theorem eml_ac_compact (pp_eml pp_std vp_eml vp_std : ℕ)
     (hp : pp_eml ≤ pp_std) (hv : vp_eml ≤ vp_std) :
     stdActorCriticParams pp_eml vp_eml ≤ stdActorCriticParams pp_std vp_std := by
@@ -65,11 +68,13 @@ def replayMemory (bufferSize stateDim actionDim : ℕ) : ℕ :=
   bufferSize * (2 * stateDim + actionDim + 1)
 
 
+/-- [Section: ## §5. Experience Replay] -/
 theorem larger_buffer_more_memory (b1 b2 sd ad : ℕ) (hb : b1 ≤ b2) :
     replayMemory b1 sd ad ≤ replayMemory b2 sd ad := by
   unfold replayMemory; exact Nat.mul_le_mul_right _ hb
 
 
+/-- [Section: ## §6. Exploration Bonus] -/
 theorem more_visits_less_bonus (c : ℝ) (n1 n2 : ℕ) (hc : 0 < c) (hn1 : 0 < n1) (hn : n1 ≤ n2) :
     explorationBonus c n2 ≤ explorationBonus c n1 := by
   unfold explorationBonus
@@ -80,6 +85,7 @@ theorem more_visits_less_bonus (c : ℝ) (n1 n2 : ℕ) (hc : 0 < c) (hn1 : 0 < n
 def maCommCost (numAgents messageDim : ℕ) : ℕ := numAgents * numAgents * messageDim
 
 
+/-- [Section: ## §7. Multi-Agent Communication] -/
 theorem eml_ma_comm_cheaper (n md_eml md_std : ℕ) (hm : md_eml ≤ md_std) :
     maCommCost n md_eml ≤ maCommCost n md_std := by
   unfold maCommCost; exact Nat.mul_le_mul_left (n * n) hm
@@ -90,6 +96,7 @@ def stdWorldModelParams (stateDim actionDim hiddenDim : ℕ) : ℕ :=
   (stateDim + actionDim) * hiddenDim + hiddenDim * stateDim
 
 
+/-- [Section: ## §8. Model-Based RL World Model] -/
 def emlWorldModelParams (hiddenDim stateDim : ℕ) : ℕ :=
   4 * hiddenDim + 4 * stateDim
 
@@ -102,6 +109,7 @@ theorem eml_world_model_compact (sd ad hd : ℕ) (hsa : 4 ≤ sd + ad) (hh : 4 �
   omega
 
 
+/-- [Section: ## §9. Reward Shaping] -/
 theorem zero_potential_preserves (r gamma : ℝ) :
     shapedReward r gamma 0 0 = r := by
   unfold shapedReward; ring

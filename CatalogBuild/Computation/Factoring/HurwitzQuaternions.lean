@@ -12,6 +12,7 @@ def InSumSqLattice (N : ℤ) (x y z : ℤ) : Prop :=
   N ∣ (x^2 + y^2 + z^2)
 
 
+/-- [Section: ## Section 1: Lattice Algebraic Properties] -/
 theorem lattice_zero_mem (N : ℤ) : InSumSqLattice N 0 0 0 := by
   unfold InSumSqLattice; simp
 
@@ -65,6 +66,7 @@ theorem quat_mul_conj_im_i (a b c d : ℤ) :
     a * (-b) + b * a + c * (-d) - d * (-c) = 0 := by ring
 
 
+/-- [Section: ## Section 2: Conjugation and Norm] -/
 theorem quat_mul_conj_im_j (a b c d : ℤ) :
     a * (-c) - b * (-d) + c * a + d * (-b) = 0 := by ring
 
@@ -114,6 +116,7 @@ theorem dim_advantage_4_3 (N : ℕ) (hN : 2 ≤ N) :
   Real.rpow_le_rpow_of_exponent_le (by exact_mod_cast Nat.one_le_iff_ne_zero.mpr (by omega)) (by norm_num)
 
 
+/-- [Section: ## Section 6: Dimensional Advantage] -/
 theorem dim_advantage_3_2 (N : ℕ) (hN : 2 ≤ N) :
     (N : ℝ) ^ ((1:ℝ)/3) ≤ (N : ℝ) ^ ((1:ℝ)/2) :=
   Real.rpow_le_rpow_of_exponent_le (by exact_mod_cast Nat.one_le_iff_ne_zero.mpr (by omega)) (by norm_num)

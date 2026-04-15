@@ -35,6 +35,7 @@ theorem inv_stereo_on_circle' (t : ℝ) :
   field_simp; ring
 
 
+/-- [Section: ## Part I: The Encoding — Inverse Stereographic Projection] -/
 theorem inv_stereo_injective' : Function.Injective invStereoCircle' := by
   intro s t hst
   simp only [invStereoCircle', Prod.mk.injEq] at hst
@@ -150,6 +151,7 @@ The factorization of 1 + n² over ℤ[i] determines the particle content. -/
 def integerParticleEnergy' (n : ℤ) : ℤ := stereoDenom' n 1
 
 
+/-- [Section: ## Part II: The Factorization — Particles from Observation] -/
 theorem integer_particle_energy_eq' (n : ℤ) :
     integerParticleEnergy' n = 1 + n ^ 2 := by
   simp [integerParticleEnergy', stereoDenom']; ring

@@ -7,6 +7,8 @@ Declarations: 23
 
 import Mathlib
 
+/-- [Section: ## Section 1: Divisor-Triple Bijection
+The fundamental correspondence: factorizations of N² ↔ Pythagorean triples with leg N.] -/
 theorem divisor_pair_to_triple (N d e : ℤ) (hprod : d * e = N ^ 2)
     (hd_pos : 0 < d) (hle : d ≤ e) (hparity : Even (e - d)) :
     N ^ 2 + ((e - d) / 2) ^ 2 = ((e + d) / 2) ^ 2 := by
@@ -26,6 +28,9 @@ theorem divisor_triple_roundtrip (N d e : ℤ) (hprod : d * e = N ^ 2)
   grind
 
 
+/-- [Section: ## Section 2: Primality Criterion via Pythagorean Triples
+An odd prime p > 2 has exactly one Pythagorean triple with p as a leg:
+(p, (p²-1)/2, (p²+1)/2). For composites, there are multiple such triples.] -/
 theorem canonical_prime_triple (p : ℤ) (hp : 1 < p) (hodd : ¬Even p) :
     p ^ 2 + ((p ^ 2 - 1) / 2) ^ 2 = ((p ^ 2 + 1) / 2) ^ 2 := by
   cases abs_cases p <;> nlinarith [ Int.ediv_mul_cancel ( show 2 ∣ p ^ 2 - 1 from even_iff_two_dvd.mp <| by simp_all +decide [ parity_simps ] ), Int.ediv_mul_cancel ( show 2 ∣ p ^ 2 + 1 from even_iff_two_dvd.mp <| by simp_all +decide [ parity_simps ] ) ]
@@ -36,6 +41,7 @@ theorem trivial_factorization_triple (N : ℤ) (hN : 1 < N) (hodd : ¬Even N) :
   exact canonical_prime_triple N hN hodd
 
 
+/-- [Section: ## Section 3: Berggren Matrix Algebraic Properties] -/
 theorem B1_preserves_pythagorean (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (a - 2*b + 2*c) ^ 2 + (2*a - b + 2*c) ^ 2 = (2*a - 2*b + 3*c) ^ 2 := by
   grind
@@ -63,6 +69,7 @@ theorem euclid_coprime (m n : ℤ) (hcop : IsCoprime m n)
     convert rfl
 
 
+/-- [Section: ## Section 5: Tree Sieve Algebraic Foundation] -/
 theorem two_triples_factor (N b₁ c₁ b₂ c₂ : ℤ)
     (h₁ : N ^ 2 + b₁ ^ 2 = c₁ ^ 2)
     (h₂ : N ^ 2 + b₂ ^ 2 = c₂ ^ 2) :
@@ -93,6 +100,9 @@ theorem smooth_relation_product (s₁ s₂ N : ℤ) (hN : 0 < N) :
   rw [ Int.mul_emod ]
 
 
+/-- [Section: ## Section 6: Quadratic Form Preservation
+The Berggren tree preserves Q(a,b,c) = a² + b² - c², the indefinite quadratic form
+of signature (2,1). This connects the tree to the orthogonal group O(2,1;ℤ).] -/
 theorem berggren_preserves_lorentz (a b c : ℤ) :
     -- B₁ preserves Q
     (a - 2*b + 2*c)^2 + (2*a - b + 2*c)^2 - (2*a - 2*b + 3*c)^2 = a^2 + b^2 - c^2 ∧
@@ -103,11 +113,13 @@ theorem berggren_preserves_lorentz (a b c : ℤ) :
   grind
 
 
+/-- [Section: ## Section 7: Hypotenuse Bounds and Tree Depth] -/
 theorem min_hypotenuse_at_depth (d : ℕ) :
     (3 : ℤ) ^ d * 5 ≥ 5 := by
   nlinarith [ pow_pos ( by decide : 0 < 3 ) d ]
 
 
+/-- [Section: ## Section 8: Parent Uniqueness] -/
 theorem B1_parent_recovery (a b c : ℤ) :
     let a' := a - 2*b + 2*c
     let b' := 2*a - b + 2*c
@@ -119,16 +131,19 @@ theorem B1_parent_recovery (a b c : ℤ) :
   grind
 
 
+/-- [Section: ## Section 10: GCD Factor Extraction] -/
 theorem gcd_factor_from_triples (N d₁ : ℤ) (hN : 0 < N) :
     (Int.gcd d₁ N : ℤ) ∣ N := by
   exact Int.gcd_dvd_right _ _
 
 
+/-- [Section: ## Section 11: Modular Arithmetic in the Tree] -/
 theorem hypotenuse_mod_transform (a b c N : ℤ) (hN : 0 < N) :
     (2*a + 2*b + 3*c) % N = (2*a + 2*b + 3*(c % N)) % N := by
   simp +decide [ Int.add_emod, Int.mul_emod ]
 
 
+/-- [Section: ## Section 12: Leg Difference Divisibility] -/
 theorem leg_difference_identity (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     a ^ 2 - b ^ 2 = 2 * a ^ 2 - c ^ 2 := by
   grind
@@ -140,6 +155,7 @@ theorem both_legs_less (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
   constructor <;> nlinarith
 
 
+/-- [Section: ## Section 13: Berggren Tree Enumeration] -/
 theorem tree_nodes_at_depth (d : ℕ) : (3 : ℕ) ^ d ≥ 1 := by
   exact Nat.one_le_pow _ _ ( by decide )
 
@@ -149,6 +165,7 @@ theorem tree_total_nodes (d : ℕ) :
   exact Nat.mod_eq_zero_of_dvd ( by simpa using nat_sub_dvd_pow_sub_pow _ 1 _ )
 
 
+/-- [Section: ## Section 14: Composition of Pythagorean Triples] -/
 theorem gaussian_composition (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ)
     (h₁ : a₁ ^ 2 + b₁ ^ 2 = c₁ ^ 2)
     (h₂ : a₂ ^ 2 + b₂ ^ 2 = c₂ ^ 2) :

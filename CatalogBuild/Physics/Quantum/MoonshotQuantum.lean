@@ -7,6 +7,18 @@ Declarations: 61
 
 import Mathlib
 
+/-- [Section: # Part I: The No-Cloning Theorem
+## The Algebraic Heart of Quantum Impossibility
+The no-cloning theorem states that no physical process can duplicate
+an arbitrary quantum state. Its mathematical core is surprisingly simple:
+if inner products are preserved by a cloning map, then
+⟨ψ|φ⟩ = ⟨ψ|φ⟩² for all states, forcing ⟨ψ|φ⟩ ∈ {0, 1}.
+This same equation x = x² governs:
+- **No-cloning**: Can't copy unknown quantum states
+- **No-deleting**: Can't erase one of two copies
+- **No-broadcasting**: Can't share quantum information freely
+- **No time travel**: Closed timelike curves would enable cloning
+We formalize the core algebraic lemma and its consequences.] -/
 theorem no_cloning_core_real (x : ℝ) (h : x = x ^ 2) : x = 0 ∨ x = 1 := by
   grind
 
@@ -34,6 +46,19 @@ def time_reverse_matrix (M : Matrix (Fin 2) (Fin 2) ℤ) : Matrix (Fin 2) (Fin 2
   !![M 1 1, -(M 0 1); -(M 1 0), M 0 0]
 
 
+/-- [Section: # Part II: Time-Reversal Symmetry
+## Every Quantum Gate is Reversible — Time Can Always Run Backwards
+In quantum mechanics, time-reversal corresponds to taking the adjoint
+(conjugate transpose) of the evolution operator. For unitary operators,
+U†U = I, meaning every quantum process has a perfect inverse.
+Over integer matrices (our gate set), this manifests as:
+- Every gate matrix M has det(M) = ±1
+- The inverse M⁻¹ exists over ℤ (by Cramer's rule, since det = ±1)
+- Applying M then M⁻¹ returns to the original state: time reversal!
+**Moonshot Insight**: The reversibility of quantum gates is why
+quantum computers don't dissipate energy (Landauer's principle).
+Classical irreversible gates (AND, OR) erase information and must
+generate heat. Quantum gates preserve information perfectly.] -/
 theorem time_reverse_mul (M : Matrix (Fin 2) (Fin 2) ℤ) :
     M * (time_reverse_matrix M) = M.det • (1 : Matrix (Fin 2) (Fin 2) ℤ) := by
   ext i j; fin_cases i <;> fin_cases j <;> norm_num [ Matrix.mul_apply, Matrix.det_fin_two, time_reverse_matrix ] <;> ring;
@@ -98,6 +123,13 @@ theorem trace_orth_I_X : Matrix.trace (pauli_Iᵀ * sd_X) = 0 := by
   native_decide
 
 
+/-- [Section: # Part III: Superdense Coding and Information Bounds
+## Sending 2 Classical Bits with 1 Qubit
+Superdense coding exploits entanglement to double the classical capacity
+of a quantum channel. The four Pauli operations {I, X, Z, XZ} on Alice's
+qubit of a Bell pair produce four orthogonal states — encoding 2 bits.
+**Key algebraic fact**: The four Pauli matrices {I, X, Z, XZ} are mutually
+trace-orthogonal over 2×2 matrices, providing 4 = 2² distinguishable states.] -/
 theorem trace_orth_I_Z : Matrix.trace (pauli_Iᵀ * sd_Z) = 0 := by
   native_decide
 
@@ -144,6 +176,12 @@ theorem pauli_group_closure_XZ_sq : sd_XZ * sd_XZ = -(1 : Matrix (Fin 2) (Fin 2)
   native_decide
 
 
+/-- [Section: # Part IV: Bell Inequality — Quantum Beats Classical
+## The CHSH Inequality and Its Violation
+The Clauser-Horne-Shimony-Holt (CHSH) inequality bounds correlations
+in any classical (local hidden variable) theory to |S| ≤ 2.
+Quantum mechanics violates this: |S| ≤ 2√2 ≈ 2.828...
+**Formalization**: We prove the algebraic bounds that govern this.] -/
 theorem classical_CHSH_bound (a a' b b' : ℤ)
     (ha : a = 1 ∨ a = -1) (ha' : a' = 1 ∨ a' = -1)
     (hb : b = 1 ∨ b = -1) (hb' : b' = 1 ∨ b' = -1) :
@@ -204,6 +242,11 @@ theorem gate_counting_lower_bound (k d n : ℕ) (hk : 2 ≤ k) (hn : 1 ≤ n) :
     k ^ d ≥ 2 ^ d := Nat.pow_le_pow_left hk d
 
 
+/-- [Section: # Part VI: Quantum Circuit Complexity Bounds
+## How Deep Must Quantum Circuits Be?
+We formalize counting arguments that bound the depth of quantum circuits
+needed to implement various operations. These connect quantum compilation
+to problems in group theory and number theory.] -/
 theorem depth_log_bound (k d : ℕ) (hk : 2 ≤ k) (hd : 0 < d) :
     k ^ d > d := by
   exact Nat.le_induction ( by linarith ) ( fun n hn ih => by rw [ pow_succ' ] ; nlinarith ) d hd
@@ -217,6 +260,11 @@ theorem knill_lower_bound_base (n : ℕ) (hn : 1 ≤ n) : 4 ^ n ≥ 4 * n := by
   induction hn <;> norm_num [ pow_succ' ] at * ; linarith
 
 
+/-- [Section: # Part VII: Quantum Information Geometry
+## The Bloch Sphere and State Space Structure
+The state space of a qubit is the Bloch sphere S². Points on the sphere
+correspond to pure states, interior points to mixed states. The geometry
+of this space constrains quantum operations.] -/
 theorem bloch_sphere_constraint (x y z : ℝ) (h : x ^ 2 + y ^ 2 + z ^ 2 = 1) :
     x ^ 2 ≤ 1 ∧ y ^ 2 ≤ 1 ∧ z ^ 2 ≤ 1 := by
   exact ⟨ by nlinarith, by nlinarith, by nlinarith ⟩
@@ -247,6 +295,16 @@ def is_hyperbolic (M : Matrix (Fin 2) (Fin 2) ℤ) : Prop :=
   M.det = 1 ∧ |M.trace| > 2
 
 
+/-- [Section: # Part VIII: The Grand Unification — Quantum Gates Meet Number Theory
+## Connecting Everything: Gates, Trees, Codes, and Factoring
+The deepest insight of this project: the algebraic structures underlying
+quantum gates (SL(2,ℤ), Pauli group, stabilizer formalism) are the SAME
+structures that govern:
+- Pythagorean triples (Berggren tree)
+- Modular forms (theta functions)
+- Error-correcting codes (symplectic geometry)
+- Integer factoring (continued fractions)
+This is not coincidence — it's mathematics.] -/
 theorem sl2_trichotomy (M : Matrix (Fin 2) (Fin 2) ℤ) (hdet : M.det = 1) :
     is_elliptic M ∨ is_parabolic M ∨ is_hyperbolic M := by
   unfold is_elliptic is_parabolic is_hyperbolic; cases lt_trichotomy ( |M.trace| ) 2 <;> aesop;
@@ -273,6 +331,13 @@ theorem sl2_preserves_pythagorean_structure (M : Matrix (Fin 2) (Fin 2) ℤ)
   simp +decide [ Matrix.mulVec, dotProduct ]
 
 
+/-- [Section: # Part IX: Faster Than Light? The No-Signaling Theorem
+## Why Entanglement Can't Send Messages
+Entanglement creates correlations but cannot transmit information
+faster than light. The mathematical reason: the reduced density matrix
+of Bob's qubit is independent of Alice's measurement choice.
+**Formalization**: For product states, the partial trace over Alice's
+system is independent of operations on Alice's system.] -/
 theorem no_signaling_trace (A : Matrix (Fin 2) (Fin 2) ℤ)
     (h : A * Aᵀ = 1) : Matrix.trace (A * Aᵀ) = 2 := by
   aesop
@@ -294,6 +359,10 @@ theorem simon_gap (n : ℕ) (hn : 6 ≤ n) : n < 2 ^ (n / 2) := by
   grind
 
 
+/-- [Section: # Part XI: Dream Big — Open Problems and Conjectures
+## Moonshot Hypotheses for Future Work
+These are open problems at the frontier of quantum information theory.
+We state them formally and prove what we can.] -/
 theorem quantum_supremacy_base :
     ∃ (f : ℕ → ℕ), ∀ n, f n < 2 ^ n ∧ f n ≥ n := by
   exact ⟨ fun n => n, fun n => ⟨ by induction' n with n ih <;> norm_num [ pow_succ' ] at * ; linarith, le_rfl ⟩ ⟩

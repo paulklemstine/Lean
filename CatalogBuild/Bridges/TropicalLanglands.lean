@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Bridges
-Declarations: 14
+Declarations: 15
 -/
 
 import Mathlib
@@ -15,6 +15,10 @@ inductive BerggrenMove
   | M  -- Apply M₂
   | R  -- Apply M₃
   deriving DecidableEq, Repr
+
+
+/-- A path in the Berggren tree -/
+abbrev BerggrenPath := List BerggrenMove
 
 
 /-- Apply a single Berggren move to a triple -/
@@ -72,6 +76,7 @@ theorem move_M_hyp_increase (a b c : ℤ)
 /-- The root (3,4,5) children -/
 theorem root_child_L : applyMove .L (3, 4, 5) = (5, 12, 13) := by decide
 
+/-- [Section: ## Growth Bounds] -/
 theorem root_child_M : applyMove .M (3, 4, 5) = (21, 20, 29) := by decide
 
 theorem root_child_R : applyMove .R (3, 4, 5) = (15, 8, 17) := by decide
@@ -86,6 +91,7 @@ theorem root_grandchild_LM :
     applyPath [.L, .M] (3, 4, 5) = (55, 48, 73) := by decide
 
 
+/-- [Section: ## Modular Arithmetic] -/
 theorem pyth_perimeter_even (a b c : ℤ) (h : a^2 + b^2 = c^2)
     (hparity : (a % 2 = 0 ∧ b % 2 = 1) ∨ (a % 2 = 1 ∧ b % 2 = 0)) :
     2 ∣ (a + b + c) := by

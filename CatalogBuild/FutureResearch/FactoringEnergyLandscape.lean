@@ -9,6 +9,9 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # Factoring Energy Landscape and Phase Transitions (C2, C6, E9)
+The "energy landscape" for factoring: partition functions, phase transitions,
+and Morse theory connections.] -/
 def factoring_energy (N x : ℕ) : ℕ := N % x
 
 

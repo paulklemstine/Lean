@@ -7,6 +7,14 @@ Declarations: 21
 
 import Mathlib
 
+/-- [Section: # Advanced Number Theory
+Deep explorations including:
+- Quadratic reciprocity applications
+- Multiplicative functions (Euler φ, Möbius μ)
+- Chinese Remainder Theorem
+- p-adic valuations
+- Prime distribution
+- Divisibility results] -/
 theorem neg_one_qr_mod5 : ∃ a : ZMod 5, a ^ 2 = -1 := by
   native_decide +revert
 

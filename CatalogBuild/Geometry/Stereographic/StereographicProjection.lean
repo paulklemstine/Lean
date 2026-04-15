@@ -7,6 +7,7 @@ Declarations: 5
 
 import Mathlib
 
+/-- [Section: ### 2D Stereographic Projection] -/
 theorem stereo_proj_2d_unit_norm (a b : ℝ) (hc : a ^ 2 + b ^ 2 ≠ 0) :
     (2 * a * b / (a ^ 2 + b ^ 2)) ^ 2 +
     ((b ^ 2 - a ^ 2) / (a ^ 2 + b ^ 2)) ^ 2 = 1 := by
@@ -30,6 +31,7 @@ theorem inverse_stereo_second_component (x y : ℝ) (hunit : x ^ 2 + y ^ 2 = 1)
   grind +ring
 
 
+/-- [Section: ### General Stereographic Projection (using Finset sums)] -/
 theorem stereo_proj_unit_norm_general (S m_n_sq c : ℝ)
     (hc_pos : c ≠ 0) (hc_def : c = S + m_n_sq) :
     (4 * S * m_n_sq + (m_n_sq - S) ^ 2) / c ^ 2 = 1 := by

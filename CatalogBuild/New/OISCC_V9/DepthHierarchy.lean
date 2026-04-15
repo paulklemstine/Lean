@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: New/OISCC_V9
-Declarations: 17
+Declarations: 15
 -/
 
 import Mathlib
@@ -49,14 +49,6 @@ theorem iterExp_strictMono_n (x : ℝ) (hx : 0 ≤ x) :
   linarith [Real.add_one_le_exp (iterExp n x)]
 
 
-/-- eTower 0 = 1. -/
-theorem eTower_zero : eTower 0 = 1 := rfl
-
-
-/-- eTower 1 = e. -/
-theorem eTower_one : eTower 1 = Real.exp 1 := rfl
-
-
 /-- eTower n ≥ n + 1. -/
 theorem eTower_ge (n : ℕ) : eTower n ≥ ↑n + 1 := by
   have := iterExp_ge_add n 1 (by norm_num : (0 : ℝ) ≤ 1)
@@ -70,6 +62,7 @@ theorem eTower_unbounded : ∀ M : ℝ, ∃ n : ℕ, eTower n > M := by
   exact ⟨⌊M⌋₊, by linarith [Nat.lt_floor_add_one M, eTower_ge ⌊M⌋₊]⟩
 
 
+/-- [Section: ## Section 3: Growth Separation] -/
 theorem growth_sep_depth1_depth2 (C D : ℝ) :
     ∀ᶠ x in atTop, Real.exp (Real.exp x) > Real.exp (C * x + D) := by
   norm_num +zetaDelta at *;
@@ -109,6 +102,7 @@ theorem depth2_contains_new_value :
   linarith [Real.exp_one_gt_d9]
 
 
+/-- [Section: ## Section 5: Depth Hierarchy Separation — Low Depths] -/
 theorem triple_exp_exceeds_double :
     Real.exp (Real.exp (Real.exp 1)) > Real.exp (Real.exp 1) + Real.exp 1 := by
   have := Real.add_one_le_exp ( Real.exp ( Real.exp 1 ) - 1 );

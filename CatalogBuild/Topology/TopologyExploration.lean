@@ -7,12 +7,14 @@ Declarations: 8
 
 import Mathlib
 
+/-- [Section: ## §1: Metric Space Fundamentals] -/
 theorem discrete_metric_triangle (α : Type*) [DecidableEq α] (x y z : α) :
     (if x = z then (0 : ℝ) else 1) ≤
     (if x = y then 0 else 1) + (if y = z then 0 else 1) := by
   grind +ring
 
 
+/-- [Section: ## §2: Compactness] -/
 theorem closed_subset_compact' {α : Type*} [TopologicalSpace α]
     {K S : Set α} (hK : IsCompact K) (hS : IsClosed S) (hSK : S ⊆ K) :
     IsCompact S := by
@@ -24,12 +26,14 @@ theorem Icc_connected' (a b : ℝ) (h : a ≤ b) : IsConnected (Set.Icc a b) := 
   apply_rules [ isConnected_Icc ]
 
 
+/-- [Section: ## §3: Connectedness] -/
 theorem connected_image' {α β : Type*} [TopologicalSpace α] [TopologicalSpace β]
     {f : α → β} {S : Set α} (hf : Continuous f) (hS : IsConnected S) :
     IsConnected (f '' S) := by
   exact hS.image _ hf.continuousOn
 
 
+/-- [Section: ## §5: Topological Properties of Number-Theoretic Sets] -/
 theorem integers_closed' : IsClosed (Set.range (Int.cast : ℤ → ℝ)) := by
   refine' isClosed_of_closure_subset fun x hx => _;
   rw [ mem_closure_iff_seq_limit ] at hx;
@@ -59,6 +63,7 @@ theorem product_compact' {α β : Type*} [TopologicalSpace α] [TopologicalSpace
     [CompactSpace α] [CompactSpace β] : CompactSpace (α × β) := inferInstance
 
 
+/-- [Section: ## §7: Cantor's Theorem] -/
 theorem cantor_diagonal' {α : Type*} (f : α → Set α) : ¬ Function.Surjective f := by
   by_contra! h_surj;
   -- By Cantor's theorem, there exists a subset $S$ of $\alpha$ that is not in the range of $f$.

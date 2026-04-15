@@ -13,6 +13,7 @@ theorem B1_B2_distinct_hyp (a b c : ℤ) (hb : 0 < b) :
     2*a - 2*b + 3*c ≠ 2*a + 2*b + 3*c := by linarith
 
 
+/-- [Section: ## Section 1: Branch Disjointness] -/
 theorem B1_B3_distinct_hyp (a b c : ℤ) (hab : a ≠ b) :
     2*a - 2*b + 3*c ≠ -2*a + 2*b + 3*c := by
   intro h; apply hab; linarith

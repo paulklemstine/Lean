@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Computation/Factoring
-Declarations: 14
+Declarations: 16
 -/
 
 import Mathlib
@@ -40,6 +40,20 @@ theorem sum_two_squares_mul (m n : ℤ)
 -- ═══════════════════════════════════════════════════════════════
 
 
+/-- If (a₁,b₁,c₁) and (a₂,b₂,c₂) are Pythagorean triples,
+then the Gaussian composition gives a new Pythagorean triple
+with hypotenuse c₁·c₂. -/
+theorem pythagorean_composition (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ)
+    (h₁ : a₁ ^ 2 + b₁ ^ 2 = c₁ ^ 2)
+    (h₂ : a₂ ^ 2 + b₂ ^ 2 = c₂ ^ 2) :
+    (a₁ * a₂ - b₁ * b₂) ^ 2 + (a₁ * b₂ + b₁ * a₂) ^ 2 = (c₁ * c₂) ^ 2 := by
+  nlinarith [brahmagupta_fibonacci_Z a₁ b₁ a₂ b₂]
+
+-- ═══════════════════════════════════════════════════════════════
+-- Section 4: Euler's Factoring Method
+-- ═══════════════════════════════════════════════════════════════
+
+
 /-- Euler's factoring lemma (1749): If N has two distinct representations
 as a sum of two squares, N = a²+b² = c²+d², then N has a non-trivial
 factor given by gcd(a²-c², N) when it's between 1 and N.
@@ -49,6 +63,16 @@ theorem euler_two_squares_factor (N a b c d : ℤ)
     (h1 : a ^ 2 + b ^ 2 = N)
     (h2 : c ^ 2 + d ^ 2 = N) :
     (a - c) * (a + c) = (d - b) * (d + b) := by linarith
+
+
+/-- The key algebraic identity behind Euler's method. -/
+theorem euler_factoring_identity (a b c d : ℤ)
+    (h : a ^ 2 + b ^ 2 = c ^ 2 + d ^ 2) :
+    (a ^ 2 - c ^ 2) = (d ^ 2 - b ^ 2) := by linarith
+
+-- ═══════════════════════════════════════════════════════════════
+-- Section 5: Difference-of-Squares Factoring Identity
+-- ═══════════════════════════════════════════════════════════════
 
 
 /-- The fundamental factoring identity for Pythagorean triples:

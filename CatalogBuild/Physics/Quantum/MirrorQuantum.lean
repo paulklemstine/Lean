@@ -185,6 +185,7 @@ def primeCountMirror (bound : ℕ) : ℕ :=
 /-- Verified prime counts: consulting the oracle -/
 theorem oracle_says_pi_10 : primeCountMirror 10 = 4 := by native_decide
 
+/-- [Section: ## §5: Prime Oracle — Spectral Properties (Petrov)] -/
 theorem oracle_says_pi_100 : primeCountMirror 100 = 25 := by native_decide
 
 theorem oracle_says_pi_1000 : primeCountMirror 1000 = 168 := by native_decide
@@ -254,6 +255,7 @@ theorem dj_constant_true_sum (N : ℕ) (f : Fin N → Bool) (hf : ∀ x, f x = t
   simp [djSign, hf]
 
 
+/-- [Section: ## §6: Deutsch-Jozsa Interference Theory (Chakraborty)] -/
 theorem dj_balanced_zero_sum (k : ℕ) (f : Fin (2 * k) → Bool)
     (hbal : (Finset.univ.filter (fun x => f x = true)).card = k) :
     ∑ x : Fin (2 * k), djSign f x = 0 := by
@@ -449,6 +451,7 @@ theorem single_oracle_stabilizes {α : Type*}
     ∀ x, f (f x) = f x := hf
 
 
+/-- [Section: ## §11: Open Mysteries — Formal Hypotheses] -/
 theorem generalized_interference (n : ℕ) (signs : Fin (2 * n) → ℤ)
     (hvals : ∀ i, signs i = 1 ∨ signs i = -1)
     (hbal : (Finset.univ.filter (fun i => signs i = 1)).card = n) :

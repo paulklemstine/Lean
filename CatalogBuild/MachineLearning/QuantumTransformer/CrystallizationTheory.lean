@@ -73,6 +73,9 @@ theorem factorial_pos_nat (n : ℕ) : 0 < n.factorial :=
   Nat.factorial_pos n
 
 
+/-- [Section: ## §3: Compression Bounds
+The information content of a crystallized transformer is bounded by the
+number of permutations: n! per attention head.] -/
 theorem factorial_ge_pow (n : ℕ) (hn : 1 ≤ n) : 2 ^ (n - 1) ≤ n.factorial := by
   induction hn <;> simp_all +decide [ Nat.factorial_succ, pow_succ' ];
   cases ‹1 ≤ _› <;> norm_num [ pow_succ' ] at * ; nlinarith
@@ -101,10 +104,16 @@ theorem quantum_depth_advantage (n : ℕ) (hn : 2 ≤ n) : n < n * n := by
   nlinarith
 
 
+/-- [Section: ## §4: Quantum Circuit Depth Bounds
+A permutation on n elements can be decomposed into transpositions and
+compiled to a quantum circuit.] -/
 theorem exp_ge_linear (k : ℕ) (hk : 1 ≤ k) : k + 1 ≤ 2 ^ k := by
   exact Nat.recOn k ( by norm_num ) fun n ihn => by rw [ Nat.pow_succ' ] ; linarith;
 
 
+/-- [Section: ## §5: Crystallization of Sums
+When attention weights sum to 1 (stochastic), crystallization
+preserves the sum constraint.] -/
 theorem at_most_one_large {n : ℕ} (w : Fin n → ℝ)
     (hw_nn : ∀ i, 0 ≤ w i)
     (hw_sum : ∑ i, w i = 1)

@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Section 1: SPB Iteration Properties] -/
 theorem spbIter_zero : spbIter 0 = fun _ => 0 := rfl
 
 theorem spbIter_one : spbIter 1 = id := rfl
@@ -28,6 +29,7 @@ theorem spbIter_three_eq (x : ℝ) (h1 : 1 - x * x ≠ 0)
   grind
 
 
+/-- [Section: ## Section 2: The Tangent Flow ODE] -/
 theorem tan_ode (t : ℝ) (h : cos t ≠ 0) :
     HasDerivAt tan (1 + tan t ^ 2) t := by
   convert Real.hasDerivAt_tan h using 1;
@@ -52,6 +54,7 @@ theorem arctan_spbIter_two (x : ℝ) (h : 0 < 1 - x * x) :
   rw [arctan_spb x x h1]; ring
 
 
+/-- [Section: ## Section 4: The Cauchy Invariant Measure] -/
 theorem cauchy_invariance_algebraic (x a : ℝ) (h : 1 - x * a ≠ 0) :
     (1 + a ^ 2) / ((1 + spb x a ^ 2) * (1 - x * a) ^ 2) =
     1 / (1 + x ^ 2) := by

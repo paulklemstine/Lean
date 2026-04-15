@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Bridges
-Declarations: 42
+Declarations: 43
 -/
 
 import Mathlib
@@ -38,6 +38,10 @@ theorem tropical_spectral_stability (rho : ℝ) (hrho_nn : 0 ≤ rho) (hrho : rh
     (d : ℕ) : rho ^ d ≤ 1 := pow_le_one₀ hrho_nn hrho
 
 
+/-- [Section: ## Section 1: Tropical Neural Architecture Search
+The tropical rank of a weight matrix governs the number of linear regions
+a ReLU network can create. By computing tropical eigenvalues (polynomial time
+via assignment problems), we can predict network expressiveness without training.] -/
 theorem depth_advantage (w d : ℕ) (hw : 2 ≤ w) (hd : 1 ≤ d) :
     w * d + 1 ≤ w ^ (d + 1) := by
       induction hd <;> simp_all +decide [ pow_succ' ];
@@ -105,6 +109,10 @@ theorem softmax_sum_one (x y : ℝ) :
   field_simp; ring
 
 
+/-- [Section: ## Section 2: Quantum-Inspired Optimization
+The LogSumExp function provides a smooth interpolation between exact optimization
+(max = tropical) and probabilistic exploration (softmax = quantum). The temperature
+parameter controls this interpolation, with the sandwich theorem bounding the error.] -/
 theorem optimization_gap_less_than_one :
     Real.log 2 < 1 := by
       exact Real.log_two_lt_d9.trans_le <| by norm_num;
@@ -169,6 +177,10 @@ theorem tropicalPersistenceDist_eq_zero (I J : PersistenceInterval)
   simp [tropicalPersistenceDist, h, h2]
 
 
+/-- [Section: ## Section 3: Topological AI Interpretability
+Persistence diagrams capture the "shape" of what a neural network has learned.
+The tropical metric (L∞) provides stability: small changes in network weights
+produce small changes in the persistence diagram.] -/
 theorem tropicalPersistenceDist_triangle (I J K : PersistenceInterval) :
     tropicalPersistenceDist I K ≤
     tropicalPersistenceDist I J + tropicalPersistenceDist J K := by
@@ -203,6 +215,11 @@ theorem diagonal_robustness (I : PersistenceInterval) (ε : ℝ)
 /-- The Hurwitz dimensions: only 1, 2, 4, 8 admit division algebras. -/
 theorem hurwitz_dimensions_exist :
     ∀ n ∈ ([1, 2, 4, 8] : List ℕ), 0 < n := by decide
+
+
+/-- The Brahmagupta-Fibonacci identity: norm-multiplicativity for ℂ. -/
+theorem brahmagupta_fibonacci (a b c d : ℝ) :
+    (a^2 + b^2) * (c^2 + d^2) = (a*c - b*d)^2 + (a*d + b*c)^2 := by ring
 
 
 /-- E8 kissing number decomposes as 112 + 128 = 240. -/

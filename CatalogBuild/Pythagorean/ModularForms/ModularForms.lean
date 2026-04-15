@@ -79,6 +79,12 @@ def ThetaGroupParity (M : Matrix (Fin 2) (Fin 2) ℤ) : Prop :=
   M 0 0 % 2 = M 1 1 % 2 ∧ M 0 1 % 2 = M 1 0 % 2 ∧ (M 0 0 + M 0 1) % 2 = 1
 
 
+/-- [Section: ## §4. Theta Group Parity Conditions
+The theta group Γ_θ consists of SL(2,ℤ) matrices satisfying specific parity conditions.
+A matrix [[a,b],[c,d]] ∈ SL(2,ℤ) is in Γ_θ iff:
+(a ≡ d ≡ 1 mod 2 AND b ≡ c ≡ 0 mod 2)  OR
+(a ≡ d ≡ 0 mod 2 AND b ≡ c ≡ 1 mod 2)
+Equivalently: a + b is odd, i.e., (a + b) % 2 = 1.] -/
 instance (M : Matrix (Fin 2) (Fin 2) ℤ) : Decidable (ThetaGroupParity M) :=
   inferInstanceAs (Decidable (M 0 0 % 2 = M 1 1 % 2 ∧ M 0 1 % 2 = M 1 0 % 2 ∧ (M 0 0 + M 0 1) % 2 = 1))
 
@@ -91,6 +97,7 @@ theorem T_sq_theta_parity : ThetaGroupParity T_sq := by native_decide
 theorem S_gen_theta_parity : ThetaGroupParity S_gen := by native_decide
 
 
+/-- [Section: ## §5. Theta Group Closure Properties] -/
 theorem theta_parity_mul_closure (A B : Matrix (Fin 2) (Fin 2) ℤ)
     (hA : ThetaGroupParity A) (hB : ThetaGroupParity B)
     (hdetA : Matrix.det A = 1) (hdetB : Matrix.det B = 1) :
@@ -128,6 +135,7 @@ theorem cusp_zero_stabilizer :
 /-- The three coset representatives for SL(2,ℤ)/Γ_θ are I, T, T⁻¹ -/
 def coset_rep_I : Matrix (Fin 2) (Fin 2) ℤ := 1
 
+/-- [Section: ## §8. Modular Fundamental Domain] -/
 def coset_rep_T : Matrix (Fin 2) (Fin 2) ℤ := T_mat
 
 def coset_rep_Tinv : Matrix (Fin 2) (Fin 2) ℤ := !![1, -1; 0, 1]
@@ -152,6 +160,7 @@ theorem euclid_param_is_pyth (m n : ℤ) :
   simp [euclid_param]; ring
 
 
+/-- [Section: ## §10. Sum of Two Squares and Theta Functions] -/
 theorem r₂_zero : r₂ 0 = 1 := by
   unfold r₂; norm_num;
   exact ⟨ 0, 0, Set.eq_singleton_iff_unique_mem.mpr ⟨ by norm_num, fun p hp => Prod.mk_inj.mpr ⟨ by nlinarith [ hp.symm ], by nlinarith [ hp.symm ] ⟩ ⟩ ⟩
@@ -284,6 +293,7 @@ theorem BM₃_mod2 : ∀ i j : Fin 2, BM₃ i j % 2 = (1 : Matrix (Fin 2) (Fin 2
 theorem genus_X_theta_is_zero : (0 : ℤ) = 0 := rfl
 
 
+/-- [Section: ## §24. Berggren Words and Geodesics] -/
 theorem BM₃_pow_is_T_pow (k : ℕ) :
     BM₃ ^ k = !![1, (2 * (k : ℤ)); 0, 1] := by
       induction k <;> simp_all +decide [ pow_succ, Matrix.mul_fin_two ];
@@ -340,6 +350,7 @@ theorem det_BB₂ : Matrix.det BB₂ = -1 := by native_decide
 theorem det_BB₃ : Matrix.det BB₃ = 1 := by native_decide
 
 
+/-- [Section: ## §26. Sum of Two Squares for Primes] -/
 theorem r₂_prime_1mod4 (p : ℕ) (hp : Nat.Prime p) (hmod : p % 4 = 1) :
     ∃ a b : ℤ, a ^ 2 + b ^ 2 = (p : ℤ) := by
       have := Fact.mk hp; ( have := @Nat.Prime.sq_add_sq p; aesop )

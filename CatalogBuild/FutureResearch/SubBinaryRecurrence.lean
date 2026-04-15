@@ -7,6 +7,8 @@ Declarations: 6
 
 import Mathlib
 
+/-- [Section: # General Sub-Binary Recurrence Theorem
+Recurrences with dominant root λ < 2 have values eventually less than 2^n.] -/
 theorem fib_sub_binary (n : ℕ) (hn : 2 ≤ n) : fib (n + 2) < 2 ^ n := by
   rcases n with (_ | _ | n) <;> simp_all +arith +decide [Nat.pow_succ']
   induction' n with n ih <;> norm_num [Nat.pow_succ', fib_add_two] at *

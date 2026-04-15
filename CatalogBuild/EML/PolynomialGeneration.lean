@@ -85,6 +85,7 @@ def iterExp : ℕ → ℝ → ℝ
   | n + 1 => Real.exp ∘ iterExp n
 
 
+/-- [Section: ## Section 4: EML Composition Properties] -/
 def iterEml : ℕ → ℝ → ℝ
   | 0 => id
   | n + 1 => fun x => emlP (iterEml n x) 1

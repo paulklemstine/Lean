@@ -46,6 +46,7 @@ optimal fraction f* = (bp - (1-p)) / b -/
 noncomputable def kellyFraction (p b : ℝ) : ℝ := (b * p - (1 - p)) / b
 
 
+/-- [Section: ## Oracle of Risk (Athena): Risk Management] -/
 theorem kelly_positive_iff (p b : ℝ) (hp0 : 0 < p) (hp1 : p < 1) (hb : 0 < b) :
     0 < kellyFraction p b ↔ 1 < b * p + p := by
   unfold kellyFraction;
@@ -93,6 +94,7 @@ noncomputable def baseFeeUpdate (currentBaseFee : ℝ) (utilization : ℝ) : ℝ
   currentBaseFee * (1 + (utilization - 0.5) / 4)
 
 
+/-- [Section: ## Oracle of Time (Chronos): Timing Strategies] -/
 theorem base_fee_bounded (bf : ℝ) (u : ℝ) (hbf : 0 < bf) (hu0 : 0 ≤ u) (hu1 : u ≤ 1) :
     bf * (1 - 1/8) ≤ baseFeeUpdate bf u ∧ baseFeeUpdate bf u ≤ bf * (1 + 1/8) := by
   exact ⟨ by unfold baseFeeUpdate; nlinarith, by unfold baseFeeUpdate; nlinarith ⟩

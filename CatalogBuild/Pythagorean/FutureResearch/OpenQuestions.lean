@@ -56,6 +56,7 @@ theorem cross_collision_gcd_divides (x₁ x₂ N : ℤ) :
     ↑(Int.gcd (x₁ - x₂) N) ∣ N := Int.gcd_dvd_right _ _
 
 
+/-- [Section: ## §3. Cross-Collision Factoring] -/
 theorem cross_channels_formula (k : ℕ) (hk : 2 ≤ k) :
     Nat.choose k 2 = k * (k - 1) / 2 := by
       exact?
@@ -89,6 +90,7 @@ theorem channel_efficiency (k : ℕ) (hk : 0 < k) :
     nlinarith [ht]
 
 
+/-- [Section: ## §5. Optimal Dimension Analysis] -/
 theorem marginal_channel_gain (k : ℕ) (hk : 1 ≤ k) :
     (k + 1) + Nat.choose (k + 1) 2 - (k + Nat.choose k 2) = k + 1 := by
       exact Nat.sub_eq_of_eq_add <| by induction hk <;> norm_num [ Nat.choose ] at * ; linarith

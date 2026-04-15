@@ -38,6 +38,7 @@ theorem grav_truth_set_eq_range {X : Type*} (O : X → X) (hO : IsGravOracle O) 
   · rintro ⟨x, hx⟩; show O y = y; rw [← hx, hO x]
 
 
+/-- [Section: ## Part I: The Geodesic Oracle] -/
 theorem grav_oracle_iterate_eq {X : Type*} (O : X → X) (hO : IsGravOracle O)
     (n : ℕ) (hn : 1 ≤ n) (x : X) : O^[n] x = O x := by
   induction hn <;> simp +decide [ *, Function.iterate_succ_apply' ];
@@ -89,6 +90,7 @@ theorem grav_bekenstein_entropy_monotone (A₁ A₂ : ℝ) (h : A₁ ≤ A₂) :
     A₁ / 4 ≤ A₂ / 4 := by linarith
 
 
+/-- [Section: ## Part II: Gravitational Compression] -/
 theorem grav_area_beats_volume (L : ℝ) (hL : 6 < L) :
     6 * L ^ 2 < L ^ 3 := by
       nlinarith [ sq_nonneg ( L - 6 ) ]
@@ -263,6 +265,7 @@ theorem grav_hawking_temp_pos (M : ℝ) (hM : 0 < M) :
     0 < gravHawkingTemp M := by unfold gravHawkingTemp; positivity
 
 
+/-- [Section: ## Part VI: Grand Unification] -/
 theorem grav_smaller_bh_hotter (M₁ M₂ : ℝ) (h1 : 0 < M₁) (_h2 : 0 < M₂) (hM : M₁ < M₂) :
     gravHawkingTemp M₂ < gravHawkingTemp M₁ := by
   unfold gravHawkingTemp; gcongr;

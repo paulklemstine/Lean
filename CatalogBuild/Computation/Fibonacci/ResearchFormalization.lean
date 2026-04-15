@@ -7,6 +7,7 @@ Declarations: 13
 
 import Mathlib
 
+/-- [Section: ## Q1: Search Space Reduction] -/
 theorem search_space_ratio (k : ℕ) (hk : 2 ≤ k) :
     Nat.fib (k + 2) < 2 ^ k := by
   induction hk <;> simp_all +arith +decide [ Nat.fib_add_two, pow_succ' ];
@@ -39,6 +40,7 @@ theorem fib_coprime_adjacent (n : ℕ) :
   Nat.fib_coprime_fib_succ n
 
 
+/-- [Section: ## Q3: Golden Ratio Optimality] -/
 theorem fib_subexponential_growth (n : ℕ) (hn : 1 ≤ n) :
     Nat.fib (n + 1) ≤ 2 * Nat.fib n := by
   rcases n with ( _ | _ | _ | _ | n ) <;> simp_all +arith +decide [ fib_add_two ]
@@ -56,6 +58,7 @@ def ValidZeckendorfBits (bits : ℕ → Bool) (len : ℕ) : Prop :=
   ∀ i, i + 1 < len → ¬(bits i = true ∧ bits (i + 1) = true)
 
 
+/-- [Section: ## Q5: Non-Adjacency Propagation] -/
 theorem nonadjacency_forward
     (bits : ℕ → Bool) (len : ℕ) (hvalid : ValidZeckendorfBits bits len)
     (i : ℕ) (hi : i + 1 < len) (hset : bits i = true) :

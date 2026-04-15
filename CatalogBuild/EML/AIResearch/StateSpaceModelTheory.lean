@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## §1. State Space Fundamentals] -/
 def ssmTransition (a delta : ℝ) : ℝ := Real.exp (delta * a)
 
 
@@ -26,6 +27,7 @@ theorem more_negative_faster_decay (a1 a2 delta : ℝ) (hd : 0 < delta) (ha : a1
   unfold ssmTransition; exact Real.exp_le_exp.mpr (by nlinarith)
 
 
+/-- [Section: ## §2. SSM Parameterization Efficiency] -/
 def stdSSMParams (stateDim inputDim : ℕ) : ℕ :=
   stateDim * stateDim + 2 * stateDim * inputDim + inputDim
 
@@ -39,6 +41,7 @@ theorem eml_ssm_efficiency (s i : ℕ) (hs : 9 ≤ s) :
   unfold emlSSMParams stdSSMParams; nlinarith
 
 
+/-- [Section: ## §3. Selective Scan (Mamba)] -/
 def mambaSelectParams (d_model d_inner : ℕ) : ℕ := d_model * d_inner
 
 def emlMambaParams (d_model : ℕ) : ℕ := 4 * d_model
@@ -51,6 +54,7 @@ theorem eml_mamba_efficiency (dm di : ℕ) (hdi : 4 ≤ di) :
     _ ≤ dm * di := Nat.mul_le_mul_left dm hdi
 
 
+/-- [Section: ## §4. Convolutional View] -/
 def stdKernelCost (stateDim seqLen : ℕ) : ℕ := stateDim * seqLen
 
 def emlKernelCost (seqLen : ℕ) : ℕ := 4 * seqLen
@@ -61,6 +65,7 @@ theorem eml_kernel_efficiency (n l : ℕ) (hn : 4 ≤ n) :
   unfold emlKernelCost stdKernelCost; exact Nat.mul_le_mul_right l hn
 
 
+/-- [Section: ## §5. Parallel Scan] -/
 def parallelScanWork (seqLen : ℕ) : ℕ := seqLen * Nat.log 2 seqLen
 
 def emlParallelScanWork (seqLen opCostRatio : ℕ) : ℕ :=
@@ -72,6 +77,7 @@ theorem eml_parallel_scan_cheaper (l r : ℕ) :
   unfold emlParallelScanWork parallelScanWork; exact Nat.div_le_self _ _
 
 
+/-- [Section: ## §6. Long-Range Dependency] -/
 def memoryRetention (decay : ℝ) (k : ℕ) : ℝ := decay ^ k
 
 
@@ -86,6 +92,7 @@ theorem higher_decay_more_memory (d1 d2 : ℝ) (k : ℕ) (hd1 : 0 ≤ d1)
   unfold memoryRetention; gcongr
 
 
+/-- [Section: ## §7. HiPPO Initialization] -/
 def denseInitCost (stateDim : ℕ) : ℕ := stateDim * stateDim
 
 def emlInitCost (stateDim rank : ℕ) : ℕ := stateDim + 2 * stateDim * rank
@@ -96,6 +103,7 @@ theorem eml_init_cheaper (n r : ℕ) (hr : 2 * r + 1 ≤ n) :
   unfold emlInitCost denseInitCost; nlinarith
 
 
+/-- [Section: ## §8. Hybrid SSM-Attention] -/
 def hybridStdParams (ssmLayers attnLayers d_model : ℕ) : ℕ :=
   ssmLayers * d_model * d_model + attnLayers * d_model * d_model
 
@@ -114,6 +122,7 @@ theorem eml_hybrid_efficiency (sL aL d : ℕ) (hd : 8 ≤ d) :
   omega
 
 
+/-- [Section: ## §9. Discretization Error] -/
 def discretizationError (stepSize : ℝ) : ℝ := stepSize ^ 2
 
 

@@ -70,6 +70,7 @@ theorem qubit1_opposite : probZero qubit1 = 0 := by
 def hadamardCoeff : ℝ := 1 / Real.sqrt 2
 
 
+/-- [Section: ## Part 3: The Hadamard Gate] -/
 theorem hadamard_creates_equal_superposition :
     hadamardCoeff ^ 2 + hadamardCoeff ^ 2 = 1 := by
   norm_num [ hadamardCoeff ]
@@ -87,6 +88,7 @@ theorem tropical_inner_comm (x₁ x₂ y₁ y₂ : ℝ) :
   rw [add_comm x₁ y₁, add_comm x₂ y₂, max_comm]
 
 
+/-- [Section: ## Part 4: Tropical Computation Model] -/
 theorem tropical_cauchy_schwarz (x₁ x₂ y₁ y₂ : ℝ) :
     tropicalInnerProduct2 x₁ x₂ y₁ y₂ ≤
     max (2 * x₁) (2 * x₂) / 2 + max (2 * y₁) (2 * y₂) / 2 := by

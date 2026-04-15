@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Part 1: Non-Injectivity of Hash Functions (Pigeonhole)] -/
 theorem hash_not_injective {α β : Type*} [Fintype α] [Fintype β]
     (h_card : Fintype.card β < Fintype.card α) (f : α → β) :
     ¬ Injective f := by
@@ -33,6 +34,7 @@ def tropicalMatMul (n : ℕ) (A B : Fin n → Fin n → WithTop ℤ) :
   fun i j => Finset.inf (Finset.univ) (fun k => A i k + B k j)
 
 
+/-- [Section: ## Part 2: Tropical Matrix Algebra for Boolean Circuits] -/
 lemma finset_inf_add_right (s : Finset ι) (f : ι → WithTop ℤ) (c : WithTop ℤ)
     (hs : s.Nonempty) :
     s.inf (fun k => f k + c) = s.inf f + c := by
@@ -109,6 +111,7 @@ theorem tropicalMatMul_identity_left (n : ℕ) (hn : 0 < n)
     · aesop
 
 
+/-- [Section: ## Part 3: XOR as an Invertible Tropical Operation] -/
 theorem xor_self_inverse (x k : Bool) : xor (xor x k) k = x := by
   cases x <;> cases k <;> rfl
 
@@ -125,6 +128,7 @@ theorem bitvec_xor_self_inverse (n : ℕ) (x k : Fin (2^n)) :
   exact h_xor_self _ _
 
 
+/-- [Section: ## Part 4: Modular Addition is NOT Invertible (Without the Other Operand)] -/
 theorem mod_add_surjective (m : ℕ) (hm : 0 < m) (b : Fin m) :
     Surjective (fun x : Fin m => x + b) := by
   intro y; use y - b; simp +decide [ Fin.add_def ] ;
@@ -139,6 +143,7 @@ theorem mod_add_not_injective (m : ℕ) (hm : 2 ≤ m) :
   norm_num [ Fin.val_add ]
 
 
+/-- [Section: ## Part 5: Composition of Lossy Functions Cannot Be Inverted] -/
 theorem composition_not_injective_of_component {α β γ : Type*}
     (f : α → β) (g : β → γ) (hf : ¬ Injective f) :
     ¬ Injective (g ∘ f) := by
@@ -164,6 +169,7 @@ theorem lossy_composition_not_invertible {α β γ : Type*}
   composition_not_injective_of_component f g hf
 
 
+/-- [Section: ## Part 6: Quantum Circuit Reversibility Requires Ancilla Bits] -/
 theorem reversible_iff_bijective {α : Type*} [Fintype α] (f : α → α) :
     (∃ g : α → α, g ∘ f = id ∧ f ∘ g = id) ↔ Bijective f := by
   constructor <;> intro h;
@@ -194,6 +200,7 @@ theorem quantum_sha256_inverse_needs_garbage
   exact fun inv h => h_not_inj <| fun x y hxy => by have := h x; have := h y; aesop;
 
 
+/-- [Section: ## Part 7: Tropical Rank of Lossy Boolean Matrices] -/
 theorem tropical_rank_le_dim (n : ℕ) (A : Fin n → Fin n → WithTop ℤ) :
     ∃ r : ℕ, r ≤ n := by
   use n
@@ -218,18 +225,21 @@ theorem tropicalPerm_inverse (n : ℕ) (hn : 0 < n) (σ : Equiv.Perm (Fin n)) :
   · grind
 
 
+/-- [Section: ## Part 8: The Fundamental Impossibility Theorem] -/
 theorem no_matrix_inverts_noninj_function {α β : Type*}
     (f : α → β) (hf : ¬ Injective f) :
     ¬ ∃ g : β → α, ∀ x, g (f x) = x := by
   exact fun ⟨ g, hg ⟩ => hf fun x y hxy => by have := hg x; have := hg y; aesop;
 
 
+/-- [Section: ## Part 9: What IS Possible — Partial Inverses and Preimage Search] -/
 theorem surjective_has_right_inverse {α β : Type*}
     (f : α → β) (hf : Surjective f) :
     ∃ g : β → α, ∀ y, f (g y) = y := by
   exact ⟨ fun y => Classical.choose ( hf y ), fun y => Classical.choose_spec ( hf y ) ⟩
 
 
+/-- [Section: ## Part 10: Tropical Encoding of Boolean Operations] -/
 theorem bool_or_as_tropical_min :
     ∀ a b : Bool,
       (if a || b then (0 : WithTop ℤ) else ⊤) =

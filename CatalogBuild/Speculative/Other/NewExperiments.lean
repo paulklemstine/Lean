@@ -47,6 +47,7 @@ def mod2Oracle4 : Fin 4 → Fin 4 := fun x => ⟨x.val % 2, by omega⟩
 
 
 
+/-- [Section: ## Section 16: Oracle Entropy Experiments] -/
 theorem zeroOracle_is_oracle (n : ℕ) :
     ∀ x : Fin (n + 1), zeroOracle n (zeroOracle n x) = zeroOracle n x := by
   aesop
@@ -93,6 +94,10 @@ theorem fib_squares_up_to_25 :
   native_decide
 
 
+/-- [Section: ## Section 18: Categorical Oracle Theory (Hypothesis H18)
+An oracle O : α → α is an idempotent endomorphism. In category theory,
+every idempotent splits: O = i ∘ r where r ∘ i = id on the image.
+We formalize this factorization.] -/
 theorem oracle_retract_section {α : Type*} (O : α → α) (hO : ∀ x, O (O x) = O x)
     (y : α) (hy : ∃ x, O x = y) : O y = y := by
   grind +ring
@@ -110,6 +115,10 @@ def subsetOracle {n : ℕ} (S : Finset (Fin n)) (c : Fin n) (hc : c ∈ S) : Fin
 
 
 
+/-- [Section: ## Section 19: New Hypothesis Validation
+H19: "Oracle Power Law" — The number of oracles on Fin n grows
+at least exponentially with n, because every subset can be the
+truth set of some oracle (constant on the complement).] -/
 theorem subsetOracle_is_oracle {n : ℕ} (S : Finset (Fin n)) (c : Fin n) (hc : c ∈ S) :
     ∀ x, subsetOracle S c hc (subsetOracle S c hc x) = subsetOracle S c hc x := by
   unfold subsetOracle; aesop;
@@ -124,6 +133,11 @@ theorem subsetOracle_truth {n : ℕ} (S : Finset (Fin n)) (c : Fin n) (hc : c �
   by_cases hx : x ∈ S <;> aesop
 
 
+/-- [Section: ## Section 20: The Division Algebra Dimension Theorem
+We verify the key numerical fact: the dimensions 1, 2, 4, 8 and only
+these satisfy the Hurwitz condition for sum-of-squares identities.
+For small n, we can verify that n ∈ {1, 2, 4, 8} implies n is a power of 2
+whose corresponding Cayley-Dickson algebra is a division algebra.] -/
 theorem hurwitz_dims_are_powers_of_two :
     ∀ n ∈ ({1, 2, 4, 8} : Finset ℕ), ∃ k, n = 2^k := by
   norm_num +zetaDelta at *;

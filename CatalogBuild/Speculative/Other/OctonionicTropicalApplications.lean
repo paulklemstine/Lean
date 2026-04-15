@@ -8,6 +8,7 @@ import Mathlib
 
 noncomputable section
 
+/-- APPLICATION 1: TROPICAL OCTONIONIC ERROR CORRECTION Abstract associator for a binary operation -/
 def associator {α : Type*} [AddGroup α] (mul : α → α → α) (a b c : α) : α :=
   mul (mul a b) c - mul a (mul b c)
 
@@ -34,6 +35,7 @@ theorem error_detection_principle {α : Type*} [AddGroup α]
   simp [associator, heq]
 
 
+/-- APPLICATION 2: OCTONIONIC HOPF FIBRATION FOR DATA MANIFOLDS The unit sphere in ℝⁿ -/
 def unitSphere (n : ℕ) : Set (Fin n → ℝ) :=
   {v | ∑ i, (v i) ^ 2 = 1}
 
@@ -86,6 +88,7 @@ theorem triality_triple_gap (g₁ g₂ g₃ : ℝ) (h₁ : g₁ = 1) (h₂ : g�
     g₁ + g₂ + g₃ = 3 := by linarith
 
 
+/-- APPLICATION 5: TROPICAL MOUFANG LOOP CRYPTOGRAPHY Tropical Moufang identity (trivially holds since max is associative + commutative) -/
 theorem tropical_moufang (a b c : ℝ) :
     max (max a b) (max c a) = max a (max (max b c) a) := by
   simp [max_comm, max_left_comm]
@@ -101,6 +104,7 @@ theorem max_preimage_nonunique (c : ℝ) :
 
 -- Catalan number C₃ = 5 (number of bracketings of 4 elements)
 
+/-- SYNTHESIS: THE OCTONIONIC-TROPICAL BRIDGE Summary theorem linking all five applications -/
 theorem five_applications_summary :
     -- 1. Error correction: associator detects errors in non-associative algebras
     (∀ a b c : ℝ, max (max a b) c = max a (max b c)) ∧

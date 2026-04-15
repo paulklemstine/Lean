@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Computation/Factoring
-Declarations: 22
+Declarations: 23
 -/
 
 import CatalogBuild.Computation.Factoring.Core
@@ -80,6 +80,7 @@ theorem pisano_period_composes (m : ℕ) (hm : 2 ≤ m)
     exact ih
 
 
+/-- [Section: ## Thrust II: Fibonacci-Spectral Duality] -/
 theorem fib_determined_by_consecutive_pair (m : ℕ) (hm : 2 ≤ m)
     (a b : ℕ)
     (h₀ : Nat.fib a % m = Nat.fib b % m)
@@ -141,6 +142,12 @@ theorem order_finding_factor_candidate (N a r : ℕ) (hN : 1 < N) :
   Nat.one_le_iff_ne_zero.mpr (by intro h; simp [Nat.gcd_eq_zero_iff] at h; omega)
 
 
+/-- Grover's bound: (⌊√N⌋ + 1)² > N. -/
+theorem grover_query_bound (N : ℕ) :
+    N < (Nat.sqrt N + 1) ^ 2 :=
+  Nat.lt_succ_sqrt' N
+
+
 /-- Classical-quantum hybrid: classical lenses reduce the quantum search space. -/
 theorem hybrid_speedup (S k : ℕ) :
     Nat.sqrt (S / 2 ^ k) ≤ Nat.sqrt S :=
@@ -153,6 +160,7 @@ theorem dlp_order_connection {G : Type*} [Group G] [Fintype G] (g : G) :
   pow_card_eq_one
 
 
+/-- [Section: ## Thrust V: Adjacent Problems] -/
 theorem pohlig_hellman_structure (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q) (hpq : p ≠ q) :
     Nat.totient (p * q) = (p - 1) * (q - 1) := by
   rw [ Nat.totient_mul, Nat.totient_prime hp, Nat.totient_prime hq ];
@@ -177,6 +185,7 @@ theorem zsqrtd_norm_mult (d : ℤ) (a b : ℤ√d) :
   Zsqrtd.norm_mul a b
 
 
+/-- [Section: ## Cross-Cutting: New Bridge Theorems] -/
 theorem norm_congruence_bridge (p : ℕ) (hp : Nat.Prime p) (hmod : p % 4 = 3)
     (a b : ℤ) (hdvd : (p : ℤ) ∣ a ^ 2 + b ^ 2) :
     (p : ℤ) ∣ a ∧ (p : ℤ) ∣ b := by

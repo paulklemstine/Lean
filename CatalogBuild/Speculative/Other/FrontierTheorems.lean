@@ -28,6 +28,9 @@ theorem fibonacci_pythagorean_general (a b c d : ℤ)
   subst h1; subst h2; ring
 
 
+/-- [Section: ## 2. PPT Area Divisibility by 6
+The area of any Pythagorean triple triangle is (1/2)ab.
+For any PPT, 6 | ab (equivalently, 3 | ab and 2 | ab).] -/
 theorem pyth_3_dvd_ab (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (3 : ℤ) ∣ a * b := by
       rw [ Int.dvd_iff_emod_eq_zero ] ; have := congr_arg ( · % 3 ) h ; norm_num [ sq, Int.add_emod, Int.mul_emod ] at this ⊢; have := Int.emod_nonneg a three_ne_zero; have := Int.emod_nonneg b three_ne_zero; have := Int.emod_nonneg c three_ne_zero; have := Int.emod_lt_of_pos a three_pos; have := Int.emod_lt_of_pos b three_pos; have := Int.emod_lt_of_pos c three_pos; interval_cases a % 3 <;> interval_cases b % 3 <;> interval_cases c % 3 <;> trivial;
@@ -44,6 +47,8 @@ theorem pyth_6_dvd_ab (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
       exact dvd_trans ( by norm_num ) ( Int.coe_lcm_dvd ( pyth_2_dvd_ab a b c h ) ( pyth_3_dvd_ab a b c h ) )
 
 
+/-- [Section: ## 3. Berggren Trace Arithmetic
+The traces of Berggren matrices satisfy remarkable arithmetic properties.] -/
 theorem berggren_trace_sum :
     Matrix.trace !![(1:ℤ), -2, 2; 2, -1, 2; 2, -2, 3] +
     Matrix.trace !![(1:ℤ), 2, 2; 2, 1, 2; 2, 2, 3] +
@@ -58,6 +63,10 @@ theorem berggren_det_product :
       native_decide +revert
 
 
+/-- [Section: ## 4. Lorentz Form Invariance
+The Berggren matrices preserve a²+b²-c² = 0, acting as elements
+of the integer Lorentz group O(2,1,ℤ). Key: B preserves the
+quadratic form Q(v) = v₁² + v₂² - v₃².] -/
 theorem B1_preserves_pyth_def (v : Fin 3 → ℤ) (h : v 0 ^ 2 + v 1 ^ 2 = v 2 ^ 2) :
     let w := !![(1:ℤ), -2, 2; 2, -1, 2; 2, -2, 3] *ᵥ v
     w 0 ^ 2 + w 1 ^ 2 = w 2 ^ 2 := by
@@ -68,6 +77,9 @@ theorem B1_preserves_pyth_def (v : Fin 3 → ℤ) (h : v 0 ^ 2 + v 1 ^ 2 = v 2 ^
 /-- All primes up to 40 that are ≡ 1 (mod 4) can be written as sum of two squares. -/
 theorem sum_two_sq_5 : ∃ a b : ℕ, a ^ 2 + b ^ 2 = 5 := ⟨1, 2, by norm_num⟩
 
+/-- [Section: ## 5. Pythagorean Primes mod 12
+Every prime that is a hypotenuse of a PPT is ≡ 1 (mod 4).
+We verify specific small cases.] -/
 theorem sum_two_sq_13 : ∃ a b : ℕ, a ^ 2 + b ^ 2 = 13 := ⟨2, 3, by norm_num⟩
 
 theorem sum_two_sq_17 : ∃ a b : ℕ, a ^ 2 + b ^ 2 = 17 := ⟨1, 4, by norm_num⟩
@@ -77,6 +89,9 @@ theorem sum_two_sq_29 : ∃ a b : ℕ, a ^ 2 + b ^ 2 = 29 := ⟨2, 5, by norm_nu
 theorem sum_two_sq_37 : ∃ a b : ℕ, a ^ 2 + b ^ 2 = 37 := ⟨1, 6, by norm_num⟩
 
 
+/-- [Section: ## 6. Descent Energy Bound
+In inside-out factoring, the "energy" at step k is E(k) = (N - 2k)².
+This decreases monotonically, providing a termination guarantee.] -/
 theorem iof_energy_decreasing (N : ℤ) (k : ℤ) (hk : 0 ≤ k) (hN : 2 * k + 1 < N) :
     (N - 2 * (k + 1)) ^ 2 < (N - 2 * k) ^ 2 := by
       nlinarith
@@ -119,6 +134,9 @@ theorem congruent_210_factored : 210 = 2 * 3 * 5 * 7 := by norm_num
 def leg_swap : Matrix (Fin 3) (Fin 3) ℤ := !![0, 1, 0; 1, 0, 0; 0, 0, 1]
 
 
+/-- [Section: ## 9. Berggren Fixed Points and Involutions
+The product B₁·B₃ has interesting fixed-point properties.
+The Berggren tree also has an involution swapping legs: (a,b,c) ↦ (b,a,c).] -/
 theorem leg_swap_involution : leg_swap * leg_swap = (1 : Matrix (Fin 3) (Fin 3) ℤ) := by
   native_decide +revert
 
@@ -130,6 +148,10 @@ theorem leg_swap_det : Matrix.det leg_swap = -1 := by
 /-- Every prime p ≡ 1 (mod 4) with p ≤ 37 is a sum of two squares. -/
 theorem sum_two_sq_5' : 1 ^ 2 + 2 ^ 2 = (5 : ℕ) := by norm_num
 
+/-- [Section: ## 10. Quadratic Form Representation Counting
+The number of ways to write n as a sum of two squares is related to
+the divisors of n. For primes p ≡ 1 (mod 4), there are exactly 8
+representations (counting signs and order).] -/
 theorem sum_two_sq_13' : 2 ^ 2 + 3 ^ 2 = (13 : ℕ) := by norm_num
 
 theorem sum_two_sq_17' : 1 ^ 2 + 4 ^ 2 = (17 : ℕ) := by norm_num
@@ -139,6 +161,7 @@ theorem sum_two_sq_29' : 2 ^ 2 + 5 ^ 2 = (29 : ℕ) := by norm_num
 theorem sum_two_sq_37' : 1 ^ 2 + 6 ^ 2 = (37 : ℕ) := by norm_num
 
 
+/-- [Section: ## Bonus: Deep Connection Theorems] -/
 theorem M1_cayley_hamilton :
     let M : Matrix (Fin 2) (Fin 2) ℤ := !![2, -1; 1, 0]
     M * M - 2 • M + (1 : Matrix (Fin 2) (Fin 2) ℤ) = 0 := by

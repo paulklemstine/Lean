@@ -65,6 +65,7 @@ theorem emlChainLeaves_linear (d₁ d₂ : ℕ) (h : d₁ ≤ d₂) :
 theorem depth5_chain_leaves : emlChainLeaves 5 = 11 := by rfl
 
 
+/-- [Section: ## Lipschitz Bounds for EML Trees] -/
 theorem eml_neuron_lipschitz_bound (w₁ b₁ : ℝ) (M : ℝ) (hM : 0 < M) :
     ∀ x ∈ Icc (-M) M,
     |w₁| * Real.exp (|w₁| * M + |b₁|) ≥
@@ -78,6 +79,7 @@ theorem eml_complexity_subadditive (m n : ℕ) (hm : 1 ≤ m) (hn : 1 ≤ n) :
     m + n - 1 ≤ m + n := by omega
 
 
+/-- [Section: ## EML Complexity Subadditivity] -/
 theorem eml_complexity_strictly_subadditive (m n : ℕ) (hm : 2 ≤ m) (hn : 2 ≤ n) :
     m + n - 1 < m * n := by
   rw [ tsub_lt_iff_left ] <;> nlinarith
@@ -96,6 +98,7 @@ chains handle with constant width. -/
 def reluWidthForTower (d : ℕ) : ℕ := 2^d
 
 
+/-- [Section: ## EML vs ReLU Depth Efficiency] -/
 theorem width_ratio_exponential (d : ℕ) (hd : 3 ≤ d) :
     emlChainLeaves d < reluWidthForTower d := by
   exact Nat.le_induction ( by decide ) ( fun k hk ih ↦ by { unfold emlChainLeaves reluWidthForTower at *; rw [ pow_succ' ] ; linarith } ) d hd

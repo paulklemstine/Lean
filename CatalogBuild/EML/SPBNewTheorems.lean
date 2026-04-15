@@ -13,6 +13,7 @@ noncomputable section
 def normSPB (x : ℝ) : ℝ := 1 + x ^ 2
 
 
+/-- [Section: ## 1. Cross-Ratio Invariance] -/
 theorem spb_preserves_cross_ratio (a b c d t : ℝ)
     (h1 : 1 - a * t ≠ 0) (h2 : 1 - b * t ≠ 0)
     (h3 : 1 - c * t ≠ 0) (h4 : 1 - d * t ≠ 0)
@@ -35,11 +36,13 @@ theorem spbMat_det (a : ℝ) : (spbMat a).det = 1 + a ^ 2 := by
   simp [spbMat, Matrix.det_fin_two]; ring
 
 
+/-- [Section: ## 2. Elliptic Classification] -/
 theorem spb_elliptic_classification (a : ℝ) (ha : a ≠ 0) :
     (spbMat a).trace ^ 2 < 4 * (spbMat a).det := by
   norm_num [ spbMat, Matrix.det_fin_two ] ; nlinarith [ mul_self_pos.2 ha ]
 
 
+/-- [Section: ## 3. Projective SPB] -/
 theorem projSPB_eq_affine (x y : ℝ) (hd : 1 - x * y ≠ 0) :
     (projSPB x 1 y 1).1 / (projSPB x 1 y 1).2 = spb x y := by
   unfold projSPB spb; ring
@@ -61,6 +64,7 @@ theorem projSPB_norm_mul (x₁ x₂ y₁ y₂ : ℝ) :
   unfold projSPB; ring;
 
 
+/-- [Section: ## 4. Infinitesimal Generator] -/
 theorem spb_infinitesimal_generator (x : ℝ) :
     HasDerivAt (fun ε => spb x ε) (1 + x ^ 2) 0 := by
   unfold spb; convert HasDerivAt.div ( hasDerivAt_id 0 |> HasDerivAt.const_add x ) ( HasDerivAt.sub ( hasDerivAt_const _ _ ) ( HasDerivAt.mul ( hasDerivAt_const _ _ ) ( hasDerivAt_id 0 ) ) ) _ using 1 <;> norm_num;
@@ -82,6 +86,7 @@ theorem gaussian_norm_spb (x y : ℝ) :
   ring
 
 
+/-- [Section: ## 6. Cocycle Geometric Series] -/
 theorem cocycle_geometric_series (x y : ℝ) (hxy : |x * y| < 1) :
     HasSum (fun n => (x * y) ^ n) (1 / (1 - x * y)) := by
   simpa using hasSum_geometric_of_abs_lt_one hxy
@@ -127,6 +132,7 @@ def complexMul (p q : ℝ × ℝ) : ℝ × ℝ :=
 def complexNorm (p : ℝ × ℝ) : ℝ := p.1 ^ 2 + p.2 ^ 2
 
 
+/-- [Section: ## 9. Division Algebra Obstruction (d=1)] -/
 theorem complexNorm_mul (p q : ℝ × ℝ) :
     complexNorm (complexMul p q) = complexNorm p * complexNorm q := by
   unfold complexNorm complexMul; ring;
@@ -148,6 +154,7 @@ theorem spbMat_trace_constant (a : ℝ) :
     (spbMat a).trace = 2 := spbMat_trace a
 
 
+/-- [Section: ## 11. SPB Matrix Trace Classification] -/
 theorem spb_discriminant_nonpos (a : ℝ) :
     (spbMat a).trace ^ 2 - 4 * (spbMat a).det = -(4 * a ^ 2) := by
   unfold spbMat; norm_num; ring;
@@ -158,11 +165,13 @@ theorem spb_discriminant_neg (a : ℝ) (ha : a ≠ 0) :
   unfold spbMat; norm_num; nlinarith [ mul_self_pos.2 ha ] ;
 
 
+/-- [Section: ## 12. Hyperbolic SPB Contraction] -/
 theorem spbH_contraction (x y : ℝ) (hx : |x| < 1) (hy : |y| < 1) :
     |spbH x y| < 1 := by
   exact abs_lt.mpr ⟨ by rw [ spbH ] ; rw [ lt_div_iff₀ ] <;> nlinarith [ abs_lt.mp hx, abs_lt.mp hy ], by rw [ spbH ] ; rw [ div_lt_iff₀ ] <;> nlinarith [ abs_lt.mp hx, abs_lt.mp hy ] ⟩
 
 
+/-- [Section: ## 14. Wick Rotation Duality] -/
 theorem wick_norm_circular (x y : ℝ) :
     (1 + x^2) * (1 + y^2) = (1 - x*y)^2 + (x + y)^2 := by
   ring
@@ -173,6 +182,7 @@ theorem wick_norm_hyperbolic (x y : ℝ) :
   ring
 
 
+/-- [Section: ## 16. SPB Matrix Determinant Multiplicativity] -/
 theorem spbMat_det_mul (a b : ℝ) :
     (spbMat a * spbMat b).det = (1 + a^2) * (1 + b^2) := by
   rw [ ← spbMat_det a, ← spbMat_det b, ← Matrix.det_mul ]

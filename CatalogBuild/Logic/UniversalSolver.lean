@@ -85,6 +85,10 @@ theorem invStereoNorth'_avoids_north (t : ℝ) :
   nlinarith [sq_nonneg t]
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§2: THE DUAL PROJECTION IS A MÖBIUS TRANSFORMATION
+Agent Beta: Matrix representation
+═══════════════════════════════════════════════════════════════════════] -/
 theorem dualProjection'_eq_inv (t : ℝ) (ht : t ≠ 0) :
     dualProjection' t = 1 / t := by
   unfold dualProjection' invStereoSouth' stereoFromNorth';

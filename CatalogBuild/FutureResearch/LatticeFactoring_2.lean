@@ -7,6 +7,13 @@ Declarations: 9
 
 import Mathlib
 
+/-- [Section: # Lattice-Based Factoring Theory (A2, A6c, C14, NEW)
+## Main Results
+* `normSq_nonneg'` — Norm squared is nonneg
+* `normSq_zero_iff'` — Norm squared zero iff both zero
+* `factoring_lattice_exists'` — Lattice construction for factoring
+* `smooth_exists` — B-smooth numbers exist in [2,N]
+* `coppersmith_deg1` — Small modular roots are zero] -/
 def normSq' (x y : ℤ) : ℤ := x ^ 2 + y ^ 2
 
 
@@ -21,6 +28,7 @@ theorem normSq_zero_iff' (x y : ℤ) : normSq' x y = 0 ↔ x = 0 ∧ y = 0 := by
   · rintro ⟨rfl, rfl⟩; ring
 
 
+/-- [Section: ### Factoring Lattice] -/
 theorem factoring_lattice_exists' (N : ℕ) (hN : 1 < N) :
     ∃ a b c d : ℤ, a * d - b * c = N ∧ normSq' c d ≤ 2 * N := by
   refine ⟨N, 0, 0, 1, ?_, ?_⟩
@@ -28,6 +36,7 @@ theorem factoring_lattice_exists' (N : ℕ) (hN : 1 < N) :
   · simp [normSq']; omega
 
 
+/-- [Section: ### Smooth Numbers] -/
 def IsSmooth' (B n : ℕ) : Prop :=
   ∀ p, Nat.Prime p → p ∣ n → p ≤ B
 
@@ -58,6 +67,7 @@ theorem smooth_exists (N B : ℕ) (hB : 1 < B) (hBN : B ≤ N) :
     · rw [h]; exact le_of_dvd (by omega) hpB
 
 
+/-- [Section: ### Coppersmith] -/
 theorem coppersmith_deg1 (a b p : ℤ) (hp : 0 < p)
     (hmod : p ∣ (a + b))
     (hsmall : |a + b| < p) :

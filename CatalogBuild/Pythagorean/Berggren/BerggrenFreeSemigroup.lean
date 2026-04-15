@@ -7,6 +7,7 @@ Declarations: 57
 
 import Mathlib
 
+/-- [Section: ## Generators are distinct and non-identity] -/
 theorem BF1_ne_BF2 : BF1 ≠ BF2 := by native_decide
 
 theorem BF1_ne_BF3 : BF1 ≠ BF3 := by native_decide
@@ -20,6 +21,7 @@ theorem BF2_ne_one : BF2 ≠ 1 := by native_decide
 theorem BF3_ne_one : BF3 ≠ 1 := by native_decide
 
 
+/-- [Section: ## Non-Commutativity] -/
 theorem BF12_ne_BF21 : BF1 * BF2 ≠ BF2 * BF1 := by native_decide
 
 theorem BF13_ne_BF31 : BF1 * BF3 ≠ BF3 * BF1 := by native_decide
@@ -27,6 +29,7 @@ theorem BF13_ne_BF31 : BF1 * BF3 ≠ BF3 * BF1 := by native_decide
 theorem BF23_ne_BF32 : BF2 * BF3 ≠ BF3 * BF2 := by native_decide
 
 
+/-- [Section: ## No two-letter relation equals identity] -/
 theorem BF11_ne_one : BF1 * BF1 ≠ 1 := by native_decide
 
 theorem BF12_ne_one : BF1 * BF2 ≠ 1 := by native_decide
@@ -46,6 +49,7 @@ theorem BF32_ne_one : BF3 * BF2 ≠ 1 := by native_decide
 theorem BF33_ne_one : BF3 * BF3 ≠ 1 := by native_decide
 
 
+/-- Row 1 vs Row 2 -/
 theorem d2_11_21 : BF1*BF1 ≠ BF2*BF1 := by native_decide
 
 theorem d2_11_22 : BF1*BF1 ≠ BF2*BF2 := by native_decide
@@ -129,6 +133,7 @@ theorem d2_31_33 : BF3*BF1 ≠ BF3*BF3 := by native_decide
 theorem d2_32_33 : BF3*BF2 ≠ BF3*BF3 := by native_decide
 
 
+/-- [Section: ## Conjugacy: B₃ = S·B₁·S where S swaps legs] -/
 theorem SwapS_invol : SwapS * SwapS = 1 := by native_decide
 
 

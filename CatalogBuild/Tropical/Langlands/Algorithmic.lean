@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Section 1: Sorting as Tropical Satake Transform] -/
 def isSorted (n : ℕ) (x : Fin n → ℝ) : Prop :=
   ∀ i j : Fin n, i ≤ j → x i ≤ x j
 
@@ -22,6 +23,7 @@ theorem monotone_sorted (n : ℕ) (f : Fin n → ℝ) (hf : Monotone f) :
   fun _ _ h => hf h
 
 
+/-- [Section: ## Section 2: Tropical Determinant via Assignment] -/
 def tropicalDet (n : ℕ) [NeZero n] (A : Fin n → Fin n → ℝ) : ℝ :=
   (Finset.univ : Finset (Equiv.Perm (Fin n))).inf'
     ⟨1, Finset.mem_univ _⟩
@@ -39,6 +41,7 @@ theorem tropicalDet_le_identity (n : ℕ) [NeZero n] (A : Fin n → Fin n → �
   exact Finset.inf'_le _ ( Finset.mem_univ 1 ) |> le_trans <| by norm_num;
 
 
+/-- [Section: ## Section 3: Min-Plus Convolution] -/
 def minPlusConv (f g : ℤ → ℝ) (n : ℤ) : ℝ :=
   ⨅ k : ℤ, f k + g (n - k)
 
@@ -64,6 +67,7 @@ theorem graphLFunction_zero (n : ℕ) (G : WeightedGraph n) (s t : Fin n) :
   simp [graphLFunction]
 
 
+/-- [Section: ## Section 5: Young Diagrams] -/
 structure YoungDiagram' where
   numRows : ℕ
   rowLengths : Fin numRows → ℕ
@@ -94,6 +98,7 @@ theorem singleRowYoung_size (k : ℕ) : (singleRowYoung k).size = k := by
   simp [YoungDiagram'.size, singleRowYoung, Fin.sum_univ_one]
 
 
+/-- [Section: ## Section 6: Complexity Bounds] -/
 def sortingBound (n : ℕ) : ℕ := n * (Nat.log 2 n + 1)
 
 
@@ -109,6 +114,7 @@ theorem assignment_ge_quadratic (n : ℕ) (hn : n ≥ 1) :
   exact Nat.pow_le_pow_right hn ( by decide )
 
 
+/-- [Section: ## Section 7: Hook Length] -/
 def hookLength (arm leg : ℕ) : ℕ := arm + leg + 1
 
 
@@ -116,6 +122,7 @@ theorem hookLength_pos (arm leg : ℕ) : hookLength arm leg ≥ 1 := by
   unfold hookLength; omega
 
 
+/-- [Section: ## Section 8: Min-Plus Matrix] -/
 def minPlusIdentity (n : ℕ) (bigVal : ℝ) : Fin n → Fin n → ℝ :=
   fun i j => if i = j then 0 else bigVal
 
@@ -130,6 +137,7 @@ theorem minPlusIdentity_off_diag (n : ℕ) (M : ℝ) (i j : Fin n) (h : i ≠ j)
   simp [minPlusIdentity, h]
 
 
+/-- [Section: ## Section 9: Bellman-Ford] -/
 def bellmanFordStep (n : ℕ) (hn : 0 < n) (G : WeightedGraph n) (dist : Fin n → ℝ) : Fin n → ℝ :=
   fun v => min (dist v) ((Finset.univ : Finset (Fin n)).inf'
     ⟨⟨0, hn⟩, Finset.mem_univ _⟩

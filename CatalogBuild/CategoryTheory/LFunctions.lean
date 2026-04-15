@@ -67,6 +67,7 @@ inductive SymmetricPowerStatus where
   | open_ : SymmetricPowerStatus
 
 
+/-- [Section: ## Symmetric Power L-functions] -/
 def symmetricPowerResults : ℕ → SymmetricPowerStatus
   | 0 => .proved "trivial"
   | 1 => .proved "trivial"
@@ -81,6 +82,7 @@ theorem sym2_is_proved : symmetricPowerResults 2 = .proved "Gelbart-Jacquet 1978
 theorem sym3_is_proved : symmetricPowerResults 3 = .proved "Kim-Shahidi 2002" := rfl
 
 
+/-- [Section: ## a_p data for E: y^2 = x^3 - x] -/
 def ec_32_ap : List (ℕ × ℤ) :=
   [(3, 0), (5, -2), (7, 0), (11, 0), (13, 6), (17, 2), (19, 0), (23, 0),
    (29, -10), (31, 0), (37, -2), (41, 10), (43, 0), (47, 0)]

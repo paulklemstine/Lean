@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## §1. Lipschitz Bounds] -/
 theorem eml_lip_pos (b : ℝ) : 0 < emlLipschitz b := Real.exp_pos b
 
 
@@ -45,6 +46,7 @@ def advTrainingCost (pgdSteps modelCost : ℕ) : ℕ := (pgdSteps + 1) * modelCo
 def attackSuccessRate (vulnerability perturbBudget : ℝ) : ℝ := vulnerability * perturbBudget
 
 
+/-- [Section: ## §4. Perturbation Budget] -/
 theorem larger_budget_more_vulnerable (v eps1 eps2 : ℝ) (hv : 0 ≤ v) (he : eps1 ≤ eps2) :
     attackSuccessRate v eps1 ≤ attackSuccessRate v eps2 := by
   unfold attackSuccessRate; exact mul_le_mul_of_nonneg_left he hv
@@ -58,6 +60,7 @@ theorem zero_perturbation_safe (v : ℝ) : attackSuccessRate v 0 = 0 := by
 def smoothingCost (numSamples modelCost : ℕ) : ℕ := numSamples * modelCost
 
 
+/-- [Section: ## §5. Randomized Smoothing] -/
 theorem eml_smoothing_cheaper (n c_eml c_std : ℕ) (hc : c_eml ≤ c_std) :
     smoothingCost n c_eml ≤ smoothingCost n c_std := by
   unfold smoothingCost; exact Nat.mul_le_mul_left n hc
@@ -72,6 +75,7 @@ theorem more_samples_costlier (n1 n2 c : ℕ) (hn : n1 ≤ n2) :
 def verificationCost (numNeurons verifyPerNeuron : ℕ) : ℕ := numNeurons * verifyPerNeuron
 
 
+/-- [Section: ## §6. Robustness Verification Cost] -/
 theorem eml_verify_cheaper (n_eml n_std v : ℕ) (hn : n_eml ≤ n_std) :
     verificationCost n_eml v ≤ verificationCost n_std v := by
   unfold verificationCost; exact Nat.mul_le_mul_right v hn

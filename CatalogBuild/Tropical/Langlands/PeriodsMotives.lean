@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Section 1: Tropical Motives] -/
 structure TropicalMotive (n : ℕ) where
   weights : Fin n → ℝ
   weights_nonneg : ∀ i, weights i ≥ 0
@@ -23,6 +24,7 @@ theorem totalWeight_nonneg (n : ℕ) (M : TropicalMotive n) :
   exact Finset.sum_nonneg fun _ _ => M.weights_nonneg _
 
 
+/-- [Section: ## Section 2: Tropical Periods] -/
 def tropicalPeriod (n : ℕ) (gamma : Fin n → ℤ) (omega : Fin n → ℝ) : ℝ :=
   ∑ i : Fin n, (gamma i : ℝ) * omega i
 
@@ -51,6 +53,7 @@ theorem period_zero_form (n : ℕ) (gamma : Fin n → ℤ) :
   simp [tropicalPeriod]
 
 
+/-- [Section: ## Section 3: Tropical L-functions from Motives] -/
 def motivicLFunction (n : ℕ) (M : TropicalMotive n) (s : ℝ) : ℝ :=
   ∑ i : Fin n, M.weights i * s
 
@@ -70,6 +73,7 @@ theorem motivicLFunction_at_zero (n : ℕ) (M : TropicalMotive n) :
   simp [motivicLFunction_eq]
 
 
+/-- [Section: ## Section 4: Motivic Galois Group Action] -/
 def galoisAction (n : ℕ) (sigma : Equiv.Perm (Fin n)) (M : TropicalMotive n) :
     TropicalMotive n where
   weights := M.weights ∘ sigma
@@ -93,6 +97,7 @@ theorem galoisAction_id (n : ℕ) (M : TropicalMotive n) :
   simp [galoisAction, Function.comp_id]
 
 
+/-- [Section: ## Section 5: Tropical Hodge Structure] -/
 structure TropicalHodgeStructure (n : ℕ) where
   hodgeNumbers : Fin (n + 1) → ℕ
   symmetry : ∀ k : Fin (n + 1),
@@ -115,6 +120,7 @@ theorem weight1Hodge_dimension (g : ℕ) :
   simp [hodgeDimension, weight1Hodge, Fin.sum_univ_two]; ring
 
 
+/-- [Section: ## Section 6: Period Equivalence] -/
 def periodEquivalent (n : ℕ) (M1 M2 : TropicalMotive n) : Prop :=
   ∀ (gamma : Fin n → ℤ),
     tropicalPeriod n gamma M1.weights = tropicalPeriod n gamma M2.weights
@@ -145,6 +151,7 @@ theorem periodEquiv_same_LFunction (n : ℕ) (M1 M2 : TropicalMotive n)
   unfold motivicLFunction; simp +decide [ ← Finset.sum_mul, h_totalWeight ] ;
 
 
+/-- [Section: ## Section 7: Tropical Betti Numbers] -/
 def tropicalBetti (genus : ℕ) (k : ℕ) : ℕ :=
   match k with
   | 0 => 1

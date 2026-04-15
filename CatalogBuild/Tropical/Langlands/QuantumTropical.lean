@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Section 1: Crystal Bases as Tropical Objects] -/
 structure TropicalCrystal (n : ℕ) where
   numElements : ℕ
   weight : Fin numElements → Fin n → ℤ
@@ -23,6 +24,7 @@ def tropicalRMatrix (a b : ℝ) : ℝ × ℝ :=
   (min a b, max a b)
 
 
+/-- [Section: ## Section 2: Tropical R-matrix and Yang-Baxter] -/
 theorem rMatrix_sorts (a b : ℝ) :
     (tropicalRMatrix a b).1 ≤ (tropicalRMatrix a b).2 := by
   simp only [tropicalRMatrix]
@@ -48,6 +50,7 @@ theorem sort_preserves_sum (a b c : ℝ) :
   ring
 
 
+/-- [Section: ## Section 3: Littelmann Path Model] -/
 structure LittelmannPath (n : ℕ) where
   numSegments : ℕ
   waypoints : Fin (numSegments + 1) → Fin n → ℝ
@@ -69,6 +72,7 @@ theorem straightPath_endpoint (n : ℕ) (target : Fin n → ℝ) :
   exact?
 
 
+/-- [Section: ## Section 4: Tropical Tensor Product] -/
 def tropicalTensorProduct (m n : ℕ) (u : Fin m → ℝ) (v : Fin n → ℝ) :
     Fin (m + n) → ℝ :=
   Fin.append u v
@@ -81,6 +85,7 @@ theorem tensorProduct_sum (m n : ℕ) (u : Fin m → ℝ) (v : Fin n → ℝ) :
   rw [ Fin.sum_univ_add ] ; aesop
 
 
+/-- [Section: ## Section 5: Crystal Character] -/
 def crystalCharacter (n : ℕ) (C : TropicalCrystal n) : Fin n → ℤ :=
   C.totalWeight
 
@@ -100,6 +105,7 @@ theorem tropicalCharValue_zero_point (n : ℕ) (wt : Fin n → ℤ) :
   simp [tropicalCharValue]
 
 
+/-- [Section: ## Section 6: Crystal Dimension] -/
 def crystalDimension (n : ℕ) : ℕ := n
 
 
@@ -113,6 +119,7 @@ theorem crystalDim_mul (m n : ℕ) :
   simp [crystalDimension]
 
 
+/-- [Section: ## Section 7: Tropical Kazhdan-Lusztig Theory] -/
 def tropicalKLValue (n : ℕ) (s t : Equiv.Perm (Fin n)) : ℕ :=
   if s = t then 1 else 0
 
@@ -127,6 +134,7 @@ theorem tropicalKL_off_diagonal (n : ℕ) (s t : Equiv.Perm (Fin n)) (h : s ≠ 
   simp [tropicalKLValue, h]
 
 
+/-- [Section: ## Section 8: Crystal Langlands Duality] -/
 def crystalLanglandsDual (n : ℕ) (wt : Fin n → ℤ) : Fin n → ℤ :=
   fun i => wt ⟨n - 1 - i.val, by omega⟩
 

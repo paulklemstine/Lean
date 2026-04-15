@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Part I: Quantum Error Correction] -/
 structure QECCode where
   n : ℕ
   k : ℕ
@@ -35,6 +36,7 @@ theorem more_distance_more_correction (d1 d2 : ℕ) (h : d1 < d2) :
   simp [correctableErrors]; omega
 
 
+/-- [Section: ## Part II: Perfect Tensors] -/
 structure PerfectTensor where
   legs : ℕ
   bond_dim : ℕ
@@ -54,6 +56,7 @@ theorem perfect_tensor_entropy_pos (T : PerfectTensor) (hl : T.legs ≥ 2) :
   · exact Real.log_pos (by exact_mod_cast T.dim_pos)
 
 
+/-- [Section: ## Part III: Entanglement Wedge & ER=EPR] -/
 theorem jlms_formula (S_bulk area GN S_bdry : ℝ)
     (h : S_bulk + area / (4 * GN) = S_bdry) :
     S_bdry - S_bulk = area / (4 * GN) := by linarith
@@ -71,6 +74,7 @@ theorem tfd_weight_pos (beta E : ℝ) :
     Real.exp (-beta * E / 2) > 0 := Real.exp_pos _
 
 
+/-- [Section: ## Part IV: Gravitational Waves from Topology] -/
 def allowedWavenumber (n : ℕ) (L : ℝ) : ℝ := 2 * Real.pi * (n : ℝ) / L
 
 

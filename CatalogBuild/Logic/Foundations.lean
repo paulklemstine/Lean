@@ -56,6 +56,10 @@ def bayesianUpdate {n : ℕ} (b : BeliefState n) (l : Likelihood n) : BeliefStat
   else fun i => (b i * l i) / e
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§2: BAYESIAN UPDATING — THE ENGINE OF SCIENCE
+"Beliefs + Evidence → Better Beliefs"
+═══════════════════════════════════════════════════════════════════════] -/
 theorem posterior_nonneg {n : ℕ} (b : BeliefState n) (l : Likelihood n)
     (hb : ∀ i, 0 ≤ b i) (hl : ∀ i, 0 ≤ l i) :
     ∀ i, 0 ≤ bayesianUpdate b l i := by
@@ -91,6 +95,10 @@ def IsTrueHypothesis {n : ℕ} (hstar : Fin n) (experiments : ℕ → Likelihood
   ∀ k i, experiments k i ≤ experiments k hstar
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§4: CONVERGENCE — SCIENCE WORKS
+"Iterated Bayesian updating converges to certainty about truth"
+═══════════════════════════════════════════════════════════════════════] -/
 theorem true_hypothesis_weight_increases {n : ℕ} (b : BeliefState n)
     (l : Likelihood n) (hstar : Fin n)
     (hb : BeliefState.IsValid b) (hl : Likelihood.IsValid l)
@@ -119,6 +127,10 @@ def pureBelief {n : ℕ} (i : Fin n) : BeliefState n :=
   fun j => if j = i then 1 else 0
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§5: FIXED POINTS — THE GOAL OF SCIENCE
+"Truth is the fixed point of rational inquiry"
+═══════════════════════════════════════════════════════════════════════] -/
 theorem pure_belief_is_fixed_point {n : ℕ} (i : Fin n)
     (l : Likelihood n) (hl : 0 < l i) :
     IsFixedPoint (pureBelief i) l := by
@@ -170,6 +182,10 @@ def Experiment.toOracle {n : ℕ} (e : Experiment n) : Fin n → Bool :=
   fun i => e.prediction i == e.outcome
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§6: ORACLE-EXPERIMENT DUALITY
+"Every experiment is an oracle query"
+═══════════════════════════════════════════════════════════════════════] -/
 theorem experiment_oracle_surjective {n : ℕ} (f : Fin n → Bool) :
     ∃ e : Experiment n, e.toOracle = f := by
   constructor;
@@ -197,6 +213,10 @@ def ScientificTheory.refine {n : ℕ} (T : ScientificTheory n)
   valid := bayesian_update_valid T.belief l T.valid hl he
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§7: THE SCIENTIFIC METHOD AS A CATEGORY
+"Science is a functor from questions to answers"
+═══════════════════════════════════════════════════════════════════════] -/
 theorem refinement_increases_experiments {n : ℕ} (T : ScientificTheory n)
     (l : Likelihood n) (hl : Likelihood.IsValid l)
     (he : 0 < evidence T.belief l) :

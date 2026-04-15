@@ -7,6 +7,13 @@ Declarations: 11
 
 import Mathlib
 
+/-- [Section: # Group Theory Exploration
+Deep explorations in group theory including:
+- Lagrange's theorem consequences
+- Order of elements
+- Cyclic group properties
+- Permutation groups
+- Direct products] -/
 theorem prime_order_generates (G : Type*) [Group G] [Fintype G]
     (hp : Nat.Prime (Fintype.card G)) (g : G) (hg : g ≠ 1) :
     orderOf g = Fintype.card G := by

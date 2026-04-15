@@ -2,15 +2,12 @@
 
 Auto-generated from theorem catalog database.
 Domain: EML/V10
-Declarations: 22
+Declarations: 21
 -/
 
 import Mathlib
 
 noncomputable section
-
-def emlSelfPair (x : ℝ) : ℝ := Real.exp x - x
-
 
 /-- Shannon entropy term: −p·ln(p) = p·eml(0,p) − p. -/
 theorem eml_entropy_decomp (p : ℝ) :
@@ -76,6 +73,7 @@ theorem eml_loss_ge_one (r : ℝ) : emlSelfPair r ≥ 1 := by
   unfold emlSelfPair; linarith [Real.add_one_le_exp r]
 
 
+/-- [Section: ## Section 4: Loss Functions] -/
 theorem eml_loss_at_zero : emlSelfPair 0 = 1 := by simp [emlSelfPair]
 
 
@@ -118,6 +116,7 @@ theorem eml_activation_neg_gradient (x : ℝ) (hx : x < 0) :
   linarith
 
 
+/-- [Section: ## Section 6: Coding Theory] -/
 theorem eml_code_length (q : ℝ) : -Real.log q = eml 0 q - 1 := by unfold eml; simp
 
 
@@ -126,12 +125,14 @@ theorem eml_redundancy (p q : ℝ) (hp : 0 < p) (hq : 0 < q) :
   unfold eml; rw [Real.log_div hp.ne' hq.ne']; ring
 
 
+/-- [Section: ## Section 7: Mirror Descent] -/
 theorem bregman_exp_nonneg (x y : ℝ) :
     Real.exp x - Real.exp y - Real.exp y * (x - y) ≥ 0 := by
   rw [show x = y + (x - y) by ring, Real.exp_add]
   nlinarith [Real.add_one_le_exp (x - y), Real.exp_pos y]
 
 
+/-- [Section: ## Section 8: Cumulant Generating Functions] -/
 theorem eml_cumulant (Mt : ℝ) : Real.log Mt = -(eml 0 Mt) + 1 := by unfold eml; simp
 
 

@@ -19,6 +19,7 @@ def StrangeLoop.orbit (L : StrangeLoop) (l : L.Level) : Set L.Level :=
   { l' | ∃ k : ℕ, L.next^[k] l = l' }
 
 
+/-- [Section: ## §1: Strange Loop Structure] -/
 theorem StrangeLoop.self_in_orbit (L : StrangeLoop) (l : L.Level) :
     l ∈ L.orbit l := ⟨0, rfl⟩
 
@@ -29,6 +30,7 @@ theorem StrangeLoop.orbit_closed (L : StrangeLoop) (l l' : L.Level)
   exact ⟨k + 1, by rw [iterate_succ_apply', hk]⟩
 
 
+/-- [Section: ## §2: Strange Loops on Finite Types] -/
 def strangeLoopPerm (L : StrangeLoop) [Fintype L.Level] [DecidableEq L.Level]
     (hinj : Injective L.next) : Equiv.Perm L.Level :=
   Equiv.ofBijective L.next ⟨hinj, Finite.surjective_of_injective hinj⟩
@@ -46,6 +48,7 @@ theorem addLayer_depth_increases {α : Type*} (s : SelfRef α) (f : α → α) :
     (addLayer s f).depth = s.depth + 1 := rfl
 
 
+/-- [Section: ## §5: Fixed Points of Strange Loops] -/
 theorem strange_loop_composition_fixed_point
     {α : Type*} (f g : α → α)
     (hf_fp : ∃ a, f a = a)
@@ -55,6 +58,7 @@ theorem strange_loop_composition_fixed_point
   exact ⟨a, ha, hg_preserves a ha⟩
 
 
+/-- [Section: ## §6: Gödel-Hofstadter Loop] -/
 structure GodelHofstadterLoop where
   Statement : Type*
   isTheorem : Statement → Prop
@@ -76,6 +80,7 @@ theorem godel_unprovable (G : GodelHofstadterLoop) :
   exact hT
 
 
+/-- [Section: ## §7: Consciousness as Categorical Fixed Point] -/
 structure CategoricalConsciousness where
   Ob : Type*
   Mor : Ob → Ob → Type*

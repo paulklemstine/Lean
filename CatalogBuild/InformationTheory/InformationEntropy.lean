@@ -21,6 +21,7 @@ structure ProbDist {α : Type*} [Fintype α] (p : α → ℝ) : Prop where
   sum_one : ∑ x, p x = 1
 
 
+/-- [Section: ## Part I: Shannon Information] -/
 theorem shannonInfo_nonneg {α : Type*} [Fintype α] (p : α → ℝ)
     (hp : ProbDist p) : 0 ≤ shannonInfo p := by
   exact neg_nonneg_of_nonpos ( Finset.sum_nonpos fun x _ => by split_ifs <;> [ exact mul_nonpos_of_nonneg_of_nonpos ( hp.nonneg x ) ( Real.logb_nonpos ( by norm_num ) ( by linarith [ hp.nonneg x ] ) ( by linarith [ hp.sum_one, Finset.single_le_sum ( fun a _ => hp.nonneg a ) ( Finset.mem_univ x ) ] ) ) ; norm_num ] )
@@ -61,6 +62,7 @@ def gibbsEntropy {α : Type*} [Fintype α] (k_B : ℝ) (p : α → ℝ) : ℝ :=
   -k_B * ∑ x : α, if p x > 0 then p x * Real.log (p x) else 0
 
 
+/-- [Section: ## Part II: Thermodynamic Entropy] -/
 theorem gibbs_shannon_bridge {α : Type*} [Fintype α] (k_B : ℝ) (p : α → ℝ)
     (hp : ProbDist p) :
     gibbsEntropy k_B p = k_B * Real.log 2 * shannonInfo p := by
@@ -127,6 +129,7 @@ S / (k_B × ln(2)) bits of information. -/
 def entropyToInfo (k_B : ℝ) (entropy : ℝ) : ℝ := entropy / (k_B * Real.log 2)
 
 
+/-- [Section: ## Part V: The Information-to-Entropy Algorithm] -/
 theorem info_entropy_roundtrip (k_B bits : ℝ) (hk : k_B ≠ 0)
     (hlog : Real.log 2 ≠ 0) :
     entropyToInfo k_B (infoToEntropy k_B bits) = bits := by
@@ -146,6 +149,7 @@ def bekensteinBound (R E ℏ c : ℝ) : ℝ :=
   2 * Real.pi * R * E / (ℏ * c * Real.log 2)
 
 
+/-- [Section: ## Part VI: The Bekenstein Bound] -/
 theorem bekenstein_nonneg (R E ℏ c : ℝ)
     (hR : 0 ≤ R) (hE : 0 ≤ E) (hℏ : 0 < ℏ) (hc : 0 < c) :
     0 ≤ bekensteinBound R E ℏ c := by

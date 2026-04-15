@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## §1: Finite Oracle Compression] -/
 theorem oracle_range_card_le (n : ℕ) (O : Fin n → Fin n) :
     Finset.card (Finset.image O Finset.univ) ≤ n := by
       exact le_trans ( Finset.card_image_le ) ( by simpa )
@@ -27,6 +28,7 @@ theorem nontrivial_oracle_compresses {n : ℕ} (O : Fin (n + 2) → Fin (n + 2))
       exact fun h => hne <| funext fun x => by have := @h ( O x ) x; aesop;
 
 
+/-- [Section: ## §2: The Compression-Truth Duality] -/
 theorem fixedPoint_mem_range {X : Type*} (O : X → X) (x : X) (hx : O x = x) :
     x ∈ range O := by
       use x
@@ -49,6 +51,7 @@ def infoLoss {n : ℕ} (O : Fin n → Fin n) : ℕ :=
   n - Finset.card (Finset.filter (fun x => O x = x) Finset.univ)
 
 
+/-- [Section: ## §3: Information Loss Quantification] -/
 theorem oracle_accounting {n : ℕ} (O : Fin n → Fin n) :
     Finset.card (Finset.filter (fun x => O x = x) Finset.univ) + infoLoss O = n := by
       exact Nat.add_sub_of_le ( by exact le_trans ( Finset.card_filter_le _ _ ) ( by simpa ) )
@@ -58,6 +61,7 @@ theorem id_zero_loss (n : ℕ) : infoLoss (id : Fin n → Fin n) = 0 := by
   unfold infoLoss; aesop;
 
 
+/-- [Section: ## §4: Compression Ratio] -/
 theorem oracle_image_nonempty {n : ℕ} (hn : 0 < n) (O : Fin n → Fin n) :
     (Finset.image O Finset.univ).Nonempty := by
       exact ⟨ O ⟨ 0, hn ⟩, Finset.mem_image_of_mem _ ( Finset.mem_univ _ ) ⟩
@@ -68,6 +72,7 @@ theorem constant_oracle_range {n : ℕ} (c : Fin (n + 1)) :
       simp +decide [ Finset.image_const ]
 
 
+/-- [Section: ## §5: Semantic Compression] -/
 theorem semantic_compression_bound {n k : ℕ} (hk : k ≤ n) :
     k ≤ n := by
       assumption

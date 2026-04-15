@@ -39,6 +39,7 @@ def IsAttractor {X : Type*} [MetricSpace X] (f : X → X) (x0 : X) : Prop :=
     dist (f x) x0 ≤ dist x x0
 
 
+/-- [Section: ## §2: Repulsor Fixed Points] -/
 theorem not_attractor_and_repulsor {X : Type*} [MetricSpace X]
     (f : X → X) (x0 : X)
     (hrep : IsRepulsor f x0) (hatt : IsAttractor f x0)
@@ -55,6 +56,7 @@ structure SelfOptimizingOracle where
   predict_nondecreasing : ∀ s, predict s ≤ predict (optimize s)
 
 
+/-- [Section: ## §3: Oracle Goodhart Effect] -/
 theorem self_optimizing_bounded_convergence (O : SelfOptimizingOracle)
     (s0 : O.State) :
     Monotone (fun n => O.predict (O.optimize^[n] s0)) := by
@@ -80,6 +82,7 @@ def alignmentDecay (initialCorrelation decayRate : ℝ) (t : ℕ) : ℝ :=
   initialCorrelation * decayRate ^ t
 
 
+/-- [Section: ## §5: Proxy Alignment Decay] -/
 theorem alignment_monotone_decay (c r : ℝ) (hc : 0 ≤ c) (hr : 0 ≤ r) (hr1 : r ≤ 1) :
     Antitone (fun t => alignmentDecay c r t) := by
       exact fun x y hxy => mul_le_mul_of_nonneg_left ( pow_le_pow_of_le_one hr hr1 hxy ) hc

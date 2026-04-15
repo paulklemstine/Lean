@@ -21,6 +21,20 @@ inductive PhotonChannel where
   deriving DecidableEq, Fintype, Repr
 
 
+/-- [Section: # The Seven Channels of Light: Formal Foundations
+We formalize the mathematical framework for the seven independent information channels
+of a photon. This includes:
+- The enumeration of channels as an inductive type
+- The conjugate pair structure
+- Information capacity computations
+- Key structural theorems (e.g., polarization rigidity)
+## Main Definitions and Results
+* `PhotonChannel` — the seven fundamental information channels
+* `ConjugatePair` — the pairing structure linking channels via uncertainty relations
+* `hilbertSpaceDim` — the Hilbert space dimension of each channel
+* `channelInfoCapacity` — bits of information per channel under realistic parameters
+* `totalInfoCapacity` — the total ~99 bits per photon
+* `polarization_unique_finite` — polarization is the unique finite-dimensional channel] -/
 theorem PhotonChannel.card : Fintype.card PhotonChannel = 7 := by
   bound
 

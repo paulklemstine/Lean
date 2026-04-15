@@ -47,6 +47,7 @@ theorem hard_attention_any_target {n d : ℕ} [NeZero n] (hn : 1 < n) (hd : 0 < 
 def tropicalPosEncoding (n : ℕ) : Fin n → ℝ := fun i => (i : ℝ)
 
 
+/-- [Section: ### Tropical Positional Encoding] -/
 theorem tropicalPosEncoding_injective (n : ℕ) :
     Injective (tropicalPosEncoding n) := by
       exact fun i j h => Fin.ext <| Nat.cast_injective h
@@ -83,6 +84,13 @@ def TropCircuit.addGateCount {n : ℕ} (c : TropCircuit n) : ℕ :=
   (Finset.univ.filter fun i => c.gateTypes i = TropGate.addGate).card
 
 
+/-- [Section: ================================================================
+SECTION 2: TROPICAL HARDWARE — GATE COMPLEXITY
+================================================================
+Tropical circuits replace multiply gates with add gates and add gates
+with max gates. We formalize complexity measures and prove that
+tropical circuits can be simpler than classical arithmetic circuits.
+================================================================] -/
 theorem TropCircuit.gate_count_decomp {n : ℕ} (c : TropCircuit n) :
     c.maxGateCount + c.addGateCount = c.numGates := by
       convert Finset.card_add_card_compl ( Finset.filter ( fun i => c.gateTypes i = TropGate.maxGate ) Finset.univ );
@@ -107,6 +115,12 @@ def tropMatMul {m n p : ℕ} [NeZero n]
   fun i j => Finset.univ.sup' Finset.univ_nonempty fun k => A i k + B k j
 
 
+/-- [Section: ================================================================
+SECTION 3: TROPICAL COMPLEXITY THEORY
+================================================================
+We formalize tropical matrix rank, tropical determinant properties,
+and connections to classical complexity via the permanent.
+================================================================] -/
 theorem tropMatMul_assoc {m n p q : ℕ} [NeZero n] [NeZero p]
     (A : Fin m → Fin n → ℝ) (B : Fin n → Fin p → ℝ) (C : Fin p → Fin q → ℝ) :
     tropMatMul (tropMatMul A B) C = tropMatMul A (tropMatMul B C) := by
@@ -194,6 +208,14 @@ structure TropicalCharacter (G : Type*) [AddCommGroup G] where
   map_zero : toFun 0 = 0
 
 
+/-- [Section: ================================================================
+SECTION 4: TROPICAL LANGLANDS FOUNDATIONS
+================================================================
+The tropical Langlands program connects tropical automorphic forms to
+tropical Galois representations. We formalize the algebraic foundations:
+tropical valuations, the tropical Hecke algebra, and tropical
+characters.
+================================================================] -/
 theorem TropicalCharacter.map_neg {G : Type*} [AddCommGroup G]
     (χ : TropicalCharacter G) (a : G) :
     χ.toFun (-a) = -χ.toFun a := by
@@ -248,6 +270,7 @@ def tropLFunction (localFactors : ℕ → ℝ) (N : ℕ) : ℝ :=
   ∑ p ∈ Finset.range N, localFactors p
 
 
+/-- [Section: ### Tropical L-functions] -/
 theorem tropLFunction_mono (localFactors : ℕ → ℝ) (hpos : ∀ n, localFactors n ≥ 0)
     (M N : ℕ) (hMN : M ≤ N) :
     tropLFunction localFactors M ≤ tropLFunction localFactors N := by
@@ -270,6 +293,9 @@ theorem tropical_classical_bridge (a b : ℝ) :
   simp [max_def]; split_ifs <;> linarith
 
 
+/-- [Section: ================================================================
+SECTION 5: CROSS-CUTTING RESULTS
+================================================================] -/
 theorem max_affine_convex (a₁ b₁ a₂ b₂ : ℝ) (x y : ℝ) (t : ℝ)
     (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
     max (a₁ * (t * x + (1 - t) * y) + b₁) (a₂ * (t * x + (1 - t) * y) + b₂) ≤

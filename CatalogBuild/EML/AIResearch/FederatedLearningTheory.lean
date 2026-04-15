@@ -14,6 +14,7 @@ def commCostPerRound (numClients modelParams bitsPerParam : ℕ) : ℕ :=
   numClients * modelParams * bitsPerParam
 
 
+/-- [Section: ## §1. Communication Cost] -/
 theorem eml_comm_cheaper (n p_eml p_std b : ℕ) (hp : p_eml ≤ p_std) :
     commCostPerRound n p_eml b ≤ commCostPerRound n p_std b := by
   unfold commCostPerRound
@@ -36,6 +37,7 @@ theorem eml_total_comm_cheaper (r n p_eml p_std b : ℕ) (hp : p_eml ≤ p_std) 
 def aggregationCost (numClients modelParams : ℕ) : ℕ := numClients * modelParams
 
 
+/-- [Section: ## §2. Aggregation Efficiency] -/
 theorem eml_aggregation_cheaper (n p_eml p_std : ℕ) (hp : p_eml ≤ p_std) :
     aggregationCost n p_eml ≤ aggregationCost n p_std := by
   unfold aggregationCost; exact Nat.mul_le_mul_left n hp
@@ -45,6 +47,7 @@ theorem eml_aggregation_cheaper (n p_eml p_std : ℕ) (hp : p_eml ≤ p_std) :
 def dpNoiseMagnitude (params : ℝ) (epsilon : ℝ) : ℝ := Real.sqrt params / epsilon
 
 
+/-- [Section: ## §3. Differential Privacy Noise] -/
 theorem eml_less_noise (p_eml p_std eps : ℝ) (_hpe : 0 ≤ p_eml)
     (hp : p_eml ≤ p_std) (heps : 0 < eps) :
     dpNoiseMagnitude p_eml eps ≤ dpNoiseMagnitude p_std eps := by
@@ -63,6 +66,7 @@ theorem higher_epsilon_less_noise (p eps1 eps2 : ℝ) (_hp : 0 ≤ p) (he1 : 0 <
 def clientModelMemory (params bitsPerParam : ℕ) : ℕ := params * bitsPerParam
 
 
+/-- [Section: ## §4. Client Model Size] -/
 theorem eml_client_smaller (p_eml p_std b : ℕ) (hp : p_eml ≤ p_std) :
     clientModelMemory p_eml b ≤ clientModelMemory p_std b := by
   unfold clientModelMemory; exact Nat.mul_le_mul_right b hp
@@ -73,6 +77,7 @@ def partialCommCost (activeClients modelParams bitsPerParam : ℕ) : ℕ :=
   activeClients * modelParams * bitsPerParam
 
 
+/-- [Section: ## §5. Partial Participation] -/
 theorem fewer_clients_cheaper (k1 k2 p b : ℕ) (hk : k1 ≤ k2) :
     partialCommCost k1 p b ≤ partialCommCost k2 p b := by
   unfold partialCommCost
@@ -83,6 +88,7 @@ theorem fewer_clients_cheaper (k1 k2 p b : ℕ) (hk : k1 ≤ k2) :
 /-- Per-client adapter: small personalization layer -/
 def stdAdapterParams (d_model d_adapter : ℕ) : ℕ := 2 * d_model * d_adapter
 
+/-- [Section: ## §6. Personalization Adapters] -/
 def emlAdapterParams (d_adapter : ℕ) : ℕ := 4 * d_adapter
 
 
@@ -96,6 +102,7 @@ def secureAggCost (numClients modelParams cryptoOverhead : ℕ) : ℕ :=
   numClients * numClients * cryptoOverhead + numClients * modelParams
 
 
+/-- [Section: ## §7. Secure Aggregation] -/
 theorem eml_secure_agg_cheaper (n p_eml p_std c : ℕ) (hp : p_eml ≤ p_std) :
     secureAggCost n p_eml c ≤ secureAggCost n p_std c := by
   unfold secureAggCost
@@ -107,6 +114,7 @@ theorem eml_secure_agg_cheaper (n p_eml p_std c : ℕ) (hp : p_eml ≤ p_std) :
 def compressedGradSize (modelParams comprRatio : ℕ) : ℕ := modelParams / comprRatio
 
 
+/-- [Section: ## §8. Gradient Compression] -/
 theorem eml_gradient_smaller (p_eml p_std r : ℕ) (hp : p_eml ≤ p_std) :
     compressedGradSize p_eml r ≤ compressedGradSize p_std r := by
   unfold compressedGradSize; exact Nat.div_le_div_right hp

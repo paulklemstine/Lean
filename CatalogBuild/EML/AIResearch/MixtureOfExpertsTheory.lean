@@ -17,6 +17,7 @@ def stdExpertParams (d_model d_ff : ℕ) : ℕ := 2 * d_model * d_ff
 def emlExpertParams (d_ff : ℕ) : ℕ := 4 * d_ff
 
 
+/-- [Section: ## §1. Expert Network Efficiency] -/
 theorem eml_expert_compact (d_model d_ff : ℕ) (hd : 2 ≤ d_model) :
     emlExpertParams d_ff ≤ stdExpertParams d_model d_ff := by
   unfold emlExpertParams stdExpertParams; nlinarith
@@ -46,6 +47,7 @@ def stdRouterParams (d_model numExperts : ℕ) : ℕ := d_model * numExperts
 def emlRouterParams (numExperts : ℕ) : ℕ := 4 * numExperts
 
 
+/-- [Section: ## §2. Router Efficiency] -/
 theorem eml_router_compact (d_model numExperts : ℕ) (hd : 4 ≤ d_model) :
     emlRouterParams numExperts ≤ stdRouterParams d_model numExperts := by
   unfold emlRouterParams stdRouterParams
@@ -58,6 +60,7 @@ theorem eml_router_compact (d_model numExperts : ℕ) (hd : 4 ≤ d_model) :
 def loadBalanceLoss (fracRouted fracCapacity : ℝ) : ℝ := fracRouted * fracCapacity
 
 
+/-- [Section: ## §3. Load Balancing] -/
 theorem load_balance_nonneg (fr fc : ℝ) (hfr : 0 ≤ fr) (hfc : 0 ≤ fc) :
     0 ≤ loadBalanceLoss fr fc := by
   unfold loadBalanceLoss; exact mul_nonneg hfr hfc
@@ -74,6 +77,7 @@ theorem perfect_balance (n : ℕ) (hn : 0 < n) :
 def activeParamsPerToken (expertParams k : ℕ) : ℕ := k * expertParams
 
 
+/-- [Section: ## §4. Top-k Routing] -/
 theorem fewer_experts_cheaper (ep k1 k2 : ℕ) (hk : k1 ≤ k2) :
     activeParamsPerToken ep k1 ≤ activeParamsPerToken ep k2 := by
   unfold activeParamsPerToken; exact Nat.mul_le_mul_right ep hk
@@ -89,6 +93,7 @@ def expertCapacity (totalTokens numExperts capacityFactor : ℕ) : ℕ :=
   capacityFactor * totalTokens / numExperts
 
 
+/-- [Section: ## §5. Expert Capacity] -/
 theorem higher_capacity_more_tokens (t n cf1 cf2 : ℕ) (hcf : cf1 ≤ cf2) :
     expertCapacity t n cf1 ≤ expertCapacity t n cf2 := by
   unfold expertCapacity
@@ -100,6 +105,7 @@ def specialization (baseScore learnRate : ℝ) (steps : ℕ) : ℝ :=
   baseScore + learnRate * ↑steps
 
 
+/-- [Section: ## §6. Expert Specialization] -/
 theorem more_training_more_specialized (b lr : ℝ) (s1 s2 : ℕ) (hlr : 0 ≤ lr) (hs : s1 ≤ s2) :
     specialization b lr s1 ≤ specialization b lr s2 := by
   unfold specialization; nlinarith [Nat.cast_le (α := ℝ).mpr hs]
@@ -115,6 +121,7 @@ def fineGrainedMoEParams (numExperts paramsPerExpert routerParams : ℕ) : ℕ :
   numExperts * paramsPerExpert + routerParams
 
 
+/-- [Section: ## §8. Granularity Scaling] -/
 theorem eml_fine_grained_advantage (n pe_eml pe_std r_eml r_std : ℕ)
     (hp : pe_eml ≤ pe_std) (hr : r_eml ≤ r_std) :
     fineGrainedMoEParams n pe_eml r_eml ≤ fineGrainedMoEParams n pe_std r_std := by
@@ -126,6 +133,7 @@ theorem eml_fine_grained_advantage (n pe_eml pe_std r_eml r_std : ℕ)
 def expertMergeCost (k expertParams : ℕ) : ℕ := k * expertParams
 
 
+/-- [Section: ## §9. Expert Merging] -/
 theorem eml_merge_cheaper (k ep_eml ep_std : ℕ) (hp : ep_eml ≤ ep_std) :
     expertMergeCost k ep_eml ≤ expertMergeCost k ep_std := by
   unfold expertMergeCost; exact Nat.mul_le_mul_left k hp

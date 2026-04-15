@@ -16,6 +16,7 @@ theorem crystallization_gradient_zero_at_int (n : ℤ) :
   exact sin_int_mul_pi (2 * n)
 
 
+/-- [Section: ## §1: Pendulum Dynamics of Crystallization] -/
 theorem crystallization_gradient_zero_at_half_int (n : ℤ) :
     Real.sin (2 * π * ((n : ℝ) + 1/2)) = 0 := by
       exact Real.sin_eq_zero_iff.mpr ⟨ 2 * n + 1, by push_cast; ring ⟩
@@ -87,6 +88,7 @@ theorem rotation_char_poly_discriminant (θ : ℝ) :
   have := Real.sin_sq_add_cos_sq θ; nlinarith
 
 
+/-- [Section: ## §4: Information-Theoretic Bounds] -/
 theorem integer_points_in_range (B : ℕ) :
     Finset.card (Finset.Icc (-(B : ℤ)) (B : ℤ)) = 2 * B + 1 := by
       norm_num +zetaDelta at *;
@@ -103,6 +105,7 @@ theorem inv_stereo_one :
     (2 * (1 : ℝ) / (1 + 1 ^ 2), (1 - 1 ^ 2) / (1 + 1 ^ 2)) = (1, 0) := by norm_num
 
 
+/-- [Section: ## §5: Fixed-Point Theory of Stereographic Maps] -/
 theorem stereo_round_trip_fst (x y : ℝ) (h : x ^ 2 + y ^ 2 = 1) (hy : 1 + y ≠ 0) :
     2 * (x / (1 + y)) / (1 + (x / (1 + y)) ^ 2) = x := by
       grind
@@ -161,6 +164,7 @@ theorem deep_lipschitz_bound (L₁ L₂ : ℝ) (hL1 : 0 ≤ L₁) (hL1b : L₁ �
     L₁ * L₂ ≤ 1 := by nlinarith
 
 
+/-- [Section: ## §8: Residual Crystallization Energy] -/
 theorem crystallization_periodic (m : ℝ) (n : ℤ) :
     Real.sin (π * (m + n)) ^ 2 = Real.sin (π * m) ^ 2 := by
       -- Rewrite π*(m+n) as π*m + n*π.
@@ -193,6 +197,7 @@ theorem crystallization_at_integer (n : ℤ) :
   rw [mul_comm, sin_int_mul_pi]; ring
 
 
+/-- [Section: ## §10: Crystallization-Quantization Duality] -/
 theorem stereo_injective_on_int (m n : ℤ) (hm : m ≠ n) :
     (2 * (m : ℝ) / (1 + (m : ℝ) ^ 2), (1 - (m : ℝ) ^ 2) / (1 + (m : ℝ) ^ 2)) ≠
     (2 * (n : ℝ) / (1 + (n : ℝ) ^ 2), (1 - (n : ℝ) ^ 2) / (1 + (n : ℝ) ^ 2)) := by
@@ -217,6 +222,7 @@ theorem hopf_fiber_north_pole (a b : ℝ) (h : a ^ 2 + b ^ 2 = 1) :
 theorem lyapunov_nonneg (m : ℝ) : 0 ≤ Real.sin (π * m) ^ 2 := sq_nonneg _
 
 
+/-- [Section: ## §12: Convergence of Crystallization Training] -/
 theorem lyapunov_zero_iff_equilibrium (m : ℝ) :
     Real.sin (π * m) ^ 2 = 0 ↔ ∃ n : ℤ, m = ↑n := by
       exact ⟨ fun h => by obtain ⟨ n, hn ⟩ := Real.sin_eq_zero_iff.mp ( sq_eq_zero_iff.mp h ) ; exact ⟨ n, by nlinarith [ Real.pi_pos ] ⟩, by rintro ⟨ n, rfl ⟩ ; simp +decide [ mul_comm Real.pi ] ⟩

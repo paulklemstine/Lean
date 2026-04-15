@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Core Idempotent Theory] -/
 theorem idempotent_image_eq_fixedPoints (f : α → α) (hf : f ∘ f = f) :
     range f = {x | f x = x} := by
   ext x;
@@ -39,6 +40,7 @@ theorem const_idempotent (a : α) : (fun _ : α => a) ∘ (fun _ : α => a) = (f
   rfl
 
 
+/-- [Section: ## Idempotent on Finite Types] -/
 theorem idempotent_card_fixedPoints_eq_range {α : Type*} [Fintype α] [DecidableEq α]
     (f : α → α) (hf : f ∘ f = f) :
     (Finset.univ.filter (fun x => f x = x)).card = (Finset.univ.image f).card := by
@@ -54,6 +56,7 @@ theorem clamp_idempotent (x : ℝ) :
   grind
 
 
+/-- [Section: ## Lattice Idempotence] -/
 theorem idempotent_lattice_inf [SemilatticeInf L] (a : L) :
     (fun x => a ⊓ x) ∘ (fun x => a ⊓ x) = fun x => a ⊓ x := by
   grind +splitImp
@@ -65,6 +68,7 @@ theorem idempotent_lattice_sup [SemilatticeSup L] (a : L) :
   simp +decide [ sup_assoc ]
 
 
+/-- [Section: ## Linear Algebra: Idempotent Endomorphisms] -/
 theorem idempotent_linear_map_range_id (f : V →ₗ[K] V) (hf : f.comp f = f) :
     ∀ v ∈ LinearMap.range f, f v = v := by
   simp_all +decide [ LinearMap.ext_iff ]

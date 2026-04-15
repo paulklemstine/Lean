@@ -7,6 +7,7 @@ Declarations: 21
 
 import Mathlib
 
+/-- [Section: ## §1. Trivial Triple Construction] -/
 theorem odd_trivial_triple (n : ℤ) (hn : n % 2 = 1) :
     n ^ 2 + ((n ^ 2 - 1) / 2) ^ 2 = ((n ^ 2 + 1) / 2) ^ 2 := by
   cases abs_cases n <;> nlinarith [ Int.ediv_mul_cancel ( show 2 ∣ n ^ 2 - 1 from Int.dvd_self_sub_of_emod_eq ( by simp +decide [ sq, Int.mul_emod, hn ] ) ), Int.ediv_mul_cancel ( show 2 ∣ n ^ 2 + 1 from Int.dvd_of_emod_eq_zero ( by simp +decide [ sq, Int.mul_emod, Int.add_emod, hn ] ) ) ]
@@ -17,6 +18,7 @@ theorem even_trivial_triple (m : ℤ) (hm : m > 0) :
   ring
 
 
+/-- [Section: ## §2. The Quadruple Equation and Factor Structure] -/
 theorem quad_factor_identity (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     (d - c) * (d + c) = a ^ 2 + b ^ 2 := by
@@ -36,6 +38,7 @@ theorem gcd_dc_divides_sum_sq (a b c d : ℤ)
   exact ⟨ ( d - c ) * ( d + c ) / Int.gcd ( d - c ) ( d + c ), by linarith [ Int.ediv_mul_cancel <| show ( Int.gcd ( d - c ) ( d + c ) : ℤ ) ∣ ( d - c ) * ( d + c ) from dvd_mul_of_dvd_left ( Int.gcd_dvd_left _ _ ) _ ] ⟩
 
 
+/-- [Section: ## §3. Factor Extraction Theorems] -/
 theorem factor_extraction_product (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     (↑(Int.gcd (d - c) a) : ℤ) * ↑(Int.gcd (d + c) a) ∣ a ^ 2 := by
@@ -47,6 +50,7 @@ theorem trivial_triple_hypotenuse (n : ℤ) (hn_odd : n % 2 = 1) (hn_pos : n > 0
   exact odd_trivial_triple n hn_odd
 
 
+/-- [Section: ## §4. Shared-Hypotenuse Collision Theorem] -/
 theorem shared_hypotenuse_eq (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
     (h1 : a₁ ^ 2 + b₁ ^ 2 + c₁ ^ 2 = d ^ 2)
     (h2 : a₂ ^ 2 + b₂ ^ 2 + c₂ ^ 2 = d ^ 2) :
@@ -69,6 +73,7 @@ theorem cross_difference_factored (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
   linarith
 
 
+/-- [Section: ## §5. Berggren Tree Formalization] -/
 theorem berggrenM1_preserves (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     let t := berggrenM1 a b c
     t.1 ^ 2 + t.2.1 ^ 2 = t.2.2 ^ 2 := by
@@ -87,6 +92,7 @@ theorem berggrenM3_preserves (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
   unfold berggrenM3; linarith;
 
 
+/-- [Section: ## §6. Quadruple-Mediated Berggren Bridge] -/
 theorem berggren_bridge_triple (a b c k d : ℤ)
     (h_pyth : a ^ 2 + b ^ 2 = c ^ 2)
     (h_quad : a ^ 2 + b ^ 2 + k ^ 2 = d ^ 2)
@@ -105,6 +111,7 @@ theorem berggren_hypotenuse_growth_M2 (a b c : ℤ) :
   rfl
 
 
+/-- [Section: ## §7. GCD Cascade for Factor Extraction from Multiple Quadruples] -/
 theorem gcd_cascade_divides (c₁ c₂ N : ℤ) (hN : N > 0) :
     ↑(Int.gcd (c₁ ^ 2 - c₂ ^ 2) N) ∣ N := by
   exact Int.gcd_dvd_right _ _
@@ -114,6 +121,7 @@ theorem gcd_divides_right (a N : ℤ) : ↑(Int.gcd a N) ∣ N := by
   exact Int.gcd_dvd_right _ _
 
 
+/-- [Section: ## §8. The Division-Reduction Map] -/
 theorem quad_reduction_preserves (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2)
     (g : ℤ) (hg : g > 0) (ha : g ∣ a) (hb : g ∣ b) (hc : g ∣ c) (hd : g ∣ d) :
@@ -122,6 +130,7 @@ theorem quad_reduction_preserves (a b c d : ℤ)
   rw [ Int.mul_ediv_cancel_left _ hg.ne', Int.mul_ediv_cancel_left _ hg.ne', Int.mul_ediv_cancel_left _ hg.ne', Int.mul_ediv_cancel_left _ hg.ne' ] ; nlinarith [ mul_pos hg hg ]
 
 
+/-- [Section: ## §9. Parity Constraints on Quadruples] -/
 theorem quad_parity_constraint (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2)
     (hd_even : 2 ∣ d) (ha_odd : ¬ 2 ∣ a) (hb_odd : ¬ 2 ∣ b) :
@@ -130,6 +139,7 @@ theorem quad_parity_constraint (a b c d : ℤ)
   norm_num [ hk, mul_pow ] at h
 
 
+/-- [Section: ## §10. Quadruple Component Sum Identity] -/
 theorem quad_component_sum_sq (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     (a + b + c + d) ^ 2 =

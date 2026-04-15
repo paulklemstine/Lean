@@ -27,6 +27,7 @@ theorem isNPotent_two_iff_idempotent {α : Type*} (P : α → α) :
     exact h x
 
 
+/-- [Section: ## §1: n-Potent Operators — Generalized Oracles (H12)] -/
 theorem npotent_spectrum {R : Type*} [CommRing R] [NoZeroDivisors R]
     {M : Type*} [AddCommGroup M] [Module R M] [NoZeroSMulDivisors R M]
     (P : M →ₗ[R] M) (n : ℕ) (hn : 1 ≤ n)
@@ -62,6 +63,7 @@ theorem tripotent_spectrum {R : Type*} [CommRing R] [NoZeroDivisors R]
       exact Classical.or_iff_not_imp_left.2 fun h₀ => Classical.or_iff_not_imp_left.2 fun h₁ => mul_left_cancel₀ ( sub_ne_zero_of_ne h₁ ) <| mul_left_cancel₀ ( sub_ne_zero_of_ne h₀ ) <| by linear_combination' h;
 
 
+/-- [Section: ## §2: n-Potent Hierarchy] -/
 theorem npotent_hierarchy {α : Type*} (P : α → α) (m n : ℕ)
     (hm : 2 ≤ m) (hn : 2 ≤ n)
     (hP : P^[m] = P) (hdvd : (m - 1) ∣ (n - 1)) :
@@ -82,6 +84,7 @@ theorem idempotent_is_npotent {α : Type*} (P : α → α) (n : ℕ) (hn : 2 ≤
 def bootstrapMap (x : ℝ) : ℝ := 3 * x ^ 2 - 2 * x ^ 3
 
 
+/-- [Section: ## §3: Oracle Bootstrap Symmetry (H9)] -/
 theorem bootstrap_fixed_points (x : ℝ) :
     bootstrapMap x = x ↔ x = 0 ∨ x = 1/2 ∨ x = 1 := by
       unfold bootstrapMap; exact ⟨ fun hx => Classical.or_iff_not_imp_left.2 fun hx0 => Classical.or_iff_not_imp_left.2 fun hx1 => mul_left_cancel₀ ( sub_ne_zero_of_ne hx0 ) <| mul_left_cancel₀ ( sub_ne_zero_of_ne hx1 ) <| by nlinarith, fun hx => by rcases hx with ( rfl | rfl | rfl ) <;> norm_num ⟩ ;
@@ -111,6 +114,7 @@ theorem family_at_two (x : ℝ) : bootstrapFamily 2 x = bootstrapMap x := by
   unfold bootstrapFamily bootstrapMap; ring
 
 
+/-- [Section: ## §4: Generalized Bootstrap Family (H10)] -/
 theorem family_symmetry_iff_alpha_two (α : ℝ) :
     (∀ x, bootstrapFamily α (1 - x) = 1 - bootstrapFamily α x) ↔ α = 2 := by
       constructor <;> intro h <;> unfold bootstrapFamily at *;
@@ -129,6 +133,7 @@ def tripotentMinus {R : Type*} [Field R] (a : R) : R :=
   (a ^ 2 - a) / 2
 
 
+/-- [Section: ## §5: Tripotent Decomposition] -/
 theorem tripotentPlus_idem {R : Type*} [Field R] [CharZero R]
     (a : R) (ha : a ^ 3 = a) :
     (tripotentPlus a) ^ 2 = tripotentPlus a := by

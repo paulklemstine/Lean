@@ -18,6 +18,7 @@ structure YangBaxterOperator (n : ℕ) where
 def braidRepDim (n d : ℕ) : ℕ := d ^ n
 
 
+/-- [Section: ## 1. Braid Groups and Topological Computation] -/
 theorem braidRepDim_pos (n d : ℕ) (hd : 0 < d) : 0 < braidRepDim n d := by
   exact pow_pos hd n
 
@@ -37,6 +38,7 @@ def completeGraphState (n : ℕ) : GraphState n where
   no_self_loops := by intro i; simp
 
 
+/-- [Section: ## 2. Graph States and Measurement-Based Computation] -/
 theorem complete_graph_has_neighbors (n : ℕ) (hn : 2 ≤ n) :
     ∀ i : Fin n, ∃ j : Fin n, i ≠ j ∧ (completeGraphState n).adjacency i j = 1 := by
   intro i
@@ -45,12 +47,14 @@ theorem complete_graph_has_neighbors (n : ℕ) (hn : 2 ≤ n) :
   · exact ⟨ ⟨ 0, by linarith ⟩, h, by unfold completeGraphState; aesop ⟩
 
 
+/-- [Section: ## 3. Post-Selected Computation] -/
 theorem postselection_bounded (p q : ℝ)
     (hp : 1/2 < p) (hq : 0 < q) (hq1 : q ≤ 1) (hpq : p ≤ q) :
     p / q ≤ 1 := by
   rw [ div_le_iff₀ ] <;> linarith
 
 
+/-- [Section: ## 4. Quantum Speedup Bounds] -/
 theorem quantum_search_bound (N : ℕ) (hN : 0 < N) :
     Nat.sqrt N ≤ N := by
   exact Nat.sqrt_le_self _
@@ -63,6 +67,7 @@ theorem period_finding_qubits (N : ℕ) (hN : 2 ≤ N) :
   · exact?
 
 
+/-- [Section: ## 5. Novel: Crystallizer-Topological Connection] -/
 theorem crystallizer_topological_bound (n d : ℕ) (hd : 1 ≤ d) :
     1 ≤ d ^ n := by
   exact Nat.one_le_pow _ _ hd
@@ -73,6 +78,7 @@ theorem mbqc_edge_upper_bound (n : ℕ) (hn : 1 ≤ n) :
   use n * ( n - 1 ) / 2
 
 
+/-- [Section: ## 6. Novel: Quantum Error Correction from Descent] -/
 theorem descent_error_bound (d₁ d₂ : ℕ) (hd₁ : 0 < d₁) (hd₂ : 0 < d₂)
     (hdvd : d₁ ∣ d₂) :
     (d₁ : ℚ) / d₂ ≤ 1 := by

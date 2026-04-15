@@ -30,6 +30,15 @@ structure EntropyFunctional {T S : Type*} [AddMonoid T] (Φ : TemporalFlow T S) 
   monotone : ∀ (t : T) (s : S), entropy s ≤ entropy (Φ.flow t s)
 
 
+/-- [Section: ## Arrow of Time Theorem
+The central result: if entropy STRICTLY increases for some non-equilibrium state
+at some positive time, then the flow cannot have an inverse at that time.
+This is the algebraic essence of the arrow of time.
+If η(Φ(t)(s)) > η(s) and η is monotone for all time parameters,
+then Φ(-t) cannot exist as a left inverse of Φ(t) that also satisfies
+the entropy monotonicity condition. The proof: rewriting the inverse condition
+into the monotonicity inequality yields η(Φ(t)(s)) ≤ η(s), contradicting
+the strict increase.] -/
 theorem arrow_of_time
     {S : Type*}
     (flow_t : S → S)        -- Φ(t): forward evolution
@@ -128,6 +137,11 @@ theorem entropy_monotone_trajectory
   exact η.monotone _ _
 
 
+/-- [Section: ## The Group-Monoid Dichotomy
+This section formalizes the key insight: if a reversible flow has a
+strictly monotone entropy functional, we get a contradiction.
+This is the full Arrow of Time Theorem: ReversibleFlow + StrictlyIncreasingEntropy = ⊥.
+Therefore: StrictlyIncreasingEntropy ⟹ time is NOT a group (just a monoid).] -/
 theorem group_monoid_dichotomy
     {G S : Type*} [AddGroup G]
     (Φ : ReversibleFlow G S)

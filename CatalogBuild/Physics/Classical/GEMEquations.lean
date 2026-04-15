@@ -7,6 +7,7 @@ Declarations: 11
 
 import Mathlib
 
+/-- [Section: ## 1. The Hierarchy Problem: Gravity vs Electromagnetism] -/
 theorem gravity_em_ratio_bound :
     ∀ (G m_p m_e e_sq k_e : ℝ),
     G > 0 → m_p > 0 → m_e > 0 → e_sq > 0 → k_e > 0 →
@@ -15,6 +16,7 @@ theorem gravity_em_ratio_bound :
   intro G m_p m_e e_sq k_e hG hm_p hm_e he_sq hk_e h; rw [ div_lt_div_iff₀ ] at h <;> nlinarith [ show 0 < G*m_p*m_e by positivity, show 0 < k_e*e_sq by positivity ] ;
 
 
+/-- [Section: ## 2. Casimir Energy Density] -/
 theorem casimir_energy_monotone :
     ∀ (a₁ a₂ : ℝ) (C : ℝ),
     0 < a₁ → 0 < a₂ → a₁ < a₂ → C > 0 →
@@ -28,6 +30,7 @@ theorem casimir_energy_negative :
   exact fun a C ha hC => div_neg_of_neg_of_pos ( neg_neg_of_pos hC ) ( pow_pos ha 4 )
 
 
+/-- [Section: ## 3. Warp Bubble Shaping Function] -/
 theorem warp_shaping_bounded :
     ∀ (f : ℝ → ℝ),
     (∀ x, 0 ≤ f x) →
@@ -45,6 +48,7 @@ theorem warp_energy_scaling :
   intros; gcongr;
 
 
+/-- [Section: ## 4. Gravitomagnetic Field Scaling] -/
 theorem gravitomagnetic_field_scaling :
     ∀ (G M ω c R : ℝ),
     G > 0 → M > 0 → ω > 0 → c > 0 → R > 0 →
@@ -59,6 +63,7 @@ theorem gemr_amplification :
   exact fun B Q hB hQ => lt_mul_of_one_lt_left hB hQ
 
 
+/-- [Section: ## 5. Levitation Force Balance] -/
 theorem levitation_equilibrium :
     ∀ (m g F_lev : ℝ),
     m > 0 → g > 0 →
@@ -74,6 +79,7 @@ theorem gravitomagnetic_levitation_bound :
   exact fun m g v hm hg hv => mul_div_mul_left _ _ hm.ne'
 
 
+/-- [Section: ## 6. Energy Hierarchy Theorem] -/
 theorem vdb_optimization :
     ∀ (R_outer R_inner : ℝ),
     0 < R_outer → 0 < R_inner → R_outer < R_inner →

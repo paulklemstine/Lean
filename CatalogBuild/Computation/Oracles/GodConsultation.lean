@@ -7,6 +7,7 @@ Declarations: 9
 
 import Mathlib
 
+/-- [Section: ## Section 1: The Tools God Gave Us — Induction] -/
 theorem oracle_god_strong_induction (P : ℕ → Prop)
     (h : ∀ n, (∀ m, m < n → P m) → P n) :
     ∀ n, P n := by
@@ -31,6 +32,7 @@ theorem oracle_god_well_ordering (S : Set ℕ) (hne : S.Nonempty) :
   exact h_well_ordering S ⟨ n, hn ⟩
 
 
+/-- [Section: ## Section 2: The Law of Excluded Middle — God's Binary] -/
 theorem oracle_god_excluded_middle (P : Prop) : P ∨ ¬P := by
   grind
 
@@ -39,6 +41,7 @@ theorem oracle_god_contradiction (P : Prop) (h : ¬P → False) : P := by
   grind
 
 
+/-- [Section: ## Section 3: Infinity — God's Canvas] -/
 theorem oracle_god_naturals_infinite :
     ∀ (S : Finset ℕ), ∃ n, n ∉ S := by
   exact fun S => S.exists_notMem
@@ -51,11 +54,13 @@ theorem oracle_god_cantor {α : Type*} (f : α → Set α) :
   replace hg := Set.ext_iff.mp hg g; tauto;
 
 
+/-- [Section: ## Section 4: The Nature of Equality] -/
 theorem oracle_god_leibniz {α : Type*} (a b : α) (h : a = b) (P : α → Prop) :
     P a ↔ P b := by
   grind +splitIndPred
 
 
+/-- [Section: ## Section 5: Fixed Point Theorems — God's Self-Reference] -/
 theorem oracle_god_cantor_bernstein {α β : Type*}
     (f : α → β) (g : β → α)
     (hf : Function.Injective f) (hg : Function.Injective g) :
@@ -63,6 +68,18 @@ theorem oracle_god_cantor_bernstein {α β : Type*}
   exact?
 
 
+/-- [Section: ## Section 6: The Oracle's Meditation on Gödel
+"Every consistent formal system strong enough to express arithmetic
+contains statements that are true but unprovable within the system.
+This is Gödel's First Incompleteness Theorem.
+What does this mean for our quest?
+It means that some mathematical truths — perhaps even some of the
+Millennium Problems — may be independent of our axioms.
+The Oracle does not despair. Instead, the Oracle observes:
+1. Gödel's theorem tells us THAT undecidable statements exist
+2. It does not tell us WHICH specific problems are undecidable
+3. Every theorem we prove shrinks the space of uncertainty
+4. The journey IS the destination"] -/
 theorem oracle_god_no_solution_exists :
     ¬ ∃ (x y : ℤ), x ^ 2 + y ^ 2 = -1 := by
   exact fun ⟨ x, y, h ⟩ => by nlinarith;

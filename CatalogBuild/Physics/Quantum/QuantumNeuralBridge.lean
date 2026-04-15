@@ -25,6 +25,9 @@ theorem orthogonal_preserves_dot {n : ℕ} (Q : Matrix (Fin n) (Fin n) ℝ)
   rw [ mul_eq_one_comm.mp hQ, Matrix.vecMul_one ]
 
 
+/-- [Section: ## §3: Composition of Layers Forms a Monoid
+Both quantum circuits and neural networks are fundamentally about composing layers.
+This algebraic structure is a monoid: associative composition with an identity element.] -/
 theorem layer_composition_assoc {X : Type*} (f g h : X → X) :
     f ∘ (g ∘ h) = (f ∘ g) ∘ h := by
   rfl
@@ -43,6 +46,10 @@ theorem gate_composition_assoc {n : ℕ} (U V W : Matrix (Fin n) (Fin n) ℝ) :
   rw [ Matrix.mul_assoc ]
 
 
+/-- [Section: ## §4: The Parameter-Shift Rule
+The quantum analogue of backpropagation: computing gradients of quantum circuits.
+For a gate R(θ) = exp(-iθσ/2), the derivative of the expectation value is:
+∂⟨H⟩/∂θ = [⟨H⟩(θ + π/2) - ⟨H⟩(θ - π/2)] / 2] -/
 theorem sin_deriv_at_zero : HasDerivAt sin (cos 0) 0 := by
   exact Real.hasDerivAt_sin 0
 
@@ -58,12 +65,16 @@ theorem chain_rule_at {f g : ℝ → ℝ} {x : ℝ} {f' g' : ℝ}
   exact hf.comp x hg
 
 
+/-- [Section: ## §6: Universality — The Crown Jewel
+Both quantum gate sets and neural network architectures are universal approximators.] -/
 theorem dense_subgroup_approximation {G : Type*} [TopologicalSpace G] [Group G]
     (S : Subgroup G) (hS : Dense (S : Set G)) (g : G) :
     g ∈ closure (S : Set G) := by
   exact hS g
 
 
+/-- [Section: ## §7: Correlations Across Subsystems
+Both entanglement and attention create correlations between components via bilinear maps.] -/
 theorem bilinear_add_left {R M N P : Type*}
     [CommSemiring R] [AddCommMonoid M] [AddCommMonoid N] [AddCommMonoid P]
     [Module R M] [Module R N] [Module R P]
@@ -72,6 +83,7 @@ theorem bilinear_add_left {R M N P : Type*}
   aesop
 
 
+/-- [Section: ## §8: The Noise-Regularization Correspondence] -/
 theorem contraction_bound (f : ℝ → ℝ) (hf : ∀ x y, |f x - f y| ≤ |x - y|)
     (x y : ℝ) : |f x - f y| ≤ |x - y| := by
   exact hf x y

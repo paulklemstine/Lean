@@ -46,6 +46,7 @@ theorem SPBTree.eval_var (x : ℝ) : SPBTree.var.eval x = x := rfl
 def doubleSPBTree : SPBTree := .node .var .var
 
 
+/-- [Section: ## SPB Tree Depth and Expressiveness] -/
 theorem doubleSPBTree_eval (x : ℝ) :
     doubleSPBTree.eval x = 2 * x / (1 - x ^ 2) := by
   simp [doubleSPBTree, SPBTree.eval, spbApprox]; ring

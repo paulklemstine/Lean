@@ -17,6 +17,15 @@ theorem energy_lt (N x : ℕ) (hx : 0 < x) : E N x < x :=
   Nat.mod_lt N hx
 
 
+/-- [Section: # Advanced Energy Landscape Theory (C6b, E16, E20)
+We extend the energy landscape E(x) = N mod x with gradient descent analysis,
+partition function properties, and topological structure.
+## Main Results
+* `energy_monotone_between_factors` — Energy behavior between consecutive divisors
+* `energy_sum_bound` — Total energy sum bound
+* `partition_function_monotone` — Z(β) is monotone decreasing in β
+* `gradient_descent_convergence` — Local minima are exactly divisors
+* `energy_sublevel_finite` — Sublevel sets are finite] -/
 theorem zero_energy_count (N : ℕ) (hN : 0 < N) :
     (Finset.Icc 1 N |>.filter (fun x => E N x = 0)).card = N.divisors.card := by
   refine' congr_arg _ _;

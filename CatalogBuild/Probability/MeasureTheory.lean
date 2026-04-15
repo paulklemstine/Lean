@@ -32,6 +32,7 @@ theorem prob_measure_total {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω)
   measure_univ
 
 
+/-- [Section: ## §2: Probability Measures] -/
 theorem prob_complement' {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω)
     [IsProbabilityMeasure μ] (A : Set Ω) (hA : MeasurableSet A) :
     μ Aᶜ = 1 - μ A := by
@@ -43,4 +44,5 @@ theorem qubit_normalization (a b : ℝ) (h : a ^ 2 + b ^ 2 = 1) :
     a ^ 2 + b ^ 2 = 1 := h
 
 
+/-- [Section: ## §4: Hausdorff Dimension Bounds] -/
 theorem cantor_dim_bounds : (1 : ℕ) < 2 ∧ (2 : ℕ) < 3 := by omega

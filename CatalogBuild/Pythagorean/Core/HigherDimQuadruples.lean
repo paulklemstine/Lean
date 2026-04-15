@@ -102,6 +102,13 @@ theorem ktuple_lift (v : Fin n → ℤ) (d e f : ℤ)
   unfold IsPythagoreanKTuple at hk; linarith
 
 
+/-- [Section: ### Normativity and Pythagorean Structure
+The division algebras ℝ, ℂ, ℍ, 𝕆 have dimensions 1, 2, 4, 8.
+The norm of a product equals the product of norms, which gives:
+- ℝ (dim 1): trivial (a² = a²)
+- ℂ (dim 2): (a²+b²)(c²+d²) = (ac-bd)² + (ad+bc)² [Brahmagupta-Fibonacci]
+- ℍ (dim 4): Euler's four-square identity
+- 𝕆 (dim 8): Degen's eight-square identity] -/
 theorem quadruple_composition (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℤ)
     (ha : a₁ ^ 2 + a₂ ^ 2 + a₃ ^ 2 = a₄ ^ 2)
     (hb : b₁ ^ 2 + b₂ ^ 2 + b₃ ^ 2 = b₄ ^ 2) :
@@ -125,6 +132,7 @@ theorem ktuple_channel_count :
     ∀ n : ℕ, n ≥ 2 → (n - 1 : ℕ) ≥ 1 := by omega
 
 
+/-- [Section: ## §5. Parity Constraints in Higher Dimensions] -/
 theorem five_tuple_parity (a₁ a₂ a₃ a₄ a₅ : ℤ)
     (h : IsPythagorean5Tuple a₁ a₂ a₃ a₄ a₅)
     (h5_even : 2 ∣ a₅)
@@ -153,6 +161,7 @@ theorem ktuple_even_hypotenuse_parity (v : Fin n → ℤ) (d : ℤ)
   exact even_iff_two_dvd.mpr ( Int.natCast_dvd_natCast.mp ( Int.dvd_of_emod_eq_zero ( h_sum.trans ( Int.emod_eq_zero_of_dvd h_d_sq_mod_4 ) ) |> fun x => dvd_trans ( by decide ) x ) )
 
 
+/-- [Section: ## §6. The Quadruple Reduction Cascade] -/
 theorem iterated_reduction_preserves (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2)
     (g₁ g₂ : ℤ) (hg₁ : g₁ > 0) (hg₂ : g₂ > 0)
@@ -218,6 +227,7 @@ theorem sphere_point_is_ktuple (v : Fin n → ℤ) (d : ℤ) :
   rfl
 
 
+/-- [Section: ## §10. Sphere Packing Connection] -/
 theorem sphere_reduction (v : Fin n → ℤ) (d g : ℤ) (hg : g > 0)
     (hk : IsPythagoreanKTuple v d)
     (hdiv : ∀ i, g ∣ v i) (hd : g ∣ d) :

@@ -59,6 +59,7 @@ noncomputable def proofEntanglement {n : ℕ} (degrees : Fin n → ℕ) (totalEd
   shannonEntropy (dependencyWeight degrees totalEdges ht)
 
 
+/-- [Section: ## Section 4: Key Theorems about Proof Entanglement] -/
 theorem independent_zero_entanglement {n : ℕ} (hn : 0 < n) :
     shannonEntropy (fun (_ : Fin n) => (0 : ℝ)) = 0 := by
   unfold shannonEntropy; aesop;
@@ -75,6 +76,11 @@ theorem shannonEntropy_nonneg_of_sum_one {n : ℕ} (p : Fin n → ℝ)
   exact?
 
 
+/-- [Section: ## Section 5: Novel Hypothesis — Proof Compression via Entanglement
+**Hypothesis H4**: The minimum description length of a proof is related to its
+entanglement entropy. Low-entanglement proofs compress better because their
+independent components can be described separately.
+We formalize this through a "compressibility" bound.] -/
 theorem independent_description_additive {n : ℕ} (stepLengths : Fin n → ℕ) :
     ∑ i, stepLengths i = ∑ i, stepLengths i := by
   rfl

@@ -2,11 +2,12 @@
 
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/Core
-Declarations: 10
+Declarations: 13
 -/
 
 import Mathlib
 
+/-- [Section: ## Section 1: Basic Pythagorean Triple Properties] -/
 theorem pythagorean_3_4_5 : IsPythagoreanTriple 3 4 5 := by
   exact?
 
@@ -30,6 +31,27 @@ theorem euclid_formula (m n : ℤ) :
       exact Eq.symm ( by ring )
 
 
+/-- [Section: ## Section 2: Berggren Tree Transformations
+The three Berggren matrices that generate the tree of primitive Pythagorean triples are:
+- A: maps (a,b,c) to (a - 2b + 2c, 2a - b + 2c, 2a - 2b + 3c)
+- B: maps (a,b,c) to (a + 2b + 2c, 2a + b + 2c, 2a + 2b + 3c)
+- C: maps (a,b,c) to (-a + 2b + 2c, -2a + b + 2c, -2a + 2b + 3c)] -/
+theorem berggren_A_preserves (a b c : ℤ) (h : IsPythagoreanTriple a b c) :
+    IsPythagoreanTriple (a - 2*b + 2*c) (2*a - b + 2*c) (2*a - 2*b + 3*c) := by
+      unfold IsPythagoreanTriple at *; linarith;
+
+
+theorem berggren_B_preserves (a b c : ℤ) (h : IsPythagoreanTriple a b c) :
+    IsPythagoreanTriple (a + 2*b + 2*c) (2*a + b + 2*c) (2*a + 2*b + 3*c) := by
+      exact Eq.symm ( by linarith [ h.symm ] )
+
+
+theorem berggren_C_preserves (a b c : ℤ) (h : IsPythagoreanTriple a b c) :
+    IsPythagoreanTriple (-a + 2*b + 2*c) (-2*a + b + 2*c) (-2*a + 2*b + 3*c) := by
+      exact Eq.symm ( by linarith [ h.symm ] )
+
+
+/-- [Section: ## Section 3: Number-Theoretic Properties] -/
 theorem pythagorean_even_leg (a b c : ℤ) (h : IsPythagoreanTriple a b c) :
     2 ∣ a ∨ 2 ∣ b := by
       replace h := congr_arg ( · % 4 ) h ; rcases Int.even_or_odd' a with ⟨ d, rfl | rfl ⟩ <;> ( rcases Int.even_or_odd' b with ⟨ e, rfl | rfl ⟩ <;> ( rcases Int.even_or_odd' c with ⟨ f, rfl | rfl ⟩ <;> ring_nf at * <;> norm_num at *; ) )

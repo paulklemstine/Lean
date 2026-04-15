@@ -223,6 +223,7 @@ theorem trace_outer_product (n : ℕ) (u v : Fin n → ℤ) :
   simp [Matrix.trace, Matrix.vecMulVec, Matrix.diag]
 
 
+/-- [Section: ## §10: Complexity-Theoretic Foundations] -/
 theorem composite_has_small_factor (N : ℕ) (hN : 1 < N) (hcomp : ¬Nat.Prime N) :
     ∃ d : ℕ, Nat.Prime d ∧ d ∣ N ∧ d * d ≤ N := by
   obtain ⟨d, hd_prime, hd_factor⟩ : ∃ d, Nat.Prime d ∧ d ∣ N ∧ ∀ e, Nat.Prime e → e ∣ N → d ≤ e := by
@@ -271,6 +272,9 @@ theorem carmichael_divides_totient (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prim
   exact Nat.lcm_dvd_mul (p - 1) (q - 1)
 
 
+/-- [Section: ## §12: Cyclotomic and Cunningham Factoring
+The Cunningham project factors numbers of the form b^n ± 1 using
+algebraic identities — the "warp drives" of factoring.] -/
 theorem cyclotomic_2 (x : ℤ) : x ^ 2 - 1 = (x - 1) * (x + 1) := by ring
 
 theorem cyclotomic_3 (x : ℤ) : x ^ 3 - 1 = (x - 1) * (x ^ 2 + x + 1) := by ring

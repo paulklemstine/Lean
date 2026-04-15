@@ -120,6 +120,7 @@ def quantumCoherence_l1 {n : ℕ} (amplitudes : Fin n → ℝ)
   (∑ i, amplitudes i) ^ 2 - 1
 
 
+/-- [Section: ## Part III: Quantum Coherence] -/
 theorem quantum_coherence_nonneg {n : ℕ} (hn : 0 < n)
     (amplitudes : Fin n → ℝ)
     (h_nonneg : ∀ i, 0 ≤ amplitudes i)
@@ -174,6 +175,7 @@ theorem tensor_coherence_decomposition
   ring
 
 
+/-- [Section: ## Part IV: N-Dimensional Coherence and Entanglement] -/
 theorem bell_state_coherence :
     let a : Fin 4 → ℝ := ![1 / Real.sqrt 2, 0, 0, 1 / Real.sqrt 2]
     (∑ i, a i) ^ 2 - 1 = 1 := by

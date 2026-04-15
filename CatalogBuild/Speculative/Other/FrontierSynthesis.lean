@@ -54,6 +54,7 @@ theorem id_preserves_composition {α : Type*} (f : α → α) : f ∘ id = f ∧
   exact ⟨Function.comp_id f, Function.id_comp f⟩
 
 
+/-- [Section: ## §6: The Vandermonde Repulsion Factor] -/
 theorem vandermonde_vanishes_at_coincidence {n : ℕ} (ev : Fin n → ℝ)
     (i j : Fin n) (hij : i ≠ j) (heq : ev i = ev j) :
     ∏ k : Fin n, ∏ l ∈ Finset.Ioi k, (ev l - ev k) = 0 := by

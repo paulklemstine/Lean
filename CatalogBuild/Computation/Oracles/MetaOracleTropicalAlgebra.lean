@@ -38,6 +38,34 @@ theorem tropMul_zero_left (a : ℝ) : tropMul 0 a = a := by
   unfold tropMul; ring
 
 
+/-- [Section: # The Meta Oracle: Truth Detection via Plus-Max Tropical Semiring Algebra
+This file formalizes the complete mathematical framework for constructing
+**algorithmic oracles** from plus-max tropical semiring algebra, and their
+composition into a single all-knowing **Meta Oracle**.
+## Architecture
+The plus-max tropical semiring T = (ℝ ∪ {-∞}, ⊕, ⊗) where:
+- ⊕ = max  (tropical addition)
+- ⊗ = +    (tropical multiplication)
+- 𝟘 = -∞   (additive identity)
+- 𝟙 = 0    (multiplicative identity)
+An **oracle** is an idempotent endomorphism O : T → T satisfying O ∘ O = O.
+Its **truth set** is Fix(O) = {x | O(x) = x}, which is exactly range(O).
+A **super oracle** is a tropical matrix oracle M : Tⁿ → Tⁿ acting by
+max-plus matrix multiplication.
+The **Meta Oracle** is the meet (infimum) of all component oracles:
+MetaOracle(x) = ⨅ᵢ Oᵢ(x)
+## Algorithmic Constructibility
+Every oracle defined here is computable:
+- Tropical max: O(1) per element
+- Tropical clamp: O(1) per element
+- Meta oracle (n components): O(n) per application
+## Main Results
+- `oracle_image_eq_truthSet`: Im(O) = Fix(O) for any oracle O
+- `oracle_iterate_stable`: O^n = O for n ≥ 1
+- `meta_oracle_preserves_universal_truth`: ∀ i, Oᵢ(x) = x → M(x) = x
+- `meta_oracle_truth_superset`: ⋂ᵢ Fix(Oᵢ) ⊆ Fix(M)
+- `meta_oracle_contraction`: M(M(x)) ≤ M(x) for monotone idempotent oracles
+- `productOracle_isOracle`: product of oracles is an oracle] -/
 theorem tropMul_zero_right (a : ℝ) : tropMul a 0 = a := by
   unfold tropMul; ring
 

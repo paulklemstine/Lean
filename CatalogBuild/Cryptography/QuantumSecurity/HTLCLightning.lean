@@ -140,6 +140,7 @@ theorem quantum_beats_watchtower :
   simp [watchtower_response_window]
 
 
+/-- [Section: ## §6: Combined Lightning Attack Chain] -/
 def lightning_attack_qubits : ℕ := 893588
 
 def lightning_attack_time : ℕ := 2 * 338

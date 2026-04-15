@@ -231,6 +231,7 @@ theorem T_squared : quat_mul T_quat T_quat = ![0, 2, 0, 0] := by native_decide
 def T4 : Fin 4 → ℤ := quat_mul (quat_mul T_quat T_quat) (quat_mul T_quat T_quat)
 
 
+/-- [Section: ## Section 11: Specific Gate Decomposition Examples] -/
 theorem T4_norm : quat_sqnorm T4 = 16 := by native_decide
 
 

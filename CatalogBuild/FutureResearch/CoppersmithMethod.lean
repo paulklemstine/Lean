@@ -34,6 +34,7 @@ theorem coppersmith_quadratic_bound (x₀ b c N : ℤ) (hN : 0 < N)
   small_mod_root_zero _ N hN hmod hsmall
 
 
+/-- [Section: ### Hensel's Lemma (for quadratics)] -/
 theorem exists_mod_cancel (b k p : ℤ) (hp : Nat.Prime p.toNat) (hb : ¬ p ∣ b) :
     ∃ t : ℤ, p ∣ (k + b * t) := by
   rcases Int.eq_nat_or_neg p with ⟨ n, rfl | rfl ⟩ <;> simp_all +decide [ Int.natCast_dvd ];
@@ -60,6 +61,7 @@ theorem hensel_lift_square (a c p : ℤ) (hp : 0 < p) (hprime : Nat.Prime p.toNa
   nlinarith
 
 
+/-- [Section: ### Lattice Basis for Coppersmith] -/
 theorem coppersmith_lattice_det (N : ℤ) : N * N = N ^ 2 := by ring
 
 

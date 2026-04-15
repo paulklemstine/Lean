@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## Abstract Signature Scheme] -/
 structure SignatureScheme (Message PublicKey SecretKey Signature : Type) where
   keygen : SecretKey → PublicKey
   sign : SecretKey → Message → Signature
@@ -16,6 +17,7 @@ structure SignatureScheme (Message PublicKey SecretKey Signature : Type) where
   correctness : ∀ sk m, verify (keygen sk) m (sign sk m)
 
 
+/-- [Section: ## Lattice Parameters] -/
 structure LatticeParams where
   n : ℕ
   q : ℕ
@@ -25,6 +27,7 @@ structure LatticeParams where
   hβ : 0 < β
 
 
+/-- [Section: ## SIS Hardness] -/
 structure SISHardness where
   sisAdvantage : ℕ → ℝ
   isHard : ∀ c : ℕ, ∃ N : ℕ, ∀ n : ℕ, N ≤ n → |sisAdvantage n| < (1 / (n : ℝ)) ^ c
@@ -45,6 +48,7 @@ theorem lattice_sig_security (sis : SISHardness)
     linarith⟩
 
 
+/-- [Section: ## BLS vs Lattice Comparison] -/
 noncomputable def blsSigSize : ℝ := 48
 
 noncomputable def latticeSigSize (n : ℕ) : ℝ := 2 * (n : ℝ)
@@ -64,6 +68,7 @@ theorem lattice_larger_for_security (n : ℕ) (hn : 24 ≤ n) :
   linarith
 
 
+/-- [Section: ## Aggregation Space Efficiency] -/
 theorem aggregation_space_saving (k : ℕ) (sigSize aggSize : ℝ)
     (hk : 1 < k) (hSig : 0 < sigSize)
     (h_saving : aggSize < k * sigSize) :
@@ -72,6 +77,7 @@ theorem aggregation_space_saving (k : ℕ) (sigSize aggSize : ℝ)
   exact h_saving
 
 
+/-- [Section: ## Quantum Resistance] -/
 theorem quantum_lattice_exponential (n : ℕ) (hn : 2 ≤ n) :
     (1 : ℝ) < 2 ^ n := by
   have : (1:ℝ) < 2 := by norm_num

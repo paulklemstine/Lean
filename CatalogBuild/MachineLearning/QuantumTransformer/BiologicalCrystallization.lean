@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: ## §1: Winner-Take-All Networks] -/
 def is_one_hot {n : ℕ} (v : Fin n → ℝ) : Prop :=
   ∃ k, v k = 1 ∧ ∀ j, j ≠ k → v j = 0
 
@@ -35,6 +36,7 @@ theorem one_hot_crystal_loss_zero {n : ℕ} (v : Fin n → ℝ) (hv : is_one_hot
   rcases one_hot_binary v hv i with h | h <;> simp [h]
 
 
+/-- [Section: ## §2: Sparse Coding] -/
 def is_k_sparse {n : ℕ} (k : ℕ) (v : Fin n → ℝ) : Prop :=
   (Finset.univ.filter (fun i => v i ≠ 0)).card ≤ k
 
@@ -63,6 +65,7 @@ theorem sparse_monotone {n k : ℕ} {v : Fin n → ℝ}
   unfold is_k_sparse at *; omega
 
 
+/-- [Section: ## §3: Phase Transition Model] -/
 theorem low_temp_crystallization (tau : ℝ) (htau : 0 < tau) (htau_small : tau < 1) :
     1 / tau > 1 := by
   rw [gt_iff_lt, one_lt_div htau]; linarith
@@ -73,6 +76,7 @@ theorem critical_temp_exists :
   ⟨1 / 2, by norm_num, by norm_num⟩
 
 
+/-- [Section: ## §4: Neural Population States] -/
 theorem neural_attention_states (n : ℕ) :
     Fintype.card (Equiv.Perm (Fin n)) = n.factorial := by
   simp [Fintype.card_perm, Fintype.card_fin]

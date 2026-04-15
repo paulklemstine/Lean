@@ -46,6 +46,7 @@ theorem onorm_nonneg (v : Fin 8 → ℤ) : onorm v ≥ 0 := by
 cross-collision pairs. -/
 theorem dim8_cross_collisions : Nat.choose 8 2 = 28 := by decide
 
+/-- [Section: ## Part 2: E₈ Lattice Geometry] -/
 theorem dim4_cross_collisions : Nat.choose 4 2 = 6 := by decide
 
 theorem dim2_cross_collisions : Nat.choose 2 2 = 1 := by decide

@@ -17,6 +17,17 @@ theorem master_equation_general {X : Type*} (O : X → X) (hO : ∀ x, O (O x) =
   · intro hy; exact ⟨y, hy⟩
 
 
+/-- [Section: # Cross-Domain Bridges & Unification: New Formalizations
+This file formalizes theorems from the Cross-Domain Bridges & Unification research,
+focusing on the missing inter-domain connections identified in §15 of the corpus
+cross-examination.
+## Contents
+1. **The Idempotent Thread**: Universal properties of e² = e across domains
+2. **Tropical–Classical Bridge**: Tropical limits and ReLU
+3. **Random Matrix Repulsion**: Vandermonde determinant and contact repulsion
+4. **Categorified Bridges**: Bridge composition as 2-categorical structure
+5. **Tropical Langlands Foundations**: First steps toward the missing correspondence
+6. **Unification Metatheorems**: Universal idempotent properties] -/
 theorem idempotent_join_comm {R : Type*} [CommRing R] {e f : R}
     (he : e * e = e) (hf : f * f = f) :
     (e + f - e * f) * (e + f - e * f) = e + f - e * f := by

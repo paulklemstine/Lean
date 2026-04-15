@@ -26,6 +26,7 @@ def CoherenceTier.toNat : CoherenceTier → ℕ
   | .tier3 => 3
 
 
+/-- [Section: ## Coherence Tiers] -/
 instance : LE CoherenceTier where
   le a b := a.toNat ≤ b.toNat
 
@@ -68,6 +69,7 @@ def isPolyComm (cc : CommComplexity) : Prop :=
   ∃ c k, ∀ n, 0 < n → cc.commBits n ≤ c * n ^ k
 
 
+/-- [Section: ## Communication Complexity Model] -/
 theorem log_implies_poly (cc : CommComplexity) (h : isLogComm cc) :
     isPolyComm cc := by
       obtain ⟨ c, hc ⟩ := h;
@@ -75,6 +77,7 @@ theorem log_implies_poly (cc : CommComplexity) (h : isLogComm cc) :
       exact fun n hn => le_trans ( hc n hn ) ( Nat.mul_le_mul_left _ ( Nat.le_of_lt ( Nat.log_lt_of_lt_pow ( by linarith ) ( by exact Nat.recOn n ( by norm_num ) fun n ihn => by norm_num [ Nat.pow_succ ] at * ; nlinarith ) ) ) )
 
 
+/-- [Section: ## Information-Theoretic Foundations] -/
 theorem binomial_sum (n : ℕ) :
     Finset.sum (Finset.range (n + 1)) (fun k => Nat.choose n k) = 2 ^ n := by
       convert Nat.sum_range_choose n
@@ -105,6 +108,7 @@ def isPolyDepth (cd : CircuitDepth) : Prop :=
   ∃ c k, ∀ n, cd.depth n ≤ c * n ^ k
 
 
+/-- [Section: ## Tier Separation via Counting Arguments] -/
 theorem bool_fn_count (n : ℕ) :
     Fintype.card (Fin (2^n) → Bool) = 2 ^ (2 ^ n) := by
       norm_num
@@ -139,6 +143,7 @@ noncomputable def approxRatio (optimal achieved : ℝ) (hopt : 0 < optimal) : �
   achieved / optimal
 
 
+/-- [Section: ## Defect Algebra for Approximation] -/
 theorem approxRatio_ge_one (opt ach : ℝ) (hopt : 0 < opt) (hge : opt ≤ ach) :
     1 ≤ approxRatio opt ach hopt := by
       unfold approxRatio;

@@ -54,6 +54,7 @@ noncomputable def sandwichProfit (pool : PoolState) (victim : PendingSwap)
   tokens_bought - dx_front
 
 
+/-- [Section: ## Sandwich Attack] -/
 theorem sandwich_output_pos (pool : PoolState)
     (dx_front : ℝ) (hdx : 0 < dx_front) :
     0 < swapOutput pool dx_front := by
@@ -82,6 +83,7 @@ structure PGABid where
   hProfit : 0 < expectedProfit
 
 
+/-- [Section: ## Priority Gas Auction (PGA)] -/
 theorem pga_equilibrium_limit (profit : ℝ) (hProfit : 0 < profit)
     (n : ℕ) (hn : 2 ≤ n) :
     ∀ ε > 0, ∃ N : ℕ, N ≤ n →

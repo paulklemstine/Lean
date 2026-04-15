@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Computation/Factoring
-Declarations: 16
+Declarations: 17
 -/
 
 import Mathlib
@@ -174,6 +174,7 @@ theorem invB1_preserves_form (a b c : ℤ) :
     a^2 + b^2 - c^2 := by ring
 
 
+/-- [Section: ## §7: Formal Correctness Theorems] -/
 theorem invB2_preserves_form (a b c : ℤ) :
     (a + 2*b - 2*c)^2 + (2*a + b - 2*c)^2 - (-2*a - 2*b + 3*c)^2 =
     a^2 + b^2 - c^2 := by ring
@@ -182,6 +183,12 @@ theorem invB2_preserves_form (a b c : ℤ) :
 theorem invB3_preserves_form (a b c : ℤ) :
     (-a - 2*b + 2*c)^2 + (2*a + b - 2*c)^2 - (-2*a - 2*b + 3*c)^2 =
     a^2 + b^2 - c^2 := by ring
+
+
+/-- If gcd(a, N) = d with 1 < d < N, then d divides N (factor found) -/
+theorem gcd_reveals_factor (a N d : ℕ) (hd : d = Nat.gcd a N)
+    (h1 : 1 < d) (h2 : d < N) : d ∣ N := by
+  rw [hd]; exact Nat.gcd_dvd_right a N
 
 
 /-- The parent hypotenuse c' = -2a-2b+3c satisfies c' < c when a,b > 0 -/

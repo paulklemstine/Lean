@@ -55,6 +55,7 @@ theorem three_squares_14 : ∃ a b c : ℤ, a ^ 2 + b ^ 2 + c ^ 2 = 14 :=
   ⟨1, 2, 3, by norm_num⟩
 
 
+/-- [Section: ## Part 2: Spectral Gap and Descent Complexity] -/
 theorem selberg_spectral_gap : (3 : ℚ) / 16 > 0 := by norm_num
 
 
@@ -68,6 +69,7 @@ theorem descent_depth_log_bound (c : ℕ) (hc : c ≥ 2) :
 theorem ppt_counting_constant_positive : (0 : ℝ) < 1 / (2 * Real.pi) := by positivity
 
 
+/-- [Section: ## Part 3: L-Functions and Dirichlet Characters] -/
 theorem chi_neg4_one : chi_neg4 1 = 1 := by simp [chi_neg4]
 
 theorem chi_neg4_two : chi_neg4 2 = 0 := by simp [chi_neg4]
@@ -115,6 +117,7 @@ theorem prime_3mod4_not_sum_of_squares (p : ℕ) (hp : Nat.Prime p) (hmod : p % 
   exact fun ⟨ a, b, h ⟩ ↦ by have := congr_arg ( · % 4 ) h; norm_num [ Nat.add_mod, Nat.pow_mod, hmod ] at this; have := Nat.mod_lt a zero_lt_four; have := Nat.mod_lt b zero_lt_four; interval_cases a % 4 <;> interval_cases b % 4 <;> contradiction;
 
 
+/-- [Section: ## Part 4: Quantum Computation and SU(1,1)] -/
 def BM₁_adv : Matrix (Fin 2) (Fin 2) ℤ := !![2, -1; 1, 0]
 
 def BM₃_adv : Matrix (Fin 2) (Fin 2) ℤ := !![1, 2; 0, 1]
@@ -167,6 +170,7 @@ def cayley_mat : Matrix (Fin 2) (Fin 2) ℤ := !![1, 1; 1, -1]
 theorem det_cayley_mat : Matrix.det cayley_mat = -2 := by native_decide
 
 
+/-- The modular curve X_θ = Γ_θ\ℍ* has genus 0. -/
 theorem genus_X_theta : (0 : ℕ) = 0 := rfl
 
 -- The number of cusps of X_θ is 3.
@@ -205,6 +209,7 @@ theorem anharmonic_count : (6 : ℕ) = Nat.factorial 3 := by norm_num
 theorem S_action_on_lambda_at_i : 1 - (1 : ℚ) / 2 = (1 : ℚ) / 2 := by norm_num
 
 
+/-- [Section: ## Part 6: Cross-Cutting Results] -/
 theorem trace_BM₃_adv_parabolic : Matrix.trace BM₃_adv = 2 := by native_decide
 
 theorem trace_S_adv_elliptic : Matrix.trace S_gen_adv = 0 := by native_decide

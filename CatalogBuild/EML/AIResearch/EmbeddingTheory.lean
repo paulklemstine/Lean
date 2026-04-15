@@ -19,6 +19,7 @@ def emlFactoredEmbeddingParams (vocabSize rank d_embed : ℕ) : ℕ :=
   vocabSize * rank + 4 * d_embed
 
 
+/-- [Section: ## §1. Embedding Table Compression] -/
 theorem eml_embedding_table_compact (v r d : ℕ) (_hv : 4 ≤ v)
     (hvr : v * r + 4 * d ≤ v * d) :
     emlFactoredEmbeddingParams v r d ≤ stdEmbeddingTableParams v d := by
@@ -33,6 +34,7 @@ def stdProjectionParams (d_in d_out : ℕ) : ℕ := d_in * d_out
 def emlProjectionParams (d_out : ℕ) : ℕ := 4 * d_out
 
 
+/-- [Section: ## §2. Projection Layer] -/
 theorem eml_projection_compact (di do_ : ℕ) (hdi : 4 ≤ di) :
     emlProjectionParams do_ ≤ stdProjectionParams di do_ := by
   unfold emlProjectionParams stdProjectionParams; exact Nat.mul_le_mul_right do_ hdi
@@ -42,6 +44,7 @@ theorem eml_projection_compact (di do_ : ℕ) (hdi : 4 ≤ di) :
 def tripletLoss (d_pos d_neg margin : ℝ) : ℝ := max 0 (d_pos - d_neg + margin)
 
 
+/-- [Section: ## §3. Triplet Loss Properties] -/
 theorem triplet_loss_nonneg (dp dn m : ℝ) : 0 ≤ tripletLoss dp dn m := by
   unfold tripletLoss; exact le_max_left 0 _
 
@@ -64,6 +67,7 @@ def dimReductionParams (d_high d_low : ℕ) : ℕ := d_high * d_low
 def emlDimReductionParams (d_low : ℕ) : ℕ := 4 * d_low
 
 
+/-- [Section: ## §4. Dimensionality Reduction] -/
 theorem eml_dim_reduction_compact (dh dl : ℕ) (hh : 4 ≤ dh) :
     emlDimReductionParams dl ≤ dimReductionParams dh dl := by
   unfold emlDimReductionParams dimReductionParams; exact Nat.mul_le_mul_right dl hh
@@ -74,6 +78,7 @@ def quantizedEmbeddingMemory (numEmbeddings d_embed bits : ℕ) : ℕ :=
   numEmbeddings * d_embed * bits
 
 
+/-- [Section: ## §5. Embedding Quantization] -/
 theorem fewer_bits_less_memory (n d b1 b2 : ℕ) (hb : b1 ≤ b2) :
     quantizedEmbeddingMemory n d b1 ≤ quantizedEmbeddingMemory n d b2 := by
   unfold quantizedEmbeddingMemory; exact Nat.mul_le_mul_left (n * d) hb
@@ -82,6 +87,7 @@ theorem fewer_bits_less_memory (n d b1 b2 : ℕ) (hb : b1 ≤ b2) :
 /-- Cost of contextual embedding layer (transformer-style) -/
 def contextualEmbeddingCost (seqLen d_model : ℕ) : ℕ := seqLen * d_model * d_model
 
+/-- [Section: ## §6. Contextual Embeddings] -/
 def emlContextualCost (seqLen d_model : ℕ) : ℕ := seqLen * 4 * d_model
 
 
@@ -100,6 +106,7 @@ def nnSearchCost (numStored d_embed : ℕ) : ℕ := numStored * d_embed
 def emlNNSearchCost (numStored d_compressed : ℕ) : ℕ := numStored * d_compressed
 
 
+/-- [Section: ## §7. Nearest Neighbor Search] -/
 theorem eml_nn_search_cheaper (n de dc : ℕ) (hd : dc ≤ de) :
     emlNNSearchCost n dc ≤ nnSearchCost n de := by
   unfold emlNNSearchCost nnSearchCost; exact Nat.mul_le_mul_left n hd
@@ -113,6 +120,7 @@ def composedEmbeddingParams (d1 d_mid d2 : ℕ) : ℕ := d1 * d_mid + d_mid * d2
 def emlComposedParams (d_mid : ℕ) : ℕ := 4 * d_mid + 4 * d_mid
 
 
+/-- [Section: ## §8. Embedding Composition] -/
 theorem eml_composed_cheaper (d1 dm d2 : ℕ) (h1 : 4 ≤ d1) (h2 : 4 ≤ d2) :
     emlComposedParams dm ≤ composedEmbeddingParams d1 dm d2 := by
   unfold emlComposedParams composedEmbeddingParams

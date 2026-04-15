@@ -28,6 +28,7 @@ noncomputable def chiChar {n : ℕ} (S : Finset (Fin n)) (x : Fin n → Bool) : 
   (-1 : ℝ) ^ ((Finset.filter (fun i => x i = true) S).card)
 
 
+/-- [Section: ## Fourier Analysis on Boolean Cube] -/
 theorem chiChar_sq {n : ℕ} (S : Finset (Fin n)) (x : Fin n → Bool) :
     chiChar S x * chiChar S x = 1 := by
       unfold chiChar;
@@ -58,6 +59,7 @@ noncomputable def totalSpectralEnergy (n : ℕ) (weights : Finset (Fin n) → �
   Finset.sum Finset.univ (fun S : Finset (Fin n) => weights S ^ 2)
 
 
+/-- [Section: ## Fourier Coefficients] -/
 theorem spectralEnergy_nonneg (n k : ℕ) (weights : Finset (Fin n) → ℝ) :
     0 ≤ spectralEnergy n k weights := by
       exact Finset.sum_nonneg fun _ _ => sq_nonneg _
@@ -92,6 +94,7 @@ noncomputable def spectralGap (n : ℕ) (eigenvalues : Fin n → ℝ) : ℝ :=
   else 0
 
 
+/-- [Section: ## Phase Transition Model] -/
 theorem spectralGap_nonneg {n : ℕ} (eigenvalues : Fin n → ℝ)
     (hsorted : ∀ i j : Fin n, i ≤ j → eigenvalues j ≤ eigenvalues i) :
     0 ≤ spectralGap n eigenvalues := by
@@ -112,6 +115,7 @@ structure SpectralCollapseThreshold where
   hthreshold_pos : 0 < threshold
 
 
+/-- [Section: ## Spectral Collapse Threshold] -/
 theorem sat_threshold_lower_bound (k : ℕ) (hk : 2 ≤ k) :
     (2 : ℝ) ^ (k - 1) * Real.log 2 - 1 ≤ (2 : ℝ) ^ k * Real.log 2 := by
       rcases k with ( _ | _ | k ) <;> norm_num [ pow_succ' ] at *;
@@ -126,6 +130,7 @@ structure LovaszTheta where
   hpos : 0 < value
 
 
+/-- [Section: ## Lovász Theta Function] -/
 theorem lovasz_sandwich (omega theta chi : ℝ)
     (h_omega_pos : 0 < omega) (h_theta_pos : 0 < theta) (h_chi_pos : 0 < chi)
     (h1 : omega ≤ theta) (h2 : theta ≤ chi) :

@@ -69,6 +69,7 @@ def gate_21_20_29' : BerggrenGate := ⟨21, 20, 29, by norm_num, by norm_num⟩
 def gate_15_8_17' : BerggrenGate := ⟨15, 8, 17, by norm_num, by norm_num⟩
 
 
+/-- [Section: ## §3: Light Cone Preservation — The Lorentz Connection] -/
 def B₁' : Matrix (Fin 3) (Fin 3) ℤ := !![1, -2, 2; 2, -1, 2; 2, -2, 3]
 
 def B₂' : Matrix (Fin 3) (Fin 3) ℤ := !![1, 2, 2; 2, 1, 2; 2, 2, 3]
@@ -129,6 +130,7 @@ theorem B3_preserves_cone' (a b c : ℤ) (h : onLightCone' a b c) :
   simp only [onLightCone'] at *; nlinarith
 
 
+/-- [Section: ## §4: The SL(2,ℤ) Connection and Theta Group] -/
 def S_SL2' : Matrix (Fin 2) (Fin 2) ℤ := !![0, -1; 1, 0]
 
 def T_SL2' : Matrix (Fin 2) (Fin 2) ℤ := !![1, 1; 0, 1]
@@ -174,6 +176,7 @@ theorem S_order_4' : S_SL2' * S_SL2' * S_SL2' * S_SL2' = (1 : Matrix (Fin 2) (Fi
   native_decide
 
 
+/-- [Section: ## §5: Pauli Gate Interactions] -/
 def pauliX' : Matrix (Fin 2) (Fin 2) ℤ := !![0, 1; 1, 0]
 
 def pauliZ' : Matrix (Fin 2) (Fin 2) ℤ := !![1, 0; 0, -1]
@@ -209,6 +212,7 @@ theorem pauliXZ_anticommute' :
     pauliX' * pauliZ' = -(pauliZ' * pauliX') := by native_decide
 
 
+/-- [Section: ## §6: Circuit Evaluation] -/
 def evalCircuit' : List BerggrenGate → Matrix (Fin 2) (Fin 2) ℤ
   | [] => 1
   | g :: gs => g.toMatrix * evalCircuit' gs
@@ -228,6 +232,7 @@ theorem circuit_two_gates' (g₁ g₂ : BerggrenGate) :
   simp [evalCircuit', BerggrenGate.toMatrix, pythRot_mul]
 
 
+/-- [Section: ## §7: Rotation Composition Examples] -/
 theorem R345_squared' :
     pythRot 3 4 * pythRot 3 4 = pythRot (-7) 24 := by
   rw [pythRot_mul]; norm_num
@@ -262,6 +267,7 @@ def PythQuadruple.toMatrix (q : PythQuadruple) : Matrix (Fin 4) (Fin 4) ℤ :=
      q.c, -q.b,  q.a,  q.d]
 
 
+/-- [Section: ## §8: Pythagorean Quadruples → SU(2) Quantum Gates] -/
 def rootQuad' : PythQuadruple := ⟨1, 2, 2, 3, by norm_num, by norm_num⟩
 
 def quad_2_3_6_7' : PythQuadruple := ⟨2, 3, 6, 7, by norm_num, by norm_num⟩
@@ -281,6 +287,7 @@ theorem pythQuad_norm_eq_2d_sq' (q : PythQuadruple) :
   linarith [q.pyth]
 
 
+/-- [Section: ## §9: Gaussian Norm] -/
 def gaussNorm' (a b : ℤ) : ℤ := a^2 + b^2
 
 
@@ -296,6 +303,7 @@ theorem gaussNorm_pyth_preserved' (a₁ b₁ a₂ b₂ r₁ r₂ : ℤ)
   rw [gaussNorm_mul', h₁, h₂]; ring
 
 
+/-- [Section: ## §10: Trace Theory] -/
 theorem trace_composition' (a₁ b₁ a₂ b₂ : ℤ) :
     trace (pythRot a₁ b₁ * pythRot a₂ b₂) = 2 * (a₁ * a₂ - b₁ * b₂) := by
   rw [pythRot_mul, trace_pythRot]
@@ -314,6 +322,7 @@ theorem pythRot_char_eq' (a b : ℤ) :
     simp [pythRot, mul_apply, Fin.sum_univ_two] <;> ring
 
 
+/-- [Section: ## §11: Finite Field Gates] -/
 def pythRotMod' (a b : ℤ) (p : ℕ) : Matrix (Fin 2) (Fin 2) (ZMod p) :=
   !![((a : ℤ) : ZMod p), ((-b : ℤ) : ZMod p);
      ((b : ℤ) : ZMod p), ((a : ℤ) : ZMod p)]
@@ -324,6 +333,7 @@ theorem det_pythRotMod' (a b : ℤ) (p : ℕ) [NeZero p] :
   simp [pythRotMod', det_fin_two]; ring
 
 
+/-- [Section: ## §12: Power Formula] -/
 theorem pythRot_sq' (a b : ℤ) :
     pythRot a b * pythRot a b = pythRot (a^2 - b^2) (2*a*b) := by
   rw [pythRot_mul]; congr 1 <;> ring
@@ -334,6 +344,7 @@ theorem det_pythRot_sq' (a b : ℤ) :
   simp [det_mul, det_pythRot]; ring
 
 
+/-- [Section: ## §13: Controlled Gate] -/
 def controlledPythRot' (a b c : ℤ) : Matrix (Fin 4) (Fin 4) ℤ :=
   !![c, 0,  0,  0;
      0, c,  0,  0;
@@ -353,6 +364,7 @@ theorem det_controlledPythRot_pyth' (a b c : ℤ) (h : a^2 + b^2 = c^2) :
   rw [det_controlledPythRot', h]; ring
 
 
+/-- [Section: ## §14: Complex Structure] -/
 def J_SO2' : Matrix (Fin 2) (Fin 2) ℤ := pythRot 0 1
 
 

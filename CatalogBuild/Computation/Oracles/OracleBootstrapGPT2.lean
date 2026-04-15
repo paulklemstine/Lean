@@ -133,6 +133,7 @@ theorem moderate_compression :
 def bootstrapIter (n : ℕ) (r : ℝ) : ℝ := compressionBootstrap^[n] r
 
 
+/-- [Section: ## §6: Iterative Bootstrap Convergence] -/
 theorem bootstrap_monotone_upper (r s : ℝ) (hr1 : 1/2 ≤ r) (hs1 : s ≤ 1)
     (hrs : r ≤ s) :
     compressionBootstrap r ≤ compressionBootstrap s := by

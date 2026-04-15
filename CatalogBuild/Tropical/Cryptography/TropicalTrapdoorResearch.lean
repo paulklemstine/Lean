@@ -53,6 +53,7 @@ theorem tropical_circuit_duality (a b : ℝ) :
          neg_add a b⟩
 
 
+/-- [Section: ## Part V: Contraction Properties] -/
 theorem max_gate_contraction (a₁ a₂ b₁ b₂ : ℝ) :
     |max a₁ b₁ - max a₂ b₂| ≤ max |a₁ - a₂| |b₁ - b₂| := by
   grind +revert

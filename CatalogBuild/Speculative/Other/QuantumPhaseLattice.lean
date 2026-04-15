@@ -80,6 +80,7 @@ theorem quantum_coherence_bound
     _ ≤ ‖ψ‖ * ‖φ‖ := norm_inner_le_norm ψ φ
 
 
+/-- [Section: ## Section 5: Quantum Coherence Bounds] -/
 theorem quantum_interference_formula
     {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
     (ψ φ : V) :
@@ -88,6 +89,7 @@ theorem quantum_interference_formula
   ring
 
 
+/-- [Section: ## Section 6: Projection Norm Decrease] -/
 theorem projection_norm_le
     {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
     (K : Submodule ℂ V) [K.HasOrthogonalProjection]

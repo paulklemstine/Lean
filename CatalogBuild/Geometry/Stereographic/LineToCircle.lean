@@ -19,6 +19,7 @@ theorem line_to_circle_1d (a b t : ℝ) :
   invStereoN_norm_sq 1 _
 
 
+/-- [Section: ## North Pole as Limit Point] -/
 theorem invStereoN_last_coord_limit_1d (a b : ℝ) (hb : b ≠ 0) :
     Filter.Tendsto (fun t : ℝ => invStereoN 1 (fun _ => a + b * t)
       ⟨1, by omega⟩) Filter.atTop (nhds 1) := by

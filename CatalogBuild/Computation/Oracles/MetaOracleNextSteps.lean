@@ -197,6 +197,10 @@ theorem invStereo_neg_one : invStereo (-1) = (-1, 0) := by
   unfold invStereo; norm_num
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§10: DENSITY PRINCIPLE (H9)
+"Rational oracles approximate all truths"
+═══════════════════════════════════════════════════════════════════════] -/
 theorem invStereo_injective : Function.Injective invStereo := by
   -- Let's assume that invStereo(a) = invStereo(b) and show that a = b.
   intro a b hab
@@ -240,6 +244,10 @@ theorem const_oracle_illusion (c : ℝ) :
   ext x; simp [MetaOracle.illusionSet, MetaOracle.const, eq_comm]
 
 
+/-- [Section: ═══════════════════════════════════════════════════════════════════════
+§12: FOUR-SQUARE UNIVERSALITY (H11)
+"Lagrange's theorem as a 4D oracle"
+═══════════════════════════════════════════════════════════════════════] -/
 theorem four_square_up_to_30 :
     ∀ n ∈ Finset.range 31, ∃ a b c d : ℕ, a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 = n := by
   intro n hn

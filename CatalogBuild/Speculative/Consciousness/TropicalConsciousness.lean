@@ -24,6 +24,7 @@ theorem tropMul_one (a : WithBot ℝ) : tropMul a tropOne = a := by
   | (x : ℝ) => simp [tropMul, tropOne]
 
 
+/-- [Section: ## §2: Tropical Consciousness Matrix] -/
 def TropicalMatrix (n : ℕ) := Fin n → Fin n → WithBot ℝ
 
 
@@ -37,6 +38,7 @@ def isTropicalEigenvalue {n : ℕ} (M : TropicalMatrix n) (lam : ℝ)
   ∀ i, tropMatVecMul M v i = tropMul (↑lam) (v i)
 
 
+/-- [Section: ## §3: Tropical Fixed Points] -/
 structure TropicalReflector (n : ℕ) where
   matrix : TropicalMatrix n
   self_aware : ∀ i : Fin n, matrix i i ≠ ⊥
@@ -48,6 +50,7 @@ def tropicalIterate {n : ℕ} (R : TropicalReflector n)
   | k + 1 => tropMatVecMul R.matrix (tropicalIterate R v k)
 
 
+/-- [Section: ## §4: Tropical Convexity] -/
 def isTropConvex (n : ℕ) (S : Set (Fin n → ℝ)) : Prop :=
   ∀ x y : Fin n → ℝ, x ∈ S → y ∈ S →
     ∀ t : ℝ, 0 ≤ t → t ≤ 1 →
@@ -64,6 +67,7 @@ theorem subset_tropConvexHull (n : ℕ) (S : Set (Fin n → ℝ)) :
   exact hST hx
 
 
+/-- [Section: ## §5: Tropical Consciousness Metric] -/
 def tropicalDist {n : ℕ} (x y : Fin (n + 1) → ℝ) : ℝ :=
   Finset.univ.sup' ⟨⟨0, Nat.zero_lt_succ n⟩, Finset.mem_univ _⟩ (fun i => |x i - y i|)
 

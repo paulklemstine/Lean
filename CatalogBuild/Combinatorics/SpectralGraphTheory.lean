@@ -7,6 +7,7 @@ Declarations: 4
 
 import Mathlib
 
+/-- Petersen graph eigenvalues -/
 theorem petersen_eig : (3 : ℤ) + 5 * 1 + 4 * (-2) = 0 := by norm_num
 
 -- Path algebraic connectivity

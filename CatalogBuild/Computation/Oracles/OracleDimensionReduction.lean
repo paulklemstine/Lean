@@ -119,6 +119,7 @@ theorem id_refined_by_all {X : Type*} (O : X → X) (_hO : ∀ x, O (O x) = O x)
   intro x _hx; simp [fixedPoints, IsFixedPt]
 
 
+/-- [Section: ## §6: Experiments — Counting Oracles by Fixed-Point Count] -/
 theorem experiment_fin2_one_fixpoint :
     (Finset.filter (fun O : Fin 2 → Fin 2 =>
       (∀ x, O (O x) = O x) ∧
@@ -166,6 +167,7 @@ theorem oracle_formula_check_3_2 : Nat.choose 3 2 * 2 ^ (3 - 2) = 6 := by norm_n
 theorem oracle_formula_check_3_3 : Nat.choose 3 3 * 3 ^ (3 - 3) = 1 := by norm_num
 
 
+/-- [Section: ## §7: The Fundamental Theorem of Oracle Dimension Reduction] -/
 theorem oracle_strict_dimension_reduction {n : ℕ} (O : Fin (n + 2) → Fin (n + 2))
     (hO : ∀ x, O (O x) = O x) (hne : O ≠ id) :
     Fintype.card (range O) < n + 2 := by
@@ -203,6 +205,7 @@ theorem kernel_class_has_unique_fixpoint {X : Type*} (O : X → X) (hO : ∀ x, 
   ⟨O x, ⟨hO x, rfl⟩, fun y ⟨_, hy₂⟩ => hy₂.symm⟩
 
 
+/-- [Section: ## §8: The Pullback Theorem — Information Recovery] -/
 theorem kernel_classes_eq_fixpoints {n : ℕ} (O : Fin n → Fin n) (hO : ∀ x, O (O x) = O x) :
     (Finset.image O Finset.univ).card = (Finset.filter (fun x => O x = x) Finset.univ).card := by
   congr 1 with x ; aesop
@@ -248,6 +251,7 @@ theorem minimal_oracle_unique {n : ℕ} (O₁ O₂ : Fin (n + 1) → Fin (n + 1)
 theorem oracle_count_formula_n0 :
     ∑ k ∈ Finset.range 1, Nat.choose 0 k * k ^ (0 - k) = 1 := by decide
 
+/-- [Section: ## §10: New Hypotheses from Oracle Consultation] -/
 theorem oracle_count_formula_n1 :
     ∑ k ∈ Finset.range 2, Nat.choose 1 k * k ^ (1 - k) = 1 := by decide
 
@@ -274,6 +278,7 @@ theorem oracle_dimension_bounds {n : ℕ} (O : Fin (n + 1) → Fin (n + 1))
   · exact le_trans Finset.card_image_le (by simp)
 
 
+/-- [Section: ## §11: The Oracle Spectrum] -/
 theorem id_oracle_dimension {n : ℕ} :
     oracle_dimension (id : Fin (n + 1) → Fin (n + 1)) = n + 1 := by
   unfold oracle_dimension; simp +decide ;

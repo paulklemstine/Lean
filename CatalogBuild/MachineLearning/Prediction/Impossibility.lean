@@ -38,6 +38,9 @@ theorem prediction_uncertainty_principle
   exact fun h => by nlinarith
 
 
+/-- [Section: ## §4. The Gödelian Prediction Limit
+A prediction system cannot predict a diagonalized version of itself.
+This is the prediction-theoretic Gödel incompleteness.] -/
 theorem goedel_prediction_diagonal
     (predict : ℕ → (ℕ → ℕ)) :
     ∃ f : ℕ → ℕ, ∀ n, f n ≠ predict n n := by
@@ -75,6 +78,11 @@ def dictatorial {n : ℕ} (f : SocialPredictionFn n) : Prop :=
   ∃ d : Fin n, ∀ profile, f profile = profile d
 
 
+/-- [Section: ## §6. Arrow-type result: Dictatorial structure of binary aggregation
+With 2 oracles, if the aggregation respects unanimity AND anti-unanimity
+(both agree on false → aggregate false, both agree on true → aggregate true)
+and is monotone, and the mixed profiles give opposite results,
+then one oracle dictates.] -/
 theorem two_oracle_mixed_implies_dictatorial
     (f : SocialPredictionFn 2)
     (hunan : unanimous f)

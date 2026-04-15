@@ -44,6 +44,7 @@ theorem prime_gap_sizes_exist :
     first | decide | native_decide | omega
 
 
+/-- [Section: ### Prime deserts (arbitrarily long gaps)] -/
 theorem prime_desert (k : ℕ) (hk : 2 ≤ k) :
     ∀ j ∈ Finset.Icc 2 k, ¬ Nat.Prime ((k + 1).factorial + j) := by
   norm_num +zetaDelta at *;

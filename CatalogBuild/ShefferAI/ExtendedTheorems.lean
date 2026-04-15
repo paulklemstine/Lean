@@ -60,6 +60,7 @@ theorem sheffer_algebra_continuous {f : ℝ → ℝ} (hf : f ∈ ShefferAlgebra)
   exact (sheffer_algebra_differentiable hf).continuous
 
 
+/-- [Section: ## The Smoothness Barrier: Non-differentiable functions excluded] -/
 lemma abs_not_differentiableAt_zero : ¬ DifferentiableAt ℝ (fun x : ℝ => |x|) 0 := by
   exact not_differentiableAt_abs_zero
 
@@ -139,6 +140,7 @@ theorem sheffer_not_mul_closed :
   exact sq_not_mem_sheffer hmul
 
 
+/-- [Section: ## Softplus Range Characterization] -/
 theorem softplus_surjective_pos (y : ℝ) (hy : y > 0) :
     ∃ x : ℝ, softplus x = y := by
   use Real.log ( Real.exp y - 1 );
@@ -151,6 +153,7 @@ theorem sigmoid_surjective_unit (y : ℝ) (hy0 : 0 < y) (hy1 : y < 1) :
   exact ⟨ Real.log ( y / ( 1 - y ) ), by rw [ Real.exp_log ( div_pos hy0 ( sub_pos.mpr hy1 ) ), div_eq_iff ] <;> nlinarith [ div_mul_cancel₀ y ( ne_of_gt ( sub_pos.mpr hy1 ) ) ] ⟩
 
 
+/-- [Section: ## Sigmoid Logit Identity] -/
 theorem sigmoid_logit_inverse (y : ℝ) (hy0 : 0 < y) (hy1 : y < 1) :
     logisticSigmoid (Real.log (y / (1 - y))) = y := by
   unfold logisticSigmoid;

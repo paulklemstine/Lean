@@ -67,6 +67,7 @@ theorem quaternion_norm_order_invariant (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄
     (a₁^2 + a₂^2 + a₃^2 + a₄^2) * (b₁^2 + b₂^2 + b₃^2 + b₄^2) := by ring
 
 
+/-- [Section: ## Section 7: Bridge Theorems] -/
 theorem bridge_fibonacci_lattice (n : ℕ) (hn : 1 ≤ n) :
     (Nat.fib (n + 1) : ℤ) * Nat.fib (n - 1) - (Nat.fib n : ℤ) ^ 2 = (-1) ^ n := by
   rcases n with ( _ | _ | n ) <;> simp_all +decide [ Nat.fib_add_two ];
