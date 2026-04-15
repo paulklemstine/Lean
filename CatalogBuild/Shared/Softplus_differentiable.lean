@@ -28,6 +28,39 @@ theorem softplus_strictMono : StrictMono softplus := by
 
 /-- Softplus is monotone increasing -/
 
+theorem softplus_mono : Monotone softplus :=
+  softplus_strictMono.monotone
+
+/-! ## Softplus dominates identity -/
+
+/-- Softplus is greater than x for all x -/
+
+theorem softplus_deriv (x : ℝ) : deriv softplus x = logisticSigmoid x := by
+  apply HasDerivAt.deriv;
+  convert HasDerivAt.log ( HasDerivAt.add ( hasDerivAt_const _ _ ) ( Real.hasDerivAt_exp x ) ) _ using 1 <;> norm_num [ logisticSigmoid ];
+  positivity
+
+/-! ## Convexity -/
+
+/-
+Softplus is convex
+-/
+
+theorem softplus_convex : ConvexOn ℝ Set.univ softplus := by
+  have h_hessian : ∀ x, deriv (deriv softplus) x > 0 := by
+    rw [ show deriv softplus = logisticSigmoid from funext fun x => softplus_deriv x ];
+    unfold logisticSigmoid;
+    exact fun x => by norm_num [ Real.differentiableAt_exp, ne_of_gt ( add_pos zero_lt_one ( Real.exp_pos x ) ) ] ; ring_nf; positivity;
+  apply_rules [ convexOn_of_deriv2_nonneg, convex_univ ];
+  · exact ContinuousOn.log ( continuousOn_const.add ( Real.continuousOn_exp ) ) fun x hx => by positivity;
+  · exact fun x _ => DifferentiableAt.differentiableWithinAt ( softplus_differentiable.differentiableAt );
+  · exact fun x hx => differentiableAt_of_deriv_ne_zero ( ne_of_gt ( h_hessian x ) ) |> DifferentiableAt.differentiableWithinAt;
+  · exact fun x _ => le_of_lt ( h_hessian x )
+
+/-! ## Key Identity -/
+
+/-- e^σ(x) = 1 + eˣ -/
+
 theorem softplus_exp_identity (x : ℝ) : Real.exp (softplus x) = 1 + Real.exp x := by
   unfold softplus
   rw [Real.exp_log (one_plus_exp_pos x)]
@@ -38,12 +71,13 @@ theorem softplus_exp_identity (x : ℝ) : Real.exp (softplus x) = 1 + Real.exp x
 σ(x) - x = σ(-x) (reflection identity)
 -/
 
-theorem softplus_mono : Monotone softplus :=
-  softplus_strictMono.monotone
+theorem softplus_reflection (x : ℝ) : softplus x - x = softplus (-x) := by
+  unfold softplus;
+  rw [ show ( 1 + Real.exp ( -x ) ) = ( 1 + Real.exp x ) / Real.exp x by rw [ add_div, div_self <| ne_of_gt <| Real.exp_pos x ] ; rw [ Real.exp_neg ] ; ring, Real.log_div ( by positivity ) <| by positivity, Real.log_exp ]
 
-/-! ## Softplus dominates identity -/
+/-! ## Sigmoid properties -/
 
-/-- Softplus is greater than x for all x -/
+/-- Sigmoid symmetry: S(-x) = 1 - S(x) -/
 
 theorem softplus_gt_id (x : ℝ) : softplus x > x := by
   unfold softplus
@@ -62,39 +96,5 @@ theorem softplus_zero : softplus 0 = Real.log 2 := by
   norm_num
 
 end
-
-theorem softplus_convex : ConvexOn ℝ Set.univ softplus := by
-  have h_hessian : ∀ x, deriv (deriv softplus) x > 0 := by
-    rw [ show deriv softplus = logisticSigmoid from funext fun x => softplus_deriv x ];
-    unfold logisticSigmoid;
-    exact fun x => by norm_num [ Real.differentiableAt_exp, ne_of_gt ( add_pos zero_lt_one ( Real.exp_pos x ) ) ] ; ring_nf; positivity;
-  apply_rules [ convexOn_of_deriv2_nonneg, convex_univ ];
-  · exact ContinuousOn.log ( continuousOn_const.add ( Real.continuousOn_exp ) ) fun x hx => by positivity;
-  · exact fun x _ => DifferentiableAt.differentiableWithinAt ( softplus_differentiable.differentiableAt );
-  · exact fun x hx => differentiableAt_of_deriv_ne_zero ( ne_of_gt ( h_hessian x ) ) |> DifferentiableAt.differentiableWithinAt;
-  · exact fun x _ => le_of_lt ( h_hessian x )
-
-/-! ## Key Identity -/
-
-/-- e^σ(x) = 1 + eˣ -/
-
-theorem softplus_deriv (x : ℝ) : deriv softplus x = logisticSigmoid x := by
-  apply HasDerivAt.deriv;
-  convert HasDerivAt.log ( HasDerivAt.add ( hasDerivAt_const _ _ ) ( Real.hasDerivAt_exp x ) ) _ using 1 <;> norm_num [ logisticSigmoid ];
-  positivity
-
-/-! ## Convexity -/
-
-/-
-Softplus is convex
--/
-
-theorem softplus_reflection (x : ℝ) : softplus x - x = softplus (-x) := by
-  unfold softplus;
-  rw [ show ( 1 + Real.exp ( -x ) ) = ( 1 + Real.exp x ) / Real.exp x by rw [ add_div, div_self <| ne_of_gt <| Real.exp_pos x ] ; rw [ Real.exp_neg ] ; ring, Real.log_div ( by positivity ) <| by positivity, Real.log_exp ]
-
-/-! ## Sigmoid properties -/
-
-/-- Sigmoid symmetry: S(-x) = 1 - S(x) -/
 
 end

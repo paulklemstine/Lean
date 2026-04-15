@@ -19,14 +19,14 @@ theorem spbCirc_neg (x : ℝ) : spbCirc x (-x) = 0 := by
 
 /-- Hyperbolic SPB inverse. -/
 
-theorem spbCirc_zero (x : ℝ) : spbCirc x 0 = x := by
-  simp [spbCirc]
-
-/-- Hyperbolic SPB identity. -/
-
 theorem spbCirc_comm (x y : ℝ) : spbCirc x y = spbCirc y x := by
   simp [spbCirc, add_comm, mul_comm]
 
 /-- Hyperbolic SPB is commutative. -/
+
+theorem spbCirc_zero (x : ℝ) : spbCirc x 0 = x := by
+  simp [spbCirc]
+
+/-- Hyperbolic SPB identity. -/
 
 end

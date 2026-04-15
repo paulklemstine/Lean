@@ -28,27 +28,6 @@ theorem spb_hasDerivAt_fst (x y : ℝ) (h : 1 - x * y ≠ 0) :
 SPB is differentiable in y when 1 - xy ≠ 0.
 -/
 
-theorem spb_deriv_snd_pos (x : ℝ) (d : ℝ) (hd : d ≠ 0) :
-    (1 + x ^ 2) / d ^ 2 > 0 := by
-  apply div_pos
-  · linarith [sq_nonneg x]
-  · positivity
-
-/-! ## Idempotent SPB -/
-
-/-- spb(x, x) = 2x/(1-x²), which is the double-angle tangent formula.
-    If x = tan(θ), then spb(x,x) = tan(2θ). -/
-
-theorem spb_tan_double (θ : ℝ) (hc : Real.cos θ ≠ 0) :
-    spb (Real.tan θ) (Real.tan θ) = Real.tan (2 * θ) := by
-  rw [show 2 * θ = θ + θ from by ring]
-  exact (tan_add_eq_spb θ θ hc hc).symm
-
-
-theorem spb_tower_1_0 : spb 1 0 = 1 := spb_zero_right 1
-
-/-- spb(0, 1) = 1. -/
-
 theorem spb_tower_0_1 : spb 0 1 = 1 := spb_zero_left 1
 
 /-! ## Differentiability of SPB -/
@@ -65,6 +44,16 @@ theorem spb_deriv_fst_pos (y : ℝ) (d : ℝ) (hd : d ≠ 0) :
 
 /-- Similarly for the second argument. -/
 
+theorem spb_tan_double (θ : ℝ) (hc : Real.cos θ ≠ 0) :
+    spb (Real.tan θ) (Real.tan θ) = Real.tan (2 * θ) := by
+  rw [show 2 * θ = θ + θ from by ring]
+  exact (tan_add_eq_spb θ θ hc hc).symm
+
+
+theorem spb_tower_1_0 : spb 1 0 = 1 := spb_zero_right 1
+
+/-- spb(0, 1) = 1. -/
+
 theorem spb_neg_right (x : ℝ) : spb x (-x) = 0 := by
   simp [spb]
 
@@ -76,3 +65,14 @@ theorem spb_one (x : ℝ) (hx : x ≠ 1) : spb x 1 = (x + 1) / (1 - x) := by
 /-! ## Hyperbolic SPB Properties -/
 
 /-- Hyperbolic SPB is commutative. -/
+
+theorem spb_deriv_snd_pos (x : ℝ) (d : ℝ) (hd : d ≠ 0) :
+    (1 + x ^ 2) / d ^ 2 > 0 := by
+  apply div_pos
+  · linarith [sq_nonneg x]
+  · positivity
+
+/-! ## Idempotent SPB -/
+
+/-- spb(x, x) = 2x/(1-x²), which is the double-angle tangent formula.
+    If x = tan(θ), then spb(x,x) = tan(2θ). -/

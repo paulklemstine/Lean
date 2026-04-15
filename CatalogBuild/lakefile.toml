@@ -1,5 +1,5 @@
 name = "CatalogBuild"
-defaultTargets = ["Algebra", "Analysis", "Best", "Bridges", "CategoryTheory", "Combinatorics", "ComplexityTheory", "Computation", "Cryptography", "EML", "FutureResearch", "Geometry", "GravitationalFactoringResearch", "InformationTheory", "Logic", "MachineLearning", "NeuralCompilation", "New", "NumberTheory", "OISCC", "Physics", "Probability", "Pythagorean", "SPBBridge", "Shared", "ShefferAI", "Speculative", "TestRescan.lean", "Topology", "Tropical"]
+defaultTargets = ["Algebra", "Analysis", "Best", "Bridges", "CategoryTheory", "Combinatorics", "ComplexityTheory", "Computation", "Cryptography", "EML", "FutureResearch", "Geometry", "GravitationalFactoringResearch", "InformationTheory", "Logic", "MachineLearning", "NeuralCompilation", "New", "NumberTheory", "OISCC", "Physics", "Probability", "Pythagorean", "RescanTest.lean", "SPBBridge", "Shared", "ShefferAI", "Speculative", "Topology", "Tropical"]
 
 [[require]]
 name = "mathlib"
@@ -99,6 +99,10 @@ name = "Pythagorean"
 globs = ["Pythagorean.+"]
 
 [[lean_lib]]
+name = "RescanTest.lean"
+globs = ["RescanTest.lean.+"]
+
+[[lean_lib]]
 name = "SPBBridge"
 globs = ["SPBBridge.+"]
 
@@ -113,10 +117,6 @@ globs = ["ShefferAI.+"]
 [[lean_lib]]
 name = "Speculative"
 globs = ["Speculative.+"]
-
-[[lean_lib]]
-name = "TestRescan.lean"
-globs = ["TestRescan.lean.+"]
 
 [[lean_lib]]
 name = "Topology"

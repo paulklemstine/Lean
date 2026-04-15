@@ -29,4 +29,15 @@ python3 tools/catalog.py all --source Catalog/ --output-dir CatalogBuild/ --verb
 - 3,652 duplicate groups identified
 - Shared modules generated for declarations appearing in 5+ files
 
+## Rescan Workflow
+
+After adding new theorems to `Catalog/`:
+```bash
+python3 tools/catalog.py rescan --source Catalog/ --db tools/output/catalog.json --output-dir CatalogBuild/
+```
+- Only parses new/modified files (detected by mtime comparison)
+- Merges into existing DB, re-resolves duplicates
+- Auto-rebuilds CatalogBuild/
+- Subsequent rescans with no changes take <1 second
+
 ## Why: The database owns the theorems; source files are compiled output

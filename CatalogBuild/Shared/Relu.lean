@@ -19,9 +19,12 @@ theorem relu_idempotent (x : ℝ) : relu (relu x) = relu x := by
 
 /-- ReLU is non-negative. -/
 
-theorem relu_nonneg (x : ℝ) : 0 ≤ relu x := le_max_right x 0
+theorem relu_fixed_iff (x : ℝ) : relu x = x ↔ 0 ≤ x := by
+  constructor
+  · intro h; have := relu_nonneg x; linarith
+  · intro h; simp [relu, max_eq_left h]
 
-/-- The tropical max operation is idempotent. -/
+/-- The idempotent-tropical-quantum hierarchy is a refinement chain. -/
 
 theorem relu_lipschitz (x y : ℝ) : |relu x - relu y| ≤ |x - y| := by
   unfold relu;
@@ -36,11 +39,8 @@ code construction with norm-multiplicativity.
 
 /-- The Hurwitz dimensions: only 1, 2, 4, 8 admit division algebras. -/
 
-theorem relu_fixed_iff (x : ℝ) : relu x = x ↔ 0 ≤ x := by
-  constructor
-  · intro h; have := relu_nonneg x; linarith
-  · intro h; simp [relu, max_eq_left h]
+theorem relu_nonneg (x : ℝ) : 0 ≤ relu x := le_max_right x 0
 
-/-- The idempotent-tropical-quantum hierarchy is a refinement chain. -/
+/-- The tropical max operation is idempotent. -/
 
 end

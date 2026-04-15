@@ -11,6 +11,15 @@ noncomputable section
 
 theorem spb_zero (x : ℝ) : spb x 0 = x := by simp [spb]
 
+theorem spb_eml_decomposition (x y : ℝ) (hden : 0 < 1 - x * y) :
+    spb x y = (x + y) * exp (-log (1 - x * y)) := by
+  unfold spb
+  rw [Real.exp_neg, Real.exp_log hden]
+  simp [spb, div_eq_mul_inv]
+
+/-! ## arctan Homomorphism -/
+
+
 theorem spb_norm_ratio (x y : ℝ) (h : 1 - x * y ≠ 0) :
     1 + (spb x y) ^ 2 = (1 + x ^ 2) * (1 + y ^ 2) / (1 - x * y) ^ 2 := by
   have h2 : (1 - x * y) ^ 2 ≠ 0 := pow_ne_zero 2 h
@@ -19,15 +28,6 @@ theorem spb_norm_ratio (x y : ℝ) (h : 1 - x * y ≠ 0) :
   linarith
 
 /-! ## The Logarithmic Bridge Identity -/
-
-
-theorem spb_eml_decomposition (x y : ℝ) (hden : 0 < 1 - x * y) :
-    spb x y = (x + y) * exp (-log (1 - x * y)) := by
-  unfold spb
-  rw [Real.exp_neg, Real.exp_log hden]
-  simp [spb, div_eq_mul_inv]
-
-/-! ## arctan Homomorphism -/
 
 
 theorem spb_neg (x : ℝ) : spb x (-x) = 0 := by simp [spb]

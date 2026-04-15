@@ -25,16 +25,6 @@ theorem softplus_strictMono : StrictMono softplus := by
 
 /-- Softplus is monotone increasing -/
 
-theorem softplus_exp_identity (x : ℝ) : Real.exp (softplus x) = 1 + Real.exp x := by
-  unfold softplus
-  rw [Real.exp_log (one_plus_exp_pos x)]
-
-/-! ## Functional equation -/
-
-/-
-σ(x) - x = σ(-x) (reflection identity)
--/
-
 theorem softplus_mono : Monotone softplus :=
   softplus_strictMono.monotone
 
@@ -42,25 +32,15 @@ theorem softplus_mono : Monotone softplus :=
 
 /-- Softplus is greater than x for all x -/
 
-theorem softplus_gt_id (x : ℝ) : softplus x > x := by
-  unfold softplus
-  have h1 : (1 : ℝ) + Real.exp x > Real.exp x := by linarith
-  calc x = Real.log (Real.exp x) := (Real.log_exp x).symm
-    _ < Real.log (1 + Real.exp x) := by
-        apply Real.log_lt_log (Real.exp_pos x) h1
+theorem softplus_deriv (x : ℝ) : deriv softplus x = logisticSigmoid x := by
+  apply HasDerivAt.deriv;
+  convert HasDerivAt.log ( HasDerivAt.add ( hasDerivAt_const _ _ ) ( Real.hasDerivAt_exp x ) ) _ using 1 <;> norm_num [ logisticSigmoid ];
+  positivity
 
-/-! ## Derivative -/
-
-/-- Softplus is differentiable -/
-
-theorem softplus_differentiable : Differentiable ℝ softplus := by
-  unfold softplus
-  apply Differentiable.log
-  · exact differentiable_const 1 |>.add Real.differentiable_exp
-  · intro x; exact ne_of_gt (one_plus_exp_pos x)
+/-! ## Convexity -/
 
 /-
-The derivative of softplus is the logistic sigmoid
+Softplus is convex
 -/
 
 theorem softplus_convex : ConvexOn ℝ Set.univ softplus := by
@@ -78,15 +58,24 @@ theorem softplus_convex : ConvexOn ℝ Set.univ softplus := by
 
 /-- e^σ(x) = 1 + eˣ -/
 
-theorem softplus_deriv (x : ℝ) : deriv softplus x = logisticSigmoid x := by
-  apply HasDerivAt.deriv;
-  convert HasDerivAt.log ( HasDerivAt.add ( hasDerivAt_const _ _ ) ( Real.hasDerivAt_exp x ) ) _ using 1 <;> norm_num [ logisticSigmoid ];
-  positivity
+theorem softplus_exp_identity (x : ℝ) : Real.exp (softplus x) = 1 + Real.exp x := by
+  unfold softplus
+  rw [Real.exp_log (one_plus_exp_pos x)]
 
-/-! ## Convexity -/
+/-! ## Functional equation -/
 
 /-
-Softplus is convex
+σ(x) - x = σ(-x) (reflection identity)
+-/
+
+theorem softplus_differentiable : Differentiable ℝ softplus := by
+  unfold softplus
+  apply Differentiable.log
+  · exact differentiable_const 1 |>.add Real.differentiable_exp
+  · intro x; exact ne_of_gt (one_plus_exp_pos x)
+
+/-
+The derivative of softplus is the logistic sigmoid
 -/
 
 theorem softplus_reflection (x : ℝ) : softplus x - x = softplus (-x) := by
@@ -96,5 +85,16 @@ theorem softplus_reflection (x : ℝ) : softplus x - x = softplus (-x) := by
 /-! ## Sigmoid properties -/
 
 /-- Sigmoid symmetry: S(-x) = 1 - S(x) -/
+
+theorem softplus_gt_id (x : ℝ) : softplus x > x := by
+  unfold softplus
+  have h1 : (1 : ℝ) + Real.exp x > Real.exp x := by linarith
+  calc x = Real.log (Real.exp x) := (Real.log_exp x).symm
+    _ < Real.log (1 + Real.exp x) := by
+        apply Real.log_lt_log (Real.exp_pos x) h1
+
+/-! ## Derivative -/
+
+/-- Softplus is differentiable -/
 
 end

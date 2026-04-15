@@ -6,9 +6,10 @@ Build system for generating canonical, deduplicated Lean 4 source files from a t
 
 ```
   Existing .lean files ──► extract ──► catalog.json (master DB)
-                                            │
-                                            ▼
-                                       build ──► CatalogBuild/ (clean source tree)
+         │                                │
+         │  (new theorems)                │
+         ▼                                ▼
+  rescan ──► incremental update ──► build ──► CatalogBuild/ (clean source tree)
                                             │
                                             ▼
                                        validate ──► PASS/FAIL
@@ -18,7 +19,7 @@ The **database is the source of truth**. Source files are generated from it.
 
 ## Commands
 
-### Extract — scan existing files into the database
+### Extract — initial full scan
 
 ```bash
 python3 tools/catalog.py extract \
@@ -26,6 +27,20 @@ python3 tools/catalog.py extract \
   --output tools/output/catalog.json \
   --verbose
 ```
+
+### Rescan — incremental update (recommended for ongoing work)
+
+After adding or modifying theorems in `Catalog/`, run:
+
+```bash
+python3 tools/catalog.py rescan \
+  --source Catalog/ \
+  --db tools/output/catalog.json \
+  --output-dir CatalogBuild/ \
+  --verbose
+```
+
+This only parses **new or modified** files (detected by file modification time), merges them into the database, and auto-rebuilds `CatalogBuild/`. Subsequent rescans after no changes take <1 second.
 
 ### Build — generate clean source tree from the database
 
@@ -59,6 +74,12 @@ python3 tools/catalog.py all \
   --verbose
 ```
 
+## Workflow
+
+1. **Add new theorems** to `Catalog/` (any `.lean` file)
+2. Run **`rescan`** — detects changes, updates database, rebuilds output
+3. Your new theorems appear in `CatalogBuild/` with proper deduplication and imports
+
 ## What the build does
 
 1. **Deduplication**: Only canonical declarations are emitted (one per duplicate group)
@@ -91,7 +112,7 @@ CatalogBuild/
 
 | File | Purpose |
 |------|---------|
-| `catalog.py` | Unified CLI entry point |
+| `catalog.py` | Unified CLI entry point (extract, rescan, build, validate, all) |
 | `extract_catalog.py` | Extraction logic — scans .lean files into DB |
 | `build_catalog.py` | Build logic — generates source from DB |
 | `validate_catalog.py` | Validation — checks build integrity |

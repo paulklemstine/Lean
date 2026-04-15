@@ -11,6 +11,10 @@ import Mathlib
 def quatNorm (a b c d : ℤ) : ℤ := a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2
 
 
+theorem quatNorm_nonneg (a b c d : ℤ) : 0 ≤ quatNorm a b c d := by
+  unfold quatNorm; positivity
+
+
 theorem quatNorm_zero_iff (a b c d : ℤ) :
     quatNorm a b c d = 0 ↔ a = 0 ∧ b = 0 ∧ c = 0 ∧ d = 0 := by
   unfold quatNorm
@@ -22,7 +26,3 @@ theorem quatNorm_zero_iff (a b c d : ℤ) :
 
 /-- Euler's identity: the product of two sums of four squares is a sum of four squares.
     This is the key multiplicativity property of quaternion norms. -/
-
-theorem quatNorm_nonneg (a b c d : ℤ) : 0 ≤ quatNorm a b c d := by
-  unfold quatNorm; positivity
-

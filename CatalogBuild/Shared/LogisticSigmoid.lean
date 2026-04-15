@@ -21,25 +21,6 @@ lemma logisticSigmoid_pos (x : ℝ) : logisticSigmoid x > 0 := by
 
 /-- The logistic sigmoid is strictly less than 1 -/
 
-lemma logisticSigmoid_lt_one (x : ℝ) : logisticSigmoid x < 1 := by
-  unfold logisticSigmoid
-  rw [div_lt_one (one_plus_exp_pos x)]
-  linarith
-
-/-- Logistic sigmoid is between 0 and 1 -/
-
-theorem logisticSigmoid_zero : logisticSigmoid 0 = 1 / 2 := by
-  unfold logisticSigmoid
-  simp [Real.exp_zero]
-  ring
-
-/-- Softplus at zero equals log 2 -/
-
-lemma logisticSigmoid_mem_Ioo (x : ℝ) : logisticSigmoid x ∈ Set.Ioo (0 : ℝ) 1 :=
-  ⟨logisticSigmoid_pos x, logisticSigmoid_lt_one x⟩
-
-/-- Softplus is strictly monotone increasing -/
-
 theorem logisticSigmoid_symmetry (x : ℝ) : logisticSigmoid (-x) = 1 - logisticSigmoid x := by
   unfold logisticSigmoid
   rw [Real.exp_neg]
@@ -50,5 +31,24 @@ theorem logisticSigmoid_symmetry (x : ℝ) : logisticSigmoid (-x) = 1 - logistic
   ring
 
 /-- Sigmoid at zero equals 1/2 -/
+
+lemma logisticSigmoid_mem_Ioo (x : ℝ) : logisticSigmoid x ∈ Set.Ioo (0 : ℝ) 1 :=
+  ⟨logisticSigmoid_pos x, logisticSigmoid_lt_one x⟩
+
+/-- Softplus is strictly monotone increasing -/
+
+theorem logisticSigmoid_zero : logisticSigmoid 0 = 1 / 2 := by
+  unfold logisticSigmoid
+  simp [Real.exp_zero]
+  ring
+
+/-- Softplus at zero equals log 2 -/
+
+lemma logisticSigmoid_lt_one (x : ℝ) : logisticSigmoid x < 1 := by
+  unfold logisticSigmoid
+  rw [div_lt_one (one_plus_exp_pos x)]
+  linarith
+
+/-- Logistic sigmoid is between 0 and 1 -/
 
 end

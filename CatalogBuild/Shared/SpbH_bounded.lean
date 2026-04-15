@@ -17,6 +17,11 @@ theorem spbH_bounded (u v : ℝ) (hu : |u| < 1) (hv : |v| < 1) :
 Hyperbolic SPB is associative.
 -/
 
+theorem spbH_comm (u v : ℝ) : spbH u v = spbH v u := by
+  simp [spbH, add_comm, mul_comm]
+
+/-- Zero is the identity for hyperbolic SPB. -/
+
 theorem spbH_zero_right (u : ℝ) : spbH u 0 = u := by
   simp [spbH]
 
@@ -30,15 +35,6 @@ theorem spbH_neg_self (u : ℝ) : spbH u (-u) = 0 := by
     then `|spbH(u,v)| < 1`. Light speed is a barrier.
 -/
 
-def spbH (u v : ℝ) : ℝ := (u + v) / (1 + u * v)
-
-/-- Hyperbolic SPB is commutative. -/
-
-theorem spbH_comm (u v : ℝ) : spbH u v = spbH v u := by
-  simp [spbH, add_comm, mul_comm]
-
-/-- Zero is the identity for hyperbolic SPB. -/
-
 theorem spbH_assoc (u v w : ℝ) (huv : u * v ≠ -1) (hvw : v * w ≠ -1)
     (huvw : spbH u v * w ≠ -1) (huvw' : u * spbH v w ≠ -1) :
     spbH (spbH u v) w = spbH u (spbH v w) := by
@@ -48,5 +44,9 @@ theorem spbH_assoc (u v w : ℝ) (huv : u * v ≠ -1) (hvw : v * w ≠ -1)
 /-! ## Section 5: SPB over General Fields -/
 
 /-- SPB over an arbitrary field. -/
+
+def spbH (u v : ℝ) : ℝ := (u + v) / (1 + u * v)
+
+/-- Hyperbolic SPB is commutative. -/
 
 end

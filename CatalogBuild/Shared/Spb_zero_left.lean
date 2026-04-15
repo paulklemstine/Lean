@@ -14,27 +14,25 @@ theorem spb_zero_left (x : ℝ) : spb 0 x = x := by
 
 /-- The SPB inverse of `x` is `-x`: `spb(x, -x) = 0`. -/
 
-theorem spb_zero_right (x : ℝ) : spb x 0 = x := by
-  simp [spb]
+theorem spb_triple (a : ℝ) (ha : cos a ≠ 0) (h2a : cos (2 * a) ≠ 0)
+    (h3a : cos (3 * a) ≠ 0)
+    (h12 : tan a * tan a ≠ 1) (h_spb : spb (tan a) (tan a) * tan a ≠ 1) :
+    tan (3 * a) = spb (spb (tan a) (tan a)) (tan a) := by
+  norm_num [ ( by ring : 3 * a = 2 * a + a ), Real.tan_eq_sin_div_cos, Real.sin_add, Real.cos_add, Real.sin_two_mul, Real.cos_two_mul' ] at *;
+  unfold spb;
+  field_simp;
+  ring
 
-/-- Zero is a left identity for SPB. -/
+/-! ## Section 3: Cayley Transform and Circle Group -/
 
-theorem spb_neg_neg (x y : ℝ) : spb (-x) (-y) = -spb x y := by
-  simp [spb, neg_mul, neg_neg]
-  ring_nf
+/-- The Cayley transform maps a real number to a point on the unit circle
+    in the complex plane: `cayley(x) = (1 + ix)/(1 - ix)`. -/
 
-/-
-SPB involution: `spb(spb(x,y), -y) = x` when `xy ≠ 1` and `y² ≠ 1`.
--/
+/-- The SPB (Stereographic Projection Bridge) operation.
+`spb x y = (x + y) / (1 - x * y)` -/
+def spb (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
 
-theorem spb_cancel_right (x y : ℝ) (hxy : x * y ≠ 1)
-    (hy : y ^ 2 ≠ 1) (h : spb x y * (-y) ≠ 1) :
-    spb (spb x y) (-y) = x := by
-  unfold SPB.spb at *;
-  rw [ div_eq_iff ];
-  · linarith [ div_mul_cancel₀ ( x + y ) ( sub_ne_zero_of_ne <| Ne.symm hxy ) ];
-  · grind +locals
-
+/-- SPB is commutative. -/
 
 theorem spb_tan_add (a b : ℝ) (ha : cos a ≠ 0) (hb : cos b ≠ 0)
     (hab : cos (a + b) ≠ 0) :
@@ -52,6 +50,19 @@ theorem spb_neg_self (x : ℝ) : spb x (-x) = 0 := by
 
 /-- SPB of `x` with itself gives the double formula: `2x/(1-x²)`. -/
 
+theorem spb_neg_neg (x y : ℝ) : spb (-x) (-y) = -spb x y := by
+  simp [spb, neg_mul, neg_neg]
+  ring_nf
+
+/-
+SPB involution: `spb(spb(x,y), -y) = x` when `xy ≠ 1` and `y² ≠ 1`.
+-/
+
+theorem spb_zero_right (x : ℝ) : spb x 0 = x := by
+  simp [spb]
+
+/-- Zero is a left identity for SPB. -/
+
 theorem spb_self (x : ℝ) (h : x * x ≠ 1) : spb x x = 2 * x / (1 - x * x) := by
   have h1 : 1 - x * x ≠ 0 := sub_ne_zero.mpr (Ne.symm h)
   simp [spb]
@@ -62,44 +73,12 @@ theorem spb_self (x : ℝ) (h : x * x ≠ 1) : spb x x = 2 * x / (1 - x * x) := 
 SPB is associative when all denominators are nonzero.
 -/
 
-theorem spb_triple (a : ℝ) (ha : cos a ≠ 0) (h2a : cos (2 * a) ≠ 0)
-    (h3a : cos (3 * a) ≠ 0)
-    (h12 : tan a * tan a ≠ 1) (h_spb : spb (tan a) (tan a) * tan a ≠ 1) :
-    tan (3 * a) = spb (spb (tan a) (tan a)) (tan a) := by
-  norm_num [ ( by ring : 3 * a = 2 * a + a ), Real.tan_eq_sin_div_cos, Real.sin_add, Real.cos_add, Real.sin_two_mul, Real.cos_two_mul' ] at *;
-  unfold spb;
-  field_simp;
-  ring
-
-/-! ## Section 3: Cayley Transform and Circle Group -/
-
-/-- The Cayley transform maps a real number to a point on the unit circle
-    in the complex plane: `cayley(x) = (1 + ix)/(1 - ix)`. -/
-
-theorem spb_cayley (x y : ℝ) (hxy : x * y ≠ 1) :
-    cayley (spb x y) = cayley x * cayley y := by
-  unfold cayley spb;
-  norm_num [ Complex.ext_iff, div_eq_mul_inv ];
-  norm_num [ Complex.normSq ] ; ring;
-  grind
-
-/-! ## Section 4: Hyperbolic SPB (Velocity Addition) -/
-
-/-- The hyperbolic SPB: velocity addition in special relativity (c=1 units).
-    `spbH(u,v) = (u + v)/(1 + uv)` -/
-
 theorem spb_cocycle (x y z : ℝ) (hxy : x * y ≠ 1) (hyz : y * z ≠ 1) :
     (1 - x * y) * (1 - spb x y * z) = (1 - y * z) * (1 - x * spb y z) := by
   unfold spb;
   grind
 
 /-- SPB distributes over negation: `spb(-x, -y) = -spb(x, y)`. -/
-
-/-- The SPB (Stereographic Projection Bridge) operation.
-`spb x y = (x + y) / (1 - x * y)` -/
-def spb (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
-
-/-- SPB is commutative. -/
 
 theorem spb_comm (x y : ℝ) : spb x y = spb y x := by
   simp [spb, add_comm, mul_comm]
@@ -138,5 +117,26 @@ theorem spb_assoc (x y z : ℝ) (hxy : x * y ≠ 1) (hyz : y * z ≠ 1)
 **Tangent addition formula as SPB**: `tan(a + b) = spb(tan a, tan b)`
     when `cos a ≠ 0`, `cos b ≠ 0`, and `cos(a+b) ≠ 0`.
 -/
+
+theorem spb_cancel_right (x y : ℝ) (hxy : x * y ≠ 1)
+    (hy : y ^ 2 ≠ 1) (h : spb x y * (-y) ≠ 1) :
+    spb (spb x y) (-y) = x := by
+  unfold SPB.spb at *;
+  rw [ div_eq_iff ];
+  · linarith [ div_mul_cancel₀ ( x + y ) ( sub_ne_zero_of_ne <| Ne.symm hxy ) ];
+  · grind +locals
+
+
+theorem spb_cayley (x y : ℝ) (hxy : x * y ≠ 1) :
+    cayley (spb x y) = cayley x * cayley y := by
+  unfold cayley spb;
+  norm_num [ Complex.ext_iff, div_eq_mul_inv ];
+  norm_num [ Complex.normSq ] ; ring;
+  grind
+
+/-! ## Section 4: Hyperbolic SPB (Velocity Addition) -/
+
+/-- The hyperbolic SPB: velocity addition in special relativity (c=1 units).
+    `spbH(u,v) = (u + v)/(1 + uv)` -/
 
 end

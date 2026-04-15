@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Computation/Oracles
-Declarations: 9
+Declarations: 8
 -/
 
 import Mathlib
@@ -36,21 +36,6 @@ Every composite number n has a factor ≤ √n.
 
 PROVIDED SOLUTION
 Use Nat.exists_prime_and_dvd to get a prime factor p. If p*p ≤ n, we're done. Otherwise p > √n, so n/p < √n and n/p is also a non-trivial factor with (n/p)^2 ≤ n.
--/
-
-theorem trial_division_correct (n d : ℕ) (hd1 : 1 < d) (hd2 : d < n)
-    (hdiv : d ∣ n) : ¬ Nat.Prime n := by
-  exact fun h => by rw [ Nat.dvd_prime h ] at hdiv; aesop;
-
-/-! ## Part 4: Bit-Flip Landscape Analysis -/
-
-/-
-PROBLEM
-Flipping bit k in a number changes it by exactly 2^k (either adding or subtracting).
-    This makes the objective landscape exponentially rugged for high-order bits.
-
-PROVIDED SOLUTION
-omega
 -/
 
 theorem bit_flip_change (a : ℕ) (k : ℕ) :
