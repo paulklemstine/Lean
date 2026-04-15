@@ -408,8 +408,9 @@ class CatalogBuilder:
         # Emit all declarations as-is (bodies contain their own namespace/end blocks)
         for e in entries:
             lines.append('')
-            if e.get('doc_comment'):
-                lines.append(f'/-- {e["doc_comment"]} -/')
+            desc = e.get('description') or e.get('doc_comment')
+            if desc:
+                lines.append(f'/-- {desc} -/')
             lines.append(e.get('body', ''))
 
         if has_noncomp:

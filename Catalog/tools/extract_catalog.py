@@ -301,8 +301,12 @@ class LeanFileParser:
                 description = self._build_description(
                     doc, pending_line_comments, last_module_comment)
 
-                # Clear accumulated line comments
+                # Clear accumulated line comments and consumed module comment
                 pending_line_comments = []
+                # Module comment attaches to the first declaration after it;
+                # don't repeat it for subsequent declarations
+                if last_module_comment and not doc:
+                    last_module_comment = None
 
                 # Find end of declaration body
                 end_line = self._find_decl_end(i)
@@ -366,29 +370,23 @@ class LeanFileParser:
         """Build a human-readable description from all comment sources.
 
         Priority: doc_comment > line_comments > module_comment context.
-        Combines sources when multiple are available.
         """
-        parts = []
-
-        # /-- ... -/ doc comment is the primary description
+        # /-- ... -/ doc comment is the best description
         if doc_comment:
-            parts.append(doc_comment)
+            return doc_comment
 
         # -- line comments immediately before the declaration
-        if line_comments:
-            line_text = ' '.join(line_comments)
-            parts.append(line_text)
+        # Filter out decorative separators (lines of only -, =, *, #)
+        meaningful = [c for c in line_comments
+                     if not re.match(r'^[-=*#]+\s*$', c) and len(c.strip()) > 0]
+        if meaningful:
+            return ' '.join(meaningful)
 
         # /-! ... -/ section/module comment as context
-        # Only include if there's no doc_comment (avoid duplication
-        # since doc comments often repeat section content)
-        if module_comment and not doc_comment:
-            parts.append(f'[Section: {module_comment}]')
+        if module_comment:
+            return f'[Section: {module_comment}]'
 
-        if not parts:
-            return None
-
-        return '\n'.join(parts)
+        return None
 
     def _detect_declaration(self, stripped: str, in_noncomp_section: bool) -> Optional[tuple]:
         """Detect a declaration keyword on a stripped line.
