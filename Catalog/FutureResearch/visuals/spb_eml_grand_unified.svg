@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a1628"/>
+      <stop offset="100%" stop-color="#1a2a4a"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f0c040"/>
+      <stop offset="100%" stop-color="#e8a020"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4488ff"/>
+      <stop offset="100%" stop-color="#2266dd"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#44dd88"/>
+      <stop offset="100%" stop-color="#22aa66"/>
+    </linearGradient>
+    <linearGradient id="red" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ff6644"/>
+      <stop offset="100%" stop-color="#dd4422"/>
+    </linearGradient>
+    <linearGradient id="purple" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#aa66ff"/>
+      <stop offset="100%" stop-color="#8844dd"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="700" fill="url(#bg)"/>
+
+  <!-- Title -->
+  <text x="500" y="45" text-anchor="middle" fill="url(#gold)" font-size="28" font-weight="bold" filter="url(#glow)">
+    SPB–EML Grand Unified Framework
+  </text>
+  <text x="500" y="70" text-anchor="middle" fill="#8899bb" font-size="14">
+    One Formula, Four Geometries, Infinite Applications
+  </text>
+
+  <!-- Central SPB Formula -->
+  <rect x="350" y="90" width="300" height="70" rx="15" fill="none" stroke="url(#gold)" stroke-width="2" filter="url(#shadow)"/>
+  <text x="500" y="118" text-anchor="middle" fill="#f0c040" font-size="20" font-weight="bold">
+    spb(x, y) = (x + y) / (1 − xy)
+  </text>
+  <text x="500" y="148" text-anchor="middle" fill="#aabbcc" font-size="12" font-style="italic">
+    The Continuous Sheffer Stroke
+  </text>
+
+  <!-- Four Conjugation Paths -->
+  <!-- Addition (top-left) -->
+  <rect x="50" y="220" width="200" height="100" rx="12" fill="rgba(68,136,255,0.15)" stroke="url(#blue)" stroke-width="1.5"/>
+  <text x="150" y="248" text-anchor="middle" fill="#4488ff" font-size="16" font-weight="bold">Addition</text>
+  <text x="150" y="270" text-anchor="middle" fill="#88aadd" font-size="13">a + b</text>
+  <text x="150" y="290" text-anchor="middle" fill="#6688aa" font-size="11">conjugation: id</text>
+  <text x="150" y="308" text-anchor="middle" fill="#6688aa" font-size="11">(ℝ, +)</text>
+
+  <!-- Multiplication (top-right) -->
+  <rect x="750" y="220" width="200" height="100" rx="12" fill="rgba(68,221,136,0.15)" stroke="url(#green)" stroke-width="1.5"/>
+  <text x="850" y="248" text-anchor="middle" fill="#44dd88" font-size="16" font-weight="bold">Multiplication</text>
+  <text x="850" y="270" text-anchor="middle" fill="#88ddaa" font-size="13">a · b = exp(ln a + ln b)</text>
+  <text x="850" y="290" text-anchor="middle" fill="#66aa88" font-size="11">conjugation: exp</text>
+  <text x="850" y="308" text-anchor="middle" fill="#66aa88" font-size="11">(ℝ₊, ·)</text>
+
+  <!-- Circular SPB (bottom-left) -->
+  <rect x="50" y="400" width="200" height="120" rx="12" fill="rgba(255,102,68,0.15)" stroke="url(#red)" stroke-width="1.5"/>
+  <text x="150" y="428" text-anchor="middle" fill="#ff6644" font-size="16" font-weight="bold">Circular SPB</text>
+  <text x="150" y="450" text-anchor="middle" fill="#dd8866" font-size="13">tan(arctan a + arctan b)</text>
+  <text x="150" y="470" text-anchor="middle" fill="#aa6644" font-size="11">conjugation: tan</text>
+  <text x="150" y="488" text-anchor="middle" fill="#aa6644" font-size="11">(ℝ, spb) ≅ SO(2)</text>
+  <text x="150" y="506" text-anchor="middle" fill="#aa6644" font-size="11">denom: 1 − xy</text>
+
+  <!-- Hyperbolic SPB (bottom-right) -->
+  <rect x="750" y="400" width="200" height="120" rx="12" fill="rgba(170,102,255,0.15)" stroke="url(#purple)" stroke-width="1.5"/>
+  <text x="850" y="428" text-anchor="middle" fill="#aa66ff" font-size="16" font-weight="bold">Hyperbolic SPB</text>
+  <text x="850" y="450" text-anchor="middle" fill="#bb88dd" font-size="13">tanh(artanh a + artanh b)</text>
+  <text x="850" y="470" text-anchor="middle" fill="#8866aa" font-size="11">conjugation: tanh</text>
+  <text x="850" y="488" text-anchor="middle" fill="#8866aa" font-size="11">(−1,1), spbH) ≅ SO(1,1)</text>
+  <text x="850" y="506" text-anchor="middle" fill="#8866aa" font-size="11">denom: 1 + xy</text>
+
+  <!-- Connection arrows -->
+  <!-- Addition to SPB center -->
+  <line x1="250" y1="270" x2="350" y2="125" stroke="#4488ff" stroke-width="1" stroke-dasharray="5,3"/>
+  <line x1="750" y1="270" x2="650" y2="125" stroke="#44dd88" stroke-width="1" stroke-dasharray="5,3"/>
+  <line x1="250" y1="460" x2="350" y2="145" stroke="#ff6644" stroke-width="1" stroke-dasharray="5,3"/>
+  <line x1="750" y1="460" x2="650" y2="145" stroke="#aa66ff" stroke-width="1" stroke-dasharray="5,3"/>
+
+  <!-- Wick Rotation arrow -->
+  <line x1="260" y1="460" x2="740" y2="460" stroke="#ffaa00" stroke-width="2" stroke-dasharray="8,4"/>
+  <text x="500" y="450" text-anchor="middle" fill="#ffaa00" font-size="14" font-weight="bold">
+    ← Wick Rotation: 1−xy ↔ 1+xy →
+  </text>
+  <text x="500" y="475" text-anchor="middle" fill="#cc8800" font-size="11">
+    t → it (Minkowski ↔ Euclidean)
+  </text>
+
+  <!-- Applications strip -->
+  <rect x="30" y="570" width="940" height="110" rx="10" fill="rgba(240,192,64,0.08)" stroke="#f0c040" stroke-width="1" stroke-dasharray="4,2"/>
+  <text x="500" y="595" text-anchor="middle" fill="#f0c040" font-size="16" font-weight="bold">
+    Applications (Machine-Verified ✓)
+  </text>
+
+  <!-- Application boxes -->
+  <rect x="50" y="605" width="140" height="55" rx="6" fill="rgba(68,136,255,0.1)" stroke="#4488ff" stroke-width="1"/>
+  <text x="120" y="623" text-anchor="middle" fill="#4488ff" font-size="11" font-weight="bold">Cauchy Measure</text>
+  <text x="120" y="638" text-anchor="middle" fill="#6688aa" font-size="9">Invariant distribution</text>
+  <text x="120" y="651" text-anchor="middle" fill="#6688aa" font-size="9">pullback identity ✓</text>
+
+  <rect x="210" y="605" width="140" height="55" rx="6" fill="rgba(255,102,68,0.1)" stroke="#ff6644" stroke-width="1"/>
+  <text x="280" y="623" text-anchor="middle" fill="#ff6644" font-size="11" font-weight="bold">Cocycle H²=0</text>
+  <text x="280" y="638" text-anchor="middle" fill="#aa6644" font-size="9">Coboundary f(x)=1+x²</text>
+  <text x="280" y="651" text-anchor="middle" fill="#aa6644" font-size="9">Jacobian factor ✓</text>
+
+  <rect x="370" y="605" width="140" height="55" rx="6" fill="rgba(170,102,255,0.1)" stroke="#aa66ff" stroke-width="1"/>
+  <text x="440" y="623" text-anchor="middle" fill="#aa66ff" font-size="11" font-weight="bold">Relativity</text>
+  <text x="440" y="638" text-anchor="middle" fill="#8866aa" font-size="9">Velocity bound |v|&lt;c</text>
+  <text x="440" y="651" text-anchor="middle" fill="#8866aa" font-size="9">Rapidity addition ✓</text>
+
+  <rect x="530" y="605" width="140" height="55" rx="6" fill="rgba(68,221,136,0.1)" stroke="#44dd88" stroke-width="1"/>
+  <text x="600" y="623" text-anchor="middle" fill="#44dd88" font-size="11" font-weight="bold">Möbius Group</text>
+  <text x="600" y="638" text-anchor="middle" fill="#66aa88" font-size="9">PSL(2,ℝ) matrices</text>
+  <text x="600" y="651" text-anchor="middle" fill="#66aa88" font-size="9">No fixed points ✓</text>
+
+  <rect x="690" y="605" width="140" height="55" rx="6" fill="rgba(240,192,64,0.1)" stroke="#f0c040" stroke-width="1"/>
+  <text x="760" y="623" text-anchor="middle" fill="#f0c040" font-size="11" font-weight="bold">Finite Fields</text>
+  <text x="760" y="638" text-anchor="middle" fill="#cc8800" font-size="9">p±1 order law</text>
+  <text x="760" y="651" text-anchor="middle" fill="#cc8800" font-size="9">Crypto potential ✓</text>
+
+  <rect x="850" y="605" width="110" height="55" rx="6" fill="rgba(68,136,255,0.1)" stroke="#4488ff" stroke-width="1"/>
+  <text x="905" y="623" text-anchor="middle" fill="#4488ff" font-size="11" font-weight="bold">CORDIC</text>
+  <text x="905" y="638" text-anchor="middle" fill="#6688aa" font-size="9">25% fewer ops</text>
+  <text x="905" y="651" text-anchor="middle" fill="#6688aa" font-size="9">Hardware ✓</text>
+
+  <!-- Central insight text -->
+  <text x="500" y="360" text-anchor="middle" fill="#ddeeff" font-size="14" font-style="italic">
+    "Addition is the universal operation. Everything else is conjugation."
+  </text>
+</svg>

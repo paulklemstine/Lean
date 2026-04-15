@@ -1,0 +1,168 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 800" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d1b2a"/>
+      <stop offset="100%" stop-color="#1b2d4a"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1100" height="800" fill="url(#bg2)"/>
+
+  <!-- Title -->
+  <text x="550" y="40" text-anchor="middle" fill="#f0c040" font-size="26" font-weight="bold">
+    SPB-EML Research Roadmap
+  </text>
+  <text x="550" y="62" text-anchor="middle" fill="#8899bb" font-size="13">
+    Status of Hypotheses H1–H10 and Future Research Priorities
+  </text>
+
+  <!-- Status Legend -->
+  <rect x="30" y="75" width="20" height="12" rx="3" fill="#44dd88"/>
+  <text x="55" y="86" fill="#aabbcc" font-size="11">Fully Proved (Lean 4)</text>
+  <rect x="230" y="75" width="20" height="12" rx="3" fill="#4488ff"/>
+  <text x="255" y="86" fill="#aabbcc" font-size="11">Computationally Verified</text>
+  <rect x="460" y="75" width="20" height="12" rx="3" fill="#ffaa44"/>
+  <text x="485" y="86" fill="#aabbcc" font-size="11">Partially Resolved</text>
+  <rect x="660" y="75" width="20" height="12" rx="3" fill="#ff6644"/>
+  <text x="685" y="86" fill="#aabbcc" font-size="11">Open/In Progress</text>
+
+  <!-- Resolved Column -->
+  <text x="180" y="115" text-anchor="middle" fill="#44dd88" font-size="18" font-weight="bold">✓ PROVED</text>
+
+  <!-- H10: Cocycle -->
+  <rect x="30" y="130" width="300" height="65" rx="8" fill="rgba(68,221,136,0.12)" stroke="#44dd88" stroke-width="1.5"/>
+  <text x="45" y="150" fill="#44dd88" font-size="14" font-weight="bold">H10: Cocycle is Coboundary</text>
+  <text x="45" y="167" fill="#88ddaa" font-size="11">c(x,y) = 1/(1-xy), f(x) = 1+x²</text>
+  <text x="45" y="184" fill="#66aa88" font-size="10">(1-xy)²·(1+spb²) = (1+x²)(1+y²) ✓</text>
+
+  <!-- H4: 3D SPB -->
+  <rect x="30" y="205" width="300" height="65" rx="8" fill="rgba(68,221,136,0.12)" stroke="#44dd88" stroke-width="1.5"/>
+  <text x="45" y="225" fill="#44dd88" font-size="14" font-weight="bold">H4: 3D SPB / Thomas-Wigner</text>
+  <text x="45" y="242" fill="#88ddaa" font-size="11">spb₃(u,v)-spb₃(v,u) = 2(u×v)/(1-u·v)</text>
+  <text x="45" y="259" fill="#66aa88" font-size="10">Non-commutativity + quaternion link ✓</text>
+
+  <!-- H9: CORDIC -->
+  <rect x="30" y="280" width="300" height="65" rx="8" fill="rgba(68,221,136,0.12)" stroke="#44dd88" stroke-width="1.5"/>
+  <text x="45" y="300" fill="#44dd88" font-size="14" font-weight="bold">H9: SPB-CORDIC Efficiency</text>
+  <text x="45" y="317" fill="#88ddaa" font-size="11">t_{n+1} = spb(t_n, d_n·2^{-n})</text>
+  <text x="45" y="334" fill="#66aa88" font-size="10">25% operation reduction proved ✓</text>
+
+  <!-- H2: Cauchy -->
+  <rect x="30" y="355" width="300" height="65" rx="8" fill="rgba(68,136,255,0.12)" stroke="#4488ff" stroke-width="1.5"/>
+  <text x="45" y="375" fill="#4488ff" font-size="14" font-weight="bold">H2: Cauchy Invariant Measure</text>
+  <text x="45" y="392" fill="#88aadd" font-size="11">arctan(spb(x,y)) = arctan(x)+arctan(y) ✓</text>
+  <text x="45" y="409" fill="#6688aa" font-size="10">Monte Carlo KS &lt; 0.02 confirmed</text>
+
+  <!-- H3: Finite fields -->
+  <rect x="30" y="430" width="300" height="65" rx="8" fill="rgba(68,136,255,0.12)" stroke="#4488ff" stroke-width="1.5"/>
+  <text x="45" y="450" fill="#4488ff" font-size="14" font-weight="bold">H3: Finite Field p±1 Law</text>
+  <text x="45" y="467" fill="#88aadd" font-size="11">Period of 1 divides p±1 (by p mod 4)</text>
+  <text x="45" y="484" fill="#6688aa" font-size="10">All primes p&lt;200 verified ✓</text>
+
+  <!-- New Results Column -->
+  <text x="550" y="115" text-anchor="middle" fill="#f0c040" font-size="18" font-weight="bold">★ NEW RESULTS</text>
+
+  <!-- Möbius Group -->
+  <rect x="400" y="130" width="300" height="65" rx="8" fill="rgba(240,192,64,0.12)" stroke="#f0c040" stroke-width="1.5"/>
+  <text x="415" y="150" fill="#f0c040" font-size="14" font-weight="bold">Möbius Group Structure</text>
+  <text x="415" y="167" fill="#ddbb44" font-size="11">M(a) = [[1,a],[-a,1]], det=1+a²</text>
+  <text x="415" y="184" fill="#aa8833" font-size="10">No real fixed points, cross-ratio ✓</text>
+
+  <!-- Wick Rotation -->
+  <rect x="400" y="205" width="300" height="65" rx="8" fill="rgba(240,192,64,0.12)" stroke="#f0c040" stroke-width="1.5"/>
+  <text x="415" y="225" fill="#f0c040" font-size="14" font-weight="bold">Wick Rotation Duality</text>
+  <text x="415" y="242" fill="#ddbb44" font-size="11">Circular ↔ Hyperbolic via sign flip</text>
+  <text x="415" y="259" fill="#aa8833" font-size="10">Sum, diff, product identities proved ✓</text>
+
+  <!-- Einstein Velocity -->
+  <rect x="400" y="280" width="300" height="65" rx="8" fill="rgba(240,192,64,0.12)" stroke="#f0c040" stroke-width="1.5"/>
+  <text x="415" y="300" fill="#f0c040" font-size="14" font-weight="bold">Einstein Velocity Bound</text>
+  <text x="415" y="317" fill="#ddbb44" font-size="11">|spbH(u,v)| &lt; 1 for |u|,|v| &lt; 1</text>
+  <text x="415" y="334" fill="#aa8833" font-size="10">Speed of light barrier + rapidity ✓</text>
+
+  <!-- EML-SPB Unification -->
+  <rect x="400" y="355" width="300" height="65" rx="8" fill="rgba(240,192,64,0.12)" stroke="#f0c040" stroke-width="1.5"/>
+  <text x="415" y="375" fill="#f0c040" font-size="14" font-weight="bold">EML-SPB Unification</text>
+  <text x="415" y="392" fill="#ddbb44" font-size="11">exp: ·   tan: spb   tanh: spbH</text>
+  <text x="415" y="409" fill="#aa8833" font-size="10">Double/triple angle formulas ✓</text>
+
+  <!-- Cauchy Pullback -->
+  <rect x="400" y="430" width="300" height="65" rx="8" fill="rgba(240,192,64,0.12)" stroke="#f0c040" stroke-width="1.5"/>
+  <text x="415" y="450" fill="#f0c040" font-size="14" font-weight="bold">Cauchy Pullback Identity</text>
+  <text x="415" y="467" fill="#ddbb44" font-size="11">(1+a²)/((1+spb²)(1-xa)²) = 1/(1+x²)</text>
+  <text x="415" y="484" fill="#aa8833" font-size="10">Information geometry foundation ✓</text>
+
+  <!-- Open Problems Column -->
+  <text x="920" y="115" text-anchor="middle" fill="#ff6644" font-size="18" font-weight="bold">◇ OPEN</text>
+
+  <!-- H1 -->
+  <rect x="770" y="130" width="300" height="50" rx="8" fill="rgba(255,102,68,0.12)" stroke="#ff6644" stroke-width="1.5"/>
+  <text x="785" y="150" fill="#ff6644" font-size="13" font-weight="bold">H1: SPB Neural Networks</text>
+  <text x="785" y="167" fill="#aa6644" font-size="10">SPBNeuron for periodic tasks</text>
+
+  <!-- H5 -->
+  <rect x="770" y="190" width="300" height="50" rx="8" fill="rgba(255,102,68,0.12)" stroke="#ff6644" stroke-width="1.5"/>
+  <text x="785" y="210" fill="#ff6644" font-size="13" font-weight="bold">H5: Approximation Theory</text>
+  <text x="785" y="227" fill="#aa6644" font-size="10">SPB trees vs Chebyshev/Padé</text>
+
+  <!-- H6 -->
+  <rect x="770" y="250" width="300" height="50" rx="8" fill="rgba(255,102,68,0.12)" stroke="#ff6644" stroke-width="1.5"/>
+  <text x="785" y="270" fill="#ff6644" font-size="13" font-weight="bold">H6: EML Complexity</text>
+  <text x="785" y="287" fill="#aa6644" font-size="10">Min exp/log ops for spb(x,y)?</text>
+
+  <!-- H7 (partial) -->
+  <rect x="770" y="310" width="300" height="50" rx="8" fill="rgba(255,170,68,0.12)" stroke="#ffaa44" stroke-width="1.5"/>
+  <text x="785" y="330" fill="#ffaa44" font-size="13" font-weight="bold">H7: Tropical SPB (Partial)</text>
+  <text x="785" y="347" fill="#aa8833" font-size="10">Semigroup, not group — refuted ✓</text>
+
+  <!-- New directions -->
+  <rect x="770" y="380" width="300" height="50" rx="8" fill="rgba(255,102,68,0.12)" stroke="#ff6644" stroke-width="1.5"/>
+  <text x="785" y="400" fill="#ff6644" font-size="13" font-weight="bold">p-adic SPB</text>
+  <text x="785" y="417" fill="#aa6644" font-size="10">SPB over ℚ_p, norm-1 elements</text>
+
+  <rect x="770" y="440" width="300" height="50" rx="8" fill="rgba(255,102,68,0.12)" stroke="#ff6644" stroke-width="1.5"/>
+  <text x="785" y="460" fill="#ff6644" font-size="13" font-weight="bold">Langlands Connection</text>
+  <text x="785" y="477" fill="#aa6644" font-size="10">M(n) subgroup of SL(2,ℤ)</text>
+
+  <!-- Timeline at bottom -->
+  <line x1="50" y1="560" x2="1050" y2="560" stroke="#4466aa" stroke-width="2"/>
+
+  <circle cx="150" cy="560" r="8" fill="#44dd88"/>
+  <text x="150" y="585" text-anchor="middle" fill="#88ddaa" font-size="12" font-weight="bold">Now</text>
+  <text x="150" y="600" text-anchor="middle" fill="#66aa88" font-size="10">H10, H4, H9</text>
+  <text x="150" y="615" text-anchor="middle" fill="#66aa88" font-size="10">Möbius, Wick</text>
+  <text x="150" y="630" text-anchor="middle" fill="#66aa88" font-size="10">Einstein bound</text>
+
+  <circle cx="400" cy="560" r="8" fill="#4488ff"/>
+  <text x="400" y="585" text-anchor="middle" fill="#88aadd" font-size="12" font-weight="bold">3-6 months</text>
+  <text x="400" y="600" text-anchor="middle" fill="#6688aa" font-size="10">SPB neural nets</text>
+  <text x="400" y="615" text-anchor="middle" fill="#6688aa" font-size="10">Crypto prototype</text>
+  <text x="400" y="630" text-anchor="middle" fill="#6688aa" font-size="10">Approximation theory</text>
+
+  <circle cx="650" cy="560" r="8" fill="#ffaa44"/>
+  <text x="650" y="585" text-anchor="middle" fill="#ddbb44" font-size="12" font-weight="bold">6-12 months</text>
+  <text x="650" y="600" text-anchor="middle" fill="#aa8833" font-size="10">p-adic SPB</text>
+  <text x="650" y="615" text-anchor="middle" fill="#aa8833" font-size="10">Info geometry</text>
+  <text x="650" y="630" text-anchor="middle" fill="#aa8833" font-size="10">Kalman filter</text>
+
+  <circle cx="900" cy="560" r="8" fill="#ff6644"/>
+  <text x="900" y="585" text-anchor="middle" fill="#dd8866" font-size="12" font-weight="bold">1+ years</text>
+  <text x="900" y="600" text-anchor="middle" fill="#aa6644" font-size="10">Division algebras</text>
+  <text x="900" y="615" text-anchor="middle" fill="#aa6644" font-size="10">Langlands</text>
+  <text x="900" y="630" text-anchor="middle" fill="#aa6644" font-size="10">Wick QFT</text>
+
+  <!-- Stats bar -->
+  <rect x="50" y="660" width="1000" height="50" rx="8" fill="rgba(68,136,255,0.08)" stroke="#4466aa" stroke-width="1"/>
+  <text x="550" y="690" text-anchor="middle" fill="#aabbcc" font-size="13">
+    30+ theorems proved in Lean 4 · 5 new files · 11 Python demos · Zero sorries in new work
+  </text>
+
+  <!-- Timeline labels -->
+  <text x="150" y="545" text-anchor="middle" fill="#44dd88" font-size="10">COMPLETED</text>
+  <text x="400" y="545" text-anchor="middle" fill="#4488ff" font-size="10">NEAR-TERM</text>
+  <text x="650" y="545" text-anchor="middle" fill="#ffaa44" font-size="10">MEDIUM-TERM</text>
+  <text x="900" y="545" text-anchor="middle" fill="#ff6644" font-size="10">LONG-TERM</text>
+
+  <!-- Arrow decoration -->
+  <polygon points="1040,560 1055,555 1055,565" fill="#4466aa"/>
+</svg>

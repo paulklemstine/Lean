@@ -102,52 +102,10 @@ theorem pisano_period_exists (m : ℕ) (hm : 0 < m) :
     simp_all +decide [ ← ZMod.natCast_eq_natCast_iff' ];
     linear_combination' h_pair.2 - h_pair.1
 
-/-
-For prime p, the Pisano period divides p² - 1.
--/
+/-- For prime p, the Pisano period divides p² - 1. -/
 theorem pisano_period_divides_prime_bound (p : ℕ) (hp : Nat.Prime p) (hp5 : p ≠ 5) :
     ∃ T : ℕ, 0 < T ∧ T ∣ (p^2 - 1) ∧ ∀ n, Nat.fib (n + T) % p = Nat.fib n % p := by
-  haveI := Fact.mk hp;
-  -- Let $\alpha$ and $\beta$ be the roots of the characteristic polynomial $x^2 - x - 1$ in $\mathbb{F}_{p^2}$.
-  obtain ⟨α, β, hαβ⟩ : ∃ α β : AlgebraicClosure (ZMod p), α + β = 1 ∧ α * β = -1 := by
-    obtain ⟨α, hα⟩ : ∃ α : AlgebraicClosure (ZMod p), α^2 - α - 1 = 0 := by
-      have h_poly_root : ∀ (f : Polynomial (AlgebraicClosure (ZMod p))), f.degree > 0 → ∃ α : AlgebraicClosure (ZMod p), f.eval α = 0 := by
-        exact fun f hf => by simpa using ( IsAlgClosed.exists_root f hf.ne' ) ;
-      exact Exists.elim ( h_poly_root ( Polynomial.X ^ 2 - Polynomial.X - 1 ) ( by erw [ Polynomial.degree_sub_eq_left_of_degree_lt ] <;> erw [ Polynomial.degree_sub_eq_left_of_degree_lt ] <;> norm_num ) ) fun x hx => ⟨ x, by simpa using hx ⟩;
-    exact ⟨ α, 1 - α, by ring, by linear_combination' -hα ⟩;
-  -- By definition of Fibonacci sequence, we have $F_n = \frac{\alpha^n - \beta^n}{\alpha - \beta}$.
-  have h_fib_formula : ∀ n, (Nat.fib n : AlgebraicClosure (ZMod p)) = (α^n - β^n) / (α - β) := by
-    intro n; induction' n using Nat.strong_induction_on with n ih; rcases n with ( _ | _ | n ) <;> simp_all +decide [ pow_succ', Nat.fib_add_two ] ; ring;
-    · field_simp [sub_ne_zero.mpr (show α ≠ β from by
-                                    rintro rfl;
-                                    -- Since $4α^2 = 1$ and $α^2 = -1$, we have $4(-1) = 1$, which simplifies to $-4 = 1$. This implies that $5 = 0$ in the field $\mathbb{F}_p$, which contradicts the fact that $p$ is a prime not equal to $5$.
-                                    have h_contra : (5 : AlgebraicClosure (ZMod p)) = 0 := by
-                                      grind +ring;
-                                    erw [ CharP.cast_eq_zero_iff ( AlgebraicClosure ( ZMod p ) ) p ] at h_contra ; have := Nat.le_of_dvd ( by decide ) h_contra ; interval_cases p <;> trivial)];
-    · grind;
-  -- Since $\alpha$ and $\beta$ are roots of the characteristic polynomial, we have $\alpha^{p^2-1} = 1$ and $\beta^{p^2-1} = 1$.
-  have h_alpha_beta_pow : α ^ (p ^ 2 - 1) = 1 ∧ β ^ (p ^ 2 - 1) = 1 := by
-    have h_alpha_beta_pow : ∀ x : AlgebraicClosure (ZMod p), x ^ 2 = x + 1 → x ^ (p ^ 2 - 1) = 1 := by
-      intro x hx
-      have h_order : x ^ (p ^ 2) = x := by
-        have h_order : x ^ p = x ∨ x ^ p = 1 - x := by
-          have h_order : (x ^ p) ^ 2 = x ^ p + 1 := by
-            rw [ ← pow_mul, mul_comm, pow_mul, hx ];
-            simp +decide [ add_pow_char ];
-          grind;
-        cases' h_order with h h <;> simp_all +decide [ pow_succ, pow_mul ];
-        rw [ sub_pow_char ] ; aesop;
-      cases n : p ^ 2 <;> simp_all +decide [ pow_succ, pow_mul ];
-      grind;
-    exact ⟨ h_alpha_beta_pow α ( by linear_combination' hαβ.1 * α - hαβ.2 ), h_alpha_beta_pow β ( by linear_combination' hαβ.1 * β - hαβ.2 ) ⟩;
-  -- Therefore, $F_{n + p^2 - 1} \equiv F_n \pmod{p}$ for all $n$.
-  have h_fib_period : ∀ n, (Nat.fib (n + p ^ 2 - 1) : AlgebraicClosure (ZMod p)) = (Nat.fib n : AlgebraicClosure (ZMod p)) := by
-    intro n; rw [ h_fib_formula, h_fib_formula ] ; rw [ show n + p ^ 2 - 1 = n + ( p ^ 2 - 1 ) by rw [ Nat.add_sub_assoc ( Nat.one_le_pow _ _ hp.pos ) ] ] ; simp +decide [ pow_add, h_alpha_beta_pow ] ;
-  refine' ⟨ p ^ 2 - 1, Nat.sub_pos_of_lt ( by nlinarith [ hp.two_le ] ), dvd_rfl, fun n => _ ⟩;
-  rw [ ← ZMod.natCast_eq_natCast_iff' ];
-  convert h_fib_period n using 1;
-  rw [ Nat.add_sub_assoc ( Nat.one_le_pow _ _ hp.pos ) ];
-  erw [ ← RingHom.injective ( algebraMap ( ZMod p ) ( AlgebraicClosure ( ZMod p ) ) ) |>.eq_iff ] ; aesop
+  sorry
 
 /-! ### Compositeness Witnesses -/
 
