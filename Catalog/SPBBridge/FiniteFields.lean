@@ -1,5 +1,5 @@
 import Mathlib
-import Research.SPBBridge.Core
+import SPBBridge.Core
 
 /-!
 # SPB over Finite Fields: The p±1 Law

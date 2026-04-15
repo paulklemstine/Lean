@@ -1,5 +1,5 @@
 import Mathlib
-import Research.SPBBridge.Core
+import SPBBridge.Core
 
 /-!
 # Tropical SPB: Structure and Properties

@@ -1,5 +1,5 @@
 import Mathlib
-import Research.SPBBridge.Core
+import SPBBridge.Core
 
 /-!
 # SPB Power Formulas and Iterated Application
