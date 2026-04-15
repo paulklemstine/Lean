@@ -455,8 +455,6 @@ class LeanFileParser:
         n = len(lines)
 
         i = body_start_idx
-        # Track the minimum indent within the body to handle nested blocks
-        min_body_indent = None
 
         while i < n:
             stripped = lines[i].strip()
@@ -467,25 +465,24 @@ class LeanFileParser:
 
             current_indent = len(lines[i]) - len(lines[i].lstrip())
 
-            # Track minimum body indent
-            if min_body_indent is None or current_indent < min_body_indent:
-                if current_indent > base_indent:
-                    min_body_indent = current_indent
-
-            # A line at base_indent or less that is a declaration keyword
+            # A line at base_indent or less that starts a new declaration
+            # always ends the current declaration
             if current_indent <= base_indent:
                 if self._line_starts_declaration(stripped):
                     return i - 1
-                # namespace/end/section at base indent
+                # namespace/end/section at base indent also ends the declaration
                 if NAMESPACE_OPEN.match(lines[i]) or NAMESPACE_CLOSE.match(lines[i]):
                     return i - 1
                 if re.match(r'^\s*(noncomputable\s+)?section\b', stripped):
                     return i - 1
-                if re.match(r'^\s*end\s*$', stripped) or re.match(r'^\s*end\s+\w+', stripped):
-                    # But "end" could be closing a proof block
-                    # Only end the declaration if we're at base indent
-                    if current_indent <= base_indent:
-                        return i - 1
+                if re.match(r'^\s*end\s*$', stripped):
+                    return i - 1
+                # A bare `end X` at base indent (not inside a proof)
+                # Only ends the declaration if it's closing a namespace
+                # that wasn't opened within the declaration body
+                ns_close = NAMESPACE_CLOSE.match(lines[i])
+                if ns_close:
+                    return i - 1
 
             i += 1
 
