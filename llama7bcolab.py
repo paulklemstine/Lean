@@ -120,7 +120,7 @@ class LLaMAWeightLoader:
     """Loads real LLaMA 7B weights from HuggingFace or local path."""
 
     def __init__(self, model_name: str = "meta-llama/Llama-2-7b-hf",
-                 local_path: Optional[str] = None, device: str = "cpu"):
+                 local_path: Optional[str] = None, device: str = "auto"):
         self.model_name = model_name
         self.local_path = local_path
         self.device = device
@@ -128,6 +128,17 @@ class LLaMAWeightLoader:
         self.tokenizer = None
         self.config = None
         self._loaded = False
+
+    @staticmethod
+    def _detect_device() -> str:
+        """Auto-detect best available device."""
+        try:
+            import torch
+            if torch.cuda.is_available():
+                return "cuda"
+        except ImportError:
+            pass
+        return "cpu"
 
     def load(self) -> bool:
         """Load the model. Returns True if successful."""
@@ -1013,7 +1024,7 @@ MODEL_NAME    = "openlm-research/open_llama_7b"  # Open model (no auth needed)
 LOCAL_PATH    = None                         # Or local path (overrides MODEL_NAME)
 USE_SYNTHETIC = False                        # True = skip HuggingFace, use random weights
 MEASURE_PPL   = False                        # True = measure perplexity on WikiText-2
-DEVICE        = "cuda"                       # "cpu", "cuda", "cuda:0"
+DEVICE        = "auto"                       # "auto", "cpu", "cuda", "cuda:0"
 SEED          = 42
 
 
