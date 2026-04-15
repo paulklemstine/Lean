@@ -18,10 +18,57 @@ theorem fib_gcd_identity (m n : ℕ) :
 The Pisano period π(m): existence of a period for F(n) mod m.
 -/
 
+theorem fib_exp_bound (n : ℕ) : Nat.fib n ≤ 2^n := by
+  induction n using Nat.strongRecOn with
+  | ind n ih =>
+    match n with
+    | 0 => simp
+    | 1 => simp [Nat.fib]
+    | n + 2 =>
+      rw [Nat.fib_add_two]
+      have h1 := ih (n+1) (by omega)
+      have h2 := ih n (by omega)
+      have : 2^n ≤ 2^(n+1) := Nat.pow_le_pow_right (by omega) (by omega)
+      linarith [show 2^(n+2) = 2^(n+1) + 2^(n+1) from by ring]
+
+/-
+F(n) ≥ n for n ≥ 6.
+-/
+
+theorem fib_composite_test (n : ℕ) (hn : 1 < n) (hn2 : n ≠ 2) (hn5 : n ≠ 5)
+    (h : (Nat.fib n ^ 2) % n ≠ 1 % n) :
+    ¬Nat.Prime n := by
+  exact fun h' => h <| by have := fib_sq_mod_prime n h' hn2 hn5; simpa [ sq, Nat.mul_mod ] using this;
+
+/-- F(4) = 3. -/
+
+theorem fib_linear_lower (n : ℕ) (hn : 6 ≤ n) : n ≤ Nat.fib n := by
+  rcases n with ( _ | _ | _ | _ | _ | _ | _ | n ) <;> simp_all +arith +decide;
+  exact Nat.recOn n ( by decide ) fun n ihn => by norm_num [ Nat.fib_add_two ] at * ; linarith
+
+/- COMMENTED OUT: This theorem is FALSE when p = q.
+   Counterexample: p = q = 2, T₁ = T₂ = 3 (Pisano period of 2).
+   Then T₁ * T₂ = 9, fib(9) = 34, 34 % 4 = 2 ≠ 0 = fib(0) % 4.
+   The theorem would hold with an additional hypothesis `p ≠ q` (or `Nat.Coprime p q`),
+   since then p * q would be coprime and CRT applies. -/
+/- theorem pisano_for_factoring (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q) :
+    ∀ T₁ T₂ : ℕ, (0 < T₁ ∧ ∀ n, Nat.fib (n + T₁) % p = Nat.fib n % p) →
+    (0 < T₂ ∧ ∀ n, Nat.fib (n + T₂) % q = Nat.fib n % q) →
+    ∀ n, Nat.fib (n + T₁ * T₂) % (p * q) = Nat.fib n % (p * q) := by
+  sorry -/
+
+/-- Carmichael's theorem (weak): For n ≥ 13, F(n) has a primitive prime divisor. -/
+
 theorem fib_dvd_chain (m n : ℕ) (h : m ∣ n) : Nat.fib m ∣ Nat.fib n :=
   Nat.fib_dvd _ _ h
 
 /-- GCD identity: gcd(F(m), F(n)) = F(gcd(m,n)). -/
+
+theorem fib_four_val : Nat.fib 4 = 3 := by native_decide
+
+/-! ### Fibonacci Bounds -/
+
+/-- F(n) ≤ 2^n for all n. -/
 
 theorem fib_sq_mod_prime (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2) (hp5 : p ≠ 5) :
     (Nat.fib p ^ 2) % p = 1 % p := by
@@ -68,54 +115,7 @@ theorem fib_sq_mod_prime (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2) (hp5 : p �
 
 /-- Fibonacci divisibility: m | n implies F(m) | F(n). -/
 
-theorem fib_exp_bound (n : ℕ) : Nat.fib n ≤ 2^n := by
-  induction n using Nat.strongRecOn with
-  | ind n ih =>
-    match n with
-    | 0 => simp
-    | 1 => simp [Nat.fib]
-    | n + 2 =>
-      rw [Nat.fib_add_two]
-      have h1 := ih (n+1) (by omega)
-      have h2 := ih n (by omega)
-      have : 2^n ≤ 2^(n+1) := Nat.pow_le_pow_right (by omega) (by omega)
-      linarith [show 2^(n+2) = 2^(n+1) + 2^(n+1) from by ring]
-
-/-
-F(n) ≥ n for n ≥ 6.
--/
-
-theorem fib_linear_lower (n : ℕ) (hn : 6 ≤ n) : n ≤ Nat.fib n := by
-  rcases n with ( _ | _ | _ | _ | _ | _ | _ | n ) <;> simp_all +arith +decide;
-  exact Nat.recOn n ( by decide ) fun n ihn => by norm_num [ Nat.fib_add_two ] at * ; linarith
-
-/- COMMENTED OUT: This theorem is FALSE when p = q.
-   Counterexample: p = q = 2, T₁ = T₂ = 3 (Pisano period of 2).
-   Then T₁ * T₂ = 9, fib(9) = 34, 34 % 4 = 2 ≠ 0 = fib(0) % 4.
-   The theorem would hold with an additional hypothesis `p ≠ q` (or `Nat.Coprime p q`),
-   since then p * q would be coprime and CRT applies. -/
-/- theorem pisano_for_factoring (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q) :
-    ∀ T₁ T₂ : ℕ, (0 < T₁ ∧ ∀ n, Nat.fib (n + T₁) % p = Nat.fib n % p) →
-    (0 < T₂ ∧ ∀ n, Nat.fib (n + T₂) % q = Nat.fib n % q) →
-    ∀ n, Nat.fib (n + T₁ * T₂) % (p * q) = Nat.fib n % (p * q) := by
-  sorry -/
-
-/-- Carmichael's theorem (weak): For n ≥ 13, F(n) has a primitive prime divisor. -/
-
-theorem fib_composite_test (n : ℕ) (hn : 1 < n) (hn2 : n ≠ 2) (hn5 : n ≠ 5)
-    (h : (Nat.fib n ^ 2) % n ≠ 1 % n) :
-    ¬Nat.Prime n := by
-  exact fun h' => h <| by have := fib_sq_mod_prime n h' hn2 hn5; simpa [ sq, Nat.mul_mod ] using this;
-
-/-- F(4) = 3. -/
-
 theorem fib_primitive_divisor_existence :
     ∀ n : ℕ, 13 ≤ n → ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
       ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
   sorry
-
-theorem fib_four_val : Nat.fib 4 = 3 := by native_decide
-
-/-! ### Fibonacci Bounds -/
-
-/-- F(n) ≤ 2^n for all n. -/

@@ -16,6 +16,10 @@ def chi4 (n : ℤ) : ℤ :=
 
 /-- χ₄(1) = 1. -/
 
+theorem chi4_one : chi4 1 = 1 := by native_decide
+
+/-- χ₄(3) = -1. -/
+
 theorem chi4_mul_odd (a b : ℤ) (ha : a % 2 = 1) (hb : b % 2 = 1) :
     chi4 (a * b) = chi4 a * chi4 b := by
   unfold chi4;
@@ -28,9 +32,5 @@ theorem chi4_three : chi4 3 = -1 := by native_decide
 /-
 χ₄ is multiplicative on odd numbers.
 -/
-
-theorem chi4_one : chi4 1 = 1 := by native_decide
-
-/-- χ₄(3) = -1. -/
 
 end

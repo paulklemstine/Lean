@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Bridges
-Declarations: 26
+Declarations: 25
 -/
 
 import Mathlib
@@ -78,18 +78,6 @@ theorem complex_norm_sq_pythagorean (z : ℂ) :
 
 /-- The Brahmagupta–Fibonacci identity: product of sums of two squares
     is a sum of two squares. This is the multiplicativity of the complex norm. -/
-
-theorem sum_sq_nonneg (a b : ℝ) : 0 ≤ a ^ 2 + b ^ 2 := by positivity
-
-/-! ## Part 5: The Berggren–Modular Bridge
-
-The 2×2 Berggren matrices M₁, M₃ have determinant 1, placing them in SL₂(ℤ).
-They generate the theta group Γ_θ, an index-3 subgroup of SL₂(ℤ),
-which governs the modular properties of theta functions — connecting
-Pythagorean triple enumeration to the Langlands program.
--/
-
-/-- Berggren matrix M₁ acting on Euclid parameters. -/
 
 def berggrenM₁ : Matrix (Fin 2) (Fin 2) ℤ := !![2, -1; 1, 0]
 

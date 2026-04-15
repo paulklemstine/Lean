@@ -24,10 +24,17 @@ theorem sublevel_full (N : ℕ) (hN : 0 < N) :
 /-- Between two consecutive divisors, the energy rises from 0.
     Specifically, if d | N and d < x < d' (next divisor), then E(N,x) > 0. -/
 
-def sublevel (N t : ℕ) : Finset ℕ :=
-  (Finset.Icc 1 N).filter (fun x => E N x ≤ t)
+theorem sublevel_zero_is_divisors (N : ℕ) (hN : 0 < N) :
+    sublevel N 0 = (Finset.Icc 1 N).filter (fun x => x ∣ N) := by
+  ext x
+  simp only [sublevel, Finset.mem_filter, Finset.mem_Icc, E, Nat.le_zero]
+  constructor
+  · rintro ⟨hx, hmod⟩
+    exact ⟨hx, Nat.dvd_of_mod_eq_zero hmod⟩
+  · rintro ⟨hx, hdvd⟩
+    exact ⟨hx, Nat.mod_eq_zero_of_dvd hdvd⟩
 
-/-- Sublevel sets are monotone in the threshold. -/
+/-- Card of sublevel at 0 equals number of divisors. -/
 
 theorem sublevel_mono (N s t : ℕ) (hst : s ≤ t) :
     sublevel N s ⊆ sublevel N t := by
@@ -49,14 +56,7 @@ theorem sublevel_zero_card_eq_tau (N : ℕ) (hN : 0 < N) :
 
 /-- The sublevel set at threshold N-1 is all of [1, N]. -/
 
-theorem sublevel_zero_is_divisors (N : ℕ) (hN : 0 < N) :
-    sublevel N 0 = (Finset.Icc 1 N).filter (fun x => x ∣ N) := by
-  ext x
-  simp only [sublevel, Finset.mem_filter, Finset.mem_Icc, E, Nat.le_zero]
-  constructor
-  · rintro ⟨hx, hmod⟩
-    exact ⟨hx, Nat.dvd_of_mod_eq_zero hmod⟩
-  · rintro ⟨hx, hdvd⟩
-    exact ⟨hx, Nat.mod_eq_zero_of_dvd hdvd⟩
+def sublevel (N t : ℕ) : Finset ℕ :=
+  (Finset.Icc 1 N).filter (fun x => E N x ≤ t)
 
-/-- Card of sublevel at 0 equals number of divisors. -/
+/-- Sublevel sets are monotone in the threshold. -/

@@ -16,6 +16,13 @@ theorem parent_hyp_lt (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
 
 /-- The first components of invB1 and invB2 are equal -/
 
+theorem parent_hyp_pos (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
+    (hpt : IsPT a b c) : 0 < -2*a - 2*b + 3*c := by
+  unfold IsPT at hpt
+  nlinarith [sq_nonneg (3*c - 2*a - 2*b), sq_nonneg (a - b), mul_pos ha hb]
+
+/-- The parent hypotenuse is strictly less than c for any PPT with a,b > 0. -/
+
 theorem parent_exists (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (hpt : IsPT a b c) (hc5 : c > 5) (hprim : Int.gcd a b = 1) :
     (0 < (invB1 a b c).1 ∧ 0 < (invB1 a b c).2.1 ∧ 0 < (invB1 a b c).2.2) ∨
@@ -48,10 +55,3 @@ theorem parent_exists (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
 /-! ## Verification: Descent from Known Triples -/
 
 /-- (5,12,13) descends to (3,4,5) via invB1 -/
-
-theorem parent_hyp_pos (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
-    (hpt : IsPT a b c) : 0 < -2*a - 2*b + 3*c := by
-  unfold IsPT at hpt
-  nlinarith [sq_nonneg (3*c - 2*a - 2*b), sq_nonneg (a - b), mul_pos ha hb]
-
-/-- The parent hypotenuse is strictly less than c for any PPT with a,b > 0. -/

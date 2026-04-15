@@ -11,7 +11,9 @@ noncomputable section
 
 def EML_irr (a b : ℝ) : ℝ := Real.exp a - Real.log b
 
-/-- e is irrational. -/
+/-
+e is irrational.
+-/
 
 theorem EML_one_one_irrational (h : Irrational (Real.exp 1)) :
     Irrational (EML_irr 1 1) := by

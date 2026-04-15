@@ -21,6 +21,19 @@ theorem spbHyp_zero (x : ℝ) : spbHyp x 0 = x := by
 
 /-- Circular SPB inverse. -/
 
+theorem spbHyp_subluminal (x y : ℝ) (hx : |x| < 1) (hy : |y| < 1) :
+    |spbHyp x y| < 1 := by
+  unfold spbHyp;
+  rw [ abs_lt ] at *;
+  exact ⟨ by rw [ lt_div_iff₀ ] <;> nlinarith, by rw [ div_lt_iff₀ ] <;> nlinarith ⟩
+
+/-! ## The Rapidity Parametrization -/
+
+/-
+The rapidity parametrization: if x = tanh(α) and y = tanh(β),
+    then spbHyp(x,y) = tanh(α+β). This linearizes hyperbolic SPB.
+-/
+
 theorem spbHyp_neg (x : ℝ) : spbHyp x (-x) = 0 := by
   simp [spbHyp]
 
@@ -52,18 +65,5 @@ theorem spbHyp_comm (x y : ℝ) : spbHyp x y = spbHyp y x := by
   simp [spbHyp, add_comm, mul_comm]
 
 /-- Circular SPB identity. -/
-
-theorem spbHyp_subluminal (x y : ℝ) (hx : |x| < 1) (hy : |y| < 1) :
-    |spbHyp x y| < 1 := by
-  unfold spbHyp;
-  rw [ abs_lt ] at *;
-  exact ⟨ by rw [ lt_div_iff₀ ] <;> nlinarith, by rw [ div_lt_iff₀ ] <;> nlinarith ⟩
-
-/-! ## The Rapidity Parametrization -/
-
-/-
-The rapidity parametrization: if x = tanh(α) and y = tanh(β),
-    then spbHyp(x,y) = tanh(α+β). This linearizes hyperbolic SPB.
--/
 
 end

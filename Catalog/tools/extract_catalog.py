@@ -613,6 +613,7 @@ def scan_catalog(catalog_root: str, verbose: bool = False) -> dict:
         "total_sorry": sorry_total,
         "total_duplicate_groups": len(dup_groups),
         "total_canonical": sum(1 for e in entries if e.canonical),
+        "file_fingerprints": file_fingerprints(str(root)),
     }
 
     catalog = {
@@ -816,6 +817,210 @@ def build_bridge_index(root: Path, entries: list[CatalogEntry]) -> list:
         })
 
     return bridge_index
+
+
+def file_fingerprints(catalog_root: str) -> dict:
+    """Get modification times for all .lean files under catalog_root.
+
+    Returns dict mapping relative_path -> mtime_iso string.
+    """
+    root = Path(catalog_root)
+    fingerprints = {}
+    for filepath in sorted(root.rglob('*.lean')):
+        if 'tools' in filepath.parts:
+            continue
+        rel_path = str(filepath.relative_to(root))
+        try:
+            mtime = filepath.stat().st_mtime
+            fingerprints[rel_path] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(mtime))
+        except OSError:
+            continue
+    return fingerprints
+
+
+def diff_fingerprints(old_fingerprints: dict, new_fingerprints: dict) -> tuple:
+    """Compare old and new file fingerprints.
+
+    Returns (added, modified, removed, unchanged) as sets of rel_paths.
+    """
+    old_keys = set(old_fingerprints.keys())
+    new_keys = set(new_fingerprints.keys())
+
+    added = new_keys - old_keys
+    removed = old_keys - new_keys
+    common = old_keys & new_keys
+    modified = {f for f in common if new_fingerprints[f] != old_fingerprints[f]}
+    unchanged = {f for f in common if new_fingerprints[f] == old_fingerprints[f]}
+
+    return added, modified, removed, unchanged
+
+
+def scan_incremental(catalog_root: str, existing_db: dict, verbose: bool = False) -> dict:
+    """Incrementally rescan: only parse new/modified files, merge with existing DB.
+
+    Args:
+        catalog_root: Path to Catalog/ directory
+        existing_db: The existing catalog database dict (from catalog.json)
+        verbose: Print progress
+
+    Returns:
+        Updated catalog database dict
+    """
+    root = Path(catalog_root)
+
+    # Get current file fingerprints
+    new_fingerprints = file_fingerprints(catalog_root)
+    old_fingerprints = existing_db.get("metadata", {}).get("file_fingerprints", {})
+
+    added, modified, removed, unchanged = diff_fingerprints(old_fingerprints, new_fingerprints)
+
+    if verbose:
+        print(f"Incremental scan: {len(added)} new, {len(modified)} modified, {len(removed)} removed, {len(unchanged)} unchanged")
+
+    files_to_parse = added | modified
+
+    # Parse new/modified files
+    new_entries_by_file = {}
+    new_imports_by_file = {}
+
+    for filepath in sorted(root.rglob('*.lean')):
+        if 'tools' in filepath.parts:
+            continue
+        rel_path = str(filepath.relative_to(root))
+        if rel_path not in files_to_parse:
+            continue
+        try:
+            content = filepath.read_text(encoding='utf-8')
+        except Exception as e:
+            if verbose:
+                print(f"  WARNING: Could not read {rel_path}: {e}")
+            continue
+
+        parser = LeanFileParser(rel_path, content)
+        entries = parser.parse()
+        new_entries_by_file[rel_path] = entries
+        new_imports_by_file[rel_path] = parser.imports
+
+        if verbose and entries:
+            print(f"  {rel_path}: {len(entries)} declarations (rescanned)")
+
+    # Build merged entry list
+    # Keep entries from unchanged files, replace entries from modified files, add new file entries
+    existing_entries = existing_db.get("entries", [])
+    kept_entries = []
+    for e in existing_entries:
+        sf = e.get("source_file", e.get("source_provenance", ""))
+        if sf in removed:
+            continue  # Remove entries from deleted files
+        if sf in modified:
+            continue  # Will be replaced by new parse
+        if sf in added:
+            continue  # Will be added from new parse
+        kept_entries.append(e)
+
+    # Convert kept entries back to CatalogEntry objects
+    kept_catalog_entries = []
+    for e in kept_entries:
+        entry = CatalogEntry(
+            id=e.get("id", ""),
+            name=e.get("name", ""),
+            qualified_name=e.get("qualified_name", ""),
+            kind=e.get("kind", ""),
+            namespace=e.get("namespace", ""),
+            source_file=e.get("source_file", ""),
+            module_path=e.get("module_path", ""),
+            line_number=e.get("line_number", 0),
+            end_line=e.get("end_line", 0),
+            type_signature=e.get("type_signature", ""),
+            doc_comment=e.get("doc_comment"),
+            body=e.get("body", ""),
+            domain=e.get("domain", ""),
+            subdomain=e.get("subdomain"),
+            imports=e.get("imports", []),
+            internal_imports=e.get("internal_imports", []),
+            proof_tactics=e.get("proof_tactics", []),
+            sorry_count=e.get("sorry_count", 0),
+            proof_length_lines=e.get("proof_length_lines", 0),
+            is_noncomputable=e.get("is_noncomputable", False),
+            canonical=e.get("canonical", True),
+            duplicate_of=e.get("duplicate_of"),
+            duplicate_group_id=e.get("duplicate_group_id"),
+            source_provenance=e.get("source_provenance", ""),
+        )
+        kept_catalog_entries.append(entry)
+
+    # Add new/modified file entries
+    all_catalog_entries = kept_catalog_entries
+    for rel_path, entries in new_entries_by_file.items():
+        all_catalog_entries.extend(entries)
+
+    # Merge imports
+    all_imports = {}
+    # Keep imports from existing entries for unchanged files
+    for e in kept_entries:
+        sf = e.get("source_file", e.get("source_provenance", ""))
+        if sf not in all_imports:
+            all_imports[sf] = e.get("imports", [])
+    # Add new imports
+    for rel_path, imports in new_imports_by_file.items():
+        all_imports[rel_path] = imports
+
+    # Collect lean file list (for stats and import graph)
+    lean_files = sorted(root.rglob('*.lean'))
+    lean_files = [f for f in lean_files if 'tools' not in f.parts]
+
+    # Recompute everything
+    all_entries = all_catalog_entries
+
+    # Re-resolve duplicates
+    all_entries, dup_groups = resolve_duplicates(all_entries)
+
+    # Rebuild import graph
+    import_graph = build_import_graph(lean_files, root, all_imports)
+
+    # Rebuild domain stats
+    domains = build_domain_stats(all_entries, lean_files, root)
+
+    # Rebuild bridge index
+    bridge_index = build_bridge_index(root, all_entries)
+
+    # Compute metadata
+    kind_counts = defaultdict(int)
+    sorry_total = 0
+    for e in all_entries:
+        kind_counts[e.kind] += 1
+        sorry_total += e.sorry_count
+
+    file_count = len(new_fingerprints)
+
+    metadata = {
+        "schema_version": "1.0.0",
+        "generated_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "lean_version": "v4.28.0",
+        "mathlib_version": "v4.28.0",
+        "total_files": file_count,
+        "total_declarations": len(all_entries),
+        "total_theorems": kind_counts.get('theorem', 0) + kind_counts.get('lemma', 0),
+        "total_defs": kind_counts.get('def', 0) + kind_counts.get('noncomputable_def', 0),
+        "total_structures": (kind_counts.get('structure', 0) + kind_counts.get('class', 0)
+                           + kind_counts.get('inductive', 0)),
+        "total_lines": sum(e.proof_length_lines for e in all_entries),  # approximate
+        "total_sorry": sorry_total,
+        "total_duplicate_groups": len(dup_groups),
+        "total_canonical": sum(1 for e in all_entries if e.canonical),
+        "file_fingerprints": new_fingerprints,
+    }
+
+    catalog = {
+        "metadata": metadata,
+        "entries": [asdict(e) for e in all_entries],
+        "domains": domains,
+        "duplicate_groups": dup_groups,
+        "import_graph": import_graph,
+        "bridge_index": bridge_index,
+    }
+
+    return catalog
 
 
 def main():

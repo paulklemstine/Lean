@@ -11,12 +11,14 @@ noncomputable section
 
 theorem spb_zero (x : ℝ) : spb x 0 = x := by simp [spb]
 
-theorem spb_neg (x : ℝ) : spb x (-x) = 0 := by simp [spb]
+theorem spb_norm_ratio (x y : ℝ) (h : 1 - x * y ≠ 0) :
+    1 + (spb x y) ^ 2 = (1 + x ^ 2) * (1 + y ^ 2) / (1 - x * y) ^ 2 := by
+  have h2 : (1 - x * y) ^ 2 ≠ 0 := pow_ne_zero 2 h
+  field_simp
+  have := spb_norm_identity x y h
+  linarith
 
-
-theorem spb_norm_identity (x y : ℝ) (h : 1 - x * y ≠ 0) :
-    (1 + (spb x y) ^ 2) * (1 - x * y) ^ 2 = (1 + x ^ 2) * (1 + y ^ 2) := by
-  unfold spb; field_simp; ring
+/-! ## The Logarithmic Bridge Identity -/
 
 
 theorem spb_eml_decomposition (x y : ℝ) (hden : 0 < 1 - x * y) :
@@ -28,14 +30,12 @@ theorem spb_eml_decomposition (x y : ℝ) (hden : 0 < 1 - x * y) :
 /-! ## arctan Homomorphism -/
 
 
-theorem spb_norm_ratio (x y : ℝ) (h : 1 - x * y ≠ 0) :
-    1 + (spb x y) ^ 2 = (1 + x ^ 2) * (1 + y ^ 2) / (1 - x * y) ^ 2 := by
-  have h2 : (1 - x * y) ^ 2 ≠ 0 := pow_ne_zero 2 h
-  field_simp
-  have := spb_norm_identity x y h
-  linarith
+theorem spb_neg (x : ℝ) : spb x (-x) = 0 := by simp [spb]
 
-/-! ## The Logarithmic Bridge Identity -/
+
+theorem spb_norm_identity (x y : ℝ) (h : 1 - x * y ≠ 0) :
+    (1 + (spb x y) ^ 2) * (1 - x * y) ^ 2 = (1 + x ^ 2) * (1 + y ^ 2) := by
+  unfold spb; field_simp; ring
 
 
 end

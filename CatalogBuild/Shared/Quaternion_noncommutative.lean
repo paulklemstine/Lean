@@ -17,6 +17,14 @@ theorem quaternion_noncommutative :
 
 /-- Lipschitz unit i has norm 1. -/
 
+/-- The quaternion norm is multiplicative: N(ab) = N(a)·N(b).
+This is the algebraic foundation of quaternion-based factoring. -/
+theorem quaternion_norm_sq_mul (a b : Quaternion ℝ) :
+    Quaternion.normSq (a * b) = Quaternion.normSq a * Quaternion.normSq b :=
+  map_mul Quaternion.normSq a b
+
+/-- Quaternion norm is non-negative. -/
+
 theorem quaternion_normSq_nonneg (q : Quaternion ℝ) :
     0 ≤ Quaternion.normSq q := by
   simp [Quaternion.normSq_def']
@@ -40,11 +48,3 @@ theorem quaternion_mul_components (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℝ
 /-- **The Norm Factoring Principle**: If we can express p and q each as a sum
     of four squares, then p*q has a four-square representation given by
     the quaternion product formula. -/
-
-/-- The quaternion norm is multiplicative: N(ab) = N(a)·N(b).
-This is the algebraic foundation of quaternion-based factoring. -/
-theorem quaternion_norm_sq_mul (a b : Quaternion ℝ) :
-    Quaternion.normSq (a * b) = Quaternion.normSq a * Quaternion.normSq b :=
-  map_mul Quaternion.normSq a b
-
-/-- Quaternion norm is non-negative. -/

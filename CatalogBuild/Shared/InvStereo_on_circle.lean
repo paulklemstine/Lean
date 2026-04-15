@@ -19,14 +19,14 @@ theorem invStereo_on_circle (t : ℝ) :
     The universe, viewed as the process of encoding (into a photon) and then
     decoding (back to a particle), is the identity map. This IS idempotence. -/
 
-lemma invStereo_denom_pos (t : ℝ) : (0 : ℝ) < 1 + t ^ 2 := by positivity
-
-/-- The encoding maps to S¹. -/
-
 def invStereo (t : ℝ) : ℝ × ℝ :=
   (2 * t / (1 + t ^ 2), (1 - t ^ 2) / (1 + t ^ 2))
 
 /-- Forward stereographic projection: S¹ \ {south pole} → ℝ.
     The decoding: a photon state maps back to a massive particle state. -/
+
+lemma invStereo_denom_pos (t : ℝ) : (0 : ℝ) < 1 + t ^ 2 := by positivity
+
+/-- The encoding maps to S¹. -/
 
 end

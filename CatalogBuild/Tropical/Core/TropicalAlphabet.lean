@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Tropical/Core
-Declarations: 23
+Declarations: 22
 -/
 
 import Mathlib
@@ -43,17 +43,6 @@ theorem tropDiv_tropMul_cancel (a b : ℝ) : tropDiv (tropMul a b) b = a := by
 /-! ## Part II: ReLU as Tropical Oracle (Level 2) -/
 
 /-- ReLU is tropical addition with the tropical one -/
-
-theorem logSumExp_ge_max (a b : ℝ) : logSumExp a b ≥ max a b := by
-  unfold logSumExp
-  cases max_cases a b <;>
-    linarith [Real.log_exp a, Real.log_exp b,
-      Real.log_le_log (by positivity)
-        (by linarith [Real.exp_pos a, Real.exp_pos b] : Real.exp a + Real.exp b ≥ Real.exp a),
-      Real.log_le_log (by positivity)
-        (by linarith [Real.exp_pos a, Real.exp_pos b] : Real.exp a + Real.exp b ≥ Real.exp b)]
-
-/-- LogSumExp is at most max + log 2 -/
 
 theorem logSumExp_le_max_add_log2 (a b : ℝ) :
     logSumExp a b ≤ max a b + Real.log 2 := by

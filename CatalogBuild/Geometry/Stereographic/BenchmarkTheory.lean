@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Geometry/Stereographic
-Declarations: 19
+Declarations: 18
 -/
 
 import Mathlib
@@ -48,10 +48,6 @@ theorem gradient_variance_bound (batchSize : ℕ) (maxGrad : ℝ)
   exact sq_le_sq' (by linarith [abs_le.mp (hbound i)]) (by linarith [abs_le.mp (hbound i)])
 
 /-! ## Part 3: Attention Entropy -/
-
-
-def logSumExp (seqLen : ℕ) (logits : Fin seqLen → ℝ) : ℝ :=
-  Real.log (∑ i, Real.exp (logits i))
 
 
 theorem logSumExp_ge (seqLen : ℕ) (logits : Fin seqLen → ℝ) (j : Fin seqLen) :
