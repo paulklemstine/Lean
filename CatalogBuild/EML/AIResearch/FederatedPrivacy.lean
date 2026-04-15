@@ -26,8 +26,6 @@ theorem eml_total_comm_savings (d w p R : ℕ) (hw : 5 ≤ w) :
     totalFedComm (emlFedCommBits d w p) R ≤ totalFedComm (mlpFedCommBits d w p) R := by
   unfold totalFedComm; exact Nat.mul_le_mul_right R (eml_comm_savings d w p hw)
 
-/-! ## §2. Differential Privacy -/
-
 
 def gaussianNoiseScale (sensitivity epsilon : ℝ) : ℝ := sensitivity / epsilon
 
@@ -48,8 +46,6 @@ theorem more_rounds_less_privacy (eps : ℝ) (r1 r2 : ℕ)
   unfold composedEpsilon
   exact mul_le_mul_of_nonneg_left (Real.sqrt_le_sqrt (by exact_mod_cast hr)) heps
 
-/-! ## §3. Secure Aggregation -/
-
 
 def secAggCost (numParams numClients : ℕ) : ℕ := numParams * numClients
 
@@ -58,8 +54,6 @@ theorem eml_sec_agg_cheaper (d w c : ℕ) (hw : 5 ≤ w) :
     secAggCost (4 * d * w) c ≤ secAggCost (d * w * w) c := by
   unfold secAggCost; apply Nat.mul_le_mul_right
   nlinarith [mul_le_mul_of_nonneg_left hw (Nat.zero_le d)]
-
-/-! ## §4. Data Heterogeneity -/
 
 
 def clientDivergence (localSteps learningRate gradVariance : ℝ) : ℝ :=
@@ -73,8 +67,6 @@ theorem more_local_steps_more_divergence (s1 s2 lr gv : ℝ)
   have h1 : 0 ≤ lr ^ 2 * gv := mul_nonneg (sq_nonneg lr) hgv
   nlinarith
 
-/-! ## §5. Privacy-Utility Tradeoff -/
-
 
 def dpUtilityLoss (noiseScale : ℝ) (numParams : ℕ) : ℝ :=
   noiseScale ^ 2 * ↑numParams
@@ -86,8 +78,6 @@ theorem eml_dp_less_utility_loss (sigma : ℝ) (d w : ℕ) (hw : 5 ≤ w) :
   apply mul_le_mul_of_nonneg_left _ (sq_nonneg sigma)
   have : 4 * d * w ≤ d * w * w := by nlinarith [mul_le_mul_of_nonneg_left hw (Nat.zero_le d)]
   exact_mod_cast this
-
-/-! ## §6. Membership Inference Resistance -/
 
 
 def membershipAdvantage (trainLoss testLoss : ℝ) : ℝ := trainLoss - testLoss

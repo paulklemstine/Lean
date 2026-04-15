@@ -37,8 +37,6 @@ theorem det_BM2x2_3 : BM2x2_3.det = 1 := by native_decide
 theorem M1_M3_in_SL2Z : BM2x2_1.det = 1 ∧ BM2x2_3.det = 1 :=
   ⟨det_BM2x2_1, det_BM2x2_3⟩
 
-/-! ## §3. Stern-Brocot Connection -/
-
 
 def T_mat : Matrix (Fin 2) (Fin 2) ℤ := !![1, 1; 0, 1]
 
@@ -48,8 +46,6 @@ def SB_R : Matrix (Fin 2) (Fin 2) ℤ := !![1, 1; 0, 1]
 theorem M3_is_T_sq : BM2x2_3 = T_mat * T_mat := by native_decide
 
 theorem M3_is_R_sq : BM2x2_3 = SB_R * SB_R := by native_decide
-
-/-! ## §4. Theta Group Connection -/
 
 
 def S_2x2 : Matrix (Fin 2) (Fin 2) ℤ := !![0, -1; 1, 0]
@@ -64,8 +60,6 @@ theorem M3_inv_correct' : BM2x2_3 * M3_inv = 1 := by native_decide
 theorem S_2x2_sq : S_2x2 * S_2x2 = -1 := by native_decide
 
 theorem M3inv_M1_is_S : M3_inv * BM2x2_1 = S_2x2 := by native_decide
-
-/-! ## §5. Parameter Verification -/
 
 
 theorem M1_root_params :

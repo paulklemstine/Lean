@@ -10,42 +10,27 @@ import Mathlib
 theorem metric_hausdorff (X : Type*) [MetricSpace X] : T2Space X := by
   infer_instance
 
-/-
-Open balls are open
--/
 
 theorem ball_open {X : Type*} [MetricSpace X] (x : X) (r : ℝ) :
     IsOpen (Metric.ball x r) := by
   exact Metric.isOpen_ball
 
-/-
-Empty set is open
--/
 
 theorem empty_open {X : Type*} [TopologicalSpace X] :
     IsOpen (∅ : Set X) := by
   exact isOpen_empty
 
-/-
-Whole space is open
--/
 
 theorem univ_open {X : Type*} [TopologicalSpace X] :
     IsOpen (Set.univ : Set X) := by
   exact isOpen_univ
 
-/-
-Finite intersection of opens is open
--/
 
 theorem inter_open {X : Type*} [TopologicalSpace X]
     (U V : Set X) (hU : IsOpen U) (hV : IsOpen V) :
     IsOpen (U ∩ V) := by
   exact hU.inter hV
 
-/-
-Union of opens is open
--/
 
 theorem union_of_open {X : Type*} [TopologicalSpace X]
     (U V : Set X) (hU : IsOpen U) (hV : IsOpen V) :
@@ -57,34 +42,18 @@ theorem closed_compact {X : Type*} [TopologicalSpace X] [CompactSpace X]
     (S : Set X) (hS : IsClosed S) : IsCompact S := by
   exact hS.isCompact
 
-/-
-ℝ is not compact
--/
 
 theorem real_noncompact : ¬ CompactSpace ℝ := by
   exact fun h => by have := h.isCompact_univ; exact absurd this ( by exact fun h' => by exact absurd ( h'.ne_univ ) ( by norm_num ) ) ;
 
-/-
-[0, 1] is compact
--/
 
 theorem icc_compact : IsCompact (Set.Icc (0 : ℝ) 1) := by
   exact CompactIccSpace.isCompact_Icc
 
-end Compactness
-
-section Connectedness
-
-/-
-ℝ is connected
--/
 
 theorem real_conn : ConnectedSpace ℝ := by
   infer_instance
 
-/-
-ℤ is totally disconnected
--/
 
 theorem int_totally_disc :
     TotallyDisconnectedSpace ℤ := by
@@ -108,8 +77,8 @@ theorem fixed_iterate {α : Type*} (f : α → α) (x : α) (hx : f x = x) (n : 
   | succ n ih =>
     rw [Function.iterate_succ', Function.comp_apply, ih, hx]
 
-/-- Period 2 orbit -/
 
+/-- Period 2 orbit -/
 theorem period2_iterate {α : Type*} (f : α → α) (x : α) (hx : f (f x) = x) (k : ℕ) :
     f^[2 * k] x = x := by
   induction k with
@@ -130,13 +99,6 @@ theorem euler_dodec : 20 - 30 + 12 = (2 : ℤ) := by norm_num
 
 theorem euler_icos : 12 - 30 + 20 = (2 : ℤ) := by norm_num
 
-/-
-PROBLEM
-Only 5 Platonic solids
-
-PROVIDED SOLUTION
-omega on p and q with 3 ≤ p, 3 ≤ q, 2(p+q) > pq. Enumerate: when p=3, need 6+2q > 3q → q < 6, so q ∈ {3,4,5}. When p=4, need 8+2q > 4q → q < 4, so q=3. When p=5, need 10+2q > 5q → q < 10/3, so q=3. When p≥6, 2p+2q > pq → 2q(1) > q(p-2) → 2 > p-2, impossible.
--/
 
 theorem platonic_five :
     ∀ p q : ℕ, 3 ≤ p → 3 ≤ q → (2 * (p + q) > p * q) →

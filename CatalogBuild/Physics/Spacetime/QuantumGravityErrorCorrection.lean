@@ -34,8 +34,6 @@ theorem more_distance_more_correction (d1 d2 : ℕ) (h : d1 < d2) :
     correctableErrors d1 ≤ correctableErrors d2 := by
   simp [correctableErrors]; omega
 
-/-! ## Part II: Perfect Tensors -/
-
 
 structure PerfectTensor where
   legs : ℕ
@@ -55,8 +53,6 @@ theorem perfect_tensor_entropy_pos (T : PerfectTensor) (hl : T.legs ≥ 2) :
   · exact div_pos (by positivity : (T.legs : ℝ) > 0) two_pos
   · exact Real.log_pos (by exact_mod_cast T.dim_pos)
 
-/-! ## Part III: Entanglement Wedge & ER=EPR -/
-
 
 theorem jlms_formula (S_bulk area GN S_bdry : ℝ)
     (h : S_bulk + area / (4 * GN) = S_bdry) :
@@ -73,8 +69,6 @@ theorem wormhole_growth (rate t1 t2 : ℝ) (hr : rate > 0) (h : t2 > t1) :
 
 theorem tfd_weight_pos (beta E : ℝ) :
     Real.exp (-beta * E / 2) > 0 := Real.exp_pos _
-
-/-! ## Part IV: Gravitational Waves from Topology -/
 
 
 def allowedWavenumber (n : ℕ) (L : ℝ) : ℝ := 2 * Real.pi * (n : ℝ) / L

@@ -20,11 +20,6 @@ def diagIterA : ℕ → ℝ → ℝ
   | 0, z => z
   | n + 1, z => diagA (diagIterA n z)
 
-/-! ## Section 1: Enhanced Diagonal Bounds -/
-
-/-
-d(z) > z for all real z (no fixed points).
--/
 
 theorem diagA_gt_z (z : ℝ) : diagA z > z := by
   unfold diagA;
@@ -36,9 +31,6 @@ theorem diagA_gt_z (z : ℝ) : diagA z > z := by
     rw [ show z = z - 1 + 1 by ring, Real.exp_add ];
     nlinarith [ Real.add_one_le_exp 1, Real.log_le_sub_one_of_pos ( by linarith : 0 < z - 1 + 1 ) ]
 
-/-
-d(z) ≥ z + 1 for all real z (gap bound).
--/
 
 theorem diagA_ge_z_add_one (z : ℝ) : diagA z ≥ z + 1 := by
   unfold diagA;
@@ -50,28 +42,17 @@ theorem diagA_ge_z_add_one (z : ℝ) : diagA z ≥ z + 1 := by
     · norm_num [ hz ];
     · nlinarith [ Real.exp_pos z, Real.exp_neg z, mul_inv_cancel₀ ( ne_of_gt ( Real.exp_pos z ) ), Real.add_one_le_exp z, Real.log_le_sub_one_of_pos ( neg_pos.mpr ( lt_of_le_of_ne ( le_of_not_gt h ) hz ) ), Real.log_neg_eq_log z ]
 
-/-
-For z > 0: d(z) ≥ exp(z)(1 − 1/z) + 1. Stronger bound.
--/
 
 theorem diagA_strong_bound (z : ℝ) (hz : 1 ≤ z) :
     diagA z ≥ Real.exp z - z + 1 := by
   unfold diagA; nlinarith [ Real.add_one_le_exp 1, Real.exp_pos z, Real.log_le_sub_one_of_pos ( by linarith : 0 < z ) ] ;
 
-/-
-Orbit divergence: dⁿ(z) ≥ z + n.
--/
 
 theorem diagA_orbit_linear (z : ℝ) (n : ℕ) :
     diagIterA n z ≥ z + n := by
   induction' n with n ih generalizing z <;> norm_num [ diagIterA ] at *;
   linarith [ ih z, diagA_ge_z_add_one ( diagIterA n z ) ]
 
-/-
-Orbit gap is increasing: d(dⁿ(z)) − dⁿ(z) is increasing in n for z > 0.
-    The gap function g(w) = exp(w) - log(w) - w is increasing for w ≥ 2,
-    and all orbit points are ≥ 2 for z > 0.
--/
 
 theorem diagA_orbit_gap_mono (z : ℝ) (hz : 0 < z) (n : ℕ) :
     diagA (diagIterA (n + 1) z) - diagIterA (n + 1) z ≥
@@ -103,105 +84,88 @@ theorem diagA_orbit_gap_mono (z : ℝ) (hz : 0 < z) (n : ℕ) :
     rw [ Real.log_div ] at this <;> norm_num at * <;> try linarith;
     have := Real.exp_one_gt_d9.le ; norm_num1 at * ; nlinarith [ Real.log_le_sub_one_of_pos zero_lt_two, Real.log_le_sub_one_of_pos hz ]
 
-/-! ## Section 2: Bregman Divergence Connection -/
 
 /-- The Bregman divergence for f(x) = eˣ is D_f(x,y) = eˣ − eʸ − eʸ(x−y).
-    This connects to EML via: D_f(x,y) = eml(x,1) − eml(y,1) − eʸ(x−y). -/
-
+This connects to EML via: D_f(x,y) = eml(x,1) − eml(y,1) − eʸ(x−y). -/
 theorem eml_bregman_exp (x y : ℝ) :
     Real.exp x - Real.exp y - Real.exp y * (x - y) =
     (emlA x 1 - emlA y 1) - Real.exp y * (x - y) := by
   simp [emlA, Real.log_one]
 
-/-
-The Bregman divergence D_exp is always ≥ 0 (convexity of exp).
--/
 
+/-- Chain identity: eml(eml(x,1), 1) = exp(exp(x)). -/
 theorem eml_chain (x : ℝ) : emlA (emlA x 1) 1 = Real.exp (Real.exp x) := by
   simp [emlA, Real.log_one]
 
-/-- Triple chain: eml³(x) = exp(exp(exp(x))). -/
 
+/-- Triple chain: eml³(x) = exp(exp(exp(x))). -/
 theorem eml_triple_chain (x : ℝ) :
     emlA (emlA (emlA x 1) 1) 1 = Real.exp (Real.exp (Real.exp x)) := by
   simp [emlA, Real.log_one]
 
-/-- Shift identity: eml(x + a, y) = eᵃ · eml(x, y^(eᵃ)) + eᵃ·ln(y) − ln(y).
-    Simplified: eml(x+a, y) = eᵃ · eˣ − ln(y). -/
 
+/-- Shift identity: eml(x + a, y) = eᵃ · eml(x, y^(eᵃ)) + eᵃ·ln(y) − ln(y).
+Simplified: eml(x+a, y) = eᵃ · eˣ − ln(y). -/
 theorem eml_shift (x a y : ℝ) :
     emlA (x + a) y = Real.exp a * Real.exp x - Real.log y := by
   simp [emlA, Real.exp_add]; ring
 
-/-- Scale identity for the second argument.
-    eml(x, y^n) = eml(x, y) − (n−1)·ln(y) for y > 0. -/
 
+/-- Scale identity for the second argument.
+eml(x, y^n) = eml(x, y) − (n−1)·ln(y) for y > 0. -/
 theorem eml_power_snd (x y : ℝ) (n : ℕ) (hy : 0 < y) :
     emlA x (y ^ n) = emlA x y - (n - 1) * Real.log y := by
   simp [emlA, Real.log_pow]; ring
 
-/-! ## Section 5: Integral Identities -/
-
-/-- ∫₀¹ eml(t, 1) dt = e − 1 (integral of exp on [0,1]). -/
 
 theorem eml_integral_log :
     ∫ t in (1:ℝ)..Real.exp 1, emlA 0 t = Real.exp 1 - 2 := by
       norm_num [ emlA ];
       ring
 
-/-! ## Section 6: Additional Algebraic Failures -/
 
-/-- EML is not power-associative: eml(eml(x,x), eml(x,x)) ≠ eml(x, eml(x, eml(x,x)))
-    in general. -/
-
+/-- exp(x) − x ≥ 1 for all x (fundamental lower bound). -/
 theorem exp_sub_x_ge_one (x : ℝ) : Real.exp x - x ≥ 1 := by
   linarith [Real.add_one_le_exp x]
 
-/-- exp(x) − x is minimized at x = 0. -/
 
+/-- exp(x) − x is minimized at x = 0. -/
 theorem exp_sub_x_min_at_zero : ∀ x : ℝ, Real.exp x - x ≥ Real.exp 0 - 0 := by
   intro x; simp; linarith [Real.add_one_le_exp x]
 
-/-
-For x ≥ 1: exp(x) ≥ x + 1 + x²/2 (Taylor lower bound).
--/
 
+/-- g(e) = e − 1 < e, so g maps [1, e] into itself. -/
 theorem gmapA_at_e : gmapA (Real.exp 1) = Real.exp 1 - 1 := by
   simp [gmapA, Real.log_exp]
 
-/-- g(1) = e > 1. -/
 
+/-- g(1) = e > 1. -/
 theorem gmapA_at_one : gmapA 1 = Real.exp 1 := by
   simp [gmapA, Real.log_one]
 
-/-- g maps (0, ∞) to ℝ. -/
 
+/-- g maps (0, ∞) to ℝ. -/
 theorem gmapA_deriv (z : ℝ) (hz : 0 < z) :
     HasDerivAt gmapA (-z⁻¹) z := by
   unfold gmapA
   exact ((hasDerivAt_const z (Real.exp 1)).sub (Real.hasDerivAt_log hz.ne'))
     |>.congr_deriv (by ring)
 
-/-! ## Section 10: EML and AM-GM -/
 
 /-- For a, b > 0: eml(ln a, b) + eml(ln b, a) ≥ 2. -/
-
 theorem eml_amgm_trace_ge_two (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
     emlA (Real.log a) b + emlA (Real.log b) a ≥ 2 := by
   simp [emlA, Real.exp_log ha, Real.exp_log hb]
   linarith [Real.log_le_sub_one_of_pos ha, Real.log_le_sub_one_of_pos hb]
 
-/-- The diagonal satisfies exp(x) − ln(x) ≥ 2 for x > 0. -/
 
+/-- The diagonal satisfies exp(x) − ln(x) ≥ 2 for x > 0. -/
 theorem diagA_ge_two (z : ℝ) (hz : 0 < z) : diagA z ≥ 2 := by
   unfold diagA
   have h1 := Real.add_one_le_exp z
   have h2 := Real.log_le_sub_one_of_pos hz
   linarith
 
-/-! ## Section 11: Tropical EML -/
-
-/-- Tropical EML: trop(x, y) = max(x, −y). -/
 
 theorem tropEml_noncomm : ∃ x y : ℝ, tropEml x y ≠ tropEml y x := by
   use 0, 1; simp [tropEml]
@@ -210,12 +174,11 @@ theorem tropEml_noncomm : ∃ x y : ℝ, tropEml x y ≠ tropEml y x := by
 theorem tropEml_diag (x : ℝ) : tropEml x x = |x| := by
   simp only [tropEml, abs_eq_max_neg]
 
-/-- Tropical EML is idempotent when x = −y is impossible:
-    trop(x, −x) = max(x, x) = x. -/
 
+/-- Tropical EML is idempotent when x = −y is impossible:
+trop(x, −x) = max(x, x) = x. -/
 theorem tropEml_neg_snd (x : ℝ) : tropEml x (-x) = x := by
   simp [tropEml]
 
-end
 
 end

@@ -60,9 +60,6 @@ theorem EML_poly1_strictMono (a b c : ℝ) (hb : 0 < b) :
   have : a + b * x₁ < a + b * x₂ := by nlinarith
   linarith [Real.exp_lt_exp.mpr this]
 
-/-
-EML grows super-polynomially.
--/
 
 theorem EML_superpolynomial_growth (c : ℝ) (n : ℕ) :
     ∀ᶠ x in Filter.atTop, EML_trop x c > x ^ n := by

@@ -13,31 +13,17 @@ noncomputable section
 def kardashevNumber (P : ℝ) : ℝ :=
   (Real.log P / Real.log 10 - 6) / 10
 
-/-
-Higher power means higher Kardashev number (for positive power).
--/
 
 theorem kardashev_mono {P₁ P₂ : ℝ} (h₁ : 0 < P₁) (h : P₁ < P₂) :
     kardashevNumber P₁ < kardashevNumber P₂ := by
   unfold kardashevNumber; gcongr;
 
-/-
-Type I civilization uses ~10^16 W, giving K = 1.0.
--/
 
 theorem kardashev_typeI :
     kardashevNumber (10 ^ 16 : ℝ) = 1 := by
   unfold kardashevNumber; norm_num; ring_nf; norm_num;
   rw [ show ( 10000000000000000 : ℝ ) = 10 ^ 16 by norm_num, Real.log_pow ] ; norm_num
 
-/-! ## Dyson Sphere: equilibrium temperature
-
-  T = (L / (4π R² σ_B))^(1/4)
-  Power density σ = L / (4π R²) -/
-
-/-
-Power density decreases with the square of the radius.
--/
 
 theorem power_density_inverse_square (L R₁ R₂ : ℝ)
     (hR₁ : 0 < R₁) (hR₂ : 0 < R₂) (h : R₁ < R₂) :

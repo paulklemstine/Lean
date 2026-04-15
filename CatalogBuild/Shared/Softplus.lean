@@ -9,14 +9,15 @@ import Mathlib
 
 noncomputable section
 
+/-- ReLU is not directly an EML neuron, but can be approximated.
+Softplus(x) = ln(1 + exp(x)) ≈ ReLU(x) is expressible via EML components. -/
 def softplus (x : ℝ) : ℝ := Real.log (1 + Real.exp x)
 
-/-- Softplus is always positive. -/
 
+/-- Softplus is always positive. -/
 theorem softplus_pos (x : ℝ) : 0 < softplus x := by
   unfold softplus
   exact Real.log_pos (by linarith [Real.exp_pos x])
 
-/-- Sigmoid function: σ(x) = 1/(1 + exp(-x)). -/
 
 end

@@ -31,8 +31,6 @@ theorem parameterRatio_le_two (d : ℕ) (hd : 1 ≤ d) :
   rw [div_le_iff₀ (by linarith)]
   linarith
 
-/-! ## Part 2: Gradient Statistics -/
-
 
 def gradientVarianceBound (_ : ℕ) (maxGrad : ℝ) : ℝ :=
   maxGrad ^ 2
@@ -47,8 +45,6 @@ theorem gradient_variance_bound (batchSize : ℕ) (maxGrad : ℝ)
   unfold gradientVarianceBound
   exact sq_le_sq' (by linarith [abs_le.mp (hbound i)]) (by linarith [abs_le.mp (hbound i)])
 
-/-! ## Part 3: Attention Entropy -/
-
 
 theorem logSumExp_ge (seqLen : ℕ) (logits : Fin seqLen → ℝ) (j : Fin seqLen) :
     logits j ≤ logSumExp seqLen logits := by
@@ -59,8 +55,6 @@ theorem logSumExp_ge (seqLen : ℕ) (logits : Fin seqLen → ℝ) (j : Fin seqLe
         Finset.single_le_sum (fun i _ => le_of_lt (exp_pos _)) (Finset.mem_univ j)
     _ = Real.exp (Real.log (∑ i, Real.exp (logits i))) := by
         rw [Real.exp_log (Finset.sum_pos (fun i _ => exp_pos _) ⟨j, Finset.mem_univ _⟩)]
-
-/-! ## Part 4: Depth-Wise Gradient Analysis -/
 
 
 def depthGradientProduct (L : ℕ) (factors : Fin L → ℝ) : ℝ :=
@@ -82,8 +76,6 @@ theorem depth_gradient_product_bounded (L : ℕ) (factors : Fin L → ℝ)
       ≤ ∏ _ : Fin L, (2 : ℝ) :=
         Finset.prod_le_prod (fun i _ => hpos i) (fun i _ => hbound i)
     _ = 2 ^ L := by simp [Finset.prod_const, Finset.card_fin]
-
-/-! ## Part 5: Learning Rate Schedules -/
 
 
 def warmupCosineLR (baseLR : ℝ) (warmupSteps totalSteps step : ℕ) : ℝ :=
@@ -115,8 +107,6 @@ theorem warmup_lr_monotone (baseLR : ℝ) (warmupSteps : ℕ) (s t : ℕ)
   exact div_le_div_of_nonneg_right
     (mul_le_mul_of_nonneg_left (Nat.cast_le.mpr hst) hbase)
     (Nat.cast_nonneg warmupSteps)
-
-/-! ## Part 6: Benchmark Complexity Analysis -/
 
 
 def stereoAttentionFLOPs (seqLen d : ℕ) : ℕ :=

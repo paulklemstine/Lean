@@ -9,39 +9,36 @@ import Mathlib
 
 noncomputable section
 
+/-- Two idempotents are orthogonal if ef = fe = 0. -/
 def AreOrthogonalIdempotents' {R : Type*} [Ring R] (e f : R) : Prop :=
   IsIdempotentElem e ∧ IsIdempotentElem f ∧ e * f = 0 ∧ f * e = 0
 
-/-- e and 1-e are orthogonal idempotents. -/
 
+/-- e and 1-e are orthogonal idempotents. -/
 theorem orthogonal_complement' {R : Type*} [Ring R] (e : R) (he : IsIdempotentElem e) :
     AreOrthogonalIdempotents' e (1 - e) := by
   refine ⟨he, he.one_sub, ?_, ?_⟩
   · rw [mul_sub, mul_one, he.eq, sub_self]
   · rw [sub_mul, one_mul, he.eq, sub_self]
 
-/-- A complete set of orthogonal idempotents sums to 1. -/
 
+/-- A complete set of orthogonal idempotents sums to 1. -/
 def IsCompleteIdempotentSystem' {R : Type*} [Ring R] {n : ℕ}
     (idemps : Fin n → R) : Prop :=
   (∀ i, IsIdempotentElem (idemps i)) ∧
   (∀ i j, i ≠ j → idemps i * idemps j = 0) ∧
   ∑ i, idemps i = 1
 
-/-- The trivial complete system: {1}. -/
 
+/-- The trivial complete system: {1}. -/
 theorem trivial_complete_system' {R : Type*} [Ring R] :
     IsCompleteIdempotentSystem' (fun (_ : Fin 1) => (1 : R)) := by
   refine ⟨fun _ => by simp [IsIdempotentElem], fun i j hij => ?_, ?_⟩
   · exact absurd (Fin.ext (by omega)) hij
   · simp
 
-/-! ## Section 2: Idempotents in Matrix Rings -/
 
-/-
-A diagonal matrix with 0/1 entries is idempotent.
--/
-
+/-- A Hecke algebra element (simplified diagonal model). -/
 structure HeckeElement' (n : ℕ) where
   coeffs : Fin n → ℝ
 
@@ -49,30 +46,28 @@ structure HeckeElement' (n : ℕ) where
 instance {n : ℕ} : Mul (HeckeElement' n) :=
   ⟨fun a b => ⟨fun i => a.coeffs i * b.coeffs i⟩⟩
 
-/-- A Hecke algebra idempotent. -/
 
+/-- A Hecke algebra idempotent. -/
 def isHeckeIdempotent' {n : ℕ} (e : HeckeElement' n) : Prop :=
   e * e = e
 
-/-- The identity Hecke element is idempotent. -/
 
+/-- The identity Hecke element is idempotent. -/
 theorem heckeIdentity_idempotent' (n : ℕ) :
     isHeckeIdempotent' (⟨fun _ => 1⟩ : HeckeElement' n) := by
   show (⟨fun i => 1 * 1⟩ : HeckeElement' n) = ⟨fun _ => 1⟩
   simp
 
-/-! ## Section 4: Tempered-Lieb Algebras -/
 
 /-- When δ = 2, TL generators are (rescaled) idempotents: (e/2)² = e/2. -/
-
 theorem tl_delta2_idempotent' (e_val : ℝ) (h : e_val * e_val = 2 * e_val) :
     IsIdempotentElem (e_val / 2) := by
   simp [IsIdempotentElem]
   field_simp
   linarith
 
-/-- Jones-Wenzl idempotent existence bound. -/
 
+/-- Jones-Wenzl idempotent existence bound. -/
 theorem jones_wenzl_bound' (n : ℕ) (hn : 0 < n) :
     Real.cos (Real.pi / (n + 1)) > -1 := by
   nlinarith [Real.sin_sq_add_cos_sq (Real.pi / (n + 1)),
@@ -81,29 +76,12 @@ theorem jones_wenzl_bound' (n : ℕ) (hn : 0 < n) :
           nlinarith [Real.pi_pos, show (n : ℝ) ≥ 1 by norm_cast]
         : Real.pi / (n + 1) < Real.pi)]
 
-/-! ## Section 5: Karoubi Envelope via Mathlib -/
-
-/-- The Karoubi envelope: an object is a pair (X, e) with e idempotent. -/
-example (C : Type*) [Category C] [Preadditive C] (X : Idempotents.Karoubi C) :
-    X.p ≫ X.p = X.p :=
-  X.idem
-
-/-- The embedding functor sends X to (X, id). -/
-example (C : Type*) [Category C] [Preadditive C] :
-    C ⥤ Idempotents.Karoubi C :=
-  Idempotents.toKaroubi C
-
-/-! ## Section 6: Idempotent Collapse and Physics -/
 
 /-- Trace is additive for any matrices. -/
-
 theorem trace_additive_matrices {n : ℕ} (E F : Matrix (Fin n) (Fin n) ℝ) :
     (E + F).trace = E.trace + F.trace :=
   Matrix.trace_add E F
 
-/-
-For an idempotent real matrix E, trace(E) = trace(E * Eᵀ) ≥ 0.
--/
 
 theorem idempotent_trace_nonneg {n : ℕ} (E : Matrix (Fin n) (Fin n) ℝ)
     (hE : E * E = E) :
@@ -142,9 +120,9 @@ theorem idempotent_trace_nonneg {n : ℕ} (E : Matrix (Fin n) (Fin n) ℝ)
   convert congr_arg Complex.re h_trace_sum_eigenvalues using 1;
   induction ( Matrix.charpoly ( E.map ( algebraMap ℝ ℂ ) ) |> Polynomial.roots ) using Multiset.induction <;> aesop
 
-/-- Quantum observable bound: for a complete system of orthogonal projectors,
-    each projector has non-negative trace. -/
 
+/-- Quantum observable bound: for a complete system of orthogonal projectors,
+each projector has non-negative trace. -/
 theorem quantum_observable_bound (n : ℕ) (projectors : Fin n → Matrix (Fin n) (Fin n) ℝ)
     (h_idem : ∀ i, projectors i * projectors i = projectors i)
     (h_ortho : ∀ i j, i ≠ j → projectors i * projectors j = 0)

@@ -13,13 +13,13 @@ noncomputable section
 def OracleReducesTo {alpha beta : Type*} (A : OracleDecision alpha) (B : OracleDecision beta) : Prop :=
   ∃ f : (beta → Bool) → (alpha → Bool), f B = A
 
-/-- Oracle reduction is reflexive. -/
 
+/-- Oracle reduction is reflexive. -/
 theorem oracle_reduces_refl {alpha : Type*} (A : OracleDecision alpha) :
     OracleReducesTo A A := ⟨id, rfl⟩
 
-/-- Oracle reduction is transitive. -/
 
+/-- Oracle reduction is transitive. -/
 theorem oracle_reduces_trans {alpha beta gamma : Type*}
     (A : OracleDecision alpha) (B : OracleDecision beta) (C : OracleDecision gamma)
     (hAB : OracleReducesTo A B) (hBC : OracleReducesTo B C) :
@@ -28,8 +28,8 @@ theorem oracle_reduces_trans {alpha beta gamma : Type*}
   obtain ⟨g, hg⟩ := hBC
   exact ⟨f ∘ g, by simp [hg, hf]⟩
 
-/-- Oracle equivalence: mutual reducibility. -/
 
+/-- Oracle equivalence: mutual reducibility. -/
 def OracleEquiv {alpha beta : Type*} (A : OracleDecision alpha) (B : OracleDecision beta) : Prop :=
   OracleReducesTo A B ∧ OracleReducesTo B A
 
@@ -47,18 +47,13 @@ theorem oracle_equiv_trans {alpha beta gamma : Type*}
     OracleEquiv A B → OracleEquiv B C → OracleEquiv A C :=
   fun ⟨h1, h2⟩ ⟨h3, h4⟩ => ⟨oracle_reduces_trans A B C h1 h3, oracle_reduces_trans C B A h4 h2⟩
 
-/-! ## §2: Oracle Query Complexity -/
-
-/-
-k binary queries yield 2^k outcomes.
--/
 
 theorem query_bound_card (k : ℕ) :
     Fintype.card (Fin k → Bool) = 2 ^ k := by
       norm_num +zetaDelta at *
 
-/-- A k-query strategy can produce at most 2^k distinct outputs. -/
 
+/-- A k-query strategy can produce at most 2^k distinct outputs. -/
 structure QueryStrategy (alpha beta : Type*) (k : ℕ) where
   queries : Fin k → alpha
   decide : (Fin k → Bool) → beta
@@ -70,10 +65,8 @@ theorem query_strategy_output_bound {alpha beta : Type*} [DecidableEq beta] (k :
       convert Finset.card_image_le;
       simp +decide [ Finset.card_univ ]
 
-/-! ## §3: Oracle Composition Algebra -/
 
 /-- Oracle composition. -/
-
 def OracleComp {alpha : Type*} (f g : OracleDecision alpha → OracleDecision alpha) :
     OracleDecision alpha → OracleDecision alpha := f ∘ g
 
@@ -93,18 +86,13 @@ theorem oracle_comp_id_left {alpha : Type*} (f : OracleDecision alpha → Oracle
 theorem oracle_comp_id_right {alpha : Type*} (f : OracleDecision alpha → OracleDecision alpha) :
     OracleComp f OracleIdentity = f := rfl
 
-/-! ## §4: Oracle Entropy Bounds -/
-
-/-
-An oracle on Fin n is determined by n bits.
--/
 
 theorem oracle_entropy_finite_bound (n : ℕ) :
     Fintype.card (OracleDecision (Fin n)) = 2 ^ n := by
       convert query_bound_card n using 1
 
-/-- Two oracles that agree everywhere are equal. -/
 
+/-- Two oracles that agree everywhere are equal. -/
 theorem oracle_ext_finite {n : ℕ} (A B : OracleDecision (Fin n))
     (h : ∀ i, A i = B i) : A = B := funext h
 

@@ -7,29 +7,29 @@ Declarations: 11
 
 import Mathlib
 
+/-- A number n > 0 is perfect if σ₁(n) = 2n. -/
 def IsPerfect (n : ℕ) : Prop := 0 < n ∧ sigma1 n = 2 * n
 
-/-- 6 is perfect. -/
 
+/-- 6 is perfect. -/
 theorem perfect_6 : IsPerfect 6 := by
   refine ⟨by omega, ?_⟩; decide
 
-/-- 28 is perfect. -/
 
+/-- 28 is perfect. -/
 theorem perfect_28 : IsPerfect 28 := by
   refine ⟨by omega, ?_⟩; native_decide
 
-/-- 496 is perfect. -/
 
+/-- 496 is perfect. -/
 theorem perfect_496 : IsPerfect 496 := by
   refine ⟨by omega, ?_⟩; native_decide
 
-/-- 8128 is perfect. -/
 
+/-- 8128 is perfect. -/
 theorem perfect_8128 : IsPerfect 8128 := by
   refine ⟨by omega, ?_⟩; native_decide
 
-/-- σ₁(2^k) = 2^(k+1) - 1. -/
 
 theorem euclid_perfect (p : ℕ) (hp : 1 < p) (hm : Nat.Prime (2 ^ p - 1)) :
     IsPerfect (2 ^ (p - 1) * (2 ^ p - 1)) := by
@@ -44,12 +44,6 @@ theorem euclid_perfect (p : ℕ) (hp : 1 < p) (hm : Nat.Prime (2 ^ p - 1)) :
   · assumption;
   · simpa [ Nat.one_le_iff_ne_zero, parity_simps ]
 
-/-! ### Euler's Direction -/
-
-/-
-Every even perfect number has the form 2^(p-1) · (2^p - 1) for some prime p
-    with 2^p - 1 prime.
--/
 
 theorem even_perfect_euler_form (n : ℕ) (hperf : IsPerfect n) (heven : 2 ∣ n) :
     ∃ p : ℕ, Nat.Prime p ∧ Nat.Prime (2 ^ p - 1) ∧ n = 2 ^ (p - 1) * (2 ^ p - 1) := by
@@ -99,12 +93,6 @@ theorem even_perfect_euler_form (n : ℕ) (hperf : IsPerfect n) (heven : 2 ∣ n
         grind;
     nlinarith [ Nat.sub_add_cancel ( Nat.one_le_pow ( k + 1 ) 2 zero_lt_two ), Nat.sub_add_cancel ( Nat.one_le_iff_ne_zero.mpr ( show 2 ^ ( k + 1 ) - 1 ≠ 0 from Nat.sub_ne_zero_of_lt ( by norm_num ) ) ), Nat.pos_of_ne_zero ( show q ≠ 0 from by aesop_cat ) ]
 
-/-! ### Euclid-Euler Complete Biconditional -/
-
-/-
-A positive even number n is perfect if and only if
-    n = 2^(p-1) · (2^p - 1) for some prime p with 2^p - 1 prime.
--/
 
 theorem euclid_euler_iff (n : ℕ) (heven : 2 ∣ n) :
     IsPerfect n ↔
@@ -114,11 +102,6 @@ theorem euclid_euler_iff (n : ℕ) (heven : 2 ∣ n) :
   · rintro ⟨ p, hp₁, hp₂, rfl ⟩;
     convert euclid_perfect p hp₁.one_lt hp₂ using 1
 
-/-! ### Odd Perfect Number Bounds -/
-
-/-
-No odd perfect number is less than 10000.
--/
 
 theorem no_small_odd_perfect_10000 (n : ℕ) (hn : 0 < n) (hodd : ¬ 2 ∣ n)
     (hsmall : n < 10000) (hperf : sigma1 n = 2 * n) : False := by
@@ -127,22 +110,14 @@ theorem no_small_odd_perfect_10000 (n : ℕ) (hn : 0 < n) (hodd : ¬ 2 ∣ n)
     native_decide;
   exact h_check n ( Finset.mem_Ico.mpr ⟨ hn, hsmall ⟩ ) hodd hperf
 
-/-! ### Perfect Number Properties -/
 
 /-- Every perfect number ≥ 2 has at least 2 distinct prime factors. -/
-
 theorem perfect_not_prime (n : ℕ) (hn : 1 < n) (hperf : sigma1 n = 2 * n)
     (hp : Nat.Prime n) : False := by
   have : sigma1 n = n + 1 := by simp [sigma1, hp.sum_divisors]
   omega
 
-/-
-Every perfect number is at least 6.
--/
 
 theorem perfect_ge_6 (n : ℕ) (hperf : IsPerfect n) : 6 ≤ n := by
   rcases n with ( _ | _ | _ | _ | _ | _ | _ | n ) <;> simp_all +arith +decide [ IsPerfect ]
 
-/-
-σ₁ is multiplicative for coprime arguments.
--/

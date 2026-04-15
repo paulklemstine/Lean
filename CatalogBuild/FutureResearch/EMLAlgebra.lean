@@ -9,64 +9,48 @@ import Mathlib
 
 noncomputable section
 
+/-- The real EML operator. -/
 def emlR (x y : ℝ) : ℝ := Real.exp x - Real.log y
 
-/-- The EDL (Exp-Div-Log) operator on ℂ. -/
 
+/-- The EDL (Exp-Div-Log) operator on ℂ. -/
 def edl (x y : ℂ) : ℂ := Complex.exp x / Complex.log y
 
-/-- The anti-EML operator. -/
 
+/-- The anti-EML operator. -/
 def antiEml (x y : ℂ) : ℂ := Complex.log x - Complex.exp y
 
-/-! ## 2. Fundamental Recovery Identities -/
 
-/-- exp(x) = eml(x, 1). -/
-
+/-- e = eml(1, 1). -/
 theorem eml_recovers_e : eml 1 1 = Complex.exp 1 := by
   simp [eml, Complex.log_one]
 
-/-- Real exp(x) = emlR(x, 1). -/
 
+/-- Real exp(x) = emlR(x, 1). -/
 theorem emlR_recovers_exp (x : ℝ) : emlR x 1 = Real.exp x := by
   simp [emlR, Real.log_one]
 
-/-- Real e = emlR(1, 1). -/
 
+/-- Real e = emlR(1, 1). -/
 theorem emlR_recovers_e : emlR 1 1 = Real.exp 1 := by
   simp [emlR, Real.log_one]
 
-/-! ## 3. Subtraction Identity -/
-
-/-- a - b = eml(ln(a), exp(b)) when a ≠ 0 and Im(b) ∈ (-π, π]. -/
-theorem eml_subtraction (a b : ℂ) (ha : a ≠ 0)
-    (hb1 : -Real.pi < b.im) (hb2 : b.im ≤ Real.pi) :
-    eml (Complex.log a) (Complex.exp b) = a - b := by
-  simp [eml, Complex.exp_log ha, Complex.log_exp hb1 hb2]
 
 /-- Real subtraction: a - b = emlR(ln(a), exp(b)) for a > 0. -/
-
 theorem emlR_subtraction (a b : ℝ) (ha : 0 < a) :
     emlR (Real.log a) (Real.exp b) = a - b := by
   simp [emlR, Real.exp_log ha, Real.log_exp]
 
-/-! ## 4. Anti-EML Duality -/
 
 /-- antiEml(x,y) = -eml(y,x). -/
-
 theorem antiEml_eq_neg_eml (x y : ℂ) : antiEml x y = -eml y x := by
   unfold antiEml eml; ring
 
-/-- eml(x,y) = -antiEml(y,x). -/
 
+/-- eml(x,y) = -antiEml(y,x). -/
 theorem eml_eq_neg_antiEml (x y : ℂ) : eml x y = -antiEml y x := by
   unfold antiEml eml; ring
 
-/-! ## 5. Non-Commutativity and Non-Associativity -/
-
-/-
-EML is non-commutative.
--/
 
 theorem emlR_not_comm : ∃ x y : ℝ, emlR x y ≠ emlR y x := by
   -- Use x=0, y=1. emlR(0,1) = exp(0) - log(1) = 1. emlR(1,0) = exp(1) - log(0) = e - 0 = e. 1 ≠ e since e > 1.
@@ -74,49 +58,45 @@ theorem emlR_not_comm : ∃ x y : ℝ, emlR x y ≠ emlR y x := by
   simp [emlR];
   exact Ne.symm <| by norm_num
 
-/-
-EML is non-associative.
--/
 
+/-- An EML expression tree. -/
 inductive EMLExpr where
   | one : EMLExpr
   | var : ℕ → EMLExpr
   | app : EMLExpr → EMLExpr → EMLExpr
   deriving Repr, BEq, Inhabited
 
-/-- Evaluate an EML expression tree. -/
 
+/-- Evaluate an EML expression tree. -/
 def EMLExpr.eval (e : EMLExpr) (vars : ℕ → ℂ) : ℂ :=
   match e with
   | .one => 1
   | .var n => vars n
   | .app l r => eml (l.eval vars) (r.eval vars)
 
-/-- Depth of an EML expression tree. -/
 
+/-- Depth of an EML expression tree. -/
 def EMLExpr.depth : EMLExpr → ℕ
   | .one => 0
   | .var _ => 0
   | .app l r => 1 + max l.depth r.depth
 
-/-- Leaf count. -/
 
+/-- Leaf count. -/
 def EMLExpr.leafCount : EMLExpr → ℕ
   | .one => 1
   | .var _ => 1
   | .app l r => l.leafCount + r.leafCount
 
-/-- Internal node count. -/
 
+/-- Internal node count. -/
 def EMLExpr.nodeCount : EMLExpr → ℕ
   | .one => 0
   | .var _ => 0
   | .app l r => 1 + l.nodeCount + r.nodeCount
 
-/-! ### Tree Combinatorics -/
 
 /-- Leaves = internal nodes + 1. -/
-
 theorem EMLExpr.leafCount_eq_nodeCount_succ (e : EMLExpr) :
     e.leafCount = e.nodeCount + 1 := by
   induction e with
@@ -124,14 +104,11 @@ theorem EMLExpr.leafCount_eq_nodeCount_succ (e : EMLExpr) :
   | var _ => rfl
   | app l r ihl ihr => simp [leafCount, nodeCount, ihl, ihr]; omega
 
-/-- Leaf count is always positive. -/
 
+/-- Leaf count is always positive. -/
 theorem EMLExpr.leafCount_pos (e : EMLExpr) : 0 < e.leafCount := by
   have := e.leafCount_eq_nodeCount_succ; omega
 
-/-
-Leaves ≤ 2^depth.
--/
 
 theorem EMLExpr.leafCount_le_pow_depth (e : EMLExpr) :
     e.leafCount ≤ 2 ^ e.depth := by
@@ -147,9 +124,6 @@ theorem EMLExpr.leafCount_le_pow_depth (e : EMLExpr) :
     · linarith [ pow_le_pow_right₀ ( by decide : 1 ≤ 2 ) ‹_› ];
     · linarith [ pow_le_pow_right₀ ( by norm_num : ( 1 : ℕ ) ≤ 2 ) ( by linarith : r.depth ≤ ihl.depth ) ]
 
-/-! ## 7. Master Formula Parameters -/
-
-/-- Parameter count for depth-n EML master formula. -/
 
 theorem masterParams_1 : masterParams 1 = 4 := by native_decide
 
@@ -159,44 +133,37 @@ theorem masterParams_3 : masterParams 3 = 34 := by native_decide
 
 theorem masterParams_4 : masterParams 4 = 74 := by native_decide
 
-/-
-Parameter count grows with depth.
--/
 
 theorem masterParams_growth (n : ℕ) (hn : 2 ≤ n) :
     masterParams n < masterParams (n + 1) := by
   unfold masterParams; zify; norm_num; ring_nf;
   grind
 
-/-! ## 8. Classification of EML-Family Operators -/
 
 /-- The EML family: a·exp(x) + b·log(y) + c. -/
-
 def emlFamily (a b c : ℂ) (x y : ℂ) : ℂ :=
   a * Complex.exp x + b * Complex.log y + c
 
-/-- Standard EML is emlFamily(1, -1, 0). -/
 
+/-- Standard EML is emlFamily(1, -1, 0). -/
 theorem eml_in_family (x y : ℂ) :
     emlFamily 1 (-1) 0 x y = eml x y := by
   simp [emlFamily, eml]; ring
 
-/-- Anti-EML is emlFamily(-1, 1, 0) with swapped arguments. -/
 
+/-- Anti-EML is emlFamily(-1, 1, 0) with swapped arguments. -/
 theorem antiEml_in_family (x y : ℂ) :
     emlFamily (-1) 1 0 y x = antiEml x y := by
   simp [emlFamily, antiEml]; ring
 
-/-! ## 9. Differentiability -/
 
 /-- EML is differentiable in x. -/
-
 theorem eml_differentiable_fst (y : ℂ) :
     Differentiable ℂ (fun x => eml x y) :=
   Complex.differentiable_exp.sub (differentiable_const _)
 
-/-- ∂eml/∂x = exp(x). -/
 
+/-- ∂eml/∂x = exp(x). -/
 theorem eml_deriv_fst (x y : ℂ) :
     HasDerivAt (fun x' => eml x' y) (Complex.exp x) x := by
   show HasDerivAt (fun x' => Complex.exp x' - Complex.log y) (Complex.exp x) x
@@ -204,8 +171,8 @@ theorem eml_deriv_fst (x y : ℂ) :
     (Complex.hasDerivAt_exp x).sub (hasDerivAt_const _ _)
   simpa using this
 
-/-- Real ∂emlR/∂x = exp(x). -/
 
+/-- Real ∂emlR/∂x = exp(x). -/
 theorem emlR_deriv_fst (x y : ℝ) :
     HasDerivAt (fun x' => emlR x' y) (Real.exp x) x := by
   show HasDerivAt (fun x' => Real.exp x' - Real.log y) (Real.exp x) x
@@ -213,8 +180,8 @@ theorem emlR_deriv_fst (x y : ℝ) :
     (Real.hasDerivAt_exp x).sub (hasDerivAt_const _ _)
   simpa using this
 
-/-- Real ∂emlR/∂y = -1/y for y ≠ 0. -/
 
+/-- Real ∂emlR/∂y = -1/y for y ≠ 0. -/
 theorem emlR_deriv_snd (x y : ℝ) (hy : y ≠ 0) :
     HasDerivAt (fun y' => emlR x y') (-y⁻¹) y := by
   show HasDerivAt (fun y' => Real.exp x - Real.log y') (-y⁻¹) y
@@ -222,38 +189,34 @@ theorem emlR_deriv_snd (x y : ℝ) (hy : y ≠ 0) :
     (hasDerivAt_const y (Real.exp x)).sub (Real.hasDerivAt_log hy)
   simpa using h
 
-/-! ## 10. The EML Closure -/
 
-/-- The EML closure: smallest set containing 1 and closed under eml. -/
-
+/-- e ∈ EML closure. -/
 theorem e_in_closure : EMLClosure (Complex.exp 1) := by
   have h := EMLClosure.apply EMLClosure.const_one EMLClosure.const_one
   rwa [eml_recovers_exp] at h
 
-/-- exp(e) ∈ EML closure. -/
 
+/-- exp(e) ∈ EML closure. -/
 theorem exp_e_in_closure : EMLClosure (Complex.exp (Complex.exp 1)) := by
   have h := EMLClosure.apply e_in_closure EMLClosure.const_one
   rwa [eml_recovers_exp] at h
 
-/-- EML closure with a variable. -/
 
+/-- EML closure with a variable. -/
 inductive EMLClosureVar (x : ℂ) : ℂ → Prop where
   | const_one : EMLClosureVar x 1
   | var : EMLClosureVar x x
   | apply : EMLClosureVar x a → EMLClosureVar x b → EMLClosureVar x (eml a b)
 
-/-- exp(x) ∈ EML closure(x). -/
 
+/-- exp(x) ∈ EML closure(x). -/
 theorem exp_in_closure_var (x : ℂ) :
     EMLClosureVar x (Complex.exp x) := by
   have h := EMLClosureVar.apply (EMLClosureVar.var (x := x)) (EMLClosureVar.const_one (x := x))
   rwa [eml_recovers_exp] at h
 
-/-! ## 11. Catalan Numbers and Tree Enumeration -/
 
-/-- Catalan numbers (closed form). -/
-
+/-- Labeled EML trees: C(n) · k^(n+1) trees with n nodes over k terminals. -/
 def labeledEMLTrees (n k : ℕ) : ℕ := catalanNum n * k ^ (n + 1)
 
 
@@ -263,42 +226,29 @@ theorem labeled_trees_2_2 : labeledEMLTrees 2 2 = 16 := by native_decide
 
 theorem labeled_trees_3_2 : labeledEMLTrees 3 2 = 80 := by native_decide
 
-/-! ## 12. Real-Only Periodicity Obstruction -/
-
-/-
-Compositions of exp cannot produce periodic functions on ℝ.
-    This is a structural obstruction to real-only Sheffer operators generating sin/cos.
--/
 
 theorem exp_exp_not_periodic :
     ¬ ∃ (p : ℝ), 0 < p ∧ ∀ x : ℝ, Real.exp (Real.exp x) = Real.exp (Real.exp (x + p)) := by
   norm_num +zetaDelta at *
 
-/-! ## 13. EDL-EML Relationship -/
 
 /-- edl(x,y) = eml(x,y)/log(y) + 1 when log(y) ≠ 0. -/
-
 theorem edl_eml_relation (x y : ℂ) (hy : Complex.log y ≠ 0) :
     edl x y = eml x y / Complex.log y + 1 := by
   simp [edl, eml]; field_simp; ring
 
-/-! ## 14. EML Complexity Measure -/
 
 /-- EML complexity: minimum leaf count over all trees computing f. -/
-
 def emlComplexity (f : ℂ → ℂ) : ℕ :=
   sInf { n : ℕ | ∃ e : EMLExpr, e.leafCount = n ∧
     ∀ x : ℂ, e.eval (fun _ => x) = f x }
 
-/-- exp has EML complexity ≤ 2. -/
 
+/-- exp has EML complexity ≤ 2. -/
 theorem emlComplexity_exp_le : emlComplexity Complex.exp ≤ 2 := by
   apply Nat.sInf_le
   exact ⟨EMLExpr.app (.var 0) .one, by simp [EMLExpr.leafCount],
     fun x => by simp [EMLExpr.eval, eml_recovers_exp]⟩
 
-end EMLAlgebra
-
-end
 
 end

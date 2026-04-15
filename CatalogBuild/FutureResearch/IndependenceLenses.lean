@@ -48,4 +48,3 @@ theorem nine_primes_coprime :
 
 theorem rsa2048_lens_reduction : 1024 - 9 = 1015 := by norm_num
 
-end IndependenceLenses

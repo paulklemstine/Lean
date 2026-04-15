@@ -10,12 +10,12 @@ import Mathlib
 /-- Berggren matrix B₁ -/
 def B1 : Matrix (Fin 3) (Fin 3) ℤ := !![1, -2, 2; 2, -1, 2; 2, -2, 3]
 
-/-- The nilpotent part N = B₁ - I -/
 
+/-- The nilpotent part N = B₁ - I -/
 def N1 : Matrix (Fin 3) (Fin 3) ℤ := !![0, -2, 2; 2, -2, 2; 2, -2, 2]
 
-/-- N² = (B₁ - I)² -/
 
+/-- N² = (B₁ - I)² -/
 def N1sq : Matrix (Fin 3) (Fin 3) ℤ := !![0, 0, 0; 0, -4, 4; 0, -4, 4]
 
 
@@ -29,20 +29,16 @@ theorem N1_cubed_zero : N1 * N1 * N1 = (0 : Matrix (Fin 3) (Fin 3) ℤ) := by na
 
 theorem N1sq_ne_zero : N1 * N1 ≠ (0 : Matrix (Fin 3) (Fin 3) ℤ) := by native_decide
 
-/-! ## §2. Power formula via recursion -/
 
 /-- B₁ⁿ computed recursively -/
-
 def B1pow : ℕ → Matrix (Fin 3) (Fin 3) ℤ
   | 0 => 1
   | n + 1 => B1 * B1pow n
 
-/-- The A-branch triple at depth n -/
 
+/-- The A-branch triple at depth n -/
 def A_triple (n : ℕ) : ℤ × ℤ × ℤ :=
   (2 * n + 3, 2 * (n + 1) * (n + 2), 2 * n^2 + 6 * n + 5)
-
-/-! ## §3. Computational verifications -/
 
 
 theorem B1pow_0 : B1pow 0 = 1 := rfl
@@ -52,8 +48,6 @@ theorem B1pow_2 : B1pow 2 = !![1, (-4 : ℤ), 4; 4, -7, 8; 4, -8, 9] := by nativ
 theorem B1pow_3 : B1pow 3 = !![1, (-6 : ℤ), 6; 6, -17, 18; 6, -18, 19] := by native_decide
 
 theorem B1pow_4 : B1pow 4 = !![1, (-8 : ℤ), 8; 8, -31, 32; 8, -32, 33] := by native_decide
-
-/-! ## §4. A-branch triple verification -/
 
 
 def B1_applied (n : ℕ) : ℤ × ℤ × ℤ :=
@@ -77,39 +71,27 @@ theorem B1_applied_5 : B1_applied 5 = (13, 84, 85) := by native_decide
 
 theorem A_triple_0 : A_triple 0 = (3, 4, 5) := by simp [A_triple]
 
-/-! ## §5. A-branch is always Pythagorean -/
 
 /-- The A-branch formula always produces Pythagorean triples -/
-
 theorem A_branch_pythagorean (n : ℕ) :
     (2 * (n : ℤ) + 3)^2 + (2 * (↑n + 1) * (↑n + 2))^2 = (2 * (n : ℤ)^2 + 6 * n + 5)^2 := by
   ring
-
-/-! ## §6. A-branch near-consecutiveness: c - b = 1 -/
 
 
 theorem A_branch_consecutive (n : ℕ) :
     (2 * (n : ℤ)^2 + 6 * n + 5) - 2 * (↑n + 1) * (↑n + 2) = 1 := by
   ring
 
-/-! ## §7. A-branch first component is odd -/
-
 
 theorem A_branch_first_odd (n : ℕ) : Odd (2 * n + 3) := ⟨n + 1, by omega⟩
-
-/-! ## §8. Pythagorean identity in the A_triple form -/
 
 
 theorem A_triple_is_pythagorean (n : ℕ) :
     (A_triple n).1 ^ 2 + (A_triple n).2.1 ^ 2 = (A_triple n).2.2 ^ 2 := by
   simp only [A_triple]; ring
 
-/-! ## §9. B₁ power recurrence -/
-
 
 theorem B1pow_succ (n : ℕ) : B1pow (n + 1) = B1 * B1pow n := rfl
-
-/-! ## §10. A-branch coprimality structure -/
 
 
 theorem A_branch_gcd_structure (n : ℕ) :

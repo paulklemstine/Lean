@@ -11,8 +11,8 @@ import Mathlib
 theorem smooth_density_gap_square (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     c ^ 2 - 2 * a * b = (a - b) ^ 2 := by nlinarith
 
-/-- The minimum gap when a ≠ b is 1, giving 2ab ≤ c² - 1. -/
 
+/-- The minimum gap when a ≠ b is 1, giving 2ab ≤ c² - 1. -/
 theorem smooth_density_min_gap (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
     (h : a ^ 2 + b ^ 2 = c ^ 2) (hne : a ≠ b) :
     2 * a * b ≤ c ^ 2 - 1 := by
@@ -20,8 +20,8 @@ theorem smooth_density_min_gap (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
     nlinarith [sq_abs (a - b), abs_pos.mpr (sub_ne_zero.mpr hne)]
   nlinarith [smooth_density_gap_square a b c h]
 
-/-- Leg sum identities for each branch. -/
 
+/-- Leg sum identities for each branch. -/
 theorem B1_leg_sum (a b c : ℤ) :
     (a - 2*b + 2*c) + (2*a - b + 2*c) = 3*a - 3*b + 4*c := by ring
 
@@ -33,33 +33,27 @@ theorem B2_leg_sum (a b c : ℤ) :
 theorem B3_leg_sum (a b c : ℤ) :
     (-a + 2*b + 2*c) + (-2*a + b + 2*c) = -3*a + 3*b + 4*c := by ring
 
-/-- The B₂ child's leg product expanded. -/
 
+/-- The B₂ child's leg product expanded. -/
 theorem B2_leg_product_expanded (a b c : ℤ) :
     (a + 2*b + 2*c) * (2*a + b + 2*c) =
     2*a^2 + 5*a*b + 2*b^2 + 6*a*c + 6*b*c + 4*c^2 := by ring
 
-/-! ## Section 2: Berggren Matrix Determinants
-
-The Berggren matrices have determinant ±1, confirming they are in GL(3,ℤ). -/
 
 /-- B₂ has determinant -1. -/
-
 theorem B2_det_value : (1 : ℤ) * (1*3 - 2*2) - 2 * (2*3 - 2*2) +
     2 * (2*2 - 1*2) = -1 := by norm_num
 
-/-- The product of two matrices with det ±1 has det 1. -/
 
+/-- The product of two matrices with det ±1 has det 1. -/
 theorem berggren_product_det_one : (-1 : ℤ) * (-1) = 1 := by norm_num
 
-/-- After d steps, the determinant is (-1)^d. -/
 
+/-- After d steps, the determinant is (-1)^d. -/
 theorem berggren_path_det (d : ℕ) : (-1 : ℤ) ^ d = 1 ∨ (-1 : ℤ) ^ d = -1 := by
   rcases Nat.even_or_odd d with ⟨k, hk⟩ | ⟨k, hk⟩
   · left; simp [hk, pow_mul, pow_succ, neg_one_sq]
   · right; simp [hk, pow_add, pow_mul, pow_succ, neg_one_sq]
-
-/-! ## Section 3: Spectral Analysis -/
 
 
 theorem B2_quadratic_discriminant : (4 : ℤ)^2 - 4*1*1 = 12 := by norm_num
@@ -67,8 +61,8 @@ theorem B2_quadratic_discriminant : (4 : ℤ)^2 - 4*1*1 = 12 := by norm_num
 
 theorem eigenvalue_one_B2 : (1 : ℤ)^3 - 5*(1)^2 + 5*1 - 1 = 0 := by norm_num
 
-/-- The spectral radius of B₂ satisfies ρ²-4ρ+1=0, so ρ = 2+√3. -/
 
+/-- The spectral radius of B₂ satisfies ρ²-4ρ+1=0, so ρ = 2+√3. -/
 theorem spectral_radius_B2_equation :
     (2 + Real.sqrt 3) ^ 2 - 4 * (2 + Real.sqrt 3) + 1 = 0 := by
   set s := Real.sqrt 3 with hs_def
@@ -85,8 +79,6 @@ theorem B2_eigenvalue_product :
     (2 + Real.sqrt 3) * (2 - Real.sqrt 3) = 1 := by
   have : Real.sqrt 3 ^ 2 = 3 := Real.sq_sqrt (by norm_num : (3:ℝ) ≥ 0)
   nlinarith
-
-/-! ## Section 4: Path Length and Tree Depth Bounds -/
 
 
 theorem B2_hyp_growth_factor (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
@@ -106,15 +98,11 @@ theorem total_paths_bound (d : ℕ) : 3^(d+1) - 1 ≥ 2 * 3^d := by
   have : 3^(d+1) = 3^d * 3 := pow_succ 3 d
   omega
 
-/-! ## Section 5: Continued Fraction Connection -/
-
 
 theorem euclid_B1_transform (m n : ℤ) :
     let m' := 2*m - n
     let n' := m
     m' + n' = 3*m - n ∧ m' - n' = m - n := by constructor <;> ring
-
-/-! ## Section 6: Quantum Speedup -/
 
 
 theorem grover_cost_bound (d : ℕ) : Nat.sqrt (3^d) ≤ 3^d := Nat.sqrt_le_self _
@@ -126,8 +114,6 @@ theorem classical_tree_search_lower (d : ℕ) : 3^d ≥ d + 1 := by
   | succ n ih =>
     have h3 : 3^(n+1) = 3^n * 3 := pow_succ 3 n
     omega
-
-/-! ## Section 7: Quadratic Sieve Connection -/
 
 
 theorem qs_tree_sieve_bridge (N x : ℤ) :
@@ -141,8 +127,6 @@ theorem tree_sieve_value_divides (N b c : ℤ) (h : N^2 + b^2 = c^2) :
 theorem tree_sieve_complement_divides (N b c : ℤ) (h : N^2 + b^2 = c^2) :
     (c + b) ∣ N^2 := ⟨c - b, by linarith⟩
 
-/-! ## Section 8: Density and Counting -/
-
 
 theorem root_triple : (3 : ℤ)^2 + 4^2 = 5^2 := by norm_num
 
@@ -153,8 +137,6 @@ theorem level1_products :
 
 theorem level1_all_7_smooth :
     60 = 2^2 * 3 * 5 ∧ 420 = 2^2 * 3 * 5 * 7 ∧ 120 = 2^3 * 3 * 5 := by norm_num
-
-/-! ## Section 9: Free Monoid Structure -/
 
 
 theorem berggren_B1_injective (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ)
@@ -183,8 +165,6 @@ theorem berggren_B3_injective (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ)
   constructor; · linarith
   constructor <;> linarith
 
-/-! ## Section 10: Poincaré Disk Model -/
-
 
 theorem poincare_on_circle (a b c : ℤ) (hc : c ≠ 0)
     (h : a^2 + b^2 = c^2) :
@@ -192,8 +172,6 @@ theorem poincare_on_circle (a b c : ℤ) (hc : c ≠ 0)
   have hc' : (c : ℚ) ≠ 0 := Int.cast_ne_zero.mpr hc
   field_simp
   exact_mod_cast h
-
-/-! ## Section 11: Concrete Factoring Examples -/
 
 
 theorem berggren_from_root :

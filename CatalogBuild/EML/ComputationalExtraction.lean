@@ -635,9 +635,9 @@ if __name__ == '__main__':
     main()
 "
 
-/-- The reference implementation string is non-empty, witnessing that the
-    computational extraction is non-trivial. -/
 
+/-- The reference implementation string is non-empty, witnessing that the
+computational extraction is non-trivial. -/
 theorem orchestrator_is_well_formed : demo_orchestrator_python_code.length > 0 := by
   native_decide
 

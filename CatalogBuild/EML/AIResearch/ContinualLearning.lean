@@ -24,8 +24,6 @@ theorem eml_less_forgetting (overlap invFactor : ℝ) (td : ℕ)
   have htd : (0 : ℝ) ≤ ↑td := Nat.cast_nonneg _
   nlinarith [mul_nonneg hoverlap htd]
 
-/-! ## §2. Elastic Weight Consolidation -/
-
 
 def ewcPenalty (fisher paramShift : ℝ) : ℝ := fisher * paramShift ^ 2
 
@@ -45,8 +43,6 @@ theorem eml_cheaper_ewc (d w : ℕ) (f s : ℝ) (hw : 5 ≤ w) (hf : 0 ≤ f) :
   have h1 : 4 * d * w ≤ d * w * w := by nlinarith [mul_le_mul_of_nonneg_left hw (Nat.zero_le d)]
   exact_mod_cast h1
 
-/-! ## §3. Task Capacity -/
-
 
 def taskCapacity (totalParams paramsPerTask : ℕ) : ℕ := totalParams / paramsPerTask
 
@@ -55,8 +51,6 @@ theorem eml_more_tasks (totalParams emlPerTask stdPerTask : ℕ)
     (heml : 0 < emlPerTask) (h : emlPerTask ≤ stdPerTask) :
     taskCapacity totalParams stdPerTask ≤ taskCapacity totalParams emlPerTask := by
   unfold taskCapacity; exact Nat.div_le_div_left h heml
-
-/-! ## §4. Memory Replay Buffer -/
 
 
 def replayBufferSize (paramsPerTask numTasks : ℕ) : ℕ := paramsPerTask * numTasks
@@ -67,8 +61,6 @@ theorem eml_smaller_replay (d w numTasks : ℕ) (hw : 5 ≤ w) :
   unfold replayBufferSize; apply Nat.mul_le_mul_right
   nlinarith [mul_le_mul_of_nonneg_left hw (Nat.zero_le d)]
 
-/-! ## §5. Progressive Network Growth -/
-
 
 def emlGrowthCost (newWidth : ℕ) : ℕ := 4 * newWidth
 
@@ -78,8 +70,6 @@ def stdGrowthCost (existingWidth newWidth : ℕ) : ℕ := existingWidth * newWid
 theorem eml_cheaper_growth (existingWidth newWidth : ℕ) (hw : 4 ≤ existingWidth) :
     emlGrowthCost newWidth ≤ stdGrowthCost existingWidth newWidth := by
   unfold emlGrowthCost stdGrowthCost; exact Nat.mul_le_mul_right newWidth hw
-
-/-! ## §6. Knowledge Transfer -/
 
 
 def transferBenefit (sharedFraction : ℝ) (baseCost : ℕ) : ℝ :=

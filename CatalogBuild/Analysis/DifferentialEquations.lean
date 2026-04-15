@@ -20,10 +20,6 @@ theorem fixed_point_stability' (f : ℝ → ℝ) (x_star : ℝ) (c : ℝ)
       _ ≤ c * (c ^ n * |x₀ - x_star|) := mul_le_mul_of_nonneg_left ih hc
       _ = c ^ (n + 1) * |x₀ - x_star| := by ring
 
-/-
-PROVIDED SOLUTION
-By induction on n. Base case n=0: u(0) ≤ a + b*0 = a = a*(1+b)^0. Inductive step: assume u(k) ≤ a*(1+b)^k for all k ≤ n. Then ∑_{k<n+1} u(k) ≤ ∑ a*(1+b)^k = a*((1+b)^(n+1)-1)/b. So u(n+1) ≤ a + b*a*((1+b)^(n+1)-1)/b = a*(1+b)^(n+1). The key lemma is ∑_{k<n} (1+b)^k ≤ ((1+b)^n - 1)/b for b > 0, but this needs careful handling.
--/
 
 theorem discrete_gronwall' (u : ℕ → ℝ) (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b)
     (hu : ∀ n, u n ≤ a + b * ∑ k ∈ Finset.range n, u k)

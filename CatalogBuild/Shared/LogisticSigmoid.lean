@@ -9,18 +9,30 @@ import Mathlib
 
 noncomputable section
 
+/-- The logistic sigmoid function S(x) = eˣ / (1 + eˣ), the derivative of softplus -/
 def logisticSigmoid (x : ℝ) : ℝ := Real.exp x / (1 + Real.exp x)
 
-/-! ## Basic positivity -/
 
-/-- 1 + eˣ > 0 for all x -/
+/-- Logistic sigmoid is between 0 and 1 -/
+lemma logisticSigmoid_mem_Ioo (x : ℝ) : logisticSigmoid x ∈ Set.Ioo (0 : ℝ) 1 :=
+  ⟨logisticSigmoid_pos x, logisticSigmoid_lt_one x⟩
 
-lemma logisticSigmoid_pos (x : ℝ) : logisticSigmoid x > 0 := by
-  unfold logisticSigmoid
-  exact div_pos (Real.exp_pos x) (one_plus_exp_pos x)
 
 /-- The logistic sigmoid is strictly less than 1 -/
+lemma logisticSigmoid_lt_one (x : ℝ) : logisticSigmoid x < 1 := by
+  unfold logisticSigmoid
+  rw [div_lt_one (one_plus_exp_pos x)]
+  linarith
 
+
+/-- Sigmoid at zero equals 1/2 -/
+theorem logisticSigmoid_zero : logisticSigmoid 0 = 1 / 2 := by
+  unfold logisticSigmoid
+  simp [Real.exp_zero]
+  ring
+
+
+/-- Sigmoid symmetry: S(-x) = 1 - S(x) -/
 theorem logisticSigmoid_symmetry (x : ℝ) : logisticSigmoid (-x) = 1 - logisticSigmoid x := by
   unfold logisticSigmoid
   rw [Real.exp_neg]
@@ -30,25 +42,11 @@ theorem logisticSigmoid_symmetry (x : ℝ) : logisticSigmoid (-x) = 1 - logistic
   field_simp
   ring
 
-/-- Sigmoid at zero equals 1/2 -/
 
-lemma logisticSigmoid_mem_Ioo (x : ℝ) : logisticSigmoid x ∈ Set.Ioo (0 : ℝ) 1 :=
-  ⟨logisticSigmoid_pos x, logisticSigmoid_lt_one x⟩
-
-/-- Softplus is strictly monotone increasing -/
-
-theorem logisticSigmoid_zero : logisticSigmoid 0 = 1 / 2 := by
+/-- The logistic sigmoid is strictly positive -/
+lemma logisticSigmoid_pos (x : ℝ) : logisticSigmoid x > 0 := by
   unfold logisticSigmoid
-  simp [Real.exp_zero]
-  ring
+  exact div_pos (Real.exp_pos x) (one_plus_exp_pos x)
 
-/-- Softplus at zero equals log 2 -/
-
-lemma logisticSigmoid_lt_one (x : ℝ) : logisticSigmoid x < 1 := by
-  unfold logisticSigmoid
-  rw [div_lt_one (one_plus_exp_pos x)]
-  linarith
-
-/-- Logistic sigmoid is between 0 and 1 -/
 
 end

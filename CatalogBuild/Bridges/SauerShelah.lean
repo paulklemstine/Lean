@@ -14,18 +14,12 @@ def restrictFamily {α : Type*} [DecidableEq α]
     (F : Finset (Finset α)) (S : Finset α) : Finset (Finset α) :=
   F.image (· ∩ S)
 
-/-
-Restricting twice to the same set is idempotent
--/
 
 theorem restrictFamily_idempotent {α : Type*} [DecidableEq α]
     (F : Finset (Finset α)) (S : Finset α) :
     restrictFamily (restrictFamily F S) S = restrictFamily F S := by
   ext; simp +decide [ restrictFamily ]
 
-/-
-The restriction has at most 2^|S| elements
--/
 
 theorem restrictFamily_card_le_pow {α : Type*} [DecidableEq α]
     (F : Finset (Finset α)) (S : Finset α) :
@@ -34,35 +28,24 @@ theorem restrictFamily_card_le_pow {α : Type*} [DecidableEq α]
   · rw [ Finset.card_powerset ];
   · grind
 
-/-
-Restriction to empty gives {∅} for nonempty families
--/
 
 theorem restrict_empty {α : Type*} [DecidableEq α]
     (F : Finset (Finset α)) (hF : F.Nonempty) :
     restrictFamily F ∅ = {∅} := by
   unfold restrictFamily; aesop;
 
-/-! ## Shattering -/
 
 /-- A family F shatters S if every subset of S appears as a restriction -/
-
 def Shatters' {α : Type*} [DecidableEq α]
     (F : Finset (Finset α)) (S : Finset α) : Prop :=
   S.powerset ⊆ restrictFamily F S
 
-/-
-Shattering is monotone in the family
--/
 
 theorem shatters_mono' {α : Type*} [DecidableEq α]
     {F G : Finset (Finset α)} (h : F ⊆ G) {S : Finset α}
     (hF : Shatters' F S) : Shatters' G S := by
   exact Set.Subset.trans hF ( Finset.image_subset_image h )
 
-/-
-Every nonempty family shatters the empty set
--/
 
 theorem shatters_empty' {α : Type*} [DecidableEq α]
     (F : Finset (Finset α)) (hF : F.Nonempty) :
@@ -70,10 +53,8 @@ theorem shatters_empty' {α : Type*} [DecidableEq α]
   simp +decide [ Shatters' ];
   exact Finset.mem_image.2 ⟨ hF.choose, hF.choose_spec, by simp +decide ⟩
 
-/-! ## Binomial Bounds -/
 
 /-- Sum of binomial coefficients up to d -/
-
 def binomialSum (n d : ℕ) : ℕ :=
   ∑ i ∈ Finset.range (d + 1), n.choose i
 

@@ -39,8 +39,6 @@ theorem quadraticForm_eq_zero_iff (n : ℕ) (x : Fin n → ℝ) :
   unfold tropicalQuadraticForm;
   norm_num [ funext_iff, Finset.sum_eq_zero_iff_of_nonneg, sq_nonneg ]
 
-/-! ## Section 2: Tropical Theta Kernel -/
-
 
 def tropicalThetaKernel (m n : ℕ) (a : Fin m → ℝ) (b : Fin n → ℝ) : ℝ :=
   ∑ i : Fin m, ∑ j : Fin n, a i * b j
@@ -67,8 +65,6 @@ theorem thetaKernel_comm (m n : ℕ) (a : Fin m → ℝ) (b : Fin n → ℝ) :
     tropicalThetaKernel m n a b = tropicalThetaKernel n m b a := by
   exact Finset.sum_comm.trans ( Finset.sum_congr rfl fun _ _ => Finset.sum_congr rfl fun _ _ => mul_comm _ _ )
 
-/-! ## Section 3: Tropical Theta Lift -/
-
 
 def tropicalThetaLift (m n : ℕ) (f : (Fin m → ℝ) → ℝ)
     (b : Fin n → ℝ) (a : Fin m → ℝ) : ℝ :=
@@ -87,8 +83,6 @@ def tropicalLValue (n : ℕ) (p : LParam n) (s : ℝ) : ℝ :=
 theorem tropicalLValue_zero (n : ℕ) (p : LParam n) :
     tropicalLValue n p 0 = 0 := by
   simp [tropicalLValue]
-
-/-! ## Section 4: Tropical Howe Duality -/
 
 
 structure TropicalDualPair where
@@ -112,8 +106,6 @@ theorem dualPair_size_swap (P : TropicalDualPair) :
     P.swap.size = P.size := by
   simp [TropicalDualPair.swap, TropicalDualPair.size, Nat.mul_comm]
 
-/-! ## Section 5: Tropical Weil Representation -/
-
 
 def tropicalWeilAction (n : ℕ) (x : Fin n → ℝ) : Fin n → ℝ :=
   fun i => -x i
@@ -128,8 +120,6 @@ theorem weilAction_preserves_quadratic (n : ℕ) (x : Fin n → ℝ) :
     tropicalQuadraticForm n (tropicalWeilAction n x) = tropicalQuadraticForm n x := by
   simp only [tropicalQuadraticForm, tropicalWeilAction]
   congr 1; ext i; ring
-
-/-! ## Section 6: See-Saw Duality -/
 
 
 structure SeeSaw where

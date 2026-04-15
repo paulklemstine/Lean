@@ -21,8 +21,6 @@ theorem monotone_sorted (n : ℕ) (f : Fin n → ℝ) (hf : Monotone f) :
     isSorted n f :=
   fun _ _ h => hf h
 
-/-! ## Section 2: Tropical Determinant via Assignment -/
-
 
 def tropicalDet (n : ℕ) [NeZero n] (A : Fin n → Fin n → ℝ) : ℝ :=
   (Finset.univ : Finset (Equiv.Perm (Fin n))).inf'
@@ -40,8 +38,6 @@ theorem tropicalDet_le_identity (n : ℕ) [NeZero n] (A : Fin n → Fin n → �
     tropicalDet n A ≤ ∑ i : Fin n, A i i := by
   exact Finset.inf'_le _ ( Finset.mem_univ 1 ) |> le_trans <| by norm_num;
 
-/-! ## Section 3: Min-Plus Convolution -/
-
 
 def minPlusConv (f g : ℤ → ℝ) (n : ℤ) : ℝ :=
   ⨅ k : ℤ, f k + g (n - k)
@@ -51,8 +47,6 @@ theorem minPlusConv_comm (f g : ℤ → ℝ) (n : ℤ) :
     minPlusConv f g n = minPlusConv g f n := by
   unfold minPlusConv;
   rw [ ← Equiv.iInf_comp ( Equiv.subLeft n ) ] ; simp +decide [ add_comm ]
-
-/-! ## Section 4: Shortest Path as L-function -/
 
 
 def graphLFunction (n : ℕ) (G : WeightedGraph n) (s t : Fin n) (scale : ℝ) : ℝ :=
@@ -68,8 +62,6 @@ theorem graphLFunction_linear (n : ℕ) (G : WeightedGraph n) (s t : Fin n) (a b
 theorem graphLFunction_zero (n : ℕ) (G : WeightedGraph n) (s t : Fin n) :
     graphLFunction n G s t 0 = 0 := by
   simp [graphLFunction]
-
-/-! ## Section 5: Young Diagrams -/
 
 
 structure YoungDiagram' where
@@ -101,8 +93,6 @@ def singleRowYoung (k : ℕ) : YoungDiagram' where
 theorem singleRowYoung_size (k : ℕ) : (singleRowYoung k).size = k := by
   simp [YoungDiagram'.size, singleRowYoung, Fin.sum_univ_one]
 
-/-! ## Section 6: Complexity Bounds -/
-
 
 def sortingBound (n : ℕ) : ℕ := n * (Nat.log 2 n + 1)
 
@@ -118,16 +108,12 @@ theorem assignment_ge_quadratic (n : ℕ) (hn : n ≥ 1) :
     assignmentComplexity n ≥ n ^ 2 := by
   exact Nat.pow_le_pow_right hn ( by decide )
 
-/-! ## Section 7: Hook Length -/
-
 
 def hookLength (arm leg : ℕ) : ℕ := arm + leg + 1
 
 
 theorem hookLength_pos (arm leg : ℕ) : hookLength arm leg ≥ 1 := by
   unfold hookLength; omega
-
-/-! ## Section 8: Min-Plus Matrix -/
 
 
 def minPlusIdentity (n : ℕ) (bigVal : ℝ) : Fin n → Fin n → ℝ :=
@@ -142,8 +128,6 @@ theorem minPlusIdentity_diag (n : ℕ) (M : ℝ) (i : Fin n) :
 theorem minPlusIdentity_off_diag (n : ℕ) (M : ℝ) (i j : Fin n) (h : i ≠ j) :
     minPlusIdentity n M i j = M := by
   simp [minPlusIdentity, h]
-
-/-! ## Section 9: Bellman-Ford -/
 
 
 def bellmanFordStep (n : ℕ) (hn : 0 < n) (G : WeightedGraph n) (dist : Fin n → ℝ) : Fin n → ℝ :=

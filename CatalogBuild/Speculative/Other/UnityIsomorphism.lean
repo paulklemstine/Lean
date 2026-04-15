@@ -17,59 +17,46 @@ theorem terminal_objects_isomorphic {C : Type*} [Category C]
     Nonempty (T₁ ≅ T₂) :=
   ⟨hT₁.uniqueUpToIso hT₂⟩
 
-/-- The terminal object in any category with a terminal object is indeed terminal. -/
-example (C : Type*) [Category C] [HasTerminal C] : IsTerminal (⊤_ C) :=
-  terminalIsTerminal
-
-/-! ## Part II: The Identity Element Principle -/
 
 /-- The number 1 is the multiplicative identity: 1 * x = x for all x.
-    This is the algebraic face of the unity isomorphism. -/
-
+This is the algebraic face of the unity isomorphism. -/
 theorem one_mul_identity (R : Type*) [Monoid R] (x : R) : 1 * x = x :=
   one_mul x
 
-/-- The number 1 is also a right identity: x * 1 = x for all x. -/
 
+/-- The number 1 is also a right identity: x * 1 = x for all x. -/
 theorem mul_one_identity (R : Type*) [Monoid R] (x : R) : x * 1 = x :=
   mul_one x
 
-/-- In a monoid, the identity element is unique. Just as the universe
-    is the unique "context" for physical law, 1 is the unique identity. -/
 
+/-- In a monoid, the identity element is unique. Just as the universe
+is the unique "context" for physical law, 1 is the unique identity. -/
 theorem identity_unique (M : Type*) [Monoid M] (e : M)
     (h_left : ∀ x, e * x = x) : e = 1 := by
   have := h_left 1
   rw [mul_one] at this
   exact this
 
-/-! ## Part III: Information-Theoretic Zero -/
 
 /-- log(1) = 0: The number 1 carries zero information.
-    Just as a universe with no alternatives carries zero entropy. -/
-
+Just as a universe with no alternatives carries zero entropy. -/
 theorem log_unity_zero : Real.log 1 = 0 := Real.log_one
 
-/-- For any base b, log_b(1) = 0. Unity is zero-information
-    regardless of how you measure it. -/
 
+/-- For any base b, log_b(1) = 0. Unity is zero-information
+regardless of how you measure it. -/
 theorem logb_unity_zero (b : ℝ) : Real.logb b 1 = 0 :=
   Real.logb_one
 
-/-! ## Part IV: Topological Unity — The Point Is Contractible -/
 
-/-- The one-point space (PUnit) has trivial fundamental structure.
-    It is the topological instantiation of "1". -/
-
+/-- Any map to PUnit is unique — the terminal property in Top. -/
 theorem map_to_unit_unique {α : Type*} (f g : α → PUnit) : f = g := by
   funext x; exact Subsingleton.elim _ _
 
-/-! ## Part V: Prediction Framework — Mathematical Structures as Oracles -/
 
 /-- A mathematical prediction framework.
-    A prediction is a mathematical structure M together with
-    a physical interpretation function that maps M to observable predictions. -/
-
+A prediction is a mathematical structure M together with
+a physical interpretation function that maps M to observable predictions. -/
 structure MathPrediction where
   /-- The mathematical structure (e.g., a symmetry group) -/
   math_structure : Type*
@@ -80,9 +67,9 @@ structure MathPrediction where
   /-- Surjectivity: every prediction comes from the math -/
   surjective : Function.Surjective interpret
 
-/-- Noether's theorem schema: every continuous symmetry implies a conservation law.
-    This is the archetype of mathematical prediction. -/
 
+/-- Noether's theorem schema: every continuous symmetry implies a conservation law.
+This is the archetype of mathematical prediction. -/
 structure NoetherCorrespondence where
   /-- The symmetry group -/
   Symmetry : Type*
@@ -91,17 +78,17 @@ structure NoetherCorrespondence where
   /-- The correspondence: symmetry ↔ conservation -/
   correspondence : Symmetry ≃ ConservedQuantity
 
-/-- Example: Time translation symmetry ↔ Energy conservation.
-    Both are ℝ (continuous, one-parameter). -/
 
+/-- Example: Time translation symmetry ↔ Energy conservation.
+Both are ℝ (continuous, one-parameter). -/
 def time_energy_noether : NoetherCorrespondence where
   Symmetry := ℝ
   ConservedQuantity := ℝ
   correspondence := Equiv.refl ℝ
 
-/-- The prediction gap: the time between mathematical prediction
-    and physical confirmation, measured in years. -/
 
+/-- The prediction gap: the time between mathematical prediction
+and physical confirmation, measured in years. -/
 structure PredictionRecord where
   name : String
   math_year : ℕ
@@ -109,8 +96,8 @@ structure PredictionRecord where
   gap : ℕ := physics_year - math_year
   confirmed : Bool
 
-/-- Historical prediction records -/
 
+/-- Historical prediction records -/
 def historical_predictions : List PredictionRecord := [
   ⟨"Electromagnetic waves", 1864, 1887, 23, true⟩,
   ⟨"Positron", 1928, 1932, 4, true⟩,
@@ -121,8 +108,8 @@ def historical_predictions : List PredictionRecord := [
   ⟨"Black hole image", 1916, 2019, 103, true⟩
 ]
 
-/-- Open predictions still awaiting confirmation -/
 
+/-- Open predictions still awaiting confirmation -/
 def open_predictions : List PredictionRecord := [
   ⟨"Magnetic monopoles", 1931, 0, 0, false⟩,
   ⟨"Dark matter particle", 1933, 0, 0, false⟩,
@@ -136,26 +123,22 @@ def open_predictions : List PredictionRecord := [
   ⟨"Graviton", 1930, 0, 0, false⟩
 ]
 
-/-- The mean prediction gap for confirmed predictions (~47 years). -/
 
+/-- The mean prediction gap for confirmed predictions (~47 years). -/
 def mean_prediction_gap : ℚ :=
   let gaps := historical_predictions.map (fun r => (r.gap : ℚ))
   gaps.sum / gaps.length
 
 #eval mean_prediction_gap
 
-/-! ## Part VI: The Unity Isomorphism — Summary Theorem -/
 
 /-- The Unity Isomorphism Principle, formalized:
-
-    The number 1 and the universe U share the following structural properties:
-    1. Terminal objects are unique up to isomorphism (categorical unity)
-    2. The multiplicative identity is unique (algebraic unity)
-    3. log(1) = 0 — zero information (information-theoretic unity)
-    4. Maps to the point are unique — contractibility (topological unity)
-
-    Any two objects sharing these universal properties are isomorphic. -/
-
+The number 1 and the universe U share the following structural properties:
+1. Terminal objects are unique up to isomorphism (categorical unity)
+2. The multiplicative identity is unique (algebraic unity)
+3. log(1) = 0 — zero information (information-theoretic unity)
+4. Maps to the point are unique — contractibility (topological unity)
+Any two objects sharing these universal properties are isomorphic. -/
 theorem unity_isomorphism_principle :
     -- 1. Terminal objects are isomorphic
     (∀ (C : Type*) [Category C] (T₁ T₂ : C),

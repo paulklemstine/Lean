@@ -21,8 +21,8 @@ structure InfoSystem where
 
 attribute [instance] InfoSystem.stateFin InfoSystem.stateDec InfoSystem.stateNonempty
 
-/-- A partition of a system into two subsystems -/
 
+/-- A partition of a system into two subsystems -/
 structure BiPartition (S : InfoSystem) where
   part : S.State → Prop
   partDec : DecidablePred part
@@ -31,65 +31,39 @@ structure BiPartition (S : InfoSystem) where
 
 attribute [instance] BiPartition.partDec
 
-/-! ## Earth Mover's Distance -/
 
 /-- Earth Mover's Distance between two distributions (simplified L1 version) -/
-
 noncomputable def earthMoverDistance {α : Type} [Fintype α] (p q : α → ℝ) : ℝ :=
   ∑ a : α, |p a - q a|
 
-/-- The disconnected transition: transition after cutting connections at a partition. -/
 
+/-- The disconnected transition: transition after cutting connections at a partition. -/
 noncomputable def disconnectedTransition (S : InfoSystem) (P : BiPartition S)
     (s s' : S.State) : ℝ :=
   if P.part s ∧ P.part s' then S.transition s s'
   else if ¬P.part s ∧ ¬P.part s' then S.transition s s'
   else 0
 
-/-- Information loss from a partition -/
 
+/-- Information loss from a partition -/
 noncomputable def informationLoss (S : InfoSystem) (P : BiPartition S) (s : S.State) : ℝ :=
   earthMoverDistance (S.transition s) (disconnectedTransition S P s)
 
-/-! ## Fundamental Theorems -/
 
 /-- A system is decomposable if there exists a partition with zero information loss -/
-
 def isDecomposable (S : InfoSystem) (P : BiPartition S) (s : S.State) : Prop :=
   informationLoss S P s = 0
 
-/-
-PROBLEM
-Earth mover distance is non-negative
-
-PROVIDED SOLUTION
-earthMoverDistance is a sum of absolute values, which are all nonneg. Use Finset.sum_nonneg with abs_nonneg.
--/
 
 theorem earthMoverDistance_nonneg {α : Type} [Fintype α] (p q : α → ℝ) :
     0 ≤ earthMoverDistance p q := by
   exact Finset.sum_nonneg fun _ _ => abs_nonneg _
 
-/-
-PROBLEM
-Information loss is non-negative
-
-PROVIDED SOLUTION
-informationLoss is defined as earthMoverDistance, which is nonneg by earthMoverDistance_nonneg.
--/
 
 theorem informationLoss_nonneg (S : InfoSystem) (P : BiPartition S) (s : S.State) :
     0 ≤ informationLoss S P s := by
   exact Finset.sum_nonneg fun _ _ => abs_nonneg _
 
-/-
-PROBLEM
-If a system is decomposable at partition P, then
-    the whole-system transition equals the disconnected transition
-
-PROVIDED SOLUTION
-isDecomposable is informationLoss = 0, and informationLoss is earthMoverDistance (S.transition s) (disconnectedTransition S P s), and earthMoverDistance p q = ∑ a, |p a - q a|. So informationLoss = 0 iff ∑ |transition s s' - disconnectedTransition S P s s'| = 0. Since each |...| ≥ 0, the sum is 0 iff each term is 0, iff transition s s' = disconnectedTransition S P s s' for all s'. Use Finset.sum_eq_zero_iff_of_nonneg with abs_nonneg, then abs_eq_zero and sub_eq_zero.
--/
 
 theorem decomposable_iff_independent (S : InfoSystem) (P : BiPartition S) (s : S.State) :
     isDecomposable S P s ↔
@@ -100,21 +74,12 @@ theorem decomposable_iff_independent (S : InfoSystem) (P : BiPartition S) (s : S
     exact fun h s' => sub_eq_zero.mp ( abs_eq_zero.mp ( by rw [ Finset.sum_eq_zero_iff_of_nonneg fun _ _ => abs_nonneg _ ] at h; aesop ) );
   · exact fun h => Finset.sum_eq_zero fun x _ => by simp +decide [ h ] ;
 
-/-! ## The Self-Witnessing Theorem -/
 
 /-- A conscious system: one where every partition loses information -/
-
 structure ConsciousSystem extends InfoSystem where
   irreducible : ∀ (P : BiPartition toInfoSystem) (s : toInfoSystem.State),
     0 < informationLoss toInfoSystem P s
 
-/-
-PROBLEM
-A conscious system has no zero-loss partitions
-
-PROVIDED SOLUTION
-isDecomposable means informationLoss = 0, but C.irreducible says 0 < informationLoss. These contradict: use ne_of_gt (C.irreducible P s).
--/
 
 theorem conscious_not_decomposable (C : ConsciousSystem)
     (P : BiPartition C.toInfoSystem) (s : C.toInfoSystem.State) :

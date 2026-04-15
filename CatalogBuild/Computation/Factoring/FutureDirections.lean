@@ -12,58 +12,40 @@ the search space from S to S / 2^k. For k ≥ 1, this is a strict reduction. -/
 theorem multi_lens_advantage (S : ℕ) (k : ℕ) (hS : 0 < S) (hk : 1 ≤ k) :
     S / 2 ^ k < S := Nat.div_lt_self hS (Nat.one_lt_two_pow_iff.mpr (by omega))
 
-/-- The advantage grows without bound: for any target ε > 0, sufficiently
-    many lenses reduce below ε. -/
 
+/-- The advantage grows without bound: for any target ε > 0, sufficiently
+many lenses reduce below ε. -/
 theorem advantage_unbounded (S : ℕ) (hS : 0 < S) :
     ∀ ε : ℕ, 0 < ε → ∃ k : ℕ, S / 2 ^ k < ε := by
   intros ε hε
   obtain ⟨k, hk⟩ := pow_unbounded_of_one_lt (S / ε) one_lt_two
   exact ⟨k, Nat.div_lt_of_lt_mul (by nlinarith [Nat.div_add_mod S ε, Nat.mod_lt S hε])⟩
 
-/-- Information-theoretic bound: log₂(2^k) = k bits of information. -/
 
+/-- Information-theoretic bound: log₂(2^k) = k bits of information. -/
 theorem information_bound (k : ℕ) : Nat.log 2 (2 ^ k) = k :=
   Nat.log_pow (by norm_num) k
 
-/-- With 7 lenses (the MetaFactoring count), the reduction factor is 128. -/
 
+/-- With 7 lenses (the MetaFactoring count), the reduction factor is 128. -/
 theorem seven_lens_factor : 2 ^ 7 = 128 := by norm_num
 
-end ConstraintIntersection
 
-/-! ## Research Thrust II: Fibonacci-Spectral Duality -/
-
-section FibonacciSpectral
-
-/-
-The Fibonacci sequence is periodic modulo any m ≥ 2 (Pisano periodicity).
-    Proved via pigeonhole on pairs (F(n) mod m, F(n+1) mod m).
--/
-
+/-- F(n)² + F(n+1)² = F(2n+1). Connects Fibonacci squares to doubled indices. -/
 theorem fib_sq_sum (n : ℕ) :
     (Nat.fib n) ^ 2 + (Nat.fib (n + 1)) ^ 2 = Nat.fib (2 * n + 1) := by
   rw [Nat.fib_two_mul_add_one]; ring
 
-/-
-Cassini's identity: F(n+1)·F(n-1) - F(n)² = (-1)^n for n ≥ 1.
--/
 
+/-- Fibonacci divisibility: m | n implies F(m) | F(n). -/
 theorem fib_divisibility (m n : ℕ) (h : m ∣ n) :
     Nat.fib m ∣ Nat.fib n := Nat.fib_dvd m n h
 
-/-
-The golden ratio bound: F(n+1) ≤ 2·F(n) for n ≥ 1.
--/
 
 theorem golden_ratio_bound (n : ℕ) (hn : 1 ≤ n) :
     Nat.fib (n + 1) ≤ 2 * Nat.fib n := by
   rcases n with ( _ | _ | n ) <;> simp_all +arith +decide [ fib_add_two ]
 
-/-
-For p ≡ 1 or 4 (mod 5), we have p | F(p-1).
-    (5 is a quadratic residue mod p, so p splits in ℚ(√5).)
--/
 
 theorem pisano_split_case (p : ℕ) (hp : Nat.Prime p) (hp5 : p % 5 = 1 ∨ p % 5 = 4) :
     p ∣ Nat.fib (p - 1) := by
@@ -104,10 +86,6 @@ theorem pisano_split_case (p : ℕ) (hp : Nat.Prime p) (hp5 : p % 5 = 1 ∨ p % 
   simp_all +decide [ ← ZMod.natCast_eq_zero_iff ];
   rw [ ZMod.pow_card_sub_one_eq_one, ZMod.pow_card_sub_one_eq_one ] <;> aesop
 
-/-
-For p ≡ 2 or 3 (mod 5), we have p | F(p+1).
-    (5 is a quadratic non-residue mod p, so p is inert in ℚ(√5).)
--/
 
 theorem pisano_inert_case (p : ℕ) (hp : Nat.Prime p) (hp5 : p % 5 = 2 ∨ p % 5 = 3) :
     p ∣ Nat.fib (p + 1) := by
@@ -193,25 +171,17 @@ theorem pisano_inert_case (p : ℕ) (hp : Nat.Prime p) (hp5 : p % 5 = 2 ∨ p % 
   rw [ ZMod.natCast_eq_zero_iff ];
   exact?
 
-/-
-Fibonacci grows at least linearly: F(k+2) ≥ k+1.
--/
 
 theorem fib_at_least_linear (k : ℕ) : k + 1 ≤ Nat.fib (k + 2) := by
   induction k <;> simp +arith +decide [ *, Nat.fib_add_two ];
   cases ‹ℕ› <;> norm_num [ fib_add_two ] at * ; linarith
 
-/-
-The Fibonacci search space reduction: fib(k+2) < 2^k for k ≥ 2.
--/
 
+/-- Two sum-of-squares representations yield a factoring equation. -/
 theorem two_reps_factoring (a b c d N : ℤ)
     (h1 : a ^ 2 + b ^ 2 = N) (h2 : c ^ 2 + d ^ 2 = N) :
     (a - c) * (a + c) = (d - b) * (d + b) := by nlinarith
 
-/-
-Fermat's two-square theorem: primes p ≡ 1 (mod 4) are sums of two squares.
--/
 
 theorem fermat_two_square (p : ℕ) (hp : Nat.Prime p) (hmod : p % 4 = 1) :
     ∃ a b : ℕ, a ^ 2 + b ^ 2 = p := by
@@ -219,10 +189,8 @@ theorem fermat_two_square (p : ℕ) (hp : Nat.Prime p) (hmod : p % 4 = 1) :
   have := @Nat.Prime.sq_add_sq p;
   convert this ( by rw [ hmod ] ; decide )
 
-/-
-Lagrange's four-square theorem: every natural number is a sum of 4 squares.
--/
 
+/-- The Degen eight-square identity (dimension 8 norm channel). -/
 theorem degen_eight_square
     (a₁ a₂ a₃ a₄ a₅ a₆ a₇ a₈ b₁ b₂ b₃ b₄ b₅ b₆ b₇ b₈ : ℤ) :
     (a₁^2 + a₂^2 + a₃^2 + a₄^2 + a₅^2 + a₆^2 + a₇^2 + a₈^2) *
@@ -237,8 +205,8 @@ theorem degen_eight_square
     (a₁*b₈ - a₂*b₇ + a₃*b₆ + a₄*b₅ - a₅*b₄ - a₆*b₃ + a₇*b₂ + a₈*b₁)^2 := by
   ring
 
-/-- AM-GM for divisor pairs: 4N ≤ (d + N/d)². -/
 
+/-- AM-GM for divisor pairs: 4N ≤ (d + N/d)². -/
 theorem divisor_sum_am_gm (N d : ℕ) (hN : 0 < N) (hd : d ∣ N) (hd_pos : 0 < d) :
     4 * N ≤ (d + N / d) ^ 2 := by
   nlinarith [Nat.div_mul_cancel hd, sq_nonneg (N / d - d : ℤ)]
@@ -249,14 +217,13 @@ theorem order_divides_group_size {G : Type*} [Group G] [Fintype G] (g : G) :
     g ^ Fintype.card G = 1 :=
   pow_card_eq_one
 
-/-- Wilson's theorem: (p-1)! ≡ -1 (mod p) for prime p. -/
 
+/-- Wilson's theorem: (p-1)! ≡ -1 (mod p) for prime p. -/
 theorem wilson (p : ℕ) (hp : Nat.Prime p) :
     ((p - 1).factorial : ZMod p) = -1 := by
   haveI : Fact (Nat.Prime p) := ⟨hp⟩
   exact ZMod.wilsons_lemma p
 
-/-- Totient is multiplicative for coprime arguments. -/
 
 theorem euler_criterion (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2)
     (a : ZMod p) (ha : a ≠ 0) :
@@ -264,15 +231,12 @@ theorem euler_criterion (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2)
   haveI := Fact.mk hp; have h := FiniteField.pow_card_sub_one_eq_one a;
   cases Nat.Prime.odd_of_ne_two hp hp2 ; simp_all +decide [ pow_add, pow_mul' ]
 
-/-
-The minimum factor of a composite n is at most √n.
--/
 
 /-- CRT cardinality: m·n = m·n (product structure). -/
 theorem crt_cardinality (m n : ℕ) : m * n = m * n := rfl
 
-/-- Bézout's identity: coprime integers generate ℤ. -/
 
+/-- Bézout's identity: coprime integers generate ℤ. -/
 theorem bezout {a b : ℤ} (h : IsCoprime a b) :
     ∃ s t : ℤ, s * a + t * b = 1 := by
   obtain ⟨s, t, hst⟩ := h; exact ⟨s, t, hst⟩

@@ -34,9 +34,6 @@ theorem bf_two_representations (a b c d : ℤ) :
     (a * c + b * d) ^ 2 + (a * d - b * c) ^ 2 :=
   ⟨by ring, by ring⟩
 
-/-
-Two BF representations are distinct when b*c ≠ 0 (so the two decompositions differ).
--/
 
 theorem bf_representations_distinct (a b c d : ℤ) (hbc : b * c ≠ 0) :
     a * d + b * c ≠ a * d - b * c := by

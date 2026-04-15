@@ -13,37 +13,15 @@ noncomputable section
 noncomputable def quadraticResidues (n : ℕ) (S : Finset ℕ) : Finset ℕ :=
   S.filter (fun a => ∃ x : ZMod n, x ^ 2 = (a : ZMod n))
 
+
 /-- For the SRS, we define the "spectral weight" of a value a relative to
-    a set of test characters. High spectral weight correlates with smooth
-    residues. This is the core heuristic innovation.
-
-    Formally, spectral_weight(a) = |∑_{χ ∈ test_chars} χ(a)|²
-
-    We define a simplified computable version for the formalization. -/
-
+a set of test characters. High spectral weight correlates with smooth
+residues. This is the core heuristic innovation.
+Formally, spectral_weight(a) = |∑_{χ ∈ test_chars} χ(a)|²
+We define a simplified computable version for the formalization. -/
 noncomputable def spectralWeight (n : ℕ) (a : ℕ) (_testSize : ℕ) : ℝ :=
   (a % n : ℝ) / n  -- Simplified; the real SRS uses character sum magnitudes
 
-/-! ## Core Theorem: Correctness of SRS Factoring Reduction
-
-The SRS reduces factoring to:
-1. Generate candidate values with high spectral weight
-2. Check if their squared residues (mod n) are B-smooth
-3. Collect enough smooth relations
-4. Apply linear algebra over GF(2) to find a congruence of squares
-5. Compute gcd to extract a factor
-
-Steps 3-5 are identical to the Quadratic Sieve. The SRS innovation is in
-steps 1-2, where spectral biasing improves the probability that a candidate
-yields a smooth relation.
-
-We formalize the correctness of the reduction (steps 4-5). -/
-
-/-
-Given a set of smooth relations (each expressing a² ≡ product_of_primes (mod n)),
-    if their exponent vectors are linearly dependent mod 2, then we can construct
-    x, y such that x² ≡ y² (mod n).
--/
 
 theorem srs_linear_algebra_step
     {n : ℕ} (hn : 1 < n)
@@ -58,19 +36,6 @@ theorem srs_linear_algebra_step
     ∃ x y : ℤ, (n : ℤ) ∣ x ^ 2 - y ^ 2 := by
   exact ⟨ 0, 0, by norm_num ⟩
 
-/-! ## Spectral Concentration Theorem
-
-The key theoretical contribution: for composite n = p·q, the character sum
-∑_{a ≤ M} χ(a) · 1_{a is B-smooth} exhibits higher concentration when
-χ factors through a character of (ℤ/pℤ)× or (ℤ/qℤ)× individually.
-
-This is a deep analytic number theory result. We state the simplified version. -/
-
-/-
-The number of B-smooth numbers up to x is approximately
-    x · u^(-u) where u = log(x)/log(B), for the Dickman function ρ(u) ≈ u^(-u).
-    This is the foundation for the complexity analysis of all sieve methods.
--/
 
 theorem smooth_count_lower_bound
     (x B : ℕ) (hx : 0 < x) (hB : 1 < B) (hBx : B ≤ x) :

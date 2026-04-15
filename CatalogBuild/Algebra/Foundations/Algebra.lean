@@ -13,53 +13,21 @@ theorem lagrange_theorem {G : Type*} [Group G] [Fintype G]
       convert Subgroup.card_subgroup_dvd_card H using 1 ; aesop;
       rw [ Nat.card_eq_fintype_card ]
 
-/-
-PROBLEM
-Every group of prime order is cyclic.
-
-PROVIDED SOLUTION
-Use isCyclic_of_prime_card from Mathlib.
--/
 
 theorem prime_order_cyclic {G : Type*} [Group G] [Fintype G]
     (hp : (Fintype.card G).Prime) : IsCyclic G := by
       haveI := Fact.mk hp; exact isCyclic_of_prime_card ( by aesop ) ;
 
-/-! ## Section 2: Ring Theory and Factoring -/
-
-/-
-PROBLEM
-In a principal ideal domain, every irreducible element is prime.
-
-PROVIDED SOLUTION
-Use Irreducible.prime from Mathlib (available for PIDs).
--/
 
 theorem irreducible_is_prime_in_pid {R : Type*} [CommRing R] [IsDomain R]
     [IsPrincipalIdealRing R] {p : R} (hp : Irreducible p) : Prime p := by
       convert hp.prime
 
-/-
-PROBLEM
-The Chinese Remainder Theorem for coprime moduli.
-
-PROVIDED SOLUTION
-Use Nat.chineseRemainder or construct the solution directly. Since gcd(m,n)=1, there exist u,v with um+vn=1. The solution x = a*v*n + b*u*m works.
--/
 
 theorem crt_coprime (m n : ℕ) (hm : 0 < m) (hn : 0 < n) (hcoprime : Nat.Coprime m n)
     (a b : ℕ) : ∃ x : ℕ, x % m = a % m ∧ x % n = b % n := by
       have := Nat.chineseRemainder hcoprime a b; aesop;
 
-/-! ## Section 3: Polynomial Rings -/
-
-/-
-PROBLEM
-x² + 1 is irreducible over ℚ.
-
-PROVIDED SOLUTION
-Use Polynomial.irreducible_X_pow_add_C or show it has no rational roots. Alternatively use the fact that x²+1 has no real roots.
--/
 
 theorem x_sq_plus_one_irreducible :
     Irreducible (Polynomial.X ^ 2 + 1 : Polynomial ℚ) := by

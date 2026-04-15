@@ -7,9 +7,8 @@ Declarations: 11
 
 import Mathlib
 
+/-- The Lorentz quadratic form Q(a,b,c) = a² + b² - c². -/
 def lorentzForm (a b c : ℤ) : ℤ := a ^ 2 + b ^ 2 - c ^ 2
-
-/-! ## Lorentz Form Preservation -/
 
 
 theorem lorentz_M1 (a b c : ℤ) :
@@ -25,8 +24,6 @@ theorem lorentz_M2 (a b c : ℤ) :
 theorem lorentz_M3 (a b c : ℤ) :
     lorentzForm (-a + 2*b + 2*c) (-2*a + b + 2*c) (-2*a + 2*b + 3*c) = lorentzForm a b c := by
   unfold lorentzForm; ring
-
-/-! ## Pythagorean Preservation -/
 
 
 theorem pyth_iff_lorentz_null (a b c : ℤ) :
@@ -48,13 +45,9 @@ theorem M3_preserves_pyth (a b c : ℤ) (h : IsPythTriple' a b c) :
     IsPythTriple' (-a + 2*b + 2*c) (-2*a + b + 2*c) (-2*a + 2*b + 3*c) := by
   rw [pyth_iff_lorentz_null] at h ⊢; rw [lorentz_M3]; exact h
 
-/-! ## Hypotenuse Growth -/
-
 
 theorem M2_hyp_increases (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 ≤ c) :
     c < 2*a + 2*b + 3*c := by omega
-
-/-! ## Euclid Parametrization -/
 
 
 theorem brahmagupta_fibonacci_alt (a b c d : ℤ) :

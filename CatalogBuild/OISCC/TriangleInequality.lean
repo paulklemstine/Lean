@@ -34,8 +34,8 @@ theorem D_eml_diag_ge_two (x : ℝ) (hx : 0 < x) : D_eml x x ≥ 2 := by
 
 def f_eml (x : ℝ) : ℝ := Real.exp x - Real.log x - 1
 
-/-- D(x,y) = f(x) + f(y). D is SEPARABLE. -/
 
+/-- D(x,y) = f(x) + f(y). D is SEPARABLE. -/
 theorem D_eml_separable (x y : ℝ) : D_eml x y = f_eml x + f_eml y := by
   simp [D_eml, f_eml]; ring
 
@@ -49,15 +49,15 @@ theorem f_eml_ge_one (x : ℝ) (hx : 0 < x) : f_eml x ≥ 1 := by
   simp [f_eml]
   linarith [Real.add_one_le_exp x, Real.log_le_sub_one_of_pos hx]
 
-/-- Triangle inequality for D — immediate from separability. -/
 
+/-- Triangle inequality for D — immediate from separability. -/
 theorem D_eml_triangle (x y z : ℝ) (_hx : 0 < x) (hy : 0 < y) (_hz : 0 < z) :
     D_eml x z ≤ D_eml x y + D_eml y z := by
   rw [D_eml_separable, D_eml_separable, D_eml_separable]
   linarith [f_eml_pos y hy]
 
-/-- Derived metric: d(x,y) = |f(x) - f(y)|. -/
 
+/-- Derived metric: d(x,y) = |f(x) - f(y)|. -/
 def d_eml_metric (x y : ℝ) : ℝ := |f_eml x - f_eml y|
 
 

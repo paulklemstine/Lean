@@ -12,38 +12,38 @@ noncomputable section
 /-- An octonion is an 8-tuple of real numbers. -/
 abbrev Octonion := Fin 8 → ℝ
 
-/-- The squared norm of an octonion. -/
 
+/-- The squared norm of an octonion. -/
 def octNormSq (a : Octonion) : ℝ := ∑ i : Fin 8, (a i) ^ 2
 
-/-- The norm of an octonion. -/
 
+/-- The norm of an octonion. -/
 def octNorm (a : Octonion) : ℝ := Real.sqrt (octNormSq a)
 
-/-- Octonion addition is commutative. -/
 
+/-- Octonion addition is commutative. -/
 theorem oct_add_comm (a b : Octonion) : a + b = b + a := by
   ext i; exact add_comm (a i) (b i)
 
-/-- Norm squared is nonneg. -/
 
+/-- Norm squared is nonneg. -/
 theorem octNormSq_nonneg (a : Octonion) : 0 ≤ octNormSq a := by
   apply Finset.sum_nonneg
   intro i _
   exact sq_nonneg (a i)
 
-/-- Norm is nonneg. -/
 
+/-- Norm is nonneg. -/
 theorem octNorm_nonneg (a : Octonion) : 0 ≤ octNorm a :=
   Real.sqrt_nonneg _
 
-/-- Zero octonion has zero norm. -/
 
+/-- Zero octonion has zero norm. -/
 theorem octNormSq_zero : octNormSq (0 : Octonion) = 0 := by
   simp [octNormSq]
 
-/-- Scalar multiplication scales norm squared. -/
 
+/-- Scalar multiplication scales norm squared. -/
 theorem octNormSq_smul (r : ℝ) (a : Octonion) :
     octNormSq (r • a) = r ^ 2 * octNormSq a := by
   simp [octNormSq, Pi.smul_apply, smul_eq_mul, mul_pow]
@@ -53,57 +53,57 @@ theorem octNormSq_smul (r : ℝ) (a : Octonion) :
 -- PART II: OCTONIONIC MAPS AND SOLVERS
 -- ============================================================================
 
-/-- An octonionic map is norm-preserving (unitary/orthogonal). -/
 
+/-- An octonionic map is norm-preserving (unitary/orthogonal). -/
 def isNormPreserving (f : Octonion → Octonion) : Prop :=
   ∀ a : Octonion, octNormSq (f a) = octNormSq a
 
-/-- An octonionic map is idempotent (oracle property). -/
 
+/-- An octonionic map is idempotent (oracle property). -/
 def isIdempotent (f : Octonion → Octonion) : Prop :=
   ∀ a : Octonion, f (f a) = f a
 
-/-- The fixed point set of an octonionic map. -/
 
+/-- An octonionic quantum solver: norm-preserving + idempotent. -/
 structure OctSolver where
   transform : Octonion → Octonion
   normPres : isNormPreserving transform
   idempotent : isIdempotent transform
 
-/-- The identity is a valid solver. -/
 
+/-- The identity is a valid solver. -/
 def identitySolver : OctSolver where
   transform := id
   normPres := fun _ => rfl
   idempotent := fun _ => rfl
 
-/-- An idempotent octonionic map (oracle without norm preservation). -/
 
+/-- An idempotent octonionic map (oracle without norm preservation). -/
 structure OctOracle where
   transform : Octonion → Octonion
   idempotent : isIdempotent transform
 
-/-- Constant zero map is an oracle (idempotent). -/
 
+/-- A mathematical problem is encoded as an octonion. -/
 structure Problem where
   encoding : Octonion
   nonzero : octNormSq encoding ≠ 0
 
-/-- A solution is a fixed point of the solver. -/
 
+/-- A solution is a fixed point of the solver. -/
 def isSolution (S : OctSolver) (prob : Problem) (sol : Octonion) : Prop :=
   S.transform prob.encoding = sol ∧ sol ∈ fixedPoints S.transform
 
-/-- Every solver produces a solution (the image is always a fixed point). -/
 
+/-- Every solver produces a solution (the image is always a fixed point). -/
 theorem solver_produces_solution (S : OctSolver) (prob : Problem) :
     isSolution S prob (S.transform prob.encoding) := by
   constructor
   · rfl
   · exact S.idempotent prob.encoding
 
-/-- The solution norm equals the problem norm (information preservation). -/
 
+/-- The solution norm equals the problem norm (information preservation). -/
 theorem solution_preserves_norm (S : OctSolver) (prob : Problem) :
     octNormSq (S.transform prob.encoding) = octNormSq prob.encoding :=
   S.normPres prob.encoding
@@ -112,28 +112,28 @@ theorem solution_preserves_norm (S : OctSolver) (prob : Problem) :
 -- PART IV: TROPICAL-OCTONIONIC CONNECTION
 -- ============================================================================
 
-/-- Tropical max operation. -/
 
+/-- Tropical max operation. -/
 def tropMax (a b : ℝ) : ℝ := max a b
 
-/-- ReLU as tropical operation. -/
 
+/-- ReLU is a tropical operation (definitional). -/
 theorem relu_tropical (x : ℝ) : relu x = tropMax x 0 := rfl
 
-/-- Componentwise ReLU on octonions. -/
 
+/-- Componentwise ReLU on octonions. -/
 def octRelu (a : Octonion) : Octonion := fun i => relu (a i)
 
-/-- Componentwise ReLU is idempotent. -/
 
+/-- Componentwise ReLU is idempotent. -/
 theorem octRelu_idempotent : isIdempotent octRelu := by
   intro a
   ext i
   simp only [octRelu, relu]
   exact max_eq_left (le_max_right (a i) 0)
 
-/-- Componentwise ReLU preserves nonnegativity. -/
 
+/-- Componentwise ReLU preserves nonnegativity. -/
 theorem octRelu_nonneg (a : Octonion) (i : Fin 8) :
     0 ≤ octRelu a i :=
   le_max_right (a i) 0
@@ -142,20 +142,20 @@ theorem octRelu_nonneg (a : Octonion) (i : Fin 8) :
 -- PART V: LLM AGENT AS OCTONIONIC ORACLE COMPOSITION
 -- ============================================================================
 
-/-- An LLM layer is modeled as an octonionic map with oracle property. -/
 
+/-- An LLM layer is modeled as an octonionic map with oracle property. -/
 structure LLMLayer where
   map : Octonion → Octonion
   oracle : isIdempotent map
 
-/-- The identity layer is an oracle. -/
 
+/-- The identity layer is an oracle. -/
 def identityLayer : LLMLayer where
   map := id
   oracle := fun _ => rfl
 
-/-- The ReLU layer is an oracle. -/
 
+/-- The ReLU layer is an oracle. -/
 def reluLayer : LLMLayer where
   map := octRelu
   oracle := octRelu_idempotent
@@ -164,13 +164,13 @@ def reluLayer : LLMLayer where
 -- PART VI: DIMENSION REDUCTION VIA OCTONIONIC PROJECTION
 -- ============================================================================
 
-/-- Project an octonion to its first k components (zero out the rest). -/
 
+/-- Project an octonion to its first k components (zero out the rest). -/
 def octProject (k : Fin 9) (a : Octonion) : Octonion :=
   fun i => if (i : ℕ) < (k : ℕ) then a i else 0
 
-/-- Projection is idempotent. -/
 
+/-- Projection is idempotent. -/
 theorem octProject_idempotent (k : Fin 9) : isIdempotent (octProject k) := by
   intro a
   ext i
@@ -179,8 +179,8 @@ theorem octProject_idempotent (k : Fin 9) : isIdempotent (octProject k) := by
   · rfl
   · rfl
 
-/-- Projection reduces norm. -/
 
+/-- Projection reduces norm. -/
 theorem octProject_norm_le (k : Fin 9) (a : Octonion) :
     octNormSq (octProject k a) ≤ octNormSq a := by
   apply Finset.sum_le_sum

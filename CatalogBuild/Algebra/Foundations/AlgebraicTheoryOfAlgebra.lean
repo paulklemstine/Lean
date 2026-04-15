@@ -14,8 +14,8 @@ structure AlgSignature where
   /-- The arity of each operation symbol -/
   arity : OpSym → ℕ
 
-/-- A Sig-algebra: a carrier type with interpretations of operation symbols -/
 
+/-- A Sig-algebra: a carrier type with interpretations of operation symbols -/
 structure SigAlgebra (S : AlgSignature) where
   /-- The carrier set -/
   carrier : Type
@@ -26,9 +26,9 @@ structure SigAlgebra (S : AlgSignature) where
 -- Section 2: The Lattice of Equational Theories
 -- ============================================================
 
-/-- An equational theory over a type is a set of pairs of elements
-    that are declared equal. Modeled as an equivalence-like relation. -/
 
+/-- An equational theory over a type is a set of pairs of elements
+that are declared equal. Modeled as an equivalence-like relation. -/
 structure EquationalTheory (α : Type*) where
   /-- The set of equations, as a relation -/
   eqns : α → α → Prop
@@ -44,22 +44,23 @@ instance (α : Type*) : LE (EquationalTheory α) where
   le T₁ T₂ := ∀ a b, T₁.eqns a b → T₂.eqns a b
 
 
+/-- The trivial theory: everything is equal -/
 def trivialTheory (α : Type*) : EquationalTheory α where
   eqns := fun _ _ => True
   refl := fun _ => trivial
   symm := fun _ _ _ => trivial
   trans := fun _ _ _ _ _ => trivial
 
-/-- The discrete theory: only reflexive equations -/
 
+/-- The discrete theory: only reflexive equations -/
 def discreteTheory (α : Type*) : EquationalTheory α where
   eqns := fun a b => a = b
   refl := fun _ => rfl
   symm := fun _ _ h => h.symm
   trans := fun _ _ _ h₁ h₂ => h₁.trans h₂
 
-/-- The meet (intersection) of two theories -/
 
+/-- The meet (intersection) of two theories -/
 def theoryMeet (T₁ T₂ : EquationalTheory α) : EquationalTheory α where
   eqns a b := T₁.eqns a b ∧ T₂.eqns a b
   refl a := ⟨T₁.refl a, T₂.refl a⟩
@@ -82,8 +83,8 @@ theorem le_theoryMeet (T T₁ T₂ : EquationalTheory α) (h₁ : T ≤ T₁) (h
 -- Section 3: Varieties and the HSP Theorem Structure
 -- ============================================================
 
-/-- A variety is a class of algebras closed under H, S, and P. -/
 
+/-- A variety is a class of algebras closed under H, S, and P. -/
 structure Variety (S : AlgSignature) where
   member : SigAlgebra S → Prop
 
@@ -92,16 +93,17 @@ instance (S : AlgSignature) : LE (Variety S) where
   le V₁ V₂ := ∀ A, V₁.member A → V₂.member A
 
 
+/-- The variety of all algebras -/
 def totalVariety (S : AlgSignature) : Variety S where
   member := fun _ => True
 
-/-- The trivial variety (only one-element algebras) -/
 
+/-- The trivial variety (only one-element algebras) -/
 def trivialVariety' (S : AlgSignature) : Variety S where
   member A := Subsingleton A.carrier
 
-/-- The meet of two varieties = their intersection -/
 
+/-- The meet of two varieties = their intersection -/
 def varietyMeet (V₁ V₂ : Variety S) : Variety S where
   member A := V₁.member A ∧ V₂.member A
 
@@ -121,27 +123,27 @@ theorem le_varietyMeet (V V₁ V₂ : Variety S) (h₁ : V ≤ V₁) (h₂ : V �
 -- Section 4: Free Algebra Construction (Terms)
 -- ============================================================
 
-/-- Terms over a signature S with variables from X -/
 
+/-- Terms over a signature S with variables from X -/
 inductive AlgTerm (S : AlgSignature) (X : Type) : Type where
   | var : X → AlgTerm S X
   | app : (f : S.OpSym) → (Fin (S.arity f) → AlgTerm S X) → AlgTerm S X
 
-/-- The term algebra: terms with the natural operations -/
 
+/-- The term algebra: terms with the natural operations -/
 def termAlgebra (S : AlgSignature) (X : Type) : SigAlgebra S where
   carrier := AlgTerm S X
   interp f args := AlgTerm.app f args
 
-/-- Substitution: replace variables in a term -/
 
+/-- Substitution: replace variables in a term -/
 def AlgTerm.subst {S : AlgSignature} {X Y : Type}
     (sigma : X → AlgTerm S Y) : AlgTerm S X → AlgTerm S Y
   | .var x => sigma x
   | .app f args => .app f (fun i => (args i).subst sigma)
 
-/-- Substitution with variable inclusion is the identity -/
 
+/-- Substitution with variable inclusion is the identity -/
 theorem AlgTerm.subst_var {S : AlgSignature} {X : Type} (t : AlgTerm S X) :
     t.subst AlgTerm.var = t := by
   induction t with
@@ -152,34 +154,34 @@ theorem AlgTerm.subst_var {S : AlgSignature} {X : Type} (t : AlgTerm S X) :
 -- Section 5: The Self-Referential Structure
 -- ============================================================
 
-/-- Meet is idempotent -/
 
+/-- Meet is idempotent -/
 theorem theoryMeet_idem (T : EquationalTheory α) :
     ∀ a b, (theoryMeet T T).eqns a b ↔ T.eqns a b :=
   fun _ _ => ⟨fun ⟨h, _⟩ => h, fun h => ⟨h, h⟩⟩
 
-/-- Meet is commutative -/
 
+/-- Meet is commutative -/
 theorem theoryMeet_comm (T₁ T₂ : EquationalTheory α) :
     ∀ a b, (theoryMeet T₁ T₂).eqns a b ↔ (theoryMeet T₂ T₁).eqns a b :=
   fun _ _ => ⟨fun ⟨h₁, h₂⟩ => ⟨h₂, h₁⟩, fun ⟨h₂, h₁⟩ => ⟨h₁, h₂⟩⟩
 
-/-- Meet is associative -/
 
+/-- Meet is associative -/
 theorem theoryMeet_assoc (T₁ T₂ T₃ : EquationalTheory α) :
     ∀ a b, (theoryMeet (theoryMeet T₁ T₂) T₃).eqns a b ↔
            (theoryMeet T₁ (theoryMeet T₂ T₃)).eqns a b :=
   fun _ _ => ⟨fun ⟨⟨h₁, h₂⟩, h₃⟩ => ⟨h₁, h₂, h₃⟩,
               fun ⟨h₁, h₂, h₃⟩ => ⟨⟨h₁, h₂⟩, h₃⟩⟩
 
-/-- The discrete theory is the bottom -/
 
+/-- The discrete theory is the bottom -/
 theorem discreteTheory_le (T : EquationalTheory α) :
     discreteTheory α ≤ T := by
   intro a b hab; cases hab; exact T.refl a
 
-/-- The trivial theory is the top -/
 
+/-- The trivial theory is the top -/
 theorem le_trivialTheory (T : EquationalTheory α) :
     T ≤ trivialTheory α := fun _ _ _ => trivial
 
@@ -187,24 +189,24 @@ theorem le_trivialTheory (T : EquationalTheory α) :
 -- Section 6: Monad Structure (Algebraic Theory ↔ Monad)
 -- ============================================================
 
-/-- The unit of the free algebra monad -/
 
+/-- The unit of the free algebra monad -/
 def freeMonadUnit (S : AlgSignature) (X : Type) : X → AlgTerm S X :=
   AlgTerm.var
 
-/-- The multiplication of the free algebra monad -/
 
+/-- The multiplication of the free algebra monad -/
 def freeMonadMult (S : AlgSignature) (X : Type) : AlgTerm S (AlgTerm S X) → AlgTerm S X :=
   AlgTerm.subst id
 
-/-- Left unit law: μ ∘ η_TX = id -/
 
+/-- Left unit law: μ ∘ η_TX = id -/
 theorem freeMonad_leftUnit (S : AlgSignature) (X : Type) (t : AlgTerm S X) :
     freeMonadMult S X (freeMonadUnit S (AlgTerm S X) t) = t := by
   simp [freeMonadMult, freeMonadUnit, AlgTerm.subst, id]
 
-/-- Right unit law: μ ∘ T(η) = id -/
 
+/-- Right unit law: μ ∘ T(η) = id -/
 theorem freeMonad_rightUnit (S : AlgSignature) (X : Type) (t : AlgTerm S X) :
     freeMonadMult S X ((AlgTerm.subst (fun x => AlgTerm.var (AlgTerm.var x))) t) = t := by
   induction t with
@@ -217,13 +219,12 @@ theorem freeMonad_rightUnit (S : AlgSignature) (X : Type) (t : AlgTerm S X) :
 -- Section 7: The Grand Self-Reference Theorem
 -- ============================================================
 
+
 /-- **Main Theorem**: The collection of equational theories over any
-    signature forms a bounded lattice with meet.
-
-    This is an algebraic structure — meaning the algebraic theory
-    of algebra produces algebraic objects. The self-reference is
-    productive, not paradoxical. -/
-
+signature forms a bounded lattice with meet.
+This is an algebraic structure — meaning the algebraic theory
+of algebra produces algebraic objects. The self-reference is
+productive, not paradoxical. -/
 theorem algebraicTheoryOfAlgebra_selfReference (α : Type*) :
     (∀ T : EquationalTheory α, discreteTheory α ≤ T) ∧
     (∀ T : EquationalTheory α, T ≤ trivialTheory α) ∧

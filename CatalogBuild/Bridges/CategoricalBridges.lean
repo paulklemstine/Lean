@@ -17,18 +17,16 @@ def bridge_composition {C D E : Type*}
     (F₁ ⋙ F₂) ⊣ (G₂ ⋙ G₁) :=
   adj₁.comp adj₂
 
-/-! ## Bridge Hierarchy -/
 
 /-- The mathematical bridge hierarchy. -/
-
 inductive BridgeLevel where
   | setTheoretic | stone | gelfand | pontryagin | galois
   | tannaka | langlands | geometricLanglands | derivedLanglands
   | motivic | hott
   deriving DecidableEq
 
-/-- Numerical level of each bridge. -/
 
+/-- Numerical level of each bridge. -/
 def BridgeLevel.toNat : BridgeLevel → ℕ
   | .setTheoretic => 0
   | .stone => 1
@@ -42,31 +40,24 @@ def BridgeLevel.toNat : BridgeLevel → ℕ
   | .motivic => 9
   | .hott => 10
 
-/-- HoTT subsumes all previous bridges. -/
 
+/-- HoTT subsumes all previous bridges. -/
 theorem hott_subsumes_all (b : BridgeLevel) :
     b.toNat ≤ BridgeLevel.hott.toNat := by
   cases b <;> simp [BridgeLevel.toNat]
 
-/-! ## Analysis Bridges -/
 
 /-- Analysis bridges have unique limits (Hausdorff uniqueness). -/
-
 theorem analysis_bridge_unique_limit {X : Type*} [TopologicalSpace X] [T2Space X]
     {f : ℕ → X} {a b : X} (ha : Filter.Tendsto f Filter.atTop (nhds a))
     (hb : Filter.Tendsto f Filter.atTop (nhds b)) : a = b :=
   tendsto_nhds_unique ha hb
 
-/-! ## Riemann Sum Bridge -/
 
 /-- The Riemann sum of f on [0,1] with n uniform subdivisions. -/
-
 def riemannSum (f : ℝ → ℝ) (n : ℕ) : ℝ :=
   (1 / (n : ℝ)) * ∑ k ∈ Finset.range n, f ((k : ℝ) / (n : ℝ))
 
-/-
-For continuous f on [0,1], Riemann sums converge to ∫₀¹ f(x) dx.
--/
 
 theorem riemann_sum_converges (f : ℝ → ℝ) (hf : Continuous f) :
     Filter.Tendsto (fun n => riemannSum f (n + 1))
@@ -101,39 +92,34 @@ theorem riemann_sum_converges (f : ℝ → ℝ) (hf : Continuous f) :
   rw [ ← Finset.sum_sub_distrib ] ; rw [ Finset.mul_sum _ _ _ ] ; refine' Finset.sum_congr rfl fun i hi => _ ; rw [ intervalIntegral.integral_sub ( by exact Continuous.intervalIntegrable ( by continuity ) .. ) ] <;> norm_num ; ring;
   norm_num
 
-/-! ## Functorial L-Functions -/
 
 /-- L-function data. -/
-
 structure LFunctionData where
   degree : ℕ
   conductor : ℕ
 
-/-- L-function equivalence is reflexive. -/
 
+/-- L-function equivalence is reflexive. -/
 theorem lfunc_equiv_refl (L : LFunctionData) : L.degree = L.degree ∧ L.conductor = L.conductor :=
   ⟨rfl, rfl⟩
 
-/-! ## Functional Equation Framework -/
 
 /-- A functional equation with root number. -/
-
 structure FunctionalEquation where
   conductor : ℕ
   weight : ℕ
   root_number : ℂ
   root_number_norm_one : ‖root_number‖ = 1
 
-/-- The root number has norm 1. -/
 
+/-- The root number has norm 1. -/
 theorem root_number_unit (fe : FunctionalEquation) :
     ‖fe.root_number‖ = 1 := fe.root_number_norm_one
 
-/-- Self-dual L-functions have root number ±1. -/
 
+/-- Self-dual L-functions have root number ±1. -/
 def FunctionalEquation.isSelfDual (fe : FunctionalEquation) : Prop :=
   fe.root_number = 1 ∨ fe.root_number = -1
 
-end
 
 end

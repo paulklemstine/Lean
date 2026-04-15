@@ -10,25 +10,25 @@ import Mathlib
 /-- The quadruple Lorentz form Q₄(a,b,c,d) = a² + b² + c² - d² -/
 def lorentzQ4 (a b c d : ℤ) : ℤ := a ^ 2 + b ^ 2 + c ^ 2 - d ^ 2
 
-/-- Pythagorean quadruples lie on the null cone Q₄ = 0 -/
 
+/-- Pythagorean quadruples lie on the null cone Q₄ = 0 -/
 theorem quadruple_null_cone {a b c d : ℤ} (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     lorentzQ4 a b c d = 0 := by
   unfold lorentzQ4; omega
 
-/-- The fundamental Pythagorean quadruple (1,2,2,3) -/
 
+/-- The fundamental Pythagorean quadruple (1,2,2,3) -/
 theorem fundamental_quadruple : (1 : ℤ) ^ 2 + 2 ^ 2 + 2 ^ 2 = 3 ^ 2 := by norm_num
 
-/-- Scaling preserves quadruples -/
 
+/-- Pell numbers: P(0)=0, P(1)=1, P(n+2)=2P(n+1)+P(n) -/
 def pellNum : ℕ → ℤ
   | 0 => 0
   | 1 => 1
   | (n + 2) => 2 * pellNum (n + 1) + pellNum n
 
-/-- Companion Pell numbers: H(0)=1, H(1)=1, H(n+2)=2H(n+1)+H(n) -/
 
+/-- Companion Pell numbers: H(0)=1, H(1)=1, H(n+2)=2H(n+1)+H(n) -/
 def pellComp : ℕ → ℤ
   | 0 => 1
   | 1 => 1
@@ -45,9 +45,6 @@ theorem pellNum_3 : pellNum 3 = 5 := by simp [pellNum]
 
 theorem pellNum_5 : pellNum 5 = 29 := by simp [pellNum]
 
-/-
-The Pell equation: H(n)² - 2P(n)² = (-1)^n
--/
 
 theorem pell_equation_holds (n : ℕ) :
     pellComp n ^ 2 - 2 * pellNum n ^ 2 = (-1 : ℤ) ^ n := by
@@ -65,65 +62,54 @@ theorem pell_equation_holds (n : ℕ) :
       induction' m with m ih <;> simp_all +decide [ pow_succ ];
       rw [ show pellNum ( m + 3 ) = 2 * pellNum ( m + 2 ) + pellNum ( m + 1 ) by rfl ] at * ; linarith
 
-/-! ## Section 3: Short Triple Bounds (§7.1) -/
 
 /-- The trivial PPT identity: (2N)² + (N²-1)² = (N²+1)² -/
-
 theorem trivial_ppt_identity (N : ℤ) :
     (2 * N) ^ 2 + (N ^ 2 - 1) ^ 2 = (N ^ 2 + 1) ^ 2 := by ring
 
-/-
-For a PPT (a,b,c), if b ≠ 0 then a² < c²
--/
 
 theorem hypotenuse_exceeds_leg (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     (hb : b ≠ 0) : a ^ 2 < c ^ 2 := by
       nlinarith [ mul_self_pos.2 hb ]
 
-/-- Difference of squares factorization -/
 
+/-- Difference of squares factorization -/
 theorem diff_squares_factor (a b : ℤ) : a ^ 2 - b ^ 2 = (a - b) * (a + b) := by ring
 
-/-! ## Section 4: Berggren Inverse Matrices -/
 
 /-- Berggren matrix B_A -/
-
 def BA' : Matrix (Fin 3) (Fin 3) ℤ := !![1, -2, 2; 2, -1, 2; 2, -2, 3]
 
-/-- Inverse of B_A -/
 
+/-- Inverse of B_A -/
 def BA'_inv : Matrix (Fin 3) (Fin 3) ℤ := !![1, 2, (-2); (-2), (-1), 2; (-2), (-2), 3]
 
-/-- The Lorentz metric -/
 
+/-- The Lorentz metric -/
 def QLorentz' : Matrix (Fin 3) (Fin 3) ℤ := !![1, 0, 0; 0, 1, 0; 0, 0, (-1)]
 
-/-- B_A * B_A⁻¹ = I -/
 
+/-- B_A * B_A⁻¹ = I -/
 theorem BA'_mul_inv : BA' * BA'_inv = 1 := by native_decide
 
-/-- Inverse of B_A preserves Lorentz form -/
 
+/-- Inverse of B_A preserves Lorentz form -/
 theorem BA'_inv_preserves_lorentz : BA'_invᵀ * QLorentz' * BA'_inv = QLorentz' := by
   native_decide
 
-/-! ## Section 5: Lattice Connection (§7.4) -/
 
 /-- The lattice condition: (c-b)(c+b) = N² when N is a leg -/
-
 theorem lattice_condition' (N b c : ℤ) (h : N ^ 2 + b ^ 2 = c ^ 2) :
     (c - b) * (c + b) = N ^ 2 := by nlinarith
 
-/-- GCD factor relation for semiprimes -/
 
+/-- GCD factor relation for semiprimes -/
 theorem gcd_factor_relation' (p q b c : ℤ)
     (h : (p * q) ^ 2 + b ^ 2 = c ^ 2) :
     (c - b) * (c + b) = p ^ 2 * q ^ 2 := by nlinarith
 
-/-! ## Section 6: Brahmagupta-Fibonacci Identity -/
 
-/-- The product of sums of two squares is a sum of two squares -/
-
+/-- A⁻¹ maps consecutive-parameter PPTs down by one step -/
 theorem A_inv_descent (m : ℤ) :
     let a := m ^ 2 - (m - 1) ^ 2
     let b := 2 * m * (m - 1)
@@ -136,23 +122,14 @@ theorem A_inv_descent (m : ℤ) :
     c' = (m - 1) ^ 2 + (m - 2) ^ 2 := by
   constructor <;> [skip; constructor] <;> ring
 
-/-! ## Section 8: Additional Quadruple Results -/
 
 /-- Quadruple parametrization: (2mp, 2mq, 2mr, ...) -/
-
 theorem three_square_factor' (m p q r : ℤ) :
     (2 * m * p) ^ 2 + (2 * m * q) ^ 2 + (2 * m * r) ^ 2 =
     4 * m ^ 2 * (p ^ 2 + q ^ 2 + r ^ 2) := by ring
 
-/-- For factoring: a² = (c-b)(c+b) from a²+b²=c² -/
 
+/-- For factoring: a² = (c-b)(c+b) from a²+b²=c² -/
 theorem sum_of_squares_factoring' (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     a ^ 2 = (c - b) * (c + b) := by nlinarith
 
-/-! ## Axiom Audit
-
-All proofs use only standard axioms:
-- `propext`, `Classical.choice`, `Quot.sound`
-- `Lean.ofReduceBool`, `Lean.trustCompiler` (for `native_decide`)
-No `sorry` or custom axioms.
--/

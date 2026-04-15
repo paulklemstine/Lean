@@ -35,8 +35,6 @@ theorem warmup_reaches_target (eta : ℝ) (W : ℕ) (hW : 0 < W) :
     warmupLR eta W W = eta := by
   simp [warmupLR, le_refl]; field_simp
 
-/-! ## §2. Momentum Accumulation -/
-
 
 def momentumUpdate (beta v g : ℝ) : ℝ := beta * v + g
 
@@ -45,8 +43,6 @@ theorem higher_momentum_more_velocity (beta1 beta2 v g : ℝ) (hv : 0 ≤ v) (hg
     (hbeta : beta1 ≤ beta2) :
     momentumUpdate beta1 v g ≤ momentumUpdate beta2 v g := by
   unfold momentumUpdate; nlinarith
-
-/-! ## §3. Gradient Clipping -/
 
 
 def clipGrad (g tau : ℝ) : ℝ := min (|g|) tau
@@ -65,8 +61,6 @@ theorem clip_preserves_small (g tau : ℝ) (h : |g| ≤ tau) :
 theorem clip_reduces_large (g tau : ℝ) (h : tau ≤ |g|) :
     clipGrad g tau = tau := by
   unfold clipGrad; exact min_eq_right h
-
-/-! ## §4. Loss Landscape Smoothness -/
 
 
 def optimalStepSize (L : ℝ) : ℝ := 1 / L

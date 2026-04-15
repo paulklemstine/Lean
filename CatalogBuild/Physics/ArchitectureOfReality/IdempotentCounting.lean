@@ -9,14 +9,13 @@ import Mathlib
 
 noncomputable section
 
+/-- The set of idempotents in ℤ/nℤ -/
 def idemSet (n : ℕ) [NeZero n] : Finset (ZMod n) :=
   Finset.univ.filter (fun e => e * e = e)
 
+
 /-- Count of idempotents in ℤ/nℤ -/
-
 def idemCount (n : ℕ) [NeZero n] : ℕ := (idemSet n).card
-
-/-! ## Computational verification of 2^ω(n) -/
 
 
 theorem idem_count_1 : idemCount 1 = 1 := by native_decide
@@ -51,17 +50,15 @@ theorem idem_count_105 : idemCount 105 = 8 := by native_decide
 
 theorem idem_count_210 : idemCount 210 = 16 := by native_decide
 
-/-! ## Algebraic structure of idempotents -/
 
 /-- In a commutative ring, the product of idempotents is idempotent -/
-
 theorem idem_mul {R : Type*} [CommRing R] {e f : R}
     (he : IsIdem e) (hf : IsIdem f) : IsIdem (e * f) := by
   unfold IsIdem at *
   rw [mul_mul_mul_comm, he, hf]
 
-/-- The complement of an idempotent is idempotent -/
 
+/-- The complement of an idempotent is idempotent -/
 theorem idem_complement {R : Type*} [Ring R] {e : R} (he : IsIdem e) :
     IsIdem (1 - e) := by
   unfold IsIdem at *
@@ -70,34 +67,32 @@ theorem idem_complement {R : Type*} [Ring R] {e : R} (he : IsIdem e) :
     _ = (1 - e) - 0 := by rw [mul_one, h1]
     _ = 1 - e := by rw [sub_zero]
 
-/-- 0 is always idempotent -/
 
+/-- 0 is always idempotent -/
 theorem idem_zero {R : Type*} [MulZeroClass R] : IsIdem (0 : R) :=
   mul_zero 0
 
-/-- 1 is always idempotent -/
 
+/-- 1 is always idempotent -/
 theorem idem_one {R : Type*} [MulOneClass R] : IsIdem (1 : R) :=
   one_mul 1
 
-/-- An idempotent and its complement are orthogonal -/
 
+/-- An idempotent and its complement are orthogonal -/
 theorem idem_orthogonal {R : Type*} [Ring R] {e : R} (he : IsIdem e) :
     e * (1 - e) = 0 := by
   unfold IsIdem at he
   rw [mul_sub, mul_one, he, sub_self]
 
-/-! ## The Master Equation: Im(O) = Fix(O) -/
 
-/-- For an idempotent operator, the image equals the fixed-point set -/
-
+/-- Gaussian binomial coefficient [n choose k]_q -/
 def gaussBinom : ℕ → ℕ → ℕ → ℕ
   | _, 0, _ => 1
   | 0, _ + 1, _ => 0
   | n + 1, k + 1, q => q^(k+1) * gaussBinom n k q + gaussBinom n (k+1) q
 
-/-- At q=1, Gaussian binomials recover ordinary binomial coefficients -/
 
+/-- At q=1, Gaussian binomials recover ordinary binomial coefficients -/
 theorem gaussBinom_at_one (n k : ℕ) : gaussBinom n k 1 = n.choose k := by
   induction n generalizing k with
   | zero => cases k <;> simp [gaussBinom, Nat.choose]
@@ -108,22 +103,17 @@ theorem gaussBinom_at_one (n k : ℕ) : gaussBinom n k 1 = n.choose k := by
       simp only [gaussBinom, Nat.choose, one_pow, one_mul]
       rw [ih k, ih (k + 1)]
 
-/-- Total idempotent-analog count for matrix rings: Σ [n choose k]_q -/
 
+/-- Total idempotent-analog count for matrix rings: Σ [n choose k]_q -/
 def totalProjections (n q : ℕ) : ℕ :=
   ∑ r ∈ Finset.range (n + 1), gaussBinom n r q
 
-/-- At q=1: total projections = 2^n -/
 
+/-- At q=1: total projections = 2^n -/
 theorem totalProjections_one (n : ℕ) : totalProjections n 1 = 2^n := by
   simp only [totalProjections, gaussBinom_at_one]
   exact Nat.sum_range_choose n
 
-/-
-Boolean ring theorem: if every element is idempotent, the ring is commutative.
-    Proof: (a+b)² = a+b implies ab + ba = 0. Also x² = x implies 2x = 0
-    (from (x+x)² = x+x). So ab = -ba = ba.
--/
 
 theorem boolean_ring_comm {R : Type*} [Ring R]
     (h : ∀ x : R, x * x = x) (a b : R) : a * b = b * a := by

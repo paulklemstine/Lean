@@ -10,9 +10,6 @@ import Mathlib
 theorem norm_nonneg (q : IntQuaternion) : 0 ≤ q.norm := by
   exact add_nonneg ( add_nonneg ( add_nonneg ( sq_nonneg _ ) ( sq_nonneg _ ) ) ( sq_nonneg _ ) ) ( sq_nonneg _ )
 
-/-
-The norm is zero iff the quaternion is zero.
--/
 
 theorem mul_conj (q : IntQuaternion) :
     mul q (conj q) = ⟨q.norm, 0, 0, 0⟩ := by

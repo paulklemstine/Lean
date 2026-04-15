@@ -29,8 +29,6 @@ theorem gaugeField_sq (n : ℕ) (x : Fin n → ℝ) :
     gaugeField n x ^ 2 = 4 / (1 + ∑ i, (x i) ^ 2) ^ 2 := by
   unfold gaugeField; field_simp; ring
 
-/-! ## Part 2: Gauge-Invariant Attention Kernel -/
-
 
 def gaugeInvariantKernel (n : ℕ) (x y : Fin n → ℝ) : ℝ :=
   gaugeField n x * gaugeField n y *
@@ -43,8 +41,6 @@ theorem gaugeInvariantKernel_symm (n : ℕ) (x y : Fin n → ℝ) :
   have h1 : (∑ i, x i * y i) = (∑ i, y i * x i) :=
     Finset.sum_congr rfl fun i _ => mul_comm (x i) (y i)
   rw [h1]; ring
-
-/-! ## Part 3: The Gauge Connection -/
 
 
 def gaugeConnection (n : ℕ) (x : Fin n → ℝ) (i : Fin n) : ℝ :=
@@ -59,8 +55,6 @@ theorem gaugeConnection_parity (n : ℕ) (x : Fin n → ℝ) (i : Fin n) :
 theorem gaugeConnection_zero (n : ℕ) (i : Fin n) :
     gaugeConnection n (fun _ => 0) i = 0 := by
   unfold gaugeConnection; simp
-
-/-! ## Part 4: Gauge Curvature -/
 
 
 def gaugeCurvatureComponent (n : ℕ) (x : Fin n → ℝ) (i j : Fin n) : ℝ :=
@@ -79,8 +73,6 @@ theorem gaugeCurvature_antisymm (n : ℕ) (x : Fin n → ℝ) (i j : Fin n)
 theorem gaugeCurvature_zero_origin (n : ℕ) (i j : Fin n) (hij : i ≠ j) :
     gaugeCurvatureComponent n (fun _ => 0) i j = 0 := by
   unfold gaugeCurvatureComponent; simp [hij]
-
-/-! ## Part 5: Gauge-Covariant Gradient -/
 
 
 def gaugeCovariantGrad (n : ℕ) (x : Fin n → ℝ)
@@ -103,8 +95,6 @@ theorem gaugeCovariantGrad_bounded (n : ℕ) (x : Fin n → ℝ)
         apply add_le_add hgrad
         exact mul_le_mul hconn hfval (abs_nonneg _) hC
 
-/-! ## Part 6: The Gauge Action -/
-
 
 def gaugeAction (seqLen n : ℕ) (X : Fin seqLen → Fin n → ℝ) : ℝ :=
   ∑ i : Fin seqLen, ∑ j : Fin seqLen,
@@ -116,8 +106,6 @@ theorem gaugeAction_nonneg (seqLen n : ℕ) (X : Fin seqLen → Fin n → ℝ) :
   unfold gaugeAction
   exact Finset.sum_nonneg fun _ _ =>
     Finset.sum_nonneg fun _ _ => by positivity
-
-/-! ## Part 7: Gauge Symmetry Breaking and Mass Generation -/
 
 
 def effectiveMass (n : ℕ) (x : Fin n → ℝ) : ℝ :=

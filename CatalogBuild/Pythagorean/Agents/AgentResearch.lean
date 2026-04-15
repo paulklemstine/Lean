@@ -28,14 +28,10 @@ theorem idempotent_count_3_v2 : idempotentCount_v2 3 = 10 := by native_decide
 
 theorem oracle_density_3_v2 : (idempotentCount_v2 3 : ℚ) / (3 ^ 3) = 10 / 27 := by native_decide
 
-/-! ## §2: Contraction Oracle Convergence -/
-
 
 theorem contraction_rate_v2 (c d₀ : ℝ) (hc : 0 ≤ c) (hc1 : c < 1) (hd : 0 ≤ d₀) (n : ℕ) :
     c ^ n * d₀ ≤ d₀ :=
   le_of_le_of_eq (mul_le_mul_of_nonneg_right (pow_le_one₀ hc hc1.le) hd) (one_mul d₀)
-
-/-! ## §3: Millennium Problem Connections -/
 
 
 theorem prime_count_bound_v2 (N : ℕ) :
@@ -47,13 +43,9 @@ theorem pi_10_v2 : ((range 11).filter Nat.Prime).card = 4 := by native_decide
 
 theorem pi_100_v2 : ((range 101).filter Nat.Prime).card = 25 := by native_decide
 
-/-! ## §4: Quantum Oracle Consultation -/
-
 
 theorem grover_speedup_v2 (N : ℕ) (hN : 4 ≤ N) :
     Nat.sqrt N + 1 < N := by nlinarith [Nat.sqrt_le N]
-
-/-! ## §5: LLM as Approximate Oracle -/
 
 
 structure ApproxOracleV2 (X : Type*) where
@@ -64,29 +56,25 @@ structure ApproxOracleV2 (X : Type*) where
   ε : ℝ
   approx : ∀ x, dist (O x) (truth x) ≤ ε
 
-/-! ## §6: Moonshot Hypotheses -/
-
 
 def collatz_v2 : ℕ → ℕ
   | 0 => 0
   | 1 => 1
   | n => if n % 2 = 0 then n / 2 else 3 * n + 1
 
-/-- Bertrand's postulate. -/
 
+/-- Bertrand's postulate. -/
 theorem bertrand_postulate_v2 (p : ℕ) (hp : Nat.Prime p) :
     ∃ q : ℕ, Nat.Prime q ∧ p < q ∧ q ≤ 2 * p := Nat.bertrand p hp.ne_zero
 
-/-- Goldbach check via Finset.filter. -/
 
+/-- Goldbach check via Finset.filter. -/
 def goldbachCheck_v2 (n : ℕ) : Bool :=
   ((range (n + 1)).filter (fun k => Nat.Prime k ∧ Nat.Prime (n - k) ∧ k ≤ n)).Nonempty
 
 
 theorem goldbach_verified_v2 : ∀ n ∈ (range 51).filter (fun n => 4 ≤ n ∧ n % 2 = 0),
     goldbachCheck_v2 n = true := by native_decide
-
-/-! ## §7: Grand Unified Oracle -/
 
 
 theorem truth_oracle_is_em_v2 : ∀ P : Prop, P ∨ ¬P := Classical.em

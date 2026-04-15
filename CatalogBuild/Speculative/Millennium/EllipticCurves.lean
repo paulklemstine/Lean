@@ -13,51 +13,25 @@ def countSolutionsMod (a b : ZMod p) [NeZero p] : ℕ :=
   Finset.card (Finset.univ.filter (fun xy : ZMod p × ZMod p =>
     xy.2 ^ 2 = xy.1 ^ 3 + a * xy.1 + b))
 
-/-- The discriminant of an elliptic curve y² = x³ + ax + b.
-    Non-vanishing ensures the curve is smooth. -/
 
+/-- The discriminant of an elliptic curve y² = x³ + ax + b.
+Non-vanishing ensures the curve is smooth. -/
 def ellipticDiscriminant (a b : ℤ) : ℤ := -16 * (4 * a ^ 3 + 27 * b ^ 2)
 
-/-- A curve is an elliptic curve (smooth) iff its discriminant is nonzero. -/
 
+/-- A curve is an elliptic curve (smooth) iff its discriminant is nonzero. -/
 def isEllipticCurve (a b : ℤ) : Prop := ellipticDiscriminant a b ≠ 0
 
-/-
-PROBLEM
-The curve y² = x³ - x has nonzero discriminant, hence is an elliptic curve.
-
-PROVIDED SOLUTION
-Compute: ellipticDiscriminant (-1) 0 = -16 * (4*(-1)^3 + 27*0^2) = -16*(-4) = 64 ≠ 0. Just unfold and norm_num.
--/
 
 theorem curve_minus_x_is_elliptic : isEllipticCurve (-1) 0 := by
   -- We need to show that the discriminant is non-zero.
   unfold isEllipticCurve
   norm_num [ellipticDiscriminant]
 
-/-
-PROBLEM
-The curve y² = x³ - 1 has nonzero discriminant.
-
-PROVIDED SOLUTION
-Compute: ellipticDiscriminant 0 (-1) = -16*(4*0 + 27*1) = -16*27 = -432 ≠ 0. Unfold and norm_num.
--/
 
 theorem curve_minus_one_is_elliptic : isEllipticCurve 0 (-1) := by
   unfold isEllipticCurve; norm_num [ ellipticDiscriminant ] ;
 
-/-
-PROBLEM
-For the curve y² = x³ + ax + b over 𝔽_p, the trace of Frobenius satisfies
-    |a_p| ≤ 2√p (Hasse bound). We prove a simplified version: the count N_p
-    satisfies |N_p - p - 1| ≤ 2√p, i.e., N_p is close to p + 1.
-
-    Here we prove the weaker statement that for any prime p > 3,
-    the number of affine points is at most 2p (trivial upper bound).
-
-PROVIDED SOLUTION
-Each of the p values of x has at most 2 values of y satisfying y² = f(x) mod p. So countSolutionsMod ≤ 2p. Use Finset.card_filter_le and bound the fiber size.
--/
 
 theorem trivial_point_bound (p : ℕ) [Fact (Nat.Prime p)] (a b : ZMod p)
     (hp : p > 3) : countSolutionsMod a b ≤ 2 * p := by
@@ -74,34 +48,16 @@ theorem trivial_point_bound (p : ℕ) [Fact (Nat.Prime p)] (a b : ZMod p)
   push_cast [ Finset.card_filter ] at *;
   erw [ Finset.sum_product ] ; simpa [ mul_comm ] using Finset.sum_le_sum fun x ( hx : x ∈ Finset.univ ) => h_fiber_card x;
 
-/-
-PROBLEM
-The Euler product for the L-function converges absolutely for Re(s) > 3/2.
-    We prove a simpler related fact: the sum ∑ 1/n^s converges for s > 1
-    (the zeta function). Here we show a basic bound.
-
-PROVIDED SOLUTION
-Each term 1/(i+1) ≤ 1 for i in range N, so the sum is ≤ N. Use Finset.sum_le_card_nsmul.
--/
 
 theorem harmonic_partial_sum_bound (N : ℕ) (hN : 0 < N) :
     ∑ i ∈ Finset.range N, (1 : ℝ) / (↑(i + 1)) ≤ ↑N := by
   exact le_trans ( Finset.sum_le_sum fun _ _ => div_le_self zero_le_one <| mod_cast Nat.succ_pos _ ) ( by norm_num )
 
-/-- The rank of an elliptic curve is always non-negative
-    (by definition, it's the rank of a free abelian group). -/
 
+/-- The rank of an elliptic curve is always non-negative
+(by definition, it's the rank of a free abelian group). -/
 theorem rank_nonneg : (0 : ℕ) ≤ 0 + 0 := le_refl _
 
-/-
-PROBLEM
-Mordell's theorem (statement): E(ℚ) is a finitely generated abelian group.
-    This is a foundational result that makes the BSD conjecture meaningful.
-    We state a model version: any subgroup of ℤ^n × (ℤ/mℤ)^k is finitely generated.
-
-PROVIDED SOLUTION
-A subgroup of a finitely generated group is not always finitely generated in general! But for abelian (commutative) groups it is. Use Subgroup.fg_of_fg_map_of_fg_inf or Group.fg_of_surjective or just the fact that CommGroup + FG implies subgroups are FG.
--/
 
 theorem fg_subgroup_of_fg {G : Type*} [CommGroup G] [Group.FG G]
     (H : Subgroup G) : Group.FG H := by

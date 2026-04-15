@@ -14,10 +14,10 @@ theorem ordinal_le_of_forall_lt (o : Ordinal) :
   intro p hp
   exact Order.succ_le_of_lt hp
 
-/-- Transfinite induction: the ultimate bootstrap principle. To prove P holds for
-    all ordinals, it suffices to show P(α) assuming P(β) for all β < α.
-    Each step bootstraps from all previous steps. -/
 
+/-- Transfinite induction: the ultimate bootstrap principle. To prove P holds for
+all ordinals, it suffices to show P(α) assuming P(β) for all β < α.
+Each step bootstraps from all previous steps. -/
 theorem transfinite_bootstrap (P : Ordinal → Prop)
     (h : ∀ o : Ordinal, (∀ p : Ordinal, p < o → P p) → P o) :
     ∀ o : Ordinal, P o :=
@@ -30,9 +30,9 @@ theorem universe_lift_exists (α : Type u) :
     ∃ _ : Type (u + 1), Nonempty (α ≃ ULift.{u+1} α) :=
   ⟨ULift.{u+1} α, ⟨Equiv.ulift.symm⟩⟩
 
-/-- The powerset operation bootstraps a type into a fundamentally richer one
-    (Cantor's theorem in type-theoretic form) -/
 
+/-- The powerset operation bootstraps a type into a fundamentally richer one
+(Cantor's theorem in type-theoretic form) -/
 theorem powerset_strictly_larger (α : Type*) [Nonempty α] :
     ¬ ∃ f : (α → Prop) → α, Function.Injective f := by
   rintro ⟨f, hf⟩
@@ -48,8 +48,8 @@ def ackermann : ℕ → ℕ → ℕ
   | m + 1, 0 => ackermann m 1
   | m + 1, n + 1 => ackermann m (ackermann (m + 1) n)
 
-/-- Ackermann grows faster than its inputs: n < ackermann m n -/
 
+/-- Ackermann grows faster than its inputs: n < ackermann m n -/
 theorem ackermann_growth (m n : ℕ) : n < ackermann m n := by
   induction' m with m ih generalizing n
   · simp [ackermann]
@@ -59,8 +59,8 @@ theorem ackermann_growth (m n : ℕ) : n < ackermann m n := by
     · have : ackermann (m + 1) (n + 1) = ackermann m (ackermann (m + 1) n) := by rw [ackermann]
       linarith [h_ind (ackermann (m + 1) n)]
 
-/-- ackermann m is strictly increasing: ackermann m n < ackermann m (n + 1) -/
 
+/-- ackermann m is strictly increasing: ackermann m n < ackermann m (n + 1) -/
 theorem ackermann_lt_succ : ∀ m n : ℕ, ackermann m n < ackermann m (n + 1) := by
   intro m
   induction m with
@@ -72,57 +72,46 @@ theorem ackermann_lt_succ : ∀ m n : ℕ, ackermann m n < ackermann m (n + 1) :
     | zero => simp only [ackermann]; exact hm (ackermann_growth m 1)
     | succ n ihn => unfold ackermann; exact hm ihn
 
-/-- Ackermann's function is strictly increasing in the second argument -/
 
+/-- Ackermann's function is strictly increasing in the second argument -/
 theorem ackermann_strict_mono_right (m : ℕ) : StrictMono (ackermann m) :=
   strictMono_nat_of_lt_succ (ackermann_lt_succ m)
 
-end WellFoundedBootstrap
-
-/-! ## The Completeness Bootstrap
-
-Gödel's completeness theorem has a beautiful bootstrap structure:
-it proves that provability (a syntactic notion) equals truth in all models
-(a semantic notion). We formalize a toy version with propositional logic.
--/
-
-section CompletenessBootstrap
 
 /-- Simple propositional formulas -/
-
 inductive PropForm : Type where
   | var : ℕ → PropForm
   | false_ : PropForm
   | imp : PropForm → PropForm → PropForm
 
-/-- Assignment of truth values to propositional variables -/
 
+/-- Assignment of truth values to propositional variables -/
 def PropValuation := ℕ → Bool
 
-/-- Evaluate a formula under a valuation -/
 
+/-- Evaluate a formula under a valuation -/
 def PropForm.eval (v : PropValuation) : PropForm → Bool
   | .var n => v n
   | .false_ => false
   | .imp p q => !(p.eval v) || q.eval v
 
-/-- A formula is a tautology if true under all valuations -/
 
+/-- A formula is a tautology if true under all valuations -/
 def PropForm.isTautology (φ : PropForm) : Prop :=
   ∀ v : PropValuation, φ.eval v = true
 
-/-- Negation as syntactic sugar -/
 
+/-- Negation as syntactic sugar -/
 def PropForm.not_ (φ : PropForm) : PropForm := .imp φ .false_
 
-/-- Double negation elimination is a tautology: ¬¬p → p -/
 
+/-- Double negation elimination is a tautology: ¬¬p → p -/
 theorem dne_is_tautology (n : ℕ) :
     PropForm.isTautology (.imp (.not_ (.not_ (.var n))) (.var n)) := by
   intro v; cases v n <;> simp [PropForm.eval, PropForm.not_]
 
-/-- The identity is a tautology: p → p -/
 
+/-- The identity is a tautology: p → p -/
 theorem identity_is_tautology (n : ℕ) :
     PropForm.isTautology (.imp (.var n) (.var n)) := by
   intro v; simp [PropForm.eval]

@@ -9,6 +9,7 @@ import Mathlib
 
 noncomputable section
 
+/-- d(z) > z for all z (no real fixed points). -/
 theorem emlDiag_gt_z (z : ℝ) : emlDiag z > z := by
   unfold emlDiag
   by_cases hz : 0 < z
@@ -25,8 +26,8 @@ theorem emlDiag_gt_z (z : ℝ) : emlDiag z > z := by
       linarith [Real.exp_pos z,
         Real.log_le_sub_one_of_pos (neg_pos.mpr (lt_of_le_of_ne hz hz0))]
 
-/-- d(z) ≥ z + 1 for all z. -/
 
+/-- d(z) ≥ z + 1 for all z. -/
 theorem emlDiag_ge_z_add_one (z : ℝ) : emlDiag z ≥ z + 1 := by
   unfold emlDiag
   by_cases hz : 0 < z
@@ -43,21 +44,21 @@ theorem emlDiag_ge_z_add_one (z : ℝ) : emlDiag z ≥ z + 1 := by
       linarith [Real.exp_pos z,
         Real.log_le_sub_one_of_pos (neg_pos.mpr (lt_of_le_of_ne hz hz0))]
 
-/-- d(z) ≥ 2 for z > 0. -/
 
+/-- d(z) ≥ 2 for z > 0. -/
 theorem emlDiag_ge_two_pos (z : ℝ) (hz : 0 < z) : emlDiag z ≥ 2 := by
   unfold emlDiag
   linarith [Real.add_one_le_exp z, Real.log_le_sub_one_of_pos hz]
 
-/-- Strong bound: d(z) ≥ exp(z) − z + 1 for z ≥ 1. -/
 
+/-- Strong bound: d(z) ≥ exp(z) − z + 1 for z ≥ 1. -/
 theorem emlDiag_strong_bound (z : ℝ) (hz : 1 ≤ z) :
     emlDiag z ≥ Real.exp z - z + 1 := by
   unfold emlDiag
   nlinarith [Real.log_le_sub_one_of_pos (by linarith : 0 < z)]
 
-/-- For z ≥ 2: d(z) ≥ exp(z)/2. -/
 
+/-- For z ≥ 2: d(z) ≥ exp(z)/2. -/
 theorem emlDiag_ge_half_exp (z : ℝ) (hz : 2 ≤ z) :
     emlDiag z ≥ Real.exp z / 2 := by
   unfold emlDiag
@@ -72,10 +73,8 @@ theorem emlDiag_ge_half_exp (z : ℝ) (hz : 2 ≤ z) :
   -- So exp(z)/2 ≥ z ≥ z-1 ≥ log(z)
   nlinarith [sq_nonneg (z - 1)]
 
-/-! ## Section 2: Orbit Theory -/
 
 /-- Orbit linear divergence: dⁿ(z) ≥ z + n. -/
-
 theorem emlDiag_orbit_linear (z : ℝ) (n : ℕ) :
     emlDiagIter n z ≥ z + n := by
   induction n with
@@ -84,8 +83,8 @@ theorem emlDiag_orbit_linear (z : ℝ) (n : ℕ) :
     simp only [emlDiagIter]; push_cast
     linarith [emlDiag_ge_z_add_one (emlDiagIter n z)]
 
-/-- The orbit is strictly increasing. -/
 
+/-- After one step from z > 0, all orbit points are ≥ 2. -/
 theorem emlDiag_orbit_ge_two (z : ℝ) (hz : 0 < z) (n : ℕ) (hn : 1 ≤ n) :
     emlDiagIter n z ≥ 2 := by
   have h1 : emlDiagIter 1 z ≥ 2 := emlDiag_ge_two_pos z hz
@@ -94,44 +93,38 @@ theorem emlDiag_orbit_ge_two (z : ℝ) (hz : 0 < z) (n : ℕ) (hn : 1 ≤ n) :
     exact this (by omega)
   linarith
 
-/-! ## Section 3: G-map Theory -/
 
 /-- g(1) = e. -/
-
 theorem emlGmap_one : emlGmap 1 = Real.exp 1 := by simp [emlGmap, Real.log_one]
 
-/-- g(e) = e − 1. -/
 
+/-- g(e) = e − 1. -/
 theorem emlGmap_e : emlGmap (Real.exp 1) = Real.exp 1 - 1 := by
   simp [emlGmap, Real.log_exp]
 
-/-- |g'(z)| = 1/z < 1 for z > 1 (contraction). -/
 
+/-- The derivative of g at z > 0 is −1/z. -/
 theorem emlGmap_hasDerivAt (z : ℝ) (hz : 0 < z) :
     HasDerivAt emlGmap (-z⁻¹) z := by
   unfold emlGmap
   exact ((hasDerivAt_const z (Real.exp 1)).sub (Real.hasDerivAt_log hz.ne')).congr_deriv (by ring)
 
-/-- g is strictly decreasing on (0,∞). -/
 
+/-- g is strictly decreasing on (0,∞). -/
 theorem emlGmap_strictAnti : StrictAntiOn emlGmap (Set.Ioi 0) := by
   intro a ha b _ hab
   unfold emlGmap
   linarith [Real.log_lt_log ha hab]
 
-/-! ## Section 4: Gap Function -/
 
-/-- The gap exp(z) - log(z) - z ≥ 1. -/
-
+/-- Gap derivative at z > 0. -/
 theorem emlGap_deriv (z : ℝ) (hz : 0 < z) :
     HasDerivAt (fun z => Real.exp z - Real.log z - z) (Real.exp z - z⁻¹ - 1) z := by
   exact ((Real.hasDerivAt_exp z).sub (Real.hasDerivAt_log hz.ne')).sub (hasDerivAt_id z)
     |>.congr_deriv (by ring)
 
-/-! ## Section 5: Lower Bounds for Large z -/
 
 /-- For z ≥ 2: d(z) ≥ eᶻ − z. -/
-
 theorem emlDiag_lower_exp (z : ℝ) (hz : 2 ≤ z) :
     emlDiag z ≥ Real.exp z - z := by
   unfold emlDiag

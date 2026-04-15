@@ -16,35 +16,33 @@ theorem singleton_bound_abstract {α β : Type*} [Fintype α] [Fintype β]
     Fintype.card α ≤ M :=
   le_trans (Fintype.card_le_of_injective f hf) hM
 
-/-! ## Hamming Distance -/
 
 /-- Hamming distance between two strings: number of positions where they differ. -/
-
 def hammingDist' {n : ℕ} {α : Type*} [DecidableEq α] (x y : Fin n → α) : ℕ :=
   (Finset.univ.filter fun i => x i ≠ y i).card
 
-/-- Hamming distance is symmetric. -/
 
+/-- Hamming distance is symmetric. -/
 theorem hammingDist'_comm {n : ℕ} {α : Type*} [DecidableEq α] (x y : Fin n → α) :
     hammingDist' x y = hammingDist' y x := by
   unfold hammingDist'; congr 1; ext i; simp [ne_comm]
 
-/-- Hamming distance is zero iff strings are equal. -/
 
+/-- Hamming distance is zero iff strings are equal. -/
 theorem hammingDist'_eq_zero {n : ℕ} {α : Type*} [DecidableEq α] (x y : Fin n → α) :
     hammingDist' x y = 0 ↔ x = y := by
   unfold hammingDist'
   simp [Finset.card_eq_zero, Finset.filter_eq_empty_iff, funext_iff]
 
-/-- Hamming distance is at most `n`. -/
 
+/-- Hamming distance is at most `n`. -/
 theorem hammingDist'_le {n : ℕ} {α : Type*} [DecidableEq α] (x y : Fin n → α) :
     hammingDist' x y ≤ n := by
   unfold hammingDist'
   exact le_trans (Finset.card_filter_le _ _) (by simp)
 
-/-- Triangle inequality for Hamming distance. -/
 
+/-- Triangle inequality for Hamming distance. -/
 theorem hammingDist'_triangle {n : ℕ} {α : Type*} [DecidableEq α]
     (x y z : Fin n → α) :
     hammingDist' x z ≤ hammingDist' x y + hammingDist' y z := by
@@ -56,15 +54,13 @@ theorem hammingDist'_triangle {n : ℕ} {α : Type*} [DecidableEq α]
         intro hxz; by_contra h; push_neg at h; exact hxz (h.1.symm ▸ h.2)
     _ ≤ _ := Finset.card_union_le _ _
 
-/-! ## Hamming Ball Volume -/
 
 /-- Volume of a Hamming ball of radius `r` in `{0,...,q-1}^n`. -/
-
 noncomputable def hammingBallVolume (q n r : ℕ) : ℕ :=
   ∑ i ∈ Finset.range (r + 1), Nat.choose n i * (q - 1) ^ i
 
-/-- The Hamming ball volume is positive. -/
 
+/-- The Hamming ball volume is positive. -/
 theorem hammingBallVolume_pos (q n r : ℕ) :
     0 < hammingBallVolume q n r := by
   unfold hammingBallVolume
@@ -72,10 +68,8 @@ theorem hammingBallVolume_pos (q n r : ℕ) :
   have := Finset.sum_eq_zero_iff.mp h 0 (Finset.mem_range.mpr (by omega))
   simp at this
 
-/-! ## The Hamming Bound (Sphere-Packing Bound) -/
 
 /-- **Hamming bound**: `|C| * V(n, t) ≤ q^n` for a `t`-error-correcting code. -/
-
 theorem hamming_bound_abstract (q n t : ℕ)
     (C : Finset (Fin n → Fin q))
     (V : ℕ) (hV : 0 < V)
@@ -83,30 +77,6 @@ theorem hamming_bound_abstract (q n t : ℕ)
     C.card ≤ q ^ n / V := by
   exact Nat.le_div_iff_mul_le hV |>.mpr hpacking
 
-/-! ## The Plotkin Bound -/
-
-/-
-PROBLEM
-**Plotkin bound (simplified)**: A binary code of length `n` with minimum distance
-`d > n/2` has at most `2d` codewords.
-
-PROVIDED SOLUTION
-Try by_contra. Assume C.card > 2*d. We'll derive a contradiction with hd : n < 2*d.
-
-Key idea: Consider the sum S = ∑ x ∈ C, ∑ y ∈ C, hammingDist' x y (sum over all ordered pairs including x=y, noting hammingDist' x x = 0).
-
-Lower bound: For x ≠ y, hammingDist' x y ≥ d. The number of ordered pairs with x ≠ y is C.card * (C.card - 1). So S ≥ d * C.card * (C.card - 1).
-
-Upper bound: S = ∑_i ∑_{x,y} [x_i ≠ y_i]. For each position i, let t_i = #{x ∈ C : x i = true}. Then the contribution of position i is 2 * t_i * (C.card - t_i) ≤ C.card^2/2 (AM-GM). Sum over n positions: S ≤ n * C.card^2/2.
-
-So d * C.card * (C.card - 1) ≤ n * C.card^2 / 2. Dividing by C.card (≥ 2): d * (C.card - 1) ≤ n * C.card / 2. If C.card > 2d, then d * (2d) ≤ n * (2d+1)/2 < 2d * (2d+1)/2 = d*(2d+1). So 2d^2 ≤ d*(2d+1) - ... This doesn't directly help.
-
-Actually simpler: from d*(C.card - 1) ≤ n*C.card/2 and n < 2d: d*(C.card-1) ≤ (2d-1)*C.card/2 = d*C.card - C.card/2. So -d ≤ -C.card/2, i.e. C.card/2 ≤ d, i.e. C.card ≤ 2d. This contradicts our assumption, but we need to be careful with the nat division.
-
-Actually try a direct proof: we show C.card ≤ 2*d directly from the double-counting.
-
-Try: by_contra h. push_neg at h. Show a contradiction using the double counting S ≥ d*C.card*(C.card-1) and S ≤ n*C.card^2/2, combined with n < 2*d and C.card > 2*d. The key step is: d*(C.card-1) ≤ n*C.card/2 < d*C.card, so d*(C.card-1) < d*C.card which is trivially true. We need a tighter bound. Actually: from S ≥ d*C*(C-1) and S ≤ n*C^2/2: d*(C-1) ≤ n*C/2. So 2*d*(C-1) ≤ n*C < 2*d*C. But 2d*(C-1) = 2dC - 2d ≤ nC = (something < 2d)*C, so 2dC - 2d ≤ 2dC - C (since nC ≤ (2d-1)*C). So -2d ≤ -C, i.e. C ≤ 2d. QED.
--/
 
 theorem plotkin_bound (n d : ℕ) (hd : n < 2 * d)
     (C : Finset (Fin n → Bool))
@@ -145,12 +115,10 @@ theorem plotkin_bound (n d : ℕ) (hd : n < 2 * d)
   rw [ Nat.le_div_iff_mul_le ] at h_upper_bound <;> rcases C with ⟨ ⟨ l, hl ⟩ ⟩ <;> norm_num at *;
   nlinarith [ mul_pos ( by linarith : 0 < List.length ‹_› + 1 ) ( by linarith : 0 < List.length ‹_› + 1 ) ]
 
-/-! ## Compression-Correction Tradeoff -/
 
 /-- **Compression-correction tradeoff**: An injective encoding from `n` bits to
 `n - k` bits means we've used fewer bits, but it requires `k ≥ 1` for nontrivial
 compression, consuming redundancy that could be used for error correction. -/
-
 theorem compression_correction_tradeoff (n k : ℕ) (hk : 0 < k) (hkn : k ≤ n) :
     n - k < n := by omega
 

@@ -32,14 +32,10 @@ theorem sigma1_gt_self' (n : ℕ) (hn : 1 < n) : n < σ₁'' n := by
   unfold σ₁'';
   rw [ Nat.sum_divisors_eq_sum_properDivisors_add_self ] ; linarith [ Finset.sum_pos ( fun x hx => Nat.pos_of_mem_properDivisors hx ) ⟨ 1, Nat.mem_properDivisors.2 ⟨ by norm_num, hn ⟩ ⟩ ]
 
-/-! ### Prime Power -/
-
 
 theorem sigma1_prime_pow' (p k : ℕ) (hp : Nat.Prime p) :
     σ₁'' (p ^ k) = ∑ i ∈ Finset.range (k + 1), p ^ i := by
   unfold σ₁''; rw [Nat.divisors_prime_pow hp]; simp
-
-/-! ### Abundancy -/
 
 
 def IsAbundant' (n : ℕ) : Prop := 2 * n < σ₁'' n

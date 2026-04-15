@@ -23,16 +23,6 @@ theorem idempotent_count_15 : idempotentCount 15 = 4 := by native_decide
 
 theorem idempotent_count_210 : idempotentCount 210 = 16 := by native_decide
 
-end IdempotentCounting
-
--- ═══════════════════════════════════════════════════════════════════════════════
--- §2: Boolean Algebra of Idempotents (Commutative Rings)
--- ═══════════════════════════════════════════════════════════════════════════════
-
-section IdempotentBooleanAlgebra
-
-variable {R : Type*} [CommRing R]
-
 
 theorem idem_meet {e f : R} (he : IsIdem e) (hf : IsIdem f) :
     IsIdem (e * f) := by
@@ -106,14 +96,6 @@ theorem reluFn_master : range reluFn = {x : ℝ | reluFn x = x} := by
   · rintro ⟨x, rfl⟩; exact reluFn_idem x
   · intro hy; exact ⟨y, hy⟩
 
-end TropicalIdempotency
-
--- ═══════════════════════════════════════════════════════════════════════════════
--- §5: Vandermonde and Eigenvalue Repulsion
--- ═══════════════════════════════════════════════════════════════════════════════
-
-section VandermondeRepulsion
-
 
 def vandermondeProd (n : ℕ) (v : Fin n → ℝ) : ℝ :=
   ∏ i : Fin n, ∏ j ∈ (Finset.univ.filter (· > i)), (v j - v i)
@@ -141,14 +123,6 @@ theorem gue_vanishes_collision {n : ℕ} (v : Fin n → ℝ)
 
 theorem gue_nonneg (n : ℕ) (v : Fin n → ℝ) : 0 ≤ gueJointDensity n v :=
   mul_nonneg (sq_nonneg _) (le_of_lt (Real.exp_pos _))
-
-end VandermondeRepulsion
-
--- ═══════════════════════════════════════════════════════════════════════════════
--- §6: Categorified Bridge Structure
--- ═══════════════════════════════════════════════════════════════════════════════
-
-section CategorifiedBridges
 
 
 structure MathBridge' (C D : Type*) [Category C] [Category D] where
@@ -229,14 +203,6 @@ theorem idemLE_zero (e : R) (he : e * e = e) : idemLE 0 e :=
 theorem idemLE_one (e : R) (he : e * e = e) : idemLE e 1 :=
   ⟨he, one_mul 1, mul_one e, one_mul e⟩
 
-end SpectralIdempotents
-
--- ═══════════════════════════════════════════════════════════════════════════════
--- §9: Tropical Langlands Foundation
--- ═══════════════════════════════════════════════════════════════════════════════
-
-section TropicalLanglands
-
 
 def tropicalFourier {G : Type*} [Fintype G] [Nonempty G] [DecidableEq G]
     (f : G → ℝ) (χ : G → ℝ) : ℝ :=
@@ -265,6 +231,5 @@ theorem inf_universal_idem {S : Type*} [SemilatticeInf S] (a : S) : a ⊓ a = a 
 
 theorem sup_universal_idem {S : Type*} [SemilatticeSup S] (a : S) : a ⊔ a = a := sup_idem a
 
-end UnificationMeta
 
 end

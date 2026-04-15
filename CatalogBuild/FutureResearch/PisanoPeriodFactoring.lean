@@ -13,21 +13,12 @@ We verify the base case. -/
 theorem fib_matrix_base :
     Nat.fib 2 = Nat.fib 1 + Nat.fib 0 := by simp [Nat.fib]
 
-/-
-Matrix representation identity:
-    F(m+n) = F(m)*F(n+1) + F(m-1)*F(n) (Vajda's identity).
--/
 
 theorem fib_add (m n : ℕ) (hm : 0 < m) :
     Nat.fib (m + n) = Nat.fib m * Nat.fib (n + 1) + Nat.fib (m - 1) * Nat.fib n := by
   rcases m with ⟨ ⟩ <;> simp_all +arith +decide [ Nat.fib_add ];
   ring
 
-/-! ### Pisano Period Properties -/
-
-/-
-The Fibonacci sequence mod m is periodic (Pisano period existence).
--/
 
 theorem fib_mod_periodic (m : ℕ) (hm : 2 ≤ m) :
     ∃ T : ℕ, 0 < T ∧ T ≤ m * m ∧
@@ -53,14 +44,11 @@ theorem fib_mod_periodic (m : ℕ) (hm : 2 ≤ m) :
     simp_all +decide [ ← ZMod.natCast_eq_natCast_iff' ];
     grind
 
-/-- F(0) ≡ 0 (mod m) and F(π(m)) ≡ 0 (mod m). The Pisano period
-    always starts with F(0) = 0, F(1) = 1. -/
 
+/-- F(0) ≡ 0 (mod m) and F(π(m)) ≡ 0 (mod m). The Pisano period
+always starts with F(0) = 0, F(1) = 1. -/
 theorem fib_zero_mod (m : ℕ) : Nat.fib 0 % m = 0 := by simp
 
-/-
-The Pisano period of a product of coprimes divides the lcm of individual periods.
--/
 
 theorem pisano_coprime_lcm (m₁ m₂ : ℕ) (hm1 : 2 ≤ m₁) (hm2 : 2 ≤ m₂)
     (hcop : Nat.Coprime m₁ m₂) :
@@ -83,13 +71,6 @@ theorem pisano_coprime_lcm (m₁ m₂ : ℕ) (hm1 : 2 ≤ m₁) (hm2 : 2 ≤ m�
   rw [ ← Nat.modEq_and_modEq_iff_modEq_mul ] ; tauto;
   assumption
 
-/-! ### Factoring via Pisano Periods -/
-
-/-
-Key insight: if we can compute π(N) for N = pq, and we know that
-    π(p) | p² - 1, then p² ≡ 1 (mod π(N)/gcd(π(N), p²-1)).
-    This constrains p to a small set.
--/
 
 theorem pisano_factor_constraint (p : ℕ) (hp : Nat.Prime p) (hp5 : p ≠ 5) :
     ∃ T, 0 < T ∧ T ∣ (p * p - 1) ∧
@@ -137,10 +118,6 @@ theorem pisano_factor_constraint (p : ℕ) (hp : Nat.Prime p) (hp5 : p ≠ 5) :
     erw [ ← h_fib_expr, ← h_fib_expr ] ; norm_cast;
     erw [ ← map_natCast ( algebraMap ( ZMod p ) ( AlgebraicClosure ( ZMod p ) ) ), ← map_natCast ( algebraMap ( ZMod p ) ( AlgebraicClosure ( ZMod p ) ) ) ] ; norm_cast
 
-/-
-Small Pisano periods for primes (verified computationally):
-    π(2) = 3, π(3) = 8, π(5) = 20, π(7) = 16, π(11) = 10, π(13) = 7
--/
 
 theorem pisano_small_primes :
     (∀ n, Nat.fib (n + 3) % 2 = Nat.fib n % 2) ∧
@@ -148,12 +125,6 @@ theorem pisano_small_primes :
   norm_num [ Nat.add_mod, Nat.mul_mod, Nat.pow_mod, Nat.fib_add_two ];
   grind
 
-/-! ### Order of Fibonacci in Multiplicative Group -/
-
-/-
-For prime p ≠ 2, 5, the sequence F(n) mod p has period dividing p-1 or 2(p+1).
-    More precisely, π(p) | p - (p|5) where (p|5) is the Legendre symbol.
--/
 
 theorem pisano_legendre_bound (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2) (hp5 : p ≠ 5) :
     ∃ T, 0 < T ∧ T ≤ 2 * (p + 1) ∧
@@ -232,10 +203,6 @@ theorem pisano_legendre_bound (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2) (hp5 
     convert h_period_alg n using 1;
     erw [ ← map_natCast ( algebraMap ( ZMod p ) ( AlgebraicClosure ( ZMod p ) ) ), ← map_natCast ( algebraMap ( ZMod p ) ( AlgebraicClosure ( ZMod p ) ) ) ] ; norm_cast
 
-/-
-The wall of a prime p: the rank of apparition α(p) is the smallest
-    positive integer n with p | F(n). For p ≠ 5, α(p) | π(p).
--/
 
 theorem wall_divides_pisano (p : ℕ) (hp : Nat.Prime p) (hp5 : p ≠ 5) :
     ∃ α T, 0 < α ∧ 0 < T ∧ p ∣ Nat.fib α ∧

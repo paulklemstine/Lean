@@ -203,8 +203,9 @@ class LeanFileParser:
                 i += 1
                 continue
 
-            # Check for block comment start
-            if stripped.startswith('/-!') or stripped.startswith('/--'):
+            # Check for block comment start (/-! ... -/, /-- ... -/, and /- ... -/)
+            # All Lean 4 block comments start with /-
+            if stripped.startswith('/-'):
                 in_block_comment = True
                 if stripped.startswith('/--'):
                     in_doc_comment = True
@@ -399,6 +400,16 @@ class LeanFileParser:
         # Get the indentation of the declaration keyword line
         base_indent = len(lines[start_idx]) - len(lines[start_idx].lstrip())
 
+        # Check if the declaration line itself contains := or ends with 'by'
+        # (one-liner or body-starts-on-same-line pattern)
+        start_stripped = lines[start_idx].strip()
+        body_on_start_line = ':=' in start_stripped or start_stripped.endswith(' by') or start_stripped == 'by'
+
+        if body_on_start_line:
+            # The body starts on the declaration line itself.
+            # Scan forward from the next line to find where the body ends.
+            return self._find_body_end(start_idx + 1, base_indent, start_idx)
+
         # Find the signature line (may span multiple lines)
         # The signature ends when we hit := or a "by" keyword at the end
         sig_indent = base_indent
@@ -412,6 +423,27 @@ class LeanFileParser:
             # Skip blank lines and comments within the first few lines
             if not stripped or stripped.startswith('--'):
                 i += 1
+                continue
+
+            # Block comments at base_indent end the declaration signature;
+            # indented block comments are skipped (part of the signature)
+            if stripped.startswith('/-'):
+                bc_indent = len(lines[i]) - len(lines[i].lstrip())
+                if bc_indent <= base_indent:
+                    # Block comment at base indent — declaration ends before it
+                    return i - 1
+                # Indented block comment: skip it
+                if BLOCK_COMMENT_END.search(stripped):
+                    # Single-line block comment: /- ... -/
+                    i += 1
+                    continue
+                # Multi-line block comment: skip until -/
+                i += 1
+                while i < n:
+                    if BLOCK_COMMENT_END.search(lines[i].strip()):
+                        i += 1
+                        break
+                    i += 1
                 continue
 
             current_indent = len(lines[i]) - len(lines[i].lstrip())
@@ -433,8 +465,11 @@ class LeanFileParser:
                 return self._find_body_end(i, base_indent, start_idx)
 
             # If we're still in the signature and the indent drops back
-            # to base or less, and we've gone past the first line
-            if current_indent <= base_indent and i > start_idx + 1 and paren_depth <= 0:
+            # to base or less, check if this is a new declaration.
+            # We check from i > start_idx (not i > start_idx + 1) because
+            # a one-liner without := followed by another declaration on the
+            # very next line is a valid boundary.
+            if current_indent <= base_indent and i > start_idx and paren_depth <= 0:
                 # Check if this line is a new declaration
                 if self._line_starts_declaration(stripped):
                     return i - 1
@@ -450,6 +485,7 @@ class LeanFileParser:
 
         The body ends when we return to base_indent or less with a new declaration
         keyword, or when we hit a namespace/end/section at base indent.
+        Block comments (/- ... -/) are skipped entirely.
         """
         lines = self.lines
         n = len(lines)
@@ -461,6 +497,27 @@ class LeanFileParser:
 
             if not stripped or stripped.startswith('--'):
                 i += 1
+                continue
+
+            # Block comments at base_indent end the declaration;
+            # indented block comments are part of the proof body
+            if stripped.startswith('/-'):
+                current_indent_bc = len(lines[i]) - len(lines[i].lstrip())
+                if current_indent_bc <= base_indent:
+                    # Block comment at base indent — declaration ends before it
+                    return i - 1
+                # Indented block comment: skip it (it's inside the proof)
+                if BLOCK_COMMENT_END.search(stripped):
+                    # Single-line block comment: /- ... -/
+                    i += 1
+                    continue
+                # Multi-line block comment: skip until -/
+                i += 1
+                while i < n:
+                    if BLOCK_COMMENT_END.search(lines[i].strip()):
+                        i += 1
+                        break
+                    i += 1
                 continue
 
             current_indent = len(lines[i]) - len(lines[i].lstrip())

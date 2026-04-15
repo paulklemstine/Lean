@@ -10,4 +10,3 @@ import Mathlib
 /-- The factoring energy function. -/
 def E (N x : ℕ) : ℕ := N % x
 
-/-- Energy is zero iff x divides N. -/

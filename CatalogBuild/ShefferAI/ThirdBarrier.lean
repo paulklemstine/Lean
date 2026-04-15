@@ -30,15 +30,15 @@ theorem periodic_no_finite_limit {f : ℝ → ℝ} {T : ℝ} (hT : T > 0)
       tendsto_natCast_atTop_atTop.atTop_mul_const hT
   aesop
 
-/-- cos does not converge at +∞. -/
 
+/-- cos does not converge at +∞. -/
 theorem cos_no_limit_atTop :
     ¬ (∃ L : ℝ, Tendsto (fun x : ℝ => Real.cos x) atTop (nhds L)) := by
   convert periodic_no_finite_limit (by positivity) Real.cos_periodic
     Real.continuous_cos (by exact ⟨0, Real.pi, by norm_num⟩) using 1
 
-/-- sin does not converge at +∞. -/
 
+/-- sin does not converge at +∞. -/
 theorem sin_no_limit_atTop :
     ¬ (∃ L : ℝ, Tendsto (fun x : ℝ => Real.sin x) atTop (nhds L)) := by
   rintro ⟨L, hL⟩
@@ -52,11 +52,6 @@ theorem sin_no_limit_atTop :
   norm_num [mul_comm (2 * Real.pi)] at h3 h4
   linarith [abs_lt.mp h3, abs_lt.mp h4]
 
-/-! ## Helper: Sigmoid Limits -/
-
-/-
-The logistic sigmoid tends to 1 at +∞.
--/
 
 theorem logisticSigmoid_tendsto_one :
     Tendsto logisticSigmoid atTop (nhds 1) := by
@@ -64,9 +59,6 @@ theorem logisticSigmoid_tendsto_one :
   norm_num [ dist_eq_norm, logisticSigmoid ];
   exact fun ε hε => ⟨ ε⁻¹, fun x hx => by rw [ abs_lt ] ; constructor <;> nlinarith [ Real.exp_pos x, mul_inv_cancel₀ hε.ne', Real.add_one_le_exp x, mul_div_cancel₀ ( Real.exp x ) ( by positivity : ( 1 + Real.exp x ) ≠ 0 ) ] ⟩
 
-/-
-The logistic sigmoid tends to 0 at -∞.
--/
 
 theorem logisticSigmoid_tendsto_zero :
     Tendsto logisticSigmoid atBot (nhds 0) := by
@@ -75,12 +67,6 @@ theorem logisticSigmoid_tendsto_zero :
   · filter_upwards [ Filter.eventually_lt_atBot 0 ] with x hx using by rw [ Real.norm_of_nonneg ( by exact div_nonneg ( Real.exp_nonneg x ) ( add_nonneg zero_le_one ( Real.exp_nonneg x ) ) ) ] ; exact div_le_self ( Real.exp_nonneg x ) ( by linarith [ Real.exp_pos x ] ) ;
   · exact Real.tendsto_exp_atBot
 
-/-! ## Helper: Derivative bounded → product with zero limit is zero -/
-
-/-
-If f is Lipschitz (hence derivative bounded) and g' → 0,
-    then (f ∘ g)' → 0.
--/
 
 theorem deriv_comp_tendsto_zero {f g : ℝ → ℝ}
     (hf_diff : Differentiable ℝ f) (hg_diff : Differentiable ℝ g)
@@ -89,11 +75,6 @@ theorem deriv_comp_tendsto_zero {f g : ℝ → ℝ}
     Tendsto (fun x => deriv f (g x) * deriv g x) atTop (nhds 0) := by
   exact squeeze_zero_norm ( fun x => by simpa [ abs_mul ] using mul_le_mul_of_nonneg_right ( hf_lip.choose_spec ( g x ) ) ( abs_nonneg ( deriv g x ) ) ) ( by simpa using hg_zero.abs.const_mul _ )
 
-/-! ## Helper: Positive derivative limit implies divergence -/
-
-/-
-If f is differentiable and f' → L > 0, then f → +∞.
--/
 
 theorem tendsto_atTop_of_deriv_pos_limit {f : ℝ → ℝ}
     (hf : Differentiable ℝ f)
@@ -110,9 +91,6 @@ theorem tendsto_atTop_of_deriv_pos_limit {f : ℝ → ℝ}
   rw [ Filter.tendsto_atTop_atTop ];
   exact fun b => ⟨ M + ⌈ ( b - f M ) / ( L / 2 ) ⌉₊ + 1, fun x hx => by obtain ⟨ c, ⟨ hc₁, hc₂ ⟩, hc ⟩ := h_mvt x ( by linarith ) ; nlinarith [ Nat.le_ceil ( ( b - f M ) / ( L / 2 ) ), hM c hc₁.le, mul_div_cancel₀ ( b - f M ) ( by linarith : ( L / 2 ) ≠ 0 ) ] ⟩
 
-/-
-If f is differentiable and f' → L < 0, then f → -∞.
--/
 
 theorem tendsto_atBot_of_deriv_neg_limit {f : ℝ → ℝ}
     (hf : Differentiable ℝ f)
@@ -130,12 +108,6 @@ theorem tendsto_atBot_of_deriv_neg_limit {f : ℝ → ℝ}
     intro x hx; obtain ⟨ c, hc₁, hc₂ ⟩ := h_mvt x₀ x hx; nlinarith [ hx₀ c hc₁.1 ] ;
   exact Filter.tendsto_atTop_atBot.mpr fun b => ⟨ x₀ + ⌈ ( b - f x₀ ) / ( L / 2 ) ⌉₊ + 1, fun x hx => by nlinarith [ Nat.le_ceil ( ( b - f x₀ ) / ( L / 2 ) ), h_lim_neg_inf x ( by linarith ), mul_div_cancel₀ ( b - f x₀ ) ( by linarith : ( L / 2 ) ≠ 0 ) ] ⟩
 
-/-! ## Main Structural Lemma -/
-
-/-
-Every Sheffer expression's derivative converges at both +∞ and -∞.
-    We prove both limits exist simultaneously to handle all inductive cases.
--/
 
 theorem sheffer_expr_deriv_tendsto_both (e : ShefferExpr) :
     (∃ L : ℝ, Tendsto (deriv e.eval) atTop (nhds L)) ∧
@@ -264,32 +236,30 @@ theorem sheffer_expr_deriv_tendsto_both (e : ShefferExpr) :
             exact ih₁.1.choose_spec.comp h_e2_neg_inf;
           exact ⟨ _, by simpa only [ funext h_chain ] using h_e1_neg_inf.mul hL₂ ⟩
 
-/-- Every Sheffer expression's derivative converges at +∞. -/
 
+/-- Every Sheffer expression's derivative converges at +∞. -/
 theorem sheffer_expr_deriv_tendsto (e : ShefferExpr) :
     ∃ L : ℝ, Tendsto (deriv e.eval) atTop (nhds L) :=
   (sheffer_expr_deriv_tendsto_both e).1
 
-/-! ## Main Exclusion Results -/
 
 /-- sin is NOT in the Sheffer algebra. -/
-
 theorem sin_not_mem_sheffer : (fun x : ℝ => Real.sin x) ∉ ShefferAlgebra := by
   rintro ⟨e, he⟩
   obtain ⟨L, hL⟩ := sheffer_expr_deriv_tendsto e
   have h_cos : deriv e.eval = fun x => Real.cos x := by rw [← he]; norm_num
   exact cos_no_limit_atTop ⟨L, by rwa [h_cos] at hL⟩
 
-/-- cos is NOT in the Sheffer algebra. -/
 
+/-- cos is NOT in the Sheffer algebra. -/
 theorem cos_not_mem_sheffer : (fun x : ℝ => Real.cos x) ∉ ShefferAlgebra := by
   rintro ⟨e, he⟩
   obtain ⟨L, hL⟩ := sheffer_expr_deriv_tendsto e
   have h_neg_sin : deriv e.eval = fun x => -Real.sin x := by rw [← he]; norm_num
   exact sin_no_limit_atTop ⟨-L, by simpa [h_neg_sin] using hL.neg⟩
 
-/-- No non-constant periodic function is in the Sheffer algebra. -/
 
+/-- No non-constant periodic function is in the Sheffer algebra. -/
 theorem periodic_not_mem_sheffer {f : ℝ → ℝ} {T : ℝ} (hT : T > 0)
     (hperiodic : Function.Periodic f T)
     (hcont : Continuous f)

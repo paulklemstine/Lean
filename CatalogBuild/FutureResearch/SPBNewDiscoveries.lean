@@ -15,8 +15,6 @@ theorem norm_factorization (x y : ℝ) :
   nlinarith [sq_nonneg x, sq_nonneg y, sq_nonneg (x*y), sq_nonneg (x - y),
              sq_nonneg (x + y), sq_nonneg (x*y - 1), sq_nonneg (x*y + 1)]
 
-/-! ## Section 2: SPB Matrix Subgroup Γ_SPB -/
-
 
 theorem spbMat_not_SL2 (n : ℤ) (hn : n ≠ 0) :
     (spbMat n).det ≠ 1 := by
@@ -45,8 +43,6 @@ theorem spb_arctan_add (x y : ℝ) (h : 0 < 1 - x * y) :
   unfold spb
   exact (Real.arctan_add (by linarith)).symm
 
-/-! ## Section 4: SPB Iteration -/
-
 
 theorem spb_difference_formula (a b t : ℝ)
     (ha : 1 - a * t ≠ 0) (hb : 1 - b * t ≠ 0) :
@@ -68,14 +64,10 @@ theorem crossRatio_spb_invariant (a b c d t : ℝ)
   field_simp;
   convert mul_div_mul_right _ _ ( mul_ne_zero ( by contrapose! hc; linarith : ( 1 - t * c ) ≠ 0 ) ( by contrapose! hd; linarith : ( 1 - t * d ) ≠ 0 ) ) using 1 ; ring
 
-/-! ## Section 6: SPB Differential Calculus -/
-
 
 theorem deriv_cauchy_kernel (x : ℝ) :
     HasDerivAt (fun t => 1 / (1 + t ^ 2)) (-2 * x / (1 + x ^ 2) ^ 2) x := by
   simpa [ div_eq_mul_inv ] using HasDerivAt.inv ( hasDerivAt_pow 2 x |> HasDerivAt.const_add ( 1 : ℝ ) ) ( by positivity )
-
-/-! ## Section 7: Norm Identities -/
 
 
 theorem circular_norm (x y : ℝ) (h : 1 - x * y ≠ 0) :
@@ -87,14 +79,10 @@ theorem hyperbolic_norm (x y : ℝ) (h : 1 + x * y ≠ 0) :
     (1 + x * y) ^ 2 * (1 - spbH x y ^ 2) = (1 - x ^ 2) * (1 - y ^ 2) := by
   unfold spbH; field_simp; ring
 
-/-! ## Section 8: Brahmagupta-Fibonacci Identity -/
-
 
 theorem sum_of_squares_alt (a b c d : ℤ) :
     (a ^ 2 + b ^ 2) * (c ^ 2 + d ^ 2) =
       (a * c + b * d) ^ 2 + (a * d - b * c) ^ 2 := by ring
-
-/-! ## Section 9: SPB Projective Coordinates -/
 
 
 def spbProj (x₁ x₂ y₁ y₂ : ℝ) : ℝ × ℝ :=
@@ -119,19 +107,15 @@ theorem spbProj_inverse (x : ℝ) :
     spbProj x 1 (-x) 1 = (0, 1 + x ^ 2) := by
   simp only [spbProj, Prod.mk.injEq]; constructor <;> ring
 
-/-! ## Section 10: SPB Elliptic Classification -/
 
 /-- SPB matrices are elliptic (trace² < 4·det) for nonzero parameter.
-    This means the corresponding Möbius transformation has no real fixed
-    points, confirming the no-fixed-point theorem algebraically. -/
-
+This means the corresponding Möbius transformation has no real fixed
+points, confirming the no-fixed-point theorem algebraically. -/
 theorem spbMat_elliptic (n : ℤ) (hn : n ≠ 0) :
     (spbMat n).trace ^ 2 < 4 * (spbMat n).det := by
   rw [spbMat_trace, spbMat_det]
   have : n ^ 2 > 0 := by positivity
   nlinarith
-
-/-! ## Section 11: SPB Cocycle Generating Function -/
 
 
 theorem geometric_cocycle (x y : ℝ) (h : |x * y| < 1) :

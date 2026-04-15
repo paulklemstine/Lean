@@ -33,8 +33,8 @@ def mp_payoff' : Bool → Bool → ℤ
   | false, true => -1
   | false, false => 1
 
-/-- Matching pennies has no pure NE (P1 maximizes, P2 minimizes). -/
 
+/-- Matching pennies has no pure NE (P1 maximizes, P2 minimizes). -/
 theorem matching_pennies_no_pure_ne' :
     ¬∃ (s₁ s₂ : Bool), (∀ s₁', mp_payoff' s₁' s₂ ≤ mp_payoff' s₁ s₂) ∧
                           (∀ s₂', mp_payoff' s₁ s₂ ≤ mp_payoff' s₁ s₂') := by

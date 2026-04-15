@@ -9,11 +9,12 @@ import Mathlib
 
 noncomputable section
 
+/-- The identity bridge on any category. -/
 def identityBridge (C : Type*) [Category C] : MathBridge C C :=
   ⟨𝟭 C, 𝟭 C, Adjunction.id⟩
 
-/-- Composition of bridges via adjunction composition. -/
 
+/-- A bridge invariant is a property preserved by both directions. -/
 structure BridgeInvariant {C D : Type*} [Category C] [Category D]
     (bridge : MathBridge C D) where
   propC : C → Prop
@@ -21,16 +22,14 @@ structure BridgeInvariant {C D : Type*} [Category C] [Category D]
   forward_preserves : ∀ X : C, propC X → propD (bridge.forward.obj X)
   backward_preserves : ∀ Y : D, propD Y → propC (bridge.backward.obj Y)
 
-/-- A bridge is an equivalence if the forward functor is. -/
 
+/-- A bridge is an equivalence if the forward functor is. -/
 def isBridgeEquivalence {C D : Type*} [Category C] [Category D]
     (bridge : MathBridge C D) : Prop :=
   bridge.forward.IsEquivalence
 
-/-! ## Section 3: The Bridge Hierarchy -/
 
-/-- The ten bridges form a hierarchy, each generalizing the previous. -/
-
+/-- Each bridge level subsumes the previous. -/
 def bridgeSubsumes : BridgeLevel → BridgeLevel → Prop
   | .stone, .classical => True
   | .gelfand, .stone => True
@@ -41,15 +40,15 @@ def bridgeSubsumes : BridgeLevel → BridgeLevel → Prop
   | .hott, _ => True  -- HoTT subsumes all
   | _, _ => False
 
-/-- HoTT subsumes all bridges. -/
 
+/-- An analysis bridge extends a discrete bridge to handle limits. -/
 structure AnalysisBridge where
   discreteMap : ℕ → ℝ
   continuousLimit : ℝ
   hasLimit : Filter.Tendsto discreteMap Filter.atTop (nhds continuousLimit)
 
-/-- The discrete-to-continuous bridge is unique: limits are unique. -/
 
+/-- The discrete-to-continuous bridge is unique: limits are unique. -/
 theorem analysis_bridge_unique (b₁ b₂ : AnalysisBridge)
     (h : b₁.discreteMap = b₂.discreteMap) :
     b₁.continuousLimit = b₂.continuousLimit := by
@@ -58,10 +57,6 @@ theorem analysis_bridge_unique (b₁ b₂ : AnalysisBridge)
   rw [h] at h1
   exact tendsto_nhds_unique h1 h2
 
-/-
-The Euler bridge: connecting discrete sums to integrals.
-    Riemann sum convergence as a bridge theorem.
--/
 
 theorem riemann_sum_bridge (f : ℝ → ℝ) (hf : Continuous f) :
     Filter.Tendsto
@@ -99,27 +94,23 @@ theorem riemann_sum_bridge (f : ℝ → ℝ) (hf : Continuous f) :
   rw [ ← Finset.sum_sub_distrib ] ; refine' Finset.sum_congr rfl fun i hi => _ ; rw [ intervalIntegral.integral_sub ( by exact Continuous.intervalIntegrable hf _ _ ) ] <;> norm_num;
   exact Or.inl <| by ring;
 
-/-! ## Section 6: Automorphic Oracle Bridge -/
 
 /-- An automorphic oracle maps Galois data to automorphic data.
-    This is the Langlands correspondence at the highest level. -/
-
+This is the Langlands correspondence at the highest level. -/
 structure AutomorphicOracle where
   galoisToAutomorphic : ℤ → ℂ
   galoisLFunction : ℂ → ℂ
   automorphicLFunction : ℂ → ℂ
   lfunction_match : galoisLFunction = automorphicLFunction
 
-/-- The Langlands bridge preserves L-functions. -/
 
+/-- The Langlands bridge preserves L-functions. -/
 theorem langlands_bridge_preserves_L (oracle : AutomorphicOracle) (s : ℂ) :
     oracle.galoisLFunction s = oracle.automorphicLFunction s := by
   rw [oracle.lfunction_match]
 
-/-! ## Section 7: Concrete Bridge Example — Type ↔ Prop -/
 
 /-- The bridge from types to propositions via Nonempty. -/
-
 theorem type_prop_bridge (α : Type*) :
     Nonempty α ↔ ∃ _ : α, True := by
   constructor

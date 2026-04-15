@@ -12,8 +12,6 @@ theorem reentrancy_guard_sound (postLocked : Bool)
     (h_reenter : postLocked = true) : False := by
   rw [h_guarded] at h_reenter; exact Bool.false_ne_true h_reenter
 
-/-! ## Invariant Preservation -/
-
 
 def Invariant (S : Type) := S → Prop
 
@@ -33,14 +31,10 @@ theorem sequential_preserves {S : Type} (inv : Invariant S)
 theorem id_preserves {S : Type} (inv : Invariant S) : preservesInvariant inv id :=
   fun _ hs => hs
 
-/-! ## Slippage Protection -/
-
 
 theorem tighter_slippage_less_mev (output min₁ min₂ : ℝ)
     (hle : min₁ ≤ min₂) :
     output - min₂ ≤ output - min₁ := by linarith
-
-/-! ## Access Control -/
 
 
 def hasPermission (roles : ℕ → Finset ℕ) (requiredRole addr : ℕ) : Prop :=
@@ -50,8 +44,6 @@ def hasPermission (roles : ℕ → Finset ℕ) (requiredRole addr : ℕ) : Prop 
 theorem access_control_blocks (roles : ℕ → Finset ℕ) (requiredRole addr : ℕ)
     (h_no_role : requiredRole ∉ roles addr) :
     ¬ hasPermission roles requiredRole addr := h_no_role
-
-/-! ## Swap Specification -/
 
 
 structure SwapSpec where
@@ -69,8 +61,8 @@ theorem swap_spec_correct (spec : SwapSpec) :
     spec.outputDy = spec.reserveY * spec.inputDx / (spec.reserveX + spec.inputDx) :=
   spec.hFormula
 
-/-- The constant product invariant is preserved after a swap -/
 
+/-- The constant product invariant is preserved after a swap -/
 theorem swap_spec_preserves_invariant (spec : SwapSpec) :
     (spec.reserveX + spec.inputDx) *
     (spec.reserveY - spec.outputDy) = spec.reserveX * spec.reserveY := by
@@ -79,17 +71,14 @@ theorem swap_spec_preserves_invariant (spec : SwapSpec) :
   field_simp
   ring
 
-/-- Output is always positive -/
 
+/-- Output is always positive -/
 theorem swap_spec_output_pos (spec : SwapSpec) :
     0 < spec.outputDy := by
   rw [spec.hFormula]
   apply div_pos (mul_pos spec.hRY spec.hDx)
   linarith [spec.hRX, spec.hDx]
 
-/-
-Output is always less than reserve
--/
 
 theorem swap_spec_output_bounded (spec : SwapSpec) :
     spec.outputDy < spec.reserveY := by

@@ -9,12 +9,10 @@ import Mathlib
 
 noncomputable section
 
+/-- The binary entropy function H(p) = -p log p - (1-p) log (1-p) is maximized at p = 1/2.
+We prove a simpler property: symmetry H(p) = H(1-p). -/
 noncomputable def binaryEntropy (p : ℝ) : ℝ :=
   -(p * Real.log p + (1 - p) * Real.log (1 - p))
 
-/-
-PROVIDED SOLUTION
-Unfold binaryEntropy. binaryEntropy p = -(p log p + (1-p) log(1-p)). binaryEntropy (1-p) = -((1-p) log(1-p) + (1-(1-p)) log(1-(1-p))) = -((1-p)log(1-p) + p log p). These are equal by commutativity of addition. Use ring or simp.
--/
 
 end

@@ -12,6 +12,5 @@ noncomputable section
 /-- A Pythagorean triple over integers. -/
 def IsPythTriple (a b c : ℤ) : Prop := a ^ 2 + b ^ 2 = c ^ 2
 
-/-- The root triple (3, 4, 5). -/
 
 end

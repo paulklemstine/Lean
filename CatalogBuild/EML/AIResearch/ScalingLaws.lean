@@ -18,8 +18,6 @@ theorem loss_bounded_below (A alpha L_inf : ℝ) (N : ℕ) (hA : 0 ≤ A) (hN : 
   unfold scalingLaw
   linarith [mul_nonneg hA (rpow_nonneg (by positivity : (0 : ℝ) ≤ ↑N) (-alpha))]
 
-/-! ## §2. Compute-Optimal Training -/
-
 
 def totalCompute (N D : ℕ) : ℕ := 6 * N * D
 
@@ -41,8 +39,6 @@ theorem compute_linear_N (N1 N2 D : ℕ) (h : N1 ≤ N2) :
     totalCompute N1 D ≤ totalCompute N2 D := by
   unfold totalCompute; nlinarith
 
-/-! ## §3. Emergent Capabilities -/
-
 
 def capabilityThreshold (taskComplexity : ℕ) : ℕ := 2 ^ taskComplexity
 
@@ -60,8 +56,6 @@ def mlpEffectiveCapacity (d w : ℕ) : ℕ := d * w
 theorem eml_capacity_advantage (d w : ℕ) (hd : 2 ≤ d) (hw : 1 ≤ w) :
     mlpEffectiveCapacity d w ≤ emlEffectiveCapacity d w := by
   exact Nat.mul_le_mul_right _ ( Nat.le_of_lt ( Nat.recOn d ( by norm_num ) fun n ihn => by norm_num [ Nat.pow_succ ] at * ; nlinarith ) )
-
-/-! ## §4. Efficiency Frontiers -/
 
 
 def dominates (accA accB : ℝ) (paramsA paramsB : ℕ) : Prop :=
@@ -82,8 +76,6 @@ def mlpFlops (d w : ℕ) : ℕ := d * w * w
 theorem eml_flop_efficiency (d w : ℕ) (hw : 5 ≤ w) (hd : 0 < d) :
     emlFlops d w ≤ mlpFlops d w := by
   exact Nat.le_of_not_lt fun h => by unfold emlFlops mlpFlops at h; nlinarith [ mul_le_mul_left' hw d ] ;
-
-/-! ## §5. Data Efficiency -/
 
 
 def standardSamples (params : ℕ) (targetAcc : ℝ) : ℝ := ↑params / targetAcc

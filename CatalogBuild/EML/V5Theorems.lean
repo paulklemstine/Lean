@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: EML
-Declarations: 63
+Declarations: 64
 -/
 
 import Mathlib
@@ -12,21 +12,19 @@ noncomputable section
 /-- The real EML operator: eml(x, y) = exp(x) - ln(y). -/
 def emlV (x y : ℝ) : ℝ := Real.exp x - Real.log y
 
-/-- The diagonal map: d(z) = exp(z) - ln(z). -/
 
+/-- The diagonal map: d(z) = exp(z) - ln(z). -/
 def diagV (z : ℝ) : ℝ := Real.exp z - Real.log z
 
-/-- The e-tower: e↑↑n. -/
 
+/-- The e-tower: e↑↑n. -/
 def eTowerV : ℕ → ℝ
   | 0 => 1
   | n + 1 => Real.exp (eTowerV n)
 
+
 /-- The tropical EML operator: trop(x,y) = max(x, -y). -/
-
 def tropV (x y : ℝ) : ℝ := max x (-y)
-
-/-! ## Section 1: EML Generates Key Constants -/
 
 
 theorem emlV_e : emlV 1 1 = Real.exp 1 := by
@@ -55,8 +53,6 @@ theorem emlV_mul (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
 theorem emlV_produces_negative : emlV 0 (Real.exp (Real.exp 1)) < 0 := by
   unfold emlV; simp
 
-/-! ## Section 2: e-Tower Growth -/
-
 
 theorem eTowerV_pos (n : ℕ) : 0 < eTowerV n := by
   induction n with
@@ -75,9 +71,6 @@ theorem eTowerV_strictMono : StrictMono eTowerV := by
   intro n; simp only [eTowerV]
   linarith [Real.add_one_le_exp (eTowerV n)]
 
-/-
-e↑↑(n+1) ≥ e · e↑↑n (superexponential growth).
--/
 
 theorem eTowerV_growth (n : ℕ) : eTowerV (n + 1) ≥ Real.exp 1 * eTowerV n := by
   -- Apply the inequality $e^{x} \geq e \cdot x$ with $x = eTowerV(n)$.
@@ -86,9 +79,6 @@ theorem eTowerV_growth (n : ℕ) : eTowerV (n + 1) ≥ Real.exp 1 * eTowerV n :=
     exact mul_le_mul_of_nonneg_left ( by linarith [ Real.add_one_le_exp ( eTowerV n - 1 ) ] ) ( Real.exp_nonneg _ );
   exact h_exp_ineq
 
-/-
-e↑↑n ≥ e^n for all n.
--/
 
 theorem eTowerV_ge_exp_n (n : ℕ) : eTowerV n ≥ Real.exp 1 ^ n := by
   induction' n with n ih;
@@ -96,9 +86,6 @@ theorem eTowerV_ge_exp_n (n : ℕ) : eTowerV n ≥ Real.exp 1 ^ n := by
   · rw [ pow_succ' ];
     exact le_trans ( mul_le_mul_of_nonneg_left ih <| by positivity ) ( eTowerV_growth n )
 
-/-
-The e-tower grows faster than any fixed polynomial.
--/
 
 theorem eTowerV_dominates_poly (k : ℕ) :
     ∀ᶠ n in Filter.atTop, eTowerV n > (n : ℝ) ^ k := by
@@ -111,8 +98,6 @@ theorem eTowerV_dominates_poly (k : ℕ) :
     filter_upwards [ h_exp_growth.eventually_gt_atTop 1, Filter.eventually_gt_atTop 0 ] with n hn hn' using by rw [ gt_iff_lt ] at *; rw [ lt_div_iff₀ ( pow_pos hn' _ ) ] at *; linarith;
   filter_upwards [ h_exp_gt_poly.natCast_atTop, Filter.eventually_ge_atTop 1 ] with n hn hn' ; norm_cast at *;
   exact hn.trans_le ( mod_cast eTowerV_ge_exp_n n )
-
-/-! ## Section 3: Diagonal Map Analysis -/
 
 
 theorem diagV_gt (z : ℝ) : diagV z > z := by
@@ -132,9 +117,6 @@ theorem diagV_deriv (z : ℝ) (hz : z ≠ 0) :
     HasDerivAt diagV (Real.exp z - z⁻¹) z :=
   (Real.hasDerivAt_exp z).sub (Real.hasDerivAt_log hz)
 
-/-
-d is convex on (0, ∞).
--/
 
 theorem diagV_convexOn : ConvexOn ℝ (Ioi 0) diagV := by
   unfold diagV;
@@ -149,8 +131,8 @@ theorem diagV_convexOn : ConvexOn ℝ (Ioi 0) diagV := by
       intro z hz; rw [ h_deriv2 z hz ] ; norm_num [ Real.differentiableAt_exp, differentiableAt_inv, hz.ne' ];
     exact fun x hx => h_deriv2 x ( interior_subset hx ) ▸ add_nonneg ( Real.exp_nonneg x ) ( one_div_nonneg.mpr ( sq_nonneg x ) )
 
-/-- The iterated diagonal map. -/
 
+/-- The iterated diagonal map. -/
 def iterDiagV : ℕ → ℝ → ℝ
   | 0 => id
   | n + 1 => diagV ∘ iterDiagV n
@@ -160,10 +142,8 @@ theorem iterDiagV_growth (n : ℕ) (z : ℝ) :
     iterDiagV (n + 1) z > iterDiagV n z := by
   simp [iterDiagV]; exact diagV_gt _
 
-/-! ## Section 4: EML Complexity Theory -/
 
 /-- Pure EML trees (all leaves = 1). -/
-
 inductive PureTree where
   | leaf : PureTree
   | node : PureTree → PureTree → PureTree
@@ -212,8 +192,8 @@ theorem PureTree.eval_e_minus_one :
     (PureTree.node .leaf (.node .leaf .leaf)).eval = Real.exp 1 - 1 := by
   simp [PureTree.eval, emlV, Real.log_one, Real.log_exp]
 
-/-- eml(e, e^e) = e^e - e. A 3-node tree producing e^e - e. -/
 
+/-- eml(e, e^e) = e^e - e. A 3-node tree producing e^e - e. -/
 theorem PureTree.eval_ee_minus_e :
     (PureTree.node (.node .leaf .leaf) (PureTree.node (.node .leaf .leaf) .leaf)).eval
     = Real.exp (Real.exp 1) - Real.exp 1 := by
@@ -221,13 +201,12 @@ theorem PureTree.eval_ee_minus_e :
 
 
 theorem exp_complexity_one : (PureTree.node .leaf .leaf).nodeCount = 1 := by rfl
+
 theorem exp_exp_complexity_two :
     (PureTree.node (.node .leaf .leaf) .leaf).nodeCount = 2 := by rfl
 
 theorem zero_complexity_three :
     (PureTree.node .leaf (.node (.node .leaf .leaf) .leaf)).nodeCount = 3 := by rfl
-
-/-! ## Section 5: Tropical EML -/
 
 
 theorem tropV_max (x y : ℝ) : tropV x (-y) = max x y := by
@@ -237,8 +216,8 @@ theorem tropV_max (x y : ℝ) : tropV x (-y) = max x y := by
 theorem tropV_min (x y : ℝ) : -tropV (-x) y = min x y := by
   unfold tropV; simp [neg_sup, neg_neg]
 
-/-- trop(z, z) = max(z, -z) = |z|. -/
 
+/-- trop(z, z) = max(z, -z) = |z|. -/
 theorem tropV_abs (z : ℝ) : tropV z z = |z| := by
   unfold tropV
   rcases le_or_gt z 0 with h | h
@@ -248,8 +227,6 @@ theorem tropV_abs (z : ℝ) : tropV z z = |z| := by
 
 theorem tropV_comm_max (x y : ℝ) : tropV x (-y) = tropV y (-x) := by
   unfold tropV; simp [max_comm]
-
-/-! ## Section 6: EML Trace and Difference -/
 
 
 theorem emlV_trace (x y : ℝ) :
@@ -265,8 +242,6 @@ theorem emlV_diff (x y : ℝ) :
 theorem emlV_diag_double (z : ℝ) :
     emlV z z + emlV z z = 2 * diagV z := by
   unfold emlV diagV; ring
-
-/-! ## Section 7: EML Interval Arithmetic -/
 
 
 theorem emlV_interval_lower (x y a d : ℝ)
@@ -286,15 +261,11 @@ theorem emlV_interval_upper (x y b c : ℝ)
   have h2 : Real.log c ≤ Real.log y := Real.log_le_log hc hy1
   linarith
 
-/-! ## Section 8: EML Power-Associativity Failure -/
-
 
 theorem emlV_not_power_assoc : ∃ x : ℝ,
     emlV x (emlV x x) ≠ emlV (emlV x x) x := by
   use 0; norm_num [ emlV ] ;
   exact Ne.symm <| by norm_num;
-
-/-! ## Section 9: EML Generates Arbitrarily Large Constants -/
 
 
 theorem eTowerV_step_growth (n : ℕ) : eTowerV (n + 1) ≥ eTowerV n + 1 := by
@@ -322,8 +293,6 @@ theorem emlV_small_constants : ∀ ε : ℝ, ε > 0 → ∃ n : ℕ,
       Real.exp_lt_exp.mpr (by linarith)
     rwa [Real.exp_log hε] at this⟩
 
-/-! ## Section 10: Complex EML -/
-
 
 def emlVC (x y : ℂ) : ℂ := Complex.exp x - Complex.log y
 
@@ -334,8 +303,6 @@ def diagVC (z : ℂ) : ℂ := Complex.exp z - Complex.log z
 theorem emlVC_differentiable_fst (y : ℂ) :
     Differentiable ℂ (fun x => emlVC x y) :=
   Complex.differentiable_exp.sub (differentiable_const _)
-
-/-! ## Section 11: Fixed Point Iteration -/
 
 
 def gIterV (z : ℝ) : ℝ := Real.exp 1 - Real.log z
@@ -361,48 +328,42 @@ theorem gIterV_fixedPoint_gt_one (z : ℝ) (hz : 0 < z)
     (hfp : z + Real.log z = Real.exp 1) : z > 1 := by
   exact not_le.mp fun h => by have := Real.exp_one_gt_d9.le; norm_num1 at *; linarith [ Real.log_le_sub_one_of_pos hz ] ;
 
-/-
-The function h(z) = z + ln(z) - e is strictly monotone on (0,∞),
-    guaranteeing uniqueness of the fixed point.
--/
 
 theorem gIterV_uniqueness (z₁ z₂ : ℝ) (hz₁ : 0 < z₁) (hz₂ : 0 < z₂)
     (hfp₁ : gIterV z₁ = z₁) (hfp₂ : gIterV z₂ = z₂) : z₁ = z₂ := by
   unfold gIterV at *;
   exact le_antisymm ( le_of_not_gt fun h => by linarith [ Real.log_lt_log ( by positivity ) h ] ) ( le_of_not_gt fun h => by linarith [ Real.log_lt_log ( by positivity ) h ] )
 
-/-! ## Section 12: EML Functional Equations -/
 
 /-- The negation identity: eml(0, exp(x)) = 1 - x. -/
-
 theorem emlV_negation (x : ℝ) : emlV 0 (Real.exp x) = 1 - x := by
   unfold emlV; simp
 
-/-- Double negation via EML: eml(0, exp(eml(0, exp(x)))) = x. -/
 
+/-- Double negation via EML: eml(0, exp(eml(0, exp(x)))) = x. -/
 theorem emlV_double_neg (x : ℝ) : emlV 0 (Real.exp (emlV 0 (Real.exp x))) = x := by
   unfold emlV; simp [Real.log_exp]
 
-/-- The involution chain. -/
 
+/-- The involution chain. -/
 theorem emlV_involution_chain (x : ℝ) :
     emlV (emlV 0 (Real.exp (emlV x 1))) 1 = Real.exp (1 - Real.exp x) := by
   unfold emlV; simp [Real.log_one, Real.log_exp]
 
-/-- eml(x, 1) = exp(x), so eml is an exponential when the second arg is 1. -/
 
+/-- eml(x, 1) = exp(x), so eml is an exponential when the second arg is 1. -/
 theorem emlV_exp (x : ℝ) : emlV x 1 = Real.exp x := by
   unfold emlV; simp [Real.log_one]
 
-/-- exp and log recovery: e - eml(1, x) = ln(x) for x > 0. -/
 
+/-- exp and log recovery: e - eml(1, x) = ln(x) for x > 0. -/
 theorem emlV_log_recovery (x : ℝ) :
     Real.exp 1 - emlV 1 x = Real.log x := by
   unfold emlV; ring
 
-/-- EML satisfies the chain: eml(a, exp(b)) composed with eml(c, exp(d))
-    yields a certain algebraic relation. -/
 
+/-- EML satisfies the chain: eml(a, exp(b)) composed with eml(c, exp(d))
+yields a certain algebraic relation. -/
 theorem emlV_chain (a b c d : ℝ) :
     emlV (emlV a (Real.exp b)) (Real.exp (emlV c (Real.exp d))) =
     Real.exp (Real.exp a - b) - (Real.exp c - d) := by

@@ -14,28 +14,26 @@ def applyInvBG1 (v : Fin 3 → ℤ) : Fin 3 → ℤ :=
   | 1 => -2 * v 0 - v 1 + 2 * v 2
   | 2 => -2 * v 0 - 2 * v 1 + 3 * v 2
 
-/-- Apply inverse Berggren matrix B₂⁻¹ -/
 
+/-- Apply inverse Berggren matrix B₂⁻¹ -/
 def applyInvBG2 (v : Fin 3 → ℤ) : Fin 3 → ℤ :=
   fun i => match i with
   | 0 => v 0 + 2 * v 1 - 2 * v 2
   | 1 => 2 * v 0 + v 1 - 2 * v 2
   | 2 => -2 * v 0 - 2 * v 1 + 3 * v 2
 
-/-- Apply inverse Berggren matrix B₃⁻¹ -/
 
+/-- Apply inverse Berggren matrix B₃⁻¹ -/
 def applyInvBG3 (v : Fin 3 → ℤ) : Fin 3 → ℤ :=
   fun i => match i with
   | 0 => -v 0 - 2 * v 1 + 2 * v 2
   | 1 => 2 * v 0 + v 1 - 2 * v 2
   | 2 => -2 * v 0 - 2 * v 1 + 3 * v 2
 
-/-! ## §2: Parent-Finding Algorithm -/
 
 /-- Find the parent of a Pythagorean triple in the Berggren tree.
-    Returns (branch, a', b', c') where branch ∈ {1,2,3} indicates
-    which inverse matrix was used. -/
-
+Returns (branch, a', b', c') where branch ∈ {1,2,3} indicates
+which inverse matrix was used. -/
 def findBerggrenParent (a b c : ℤ) : ℕ × ℤ × ℤ × ℤ :=
   let a1 := a + 2*b - 2*c
   let b1 := -2*a - b + 2*c
@@ -49,12 +47,10 @@ def findBerggrenParent (a b c : ℤ) : ℕ × ℤ × ℤ × ℤ :=
     let b3 := 2*a + b - 2*c
     (3, a3, b3, c1)
 
-/-! ## §3: The Inside-Out Factoring Algorithm -/
 
 /-- The inside-out factoring algorithm.
-    Given odd N, constructs the Euclid triple and descends,
-    checking GCDs at each step. Returns first nontrivial factor found. -/
-
+Given odd N, constructs the Euclid triple and descends,
+checking GCDs at each step. Returns first nontrivial factor found. -/
 def insideOutFactor (N : ℕ) (maxSteps : ℕ) : Option (ℕ × ℕ) := Id.run do
   if N % 2 == 0 || N < 9 then return none
   let m : ℤ := ((N : ℤ) + 1) / 2
@@ -75,8 +71,8 @@ def insideOutFactor (N : ℕ) (maxSteps : ℕ) : Option (ℕ × ℕ) := Id.run d
     a := pa; b := pb; c := pc
   return none
 
-/-- Extended version: returns ALL factors found during descent -/
 
+/-- Extended version: returns ALL factors found during descent -/
 def insideOutFactorAll (N : ℕ) (maxSteps : ℕ) : List (ℕ × ℕ × ℕ) := Id.run do
   if N % 2 == 0 || N < 9 then return []
   let m : ℤ := ((N : ℤ) + 1) / 2
@@ -97,45 +93,8 @@ def insideOutFactorAll (N : ℕ) (maxSteps : ℕ) : List (ℕ × ℕ × ℕ) := 
     a := pa; b := pb; c := pc
   return results.reverse
 
-/-! ## §4: Computational Verification -/
-
--- Factor 77 = 7 × 11
-#eval insideOutFactor 77 100      -- some (7, 11)
-#eval insideOutFactorAll 77 30    -- factors at multiple steps
-
--- Factor 143 = 11 × 13
-#eval insideOutFactor 143 100     -- some (11, 13) or (13, 11)
-
--- Factor 221 = 13 × 17
-#eval insideOutFactor 221 100
-
--- Factor 1073 = 29 × 37
-#eval insideOutFactor 1073 100
-
--- Factor 10403 = 101 × 103
-#eval insideOutFactor 10403 500
-
--- Factor 1000003 (a larger semiprime)
-#eval insideOutFactor 1000003 5000
-
--- Verify the Euclid triple is valid
-#eval do
-  let N := 77
-  let m : Int := (N + 1) / 2
-  let n : Int := (N - 1) / 2
-  let a := m^2 - n^2
-  let b := 2*m*n
-  let c := m^2 + n^2
-  return (a, b, c, a*a + b*b == c*c)
-
-/-! ## §5: The Sum-of-Two-Squares Approach
-
-Alternative: for N with a prime factor p ≡ 1 (mod 4), find all ways
-to write N² = a² + b². Each decomposition gives a Pythagorean triple
-(a, b, N), and non-primitive triples reveal factors via GCD. -/
 
 /-- Find all representations of n = a² + b² with 0 < a ≤ b -/
-
 def sumOfTwoSquaresReps (n : ℕ) : List (ℕ × ℕ) :=
   let sq := Nat.sqrt n
   (List.range (sq + 1)).filterMap fun a =>
@@ -146,9 +105,9 @@ def sumOfTwoSquaresReps (n : ℕ) : List (ℕ × ℕ) :=
       else none
     else none
 
-/-- Factor N by finding non-primitive Pythagorean triples with hypotenuse N.
-    If N² = a² + b² and gcd(a, b, N) = d > 1, then d | N is a factor. -/
 
+/-- Factor N by finding non-primitive Pythagorean triples with hypotenuse N.
+If N² = a² + b² and gcd(a, b, N) = d > 1, then d | N is a factor. -/
 def factorViaSumOfSquares (N : ℕ) : List (ℕ × ℕ × ℕ × ℕ) :=
   let decomps := sumOfTwoSquaresReps (N * N)
   decomps.filterMap fun (a, b) =>
@@ -168,14 +127,8 @@ def factorViaSumOfSquares (N : ℕ) : List (ℕ × ℕ × ℕ × ℕ) :=
 -- Test: 77 = 7 × 11 (both ≡ 3 mod 4 — no non-trivial decompositions)
 #eval factorViaSumOfSquares 77    -- empty! Both primes ≡ 3 mod 4
 
-/-! ## §6: Hybrid Approach: Auxiliary Prime Multiplication
-
-For N = p·q with both p,q ≡ 3 (mod 4), multiply by an auxiliary
-prime r ≡ 1 (mod 4) to get N' = rN. Then N'² has non-trivial
-sum-of-two-squares decompositions, and GCDs reveal factors of N. -/
 
 /-- Factor N by first multiplying by auxiliary prime 5 -/
-
 def factorViaAuxiliary (N : ℕ) (aux : ℕ) : List (ℕ × ℕ) :=
   let N' := N * aux
   let decomps := sumOfTwoSquaresReps (N' * N')
@@ -194,18 +147,16 @@ def factorViaAuxiliary (N : ℕ) (aux : ℕ) : List (ℕ × ℕ) :=
 -- Factor 77 = 7 × 11 using auxiliary prime 13
 #eval factorViaAuxiliary 77 13
 
-/-! ## §7: Formal Correctness Theorems -/
 
 /-- The Euclid parametrization produces a valid Pythagorean triple -/
-
 theorem euclid_triple_valid (N : ℤ) (hodd : N % 2 = 1) :
     let m := (N + 1) / 2
     let n := (N - 1) / 2
     (m ^ 2 - n ^ 2) ^ 2 + (2 * m * n) ^ 2 = (m ^ 2 + n ^ 2) ^ 2 := by
   ring
 
-/-- The odd leg of the Euclid triple is exactly N -/
 
+/-- The odd leg of the Euclid triple is exactly N -/
 theorem euclid_odd_leg (N : ℤ) (hodd : N % 2 = 1) :
     let m := (N + 1) / 2
     let n := (N - 1) / 2
@@ -216,8 +167,8 @@ theorem euclid_odd_leg (N : ℤ) (hodd : N % 2 = 1) :
   rw [hm]; ring_nf
   omega
 
-/-- Inverse Berggren maps preserve the Lorentz form (algebraically) -/
 
+/-- Inverse Berggren maps preserve the Lorentz form (algebraically) -/
 theorem invB1_preserves_form (a b c : ℤ) :
     (a + 2*b - 2*c)^2 + (-2*a - b + 2*c)^2 - (-2*a - 2*b + 3*c)^2 =
     a^2 + b^2 - c^2 := by ring
@@ -232,54 +183,15 @@ theorem invB3_preserves_form (a b c : ℤ) :
     (-a - 2*b + 2*c)^2 + (2*a + b - 2*c)^2 - (-2*a - 2*b + 3*c)^2 =
     a^2 + b^2 - c^2 := by ring
 
-/-- If gcd(a, N) = d with 1 < d < N, then d divides N (factor found) -/
 
+/-- The parent hypotenuse c' = -2a-2b+3c satisfies c' < c when a,b > 0 -/
 theorem parent_hyp_decreases (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
     (hpyth : a^2 + b^2 = c^2) :
     -2*a - 2*b + 3*c < c := by
   nlinarith [sq_nonneg (a + b - c)]
 
-/-- The hypotenuse decrease is exactly 2(a+b-c) -/
 
+/-- The hypotenuse decrease is exactly 2(a+b-c) -/
 theorem hyp_decrease_exact (a b c : ℤ) :
     c - (-2*a - 2*b + 3*c) = 2*(a + b) - 2*c := by ring
-
-/-! ## §9: Batch Experiment — Factoring Many Semiprimes -/
-
--- Test on a range of semiprimes
-#eval (insideOutFactor 15 100, insideOutFactor 21 100, insideOutFactor 35 100)
-#eval (insideOutFactor 77 100, insideOutFactor 91 100, insideOutFactor 119 100)
-#eval (insideOutFactor 143 100, insideOutFactor 187 100, insideOutFactor 209 100)
-#eval (insideOutFactor 323 100, insideOutFactor 437 200, insideOutFactor 667 200)
-
--- Primes should return none (or only trivial factors)
-#eval insideOutFactor 97 100
-#eval insideOutFactor 101 100
-#eval insideOutFactor 103 100
-
-/-! ## §10: Connection to Quantum Search
-
-The inside-out factoring algorithm has a structural parallel with
-Grover's quantum search:
-
-1. **Oracle**: The GCD check gcd(leg, N) > 1 acts as a "marking oracle"
-   that identifies when a leg value reveals a factor.
-
-2. **Iteration**: Each inverse Berggren step is an "iteration" that
-   transforms the state (a,b,c) deterministically.
-
-3. **Speed**: Both Grover's algorithm and our descent find solutions
-   in O(√N) steps, but through different mechanisms:
-   - Grover: amplitude amplification in Hilbert space
-   - Berggren descent: geometric progression on the Lorentz cone
-
-4. **Determinism**: Unlike Grover's probabilistic algorithm, the
-   Berggren descent is fully deterministic. This is possible because
-   it uses O(N²) bits of state (the triple) rather than O(log N)
-   qubits. The tradeoff is space vs. quantum parallelism.
-
-The key insight: the Berggren tree provides a CLASSICAL analogue of
-quantum search on the integers, where the "superposition" is replaced
-by the rich algebraic structure of the Lorentz group action.
--/
 

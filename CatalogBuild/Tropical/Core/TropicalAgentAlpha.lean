@@ -10,21 +10,11 @@ import Mathlib
 theorem exp_tropPow (a : ℝ) (n : ℕ) : exp (tropPow a n) = (exp a) ^ n := by
   simp [tropPow, exp_nat_mul]
 
-/-! ## Maslov Dequantization: log(exp a + exp b) ≈ max(a,b) -/
-
-/-
-PROVIDED SOLUTION
-WLOG a ≤ b. Then max a b = b. We need b ≤ log(exp a + exp b). Since exp a + exp b ≥ exp b > 0, and log is monotone, log(exp a + exp b) ≥ log(exp b) = b.
--/
 
 theorem softmax_ge_max (a b : ℝ) :
     max a b ≤ Real.log (exp a + exp b) := by
       cases max_cases a b <;> linarith [ Real.log_exp a, Real.log_exp b, Real.log_le_log ( by positivity ) ( by linarith [ Real.exp_pos a, Real.exp_pos b ] : Real.exp a + Real.exp b ≥ Real.exp a ), Real.log_le_log ( by positivity ) ( by linarith [ Real.exp_pos a, Real.exp_pos b ] : Real.exp a + Real.exp b ≥ Real.exp b ) ]
 
-/-
-PROVIDED SOLUTION
-exp a + exp b ≤ 2 * exp(max a b) since each of exp a, exp b ≤ exp(max a b). So log(exp a + exp b) ≤ log(2 * exp(max a b)) = log 2 + max a b.
--/
 
 theorem softmax_le_max_add_log2 (a b : ℝ) :
     Real.log (exp a + exp b) ≤ max a b + Real.log 2 := by
@@ -32,8 +22,6 @@ theorem softmax_le_max_add_log2 (a b : ℝ) :
       have h_log_le : Real.log (Real.exp a + Real.exp b) ≤ Real.log (2 * Real.exp (max a b)) := by
         exact Real.log_le_log ( by positivity ) ( by linarith [ Real.exp_le_exp.2 ( le_max_left a b ), Real.exp_le_exp.2 ( le_max_right a b ) ] );
       rw [ Real.log_mul ( by positivity ) ( by positivity ), Real.log_exp ] at h_log_le ; linarith
-
-/-! ## Fixed Points -/
 
 
 def IsTropicalContraction (f : ℝ → ℝ) (c : ℝ) : Prop :=
@@ -47,18 +35,12 @@ theorem tropical_contraction_unique (f : ℝ → ℝ) (c : ℝ) (hf : IsTropical
   have hne : |x - y| > 0 := abs_pos.mpr (sub_ne_zero.mpr h)
   have h1 := hcont x y; rw [hx, hy] at h1; nlinarith
 
-/-! ## Tropical-Classical Bridge -/
-
 
 theorem exp_sum_sandwich {n : ℕ} (v : Fin (n+1) → ℝ) :
     exp (Finset.sup' Finset.univ ⟨0, Finset.mem_univ 0⟩ v) ≤ ∑ i, exp (v i) := by
   obtain ⟨k, _, hk⟩ := Finset.exists_mem_eq_sup' ⟨(0 : Fin (n+1)), Finset.mem_univ 0⟩ v
   rw [hk]; exact Finset.single_le_sum (fun _ _ => exp_nonneg _) (Finset.mem_univ k)
 
-/-
-PROVIDED SOLUTION
-Each exp(v i) ≤ exp(sup v), so the sum ≤ (n+1) * exp(sup v). Use Finset.sum_le_sum and Finset.le_sup'.
--/
 
 theorem exp_sum_upper {n : ℕ} (v : Fin (n+1) → ℝ) :
     ∑ i, exp (v i) ≤ (n + 1) * exp (Finset.sup' Finset.univ ⟨0, Finset.mem_univ 0⟩ v) := by
@@ -66,11 +48,7 @@ theorem exp_sum_upper {n : ℕ} (v : Fin (n+1) → ℝ) :
   · infer_instance;
   · exact fun x _ => Real.exp_le_exp.2 <| Finset.le_sup' ( fun x => v x ) <| Finset.mem_univ x
 
-/-! ## ReLU Expressivity -/
-
 
 theorem expressivity_gap (w L : ℕ) :
     (2 * w) ^ (L + 1) = 2 * w * (2 * w) ^ L := by ring
-
-/-! ## Log inequality -/
 

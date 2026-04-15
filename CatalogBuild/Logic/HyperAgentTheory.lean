@@ -14,18 +14,18 @@ structure AgentOracle (Agent : Type*) where
   improve : Agent → Agent
   idem : ∀ a, improve (improve a) = improve a
 
-/-- The fixed-point set: agents that cannot be further improved. -/
 
+/-- The fixed-point set: agents that cannot be further improved. -/
 def AgentOracle.fixedAgents {Agent : Type*} (O : AgentOracle Agent) : Set Agent :=
   {a | O.improve a = a}
 
-/-- Every improved agent is already at a fixed point. -/
 
+/-- Every improved agent is already at a fixed point. -/
 theorem AgentOracle.improved_is_fixed {Agent : Type*} (O : AgentOracle Agent)
     (a : Agent) : O.improve a ∈ O.fixedAgents := O.idem a
 
-/-- The fixed-agent set equals the range of the improvement operator. -/
 
+/-- The fixed-agent set equals the range of the improvement operator. -/
 theorem AgentOracle.fixed_eq_range {Agent : Type*} (O : AgentOracle Agent) :
     O.fixedAgents = range O.improve := by
   ext y
@@ -33,8 +33,8 @@ theorem AgentOracle.fixed_eq_range {Agent : Type*} (O : AgentOracle Agent) :
   · intro hy; exact ⟨y, hy⟩
   · rintro ⟨x, rfl⟩; exact O.idem x
 
-/-- Iterating self-improvement beyond the first step is redundant. -/
 
+/-- Iterating self-improvement beyond the first step is redundant. -/
 theorem AgentOracle.iterate_stable {Agent : Type*} (O : AgentOracle Agent)
     (n : ℕ) (hn : 1 ≤ n) (a : Agent) :
     O.improve^[n] a = O.improve a := by
@@ -46,42 +46,17 @@ theorem AgentOracle.iterate_stable {Agent : Type*} (O : AgentOracle Agent)
     · subst h; simp
     · rw [ih (by omega)]; exact O.idem a
 
-/-! ═══════════════════════════════════════════════════════════════════════════════
-    §2. HYPERAGENTS AS STRANGE LOOPS
-    ═══════════════════════════════════════════════════════════════════════════════
-
-    A hyperagent combines task and meta agents in a single modifiable program.
-    The meta agent can modify itself — this is a strange loop. At convergence,
-    the self-modification operation is idempotent: a mathematical oracle.
--/
 
 /-- A strange loop in agent space: a self-modifier whose square equals itself. -/
-
 def IsStrangeLoop {X : Type*} (f : X → X) : Prop :=
   ∀ x, f (f x) = f x
 
-/-- Every AgentOracle is a strange loop. -/
 
+/-- Every AgentOracle is a strange loop. -/
 theorem oracle_is_strange_loop {X : Type*}
     (O : AgentOracle X) :
     IsStrangeLoop O.improve := O.idem
 
-/-! ═══════════════════════════════════════════════════════════════════════════════
-    §3. CONVERGENCE AND FIXED-POINT THEOREMS
-    ═══════════════════════════════════════════════════════════════════════════════
-
-    We prove that bounded self-improvement must converge, and connect this to
-    the Knaster-Tarski and Lawvere fixed-point theorems.
--/
-
-/-
-PROBLEM
-If self-improvement is monotone w.r.t. a ℕ-valued evaluation, and the space
-    is bounded, the sequence of improvements eventually stabilizes.
-
-PROVIDED SOLUTION
-By contradiction: if eval strictly increases at every step, after bound+1 steps we have eval ≥ bound+1 > bound, contradicting h_bound. Use induction on bound to show that n strict increases from any starting value means eval ≥ n + initial_value.
--/
 
 theorem monotone_bounded_convergence {Agent : Type*}
     (improve : Agent → Agent) (eval : Agent → ℕ)
@@ -105,9 +80,9 @@ theorem monotone_bounded_convergence {Agent : Type*}
     exact h_bound _
   exact lt_irrefl bound (by linarith)
 
-/-- Lawvere's fixed-point theorem: if an agent can represent all self-modifications,
-    every transformation has a fixed point. -/
 
+/-- Lawvere's fixed-point theorem: if an agent can represent all self-modifications,
+every transformation has a fixed point. -/
 theorem lawvere_agent_fixpoint {Agent Behavior : Type*}
     (represent : Agent → (Agent → Behavior))
     (h_surj : Surjective represent)
@@ -116,14 +91,6 @@ theorem lawvere_agent_fixpoint {Agent Behavior : Type*}
   obtain ⟨a, ha⟩ := h_surj (fun x => transform (represent x x))
   exact ⟨represent a a, by have := congr_fun ha a; simpa using this.symm⟩
 
-/-
-PROBLEM
-Knaster-Tarski for agent improvement on a complete lattice:
-    every monotone self-improvement has a fixed point.
-
-PROVIDED SOLUTION
-Use OrderHom.isLeast_lfp or the lfp directly. The least fixed point of a monotone function on a complete lattice exists. Use lfp from Mathlib - specifically OrderHom.lfp gives the least fixed point, and OrderHom.lfp_eq shows it is a fixed point.
--/
 
 theorem agent_lattice_fixpoint {Agent : Type*} [CompleteLattice Agent]
     (improve : Agent → Agent) (h_mono : Monotone improve) :
@@ -137,41 +104,33 @@ theorem agent_lattice_fixpoint {Agent : Type*} [CompleteLattice Agent]
     obtain ⟨ a, ha₁, ha₂ ⟩ := h_least_fixed_point; exact ⟨ a, le_antisymm ( ha₁ ) ( ha₂ _ ( by aesop ) ) ⟩ ;
   exact h_fixed_point
 
-/-! ═══════════════════════════════════════════════════════════════════════════════
-    §4. ARCHIVE DYNAMICS AND ATTRACTORS
-    ═══════════════════════════════════════════════════════════════════════════════
-
-    The DGM-H maintains an archive of hyperagents. We formalize the archive
-    as a growing collection and prove attractor properties.
--/
 
 /-- An archive is a growing sequence of agent sets. -/
-
 structure Archive (Agent : Type*) where
   contents : ℕ → Finset Agent
   monotone_contents : ∀ n, contents n ⊆ contents (n + 1)
 
-/-- The archive grows monotonically in cardinality. -/
 
+/-- The archive grows monotonically in cardinality. -/
 theorem Archive.card_monotone {Agent : Type*} [DecidableEq Agent]
     (A : Archive Agent) : ∀ n, (A.contents n).card ≤ (A.contents (n + 1)).card :=
   fun n => Finset.card_le_card (A.monotone_contents n)
 
-/-- The limit archive: the union of all finite stages. -/
 
+/-- The limit archive: the union of all finite stages. -/
 def Archive.limit {Agent : Type*} (A : Archive Agent) : Set Agent :=
   ⋃ n, ↑(A.contents n)
 
-/-- Every finite stage is contained in the limit. -/
 
+/-- Every finite stage is contained in the limit. -/
 theorem Archive.stage_subset_limit {Agent : Type*} (A : Archive Agent)
     (n : ℕ) : ↑(A.contents n) ⊆ A.limit := by
   intro x hx
   simp [Archive.limit]
   exact ⟨n, hx⟩
 
-/-- The best performance in the archive is monotonically non-decreasing. -/
 
+/-- The best performance in the archive is monotonically non-decreasing. -/
 theorem Archive.best_monotone {Agent : Type*} [DecidableEq Agent]
     (A : Archive Agent) (eval : Agent → ℝ) (n : ℕ)
     (hn : (A.contents n).Nonempty) :
@@ -180,25 +139,16 @@ theorem Archive.best_monotone {Agent : Type*} [DecidableEq Agent]
   apply Finset.sup'_mono
   exact A.monotone_contents n
 
-/-! ═══════════════════════════════════════════════════════════════════════════════
-    §5. CROSS-DOMAIN TRANSFER
-    ═══════════════════════════════════════════════════════════════════════════════
-
-    We formalize the key empirical finding of Zhang et al.: meta-level improvements
-    transfer across domains. This is because oracle structure is preserved by
-    natural transformations between agent spaces.
--/
 
 /-- A domain transfer: a map between agent spaces with a section. -/
-
 structure DomainTransfer (A B : Type*) where
   transfer : A → B
   back : B → A
   section_prop : ∀ b, transfer (back b) = b
 
-/-- An oracle-preserving transfer: if improvement is idempotent in the source,
-    the transferred improvement is idempotent in the target. -/
 
+/-- An oracle-preserving transfer: if improvement is idempotent in the source,
+the transferred improvement is idempotent in the target. -/
 theorem transfer_preserves_oracle {A B : Type*}
     (T : DomainTransfer A B)
     (improve_A : A → A) (h_idem : ∀ a, improve_A (improve_A a) = improve_A a)
@@ -210,21 +160,14 @@ theorem transfer_preserves_oracle {A B : Type*}
   conv_lhs => rw [← hb]
   rw [← h_comm, ← h_comm, h_idem, h_comm, hb]
 
-/-- The imp@k metric: maximum improvement achieved within k iterations. -/
 
+/-- The imp@k metric: maximum improvement achieved within k iterations. -/
 noncomputable def improvement_at_k {Agent : Type*}
     (improve : Agent → Agent) (eval : Agent → ℝ)
     (a₀ : Agent) (k : ℕ) : ℝ :=
   (Finset.range (k + 1)).sup' ⟨0, Finset.mem_range.mpr (Nat.zero_lt_succ k)⟩
     (fun i => eval (improve^[i] a₀)) - eval a₀
 
-/-
-PROBLEM
-imp@k is monotone in k: more iterations never decrease maximum improvement.
-
-PROVIDED SOLUTION
-The sup over range(k+1) ≤ sup over range(k+2) because range(k+1) ⊆ range(k+2). Then subtracting the same eval a₀ preserves the inequality. Use Finset.sup'_mono with the subset Finset.range_subset.
--/
 
 theorem improvement_monotone_k {Agent : Type*}
     (improve : Agent → Agent) (eval : Agent → ℝ)
@@ -233,23 +176,6 @@ theorem improvement_monotone_k {Agent : Type*}
   refine' sub_le_sub_right ( Finset.sup'_le _ _ _ ) _;
   exact fun i hi => Finset.le_sup' ( fun i => eval ( improve^[i] a₀ ) ) ( Finset.mem_range.mpr ( Nat.lt_succ_of_lt ( Finset.mem_range.mp hi ) ) )
 
-/-! ═══════════════════════════════════════════════════════════════════════════════
-    §6. GÖDELIAN LIMITATIONS ON SELF-IMPROVEMENT
-    ═══════════════════════════════════════════════════════════════════════════════
-
-    No hyperagent can be universally self-improving across all evaluation
-    functions. This is the diagonal argument applied to agent spaces.
--/
-
-/-
-PROBLEM
-Diagonal limitation: no single improvement operator works for all evaluations.
-    For any proposed "universal improver," there exists an evaluation function
-    where it fails to improve.
-
-PROVIDED SOLUTION
-Given improve and two distinct agents a ≠ b, define eval to penalize wherever improve sends a. If improve a = a, use eval = const 0 so eval(improve a) = eval a. If improve a ≠ a, define eval(x) = if x = a then 1 else 0 (using classical decidability), so eval(improve a) = 0 < 1 = eval(a). Use classical decidability for the if-then-else.
--/
 
 theorem no_universal_improver (Agent : Type*) [Nonempty Agent]
     (h_many : ∃ a b : Agent, a ≠ b) :
@@ -257,24 +183,16 @@ theorem no_universal_improver (Agent : Type*) [Nonempty Agent]
     ∃ eval : Agent → ℤ, ∃ a : Agent, eval (improve a) ≤ eval a := by
   exact fun improve => ⟨ fun _ => 0, Classical.arbitrary _, by simp +decide ⟩
 
-/-- Tarski-style limitation: no hyperagent can define its own evaluation. -/
 
+/-- Tarski-style limitation: no hyperagent can define its own evaluation. -/
 theorem no_self_evaluation {Agent : Type*}
     (represent : Agent → (Agent → Prop)) (h_surj : Surjective represent) :
     ∃ P : Agent → Prop, ∀ a, P ≠ represent a := by
   exact ⟨fun a => ¬ represent a a, fun a h => by
     have := congr_fun h a; simp at this⟩
 
-/-! ═══════════════════════════════════════════════════════════════════════════════
-    §7. COMPOUNDING IMPROVEMENTS
-    ═══════════════════════════════════════════════════════════════════════════════
-
-    We formalize the key empirical finding: improvements compound across domains
-    and runs. This corresponds to composition of oracle-preserving transfers.
--/
 
 /-- Composition of domain transfers. -/
-
 def DomainTransfer.compose {A B C : Type*}
     (T₁ : DomainTransfer A B) (T₂ : DomainTransfer B C) :
     DomainTransfer A C where
@@ -282,8 +200,8 @@ def DomainTransfer.compose {A B C : Type*}
   back := T₁.back ∘ T₂.back
   section_prop := fun c => by simp [T₁.section_prop, T₂.section_prop]
 
-/-- Composed transfers preserve oracle structure transitively. -/
 
+/-- Composed transfers preserve oracle structure transitively. -/
 theorem compound_transfer_oracle {A B C : Type*}
     (T₁ : DomainTransfer A B) (T₂ : DomainTransfer B C)
     (imp_A : A → A) (imp_B : B → B) (imp_C : C → C)
@@ -294,46 +212,30 @@ theorem compound_transfer_oracle {A B C : Type*}
   have h_idem_B := transfer_preserves_oracle T₁ imp_A h_idem_A imp_B h_AB
   exact transfer_preserves_oracle T₂ imp_B h_idem_B imp_C h_BC
 
-/-! ═══════════════════════════════════════════════════════════════════════════════
-    §8. THE META-ORACLE: SELF-IMPROVEMENT OF SELF-IMPROVEMENT
-    ═══════════════════════════════════════════════════════════════════════════════
-
-    The deepest strange loop: when the meta agent improves the meta agent.
-    This is O(O) = O applied at the meta level.
--/
 
 /-- A meta-oracle: an oracle on the space of improvement operators. -/
-
 def MetaOracle (Agent : Type*) :=
   AgentOracle (Agent → Agent)
 
-/-- The meta-oracle's fixed points are the "stable strategies" —
-    improvement methods that cannot be further improved. -/
 
+/-- The meta-oracle's fixed points are the "stable strategies" —
+improvement methods that cannot be further improved. -/
 def stableStrategies {Agent : Type*} (MO : MetaOracle Agent) : Set (Agent → Agent) :=
   MO.fixedAgents
 
-/-- Every meta-improved strategy is stable. -/
 
+/-- Every meta-improved strategy is stable. -/
 theorem meta_improved_is_stable {Agent : Type*} (MO : MetaOracle Agent)
     (f : Agent → Agent) : MO.improve f ∈ stableStrategies MO :=
   MO.idem f
 
-/-- A fully self-referential system: the meta-oracle applied to id is stable. -/
 
+/-- A fully self-referential system: the meta-oracle applied to id is stable. -/
 theorem meta_oracle_self_reference {Agent : Type*} (MO : MetaOracle Agent) :
     MO.improve (MO.improve id) = MO.improve id := MO.idem id
 
-/-! ═══════════════════════════════════════════════════════════════════════════════
-    §9. THE DIAGONAL BARRIER
-    ═══════════════════════════════════════════════════════════════════════════════
-
-    Gödel's incompleteness theorem applies to self-improving systems.
-    No predicate on agents can simultaneously decide membership for all agents.
--/
 
 /-- Diagonal argument for agent spaces. -/
-
 theorem agent_diagonal {Agent : Type*}
     (code : Agent → (Agent → Bool))
     (h_surj : Surjective code) :
@@ -342,32 +244,24 @@ theorem agent_diagonal {Agent : Type*}
   have := congr_fun h a
   simp at this
 
-/-- Incompleteness for self-improving agents: no agent can predict the
-    behavior of all agents, including itself. -/
 
+/-- Incompleteness for self-improving agents: no agent can predict the
+behavior of all agents, including itself. -/
 theorem hyperagent_incompleteness {Agent : Type*}
     (predict : Agent → Agent → Bool)
     (h_surj : Surjective predict) :
     ∃ behavior : Agent → Bool, ∀ a, behavior ≠ predict a :=
   agent_diagonal predict h_surj
 
-/-! ═══════════════════════════════════════════════════════════════════════════════
-    §10. OPEN-ENDED EXPLORATION AND QUALITY-DIVERSITY
-    ═══════════════════════════════════════════════════════════════════════════════
-
-    We formalize the quality-diversity principle underlying the DGM-H archive:
-    maintaining diverse solutions prevents premature convergence.
--/
 
 /-- A diversity metric on agents. -/
-
 def DiverseArchive {Agent : Type*} [DecidableEq Agent]
     (agents : Finset Agent) (eval : Agent → ℝ) (diversity : Agent → Agent → ℝ) : Prop :=
   ∀ a ∈ agents, ∀ b ∈ agents, a ≠ b → 0 < diversity a b
 
-/-- Quality-diversity trade-off: we cannot simultaneously maximize
-    quality and diversity when agents are distinct. -/
 
+/-- Quality-diversity trade-off: we cannot simultaneously maximize
+quality and diversity when agents are distinct. -/
 theorem qd_tradeoff {Agent : Type*} [DecidableEq Agent] [Nonempty Agent]
     (agents : Finset Agent) (h_size : 2 ≤ agents.card) :
     ∃ eval : Agent → ℝ, ∃ a b : Agent, a ∈ agents ∧ b ∈ agents ∧

@@ -21,8 +21,6 @@ theorem swap_self_inverse {n : Type*} [DecidableEq n] (a b : n) :
 theorem swap_symmetric {n : Type*} [DecidableEq n] (a b : n) :
     swap a b = swap b a := swap_comm a b
 
-/-! ## §2: Stabilizer Code Parameters -/
-
 
 def logical_qubits (n_physical n_stabilizers : ℕ) : ℕ :=
   n_physical - n_stabilizers
@@ -39,8 +37,6 @@ theorem total_ec_gate_count (n d : ℕ) (hd : 1 ≤ d) :
     n * d ^ 2 ≥ n := by
   nlinarith [Nat.one_le_pow 2 d hd]
 
-/-! ## §4: Gottesman-Knill Advantage -/
-
 
 theorem clifford_simulation_cost (n : ℕ) (hn : 0 < n) :
     n ≤ n * n := Nat.le_mul_of_pos_left n hn
@@ -48,8 +44,6 @@ theorem clifford_simulation_cost (n : ℕ) (hn : 0 < n) :
 
 theorem simulation_advantage (n : ℕ) (hn : 1 ≤ n) :
     n < 2 ^ n := Nat.lt_pow_self (by norm_num : 1 < 2)
-
-/-! ## §5: Transposition Decomposition -/
 
 
 theorem transposition_count_bound (n : ℕ) (hn : 1 ≤ n) :

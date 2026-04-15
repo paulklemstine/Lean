@@ -13,15 +13,13 @@ noncomputable section
 def IsIdem {C : Type*} [Category C] {X : C} (e : X ⟶ X) : Prop :=
   e ≫ e = e
 
-/-- Identity is idempotent. -/
 
+/-- Identity is idempotent. -/
 theorem isIdem_id {C : Type*} [Category C] (X : C) :
     IsIdem (𝟙 X) := by simp [IsIdem]
 
-/-! ## §2: Retraction Theory -/
 
 /-- A retraction pair (section-retraction) in a category. -/
-
 structure RetrPair {C : Type*} [Category C] (X Y : C) where
   /-- Section: Y → X (inclusion) -/
   sect : Y ⟶ X
@@ -30,15 +28,12 @@ structure RetrPair {C : Type*} [Category C] (X Y : C) where
   /-- The retraction-section identity: sect ≫ retr = 𝟙 Y -/
   is_retract : sect ≫ retr = 𝟙 Y
 
-/-- Every retraction pair induces an idempotent on X via retr ≫ sect. -/
 
+/-- Every retraction pair induces an idempotent on X via retr ≫ sect. -/
 def RetrPair.toIdem {C : Type*} [Category C] {X Y : C}
     (r : RetrPair X Y) : X ⟶ X :=
   r.retr ≫ r.sect
 
-/-
-The induced endomorphism is indeed idempotent.
--/
 
 theorem retrPair_idempotent {C : Type*} [Category C] {X Y : C}
     (r : RetrPair X Y) :
@@ -48,40 +43,30 @@ theorem retrPair_idempotent {C : Type*} [Category C] {X Y : C}
       simp +decide [ RetrPair.toIdem ];
       grind +revert
 
-/-! ## §3: Functorial Collapse -/
-
-/-
-Functors preserve idempotency.
--/
 
 theorem functor_preserves_idem {C D : Type*} [Category C] [Category D]
     (F : C ⥤ D) {X : C} {e : X ⟶ X} (he : IsIdem e) :
     IsIdem (F.map e) := by
       grind +locals
 
-/-! ## §4: Collapse Lattice -/
 
 /-- The refinement ordering on idempotents. -/
-
 def IdemRefines {C : Type*} [Category C] {X : C} (e f : X ⟶ X) : Prop :=
   e ≫ f = e ∧ f ≫ e = e
 
-/-- Idempotent refinement is reflexive for idempotents. -/
 
+/-- Idempotent refinement is reflexive for idempotents. -/
 theorem idemRefines_refl {C : Type*} [Category C] {X : C}
     (e : X ⟶ X) (he : IsIdem e) :
     IdemRefines e e := ⟨he, he⟩
 
-/-- The identity idempotent is the top element. -/
 
+/-- The identity idempotent is the top element. -/
 theorem idemRefines_id {C : Type*} [Category C] {X : C}
     (e : X ⟶ X) (he : IsIdem e) :
     IdemRefines e (𝟙 X) :=
   ⟨Category.comp_id e, Category.id_comp e⟩
 
-/-
-Idempotent refinement is transitive.
--/
 
 theorem idemRefines_trans {C : Type*} [Category C] {X : C}
     (e f g : X ⟶ X) (hef : IdemRefines e f) (hfg : IdemRefines f g) :

@@ -15,8 +15,6 @@ structure SignatureScheme (Message PublicKey SecretKey Signature : Type) where
   verify : PublicKey → Message → Signature → Prop
   correctness : ∀ sk m, verify (keygen sk) m (sign sk m)
 
-/-! ## Lattice Parameters -/
-
 
 structure LatticeParams where
   n : ℕ
@@ -26,15 +24,13 @@ structure LatticeParams where
   hq : 1 < q
   hβ : 0 < β
 
-/-! ## SIS Hardness -/
-
 
 structure SISHardness where
   sisAdvantage : ℕ → ℝ
   isHard : ∀ c : ℕ, ∃ N : ℕ, ∀ n : ℕ, N ≤ n → |sisAdvantage n| < (1 / (n : ℝ)) ^ c
 
-/-- Security of lattice signature reduces to SIS hardness -/
 
+/-- Security of lattice signature reduces to SIS hardness -/
 theorem lattice_sig_security (sis : SISHardness)
     (forgeryAdvantage : ℕ → ℝ)
     (h_reduction : ∀ n, |forgeryAdvantage n| ≤ |sis.sisAdvantage n| + (1 / (n : ℝ)) ^ n) :
@@ -47,8 +43,6 @@ theorem lattice_sig_security (sis : SISHardness)
     have h2 := hN n hn
     have h3 : (0:ℝ) ≤ (1 / (n : ℝ)) ^ c := by positivity
     linarith⟩
-
-/-! ## BLS vs Lattice Comparison -/
 
 
 noncomputable def blsSigSize : ℝ := 48
@@ -69,8 +63,6 @@ theorem lattice_larger_for_security (n : ℕ) (hn : 24 ≤ n) :
   have : (24 : ℝ) ≤ (n : ℝ) := by exact_mod_cast hn
   linarith
 
-/-! ## Aggregation Space Efficiency -/
-
 
 theorem aggregation_space_saving (k : ℕ) (sigSize aggSize : ℝ)
     (hk : 1 < k) (hSig : 0 < sigSize)
@@ -78,8 +70,6 @@ theorem aggregation_space_saving (k : ℕ) (sigSize aggSize : ℝ)
     aggSize / (k * sigSize) < 1 := by
   rw [div_lt_one (by positivity)]
   exact h_saving
-
-/-! ## Quantum Resistance -/
 
 
 theorem quantum_lattice_exponential (n : ℕ) (hn : 2 ≤ n) :

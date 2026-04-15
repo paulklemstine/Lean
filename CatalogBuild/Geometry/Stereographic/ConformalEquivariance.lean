@@ -13,33 +13,28 @@ noncomputable section
 def rotationAction (n : ℕ) (R : Fin n → Fin n → ℝ) (x : Fin n → ℝ) : Fin n → ℝ :=
   fun i => ∑ j, R i j * x j
 
-/-- Dilation action: scales a vector by a positive factor. -/
 
+/-- Dilation action: scales a vector by a positive factor. -/
 def dilationAction (lambda : ℝ) (n : ℕ) (x : Fin n → ℝ) : Fin n → ℝ :=
   fun i => lambda * x i
 
-/-- Inversion (Kelvin transform): x ↦ x/‖x‖². -/
 
+/-- Inversion (Kelvin transform): x ↦ x/‖x‖². -/
 def inversionAction (n : ℕ) (x : Fin n → ℝ) : Fin n → ℝ :=
   let sqn := ∑ i, (x i) ^ 2
   fun i => x i / sqn
 
-/-! ## Part 2: Kernel Invariance Under Rotations -/
 
 /-- The squared norm of a vector. -/
-
 def vecSqNorm' (n : ℕ) (x : Fin n → ℝ) : ℝ :=
   ∑ i, (x i) ^ 2
 
-/-- The stereographic kernel. -/
 
+/-- The stereographic kernel. -/
 def stereoKernel' (n : ℕ) (x y : Fin n → ℝ) : ℝ :=
   (4 * ∑ i, x i * y i + (vecSqNorm' n x - 1) * (vecSqNorm' n y - 1)) /
   ((1 + vecSqNorm' n x) * (1 + vecSqNorm' n y))
 
-/-
-The squared norm of a rotated vector equals the original if R is orthogonal.
--/
 
 theorem rotation_preserves_sqnorm (n : ℕ) (R : Fin n → Fin n → ℝ) (x : Fin n → ℝ)
     (hR : ∀ i j, ∑ k, R k i * R k j = if i = j then 1 else 0) :
@@ -52,9 +47,6 @@ theorem rotation_preserves_sqnorm (n : ℕ) (R : Fin n → Fin n → ℝ) (x : F
     exact?;
   simp_all +decide [ Finset.sum_ite, Finset.filter_eq, Finset.filter_ne ]
 
-/-
-The inner product is preserved by orthogonal rotations.
--/
 
 theorem rotation_preserves_inner (n : ℕ) (R : Fin n → Fin n → ℝ) (x y : Fin n → ℝ)
     (hR : ∀ i j, ∑ k, R k i * R k j = if i = j then 1 else 0) :
@@ -66,8 +58,8 @@ theorem rotation_preserves_inner (n : ℕ) (R : Fin n → Fin n → ℝ) (x y : 
     exact?;
   unfold rotationAction; aesop;
 
-/-- The kernel is invariant under rotations (given orthogonality of R). -/
 
+/-- The kernel is invariant under rotations (given orthogonality of R). -/
 theorem rotationKernel_invariant (n : ℕ) (R : Fin n → Fin n → ℝ) (x y : Fin n → ℝ)
     (hR : ∀ i j, ∑ k, R k i * R k j = if i = j then 1 else 0) :
     stereoKernel' n (rotationAction n R x) (rotationAction n R y) =
@@ -76,27 +68,23 @@ theorem rotationKernel_invariant (n : ℕ) (R : Fin n → Fin n → ℝ) (x y : 
   rw [rotation_preserves_sqnorm n R x hR, rotation_preserves_sqnorm n R y hR,
       rotation_preserves_inner n R x y hR]
 
-/-! ## Part 3: Dilation Behavior -/
 
 /-- The squared norm scales quadratically under dilation. -/
-
 theorem dilation_sqnorm (lambda : ℝ) (n : ℕ) (x : Fin n → ℝ) :
     vecSqNorm' n (dilationAction lambda n x) = lambda ^ 2 * vecSqNorm' n x := by
   unfold vecSqNorm' dilationAction
   simp [mul_pow, Finset.mul_sum]
 
-/-- The inner product scales linearly in each factor under dilation. -/
 
+/-- The inner product scales linearly in each factor under dilation. -/
 theorem dilation_inner (lambda : ℝ) (n : ℕ) (x y : Fin n → ℝ) :
     ∑ i, dilationAction lambda n x i * y i = lambda * ∑ i, x i * y i := by
   unfold dilationAction
   simp [Finset.mul_sum, mul_assoc]
 
-/-! ## Part 4: Conformal Equivariant Layer -/
 
 /-- A conformal equivariant layer: transforms inputs through the stereographic
-    kernel while preserving conformal structure. -/
-
+kernel while preserving conformal structure. -/
 def conformalEquivariantLayer (seqLen d : ℕ) (T : ℝ)
     (X : Fin seqLen → Fin d → ℝ)
     (V : Fin seqLen → Fin d → ℝ) : Fin seqLen → Fin d → ℝ :=
@@ -106,42 +94,40 @@ def conformalEquivariantLayer (seqLen d : ℕ) (T : ℝ)
     let totalWeight := ∑ k : Fin seqLen, weights k
     ∑ k : Fin seqLen, (weights k / totalWeight) * (cf k * V k j)
 
-/-- Conformal weights are positive. -/
 
+/-- Conformal weights are positive. -/
 theorem conformalWeight_pos (d : ℕ) (T : ℝ) (x y : Fin d → ℝ) :
     0 < Real.exp (stereoKernel' d x y / T) :=
   exp_pos _
 
-/-- Sum of conformal weights is positive. -/
 
+/-- Sum of conformal weights is positive. -/
 theorem conformalWeight_sum_pos (seqLen d : ℕ) (T : ℝ)
     (X : Fin seqLen → Fin d → ℝ) (i : Fin seqLen) :
     0 < ∑ k : Fin seqLen, Real.exp (stereoKernel' d (X i) (X k) / T) :=
   Finset.sum_pos (fun k _ => exp_pos _) ⟨i, Finset.mem_univ _⟩
 
-/-! ## Part 5: Equivariant Layer Composition -/
 
 /-- Composing two equivariant layers yields an equivariant layer. -/
-
 def composedEquivariantLayers (seqLen d : ℕ) (T₁ T₂ : ℝ)
     (X V₁ V₂ : Fin seqLen → Fin d → ℝ) : Fin seqLen → Fin d → ℝ :=
   let intermediate := conformalEquivariantLayer seqLen d T₁ X V₁
   conformalEquivariantLayer seqLen d T₂ X intermediate
 
-/-- The conformal factor cf(x) = 2/(1+‖x‖²) satisfies cf(0) = 2. -/
 
+/-- The conformal factor cf(x) = 2/(1+‖x‖²) satisfies cf(0) = 2. -/
 theorem conformal_factor_at_origin (d : ℕ) :
     2 / (1 + vecSqNorm' d (fun _ => (0 : ℝ))) = 2 := by
   unfold vecSqNorm'; simp
 
-/-- The conformal factor is always positive. -/
 
+/-- The conformal factor is always positive. -/
 theorem conformal_factor_pos' (d : ℕ) (x : Fin d → ℝ) :
     0 < 2 / (1 + vecSqNorm' d x) := by
   unfold vecSqNorm'; positivity
 
-/-- The conformal factor is at most 2. -/
 
+/-- The conformal factor is at most 2. -/
 theorem conformal_factor_le_two' (d : ℕ) (x : Fin d → ℝ) :
     2 / (1 + vecSqNorm' d x) ≤ 2 := by
   unfold vecSqNorm'

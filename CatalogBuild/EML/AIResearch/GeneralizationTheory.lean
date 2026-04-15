@@ -25,8 +25,6 @@ theorem eml_less_overfitting (d w : ℕ) (hw : 5 ≤ w) :
   unfold shatteringBound
   exact Nat.pow_le_pow_right (by omega) (eml_lower_vc d w hw)
 
-/-! ## §2. Dropout Regularization -/
-
 
 def effectiveParams (totalParams : ℕ) (keepRate : ℝ) : ℝ := ↑totalParams * keepRate
 
@@ -47,8 +45,6 @@ theorem eml_less_dropout_needed (d w : ℕ) (p_eml p_std : ℝ)
     effectiveParams (emlVC d w) p_eml ≤ effectiveParams (mlpVC d w) p_std := by
   unfold effectiveParams; nlinarith [ show ( emlVC d w:ℝ ) ≤ mlpVC d w by exact_mod_cast eml_lower_vc d w hw ] ;
 
-/-! ## §3. Weight Decay -/
-
 
 def l2Penalty (lam : ℝ) (normSq : ℝ) : ℝ := lam * normSq
 
@@ -65,8 +61,6 @@ theorem regularized_ge_empirical (L lam normSq : ℝ) (hlam : 0 ≤ lam) (hn : 0
 theorem stronger_reg_more_loss (L lam1 lam2 normSq : ℝ) (hn : 0 ≤ normSq) (hlam : lam1 ≤ lam2) :
     regularizedLoss L lam1 normSq ≤ regularizedLoss L lam2 normSq := by
   unfold regularizedLoss l2Penalty; nlinarith
-
-/-! ## §4. Bias-Variance Decomposition -/
 
 
 def biasAtCapacity (baseCapacity modelCapacity : ℕ) : ℝ :=
@@ -86,8 +80,6 @@ theorem more_data_less_variance (c n1 n2 : ℕ) (hn1 : 0 < n1) (hn : n1 ≤ n2) 
     varianceEstimate c n2 ≤ varianceEstimate c n1 := by
   unfold varianceEstimate;
   gcongr
-
-/-! ## §5. Double Descent Modeling -/
 
 
 def modernTestError (params data : ℕ) (noise : ℝ) : ℝ :=

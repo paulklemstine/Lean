@@ -13,8 +13,8 @@ noncomputable section
 noncomputable def invStereo2D (t : ℝ) : ℝ × ℝ :=
   (2 * t / (1 + t^2), (1 - t^2) / (1 + t^2))
 
-/-- 3D inverse stereographic projection: ℝ² → S² -/
 
+/-- 3D inverse stereographic projection: ℝ² → S² -/
 noncomputable def invStereo3D (u v : ℝ) : ℝ × ℝ × ℝ :=
   (2 * u / (1 + u^2 + v^2),
    2 * v / (1 + u^2 + v^2),
@@ -56,13 +56,8 @@ theorem invStereo2D_one : invStereo2D 1 = (1, 0) := by
 theorem invStereo2D_neg_one : invStereo2D (-1) = (-1, 0) := by
   unfold invStereo2D; norm_num;
 
-/-! ## Section 11: Pythagorean Triples from Stereographic Projection
-
-The rational oracle: plug in rational t = p/q to get Pythagorean triples.
--/
 
 /-- The Pythagorean triple generator from stereographic projection. -/
-
 def pythTriple (m n : ℤ) : ℤ × ℤ × ℤ :=
   (2 * m * n, m^2 - n^2, m^2 + n^2)
 
@@ -72,8 +67,8 @@ theorem pyth_triple_identity (m n : ℤ) :
     (2 * m * n)^2 + (m^2 - n^2)^2 = (m^2 + n^2)^2 := by
   ring
 
-/-- The 3D Pythagorean quadruple generator. -/
 
+/-- The 3D Pythagorean quadruple generator. -/
 def pythQuadruple (p q r : ℤ) : ℤ × ℤ × ℤ × ℤ :=
   (2 * p * r, 2 * q * r, r^2 - p^2 - q^2, r^2 + p^2 + q^2)
 
@@ -83,30 +78,22 @@ theorem pyth_quadruple_identity (p q r : ℤ) :
     (2*p*r)^2 + (2*q*r)^2 + (r^2 - p^2 - q^2)^2 = (r^2 + p^2 + q^2)^2 := by
   ring
 
-/-- Theorem 26.3: Classic triple (3, 4, 5). -/
 
+/-- Theorem 26.3: Classic triple (3, 4, 5). -/
 theorem classic_345 : 3^2 + 4^2 = 5^2 := by norm_num
 
-/-- Theorem 26.4: Classic triple (5, 12, 13). -/
 
+/-- Theorem 26.4: Classic triple (5, 12, 13). -/
 theorem classic_51213 : 5^2 + 12^2 = 13^2 := by norm_num
 
-/-- Theorem 26.5: Classic quadruple (1, 2, 2, 3). -/
 
+/-- Theorem 26.5: Classic quadruple (1, 2, 2, 3). -/
 theorem classic_1223 : 1^2 + 2^2 + 2^2 = 3^2 := by norm_num
 
-/-- Theorem 26.6: Classic quadruple (2, 3, 6, 7). -/
 
+/-- Theorem 26.6: Classic quadruple (2, 3, 6, 7). -/
 theorem classic_2367 : 2^2 + 3^2 + 6^2 = 7^2 := by norm_num
 
-/-! ## Section 12: Tropical Oracle Geometry (Hypothesis H17)
-
-In tropical mathematics, we replace (×, +) with (+, min).
-The "tropical circle" x ⊕ y = 0 becomes min(x, y) = 0.
-We explore what "tropical Pythagorean triples" look like.
--/
-
-/-- Tropical addition: minimum. -/
 
 theorem tropAdd_idempotent (a : ℤ) : tropAdd a a = a := by
   exact min_self a
@@ -130,9 +117,6 @@ theorem tropMul_zero (a : ℤ) : tropMul a 0 = a := by
   -- By definition of tropMul, we have tropMul a 0 = a + 0.
   simp [tropMul]
 
-/-! ## Section 13: Sum-of-Squares Identities -/
-
-
 
 theorem sum_two_sq_mul_sum_two_sq (a b c d : ℤ) :
     ∃ e f : ℤ, (a^2 + b^2) * (c^2 + d^2) = e^2 + f^2 := by
@@ -140,16 +124,17 @@ theorem sum_two_sq_mul_sum_two_sq (a b c d : ℤ) :
 
 
 
+/-- Theorem 28.4: 2 is a sum of two squares. -/
 theorem two_sum_two_sq : ∃ a b : ℤ, a^2 + b^2 = 2 := by
   exact ⟨1, 1, by norm_num⟩
 
-/-- Theorem 28.5: 5 is a sum of two squares. -/
 
+/-- Theorem 28.5: 5 is a sum of two squares. -/
 theorem five_sum_two_sq : ∃ a b : ℤ, a^2 + b^2 = 5 := by
   exact ⟨1, 2, by norm_num⟩
 
-/-- Theorem 28.6: 10 = 2 × 5 is a sum of two squares. -/
 
+/-- Theorem 28.6: 10 = 2 × 5 is a sum of two squares. -/
 theorem ten_sum_two_sq : ∃ a b : ℤ, a^2 + b^2 = 10 := by
   exact ⟨1, 3, by norm_num⟩
 
@@ -158,14 +143,12 @@ theorem ten_sum_two_sq : ∃ a b : ℤ, a^2 + b^2 = 10 := by
 theorem three_not_sum_two_sq : ¬ ∃ a b : ℤ, a^2 + b^2 = 3 ∧ 0 ≤ a ∧ 0 ≤ b ∧ a ≤ b := by
   exact fun ⟨ a, b, h1, h2, h3, h4 ⟩ => by nlinarith [ show a ≤ 1 by nlinarith, show b ≤ 1 by nlinarith ] ;
 
-/-! ## Section 14: The Stereographic Oracle Collapse -/
 
 /-- The 2D stereographic oracle: project to circle, back to line. -/
-
 noncomputable def stereoOracle (t : ℝ) : ℝ := t
 
-/-- Theorem 29.1: The stereographic round-trip is the identity. -/
 
+/-- Theorem 29.1: The stereographic round-trip is the identity. -/
 theorem stereo_roundtrip_id (t : ℝ) : stereoOracle t = t := by
   rfl
 

@@ -15,21 +15,11 @@ theorem rsa_key_ex2 : (3 * 27 : ℤ) % 40 = 1 := by norm_num
 
 theorem euler_thm_15 : ∀ a : (ZMod 15)ˣ, (a : ZMod 15) ^ Nat.totient 15 = 1 := by decide
 
-end RSA
-
-section DiffieHellman
-
-/-
-DH correctness: (g^a)^b = (g^b)^a
--/
 
 theorem dh_correct {G : Type*} [CommMonoid G] (g : G) (a b : ℕ) :
     (g ^ a) ^ b = (g ^ b) ^ a := by
   rw [ ← pow_mul, ← pow_mul, mul_comm ]
 
-/-
-3 generates (ℤ/7ℤ)*
--/
 
 theorem primitive_root_3_7 :
     ∀ a : (ZMod 7)ˣ, ∃ k : ℕ, (3 : ZMod 7) ^ k = (a : ZMod 7) := by
@@ -58,19 +48,12 @@ theorem hamming_symmetric {n : ℕ} (x y : Fin n → Bool) :
   -- Since equality is symmetric, the sets {i | ¬x i = y i} and {i | ¬y i = x i} are identical.
   simp [eq_comm]
 
-/-
-PROVIDED SOLUTION
-If x_i ≠ z_i, then either x_i ≠ y_i or y_i ≠ z_i (since equality is transitive). So the filter set for d(x,z) is a subset of the union of filter sets for d(x,y) and d(y,z). Use Finset.card_filter_le_card_filter + Finset.card_union_le.
--/
 
 theorem hamming_tri {n : ℕ} (x y z : Fin n → Bool) :
     hammingDistance x z ≤ hammingDistance x y + hammingDistance y z := by
   unfold hammingDistance; rw [ ← Finset.card_union_add_card_inter ] ;
   exact le_add_right ( Finset.card_le_card fun i hi => by by_cases hi' : x i = y i <;> by_cases hi'' : y i = z i <;> aesop )
 
-/-
-Repetition code distance
--/
 
 theorem rep_code_distance :
     hammingDistance (fun _ : Fin 3 => false) (fun _ : Fin 3 => true) = 3 := by

@@ -16,25 +16,10 @@ theorem invStereo1_on_circle (y : ℝ) :
   field_simp
   ring
 
-/-
-PROBLEM
-The origin maps to the south pole (0, -1).
-
-PROVIDED SOLUTION
-Just unfold invStereo1 and simplify: 2*0/(0+1) = 0, (0-1)/(0+1) = -1.
--/
 
 theorem invStereo1_zero : invStereo1 0 = (0, -1) := by
   unfold invStereo1; norm_num;
 
-/-
-PROBLEM
-As y → ∞, invStereo1 approaches the north pole (0, 1).
-    More precisely: the limit of the second coordinate is 1.
-
-PROVIDED SOLUTION
-The second coordinate of invStereo1 y is (y²-1)/(y²+1) = 1 - 2/(y²+1). As y → +∞, y²+1 → +∞, so 2/(y²+1) → 0, so the expression → 1. Use Filter.Tendsto, show it equals 1 - 2/(y²+1), then show 2/(y²+1) → 0.
--/
 
 theorem invStereo1_limit_north :
     Filter.Tendsto (fun y => (invStereo1 y).2) Filter.atTop (nhds 1) := by
@@ -42,9 +27,6 @@ theorem invStereo1_limit_north :
   field_simp;
   exact ( Metric.tendsto_atTop.mpr <| fun ε εpos ↦ ⟨ ε⁻¹ + 1, fun y hy ↦ abs_lt.mpr <| by constructor <;> nlinarith [ inv_pos.mpr εpos, mul_inv_cancel₀ ( ne_of_gt εpos ), sq_nonneg ( y - 1 ), mul_div_cancel₀ ( y ^ 2 - 1 ) ( by nlinarith [ inv_pos.mpr εpos ] : ( 1 + y ^ 2 ) ≠ 0 ) ] ⟩ ));
 
-/-! ## Inverse Stereographic Projection in ℝ² → S² -/
-
-/-- Inverse stereographic projection from ℝ² to the unit sphere S² ⊂ ℝ³. -/
 
 theorem invStereo2_on_sphere (y : Fin 2 → ℝ) :
     (invStereo2 y) 0 ^ 2 + (invStereo2 y) 1 ^ 2 + (invStereo2 y) 2 ^ 2 = 1 := by
@@ -54,87 +36,38 @@ theorem invStereo2_on_sphere (y : Fin 2 → ℝ) :
   field_simp
   ring
 
-/-! ## The Conformal Factor -/
 
 /-- The conformal factor of (inverse) stereographic projection. -/
-
 def conformalFactor (y : ℝ) : ℝ := 2 / (1 + y ^ 2)
 
-/-
-PROBLEM
-The conformal factor is always positive.
-
-PROVIDED SOLUTION
-conformalFactor y = 2/(1+y²). Since 1+y² > 0 (by sq_add_one_pos) and 2 > 0, the ratio is positive. Use div_pos and sq_add_one_pos.
--/
 
 theorem conformalFactor_pos (y : ℝ) : 0 < conformalFactor y := by
   exact div_pos zero_lt_two ( by positivity )
 
-/-
-PROBLEM
-The conformal factor at the origin is 2.
-
-PROVIDED SOLUTION
-Unfold conformalFactor, compute 2/(1+0²) = 2/1 = 2. Use simp [conformalFactor] and norm_num.
--/
 
 theorem conformalFactor_zero : conformalFactor 0 = 2 := by
   unfold conformalFactor; norm_num;
 
-/-
-PROBLEM
-The conformal factor at y = 1 is 1.
-
-PROVIDED SOLUTION
-Unfold conformalFactor, compute 2/(1+1²) = 2/2 = 1. Use simp [conformalFactor] and norm_num.
--/
 
 theorem conformalFactor_one : conformalFactor 1 = 1 := by
   unfold conformalFactor; norm_num;
 
-/-
-PROBLEM
-The conformal factor tends to 0 as |y| → ∞.
-    This corresponds to the "Big Bang compression" at the north pole.
-
-PROVIDED SOLUTION
-conformalFactor y = 2/(1+y²). As y → +∞, 1+y² → +∞, so 2/(1+y²) → 0. Use Filter.Tendsto.div_atTop or similar. Can also write it as 2 * (1/(1+y²)) and show 1/(1+y²) → 0.
--/
 
 theorem conformalFactor_tendsto_zero :
     Filter.Tendsto conformalFactor Filter.atTop (nhds 0) := by
   exact tendsto_const_nhds.div_atTop ( tendsto_const_nhds.add_atTop ( by norm_num ) )
 
-/-
-PROBLEM
-The conformal factor is bounded above by 2.
-
-PROVIDED SOLUTION
-conformalFactor y = 2/(1+y²). Since 1+y² ≥ 1, we have 2/(1+y²) ≤ 2/1 = 2. Use div_le_of_le_mul or similar, with sq_nonneg.
--/
 
 theorem conformalFactor_le_two (y : ℝ) : conformalFactor y ≤ 2 := by
   exact div_le_self ( by norm_num ) ( by nlinarith )
 
-/-! ## The Denominator is Always Positive -/
-
-/-
-PROBLEM
-Key helper: y² + 1 > 0 for all real y.
-
-PROVIDED SOLUTION
-y² ≥ 0 so y² + 1 ≥ 1 > 0. Use positivity or linarith [sq_nonneg y].
--/
 
 theorem sq_add_one_pos (y : ℝ) : 0 < y ^ 2 + 1 := by
   positivity
 
-/-! ## The Dimensional Cascade: Volume of Sⁿ -/
 
 /-- The volume of the unit n-sphere Sⁿ.
-    Vol(S¹) = 2π, Vol(S²) = 4π, Vol(S³) = 2π². -/
-
+Vol(S¹) = 2π, Vol(S²) = 4π, Vol(S³) = 2π². -/
 def sphereVolume : ℕ → ℝ
   | 0 => 2
   | 1 => 2 * π
@@ -142,50 +75,21 @@ def sphereVolume : ℕ → ℝ
   | 3 => 2 * π ^ 2
   | (n + 4) => 2 * π / (n + 3 : ℝ) * sphereVolume (n + 2)
 
-/-
-PROBLEM
-Vol(S⁰) = 2 (two points).
-
-PROVIDED SOLUTION
-Unfold the definition. sphereVolume 0 = 2 by definition.
--/
 
 theorem sphereVolume_zero : sphereVolume 0 = 2 := by
   rfl
 
-/-
-PROBLEM
-Vol(S¹) = 2π (circumference of unit circle).
-
-PROVIDED SOLUTION
-Unfold the definition. sphereVolume 1 = 2 * π by definition.
--/
 
 theorem sphereVolume_one : sphereVolume 1 = 2 * π := by
   rfl
 
-/-
-PROBLEM
-Vol(S²) = 4π (surface area of unit sphere).
-
-PROVIDED SOLUTION
-Unfold the definition. sphereVolume 2 = 4 * π by definition.
--/
 
 theorem sphereVolume_two : sphereVolume 2 = 4 * π := by
   rfl
 
-/-
-PROBLEM
-Vol(S³) = 2π² (the volume of the universe in Genesis Projection units).
-
-PROVIDED SOLUTION
-Unfold the definition. sphereVolume 3 = 2 * π ^ 2 by definition.
--/
 
 theorem sphereVolume_three : sphereVolume 3 = 2 * π ^ 2 := by
   rfl
 
-end
 
 end

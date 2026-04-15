@@ -13,20 +13,18 @@ noncomputable section
 def M1_SL2 : Matrix.SpecialLinearGroup (Fin 2) ℤ :=
   ⟨!![2, -1; 1, 0], by decide +revert⟩
 
-/-- M₃ as an element of SL(2,ℤ). -/
 
+/-- M₃ as an element of SL(2,ℤ). -/
 def M3_SL2 : Matrix.SpecialLinearGroup (Fin 2) ℤ :=
   ⟨!![1, 2; 0, 1], by decide +revert⟩
 
-/-- The theta group Γ_θ = ⟨S, T²⟩ as a subgroup of SL(2,ℤ). -/
 
+/-- The theta group Γ_θ = ⟨S, T²⟩ as a subgroup of SL(2,ℤ). -/
 def GammaTheta : Subgroup (Matrix.SpecialLinearGroup (Fin 2) ℤ) :=
   Subgroup.closure {ModularGroup.S, ModularGroup.T ^ 2}
 
-/-! ## Main Theorem: ⟨M₁, M₃⟩ = Γ_θ -/
 
 /-- The Berggren generators M₁ and M₃ generate the theta group. -/
-
 theorem berggren_eq_theta : Subgroup.closure {M1_SL2, M3_SL2} = GammaTheta := by
   refine le_antisymm ?_ ?_
   · simp +decide [Subgroup.closure_le, Set.insert_subset_iff]
@@ -53,16 +51,6 @@ theorem berggren_eq_theta : Subgroup.closure {M1_SL2, M3_SL2} = GammaTheta := by
         (Subgroup.subset_closure (Set.mem_insert _ _))
     · exact Subgroup.subset_closure (by right; ext i j; fin_cases i <;> fin_cases j <;> rfl)
 
-/-! ## ADE Tower: Group Orders
-
-The orders |SL(2,𝔽_p)| for small primes connect to the ADE classification
-via the McKay correspondence:
-- p = 2: |SL(2,𝔽₂)| = 6  (S₃, related to A₂)
-- p = 3: |SL(2,𝔽₃)| = 24 (binary tetrahedral = Ẽ₆)
-- p = 5: |SL(2,𝔽₅)| = 120 (binary icosahedral = Ẽ₈)
-- p = 7: |SL(2,𝔽₇)| = 336
-- p = 11: |SL(2,𝔽₁₁)| = 1320 (contains M₁₁ connection) -/
-
 
 theorem SL2_F2_card :
     Fintype.card (Matrix.SpecialLinearGroup (Fin 2) (ZMod 2)) = 6 := by native_decide
@@ -83,18 +71,13 @@ theorem SL2_F7_card :
 theorem SL2_F11_card :
     Fintype.card (Matrix.SpecialLinearGroup (Fin 2) (ZMod 11)) = 1320 := by native_decide
 
-/-- The general formula |SL(2,𝔽_p)| = p(p²-1) verified for p = 3. -/
 
+/-- The general formula |SL(2,𝔽_p)| = p(p²-1) verified for p = 3. -/
 theorem SL2_order_formula_p3 : 3 * (3 ^ 2 - 1) = 24 := by norm_num
 
+
 /-- |SL(2,𝔽_p)| = p(p²-1) verified for p = 5. -/
-
 theorem SL2_order_formula_p5 : 5 * (5 ^ 2 - 1) = 120 := by norm_num
-
-/-! ## M₁₁ Connection
-
-PSL(2,𝔽₁₁) has order 660 = 1320/2 and embeds into the Mathieu group M₁₁
-of order 7920, acting on P¹(𝔽₁₁) = 12 points. -/
 
 
 theorem PSL2_F11_order : 1320 / 2 = 660 := by norm_num
@@ -103,27 +86,19 @@ theorem M11_order : 7920 = 2 ^ 4 * 3 ^ 2 * 5 * 11 := by norm_num
 
 theorem PSL2_divides_M11 : 660 ∣ 7920 := ⟨12, by norm_num⟩
 
-/-! ## j-invariant Connection
-
-The j-invariant formula j = 256(1-λ+λ²)³/(λ(1-λ))² at λ = 1/2
-gives j(i) = 1728 = 12³. This connects the Berggren tree to
-modular forms via the theta group. -/
 
 /-- j-invariant formula as a rational function. -/
-
 noncomputable def j_from_lambda (l : ℚ) : ℚ :=
   256 * (1 - l + l ^ 2) ^ 3 / (l * (1 - l)) ^ 2
 
-/-- At λ = 1/2, the j-invariant gives 1728. -/
 
+/-- At λ = 1/2, the j-invariant gives 1728. -/
 theorem j_at_half : j_from_lambda (1/2) = 1728 := by
   unfold j_from_lambda; norm_num
 
+
 /-- 1728 = 12³ -/
-
 theorem j_1728_eq : (1728 : ℤ) = 12 ^ 3 := by norm_num
-
-end
 
 
 end

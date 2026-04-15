@@ -21,11 +21,6 @@ def fib : ℕ → ℕ
       results := results.push s!"fib({k+2})={n}: r₂={s.ch2}, r₄={s.ch3}"
   return results
 
-/-! ## Experiment 17: Representation entropy per channel
-
-Compute average log(r_k(n)) for n ≤ N as a proxy for channel entropy. -/
-
--- Simple integer log2 approximation
 
 def ilog2 (n : ℕ) : ℕ :=
   if n ≤ 1 then 0
@@ -49,29 +44,6 @@ def ilog2 (n : ℕ) : ℕ :=
   let avg_r8 : ℚ := (sum_log_r8 : ℚ) / N
   return s!"N={N}: avg_log2(r₂|visible)={avg_r2}, avg_log2(r₄)={avg_r4}, avg_log2(r₈)={avg_r8}, r₂_visible={count_r2}/{N}"
 
-/-! ## Experiment 18: The "quantum interference" of Channel 3
-
-For r₄(m+n) vs r₄(m) and r₄(n): is there a pattern in the "interference term"
-  I(m,n) = r₄(m+n) - r₄(m) - r₄(n)?
--/
-
-#eval Id.run do
-  let mut results : Array String := #[]
-  for m in [3, 5, 7, 10, 12] do
-    for n in [2, 4, 6, 8] do
-      let rm := r4 m
-      let rn := r4 n
-      let rmn := r4 (m + n)
-      let interference := rmn - rm - rn
-      results := results.push s!"I({m},{n}) = r₄({m+n}) - r₄({m}) - r₄({n}) = {rmn} - {rm} - {rn} = {interference}"
-  return results
-
-/-! ## Experiment 19: Channel 2 as parity detector
-
-For which n does the "parity" (r₂(n) = 0 vs r₂(n) > 0) agree with
-a simple function of the prime factorization? Count violations. -/
-
--- Naive primality test
 
 def isPrime (n : ℕ) : Bool :=
   if n < 2 then false

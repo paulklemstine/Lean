@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Physics/Spacetime
-Declarations: 19
+Declarations: 20
 -/
 
 import Mathlib
@@ -29,18 +29,15 @@ theorem kolmogorov_decay (C eps k1 k2 : ℝ)
   simp only [Real.rpow_neg (le_of_lt hk2), Real.rpow_neg (le_of_lt hk1)]
   gcongr
 
-/-! ## Part II: Holographic Dictionary -/
-
 
 theorem kss_bound_positive : (1 : ℝ) / (4 * Real.pi) > 0 := by positivity
+
 theorem diffusion_positive (eta rhoP : ℝ) (heta : eta > 0) (hrhoP : rhoP > 0) :
     eta / rhoP > 0 := by positivity
 
 
 theorem dominant_energy (T00 T0i : ℝ) (h : T00 ≥ |T0i|) : T00 ≥ 0 := by
   linarith [abs_nonneg T0i]
-
-/-! ## Part III: Entanglement Entropy -/
 
 
 theorem rt_entropy_positive (area GN : ℝ) (ha : area > 0) (hG : GN > 0) :
@@ -67,8 +64,6 @@ theorem scrambling_time_positive (T S : ℝ) (hT : T > 0) (hS : S > 1) :
 
 theorem lloyd_bound (M : ℝ) (hM : M > 0) : 2 * M / Real.pi > 0 := by positivity
 
-/-! ## Part V: Page Curve -/
-
 
 def pageEntropy (t S_BH : ℝ) : ℝ := min t (S_BH - t)
 
@@ -86,8 +81,6 @@ theorem page_symmetric (t S_BH : ℝ) :
 theorem page_nonneg (t S_BH : ℝ) (ht : 0 ≤ t) (hS : t ≤ S_BH) :
     pageEntropy t S_BH ≥ 0 := by
   simp only [pageEntropy, ge_iff_le, le_min_iff]; constructor <;> linarith
-
-/-! ## Part VI: Blackening Factor -/
 
 
 def blackeningFactor (r rH : ℝ) (d : ℕ) : ℝ := 1 - (rH / r) ^ d

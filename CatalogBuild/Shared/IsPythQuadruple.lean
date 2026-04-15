@@ -7,15 +7,7 @@ Declarations: 1
 
 import Mathlib
 
+/-- A Pythagorean quadruple (a, b, c, d) satisfies a² + b² + c² = d² -/
 def IsPythQuadruple (a b c d : ℤ) : Prop :=
   a^2 + b^2 + c^2 = d^2
 
-/-
-The parametric construction of a Pythagorean quadruple from four parameters.
-    Given (m, n, p, q), define:
-      a = m² + n² - p² - q²
-      b = 2(mq + np)
-      c = 2(nq - mp)
-      d = m² + n² + p² + q²
-    This always yields a valid quadruple.
--/

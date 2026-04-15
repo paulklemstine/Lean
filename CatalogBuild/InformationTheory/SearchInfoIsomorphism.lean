@@ -12,46 +12,46 @@ noncomputable section
 /-- Shannon entropy of a uniform distribution over N outcomes. -/
 def uniformEntropy (N : ℕ) : ℝ := Real.log N / Real.log 2
 
-/-- Information gained by learning the answer from a uniform distribution. -/
 
+/-- Information gained by learning the answer from a uniform distribution. -/
 def informationGain (N : ℕ) : ℝ := uniformEntropy N
 
-/-- Minimum binary search depth for a search space of size N. -/
 
+/-- Minimum binary search depth for a search space of size N. -/
 def searchWork (N : ℕ) : ℝ := uniformEntropy N
 
-/-- **Theorem 1.1 (The Search-Information Isomorphism)** -/
 
+/-- **Theorem 1.1 (The Search-Information Isomorphism)** -/
 theorem search_info_isomorphism (N : ℕ) :
     searchWork N = informationGain N := rfl
 
-/-- **Theorem 1.2**: Entropy of a trivial search space is zero. -/
 
+/-- **Theorem 1.2**: Entropy of a trivial search space is zero. -/
 theorem entropy_one : uniformEntropy 1 = 0 := by
   simp [uniformEntropy, Real.log_one]
 
-/-- **Theorem 1.3**: Entropy of a binary choice is 1 bit. -/
 
+/-- **Theorem 1.3**: Entropy of a binary choice is 1 bit. -/
 theorem entropy_two : uniformEntropy 2 = 1 := by
   simp only [uniformEntropy, Nat.cast_ofNat]
   exact div_self (ne_of_gt (Real.log_pos (by norm_num : (1 : ℝ) < 2)))
 
-/-- **Theorem 1.4**: Doubling the search space adds exactly 1 bit. -/
 
+/-- **Theorem 1.4**: Doubling the search space adds exactly 1 bit. -/
 theorem entropy_doubling (N : ℕ) (hN : (N : ℝ) > 0) :
     uniformEntropy (2 * N) = 1 + uniformEntropy N := by
       unfold uniformEntropy
       field_simp [hN];
       rw [ Nat.cast_mul, Real.log_mul ] <;> aesop
 
-/-- **Theorem 1.5**: Entropy is monotone. -/
 
+/-- **Theorem 1.5**: Entropy is monotone. -/
 theorem entropy_monotone {M N : ℕ} (hM : 0 < M) (h : M ≤ N) :
     uniformEntropy M ≤ uniformEntropy N := by
       exact div_le_div_of_nonneg_right ( Real.log_le_log ( by positivity ) ( by norm_cast ) ) ( by positivity )
 
-/-- **Theorem 1.6**: Entropy is nonneg for nonempty search spaces. -/
 
+/-- **Theorem 1.6**: Entropy is nonneg for nonempty search spaces. -/
 theorem entropy_nonneg {N : ℕ} (hN : 1 ≤ N) :
     0 ≤ uniformEntropy N := by
   simp only [uniformEntropy]
@@ -59,81 +59,73 @@ theorem entropy_nonneg {N : ℕ} (hN : 1 ≤ N) :
   · exact Real.log_nonneg (by exact_mod_cast hN)
   · exact le_of_lt (Real.log_pos (by norm_num : (1:ℝ) < 2))
 
-/-! ═══════════════════════════════════════════════════════════════════════
-    §2: THE COLLAPSE OPERATOR
-    ═══════════════════════════════════════════════════════════════════════ -/
 
 /-- A collapse operator is an idempotent endomorphism. -/
-
 structure CollapseOperator (X : Type*) where
   collapse : X → X
   idempotent : ∀ x, collapse (collapse x) = collapse x
 
-/-- The "collapsed set" — fixed points of the collapse. -/
 
+/-- The "collapsed set" — fixed points of the collapse. -/
 def CollapseOperator.collapsedSet {X : Type*} (C : CollapseOperator X) : Set X :=
   {x | C.collapse x = x}
 
-/-- The "superposition set" — non-fixed points. -/
 
+/-- The "superposition set" — non-fixed points. -/
 def CollapseOperator.superpositionSet {X : Type*} (C : CollapseOperator X) : Set X :=
   {x | C.collapse x ≠ x}
 
-/-- **Theorem 2.1**: Collapsed and superposition sets partition the space. -/
 
+/-- **Theorem 2.1**: Collapsed and superposition sets partition the space. -/
 theorem collapse_partition {X : Type*} (C : CollapseOperator X) :
     C.collapsedSet ∪ C.superpositionSet = Set.univ := by
   ext x; simp [CollapseOperator.collapsedSet, CollapseOperator.superpositionSet, em]
 
-/-- **Theorem 2.2**: Collapsed and superposition sets are disjoint. -/
 
+/-- **Theorem 2.2**: Collapsed and superposition sets are disjoint. -/
 theorem collapse_disjoint {X : Type*} (C : CollapseOperator X) :
     C.collapsedSet ∩ C.superpositionSet = ∅ := by
   ext x; simp [CollapseOperator.collapsedSet, CollapseOperator.superpositionSet]
 
-/-- **Theorem 2.3 (Collapse Irreversibility)** -/
 
+/-- **Theorem 2.3 (Collapse Irreversibility)** -/
 theorem collapse_to_collapsed {X : Type*} (C : CollapseOperator X) (x : X) :
     C.collapse x ∈ C.collapsedSet := C.idempotent x
 
-/-- **Theorem 2.4 (Range = Collapsed Set)** -/
 
+/-- **Theorem 2.4 (Range = Collapsed Set)** -/
 theorem collapse_range_eq {X : Type*} (C : CollapseOperator X) :
     range C.collapse = C.collapsedSet := by
   ext y; constructor
   · rintro ⟨x, rfl⟩; exact C.idempotent x
   · intro hy; exact ⟨y, hy⟩
 
-/-- Identity collapse. -/
 
+/-- Identity collapse. -/
 def CollapseOperator.identity (X : Type*) : CollapseOperator X where
   collapse := id
   idempotent _ := rfl
 
-/-- **Theorem 2.6**: Identity collapse has empty superposition set. -/
 
+/-- **Theorem 2.6**: Identity collapse has empty superposition set. -/
 theorem identity_no_superposition :
     (CollapseOperator.identity ℝ).superpositionSet = ∅ := by
   ext x; simp [CollapseOperator.superpositionSet, CollapseOperator.identity]
 
-/-- Constant collapse. -/
 
+/-- Constant collapse. -/
 def CollapseOperator.total {X : Type*} (answer : X) : CollapseOperator X where
   collapse := fun _ => answer
   idempotent _ := rfl
 
-/-- **Theorem 2.8**: Total collapse has singleton collapsed set. -/
 
+/-- **Theorem 2.8**: Total collapse has singleton collapsed set. -/
 theorem total_collapse_singleton (c : ℝ) :
     (CollapseOperator.total c).collapsedSet = {c} := by
   ext x; simp [CollapseOperator.collapsedSet, CollapseOperator.total, eq_comm]
 
-/-! ═══════════════════════════════════════════════════════════════════════
-    §3: SEARCH AS ENTROPY REDUCTION
-    ═══════════════════════════════════════════════════════════════════════ -/
 
 /-- Binary query entropy after k queries. -/
-
 def binaryQueryEntropy (N : ℕ) (k : ℕ) : ℝ :=
   uniformEntropy N - k
 
@@ -152,18 +144,14 @@ theorem entropy_reduction_additive (N k₁ k₂ : ℕ) :
     binaryQueryEntropy N k₁ - binaryQueryEntropy N (k₁ + k₂) = k₂ := by
   simp only [binaryQueryEntropy]; push_cast; ring
 
-/-- **Theorem 3.4 (Information Conservation)** -/
 
+/-- **Theorem 3.4 (Information Conservation)** -/
 theorem information_conservation (N k : ℕ) :
     (k : ℝ) + binaryQueryEntropy N k = uniformEntropy N := by
   simp only [binaryQueryEntropy]; ring
 
-/-! ═══════════════════════════════════════════════════════════════════════
-    §4: LANDAUER'S BRIDGE — INFORMATION IS PHYSICAL
-    ═══════════════════════════════════════════════════════════════════════ -/
 
 /-- Landauer energy cost. -/
-
 def landauerCost (n_bits : ℝ) (kT : ℝ) : ℝ :=
   n_bits * kT * Real.log 2
 
@@ -196,10 +184,6 @@ theorem landauer_monotone (n₁ n₂ kT : ℝ) (hn : n₁ ≤ n₂) (hkT : 0 ≤
   · exact mul_le_mul_of_nonneg_right hn hkT
   · exact le_of_lt (Real.log_pos (by norm_num : (1:ℝ) < 2))
 
-/-! ═══════════════════════════════════════════════════════════════════════
-    §5: QUANTUM MEASUREMENT AS SEARCH COLLAPSE
-    ═══════════════════════════════════════════════════════════════════════ -/
-
 
 structure MeasurementScenario where
   N : ℕ
@@ -219,22 +203,22 @@ def postMeasurementEntropy : ℝ := 0
 def MeasurementScenario.infoGained (m : MeasurementScenario) : ℝ :=
   m.preMeasurementEntropy - postMeasurementEntropy
 
-/-- **Theorem 5.1 (Collapse = Full Information Gain)** -/
 
+/-- **Theorem 5.1 (Collapse = Full Information Gain)** -/
 theorem collapse_is_full_info_gain (m : MeasurementScenario) :
     m.infoGained = m.preMeasurementEntropy := by
   simp [MeasurementScenario.infoGained, postMeasurementEntropy]
 
-/-- **Theorem 5.2**: For a uniform measurement, info gained = log(N). -/
 
+/-- **Theorem 5.2**: For a uniform measurement, info gained = log(N). -/
 theorem uniform_measurement_info (N : ℕ) (hN : 0 < N) :
     -∑ i : Fin N, (1 / (N : ℝ)) * Real.log (1 / (N : ℝ)) =
     Real.log N := by
       simp +zetaDelta
       rw [← mul_assoc, mul_inv_cancel₀ (by positivity : (N : ℝ) ≠ 0), one_mul]
 
-/-- A uniform measurement scenario. -/
 
+/-- A uniform measurement scenario. -/
 def uniformMeasurement (N : ℕ) (hN : 0 < N) : MeasurementScenario where
   N := N
   hN := hN
@@ -242,10 +226,6 @@ def uniformMeasurement (N : ℕ) (hN : 0 < N) : MeasurementScenario where
   prob_nonneg := fun _ => by positivity
   prob_sum_one := by
     rw [Finset.sum_const, Finset.card_fin, nsmul_eq_mul]; field_simp
-
-/-! ═══════════════════════════════════════════════════════════════════════
-    §6: THE ISOMORPHISM THEOREM
-    ═══════════════════════════════════════════════════════════════════════ -/
 
 
 structure SearchMeasurementInfo where
@@ -267,12 +247,8 @@ theorem grand_isomorphism : ∃ (_ : SearchMeasurementInfo), True :=
 theorem collapse_functor (C : CollapseOperator ℕ) (N : ℕ) :
     searchWork (C.collapse N) = informationGain (C.collapse N) := rfl
 
-/-! ═══════════════════════════════════════════════════════════════════════
-    §7: PRODUCT SPACES
-    ═══════════════════════════════════════════════════════════════════════ -/
 
 /-- **Theorem 7.1 (Search Additivity)** -/
-
 theorem search_additivity (M N : ℕ) (hM : (M : ℝ) > 0) (hN : (N : ℝ) > 0) :
     uniformEntropy (M * N) = uniformEntropy M + uniformEntropy N := by
   simp only [uniformEntropy, Nat.cast_mul]
@@ -293,10 +269,6 @@ theorem product_collapsed_set {X Y : Type*}
   ext ⟨x, y⟩
   simp [CollapseOperator.collapsedSet, CollapseOperator.product, Set.mem_prod]
 
-/-! ═══════════════════════════════════════════════════════════════════════
-    §8: ITERATED SEARCH
-    ═══════════════════════════════════════════════════════════════════════ -/
-
 
 def CollapseOperator.iterate {X : Type*} (C : CollapseOperator X) : ℕ → X → X
   | 0 => id
@@ -311,15 +283,11 @@ theorem iterate_stabilizes {X : Type*} (C : CollapseOperator X) (n : ℕ) (x : X
     show C.collapse (C.iterate (n + 1) x) = C.collapse x
     rw [ih]; exact C.idempotent x
 
-/-- **Theorem 8.2 (One Collapse Suffices)** -/
 
+/-- **Theorem 8.2 (One Collapse Suffices)** -/
 theorem one_collapse_suffices {X : Type*} (C : CollapseOperator X) (x : X) :
     C.iterate 2 x = C.iterate 1 x :=
   iterate_stabilizes C 1 x
-
-/-! ═══════════════════════════════════════════════════════════════════════
-    §9: THE PHOTON EPISTEMIC BRIDGE
-    ═══════════════════════════════════════════════════════════════════════ -/
 
 
 structure PhotonObservation where
@@ -343,14 +311,6 @@ theorem photon_collapse_theorem (obs : PhotonObservation) (state : Fin obs.sourc
 
 theorem no_photon_no_info : uniformEntropy 1 = 0 := entropy_one
 
-/-! ═══════════════════════════════════════════════════════════════════════
-    §10: EXPERIMENTAL VALIDATION
-    ═══════════════════════════════════════════════════════════════════════ -/
-
-private theorem log_pow2_div (k : ℕ) : Real.log (2 ^ k : ℝ) / Real.log 2 = k := by
-  rw [Real.log_pow, mul_div_cancel_of_imp]
-  intro h; exact absurd (Real.log_pos (by norm_num : (1:ℝ) < 2)) (by rw [h]; norm_num)
-
 
 theorem experiment_binary_8 : uniformEntropy 8 = 3 := by
   show Real.log (8 : ℝ) / Real.log 2 = 3
@@ -361,8 +321,8 @@ theorem experiment_binary_1024 : uniformEntropy 1024 = 10 := by
   show Real.log (1024 : ℝ) / Real.log 2 = 10
   rw [show (1024 : ℝ) = 2 ^ 10 from by norm_num]; exact log_pow2_div 10
 
-/-- Powers of 2 have integer entropy. -/
 
+/-- Powers of 2 have integer entropy. -/
 theorem power_of_two_entropy (k : ℕ) : uniformEntropy (2 ^ k) = k := by
   show Real.log ((2 ^ k : ℕ) : ℝ) / Real.log 2 = k
   rw [Nat.cast_pow, Nat.cast_ofNat]; exact log_pow2_div k
@@ -375,10 +335,6 @@ theorem experiment_retraction (C : CollapseOperator ℝ) :
 theorem experiment_landauer_byte :
     landauerCost 8 (411 / 100) = 8 * (411/100) * Real.log 2 := by
   unfold landauerCost; ring
-
-/-! ═══════════════════════════════════════════════════════════════════════
-    §11: NEW HYPOTHESES
-    ═══════════════════════════════════════════════════════════════════════ -/
 
 
 theorem recursive_collapse (M N : ℕ) (hM : (M : ℝ) > 0) (hN : (N : ℝ) > 0) :
@@ -407,15 +363,11 @@ theorem collapse_refinement {X : Type*} (C₁ C₂ : CollapseOperator X)
     ∀ x, C₁.collapse (C₂.collapse x) = C₂.collapse x :=
   fun x => h (h_range x)
 
-/-- **H5 (Information Speed Limit)**: |Δx| ≤ |Δt| for causal signals. -/
 
+/-- **H5 (Information Speed Limit)**: |Δx| ≤ |Δt| for causal signals. -/
 theorem information_speed_limit (Δx Δt : ℝ) (h_causal : Δx ^ 2 ≤ Δt ^ 2) :
     |Δx| ≤ |Δt| := by
       simpa only [ sq_le_sq ] using h_causal
-
-/-! ═══════════════════════════════════════════════════════════════════════
-    §12: GRAND SYNTHESIS
-    ═══════════════════════════════════════════════════════════════════════ -/
 
 
 structure GrandSynthesis where
@@ -427,8 +379,8 @@ structure GrandSynthesis where
   search_additive : ∀ M N : ℕ, (M : ℝ) > 0 → (N : ℝ) > 0 →
     uniformEntropy (M * N) = uniformEntropy M + uniformEntropy N
 
-/-- **The Grand Theorem**: The synthesis is internally consistent. -/
 
+/-- **The Grand Theorem**: The synthesis is internally consistent. -/
 theorem grand_synthesis_consistent : Nonempty GrandSynthesis :=
   ⟨{ search_is_info := fun _ => rfl
      collapse_once := fun _ C x => C.idempotent x

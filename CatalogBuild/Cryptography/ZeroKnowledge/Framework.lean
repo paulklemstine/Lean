@@ -16,8 +16,8 @@ structure Protocol (Statement Witness Commitment Challenge Response : Type) wher
   respond : Statement → Witness → Commitment → Challenge → Response
   verify : Statement → Commitment → Challenge → Response → Prop
 
-/-- A Sigma protocol is complete if honest execution always verifies. -/
 
+/-- A Sigma protocol is complete if honest execution always verifies. -/
 def IsComplete {S W C Ch R : Type}
     (π : Protocol S W C Ch R) : Prop :=
   ∀ (stmt : S) (wit : W),
@@ -26,9 +26,9 @@ def IsComplete {S W C Ch R : Type}
       π.verify stmt (π.commit stmt wit) ch
         (π.respond stmt wit (π.commit stmt wit) ch)
 
-/-- 2-Special soundness: two accepting transcripts with same commitment
-    but different challenges yield a valid witness. -/
 
+/-- 2-Special soundness: two accepting transcripts with same commitment
+but different challenges yield a valid witness. -/
 def Has2SpecialSoundness {S W C Ch R : Type}
     (π : Protocol S W C Ch R) : Prop :=
   ∀ (stmt : S) (com : C) (ch₁ ch₂ : Ch) (r₁ r₂ : R),
@@ -37,8 +37,8 @@ def Has2SpecialSoundness {S W C Ch R : Type}
     π.verify stmt com ch₂ r₂ →
     ∃ wit : W, π.relation stmt wit
 
-/-- Honest-verifier zero-knowledge via simulation. -/
 
+/-- Honest-verifier zero-knowledge via simulation. -/
 structure HasHVZK {S W C Ch R : Type}
     (π : Protocol S W C Ch R) where
   simulate_com : S → Ch → C
@@ -47,14 +47,8 @@ structure HasHVZK {S W C Ch R : Type}
     (∃ wit, π.relation stmt wit) →
     π.verify stmt (simulate_com stmt ch) ch (simulate_resp stmt ch)
 
-/-! ## Concrete Schnorr Sigma Protocol in ZMod q -/
-
-section SchnorrSigma
-
-variable {q : ℕ} [Fact (Nat.Prime q)] [NeZero q]
 
 /-- The Schnorr exponent-level protocol over ZMod q. -/
-
 noncomputable def schnorrExponent :
     Protocol (ZMod q) (ZMod q) (ZMod q × ZMod q) (ZMod q) (ZMod q) where
   relation stmt wit := stmt = wit
@@ -108,8 +102,8 @@ theorem soundness_error_bound (n : ℕ) (hn : 0 < n)
   gcongr
   exact_mod_cast h_at_most_one
 
-/-- Parallel repetition reduces soundness error exponentially -/
 
+/-- Parallel repetition reduces soundness error exponentially -/
 theorem parallel_repetition_soundness (n k : ℕ) (hn : 1 < n) (hk : 0 < k) :
     (1 / (n : ℝ)) ^ k < 1 := by
   apply pow_lt_one₀ (by positivity)
@@ -117,8 +111,8 @@ theorem parallel_repetition_soundness (n k : ℕ) (hn : 1 < n) (hk : 0 < k) :
     exact_mod_cast hn
   · omega
 
-/-- Sequential repetition also reduces error -/
 
+/-- Sequential repetition also reduces error -/
 theorem sequential_repetition_bound (n k : ℕ) (hn : 2 ≤ n) :
     (1 / (n : ℝ)) ^ k ≤ 1 := by
   apply pow_le_one₀ (by positivity)
@@ -132,8 +126,8 @@ structure NIProof (C Ch R : Type) where
   challenge : Ch
   response : R
 
-/-- Apply Fiat-Shamir to a Sigma protocol with a hash function -/
 
+/-- Apply Fiat-Shamir to a Sigma protocol with a hash function -/
 def fiatShamirProve {S W C Ch R : Type}
     (π : Protocol S W C Ch R) (hash : S → C → Ch)
     (stmt : S) (wit : W) : NIProof C Ch R :=
@@ -142,16 +136,16 @@ def fiatShamirProve {S W C Ch R : Type}
   let resp := π.respond stmt wit com ch
   ⟨com, ch, resp⟩
 
-/-- Verify a Fiat-Shamir proof -/
 
+/-- Verify a Fiat-Shamir proof -/
 def fiatShamirVerify {S W C Ch R : Type}
     (π : Protocol S W C Ch R) (hash : S → C → Ch)
     (stmt : S) (proof : NIProof C Ch R) : Prop :=
   proof.challenge = hash stmt proof.commitment ∧
   π.verify stmt proof.commitment proof.challenge proof.response
 
-/-- Fiat-Shamir completeness: honest proofs always verify. -/
 
+/-- Fiat-Shamir completeness: honest proofs always verify. -/
 theorem fiat_shamir_complete {S W C Ch R : Type}
     (π : Protocol S W C Ch R) (hash : S → C → Ch)
     (h_complete : IsComplete π)

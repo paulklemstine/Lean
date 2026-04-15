@@ -35,8 +35,6 @@ theorem proof_compression_ratio' (n : ℕ) (k : ℕ) (hk : 0 < k) :
   calc (n : ℚ) / k ≤ n / 1 := by apply div_le_div_of_nonneg_left (by exact_mod_cast Nat.zero_le n) (by linarith) ‹(1 : ℚ) ≤ k›
     _ = n := by simp
 
-/-! ## §3: AI Alignment as Oracle Agreement -/
-
 
 def OraclesAgreeV2 {X : Type*} (O₁ O₂ : X → X) : Prop :=
   ∃ x, O₁ x = x ∧ O₂ x = x
@@ -54,35 +52,17 @@ theorem strong_agreement_compose' {X : Type*} (O₁ O₂ : X → X)
   have : x ∈ {x | O₁ x = x} := hx
   rw [hagree] at this; exact this
 
-/-! ## §4: Semantic Compression Beyond Shannon -/
-
 
 theorem truth_aware_compression' (n k : ℕ) (_hk : 0 < k) (hkn : k ≤ n) :
     Nat.log 2 k ≤ Nat.log 2 n := Nat.log_mono_right hkn
-
-/-! ## §5: Strange Attractor Neural Networks -/
 
 
 theorem sigmoid_positive (x b : ℝ) (_hx : 0 < x) (_hb : 0 < b) :
     0 < 1 / (1 + Real.exp (-b * x)) := by positivity
 
-/-! ## §6: Self-Consistent Mathematical Structures -/
-
 
 theorem nat_self_consistent' : ∀ n : ℕ, n + 0 = n := Nat.add_zero
 
-/-! ## §7: The Grand Synthesis -/
-
-/-
-PROBLEM
-The Grand Unified Oracle Theorem: for finite idempotent maps, compression
-    (range < domain) is equivalent to non-injectivity.
-
-PROVIDED SOLUTION
-Forward direction: if O is not injective, then card(range O) < card(Fin n) = n. This follows because for a non-injective function, card(range) < card(domain). Use Fintype.card_lt_of_surjective_not_injective with Set.surjective_onto_range, and the fact that if rangeFactorization is injective then O is injective (contradiction).
-
-Backward direction: if card(range O) < n, then O cannot be injective. Because if O were injective, then card(range O) = card(Fin n) = n, contradicting the strict inequality.
--/
 
 theorem grand_unified_oracle' {n : ℕ} (_hn : 0 < n) (O : Fin n → Fin n)
     (_hO : ∀ x, O (O x) = O x) :

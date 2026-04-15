@@ -11,16 +11,16 @@ import Mathlib
 theorem elliptic_discriminant_En (n : ℤ) (hn : n ≠ 0) :
     -16 * (4 * (-n^2)^3 + 27 * 0^2) = 64 * n ^ 6 := by ring
 
-/-- E_n has three rational 2-torsion points. -/
 
+/-- E_n has three rational 2-torsion points. -/
 theorem En_2_torsion (n : ℤ) :
     (0 : ℤ) * ((0 : ℤ) - n) * ((0 : ℤ) + n) = 0 ∧
     n * (n - n) * (n + n) = 0 ∧
     (-n) * ((-n) - n) * ((-n) + n) = 0 := by
   constructor <;> [ring; constructor <;> ring]
 
-/-- For a PPT (a,b,c), the scaled point on E_n satisfies the curve equation. -/
 
+/-- For a PPT (a,b,c), the scaled point on E_n satisfies the curve equation. -/
 theorem ppt_to_En_point (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     c ^ 2 * (b ^ 2 - a ^ 2) ^ 2 = c ^ 6 - 4 * a ^ 2 * b ^ 2 * c ^ 2 := by
   have h1 : c ^ 2 = a ^ 2 + b ^ 2 := h.symm
@@ -28,21 +28,11 @@ theorem ppt_to_En_point (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
   have h3 : c ^ 6 = c ^ 2 * c ^ 2 * c ^ 2 := by ring
   rw [h1] at h2 h3; nlinarith [sq_nonneg (a^2 - b^2)]
 
-/-- Nagell-Lutz discriminant for E_n. -/
 
+/-- Nagell-Lutz discriminant for E_n. -/
 theorem nagell_lutz_discriminant (n : ℤ) :
     4 * (-n^2)^3 + 27 * (0 : ℤ)^2 = -4 * n ^ 6 := by ring
 
-/-! ## §2: Riemann Hypothesis Connection -/
-
-/-
-PROBLEM
-If p > 2 is prime and p = a² + b², then p ≡ 1 (mod 4).
-    This is the easy direction of Fermat's theorem on sums of two squares.
-
-PROVIDED SOLUTION
-Since p > 2 is prime, p is odd. Since p = a² + b², and squares mod 4 are 0 or 1, we have a² + b² mod 4 ∈ {0, 1, 2}. Since p is odd, p mod 4 ∈ {1, 3}. If p mod 4 = 3, then a² + b² ≡ 3 mod 4, but this is impossible since the only way to get 3 is 1+2 which isn't possible with squares mod 4 (they're 0 or 1). So we need 1+2 mod 4 = 3 but we can't get 2 from a square. Actually a² mod 4 ∈ {0,1}, same for b². So a²+b² mod 4 ∈ {0,1,2}. Since p is odd, p%4 ∈ {1,3}. So p%4 = 1 (can't be 0 or 2 or 3). Use omega after establishing a%2 and b%2 cases.
--/
 
 theorem hypotenuse_prime_iff_1mod4 (p : ℕ) (hp : Nat.Prime p) (hp2 : p > 2) :
     (∃ m n : ℕ, 0 < n ∧ n < m ∧ m ^ 2 + n ^ 2 = p) ↔ p % 4 = 1 := by
@@ -63,46 +53,40 @@ theorem hypotenuse_prime_iff_1mod4 (p : ℕ) (hp : Nat.Prime p) (hp2 : p > 2) :
           · exact ⟨ n, m, by linarith, hmn, hn, lt_of_le_of_ne ( le_of_not_gt hmn' ) ( by rintro rfl; exact absurd ( congr_arg ( · % 4 ) hm ) ( by norm_num [ Nat.add_mod, Nat.pow_mod, h ] ; have := Nat.mod_lt m zero_lt_four; interval_cases m % 4 <;> trivial ) ) ⟩;
         exact ⟨ m, n, hmn.1, hmn.2, hm ⟩
 
-/-! ## §3: Lorentz Group and Berggren -/
 
 /-- The Berggren B₁ transformation preserves Q(a,b,c) = a² + b² - c². -/
-
 theorem lorentz_form_preserved_B1 (a b c : ℤ) :
     (a - 2*b + 2*c) ^ 2 + (2*a - b + 2*c) ^ 2 - (2*a - 2*b + 3*c) ^ 2 =
     a ^ 2 + b ^ 2 - c ^ 2 := by ring
 
-/-- The Berggren B₂ transformation preserves Q(a,b,c) = a² + b² - c². -/
 
+/-- The Berggren B₂ transformation preserves Q(a,b,c) = a² + b² - c². -/
 theorem lorentz_form_preserved_B2 (a b c : ℤ) :
     (a + 2*b + 2*c) ^ 2 + (2*a + b + 2*c) ^ 2 - (2*a + 2*b + 3*c) ^ 2 =
     a ^ 2 + b ^ 2 - c ^ 2 := by ring
 
-/-- The Berggren B₃ transformation preserves Q(a,b,c) = a² + b² - c². -/
 
+/-- The Berggren B₃ transformation preserves Q(a,b,c) = a² + b² - c². -/
 theorem lorentz_form_preserved_B3 (a b c : ℤ) :
     (-a + 2*b + 2*c) ^ 2 + (-2*a + b + 2*c) ^ 2 - (-2*a + 2*b + 3*c) ^ 2 =
     a ^ 2 + b ^ 2 - c ^ 2 := by ring
 
-/-! ## §4: Moonshine Numerology -/
 
 /-- 196884 = 196883 + 1 (Thompson's observation connecting j-function to Monster). -/
-
 theorem moonshine_numerology : 196884 = 196883 + 1 := by norm_num
 
-/-- Second coefficient: 21493760 = 21296876 + 196883 + 1. -/
 
+/-- Second coefficient: 21493760 = 21296876 + 196883 + 1. -/
 theorem moonshine_second : 21493760 = 21296876 + 196883 + 1 := by norm_num
 
-/-- The Monster group order factorization. -/
 
+/-- The Monster group order factorization. -/
 theorem monster_order :
     2^46 * 3^20 * 5^9 * 7^6 * 11^2 * 13^3 * 17 * 19 * 23 * 29 * 31 * 41 * 47 * 59 * 71
     = 808017424794512875886459904961710757005754368000000000 := by norm_num
 
-/-! ## §5: Spectral Theory -/
 
 /-- The Berggren Cayley graph mod p has |SL(2,𝔽_p)| vertices. -/
-
 theorem berggren_cayley_vertices :
     Fintype.card (Matrix.SpecialLinearGroup (Fin 2) (ZMod 3)) = 24 ∧
     Fintype.card (Matrix.SpecialLinearGroup (Fin 2) (ZMod 5)) = 120 ∧

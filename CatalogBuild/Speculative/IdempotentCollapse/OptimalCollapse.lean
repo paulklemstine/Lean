@@ -13,13 +13,6 @@ noncomputable section
 def collapseDisplacement {α : Type*} [Fintype α] [PseudoMetricSpace α] (f : α → α) : ℝ :=
   ∑ x : α, dist x (f x)
 
-/-
-PROBLEM
-An idempotent with zero displacement is the identity.
-
-PROVIDED SOLUTION
-collapseDisplacement f = ∑ dist(x, f(x)) = 0. Since dist ≥ 0, each term must be 0. dist(x, f(x)) = 0 implies f(x) = x in a MetricSpace. Use Finset.sum_eq_zero_iff_of_nonneg with dist_nonneg.
--/
 
 theorem zero_displacement_is_id {α : Type*} [Fintype α] [MetricSpace α]
     (f : α → α) (hf : ∀ x, f (f x) = f x)
@@ -30,13 +23,6 @@ theorem zero_displacement_is_id {α : Type*} [Fintype α] [MetricSpace α]
         exact fun x => hd.symm ▸ Finset.sum_eq_zero_iff_of_nonneg ( fun _ _ => dist_nonneg ) |>.1 rfl x ( Finset.mem_univ x );
       exact fun x => dist_eq_zero.mp ( h_zero x ) ▸ rfl
 
-/-
-PROBLEM
-Transport cost bounded by card × diameter.
-
-PROVIDED SOLUTION
-Each dist(x, f(x)) ≤ diam(univ). Sum over all x gives ∑ dist(x,f(x)) ≤ card α * diam(univ). Use Finset.sum_le_card_nsmul and dist_le_diam_of_mem (trivial: x and f(x) are in univ).
--/
 
 theorem collapse_transport_bound {α : Type*} [Fintype α] [PseudoMetricSpace α]
     [BoundedSpace α] (f : α → α) :
@@ -56,8 +42,8 @@ theorem collapse_transport_bound {α : Type*} [Fintype α] [PseudoMetricSpace α
       convert Finset.sum_le_sum fun x _ => h_dist_le_diam x using 1 ; simp +decide [ collapseDisplacement ];
       exact Or.inl rfl
 
-/-- Composing with any map can only shrink the range. -/
 
+/-- Composing with any map can only shrink the range. -/
 theorem idempotent_range_inclusion {α : Type*} (f g : α → α) :
     range (f ∘ g) ⊆ range f := by
   intro x ⟨y, hy⟩; exact ⟨g y, hy⟩

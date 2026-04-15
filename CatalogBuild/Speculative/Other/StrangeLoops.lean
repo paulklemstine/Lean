@@ -19,8 +19,6 @@ theorem lawvere_fp {A B : Type*}
   simp at this
   exact this.symm
 
-/-! ## §2: Gödel Sentences -/
-
 
 structure GodelSentenceV2 (X : Type*) where
   code : Prop → X
@@ -36,8 +34,6 @@ theorem godel_incompleteness_v2 {X : Type*} (gs : GodelSentenceV2 X)
     gs.self_ref.mp (sound gs.G h) h
   exact ⟨gs.self_ref.mpr not_provable, not_provable⟩
 
-/-! ## §3: The MU Puzzle -/
-
 
 theorem pow2_not_div3' : ∀ k : ℕ, 2 ^ k % 3 ≠ 0 := by
   intro k; induction k with
@@ -51,8 +47,6 @@ theorem double_preserves_mod3' (n : ℕ) (h : n % 3 ≠ 0) : (2 * n) % 3 ≠ 0 :
 theorem sub3_preserves_mod3' (n : ℕ) (h : n % 3 ≠ 0) (_h3 : 3 ≤ n) :
     (n - 3) % 3 ≠ 0 := by omega
 
-/-! ## §4: Grelling's Paradox -/
-
 
 theorem no_self_negating_prop' : ¬ ∃ P : Prop, P ↔ ¬P := by
   intro ⟨P, hP⟩
@@ -63,8 +57,6 @@ theorem grelling_paradox_v2 :
     ¬ ∃ (Adj : Type) (describes_self : Adj → Prop) (het : Adj),
       (describes_self het ↔ ¬ describes_self het) := by
   intro ⟨_, _, _, h⟩; exact no_self_negating_prop' ⟨_, h⟩
-
-/-! ## §5: Strange Loop Composition -/
 
 
 theorem strange_loop_compose_v2 {X : Type*} (_f g : X → X)
@@ -89,8 +81,6 @@ theorem observer_convergence' {X : Type*} (observe : X → X)
     | zero => rfl
     | succ n => rw [ih (by omega)]; exact h_idem x
 
-/-! ## §6: Tarski's Undefinability -/
-
 
 theorem tarski_undefinability' :
     ¬ ∃ (T : Prop → Prop), (∀ P, T P ↔ P) ∧ (∃ L, L ↔ ¬ T L) := by
@@ -100,8 +90,6 @@ theorem tarski_undefinability' :
     · intro hLt; have := hL.mp hLt; rwa [hT] at this
     · intro hnL; apply hL.mpr; rwa [hT]
   exact no_self_negating_prop' ⟨L, key⟩
-
-/-! ## §7: Self-Application -/
 
 
 theorem self_application_surj {X Y : Type*}

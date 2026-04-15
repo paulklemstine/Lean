@@ -18,8 +18,6 @@ theorem sat_formula_satisfiable : ∃ x : Fin 3 → Bool, sat_formula x = true :
 theorem sat_assignments (n : ℕ) : Fintype.card (Fin n → Bool) = 2 ^ n := by
   simp [Fintype.card_fun, Fintype.card_bool, Fintype.card_fin]
 
-/-! ## §2: Riemann Hypothesis -/
-
 
 theorem euler_product_first_factor : (1 : ℚ) - 1/4 = 3/4 := by norm_num
 
@@ -27,7 +25,6 @@ theorem euler_product_second_factor : (1 : ℚ) - 1/9 = 8/9 := by norm_num
 
 theorem euler_product_third_factor : (1 : ℚ) - 1/25 = 24/25 := by norm_num
 
-/-- Prime counting function. -/
 
 theorem E_neg1_torsion :
     (0 : ℤ)^2 = 0^3 - 0 ∧
@@ -39,16 +36,12 @@ theorem E_neg1_torsion :
 theorem nagell_lutz_discriminant' :
     -16 * (-4 * (-1 : ℤ)^3 + 27 * 0^2) = -64 := by ring
 
-/-! ## §4: Yang-Mills -/
-
 
 theorem identity_eigenvalue :
     ∀ v : Fin 2 → ℤ, (1 : Matrix (Fin 2) (Fin 2) ℤ).mulVec v = v := by
   intro v
   ext i
   simp [Matrix.mulVec, dotProduct, Matrix.one_apply]
-
-/-! ## §5: Navier-Stokes -/
 
 
 def genus_plane_curve (d : ℕ) : ℕ := (d - 1) * (d - 2) / 2
@@ -66,8 +59,6 @@ theorem genus_quintic : genus_plane_curve 5 = 6 := rfl
 
 
 theorem riemann_hurwitz_example : 2 * 3 - 2 = 2 * (2 * 2 - 2) + (0 : ℤ) := by norm_num
-
-/-! ## §7: Poincaré (Proved) -/
 
 
 def euler_char_surface (g : ℕ) : ℤ := 2 - 2 * g

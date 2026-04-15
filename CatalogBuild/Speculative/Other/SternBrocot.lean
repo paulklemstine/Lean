@@ -7,32 +7,33 @@ Declarations: 9
 
 import Mathlib
 
+/-- A path in the Stern-Brocot tree is a list of directions. -/
 abbrev Path := List Dir
 
-/-- Navigate the Stern-Brocot tree: starting from bounds (a/b, c/d),
-    follow a path to reach a node via mediants. -/
 
+/-- Navigate the Stern-Brocot tree: starting from bounds (a/b, c/d),
+follow a path to reach a node via mediants. -/
 def navigate : Path → ℕ × ℕ × ℕ × ℕ → ℕ × ℕ
   | [], (a, b, c, d) => (a + c, b + d)
   | Dir.L :: rest, (a, b, c, d) => navigate rest (a, b, a + c, b + d)
   | Dir.R :: rest, (a, b, c, d) => navigate rest (a + c, b + d, c, d)
 
-/-- The Stern-Brocot tree entry corresponding to a path,
-    starting from the standard bounds 0/1 and 1/0. -/
 
+/-- The Stern-Brocot tree entry corresponding to a path,
+starting from the standard bounds 0/1 and 1/0. -/
 def fromPath (p : Path) : ℕ × ℕ :=
   navigate p (0, 1, 1, 0)
 
-/-- The bounds after navigating a path. -/
 
+/-- The bounds after navigating a path. -/
 def navigateBounds : Path → ℕ × ℕ × ℕ × ℕ → ℕ × ℕ × ℕ × ℕ
   | [], bounds => bounds
   | Dir.L :: rest, (a, b, c, d) => navigateBounds rest (a, b, a + c, b + d)
   | Dir.R :: rest, (a, b, c, d) => navigateBounds rest (a + c, b + d, c, d)
 
-/-- The mediant of a/b and c/d preserves the adjacency invariant:
-    if bc - ad = 1 then the left and right children also satisfy this. -/
 
+/-- The mediant of a/b and c/d preserves the adjacency invariant:
+if bc - ad = 1 then the left and right children also satisfy this. -/
 theorem mediant_adjacency_left (a b c d : ℕ)
     (h : b * c = a * d + 1) :
     (b + d) * c = (a + c) * d + 1 := by ring_nf; linarith
@@ -42,8 +43,8 @@ theorem mediant_adjacency_right (a b c d : ℕ)
     (h : b * c = a * d + 1) :
     b * (a + c) = a * (b + d) + 1 := by ring_nf; linarith
 
-/-- The adjacency invariant is preserved through any path in the tree. -/
 
+/-- The adjacency invariant is preserved through any path in the tree. -/
 theorem adjacency_invariant (p : Path) (a b c d : ℕ)
     (h : b * c = a * d + 1) :
     let (a', b', c', d') := navigateBounds p (a, b, c, d)
@@ -53,16 +54,13 @@ theorem adjacency_invariant (p : Path) (a b c d : ℕ)
   | cons dir rest ih =>
     cases dir <;> simp [navigateBounds] <;> apply ih <;> ring_nf <;> linarith
 
-/-- The standard Stern-Brocot tree maintains the adjacency invariant. -/
 
+/-- The standard Stern-Brocot tree maintains the adjacency invariant. -/
 theorem standard_adjacency (p : Path) :
     let (a', b', c', d') := navigateBounds p (0, 1, 1, 0)
     b' * c' = a' * d' + 1 := by
   exact adjacency_invariant p 0 1 1 0 (by ring)
 
-/-
-The denominator of any Stern-Brocot node is positive.
--/
 
 theorem fromPath_den_pos (p : Path) : 0 < (fromPath p).2 := by
   -- By the adjacency invariant, we know that the denominator of any node in the Stern-Brocot tree is positive.

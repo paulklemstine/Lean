@@ -10,31 +10,29 @@ import Mathlib
 /-- A triple (a,b,c) is Pythagorean if a² + b² = c². -/
 def IsPythag (a b c : ℤ) : Prop := a ^ 2 + b ^ 2 = c ^ 2
 
-/-- Berggren child A -/
 
+/-- Berggren child A -/
 def bergA (a b c : ℤ) : ℤ × ℤ × ℤ := (a - 2*b + 2*c, 2*a - b + 2*c, 2*a - 2*b + 3*c)
 
-/-- Berggren child B -/
 
+/-- Berggren child B -/
 def bergB (a b c : ℤ) : ℤ × ℤ × ℤ := (a + 2*b + 2*c, 2*a + b + 2*c, 2*a + 2*b + 3*c)
 
-/-- Berggren child C -/
 
+/-- Berggren child C -/
 def bergC (a b c : ℤ) : ℤ × ℤ × ℤ := (-a + 2*b + 2*c, -2*a + b + 2*c, -2*a + 2*b + 3*c)
 
-/-- Inverse Berggren A: B₁⁻¹ = Q B₁ᵀ Q where Q = diag(1,1,-1) -/
 
+/-- Inverse Berggren A: B₁⁻¹ = Q B₁ᵀ Q where Q = diag(1,1,-1) -/
 def invA (a b c : ℤ) : ℤ × ℤ × ℤ := (a + 2*b - 2*c, -2*a - b + 2*c, -2*a - 2*b + 3*c)
 
-/-- Inverse Berggren B -/
 
+/-- Inverse Berggren B -/
 def invB (a b c : ℤ) : ℤ × ℤ × ℤ := (a + 2*b - 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
 
+
 /-- Inverse Berggren C -/
-
 def invC (a b c : ℤ) : ℤ × ℤ × ℤ := (-a - 2*b + 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
-
-/-! ## §2. Pythagorean Preservation -/
 
 
 theorem bergA_pyth (a b c : ℤ) (h : IsPythag a b c) :
@@ -51,9 +49,6 @@ theorem bergC_pyth (a b c : ℤ) (h : IsPythag a b c) :
     IsPythag (bergC a b c).1 (bergC a b c).2.1 (bergC a b c).2.2 := by
   unfold IsPythag bergC at *; nlinarith [h]
 
-/-! ## §3. Lorentz Form Preservation (ring identity, no hypothesis needed) -/
-
-/-- Lorentz form value -/
 
 theorem bergA_preserves_Q (a b c : ℤ) :
     lorentzQ (bergA a b c).1 (bergA a b c).2.1 (bergA a b c).2.2 = lorentzQ a b c := by
@@ -69,8 +64,6 @@ theorem bergC_preserves_Q (a b c : ℤ) :
     lorentzQ (bergC a b c).1 (bergC a b c).2.1 (bergC a b c).2.2 = lorentzQ a b c := by
   unfold lorentzQ bergC; ring
 
-/-! ## §4. Determinant Structure (Direction #36) -/
-
 
 def B₁_mat : Matrix (Fin 3) (Fin 3) ℤ := !![1, -2, 2; 2, -1, 2; 2, -2, 3]
 
@@ -81,10 +74,12 @@ def B₃_mat : Matrix (Fin 3) (Fin 3) ℤ := !![-1, 2, 2; -2, 1, 2; -2, 2, 3]
 def QLor : Matrix (Fin 3) (Fin 3) ℤ := !![1, 0, 0; 0, 1, 0; 0, 0, -1]
 
 
+/-- B₁, B₃ are in SO(2,1;ℤ) while B₂ is in O(2,1;ℤ) \ SO(2,1;ℤ) -/
 theorem det_asymmetry : Matrix.det B₁_mat = 1 ∧ Matrix.det B₂_mat = -1 ∧ Matrix.det B₃_mat = 1 :=
   ⟨det_B₁, det_B₂, det_B₃⟩
 
 
+/-- Product of Berggren matrices remains in O(2,1;ℤ) -/
 theorem B₁B₂_lorentz : (B₁_mat * B₂_mat).transpose * QLor * (B₁_mat * B₂_mat) = QLor := by
   native_decide
 
@@ -92,8 +87,6 @@ theorem B₁B₂_lorentz : (B₁_mat * B₂_mat).transpose * QLor * (B₁_mat * 
 theorem B₁B₂B₃_lorentz :
     (B₁_mat * B₂_mat * B₃_mat).transpose * QLor * (B₁_mat * B₂_mat * B₃_mat) = QLor := by
   native_decide
-
-/-! ## §5. Forward-Inverse Cancellation -/
 
 
 theorem fwd_inv_A (a b c : ℤ) :
@@ -125,8 +118,6 @@ theorem inv_fwd_C (a b c : ℤ) :
     bergC (invC a b c).1 (invC a b c).2.1 (invC a b c).2.2 = (a, b, c) := by
   simp only [bergC, invC, Prod.mk.injEq]; exact ⟨by ring, by ring, by ring⟩
 
-/-! ## §6. Computational Verification -/
-
 
 theorem bergA_root : bergA 3 4 5 = (5, 12, 13) := by native_decide
 
@@ -146,8 +137,6 @@ theorem bergA_depth2 : bergA 5 12 13 = (7, 24, 25) := by native_decide
 
 theorem bergB_depth2 : bergB 21 20 29 = (119, 120, 169) := by native_decide
 
-/-! ## §7. Hypotenuse Growth -/
-
 
 theorem bergA_hyp_increase (a b c : ℤ) (ha : 0 < a) (_ : 0 < b) (_ : 0 < c)
     (_ : a < c) (hbc : b < c) :
@@ -165,23 +154,11 @@ theorem bergC_hyp_increase (a b c : ℤ) (_ : 0 < a) (hb : 0 < b) (_ : 0 < c)
     c < (bergC a b c).2.2 := by
   unfold bergC; nlinarith
 
-/-! ## §8. Primitivity Preservation (Direction #3)
-
-Key insight: if p | gcd(a',b') for a child, then since the inverse matrix has integer
-entries and recovers (a,b,c), and since p | a' ∧ p | b' implies p² | a'²+b'² = c'²
-hence p | c', we get p | a ∧ p | b (from the integer inverse formula). -/
-
-/-
-If d divides both legs of a Pythagorean triple, d² divides c².
--/
 
 theorem dvd_sq_hyp_of_dvd_legs (a b c d : ℤ) (h : IsPythag a b c)
     (ha : d ∣ a) (hb : d ∣ b) : d ^ 2 ∣ c ^ 2 := by
   exact h ▸ dvd_add ( pow_dvd_pow_of_dvd ha 2 ) ( pow_dvd_pow_of_dvd hb 2 )
 
-/-
-If d divides both legs of a Pythagorean triple, d divides the hypotenuse.
--/
 
 theorem dvd_hyp_of_dvd_legs (a b c d : ℤ) (h : IsPythag a b c)
     (ha : d ∣ a) (hb : d ∣ b) : d ∣ c := by
@@ -189,9 +166,6 @@ theorem dvd_hyp_of_dvd_legs (a b c d : ℤ) (h : IsPythag a b c)
   obtain ⟨ k₂, rfl ⟩ := hb;
   exact Int.pow_dvd_pow_iff two_ne_zero |>.1 ⟨ k₁ ^ 2 + k₂ ^ 2, by linarith! [ h.symm ] ⟩
 
-/-
-Berggren A preserves primitivity: gcd(a,b)=1 implies gcd(a',b')=1.
--/
 
 theorem bergA_prim (a b c : ℤ) (h : IsPythag a b c) (hprim : Int.gcd a b = 1) :
     Int.gcd (bergA a b c).1 (bergA a b c).2.1 = 1 := by
@@ -207,9 +181,6 @@ theorem bergA_prim (a b c : ℤ) (h : IsPythag a b c) (hprim : Int.gcd a b = 1) 
     unfold bergA; ring_nf; aesop;
   exact Nat.Prime.not_dvd_one hp_prime ( hprim ▸ Int.natCast_dvd_natCast.mp ( Int.dvd_coe_gcd ( show ( p : ℤ ) ∣ a from h_inv.1.symm ▸ dvd_sub ( dvd_add hp_div.1 ( dvd_mul_of_dvd_right hp_div.2 _ ) ) ( dvd_mul_of_dvd_right hp_div_c _ ) ) ( show ( p : ℤ ) ∣ b from h_inv.2.1.symm ▸ dvd_add ( dvd_sub ( dvd_mul_of_dvd_right hp_div.1 _ ) hp_div.2 ) ( dvd_mul_of_dvd_right hp_div_c _ ) ) ) )
 
-/-
-Berggren B preserves primitivity.
--/
 
 theorem bergB_prim (a b c : ℤ) (h : IsPythag a b c) (hprim : Int.gcd a b = 1) :
     Int.gcd (bergB a b c).1 (bergB a b c).2.1 = 1 := by
@@ -231,9 +202,6 @@ theorem bergB_prim (a b c : ℤ) (h : IsPythag a b c) (hprim : Int.gcd a b = 1) 
     grind;
   exact Nat.Prime.not_dvd_one hp_prime ( hprim ▸ Int.natCast_dvd_natCast.mp ( Int.dvd_coe_gcd hp_div_a hp_div_b ) )
 
-/-
-Berggren C preserves primitivity.
--/
 
 theorem bergC_prim (a b c : ℤ) (h : IsPythag a b c) (hprim : Int.gcd a b = 1) :
     Int.gcd (bergC a b c).1 (bergC a b c).2.1 = 1 := by
@@ -252,10 +220,8 @@ theorem bergC_prim (a b c : ℤ) (h : IsPythag a b c) (hprim : Int.gcd a b = 1) 
     exact h_invC.2.1.symm ▸ dvd_sub ( dvd_add ( dvd_mul_of_dvd_right ( Int.gcd_dvd_left _ _ ) _ ) ( Int.gcd_dvd_right _ _ ) ) ( dvd_mul_of_dvd_right hd_div_c' _ );
   exact Nat.dvd_one.mp ( hprim ▸ Int.natCast_dvd_natCast.mp ( Int.dvd_coe_gcd hd_div_a hd_div_b ) )
 
-/-! ## §9. Pell Recurrence (Direction #38) -/
 
 /-- B-branch hypotenuse sequence: c₀=5, c₁=29, c_{n+2} = 6c_{n+1} - cₙ -/
-
 def bHyp : ℕ → ℤ
   | 0 => 5
   | 1 => 29
@@ -272,15 +238,12 @@ theorem bHyp_values : bHyp 0 = 5 ∧ bHyp 1 = 29 ∧ bHyp 2 = 169 ∧ bHyp 3 = 9
   constructor; · native_decide
   · native_decide
 
-/-- The Pell recurrence checks: 6·29-5=169, 6·169-29=985, 6·985-169=5741 -/
 
+/-- The Pell recurrence checks: 6·29-5=169, 6·169-29=985, 6·985-169=5741 -/
 theorem pell_checks :
     6 * 29 - 5 = (169 : ℤ) ∧ 6 * 169 - 29 = (985 : ℤ) ∧ 6 * 985 - 169 = (5741 : ℤ) := by
   omega
 
-/-
-B-branch hypotenuses are strictly increasing
--/
 
 theorem bHyp_increasing (n : ℕ) : bHyp n < bHyp (n + 1) := by
   -- We can prove this by induction on $n$.
@@ -288,15 +251,13 @@ theorem bHyp_increasing (n : ℕ) : bHyp n < bHyp (n + 1) := by
     intro n; induction n <;> simp_all +decide [ bHyp ] ; omega;
   exact h_ind n |>.2
 
-/-! ## §10. Tree Path Correctness -/
 
 /-- Steps in the Berggren tree -/
-
 inductive BerggrenStep where | A | B | C
   deriving DecidableEq, Repr
 
-/-- Apply a single step -/
 
+/-- Any Berggren step preserves the Pythagorean property -/
 theorem step_preserves_pyth (s : BerggrenStep) (a b c : ℤ) (h : IsPythag a b c) :
     let t := applyStep s (a, b, c)
     IsPythag t.1 t.2.1 t.2.2 := by
@@ -305,9 +266,6 @@ theorem step_preserves_pyth (s : BerggrenStep) (a b c : ℤ) (h : IsPythag a b c
   · exact bergB_pyth a b c h
   · exact bergC_pyth a b c h
 
-/-
-Folding steps preserves the Pythagorean property
--/
 
 theorem path_preserves_pyth (path : List BerggrenStep) :
     let t := applyPath path
@@ -317,10 +275,8 @@ theorem path_preserves_pyth (path : List BerggrenStep) :
   · convert step_preserves_pyth l _ _ _ ih using 1;
     unfold applyPath; aesop;
 
-/-! ## §11. Binary Tree Leaf Counting (Direction #39) -/
 
 /-- Binary expression tree -/
-
 inductive BinTree (α : Type*) where
   | leaf : α → BinTree α
   | node : BinTree α → BinTree α → BinTree α
@@ -335,19 +291,14 @@ def BinTree.internals : BinTree α → ℕ
   | .leaf _ => 0
   | .node l r => 1 + l.internals + r.internals
 
-/-
-Fundamental binary tree identity: #leaves = #internal_nodes + 1
--/
 
 theorem bin_tree_leaf_count (t : BinTree α) : t.leaves = t.internals + 1 := by
   induction t;
   · rfl;
   · simp +arith +decide [ *, BinTree.leaves, BinTree.internals ]
 
-/-! ## §12. Euclid Parametrization -/
 
 /-- Euclid parametrization: (m,n) ↦ (m²-n², 2mn, m²+n²) -/
-
 def euclid (m n : ℤ) : ℤ × ℤ × ℤ := (m ^ 2 - n ^ 2, 2 * m * n, m ^ 2 + n ^ 2)
 
 
@@ -362,9 +313,3 @@ theorem euclid_5_12_13 : euclid 3 2 = (5, 12, 13) := by native_decide
 
 theorem euclid_8_15_17 : euclid 4 1 = (15, 8, 17) := by native_decide
 
-/-! ## §13. Quadruple Extension (Direction #6 prerequisite)
-
-A Pythagorean quadruple satisfies a² + b² + c² = d². We can embed triples
-into quadruples by zero-extension. -/
-
-/-- A Pythagorean quadruple -/

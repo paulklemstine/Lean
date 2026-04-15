@@ -26,14 +26,11 @@ def pathMatrix : BPath → Matrix (Fin 3) (Fin 3) ℤ
 theorem dir_preserves_Q (d : BDir) : (dirMatrix d)ᵀ * Q * (dirMatrix d) = Q := by
   cases d <;> simp only [dirMatrix] <;> native_decide
 
-/-- Each direction matrix has |det| = 1 (they are in O(2,1)(ℤ)). -/
 
+/-- Each direction matrix has |det| = 1 (they are in O(2,1)(ℤ)). -/
 theorem dir_det_abs (d : BDir) : |Matrix.det (dirMatrix d)| = 1 := by
   cases d <;> simp only [dirMatrix] <;> native_decide
 
-/-
-Any path's composite matrix preserves the Lorentz form.
--/
 
 theorem pathMatrix_preserves_Q (p : BPath) :
     (pathMatrix p)ᵀ * Q * (pathMatrix p) = Q := by
@@ -43,16 +40,14 @@ theorem pathMatrix_preserves_Q (p : BPath) :
     simp +decide only [transpose_mul, Matrix.mul_assoc];
     simp +decide [ ← mul_assoc, ← Matrix.mul_assoc ( pathMatrix p |> Matrix.transpose ), ih, dir_preserves_Q ]
 
-/-- The absolute determinant of any path matrix is 1. -/
 
+/-- The absolute determinant of any path matrix is 1. -/
 theorem shortcut_det_abs (p : BPath) :
     |Matrix.det (pathMatrix p)| = 1 := by
   induction p with
   | nil => simp [pathMatrix]
   | cons d ds ih =>
     simp only [pathMatrix, Matrix.det_mul, abs_mul, dir_det_abs, ih, one_mul]
-
-/-! ## Pythagorean Preservation -/
 
 
 theorem B₁_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
@@ -66,9 +61,6 @@ theorem B₂_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 theorem B₃_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (-a + 2*b + 2*c)^2 + (-2*a + b + 2*c)^2 = (-2*a + 2*b + 3*c)^2 := by nlinarith
 
-/-
-Every direction preserves the Pythagorean property.
--/
 
 theorem dir_preserves_pyth (d : BDir) (v : Fin 3 → ℤ)
     (hv : v 0 ^ 2 + v 1 ^ 2 = v 2 ^ 2) :
@@ -83,8 +75,8 @@ theorem dir_preserves_pyth (d : BDir) (v : Fin 3 → ℤ)
   · simp +decide [ dirMatrix, dotProduct ];
     simp +decide [ B₃, Fin.sum_univ_three ] ; linarith
 
-/-- Every triple in the Berggren tree satisfies a² + b² = c². -/
 
+/-- Every triple in the Berggren tree satisfies a² + b² = c². -/
 theorem tripleAt_pythagorean (p : BPath) :
     (tripleAt p) 0 ^ 2 + (tripleAt p) 1 ^ 2 = (tripleAt p) 2 ^ 2 := by
   induction p with
@@ -94,24 +86,19 @@ theorem tripleAt_pythagorean (p : BPath) :
     rw [← mulVec_mulVec]
     exact dir_preserves_pyth d _ ih
 
-/-! ## Factoring Identities -/
 
-/-- (c - b)(c + b) = a² when a² + b² = c². -/
-
+/-- (c - a)(c + a) = b² when a² + b² = c². -/
 theorem factoring_identity' (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (c - a) * (c + a) = b ^ 2 := by ring_nf; linarith
 
-/-- Factoring from a Pythagorean triple with leg N. -/
 
+/-- Path concatenation = matrix multiplication. -/
 theorem pathMatrix_append (p q : BPath) :
     pathMatrix (p ++ q) = pathMatrix p * pathMatrix q := by
   induction p with
   | nil => simp [pathMatrix]
   | cons d ds ih => simp only [List.cons_append, pathMatrix, ih, Matrix.mul_assoc]
 
-/-
-Shortcuts preserve information (injectivity).
--/
 
 theorem shortcut_preserves_information (p : BPath) :
     Function.Injective (pathMatrix p *ᵥ ·) := by
@@ -120,23 +107,19 @@ theorem shortcut_preserves_information (p : BPath) :
     rw [ abs_eq ] at this <;> aesop;
   exact fun x y hxy => by simpa [ h_det ] using congr_arg ( fun z => ( pathMatrix p ) ⁻¹ *ᵥ z ) hxy;
 
-/-! ## Inverse Tree -/
-
 
 theorem B₁_inv_left : B₁_inv * B₁ = 1 := by native_decide
 
 theorem B₁_inv_right : B₁ * B₁_inv = 1 := by native_decide
 
-/-- det B₁ = 1, det B₃ = 1, but det B₂ = -1. B₁ and B₃ are in SO(2,1)(ℤ),
-    while B₂ is in O(2,1)(ℤ) \ SO(2,1)(ℤ). -/
 
+/-- det B₁ = 1, det B₃ = 1, but det B₂ = -1. B₁ and B₃ are in SO(2,1)(ℤ),
+while B₂ is in O(2,1)(ℤ) \ SO(2,1)(ℤ). -/
 theorem B₁_in_SO : Matrix.det B₁ = 1 := det_B₁
 
 theorem B₃_in_SO : Matrix.det B₃ = 1 := det_B₃
 
 theorem B₂_not_SO : Matrix.det B₂ = -1 := det_B₂
-
-/-! ## Lorentz Inner Product -/
 
 
 def lorentzInner (u v : Fin 3 → ℤ) : ℤ := u 0 * v 0 + u 1 * v 1 - u 2 * v 2
@@ -145,9 +128,6 @@ def lorentzInner (u v : Fin 3 → ℤ) : ℤ := u 0 * v 0 + u 1 * v 1 - u 2 * v 
 theorem root_lorentz_zero : lorentzInner root root = 0 := by
   simp [lorentzInner, root]
 
-/-
-Lorentz inner product is preserved by any path.
--/
 
 theorem path_preserves_lorentz (p : BPath) (u v : Fin 3 → ℤ) :
     lorentzInner (pathMatrix p *ᵥ u) (pathMatrix p *ᵥ v) = lorentzInner u v := by

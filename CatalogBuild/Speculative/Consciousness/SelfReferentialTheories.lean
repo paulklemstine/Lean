@@ -24,8 +24,6 @@ theorem quine_fixed_point {A : Type*} (Y : (A → A) → A)
     (hY : ∀ f : A → A, f (Y f) = Y f) (f : A → A) :
     ∃ q : A, f q = q := ⟨Y f, hY f⟩
 
-/-! ## §2: Self-Justifying Axiom Systems -/
-
 
 structure SelfJustifyingSystem where
   Axiom_ : Type*
@@ -41,8 +39,6 @@ def SelfJustifyingSystem.isMinimal (S : SelfJustifyingSystem) : Prop :=
   ∀ a ∈ S.axioms, ¬ ∀ a' ∈ S.axioms \ {a},
     ∃ t, S.derives (S.axioms \ {a}) t ∧ S.justify t = a'
 
-/-! ## §3: Autopoietic Systems -/
-
 
 def AutopoieticSystem.operationallyClosed (A : AutopoieticSystem)
     (boundary : Set A.Component) : Prop :=
@@ -53,8 +49,6 @@ theorem autopoietic_fixed_point (A : AutopoieticSystem) (S : Set A.Component)
     (hclosed : ∀ c ∈ S, A.produces c ⊆ S) :
     ⋃ c ∈ S, A.produces c ⊆ S := by
   intro x hx; simp at hx; obtain ⟨c, hcS, hxp⟩ := hx; exact hclosed c hcS hxp
-
-/-! ## §4: The Bootstrap Paradox -/
 
 
 structure BootstrapLoop where
@@ -76,8 +70,6 @@ theorem bootstrap_periodic (B : BootstrapLoop) (t : ℤ) (k : ℕ) :
       push_cast; ring
     rw [this, ← add_assoc, B.is_loop, ih]
 
-/-! ## §5: Self-Referential Consciousness -/
-
 
 structure SelfReferentialConsciousness where
   State : Type*
@@ -97,8 +89,6 @@ def SelfReferentialConsciousness.consciousStates (S : SelfReferentialConsciousne
 theorem conscious_states_justified (S : SelfReferentialConsciousness) :
     ∀ s ∈ S.consciousStates, S.justify s :=
   fun s hs => S.self_justified s hs
-
-/-! ## §6: The Liar's Staircase -/
 
 
 def liarsStaircase : ℕ → Bool

@@ -24,9 +24,6 @@ theorem contraction_has_fixedPoint {X : Type*} [MetricSpace X] [CompleteSpace X]
   rw [ ← Filter.tendsto_add_atTop_iff_nat 1 ];
   simpa only [ Function.iterate_succ_apply' ] using Filter.Tendsto.comp ( show Filter.Tendsto f _ _ from by exact ( Metric.tendsto_nhds_nhds.mpr fun ε hε => by exact ⟨ ε, hε, by intro y hy; exact lt_of_le_of_lt ( hf _ _ ) ( by nlinarith [ hq.1, hq.2 ] ) ⟩ ) ) hx
 
-/-
-Uniqueness of fixed points for contraction mappings.
--/
 
 theorem contraction_fixedPoint_unique {X : Type*} [MetricSpace X]
     {f : X → X} {q : ℝ} (hq : q < 1)
@@ -35,11 +32,6 @@ theorem contraction_fixedPoint_unique {X : Type*} [MetricSpace X]
   contrapose! hf;
   exact ⟨ x₁, x₂, by simp [ * ] ⟩
 
-/-! ## Knaster-Tarski: Monotone functions on complete lattices have fixed points -/
-
-/-
-Monotone endomorphisms on complete lattices have a least fixed point.
--/
 
 theorem monotone_has_lfp {L : Type*} [CompleteLattice L] {f : L → L}
     (hf : Monotone f) : ∃ x, f x = x ∧ ∀ y, f y = y → x ≤ y := by
@@ -51,16 +43,6 @@ theorem monotone_has_lfp {L : Type*} [CompleteLattice L] {f : L → L}
       exact le_sInf fun x hx => hf ( sInf_le hx ) |> le_trans <| hx;
   · exact fun y hy => sInf_le hy.le
 
-/-! ## Brouwer-style: continuous self-maps of compact convex sets have fixed points
-
-  This guarantees that if the space of possible universe-states is "ball-like"
-  (compact and convex) and the evolution is continuous, then at least one
-  self-consistent timeline exists. -/
-
-/-
-Every continuous self-map of a nonempty compact convex subset of ℝ has a fixed point
-    (one-dimensional Brouwer / intermediate value theorem).
--/
 
 theorem interval_fixedPoint {f : ℝ → ℝ} {a b : ℝ} (hab : a ≤ b)
     (hf : ContinuousOn f (Set.Icc a b))

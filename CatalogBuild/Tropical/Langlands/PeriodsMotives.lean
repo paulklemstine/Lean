@@ -22,8 +22,6 @@ theorem totalWeight_nonneg (n : ℕ) (M : TropicalMotive n) :
     totalWeight n M ≥ 0 := by
   exact Finset.sum_nonneg fun _ _ => M.weights_nonneg _
 
-/-! ## Section 2: Tropical Periods -/
-
 
 def tropicalPeriod (n : ℕ) (gamma : Fin n → ℤ) (omega : Fin n → ℝ) : ℝ :=
   ∑ i : Fin n, (gamma i : ℝ) * omega i
@@ -52,8 +50,6 @@ theorem period_zero_form (n : ℕ) (gamma : Fin n → ℤ) :
     tropicalPeriod n gamma (fun _ => (0 : ℝ)) = 0 := by
   simp [tropicalPeriod]
 
-/-! ## Section 3: Tropical L-functions from Motives -/
-
 
 def motivicLFunction (n : ℕ) (M : TropicalMotive n) (s : ℝ) : ℝ :=
   ∑ i : Fin n, M.weights i * s
@@ -72,8 +68,6 @@ theorem motivicLFunction_at_one (n : ℕ) (M : TropicalMotive n) :
 theorem motivicLFunction_at_zero (n : ℕ) (M : TropicalMotive n) :
     motivicLFunction n M 0 = 0 := by
   simp [motivicLFunction_eq]
-
-/-! ## Section 4: Motivic Galois Group Action -/
 
 
 def galoisAction (n : ℕ) (sigma : Equiv.Perm (Fin n)) (M : TropicalMotive n) :
@@ -98,8 +92,6 @@ theorem galoisAction_id (n : ℕ) (M : TropicalMotive n) :
     galoisAction n 1 M = M := by
   simp [galoisAction, Function.comp_id]
 
-/-! ## Section 5: Tropical Hodge Structure -/
-
 
 structure TropicalHodgeStructure (n : ℕ) where
   hodgeNumbers : Fin (n + 1) → ℕ
@@ -121,8 +113,6 @@ def weight1Hodge (g : ℕ) : TropicalHodgeStructure 1 where
 theorem weight1Hodge_dimension (g : ℕ) :
     hodgeDimension 1 (weight1Hodge g) = 2 * g := by
   simp [hodgeDimension, weight1Hodge, Fin.sum_univ_two]; ring
-
-/-! ## Section 6: Period Equivalence -/
 
 
 def periodEquivalent (n : ℕ) (M1 M2 : TropicalMotive n) : Prop :=
@@ -153,8 +143,6 @@ theorem periodEquiv_same_LFunction (n : ℕ) (M1 M2 : TropicalMotive n)
     · unfold tropicalPeriod; norm_num;
     · unfold tropicalPeriod; norm_num;
   unfold motivicLFunction; simp +decide [ ← Finset.sum_mul, h_totalWeight ] ;
-
-/-! ## Section 7: Tropical Betti Numbers -/
 
 
 def tropicalBetti (genus : ℕ) (k : ℕ) : ℕ :=

@@ -13,19 +13,12 @@ theorem euler_criterion_forward (p : ℕ) [Fact (Nat.Prime p)] (hodd : p ≠ 2)
   obtain ⟨ x, rfl ⟩ := hx;
   rw [ ← pow_mul, Nat.mul_div_cancel' ( even_iff_two_dvd.mp <| Nat.Prime.even_sub_one Fact.out hodd ), ZMod.pow_card_sub_one_eq_one ] ; aesop
 
-/-! ### Legendre Symbol Properties -/
 
 /-- The Legendre symbol is multiplicative. -/
-
 theorem legendreSym_mul' (p : ℕ) [Fact (Nat.Prime p)] (a b : ℤ) :
     legendreSym p (a * b) = legendreSym p a * legendreSym p b :=
   legendreSym.mul p a b
 
-/-! ### Specific QR Results -/
-
-/-
--1 is a QR mod p iff p ≡ 1 (mod 4), for odd primes p > 2.
--/
 
 theorem neg_one_qr_iff_one_mod_four (p : ℕ) [Fact (Nat.Prime p)] (hodd : p ≠ 2) :
     (∃ x : ZMod p, x ^ 2 = -1) ↔ p % 4 = 1 := by
@@ -36,9 +29,6 @@ theorem neg_one_qr_iff_one_mod_four (p : ℕ) [Fact (Nat.Prime p)] (hodd : p ≠
   · have := ZMod.exists_sq_eq_neg_one_iff ( p := p );
     exact Exists.elim ( this.mpr ( by linarith ) ) fun x hx => ⟨ x, by rw [ sq, hx ] ⟩
 
-/-
-2 is a QR mod p iff p ≡ ±1 (mod 8).
--/
 
 theorem two_qr_iff (p : ℕ) [Fact (Nat.Prime p)] (hodd : p ≠ 2) :
     (∃ x : ZMod p, x ^ 2 = 2) ↔ p % 8 = 1 ∨ p % 8 = 7 := by
@@ -53,17 +43,15 @@ theorem two_qr_iff (p : ℕ) [Fact (Nat.Prime p)] (hodd : p ≠ 2) :
   · erw [ ZMod.χ₈_nat_mod_eight ] ; have := Nat.mod_lt p ( by decide : 0 < 8 ) ; interval_cases _ : p % 8 <;> simp +decide [ * ];
   · assumption
 
-/-! ### QR Closure Properties -/
 
 /-- Quadratic residues are closed under powers. -/
-
 theorem qr_pow_closed (n : ℕ) (a : ZMod n) (k : ℕ) (hqr : ∃ x : ZMod n, x ^ 2 = a) :
     ∃ y : ZMod n, y ^ 2 = a ^ k := by
   obtain ⟨x, hx⟩ := hqr
   exact ⟨x ^ k, by rw [← pow_mul, mul_comm, pow_mul, hx]⟩
 
-/-- The set of QRs mod n forms a submonoid under multiplication. -/
 
+/-- The set of QRs mod n forms a submonoid under multiplication. -/
 theorem qr_one (n : ℕ) : ∃ x : ZMod n, x ^ 2 = (1 : ZMod n) :=
   ⟨1, by ring⟩
 
@@ -76,9 +64,6 @@ theorem qr_mul' (n : ℕ) (a b : ZMod n)
   obtain ⟨y, hy⟩ := hb
   exact ⟨x * y, by rw [mul_pow, hx, hy]⟩
 
-/-! ### Computational Verifications -/
-
--- 2 is a QR mod 7: 3² = 9 ≡ 2 (mod 7)
 
 theorem two_qr_mod_7 : ∃ x : ZMod 7, x ^ 2 = 2 := ⟨3, by decide⟩
 

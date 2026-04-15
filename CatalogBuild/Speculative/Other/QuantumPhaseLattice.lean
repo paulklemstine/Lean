@@ -18,52 +18,48 @@ theorem quantum_phase_lattice_is_complete_lattice
     ∀ (S : Set (Submodule ℂ V)), ∃ s, IsLUB S s := fun S =>
   ⟨sSup S, isLUB_sSup S⟩
 
-/-! ## Section 2: Superposition Norm Bound -/
 
 /-- The norm of a quantum superposition is bounded by the sum of norms. -/
-
 theorem superposition_norm_bound
     {V : Type*} [SeminormedAddCommGroup V]
     (ψ φ : V) :
     ‖ψ + φ‖ ≤ ‖ψ‖ + ‖φ‖ :=
   norm_add_le ψ φ
 
-/-- Generalized superposition bound for n quantum states. -/
 
+/-- Generalized superposition bound for n quantum states. -/
 theorem superposition_norm_bound_finset
     {V : Type*} [SeminormedAddCommGroup V]
     (n : ℕ) (states : Fin n → V) :
     ‖∑ i, states i‖ ≤ ∑ i, ‖states i‖ :=
   norm_sum_le _ _
 
-/-! ## Section 3: Born Rule and Measurement Probabilities -/
 
 /-- The Born rule probability |⟨ψ|φ⟩|² is non-negative. -/
-
 theorem born_rule_nonneg
     {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
     (ψ φ : V) :
     0 ≤ ‖@inner ℂ V _ ψ φ‖ ^ 2 := by
   positivity
 
-/-- Cauchy-Schwarz bounds Born rule: |⟨ψ|φ⟩| ≤ ‖ψ‖·‖φ‖. -/
 
+/-- Cauchy-Schwarz bounds Born rule: |⟨ψ|φ⟩| ≤ ‖ψ‖·‖φ‖. -/
 theorem born_rule_cauchy_schwarz
     {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
     (ψ φ : V) :
     ‖@inner ℂ V _ ψ φ‖ ≤ ‖ψ‖ * ‖φ‖ :=
   norm_inner_le_norm ψ φ
 
-/-- For unit vectors, Born probability ≤ 1. -/
 
+/-- Global phase invariance of norm: ‖e^{iθ} · ψ‖ = ‖ψ‖. -/
 theorem phase_invariance_norm
     {V : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
     (ψ : V) (θ : ℝ) :
     ‖Complex.exp (↑θ * Complex.I) • ψ‖ = ‖ψ‖ := by
   rw [norm_smul, Complex.norm_exp_ofReal_mul_I, one_mul]
 
-/-- Phase invariance of inner product magnitude: |⟨ψ|e^{iθ}φ⟩| = |⟨ψ|φ⟩|. -/
 
+/-- Phase invariance of inner product magnitude: |⟨ψ|e^{iθ}φ⟩| = |⟨ψ|φ⟩|. -/
 theorem phase_invariance_inner_norm
     {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
     (ψ φ : V) (θ : ℝ) :
@@ -72,11 +68,9 @@ theorem phase_invariance_inner_norm
   rw [inner_smul_right]
   simp [Complex.norm_exp_ofReal_mul_I]
 
-/-! ## Section 5: Quantum Coherence Bounds -/
 
 /-- The real part of the inner product (interference term) is bounded:
-    |Re⟨ψ|φ⟩| ≤ ‖ψ‖·‖φ‖. -/
-
+|Re⟨ψ|φ⟩| ≤ ‖ψ‖·‖φ‖. -/
 theorem quantum_coherence_bound
     {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
     (ψ φ : V) :
@@ -85,10 +79,6 @@ theorem quantum_coherence_bound
       ≤ ‖@inner ℂ V _ ψ φ‖ := Complex.abs_re_le_norm _
     _ ≤ ‖ψ‖ * ‖φ‖ := norm_inner_le_norm ψ φ
 
-/-
-The quantum interference formula:
-    ‖ψ + φ‖² = ‖ψ‖² + ‖φ‖² + 2·Re⟨ψ|φ⟩.
--/
 
 theorem quantum_interference_formula
     {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
@@ -97,11 +87,6 @@ theorem quantum_interference_formula
   rw [ @norm_add_sq ℂ ];
   ring
 
-/-! ## Section 6: Projection Norm Decrease -/
-
-/-
-Orthogonal projection decreases norms: ‖Pψ‖ ≤ ‖ψ‖.
--/
 
 theorem projection_norm_le
     {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
@@ -113,38 +98,32 @@ theorem projection_norm_le
     exact fun ψ => norm_orthogonalProjection_apply_le K ψ;
   exact hProj ψ
 
-/-! ## Section 7: Quantum State Fidelity -/
 
 /-- Fidelity is symmetric: |⟨ψ|φ⟩| = |⟨φ|ψ⟩|. -/
-
 theorem fidelity_symmetric
     {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
     (ψ φ : V) :
     ‖@inner ℂ V _ ψ φ‖ = ‖@inner ℂ V _ φ ψ‖ := by
   rw [← inner_conj_symm ψ φ, RCLike.norm_conj]
 
-/-- Orthogonal states have zero fidelity. -/
 
+/-- Orthogonal states have zero fidelity. -/
 theorem fidelity_orthogonal
     {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
     (ψ φ : V) (horth : @inner ℂ V _ ψ φ = 0) :
     ‖@inner ℂ V _ ψ φ‖ = 0 := by
   simp [horth]
 
-/-! ## Section 8: Modularity of the Quantum Phase Lattice -/
 
 /-- The submodule lattice is modular: if A ≤ C then A ⊔ (B ⊓ C) = (A ⊔ B) ⊓ C. -/
-
 theorem quantum_lattice_modular
     {V : Type*} [AddCommGroup V] [Module ℂ V]
     (A B C : Submodule ℂ V) (hAC : A ≤ C) :
     A ⊔ (B ⊓ C) = (A ⊔ B) ⊓ C :=
   (sup_inf_assoc_of_le B hAC).symm
 
-/-! ## Section 9: Quantum Phase Sensitivity -/
 
 /-- The norm of αψ + βφ is bounded by |α|‖ψ‖ + |β|‖φ‖. -/
-
 theorem quantum_phase_sensitivity_bound
     {V : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
     (ψ φ : V) (α β : ℂ) :
@@ -153,11 +132,9 @@ theorem quantum_phase_sensitivity_bound
       ≤ ‖α • ψ‖ + ‖β • φ‖ := norm_add_le _ _
     _ = ‖α‖ * ‖ψ‖ + ‖β‖ * ‖φ‖ := by rw [norm_smul, norm_smul]
 
-/-! ## Section 10: Quantum Transport as Contraction -/
 
 /-- A norm-nonincreasing linear map is 1-Lipschitz, enabling application
-    of the ECSTASIS fixed-point convergence framework. -/
-
+of the ECSTASIS fixed-point convergence framework. -/
 theorem quantum_channel_lipschitz
     {V W : Type*} [NormedAddCommGroup V] [NormedAddCommGroup W]
     [NormedSpace ℂ V] [NormedSpace ℂ W]
@@ -165,8 +142,8 @@ theorem quantum_channel_lipschitz
     LipschitzWith 1 T :=
   T.lipschitz.weaken (by exact_mod_cast hT)
 
-/-- Composition of quantum channels: ‖T₂ ∘ T₁‖ ≤ ‖T₂‖ · ‖T₁‖. -/
 
+/-- Composition of quantum channels: ‖T₂ ∘ T₁‖ ≤ ‖T₂‖ · ‖T₁‖. -/
 theorem quantum_channel_composition_bound
     {V W U : Type*} [NormedAddCommGroup V] [NormedAddCommGroup W]
     [NormedAddCommGroup U]
@@ -175,12 +152,10 @@ theorem quantum_channel_composition_bound
     ‖T₂.comp T₁‖ ≤ ‖T₂‖ * ‖T₁‖ :=
   ContinuousLinearMap.opNorm_comp_le T₂ T₁
 
-/-! ## Section 11: Parallelogram Law -/
 
 /-- The parallelogram law: ‖ψ+φ‖² + ‖ψ-φ‖² = 2(‖ψ‖² + ‖φ‖²).
-    This characterizes inner product spaces and constrains the geometry
-    of the quantum phase lattice. -/
-
+This characterizes inner product spaces and constrains the geometry
+of the quantum phase lattice. -/
 theorem quantum_parallelogram_law
     {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
     (ψ φ : V) :
@@ -188,11 +163,9 @@ theorem quantum_parallelogram_law
   have h := parallelogram_law_with_norm ℂ ψ φ
   nlinarith [sq_abs ‖ψ + φ‖, sq_abs ‖ψ - φ‖, sq_abs ‖ψ‖, sq_abs ‖φ‖]
 
-/-! ## Section 12: Quantum Phase Lattice Transport -/
 
 /-- A norm-bounded linear self-map is Lipschitz, connecting to the
-    ECSTASIS contraction/fixed-point framework for quantum channels. -/
-
+ECSTASIS contraction/fixed-point framework for quantum channels. -/
 theorem quantum_phase_lattice_transport
     {V : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
     (U : V →L[ℂ] V) (hU : ‖U‖ ≤ 1) :

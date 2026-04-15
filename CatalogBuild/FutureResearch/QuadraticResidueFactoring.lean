@@ -25,8 +25,6 @@ theorem qr_mul_qr (a b n : ℕ) (ha : IsQuadraticResidue a n) (hb : IsQuadraticR
   obtain ⟨y, hy⟩ := hb
   exact ⟨x * y, by rw [mul_pow]; simp [Nat.mul_mod, hx, hy]⟩
 
-/-! ### Difference of Squares -/
-
 
 theorem fermat_factoring_identity (a b : ℤ) :
     4 * (a * b) = (a + b) ^ 2 - (b - a) ^ 2 := by ring
@@ -34,8 +32,6 @@ theorem fermat_factoring_identity (a b : ℤ) :
 
 theorem diff_of_squares_int (x y : ℤ) :
     x ^ 2 - y ^ 2 = (x - y) * (x + y) := by ring
-
-/-! ### Smooth Numbers -/
 
 
 theorem one_is_smooth (B : ℕ) : IsSmooth B 1 := by

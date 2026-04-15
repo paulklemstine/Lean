@@ -20,8 +20,6 @@ def chBD (a b c : ℤ) : ℤ × ℤ × ℤ := (a + 2*b + 2*c, 2*a + b + 2*c, 2*a
 
 def chCD (a b c : ℤ) : ℤ × ℤ × ℤ := (-a + 2*b + 2*c, -2*a + b + 2*c, -2*a + 2*b + 3*c)
 
-/-! ## Forward-Inverse Cancellation -/
-
 
 theorem chAD_invAD (a b c : ℤ) :
     let t := chAD a b c; invAD t.1 t.2.1 t.2.2 = (a, b, c) := by
@@ -52,8 +50,6 @@ theorem invCD_chCD (a b c : ℤ) :
     let t := invCD a b c; chCD t.1 t.2.1 t.2.2 = (a, b, c) := by
   simp only [invCD, chCD]; refine Prod.ext ?_ (Prod.ext ?_ ?_) <;> ring
 
-/-! ## Inverse maps preserve Pythagorean property -/
-
 
 theorem invAD_pyth (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     (invAD a b c).1^2 + (invAD a b c).2.1^2 = (invAD a b c).2.2^2 := by
@@ -69,19 +65,14 @@ theorem invCD_pyth (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     (invCD a b c).1^2 + (invCD a b c).2.1^2 = (invCD a b c).2.2^2 := by
   simp only [invCD]; nlinarith [sq_nonneg a, sq_nonneg b, sq_nonneg c]
 
-/-! ## Parent hypotenuse analysis -/
-
-/-- The parent hypotenuse -2a-2b+3c is strictly less than c -/
 
 theorem sigma_sum (a b c : ℤ) :
     (a + 2*b - 2*c) + (a - 2*b + 2*c) = 2 * a := by ring
 
-/-- σ₁ and -σ₁ can't both be ≤ 0 with a > 0, b > 0 -/
 
+/-- σ₁ and -σ₁ can't both be ≤ 0 with a > 0, b > 0 -/
 theorem not_both_sigma_nonpos (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) :
     0 < a + 2*b - 2*c ∨ 0 < -a - 2*b + 2*c ∨ (a + 2*b - 2*c = 0) := by omega
-
-/-! ## σ₁ = 0 implies 3a = 4b -/
 
 
 theorem sigma1_neg_invC_works (a b c : ℤ) (h : a^2 + b^2 = c^2)
@@ -101,20 +92,11 @@ theorem sigma1_neg_invC_works (a b c : ℤ) (h : a^2 + b^2 = c^2)
   -- Multiply: 16ab ≤ 9ab, contradiction since ab > 0
   nlinarith
 
-/-! ## σ₁ > 0 implies invA or invB works
-
-When σ₁ > 0, the first component of invA and invB is positive.
-For invA, second comp = -2a-b+2c. Positive iff 2c > 2a+b.
-For invB, second comp = 2a+b-2c. Positive iff 2a+b > 2c.
-These are complementary, so at least one works. -/
 
 /-- When σ₁ > 0, either invA or invB has positive second component -/
-
 theorem sigma1_pos_descent (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
     (hs : 0 < a + 2*b - 2*c) :
     (0 < -2*a - b + 2*c) ∨ (0 < 2*a + b - 2*c) ∨ (2*a + b = 2*c) := by omega
-
-/-! ## Root classification -/
 
 
 theorem root_classification (a b c : ℤ) (h : a^2 + b^2 = c^2)
@@ -122,11 +104,6 @@ theorem root_classification (a b c : ℤ) (h : a^2 + b^2 = c^2)
     (hcop : Int.gcd a b = 1) :
     (a = 3 ∧ b = 4) ∨ (a = 4 ∧ b = 3) := by
   subst hc5; have : a ≤ 5 := Int.le_of_lt_add_one ( by nlinarith only [ h ] ) ; have : b ≤ 5 := Int.le_of_lt_add_one ( by nlinarith only [ h ] ) ; interval_cases a <;> interval_cases b <;> trivial;
-
-/-! ## σ₁ = 0 and coprime implies c = 5
-
-From 3a = 4b: write a = 4t, b = 3t (since gcd(3,4) = 1).
-Then gcd(a,b) = t, so coprime implies t = 1 and c = 5. -/
 
 
 theorem sigma1_zero_coprime (a b c : ℤ) (h : a^2 + b^2 = c^2)
@@ -142,7 +119,6 @@ theorem sigma1_zero_coprime (a b c : ℤ) (h : a^2 + b^2 = c^2)
   simp_all +decide [ Int.gcd_mul_left, Int.gcd_mul_right ];
   grind +locals
 
-/-- For primitive triples with c > 5, σ₁ ≠ 0 -/
 
 theorem descent_step (a b c : ℤ) (h : a^2 + b^2 = c^2)
     (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) (hc5 : 5 < c)

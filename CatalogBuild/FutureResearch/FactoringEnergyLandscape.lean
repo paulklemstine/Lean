@@ -47,9 +47,6 @@ noncomputable def partition_count (N t : ℕ) : ℕ :=
 theorem energy_near_factor (N d : ℕ) (hd : d ∣ N) (hd_pos : 0 < d) :
     factoring_energy N d = 0 := factor_set_is_zero_energy N d hd_pos hd
 
-/-
-For N > 2, x = N-1 gives energy 1 (since N mod (N-1) = 1).
--/
 
 theorem energy_at_predecessor (N : ℕ) (hN : 2 < N) :
     factoring_energy N (N - 1) = 1 := by

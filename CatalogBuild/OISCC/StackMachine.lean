@@ -100,8 +100,8 @@ theorem prog_length (p : Program) : p.length = emlOps p + pushOps p := by
     | PUSH v => simp [emlOps, pushOps, ih]; omega
     | EML => simp [emlOps, pushOps, ih]; omega
 
-/-- Program computing e↑↑n. -/
 
+/-- Program computing e↑↑n. -/
 def eTowerProg : ℕ → Program
   | 0 => [.PUSH 1]
   | n + 1 => eTowerProg n ++ [.PUSH 1, .EML]
@@ -119,8 +119,8 @@ theorem eTowerProg_correct (n : ℕ) :
   | succ n ih =>
     simp [eTowerProg, run_append, ih, run, step, EML_sm, Real.log_one, eTow_sm]
 
-/-- emlOps for appended lists. -/
 
+/-- emlOps for appended lists. -/
 theorem emlOps_append (p1 p2 : Program) : emlOps (p1 ++ p2) = emlOps p1 + emlOps p2 := by
   induction p1 with
   | nil => simp [emlOps]
@@ -134,8 +134,6 @@ theorem eTowerProg_eml_count (n : ℕ) : emlOps (eTowerProg n) = n := by
   induction n with
   | zero => simp [eTowerProg, emlOps]
   | succ n ih => simp [eTowerProg, emlOps_append, ih, emlOps]
-
-end
 
 
 end

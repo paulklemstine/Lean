@@ -16,30 +16,14 @@ where this horror is true by default. -/
 noncomputable def evil_well_order (α : Type*) : LinearOrder α :=
   linearOrderOfSTO (WellOrderingRel)
 
-/-- **The Well-Ordering is Actually Well-Founded:**
-    Not only can we linearly order any type, but we can well-order it.
-    Every descending chain terminates. Chaos has a floor. -/
 
+/-- **The Well-Ordering is Actually Well-Founded:**
+Not only can we linearly order any type, but we can well-order it.
+Every descending chain terminates. Chaos has a floor. -/
 theorem well_ordering_exists (α : Type*) :
     ∃ r : α → α → Prop, IsWellOrder α r := by
   exact ⟨WellOrderingRel, inferInstance⟩
 
-/-! ### The Drinker's Paradox
-
-In every pub, there exists a person such that IF that person drinks,
-THEN everyone in the pub drinks. This sounds absurd but is classically
-true. It's a consequence of the law of excluded middle. -/
-
-/-
-PROBLEM
-**The Drinker's Paradox (Smullyan):**
-    For any predicate on a nonempty type, there exists a witness
-    such that if the predicate holds for that witness, it holds everywhere.
-    Logic is drunk.
-
-PROVIDED SOLUTION
-By excluded middle: either everyone drinks (pick any person) or someone doesn't drink (pick that person — the premise is vacuously true). Use by_cases (∀ x, drinks x). If yes, exact ⟨Classical.arbitrary α, fun _ => ‹_›⟩. If no, push_neg to get ⟨p, hp⟩, exact ⟨p, fun h => absurd h hp⟩.
--/
 
 theorem drinkers_paradox [Nonempty α] (drinks : α → Prop) :
     ∃ person : α, drinks person → ∀ x, drinks x := by
@@ -47,23 +31,6 @@ theorem drinkers_paradox [Nonempty α] (drinks : α → Prop) :
   simp +zetaDelta at *;
   exact h ( Classical.arbitrary α ) |>.2.elim fun x hx => hx ( h x |>.1 )
 
-/-! ### The Schröder-Bernstein Sorcery
-
-If A injects into B and B injects into A, then A and B have the
-same cardinality. This sounds obvious but the proof is BIZARRE:
-it constructs a bijection by iterating injections and taking a
-fixed-point decomposition of the space. -/
-
-/-
-PROBLEM
-**Schröder-Bernstein (The Size Equalizer):**
-    Mutual injection implies bijection. If two infinities can
-    each fit inside the other, they're the same size.
-    The proof is non-trivial and deeply weird.
-
-PROVIDED SOLUTION
-Use Function.Embedding.schropieterBernstein or Schroeder-Bernstein from Mathlib. There should be a theorem like Function.Embedding.antisymm or Cardinal.eq. Actually try: use the fact that Cardinal.mk α = Cardinal.mk β implies Nonempty (α ≃ β). From injections f and g, we get Cardinal.mk α ≤ Cardinal.mk β and Cardinal.mk β ≤ Cardinal.mk α, hence equal, hence equiv exists, hence bijection exists.
--/
 
 theorem not_all_sets_measurable :
     ¬ ∀ (s : Set ℝ), MeasurableSet s := by
@@ -115,37 +82,12 @@ theorem not_all_sets_measurable :
   simp_all +decide [ Cardinal.mk_real ];
   exact absurd h_measurable_card ( not_le_of_gt ( Cardinal.cantor _ ) )
 
-/-! ### The Infinite Hotel
-
-Hilbert's Hotel: a hotel with infinitely many rooms, all full,
-can accommodate any finite number of new guests, countably many
-new guests, or even uncountably many — wait, not that last one.
-But it CAN accommodate countably many coaches of countably many guests. -/
-
-/-
-PROBLEM
-**Hilbert's Hotel: One New Guest:**
-    ℕ and ℕ have the same cardinality even after adding one element.
-    A full hotel can always fit one more guest. Just shift everyone.
-
-PROVIDED SOLUTION
-Use f = Nat.succ. It's injective (Nat.succ_injective) and 0 ∉ range Nat.succ (since Nat.succ n ≥ 1 for all n).
--/
 
 theorem hilbert_hotel_one_guest :
     ∃ f : ℕ → ℕ, Injective f ∧ 0 ∉ Set.range f := by
   -- Define a function that is injective and does not contain zero in its range.
   use fun n => n + 1; simp [Nat.succ_ne_zero, Function.Injective]
 
-/-
-PROBLEM
-**Hilbert's Hotel: Countably Many Guests:**
-    ℕ × ℕ has the same cardinality as ℕ.
-    Countably many coaches of countably many guests all fit.
-
-PROVIDED SOLUTION
-Use the Cantor pairing function. Mathlib has Nat.pair and Nat.unpair, or Equiv.natProd or similar. Use (Nat.pairEquiv).symm or the pairing function's bijectivity.
--/
 
 theorem hilbert_hotel_countable :
     ∃ f : ℕ × ℕ → ℕ, Bijective f := by
@@ -154,19 +96,6 @@ theorem hilbert_hotel_countable :
     exact ( Cardinal.eq.1 <| by simp +decide );
   exact ⟨ _, h_countable.some.bijective ⟩
 
-/-! ### The Bizarre Self-Similarity of ℕ
-
-ℕ is isomorphic to one of its proper subsets.
-This is the DEFINITION of Dedekind-infinite.
-Finite sets can't do this. Infinity is self-similar. -/
-
-/-
-PROBLEM
-**ℕ is Dedekind-infinite:** It bijects with its proper subset (the evens).
-
-PROVIDED SOLUTION
-Use f = fun n => 2*n. It's injective (by omega) and not surjective (1 is not in the range since 2*n = 1 has no solution in ℕ).
--/
 
 theorem nat_self_similar :
     ∃ f : ℕ → ℕ, Injective f ∧ ¬ Surjective f := by

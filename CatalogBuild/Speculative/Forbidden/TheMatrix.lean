@@ -14,16 +14,6 @@ theorem matrix_reality_criterion (a b c d : ℝ) :
     (a - d)^2 + 4 * b * c ≥ 0 := by
   constructor <;> intro h <;> linarith
 
-/-! ## §2: Matrix Powers and Stability -/
-
-/-
-PROBLEM
-The trace of A² is the sum of squared entries for symmetric matrices.
-    This connects matrix structure to energy (Frobenius norm squared).
-
-PROVIDED SOLUTION
-tr(A*A) = ∑_i (A*A)_{ii} = ∑_i ∑_j A_{ij} * A_{ji}. Since A is symmetric, A_{ji} = A_{ij}, so this equals ∑_i ∑_j A_{ij}². Use Matrix.trace, Matrix.mul_apply, and the symmetry condition hA.
--/
 
 theorem trace_sq_symmetric (n : ℕ) (A : Matrix (Fin n) (Fin n) ℝ)
     (hA : A.IsSymm) :
@@ -32,60 +22,21 @@ theorem trace_sq_symmetric (n : ℕ) (A : Matrix (Fin n) (Fin n) ℝ)
   simp +decide [ Matrix.mul_apply, Matrix.diag ];
   exact Finset.sum_congr rfl fun i hi => Finset.sum_congr rfl fun j hj => by rw [ ← hA.apply ] ;
 
-/-! ## §3: Commutator Trace Vanishing -/
-
-/-
-PROBLEM
-The trace of a commutator is always zero: [A, B] leaves no fingerprint.
-    The simulation's internal dynamics are traceless.
-
-PROVIDED SOLUTION
-tr(AB - BA) = tr(AB) - tr(BA) = 0 since tr(AB) = tr(BA) for any matrices A, B. Use Matrix.trace_mul_comm.
--/
 
 theorem commutator_traceless (n : ℕ) (A B : Matrix (Fin n) (Fin n) ℝ) :
     Matrix.trace (A * B - B * A) = 0 := by
   rw [ Matrix.trace_sub, Matrix.trace_mul_comm, sub_self ]
 
-/-! ## §4: The Characteristic Polynomial Identity -/
-
-/-
-PROBLEM
-Every 1×1 "matrix" satisfies its characteristic equation trivially.
-    The simplest Cayley-Hamilton.
-
-PROVIDED SOLUTION
-Direct computation: !![a] - a • 1 = !![a - a] = !![0] = 0. Use ext, fin_cases, simp.
--/
 
 theorem cayley_hamilton_1x1 (a : ℝ) :
     !![a] - a • (1 : Matrix (Fin 1) (Fin 1) ℝ) = 0 := by
   ext i j ; fin_cases i ; fin_cases j ; norm_num
 
-/-! ## §5: Determinant Multiplicativity — The Matrix Composition Law -/
-
-/-
-PROBLEM
-det(AB) = det(A) · det(B). Composing simulations multiplies their "reality scores".
-
-PROVIDED SOLUTION
-This is Matrix.det_mul in Mathlib.
--/
 
 theorem det_composition (n : ℕ) (A B : Matrix (Fin n) (Fin n) ℝ) :
     Matrix.det (A * B) = Matrix.det A * Matrix.det B := by
   exact Matrix.det_mul A B
 
-/-! ## §6: The Projection Theorem (Exiting the Matrix) -/
-
-/-
-PROBLEM
-An idempotent matrix (P² = P) has integer trace.
-    In "Matrix" terms: once you see the code, you can't unsee it.
-
-PROVIDED SOLUTION
-This is a nontrivial result. For the ℚ case, the eigenvalues of an idempotent matrix are 0 or 1, and the trace equals the sum of eigenvalues = number of 1-eigenvalues. But proving this formally requires diagonalization. Alternative approach: use the fact that tr(P) = tr(P²) = tr(P*P), and by induction on dimension show the trace is a natural number. Actually, try using the fact that over any field, an idempotent matrix is similar to a diagonal matrix with 0s and 1s. This might be hard in Lean. Try a different approach: consider the linear map P as a projection, use that the rank + nullity = n, and tr(P) = rank(P). The Mathlib approach would use LinearMap.trace_eq_matrix_trace and properties of idempotent linear maps.
--/
 
 theorem idempotent_trace_eq_rank_nat (n : ℕ) (P : Matrix (Fin n) (Fin n) ℚ)
     (hP : P * P = P) :
@@ -114,29 +65,11 @@ theorem idempotent_trace_eq_rank_nat (n : ℕ) (P : Matrix (Fin n) (Fin n) ℚ)
   simp +decide [ Matrix.trace, LinearMap.toMatrix_apply ];
   rw [ eq_comm ]
 
-/-! ## §7: The Transpose Symmetry -/
-
-/-
-PROBLEM
-det(Aᵀ) = det(A). The mirror image has the same reality score.
-
-PROVIDED SOLUTION
-This is Matrix.det_transpose in Mathlib.
--/
 
 theorem det_transpose_eq (n : ℕ) (A : Matrix (Fin n) (Fin n) ℝ) :
     Matrix.det A.transpose = Matrix.det A := by
   apply Matrix.det_transpose
 
-/-! ## §8: Trace Linearity -/
-
-/-
-PROBLEM
-Trace is linear: tr(A + B) = tr(A) + tr(B)
-
-PROVIDED SOLUTION
-Use map_add or Matrix.trace_add.
--/
 
 theorem trace_additive (n : ℕ) (A B : Matrix (Fin n) (Fin n) ℝ) :
     Matrix.trace (A + B) = Matrix.trace A + Matrix.trace B := by

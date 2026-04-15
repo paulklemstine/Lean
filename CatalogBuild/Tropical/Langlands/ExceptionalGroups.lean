@@ -15,9 +15,6 @@ structure TropicalRootSystem (n : ℕ) where
   neg_closed : ∀ α ∈ roots, (fun i => -α i) ∈ roots
   zero_not_root : (fun _ => (0 : ℝ)) ∉ roots
 
-/-
-The number of roots is always even (they come in ±α pairs)
--/
 
 theorem root_count_even (n : ℕ) (Φ : TropicalRootSystem n) :
     Even Φ.roots.card := by
@@ -35,13 +32,13 @@ theorem root_count_even (n : ℕ) (Φ : TropicalRootSystem n) :
   · rw [ Finset.card_biUnion ] <;> aesop;
   · grind
 
-/-- The dominant chamber for a set of positive roots -/
 
+/-- The dominant chamber for a set of positive roots -/
 def dominantChamber (n : ℕ) (posRoots : Finset (Fin n → ℝ)) : Set (Fin n → ℝ) :=
   { x | ∀ α ∈ posRoots, ∑ i, α i * x i ≥ 0 }
 
-/-- The dominant chamber is always convex -/
 
+/-- The dominant chamber is always convex -/
 theorem dominantChamber_convex (n : ℕ) (posRoots : Finset (Fin n → ℝ)) :
     Convex ℝ (dominantChamber n posRoots) := by
   intro x hx y hy a b ha hb _
@@ -56,15 +53,10 @@ theorem dominantChamber_convex (n : ℕ) (posRoots : Finset (Fin n → ℝ)) :
         rw [Finset.sum_add_distrib, ← Finset.mul_sum, ← Finset.mul_sum]
     _ ≥ 0 := add_nonneg (mul_nonneg ha h1) (mul_nonneg hb h2)
 
-/-
-The origin is always in the dominant chamber
--/
 
 theorem origin_in_dominantChamber (n : ℕ) (posRoots : Finset (Fin n → ℝ)) :
     (fun _ => (0 : ℝ)) ∈ dominantChamber n posRoots := by
   exact fun α _ => by simp +decide ;
-
-/-! ## Section 2: E₆ Root System Properties -/
 
 
 def E6_rank : ℕ := 6
@@ -84,8 +76,6 @@ theorem E6_positive_roots_count : 2 * E6_num_positive_roots = E6_num_roots := by
 
 theorem E6_weyl_factorization : E6_weyl_order = 2^7 * 3^4 * 5 := by native_decide
 
-/-! ## Section 3: E₇ Root System Properties -/
-
 
 def E7_rank : ℕ := 7
 
@@ -104,8 +94,6 @@ theorem E7_positive_roots_count : 2 * E7_num_positive_roots = E7_num_roots := by
 
 theorem E7_weyl_factorization : E7_weyl_order = 2^10 * 3^4 * 5 * 7 := by native_decide
 
-/-! ## Section 4: E₈ Root System Properties -/
-
 
 def E8_rank : ℕ := 8
 
@@ -123,8 +111,6 @@ theorem E8_dimension : E8_rank + E8_num_roots = 248 := by native_decide
 theorem E8_positive_roots_count : 2 * E8_num_positive_roots = E8_num_roots := by native_decide
 
 theorem E8_weyl_factorization : E8_weyl_order = 2^14 * 3^5 * 5^2 * 7 := by native_decide
-
-/-! ## Section 5: Exceptional Langlands Duality -/
 
 
 inductive LanglandsDualType
@@ -145,8 +131,6 @@ theorem exceptional_E_self_dual :
     E8_langlands_dual_type = LanglandsDualType.SelfDual :=
   ⟨rfl, rfl, rfl⟩
 
-/-! ## Section 6: Tropical Satake Parameters -/
-
 
 structure TropicalSatakeParam (n : ℕ) where
   param : Fin n → ℝ
@@ -160,8 +144,6 @@ def tropicalLFunction (n : ℕ) (sp : TropicalSatakeParam n) (s : ℝ) : ℝ :=
 theorem tropicalLFunction_zero (n : ℕ) (sp : TropicalSatakeParam n) :
     tropicalLFunction n sp 0 = 0 := by
   simp [tropicalLFunction]
-
-/-! ## Section 7: Tropical Weyl Character Formula -/
 
 
 def tropicalWeylCharacter (n : ℕ) (wt x : Fin n → ℝ) : ℝ :=
@@ -179,8 +161,6 @@ theorem tropicalWeylCharacter_smul (n : ℕ) (c : ℝ) (wt x : Fin n → ℝ) :
     c * tropicalWeylCharacter n wt x := by
   simp [tropicalWeylCharacter, mul_assoc, Finset.mul_sum]
 
-/-! ## Section 8: Inner Product -/
-
 
 theorem innerProduct_comm (n : ℕ) (x y : Fin n → ℝ) :
     innerProduct n x y = innerProduct n y x := by
@@ -195,8 +175,6 @@ theorem innerProduct_add_right (n : ℕ) (x y z : Fin n → ℝ) :
 theorem innerProduct_zero_right (n : ℕ) (x : Fin n → ℝ) :
     innerProduct n x (fun _ => 0) = 0 := by
   simp [innerProduct]
-
-/-! ## Section 9: Tropical Casselman-Shalika Formula -/
 
 
 def tropicalCasselmanShalika (n : ℕ) (wt rho : Fin n → ℝ) : ℝ :=

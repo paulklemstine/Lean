@@ -38,9 +38,6 @@ theorem birthday_tuples_needed (N k : ℕ) (hk : 0 < k) :
   rw [ Nat.le_div_iff_mul_le hk ];
   exact Nat.le_sqrt.2 ( by nlinarith [ Nat.sqrt_le ( N / k ^ 2 ), Nat.div_mul_le_self N ( k ^ 2 ) ] )
 
-/-
-Marginal channel gain from k to k+1: total channels grow by 4k+1.
--/
 
 theorem marginal_channels (k : ℕ) (hk : 2 ≤ k) :
     (k + 1) ^ 2 + 2 * Nat.choose (k + 1) 2 -

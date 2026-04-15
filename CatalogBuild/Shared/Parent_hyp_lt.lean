@@ -7,21 +7,19 @@ Declarations: 3
 
 import Mathlib
 
+/-- The parent hypotenuse is strictly less than c for any PPT with a,b > 0. -/
 theorem parent_hyp_lt (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
     (hpt : IsPT a b c) : -2*a - 2*b + 3*c < c := by
   unfold IsPT at hpt
   nlinarith [sq_nonneg (a + b - c), sq_nonneg (a - b)]
 
-/-! ## Sign Analysis of Inverse Branches -/
 
-/-- The first components of invB1 and invB2 are equal -/
-
+/-- The parent hypotenuse 3c - 2(a+b) is positive for any PPT with a,b,c > 0. -/
 theorem parent_hyp_pos (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (hpt : IsPT a b c) : 0 < -2*a - 2*b + 3*c := by
   unfold IsPT at hpt
   nlinarith [sq_nonneg (3*c - 2*a - 2*b), sq_nonneg (a - b), mul_pos ha hb]
 
-/-- The parent hypotenuse is strictly less than c for any PPT with a,b > 0. -/
 
 theorem parent_exists (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (hpt : IsPT a b c) (hc5 : c > 5) (hprim : Int.gcd a b = 1) :
@@ -52,6 +50,3 @@ theorem parent_exists (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
       · exact Or.inr <| Or.inr <| invB3_pos_case a b c ha hb hc hpt ( lt_of_le_of_ne ( le_of_not_gt h3 ) h1 ) h4;
       · exact False.elim <| not_both_neg a b c ha hb hpt ( le_of_not_gt h3 ) ( le_of_not_gt h4 )
 
-/-! ## Verification: Descent from Known Triples -/
-
-/-- (5,12,13) descends to (3,4,5) via invB1 -/

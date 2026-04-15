@@ -11,19 +11,11 @@ theorem id_functor_comp {C : Type*} [Category C] (X Y : C) (f : X ⟶ Y) :
     (𝟭 C).map f = f := by
   rfl
 
-/-
-Functor composition is associative
-
-This is automatically true in Lean's category theory
--/
 
 theorem iso_has_inverse {C : Type*} [Category C] {X Y : C} (f : X ≅ Y) :
     f.hom ≫ f.inv = 𝟙 X := by
   exact?
 
-/-
-Composition with identity is identity
--/
 
 theorem comp_id_left {C : Type*} [Category C] {X Y : C} (f : X ⟶ Y) :
     𝟙 X ≫ f = f := by
@@ -40,27 +32,18 @@ theorem free_module_dim (F : Type*) [Field F] (n : ℕ) :
     Module.finrank F (Fin n → F) = n := by
   simp +decide [ Module.finrank ]
 
-/-
-Submodules of a finite-dimensional space are finite-dimensional
--/
 
 theorem submodule_finite_dim {F V : Type*} [Field F] [AddCommGroup V] [Module F V]
     [FiniteDimensional F V] (W : Submodule F V) :
     FiniteDimensional F W := by
   infer_instance
 
-/-
-Dimension of a subspace ≤ dimension of the ambient space
--/
 
 theorem submodule_dim_le {F V : Type*} [Field F] [AddCommGroup V] [Module F V]
     [FiniteDimensional F V] (W : Submodule F V) :
     Module.finrank F W ≤ Module.finrank F V := by
   exact?
 
-/-
-Rank-nullity theorem
--/
 
 theorem rank_nullity {F V W : Type*} [Field F] [AddCommGroup V] [Module F V]
     [FiniteDimensional F V] [AddCommGroup W] [Module F W]
@@ -75,11 +58,6 @@ theorem char_at_identity (n : ℕ) :
     Matrix.trace (1 : Matrix (Fin n) (Fin n) ℤ) = (n : ℤ) := by
   simp +decide [ Matrix.trace ]
 
-/-
-For a 1-dimensional representation, ρ(g)ρ(h) = ρ(gh) reduces to multiplication
-
-The determinant of a 1×1 matrix [[a]] is a
--/
 
 theorem det_one_by_one (a : ℤ) :
     Matrix.det !![a] = a := by

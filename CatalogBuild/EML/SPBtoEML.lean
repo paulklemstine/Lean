@@ -15,8 +15,6 @@ theorem log_spb_norm (x y : ℝ) (h : 1 - x * y ≠ 0) :
   convert congr_arg Real.log ( spb_norm_ratio x y h ) using 1;
   rw [ Real.log_div, Real.log_mul ] <;> first | positivity | aesop;
 
-/-! ## EML Properties -/
-
 
 theorem eml_is_neg_log (y : ℝ) : eml 0 y = 1 - log y := by simp [eml]
 
@@ -26,14 +24,10 @@ theorem exp_arctan_spb_mul (x y : ℝ) (h : 0 < 1 - x * y) :
     exp (arctan (spb x y)) = exp (arctan x) * exp (arctan y) := by
   rw [arctan_spb_add x y h, Real.exp_add]
 
-/-! ## SPB Group Properties -/
-
 
 theorem wick_rotation (x y : ℝ) :
     spb x (-y) = (x - y) / (1 + x * y) := by
   unfold spb; ring_nf
-
-/-! ## Cauchy Entropy -/
 
 
 def cauchyEntropy (x : ℝ) : ℝ := log (1 + x ^ 2)
@@ -55,8 +49,6 @@ theorem cauchyEntropy_spb (x y : ℝ) (h : 1 - x * y ≠ 0) :
     cauchyEntropy (spb x y) =
     cauchyEntropy x + cauchyEntropy y - 2 * log |1 - x * y| :=
   log_spb_norm x y h
-
-/-! ## SPB Derivative -/
 
 
 end

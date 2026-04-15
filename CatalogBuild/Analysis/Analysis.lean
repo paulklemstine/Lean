@@ -12,14 +12,6 @@ theorem convergent_is_cauchy {X : Type*} [MetricSpace X] {f : ℕ → X}
     CauchySeq f := by
       exact Filter.Tendsto.cauchySeq hf.choose_spec
 
-/-
-PROBLEM
-A contraction mapping on a complete metric space has a unique fixed point.
-    (Banach fixed-point theorem - we state existence)
-
-PROVIDED SOLUTION
-Use contractionWith from Mathlib. Define a ContractingWith instance and use its fixedPoint.
--/
 
 theorem contraction_has_fixed_point {X : Type*} [MetricSpace X] [CompleteSpace X]
     [Nonempty X] (f : X → X) (k : ℝ) (hk : 0 ≤ k) (hk1 : k < 1)
@@ -36,15 +28,6 @@ theorem contraction_has_fixed_point {X : Type*} [MetricSpace X] [CompleteSpace X
       obtain ⟨ x₀, hx₀ ⟩ := h_fixed_point;
       use x₀, tendsto_nhds_unique ( by erw [ ← Filter.tendsto_add_atTop_iff_nat 1 ] ; simpa only [ Function.iterate_succ_apply' ] using Filter.Tendsto.comp ( show Filter.Tendsto f _ _ from Metric.tendsto_nhds_nhds.2 fun ε εpos => ⟨ ε, εpos, by intros y hy; exact lt_of_le_of_lt ( hf _ _ ) <| by nlinarith ⟩ ) hx₀ ) hx₀;
 
-/-! ## Section 2: Calculus Fundamentals -/
-
-/-
-PROBLEM
-The mean value theorem.
-
-PROVIDED SOLUTION
-Use exists_ratio_hasDerivAt_eq_ratio_slope or exists_hasDerivAt_eq_slope from Mathlib.
--/
 
 theorem mean_value_theorem (f f' : ℝ → ℝ) {a b : ℝ} (hab : a < b)
     (hf : ContinuousOn f (Set.Icc a b))
@@ -53,13 +36,6 @@ theorem mean_value_theorem (f f' : ℝ → ℝ) {a b : ℝ} (hab : a < b)
       have := exists_deriv_eq_slope f hab;
       exact this hf ( fun x hx => ( hf' x hx |> HasDerivAt.differentiableAt |> DifferentiableAt.differentiableWithinAt ) ) |> fun ⟨ c, hc₁, hc₂ ⟩ => ⟨ c, hc₁, by rw [ ← div_eq_iff ( sub_ne_zero_of_ne hab.ne' ), ← hc₂, hf' c hc₁ |> HasDerivAt.deriv ] ⟩
 
-/-
-PROBLEM
-The fundamental theorem of calculus (evaluation form).
-
-PROVIDED SOLUTION
-Use intervalIntegral.integral_eq_sub_of_hasDerivAt or integral_deriv_eq_sub. We have HasDerivAt on [a,b] and continuous derivative.
--/
 
 theorem ftc_eval {f : ℝ → ℝ} {a b : ℝ} (hab : a ≤ b)
     (hf : ∀ x ∈ Set.Icc a b, HasDerivAt f (deriv f x) x)
@@ -69,41 +45,16 @@ theorem ftc_eval {f : ℝ → ℝ} {a b : ℝ} (hab : a ≤ b)
       · aesop;
       · exact hf'.intervalIntegrable_of_Icc hab
 
-/-! ## Section 3: Stability Theory (relevant to IMU drift) -/
-
-/-
-PROBLEM
-Exponential decay: if |f(t)| ≤ C * exp(-αt) for α > 0, then f → 0.
-
-PROVIDED SOLUTION
-Use Filter.Tendsto.const_mul and the fact that exp(-αt) → 0 as t → ∞. Real.tendsto_exp_atBot or similar.
--/
 
 theorem exponential_decay_tendsto (C α : ℝ) (hα : 0 < α) :
     Filter.Tendsto (fun t => C * Real.exp (-α * t)) Filter.atTop (nhds 0) := by
       simpa using tendsto_const_nhds.mul ( Real.tendsto_exp_atBot.comp <| Filter.tendsto_neg_atTop_atBot.comp <| Filter.tendsto_id.const_mul_atTop hα )
 
-/-
-PROBLEM
-Geometric series sum formula.
-
-PROVIDED SOLUTION
-Use hasSum_geometric_of_abs_lt_one from Mathlib.
--/
 
 theorem geometric_series_sum (r : ℝ) (hr : |r| < 1) :
     HasSum (fun n => r ^ n) (1 - r)⁻¹ := by
       exact hasSum_geometric_of_abs_lt_one hr
 
-/-! ## Section 4: Inequalities -/
-
-/-
-PROBLEM
-AM-GM inequality for two nonneg reals.
-
-PROVIDED SOLUTION
-This follows from (√a - √b)² ≥ 0. Use Real.sqrt_le_sqrt and nlinarith, or use the Mathlib lemma directly.
--/
 
 theorem cauchy_schwarz_finset {n : ℕ} (a b : Fin n → ℝ) :
     (∑ i, a i * b i) ^ 2 ≤ (∑ i, a i ^ 2) * (∑ i, b i ^ 2) := by

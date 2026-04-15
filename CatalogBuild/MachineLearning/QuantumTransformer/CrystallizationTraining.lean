@@ -49,8 +49,6 @@ theorem crystal_regularizer_zero_iff_binary {n : ℕ} (w : Fin n → ℝ)
     intro i _
     rcases h i with h1 | h1 <;> simp [entry_crystal_loss, h1]
 
-/-! ## §2: Temperature Annealing -/
-
 
 def geometric_anneal (tau_0 alpha : ℝ) (t : ℕ) : ℝ := tau_0 * alpha ^ t
 
@@ -81,8 +79,6 @@ theorem anneal_converges (tau_0 alpha : ℝ) (htau : 0 < tau_0) (halpha0 : 0 < a
     Filter.Tendsto.const_mul tau_0 h1
   simpa using h2
 
-/-! ## §3: Combined Loss -/
-
 
 def combined_loss (L_task L_cryst lambda_reg : ℝ) : ℝ :=
   L_task + lambda_reg * L_cryst
@@ -101,10 +97,8 @@ theorem combined_loss_nonneg (L_task L_cryst lambda_reg : ℝ)
   unfold combined_loss
   linarith [mul_nonneg hlambda hc]
 
-/-! ## §4: Gradient Analysis -/
 
 /-- At equilibrium, the task gradient balances the crystallization gradient. -/
-
 theorem equilibrium_condition (p grad_task : ℝ) :
     grad_task + (1 - 2 * p) = 0 ↔ p = (1 + grad_task) / 2 := by
   constructor <;> intro h <;> linarith

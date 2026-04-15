@@ -22,8 +22,6 @@ theorem eml_shorter_description (d w p : ℕ) (hw : 5 ≤ w) (hd : 0 < d) (hp : 
   unfold emlDescLength standardDescLength;
   nlinarith [ mul_le_mul_left' hw ( d * p ) ]
 
-/-! ## §2. Information Bottleneck -/
-
 
 def infoRetained (alpha : ℝ) (l : ℕ) : ℝ := alpha ^ l
 
@@ -38,8 +36,6 @@ theorem info_decays_with_depth (alpha : ℝ) (l1 l2 : ℕ) (halpha0 : 0 ≤ alph
     (hl : l1 ≤ l2) :
     infoRetained alpha l2 ≤ infoRetained alpha l1 := by
   unfold infoRetained; exact pow_le_pow_of_le_one halpha0 halpha1 hl
-
-/-! ## §3. Entropy of EML Representations -/
 
 
 def reprEntropy (states : ℕ) : ℝ := Real.log ↑states
@@ -66,8 +62,6 @@ def emlRate (variance D advantage : ℝ) : ℝ :=
 theorem eml_rate_advantage (sigma_sq D adv : ℝ) (hadv : 0 ≤ adv) :
     emlRate sigma_sq D adv ≤ rateFunction sigma_sq D := by
   unfold emlRate; linarith
-
-/-! ## §5. Generalization via Compression -/
 
 
 def pacBayesBound (kl : ℝ) (n : ℕ) : ℝ := Real.sqrt (kl / ↑n)

@@ -11,10 +11,6 @@ theorem spec_contravariant {R S : Type*} [CommRing R] [CommRing S]
     (f : R →+* S) : Continuous (PrimeSpectrum.comap f) := by
   exact?
 
-/-
-For a field k, Spec(k) has exactly one point: the zero ideal.
-    Algebraically: a field has exactly one prime ideal.
--/
 
 theorem spec_field_unique (k : Type*) [Field k] :
     ∀ (p : PrimeSpectrum k), p = ⟨⊥, Ideal.isPrime_bot⟩ := by
@@ -31,9 +27,6 @@ theorem zeroLocus_antitone (R : Type*) [CommRing R] (I J : Ideal R)
     PrimeSpectrum.zeroLocus (J : Set R) ⊆ PrimeSpectrum.zeroLocus (I : Set R) := by
   intro p hp; intro x hx; exact hp (h hx) |> fun h => by aesop;
 
-/-
-The empty set is the zero locus of the whole ring.
--/
 
 theorem zeroLocus_top (R : Type*) [CommRing R] :
     PrimeSpectrum.zeroLocus (Set.univ : Set R) = ∅ := by
@@ -44,21 +37,12 @@ theorem krull_dim_field (k : Type*) [Field k] :
     ringKrullDim k = 0 := by
   rw [ eq_comm ] ; aesop;
 
-/-
-A PID that is not a field has Krull dimension 1 (algebraic dimension
-    of a line/curve). This captures the fact that ℤ and k[x] are
-    1-dimensional.
--/
 
 theorem krull_dim_pid (R : Type*) [CommRing R] [IsDomain R]
     [IsPrincipalIdealRing R] (h : ¬ IsField R) :
     ringKrullDim R = 1 := by
   exact?
 
-/-
-Isomorphic rings have equal Krull dimension — dimension is an
-    algebraic invariant.
--/
 
 theorem krull_dim_iso {R S : Type*} [CommRing R] [CommRing S]
     (e : R ≃+* S) : ringKrullDim R = ringKrullDim S := by
@@ -70,9 +54,6 @@ theorem spec_comp {R S T : Type*} [CommRing R] [CommRing S] [CommRing T]
     PrimeSpectrum.comap (g.comp f) = (PrimeSpectrum.comap f) ∘ (PrimeSpectrum.comap g) := by
   exact?
 
-/-
-The identity ring homomorphism gives the identity map on Spec.
--/
 
 theorem spec_id (R : Type*) [CommRing R] :
     PrimeSpectrum.comap (RingHom.id R) = id := by
@@ -91,10 +72,6 @@ theorem isIdempotentElem_iff (R : Type*) [Ring R] (e : R) :
     IsIdempotentElem e ↔ e * e = e := by
   exact?
 
-/-
-In a connected ring (no nontrivial idempotents), the spectrum
-    is a connected topological space.
--/
 
 theorem spec_connected_of_no_idempotents (R : Type*) [CommRing R]
     [Nontrivial R]

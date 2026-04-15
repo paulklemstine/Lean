@@ -12,8 +12,3 @@ theorem lagrange_four_squares (n : ℕ) :
   have := Nat.sum_four_squares n;
   exact ⟨ this.choose, this.choose_spec.choose, this.choose_spec.choose_spec.choose, this.choose_spec.choose_spec.choose_spec.choose, mod_cast this.choose_spec.choose_spec.choose_spec.choose_spec.symm ⟩
 
-/-! ### Sum of Two Squares -/
-
-/-
-A prime p ≡ 1 (mod 4) is a sum of two squares.
--/

@@ -9,32 +9,23 @@ import Mathlib
 
 noncomputable section
 
+/-- Gaussian channel capacity function. -/
 def gaussianCapacity (W SNR : ℝ) : ℝ :=
   W * Real.log (1 + SNR) / Real.log 2
 
-/-
-Channel capacity is non-negative when bandwidth and SNR are non-negative.
--/
 
 theorem gaussianCapacity_nonneg (W SNR : ℝ) (hW : 0 ≤ W) (hSNR : 0 ≤ SNR) :
     0 ≤ gaussianCapacity W SNR := by
   exact div_nonneg ( mul_nonneg hW ( Real.log_nonneg ( by linarith ) ) ) ( Real.log_nonneg ( by norm_num ) )
 
-/-
-Channel capacity is monotone increasing in SNR for non-negative SNR and positive W.
--/
 
 theorem gaussianCapacity_mono_SNR (W : ℝ) (hW : 0 < W) {a b : ℝ}
     (ha : 0 ≤ a) (hab : a ≤ b) :
     gaussianCapacity W a ≤ gaussianCapacity W b := by
   unfold gaussianCapacity; gcongr
 
-/-! ## Kolmogorov Complexity Invariance
-
-  |K_U₁(x) - K_U₂(x)| ≤ c for some constant c. -/
 
 /-- Abstract invariance theorem: two complexity measures agree up to a constant. -/
-
 theorem kolmogorov_invariance {X : Type*} (K₁ K₂ : X → ℕ)
     (c : ℕ) (h : ∀ x, K₁ x ≤ K₂ x + c) (h' : ∀ x, K₂ x ≤ K₁ x + c)
     (x : X) : (K₁ x : ℤ) - (K₂ x : ℤ) ≤ c ∧ (K₂ x : ℤ) - (K₁ x : ℤ) ≤ c := by

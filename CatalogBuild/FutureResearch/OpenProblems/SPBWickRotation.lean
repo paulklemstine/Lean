@@ -25,8 +25,5 @@ theorem denom_product (x y : ℝ) :
 
 theorem wick_norm_exchange (x : ℝ) : (1 + x ^ 2) + (1 - x ^ 2) = 2 := by ring
 
-/-
-Cross-ratio key: spb(a,t) - spb(b,t).
--/
 
 end

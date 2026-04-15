@@ -17,8 +17,6 @@ theorem finite_crystallized_models (n H L : ℕ) :
     Fintype.card (Fin L → Fin H → Perm (Fin n)) = (n.factorial ^ H) ^ L := by
   simp [Fintype.card_pi, Fintype.card_perm, Fintype.card_fin]
 
-/-! ## §2: Quantum-Classical Hybrid -/
-
 
 theorem quantum_exploration_space (n : ℕ) :
     2 ^ n > n := Nat.lt_pow_self (by norm_num : 1 < 2)
@@ -32,8 +30,6 @@ theorem hybrid_advantage (n : ℕ) (hn : 2 ≤ n) :
 
 theorem measurement_collapse (n : ℕ) :
     Fintype.card (Fin (2 ^ n)) = 2 ^ n := Fintype.card_fin _
-
-/-! ## §3: Self-Crystallizing AI -/
 
 
 def crystallize_step (alpha : ℝ) (p : ℝ) : ℝ :=
@@ -92,8 +88,6 @@ theorem self_crystallization_limit_exists :
   by_cases h : p < 1/2
   · exact ⟨0, Or.inl rfl⟩
   · exact ⟨1, Or.inr rfl⟩
-
-/-! ## §4: Information Integration -/
 
 
 theorem integrated_info_additive (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) :

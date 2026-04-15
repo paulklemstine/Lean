@@ -28,23 +28,19 @@ def sub (p q : LipschitzInt) : LipschitzInt :=
 
 def one : LipschitzInt := ⟨1, 0, 0, 0⟩
 
-end LipschitzInt
-
-/-! ## Part 2: Norm Multiplicativity -/
 
 /-- |p · q|² = |p|² · |q|² — the four-square identity -/
-
 theorem LipschitzInt.sqNorm_mul (p q : LipschitzInt) :
     (p.mul q).sqNorm = p.sqNorm * q.sqNorm := by
   simp only [LipschitzInt.sqNorm, LipschitzInt.mul]; ring
 
-/-- Squared norm is non-negative -/
 
+/-- Squared norm is non-negative -/
 theorem LipschitzInt.sqNorm_nonneg (q : LipschitzInt) : 0 ≤ q.sqNorm := by
   unfold LipschitzInt.sqNorm; positivity
 
-/-- Squared norm is zero iff quaternion is zero -/
 
+/-- Squared norm is zero iff quaternion is zero -/
 theorem LipschitzInt.sqNorm_eq_zero (q : LipschitzInt) :
     q.sqNorm = 0 ↔ q = LipschitzInt.zero := by
   constructor
@@ -57,19 +53,17 @@ theorem LipschitzInt.sqNorm_eq_zero (q : LipschitzInt) :
     ext <;> assumption
   · intro h; subst h; simp [LipschitzInt.sqNorm, LipschitzInt.zero]
 
-/-! ## Part 3: The σ = 1+i+j+k Quotient Structure (Question 1) -/
 
 /-- σ = 1 + i + j + k -/
-
 def sigmaQuat : LipschitzInt := ⟨1, 1, 1, 1⟩
 
-/-- |σ|² = 4 -/
 
+/-- |σ|² = 4 -/
 theorem sigmaQuat_sqNorm : sigmaQuat.sqNorm = 4 := by
   simp [sigmaQuat, LipschitzInt.sqNorm]
 
-/-- The Euler parametrization from a quaternion -/
 
+/-- The Euler parametrization from a quaternion -/
 def eulerMap (α : LipschitzInt) : Fin 4 → ℤ := fun i =>
   match i with
   | 0 => α.w ^ 2 + α.x ^ 2 - α.y ^ 2 - α.z ^ 2
@@ -77,21 +71,21 @@ def eulerMap (α : LipschitzInt) : Fin 4 → ℤ := fun i =>
   | 2 => 2 * (α.x * α.z - α.w * α.y)
   | 3 => α.sqNorm
 
-/-- The Euler map always produces a Pythagorean quadruple -/
 
+/-- The Euler map always produces a Pythagorean quadruple -/
 theorem eulerMap_pyth (α : LipschitzInt) :
     (eulerMap α 0) ^ 2 + (eulerMap α 1) ^ 2 + (eulerMap α 2) ^ 2 =
     (eulerMap α 3) ^ 2 := by
   unfold eulerMap LipschitzInt.sqNorm; ring
 
-/-- σ-multiplication scales the norm by 4 -/
 
+/-- σ-multiplication scales the norm by 4 -/
 theorem sigma_equiv_same_hyp_mod (α : LipschitzInt) :
     (sigmaQuat.mul α).sqNorm = 4 * α.sqNorm := by
   rw [LipschitzInt.sqNorm_mul, sigmaQuat_sqNorm]
 
-/-- The branching number at a node with hypotenuse d -/
 
+/-- The branching number at a node with hypotenuse d -/
 def branchingNumber (d : ℕ) : ℕ :=
   ((Finset.range (d + 1)).filter fun c =>
     ((Finset.range (c + 1)).filter fun b =>
@@ -99,14 +93,6 @@ def branchingNumber (d : ℕ) : ℕ :=
         a * a + b * b + c * c = d * d ∧
         Nat.gcd (Nat.gcd a b) (Nat.gcd c d) = 1).card > 0).card > 0).card
 
-/-! ## Part 4: Hurwitz vs. Lipschitz Descent (Question 2) -/
-
-/-
-The Lipschitz division gives remainder with norm ≤ |β|² (non-strict).
-    Note: STRICT inequality fails in general for Lipschitz integers!
-    Counterexample: α=(1,1,1,1), β=(0,0,0,2) gives min |ρ|² = 4 = |β|².
-    This is why Hurwitz integers (with strict |ρ|² < |β|²) are preferred.
--/
 
 theorem lipschitz_division_exists (α β : LipschitzInt) (hβ : β ≠ LipschitzInt.zero) :
     ∃ γ ρ : LipschitzInt, α = (β.mul γ).add ρ ∧ ρ.sqNorm ≤ β.sqNorm := by
@@ -145,10 +131,6 @@ theorem lipschitz_division_exists (α β : LipschitzInt) (hβ : β ≠ Lipschitz
     exact_mod_cast hρ_sq
   exact h_contra ⟨γ_w, γ_x, γ_y, γ_z⟩ ρ hρ |> not_le_of_gt <| hρ_sq.trans' <| by linarith;
 
-/-
-The strict inequality FAILS for Lipschitz integers.
-    This is the key motivation for using Hurwitz integers instead.
--/
 
 theorem lipschitz_strict_fails :
     ∃ α β : LipschitzInt, β ≠ LipschitzInt.zero ∧
@@ -161,17 +143,17 @@ theorem lipschitz_strict_fails :
     unfold LipschitzInt.sub LipschitzInt.mul;
     grind +suggestions
 
-/-- The Hurwitz order has a better Euclidean bound: 3/4 > 1/2 -/
 
+/-- The Hurwitz order has a better Euclidean bound: 3/4 > 1/2 -/
 theorem hurwitz_better_bound : (3 : ℚ) / 4 > (1 : ℚ) / 2 := by norm_num
 
-/-- The Lipschitz max remainder ratio is at most 1 (4 coords × (1/2)² = 1) -/
 
+/-- The Lipschitz max remainder ratio is at most 1 (4 coords × (1/2)² = 1) -/
 theorem lipschitz_remainder_ratio :
     4 * ((1 : ℚ) / 2) ^ 2 = 1 := by norm_num
 
-/-- The Hurwitz max remainder ratio ≤ 1/4 per coord when rounding error ≤ 1/4 -/
 
+/-- The Hurwitz max remainder ratio ≤ 1/4 per coord when rounding error ≤ 1/4 -/
 theorem hurwitz_remainder_ratio :
     ∀ (e₁ e₂ e₃ e₄ : ℚ), |e₁| ≤ 1/4 → |e₂| ≤ 1/4 → |e₃| ≤ 1/4 → |e₄| ≤ 1/4 →
     e₁ ^ 2 + e₂ ^ 2 + e₃ ^ 2 + e₄ ^ 2 ≤ 1 / 4 := by
@@ -186,36 +168,33 @@ theorem hurwitz_remainder_ratio :
     rw [← sq_abs e₄]; exact sq_le_sq' (by linarith [abs_nonneg e₄]) h₄
   linarith
 
-/-- The Hurwitz tree is shallower: 4/3 < 2 -/
 
+/-- The Hurwitz tree is shallower: 4/3 < 2 -/
 theorem hurwitz_depth_better : (4 : ℚ) / 3 < 2 := by norm_num
 
-/-! ## Part 5: The Eight-Square Identity / Octonion Norms (Question 3) -/
 
-/-- Degen's eight-square identity: product of sums of 8 squares is sum of 8 squares.
-    This is the norm multiplicativity of octonions. -/
-
+/-- The Pythagorean 8-tuple equation -/
 def IsPyth8 (v : Fin 8 → ℤ) : Prop :=
   v 0 ^ 2 + v 1 ^ 2 + v 2 ^ 2 + v 3 ^ 2 + v 4 ^ 2 + v 5 ^ 2 + v 6 ^ 2 = v 7 ^ 2
 
-/-- The Lorentz form in signature (7,1) -/
 
+/-- The Lorentz form in signature (7,1) -/
 def Q8 (v : Fin 8 → ℤ) : ℤ :=
   v 0 ^ 2 + v 1 ^ 2 + v 2 ^ 2 + v 3 ^ 2 + v 4 ^ 2 + v 5 ^ 2 + v 6 ^ 2 - v 7 ^ 2
 
-/-- The all-ones vector in ℤ⁸ -/
 
+/-- The all-ones vector in ℤ⁸ -/
 def ones8 : Fin 8 → ℤ := fun _ => 1
 
-/-- The Minkowski norm of the all-ones vector in (7,1): 7 - 1 = 6 -/
 
+/-- The Minkowski norm of the all-ones vector in (7,1): 7 - 1 = 6 -/
 theorem ones8_minkowski_norm : Q8 ones8 = 6 := by simp [Q8, ones8]
 
-/-- Key obstruction: the naive reflection for 8-tuples fails to preserve integrality.
-    The all-ones vector has η-norm 6, so the reflection formula requires division by 3.
-    Counterexample: (2,3,6,0,0,0,0,7) is a Pythagorean 8-tuple with
-    spatial-temporal dot product 4, which is not divisible by 3. -/
 
+/-- Key obstruction: the naive reflection for 8-tuples fails to preserve integrality.
+The all-ones vector has η-norm 6, so the reflection formula requires division by 3.
+Counterexample: (2,3,6,0,0,0,0,7) is a Pythagorean 8-tuple with
+spatial-temporal dot product 4, which is not divisible by 3. -/
 theorem octonion_obstruction :
     ¬ (∀ (v : Fin 8 → ℤ), IsPyth8 v →
        3 ∣ (v 0 + v 1 + v 2 + v 3 + v 4 + v 5 + v 6 - v 7)) := by
@@ -223,17 +202,15 @@ theorem octonion_obstruction :
   have := h ![2, 3, 6, 0, 0, 0, 0, 7] (by unfold IsPyth8; native_decide)
   simp at this
 
-/-! ## Part 6: Quantum Information / SU(2) Integer Points (Question 4) -/
 
-/-- r₄(n) = number of representations of n as sum of 4 squares -/
-
+/-- r₃(n) = number of representations of n as sum of 3 squares -/
 def r3 (n : ℕ) : ℕ :=
   ((Finset.Icc (-(n : ℤ)) n ×ˢ Finset.Icc (-(n : ℤ)) n ×ˢ
     Finset.Icc (-(n : ℤ)) n).filter
     fun ⟨a, b, c⟩ => a ^ 2 + b ^ 2 + c ^ 2 = n).card
 
-/-- r₃(d²) > 0 for all d > 0 (trivially: 0²+0²+d²=d²) -/
 
+/-- r₃(d²) > 0 for all d > 0 (trivially: 0²+0²+d²=d²) -/
 theorem branching_r3_connection (d : ℕ) (hd : 0 < d) :
     0 < r3 (d * d) := by
   unfold r3
@@ -246,8 +223,8 @@ theorem branching_r3_connection (d : ℕ) (hd : 0 < d) :
     linarith
   · exact_mod_cast Nat.le_mul_of_pos_left d hd
 
-/-- Descent depth = O(log d) -/
 
+/-- Legendre's three-square obstruction: n = 4^a(8b+7) cannot be sum of 3 squares -/
 def isThreeSquareObstructed (n : ℕ) : Bool :=
   let rec removeFactorsOf4 (m : ℕ) (fuel : ℕ) : ℕ :=
     match fuel with
@@ -276,42 +253,38 @@ theorem r3_val_4 : r3 4 = 6 := by native_decide
 
 theorem r3_val_9 : r3 9 = 30 := by native_decide
 
-/-! ## Part 8: Quaternion Division Structure (Question 1 continued) -/
 
 /-- The R₁₁₁₁ reflection matrix -/
-
 def R1111_mat : Matrix (Fin 4) (Fin 4) ℤ :=
   !![0, -1, -1, 1; -1, 0, -1, 1; -1, -1, 0, 1; -1, -1, -1, 2]
 
-/-- The conjugate of σ is (1,-1,-1,-1) -/
 
+/-- The conjugate of σ is (1,-1,-1,-1) -/
 theorem sigmaQuat_conj : sigmaQuat.conj = ⟨1, -1, -1, -1⟩ := by
   simp [sigmaQuat, LipschitzInt.conj]
 
-/-- σ · σ̄ has real part 4 -/
 
+/-- σ · σ̄ has real part 4 -/
 theorem sigma_mul_conj_re :
     (sigmaQuat.mul sigmaQuat.conj).w = 4 := by
   simp [sigmaQuat, LipschitzInt.mul, LipschitzInt.conj]
 
-/-- σ · σ̄ has zero imaginary parts -/
 
+/-- σ · σ̄ has zero imaginary parts -/
 theorem sigma_mul_conj_im :
     (sigmaQuat.mul sigmaQuat.conj).x = 0 ∧
     (sigmaQuat.mul sigmaQuat.conj).y = 0 ∧
     (sigmaQuat.mul sigmaQuat.conj).z = 0 := by
   simp [sigmaQuat, LipschitzInt.mul, LipschitzInt.conj]
 
-/-! ## Part 9: Hurwitz Units and the 24-Cell (Question 2 continued) -/
 
 /-- The 8 Lipschitz units: ±1, ±i, ±j, ±k -/
-
 def lipschitzUnits : List LipschitzInt :=
   [⟨1,0,0,0⟩, ⟨-1,0,0,0⟩, ⟨0,1,0,0⟩, ⟨0,-1,0,0⟩,
    ⟨0,0,1,0⟩, ⟨0,0,-1,0⟩, ⟨0,0,0,1⟩, ⟨0,0,0,-1⟩]
 
-/-- All Lipschitz units have squared norm 1 -/
 
+/-- All Lipschitz units have squared norm 1 -/
 theorem lipschitz_units_norm :
     ∀ u ∈ lipschitzUnits, u.sqNorm = 1 := by
   intro u hu
@@ -319,26 +292,22 @@ theorem lipschitz_units_norm :
   rcases hu with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl <;>
     simp [LipschitzInt.sqNorm]
 
-/-- There are exactly 8 Lipschitz units -/
 
+/-- There are exactly 8 Lipschitz units -/
 theorem hurwitz_unit_count : lipschitzUnits.length = 8 := by decide
 
-/-- σ has norm 4, linking to Hurwitz structure -/
 
+/-- σ has norm 4, linking to Hurwitz structure -/
 theorem sigma_norm_is_four : sigmaQuat.sqNorm = 4 := sigmaQuat_sqNorm
 
-/-! ## Part 10: Associativity — Key Difference from Octonions (Question 3 cont.) -/
 
 /-- Quaternion multiplication IS associative — essential for iterated descent -/
-
 theorem lipschitz_mul_assoc (p q r : LipschitzInt) :
     p.mul (q.mul r) = (p.mul q).mul r := by
   ext <;> simp [LipschitzInt.mul] <;> ring
 
-/-! ## Part 11: Master Summary Theorem -/
 
 /-- Combined statement of the main results from all five questions -/
-
 theorem quaternion_descent_master :
     (∀ p q : LipschitzInt, (p.mul q).sqNorm = p.sqNorm * q.sqNorm) ∧
     sigmaQuat.sqNorm = 4 ∧
@@ -350,18 +319,3 @@ theorem quaternion_descent_master :
   exact ⟨LipschitzInt.sqNorm_mul, sigmaQuat_sqNorm, eulerMap_pyth,
          lipschitz_mul_assoc, octonion_obstruction⟩
 
-/-! ## Computational Explorations -/
-
-#eval r3 1   -- 6
-#eval r3 2   -- 12
-#eval r3 3   -- 8
-#eval r3 9   -- 30
-
-#eval branchingNumber 3
-#eval branchingNumber 7
-#eval branchingNumber 9
-
-#eval isThreeSquareObstructed 7   -- true
-#eval isThreeSquareObstructed 15  -- true
-#eval isThreeSquareObstructed 1   -- false
-#eval isThreeSquareObstructed 9

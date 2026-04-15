@@ -13,38 +13,33 @@ noncomputable section
 We model binary strings as `List Bool`. -/
 def DescriptionMethod := List Bool → Option (List Bool)
 
-/-- The set of valid programs for a given output under a description method. -/
 
+/-- The set of valid programs for a given output under a description method. -/
 def validPrograms (φ : DescriptionMethod) (x : List Bool) : Set (List Bool) :=
   {p | φ p = some x}
 
-/-- The descriptive complexity of `x` with respect to a description method `φ`:
-    the length of the shortest program `p` such that `φ p = some x`.
-    Returns `⊤` (infinity) if no such program exists. -/
 
+/-- The descriptive complexity of `x` with respect to a description method `φ`:
+the length of the shortest program `p` such that `φ p = some x`.
+Returns `⊤` (infinity) if no such program exists. -/
 noncomputable def complexity (φ : DescriptionMethod) (x : List Bool) : ℕ∞ :=
   ⨅ (p : List Bool) (_ : φ p = some x), (p.length : ℕ∞)
 
-/-- A description method `U` is universal if it can simulate any other
-    description method given a finite prefix (interpreter). -/
 
+/-- A description method `U` is universal if it can simulate any other
+description method given a finite prefix (interpreter). -/
 def IsUniversal (U : DescriptionMethod) : Prop :=
   ∀ φ : DescriptionMethod, ∃ (prefix_ : List Bool),
     ∀ p x : List Bool, φ p = some x →
       U (prefix_ ++ p) = some x
 
-/-- A description method `ψ` is optimal if for every other description method `φ`,
-    there exists a constant `c` such that `K_ψ(x) ≤ K_φ(x) + c` for all x. -/
 
+/-- A description method `ψ` is optimal if for every other description method `φ`,
+there exists a constant `c` such that `K_ψ(x) ≤ K_φ(x) + c` for all x. -/
 def IsOptimal (ψ : DescriptionMethod) : Prop :=
   ∀ φ : DescriptionMethod, ∃ c : ℕ,
     ∀ x : List Bool, complexity ψ x ≤ complexity φ x + c
 
-/-
-Universal description methods are optimal (Invariance Theorem).
-    This is the foundational result that makes Kolmogorov complexity
-    well-defined up to an additive constant.
--/
 
 theorem universal_is_optimal (U : DescriptionMethod) (hU : IsUniversal U) :
     IsOptimal U := by
@@ -60,10 +55,6 @@ theorem universal_is_optimal (U : DescriptionMethod) (hU : IsUniversal U) :
         by_cases hp : φ p = some x <;> simp_all +decide [ tsub_le_iff_right ];
       convert tsub_le_iff_right.mp h_inf_le using 1
 
-/-
-The complexity of any string is at most its length plus a constant
-    (using the identity as a description method).
--/
 
 theorem complexity_le_length (U : DescriptionMethod)
     (hU : IsUniversal U) :
@@ -76,15 +67,11 @@ theorem complexity_le_length (U : DescriptionMethod)
         refine' le_trans ( ciInf_le _ _ ) _ <;> norm_num [ hprefix ];
         exacts [ prefix_ ++ x, by simp [ hprefix, add_comm ] ]
 
-/-- A string is `c`-incompressible if K(x) ≥ |x| - c. -/
 
+/-- A string is `c`-incompressible if K(x) ≥ |x| - c. -/
 def Incompressible (U : DescriptionMethod) (x : List Bool) (c : ℕ) : Prop :=
   complexity U x ≥ x.length - c
 
-/-
-Counting argument: there are 2^n strings of length n but fewer than
-    2^n programs of length < n, so incompressible strings must exist.
--/
 
 theorem incompressible_exist (φ : DescriptionMethod) (n : ℕ) :
     ∃ x : List Bool, x.length = n ∧

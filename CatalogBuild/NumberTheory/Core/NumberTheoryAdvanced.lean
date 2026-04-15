@@ -12,21 +12,11 @@ theorem legendre_mul' (p : ℕ) [hp : Fact (Nat.Prime p)] (hp2 : p ≠ 2)
     legendreSym p (a * b) = legendreSym p a * legendreSym p b := by
   rw [ legendreSym.mul ]
 
-/-! ## §2: Arithmetic Functions -/
-
-/-
-PROVIDED SOLUTION
-Use Nat.totient_mul from Mathlib with the coprimality hypothesis.
--/
 
 theorem totient_mul_coprime' (m n : ℕ) (h : Nat.Coprime m n) :
     Nat.totient (m * n) = Nat.totient m * Nat.totient n := by
   exact Nat.totient_mul h
 
-/-
-PROVIDED SOLUTION
-Use Nat.totient_prime from Mathlib.
--/
 
 theorem sum_divisors_6 : ∑ d ∈ Nat.divisors 6, d = 12 := by native_decide
 
@@ -40,12 +30,6 @@ theorem pell_convergent_17_12' : (17 : ℤ) ^ 2 - 2 * 12 ^ 2 = 1 := by norm_num
 
 theorem pell_convergent_41_29' : (41 : ℤ) ^ 2 - 2 * 29 ^ 2 = -1 := by norm_num
 
-/-! ## §4: Prime Factors -/
-
-/-
-PROVIDED SOLUTION
-Use Nat.exists_prime_and_dvd. Since n ≥ 2, n ≠ 1, so n has a prime factor.
--/
 
 theorem goldbach_small :
     (∃ p q, Nat.Prime p ∧ Nat.Prime q ∧ p + q = 4) ∧
@@ -60,12 +44,6 @@ theorem goldbach_small :
   -- We can verify each case individually.
   exact ⟨⟨2, 2, by norm_num⟩, ⟨3, 3, by norm_num⟩, ⟨3, 5, by norm_num⟩, ⟨3, 7, by norm_num⟩, ⟨5, 7, by norm_num⟩, ⟨3, 11, by norm_num⟩, ⟨3, 13, by norm_num⟩, ⟨5, 13, by norm_num⟩, ⟨3, 17, by norm_num⟩⟩
 
-/-! ## §6: Fermat's Little Theorem -/
-
-/-
-PROVIDED SOLUTION
-Use ZMod.pow_card from Mathlib.
--/
 
 theorem fermat_little_general' (p : ℕ) [hp : Fact (Nat.Prime p)] (a : ZMod p) :
     a ^ p = a := by
@@ -75,8 +53,6 @@ theorem fermat_little_general' (p : ℕ) [hp : Fact (Nat.Prime p)] (a : ZMod p) 
 theorem crt_cardinality_check' :
     Fintype.card (ZMod 2) * Fintype.card (ZMod 3) = Fintype.card (ZMod 6) := by
   simp [ZMod.card]
-
-/-! ## §7: Congruent Numbers -/
 
 
 theorem six_congruent : ((3 : ℚ) ^ 2 + 4 ^ 2 = 5 ^ 2) ∧ (3 * 4 / 2 = 6) :=

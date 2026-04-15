@@ -7,40 +7,35 @@ Declarations: 21
 
 import Mathlib
 
+/-- The classical parametrization: (m² - n², 2mn, m² + n²) -/
 def pythagoreanParam (m n : ℤ) : ℤ × ℤ × ℤ :=
   (m ^ 2 - n ^ 2, 2 * m * n, m ^ 2 + n ^ 2)
 
-/-- The parametrization produces Pythagorean triples. -/
 
+/-- The parametrization produces Pythagorean triples. -/
 theorem param_is_pythagorean (m n : ℤ) :
     let t := pythagoreanParam m n
     IsPythagoreanTriple t.1 t.2.1 t.2.2 := by
   simp only [pythagoreanParam, IsPythagoreanTriple]
   ring
 
-/-
-═══════════════════════════════════════════════════════════════════════════════
-§2: PARITY STRUCTURE
-═══════════════════════════════════════════════════════════════════════════════
 
-In a Pythagorean triple, a and b cannot both be odd.
--/
-
+/-- (3, 4, 5) is a Pythagorean triple. -/
 theorem pyth_3_4_5 : IsPythagoreanTriple 3 4 5 := by
   unfold IsPythagoreanTriple; norm_num
 
-/-- (5, 12, 13) is a Pythagorean triple. -/
 
+/-- (8, 15, 17) is a Pythagorean triple. -/
 theorem pyth_8_15_17 : IsPythagoreanTriple 8 15 17 := by
   unfold IsPythagoreanTriple; norm_num
 
-/-- (7, 24, 25) is a Pythagorean triple. -/
 
+/-- (7, 24, 25) is a Pythagorean triple. -/
 theorem pyth_7_24_25 : IsPythagoreanTriple 7 24 25 := by
   unfold IsPythagoreanTriple; norm_num
 
-/-- The Pythagorean property is symmetric in a, b. -/
 
+/-- The Pythagorean property is symmetric in a, b. -/
 theorem pyth_comm {a b c : ℤ} (h : IsPythagoreanTriple a b c) :
     IsPythagoreanTriple b a c := by
   unfold IsPythagoreanTriple at *; linarith
@@ -49,14 +44,14 @@ theorem pyth_comm {a b c : ℤ} (h : IsPythagoreanTriple a b c) :
 --  §4: LORENTZ FORM AND QUADRATIC STRUCTURE
 -- ═══════════════════════════════════════════════════════════════════════════════
 
-/-- The Lorentz quadratic form Q(a,b,c) = a² + b² - c². -/
 
+/-- A triple is Pythagorean iff its Lorentz form vanishes. -/
 theorem pyth_iff_lorentz_zero {a b c : ℤ} :
     IsPythagoreanTriple a b c ↔ lorentzQ a b c = 0 := by
   unfold IsPythagoreanTriple lorentzQ; omega
 
-/-- The Lorentz form is preserved under negation of any component. -/
 
+/-- The Lorentz form is preserved under negation of any component. -/
 theorem lorentzQ_neg_a (a b c : ℤ) : lorentzQ (-a) b c = lorentzQ a b c := by
   unfold lorentzQ; ring
 
@@ -64,8 +59,8 @@ theorem lorentzQ_neg_a (a b c : ℤ) : lorentzQ (-a) b c = lorentzQ a b c := by
 theorem lorentzQ_neg_b (a b c : ℤ) : lorentzQ a (-b) c = lorentzQ a b c := by
   unfold lorentzQ; ring
 
-/-- Swapping a and b preserves the Lorentz form. -/
 
+/-- Swapping a and b preserves the Lorentz form. -/
 theorem lorentzQ_swap (a b c : ℤ) : lorentzQ b a c = lorentzQ a b c := by
   unfold lorentzQ; ring
 
@@ -73,14 +68,14 @@ theorem lorentzQ_swap (a b c : ℤ) : lorentzQ b a c = lorentzQ a b c := by
 --  §5: BERGGREN MATRICES
 -- ═══════════════════════════════════════════════════════════════════════════════
 
-/-- Berggren matrix A action on a triple. -/
 
+/-- The hypotenuse strictly increases under Berggren B when a,b,c > 0. -/
 theorem berggrenB_hyp_grows {a b c : ℤ} (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
     c < (berggrenB a b c).2.2 := by
   simp only [berggrenB]; linarith
 
-/-- The hypotenuse strictly increases under Berggren C when b > a and c > 0. -/
 
+/-- The hypotenuse strictly increases under Berggren C when b > a and c > 0. -/
 theorem berggrenC_hyp_grows {a b c : ℤ} (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (hab : a ≤ b) :
     c < (berggrenC a b c).2.2 := by
@@ -90,13 +85,13 @@ theorem berggrenC_hyp_grows {a b c : ℤ} (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
 --  §7: SUM OF TWO SQUARES — THE GATEWAY TO PYTHAGOREAN THEORY
 -- ═══════════════════════════════════════════════════════════════════════════════
 
-/-- A number is expressible as a sum of two squares. -/
 
+/-- A number is expressible as a sum of two squares. -/
 def IsSumTwoSquares (n : ℤ) : Prop :=
   ∃ a b : ℤ, a ^ 2 + b ^ 2 = n
 
-/-- The product of two sums of two squares is a sum of two squares (Brahmagupta–Fibonacci). -/
 
+/-- If c is a hypotenuse, then c² is a sum of two squares. -/
 theorem hypotenuse_sq_sum_two_squares {a b c : ℤ} (h : IsPythagoreanTriple a b c) :
     IsSumTwoSquares (c ^ 2) :=
   ⟨a, b, h⟩
@@ -105,8 +100,8 @@ theorem hypotenuse_sq_sum_two_squares {a b c : ℤ} (h : IsPythagoreanTriple a b
 --  §8: HYPOTENUSE LEG INEQUALITY
 -- ═══════════════════════════════════════════════════════════════════════════════
 
-/-- In a Pythagorean triple, each leg squared is at most the hypotenuse squared. -/
 
+/-- In a Pythagorean triple, each leg squared is at most the hypotenuse squared. -/
 theorem pyth_hyp_ge_leg {a b c : ℤ} (h : IsPythagoreanTriple a b c) :
     a ^ 2 ≤ c ^ 2 ∧ b ^ 2 ≤ c ^ 2 := by
   unfold IsPythagoreanTriple at h
@@ -116,8 +111,8 @@ theorem pyth_hyp_ge_leg {a b c : ℤ} (h : IsPythagoreanTriple a b c) :
 --  §9: INFINITUDE OF PYTHAGOREAN TRIPLES
 -- ═══════════════════════════════════════════════════════════════════════════════
 
-/-- There are infinitely many Pythagorean triples (via scaling). -/
 
+/-- There are infinitely many Pythagorean triples (via scaling). -/
 theorem infinitely_many_pyth_triples :
     ∀ N : ℕ, ∃ a b c : ℕ, a > 0 ∧ b > 0 ∧ c > 0 ∧
       a ^ 2 + b ^ 2 = c ^ 2 ∧ c > N := by
@@ -129,37 +124,24 @@ theorem infinitely_many_pyth_triples :
   · ring
   · omega
 
-/-- There are infinitely many primitive Pythagorean triples (via parametrization). -/
 
+/-- There are infinitely many primitive Pythagorean triples (via parametrization). -/
 theorem infinitely_many_primitive_pyth :
     ∀ N : ℕ, ∃ a b c : ℕ, a > 0 ∧ b > 0 ∧ c > N ∧
       a ^ 2 + b ^ 2 = c ^ 2 := by
   intro N
   refine ⟨3 * (N + 1), 4 * (N + 1), 5 * (N + 1), by omega, by omega, by omega, by ring⟩
 
-/-
-═══════════════════════════════════════════════════════════════════════════════
-§10: MODULAR ARITHMETIC OF PYTHAGOREAN TRIPLES
-═══════════════════════════════════════════════════════════════════════════════
-
-Every square is ≡ 0 or 1 (mod 4).
--/
 
 theorem sq_mod3 (n : ℤ) : n ^ 2 % 3 = 0 ∨ n ^ 2 % 3 = 1 := by
   rw [ sq, Int.mul_emod ] ; have := Int.emod_nonneg n three_pos.ne'; have := Int.emod_lt_of_pos n three_pos; interval_cases n % 3 <;> trivial;
 
-/-
-In a Pythagorean triple, 3 divides at least one of a or b.
--/
 
 theorem pyth_div3 {a b c : ℤ} (h : IsPythagoreanTriple a b c) :
     3 ∣ a ∨ 3 ∣ b := by
   replace := congr_arg ( · % 3 ) h; norm_num [ sq, Int.add_emod, Int.mul_emod ] at this; ( have := Int.emod_nonneg a three_pos.ne'; ( have := Int.emod_nonneg b three_pos.ne'; ( have := Int.emod_nonneg c three_pos.ne'; ( have := Int.emod_lt_of_pos a three_pos; ( have := Int.emod_lt_of_pos b three_pos; ( have := Int.emod_lt_of_pos c three_pos; interval_cases _ : a % 3 <;> interval_cases _ : b % 3 <;> interval_cases _ : c % 3 <;> simp_all +decide only ; ) ) ) ) ) );
   all_goals simp_all +decide only [Int.dvd_iff_emod_eq_zero] ;
 
-/-
-In a Pythagorean triple, 4 divides a*b.
--/
 
 theorem pyth_4_div_ab {a b c : ℤ} (h : IsPythagoreanTriple a b c) :
     4 ∣ a * b := by
@@ -177,14 +159,6 @@ theorem pyth_4_div_ab {a b c : ℤ} (h : IsPythagoreanTriple a b c) :
       · exact absurd ( congr_arg ( · % 8 ) h ) ( by ring_nf; norm_num [ Int.add_emod, Int.sub_emod, Int.mul_emod, sq ] ; have := Int.emod_nonneg x ( by decide : ( 8 : ℤ ) ≠ 0 ) ; have := Int.emod_nonneg z ( by decide : ( 8 : ℤ ) ≠ 0 ) ; have := Int.emod_nonneg k ( by decide : ( 8 : ℤ ) ≠ 0 ) ; have := Int.emod_lt_of_pos x ( by decide : ( 8 : ℤ ) > 0 ) ; have := Int.emod_lt_of_pos z ( by decide : ( 8 : ℤ ) > 0 ) ; have := Int.emod_lt_of_pos k ( by decide : ( 8 : ℤ ) > 0 ) ; interval_cases x % 8 <;> interval_cases z % 8 <;> interval_cases k % 8 <;> trivial );
   · exact absurd ( pyth_not_both_odd h ) ( by norm_num )
 
-/-
-═══════════════════════════════════════════════════════════════════════════════
-§11: THE FUNDAMENTAL THEOREM OF PYTHAGOREAN TRIPLE AREA
-═══════════════════════════════════════════════════════════════════════════════
-
-The area of the right triangle formed by a Pythagorean triple is a*b/2.
-    Key property: 12 divides a*b*c for any Pythagorean triple.
--/
 
 theorem pyth_12_div_abc {a b c : ℤ} (h : IsPythagoreanTriple a b c) :
     12 ∣ a * b * c := by
@@ -201,6 +175,3 @@ theorem pyth_12_div_abc {a b c : ℤ} (h : IsPythagoreanTriple a b c) :
 --  §12: DESCENT STRUCTURE
 -- ═══════════════════════════════════════════════════════════════════════════════
 
-/-- The parent map: given a primitive Pythagorean triple, compute its parent
-    in the Berggren tree. The parent is obtained by applying the inverse of
-    whichever Berggren matrix was used. -/

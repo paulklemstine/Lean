@@ -19,16 +19,12 @@ theorem BF2_ne_one : BF2 ≠ 1 := by native_decide
 
 theorem BF3_ne_one : BF3 ≠ 1 := by native_decide
 
-/-! ## Non-Commutativity -/
-
 
 theorem BF12_ne_BF21 : BF1 * BF2 ≠ BF2 * BF1 := by native_decide
 
 theorem BF13_ne_BF31 : BF1 * BF3 ≠ BF3 * BF1 := by native_decide
 
 theorem BF23_ne_BF32 : BF2 * BF3 ≠ BF3 * BF2 := by native_decide
-
-/-! ## No two-letter relation equals identity -/
 
 
 theorem BF11_ne_one : BF1 * BF1 ≠ 1 := by native_decide
@@ -49,14 +45,6 @@ theorem BF32_ne_one : BF3 * BF2 ≠ 1 := by native_decide
 
 theorem BF33_ne_one : BF3 * BF3 ≠ 1 := by native_decide
 
-/-! ## All 9 depth-2 products are pairwise distinct
-
-Products: BF1*BF1, BF1*BF2, BF1*BF3, BF2*BF1, BF2*BF2, BF2*BF3,
-          BF3*BF1, BF3*BF2, BF3*BF3
-
-We verify all 36 = C(9,2) pairwise inequalities. -/
-
--- Row 1 vs Row 2
 
 theorem d2_11_21 : BF1*BF1 ≠ BF2*BF1 := by native_decide
 
@@ -140,8 +128,6 @@ theorem d2_31_33 : BF3*BF1 ≠ BF3*BF3 := by native_decide
 
 theorem d2_32_33 : BF3*BF2 ≠ BF3*BF3 := by native_decide
 
-/-! ## Determinant Separation -/
-
 
 theorem SwapS_invol : SwapS * SwapS = 1 := by native_decide
 
@@ -150,6 +136,4 @@ theorem BF3_conjugate : SwapS * BF1 * SwapS = BF3 := by native_decide
 
 
 theorem BF2_self_conjugate : SwapS * BF2 * SwapS = BF2 := by native_decide
-
-/-! ## Summary theorem: all 9 depth-2 products are distinct -/
 

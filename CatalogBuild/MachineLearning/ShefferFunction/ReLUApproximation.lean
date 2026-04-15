@@ -13,9 +13,6 @@ theorem softplus_ge_relu (x : ℝ) : softplus x ≥ max 0 x := by
   · exact Real.log_nonneg ( by linarith [ Real.exp_pos x ] );
   · rw [ Real.le_log_iff_exp_le ] <;> linarith [ Real.exp_pos x ]
 
-/-
-For positive x, σ(βx)/β → x as β → ∞.
--/
 
 theorem softplus_div_tendsto_relu_pos (x : ℝ) (hx : 0 < x) :
     Tendsto (fun β => softplus (β * x) / β) atTop (nhds x) := by
@@ -26,9 +23,6 @@ theorem softplus_div_tendsto_relu_pos (x : ℝ) (hx : 0 < x) :
   norm_num [ add_div ];
   simpa using Filter.Tendsto.add ( tendsto_const_nhds.congr' ( by filter_upwards [ Filter.eventually_ne_atTop 0 ] with β hβ; rw [ mul_div_cancel_left₀ _ hβ ] ) ) ( Filter.Tendsto.div_atTop ( Filter.Tendsto.log ( tendsto_const_nhds.add ( Real.tendsto_exp_atBot.comp <| Filter.tendsto_neg_atTop_atBot.comp <| Filter.tendsto_id.atTop_mul_const hx ) ) <| by positivity ) Filter.tendsto_id )
 
-/-
-For negative x, σ(βx)/β → 0 as β → ∞.
--/
 
 theorem softplus_div_tendsto_relu_neg (x : ℝ) (hx : x < 0) :
     Tendsto (fun β => softplus (β * x) / β) atTop (nhds 0) := by
@@ -43,18 +37,12 @@ theorem softplus_div_tendsto_relu_neg (x : ℝ) (hx : x < 0) :
     simpa using Filter.Tendsto.div_atTop ( Real.tendsto_exp_atBot.comp <| Filter.tendsto_id.atTop_mul_const_of_neg hx ) Filter.tendsto_id;
   exact squeeze_zero_norm' ( by filter_upwards [ Filter.eventually_gt_atTop 0 ] with β hβ using by rw [ Real.norm_of_nonneg ( h_bound β hβ |>.1 ) ] ; exact h_bound β hβ |>.2 ) h_upper_bound
 
-/-
-Softplus is bounded above by x + log 2.
--/
 
 theorem softplus_le_add_log2 (x : ℝ) (hx : 0 ≤ x) :
     softplus x ≤ x + Real.log 2 := by
   unfold softplus;
   rw [ ← Real.log_exp ( x + Real.log 2 ), Real.log_le_log_iff ] <;> first | positivity | rw [ Real.exp_add, Real.exp_log ] <;> nlinarith [ Real.add_one_le_exp x ]
 
-/-
-Softplus minus identity tends to 0 as x → ∞.
--/
 
 theorem softplus_sub_id_tendsto :
     Tendsto (fun x => softplus x - x) atTop (nhds 0) := by

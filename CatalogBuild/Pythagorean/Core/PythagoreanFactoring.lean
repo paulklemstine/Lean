@@ -9,6 +9,8 @@ import Mathlib
 
 noncomputable section
 
+/-- A same-parity divisor pair of `n²` is a pair `(d, e)` with `d * e = n²`,
+`d < e`, and `d ≡ e (mod 2)`. -/
 structure DivisorPair (n : ℕ) where
   d : ℕ
   e : ℕ
@@ -16,15 +18,6 @@ structure DivisorPair (n : ℕ) where
   lt : d < e
   same_parity : d % 2 = e % 2
 
-/-
-PROBLEM
-From a divisor pair, construct a Pythagorean triple.
-
-PROVIDED SOLUTION
-For hyp: We need n² + ((e-d)/2)² = ((e+d)/2)². Since d*e = n² and d ≡ e (mod 2), we have d+e and e-d are even. Expanding: ((e+d)/2)² - ((e-d)/2)² = ((e+d)² - (e-d)²)/4 = 4de/4 = de = n². For b_pos: Since d < e, (e-d)/2 > 0.
-
-Since dp.d < dp.e, we have dp.e - dp.d > 0, so (dp.e - dp.d) / 2 > 0. Use Nat.div_pos with the fact that dp.e - dp.d ≥ 2 (since they have same parity, the difference is at least 2). Actually the difference dp.e - dp.d is even and positive, so at least 2, and dividing by 2 gives at least 1.
--/
 
 noncomputable def divisorPairToTriple {n : ℕ} (hn : 0 < n) (dp : DivisorPair n) :
     PythTriple n where
@@ -47,17 +40,6 @@ noncomputable def divisorPairToTriple {n : ℕ} (hn : 0 < n) (dp : DivisorPair n
     · linarith [ dp.lt, Nat.sub_pos_of_lt dp.lt ];
     · omega
 
-/-
-PROBLEM
-From a Pythagorean triple, construct a divisor pair.
-
-PROVIDED SOLUTION
-product: (c-b)(c+b) = c²-b² = n² from the Pythagorean relation. lt: Need c-b < c+b, which holds since b > 0 so 2b > 0. same_parity: c-b and c+b have the same parity since their sum is 2c (even) and their difference is 2b (even).
-
-We need t.c - t.b < t.c + t.b. Since t.b > 0 (from t.b_pos), and t.b ≤ t.c (from Pythagorean), this follows by omega.
-
-(t.c - t.b) % 2 = (t.c + t.b) % 2 because (c+b) - (c-b) = 2b which is even. So c+b ≡ c-b mod 2. Use omega after establishing b ≤ c.
--/
 
 noncomputable def tripleToDivisorPair {n : ℕ} (hn : 1 < n) (t : PythTriple n) :
     DivisorPair n where
@@ -71,62 +53,23 @@ noncomputable def tripleToDivisorPair {n : ℕ} (hn : 1 < n) (t : PythTriple n) 
     zify;
     rw [ Int.ofNat_sub ( by nlinarith [ t.hyp ] ) ] ; omega;
 
-/-
-PROBLEM
-============================================================================
-SECTION 2: The difference-of-squares identity (core algebraic fact)
-============================================================================
-
-The fundamental identity: if `n² + b² = c²` then `(c - b)(c + b) = n²`.
-
-PROVIDED SOLUTION
-Expand (c-b)(c+b) = c² - b² = n² using the hypothesis n² + b² = c², i.e., c² - b² = n². Use ring to handle the algebra.
--/
 
 theorem diff_of_squares_pyth {n b c : ℤ} (h : n ^ 2 + b ^ 2 = c ^ 2) :
     (c - b) * (c + b) = n ^ 2 := by
       linarith
 
-/-
-PROBLEM
-Converse: if `d * e = n²` and `d, e` have same parity, then
-    `n² + ((e-d)/2)² = ((e+d)/2)²`.
-
-PROVIDED SOLUTION
-Need to show n² + ((e-d)/2)² = ((e+d)/2)². Since d*e = n², expand: ((e+d)/2)² - ((e-d)/2)² = (e+d)²/4 - (e-d)²/4 = ((e+d)²-(e-d)²)/4 = 4de/4 = de = n². The parity condition ensures d+e and e-d are even so division by 2 works. Use ring after establishing divisibility.
--/
 
 theorem divisor_pair_gives_triple {n d e : ℤ} (hprod : d * e = n ^ 2)
     (hparity : (d + e) % 2 = 0) :
     n ^ 2 + ((e - d) / 2) ^ 2 = ((e + d) / 2) ^ 2 := by
       cases abs_cases d <;> cases abs_cases e <;> nlinarith [ Int.ediv_mul_cancel ( show 2 ∣ e-d from Int.dvd_of_emod_eq_zero <| by omega ), Int.ediv_mul_cancel ( show 2 ∣ e+d from Int.dvd_of_emod_eq_zero <| by omega ) ] ;
 
-/-
-PROBLEM
-============================================================================
-SECTION 3: Factoring via GCD
-============================================================================
-
-If `d * e = n²` and `1 < gcd d n` and `gcd d n < n`, then
-    `gcd d n` is a non-trivial factor of `n`.
-
-PROVIDED SOLUTION
-gcd(d,n) divides n by definition. The hypotheses give 1 < gcd(d,n) and gcd(d,n) < n. So the conjunction follows directly from the definition of gcd and the given bounds.
--/
 
 theorem gcd_factor_of_n {n d e : ℕ} (hn : 1 < n) (hprod : d * e = n ^ 2)
     (hgcd_gt : 1 < Nat.gcd d n) (hgcd_lt : Nat.gcd d n < n) :
     Nat.gcd d n ∣ n ∧ 1 < Nat.gcd d n ∧ Nat.gcd d n < n := by
       exact ⟨ Nat.gcd_dvd_right _ _, hgcd_gt, hgcd_lt ⟩
 
-/-
-PROBLEM
-For a semiprime `n = p * q` with `p < q` both prime,
-    the factorization `d = p, e = p * q²` gives `gcd(d, n) = p`.
-
-PROVIDED SOLUTION
-Let n = p*q. Then d*e = p * (p*q²) = p²*q² = (p*q)² = n². For gcd(d,n) = gcd(p, p*q) = p since p is prime. Use Nat.gcd_eq_left or similar, and ring for the product.
--/
 
 theorem semiprime_factor_triple {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
     (hpq : p < q) (hodd_p : p % 2 = 1) (hodd_q : q % 2 = 1) :
@@ -136,18 +79,6 @@ theorem semiprime_factor_triple {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q
     d * e = n ^ 2 ∧ Nat.gcd d n = p := by
       exact ⟨ by ring, Nat.gcd_eq_left ( dvd_mul_right _ _ ) ⟩
 
-/-
-PROBLEM
-============================================================================
-SECTION 4: Primality characterization
-============================================================================
-
-For an odd prime `p > 1`, the only Pythagorean triple with leg `p`
-    is the trivial one: `(p, (p²-1)/2, (p²+1)/2)`.
-
-PROVIDED SOLUTION
-If p² + b² = c², then (c-b)(c+b) = p². Since p is prime, p² has only divisors {1, p, p²}. The same-parity pairs (d,e) with d*e = p² and d < e must have d and e both odd (since p is odd, p² is odd, so both d and e must be odd). The factorizations are: d=1, e=p². So c-b=1, c+b=p², giving b=(p²-1)/2, c=(p²+1)/2. The only possibility d=p, e=p has d=e which violates d < e. So the unique solution is b = (p²-1)/2, c = (p²+1)/2.
--/
 
 theorem prime_unique_triple (p : ℕ) (hp : Nat.Prime p) (hodd : p % 2 = 1) :
     ∀ b c : ℕ, p ^ 2 + b ^ 2 = c ^ 2 → b > 0 →
@@ -164,14 +95,6 @@ theorem prime_unique_triple (p : ℕ) (hp : Nat.Prime p) (hodd : p % 2 = 1) :
         · rcases p with ( _ | _ | p ) <;> simp_all +decide [ ne_of_gt ];
       grind
 
-/-
-PROBLEM
-Conversely, if an odd composite `n` has more than one Pythagorean triple
-    as a leg, we can extract a non-trivial factor.
-
-PROVIDED SOLUTION
-Since n is odd composite with n > 1, n has a non-trivial factorization n = a*b with 1 < a, 1 < b. Then n² = 1*n² = a²*b² gives two different same-parity factorizations (since n is odd, all these are odd). The first gives triple (n, (n²-1)/2, (n²+1)/2). The second gives triple (n, (b²-a²)/2, (b²+a²)/2) (assuming a < b). Since these are different factorizations, the triples are distinct. The b values are different since the d values (c-b = 1 vs c-b = a²) differ.
--/
 
 theorem composite_multiple_triples (n : ℕ) (hn : 1 < n) (hodd : n % 2 = 1)
     (hcomp : ¬ Nat.Prime n) :
@@ -198,22 +121,6 @@ theorem composite_multiple_triples (n : ℕ) (hn : 1 < n) (hodd : n % 2 = 1)
       · nlinarith only [ Nat.div_mul_cancel ( show 2 ∣ n ^ 2 + 1 from even_iff_two_dvd.mp ( by simpa [ parity_simps ] using Nat.odd_iff.mpr hodd ) ), Nat.div_mul_cancel ( show 2 ∣ n ^ 2 - 1 from even_iff_two_dvd.mp ( by rw [ Nat.even_sub ( by nlinarith only [ hn ] ) ] ; simpa [ parity_simps ] using Nat.odd_iff.mpr hodd ) ), Nat.sub_add_cancel ( by nlinarith only [ hn ] : 1 ≤ n ^ 2 ) ];
       · intro h; omega;
 
-/-
-PROBLEM
-============================================================================
-SECTION 5: The Berggren tree (parametric formulation)
-============================================================================
-
-The (m,n) parametrization: every primitive Pythagorean triple with
-    odd leg `a` equals `(m²-n², 2mn, m²+n²)` for unique `m > n > 0`
-    with `gcd(m,n) = 1` and `m - n` odd.
-
-PROVIDED SOLUTION
-This is the classical parametrization of primitive Pythagorean triples. Since a is odd, b is even, and gcd(a,b)=1, with a²+b²=c², we know c is odd. Let b = 2k. Then a² = c² - 4k² = (c-2k)(c+2k)... Actually use the standard approach: since gcd(a,b)=1, gcd(c-b, c+b) divides 2 and since a²=(c-b)(c+b) with a odd, we get c-b and c+b coprime. So c-b = s² and c+b = t² for some s,t. Then m = t, n = s gives the parametrization... Actually this is tricky in Lean. The key Mathlib result might be `Nat.sq_add_sq_iff_prime` or we can use `Int.sq_of_coprime`. An alternative: since b = 2mn and a = m²-n², we need m = (c+a)/2, n = ... Actually let me think. We want m = sqrt((c+a)/2), n = sqrt((c-a)/2). Since a odd, c odd, (c+a)/2 and (c-a)/2 are natural numbers. And since gcd(a,b) = 1, these must be perfect squares. Set m² = (c+a)/2, n² = (c-a)/2. Then m²-n² = a, 2mn = b (need to verify). This classical number theory result should be somewhere in Mathlib but might be hard to find. Try using PythagoreanTriple from Mathlib.
-
-Use the Mathlib result about Pythagorean triples. Look for `PythagoreanTriple` in Mathlib.NumberTheory.PythagoreanTriples. The key lemma is `PythagoreanTriple.coprime_classification` which states: if (x,y,z) is a primitive Pythagorean triple with x odd, then there exist m,n with x = m²-n², y = 2mn, z = m²+n². Alternatively, work directly: since gcd(a,b)=1 and a²+b²=c², and a is odd, we have c odd and b even. Write b=2r. Then a² = c² - 4r² = (c-2r)(c+2r). Show gcd(c-2r, c+2r) | gcd(2c, 2a) and since gcd(a,b)=1 and b=2r, we get gcd(c-a, c+a) divides 2. Since a is odd and c is odd, c-a and c+a are both even, say c-a=2k, c+a=2m. Then b²=4km and gcd(k,m)=1, so k=s², m=t². Set these as the witnesses. For parity: a = t²-s² = (t-s)(t+s) is odd, so t-s and t+s are both odd, meaning t and s have different parity, i.e., (t-s)%2=1.
--/
-set_option maxHeartbeats 800000 in
 
 theorem parametrize_primitive (a b c : ℕ) (ha : a % 2 = 1) (hb : b % 2 = 0)
     (hpyth : a ^ 2 + b ^ 2 = c ^ 2) (hprim : Nat.gcd a b = 1) (ha_pos : 0 < a)
@@ -252,14 +159,6 @@ theorem parametrize_primitive (a b c : ℕ) (ha : a % 2 = 1) (hb : b % 2 = 0)
       use m, n;
       cases Nat.mod_two_eq_zero_or_one m <;> cases Nat.mod_two_eq_zero_or_one n <;> simp_all +decide [ Nat.sq_sub_sq, Nat.add_mod, Nat.mul_mod ]
 
-/-
-PROBLEM
-For an odd prime `p`, the trivial triple has parameters
-    `m = (p+1)/2`, `n = (p-1)/2`.
-
-PROVIDED SOLUTION
-Let m = (p+1)/2, n = (p-1)/2. Then m > n since p ≥ 3 implies (p+1)/2 > (p-1)/2. n > 0 since p ≥ 3 implies (p-1)/2 ≥ 1. And m² - n² = ((p+1)/2)² - ((p-1)/2)² = ((p+1)² - (p-1)²)/4 = (4p)/4 = p. Use omega for the natural number arithmetic since these are all natural number divisions.
--/
 
 theorem prime_triple_params (p : ℕ) (hp : Nat.Prime p) (hodd : p % 2 = 1) (hp3 : 3 ≤ p) :
     let m := (p + 1) / 2
@@ -268,25 +167,6 @@ theorem prime_triple_params (p : ℕ) (hp : Nat.Prime p) (hodd : p % 2 = 1) (hp3
       cases Nat.Prime.eq_two_or_odd hp <;> simp_all +decide [ Nat.div_le_iff_le_mul_add_pred ];
       exact ⟨ by omega, Nat.le_sub_one_of_lt hp3, eq_tsub_of_add_eq <| by nlinarith only [ Nat.div_mul_cancel ( show 2 ∣ p + 1 from Nat.dvd_of_mod_eq_zero <| by omega ), Nat.div_mul_cancel ( show 2 ∣ p - 1 from Nat.dvd_of_mod_eq_zero <| by omega ), Nat.sub_add_cancel hp.pos ] ⟩
 
-/-
-PROBLEM
-============================================================================
-SECTION 6: Tree depth theorem (the key new result)
-============================================================================
-
-The Berggren tree depth of a primitive triple parametrized by
-    `(m, n)` with `m > n` and `m/n` having continued fraction `[1; a₁, a₂, ...]`
-    equals `a₁ + a₂ + ...` (the total of the continued fraction partial quotients).
-
-    For the special case of a prime `p` with `m = (p+1)/2, n = (p-1)/2`:
-    `m/n = (p+1)/(p-1)` → continued fraction `[1; (p-3)/2, 1]` when `p > 3`,
-    giving depth `(p-3)/2 + 1 = (p-1)/2`.
-
-    Actually the depth is `m - 2` for `m/n` close to 1, which equals `(p-3)/2`.
-
-PROVIDED SOLUTION
-m = (p+1)/2. Since p ≥ 5, m = (p+1)/2 ≥ 3, so m ≥ 2. Then m - 2 = (p+1)/2 - 2 = (p+1-4)/2 = (p-3)/2. This is natural number arithmetic with omega.
--/
 
 theorem berggren_depth_prime (p : ℕ) (hp : Nat.Prime p) (hodd : p % 2 = 1) (hp5 : 5 ≤ p) :
     let m := (p + 1) / 2

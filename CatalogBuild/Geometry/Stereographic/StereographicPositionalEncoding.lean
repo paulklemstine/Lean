@@ -17,23 +17,18 @@ def spiralPos (freq : ℝ) (pos : ℕ) : Fin 3 → ℝ := fun i =>
   | ⟨1, _⟩ => Real.sin t * Real.sin (t / 3)
   | ⟨2, _⟩ => Real.cos t
 
-/-
-The spiral positional embedding lies on the unit sphere.
--/
 
 theorem spiralPos_on_sphere (freq : ℝ) (pos : ℕ) :
     (spiralPos freq pos 0) ^ 2 + (spiralPos freq pos 1) ^ 2 +
     (spiralPos freq pos 2) ^ 2 = 1 := by
       unfold spiralPos; ring_nf; norm_num [ Real.sin_sq, Real.cos_sq ] ; ring;
 
-/-- Sum form of the on-sphere property. -/
 
+/-- Sum form of the on-sphere property. -/
 theorem spiralPos_on_sphere_sum (freq : ℝ) (pos : ℕ) :
     ∑ i : Fin 3, (spiralPos freq pos i) ^ 2 = 1 := by
   simp [Fin.sum_univ_three]
   exact spiralPos_on_sphere freq pos
-
-/-! ## Part 2: Geodesic Distance on the Sphere -/
 
 
 def sphereInnerProd (p q : Fin 3 → ℝ) : ℝ :=
@@ -44,8 +39,6 @@ theorem geodesicDist_le_pi (p q : Fin 3 → ℝ) :
     geodesicDist p q ≤ Real.pi := by
   unfold geodesicDist
   exact Real.arccos_le_pi _
-
-/-! ## Part 3: Stereographic Positional Encoding -/
 
 
 def stereoPosEnc (freq : ℝ) (pos1 pos2 : ℕ) : ℝ :=
@@ -63,8 +56,6 @@ theorem stereoPosEnc_self (freq : ℝ) (pos : ℕ) :
   unfold stereoPosEnc sphereInnerProd
   simp only [← sq]
   exact spiralPos_on_sphere_sum freq pos
-
-/-! ## Part 4: Relative Positional Encoding via Geodesic Distance -/
 
 
 def relativePosBias (freq decay : ℝ) (pos1 pos2 : ℕ) : ℝ :=

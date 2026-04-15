@@ -7,6 +7,7 @@ Declarations: 19
 
 import Mathlib
 
+/-- If N = N(q₁·q₂), then N = N(q₁) · N(q₂). -/
 theorem four_square_factoring_channel
     (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ) (N : ℤ)
     (hN : quatNorm (a₁*a₂ - b₁*b₂ - c₁*c₂ - d₁*d₂)
@@ -16,16 +17,14 @@ theorem four_square_factoring_channel
     N = quatNorm a₁ b₁ c₁ d₁ * quatNorm a₂ b₂ c₂ d₂ := by
   rw [← hN, ← euler_four_square_identity]
 
-/-- The norm is always nonneg. -/
 
+/-- GCD-based factor extraction from 4-square representations. -/
 theorem four_square_cross_collision (a₁ a₂ N : ℤ) :
     ↑(Int.gcd (a₁ - a₂) N) ∣ N := Int.gcd_dvd_right _ _
 
+
 /-- 4 + C(4,2) = 10 channels. -/
-
 theorem four_square_channel_count : 4 + Nat.choose 4 2 = 10 := by decide
-
-/-! ## §4. Sum-of-Divisors Function -/
 
 
 theorem sigma1_pos (n : ℕ) (hn : 0 < n) : 0 < sigma1 n := by
@@ -47,8 +46,6 @@ theorem quaternion_norm_mult (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ) :
     (a₁*c₂ - b₁*d₂ + c₁*a₂ + d₁*b₂)^2 +
     (a₁*d₂ + b₁*c₂ - c₁*b₂ + d₁*a₂)^2 := by ring
 
-/-! ## §6. Channel Hierarchy -/
-
 
 theorem hurwitz_1248 : ({1, 2, 4, 8} : Finset ℕ).card = 4 := by decide
 
@@ -61,19 +58,14 @@ theorem cayley_dickson_channels :
     (16 + Nat.choose 16 2 = 136) ∧
     (32 + Nat.choose 32 2 = 528) := by decide
 
-/-! ## §7. Lattice Reduction -/
 
 /-- gcd(mN - x, N) = gcd(x, N). -/
-
 theorem lattice_short_vector_gcd_eq (x N m : ℤ) :
     Int.gcd (m * N - x) N = Int.gcd x N := by
   rw [show m * N - x = -x + m * N by ring]
   rw [Int.gcd_add_mul_right_left]
   rw [Int.neg_gcd]
 
-/-
-If N | (v₁ · v₂) with 0 < v₁, v₂ < N, at least one GCD > 1.
--/
 
 theorem lattice_product_factor (v₁ v₂ N : ℕ)
     (hN : 1 < N) (hv1 : 0 < v₁) (hv2 : 0 < v₂)
@@ -82,8 +74,6 @@ theorem lattice_product_factor (v₁ v₂ N : ℕ)
   contrapose! hv1N;
   cases hv1N.1.eq_or_lt <;> cases hv1N.2.eq_or_lt <;> simp_all +decide [ Nat.Coprime, Nat.Coprime.gcd_eq_one ];
   exact absurd ( Nat.dvd_gcd ( show N ∣ v₂ from ( Nat.Coprime.symm ‹v₁.gcd N = 1› ) |> fun h => h.dvd_of_dvd_mul_left hdvd ) ( dvd_refl N ) ) ( by aesop )
-
-/-! ## §8. Berggren Tree -/
 
 
 def berggrenA (a b c : ℤ) : ℤ × ℤ × ℤ :=
@@ -115,14 +105,10 @@ theorem berggrenC_preserves_pyth (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     a'^2 + b'^2 = c'^2 := by
   simp [berggrenC]; nlinarith
 
-/-! ## §9. Grover Speedup -/
-
 
 theorem quantum_fourth_root (N : ℕ) :
     Nat.sqrt (Nat.sqrt N) ≤ Nat.sqrt N :=
   Nat.sqrt_le_sqrt (Nat.sqrt_le_self N)
-
-/-! ## §10. Tropical Geometry -/
 
 
 theorem info_theoretic_lower_bound (total_bits channels : ℕ)

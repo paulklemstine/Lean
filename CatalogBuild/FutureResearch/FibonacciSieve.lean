@@ -11,58 +11,42 @@ import Mathlib
 theorem fib_dvd_of_dvd (m n : ℕ) (h : m ∣ n) : Nat.fib m ∣ Nat.fib n :=
   Nat.fib_dvd _ _ h
 
-/-- The GCD of Fibonacci numbers equals the Fibonacci of the GCD. -/
 
 theorem fib_even_iff_three_dvd (n : ℕ) : 2 ∣ Nat.fib n ↔ 3 ∣ n := by
   induction' n using Nat.strong_induction_on with n ih;
   rcases n with ( _ | _ | _ | _ | _ | _ | n ) <;> simp_all +arith +decide [ Nat.ModEq, Nat.fib_add_two ];
   grind
 
-/-- F(5) = 5 divides F(5k) for all k. -/
 
+/-- F(5) = 5 divides F(5k) for all k. -/
 theorem fib_five_dvd (k : ℕ) : 5 ∣ Nat.fib (5 * k) := by
   exact fib_dvd_of_dvd 5 (5 * k) ⟨k, rfl⟩
 
-/-
-Cassini's identity in ℤ.
--/
 
 theorem cassini (n : ℕ) :
     (Nat.fib (n + 1) : ℤ) ^ 2 - (Nat.fib n : ℤ) * (Nat.fib (n + 2) : ℤ) = (-1) ^ n := by
   induction n <;> simp_all +decide [ pow_succ, Nat.fib_add_two ] ; linarith
 
-/-- F(2n) = F(n) * (2F(n+1) - F(n)). -/
 
+/-- F(n) ≥ 1 for n ≥ 1. -/
 theorem fib_pos_of_pos (n : ℕ) (hn : 0 < n) : 0 < Nat.fib n :=
   Nat.fib_pos.mpr hn
 
-/-
-The Fibonacci sequence is eventually strictly increasing: F(n+2) > F(n) for n ≥ 1.
--/
 
 theorem fib_strict_mono (n : ℕ) (hn : 1 ≤ n) : Nat.fib n < Nat.fib (n + 2) := by
   rcases n with ( _ | _ | n ) <;> simp_all +arith +decide [ Nat.fib_add_two ]
 
-/-
-F(n) ≤ 2^n for all n (exponential upper bound).
--/
 
 theorem fib_le_two_pow (n : ℕ) : Nat.fib n ≤ 2 ^ n := by
   induction' n using Nat.strong_induction_on with n ih;
   rcases n with ( _ | _ | n ) <;> simp_all +arith +decide [ Nat.fib_add_two ];
   grind
 
-/-
-If p is prime and p | F(n), then p | F(n * k) for all k.
--/
 
 theorem prime_fib_dvd_periodic (p n k : ℕ) (hp : Nat.Prime p)
     (hdvd : p ∣ Nat.fib n) : p ∣ Nat.fib (n * k) := by
   exact dvd_trans hdvd ( Nat.fib_dvd _ _ ( dvd_mul_right _ _ ) )
 
-/-
-The Pisano period: F(n) mod m is periodic. We prove F(n + period) ≡ F(n).
--/
 
 theorem fib_periodic_mod (m : ℕ) (hm : 0 < m) :
     ∃ T : ℕ, 0 < T ∧ ∀ n, Nat.fib (n + T) % m = Nat.fib n % m := by

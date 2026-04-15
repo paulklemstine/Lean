@@ -19,11 +19,6 @@ theorem congruence_of_squares_factoring
   · refine' lt_of_le_of_ne ( Nat.le_of_dvd ( Int.natAbs_pos.mpr ( by linarith ) ) ( Int.natCast_dvd.mp ( Int.gcd_dvd_right _ _ ) ) ) fun con => hne_sub _;
     exact Int.dvd_trans ( by norm_num ) ( con ▸ Int.gcd_dvd_left _ _ )
 
-/-
-The product of gcd(x-y, n) and gcd(x+y, n) is divisible by n
-    when n divides x² - y². This is essential: after finding one factor
-    via gcd(x-y, n), the cofactor n / gcd(x-y, n) divides gcd(x+y, n).
--/
 
 theorem congruence_of_squares_cofactor
     {n x y : ℤ} (hn : 1 < n)
@@ -31,19 +26,10 @@ theorem congruence_of_squares_cofactor
     (n : ℤ) ∣ ↑(Int.gcd (x - y) n) * ↑(Int.gcd (x + y) n) := by
   grind +suggestions
 
-/-! ## Part 2: GCD yields a divisor -/
-
-/-
-gcd(x - y, n) always divides n.
--/
 
 theorem gcd_sub_dvd_n (x y n : ℤ) : ↑(Int.gcd (x - y) n) ∣ n := by
   exact Int.gcd_dvd_right _ _
 
-/-
-If n divides x² - y², then gcd(x - y, n) * gcd(x + y, n) is a
-    multiple of n that is bounded by n².
--/
 
 theorem gcd_product_bound
     {n x y : ℤ} (hn : 0 < n)
@@ -51,84 +37,48 @@ theorem gcd_product_bound
     (Int.gcd (x - y) n : ℤ) * (Int.gcd (x + y) n : ℤ) ≤ n ^ 2 := by
   nlinarith [ Int.le_of_dvd ( by positivity ) ( Int.gcd_dvd_right ( x - y ) n ), Int.le_of_dvd ( by positivity ) ( Int.gcd_dvd_right ( x + y ) n ) ]
 
-/-! ## Part 3: Smooth Numbers -/
 
 /-- A natural number is B-smooth if all its prime factors are ≤ B. -/
-
 def isSmooth (B : ℕ) (n : ℕ) : Prop :=
   ∀ p : ℕ, p.Prime → p ∣ n → p ≤ B
 
-/-
-1 is B-smooth for any B.
--/
 
 theorem isSmooth_one (B : ℕ) : isSmooth B 1 := by
   exact fun p pp dp => pp.not_dvd_one.elim dp
 
-/-
-If m and n are B-smooth, so is m * n.
--/
 
 theorem isSmooth_mul {B m n : ℕ} (hm : isSmooth B m) (hn : isSmooth B n) :
     isSmooth B (m * n) := by
   intro p pp dp; rw [ Nat.Prime.dvd_mul pp ] at dp; aesop;
 
-/-
-If n is B-smooth and B ≤ B', then n is B'-smooth.
--/
 
 theorem isSmooth_mono {B B' n : ℕ} (h : B ≤ B') (hn : isSmooth B n) :
     isSmooth B' n := by
   exact fun p pp dp => le_trans ( hn p pp dp ) h
 
-/-
-A prime p is B-smooth iff p ≤ B.
--/
 
 theorem isSmooth_prime_iff {B p : ℕ} (hp : p.Prime) :
     isSmooth B p ↔ p ≤ B := by
   exact ⟨ fun h => h p hp dvd_rfl, fun h q hq hqp => by rw [ Nat.prime_dvd_prime_iff_eq ] at hqp <;> aesop ⟩
 
-/-! ## Part 4: Factor Base Properties -/
 
 /-- The factor base: the set of primes up to bound B. -/
-
 def factorBase (B : ℕ) : Finset ℕ :=
   (Finset.range (B + 1)).filter Nat.Prime
 
-/-
-Every element of the factor base is prime.
--/
 
 theorem factorBase_prime {B p : ℕ} (hp : p ∈ factorBase B) : p.Prime := by
   exact Finset.mem_filter.mp hp |>.2
 
-/-
-Every element of the factor base is ≤ B.
--/
 
 theorem factorBase_le {B p : ℕ} (hp : p ∈ factorBase B) : p ≤ B := by
   exact Finset.mem_range_succ_iff.mp ( Finset.mem_filter.mp hp |>.1 )
 
-/-
-A B-smooth number > 0 has all prime factors in the factor base.
--/
 
 theorem smooth_factors_in_base {B n : ℕ} (hn : 0 < n) (hs : isSmooth B n) :
     ∀ p : ℕ, p.Prime → p ∣ n → p ∈ factorBase B := by
   exact fun p pp dp => Finset.mem_filter.mpr ⟨ Finset.mem_range.mpr ( Nat.lt_succ_of_le ( hs p pp dp ) ), pp ⟩
 
-/-! ## Part 5: The Birthday Bound — why we need √(#factor_base) + 1 relations -/
-
-/-
-If we have more relations than the size of the factor base,
-    then the exponent vectors (mod 2) are linearly dependent over GF(2).
-    This is the key combinatorial fact: with k primes in the base,
-    we need at most k + 1 smooth relations to guarantee a
-    congruence of squares via linear algebra over GF(2).
-
-    We state this as a pigeonhole/linear algebra fact over ZMod 2 vectors.
--/
 
 theorem relations_exceed_base_gives_dependency
     {k : ℕ} (relations : Fin (k + 1) → Fin k → ZMod 2) :

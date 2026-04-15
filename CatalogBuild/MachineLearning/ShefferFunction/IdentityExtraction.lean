@@ -9,11 +9,6 @@ import Mathlib
 
 theorem one_plus_exp_pos' (x : ℝ) : (1 : ℝ) + Real.exp x > 0 := by positivity
 
-/-
-The identity extraction formula: σ(x) - σ(-x) = x.
-    This is the key identity that allows recovering the identity
-    function from softplus compositions.
--/
 
 theorem softplus_identity_extraction (x : ℝ) :
     softplus x - softplus (-x) = x := by
@@ -22,25 +17,25 @@ theorem softplus_identity_extraction (x : ℝ) :
   · positivity;
   · positivity
 
-/-
-Softplus satisfies the reflection identity: σ(x) = x + σ(-x).
--/
 
+/-- The softplus addition formula: σ(x) + σ(-x) = x + 2σ(-x) follows
+from the reflection identity. This shows that softplus of x and -x
+contain all the information about x. -/
 theorem softplus_sum_formula (x : ℝ) :
     softplus x + softplus (-x) = x + 2 * softplus (-x) := by
   linarith [softplus_identity_extraction x]
 
-/-- Softplus at zero equals log 2. -/
 
+/-- The doubling formula: 2σ(0) = log 4 = 2 log 2. -/
 theorem softplus_zero_double : 2 * softplus 0 = Real.log 4 := by
   rw [softplus_zero]
   rw [show (4 : ℝ) = 2 ^ 2 by norm_num]
   rw [Real.log_pow]
   ring
 
-/-- For any a ≠ 0, the scaled difference σ(ax) - σ(-ax) = ax extracts
-    a scaled version of the identity. -/
 
+/-- For any a ≠ 0, the scaled difference σ(ax) - σ(-ax) = ax extracts
+a scaled version of the identity. -/
 theorem softplus_scaled_identity (a : ℝ) (x : ℝ) :
     softplus (a * x) - softplus (-(a * x)) = a * x := by
   exact softplus_identity_extraction (a * x)

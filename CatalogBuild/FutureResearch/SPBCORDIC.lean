@@ -12,9 +12,6 @@ noncomputable section
 def cordicStep (x y : ℝ) (d : ℝ) (n : ℕ) : ℝ × ℝ :=
   (x - d * y * (2 : ℝ)⁻¹ ^ n, y + d * x * (2 : ℝ)⁻¹ ^ n)
 
-/-
-The t-coordinate after a CORDIC step equals SPB.
--/
 
 theorem cordic_in_spb (x y d : ℝ) (n : ℕ) (hx : x ≠ 0)
     (hx' : x - d * y * (2 : ℝ)⁻¹ ^ n ≠ 0) :
@@ -57,6 +54,5 @@ theorem cordicGain_pos (n : ℕ) : 0 < cordicGain n := by
   apply div_pos one_pos
   exact Real.sqrt_pos.mpr (by positivity)
 
-end
 
 end

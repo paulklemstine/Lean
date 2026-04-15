@@ -27,9 +27,6 @@ theorem EML_diagonal_quadratic_bound (x : ℝ) (hx : 0 < x) :
   unfold EML_new
   nlinarith [quadratic_le_exp_of_nonneg hx.le, Real.log_le_sub_one_of_pos hx]
 
-/-
-The diagonal map is strictly increasing on [1, ∞).
--/
 
 theorem EML_diagonal_strictMono_ge_one :
     StrictMonoOn (fun x => EML_new x x) (Set.Ici 1) := by
@@ -105,10 +102,10 @@ theorem e_minus_one_lt_two : Real.exp 1 - 1 < 2 := by linarith [Real.exp_one_lt_
 
 theorem e_gt_two : Real.exp 1 > 2 := by linarith [Real.exp_one_gt_d9]
 
-/-- EML amplification for non-negative first argument:
-    If a ≥ 0 and δ > 0, the change in EML exceeds δ.
-    This is because exp(a) ≥ 1 when a ≥ 0. -/
 
+/-- EML amplification for non-negative first argument:
+If a ≥ 0 and δ > 0, the change in EML exceeds δ.
+This is because exp(a) ≥ 1 when a ≥ 0. -/
 theorem EML_amplification (a b δ : ℝ) (ha : 0 ≤ a) (hδ : 0 < δ) :
     EML_new (a + δ) b - EML_new a b > δ := by
   simp only [EML_new]

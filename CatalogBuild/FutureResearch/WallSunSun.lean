@@ -15,8 +15,6 @@ theorem wieferich_1093 : IsWieferichPrime 1093 := ⟨by native_decide, by native
 
 theorem wieferich_3511 : IsWieferichPrime 3511 := ⟨by native_decide, by native_decide⟩
 
-/-! ### Fibonacci Properties -/
-
 
 theorem fib_dvd_fib_mul' (m n : ℕ) : Nat.fib m ∣ Nat.fib (m * n) :=
   Nat.fib_dvd _ _ (dvd_mul_right m n)
@@ -25,8 +23,6 @@ theorem fib_dvd_fib_mul' (m n : ℕ) : Nat.fib m ∣ Nat.fib (m * n) :=
 theorem fib_gcd_eq (m n : ℕ) :
     Nat.gcd (Nat.fib m) (Nat.fib n) = Nat.fib (Nat.gcd m n) :=
   (Nat.fib_gcd m n).symm
-
-/-! ### Wall-Sun-Sun Conjecture -/
 
 
 def WallSunSunConjecture : Prop :=

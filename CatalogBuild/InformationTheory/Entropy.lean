@@ -13,33 +13,31 @@ noncomputable section
 noncomputable def shannonEntropy' {α : Type*} [Fintype α] (p : α → ℝ) : ℝ :=
   -∑ x : α, if p x > 0 then p x * Real.logb 2 (p x) else 0
 
-/-- Joint entropy of a distribution on a product type. -/
 
+/-- Joint entropy of a distribution on a product type. -/
 noncomputable def jointEntropy {α β : Type*} [Fintype α] [Fintype β]
     (p : α × β → ℝ) : ℝ :=
   shannonEntropy' p
 
-/-- Conditional entropy H(Y|X) = H(X,Y) - H(X). -/
 
+/-- Conditional entropy H(Y|X) = H(X,Y) - H(X). -/
 noncomputable def conditionalEntropy {α β : Type*} [Fintype α] [Fintype β]
     (pXY : α × β → ℝ) (pX : α → ℝ) : ℝ :=
   jointEntropy pXY - shannonEntropy' pX
 
-/-- Mutual information I(X;Y) = H(X) + H(Y) - H(X,Y). -/
 
+/-- Mutual information I(X;Y) = H(X) + H(Y) - H(X,Y). -/
 noncomputable def mutualInformation {α β : Type*} [Fintype α] [Fintype β]
     (pXY : α × β → ℝ) (pX : α → ℝ) (pY : β → ℝ) : ℝ :=
   shannonEntropy' pX + shannonEntropy' pY - jointEntropy pXY
 
-/-- **KL divergence** (relative entropy) between two distributions. -/
 
+/-- **KL divergence** (relative entropy) between two distributions. -/
 noncomputable def klDivergence {α : Type*} [Fintype α] (p q : α → ℝ) : ℝ :=
   ∑ x : α, if p x > 0 then p x * Real.logb 2 (p x / q x) else 0
 
-/-! ## Entropy of Special Distributions -/
 
 /-- Entropy of a deterministic distribution (point mass) is 0. -/
-
 theorem entropy_deterministic {α : Type*} [Fintype α] [DecidableEq α] (a : α) :
     shannonEntropy' (fun x => if x = a then (1 : ℝ) else 0) = 0 := by
   unfold shannonEntropy'
@@ -50,10 +48,8 @@ theorem entropy_deterministic {α : Type*} [Fintype α] [DecidableEq α] (a : α
   · subst hx; simp [Real.logb]
   · simp [hx]
 
-/-! ## Gibbs' Inequality -/
 
 /-- For positive reals, `log(p/q) ≥ (1 - q/p) / log(2)`. -/
-
 lemma logb_div_ge {p q : ℝ} (hp : 0 < p) (hq : 0 < q) :
     Real.logb 2 (p / q) ≥ (1 - q / p) / Real.log 2 := by
   set x := q / p
@@ -65,22 +61,14 @@ lemma logb_div_ge {p q : ℝ} (hp : 0 < p) (hq : 0 < q) :
   exact le_trans (mul_le_mul_of_nonneg_right h_log <| inv_nonneg.2 <|
     Real.log_nonneg <| by norm_num) <| by unfold logb; aesop
 
-/-- Each term in KL divergence: `p * log(p/q) ≥ (p - q) / log(2)`. -/
 
+/-- Each term in KL divergence: `p * log(p/q) ≥ (p - q) / log(2)`. -/
 lemma kl_term_bound {p q : ℝ} (hp : 0 < p) (hq : 0 < q) :
     p * Real.logb 2 (p / q) ≥ (p - q) / Real.log 2 := by
   have := logb_div_ge hp hq
   field_simp [hp.ne'] at *
   linarith
 
-/-
-PROBLEM
-**Gibbs' inequality**: KL divergence is nonneg. `D(p ‖ q) ≥ 0`.
-    Requires q ≥ 0 (standard assumption for probability distributions).
-
-PROVIDED SOLUTION
-Use the kl_term_bound lemma. KL divergence = ∑ p(x) log(p(x)/q(x)) ≥ ∑ (p(x)-q(x))/log(2) = (∑p(x) - ∑q(x))/log(2) = (1-1)/log(2) = 0. The key is to split the sum based on whether p(x) > 0, use kl_term_bound for positive terms, and note the conditional is 0 otherwise.
--/
 
 theorem gibbs_inequality {α : Type*} [Fintype α] (p q : α → ℝ)
     (hp_nonneg : ∀ x, 0 ≤ p x) (hq_nonneg : ∀ x, 0 ≤ q x)
@@ -99,15 +87,6 @@ theorem gibbs_inequality {α : Type*} [Fintype α] (p q : α → ℝ)
   · simp +decide [ ← Finset.sum_div _ _ _, hp_sum, hq_sum ];
   · split_ifs <;> [ exact h_term x; exact div_le_iff₀ ( Real.log_pos one_lt_two ) |>.2 ( by nlinarith [ hp_nonneg x, hq_nonneg x, hq_pos x, show q x ≥ 0 from hq_nonneg x ] ) ]
 
-/-! ## Maximum Entropy -/
-
-/-
-PROBLEM
-**Maximum entropy theorem**: `H(p) ≤ log₂ |α|` for any distribution p.
-
-PROVIDED SOLUTION
-Maximum entropy theorem. The uniform distribution maximizes entropy. Use Gibbs' inequality (even if sorry'd) with q = uniform distribution (1/|α| for each x), showing KL(p||q) ≥ 0, which gives H(p) ≤ log|α|. Or prove directly using the log-sum inequality or Jensen's inequality applied to the concave function -x log x.
--/
 
 theorem entropy_le_log_card {α : Type*} [Fintype α] [Nonempty α]
     (p : α → ℝ) (hp_nonneg : ∀ x, 0 ≤ p x)
@@ -134,17 +113,6 @@ theorem entropy_le_log_card {α : Type*} [Fintype α] [Nonempty α]
     · rw [ ← Finset.sum_mul _ _ _, hp_sum, one_mul, neg_neg ];
   exact h_max_entropy p hp_nonneg hp_sum
 
-/-! ## Source Coding Lower Bound -/
-
-/-
-PROBLEM
-**Source coding lower bound**: For any uniquely decodable code,
-the expected codeword length is at least the entropy.
-(Shannon's source coding theorem, converse direction.)
-
-PROVIDED SOLUTION
-Shannon's source coding theorem converse. For each symbol x, the codeword length ℓ(x) satisfies ℓ(x) ≥ -log₂(p(x)) (from the Kraft inequality). Sum weighted by p(x) gives E[ℓ] ≥ -∑ p(x) log₂ p(x) = H(p). Use the Kraft inequality hypothesis and the log inequality.
--/
 
 theorem source_coding_lower_bound {α : Type*} [Fintype α]
     (p : α → ℝ) (ℓ : α → ℕ)
@@ -188,11 +156,9 @@ theorem source_coding_lower_bound {α : Type*} [Fintype α]
   · linarith [ show -Real.log ( ∑ x : α, ( 2 ^ ℓ x ) ⁻¹ ) / Real.log 2 ≥ 0 by exact div_nonneg ( neg_nonneg_of_nonpos ( Real.log_nonpos ( Finset.sum_nonneg fun _ _ => inv_nonneg.2 ( pow_nonneg zero_le_two _ ) ) hkraft ) ) ( Real.log_nonneg one_le_two ) ];
   · exact fun x _ hx => lt_of_le_of_ne ( hp_nonneg x ) ( Ne.symm <| by aesop )
 
-/-! ## Data Processing Inequality (Combinatorial) -/
 
 /-- **Monotonicity of information under functions**: Composing functions
 cannot increase the number of distinct outputs. -/
-
 theorem data_processing_card {α β γ : Type*} [DecidableEq β] [DecidableEq γ]
     [Fintype α]
     (f : α → β) (g : β → γ) (S : Finset α) :

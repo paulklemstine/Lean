@@ -25,11 +25,8 @@ theorem eml_legendre (x y : ℝ) : eml x (Real.exp y) = Real.exp x - y := by
 theorem eml_self_pair_eq (x : ℝ) : eml x (Real.exp x) = emlSelfPair x := by
   simp [eml, emlSelfPair, Real.log_exp]
 
-/-! ## Section 2: Joint Convexity (NEW V10) -/
 
-/-- EML is jointly convex on ℝ × (0,∞).
-    The Hessian is diag(eˣ, 1/y²), which is positive definite. -/
-
+/-- σ is strictly convex. -/
 theorem emlSelfPair_strictConvex : StrictConvexOn ℝ Set.univ emlSelfPair := by
   apply strictConvexOn_of_deriv2_pos (convex_univ)
   · exact (Real.continuous_exp.sub continuous_id).continuousOn
@@ -45,15 +42,15 @@ theorem emlSelfPair_strictConvex : StrictConvexOn ℝ Set.univ emlSelfPair := by
         |>.congr_deriv (by ring)).deriv
     rw [this]; exact Real.exp_pos x
 
-/-- σ'(x) = eˣ − 1. -/
 
+/-- σ'(x) = eˣ − 1. -/
 theorem emlSelfPair_deriv (x : ℝ) :
     HasDerivAt emlSelfPair (Real.exp x - 1) x := by
   unfold emlSelfPair
   exact (Real.hasDerivAt_exp x).sub (hasDerivAt_id x) |>.congr_deriv (by ring)
 
-/-- σ is strictly monotone on [0,∞). -/
 
+/-- d(z) ≥ z + 1 for all z. -/
 theorem emlDiag_ge_add_one (z : ℝ) : emlDiag z ≥ z + 1 := by
   unfold emlDiag
   by_cases hz : 0 < z
@@ -71,8 +68,8 @@ theorem emlDiag_ge_add_one (z : ℝ) : emlDiag z ≥ z + 1 := by
       linarith [Real.exp_pos z,
         Real.log_le_sub_one_of_pos (neg_pos.mpr (lt_of_le_of_ne hz hz0))]
 
-/-- For z > 0: d(z) ≥ 2. -/
 
+/-- Orbit linear divergence: dⁿ(z) ≥ z + n. -/
 theorem emlDiag_orbit_diverge (z : ℝ) (n : ℕ) :
     emlDiagIter n z ≥ z + n := by
   induction n with
@@ -81,18 +78,16 @@ theorem emlDiag_orbit_diverge (z : ℝ) (n : ℕ) :
     simp only [emlDiagIter]
     push_cast; linarith [emlDiag_ge_add_one (emlDiagIter n z)]
 
-/-- The gap function gap(z) = eᶻ − ln(z) − z ≥ 1. -/
 
+/-- The gap function gap(z) = eᶻ − ln(z) − z ≥ 1. -/
 theorem emlGap_ge_one (z : ℝ) : Real.exp z - Real.log z - z ≥ 1 := by
   have := emlDiag_ge_add_one z; unfold emlDiag at this; linarith
 
-/-- The orbit is strictly increasing. -/
 
+/-- The orbit is strictly increasing. -/
 theorem emlDiag_orbit_strictMono (z : ℝ) : StrictMono (fun n => emlDiagIter n z) := by
   apply strictMono_nat_of_lt_succ
   intro n; simp only [emlDiagIter]; exact emlDiag_gt _
-
-/-! ## Section 5: Monotonicity -/
 
 
 theorem eml_strictMono_x (y : ℝ) : StrictMono (fun x => eml x y) := by
@@ -102,8 +97,6 @@ theorem eml_strictMono_x (y : ℝ) : StrictMono (fun x => eml x y) := by
 theorem eml_strictAnti_y (x : ℝ) : StrictAntiOn (fun y => eml x y) (Set.Ioi 0) := by
   intro a ha b _ hab; simp only [eml]
   linarith [Real.log_lt_log (Set.mem_Ioi.mp ha) hab]
-
-/-! ## Section 6: Magma Properties -/
 
 
 theorem eml_noncomm : ∃ x y : ℝ, eml x y ≠ eml y x := by
@@ -125,8 +118,8 @@ theorem eml_no_right_id : ¬∃ e₀ : ℝ, ∀ x : ℝ, eml x e₀ = x := by
   have h0 := he₀ 0; have h1 := he₀ 1
   simp [eml] at h0 h1; linarith [Real.exp_one_gt_d9]
 
-/-- EML has no idempotent elements: eml(x,x) ≠ x for all x. -/
 
+/-- The EML magma (ℝ, eml) has no finite sub-magma. -/
 theorem eml_no_finite_submagma :
     ¬∃ (S : Finset ℝ), S.Nonempty ∧ ∀ x ∈ S, ∀ y ∈ S, eml x y ∈ S := by
   intro ⟨S, ⟨x, hx⟩, hclosed⟩
@@ -138,16 +131,12 @@ theorem eml_no_finite_submagma :
   have h_inj : Function.Injective (fun n => emlDiagIter n x) := h_strict.injective
   exact Set.infinite_of_injective_forall_mem h_inj h_in S.finite_toSet
 
-/-! ## Section 8: Uniqueness Theorems -/
 
 /-- EML is the unique function satisfying the Legendre bridge. -/
-
 theorem eml_unique_legendre {F : ℝ → ℝ → ℝ}
     (hF : ∀ x y, F x (Real.exp y) = Real.exp x - y)
     (x y : ℝ) (hy : 0 < y) : F x y = eml x y := by
   have h := hF x (Real.log y); rw [Real.exp_log hy] at h; rw [h]; simp [eml]
-
-/-! ## Section 9: Trace Theory -/
 
 
 theorem eml_trace (x y : ℝ) :
@@ -161,21 +150,17 @@ theorem eml_trace_ge_two (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
   linarith [Real.add_one_le_exp x, Real.add_one_le_exp y,
             Real.log_le_sub_one_of_pos hx, Real.log_le_sub_one_of_pos hy]
 
-/-! ## Section 10: Information Theory -/
 
 /-- Shannon entropy term decomposition. -/
-
 theorem eml_entropy_term (p : ℝ) :
     -p * Real.log p = p * eml 0 p - p := by
   unfold eml; simp; ring
 
-/-- KL divergence term via EML. -/
 
+/-- KL divergence term via EML. -/
 theorem eml_kl_term (p q : ℝ) (hp : 0 < p) (hq : 0 < q) :
     p * Real.log (p / q) = p * (eml 0 q - eml 0 p) := by
   unfold eml; rw [Real.log_div hp.ne' hq.ne']; ring
-
-/-! ## Section 11: Constants and E-Tower -/
 
 
 theorem eml_generates_ee : eml (eml 1 1) 1 = Real.exp (Real.exp 1) := by
@@ -185,24 +170,18 @@ theorem eml_generates_ee : eml (eml 1 1) 1 = Real.exp (Real.exp 1) := by
 theorem eTower_is_eml (n : ℕ) : eTower (n + 1) = eml (eTower n) 1 := by
   simp [eTower, eml, Real.log_one]
 
-/-! ## Section 12: Integral Identities -/
 
 /-- ∫₀¹ eml(t, 1) dt = e − 1. -/
-
 theorem eml_integral_unit :
     ∫ t in (0:ℝ)..1, eml t 1 = Real.exp 1 - 1 := by
   simp [eml, Real.log_one]
 
-/-! ## Section 13: Bregman Divergence -/
 
-/-- D_exp(x,y) = eˣ − eʸ − eʸ(x−y) ≥ 0. -/
-
+/-- D_exp as EML difference. -/
 theorem bregman_as_eml (x y : ℝ) :
     Real.exp x - Real.exp y - Real.exp y * (x - y) =
     (eml x 1 - eml y 1) - Real.exp y * (x - y) := by
   simp [eml, Real.log_one]
-
-/-! ## Section 14: Level Sets and Zero Set -/
 
 
 theorem eml_level_nonempty (c : ℝ) : ∃ x y : ℝ, 0 < y ∧ eml x y = c := by
@@ -223,10 +202,8 @@ theorem eml_zero_set (x y : ℝ) (hy : 0 < y) :
     rw [← this, Real.exp_log hy]
   · intro h; subst h; simp [eml, Real.log_exp]
 
-/-! ## Section 15: Taylor Lower Bound -/
 
 /-- exp(x) ≥ 1 + x + x²/2 for x ≥ 0. -/
-
 theorem exp_taylor_lower (x : ℝ) (hx : 0 ≤ x) :
     Real.exp x ≥ 1 + x + x ^ 2 / 2 := by
   rw [Real.exp_eq_exp_ℝ, NormedSpace.exp_eq_tsum_div]
@@ -235,8 +212,5 @@ theorem exp_taylor_lower (x : ℝ) (hx : 0 ≤ x) :
       (fun i _ => by positivity)
       (Real.summable_pow_div_factorial x))
 
-/-! ## Section 16: Convexity in Each Variable -/
-
-/-- EML is convex in x for fixed y. -/
 
 end

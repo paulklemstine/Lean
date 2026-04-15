@@ -13,48 +13,37 @@ noncomputable section
 theorem totient_prime' (p : ℕ) (hp : Nat.Prime p) : Nat.totient p = p - 1 :=
   Nat.totient_prime hp
 
-/-- φ is multiplicative for coprime arguments. -/
 
+/-- φ is multiplicative for coprime arguments. -/
 theorem totient_multiplicative' (m n : ℕ) (hcop : Nat.Coprime m n) :
     Nat.totient (m * n) = Nat.totient m * Nat.totient n :=
   Nat.totient_mul hcop
 
-/-
-φ(p^k) = p^k - p^(k-1) for prime p and k ≥ 1.
--/
 
 theorem totient_prime_pow (p k : ℕ) (hp : Nat.Prime p) (hk : 0 < k) :
     Nat.totient (p ^ k) = p ^ k - p ^ (k - 1) := by
   rw [ Nat.totient_prime_pow hp hk ];
   rw [ mul_tsub, mul_one, ← pow_succ, Nat.sub_add_cancel hk ]
 
-/-! ### Divisor Count Function -/
 
 /-- τ(n) = |{d : d | n}| -/
-
 noncomputable def tau (n : ℕ) : ℕ := n.divisors.card
 
-/-- τ(p) = 2 for prime p. -/
 
+/-- τ(p) = 2 for prime p. -/
 theorem tau_prime (p : ℕ) (hp : Nat.Prime p) : tau p = 2 := by
   simp [tau, Nat.Prime.divisors hp, Finset.card_pair (Ne.symm hp.one_lt.ne')]
 
-/-- τ(1) = 1. -/
 
+/-- τ(1) = 1. -/
 theorem tau_one : tau 1 = 1 := by
   simp [tau]
 
-/-
-τ(p^k) = k + 1 for prime p.
--/
 
 theorem tau_prime_pow (p k : ℕ) (hp : Nat.Prime p) :
     tau (p ^ k) = k + 1 := by
   simp +decide [ tau, Nat.divisors_prime_pow hp ]
 
-/-
-τ is multiplicative for coprime arguments.
--/
 
 theorem tau_multiplicative (m n : ℕ) (hm : 0 < m) (hn : 0 < n)
     (hcop : Nat.Coprime m n) :
@@ -62,19 +51,11 @@ theorem tau_multiplicative (m n : ℕ) (hm : 0 < m) (hn : 0 < n)
   unfold tau;
   exact?
 
-/-! ### Möbius Function -/
-
-/-
-μ(p) = -1 for prime p.
--/
 
 theorem mobius_at_prime (p : ℕ) (hp : Nat.Prime p) :
     ArithmeticFunction.moebius p = -1 := by
   rw [ ArithmeticFunction.moebius_apply_prime hp ]
 
-/-
-Möbius inversion: if g(n) = Σ_{d|n} f(d), then f(n) = Σ_{d|n} μ(n/d) g(d).
--/
 
 theorem mobius_inversion_statement :
     ∀ (f g : ℕ → ℤ),
@@ -115,48 +96,41 @@ theorem mobius_inversion_statement :
   rw [ Finset.sum_congr rfl fun x hx => by rw [ hg x ( Nat.pos_of_mem_divisors hx ) ] ];
   rw [ h_fubini, Finset.sum_congr rfl fun x hx => by rw [ h_inner x hx ] ] ; aesop
 
-/-! ### Perfect Number Variants -/
 
 /-- A k-multiperfect number has σ₁(n) = k·n. -/
-
 def IsMultiperfect (k n : ℕ) : Prop :=
   0 < n ∧ ∑ d ∈ n.divisors, d = k * n
 
-/-- 120 is 3-perfect (triperfect). -/
 
+/-- 120 is 3-perfect (triperfect). -/
 theorem triperfect_120 : IsMultiperfect 3 120 := by
   refine ⟨by omega, ?_⟩; native_decide
 
-/-- 672 is 3-perfect (triperfect). -/
 
+/-- 672 is 3-perfect (triperfect). -/
 theorem triperfect_672 : IsMultiperfect 3 672 := by
   refine ⟨by omega, ?_⟩; native_decide
 
-/-! ### Abundancy -/
 
 /-- An abundant number has σ₁(n) > 2n. -/
-
 def IsAbundant (n : ℕ) : Prop := 0 < n ∧ 2 * n < ∑ d ∈ n.divisors, d
 
-/-- 12 is abundant. -/
 
+/-- 12 is abundant. -/
 theorem abundant_12 : IsAbundant 12 := by
   refine ⟨by omega, ?_⟩; native_decide
 
-/-- A deficient number has σ₁(n) < 2n. -/
 
+/-- A deficient number has σ₁(n) < 2n. -/
 def IsDeficient (n : ℕ) : Prop := 0 < n ∧ ∑ d ∈ n.divisors, d < 2 * n
 
-/-- All primes are deficient. -/
 
+/-- All primes are deficient. -/
 theorem prime_deficient (p : ℕ) (hp : Nat.Prime p) : IsDeficient p := by
   constructor
   · exact hp.pos
   · simp [hp.sum_divisors]; have := hp.one_lt; omega
 
-/-
-The smallest abundant number is 12.
--/
 
 theorem smallest_abundant : ∀ n, 0 < n → n < 12 → ¬ IsAbundant n := by
   -- By definition of IsAbundant, we need to show that for any n < 12, the sum of its divisors is not greater than 2n.

@@ -9,14 +9,11 @@ import Mathlib
 
 noncomputable section
 
+/-- The cast from ZMod (p * q) to ZMod p. -/
 noncomputable def castToFactor (p q : ℕ) (hp : Fact (Nat.Prime p)) :
     ZMod (p * q) →+* ZMod p :=
   ZMod.castHom (dvd_mul_right p q) (ZMod p)
 
-/-
-**Theorem 3: CRT Orbit Decomposition.**
-The projection to ZMod p commutes with the squaring map.
--/
 
 theorem orbit_CRT_decomposition (p q : ℕ) (hp : Fact (Nat.Prime p))
     (x : ZMod (p * q)) (k : ℕ) :
@@ -24,14 +21,6 @@ theorem orbit_CRT_decomposition (p q : ℕ) (hp : Fact (Nat.Prime p))
       sqIter p ((castToFactor p q hp) x) k := by
   induction k <;> simp_all +decide [ sqIter_eq_pow, pow_succ ]
 
-/-! ## Section 3: Period Structure -/
-
-/-
-**Theorem 4: Period Divides LCM.**
-If projections to both factors agree at indices a and b,
-then the original orbit agrees at a and b (by CRT).
--/
-set_option maxHeartbeats 800000 in
 
 theorem orbit_period_divides_lcm (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
     (hcoprime : Nat.Coprime p q) (x : ZMod (p * q))
@@ -56,26 +45,14 @@ theorem orbit_period_divides_lcm (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime 
   generalize_proofs at *; (
   haveI := Fact.mk hp; haveI := Fact.mk hq; erw [ ← ZMod.intCast_eq_intCast_iff ] at *; aesop;))
 
-/-! ## Section 4: Smooth Numbers -/
-
-/-- A natural number m is B-smooth if all prime factors are ≤ B. -/
 
 instance (B m : ℕ) : Decidable (IsSmooth B m) :=
   inferInstanceAs (Decidable (∀ p ∈ m.primeFactors, p ≤ B))
 
-/-
-1 is trivially B-smooth.
--/
 
 theorem factorBase_card_le (B : ℕ) : (factorBase B).card ≤ B := by
   exact le_trans ( Finset.card_le_card <| show factorBase B ⊆ Finset.Ico 1 ( B + 1 ) from fun x hx => Finset.mem_Ico.mpr ⟨ Nat.Prime.pos <| Finset.mem_filter.mp hx |>.2, Nat.lt_succ_of_le <| Finset.mem_range_succ_iff.mp <| Finset.mem_filter.mp hx |>.1 ⟩ ) ( by simpa )
 
-/-! ## Section 5: GCD Extraction and Factoring Correctness -/
-
-/-
-**Theorem 7: GCD Extraction.**
-If x² ≡ y² (mod n), n ∤ (x-y), n ∤ (x+y), then gcd(x-y,n) is nontrivial.
--/
 
 theorem gcd_success_for_semiprime (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
     (hpq : p ≠ q) (a : ℕ)
@@ -105,10 +82,6 @@ theorem gcd_success_for_semiprime (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime
     · exact lt_of_lt_of_le hq.one_lt ( Nat.le_of_dvd ( Nat.gcd_pos_of_pos_right _ ( Nat.mul_pos hp.pos hq.pos ) ) ( Nat.dvd_gcd h ( dvd_mul_left _ _ ) ) );
     · exact lt_of_le_of_ne ( Nat.le_of_dvd ( Nat.mul_pos hp.pos hq.pos ) ( Nat.gcd_dvd_right _ _ ) ) fun con => ha_ne_neg1 <| con ▸ Nat.gcd_dvd_left _ _
 
-/-
-**Theorem 9: Factoring Correctness.**
-More smooth relations than factor base size implies a nontrivial subset exists.
--/
 
 theorem factoring_correctness (B : ℕ) (hB : 0 < B)
     (relations : Finset ℕ)
@@ -117,9 +90,6 @@ theorem factoring_correctness (B : ℕ) (hB : 0 < B)
     ∃ S : Finset ℕ, S ⊆ relations ∧ S.Nonempty := by
   exact ⟨ relations, Finset.Subset.refl _, Finset.card_pos.mp ( pos_of_gt hcount ) ⟩
 
-/-! ## Section 6: Complexity Bounds -/
-
-/-- L-notation: L_n[α, c] = exp(c · (ln n)^α · (ln ln n)^(1-α)). -/
 
 theorem subexponential_bound (c : ℝ) (hc : 0 < c) (ε : ℝ) (hε : 0 < ε) :
     ∃ N : ℕ, ∀ n : ℕ, N ≤ n → Lnotation n (1/2) c < (n : ℝ) ^ ε := by
@@ -142,52 +112,29 @@ theorem subexponential_bound (c : ℝ) (hc : 0 < c) (ε : ℝ) (hε : 0 < ε) :
   have := h_lim.sqrt;
   simpa [ mul_div_assoc, Real.sqrt_div' _ ( Real.log_natCast_nonneg _ ) ] using this.const_mul c |> fun h => h.eventually ( gt_mem_nhds <| by simpa )
 
-/-
-**Theorem 11: Polynomial Barrier.**
-For any smoothness bound B, there exist arbitrarily large numbers
-that are not B-smooth. This is the fundamental reason IOF cannot
-achieve polynomial time: not all residues are smooth.
--/
 
 theorem not_polynomial_unconditional (B : ℕ) :
     ∃ m : ℕ, B < m ∧ ¬ IsSmooth B m := by
   have := Nat.exists_infinite_primes ( B + 1 );
   obtain ⟨ p, hp₁, hp₂ ⟩ := this; exact ⟨ p, hp₁, fun hp₃ => by have := hp₃ p ( by aesop ) ; linarith ⟩ ;
 
-/-
-**Theorem 12: Relation Verification is Polynomial.**
--/
 
 theorem relation_verification_poly (B m : ℕ) (hB : 0 < B) :
     ∃ steps : ℕ, steps ≤ B ∧
       (∀ p : ℕ, Nat.Prime p → p ≤ B → (p ∣ m ∨ ¬ p ∣ m)) := by
   exact ⟨ 0, by norm_num, fun p hp _ => em _ ⟩
 
-/-! ## Section 7: Orbit Correlations and Sieve Enhancement -/
-
-/-
-**Theorem 13: Orbit Correlation.**
-sqIter n x (k+1) = (sqIter n x k)².
--/
 
 theorem orbit_correlation (n : ℕ) (x : ZMod n) (k : ℕ) :
     sqIter n x (k + 1) = (sqIter n x k) ^ 2 := by
   rw [ sqIter ];
   rw [ sqMap, sq ]
 
-/-
-**Theorem 14: Smooth Probability Bound.**
-The number of B-smooth numbers up to N is at most N.
--/
 
 theorem smooth_probability_bound (B N : ℕ) :
     ((Finset.range (N + 1)).filter (fun m => IsSmooth B m)).card ≤ N + 1 := by
   grind
 
-/-
-**Theorem 15: Sieve Enhancement.**
-If m is B-smooth and p ≤ B is prime, then m * p is B-smooth.
--/
 
 theorem sieve_enhanced_relations (B m p : ℕ) (hm : IsSmooth B m)
     (hp : Nat.Prime p) (hpB : p ≤ B) :

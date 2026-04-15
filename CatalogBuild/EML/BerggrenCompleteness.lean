@@ -9,8 +9,6 @@ import Mathlib
 
 def IsPT (a b c : ℤ) : Prop := a ^ 2 + b ^ 2 = c ^ 2
 
-/-! ## Berggren Transformations -/
-
 
 def childA (a b c : ℤ) : ℤ × ℤ × ℤ := (a - 2*b + 2*c, 2*a - b + 2*c, 2*a - 2*b + 3*c)
 
@@ -32,8 +30,6 @@ theorem childB_pyth (a b c : ℤ) (h : IsPT a b c) :
 theorem childC_pyth (a b c : ℤ) (h : IsPT a b c) :
     let t := childC a b c; IsPT t.1 t.2.1 t.2.2 := by
   unfold IsPT childC at *; nlinarith
-
-/-! ## The Berggren Tree -/
 
 
 inductive BStep where | A | B | C
@@ -60,8 +56,6 @@ theorem depth2_AA : applyPath [.A, .A] = (7, 24, 25) := by native_decide
 
 theorem depth2_BB : applyPath [.B, .B] = (119, 120, 169) := by native_decide
 
-/-! ## Depth-1 Triples are Pythagorean -/
-
 
 theorem depth1_A_pyth : IsPT 5 12 13 := by unfold IsPT; norm_num
 
@@ -69,10 +63,6 @@ theorem depth1_B_pyth : IsPT 21 20 29 := by unfold IsPT; norm_num
 
 theorem depth1_C_pyth : IsPT 15 8 17 := by unfold IsPT; norm_num
 
-/-! ## Growth Rate -/
-
--- The B-branch recurrence: hypotenuses satisfy c_{n+1} = 6c_n - c_{n-1}
--- c₀ = 5, c₁ = 29, c₂ = 169 = 6·29 - 5, c₃ = 985 = 6·169 - 29
 
 theorem pell_check_1 : 6 * 29 - 5 = (169 : ℤ) := by norm_num
 
@@ -80,9 +70,6 @@ theorem pell_check_2 : 6 * 169 - 29 = (985 : ℤ) := by norm_num
 
 theorem pell_check_3 : 6 * 985 - 169 = (5741 : ℤ) := by norm_num
 
-/-! ## Inverse Berggren (Parent) Maps -/
-
--- The three inverse matrices, one of which gives the valid parent
 
 def parentA (a b c : ℤ) : ℤ × ℤ × ℤ := (a + 2*b - 2*c, 2*a + b - 2*c, 2*a + 2*b - 3*c)
 

@@ -18,27 +18,11 @@ theorem functor_preserves_iso {C D : Type*} [Category C] [Category D]
         exact h_iso
       exact h_iso
 
-/-
-PROBLEM
-The identity functor acts as identity on morphisms.
-
-PROVIDED SOLUTION
-By definition, the identity functor maps f to f. Use rfl or Functor.id_map.
--/
 
 theorem id_functor_map {C : Type*} [Category C] {X Y : C} (f : X ⟶ Y) :
     (Functor.id C).map f = f := by
       grind
 
-/-! ## Section 2: Composition Laws -/
-
-/-
-PROBLEM
-Functor composition is associative.
-
-PROVIDED SOLUTION
-Use Functor.assoc or rfl - functor composition is definitionally associative.
--/
 
 theorem functor_comp_assoc {A B C D : Type*}
     [Category A] [Category B] [Category C] [Category D]
@@ -46,13 +30,6 @@ theorem functor_comp_assoc {A B C D : Type*}
     (F ⋙ G) ⋙ H = F ⋙ (G ⋙ H) := by
       aesop
 
-/-
-PROBLEM
-Composing with the identity functor gives the same functor.
-
-PROVIDED SOLUTION
-Use Functor.comp_id or rfl.
--/
 
 theorem functor_comp_id {C D : Type*} [Category C] [Category D] (F : C ⥤ D) :
     F ⋙ Functor.id D = F := by

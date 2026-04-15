@@ -10,8 +10,6 @@ import Mathlib
 def BSmooth (B n : ℕ) : Prop :=
   ∀ p, Nat.Prime p → p ∣ n → p ≤ B
 
-/-! ### Basic Properties -/
-
 
 theorem smooth_one (B : ℕ) : BSmooth B 1 := by
   intro p hp hd
@@ -33,8 +31,6 @@ theorem smooth_prime_pow (p k : ℕ) (hp : Nat.Prime p) : BSmooth p (p ^ k) := b
   rcases hp.eq_one_or_self_of_dvd q this with h | h
   · exact absurd h hq.ne_one
   · exact le_of_eq h
-
-/-! ### Closure Properties -/
 
 
 theorem smooth_mul_closed (B a b : ℕ) (ha : BSmooth B a) (hb : BSmooth B b) :
@@ -61,8 +57,6 @@ theorem smooth_gcd_closed (B a b : ℕ) (ha : BSmooth B a) :
     BSmooth B (Nat.gcd a b) := by
   exact smooth_dvd_closed B a _ ha (Nat.gcd_dvd_left a b)
 
-/-! ### Non-Smoothness -/
-
 
 theorem not_smooth_prime_gt (B p : ℕ) (hp : Nat.Prime p) (hBp : B < p) :
     ¬ BSmooth B p := by
@@ -70,15 +64,11 @@ theorem not_smooth_prime_gt (B p : ℕ) (hp : Nat.Prime p) (hBp : B < p) :
   have := h p hp dvd_rfl
   omega
 
-/-! ### Monotonicity -/
-
 
 theorem smooth_mono (B₁ B₂ n : ℕ) (hle : B₁ ≤ B₂) (h : BSmooth B₁ n) :
     BSmooth B₂ n := by
   intro p hp hd
   exact le_trans (h p hp hd) hle
-
-/-! ### Computational Verification -/
 
 
 theorem two_smooth_8 : BSmooth 2 8 := by
@@ -100,8 +90,6 @@ theorem three_smooth_12 : BSmooth 3 12 := by
   · rcases (by norm_num : Nat.Prime 3).eq_one_or_self_of_dvd p h with h | h
     · exact absurd h hp.ne_one
     · omega
-
-/-! ### Smooth Number Existence -/
 
 
 theorem smooth_exists_in_range (N B : ℕ) (hB : 1 < B) (hBN : B ≤ N) :

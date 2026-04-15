@@ -9,11 +9,12 @@ import Mathlib
 
 noncomputable section
 
+/-- Non-trivial: at least 2 distinct levels. -/
 def StrangeLoop.isNontrivial (L : StrangeLoop) : Prop :=
   ∃ a b : L.Level, a ≠ b
 
-/-- The orbit of a level under next. -/
 
+/-- The orbit of a level under next. -/
 def StrangeLoop.orbit (L : StrangeLoop) (l : L.Level) : Set L.Level :=
   { l' | ∃ k : ℕ, L.next^[k] l = l' }
 
@@ -27,20 +28,14 @@ theorem StrangeLoop.orbit_closed (L : StrangeLoop) (l l' : L.Level)
   obtain ⟨k, hk⟩ := h
   exact ⟨k + 1, by rw [iterate_succ_apply', hk]⟩
 
-/-! ## §2: Strange Loops on Finite Types -/
-
 
 def strangeLoopPerm (L : StrangeLoop) [Fintype L.Level] [DecidableEq L.Level]
     (hinj : Injective L.next) : Equiv.Perm L.Level :=
   Equiv.ofBijective L.next ⟨hinj, Finite.surjective_of_injective hinj⟩
 
-/-! ## §3: The Tangled Hierarchy -/
-
 
 def TangledHierarchy.entangled (T : TangledHierarchy) (i j : ℕ) : Prop :=
   ∃ k, ∀ l, (T.loops i ∘ T.loops j)^[k] l = l
-
-/-! ## §4: Self-Referential Depth -/
 
 
 def addLayer {α : Type*} (s : SelfRef α) (f : α → α) : SelfRef α :=
@@ -49,8 +44,6 @@ def addLayer {α : Type*} (s : SelfRef α) (f : α → α) : SelfRef α :=
 
 theorem addLayer_depth_increases {α : Type*} (s : SelfRef α) (f : α → α) :
     (addLayer s f).depth = s.depth + 1 := rfl
-
-/-! ## §5: Fixed Points of Strange Loops -/
 
 
 theorem strange_loop_composition_fixed_point
@@ -61,8 +54,6 @@ theorem strange_loop_composition_fixed_point
   obtain ⟨a, ha⟩ := hf_fp
   exact ⟨a, ha, hg_preserves a ha⟩
 
-/-! ## §6: Gödel-Hofstadter Loop -/
-
 
 structure GodelHofstadterLoop where
   Statement : Type*
@@ -71,20 +62,18 @@ structure GodelHofstadterLoop where
   diagonal : (ℕ → Prop) → Statement
   diag_spec : ∀ P, isTheorem (diagonal P) ↔ P (encode (diagonal P))
 
-/-- The Gödel sentence. -/
 
+/-- The Gödel sentence. -/
 def GodelHofstadterLoop.godelSentence (G : GodelHofstadterLoop) : G.Statement :=
   G.diagonal (fun _ => False)
 
-/-- The Gödel sentence is unprovable. -/
 
+/-- The Gödel sentence is unprovable. -/
 theorem godel_unprovable (G : GodelHofstadterLoop) :
     ¬ G.isTheorem G.godelSentence := by
   intro hT
   rw [GodelHofstadterLoop.godelSentence, G.diag_spec] at hT
   exact hT
-
-/-! ## §7: Consciousness as Categorical Fixed Point -/
 
 
 structure CategoricalConsciousness where

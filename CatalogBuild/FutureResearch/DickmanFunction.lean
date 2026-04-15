@@ -39,8 +39,6 @@ theorem dickman_base_antitone {u₁ u₂ : ℝ} (hu₁ : 0 < u₁) (_hu₂ : u�
   · linarith [ Real.log_nonneg ( by linarith : ( 1 : ℝ ) ≤ u₂ ) ];
   · gcongr
 
-/-! ## Smooth Numbers -/
-
 
 def IsSmooth (n y : ℕ) : Prop := ∀ p : ℕ, p.Prime → p ∣ n → p ≤ y
 
@@ -59,8 +57,6 @@ theorem IsSmooth.of_dvd {n m y : ℕ} (hn : IsSmooth n y) (hm : m ∣ n) : IsSmo
 
 theorem IsSmooth.mono {n y₁ y₂ : ℕ} (hn : IsSmooth n y₁) (h : y₁ ≤ y₂) : IsSmooth n y₂ :=
   fun p hp hpn => le_trans (hn p hp hpn) h
-
-/-! ## L-notation -/
 
 
 noncomputable def L_notation (n : ℝ) (α c : ℝ) : ℝ :=

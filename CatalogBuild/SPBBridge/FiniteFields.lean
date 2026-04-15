@@ -10,6 +10,7 @@ import SPBBridge.Core
 
 noncomputable section
 
+/-- -1 is a square mod p iff p ≡ 1 (mod 4), for odd primes. -/
 theorem neg_one_square_iff (hp2 : p ≠ 2) :
     IsSquare (-1 : ZMod p) ↔ p % 4 = 1 := by
   rw [FiniteField.isSquare_neg_one_iff, ZMod.card]
@@ -17,8 +18,5 @@ theorem neg_one_square_iff (hp2 : p ≠ 2) :
   · exact absurd rfl hp2
   · omega
 
-/-! ## Computational Verification -/
-
--- These instance declarations are needed for native_decide
 
 end

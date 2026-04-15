@@ -16,8 +16,8 @@ structure PredictionMorphism (α β : Type*) where
   quality_nonneg : 0 ≤ quality
   quality_le_one : quality ≤ 1
 
-/-- Composition of prediction morphisms -/
 
+/-- Composition of prediction morphisms -/
 noncomputable def PredictionMorphism.comp {α β γ : Type*}
     (f : PredictionMorphism α β) (g : PredictionMorphism β γ) :
     PredictionMorphism α γ where
@@ -26,8 +26,8 @@ noncomputable def PredictionMorphism.comp {α β γ : Type*}
   quality_nonneg := mul_nonneg f.quality_nonneg g.quality_nonneg
   quality_le_one := by nlinarith [f.quality_le_one, g.quality_le_one, f.quality_nonneg, g.quality_nonneg]
 
-/-- Quality degrades under composition (data processing inequality) -/
 
+/-- Quality degrades under composition (data processing inequality) -/
 theorem composition_quality_bound {α β γ : Type*}
     (f : PredictionMorphism α β) (g : PredictionMorphism β γ) :
     (f.comp g).quality ≤ min f.quality g.quality := by
@@ -35,92 +35,82 @@ theorem composition_quality_bound {α β γ : Type*}
   exact ⟨by nlinarith [g.quality_le_one, f.quality_nonneg],
          by nlinarith [f.quality_le_one, g.quality_nonneg]⟩
 
-/-! ## §2. The Identity Prediction (Perfect Oracle) -/
 
 /-- The identity prediction: perfect knowledge -/
-
 def PredictionMorphism.identity (α : Type*) : PredictionMorphism α α where
   predict := id
   quality := 1
   quality_nonneg := by norm_num
   quality_le_one := by norm_num
 
-/-- Identity is a left unit for quality -/
 
+/-- Identity is a left unit for quality -/
 theorem identity_left_unit {α β : Type*} (f : PredictionMorphism α β) :
     ((PredictionMorphism.identity α).comp f).quality = f.quality := by
   show 1 * f.quality = f.quality; ring
 
-/-- Identity is a right unit for quality -/
 
+/-- Identity is a right unit for quality -/
 theorem identity_right_unit {α β : Type*} (f : PredictionMorphism α β) :
     (f.comp (PredictionMorphism.identity β)).quality = f.quality := by
   show f.quality * 1 = f.quality; ring
 
-/-! ## §3. The Bayesian Monad -/
 
 /-- The Bayesian update monad: simplified as a type wrapper with log-likelihood -/
-
 structure BayesianDist (α : Type*) where
   sample : α
   logLikelihood : ℝ
 
-/-- The unit (return/pure): point mass distribution -/
 
+/-- The unit (return/pure): point mass distribution -/
 def BayesianDist.pure' {α : Type*} (x : α) : BayesianDist α where
   sample := x
   logLikelihood := 0
 
-/-- The monad multiplication (join): marginalization -/
 
+/-- The monad multiplication (join): marginalization -/
 def BayesianDist.join {α : Type*} (dd : BayesianDist (BayesianDist α)) : BayesianDist α where
   sample := dd.sample.sample
   logLikelihood := dd.logLikelihood + dd.sample.logLikelihood
 
-/-- Left unit law for log-likelihoods -/
 
+/-- Left unit law for log-likelihoods -/
 theorem bayesian_monad_left_unit {α : Type*} (d : BayesianDist α) :
     (BayesianDist.pure' d).join.logLikelihood = d.logLikelihood := by
   simp [BayesianDist.pure', BayesianDist.join]
 
-/-- Right unit law -/
 
+/-- Right unit law -/
 theorem bayesian_monad_right_unit {α : Type*} (x : α) :
     (BayesianDist.pure' x).logLikelihood = 0 := by
   simp [BayesianDist.pure']
 
-/-! ## §4. Natural Transformations as Model Updates -/
 
 /-- A model update transforms one prediction scheme to another -/
-
 structure ModelUpdate (α β : Type*) where
   transform : (α → β) → (α → β)
   improvement : ℝ
 
-/-- Composing updates: improvement sums -/
 
+/-- Composing updates: improvement sums -/
 theorem update_composition_sum {α β : Type*}
     (u₁ u₂ : ModelUpdate α β)
     (h1 : 0 ≤ u₁.improvement) (h2 : 0 ≤ u₂.improvement) :
     0 ≤ u₁.improvement + u₂.improvement := by
   linarith
 
-/-! ## §5. Prediction as Kan Extension -/
 
 /-- The Kan extension property: if the summary S is sufficient,
-    then Lan_S(f) ∘ S = f -/
-
+then Lan_S(f) ∘ S = f -/
 theorem kan_extension_approximation {α β γ : Type*}
     (S : α → β) (f : α → γ) (Lan : β → γ)
     (h_exact : ∀ x, Lan (S x) = f x) :
     ∀ x, Lan (S x) = f x :=
   h_exact
 
-/-! ## §6. Compositionality Theorem -/
 
 /-- Prediction is compositional: quality of A→B→C is bounded by
-    the product of individual qualities -/
-
+the product of individual qualities -/
 theorem prediction_compositionality
     (q_AB q_BC q_AC : ℝ)
     (hAB : 0 ≤ q_AB) (hAB1 : q_AB ≤ 1)

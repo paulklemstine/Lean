@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Tropical/NeuralNetworks
-Declarations: 53
+Declarations: 54
 -/
 
 import Mathlib
@@ -24,85 +24,80 @@ theorem tMul_zero_right (a : ℝ) : tMul a 0 = a := add_zero a
 
 theorem tMul_zero_left (a : ℝ) : tMul 0 a = a := zero_add a
 
-/-- Left distributivity of tropical multiplication over tropical addition -/
 
+/-- Left distributivity of tropical multiplication over tropical addition -/
 theorem tMul_tAdd_left (a b c : ℝ) :
     tMul a (tAdd b c) = tAdd (tMul a b) (tMul a c) := by
   simp only [tMul, tAdd]; exact (max_add_add_left a b c).symm
 
-/-- Right distributivity -/
 
+/-- Right distributivity -/
 theorem tMul_tAdd_right (a b c : ℝ) :
     tMul (tAdd a b) c = tAdd (tMul a c) (tMul b c) := by
   simp only [tMul, tAdd]; exact max_add a b c
 
-/-! ## Part II: ReLU as Tropical Addition -/
 
-/-- ReLU activation function: max(x, 0) -/
-
+/-- ReLU is a piecewise linear function -/
 theorem relu_piecewise (x : ℝ) : relu x = if x ≤ 0 then 0 else x := by
   unfold relu; split_ifs with h
   · exact max_eq_right h
   · exact max_eq_left (le_of_lt (not_le.mp h))
 
-/-- ReLU is NOT a linear function -/
 
+/-- exp preserves tropical multiplication (becomes ordinary multiplication) -/
 theorem exp_tMul (a b : ℝ) : exp (tMul a b) = exp a * exp b :=
   exp_add a b
 
-/-- exp maps tropical multiplicative identity to 1 -/
 
+/-- exp maps tropical multiplicative identity to 1 -/
 theorem exp_tropical_one : exp (0 : ℝ) = 1 := exp_zero
 
-/-- exp is order-preserving (connects tropical ordering to standard ordering) -/
 
+/-- exp is order-preserving (connects tropical ordering to standard ordering) -/
 theorem exp_mono_iff (a b : ℝ) : a ≤ b ↔ exp a ≤ exp b := exp_le_exp.symm
 
-/-- exp is strictly order-preserving -/
 
+/-- exp is strictly order-preserving -/
 theorem exp_strict_mono_iff' (a b : ℝ) : a < b ↔ exp a < exp b := Real.exp_lt_exp.symm
 
-/-- Log recovers tropical multiplication from classical multiplication -/
 
+/-- Log recovers tropical multiplication from classical multiplication -/
 theorem log_recovers_tMul (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
     Real.log (a * b) = tMul (Real.log a) (Real.log b) :=
   Real.log_mul (ne_of_gt ha) (ne_of_gt hb)
 
-/-! ## Part IV: Softmax and Scaled Softmax -/
 
-/-- Softmax function -/
-
+/-- Sum of exp is positive for nonempty types -/
 theorem sum_exp_pos' {n : ℕ} [NeZero n] (v : Fin n → ℝ) :
     0 < ∑ j, exp (v j) :=
   Finset.sum_pos (fun _ _ => exp_pos _) Finset.univ_nonempty
 
-/-- Softmax outputs are nonnegative -/
 
+/-- Softmax is invariant under constant shifts -/
 theorem softmax_shift {n : ℕ} (v : Fin n → ℝ) (c : ℝ) (i : Fin n) :
     softmax (fun j => v j + c) i = softmax v i := by
   simp only [softmax, exp_add]
   rw [← Finset.sum_mul]
   exact mul_div_mul_right _ _ (ne_of_gt (exp_pos c))
 
-/-- Softmax preserves strict ordering -/
 
+/-- Softmax is bounded above by 1 -/
 theorem softmax_le_one {n : ℕ} [NeZero n] (v : Fin n → ℝ) (i : Fin n) :
     softmax v i ≤ 1 :=
   (div_le_one₀ (sum_exp_pos' v)).mpr
     (Finset.single_le_sum (fun _ _ => exp_nonneg _) (Finset.mem_univ i))
 
-/-- Scaled softmax with inverse temperature β -/
 
+/-- At β = 1, scaled softmax equals standard softmax -/
 theorem scaledSoftmax_one {n : ℕ} (v : Fin n → ℝ) (i : Fin n) :
     scaledSoftmax 1 v i = softmax v i := by simp [scaledSoftmax, softmax]
 
-/-- Scaled softmax is nonnegative -/
 
+/-- Sum of exp is positive -/
 theorem sum_exp_pos {n : ℕ} (v : Fin (n + 1) → ℝ) :
     0 < ∑ i, exp (v i) :=
   Finset.sum_pos (fun _ _ => exp_pos _) Finset.univ_nonempty
 
-/-- LogSumExp ≥ any component (it's an upper bound on all inputs) -/
 
 theorem logSumExp_le {n : ℕ} (v : Fin (n + 1) → ℝ) :
     logSumExp v ≤
@@ -115,43 +110,37 @@ theorem logSumExp_le {n : ℕ} (v : Fin (n + 1) → ℝ) :
   rw [ add_comm, logSumExp ];
   simpa [ Real.log_mul, show ( n :ℝ ) + 1 ≠ 0 by positivity ] using Real.log_le_log ( Finset.sum_pos ( fun _ _ => Real.exp_pos _ ) ( Finset.univ_nonempty ) ) h_exp_monotone
 
-/-! ## Part VI: Attention Mechanism Properties -/
 
-/-- Attention score: dot product scaled by √d -/
-
+/-- Attention score scales linearly in q -/
 theorem attentionScore_scale {d : ℕ} (c : ℝ) (q k : Fin d → ℝ) :
     attentionScore (fun i => c * q i) k = c * attentionScore q k := by
   simp only [attentionScore]; simp_rw [mul_assoc]; rw [← Finset.mul_sum]; ring
 
-/-! ## Part VII: Weight Transplantation Correctness -/
 
-/-- Linear layer: x ↦ Wx + b -/
-
+/-- Transplantation preserves the linear map exactly -/
 theorem transplant_exact {m n : ℕ} (W : Fin m → Fin n → ℝ) (b : Fin m → ℝ)
     (x : Fin n → ℝ) :
     linearLayer W b x = fun i => (∑ j, W i j * x j) + b i := rfl
 
-/-- Composition of linear layers -/
 
+/-- Composition of linear layers -/
 theorem compose_linear {l m n : ℕ}
     (W₁ : Fin m → Fin n → ℝ) (b₁ : Fin m → ℝ)
     (W₂ : Fin l → Fin m → ℝ) (b₂ : Fin l → ℝ) (x : Fin n → ℝ) :
     linearLayer W₂ b₂ (linearLayer W₁ b₁ x) =
     fun i => (∑ j, W₂ i j * ((∑ k, W₁ j k * x k) + b₁ j)) + b₂ i := rfl
 
-/-! ## Part VIII: Residual Connections -/
 
 /-- Residual connection: out = x + f(x) -/
-
 def residualConn {n : ℕ} (x fx : Fin n → ℝ) : Fin n → ℝ := fun i => x i + fx i
 
-/-- Residual connection recovers the layer output -/
 
+/-- Residual connection recovers the layer output -/
 theorem residual_sub {n : ℕ} (x fx : Fin n → ℝ) (i : Fin n) :
     residualConn x fx i - x i = fx i := by simp [residualConn]
 
-/-- Layer norm mean -/
 
+/-- Layer norm mean -/
 noncomputable def layerNormMean {n : ℕ} [NeZero n] (x : Fin n → ℝ) : ℝ :=
   (∑ i, x i) / n
 
@@ -161,24 +150,21 @@ theorem layerNormMean_const {n : ℕ} [NeZero n] (c : ℝ) :
   simp [layerNormMean, Finset.sum_const]
   exact mul_div_cancel_left₀ c (Nat.cast_ne_zero.mpr (NeZero.ne n))
 
-/-! ## Part IX: Causal Mask -/
 
 /-- Causal mask: position i can attend to position j iff j ≤ i -/
-
 def causalMask (i j : ℕ) : Prop := j ≤ i
 
 
 theorem causalMask_refl (i : ℕ) : causalMask i i := le_refl i
+
 theorem causalMask_trans {i j k : ℕ} (hkj : causalMask k j) (hji : causalMask j i) :
     causalMask k i := by unfold causalMask at *; omega
 
-/-- Number of valid positions for causal attention at position i -/
 
+/-- Number of valid positions for causal attention at position i -/
 theorem causal_attention_count (i : ℕ) :
     (Finset.filter (fun j => j ≤ i) (Finset.range (i + 1))).card = i + 1 := by
   simp [Finset.filter_true_of_mem]
-
-/-! ## Part X: GPT-2 Architecture Constants -/
 
 
 def gpt2_n_layer : ℕ := 12
@@ -206,16 +192,14 @@ theorem gpt2_mlp_params :
 theorem gpt2_layer_params :
     4 * gpt2_n_embd ^ 2 + 8 * gpt2_n_embd ^ 2 = 12 * gpt2_n_embd ^ 2 := by ring
 
-/-- Multi-head splits preserve dimension -/
 
+/-- Multi-head splits preserve dimension -/
 theorem multihead_dim_split (n_embd n_head : ℕ) (h : n_head ∣ n_embd) :
     n_head * (n_embd / n_head) = n_embd :=
   Nat.mul_div_cancel' h
 
-/-! ## Part XI: GELU Properties -/
 
 /-- GELU approximation via sigmoid: x · σ(1.702x) -/
-
 noncomputable def geluApprox (x : ℝ) : ℝ :=
   x * (1 / (1 + exp (-(1.702 * x))))
 
@@ -230,54 +214,40 @@ theorem sigmoid_pos (x : ℝ) : 0 < 1 / (1 + exp (-x)) := by
 theorem geluApprox_pos {x : ℝ} (hx : 0 < x) : 0 < geluApprox x :=
   mul_pos hx (sigmoid_pos (1.702 * x))
 
-/-! ## Part XII: Tropical Convexity -/
 
-/-- A function is tropically convex if f(max(x,y)) ≤ max(f(x), f(y)) -/
-
+/-- One-hot distribution has zero entropy -/
 theorem one_hot_zero_entropy {n : ℕ} [NeZero n] (k : Fin n) :
     shannonEntropy (fun i : Fin n => if i = k then (1 : ℝ) else 0) = 0 := by
   simp [shannonEntropy, Finset.sum_ite_eq', Finset.mem_univ, Real.log_one]
 
-/-! ## Part XIV: Key Algebraic Identities -/
 
 /-- Addition distributes over max (tropical perspective) -/
-
 theorem add_max_distrib (a b c : ℝ) : a + max b c = max (a + b) (a + c) :=
   (max_add_add_left a b c).symm
 
-/-- Max distributes over multiplication by nonneg scalars -/
 
+/-- Max distributes over multiplication by nonneg scalars -/
 theorem max_mul_nonneg (a b c : ℝ) (hc : 0 ≤ c) :
     max a b * c = max (a * c) (b * c) := by
   rcases le_total a b with h | h
   · rw [max_eq_right h, max_eq_right (mul_le_mul_of_nonneg_right h hc)]
   · rw [max_eq_left h, max_eq_left (mul_le_mul_of_nonneg_right h hc)]
 
-/-! ## Part XV: Tropical Matrix Multiplication -/
 
-/-- Tropical matrix multiplication: (A ⊙ B)ᵢⱼ = maxₖ (Aᵢₖ + Bₖⱼ) -/
-
+/-- GPT-2 vocabulary size -/
 def gpt2_vocab : ℕ := 50257
 
-/-- Naive lookup table is astronomically large -/
 
+/-- Naive lookup table is astronomically large -/
 theorem gpt2_lookup_huge : gpt2_vocab ^ 1024 > 10 ^ 100 := by native_decide
 
-/-! ## Part XVIII: exp is NOT affine (transcendental barrier) -/
 
-/-
-PROBLEM
-exp cannot be represented as an affine function
-
-PROVIDED SOLUTION
-Plug in x=0: exp(0)=1 so b=1. x=1: exp(1)=a+1, so a=e-1. x=-1: exp(-1)=-(e-1)+1=2-e. But 1/e ≠ 2-e since e≈2.718. Use nlinarith with Real.add_one_le_exp and exp_pos.
--/
-
+/-- ReLU can be decomposed as max of two linear pieces -/
 theorem relu_two_pieces (x : ℝ) : relu x = max (1 * x + 0) (0 * x + 0) := by
   simp [relu]
 
-/-- Composition of ReLU layers creates more linear regions -/
 
+/-- Composition of ReLU layers creates more linear regions -/
 theorem relu_compose_pieces (x : ℝ) :
     relu (relu x - 1) = max (max x 0 - 1) 0 := by
   simp [relu]

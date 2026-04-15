@@ -11,27 +11,18 @@ theorem euclid_thin_triple (a : ℤ) (hodd : a % 2 = 1) :
     a ^ 2 + ((a ^ 2 - 1) / 2) ^ 2 = ((a ^ 2 + 1) / 2) ^ 2 := by
   nlinarith [ Int.ediv_mul_cancel ( show 2 ∣ a^2 - 1 from Int.dvd_of_emod_eq_zero ( by norm_num [ sq, Int.mul_emod, Int.sub_emod, hodd ] ) ), Int.ediv_mul_cancel ( show 2 ∣ a^2 + 1 from Int.dvd_of_emod_eq_zero ( by norm_num [ sq, Int.mul_emod, Int.add_emod, hodd ] ) ) ]
 
-/-! ## §2: Core Divisibility — The Factor Condition -/
-
-/-
-PROBLEM
-The core divisibility: if p | N, then p | ((N-2k)² - 1) iff p | (4k² - 1)
-
-PROVIDED SOLUTION
-After obtaining d with N = p*d, show (p*d - 2k)² - 1 = (4k² - 1) + p*(p*d² - 4dk) by ring. Then p divides the LHS iff p divides 4k² - 1, since p divides p*(p*d² - 4dk). Use dvd_add and dvd_sub or the fact that p | (A + p*B) iff p | A.
--/
 
 theorem factor_condition (N k p : ℤ) (hp : p ∣ N) :
     p ∣ ((N - 2*k)^2 - 1) ↔ p ∣ (4*k^2 - 1) := by
   obtain ⟨d, rfl⟩ := hp
   exact ⟨ fun ⟨ x, hx ⟩ => ⟨ x - p * d ^ 2 + 4 * d * k, by linarith ⟩, fun ⟨ x, hx ⟩ => ⟨ x + p * d ^ 2 - 4 * d * k, by linarith ⟩ ⟩ ;
 
-/-- Factoring 4k² - 1 = (2k-1)(2k+1) -/
 
+/-- Factoring 4k² - 1 = (2k-1)(2k+1) -/
 theorem four_k_sq_minus_one (k : ℤ) : 4 * k ^ 2 - 1 = (2 * k - 1) * (2 * k + 1) := by ring
 
-/-- At k = (p-1)/2, we have 2k = p-1, so 2k+1 = p, hence p | (4k²-1) -/
 
+/-- At k = (p-1)/2, we have 2k = p-1, so 2k+1 = p, hence p | (4k²-1) -/
 theorem factor_at_half_p (p : ℕ) (hp : 2 ≤ p) (hodd : p % 2 = 1) :
     (p : ℤ) ∣ (4 * ((p - 1 : ℕ) / 2 : ℤ) ^ 2 - 1) := by
   rw [four_k_sq_minus_one]
@@ -42,13 +33,6 @@ theorem factor_at_half_p (p : ℕ) (hp : 2 ≤ p) (hodd : p % 2 = 1) :
   rw [show 2 * ((p - 1 : ℕ) / 2 : ℤ) + 1 = (p : ℤ) from h2k]
   exact dvd_mul_left (p : ℤ) _
 
-/-
-PROBLEM
-For 0 < k < (p-1)/2 with p prime, p does NOT divide 4k²-1
-
-PROVIDED SOLUTION
-4k²-1 = (2k-1)(2k+1). For p prime to divide this product, p must divide 2k-1 or 2k+1. If p | (2k-1), then 2k ≥ p+1 so k ≥ (p+1)/2 > (p-1)/2, contradicting k < (p-1)/2. If p | (2k+1), then 2k+1 ≥ p so k ≥ (p-1)/2, also contradicting k < (p-1)/2. Use Nat.Prime.dvd_mul and then bound arguments. Note: for 0 < k < (p-1)/2 with p ≥ 3, we have 1 ≤ 2k-1 < p-2 < p and 3 ≤ 2k+1 < p, so neither factor is 0 mod p. Need to be careful with Int vs Nat here — the values are all positive integers.
--/
 
 theorem no_factor_before_half (p : ℕ) (hp : Nat.Prime p) (hodd : p ≠ 2)
     (k : ℕ) (hk_pos : 0 < k) (hk_lt : k < (p - 1) / 2) :
@@ -58,27 +42,23 @@ theorem no_factor_before_half (p : ℕ) (hp : Nat.Prime p) (hodd : p ≠ 2)
     exact Int.Prime.dvd_mul' hp ( by convert h_div using 1; ring );
   obtain h | h := h_div_cases <;> obtain ⟨ m, hm ⟩ := h <;> nlinarith [ show m = 1 by nlinarith [ Nat.div_mul_le_self ( p - 1 ) 2, Nat.sub_add_cancel hp.pos ], Nat.div_mul_le_self ( p - 1 ) 2, Nat.sub_add_cancel hp.pos ] ;
 
-/-! ## §3: Berggren Descent Preserves Pythagorean Property -/
 
 /-- The Berggren inverse B₁⁻¹ preserves the Pythagorean property -/
-
 theorem invB1_preserves_pyth (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     (a + 2*b - 2*c)^2 + (-2*a - b + 2*c)^2 = (-2*a - 2*b + 3*c)^2 := by
   nlinarith [h]
 
-/-- The Berggren inverse B₂⁻¹ preserves the Pythagorean property -/
 
+/-- The Berggren inverse B₂⁻¹ preserves the Pythagorean property -/
 theorem invB2_preserves_pyth (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     (a + 2*b - 2*c)^2 + (2*a + b - 2*c)^2 = (-2*a - 2*b + 3*c)^2 := by
   nlinarith [h]
 
-/-- The Berggren inverse B₃⁻¹ preserves the Pythagorean property -/
 
+/-- The Berggren inverse B₃⁻¹ preserves the Pythagorean property -/
 theorem invB3_preserves_pyth (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     (-a - 2*b + 2*c)^2 + (2*a + b - 2*c)^2 = (-2*a - 2*b + 3*c)^2 := by
   nlinarith [h]
-
-/-! ## §4: Lorentz Form Invariance -/
 
 
 theorem lorentz_invariant_B1 (a b c : ℤ) :
@@ -95,30 +75,19 @@ theorem lorentz_invariant_B3 (a b c : ℤ) :
     (-a - 2*b + 2*c)^2 + (2*a + b - 2*c)^2 - (-2*a - 2*b + 3*c)^2 =
     a^2 + b^2 - c^2 := by ring
 
-/-! ## §5: Descent Terminates -/
 
 /-- The hypotenuse strictly decreases at each step -/
-
 theorem hyp_strictly_decreases (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
     (hpyth : a^2 + b^2 = c^2) :
     -2*a - 2*b + 3*c < c := by
   nlinarith [sq_nonneg (a + b - c)]
 
-/-! ## §6: GCD Factor Detection -/
 
 /-- If gcd(b_k, N) is nontrivial, it reveals a factor -/
-
 theorem gcd_factor_detection (bk N : ℕ) (h1 : 1 < Nat.gcd bk N) (h2 : Nat.gcd bk N < N) :
     (Nat.gcd bk N) ∣ N ∧ 1 < Nat.gcd bk N := by
   exact ⟨Nat.gcd_dvd_right bk N, h1⟩
 
-/-
-PROBLEM
-For a semiprime N = p·q, any nontrivial divisor must be p or q
-
-PROVIDED SOLUTION
-N = p*q with p,q prime. d | N = p*q. By unique factorization (or Nat.Prime.dvd_mul), d | p*q implies d | p or d | q. Since p is prime, d | p means d = 1 or d = p. Since 1 < d, d = p. Similarly d | q means d = 1 or d = q, so d = q. Hence d = p or d = q.
--/
 
 theorem semiprime_divisor (N p q : ℕ) (hN : N = p * q)
     (hp : Nat.Prime p) (hq : Nat.Prime q)
@@ -127,18 +96,16 @@ theorem semiprime_divisor (N p q : ℕ) (hN : N = p * q)
   simp_all +decide [ Nat.dvd_mul ];
   rcases hd with ⟨ k₁, hk₁, x, hx, rfl ⟩ ; rw [ Nat.dvd_prime hp, Nat.dvd_prime hq ] at *; aesop;
 
-/-! ## §7: The Euclid Parametrization Identity -/
 
 /-- The odd leg of the Euclid triple with m=(N+1)/2, n=(N-1)/2 is N -/
-
 theorem euclid_odd_leg_is_N (N : ℤ) (hodd : N % 2 = 1) :
     ((N + 1) / 2) ^ 2 - ((N - 1) / 2) ^ 2 = N := by
   have hN : N = 2 * ((N - 1) / 2) + 1 := by omega
   have hm : (N + 1) / 2 = (N - 1) / 2 + 1 := by omega
   rw [hm]; ring_nf; omega
 
-/-- The Euclid triple satisfies the Pythagorean equation -/
 
+/-- The simplified closed-form inside-out factoring algorithm -/
 def insideOutFactorV2 (N : ℕ) (maxSteps : ℕ) : Option (ℕ × ℕ) := Id.run do
   if N % 2 == 0 || N < 9 then return none
   for k in [:maxSteps] do
@@ -149,8 +116,8 @@ def insideOutFactorV2 (N : ℕ) (maxSteps : ℕ) : Option (ℕ × ℕ) := Id.run
     if 1 < g && g < N then return some (g, N / g)
   return none
 
-/-- The multi-polynomial sieve version -/
 
+/-- The multi-polynomial sieve version -/
 def multiPolySieve (N : ℕ) (maxSteps : ℕ) : Option (ℕ × ℕ) := Id.run do
   if N % 2 == 0 || N < 4 then return none
   for k in [:maxSteps] do

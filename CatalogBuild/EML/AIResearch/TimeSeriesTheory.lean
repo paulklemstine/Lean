@@ -30,8 +30,6 @@ theorem no_smoothing (x s : ℝ) : expSmoothing 0 x s = s := by
 theorem full_smoothing (x s : ℝ) : expSmoothing 1 x s = x := by
   unfold expSmoothing; ring
 
-/-! ## §2. Forecasting Model Efficiency -/
-
 
 def stdTemporalParams (inputDim hiddenDim numLayers : ℕ) : ℕ :=
   numLayers * (4 * inputDim * hiddenDim + 4 * hiddenDim * hiddenDim)
@@ -49,8 +47,6 @@ theorem eml_temporal_efficient (d h L : ℕ) (hh : 1 ≤ h) :
     _ ≤ L * (4 * d * h) := Nat.mul_le_mul_left L h1
     _ ≤ L * (4 * d * h + 4 * h * h) := Nat.mul_le_mul_left L h2
 
-/-! ## §3. Anomaly Detection -/
-
 
 def anomalyScore (predicted actual : ℝ) : ℝ := (predicted - actual) ^ 2
 
@@ -61,8 +57,6 @@ theorem perfect_prediction_no_anomaly (x : ℝ) : anomalyScore x x = 0 := by
 
 theorem anomaly_nonneg (p a : ℝ) : 0 ≤ anomalyScore p a := by
   unfold anomalyScore; exact sq_nonneg _
-
-/-! ## §4. Multi-Horizon Forecasting -/
 
 
 def horizonError (baseError growthRate : ℝ) (horizon : ℕ) : ℝ :=
@@ -80,8 +74,6 @@ theorem eml_slower_error_growth (e g_eml g_std : ℝ) (h : ℕ) (he : 0 ≤ e)
     horizonError e g_eml h ≤ horizonError e g_std h := by
   unfold horizonError; gcongr
 
-/-! ## §5. Temporal Fusion -/
-
 
 def fusionProjectParams (numInputs inputDim outputDim : ℕ) : ℕ :=
   numInputs * inputDim * outputDim
@@ -97,8 +89,6 @@ theorem eml_fusion_cheaper (n d o : ℕ) (ho : 4 ≤ o) :
   calc n * 4 * d ≤ n * o * d := Nat.mul_le_mul_right d h1
     _ = n * d * o := by ring_nf
 
-/-! ## §6. Change Point Detection -/
-
 
 def cusumStat (prevStat deviation threshold : ℝ) : ℝ :=
   max 0 (prevStat + deviation - threshold)
@@ -110,8 +100,6 @@ theorem cusum_nonneg (s d t : ℝ) : 0 ≤ cusumStat s d t := by
 
 theorem cusum_resets (t : ℝ) (ht : 0 ≤ t) : cusumStat 0 0 t = 0 := by
   unfold cusumStat; simp; linarith
-
-/-! ## §7. Forecast Combination -/
 
 
 def combinedForecast (w1 f1 w2 f2 : ℝ) : ℝ := w1 * f1 + w2 * f2
@@ -126,8 +114,6 @@ theorem single_forecast (f1 f2 : ℝ) :
     combinedForecast 1 f1 0 f2 = f1 := by
   unfold combinedForecast; ring
 
-/-! ## §8. Autoregressive EML -/
-
 
 def arParams (order : ℕ) : ℕ := order + 1
 
@@ -137,8 +123,6 @@ def emlARParams (order : ℕ) : ℕ := 4 * order
 theorem eml_ar_richer (p : ℕ) (hp : 2 ≤ p) : arParams p ≤ emlARParams p := by
   unfold arParams emlARParams; omega
 
-/-! ## §9. Seasonal EML Encoding -/
-
 
 def fourierParams (numHarmonics : ℕ) : ℕ := 2 * numHarmonics
 
@@ -147,8 +131,6 @@ def emlSeasonalParams (numHarmonics : ℕ) : ℕ := 4 * numHarmonics
 
 theorem eml_seasonal_richer (k : ℕ) : fourierParams k ≤ emlSeasonalParams k := by
   unfold fourierParams emlSeasonalParams; omega
-
-end
 
 
 end

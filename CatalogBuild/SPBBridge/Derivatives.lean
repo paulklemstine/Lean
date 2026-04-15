@@ -23,8 +23,8 @@ theorem spb_hasDerivAt_x (a x : ℝ) (h : 1 - x * a ≠ 0) :
   field_simp
   ring
 
-/-- Derivative of y ↦ spb(a, y) is (1 + a²)/(1 - ay)². -/
 
+/-- Derivative of y ↦ spb(a, y) is (1 + a²)/(1 - ay)². -/
 theorem spb_hasDerivAt_y (a y : ℝ) (h : 1 - a * y ≠ 0) :
     HasDerivAt (fun t => spb a t) ((1 + a ^ 2) / (1 - a * y) ^ 2) y := by
   have h' : 1 - y * a ≠ 0 := by rwa [mul_comm]
@@ -34,8 +34,9 @@ theorem spb_hasDerivAt_y (a y : ℝ) (h : 1 - a * y ≠ 0) :
     funext t; unfold spb; ring
   rw [heq]; convert key using 1; ring
 
-/-- The derivative is always positive (SPB is strictly increasing). -/
 
+/-- Full chain rule for spb(f(t), g(t)).
+d/dt spb(f(t), g(t)) = [f'(1+g²) + g'(1+f²)] / (1-fg)² -/
 theorem spb_chain_rule (f g : ℝ → ℝ) (t₀ f' g' : ℝ)
     (hf : HasDerivAt f f' t₀)
     (hg : HasDerivAt g g' t₀)
@@ -52,8 +53,8 @@ theorem spb_chain_rule (f g : ℝ → ℝ) (t₀ f' g' : ℝ)
   field_simp
   ring
 
-/-- Second derivative of x ↦ spb(x, a). -/
 
+/-- Derivative of hyperbolic SPB. -/
 theorem spbH_hasDerivAt_x (a x : ℝ) (h : 1 + x * a ≠ 0) :
     HasDerivAt (fun t => spbH t a) ((1 - a ^ 2) / (1 + x * a) ^ 2) x := by
   unfold spbH

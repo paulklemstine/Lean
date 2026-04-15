@@ -12,25 +12,16 @@ theorem fib_cassini (n : ℕ) (hn : 0 < n) :
   rcases n with ( _ | _ | n ) <;> simp_all +decide [ Nat.fib_add_two ];
   induction n <;> norm_num [ pow_succ, Nat.fib_add_two ] at * ; linarith
 
-/-
-F(1) + F(2) + ... + F(n) = F(n+2) - 1
--/
 
 theorem fib_sum_formula (n : ℕ) :
     ∑ i ∈ Finset.range n, Nat.fib (i + 1) = Nat.fib (n + 2) - 1 := by
   exact eq_tsub_of_add_eq <| by induction n <;> simp_all +arith +decide [ Nat.fib_add_two, Finset.sum_range_succ ] ;
 
-/-
-F(2n) = F(n) · (2·F(n+1) - F(n))
--/
 
 theorem fib_double (n : ℕ) :
     Nat.fib (2 * n) = Nat.fib n * (2 * Nat.fib (n + 1) - Nat.fib n) := by
   convert fib_two_mul n using 1
 
-/-! ### Fibonacci Divisibility -/
-
-/-- F(m) | F(m·n) — divisibility property -/
 
 theorem fib_prime_odd (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2) (hp3 : p ≠ 3) :
     ¬ 2 ∣ Nat.fib p := by
@@ -39,13 +30,6 @@ theorem fib_prime_odd (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2) (hp3 : p ≠ 
     intro n; induction' n using Nat.strong_induction_on with n ih; rcases n with ( _ | _ | _ | n ) <;> simp +arith +decide [ *, Nat.fib_add_two, Nat.add_mod, Nat.mul_mod, Nat.dvd_iff_mod_eq_zero ] ;
   rw [ Nat.dvd_iff_mod_eq_zero, h_fib_even_iff_three_dvd ] ; exact fun h => hp3 <| by have := Nat.prime_dvd_prime_iff_eq Nat.prime_three hp; tauto;
 
-/-! ### Pisano Period Properties -/
-
-/-
-The Pisano period π(n) divides n²-1 for primes n ≡ ±1 (mod 5).
-
-This is a well-known result; we formalize it as a statement.
--/
 
 theorem pisano_divides_p_sq_sub_one (p : ℕ) (hp : Nat.Prime p) (hp5 : p ≠ 5)
     (hmod : p % 5 = 1 ∨ p % 5 = 4) :
@@ -88,8 +72,6 @@ theorem pisano_divides_p_sq_sub_one (p : ℕ) (hp : Nat.Prime p) (hp5 : p ≠ 5)
   simp_all +decide [ pow_add ];
   rw [ show p ^ 2 - 1 = ( p - 1 ) * ( p + 1 ) by convert Nat.sq_sub_sq p 1 using 1; ring ] ; simp +decide [ pow_mul, ZMod.pow_card_sub_one_eq_one, show α ≠ 0 from by aesop_cat, show β ≠ 0 from by aesop_cat ] ;
 
-/-! ### Extended Wall-Sun-Sun Verification -/
-
 
 theorem wss_check_31 : ¬(31 ^ 2 ∣ Nat.fib 30 * Nat.fib 32) := by native_decide
 
@@ -121,11 +103,9 @@ theorem wss_check_89 : ¬(89 ^ 2 ∣ Nat.fib 88 * Nat.fib 90) := by native_decid
 
 theorem wss_check_97 : ¬(97 ^ 2 ∣ Nat.fib 96 * Nat.fib 98) := by native_decide
 
-/-! ### Fibonacci Compositeness Test -/
 
 /-- If n is composite and not a Fibonacci pseudoprime, F(n) mod n ≠ (n/p) mod n
-    where p is the Legendre symbol. This is the basis for the Fibonacci compositeness test. -/
-
+where p is the Legendre symbol. This is the basis for the Fibonacci compositeness test. -/
 theorem fib_composite_test_5 : Nat.fib 4 % 4 ≠ 0 ∧ ¬ Nat.Prime 4 := by decide
 
 theorem fib_composite_test_9 : ¬ Nat.Prime 9 := by decide

@@ -27,34 +27,30 @@ theorem generalized_pigeonhole {α β : Type*} [Fintype α] [Fintype β] [Decida
       _ = k * Fintype.card β := by simp [mul_comm]
   linarith
 
-/-- **Pigeonhole corollary**: If `|A| > |B|`, then no injection `A → B` exists. -/
 
+/-- **Pigeonhole corollary**: If `|A| > |B|`, then no injection `A → B` exists. -/
 theorem pigeonhole_not_injective {α β : Type*} [Fintype α] [Fintype β]
     (h : Fintype.card β < Fintype.card α) :
     ¬ ∃ f : α → β, Injective f := by
   intro ⟨f, hf⟩
   exact absurd (Fintype.card_le_of_injective f hf) (not_le.mpr h)
 
-/-! ## Double Counting -/
 
 /-- **Double counting**: Rows-sum equals columns-sum for any relation. -/
-
 theorem double_counting {α β : Type*} [Fintype α] [Fintype β] [DecidableEq α] [DecidableEq β]
     (R : α → β → Prop) [DecidableRel R] :
     ∑ a : α, (Finset.univ.filter fun b => R a b).card =
     ∑ b : β, (Finset.univ.filter fun a => R a b).card := by
   simp_rw [Finset.card_filter]; rw [Finset.sum_comm]
 
-/-! ## Binomial Coefficient Identities -/
 
 /-- Sum of binomial coefficients: `∑_{i=0}^{n} C(n,i) = 2^n`. -/
-
 theorem sum_binomial' (n : ℕ) :
     ∑ i ∈ Finset.range (n + 1), Nat.choose n i = 2 ^ n :=
   Nat.sum_range_choose n
 
-/-- **Partial sum bound**: `∑_{i=0}^{k} C(n,i) ≤ 2^n`. -/
 
+/-- **Partial sum bound**: `∑_{i=0}^{k} C(n,i) ≤ 2^n`. -/
 theorem partial_binomial_sum_le (n k : ℕ) :
     ∑ i ∈ Finset.range (k + 1), Nat.choose n i ≤ 2 ^ n := by
   trans (∑ i ∈ Finset.range (n + 1), Nat.choose n i)
@@ -65,11 +61,9 @@ theorem partial_binomial_sum_le (n k : ℕ) :
     simp [Nat.choose_eq_zero_of_lt (by omega : n < i)] at hne
   · exact le_of_eq (Nat.sum_range_choose n)
 
-/-! ## Sperner's Theorem -/
 
 /-- **Sperner's theorem**: The maximum antichain in the power set of `Fin n` has
 size `C(n, ⌊n/2⌋)`. Proved using Mathlib's `IsAntichain.sperner`. -/
-
 theorem sperner_bound (n : ℕ) (𝒜 : Finset (Finset (Fin n)))
     (hanti : ∀ A ∈ 𝒜, ∀ B ∈ 𝒜, A ≠ B → ¬(A ⊆ B)) :
     𝒜.card ≤ Nat.choose n (n / 2) := by
@@ -90,20 +84,17 @@ theorem sperner_bound (n : ℕ) (𝒜 : Finset (Finset (Fin n)))
         (Finset.ssubset_iff_subset_ne.mp hab |>.1))
   exact h_sperner _ hanti
 
-/-! ## Sauer-Shelah Lemma and VC Dimension -/
 
 /-- A set system **shatters** `S` if every subset of `S` appears as an intersection. -/
-
 def shatters' {n : ℕ} (𝒜 : Finset (Finset (Fin n))) (S : Finset (Fin n)) : Prop :=
   ∀ T : Finset (Fin n), T ⊆ S → ∃ A ∈ 𝒜, A ∩ S = T
 
+
 /-- **Sauer-Shelah lemma**: If `|𝒜| > ∑_{i=0}^{d} C(n,i)`, then `𝒜` shatters
 some set of size `d + 1`.
-
 Note: A full proof of the Sauer-Shelah lemma (in contrapositive form) is available
 in `SauerShelah.lean` as `SauerShelah.sauer_shelah`. The formulation below uses
 the direct (non-contrapositive) statement, which we derive from the contrapositive. -/
-
 theorem sauer_shelah' {n d : ℕ} (𝒜 : Finset (Finset (Fin n)))
     (hlarge : ∑ i ∈ Finset.range (d + 1), Nat.choose n i < 𝒜.card) :
     ∃ S : Finset (Fin n), S.card = d + 1 ∧ shatters' 𝒜 S := by
@@ -128,17 +119,6 @@ theorem sauer_shelah' {n d : ℕ} (𝒜 : Finset (Finset (Fin n)))
     exact absurd hBshatter (h B hBcard)
   linarith [SauerShelah.sauer_shelah n d 𝒜 hvc]
 
-/-! ## LYM Inequality -/
-
-/-
-PROBLEM
-**LYM inequality**: For an antichain in the power set of `Fin n`,
-`∑_{A ∈ 𝒜} 1/C(n, |A|) ≤ 1`.
-(Open — requires chain-counting double argument with permutations.)
-
-PROVIDED SOLUTION
-Convert the antichain hypothesis to IsAntichain (· ⊆ ·) on the set coercion. Then use Mathlib's Finset.sum_card_slice_div_choose_le_one with 𝕜 := ℚ. Finally show that our sum equals Mathlib's sum: ∑ A ∈ 𝒜, 1/C(n,|A|) = ∑ r in range(n+1), |𝒜.slice r|/C(n,r) by regrouping by cardinality. The key identity is that summing 1/C(n,r) over all A in 𝒜 with |A|=r gives |𝒜.slice r|/C(n,r).
--/
 
 theorem lym_inequality (n : ℕ) (𝒜 : Finset (Finset (Fin n)))
     (hanti : ∀ A ∈ 𝒜, ∀ B ∈ 𝒜, A ≠ B → ¬(A ⊆ B)) :
@@ -159,10 +139,8 @@ theorem lym_inequality (n : ℕ) (𝒜 : Finset (Finset (Fin n)))
       ext; simp [Finset.mem_biUnion];
       exact fun _ => le_trans ( Finset.card_le_univ _ ) ( by norm_num )
 
-/-! ## Compression from Pigeonhole -/
 
 /-- The compression impossibility is a special case of the pigeonhole principle. -/
-
 theorem compression_from_pigeonhole {n m : ℕ} (h : m < n) :
     ¬ ∃ f : (Fin n → Bool) → (Fin m → Bool), Injective f := by
   exact pigeonhole_not_injective (by

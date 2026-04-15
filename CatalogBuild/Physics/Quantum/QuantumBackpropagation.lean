@@ -22,14 +22,10 @@ theorem qb_sinCost_deriv (a b d θ : ℝ) :
     HasDerivAt (qbSinCost a b d) (-a * sin θ + b * cos θ) θ := by
       convert HasDerivAt.add ( HasDerivAt.add ( HasDerivAt.const_mul a ( Real.hasDerivAt_cos θ ) ) ( HasDerivAt.const_mul b ( Real.hasDerivAt_sin θ ) ) ) ( hasDerivAt_const _ _ ) using 1 ; ring!
 
-/-! ## §2: Multi-Parameter Gradients -/
-
 
 theorem qb_gradient_eval_count (k : ℕ) : 2 * k = k + k := by ring
 
 theorem qb_gradient_cost (n L : ℕ) : 2 * (n * L) = 2 * n * L := by ring
-
-/-! ## §3: Quantum Fisher Information -/
 
 
 theorem qb_cramer_rao_bound (n : ℕ) (F : ℝ) (hn : 0 < n) (hF : 0 < F) :
@@ -37,8 +33,6 @@ theorem qb_cramer_rao_bound (n : ℕ) (F : ℝ) (hn : 0 < n) (hF : 0 < F) :
 
 
 theorem qb_heisenberg_vs_shot_noise (n : ℕ) (hn : 2 ≤ n) : n ^ 2 > n := by nlinarith
-
-/-! ## §4: VQE -/
 
 
 theorem qb_variational_principle (E₀ : ℝ) (C : ℝ → ℝ)
@@ -48,8 +42,6 @@ theorem qb_variational_principle (E₀ : ℝ) (C : ℝ → ℝ)
 theorem qb_qaoa_approx_ratio : (0.6924 : ℝ) > 1 / 2 := by norm_num
 
 theorem qb_measurement_count_bound (ε : ℝ) (hε : 0 < ε) : 1 / ε ^ 2 > 0 := by positivity
-
-/-! ## §5: Quantum Backprop Complexity -/
 
 
 theorem qb_quantum_gradient_overhead (k : ℕ) (hk : 1 ≤ k) : 2 * k ≥ 2 := by omega

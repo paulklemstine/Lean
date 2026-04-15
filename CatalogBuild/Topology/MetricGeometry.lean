@@ -16,20 +16,14 @@ theorem isometry_comp' {X Y Z : Type*} [PseudoMetricSpace X] [PseudoMetricSpace 
     [PseudoMetricSpace Z] (f : X → Y) (g : Y → Z) (hf : Isometry f) (hg : Isometry g) :
     Isometry (g ∘ f) := hg.comp hf
 
-/-! ## Completions -/
-
 
 theorem completion_complete' (X : Type*) [MetricSpace X] :
     CompleteSpace (UniformSpace.Completion X) := inferInstance
-
-/-! ## Hausdorff Distance -/
 
 
 theorem hausdorff_dist_comm' {X : Type*} [PseudoMetricSpace X]
     (A B : Set X) : Metric.hausdorffDist A B = Metric.hausdorffDist B A :=
   Metric.hausdorffDist_comm
-
-/-! ## Geodesics -/
 
 
 theorem euclidean_dist_eq_norm (x y : EuclideanSpace ℝ (Fin 2)) :
@@ -38,8 +32,6 @@ theorem euclidean_dist_eq_norm (x y : EuclideanSpace ℝ (Fin 2)) :
 
 theorem euclidean_triangle' (x y z : EuclideanSpace ℝ (Fin 2)) :
     dist x z ≤ dist x y + dist y z := dist_triangle x y z
-
-/-! ## Nearest Neighbor -/
 
 
 theorem nearest_neighbor_exists' {X : Type*} [MetricSpace X]

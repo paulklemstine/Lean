@@ -31,8 +31,6 @@ def IsFullyHomomorphic {P C : Type} [Add P] [Mul P]
     (fhe : FHEScheme P C) : Prop :=
   IsAdditivelyHomomorphic fhe ∧ IsMultiplicativelyHomomorphic fhe
 
-/-! ## Noise Growth Model -/
-
 
 structure NoisyFHE where
   initialNoise : ℝ
@@ -51,8 +49,6 @@ theorem max_depth_exists (nfhe : NoisyFHE) (hInit : 0 < nfhe.initialNoise) :
     ∃ d : ℕ, (d : ℝ) * nfhe.initialNoise ≥ nfhe.maxNoise := by
   obtain ⟨d, hd⟩ := exists_nat_ge (nfhe.maxNoise / nfhe.initialNoise)
   exact ⟨d, by rwa [ge_iff_le, ← div_le_iff₀ hInit]⟩
-
-/-! ## Private AMM Trade -/
 
 
 structure PrivateAMMTrade where
@@ -74,9 +70,6 @@ theorem private_trade_output_pos (trade : PrivateAMMTrade) :
   apply div_pos (mul_pos trade.hRY trade.hAmount)
   linarith [trade.hRX, trade.hAmount]
 
-/-
-FHE prevents sandwich attacks: wrong trade size guess → wrong output
--/
 
 theorem fhe_prevents_sandwich (trade : PrivateAMMTrade)
     (attacker_guess : ℝ) (h_wrong : attacker_guess ≠ trade.actualAmount)
@@ -86,8 +79,6 @@ theorem fhe_prevents_sandwich (trade : PrivateAMMTrade)
   contrapose! h_wrong; have := trade.hRY; have := trade.hRX; simp_all +decide [ privateTradeOutput ] ; ring_nf at *;
   field_simp at h_wrong;
   rw [ eq_div_iff ] at h_wrong <;> nlinarith [ trade.hAmount ]
-
-/-! ## Threshold FHE -/
 
 
 structure ThresholdParams where

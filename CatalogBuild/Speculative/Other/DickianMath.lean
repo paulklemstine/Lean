@@ -23,14 +23,6 @@ theorem dickian_fixed_point_exists
   · exact le_sSup ( by simpa [ ← hx.1 ] using Φ.monotone hx.2 );
   · exact fun y hy => le_trans hy ( Φ.monotone ( le_sSup hy ) )
 
-/-
-PROBLEM
-The Black Iron Prison theorem: if the perception operator is strictly
-deflationary (Φ(x) < x for all x > ⊥), then ⊥ is the unique fixed point.
-
-PROVIDED SOLUTION
-By contrapositive: if x ≠ ⊥ then Φ x < x, so Φ x ≠ x. Equivalently, if Φ x = x then x = ⊥.
--/
 
 theorem black_iron_prison_unique
     {L : Type*} [CompleteLattice L] (Φ : L →o L)
@@ -43,13 +35,6 @@ theorem ubik_collapse_time_formula :
     (1 : ℝ) ^ ((1 : ℝ) - 2) / (1 * (2 - 1)) = 1 := by
   norm_num +zetaDelta at *
 
-/-
-PROBLEM
-The Ubik stabilizer: setting dC/dt = -α*C^β + u = 0 gives u = α*C^β.
-
-PROVIDED SOLUTION
-This is just -x + x = 0. Use ring or linarith.
--/
 
 theorem ubik_stabilizer_formula (a C_target b : ℝ) (ha : 0 < a) (hC : 0 < C_target)
     (hb : 1 < b) :
@@ -63,14 +48,6 @@ theorem connected_image_connected
     ConnectedSpace Y := by
   grind +suggestions
 
-/-
-PROBLEM
-A connected space cannot have a continuous retraction onto a
-disconnected subspace. This is the Substance D irreversibility theorem.
-
-PROVIDED SOLUTION
-The preimage r⁻¹(A) is open (since r is continuous and A is open). Similarly r⁻¹(B) is open. Since every x is in A or B by hr_range, and retraction means r⁻¹(A) ⊇ A and r⁻¹(B) ⊇ B, actually r⁻¹(A) and r⁻¹(B) cover X. They are disjoint because A ∩ B = ∅ (if r x ∈ A and r x ∈ B then r x ∈ A ∩ B = ∅). Both are nonempty (A ⊆ r⁻¹(A) and B ⊆ r⁻¹(B)). This contradicts ConnectedSpace X, which says X cannot be partitioned into two nonempty disjoint open sets.
--/
 
 theorem no_retraction_to_disconnected
     {X : Type*} [TopologicalSpace X] [ConnectedSpace X]
@@ -93,14 +70,6 @@ theorem perfect_precog_no_free_will
     ∀ x, act x = predict x := by
   exact fun x => h_perfect x ▸ rfl
 
-/-
-PROBLEM
-The Minority Report Paradox: a prediction system cannot be
-simultaneously accurate and preventive.
-
-PROVIDED SOLUTION
-Fix x. If predict x = true, then by h_prevent, intervene x = false, but by h_accurate predict x = intervene x = false, contradicting predict x = true. So predict x must be false.
--/
 
 theorem minority_report_paradox
     {X : Type*} (predict : X → Bool) (intervene : X → Bool)
@@ -116,13 +85,6 @@ theorem mercerism_instability_condition
     0 < coupling * spec_rad - decay := by
   nlinarith [ div_mul_cancel₀ decay hs.ne' ]
 
-/-
-PROBLEM
-Below the critical coupling, the zero state is stable (emotions decay).
-
-PROVIDED SOLUTION
-From hw: coupling < decay / spec_rad, multiply both sides by spec_rad (positive): coupling * spec_rad < decay, so coupling * spec_rad - decay < 0. Use div_lt_iff and linarith or similar.
--/
 
 theorem below_critical_stable
     (decay spec_rad coupling : ℝ) (hd : 0 < decay) (hs : 0 < spec_rad)

@@ -11,17 +11,15 @@ import Mathlib
 def BPF₁ : Matrix (Fin 3) (Fin 3) ℤ :=
   !![1, -2, 2; 2, -1, 2; 2, -2, 3]
 
-/-- The nilpotent part N₁ = B₁ - I -/
 
+/-- The nilpotent part N₁ = B₁ - I -/
 def NPF₁ : Matrix (Fin 3) (Fin 3) ℤ :=
   !![0, -2, 2; 2, -2, 2; 2, -2, 2]
 
-/-- N₁² (computed) -/
 
+/-- N₁² (computed) -/
 def NPF₁sq : Matrix (Fin 3) (Fin 3) ℤ :=
   !![0, 0, 0; 0, -4, 4; 0, -4, 4]
-
-/-! ## Nilpotent Verification -/
 
 
 theorem NPF₁_eq_B₁_sub_I : NPF₁ = BPF₁ - 1 := by
@@ -36,15 +34,10 @@ theorem NPF₁_sq_ne_zero : NPF₁ * NPF₁ ≠ 0 := by native_decide
 
 theorem NPF₁_cubed_eq_zero : NPF₁ * NPF₁ * NPF₁ = 0 := by native_decide
 
-/-! ## The A-branch triple at depth n -/
-
-/-- The A-branch triple at depth n (starting from (3,4,5)) -/
 
 theorem A_triple_pythagorean (n : ℕ) :
     (A_triple n).1 ^ 2 + (A_triple n).2.1 ^ 2 = (A_triple n).2.2 ^ 2 := by
   simp only [A_triple]; ring
-
-/-! ## A-branch c - b = 1 (consecutive integers) -/
 
 
 theorem A_triple_1 : A_triple 1 = (5, 12, 13) := by simp [A_triple]
@@ -54,8 +47,6 @@ theorem A_triple_2 : A_triple 2 = (7, 24, 25) := by simp [A_triple]
 
 
 theorem A_triple_3 : A_triple 3 = (9, 40, 41) := by simp [A_triple]
-
-/-! ## A-branch growth -/
 
 
 theorem A_hyp_growth (n : ℕ) : (A_triple n).2.2 < (A_triple (n + 1)).2.2 := by

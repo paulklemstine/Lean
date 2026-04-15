@@ -20,8 +20,6 @@ theorem comp_measure_preserving' {α β γ : Type*}
 theorem id_measure_preserving' {α : Type*} [MeasurableSpace α] (μ : Measure α) :
     MeasurePreserving id μ μ := MeasurePreserving.id μ
 
-/-! ## Ergodic Averages -/
-
 
 noncomputable def timeAverage' {α : Type*} (f : α → ℝ) (T : α → α) (x : α) (n : ℕ) : ℝ :=
   (1 / (n : ℝ)) * ∑ i ∈ Finset.range n, f (T^[i] x)
@@ -37,8 +35,6 @@ theorem timeAverage_add' {α : Type*} (f g : α → ℝ) (T : α → α) (x : α
     timeAverage' (fun a => f a + g a) T x n =
     timeAverage' f T x n + timeAverage' g T x n := by
   simp [timeAverage', Finset.sum_add_distrib, mul_add]
-
-/-! ## Orbit Properties -/
 
 
 theorem orbit_finite' {n : ℕ} (f : Equiv.Perm (Fin n)) (x : Fin n) :

@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Topology
-Declarations: 14
+Declarations: 15
 -/
 
 import Mathlib
@@ -28,6 +28,7 @@ theorem trefoil_bridge : (2 : ℕ) ≥ 2 := le_refl _
 -- Alexander polynomial
 
 theorem alexander_at_one : (1 : ℤ) = 1 := rfl
+
 theorem alexander_trefoil_minus_one :
     |(-1 : ℤ) - 1 + (-1)| = 3 := by norm_num
 

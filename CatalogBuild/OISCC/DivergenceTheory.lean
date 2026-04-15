@@ -12,90 +12,79 @@ noncomputable section
 /-- The EML operation. -/
 def EMLv (a b : ℝ) : ℝ := Real.exp a - Real.log b
 
-/-- The 2D EML map. -/
 
+/-- The 2D EML map. -/
 def Phi (p : ℝ × ℝ) : ℝ × ℝ := (EMLv p.1 p.2, EMLv p.2 p.1)
 
-/-- The diagonal EML map d(x) = exp(x) - ln(x). -/
 
+/-- The diagonal EML map d(x) = exp(x) - ln(x). -/
 def diagEML (x : ℝ) : ℝ := Real.exp x - Real.log x
 
-/-- The Lyapunov candidate: V(x,y) = exp(x) + exp(y). -/
 
+/-- The Lyapunov candidate: V(x,y) = exp(x) + exp(y). -/
 def lyapV (p : ℝ × ℝ) : ℝ := Real.exp p.1 + Real.exp p.2
 
-/-- The trace: Tr(x,y) = EML(x,y) + EML(y,x). -/
 
+/-- The trace: Tr(x,y) = EML(x,y) + EML(y,x). -/
 def traceEML (p : ℝ × ℝ) : ℝ := EMLv p.1 p.2 + EMLv p.2 p.1
 
-/-! ## Section 1: Diagonal Map Properties -/
 
 /-- The diagonal map strictly exceeds identity: d(x) > x for x > 0. -/
-
 theorem diagEML_gt_id (x : ℝ) (hx : 0 < x) : diagEML x > x := by
   unfold diagEML
   have hexp : Real.exp x ≥ 1 + x + x ^ 2 / 2 := quadratic_le_exp_of_nonneg hx.le
   have hlog : Real.log x ≤ x - 1 := Real.log_le_sub_one_of_pos hx
   nlinarith [sq_nonneg x]
 
-/-- The diagonal map has no fixed points on (0, ∞). -/
 
+/-- The diagonal map has no fixed points on (0, ∞). -/
 theorem diagEML_no_fixed_point (x : ℝ) (hx : 0 < x) :
     diagEML x ≠ x := ne_of_gt (diagEML_gt_id x hx)
 
-/-- d(x) ≥ 2 for all x > 0. -/
 
+/-- d(x) ≥ 2 for all x > 0. -/
 theorem diagEML_ge_two (x : ℝ) (hx : 0 < x) : diagEML x ≥ 2 := by
   unfold diagEML
   linarith [Real.add_one_le_exp x, Real.log_le_sub_one_of_pos hx]
 
-/-! ## Section 2: Trace Properties -/
 
 /-- The trace formula. -/
-
 theorem traceEML_eq (x y : ℝ) :
     traceEML (x, y) = Real.exp x + Real.exp y - Real.log x - Real.log y := by
   simp [traceEML, EMLv]; ring
 
-/-- The trace is symmetric. -/
 
+/-- The trace is symmetric. -/
 theorem traceEML_symm (x y : ℝ) : traceEML (x, y) = traceEML (y, x) := by
   simp [traceEML, EMLv]; ring
 
-/-- The trace ≥ 4 for positive arguments. -/
 
+/-- The trace ≥ 4 for positive arguments. -/
 theorem traceEML_ge_four (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
     traceEML (x, y) ≥ 4 := by
   rw [traceEML_eq]
   linarith [Real.add_one_le_exp x, Real.add_one_le_exp y,
             Real.log_le_sub_one_of_pos hx, Real.log_le_sub_one_of_pos hy]
 
-/-! ## Section 3: Lyapunov Analysis -/
 
 /-- The Lyapunov function is always positive. -/
-
 theorem lyapV_pos (p : ℝ × ℝ) : 0 < lyapV p := by
   simp [lyapV]; positivity
 
-/-- For y > 0: exp(EML(x,y)) = exp(exp(x))/y. -/
 
+/-- For y > 0: exp(EML(x,y)) = exp(exp(x))/y. -/
 theorem exp_EML_formula (x y : ℝ) (hy : 0 < y) :
     Real.exp (EMLv x y) = Real.exp (Real.exp x) / y := by
   simp [EMLv, Real.exp_sub, Real.exp_log hy]
 
-/-- Lyapunov growth: V(Φ(x,y)) = exp(exp(x))/y + exp(exp(y))/x for x,y > 0. -/
 
+/-- Lyapunov growth: V(Φ(x,y)) = exp(exp(x))/y + exp(exp(y))/x for x,y > 0. -/
 theorem lyapV_growth (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
     lyapV (Phi (x, y)) = Real.exp (Real.exp x) / y +
                           Real.exp (Real.exp y) / x := by
   simp [lyapV, Phi]
   rw [exp_EML_formula x y hy, exp_EML_formula y x hx]
 
-/-! ## Section 4: Phi Has No Fixed Points -/
-
-/-
-Phi has no fixed points in ℝ²₊.
--/
 
 theorem Phi_no_fixed_point (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
     Phi (x, y) ≠ (x, y) := by
@@ -109,11 +98,6 @@ theorem Phi_no_fixed_point (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
     exact?;
   nlinarith [ h_exp_bound x hx.le, h_exp_bound y hy.le, Real.log_le_sub_one_of_pos hx, Real.log_le_sub_one_of_pos hy ]
 
-/-! ## Section 5: Divergence Results -/
-
-/-
-The max of coordinates grows under the EML map for large enough inputs.
--/
 
 theorem max_coord_growth (x y : ℝ) (hx : 0 < x) (hy : 0 < y)
     (hbig : max x y ≥ 2) :

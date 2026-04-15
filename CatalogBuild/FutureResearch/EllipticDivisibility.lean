@@ -34,4 +34,3 @@ theorem eds_divisibility (E : EDS) {p k : ℕ} (hk : 1 ≤ k)
 theorem fib_dvd_fib_mul (m n : ℕ) : fib m ∣ fib (m * n) := by
   induction n <;> simp_all +decide [ Nat.fib_dvd, Nat.mul_succ ]
 
-end EllipticDivisibility

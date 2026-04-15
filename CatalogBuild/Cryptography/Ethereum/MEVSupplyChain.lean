@@ -20,10 +20,6 @@ structure Builder where
 noncomputable def builderProfit (b : Builder) (totalMEV bid : ℝ) : ℝ :=
   b.efficiency * totalMEV - b.cost - bid
 
-/-
-Builder 2 can outbid builder 1 if more efficient and has lower costs.
-    The hypothesis h_cost_advantage ensures b₂'s net profit margin exceeds b₁'s.
--/
 
 theorem competition_drives_bids (b₁ b₂ : Builder) (totalMEV : ℝ)
     (hMEV : 0 < totalMEV)
@@ -33,8 +29,6 @@ theorem competition_drives_bids (b₁ b₂ : Builder) (totalMEV : ℝ)
     ∃ bid₂ : ℝ, bid₂ > b₁.efficiency * totalMEV - b₁.cost ∧
                0 < builderProfit b₂ totalMEV bid₂ := by
   exact ⟨ ( b₁.efficiency * totalMEV - b₁.cost + b₂.efficiency * totalMEV - b₂.cost ) / 2, by linarith, by linarith [ show builderProfit b₂ totalMEV ( ( b₁.efficiency * totalMEV - b₁.cost + b₂.efficiency * totalMEV - b₂.cost ) / 2 ) = b₂.efficiency * totalMEV - b₂.cost - ( ( b₁.efficiency * totalMEV - b₁.cost + b₂.efficiency * totalMEV - b₂.cost ) / 2 ) by exact rfl ] ⟩
-
-/-! ## Builder Specialization -/
 
 
 structure SpecializedBuilder extends Builder where
@@ -54,17 +48,12 @@ noncomputable def specializedCapture (sb : SpecializedBuilder) (totalMEV : ℝ) 
 noncomputable def generalCapture (sb : SpecializedBuilder) (totalMEV : ℝ) : ℝ :=
   sb.efficiency * totalMEV
 
-/-
-Specialization is weakly beneficial
--/
 
 theorem specialization_beneficial (sb : SpecializedBuilder)
     (totalMEV : ℝ) (hMEV : 0 ≤ totalMEV) :
     generalCapture sb totalMEV ≤ specializedCapture sb totalMEV := by
   unfold generalCapture specializedCapture
   nlinarith [ mul_nonneg hMEV ( show 0 ≤ sb.specialtyFraction by linarith [ sb.hSpecFrac0 ] ), mul_nonneg hMEV ( show 0 ≤ sb.efficiency by linarith [ sb.hEff0 ] ),sb.hSpecEff, sb.hEff0, sb.hEff1 ]
-
-/-! ## MEV-Share -/
 
 
 noncomputable def mevShareUserReturn (totalMEV userShare : ℝ) : ℝ :=
@@ -82,14 +71,10 @@ theorem mev_share_tradeoff (totalMEV s₁ s₂ : ℝ)
     (1 - s₂) * totalMEV ≤ (1 - s₁) * totalMEV := by
   nlinarith
 
-/-! ## Relay Model -/
-
 
 theorem multi_relay_correctness (bid₁ bid₂ : ℝ) :
     max bid₁ bid₂ ≥ bid₁ ∧ max bid₁ bid₂ ≥ bid₂ :=
   ⟨le_max_left _ _, le_max_right _ _⟩
-
-/-! ## Timing Games -/
 
 
 noncomputable def lateMevGain (baseMEV delayMs mevGrowthRate : ℝ) : ℝ :=

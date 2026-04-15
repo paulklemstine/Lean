@@ -13,15 +13,15 @@ noncomputable section
 def vecSqNorm (n : ℕ) (v : Fin n → ℝ) : ℝ :=
   ∑ i, (v i) ^ 2
 
-/-- Spherical normalization: project a nonzero vector to the unit sphere
-    via v ↦ v / ‖v‖. This is the simplest spherical normalization. -/
 
+/-- Spherical normalization: project a nonzero vector to the unit sphere
+via v ↦ v / ‖v‖. This is the simplest spherical normalization. -/
 def sphericalNorm (n : ℕ) (v : Fin n → ℝ) (hv : vecSqNorm n v ≠ 0) : Fin n → ℝ :=
   fun i => v i / Real.sqrt (vecSqNorm n v)
 
-/-- The stereographic spherical normalization: project to Sⁿ⁺¹ via inverse
-    stereographic projection, providing an extra dimension for "confidence". -/
 
+/-- The stereographic spherical normalization: project to Sⁿ⁺¹ via inverse
+stereographic projection, providing an extra dimension for "confidence". -/
 def stereoSphericalNorm (n : ℕ) (v : Fin n → ℝ) : Fin (n + 1) → ℝ := fun i =>
   let D := 1 + vecSqNorm n v
   if h : i.val < n then
@@ -29,7 +29,6 @@ def stereoSphericalNorm (n : ℕ) (v : Fin n → ℝ) : Fin (n + 1) → ℝ := f
   else
     (vecSqNorm n v - 1) / D
 
-/-- The denominator 1 + ‖v‖² is always positive. -/
 
 theorem stereo_spherical_norm_unit (n : ℕ) (v : Fin n → ℝ) :
     ∑ i, (stereoSphericalNorm n v i) ^ 2 = 1 := by
@@ -40,21 +39,12 @@ theorem stereo_spherical_norm_unit (n : ℕ) (v : Fin n → ℝ) :
   norm_num [ ← Finset.mul_sum _ _ _, ← Finset.sum_div ];
   rw [ mul_div, ← add_div, div_eq_iff ] <;> nlinarith! [ show 0 ≤ vecSqNorm n v from Finset.sum_nonneg fun _ _ => sq_nonneg _ ]
 
-/-
-The zero vector maps to the south pole (0,...,0,-1) under
-    stereographic spherical normalization.
--/
 
 theorem stereo_norm_zero_is_south_pole (n : ℕ) (hn : 0 < n) :
     stereoSphericalNorm n (fun _ => 0) ⟨n, Nat.lt_succ_iff.mpr (le_refl n)⟩ = -1 := by
   unfold stereoSphericalNorm;
   unfold vecSqNorm; aesop
 
-/-
-Large vectors map close to the north pole (0,...,0,1) under
-    stereographic spherical normalization. Specifically, the last
-    coordinate approaches 1 as ‖v‖ → ∞.
--/
 
 theorem stereo_norm_last_coord_bound (n : ℕ) (v : Fin n → ℝ) :
     stereoSphericalNorm n v ⟨n, Nat.lt_succ_iff.mpr (le_refl n)⟩ ≤ 1 := by
@@ -62,15 +52,12 @@ theorem stereo_norm_last_coord_bound (n : ℕ) (v : Fin n → ℝ) :
   norm_num [ div_le_iff₀, vecSqNorm ];
   rw [ div_le_iff₀ ] <;> linarith [ show 0 ≤ ∑ i, v i ^ 2 by exact Finset.sum_nonneg fun _ _ => sq_nonneg _ ]
 
-/-! ## The Exponential Map Normalization -/
 
 /-- Exponential map normalization: a smooth normalization that uses the
-    exponential map on the sphere. Given a base point p ∈ Sⁿ and a
-    tangent vector v ∈ TₚSⁿ, this produces a point on the sphere.
-
-    For the south pole base point, this reduces to inverse stereographic
-    projection (up to reparameterization). -/
-
+exponential map on the sphere. Given a base point p ∈ Sⁿ and a
+tangent vector v ∈ TₚSⁿ, this produces a point on the sphere.
+For the south pole base point, this reduces to inverse stereographic
+projection (up to reparameterization). -/
 def expMapNorm (θ : ℝ) (v : Fin 2 → ℝ) : Fin 3 → ℝ := fun i =>
   let norm_v := Real.sqrt ((v 0) ^ 2 + (v 1) ^ 2)
   match i with
@@ -78,9 +65,6 @@ def expMapNorm (θ : ℝ) (v : Fin 2 → ℝ) : Fin 3 → ℝ := fun i =>
   | ⟨1, _⟩ => if norm_v = 0 then 0 else Real.sin (θ * norm_v) * v 1 / norm_v
   | ⟨2, _⟩ => Real.cos (θ * norm_v)
 
-/-
-The exponential map normalization produces unit vectors (in 3D).
--/
 
 theorem expMapNorm_unit (θ : ℝ) (v : Fin 2 → ℝ) :
     (expMapNorm θ v 0) ^ 2 + (expMapNorm θ v 1) ^ 2 + (expMapNorm θ v 2) ^ 2 = 1 := by

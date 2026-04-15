@@ -13,51 +13,47 @@ theorem pathMatrix_det_abs (p : BPath) : |Matrix.det (pathMatrix p)| = 1 := by
   | cons d ds ih =>
     simp only [pathMatrix, Matrix.det_mul, abs_mul, dir_det_abs, ih, one_mul]
 
-/-! ## §3. Parallelizability of Hyperbolic Shortcuts -/
 
 /-- **Parallel Independence:** Subtree computations are independent. -/
-
 theorem parallel_independence (p₁ suffix : BPath) :
     tripleAt (p₁ ++ suffix) = pathMatrix p₁ *ᵥ (tripleAt suffix) := by
   simp [tripleAt, pathMatrix_append, mulVec_mulVec]
 
-/-- **Parallel Composition:** Workers can combine results via matrix multiplication. -/
 
+/-- **Parallel Composition:** Workers can combine results via matrix multiplication. -/
 theorem parallel_composition (p₁ p₂ : BPath) :
     pathMatrix (p₁ ++ p₂) = pathMatrix p₁ * pathMatrix p₂ :=
   pathMatrix_append p₁ p₂
 
-/-- Determinant is multiplicative across parallel path segments. -/
 
+/-- Determinant is multiplicative across parallel path segments. -/
 theorem parallel_det_compose (p₁ p₂ : BPath) :
     Matrix.det (pathMatrix (p₁ ++ p₂)) =
     Matrix.det (pathMatrix p₁) * Matrix.det (pathMatrix p₂) := by
   rw [pathMatrix_append, Matrix.det_mul]
 
-/-- **Branch Disjointness:** B₁ and B₂ produce distinct hypotenuses. -/
 
+/-- **Branch Disjointness:** B₁ and B₂ produce distinct hypotenuses. -/
 theorem branch_disjoint_L_M (a b c : ℤ) (hb : b ≠ 0) :
     2 * a - 2 * b + 3 * c ≠ 2 * a + 2 * b + 3 * c := by omega
 
-/-- B₁ and B₃ produce distinct hypotenuses when a ≠ b. -/
 
+/-- B₁ and B₃ produce distinct hypotenuses when a ≠ b. -/
 theorem branch_disjoint_L_R (a b c : ℤ) (hab : a ≠ b) :
     2 * a - 2 * b + 3 * c ≠ -2 * a + 2 * b + 3 * c := by omega
 
-/-- B₂ and B₃ produce distinct hypotenuses when a ≠ 0. -/
 
+/-- B₂ and B₃ produce distinct hypotenuses when a ≠ 0. -/
 theorem branch_disjoint_M_R (a b c : ℤ) (ha : a ≠ 0) :
     2 * a + 2 * b + 3 * c ≠ -2 * a + 2 * b + 3 * c := by omega
 
-/-- 3^k ≥ 1. -/
 
+/-- 3^k ≥ 1. -/
 theorem paths_at_depth (k : ℕ) : 3 ^ k ≥ 1 :=
   Nat.one_le_pow k 3 (by norm_num)
 
-/-! ## §4. Higher-Dimensional Analogues -/
 
 /-- The (3,1)-Lorentz metric. -/
-
 def η₄ : Matrix (Fin 4) (Fin 4) ℤ :=
   !![1, 0, 0, 0; 0, 1, 0, 0; 0, 0, 1, 0; 0, 0, 0, (-1)]
 
@@ -71,8 +67,8 @@ def Q₄ (a b c d : ℤ) : ℤ := a ^ 2 + b ^ 2 + c ^ 2 - d ^ 2
 theorem quad_null_cone (a b c d : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     Q₄ a b c d = 0 := by simp [Q₄]; linarith
 
-/-- A 4×4 generator extending B₂. -/
 
+/-- A 4×4 generator extending B₂. -/
 def G₄ : Matrix (Fin 4) (Fin 4) ℤ :=
   !![1, 2, 0, 2; 2, 1, 0, 2; 0, 0, 1, 0; 2, 2, 0, 3]
 
@@ -81,8 +77,8 @@ theorem G₄_preserves_η₄ : G₄ᵀ * η₄ * G₄ = η₄ := by native_decid
 
 theorem G₄_det : Matrix.det G₄ = -1 := by native_decide
 
-/-- A second 4×4 generator: boost in the (1,3)-plane. -/
 
+/-- A second 4×4 generator: boost in the (1,3)-plane. -/
 def G₄' : Matrix (Fin 4) (Fin 4) ℤ :=
   !![1, 0, 2, 2; 0, 1, 0, 0; 2, 0, 1, 2; 2, 0, 2, 3]
 
@@ -91,30 +87,28 @@ theorem G₄'_preserves_η₄ : G₄'ᵀ * η₄ * G₄' = η₄ := by native_de
 
 theorem G₄'_det : Matrix.det G₄' = -1 := by native_decide
 
-/-- Spatial rotation R₁₂. -/
 
 theorem R₁₂_preserves_η₄ : R₁₂ᵀ * η₄ * R₁₂ = η₄ := by native_decide
 
 theorem R₁₂_det : Matrix.det R₁₂ = 1 := by native_decide
 
-/-- Spatial rotation R₂₃. -/
 
 theorem R₂₃_preserves_η₄ : R₂₃ᵀ * η₄ * R₂₃ = η₄ := by native_decide
 
 theorem R₂₃_det : Matrix.det R₂₃ = 1 := by native_decide
 
-/-- Composition preserves η₄. -/
 
+/-- Composition preserves η₄. -/
 theorem compose_preserves_η₄ :
     (G₄ * R₁₂)ᵀ * η₄ * (G₄ * R₁₂) = η₄ := by native_decide
 
-/-- **Quadruple Factoring Identity.** -/
 
+/-- **Quadruple Factoring Identity.** -/
 theorem quad_factoring (a b c d : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     (d - c) * (d + c) = a ^ 2 + b ^ 2 := by nlinarith
 
-/-- **Enhanced Factoring:** Quadruples give THREE independent factoring identities. -/
 
+/-- **Enhanced Factoring:** Quadruples give THREE independent factoring identities. -/
 theorem quad_triple_factoring (a b c d : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     (d - c) * (d + c) = a ^ 2 + b ^ 2 ∧
     (d - b) * (d + b) = a ^ 2 + c ^ 2 ∧
@@ -130,8 +124,6 @@ theorem G₄_generates_quadruple :
 
 theorem quad_branching (k : ℕ) : 4 ^ k ≥ 3 ^ k :=
   Nat.pow_le_pow_left (by norm_num : 3 ≤ 4) k
-
-/-! ## §5. Lattice-Based Cryptography Connections -/
 
 
 theorem berggren_lattice_automorphism (d : BDir) :
@@ -163,14 +155,12 @@ theorem perfect_lorentz_basis (p : BPath) :
     (pathMatrix p)ᵀ * Q * (pathMatrix p) = Q :=
   pathMatrix_preserves_Q p
 
-/-- **Descent Terminates.** -/
 
+/-- **Descent Terminates.** -/
 theorem descent_terminates (a b c : ℤ)
     (hpyth : a ^ 2 + b ^ 2 = c ^ 2)
     (ha : 0 < a) (hb : 0 < b) (hc : 5 < c) :
     -2 * a - 2 * b + 3 * c < c := by nlinarith [sq_nonneg a, sq_nonneg b]
-
-/-! ## §6. Quantum-Algorithmic Structure -/
 
 
 theorem quantum_vs_classical (k : ℕ) (hk : 0 < k) :
@@ -195,8 +185,6 @@ theorem quantum_walk_step_preserves (d : BDir) (p : BPath) :
   change (pathMatrix (d :: p))ᵀ * Q * pathMatrix (d :: p) = Q
   exact pathMatrix_preserves_Q (d :: p)
 
-/-! ## §7. Determinant Parity and Structural Theorems -/
-
 
 def countM : BPath → ℕ
   | [] => 0
@@ -204,6 +192,7 @@ def countM : BPath → ℕ
   | _ :: ds => countM ds
 
 
+/-- **Determinant Parity Theorem.** -/
 theorem det_parity (p : BPath) :
     Matrix.det (pathMatrix p) = (-1) ^ (countM p) := by
   induction p with
@@ -214,16 +203,16 @@ theorem det_parity (p : BPath) :
     all_goals simp [dirMatrix, countM, det_B₁, det_B₂, det_B₃]
     ring
 
-/-- LR paths (no M-steps). -/
 
+/-- LR paths (no M-steps). -/
 def isLRPath : BPath → Prop
   | [] => True
   | .L :: ds => isLRPath ds
   | .R :: ds => isLRPath ds
   | .M :: _ => False
 
-/-- **LR-Submonoid Theorem:** LR-paths have determinant +1. -/
 
+/-- **LR-Submonoid Theorem:** LR-paths have determinant +1. -/
 theorem LR_path_det_one (p : BPath) (h : isLRPath p) :
     Matrix.det (pathMatrix p) = 1 := by
   induction p with
@@ -234,9 +223,6 @@ theorem LR_path_det_one (p : BPath) (h : isLRPath p) :
     | R => simp [pathMatrix, dirMatrix, Matrix.det_mul, det_B₃, ih (by exact h)]
     | M => exact absurd h (by simp [isLRPath])
 
-/-
-**Shortcut Injectivity.**
--/
 
 theorem shortcut_injective (p : BPath) :
     Function.Injective (fun v => pathMatrix p *ᵥ v) := by
@@ -249,6 +235,3 @@ theorem shortcut_injective (p : BPath) :
   · exact fun v w h => by simpa [ h_det ] using congr_arg ( fun v => ( pathMatrix p ) ⁻¹.mulVec v ) h;
   · exact fun v w h => by simpa [ h_det ] using congr_arg ( fun v => ( pathMatrix p ) ⁻¹.mulVec v ) h;
 
-/-
-Every direction preserves the Pythagorean property.
--/

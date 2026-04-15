@@ -20,20 +20,20 @@ theorem generalized_lens_advantage (S β : ℕ) (k : ℕ)
     _ = β := pow_one β
     _ > 1 := hβ
 
-/-- Lens monotonicity: adding more lenses never increases the surviving space. -/
 
+/-- Lens monotonicity: adding more lenses never increases the surviving space. -/
 theorem lens_monotonicity (S : ℕ) (k₁ k₂ : ℕ) (hle : k₁ ≤ k₂) :
     S / 2 ^ k₂ ≤ S / 2 ^ k₁ :=
   Nat.div_le_div_left (Nat.pow_le_pow_right (by norm_num) hle) (by positivity)
 
-/-- Lens composition commutes: reducing by 2^a then 2^b = 2^(a+b). -/
 
+/-- Lens composition commutes: reducing by 2^a then 2^b = 2^(a+b). -/
 theorem lens_composition_commutes (S a b : ℕ) :
     S / 2 ^ (a + b) = S / (2 ^ a * 2 ^ b) := by
   rw [pow_add]
 
-/-- For coprime moduli, CRT gives exact multiplicative reduction. -/
 
+/-- For coprime moduli, CRT gives exact multiplicative reduction. -/
 theorem crt_exact_reduction (m n : ℕ) (hcop : Nat.Coprime m n) :
     Nat.totient (m * n) = Nat.totient m * Nat.totient n :=
   Nat.totient_mul hcop
@@ -66,8 +66,8 @@ theorem pisano_period_divides_p_sq_sub_one (p : ℕ) (hp : Nat.Prime p) (hp5 : p
     rw [pp_sub_one_eq p hp1]
     exact dvd_trans hsplit (Nat.fib_dvd _ _ (dvd_mul_right (p - 1) (p + 1)))
 
-/-- Pisano periodicity composes: if T₁ is a period mod m, then T₁·j is too for any j. -/
 
+/-- Pisano periodicity composes: if T₁ is a period mod m, then T₁·j is too for any j. -/
 theorem pisano_period_composes (m : ℕ) (hm : 2 ≤ m)
     (T₁ : ℕ) (hT₁ : 0 < T₁)
     (h₁ : ∀ k, Nat.fib (k + T₁) % m = Nat.fib k % m)
@@ -79,9 +79,6 @@ theorem pisano_period_composes (m : ℕ) (hm : 2 ≤ m)
     rw [Nat.mul_succ, ← Nat.add_assoc, h₁]
     exact ih
 
-/-
-The Fibonacci sequence mod m is determined by consecutive pairs.
--/
 
 theorem fib_determined_by_consecutive_pair (m : ℕ) (hm : 2 ≤ m)
     (a b : ℕ)
@@ -93,8 +90,8 @@ theorem fib_determined_by_consecutive_pair (m : ℕ) (hm : 2 ≤ m)
   rcases k with ( _ | _ | k ) <;> simp_all +arith +decide [ Nat.fib_add_two ];
   exact Nat.ModEq.add ( ih _ <| Nat.le_succ _ ) ( ih _ <| Nat.le_refl _ )
 
-/-- F(n) mod m depends only on n mod T where T is the Pisano period. -/
 
+/-- F(n) mod m depends only on n mod T where T is the Pisano period. -/
 theorem fib_mod_periodic_reduction (m T n : ℕ) (hm : 2 ≤ m) (hT : 0 < T)
     (hper : ∀ k, Nat.fib (k + T) % m = Nat.fib k % m) :
     Nat.fib n % m = Nat.fib (n % T) % m := by
@@ -108,8 +105,8 @@ theorem norm_channel_dim4_subsumes_dim2 (a b : ℤ) (h : ∃ x y : ℤ, x^2 + y^
     ∃ w x y z : ℤ, w^2 + x^2 + y^2 + z^2 = a^2 + b^2 :=
   ⟨a, b, 0, 0, by ring⟩
 
-/-- Non-commutativity of quaternion multiplication: both orderings have the same norm. -/
 
+/-- Non-commutativity of quaternion multiplication: both orderings have the same norm. -/
 theorem quaternion_two_factorizations (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℤ) :
     (a₁*b₁ - a₂*b₂ - a₃*b₃ - a₄*b₄)^2 +
     (a₁*b₂ + a₂*b₁ + a₃*b₄ - a₄*b₃)^2 +
@@ -120,16 +117,16 @@ theorem quaternion_two_factorizations (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ :
     (b₁*a₃ - b₂*a₄ + b₃*a₁ + b₄*a₂)^2 +
     (b₁*a₄ + b₂*a₃ - b₃*a₂ + b₄*a₁)^2 := by ring
 
-/-- The naive pointwise 16-square identity fails (consequence of Hurwitz 1898). -/
 
+/-- The naive pointwise 16-square identity fails (consequence of Hurwitz 1898). -/
 theorem no_16_square_naive_identity :
     ¬ ∀ (a b : Fin 16 → ℤ),
       (∑ i, a i ^ 2) * (∑ i, b i ^ 2) = ∑ i, (a i * b i) ^ 2 := by
   push_neg
   exact ⟨fun _ => 1, fun _ => 1, by decide⟩
 
-/-- Dim-8 subsumes dim-4: any 4-square representation lifts to 8-square. -/
 
+/-- Dim-8 subsumes dim-4: any 4-square representation lifts to 8-square. -/
 theorem norm_channel_dim8_subsumes_dim4 (a b c d : ℤ)
     (h : ∃ w x y z : ℤ, w^2 + x^2 + y^2 + z^2 = a^2 + b^2 + c^2 + d^2) :
     ∃ e₁ e₂ e₃ e₄ e₅ e₆ e₇ e₈ : ℤ,
@@ -143,8 +140,8 @@ theorem order_finding_factor_candidate (N a r : ℕ) (hN : 1 < N) :
     1 ≤ Nat.gcd (a ^ (r / 2) - 1) N :=
   Nat.one_le_iff_ne_zero.mpr (by intro h; simp [Nat.gcd_eq_zero_iff] at h; omega)
 
-/-- Grover's bound: (⌊√N⌋ + 1)² > N. -/
 
+/-- Classical-quantum hybrid: classical lenses reduce the quantum search space. -/
 theorem hybrid_speedup (S k : ℕ) :
     Nat.sqrt (S / 2 ^ k) ≤ Nat.sqrt S :=
   Nat.sqrt_le_sqrt (Nat.div_le_self S (2 ^ k))
@@ -155,29 +152,26 @@ theorem dlp_order_connection {G : Type*} [Group G] [Fintype G] (g : G) :
     g ^ Fintype.card G = 1 :=
   pow_card_eq_one
 
-/-
-Pohlig-Hellman structure: for distinct primes p, q, φ(pq) = (p-1)(q-1).
--/
 
 theorem pohlig_hellman_structure (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q) (hpq : p ≠ q) :
     Nat.totient (p * q) = (p - 1) * (q - 1) := by
   rw [ Nat.totient_mul, Nat.totient_prime hp, Nat.totient_prime hq ];
   simpa [ hpq ] using Nat.coprime_primes hp hq
 
-/-- Miller-Rabin bound: n/4 < n for n ≥ 4. -/
 
+/-- Miller-Rabin bound: n/4 < n for n ≥ 4. -/
 theorem miller_rabin_bound (n : ℕ) (hn : 4 ≤ n) :
     n / 4 < n := by omega
 
-/-- Primality certificate bound: log₂(p) < p for p ≥ 2. -/
 
+/-- Primality certificate bound: log₂(p) < p for p ≥ 2. -/
 theorem primality_certificate_bound (p : ℕ) (hp : 2 ≤ p) :
     Nat.log 2 p < p := by
   apply Nat.log_lt_of_lt_pow (by omega)
   exact @Nat.lt_pow_self p 2 (by omega)
 
-/-- Norm multiplicativity in ℤ[√d] — structural basis for NFS. -/
 
+/-- Norm multiplicativity in ℤ[√d] — structural basis for NFS. -/
 theorem zsqrtd_norm_mult (d : ℤ) (a b : ℤ√d) :
     (a * b).norm = a.norm * b.norm :=
   Zsqrtd.norm_mul a b
@@ -195,15 +189,15 @@ theorem norm_congruence_bridge (p : ℕ) (hp : Nat.Prime p) (hmod : p % 4 = 3)
   by_cases hb : ( b : ZMod p ) = 0 <;> simp_all +decide [ add_eq_zero_iff_eq_neg ];
   exact h_neg_one_nonresidue ( a / b ) ( by simp_all +decide [ ← ZMod.intCast_eq_intCast_iff, mul_pow, mul_assoc, div_pow, mul_div_cancel₀ ] )
 
-/-- Lattice-hyperbolic bridge: min(p,q) ≤ √(pq) for any factorization. -/
 
+/-- Lattice-hyperbolic bridge: min(p,q) ≤ √(pq) for any factorization. -/
 theorem lattice_hyperbolic_bridge (p q : ℕ) (hp : 0 < p) (hle : p ≤ q) :
     p ≤ Nat.sqrt (p * q) := by
   rw [Nat.le_sqrt]
   nlinarith
 
-/-- Fibonacci + hyperbolic synergy: d < fib(k+2) implies d < 2^k. -/
 
+/-- Fibonacci + hyperbolic synergy: d < fib(k+2) implies d < 2^k. -/
 theorem fib_hyperbolic_synergy (d k : ℕ)
     (hd_bound : d < Nat.fib (k + 2)) (hk : 2 ≤ k) :
     d < 2 ^ k :=

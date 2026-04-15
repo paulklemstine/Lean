@@ -18,7 +18,3 @@ def spbModIter (g : ZMod p) : ℕ → ZMod p
 theorem spbModIter_one (g : ZMod p) : spbModIter g 1 = g := by
   simp [spbModIter, spbMod]
 
-end SPBFinite
-
-section Verification
-

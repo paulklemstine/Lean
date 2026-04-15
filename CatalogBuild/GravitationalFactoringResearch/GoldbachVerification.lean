@@ -14,24 +14,24 @@ theorem goldbach_verified_to_100 :
         Nat.Prime p ∧ Nat.Prime q ∧ n = p + q := by
   native_decide
 
-/-- Goldbach's conjecture verified for all even n with 4 ≤ n ≤ 500. -/
 
+/-- Goldbach's conjecture verified for all even n with 4 ≤ n ≤ 500. -/
 theorem goldbach_verified_to_500 :
     ∀ n ∈ (Finset.Icc 4 500).filter (fun n => Even n),
       ∃ p ∈ Finset.range (n + 1), ∃ q ∈ Finset.range (n + 1),
         Nat.Prime p ∧ Nat.Prime q ∧ n = p + q := by
   native_decide
 
-/-- Goldbach's conjecture verified for all even n with 4 ≤ n ≤ 1000. -/
 
+/-- Goldbach's conjecture verified for all even n with 4 ≤ n ≤ 1000. -/
 theorem goldbach_verified_to_1000 :
     ∀ n ∈ (Finset.Icc 4 1000).filter (fun n => Even n),
       ∃ p ∈ Finset.range (n + 1), ∃ q ∈ Finset.range (n + 1),
         Nat.Prime p ∧ Nat.Prime q ∧ n = p + q := by
   native_decide
 
-/-- Explicit Goldbach witnesses for notable numbers. -/
 
+/-- Explicit Goldbach witnesses for notable numbers. -/
 theorem goldbach_explicit_witnesses :
     (4 = 2 + 2 ∧ Nat.Prime 2) ∧
     (6 = 3 + 3 ∧ Nat.Prime 3) ∧
@@ -39,10 +39,8 @@ theorem goldbach_explicit_witnesses :
     (1000 = 3 + 997 ∧ Nat.Prime 3 ∧ Nat.Prime 997) := by
   refine ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_, ?_⟩, ⟨?_, ?_, ?_⟩⟩ <;> first | norm_num | decide
 
-/-! ### Weak (ternary) Goldbach verification -/
 
 /-- Weak Goldbach: every odd n ≥ 7 is sum of three primes, verified to 100. -/
-
 theorem weak_goldbach_verified_to_100 :
     ∀ n ∈ (Finset.Icc 7 100).filter (fun n => ¬ Even n),
       ∃ p ∈ Finset.range (n + 1), ∃ q ∈ Finset.range (n + 1),
@@ -50,8 +48,8 @@ theorem weak_goldbach_verified_to_100 :
           Nat.Prime p ∧ Nat.Prime q ∧ Nat.Prime r ∧ n = p + q + r := by
   native_decide
 
-/-- Weak Goldbach verified to 500. -/
 
+/-- Weak Goldbach verified to 500. -/
 theorem weak_goldbach_verified_to_500 :
     ∀ n ∈ (Finset.Icc 7 500).filter (fun n => ¬ Even n),
       ∃ p ∈ Finset.range (n + 1), ∃ q ∈ Finset.range (n + 1),
@@ -59,22 +57,20 @@ theorem weak_goldbach_verified_to_500 :
           Nat.Prime p ∧ Nat.Prime q ∧ Nat.Prime r ∧ n = p + q + r := by
   native_decide
 
-/-! ### Twin primes -/
 
 /-- Count of twin prime pairs (p, p+2) with both prime, p ≤ 98. -/
-
 theorem twin_prime_count_100 :
     ((Finset.range 99).filter (fun p => Nat.Prime p ∧ Nat.Prime (p + 2))).card = 8 := by
   native_decide
 
-/-- Count of twin prime pairs up to 1000. -/
 
+/-- Count of twin prime pairs up to 1000. -/
 theorem twin_prime_count_1000 :
     ((Finset.range 999).filter (fun p => Nat.Prime p ∧ Nat.Prime (p + 2))).card = 35 := by
   native_decide
 
-/-- The 8 twin prime pairs up to 100. -/
 
+/-- The 8 twin prime pairs up to 100. -/
 theorem twin_primes_list :
     (Nat.Prime 3 ∧ Nat.Prime 5) ∧
     (Nat.Prime 5 ∧ Nat.Prime 7) ∧
@@ -86,32 +82,26 @@ theorem twin_primes_list :
     (Nat.Prime 71 ∧ Nat.Prime 73) := by
   refine ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩⟩ <;> decide
 
-/-! ### Cousin primes (p, p+4) -/
 
 /-- Count of cousin prime pairs up to 100. -/
-
 theorem cousin_prime_count_100 :
     ((Finset.range 97).filter (fun p => Nat.Prime p ∧ Nat.Prime (p + 4))).card = 8 := by
   native_decide
 
-/-! ### Sexy primes (p, p+6) -/
 
 /-- Count of sexy prime pairs up to 100. -/
-
 theorem sexy_prime_count_100 :
     ((Finset.range 95).filter (fun p => Nat.Prime p ∧ Nat.Prime (p + 6))).card = 15 := by
   native_decide
 
-/-! ### Sophie Germain primes -/
 
 /-- Sophie Germain primes: p is a Sophie Germain prime if both p and 2p+1 are prime. -/
-
 theorem sophie_germain_count_100 :
     ((Finset.range 100).filter (fun p => Nat.Prime p ∧ Nat.Prime (2 * p + 1))).card = 10 := by
   native_decide
 
-/-- Some Sophie Germain primes. -/
 
+/-- Some Sophie Germain primes. -/
 theorem sophie_germain_examples :
     (Nat.Prime 2 ∧ Nat.Prime 5) ∧
     (Nat.Prime 3 ∧ Nat.Prime 7) ∧

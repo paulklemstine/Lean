@@ -11,12 +11,11 @@ import Mathlib
 def octonionNorm (a₁ a₂ a₃ a₄ a₅ a₆ a₇ a₈ : ℤ) : ℤ :=
   a₁^2 + a₂^2 + a₃^2 + a₄^2 + a₅^2 + a₆^2 + a₇^2 + a₈^2
 
-/-! ## §2. Degen's Eight-Square Identity -/
 
-/-- Degen's eight-square identity (1818): the product of two sums of eight squares
-is a sum of eight squares. This is the octonion multiplication norm identity
-for the product a·b. -/
-
+/-- The reverse product b·a gives a DIFFERENT valid eight-square decomposition.
+Since octonion multiplication is non-commutative, a·b ≠ b·a in general,
+but both have the same norm. This is the source of the "octonionic advantage":
+the same integer product gets two independent decompositions. -/
 theorem degen_eight_square_reverse
     (a₁ a₂ a₃ a₄ a₅ a₆ a₇ a₈ b₁ b₂ b₃ b₄ b₅ b₆ b₇ b₈ : ℤ) :
     octonionNorm a₁ a₂ a₃ a₄ a₅ a₆ a₇ a₈ *
@@ -34,8 +33,8 @@ theorem degen_eight_square_reverse
   have h := degen_eight_square_identity b₁ b₂ b₃ b₄ b₅ b₆ b₇ b₈ a₁ a₂ a₃ a₄ a₅ a₆ a₇ a₈
   rw [mul_comm] at h; exact h
 
-/-- The octonion norm is multiplicative. -/
 
+/-- The octonion norm is multiplicative. -/
 theorem octonion_norm_multiplicative
     (a₁ a₂ a₃ a₄ a₅ a₆ a₇ a₈ b₁ b₂ b₃ b₄ b₅ b₆ b₇ b₈ : ℤ) :
     ∃ c₁ c₂ c₃ c₄ c₅ c₆ c₇ c₈ : ℤ,
@@ -44,11 +43,9 @@ theorem octonion_norm_multiplicative
       octonionNorm c₁ c₂ c₃ c₄ c₅ c₆ c₇ c₈ := by
   exact ⟨_, _, _, _, _, _, _, _, degen_eight_square_identity ..⟩
 
-/-! ## §3. Factoring via Octonionic Decomposition -/
 
 /-- If p has an 8-square representation and q has an 8-square representation,
-    then p*q has an 8-square representation. -/
-
+then p*q has an 8-square representation. -/
 theorem eight_square_product_closure (p q : ℤ)
     (hp : ∃ a₁ a₂ a₃ a₄ a₅ a₆ a₇ a₈ : ℤ,
       octonionNorm a₁ a₂ a₃ a₄ a₅ a₆ a₇ a₈ = p)
@@ -60,17 +57,15 @@ theorem eight_square_product_closure (p q : ℤ)
   obtain ⟨b₁, b₂, b₃, b₄, b₅, b₆, b₇, b₈, rfl⟩ := hq
   exact ⟨_, _, _, _, _, _, _, _, (degen_eight_square_identity ..).symm⟩
 
-/-! ## §4. The 36-Channel Structure -/
 
 /-- An 8-tuple Pythagorean structure. -/
-
 structure Octo where
   x : Fin 8 → ℤ
   d : ℤ
   eq : (∑ i, (x i)^2) = d^2
 
-/-- Each of the 8 peel channels gives a GCD candidate. -/
 
+/-- Each of the 8 peel channels gives a GCD candidate. -/
 theorem octo_peel_channel (t : Octo) (j : Fin 8) :
     (t.d - t.x j) * (t.d + t.x j) = ∑ i ∈ Finset.univ.erase j, (t.x i)^2 := by
   have h := t.eq
@@ -78,22 +73,20 @@ theorem octo_peel_channel (t : Octo) (j : Fin 8) :
     rw [← Finset.add_sum_erase _ _ (Finset.mem_univ j)]
   rw [this] at h; nlinarith
 
-/-- GCD from peel channel divides N. -/
 
+/-- GCD from peel channel divides N. -/
 theorem octo_gcd_divides (t : Octo) (j : Fin 8) (N : ℤ) :
     ↑(Int.gcd (t.d - t.x j) N) ∣ N :=
   Int.gcd_dvd_right _ _
 
-/-- 36 = 8 + C(8,2) factoring channels for octonionic tuples. -/
 
+/-- 36 = 8 + C(8,2) factoring channels for octonionic tuples. -/
 theorem thirty_six_channels : 8 + Nat.choose 8 2 = 36 := by decide
 
-/-! ## §5. The Dual Decomposition Theorem -/
 
 /-- Non-commutativity of octonions means a·b and b·a give DIFFERENT
-    eight-square decompositions of the same product Norm(a)·Norm(b).
-    Each decomposition provides an independent set of 36 factoring channels. -/
-
+eight-square decompositions of the same product Norm(a)·Norm(b).
+Each decomposition provides an independent set of 36 factoring channels. -/
 theorem dual_octonionic_decomposition
     (a₁ a₂ a₃ a₄ a₅ a₆ a₇ a₈ b₁ b₂ b₃ b₄ b₅ b₆ b₇ b₈ : ℤ) :
     ∃ c₁ c₂ c₃ c₄ c₅ c₆ c₇ c₈ d₁ d₂ d₃ d₄ d₅ d₆ d₇ d₈ : ℤ,

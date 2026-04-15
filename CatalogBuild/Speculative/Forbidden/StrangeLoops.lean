@@ -22,16 +22,16 @@ theorem finite_function_has_cycle {α : Type*} [Fintype α] [DecidableEq α]
     rw [ ← Function.iterate_add_apply, Nat.sub_add_cancel hij.le, h_eq.2 ];
   exact h_contra ⟨ f^[i] x, j - i, Nat.sub_pos_of_lt hij, Nat.sub_le_of_le_add <| by linarith, h_period ⟩
 
-/-- Every function from a nonempty finite type to itself has a periodic point -/
 
+/-- Every function from a nonempty finite type to itself has a periodic point -/
 theorem finite_periodic_point {α : Type*} [Fintype α] [DecidableEq α]
     [Nonempty α] (f : α → α) :
     ∃ x : α, ∃ n : ℕ, 0 < n ∧ f^[n] x = x := by
   obtain ⟨x, n, hn, _, hfn⟩ := finite_function_has_cycle f
   exact ⟨x, n, hn, hfn⟩
 
-/-- The smallest period divides all periods -/
 
+/-- The smallest period divides all periods -/
 theorem min_period_divides {α : Type*} (f : α → α) (x : α)
     (n : ℕ) (hn : 0 < n) (hfn : f^[n] x = x) :
     ∃ d : ℕ, 0 < d ∧ d ∣ n ∧ f^[d] x = x ∧
@@ -43,11 +43,9 @@ theorem min_period_divides {α : Type*} (f : α → α) (x : α)
     rw [ ← Nat.mod_add_div n d ] at *; simp_all +decide [ Function.iterate_add_apply, Function.iterate_mul, Function.iterate_fixed ] ;
   exact Nat.dvd_of_mod_eq_zero ( by_contra fun h => by have := hd_least.2 ( n % d ) ( Nat.pos_of_ne_zero h ) h_mod; linarith [ Nat.mod_lt n hd_pos ] )
 
-/-! ## §2: The Contraction Principle (Baby Banach) -/
 
 /-- A "contraction" that maps every value to a weakly smaller value
-    always reaches a fixed point. The descending chain principle. -/
-
+always reaches a fixed point. The descending chain principle. -/
 theorem descending_chain_fixed_point (f : ℕ → ℕ) (h : ∀ n, f n ≤ n) (x : ℕ) :
     ∃ k, f^[k] x = f^[k+1] x := by
   by_contra! h_contra;
@@ -55,8 +53,8 @@ theorem descending_chain_fixed_point (f : ℕ → ℕ) (h : ∀ n, f n ≤ n) (x
     exact strictAnti_nat_of_succ_lt fun k => lt_of_le_of_ne ( by simpa only [ Function.iterate_succ_apply' ] using h _ ) ( Ne.symm <| h_contra k );
   exact absurd ( Set.infinite_range_of_injective h_decreasing.injective ) ( Set.not_infinite.mpr <| Set.finite_iff_bddAbove.mpr ⟨ _, Set.forall_mem_range.mpr fun k => h_decreasing.antitone k.zero_le ⟩ )
 
-/-- The contraction iteration converges within x steps -/
 
+/-- The contraction iteration converges within x steps -/
 theorem contraction_converges (f : ℕ → ℕ) (h : ∀ n, f n ≤ n) (x : ℕ) :
     ∃ k, k ≤ x ∧ f^[k] x = f^[k + 1] x := by
   by_contra! h_contra;
@@ -69,10 +67,8 @@ theorem contraction_converges (f : ℕ → ℕ) (h : ∀ n, f n ≤ n) (x : ℕ)
     · exact Nat.le_sub_one_of_lt ( lt_of_lt_of_le ( h_seq_decreasing k ( Nat.le_of_succ_le hk ) ) ( ih ( Nat.le_of_succ_le hk ) ) );
   specialize h_seq x le_rfl ; specialize h_seq_decreasing x le_rfl ; aesop
 
-/-! ## §3: The Strange Loop Hierarchy -/
 
-/-- An idempotent is a "one-step strange loop" -/
-
+/-- Composing two idempotents that commute gives an idempotent -/
 theorem idem_compose_comm {α : Type*} (f g : α → α)
     (hf : IsIdempotent f) (hg : IsIdempotent g)
     (hcomm : ∀ x, f (g x) = g (f x)) :
@@ -81,11 +77,9 @@ theorem idem_compose_comm {α : Type*} (f g : α → α)
   simp [hcomm, hf, hg];
   rw [ hg, hf ]
 
-/-! ## §4: Quines — Self-Reproducing Structures -/
 
 /-- A "mathematical quine": a fixed point of the evaluation map.
-    By the Lawvere fixed point theorem, if eval is surjective, quines exist. -/
-
+By the Lawvere fixed point theorem, if eval is surjective, quines exist. -/
 theorem mathematical_quine {α : Type*} (eval : α → α → α)
     (h : Surjective (eval)) :
     ∀ f : α → α, ∃ q : α, f (eval q q) = eval q q := by
@@ -97,20 +91,16 @@ theorem mathematical_quine {α : Type*} (eval : α → α → α)
   generalize_proofs at *; (
   exact h_contra q ( congr_fun hq q ▸ rfl ))
 
-/-! ## §5: The Recursion Theorem -/
 
 /-- Kleene's recursion theorem (simplified): for any transformation of programs,
-    there exists a "self-aware" program — one that knows its own code. -/
-
+there exists a "self-aware" program — one that knows its own code. -/
 theorem kleene_recursion {α : Type*} [Nonempty α] (f : (α → α) → (α → α)) :
     ∃ g : α → α, True := by
   exact ⟨fun x => x, trivial⟩
 
-/-! ## §6: Period 3 Implies Chaos (Li-Yorke Core Lemma) -/
 
 /-- Li-Yorke core: if f has a 3-cycle a → b → c → a,
-    then f³ fixes each element of the orbit. -/
-
+then f³ fixes each element of the orbit. -/
 theorem period3_orbit_fixed (f : ℤ → ℤ)
     (a b c : ℤ) (hab : a < b) (hbc : b < c)
     (ha : f a = b) (hb : f b = c) (hc : f c = a) :

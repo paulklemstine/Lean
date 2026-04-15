@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Logic
-Declarations: 8
+Declarations: 9
 -/
 
 import Mathlib
@@ -31,6 +31,7 @@ theorem countable_inter_measurable' {X : Type*} [MeasurableSpace X]
 -- Cantor space
 
 theorem cantor_compact' : CompactSpace (ℕ → Bool) := inferInstance
+
 theorem cantor_totally_disconnected' :
     TotallyDisconnectedSpace (ℕ → Bool) := inferInstance
 

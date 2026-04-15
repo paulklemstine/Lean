@@ -12,60 +12,40 @@ noncomputable section
 /-- An endomorphism is idempotent if applying it twice equals applying it once. -/
 def Idempotent (f : α → α) : Prop := ∀ x, f (f x) = f x
 
-/-
-PROBLEM
-The image of an idempotent equals its fixed-point set.
 
-PROVIDED SOLUTION
-ext x. For ⊇: if f x = x then x = f x ∈ range f. For ⊆: if x = f a ∈ range f, then f x = f(f a) = f a = x by hf.
--/
-
+/-- Every point in the image of an idempotent is a fixed point. -/
 theorem idempotent_fixes_image (f : α → α) (hf : Idempotent f) (y : α)
     (hy : y ∈ range f) : f y = y := by
   obtain ⟨a, rfl⟩ := hy; exact hf a
 
-/-
-PROBLEM
-An idempotent iterated n ≥ 1 times equals itself.
-
-PROVIDED SOLUTION
-Induction on n. Base case n=0 contradicts hn. For n+1: if n=0, f^[1]=f trivially. If n≥1, f^[n+1] x = f(f^[n] x) = f(f x) by IH = f x by hf. Use Function.iterate_succ'.
--/
 
 theorem idempotent_iterate_eq (f : α → α) (hf : Idempotent f) (n : ℕ) (hn : 1 ≤ n) :
     f^[n] = f := by
       induction hn <;> aesop
 
-/-
-PROBLEM
-Composition of two commuting idempotents is idempotent.
-
-PROVIDED SOLUTION
-(f∘g)(f∘g)(x) = f(g(f(g(x)))) = f(f(g(g(x)))) by hcomm = f(g(g(x))) by hf = f(g(x)) by hg. So (f∘g)∘(f∘g) = f∘g.
--/
 
 theorem idempotent_comp_comm (f g : α → α) (hf : Idempotent f) (hg : Idempotent g)
     (hcomm : ∀ x, f (g x) = g (f x)) :
     Idempotent (f ∘ g) := by
       unfold Idempotent at *; aesop;
 
-/-- The identity is idempotent. -/
 
+/-- The identity is idempotent. -/
 theorem idempotent_id : Idempotent (id : α → α) := fun _ => rfl
 
-/-- A constant function is idempotent. -/
 
+/-- A constant function is idempotent. -/
 theorem idempotent_const (c : α) : Idempotent (fun _ => c) := fun _ => rfl
 
-/-- A retraction onto S is idempotent. -/
 
+/-- A retraction onto S is idempotent. -/
 theorem retraction_is_idempotent (f : α → α) (S : Set α)
     (h_into : ∀ x, f x ∈ S) (h_fixes : ∀ x ∈ S, f x = x) :
     Idempotent f :=
   fun x => h_fixes (f x) (h_into x)
 
-/-- For any nonempty subset S, there exists a retraction onto S. -/
 
+/-- For any nonempty subset S, there exists a retraction onto S. -/
 theorem retraction_exists (S : Set α) (hS : S.Nonempty) :
     ∃ f : α → α, (∀ x, f x ∈ S) ∧ (∀ x ∈ S, f x = x) := by
   have : ∀ x : α, ∃ y ∈ S, (x ∈ S → y = x) := by
@@ -76,9 +56,9 @@ theorem retraction_exists (S : Set α) (hS : S.Nonempty) :
   choose g hg_mem hg_fix using this
   exact ⟨g, hg_mem, fun x hx => hg_fix x hx⟩
 
-/-- **Universal Collapse Theorem**: For ANY nonempty S ⊆ α, there exists an
-    idempotent f with range f = S. -/
 
+/-- **Universal Collapse Theorem**: For ANY nonempty S ⊆ α, there exists an
+idempotent f with range f = S. -/
 theorem universal_collapse_exists (S : Set α) (hS : S.Nonempty) :
     ∃ f : α → α, Idempotent f ∧ range f = S := by
   obtain ⟨f, h_into, h_fixes⟩ := retraction_exists S hS
@@ -87,8 +67,8 @@ theorem universal_collapse_exists (S : Set α) (hS : S.Nonempty) :
   · rintro ⟨a, rfl⟩; exact h_into a
   · intro hx; exact ⟨x, h_fixes x hx⟩
 
-/-- **The Full Universal Collapse Theorem** with hierarchy flatness. -/
 
+/-- **The Full Universal Collapse Theorem** with hierarchy flatness. -/
 theorem universal_forced_collapse (S : Set α) (hS : S.Nonempty) :
     ∃ f : α → α,
       Idempotent f ∧
@@ -100,51 +80,44 @@ theorem universal_forced_collapse (S : Set α) (hS : S.Nonempty) :
   intro x hx
   exact idempotent_fixes_image f hf_idem x (hf_range ▸ hx)
 
-/-- Collapse is injective on its image. -/
 
+/-- Collapse is injective on its image. -/
 theorem collapse_inj_on_image (f : α → α) (hf : Idempotent f) : InjOn f (range f) := by
   intro a ha b hb hab
   rwa [idempotent_fixes_image f hf a ha, idempotent_fixes_image f hf b hb] at hab
 
-/-- Total collapse to a single point. -/
 
+/-- Total collapse to a single point. -/
 theorem total_collapse_exists [Nonempty α] :
     ∃ f : α → α, Idempotent f ∧ ∃ c : α, ∀ x, f x = c := by
   obtain ⟨c⟩ : Nonempty α := inferInstance
   exact ⟨fun _ => c, idempotent_const c, c, fun _ => rfl⟩
 
-/-- The identity is the unique surjective idempotent. -/
 
+/-- The identity is the unique surjective idempotent. -/
 theorem identity_unique_total_preserving (f : α → α)
     (hf : Idempotent f) (h_surj : Surjective f) :
     f = id := by
   ext x; exact idempotent_fixes_image f hf x (h_surj x)
 
-/-- At a fixed point, iteration is trivial. -/
 
+/-- At a fixed point, iteration is trivial. -/
 theorem fixed_point_iterate' (f : α → α) (x : α) (hx : f x = x) (n : ℕ) :
     f^[n] x = x := by
   induction n with
   | zero => simp
   | succ n ih => simp [Function.iterate_succ, ih, hx]
 
-/-- Tropical: max is idempotent as a self-operation. -/
 
+/-- Tropical: max is idempotent as a self-operation. -/
 theorem tropical_self_max_idempotent (a : ℝ) : max a a = a := max_self a
 
-/-- An oracle is an idempotent endomorphism. -/
 
+/-- Complex norm of a real equals real absolute value. -/
 theorem complex_norm_real_idempotent (r : ℝ) :
     ‖(r : ℂ)‖ = |r| :=
   Complex.norm_real r
 
-/-
-PROBLEM
-**Collapse Spectrum**: Any intermediate cardinality is achievable on Fin n.
-
-PROVIDED SOLUTION
-Define f(i) = if i < m then i else ⟨0, by omega⟩. Then f is idempotent (f(f(i)) = f(i) since f(i) < m) and image = {0,...,m-1} which has cardinality m. Use Fin.val for the condition. The key is constructing f : Fin n → Fin n using fun i => if i.val < m then i else ⟨0, by omega⟩ and showing the image has size m by showing it equals Finset.image Fin.val on {0,..,m-1}.
--/
 
 theorem collapse_spectrum {n m : ℕ} (hm : 0 < m) (hmn : m ≤ n) :
     ∃ f : Fin n → Fin n, Idempotent f ∧

@@ -17,28 +17,25 @@ noncomputable def mobiusFn : ℕ → ℤ := fun n =>
   else if Even (n.primeFactorsList.length) then 1
   else -1
 
-/-- μ(1) = 1. -/
 
+/-- μ(1) = 1. -/
 theorem mobius_one : mobiusFn 1 = 1 := by
   simp [mobiusFn]
 
-/-- μ(p) = -1 for prime p. -/
 
+/-- μ(p) = -1 for prime p. -/
 theorem mobius_prime' (p : ℕ) (hp : Nat.Prime p) : mobiusFn p = -1 := by
   simp [mobiusFn, hp.ne_one, hp.ne_zero, hp.squarefree, Nat.primeFactorsList_prime hp]
 
-/-- Dirichlet convolution of arithmetic functions. -/
 
+/-- Dirichlet convolution of arithmetic functions. -/
 noncomputable def dirichletConv (f g : ℕ → ℤ) (n : ℕ) : ℤ :=
   ∑ d ∈ n.divisors, f d * g (n / d)
 
-/-- The identity function for Dirichlet convolution: ε(1) = 1, ε(n) = 0 for n > 1. -/
 
+/-- The identity function for Dirichlet convolution: ε(1) = 1, ε(n) = 0 for n > 1. -/
 def dirichletId : ℕ → ℤ := fun n => if n = 1 then 1 else 0
 
-/-
-Σ_{d|n} μ(d) = [n = 1] (Möbius inversion foundation).
--/
 
 theorem mobius_sum_eq_indicator (n : ℕ) (hn : 0 < n) :
     ∑ d ∈ n.divisors, mobiusFn d = if n = 1 then 1 else 0 := by
@@ -51,35 +48,32 @@ theorem mobius_sum_eq_indicator (n : ℕ) (hn : 0 < n) :
     exact ArithmeticFunction.coe_mul_zeta_apply;
   aesop
 
-/-- The prime-counting function π(x). -/
 
+/-- The prime-counting function π(x). -/
 def primeCountFn (x : ℕ) : ℕ :=
   ((Finset.Icc 2 x).filter Nat.Prime).card
 
-/-- π(10) = 4: the primes up to 10 are 2, 3, 5, 7. -/
 
+/-- π(10) = 4: the primes up to 10 are 2, 3, 5, 7. -/
 theorem prime_counting_10' : primeCountFn 10 = 4 := by
   native_decide
 
-/-- An arithmetic function f is completely multiplicative if f(mn) = f(m)f(n) for all m, n. -/
 
+/-- The Liouville function λ(n) = (-1)^Ω(n). -/
 def liouvilleFn (n : ℕ) : ℤ :=
   if n = 0 then 0
   else (-1) ^ n.primeFactorsList.length
 
-/-- λ(1) = 1. -/
 
+/-- λ(1) = 1. -/
 theorem liouville_one : liouvilleFn 1 = 1 := by
   simp [liouvilleFn]
 
-/-- λ(p) = -1 for prime p. -/
 
+/-- λ(p) = -1 for prime p. -/
 theorem liouville_prime' (p : ℕ) (hp : Nat.Prime p) : liouvilleFn p = -1 := by
   simp [liouvilleFn, hp.ne_zero, Nat.primeFactorsList_prime hp]
 
-/-
-The Liouville function is completely multiplicative.
--/
 
 theorem liouville_completely_multiplicative :
     IsCompletelyMultiplicative liouvilleFn := by

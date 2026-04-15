@@ -10,81 +10,30 @@ import Mathlib
 theorem pythagorean_3_4_5 : IsPythagoreanTriple 3 4 5 := by
   exact?
 
-/-
-PROBLEM
-The triple (5, 12, 13) is Pythagorean.
-
-PROVIDED SOLUTION
-Unfold and compute with norm_num.
--/
 
 theorem pythagorean_8_15_17 : IsPythagoreanTriple 8 15 17 := by
   exact show 8 ^ 2 + 15 ^ 2 = 17 ^ 2 by decide;
 
-/-
-PROBLEM
-Scaling a Pythagorean triple by k gives another Pythagorean triple.
-
-PROVIDED SOLUTION
-Unfold IsPythagoreanTriple in h and goal. Goal becomes (k*a)^2 + (k*b)^2 = (k*c)^2, i.e. k^2*(a^2+b^2) = k^2*c^2. Use ring and h.
--/
 
 theorem pythagorean_scale (a b c k : ℤ) (h : IsPythagoreanTriple a b c) :
     IsPythagoreanTriple (k * a) (k * b) (k * c) := by
       exact Eq.symm ( by linear_combination' h.symm * k ^ 2 )
 
-/-
-PROBLEM
-Swapping the legs of a Pythagorean triple gives another Pythagorean triple.
-
-PROVIDED SOLUTION
-Unfold and use add_comm then h.
--/
 
 theorem pythagorean_swap (a b c : ℤ) (h : IsPythagoreanTriple a b c) :
     IsPythagoreanTriple b a c := by
       exact Eq.trans ( by ring ) h
 
-/-
-PROBLEM
-Euclid's formula: for any m > n > 0, (m²-n², 2mn, m²+n²) is a Pythagorean triple.
-
-PROVIDED SOLUTION
-Unfold IsPythagoreanTriple, the goal is (m²-n²)² + (2mn)² = (m²+n²)². This is a polynomial identity, use ring.
--/
 
 theorem euclid_formula (m n : ℤ) :
     IsPythagoreanTriple (m ^ 2 - n ^ 2) (2 * m * n) (m ^ 2 + n ^ 2) := by
       exact Eq.symm ( by ring )
 
-/-! ## Section 2: Berggren Tree Transformations
-
-The three Berggren matrices that generate the tree of primitive Pythagorean triples are:
-- A: maps (a,b,c) to (a - 2b + 2c, 2a - b + 2c, 2a - 2b + 3c)
-- B: maps (a,b,c) to (a + 2b + 2c, 2a + b + 2c, 2a + 2b + 3c)
-- C: maps (a,b,c) to (-a + 2b + 2c, -2a + b + 2c, -2a + 2b + 3c)
--/
-
-/-
-PROBLEM
-Berggren transformation A preserves the Pythagorean property.
-
-PROVIDED SOLUTION
-Unfold IsPythagoreanTriple in h and goal. The goal is a polynomial identity in a,b,c assuming a²+b²=c². Use nlinarith or linear_combination with h.
--/
 
 theorem pythagorean_even_leg (a b c : ℤ) (h : IsPythagoreanTriple a b c) :
     2 ∣ a ∨ 2 ∣ b := by
       replace h := congr_arg ( · % 4 ) h ; rcases Int.even_or_odd' a with ⟨ d, rfl | rfl ⟩ <;> ( rcases Int.even_or_odd' b with ⟨ e, rfl | rfl ⟩ <;> ( rcases Int.even_or_odd' c with ⟨ f, rfl | rfl ⟩ <;> ring_nf at * <;> norm_num at *; ) )
 
-/-
-PROBLEM
-Fermat's Last Theorem for n=4: no nontrivial solutions to a⁴ + b⁴ = c⁴.
-    (Actually the stronger result: a⁴ + b⁴ = c² has no nontrivial solutions.)
-
-PROVIDED SOLUTION
-Use Mathlib's FermatLastTheoremFour or Int.FermatLastTheoremFour. Search for FermatLastTheoremFour or fermatLastTheoremFour.
--/
 
 theorem fermat_n4_no_solution (a b c : ℤ) (ha : a ≠ 0) (hb : b ≠ 0) :
     a ^ 4 + b ^ 4 ≠ c ^ 4 := by
@@ -98,35 +47,14 @@ theorem fermat_n4_no_solution (a b c : ℤ) (ha : a ≠ 0) (hb : b ≠ 0) :
       by_cases hc : c = 0 <;> simp_all +decide;
       positivity
 
-/-
-PROBLEM
-The sum of two squares function: n can be written as a² + b² iff
-    every prime factor of the form 4k+3 appears to an even power.
-
-This is a deep theorem; we state a simpler version.
-
-PROVIDED SOLUTION
-Witness: a=1, b=2. 1+4=5. Use exact ⟨1, 2, by norm_num⟩.
--/
 
 theorem sum_two_squares_5 : ∃ a b : ℤ, a ^ 2 + b ^ 2 = 5 := by
   exists 1, 2
 
-/-
-PROVIDED SOLUTION
-Witness: a=2, b=3. 4+9=13. Use exact ⟨2, 3, by norm_num⟩.
--/
 
 theorem sum_two_squares_13 : ∃ a b : ℤ, a ^ 2 + b ^ 2 = 13 := by
   exists 2, 3
 
-/-
-PROBLEM
-No integer can be written as a sum of two squares if it's 3 mod 4.
-
-PROVIDED SOLUTION
-Suppose a²+b²=n. Squares mod 4 are 0 or 1. So a²+b² mod 4 ∈ {0,1,2}. But n mod 4 = 3, contradiction. Use omega/decide on cases of a%4 and b%4.
--/
 
 theorem no_sum_two_squares_mod4 (n : ℕ) (hn : n % 4 = 3) :
     ¬ ∃ a b : ℕ, a ^ 2 + b ^ 2 = n := by

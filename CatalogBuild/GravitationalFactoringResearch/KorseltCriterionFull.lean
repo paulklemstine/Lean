@@ -11,37 +11,35 @@ import Mathlib
 def IsCarmichaelNum (n : ℕ) : Prop :=
   1 < n ∧ ¬ Nat.Prime n ∧ ∀ a : ℕ, Nat.Coprime a n → a ^ (n - 1) ≡ 1 [MOD n]
 
-/-- Korselt's criterion predicate. -/
 
+/-- Korselt's criterion predicate. -/
 def SatisfiesKorseltCrit (n : ℕ) : Prop :=
   1 < n ∧ ¬ Nat.Prime n ∧ Squarefree n ∧
   ∀ p : ℕ, Nat.Prime p → p ∣ n → (p - 1) ∣ (n - 1)
 
-/-! ### Computational verification of Korselt for specific numbers -/
 
 /-- 561 satisfies Korselt's criterion. -/
-
 theorem korselt_561_verified :
     ¬ Nat.Prime 561 ∧ Squarefree 561 ∧
     Nat.primeFactorsList 561 = [3, 11, 17] := by
   refine ⟨by native_decide, by native_decide, by native_decide⟩
 
-/-- 1105 satisfies Korselt's criterion. -/
 
+/-- 1105 satisfies Korselt's criterion. -/
 theorem korselt_1105_verified :
     ¬ Nat.Prime 1105 ∧ Squarefree 1105 ∧
     Nat.primeFactorsList 1105 = [5, 13, 17] := by
   refine ⟨by native_decide, by native_decide, by native_decide⟩
 
-/-- 1729 satisfies Korselt's criterion. -/
 
+/-- 1729 satisfies Korselt's criterion. -/
 theorem korselt_1729_verified :
     ¬ Nat.Prime 1729 ∧ Squarefree 1729 ∧
     Nat.primeFactorsList 1729 = [7, 13, 19] := by
   refine ⟨by native_decide, by native_decide, by native_decide⟩
 
-/-- Korselt divisibility conditions: (p-1) | (n-1) for each prime factor p. -/
 
+/-- Korselt divisibility conditions: (p-1) | (n-1) for each prime factor p. -/
 theorem korselt_561_divs_full :
     (2 ∣ 560) ∧ (10 ∣ 560) ∧ (16 ∣ 560) := by
   exact ⟨⟨280, by norm_num⟩, ⟨56, by norm_num⟩, ⟨35, by norm_num⟩⟩
@@ -71,8 +69,6 @@ theorem korselt_8911_divs :
     (6 ∣ 8910) ∧ (18 ∣ 8910) ∧ (66 ∣ 8910) := by
   exact ⟨⟨1485, by norm_num⟩, ⟨495, by norm_num⟩, ⟨135, by norm_num⟩⟩
 
-/-! ### All 7 Carmichael numbers up to 10000 with full factorizations -/
-
 
 theorem all_carmichael_to_10000 :
     561 = 3 * 11 * 17 ∧
@@ -84,11 +80,6 @@ theorem all_carmichael_to_10000 :
     8911 = 7 * 19 * 67 := by
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_⟩ <;> norm_num
 
-/-! ### Structural properties -/
-
-/-
-All Carmichael numbers are odd.
--/
 
 theorem carmichael_odd (n : ℕ) (hc : IsCarmichaelNum n) : ¬ Even n := by
   rcases hc with ⟨ hn₁, hn₂, hn₃ ⟩;
@@ -103,9 +94,6 @@ theorem carmichael_odd (n : ℕ) (hc : IsCarmichaelNum n) : ¬ Even n := by
   rcases n with ( _ | _ | n ) <;> simp_all +decide [ parity_simps ];
   nlinarith [ Int.le_of_dvd ( by linarith ) h_neg_one.dvd, show n > 0 from Nat.pos_of_ne_zero ( by rintro rfl; contradiction ) ]
 
-/-
-A Carmichael number cannot be a prime power.
--/
 
 theorem carmichael_not_prime_power (n : ℕ) (hc : IsCarmichaelNum n) :
     ¬ IsPrimePow n := by
@@ -135,9 +123,6 @@ theorem carmichael_not_prime_power (n : ℕ) (hc : IsCarmichaelNum n) :
       haveI := Fact.mk hp; simp_all +decide [ ← ZMod.natCast_eq_zero_iff, Nat.cast_sub ( Nat.one_le_pow _ _ hp.pos ) ] ;
       cases k <;> simp_all +decide
 
-/-
-A product of exactly two distinct primes cannot be Carmichael.
--/
 
 theorem no_carmichael_semiprime (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
     (hpq : p < q) : ¬ IsCarmichaelNum (p * q) := by
@@ -184,10 +169,6 @@ theorem no_carmichael_semiprime (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q
       obtain ⟨ m, hm ⟩ := Nat.modEq_zero_iff_dvd.mp h_korselt_q;
       nlinarith [ show m = p + 2 by nlinarith ]
 
-/-
-Korselt's criterion forward direction: if n is composite, squarefree, and
-    (p-1) | (n-1) for all prime factors p, then n is Carmichael.
--/
 
 theorem korselt_forward (n : ℕ) (hk : SatisfiesKorseltCrit n) :
     IsCarmichaelNum n := by

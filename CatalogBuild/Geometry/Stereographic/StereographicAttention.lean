@@ -13,19 +13,19 @@ noncomputable section
 def stereoConfFactor (n : ℕ) (y : Fin n → ℝ) : ℝ :=
   2 / (1 + ∑ i, (y i) ^ 2)
 
-/-- Inverse stereographic projection: maps ℝⁿ to the unit sphere in ℝⁿ⁺¹.
-    The first n coordinates are 2yᵢ/(1+‖y‖²), the last is (‖y‖²-1)/(1+‖y‖²). -/
 
+/-- The stereographic kernel: measures similarity of two points via their
+spherical images under inverse stereographic projection. -/
 def stereoKernel (n : ℕ) (x y : Fin n → ℝ) : ℝ :=
   ∑ i, invStereo n x i * invStereo n y i
 
-/-- Inner product in ℝⁿ. -/
 
+/-- Inner product in ℝⁿ. -/
 def innerProd (n : ℕ) (x y : Fin n → ℝ) : ℝ :=
   ∑ i, x i * y i
 
-/-- Squared norm ‖x‖² = ∑ xᵢ². -/
 
+/-- The denominator D(y) = 1 + ‖y‖². Always positive. -/
 def stereoDenom (n : ℕ) (y : Fin n → ℝ) : ℝ :=
   1 + sqNorm n y
 
@@ -38,12 +38,6 @@ theorem stereoDenom_pos (n : ℕ) (y : Fin n → ℝ) : 0 < stereoDenom n y := b
 theorem stereoDenom_ne_zero (n : ℕ) (y : Fin n → ℝ) : stereoDenom n y ≠ 0 := by
   exact ne_of_gt (stereoDenom_pos n y)
 
-/-! ## Part 2: Kernel Properties -/
-
-/-
-The stereographic kernel can be expressed as a rational function of inner products:
-    K(x,y) = (4⟨x,y⟩ + (‖x‖²-1)(‖y‖²-1)) / (D(x)·D(y))
--/
 
 theorem stereoKernel_rational (n : ℕ) (x y : Fin n → ℝ) :
     stereoKernel n x y * (stereoDenom n x * stereoDenom n y) =
@@ -56,25 +50,22 @@ theorem stereoKernel_rational (n : ℕ) (x y : Fin n → ℝ) :
   field_simp
   ring
 
-/-
-The stereographic kernel is symmetric: K(x,y) = K(y,x).
--/
 
+/-- The stereographic softmax weight: exponential of the stereographic kernel,
+measuring how much token j attends to token i. -/
 def stereoSoftmaxWeight (n : ℕ) (temperature : ℝ) (q k : Fin n → ℝ) : ℝ :=
   Real.exp (stereoKernel n q k / temperature)
 
-/-- Stereographic softmax weights are always positive. -/
 
+/-- Stereographic softmax weights are always positive. -/
 theorem stereoSoftmaxWeight_pos (n : ℕ) (T : ℝ) (q k : Fin n → ℝ) :
     0 < stereoSoftmaxWeight n T q k := by
   unfold stereoSoftmaxWeight
   exact exp_pos _
 
-/-! ## Part 4: Möbius Equivariance -/
 
 /-- A 2D Möbius transformation: f(z) = (az+b)/(cz+d) where ad-bc ≠ 0.
-    We encode this as a transformation on ℝ² via the real/imaginary decomposition. -/
-
+We encode this as a transformation on ℝ² via the real/imaginary decomposition. -/
 def mobiusTransform2D (a b c d : ℝ × ℝ) (z : Fin 2 → ℝ) : Fin 2 → ℝ :=
   let x := z 0
   let y := z 1
@@ -88,14 +79,12 @@ def mobiusTransform2D (a b c d : ℝ × ℝ) (z : Fin 2 → ℝ) : Fin 2 → ℝ
     then (num_re * den_re + num_im * den_im) / den_sq
     else (num_im * den_re - num_re * den_im) / den_sq
 
-/-! ## Part 5: The Stereographic Attention Layer -/
 
 /-- A stereographic attention head: given queries Q, keys K, values V
-    (each as sequences of n-dimensional vectors), computes attention output.
-    - `seqLen` is the sequence length
-    - `d` is the embedding dimension
-    - `T` is the temperature parameter -/
-
+(each as sequences of n-dimensional vectors), computes attention output.
+- `seqLen` is the sequence length
+- `d` is the embedding dimension
+- `T` is the temperature parameter -/
 def stereoAttentionHead (seqLen d : ℕ) (T : ℝ)
     (Q K V : Fin seqLen → Fin d → ℝ) : Fin seqLen → Fin d → ℝ :=
   fun i j =>
@@ -103,16 +92,12 @@ def stereoAttentionHead (seqLen d : ℕ) (T : ℝ)
     let totalWeight := ∑ k : Fin seqLen, weights k
     ∑ k : Fin seqLen, (weights k / totalWeight) * V k j
 
-/-- Each attention weight in the stereographic head is non-negative. -/
 
+/-- Each attention weight in the stereographic head is non-negative. -/
 theorem stereoAttention_weights_nonneg (d : ℕ) (T : ℝ) (q k : Fin d → ℝ) :
     0 ≤ stereoSoftmaxWeight d T q k :=
   le_of_lt (stereoSoftmaxWeight_pos d T q k)
 
-/-
-The sum of stereographic attention weights is positive
-    (ensuring normalization is well-defined).
--/
 
 theorem stereoAttention_weight_sum_pos (seqLen d : ℕ) (T : ℝ)
     (Q : Fin seqLen → Fin d → ℝ) (K : Fin seqLen → Fin d → ℝ)
@@ -120,12 +105,6 @@ theorem stereoAttention_weight_sum_pos (seqLen d : ℕ) (T : ℝ)
     0 < ∑ k : Fin seqLen, stereoSoftmaxWeight d T (Q i) (K k) := by
   exact Finset.sum_pos ( fun _ _ => Real.exp_pos _ ) ⟨ i, Finset.mem_univ _ ⟩
 
-/-! ## Part 6: Bounded Attention Scores -/
-
-/-
-The stereographic kernel is bounded: for any x, y, we have |K(x,y)| ≤ n+1.
-    This follows because the inverse stereographic images lie on the unit sphere.
--/
 
 theorem stereoKernel_bounded (n : ℕ) (x y : Fin n → ℝ) :
     |stereoKernel n x y| ≤ n + 1 := by
@@ -140,10 +119,6 @@ theorem stereoKernel_bounded (n : ℕ) (x y : Fin n → ℝ) :
     exact?;
   exact abs_le.mpr ⟨ by have := h_cauchy_schwarz ( invStereo n x ) ( invStereo n y ) ; have := h_norm_sq x; have := h_norm_sq y; norm_num [ stereoKernel ] at *; nlinarith, by have := h_cauchy_schwarz ( invStereo n x ) ( invStereo n y ) ; have := h_norm_sq x; have := h_norm_sq y; norm_num [ stereoKernel ] at *; nlinarith ⟩
 
-/-
-The inverse stereographic projection maps to the unit sphere:
-    ‖σ⁻¹(y)‖² = 1 for all y ∈ ℝⁿ.
--/
 
 theorem invStereo_on_sphere (n : ℕ) (y : Fin n → ℝ) :
     ∑ i, (invStereo n y i) ^ 2 = 1 := by
@@ -153,10 +128,5 @@ theorem invStereo_on_sphere (n : ℕ) (y : Fin n → ℝ) :
   norm_num [ ← Finset.mul_sum _ _ _, ← Finset.sum_div ];
   rw [ mul_div_cancel₀ ] <;> nlinarith [ show 0 ≤ ∑ i, y i ^ 2 by exact Finset.sum_nonneg fun _ _ => sq_nonneg _ ]
 
-/-! ## Part 7: Gradient Flow Properties -/
-
-/-
-The conformal factor squared satisfies cf(x)² = 4/D(x)².
--/
 
 end

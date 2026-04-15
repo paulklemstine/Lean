@@ -30,8 +30,6 @@ theorem eml_vs_standard_nas (d : ℕ) :
     emlArchSpace d ≤ archSpace d 10 :=
   eml_search_reduction d 10 (by omega)
 
-/-! ## §2. Depth-Width Tradeoffs -/
-
 
 def denseParams (layers width : ℕ) : ℕ := layers * width * width
 
@@ -43,8 +41,6 @@ theorem eml_param_efficiency (d w : ℕ) (hd : 0 < d) (hw : 5 ≤ w) :
 theorem eml_depth_cheaper_than_width (d w : ℕ) (hd : 1 ≤ d) (hw : 2 ≤ w) :
     emlParams (2 * d) w ≤ emlParams d (2 * w) := by
   unfold emlParams; nlinarith
-
-/-! ## §3. Skip Connections and Residual EML -/
 
 
 def gradientFlow (r : ℝ) (d : ℕ) : ℝ := r ^ d
@@ -75,8 +71,6 @@ theorem score_mono_accuracy (a1 a2 : ℝ) (p : ℕ) (hp : 0 < p) (ha : a1 ≤ a2
 theorem score_mono_params (a : ℝ) (p1 p2 : ℕ) (ha : 0 ≤ a) (hp1 : 0 < p1) (hp : p1 ≤ p2) :
     archScore a p2 ≤ archScore a p1 := by
   unfold archScore; gcongr;
-
-/-! ## §5. EML Layer Composition -/
 
 
 def emlExpressivity (d : ℕ) : ℕ := 3 ^ d

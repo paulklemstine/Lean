@@ -30,8 +30,6 @@ theorem three_square_five : IsThreeSquareRep 5 2 1 0 := by
 theorem three_square_six : IsThreeSquareRep 6 2 1 1 := by
   simp [IsThreeSquareRep]
 
-/-! ## Section 2: The Quadruple Lattice -/
-
 
 def InQuadLattice (N : ℤ) (x y z : ℤ) : Prop :=
   N ∣ (x ^ 2 + y ^ 2 + z ^ 2)
@@ -40,16 +38,14 @@ def InQuadLattice (N : ℤ) (x y z : ℤ) : Prop :=
 theorem zero_in_quad_lattice (N : ℤ) : InQuadLattice N 0 0 0 := by
   simp [InQuadLattice]
 
-/-- Scalar multiples preserve the quadruple lattice. -/
 
+/-- Scalar multiples preserve the quadruple lattice. -/
 theorem scalar_in_quad_lattice (N k x y z : ℤ) (h : InQuadLattice N x y z) :
     InQuadLattice N (k * x) (k * y) (k * z) := by
   simp only [InQuadLattice] at *
   have : (k * x) ^ 2 + (k * y) ^ 2 + (k * z) ^ 2 = k ^ 2 * (x ^ 2 + y ^ 2 + z ^ 2) := by ring
   rw [this]
   exact dvd_mul_of_dvd_right h _
-
-/-! ## Section 3: Lorentz Group O(3,1;ℤ) -/
 
 
 def lorentzEta : Matrix (Fin 4) (Fin 4) ℤ :=
@@ -62,13 +58,12 @@ def IsLorentzInt (M : Matrix (Fin 4) (Fin 4) ℤ) : Prop :=
 
 theorem lll_factor_dim3 : (2 : ℕ) ^ ((3 - 1) / 2) = 2 := by norm_num
 
-/-! ## Section 5: Factor Extraction -/
-
 
 def extractFactor (N x y z : ℤ) : ℤ := Int.gcd (x ^ 2 + y ^ 2) N
 
-/-- If x² + y² + z² = N and p | N and p | (x² + y²), then p | z². -/
 
+/-- In dimension d ≥ 3, the number of short lattice vectors grows
+exponentially, giving more chances to find factoring-relevant ones. -/
 theorem dimension_advantage (d : ℕ) (hd : 3 ≤ d) :
     2 ^ d ≥ 8 := by
   calc 2 ^ d ≥ 2 ^ 3 := Nat.pow_le_pow_right (by norm_num) hd

@@ -13,11 +13,3 @@ theorem gaussian_product_preserves_sum_of_squares (a b c d : ℤ)
     ∃ x y : ℤ, (a^2 + b^2) * (c^2 + d^2) = x^2 + y^2 := by
   exact ⟨ a * c + b * d, a * d - b * c, by ring ⟩
 
-/-
-PROBLEM
-Connection to Gaussian integers: |z₁ · z₂|² = |z₁|² · |z₂|²
-    where z = a + bi ∈ ℤ[i].
-
-PROVIDED SOLUTION
-Use Zsqrtd.norm_mul or the fact that norm is a monoid hom.
--/

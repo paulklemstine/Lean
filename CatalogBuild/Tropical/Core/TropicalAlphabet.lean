@@ -9,41 +9,40 @@ import Mathlib
 
 noncomputable section
 
+/-- Tropical inverse is negation -/
 def tropInv (a : ℝ) : ℝ := -a
 
-/-- Tropical division is subtraction -/
 
+/-- Tropical division is subtraction -/
 def tropDiv (a b : ℝ) : ℝ := a - b
 
-/-- Tropical absolute value -/
 
+/-- Tropical absolute value -/
 def tropAbs (a : ℝ) : ℝ := max a (-a)
 
-/-- ReLU function -/
 
+/-- Tropical addition is selective: max(a, b) is either a or b -/
 theorem tropAdd_selective (a b : ℝ) : tropAdd a b = a ∨ tropAdd a b = b := by
   unfold tropAdd
   exact max_choice a b
 
-/-- Tropical absolute value equals ordinary absolute value -/
 
+/-- Tropical absolute value equals ordinary absolute value -/
 theorem tropAbs_eq_abs (a : ℝ) : tropAbs a = |a| := by
   simp [tropAbs, abs_eq_max_neg]
 
-/-- Tropical inverse is an involution -/
 
+/-- Tropical inverse is an involution -/
 theorem tropInv_involutive (a : ℝ) : tropInv (tropInv a) = a := by
   unfold tropInv; ring
 
-/-- Tropical division undoes tropical multiplication -/
 
+/-- Tropical division undoes tropical multiplication -/
 theorem tropDiv_tropMul_cancel (a b : ℝ) : tropDiv (tropMul a b) b = a := by
   simp [tropDiv, tropMul]
 
-/-! ## Part II: ReLU as Tropical Oracle (Level 2) -/
 
-/-- ReLU is tropical addition with the tropical one -/
-
+/-- LogSumExp is at most max + log 2 -/
 theorem logSumExp_le_max_add_log2 (a b : ℝ) :
     logSumExp a b ≤ max a b + Real.log 2 := by
   by_cases h : a ≥ b
@@ -56,47 +55,38 @@ theorem logSumExp_le_max_add_log2 (a b : ℝ) :
     exact Real.log_le_log (by positivity)
       (by rw [Real.exp_log (by positivity)]; linarith [Real.exp_le_exp.2 (le_of_not_ge h)])
 
-/-- The Maslov dequantization bound: error ≤ ε · log 2 -/
 
+/-- The Maslov dequantization bound: error ≤ ε · log 2 -/
 theorem maslov_bound (a b : ℝ) :
     logSumExp a b - max a b ≤ Real.log 2 := by
   linarith [logSumExp_le_max_add_log2 a b]
 
-/-! ## Part IV: Oracle Theory (Level 5) -/
 
-/-- A function is an oracle (idempotent) -/
-
+/-- The identity is an oracle -/
 theorem isOracle_id {α : Type*} : IsOracle (id : α → α) := fun _ => rfl
 
-/-- Constant functions are oracles -/
 
+/-- Constant functions are oracles -/
 theorem isOracle_const {α : Type*} (c : α) : IsOracle (fun _ => c) := fun _ => rfl
 
-/-- ReLU is an oracle -/
 
+/-- ReLU is an oracle -/
 theorem isOracle_relu : IsOracle relu := relu_idempotent
 
-/-- For an oracle, range = fixed points -/
 
+/-- For an oracle, range = fixed points -/
 theorem oracle_range_eq_fixedPoints {α : Type*} (O : α → α) (hO : IsOracle O) :
     Set.range O = {x | O x = x} := by
   ext x; unfold IsOracle at hO; aesop
 
-/-- Composition of commuting oracles is an oracle -/
 
+/-- Composition of commuting oracles is an oracle -/
 theorem isOracle_comp_comm {α : Type*} (O₁ O₂ : α → α)
     (h₁ : IsOracle O₁) (h₂ : IsOracle O₂)
     (hcomm : ∀ x, O₁ (O₂ x) = O₂ (O₁ x)) :
     IsOracle (O₁ ∘ O₂) := by
   intro x; have := h₁ (O₂ x); have := h₂ (O₁ x); aesop
 
-/-
-PROBLEM
-Fixed points of composed commuting oracles = intersection
-
-PROVIDED SOLUTION
-ext x, simp [Function.comp, Set.mem_inter_iff, Set.mem_setOf_eq]. Forward: assume O₁(O₂(x)) = x. Then O₂(x) = O₂(O₁(O₂(x))) = O₁(O₂(O₂(x))) by commutativity = O₁(O₂(x)) by h₂ = x. So O₂(x) = x. Then O₁(x) = O₁(O₂(x)) = x. Backward: if O₁(x) = x and O₂(x) = x then O₁(O₂(x)) = O₁(x) = x.
--/
 
 theorem fixedPoints_comp_comm {α : Type*} (O₁ O₂ : α → α)
     (h₁ : IsOracle O₁) (h₂ : IsOracle O₂)
@@ -107,54 +97,37 @@ theorem fixedPoints_comp_comm {α : Type*} (O₁ O₂ : α → α)
   simp [Set.mem_setOf_eq, Set.mem_inter_iff];
   grind +locals
 
-/-! ## Part V: Tropical Logic -/
 
 /-- Tropical OR gate -/
-
 def tropOR (a b : ℝ) : ℝ := max a b
 
-/-- Tropical AND gate -/
 
+/-- Tropical AND gate -/
 def tropAND (a b : ℝ) : ℝ := min a b
 
-/-- Tropical NOT gate (on {0, 1}) -/
 
+/-- Tropical NOT gate (on {0, 1}) -/
 def tropNOT (a : ℝ) : ℝ := 1 - a
 
-/-- Tropical NOT is an involution -/
 
+/-- Tropical NOT is an involution -/
 theorem tropNOT_involutive (a : ℝ) : tropNOT (tropNOT a) = a := by
   unfold tropNOT; ring
 
-/-
-PROBLEM
-De Morgan's law: NOT(OR(a,b)) = AND(NOT a, NOT b)
-
-PROVIDED SOLUTION
-Unfold all definitions. Need 1 - max a b = min (1-a) (1-b). This is a standard identity: sub_max distributes as min_sub. Try simp [tropNOT, tropOR, tropAND] and then use sub_max_eq_min_sub or similar.
--/
 
 theorem trop_deMorgan_or (a b : ℝ) :
     tropNOT (tropOR a b) = tropAND (tropNOT a) (tropNOT b) := by
   grind +locals
 
-/-
-PROBLEM
-De Morgan's law: NOT(AND(a,b)) = OR(NOT a, NOT b)
-
-PROVIDED SOLUTION
-Unfold all definitions. Need 1 - min a b = max (1-a) (1-b). This is sub_min distributes as max_sub. Try simp [tropNOT, tropAND, tropOR] and use sub_min_eq_max_sub or similar.
--/
 
 theorem trop_deMorgan_and (a b : ℝ) :
     tropNOT (tropAND a b) = tropOR (tropNOT a) (tropNOT b) := by
   unfold tropNOT tropAND tropOR;
   rw [ min_def, max_def ] ; split_ifs <;> linarith
 
-/-- Tropical XOR: max(min(a, 1-b), min(1-a, b)) -/
 
+/-- Tropical XOR: max(min(a, 1-b), min(1-a, b)) -/
 def tropXOR (a b : ℝ) : ℝ := max (min a (1 - b)) (min (1 - a) b)
 
-end TropicalAlphabet
 
 end

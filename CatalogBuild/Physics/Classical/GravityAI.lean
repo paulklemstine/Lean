@@ -106,28 +106,16 @@ def BlackHole.entropy (bh : BlackHole) : ℝ := 4 * π * bh.mass ^ 2
 
 def BlackHole.temperature (bh : BlackHole) : ℝ := 1 / (8 * π * bh.mass)
 
-/-
-PROVIDED SOLUTION
-Unfold horizonArea to get 16 * π * bh.mass ^ 2. Use bh.mass_pos and pi_pos, then positivity or mul_pos.
--/
 
 theorem BlackHole.horizonArea_pos (bh : BlackHole) :
     0 < bh.horizonArea := by
   exact mul_pos ( mul_pos ( by norm_num ) Real.pi_pos ) ( sq_pos_of_pos bh.mass_pos )
 
-/-
-PROVIDED SOLUTION
-Unfold entropy to 4 * π * bh.mass ^ 2. Use bh.mass_pos and pi_pos, then mul_pos or positivity.
--/
 
 theorem BlackHole.entropy_pos (bh : BlackHole) :
     0 < bh.entropy := by
   exact mul_pos ( mul_pos zero_lt_four Real.pi_pos ) ( sq_pos_of_pos bh.mass_pos )
 
-/-
-PROVIDED SOLUTION
-Unfold temperature to 1 / (8 * π * bh.mass). Use div_pos one_pos and mul_pos with pi_pos and mass_pos.
--/
 
 theorem BlackHole.temperature_pos (bh : BlackHole) :
     0 < bh.temperature := by
@@ -138,10 +126,6 @@ theorem BlackHole.entropy_eq_area_div_4 (bh : BlackHole) :
     bh.entropy = bh.horizonArea / 4 := by
   simp [entropy, horizonArea]; ring
 
-/-
-PROVIDED SOLUTION
-Unfold entropy. The goal becomes 4*π*M1^2 + 4*π*M2^2 ≤ 4*π*(M1+M2)^2. Factor out 4π and expand. The difference is 8*π*M1*M2 ≥ 0, which follows from mass_pos.
--/
 
 theorem BlackHole.second_law (bh₁ bh₂ : BlackHole) :
     bh₁.entropy + bh₂.entropy ≤
@@ -149,20 +133,12 @@ theorem BlackHole.second_law (bh₁ bh₂ : BlackHole) :
   unfold BlackHole.entropy; ring_nf; norm_num;
   exact mul_nonneg ( mul_nonneg Real.pi_pos.le bh₁.mass_pos.le ) bh₂.mass_pos.le
 
-/-
-PROVIDED SOLUTION
-Temperature is 1/(8πM). If M1 < M2 then 8πM1 < 8πM2 (by mul_lt_mul_of_pos_left), so 1/(8πM2) < 1/(8πM1). Use one_div_lt_one_div_of_lt or div_lt_div_of_pos_left.
--/
 
 theorem BlackHole.smaller_is_hotter (bh₁ bh₂ : BlackHole)
     (h : bh₁.mass < bh₂.mass) :
     bh₂.temperature < bh₁.temperature := by
   exact one_div_lt_one_div_of_lt ( mul_pos ( mul_pos ( by norm_num ) Real.pi_pos ) bh₁.mass_pos ) ( mul_lt_mul_of_pos_left h ( by positivity ) )
 
-/-
-PROVIDED SOLUTION
-Entropy is 4*π*M^2. If M1 ≤ M2 then M1^2 ≤ M2^2 (since both positive), so 4π*M1^2 ≤ 4π*M2^2. Use mul_le_mul_of_nonneg_left.
--/
 
 theorem BlackHole.larger_more_entropy (bh₁ bh₂ : BlackHole)
     (h : bh₁.mass ≤ bh₂.mass) :
@@ -178,10 +154,6 @@ theorem redshift_positive (M r : ℝ) (hr : 0 < r) (hMr : 2 * M < r) :
 def Oracle.commutes {X : Type*} (O₁ O₂ : Oracle X) : Prop :=
   ∀ x, O₁.op (O₂.op x) = O₂.op (O₁.op x)
 
-/-
-PROVIDED SOLUTION
-Goal: O1(O2(O1(O2(x)))) = O1(O2(x)). Use hcomm to rewrite the inner O1(O2(x)) to O2(O1(x)), getting O1(O2(O2(O1(x)))). Then use O2.idem on O2(O2(O1(x))) to get O2(O1(x)). Then use hcomm backwards on O1(O2(O1(x))) to get back O1(O2(x)). Actually simpler: use conv to rewrite the 2nd-innermost application.
--/
 
 theorem Oracle.comp_of_commuting {X : Type*} (O₁ O₂ : Oracle X)
     (hcomm : O₁.commutes O₂) :
@@ -200,9 +172,9 @@ def vanillaStep (eta grad theta : ℝ) : ℝ := theta - eta * grad
 
 def naturalStep (eta grad g theta : ℝ) : ℝ := theta - eta * (grad / g)
 
-/-- Natural gradient is covariant: scaling gradient by alpha and metric by alpha
-    rescales the step by 1. (The correct covariance uses alpha in both.) -/
 
+/-- Natural gradient is covariant: scaling gradient by alpha and metric by alpha
+rescales the step by 1. (The correct covariance uses alpha in both.) -/
 theorem natural_gradient_invariant (eta grad g alpha : ℝ)
     (halpha : alpha ≠ 0) (_hg : g ≠ 0) (theta : ℝ) :
     naturalStep eta (alpha * grad) (alpha * g) theta =
@@ -223,10 +195,6 @@ structure TwoLayerNet (input hidden output : ℕ) where
 def TwoLayerNet.forward {i h o : ℕ} (net : TwoLayerNet i h o) : Fin i → Fin o :=
   net.layer2 ∘ net.layer1
 
-/-
-PROVIDED SOLUTION
-The range of net.forward = range (net.layer2 ∘ net.layer1) ⊆ range net.layer2. So card(range net.forward) ≤ card(range net.layer2) ≤ card(Fin h) = h. Use Set.range_comp_subset_range and Fintype.card_le_of_surjective or Set.Finite.toFinset_mono.
--/
 
 theorem bottleneck_compression {i h o : ℕ} (net : TwoLayerNet i h o) :
     Fintype.card (range net.forward) ≤ h := by
@@ -265,10 +233,6 @@ theorem holographic_sphere (R : ℝ) :
     holographicBound (4 * π * R ^ 2) = π * R ^ 2 := by
   unfold holographicBound; ring
 
-/-
-PROVIDED SOLUTION
-We need π*R^2 < (4/3)*π*R^3 when R > 3. Divide both sides by π*R^2 (positive) to get 1 < (4/3)*R, i.e., R > 3/4, which holds since R > 3. Use nlinarith with pi_pos and sq_nonneg.
--/
 
 theorem holographic_beats_volume (R : ℝ) (hR : 3 < R) :
     π * R ^ 2 < (4 / 3) * π * R ^ 3 := by
@@ -330,10 +294,6 @@ theorem five_sos : isSumOfTwoSquares 5 := ⟨1, 2, by norm_num⟩
 
 theorem twentyfive_sos : isSumOfTwoSquares 25 := ⟨3, 4, by norm_num⟩
 
-/-
-PROVIDED SOLUTION
-Use Brahmagupta-Fibonacci identity: (a1^2+b1^2)(a2^2+b2^2) = (a1*a2-b1*b2)^2 + (a1*b2+b1*a2)^2. The witnesses are |a1*a2 - b1*b2| and a1*b2 + b1*a2. Use Nat subtraction with cases on whether a1*a2 ≤ b1*b2, then verify by zify and ring.
--/
 
 theorem sos_mul (m n : ℕ) (hm : isSumOfTwoSquares m) (hn : isSumOfTwoSquares n) :
     isSumOfTwoSquares (m * n) := by
@@ -448,6 +408,5 @@ theorem gravity_ai_axiom {X : Type*} (O : Oracle X) :
   · intro h; have := O.idem x; rw [h] at this; exact this.symm
   · intro h; rw [h, h]
 
-/-- **The Grand Theorem**: Every oracle is a gravitational truth-finder. -/
 
 end

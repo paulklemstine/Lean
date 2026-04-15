@@ -9,9 +9,9 @@ import Mathlib
 
 noncomputable section
 
+/-- The negation involution: N(x) = 1 − x (via eml(0, exp(x))). -/
 def emlNeg (x : ℝ) : ℝ := 1 - x
 
-/-- Iterated diagonal map. -/
 
 theorem eml_one_one : eml 1 1 = Real.exp 1 := by
   simp [eml, Real.log_one]
@@ -23,8 +23,6 @@ theorem eml_self_pair (x : ℝ) : eml x (Real.exp x) = Real.exp x - x := by
 
 theorem eml_power (x : ℝ) (n : ℕ) : eml (n * x) 1 = (Real.exp x) ^ n := by
   simp [eml, Real.log_one, Real.exp_nat_mul]
-
-/-! ## Section 2: Double Negation and Involution -/
 
 
 theorem emlNeg_involution (x : ℝ) : emlNeg (emlNeg x) = x := by
@@ -39,9 +37,8 @@ theorem eml_double_neg (x : ℝ) :
     eml 0 (Real.exp (eml 0 (Real.exp x))) = x := by
   simp [eml, Real.log_exp]
 
-/-! ## Section 3: Monotonicity -/
 
-
+/-- The self-pairing has a unique minimum at x = 0 with value σ(0) = 1. -/
 theorem emlSelfPair_min : ∀ x : ℝ, emlSelfPair x ≥ 1 := by
   intro x
   unfold emlSelfPair
@@ -50,8 +47,6 @@ theorem emlSelfPair_min : ∀ x : ℝ, emlSelfPair x ≥ 1 := by
 
 theorem emlSelfPair_min_achieved : emlSelfPair 0 = 1 := by
   simp [emlSelfPair]
-
-/-! ## Section 6: Derivatives and Calculus -/
 
 
 theorem eml_hasDerivAt_x (x y : ℝ) :
@@ -67,17 +62,15 @@ theorem eml_hasDerivAt_y (x y : ℝ) (hy : 0 < y) :
   have h := (hasDerivAt_const y (Real.exp x)).sub (Real.hasDerivAt_log hy.ne')
   simp only [zero_sub] at h; exact h
 
-/-- The second derivative ∂²eml/∂x² = exp(x) > 0 (convexity). -/
 
+/-- The second derivative ∂²eml/∂x² = exp(x) > 0 (convexity). -/
 theorem eml_second_deriv_x_pos (x : ℝ) : Real.exp x > 0 :=
   Real.exp_pos x
 
-/-- The second derivative ∂²eml/∂y² = 1/y² > 0 for y > 0 (convexity). -/
 
+/-- The second derivative ∂²eml/∂y² = 1/y² > 0 for y > 0 (convexity). -/
 theorem eml_second_deriv_y_pos (y : ℝ) (hy : 0 < y) : y⁻¹ ^ 2 > 0 := by
   positivity
-
-/-! ## Section 7: Magma Properties -/
 
 
 theorem eml_log_split (x y z : ℝ) (hy : 0 < y) (hz : 0 < z) :
@@ -94,14 +87,11 @@ theorem eml_exp_sum (x y : ℝ) :
     eml (x + y) 1 = Real.exp x * Real.exp y := by
   simp [eml, Real.log_one, Real.exp_add]
 
-/-! ## Section 9: Trace Theory -/
-
 
 theorem eml_antisymm (x y : ℝ) :
     eml x y - eml y x = (Real.exp x - Real.exp y) + (Real.log x - Real.log y) := by
   unfold eml; ring
 
-/-- The trace is always ≥ 2 for x, y > 0 (AM-GM connection). -/
 
 theorem eml_generates_e2 : eml 2 1 = Real.exp 2 := by simp [eml, Real.log_one]
 
@@ -109,27 +99,22 @@ theorem eml_generates_e2 : eml 2 1 = Real.exp 2 := by simp [eml, Real.log_one]
 theorem eml_generates_eee : eml (eml (eml 1 1) 1) 1 = Real.exp (Real.exp (Real.exp 1)) := by
   simp [eml, Real.log_one]
 
-/-- The EML zero: eml(1, e^e) = 0. -/
 
+/-- The EML zero: eml(1, e^e) = 0. -/
 theorem eml_zero : eml 1 (Real.exp (Real.exp 1)) = 0 := by
   simp [eml, Real.log_exp]
 
-/-- EML generates subtraction: eml(ln(a), exp(b)) = a − b for a > 0. -/
 
+/-- EML generates addition via double application. -/
 theorem eml_addition (a b : ℝ) (ha : 0 < a) :
     eml (Real.log a) (Real.exp (-b)) = a + b := by
   unfold eml; rw [Real.exp_log ha, Real.log_exp]; ring
 
-/-! ## Section 11: Information-Theoretic Connections -/
 
-/-- The EML entropy decomposition: for p > 0,
-    −p · ln(p) = p · eml(0, p) − p.
-    This connects Shannon entropy to EML. -/
-
+/-- σ(x) = eˣ − x is always positive. -/
 theorem emlSelfPair_pos (x : ℝ) : emlSelfPair x > 0 := by
   unfold emlSelfPair
   linarith [Real.add_one_le_exp x]
 
-/-- σ is strictly decreasing on (−∞, 0) and strictly increasing on (0, ∞). -/
 
 end

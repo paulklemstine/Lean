@@ -11,62 +11,47 @@ import Mathlib
 theorem norm_triangle' {E : Type*} [SeminormedAddCommGroup E] (x y : E) :
     ‖x + y‖ ≤ ‖x‖ + ‖y‖ := norm_add_le x y
 
-/-- Reverse triangle inequality. -/
 
+/-- Reverse triangle inequality. -/
 theorem norm_reverse_triangle' {E : Type*} [SeminormedAddCommGroup E] (x y : E) :
     |‖x‖ - ‖y‖| ≤ ‖x - y‖ := abs_norm_sub_norm_le x y
 
-/-- Norm of scalar multiplication. -/
 
+/-- Norm of scalar multiplication. -/
 theorem norm_smul_eq' {𝕜 E : Type*} [NontriviallyNormedField 𝕜]
     [SeminormedAddCommGroup E] [NormedSpace 𝕜 E] (c : 𝕜) (x : E) :
     ‖c • x‖ = ‖c‖ * ‖x‖ := norm_smul c x
 
-/-! ## Bounded Linear Maps -/
 
 /-- The operator norm is submultiplicative. -/
-
 theorem opnorm_comp_le' {E F G : Type*}
     [SeminormedAddCommGroup E] [SeminormedAddCommGroup F] [SeminormedAddCommGroup G]
     [NormedSpace ℝ E] [NormedSpace ℝ F] [NormedSpace ℝ G]
     (f : F →L[ℝ] G) (g : E →L[ℝ] F) :
     ‖f.comp g‖ ≤ ‖f‖ * ‖g‖ := ContinuousLinearMap.opNorm_comp_le f g
 
-/-- Identity operator has norm ≤ 1. -/
 
+/-- Identity operator has norm ≤ 1. -/
 theorem id_opnorm_le_one' {E : Type*}
     [SeminormedAddCommGroup E] [NormedSpace ℝ E] :
     ‖ContinuousLinearMap.id ℝ E‖ ≤ 1 := ContinuousLinearMap.norm_id_le
 
-/-! ## Cauchy-Schwarz in Inner Product Spaces -/
 
 /-- Cauchy-Schwarz inequality for inner product spaces. -/
-
 theorem cauchy_schwarz_inner' {E : Type*} [SeminormedAddCommGroup E]
     [InnerProductSpace ℝ E] (x y : E) :
     |@inner ℝ E _ x y| ≤ ‖x‖ * ‖y‖ :=
   abs_real_inner_le_norm x y
 
-/-! ## Completeness -/
 
 /-- ℝ is a complete metric space. -/
-
 theorem real_complete' : CompleteSpace ℝ := inferInstance
 
-/-- ℝⁿ is a complete metric space. -/
 
+/-- ℝⁿ is a complete metric space. -/
 theorem euclidean_complete' (n : ℕ) : CompleteSpace (EuclideanSpace ℝ (Fin n)) :=
   inferInstance
 
-/-! ## Banach Fixed Point Theorem -/
-
-/-
-PROBLEM
-A contraction on a complete metric space has a unique fixed point.
-
-PROVIDED SOLUTION
-This is the Banach contraction mapping theorem. The sequence x, f(x), f(f(x)), ... is Cauchy because dist(f^n x, f^(n+1) x) ≤ k^n * dist(x, f(x)), so the tail sums form a geometric series. Since the space is complete, the limit exists, and by continuity f(lim) = lim. Uniqueness follows from the contraction: if f(x)=x and f(y)=y, then dist(x,y) = dist(f(x),f(y)) ≤ k*dist(x,y), so (1-k)*dist(x,y) ≤ 0, giving x=y.
--/
 
 theorem banach_fixed_point' {X : Type*} [MetricSpace X] [CompleteSpace X]
     [Nonempty X] (f : X → X) (k : ℝ) (hk0 : 0 ≤ k) (hk1 : k < 1)

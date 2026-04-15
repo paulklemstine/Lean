@@ -12,59 +12,23 @@ theorem discrete_metric_triangle (α : Type*) [DecidableEq α] (x y z : α) :
     (if x = y then 0 else 1) + (if y = z then 0 else 1) := by
   grind +ring
 
-/-- ℝ is a complete metric space. -/
-example : CompleteSpace ℝ := inferInstance
-
-/-- ℝ is second countable. -/
-example : SecondCountableTopology ℝ := inferInstance
-
-/-! ## §2: Compactness -/
-
-/-- [0,1] is compact in ℝ. -/
 
 theorem closed_subset_compact' {α : Type*} [TopologicalSpace α]
     {K S : Set α} (hK : IsCompact K) (hS : IsClosed S) (hSK : S ⊆ K) :
     IsCompact S := by
   exact?
 
-/-! ## §3: Connectedness -/
 
 /-- ℝ is connected. -/
-example : ConnectedSpace ℝ := inferInstance
-
-/-
-PROBLEM
-[a,b] is connected for a ≤ b.
-
-PROVIDED SOLUTION
-Use isConnected_Icc from Mathlib with h.
--/
-
 theorem Icc_connected' (a b : ℝ) (h : a ≤ b) : IsConnected (Set.Icc a b) := by
   apply_rules [ isConnected_Icc ]
 
-/-
-PROBLEM
-The continuous image of a connected set is connected.
-
-PROVIDED SOLUTION
-Use IsConnected.image from Mathlib: hS.image f hf.continuousOn.
--/
 
 theorem connected_image' {α β : Type*} [TopologicalSpace α] [TopologicalSpace β]
     {f : α → β} {S : Set α} (hf : Continuous f) (hS : IsConnected S) :
     IsConnected (f '' S) := by
   exact hS.image _ hf.continuousOn
 
-/-! ## §4: Fixed Point Theorems -/
-
-/-
-PROBLEM
-Every continuous map [0,1] → [0,1] has a fixed point (Brouwer in 1D = IVT).
-
-PROVIDED SOLUTION
-Apply IVT to g(x) = f(x) - x. g(0) = f(0) - 0 ≥ 0 (since f(0) ∈ [0,1]). g(1) = f(1) - 1 ≤ 0 (since f(1) ∈ [0,1]). By IVT, ∃ x ∈ [0,1], g(x) = 0, i.e., f(x) = x. Use intermediate_value_Icc.
--/
 
 theorem integers_closed' : IsClosed (Set.range (Int.cast : ℤ → ℝ)) := by
   refine' isClosed_of_closure_subset fun x hx => _;
@@ -84,34 +48,16 @@ theorem integers_closed' : IsClosed (Set.range (Int.cast : ℤ → ℝ)) := by
   simp +zetaDelta at *;
   exact ⟨ h_const.choose, tendsto_nhds_unique ( by rw [ Filter.tendsto_congr' ( Filter.eventuallyEq_of_mem ( Filter.Ici_mem_atTop h_const.choose_spec.choose ) fun n hn => by rw [ ← hf, h_const.choose_spec.choose_spec n hn ] ) ] ; exact tendsto_const_nhds ) hy' ⟩
 
-/-
-PROBLEM
-The rationals are dense in ℝ.
-
-PROVIDED SOLUTION
-Use Rat.isDenseEmbedding_coe_real.dense or Rat.denseRange_ratCast from Mathlib.
--/
 
 theorem rationals_dense' : Dense (Set.range (Rat.cast : ℚ → ℝ)) := by
   convert Rat.denseRange_cast using 1;
   all_goals infer_instance
 
-/-! ## §6: Product Topology -/
 
 /-- Product of compact spaces is compact (Tychonoff for finite products). -/
-
 theorem product_compact' {α β : Type*} [TopologicalSpace α] [TopologicalSpace β]
     [CompactSpace α] [CompactSpace β] : CompactSpace (α × β) := inferInstance
 
-/-! ## §7: Cantor's Theorem -/
-
-/-
-PROBLEM
-Cantor's theorem: no surjection from a type to its power set.
-
-PROVIDED SOLUTION
-Use cantor_surjective from Mathlib, or directly: consider S = {x | x ∉ f(x)}, show S ∉ range(f).
--/
 
 theorem cantor_diagonal' {α : Type*} (f : α → Set α) : ¬ Function.Surjective f := by
   by_contra! h_surj;

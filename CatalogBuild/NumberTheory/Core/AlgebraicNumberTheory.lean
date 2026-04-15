@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: NumberTheory/Core
-Declarations: 9
+Declarations: 10
 -/
 
 import Mathlib
@@ -31,6 +31,7 @@ theorem qr_2_5 : ¬ ∃ x : ZMod 5, x ^ 2 = 2 := by
 -- Pell's equation
 
 theorem pell1 : (3 : ℤ) ^ 2 - 2 * 2 ^ 2 = 1 := by norm_num
+
 theorem pell_r (x y : ℤ) (h : x ^ 2 - 2 * y ^ 2 = 1) :
     (3 * x + 4 * y) ^ 2 - 2 * (2 * x + 3 * y) ^ 2 = 1 := by nlinarith
 

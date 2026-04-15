@@ -24,26 +24,12 @@ theorem powerset_fixed_point {α : Type*} (f : Set α → Set α)
     exact Set.subset_sInter fun T hT => hf ( Set.sInter_subset_of_mem hT ) |> Set.Subset.trans <| hT;
   exact h_contra S ( subset_antisymm h_fS_subset_S <| Set.sInter_subset_of_mem <| hf h_fS_subset_S )
 
-/-! ## Part II: Agent Beta — Diagonalization Barriers (Walls of Knowledge)
-
-Cantor's theorem and its descendants show that no finite system can
-fully comprehend itself. These are the fundamental barriers preventing
-any computable oracle from being truly "all-knowing."
--/
-
 
 theorem not_has_no_fixed_point : ¬ ∃ p : Prop, ¬p = p := by
   aesop
 
-/-! ## Part III: Agent Gamma — Mirrors, Involutions, and Duality
-
-Involutions (functions equal to their own inverse) are the mathematical
-formalization of "mirrors." They reveal deep symmetries in mathematical
-structures and connect to the idea of reality reflecting back on itself.
--/
 
 /-- An involution on a type: a function that is its own inverse. -/
-
 def IsInvolution {α : Type*} (f : α → α) : Prop := ∀ x, f (f x) = x
 
 
@@ -66,22 +52,12 @@ theorem double_negation_involution : IsInvolution (fun p : Prop => ¬¬p) := by
   -- By definition of negation, we know that ¬¬p is equivalent to p.
   simp [IsInvolution]
 
-/-! ## Part IV: Agent Delta — Iteration and Convergence
-
-Banach's contraction mapping theorem shows that in metric spaces,
-"shrinking" transformations always converge to a unique fixed point.
-This is the mathematical model for iterative computation approaching
-a stable answer — the closest thing to "converging toward an oracle."
--/
 
 /-- **Iterative convergence principle**: If a value is a fixed point of f,
 then it remains stable under iteration. -/
-
 theorem iteration_fixed_point {α : Type*} (f : α → α) (c : α)
     (h : f c = c) : f c = c := h
 
-/-- **Idempotent functions are "one-step oracles"**: applying them once
-gives you the answer, and applying them again changes nothing. -/
 
 theorem idempotent_range_fixed {α : Type*} (f : α → α) (hf : IsIdempotent f)
     (y : α) (hy : y ∈ range f) : f y = y := by
@@ -104,10 +80,10 @@ theorem knowledge_fixed_point {α : Type*} [CompleteLattice α]
     exact fun y hy => sInf_le hy;
   exact le_sInf fun x hx => hf ( h_sInf_le x hx ) |> le_trans <| hx
 
+
 /-- **Closure operators are idempotent, monotone, and extensive.**
 A closure operator models "completing our knowledge" — once we've
 derived all consequences, deriving again adds nothing new. -/
-
 structure ClosureOp (α : Type*) [Preorder α] where
   toFun : α → α
   monotone' : Monotone toFun
@@ -119,11 +95,11 @@ theorem closure_fixed_iff {α : Type*} [Preorder α] (c : ClosureOp α)
     (x : α) : c.toFun x = x ↔ x ∈ {y | c.toFun y = y} := by
   rfl
 
+
 /-- **Galois connections create paired fixed-point sets.**
 If (l, u) form a Galois connection, then u ∘ l and l ∘ u are closure
 operators whose fixed points are in bijection. This is the mathematical
 model of "dual oracles" — two perspectives that perfectly mirror each other. -/
-
 theorem galois_connection_closure {α β : Type*} [PartialOrder α] [Preorder β]
     (l : α → β) (u : β → α) (gc : GaloisConnection l u) :
     ∀ a, u (l (u (l a))) = u (l a) := by

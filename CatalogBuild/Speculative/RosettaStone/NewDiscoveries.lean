@@ -16,24 +16,17 @@ theorem idempotent_mul (e f : R) (he : e * e = e) (hf : f * f = f) :
     (e * f) * (e * f) = e * f := by
   rw [mul_mul_mul_comm, he, hf]
 
-/-
-PROBLEM
-e + f - ef is idempotent when e, f are idempotents (= "join").
-
-PROVIDED SOLUTION
-Expand (e + f - ef)(e + f - ef) using distributivity in a commutative ring, then use he: e*e=e and hf: f*f=f to simplify. The key computation: (e+f-ef)^2 = e^2 + f^2 + e^2f^2 + 2ef - 2e^2f - 2ef^2 = e + f + ef - 2ef - 2ef + 2e^2f^2... actually just use nlinarith or convert to show it with ring after substituting.
--/
 
 theorem idempotent_join (e f : R) (he : e * e = e) (hf : f * f = f) :
     (e + f - e * f) * (e + f - e * f) = e + f - e * f := by
   grind
 
-/-- The "zero" idempotent. -/
 
+/-- The "one" idempotent. -/
 theorem one_idempotent : (1 : R) * 1 = 1 := mul_one 1
 
-/-- Idempotent ordering is transitive: if ef = e and fg = f, then eg = e. -/
 
+/-- Idempotent ordering is transitive: if ef = e and fg = f, then eg = e. -/
 theorem idempotent_le_trans (e f g : R)
     (hef : e * f = e) (hfg : f * g = f) :
     e * g = e := by
@@ -42,8 +35,8 @@ theorem idempotent_le_trans (e f g : R)
     _ = e * f := by rw [hfg]
     _ = e := hef
 
-/-- Idempotent ordering is antisymmetric. -/
 
+/-- Idempotent ordering is antisymmetric. -/
 theorem idempotent_le_antisymm (e f : R)
     (hef : e * f = e) (hfe : f * e = f) :
     e = f := by
@@ -59,8 +52,8 @@ theorem newton_idempotent_step (e : R) :
   dsimp only
   ring
 
-/-- Newton refinement preserves exact idempotents. -/
 
+/-- Newton refinement preserves exact idempotents. -/
 theorem newton_preserves_idempotent (e : R) (he : e * e = e) :
     3 * e ^ 2 - 2 * e ^ 3 = e := by
   have h2 : e ^ 2 = e := by rw [sq, he]
@@ -74,8 +67,8 @@ theorem tropical_distrib_left (a b c : ℝ) :
     a + min b c = min (a + b) (a + c) := by
   simp [min_def]; split_ifs <;> linarith
 
-/-- Tropical distributivity (right). -/
 
+/-- Tropical distributivity (right). -/
 theorem tropical_distrib_right (a b c : ℝ) :
     min b c + a = min (b + a) (c + a) := by
   simp [min_def]; split_ifs <;> linarith
@@ -86,24 +79,25 @@ theorem fundamental_decomposition (e x : R) :
     x = e * x + (1 - e) * x := by
   simp [sub_mul, one_mul]
 
-/-- The two summands are orthogonal. -/
 
+/-- The two summands are orthogonal. -/
 theorem fundamental_orthogonality (e : R) (he : e * e = e) (y : R) :
     e * ((1 - e) * y) = 0 := by
   rw [← mul_assoc, mul_sub, mul_one, he, sub_self, zero_mul]
 
-/-- e acts as identity on eR. -/
 
+/-- e acts as identity on eR. -/
 theorem idempotent_acts_as_identity (e : R) (he : e * e = e) (x : R) :
     e * (e * x) = e * x := by rw [← mul_assoc, he]
 
 
+/-- The (1,1)-Peirce component is stable under left multiplication by e. -/
 theorem peirce_11_stable (e : R) (he : e * e = e) (x : R) :
     e * (e * x * e) = e * x * e := by
   rw [← mul_assoc, ← mul_assoc, he]
 
-/-- The (1,1)-Peirce component is stable under right multiplication by e. -/
 
+/-- The (1,1)-Peirce component is stable under right multiplication by e. -/
 theorem peirce_11_stable_right (e : R) (he : e * e = e) (x : R) :
     (e * x * e) * e = e * x * e := by
   rw [mul_assoc, he]

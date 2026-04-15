@@ -22,17 +22,17 @@ namespace PadicMobius
 
 variable {p : ℕ} [hp : Fact (Nat.Prime p)]
 
-/-- The determinant of a Möbius transformation. -/
 
+/-- The determinant of a Möbius transformation. -/
 noncomputable def det (M : PadicMobius p) : ℚ_[p] := M.a * M.d - M.b * M.c
 
-/-- Apply a Möbius transformation to an element of ℚ_p (when the denominator is nonzero). -/
 
+/-- Apply a Möbius transformation to an element of ℚ_p (when the denominator is nonzero). -/
 noncomputable def apply (M : PadicMobius p) (z : ℚ_[p]) (h : M.c * z + M.d ≠ 0) : ℚ_[p] :=
   (M.a * z + M.b) / (M.c * z + M.d)
 
-/-- The identity Möbius transformation. -/
 
+/-- The identity Möbius transformation. -/
 noncomputable def id : PadicMobius p where
   a := 1
   b := 0
@@ -40,9 +40,6 @@ noncomputable def id : PadicMobius p where
   d := 1
   det_ne_zero := by simp
 
-/-
-Composition of two Möbius transformations (matrix multiplication).
--/
 
 noncomputable def inv (M : PadicMobius p) : PadicMobius p where
   a := M.d
@@ -52,8 +49,8 @@ noncomputable def inv (M : PadicMobius p) : PadicMobius p where
   det_ne_zero := by
     convert M.det_ne_zero using 1 ; ring
 
-/-- A translation z ↦ z + t. -/
 
+/-- A translation z ↦ z + t. -/
 noncomputable def translation (t : ℚ_[p]) : PadicMobius p where
   a := 1
   b := t
@@ -61,8 +58,8 @@ noncomputable def translation (t : ℚ_[p]) : PadicMobius p where
   d := 1
   det_ne_zero := by simp
 
-/-- A scaling z ↦ s·z for s ≠ 0. -/
 
+/-- A scaling z ↦ s·z for s ≠ 0. -/
 noncomputable def scaling (s : ℚ_[p]) (hs : s ≠ 0) : PadicMobius p where
   a := s
   b := 0
@@ -70,8 +67,8 @@ noncomputable def scaling (s : ℚ_[p]) (hs : s ≠ 0) : PadicMobius p where
   d := 1
   det_ne_zero := by simp [hs]
 
-/-- The inversion z ↦ 1/z. -/
 
+/-- The inversion z ↦ 1/z. -/
 noncomputable def inversion : PadicMobius p where
   a := 0
   b := 1
@@ -79,47 +76,44 @@ noncomputable def inversion : PadicMobius p where
   d := 0
   det_ne_zero := by simp
 
-/-- The determinant of the identity is 1. -/
 
+/-- The determinant of the identity is 1. -/
 theorem det_id : (PadicMobius.id : PadicMobius p).det = 1 := by
   unfold det PadicMobius.id; ring
 
-/-- The determinant of a composition is the product of determinants. -/
 
+/-- The determinant of a composition is the product of determinants. -/
 theorem det_comp (M N : PadicMobius p) :
     (comp M N).det = M.det * N.det := by
   unfold det comp; ring
 
-/-- The determinant of the inverse. -/
 
+/-- The determinant of the inverse. -/
 theorem det_inv (M : PadicMobius p) :
     (inv M).det = M.det := by
   unfold det inv; ring
 
-/-- The identity acts trivially. -/
 
+/-- The identity acts trivially. -/
 theorem apply_id (z : ℚ_[p])
     (h : (PadicMobius.id : PadicMobius p).c * z + PadicMobius.id.d ≠ 0) :
     PadicMobius.id.apply z h = z := by
   unfold apply PadicMobius.id; simp
 
-/-- Translation applies correctly. -/
 
+/-- Translation applies correctly. -/
 theorem apply_translation (t z : ℚ_[p])
     (h : (translation t : PadicMobius p).c * z + (translation t).d ≠ 0) :
     (translation t).apply z h = z + t := by
   unfold apply translation; simp
 
-/-- Scaling applies correctly. -/
 
+/-- Scaling applies correctly. -/
 theorem apply_scaling (s : ℚ_[p]) (hs : s ≠ 0) (z : ℚ_[p])
     (h : (scaling s hs : PadicMobius p).c * z + (scaling s hs).d ≠ 0) :
     (scaling s hs).apply z h = s * z := by
   unfold apply scaling; simp
 
-/-! ## Section 2: Cross-Ratio -/
-
-/-- The p-adic cross-ratio of four points. -/
 
 theorem fixed_point_equation (M : PadicMobius p) (z : ℚ_[p]) (h : M.c * z + M.d ≠ 0) :
     IsFixedPoint M z h ↔ M.c * z ^ 2 + (M.d - M.a) * z - M.b = 0 := by
@@ -127,28 +121,28 @@ theorem fixed_point_equation (M : PadicMobius p) (z : ℚ_[p]) (h : M.c * z + M.
   unfold PadicMobius.apply;
   grind
 
-/-- The discriminant of the fixed point equation. -/
 
+/-- The discriminant of the fixed point equation. -/
 noncomputable def fixedPointDiscriminant (M : PadicMobius p) : ℚ_[p] :=
   (M.a - M.d) ^ 2 + 4 * M.b * M.c
 
-/-- The trace of a Möbius transformation. -/
 
+/-- The trace of a Möbius transformation. -/
 noncomputable def trace (M : PadicMobius p) : ℚ_[p] := M.a + M.d
 
-/-- The trace squared relates to the discriminant and determinant. -/
 
+/-- The trace squared relates to the discriminant and determinant. -/
 theorem trace_sq_and_discriminant (M : PadicMobius p) :
     M.fixedPointDiscriminant = M.trace ^ 2 - 4 * M.det := by
   unfold fixedPointDiscriminant trace det; ring
 
-/-- A transformation is parabolic iff its discriminant is zero. -/
 
+/-- A transformation is parabolic iff its discriminant is zero. -/
 def isParabolic (M : PadicMobius p) : Prop :=
   M.fixedPointDiscriminant = 0
 
-/-- A parabolic transformation satisfies trace² = 4·det. -/
 
+/-- A parabolic transformation satisfies trace² = 4·det. -/
 theorem parabolic_iff_trace (M : PadicMobius p) :
     M.isParabolic ↔ M.trace ^ 2 = 4 * M.det := by
   unfold isParabolic
@@ -157,35 +151,22 @@ theorem parabolic_iff_trace (M : PadicMobius p) :
   · intro h; exact sub_eq_zero.mp h
   · intro h; exact sub_eq_zero.mpr h
 
-/-! ## Section 4: Ultrametric Properties -/
-
-/-
-The p-adic norm satisfies the ultrametric inequality: ‖x + y‖ ≤ max ‖x‖ ‖y‖.
--/
 
 theorem padic_ultrametric (x y : ℚ_[p]) :
     ‖x + y‖ ≤ max ‖x‖ ‖y‖ := by
   exact Padic.nonarchimedean x y
 
-/-
-In p-adic geometry, "all triangles are isosceles": if ‖x‖ ≠ ‖y‖, then
-    ‖x + y‖ = max ‖x‖ ‖y‖.
--/
 
 theorem padic_isosceles (x y : ℚ_[p]) (h : ‖x‖ ≠ ‖y‖) :
     ‖x + y‖ = max ‖x‖ ‖y‖ := by
   exact Padic.add_eq_max_of_ne h
 
-/-- The p-adic norm of a product. -/
 
+/-- The p-adic norm of a product. -/
 theorem padic_norm_mul (x y : ℚ_[p]) :
     ‖x * y‖ = ‖x‖ * ‖y‖ :=
   norm_mul x y
 
-/-
-For a Möbius transformation with ‖c‖ < ‖d‖, the transformation maps
-    the unit disk {z : ‖z‖ ≤ 1} to itself.
--/
 
 theorem mobius_maps_unit_disk (M : PadicMobius p)
     (ha : ‖M.a‖ ≤ 1) (hb : ‖M.b‖ ≤ 1) (hc : ‖M.c‖ < 1) (hd : ‖M.d‖ = 1)
@@ -202,17 +183,11 @@ theorem mobius_maps_unit_disk (M : PadicMobius p)
   simp_all +decide [ PadicMobius.apply, norm_mul ];
   cases h_num <;> nlinarith [ norm_nonneg ( M.a ), norm_nonneg ( M.b ), norm_nonneg z ]
 
-/-! ## Section 5: P-adic Disks and Limit Sets -/
 
 /-- A p-adic disk (closed ball) in ℚ_p. -/
-
 def padicDisk (center : ℚ_[p]) (r : ℝ) : Set ℚ_[p] :=
   {z | ‖z - center‖ ≤ r}
 
-/-
-In the p-adic world, two disks are either disjoint or one contains the other.
-    This is a fundamental consequence of the ultrametric inequality.
--/
 
 theorem padic_disk_dichotomy (a b : ℚ_[p]) (r s : ℝ) (hr : 0 < r) (hs : 0 < s) :
     Disjoint (padicDisk a r) (padicDisk b s) ∨
@@ -222,8 +197,8 @@ theorem padic_disk_dichotomy (a b : ℚ_[p]) (r s : ℝ) (hr : 0 < r) (hs : 0 < 
   specialize this a b r s;
   grind
 
-/-- The orbit of a point under iteration of a Möbius transformation. -/
 
+/-- The orbit of a point under iteration of a Möbius transformation. -/
 noncomputable def orbit (M : PadicMobius p) (z₀ : ℚ_[p]) : ℕ → ℚ_[p]
   | 0 => z₀
   | n + 1 =>
@@ -232,23 +207,18 @@ noncomputable def orbit (M : PadicMobius p) (z₀ : ℚ_[p]) : ℕ → ℚ_[p]
     then M.apply zn h
     else z₀
 
-/-- The set of accumulation points of an orbit. -/
 
+/-- The set of accumulation points of an orbit. -/
 noncomputable def limitPoint (M : PadicMobius p) (z₀ : ℚ_[p]) : Set ℚ_[p] :=
   {w | ∀ ε > 0, ∃ n : ℕ, n > 0 ∧ ‖orbit M z₀ n - w‖ < ε}
 
-/-! ## Section 6: Conformality and the Derivative -/
 
 /-- The "derivative" of a Möbius transformation at a point z:
-    det(M)/(cz+d)². -/
-
+det(M)/(cz+d)². -/
 noncomputable def derivative (M : PadicMobius p) (z : ℚ_[p])
     (_h : M.c * z + M.d ≠ 0) : ℚ_[p] :=
   M.det / (M.c * z + M.d) ^ 2
 
-/-
-The chain rule for Möbius derivatives.
--/
 
 theorem derivative_comp (M N : PadicMobius p) (z : ℚ_[p])
     (hN : N.c * z + N.d ≠ 0)
@@ -264,18 +234,12 @@ theorem derivative_comp (M N : PadicMobius p) (z : ℚ_[p])
   · aesop;
   · aesop
 
-/-
-The p-adic norm of the derivative gives the local scaling factor.
--/
 
 theorem norm_derivative (M : PadicMobius p) (z : ℚ_[p]) (h : M.c * z + M.d ≠ 0) :
     ‖derivative M z h‖ = ‖M.det‖ / ‖M.c * z + M.d‖ ^ 2 := by
   unfold PadicMobius.derivative;
   rw [ norm_div, norm_pow ]
 
-/-
-A Möbius transformation preserves the p-adic metric up to the derivative factor.
--/
 
 theorem conformal_distortion (M : PadicMobius p)
     (z w : ℚ_[p])
@@ -287,26 +251,21 @@ theorem conformal_distortion (M : PadicMobius p)
     rw [ div_sub_div _ _ hzd hwd ] ; unfold PadicMobius.det ; ring;
   simp_all +decide [ mul_comm, mul_assoc, mul_left_comm, div_eq_mul_inv, mul_inv_rev ]
 
-/-! ## Section 7: The Bruhat-Tits Tree Connection -/
 
 /-- A vertex in the Bruhat-Tits tree is represented by a homothety class
-    of ℤ_p-lattices in ℚ_p². We model this abstractly. -/
-
+of ℤ_p-lattices in ℚ_p². We model this abstractly. -/
 structure BTVertex (p : ℕ) [Fact (Nat.Prime p)] where
   /-- Representative center in ℚ_p. -/
   center : ℚ_[p]
   /-- The "level" or scale parameter (as a ℤ-valued valuation). -/
   level : ℤ
 
-/-- Two vertices are adjacent in the Bruhat-Tits tree if they differ by one level. -/
 
+/-- Two vertices are adjacent in the Bruhat-Tits tree if they differ by one level. -/
 def BTAdjacent (v w : BTVertex p) : Prop :=
   (v.level - w.level = 1 ∨ v.level - w.level = -1) ∧
   ‖v.center - w.center‖ ≤ (p : ℝ) ^ (-min v.level w.level)
 
-/-
-PGL₂(ℚ_p) acts on the Bruhat-Tits tree, preserving adjacency.
--/
 
 theorem mobius_preserves_bt_adjacency (M : PadicMobius p)
     (v w : BTVertex p) (hadj : BTAdjacent v w)

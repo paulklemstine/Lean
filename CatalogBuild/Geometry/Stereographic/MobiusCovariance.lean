@@ -10,19 +10,11 @@ import Mathlib
 /-- The S matrix of the modular group. -/
 def modS : Matrix (Fin 2) (Fin 2) ℤ := !![0, -1; 1, 0]
 
-/-- The T matrix of the modular group. -/
 
+/-- The T matrix of the modular group. -/
 def modT : Matrix (Fin 2) (Fin 2) ℤ := !![1, 1; 0, 1]
 
-/-
-PROBLEM
-S² = -I in the modular group.
-
-PROVIDED SOLUTION
-ext i j; fin_cases i <;> fin_cases j <;> simp [modS, Matrix.mul_apply, Fin.sum_univ_two]
--/
 
 theorem sin_int_mul_pi (n : ℤ) : Real.sin (n * Real.pi) = 0 := by
   exact Real.sin_int_mul_pi n
 
-end Crystallization

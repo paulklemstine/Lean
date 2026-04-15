@@ -11,9 +11,9 @@ import Mathlib
 def trivialTriple' (N : ℕ) : ℤ × ℤ × ℤ :=
   (N, ((N : ℤ) ^ 2 - 1) / 2, ((N : ℤ) ^ 2 + 1) / 2)
 
-/-- The universal parent transform: unique parent in the Berggren tree.
-    Returns the parent triple (choosing the branch that gives positive components). -/
 
+/-- The universal parent transform: unique parent in the Berggren tree.
+Returns the parent triple (choosing the branch that gives positive components). -/
 def universalParent' (a b c : ℤ) : ℤ × ℤ × ℤ :=
   let c' := -2 * a - 2 * b + 3 * c
   -- B₁⁻¹: (a + 2b - 2c, -2a - b + 2c, c')
@@ -28,16 +28,16 @@ def universalParent' (a b c : ℤ) : ℤ × ℤ × ℤ :=
   else if a_opt3 > 0 && b1_opt2 > 0 then (a_opt3, b1_opt2, c')  -- B₃⁻¹
   else (a, b, c)  -- at root
 
-/-- Try to extract a factor of N from a triple's legs. -/
 
+/-- Try to extract a factor of N from a triple's legs. -/
 def tryFactor' (N : ℕ) (a b : ℤ) : Option ℕ :=
   let candidates := [a.natAbs, b.natAbs, (a - b).natAbs, (a + b).natAbs]
   candidates.findSome? fun v =>
     let g := Nat.gcd v N
     if 1 < g && g < N then some g else none
 
-/-- Factor N via parent descent. -/
 
+/-- Factor N via parent descent. -/
 def factorByParentDescent' (N : ℕ) (maxSteps : ℕ) : Option ℕ :=
   if N % 2 == 0 || N < 9 then none
   else
@@ -55,21 +55,8 @@ where
           let (pa, pb, pc) := universalParent' a b c
           go N pa pb pc fuel
 
-/-! ## Experiment 1: Factoring Small Semiprimes -/
-
-#eval factorByParentDescent' 15 100    -- 3 × 5
-#eval factorByParentDescent' 21 100    -- 3 × 7
-#eval factorByParentDescent' 33 100    -- 3 × 11
-#eval factorByParentDescent' 35 100    -- 5 × 7
-#eval factorByParentDescent' 77 100    -- 7 × 11
-#eval factorByParentDescent' 143 100   -- 11 × 13
-#eval factorByParentDescent' 221 100   -- 13 × 17
-#eval factorByParentDescent' 323 100   -- 17 × 19
-
-/-! ## Experiment 2: Depth of Factor Discovery -/
 
 /-- Count steps to find a factor. -/
-
 def stepsToFactor' (N : ℕ) (maxSteps : ℕ) : Option ℕ :=
   if N % 2 == 0 || N < 9 then none
   else
@@ -92,10 +79,8 @@ where
 #eval stepsToFactor' 143 200    -- 11 × 13
 #eval stepsToFactor' 323 200    -- 17 × 19
 
-/-! ## Experiment 3: Euclid Parameter Extraction -/
 
 /-- Compute the Euclid parameters (m, n) from a PPT (a, b, c). -/
-
 def euclidParams' (a b c : ℤ) : ℤ × ℤ :=
   let n_sq := (c - a) / 2
   let n := Int.sqrt n_sq.toNat
@@ -107,18 +92,4 @@ def euclidParams' (a b c : ℤ) : ℤ × ℤ :=
 #eval euclidParams' 7 24 25     -- (4, 3)
 #eval euclidParams' 21 20 29    -- (5, 2)
 #eval euclidParams' 15 8 17     -- (4, 1)
-
-/-! ## Research Findings Summary
-
-### Finding 1: Universal Hypotenuse Formula
-The parent hypotenuse c' = 3c - 2a - 2b is the SAME regardless of which
-branch (B₁⁻¹, B₂⁻¹, B₃⁻¹) is used.
-
-### Finding 2: GCD Factor Discovery
-At each descent step, gcd(leg, N) has a nonzero probability of revealing a factor.
-
-### Finding 3: Termination Guarantee
-The descent always terminates at (3,4,5) because the hypotenuse strictly
-decreases and remains positive.
--/
 

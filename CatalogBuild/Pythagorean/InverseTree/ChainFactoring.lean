@@ -7,42 +7,39 @@ Declarations: 33
 
 import Mathlib
 
+/-- All three inverse maps share the same hypotenuse formula. -/
 theorem inv_hyp_formula (a b c : ℤ) :
     (invB1 a b c).2.2 = -2*a - 2*b + 3*c ∧
     (invB2 a b c).2.2 = -2*a - 2*b + 3*c ∧
     (invB3 a b c).2.2 = -2*a - 2*b + 3*c := by
   simp [invB1, invB2, invB3]
 
-/-- The parent hypotenuse is strictly less than the child's. -/
 
+/-- The parent hypotenuse is strictly less than the child's. -/
 theorem parent_hyp_decrease (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
     (h : a ^ 2 + b ^ 2 = c ^ 2) :
     -2*a - 2*b + 3*c < c := by
   nlinarith [sq_nonneg (a + b - c)]
 
-/-- The parent hypotenuse is positive. -/
 
+/-- The hypotenuse decreases by exactly 2(a + b - c). -/
 theorem hyp_decrease_amount (a b c : ℤ) :
     c - (-2*a - 2*b + 3*c) = 2*(a + b) - 2*c := by ring
 
-/-! ### 1.4 Branch exclusivity -/
 
 /-- B₁⁻¹ and B₂⁻¹ cannot both have positive second components. -/
-
 theorem branch_exclusive_12 (a b c : ℤ)
     (h1 : 0 < (-2*a - b + 2*c))
     (h2 : 0 < (2*a + b - 2*c)) : False := by linarith
 
-/-- B₁⁻¹/B₂⁻¹ and B₃⁻¹ cannot both have positive first components. -/
 
+/-- B₁⁻¹/B₂⁻¹ and B₃⁻¹ cannot both have positive first components. -/
 theorem branch_exclusive_123 (a b c : ℤ)
     (h1 : 0 < (a + 2*b - 2*c))
     (h2 : 0 < (-a - 2*b + 2*c)) : False := by linarith
 
-/-! ## Section 2: The Recursive Chain Formula -/
 
 /-- The computable parent function: selects the correct inverse Berggren matrix. -/
-
 def parentTriple (t : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
   let (a, b, c) := t
   let (a1, b1, _c1) := invB1 a b c
@@ -52,29 +49,27 @@ def parentTriple (t : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
     if 0 < a2 && 0 < b2 then invB2 a b c
     else invB3 a b c
 
-/-- The chain function: f(d) = parent^d(t). -/
 
+/-- The chain function: f(d) = parent^d(t). -/
 def chainF (t : ℤ × ℤ × ℤ) : ℕ → ℤ × ℤ × ℤ
   | 0 => t
   | d + 1 => parentTriple (chainF t d)
 
-/-- f(0) = t. -/
 
+/-- f(0) = t. -/
 theorem chain_zero (t : ℤ × ℤ × ℤ) : chainF t 0 = t := rfl
 
-/-- f(d+1) = parent(f(d)). -/
 
+/-- f(d+1) = parent(f(d)). -/
 theorem chain_succ (t : ℤ × ℤ × ℤ) (d : ℕ) :
     chainF t (d + 1) = parentTriple (chainF t d) := rfl
 
-/-- The hypotenuse of a triple. -/
 
+/-- The hypotenuse of a triple. -/
 def tripleHyp (t : ℤ × ℤ × ℤ) : ℤ := t.2.2
 
-/-! ### 2.1 Chain preserves Pythagorean property -/
 
 /-- The parent triple preserves the Pythagorean property (for any branch). -/
-
 theorem parent_preserves_pyth_any_branch (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     let t := parentTriple (a, b, c)
     t.1 ^ 2 + t.2.1 ^ 2 = t.2.2 ^ 2 := by
@@ -85,16 +80,11 @@ theorem parent_preserves_pyth_any_branch (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 
     · exact invB2_preserves_pyth a b c h
     · exact invB3_preserves_pyth a b c h
 
-/-! ## Section 3: Factoring Connection -/
 
 /-- The trivial PPT for an odd N: (N, (N²-1)/2, (N²+1)/2). -/
-
 def trivialPPT (N : ℤ) : ℤ × ℤ × ℤ :=
   (N, (N ^ 2 - 1) / 2, (N ^ 2 + 1) / 2)
 
-/-
-The trivial PPT satisfies the Pythagorean equation when N is odd.
--/
 
 theorem trivial_ppt_is_pyth (N : ℤ) (hodd : N % 2 = 1) (hN : 1 < N) :
     let t := trivialPPT N
@@ -102,8 +92,6 @@ theorem trivial_ppt_is_pyth (N : ℤ) (hodd : N % 2 = 1) (hN : 1 < N) :
   simp only [trivialPPT]
   nlinarith [ Int.ediv_mul_cancel ( show 2 ∣ N ^ 2 + 1 from Int.dvd_of_emod_eq_zero ( by norm_num [ sq, Int.add_emod, Int.mul_emod, hodd ] ) ), Int.ediv_mul_cancel ( show 2 ∣ N ^ 2 - 1 from Int.dvd_of_emod_eq_zero ( by norm_num [ sq, Int.sub_emod, Int.mul_emod, hodd ] ) ) ]
 
-/-- The fundamental identity connecting Pythagorean triples to factoring:
-    if a² + b² = c², then (c - b)(c + b) = a². -/
 
 theorem trivial_ppt_diff (N : ℤ) (hodd : N % 2 = 1) :
     let t := trivialPPT N
@@ -111,9 +99,6 @@ theorem trivial_ppt_diff (N : ℤ) (hodd : N % 2 = 1) :
   simp only [trivialPPT]
   constructor <;> linarith [ Int.ediv_mul_cancel ( show 2 ∣ N ^ 2 + 1 from Int.dvd_of_emod_eq_zero ( by norm_num [ sq, Int.add_emod, Int.mul_emod, hodd ] ) ), Int.ediv_mul_cancel ( show 2 ∣ N ^ 2 - 1 from Int.dvd_of_emod_eq_zero ( by norm_num [ sq, Int.sub_emod, Int.mul_emod, hodd ] ) ) ]
 
-/-
-A same-parity divisor pair of N² gives a Pythagorean triple with leg N.
--/
 
 theorem divisor_pair_gives_triple_Z (N d e : ℤ)
     (hprod : d * e = N ^ 2) (hparity : (d + e) % 2 = 0) (hd_pos : 0 < d) (he_pos : 0 < e)
@@ -121,10 +106,6 @@ theorem divisor_pair_gives_triple_Z (N d e : ℤ)
     N ^ 2 + ((e - d) / 2) ^ 2 = ((e + d) / 2) ^ 2 := by
   cases abs_cases N <;> nlinarith [ Int.ediv_mul_cancel ( show 2 ∣ e - d from Int.dvd_of_emod_eq_zero ( by omega ) ), Int.ediv_mul_cancel ( show 2 ∣ e + d from Int.dvd_of_emod_eq_zero ( by omega ) ) ]
 
-/-
-For a composite N = p * q with p, q > 1 and both odd, there exists a nontrivial
-    same-parity factorization of N² besides 1 × N².
--/
 
 theorem composite_nontrivial_factorization (p q : ℤ) (hp : 1 < p) (hq : 1 < q)
     (hodd_p : p % 2 = 1) (hodd_q : q % 2 = 1) :
@@ -132,44 +113,14 @@ theorem composite_nontrivial_factorization (p q : ℤ) (hp : 1 < p) (hq : 1 < q)
     ∃ d e : ℤ, d * e = N ^ 2 ∧ 1 < d ∧ d < N ^ 2 ∧ (d + e) % 2 = 0 := by
   exact ⟨ p ^ 2, q ^ 2, by ring, one_lt_pow₀ hp two_ne_zero, by nlinarith [ pow_pos ( zero_lt_one.trans hp ) 2, pow_pos ( zero_lt_one.trans hq ) 2 ], by norm_num [ *, sq, Int.add_emod, Int.mul_emod ] ⟩
 
-/-! ## Section 4: Chain at Specific Depths — Computational Verification -/
-
--- The chain from (5, 12, 13) reaches (3, 4, 5) in 1 step
-#eval chainF (5, 12, 13) 0   -- (5, 12, 13)
-#eval chainF (5, 12, 13) 1   -- should be (3, 4, 5)
-
--- The chain from (21, 20, 29) reaches (3, 4, 5) in 1 step
-#eval chainF (21, 20, 29) 0  -- (21, 20, 29)
-#eval chainF (21, 20, 29) 1  -- should be (3, 4, 5)
-
--- The chain from (119, 120, 169) reaches (3, 4, 5) in 2 steps
-#eval chainF (119, 120, 169) 0  -- (119, 120, 169)
-#eval chainF (119, 120, 169) 1  -- (21, 20, 29)
-#eval chainF (119, 120, 169) 2  -- (3, 4, 5)
-
--- Factoring demo: N = 77 = 7 × 11
--- Trivial PPT: (77, 2964, 2965)
-#eval chainF (77, 2964, 2965) 0   -- (77, 2964, 2965)
-#eval chainF (77, 2964, 2965) 3   -- check for factor
-#eval Int.gcd (chainF (77, 2964, 2965) 3).2.1 77  -- should reveal 7
-
--- Factoring demo: N = 143 = 11 × 13
-#eval let N : ℤ := 143; trivialPPT N
-#eval let t := trivialPPT 143; chainF t 5
-#eval let t := trivialPPT 143; Int.gcd (chainF t 5).2.1 143
-
-/-! ## Section 5: The Depth Bound for Primes -/
 
 /-- For an odd prime p ≥ 5, the Berggren tree depth of the trivial PPT
-    is at most (p - 3) / 2. -/
-
+is at most (p - 3) / 2. -/
 theorem depth_bound_prime (p : ℕ) (hodd : p % 2 = 1) (hp5 : 5 ≤ p) :
     (p + 1) / 2 ≥ 2 ∧ (p + 1) / 2 - 2 = (p - 3) / 2 := by omega
 
-/-! ## Section 6: Lorentz Form Preservation -/
 
 /-- All three inverse Berggren matrices preserve the Lorentz form a² + b² - c². -/
-
 theorem invB1_lorentz_form (a b c : ℤ) :
     let t := invB1 a b c
     t.1 ^ 2 + t.2.1 ^ 2 - t.2.2 ^ 2 = a ^ 2 + b ^ 2 - c ^ 2 := by
@@ -187,8 +138,8 @@ theorem invB3_lorentz_form (a b c : ℤ) :
     t.1 ^ 2 + t.2.1 ^ 2 - t.2.2 ^ 2 = a ^ 2 + b ^ 2 - c ^ 2 := by
   simp only [invB3]; ring
 
-/-- All three forward Berggren matrices preserve the Lorentz form. -/
 
+/-- All three forward Berggren matrices preserve the Lorentz form. -/
 theorem fwdB1_lorentz_form (a b c : ℤ) :
     let t := fwdB1 a b c
     t.1 ^ 2 + t.2.1 ^ 2 - t.2.2 ^ 2 = a ^ 2 + b ^ 2 - c ^ 2 := by
@@ -206,11 +157,9 @@ theorem fwdB3_lorentz_form (a b c : ℤ) :
     t.1 ^ 2 + t.2.1 ^ 2 - t.2.2 ^ 2 = a ^ 2 + b ^ 2 - c ^ 2 := by
   simp only [fwdB3]; ring
 
-/-! ## Section 7: The Chain as a Factoring Oracle -/
 
 /-- GCD of the chain components with N at each depth.
-    This computes gcd(a_d, N) for the chain from triple t. -/
-
+This computes gcd(a_d, N) for the chain from triple t. -/
 def chainGcdA (t : ℤ × ℤ × ℤ) (N : ℤ) (d : ℕ) : ℤ :=
   Int.gcd (chainF t d).1 N
 
@@ -218,8 +167,8 @@ def chainGcdA (t : ℤ × ℤ × ℤ) (N : ℤ) (d : ℕ) : ℤ :=
 def chainGcdB (t : ℤ × ℤ × ℤ) (N : ℤ) (d : ℕ) : ℤ :=
   Int.gcd (chainF t d).2.1 N
 
-/-- The GCD always divides N. -/
 
+/-- The GCD always divides N. -/
 theorem chainGcdA_dvd_N (t : ℤ × ℤ × ℤ) (N : ℤ) (d : ℕ) :
     (chainGcdA t N d : ℤ) ∣ N := by
   simp [chainGcdA]
@@ -231,19 +180,15 @@ theorem chainGcdB_dvd_N (t : ℤ × ℤ × ℤ) (N : ℤ) (d : ℕ) :
   simp [chainGcdB]
   exact_mod_cast Int.gcd_dvd_right (chainF t d).2.1 N
 
-/-! ## Section 8: Factoring Composites via GCD at Depth -/
 
 /-- If gcd(a_d, N) is nontrivial, it gives a valid factor of N. -/
-
 theorem nontrivial_gcd_gives_factor (t : ℤ × ℤ × ℤ) (N : ℤ) (d : ℕ)
     (hgcd : 1 < chainGcdA t N d) (hgcd2 : chainGcdA t N d < N) :
     (chainGcdA t N d : ℤ) ∣ N ∧ 1 < chainGcdA t N d ∧ chainGcdA t N d < N :=
   ⟨chainGcdA_dvd_N t N d, hgcd, hgcd2⟩
 
-/-! ## Section 9: Concrete Factoring Verification -/
 
 /-- Verify: factoring N = 15 = 3 × 5 via the chain. -/
-
 theorem factor_15 : ∃ d : ℕ, d ≤ 10 ∧
     let t := trivialPPT 15
     let g := Int.gcd (chainF t d).2.1 15
@@ -251,8 +196,8 @@ theorem factor_15 : ∃ d : ℕ, d ≤ 10 ∧
   use 1
   native_decide
 
-/-- Verify: factoring N = 21 = 3 × 7 via the chain. -/
 
+/-- Verify: factoring N = 21 = 3 × 7 via the chain. -/
 theorem factor_21 : ∃ d : ℕ, d ≤ 10 ∧
     let t := trivialPPT 21
     let g := Int.gcd (chainF t d).2.1 21
@@ -260,8 +205,8 @@ theorem factor_21 : ∃ d : ℕ, d ≤ 10 ∧
   use 1
   native_decide
 
-/-- Verify: factoring N = 77 = 7 × 11 via the chain. -/
 
+/-- Verify: factoring N = 77 = 7 × 11 via the chain. -/
 theorem factor_77 : ∃ d : ℕ, d ≤ 10 ∧
     let t := trivialPPT 77
     let g := Int.gcd (chainF t d).2.1 77
@@ -269,8 +214,8 @@ theorem factor_77 : ∃ d : ℕ, d ≤ 10 ∧
   use 3
   native_decide
 
-/-- Verify: factoring N = 143 = 11 × 13 via the chain. -/
 
+/-- Verify: factoring N = 143 = 11 × 13 via the chain. -/
 theorem factor_143 : ∃ d : ℕ, d ≤ 10 ∧
     let t := trivialPPT 143
     let g := Int.gcd (chainF t d).2.1 143
@@ -278,8 +223,8 @@ theorem factor_143 : ∃ d : ℕ, d ≤ 10 ∧
   use 5
   native_decide
 
-/-- Verify: factoring N = 221 = 13 × 17 via the chain. -/
 
+/-- Verify: factoring N = 221 = 13 × 17 via the chain. -/
 theorem factor_221 : ∃ d : ℕ, d ≤ 10 ∧
     let t := trivialPPT 221
     let g := Int.gcd (chainF t d).2.1 221

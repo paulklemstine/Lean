@@ -41,9 +41,6 @@ theorem cross3_anti (u v : Fin 3 → ℝ) (i : Fin 3) :
 theorem dot3_comm (u v : Fin 3 → ℝ) : dot3 u v = dot3 v u := by
   simp [dot3, Fin.sum_univ_three]; ring
 
-/-
-3D SPB is NON-commutative.
--/
 
 theorem spb3_noncomm :
     ∃ u v : Fin 3 → ℝ, spb3 u v ≠ spb3 v u := by
@@ -54,9 +51,6 @@ theorem spb3_noncomm :
   unfold cross3 dot3; norm_num;
   norm_num [ Fin.sum_univ_succ ]
 
-/-
-The non-commutativity measures the Thomas-Wigner rotation.
--/
 
 theorem thomas_wigner_rotation (u v : Fin 3 → ℝ) (h : 1 - dot3 u v ≠ 0) (i : Fin 3) :
     spb3 u v i - spb3 v u i = 2 * cross3 u v i / (1 - dot3 u v) := by
@@ -78,6 +72,5 @@ theorem spb3_neg_right (u : Fin 3 → ℝ) : spb3 u (-u) = 0 := by
   ext i; norm_num [ spb3 ] ; ring;
   exact Or.inl ( cross3_neg_self u i )
 
-end
 
 end

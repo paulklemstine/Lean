@@ -34,8 +34,6 @@ def applyMoebius (p : MoebiusParams) (z : ℝ × ℝ) : ℝ × ℝ :=
   ((num.1 * den.1 + num.2 * den.2) / den_sq,
    (num.2 * den.1 - num.1 * den.2) / den_sq)
 
-/-! ## Part 2: Composition of Möbius Transforms -/
-
 
 def composeMoebius (p q : MoebiusParams) : MoebiusParams where
   a := (p.a.1 * q.a.1 - p.a.2 * q.a.2 + p.b.1 * q.c.1 - p.b.2 * q.c.2,
@@ -65,8 +63,6 @@ def idMoebius : MoebiusParams where
 theorem idMoebius_det : moebiusDet idMoebius = (1, 0) := by
   unfold moebiusDet idMoebius; norm_num
 
-/-! ## Part 3: Conformal Factor of Möbius Transforms -/
-
 
 def moebiusConfFactor (p : MoebiusParams) (z : ℝ × ℝ) : ℝ :=
   let den := (p.c.1 * z.1 - p.c.2 * z.2 + p.d.1,
@@ -81,8 +77,6 @@ theorem moebiusConfFactor_nonneg (p : MoebiusParams) (z : ℝ × ℝ) :
   apply div_nonneg
   · exact Real.sqrt_nonneg _
   · positivity
-
-/-! ## Part 4: Möbius-Parameterized Attention -/
 
 
 def moebiusAttentionHead (seqLen : ℕ) (T : ℝ)
@@ -101,8 +95,6 @@ def moebiusAttentionHead (seqLen : ℕ) (T : ℝ)
     (∑ j : Fin seqLen, (weights j / totalWeight) * (V j).1,
      ∑ j : Fin seqLen, (weights j / totalWeight) * (V j).2)
 
-/-! ## Part 5: Learnable Parameterization -/
-
 
 def learnableMoebiusParams (params : Fin 8 → ℝ) : MoebiusParams where
   a := (params 0, params 1)
@@ -113,9 +105,9 @@ def learnableMoebiusParams (params : Fin 8 → ℝ) : MoebiusParams where
 
 theorem moebius_param_dim : Fintype.card (Fin 8) = 8 := by simp
 
-/-- Standard linear attention uses d² parameters per projection.
-    Möbius attention uses only 8 parameters per head (in 2D). -/
 
+/-- Standard linear attention uses d² parameters per projection.
+Möbius attention uses only 8 parameters per head (in 2D). -/
 theorem moebius_param_efficiency (d : ℕ) (hd : 3 ≤ d) :
     8 ≤ d * d := by nlinarith
 

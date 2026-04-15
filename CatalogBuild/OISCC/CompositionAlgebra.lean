@@ -53,8 +53,8 @@ theorem L_op_strictAnti (a : ℝ) : StrictAntiOn (L_op a) (Set.Ioi 0) :=
 theorem L_op_zero (y : ℝ) : L_op 0 y = 1 - Real.log y := by
   simp [L_op, EML_comp]
 
-/-- The remarkable involution: L_a ∘ exp ∘ L_a = ln, for ALL a. -/
 
+/-- The remarkable involution: L_a ∘ exp ∘ L_a = ln, for ALL a. -/
 theorem L_op_involution (a y : ℝ) :
     L_op a (Real.exp (L_op a y)) = Real.log y := by
   simp [L_op, EML_comp, Real.log_exp]

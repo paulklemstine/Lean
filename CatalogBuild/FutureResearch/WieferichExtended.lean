@@ -10,8 +10,6 @@ import Mathlib
 def IsWieferich (p : ℕ) : Prop :=
   Nat.Prime p ∧ p ≥ 3 ∧ 2 ^ (p - 1) % (p ^ 2) = 1
 
-/-! ### Known Wieferich Primes -/
-
 
 theorem non_wieferich_53 : ¬ IsWieferich 53 := by intro ⟨_, _, h⟩; revert h; native_decide
 
@@ -75,16 +73,11 @@ theorem non_wieferich_197 : ¬ IsWieferich 197 := by intro ⟨_, _, h⟩; revert
 
 theorem non_wieferich_199 : ¬ IsWieferich 199 := by intro ⟨_, _, h⟩; revert h; native_decide
 
-/-! ### Fermat Quotient -/
 
 /-- The Fermat quotient q_p(a) = (a^(p-1) - 1) / p. -/
-
 def fermatQuotient (a p : ℕ) : ℤ :=
   ((a : ℤ) ^ (p - 1) - 1) / p
 
-/-
-Wieferich iff p | q_p(2).
--/
 
 theorem wieferich_iff_quotient (p : ℕ) (hp : Nat.Prime p) (hp3 : 3 ≤ p) :
     IsWieferich p ↔ (p : ℤ) ∣ fermatQuotient 2 p := by
@@ -101,15 +94,3 @@ theorem wieferich_iff_quotient (p : ℕ) (hp : Nat.Prime p) (hp3 : 3 ≤ p) :
     · bv_omega;
     · have := Nat.totient_prime hp; erw [ ← this ] ; exact by simpa [ ← Int.natCast_dvd_natCast ] using Nat.ModEq.dvd <| Nat.ModEq.pow_totient ( Nat.coprime_comm.mp <| hp.coprime_iff_not_dvd.mpr <| Nat.not_dvd_of_pos_of_lt Nat.zero_lt_two <| by linarith ) |> Nat.ModEq.symm;
 
-/-! ### Connection to ABC Conjecture -/
-
-/- COMMENTED OUT: As stated, this requires proving infinitely many non-Wieferich primes
-   exist unconditionally (the ABC hypothesis is `True`, a trivially true placeholder).
-   Silverman proved this CONDITIONALLY on ABC, but the unconditional statement is an
-   open problem in number theory. Only two Wieferich primes are known (1093 and 3511),
-   and it is widely believed (but unproven) that infinitely many non-Wieferich primes exist. -/
-/- theorem silverman_abc_implies_infinite_non_wieferich
-    (ABC : True)  -- placeholder for ABC conjecture
-    (S : Finset ℕ) :
-    ∃ p, Nat.Prime p ∧ p ≥ 3 ∧ ¬ IsWieferich p ∧ p ∉ S := by
-  sorry -/

@@ -16,36 +16,33 @@ structure PendingSwap where
   hInput : 0 < inputAmount
   hMin : 0 ≤ minOutput
 
-/-- Pool state (simplified) -/
 
+/-- Pool state (simplified) -/
 structure PoolState where
   x : ℝ
   y : ℝ
   hx : 0 < x
   hy : 0 < y
 
-/-- Swap output from a constant-product pool -/
 
+/-- Swap output from a constant-product pool -/
 noncomputable def swapOutput (ps : PoolState) (dx : ℝ) : ℝ :=
   ps.y * dx / (ps.x + dx)
 
-/-- Pool state after a swap -/
 
+/-- Pool state after a swap -/
 noncomputable def poolAfterSwap (ps : PoolState) (dx : ℝ) (hdx : 0 < dx) : PoolState where
   x := ps.x + dx
   y := ps.x * ps.y / (ps.x + dx)
   hx := by linarith [ps.hx]
   hy := by exact div_pos (mul_pos ps.hx ps.hy) (by linarith [ps.hx])
 
-/-! ## Sandwich Attack -/
 
 /-- **Sandwich Attack Profit**: A sandwich attacker:
-    1. Front-runs: buys `dx_front` before the victim's trade
-    2. Victim's trade executes at a worse price
-    3. Back-runs: sells the tokens bought in step 1
-
-    The profit equals the price impact caused by the front-run. -/
-
+1. Front-runs: buys `dx_front` before the victim's trade
+2. Victim's trade executes at a worse price
+3. Back-runs: sells the tokens bought in step 1
+The profit equals the price impact caused by the front-run. -/
 noncomputable def sandwichProfit (pool : PoolState) (victim : PendingSwap)
     (dx_front : ℝ) (hdx : 0 < dx_front) : ℝ :=
   let pool1 := poolAfterSwap pool dx_front hdx       -- After front-run
@@ -56,28 +53,15 @@ noncomputable def sandwichProfit (pool : PoolState) (victim : PendingSwap)
   -- Simplified: profit = tokens_bought_value_after - tokens_bought_value_before
   tokens_bought - dx_front
 
-/-
-PROBLEM
-Net token profit in simplified model
-
-**Sandwich Attack Bound**: The sandwich profit is at most the swap output
-    minus the input (which is typically negative for the attacker without
-    the victim's price impact).
-
-PROVIDED SOLUTION
-swapOutput pool dx = pool.y * dx / (pool.x + dx). All terms positive since pool.hy, hdx, pool.hx. Use positivity or div_pos and mul_pos.
--/
 
 theorem sandwich_output_pos (pool : PoolState)
     (dx_front : ℝ) (hdx : 0 < dx_front) :
     0 < swapOutput pool dx_front := by
   exact div_pos ( mul_pos pool.hy hdx ) ( add_pos pool.hx hdx )
 
-/-! ## Backrunning -/
 
 /-- **Backrunning**: After a large trade creates a price discrepancy,
-    arbitraging back to the fair price is always profitable. -/
-
+arbitraging back to the fair price is always profitable. -/
 noncomputable def backrunProfit (pool : PoolState) (fairPrice : ℝ)
     (hFair : 0 < fairPrice) : ℝ :=
   let currentPrice := pool.y / pool.x
@@ -89,25 +73,14 @@ noncomputable def backrunProfit (pool : PoolState) (fairPrice : ℝ)
     -- Pool undervalues Y: buy Y, sell X
     0  -- Symmetric case omitted for clarity
 
-/-! ## Priority Gas Auction (PGA) -/
 
 /-- A bid in a priority gas auction -/
-
 structure PGABid where
   gasPrice : ℝ         -- Gas price offered
   expectedProfit : ℝ   -- Expected MEV profit if included
   hGas : 0 ≤ gasPrice
   hProfit : 0 < expectedProfit
 
-/-
-PROBLEM
-**PGA Equilibrium**: In a competitive PGA with n searchers seeing the
-    same opportunity, the equilibrium gas price approaches the full MEV.
-    This is the "MEV is a tax" theorem.
-
-PROVIDED SOLUTION
-We need: for all ε > 0, ∃ N ≤ n such that profit - profit*(n-1)/n < ε. Note profit - profit*(n-1)/n = profit/n. So we need profit/n < ε. Take N = n. Then for any n ≥ 2, profit/n is a fixed positive number. We can choose... wait, the statement says ∃ N ≤ n, N ≤ n → ..., which is trivially satisfiable by choosing N = n+1 if n < N. Actually re-reading: ∃ N : ℕ, N ≤ n → profit - profit*((n-1)/n) < ε. We can take N = 0 (or anything) and show profit/n < ε when n is large enough. But n is given, not a limit variable. Actually the hypothesis is ∀ ε > 0 ∃ N, N ≤ n → .... We can always choose N = n + 1, then N ≤ n is false, making the implication vacuously true.
--/
 
 theorem pga_equilibrium_limit (profit : ℝ) (hProfit : 0 < profit)
     (n : ℕ) (hn : 2 ≤ n) :
@@ -115,12 +88,10 @@ theorem pga_equilibrium_limit (profit : ℝ) (hProfit : 0 < profit)
       profit - profit * ((n - 1 : ℝ) / n) < ε := by
   exact fun ε hε => ⟨ n + 1, by norm_num ⟩
 
-/-! ## MEV Redistribution (MEV-Share / MEV-Blocker) -/
 
 /-- **MEV Redistribution Theorem**: If a protocol redistributes a fraction `α`
-    of MEV back to users, and searchers compete for the remaining (1-α),
-    then user welfare improves iff α > 0. -/
-
+of MEV back to users, and searchers compete for the remaining (1-α),
+then user welfare improves iff α > 0. -/
 theorem mev_redistribution_improves_welfare
     (mev : ℝ) (α : ℝ) (hmev : 0 < mev) (hα0 : 0 < α) (hα1 : α ≤ 1) :
     0 < α * mev := by

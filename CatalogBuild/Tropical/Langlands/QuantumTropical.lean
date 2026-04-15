@@ -17,10 +17,8 @@ structure TropicalCrystal (n : ℕ) where
 
 def crystalDim (n : ℕ) (C : TropicalCrystal n) : ℕ := C.numElements
 
-/-! ## Section 2: Tropical R-matrix and Yang-Baxter -/
 
 /-- Tropical R-matrix: R(a,b) = (min(a,b), max(a,b)) -/
-
 def tropicalRMatrix (a b : ℝ) : ℝ × ℝ :=
   (min a b, max a b)
 
@@ -43,13 +41,11 @@ theorem rMatrix_idempotent (a b : ℝ) :
   -- By definition of the tropical R-matrix, we have:
   simp [tropicalRMatrix]
 
-/-- Sorting preserves the sum -/
 
+/-- Sorting preserves the sum -/
 theorem sort_preserves_sum (a b c : ℝ) :
     min a (min b c) + (a + b + c - min a (min b c) - max a (max b c)) + max a (max b c) = a + b + c := by
   ring
-
-/-! ## Section 3: Littelmann Path Model -/
 
 
 structure LittelmannPath (n : ℕ) where
@@ -72,8 +68,6 @@ theorem straightPath_endpoint (n : ℕ) (target : Fin n → ℝ) :
     pathEndpoint n (straightPath n target) = target := by
   exact?
 
-/-! ## Section 4: Tropical Tensor Product -/
-
 
 def tropicalTensorProduct (m n : ℕ) (u : Fin m → ℝ) (v : Fin n → ℝ) :
     Fin (m + n) → ℝ :=
@@ -85,8 +79,6 @@ theorem tensorProduct_sum (m n : ℕ) (u : Fin m → ℝ) (v : Fin n → ℝ) :
     (∑ i : Fin m, u i) + (∑ i : Fin n, v i) := by
   unfold tropicalTensorProduct;
   rw [ Fin.sum_univ_add ] ; aesop
-
-/-! ## Section 5: Crystal Character -/
 
 
 def crystalCharacter (n : ℕ) (C : TropicalCrystal n) : Fin n → ℤ :=
@@ -107,8 +99,6 @@ theorem tropicalCharValue_zero_point (n : ℕ) (wt : Fin n → ℤ) :
     tropicalCharValue n wt (fun _ => 0) = 0 := by
   simp [tropicalCharValue]
 
-/-! ## Section 6: Crystal Dimension -/
-
 
 def crystalDimension (n : ℕ) : ℕ := n
 
@@ -121,8 +111,6 @@ theorem crystalDim_add (m n : ℕ) :
 theorem crystalDim_mul (m n : ℕ) :
     crystalDimension (m * n) = crystalDimension m * crystalDimension n := by
   simp [crystalDimension]
-
-/-! ## Section 7: Tropical Kazhdan-Lusztig Theory -/
 
 
 def tropicalKLValue (n : ℕ) (s t : Equiv.Perm (Fin n)) : ℕ :=
@@ -137,8 +125,6 @@ theorem tropicalKL_diagonal (n : ℕ) (s : Equiv.Perm (Fin n)) :
 theorem tropicalKL_off_diagonal (n : ℕ) (s t : Equiv.Perm (Fin n)) (h : s ≠ t) :
     tropicalKLValue n s t = 0 := by
   simp [tropicalKLValue, h]
-
-/-! ## Section 8: Crystal Langlands Duality -/
 
 
 def crystalLanglandsDual (n : ℕ) (wt : Fin n → ℤ) : Fin n → ℤ :=

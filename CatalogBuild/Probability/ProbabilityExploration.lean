@@ -11,25 +11,15 @@ theorem dice_complement_1 : 1 - (5 : ℚ) / 6 = 1 / 6 := by norm_num
 
 theorem dice_complement_2 : 1 - (5 : ℚ) / 6 * (5 / 6) = 11 / 36 := by norm_num
 
-/-- Birthday problem approximation -/
 
+/-- Birthday problem approximation -/
 theorem birthday_approx : (23 : ℚ) * 22 / 2 > 182 := by norm_num
 
-end CountingProbability
-
-section DiscreteDistributions
-
-/-
-Expected value of a fair die (1-6) = 3.5
--/
 
 theorem fair_die_ev :
     (∑ i ∈ Finset.range 6, ((i : ℚ) + 1)) / 6 = 7 / 2 := by
   native_decide +revert
 
-/-
-Linearity of expectation
--/
 
 theorem linearity_expect (n : ℕ) (X Y : Fin n → ℚ) :
     ∑ i, (X i + Y i) = ∑ i, X i + ∑ i, Y i := by

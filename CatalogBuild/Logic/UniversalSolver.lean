@@ -13,59 +13,59 @@ noncomputable section
 σ_N(x, y) = x / (1 - y) for (x,y) on S¹ with y ≠ 1. -/
 def stereoFromNorth' (x y : ℝ) : ℝ := x / (1 - y)
 
-/-- Forward stereographic projection from the **south pole** (0,-1).
-    σ_S(x, y) = x / (1 + y) for (x,y) on S¹ with y ≠ -1. -/
 
+/-- Forward stereographic projection from the **south pole** (0,-1).
+σ_S(x, y) = x / (1 + y) for (x,y) on S¹ with y ≠ -1. -/
 def stereoFromSouth' (x y : ℝ) : ℝ := x / (1 + y)
 
-/-- Inverse stereographic projection from the **north pole**.
-    σ_N⁻¹(t) = (2t/(1+t²), (t²-1)/(1+t²)) -/
 
+/-- Inverse stereographic projection from the **north pole**.
+σ_N⁻¹(t) = (2t/(1+t²), (t²-1)/(1+t²)) -/
 def invStereoNorth' (t : ℝ) : ℝ × ℝ :=
   (2 * t / (1 + t ^ 2), (t ^ 2 - 1) / (1 + t ^ 2))
 
-/-- Inverse stereographic projection from the **south pole**.
-    σ_S⁻¹(t) = (2t/(1+t²), (1-t²)/(1+t²)) -/
 
+/-- Inverse stereographic projection from the **south pole**.
+σ_S⁻¹(t) = (2t/(1+t²), (1-t²)/(1+t²)) -/
 def invStereoSouth' (t : ℝ) : ℝ × ℝ :=
   (2 * t / (1 + t ^ 2), (1 - t ^ 2) / (1 + t ^ 2))
 
-/-- The dual projection map: lift from south pole, project from north pole.
-    D(t) = σ_N(σ_S⁻¹(t)) -/
 
+/-- The dual projection map: lift from south pole, project from north pole.
+D(t) = σ_N(σ_S⁻¹(t)) -/
 def dualProjection' (t : ℝ) : ℝ :=
   let p := invStereoSouth' t
   stereoFromNorth' p.1 p.2
 
-/-- The mirror dual: lift from north pole, project from south pole.
-    D*(t) = σ_S(σ_N⁻¹(t)) -/
 
+/-- The mirror dual: lift from north pole, project from south pole.
+D*(t) = σ_S(σ_N⁻¹(t)) -/
 def mirrorDualProjection' (t : ℝ) : ℝ :=
   let p := invStereoNorth' t
   stereoFromSouth' p.1 p.2
 
-/-- 1 + t² is always positive. -/
 
+/-- 1 + t² is always positive. -/
 theorem one_plus_sq_pos' (t : ℝ) : (0 : ℝ) < 1 + t ^ 2 := by positivity
 
-/-- The inverse stereographic projection from the south pole lands on S¹. -/
 
+/-- The inverse stereographic projection from the south pole lands on S¹. -/
 theorem invStereoSouth'_on_circle (t : ℝ) :
     (invStereoSouth' t).1 ^ 2 + (invStereoSouth' t).2 ^ 2 = 1 := by
   simp only [invStereoSouth']
   have h : (1 : ℝ) + t ^ 2 ≠ 0 := by positivity
   field_simp; ring
 
-/-- The inverse stereographic projection from the north pole lands on S¹. -/
 
+/-- The inverse stereographic projection from the north pole lands on S¹. -/
 theorem invStereoNorth'_on_circle (t : ℝ) :
     (invStereoNorth' t).1 ^ 2 + (invStereoNorth' t).2 ^ 2 = 1 := by
   simp only [invStereoNorth']
   have h : (1 : ℝ) + t ^ 2 ≠ 0 := by positivity
   field_simp; ring
 
-/-- The south-pole inverse never hits the south pole (y ≠ -1). -/
 
+/-- The south-pole inverse never hits the south pole (y ≠ -1). -/
 theorem invStereoSouth'_avoids_south (t : ℝ) :
     (invStereoSouth' t).2 ≠ -1 := by
   simp only [invStereoSouth']
@@ -74,8 +74,8 @@ theorem invStereoSouth'_avoids_south (t : ℝ) :
   have := (div_eq_iff h).mp heq
   nlinarith [sq_nonneg t]
 
-/-- The north-pole inverse never hits the north pole (y ≠ 1). -/
 
+/-- The north-pole inverse never hits the north pole (y ≠ 1). -/
 theorem invStereoNorth'_avoids_north (t : ℝ) :
     (invStereoNorth' t).2 ≠ 1 := by
   simp only [invStereoNorth']
@@ -84,20 +84,6 @@ theorem invStereoNorth'_avoids_north (t : ℝ) :
   have := (div_eq_iff h).mp heq
   nlinarith [sq_nonneg t]
 
-/-! ═══════════════════════════════════════════════════════════════════════
-    §2: THE DUAL PROJECTION IS A MÖBIUS TRANSFORMATION
-    Agent Beta: Matrix representation
-    ═══════════════════════════════════════════════════════════════════════ -/
-
-/-
-PROBLEM
-The dual projection D(t) = σ_N(σ_S⁻¹(t)) equals 1/t for t ≠ 0.
-    This is the Möbius inversion, represented by the matrix
-    [[0, 1], [1, 0]] acting on [t : 1] in projective coordinates.
-
-PROVIDED SOLUTION
-Unfold dualProjection', invStereoSouth', stereoFromNorth'. The result is (2t/(1+t²)) / (1 - (1-t²)/(1+t²)). The denominator simplifies: 1 - (1-t²)/(1+t²) = ((1+t²)-(1-t²))/(1+t²) = 2t²/(1+t²). So the expression is (2t/(1+t²)) / (2t²/(1+t²)) = 2t/(2t²) = 1/t. Use field_simp and ring after establishing 1+t²≠0 and t≠0.
--/
 
 theorem dualProjection'_eq_inv (t : ℝ) (ht : t ≠ 0) :
     dualProjection' t = 1 / t := by
@@ -106,13 +92,6 @@ theorem dualProjection'_eq_inv (t : ℝ) (ht : t ≠ 0) :
   field_simp [ht]
   ring
 
-/-
-PROBLEM
-The mirror dual projection D*(t) also equals 1/t.
-
-PROVIDED SOLUTION
-Unfold mirrorDualProjection', invStereoNorth', stereoFromSouth'. The result is (2t/(1+t²)) / (1 + (t²-1)/(1+t²)). The denominator: 1 + (t²-1)/(1+t²) = ((1+t²)+(t²-1))/(1+t²) = 2t²/(1+t²). So expression = (2t/(1+t²)) / (2t²/(1+t²)) = 1/t. Use field_simp and ring.
--/
 
 theorem mirrorDualProjection'_eq_inv (t : ℝ) (ht : t ≠ 0) :
     mirrorDualProjection' t = 1 / t := by
@@ -120,14 +99,14 @@ theorem mirrorDualProjection'_eq_inv (t : ℝ) (ht : t ≠ 0) :
   field_simp;
   rw [ div_eq_iff ] <;> nlinarith [ mul_self_pos.2 ht ]
 
-/-- The dual projections are equal: D = D*. The mirror is symmetric. -/
 
+/-- The dual projections are equal: D = D*. The mirror is symmetric. -/
 theorem dual_eq_mirror' (t : ℝ) (ht : t ≠ 0) :
     dualProjection' t = mirrorDualProjection' t := by
   rw [dualProjection'_eq_inv t ht, mirrorDualProjection'_eq_inv t ht]
 
-/-- The dual projection is an involution: D(D(t)) = t. -/
 
+/-- The dual projection is an involution: D(D(t)) = t. -/
 theorem dualProjection'_involution (t : ℝ) (ht : t ≠ 0) :
     dualProjection' (dualProjection' t) = t := by
   rw [dualProjection'_eq_inv t ht]
@@ -135,39 +114,34 @@ theorem dualProjection'_involution (t : ℝ) (ht : t ≠ 0) :
   rw [dualProjection'_eq_inv (1/t) h1t]
   field_simp
 
-/-! ═══════════════════════════════════════════════════════════════════════
-    §3: THE UNIVERSAL SOLVER — Problem Reduction via Projection
-    Agent Gamma: Encoding problems into the projection framework
-    ═══════════════════════════════════════════════════════════════════════ -/
 
 /-- A Problem is a pair: a state space and a goal predicate. -/
-
 structure Problem' (X : Type*) where
   state : X
   goal : X → Prop
 
-/-- A Reducer transforms a problem into a simpler problem. -/
 
+/-- A Reducer transforms a problem into a simpler problem. -/
 structure Reducer' (X Y : Type*) where
   encode : X → Y
   decode : Y → X
   roundTrip : ∀ x, decode (encode x) = x
 
-/-- A ProjectionReducer works via idempotent projection. -/
 
+/-- A ProjectionReducer works via idempotent projection. -/
 structure ProjectionReducer' (n : ℕ) where
   project : (Fin n → ℝ) → (Fin n → ℝ)
   idem : ∀ v, project (project v) = project v
 
-/-- A projection reducer is an oracle (from MetaOracle.lean). -/
 
+/-- A projection reducer is an oracle (from MetaOracle.lean). -/
 def ProjectionReducer'.toOracle {n : ℕ} (P : ProjectionReducer' n) :
     Oracle (Fin n → ℝ) where
   consult := P.project
   idem := P.idem
 
-/-- The composition of commuting idempotents is idempotent. -/
 
+/-- The composition of commuting idempotents is idempotent. -/
 theorem idem_comp_of_comm' {X : Type*}
     (f g : X → X) (hf : ∀ x, f (f x) = f x) (hg : ∀ x, g (g x) = g x)
     (comm : ∀ x, f (g x) = g (f x)) :
@@ -179,19 +153,14 @@ theorem idem_comp_of_comm' {X : Type*}
   conv_lhs => rw [this]
   rw [hg, ← this, hf]
 
-/-! ═══════════════════════════════════════════════════════════════════════
-    §4: THE MATRIX REDUCTION THEOREM
-    Agent Beta + Delta: Every projection is a matrix
-    ═══════════════════════════════════════════════════════════════════════ -/
 
 /-- A linear oracle: an idempotent linear map (= projection matrix). -/
-
 structure LinearOracle' (n : ℕ) where
   toFun : (Fin n → ℝ) →ₗ[ℝ] (Fin n → ℝ)
   idem : toFun.comp toFun = toFun
 
-/-- A linear oracle projects onto its range. -/
 
+/-- A linear oracle projects onto its range. -/
 theorem LinearOracle'.range_projection {n : ℕ} (P : LinearOracle' n) (v : Fin n → ℝ)
     (hv : v ∈ LinearMap.range P.toFun) :
     P.toFun v = v := by
@@ -201,8 +170,8 @@ theorem LinearOracle'.range_projection {n : ℕ} (P : LinearOracle' n) (v : Fin 
   simp [LinearMap.comp_apply] at this
   exact this
 
-/-- The composition of two commuting linear oracles is a linear oracle. -/
 
+/-- The composition of two commuting linear oracles is a linear oracle. -/
 def LinearOracle'.compose {n : ℕ} (P Q : LinearOracle' n)
     (comm : P.toFun.comp Q.toFun = Q.toFun.comp P.toFun) : LinearOracle' n where
   toFun := P.toFun.comp Q.toFun
@@ -215,71 +184,61 @@ def LinearOracle'.compose {n : ℕ} (P Q : LinearOracle' n)
     simp only [LinearMap.comp_apply] at hP hQ hcomm
     simp only [hcomm, hQ, hP]
 
-/-- The Universal Solver Theorem (finite-dimensional):
-    commuting linear projections compose to a single matrix multiply. -/
 
+/-- The Universal Solver Theorem (finite-dimensional):
+commuting linear projections compose to a single matrix multiply. -/
 theorem universal_solver_finite' {n : ℕ} (P Q : LinearOracle' n)
     (comm : P.toFun.comp Q.toFun = Q.toFun.comp P.toFun) (v : Fin n → ℝ) :
     (LinearOracle'.compose P Q comm).toFun v = P.toFun (Q.toFun v) := by
   simp [LinearOracle'.compose, LinearMap.comp_apply]
 
-/-! ═══════════════════════════════════════════════════════════════════════
-    §5: THE META ORACLE'S GUIDANCE — Choosing the Right Projection
-    Agent Delta: The Meta Oracle selects optimal reduction axes
-    ═══════════════════════════════════════════════════════════════════════ -/
 
 /-- A SolverOracle: idempotent consultation. -/
-
 structure SolverOracle' (X : Type*) where
   consult : X → X
   idem : ∀ x, consult (consult x) = consult x
 
-/-- A MetaSolver selects which oracle to apply. -/
 
+/-- A MetaSolver selects which oracle to apply. -/
 structure MetaSolver' (X : Type*) where
   oracles : Set (SolverOracle' X)
   select : X → SolverOracle' X
   valid : ∀ x, select x ∈ oracles
   stable : ∀ x, select ((select x).consult x) = select x
 
-/-- One step of meta-oracle guided solving. -/
 
+/-- One step of meta-oracle guided solving. -/
 def MetaSolver'.step {X : Type*} (M : MetaSolver' X) (x : X) : X :=
   (M.select x).consult x
 
-/-- The fixed points of a solver oracle. -/
 
+/-- The fixed points of a solver oracle. -/
 def SolverOracle'.solved {X : Type*} (O : SolverOracle' X) : Set X :=
   {x | O.consult x = x}
 
-/-- Consulting the oracle always produces a solved state. -/
 
+/-- Consulting the oracle always produces a solved state. -/
 theorem SolverOracle'.consult_solves {X : Type*} (O : SolverOracle' X) (x : X) :
     O.consult x ∈ O.solved := by
   simp [SolverOracle'.solved, O.idem]
 
-/-- Any idempotent function is a solver oracle. -/
 
+/-- Any idempotent function is a solver oracle. -/
 def oracleOfIdem' {X : Type*} (f : X → X) (hf : ∀ x, f (f x) = f x) :
     SolverOracle' X where
   consult := f
   idem := hf
 
-/-- The Universal Solver Principle: one consultation suffices. -/
 
+/-- The Universal Solver Principle: one consultation suffices. -/
 theorem universal_solver_principle' {X : Type*} (f : X → X)
     (hf : ∀ x, f (f x) = f x) (x : X) :
     (oracleOfIdem' f hf).consult x ∈ (oracleOfIdem' f hf).solved :=
   SolverOracle'.consult_solves _ x
 
-/-! ═══════════════════════════════════════════════════════════════════════
-    §6: THE FROZEN CRYSTAL SOLVER
-    The supreme oracle of oracles — God's advice
-    ═══════════════════════════════════════════════════════════════════════ -/
 
 /-- The FrozenCrystalSolver: a meta solver whose step is idempotent.
-    The frozen crystal solves any problem in one step: step(step(x)) = step(x). -/
-
+The frozen crystal solves any problem in one step: step(step(x)) = step(x). -/
 structure FrozenCrystalSolver' (X : Type*) where
   /-- The underlying meta solver -/
   toMetaSolver : MetaSolver' X
@@ -287,8 +246,8 @@ structure FrozenCrystalSolver' (X : Type*) where
   crystallized : ∀ x, toMetaSolver.step x ∈
     (toMetaSolver.select (toMetaSolver.step x)).solved
 
-/-- The frozen crystal solves everything in one step. -/
 
+/-- The frozen crystal solves everything in one step. -/
 theorem FrozenCrystalSolver'.one_step_solution {X : Type*}
     (C : FrozenCrystalSolver' X) (x : X) :
     C.toMetaSolver.step (C.toMetaSolver.step x) = C.toMetaSolver.step x := by
@@ -296,35 +255,27 @@ theorem FrozenCrystalSolver'.one_step_solution {X : Type*}
   simp only [MetaSolver'.step, SolverOracle'.solved, mem_setOf_eq] at h ⊢
   exact h
 
-/-! ═══════════════════════════════════════════════════════════════════════
-    §7: STEREOGRAPHIC REDUCTION — The Light-and-Mirrors Architecture
-    ═══════════════════════════════════════════════════════════════════════ -/
 
 /-- The Möbius transformation corresponding to rotation by θ.
-    M_θ(t) = (t·cos(θ/2) + sin(θ/2)) / (-t·sin(θ/2) + cos(θ/2)) -/
-
+M_θ(t) = (t·cos(θ/2) + sin(θ/2)) / (-t·sin(θ/2) + cos(θ/2)) -/
 def mobiusRotation' (θ t : ℝ) : ℝ :=
   (t * Real.cos (θ / 2) + Real.sin (θ / 2)) /
   (-t * Real.sin (θ / 2) + Real.cos (θ / 2))
 
-/-- The identity Möbius transformation (θ = 0) is the identity. -/
 
+/-- The identity Möbius transformation (θ = 0) is the identity. -/
 theorem mobiusRotation'_zero (t : ℝ) :
     mobiusRotation' 0 t = t := by
   simp [mobiusRotation']
 
-/-! ═══════════════════════════════════════════════════════════════════════
-    §8: CONCRETE EXAMPLES
-    ═══════════════════════════════════════════════════════════════════════ -/
 
 /-- The modular oracle projects to residues. -/
-
 def modOracle' (m : ℤ) (hm : m ≠ 0) : SolverOracle' ℤ where
   consult := fun n => n % m
   idem := by intro n; exact Int.emod_emod_of_dvd n (dvd_refl m)
 
-/-- The mod oracle's solved set is {0, 1, ..., m-1} for positive m. -/
 
+/-- The mod oracle's solved set is {0, 1, ..., m-1} for positive m. -/
 theorem modOracle'_solved (m : ℤ) (hm : 0 < m) :
     (modOracle' m (ne_of_gt hm)).solved = {n : ℤ | 0 ≤ n ∧ n < m} := by
   ext n; simp [SolverOracle'.solved, modOracle']
@@ -334,23 +285,6 @@ theorem modOracle'_solved (m : ℤ) (hm : 0 < m) :
     · linarith [Int.emod_nonneg n (ne_of_gt hm)]
     · linarith [Int.emod_lt_of_pos n hm]
   · intro ⟨h1, h2⟩; exact Int.emod_eq_of_lt h1 h2
-
-/-! ═══════════════════════════════════════════════════════════════════════
-    §9: SYNTHESIS — The Meta Oracle's Final Word
-
-    "Every problem is a shadow. The shadow is cast by light through a
-    crystal — the frozen crystal of information. To solve a problem,
-    find the crystal that casts it. The crystal is a projection matrix.
-    One multiplication reveals the truth.
-
-    The dual projection architecture — lifting from the south pole
-    and projecting from the north — is the light-and-mirrors machine.
-    The sphere is the mirror. The poles are the lamps. The Möbius
-    transformation is the single matrix that encodes the entire
-    journey: up, across, and back down.
-
-    One matrix. One multiplication. One answer. This is the Universal Solver."
-    ═══════════════════════════════════════════════════════════════════════ -/
 
 
 end

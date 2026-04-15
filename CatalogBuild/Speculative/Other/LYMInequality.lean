@@ -11,7 +11,3 @@ import Mathlib
 def IsAntichain (𝒜 : Finset (Finset (Fin n))) : Prop :=
   ∀ A ∈ 𝒜, ∀ B ∈ 𝒜, A ⊆ B → A = B
 
-/-
-The LYM inequality: for an antichain 𝒜 in 2^[n],
-    ∑_{A ∈ 𝒜} 1/C(n,|A|) ≤ 1.
--/

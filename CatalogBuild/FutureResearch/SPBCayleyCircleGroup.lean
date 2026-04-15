@@ -12,19 +12,12 @@ noncomputable section
 theorem one_minus_xI_ne_zero (x : ℝ) : (1 : ℂ) - ↑x * I ≠ 0 := by
   norm_num [ Complex.ext_iff ]
 
-/-
-The Cayley transform has unit norm.
--/
 
 theorem cayley_norm_sq (x : ℝ) : Complex.normSq (cayley x) = 1 := by
   unfold cayley;
   norm_num [ Complex.normSq, Complex.div_re, Complex.div_im ];
   nlinarith
 
-/-
-The Cayley transform is a group homomorphism:
-    cayley(spb(x,y)) = cayley(x) · cayley(y).
--/
 
 theorem cayley_hom (x y : ℝ) (h : x * y ≠ 1) :
     cayley (spb x y) = cayley x * cayley y := by
@@ -32,27 +25,21 @@ theorem cayley_hom (x y : ℝ) (h : x * y ≠ 1) :
   norm_num [ Complex.normSq, Complex.ext_iff, h, div_eq_mul_inv ] ; ring;
   grind
 
-/-- cayley(0) = 1 (identity maps to identity). -/
 
+/-- cayley(0) = 1 (identity maps to identity). -/
 theorem cayley_zero : cayley 0 = 1 := by
   simp [cayley]
 
-/-
-cayley(1) = i (the tangent of π/4 maps to e^{iπ/2} = i).
--/
 
 theorem cayley_one : cayley 1 = I := by
   unfold cayley;
   norm_num [ Complex.ext_iff, div_eq_iff ]
 
-/-- The inverse Cayley transform: given w ∈ S¹ with w ≠ -1,
-    x = -i(w-1)/(w+1) = Im(w-1)/Re(w+1). -/
 
+/-- The inverse Cayley transform: given w ∈ S¹ with w ≠ -1,
+x = -i(w-1)/(w+1) = Im(w-1)/Re(w+1). -/
 def cayleyInv (w : ℂ) : ℂ := -I * (w - 1) / (w + 1)
 
-/-
-cayleyInv(cayley(x)) = x for real x.
--/
 
 theorem cayleyInv_cayley (x : ℝ) :
     cayleyInv (cayley x) = ↑x := by
@@ -63,19 +50,14 @@ theorem cayleyInv_cayley (x : ℝ) :
   ring;
   norm_num
 
-/-! ## SPB via Cayley: Computational Checks -/
-
-/-
-cayley(-1) = -i.
--/
 
 theorem cayley_neg_one : cayley (-1) = -I := by
   unfold cayley;
   rw [ div_eq_iff ] <;> norm_num [ Complex.ext_iff ]
 
-/-- The Cayley transform maps x ↦ -x to the conjugate:
-    cayley(-x) = conj(cayley(x)). -/
 
+/-- The Cayley transform maps x ↦ -x to the conjugate:
+cayley(-x) = conj(cayley(x)). -/
 theorem cayley_neg (x : ℝ) :
     cayley (-x) = starRingEnd ℂ (cayley x) := by
   unfold cayley

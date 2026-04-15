@@ -10,16 +10,16 @@ import Mathlib
 theorem quadruple_2_3_6_7 : IsPythQuadruple 2 3 6 7 := by
   unfold IsPythQuadruple; norm_num
 
-/-- The Lorentz form Q₃₁ = diag(1,1,1,-1) for SO(3,1). -/
 
+/-- The Lorentz form Q₃₁ = diag(1,1,1,-1) for SO(3,1). -/
 def Q31 : Matrix (Fin 4) (Fin 4) ℤ :=
   !![1, 0, 0, 0; 0, 1, 0, 0; 0, 0, 1, 0; 0, 0, 0, -1]
 
 
 theorem det_Q31 : Matrix.det Q31 = -1 := by native_decide
 
-/-- The Lorentz form Q₂₁ = diag(1,1,-1) for SO(2,1). -/
 
+/-- The Lorentz form Q₂₁ = diag(1,1,-1) for SO(2,1). -/
 def Q21 : Matrix (Fin 3) (Fin 3) ℤ :=
   !![1, 0, 0; 0, 1, 0; 0, 0, -1]
 
@@ -33,15 +33,15 @@ def BB₁_adv : Matrix (Fin 3) (Fin 3) ℤ :=
 
 theorem BB₁_adv_preserves_Q21 : BB₁_advᵀ * Q21 * BB₁_adv = Q21 := by native_decide
 
-/-- Pythagorean quadruple parametrization. -/
 
+/-- Pythagorean quadruple parametrization. -/
 theorem quadruple_parametrization (p q r s : ℤ) :
     IsPythQuadruple (p^2 + q^2 - r^2 - s^2) (2*(p*s + q*r)) (2*(q*s - p*r))
       (p^2 + q^2 + r^2 + s^2) := by
   unfold IsPythQuadruple; ring
 
-/-- 7 is not a sum of three squares of natural numbers. -/
 
+/-- 7 is not a sum of three squares of natural numbers. -/
 theorem seven_not_three_squares : ¬ ∃ a b c : ℕ, a ^ 2 + b ^ 2 + c ^ 2 = 7 := by
   intro ⟨a, b, c, h⟩
   have ha : a ≤ 2 := by nlinarith
@@ -49,12 +49,10 @@ theorem seven_not_three_squares : ¬ ∃ a b c : ℕ, a ^ 2 + b ^ 2 + c ^ 2 = 7 
   have hc : c ≤ 2 := by nlinarith
   interval_cases a <;> interval_cases b <;> interval_cases c <;> omega
 
-/-- 14 is a sum of three squares. -/
 
+/-- 14 is a sum of three squares. -/
 theorem three_squares_14 : ∃ a b c : ℤ, a ^ 2 + b ^ 2 + c ^ 2 = 14 :=
   ⟨1, 2, 3, by norm_num⟩
-
-/-! ## Part 2: Spectral Gap and Descent Complexity -/
 
 
 theorem selberg_spectral_gap : (3 : ℚ) / 16 > 0 := by norm_num
@@ -69,9 +67,6 @@ theorem descent_depth_log_bound (c : ℕ) (hc : c ≥ 2) :
 
 theorem ppt_counting_constant_positive : (0 : ℝ) < 1 / (2 * Real.pi) := by positivity
 
-/-! ## Part 3: L-Functions and Dirichlet Characters -/
-
-/-- The character χ₋₄ mod 4. -/
 
 theorem chi_neg4_one : chi_neg4 1 = 1 := by simp [chi_neg4]
 
@@ -81,15 +76,12 @@ theorem chi_neg4_three : chi_neg4 3 = -1 := by simp [chi_neg4]
 
 theorem chi_neg4_five : chi_neg4 5 = 1 := by simp [chi_neg4]
 
-/-- χ₋₄ is periodic with period 4. -/
 
+/-- χ₋₄ is periodic with period 4. -/
 theorem chi_neg4_periodic (n : ℤ) : chi_neg4 (n + 4) = chi_neg4 n := by
   simp only [chi_neg4]
   split_ifs <;> omega
 
-/-
-χ₋₄ is multiplicative for odd inputs.
--/
 
 theorem chi_neg4_mult_odd (m n : ℤ) (hm : m % 2 = 1) (hn : n % 2 = 1) :
     chi_neg4 (m * n) = chi_neg4 m * chi_neg4 n := by
@@ -121,8 +113,6 @@ theorem prime_1mod4_is_hypotenuse (p : ℕ) (hp : Nat.Prime p) (hmod : p % 4 = 1
 theorem prime_3mod4_not_sum_of_squares (p : ℕ) (hp : Nat.Prime p) (hmod : p % 4 = 3) :
     ¬ ∃ a b : ℕ, a ^ 2 + b ^ 2 = p := by
   exact fun ⟨ a, b, h ⟩ ↦ by have := congr_arg ( · % 4 ) h; norm_num [ Nat.add_mod, Nat.pow_mod, hmod ] at this; have := Nat.mod_lt a zero_lt_four; have := Nat.mod_lt b zero_lt_four; interval_cases a % 4 <;> interval_cases b % 4 <;> contradiction;
-
-/-! ## Part 4: Quantum Computation and SU(1,1) -/
 
 
 def BM₁_adv : Matrix (Fin 2) (Fin 2) ℤ := !![2, -1; 1, 0]
@@ -176,9 +166,6 @@ def cayley_mat : Matrix (Fin 2) (Fin 2) ℤ := !![1, 1; 1, -1]
 
 theorem det_cayley_mat : Matrix.det cayley_mat = -2 := by native_decide
 
-/-! ## Part 5: The Hauptmodul — Modular Lambda Function -/
-
--- The modular curve X_θ = Γ_θ\ℍ* has genus 0.
 
 theorem genus_X_theta : (0 : ℕ) = 0 := rfl
 
@@ -217,8 +204,6 @@ theorem anharmonic_count : (6 : ℕ) = Nat.factorial 3 := by norm_num
 
 theorem S_action_on_lambda_at_i : 1 - (1 : ℚ) / 2 = (1 : ℚ) / 2 := by norm_num
 
-/-! ## Part 6: Cross-Cutting Results -/
-
 
 theorem trace_BM₃_adv_parabolic : Matrix.trace BM₃_adv = 2 := by native_decide
 
@@ -236,7 +221,7 @@ theorem berggren_farey_5_12_13 : (12 : ℚ) / (5 + 13) = 2 / 3 := by norm_num
 theorem det_product_BM₁_BM₃ :
     Matrix.det (BM₁_adv * BM₃_adv) = 1 := by native_decide
 
-/-- Euclid parametrization always produces Pythagorean triples. -/
 
+/-- Euclid parametrization always produces Pythagorean triples. -/
 theorem euclid_param_is_pyth' (m n : ℤ) :
     (m ^ 2 - n ^ 2) ^ 2 + (2 * m * n) ^ 2 = (m ^ 2 + n ^ 2) ^ 2 := by ring

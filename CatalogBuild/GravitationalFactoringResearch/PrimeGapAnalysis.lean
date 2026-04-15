@@ -13,15 +13,15 @@ theorem prime_gaps_max_100 :
       ∃ q ∈ (Finset.Ioc p (p + 8)).filter Nat.Prime, True := by
   native_decide
 
-/-- No prime gap exceeds 20 for primes up to 1000. -/
 
+/-- No prime gap exceeds 20 for primes up to 1000. -/
 theorem prime_gaps_max_1000 :
     ∀ p ∈ (Finset.Icc 2 983).filter Nat.Prime,
       ∃ q ∈ (Finset.Ioc p (p + 20)).filter Nat.Prime, True := by
   native_decide
 
-/-- There exist prime gaps of every even size 2, 4, 6, 8, 14, 18, 20. -/
 
+/-- There exist prime gaps of every even size 2, 4, 6, 8, 14, 18, 20. -/
 theorem prime_gap_sizes_exist :
     -- gap 1: 2→3
     (Nat.Prime 2 ∧ Nat.Prime 3 ∧ 3 - 2 = 1) ∧
@@ -43,12 +43,6 @@ theorem prime_gap_sizes_exist :
          ⟨?_, ?_, ?_⟩, ⟨?_, ?_, ?_⟩, ⟨?_, ?_, ?_⟩, ⟨?_, ?_, ?_⟩⟩ <;>
     first | decide | native_decide | omega
 
-/-! ### Prime deserts (arbitrarily long gaps) -/
-
-/-
-For any k, there exist k consecutive composite numbers:
-    (k+1)! + 2, (k+1)! + 3, ..., (k+1)! + (k+1) are all composite.
--/
 
 theorem prime_desert (k : ℕ) (hk : 2 ≤ k) :
     ∀ j ∈ Finset.Icc 2 k, ¬ Nat.Prime ((k + 1).factorial + j) := by
@@ -59,30 +53,26 @@ theorem prime_desert (k : ℕ) (hk : 2 ≤ k) :
   rw [ Nat.prime_def_lt' ];
   exact fun h => h.2 _ hj1 ( by linarith [ Nat.self_le_factorial ( k + 1 ) ] ) ( Nat.dvd_add h_div ( dvd_refl _ ) )
 
-/-! ### Gap distribution counts -/
 
 /-- Twin prime pairs (gap 2) up to 1000. -/
-
 theorem gap2_count_1000 :
     ((Finset.range 999).filter (fun p => Nat.Prime p ∧ Nat.Prime (p + 2))).card = 35 := by
   native_decide
 
-/-- Cousin prime pairs (gap 4) up to 1000. -/
 
+/-- Cousin prime pairs (gap 4) up to 1000. -/
 theorem gap4_count_1000 :
     ((Finset.range 997).filter (fun p => Nat.Prime p ∧ Nat.Prime (p + 4))).card = 41 := by
   native_decide
 
-/-- Sexy prime pairs (gap 6) up to 1000. -/
 
+/-- Sexy prime pairs (gap 6) up to 1000. -/
 theorem gap6_count_1000 :
     ((Finset.range 995).filter (fun p => Nat.Prime p ∧ Nat.Prime (p + 6))).card = 74 := by
   native_decide
 
-/-! ### First occurrence of each gap size -/
 
 /-- First occurrence of gap sizes. -/
-
 theorem first_gap_occurrences :
     (Nat.Prime 2 ∧ Nat.Prime 3) ∧
     (Nat.Prime 3 ∧ Nat.Prime 5) ∧
@@ -91,12 +81,10 @@ theorem first_gap_occurrences :
     (Nat.Prime 89 ∧ Nat.Prime 97) := by
   refine ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩⟩ <;> decide
 
-/-! ### Cramér's conjecture evidence -/
 
 /-- Cramér's conjecture states that prime gaps satisfy g(p) = O((log p)²).
-    For primes up to 1000, the maximum gap is 20, while (ln 1000)² ≈ 47.7.
-    The ratio gap/(log p)² is well below 1 for all primes in this range. -/
-
+For primes up to 1000, the maximum gap is 20, while (ln 1000)² ≈ 47.7.
+The ratio gap/(log p)² is well below 1 for all primes in this range. -/
 theorem cramer_evidence :
     -- Max gap 20 at p = 887, and 20 < 48 ≈ (ln 1000)²
     (20 : ℕ) < 48 := by omega

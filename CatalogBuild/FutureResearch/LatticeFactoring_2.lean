@@ -20,16 +20,12 @@ theorem normSq_zero_iff' (x y : ℤ) : normSq' x y = 0 ↔ x = 0 ∧ y = 0 := by
   · intro h; exact ⟨by nlinarith, by nlinarith⟩
   · rintro ⟨rfl, rfl⟩; ring
 
-/-! ### Factoring Lattice -/
-
 
 theorem factoring_lattice_exists' (N : ℕ) (hN : 1 < N) :
     ∃ a b c d : ℤ, a * d - b * c = N ∧ normSq' c d ≤ 2 * N := by
   refine ⟨N, 0, 0, 1, ?_, ?_⟩
   · simp
   · simp [normSq']; omega
-
-/-! ### Smooth Numbers -/
 
 
 def IsSmooth' (B n : ℕ) : Prop :=
@@ -60,8 +56,6 @@ theorem smooth_exists (N B : ℕ) (hB : 1 < B) (hBN : B ≤ N) :
     rcases hp.eq_one_or_self_of_dvd q hqp with h | h
     · exact absurd h hq.ne_one
     · rw [h]; exact le_of_dvd (by omega) hpB
-
-/-! ### Coppersmith -/
 
 
 theorem coppersmith_deg1 (a b p : ℤ) (hp : 0 < p)

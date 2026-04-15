@@ -21,13 +21,6 @@ theorem adaptive_feedback_convergence
   simp_all +decide [ h_fixed_point.choose_spec ];
   exact dist_le_zero.mp ( le_of_not_gt fun h => by nlinarith [ show ( K : ℝ ) < 1 from mod_cast hf.1, show ( 0 : ℝ ) ≤ dist x h_fixed_point.choose from dist_nonneg ] )
 
-/-! ## Section 2: Composition of Signal Transports -/
-
-/-
-Composing two Lipschitz signal transport maps yields a Lipschitz map
-    whose constant is the product of the individual constants.
-    This enables modular pipeline design in ECSTASIS.
--/
 
 theorem transport_composition_lipschitz
     {α β γ : Type*} [PseudoEMetricSpace α] [PseudoEMetricSpace β] [PseudoEMetricSpace γ]
@@ -36,13 +29,6 @@ theorem transport_composition_lipschitz
     LipschitzWith (Kg * Kf) (g ∘ f) := by
   exact hg.comp hf
 
-/-! ## Section 3: Self-Repair via Knaster-Tarski -/
-
-/-
-A monotone self-repair operator on a complete lattice has a least fixed point.
-    This is the mathematical foundation of AutoHeal: any monotone repair
-    function on the software state lattice converges to a stable state.
--/
 
 theorem self_repair_fixed_point
     {α : Type*} [CompleteLattice α] (f : α →o α) :
@@ -56,24 +42,11 @@ theorem self_repair_fixed_point
     refine' f.monotone _;
     exact le_sInf fun x hx => f.monotone ( sInf_le hx ) |> le_trans <| hx
 
-/-! ## Section 4: Entropy Bounds for Signal Processing -/
-
-/-
-For any finite probability distribution, each term of the Shannon entropy
-    sum is non-negative (when p_i ∈ [0,1]). Combined these give H ≥ 0.
--/
 
 theorem shannon_entropy_term_nonneg (p : ℝ) (hp0 : 0 ≤ p) (hp1 : p ≤ 1) :
     0 ≤ -(p * Real.log p) := by
   by_cases h : p = 0 <;> simpa [ h ] using by nlinarith [ Real.log_nonpos hp0 hp1 ] ;
 
-/-! ## Section 5: Convergence of Iterative Refinement -/
-
-/-
-Iterating a Lipschitz map, the distance to a fixed point is bounded by
-    K^n times the initial distance. This quantifies how fast adaptive
-    feedback loops in ECSTASIS stabilize.
--/
 
 theorem iterative_refinement_geometric_convergence
     {α : Type*} [PseudoEMetricSpace α]
@@ -85,13 +58,6 @@ theorem iterative_refinement_geometric_convergence
   · simp +decide;
   · simpa [ hfix, pow_succ', mul_assoc, Function.iterate_succ_apply', mul_left_comm ] using hf.edist_le_mul _ _ |> le_trans <| mul_le_mul_left' ih K
 
-/-! ## Section 6: Collaborative Generation — Consensus -/
-
-/-
-In a convex combination of n agent outputs in a real normed space,
-    the result lies in the convex hull. This models multi-user
-    collaborative generation: blending outputs preserves validity.
--/
 
 theorem collaborative_convex_combination
     {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]

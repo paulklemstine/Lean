@@ -13,32 +13,18 @@ theorem one_square_identity (a b : ℤ) :
     a^2 * b^2 = (a * b)^2 := by
   ring
 
-/-! ## The 2-Square Identity (Dimension 2: Complex numbers / Gaussian integers) -/
 
-/-
-PROBLEM
-Brahmagupta-Fibonacci: the 2-square identity
-
-PROVIDED SOLUTION
-ring
--/
-
+/-- The stereographic projection maps a point on the unit sphere to the plane.
+For the circle S¹ ⊂ ℝ², this maps (x,y) with x²+y²=1 to t = y/(1-x). -/
 noncomputable def stereo_proj (x y : ℝ) (hx : x ≠ 1) : ℝ :=
   y / (1 - x)
 
-/-- The inverse stereographic projection maps t ∈ ℝ to a point on S¹.
-    t ↦ ((t²-1)/(t²+1), 2t/(t²+1)) -/
 
+/-- The inverse stereographic projection maps t ∈ ℝ to a point on S¹.
+t ↦ ((t²-1)/(t²+1), 2t/(t²+1)) -/
 noncomputable def inv_stereo_proj (t : ℝ) : ℝ × ℝ :=
   ((t^2 - 1) / (t^2 + 1), 2 * t / (t^2 + 1))
 
-/-
-PROBLEM
-The inverse stereographic projection lands on the unit circle
-
-PROVIDED SOLUTION
-Unfold inv_stereo_proj and compute: ((t²-1)/(t²+1))² + (2t/(t²+1))² = ((t²-1)² + 4t²)/(t²+1)² = (t⁴-2t²+1+4t²)/(t²+1)² = (t⁴+2t²+1)/(t²+1)² = (t²+1)²/(t²+1)² = 1. Need to show t²+1 ≠ 0 for reals, which follows from t² ≥ 0.
--/
 
 theorem rational_stereo_gives_pyth (p q : ℤ) (hq : q ≠ 0) (hp : (p : ℚ) / q ≠ 0) :
     (p^2 - q^2)^2 + (2*p*q)^2 = (p^2 + q^2)^2 := by

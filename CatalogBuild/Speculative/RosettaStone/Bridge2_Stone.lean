@@ -10,38 +10,34 @@ import Mathlib
 /-- Every element is idempotent under ∧. -/
 theorem boolean_inf_idempotent (a : α) : a ⊓ a = a := inf_idem a
 
-/-- Every element is idempotent under ∨. -/
 
+/-- Every element is idempotent under ∨. -/
 theorem boolean_sup_idempotent (a : α) : a ⊔ a = a := sup_idem a
 
-/-- Double complement. -/
 
+/-- Double complement. -/
 theorem boolean_compl_compl (a : α) : aᶜᶜ = a := compl_compl a
 
-/-- De Morgan (inf). -/
 
+/-- De Morgan (inf). -/
 theorem boolean_de_morgan_inf (a b : α) : (a ⊓ b)ᶜ = aᶜ ⊔ bᶜ := compl_inf
 
-/-- De Morgan (sup). -/
 
+/-- De Morgan (sup). -/
 theorem boolean_de_morgan_sup (a b : α) : (a ⊔ b)ᶜ = aᶜ ⊓ bᶜ := compl_sup
 
-/-- a ∨ ¬a = ⊤. -/
 
+/-- a ∨ ¬a = ⊤. -/
 theorem boolean_sup_compl_top (a : α) : a ⊔ aᶜ = ⊤ := sup_compl_eq_top
 
-/-- a ∧ ¬a = ⊥. -/
 
+/-- a ∧ ¬a = ⊥. -/
 theorem boolean_inf_compl_bot (a : α) : a ⊓ aᶜ = ⊥ := inf_compl_eq_bot
 
-/-- Distributivity. -/
 
+/-- Distributivity. -/
 theorem boolean_inf_sup_distrib (a b c : α) : a ⊓ (b ⊔ c) = (a ⊓ b) ⊔ (a ⊓ c) :=
   inf_sup_left a b c
-
-end BooleanIdempotency
-
-section PropLogic
 
 
 theorem prop_and_idempotent (P : Prop) : P ∧ P ↔ P :=
@@ -53,10 +49,6 @@ theorem prop_or_idempotent (P : Prop) : P ∨ P ↔ P :=
 
 
 theorem prop_em (P : Prop) : P ∨ ¬P := Classical.em P
-
-end PropLogic
-
-section FiniteBoolAlg
 
 
 theorem bool_and_idem : ∀ b : Bool, (b && b) = b := by

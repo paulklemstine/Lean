@@ -15,21 +15,10 @@ theorem markov_inequality_nat (f : ℕ → ℝ) (w : ℕ → ℝ) (n : ℕ) (hn 
       rw [ le_div_iff₀ ha, mul_comm ];
       rw [ Finset.mul_sum _ _ _ ] ; exact Finset.sum_le_sum fun i _ => by split_ifs <;> nlinarith [ hw i, hf i ] ;
 
-/-! ## Section 2: Entropy and Information -/
-
-/-
-PROBLEM
-log is monotone on positive reals.
-
-PROVIDED SOLUTION
-Use Real.log_le_log_of_le or show monotoneOn directly. For 0 < x ≤ y, log x ≤ log y.
--/
 
 theorem log_monotone_on : MonotoneOn (fun x : ℝ => Real.log x) (Set.Ioi 0) := by
   exact fun x hx y hy hxy => Real.log_le_log hx hxy
 
-/-- The binary entropy function H(p) = -p log p - (1-p) log (1-p) is maximized at p = 1/2.
-    We prove a simpler property: symmetry H(p) = H(1-p). -/
 
 theorem binary_entropy_symmetric (p : ℝ) :
     binaryEntropy p = binaryEntropy (1 - p) := by

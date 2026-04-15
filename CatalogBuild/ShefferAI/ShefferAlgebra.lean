@@ -18,51 +18,49 @@ inductive ShefferExpr : Type where
   | affine_comb (α β γ : ℝ) (e₁ e₂ : ShefferExpr) : ShefferExpr  -- αe₁ + βe₂ + γ
   | comp (e₁ e₂ : ShefferExpr) : ShefferExpr  -- e₁ ∘ e₂
 
-/-- Evaluate a Sheffer expression at a point -/
 
+/-- Evaluate a Sheffer expression at a point -/
 def ShefferExpr.eval : ShefferExpr → ℝ → ℝ
   | .base => softplus
   | .affine_pre a b e => fun x => e.eval (a * x + b)
   | .affine_comb α β γ e₁ e₂ => fun x => α * e₁.eval x + β * e₂.eval x + γ
   | .comp e₁ e₂ => fun x => e₁.eval (e₂.eval x)
 
-/-- The depth of a Sheffer expression -/
 
+/-- The depth of a Sheffer expression -/
 def ShefferExpr.depth : ShefferExpr → ℕ
   | .base => 1
   | .affine_pre _ _ e => e.depth
   | .affine_comb _ _ _ e₁ e₂ => max e₁.depth e₂.depth
   | .comp e₁ e₂ => e₁.depth + e₂.depth
 
-/-- The width of a Sheffer expression (number of base activations) -/
 
+/-- The width of a Sheffer expression (number of base activations) -/
 def ShefferExpr.width : ShefferExpr → ℕ
   | .base => 1
   | .affine_pre _ _ e => e.width
   | .affine_comb _ _ _ e₁ e₂ => e₁.width + e₂.width
   | .comp e₁ e₂ => e₁.width + e₂.width
 
-/-! ## The Sheffer Algebra as a Set -/
 
 /-- The Sheffer algebra: the set of all functions representable as Sheffer expressions -/
-
 def ShefferAlgebra : Set (ℝ → ℝ) :=
   { f | ∃ e : ShefferExpr, f = e.eval }
 
-/-- Softplus is in the Sheffer algebra -/
 
+/-- Softplus is in the Sheffer algebra -/
 theorem softplus_mem_sheffer : softplus ∈ ShefferAlgebra :=
   ⟨ShefferExpr.base, rfl⟩
 
-/-- The Sheffer algebra is closed under affine pre-composition -/
 
+/-- The Sheffer algebra is closed under affine pre-composition -/
 theorem sheffer_affine_pre_closed {f : ℝ → ℝ} (hf : f ∈ ShefferAlgebra) (a b : ℝ) :
     (fun x => f (a * x + b)) ∈ ShefferAlgebra := by
   obtain ⟨e, he⟩ := hf
   exact ⟨ShefferExpr.affine_pre a b e, by ext x; simp [ShefferExpr.eval, he]⟩
 
-/-- The Sheffer algebra is closed under affine combination -/
 
+/-- The Sheffer algebra is closed under affine combination -/
 theorem sheffer_affine_comb_closed {f g : ℝ → ℝ} (hf : f ∈ ShefferAlgebra)
     (hg : g ∈ ShefferAlgebra) (α β γ : ℝ) :
     (fun x => α * f x + β * g x + γ) ∈ ShefferAlgebra := by
@@ -70,8 +68,8 @@ theorem sheffer_affine_comb_closed {f g : ℝ → ℝ} (hf : f ∈ ShefferAlgebr
   obtain ⟨e₂, he₂⟩ := hg
   exact ⟨ShefferExpr.affine_comb α β γ e₁ e₂, by ext x; simp [ShefferExpr.eval, he₁, he₂]⟩
 
-/-- The Sheffer algebra is closed under composition -/
 
+/-- The Sheffer algebra is closed under composition -/
 theorem sheffer_comp_closed {f g : ℝ → ℝ} (hf : f ∈ ShefferAlgebra)
     (hg : g ∈ ShefferAlgebra) :
     (fun x => f (g x)) ∈ ShefferAlgebra := by
@@ -79,19 +77,17 @@ theorem sheffer_comp_closed {f g : ℝ → ℝ} (hf : f ∈ ShefferAlgebra)
   obtain ⟨e₂, he₂⟩ := hg
   exact ⟨ShefferExpr.comp e₁ e₂, by ext x; simp [ShefferExpr.eval, he₁, he₂]⟩
 
-/-! ## Key functions in the Sheffer algebra -/
 
 /-- Constants are in the Sheffer algebra -/
-
 theorem const_mem_sheffer (c : ℝ) : (fun _ : ℝ => c) ∈ ShefferAlgebra := by
   have h := softplus_mem_sheffer
   have := sheffer_affine_comb_closed h h 1 (-1) c
   convert this using 1
   ext x; ring
 
-/-- The identity function is in the Sheffer algebra:
-    x = σ(x) - σ(-x) (by the reflection identity σ(x) - x = σ(-x)) -/
 
+/-- The identity function is in the Sheffer algebra:
+x = σ(x) - σ(-x) (by the reflection identity σ(x) - x = σ(-x)) -/
 theorem id_mem_sheffer : (fun x : ℝ => x) ∈ ShefferAlgebra := by
   have hσ := softplus_mem_sheffer
   have hσ_neg := sheffer_affine_pre_closed hσ (-1) 0
@@ -102,14 +98,10 @@ theorem id_mem_sheffer : (fun x : ℝ => x) ∈ ShefferAlgebra := by
   have := softplus_reflection x
   linarith
 
-/-! ## Sheffer Degree -/
 
 /-- The Sheffer degree of a function: the minimum depth needed to represent it -/
-
 noncomputable def shefferDegree (f : ℝ → ℝ) : ℕ∞ :=
   ⨅ (e : ShefferExpr) (_ : f = e.eval), (e.depth : ℕ∞)
-
-end
 
 
 end

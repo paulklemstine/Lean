@@ -18,38 +18,33 @@ theorem orthogonal_complement_antimono
     K₂ᗮ ≤ K₁ᗮ :=
   Submodule.orthogonal_le h
 
-/-- **Theorem 22 (Double orthogonal complement).**
-    For a closed subspace with orthogonal projection, Kᗮᗮ = K. -/
 
+/-- **Theorem 22 (Double orthogonal complement).**
+For a closed subspace with orthogonal projection, Kᗮᗮ = K. -/
 theorem double_orthogonal_eq
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]
     (K : Submodule ℂ E) [K.HasOrthogonalProjection] :
     Kᗮᗮ = K :=
   Submodule.orthogonal_orthogonal K
 
-/-- **Theorem 23 (Orthogonal complement decomposition).**
-    Every vector decomposes as v = P_K(v) + P_{K⊥}(v), i.e. K ⊔ K⊥ = ⊤. -/
 
+/-- **Theorem 23 (Orthogonal complement decomposition).**
+Every vector decomposes as v = P_K(v) + P_{K⊥}(v), i.e. K ⊔ K⊥ = ⊤. -/
 theorem orthogonal_complement_spans_top
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]
     (K : Submodule ℂ E) [K.HasOrthogonalProjection] :
     K ⊔ Kᗮ = ⊤ :=
   Submodule.sup_orthogonal_of_hasOrthogonalProjection
 
-/-- **Theorem 24 (Orthogonal complement disjointness).**
-    K ⊓ K⊥ = ⊥: a vector orthogonal to itself in an inner product space is zero. -/
 
+/-- **Theorem 24 (Orthogonal complement disjointness).**
+K ⊓ K⊥ = ⊥: a vector orthogonal to itself in an inner product space is zero. -/
 theorem orthogonal_complement_disjoint
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]
     (K : Submodule ℂ E) :
     Disjoint K Kᗮ :=
   Submodule.orthogonal_disjoint K
 
-/-
-**Theorem 25 (Orthomodular law).**
-    If K ≤ L (both with orthogonal projections), then L = K ⊔ (L ⊓ Kᗮ).
-    This is the orthomodular law, distinguishing quantum logic from Boolean logic.
--/
 
 theorem orthomodular_law
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]
@@ -65,20 +60,18 @@ theorem orthomodular_law
     exact ⟨ y, z, hyK, ⟨ by simpa using L.sub_mem hx ( hKL z ), hzK ⟩, rfl ⟩;
   · aesop
 
-/-- **Theorem 26 (De Morgan for orthogonal complements).**
-    (K₁ ⊔ K₂)ᗮ = K₁ᗮ ⊓ K₂ᗮ — meets and joins dualize under orthocomplementation. -/
 
+/-- **Theorem 26 (De Morgan for orthogonal complements).**
+(K₁ ⊔ K₂)ᗮ = K₁ᗮ ⊓ K₂ᗮ — meets and joins dualize under orthocomplementation. -/
 theorem orthogonal_complement_sup
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]
     (K₁ K₂ : Submodule ℂ E) :
     (K₁ ⊔ K₂)ᗮ = K₁ᗮ ⊓ K₂ᗮ :=
   (Submodule.inf_orthogonal K₁ K₂).symm
 
-/-! ## Part 2: Density Operators and Self-Adjoint Maps -/
 
 /-- **Theorem 27 (Adjoint inner product identity).**
-    ⟨A†y, x⟩ = ⟨y, Ax⟩ — the defining property of the adjoint. -/
-
+⟨A†y, x⟩ = ⟨y, Ax⟩ — the defining property of the adjoint. -/
 theorem adjoint_inner_left'
     {E F : Type*} [NormedAddCommGroup E] [NormedAddCommGroup F]
     [InnerProductSpace ℂ E] [InnerProductSpace ℂ F]
@@ -87,10 +80,6 @@ theorem adjoint_inner_left'
     @inner ℂ E _ (adjoint A y) x = @inner ℂ F _ y (A x) :=
   ContinuousLinearMap.adjoint_inner_left A x y
 
-/-
-**Theorem 28 (Adjoint is involutive).**
-    (A†)† = A — taking the adjoint twice returns the original operator.
--/
 
 theorem adjoint_adjoint'
     {E F : Type*} [NormedAddCommGroup E] [NormedAddCommGroup F]
@@ -100,10 +89,6 @@ theorem adjoint_adjoint'
     adjoint (adjoint A) = A := by
   exact?
 
-/-
-**Theorem 29 (Self-adjoint operators have real expectation values).**
-    If A = A†, then ⟨Av, v⟩ is real (imaginary part is zero).
--/
 
 theorem self_adjoint_real_inner
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]
@@ -117,10 +102,6 @@ theorem self_adjoint_real_inner
     rw [ ← ContinuousLinearMap.adjoint_inner_right, hA ];
   rw [ ← inner_conj_symm, ← Complex.conj_eq_iff_im ] at * ; aesop
 
-/-
-**Theorem 30 (Norm of adjoint equals norm of operator).**
-    ‖A†‖ = ‖A‖ — the adjoint preserves operator norm.
--/
 
 theorem adjoint_norm_eq'
     {E F : Type*} [NormedAddCommGroup E] [NormedAddCommGroup F]
@@ -130,11 +111,9 @@ theorem adjoint_norm_eq'
     ‖adjoint A‖ = ‖A‖ := by
   simp_all +decide [ ContinuousLinearMap.adjointAux, ContinuousLinearMap.ext_iff ]
 
-/-! ## Part 3: Quantum Channels -/
 
 /-- **Theorem 31 (Quantum channel norm-boundedness).**
-    A bounded linear map satisfies ‖Tv‖ ≤ ‖T‖ · ‖v‖ for all v. -/
-
+A bounded linear map satisfies ‖Tv‖ ≤ ‖T‖ · ‖v‖ for all v. -/
 theorem quantum_channel_norm_bound
     {E F : Type*} [NormedAddCommGroup E] [NormedAddCommGroup F]
     [NormedSpace ℂ E] [NormedSpace ℂ F]
@@ -142,20 +121,15 @@ theorem quantum_channel_norm_bound
     ‖T v‖ ≤ ‖T‖ * ‖v‖ :=
   T.le_opNorm v
 
-/-- **Theorem 32 (Identity channel has norm 1).**
-    The identity map on a nontrivial space has operator norm 1. -/
 
+/-- **Theorem 32 (Identity channel has norm 1).**
+The identity map on a nontrivial space has operator norm 1. -/
 theorem identity_channel_norm
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]
     [Nontrivial E] :
     ‖ContinuousLinearMap.id ℂ E‖ = 1 :=
   ContinuousLinearMap.norm_id
 
-/-
-**Theorem 33 (Contractive channel iteration convergence).**
-    If ‖T‖ < 1 then ‖T^n v‖ → 0 for all v: iterating a strictly
-    contractive channel drives any state toward 0.
--/
 
 theorem contractive_channel_convergence
     {E : Type*} [NormedAddCommGroup E] [NormedSpace ℂ E]
@@ -169,10 +143,6 @@ theorem contractive_channel_convergence
     · simpa only [ pow_succ' ] using le_trans ( ContinuousLinearMap.opNorm_comp_le _ _ ) ( mul_le_mul_of_nonneg_left ih ( norm_nonneg _ ) );
   exact squeeze_zero ( fun _ => norm_nonneg _ ) ( fun n => ContinuousLinearMap.le_opNorm _ _ |> le_trans <| mul_le_mul_of_nonneg_right ( h_norm_pow n ) <| norm_nonneg _ ) <| by simpa using Filter.Tendsto.mul ( tendsto_pow_atTop_nhds_zero_of_lt_one ( norm_nonneg _ ) hT ) tendsto_const_nhds;
 
-/-
-**Theorem 34 (Adjoint preserves composition).**
-    (T₂ ∘ T₁)† = T₁† ∘ T₂† — adjoints reverse composition order.
--/
 
 theorem adjoint_comp'
     {E F G : Type*} [NormedAddCommGroup E] [NormedAddCommGroup F]
@@ -183,13 +153,6 @@ theorem adjoint_comp'
     adjoint (T₂.comp T₁) = (adjoint T₁).comp (adjoint T₂) := by
   ext x y; simp +decide [ adjoint_inner_right ] ;
 
-/-! ## Part 4: Tensor Products and Entanglement -/
-
-/-
-**Theorem 35 (Tensor product of submodules is monotone).**
-    If K₁ ≤ K₂ and L₁ ≤ L₂, then the image of K₁ ⊗ L₁ in V ⊗ W
-    is contained in the image of K₂ ⊗ L₂.
--/
 
 theorem tensor_submodule_monotone
     {V W : Type*} [AddCommGroup V] [AddCommGroup W]
@@ -205,11 +168,6 @@ theorem tensor_submodule_monotone
     exact ⟨ TensorProduct.tmul ℂ ⟨ x, hK x.2 ⟩ ⟨ y, hL y.2 ⟩, rfl ⟩;
   · case _ hx hy => obtain ⟨ y₁, hy₁ ⟩ := hx; obtain ⟨ y₂, hy₂ ⟩ := hy; exact ⟨ y₁ + y₂, by simp +decide [ hy₁, hy₂ ] ⟩ ;
 
-/-
-**Theorem 36 (Tensor product distributes over sup for submodules).**
-    For submodules, (K₁ ⊔ K₂) ⊗ L ⊇ K₁⊗L + K₂⊗L — the lattice
-    structure interacts with tensor products.
--/
 
 theorem tensor_sup_contains
     {V W : Type*} [AddCommGroup V] [AddCommGroup W]
@@ -225,13 +183,6 @@ theorem tensor_sup_contains
     induction x using TensorProduct.induction_on <;> aesop;
   · exact tensor_submodule_monotone _ _ _ _ le_sup_right le_rfl
 
-/-! ## Part 5: Spectral Theory Connections -/
-
-/-
-**Theorem 37 (Eigenspace is a submodule).**
-    The eigenspace of a linear operator for eigenvalue μ is a submodule,
-    hence an element of the quantum phase lattice.
--/
 
 theorem eigenspace_is_submodule
     {E : Type*} [AddCommGroup E] [Module ℂ E]
@@ -240,10 +191,6 @@ theorem eigenspace_is_submodule
   refine' ⟨ LinearMap.ker ( T - mu • LinearMap.id ), _ ⟩;
   simp +decide [ sub_eq_zero ]
 
-/-
-**Theorem 38 (Eigenspaces of distinct eigenvalues are disjoint).**
-    If μ₁ ≠ μ₂ and v is in both eigenspaces, then v = 0.
--/
 
 theorem eigenspaces_disjoint
     {E : Type*} [AddCommGroup E] [Module ℂ E]
@@ -252,10 +199,6 @@ theorem eigenspaces_disjoint
     v = 0 := by
   exact Classical.not_not.1 fun h => hne <| smul_left_injective _ h <| by aesop;
 
-/-
-**Theorem 39 (Self-adjoint eigenvalues are real).**
-    If A = A† and Av = μv with v ≠ 0, then μ is real.
--/
 
 theorem self_adjoint_eigenvalue_real
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]
@@ -268,10 +211,6 @@ theorem self_adjoint_eigenvalue_real
   simp_all +decide [ mul_comm, Complex.ext_iff, sq ];
   nlinarith [ norm_pos_iff.mpr hv, mul_pos ( norm_pos_iff.mpr hv ) ( norm_pos_iff.mpr hv ) ]
 
-/-
-**Theorem 40 (Eigenvectors of self-adjoint operators for distinct
-    eigenvalues are orthogonal).**
--/
 
 theorem self_adjoint_eigenvectors_orthogonal
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]

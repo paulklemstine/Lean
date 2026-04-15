@@ -15,10 +15,8 @@ theorem geometric_divergence (c : ℝ) (hc : 1 < |c|) :
       norm_num;
       exact ⟨ 1, by norm_num, fun n => ⟨ n, le_rfl, one_le_pow₀ hc.le ⟩ ⟩
 
-/-! ## §2: Lyapunov Stability for Oracle Systems -/
 
 /-- A Lyapunov function for an oracle iteration. -/
-
 structure LyapunovFn where
   State : Type*
   V : State → ℝ
@@ -28,15 +26,12 @@ structure LyapunovFn where
   V_zero_iff : ∀ s, V s = 0 ↔ s = eq
   V_decreasing : ∀ s, s ≠ eq → V (f s) < V s
 
-/-- **Lyapunov Stability**: If a Lyapunov function exists, V decreases along orbits. -/
 
+/-- **Lyapunov Stability**: If a Lyapunov function exists, V decreases along orbits. -/
 theorem lyapunov_V_iterate_decreasing (L : LyapunovFn)
     (s : L.State) (hs : s ≠ L.eq) :
     L.V (L.f s) < L.V s := L.V_decreasing s hs
 
-/-
-The Lyapunov value sequence is strictly decreasing until equilibrium.
--/
 
 theorem lyapunov_sequence_antitone (L : LyapunovFn) (s0 : L.State)
     (h : ∀ k, L.f^[k] s0 ≠ L.eq) :
@@ -44,19 +39,13 @@ theorem lyapunov_sequence_antitone (L : LyapunovFn) (s0 : L.State)
       refine' strictAnti_nat_of_succ_lt fun k => _;
       simpa only [ Function.iterate_succ_apply' ] using L.V_decreasing _ ( h k )
 
-/-! ## §3: Critical Exponent -/
 
 /-- Steps needed to reach accuracy eps with contraction factor c. -/
-
 def stepsToAccuracy (c eps : ℝ) : ℕ :=
   if hc : 0 < c ∧ c < 1 ∧ 0 < eps ∧ eps < 1
   then ⌈- Real.log eps / Real.log c⌉₊
   else 0
 
-/-
-The convergence time diverges as c → 1⁻: for 0 < eps < 1,
-    log(eps)/log(c) → +∞ as c → 1⁻.
--/
 
 theorem steps_grow_near_critical (eps : ℝ) (heps : 0 < eps) (heps1 : eps < 1) :
     Tendsto (fun c => (Real.log eps / Real.log c : ℝ))
@@ -67,19 +56,14 @@ theorem steps_grow_near_critical (eps : ℝ) (heps : 0 < eps) (heps1 : eps < 1) 
         · simpa using tendsto_nhdsWithin_of_tendsto_nhds ( Real.continuousAt_log one_ne_zero );
         · filter_upwards [ Ioo_mem_nhdsLT zero_lt_one ] with x hx using Real.log_neg hx.1 hx.2
 
-/-! ## §4: Oracle Entropy Phase Transition -/
 
-/-- Binary entropy function. -/
-
+/-- Binary entropy is zero at 0. -/
 theorem binaryEntropy_zero : binaryEntropy 0 = 0 := by simp [binaryEntropy]
 
-/-- Binary entropy is zero at 1. -/
 
+/-- Binary entropy is zero at 1. -/
 theorem binaryEntropy_one : binaryEntropy 1 = 0 := by simp [binaryEntropy]
 
-/-
-Binary entropy is symmetric around 1/2.
--/
 
 theorem binaryEntropy_symm (p : ℝ) (hp : 0 < p) (hp1 : p < 1) :
     binaryEntropy p = binaryEntropy (1 - p) := by

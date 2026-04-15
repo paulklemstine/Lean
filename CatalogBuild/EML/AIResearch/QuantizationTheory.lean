@@ -27,8 +27,6 @@ theorem more_bits_less_error (lo hi : ℝ) (b1 b2 : ℕ) (h : lo < hi) (hb : b1 
   unfold maxQuantError
   exact div_le_div_of_nonneg_right (more_bits_finer lo hi b1 b2 h hb) (by positivity)
 
-/-! ## §2. EML Memory Savings -/
-
 
 def stdModelMemory (params bits : ℕ) : ℕ := params * bits
 
@@ -39,8 +37,6 @@ theorem eml_memory_savings (p_eml p_std b_eml b_std : ℕ)
     (hp : p_eml ≤ p_std) (hb : b_eml ≤ b_std) :
     emlModelMemory p_eml b_eml ≤ stdModelMemory p_std b_std := by
   unfold emlModelMemory stdModelMemory; exact Nat.mul_le_mul hp hb
-
-/-! ## §3. Mixed-Precision Efficiency -/
 
 
 def mixedPrecisionCost (sensLayers otherLayers highBits lowBits ppl : ℕ) : ℕ :=
@@ -60,8 +56,6 @@ theorem eml_mixed_precision_cheaper (sL oL hB lB pStd pEml : ℕ) (hp : pEml ≤
   have h4 : oL * pEml * lB ≤ oL * pStd * lB := Nat.mul_le_mul_right lB h2
   omega
 
-/-! ## §4. Weight Pruning -/
-
 
 def prunedParams (totalParams : ℕ) (sparsity : ℝ) : ℝ := ↑totalParams * (1 - sparsity)
 
@@ -76,8 +70,6 @@ theorem eml_pruned_advantage (p_eml p_std : ℕ) (s : ℝ) (hp : p_eml ≤ p_std
   unfold prunedParams
   apply mul_le_mul_of_nonneg_right (by exact_mod_cast hp) (by linarith)
 
-/-! ## §5. Latency -/
-
 
 def modelLatency (params : ℕ) : ℕ := params
 
@@ -85,16 +77,12 @@ def modelLatency (params : ℕ) : ℕ := params
 theorem eml_lower_latency (p_eml p_std : ℕ) (hp : p_eml ≤ p_std) :
     modelLatency p_eml ≤ modelLatency p_std := hp
 
-/-! ## §6. Activation Properties -/
-
 
 theorem eml_exp_positive_range (x : ℝ) : 0 < Real.exp x := Real.exp_pos x
 
 
 theorem eml_exp_monotone (x y : ℝ) (h : x ≤ y) : Real.exp x ≤ Real.exp y :=
   Real.exp_le_exp.mpr h
-
-/-! ## §7. KV-Cache Compression -/
 
 
 def kvCacheMemory (batchSize seqLen d_model : ℕ) : ℕ := 2 * batchSize * seqLen * d_model
@@ -106,8 +94,6 @@ def emlKVCacheMemory (batchSize seqLen d_model comprRatio : ℕ) : ℕ :=
 theorem eml_kv_cache_smaller (b s d r : ℕ) :
     emlKVCacheMemory b s d r ≤ kvCacheMemory b s d := by
   unfold emlKVCacheMemory kvCacheMemory; exact Nat.div_le_self _ _
-
-/-! ## §8. Sparse Computation -/
 
 
 def denseComputeCost (params : ℕ) : ℕ := params
@@ -123,8 +109,6 @@ theorem sparse_cheaper_than_dense (p r : ℕ) :
 theorem eml_sparse_compounds (p_eml p_std r : ℕ) (hp : p_eml ≤ p_std) :
     sparseComputeCost p_eml r ≤ denseComputeCost p_std := by
   exact le_trans (Nat.div_le_self _ _) hp
-
-/-! ## §9. Quantization-Aware Training -/
 
 
 def qatCost (params epochs qatOverhead : ℕ) : ℕ := params * epochs * qatOverhead

@@ -23,8 +23,6 @@ theorem temporal_is_timelike (t : ℝ) (ht : t ≠ 0) :
   simp [h0, h1, h2]
   exact ht
 
-/-! ## Part II: Lorentz Boosts -/
-
 
 theorem lorentz_boost_preserves_inner (phi : ℝ) (u v : Fin 4 → ℝ) :
     minkowskiInner (lorentzBoostX phi u) (lorentzBoostX phi v) =
@@ -69,8 +67,6 @@ theorem chirp_mass_bound (m1 m2 : ℝ) :
 theorem gw_energy_nonneg (coeff hdot : ℝ) (hcoeff : coeff ≥ 0) :
     coeff * hdot ^ 2 ≥ 0 := mul_nonneg hcoeff (sq_nonneg _)
 
-/-! ## Part IV: Causal Diamonds and Holographic Bounds -/
-
 
 theorem causal_diamond_scaling (tau1 tau2 k : ℝ)
     (hk : k > 0) (ht1 : tau1 > 0) (h : tau2 > tau1) :
@@ -80,8 +76,6 @@ theorem causal_diamond_scaling (tau1 tau2 k : ℝ)
 
 theorem bekenstein_hawking_positive (A lP : ℝ) (hA : A > 0) (hlP : lP > 0) :
     A / (4 * lP ^ 2) > 0 := by positivity
-
-/-! ## Part V: Gravitational Lensing -/
 
 
 theorem deflection_positive (G M c b : ℝ)
@@ -101,8 +95,6 @@ theorem gravitational_time_dilation (phi1 phi2 : ℝ)
     (h12 : phi1 < phi2) (hb2 : phi2 < 1) (h0 : 0 < phi1) :
     Real.sqrt (1 - phi2) < Real.sqrt (1 - phi1) :=
   Real.sqrt_lt_sqrt (by linarith) (by linarith)
-
-/-! ## Part VI: Cosmological Observables -/
 
 
 theorem cosmological_redshift_positive (a_obs a_emit : ℝ)

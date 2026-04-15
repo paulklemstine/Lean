@@ -15,43 +15,22 @@ structure PredictionOracle (α : Type*) where
   predict : α → α
   idempotent : ∀ x, predict (predict x) = predict x
 
-/-- The fixed points of an oracle — the "settled predictions" -/
 
+/-- The fixed points of an oracle — the "settled predictions" -/
 def PredictionOracle.fixedPoints {α : Type*} (O : PredictionOracle α) : Set α :=
   {x | O.predict x = x}
 
-/-
-PROBLEM
-Every oracle output is a fixed point
-
-PROVIDED SOLUTION
-Unfold fixedPoints, show O.predict (O.predict x) = O.predict x using O.idempotent.
--/
 
 theorem PredictionOracle.predict_mem_fixedPoints {α : Type*} (O : PredictionOracle α)
     (x : α) : O.predict x ∈ O.fixedPoints := by
   exact O.idempotent x
 
-/-
-PROBLEM
-The identity oracle: everything is already predicted
-
-PROVIDED SOLUTION
-idempotent is trivial: id (id x) = id x by rfl
--/
 
 def PredictionOracle.identity (α : Type*) : PredictionOracle α where
   predict := id
   idempotent := by
     exact fun x => rfl
 
-/-
-PROBLEM
-The identity oracle's fixed point set is everything
-
-PROVIDED SOLUTION
-fixedPoints = {x | id x = x} = {x | x = x} = univ. Use ext and simp.
--/
 
 theorem PredictionOracle.identity_fixedPoints (α : Type*) :
     (PredictionOracle.identity α).fixedPoints = Set.univ := by
@@ -69,29 +48,15 @@ structure PredictionHorizon where
   delta_pos : 0 < delta
   delta_gt_eps : epsilon_0 < delta
 
-/-- The prediction horizon formula: H = ln(δ/ε₀) / λ -/
 
+/-- The prediction horizon formula: H = ln(δ/ε₀) / λ -/
 noncomputable def PredictionHorizon.horizon (h : PredictionHorizon) : ℝ :=
   Real.log (h.delta / h.epsilon_0) / h.lyapunov
 
-/-
-PROBLEM
-The prediction horizon is always positive
-
-PROVIDED SOLUTION
-horizon = log(δ/ε₀)/λ. Since δ > ε₀ > 0, δ/ε₀ > 1, so log(δ/ε₀) > 0. Since λ > 0, the ratio is positive. Use div_pos, Real.log_pos, and one_lt_div_of_lt.
--/
 
 theorem PredictionHorizon.horizon_pos (h : PredictionHorizon) : 0 < h.horizon := by
   exact div_pos ( Real.log_pos <| by rw [ lt_div_iff₀ h.epsilon_pos ] ; linarith [ h.delta_gt_eps ] ) h.lyapunov_pos
 
-/-
-PROBLEM
-Doubling measurement precision adds exactly ln(2)/λ to the horizon.
-
-PROVIDED SOLUTION
-h'.horizon = log(δ/(ε₀/2))/λ = log(2δ/ε₀)/λ = (log 2 + log(δ/ε₀))/λ = log(δ/ε₀)/λ + log 2/λ = h.horizon + log 2/λ. Use Real.log_div, properties of log multiplication, div_add_div_same.
--/
 
 theorem PredictionHorizon.doubling_precision_gain (h : PredictionHorizon) :
     let h' : PredictionHorizon := {
@@ -108,13 +73,6 @@ theorem PredictionHorizon.doubling_precision_gain (h : PredictionHorizon) :
   field_simp;
   rw [ ← Real.log_mul ( by exact div_ne_zero ( by linarith [ h.delta_pos, h.epsilon_pos ] ) ( by linarith [ h.delta_pos, h.epsilon_pos ] ) ) ( by linarith [ h.delta_pos, h.epsilon_pos ] ), mul_div_right_comm ]
 
-/-
-PROBLEM
-Increasing the Lyapunov exponent strictly decreases the horizon
-
-PROVIDED SOLUTION
-h2.horizon = log(δ/ε₀)/λ₂ < log(δ/ε₀)/λ₁ = h1.horizon since log(δ/ε₀) > 0 and λ₁ < λ₂. Use div_lt_div_of_pos_left.
--/
 
 theorem horizon_decreases_with_chaos (delta eps0 : ℝ) (hdelta : 0 < delta) (heps : 0 < eps0)
     (hlt : eps0 < delta)
@@ -139,18 +97,11 @@ theorem max_entropy_uniform (n : ℕ) (hn : 0 < n) (p : Fin n → ℝ)
   simp_all +decide [ ← Finset.mul_sum _ _ _, ← Finset.sum_mul ];
   nlinarith [ inv_pos.mpr ( by positivity : 0 < ( n : ℝ ) ) ]
 
-/-- Predictability: how far below maximum entropy a source is. -/
 
+/-- Predictability: how far below maximum entropy a source is. -/
 noncomputable def predictability {n : ℕ} (p : Fin n → ℝ) (hn : 0 < n) : ℝ :=
   Real.log n - shannonEntropy p
 
-/-
-PROBLEM
-Predictability is non-negative
-
-PROVIDED SOLUTION
-predictability = log(n) - shannonEntropy(p) ≥ 0 by max_entropy_uniform. Use sub_nonneg and max_entropy_uniform.
--/
 
 theorem predictability_nonneg {n : ℕ} (p : Fin n → ℝ) (hn : 0 < n)
     (hp_nonneg : ∀ i, 0 ≤ p i) (hp_sum : ∑ i, p i = 1) :
@@ -164,13 +115,6 @@ structure ContractiveOracle (α : Type*) [PseudoMetricSpace α] extends Predicti
   rate_bound : contraction_rate ∈ Set.Ico 0 1
   contractive : ∀ x y, dist (predict x) (predict y) ≤ contraction_rate * dist x y
 
-/-
-PROBLEM
-After n iterations of a contractive oracle, error decays as cⁿ
-
-PROVIDED SOLUTION
-By induction on n. Base: dist x y ≤ c^0 * dist x y = dist x y. Step: dist(f^[n+1] x)(f^[n+1] y) = dist(f(f^[n] x))(f(f^[n] y)) ≤ c * dist(f^[n] x)(f^[n] y) ≤ c * c^n * dist x y = c^(n+1) * dist x y. Use O.contractive and IH, then mul_assoc and pow_succ.
--/
 
 theorem contractive_oracle_error_decay {α : Type*} [PseudoMetricSpace α]
     (O : ContractiveOracle α) (x y : α) (n : ℕ) :
@@ -178,13 +122,6 @@ theorem contractive_oracle_error_decay {α : Type*} [PseudoMetricSpace α]
   induction' n with n ih generalizing x y <;> simp_all +decide [ Function.iterate_succ_apply', pow_succ' ];
   simpa only [ mul_assoc ] using le_trans ( O.contractive _ _ ) ( mul_le_mul_of_nonneg_left ( ih _ _ ) ( O.rate_bound.1 ) )
 
-/-
-PROBLEM
-The fixed point of a contractive oracle on a complete space is unique
-
-PROVIDED SOLUTION
-Since x, y are fixed points: dist x y = dist (f x) (f y) ≤ c * dist x y. If dist x y > 0, then 1 ≤ c contradicts c < 1. So dist x y = 0, hence x = y. Use le_antisymm, and the key step is showing dist x y ≤ c * dist x y implies dist x y = 0 when c < 1.
--/
 
 theorem contractive_oracle_unique_fixpoint {α : Type*} [MetricSpace α]
     (O : ContractiveOracle α)
@@ -203,13 +140,6 @@ theorem contractive_oracle_unique_fixpoint {α : Type*} [MetricSpace α]
 def PredictionOracle.commute {α : Type*} (O₁ O₂ : PredictionOracle α) : Prop :=
   ∀ x, O₁.predict (O₂.predict x) = O₂.predict (O₁.predict x)
 
-/-
-PROBLEM
-Commuting oracles compose to form a new oracle
-
-PROVIDED SOLUTION
-Need (O₁ ∘ O₂) ∘ (O₁ ∘ O₂) = O₁ ∘ O₂. That is O₁(O₂(O₁(O₂(x)))) = O₁(O₂(x)). Using commutativity: O₂(O₁(y)) = O₁(O₂(y)). So O₁(O₂(O₁(O₂(x)))) = O₁(O₁(O₂(O₂(x)))) = O₁(O₂(O₂(x))) = O₁(O₂(x)). Use hc, O₁.idempotent, O₂.idempotent, and simp with Function.comp.
--/
 
 def PredictionOracle.compose {α : Type*} (O₁ O₂ : PredictionOracle α)
     (hc : O₁.commute O₂) : PredictionOracle α where
@@ -221,13 +151,6 @@ def PredictionOracle.compose {α : Type*} (O₁ O₂ : PredictionOracle α)
     rw [ O₁.idempotent, hc ];
     exact O₂.idempotent _
 
-/-
-PROBLEM
-The fixed points of composed commuting oracles = intersection
-
-PROVIDED SOLUTION
-x in compose fixedPoints iff O₁(O₂(x)) = x. Forward: if O₁(O₂(x)) = x, apply O₂ to get O₂(O₁(O₂(x))) = O₂(x), use commutativity to get O₁(O₂(O₂(x))) = O₂(x), i.e. O₁(O₂(x)) = O₂(x). But O₁(O₂(x)) = x, so O₂(x) = x. Then O₁(x) = O₁(O₂(x)) = x. Backward: if O₁(x) = x and O₂(x) = x then O₁(O₂(x)) = O₁(x) = x.
--/
 
 theorem PredictionOracle.compose_fixedPoints {α : Type*} (O₁ O₂ : PredictionOracle α)
     (hc : O₁.commute O₂) :
@@ -258,25 +181,11 @@ theorem PredictionOracle.compose_fixedPoints {α : Type*} (O₁ O₂ : Predictio
 noncomputable def majorityErrorBound (p : ℝ) (k : ℕ) : ℝ :=
   (4 * p * (1 - p)) ^ k
 
-/-
-PROBLEM
-The amplification factor 4p(1-p) < 1 when p > 1/2
-
-PROVIDED SOLUTION
-4p(1-p) < 1 iff 4p - 4p² < 1 iff 4p² - 4p + 1 > 0 iff (2p-1)² > 0, which holds since p > 1/2 so 2p-1 > 0. Use nlinarith.
--/
 
 theorem amplification_factor_lt_one (p : ℝ) (hp : 1/2 < p) (hp1 : p ≤ 1) :
     4 * p * (1 - p) < 1 := by
   nlinarith [ sq_nonneg ( p - 1 / 2 ) ]
 
-/-
-PROBLEM
-Noisy oracle error vanishes exponentially with repetition
-
-PROVIDED SOLUTION
-We have 4p(1-p) < 1 by amplification_factor_lt_one. The sequence (4p(1-p))^k → 0 as k → ∞. So there exists k with (4p(1-p))^k < ε. Use exists_pow_lt_of_lt_one with hε and amplification_factor_lt_one. Need 0 ≤ 4p(1-p) which follows from 0 < p ≤ 1.
--/
 
 theorem noisy_oracle_convergence (p : ℝ) (hp : 1/2 < p) (hp1 : p ≤ 1)
     (ε : ℝ) (hε : 0 < ε) : ∃ k : ℕ, majorityErrorBound p k < ε := by
@@ -288,26 +197,12 @@ def PredictionOracle.constant {α : Type*} (c : α) : PredictionOracle α where
   idempotent := by
     exact fun _ => rfl
 
-/-
-PROBLEM
-Every prediction oracle restricts to the identity on its fixed points
-
-PROVIDED SOLUTION
-hx says O.predict x = x, which is the goal.
--/
 
 theorem PredictionOracle.restrict_fixedPoints_id {α : Type*}
     (O : PredictionOracle α) (x : α) (hx : x ∈ O.fixedPoints) :
     O.predict x = x := by
   exact?
 
-/-
-PROBLEM
-The Cramér-Rao bound: no estimator can have variance below 1/I(θ).
-
-PROVIDED SOLUTION
-Substitute is_efficient: variance = 1/I_theta, then (1/I_theta) * I_theta = 1. Use field_simp.
--/
 
 theorem cramer_rao_informal (I_theta : ℝ) (hI : 0 < I_theta)
     (variance : ℝ) (hv : 0 < variance)
@@ -315,13 +210,6 @@ theorem cramer_rao_informal (I_theta : ℝ) (hI : 0 < I_theta)
     variance * I_theta = 1 := by
   grind +qlia
 
-/-
-PROBLEM
-Min horizon ≤ max horizon
-
-PROVIDED SOLUTION
-min ≤ max always holds. Use min_le_max.
--/
 
 theorem joint_horizon_min (h₁ h₂ : PredictionHorizon)
     (h_same_lyap : h₁.lyapunov = h₂.lyapunov) :

@@ -18,13 +18,6 @@ theorem line_to_circle_1d (a b t : ℝ) :
     ∑ i : Fin 2, (p i) ^ 2 = 1 :=
   invStereoN_norm_sq 1 _
 
-/-! ## North Pole as Limit Point -/
-
-/-
-As t → ∞ along a line with nonzero direction, the last coordinate of
-    invStereoN approaches 1 (the north pole). This shows the image curve
-    "closes up" through the north pole.
--/
 
 theorem invStereoN_last_coord_limit_1d (a b : ℝ) (hb : b ≠ 0) :
     Filter.Tendsto (fun t : ℝ => invStereoN 1 (fun _ => a + b * t)
@@ -46,22 +39,20 @@ theorem invStereoN_last_coord_limit_1d (a b : ℝ) (hb : b ≠ 0) :
   rw [ Metric.tendsto_nhds ];
   intro ε hε; filter_upwards [ h_tendsto.eventually_gt_atTop ( ε⁻¹ * 2 ) ] with t ht using abs_lt.mpr ⟨ by nlinarith [ inv_pos.mpr hε, mul_inv_cancel₀ hε.ne', mul_inv_cancel₀ ( by positivity : ( 1 + ( a + b * t ) ^ 2 ) ≠ 0 ) ], by nlinarith [ inv_pos.mpr hε, mul_inv_cancel₀ hε.ne', mul_inv_cancel₀ ( by positivity : ( 1 + ( a + b * t ) ^ 2 ) ≠ 0 ) ] ⟩ ;
 
-/-! ## General N-dimensional: Line maps to curve on S^N -/
 
 /-- For any line in ℝ^N, every point on the line maps to S^N.
-    This means the image is a curve **on** the sphere. -/
-
+This means the image is a curve **on** the sphere. -/
 theorem line_image_on_sphere (N : ℕ) (p v : Fin N → ℝ) (t : ℝ) :
     ∑ i : Fin (N + 1), (invStereoN N (fun j => p j + t * v j) i) ^ 2 = 1 :=
   invStereoN_norm_sq N _
 
-/-- A parametric circle in ℝ^N: t ↦ center + r·cos(t)·u + r·sin(t)·v -/
 
+/-- A parametric circle in ℝ^N: t ↦ center + r·cos(t)·u + r·sin(t)·v -/
 def parametricCircleRN (N : ℕ) (center u v : Fin N → ℝ) (r : ℝ) (t : ℝ) : Fin N → ℝ :=
   fun j => center j + r * Real.cos t * u j + r * Real.sin t * v j
 
-/-- The image of a parametric circle in ℝ^N under invStereoN lies on S^N. -/
 
+/-- The image of a parametric circle in ℝ^N under invStereoN lies on S^N. -/
 theorem circle_image_on_sphere (N : ℕ) (center u v : Fin N → ℝ) (r t : ℝ) :
     ∑ i : Fin (N + 1), (invStereoN N (parametricCircleRN N center u v r t) i) ^ 2 = 1 :=
   invStereoN_norm_sq N _

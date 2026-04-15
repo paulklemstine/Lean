@@ -22,7 +22,3 @@ theorem quatNorm_zero_iff (a b c d : ℤ) :
   · intro h; exact ⟨by nlinarith, by nlinarith, by nlinarith, by nlinarith⟩
   · rintro ⟨rfl, rfl, rfl, rfl⟩; ring
 
-/-! ### Euler's Four-Square Identity -/
-
-/-- Euler's identity: the product of two sums of four squares is a sum of four squares.
-    This is the key multiplicativity property of quaternion norms. -/

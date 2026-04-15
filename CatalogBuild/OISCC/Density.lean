@@ -98,7 +98,5 @@ theorem one_minus_log_lt_one (y : ℝ) (hy : 1 < y) :
 
 theorem depth_zero_singleton : EMLReach 0 {1} = {1} := rfl
 
-end
-
 
 end

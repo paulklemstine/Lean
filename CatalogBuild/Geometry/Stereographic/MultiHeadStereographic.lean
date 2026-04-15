@@ -25,9 +25,6 @@ theorem generalStereoDenom_pos (n : ℕ) (y : Fin n → ℝ) :
     0 < generalStereoDenom n y := by
   unfold generalStereoDenom; positivity
 
-/-
-Inverse stereographic projection maps to the unit sphere.
--/
 
 theorem generalInvStereo_on_sphere (n : ℕ) (y : Fin n → ℝ) :
     ∑ i, (generalInvStereo n y i) ^ 2 = 1 := by
@@ -36,8 +33,6 @@ theorem generalInvStereo_on_sphere (n : ℕ) (y : Fin n → ℝ) :
       field_simp;
       rw [ ← Finset.sum_div _ _ _, mul_div_cancel₀ _ ( by positivity ) ] ; ring;
       simpa only [ ← Finset.sum_mul _ _ _ ] using by ring;
-
-/-! ## Part 2: Multi-Head Stereographic Kernel -/
 
 
 def headKernel (n : ℕ) (x y : Fin n → ℝ) : ℝ :=
@@ -67,8 +62,6 @@ theorem multiHeadKernel_symmetric (numHeads n : ℕ)
     multiHeadKernel numHeads n rotations y x h := by
   unfold multiHeadKernel
   exact headKernel_symmetric n _ _
-
-/-! ## Part 3: Multi-Head Attention Mechanism -/
 
 
 def headSoftmaxWeight (n : ℕ) (T : ℝ)
@@ -100,8 +93,6 @@ theorem multihead_weight_sum_pos (seqLen d : ℕ) (T : ℝ)
     0 < ∑ k : Fin seqLen, headSoftmaxWeight d T R (Q i) (K k) := by
   exact Finset.sum_pos (fun k _ => headSoftmaxWeight_pos d T R (Q i) (K k))
     ⟨i, Finset.mem_univ _⟩
-
-/-! ## Part 4: Theoretical Properties -/
 
 
 def headConformalFactor (n : ℕ) (y : Fin n → ℝ) : ℝ :=

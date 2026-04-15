@@ -20,8 +20,6 @@ theorem star_more_efficient (n : ℕ) (hn : 3 ≤ n) :
   have h1 : (m + 3) * (m + 2) = m * m + 5 * m + 6 := by ring
   rw [h1]; omega
 
-/-! ## §2: Black Hole Simulation -/
-
 
 def black_hole_qubits (n_planck_masses : ℕ) : ℕ := n_planck_masses ^ 2
 
@@ -32,13 +30,9 @@ theorem baby_black_hole_feasible : black_hole_qubits 10 = 100 := by
 theorem stellar_black_hole_impossible : black_hole_qubits (10^38) = 10^76 := by
   simp [black_hole_qubits, ← pow_mul]
 
-/-! ## §3: CHSH / Bell Inequality -/
-
 
 theorem quantum_money_security (n : ℕ) (hn : 1 ≤ n) : 3 ^ n < 4 ^ n :=
   Nat.pow_lt_pow_left (by norm_num : 3 < 4) (by omega : n ≠ 0)
-
-/-! ## §5: Quantum Chemistry / Terraforming -/
 
 
 def chemistry_qubits (m_basis : ℕ) : ℕ := m_basis
@@ -52,12 +46,8 @@ theorem terraforming_qubits : 100 * co2_qubits_accurate = 6000 := by
 
 theorem classical_chemistry_intractable : (2 : ℕ) ^ 60 > 10 ^ 17 := by norm_num
 
-/-! ## §6: Quantum ML Advantages -/
-
 
 theorem quantum_kernel_advantage (n : ℕ) : n < 2 ^ n := Nat.lt_two_pow_self
-
-/-! ## §7: Protein Folding -/
 
 
 def protein_interactions (L : ℕ) : ℕ := L * (L - 1) / 2
@@ -73,8 +63,6 @@ theorem levinthal_paradox (L : ℕ) : L < 3 ^ L := by
   calc L < 2 ^ L := Nat.lt_two_pow_self
     _ ≤ 3 ^ L := Nat.pow_le_pow_left (by norm_num) L
 
-/-! ## §8: Dyson Sphere Optimization -/
-
 
 def dyson_configs (n : ℕ) : ℕ := Nat.factorial n
 
@@ -82,8 +70,6 @@ def dyson_configs (n : ℕ) : ℕ := Nat.factorial n
 theorem dyson_20_configs : dyson_configs 20 > 10^18 := by native_decide
 
 theorem dyson_quantum_tractable : Nat.sqrt (dyson_configs 20) < 10^10 := by native_decide
-
-/-! ## §9: Quantum Error Correction at Scale -/
 
 
 def concatenated_qubits (d k : ℕ) : ℕ := d ^ k
@@ -105,8 +91,6 @@ theorem surface_code_d21 : surface_code_qubits 21 = 841 := by
 
 
 theorem million_qubit_logical : 1000000 / surface_code_qubits 21 = 1189 := by native_decide
-
-/-! ## §10: Feasibility Assessments -/
 
 
 inductive TRL where
@@ -144,25 +128,4 @@ def protein_assessment : MoonshotAssessment :=
 def quantum_ml_assessment : MoonshotAssessment :=
   { name := "Quantum ML Supremacy", trl := .level3,
     qubits_needed := 50, timeline_years := 5 }
-
-/-! ## Summary: Moonshots Grounded in Verified Math
-
-| Application | Qubits | Timeline | TRL |
-|-------------|--------|----------|-----|
-| Teleportation Network | 1,000 | 10 years | 4 |
-| Baby Black Hole Sim | 100 | 15 years | 2 |
-| Quantum Money | 400 | 20 years | 3 |
-| Quantum Terraforming | 6,000 | 20 years | 2 |
-| Quantum ML | 50 | 5 years | 3 |
-| Protein Folding | 10,000 | 15 years | 2 |
-| Dyson Sphere Opt | 1,000 | 30 years | 1 |
-| Fault-Tolerant QC (1M) | 10⁶ | 15 years | 4 |
-
-### Key Insight
-Many "sci-fi" applications are engineering-limited, not physics-limited:
-- 100 logical qubits: baby black hole simulation
-- 1,000 logical qubits: teleportation networks, optimization
-- 10,000 logical qubits: chemistry, protein folding
-- 10⁶ physical → ~1,189 logical (surface code d=21)
--/
 

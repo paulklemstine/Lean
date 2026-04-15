@@ -9,43 +9,41 @@ import Mathlib
 
 noncomputable section
 
+/-- Dual distributivity -/
 theorem tropical_distributive_dual (a b c : ℝ) :
     max a (min b c) = min (max a b) (max a c) :=
   max_min_distrib_left a b c
 
-/-- Absorption law: min(a, max(a, b)) = a -/
 
+/-- Tropical matrix-vector product in max-plus.
+Requires n ≥ 1 for the sup' to be well-defined. -/
 def tropMaxMatVec {n : ℕ} [NeZero n] (m : ℕ) (A : Fin m → Fin n → ℝ) (x : Fin n → ℝ) :
     Fin m → ℝ :=
   fun i => Finset.sup' Finset.univ Finset.univ_nonempty (fun j => A i j + x j)
 
-/-! ## Part III: Neural Network Interpretation (Team Zeta) -/
 
 /-- ReLU(x) = max(x, 0) is a tropical gate evaluation -/
-
 def reluAsTropical (x : ℝ) : ℝ := max x 0
 
-/-- ReLU is idempotent -/
 
+/-- Composition of k ReLU layers: at most 2^k linear regions -/
 theorem relu_composition_regions (k : ℕ) :
     2 ^ k ≥ 1 := Nat.one_le_two_pow
 
-/-! ## Part IV: Tropical Duality Theorems -/
 
 /-- Negation converts min to max -/
-
 theorem tropical_duality_min_to_max (a b : ℝ) :
     -(min a b) = max (-a) (-b) := by
   simp [min_def, max_def]; split_ifs <;> linarith
 
-/-- Negation converts max to min -/
 
+/-- Negation converts max to min -/
 theorem tropical_duality_max_to_min (a b : ℝ) :
     -(max a b) = min (-a) (-b) := by
   simp [min_def, max_def]; split_ifs <;> linarith
 
-/-- Full duality theorem for all three gate types -/
 
+/-- Full duality theorem for all three gate types -/
 theorem tropical_circuit_duality (a b : ℝ) :
     -(min a b) = max (-a) (-b) ∧
     -(max a b) = min (-a) (-b) ∧
@@ -54,66 +52,52 @@ theorem tropical_circuit_duality (a b : ℝ) :
          tropical_duality_max_to_min a b,
          neg_add a b⟩
 
-/-! ## Part V: Contraction Properties -/
-
-/-
-Max gate is a contraction in the ℓ∞ metric
--/
 
 theorem max_gate_contraction (a₁ a₂ b₁ b₂ : ℝ) :
     |max a₁ b₁ - max a₂ b₂| ≤ max |a₁ - a₂| |b₁ - b₂| := by
   grind +revert
 
-/-
-Min gate is a contraction in the ℓ∞ metric
--/
 
 theorem min_gate_contraction (a₁ a₂ b₁ b₂ : ℝ) :
     |min a₁ b₁ - min a₂ b₂| ≤ max |a₁ - a₂| |b₁ - b₂| := by
   cases max_cases |a₁ - a₂| |b₁ - b₂| <;> cases min_cases a₁ b₁ <;> cases min_cases a₂ b₂ <;> cases abs_cases ( min a₁ b₁ - min a₂ b₂ ) <;> cases abs_cases ( a₁ - a₂ ) <;> cases abs_cases ( b₁ - b₂ ) <;> linarith
 
-/-! ## Part VI: Fixed Points -/
 
 /-- A max gate with non-positive shift has a fixed point -/
-
 theorem max_shift_fixed_point (c : ℝ) (hc : c ≤ 0) :
     ∃ x : ℝ, max x (x + c) = x :=
   ⟨0, max_eq_left (by linarith)⟩
 
-/-- A min gate with non-negative shift has a fixed point -/
 
+/-- A min gate with non-negative shift has a fixed point -/
 theorem min_shift_fixed_point (c : ℝ) (hc : 0 ≤ c) :
     ∃ x : ℝ, min x (x + c) = x :=
   ⟨0, min_eq_left (by linarith)⟩
 
-/-! ## Part VII: Hypothesis H5 — Generic Uniqueness of Gate Selections -/
 
 /-- For strict inequalities, min has a unique selection -/
-
 theorem min_strict_unique_selection (a b : ℝ) (h : a < b) :
     min a b = a ∧ min a b ≠ b := by
   exact ⟨min_eq_left (le_of_lt h), by rw [min_eq_left (le_of_lt h)]; linarith⟩
 
-/-- For strict inequalities, max has a unique selection -/
 
+/-- For strict inequalities, max has a unique selection -/
 theorem max_strict_unique_selection (a b : ℝ) (h : a < b) :
     max a b = b ∧ max a b ≠ a := by
   constructor
   · exact max_eq_right (le_of_lt h)
   · intro heq; rw [max_eq_right (le_of_lt h)] at heq; linarith
 
-/-- Degeneracy is the only case where selection is non-unique -/
 
+/-- Degeneracy is the only case where selection is non-unique -/
 theorem selection_ambiguity_iff_equal (a b : ℝ) :
     (min a b = a ∧ min a b = b) ↔ a = b := by
   constructor
   · rintro ⟨h1, h2⟩; linarith [h1.symm.trans h2]
   · rintro rfl; exact ⟨min_self a, min_self a⟩
 
-/-! ## Part VIII: Experiment Data Recording Framework -/
 
 /-- Record of an inversion experiment -/
-
 structure InversionExperiment where
   circuitDepth : ℕ
   numMinMaxGates : ℕ
@@ -121,74 +105,17 @@ structure InversionExperiment where
   consistentSelections : ℕ
   inversionTimeMs : ℕ
 
-/-- Validate experiment: total selections should be 2^k -/
 
+/-- Validate experiment: total selections should be 2^k -/
 def validExperiment (exp : InversionExperiment) : Prop :=
   exp.totalSelections = 2 ^ exp.numMinMaxGates ∧
   exp.consistentSelections ≤ exp.totalSelections
 
-/-- The ratio of consistent to total selections measures "hardness" -/
 
+/-- The ratio of consistent to total selections measures "hardness" -/
 def consistencyRatio (exp : InversionExperiment) : ℚ :=
   if exp.totalSelections = 0 then 0
   else exp.consistentSelections / exp.totalSelections
 
-/-! ## Part IX: Research Iteration Protocol
-
-### Knowledge Upgrade Cycle
-
-1. **Formulate**: State a conjecture as a Lean theorem with `sorry`
-2. **Test**: Check edge cases with `#eval` on ℤ or ℚ versions
-3. **Prove**: Use the theorem prover to attempt formalization
-4. **Refine**: If proof fails, decompose into sub-lemmas
-5. **Record**: Proved theorems become lemmas for future proofs
-6. **Synthesize**: Look for patterns across proved theorems
-7. **Iterate**: Generate new conjectures from synthesis
-
-### Current Knowledge Base (Proved)
-- Tropical gates are commutative and associative
-- Tropical gates are monotone
-- Addition distributes over min/max
-- Preimages are characterized (min_preimage_char, max_preimage_char)
-- Gate selection count is 2^n
-- Linearization is correct given consistent selections
-- Min/max are contractions in ℓ∞
-- Duality: negation interconverts min-plus and max-plus
-- Absorption laws hold
-- Fixed points exist for shifted gates
-
-### Open Conjectures (Next Iteration)
-- H1: Tropical circuit inversion is NP-hard for unbounded depth
-- H2: Average-case hardness for random tropical circuits
-- H3: Tropical circuits can simulate lattice problems
-- H5: Generic inputs have unique gate selections (partially proved)
-- H6: Certain circuit families support homomorphic evaluation
--/
-
-/-! ## Part X: Future Directions
-
-### New Theorem Candidates
-
-1. **Tropical Farkas Lemma**: A system of tropical inequalities
-   min_j(A_ij + x_j) ≤ b_i is infeasible iff there exists a
-   "tropical certificate" of infeasibility.
-
-2. **Tropical Rank-Nullity**: For a tropical m×n matrix A, the tropical
-   rank plus the dimension of the tropical kernel equals n.
-
-3. **Tropical Circuit Lower Bounds**: Any circuit computing
-   min(x₁ + x₂, x₃ + x₄, ..., x_{2n-1} + x_{2n}) requires
-   Ω(n log n) gates.
-
-4. **Tropical-to-Lattice Reduction**: The tropical circuit inversion
-   problem reduces to the Closest Vector Problem (CVP) in a
-   lattice defined by the circuit structure.
-
-5. **Tropical Homomorphic Encryption**: Define a family of tropical
-   circuits that supports additive homomorphism: given E(x) and E(y),
-   compute E(x + y) without decrypting.
--/
-
-end TropicalResearch
 
 end

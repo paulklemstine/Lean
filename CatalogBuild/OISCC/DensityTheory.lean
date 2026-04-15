@@ -12,47 +12,41 @@ noncomputable section
 /-- The EML operation. -/
 def EMLd (a b : ℝ) : ℝ := Real.exp a - Real.log b
 
-/-- The set of EML-reachable values from a seed set S at depth ≤ d. -/
 
+/-- The full EML closure (union over all depths). -/
 def fullEMLClosure (S : Set ℝ) : Set ℝ := ⋃ n, EMLClosure n S
 
-/-! ## Section 1: EML Generates Key Values -/
 
 /-- 1 is in the seed set. -/
-
 theorem one_in_closure : (1 : ℝ) ∈ EMLClosure 0 {1} := by
   simp [EMLClosure]
 
-/-- EML closure is monotone in depth. -/
 
+/-- EML closure is monotone in depth. -/
 theorem EMLClosure_mono (S : Set ℝ) (n : ℕ) :
     EMLClosure n S ⊆ EMLClosure (n + 1) S := by
   intro x hx
   simp [EMLClosure]
   exact Or.inl hx
 
-/-! ## Section 2: The Log-Split Identity -/
 
 /-- Log-split: EML(x, y·z) = EML(x, y) - ln(z) for y, z > 0. -/
-
 theorem EMLd_log_split (x y z : ℝ) (hy : 0 < y) (hz : 0 < z) :
     EMLd x (y * z) = EMLd x y - Real.log z := by
   simp [EMLd, Real.log_mul hy.ne' hz.ne']; ring
 
-/-- EML(x, 1) = exp(x). -/
 
+/-- EML(x, 1) = exp(x). -/
 theorem EMLd_exp (x : ℝ) : EMLd x 1 = Real.exp x := by
   simp [EMLd, Real.log_one]
 
-/-- EML(0, x) = 1 - ln(x). -/
 
+/-- EML(0, x) = 1 - ln(x). -/
 theorem EMLd_one_minus_log (x : ℝ) : EMLd 0 x = 1 - Real.log x := by
   simp [EMLd]
 
-/-! ## Section 3: Density Building Blocks -/
 
 /-- EML(0, x) maps values in (1, e) to (0, 1). -/
-
 theorem EMLd_maps_to_unit_interval (x : ℝ) (hx1 : 1 < x) (hxe : x < Real.exp 1) :
     0 < EMLd 0 x ∧ EMLd 0 x < 1 := by
   constructor
@@ -63,44 +57,37 @@ theorem EMLd_maps_to_unit_interval (x : ℝ) (hx1 : 1 < x) (hxe : x < Real.exp 1
   · simp [EMLd]
     linarith [Real.log_pos hx1]
 
-/-- exp maps any positive value to a value > 1. -/
 
+/-- exp maps any positive value to a value > 1. -/
 theorem EMLd_amplifies (x : ℝ) (hx : 0 < x) :
     EMLd x 1 > 1 := by
   simp [EMLd, Real.log_one]
   linarith [Real.add_one_le_exp x]
 
-/-! ## Section 4: Key Identities for Density -/
 
 /-- The composition EML(EML(0, x), 1) = exp(1 - ln(x)) = e/x for x > 0. -/
-
 theorem EMLd_inv_scaled (x : ℝ) (hx : 0 < x) :
     EMLd (EMLd 0 x) 1 = Real.exp 1 / x := by
   simp [EMLd, Real.log_one, Real.exp_sub, Real.exp_log hx]
 
-/-- ln recovery: EML(0, exp(EML(0, x))) = ln(x). -/
 
+/-- ln recovery: EML(0, exp(EML(0, x))) = ln(x). -/
 theorem EMLd_recovers_ln (x : ℝ) :
     EMLd 0 (Real.exp (EMLd 0 x)) = Real.log x := by
   simp [EMLd, Real.log_exp]
 
-/-- Double negation: EML(0, exp(EML(0, exp(x)))) = x. -/
 
+/-- Double negation: EML(0, exp(EML(0, exp(x)))) = x. -/
 theorem EMLd_double_neg (x : ℝ) :
     EMLd 0 (Real.exp (EMLd 0 (Real.exp x))) = x := by
   simp [EMLd, Real.log_exp]
 
-/-- Shift identity: EML(x + c, 1) = exp(c) · exp(x). -/
 
+/-- Shift identity: EML(x + c, 1) = exp(c) · exp(x). -/
 theorem EMLd_shift (x c : ℝ) :
     EMLd (x + c) 1 = Real.exp c * Real.exp x := by
   simp [EMLd, Real.log_one, Real.exp_add, mul_comm]
 
-/-! ## Section 5: Irrationality of EML Values -/
-
-/-
-e is irrational.
--/
 
 theorem e_irrational : Irrational (Real.exp 1) := by
   by_contra h;
@@ -146,11 +133,10 @@ theorem e_irrational : Irrational (Real.exp 1) := by
   · exact absurd hm <| ne_of_gt <| lt_of_lt_of_le ( by positivity ) <| Summable.le_tsum ( by exact ( by simpa using Summable.mul_left _ <| Real.summable_pow_div_factorial 1 |> Summable.comp_injective <| by intros a b; aesop ) ) 0 <| by intros; positivity;
   · linarith [ show ( 0 : ℝ ) ≤ ∑' k : ℕ, ( q.factorial : ℝ ) / ( q + 1 + k ).factorial by exact tsum_nonneg fun _ => by positivity ]
 
-/-- exp(exp(1)) is irrational. -/
 
+/-- exp(exp(1)) is irrational. -/
 theorem exp_e_irrational : Irrational (Real.exp (Real.exp 1)) := by
   sorry
 
-end
 
 end

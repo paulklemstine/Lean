@@ -12,19 +12,19 @@ structure SecurityGame where
   /-- The game's output: 1 if adversary wins, 0 otherwise -/
   adversaryWins : ℕ → Prop  -- indexed by security parameter
 
-/-- The advantage of an adversary in a game, modeled as a function of
-    the security parameter. In the concrete model, this maps λ to ℝ. -/
 
+/-- The advantage of an adversary in a game, modeled as a function of
+the security parameter. In the concrete model, this maps λ to ℝ. -/
 def Advantage := ℕ → ℝ
 
-/-- An advantage function is negligible if it vanishes faster than any
-    inverse polynomial. -/
 
+/-- An advantage function is negligible if it vanishes faster than any
+inverse polynomial. -/
 def IsNegligible (adv : Advantage) : Prop :=
   ∀ c : ℕ, ∃ N : ℕ, ∀ n : ℕ, N ≤ n → |adv n| < (1 / (n : ℝ)) ^ c
 
-/-- Zero advantage is negligible -/
 
+/-- Zero advantage is negligible -/
 theorem zero_negligible : IsNegligible (fun _ => 0) := by
   intro c
   use 1
@@ -32,9 +32,6 @@ theorem zero_negligible : IsNegligible (fun _ => 0) := by
   simp
   exact pow_pos (by positivity) c
 
-/-
-Constant positive advantage is NOT negligible
--/
 
 theorem const_not_negligible (ε : ℝ) (hε : 0 < ε) :
     ¬ IsNegligible (fun _ => ε) := by
@@ -46,35 +43,26 @@ theorem const_not_negligible (ε : ℝ) (hε : 0 < ε) :
   cases' exists_nat_one_div_lt hε with n hn ; use n + N + 1 ; norm_num at *;
   exact ⟨ by linarith, by rw [ abs_of_pos hε ] ; exact le_trans ( inv_anti₀ ( by positivity ) ( by linarith ) ) hn.le ⟩
 
-/-! ## Game Indistinguishability -/
 
 /-- Two games are computationally indistinguishable if no efficient
-    adversary can distinguish them with non-negligible advantage. -/
-
+adversary can distinguish them with non-negligible advantage. -/
 def GamesIndistinguishable (G₁ G₂ : SecurityGame) : Prop :=
   ∀ distinguish : ℕ → Prop,  -- any distinguisher
     IsNegligible (fun n => if G₁.adversaryWins n = G₂.adversaryWins n then 0 else 1)
 
-/-- Game indistinguishability is reflexive -/
 
+/-- Game indistinguishability is reflexive -/
 theorem games_indist_refl (G : SecurityGame) :
     IsNegligible (fun _ => (0 : ℝ)) := zero_negligible
 
-/-- Game indistinguishability is symmetric -/
 
+/-- Game indistinguishability is symmetric -/
 theorem games_indist_symm (adv : Advantage) (h : IsNegligible adv) :
     IsNegligible (fun n => -adv n) := by
   intro c
   obtain ⟨N, hN⟩ := h c
   exact ⟨N, fun n hn => by rw [abs_neg]; exact hN n hn⟩
 
-/-! ## Advantage Composition -/
-
-/-
-**Triangle inequality for advantages**: if we prove security by a
-    sequence of game hops G₀ ≈ G₁ ≈ ... ≈ Gₙ, the total advantage is
-    at most the sum of individual advantages.
--/
 
 theorem advantage_triangle (adv₁ adv₂ : Advantage)
     (h₁ : IsNegligible adv₁) (h₂ : IsNegligible adv₂) :
@@ -89,9 +77,6 @@ theorem advantage_triangle (adv₁ adv₂ : Advantage)
   intro n hn; specialize h_bound n hn; rcases n with ( _ | _ | n ) <;> norm_num at *;
   exact h_bound.trans_le ( by rw [ pow_succ' ] ; norm_num ; nlinarith [ inv_pos.mpr ( by positivity : 0 < ( n : ℝ ) + 1 + 1 ), inv_pos.mpr ( by positivity : 0 < ( n + 1 + 1 : ℝ ) ^ c ), mul_inv_cancel₀ ( by positivity : ( n : ℝ ) + 1 + 1 ≠ 0 ), mul_inv_cancel₀ ( by positivity : ( n + 1 + 1 : ℝ ) ^ c ≠ 0 ) ] )
 
-/-
-Sum of negligible functions is negligible (finite case)
--/
 
 theorem sum_negligible {k : ℕ} (advs : Fin k → Advantage)
     (h : ∀ i, IsNegligible (advs i)) :
@@ -100,32 +85,15 @@ theorem sum_negligible {k : ℕ} (advs : Fin k → Advantage)
   · exact zero_negligible;
   · simpa [ Fin.sum_univ_castSucc ] using advantage_triangle _ _ ( ih _ fun i => h ( Fin.castSucc i ) ) ( h ( Fin.last _ ) )
 
-/-! ## Discrete Log Hardness and Sigma Protocol Soundness -/
 
 /-- The discrete log assumption: no efficient algorithm can compute
-    discrete logs with non-negligible probability. -/
-
+discrete logs with non-negligible probability. -/
 structure DLogAssumption where
   /-- Advantage of the best DLog solver -/
   dlogAdvantage : Advantage
   /-- The advantage is negligible -/
   isHard : IsNegligible dlogAdvantage
 
-/-
-**Schnorr soundness via reduction**: If the discrete log problem is
-    hard, then the Schnorr protocol has computational soundness.
-
-    Proof sketch: Given a cheating prover P* that breaks soundness
-    (convinces verifier without knowing x), we construct a DLog solver:
-    1. Run P* to get commitment t
-    2. Send challenge c₁, get response s₁
-    3. Rewind P* to the commitment point
-    4. Send challenge c₂ ≠ c₁, get response s₂
-    5. Extract x = (s₁ - s₂)/(c₁ - c₂)
-
-    The reduction's advantage equals P*'s advantage minus the rewinding
-    loss (which is at most 1/|Ch|).
--/
 
 theorem schnorr_soundness_reduction
     (dlog : DLogAssumption) (cheatingAdvantage : Advantage)
@@ -140,21 +108,15 @@ theorem schnorr_soundness_reduction
     exact dlog.isHard c |> fun ⟨ N, hN ⟩ => ⟨ N, fun n hn => lt_of_abs_lt ( hN n hn ) ⟩;
   exact ⟨ N, fun n hn => lt_of_le_of_lt ( h_reduction n ) ( by have := hN n hn; ring_nf at *; linarith [ inv_pos.mpr ( by positivity : 0 < ( challengeSpace : ℝ ) ) ] ) ⟩
 
-/-! ## Simulation-Based Security -/
 
 /-- A zero-knowledge protocol has computational ZK if the simulator's
-    output is computationally indistinguishable from real transcripts. -/
-
+output is computationally indistinguishable from real transcripts. -/
 structure ComputationalZK where
   /-- Distinguishing advantage between real and simulated transcripts -/
   zkAdvantage : Advantage
   /-- The advantage is negligible -/
   isZK : IsNegligible zkAdvantage
 
-/-
-**Composition theorem**: Sequential composition of ZK protocols
-    preserves the ZK property, with advantage that sums.
--/
 
 theorem sequential_zk_composition
     (zk₁ zk₂ : ComputationalZK)
@@ -168,16 +130,13 @@ theorem sequential_zk_composition
     by
       apply advantage_triangle; exact zk₁.isZK; exact zk₂.isZK;⟩
 
-/-! ## Rewinding Lemma -/
 
 /-- **The Rewinding Lemma** (simplified): If a prover succeeds with
-    probability ε in a single execution, then after rewinding and
-    re-challenging, the probability of getting two accepting transcripts
-    with different challenges is at least ε(ε - 1/|Ch|).
-
-    This is the key technical lemma for proving knowledge soundness
-    of Sigma protocols in the computational setting. -/
-
+probability ε in a single execution, then after rewinding and
+re-challenging, the probability of getting two accepting transcripts
+with different challenges is at least ε(ε - 1/|Ch|).
+This is the key technical lemma for proving knowledge soundness
+of Sigma protocols in the computational setting. -/
 theorem rewinding_lemma (ε : ℝ) (challengeSize : ℕ)
     (hε : 0 < ε) (hcs : 0 < challengeSize)
     (h_large : 1 / (challengeSize : ℝ) < ε) :

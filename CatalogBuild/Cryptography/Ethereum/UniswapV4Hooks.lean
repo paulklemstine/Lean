@@ -23,8 +23,6 @@ noncomputable def PoolV4.invariant (p : PoolV4) : ℝ := p.reserveX * p.reserveY
 
 noncomputable def PoolV4.spotPrice (p : PoolV4) : ℝ := p.reserveY / p.reserveX
 
-/-! ## Hook Interface -/
-
 
 structure Hook where
   adjustFee : ℝ → ℝ → ℝ → ℝ
@@ -44,8 +42,6 @@ noncomputable def swapNoHook (p : PoolV4) (dx : ℝ) : ℝ :=
   let effectiveDx := (1 - p.baseFee) * dx
   p.reserveY * effectiveDx / (p.reserveX + effectiveDx)
 
-/-! ## Identity Hook -/
-
 
 def identityHook (baseFee : ℝ) (hFee0 : 0 ≤ baseFee) (hFee1 : baseFee < 1) : Hook where
   adjustFee := fun _bf _dx _sp => baseFee
@@ -59,8 +55,6 @@ theorem identity_hook_preserves_output (p : PoolV4) (dx : ℝ) :
     swapWithHook p (identityHook p.baseFee p.hFee0 p.hFee1) dx = swapNoHook p dx := by
   unfold swapWithHook swapNoHook identityHook; simp
 
-/-! ## Dynamic Fee Bounds -/
-
 
 theorem dynamic_fee_bounded (minFee maxFee t : ℝ)
     (hMin : 0 ≤ minFee) (hOrder : minFee ≤ maxFee) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
@@ -70,8 +64,6 @@ theorem dynamic_fee_bounded (minFee maxFee t : ℝ)
   · linarith [mul_nonneg ht0 (sub_nonneg.mpr hOrder)]
   · nlinarith [mul_le_of_le_one_left (sub_nonneg.mpr hOrder) ht1]
 
-/-! ## Hook Composability -/
-
 
 def composeHooks (h₁ h₂ : Hook) : Hook where
   adjustFee := fun bf dx sp => h₂.adjustFee (h₁.adjustFee bf dx sp) dx sp
@@ -80,8 +72,6 @@ def composeHooks (h₁ h₂ : Hook) : Hook where
   fee_nonneg := fun bf dx sp => h₂.fee_nonneg _ _ _
   fee_lt_one := fun bf dx sp => h₂.fee_lt_one _ _ _
   redist_nonneg := fun out => add_nonneg (h₁.redist_nonneg out) (h₂.redist_nonneg out)
-
-/-! ## TWAMM: Time-Weighted AMM Hook -/
 
 
 structure TWAMMHook where
@@ -107,8 +97,6 @@ theorem twamm_reduces_price_impact (reserveX dx₁ dx₂ : ℝ)
   rw [div_le_div_iff₀ (by linarith) (by linarith)]
   nlinarith
 
-/-! ## Permission System -/
-
 
 structure HookPermissions where
   allowSwap : Bool
@@ -125,11 +113,6 @@ theorem no_swap_no_extraction (perms : HookPermissions)
     ¬ permissionedSwapAllowed perms := by
   simp [permissionedSwapAllowed, h_blocked]
 
-/-! ## Fee Override Correctness -/
-
-/-
-Higher fees produce less swap output from constant-product formula
--/
 
 theorem higher_fee_less_output (reserveX reserveY dx fee₁ fee₂ : ℝ)
     (hRX : 0 < reserveX) (hRY : 0 < reserveY) (hdx : 0 < dx)

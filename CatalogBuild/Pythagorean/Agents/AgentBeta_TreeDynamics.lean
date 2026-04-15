@@ -15,8 +15,8 @@ inductive TreePath : Type
   | right : TreePath → TreePath
 deriving Repr
 
-/-- Compute the Pythagorean triple at a given tree path. -/
 
+/-- Compute the Pythagorean triple at a given tree path. -/
 def berggrenTripleAux : TreePath → ℤ × ℤ × ℤ
   | .root => (3, 4, 5)
   | .left p =>
@@ -29,14 +29,8 @@ def berggrenTripleAux : TreePath → ℤ × ℤ × ℤ
     let (a, b, c) := berggrenTripleAux p
     (-a + 2*b + 2*c, -2*a + b + 2*c, -2*a + 2*b + 3*c)
 
-/-! ## Section 1: The Tree is Inflationary
 
-**BETA'S THEOREM**: All three Berggren transformations strictly increase the hypotenuse
-when the input triple has positive components. This is the fundamental reason the tree
-generates every primitive Pythagorean triple *exactly once*. -/
-
-/-- M₁ increases the hypotenuse. -/
-
+/-- M₂ always produces positive components from positive inputs. -/
 theorem berggren_M2_pos_a (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
     0 < a + 2*b + 2*c := by linarith
 
@@ -48,44 +42,36 @@ theorem berggren_M2_pos_b (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
 theorem berggren_M2_pos_c (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
     0 < 2*a + 2*b + 3*c := by linarith
 
-/-- M₁ produces positive first component when a² + b² = c² and all positive. -/
 
+/-- M₁ produces positive first component when a² + b² = c² and all positive. -/
 theorem berggren_M1_pos_a (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (h : a ^ 2 + b ^ 2 = c ^ 2) :
     0 < a - 2*b + 2*c := by nlinarith [sq_nonneg (a - b), sq_nonneg b]
 
-/-- M₁ produces positive second component. -/
 
+/-- M₁ produces positive second component. -/
 theorem berggren_M1_pos_b (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (h : a ^ 2 + b ^ 2 = c ^ 2) :
     0 < 2*a - b + 2*c := by nlinarith [sq_nonneg a]
 
-/-- M₃ produces positive first component. -/
 
+/-- M₃ produces positive first component. -/
 theorem berggren_M3_pos_a (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (h : a ^ 2 + b ^ 2 = c ^ 2) :
     0 < -a + 2*b + 2*c := by nlinarith [sq_nonneg (a - b)]
 
-/-- M₃ produces positive second component. -/
 
+/-- M₃ produces positive second component. -/
 theorem berggren_M3_pos_b (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (h : a ^ 2 + b ^ 2 = c ^ 2) :
     0 < -2*a + b + 2*c := by nlinarith [sq_nonneg a]
 
-/-! ## Section 3: Node Counting
-
-The Berggren tree is a complete ternary tree: each node has exactly 3 children.
-Therefore depth d contains exactly 3^d nodes. -/
 
 /-- The set of tree paths at exactly depth d. -/
-
 def pathsAtDepth : ℕ → List TreePath
   | 0     => [.root]
   | d + 1 => (pathsAtDepth d).flatMap fun p => [.left p, .mid p, .right p]
 
-/-
-The number of paths at depth d is 3^d.
--/
 
 theorem pathsAtDepth_length : ∀ d : ℕ, (pathsAtDepth d).length = 3 ^ d := by
   intro d; induction d with
@@ -96,10 +82,8 @@ theorem pathsAtDepth_length : ∀ d : ℕ, (pathsAtDepth d).length = 3 ^ d := by
     exact?;
   rw [ h_flatMap, List.length_flatMap, List.sum_eq_card_nsmul ] <;> aesop
 
-/-! ## Section 4: Hypotenuse Growth Bounds -/
 
 /-- The M₂-only branch: repeatedly applying M₂ from root. -/
-
 def m2_branch : ℕ → ℤ × ℤ × ℤ
   | 0 => (3, 4, 5)
   | n + 1 =>
@@ -113,8 +97,8 @@ def m2_branch : ℕ → ℤ × ℤ × ℤ
 #eval (m2_branch 3).2.2  -- 985
 #eval (m2_branch 4).2.2  -- 5741
 
-/-- Every M₂-branch triple is Pythagorean. -/
 
+/-- Every M₂-branch triple is Pythagorean. -/
 theorem m2_branch_pyth (n : ℕ) :
     let t := m2_branch n
     t.1 ^ 2 + t.2.1 ^ 2 = t.2.2 ^ 2 := by
@@ -122,36 +106,32 @@ theorem m2_branch_pyth (n : ℕ) :
   | zero => decide
   | succ n ih => simp only [m2_branch]; nlinarith [ih]
 
-/-! ## Section 5: Sum and Product Formulas for Children -/
 
 /-- Sum of the three children's hypotenuses. -/
-
 theorem children_hyp_sum (a b c : ℤ) :
     (2*a - 2*b + 3*c) + (2*a + 2*b + 3*c) + (-2*a + 2*b + 3*c) = 2*a + 2*b + 9*c := by
   ring
 
-/-- Sum of the three children's first legs. -/
 
+/-- Sum of the three children's first legs. -/
 theorem children_leg_a_sum (a b c : ℤ) :
     (a - 2*b + 2*c) + (a + 2*b + 2*c) + (-a + 2*b + 2*c) = a + 2*b + 6*c := by ring
 
-/-- Sum of the three children's second legs. -/
 
+/-- Sum of the three children's second legs. -/
 theorem children_leg_b_sum (a b c : ℤ) :
     (2*a - b + 2*c) + (2*a + b + 2*c) + (-2*a + b + 2*c) = 2*a + b + 6*c := by ring
 
-/-- **BETA'S THEOREM**: Sum of all children's perimeters = 5a + 5b + 21c. -/
 
+/-- **BETA'S THEOREM**: Sum of all children's perimeters = 5a + 5b + 21c. -/
 theorem children_perimeter_sum (a b c : ℤ) :
     let p1 := (a - 2*b + 2*c) + (2*a - b + 2*c) + (2*a - 2*b + 3*c)
     let p2 := (a + 2*b + 2*c) + (2*a + b + 2*c) + (2*a + 2*b + 3*c)
     let p3 := (-a + 2*b + 2*c) + (-2*a + b + 2*c) + (-2*a + 2*b + 3*c)
     p1 + p2 + p3 = 5*a + 5*b + 21*c := by ring
 
-/-! ## Section 6: M₂ Branch Recurrence -/
 
 /-- The M₂ hypotenuse recurrence: c_{n+2} = 6c_{n+1} - c_n. -/
-
 theorem m2_hyp_recurrence :
     ∀ n : ℕ, (m2_branch (n + 2)).2.2 = 6 * (m2_branch (n + 1)).2.2 - (m2_branch n).2.2 := by
   intro n
@@ -159,10 +139,8 @@ theorem m2_hyp_recurrence :
   | zero => norm_num [m2_branch]
   | succ n ih => simp only [m2_branch]; linarith
 
-/-! ## Section 7: The Perimeter Recursion -/
 
 /-- The perimeter of the M₂ branch. -/
-
 def m2_perimeter (n : ℕ) : ℤ :=
   let t := m2_branch n
   t.1 + t.2.1 + t.2.2
@@ -172,28 +150,9 @@ def m2_perimeter (n : ℕ) : ℤ :=
 #eval m2_perimeter 2  -- 408
 #eval m2_perimeter 3  -- 2378
 
-/-! ## Section 8: The Depth Bound -/
 
 /-- The minimum hypotenuse growth factor is > 1 for each transformation. -/
-
 theorem min_hyp_growth (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (h : a ^ 2 + b ^ 2 = c ^ 2) :
     c + 2 ≤ 2 * a + 2 * b + 3 * c := by linarith
 
-/-! ## Section 9: Computational Verification -/
-
--- Children of (3, 4, 5):
-#eval berggrenTripleAux (.left .root)   -- (5, 12, 13)
-#eval berggrenTripleAux (.mid .root)    -- (21, 20, 29)
-#eval berggrenTripleAux (.right .root)  -- (15, 8, 17)
-
--- Children of (5, 12, 13):
-#eval berggrenTripleAux (.left (.left .root))   -- (7, 24, 25)
-#eval berggrenTripleAux (.mid (.left .root))    -- (55, 48, 73)
-#eval berggrenTripleAux (.right (.left .root))  -- (45, 28, 53)
-
--- Verify hypotenuse sum: 25 + 73 + 53 = 151 = 2·5 + 2·12 + 9·13 ✓
-#eval 2*5 + 2*12 + 9*13  -- 151
-
--- Verify perimeter sum: 5·5 + 5·12 + 21·13 = 25 + 60 + 273 = 358 ✓
-#eval 5*5 + 5*12 + 21*13

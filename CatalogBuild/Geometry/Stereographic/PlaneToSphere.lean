@@ -14,18 +14,12 @@ noncomputable section
 def parametricPlane (N : ℕ) (p u v : Fin N → ℝ) (s t : ℝ) : Fin N → ℝ :=
   fun j => p j + s * u j + t * v j
 
-/-- Every point of a parametric plane, mapped through invStereoN, lies on S^N. -/
 
+/-- Every point of a parametric plane, mapped through invStereoN, lies on S^N. -/
 theorem plane_image_on_sphere (N : ℕ) (p u v : Fin N → ℝ) (s t : ℝ) :
     ∑ i : Fin (N + 1), (invStereoN N (parametricPlane N p u v s t) i) ^ 2 = 1 :=
   invStereoN_norm_sq N _
 
-/-! ## The 2D concrete case: ℝ² plane maps to S² -/
-
-/-
-The entire plane ℝ² maps onto S² \ {north pole} via invStereoN.
-    For any point on S² with last coordinate ≠ 1, there exists a preimage.
--/
 
 theorem invStereoN_2_surj_on_sphere (x : Fin 3 → ℝ)
     (hx_norm : ∑ i : Fin 3, (x i) ^ 2 = 1)
@@ -42,15 +36,6 @@ theorem invStereoN_2_surj_on_sphere (x : Fin 3 → ℝ)
   · grind;
   · grind
 
-/-! ## Key structural theorem: affine constraints are preserved -/
-
-/-
-If points in ℝ^N satisfy a linear equation Σ aᵢ·yᵢ = c (a hyperplane),
-    then their images under invStereoN satisfy a linear equation relating the
-    first N sphere coordinates, specifically:
-    Σ aᵢ · (2·yᵢ/D) = 2c/D
-    This means the image lies on S^N ∩ {hyperplane}, which is a (generalized) sphere.
--/
 
 theorem hyperplane_image_characterization (N : ℕ) (a : Fin N → ℝ) (c : ℝ)
     (y : Fin N → ℝ) (hy : ∑ i, a i * y i = c) :
@@ -61,16 +46,11 @@ theorem hyperplane_image_characterization (N : ℕ) (a : Fin N → ℝ) (c : ℝ
     exact Finset.sum_congr rfl fun i hi => by simp +decide [ mul_assoc, mul_comm, mul_left_comm, div_eq_mul_inv ] ;
   · ring
 
-/-! ## Topological characterization -/
 
 /-- The north pole in ℝ^{N+1}. -/
-
 def northPole (N : ℕ) : Fin (N + 1) → ℝ := fun i =>
   if (i : ℕ) = N then 1 else 0
 
-/-
-The image of ℝ^N under invStereoN is exactly S^N minus the north pole.
--/
 
 theorem invStereoN_image_eq (N : ℕ) :
     Set.range (invStereoN N) =

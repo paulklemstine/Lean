@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Speculative/RosettaStone
-Declarations: 64
+Declarations: 65
 -/
 
 import Mathlib
@@ -16,8 +16,8 @@ theorem prod_idempotent_iff {R S : Type*} [Ring R] [Ring S] (x : R × S) :
   · intro h; exact ⟨congr_arg Prod.fst h, congr_arg Prod.snd h⟩
   · intro ⟨h1, h2⟩; ext <;> assumption
 
-/-- A field has exactly 2 idempotents: 0 and 1. -/
 
+/-- A field has exactly 2 idempotents: 0 and 1. -/
 theorem field_idempotent_iff {F : Type*} [Field F] (e : F) :
     e * e = e ↔ e = 0 ∨ e = 1 := by
   constructor
@@ -28,8 +28,8 @@ theorem field_idempotent_iff {F : Type*} [Field F] (e : F) :
     · exact Or.inr (sub_eq_zero.mp h2)
   · rintro (rfl | rfl) <;> simp
 
-/-- ℤ/pℤ for prime p has exactly 2 idempotents (computationally verified for small primes). -/
 
+/-- ℤ/pℤ for prime p has exactly 2 idempotents (computationally verified for small primes). -/
 theorem prime_two_idempotents_2 :
     (Finset.univ.filter (fun e : ZMod 2 => e * e = e)).card = 2 := by decide
 
@@ -48,41 +48,38 @@ theorem prime_two_idempotents_11 :
 theorem prime_two_idempotents_13 :
     (Finset.univ.filter (fun e : ZMod 13 => e * e = e)).card = 2 := by decide
 
-/-- Idempotent count for ℤ/2ℤ × ℤ/3ℤ is 2 × 2 = 4 (= count for ℤ/6ℤ). -/
 
+/-- Idempotent count for ℤ/2ℤ × ℤ/3ℤ is 2 × 2 = 4 (= count for ℤ/6ℤ). -/
 theorem prod_idempotent_count_2_3 :
     (Finset.univ.filter (fun e : ZMod 2 × ZMod 3 => e * e = e)).card = 4 := by
   decide
 
-/-- The CRT-Motivic principle: idempotents in ℤ/6ℤ match ℤ/2ℤ × ℤ/3ℤ. -/
 
+/-- The CRT-Motivic principle: idempotents in ℤ/6ℤ match ℤ/2ℤ × ℤ/3ℤ. -/
 theorem crt_idempotent_match :
     (Finset.univ.filter (fun e : ZMod 6 => e * e = e)).card =
     (Finset.univ.filter (fun e : ZMod 2 × ZMod 3 => e * e = e)).card := by
   decide
 
-/-! ═══════════════════════════════════════════════════════════════════════════
-    §2: Boolean Algebra of Idempotents (Bridge 1↔2↔4)
-    ═══════════════════════════════════════════════════════════════════════════ -/
 
-
+/-- Complement of idempotent is idempotent. -/
 theorem idem_compl (e : R) (he : e * e = e) :
     (1 - e) * (1 - e) = 1 - e := by
   have : (1 - e) * (1 - e) = 1 - 2 * e + e * e := by ring
   rw [this, he]; ring
 
-/-- Meet and complement give ⊥. -/
 
+/-- Meet and complement give ⊥. -/
 theorem idem_meet_compl (e : R) (he : e * e = e) :
     e * (1 - e) = 0 := by rw [mul_sub, mul_one, he, sub_self]
 
-/-- Join and complement give ⊤. -/
 
+/-- Join and complement give ⊤. -/
 theorem idem_join_compl (e : R) (he : e * e = e) :
     e + (1 - e) - e * (1 - e) = 1 := by rw [idem_meet_compl e he]; ring
 
-/-- Absorption: e ∧ (e ∨ f) = e. -/
 
+/-- Absorption: e ∧ (e ∨ f) = e. -/
 theorem idem_absorption (e f : R) (he : e * e = e) :
     e * (e + f - e * f) = e := by
   have : e * (e + f - e * f) = e * e + e * f - e * e * f := by ring
@@ -95,96 +92,74 @@ theorem trace_diagonal_projection {n : ℕ} (S : Finset (Fin n)) :
     (S.card : ℝ) := by
   simp [Matrix.trace, Matrix.diag_apply, Finset.sum_ite_mem]
 
-/-- Trace of a sum is the sum of traces. -/
 
+/-- Trace of a sum is the sum of traces. -/
 theorem trace_sum {n : ℕ} (P Q : Matrix (Fin n) (Fin n) ℝ) :
     (P + Q).trace = P.trace + Q.trace := by
   simp [Matrix.trace, Matrix.add_apply, Finset.sum_add_distrib]
 
-/-
-PROBLEM
-Complementary projections have complementary traces: Tr(P) + Tr(I-P) = n.
-
-PROVIDED SOLUTION
-Expand (1-P).trace = 1.trace - P.trace using linearity of trace. Then P.trace + (1.trace - P.trace) = 1.trace = n. Use Matrix.trace_one and linearity.
--/
 
 theorem trace_complement {n : ℕ} (P : Matrix (Fin n) (Fin n) ℝ) :
     P.trace + (1 - P).trace = (n : ℝ) := by
       norm_num [ Matrix.trace_sub ]
 
-/-- Trace is invariant under cyclic permutation. -/
 
+/-- Trace is invariant under cyclic permutation. -/
 theorem trace_cyclic_perm {n : ℕ}
     (A B : Matrix (Fin n) (Fin n) ℝ) :
     (A * B).trace = (B * A).trace :=
   Matrix.trace_mul_comm A B
 
-/-! ═══════════════════════════════════════════════════════════════════════════
-    §4: Tropical Degeneration (Bridge 1↔7)
-    ═══════════════════════════════════════════════════════════════════════════ -/
 
 /-- Classical: in ℝ, x² = x implies x ∈ {0, 1}. -/
-
 theorem classical_idempotent_sparse (x : ℝ) (hx : x * x = x) :
     x = 0 ∨ x = 1 := (field_idempotent_iff x).mp hx
 
-/-- Tropical: min(x, x) = x for ALL x. -/
 
+/-- Tropical: min(x, x) = x for ALL x. -/
 theorem tropical_idempotent_dense (x : ℝ) : min x x = x := min_self x
 
-/-- The tropical semiring satisfies left distributivity. -/
 
+/-- The tropical semiring satisfies left distributivity. -/
 theorem tropical_left_distrib (a b c : ℝ) :
     a + min b c = min (a + b) (a + c) := by
   simp [min_def]; split_ifs <;> linarith
 
-/-- The tropical semiring satisfies right distributivity. -/
 
+/-- The tropical semiring satisfies right distributivity. -/
 theorem tropical_right_distrib (a b c : ℝ) :
     min a b + c = min (a + c) (b + c) := by
   simp [min_def]; split_ifs <;> linarith
 
-/-! ═══════════════════════════════════════════════════════════════════════════
-    §5: Spectral Decomposition Universality (Bridge 3↔8↔9)
-    ═══════════════════════════════════════════════════════════════════════════ -/
 
 /-- Complete system of orthogonal idempotents in a ring. -/
-
 structure CSOI (R : Type*) [Ring R] (n : ℕ) where
   proj : Fin n → R
   idempotent : ∀ i, proj i * proj i = proj i
   orthogonal : ∀ i j, i ≠ j → proj i * proj j = 0
   complete : ∑ i : Fin n, proj i = 1
 
-/-- Spectral decomposition: any element is the sum of its projections. -/
 
+/-- Spectral decomposition: any element is the sum of its projections. -/
 theorem spectral_decomposition {R : Type*} [Ring R] {n : ℕ}
     (csoi : CSOI R n) (x : R) :
     x = ∑ i : Fin n, csoi.proj i * x := by
   conv_lhs => rw [← one_mul x, ← csoi.complete]; rw [Finset.sum_mul]
 
-/-- Each spectral component is stable under its projector. -/
 
+/-- Each spectral component is stable under its projector. -/
 theorem spectral_component_stable {R : Type*} [Ring R] {n : ℕ}
     (csoi : CSOI R n) (x : R) (k : Fin n) :
     csoi.proj k * (csoi.proj k * x) = csoi.proj k * x := by
   rw [← mul_assoc, csoi.idempotent]
 
-/-- Orthogonality of spectral components. -/
 
+/-- Orthogonality of spectral components. -/
 theorem spectral_orthogonality {R : Type*} [Ring R] {n : ℕ}
     (csoi : CSOI R n) (x : R) (i j : Fin n) (hij : i ≠ j) :
     csoi.proj i * (csoi.proj j * x) = 0 := by
   rw [← mul_assoc, csoi.orthogonal i j hij, zero_mul]
 
-/-
-PROBLEM
-A CSOI with 2 elements: second projector is 1 minus the first.
-
-PROVIDED SOLUTION
-From csoi.complete, we have ∑ i : Fin 2, csoi.proj i = 1. Expand with Fin.sum_univ_two to get csoi.proj 0 + csoi.proj 1 = 1, hence csoi.proj 1 = 1 - csoi.proj 0. Use linarith or sub_eq_of_eq_add.
--/
 
 theorem csoi_two_is_complement {R : Type*} [Ring R]
     (csoi : CSOI R 2) :
@@ -192,21 +167,14 @@ theorem csoi_two_is_complement {R : Type*} [Ring R]
       have := csoi.complete;
       rw [ ← this, Fin.sum_univ_two, eq_sub_iff_add_eq', add_comm ]
 
-/-- The trivial CSOI: {1}. -/
 
+/-- The trivial CSOI: {1}. -/
 def csoi_trivial (R : Type*) [Ring R] : CSOI R 1 where
   proj := fun _ => 1
   idempotent := fun _ => one_mul 1
   orthogonal := fun i j hij => absurd (Subsingleton.elim i j) hij
   complete := by simp
 
-/-
-PROBLEM
-From an idempotent, construct a CSOI with 2 elements.
-
-PROVIDED SOLUTION
-For idempotent: fin_cases i, for i=0 use he, for i=1 expand (1-e)(1-e) = 1-2e+e² = 1-2e+e = 1-e. For orthogonal: fin_cases i j, use he_orth1 and he_orth2. For complete: ![e, 1-e] sums to e + (1-e) = 1 by add_sub_cancel. Access elements with Matrix.cons_val_zero and Matrix.cons_val_one.
--/
 
 def csoi_from_idempotent {R : Type*} [Ring R] (e : R) (he : e * e = e)
     (he_orth1 : e * (1 - e) = 0) (he_orth2 : (1 - e) * e = 0) :
@@ -219,19 +187,6 @@ def csoi_from_idempotent {R : Type*} [Ring R] (e : R) (he : e * e = e)
   complete := by
     simp [Fin.sum_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one]
 
-/-! ═══════════════════════════════════════════════════════════════════════════
-    §6: Oracle-Module Bridge (Cross↔Bridge 6)
-    ═══════════════════════════════════════════════════════════════════════════ -/
-
-variable {K : Type*} [CommRing K] {W : Type*} [AddCommGroup W] [Module K W]
-
-/-
-PROBLEM
-Oracle-Module correspondence: range(e) = ker(1 - e).
-
-PROVIDED SOLUTION
-ext x. For (→): if x ∈ range(e), then x = e(y) for some y, so (id - e)(x) = x - e(x) = e(y) - e(e(y)) = e(y) - e(y) = 0, using he: e ∘ₗ e = e. For (←): if x ∈ ker(id - e), then x - e(x) = 0, so x = e(x), hence x ∈ range(e) (take y = x). Use LinearMap.mem_range, LinearMap.mem_ker, LinearMap.sub_apply, LinearMap.id_apply, and LinearMap.congr_fun he.
--/
 
 theorem range_eq_ker_complement (e : W →ₗ[K] W) (he : e ∘ₗ e = e) :
     LinearMap.range e = LinearMap.ker (LinearMap.id - e) := by
@@ -242,29 +197,17 @@ theorem range_eq_ker_complement (e : W →ₗ[K] W) (he : e ∘ₗ e = e) :
         rw [ sub_eq_zero, ← LinearMap.comp_apply, he ];
       · grind
 
-/-
-PROBLEM
-Complementary oracle-module: ker(e) = range(1 - e).
-
-PROVIDED SOLUTION
-ext x. For (→): if e(x) = 0, then (id - e)(x) = x - e(x) = x - 0 = x, so x = (id - e)(x) ∈ range(id - e). For (←): if x ∈ range(id - e), then x = y - e(y) for some y, so e(x) = e(y) - e(e(y)) = e(y) - e(y) = 0 using he. Use LinearMap.mem_ker, LinearMap.mem_range, map_sub, LinearMap.congr_fun he.
--/
 
 theorem ker_eq_range_complement (e : W →ₗ[K] W) (he : e ∘ₗ e = e) :
     LinearMap.ker e = LinearMap.range (LinearMap.id - e) := by
       exact LinearMap.IsIdempotentElem.ker_eq_range he
 
-/-- The oracle "identity on image" theorem for linear maps. -/
 
+/-- The oracle "identity on image" theorem for linear maps. -/
 theorem linear_oracle_identity (e : W →ₗ[K] W) (he : e ∘ₗ e = e)
     (x : W) (hx : x ∈ LinearMap.range e) : e x = x := by
   obtain ⟨y, rfl⟩ := hx; exact LinearMap.congr_fun he y
 
-/-! ═══════════════════════════════════════════════════════════════════════════
-    §7: Idempotent Zeta Function (Bridge 1↔9)
-    ═══════════════════════════════════════════════════════════════════════════ -/
-
-/-- Idempotent count function. -/
 
 theorem idem_p2 : idemCount 2 = 2 := by native_decide
 
@@ -312,20 +255,16 @@ theorem idem_mult_30 : idemCount 30 = idemCount 2 * idemCount 15 := by native_de
 
 theorem idem_mult_210 : idemCount 210 = idemCount 2 * idemCount 105 := by native_decide
 
-/-! ═══════════════════════════════════════════════════════════════════════════
-    §8: Contraction-Projection Duality (Bridge 4↔8)
-    ═══════════════════════════════════════════════════════════════════════════ -/
 
-/-- A closure operator on a partial order. -/
-
+/-- An interior operator on a partial order. -/
 structure InteriorOp (α : Type*) [Preorder α] where
   op : α → α
   mono : ∀ a b, a ≤ b → op a ≤ op b
   restrictive : ∀ a, op a ≤ a
   idempotent : ∀ a, op (op a) = op a
 
-/-- Topological closure is a closure operator. -/
 
+/-- Topological closure is a closure operator. -/
 noncomputable def topological_closure (X : Type*) [TopologicalSpace X] :
     ClosureOp (Set X) where
   op := closure
@@ -333,8 +272,8 @@ noncomputable def topological_closure (X : Type*) [TopologicalSpace X] :
   extensive := fun _ => subset_closure
   idempotent := fun _ => isClosed_closure.closure_eq
 
-/-- Topological interior is an interior operator. -/
 
+/-- Topological interior is an interior operator. -/
 noncomputable def topological_interior (X : Type*) [TopologicalSpace X] :
     InteriorOp (Set X) where
   op := interior
@@ -342,23 +281,19 @@ noncomputable def topological_interior (X : Type*) [TopologicalSpace X] :
   restrictive := fun _ => interior_subset
   idempotent := fun _ => isOpen_interior.interior_eq
 
-/-- Every element of the form cl(a) is a fixed point. -/
 
+/-- Every element of the form cl(a) is a fixed point. -/
 theorem closure_image_fixed {α : Type*} [Preorder α] (cl : ClosureOp α) (a : α) :
     cl.op (cl.op a) = cl.op a := cl.idempotent a
 
-/-- Interior = complement of closure of complement. -/
 
+/-- Interior = complement of closure of complement. -/
 theorem interior_via_closure (X : Type*) [TopologicalSpace X] (s : Set X) :
     interior s = (closure sᶜ)ᶜ := by rw [closure_compl, compl_compl]
 
-/-! ═══════════════════════════════════════════════════════════════════════════
-    §9: The Grand Unification — All Bridges Share e ∘ e = e
-    ═══════════════════════════════════════════════════════════════════════════ -/
-
-/-- An abstract idempotent in any magma. -/
 
 theorem bridge1_instance {R : Type*} [Ring R] (e : R) (he : e * e = e) : IsIdem e := he
+
 theorem bridge2_instance {α : Type*} [SemilatticeInf α] (a : α) :
     @IsIdem α ⟨(· ⊓ ·)⟩ a := inf_idem a
 
@@ -367,12 +302,8 @@ theorem bridge5_instance {n : ℕ} (P : Matrix (Fin n) (Fin n) ℝ) (hP : P * P 
 
 theorem bridge7_instance (a : ℝ) : @IsIdem ℝ ⟨min⟩ a := min_self a
 
-/-! ═══════════════════════════════════════════════════════════════════════════
-    §10: Idempotent Entropy — A New Invariant
-    ═══════════════════════════════════════════════════════════════════════════ -/
 
 /-- The idempotent entropy: log of the number of idempotents. -/
-
 noncomputable def idemEntropy (k : ℕ) : ℝ :=
   if k = 0 then 0 else Real.log k
 
@@ -381,15 +312,15 @@ theorem field_idem_entropy : idemEntropy 2 = Real.log 2 := by simp [idemEntropy]
 
 theorem zmod6_idem_entropy : idemEntropy 4 = Real.log 4 := by simp [idemEntropy]
 
-/-- Entropy increases with number of idempotents. -/
 
+/-- Entropy increases with number of idempotents. -/
 theorem idem_entropy_mono (k₁ k₂ : ℕ) (hk1 : 0 < k₁) (hk2 : k₁ ≤ k₂) :
     idemEntropy k₁ ≤ idemEntropy k₂ := by
   simp only [idemEntropy, if_neg (by omega : k₁ ≠ 0), if_neg (by omega : k₂ ≠ 0)]
   exact Real.log_le_log (by positivity) (by exact_mod_cast hk2)
 
-/-- Multiplicativity of counts implies additivity of entropy. -/
 
+/-- Multiplicativity of counts implies additivity of entropy. -/
 theorem idem_entropy_additive (m n : ℕ) (hm : 0 < m) (hn : 0 < n) :
     idemEntropy (m * n) = idemEntropy m + idemEntropy n := by
   have hmn : m * n ≠ 0 := by positivity

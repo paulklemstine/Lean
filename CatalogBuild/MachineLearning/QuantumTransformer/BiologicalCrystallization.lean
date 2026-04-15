@@ -34,8 +34,6 @@ theorem one_hot_crystal_loss_zero {n : ℕ} (v : Fin n → ℝ) (hv : is_one_hot
   intro i _
   rcases one_hot_binary v hv i with h | h <;> simp [h]
 
-/-! ## §2: Sparse Coding -/
-
 
 def is_k_sparse {n : ℕ} (k : ℕ) (v : Fin n → ℝ) : Prop :=
   (Finset.univ.filter (fun i => v i ≠ 0)).card ≤ k
@@ -64,8 +62,6 @@ theorem sparse_monotone {n k : ℕ} {v : Fin n → ℝ}
     (hv : is_k_sparse k v) : is_k_sparse (k + 1) v := by
   unfold is_k_sparse at *; omega
 
-/-! ## §3: Phase Transition Model -/
-
 
 theorem low_temp_crystallization (tau : ℝ) (htau : 0 < tau) (htau_small : tau < 1) :
     1 / tau > 1 := by
@@ -76,15 +72,13 @@ theorem critical_temp_exists :
     ∃ tau_c : ℝ, 0 < tau_c ∧ tau_c < 1 :=
   ⟨1 / 2, by norm_num, by norm_num⟩
 
-/-! ## §4: Neural Population States -/
-
 
 theorem neural_attention_states (n : ℕ) :
     Fintype.card (Equiv.Perm (Fin n)) = n.factorial := by
   simp [Fintype.card_perm, Fintype.card_fin]
 
-/-- The order parameter for crystallization. -/
 
+/-- The order parameter for crystallization. -/
 def order_parameter {n : ℕ} (w : Fin n → ℝ) : ℝ :=
   (1 / ↑n) * ∑ i, w i * (1 - w i)
 

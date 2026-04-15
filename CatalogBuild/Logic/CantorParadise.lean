@@ -11,101 +11,48 @@ theorem power_set_strictly_larger (α : Type*) [Infinite α] :
     #α < #(Set α) := by
       convert Cardinal.cantor _ using 1 ; aesop;
 
-/-! ## The Diagonal Argument
-
-Rucker explains the diagonal argument as a fundamentally creative act:
-"You look at what everyone else is doing, and you do something different."
--/
 
 /-- The diagonal set: given f : α → Set α, the set of elements not in their own image.
-  This is the "rebel set" that cannot be in the range of f. -/
-
+This is the "rebel set" that cannot be in the range of f. -/
 def diagonalSet (f : α → Set α) : Set α := {x | x ∉ f x}
 
-/-
-PROBLEM
-The diagonal set is never in the range of any function to power sets.
-
-PROVIDED SOLUTION
-Suppose diagonalSet f = f a for some a. Then a ∈ diagonalSet f ↔ a ∉ f a = a ∉ diagonalSet f. Contradiction.
--/
 
 theorem diagonal_not_in_range (f : α → Set α) : diagonalSet f ∉ Set.range f := by
   by_contra! h_contra;
   obtain ⟨ a, ha ⟩ := h_contra ; have := Set.ext_iff.mp ha a ; tauto;
 
-/-! ## The Hierarchy of Infinities
-
-Rucker describes the "Absolute Infinite" as the class of all ordinals,
-and shows how each level of infinity begets a higher one.
--/
-
-/-
-Aleph-0 is the cardinality of the natural numbers.
--/
 
 theorem aleph0_eq_nat_card : ℵ₀ = #ℕ := by
   aesop
 
-/-
-The aleph sequence is strictly increasing.
--/
 
 theorem aleph_strictMono : StrictMono aleph := by
   exact?
 
-/-
-For every cardinal, there is a strictly larger one.
-  Rucker: "There is no largest infinity."
--/
 
 theorem cardinal_pow_gt (κ : Cardinal) : κ < 2 ^ κ := by
   exact?
 
-/-! ## Countability and Uncountability
-
-Rucker devotes much discussion to the boundary between
-countable and uncountable — the "first great divide" in infinity.
--/
-
-/-
-The natural numbers are countably infinite.
--/
 
 theorem nat_countably_infinite : #ℕ = ℵ₀ := by
   exact Cardinal.mk_nat
 
-/-
-The integers are countably infinite.
--/
 
 theorem int_countably_infinite : #ℤ = ℵ₀ := by
   aesop
 
-/-
-The rationals are countably infinite.
--/
 
 theorem rat_countably_infinite : #ℚ = ℵ₀ := by
   exact?
 
-/-
-The reals are uncountable — Cantor's most famous theorem.
--/
 
 theorem reals_eq_continuum : #ℝ = 2 ^ ℵ₀ := by
   -- Apply the theorem that states the cardinality of the real numbers is 2^ℵ₀.
   apply Cardinal.mk_real
 
-/-! ## König's Theorem
-
-Rucker discusses König's theorem as a powerful generalization
-of Cantor's diagonal argument to arbitrary products and sums.
--/
 
 /-- König's theorem: if κᵢ < λᵢ for all i, then Σκᵢ < Πλᵢ.
-  We state a consequence: cofinality of 2^ℵ₀ is uncountable. -/
-
+We state a consequence: cofinality of 2^ℵ₀ is uncountable. -/
 theorem konig_cofinality : ℵ₀ < ((2 : Cardinal) ^ ℵ₀).ord.cof := by
   by_contra h
   push_neg at h
@@ -117,19 +64,6 @@ theorem konig_cofinality : ℵ₀ < ((2 : Cardinal) ^ ℵ₀).ord.cof := by
     rw [← power_mul, aleph0_mul_aleph0]
   exact absurd (lt_of_lt_of_le h2 (h3.trans h5.le)) (not_lt.mpr le_rfl)
 
-/-! ## The Schröder-Bernstein Theorem
-
-Rucker presents this as the "conservation law" of cardinality:
-if A injects into B and B injects into A, they have the same size.
--/
-
-/-
-PROBLEM
-Schröder-Bernstein: mutual injection implies bijection.
-
-PROVIDED SOLUTION
-Use Function.Embedding.schropieder_bernstein or Equiv from Mathlib. Or construct using Function.Injective to get Embedding, then use antisymmetry of Cardinal.mk to get an Equiv, and extract the bijection.
--/
 
 theorem schroder_bernstein {α β : Type*}
     (f : α → β) (g : β → α) (hf : Injective f) (hg : Injective g) :

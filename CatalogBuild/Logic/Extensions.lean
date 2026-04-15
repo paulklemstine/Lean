@@ -14,8 +14,6 @@ theorem ppt_c_odd (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
   rcases heven_b with ⟨m, rfl⟩
   rcases Int.even_or_odd' c with ⟨n, rfl | rfl⟩ <;> ring_nf at * <;> norm_num at *
 
-/-! ## Theorem 3: det = 1 for all Berggren 3×3 matrices -/
-
 
 theorem det_B₁_eq_one : Matrix.det !![(1 : ℤ), -2, 2; 2, -1, 2; 2, -2, 3] = 1 := by
   native_decide
@@ -28,20 +26,14 @@ theorem det_B₂_eq_neg_one : Matrix.det !![(1 : ℤ), 2, 2; 2, 1, 2; 2, 2, 3] =
 theorem det_B₃_eq_one : Matrix.det !![(-1 : ℤ), 2, 2; -2, 1, 2; -2, 2, 3] = 1 := by
   native_decide
 
-/-! ## Theorem 4: Quadratic Residue from Pythagoras -/
-
 
 theorem qr_from_pyth (a c : ℤ) :
     ∃ x : ℤ, x ^ 2 ≡ a ^ 2 [ZMOD c] :=
   ⟨a, Int.ModEq.refl _⟩
 
-/-! ## Theorem 5: The factored difference identity (c-a)(c+a) = b² -/
-
 
 theorem pyth_factored (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (c - a) * (c + a) = b ^ 2 := by nlinarith [sq_abs a, sq_abs b, sq_abs c]
-
-/-! ## Theorem 6: B₂ applied to (3,4,5) -/
 
 
 theorem B₂_on_345 :

@@ -25,9 +25,6 @@ theorem sum_after_phi (x y : ℝ) :
     sumCoord (Phi_orb (x, y)) = (Real.exp x - Real.log y) + (Real.exp y - Real.log x) := by
   simp [sumCoord, Phi_orb, EML_orb]
 
-/-
-Sum grows by at least x²/2 + y²/2.
--/
 
 theorem sum_quadratic_growth (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
     sumCoord (Phi_orb (x, y)) ≥ sumCoord (x, y) + x ^ 2 / 2 + y ^ 2 / 2 := by
@@ -57,8 +54,8 @@ theorem sum_quadratic_growth (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
 
 def lyap_orb (p : ℝ × ℝ) : ℝ := Real.exp p.1 + Real.exp p.2
 
-/-- exp(x) + exp(y) > 0 always. -/
 
+/-- exp(x) + exp(y) > 0 always. -/
 theorem lyap_pos (p : ℝ × ℝ) : lyap_orb p > 0 := by
   simp [lyap_orb]; positivity
 
@@ -104,9 +101,6 @@ theorem asymmetry_preserved (x y : ℝ) (hy : 0 < y) (hxy : x > y) :
   have h2 : Real.log x > Real.log y := Real.log_lt_log hy hxy
   linarith
 
-/-
-If x > y ≥ 1, asymmetry grows.
--/
 
 theorem asymmetry_grows (x y : ℝ) (hy : 1 ≤ y) (hxy : x > y) :
     asymmetry (Phi_orb (x, y)) > asymmetry (x, y) := by
@@ -132,8 +126,8 @@ theorem prod_after_phi (x y : ℝ) :
     (Real.exp x - Real.log y) * (Real.exp y - Real.log x) := by
   simp [prodCoord, Phi_orb, EML_orb]
 
-/-- On the diagonal, the product equals d(x)² ≥ 4. -/
 
+/-- On the diagonal, the product equals d(x)² ≥ 4. -/
 theorem prod_diagonal_ge_four (x : ℝ) (hx : 0 < x) :
     prodCoord (Phi_orb (x, x)) ≥ 4 := by
   rw [prod_after_phi]
