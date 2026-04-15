@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" font-family="Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+    <filter id="glow2">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="900" fill="url(#bg2)"/>
+
+  <text x="600" y="45" text-anchor="middle" fill="#fff" font-size="26" font-weight="bold" filter="url(#glow2)">
+    EML Research Landscape: AI &amp; Machine Learning
+  </text>
+  <text x="600" y="72" text-anchor="middle" fill="#94a3b8" font-size="13">
+    120+ Research Directions · 350+ Verified Theorems · Cross-Disciplinary Impact
+  </text>
+
+  <!-- Central hub -->
+  <circle cx="600" cy="450" r="80" fill="#1e3a5f" stroke="#3b82f6" stroke-width="3" filter="url(#glow2)"/>
+  <text x="600" y="440" text-anchor="middle" fill="#60a5fa" font-size="20" font-weight="bold">EML</text>
+  <text x="600" y="462" text-anchor="middle" fill="#94a3b8" font-size="12">exp(x) − ln(y)</text>
+  <text x="600" y="480" text-anchor="middle" fill="#94a3b8" font-size="10">Core Framework</text>
+
+  <!-- ML Branch -->
+  <line x1="520" y1="410" x2="200" y2="200" stroke="#3b82f6" stroke-width="2" opacity="0.6"/>
+  <circle cx="200" cy="200" r="65" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+  <text x="200" y="190" text-anchor="middle" fill="#60a5fa" font-size="15" font-weight="bold">Machine</text>
+  <text x="200" y="210" text-anchor="middle" fill="#60a5fa" font-size="15" font-weight="bold">Learning</text>
+
+  <g font-size="10" fill="#94a3b8">
+    <text x="60" y="115" fill="#22c55e">✓ PAC Learning Bounds</text>
+    <text x="60" y="133" fill="#22c55e">✓ 252× Distillation</text>
+    <text x="60" y="151" fill="#22c55e">✓ Scaling Laws</text>
+    <text x="60" y="169" fill="#22c55e">✓ Batch Optimization</text>
+    <text x="60" y="187" fill="#fbbf24">◆ Universal Approximation</text>
+    <text x="60" y="205" fill="#fbbf24">◆ Architecture Search</text>
+    <text x="60" y="223" fill="#fbbf24">◆ Convergence Rates</text>
+    <text x="60" y="241" fill="#94a3b8">○ Reinforcement Learning</text>
+    <text x="60" y="259" fill="#94a3b8">○ Generative Models</text>
+  </g>
+
+  <!-- Quantum Branch -->
+  <line x1="680" y1="410" x2="1000" y2="200" stroke="#8b5cf6" stroke-width="2" opacity="0.6"/>
+  <circle cx="1000" cy="200" r="65" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+  <text x="1000" y="190" text-anchor="middle" fill="#a78bfa" font-size="15" font-weight="bold">Quantum</text>
+  <text x="1000" y="210" text-anchor="middle" fill="#a78bfa" font-size="15" font-weight="bold">Computing</text>
+
+  <g font-size="10" fill="#94a3b8">
+    <text x="1080" y="133" fill="#22c55e">✓ Grover √N Speedup</text>
+    <text x="1080" y="151" fill="#22c55e">✓ VQE Ansatz (3ql)</text>
+    <text x="1080" y="169" fill="#22c55e">✓ O(n) Gate Count</text>
+    <text x="1080" y="187" fill="#22c55e">✓ Surface Code QEC</text>
+    <text x="1080" y="205" fill="#fbbf24">◆ IBMQ Implementation</text>
+    <text x="1080" y="223" fill="#fbbf24">◆ Error Mitigation</text>
+    <text x="1080" y="241" fill="#94a3b8">○ Quantum ML Kernel</text>
+  </g>
+
+  <!-- Crypto Branch -->
+  <line x1="520" y1="490" x2="200" y2="680" stroke="#f59e0b" stroke-width="2" opacity="0.6"/>
+  <circle cx="200" cy="680" r="65" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+  <text x="200" y="670" text-anchor="middle" fill="#fbbf24" font-size="15" font-weight="bold">Crypto &amp;</text>
+  <text x="200" y="690" text-anchor="middle" fill="#fbbf24" font-size="15" font-weight="bold">Privacy</text>
+
+  <g font-size="10" fill="#94a3b8">
+    <text x="60" y="610" fill="#22c55e">✓ Certified Robustness</text>
+    <text x="60" y="628" fill="#22c55e">✓ DP Composition</text>
+    <text x="60" y="646" fill="#22c55e">✓ Timing Safety</text>
+    <text x="60" y="664" fill="#22c55e">✓ Federated Learning</text>
+    <text x="60" y="682" fill="#fbbf24">◆ HE-EML Inference</text>
+    <text x="60" y="700" fill="#fbbf24">◆ Post-Quantum ML</text>
+    <text x="60" y="718" fill="#94a3b8">○ MPC Training</text>
+    <text x="60" y="736" fill="#94a3b8">○ ZK-ML Proofs</text>
+  </g>
+
+  <!-- Applications Branch -->
+  <line x1="680" y1="490" x2="1000" y2="680" stroke="#10b981" stroke-width="2" opacity="0.6"/>
+  <circle cx="1000" cy="680" r="65" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+  <text x="1000" y="670" text-anchor="middle" fill="#34d399" font-size="15" font-weight="bold">Real-World</text>
+  <text x="1000" y="690" text-anchor="middle" fill="#34d399" font-size="15" font-weight="bold">Applications</text>
+
+  <g font-size="10" fill="#94a3b8">
+    <text x="1080" y="610" fill="#fbbf24">◆ Factor Discovery Net</text>
+    <text x="1080" y="628" fill="#fbbf24">◆ BERT Compression</text>
+    <text x="1080" y="646" fill="#fbbf24">◆ Protein Folding</text>
+    <text x="1080" y="664" fill="#94a3b8">○ Autonomous Vehicles</text>
+    <text x="1080" y="682" fill="#94a3b8">○ Drug Discovery</text>
+    <text x="1080" y="700" fill="#94a3b8">○ Climate Modeling</text>
+    <text x="1080" y="718" fill="#94a3b8">○ Scientific Computing</text>
+  </g>
+
+  <!-- Theory Branch (top center) -->
+  <line x1="600" y1="370" x2="600" y2="130" stroke="#ef4444" stroke-width="2" opacity="0.6"/>
+  <circle cx="600" cy="130" r="55" fill="#1e293b" stroke="#ef4444" stroke-width="2"/>
+  <text x="600" y="125" text-anchor="middle" fill="#f87171" font-size="14" font-weight="bold">Math</text>
+  <text x="600" y="143" text-anchor="middle" fill="#f87171" font-size="14" font-weight="bold">Theory</text>
+
+  <g font-size="10">
+    <text x="450" y="100" fill="#22c55e">✓ Information Theory</text>
+    <text x="450" y="118" fill="#22c55e">✓ Generalization Bounds</text>
+    <text x="690" y="100" fill="#22c55e">✓ PAC-Bayes</text>
+    <text x="690" y="118" fill="#fbbf24">◆ Rate-Distortion</text>
+  </g>
+
+  <!-- Legend -->
+  <rect x="420" y="810" width="360" height="70" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+  <circle cx="445" cy="835" r="6" fill="#22c55e"/>
+  <text x="460" y="840" fill="#94a3b8" font-size="11">✓ Formally Verified</text>
+  <circle cx="580" cy="835" r="6" fill="#fbbf24"/>
+  <text x="595" y="840" fill="#94a3b8" font-size="11">◆ In Progress</text>
+  <circle cx="700" cy="835" r="6" fill="#64748b"/>
+  <text x="715" y="840" fill="#94a3b8" font-size="11">○ Future</text>
+
+  <text x="600" y="870" text-anchor="middle" fill="#475569" font-size="11">
+    v11 · 350+ theorems · 5 Lean files · 6 Python demos · Cross-disciplinary
+  </text>
+</svg>

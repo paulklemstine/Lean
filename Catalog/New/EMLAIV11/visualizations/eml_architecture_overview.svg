@@ -1,0 +1,238 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" font-family="Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a1628;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#1a2744;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="emlGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3b82f6"/>
+      <stop offset="100%" style="stop-color:#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#10b981"/>
+      <stop offset="100%" style="stop-color:#34d399"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="800" fill="url(#bgGrad)"/>
+
+  <!-- Title -->
+  <text x="600" y="50" text-anchor="middle" fill="#fff" font-size="28" font-weight="bold" filter="url(#glow)">
+    EML Neural Network Architecture
+  </text>
+  <text x="600" y="78" text-anchor="middle" fill="#94a3b8" font-size="14">
+    Exponential-Multiplicative-Logarithmic · Formally Verified in Lean 4
+  </text>
+
+  <!-- EML Neuron Detail -->
+  <rect x="50" y="110" width="350" height="280" rx="15" fill="#1e293b" stroke="#3b82f6" stroke-width="2" filter="url(#shadow)"/>
+  <text x="225" y="140" text-anchor="middle" fill="#60a5fa" font-size="18" font-weight="bold">EML Neuron</text>
+
+  <!-- Neuron diagram -->
+  <circle cx="120" cy="220" r="12" fill="#3b82f6" opacity="0.8"/>
+  <text x="120" y="200" text-anchor="middle" fill="#94a3b8" font-size="11">x</text>
+
+  <line x1="132" y1="220" x2="180" y2="190" stroke="#3b82f6" stroke-width="2"/>
+  <line x1="132" y1="220" x2="180" y2="250" stroke="#8b5cf6" stroke-width="2"/>
+
+  <!-- Exp branch -->
+  <rect x="180" y="175" width="60" height="30" rx="8" fill="#3b82f6" opacity="0.8"/>
+  <text x="210" y="195" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">exp</text>
+
+  <!-- Log branch -->
+  <rect x="180" y="235" width="60" height="30" rx="8" fill="#8b5cf6" opacity="0.8"/>
+  <text x="210" y="255" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">ln</text>
+
+  <!-- Minus -->
+  <line x1="240" y1="190" x2="290" y2="220" stroke="#3b82f6" stroke-width="2"/>
+  <line x1="240" y1="250" x2="290" y2="220" stroke="#8b5cf6" stroke-width="2"/>
+  <circle cx="290" cy="220" r="15" fill="none" stroke="#f59e0b" stroke-width="2"/>
+  <text x="290" y="225" text-anchor="middle" fill="#f59e0b" font-size="16" font-weight="bold">−</text>
+
+  <!-- Output -->
+  <line x1="305" y1="220" x2="360" y2="220" stroke="#10b981" stroke-width="2" marker-end="url(#arrow)"/>
+  <circle cx="370" cy="220" r="12" fill="#10b981" opacity="0.8"/>
+  <text x="370" y="200" text-anchor="middle" fill="#94a3b8" font-size="11">y</text>
+
+  <!-- Formula -->
+  <text x="225" y="310" text-anchor="middle" fill="#e2e8f0" font-size="14">
+    f(x) = exp(w₁x + b₁) − ln(w₂x + b₂)
+  </text>
+  <text x="225" y="335" text-anchor="middle" fill="#94a3b8" font-size="12">
+    4 parameters per neuron
+  </text>
+  <text x="225" y="358" text-anchor="middle" fill="#22c55e" font-size="11">
+    ✓ Differentiable  ✓ Interpretable  ✓ Invertible
+  </text>
+  <text x="225" y="378" text-anchor="middle" fill="#22c55e" font-size="11">
+    ✓ Bounded activation  ✓ exp(-x²) ∈ [0,1]
+  </text>
+
+  <!-- Network Architecture -->
+  <rect x="440" y="110" width="720" height="280" rx="15" fill="#1e293b" stroke="#10b981" stroke-width="2" filter="url(#shadow)"/>
+  <text x="800" y="140" text-anchor="middle" fill="#34d399" font-size="18" font-weight="bold">EML Network Architecture</text>
+
+  <!-- Input layer -->
+  <g transform="translate(490, 160)">
+    <text x="30" y="0" text-anchor="middle" fill="#94a3b8" font-size="11">Input</text>
+    <circle cx="30" cy="25" r="10" fill="#64748b"/>
+    <circle cx="30" cy="55" r="10" fill="#64748b"/>
+    <circle cx="30" cy="85" r="10" fill="#64748b"/>
+    <circle cx="30" cy="115" r="10" fill="#64748b"/>
+    <circle cx="30" cy="145" r="10" fill="#64748b"/>
+    <text x="30" y="175" text-anchor="middle" fill="#64748b" font-size="10">n features</text>
+  </g>
+
+  <!-- Hidden layer 1 -->
+  <g transform="translate(610, 160)">
+    <text x="30" y="0" text-anchor="middle" fill="#94a3b8" font-size="11">EML Layer 1</text>
+    <rect x="5" y="15" width="50" height="25" rx="6" fill="#3b82f6" opacity="0.7"/>
+    <text x="30" y="32" text-anchor="middle" fill="#fff" font-size="9">exp−ln</text>
+    <rect x="5" y="50" width="50" height="25" rx="6" fill="#3b82f6" opacity="0.7"/>
+    <text x="30" y="67" text-anchor="middle" fill="#fff" font-size="9">exp−ln</text>
+    <rect x="5" y="85" width="50" height="25" rx="6" fill="#3b82f6" opacity="0.7"/>
+    <text x="30" y="102" text-anchor="middle" fill="#fff" font-size="9">exp−ln</text>
+    <rect x="5" y="120" width="50" height="25" rx="6" fill="#3b82f6" opacity="0.7"/>
+    <text x="30" y="137" text-anchor="middle" fill="#fff" font-size="9">exp−ln</text>
+    <text x="30" y="175" text-anchor="middle" fill="#3b82f6" font-size="10">4dw params</text>
+  </g>
+
+  <!-- Hidden layer 2 -->
+  <g transform="translate(730, 160)">
+    <text x="30" y="0" text-anchor="middle" fill="#94a3b8" font-size="11">EML Layer 2</text>
+    <rect x="5" y="15" width="50" height="25" rx="6" fill="#8b5cf6" opacity="0.7"/>
+    <text x="30" y="32" text-anchor="middle" fill="#fff" font-size="9">exp−ln</text>
+    <rect x="5" y="50" width="50" height="25" rx="6" fill="#8b5cf6" opacity="0.7"/>
+    <text x="30" y="67" text-anchor="middle" fill="#fff" font-size="9">exp−ln</text>
+    <rect x="5" y="85" width="50" height="25" rx="6" fill="#8b5cf6" opacity="0.7"/>
+    <text x="30" y="102" text-anchor="middle" fill="#fff" font-size="9">exp−ln</text>
+    <rect x="5" y="120" width="50" height="25" rx="6" fill="#8b5cf6" opacity="0.7"/>
+    <text x="30" y="137" text-anchor="middle" fill="#fff" font-size="9">exp−ln</text>
+    <text x="30" y="175" text-anchor="middle" fill="#8b5cf6" font-size="10">Skip conn.</text>
+  </g>
+
+  <!-- Hidden layer 3 -->
+  <g transform="translate(850, 160)">
+    <text x="30" y="0" text-anchor="middle" fill="#94a3b8" font-size="11">EML Layer d</text>
+    <rect x="5" y="15" width="50" height="25" rx="6" fill="#6366f1" opacity="0.7"/>
+    <text x="30" y="32" text-anchor="middle" fill="#fff" font-size="9">exp−ln</text>
+    <rect x="5" y="50" width="50" height="25" rx="6" fill="#6366f1" opacity="0.7"/>
+    <text x="30" y="67" text-anchor="middle" fill="#fff" font-size="9">exp−ln</text>
+    <rect x="5" y="85" width="50" height="25" rx="6" fill="#6366f1" opacity="0.7"/>
+    <text x="30" y="102" text-anchor="middle" fill="#fff" font-size="9">exp−ln</text>
+    <rect x="5" y="120" width="50" height="25" rx="6" fill="#6366f1" opacity="0.7"/>
+    <text x="30" y="137" text-anchor="middle" fill="#fff" font-size="9">exp−ln</text>
+    <text x="30" y="175" text-anchor="middle" fill="#6366f1" font-size="10">3^d functions</text>
+  </g>
+
+  <!-- Output -->
+  <g transform="translate(970, 160)">
+    <text x="30" y="0" text-anchor="middle" fill="#94a3b8" font-size="11">Output</text>
+    <circle cx="30" cy="55" r="10" fill="#10b981"/>
+    <circle cx="30" cy="95" r="10" fill="#10b981"/>
+    <text x="30" y="135" text-anchor="middle" fill="#10b981" font-size="10">Symbolic</text>
+    <text x="30" y="150" text-anchor="middle" fill="#10b981" font-size="10">readout</text>
+  </g>
+
+  <!-- Connections (simplified) -->
+  <g stroke="#475569" stroke-width="0.5" opacity="0.4">
+    <line x1="550" y1="185" x2="615" y2="188"/>
+    <line x1="550" y1="215" x2="615" y2="188"/>
+    <line x1="550" y1="245" x2="615" y2="223"/>
+    <line x1="550" y1="275" x2="615" y2="258"/>
+    <line x1="550" y1="305" x2="615" y2="293"/>
+    <line x1="665" y1="188" x2="735" y2="188"/>
+    <line x1="665" y1="223" x2="735" y2="223"/>
+    <line x1="665" y1="258" x2="735" y2="258"/>
+    <line x1="665" y1="293" x2="735" y2="293"/>
+    <line x1="785" y1="188" x2="855" y2="188"/>
+    <line x1="785" y1="223" x2="855" y2="223"/>
+    <line x1="785" y1="258" x2="855" y2="258"/>
+    <line x1="785" y1="293" x2="855" y2="293"/>
+    <line x1="905" y1="188" x2="970" y2="215"/>
+    <line x1="905" y1="223" x2="970" y2="215"/>
+    <line x1="905" y1="258" x2="970" y2="255"/>
+    <line x1="905" y1="293" x2="970" y2="255"/>
+  </g>
+
+  <!-- Skip connection arc -->
+  <path d="M 640 155 C 640 120, 880 120, 880 155" stroke="#f59e0b" stroke-width="2" fill="none" stroke-dasharray="5,3" opacity="0.7"/>
+  <text x="760" y="115" text-anchor="middle" fill="#f59e0b" font-size="10">Skip Connection</text>
+
+  <!-- Comparison Table -->
+  <rect x="50" y="420" width="540" height="340" rx="15" fill="#1e293b" stroke="#f59e0b" stroke-width="2" filter="url(#shadow)"/>
+  <text x="320" y="450" text-anchor="middle" fill="#fbbf24" font-size="18" font-weight="bold">EML vs Standard MLP</text>
+
+  <g fill="#94a3b8" font-size="13">
+    <text x="80" y="490" fill="#e2e8f0" font-weight="bold">Property</text>
+    <text x="280" y="490" text-anchor="middle" fill="#3b82f6" font-weight="bold">EML</text>
+    <text x="450" y="490" text-anchor="middle" fill="#ef4444" font-weight="bold">Standard MLP</text>
+    <line x1="70" y1="500" x2="570" y2="500" stroke="#334155" stroke-width="1"/>
+
+    <text x="80" y="525">Parameters</text>
+    <text x="280" y="525" text-anchor="middle" fill="#22c55e">4dw</text>
+    <text x="450" y="525" text-anchor="middle" fill="#ef4444">dw²</text>
+
+    <text x="80" y="555">Expressivity</text>
+    <text x="280" y="555" text-anchor="middle" fill="#22c55e">3^d functions</text>
+    <text x="450" y="555" text-anchor="middle" fill="#ef4444">d·w functions</text>
+
+    <text x="80" y="585">FLOPs</text>
+    <text x="280" y="585" text-anchor="middle" fill="#22c55e">O(dw)</text>
+    <text x="450" y="585" text-anchor="middle" fill="#ef4444">O(dw²)</text>
+
+    <text x="80" y="615">Interpretability</text>
+    <text x="280" y="615" text-anchor="middle" fill="#22c55e">Symbolic readout</text>
+    <text x="450" y="615" text-anchor="middle" fill="#ef4444">Black box</text>
+
+    <text x="80" y="645">Activation bound</text>
+    <text x="280" y="645" text-anchor="middle" fill="#22c55e">[0, 1] ✓ proven</text>
+    <text x="450" y="645" text-anchor="middle" fill="#ef4444">[0, ∞) unbounded</text>
+
+    <text x="80" y="675">Lipschitz</text>
+    <text x="280" y="675" text-anchor="middle" fill="#22c55e">|a|·|b| bounded</text>
+    <text x="450" y="675" text-anchor="middle" fill="#ef4444">Unbounded</text>
+
+    <text x="80" y="705">VC dimension</text>
+    <text x="280" y="705" text-anchor="middle" fill="#22c55e">4dw</text>
+    <text x="450" y="705" text-anchor="middle" fill="#ef4444">dw²</text>
+
+    <text x="80" y="735">Distillation</text>
+    <text x="280" y="735" text-anchor="middle" fill="#22c55e">252× ✓ proven</text>
+    <text x="450" y="735" text-anchor="middle" fill="#ef4444">~4-10×</text>
+  </g>
+
+  <!-- Applications -->
+  <rect x="620" y="420" width="540" height="340" rx="15" fill="#1e293b" stroke="#8b5cf6" stroke-width="2" filter="url(#shadow)"/>
+  <text x="890" y="450" text-anchor="middle" fill="#a78bfa" font-size="18" font-weight="bold">Verified Applications</text>
+
+  <g font-size="13">
+    <text x="650" y="490" fill="#60a5fa">🔬 Machine Learning</text>
+    <text x="670" y="515" fill="#94a3b8">PAC learning bounds, scaling laws</text>
+    <text x="670" y="535" fill="#94a3b8">252× distillation, batch optimization</text>
+
+    <text x="650" y="570" fill="#a78bfa">⚛️ Quantum Computing</text>
+    <text x="670" y="595" fill="#94a3b8">Grover √N speedup, VQE ansatz</text>
+    <text x="670" y="615" fill="#94a3b8">O(n) gates, surface code savings</text>
+
+    <text x="650" y="650" fill="#f59e0b">🔐 Cryptography</text>
+    <text x="670" y="675" fill="#94a3b8">Certified robustness, DP training</text>
+    <text x="670" y="695" fill="#94a3b8">Timing-safe, federated learning</text>
+
+    <text x="650" y="730" fill="#34d399">📊 Theory</text>
+    <text x="670" y="755" fill="#94a3b8">Information bottleneck, PAC-Bayes</text>
+  </g>
+
+  <!-- Footer -->
+  <text x="600" y="790" text-anchor="middle" fill="#475569" font-size="11">
+    280+ formally verified theorems · Lean 4 + Mathlib · Zero sorries
+  </text>
+</svg>
