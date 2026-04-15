@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <style>
+      .title { font: bold 18px 'Helvetica Neue', Arial, sans-serif; fill: #2c3e50; }
+      .label { font: 13px 'Helvetica Neue', Arial, sans-serif; fill: #555; }
+      .axis-label { font: bold 14px 'Helvetica Neue', Arial, sans-serif; fill: #333; }
+      .tick { font: 11px monospace; fill: #777; }
+      .annotation { font: italic 12px 'Georgia', serif; fill: #c0392b; }
+    </style>
+  </defs>
+  <rect width="800" height="600" fill="white" rx="8"/>
+  <text x="400" y="30" text-anchor="middle" class="title">The EML Operator: A Map of Connections</text>
+<circle cx="400" cy="300" r="60" fill="#e74c3c" opacity="0.9"/>
+<text x="400" y="292" text-anchor="middle" fill="white" style="font:bold 20px sans-serif">eml(x,y)</text>
+<text x="400" y="312" text-anchor="middle" fill="white" style="font:14px sans-serif">= eˣ − ln(y)</text>
+<rect x="110" y="75" width="140" height="50" fill="#3498db" rx="8" opacity="0.85"/>
+<text x="180" y="95" text-anchor="middle" fill="white" style="font:bold 13px sans-serif">Monotonicity</text>
+<text x="180" y="113" text-anchor="middle" fill="white" style="font:10px sans-serif">∂/∂x > 0, ∂/∂y < 0</text>
+<line x1="235" y1="120" x2="352" y2="256" stroke="#3498db" stroke-width="1.5" opacity="0.5" stroke-dasharray="4,3"/>
+<rect x="550" y="75" width="140" height="50" fill="#2ecc71" rx="8" opacity="0.85"/>
+<text x="620" y="95" text-anchor="middle" fill="white" style="font:bold 13px sans-serif">E-Tower</text>
+<text x="620" y="113" text-anchor="middle" fill="white" style="font:10px sans-serif">e↑↑n → ∞</text>
+<line x1="565" y1="120" x2="448" y2="256" stroke="#2ecc71" stroke-width="1.5" opacity="0.5" stroke-dasharray="4,3"/>
+<rect x="30" y="275" width="140" height="50" fill="#9b59b6" rx="8" opacity="0.85"/>
+<text x="100" y="295" text-anchor="middle" fill="white" style="font:bold 13px sans-serif">Magma</text>
+<text x="100" y="313" text-anchor="middle" fill="white" style="font:10px sans-serif">¬comm, ¬assoc, ...</text>
+<line x1="175" y1="300" x2="335" y2="300" stroke="#9b59b6" stroke-width="1.5" opacity="0.5" stroke-dasharray="4,3"/>
+<rect x="630" y="275" width="140" height="50" fill="#e67e22" rx="8" opacity="0.85"/>
+<text x="700" y="295" text-anchor="middle" fill="white" style="font:bold 13px sans-serif">AM-GM Bridge</text>
+<text x="700" y="313" text-anchor="middle" fill="white" style="font:10px sans-serif">a+b−ln a−ln b ≥ 2</text>
+<line x1="625" y1="300" x2="465" y2="300" stroke="#e67e22" stroke-width="1.5" opacity="0.5" stroke-dasharray="4,3"/>
+<rect x="110" y="475" width="140" height="50" fill="#1abc9c" rx="8" opacity="0.85"/>
+<text x="180" y="495" text-anchor="middle" fill="white" style="font:bold 13px sans-serif">Fixed Points</text>
+<text x="180" y="513" text-anchor="middle" fill="white" style="font:10px sans-serif">z* = W(eᵉ)</text>
+<line x1="235" y1="480" x2="352" y2="344" stroke="#1abc9c" stroke-width="1.5" opacity="0.5" stroke-dasharray="4,3"/>
+<rect x="550" y="475" width="140" height="50" fill="#34495e" rx="8" opacity="0.85"/>
+<text x="620" y="495" text-anchor="middle" fill="white" style="font:bold 13px sans-serif">Complexity</text>
+<text x="620" y="513" text-anchor="middle" fill="white" style="font:10px sans-serif">K(ln) = ?</text>
+<line x1="565" y1="480" x2="448" y2="344" stroke="#34495e" stroke-width="1.5" opacity="0.5" stroke-dasharray="4,3"/>
+<rect x="330" y="75" width="140" height="50" fill="#c0392b" rx="8" opacity="0.85"/>
+<text x="400" y="95" text-anchor="middle" fill="white" style="font:bold 13px sans-serif">Tropical</text>
+<text x="400" y="113" text-anchor="middle" fill="white" style="font:10px sans-serif">max(x, −y)</text>
+<line x1="400" y1="130" x2="400" y2="235" stroke="#c0392b" stroke-width="1.5" opacity="0.5" stroke-dasharray="4,3"/>
+<rect x="330" y="475" width="140" height="50" fill="#16a085" rx="8" opacity="0.85"/>
+<text x="400" y="495" text-anchor="middle" fill="white" style="font:bold 13px sans-serif">Involution</text>
+<text x="400" y="513" text-anchor="middle" fill="white" style="font:10px sans-serif">f∘f = id</text>
+<line x1="400" y1="470" x2="400" y2="365" stroke="#16a085" stroke-width="1.5" opacity="0.5" stroke-dasharray="4,3"/>
+</svg>
