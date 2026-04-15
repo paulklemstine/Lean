@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" font-family="Georgia, serif">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a2e"/>
+      <stop offset="100%" style="stop-color:#1a1a4e"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FFD700"/>
+      <stop offset="100%" style="stop-color:#FFA500"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#FFD700"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="900" fill="url(#bg)"/>
+
+  <!-- Title -->
+  <text x="600" y="50" text-anchor="middle" fill="url(#gold)" font-size="32" font-weight="bold" filter="url(#glow)">
+    The Stereographic Projection Bridge
+  </text>
+  <text x="600" y="80" text-anchor="middle" fill="#aaa" font-size="18" font-style="italic">
+    One Formula Connecting Four Domains of Mathematics
+  </text>
+
+  <!-- Central Formula -->
+  <rect x="400" y="100" width="400" height="70" rx="15" fill="#1a1a5e" stroke="url(#gold)" stroke-width="3" filter="url(#shadow)"/>
+  <text x="600" y="130" text-anchor="middle" fill="#FFD700" font-size="28" font-weight="bold" font-family="'Courier New', monospace">
+    spb(x, y) = (x+y)/(1−xy)
+  </text>
+  <text x="600" y="155" text-anchor="middle" fill="#888" font-size="14">
+    Machine-verified in Lean 4 — 28 theorems, 0 sorry
+  </text>
+
+  <!-- Domain 1: Trigonometry (top-left) -->
+  <g transform="translate(150, 280)">
+    <rect x="-120" y="-40" width="240" height="160" rx="15" fill="#0d2b45" stroke="#4FC3F7" stroke-width="2"/>
+    <text x="0" y="-15" text-anchor="middle" fill="#4FC3F7" font-size="20" font-weight="bold">Trigonometry</text>
+    <text x="0" y="15" text-anchor="middle" fill="#ccc" font-size="14">tan(α + β) = spb(tan α, tan β)</text>
+    <text x="0" y="40" text-anchor="middle" fill="#999" font-size="12">• Double/triple angle formulas</text>
+    <text x="0" y="58" text-anchor="middle" fill="#999" font-size="12">• Machin-type π identities</text>
+    <text x="0" y="76" text-anchor="middle" fill="#999" font-size="12">• Weierstrass substitution</text>
+    <text x="0" y="100" text-anchor="middle" fill="#4FC3F7" font-size="11">arctan(1/2) + arctan(1/3) = π/4</text>
+    <!-- Circle icon -->
+    <circle cx="0" cy="-60" r="12" fill="none" stroke="#4FC3F7" stroke-width="1.5"/>
+    <line x1="-8" y1="-60" x2="8" y2="-60" stroke="#4FC3F7" stroke-width="1"/>
+    <line x1="0" y1="-72" x2="0" y2="-48" stroke="#4FC3F7" stroke-width="1"/>
+  </g>
+
+  <!-- Domain 2: Group Theory (top-right) -->
+  <g transform="translate(1050, 280)">
+    <rect x="-120" y="-40" width="240" height="160" rx="15" fill="#0d2b45" stroke="#66BB6A" stroke-width="2"/>
+    <text x="0" y="-15" text-anchor="middle" fill="#66BB6A" font-size="20" font-weight="bold">Group Theory</text>
+    <text x="0" y="15" text-anchor="middle" fill="#ccc" font-size="14">(ℝ, spb) ≅ (S¹, ·) via Cayley</text>
+    <text x="0" y="40" text-anchor="middle" fill="#999" font-size="12">• Identity: spb(x, 0) = x</text>
+    <text x="0" y="58" text-anchor="middle" fill="#999" font-size="12">• Inverse: spb(x, −x) = 0</text>
+    <text x="0" y="76" text-anchor="middle" fill="#999" font-size="12">• Associativity (partial group)</text>
+    <text x="0" y="100" text-anchor="middle" fill="#66BB6A" font-size="11">Cayley: x ↦ (1+ix)/(1−ix) ∈ S¹</text>
+  </g>
+
+  <!-- Domain 3: Special Relativity (bottom-left) -->
+  <g transform="translate(150, 600)">
+    <rect x="-120" y="-40" width="240" height="160" rx="15" fill="#0d2b45" stroke="#FF7043" stroke-width="2"/>
+    <text x="0" y="-15" text-anchor="middle" fill="#FF7043" font-size="20" font-weight="bold">Special Relativity</text>
+    <text x="0" y="15" text-anchor="middle" fill="#ccc" font-size="14">spbH(u,v) = (u+v)/(1+uv)</text>
+    <text x="0" y="40" text-anchor="middle" fill="#999" font-size="12">• Einstein velocity addition</text>
+    <text x="0" y="58" text-anchor="middle" fill="#999" font-size="12">• Speed of light barrier: |result| &lt; c</text>
+    <text x="0" y="76" text-anchor="middle" fill="#999" font-size="12">• Rapidity: additive in tanh⁻¹</text>
+    <text x="0" y="100" text-anchor="middle" fill="#FF7043" font-size="11">v₁ = v₂ = 0.9c → v₁⊕v₂ = 0.9945c</text>
+  </g>
+
+  <!-- Domain 4: Approximation Theory (bottom-right) -->
+  <g transform="translate(1050, 600)">
+    <rect x="-120" y="-40" width="240" height="160" rx="15" fill="#0d2b45" stroke="#AB47BC" stroke-width="2"/>
+    <text x="0" y="-15" text-anchor="middle" fill="#AB47BC" font-size="20" font-weight="bold">Approximation Theory</text>
+    <text x="0" y="15" text-anchor="middle" fill="#ccc" font-size="14">T_n(x) = tan(n·arctan(x))</text>
+    <text x="0" y="40" text-anchor="middle" fill="#999" font-size="12">• SPB tree = fast computation</text>
+    <text x="0" y="58" text-anchor="middle" fill="#999" font-size="12">• Rational Chebyshev basis</text>
+    <text x="0" y="76" text-anchor="middle" fill="#999" font-size="12">• O(log n) operations via squaring</text>
+    <text x="0" y="100" text-anchor="middle" fill="#AB47BC" font-size="11">Avoids Runge phenomenon</text>
+  </g>
+
+  <!-- Connecting arrows -->
+  <line x1="280" y1="280" x2="470" y2="170" stroke="#FFD700" stroke-width="1.5" marker-end="url(#arrow)" opacity="0.6"/>
+  <line x1="920" y1="280" x2="730" y2="170" stroke="#FFD700" stroke-width="1.5" marker-end="url(#arrow)" opacity="0.6"/>
+  <line x1="280" y1="600" x2="470" y2="170" stroke="#FFD700" stroke-width="1.5" marker-end="url(#arrow)" opacity="0.6"/>
+  <line x1="920" y1="600" x2="730" y2="170" stroke="#FFD700" stroke-width="1.5" marker-end="url(#arrow)" opacity="0.6"/>
+
+  <!-- Cross connections -->
+  <line x1="280" y1="350" x2="920" y2="350" stroke="#FFD700" stroke-width="1" stroke-dasharray="5,5" opacity="0.3"/>
+  <line x1="280" y1="650" x2="920" y2="650" stroke="#FFD700" stroke-width="1" stroke-dasharray="5,5" opacity="0.3"/>
+  <line x1="150" y1="440" x2="150" y2="560" stroke="#FFD700" stroke-width="1" stroke-dasharray="5,5" opacity="0.3"/>
+  <line x1="1050" y1="440" x2="1050" y2="560" stroke="#FFD700" stroke-width="1" stroke-dasharray="5,5" opacity="0.3"/>
+
+  <!-- Center: Cayley Transform -->
+  <g transform="translate(600, 440)">
+    <circle r="80" fill="#1a1a5e" stroke="url(#gold)" stroke-width="2" filter="url(#shadow)"/>
+    <text x="0" y="-20" text-anchor="middle" fill="#FFD700" font-size="16" font-weight="bold">Cayley</text>
+    <text x="0" y="0" text-anchor="middle" fill="#FFD700" font-size="16" font-weight="bold">Transform</text>
+    <text x="0" y="25" text-anchor="middle" fill="#ccc" font-size="12">x ↦ (1+ix)/(1−ix)</text>
+    <text x="0" y="45" text-anchor="middle" fill="#888" font-size="10">Bridges all four domains</text>
+  </g>
+
+  <!-- New connections: 3D Extension -->
+  <g transform="translate(600, 700)">
+    <rect x="-200" y="-35" width="400" height="70" rx="10" fill="#2a1a3e" stroke="#E040FB" stroke-width="2"/>
+    <text x="0" y="-10" text-anchor="middle" fill="#E040FB" font-size="16" font-weight="bold">3D Extension: Quaternions</text>
+    <text x="0" y="15" text-anchor="middle" fill="#ccc" font-size="13">spb₃(u, v) = (u + v + u×v) / (1 − u·v)</text>
+  </g>
+
+  <!-- Properties bar -->
+  <g transform="translate(600, 830)">
+    <text x="-450" y="0" fill="#666" font-size="12">Commutative ✓</text>
+    <text x="-300" y="0" fill="#666" font-size="12">Associative ✓</text>
+    <text x="-150" y="0" fill="#666" font-size="12">Norm-multiplicative ✓</text>
+    <text x="30" y="0" fill="#666" font-size="12">No fixed points ✓</text>
+    <text x="200" y="0" fill="#666" font-size="12">Cayley-compatible ✓</text>
+    <text x="380" y="0" fill="#666" font-size="12">Lean 4 verified ✓</text>
+  </g>
+
+  <!-- Corner decoration -->
+  <text x="600" y="880" text-anchor="middle" fill="#444" font-size="11">
+    SPB Research Program — Formally Verified Mathematics — 2026
+  </text>
+</svg>

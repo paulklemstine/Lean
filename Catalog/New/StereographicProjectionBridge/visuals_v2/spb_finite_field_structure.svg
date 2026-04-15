@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="'Segoe UI', Arial, sans-serif">
+  <rect width="800" height="500" fill="#fafafa"/>
+
+  <text x="400" y="35" text-anchor="middle" fill="#1a237e" font-size="22" font-weight="bold">
+    SPB Group Orders over Finite Fields 𝔽_p
+  </text>
+  <text x="400" y="55" text-anchor="middle" fill="#666" font-size="13">
+    |SPB(𝔽_p)| = p+1 when p ≡ 3 (mod 4) · |SPB(𝔽_p)| = p−1 when p ≡ 1 (mod 4)
+  </text>
+
+  <!-- Chart area -->
+  <g transform="translate(80, 80)">
+    <!-- Axes -->
+    <line x1="0" y1="340" x2="660" y2="340" stroke="#333" stroke-width="1.5"/>
+    <line x1="0" y1="0" x2="0" y2="340" stroke="#333" stroke-width="1.5"/>
+
+    <!-- Y axis label -->
+    <text x="-20" y="-10" fill="#333" font-size="12">|SPB(𝔽_p)|</text>
+
+    <!-- X axis label -->
+    <text x="330" y="370" text-anchor="middle" fill="#333" font-size="12">Prime p</text>
+
+    <!-- Grid lines -->
+    <line x1="0" y1="68" x2="660" y2="68" stroke="#eee" stroke-width="0.5"/>
+    <line x1="0" y1="136" x2="660" y2="136" stroke="#eee" stroke-width="0.5"/>
+    <line x1="0" y1="204" x2="660" y2="204" stroke="#eee" stroke-width="0.5"/>
+    <line x1="0" y1="272" x2="660" y2="272" stroke="#eee" stroke-width="0.5"/>
+
+    <!-- Y axis ticks -->
+    <text x="-10" y="344" text-anchor="end" fill="#666" font-size="10">0</text>
+    <text x="-10" y="276" text-anchor="end" fill="#666" font-size="10">10</text>
+    <text x="-10" y="208" text-anchor="end" fill="#666" font-size="10">20</text>
+    <text x="-10" y="140" text-anchor="end" fill="#666" font-size="10">30</text>
+    <text x="-10" y="72" text-anchor="end" fill="#666" font-size="10">40</text>
+    <text x="-10" y="4" text-anchor="end" fill="#666" font-size="10">50</text>
+
+    <!-- Data points: primes and their SPB group orders -->
+    <!-- p=3, p%4=3, order=4 -->
+    <circle cx="30" cy="313" r="6" fill="#F44336"/>
+    <text x="30" y="358" text-anchor="middle" fill="#666" font-size="9">3</text>
+
+    <!-- p=5, p%4=1, order=4 -->
+    <circle cx="70" cy="313" r="6" fill="#2196F3"/>
+    <text x="70" y="358" text-anchor="middle" fill="#666" font-size="9">5</text>
+
+    <!-- p=7, p%4=3, order=8 -->
+    <circle cx="110" cy="286" r="6" fill="#F44336"/>
+    <text x="110" y="358" text-anchor="middle" fill="#666" font-size="9">7</text>
+
+    <!-- p=11, p%4=3, order=12 -->
+    <circle cx="160" cy="259" r="6" fill="#F44336"/>
+    <text x="160" y="358" text-anchor="middle" fill="#666" font-size="9">11</text>
+
+    <!-- p=13, p%4=1, order=12 -->
+    <circle cx="200" cy="259" r="6" fill="#2196F3"/>
+    <text x="200" y="358" text-anchor="middle" fill="#666" font-size="9">13</text>
+
+    <!-- p=17, p%4=1, order=16 -->
+    <circle cx="250" cy="232" r="6" fill="#2196F3"/>
+    <text x="250" y="358" text-anchor="middle" fill="#666" font-size="9">17</text>
+
+    <!-- p=19, p%4=3, order=20 -->
+    <circle cx="290" cy="204" r="6" fill="#F44336"/>
+    <text x="290" y="358" text-anchor="middle" fill="#666" font-size="9">19</text>
+
+    <!-- p=23, p%4=3, order=24 -->
+    <circle cx="340" cy="177" r="6" fill="#F44336"/>
+    <text x="340" y="358" text-anchor="middle" fill="#666" font-size="9">23</text>
+
+    <!-- p=29, p%4=1, order=28 -->
+    <circle cx="390" cy="150" r="6" fill="#2196F3"/>
+    <text x="390" y="358" text-anchor="middle" fill="#666" font-size="9">29</text>
+
+    <!-- p=31, p%4=3, order=32 -->
+    <circle cx="430" cy="123" r="6" fill="#F44336"/>
+    <text x="430" y="358" text-anchor="middle" fill="#666" font-size="9">31</text>
+
+    <!-- p=37, p%4=1, order=36 -->
+    <circle cx="480" cy="96" r="6" fill="#2196F3"/>
+    <text x="480" y="358" text-anchor="middle" fill="#666" font-size="9">37</text>
+
+    <!-- p=41, p%4=1, order=40 -->
+    <circle cx="530" cy="68" r="6" fill="#2196F3"/>
+    <text x="530" y="358" text-anchor="middle" fill="#666" font-size="9">41</text>
+
+    <!-- p=43, p%4=3, order=44 -->
+    <circle cx="570" cy="41" r="6" fill="#F44336"/>
+    <text x="570" y="358" text-anchor="middle" fill="#666" font-size="9">43</text>
+
+    <!-- p=47, p%4=3, order=48 -->
+    <circle cx="620" cy="14" r="6" fill="#F44336"/>
+    <text x="620" y="358" text-anchor="middle" fill="#666" font-size="9">47</text>
+
+    <!-- Reference lines -->
+    <!-- p+1 line -->
+    <line x1="20" y1="313" x2="630" y2="14" stroke="#F44336" stroke-width="1" stroke-dasharray="4,4" opacity="0.4"/>
+    <!-- p-1 line -->
+    <line x1="20" y1="327" x2="630" y2="28" stroke="#2196F3" stroke-width="1" stroke-dasharray="4,4" opacity="0.4"/>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(550, 430)">
+    <circle cx="0" cy="0" r="5" fill="#F44336"/>
+    <text x="12" y="4" fill="#333" font-size="12">p ≡ 3 (mod 4): order = p+1</text>
+    <circle cx="0" cy="22" r="5" fill="#2196F3"/>
+    <text x="12" y="26" fill="#333" font-size="12">p ≡ 1 (mod 4): order = p−1</text>
+  </g>
+
+  <!-- Explanation box -->
+  <g transform="translate(80, 430)">
+    <rect x="0" y="-5" width="350" height="55" rx="5" fill="#E3F2FD" stroke="#2196F3" stroke-width="1"/>
+    <text x="10" y="12" fill="#1565C0" font-size="11" font-weight="bold">Why p ≡ 3 mod 4 gives p+1:</text>
+    <text x="10" y="28" fill="#333" font-size="10">−1 is not a square mod p, so 𝔽_p[i] is a genuine</text>
+    <text x="10" y="42" fill="#333" font-size="10">field extension ⟹ norm-1 subgroup has order p+1.</text>
+  </g>
+</svg>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1000" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f0f4ff"/>
+      <stop offset="100%" style="stop-color:#e0e8f5"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="1000" fill="url(#bg3)"/>
+
+  <!-- Title -->
+  <text x="600" y="40" text-anchor="middle" fill="#1a237e" font-size="28" font-weight="bold">
+    SPB Research Roadmap — From Foundation to Frontier
+  </text>
+  <line x1="200" y1="55" x2="1000" y2="55" stroke="#1a237e" stroke-width="2"/>
+
+  <!-- Timeline axis -->
+  <line x1="100" y1="100" x2="100" y2="950" stroke="#999" stroke-width="2"/>
+  <text x="60" y="95" fill="#666" font-size="14" font-weight="bold" text-anchor="middle">Time</text>
+
+  <!-- Phase 1: Foundation (Done) -->
+  <g transform="translate(100, 130)">
+    <circle r="12" fill="#4CAF50" stroke="#fff" stroke-width="2"/>
+    <text x="25" y="5" fill="#4CAF50" font-size="16" font-weight="bold">Phase 1: Foundation ✓ COMPLETE</text>
+
+    <rect x="30" y="15" width="350" height="80" rx="8" fill="#E8F5E9" stroke="#4CAF50" stroke-width="1"/>
+    <text x="45" y="35" fill="#333" font-size="12">✓ Core SPB: commutativity, identity, inverse, associativity</text>
+    <text x="45" y="52" fill="#333" font-size="12">✓ Cayley homomorphism: C(spb(x,y)) = C(x)·C(y)</text>
+    <text x="45" y="69" fill="#333" font-size="12">✓ Einstein velocity bound: |u|,|v| &lt; 1 ⟹ |spbH(u,v)| &lt; 1</text>
+    <text x="45" y="86" fill="#333" font-size="12">✓ 28 theorems, 0 sorry — Lean 4 + Mathlib</text>
+
+    <rect x="420" y="15" width="350" height="80" rx="8" fill="#E8F5E9" stroke="#4CAF50" stroke-width="1"/>
+    <text x="435" y="35" fill="#333" font-size="12">✓ Norm multiplicativity: N(spb)·(1-xy)² = N(x)·N(y)</text>
+    <text x="435" y="52" fill="#333" font-size="12">✓ No fixed points, cancellation, cocycle identity</text>
+    <text x="435" y="69" fill="#333" font-size="12">✓ Inversion anti-automorphism: spb(1/x,1/y) = -spb(x,y)</text>
+    <text x="435" y="86" fill="#333" font-size="12">✓ Python demos, SVG visuals, research papers</text>
+  </g>
+
+  <!-- Phase 2: Immediate (Months 1-3) -->
+  <g transform="translate(100, 290)">
+    <circle r="12" fill="#2196F3" stroke="#fff" stroke-width="2"/>
+    <text x="25" y="5" fill="#2196F3" font-size="16" font-weight="bold">Phase 2: Immediate Priorities (Months 1-3)</text>
+
+    <rect x="30" y="15" width="280" height="100" rx="8" fill="#E3F2FD" stroke="#2196F3" stroke-width="1"/>
+    <text x="45" y="35" fill="#1565C0" font-size="13" font-weight="bold">3D SPB ★★★</text>
+    <text x="45" y="52" fill="#333" font-size="11">spb₃(u,v) = (u+v+u×v)/(1−u·v)</text>
+    <text x="45" y="69" fill="#333" font-size="11">→ Quaternion correspondence</text>
+    <text x="45" y="86" fill="#333" font-size="11">→ Thomas-Wigner rotation</text>
+    <text x="45" y="103" fill="#333" font-size="11">→ Non-commutativity proof</text>
+
+    <rect x="340" y="15" width="280" height="100" rx="8" fill="#E3F2FD" stroke="#2196F3" stroke-width="1"/>
+    <text x="355" y="35" fill="#1565C0" font-size="13" font-weight="bold">Finite Fields ★★★</text>
+    <text x="355" y="52" fill="#333" font-size="11">|SPB(𝔽_p)| = p±1 conjecture</text>
+    <text x="355" y="69" fill="#333" font-size="11">→ Norm-1 subgroup isomorphism</text>
+    <text x="355" y="86" fill="#333" font-size="11">→ Cyclicity from 𝔽_{p²}* embedding</text>
+    <text x="355" y="103" fill="#333" font-size="11">→ Cryptographic applications</text>
+
+    <rect x="650" y="15" width="280" height="100" rx="8" fill="#E3F2FD" stroke="#2196F3" stroke-width="1"/>
+    <text x="665" y="35" fill="#1565C0" font-size="13" font-weight="bold">Neural Networks ★★★</text>
+    <text x="665" y="52" fill="#333" font-size="11">SPB neuron: spb(w₁x, w₂)</text>
+    <text x="665" y="69" fill="#333" font-size="11">→ Periodic function approximation</text>
+    <text x="665" y="86" fill="#333" font-size="11">→ Benchmark vs MLP on cyclical data</text>
+    <text x="665" y="103" fill="#333" font-size="11">→ Runge phenomenon avoidance</text>
+  </g>
+
+  <!-- Phase 3: Short-term (Months 3-6) -->
+  <g transform="translate(100, 460)">
+    <circle r="12" fill="#FF9800" stroke="#fff" stroke-width="2"/>
+    <text x="25" y="5" fill="#FF9800" font-size="16" font-weight="bold">Phase 3: Short-Term (Months 3-6)</text>
+
+    <rect x="30" y="15" width="230" height="90" rx="8" fill="#FFF3E0" stroke="#FF9800" stroke-width="1"/>
+    <text x="45" y="35" fill="#E65100" font-size="13" font-weight="bold">Approximation ★★★</text>
+    <text x="45" y="52" fill="#333" font-size="11">Convergence rates</text>
+    <text x="45" y="69" fill="#333" font-size="11">SPB vs Chebyshev</text>
+    <text x="45" y="86" fill="#333" font-size="11">Rational approximation</text>
+
+    <rect x="280" y="15" width="230" height="90" rx="8" fill="#FFF3E0" stroke="#FF9800" stroke-width="1"/>
+    <text x="295" y="35" fill="#E65100" font-size="13" font-weight="bold">Signal Processing ★★</text>
+    <text x="295" y="52" fill="#333" font-size="11">All-pass filters as SPB</text>
+    <text x="295" y="69" fill="#333" font-size="11">Schur parameters</text>
+    <text x="295" y="86" fill="#333" font-size="11">CORDIC via SPB</text>
+
+    <rect x="530" y="15" width="230" height="90" rx="8" fill="#FFF3E0" stroke="#FF9800" stroke-width="1"/>
+    <text x="545" y="35" fill="#E65100" font-size="13" font-weight="bold">Quantum Computing ★★</text>
+    <text x="545" y="52" fill="#333" font-size="11">Bloch sphere SPB</text>
+    <text x="545" y="69" fill="#333" font-size="11">Gate decomposition</text>
+    <text x="545" y="86" fill="#333" font-size="11">Z-rotation = spb(tan(α/2), z)</text>
+
+    <rect x="780" y="15" width="230" height="90" rx="8" fill="#FFF3E0" stroke="#FF9800" stroke-width="1"/>
+    <text x="795" y="35" fill="#E65100" font-size="13" font-weight="bold">SPB–EML Bridge ★★★</text>
+    <text x="795" y="52" fill="#333" font-size="11">Categorical relationship</text>
+    <text x="795" y="69" fill="#333" font-size="11">e^{iθ} connecting map</text>
+    <text x="795" y="86" fill="#333" font-size="11">Unified algebra</text>
+  </g>
+
+  <!-- Phase 4: Medium-term (Months 6-12) -->
+  <g transform="translate(100, 620)">
+    <circle r="12" fill="#9C27B0" stroke="#fff" stroke-width="2"/>
+    <text x="25" y="5" fill="#9C27B0" font-size="16" font-weight="bold">Phase 4: Medium-Term (Months 6-12)</text>
+
+    <rect x="30" y="15" width="200" height="75" rx="8" fill="#F3E5F5" stroke="#9C27B0" stroke-width="1"/>
+    <text x="45" y="33" fill="#6A1B9A" font-size="12" font-weight="bold">Cohomology ★★</text>
+    <text x="45" y="50" fill="#333" font-size="10">2-cocycle c(x,y)=1/(1-xy)</text>
+    <text x="45" y="67" fill="#333" font-size="10">Coboundary classification</text>
+    <text x="45" y="80" fill="#333" font-size="10">Group extensions</text>
+
+    <rect x="250" y="15" width="200" height="75" rx="8" fill="#F3E5F5" stroke="#9C27B0" stroke-width="1"/>
+    <text x="265" y="33" fill="#6A1B9A" font-size="12" font-weight="bold">p-adic SPB ★★</text>
+    <text x="265" y="50" fill="#333" font-size="10">SPB over ℚ_p</text>
+    <text x="265" y="67" fill="#333" font-size="10">p-adic Cayley transform</text>
+    <text x="265" y="80" fill="#333" font-size="10">Ultrametric topology</text>
+
+    <rect x="470" y="15" width="200" height="75" rx="8" fill="#F3E5F5" stroke="#9C27B0" stroke-width="1"/>
+    <text x="485" y="33" fill="#6A1B9A" font-size="12" font-weight="bold">Info Geometry ★★</text>
+    <text x="485" y="50" fill="#333" font-size="10">Fisher metric on Cauchy</text>
+    <text x="485" y="67" fill="#333" font-size="10">Hyperbolic isometries</text>
+    <text x="485" y="80" fill="#333" font-size="10">Statistical manifolds</text>
+
+    <rect x="690" y="15" width="200" height="75" rx="8" fill="#F3E5F5" stroke="#9C27B0" stroke-width="1"/>
+    <text x="705" y="33" fill="#6A1B9A" font-size="12" font-weight="bold">Cont. Fractions ★★</text>
+    <text x="705" y="50" fill="#333" font-size="10">Möbius continued fraction</text>
+    <text x="705" y="67" fill="#333" font-size="10">Arctan sum convergents</text>
+    <text x="705" y="80" fill="#333" font-size="10">Optimal π computation</text>
+  </g>
+
+  <!-- Phase 5: Long-term -->
+  <g transform="translate(100, 770)">
+    <circle r="12" fill="#607D8B" stroke="#fff" stroke-width="2"/>
+    <text x="25" y="5" fill="#607D8B" font-size="16" font-weight="bold">Phase 5: Frontier (Year 1+)</text>
+
+    <rect x="30" y="15" width="900" height="55" rx="8" fill="#ECEFF1" stroke="#607D8B" stroke-width="1"/>
+    <text x="45" y="35" fill="#333" font-size="12">
+      Modular Forms ★ | Tropical SPB ★ | Langlands Connection ★ | QFT Wick Rotation ★ | SPB Category Theory ★
+    </text>
+    <text x="45" y="55" fill="#666" font-size="11">
+      These directions require significant new mathematical infrastructure but could yield breakthrough results.
+    </text>
+  </g>
+
+  <!-- Impact metrics -->
+  <g transform="translate(100, 870)">
+    <rect x="0" y="0" width="1000" height="80" rx="10" fill="#1a237e" opacity="0.9"/>
+    <text x="500" y="25" text-anchor="middle" fill="#FFD700" font-size="16" font-weight="bold">Expected Research Output</text>
+    <text x="130" y="55" text-anchor="middle" fill="#fff" font-size="13">3-5 Journal Papers</text>
+    <text x="310" y="55" text-anchor="middle" fill="#fff" font-size="13">2-3 Conference Papers</text>
+    <text x="500" y="55" text-anchor="middle" fill="#fff" font-size="13">1 Survey Paper</text>
+    <text x="670" y="55" text-anchor="middle" fill="#fff" font-size="13">1 Mathlib Library</text>
+    <text x="870" y="55" text-anchor="middle" fill="#fff" font-size="13">2+ Software Tools</text>
+  </g>
+</svg>
