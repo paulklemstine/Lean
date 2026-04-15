@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" font-family="'Georgia', serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a0a2e"/>
+      <stop offset="100%" stop-color="#1a1a4e"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffd700"/>
+      <stop offset="100%" stop-color="#ffaa00"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#88bbff"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="900" fill="url(#bgGrad)"/>
+
+  <!-- Title -->
+  <text x="600" y="55" text-anchor="middle" fill="url(#goldGrad)" font-size="32" font-weight="bold" filter="url(#glow)">
+    The Stereographic Projection Bridge
+  </text>
+  <text x="600" y="85" text-anchor="middle" fill="#aaccff" font-size="18" font-style="italic">
+    One Formula, Five Worlds
+  </text>
+
+  <!-- Central Formula -->
+  <rect x="380" y="110" width="440" height="70" rx="15" fill="none" stroke="url(#goldGrad)" stroke-width="3"/>
+  <text x="600" y="145" text-anchor="middle" fill="#ffffff" font-size="28" font-weight="bold">
+    spb(x, y) = (x + y) / (1 − xy)
+  </text>
+  <text x="600" y="170" text-anchor="middle" fill="#aaaacc" font-size="14">
+    The Continuous Group Gate
+  </text>
+
+  <!-- Five connected domains -->
+
+  <!-- 1. Trigonometry (top-left) -->
+  <g transform="translate(150, 300)">
+    <rect x="-120" y="-50" width="240" height="110" rx="12" fill="#1a2a4a" stroke="#4488cc" stroke-width="2"/>
+    <text x="0" y="-25" text-anchor="middle" fill="#66aaff" font-size="16" font-weight="bold">TRIGONOMETRY</text>
+    <text x="0" y="0" text-anchor="middle" fill="#ffffff" font-size="13">tan(α + β) = spb(tan α, tan β)</text>
+    <text x="0" y="20" text-anchor="middle" fill="#aaaacc" font-size="11">Multiple angle formula:</text>
+    <text x="0" y="38" text-anchor="middle" fill="#ffdd88" font-size="12">spb^n(tan θ) = tan(nθ)</text>
+    <circle cx="-5" cy="-65" r="18" fill="none" stroke="#4488cc" stroke-width="1.5"/>
+    <text x="-5" y="-60" text-anchor="middle" fill="#66aaff" font-size="14">∠</text>
+  </g>
+
+  <!-- 2. Circle Group (top-right) -->
+  <g transform="translate(1050, 300)">
+    <rect x="-120" y="-50" width="240" height="110" rx="12" fill="#1a2a4a" stroke="#44cc88" stroke-width="2"/>
+    <text x="0" y="-25" text-anchor="middle" fill="#66ffaa" font-size="16" font-weight="bold">CIRCLE GROUP S¹</text>
+    <text x="0" y="0" text-anchor="middle" fill="#ffffff" font-size="13">(ℝ ∪ {∞}, spb) ≅ (S¹, ·)</text>
+    <text x="0" y="20" text-anchor="middle" fill="#aaaacc" font-size="11">Cayley transform:</text>
+    <text x="0" y="38" text-anchor="middle" fill="#ffdd88" font-size="12">C(x) = (1+ix)/(1−ix)</text>
+    <circle cx="0" cy="-68" r="18" fill="none" stroke="#44cc88" stroke-width="1.5"/>
+    <circle cx="0" cy="-68" r="2" fill="#44cc88"/>
+  </g>
+
+  <!-- 3. Special Relativity (left) -->
+  <g transform="translate(150, 550)">
+    <rect x="-120" y="-50" width="240" height="110" rx="12" fill="#2a1a1a" stroke="#cc6644" stroke-width="2"/>
+    <text x="0" y="-25" text-anchor="middle" fill="#ff8866" font-size="16" font-weight="bold">SPECIAL RELATIVITY</text>
+    <text x="0" y="0" text-anchor="middle" fill="#ffffff" font-size="13">v₁ ⊕ v₂ = (v₁+v₂)/(1+v₁v₂)</text>
+    <text x="0" y="20" text-anchor="middle" fill="#aaaacc" font-size="11">Sign flip: 1−xy → 1+xy</text>
+    <text x="0" y="38" text-anchor="middle" fill="#ffdd88" font-size="12">|v₁|,|v₂| &lt; c ⟹ |v₁⊕v₂| &lt; c</text>
+    <text x="0" y="-68" text-anchor="middle" fill="#cc6644" font-size="20">⊕</text>
+  </g>
+
+  <!-- 4. Chebyshev Polynomials (right) -->
+  <g transform="translate(1050, 550)">
+    <rect x="-120" y="-50" width="240" height="110" rx="12" fill="#1a2a1a" stroke="#88cc44" stroke-width="2"/>
+    <text x="0" y="-25" text-anchor="middle" fill="#aaff66" font-size="16" font-weight="bold">CHEBYSHEV POLYS</text>
+    <text x="0" y="0" text-anchor="middle" fill="#ffffff" font-size="13">T_n(cos θ) = cos(nθ)</text>
+    <text x="0" y="20" text-anchor="middle" fill="#aaaacc" font-size="11">SPB iteration generates</text>
+    <text x="0" y="38" text-anchor="middle" fill="#ffdd88" font-size="12">the Chebyshev recurrence</text>
+    <text x="0" y="-68" text-anchor="middle" fill="#88cc44" font-size="20">Tₙ</text>
+  </g>
+
+  <!-- 5. Möbius Geometry (bottom center) -->
+  <g transform="translate(600, 750)">
+    <rect x="-130" y="-50" width="260" height="110" rx="12" fill="#2a1a2a" stroke="#cc44cc" stroke-width="2"/>
+    <text x="0" y="-25" text-anchor="middle" fill="#ff88ff" font-size="16" font-weight="bold">MÖBIUS GEOMETRY</text>
+    <text x="0" y="0" text-anchor="middle" fill="#ffffff" font-size="13">z ↦ (z+a)/(−az+1)</text>
+    <text x="0" y="20" text-anchor="middle" fill="#aaaacc" font-size="11">Cross-ratio invariance</text>
+    <text x="0" y="38" text-anchor="middle" fill="#ffdd88" font-size="12">PSL(2,ℝ) action on ℝ∪{∞}</text>
+    <text x="0" y="-68" text-anchor="middle" fill="#cc44cc" font-size="20">𝕄</text>
+  </g>
+
+  <!-- Connecting lines -->
+  <line x1="380" y1="150" x2="240" y2="260" stroke="#4488cc" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrow)"/>
+  <line x1="820" y1="150" x2="960" y2="260" stroke="#44cc88" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrow)"/>
+  <line x1="420" y1="175" x2="240" y2="510" stroke="#cc6644" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrow)"/>
+  <line x1="780" y1="175" x2="960" y2="510" stroke="#88cc44" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrow)"/>
+  <line x1="600" y1="180" x2="600" y2="700" stroke="#cc44cc" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrow)"/>
+
+  <!-- Wick rotation arrow between circular and hyperbolic -->
+  <g transform="translate(600, 430)">
+    <rect x="-80" y="-20" width="160" height="40" rx="8" fill="#2a2a2a" stroke="#ff8844" stroke-width="1.5"/>
+    <text x="0" y="5" text-anchor="middle" fill="#ffaa66" font-size="13" font-weight="bold">Wick Rotation</text>
+    <text x="0" y="-30" text-anchor="middle" fill="#ffaa66" font-size="11">θ → iφ</text>
+  </g>
+  <line x1="260" y1="350" x2="520" y2="420" stroke="#ff8844" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="940" y1="350" x2="680" y2="420" stroke="#ff8844" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="260" y1="530" x2="520" y2="440" stroke="#ff8844" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="940" y1="530" x2="680" y2="440" stroke="#ff8844" stroke-width="1" stroke-dasharray="3,3"/>
+
+  <!-- Legend -->
+  <g transform="translate(600, 870)">
+    <text x="0" y="0" text-anchor="middle" fill="#8888aa" font-size="12">
+      Formally verified in Lean 4 with Mathlib — Zero sorries, machine-checked proofs
+    </text>
+  </g>
+</svg>

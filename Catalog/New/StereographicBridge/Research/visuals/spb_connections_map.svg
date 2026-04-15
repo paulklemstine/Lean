@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" width="900" height="700">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fefce8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ecfdf5;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <rect width="900" height="700" rx="12" fill="url(#bg2)" stroke="#94a3b8"/>
+
+  <!-- Title -->
+  <text x="450" y="40" text-anchor="middle" font-family="Georgia, serif" font-size="24" fill="#1e293b" font-weight="bold">The SPB Connection Map</text>
+  <text x="450" y="62" text-anchor="middle" font-family="serif" font-size="14" fill="#64748b">One formula, many worlds: spb(x,y) = (x+y)/(1−xy)</text>
+
+  <!-- Central SPB node -->
+  <circle cx="450" cy="350" r="65" fill="#2563eb" stroke="#1d4ed8" stroke-width="3" filter="url(#shadow)"/>
+  <text x="450" y="340" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="white" font-weight="bold">SPB</text>
+  <text x="450" y="362" text-anchor="middle" font-family="serif" font-size="11" fill="#bfdbfe">(x+y)/(1−xy)</text>
+  <text x="450" y="378" text-anchor="middle" font-family="serif" font-size="10" fill="#93c5fd">= tan addition</text>
+
+  <!-- Algebra -->
+  <rect x="50" y="100" width="170" height="80" rx="12" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" filter="url(#shadow)"/>
+  <text x="135" y="130" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="#92400e" font-weight="bold">Algebra</text>
+  <text x="135" y="148" text-anchor="middle" font-family="serif" font-size="11" fill="#78350f">Circle group S¹</text>
+  <text x="135" y="164" text-anchor="middle" font-family="serif" font-size="11" fill="#78350f">Cayley transform</text>
+  <line x1="220" y1="150" x2="390" y2="310" stroke="#f59e0b" stroke-width="2" opacity="0.6"/>
+
+  <!-- Number Theory -->
+  <rect x="680" y="100" width="170" height="80" rx="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2" filter="url(#shadow)"/>
+  <text x="765" y="130" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="#1e3a8a" font-weight="bold">Number Theory</text>
+  <text x="765" y="148" text-anchor="middle" font-family="serif" font-size="11" fill="#1e3a8a">p±1 Law</text>
+  <text x="765" y="164" text-anchor="middle" font-family="serif" font-size="11" fill="#1e3a8a">Machin formulas</text>
+  <line x1="680" y1="150" x2="510" y2="310" stroke="#2563eb" stroke-width="2" opacity="0.6"/>
+
+  <!-- Geometry -->
+  <rect x="50" y="300" width="170" height="80" rx="12" fill="#dcfce7" stroke="#16a34a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="135" y="330" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="#14532d" font-weight="bold">Geometry</text>
+  <text x="135" y="348" text-anchor="middle" font-family="serif" font-size="11" fill="#14532d">Hyperbolic plane</text>
+  <text x="135" y="364" text-anchor="middle" font-family="serif" font-size="11" fill="#14532d">Poincaré disk</text>
+  <line x1="220" y1="340" x2="385" y2="345" stroke="#16a34a" stroke-width="2" opacity="0.6"/>
+
+  <!-- Physics -->
+  <rect x="680" y="300" width="170" height="80" rx="12" fill="#fce7f3" stroke="#ec4899" stroke-width="2" filter="url(#shadow)"/>
+  <text x="765" y="330" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="#831843" font-weight="bold">Physics</text>
+  <text x="765" y="348" text-anchor="middle" font-family="serif" font-size="11" fill="#831843">Velocity addition</text>
+  <text x="765" y="364" text-anchor="middle" font-family="serif" font-size="11" fill="#831843">Wick rotation</text>
+  <line x1="680" y1="345" x2="515" y2="348" stroke="#ec4899" stroke-width="2" opacity="0.6"/>
+
+  <!-- Quantum Computing -->
+  <rect x="50" y="500" width="170" height="80" rx="12" fill="#ede9fe" stroke="#7c3aed" stroke-width="2" filter="url(#shadow)"/>
+  <text x="135" y="530" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="#3b0764" font-weight="bold">Quantum</text>
+  <text x="135" y="548" text-anchor="middle" font-family="serif" font-size="11" fill="#3b0764">Bloch sphere gates</text>
+  <text x="135" y="564" text-anchor="middle" font-family="serif" font-size="11" fill="#3b0764">H = spb(ζ, −1)</text>
+  <line x1="220" y1="530" x2="395" y2="395" stroke="#7c3aed" stroke-width="2" opacity="0.6"/>
+
+  <!-- Tropical -->
+  <rect x="365" y="530" width="170" height="80" rx="12" fill="#fff7ed" stroke="#ea580c" stroke-width="2" filter="url(#shadow)"/>
+  <text x="450" y="560" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="#7c2d12" font-weight="bold">Tropical</text>
+  <text x="450" y="578" text-anchor="middle" font-family="serif" font-size="11" fill="#7c2d12">min(x,y)−max(0,x+y)</text>
+  <text x="450" y="594" text-anchor="middle" font-family="serif" font-size="11" fill="#7c2d12">Optimization</text>
+  <line x1="450" y1="530" x2="450" y2="415" stroke="#ea580c" stroke-width="2" opacity="0.6"/>
+
+  <!-- Analysis -->
+  <rect x="680" y="500" width="170" height="80" rx="12" fill="#f0fdf4" stroke="#059669" stroke-width="2" filter="url(#shadow)"/>
+  <text x="765" y="530" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="#064e3b" font-weight="bold">Analysis</text>
+  <text x="765" y="548" text-anchor="middle" font-family="serif" font-size="11" fill="#064e3b">Equidistribution</text>
+  <text x="765" y="564" text-anchor="middle" font-family="serif" font-size="11" fill="#064e3b">Transport PDE</text>
+  <line x1="680" y1="530" x2="505" y2="395" stroke="#059669" stroke-width="2" opacity="0.6"/>
+
+  <!-- Computation -->
+  <rect x="365" y="130" width="170" height="60" rx="12" fill="#f1f5f9" stroke="#64748b" stroke-width="2" filter="url(#shadow)"/>
+  <text x="450" y="155" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="#334155" font-weight="bold">Computation</text>
+  <text x="450" y="175" text-anchor="middle" font-family="serif" font-size="11" fill="#334155">CORDIC · Neural nets</text>
+  <line x1="450" y1="190" x2="450" y2="285" stroke="#64748b" stroke-width="2" opacity="0.6"/>
+
+  <!-- Footer -->
+  <text x="450" y="660" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#475569" font-style="italic">170+ machine-verified theorems connecting these domains</text>
+  <text x="450" y="682" text-anchor="middle" font-family="serif" font-size="11" fill="#94a3b8">EML / Stereographic Bridge Research Program</text>
+</svg>

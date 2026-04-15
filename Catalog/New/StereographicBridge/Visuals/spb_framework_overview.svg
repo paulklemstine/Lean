@@ -1,0 +1,171 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" font-family="Georgia, serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a2e;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#1a1a4e;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ffd700"/>
+      <stop offset="100%" style="stop-color:#ffaa00"/>
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#4488ff"/>
+      <stop offset="100%" style="stop-color:#2244aa"/>
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#44ff88"/>
+      <stop offset="100%" style="stop-color:#22aa44"/>
+    </linearGradient>
+    <linearGradient id="redGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6644"/>
+      <stop offset="100%" style="stop-color:#cc3322"/>
+    </linearGradient>
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#aa66ff"/>
+      <stop offset="100%" style="stop-color:#6633cc"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="900" fill="url(#bgGrad)"/>
+
+  <!-- Title -->
+  <text x="600" y="55" text-anchor="middle" fill="url(#goldGrad)" font-size="32" font-weight="bold" filter="url(#glow)">
+    The Stereographic Projection Bridge
+  </text>
+  <text x="600" y="85" text-anchor="middle" fill="#aabbcc" font-size="18" font-style="italic">
+    One Formula, Many Worlds
+  </text>
+
+  <!-- Central Formula -->
+  <rect x="400" y="110" width="400" height="70" rx="15" fill="#1a1a3e" stroke="url(#goldGrad)" stroke-width="3" filter="url(#shadow)"/>
+  <text x="600" y="150" text-anchor="middle" fill="url(#goldGrad)" font-size="28" font-weight="bold" font-family="Times New Roman, serif">
+    spb(x, y) = (x + y) / (1 − xy)
+  </text>
+
+  <!-- Circle diagram (center) -->
+  <circle cx="600" cy="330" r="100" fill="none" stroke="#4488ff" stroke-width="2" opacity="0.6"/>
+  <circle cx="600" cy="330" r="3" fill="#ffd700"/>
+  <text x="600" y="345" text-anchor="middle" fill="#ffd700" font-size="10">S¹</text>
+  <!-- Stereographic projection line -->
+  <line x1="600" y1="230" x2="500" y2="430" stroke="#ff6644" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.7"/>
+  <line x1="600" y1="230" x2="700" y2="430" stroke="#ff6644" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.7"/>
+  <!-- Real line -->
+  <line x1="420" y1="430" x2="780" y2="430" stroke="#44ff88" stroke-width="2"/>
+  <text x="600" y="448" text-anchor="middle" fill="#44ff88" font-size="12">ℝ</text>
+  <!-- Point on circle -->
+  <circle cx="660" cy="260" r="5" fill="#ff6644"/>
+  <text x="680" y="255" fill="#ff6644" font-size="11">e^(iθ)</text>
+  <!-- Projected point -->
+  <circle cx="660" cy="430" r="5" fill="#44ff88"/>
+  <text x="680" y="445" fill="#44ff88" font-size="11">tan(θ/2)</text>
+  <!-- Projection arrow -->
+  <line x1="660" y1="265" x2="660" y2="425" stroke="#ffffff" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+  <text x="545" y="290" fill="#aabbcc" font-size="11" font-style="italic">Cayley</text>
+  <text x="545" y="305" fill="#aabbcc" font-size="11" font-style="italic">Transform</text>
+
+  <!-- Connection boxes -->
+  <!-- 1. Trigonometry (top left) -->
+  <rect x="40" y="200" width="280" height="100" rx="10" fill="#1a2a3e" stroke="url(#blueGrad)" stroke-width="2" filter="url(#shadow)"/>
+  <text x="180" y="225" text-anchor="middle" fill="#4488ff" font-size="16" font-weight="bold">🔵 Trigonometry</text>
+  <text x="180" y="248" text-anchor="middle" fill="#ccddee" font-size="13">tan(α+β) = spb(tan α, tan β)</text>
+  <text x="180" y="268" text-anchor="middle" fill="#88aacc" font-size="12">Multiple angles: tan(nθ) = spbⁿ(tan θ)</text>
+  <text x="180" y="288" text-anchor="middle" fill="#88aacc" font-size="12">Chebyshev polynomials via iteration</text>
+
+  <!-- 2. Relativity (top right) -->
+  <rect x="880" y="200" width="280" height="100" rx="10" fill="#2a1a1e" stroke="url(#redGrad)" stroke-width="2" filter="url(#shadow)"/>
+  <text x="1020" y="225" text-anchor="middle" fill="#ff6644" font-size="16" font-weight="bold">🔴 Special Relativity</text>
+  <text x="1020" y="248" text-anchor="middle" fill="#eecccc" font-size="13">v₁⊕v₂ = (v₁+v₂)/(1+v₁v₂)</text>
+  <text x="1020" y="268" text-anchor="middle" fill="#cc8888" font-size="12">Sign flip: 1−xy → 1+xy (Wick rotation)</text>
+  <text x="1020" y="288" text-anchor="middle" fill="#cc8888" font-size="12">|v| &lt; c preserved (sub-luminal closure)</text>
+
+  <!-- 3. Algebra (left) -->
+  <rect x="40" y="370" width="280" height="100" rx="10" fill="#1a2a1e" stroke="url(#greenGrad)" stroke-width="2" filter="url(#shadow)"/>
+  <text x="180" y="395" text-anchor="middle" fill="#44ff88" font-size="16" font-weight="bold">🟢 Group Theory</text>
+  <text x="180" y="418" text-anchor="middle" fill="#cceecc" font-size="13">(ℝ, spb) ≅ (S¹, ·) abelian group</text>
+  <text x="180" y="438" text-anchor="middle" fill="#88cc88" font-size="12">Identity: 0, Inverse: −x</text>
+  <text x="180" y="458" text-anchor="middle" fill="#88cc88" font-size="12">Works over any field F</text>
+
+  <!-- 4. Complex Analysis (right) -->
+  <rect x="880" y="370" width="280" height="100" rx="10" fill="#2a1a3e" stroke="url(#purpleGrad)" stroke-width="2" filter="url(#shadow)"/>
+  <text x="1020" y="395" text-anchor="middle" fill="#aa66ff" font-size="16" font-weight="bold">🟣 Möbius Transforms</text>
+  <text x="1020" y="418" text-anchor="middle" fill="#ccaaee" font-size="13">spb(·,y): z↦(z+y)/(−yz+1)</text>
+  <text x="1020" y="438" text-anchor="middle" fill="#aa88cc" font-size="12">Cross-ratio invariance</text>
+  <text x="1020" y="458" text-anchor="middle" fill="#aa88cc" font-size="12">Cayley: ℝ → S¹ unitarily</text>
+
+  <!-- Connecting arrows -->
+  <line x1="320" y1="250" x2="500" y2="300" stroke="#4488ff" stroke-width="1.5" opacity="0.6"/>
+  <line x1="880" y1="250" x2="700" y2="300" stroke="#ff6644" stroke-width="1.5" opacity="0.6"/>
+  <line x1="320" y1="420" x2="500" y2="380" stroke="#44ff88" stroke-width="1.5" opacity="0.6"/>
+  <line x1="880" y1="420" x2="700" y2="380" stroke="#aa66ff" stroke-width="1.5" opacity="0.6"/>
+
+  <!-- Lower section: Research Directions -->
+  <text x="600" y="530" text-anchor="middle" fill="url(#goldGrad)" font-size="22" font-weight="bold">
+    Research Frontiers
+  </text>
+
+  <!-- Research boxes row 1 -->
+  <rect x="40" y="550" width="220" height="80" rx="8" fill="#1a2233" stroke="#5588bb" stroke-width="1.5"/>
+  <text x="150" y="575" text-anchor="middle" fill="#5588bb" font-size="14" font-weight="bold">Finite Fields</text>
+  <text x="150" y="595" text-anchor="middle" fill="#8899aa" font-size="11">SPB group over 𝔽_p</text>
+  <text x="150" y="612" text-anchor="middle" fill="#8899aa" font-size="11">Fixed pts ↔ x²=−1 (mod p)</text>
+
+  <rect x="280" y="550" width="220" height="80" rx="8" fill="#2a1a33" stroke="#8855bb" stroke-width="1.5"/>
+  <text x="390" y="575" text-anchor="middle" fill="#8855bb" font-size="14" font-weight="bold">Approximation</text>
+  <text x="390" y="595" text-anchor="middle" fill="#9988aa" font-size="11">SPB trees → C(K) dense</text>
+  <text x="390" y="612" text-anchor="middle" fill="#9988aa" font-size="11">Stone-Weierstrass via Chebyshev</text>
+
+  <rect x="520" y="550" width="220" height="80" rx="8" fill="#1a3322" stroke="#55bb55" stroke-width="1.5"/>
+  <text x="630" y="575" text-anchor="middle" fill="#55bb55" font-size="14" font-weight="bold">Wick Rotation</text>
+  <text x="630" y="595" text-anchor="middle" fill="#88aa88" font-size="11">tan ↔ tanh duality</text>
+  <text x="630" y="612" text-anchor="middle" fill="#88aa88" font-size="11">Euclidean ↔ Lorentzian</text>
+
+  <rect x="760" y="550" width="220" height="80" rx="8" fill="#331a1a" stroke="#bb5555" stroke-width="1.5"/>
+  <text x="870" y="575" text-anchor="middle" fill="#bb5555" font-size="14" font-weight="bold">Neural Networks</text>
+  <text x="870" y="595" text-anchor="middle" fill="#aa8888" font-size="11">SPB activation function</text>
+  <text x="870" y="612" text-anchor="middle" fill="#aa8888" font-size="11">Rotational pattern learning</text>
+
+  <!-- Research boxes row 2 -->
+  <rect x="100" y="650" width="220" height="80" rx="8" fill="#1a2a2a" stroke="#55aaaa" stroke-width="1.5"/>
+  <text x="210" y="675" text-anchor="middle" fill="#55aaaa" font-size="14" font-weight="bold">Quantum Computing</text>
+  <text x="210" y="695" text-anchor="middle" fill="#88aaaa" font-size="11">Bloch sphere via Cayley</text>
+  <text x="210" y="712" text-anchor="middle" fill="#88aaaa" font-size="11">Gates as SPB operations</text>
+
+  <rect x="340" y="650" width="220" height="80" rx="8" fill="#2a2a1a" stroke="#aaaa55" stroke-width="1.5"/>
+  <text x="450" y="675" text-anchor="middle" fill="#aaaa55" font-size="14" font-weight="bold">Complexity Theory</text>
+  <text x="450" y="695" text-anchor="middle" fill="#aaaa88" font-size="11">K_SPB(tan nθ) ≤ ⌈log₂ n⌉</text>
+  <text x="450" y="712" text-anchor="middle" fill="#aaaa88" font-size="11">Binary exponentiation</text>
+
+  <rect x="580" y="650" width="220" height="80" rx="8" fill="#2a1a2a" stroke="#aa55aa" stroke-width="1.5"/>
+  <text x="690" y="675" text-anchor="middle" fill="#aa55aa" font-size="14" font-weight="bold">Cryptography</text>
+  <text x="690" y="695" text-anchor="middle" fill="#aa88aa" font-size="11">DH key exchange via SPB/𝔽_p</text>
+  <text x="690" y="712" text-anchor="middle" fill="#aa88aa" font-size="11">Discrete log in SPB group</text>
+
+  <rect x="820" y="650" width="220" height="80" rx="8" fill="#1a1a2a" stroke="#5555bb" stroke-width="1.5"/>
+  <text x="930" y="675" text-anchor="middle" fill="#5555bb" font-size="14" font-weight="bold">Higher Dimensions</text>
+  <text x="930" y="695" text-anchor="middle" fill="#8888aa" font-size="11">n=3: quaternions</text>
+  <text x="930" y="712" text-anchor="middle" fill="#8888aa" font-size="11">n=7: octonions</text>
+
+  <!-- Key insight box -->
+  <rect x="200" y="760" width="800" height="60" rx="12" fill="#1a1a2e" stroke="url(#goldGrad)" stroke-width="2"/>
+  <text x="600" y="785" text-anchor="middle" fill="url(#goldGrad)" font-size="16" font-weight="bold">
+    Key Insight: SPB is the "continuous Sheffer stroke" of geometry
+  </text>
+  <text x="600" y="805" text-anchor="middle" fill="#aabbcc" font-size="13" font-style="italic">
+    One binary operation that encodes the entire circle group structure on the real line
+  </text>
+
+  <!-- Proven badge -->
+  <rect x="40" y="840" width="180" height="30" rx="8" fill="#1a3a1a" stroke="#44ff88" stroke-width="1"/>
+  <text x="130" y="860" text-anchor="middle" fill="#44ff88" font-size="12">✓ Formally verified in Lean 4</text>
+
+  <!-- Version -->
+  <text x="1160" y="880" text-anchor="end" fill="#555577" font-size="10">SPB Framework v2.0 — EML Research</text>
+</svg>
