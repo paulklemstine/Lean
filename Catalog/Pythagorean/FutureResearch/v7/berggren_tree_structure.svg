@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a1a4e;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="nodeA" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6b6b" />
+      <stop offset="100%" style="stop-color:#ee5a24" />
+    </linearGradient>
+    <linearGradient id="nodeB" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#48dbfb" />
+      <stop offset="100%" style="stop-color:#0abde3" />
+    </linearGradient>
+    <linearGradient id="nodeC" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#feca57" />
+      <stop offset="100%" style="stop-color:#ff9f43" />
+    </linearGradient>
+    <linearGradient id="rootGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#a29bfe" />
+      <stop offset="100%" style="stop-color:#6c5ce7" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="700" fill="url(#bg)"/>
+
+  <!-- Title -->
+  <text x="450" y="40" text-anchor="middle" fill="#ffffff" font-size="22" font-weight="bold">
+    The Berggren Pythagorean Triple Tree
+  </text>
+  <text x="450" y="62" text-anchor="middle" fill="#aaaacc" font-size="13">
+    Every primitive Pythagorean triple appears exactly once
+  </text>
+
+  <!-- Edges (drawn first, behind nodes) -->
+  <!-- Root to depth 1 -->
+  <line x1="450" y1="120" x2="200" y2="230" stroke="#ff6b6b" stroke-width="2" opacity="0.7"/>
+  <line x1="450" y1="120" x2="450" y2="230" stroke="#48dbfb" stroke-width="2" opacity="0.7"/>
+  <line x1="450" y1="120" x2="700" y2="230" stroke="#feca57" stroke-width="2" opacity="0.7"/>
+
+  <!-- Depth 1 to depth 2 -->
+  <!-- A children -->
+  <line x1="200" y1="270" x2="100" y2="380" stroke="#ff6b6b" stroke-width="1.5" opacity="0.5"/>
+  <line x1="200" y1="270" x2="200" y2="380" stroke="#48dbfb" stroke-width="1.5" opacity="0.5"/>
+  <line x1="200" y1="270" x2="300" y2="380" stroke="#feca57" stroke-width="1.5" opacity="0.5"/>
+  <!-- B children -->
+  <line x1="450" y1="270" x2="370" y2="380" stroke="#ff6b6b" stroke-width="1.5" opacity="0.5"/>
+  <line x1="450" y1="270" x2="450" y2="380" stroke="#48dbfb" stroke-width="1.5" opacity="0.5"/>
+  <line x1="450" y1="270" x2="530" y2="380" stroke="#feca57" stroke-width="1.5" opacity="0.5"/>
+  <!-- C children -->
+  <line x1="700" y1="270" x2="620" y2="380" stroke="#ff6b6b" stroke-width="1.5" opacity="0.5"/>
+  <line x1="700" y1="270" x2="700" y2="380" stroke="#48dbfb" stroke-width="1.5" opacity="0.5"/>
+  <line x1="700" y1="270" x2="790" y2="380" stroke="#feca57" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- Root node -->
+  <rect x="395" y="85" width="110" height="50" rx="8" fill="url(#rootGrad)" filter="url(#glow)"/>
+  <text x="450" y="108" text-anchor="middle" fill="white" font-size="14" font-weight="bold">(3, 4, 5)</text>
+  <text x="450" y="126" text-anchor="middle" fill="#ddd" font-size="10">Root</text>
+
+  <!-- Depth 1: A-branch -->
+  <rect x="140" y="230" width="120" height="50" rx="8" fill="url(#nodeA)" filter="url(#shadow)"/>
+  <text x="200" y="253" text-anchor="middle" fill="white" font-size="13" font-weight="bold">(5, 12, 13)</text>
+  <text x="200" y="271" text-anchor="middle" fill="#ffeee0" font-size="10">A-branch</text>
+
+  <!-- Depth 1: B-branch -->
+  <rect x="390" y="230" width="120" height="50" rx="8" fill="url(#nodeB)" filter="url(#shadow)"/>
+  <text x="450" y="253" text-anchor="middle" fill="white" font-size="13" font-weight="bold">(21, 20, 29)</text>
+  <text x="450" y="271" text-anchor="middle" fill="#e0f7ff" font-size="10">B-branch</text>
+
+  <!-- Depth 1: C-branch -->
+  <rect x="640" y="230" width="120" height="50" rx="8" fill="url(#nodeC)" filter="url(#shadow)"/>
+  <text x="700" y="253" text-anchor="middle" fill="white" font-size="13" font-weight="bold">(15, 8, 17)</text>
+  <text x="700" y="271" text-anchor="middle" fill="#fff8e0" font-size="10">C-branch</text>
+
+  <!-- Depth 2 nodes (smaller) -->
+  <!-- AA -->
+  <rect x="55" y="380" width="90" height="40" rx="6" fill="#cc5555" opacity="0.85"/>
+  <text x="100" y="404" text-anchor="middle" fill="white" font-size="11">(7, 24, 25)</text>
+  <!-- AB -->
+  <rect x="155" y="380" width="90" height="40" rx="6" fill="#3ab0d6" opacity="0.85"/>
+  <text x="200" y="404" text-anchor="middle" fill="white" font-size="11">(55, 48, 73)</text>
+  <!-- AC -->
+  <rect x="255" y="380" width="90" height="40" rx="6" fill="#ddb640" opacity="0.85"/>
+  <text x="300" y="404" text-anchor="middle" fill="white" font-size="11">(45, 28, 53)</text>
+
+  <!-- BA -->
+  <rect x="325" y="380" width="90" height="40" rx="6" fill="#cc5555" opacity="0.85"/>
+  <text x="370" y="404" text-anchor="middle" fill="white" font-size="11">(39, 80, 89)</text>
+  <!-- BB -->
+  <rect x="405" y="380" width="90" height="40" rx="6" fill="#3ab0d6" opacity="0.85"/>
+  <text x="450" y="404" text-anchor="middle" fill="white" font-size="10">(119,120,169)</text>
+  <!-- BC -->
+  <rect x="485" y="380" width="90" height="40" rx="6" fill="#ddb640" opacity="0.85"/>
+  <text x="530" y="404" text-anchor="middle" fill="white" font-size="11">(77, 36, 85)</text>
+
+  <!-- CA -->
+  <rect x="575" y="380" width="90" height="40" rx="6" fill="#cc5555" opacity="0.85"/>
+  <text x="620" y="404" text-anchor="middle" fill="white" font-size="11">(33, 56, 65)</text>
+  <!-- CB -->
+  <rect x="655" y="380" width="90" height="40" rx="6" fill="#3ab0d6" opacity="0.85"/>
+  <text x="700" y="404" text-anchor="middle" fill="white" font-size="11">(65, 72, 97)</text>
+  <!-- CC -->
+  <rect x="745" y="380" width="90" height="40" rx="6" fill="#ddb640" opacity="0.85"/>
+  <text x="790" y="404" text-anchor="middle" fill="white" font-size="11">(35, 12, 37)</text>
+
+  <!-- Conjugacy annotation -->
+  <path d="M200,290 C200,310 700,310 700,290" stroke="#ff9" stroke-width="1.5" fill="none" stroke-dasharray="5,3"/>
+  <text x="450" y="320" text-anchor="middle" fill="#ff9" font-size="12" font-style="italic">
+    B₃ = S·B₁·S (conjugate via leg-swap)
+  </text>
+
+  <!-- Legend -->
+  <rect x="30" y="470" width="840" height="220" rx="10" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)"/>
+
+  <text x="450" y="500" text-anchor="middle" fill="#ffffff" font-size="16" font-weight="bold">
+    Key Properties (Machine-Verified in Lean 4)
+  </text>
+
+  <!-- Column 1 -->
+  <rect x="60" y="520" width="12" height="12" rx="2" fill="url(#nodeA)"/>
+  <text x="80" y="531" fill="#ff9999" font-size="12" font-weight="bold">A-Branch (B₁)</text>
+  <text x="80" y="548" fill="#ccccdd" font-size="11">• Unipotent: (B₁−I)³ = 0</text>
+  <text x="80" y="563" fill="#ccccdd" font-size="11">• Char poly: (x−1)³</text>
+  <text x="80" y="578" fill="#ccccdd" font-size="11">• tr(B₁) = 3, det(B₁) = 1</text>
+  <text x="80" y="593" fill="#ccccdd" font-size="11">• ρ(B₁) = 1 (parabolic)</text>
+
+  <!-- Column 2 -->
+  <rect x="320" y="520" width="12" height="12" rx="2" fill="url(#nodeB)"/>
+  <text x="340" y="531" fill="#80e0ff" font-size="12" font-weight="bold">B-Branch (B₂)</text>
+  <text x="340" y="548" fill="#ccccdd" font-size="11">• Hyperbolic: eigenvalues 3±2√2, −1</text>
+  <text x="340" y="563" fill="#ccccdd" font-size="11">• Char poly: x³−5x²−5x+1</text>
+  <text x="340" y="578" fill="#ccccdd" font-size="11">• tr(B₂) = 5, det(B₂) = −1</text>
+  <text x="340" y="593" fill="#ccccdd" font-size="11">• ρ(B₂) = 3+2√2 ≈ 5.83</text>
+
+  <!-- Column 3 -->
+  <rect x="620" y="520" width="12" height="12" rx="2" fill="url(#nodeC)"/>
+  <text x="640" y="531" fill="#ffdd77" font-size="12" font-weight="bold">C-Branch (B₃)</text>
+  <text x="640" y="548" fill="#ccccdd" font-size="11">• Conjugate to A: B₃ = S·B₁·S</text>
+  <text x="640" y="563" fill="#ccccdd" font-size="11">• Same char poly as B₁</text>
+  <text x="640" y="578" fill="#ccccdd" font-size="11">• tr(B₃) = 3, det(B₃) = 1</text>
+  <text x="640" y="593" fill="#ccccdd" font-size="11">• ρ(B₃) = 1 (parabolic)</text>
+
+  <!-- Bottom summary -->
+  <text x="450" y="640" text-anchor="middle" fill="#aaaadd" font-size="11">
+    Spectral gap: ρ(B₂)/ρ(B₁) = 3+2√2 ≈ 5.83 — controls growth rate and mixing time
+  </text>
+  <text x="450" y="660" text-anchor="middle" fill="#aaaadd" font-size="11">
+    Topological entropy = log 3 (full 3-symbol shift, no forbidden words)
+  </text>
+  <text x="450" y="680" text-anchor="middle" fill="#7777aa" font-size="10">
+    © EML-Pythagorean Bridge v7 Research Program
+  </text>
+</svg>

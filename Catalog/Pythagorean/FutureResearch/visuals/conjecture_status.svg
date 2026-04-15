@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg6" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d1117"/>
+      <stop offset="100%" style="stop-color:#161b22"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="400" fill="url(#bg6)" rx="10"/>
+
+  <text x="400" y="35" fill="#e94560" font-size="20" font-weight="bold" text-anchor="middle">
+    Status of Key Conjectures
+  </text>
+
+  <!-- Conjecture A -->
+  <rect x="30" y="60" width="360" height="140" fill="#0d2a0d" rx="10" stroke="#4caf50" stroke-width="2"/>
+  <text x="210" y="85" fill="#4caf50" font-size="16" font-weight="bold" text-anchor="middle">
+    Conjecture A: Density
+  </text>
+  <text x="50" y="110" fill="#a0d0a0" font-size="12">δ_k(N) = Ω(1/√N) for balanced semiprimes</text>
+  <text x="50" y="135" fill="#81c784" font-size="13" font-weight="bold">Status: PARTIALLY PROVEN ◐</text>
+  <text x="50" y="158" fill="#8b949e" font-size="11">• Exact formula: (p+q-1)/(pq) verified</text>
+  <text x="50" y="175" fill="#8b949e" font-size="11">• Base density Θ(1/√N) confirmed</text>
+  <text x="50" y="192" fill="#8b949e" font-size="11">• Effective density with correlations: open</text>
+
+  <!-- Conjecture B -->
+  <rect x="410" y="60" width="360" height="140" fill="#2a2a0d" rx="10" stroke="#ffd54f" stroke-width="2"/>
+  <text x="590" y="85" fill="#ffd54f" font-size="16" font-weight="bold" text-anchor="middle">
+    Conjecture B: Optimal k
+  </text>
+  <text x="430" y="110" fill="#e0d0a0" font-size="12">k* = O(log N / log log N)</text>
+  <text x="430" y="135" fill="#ff9800" font-size="13" font-weight="bold">Status: OPEN ○</text>
+  <text x="430" y="158" fill="#8b949e" font-size="11">• Empirically k=4 best for small N</text>
+  <text x="430" y="175" fill="#8b949e" font-size="11">• Division algebra structure at k=1,2,4,8</text>
+  <text x="430" y="192" fill="#8b949e" font-size="11">• Large-N experiments needed</text>
+
+  <!-- Conjecture C -->
+  <rect x="30" y="220" width="360" height="140" fill="#2a1a0d" rx="10" stroke="#ff9800" stroke-width="2"/>
+  <text x="210" y="245" fill="#ff9800" font-size="16" font-weight="bold" text-anchor="middle">
+    Conjecture C: Quaternion ↔ Integer
+  </text>
+  <text x="50" y="270" fill="#e0c0a0" font-size="12">Hurwitz factoring ↔ integer factoring</text>
+  <text x="50" y="295" fill="#ffb74d" font-size="13" font-weight="bold">Status: HALF-PROVEN ◑</text>
+  <text x="50" y="318" fill="#8b949e" font-size="11">• Q→ℤ direction: formally verified ✓</text>
+  <text x="50" y="335" fill="#8b949e" font-size="11">• ℤ→Q direction: requires efficient</text>
+  <text x="50" y="352" fill="#8b949e" font-size="11">  quaternion factorization algorithm</text>
+
+  <!-- Conjecture D -->
+  <rect x="410" y="220" width="360" height="140" fill="#0d2a0d" rx="10" stroke="#4caf50" stroke-width="2"/>
+  <text x="590" y="245" fill="#4caf50" font-size="16" font-weight="bold" text-anchor="middle">
+    Conjecture D: Octonionic Advantage
+  </text>
+  <text x="430" y="270" fill="#a0d0a0" font-size="12">Non-associativity gives more channels</text>
+  <text x="430" y="295" fill="#4caf50" font-size="13" font-weight="bold">Status: CONFIRMED ●</text>
+  <text x="430" y="318" fill="#8b949e" font-size="11">• a·b ≠ b·a gives 2 decompositions ✓</text>
+  <text x="430" y="335" fill="#8b949e" font-size="11">• (ab)c ≠ a(bc) verified ✓</text>
+  <text x="430" y="352" fill="#8b949e" font-size="11">• Up to 17,280 channels via 480 tables</text>
+
+  <!-- Legend -->
+  <circle cx="40" cy="390" r="6" fill="#4caf50"/>
+  <text x="55" y="394" fill="#8b949e" font-size="11">Confirmed/Proven</text>
+  <circle cx="200" cy="390" r="6" fill="#ff9800"/>
+  <text x="215" y="394" fill="#8b949e" font-size="11">Partially Resolved</text>
+  <circle cx="380" cy="390" r="6" fill="#ffd54f"/>
+  <text x="395" y="394" fill="#8b949e" font-size="11">Open</text>
+</svg>
