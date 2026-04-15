@@ -364,8 +364,11 @@ class CatalogBuilder:
         # Declarations — emit bodies as-is (they contain their own namespace/end blocks)
         for e in entries:
             lines.append('')
-            if e.get('doc_comment'):
-                lines.append(f'/-- {e["doc_comment"]} -/')
+            # Use description (combines doc + line + section comments) if available,
+            # fall back to doc_comment for backward compatibility
+            desc = e.get('description') or e.get('doc_comment')
+            if desc:
+                lines.append(f'/-- {desc} -/')
             lines.append(e.get('body', ''))
 
         if has_noncomp:

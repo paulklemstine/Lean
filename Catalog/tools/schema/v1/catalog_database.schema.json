@@ -99,6 +99,7 @@
         "end_line": { "type": "integer", "description": "End line of declaration body" },
         "type_signature": { "type": "string", "description": "Full type signature as Lean source text" },
         "doc_comment": { "type": ["string", "null"], "description": "Doc comment from /-- ... -/" },
+        "description": { "type": ["string", "null"], "description": "Human-readable description combining doc comments, line comments, and section context" },
         "body": { "type": "string", "description": "Full declaration source text including signature and proof" },
         "domain": { "type": "string", "description": "Primary domain from directory" },
         "subdomain": { "type": ["string", "null"], "description": "Subdomain if applicable" },

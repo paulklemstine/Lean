@@ -81,6 +81,7 @@ class CatalogEntry:
     end_line: int = 0
     type_signature: str = ""
     doc_comment: Optional[str] = None
+    description: Optional[str] = None
     body: str = ""
     domain: str = ""
     subdomain: Optional[str] = None
@@ -168,7 +169,10 @@ class LeanFileParser:
         namespace_stack: list[str] = []
         in_block_comment = False
         in_doc_comment = False
+        in_module_comment = False  # /-! ... -/ module/section doc comment
         pending_doc: Optional[str] = None
+        pending_line_comments: list[str] = []  # accumulated -- comments
+        last_module_comment: Optional[str] = None  # most recent /-! section comment
         doc_lines: list[str] = []
         section_noncomputable_depth = 0  # depth of noncomputable section nesting
         section_depth = 0  # total section nesting depth
@@ -197,8 +201,16 @@ class LeanFileParser:
                         pending_doc = full.strip()
                         in_doc_comment = False
                         doc_lines = []
+                    elif in_module_comment:
+                        doc_lines.append(stripped)
+                        full = '\n'.join(doc_lines)
+                        full = re.sub(r'^/-[!-]\s*', '', full, count=1)
+                        full = re.sub(r'\s*-/$', '', full, count=1)
+                        last_module_comment = full.strip()
+                        in_module_comment = False
+                        doc_lines = []
                 else:
-                    if in_doc_comment:
+                    if in_doc_comment or in_module_comment:
                         doc_lines.append(stripped)
                 i += 1
                 continue
@@ -209,6 +221,8 @@ class LeanFileParser:
                 in_block_comment = True
                 if stripped.startswith('/--'):
                     in_doc_comment = True
+                elif stripped.startswith('/-!'):
+                    in_module_comment = True
                 doc_lines = [stripped]
                 # Check if the comment ends on the same line
                 if BLOCK_COMMENT_END.search(stripped):
@@ -220,11 +234,20 @@ class LeanFileParser:
                         pending_doc = full.strip()
                         in_doc_comment = False
                         doc_lines = []
+                    elif in_module_comment:
+                        full = '\n'.join(doc_lines)
+                        full = re.sub(r'^/-[!-]\s*', '', full, count=1)
+                        full = re.sub(r'\s*-/$', '', full, count=1)
+                        last_module_comment = full.strip()
+                        in_module_comment = False
+                        doc_lines = []
                 i += 1
                 continue
 
-            # Skip line comments
+            # Collect line comments (--) immediately before declarations
             if stripped.startswith('--'):
+                comment_text = stripped[2:].strip()
+                pending_line_comments.append(comment_text)
                 i += 1
                 continue
 
@@ -274,6 +297,13 @@ class LeanFileParser:
                 doc = pending_doc
                 pending_doc = None
 
+                # Build description from all available comment context
+                description = self._build_description(
+                    doc, pending_line_comments, last_module_comment)
+
+                # Clear accumulated line comments
+                pending_line_comments = []
+
                 # Find end of declaration body
                 end_line = self._find_decl_end(i)
                 body_lines = lines[i:end_line + 1]
@@ -307,6 +337,7 @@ class LeanFileParser:
                     end_line=end_line + 1,
                     type_signature=sig,
                     doc_comment=doc,
+                    description=description,
                     body=body,
                     domain=self.domain,
                     subdomain=self.subdomain,
@@ -323,11 +354,41 @@ class LeanFileParser:
                 i = end_line + 1
                 continue
 
-            # Reset doc comment if we hit a non-declaration line
-            # (only reset if it was a standalone doc comment not attached to anything)
-            # Keep pending_doc alive for the next line
+            # Non-declaration line: clear accumulated line comments
+            # (they only attach to the immediately next declaration)
+            pending_line_comments = []
 
             i += 1
+
+    def _build_description(self, doc_comment: Optional[str],
+                           line_comments: list[str],
+                           module_comment: Optional[str]) -> Optional[str]:
+        """Build a human-readable description from all comment sources.
+
+        Priority: doc_comment > line_comments > module_comment context.
+        Combines sources when multiple are available.
+        """
+        parts = []
+
+        # /-- ... -/ doc comment is the primary description
+        if doc_comment:
+            parts.append(doc_comment)
+
+        # -- line comments immediately before the declaration
+        if line_comments:
+            line_text = ' '.join(line_comments)
+            parts.append(line_text)
+
+        # /-! ... -/ section/module comment as context
+        # Only include if there's no doc_comment (avoid duplication
+        # since doc comments often repeat section content)
+        if module_comment and not doc_comment:
+            parts.append(f'[Section: {module_comment}]')
+
+        if not parts:
+            return None
+
+        return '\n'.join(parts)
 
     def _detect_declaration(self, stripped: str, in_noncomp_section: bool) -> Optional[tuple]:
         """Detect a declaration keyword on a stripped line.
