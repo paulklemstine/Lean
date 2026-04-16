@@ -73,8 +73,8 @@ def pollard_rho(n, max_tries=20):
             if 1 < g < n: return (min(g,n//g), max(g,n//g))
     return None
 
-def pollard_rho_fast(n, max_tries=20):
-    """Optimized rho: single-walk with best micro-opts.
+def pollard_rho_fast(n, max_tries=20, use_dual_walk=False):
+    """Optimized rho with optional dual walk function.
     Catalog: brent_detection, collision_pigeonhole."""
     if n < 2: return None
     if n % 2 == 0: return (2, n//2)
@@ -87,20 +87,38 @@ def pollard_rho_fast(n, max_tries=20):
     for c in range(1, min(max_tries+1, 101)):
         y = random.Random(c*31337).randrange(2, nm-1)
         x = y; g = 1; r = 1
-        while g == 1 and r <= max_r:
-            x = y
-            for _ in range(r): y = (y*y+c)%nm
-            k = 0
-            while k < r and g == 1:
-                q = 1; batch = min(1024, r-k)
-                for _ in range(batch): y = (y*y+c)%nm; q = q*(x-y)%nm
-                g = math.gcd(q, nm); k += batch
-            r *= 2
-        if 1 < g < nm: return (min(g,nm//g), max(g,nm//g))
-        if g == nm:
-            g = 1
-            while g == 1: y = (y*y+c)%nm; g = math.gcd((x-y)%nm, nm)
+        # Use x²+x+c for odd c (if dual walk), x²+c for even c
+        use_add = use_dual_walk and (c % 2 == 1)
+        if use_add:
+            while g == 1 and r <= max_r:
+                x = y
+                for _ in range(r): y = (y*y+y+c)%nm
+                k = 0
+                while k < r and g == 1:
+                    q = 1; batch = min(1024, r-k)
+                    for _ in range(batch): y = (y*y+y+c)%nm; q = q*(x-y)%nm
+                    g = math.gcd(q, nm); k += batch
+                r *= 2
             if 1 < g < nm: return (min(g,nm//g), max(g,nm//g))
+            if g == nm:
+                g = 1
+                while g == 1: y = (y*y+y+c)%nm; g = math.gcd((x-y)%nm, nm)
+                if 1 < g < nm: return (min(g,nm//g), max(g,nm//g))
+        else:
+            while g == 1 and r <= max_r:
+                x = y
+                for _ in range(r): y = (y*y+c)%nm
+                k = 0
+                while k < r and g == 1:
+                    q = 1; batch = min(1024, r-k)
+                    for _ in range(batch): y = (y*y+c)%nm; q = q*(x-y)%nm
+                    g = math.gcd(q, nm); k += batch
+                r *= 2
+            if 1 < g < nm: return (min(g,nm//g), max(g,nm//g))
+            if g == nm:
+                g = 1
+                while g == 1: y = (y*y+c)%nm; g = math.gcd((x-y)%nm, nm)
+                if 1 < g < nm: return (min(g,nm//g), max(g,nm//g))
     return None
 
 def pollard_rho_interleaved(n, n_walks=5, max_r_total=0):
@@ -384,8 +402,9 @@ def factor_best(n):
             p,q = a-b, a+b
             if 1 < p < n: return (min(p,q), max(p,q))
         a += 1
-    # Quick rho (limited tries — fast for most)
-    r = pollard_rho_fast(n, 8)
+    # Quick rho (balanced: x²+c standard for small, x²+x+c for 56+ bit)
+    use_dual_walk = n.bit_length() >= 56
+    r = pollard_rho_fast(n, 8, use_dual_walk=use_dual_walk)
     if r: return r
     # CRT lens (balanced semiprimes rho misses)
     # Adaptive: more lenses for larger numbers where search range is bigger
@@ -407,8 +426,8 @@ def factor_best(n):
     # ECM (group-theoretic — last resort)
     r = ecm_factor(n, B1=50000, curves=5)
     if r: return r
-    # Extended rho
-    r = pollard_rho_fast(n, 50)
+    # Extended rho (same mode)
+    r = pollard_rho_fast(n, 50, use_dual_walk=use_dual_walk)
     if r: return r
     return None
 
