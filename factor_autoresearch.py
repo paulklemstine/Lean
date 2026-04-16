@@ -213,6 +213,60 @@ def fft_diffraction(n, M=0):
                 if 1 < g < n: return (min(g,n//g), max(g,n//g))
     return None
 
+# === ECM (Montgomery form) ===
+def _mdbl(Px,Pz,a24,n):
+    u=(Px+Pz)%n; v=(Px-Pz)%n; u2=u*u%n; v2=v*v%n; d=(u2-v2)%n
+    return (u2*v2%n, d*(v2+a24*d%n)%n)
+
+def _madd(Px,Pz,Qx,Qz,Dx,Dz,n):
+    u=(Px-Pz)*(Qx+Qz)%n; v=(Px+Pz)*(Qx-Qz)%n
+    a=(u+v)%n; s=(u-v)%n
+    if Dz==0 or Dx==0: return (0,0)
+    return (a*a%Dz%n, s*s%Dx%n)
+
+def _mmul(k,Px,Pz,a24,n):
+    if k==0: return (0,0)
+    if k==1: return (Px,Pz)
+    if k==2: return _mdbl(Px,Pz,a24,n)
+    R0x,R0z=Px,Pz; R1x,R1z=_mdbl(Px,Pz,a24,n)
+    for bit in bin(k)[3:]:
+        if bit=='0':
+            R1x,R1z=_madd(R1x,R1z,R0x,R0z,Px,Pz,n)
+            R0x,R0z=_mdbl(R0x,R0z,a24,n)
+        else:
+            R0x,R0z=_madd(R0x,R0z,R1x,R1z,Px,Pz,n)
+            R1x,R1z=_mdbl(R1x,R1z,a24,n)
+    return (R0x,R0z)
+
+def ecm_factor(n, B1=5000, curves=15):
+    if n < 2: return None
+    if n % 2 == 0: return (2, n//2)
+    for p in SP[:3000]:
+        if p*p > n: break
+        if n % p == 0: return (min(p,n//p), max(p,n//p))
+    if is_prime(n): return None
+    primes = _get_primes(B1)
+    for _ in range(curves):
+        sigma = random.randint(6, n-1)
+        u = (sigma*sigma-5)%n; v = (4*sigma)%n
+        x0 = u*u%n*u%n; z0 = v*v%n*v%n
+        vm6c = (v-u)%n; vm6c = vm6c*vm6c%n*vm6c%n
+        num = vm6c*(3*u+v)%n
+        den = 4*u%n*v%n*u%n*v%n
+        gd = math.gcd(den, n)
+        if 1 < gd < n: return (min(gd,n//gd), max(gd,n//gd))
+        if gd == n: continue
+        try: A = (num*pow(den,-1,n)-2)%n
+        except: continue
+        a24 = (A+2)*pow(4,-1,n)%n
+        Px,Pz = x0,z0
+        for p in primes:
+            pp = p
+            while pp <= B1: Px,Pz = _mmul(p,Px,Pz,a24,n); pp *= p
+        g = math.gcd(Pz, n)
+        if 1 < g < n: return (min(g,n//g), max(g,n//g))
+    return None
+
 # === Best cascade ===
 def factor_best(n):
     if n < 2: return None
@@ -232,19 +286,25 @@ def factor_best(n):
             p,q = a-b, a+b
             if 1 < p < n: return (min(p,q), max(p,q))
         a += 1
-    # Rho (fast for most)
-    r = pollard_rho(n, 10)
+    # Rho (fast for most — limited tries)
+    r = pollard_rho(n, 8)
     if r: return r
-    # CRT lens (balanced semiprimes rho misses)
-    r = crt_lens_fermat(n, [3,5,7,8,11,13,17], 100000)
+    # CRT lens 7-moduli (balanced semiprimes rho misses)
+    r = crt_lens_fermat(n, [3,5,7,8,11,13,17], 80000)
+    if r: return r
+    # ECM with moderate B1 (group-theoretic channel)
+    r = ecm_factor(n, B1=5000, curves=10)
     if r: return r
     # More rho
     r = pollard_rho(n, 20)
     if r: return r
-    # p-1
+    # p-1 (smooth p-1 O(1) channel)
     r = pollard_pm1(n, 50000)
     if r: return r
-    # Extended
+    # ECM larger B1
+    r = ecm_factor(n, B1=50000, curves=5)
+    if r: return r
+    # Extended rho
     r = pollard_rho(n, 40)
     if r: return r
     return None
