@@ -10,14 +10,12 @@ python3 -c "import py_compile; py_compile.compile('factor_autoresearch.py', dora
     exit 0
 }
 
-# Run the benchmark (5 runs for stability)
-python3 -c "
+# Run the benchmark - simple approach with hard time limit per test
+python3 << 'EOF'
 import factor_autoresearch as fa
 import time, random
 
 def find_max_bits(target_ms=3000):
-    # Binary search for max bits that factor within target_ms
-    # Requires at least 2/3 of test semiprimes to succeed within target_ms
     lo, hi = 40, 200
     best_bits = lo
     while lo <= hi:
@@ -35,8 +33,10 @@ def find_max_bits(target_ms=3000):
             ok = r is not None and r[0]*r[1] == n
             if ok and t_ms <= target_ms:
                 pass_count += 1
-            # Safety: if any single test takes >2x target, skip larger
-            if t_ms > target_ms * 3: break
+            # Hard cutoff: if >6s, bail this bit size
+            if t_ms > 6000:
+                pass_count = 0
+                break
         if pass_count >= 2:
             best_bits = mid
             lo = mid + 1
@@ -44,12 +44,6 @@ def find_max_bits(target_ms=3000):
             hi = mid - 1
     return best_bits
 
-# Run 3 times, report max (most optimistic but honest)
-results = []
-for _ in range(3):
-    b = find_max_bits(3000)
-    results.append(b)
-
-max_bits = max(results)
-print(f'METRIC max_bits_3s={max_bits}')
-" 2>&1 | grep METRIC || echo "METRIC max_bits_3s=0"
+best = find_max_bits(3000)
+print(f'METRIC max_bits_3s={best}')
+EOF

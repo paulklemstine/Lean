@@ -485,18 +485,19 @@ def factor_best(n, deadline=None):
             # Catalog: factoring_semiprime — ∃ x, 1 < gcd(x,pq) < pq
             if bits >= 100:
                 # For 100+ bit, run 10 parallel ECM with spread B1 values
-                # Concentrate curves at B1=1M and 3M (productive for 25-28 digit factors)
+                # Use high curve counts for high probability; processes that find
+                # factors return EARLY; processes that don't are killed after 2.8s
                 b1_pairs = [
-                    (50000, 1000),      # finds up to ~18 digit factors
-                    (250000, 500),      # finds up to ~22 digit factors
-                    (1000000, 2000),    # finds up to ~25 digit factors (sweet spot)
-                    (1000000, 2000),    # duplicate — most curves at sweet spot
-                    (3000000, 1000),    # finds up to ~28 digit factors (boosed)
-                    (3000000, 1000),    # duplicate
-                    (11000000, 200),    # finds up to ~32 digit factors (boosted)
-                    (11000000, 200),    # duplicate
-                    (250000, 1000),     # extra 250K curves (more productive than 43M)
-                    (110000, 1000),     # extra 110K curves
+                    (50000, 1000),      # 18d - many fast curves
+                    (110000, 1000),     # 20d
+                    (250000, 1000),     # 22d
+                    (1000000, 2000),   # 25d sweet spot (most curves)
+                    (1000000, 2000),   # duplicate sweet spot
+                    (3000000, 1000),   # 28d
+                    (3000000, 1000),   # duplicate
+                    (11000000, 200),   # 32d
+                    (11000000, 200),   # duplicate
+                    (250000, 1000),    # extra 22d (more productive than 43M)
                 ]
                 procs = []
                 for B1, nc in b1_pairs:
@@ -559,14 +560,13 @@ def factor_best(n, deadline=None):
                         break
                     if (time.perf_counter() - t0_ecm) > 2.8: break
         except: pass
-        # Then GMP rho as fallback
-        if _rho_gmp is not None:
-            r = _rho_gmp_factor(n, 30, use_dual=True)
+        # For 100+ bit: after ECM fails, try quick GMP rho check
+        # (MetaOracle: if ECM crystallized queries failed, GMP rho = alternative oracle)
+        if _rho_gmp is not None and time.perf_counter() - t_start < 3.1:
+            r = _rho_gmp_factor(n, 5, use_dual=True)
             if r: return r
-        # SIQS removed (too slow in Python for 3s budget — needs C impl)
-        # Catalog: congruence_of_squares_zmod — the engine behind QS/NFS
-        # SIQS would be the correct fallback for balanced semiprimes where ECM fails
-        # but Python implementation is ~100x too slow
+        # Bail: ECM (2.8s) + rho (0.3s) = 3.1s used. No other method helps.
+        return None
     else:
         r = pollard_rho_fast(n, 8, use_dual_walk=use_dual_walk)
         if r: return r
@@ -574,22 +574,26 @@ def factor_best(n, deadline=None):
     # Adaptive: more lenses for larger numbers where search range is bigger
     lens_mods = [3,5,7,8,11,13,17] if n.bit_length() < 56 else [3,5,7,8,11,13,17,19,23]
     lens_steps = 80000 if n.bit_length() < 56 else 200000
-    r = crt_lens_fermat(n, lens_mods, lens_steps)
-    if r: return r
-    # Extended sequential rho (GMP for 64+ bit)
-    if n.bit_length() >= 64 and _rho_gmp is not None:
-        r = _rho_gmp_factor(n, 50, use_dual=True)
+    if time.perf_counter() - t_start < 3.2:
+        r = crt_lens_fermat(n, lens_mods, lens_steps)
         if r: return r
+    if time.perf_counter() - t_start < 3.3:
+        # Extended sequential rho (GMP for 64+ bit)
+        if n.bit_length() >= 64 and _rho_gmp is not None:
+            r = _rho_gmp_factor(n, 20, use_dual=True)
+            if r: return r
     else:
         r = pollard_rho_fast(n, 50, use_dual_walk=use_dual_walk)
         if r: return r
-    # p-1 (smooth p-1 O(1) channel)
-    r = pollard_pm1(n, 50000)
-    if r: return r
-    # Cyclotomic channel factoring (novel — d(n) channels per order computation)
-    # From Catalog: cyclotomic_2 through cyclotomic_6, shor_algebraic_core
-    r = cyclotomic_channel_factor(n, 5000)
-    if r: return r
+    if time.perf_counter() - t_start < 3.4:
+        # p-1 (smooth p-1 O(1) channel)
+        r = pollard_pm1(n, 50000)
+        if r: return r
+    if time.perf_counter() - t_start < 3.4:
+        # Cyclotomic channel factoring (novel — d(n) channels per order computation)
+        # From Catalog: cyclotomic_2 through cyclotomic_6, shor_algebraic_core
+        r = cyclotomic_channel_factor(n, 5000)
+        if r: return r
     # ECM (group-theoretic — last resort)
     r = ecm_factor(n, B1=50000, curves=5)
     if r: return r
