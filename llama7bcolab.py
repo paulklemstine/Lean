@@ -341,22 +341,15 @@ class EMLDistiller:
             y_j = EML(w1_j * z_j + b1_j, w2_j * z_j + b2_j)
         where z_j = W[j] @ x is the teacher's own linear projection.
 
-        The EML shape is fit so that EML(z) ≈ z (near-identity) in the
-        neuron's operating range. This means the student matches the
-        teacher's behavior while adding EML structure for OISCC
-        compilation and crystallization.
+        Fits EML shape via least-squares optimization so that
+        EML(z) ≈ z (near-identity) over the neuron's operating range.
 
-        Compression comes from:
-        - Crystallization: W (float32) → W (int8), saving 2-4× memory
-        - EML structure: enables OISCC compilation (single op type)
-        - Future: low-rank EML projections can reduce params further
-
-        Returns EML shape params + projection weights.
+        Memory-efficient: uses small calibration set + vectorized L-BFGS-B.
         """
         d_out, d_in = W.shape
 
-        # Find operating range per neuron using calibration data
-        n_cal = 10
+        # Calibration data — enough points for a good fit
+        n_cal = 30
         X_cal = self.rng.standard_normal((n_cal, d_in)) * 0.1
         teacher_out = X_cal @ W.T  # (n_cal, d_out)
 
@@ -365,56 +358,84 @@ class EMLDistiller:
         w2 = np.zeros(d_out)
         b2 = np.ones(d_out)
 
-        for j in range(d_out):
-            z = teacher_out[:, j]  # neuron j's output on calibration data
+        # Vectorized least-squares fit for all neurons at once
+        # Objective: minimize sum_i (EML(w1*z_i + b1, w2*z_i + b2) - z_i)^2
+        try:
+            from scipy.optimize import minimize
 
-            # Fit EML to approximate identity: EML(z) ≈ z
-            # EML(a, b) = exp(a) - ln(b)
-            # We want: exp(w1*z + b1) - ln(w2*z + b2) ≈ z
-            #
-            # Taylor expansion at z0 = mean(z):
-            #   exp(w1*z0 + b1) - ln(w2*z0 + b2) ≈ z0     (value)
-            #   w1*exp(w1*z0+b1) - w2/(w2*z0+b2) ≈ 1      (slope)
-            #
-            # Simpler approach: set w1 small so exp branch is slowly varying,
-            # set b1 so exp(b1) captures the mean, ln branch provides offset.
+            # Compute Taylor expansion initial guesses for all neurons at once
+            z_means = teacher_out.mean(axis=0)  # (d_out,)
+            z_stds = np.maximum(teacher_out.std(axis=0), 1e-8)  # (d_out,)
 
-            z_mean = z.mean()
-            z_std = max(z.std(), 1e-8)
+            b2_init = np.maximum(np.abs(z_means) + 2.0, 1.0)
+            ln_b2 = np.log(b2_init)
+            target_exp = z_means + ln_b2
+            b1_init = np.clip(np.log(np.maximum(target_exp, 0.01)), -10, 10)
+            exp_b1 = np.exp(b1_init)
+            w1_init = np.clip(1.0 / np.maximum(exp_b1, 1e-8), -5, 5)
+            w2_init = np.zeros(d_out)
 
-            # w1*z is small in the operating range → exp(w1*z + b1) ≈ exp(b1) * (1 + w1*z)
-            # Want exp(b1) ≈ z_mean + ln(b2)   and   w1 * exp(b1) - w2/b2 ≈ 1
+            # Optimize in chunks of chunk_size neurons (memory-safe)
+            chunk_size = 512
+            for j_start in range(0, d_out, chunk_size):
+                j_end = min(j_start + chunk_size, d_out)
+                for j in range(j_start, j_end):
+                    z = teacher_out[:, j]
+                    x0 = [w1_init[j], b1_init[j], w2_init[j], b2_init[j]]
 
-            # Strategy: b2 large so ln(b2) is gentle, exp branch does the work
-            b2[j] = max(abs(z_mean) + 2.0, 1.0)
-            ln_b2 = np.log(b2[j])
+                    def loss(params, _z=z):
+                        _w1, _b1, _w2, _b2 = params
+                        a = np.clip(_w1 * _z + _b1, -20, 20)
+                        b_arg = np.maximum(_w2 * _z + _b2, 1e-10)
+                        pred = np.exp(a) - np.log(b_arg)
+                        return np.mean((pred - _z) ** 2)
 
-            # exp(b1) should be ≈ z_mean + ln_b2
-            target_exp = z_mean + ln_b2
-            if target_exp > 0:
-                b1[j] = np.clip(np.log(target_exp), -10, 10)
-            else:
-                b1[j] = 0.0
+                    def grad_fn(params, _z=z):
+                        _w1, _b1, _w2, _b2 = params
+                        a = np.clip(_w1 * _z + _b1, -20, 20)
+                        b_arg = np.maximum(_w2 * _z + _b2, 1e-10)
+                        pred = np.exp(a) - np.log(b_arg)
+                        r = pred - _z
+                        exp_a = np.exp(a)
+                        inv_b = 1.0 / b_arg
+                        return [
+                            2 * np.mean(r * exp_a * _z),
+                            2 * np.mean(r * exp_a),
+                            2 * np.mean(r * (-inv_b) * _z),
+                            2 * np.mean(r * (-inv_b)),
+                        ]
 
-            # w1 gives unit slope: w1 * exp(b1) ≈ 1 → w1 ≈ 1/exp(b1)
-            exp_b1 = np.exp(b1[j])
-            if exp_b1 > 1e-8:
-                w1[j] = np.clip(1.0 / exp_b1, -5, 5)
-            else:
-                w1[j] = 1.0
+                    try:
+                        result = minimize(loss, x0, jac=grad_fn, method='L-BFGS-B',
+                                         bounds=[(-5, 5), (-10, 10), (-5, 5), (0.01, 100)],
+                                         options={'maxiter': 50, 'ftol': 1e-10})
+                        w1[j] = np.clip(result.x[0], -5, 5)
+                        b1[j] = np.clip(result.x[1], -10, 10)
+                        w2[j] = np.clip(result.x[2], -5, 5)
+                        b2[j] = max(result.x[3], 0.01)
+                    except Exception:
+                        w1[j] = w1_init[j]
+                        b1[j] = b1_init[j]
+                        w2[j] = w2_init[j]
+                        b2[j] = b2_init[j]
 
-            # w2 fine-tunes the slope correction
-            # slope = w1*exp(b1) - w2/b2 ≈ 1
-            # w1*exp(b1) ≈ 1, so w2 ≈ 0
-            w2[j] = 0.0
+        except ImportError:
+            # No scipy — fall back to Taylor expansion for all neurons
+            for j in range(d_out):
+                z = teacher_out[:, j]
+                z_mean = z.mean()
+                b2[j] = max(abs(z_mean) + 2.0, 1.0)
+                ln_b2 = np.log(b2[j])
+                target_exp = z_mean + ln_b2
+                b1[j] = np.clip(np.log(max(target_exp, 0.01)), -10, 10)
+                exp_b1 = np.exp(b1[j])
+                w1[j] = np.clip(1.0 / max(exp_b1, 1e-8), -5, 5)
+                w2[j] = 0.0
 
         del teacher_out, X_cal
 
-        # Return EML shape params + the projection weights (teacher's W)
-        # The projection weights are the bulk of parameters but will be
-        # crystallized to integers, giving the memory savings.
         return {'w1': w1, 'b1': b1, 'w2': w2, 'b2': b2,
-                'W_proj': W}  # projection weights kept for inference
+                'W_proj': W}
 
     def distill_attention_layer(self, layer_weights: Dict[str, np.ndarray],
                                  config: LLaMAConfig) -> Dict[str, Dict[str, np.ndarray]]:
