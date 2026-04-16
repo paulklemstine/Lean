@@ -74,34 +74,36 @@ def pollard_rho(n, max_tries=20):
     return None
 
 def pollard_rho_fast(n, max_tries=20):
-    """Optimized rho: skip c values that never work, pre-compute random start,
-    use larger batch sizes, reduce Python overhead."""
+    """Optimized rho with reduced Python overhead.
+    Uses pre-computed random starts, larger batches, faster modular arithmetic.
+    Catalog: brent_detection, IntegerOrbitFactoring."""
     if n < 2: return None
     if n % 2 == 0: return (2, n//2)
     for p in SP[:3000]:
         if p*p > n: break
         if n % p == 0: return (min(p,n//p), max(p,n//p))
     if is_prime(n): return None
-    max_r = max(4000000, int(8*n**0.25))  # Larger max for 80-bit
-    # Best c values: skip c=n-1 (degenerate), try 1-100 then odd values
-    c_list = list(range(1, min(max_tries+1, 101)))
-    for c in c_list:
-        y = random.Random(c*31337).randrange(2, n-1)
-        x = y; g = 1; r = 1; f = lambda x, c=c: (x*x+c)%n
+    max_r = max(4000000, int(8*n**0.25))
+    nm = n  # Local reference for speed
+    for c in range(1, min(max_tries+1, 101)):
+        y = random.Random(c*31337).randrange(2, nm-1)
+        x = y; g = 1; r = 1
         while g == 1 and r <= max_r:
             x = y
-            for _ in range(r): y = f(y)
+            # Phase: advance y by r steps
+            for _ in range(r): y = (y*y+c)%nm
+            # Phase: batch GCD with larger batches
             k = 0
             while k < r and g == 1:
-                q = 1; batch = min(512, r-k)  # Larger batch
-                for _ in range(batch): y = f(y); q = q*(abs(x-y)%n)%n
-                g = math.gcd(q, n); k += batch
+                q = 1; batch = min(1024, r-k)  # Even larger batch
+                for _ in range(batch): y = (y*y+c)%nm; q = q*(x-y)%nm  # abs not needed mod n
+                g = math.gcd(q, nm); k += batch
             r *= 2
-        if 1 < g < n: return (min(g,n//g), max(g,n//g))
-        if g == n:
+        if 1 < g < nm: return (min(g,nm//g), max(g,nm//g))
+        if g == nm:
             g = 1
-            while g == 1: y = f(y); g = math.gcd(abs(x-y), n)
-            if 1 < g < n: return (min(g,n//g), max(g,n//g))
+            while g == 1: y = (y*y+c)%nm; g = math.gcd((x-y)%nm, nm)
+            if 1 < g < nm: return (min(g,nm//g), max(g,nm//g))
     return None
 
 # === Pollard p-1 ===
