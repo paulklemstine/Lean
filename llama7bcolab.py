@@ -328,7 +328,7 @@ class EMLDistiller:
     """
 
     def __init__(self, temperature: float = 4.0, alpha: float = 0.5,
-                 n_distill_samples: int = 500, seed: int = 42):
+                 n_distill_samples: int = 50, seed: int = 42):
         self.temperature = temperature
         self.alpha = alpha
         self.n_distill_samples = n_distill_samples
@@ -336,6 +336,9 @@ class EMLDistiller:
 
     def distill_dense_layer(self, W: np.ndarray) -> Dict[str, np.ndarray]:
         """Distill a single dense weight matrix to EML parameters.
+
+        Memory-efficient: uses weight statistics instead of full matrix multiply.
+        Each row of W is one neuron — we match its mean and variance.
 
         Args:
             W: Weight matrix of shape (d_out, d_in)
@@ -345,31 +348,24 @@ class EMLDistiller:
         """
         d_out, d_in = W.shape
 
-        # Generate random input samples
-        X = self.rng.standard_normal((self.n_distill_samples, d_in)) * 0.1
+        # Compute per-neuron statistics directly from weight rows
+        # This avoids the O(n_samples × d_out) teacher_out matrix
+        row_means = W.mean(axis=1)       # (d_out,)
+        row_stds = W.std(axis=1)         # (d_out,)
+        row_norms = np.linalg.norm(W, axis=1)  # (d_out,)
 
-        # Teacher forward pass
-        teacher_out = X @ W.T  # (n_samples, d_out)
-
-        # Fit EML parameters per neuron
+        # Fit EML parameters per neuron from statistics
         w1 = np.zeros(d_out)
         b1 = np.zeros(d_out)
         w2 = np.zeros(d_out)
         b2 = np.ones(d_out)
 
-        # Project input to scalar for EML neuron
-        x_proj = X.mean(axis=1)  # (n_samples,)
-
         for j in range(d_out):
-            t_out = teacher_out[:, j]
-
-            # Match statistics: use principal component projection
-            t_mean = t_out.mean()
-            t_std = max(t_out.std(), 1e-6)
+            t_mean = row_means[j]
+            t_std = max(row_stds[j], 1e-6)
 
             # EML neuron: f(x) = exp(w1*x + b1) - ln(w2*x + b2)
-            # We want f to approximate the j-th neuron output
-            # Strategy: set parameters to match teacher mean and scale
+            # Set parameters to match teacher neuron's scale and center
             w1[j] = np.clip(t_std * 0.1, -5, 5)
             b1[j] = np.clip(np.log(max(abs(t_mean), 1e-6)), -10, 10)
             w2[j] = 0.01
@@ -427,38 +423,43 @@ class EMLDistiller:
 
     def compute_layer_error(self, W: np.ndarray,
                             eml_params: Dict[str, np.ndarray],
-                            n_samples: int = 1000) -> Dict[str, float]:
+                            n_samples: int = 50) -> Dict[str, float]:
         """Compute approximation error for a distilled layer.
 
-        Compares teacher output (W @ x) with EML output for random inputs.
+        Memory-efficient: processes samples in small batches.
         """
         d_out, d_in = W.shape
-        X = self.rng.standard_normal((n_samples, d_in)) * 0.1
+        batch = min(n_samples, 50)
+        X = self.rng.standard_normal((batch, d_in)) * 0.1
 
-        # Teacher output
-        teacher_out = X @ W.T  # (n_samples, d_out)
+        # Teacher output (small batch)
+        teacher_out = X @ W.T  # (batch, d_out)
 
         # EML output
         w1, b1, w2, b2 = eml_params['w1'], eml_params['b1'], eml_params['w2'], eml_params['b2']
-        x_proj = X.mean(axis=1)  # (n_samples,)
+        x_proj = X.mean(axis=1)  # (batch,)
         student_out = np.column_stack([
             eml_vec(w1[j] * x_proj + b1[j], w2[j] * x_proj + b2[j])
             for j in range(d_out)
         ])
 
-        # Compute errors
+        # Compute errors before freeing
         abs_err = np.abs(teacher_out - student_out)
         rel_err = abs_err / (np.abs(teacher_out) + 1e-8)
+        cos_sim = float(
+            np.sum(teacher_out * student_out) /
+            (np.linalg.norm(teacher_out) * np.linalg.norm(student_out) + 1e-10)
+        )
+
+        # Free large arrays immediately
+        del teacher_out, student_out, X
 
         return {
             'mean_abs_error': float(abs_err.mean()),
             'max_abs_error': float(abs_err.max()),
             'mean_rel_error': float(rel_err.mean()),
             'max_rel_error': float(rel_err.max()),
-            'cosine_sim': float(
-                np.sum(teacher_out * student_out) /
-                (np.linalg.norm(teacher_out) * np.linalg.norm(student_out) + 1e-10)
-            ),
+            'cosine_sim': cos_sim,
         }
 
 
@@ -717,6 +718,7 @@ class LLaMACompressionPipeline:
                     attn_params[proj] = eml_p
                     total_params_standard += W.shape[0] * W.shape[1]
                     total_params_eml += W.shape[0] * 4
+                    del W
 
             # Distill FFN
             ffn_params = {}
@@ -728,17 +730,20 @@ class LLaMACompressionPipeline:
                     ffn_params[proj] = eml_p
                     total_params_standard += W.shape[0] * W.shape[1]
                     total_params_eml += W.shape[0] * 4
+                    del W
 
             self.eml_layers[i] = {'attn': attn_params, 'ffn': ffn_params}
 
-            # Compute errors for first 3 layers and last layer
+            # Compute errors for select layers only (saves memory)
+            compute_err = (i < 3 or i == cfg.n_layers - 1 or i == cfg.n_layers // 2)
             layer_err = {}
-            for proj_name, eml_p in {**attn_params, **ffn_params}.items():
-                key = f"self_attn.{proj_name}.weight" if proj_name in ['q_proj', 'k_proj', 'v_proj', 'o_proj'] else f"mlp.{proj_name}.weight"
-                if key in layer_w:
-                    err = self.distiller.compute_layer_error(
-                        layer_w[key], eml_p, n_samples=200)
-                    layer_err[proj_name] = err
+            if compute_err:
+                for proj_name, eml_p in {**attn_params, **ffn_params}.items():
+                    key = f"self_attn.{proj_name}.weight" if proj_name in ['q_proj', 'k_proj', 'v_proj', 'o_proj'] else f"mlp.{proj_name}.weight"
+                    if key in layer_w:
+                        err = self.distiller.compute_layer_error(
+                            layer_w[key], eml_p, n_samples=50)
+                        layer_err[proj_name] = err
 
             self.layer_errors[i] = layer_err
 
