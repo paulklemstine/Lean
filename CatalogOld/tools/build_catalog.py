@@ -129,6 +129,9 @@ class CatalogBuilder:
         # Step 6: Write build config
         self._write_build_config(file_groups, shared_modules)
 
+        # Step 7: Generate master list (CATALOG.md + DECLARATION_INDEX.md)
+        self._generate_master_list(file_groups, shared_modules)
+
         if self.verbose:
             total_files = len(file_groups) + len(shared_modules)
             print(f"\nBuild complete: {total_files} .lean files in {self.output_dir}")
@@ -434,6 +437,279 @@ class CatalogBuilder:
 
         if self.verbose:
             print(f"  Wrote {out_file.relative_to(self.output_dir)}: {len(entries)} declarations")
+
+    def _generate_master_list(self, file_groups: dict, shared_modules: list[dict]):
+        """Generate CATALOG.md and DECLARATION_INDEX.md from the database."""
+        self._write_catalog_md(file_groups, shared_modules)
+        self._write_declaration_index_md(file_groups, shared_modules)
+
+    def _write_catalog_md(self, file_groups: dict, shared_modules: list[dict]):
+        """Write CATALOG.md — master catalog organized by domain."""
+        meta = self.db.get('metadata', {})
+        domains = self.db.get('domains', {})
+        lines = []
+
+        lines.append('# Master Theorem Catalog')
+        lines.append('')
+        lines.append('A comprehensive catalog of all Lean 4 formalizations in this project,')
+        lines.append('organized by mathematical domain. Auto-generated from the catalog database.')
+        lines.append('')
+
+        # Statistics
+        lines.append('## Project Statistics')
+        lines.append('')
+        lines.append('| Metric | Count |')
+        lines.append('|--------|-------|')
+        lines.append(f'| Total Lean files | {meta.get("total_files", 0)} |')
+        lines.append(f'| Total declarations | {meta.get("total_declarations", 0)} |')
+        lines.append(f'| Theorems & lemmas | {meta.get("total_theorems", 0)} |')
+        lines.append(f'| Definitions | {meta.get("total_defs", 0)} |')
+        lines.append(f'| Structures/classes/inductives | {meta.get("total_structures", 0)} |')
+        lines.append(f'| Total lines of Lean code | {meta.get("total_lines", 0):,} |')
+        lines.append(f'| Remaining `sorry` count | {meta.get("total_sorry", 0)} |')
+        lines.append(f'| Canonical declarations | {meta.get("total_canonical", 0)} |')
+        lines.append(f'| Duplicate groups | {meta.get("total_duplicate_groups", 0)} |')
+        lines.append(f'| Consolidated domains | {len(domains)} |')
+        lines.append('')
+
+        # Build file groups by domain/subdomain for TOC and content
+        domain_tree = defaultdict(lambda: defaultdict(list))  # domain -> subdomain -> [file_info]
+        for key, fg in file_groups.items():
+            if not fg['entries']:
+                continue
+            domain = fg.get('domain', 'Uncategorized')
+            subdomain = fg.get('subdomain') or ''
+            tp = fg['target_path']
+            entry_count = len(fg['entries'])
+            theorems = sum(1 for e in fg['entries'] if e.get('kind') == 'theorem')
+            defs = sum(1 for e in fg['entries'] if e.get('kind') == 'def')
+            structs = sum(1 for e in fg['entries'] if e.get('kind') in ('structure', 'class', 'inductive'))
+            domain_tree[domain][subdomain].append({
+                'path': tp,
+                'entries': fg['entries'],
+                'entry_count': entry_count,
+                'theorems': theorems,
+                'defs': defs,
+                'structs': structs,
+            })
+
+        # Add shared modules
+        shared_entries = []
+        for sm in shared_modules:
+            if sm['entries']:
+                shared_entries.append({
+                    'path': sm['target_path'],
+                    'entries': sm['entries'],
+                    'entry_count': len(sm['entries']),
+                    'theorems': sum(1 for e in sm['entries'] if e.get('kind') == 'theorem'),
+                    'defs': sum(1 for e in sm['entries'] if e.get('kind') == 'def'),
+                    'structs': sum(1 for e in sm['entries'] if e.get('kind') in ('structure', 'class', 'inductive')),
+                })
+
+        # Table of Contents
+        lines.append('## Table of Contents')
+        lines.append('')
+
+        toc_entries = []
+        for domain in sorted(domain_tree.keys()):
+            subdomains = domain_tree[domain]
+            domain_files = 0
+            domain_decls = 0
+            for sd, files in subdomains.items():
+                for fi in files:
+                    domain_files += 1
+                    domain_decls += fi['entry_count']
+            if len(subdomains) == 1 and '' in subdomains:
+                anchor = domain.lower().replace('/', '')
+                toc_entries.append(f'- [{domain}](#{anchor}) — {domain_files} files, {domain_decls} declarations')
+            else:
+                anchor = domain.lower().replace('/', '')
+                toc_entries.append(f'- [{domain}](#{anchor}) — {domain_files} files, {domain_decls} declarations')
+                for sd in sorted(subdomains.keys()):
+                    if sd:
+                        sd_files = len(subdomains[sd])
+                        sd_decls = sum(fi['entry_count'] for fi in subdomains[sd])
+                        sd_anchor = f'{domain}{sd}'.lower().replace('/', '')
+                        toc_entries.append(f'  - [{sd}](#{sd_anchor}) — {sd_files} files, {sd_decls} declarations')
+
+        if shared_entries:
+            sh_decls = sum(fi['entry_count'] for fi in shared_entries)
+            toc_entries.append(f'- [Shared](#shared) — {len(shared_entries)} files, {sh_decls} declarations')
+
+        for entry in toc_entries:
+            lines.append(entry)
+        lines.append('')
+
+        # Domain sections
+        for domain in sorted(domain_tree.keys()):
+            subdomains = domain_tree[domain]
+            lines.append(f'## {domain}')
+            lines.append('')
+
+            for sd in sorted(subdomains.keys()):
+                if sd:
+                    lines.append(f'### {sd}')
+                    lines.append('')
+
+                for fi in sorted(subdomains[sd], key=lambda x: x['path']):
+                    filename = Path(fi['path']).name
+                    rel_path = fi['path']
+
+                    # Count lines from body lengths
+                    total_lines = sum(e.get('end_line', 0) - e.get('line_number', 0) + 1 for e in fi['entries'])
+                    source = fi['entries'][0].get('source_file', '') if fi['entries'] else ''
+
+                    lines.append(f'#### `{filename}` ({total_lines} lines)')
+                    if source:
+                        lines.append(f'*Source: `{source}`*')
+                    lines.append('')
+
+                    # Group declarations by kind
+                    theorems = [e['name'] for e in fi['entries'] if e.get('kind') == 'theorem']
+                    defs = [e['name'] for e in fi['entries'] if e.get('kind') == 'def']
+                    structs = [e['name'] for e in fi['entries'] if e.get('kind') in ('structure', 'class', 'inductive')]
+
+                    if defs:
+                        def_list = ', '.join(f'`{n}`' for n in defs[:10])
+                        extra = f' ... +{len(defs) - 10} more' if len(defs) > 10 else ''
+                        lines.append(f'- **def**: {def_list}{extra}')
+                    if theorems:
+                        thm_list = ', '.join(f'`{n}`' for n in theorems[:10])
+                        extra = f' ... +{len(theorems) - 10} more' if len(theorems) > 10 else ''
+                        lines.append(f'- **theorem**: {thm_list}{extra}')
+                    if structs:
+                        st_list = ', '.join(f'`{n}`' for n in structs[:10])
+                        extra = f' ... +{len(structs) - 10} more' if len(structs) > 10 else ''
+                        lines.append(f'- **structure**: {st_list}{extra}')
+                    lines.append('')
+
+        # Shared section
+        if shared_entries:
+            lines.append('## Shared')
+            lines.append('')
+            for fi in sorted(shared_entries, key=lambda x: x['path']):
+                filename = Path(fi['path']).name
+                total_lines = sum(e.get('end_line', 0) - e.get('line_number', 0) + 1 for e in fi['entries'])
+                lines.append(f'#### `{filename}` ({total_lines} lines)')
+                lines.append('')
+                theorems = [e['name'] for e in fi['entries'] if e.get('kind') == 'theorem']
+                defs = [e['name'] for e in fi['entries'] if e.get('kind') == 'def']
+                if defs:
+                    def_list = ', '.join(f'`{n}`' for n in defs[:10])
+                    extra = f' ... +{len(defs) - 10} more' if len(defs) > 10 else ''
+                    lines.append(f'- **def**: {def_list}{extra}')
+                if theorems:
+                    thm_list = ', '.join(f'`{n}`' for n in theorems[:10])
+                    extra = f' ... +{len(theorems) - 10} more' if len(theorems) > 10 else ''
+                    lines.append(f'- **theorem**: {thm_list}{extra}')
+                lines.append('')
+
+        self.output_dir.mkdir(parents=True, exist_ok=True)
+        catalog_md = self.output_dir / 'CATALOG.md'
+        catalog_md.write_text('\n'.join(lines) + '\n', encoding='utf-8')
+
+        if self.verbose:
+            print(f"  Wrote CATALOG.md ({len(lines)} lines)")
+
+    def _write_declaration_index_md(self, file_groups: dict, shared_modules: list[dict]):
+        """Write DECLARATION_INDEX.md — alphabetical index of all declarations."""
+        meta = self.db.get('metadata', {})
+        dup_groups = self.db.get('duplicate_groups', [])
+        lines = []
+
+        # Collect all canonical declarations
+        all_entries = list(self.canonical)
+
+        # Build name -> occurrences mapping from duplicate groups
+        name_occurrences = {}
+        for g in dup_groups:
+            name_occurrences[g['name']] = g['occurrence_count']
+
+        # Count unique names and repeated names
+        name_counts = defaultdict(int)
+        for e in all_entries:
+            name_counts[e['name']] += 1
+        unique_names = len(name_counts)
+        repeated_names = sum(1 for c in name_counts.values() if c > 1)
+
+        lines.append('# Declaration Name Index')
+        lines.append('')
+        lines.append(f'Total unique declaration names: {unique_names}')
+        lines.append(f'Names appearing in multiple files: {repeated_names}')
+        lines.append('')
+
+        # Most repeated declaration names
+        sorted_dups = sorted(dup_groups, key=lambda g: g['occurrence_count'], reverse=True)
+        if sorted_dups:
+            lines.append('## Most Repeated Declaration Names')
+            lines.append('')
+            lines.append('These names appear across multiple files and may represent semantic duplicates')
+            lines.append('(same concept formalized multiple times) or intentional reuse.')
+            lines.append('')
+            lines.append('| Name | Occurrences | Files |')
+            lines.append('|------|-------------|-------|')
+
+            for g in sorted_dups[:50]:
+                name = g['name']
+                count = g['occurrence_count']
+                # Collect source files from entries in this group
+                group_entries = [e for e in g.get('entries', []) if isinstance(e, dict)]
+                file_names = []
+                for ge in group_entries[:3]:
+                    sf = ge.get('source_file', '')
+                    fn = Path(sf).name if sf else ''
+                    if fn:
+                        file_names.append(f'`{fn}`')
+                extra_files = count - len(file_names)
+                files_str = ', '.join(file_names)
+                if extra_files > 0:
+                    files_str += f' +{extra_files} more'
+                lines.append(f'| `{name}` | {count} | {files_str} |')
+
+            lines.append('')
+
+        # Alphabetical index
+        lines.append('## Alphabetical Index')
+        lines.append('')
+
+        # Group entries by first character
+        by_letter = defaultdict(list)
+        for e in all_entries:
+            name = e.get('name', '')
+            if not name:
+                continue
+            first = name[0].upper()
+            if not first.isalpha():
+                first = '#'
+            by_letter[first].append(e)
+
+        for letter in sorted(by_letter.keys()):
+            entries_for_letter = sorted(by_letter[letter], key=lambda e: e['name'])
+            lines.append(f'### {letter} ({len(entries_for_letter)} declarations)')
+            lines.append('')
+
+            for e in entries_for_letter:
+                name = e['name']
+                kind = e.get('kind', 'unknown')
+                source = Path(e.get('source_file', '')).name
+                kind_label = kind
+                if e.get('is_noncomputable'):
+                    kind_label = f'noncomputable {kind}'
+
+                # Check if this name appears multiple times
+                occ = name_occurrences.get(name, 1)
+                suffix = f' ×{occ}' if occ > 1 else ''
+
+                lines.append(f'- `{name}` ({kind_label}) — `{source}`{suffix}')
+
+            lines.append('')
+
+        self.output_dir.mkdir(parents=True, exist_ok=True)
+        index_md = self.output_dir / 'DECLARATION_INDEX.md'
+        index_md.write_text('\n'.join(lines) + '\n', encoding='utf-8')
+
+        if self.verbose:
+            print(f"  Wrote DECLARATION_INDEX.md ({len(lines)} lines)")
 
     def _write_build_config(self, file_groups: dict, shared_modules: list[dict]):
         """Write lakefile.toml and lean-toolchain."""

@@ -29,6 +29,12 @@ python3 tools/catalog.py all --source Catalog/ --output-dir CatalogBuild/ --verb
 - 3,652 duplicate groups identified
 - Shared modules generated for declarations appearing in 5+ files
 
+## Master List Generation
+Every rebuild automatically generates:
+- `CATALOG.md` — Master catalog with statistics, TOC, domain-organized file/declaration listings
+- `DECLARATION_INDEX.md` — Alphabetical index of all canonical declarations with duplicate analysis
+Generated as Step 7 of CatalogBuilder.build() in build_catalog.py
+
 ## Rescan Workflow
 
 After adding new theorems to `Catalog/`:

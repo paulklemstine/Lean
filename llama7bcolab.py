@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# VERSION: 2026-04-16-v9
+# VERSION: 2026-04-16-v10
 """
 OISCC-EML LLaMA 7B Real Weight Compression
 
@@ -1090,49 +1090,26 @@ def run_pipeline(args):
 # ════════════════════════════════════════════════════════════════════════════
 
 def _make_eml_hook(eml_params, device):
-    """Create a PyTorch forward hook that replaces a linear layer with EML computation.
+    """Create a PyTorch forward hook that applies EML nonlinearity.
 
-    The hook computes: z = x @ W_proj.T  (teacher projection)
-    Then: output_j = exp(w1_j * z_j + b1_j) - ln(w2_j * z_j + b2_j)
-
-    This replaces the standard y = x @ W.T + b with the EML-compressed version.
+    Key insight: the linear layer's output IS the teacher projection z = x @ W.T
+    (LLaMA has no bias). So the hook just applies the EML shape on top of the
+    standard output — no need to store W_proj separately, saving ~25GB GPU memory.
     """
     import torch
 
-    W_proj = torch.tensor(eml_params['W_proj'], dtype=torch.float32, device=device)
+    # Only store the tiny EML shape params (4 per neuron) — no W_proj!
     w1 = torch.tensor(eml_params['w1'], dtype=torch.float32, device=device)
     b1 = torch.tensor(eml_params['b1'], dtype=torch.float32, device=device)
     w2 = torch.tensor(eml_params['w2'], dtype=torch.float32, device=device)
     b2 = torch.tensor(eml_params['b2'], dtype=torch.float32, device=device)
 
     def hook(module, input, output):
-        x = input[0]  # (batch, seq_len, d_in) or (batch*seq_len, d_in)
-        original_shape = x.shape
-
-        # Flatten to 2D if needed
-        if x.dim() == 3:
-            x_2d = x.reshape(-1, x.shape[-1])
-        else:
-            x_2d = x
-
-        # Teacher projection: z = x @ W_proj.T  →  (N, d_out)
-        z = x_2d @ W_proj.T  # (N, d_out)
-
-        # EML neuron: f(z_j) = exp(w1_j * z_j + b1_j) - ln(|w2_j * z_j + b2_j|)
-        # Clamp for numerical stability
-        exp_arg = w1 * z + b1
-        exp_arg = torch.clamp(exp_arg, -20, 20)  # prevent exp overflow
-
-        ln_arg = w2 * z + b2
-        ln_arg = torch.clamp(ln_arg, min=1e-8)  # prevent ln(0) or ln(negative)
-
+        z = output.float()  # output IS z = x @ W.T (no bias in LLaMA)
+        exp_arg = torch.clamp(w1 * z + b1, -20, 20)
+        ln_arg = torch.clamp(w2 * z + b2, min=1e-8)
         eml_out = torch.exp(exp_arg) - torch.log(ln_arg)
-
-        # Reshape back
-        if len(original_shape) == 3:
-            eml_out = eml_out.reshape(original_shape[0], original_shape[1], -1)
-
-        return eml_out
+        return eml_out.to(output.dtype)
 
     return hook
 
@@ -1205,6 +1182,21 @@ def run_chat_comparison(pipeline, model_name="openlm-research/open_llama_7b"):
         tokenizer = loader.tokenizer
         device = loader.device
 
+    # ─── Free memory: remove W_proj from eml_layers (not needed for hooks) ──
+    import gc
+    for layer_idx in list(pipeline.eml_layers.keys()):
+        for proj_type in ['attn', 'ffn']:
+            for proj_name in list(pipeline.eml_layers[layer_idx].get(proj_type, {}).keys()):
+                eml_p = pipeline.eml_layers[layer_idx][proj_type][proj_name]
+                if 'W_proj' in eml_p:
+                    del eml_p['W_proj']
+    gc.collect()
+    try:
+        import torch
+        torch.cuda.empty_cache()
+    except Exception:
+        pass
+
     # ─── Install EML hooks ──────────────────────────────────────────────
     print(f"\n  Installing EML hooks on all linear layers...")
     handles, n_hooked = install_eml_hooks(pipeline, model, device)
@@ -1220,7 +1212,7 @@ def run_chat_comparison(pipeline, model_name="openlm-research/open_llama_7b"):
         "Once upon a time in a galaxy far away,",
     ]
 
-    print(f"\n  Generating side-by-side comparison (max 50 tokens each)...")
+    print(f"\n  Generating side-by-side comparison (max 30 tokens each)...")
     print(f"  Device: {device}\n")
 
     for prompt in test_prompts:
@@ -1234,22 +1226,26 @@ def run_chat_comparison(pipeline, model_name="openlm-research/open_llama_7b"):
             with torch.no_grad():
                 real_out = model.generate(
                     inputs["input_ids"],
-                    max_new_tokens=50,
-                    do_sample=True, temperature=0.7, top_p=0.9,
+                    max_new_tokens=30,
+                    do_sample=False,  # greedy — less memory than sampling
                     pad_token_id=tokenizer.eos_token_id,
                 )
             real_text = tokenizer.decode(real_out[0], skip_special_tokens=True)
+            del real_out
+            torch.cuda.empty_cache()
 
             # Crystal LLaMA (reinstall hooks, generate)
             handles, n_hooked = install_eml_hooks(pipeline, model, device)
             with torch.no_grad():
                 crystal_out = model.generate(
                     inputs["input_ids"],
-                    max_new_tokens=50,
-                    do_sample=True, temperature=0.7, top_p=0.9,
+                    max_new_tokens=30,
+                    do_sample=False,  # greedy — less memory than sampling
                     pad_token_id=tokenizer.eos_token_id,
                 )
             crystal_text = tokenizer.decode(crystal_out[0], skip_special_tokens=True)
+            del crystal_out
+            torch.cuda.empty_cache()
 
             real_ans = real_text[len(prompt):].strip()[:200]
             crystal_ans = crystal_text[len(prompt):].strip()[:200]
