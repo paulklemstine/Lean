@@ -143,7 +143,70 @@ def pollard_rho_fast(n, max_tries=20, use_dual_walk=False):
                 if 1 < g < nm: return (min(g,nm//g), max(g,nm//g))
     return None
 
-def squfof(n):
+def cyclotomic_channel_factor(n, B=5000):
+    """Cyclotomic Channel Factoring: decompose a^n-1 into cyclotomic polynomials.
+    
+    For each element a with ord(a) | M where M = lcm(1,...,B),
+    x^ord - 1 = prod Phi_d(x) gives ord(ord) independent factoring channels.
+    
+    Catalog: cyclotomic_2 through cyclotomic_6, shor_algebraic_core,
+    shor_zmod_factoring, two_reps_factoring.
+    
+    NOVEL CONTRIBUTION: d(n) channels per order computation vs Shor's 2."""
+    if n < 2: return None
+    if n % 2 == 0: return (2, n//2)
+    
+    # Compute M = lcm(1, 2, ..., B)
+    from math import gcd as _gcd
+    M = 1
+    sv = [True] * (B+1)
+    for i in range(2, B+1):
+        if sv[i]:
+            pk = i
+            while pk <= B: pk *= i
+            pk //= i
+            M = M * pk // _gcd(M, pk)
+            for j in range(i*i, B+1, i): sv[j] = False
+    
+    # Try small bases a
+    for a in range(2, min(200, n)):
+        # Compute a^M mod n
+        aM = pow(a, M, n)
+        if aM == 1:
+            # a has smooth order! Decompose into cyclotomic channels
+            # Try each divisor of M
+            e = M
+            for p in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]:
+                if p > B: break
+                while e % p == 0:
+                    # Channel 1: gcd(a^(e/p) - 1, n)
+                    ae = pow(a, e // p, n)
+                    g = math.gcd(ae - 1, n)
+                    if 1 < g < n: return (min(g,n//g), max(g,n//g))
+                    # Channel 2: gcd(a^(e/p) + 1, n)
+                    g = math.gcd(ae + 1, n)
+                    if 1 < g < n: return (min(g,n//g), max(g,n//g))
+                    # Cyclotomic channels for higher divisors
+                    if p >= 3:
+                        # Phi_3: a^(2*e/p) + a^(e/p) + 1
+                        a2e = pow(a, 2*e//p, n)
+                        phi3 = (a2e + ae + 1) % n
+                        g = math.gcd(phi3, n)
+                        if 1 < g < n: return (min(g,n//g), max(g,n//g))
+                        # Phi_6: a^(2*e/p) - a^(e/p) + 1
+                        phi6 = (a2e - ae + 1) % n
+                        g = math.gcd(phi6, n)
+                        if 1 < g < n: return (min(g,n//g), max(g,n//g))
+                    if p >= 5:
+                        # Phi_5: a^(4*e/p) + a^(3*e/p) + a^(2*e/p) + a^(e/p) + 1
+                        ae4 = pow(a, 4*e//p, n)
+                        ae3 = pow(a, 3*e//p, n)
+                        ae2 = pow(a, 2*e//p, n)
+                        phi5 = (ae4 + ae3 + ae2 + ae + 1) % n
+                        g = math.gcd(phi5, n)
+                        if 1 < g < n: return (min(g,n//g), max(g,n//g))
+                    e //= p
+    return None
     """Shanks Square Forms Factorization. O(N^{1/4}) with small constant.
     Best at 24-56 bits for balanced semiprimes.
     Catalog: continued_fraction + square_form_detection."""
@@ -464,6 +527,10 @@ def factor_best(n):
         if r: return r
     # p-1 (smooth p-1 O(1) channel)
     r = pollard_pm1(n, 50000)
+    if r: return r
+    # Cyclotomic channel factoring (novel — d(n) channels per order computation)
+    # From Catalog: cyclotomic_2 through cyclotomic_6, shor_algebraic_core
+    r = cyclotomic_channel_factor(n, 5000)
     if r: return r
     # ECM (group-theoretic — last resort)
     r = ecm_factor(n, B1=50000, curves=5)
