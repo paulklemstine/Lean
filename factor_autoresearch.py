@@ -74,29 +74,26 @@ def pollard_rho(n, max_tries=20):
     return None
 
 def pollard_rho_fast(n, max_tries=20):
-    """Optimized rho with reduced Python overhead.
-    Uses pre-computed random starts, larger batches, faster modular arithmetic.
-    Catalog: brent_detection, IntegerOrbitFactoring."""
+    """Optimized rho: single-walk with best micro-opts.
+    Catalog: brent_detection, collision_pigeonhole."""
     if n < 2: return None
     if n % 2 == 0: return (2, n//2)
     for p in SP[:3000]:
         if p*p > n: break
         if n % p == 0: return (min(p,n//p), max(p,n//p))
     if is_prime(n): return None
-    max_r = max(4000000, int(8*n**0.25))
-    nm = n  # Local reference for speed
+    nm = n
+    max_r = max(4000000, int(8*nm**0.25))
     for c in range(1, min(max_tries+1, 101)):
         y = random.Random(c*31337).randrange(2, nm-1)
         x = y; g = 1; r = 1
         while g == 1 and r <= max_r:
             x = y
-            # Phase: advance y by r steps
             for _ in range(r): y = (y*y+c)%nm
-            # Phase: batch GCD with larger batches
             k = 0
             while k < r and g == 1:
-                q = 1; batch = min(1024, r-k)  # Even larger batch
-                for _ in range(batch): y = (y*y+c)%nm; q = q*(x-y)%nm  # abs not needed mod n
+                q = 1; batch = min(1024, r-k)
+                for _ in range(batch): y = (y*y+c)%nm; q = q*(x-y)%nm
                 g = math.gcd(q, nm); k += batch
             r *= 2
         if 1 < g < nm: return (min(g,nm//g), max(g,nm//g))
@@ -106,7 +103,73 @@ def pollard_rho_fast(n, max_tries=20):
             if 1 < g < nm: return (min(g,nm//g), max(g,nm//g))
     return None
 
-# === Pollard p-1 ===
+def pollard_rho_interleaved(n, n_walks=5, max_r_total=0):
+    """Interleaved rho: run multiple c values simultaneously.
+    
+    Key insight: if c=3 finds the factor but we're searching c=1,
+    we waste the first c's iterations. Interleaving means we'd find it
+    ~n_walks sooner in expectation. The cost is n_walks more iterations
+    per Brent cycle, but we skip dead c values faster.
+    Catalog: brent_detection + collision_pigeonhole."""
+    if n < 2: return None
+    if n % 2 == 0: return (2, n//2)
+    for p in SP[:3000]:
+        if p*p > n: break
+        if n % p == 0: return (min(p,n//p), max(p,n//p))
+    if is_prime(n): return None
+    nm = n
+    if max_r_total == 0: max_r_total = max(4000000, int(8*nm**0.25))
+    
+    # Initialize n_walks walkers
+    ys = [random.Random(c*31337).randrange(2, nm-1) for c in range(1, n_walks+1)]
+    xs = list(ys)
+    rs = [1] * n_walks
+    cs = list(range(1, n_walks+1))
+    active = [True] * n_walks
+    
+    for r_exp in range(1, 30):
+        r = 1 << r_exp
+        if r > max_r_total: break
+        
+        for w in range(n_walks):
+            if not active[w]: continue
+            c = cs[w]
+            
+            # Set x = y
+            xs[w] = ys[w]
+            
+            # Advance y by r steps
+            y = ys[w]
+            for _ in range(r): y = (y*y+c)%nm
+            ys[w] = y
+            
+            # Batch GCD
+            k = 0; q = 1; g = 1; x = xs[w]
+            while k < r and g == 1:
+                batch = min(1024, r-k)
+                for _ in range(batch): y = (y*y+c)%nm; q = q*(x-y)%nm
+                g = math.gcd(q, nm) if q != 0 else 1
+                k += batch
+            ys[w] = y
+            
+            if 1 < g < nm: return (min(g,nm//g), max(g,nm//g))
+            if g == nm: active[w] = False  # Dead walk
+    
+    # Fall back to sequential for remaining c values
+    for c in range(n_walks+1, 30):
+        y = random.Random(c*31337).randrange(2, nm-1)
+        x = y; g = 1; r = 1
+        while g == 1 and r <= max_r_total:
+            x = y
+            for _ in range(r): y = (y*y+c)%nm
+            k = 0
+            while k < r and g == 1:
+                q = 1; batch = min(1024, r-k)
+                for _ in range(batch): y = (y*y+c)%nm; q = q*(x-y)%nm
+                g = math.gcd(q, nm); k += batch
+            r *= 2
+        if 1 < g < nm: return (min(g,nm//g), max(g,nm//g))
+    return None
 def pollard_pm1(n, B1=50000):
     if n < 2: return None
     if n % 2 == 0: return (2, n//2)
@@ -321,15 +384,20 @@ def factor_best(n):
             p,q = a-b, a+b
             if 1 < p < n: return (min(p,q), max(p,q))
         a += 1
-    # Rho fast (optimized — limited tries)
+    # Quick rho (limited tries — fast for most)
     r = pollard_rho_fast(n, 8)
     if r: return r
     # CRT lens 7-moduli (balanced semiprimes rho misses)
     r = crt_lens_fermat(n, [3,5,7,8,11,13,17], 80000)
     if r: return r
-    # More rho
-    r = pollard_rho_fast(n, 25)
-    if r: return r
+    # For 64+ bit: try interleaved rho before extended sequential
+    if n.bit_length() >= 64:
+        n_walks = 8 if n.bit_length() >= 72 else 5
+        r = pollard_rho_interleaved(n, n_walks=n_walks)
+        if r: return r
+    else:
+        r = pollard_rho_fast(n, 25)
+        if r: return r
     # p-1 (smooth p-1 O(1) channel)
     r = pollard_pm1(n, 50000)
     if r: return r
