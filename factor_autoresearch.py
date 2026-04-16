@@ -480,18 +480,18 @@ def factor_best(n):
             # Catalog: factoring_semiprime — ∃ x, 1 < gcd(x,pq) < pq
             if bits >= 100:
                 # For 100+ bit, run 10 parallel ECM with spread B1 values
-                # Concentrate curves at B1=1M (sweet spot for 25-digit factors)
+                # Concentrate curves at B1=1M and 3M (productive for 25-28 digit factors)
                 b1_pairs = [
                     (50000, 1000),      # finds up to ~18 digit factors
                     (250000, 500),      # finds up to ~22 digit factors
                     (1000000, 2000),    # finds up to ~25 digit factors (sweet spot)
                     (1000000, 2000),    # duplicate — most curves at sweet spot
-                    (3000000, 500),     # finds up to ~28 digit factors
-                    (3000000, 500),     # duplicate
-                    (11000000, 100),    # finds up to ~32 digit factors
-                    (11000000, 100),    # duplicate
-                    (43000000, 30),     # finds up to ~35 digit factors
-                    (43000000, 30),     # duplicate
+                    (3000000, 1000),    # finds up to ~28 digit factors (boosed)
+                    (3000000, 1000),    # duplicate
+                    (11000000, 200),    # finds up to ~32 digit factors (boosted)
+                    (11000000, 200),    # duplicate
+                    (250000, 1000),     # extra 250K curves (more productive than 43M)
+                    (110000, 1000),     # extra 110K curves
                 ]
                 procs = []
                 for B1, nc in b1_pairs:
