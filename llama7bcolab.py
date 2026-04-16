@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# VERSION: 2026-04-16-v10
+# VERSION: 2026-04-16-v12
 """
 OISCC-EML LLaMA 7B Real Weight Compression
 
