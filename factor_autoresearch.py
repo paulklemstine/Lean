@@ -484,21 +484,19 @@ def factor_best(n, deadline=None):
             # Catalog: MetaOracle.crystallize — optimal fixed point of query refinement
             # Catalog: factoring_semiprime — ∃ x, 1 < gcd(x,pq) < pq
             if bits >= 100:
-                # Optimal ECM schedule based on information rate analysis
-                # B1=250K has HIGHEST info/sec for 28-digit factors
-                # Info rates: 250K=0.111/s, 1M=0.050/s, 3M=0.054/s, 50K=0.050/s
-                # Concentrate at B1=250K and 1M with high curve counts
+                # ECM schedule: spread B1 with high curve counts at 1M and 3M
+                # Each process has 2.8s budget. Processes that find factors return early.
                 b1_pairs = [
-                    (250000, 2000),    # HIGHEST info rate — max curves here
-                    (250000, 2000),    # duplicate
-                    (250000, 2000),    # 3rd copy — dominate the search
-                    (1000000, 500),   # wider coverage at 1M B1
-                    (1000000, 500),   # duplicate 1M
-                    (3000000, 100),   # 28d coverage
-                    (11000000, 30),    # 32d coverage
-                    (50000, 2000),     # fast: many curves for small factors
-                    (110000, 2000),   # 20d fast curves
-                    (500000, 500),    # in-between sweet spot
+                    (50000, 1000),      # 18d - fast
+                    (110000, 1000),     # 20d - fast
+                    (250000, 1000),     # 22d
+                    (1000000, 2000),   # 25d sweet spot (most curves)
+                    (1000000, 2000),   # duplicate sweet spot
+                    (3000000, 1000),   # 28d
+                    (3000000, 1000),   # duplicate
+                    (11000000, 200),   # 32d
+                    (250000, 1000),     # extra 22d
+                    (250000, 1000),     # another extra 22d
                 ]
                 procs = []
                 for B1, nc in b1_pairs:
