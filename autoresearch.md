@@ -63,5 +63,11 @@ Explore new algorithms to factor large integer N using the Catalog's 500+ formal
 | 48 | 1.3 | rho |
 | 56 | 2.3 | CRT |
 | 64 | 9.0 | rho |
-| 72 | 73.3 | rho |
-| 80 | 590.0 | rho |
+| 72 | 73.3 | rho+interleaved |
+| 80 | 514.8 | rho+interleaved(8) |
+
+### Recent Optimizations
+- Rho fast: batch=1024, max_r=8N^{1/4}, local nm ref → 518.3ms
+- Interleaved rho (5/8 walks for 64+/72+ bits) → 514.8ms
+- Conditional: only use interleaved for 64+ bits, sequential for smaller
+- Removed ECM from hot path (overhead not worth it for balanced semiprimes)

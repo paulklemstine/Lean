@@ -387,8 +387,11 @@ def factor_best(n):
     # Quick rho (limited tries — fast for most)
     r = pollard_rho_fast(n, 8)
     if r: return r
-    # CRT lens 7-moduli (balanced semiprimes rho misses)
-    r = crt_lens_fermat(n, [3,5,7,8,11,13,17], 80000)
+    # CRT lens (balanced semiprimes rho misses)
+    # Adaptive: more lenses for larger numbers where search range is bigger
+    lens_mods = [3,5,7,8,11,13,17] if n.bit_length() < 56 else [3,5,7,8,11,13,17,19,23]
+    lens_steps = 80000 if n.bit_length() < 56 else 200000
+    r = crt_lens_fermat(n, lens_mods, lens_steps)
     if r: return r
     # For 64+ bit: try interleaved rho before extended sequential
     if n.bit_length() >= 64:
