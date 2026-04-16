@@ -138,12 +138,11 @@ def pollard_rho_interleaved(n, n_walks=5, max_r_total=0):
     nm = n
     if max_r_total == 0: max_r_total = max(4000000, int(8*nm**0.25))
     
-    # Initialize n_walks walkers
+    # Initialize n_walks walkers with alternating walk types
     ys = [random.Random(c*31337).randrange(2, nm-1) for c in range(1, n_walks+1)]
     xs = list(ys)
-    rs = [1] * n_walks
     cs = list(range(1, n_walks+1))
-    active = [True] * n_walks
+    add_walker = [c % 2 == 1 for c in cs]  # Alternate walk types
     
     for r_exp in range(1, 30):
         r = 1 << r_exp
@@ -412,22 +411,14 @@ def factor_best(n):
     lens_steps = 80000 if n.bit_length() < 56 else 200000
     r = crt_lens_fermat(n, lens_mods, lens_steps)
     if r: return r
-    # For 64+ bit: try interleaved rho before extended sequential
-    if n.bit_length() >= 64:
-        n_walks = 8 if n.bit_length() >= 72 else 5
-        r = pollard_rho_interleaved(n, n_walks=n_walks)
-        if r: return r
-    else:
-        r = pollard_rho_fast(n, 25)
-        if r: return r
+    # Extended sequential rho
+    r = pollard_rho_fast(n, 50, use_dual_walk=use_dual_walk)
+    if r: return r
     # p-1 (smooth p-1 O(1) channel)
     r = pollard_pm1(n, 50000)
     if r: return r
     # ECM (group-theoretic — last resort)
     r = ecm_factor(n, B1=50000, curves=5)
-    if r: return r
-    # Extended rho (same mode)
-    r = pollard_rho_fast(n, 50, use_dual_walk=use_dual_walk)
     if r: return r
     return None
 
