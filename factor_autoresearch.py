@@ -594,6 +594,13 @@ def factor_best(n, deadline=None):
         # From Catalog: cyclotomic_2 through cyclotomic_6, shor_algebraic_core
         r = cyclotomic_channel_factor(n, 5000)
         if r: return r
+    # Fibonacci/Pisano channel (3rd independent channel beyond p-1 and p+1)
+    # Catalog: pisano_split_bound — p|F(p-1) for p≡1,4 mod 5
+    # Catalog: pisano_inert_bound — p|F(p+1) for p≡2,3 mod 5
+    if time.perf_counter() - t_start < 3.4 and n.bit_length() < 64:
+        from fibonacci_factor import fibonacci_channel_factor
+        r = fibonacci_channel_factor(n, 50000)
+        if r: return r
     # ECM (group-theoretic — last resort)
     r = ecm_factor(n, B1=50000, curves=5)
     if r: return r
