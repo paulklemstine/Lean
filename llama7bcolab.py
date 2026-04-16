@@ -371,6 +371,11 @@ class EMLDistiller:
         w1 = np.clip(1.0 / np.maximum(exp_b1, 1e-8), -5, 5)
         w2 = np.zeros(d_out)
 
+        # Save Taylor initial guess for safety revert
+        w1_init = w1.copy()
+        b1_init = b1.copy()
+        b2_init = b2.copy()
+
         # Step 2: Newton correction — adjust w1, b1 to reduce residual
         # Compute current EML output on calibration data
         # a = w1*z + b1, b_arg = w2*z + b2
@@ -411,12 +416,32 @@ class EMLDistiller:
 
         # Step 4: Adjust w2 for slope correction
         # slope = w1*exp(b1) - w2/b2 should ≈ 1
-        # Current slope at z_mean:
         current_slope = w1 * np.exp(b1)  # (d_out,)
-        # If slope > 1, w2 should be positive to subtract; if < 1, negative
         w2 = np.clip((current_slope - 1.0) * b2, -5, 5)
 
-        del teacher_out, X_cal, eml_out, residual, eml_out2, residual2
+        # Step 5: Verify fit — if Newton steps made it worse, revert
+        a_final = w1[np.newaxis, :] * teacher_out + b1[np.newaxis, :]
+        a_final = np.clip(a_final, -20, 20)
+        b_final = w2[np.newaxis, :] * teacher_out + b2[np.newaxis, :]
+        b_final = np.maximum(b_final, 1e-10)
+        eml_final = np.exp(a_final) - np.log(b_final)
+
+        # Cosine similarity per neuron
+        norms_t = np.sqrt(np.sum(teacher_out ** 2, axis=0)) + 1e-10
+        norms_e = np.sqrt(np.sum(eml_final ** 2, axis=0)) + 1e-10
+        cos_sim = np.sum(teacher_out * eml_final, axis=0) / (norms_t * norms_e)
+
+        # Revert neurons where fit got worse (cos_sim < 0.5)
+        bad = cos_sim < 0.5
+        if np.any(bad):
+            n_bad = int(np.sum(bad))
+            print(f"      Reverting {n_bad} neurons with poor fit")
+            w1[bad] = w1_init[bad]
+            b1[bad] = b1_init[bad]
+            w2[bad] = 0.0
+            b2[bad] = b2_init[bad]
+
+        del teacher_out, X_cal
 
         return {'w1': w1, 'b1': b1, 'w2': w2, 'b2': b2,
                 'W_proj': W}
@@ -920,7 +945,7 @@ def run_pipeline(args):
     use_real = not args.synthetic
 
     print_header("OISCC-EML LLaMA 7B Compression Pipeline")
-    print(f"  Script version: 2026-04-16-v5 (vectorized Newton + teacher projection)")
+    print(f"  Script version: 2026-04-16-v6 (Newton + safety revert)")
     mode = "REAL WEIGHTS" if use_real else "SYNTHETIC WEIGHTS"
     print(f"  Mode: {mode}")
     if use_real:
