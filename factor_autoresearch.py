@@ -407,24 +407,23 @@ def factor_best(n):
         try:
             import subprocess
             t0_ecm = time.perf_counter()
-            # Adaptive B1 based on bit size
-            # ECM probability depends on factor size, not N size
-            # For balanced semiprimes: factors are ~N/2 bits
-            # B1=1000 for 40-bit factors, B1=50000 for 50-bit, B1=1M for 60-bit
-            b1_schedule = [(1000, 30), (50000, 30), (250000, 20), (1000000, 10), (5000000, 5)]
+            # Use -c flag to run multiple curves per subprocess call (much less overhead)
+            # Progressive B1 schedule: B1 * sqrt(5) each step
+            b1_schedule = [(2000, 30), (11000, 30), (50000, 50), (250000, 40), (1000000, 200), (5000000, 50)]
             for B1, ncurves in b1_schedule:
-                for _ in range(ncurves):
-                    result = subprocess.run(['ecm', str(B1)], input=str(n), capture_output=True, text=True, timeout=10)
-                    if 'Factor found' in result.stdout:
-                        for line in result.stdout.split('\n'):
-                            if 'Factor found' in line and ':' in line:
-                                f_str = line.split(':')[-1].strip()
-                                try:
-                                    f = int(f_str)
-                                    if 1 < f < n: return (min(f,n//f), max(f,n//f))
-                                except: pass
-                        break
-                    if (time.perf_counter() - t0_ecm) > 2.8: break
+                result = subprocess.run(
+                    ['ecm', '-c', str(ncurves), str(B1)],
+                    input=str(n), capture_output=True, text=True, timeout=30
+                )
+                if 'Factor found' in result.stdout:
+                    for line in result.stdout.split('\n'):
+                        if 'Factor found' in line and ':' in line:
+                            f_str = line.split(':')[-1].strip()
+                            try:
+                                f = int(f_str)
+                                if 1 < f < n: return (min(f,n//f), max(f,n//f))
+                            except: pass
+                    break
                 if (time.perf_counter() - t0_ecm) > 2.8: break
         except: pass
         # Then GMP rho as fallback
