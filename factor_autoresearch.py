@@ -407,7 +407,6 @@ def factor_best(n):
         try:
             import subprocess
             t0_ecm = time.perf_counter()
-            # Unified progressive B1 schedule with batched curves
             b1_schedule = [(2000, 40), (50000, 50), (250000, 40), (1000000, 200), (5000000, 50)]
             for B1, ncurves in b1_schedule:
                 result = subprocess.run(
@@ -429,6 +428,24 @@ def factor_best(n):
         if _rho_gmp is not None:
             r = _rho_gmp_factor(n, 30, use_dual=True)
             if r: return r
+        # SIQS fallback for 100+ bit (catalog: congruence_of_squares_zmod)
+        if n.bit_length() >= 100:
+            try:
+                import importlib, io
+                qs_mod = importlib.import_module('pyfactorise_qs')
+                old_out = sys.stdout
+                sys.stdout = io.StringIO()
+                try:
+                    factors = qs_mod.factorise(n)
+                    sys.stdout = old_out
+                    if factors and len(factors) >= 2:
+                        prod = 1
+                        for f in factors: prod *= f
+                        if prod == n:
+                            f = min(factors)
+                            if 1 < f < n: return (f, n//f)
+                except: sys.stdout = old_out
+            except: pass
     else:
         r = pollard_rho_fast(n, 8, use_dual_walk=use_dual_walk)
         if r: return r

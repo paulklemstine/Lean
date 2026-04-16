@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# VERSION: 2024-04-15-v4  <-- verify this line appears in Colab output
+# VERSION: 2026-04-16-v5
 """
 OISCC-EML LLaMA 7B Real Weight Compression
 
@@ -342,98 +342,81 @@ class EMLDistiller:
             y_j = EML(w1_j * z_j + b1_j, w2_j * z_j + b2_j)
         where z_j = W[j] @ x is the teacher's own linear projection.
 
-        Fits EML shape via least-squares optimization so that
-        EML(z) ≈ z (near-identity) over the neuron's operating range.
-
-        Memory-efficient: uses small calibration set + vectorized L-BFGS-B.
+        Fast vectorized fit: uses calibration data to match EML(z) ≈ z
+        via closed-form Taylor expansion + one Newton correction step.
+        No per-neuron loop, no scipy — fully vectorized over d_out.
         """
         d_out, d_in = W.shape
 
-        # Calibration data — enough points for a good fit
-        n_cal = 30
+        # Small calibration set
+        n_cal = 20
         X_cal = self.rng.standard_normal((n_cal, d_in)) * 0.1
         teacher_out = X_cal @ W.T  # (n_cal, d_out)
 
-        w1 = np.zeros(d_out)
-        b1 = np.zeros(d_out)
+        # Vectorized statistics over calibration data
+        z_means = teacher_out.mean(axis=0)       # (d_out,)
+        z_stds = np.maximum(teacher_out.std(axis=0), 1e-8)
+        z_mins = teacher_out.min(axis=0)
+        z_maxs = teacher_out.max(axis=0)
+
+        # Step 1: Taylor expansion initial fit (vectorized)
+        # EML(z) ≈ z requires:
+        #   exp(b1) - ln(b2) ≈ z_mean     (value at z=0 offset)
+        #   w1*exp(b1) - w2/b2 ≈ 1        (unit slope)
+        b2 = np.maximum(np.abs(z_means) + 2.0, 1.0)
+        ln_b2 = np.log(b2)
+        target_exp = z_means + ln_b2
+        b1 = np.clip(np.log(np.maximum(target_exp, 0.01)), -10, 10)
+        exp_b1 = np.exp(b1)
+        w1 = np.clip(1.0 / np.maximum(exp_b1, 1e-8), -5, 5)
         w2 = np.zeros(d_out)
-        b2 = np.ones(d_out)
 
-        # Vectorized least-squares fit for all neurons at once
-        # Objective: minimize sum_i (EML(w1*z_i + b1, w2*z_i + b2) - z_i)^2
-        try:
-            from scipy.optimize import minimize
+        # Step 2: Newton correction — adjust w1, b1 to reduce residual
+        # Compute current EML output on calibration data
+        # a = w1*z + b1, b_arg = w2*z + b2
+        a = w1[np.newaxis, :] * teacher_out + b1[np.newaxis, :]  # (n_cal, d_out)
+        a = np.clip(a, -20, 20)
+        b_arg = w2[np.newaxis, :] * teacher_out + b2[np.newaxis, :]
+        b_arg = np.maximum(b_arg, 1e-10)
 
-            # Compute Taylor expansion initial guesses for all neurons at once
-            z_means = teacher_out.mean(axis=0)  # (d_out,)
-            z_stds = np.maximum(teacher_out.std(axis=0), 1e-8)  # (d_out,)
+        eml_out = np.exp(a) - np.log(b_arg)  # (n_cal, d_out)
+        residual = eml_out - teacher_out       # (n_cal, d_out)
 
-            b2_init = np.maximum(np.abs(z_means) + 2.0, 1.0)
-            ln_b2 = np.log(b2_init)
-            target_exp = z_means + ln_b2
-            b1_init = np.clip(np.log(np.maximum(target_exp, 0.01)), -10, 10)
-            exp_b1 = np.exp(b1_init)
-            w1_init = np.clip(1.0 / np.maximum(exp_b1, 1e-8), -5, 5)
-            w2_init = np.zeros(d_out)
+        # Gradient of MSE w.r.t. w1, b1 (vectorized)
+        exp_a = np.exp(a)
+        # d_loss/d_w1 = 2/n * sum_i(residual_i * exp(a_i) * z_i)
+        grad_w1 = 2.0 / n_cal * np.sum(residual * exp_a * teacher_out, axis=0)
+        grad_b1 = 2.0 / n_cal * np.sum(residual * exp_a, axis=0)
 
-            # Optimize in chunks of chunk_size neurons (memory-safe)
-            chunk_size = 512
-            for j_start in range(0, d_out, chunk_size):
-                j_end = min(j_start + chunk_size, d_out)
-                for j in range(j_start, j_end):
-                    z = teacher_out[:, j]
-                    x0 = [w1_init[j], b1_init[j], w2_init[j], b2_init[j]]
+        # Simple gradient descent step (fast, no scipy needed)
+        lr = 0.01
+        w1 = np.clip(w1 - lr * grad_w1, -5, 5)
+        b1 = np.clip(b1 - lr * grad_b1, -10, 10)
 
-                    def loss(params, _z=z):
-                        _w1, _b1, _w2, _b2 = params
-                        a = np.clip(_w1 * _z + _b1, -20, 20)
-                        b_arg = np.maximum(_w2 * _z + _b2, 1e-10)
-                        pred = np.exp(a) - np.log(b_arg)
-                        return np.mean((pred - _z) ** 2)
+        # Step 3: Second correction pass for better fit
+        a2 = w1[np.newaxis, :] * teacher_out + b1[np.newaxis, :]
+        a2 = np.clip(a2, -20, 20)
+        b_arg2 = w2[np.newaxis, :] * teacher_out + b2[np.newaxis, :]
+        b_arg2 = np.maximum(b_arg2, 1e-10)
 
-                    def grad_fn(params, _z=z):
-                        _w1, _b1, _w2, _b2 = params
-                        a = np.clip(_w1 * _z + _b1, -20, 20)
-                        b_arg = np.maximum(_w2 * _z + _b2, 1e-10)
-                        pred = np.exp(a) - np.log(b_arg)
-                        r = pred - _z
-                        exp_a = np.exp(a)
-                        inv_b = 1.0 / b_arg
-                        return [
-                            2 * np.mean(r * exp_a * _z),
-                            2 * np.mean(r * exp_a),
-                            2 * np.mean(r * (-inv_b) * _z),
-                            2 * np.mean(r * (-inv_b)),
-                        ]
+        eml_out2 = np.exp(a2) - np.log(b_arg2)
+        residual2 = eml_out2 - teacher_out
+        exp_a2 = np.exp(a2)
 
-                    try:
-                        result = minimize(loss, x0, jac=grad_fn, method='L-BFGS-B',
-                                         bounds=[(-5, 5), (-10, 10), (-5, 5), (0.01, 100)],
-                                         options={'maxiter': 50, 'ftol': 1e-10})
-                        w1[j] = np.clip(result.x[0], -5, 5)
-                        b1[j] = np.clip(result.x[1], -10, 10)
-                        w2[j] = np.clip(result.x[2], -5, 5)
-                        b2[j] = max(result.x[3], 0.01)
-                    except Exception:
-                        w1[j] = w1_init[j]
-                        b1[j] = b1_init[j]
-                        w2[j] = w2_init[j]
-                        b2[j] = b2_init[j]
+        grad_w1_2 = 2.0 / n_cal * np.sum(residual2 * exp_a2 * teacher_out, axis=0)
+        grad_b1_2 = 2.0 / n_cal * np.sum(residual2 * exp_a2, axis=0)
 
-        except ImportError:
-            # No scipy — fall back to Taylor expansion for all neurons
-            for j in range(d_out):
-                z = teacher_out[:, j]
-                z_mean = z.mean()
-                b2[j] = max(abs(z_mean) + 2.0, 1.0)
-                ln_b2 = np.log(b2[j])
-                target_exp = z_mean + ln_b2
-                b1[j] = np.clip(np.log(max(target_exp, 0.01)), -10, 10)
-                exp_b1 = np.exp(b1[j])
-                w1[j] = np.clip(1.0 / max(exp_b1, 1e-8), -5, 5)
-                w2[j] = 0.0
+        w1 = np.clip(w1 - lr * grad_w1_2, -5, 5)
+        b1 = np.clip(b1 - lr * grad_b1_2, -10, 10)
 
-        del teacher_out, X_cal
+        # Step 4: Adjust w2 for slope correction
+        # slope = w1*exp(b1) - w2/b2 should ≈ 1
+        # Current slope at z_mean:
+        current_slope = w1 * np.exp(b1)  # (d_out,)
+        # If slope > 1, w2 should be positive to subtract; if < 1, negative
+        w2 = np.clip((current_slope - 1.0) * b2, -5, 5)
+
+        del teacher_out, X_cal, eml_out, residual, eml_out2, residual2
 
         return {'w1': w1, 'b1': b1, 'w2': w2, 'b2': b2,
                 'W_proj': W}
@@ -937,7 +920,7 @@ def run_pipeline(args):
     use_real = not args.synthetic
 
     print_header("OISCC-EML LLaMA 7B Compression Pipeline")
-    print(f"  Script version: 2024-04-15-v4 (scipy + teacher projection)")
+    print(f"  Script version: 2026-04-16-v5 (vectorized Newton + teacher projection)")
     mode = "REAL WEIGHTS" if use_real else "SYNTHETIC WEIGHTS"
     print(f"  Mode: {mode}")
     if use_real:
