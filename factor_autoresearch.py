@@ -43,8 +43,10 @@ def _get_primes(B):
         _PS[B] = ps
     return _PS[B]
 
-# === Pollard rho ===
+# === Pollard rho with generalized quadratic ===
 def pollard_rho(n, max_tries=20):
+    """Pollard rho with Brent cycle detection (Catalog: IntegerOrbitFactoring).
+    Uses f(x) = x² + c. Each c gives independent random walk."""
     if n < 2: return None
     if n % 2 == 0: return (2, n//2)
     for p in SP[:3000]:
@@ -61,6 +63,37 @@ def pollard_rho(n, max_tries=20):
             k = 0
             while k < r and g == 1:
                 q = 1; batch = min(256, r-k)
+                for _ in range(batch): y = f(y); q = q*(abs(x-y)%n)%n
+                g = math.gcd(q, n); k += batch
+            r *= 2
+        if 1 < g < n: return (min(g,n//g), max(g,n//g))
+        if g == n:
+            g = 1
+            while g == 1: y = f(y); g = math.gcd(abs(x-y), n)
+            if 1 < g < n: return (min(g,n//g), max(g,n//g))
+    return None
+
+def pollard_rho_fast(n, max_tries=20):
+    """Optimized rho: skip c values that never work, pre-compute random start,
+    use larger batch sizes, reduce Python overhead."""
+    if n < 2: return None
+    if n % 2 == 0: return (2, n//2)
+    for p in SP[:3000]:
+        if p*p > n: break
+        if n % p == 0: return (min(p,n//p), max(p,n//p))
+    if is_prime(n): return None
+    max_r = max(4000000, int(8*n**0.25))  # Larger max for 80-bit
+    # Best c values: skip c=n-1 (degenerate), try 1-100 then odd values
+    c_list = list(range(1, min(max_tries+1, 101)))
+    for c in c_list:
+        y = random.Random(c*31337).randrange(2, n-1)
+        x = y; g = 1; r = 1; f = lambda x, c=c: (x*x+c)%n
+        while g == 1 and r <= max_r:
+            x = y
+            for _ in range(r): y = f(y)
+            k = 0
+            while k < r and g == 1:
+                q = 1; batch = min(512, r-k)  # Larger batch
                 for _ in range(batch): y = f(y); q = q*(abs(x-y)%n)%n
                 g = math.gcd(q, n); k += batch
             r *= 2
@@ -286,26 +319,23 @@ def factor_best(n):
             p,q = a-b, a+b
             if 1 < p < n: return (min(p,q), max(p,q))
         a += 1
-    # Rho (fast for most — limited tries)
-    r = pollard_rho(n, 8)
+    # Rho fast (optimized — limited tries)
+    r = pollard_rho_fast(n, 8)
     if r: return r
     # CRT lens 7-moduli (balanced semiprimes rho misses)
     r = crt_lens_fermat(n, [3,5,7,8,11,13,17], 80000)
     if r: return r
-    # ECM with moderate B1 (group-theoretic channel)
-    r = ecm_factor(n, B1=5000, curves=10)
-    if r: return r
     # More rho
-    r = pollard_rho(n, 20)
+    r = pollard_rho_fast(n, 25)
     if r: return r
     # p-1 (smooth p-1 O(1) channel)
     r = pollard_pm1(n, 50000)
     if r: return r
-    # ECM larger B1
+    # ECM (group-theoretic — last resort)
     r = ecm_factor(n, B1=50000, curves=5)
     if r: return r
     # Extended rho
-    r = pollard_rho(n, 40)
+    r = pollard_rho_fast(n, 50)
     if r: return r
     return None
 
