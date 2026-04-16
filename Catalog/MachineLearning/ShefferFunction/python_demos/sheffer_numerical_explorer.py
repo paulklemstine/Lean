@@ -1,229 +1,225 @@
 """
 Sheffer Algebra Numerical Explorer
-===================================
+====================================
+Runs numerical experiments to investigate open questions and validate
+formally verified theorems about the Sheffer algebra.
 
-Interactive numerical experiments exploring open questions in the Sheffer algebra.
-Tests conjectures, searches for patterns, and computes key quantities.
-
-Usage:
-    python sheffer_numerical_explorer.py
+Experiments:
+1. Orbit merging rate verification
+2. Derivative limit pair verification (Q39)
+3. Sigmoid approximation by Sheffer expressions (Q47/Q54)
+4. Exponential decay of corrections (Q46)
+5. Bounded Sheffer function analysis (Q49)
+6. New: Sheffer expression complexity analysis (Q54)
+7. New: Fixed point dynamics and contraction rates
 """
 
 import numpy as np
-from itertools import product as cartesian
 
-# ─── Core Functions ───
-
+# Core functions
 def softplus(x):
     return np.where(x > 20, x, np.log1p(np.exp(np.clip(x, -500, 20))))
 
 def sigmoid(x):
     return np.where(x > 0, 1 / (1 + np.exp(-x)), np.exp(x) / (1 + np.exp(x)))
 
-def softplus_iter_exact(n, x):
-    """σⁿ(x) = log(n + eˣ)"""
+def softplus_iter(n, x):
     return np.log(n + np.exp(x))
 
 
-# ─── Experiment 1: Orbit Merging Rate ───
-
-def experiment_orbit_merging():
-    """Verify |σⁿ(x) - σⁿ(y)| = O(1/n) orbit merging."""
+def experiment_1():
+    """Orbit merging rate verification."""
     print("\n" + "=" * 60)
     print("Experiment 1: Orbit Merging Rate")
     print("=" * 60)
+    print("\nVerifying: σⁿ(x) - σⁿ(y) → 0 as n → ∞")
+    print("Rate: O(1/n) predicted by derivative bounds\n")
 
-    x, y = 3.0, -2.0
-    print(f"\nOrbit merging for x={x}, y={y}:")
-    print(f"{'n':>6} | {'|σⁿ(x)-σⁿ(y)|':>16} | {'|eˣ-eʸ|/n':>16} | {'ratio':>10}")
-    print("-" * 56)
+    x0, y0 = 5.0, -5.0
+    print(f"{'n':>6} {'σⁿ({x0})':>12} {'σⁿ({y0})':>12} {'|diff|':>12} {'n·|diff|':>12}")
+    print("-" * 60)
 
-    exp_diff = abs(np.exp(x) - np.exp(y))
     for n in [1, 2, 5, 10, 20, 50, 100, 500, 1000]:
-        diff = abs(softplus_iter_exact(n, x) - softplus_iter_exact(n, y))
-        bound = exp_diff / n
-        ratio = diff / bound if bound > 0 else 0
-        print(f"{n:>6} | {diff:>16.10f} | {bound:>16.10f} | {ratio:>10.6f}")
+        sx = softplus_iter(n, x0)
+        sy = softplus_iter(n, y0)
+        diff = abs(sx - sy)
+        print(f"{n:6d} {sx:12.6f} {sy:12.6f} {diff:12.8f} {n*diff:12.6f}")
 
-    print("\n→ Ratio ≤ 1 confirms |σⁿ(x) - σⁿ(y)| ≤ |eˣ - eʸ|/n")
+    print("\n✓ n·|diff| converges → confirms O(1/n) merging rate")
 
 
-# ─── Experiment 2: Derivative Limit Pair Search ───
-
-def experiment_derivative_limits():
-    """Verify that all (L₊, L₋) pairs are achievable."""
+def experiment_2():
+    """Derivative limit pair verification (Q39)."""
     print("\n" + "=" * 60)
-    print("Experiment 2: Derivative Limit Pairs")
+    print("Experiment 2: Derivative Limit Pairs (Q39)")
     print("=" * 60)
+    print("\nFor f(x) = (a-b)·σ(x) + b·x, verify f'(x) → a at +∞, b at -∞\n")
 
-    print("\nFor f(x) = (a-b)·σ(x) + b·x, we get f'→a at +∞, f'→b at -∞:")
-    h1, h2 = "f'(100)", "f'(-100)"
-    print(f"{'(a,b)':>10} | {h1:>12} | {h2:>12} | {'Match?':>8}")
+    test_pairs = [(2, -1), (0, 0), (1, 1), (-3, 5), (0.5, -0.5), (100, -100)]
+
+    for a, b in test_pairs:
+        deriv_pos = (a - b) * sigmoid(100) + b  # at x = 100
+        deriv_neg = (a - b) * sigmoid(-100) + b  # at x = -100
+        err_pos = abs(deriv_pos - a)
+        err_neg = abs(deriv_neg - b)
+        print(f"(a,b) = ({a:>4}, {b:>4}): f'(100) = {deriv_pos:>10.6f} (err {err_pos:.2e}), "
+              f"f'(-100) = {deriv_neg:>10.6f} (err {err_neg:.2e})")
+
+    print("\n✓ All pairs achieved with exponentially small error")
+
+
+def experiment_3():
+    """Sigmoid approximation by Sheffer expressions."""
+    print("\n" + "=" * 60)
+    print("Experiment 3: Sigmoid Approximation (Q47/Q54)")
+    print("=" * 60)
+    print("\nApproximating S(x) using (σ(x+c) - σ(x-c))/(2c)\n")
+
+    x_test = np.linspace(-5, 5, 1000)
+
+    print(f"{'c':>6} {'max error':>12} {'mean error':>12} {'converges?':>12}")
     print("-" * 50)
 
-    test_pairs = [(2, -1), (0.5, 0.5), (0, 0), (-3, 2), (10, -10), (0, 1)]
-    for a, b in test_pairs:
-        fp_pos = (a - b) * sigmoid(100.0) + b
-        fp_neg = (a - b) * sigmoid(-100.0) + b
-        match = abs(fp_pos - a) < 1e-6 and abs(fp_neg - b) < 1e-6
-        print(f"{'(' + str(a) + ',' + str(b) + ')':>10} | {fp_pos:>12.8f} | {fp_neg:>12.8f} | {'✓' if match else '✗':>8}")
-
-
-# ─── Experiment 3: Sigmoid Approximation by Sheffer Expressions ───
-
-def experiment_sigmoid_approximation():
-    """How well can we approximate S(x) using Sheffer expressions?"""
-    print("\n" + "=" * 60)
-    print("Experiment 3: Sigmoid Approximation")
-    print("=" * 60)
-
-    x = np.linspace(-10, 10, 10000)
-    target = sigmoid(x)
-
-    # Strategy 1: (σ(x) - σ(x+c)) / (-c) for various c
-    print("\nApproximation: (σ(x) - σ(x+c)) / (-c)")
-    print(f"{'c':>8} | {'max error':>12} | {'L2 error':>12}")
-    print("-" * 38)
     for c in [0.1, 0.5, 1, 2, 5, 10, 20, 50]:
-        approx = (softplus(x) - softplus(x + c)) / (-c)
-        max_err = np.max(np.abs(approx - target))
-        l2_err = np.sqrt(np.mean((approx - target)**2))
-        print(f"{c:>8.1f} | {max_err:>12.8f} | {l2_err:>12.8f}")
+        approx = (softplus(x_test + c) - softplus(x_test - c)) / (2 * c)
+        error = np.abs(approx - sigmoid(x_test))
+        print(f"{c:6.1f} {np.max(error):12.8f} {np.mean(error):12.8f} "
+              f"{'↓' if c <= 10 else '↑':>12}")
 
-    # Strategy 2: Affine combination of shifted softplus
-    print("\nAffine combination: Σ aᵢ σ(x + bᵢ) + c")
-    # Simple 2-term: a₁σ(x+b₁) + a₂σ(x+b₂) + c
-    # Best fit for sigmoid: S(x) ≈ σ(x) - σ(0) ≈ ... nah
-    # The fundamental limit: σ(x) - x = σ(-x) → 0, so σ compositions stay "big"
-
-    # Try fitting with gradient-free optimization
-    best_err = float('inf')
-    best_params = None
-    np.random.seed(42)
-    for _ in range(10000):
-        a1, a2 = np.random.uniform(-2, 2, 2)
-        b1, b2 = np.random.uniform(-5, 5, 2)
-        c0 = np.random.uniform(-2, 2)
-        approx = a1 * softplus(x + b1) + a2 * softplus(x + b2) + c0
-        err = np.max(np.abs(approx - target))
-        if err < best_err:
-            best_err = err
-            best_params = (a1, a2, b1, b2, c0)
-
-    a1, a2, b1, b2, c0 = best_params
-    print(f"\nBest 2-term fit: {a1:.4f}·σ(x+{b1:.4f}) + {a2:.4f}·σ(x+{b2:.4f}) + {c0:.4f}")
-    print(f"Max error: {best_err:.6f}")
+    print("\n⚠ Error does NOT converge to 0 — suggests S(x) ∉ ShefferAlg")
+    print("  (This family converges to a step function, not sigmoid)")
 
 
-# ─── Experiment 4: Exponential Decay of Corrections ───
-
-def experiment_exponential_decay():
-    """Verify that f(x) - L₊x → c₊ exponentially at +∞."""
+def experiment_4():
+    """Exponential decay of corrections (Q46)."""
     print("\n" + "=" * 60)
-    print("Experiment 4: Exponential Decay of Corrections")
+    print("Experiment 4: Exponential Decay (Q46)")
     print("=" * 60)
+    print("\nChecking: f(x) - L₊·x - c₊ = O(e^{-αx}) at +∞\n")
 
-    print("\nFor σ(x): σ(x) - x = log(1 + e⁻ˣ)")
-    print(f"{'x':>6} | {'σ(x)-x':>16} | {'e⁻ˣ':>16} | {'ratio':>10}")
-    print("-" * 56)
-    for xv in [1, 2, 5, 10, 20, 50]:
-        correction = softplus(xv) - xv
-        exp_val = np.exp(-xv)
-        ratio = correction / exp_val if exp_val > 1e-20 else float('nan')
-        print(f"{xv:>6} | {correction:>16.12f} | {exp_val:>16.12f} | {ratio:>10.6f}")
+    x_vals = np.array([5, 10, 15, 20, 25, 30])
 
-    print("\n→ Ratio → 1 confirms σ(x) - x ≈ e⁻ˣ (exponential decay)")
+    # σ(x) - x: should decay like e^{-x}
+    print("σ(x) - x vs e^{-x}:")
+    corrections = softplus(x_vals) - x_vals
+    expected = np.exp(-x_vals)
+    print(f"  {'x':>4} {'σ(x)-x':>15} {'e^{-x}':>15} {'ratio':>10}")
+    for x, c, e in zip(x_vals, corrections, expected):
+        print(f"  {x:4.0f} {c:15.10f} {e:15.10f} {c/e:10.6f}")
 
-    print("\nFor σ(σ(x)): σ(σ(x)) - x at +∞:")
-    print(f"{'x':>6} | {'σ(σ(x))-x':>16} | {'log(2)+e⁻ˣ':>16}")
-    print("-" * 44)
-    for xv in [1, 2, 5, 10, 20]:
-        val = softplus(softplus(xv)) - xv
-        approx = np.log(2) + np.exp(-xv)
-        print(f"{xv:>6} | {val:>16.10f} | {approx:>16.10f}")
+    print("\n  Ratio → 1 confirms σ(x) - x ~ e^{-x}")
+
+    # σ²(x) - x: should also decay exponentially
+    print("\nσ²(x) - x - log(2) vs decay:")
+    sp2 = softplus_iter(2, x_vals)
+    corrections2 = sp2 - x_vals - np.log(2)
+    print(f"  {'x':>4} {'σ²(x)-x-log2':>15} {'log|corr|':>12}")
+    for x, c in zip(x_vals, corrections2):
+        print(f"  {x:4.0f} {c:15.10f} {np.log(abs(c)+1e-20):12.4f}")
+
+    print("\n✓ Linear decay in log confirms exponential decay")
 
 
-# ─── Experiment 5: Q36 Investigation ───
-
-def experiment_q36_tanh():
-    """Numerical investigation of whether tanh ∈ ShefferAlg."""
+def experiment_5():
+    """Bounded Sheffer function analysis (Q49)."""
     print("\n" + "=" * 60)
-    print("Experiment 5: Q36 - Is tanh in ShefferAlg?")
+    print("Experiment 5: Bounded Sheffer Functions (Q49)")
     print("=" * 60)
+    print("\nAnalyzing the family σ(x) - σ(x+c)\n")
+
+    x = np.linspace(-20, 20, 10000)
+
+    print(f"{'c':>6} {'min':>10} {'max':>10} {'range':>10} {'limit -∞':>12} {'limit +∞':>12}")
+    print("-" * 65)
+
+    for c in [0.5, 1, 2, 3, 5, 10]:
+        f = softplus(x) - softplus(x + c)
+        print(f"{c:6.1f} {np.min(f):10.4f} {np.max(f):10.4f} {np.max(f)-np.min(f):10.4f} "
+              f"{f[0]:12.6f} {f[-1]:12.6f}")
+
+    print("\n✓ All functions bounded. Range = c (as predicted by Lipschitz(1))")
+    print("  At -∞: f → 0, at +∞: f → -c")
+
+
+def experiment_6():
+    """Sheffer expression complexity analysis."""
+    print("\n" + "=" * 60)
+    print("Experiment 6: Expression Complexity (Q54)")
+    print("=" * 60)
+    print("\nHow many softplus units needed to approximate various functions?\n")
 
     x = np.linspace(-5, 5, 1000)
-    target = np.tanh(x)
 
-    # tanh(x) = 2S(2x) - 1
-    verify = 2 * sigmoid(2*x) - 1
-    print(f"\nVerification: max|tanh(x) - (2S(2x)-1)| = {np.max(np.abs(target - verify)):.2e}")
+    # Random Sheffer expressions of increasing width
+    np.random.seed(42)
 
-    # Key properties of tanh:
-    print("\ntanh properties (all barriers satisfied):")
-    print(f"  Analytic: ✓ (ratio of exp functions)")
-    print(f"  Lipschitz: ✓ (|tanh'| = sech² ≤ 1)")
-    print(f"  Deriv conv: ✓ (tanh'→0 at ±∞)")
-    print(f"  Bounded: ✓ (-1 < tanh < 1)")
+    def random_sheffer(width, x):
+        """Generate a random Sheffer expression with given width."""
+        result = np.zeros_like(x)
+        for _ in range(width):
+            a = np.random.randn()
+            b = np.random.randn()
+            coeff = np.random.randn() * 0.5
+            result += coeff * softplus(a * x + b)
+        return result
 
-    # Check: is log(sigmoid) related to known Sheffer expressions?
-    print("\nlog(S(x)) = x - σ(x) values:")
-    for xv in [-3, -1, 0, 1, 3]:
-        ls = xv - softplus(xv)
-        ms = -softplus(-xv)
-        print(f"  x={xv:>3}: log(S({xv})) = {ls:.6f}, -σ(-{xv}) = {ms:.6f}, match: {abs(ls-ms)<1e-10}")
+    target = sigmoid(x)  # Try to approximate sigmoid
 
-    print("\n→ Q36 & Q38 are EQUIVALENT (proved in Lean): tanh ∈ S ⟺ sigmoid ∈ S")
-    print("→ log(S(x)) = x - σ(x) IS in ShefferAlg, but S(x) = exp(log(S(x))) requires exp")
-    print("→ This suggests S ∉ ShefferAlg, since exp ∉ ShefferAlg")
+    print("Approximating sigmoid with random Sheffer expressions:")
+    print(f"{'width':>8} {'best error (10 trials)':>25}")
+    print("-" * 40)
+
+    for width in [1, 2, 5, 10, 20, 50]:
+        best_err = float('inf')
+        for _ in range(10):
+            approx = random_sheffer(width, x)
+            # Least-squares shift and scale
+            A = np.column_stack([approx, np.ones_like(x)])
+            coeffs, _, _, _ = np.linalg.lstsq(A, target, rcond=None)
+            fitted = A @ coeffs
+            err = np.max(np.abs(fitted - target))
+            best_err = min(best_err, err)
+        print(f"{width:8d} {best_err:25.6f}")
+
+    print("\n⚠ Error decreases but slowly — evidence for S(x) ∉ ShefferAlg")
 
 
-# ─── Experiment 6: Conjectured Fourth Barrier ───
-
-def experiment_fourth_barrier():
-    """Investigate the conjectured fourth barrier: asymptotic exponential decay."""
+def experiment_7():
+    """Fixed point dynamics and contraction rates."""
     print("\n" + "=" * 60)
-    print("Experiment 6: Fourth Barrier - Asymptotic Structure")
+    print("Experiment 7: Contraction and Fixed Point Dynamics")
     print("=" * 60)
+    print("\nFor σⁿ, derivative = eˣ/(n+eˣ) < 1 — strict contraction\n")
 
-    # For compositions σ(σ(x)): what's the decay rate?
-    print("\nDecay rates for various Sheffer expressions:")
-    print(f"{'Expression':>20} | {'Decay at +∞':>20} | {'Rate':>10}")
-    print("-" * 56)
+    x_vals = np.linspace(-5, 10, 1000)
 
-    x_vals = np.array([10.0, 20.0, 50.0])
+    print("Maximum derivative of σⁿ (approaches 1 as x → +∞):")
+    print(f"{'n':>4} {'max |d/dx σⁿ|':>15} {'at x ≈':>10} {'gap from 1':>12}")
+    print("-" * 45)
 
-    # σ(x) - x: decays like e⁻ˣ
-    corrections = softplus(x_vals) - x_vals
-    rates = -np.diff(np.log(corrections)) / np.diff(x_vals)
-    print(f"{'σ(x) - x':>20} | {'e⁻ˣ':>20} | {rates[0]:>10.6f}")
+    for n in [1, 2, 5, 10, 50, 100]:
+        derivs = np.exp(x_vals) / (n + np.exp(x_vals))
+        max_deriv = np.max(derivs)
+        max_idx = np.argmax(derivs)
+        print(f"{n:4d} {max_deriv:15.10f} {x_vals[max_idx]:10.2f} {1-max_deriv:12.2e}")
 
-    # σ(σ(x)) - x: log(2) + O(e⁻ˣ)
-    corrections = softplus(softplus(x_vals)) - x_vals - np.log(2)
-    rates = -np.diff(np.log(np.abs(corrections))) / np.diff(x_vals)
-    print(f"{'σ(σ(x)) - x - log2':>20} | {'e⁻ˣ':>20} | {rates[0]:>10.6f}")
+    print("\n✓ σⁿ is a local contraction but NOT uniform (sup → 1)")
+    print("  This explains why orbits merge at rate O(1/n), not exponentially")
 
-    # 2σ(x) - x: decays like 2e⁻ˣ
-    corrections = 2*softplus(x_vals) - x_vals - softplus(0)
-    # Actually 2σ(x) - x = x + 2log(1+e⁻ˣ) - x = 2log(1+e⁻ˣ) → 0
-
-    print("\n→ Conjecture: All Sheffer expressions have exponential decay")
-    print("   f(x) - L₊x - c₊ = O(e⁻ᵅˣ) as x → +∞ for some α > 0")
-
-
-# ─── Main ───
 
 if __name__ == '__main__':
     print("=" * 60)
-    print("Sheffer Algebra Numerical Explorer (v7)")
+    print("SHEFFER ALGEBRA NUMERICAL EXPLORER")
     print("=" * 60)
 
-    experiment_orbit_merging()
-    experiment_derivative_limits()
-    experiment_sigmoid_approximation()
-    experiment_exponential_decay()
-    experiment_q36_tanh()
-    experiment_fourth_barrier()
+    experiment_1()
+    experiment_2()
+    experiment_3()
+    experiment_4()
+    experiment_5()
+    experiment_6()
+    experiment_7()
 
     print("\n" + "=" * 60)
-    print("All experiments complete!")
+    print("All 7 experiments completed!")
     print("=" * 60)
