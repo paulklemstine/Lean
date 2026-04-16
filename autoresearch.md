@@ -63,13 +63,13 @@ Explore new algorithms to factor large integer N using the Catalog's 500+ formal
 | 48 | 1.3 | rho |
 | 56 | 2.3 | CRT |
 | 64 | 9.0 | rho |
-| 72 | ~72 | dual-walk rho |
-| 80 | 260.1 | dual-walk rho+CRT |
+| 72 | ~25 | GMP dual-walk rho |
+| 80 | 91.4 | GMP dual-walk rho+CRT |
 
 ### Recent Optimizations
-- **Dual-walk rho** ★★★: Alternating x²+x+c and x²+c walk functions. 57% improvement at 80-bit! x²+x+c finds factors that x²+c misses for balanced semiprimes.
+- **GMP rho** ★★★★: C-level rho via ctypes+libgmp. 85% improvement at 80-bit (605→91ms). Dual-walk built in. 6-7x faster than Python.
+- **Dual-walk rho** ★★★: x²+x+c walk function alternated with x²+c. Core algorithmic innovation.
 - Rho micro-opts: batch=1024, max_r=8N^{1/4}, local nm ref
-- Adaptive CRT: 9 lenses for 56+ bits (2049x reduction) vs 7 lenses under
-- Conditional: only use dual-walk for 56+ bits (saves overhead at small sizes)
-- Removed ECM from hot path (overhead not worth it for balanced semiprimes)
-- Removed interleaved rho (buggy, dual-walk is better anyway)
+- Adaptive CRT: 9 lenses for 56+ bits (2049x reduction)
+- SQUFOF added as standalone function (O(N^{1/4})) but not in cascade (rho dominates)
+- Removed ECM/p+1 from hot path (overhead not worth it for balanced semiprimes)

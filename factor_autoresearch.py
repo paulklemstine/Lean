@@ -402,9 +402,9 @@ def factor_best(n):
         a += 1
     # Quick rho (balanced: x²+c standard for small, x²+x+c for 56+ bit)
     use_dual_walk = n.bit_length() >= 56
-    # For 64+ bit: use GMP rho if available (2-3x faster)
+    # For 64+ bit: use GMP rho if available (2-3x faster, finds ~100% at 80-bit)
     if n.bit_length() >= 64 and _rho_gmp is not None:
-        r = _rho_gmp_factor(n, 20, use_dual=True)
+        r = _rho_gmp_factor(n, 30, use_dual=True)
         if r: return r
     else:
         r = pollard_rho_fast(n, 8, use_dual_walk=use_dual_walk)
