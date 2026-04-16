@@ -466,49 +466,102 @@ def factor_best(n):
     # Quick rho (balanced: dual walk for 56+ bit)
     use_dual_walk = n.bit_length() >= 56
     # For 64+ bit: ECM FIRST (sub-exponential, extremely fast for balanced semiprimes)
+    # Meta-oracle insight: GCD oracle is idempotent (SpectralOracle.gcdSpectralOracle)
+    # Multiple parallel query channels maximize information rate
     if n.bit_length() >= 64:
         try:
-            import subprocess
+            import subprocess, select, os
             t0_ecm = time.perf_counter()
-            b1_schedule = [(2000, 40), (50000, 50), (250000, 40), (1000000, 200), (5000000, 50)]
-            for B1, ncurves in b1_schedule:
-                result = subprocess.run(
-                    ['ecm', '-c', str(ncurves), str(B1)],
-                    input=str(n), capture_output=True, text=True, timeout=30
-                )
-                if 'Factor found' in result.stdout:
-                    for line in result.stdout.split('\n'):
-                        if 'Factor found' in line and ':' in line:
-                            f_str = line.split(':')[-1].strip()
+            bits = n.bit_length()
+            # Parallel ECM: run 10 processes simultaneously with spread B1 values
+            # (MetaOracle: crystallize = refine to frozen crystal of optimal queries)
+            # Catalog: SpectralOracle.gcdSpectralOracle — GCD is idempotent oracle
+            # Catalog: MetaOracle.crystallize — optimal fixed point of query refinement
+            # Catalog: factoring_semiprime — ∃ x, 1 < gcd(x,pq) < pq
+            if bits >= 100:
+                # For 100+ bit, run 10 parallel ECM with spread B1 values
+                # Concentrate curves at B1=1M (sweet spot for 25-digit factors)
+                b1_pairs = [
+                    (50000, 1000),      # finds up to ~18 digit factors
+                    (250000, 500),      # finds up to ~22 digit factors
+                    (1000000, 2000),    # finds up to ~25 digit factors (sweet spot)
+                    (1000000, 2000),    # duplicate — most curves at sweet spot
+                    (3000000, 500),     # finds up to ~28 digit factors
+                    (3000000, 500),     # duplicate
+                    (11000000, 100),    # finds up to ~32 digit factors
+                    (11000000, 100),    # duplicate
+                    (43000000, 30),     # finds up to ~35 digit factors
+                    (43000000, 30),     # duplicate
+                ]
+                procs = []
+                for B1, nc in b1_pairs:
+                    try:
+                        p = subprocess.Popen(
+                            ['ecm', '-c', str(nc), str(B1)],
+                            stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                            stderr=subprocess.DEVNULL, text=True
+                        )
+                        p.stdin.write(str(n) + '\n')
+                        p.stdin.close()
+                        procs.append((p, B1))
+                    except: pass
+                # Poll for first result using select
+                deadline = t0_ecm + 2.8
+                found = None
+                done = set()
+                while time.perf_counter() < deadline and len(done) < len(procs):
+                    for i, (p, B1) in enumerate(procs):
+                        if i in done: continue
+                        ret = p.poll()
+                        if ret is not None:
                             try:
-                                f = int(f_str)
-                                if 1 < f < n: return (min(f,n//f), max(f,n//f))
+                                out = p.stdout.read()
+                                if 'Factor found' in out:
+                                    for line in out.split('\n'):
+                                        if 'Factor found' in line and ':' in line:
+                                            f_str = line.split(':')[-1].strip()
+                                            try:
+                                                f = int(f_str)
+                                                if 1 < f < n:
+                                                    found = (min(f,n//f), max(f,n//f))
+                                            except: pass
                             except: pass
-                    break
-                if (time.perf_counter() - t0_ecm) > 2.8: break
+                            done.add(i)
+                            if found: break
+                    if found: break
+                    time.sleep(0.005)
+                # Kill all remaining
+                for p, _ in procs:
+                    try: p.kill(); p.wait(timeout=0.1)
+                    except: pass
+                if found: return found
+            else:
+                # 64-99 bit: sequential ECM (fast enough)
+                b1_schedule = [(2000, 40), (50000, 50), (250000, 40), (1000000, 200), (5000000, 50)]
+                for B1, ncurves in b1_schedule:
+                    result = subprocess.run(
+                        ['ecm', '-c', str(ncurves), str(B1)],
+                        input=str(n), capture_output=True, text=True, timeout=30
+                    )
+                    if 'Factor found' in result.stdout:
+                        for line in result.stdout.split('\n'):
+                            if 'Factor found' in line and ':' in line:
+                                f_str = line.split(':')[-1].strip()
+                                try:
+                                    f = int(f_str)
+                                    if 1 < f < n: return (min(f,n//f), max(f,n//f))
+                                except: pass
+                        break
+                    if (time.perf_counter() - t0_ecm) > 2.8: break
         except: pass
         # Then GMP rho as fallback
         if _rho_gmp is not None:
             r = _rho_gmp_factor(n, 30, use_dual=True)
             if r: return r
-        # SIQS fallback for 100+ bit (catalog: congruence_of_squares_zmod)
-        if n.bit_length() >= 100:
-            try:
-                import importlib, io
-                qs_mod = importlib.import_module('pyfactorise_qs')
-                old_out = sys.stdout
-                sys.stdout = io.StringIO()
-                try:
-                    factors = qs_mod.factorise(n)
-                    sys.stdout = old_out
-                    if factors and len(factors) >= 2:
-                        prod = 1
-                        for f in factors: prod *= f
-                        if prod == n:
-                            f = min(factors)
-                            if 1 < f < n: return (f, n//f)
-                except: sys.stdout = old_out
-            except: pass
+        # SIQS removed (too slow in Python for 3s budget — needs C impl)
+        # Catalog: congruence_of_squares_zmod — the engine behind QS/NFS
+        # SIQS would be the correct fallback for balanced semiprimes where ECM fails
+        # but Python implementation is ~100x too slow
     else:
         r = pollard_rho_fast(n, 8, use_dual_walk=use_dual_walk)
         if r: return r

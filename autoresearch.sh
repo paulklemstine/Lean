@@ -18,7 +18,7 @@ import time, random
 def find_max_bits(target_ms=3000):
     # Binary search for max bits that factor within target_ms
     # Requires at least 2/3 of test semiprimes to succeed within target_ms
-    lo, hi = 40, 168
+    lo, hi = 40, 200
     best_bits = lo
     while lo <= hi:
         mid = (lo + hi) // 2

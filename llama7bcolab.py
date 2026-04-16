@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# VERSION: 2026-04-16-v5
+# VERSION: 2026-04-16-v9
 """
 OISCC-EML LLaMA 7B Real Weight Compression
 
@@ -1086,41 +1086,101 @@ def run_pipeline(args):
 
 
 # ════════════════════════════════════════════════════════════════════════════
-# §8b. Chat Comparison & Interactive Loop
+# §8b. EML Hook System & Chat Comparison
 # ════════════════════════════════════════════════════════════════════════════
 
-def generate_eml_response(pipeline, prompt_tokens, model, tokenizer, device, max_new_tokens=50):
-    """Generate text using EML-compressed forward pass.
+def _make_eml_hook(eml_params, device):
+    """Create a PyTorch forward hook that replaces a linear layer with EML computation.
 
-    Runs the real model but intercepts each layer's output and applies
-    the EML nonlinearity on top, showing how close the EML path tracks
-    the standard path.
+    The hook computes: z = x @ W_proj.T  (teacher projection)
+    Then: output_j = exp(w1_j * z_j + b1_j) - ln(w2_j * z_j + b2_j)
+
+    This replaces the standard y = x @ W.T + b with the EML-compressed version.
     """
     import torch
 
-    model.eval()
-    with torch.no_grad():
-        input_ids = torch.tensor([prompt_tokens]).to(device)
+    W_proj = torch.tensor(eml_params['W_proj'], dtype=torch.float32, device=device)
+    w1 = torch.tensor(eml_params['w1'], dtype=torch.float32, device=device)
+    b1 = torch.tensor(eml_params['b1'], dtype=torch.float32, device=device)
+    w2 = torch.tensor(eml_params['w2'], dtype=torch.float32, device=device)
+    b2 = torch.tensor(eml_params['b2'], dtype=torch.float32, device=device)
 
-        # Get the model's embedding output
-        embed_layer = model.get_input_embeddings()
-        hidden = embed_layer(input_ids)  # (1, seq_len, d_model)
+    def hook(module, input, output):
+        x = input[0]  # (batch, seq_len, d_in) or (batch*seq_len, d_in)
+        original_shape = x.shape
 
-        # We'll do a simplified single-pass comparison:
-        # Run the full model normally, then compare layer activations
-        # with EML-processed versions at a few checkpoints.
-        outputs = model.generate(
-            input_ids, max_new_tokens=max_new_tokens,
-            do_sample=True, temperature=0.7, top_p=0.9,
-            pad_token_id=tokenizer.eos_token_id
-        )
-        real_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
+        # Flatten to 2D if needed
+        if x.dim() == 3:
+            x_2d = x.reshape(-1, x.shape[-1])
+        else:
+            x_2d = x
 
-    return real_text
+        # Teacher projection: z = x @ W_proj.T  →  (N, d_out)
+        z = x_2d @ W_proj.T  # (N, d_out)
+
+        # EML neuron: f(z_j) = exp(w1_j * z_j + b1_j) - ln(|w2_j * z_j + b2_j|)
+        # Clamp for numerical stability
+        exp_arg = w1 * z + b1
+        exp_arg = torch.clamp(exp_arg, -20, 20)  # prevent exp overflow
+
+        ln_arg = w2 * z + b2
+        ln_arg = torch.clamp(ln_arg, min=1e-8)  # prevent ln(0) or ln(negative)
+
+        eml_out = torch.exp(exp_arg) - torch.log(ln_arg)
+
+        # Reshape back
+        if len(original_shape) == 3:
+            eml_out = eml_out.reshape(original_shape[0], original_shape[1], -1)
+
+        return eml_out
+
+    return hook
+
+
+def install_eml_hooks(pipeline, model, device):
+    """Install EML forward hooks on all linear layers of the model.
+
+    Returns list of (module, handle) tuples for later removal.
+    After calling this, model.generate() will use the EML-compressed
+    forward pass instead of the standard linear layers.
+    """
+    handles = []
+    n_hooked = 0
+
+    for layer_idx, layer_data in pipeline.eml_layers.items():
+        model_layer = model.model.layers[layer_idx]
+
+        # Attention projections
+        for proj_name in ['q_proj', 'k_proj', 'v_proj', 'o_proj']:
+            if proj_name in layer_data.get('attn', {}):
+                eml_params = layer_data['attn'][proj_name]
+                module = getattr(model_layer.self_attn, proj_name)
+                hook_fn = _make_eml_hook(eml_params, device)
+                handle = module.register_forward_hook(hook_fn)
+                handles.append((module, handle))
+                n_hooked += 1
+
+        # FFN projections
+        for proj_name in ['gate_proj', 'up_proj', 'down_proj']:
+            if proj_name in layer_data.get('ffn', {}):
+                eml_params = layer_data['ffn'][proj_name]
+                module = getattr(model_layer.mlp, proj_name)
+                hook_fn = _make_eml_hook(eml_params, device)
+                handle = module.register_forward_hook(hook_fn)
+                handles.append((module, handle))
+                n_hooked += 1
+
+    return handles, n_hooked
+
+
+def remove_eml_hooks(handles):
+    """Remove all EML forward hooks."""
+    for module, handle in handles:
+        handle.remove()
 
 
 def run_chat_comparison(pipeline, model_name="openlm-research/open_llama_7b"):
-    """Compare real LLaMA vs EML-compressed LLaMA on sample prompts."""
+    """Compare real LLaMA vs Crystal LLaMA side-by-side, then drop into interactive chat."""
     try:
         import torch
         from transformers import AutoModelForCausalLM, AutoTokenizer
@@ -1128,7 +1188,7 @@ def run_chat_comparison(pipeline, model_name="openlm-research/open_llama_7b"):
         print("  [torch/transformers not available — skipping chat comparison]")
         return
 
-    print_header("Stage 5: Chat Comparison — Real vs EML-Compressed")
+    print_header("Stage 5: Chat Comparison — Real vs Crystal LLaMA")
 
     # Load model (may already be loaded from pipeline)
     if pipeline.loader and pipeline.loader._loaded:
@@ -1145,7 +1205,14 @@ def run_chat_comparison(pipeline, model_name="openlm-research/open_llama_7b"):
         tokenizer = loader.tokenizer
         device = loader.device
 
-    # Sample prompts for comparison
+    # ─── Install EML hooks ──────────────────────────────────────────────
+    print(f"\n  Installing EML hooks on all linear layers...")
+    handles, n_hooked = install_eml_hooks(pipeline, model, device)
+    print(f"  Hooked {n_hooked} linear layers with EML neurons")
+
+    model.eval()
+
+    # ─── Side-by-side comparison ─────────────────────────────────────────
     test_prompts = [
         "The meaning of life is",
         "In the year 2050,",
@@ -1153,57 +1220,59 @@ def run_chat_comparison(pipeline, model_name="openlm-research/open_llama_7b"):
         "Once upon a time in a galaxy far away,",
     ]
 
-    print(f"\n  Generating responses with real LLaMA 7B (max 50 tokens each)...")
+    print(f"\n  Generating side-by-side comparison (max 50 tokens each)...")
     print(f"  Device: {device}\n")
-
-    model.eval()
 
     for prompt in test_prompts:
         print(f"  ┌─ Prompt: \"{prompt}\"")
 
         try:
-            import torch
             inputs = tokenizer(prompt, return_tensors="pt").to(device)
 
+            # Real LLaMA (remove hooks, generate, reinstall hooks)
+            remove_eml_hooks(handles)
             with torch.no_grad():
-                # Real LLaMA generation
-                outputs = model.generate(
+                real_out = model.generate(
                     inputs["input_ids"],
                     max_new_tokens=50,
                     do_sample=True, temperature=0.7, top_p=0.9,
                     pad_token_id=tokenizer.eos_token_id,
                 )
-                real_response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+            real_text = tokenizer.decode(real_out[0], skip_special_tokens=True)
 
-            # Show the layer-by-layer EML error at this prompt
-            # Compare the EML distillation quality on this specific input
-            eml_quality = {}
-            for layer_idx in [0, 15, 31]:
-                if layer_idx in pipeline.eml_layers:
-                    layer_data = pipeline.eml_layers[layer_idx]
-                    layer_sims = []
-                    for proj_name, eml_p in {**layer_data.get('attn', {}),
-                                              **layer_data.get('ffn', {})}.items():
-                        if 'cosine_sim' in str(pipeline.layer_errors.get(layer_idx, {}).get(proj_name, {})):
-                            sim = pipeline.layer_errors[layer_idx][proj_name].get('cosine_sim', 0)
-                            layer_sims.append(sim)
-                    if layer_sims:
-                        eml_quality[layer_idx] = np.mean(layer_sims)
+            # Crystal LLaMA (reinstall hooks, generate)
+            handles, n_hooked = install_eml_hooks(pipeline, model, device)
+            with torch.no_grad():
+                crystal_out = model.generate(
+                    inputs["input_ids"],
+                    max_new_tokens=50,
+                    do_sample=True, temperature=0.7, top_p=0.9,
+                    pad_token_id=tokenizer.eos_token_id,
+                )
+            crystal_text = tokenizer.decode(crystal_out[0], skip_special_tokens=True)
 
-            quality_str = "  ".join(f"L{k}: {v:.3f}" for k, v in eml_quality.items())
-            print(f"  │ Real LLaMA:  {real_response[len(prompt):].strip()[:200]}")
-            print(f"  │ EML quality: {quality_str}")
+            real_ans = real_text[len(prompt):].strip()[:200]
+            crystal_ans = crystal_text[len(prompt):].strip()[:200]
+
+            print(f"  │ Real LLaMA:    {real_ans}")
+            print(f"  │ Crystal LLaMA: {crystal_ans}")
             print(f"  └─")
 
         except Exception as e:
             print(f"  │ [Error: {e}]")
             print(f"  └─")
+            # Reinstall hooks in case of error
+            handles, _ = install_eml_hooks(pipeline, model, device)
         print()
 
-    # ─── Interactive Chat Loop ──────────────────────────────────────────
-    print_header("Interactive Chat — LLaMA 7B (Real)")
-    print("  Type your prompts below. Enter 'quit' or 'exit' to stop.")
-    print("  The model is loaded and ready.\n")
+    # ─── Interactive Chat Loop (Crystal LLaMA) ──────────────────────────
+    # Make sure hooks are installed for the interactive loop
+    handles, _ = install_eml_hooks(pipeline, model, device)
+
+    print_header("Interactive Chat — Crystal LLaMA (EML-Compressed)")
+    print(f"  You are chatting with the CRYSTAL (EML-compressed) LLaMA model.")
+    print(f"  {n_hooked} linear layers replaced with EML neurons.")
+    print(f"  Type your prompts below. Enter 'quit' or 'exit' to stop.\n")
 
     while True:
         try:
@@ -1220,7 +1289,6 @@ def run_chat_comparison(pipeline, model_name="openlm-research/open_llama_7b"):
             continue
 
         try:
-            import torch
             inputs = tokenizer(user_input, return_tensors="pt").to(device)
 
             with torch.no_grad():
@@ -1232,9 +1300,8 @@ def run_chat_comparison(pipeline, model_name="openlm-research/open_llama_7b"):
                 )
                 response = tokenizer.decode(outputs[0], skip_special_tokens=True)
 
-            # Show response + EML compression stats
             answer = response[len(user_input):].strip()
-            print(f"\n  LLaMA: {answer}")
+            print(f"\n  Crystal LLaMA: {answer}")
 
             # Quick EML quality indicator
             all_sims = []
@@ -1245,11 +1312,14 @@ def run_chat_comparison(pipeline, model_name="openlm-research/open_llama_7b"):
             if all_sims:
                 mean_sim = np.mean(all_sims)
                 min_sim = np.min(all_sims)
-                print(f"  [EML distillation quality: mean={mean_sim:.3f}, min={min_sim:.3f}]")
+                print(f"  [EML distillation: mean={mean_sim:.3f}, min={min_sim:.3f}]")
             print()
 
         except Exception as e:
             print(f"  [Error generating: {e}]\n")
+
+    # Clean up hooks on exit
+    remove_eml_hooks(handles)
 
 
 # ════════════════════════════════════════════════════════════════════════════
@@ -1305,7 +1375,8 @@ def run():
     args = parser.parse_args(filtered_argv[1:])
     np.random.seed(args.seed)
 
-    run_pipeline(args)
+    results_data, pipeline = run_pipeline(args)
+    run_chat_comparison(pipeline, args.model)
 
 
 if __name__ == "__main__":
