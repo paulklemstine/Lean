@@ -63,11 +63,13 @@ Explore new algorithms to factor large integer N using the Catalog's 500+ formal
 | 48 | 1.3 | rho |
 | 56 | 2.3 | CRT |
 | 64 | 9.0 | rho |
-| 72 | 73.3 | rho+interleaved |
-| 80 | 514.8 | rho+interleaved(8) |
+| 72 | ~72 | dual-walk rho |
+| 80 | 260.1 | dual-walk rho+CRT |
 
 ### Recent Optimizations
-- Rho fast: batch=1024, max_r=8N^{1/4}, local nm ref → 518.3ms
-- Interleaved rho (5/8 walks for 64+/72+ bits) → 514.8ms
-- Conditional: only use interleaved for 64+ bits, sequential for smaller
+- **Dual-walk rho** ★★★: Alternating x²+x+c and x²+c walk functions. 57% improvement at 80-bit! x²+x+c finds factors that x²+c misses for balanced semiprimes.
+- Rho micro-opts: batch=1024, max_r=8N^{1/4}, local nm ref
+- Adaptive CRT: 9 lenses for 56+ bits (2049x reduction) vs 7 lenses under
+- Conditional: only use dual-walk for 56+ bits (saves overhead at small sizes)
 - Removed ECM from hot path (overhead not worth it for balanced semiprimes)
+- Removed interleaved rho (buggy, dual-walk is better anyway)

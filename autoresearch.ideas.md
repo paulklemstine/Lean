@@ -1,17 +1,29 @@
 # Autoresearch Ideas Backlog
 
+## Tried and Kept
+- [x] **Dual-walk rho** ★★★: x²+x+c walk function, 57% improvement. Alternating with x²+c.
+- [x] **Adaptive CRT**: 9 lenses for 56+ bit, 7 for smaller
+- [x] **Rho micro-opts**: batch=1024, max_r=8N^{1/4}, local vars
+
 ## High Priority
-- [ ] **Interleaved rho**: Run 5 different c values in lockstep, check batch GCDs for each. If c=3 finds the factor but we're on c=1, we waste time. Interleaving means we'd find it ~5x sooner in expectation.
-- [ ] **Proper SQUFOF**: Careful CF-based implementation with correct parity handling. Should be 10-100x faster than rho at 40-70 digits.
-- [ ] **Adaptive CRT lens count**: At 80-bit, use 9 lenses (2049x reduction) since Fermat range is large. At 48-bit, use 7 lenses.
+- [ ] **rho with gmpy2**: C-level modular arithmetic could give 10-100x at 80+ bits
+- [ ] **Proper SQUFOF**: Careful CF implementation for 40-70 digit numbers
+- [ ] **Quadratic Sieve**: Real QS with sieving — should dominate at 80+ digits
 
-## Medium Priority  
-- [ ] **rho with gmpy2**: If available, gmpy2 provides C-level modular arithmetic, potentially 10-100x speedup for 80+ bit numbers
-- [ ] **Williams p+1 in C**: Lucas chain computation is O(1) but Python loop kills it. A subprocess call to compiled C would be instant.
-- [ ] **Quadratic Sieve proper**: Build real QS with sieving and linear algebra. Should dominate rho at 80+ digits.
+## Tried and Rejected
+- [x] ~~Williams p+1 in cascade~~: WORSE for balanced semiprimes (17ms overhead)
+- [x] ~~ECM for balanced semiprimes~~: Marginal (1% improvement at 80-bit, overhead)
+- [x] ~~Interleaved rho~~: Buggy implementation, dual-walk is better
+- [x] ~~Conditional (x-y) instead of (x-y)%nm~~: Branch overhead worse than mod
+- [x] ~~Residue sieve per-candidate checking~~: CRT precompute is better
 
-## Low Priority / Long Shots
-- [ ] **Parallel rho with multiprocessing**: Python's multiprocessing could parallelize across c values
-- [ ] **FFT diffraction with larger M**: Current M = min(10000, N^{1/4}). For 80-bit, try M = N^{1/2} (better detection range, but slower)
-- [ ] **CRT lens + IOF hybrid**: Apply CRT lens optimization to the IOF bleg sequence
-- [ ] **Batch rho with numpy**: Vectorize the inner loop using numpy arrays instead of Python loops
+## Medium Priority
+- [ ] Batch rho with numpy: Vectorize inner loop
+- [ ] Parallel rho with multiprocessing
+- [ ] Adaptive rho: switch c range based on bit size
+- [ ] CRT lens with 11+ lenses for 80-bit numbers
+
+## Low Priority
+- [ ] FFT diffraction with larger M
+- [ ] CRT lens + IOF hybrid
+- [ ] ECM + p-1 combined (check both in same pass)
