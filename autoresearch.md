@@ -56,20 +56,23 @@ Explore new algorithms to factor large integer N using the Catalog's 500+ formal
 - 7 CRT lenses is the sweet spot (more lenses = more reduction but slower precompute + more offsets to iterate)
 
 ### Scaling Data (current best)
-| Bits | Best(ms) | Best method |
-|------|----------|-------------|
-| 24 | 0.009 | CRT |
-| 32 | 0.2 | rho |
-| 48 | 1.3 | rho |
-| 56 | 2.3 | CRT |
-| 64 | 9.0 | rho |
-| 72 | ~25 | GMP dual-walk rho |
-| 80 | 91.4 | GMP dual-walk rho+CRT |
+| Bits | Time | Best method |
+|------|------|-------------|
+| 24 | 0.009ms | CRT |
+| 32 | 0.2ms | rho |
+| 48 | 1.3ms | rho |
+| 56 | 2.3ms | CRT |
+| 64 | 9ms | GMP rho |
+| 80 | 90ms | ECM |
+| 96 | 300ms | ECM |
+| 120 | 1.4s | ECM B1=1M |
+| 144 | 2.5s | ECM B1=5M |
+| 167 | 3.0s | ECM (max in 3s) |
 
 ### Recent Optimizations
-- **GMP rho** ★★★★: C-level rho via ctypes+libgmp. 85% improvement at 80-bit (605→91ms). Dual-walk built in. 6-7x faster than Python.
-- **Dual-walk rho** ★★★: x²+x+c walk function alternated with x²+c. Core algorithmic innovation.
+- **ECM-first cascade** ★★★★★: Try gmp-ecm subprocess BEFORE rho for 64+ bit numbers. ECM finds balanced semiprimes 100x faster than rho for 100+ bit. Progressive B1 schedule with -c flag for batched curves. Max bits in 3s: 167.
+- **GMP rho** ★★★★: C-level rho via ctypes+libgmp. 85% improvement at 80-bit (605→91ms). 6-7x faster than Python.
+- **Dual-walk rho** ★★★: x²+x+c walk function. Algorithmic innovation.
 - Rho micro-opts: batch=1024, max_r=8N^{1/4}, local nm ref
 - Adaptive CRT: 9 lenses for 56+ bits (2049x reduction)
-- SQUFOF added as standalone function (O(N^{1/4})) but not in cascade (rho dominates)
-- Removed ECM/p+1 from hot path (overhead not worth it for balanced semiprimes)
+- SQUFOF standalone: O(N^{1/4}) but ECM dominates for large numbers
