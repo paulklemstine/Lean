@@ -918,7 +918,7 @@ def run_pipeline(args):
     use_real = not args.synthetic
 
     print_header("OISCC-EML LLaMA 7B Compression Pipeline")
-    print(f"  Script version: 2026-04-16-v7 (Newton stable, no w2 correction)")
+    print(f"  Script version: 2026-04-16-v12 (EML hook, residual blend)")
     mode = "REAL WEIGHTS" if use_real else "SYNTHETIC WEIGHTS"
     print(f"  Mode: {mode}")
     if use_real:
@@ -1086,67 +1086,64 @@ def run_pipeline(args):
 
 
 # ════════════════════════════════════════════════════════════════════════════
-# §8b. EML Hook System & Chat Comparison
+# §8b. EML Hook System & Chat Comparison (v12)
 # ════════════════════════════════════════════════════════════════════════════
+# The linear layer's output IS z = x @ W.T (no bias). EML(z) ≈ z in direction
+# but exp() diverges for large z. Fix: clip z + residual blend + affine correction.
 
-def _make_eml_hook(eml_params, device):
-    """Create a PyTorch forward hook that applies EML nonlinearity.
+def _make_eml_hook(eml_params, device, alpha=0.3):
+    """Create a PyTorch forward hook with EML nonlinearity + residual blend.
 
-    Key insight: the linear layer's output IS the teacher projection z = x @ W.T
-    (LLaMA has no bias). So the hook just applies the EML shape on top of the
-    standard output — no need to store W_proj separately, saving ~25GB GPU memory.
+    alpha controls the blend: alpha=0 → pure real LLaMA, alpha=1 → pure Crystal.
+    The EML output is clipped and affine-corrected to prevent exp() explosion.
     """
     import torch
-
-    # Only store the tiny EML shape params (4 per neuron) — no W_proj!
     w1 = torch.tensor(eml_params['w1'], dtype=torch.float32, device=device)
     b1 = torch.tensor(eml_params['b1'], dtype=torch.float32, device=device)
     w2 = torch.tensor(eml_params['w2'], dtype=torch.float32, device=device)
     b2 = torch.tensor(eml_params['b2'], dtype=torch.float32, device=device)
+    scale = torch.tensor(eml_params.get('scale', np.ones_like(eml_params['w1'])),
+                         dtype=torch.float32, device=device)
+    shift = torch.tensor(eml_params.get('shift', np.zeros_like(eml_params['w1'])),
+                         dtype=torch.float32, device=device)
 
     def hook(module, input, output):
-        z = output.float()  # output IS z = x @ W.T (no bias in LLaMA)
-        exp_arg = torch.clamp(w1 * z + b1, -20, 20)
-        ln_arg = torch.clamp(w2 * z + b2, min=1e-8)
+        z = output.float()
+        z_for_eml = torch.clamp(z, -3.0, 3.0)
+        exp_arg = torch.clamp(w1 * z_for_eml + b1, -10, 10)
+        ln_arg = torch.clamp(w2 * z_for_eml + b2, min=1e-8)
         eml_out = torch.exp(exp_arg) - torch.log(ln_arg)
-        return eml_out.to(output.dtype)
+        eml_out = torch.where(torch.isfinite(eml_out), eml_out, z_for_eml)
+        eml_corrected = scale * eml_out + shift
+        result = (1.0 - alpha) * z + alpha * eml_corrected
+        return result.to(output.dtype)
 
     return hook
 
 
-def install_eml_hooks(pipeline, model, device):
-    """Install EML forward hooks on all linear layers of the model.
+def install_eml_hooks(pipeline, model, device, alpha=0.3):
+    """Install EML forward hooks on all linear layers.
 
-    Returns list of (module, handle) tuples for later removal.
-    After calling this, model.generate() will use the EML-compressed
-    forward pass instead of the standard linear layers.
+    alpha controls the crystal blend ratio.
     """
     handles = []
     n_hooked = 0
-
     for layer_idx, layer_data in pipeline.eml_layers.items():
         model_layer = model.model.layers[layer_idx]
-
-        # Attention projections
         for proj_name in ['q_proj', 'k_proj', 'v_proj', 'o_proj']:
             if proj_name in layer_data.get('attn', {}):
-                eml_params = layer_data['attn'][proj_name]
                 module = getattr(model_layer.self_attn, proj_name)
-                hook_fn = _make_eml_hook(eml_params, device)
+                hook_fn = _make_eml_hook(layer_data['attn'][proj_name], device, alpha)
                 handle = module.register_forward_hook(hook_fn)
                 handles.append((module, handle))
                 n_hooked += 1
-
-        # FFN projections
         for proj_name in ['gate_proj', 'up_proj', 'down_proj']:
             if proj_name in layer_data.get('ffn', {}):
-                eml_params = layer_data['ffn'][proj_name]
                 module = getattr(model_layer.mlp, proj_name)
-                hook_fn = _make_eml_hook(eml_params, device)
+                hook_fn = _make_eml_hook(layer_data['ffn'][proj_name], device, alpha)
                 handle = module.register_forward_hook(hook_fn)
                 handles.append((module, handle))
                 n_hooked += 1
-
     return handles, n_hooked
 
 
@@ -1156,8 +1153,28 @@ def remove_eml_hooks(handles):
         handle.remove()
 
 
+def _compute_eml_normalization(pipeline):
+    """Compute per-neuron affine normalization for EML→z mapping."""
+    for layer_idx, layer_data in pipeline.eml_layers.items():
+        for proj_type in ['attn', 'ffn']:
+            for proj_name, eml_p in list(layer_data.get(proj_type, {}).items()):
+                w1, b1, w2, b2 = eml_p['w1'], eml_p['b1'], eml_p['w2'], eml_p['b2']
+                d_out = len(w1)
+                rng = np.random.default_rng(layer_idx * 1000)
+                z_sim = rng.standard_normal((500, d_out)) * 0.5
+                a = np.clip(w1 * z_sim + b1, -20, 20)
+                b_arg = np.clip(w2 * z_sim + b2, 1e-8, None)
+                eml_sim = np.exp(a) - np.log(b_arg)
+                eml_mean = eml_sim.mean(axis=0)
+                eml_std = np.maximum(eml_sim.std(axis=0), 1e-8)
+                z_mean = z_sim.mean(axis=0)
+                z_std = np.maximum(z_sim.std(axis=0), 1e-8)
+                eml_p['scale'] = z_std / eml_std
+                eml_p['shift'] = z_mean - (z_std / eml_std) * eml_mean
+
+
 def run_chat_comparison(pipeline, model_name="openlm-research/open_llama_7b"):
-    """Compare real LLaMA vs Crystal LLaMA side-by-side, then drop into interactive chat."""
+    """Compare real LLaMA vs Crystal LLaMA side-by-side, then interactive chat."""
     try:
         import torch
         from transformers import AutoModelForCausalLM, AutoTokenizer
@@ -1167,7 +1184,6 @@ def run_chat_comparison(pipeline, model_name="openlm-research/open_llama_7b"):
 
     print_header("Stage 5: Chat Comparison — Real vs Crystal LLaMA")
 
-    # Load model (may already be loaded from pipeline)
     if pipeline.loader and pipeline.loader._loaded:
         model = pipeline.loader.model
         tokenizer = pipeline.loader.tokenizer
@@ -1182,29 +1198,40 @@ def run_chat_comparison(pipeline, model_name="openlm-research/open_llama_7b"):
         tokenizer = loader.tokenizer
         device = loader.device
 
-    # ─── Free memory: remove W_proj from eml_layers (not needed for hooks) ──
+    # Free memory
     import gc
     for layer_idx in list(pipeline.eml_layers.keys()):
         for proj_type in ['attn', 'ffn']:
             for proj_name in list(pipeline.eml_layers[layer_idx].get(proj_type, {}).keys()):
-                eml_p = pipeline.eml_layers[layer_idx][proj_type][proj_name]
-                if 'W_proj' in eml_p:
-                    del eml_p['W_proj']
+                pipeline.eml_layers[layer_idx][proj_type][proj_name].pop('W_proj', None)
+    if hasattr(pipeline, 'crystal_layers') and pipeline.crystal_layers:
+        pipeline.crystal_layers.clear()
     gc.collect()
-    try:
-        import torch
-        torch.cuda.empty_cache()
-    except Exception:
-        pass
+    torch.cuda.empty_cache()
 
-    # ─── Install EML hooks ──────────────────────────────────────────────
-    print(f"\n  Installing EML hooks on all linear layers...")
-    handles, n_hooked = install_eml_hooks(pipeline, model, device)
-    print(f"  Hooked {n_hooked} linear layers with EML neurons")
+    # Compute per-neuron normalization
+    print("\n  Computing per-neuron EML normalization...")
+    _compute_eml_normalization(pipeline)
+    print("  Done.")
+
+    print("""
+  ┌──────────────────────────────────────────────────────────────────────┐
+  │  EML Architecture Note                                               │
+  │                                                                      │
+  │  The EML primitive exp(a) - ln(b) achieves 0.929 cosine similarity  │
+  │  on calibration data and 1190x compression.                         │
+  │                                                                      │
+  │  During autoregressive generation, hidden-state magnitudes exceed    │
+  │  the calibration range, causing exp() to diverge. A bounded EML      │
+  │  variant (e.g. exp(sigmoid(a)) - ln(sigmoid(b)+1)) is planned      │
+  │  future work to enable full standalone Crystal generation.           │
+  │                                                                      │
+  │  Below: residual blend at multiple alpha levels                      │
+  │  alpha=0: pure real LLaMA  alpha=1: pure Crystal LLaMA              │
+  └──────────────────────────────────────────────────────────────────────┘
+""")
 
     model.eval()
-
-    # ─── Side-by-side comparison ─────────────────────────────────────────
     test_prompts = [
         "The meaning of life is",
         "In the year 2050,",
@@ -1212,63 +1239,43 @@ def run_chat_comparison(pipeline, model_name="openlm-research/open_llama_7b"):
         "Once upon a time in a galaxy far away,",
     ]
 
-    print(f"\n  Generating side-by-side comparison (max 30 tokens each)...")
-    print(f"  Device: {device}\n")
-
+    # Real LLaMA
+    print("  ── Real LLaMA (alpha=0) ──────────────────────────────────────\n")
     for prompt in test_prompts:
-        print(f"  ┌─ Prompt: \"{prompt}\"")
+        inputs = tokenizer(prompt, return_tensors="pt").to(device)
+        with torch.no_grad():
+            out = model.generate(inputs["input_ids"], max_new_tokens=30,
+                                 do_sample=False, pad_token_id=tokenizer.eos_token_id)
+        text = tokenizer.decode(out[0], skip_special_tokens=True)
+        ans = text[len(prompt):].strip()[:120]
+        print(f"  \"{prompt}\" → {ans}")
+        del out; torch.cuda.empty_cache()
 
-        try:
-            inputs = tokenizer(prompt, return_tensors="pt").to(device)
+    # Crystal LLaMA at various alpha levels
+    for alpha in [0.05, 0.1, 0.3, 1.0]:
+        label = f"{int((1-alpha)*100)}% real + {int(alpha*100)}% crystal"
+        print(f"\n  ── alpha={alpha} ({label}) ──────────────────────────────\n")
+        handles, n_hooked = install_eml_hooks(pipeline, model, device, alpha=alpha)
+        for prompt in test_prompts:
+            try:
+                inputs = tokenizer(prompt, return_tensors="pt").to(device)
+                with torch.no_grad():
+                    out = model.generate(inputs["input_ids"], max_new_tokens=30,
+                                          do_sample=False, pad_token_id=tokenizer.eos_token_id)
+                text = tokenizer.decode(out[0], skip_special_tokens=True)
+                ans = text[len(prompt):].strip()[:120]
+                print(f"  \"{prompt}\" → {ans}")
+                del out; torch.cuda.empty_cache()
+            except Exception as e:
+                print(f"  \"{prompt}\" → [Error: {e}]")
+        remove_eml_hooks(handles)
 
-            # Real LLaMA (remove hooks, generate, reinstall hooks)
-            remove_eml_hooks(handles)
-            with torch.no_grad():
-                real_out = model.generate(
-                    inputs["input_ids"],
-                    max_new_tokens=30,
-                    do_sample=False,  # greedy — less memory than sampling
-                    pad_token_id=tokenizer.eos_token_id,
-                )
-            real_text = tokenizer.decode(real_out[0], skip_special_tokens=True)
-            del real_out
-            torch.cuda.empty_cache()
-
-            # Crystal LLaMA (reinstall hooks, generate)
-            handles, n_hooked = install_eml_hooks(pipeline, model, device)
-            with torch.no_grad():
-                crystal_out = model.generate(
-                    inputs["input_ids"],
-                    max_new_tokens=30,
-                    do_sample=False,  # greedy — less memory than sampling
-                    pad_token_id=tokenizer.eos_token_id,
-                )
-            crystal_text = tokenizer.decode(crystal_out[0], skip_special_tokens=True)
-            del crystal_out
-            torch.cuda.empty_cache()
-
-            real_ans = real_text[len(prompt):].strip()[:200]
-            crystal_ans = crystal_text[len(prompt):].strip()[:200]
-
-            print(f"  │ Real LLaMA:    {real_ans}")
-            print(f"  │ Crystal LLaMA: {crystal_ans}")
-            print(f"  └─")
-
-        except Exception as e:
-            print(f"  │ [Error: {e}]")
-            print(f"  └─")
-            # Reinstall hooks in case of error
-            handles, _ = install_eml_hooks(pipeline, model, device)
-        print()
-
-    # ─── Interactive Chat Loop (Crystal LLaMA) ──────────────────────────
-    # Make sure hooks are installed for the interactive loop
-    handles, _ = install_eml_hooks(pipeline, model, device)
-
-    print_header("Interactive Chat — Crystal LLaMA (EML-Compressed)")
-    print(f"  You are chatting with the CRYSTAL (EML-compressed) LLaMA model.")
-    print(f"  {n_hooked} linear layers replaced with EML neurons.")
-    print(f"  Type your prompts below. Enter 'quit' or 'exit' to stop.\n")
+    # Interactive Chat Loop (Real LLaMA)
+    print_header("Interactive Chat — LLaMA 7B (Real)")
+    print("  You are chatting with the real LLaMA model.")
+    print("  Note: Crystal LLaMA (alpha=1.0) requires a bounded EML variant")
+    print("  for coherent standalone generation. Use alpha<0.1 for crystal-influenced chat.")
+    print("  Type your prompts below. Enter 'quit' or 'exit' to stop.\n")
 
     while True:
         try:
@@ -1286,7 +1293,6 @@ def run_chat_comparison(pipeline, model_name="openlm-research/open_llama_7b"):
 
         try:
             inputs = tokenizer(user_input, return_tensors="pt").to(device)
-
             with torch.no_grad():
                 outputs = model.generate(
                     inputs["input_ids"],
@@ -1297,26 +1303,22 @@ def run_chat_comparison(pipeline, model_name="openlm-research/open_llama_7b"):
                 response = tokenizer.decode(outputs[0], skip_special_tokens=True)
 
             answer = response[len(user_input):].strip()
-            print(f"\n  Crystal LLaMA: {answer}")
+            print(f"\n  LLaMA: {answer}")
 
-            # Quick EML quality indicator
             all_sims = []
             for layer_err in pipeline.layer_errors.values():
                 for proj_err in layer_err.values():
                     if 'cosine_sim' in proj_err:
                         all_sims.append(proj_err['cosine_sim'])
             if all_sims:
-                mean_sim = np.mean(all_sims)
-                min_sim = np.min(all_sims)
-                print(f"  [EML distillation: mean={mean_sim:.3f}, min={min_sim:.3f}]")
+                print(f"  [EML distillation: mean={np.mean(all_sims):.3f}, min={np.min(all_sims):.3f}]")
             print()
 
         except Exception as e:
             print(f"  [Error generating: {e}]\n")
 
-    # Clean up hooks on exit
-    remove_eml_hooks(handles)
 
+# ════════════════════════════════════════════════════════════════════════════
 
 # ════════════════════════════════════════════════════════════════════════════
 # §9. Main

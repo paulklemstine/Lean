@@ -16,10 +16,12 @@ structure Codebook' (Source : Type*) (Code : Type*) where
   lossless : ∀ s, decode (encode s) = s
 
 
+
 /-- Any codebook has injective encoding. -/
 theorem Codebook'.encode_injective {Source Code : Type*} (cb : Codebook' Source Code) :
     Injective cb.encode :=
   fun a b h => by rw [← cb.lossless a, ← cb.lossless b, h]
+
 
 
 /-- For `n ≤ m`, binary strings of length `n` embed into binary strings of length `m`. -/
@@ -30,15 +32,18 @@ noncomputable def binaryCodebook {n m : ℕ} (h : n ≤ m) :
   lossless x := by ext i; simp [i.isLt]
 
 
+
 /-- The binary codebook has injective encoding. -/
 theorem binaryCodebook_injective {n m : ℕ} (h : n ≤ m) :
     Injective (binaryCodebook h).encode :=
   (binaryCodebook h).encode_injective
 
 
+
 /-- DNA bases: 4 symbols. -/
 inductive DNABase | A | C | G | T
   deriving Fintype, DecidableEq
+
 
 
 /-- Optimal 2-bit encoding for DNA bases. -/
@@ -58,9 +63,11 @@ def dnaCodebook : Codebook' DNABase (Fin 2 → Bool) where
     cases b <;> simp [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons]
 
 
+
 /-- DNA codebook is injective. -/
 theorem dnaCodebook_injective : Injective dnaCodebook.encode :=
   dnaCodebook.encode_injective
+
 
 
 /-- 2 bits is optimal for DNA: you can't do it in 1 bit (pigeonhole). -/
@@ -72,11 +79,13 @@ theorem dna_needs_two_bits :
   exact absurd (Fintype.card_le_of_injective f hf) (by omega)
 
 
+
 /-- For a two-symbol source, the optimal code uses 1 bit per symbol. -/
 theorem two_symbol_optimal :
     ∃ cb : Codebook' Bool (Fin 1 → Bool), Injective cb.encode := by
   exact ⟨⟨fun b => ![b], fun bits => bits 0, fun b => by simp⟩,
     fun a b h => by simpa using congr_fun h 0⟩
+
 
 
 /-- A run is a pair of (symbol, count). -/
@@ -86,10 +95,12 @@ structure Run (α : Type*) where
   count_pos : 0 < count
 
 
+
 /-- Decode a list of runs back to a string. -/
 def decodeRuns {α : Type*} : List (Run α) → List α
   | [] => []
   | r :: rs => List.replicate r.count r.symbol ++ decodeRuns rs
+
 
 
 /-- A single run decodes to a list of the correct length. -/
@@ -98,12 +109,14 @@ theorem decodeRuns_singleton_length {α : Type*} (r : Run α) :
   simp [decodeRuns]
 
 
+
 /-- Decoding preserves concatenation. -/
 theorem decodeRuns_append {α : Type*} (rs₁ rs₂ : List (Run α)) :
     decodeRuns (rs₁ ++ rs₂) = decodeRuns rs₁ ++ decodeRuns rs₂ := by
   induction rs₁ with
   | nil => simp [decodeRuns]
   | cons r rs ih => simp [decodeRuns, ih, List.append_assoc]
+
 
 
 /-- For a column with at most `2^k` distinct values, we can encode each value
@@ -118,10 +131,12 @@ theorem column_encoding_exists (k : ℕ) (Values : Type*) [Fintype Values] [None
     e.injective⟩
 
 
+
 /-- The identity codebook always exists and achieves ratio 1. -/
 theorem identity_always_works (α : Type*) :
     ∃ cb : Codebook' α α, Injective cb.encode :=
   ⟨⟨id, id, fun _ => rfl⟩, fun _ _ h => h⟩
+
 
 
 /-- **Compression ratio theorem**: You can always achieve ratio 1 (no compression),
@@ -129,6 +144,7 @@ but our impossibility theorem says you cannot achieve ratio < 1 universally. -/
 theorem compression_ratio_one (n : ℕ) :
     ∃ cb : Codebook' (Fin n → Bool) (Fin n → Bool), Injective cb.encode :=
   identity_always_works _
+
 
 
 end

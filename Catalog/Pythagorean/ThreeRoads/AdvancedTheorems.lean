@@ -7,15 +7,21 @@ Declarations: 23
 
 import Mathlib
 
+/-- [Section: # CatalogBuild.Pythagorean.ThreeRoads.AdvancedTheorems
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/ThreeRoads
+Declarations: 23] -/
 theorem divisor_pair_to_triple (N d e : ℤ) (hprod : d * e = N ^ 2)
     (hd_pos : 0 < d) (hle : d ≤ e) (hparity : Even (e - d)) :
     N ^ 2 + ((e - d) / 2) ^ 2 = ((e + d) / 2) ^ 2 := by
   cases abs_cases N <;> nlinarith [ Int.ediv_mul_cancel ( show 2 ∣ e - d from even_iff_two_dvd.mp hparity ), Int.ediv_mul_cancel ( show 2 ∣ e + d from even_iff_two_dvd.mp ( by simpa [ parity_simps ] using hparity ) ) ]
 
 
+
 theorem triple_to_divisor_pair (N b c : ℤ) (h : N ^ 2 + b ^ 2 = c ^ 2) :
     (c - b) * (c + b) = N ^ 2 := by
   grind
+
 
 
 theorem divisor_triple_roundtrip (N d e : ℤ) (hprod : d * e = N ^ 2)
@@ -26,9 +32,11 @@ theorem divisor_triple_roundtrip (N d e : ℤ) (hprod : d * e = N ^ 2)
   grind
 
 
+
 theorem canonical_prime_triple (p : ℤ) (hp : 1 < p) (hodd : ¬Even p) :
     p ^ 2 + ((p ^ 2 - 1) / 2) ^ 2 = ((p ^ 2 + 1) / 2) ^ 2 := by
   cases abs_cases p <;> nlinarith [ Int.ediv_mul_cancel ( show 2 ∣ p ^ 2 - 1 from even_iff_two_dvd.mp <| by simp_all +decide [ parity_simps ] ), Int.ediv_mul_cancel ( show 2 ∣ p ^ 2 + 1 from even_iff_two_dvd.mp <| by simp_all +decide [ parity_simps ] ) ]
+
 
 
 theorem trivial_factorization_triple (N : ℤ) (hN : 1 < N) (hodd : ¬Even N) :
@@ -36,14 +44,17 @@ theorem trivial_factorization_triple (N : ℤ) (hN : 1 < N) (hodd : ¬Even N) :
   exact canonical_prime_triple N hN hodd
 
 
+
 theorem B1_preserves_pythagorean (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (a - 2*b + 2*c) ^ 2 + (2*a - b + 2*c) ^ 2 = (2*a - 2*b + 3*c) ^ 2 := by
   grind
 
 
+
 theorem B3_preserves_pythagorean (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (-a + 2*b + 2*c) ^ 2 + (-2*a + b + 2*c) ^ 2 = (-2*a + 2*b + 3*c) ^ 2 := by
   grind
+
 
 
 theorem euclid_coprime (m n : ℤ) (hcop : IsCoprime m n)
@@ -63,11 +74,13 @@ theorem euclid_coprime (m n : ℤ) (hcop : IsCoprime m n)
     convert rfl
 
 
+
 theorem two_triples_factor (N b₁ c₁ b₂ c₂ : ℤ)
     (h₁ : N ^ 2 + b₁ ^ 2 = c₁ ^ 2)
     (h₂ : N ^ 2 + b₂ ^ 2 = c₂ ^ 2) :
     (c₁ - b₁) * (c₁ + b₁) = (c₂ - b₂) * (c₂ + b₂) := by
   linarith
+
 
 
 theorem leg_product_bound (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
@@ -83,14 +96,17 @@ theorem leg_product_bound (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
   obtain h | h := h_c <;> [ exact irrational_sqrt_two <| ⟨ c / a, by push_cast [ h ] ; rw [ mul_div_cancel_left₀ _ <| by positivity ] ⟩ ; exact irrational_sqrt_two <| ⟨ -c / a, by push_cast [ h ] ; rw [ div_eq_iff <| by positivity ] ; linarith ⟩ ]
 
 
+
 theorem leg_sum_sq_bound (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (a + b) ^ 2 ≤ 2 * c ^ 2 := by
   linarith [ sq_nonneg ( a - b ) ]
 
 
+
 theorem smooth_relation_product (s₁ s₂ N : ℤ) (hN : 0 < N) :
     (s₁ * s₂) % N = ((s₁ % N) * (s₂ % N)) % N := by
   rw [ Int.mul_emod ]
+
 
 
 theorem berggren_preserves_lorentz (a b c : ℤ) :
@@ -103,9 +119,11 @@ theorem berggren_preserves_lorentz (a b c : ℤ) :
   grind
 
 
+
 theorem min_hypotenuse_at_depth (d : ℕ) :
     (3 : ℤ) ^ d * 5 ≥ 5 := by
   nlinarith [ pow_pos ( by decide : 0 < 3 ) d ]
+
 
 
 theorem B1_parent_recovery (a b c : ℤ) :
@@ -119,9 +137,11 @@ theorem B1_parent_recovery (a b c : ℤ) :
   grind
 
 
+
 theorem gcd_factor_from_triples (N d₁ : ℤ) (hN : 0 < N) :
     (Int.gcd d₁ N : ℤ) ∣ N := by
   exact Int.gcd_dvd_right _ _
+
 
 
 theorem hypotenuse_mod_transform (a b c N : ℤ) (hN : 0 < N) :
@@ -129,9 +149,11 @@ theorem hypotenuse_mod_transform (a b c N : ℤ) (hN : 0 < N) :
   simp +decide [ Int.add_emod, Int.mul_emod ]
 
 
+
 theorem leg_difference_identity (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     a ^ 2 - b ^ 2 = 2 * a ^ 2 - c ^ 2 := by
   grind
+
 
 
 theorem both_legs_less (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
@@ -140,13 +162,16 @@ theorem both_legs_less (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
   constructor <;> nlinarith
 
 
+
 theorem tree_nodes_at_depth (d : ℕ) : (3 : ℕ) ^ d ≥ 1 := by
   exact Nat.one_le_pow _ _ ( by decide )
+
 
 
 theorem tree_total_nodes (d : ℕ) :
     (3 ^ (d + 1) - 1) % 2 = 0 := by
   exact Nat.mod_eq_zero_of_dvd ( by simpa using nat_sub_dvd_pow_sub_pow _ 1 _ )
+
 
 
 theorem gaussian_composition (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ)
@@ -156,6 +181,8 @@ theorem gaussian_composition (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ)
   linear_combination' h₁ * h₂
 
 
+
 theorem self_composition (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (a ^ 2 - b ^ 2) ^ 2 + (2 * a * b) ^ 2 = c ^ 4 := by
   linear_combination' h * h
+

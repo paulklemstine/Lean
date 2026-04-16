@@ -9,10 +9,15 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # CatalogBuild.MachineLearning.Prediction.KalmanFilter
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/Prediction
+Declarations: 10] -/
 structure KalmanState where
   estimate : ℝ
   variance : ℝ
   variance_nonneg : 0 ≤ variance
+
 
 
 structure SystemModel where
@@ -24,14 +29,17 @@ structure SystemModel where
   R_pos : 0 < R
 
 
+
 noncomputable def predict (model : SystemModel) (state : KalmanState) : KalmanState where
   estimate := model.A * state.estimate
   variance := model.A ^ 2 * state.variance + model.Q
   variance_nonneg := by nlinarith [sq_nonneg model.A, state.variance_nonneg, model.Q_nonneg]
 
 
+
 noncomputable def kalmanGain (model : SystemModel) (predicted_var : ℝ) : ℝ :=
   (predicted_var * model.H) / (model.H ^ 2 * predicted_var + model.R)
+
 
 
 /-- The Kalman gain is non-negative for non-negative variance and positive H -/
@@ -41,10 +49,12 @@ theorem kalman_gain_nonneg (model : SystemModel) (P : ℝ) (hP : 0 ≤ P) (hH : 
   nlinarith [sq_nonneg model.H, model.R_pos]
 
 
+
 noncomputable def riccatiStep (model : SystemModel) (P : ℝ) : ℝ :=
   let P_pred := model.A ^ 2 * P + model.Q
   let K := kalmanGain model P_pred
   (1 - K * model.H) * P_pred
+
 
 
 theorem riccati_nonneg (model : SystemModel) (P : ℝ) (hP : 0 ≤ P) :
@@ -56,11 +66,13 @@ theorem riccati_nonneg (model : SystemModel) (P : ℝ) (hP : 0 ≤ P) :
   · nlinarith [ model.Q_nonneg ]
 
 
+
 /-- When H = 0 (no observation), variance grows without bound -/
 theorem no_observation_variance_grows (model : SystemModel) (hH : model.H = 0)
     (P : ℝ) :
     riccatiStep model P = model.A ^ 2 * P + model.Q := by
   simp [riccatiStep, kalmanGain, hH]
+
 
 
 /-- The Kalman filter is unbiased -/
@@ -76,10 +88,12 @@ theorem kalman_unbiased (model : SystemModel) (state : KalmanState)
   ring
 
 
+
 /-- The steady-state Kalman gain for a simple system (A=1, H=1) -/
 noncomputable def steadyStateGain (Q R : ℝ) : ℝ :=
   let P := (-R + Real.sqrt (R ^ 2 + 4 * Q * R)) / 2
   P / (P + R)
+
 
 
 end

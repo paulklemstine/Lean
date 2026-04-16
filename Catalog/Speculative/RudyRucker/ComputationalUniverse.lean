@@ -11,13 +11,16 @@ import Mathlib
 def CAConfig := ℤ → Bool
 
 
+
 /-- A neighborhood rule for a 1D CA with radius 1 looks at 3 cells. -/
 def CArule := Bool → Bool → Bool → Bool
+
 
 
 /-- Apply a CA rule to evolve one step. -/
 def evolve (rule : CArule) (config : CAConfig) : CAConfig :=
   fun i => rule (config (i - 1)) (config i) (config (i + 1))
+
 
 
 /-- Evolution is deterministic: same rule and initial config give same result. -/
@@ -26,10 +29,12 @@ theorem evolve_deterministic (rule : CArule) (c₁ c₂ : CAConfig)
   rw [h]
 
 
+
 /-- Iterated evolution of a CA for n steps. -/
 def evolve_n (rule : CArule) (config : CAConfig) : ℕ → CAConfig
   | 0 => config
   | n + 1 => evolve rule (evolve_n rule config n)
+
 
 
 /-- Iterated evolution composes correctly. -/
@@ -38,9 +43,11 @@ theorem evolve_n_succ (rule : CArule) (config : CAConfig) (n : ℕ) :
   rfl
 
 
+
 /-- Shift a configuration by k positions. -/
 def shift (config : CAConfig) (k : ℤ) : CAConfig :=
   fun i => config (i + k)
+
 
 
 /-- CA evolution commutes with spatial shifts — this formalizes
@@ -51,14 +58,17 @@ theorem evolve_shift_commute (rule : CArule) (config : CAConfig) (k : ℤ) :
   funext fun x => by unfold evolve shift; ring_nf
 
 
+
 /-- A Garden of Eden configuration has no predecessor under the given rule. -/
 def is_garden_of_eden (rule : CArule) (config : CAConfig) : Prop :=
   ¬ ∃ prev : CAConfig, evolve rule prev = config
 
 
+
 /-- A CA rule is reversible if its evolution function is bijective. -/
 def is_reversible (rule : CArule) : Prop :=
   Function.Bijective (evolve rule)
+
 
 
 /-- A reversible CA has no Garden of Eden configurations. -/
@@ -67,4 +77,5 @@ theorem reversible_no_garden_of_eden (rule : CArule) (h : is_reversible rule) :
   intro config hgoe
   unfold is_garden_of_eden at hgoe
   exact hgoe ⟨_, (h.2 config).choose_spec⟩
+
 

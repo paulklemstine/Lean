@@ -12,9 +12,11 @@ theorem pythagorean_trig_identity (θ : ℝ) : cos θ ^ 2 + sin θ ^ 2 = 1 :=
   Real.cos_sq_add_sin_sq θ
 
 
+
 /-- Equivalent form used directly in the crystallizer's forward pass. -/
 theorem pythagorean_trig_identity' (θ : ℝ) : sin θ ^ 2 + cos θ ^ 2 = 1 :=
   Real.sin_sq_add_cos_sq θ
+
 
 
 /-- The stereographic projection lands on the unit circle. -/
@@ -28,6 +30,7 @@ theorem stereo_proj_on_circle (t : ℝ) :
   ring
 
 
+
 /-- Gram-Schmidt step: for u, v ∈ ℝ² with ‖u‖² = 1,
 v - ⟨u, v⟩ · u is orthogonal to u. -/
 theorem gram_schmidt_orthogonal_inner (u v : Fin 2 → ℝ)
@@ -35,6 +38,7 @@ theorem gram_schmidt_orthogonal_inner (u v : Fin 2 → ℝ)
     ∑ i, u i * (v i - (∑ j, u j * v j) * u i) = 0 := by
   simp only [Fin.sum_univ_two] at *
   linear_combination (u 0 * v 0 + u 1 * v 1) * -hu
+
 
 
 /-- The tri-resonant combination of three pairwise-orthogonal unit-norm scalars
@@ -55,14 +59,17 @@ theorem tri_resonant_norm_sq (θ φ a b c : ℝ)
              mul_self_nonneg a, mul_self_nonneg b, mul_self_nonneg c]
 
 
+
 /-- sin(π·n) = 0 for any integer n — the crystallization condition. -/
 theorem sin_pi_int (n : ℤ) : sin (π * n) = 0 := by
   rw [mul_comm]; exact sin_int_mul_pi n
 
 
+
 /-- The periodic loss sin²(π·m) is always non-negative. -/
 theorem periodic_loss_nonneg (m : ℝ) : sin (π * m) ^ 2 ≥ 0 :=
   sq_nonneg _
+
 
 
 /-- The periodic loss vanishes exactly at integers. This characterizes the
@@ -79,16 +86,19 @@ theorem periodic_loss_zero_iff_int (m : ℝ) :
     exact ⟨n, by ring⟩
 
 
+
 /-- Scaling a vector by s multiplies the squared norm by s². -/
 theorem norm_sq_scale (v : Fin 2 → ℝ) (s : ℝ) :
     ∑ i, (s * v i) ^ 2 = s ^ 2 * ∑ i, v i ^ 2 := by
   simp [mul_pow, Fin.sum_univ_two]; ring
 
 
+
 /-- Euclid's formula: (m²-n², 2mn, m²+n²) is a Pythagorean triple.
 This is the integer-cleared version of stereographic projection. -/
 theorem euclid_from_stereo (m n : ℤ) :
     (m ^ 2 - n ^ 2) ^ 2 + (2 * m * n) ^ 2 = (m ^ 2 + n ^ 2) ^ 2 := by ring
+
 
 
 /-- The stereographic parametrization lies on the unit circle. -/
@@ -102,6 +112,7 @@ theorem stereo_rational_on_circle (p q : ℝ) (hpq : p ^ 2 + q ^ 2 ≠ 0) :
   field_simp; ring
 
 
+
 /-- The periodic loss is bounded above by 3 (sum of three sin² terms,
 each bounded by 1). -/
 theorem periodic_loss_bounded (a b c : ℝ) :
@@ -112,10 +123,12 @@ theorem periodic_loss_bounded (a b c : ℝ) :
   linarith
 
 
+
 /-- The trigonometric identity function is continuous (trivially, since
 it's the constant function 1). -/
 theorem crystallizer_continuous :
     Continuous (fun θ : ℝ => cos θ ^ 2 + sin θ ^ 2) := by fun_prop
+
 
 
 /-- Stereographic projection of rationals gives rationals:
@@ -126,10 +139,12 @@ theorem stereo_rational_formula (p q : ℝ) (hq : q ≠ 0)
   field_simp; ring
 
 
+
 /-- The Berggren A-matrix has determinant 1 (it's in SL₃(ℤ)). -/
 theorem berggren_A_det :
     let A : Matrix (Fin 3) (Fin 3) ℤ := !![1, -2, 2; 2, -1, 2; 2, -2, 3]
     A.det = 1 := by native_decide
+
 
 
 /-- The Berggren B-matrix has determinant -1 (orientation-reversing). -/
@@ -138,8 +153,10 @@ theorem berggren_B_det :
     B.det = -1 := by native_decide
 
 
+
 /-- The Berggren C-matrix has determinant 1 (it's in SL₃(ℤ)). -/
 theorem berggren_C_det :
     let C : Matrix (Fin 3) (Fin 3) ℤ := !![-1, 2, 2; -2, 1, 2; -2, 2, 3]
     C.det = 1 := by native_decide
+
 

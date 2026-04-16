@@ -18,12 +18,14 @@ def arithmeticDerivative (n : ℕ) : ℕ :=
   else (n.primeFactors).sum fun p => (n / p) * (n.factorization p)
 
 
+
 /-- The arithmetic derivative of a prime is 1. -/
 theorem arithmeticDerivative_prime {p : ℕ} (hp : p.Prime) :
     arithmeticDerivative p = 1 := by
   unfold arithmeticDerivative
   simp [hp]
   rcases p with (_ | _ | p) <;> simp_all +arith +decide [Nat.div_self]
+
 
 
 /-- Key identity: p^p / p * factorization(p^p)(p) = p^p.
@@ -34,10 +36,12 @@ theorem ppow_self_div_mul_exp (p : ℕ) (hp : p.Prime) :
   rw [Nat.div_mul_cancel (dvd_pow_self _ (Nat.succ_ne_zero _))]
 
 
+
 /-- The prime factorization of p^p has support {p}. -/
 theorem primeFactors_prime_pow_self {p : ℕ} (hp : p.Prime) :
     (p ^ p).primeFactors = {p} := by
   rw [Nat.primeFactors_pow] <;> aesop
+
 
 
 /-- p^p is a fixed point of the arithmetic derivative: (p^p)' = p^p. -/
@@ -46,6 +50,7 @@ theorem arithmeticDerivative_ppow_eq_self {p : ℕ} (hp : p.Prime) :
   simp +decide [hp, arithmeticDerivative]
   rcases p with (_ | _ | p) <;> simp_all +decide [Nat.primeFactors_pow]
   rw [Nat.div_mul_cancel (dvd_pow_self _ (Nat.succ_ne_zero _))]
+
 
 
 end

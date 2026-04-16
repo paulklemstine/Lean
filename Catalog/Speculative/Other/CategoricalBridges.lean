@@ -14,6 +14,7 @@ def identityBridge (C : Type*) [Category C] : MathBridge C C :=
   ⟨𝟭 C, 𝟭 C, Adjunction.id⟩
 
 
+
 /-- A bridge invariant is a property preserved by both directions. -/
 structure BridgeInvariant {C D : Type*} [Category C] [Category D]
     (bridge : MathBridge C D) where
@@ -23,10 +24,12 @@ structure BridgeInvariant {C D : Type*} [Category C] [Category D]
   backward_preserves : ∀ Y : D, propD Y → propC (bridge.backward.obj Y)
 
 
+
 /-- A bridge is an equivalence if the forward functor is. -/
 def isBridgeEquivalence {C D : Type*} [Category C] [Category D]
     (bridge : MathBridge C D) : Prop :=
   bridge.forward.IsEquivalence
+
 
 
 /-- Each bridge level subsumes the previous. -/
@@ -41,11 +44,13 @@ def bridgeSubsumes : BridgeLevel → BridgeLevel → Prop
   | _, _ => False
 
 
+
 /-- An analysis bridge extends a discrete bridge to handle limits. -/
 structure AnalysisBridge where
   discreteMap : ℕ → ℝ
   continuousLimit : ℝ
   hasLimit : Filter.Tendsto discreteMap Filter.atTop (nhds continuousLimit)
+
 
 
 /-- The discrete-to-continuous bridge is unique: limits are unique. -/
@@ -58,6 +63,11 @@ theorem analysis_bridge_unique (b₁ b₂ : AnalysisBridge)
   exact tendsto_nhds_unique h1 h2
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.CategoricalBridges
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 10] -/
 theorem riemann_sum_bridge (f : ℝ → ℝ) (hf : Continuous f) :
     Filter.Tendsto
       (fun n : ℕ => (∑ k ∈ Finset.range n, f ((k + 1 : ℝ) / n)) / n)
@@ -95,6 +105,7 @@ theorem riemann_sum_bridge (f : ℝ → ℝ) (hf : Continuous f) :
   exact Or.inl <| by ring;
 
 
+
 /-- An automorphic oracle maps Galois data to automorphic data.
 This is the Langlands correspondence at the highest level. -/
 structure AutomorphicOracle where
@@ -104,10 +115,12 @@ structure AutomorphicOracle where
   lfunction_match : galoisLFunction = automorphicLFunction
 
 
+
 /-- The Langlands bridge preserves L-functions. -/
 theorem langlands_bridge_preserves_L (oracle : AutomorphicOracle) (s : ℂ) :
     oracle.galoisLFunction s = oracle.automorphicLFunction s := by
   rw [oracle.lfunction_match]
+
 
 
 /-- The bridge from types to propositions via Nonempty. -/
@@ -116,6 +129,7 @@ theorem type_prop_bridge (α : Type*) :
   constructor
   · intro ⟨a⟩; exact ⟨a, trivial⟩
   · intro ⟨a, _⟩; exact ⟨a⟩
+
 
 
 end

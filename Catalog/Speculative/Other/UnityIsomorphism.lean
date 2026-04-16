@@ -18,15 +18,18 @@ theorem terminal_objects_isomorphic {C : Type*} [Category C]
   ⟨hT₁.uniqueUpToIso hT₂⟩
 
 
+
 /-- The number 1 is the multiplicative identity: 1 * x = x for all x.
 This is the algebraic face of the unity isomorphism. -/
 theorem one_mul_identity (R : Type*) [Monoid R] (x : R) : 1 * x = x :=
   one_mul x
 
 
+
 /-- The number 1 is also a right identity: x * 1 = x for all x. -/
 theorem mul_one_identity (R : Type*) [Monoid R] (x : R) : x * 1 = x :=
   mul_one x
+
 
 
 /-- In a monoid, the identity element is unique. Just as the universe
@@ -38,9 +41,11 @@ theorem identity_unique (M : Type*) [Monoid M] (e : M)
   exact this
 
 
+
 /-- log(1) = 0: The number 1 carries zero information.
 Just as a universe with no alternatives carries zero entropy. -/
 theorem log_unity_zero : Real.log 1 = 0 := Real.log_one
+
 
 
 /-- For any base b, log_b(1) = 0. Unity is zero-information
@@ -49,9 +54,11 @@ theorem logb_unity_zero (b : ℝ) : Real.logb b 1 = 0 :=
   Real.logb_one
 
 
+
 /-- Any map to PUnit is unique — the terminal property in Top. -/
 theorem map_to_unit_unique {α : Type*} (f g : α → PUnit) : f = g := by
   funext x; exact Subsingleton.elim _ _
+
 
 
 /-- A mathematical prediction framework.
@@ -68,6 +75,7 @@ structure MathPrediction where
   surjective : Function.Surjective interpret
 
 
+
 /-- Noether's theorem schema: every continuous symmetry implies a conservation law.
 This is the archetype of mathematical prediction. -/
 structure NoetherCorrespondence where
@@ -79,12 +87,14 @@ structure NoetherCorrespondence where
   correspondence : Symmetry ≃ ConservedQuantity
 
 
+
 /-- Example: Time translation symmetry ↔ Energy conservation.
 Both are ℝ (continuous, one-parameter). -/
 def time_energy_noether : NoetherCorrespondence where
   Symmetry := ℝ
   ConservedQuantity := ℝ
   correspondence := Equiv.refl ℝ
+
 
 
 /-- The prediction gap: the time between mathematical prediction
@@ -97,6 +107,7 @@ structure PredictionRecord where
   confirmed : Bool
 
 
+
 /-- Historical prediction records -/
 def historical_predictions : List PredictionRecord := [
   ⟨"Electromagnetic waves", 1864, 1887, 23, true⟩,
@@ -107,6 +118,7 @@ def historical_predictions : List PredictionRecord := [
   ⟨"Gravitational waves", 1916, 2015, 99, true⟩,
   ⟨"Black hole image", 1916, 2019, 103, true⟩
 ]
+
 
 
 /-- Open predictions still awaiting confirmation -/
@@ -124,12 +136,14 @@ def open_predictions : List PredictionRecord := [
 ]
 
 
+
 /-- The mean prediction gap for confirmed predictions (~47 years). -/
 def mean_prediction_gap : ℚ :=
   let gaps := historical_predictions.map (fun r => (r.gap : ℚ))
   gaps.sum / gaps.length
 
 #eval mean_prediction_gap
+
 
 
 /-- The Unity Isomorphism Principle, formalized:
@@ -154,6 +168,7 @@ theorem unity_isomorphism_principle :
    fun M _ e hl => identity_unique M e hl,
    log_unity_zero,
    fun α f g => map_to_unit_unique f g⟩
+
 
 
 end

@@ -12,6 +12,7 @@ def trivialTriple' (N : ℕ) : ℤ × ℤ × ℤ :=
   (N, ((N : ℤ) ^ 2 - 1) / 2, ((N : ℤ) ^ 2 + 1) / 2)
 
 
+
 /-- The universal parent transform: unique parent in the Berggren tree.
 Returns the parent triple (choosing the branch that gives positive components). -/
 def universalParent' (a b c : ℤ) : ℤ × ℤ × ℤ :=
@@ -29,12 +30,14 @@ def universalParent' (a b c : ℤ) : ℤ × ℤ × ℤ :=
   else (a, b, c)  -- at root
 
 
+
 /-- Try to extract a factor of N from a triple's legs. -/
 def tryFactor' (N : ℕ) (a b : ℤ) : Option ℕ :=
   let candidates := [a.natAbs, b.natAbs, (a - b).natAbs, (a + b).natAbs]
   candidates.findSome? fun v =>
     let g := Nat.gcd v N
     if 1 < g && g < N then some g else none
+
 
 
 /-- Factor N via parent descent. -/
@@ -54,6 +57,7 @@ where
         else
           let (pa, pb, pc) := universalParent' a b c
           go N pa pb pc fuel
+
 
 
 /-- Count steps to find a factor. -/
@@ -80,6 +84,7 @@ where
 #eval stepsToFactor' 323 200    -- 17 × 19
 
 
+
 /-- Compute the Euclid parameters (m, n) from a PPT (a, b, c). -/
 def euclidParams' (a b c : ℤ) : ℤ × ℤ :=
   let n_sq := (c - a) / 2
@@ -92,4 +97,5 @@ def euclidParams' (a b c : ℤ) : ℤ × ℤ :=
 #eval euclidParams' 7 24 25     -- (4, 3)
 #eval euclidParams' 21 20 29    -- (5, 2)
 #eval euclidParams' 15 8 17     -- (4, 1)
+
 

@@ -14,12 +14,14 @@ def AreOrthogonalIdempotents' {R : Type*} [Ring R] (e f : R) : Prop :=
   IsIdempotentElem e ∧ IsIdempotentElem f ∧ e * f = 0 ∧ f * e = 0
 
 
+
 /-- e and 1-e are orthogonal idempotents. -/
 theorem orthogonal_complement' {R : Type*} [Ring R] (e : R) (he : IsIdempotentElem e) :
     AreOrthogonalIdempotents' e (1 - e) := by
   refine ⟨he, he.one_sub, ?_, ?_⟩
   · rw [mul_sub, mul_one, he.eq, sub_self]
   · rw [sub_mul, one_mul, he.eq, sub_self]
+
 
 
 /-- A complete set of orthogonal idempotents sums to 1. -/
@@ -30,6 +32,7 @@ def IsCompleteIdempotentSystem' {R : Type*} [Ring R] {n : ℕ}
   ∑ i, idemps i = 1
 
 
+
 /-- The trivial complete system: {1}. -/
 theorem trivial_complete_system' {R : Type*} [Ring R] :
     IsCompleteIdempotentSystem' (fun (_ : Fin 1) => (1 : R)) := by
@@ -38,18 +41,26 @@ theorem trivial_complete_system' {R : Type*} [Ring R] :
   · simp
 
 
+
 /-- A Hecke algebra element (simplified diagonal model). -/
 structure HeckeElement' (n : ℕ) where
   coeffs : Fin n → ℝ
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.KaroubiIdempotent
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 13] -/
 instance {n : ℕ} : Mul (HeckeElement' n) :=
   ⟨fun a b => ⟨fun i => a.coeffs i * b.coeffs i⟩⟩
+
 
 
 /-- A Hecke algebra idempotent. -/
 def isHeckeIdempotent' {n : ℕ} (e : HeckeElement' n) : Prop :=
   e * e = e
+
 
 
 /-- The identity Hecke element is idempotent. -/
@@ -59,12 +70,14 @@ theorem heckeIdentity_idempotent' (n : ℕ) :
   simp
 
 
+
 /-- When δ = 2, TL generators are (rescaled) idempotents: (e/2)² = e/2. -/
 theorem tl_delta2_idempotent' (e_val : ℝ) (h : e_val * e_val = 2 * e_val) :
     IsIdempotentElem (e_val / 2) := by
   simp [IsIdempotentElem]
   field_simp
   linarith
+
 
 
 /-- Jones-Wenzl idempotent existence bound. -/
@@ -77,10 +90,12 @@ theorem jones_wenzl_bound' (n : ℕ) (hn : 0 < n) :
         : Real.pi / (n + 1) < Real.pi)]
 
 
+
 /-- Trace is additive for any matrices. -/
 theorem trace_additive_matrices {n : ℕ} (E F : Matrix (Fin n) (Fin n) ℝ) :
     (E + F).trace = E.trace + F.trace :=
   Matrix.trace_add E F
+
 
 
 theorem idempotent_trace_nonneg {n : ℕ} (E : Matrix (Fin n) (Fin n) ℝ)
@@ -121,6 +136,7 @@ theorem idempotent_trace_nonneg {n : ℕ} (E : Matrix (Fin n) (Fin n) ℝ)
   induction ( Matrix.charpoly ( E.map ( algebraMap ℝ ℂ ) ) |> Polynomial.roots ) using Multiset.induction <;> aesop
 
 
+
 /-- Quantum observable bound: for a complete system of orthogonal projectors,
 each projector has non-negative trace. -/
 theorem quantum_observable_bound (n : ℕ) (projectors : Fin n → Matrix (Fin n) (Fin n) ℝ)
@@ -130,6 +146,7 @@ theorem quantum_observable_bound (n : ℕ) (projectors : Fin n → Matrix (Fin n
     ∀ i, (projectors i).trace ≥ 0 := by
   intro i
   exact idempotent_trace_nonneg _ (h_idem i)
+
 
 
 end

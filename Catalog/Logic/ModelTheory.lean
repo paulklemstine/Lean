@@ -12,9 +12,11 @@ theorem addgroup_theory_consistent : ∃ (G : Type) (_ : AddCommGroup G), True :
   ⟨ℤ, inferInstance, trivial⟩
 
 
+
 /-- The theory of fields is consistent: ℚ is a field. -/
 theorem field_theory_consistent : ∃ (F : Type) (_ : Field F), True :=
   ⟨ℚ, inferInstance, trivial⟩
+
 
 
 /-- ACF₀ is consistent: ℂ is an algebraically closed field of characteristic 0. -/
@@ -22,15 +24,18 @@ theorem acf0_consistent : ∃ (F : Type) (_ : Field F) (_ : IsAlgClosed F) (_ : 
   ⟨Complex, inferInstance, Complex.isAlgClosed, inferInstance, trivial⟩
 
 
+
 /-- ℚ is densely ordered (Cantor's back-and-forth consequence). -/
 theorem rat_dense (a b : ℚ) (h : a < b) : ∃ c : ℚ, a < c ∧ c < b :=
   DenselyOrdered.dense a b h
+
 
 
 /-- The number of subsets of Fin n is 2^n. -/
 theorem powerset_card (n : ℕ) :
     Fintype.card (Finset (Fin n)) = 2 ^ n := by
   simp [Fintype.card_finset]
+
 
 
 /-- Lagrange's theorem: subgroup order divides group order. -/
@@ -40,10 +45,12 @@ theorem lagrange_divides {G : Type*} [Group G] [Fintype G]
   Subgroup.card_subgroup_dvd_card H
 
 
+
 /-- Every element of a finite group has finite order dividing |G|. -/
 theorem order_divides_card {G : Type*} [Group G] [Fintype G] (g : G) :
     orderOf g ∣ Fintype.card G :=
   orderOf_dvd_card
+
 
 
 /-- ℚ is a countable field (Löwenheim-Skolem consequence). -/
@@ -51,10 +58,12 @@ theorem countable_field_exists : ∃ (F : Type) (_ : Field F) (_ : Countable F),
   ⟨ℚ, inferInstance, inferInstance, trivial⟩
 
 
+
 /-- ℤ is a countable infinite integral domain. -/
 theorem countable_infinite_domain : ∃ (R : Type) (_ : CommRing R) (_ : IsDomain R)
     (_ : Countable R) (_ : Infinite R), True :=
   ⟨ℤ, inferInstance, inferInstance, inferInstance, inferInstance, trivial⟩
+
 
 
 /-- A number n ≥ 2 is composite iff it has a nontrivial divisor. -/
@@ -75,4 +84,5 @@ theorem composite_iff (n : ℕ) (hn : 2 ≤ n) :
   · rintro ⟨d, hd1, hd2, hd3⟩ hp
     have := hp.eq_one_or_self_of_dvd d hd3
     omega
+
 

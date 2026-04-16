@@ -24,6 +24,7 @@ theorem spb_hasDerivAt_x (a x : ℝ) (h : 1 - x * a ≠ 0) :
   ring
 
 
+
 /-- Derivative of y ↦ spb(a, y) is (1 + a²)/(1 - ay)². -/
 theorem spb_hasDerivAt_y (a y : ℝ) (h : 1 - a * y ≠ 0) :
     HasDerivAt (fun t => spb a t) ((1 + a ^ 2) / (1 - a * y) ^ 2) y := by
@@ -33,6 +34,7 @@ theorem spb_hasDerivAt_y (a y : ℝ) (h : 1 - a * y ≠ 0) :
   have heq : (fun t => spb a t) = (fun t => spb t a) := by
     funext t; unfold spb; ring
   rw [heq]; convert key using 1; ring
+
 
 
 /-- Full chain rule for spb(f(t), g(t)).
@@ -54,6 +56,7 @@ theorem spb_chain_rule (f g : ℝ → ℝ) (t₀ f' g' : ℝ)
   ring
 
 
+
 /-- Derivative of hyperbolic SPB. -/
 theorem spbH_hasDerivAt_x (a x : ℝ) (h : 1 + x * a ≠ 0) :
     HasDerivAt (fun t => spbH t a) ((1 - a ^ 2) / (1 + x * a) ^ 2) x := by
@@ -66,6 +69,7 @@ theorem spbH_hasDerivAt_x (a x : ℝ) (h : 1 + x * a ≠ 0) :
   simp [id]
   field_simp
   ring
+
 
 
 end

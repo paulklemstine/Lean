@@ -9,10 +9,15 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # CatalogBuild.Computation.Oracles.OracleFixedPoint
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 12] -/
 theorem oracle_contraction_on_range {X : Type*} [MetricSpace X]
     (O : X → X) (hO : ∀ x, O (O x) = O x) (y : X) (hy : y ∈ range O) :
     dist (O y) y = 0 := by
       cases hy ; aesop
+
 
 
 theorem banach_unique_fixed_point {X : Type*} [MetricSpace X] [CompleteSpace X]
@@ -24,6 +29,7 @@ theorem banach_unique_fixed_point {X : Type*} [MetricSpace X] [CompleteSpace X]
       refine' ⟨ x, hx, fun y hy => _ ⟩;
       have := hf.dist_le_mul y x;
       exact dist_le_zero.mp ( by norm_num [ hx, hy ] at this; linarith )
+
 
 
 theorem knaster_tarski_fixed_point {α : Type*} [CompleteLattice α] (f : α → α)
@@ -39,6 +45,7 @@ theorem knaster_tarski_fixed_point {α : Type*} [CompleteLattice α] (f : α →
       exact h_nonempty_fixed_points
 
 
+
 theorem greatest_fixedPoint_char {α : Type*} [CompleteLattice α] (f : α → α)
     (hf : Monotone f) : f (sSup {x | x ≤ f x}) ≤ sSup {x | x ≤ f x} := by
       refine' le_sSup _;
@@ -46,9 +53,11 @@ theorem greatest_fixedPoint_char {α : Type*} [CompleteLattice α] (f : α → �
       exact sSup_le fun x hx => hx.trans ( hf <| le_sSup hx )
 
 
+
 theorem kleene_iteration_monotone {α : Type*} [CompleteLattice α] (f : α → α)
     (hf : Monotone f) : f ⊥ ≤ f (f ⊥) := by
       exact hf bot_le
+
 
 
 theorem diagonal_no_fixpoint (f : ℕ → (ℕ → Prop)) :
@@ -56,8 +65,10 @@ theorem diagonal_no_fixpoint (f : ℕ → (ℕ → Prop)) :
       exact ⟨ fun n => ¬f n n, fun n hn => by simpa using congr_fun hn n ⟩
 
 
+
 theorem russell_paradox_analog : ¬ ∃ (f : Set ℕ → Prop), ∀ S : Set ℕ, f S ↔ ¬f S := by
   exact fun ⟨ f, hf ⟩ => by simpa using hf Set.univ;
+
 
 
 theorem y_combinator_prop {X : Type*} (f : X → X) (y : X) (hy : f y = y) :
@@ -65,9 +76,11 @@ theorem y_combinator_prop {X : Type*} (f : X → X) (y : X) (hy : f y = y) :
       bv_omega
 
 
+
 theorem idempotent_gives_fixedpoint {X : Type*} (O : X → X) (hO : ∀ x, O (O x) = O x)
     (x : X) : O x ∈ {y | O y = y} := by
       grind +locals
+
 
 
 theorem fixedPoints_nonempty_iff {X : Type*} [Nonempty X] (O : X → X)
@@ -78,15 +91,18 @@ theorem fixedPoints_nonempty_iff {X : Type*} [Nonempty X] (O : X → X)
       exact ⟨ _, hO ( Classical.arbitrary X ) ⟩
 
 
+
 theorem idempotent_orbit_small {X : Type*} (O : X → X) (hO : ∀ x, O (O x) = O x)
     (x : X) : O^[2] x = O^[1] x := by
       exact hO x
+
 
 
 theorem idempotent_fixedpoint_count {n : ℕ} (O : Fin n → Fin n) (hO : ∀ x, O (O x) = O x) :
     Finset.card (Finset.filter (fun x => O x = x) Finset.univ) =
     Finset.card (Finset.image O Finset.univ) := by
       refine' Finset.card_bij ( fun x _ => x ) _ _ _ <;> aesop
+
 
 
 end

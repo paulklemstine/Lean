@@ -7,6 +7,10 @@ Declarations: 4
 
 import Mathlib
 
+/-- [Section: # CatalogBuild.Speculative.Other.Experiments2
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 4] -/
 def fib : ℕ → ℕ
   | 0 => 0
   | 1 => 1
@@ -20,6 +24,7 @@ def fib : ℕ → ℕ
       let s := signature n
       results := results.push s!"fib({k+2})={n}: r₂={s.ch2}, r₄={s.ch3}"
   return results
+
 
 
 def ilog2 (n : ℕ) : ℕ :=
@@ -45,6 +50,7 @@ def ilog2 (n : ℕ) : ℕ :=
   return s!"N={N}: avg_log2(r₂|visible)={avg_r2}, avg_log2(r₄)={avg_r4}, avg_log2(r₈)={avg_r8}, r₂_visible={count_r2}/{N}"
 
 
+
 def isPrime (n : ℕ) : Bool :=
   if n < 2 then false
   else Id.run do
@@ -56,6 +62,7 @@ def isPrime (n : ℕ) : Bool :=
     return result
 
 -- Check if n has a prime factor ≡ 3 (mod 4) to an odd power
+
 
 def hasBadFactor (n : ℕ) : Bool :=
   if n == 0 then true
@@ -88,4 +95,5 @@ def hasBadFactor (n : ℕ) : Bool :=
       mismatches := mismatches + 1
     total := total + 1
   return s!"Mismatches between r₂=0 and bad-factor prediction: {mismatches}/{total}"
+
 

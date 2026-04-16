@@ -13,6 +13,7 @@ noncomputable section
 def stdCauchyDensity (x : ℝ) : ℝ := 1 / (Real.pi * (1 + x ^ 2))
 
 
+
 /-- Standard Cauchy density is positive. -/
 theorem stdCauchyDensity_pos (x : ℝ) : 0 < stdCauchyDensity x := by
   unfold stdCauchyDensity
@@ -21,12 +22,15 @@ theorem stdCauchyDensity_pos (x : ℝ) : 0 < stdCauchyDensity x := by
   positivity
 
 
+
 /-- The SPB operator. -/
 def spbIG (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
 
 
+
 /-- The Jacobian of SPB w.r.t. the first variable: (1+y²)/(1-xy)². -/
 def spbJacobian (x y : ℝ) : ℝ := (1 + y ^ 2) / (1 - x * y) ^ 2
+
 
 
 /-- The Jacobian is always positive when the denominator is nonzero. -/
@@ -38,6 +42,7 @@ theorem spbJacobian_pos (x y : ℝ) (h : 1 - x * y ≠ 0) :
   · positivity
 
 
+
 /-- The key change-of-variables identity:
 1 + spb(x,a)² = (1+x²)(1+a²)/(1-xa)²
 This is the Jacobian factor for the Cauchy distribution. -/
@@ -46,6 +51,11 @@ theorem spb_cauchy_jacobian (x a : ℝ) (h : 1 - x * a ≠ 0) :
   unfold spbIG; field_simp; ring
 
 
+
+/-- [Section: # CatalogBuild.Speculative.SPBInformationGeometry
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 10] -/
 theorem cauchy_spb_change_of_vars (x a : ℝ) (h : 1 - x * a ≠ 0) :
     stdCauchyDensity (spbIG x a) * spbJacobian x a =
     1 / (Real.pi * (1 + x ^ 2)) := by
@@ -54,11 +64,13 @@ theorem cauchy_spb_change_of_vars (x a : ℝ) (h : 1 - x * a ≠ 0) :
   ring
 
 
+
 /-- The hyperbolic distance between two points on the upper half-plane.
 For the Cauchy manifold parametrized by (μ, γ), this is the Fisher metric. -/
 def hyperbolicDist (μ₁ γ₁ μ₂ γ₂ : ℝ) : ℝ :=
   Real.log ((μ₁ - μ₂) ^ 2 + (γ₁ + γ₂) ^ 2) -
   Real.log ((μ₁ - μ₂) ^ 2 + (γ₁ - γ₂) ^ 2)
+
 
 
 /-- When scale parameters are equal (γ₁ = γ₂ = γ), the hyperbolic distance
@@ -70,6 +82,7 @@ theorem hyperbolicDist_equal_scale (μ₁ μ₂ γ : ℝ) (hγ : 0 < γ) :
   unfold hyperbolicDist; ring_nf
 
 
+
 /-- For the standard Cauchy (γ=1), SPB translates the location parameter:
 if X ~ Cauchy(0,1), then spb(X, a) ~ Cauchy(a, 1).
 Equivalently, arctan(X) is uniform, and arctan(spb(X,a)) = arctan(X) + arctan(a). -/
@@ -78,6 +91,7 @@ theorem spb_cauchy_location_shift (a : ℝ) :
     spbIG x a - a = (x * (1 + a ^ 2)) / (1 - x * a) := by
   intro x h
   unfold spbIG; field_simp; ring
+
 
 
 end

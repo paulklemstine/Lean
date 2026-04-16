@@ -12,12 +12,18 @@ theorem four_k_sq_sub_one_eq (k : ℤ) : 4 * k ^ 2 - 1 = (2 * k - 1) * (2 * k + 
   ring
 
 
+
+/-- [Section: # CatalogBuild.MachineLearning.Neural.NeuralFactorSearch
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/Neural
+Declarations: 8] -/
 theorem iof_soundness (N : ℕ) (k : ℤ) (d : ℕ)
     (hd_eq : d = Int.gcd (4 * k ^ 2 - 1) (↑N))
     (hd_gt : 1 < d)
     (hd_lt : d < N) :
     d ∣ N ∧ 1 < d ∧ d < N := by
   exact ⟨ hd_eq ▸ Int.natCast_dvd_natCast.mp ( Int.gcd_dvd_right _ _ ), hd_gt, hd_lt ⟩
+
 
 
 theorem iof_factor_exists (p : ℕ) (hp : Nat.Prime p) (hp_odd : p ≠ 2) :
@@ -28,11 +34,13 @@ theorem iof_factor_exists (p : ℕ) (hp : Nat.Prime p) (hp_odd : p ≠ 2) :
   obtain ⟨ k, hk₁, hk₂, hk₃ ⟩ := h_k; exact ⟨ k, hk₂, hk₃, by convert hk₁.symm.dvd.mul_left ( 2 * k + 1 ) using 1; ring ⟩ ;
 
 
+
 theorem iof_gcd_nontrivial (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
     (k : ℤ) (hdvd : (↑p : ℤ) ∣ (4 * k ^ 2 - 1)) :
     1 < Int.gcd (4 * k ^ 2 - 1) (↑(p * q)) := by
   refine' lt_of_lt_of_le hp.one_lt _;
   exact Nat.le_of_dvd ( Nat.pos_of_ne_zero ( mt Int.gcd_eq_zero_iff.mp ( by aesop ) ) ) ( Nat.dvd_gcd ( Int.natAbs_dvd_natAbs.mpr hdvd ) ( dvd_mul_right _ _ ) )
+
 
 
 theorem residues_2k_minus_one (p : ℕ) (hp : Nat.Prime p) (hp_odd : p ≠ 2) :
@@ -43,12 +51,14 @@ theorem residues_2k_minus_one (p : ℕ) (hp : Nat.Prime p) (hp_odd : p ≠ 2) :
   exact ⟨ r, hr, fun x hx => by haveI := Fact.mk hp; exact mul_left_cancel₀ ( show ( 2 : ZMod p ) ≠ 0 by erw [ Ne.eq_def, ZMod.natCast_eq_zero_iff ] ; exact Nat.not_dvd_of_pos_of_lt Nat.zero_lt_two <| lt_of_le_of_ne hp.two_le <| Ne.symm hp_odd ) <| by haveI := Fact.mk hp; linear_combination hx - hr ⟩
 
 
+
 theorem residues_2k_plus_one (p : ℕ) (hp : Nat.Prime p) (hp_odd : p ≠ 2) :
     ∃! r : ZMod p, (2 : ZMod p) * r = -1 := by
   obtain ⟨r, hr⟩ : ∃ r : ZMod p, (2 : ZMod p) * r = -1 := by
     haveI := Fact.mk hp;
     exact ⟨ -1 / 2, mul_div_cancel₀ _ ( by erw [ Ne.eq_def, ZMod.natCast_eq_zero_iff ] ; exact Nat.not_dvd_of_pos_of_lt Nat.zero_lt_two ( lt_of_le_of_ne hp.two_le ( Ne.symm hp_odd ) ) ) ⟩;
   haveI := Fact.mk hp; exact ⟨ r, hr, by intros s hs; exact mul_left_cancel₀ ( show ( 2 : ZMod p ) ≠ 0 from by erw [ Ne.eq_def, ZMod.natCast_eq_zero_iff ] ; exact Nat.not_dvd_of_pos_of_lt ( by norm_num ) ( lt_of_le_of_ne hp.two_le hp_odd.symm ) ) <| by linear_combination hs - hr ⟩ ;
+
 
 
 theorem iof_hit_count_mod_p (p : ℕ) (hp : Nat.Prime p) (hp_odd : p ≠ 2) :
@@ -67,6 +77,7 @@ theorem iof_hit_count_mod_p (p : ℕ) (hp : Nat.Prime p) (hp_odd : p ≠ 2) :
   grind
 
 
+
 /-- The IOF loss function depends only on the neuron positions and hyperparameters,
 not on the factorization of N. This means gradient descent cannot guide the
 search toward valid k values any better than uniform random sampling. -/
@@ -81,4 +92,5 @@ theorem iof_loss_independent_of_factors
     -- because N does not appear in the loss function at all
     (fun N : ℕ => loss) (p * q) = (fun N : ℕ => loss) (p' * q') := by
   simp
+
 

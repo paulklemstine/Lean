@@ -12,16 +12,20 @@ theorem base_triple_pyth : IsPythTriple' 3 4 5 := by
   unfold IsPythTriple'; ring
 
 
+
 /-- Berggren A applied to (3,4,5) gives (5,12,13) -/
 theorem berggrenA_base : berggrenA 3 4 5 = (5, 12, 13) := by native_decide
+
 
 
 /-- Berggren B applied to (3,4,5) gives (21,20,29) -/
 theorem berggrenB_base : berggrenB 3 4 5 = (21, 20, 29) := by native_decide
 
 
+
 /-- Berggren C applied to (3,4,5) gives (15,8,17) -/
 theorem berggrenC_base : berggrenC 3 4 5 = (15, 8, 17) := by native_decide
+
 
 
 /-- Berggren A increases the hypotenuse for positive triples -/
@@ -31,11 +35,13 @@ theorem berggrenA_hypotenuse_grows (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc :
   simp only [berggrenA, IsPythTriple'] at *; nlinarith [sq_nonneg a, sq_nonneg b, sq_nonneg c]
 
 
+
 /-- Berggren B increases the hypotenuse for positive triples -/
 theorem berggrenB_hypotenuse_grows (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (h : IsPythTriple' a b c) :
     c < (berggrenB a b c).2.2 := by
   simp only [berggrenB, IsPythTriple'] at *; nlinarith
+
 
 
 /-- The Berggren matrices preserve the Minkowski form Q = a² + b² - c².
@@ -51,21 +57,26 @@ theorem berggren_preserves_minkowski_form (a b c : ℤ) :
   constructor <;> [skip; constructor] <;> ring
 
 
+
 /-- Depth-2: Berggren A applied twice to (3,4,5) -/
 theorem berggrenA_depth2 : berggrenA 5 12 13 = (7, 24, 25) := by native_decide
+
 
 
 /-- Depth-2: Berggren B applied to the A-child of (3,4,5) -/
 theorem berggrenB_of_A : berggrenB 5 12 13 = (55, 48, 73) := by native_decide
 
 
+
 /-- (55,48,73) is Pythagorean -/
 theorem triple_55_48_73 : IsPythTriple' 55 48 73 := by unfold IsPythTriple'; ring
+
 
 
 /-- The Gaussian product of two photon triples -/
 def gaussianProd' (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ) : ℤ × ℤ × ℤ :=
   (a₁ * a₂ - b₁ * b₂, a₁ * b₂ + b₁ * a₂, c₁ * c₂)
+
 
 
 /-- Gaussian product preserves the Pythagorean property -/
@@ -78,6 +89,7 @@ theorem gaussianProd'_preserves_pyth (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ)
              sq_nonneg (a₁ * b₂), sq_nonneg (b₁ * a₂)]
 
 
+
 /-- Gaussian product is associative -/
 theorem gaussianProd'_assoc (a₁ b₁ c₁ a₂ b₂ c₂ a₃ b₃ c₃ : ℤ) :
     let t₁₂ := gaussianProd' a₁ b₁ c₁ a₂ b₂ c₂
@@ -88,15 +100,18 @@ theorem gaussianProd'_assoc (a₁ b₁ c₁ a₂ b₂ c₂ a₃ b₃ c₃ : ℤ)
   simp only [gaussianProd']; ext <;> ring
 
 
+
 /-- Gaussian product is commutative -/
 theorem gaussianProd'_comm (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ) :
     gaussianProd' a₁ b₁ c₁ a₂ b₂ c₂ = gaussianProd' a₂ b₂ c₂ a₁ b₁ c₁ := by
   simp only [gaussianProd']; ext <;> ring
 
 
+
 /-- Direction is invariant under scaling -/
 theorem direction_ratio_scaling (a b k : ℤ) (ha : (a : ℚ) ≠ 0) (hk : (k : ℚ) ≠ 0) :
     (k * b : ℚ) / (k * a) = (b : ℚ) / a := by field_simp
+
 
 
 /-- The "slope" of a Gaussian product follows the tangent addition formula -/
@@ -110,13 +125,16 @@ theorem gaussian_slope_composition (a₁ b₁ a₂ b₂ : ℤ)
   push_cast; ring
 
 
+
 /-- A prime is "bright" if it's ≡ 1 (mod 4) — it generates a photon -/
 def isBrightPrime (p : ℕ) : Prop := Nat.Prime p ∧ p % 4 = 1
+
 
 
 /-- 2 is the unique "diagonal" prime — neither bright nor dark -/
 theorem two_is_diagonal : Nat.Prime 2 ∧ 2 % 4 ≠ 1 ∧ 2 % 4 ≠ 3 := by
   refine ⟨by decide, by omega, by omega⟩
+
 
 
 /-- The first few bright primes -/
@@ -125,10 +143,12 @@ theorem bright_primes_small :
   exact ⟨⟨by decide, by omega⟩, ⟨by decide, by omega⟩, ⟨by decide, by omega⟩, ⟨by decide, by omega⟩⟩
 
 
+
 /-- Every Pythagorean triple with c ≤ N has a, b ≤ N -/
 theorem pyth_legs_bounded {N : ℕ} (a b c : ℕ) (h : a^2 + b^2 = c^2) (hc : c ≤ N) :
     a ≤ N ∧ b ≤ N := by
   constructor <;> nlinarith [sq_nonneg b, sq_nonneg a]
+
 
 
 /-- The hypotenuse of a Pythagorean triple is at least as large as each leg -/
@@ -137,12 +157,14 @@ theorem hypotenuse_ge_legs (a b c : ℕ) (h : a^2 + b^2 = c^2) :
   constructor <;> nlinarith [sq_nonneg b, sq_nonneg a]
 
 
+
 /-- A photon state is a point on the integer light cone -/
 structure PhotonState' where
   px : ℤ
   py : ℤ
   energy : ℤ
   on_cone : px ^ 2 + py ^ 2 = energy ^ 2
+
 
 
 /-- Photon fusion via Gaussian product -/
@@ -156,8 +178,10 @@ def PhotonState'.fuse (p q : PhotonState') : PhotonState' where
                sq_nonneg (p.px * q.py), sq_nonneg (p.py * q.px)]
 
 
+
 /-- The vacuum photon (1, 0, 1) -/
 def vacuumPhoton : PhotonState' := ⟨1, 0, 1, by ring⟩
+
 
 
 /-- Fusion with vacuum is identity (left) -/
@@ -168,12 +192,14 @@ theorem fuse_vacuum_left (p : PhotonState') :
   simp [PhotonState'.fuse, vacuumPhoton]
 
 
+
 /-- Fusion with vacuum is identity (right) -/
 theorem fuse_vacuum_right (p : PhotonState') :
     (p.fuse vacuumPhoton).px = p.px ∧
     (p.fuse vacuumPhoton).py = p.py ∧
     (p.fuse vacuumPhoton).energy = p.energy := by
   simp [PhotonState'.fuse, vacuumPhoton]
+
 
 
 /-- Conjugate photon -/
@@ -184,16 +210,19 @@ def PhotonState'.conjugate (p : PhotonState') : PhotonState' where
   on_cone := by nlinarith [p.on_cone]
 
 
+
 /-- Fusing with conjugate kills the transverse momentum -/
 theorem fuse_conjugate_py (p : PhotonState') :
     (p.fuse p.conjugate).py = 0 := by
   simp [PhotonState'.fuse, PhotonState'.conjugate]; ring
 
 
+
 /-- Fusing with conjugate gives squared energy -/
 theorem fuse_conjugate_energy (p : PhotonState') :
     (p.fuse p.conjugate).energy = p.energy ^ 2 := by
   simp [PhotonState'.fuse, PhotonState'.conjugate]; ring
+
 
 
 /-- Photon fusion is commutative -/
@@ -204,6 +233,7 @@ theorem fuse_comm (p q : PhotonState') :
   simp [PhotonState'.fuse]; constructor <;> [skip; constructor] <;> ring
 
 
+
 /-- Photon fusion is associative -/
 theorem fuse_assoc (p q r : PhotonState') :
     ((p.fuse q).fuse r).px = (p.fuse (q.fuse r)).px ∧
@@ -212,14 +242,17 @@ theorem fuse_assoc (p q r : PhotonState') :
   simp [PhotonState'.fuse]; constructor <;> [skip; constructor] <;> ring
 
 
+
 /-- The depth-1 Berggren tree from (3,4,5) produces three valid triples -/
 theorem berggren_depth1_valid :
     IsPythTriple' 5 12 13 ∧ IsPythTriple' 21 20 29 ∧ IsPythTriple' 15 8 17 := by
   unfold IsPythTriple'; constructor <;> [skip; constructor] <;> ring
 
 
+
 /-- The (3,4,5) photon -/
 def photon345 : PhotonState' := ⟨3, 4, 5, by ring⟩
+
 
 
 /-- Self-fusion of (3,4,5) gives (-7, 24, 25) -/
@@ -230,8 +263,10 @@ theorem self_fuse_345 :
   simp [PhotonState'.fuse, photon345]
 
 
+
 /-- The (5,12,13) photon -/
 def photon51213 : PhotonState' := ⟨5, 12, 13, by ring⟩
+
 
 
 /-- Fusing (3,4,5) with (5,12,13) -/
@@ -242,14 +277,17 @@ theorem fuse_345_51213 :
   simp [PhotonState'.fuse, photon345, photon51213]
 
 
+
 /-- The Gaussian norm of a photon state is the energy squared -/
 theorem photon_norm_is_energy_sq (p : PhotonState') :
     p.px ^ 2 + p.py ^ 2 = p.energy ^ 2 := p.on_cone
 
 
+
 /-- Energy is preserved under conjugation -/
 theorem conjugate_energy (p : PhotonState') :
     p.conjugate.energy = p.energy := rfl
+
 
 
 /-- Double conjugation is identity -/
@@ -260,14 +298,17 @@ theorem double_conjugate (p : PhotonState') :
   simp [PhotonState'.conjugate]
 
 
+
 /-- A photon is "pure real" if py = 0 -/
 def PhotonState'.isPureReal (p : PhotonState') : Prop := p.py = 0
+
 
 
 /-- Fusing a photon with its conjugate always produces a pure real photon -/
 theorem fuse_conjugate_is_pure_real (p : PhotonState') :
     (p.fuse p.conjugate).isPureReal := by
   simp [PhotonState'.isPureReal, PhotonState'.fuse, PhotonState'.conjugate]; ring
+
 
 
 /-- Two photons with opposite momenta fuse to give energy² -/
@@ -277,10 +318,12 @@ theorem opposite_photon_fuse (p : PhotonState') :
   simp [PhotonState'.fuse]; ring
 
 
+
 /-- The quadrant of a photon (sign of px and py) -/
 def photonQuadrant (p : PhotonState') : ℤ × ℤ :=
   (if p.px > 0 then 1 else if p.px < 0 then -1 else 0,
    if p.py > 0 then 1 else if p.py < 0 then -1 else 0)
+
 
 
 /-- A photon with positive px and py is in the first quadrant -/
@@ -288,8 +331,10 @@ theorem first_quadrant_345 : photonQuadrant photon345 = (1, 1) := by
   simp [photonQuadrant, photon345]
 
 
+
 /-- The "angular momentum" proxy L = px * py for a photon -/
 def angularMomentumProxy (p : PhotonState') : ℤ := p.px * p.py
+
 
 
 /-- Angular momentum of (3,4,5) is 12 -/
@@ -297,11 +342,13 @@ theorem angular_momentum_345 : angularMomentumProxy photon345 = 12 := by
   simp [angularMomentumProxy, photon345]
 
 
+
 /-- Under fusion, the angular momentum proxy satisfies a product rule -/
 theorem angular_momentum_fuse (p q : PhotonState') :
     angularMomentumProxy (p.fuse q) =
     (p.px * q.px - p.py * q.py) * (p.px * q.py + p.py * q.px) := by
   simp [angularMomentumProxy, PhotonState'.fuse]
+
 
 
 /-- Scaling a photon by k gives another valid photon -/
@@ -312,10 +359,12 @@ def PhotonState'.scale (p : PhotonState') (k : ℤ) : PhotonState' where
   on_cone := by nlinarith [p.on_cone, sq_nonneg k]
 
 
+
 /-- Scaling by 1 is identity -/
 theorem scale_one (p : PhotonState') :
     (p.scale 1).px = p.px ∧ (p.scale 1).py = p.py ∧ (p.scale 1).energy = p.energy := by
   simp [PhotonState'.scale]
+
 
 
 /-- Scaling composes multiplicatively -/
@@ -324,4 +373,5 @@ theorem scale_compose (p : PhotonState') (j k : ℤ) :
     ((p.scale j).scale k).py = (p.scale (k * j)).py ∧
     ((p.scale j).scale k).energy = (p.scale (k * j)).energy := by
   simp [PhotonState'.scale]; constructor <;> [skip; constructor] <;> ring
+
 

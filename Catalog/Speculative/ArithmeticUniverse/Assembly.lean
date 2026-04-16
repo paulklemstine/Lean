@@ -17,10 +17,12 @@ noncomputable def assembleOracleOfPrimes : OracleOfPrimes where
   infinite_atoms := oracle_primes_infinite
 
 
+
 /-- The Oracle of Divisibility exists. -/
 def assembleOracleOfDivisibility : OracleOfDivisibility where
   div_refl := fun n _ => dvd_refl n
   gcd_is_meet := fun a b d hd => by subst hd; exact oracle_gcd_divides a b
+
 
 
 /-- The Oracle of Congruences exists. -/
@@ -28,14 +30,17 @@ noncomputable def assembleOracleOfCongruences : OracleOfCongruences where
   fermat_little := oracle_congruences_fermat
 
 
+
 /-- The Oracle of Sums exists. -/
 def assembleOracleOfSums : OracleOfSums where
   gauss_sum := oracle_sums_gauss
 
 
+
 /-- The Oracle of Diophantine exists (with FLT4 from Mathlib). -/
 noncomputable def assembleOracleOfDiophantine : OracleOfDiophantine where
   flt4 := fun a b c => fermatLastTheoremFour (a := a) (b := b) (c := c)
+
 
 
 /-- **The Oracle Council is assembled.** All five oracles are constructively
@@ -49,6 +54,7 @@ noncomputable def theOracleCouncil : OracleCouncil where
   diophantine := assembleOracleOfDiophantine
 
 #check theOracleCouncil  -- OracleCouncil
+
 
 
 end

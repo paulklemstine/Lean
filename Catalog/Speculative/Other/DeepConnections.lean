@@ -16,14 +16,21 @@ noncomputable def chebyT : ℕ → Polynomial ℤ
   | (n + 2) => 2 * Polynomial.X * chebyT (n + 1) - chebyT n
 
 
+
 /-- **THEOREM 17**: T₀ = 1 -/
 theorem chebyT_zero : chebyT 0 = 1 := by rfl
+
 
 
 /-- **THEOREM 18**: T₁ = X -/
 theorem chebyT_one : chebyT 1 = Polynomial.X := by rfl
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.DeepConnections
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 12] -/
 theorem chebyT_degree (n : ℕ) (hn : 1 ≤ n) :
     (chebyT n).natDegree = n := by
       induction' n using Nat.strong_induction_on with n ih; rcases n with _|_|n; simp_all +decide [ Polynomial.natDegree_sub_eq_left_of_natDegree_lt ] ;
@@ -33,6 +40,7 @@ theorem chebyT_degree (n : ℕ) (hn : 1 ≤ n) :
         · by_cases hn : 1 ≤ n <;> simp_all +arith +decide [ Polynomial.natDegree_sub_eq_left_of_natDegree_lt ];
           erw [ chebyT_zero ] ; norm_num;
         · exact ne_of_apply_ne Polynomial.natDegree ( by erw [ ih _ ( Nat.lt_succ_self _ ) ( Nat.succ_pos _ ) ] ; norm_num )
+
 
 
 theorem chebyT_comp (m n : ℕ) :
@@ -68,6 +76,7 @@ theorem chebyT_comp (m n : ℕ) :
       simpa using Eq.symm ( h_recurrence m n )
 
 
+
 /-- A solution to the Pell equation x² - D·y² = 1 -/
 structure PellSolution (D : ℤ) where
   x : ℤ
@@ -75,8 +84,10 @@ structure PellSolution (D : ℤ) where
   eq : x^2 - D * y^2 = 1
 
 
+
 /-- The trivial solution -/
 def PellSolution.trivial (D : ℤ) : PellSolution D := ⟨1, 0, by ring⟩
+
 
 
 /-- Composing two Pell solutions (the "Brahmagupta composition") -/
@@ -89,6 +100,7 @@ def PellSolution.compose (D : ℤ) (s₁ s₂ : PellSolution D) : PellSolution D
                        sq_nonneg (s₁.x * s₂.y - s₁.y * s₂.x)]
 
 
+
 theorem pell_compose_assoc (D : ℤ) (s₁ s₂ s₃ : PellSolution D) :
     PellSolution.compose D (PellSolution.compose D s₁ s₂) s₃ =
     PellSolution.compose D s₁ (PellSolution.compose D s₂ s₃) := by
@@ -97,9 +109,11 @@ theorem pell_compose_assoc (D : ℤ) (s₁ s₂ s₃ : PellSolution D) :
       constructor <;> ring
 
 
+
 theorem pell_compose_trivial_left (D : ℤ) (s : PellSolution D) :
     PellSolution.compose D (PellSolution.trivial D) s = s := by
       cases s ; unfold PellSolution.trivial PellSolution.compose ; aesop
+
 
 
 theorem sum_two_sq_mod (p : ℕ) (hp : Nat.Prime p) (hp4 : p % 4 = 1) :
@@ -107,6 +121,7 @@ theorem sum_two_sq_mod (p : ℕ) (hp : Nat.Prime p) (hp4 : p % 4 = 1) :
       haveI := Fact.mk hp;
       obtain ⟨ x, hx ⟩ := ZMod.exists_sq_eq_neg_one_iff ( p := p );
       exact Exists.elim ( hx ( by rw [ hp4 ] ; decide ) ) fun a ha => ⟨ a, by rw [ sq, ha ] ⟩
+
 
 
 theorem padic_val_add_ge_min (p a b : ℕ) (hp : Nat.Prime p)
@@ -118,6 +133,7 @@ theorem padic_val_add_ge_min (p a b : ℕ) (hp : Nat.Prime p)
         exact fun k hk₁ hk₂ => Nat.dvd_add hk₁ hk₂;
       simp_all +decide [ ← Nat.factorization_le_iff_dvd, padicValNat_dvd_iff ];
       contrapose! h_div; aesop;
+
 
 
 end

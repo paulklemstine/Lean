@@ -1,23 +1,12 @@
-/-
-# Planes Map to Spheres Under Inverse Stereographic Projection
+/-! # CatalogBuild.Geometry.Stereographic.PlaneToSphere
 
-This file proves that k-dimensional planes in ℝ^N map to k-spheres on S^N
-under inverse stereographic projection, and characterizes the image of
-hyperplanes via linear constraints.
-
-## Main results
-
-* `plane_image_on_sphere` — every point on a parametric plane maps to S^N
-* `hyperplane_image_characterization` — points satisfying a linear constraint
-  in ℝ^N have images satisfying a corresponding constraint on S^N
-* `invStereoN_2_surj_on_sphere` — invStereoN is surjective onto S² \ {NP}
+Auto-generated from theorem catalog database.
+Domain: Geometry/Stereographic
+Declarations: 4
 -/
-import Mathlib
+
 import Geometry.Stereographic.Basic
-
-namespace StereographicProjection
-
-open Finset BigOperators
+import Mathlib
 
 noncomputable section
 
@@ -25,16 +14,13 @@ noncomputable section
 def paramPlane {N : ℕ} (p v₁ v₂ : Fin N → ℝ) (s t : ℝ) : Fin N → ℝ :=
   fun i => p i + s * v₁ i + t * v₂ i
 
+
 /-- Every point on a parametric plane maps to S^N -/
 theorem plane_image_on_sphere {N : ℕ} (p v₁ v₂ : Fin N → ℝ) (s t : ℝ) :
     ∑ i : Fin (N + 1), (invStereoN (paramPlane p v₁ v₂ s t) i) ^ 2 = 1 :=
   invStereoN_norm_sq _
 
-/-
-Hyperplane characterization: if y satisfies ∑ aᵢyᵢ = c in ℝ^N,
-    then the image x = invStereoN(y) satisfies the linear constraint
-    ∑ aᵢxᵢ = c · (1 - x_N) on S^N, where x_N is the last coordinate
--/
+
 theorem hyperplane_image_characterization {N : ℕ} (a : Fin N → ℝ) (c : ℝ)
     (y : Fin N → ℝ) (hy : ∑ i, a i * y i = c) :
     ∑ i : Fin N, a i * invStereoN y ⟨i.val, Nat.lt_succ_of_lt i.isLt⟩ =
@@ -46,9 +32,7 @@ theorem hyperplane_image_characterization {N : ℕ} (a : Fin N → ℝ) (c : ℝ
         simp +decide [ mul_assoc, mul_div_assoc, stereoDenom, lastIdx ];
         exact Or.inl ( by rw [ one_sub_div ( by linarith [ show 0 ≤ sqNormFin y from Finset.sum_nonneg fun _ _ => sq_nonneg _ ] ) ] ; ring )
 
-/-
-invStereoN for N=2 is surjective onto S² \ {north pole}
--/
+
 theorem invStereoN_2_surj_on_sphere (x : Fin 3 → ℝ)
     (hx_sphere : ∑ i : Fin 3, x i ^ 2 = 1)
     (hx_ne_np : x ⟨2, by omega⟩ ≠ 1) :
@@ -59,6 +43,5 @@ theorem invStereoN_2_surj_on_sphere (x : Fin 3 → ℝ)
         exact h_eq.symm.subset ⟨ hx_sphere, hx_ne_np ⟩;
       exact h_range
 
-end
 
-end StereographicProjection
+end

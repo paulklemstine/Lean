@@ -9,10 +9,16 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # CatalogBuild.Computation.DynamicalSystem
+Auto-generated from theorem catalog database.
+Domain: Computation
+Declarations: 10] -/
 def EML_dyn (a b : ℝ) : ℝ := Real.exp a - Real.log b
 
 
+
 def trEML (p : ℝ × ℝ) : ℝ := EML_dyn p.1 p.2 + EML_dyn p.2 p.1
+
 
 
 def PhiIter : ℕ → ℝ × ℝ → ℝ × ℝ
@@ -20,13 +26,16 @@ def PhiIter : ℕ → ℝ × ℝ → ℝ × ℝ
   | n + 1, p => Phi (PhiIter n p)
 
 
+
 theorem trEML_formula (x y : ℝ) :
     trEML (x, y) = Real.exp x + Real.exp y - Real.log x - Real.log y := by
   simp [trEML, EML_dyn]; ring
 
 
+
 theorem trEML_symm (x y : ℝ) : trEML (x, y) = trEML (y, x) := by
   simp [trEML, EML_dyn]; ring
+
 
 
 theorem trEML_ge_four (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
@@ -36,15 +45,18 @@ theorem trEML_ge_four (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
             Real.log_le_sub_one_of_pos hx, Real.log_le_sub_one_of_pos hy]
 
 
+
 theorem Phi_ordering (x y : ℝ) (hy : 0 < y) (hxy : x > y) :
     EML_dyn x y > EML_dyn y x := by
   simp [EML_dyn]
   linarith [Real.exp_lt_exp.mpr hxy, Real.log_lt_log hy hxy]
 
 
+
 theorem Phi_antisymmetric (x y : ℝ) :
     EML_dyn x y - EML_dyn y x = (Real.exp x - Real.exp y) + (Real.log x - Real.log y) := by
   simp [EML_dyn]; ring
+
 
 
 theorem Phi_max_component_bound (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
@@ -59,6 +71,7 @@ theorem Phi_max_component_bound (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
     have h : EML_dyn y x ≥ Real.exp y - x := by
       unfold EML_dyn; linarith [Real.log_le_sub_one_of_pos hx]
     linarith [le_max_right (EML_dyn x y) (EML_dyn y x)]
+
 
 
 theorem Phi_max_grows (x y : ℝ) (hx : 0 < x) (hy : 0 < y) (hmax : max x y ≥ 2) :
@@ -78,6 +91,7 @@ theorem Phi_max_grows (x y : ℝ) (hx : 0 < x) (hy : 0 < y) (hmax : max x y ≥ 
       unfold EML_dyn
       nlinarith [quadratic_le_exp_of_nonneg hy.le, Real.log_le_sub_one_of_pos hx, sq_nonneg y]
     exact lt_of_lt_of_le this (le_max_right _ _)
+
 
 
 end

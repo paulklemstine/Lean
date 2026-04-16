@@ -15,9 +15,11 @@ structure HierarchicalSystem where
   upward : ∀ {l₁ l₂ : Level}, @LT.lt Level levelOrder.toLT l₁ l₂ → Content l₁ → Content l₂
 
 
+
 /-- A tangled hierarchy: a hierarchical system with a strange loop -/
 structure TangledHierarchy extends HierarchicalSystem where
   loop : StrangeLoop toHierarchicalSystem
+
 
 
 /-- A self-model: a system that contains a representation of itself -/
@@ -29,9 +31,15 @@ structure SelfModel where
   reflects : ∀ m : Model, project (embed m) = m
 
 
+
+/-- [Section: # CatalogBuild.MachineLearning.Consciousness.StrangeLoops
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/Consciousness
+Declarations: 8] -/
 theorem self_model_is_strange_loop (S : SelfModel) :
     Function.LeftInverse S.project S.embed := by
   exact S.reflects
+
 
 
 /-- The "I" as a fixed point -/
@@ -40,6 +48,7 @@ structure SelfAsFixedPoint where
   reflect : SelfConcept → SelfConcept
   stableSelf : SelfConcept
   is_fixed : reflect stableSelf = stableSelf
+
 
 
 theorem unique_self_from_contraction
@@ -68,6 +77,7 @@ theorem unique_self_from_contraction
   exact ⟨ x, hx, fun y hy => by_contra fun h => absurd ( hf y x ) ( by aesop ) ⟩
 
 
+
 /-- A Gödel-style strange loop -/
 structure GoedelLoop where
   Sentence : Type
@@ -76,9 +86,11 @@ structure GoedelLoop where
   goedel_property : provable goedelSentence ↔ ¬ provable goedelSentence → True
 
 
+
 /-- Isomorphism between strange loops -/
 def StrangeLoopIso (H : HierarchicalSystem) (l₁ l₂ : StrangeLoop H) : Prop :=
   ∃ (f : H.Content l₁.start → H.Content l₂.start)
     (g : H.Content l₂.start → H.Content l₁.start),
     Function.LeftInverse g f ∧ Function.RightInverse g f
+
 

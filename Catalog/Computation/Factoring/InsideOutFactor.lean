@@ -15,6 +15,7 @@ def applyInvBG1 (v : Fin 3 → ℤ) : Fin 3 → ℤ :=
   | 2 => -2 * v 0 - 2 * v 1 + 3 * v 2
 
 
+
 /-- Apply inverse Berggren matrix B₂⁻¹ -/
 def applyInvBG2 (v : Fin 3 → ℤ) : Fin 3 → ℤ :=
   fun i => match i with
@@ -23,12 +24,14 @@ def applyInvBG2 (v : Fin 3 → ℤ) : Fin 3 → ℤ :=
   | 2 => -2 * v 0 - 2 * v 1 + 3 * v 2
 
 
+
 /-- Apply inverse Berggren matrix B₃⁻¹ -/
 def applyInvBG3 (v : Fin 3 → ℤ) : Fin 3 → ℤ :=
   fun i => match i with
   | 0 => -v 0 - 2 * v 1 + 2 * v 2
   | 1 => 2 * v 0 + v 1 - 2 * v 2
   | 2 => -2 * v 0 - 2 * v 1 + 3 * v 2
+
 
 
 /-- Find the parent of a Pythagorean triple in the Berggren tree.
@@ -46,6 +49,7 @@ def findBerggrenParent (a b c : ℤ) : ℕ × ℤ × ℤ × ℤ :=
     let a3 := -a - 2*b + 2*c
     let b3 := 2*a + b - 2*c
     (3, a3, b3, c1)
+
 
 
 /-- The inside-out factoring algorithm.
@@ -72,6 +76,7 @@ def insideOutFactor (N : ℕ) (maxSteps : ℕ) : Option (ℕ × ℕ) := Id.run d
   return none
 
 
+
 /-- Extended version: returns ALL factors found during descent -/
 def insideOutFactorAll (N : ℕ) (maxSteps : ℕ) : List (ℕ × ℕ × ℕ) := Id.run do
   if N % 2 == 0 || N < 9 then return []
@@ -94,6 +99,7 @@ def insideOutFactorAll (N : ℕ) (maxSteps : ℕ) : List (ℕ × ℕ × ℕ) := 
   return results.reverse
 
 
+
 /-- Find all representations of n = a² + b² with 0 < a ≤ b -/
 def sumOfTwoSquaresReps (n : ℕ) : List (ℕ × ℕ) :=
   let sq := Nat.sqrt n
@@ -104,6 +110,7 @@ def sumOfTwoSquaresReps (n : ℕ) : List (ℕ × ℕ) :=
       if b * b == b2 && a ≤ b then some (a, b)
       else none
     else none
+
 
 
 /-- Factor N by finding non-primitive Pythagorean triples with hypotenuse N.
@@ -128,6 +135,7 @@ def factorViaSumOfSquares (N : ℕ) : List (ℕ × ℕ × ℕ × ℕ) :=
 #eval factorViaSumOfSquares 77    -- empty! Both primes ≡ 3 mod 4
 
 
+
 /-- Factor N by first multiplying by auxiliary prime 5 -/
 def factorViaAuxiliary (N : ℕ) (aux : ℕ) : List (ℕ × ℕ) :=
   let N' := N * aux
@@ -148,12 +156,14 @@ def factorViaAuxiliary (N : ℕ) (aux : ℕ) : List (ℕ × ℕ) :=
 #eval factorViaAuxiliary 77 13
 
 
+
 /-- The Euclid parametrization produces a valid Pythagorean triple -/
 theorem euclid_triple_valid (N : ℤ) (hodd : N % 2 = 1) :
     let m := (N + 1) / 2
     let n := (N - 1) / 2
     (m ^ 2 - n ^ 2) ^ 2 + (2 * m * n) ^ 2 = (m ^ 2 + n ^ 2) ^ 2 := by
   ring
+
 
 
 /-- The odd leg of the Euclid triple is exactly N -/
@@ -168,15 +178,22 @@ theorem euclid_odd_leg (N : ℤ) (hodd : N % 2 = 1) :
   omega
 
 
+
 /-- Inverse Berggren maps preserve the Lorentz form (algebraically) -/
 theorem invB1_preserves_form (a b c : ℤ) :
     (a + 2*b - 2*c)^2 + (-2*a - b + 2*c)^2 - (-2*a - 2*b + 3*c)^2 =
     a^2 + b^2 - c^2 := by ring
 
 
+
+/-- [Section: # CatalogBuild.Computation.Factoring.InsideOutFactor
+Auto-generated from theorem catalog database.
+Domain: Computation/Factoring
+Declarations: 17] -/
 theorem invB2_preserves_form (a b c : ℤ) :
     (a + 2*b - 2*c)^2 + (2*a + b - 2*c)^2 - (-2*a - 2*b + 3*c)^2 =
     a^2 + b^2 - c^2 := by ring
+
 
 
 theorem invB3_preserves_form (a b c : ℤ) :
@@ -184,10 +201,12 @@ theorem invB3_preserves_form (a b c : ℤ) :
     a^2 + b^2 - c^2 := by ring
 
 
+
 /-- If gcd(a, N) = d with 1 < d < N, then d divides N (factor found) -/
 theorem gcd_reveals_factor (a N d : ℕ) (hd : d = Nat.gcd a N)
     (h1 : 1 < d) (h2 : d < N) : d ∣ N := by
   rw [hd]; exact Nat.gcd_dvd_right a N
+
 
 
 /-- The parent hypotenuse c' = -2a-2b+3c satisfies c' < c when a,b > 0 -/
@@ -197,7 +216,9 @@ theorem parent_hyp_decreases (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
   nlinarith [sq_nonneg (a + b - c)]
 
 
+
 /-- The hypotenuse decrease is exactly 2(a+b-c) -/
 theorem hyp_decrease_exact (a b c : ℤ) :
     c - (-2*a - 2*b + 3*c) = 2*(a + b) - 2*c := by ring
+
 

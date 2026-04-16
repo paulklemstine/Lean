@@ -5,8 +5,8 @@ Domain: EML
 Declarations: 12
 -/
 
-import Mathlib
 import EML.Lean.SoftplusBasic
+import Mathlib
 
 noncomputable section
 
@@ -19,12 +19,14 @@ inductive ShefferExpr : Type where
   | comp (e₁ e₂ : ShefferExpr) : ShefferExpr  -- e₁ ∘ e₂
 
 
+
 /-- Evaluate a Sheffer expression at a point -/
 def ShefferExpr.eval : ShefferExpr → ℝ → ℝ
   | .base => softplus
   | .affine_pre a b e => fun x => e.eval (a * x + b)
   | .affine_comb α β γ e₁ e₂ => fun x => α * e₁.eval x + β * e₂.eval x + γ
   | .comp e₁ e₂ => fun x => e₁.eval (e₂.eval x)
+
 
 
 /-- The depth of a Sheffer expression -/
@@ -35,6 +37,7 @@ def ShefferExpr.depth : ShefferExpr → ℕ
   | .comp e₁ e₂ => e₁.depth + e₂.depth
 
 
+
 /-- The width of a Sheffer expression (number of base activations) -/
 def ShefferExpr.width : ShefferExpr → ℕ
   | .base => 1
@@ -43,9 +46,11 @@ def ShefferExpr.width : ShefferExpr → ℕ
   | .comp e₁ e₂ => e₁.width + e₂.width
 
 
+
 /-- The Sheffer algebra: the set of all functions representable as Sheffer expressions -/
 def ShefferAlgebra : Set (ℝ → ℝ) :=
   { f | ∃ e : ShefferExpr, f = e.eval }
+
 
 
 /-- Softplus is in the Sheffer algebra -/
@@ -53,11 +58,13 @@ theorem softplus_mem_sheffer : softplus ∈ ShefferAlgebra :=
   ⟨ShefferExpr.base, rfl⟩
 
 
+
 /-- The Sheffer algebra is closed under affine pre-composition -/
 theorem sheffer_affine_pre_closed {f : ℝ → ℝ} (hf : f ∈ ShefferAlgebra) (a b : ℝ) :
     (fun x => f (a * x + b)) ∈ ShefferAlgebra := by
   obtain ⟨e, he⟩ := hf
   exact ⟨ShefferExpr.affine_pre a b e, by ext x; simp [ShefferExpr.eval, he]⟩
+
 
 
 /-- The Sheffer algebra is closed under affine combination -/
@@ -69,6 +76,7 @@ theorem sheffer_affine_comb_closed {f g : ℝ → ℝ} (hf : f ∈ ShefferAlgebr
   exact ⟨ShefferExpr.affine_comb α β γ e₁ e₂, by ext x; simp [ShefferExpr.eval, he₁, he₂]⟩
 
 
+
 /-- The Sheffer algebra is closed under composition -/
 theorem sheffer_comp_closed {f g : ℝ → ℝ} (hf : f ∈ ShefferAlgebra)
     (hg : g ∈ ShefferAlgebra) :
@@ -78,12 +86,14 @@ theorem sheffer_comp_closed {f g : ℝ → ℝ} (hf : f ∈ ShefferAlgebra)
   exact ⟨ShefferExpr.comp e₁ e₂, by ext x; simp [ShefferExpr.eval, he₁, he₂]⟩
 
 
+
 /-- Constants are in the Sheffer algebra -/
 theorem const_mem_sheffer (c : ℝ) : (fun _ : ℝ => c) ∈ ShefferAlgebra := by
   have h := softplus_mem_sheffer
   have := sheffer_affine_comb_closed h h 1 (-1) c
   convert this using 1
   ext x; ring
+
 
 
 /-- The identity function is in the Sheffer algebra:
@@ -99,9 +109,11 @@ theorem id_mem_sheffer : (fun x : ℝ => x) ∈ ShefferAlgebra := by
   linarith
 
 
+
 /-- The Sheffer degree of a function: the minimum depth needed to represent it -/
 noncomputable def shefferDegree (f : ℝ → ℝ) : ℕ∞ :=
   ⨅ (e : ShefferExpr) (_ : f = e.eval), (e.depth : ℕ∞)
+
 
 
 end

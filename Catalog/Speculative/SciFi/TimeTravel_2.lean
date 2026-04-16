@@ -9,6 +9,10 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # CatalogBuild.Speculative.SciFi.TimeTravel_2
+Auto-generated from theorem catalog database.
+Domain: Speculative/SciFi
+Declarations: 4] -/
 theorem contraction_has_fixedPoint {X : Type*} [MetricSpace X] [CompleteSpace X]
     [Nonempty X] {f : X → X} {q : ℝ} (hq : q ∈ Set.Ico (0 : ℝ) 1)
     (hf : ∀ x y, dist (f x) (f y) ≤ q * dist x y) :
@@ -25,12 +29,14 @@ theorem contraction_has_fixedPoint {X : Type*} [MetricSpace X] [CompleteSpace X]
   simpa only [ Function.iterate_succ_apply' ] using Filter.Tendsto.comp ( show Filter.Tendsto f _ _ from by exact ( Metric.tendsto_nhds_nhds.mpr fun ε hε => by exact ⟨ ε, hε, by intro y hy; exact lt_of_le_of_lt ( hf _ _ ) ( by nlinarith [ hq.1, hq.2 ] ) ⟩ ) ) hx
 
 
+
 theorem contraction_fixedPoint_unique {X : Type*} [MetricSpace X]
     {f : X → X} {q : ℝ} (hq : q < 1)
     (hf : ∀ x y, dist (f x) (f y) ≤ q * dist x y)
     {x₁ x₂ : X} (h₁ : f x₁ = x₁) (h₂ : f x₂ = x₂) : x₁ = x₂ := by
   contrapose! hf;
   exact ⟨ x₁, x₂, by simp [ * ] ⟩
+
 
 
 theorem monotone_has_lfp {L : Type*} [CompleteLattice L] {f : L → L}
@@ -44,6 +50,7 @@ theorem monotone_has_lfp {L : Type*} [CompleteLattice L] {f : L → L}
   · exact fun y hy => sInf_le hy.le
 
 
+
 theorem interval_fixedPoint {f : ℝ → ℝ} {a b : ℝ} (hab : a ≤ b)
     (hf : ContinuousOn f (Set.Icc a b))
     (hfa : a ≤ f a) (hfb : f b ≤ b)
@@ -55,6 +62,7 @@ theorem interval_fixedPoint {f : ℝ → ℝ} {a b : ℝ} (hab : a ≤ b)
     · exact hf.sub continuousOn_id;
     · constructor <;> linarith;
   simpa only [ sub_eq_zero ] using h_ivt
+
 
 
 end

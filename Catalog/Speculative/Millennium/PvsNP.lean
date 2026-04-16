@@ -11,6 +11,7 @@ import Mathlib
 def DecisionProblem := List Bool → Prop
 
 
+
 /-- A witness-based problem: given input x, witness w proves x is a "yes" instance. -/
 structure WitnessProblem where
   /-- The language: which inputs are "yes" instances -/
@@ -23,6 +24,7 @@ structure WitnessProblem where
   complete : ∀ x, language x → ∃ w, verify x w
 
 
+
 /-- NP problems have polynomially-bounded witnesses. -/
 structure NPProblem extends WitnessProblem where
   /-- There is a polynomial bound on witness length -/
@@ -30,6 +32,11 @@ structure NPProblem extends WitnessProblem where
     ∃ w, verify x w ∧ w.length ≤ x.length ^ c + c
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Millennium.PvsNP
+Auto-generated from theorem catalog database.
+Domain: Speculative/Millennium
+Declarations: 7] -/
 theorem witness_enumeration_finite (n k : ℕ) :
     Finite {w : List Bool | w.length ≤ k} := by
   -- The set of all binary strings of length up to $k$ is finite because there are only $2^k$ possible strings.
@@ -38,9 +45,11 @@ theorem witness_enumeration_finite (n k : ℕ) :
   exact h_finite_strings.to_subtype
 
 
+
 theorem binary_strings_count (n : ℕ) :
     Fintype.card (Fin n → Bool) = 2 ^ n := by
   norm_num +zetaDelta at *
+
 
 
 theorem poly_compose (p q : Polynomial ℕ) :
@@ -49,7 +58,9 @@ theorem poly_compose (p q : Polynomial ℕ) :
   aesop
 
 
+
 theorem brute_force_decides {α : Type*} [Fintype α] [DecidableEq α]
     (P : α → Prop) [DecidablePred P] :
     (∃ x, P x) ∨ (∀ x, ¬P x) := by
   exact Classical.or_iff_not_imp_left.2 fun h => by push_neg at h; exact h;
+

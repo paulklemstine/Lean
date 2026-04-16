@@ -16,14 +16,17 @@ structure RatCirclePoint where
   c_pos : 0 < c
 
 
+
 /-- The "angular cross-product" = c₁·c₂·sin(θ₂ - θ₁). -/
 def angularCross (p q : RatCirclePoint) : ℤ :=
   p.a * q.b - p.b * q.a
 
 
+
 /-- The "angular dot-product" = c₁·c₂·cos(θ₂ - θ₁). -/
 def angularDot (p q : RatCirclePoint) : ℤ :=
   p.a * q.a + p.b * q.b
+
 
 
 /-- Angular cross-product is antisymmetric. -/
@@ -32,10 +35,12 @@ theorem angularCross_antisymm (p q : RatCirclePoint) :
   simp [angularCross]; ring
 
 
+
 /-- Angular dot-product is symmetric. -/
 theorem angularDot_symm (p q : RatCirclePoint) :
     angularDot p q = angularDot q p := by
   simp [angularDot]; ring
+
 
 
 /-- The Pythagorean identity for cross and dot products:
@@ -47,9 +52,11 @@ theorem angular_pythagorean (p q : RatCirclePoint) :
              sq_nonneg (p.a * q.b), sq_nonneg (p.b * q.a)]
 
 
+
 /-- Squared angular distance (∝ sin²(θ₂ - θ₁)). The missile minimizes this. -/
 def angularDistSq (p q : RatCirclePoint) : ℤ :=
   (angularCross p q) ^ 2
+
 
 
 /-- Angular distance is zero iff cross-product is zero. -/
@@ -60,10 +67,12 @@ theorem angularDistSq_zero_iff (p q : RatCirclePoint) :
   · intro h; simp [angularDistSq, h]
 
 
+
 /-- Angular distance is symmetric. -/
 theorem angularDistSq_symm (p q : RatCirclePoint) :
     angularDistSq p q = angularDistSq q p := by
   simp [angularDistSq, angularCross]; ring
+
 
 
 /-- Euclid parameters (m, n) with m > n > 0. -/
@@ -75,9 +84,11 @@ structure EuclidParams where
   m_gt_n : n < m
 
 
+
 /-- Convert Euclid parameters to a Pythagorean triple. -/
 def euclidToTriple (p : EuclidParams) : ℤ × ℤ × ℤ :=
   (p.m ^ 2 - p.n ^ 2, 2 * p.m * p.n, p.m ^ 2 + p.n ^ 2)
+
 
 
 /-- Berggren branch M₂: (m,n) ↦ (2m+n, m) -/
@@ -89,8 +100,10 @@ def berggren_M2 (p : EuclidParams) : EuclidParams where
   m_gt_n := by linarith [p.m_pos, p.n_pos]
 
 
+
 /-- The hypotenuse of Euclid parameters. -/
 def hypot (p : EuclidParams) : ℤ := p.m ^ 2 + p.n ^ 2
+
 
 
 /-- M₂ strictly increases the hypotenuse. -/
@@ -100,6 +113,7 @@ theorem hypot_M2_gt (p : EuclidParams) : hypot p < hypot (berggren_M2 p) := by
              sq_nonneg (p.m + p.n), sq_nonneg (p.m - p.n)]
 
 
+
 /-- M₃ strictly increases the hypotenuse. -/
 theorem hypot_M3_gt (p : EuclidParams) : hypot p < hypot (berggren_M3 p) := by
   simp [hypot, berggren_M3]
@@ -107,14 +121,17 @@ theorem hypot_M3_gt (p : EuclidParams) : hypot p < hypot (berggren_M3 p) := by
              sq_nonneg (p.m + p.n)]
 
 
+
 /-- The compass reading n/m = tan(θ/2). -/
 def compassReading (p : EuclidParams) : ℚ :=
   p.n / p.m
 
 
+
 /-- Root compass reading is 1/2. -/
 theorem compass_root : compassReading ⟨2, 1, by omega, by omega, by omega⟩ = 1/2 := by
   simp [compassReading]
+
 
 
 /-- Origin type for Berggren tree nodes. -/
@@ -126,6 +143,7 @@ inductive BerggrenOrigin where
   deriving Repr, DecidableEq
 
 
+
 /-- Parent computation — the "course correction" operation. -/
 def berggrenParent (m n : ℤ) : ℤ × ℤ × BerggrenOrigin :=
   if m = 2 ∧ n = 1 then (2, 1, .root)
@@ -135,8 +153,10 @@ def berggrenParent (m n : ℤ) : ℤ × ℤ × BerggrenOrigin :=
   else (m - 2 * n, n, .fromM3)
 
 
+
 /-- Gaussian integer multiplication. -/
 def gaussMul (a b c d : ℤ) : ℤ × ℤ := (a*c - b*d, a*d + b*c)
+
 
 
 /-- Gaussian norm is multiplicative. -/
@@ -146,11 +166,17 @@ theorem gaussNorm_mul (a b c d : ℤ) :
   simp [gaussNorm, gaussMul]; ring
 
 
+
 /-- Target acquisition: found (a,b,c) with c | N. -/
 def targetAcquired (N : ℤ) (a b c : ℤ) : Prop :=
   a ^ 2 + b ^ 2 = c ^ 2 ∧ c ∣ N
 
 
+
+/-- [Section: # CatalogBuild.Physics.Classical.HomingMissile
+Auto-generated from theorem catalog database.
+Domain: Physics/Classical
+Declarations: 34] -/
 theorem compass_M3_lt_M2 (p : EuclidParams) :
     compassReading (berggren_M3 p) < compassReading (berggren_M2 p) := by
   unfold compassReading;
@@ -162,6 +188,7 @@ theorem compass_M3_lt_M2 (p : EuclidParams) :
   · exact add_pos ( mul_pos two_pos p.m_pos ) p.n_pos
 
 
+
 theorem compass_M3_decreases (p : EuclidParams) :
     compassReading (berggren_M3 p) < compassReading p := by
   unfold compassReading berggren_M3;
@@ -171,9 +198,11 @@ theorem compass_M3_decreases (p : EuclidParams) :
   · exact p.n_pos
 
 
+
 theorem compass_in_unit_interval (p : EuclidParams) :
     0 < compassReading p ∧ compassReading p < 1 := by
   exact ⟨ div_pos ( mod_cast p.n_pos ) ( mod_cast p.m_pos ), div_lt_one ( mod_cast p.m_pos ) |>.2 ( mod_cast p.m_gt_n ) ⟩
+
 
 
 /-- Gate composition: Gaussian norm is multiplicative. -/
@@ -183,16 +212,19 @@ theorem gate_composition_norm (a₁ b₁ a₂ b₂ : ℤ) :
   simp [gaussNorm]; ring
 
 
+
 /-- M₂ hypotenuse formula. -/
 theorem M2_hypot_formula (p : EuclidParams) :
     hypot (berggren_M2 p) = 5 * p.m ^ 2 + 4 * p.m * p.n + p.n ^ 2 := by
   simp [hypot, berggren_M2]; ring
 
 
+
 /-- M₃ hypotenuse formula. -/
 theorem M3_hypot_formula (p : EuclidParams) :
     hypot (berggren_M3 p) = p.m ^ 2 + 4 * p.m * p.n + 5 * p.n ^ 2 := by
   simp [hypot, berggren_M3]; ring
+
 
 
 theorem compass_M2_lt_one (p : EuclidParams) :
@@ -204,10 +236,12 @@ theorem compass_M2_lt_one (p : EuclidParams) :
     exact show p.m < 2 * p.m + p.n from by linarith [ p.m_pos, p.n_pos ] ;
 
 
+
 theorem compass_M2_bounded (p : EuclidParams) :
     compassReading (berggren_M2 p) < 1/2 := by
   norm_num [ compassReading, berggren_M2 ];
   rw [ div_lt_div_iff₀ ] <;> norm_cast <;> linarith [ p.m_pos, p.n_pos ]
+
 
 
 /-- Compass M₂ explicit value. -/
@@ -216,10 +250,12 @@ theorem compass_M2_value (p : EuclidParams) :
   simp [compassReading, berggren_M2]
 
 
+
 /-- Compass M₃ explicit value. -/
 theorem compass_M3_value (p : EuclidParams) :
     compassReading (berggren_M3 p) = p.n / (p.m + 2 * p.n) := by
   simp [compassReading, berggren_M3]
+
 
 
 /-- M₃ always decreases AND M₃ is less than M₂. -/
@@ -229,8 +265,10 @@ theorem compass_M3_bracket (p : EuclidParams) :
   ⟨compass_M3_lt_M2 p, compass_M3_decreases p⟩
 
 
+
 theorem factor_from_pyth_triple (a b c : ℤ) (hpyth : a ^ 2 + b ^ 2 = c ^ 2)
     (hc : 0 < c) (ha : 0 < a) (hb : 0 < b) :
     a < c := by
   nlinarith
+
 

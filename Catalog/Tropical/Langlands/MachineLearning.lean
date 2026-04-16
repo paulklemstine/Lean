@@ -9,10 +9,15 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # CatalogBuild.Tropical.Langlands.MachineLearning
+Auto-generated from theorem catalog database.
+Domain: Tropical/Langlands
+Declarations: 14] -/
 theorem relu_convex (x y t : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
     relu (t * x + (1 - t) * y) ≤ t * relu x + (1 - t) * relu y := by
   unfold relu;
   cases max_cases ( t * x + ( 1 - t ) * y ) 0 <;> cases max_cases x 0 <;> cases max_cases y 0 <;> nlinarith
+
 
 
 /-- A single-layer tropical neural network -/
@@ -21,9 +26,11 @@ def tropicalLayer (n m : ℕ) (W : Fin m → Fin n → ℝ) (b : Fin m → ℝ)
   fun i => min (⨅ j : Fin n, W i j + x j) (b i)
 
 
+
 /-- The max-plus layer -/
 def maxPlusLayer (n m : ℕ) (W : Fin m → Fin n → ℝ) (x : Fin n → ℝ) : Fin m → ℝ :=
   fun i => ⨆ j : Fin n, W i j + x j
+
 
 
 /-- The dual (transpose) of a network layer -/
@@ -31,10 +38,12 @@ def dualLayer (n m : ℕ) (W : Fin m → Fin n → ℝ) : Fin n → Fin m → �
   fun j i => W i j
 
 
+
 /-- Double dual is the original -/
 theorem dualLayer_involution (n m : ℕ) (W : Fin m → Fin n → ℝ) :
     dualLayer m n (dualLayer n m W) = W := by
   ext i j; simp [dualLayer]
+
 
 
 theorem dual_preserves_tropDet (n : ℕ) (W : Fin n → Fin n → ℝ) :
@@ -45,15 +54,18 @@ theorem dual_preserves_tropDet (n : ℕ) (W : Fin n → Fin n → ℝ) :
   rw [ ← Equiv.iInf_comp ( Equiv.inv ( Equiv.Perm ( Fin n ) ) ) ] ; aesop;
 
 
+
 /-- L¹ tropical loss function -/
 def tropicalLoss (n : ℕ) (target output : Fin n → ℝ) : ℝ :=
   ∑ i : Fin n, |target i - output i|
+
 
 
 /-- Tropical loss is non-negative -/
 theorem tropicalLoss_nonneg (n : ℕ) (target output : Fin n → ℝ) :
     tropicalLoss n target output ≥ 0 :=
   Finset.sum_nonneg fun i _ => abs_nonneg _
+
 
 
 theorem tropicalLoss_zero_iff (n : ℕ) (target output : Fin n → ℝ) :
@@ -63,15 +75,18 @@ theorem tropicalLoss_zero_iff (n : ℕ) (target output : Fin n → ℝ) :
   · exact Finset.sum_eq_zero fun i _ => by simp +decide [ h i ] ;
 
 
+
 theorem tropicalLoss_triangle (n : ℕ) (x y z : Fin n → ℝ) :
     tropicalLoss n x z ≤ tropicalLoss n x y + tropicalLoss n y z := by
   unfold tropicalLoss;
   simpa only [ ← Finset.sum_add_distrib ] using Finset.sum_le_sum fun i _ => abs_sub_le _ _ _
 
 
+
 /-- A tropical polynomial: sup of affine functions -/
 def tropPolynomial (n : ℕ) (coeffs offsets : Fin n → ℝ) (x : ℝ) : ℝ :=
   ⨆ i : Fin n, coeffs i * x + offsets i
+
 
 
 theorem tropPolynomial_convex (n : ℕ) [hn : Nonempty (Fin n)]
@@ -87,16 +102,19 @@ theorem tropPolynomial_convex (n : ℕ) [hn : Nonempty (Fin n)]
   nlinarith
 
 
+
 /-- Tropical attention: (min, +) analogue of dot-product attention -/
 def tropicalAttention (n d : ℕ)
     (Q K V : Fin n → Fin d → ℝ) : Fin n → Fin d → ℝ :=
   fun i k => ⨅ j : Fin n, (∑ l : Fin d, |Q i l - K j l|) + V j k
 
 
+
 /-- ReLU difference gives arbitrary piecewise-linear pieces -/
 theorem relu_difference_is_pl (a b : ℝ) (x : ℝ) :
     relu (x - a) - relu (x - b) = max (x - a) 0 - max (x - b) 0 := by
   simp [relu]
+
 
 
 end

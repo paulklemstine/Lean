@@ -13,15 +13,22 @@ noncomputable section
 def isLightPrime' (p : ℕ) : Prop := p.Prime ∧ p % 4 = 1
 
 
+
 /-- A prime is "dark" if p ≡ 3 mod 4. -/
 def isDarkPrime' (p : ℕ) : Prop := p.Prime ∧ p % 4 = 3
 
 
+
+/-- [Section: # CatalogBuild.Physics.Classical.TimelineGravityCycles
+Auto-generated from theorem catalog database.
+Domain: Physics/Classical
+Declarations: 56] -/
 theorem prime_div_sq_add_one_mod_four (p n : ℕ) (hp : p.Prime) (hp2 : p ≠ 2)
     (hdvd : p ∣ n ^ 2 + 1) : p % 4 = 1 := by
       haveI := Fact.mk hp; norm_num [ ← ZMod.natCast_eq_zero_iff ] at *;
       have := ZMod.exists_sq_eq_neg_one_iff ( p := p );
       exact this.mp ⟨ n, by linear_combination' -hdvd ⟩ |> fun h => by have := Nat.Prime.eq_two_or_odd hp; omega;
+
 
 
 theorem infinitely_many_dark_primes :
@@ -48,6 +55,7 @@ theorem infinitely_many_dark_primes :
       exact ⟨ p, not_le.mp fun h => by have := Nat.dvd_sub ( dvd_mul_of_dvd_right ( Nat.dvd_factorial ( Nat.pos_of_ne_zero hp_prime.ne_zero ) ( by linarith : N + 1 ≥ p ) ) 4 ) hp_div.1; erw [ Nat.sub_sub_self ( Nat.one_le_iff_ne_zero.mpr <| by positivity ) ] at this; aesop, hp_prime, hp_div.2 ⟩
 
 
+
 theorem infinitely_many_light_primes :
     ∀ N : ℕ, ∃ p, N < p ∧ isLightPrime' p := by
       intro N;
@@ -57,13 +65,16 @@ theorem infinitely_many_light_primes :
       exact Exists.elim ( h_dirichlet.exists_gt N ) fun p hp => ⟨ p, hp.2, hp.1 ⟩
 
 
+
 /-- Computational verification: light and dark counts. -/
 def lightPrimeCount' (n : ℕ) : ℕ :=
   ((Finset.range (n + 1)).filter (fun p => p.Prime ∧ p % 4 = 1)).card
 
 
+
 def darkPrimeCount' (n : ℕ) : ℕ :=
   ((Finset.range (n + 1)).filter (fun p => p.Prime ∧ p % 4 = 3)).card
+
 
 
 /-- Both counts grow: 11 light and 13 dark primes up to 100. -/
@@ -72,10 +83,12 @@ theorem light_dark_count_100 :
   constructor <;> native_decide
 
 
+
 /-- By 200: 21 light, 24 dark — dark still leads (Chebyshev bias). -/
 theorem light_dark_count_200 :
     lightPrimeCount' 200 = 21 ∧ darkPrimeCount' 200 = 24 := by
   constructor <;> native_decide
+
 
 
 theorem light_prime_is_sum_of_squares (p : ℕ) (hp : p.Prime) (hmod : p % 4 = 1) :
@@ -83,8 +96,10 @@ theorem light_prime_is_sum_of_squares (p : ℕ) (hp : p.Prime) (hmod : p % 4 = 1
       convert @Nat.Prime.sq_add_sq p ( Fact.mk hp ) ( by aesop ) using 1
 
 
+
 /-- The Gaussian norm: |a + bi|² = a² + b². -/
 def gaussianNormSq (a b : ℤ) : ℤ := a ^ 2 + b ^ 2
+
 
 
 /-- A Gaussian integer decomposition of a light prime. -/
@@ -96,12 +111,14 @@ structure GaussianSplit (p : ℕ) where
   nontrivial_b : b ≠ 0
 
 
+
 /-- Concrete Gaussian split of 5 = (2 + i)(2 - i). -/
 def split_5 : GaussianSplit 5 where
   a := 2; b := 1
   norm_eq := by norm_num
   nontrivial_a := by omega
   nontrivial_b := by omega
+
 
 
 /-- Concrete Gaussian split of 13 = (3 + 2i)(3 - 2i). -/
@@ -112,12 +129,14 @@ def split_13 : GaussianSplit 13 where
   nontrivial_b := by omega
 
 
+
 /-- Concrete Gaussian split of 17 = (4 + i)(4 - i). -/
 def split_17 : GaussianSplit 17 where
   a := 4; b := 1
   norm_eq := by norm_num
   nontrivial_a := by omega
   nontrivial_b := by omega
+
 
 
 /-- Concrete Gaussian split of 29 = (5 + 2i)(5 - 2i). -/
@@ -128,12 +147,14 @@ def split_29 : GaussianSplit 29 where
   nontrivial_b := by omega
 
 
+
 /-- Concrete Gaussian split of 37 = (6 + i)(6 - i). -/
 def split_37 : GaussianSplit 37 where
   a := 6; b := 1
   norm_eq := by norm_num
   nontrivial_a := by omega
   nontrivial_b := by omega
+
 
 
 theorem unique_photon_structure (p : ℕ) (hp : p.Prime) (hmod : p % 4 = 1)
@@ -209,11 +230,13 @@ theorem unique_photon_structure (p : ℕ) (hp : p.Prime) (hmod : p % 4 = 1)
       exact h_final
 
 
+
 /-- 1 is highly composite (vacuously — the primordial singularity). -/
 theorem hc_1 : IsHighlyComposite 1 := by
   constructor
   · omega
   · intro m hm hm1; omega
+
 
 
 /-- 2 is highly composite: d(2) = 2 > d(1) = 1. -/
@@ -223,11 +246,13 @@ theorem hc_2 : IsHighlyComposite 2 := by
   interval_cases m <;> native_decide
 
 
+
 /-- 4 is highly composite: d(4) = 3 > d(m) for m < 4. -/
 theorem hc_4 : IsHighlyComposite 4 := by
   refine ⟨by omega, ?_⟩
   intro m hm hm4
   interval_cases m <;> native_decide
+
 
 
 /-- 6 is highly composite: d(6) = 4 > d(m) for m < 6. -/
@@ -237,11 +262,13 @@ theorem hc_6 : IsHighlyComposite 6 := by
   interval_cases m <;> native_decide
 
 
+
 /-- 12 is highly composite: d(12) = 6 > d(m) for m < 12. -/
 theorem hc_12 : IsHighlyComposite 12 := by
   refine ⟨by omega, ?_⟩
   intro m hm hm12
   interval_cases m <;> native_decide
+
 
 
 /-- 24 is highly composite: d(24) = 8 > d(m) for m < 24. -/
@@ -251,11 +278,13 @@ theorem hc_24 : IsHighlyComposite 24 := by
   interval_cases m <;> native_decide
 
 
+
 /-- 3 is NOT highly composite: d(3) = 2 = d(2). -/
 theorem not_hc_3 : ¬IsHighlyComposite 3 := by
   intro ⟨_, h⟩
   have h2 := h 2 (by omega) (by omega)
   revert h2; native_decide
+
 
 
 /-- 5 is NOT highly composite: d(5) = 2 < d(4) = 3. -/
@@ -265,10 +294,12 @@ theorem not_hc_5 : ¬IsHighlyComposite 5 := by
   revert h4; native_decide
 
 
+
 /-- HCNs have strictly more gravitational mass than anything before them. -/
 theorem hcn_maximal_gravity (n : ℕ) (hn : IsHighlyComposite n) :
     ∀ m, 0 < m → m < n → gravWeight m < gravWeight n :=
   hn.2
+
 
 
 theorem hcn_even_or_one (n : ℕ) (hn : IsHighlyComposite n) (hn1 : n ≠ 1) :
@@ -300,17 +331,23 @@ theorem hcn_even_or_one (n : ℕ) (hn : IsHighlyComposite n) (hn1 : n ≠ 1) :
       · rcases n with ( _ | _ | _ | n ) <;> simp_all +arith +decide
 
 
+
 /-- The factorizations of HCNs use the smallest primes: 2, 3, 5, 7, ...
 Computational evidence for small cases. -/
 theorem hcn_12_factorization : 12 = 2 ^ 2 * 3 := by norm_num
 
+
 theorem hcn_24_factorization : 24 = 2 ^ 3 * 3 := by norm_num
+
 
 theorem hcn_60_factorization : 60 = 2 ^ 2 * 3 * 5 := by norm_num
 
+
 theorem hcn_120_factorization : 120 = 2 ^ 3 * 3 * 5 := by norm_num
 
+
 theorem hcn_360_factorization : 360 = 2 ^ 3 * 3 ^ 2 * 5 := by norm_num
+
 
 
 /-- The light/dark signature of the n-th prime (0 = dark, 1 = light, 2 = twilight).
@@ -334,10 +371,12 @@ def primeSignature : ℕ → ℕ
   | _ => 0
 
 
+
 /-- Among the first 14 odd primes, 6 are light. -/
 theorem light_fraction_14 :
     ((Finset.range 14).filter (fun i => primeSignature (i + 1) = 1)).card = 6 := by
   native_decide
+
 
 
 /-- Among the first 14 odd primes, 8 are dark. Chebyshev bias! -/
@@ -346,10 +385,12 @@ theorem dark_fraction_14 :
   native_decide
 
 
+
 /-- The light/dark binary sequence: 0,1,0,0,1,1,0,0,1,0,1,1,0,0 (for primes 3..47). -/
 theorem light_dark_binary_sequence :
     (List.range 14).map (fun i => primeSignature (i + 1)) =
     [0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0] := by native_decide
+
 
 
 /-- The prime counting function π(n). -/
@@ -357,16 +398,20 @@ def primeCountingFn (n : ℕ) : ℕ :=
   ((Finset.range (n + 1)).filter Nat.Prime).card
 
 
+
 /-- π(10) = 4: primes are {2, 3, 5, 7}. -/
 theorem pi_10 : primeCountingFn 10 = 4 := by native_decide
+
 
 
 /-- π(100) = 25. -/
 theorem pi_100 : primeCountingFn 100 = 25 := by native_decide
 
 
+
 /-- π(1000) = 168. -/
 theorem pi_1000 : primeCountingFn 1000 = 168 := by native_decide
+
 
 
 /-- The prime counting function is monotone. -/
@@ -378,6 +423,7 @@ theorem primeCountingFn_mono {m n : ℕ} (h : m ≤ n) :
   exact Finset.range_mono (by omega)
 
 
+
 /-- The prime density π(n)/n decreases: evidence for logarithmic expansion.
 π(10)/10 = 0.4 > π(100)/100 = 0.25 > π(1000)/1000 = 0.168. -/
 theorem expansion_rate_decreasing :
@@ -386,11 +432,13 @@ theorem expansion_rate_decreasing :
   constructor <;> norm_num
 
 
+
 /-- Quadratic reciprocity from Mathlib. -/
 theorem quadratic_reciprocity_law (p q : ℕ) [Fact p.Prime] [Fact q.Prime]
     (hp2 : p ≠ 2) (hq2 : q ≠ 2) (hpq : p ≠ q) :
     legendreSym q p * legendreSym p q = (-1 : ℤ) ^ (p / 2 * (q / 2)) :=
   legendreSym.quadratic_reciprocity hp2 hq2 hpq
+
 
 
 theorem light_light_symmetric (p q : ℕ) [Fact p.Prime] [Fact q.Prime]
@@ -401,12 +449,14 @@ theorem light_light_symmetric (p q : ℕ) [Fact p.Prime] [Fact q.Prime]
       rw [ ← Nat.mod_add_div p 4, ← Nat.mod_add_div q 4, hp, hq ] ; norm_num [ Nat.even_div ] ;
 
 
+
 theorem light_dark_symmetric (p q : ℕ) [Fact p.Prime] [Fact q.Prime]
     (hp : p % 4 = 1) (hq : q % 4 = 3)
     (hp2 : p ≠ 2) (hq2 : q ≠ 2) (hpq : p ≠ q) :
     legendreSym q p * legendreSym p q = 1 := by
       rw [ quadratic_reciprocity_law p q hp2 hq2 hpq ];
       norm_num [ show p / 2 = 2 * ( p / 4 ) by omega, show q / 2 = 2 * ( q / 4 ) + 1 by omega ]
+
 
 
 theorem dark_dark_repulsion (p q : ℕ) [Fact p.Prime] [Fact q.Prime]
@@ -418,11 +468,13 @@ theorem dark_dark_repulsion (p q : ℕ) [Fact p.Prime] [Fact q.Prime]
       norm_num [ Nat.add_div, Nat.mul_div_assoc, Nat.mul_mod, Nat.add_mod, Nat.pow_mod ]
 
 
+
 /-- Computational verification: 3 and 7 are both dark, and (3/7)·(7/3) = -1. -/
 theorem dark_dark_3_7 :
     haveI : Fact (Nat.Prime 3) := ⟨by norm_num⟩
     haveI : Fact (Nat.Prime 7) := ⟨by norm_num⟩
     legendreSym 7 3 * legendreSym 3 7 = -1 := by native_decide
+
 
 
 /-- Computational verification: 5 and 13 are both light, and (5/13)·(13/5) = 1. -/
@@ -432,6 +484,7 @@ theorem light_light_5_13 :
     legendreSym 13 5 * legendreSym 5 13 = 1 := by native_decide
 
 
+
 /-- Computational verification: 5 (light) and 7 (dark), (5/7)·(7/5) = 1. -/
 theorem light_dark_5_7 :
     haveI : Fact (Nat.Prime 5) := ⟨by norm_num⟩
@@ -439,11 +492,13 @@ theorem light_dark_5_7 :
     legendreSym 7 5 * legendreSym 5 7 = 1 := by native_decide
 
 
+
 /-- Computational verification: 3 and 11 are both dark, and (3/11)·(11/3) = -1. -/
 theorem dark_dark_3_11 :
     haveI : Fact (Nat.Prime 3) := ⟨by norm_num⟩
     haveI : Fact (Nat.Prime 11) := ⟨by norm_num⟩
     legendreSym 11 3 * legendreSym 3 11 = -1 := by native_decide
+
 
 
 /-- A universe is a self-referential system: a space of states with a
@@ -455,12 +510,14 @@ structure SelfComputingUniverse (S : Type*) where
   attracts : ∀ s, ∃ n : ℕ, dynamics^[n] s = groundState
 
 
+
 /-- The trivial universe: a single state that maps to itself. -/
 def trivialUniverse : SelfComputingUniverse Unit where
   dynamics := id
   groundState := ()
   isFixedPoint := rfl
   attracts := fun _ => ⟨0, rfl⟩
+
 
 
 /-- A Boolean universe with two states: Light (true) and Dark (false).
@@ -472,6 +529,7 @@ def booleanUniverse : SelfComputingUniverse Bool where
   attracts := fun _ => ⟨1, rfl⟩
 
 
+
 /-- The research oracle is a self-computing universe:
 hypotheses are validated iteratively until stable knowledge emerges.
 An idempotent function reaches a fixed point after one step. -/
@@ -479,6 +537,7 @@ theorem research_is_universe {H : Type*} (R : { f : H → H // ∀ h, f (f h) = 
     (h₀ : H) :
     R.1 (R.1 h₀) = R.1 h₀ :=
   R.2 h₀
+
 
 
 /-- Grand Synthesis Theorem: The number line encodes a complete physics.
@@ -496,6 +555,7 @@ theorem grand_synthesis (n : ℕ) (hn : 2 ≤ n) :
   · refine ⟨(n + 1) ^ 2 - n, n + 1, ?_⟩
     have h1 : n ≤ (n + 1) ^ 2 := by nlinarith
     omega
+
 
 
 end

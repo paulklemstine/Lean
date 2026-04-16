@@ -5,9 +5,13 @@ Domain: Speculative
 Declarations: 2
 -/
 
-import Speculative.PisanoPeriodFactoring
 import Mathlib
+import Speculative.PisanoPeriodFactoring
 
+/-- [Section: # CatalogBuild.Speculative.FibonacciPseudoprimes
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 2] -/
 theorem pisano_period_exists (m : ℕ) (hm : 0 < m) :
     ∃ T : ℕ, 0 < T ∧ ∀ n, Nat.fib (n + T) % m = Nat.fib n % m := by
   -- By the pigeonhole principle, since there are only $m^2$ possible pairs $(F(n) \mod m, F(n+1) \mod m)$, there must exist indices $i < j$ such that $(F(i) \mod m, F(i+1) \mod m) = (F(j) \mod m, F(j+1) \mod m)$.
@@ -30,9 +34,11 @@ theorem pisano_period_exists (m : ℕ) (hm : 0 < m) :
     linear_combination' h_pair.2 - h_pair.1
 
 
+
 /-- For prime p, the Pisano period divides p² - 1. -/
 theorem pisano_period_divides_prime_bound (p : ℕ) (hp : Nat.Prime p) (hp5 : p ≠ 5) :
     ∃ T : ℕ, 0 < T ∧ T ∣ (p^2 - 1) ∧ ∀ n, Nat.fib (n + T) % p = Nat.fib n % p := by
   obtain ⟨T, hT_pos, hT_dvd, hT_period⟩ := pisano_factor_constraint p hp hp5
   exact ⟨T, hT_pos, by rwa [sq], hT_period⟩
+
 

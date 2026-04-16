@@ -5,10 +5,10 @@ Domain: EML
 Declarations: 5
 -/
 
-import Mathlib
 import EML.Lean.OpenQuestions
 import EML.Lean.ShefferAlgebra
 import EML.Lean.SoftplusBasic
+import Mathlib
 
 noncomputable section
 
@@ -16,6 +16,7 @@ noncomputable section
 theorem softplus_analyticAt (x : ℝ) : AnalyticAt ℝ softplus x := by
   unfold softplus
   exact (analyticAt_const.add analyticAt_rexp).log (one_plus_exp_pos x)
+
 
 
 /-- Every Sheffer expression defines a function that is analytic at every point.
@@ -35,12 +36,14 @@ theorem sheffer_expr_analyticAt (e : ShefferExpr) (x : ℝ) :
     exact (ih₁ (e₂.eval x)).comp (ih₂ x)
 
 
+
 /-- Corollary: every function in the Sheffer algebra is analytic at every point. -/
 theorem sheffer_algebra_analyticAt {f : ℝ → ℝ} (hf : f ∈ ShefferAlgebra) (x : ℝ) :
     AnalyticAt ℝ f x := by
   obtain ⟨e, he⟩ := hf
   rw [he]
   exact sheffer_expr_analyticAt e x
+
 
 
 /-- The upgraded Three-Barrier Characterization:
@@ -51,11 +54,13 @@ theorem sheffer_algebra_analytic_and_lipschitz {f : ℝ → ℝ} (hf : f ∈ She
   exact ⟨sheffer_algebra_analyticAt hf, (sheffer_algebra_subset_smooth_lip hf).2⟩
 
 
+
 /-- A function that is C∞ but not analytic at some point cannot be in ShefferAlg. -/
 theorem not_sheffer_of_not_analyticAt {f : ℝ → ℝ} {x : ℝ}
     (h : ¬AnalyticAt ℝ f x) : f ∉ ShefferAlgebra := by
   intro hf
   exact h (sheffer_algebra_analyticAt hf x)
+
 
 
 end

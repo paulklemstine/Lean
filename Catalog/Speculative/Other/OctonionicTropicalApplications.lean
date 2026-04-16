@@ -1,6 +1,7 @@
 /-! # CatalogBuild.Speculative.Other.OctonionicTropicalApplications
 
 Auto-generated from theorem catalog database.
+Domain: Speculative/Other
 Declarations: 15
 -/
 
@@ -8,10 +9,14 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # CatalogBuild.Speculative.Other.OctonionicTropicalApplications
+Auto-generated from theorem catalog database.
+Declarations: 15] -/
 def associator {α : Type*} [AddGroup α] (mul : α → α → α) (a b c : α) : α :=
   mul (mul a b) c - mul a (mul b c)
 
 -- For real numbers (associative), the associator is zero
+
 
 theorem real_associator_zero (a b c : ℝ) :
     associator (· * ·) a b c = 0 := by
@@ -19,11 +24,13 @@ theorem real_associator_zero (a b c : ℝ) :
 
 -- Tropical max-plus is associative
 
+
 theorem tropical_associator_zero (a b c : ℝ) :
     max (max a b) c = max a (max b c) :=
   max_assoc a b c
 
 -- Error detection: nonzero associator means non-associative path
+
 
 theorem error_detection_principle {α : Type*} [AddGroup α]
     (mul : α → α → α) (a b c : α)
@@ -34,14 +41,17 @@ theorem error_detection_principle {α : Type*} [AddGroup α]
   simp [associator, heq]
 
 
+
 def unitSphere (n : ℕ) : Set (Fin n → ℝ) :=
   {v | ∑ i, (v i) ^ 2 = 1}
 
 -- The real Hopf map: (x, y) on S¹ ↦ x² - y²
 
+
 def realHopfMap (v : Fin 2 → ℝ) : ℝ := (v 0) ^ 2 - (v 1) ^ 2
 
 -- The Hopf map sends S¹ to [-1, 1]
+
 
 theorem hopf_bounded (v : Fin 2 → ℝ) (hv : v ∈ unitSphere 2) :
     |realHopfMap v| ≤ 1 := by
@@ -51,6 +61,7 @@ theorem hopf_bounded (v : Fin 2 → ℝ) (hv : v ∈ unitSphere 2) :
   constructor <;> nlinarith [sq_nonneg (v 0), sq_nonneg (v 1)]
 
 -- The Hopf map is not constant on S¹
+
 
 theorem hopf_nonconstant :
     ∃ v w : Fin 2 → ℝ, v ∈ unitSphere 2 ∧ w ∈ unitSphere 2 ∧
@@ -62,15 +73,18 @@ theorem hopf_nonconstant :
     norm_num
 
 
+
 theorem fano_line_count : fanoLines.length = 7 := by native_decide
 
 -- Each point appears in exactly 3 lines
+
 
 theorem fano_regularity_0 :
     (fanoLines.filter (fun t => t.1 = 0 ∨ t.2.1 = 0 ∨ t.2.2 = 0)).length = 3 := by
   native_decide
 
 -- Fano plane diameter is at most 2
+
 
 theorem fano_diameter_le_2 :
     ∀ (p q : Fin 7), p ≠ q →
@@ -82,8 +96,10 @@ theorem fano_diameter_le_2 :
   native_decide
 
 
+
 theorem triality_triple_gap (g₁ g₂ g₃ : ℝ) (h₁ : g₁ = 1) (h₂ : g₂ = 1) (h₃ : g₃ = 1) :
     g₁ + g₂ + g₃ = 3 := by linarith
+
 
 
 theorem tropical_moufang (a b c : ℝ) :
@@ -91,6 +107,7 @@ theorem tropical_moufang (a b c : ℝ) :
   simp [max_comm, max_left_comm]
 
 -- One-way function: max preimage is not unique
+
 
 theorem max_preimage_nonunique (c : ℝ) :
     ∃ a b a' b' : ℝ, max a b = c ∧ max a' b' = c ∧ (a ≠ a' ∨ b ≠ b') := by
@@ -100,6 +117,7 @@ theorem max_preimage_nonunique (c : ℝ) :
   · left; linarith
 
 -- Catalan number C₃ = 5 (number of bracketings of 4 elements)
+
 
 theorem five_applications_summary :
     -- 1. Error correction: associator detects errors in non-associative algebras
@@ -118,6 +136,7 @@ theorem five_applications_summary :
    TropicalFanoRouting.fano_line_count,
    by norm_num,
    TropicalMoufangCrypto.max_preimage_nonunique⟩
+
 
 
 end

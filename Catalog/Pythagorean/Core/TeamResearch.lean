@@ -15,10 +15,12 @@ theorem pyth_diff_sq (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     c ^ 2 - a ^ 2 = b ^ 2 := by linarith
 
 
+
 /-- Stereographic projection maps t=-1 to (-1, 0), the "west pole" of S¹. -/
 theorem stereo_at_neg_one :
     (2 * (-1 : ℝ) / (1 + (-1) ^ 2), (1 - (-1) ^ 2) / (1 + (-1) ^ 2)) = (-1, 0) := by
   norm_num
+
 
 
 /-- The stereographic y-coordinate is an even function of t:
@@ -27,9 +29,11 @@ theorem stereo_y_even (t : ℝ) :
     (1 - t ^ 2) / (1 + t ^ 2) = (1 - (-t) ^ 2) / (1 + (-t) ^ 2) := by ring
 
 
+
 /-- The stereographic x-coordinate is odd: x(-t) = -x(t). -/
 theorem stereo_x_odd (t : ℝ) :
     2 * (-t) / (1 + (-t) ^ 2) = -(2 * t / (1 + t ^ 2)) := by ring
+
 
 
 /-- SL₂(ℤ) determinant preservation: if det(M)=1 and det(N)=1, then det(MN)=1.
@@ -38,6 +42,7 @@ theorem sl2_det_mul (a b c d e f g h : ℤ)
     (hM : a * d - b * c = 1) (hN : e * h - f * g = 1) :
     (a * e + b * g) * (c * f + d * h) - (a * f + b * h) * (c * e + d * g) = 1 := by
   nlinarith [mobius_compose_det a b c d e f g h]
+
 
 
 /-- Pauli X and Z anticommute: XZ + ZX = 0.
@@ -50,10 +55,12 @@ theorem pauli_xz_anticommute :
     simp [Matrix.mul_apply, Matrix.add_apply, Fin.sum_univ_two]
 
 
+
 /-- The trace of Pauli X is zero. -/
 theorem pauli_x_trace :
     Matrix.trace !![(0:ℤ), 1; 1, 0] = 0 := by
   simp [Matrix.trace, Fin.sum_univ_two]
+
 
 
 /-- The trace of Pauli Z is zero. -/
@@ -62,10 +69,12 @@ theorem pauli_z_trace :
   simp [Matrix.trace, Fin.sum_univ_two]
 
 
+
 /-- For a Bloch vector (x,y,z) on S², the corresponding density matrix
 has Tr(ρ) = 1 (proper normalization). -/
 theorem bloch_density_trace_one (x y z : ℝ) (h : x ^ 2 + y ^ 2 + z ^ 2 = 1) :
     (1 + z) / 2 + (1 - z) / 2 = 1 := by ring
+
 
 
 /-- For a pure state on S², Tr(ρ²) = 1.
@@ -76,6 +85,7 @@ theorem bloch_purity (x y z : ℝ) (h : x ^ 2 + y ^ 2 + z ^ 2 = 1) :
   nlinarith
 
 
+
 /-- The crystallization potential has period 1 (ℤ-periodicity).
 sin²(π(m+1)) = sin²(πm). -/
 theorem crystal_period_one (m : ℝ) :
@@ -84,6 +94,7 @@ theorem crystal_period_one (m : ℝ) :
     rw [show π * (m + 1) = π * m + π by ring]
     simp [sin_add, sin_pi, cos_pi]
   rw [this]; ring
+
 
 
 /-- The crystallization potential is symmetric about every integer:
@@ -100,6 +111,7 @@ theorem crystal_reflection_symmetry (n : ℤ) (t : ℝ) :
   rw [h1, h2, this]; ring
 
 
+
 /-- The maximum of the crystallization loss on any period is exactly 1,
 achieved at half-integers. -/
 theorem crystal_max_value :
@@ -108,10 +120,12 @@ theorem crystal_max_value :
   simp [sin_pi_div_two]
 
 
+
 /-- The stereographic energy vanishes when t = 0 (south pole has y=1 ∈ ℤ). -/
 theorem stereo_energy_zero_at_origin :
     sin (π * ((1 - (0 : ℝ) ^ 2) / (1 + 0 ^ 2))) ^ 2 = 0 := by
   norm_num [sin_pi]
+
 
 
 /-- **Euler's Four-Square Identity**: The product of two sums of four squares
@@ -125,6 +139,7 @@ theorem euler_four_squares_team (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℤ) 
     (a₁*b₄ + a₂*b₃ - a₃*b₂ + a₄*b₁)^2 := by ring
 
 
+
 /-- Consequence: the set of integers representable as sums of four squares
 is closed under multiplication. -/
 theorem sum_four_sq_mul (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℤ) :
@@ -132,6 +147,7 @@ theorem sum_four_sq_mul (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℤ) :
     (a₁^2 + a₂^2 + a₃^2 + a₄^2) * (b₁^2 + b₂^2 + b₃^2 + b₄^2) =
     x₁^2 + x₂^2 + x₃^2 + x₄^2 :=
   ⟨_, _, _, _, euler_four_squares_team a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄⟩
+
 
 
 /-- **Degen's Eight-Square Identity**: norm multiplicativity of the octonions. -/
@@ -150,15 +166,18 @@ theorem degen_eight_squares
   ring
 
 
+
 /-- Dimension 1: trivial identity a²·b² = (ab)². -/
 theorem hurwitz_dim1 (a b : ℤ) :
     a ^ 2 * b ^ 2 = (a * b) ^ 2 := by ring
+
 
 
 /-- Dimension 2: Brahmagupta-Fibonacci (= Gaussian norm multiplicativity). -/
 theorem hurwitz_dim2 (a₁ a₂ b₁ b₂ : ℤ) :
     (a₁^2 + a₂^2) * (b₁^2 + b₂^2) =
     (a₁*b₁ - a₂*b₂)^2 + (a₁*b₂ + a₂*b₁)^2 := by ring
+
 
 
 /-- The Hopf map preserves the sphere: if a²+b²+c²+d²=1, then
@@ -172,15 +191,18 @@ theorem hopf_preserves_sphere (a b c d : ℝ)
              sq_nonneg a, sq_nonneg b, sq_nonneg c, sq_nonneg d]
 
 
+
 /-- The conformal factor of 2D stereographic projection is positive. -/
 theorem conformal_factor_2d (u v : ℝ) :
     (0 : ℝ) < 2 / (1 + u ^ 2 + v ^ 2) := by positivity
+
 
 
 /-- Composing conformal factors: the product of two positive conformal factors
 is positive, ensuring the composed map remains conformal. -/
 theorem conformal_chain (f₁ f₂ : ℝ) (h1 : 0 < f₁) (h2 : 0 < f₂) :
     0 < f₁ * f₂ := by positivity
+
 
 
 end

@@ -14,9 +14,11 @@ noncomputable section
 def stereoFromNorth' (x y : ℝ) : ℝ := x / (1 - y)
 
 
+
 /-- Forward stereographic projection from the **south pole** (0,-1).
 σ_S(x, y) = x / (1 + y) for (x,y) on S¹ with y ≠ -1. -/
 def stereoFromSouth' (x y : ℝ) : ℝ := x / (1 + y)
+
 
 
 /-- Inverse stereographic projection from the **north pole**.
@@ -25,10 +27,12 @@ def invStereoNorth' (t : ℝ) : ℝ × ℝ :=
   (2 * t / (1 + t ^ 2), (t ^ 2 - 1) / (1 + t ^ 2))
 
 
+
 /-- Inverse stereographic projection from the **south pole**.
 σ_S⁻¹(t) = (2t/(1+t²), (1-t²)/(1+t²)) -/
 def invStereoSouth' (t : ℝ) : ℝ × ℝ :=
   (2 * t / (1 + t ^ 2), (1 - t ^ 2) / (1 + t ^ 2))
+
 
 
 /-- The dual projection map: lift from south pole, project from north pole.
@@ -38,6 +42,7 @@ def dualProjection' (t : ℝ) : ℝ :=
   stereoFromNorth' p.1 p.2
 
 
+
 /-- The mirror dual: lift from north pole, project from south pole.
 D*(t) = σ_S(σ_N⁻¹(t)) -/
 def mirrorDualProjection' (t : ℝ) : ℝ :=
@@ -45,8 +50,10 @@ def mirrorDualProjection' (t : ℝ) : ℝ :=
   stereoFromSouth' p.1 p.2
 
 
+
 /-- 1 + t² is always positive. -/
 theorem one_plus_sq_pos' (t : ℝ) : (0 : ℝ) < 1 + t ^ 2 := by positivity
+
 
 
 /-- The inverse stereographic projection from the south pole lands on S¹. -/
@@ -57,12 +64,14 @@ theorem invStereoSouth'_on_circle (t : ℝ) :
   field_simp; ring
 
 
+
 /-- The inverse stereographic projection from the north pole lands on S¹. -/
 theorem invStereoNorth'_on_circle (t : ℝ) :
     (invStereoNorth' t).1 ^ 2 + (invStereoNorth' t).2 ^ 2 = 1 := by
   simp only [invStereoNorth']
   have h : (1 : ℝ) + t ^ 2 ≠ 0 := by positivity
   field_simp; ring
+
 
 
 /-- The south-pole inverse never hits the south pole (y ≠ -1). -/
@@ -75,6 +84,7 @@ theorem invStereoSouth'_avoids_south (t : ℝ) :
   nlinarith [sq_nonneg t]
 
 
+
 /-- The north-pole inverse never hits the north pole (y ≠ 1). -/
 theorem invStereoNorth'_avoids_north (t : ℝ) :
     (invStereoNorth' t).2 ≠ 1 := by
@@ -85,12 +95,18 @@ theorem invStereoNorth'_avoids_north (t : ℝ) :
   nlinarith [sq_nonneg t]
 
 
+
+/-- [Section: # CatalogBuild.Logic.UniversalSolver
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 37] -/
 theorem dualProjection'_eq_inv (t : ℝ) (ht : t ≠ 0) :
     dualProjection' t = 1 / t := by
   unfold dualProjection' invStereoSouth' stereoFromNorth';
   -- Simplify the expression for the dual projection.
   field_simp [ht]
   ring
+
 
 
 theorem mirrorDualProjection'_eq_inv (t : ℝ) (ht : t ≠ 0) :
@@ -100,10 +116,12 @@ theorem mirrorDualProjection'_eq_inv (t : ℝ) (ht : t ≠ 0) :
   rw [ div_eq_iff ] <;> nlinarith [ mul_self_pos.2 ht ]
 
 
+
 /-- The dual projections are equal: D = D*. The mirror is symmetric. -/
 theorem dual_eq_mirror' (t : ℝ) (ht : t ≠ 0) :
     dualProjection' t = mirrorDualProjection' t := by
   rw [dualProjection'_eq_inv t ht, mirrorDualProjection'_eq_inv t ht]
+
 
 
 /-- The dual projection is an involution: D(D(t)) = t. -/
@@ -115,10 +133,12 @@ theorem dualProjection'_involution (t : ℝ) (ht : t ≠ 0) :
   field_simp
 
 
+
 /-- A Problem is a pair: a state space and a goal predicate. -/
 structure Problem' (X : Type*) where
   state : X
   goal : X → Prop
+
 
 
 /-- A Reducer transforms a problem into a simpler problem. -/
@@ -128,10 +148,12 @@ structure Reducer' (X Y : Type*) where
   roundTrip : ∀ x, decode (encode x) = x
 
 
+
 /-- A ProjectionReducer works via idempotent projection. -/
 structure ProjectionReducer' (n : ℕ) where
   project : (Fin n → ℝ) → (Fin n → ℝ)
   idem : ∀ v, project (project v) = project v
+
 
 
 /-- A projection reducer is an oracle (from MetaOracle.lean). -/
@@ -139,6 +161,7 @@ def ProjectionReducer'.toOracle {n : ℕ} (P : ProjectionReducer' n) :
     Oracle (Fin n → ℝ) where
   consult := P.project
   idem := P.idem
+
 
 
 /-- The composition of commuting idempotents is idempotent. -/
@@ -154,10 +177,12 @@ theorem idem_comp_of_comm' {X : Type*}
   rw [hg, ← this, hf]
 
 
+
 /-- A linear oracle: an idempotent linear map (= projection matrix). -/
 structure LinearOracle' (n : ℕ) where
   toFun : (Fin n → ℝ) →ₗ[ℝ] (Fin n → ℝ)
   idem : toFun.comp toFun = toFun
+
 
 
 /-- A linear oracle projects onto its range. -/
@@ -169,6 +194,7 @@ theorem LinearOracle'.range_projection {n : ℕ} (P : LinearOracle' n) (v : Fin 
   have := LinearMap.ext_iff.mp P.idem w
   simp [LinearMap.comp_apply] at this
   exact this
+
 
 
 /-- The composition of two commuting linear oracles is a linear oracle. -/
@@ -185,6 +211,7 @@ def LinearOracle'.compose {n : ℕ} (P Q : LinearOracle' n)
     simp only [hcomm, hQ, hP]
 
 
+
 /-- The Universal Solver Theorem (finite-dimensional):
 commuting linear projections compose to a single matrix multiply. -/
 theorem universal_solver_finite' {n : ℕ} (P Q : LinearOracle' n)
@@ -193,10 +220,12 @@ theorem universal_solver_finite' {n : ℕ} (P Q : LinearOracle' n)
   simp [LinearOracle'.compose, LinearMap.comp_apply]
 
 
+
 /-- A SolverOracle: idempotent consultation. -/
 structure SolverOracle' (X : Type*) where
   consult : X → X
   idem : ∀ x, consult (consult x) = consult x
+
 
 
 /-- A MetaSolver selects which oracle to apply. -/
@@ -207,9 +236,11 @@ structure MetaSolver' (X : Type*) where
   stable : ∀ x, select ((select x).consult x) = select x
 
 
+
 /-- One step of meta-oracle guided solving. -/
 def MetaSolver'.step {X : Type*} (M : MetaSolver' X) (x : X) : X :=
   (M.select x).consult x
+
 
 
 /-- The fixed points of a solver oracle. -/
@@ -217,10 +248,12 @@ def SolverOracle'.solved {X : Type*} (O : SolverOracle' X) : Set X :=
   {x | O.consult x = x}
 
 
+
 /-- Consulting the oracle always produces a solved state. -/
 theorem SolverOracle'.consult_solves {X : Type*} (O : SolverOracle' X) (x : X) :
     O.consult x ∈ O.solved := by
   simp [SolverOracle'.solved, O.idem]
+
 
 
 /-- Any idempotent function is a solver oracle. -/
@@ -230,11 +263,13 @@ def oracleOfIdem' {X : Type*} (f : X → X) (hf : ∀ x, f (f x) = f x) :
   idem := hf
 
 
+
 /-- The Universal Solver Principle: one consultation suffices. -/
 theorem universal_solver_principle' {X : Type*} (f : X → X)
     (hf : ∀ x, f (f x) = f x) (x : X) :
     (oracleOfIdem' f hf).consult x ∈ (oracleOfIdem' f hf).solved :=
   SolverOracle'.consult_solves _ x
+
 
 
 /-- The FrozenCrystalSolver: a meta solver whose step is idempotent.
@@ -247,6 +282,7 @@ structure FrozenCrystalSolver' (X : Type*) where
     (toMetaSolver.select (toMetaSolver.step x)).solved
 
 
+
 /-- The frozen crystal solves everything in one step. -/
 theorem FrozenCrystalSolver'.one_step_solution {X : Type*}
     (C : FrozenCrystalSolver' X) (x : X) :
@@ -256,11 +292,13 @@ theorem FrozenCrystalSolver'.one_step_solution {X : Type*}
   exact h
 
 
+
 /-- The Möbius transformation corresponding to rotation by θ.
 M_θ(t) = (t·cos(θ/2) + sin(θ/2)) / (-t·sin(θ/2) + cos(θ/2)) -/
 def mobiusRotation' (θ t : ℝ) : ℝ :=
   (t * Real.cos (θ / 2) + Real.sin (θ / 2)) /
   (-t * Real.sin (θ / 2) + Real.cos (θ / 2))
+
 
 
 /-- The identity Möbius transformation (θ = 0) is the identity. -/
@@ -269,10 +307,12 @@ theorem mobiusRotation'_zero (t : ℝ) :
   simp [mobiusRotation']
 
 
+
 /-- The modular oracle projects to residues. -/
 def modOracle' (m : ℤ) (hm : m ≠ 0) : SolverOracle' ℤ where
   consult := fun n => n % m
   idem := by intro n; exact Int.emod_emod_of_dvd n (dvd_refl m)
+
 
 
 /-- The mod oracle's solved set is {0, 1, ..., m-1} for positive m. -/
@@ -285,6 +325,7 @@ theorem modOracle'_solved (m : ℤ) (hm : 0 < m) :
     · linarith [Int.emod_nonneg n (ne_of_gt hm)]
     · linarith [Int.emod_lt_of_pos n hm]
   · intro ⟨h1, h2⟩; exact Int.emod_eq_of_lt h1 h2
+
 
 
 end

@@ -15,9 +15,15 @@ theorem minkQ_homogeneous (t : ℝ) (v : ℝ × ℝ × ℝ) :
   unfold minkQ; ring
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.CrossDomainSynthesis
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 28] -/
 theorem signOracle_values (x : ℝ) :
     signOracle x = -1 ∨ signOracle x = 0 ∨ signOracle x = 1 := by
   unfold signOracle; split_ifs <;> simp
+
 
 
 /-- The "oracle discriminant" classifies a Minkowski vector's causal type. -/
@@ -28,14 +34,17 @@ def causalOracle (v : ℝ × ℝ × ℝ) : ℤ := signOracle (minkQ v)
 -- ============================================================================
 
 
+
 /-- The "tropical GCD oracle". -/
 def tropGCDOracle (a : ℤ) : ℤ → ℤ := fun x => min a x
+
 
 
 /-- The tropical GCD oracle is idempotent. -/
 theorem tropGCDOracle_idem (a : ℤ) :
     ∀ x, tropGCDOracle a (tropGCDOracle a x) = tropGCDOracle a x := by
   intro x; simp [tropGCDOracle, min_def]; split_ifs <;> omega
+
 
 
 /-- The truth set of the tropical GCD oracle is {x | x ≤ a}. -/
@@ -46,8 +55,10 @@ theorem tropGCDOracle_truthSet (a x : ℤ) :
   · simp [tropGCDOracle, min_def]; omega
 
 
+
 /-- Classical GCD is idempotent. -/
 theorem gcd_self_idem (n : ℕ) : Nat.gcd n n = n := Nat.gcd_self n
+
 
 
 /-- The factoring oracle principle. -/
@@ -61,6 +72,7 @@ theorem factoring_oracle_principle (a N g : ℕ) (hg : g = Nat.gcd a N)
 -- ============================================================================
 
 
+
 theorem relu_truthSet (x : ℝ) : relu x = x ↔ 0 ≤ x := by
   -- By definition of max, if max 0 x = x, then x must be greater than or equal to 0.
   apply Iff.intro (fun h => by
@@ -68,13 +80,16 @@ theorem relu_truthSet (x : ℝ) : relu x = x ↔ 0 ≤ x := by
     exact max_eq_right h)
 
 
+
 /-- Composing two ReLU applications gives ReLU (band property). -/
 theorem relu_comp_relu : relu ∘ relu = relu := by
   ext x; exact relu_idempotent x
 
 
+
 /-- Special case: affine ReLU with w=1, b=0 is relu. -/
 def affineRelu (w b : ℝ) (x : ℝ) : ℝ := relu (w * x + b)
+
 
 
 theorem affineRelu_identity : affineRelu 1 0 = relu := by
@@ -85,9 +100,11 @@ theorem affineRelu_identity : affineRelu 1 0 = relu := by
 -- ============================================================================
 
 
+
 /-- The Minkowski bilinear form. -/
 def minkBilinear (u v : ℝ × ℝ × ℝ) : ℝ :=
   u.1 * v.1 + u.2.1 * v.2.1 - u.2.2 * v.2.2
+
 
 
 /-- Polarization identity: Q(u+v) = Q(u) + Q(v) + 2η(u,v). -/
@@ -95,6 +112,7 @@ theorem minkQ_sum (u v : ℝ × ℝ × ℝ) :
     minkQ (u.1 + v.1, u.2.1 + v.2.1, u.2.2 + v.2.2) =
       minkQ u + minkQ v + 2 * minkBilinear u v := by
   unfold minkQ minkBilinear; ring
+
 
 
 theorem sum_null_iff_ortho (u v : ℝ × ℝ × ℝ)
@@ -105,6 +123,7 @@ theorem sum_null_iff_ortho (u v : ℝ × ℝ × ℝ)
   have h_expand : minkQ (u.1 + v.1, u.2.1 + v.2.1, u.2.2 + v.2.2) = minkQ u + minkQ v + 2 * minkBilinear u v := by
     exact?;
   unfold isNull at *; aesop;
+
 
 
 theorem pyth_triple_null (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
@@ -120,9 +139,11 @@ theorem pyth_triple_null (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 -- ============================================================================
 
 
+
 /-- Brahmagupta-Fibonacci identity. -/
 theorem brahmagupta_light_cone (a b c d : ℤ) :
     (a^2 + b^2) * (c^2 + d^2) = (a*c - b*d)^2 + (a*d + b*c)^2 := by ring
+
 
 
 /-- Two sum-of-squares representations enable factoring. -/
@@ -134,14 +155,17 @@ theorem two_reps_factor_principle (a b c d : ℤ) :
 -- ============================================================================
 
 
+
 theorem idempotent_fixedPt_eq_range {α : Type*} (f : α → α) (hf : IsIdempotent f) :
     fixedPoints f = range f := by
   exact Set.ext fun x => ⟨ fun hx => ⟨ x, by tauto ⟩, fun hx => by cases hx; aesop ⟩
 
 
+
 /-- An idempotent map converges in one step. -/
 theorem neural_convergence {α : Type*} (f : α → α) (hf : IsIdempotent f) (x : α) :
     f (f x) = f x := hf x
+
 
 
 theorem compose_commuting_idempotents {α : Type*} (f g : α → α)
@@ -154,6 +178,7 @@ theorem compose_commuting_idempotents {α : Type*} (f g : α → α)
 -- ============================================================================
 
 
+
 /-- Every idempotent endomorphism is a retraction onto its image. -/
 theorem idempotent_is_retraction {α : Type*} (f : α → α) (hf : IsIdempotent f) :
     ∀ y ∈ range f, f y = y := by
@@ -164,9 +189,11 @@ theorem idempotent_is_retraction {α : Type*} (f : α → α) (hf : IsIdempotent
 -- ============================================================================
 
 
+
 /-- The (3,4,5) triple is null. -/
 theorem experiment_345_null : isNull ((3 : ℝ), (4 : ℝ), (5 : ℝ)) := by
   simp [isNull, minkQ]; norm_num
+
 
 
 /-- Tropical GCD oracle clamps above. -/
@@ -174,13 +201,16 @@ theorem experiment_tropGCD : tropGCDOracle 5 7 = 5 := by
   simp [tropGCDOracle]
 
 
+
 /-- The 65 = 4² + 7² = 1² + 8² double representation. -/
 theorem experiment_65_reps : (4 : ℤ)^2 + 7^2 = 65 ∧ (1 : ℤ)^2 + 8^2 = 65 := by
   constructor <;> norm_num
 
 
+
 /-- gcd(15, 65) = 5, revealing the factor 5. -/
 theorem experiment_gcd_factor : Nat.gcd 15 65 = 5 := by native_decide
+
 
 
 theorem projection_matrix_oracle (n : ℕ) (P : Matrix (Fin n) (Fin n) ℝ)
@@ -189,10 +219,12 @@ theorem projection_matrix_oracle (n : ℕ) (P : Matrix (Fin n) (Fin n) ℝ)
   simp +decide [hP]
 
 
+
 theorem meet_projections (n : ℕ) (P Q : Matrix (Fin n) (Fin n) ℝ)
     (hP : P * P = P) (hQ : Q * Q = Q) (hPQ : P * Q = Q * P) :
     (P * Q) * (P * Q) = P * Q := by
   grind
+
 
 
 end

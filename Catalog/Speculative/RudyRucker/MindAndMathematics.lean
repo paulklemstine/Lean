@@ -19,6 +19,7 @@ theorem exists_boundary_of_infinite_coinfinite
       Nat.le_induction (by aesop) (fun k hk ih => by aesop) m contra.le⟩
 
 
+
 /-- The powerset operation is monotone on cardinals: if κ ≤ μ then 2^κ ≤ 2^μ.
 This captures Rucker's claim that the mathematical universe is
 "inherently open-ended" — larger sets always have at least as many subsets.
@@ -26,6 +27,7 @@ This captures Rucker's claim that the mathematical universe is
 theorem powerset_monotone :
     Monotone (fun κ : Cardinal => (2 : Cardinal) ^ κ) :=
   fun _ _ hab => Cardinal.power_le_power_left two_ne_zero hab
+
 
 
 /-- Zorn's lemma: every non-empty partially ordered set in which every
@@ -40,4 +42,5 @@ theorem zorns_lemma_variant {α : Type*} [Nonempty α] [PartialOrder α]
   exact absurd (h' m) (by
     rintro ⟨a, ha₁, ha₂⟩
     exact ha₂ (le_antisymm (hm a ha₁) ha₁))
+
 

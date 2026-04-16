@@ -16,6 +16,11 @@ structure TropicalRootSystem (n : ℕ) where
   zero_not_root : (fun _ => (0 : ℝ)) ∉ roots
 
 
+
+/-- [Section: # CatalogBuild.Tropical.Langlands.ExceptionalGroups
+Auto-generated from theorem catalog database.
+Domain: Tropical/Langlands
+Declarations: 46] -/
 theorem root_count_even (n : ℕ) (Φ : TropicalRootSystem n) :
     Even Φ.roots.card := by
   -- Let $S$ be the set of roots of $\Phi$.
@@ -33,9 +38,11 @@ theorem root_count_even (n : ℕ) (Φ : TropicalRootSystem n) :
   · grind
 
 
+
 /-- The dominant chamber for a set of positive roots -/
 def dominantChamber (n : ℕ) (posRoots : Finset (Fin n → ℝ)) : Set (Fin n → ℝ) :=
   { x | ∀ α ∈ posRoots, ∑ i, α i * x i ≥ 0 }
+
 
 
 /-- The dominant chamber is always convex -/
@@ -54,63 +61,89 @@ theorem dominantChamber_convex (n : ℕ) (posRoots : Finset (Fin n → ℝ)) :
     _ ≥ 0 := add_nonneg (mul_nonneg ha h1) (mul_nonneg hb h2)
 
 
+
 theorem origin_in_dominantChamber (n : ℕ) (posRoots : Finset (Fin n → ℝ)) :
     (fun _ => (0 : ℝ)) ∈ dominantChamber n posRoots := by
   exact fun α _ => by simp +decide ;
 
 
+
 def E6_rank : ℕ := 6
+
 
 def E6_num_roots : ℕ := 72
 
+
 def E6_num_positive_roots : ℕ := 36
 
+
 def E6_coxeter_number : ℕ := 12
+
 
 def E6_weyl_order : ℕ := 51840
 
 
+
 theorem E6_dimension : E6_rank + E6_num_roots = 78 := by native_decide
 
+
 theorem E6_positive_roots_count : 2 * E6_num_positive_roots = E6_num_roots := by native_decide
+
 
 theorem E6_weyl_factorization : E6_weyl_order = 2^7 * 3^4 * 5 := by native_decide
 
 
+
 def E7_rank : ℕ := 7
+
 
 def E7_num_roots : ℕ := 126
 
+
 def E7_num_positive_roots : ℕ := 63
 
+
 def E7_coxeter_number : ℕ := 18
+
 
 def E7_weyl_order : ℕ := 2903040
 
 
+
 theorem E7_dimension : E7_rank + E7_num_roots = 133 := by native_decide
 
+
 theorem E7_positive_roots_count : 2 * E7_num_positive_roots = E7_num_roots := by native_decide
+
 
 theorem E7_weyl_factorization : E7_weyl_order = 2^10 * 3^4 * 5 * 7 := by native_decide
 
 
+
 def E8_rank : ℕ := 8
+
 
 def E8_num_roots : ℕ := 240
 
+
 def E8_num_positive_roots : ℕ := 120
 
+
 def E8_coxeter_number : ℕ := 30
+
 
 def E8_weyl_order : ℕ := 696729600
 
 
+
 theorem E8_dimension : E8_rank + E8_num_roots = 248 := by native_decide
+
 
 theorem E8_positive_roots_count : 2 * E8_num_positive_roots = E8_num_roots := by native_decide
 
+
 theorem E8_weyl_factorization : E8_weyl_order = 2^14 * 3^5 * 5^2 * 7 := by native_decide
+
 
 
 inductive LanglandsDualType
@@ -118,11 +151,15 @@ inductive LanglandsDualType
   | ExchangeDual
 
 
+
 def E6_langlands_dual_type : LanglandsDualType := LanglandsDualType.SelfDual
+
 
 def E7_langlands_dual_type : LanglandsDualType := LanglandsDualType.SelfDual
 
+
 def E8_langlands_dual_type : LanglandsDualType := LanglandsDualType.SelfDual
+
 
 
 theorem exceptional_E_self_dual :
@@ -132,13 +169,16 @@ theorem exceptional_E_self_dual :
   ⟨rfl, rfl, rfl⟩
 
 
+
 structure TropicalSatakeParam (n : ℕ) where
   param : Fin n → ℝ
   sorted : ∀ i j : Fin n, i ≤ j → param i ≥ param j
 
 
+
 def tropicalLFunction (n : ℕ) (sp : TropicalSatakeParam n) (s : ℝ) : ℝ :=
   ∑ i : Fin n, sp.param i * s
+
 
 
 theorem tropicalLFunction_zero (n : ℕ) (sp : TropicalSatakeParam n) :
@@ -146,8 +186,10 @@ theorem tropicalLFunction_zero (n : ℕ) (sp : TropicalSatakeParam n) :
   simp [tropicalLFunction]
 
 
+
 def tropicalWeylCharacter (n : ℕ) (wt x : Fin n → ℝ) : ℝ :=
   ∑ i : Fin n, wt i * x i
+
 
 
 theorem tropicalWeylCharacter_add_right (n : ℕ) (wt x y : Fin n → ℝ) :
@@ -156,10 +198,12 @@ theorem tropicalWeylCharacter_add_right (n : ℕ) (wt x y : Fin n → ℝ) :
   simp [tropicalWeylCharacter, Pi.add_apply, mul_add, Finset.sum_add_distrib]
 
 
+
 theorem tropicalWeylCharacter_smul (n : ℕ) (c : ℝ) (wt x : Fin n → ℝ) :
     tropicalWeylCharacter n (fun i => c * wt i) x =
     c * tropicalWeylCharacter n wt x := by
   simp [tropicalWeylCharacter, mul_assoc, Finset.mul_sum]
+
 
 
 theorem innerProduct_comm (n : ℕ) (x y : Fin n → ℝ) :
@@ -167,9 +211,11 @@ theorem innerProduct_comm (n : ℕ) (x y : Fin n → ℝ) :
   simp [innerProduct, mul_comm]
 
 
+
 theorem innerProduct_add_right (n : ℕ) (x y z : Fin n → ℝ) :
     innerProduct n x (y + z) = innerProduct n x y + innerProduct n x z := by
   simp [innerProduct, Pi.add_apply, mul_add, Finset.sum_add_distrib]
+
 
 
 theorem innerProduct_zero_right (n : ℕ) (x : Fin n → ℝ) :
@@ -177,8 +223,10 @@ theorem innerProduct_zero_right (n : ℕ) (x : Fin n → ℝ) :
   simp [innerProduct]
 
 
+
 def tropicalCasselmanShalika (n : ℕ) (wt rho : Fin n → ℝ) : ℝ :=
   innerProduct n wt rho
+
 
 
 theorem tropicalCasselmanShalika_add (n : ℕ) (w1 w2 rho : Fin n → ℝ) :
@@ -187,9 +235,11 @@ theorem tropicalCasselmanShalika_add (n : ℕ) (w1 w2 rho : Fin n → ℝ) :
   simp [tropicalCasselmanShalika, innerProduct, Pi.add_apply, add_mul, Finset.sum_add_distrib]
 
 
+
 theorem tropicalCasselmanShalika_zero (n : ℕ) (rho : Fin n → ℝ) :
     tropicalCasselmanShalika n (fun _ => 0) rho = 0 := by
   simp [tropicalCasselmanShalika, innerProduct]
+
 
 
 end

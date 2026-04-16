@@ -19,9 +19,11 @@ structure OGDGoal where
   mass_pos : 0 < mass
 
 
+
 /-- A coupling between two goals. Positive = synergy, negative = conflict. -/
 structure GoalCoupling where
   strength : ℝ  -- G_ij
+
 
 
 /-- The Hamiltonian (total energy) of a single goal with spring potential.
@@ -31,9 +33,11 @@ def singleGoalHamiltonian (k : ℝ) (g : OGDGoal) : ℝ :=
   (1/2) * g.mass * g.velocity^2 + (1/2) * k * g.mass * (g.position - g.target)^2
 
 
+
 /-- The potential energy of a goal toward its target: V = ½k·m·(q-τ)² -/
 def targetPotential (k : ℝ) (g : OGDGoal) : ℝ :=
   (1/2) * k * g.mass * (g.position - g.target)^2
+
 
 
 /-- Progress of a goal: distance remaining to target -/
@@ -41,8 +45,14 @@ def distanceToTarget (g : OGDGoal) : ℝ :=
   |g.position - g.target|
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.OrbitalGoalDynamics
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 21] -/
 theorem kineticEnergy_nonneg (g : OGDGoal) : 0 ≤ kineticEnergy g := by
   exact mul_nonneg ( mul_nonneg ( by norm_num ) g.mass_pos.le ) ( sq_nonneg _ )
+
 
 
 theorem targetPotential_nonneg (g : OGDGoal) (k : ℝ) (hk : 0 ≤ k) :
@@ -50,9 +60,11 @@ theorem targetPotential_nonneg (g : OGDGoal) (k : ℝ) (hk : 0 ≤ k) :
   exact mul_nonneg ( mul_nonneg ( mul_nonneg ( by norm_num ) hk ) g.mass_pos.le ) ( sq_nonneg _ )
 
 
+
 theorem hamiltonian_split (k : ℝ) (g : OGDGoal) :
     singleGoalHamiltonian k g = kineticEnergy g + targetPotential k g := by
   exact?
+
 
 
 theorem hamiltonian_nonneg (g : OGDGoal) (k : ℝ) (hk : 0 ≤ k) :
@@ -60,13 +72,16 @@ theorem hamiltonian_nonneg (g : OGDGoal) (k : ℝ) (hk : 0 ≤ k) :
   exact hamiltonian_split k g ▸ add_nonneg ( kineticEnergy_nonneg g ) ( targetPotential_nonneg g k hk )
 
 
+
 theorem hamiltonian_zero_at_target (k : ℝ) :
     singleGoalHamiltonian k ⟨1, 0, 0, 0, one_pos⟩ = 0 := by
   unfold singleGoalHamiltonian; norm_num;
 
 
+
 theorem distanceToTarget_nonneg (g : OGDGoal) : 0 ≤ distanceToTarget g := by
   exact abs_nonneg _
+
 
 
 /-- A planning operator maps value functions to value functions.
@@ -74,18 +89,22 @@ This generalizes the Bellman operator to coupled goal systems. -/
 def PlanningOperator (S : Type) := (S → ℝ) → (S → ℝ)
 
 
+
 /-- A fixed point of a planning operator: B(V) = V -/
 def isFixedPoint {S : Type} (B : PlanningOperator S) (V : S → ℝ) : Prop :=
   B V = V
+
 
 
 theorem id_fixedPoint {S : Type} (V : S → ℝ) : isFixedPoint (id : PlanningOperator S) V := by
   exact?
 
 
+
 theorem fixedPoint_idempotent {S : Type} (B : PlanningOperator S) (V : S → ℝ)
     (hV : isFixedPoint B V) : B (B V) = B V := by
   exact?
+
 
 
 theorem synergy_reduces_distance (d₁ d₂ G : ℝ) (hd₁ : 0 < d₁) (hd₂ : 0 < d₂) (hG : 0 < G)
@@ -94,10 +113,12 @@ theorem synergy_reduces_distance (d₁ d₂ G : ℝ) (hd₁ : 0 < d₁) (hd₂ :
   grind +extAll
 
 
+
 /-- Two goals are in resonance when their frequency ratio is a simple
 rational number p/q with p + q ≤ 5. -/
 def inResonance (ω₁ ω₂ : ℝ) : Prop :=
   ∃ p q : ℕ, 0 < p ∧ 0 < q ∧ p + q ≤ 5 ∧ ω₁ * q = ω₂ * p
+
 
 
 /-- The natural frequency of a goal: ω = √(k/m) -/
@@ -105,14 +126,17 @@ def goalFrequency (k : ℝ) (g : OGDGoal) : ℝ :=
   Real.sqrt (k / g.mass)
 
 
+
 theorem equal_mass_equal_freq (k : ℝ) (g₁ g₂ : OGDGoal) (hm : g₁.mass = g₂.mass) :
     goalFrequency k g₁ = goalFrequency k g₂ := by
   unfold goalFrequency; aesop;
 
 
+
 theorem equal_mass_resonance (k : ℝ) (g₁ g₂ : OGDGoal) (hm : g₁.mass = g₂.mass) :
     inResonance (goalFrequency k g₁) (goalFrequency k g₂) := by
   exact ⟨ 1, 1, by norm_num, by norm_num, by norm_num, by rw [ equal_mass_equal_freq k g₁ g₂ hm ] ⟩
+
 
 
 theorem god_oracle_uniqueness {S : Type} [Fintype S] [Nonempty S]
@@ -130,6 +154,7 @@ theorem god_oracle_uniqueness {S : Type} [Fintype S] [Nonempty S]
       exact pi_norm_le_iff_of_nonneg ( mul_nonneg ( show 0 ≤ γ by linarith [ hc.1 ] ) ( norm_nonneg _ ) ) |>.2 fun s => h_contraction s;
     nlinarith [ hc.1, hc.2.1 ];
   exact sub_eq_zero.mp ( norm_le_zero_iff.mp h_norm_zero )
+
 
 
 end

@@ -22,15 +22,22 @@ structure DeductiveSystem (α : Type*) where
   idempotent : ∀ A, cl (cl A) = cl A
 
 
+
 /-- The emergent content of combining two theories T₁ and T₂:
 sentences in Cl(T₁ ∪ T₂) that are not in Cl(T₁) ∪ Cl(T₂). -/
 def emergentContent {α : Type*} (D : DeductiveSystem α) (T₁ T₂ : Set α) : Set α :=
   D.cl (T₁ ∪ T₂) \ (D.cl T₁ ∪ D.cl T₂)
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.ThreeDreams
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 30] -/
 theorem emergent_subset_combined {α : Type*} (D : DeductiveSystem α) (T₁ T₂ : Set α) :
     emergentContent D T₁ T₂ ⊆ D.cl (T₁ ∪ T₂) := by
   exact Set.diff_subset
+
 
 
 theorem emergent_empty_of_subset {α : Type*} (D : DeductiveSystem α) (T₁ T₂ : Set α)
@@ -43,14 +50,17 @@ theorem emergent_empty_of_subset {α : Type*} (D : DeductiveSystem α) (T₁ T�
   aesop_cat
 
 
+
 theorem combined_contains_parts {α : Type*} (D : DeductiveSystem α) (T₁ T₂ : Set α) :
     D.cl T₁ ∪ D.cl T₂ ⊆ D.cl (T₁ ∪ T₂) := by
   exact Set.union_subset ( D.monotone _ _ ( Set.subset_union_left ) ) ( D.monotone _ _ ( Set.subset_union_right ) )
 
 
+
 /-- A theory pair exhibits interference if its emergent content is nonempty. -/
 def exhibitsInterference {α : Type*} (D : DeductiveSystem α) (T₁ T₂ : Set α) : Prop :=
   (emergentContent D T₁ T₂).Nonempty
+
 
 
 /-- An interference system: a deductive system where we can control
@@ -61,11 +71,13 @@ structure InterferenceSystem extends DeductiveSystem ℕ where
     ∃ S : Finset ℕ, S.card ≥ n ∧ ↑S ⊆ emergentContent toDeductiveSystem T₁ T₂
 
 
+
 /-- In an interference system, the emergent content is unbounded. -/
 theorem interference_unbounded (I : InterferenceSystem) :
     ∀ n : ℕ, ∃ T₁ T₂ : Set ℕ, ∃ S : Finset ℕ,
       S.card ≥ n ∧ ↑S ⊆ emergentContent I.toDeductiveSystem T₁ T₂ :=
   I.interference_growth
+
 
 
 /-- A theory with explicit finite axiom count and shared vocabulary. -/
@@ -82,10 +94,12 @@ structure FiniteTheoryPair where
   quadratic_growth : emergentCount ≥ sharedVocab * sharedVocab
 
 
+
 /-- The interference ratio: fraction of combined theorems that are emergent -/
 def interferenceRatio (p : FiniteTheoryPair) : ℚ :=
   if p.size₁ + p.size₂ + p.emergentCount = 0 then 0
   else p.emergentCount / (p.size₁ + p.size₂ + p.emergentCount)
+
 
 
 theorem interferenceRatio_nonneg (p : FiniteTheoryPair) :
@@ -93,14 +107,17 @@ theorem interferenceRatio_nonneg (p : FiniteTheoryPair) :
   unfold interferenceRatio; positivity;
 
 
+
 /-- The value function for a theorem at depth d, parameterized by α and β.
 V(d) = d^α · exp(-β·d) -/
 def theoremValue (a b d : ℝ) : ℝ := d ^ a * Real.exp (-b * d)
 
 
+
 theorem value_zero_at_origin (a b : ℝ) (ha : 0 < a) :
     theoremValue a b 0 = 0 := by
   unfold theoremValue; norm_num [ ha.ne' ]
+
 
 
 theorem value_tendsto_zero (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
@@ -118,8 +135,10 @@ theorem value_tendsto_zero (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
   filter_upwards [ Filter.eventually_gt_atTop 1 ] with x hx using by rw [ Real.norm_of_nonneg ( by positivity ) ] ; exact mul_le_mul_of_nonneg_right ( by exact_mod_cast Real.rpow_le_rpow_of_exponent_le hx.le ( Nat.le_ceil _ ) ) ( by positivity ) ;
 
 
+
 /-- The optimal depth (sweet spot) where value is maximized. -/
 def optimalDepth (a b : ℝ) : ℝ := a / b
+
 
 
 theorem optimal_depth_critical_point (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
@@ -127,9 +146,11 @@ theorem optimal_depth_critical_point (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
   rw [ optimalDepth, mul_div_cancel₀ _ hb.ne' ] ; ring
 
 
+
 theorem value_positive_at_optimum (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
     0 < theoremValue a b (optimalDepth a b) := by
   exact mul_pos ( Real.rpow_pos_of_pos ( div_pos ha hb ) _ ) ( Real.exp_pos _ )
+
 
 
 /-- A depth-stratified mathematical corpus with empirical value data. -/
@@ -148,15 +169,18 @@ structure MathCorpus where
   sweetSpot_max : ∀ d, d ≤ maxDepth → value d ≤ value sweetSpot
 
 
+
 /-- The total value of a corpus is concentrated around the sweet spot. -/
 theorem sweet_spot_dominance (C : MathCorpus) (d : ℕ) (hd : d ≤ C.maxDepth) :
     C.value d ≤ C.value C.sweetSpot :=
   C.sweetSpot_max d hd
 
 
+
 theorem depth_value_inequality (C : MathCorpus) (hM : 0 < C.maxDepth) :
     (∑ d ∈ range (C.maxDepth + 1), C.value d) / (C.maxDepth + 1) ≤ C.value C.sweetSpot := by
   exact div_le_iff₀' ( by positivity ) |>.2 ( le_trans ( Finset.sum_le_sum fun _ _ => C.sweetSpot_max _ <| Finset.mem_range_succ_iff.mp ‹_› ) <| by norm_num )
+
 
 
 /-- A mathematical exploration system with bounded resources. -/
@@ -177,12 +201,14 @@ structure ExplorationSystem where
   uncertainty : breadth * depth ≤ budget
 
 
+
 theorem breadth_depth_tradeoff (E : ExplorationSystem)
     (b' : ℝ) (hb' : E.breadth < b') :
     E.budget / b' < E.budget / E.breadth := by
   gcongr;
   · exact E.budget_pos;
   · exact E.breadth_pos
+
 
 
 /-- The balanced system: breadth = depth = √budget. -/
@@ -196,10 +222,12 @@ def balancedSystem (R : ℝ) (hR : 0 < R) : ExplorationSystem where
   uncertainty := le_of_eq (Real.mul_self_sqrt (le_of_lt hR))
 
 
+
 /-- The balanced system achieves equality in the uncertainty bound. -/
 theorem balanced_saturates (R : ℝ) (hR : 0 < R) :
     (balancedSystem R hR).breadth * (balancedSystem R hR).depth = R := by
   simp [balancedSystem, Real.mul_self_sqrt (le_of_lt hR)]
+
 
 
 /-- Specialization index: depth/breadth ratio. -/
@@ -207,9 +235,11 @@ def specializationIndex (E : ExplorationSystem) : ℝ :=
   E.depth / E.breadth
 
 
+
 /-- Generalization index: breadth/depth ratio. -/
 def generalizationIndex (E : ExplorationSystem) : ℝ :=
   E.breadth / E.depth
+
 
 
 theorem spec_gen_reciprocal (E : ExplorationSystem) :
@@ -218,11 +248,13 @@ theorem spec_gen_reciprocal (E : ExplorationSystem) :
   rw [ div_mul_div_cancel₀, div_self ] <;> linarith [ E.breadth_pos, E.depth_pos ]
 
 
+
 theorem harmonic_mean_bound (E : ExplorationSystem) :
     2 * E.breadth * E.depth / (E.breadth + E.depth) ≤ Real.sqrt E.budget := by
   refine Real.le_sqrt_of_sq_le ?_;
   field_simp;
   rw [ div_le_iff₀ ] <;> nlinarith [ sq_nonneg ( E.breadth - E.depth ), mul_pos E.breadth_pos E.depth_pos, E.uncertainty ]
+
 
 
 /-- The Interference-Depth connection: emergent truths from Dream 6
@@ -242,11 +274,13 @@ structure InterferenceDepthConnection where
   peakDominates : ∀ d, d ≤ maxDepth → emergentAtDepth d ≤ emergentAtDepth peakDepth
 
 
+
 /-- The interference-depth peak property. -/
 theorem interference_peaks_at_sweet_spot (conn : InterferenceDepthConnection)
     (d : ℕ) (hd : d ≤ conn.maxDepth) :
     conn.emergentAtDepth d ≤ conn.emergentAtDepth conn.peakDepth :=
   conn.peakDominates d hd
+
 
 
 end

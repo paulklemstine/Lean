@@ -9,9 +9,14 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # CatalogBuild.Physics.Classical.RepulsorTheory
+Auto-generated from theorem catalog database.
+Domain: Physics/Classical
+Declarations: 33] -/
 theorem diagonal_evasion (enum : ℕ → (ℕ → ℕ)) :
     ∃ g : ℕ → ℕ, ∀ n, g n ≠ enum n n := by
   exact ⟨ fun n => enum n n + 1, fun n => by simp +decide ⟩
+
 
 
 /-- **Diagonal Evasion with Constructive Witness.**
@@ -21,9 +26,11 @@ def diagonal_evader (enum : ℕ → (ℕ → ℕ)) : ℕ → ℕ :=
   fun n => enum n n + 1
 
 
+
 theorem diagonal_evader_evades (enum : ℕ → (ℕ → ℕ)) :
     ∀ n, diagonal_evader enum n ≠ enum n n := by
   exact fun n => Nat.succ_ne_self _
+
 
 
 /-- **Iterated Diagonal Evasion.**
@@ -38,6 +45,7 @@ def iterated_evader : ℕ → (ℕ → (ℕ → ℕ)) → (ℕ → ℕ)
     let extended : ℕ → (ℕ → ℕ) := fun k =>
       if k = 0 then prev else enum (k - 1)
     diagonal_evader extended
+
 
 
 theorem iterated_evaders_all_distinct (enum : ℕ → (ℕ → ℕ)) :
@@ -56,9 +64,11 @@ theorem iterated_evaders_all_distinct (enum : ℕ → (ℕ → ℕ)) :
   exact h_inc.injective ( congr_fun h_eq 0 ))
 
 
+
 theorem cantor_evasion (α : Type*) (f : α → Set α) :
     ∃ S : Set α, ∀ a, f a ≠ S := by
   exact ⟨ { a | a∉ f a }, fun a ha => by simpa using Set.ext_iff.mp ha a ⟩
+
 
 
 /-- **The Evading Set**: explicitly constructed via diagonalization. -/
@@ -66,9 +76,11 @@ def evading_set {α : Type*} (f : α → Set α) : Set α :=
   {a : α | a ∉ f a}
 
 
+
 theorem evading_set_evades {α : Type*} (f : α → Set α) :
     ∀ a, f a ≠ evading_set f := by
   intro a ha; have := Set.ext_iff.mp ha a; simp +decide [ evading_set ] at this;
+
 
 
 /-- A search game on a finite universe of size n.
@@ -78,9 +90,11 @@ def remaining_positions (n : ℕ) (queries : Finset (Fin n)) : Finset (Fin n) :=
   Finset.univ \ queries
 
 
+
 theorem remaining_positions_card (n : ℕ) (queries : Finset (Fin n)) :
     (remaining_positions n queries).card = n - queries.card := by
   unfold remaining_positions; simp +decide [ Finset.card_sdiff ] ;
+
 
 
 theorem evader_survives_linear (n : ℕ) (hn : 2 ≤ n) :
@@ -93,9 +107,11 @@ theorem evader_survives_linear (n : ℕ) (hn : 2 ≤ n) :
   exact ⟨ fun r => Classical.choose ( h_exists r ), fun r => Classical.choose_spec ( h_exists r ) ⟩
 
 
+
 theorem countable_search_misses_almost_all (S : Set ℝ) (hS : S.Countable) :
     MeasureTheory.MeasureSpace.volume S = 0 := by
   exact hS.measure_zero MeasureTheory.MeasureSpace.volume
+
 
 
 theorem baire_evasion {X : Type*} [TopologicalSpace X] [BaireSpace X] [Nonempty X]
@@ -111,6 +127,7 @@ theorem baire_evasion {X : Type*} [TopologicalSpace X] [BaireSpace X] [Nonempty 
   exact h_inter_dense.nonempty.imp fun x hx => by aesop;
 
 
+
 theorem generic_evasion (targets : ℕ → Set ℝ)
     (h_closed : ∀ n, IsClosed (targets n))
     (h_nwd : ∀ n, interior (targets n) = ∅) :
@@ -118,15 +135,18 @@ theorem generic_evasion (targets : ℕ → Set ℝ)
   exact dense_iInter_of_isOpen ( fun n => isOpen_compl_iff.mpr ( h_closed n ) ) fun n => by rw [ ← interior_eq_empty_iff_dense_compl ] ; aesop;
 
 
+
 theorem remaining_uncertainty_lower_bound (n k : ℕ) (hk : k < n) :
     n - k ≥ 1 := by
   exact Nat.sub_pos_of_lt hk
+
 
 
 theorem pigeonhole_evasion (n : ℕ) (queries : Finset (Fin (n + 1)))
     (hq : queries.card ≤ n) :
     ∃ pos : Fin (n + 1), pos ∉ queries := by
   exact Classical.not_forall.1 fun h => by have := Finset.eq_univ_of_forall h; aesop;
+
 
 
 theorem adaptive_evader_wins (n : ℕ) (budget : ℕ) (h : budget < n) :
@@ -138,9 +158,11 @@ theorem adaptive_evader_wins (n : ℕ) (budget : ℕ) (h : budget < n) :
   · exact not_forall.mp fun h' => h_card <| by simp [ show queries = Finset.univ from Finset.eq_univ_of_forall h' ]
 
 
+
 theorem existence_of_total_avoider (f : ℕ → ℕ) :
     ∃ g : ℕ → ℕ, ∀ n, g n ≠ f n := by
   exact ⟨ fun n => f n + 1, fun n => Nat.succ_ne_self _ ⟩
+
 
 
 theorem no_universal_enumeration :
@@ -149,14 +171,17 @@ theorem no_universal_enumeration :
   exact fun f hf => by rcases hf ( fun n => f n n + 1 ) with ⟨ n, hn ⟩ ; simpa using congr_fun hn n;
 
 
+
 theorem infinite_evasion_finite_range (f : ℕ → ℕ) (hf : Set.Finite (Set.range f)) :
     Set.Infinite {n : ℕ | n ∉ Set.range f} := by
   exact hf.infinite_compl
 
 
+
 theorem finite_repulsor {n : ℕ} (hn : 0 < n) (f : Fin n → Fin n)
     (hf : ∀ x, f x ≠ x) : ∀ x : Fin n, f x ≠ x := by
   assumption
+
 
 
 theorem antitone_fixed_point_unique {α : Type*} [LinearOrder α] [OrderTop α] [OrderBot α]
@@ -172,6 +197,7 @@ theorem antitone_fixed_point_unique {α : Type*} [LinearOrder α] [OrderTop α] 
     exact Classical.not_not.1 fun h => h_unique' x x₀ hx hx₀ h⟩
 
 
+
 theorem displacement_repulsor (f : ℕ → ℕ) (hf : StrictMono f) (h0 : 0 < f 0) :
     ∀ n, f n ≠ n := by
   -- We proceed by induction on $n$.
@@ -180,6 +206,7 @@ theorem displacement_repulsor (f : ℕ → ℕ) (hf : StrictMono f) (h0 : 0 < f 
   · linarith;
   · contrapose! ih with ih;
     exact le_antisymm ( Nat.le_of_lt_succ <| by linarith [ hf <| Nat.lt_succ_self n ] ) ( Nat.recOn n ( by linarith ) fun n ihn => by linarith [ hf <| Nat.lt_succ_self n ] )
+
 
 
 theorem search_asymmetry (n : ℕ) (hn : 0 < n) :
@@ -192,6 +219,7 @@ theorem search_asymmetry (n : ℕ) (hn : 0 < n) :
   · exact fun queries hqueries => by simpa using Finset.exists_of_ssubset ( Finset.ssubset_iff_subset_ne.mpr ⟨ Finset.subset_univ queries, fun h => by have := Finset.card_le_univ queries; aesop ⟩ ) ;
 
 
+
 /-- **The Repulsor Hierarchy.**
 Repulsors form a strict hierarchy: a Level-k repulsor evades all searches
 of depth k, but not necessarily depth k+1.
@@ -201,9 +229,11 @@ def evades_at_level (g : ℕ → ℕ) (enum : ℕ → (ℕ → ℕ)) (k : ℕ) :
   ∀ i, i < k → g i ≠ enum i i
 
 
+
 theorem level_k_evader_exists (enum : ℕ → (ℕ → ℕ)) (k : ℕ) :
     ∃ g : ℕ → ℕ, evades_at_level g enum k := by
   exact ⟨ fun n => enum n n + 1, fun i hi => by simp +decide ⟩
+
 
 
 theorem level_hierarchy_strict (enum : ℕ → (ℕ → ℕ)) :
@@ -212,14 +242,17 @@ theorem level_hierarchy_strict (enum : ℕ → (ℕ → ℕ)) :
   exact fun k ⟨ g, hg ⟩ => ⟨ g, fun i hi => hg i ( Nat.lt_succ_of_lt hi ) ⟩
 
 
+
 theorem infinite_repulsor_exists (enum : ℕ → (ℕ → ℕ)) :
     ∃ g : ℕ → ℕ, ∀ k, evades_at_level g enum k := by
   exact ⟨ fun n => enum n n + 1, fun k i hi => by simp +decide ⟩
 
 
+
 theorem prob_evasion_bound (n k : ℕ) (hk : k ≤ n) (hn : 0 < n) :
     n - k ≤ n := by
   exact Nat.sub_le _ _
+
 
 
 theorem repulsor_completion (enum : ℕ → (ℕ → ℕ)) (g_partial : ℕ → ℕ)
@@ -231,12 +264,15 @@ theorem repulsor_completion (enum : ℕ → (ℕ → ℕ)) (g_partial : ℕ → 
   unfold evades_at_level at *; aesop;
 
 
+
 theorem negation_is_repulsor : ∀ n : ℤ, n ≠ 0 → -n ≠ n := by
   grind
 
 
+
 theorem successor_is_repulsor : ∀ n : ℕ, n + 1 ≠ n := by
   exact fun n => Nat.succ_ne_self n
+
 
 
 theorem mutual_repulsion_exists :
@@ -244,6 +280,7 @@ theorem mutual_repulsion_exists :
     (∀ n, f (g n) ≠ n) := by
   simp +zetaDelta at *;
   exact ⟨ fun n => n + 1, fun n => by linarith, fun n => n + 2, fun n => by linarith, fun n => by linarith ⟩
+
 
 
 end

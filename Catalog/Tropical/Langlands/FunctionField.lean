@@ -15,12 +15,14 @@ def abelJacobi (n g : ℕ) (D : Fin n → ℤ) (embedding : Fin n → Fin g → 
   fun j => ∑ v : Fin n, (D v : ℝ) * embedding v j
 
 
+
 /-- Abel-Jacobi is linear in the divisor -/
 theorem abelJacobi_linear (n g : ℕ) (D₁ D₂ : Fin n → ℤ)
     (embedding : Fin n → Fin g → ℝ) (j : Fin g) :
     abelJacobi n g (fun v => D₁ v + D₂ v) embedding j =
     abelJacobi n g D₁ embedding j + abelJacobi n g D₂ embedding j := by
   simp [abelJacobi, Finset.sum_add_distrib, Int.cast_add, add_mul]
+
 
 
 /-- A tropical Hecke eigensheaf on the Jacobian -/
@@ -31,6 +33,11 @@ structure TropicalHeckeEigensheaf (g : ℕ) where
     toFun (fun j => x j + if j = i then 1 else 0) = toFun x + eigenvalues i
 
 
+
+/-- [Section: # CatalogBuild.Tropical.Langlands.FunctionField
+Auto-generated from theorem catalog database.
+Domain: Tropical/Langlands
+Declarations: 13] -/
 def linearEigensheaf (g : ℕ) (coeffs : Fin g → ℝ) : TropicalHeckeEigensheaf g where
   toFun := fun x => ∑ i : Fin g, coeffs i * x i
   eigenvalues := coeffs
@@ -40,10 +47,12 @@ def linearEigensheaf (g : ℕ) (coeffs : Fin g → ℝ) : TropicalHeckeEigenshea
     simp +decide [ mul_add, Finset.sum_add_distrib ]
 
 
+
 /-- The tropical geometric Langlands for GL_1 -/
 def tropGeometricLanglands_GL1 (g : ℕ) :
     TropicalHeckeEigensheaf g → (Fin g → ℝ) :=
   fun E => E.eigenvalues
+
 
 
 /-- The correspondence is injective on linear eigensheaves -/
@@ -56,9 +65,11 @@ theorem tropGeoLanglands_injective (g : ℕ) (E₁ E₂ : TropicalHeckeEigenshea
   rw [hlin₁, hlin₂, h]
 
 
+
 /-- The tropical Hitchin base for GL_n: sum of eigenvalues -/
 def tropHitchinBase (n : ℕ) (eigenvalues : Fin n → ℝ) : ℝ :=
   ∑ i : Fin n, eigenvalues i
+
 
 
 theorem tropHitchin_fiber_convex (n : ℕ) (target : ℝ) :
@@ -68,9 +79,11 @@ theorem tropHitchin_fiber_convex (n : ℕ) (target : ℝ) :
   linear_combination' hab * target
 
 
+
 /-- For GL_n, the duality is the identity (self-dual) -/
 def tropFunctionFieldDuality (g n : ℕ) :
     (Fin g → Fin n → ℝ) → (Fin g → Fin n → ℝ) := id
+
 
 
 /-- The duality is an involution -/
@@ -79,9 +92,11 @@ theorem tropFunctionFieldDuality_invol (g n : ℕ) (x : Fin g → Fin n → ℝ)
   simp [tropFunctionFieldDuality]
 
 
+
 /-- Degree of a tropical divisor -/
 def tropicalDegree (n : ℕ) (D : Fin n → ℤ) : ℤ :=
   ∑ v : Fin n, D v
+
 
 
 /-- Degree is additive -/
@@ -90,10 +105,12 @@ theorem tropicalDegree_add (n : ℕ) (D₁ D₂ : Fin n → ℤ) :
   simp [tropicalDegree, Finset.sum_add_distrib]
 
 
+
 /-- Degree of zero divisor is zero -/
 theorem tropicalDegree_zero (n : ℕ) :
     tropicalDegree n (fun _ => 0) = 0 := by
   simp [tropicalDegree]
+
 
 
 end

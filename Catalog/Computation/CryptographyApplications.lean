@@ -7,18 +7,27 @@ Declarations: 14
 
 import Mathlib
 
+/-- [Section: # CatalogBuild.Computation.CryptographyApplications
+Auto-generated from theorem catalog database.
+Domain: Computation
+Declarations: 14] -/
 theorem rsa_key_ex1 : (3 * 3 : ℤ) % 8 = 1 := by norm_num
+
 
 theorem rsa_correct_15 : ∀ m : ZMod 15, m ^ 9 = m := by decide
 
+
 theorem rsa_key_ex2 : (3 * 27 : ℤ) % 40 = 1 := by norm_num
 
+
 theorem euler_thm_15 : ∀ a : (ZMod 15)ˣ, (a : ZMod 15) ^ Nat.totient 15 = 1 := by decide
+
 
 
 theorem dh_correct {G : Type*} [CommMonoid G] (g : G) (a b : ℕ) :
     (g ^ a) ^ b = (g ^ b) ^ a := by
   rw [ ← pow_mul, ← pow_mul, mul_comm ]
+
 
 
 theorem primitive_root_3_7 :
@@ -30,15 +39,18 @@ theorem primitive_root_3_7 :
   exact Exists.elim ( h_order a ( by fin_cases a <;> trivial ) ) fun k hk => ⟨ k, hk.2 ⟩
 
 
+
 /-- Hamming distance on Fin n → Bool -/
 def hammingDistance {n : ℕ} (x y : Fin n → Bool) : ℕ :=
   (Finset.univ.filter (fun i => x i ≠ y i)).card
+
 
 
 theorem hamming_self_zero {n : ℕ} (x : Fin n → Bool) :
     hammingDistance x x = 0 := by
   -- The Hamming distance between a string and itself is zero because there are no differing positions.
   simp [hammingDistance]
+
 
 
 theorem hamming_symmetric {n : ℕ} (x y : Fin n → Bool) :
@@ -49,15 +61,18 @@ theorem hamming_symmetric {n : ℕ} (x y : Fin n → Bool) :
   simp [eq_comm]
 
 
+
 theorem hamming_tri {n : ℕ} (x y z : Fin n → Bool) :
     hammingDistance x z ≤ hammingDistance x y + hammingDistance y z := by
   unfold hammingDistance; rw [ ← Finset.card_union_add_card_inter ] ;
   exact le_add_right ( Finset.card_le_card fun i hi => by by_cases hi' : x i = y i <;> by_cases hi'' : y i = z i <;> aesop )
 
 
+
 theorem rep_code_distance :
     hammingDistance (fun _ : Fin 3 => false) (fun _ : Fin 3 => true) = 3 := by
   native_decide +revert
+
 
 
 theorem std_lattice_det_eq (n : ℕ) :
@@ -66,11 +81,14 @@ theorem std_lattice_det_eq (n : ℕ) :
   apply Matrix.det_one
 
 
+
 theorem birthday_bound_val : 2 ^ 64 * 2 ^ 64 = 2 ^ 128 := by norm_num
+
 
 
 theorem iter_inj {α : Type*} (f : α → α) (hf : Function.Injective f) (n : ℕ) :
     Function.Injective (f^[n]) := by
   -- Since $f$ is injective, the composition of $f$ with itself $n$ times is also injective.
   apply Function.Injective.iterate hf n
+
 

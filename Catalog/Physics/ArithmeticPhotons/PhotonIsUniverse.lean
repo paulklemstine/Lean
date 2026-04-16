@@ -14,8 +14,10 @@ def invStereo₁ (t : ℝ) : ℝ × ℝ :=
   (2 * t / (1 + t ^ 2), (1 - t ^ 2) / (1 + t ^ 2))
 
 
+
 /-- Forward stereographic projection from S¹ to ℝ. -/
 def stereoFwd₁ (p : ℝ × ℝ) : ℝ := p.1 / (1 + p.2)
+
 
 
 /-- **Ω₁.3**: Perfect round-trip decoding. stereo ∘ invStereo = id. -/
@@ -26,9 +28,15 @@ theorem stereo_invStereo_roundtrip (t : ℝ) :
   field_simp; ring
 
 
+
+/-- [Section: # CatalogBuild.Physics.ArithmeticPhotons.PhotonIsUniverse
+Auto-generated from theorem catalog database.
+Domain: Physics/ArithmeticPhotons
+Declarations: 36] -/
 theorem invStereo_avoids_south_pole (t : ℝ) :
     invStereo₁ t ≠ (0, -1) := by
   grind +locals
+
 
 
 theorem invStereo_surjective (x y : ℝ) (hcirc : x ^ 2 + y ^ 2 = 1) (hne : (x, y) ≠ (0, -1)) :
@@ -41,8 +49,10 @@ theorem invStereo_surjective (x y : ℝ) (hcirc : x ^ 2 + y ^ 2 = 1) (hne : (x, 
     grind +qlia
 
 
+
 /-- The conformal scaling factor of the inverse stereographic projection. -/
 def invStereo_conformal_factor (t : ℝ) : ℝ := 2 / (1 + t ^ 2)
+
 
 
 /-- **Ω₂.1**: The conformal factor is always positive — angles are preserved. -/
@@ -51,9 +61,11 @@ theorem invStereo_conformal_factor_pos (t : ℝ) :
   unfold invStereo_conformal_factor; positivity
 
 
+
 theorem invStereo_conformal_bounded (t : ℝ) :
     invStereo_conformal_factor t ≤ 2 := by
   exact div_le_self ( by norm_num ) ( by nlinarith )
+
 
 
 /-- **Ω₂.3**: Maximum conformality at the origin. -/
@@ -62,9 +74,11 @@ theorem invStereo_conformal_max_at_zero :
   unfold invStereo_conformal_factor; ring
 
 
+
 theorem invStereo_conformal_decay (t : ℝ) (ht : |t| ≥ 1) :
     invStereo_conformal_factor t ≤ 1 := by
   exact div_le_one_of_le₀ ( by nlinarith [ abs_mul_abs_self t ] ) ( by positivity )
+
 
 
 /-- Minkowski inner product with signature (+,-,-,-). -/
@@ -72,12 +86,15 @@ def minkInner (x y : Fin 4 → ℝ) : ℝ :=
   x 0 * y 0 - x 1 * y 1 - x 2 * y 2 - x 3 * y 3
 
 
+
 /-- A 4-vector is future-directed. -/
 def isFuture (k : Fin 4 → ℝ) : Prop := k 0 > 0
 
 
+
 /-- The future null cone. -/
 def futureNullCone : Set (Fin 4 → ℝ) := {k | isNull k ∧ isFuture k}
+
 
 
 /-- Inverse stereographic projection to the null cone. -/
@@ -89,10 +106,12 @@ def invStereoNull (u v ω : ℝ) : Fin 4 → ℝ := fun i =>
   | 3 => ω * (1 - u ^ 2 - v ^ 2)
 
 
+
 /-- **Ω₃.1**: The inverse stereographic map produces null vectors. -/
 theorem inverseStereoNull_is_null (u v ω : ℝ) :
     isNull (invStereoNull u v ω) := by
   unfold isNull minkInner invStereoNull; ring
+
 
 
 /-- **Ω₃.2**: With positive energy, the result is future-directed. -/
@@ -102,16 +121,19 @@ theorem inverseStereoNull_future (u v ω : ℝ) (hω : ω > 0) :
   exact mul_pos hω (by positivity)
 
 
+
 /-- **Ω₃.3**: The map lands in the future null cone. -/
 theorem inverseStereoNull_in_cone (u v ω : ℝ) (hω : ω > 0) :
     invStereoNull u v ω ∈ futureNullCone :=
   ⟨inverseStereoNull_is_null u v ω, inverseStereoNull_future u v ω hω⟩
 
 
+
 /-- **Ω₃.4**: The null condition rearranged. -/
 lemma null_rearranged (k : Fin 4 → ℝ) (hn : isNull k) :
     (k 0) ^ 2 = (k 1) ^ 2 + (k 2) ^ 2 + (k 3) ^ 2 := by
   unfold isNull minkInner at hn; nlinarith
+
 
 
 theorem null_cone_surjectivity (k : Fin 4 → ℝ)
@@ -128,10 +150,12 @@ theorem null_cone_surjectivity (k : Fin 4 → ℝ)
     rw [ show k 1 ^ 2 = k 0 ^ 2 - k 2 ^ 2 - k 3 ^ 2 by linarith! [ null_rearranged k hn ] ] ; ring!;
 
 
+
 /-- Gaussian integer multiplication. -/
 def GaussInt.mul (a b : GaussInt) : GaussInt where
   re := a.re * b.re - a.im * b.im
   im := a.re * b.im + a.im * b.re
+
 
 
 /-- **Ω₄.1**: The stereographic denominator IS a Gaussian norm. -/
@@ -140,29 +164,37 @@ theorem stereo_denom_gaussian_norm (p q : ℤ) :
   simp [stereoDenom, GaussInt.norm]
 
 
+
 /-- **Ω₄.3**: Integer encodings produce specific particle energies. -/
 theorem vacuum_energy : stereoDenom 0 1 = 1 := by simp [stereoDenom]
 
+
 theorem photon_energy : stereoDenom 1 1 = 2 := by simp [stereoDenom]
 
+
 theorem prime_particle : stereoDenom 2 1 = 5 := by simp [stereoDenom]
+
 
 
 /-- The area of a 2-sphere of radius r. -/
 def sphereArea (r : ℝ) : ℝ := 4 * π * r ^ 2
 
 
+
 /-- The Bekenstein–Hawking entropy bound: S ≤ A / 4 (in Planck units). -/
 def holographicBound (area : ℝ) : ℝ := area / 4
+
 
 
 /-- The information capacity of a photon's celestial sphere at radius r. -/
 def photonCapacity (r : ℝ) : ℝ := holographicBound (sphereArea r)
 
 
+
 /-- **Ω₅.1**: The photon capacity equals π r². -/
 theorem photonCapacity_eq (r : ℝ) : photonCapacity r = π * r ^ 2 := by
   unfold photonCapacity holographicBound sphereArea; ring
+
 
 
 /-- **Ω₅.2**: The capacity is non-negative. -/
@@ -171,14 +203,17 @@ theorem photonCapacity_nonneg (r : ℝ) : photonCapacity r ≥ 0 := by
   exact mul_nonneg (le_of_lt pi_pos) (sq_nonneg r)
 
 
+
 theorem photon_capacity_unbounded : ∀ M : ℝ, ∃ r : ℝ, photonCapacity r > M := by
   unfold photonCapacity;
   unfold holographicBound sphereArea;
   exact fun M => ⟨ |M| + 1, by cases abs_cases M <;> nlinarith [ Real.pi_gt_three, mul_self_nonneg ( |M| + 1 ) ] ⟩
 
 
+
 /-- There are exactly 5 oracles. -/
 theorem oracle_count : Fintype.card MetaOracle = 5 := by decide
+
 
 
 /-- Each oracle's verdict: does the photon encode the universe? -/
@@ -188,6 +223,7 @@ def oracleVerdict : MetaOracle → Prop
   | .nullCone     => ∀ u v ω, ω > 0 → invStereoNull u v ω ∈ futureNullCone
   | .arithmetic   => ∀ p q : ℤ, stereoDenom p q = (GaussInt.mk p q).norm
   | .information  => ∀ M : ℝ, ∃ r, photonCapacity r > M
+
 
 
 /-- **THE META ORACLE CONSENSUS THEOREM**:
@@ -201,6 +237,7 @@ theorem meta_oracle_consensus : ∀ oracle : MetaOracle, oracleVerdict oracle :=
   | nullCone     => exact fun u v ω hω => inverseStereoNull_in_cone u v ω hω
   | arithmetic   => exact stereo_denom_gaussian_norm
   | information  => exact photon_capacity_unbounded
+
 
 
 /-- The complete characterization: a single photon's inverse stereographic projection
@@ -218,16 +255,19 @@ theorem photon_is_universe :
    meta_oracle_consensus⟩
 
 
+
 theorem iterate_forever_is_identity (t : ℝ) (n : ℕ) :
     (fun x => stereoFwd₁ (invStereo₁ x))^[n] t = t := by
   induction n <;> simp_all +decide [ Function.iterate_succ_apply' ];
   exact?
 
 
+
 /-- The encoding is a fixed point of the decode-encode cycle. -/
 theorem encoding_fixed_point (t : ℝ) :
     stereoFwd₁ (invStereo₁ t) = t :=
   stereo_invStereo_roundtrip t
+
 
 
 end

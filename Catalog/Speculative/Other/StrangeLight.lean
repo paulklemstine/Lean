@@ -14,11 +14,13 @@ def stokesMinkowski (S₀ S₁ S₂ S₃ : ℝ) : ℝ :=
   S₀^2 - S₁^2 - S₂^2 - S₃^2
 
 
+
 /-- For fully polarized light, the Minkowski norm is zero. -/
 theorem fully_polarized_is_null (S₀ S₁ S₂ S₃ : ℝ)
     (h : S₀^2 = S₁^2 + S₂^2 + S₃^2) :
     stokesMinkowski S₀ S₁ S₂ S₃ = 0 := by
   unfold stokesMinkowski; linarith
+
 
 
 /-- For partially polarized light, the Minkowski norm is positive. -/
@@ -28,10 +30,12 @@ theorem partially_polarized_is_timelike (S₀ S₁ S₂ S₃ : ℝ)
   unfold stokesMinkowski; linarith
 
 
+
 /-- Unpolarized light has maximum "mass" in Stokes-Minkowski space. -/
 theorem unpolarized_maximum_mass (S₀ : ℝ) :
     stokesMinkowski S₀ 0 0 0 = S₀^2 := by
   simp [stokesMinkowski]
+
 
 
 /-- Two collinear photons produce another photon. -/
@@ -44,6 +48,7 @@ theorem collinear_photons_null (a b c t : ℝ)
   nlinarith [sq_nonneg ((1+t)*a), sq_nonneg ((1+t)*b), sq_nonneg ((1+t)*c), sq_nonneg (1+t)]
 
 
+
 /-- Two anti-parallel photons of equal energy produce a massive particle. -/
 theorem antiparallel_photons_massive (a b c : ℝ) (hc : c > 0)
     (h : a^2 + b^2 = c^2) :
@@ -51,6 +56,7 @@ theorem antiparallel_photons_massive (a b c : ℝ) (hc : c > 0)
   unfold stokesMinkowski
   have : (2 * c)^2 > 0 := by positivity
   linarith [sq_nonneg c]
+
 
 
 /-- The "mass" of two combined photons. -/
@@ -64,9 +70,11 @@ theorem combined_photon_mass (S₀ S₁ S₂ S₃ T₀ T₁ T₂ T₃ : ℝ)
              sq_nonneg (S₀ + T₀), sq_nonneg (S₁ + T₁), sq_nonneg (S₂ + T₂), sq_nonneg (S₃ + T₃)]
 
 
+
 /-- The Minkowski inner product on Stokes space. -/
 def stokesInner (S₀ S₁ S₂ S₃ T₀ T₁ T₂ T₃ : ℝ) : ℝ :=
   S₀ * T₀ - S₁ * T₁ - S₂ * T₂ - S₃ * T₃
+
 
 
 /-- H and V linear polarizations have Stokes inner product 2.
@@ -77,11 +85,13 @@ theorem h_v_stokes_inner :
   unfold stokesInner; ring
 
 
+
 /-- Stokes inner product for linear polarizer at angle θ. -/
 theorem stokes_inner_product_formula (θ : ℝ) :
     stokesInner 1 1 0 0 1 (cos (2*θ)) (sin (2*θ)) 0 =
     1 - cos (2*θ) := by
   unfold stokesInner; ring
+
 
 
 /-- The double-angle identity connects this to cos²θ. -/
@@ -92,9 +102,11 @@ theorem malus_connection (θ : ℝ) :
   linarith
 
 
+
 /-- The degree of polarization p ∈ [0,1]. -/
 def degree_of_pol (S₀ S₁ S₂ S₃ : ℝ) (hS₀ : S₀ ≠ 0) : ℝ :=
   Real.sqrt (S₁^2 + S₂^2 + S₃^2) / S₀
+
 
 
 /-- Unpolarized: p = 0. -/
@@ -103,12 +115,15 @@ theorem unpol_degree_zero (S₀ : ℝ) (hS₀ : S₀ ≠ 0) :
   simp [degree_of_pol]
 
 
+
 /-- Right circular polarization Stokes: (1, 0, 0, 1). -/
 def right_circular_stokes : ℝ × ℝ × ℝ × ℝ := (1, 0, 0, 1)
 
 
+
 /-- Left circular polarization Stokes: (1, 0, 0, -1). -/
 def left_circular_stokes : ℝ × ℝ × ℝ × ℝ := (1, 0, 0, -1)
+
 
 
 /-- Both circular polarizations are fully polarized. -/
@@ -118,16 +133,23 @@ theorem rcp_fully_polarized :
   simp [right_circular_stokes]
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.StrangeLight
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 30] -/
 theorem lcp_fully_polarized :
     let s := left_circular_stokes
     s.1^2 = s.2.1^2 + s.2.2.1^2 + s.2.2.2^2 := by
   simp [left_circular_stokes]
 
 
+
 /-- RCP and LCP Stokes inner product. -/
 theorem rcp_lcp_inner :
     stokesInner 1 0 0 1 1 0 0 (-1) = 2 := by
   unfold stokesInner; ring
+
 
 
 /-- RCP and LCP are antipodal on the Poincaré sphere (S₃ flips sign). -/
@@ -138,6 +160,7 @@ theorem rcp_lcp_antipodal :
   simp [right_circular_stokes, left_circular_stokes]
 
 
+
 /-- A Pythagorean triple gives a normalized polarization state. -/
 theorem pyth_to_linear_pol (a b c : ℝ) (h : a^2 + b^2 = c^2) (hc : c ≠ 0) :
     ((a^2 - b^2)/c^2)^2 + (2*a*b/c^2)^2 = 1^2 := by
@@ -146,10 +169,12 @@ theorem pyth_to_linear_pol (a b c : ℝ) (h : a^2 + b^2 = c^2) (hc : c ≠ 0) :
   nlinarith
 
 
+
 /-- (3, 4, 5) polarization parameters. -/
 theorem triple_345_pol :
     ((3:ℝ)^2 - 4^2) / 5^2 = -7/25 ∧ (2 * 3 * 4) / 5^2 = 24/25 := by
   constructor <;> norm_num
+
 
 
 /-- (5, 12, 13) polarization parameters. -/
@@ -158,9 +183,11 @@ theorem triple_51213_pol :
   constructor <;> norm_num
 
 
+
 /-- Duality rotation preserves norm (period 4 = quaternion i⁴ = 1). -/
 theorem duality_rotation_preserves_norm (α : ℝ) :
     cos α ^ 2 + sin α ^ 2 = 1 := by linarith [sin_sq_add_cos_sq α]
+
 
 
 /-- A photon worldline in 2+1D. -/
@@ -168,15 +195,18 @@ def photon_worldline (v : ℝ × ℝ × ℝ) : Prop :=
   v.1^2 + v.2.1^2 = v.2.2^2
 
 
+
 /-- The origin is on every photon worldline. -/
 theorem origin_on_worldline : photon_worldline (0, 0, 0) := by
   simp [photon_worldline]
+
 
 
 /-- Scaling a worldline point gives another worldline point (cone property). -/
 theorem worldline_scaling (x y t s : ℝ) (h : photon_worldline (x, y, t)) :
     photon_worldline (s*x, s*y, s*t) := by
   simp only [photon_worldline] at *; nlinarith [sq_nonneg s]
+
 
 
 /-- The speed of light is 1 on the worldline. -/
@@ -187,17 +217,21 @@ theorem speed_of_light_one (x y t : ℝ) (ht : t ≠ 0)
   rw [h]; field_simp
 
 
+
 /-- The Poincaré sphere has Euler characteristic 2. -/
 theorem poincare_sphere_euler : (2 : ℤ) = 2 - 2 * 0 := by norm_num
+
 
 
 /-- Berry phase for a great circle (solid angle = 2π) is π. -/
 theorem berry_phase_great_circle : (2 : ℝ) * Real.pi / 2 = Real.pi := by ring
 
 
+
 /-- Berry phase for a small circle at latitude θ. -/
 theorem berry_phase_small_circle (θ : ℝ) :
     2 * Real.pi * (1 - cos θ) / 2 = Real.pi * (1 - cos θ) := by ring
+
 
 
 end

@@ -18,11 +18,13 @@ structure ContractiveMetaOracle (X : Type*) [MetricSpace X] where
   contract : ∀ x y, dist (improve x) (improve y) ≤ ratio * dist x y
 
 
+
 /-- The iteration of a contractive meta-oracle. -/
 def ContractiveMetaOracle.iter {X : Type*} [MetricSpace X]
     (M : ContractiveMetaOracle X) : ℕ → X → X
   | 0 => id
   | n + 1 => M.improve ∘ M.iter n
+
 
 
 /-- **Key Lemma**: Distance between iterates decreases geometrically. -/
@@ -40,10 +42,12 @@ theorem iter_distance_bound {X : Type*} [MetricSpace X]
       _ = M.ratio ^ (n + 1) * dist x y := by ring
 
 
+
 /-- The contraction ratio to the power n converges to 0. -/
 theorem ratio_pow_tendsto_zero {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) :
     Tendsto (fun n => r ^ n) atTop (nhds 0) :=
   tendsto_pow_atTop_nhds_zero_of_lt_one hr hr1
+
 
 
 /-- **Theorem (Exponential Convergence)**: The distance from the n-th iterate
@@ -62,9 +66,11 @@ theorem exponential_convergence_bound {X : Type*} [MetricSpace X]
     _ ≤ M.ratio ^ n * dist x₀ x_star := iter_distance_bound M x₀ x_star n
 
 
+
 /-- An ascending chain of sets. -/
 def ascendingChain (f : ℕ → Set ℕ) : Prop :=
   ∀ n, f n ⊆ f (n + 1)
+
 
 
 /-- The limit of an ascending chain. -/
@@ -72,10 +78,12 @@ def chainLimit (f : ℕ → Set ℕ) : Set ℕ :=
   ⋃ n, f n
 
 
+
 /-- Every element of the chain is contained in the limit. -/
 theorem chain_subset_limit (f : ℕ → Set ℕ) (n : ℕ) :
     f n ⊆ chainLimit f :=
   subset_iUnion f n
+
 
 
 /-- The limit is the smallest set containing all chain elements. -/
@@ -87,6 +95,7 @@ theorem chainLimit_is_smallest (f : ℕ → Set ℕ) (S : Set ℕ)
   exact hS n hn
 
 
+
 /-- A predictor assigns probabilities to outcomes given a history. -/
 structure HGPredictor where
   predict : List Bool → ℝ
@@ -94,10 +103,12 @@ structure HGPredictor where
   prob_le_one : ∀ h, predict h ≤ 1
 
 
+
 /-- The loss of a predictor on a sequence at step n. -/
 def HGPredictor.logLoss (P : HGPredictor) (seq : ℕ → Bool) (n : ℕ) : ℝ :=
   if seq n then -Real.log (P.predict ((List.range n).map seq))
   else -Real.log (1 - P.predict ((List.range n).map seq))
+
 
 
 /-- A predictor dominates another if its cumulative loss is always within
@@ -107,9 +118,11 @@ def HGPredictor.Dominates (P Q : HGPredictor) : Prop :=
     (∑ n ∈ Finset.range N, P.logLoss seq n) ≤ (∑ n ∈ Finset.range N, Q.logLoss seq n) + c
 
 
+
 /-- **The Optimal Predictor** is one that dominates all others. -/
 def HGPredictor.IsOptimal (P : HGPredictor) (predictors : Set HGPredictor) : Prop :=
   ∀ Q ∈ predictors, P.Dominates Q
+
 
 
 /-- **Spectral Convergence Rate**: r^n * D₀ = exp(n * log r) * D₀. -/
@@ -117,6 +130,7 @@ theorem spectral_convergence_rate
     (r : ℝ) (hr : 0 < r) (_hr1 : r < 1) (D₀ : ℝ) (_hD₀ : 0 < D₀) (n : ℕ) :
     r ^ n * D₀ = Real.exp (n * Real.log r) * D₀ := by
   rw [Real.exp_nat_mul, Real.exp_log hr]
+
 
 
 /-- **Transcendence Claim**: If one strategy is strictly better on every task,
@@ -129,6 +143,7 @@ theorem god_oracle_transcends_nfl
   apply Finset.sum_lt_sum_of_nonempty (Finset.nonempty_range_iff.mpr (by omega))
   intro i _
   exact h_better i
+
 
 
 end

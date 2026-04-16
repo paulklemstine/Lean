@@ -7,9 +7,14 @@ Declarations: 12
 
 import Mathlib
 
+/-- [Section: # CatalogBuild.Physics.AlgebraicPhysics.AlgebraicSpaceTheory
+Auto-generated from theorem catalog database.
+Domain: Physics/AlgebraicPhysics
+Declarations: 12] -/
 theorem spec_contravariant {R S : Type*} [CommRing R] [CommRing S]
     (f : R →+* S) : Continuous (PrimeSpectrum.comap f) := by
   exact?
+
 
 
 theorem spec_field_unique (k : Type*) [Field k] :
@@ -22,10 +27,12 @@ theorem spec_field_unique (k : Type*) [Field k] :
   exact fun h => p.2.ne_top ( by rw [ Ideal.eq_top_iff_one ] ; simpa using p.asIdeal.mul_mem_left x⁻¹ h |> fun h' => by simpa [ hx ] using h' ));
 
 
+
 theorem zeroLocus_antitone (R : Type*) [CommRing R] (I J : Ideal R)
     (h : I ≤ J) :
     PrimeSpectrum.zeroLocus (J : Set R) ⊆ PrimeSpectrum.zeroLocus (I : Set R) := by
   intro p hp; intro x hx; exact hp (h hx) |> fun h => by aesop;
+
 
 
 theorem zeroLocus_top (R : Type*) [CommRing R] :
@@ -33,9 +40,11 @@ theorem zeroLocus_top (R : Type*) [CommRing R] :
   ext ⟨ x, hx ⟩ ; aesop;
 
 
+
 theorem krull_dim_field (k : Type*) [Field k] :
     ringKrullDim k = 0 := by
   rw [ eq_comm ] ; aesop;
+
 
 
 theorem krull_dim_pid (R : Type*) [CommRing R] [IsDomain R]
@@ -44,9 +53,11 @@ theorem krull_dim_pid (R : Type*) [CommRing R] [IsDomain R]
   exact?
 
 
+
 theorem krull_dim_iso {R S : Type*} [CommRing R] [CommRing S]
     (e : R ≃+* S) : ringKrullDim R = ringKrullDim S := by
   exact?
+
 
 
 theorem spec_comp {R S T : Type*} [CommRing R] [CommRing S] [CommRing T]
@@ -55,9 +66,11 @@ theorem spec_comp {R S T : Type*} [CommRing R] [CommRing S] [CommRing T]
   exact?
 
 
+
 theorem spec_id (R : Type*) [CommRing R] :
     PrimeSpectrum.comap (RingHom.id R) = id := by
   aesop
+
 
 
 theorem derivation_leibniz {R A M : Type*}
@@ -68,9 +81,11 @@ theorem derivation_leibniz {R A M : Type*}
   convert D.leibniz a b using 1
 
 
+
 theorem isIdempotentElem_iff (R : Type*) [Ring R] (e : R) :
     IsIdempotentElem e ↔ e * e = e := by
   exact?
+
 
 
 theorem spec_connected_of_no_idempotents (R : Type*) [CommRing R]
@@ -108,4 +123,5 @@ theorem spec_connected_of_no_idempotents (R : Type*) [CommRing R]
   obtain ⟨f, hf⟩ : ∃ f : R, IsIdempotentElem f ∧ V = PrimeSpectrum.zeroLocus {f} := by
     exact?;
   cases h e he.1 <;> cases h f hf.1 <;> simp_all +decide [ Set.ext_iff ]
+
 

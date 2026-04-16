@@ -12,16 +12,26 @@ theorem trace_sum_eq_11 :
     Matrix.trace B₁' + Matrix.trace B₂' + Matrix.trace B₃' = 11 := by native_decide
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.ResearchFindings
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 37] -/
 theorem trace_B₁_B₂ : Matrix.trace (B₁' * B₂') = 17 := by native_decide
 
+
 theorem trace_B₁_B₃ : Matrix.trace (B₁' * B₃') = 15 := by native_decide
+
 
 theorem trace_B₂_B₃ : Matrix.trace (B₂' * B₃') = 17 := by native_decide
 
 
+
 theorem trace_B₂_sq : Matrix.trace (B₂' * B₂') = 35 := by native_decide
 
+
 theorem trace_B₃_sq : Matrix.trace (B₃' * B₃') = 3 := by native_decide
+
 
 
 /-- tr(B₁²) + tr(B₂²) + tr(B₃²) = 41, which is a hypotenuse prime (4² + 5² = 41). -/
@@ -30,7 +40,9 @@ theorem trace_sq_sum :
     Matrix.trace (B₃' * B₃') = 41 := by native_decide
 
 
+
 theorem forty_one_sum_sq : (4 : ℤ) ^ 2 + 5 ^ 2 = 41 := by norm_num
+
 
 
 /-- tr(B₁·B₂·B₃) = 65 = 5·13, product of hypotenuse primes. -/
@@ -38,7 +50,9 @@ theorem trace_holonomy :
     Matrix.trace (B₁' * B₂' * B₃') = 65 := by native_decide
 
 
+
 theorem factor_65 : (65 : ℤ) = 5 * 13 := by norm_num
+
 
 
 /-- Trace power sums: n=3 gives 203 = 7·29, n=4 gives 1161 = 3·387. -/
@@ -47,9 +61,11 @@ theorem trace_cube_sum :
     Matrix.trace (B₃' ^ 3) = 203 := by native_decide
 
 
+
 theorem trace_fourth_sum :
     Matrix.trace (B₁' ^ 4) + Matrix.trace (B₂' ^ 4) +
     Matrix.trace (B₃' ^ 4) = 1161 := by native_decide
+
 
 
 /-- tr(B₁ⁿ) = tr(B₃ⁿ) for all tested n — they are conjugate. -/
@@ -60,19 +76,26 @@ theorem trace_B1_eq_B3_powers :
     Matrix.trace (B₁' ^ 4) = Matrix.trace (B₃' ^ 4) := by native_decide
 
 
+
 theorem congruent_from_345 : 3 * 4 / 2 = (6 : ℤ) := by norm_num
+
 
 theorem congruent_from_5_12_13 : 5 * 12 / 2 = (30 : ℤ) := by norm_num
 
+
 theorem congruent_from_8_15_17 : 8 * 15 / 2 = (60 : ℤ) := by norm_num
 
+
 theorem congruent_from_7_24_25 : 7 * 24 / 2 = (84 : ℤ) := by norm_num
+
 
 
 /-- Rational points on congruent number curves E_n : y² = x³ - n²x. -/
 theorem E6_point : (-3 : ℤ) ^ 3 - 36 * (-3) = 9 ^ 2 := by norm_num
 
+
 theorem E5_point : (-4 : ℤ) ^ 3 - 25 * (-4) = 6 ^ 2 := by norm_num
+
 
 
 /-- Depth-1 children give distinct congruent numbers. -/
@@ -82,9 +105,11 @@ theorem distinct_congruent_numbers :
     (21 * 20 / 2 : ℤ) ≠ 15 * 8 / 2 := by norm_num
 
 
+
 /-- Areas grow under B₂. -/
 theorem area_growth (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
     a * b < (a + 2*b + 2*c) * (2*a + b + 2*c) := by nlinarith
+
 
 
 theorem primes_1mod4_count :
@@ -92,19 +117,23 @@ theorem primes_1mod4_count :
   native_decide
 
 
+
 theorem primes_3mod4_count :
     ((Finset.range 101).filter (fun p => Nat.Prime p ∧ p % 4 = 3)).card = 13 := by
   native_decide
+
 
 
 /-- Chebyshev's bias: 3 mod 4 primes lead up to 100. -/
 theorem chebyshev_bias : (13 : ℕ) > 11 := by norm_num
 
 
+
 theorem sum_two_sq_count_25 :
     ((Finset.range 26).filter (fun n =>
       ∃ a ∈ Finset.range 6, ∃ b ∈ Finset.range 6, a ^ 2 + b ^ 2 = n)).card = 14 := by
   native_decide
+
 
 
 theorem six_divides_abc (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
@@ -117,6 +146,7 @@ theorem six_divides_abc (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
       exact Int.coe_lcm_dvd h2 h3
 
 
+
 /-- Unique PPT with hypotenuse 5. -/
 theorem unique_ppt_5 :
     ∀ a b : ℕ, 0 < a → 0 < b → a < b → a ^ 2 + b ^ 2 = 5 ^ 2 → a = 3 ∧ b = 4 := by
@@ -126,11 +156,15 @@ theorem unique_ppt_5 :
   interval_cases a <;> interval_cases b <;> omega
 
 
+
 theorem berggren_nonabelian_12 : B₁' * B₂' ≠ B₂' * B₁' := by native_decide
+
 
 theorem berggren_nonabelian_13 : B₁' * B₃' ≠ B₃' * B₁' := by native_decide
 
+
 theorem berggren_nonabelian_23 : B₂' * B₃' ≠ B₃' * B₂' := by native_decide
+
 
 
 /-- [B₁,B₂] = B₁B₂ - B₂B₁ (the discrete "field strength"). -/
@@ -139,21 +173,26 @@ theorem field_strength_12 :
     !![(-8 : ℤ), 12, -8; (-4), 16, -4; (-8), 20, -8] := by native_decide
 
 
+
 /-- tr([B₁,B₂]) = 0 — traceless, analogous to SU(N) gauge fields. -/
 theorem field_strength_traceless :
     Matrix.trace (B₁' * B₂' - B₂' * B₁') = 0 := by native_decide
+
 
 
 /-- B₁ is unipotent: (B₁ - I)³ = 0. -/
 theorem B1_unipotent : (B₁' - 1) ^ 3 = 0 := by native_decide
 
 
+
 /-- B₃ is unipotent: (B₃ - I)³ = 0. -/
 theorem B3_unipotent : (B₃' - 1) ^ 3 = 0 := by native_decide
 
 
+
 /-- B₂ is NOT unipotent (det B₂ = -1, it's a reflection). -/
 theorem B2_not_unipotent : (B₂' - 1) ^ 3 ≠ 0 := by native_decide
+
 
 
 /-- Berggren matrices reduce to identity mod 2. -/
@@ -162,6 +201,8 @@ theorem B1_mod2 :
   native_decide
 
 
+
 /-- Experimental verdict summary. -/
 theorem experiment_verdicts :
     (11 : ℕ) % 4 = 3 ∧ 41 % 4 = 1 ∧ 29 % 4 = 1 ∧ 43 % 4 = 3 := by decide
+

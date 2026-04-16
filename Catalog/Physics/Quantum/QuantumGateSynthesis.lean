@@ -20,8 +20,10 @@ inductive ThetaGate where
   deriving Repr, DecidableEq
 
 
+
 /-- A quantum circuit is a sequence of theta group gates. -/
 def ThetaCircuit := List ThetaGate
+
 
 
 /-- The matrix representation of each gate. -/
@@ -32,14 +34,21 @@ def ThetaGate.toMatrix : ThetaGate → Matrix (Fin 2) (Fin 2) ℤ
   | .M₃_inv => !![1, -2; 0, 1]
 
 
+
 /-- Evaluate a circuit as a matrix product (right-to-left composition). -/
 def eval_circuit : ThetaCircuit → Matrix (Fin 2) (Fin 2) ℤ
   | []      => 1
   | g :: gs => g.toMatrix * eval_circuit gs
 
 
+
+/-- [Section: # CatalogBuild.Physics.Quantum.QuantumGateSynthesis
+Auto-generated from theorem catalog database.
+Domain: Physics/Quantum
+Declarations: 35] -/
 theorem det_gate (g : ThetaGate) : Matrix.det g.toMatrix = 1 := by
   cases g <;> simp [ThetaGate.toMatrix, Matrix.det_fin_two]
+
 
 
 theorem eval_circuit_determinant (c : ThetaCircuit) : Matrix.det (eval_circuit c) = 1 := by
@@ -49,9 +58,11 @@ theorem eval_circuit_determinant (c : ThetaCircuit) : Matrix.det (eval_circuit c
     simp [eval_circuit, det_mul, det_gate, ih]
 
 
+
 theorem M₁_mul_M₁_inv : ThetaGate.M₁.toMatrix * ThetaGate.M₁_inv.toMatrix = 1 := by
   ext i j; fin_cases i <;> fin_cases j <;>
     simp [ThetaGate.toMatrix, Matrix.mul_apply, Fin.sum_univ_two]
+
 
 
 theorem M₁_inv_mul_M₁ : ThetaGate.M₁_inv.toMatrix * ThetaGate.M₁.toMatrix = 1 := by
@@ -59,9 +70,11 @@ theorem M₁_inv_mul_M₁ : ThetaGate.M₁_inv.toMatrix * ThetaGate.M₁.toMatri
     simp [ThetaGate.toMatrix, Matrix.mul_apply, Fin.sum_univ_two]
 
 
+
 theorem M₃_mul_M₃_inv : ThetaGate.M₃.toMatrix * ThetaGate.M₃_inv.toMatrix = 1 := by
   ext i j; fin_cases i <;> fin_cases j <;>
     simp [ThetaGate.toMatrix, Matrix.mul_apply, Fin.sum_univ_two]
+
 
 
 theorem M₃_inv_mul_M₃ : ThetaGate.M₃_inv.toMatrix * ThetaGate.M₃.toMatrix = 1 := by
@@ -69,12 +82,15 @@ theorem M₃_inv_mul_M₃ : ThetaGate.M₃_inv.toMatrix * ThetaGate.M₃.toMatri
     simp [ThetaGate.toMatrix, Matrix.mul_apply, Fin.sum_univ_two]
 
 
+
 /-- S matrix of SL(2,ℤ). -/
 def S_matrix : Matrix (Fin 2) (Fin 2) ℤ := !![0, -1; 1, 0]
 
 
+
 /-- T² matrix of SL(2,ℤ). -/
 def T_sq_matrix : Matrix (Fin 2) (Fin 2) ℤ := !![1, 2; 0, 1]
+
 
 
 theorem S_eq_M₃_inv_M₁ : S_matrix = ThetaGate.M₃_inv.toMatrix * ThetaGate.M₁.toMatrix := by
@@ -82,9 +98,11 @@ theorem S_eq_M₃_inv_M₁ : S_matrix = ThetaGate.M₃_inv.toMatrix * ThetaGate.
     simp [S_matrix, ThetaGate.toMatrix, Matrix.mul_apply, Fin.sum_univ_two]
 
 
+
 theorem T_sq_eq_M₃ : T_sq_matrix = ThetaGate.M₃.toMatrix := by
   ext i j; fin_cases i <;> fin_cases j <;>
     simp [T_sq_matrix, ThetaGate.toMatrix]
+
 
 
 /-- The O(1) factoring equation: given m, n with m² - n² = N,
@@ -93,9 +111,11 @@ theorem factoring_from_parameters (N m n : ℤ) (h : m ^ 2 - n ^ 2 = N) :
     N = (m - n) * (m + n) := by ring_nf; linarith
 
 
+
 /-- The factors are correct. -/
 theorem factors_correct (m n : ℤ) :
     (m - n) * (m + n) = m ^ 2 - n ^ 2 := by ring
+
 
 
 /-- Given the evaluated circuit output (m, n), factor extraction is O(1). -/
@@ -109,18 +129,22 @@ structure FactoringResult where
   factored : N = p * q := by linarith [factors_correct m n]
 
 
+
 /-- Apply a circuit to a parameter vector. -/
 def apply_circuit (c : ThetaCircuit) (v : Fin 2 → ℤ) : Fin 2 → ℤ :=
   eval_circuit c *ᵥ v
+
 
 
 /-- The root parameters: (m₀, n₀) = (2, 1) corresponding to the (3,4,5) triple. -/
 def root_params : Fin 2 → ℤ := ![2, 1]
 
 
+
 /-- Root parameters give m₀² - n₀² = 3. -/
 theorem root_params_diff_sq : (root_params 0) ^ 2 - (root_params 1) ^ 2 = 3 := by
   decide
+
 
 
 /-- Convert a Berggren path to a theta circuit. -/
@@ -131,10 +155,12 @@ def BerggrenPath.toCircuit : BerggrenPath → ThetaCircuit
   | .right :: rest => .M₃ :: BerggrenPath.toCircuit rest
 
 
+
 /-- The circuit evaluation is a single matrix — this IS the O(1) equation.
 Instead of running a quantum computer, we evaluate one matrix product. -/
 theorem circuit_eval_is_matrix_product (c : ThetaCircuit) (v : Fin 2 → ℤ) :
     apply_circuit c v = eval_circuit c *ᵥ v := rfl
+
 
 
 theorem circuit_gives_factorization (N p q : ℕ)
@@ -150,10 +176,12 @@ theorem circuit_gives_factorization (N p q : ℕ)
   linarith
 
 
+
 /-- The explicit O(1) equation: extract factors from a 2×2 matrix and root vector. -/
 def extract_factors (M : Matrix (Fin 2) (Fin 2) ℤ) : ℤ × ℤ :=
   let v := M *ᵥ root_params
   (v 0 - v 1, v 0 + v 1)
+
 
 
 /-- Extraction produces a valid factorization when the matrix encodes the right parameters. -/
@@ -166,9 +194,11 @@ theorem extract_factors_correct (M : Matrix (Fin 2) (Fin 2) ℤ) (N : ℤ)
   linarith [factors_correct m n]
 
 
+
 /-- The number of arithmetic operations to extract factors from (m, n) is exactly 2:
 one subtraction (m - n = p) and one addition (m + n = q). -/
 def extraction_ops : ℕ := 2
+
 
 
 /-- The number of operations for matrix-vector multiplication Mv₀ is at most 6:
@@ -176,17 +206,21 @@ def extraction_ops : ℕ := 2
 def matvec_ops : ℕ := 6
 
 
+
 /-- Total operations for the O(1) extraction phase. -/
 def total_extraction_ops : ℕ := matvec_ops + extraction_ops
+
 
 
 /-- The total operation count is constant (= 8). -/
 theorem extraction_is_O1 : total_extraction_ops = 8 := by rfl
 
 
+
 /-- The Euclidean step matrix: subtract q times the other. -/
 def euclidean_step (q_val : ℤ) : Matrix (Fin 2) (Fin 2) ℤ :=
   !![0, 1; 1, -q_val]
+
 
 
 /-- Each Euclidean step has determinant -1. -/
@@ -195,10 +229,12 @@ theorem det_euclidean_step (q_val : ℤ) :
   simp [euclidean_step, Matrix.det_fin_two]
 
 
+
 /-- Two consecutive Euclidean steps have determinant 1 (in SL(2,ℤ)). -/
 theorem det_two_steps (q₁ q₂ : ℤ) :
     Matrix.det (euclidean_step q₁ * euclidean_step q₂) = 1 := by
   simp [det_mul, det_euclidean_step]
+
 
 
 /-- Factoring 15 via a single M₃ gate applied to root parameters. -/
@@ -211,6 +247,7 @@ theorem factor_15_example :
   native_decide
 
 
+
 /-- Factoring 5 via a single M₁ gate applied to root parameters. -/
 theorem factor_5_example :
     let c : ThetaCircuit := [.M₁]
@@ -221,6 +258,7 @@ theorem factor_5_example :
   native_decide
 
 
+
 /-- Factoring 45 = 5 × 9 via M₃ · M₁ circuit. -/
 theorem factor_45_example :
     let c : ThetaCircuit := [.M₃, .M₁]
@@ -229,4 +267,5 @@ theorem factor_45_example :
     let n := result 1
     m ^ 2 - n ^ 2 = 45 := by
   native_decide
+
 

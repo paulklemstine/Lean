@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Logic
-Declarations: 8
+Declarations: 7
 -/
 
 import Mathlib
@@ -12,13 +12,20 @@ def twoPole (a b t : ℚ) : ℚ :=
   ((a * b + 1) * t + (b - a)) / ((a - b) * t + (a * b + 1))
 
 
+
+/-- [Section: # CatalogBuild.Logic.Hypotheses
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 8] -/
 theorem pythagorean_from_stereo (t : ℤ) :
     (2 * t) ^ 2 + (1 - t ^ 2) ^ 2 = (1 + t ^ 2) ^ 2 := by
       ring
 
 
+
 theorem twoPole_0b_at_0 (b : ℚ) (hb : b ≠ 0) : twoPole 0 b 0 = b := by
   unfold twoPole; norm_num [ hb ] ;
+
 
 
 theorem twoPole_transitivity (a b c t : ℚ)
@@ -30,9 +37,11 @@ theorem twoPole_transitivity (a b c t : ℚ)
       grind
 
 
+
 theorem matrix_product_identity (a b c : ℤ) :
     (b * c + 1) * (a * b + 1) + (c - b) * (a - b) = (1 + b ^ 2) * (a * c + 1) := by
       ring
+
 
 
 theorem matrix_product_identity' (a b c : ℤ) :
@@ -40,11 +49,8 @@ theorem matrix_product_identity' (a b c : ℤ) :
       ring
 
 
+
 /-- The Gaussian norm identity: |1+ai|² = 1+a². -/
 theorem gaussian_norm (a : ℤ) : 1 + a ^ 2 = 1 + a ^ 2 := rfl
 
-
-theorem gaussian_product_norm (a b : ℤ) :
-    (a * b + 1) ^ 2 + (a - b) ^ 2 = (1 + a ^ 2) * (1 + b ^ 2) := by
-      ring
 

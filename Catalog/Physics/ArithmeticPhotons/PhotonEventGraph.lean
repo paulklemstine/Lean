@@ -14,9 +14,11 @@ def nullSeparated (e₁ e₂ : SpacetimeEvent) : Prop :=
   minkowskiInterval e₁ e₂ = 0
 
 
+
 /-- An event e₂ is in the causal future of e₁ -/
 def causalFuture (e₁ e₂ : SpacetimeEvent) : Prop :=
   e₁.t < e₂.t ∧ minkowskiInterval e₁ e₂ ≤ 0
+
 
 
 /-- A photon edge: a worldline connecting an emission event to an absorption event.
@@ -28,9 +30,11 @@ structure PhotonEdge where
   time_ordered : emission.t < absorption.t     -- absorption is in the future
 
 
+
 /-- The momentum of a photon edge (spatial displacement). -/
 def PhotonEdge.momentum (p : PhotonEdge) : ℤ × ℤ :=
   (p.absorption.x - p.emission.x, p.absorption.y - p.emission.y)
+
 
 
 /-- The energy of a photon edge (time displacement). -/
@@ -38,10 +42,12 @@ def PhotonEdge.energy (p : PhotonEdge) : ℤ :=
   p.absorption.t - p.emission.t
 
 
+
 /-- Photon energy is always positive (time flows forward). -/
 theorem PhotonEdge.energy_pos (p : PhotonEdge) : 0 < p.energy := by
   simp only [PhotonEdge.energy]
   linarith [p.time_ordered]
+
 
 
 /-- The photon momentum and energy satisfy the on-shell condition:
@@ -51,6 +57,7 @@ theorem PhotonEdge.on_shell (p : PhotonEdge) :
   have h := p.is_null
   rw [null_iff_pythagorean] at h
   exact h
+
 
 
 /-- A photon event graph: a collection of spacetime events connected by photon worldlines.
@@ -65,12 +72,15 @@ structure PhotonEventGraph where
   absorption_mem : ∀ p ∈ photons, p.absorption ∈ events
 
 
+
 /-- The number of photons in the graph -/
 def PhotonEventGraph.photonCount (G : PhotonEventGraph) : ℕ := G.photons.card
 
 
+
 /-- The number of events in the graph -/
 def PhotonEventGraph.eventCount (G : PhotonEventGraph) : ℕ := G.events.card
+
 
 
 /-- An event is an emitter if some photon originates from it -/
@@ -78,9 +88,11 @@ def PhotonEventGraph.isEmitter (G : PhotonEventGraph) (e : SpacetimeEvent) : Pro
   ∃ p ∈ G.photons, p.emission = e
 
 
+
 /-- An event is an absorber if some photon terminates at it -/
 def PhotonEventGraph.isAbsorber (G : PhotonEventGraph) (e : SpacetimeEvent) : Prop :=
   ∃ p ∈ G.photons, p.absorption = e
+
 
 
 /-- The causal order on events: e₁ ≤ e₂ if there is a directed path of
@@ -94,6 +106,7 @@ inductive PhotonEventGraph.causallyConnected (G : PhotonEventGraph) :
       G.causallyConnected e₁ e₃
 
 
+
 /-- Causal connectivity is transitive -/
 theorem PhotonEventGraph.causallyConnected_trans (G : PhotonEventGraph)
     (e₁ e₂ e₃ : SpacetimeEvent)
@@ -104,6 +117,11 @@ theorem PhotonEventGraph.causallyConnected_trans (G : PhotonEventGraph)
   | step a b c hstep _ ih => exact .step a b e₃ hstep (ih h₂₃)
 
 
+
+/-- [Section: # CatalogBuild.Physics.ArithmeticPhotons.PhotonEventGraph
+Auto-generated from theorem catalog database.
+Domain: Physics/ArithmeticPhotons
+Declarations: 21] -/
 theorem PhotonEventGraph.time_monotone (G : PhotonEventGraph)
     (e₁ e₂ : SpacetimeEvent)
     (hconn : G.causallyConnected e₁ e₂)
@@ -119,6 +137,7 @@ theorem PhotonEventGraph.time_monotone (G : PhotonEventGraph)
     · linarith [ p.time_ordered ]
 
 
+
 theorem PhotonEventGraph.no_causal_loop (G : PhotonEventGraph)
     (e : SpacetimeEvent)
     (p : PhotonEdge) (hp : p ∈ G.photons) (hem : p.emission = e) :
@@ -131,14 +150,17 @@ theorem PhotonEventGraph.no_causal_loop (G : PhotonEventGraph)
   linarith [ p.time_ordered, show p.emission.t = e.t from congr_arg SpacetimeEvent.t hem ]
 
 
+
 /-- The emission degree of an event (number of photons emitted from it). -/
 noncomputable def PhotonEventGraph.emissionDegree (G : PhotonEventGraph) (e : SpacetimeEvent) : ℕ :=
   (G.photons.filter (fun p => p.emission = e)).card
 
 
+
 /-- The absorption degree of an event (number of photons absorbed at it). -/
 noncomputable def PhotonEventGraph.absorptionDegree (G : PhotonEventGraph) (e : SpacetimeEvent) : ℕ :=
   (G.photons.filter (fun p => p.absorption = e)).card
+
 
 
 theorem PhotonEventGraph.total_emission_count (G : PhotonEventGraph) :
@@ -147,6 +169,7 @@ theorem PhotonEventGraph.total_emission_count (G : PhotonEventGraph) :
   simp +decide only [card_filter];
   rw [ ← Finset.sum_comm ];
   simp +contextual [ G.emission_mem ]
+
 
 
 /-- An entangled pair: two photons emitted from the same event with
@@ -160,6 +183,7 @@ structure EntangledPair where
     photon1.momentum.2 + photon2.momentum.2 = 0
 
 
+
 theorem EntangledPair.equal_energy (ep : EntangledPair) :
     ep.photon1.energy = ep.photon2.energy := by
   -- By the on-shell condition, we have that for both photons, their energy squared is equal to the sum of the squares of their momentum components.
@@ -170,5 +194,6 @@ theorem EntangledPair.equal_energy (ep : EntangledPair) :
     exact ep.momentum_conservation;
   rw [ ← sq_eq_sq₀ ] <;> try linarith [ PhotonEdge.energy_pos ep.photon1, PhotonEdge.energy_pos ep.photon2 ];
   simp_all +decide [ add_eq_zero_iff_eq_neg ]
+
 
 end

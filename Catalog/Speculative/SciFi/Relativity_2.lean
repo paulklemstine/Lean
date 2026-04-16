@@ -14,10 +14,16 @@ def lorentzFactor (v : ℝ) : ℝ :=
   1 / Real.sqrt (1 - v ^ 2)
 
 
+
+/-- [Section: # CatalogBuild.Speculative.SciFi.Relativity_2
+Auto-generated from theorem catalog database.
+Domain: Speculative/SciFi
+Declarations: 7] -/
 theorem lorentz_ge_one (v : ℝ) (hv : |v| < 1) : 1 ≤ lorentzFactor v := by
   refine one_le_one_div ( Real.sqrt_pos.mpr ?_ ) ?_;
   · nlinarith [ abs_lt.mp hv ];
   · exact Real.sqrt_le_iff.mpr ⟨ by nlinarith, by nlinarith ⟩
+
 
 
 theorem lorentz_strictMono_on :
@@ -27,9 +33,11 @@ theorem lorentz_strictMono_on :
   exact fun a ha₁ ha₂ b hb₁ hb₂ hab => inv_strictAnti₀ ( Real.sqrt_pos.2 <| by nlinarith ) ( Real.sqrt_lt_sqrt ( by nlinarith ) ( by nlinarith ) )
 
 
+
 theorem time_dilation_range (v : ℝ) (hv : |v| < 1) :
     0 < Real.sqrt (1 - v ^ 2) ∧ Real.sqrt (1 - v ^ 2) ≤ 1 := by
   exact ⟨ Real.sqrt_pos.2 ( by nlinarith [ abs_lt.mp hv ] ), Real.sqrt_le_iff.2 ⟨ by nlinarith [ abs_lt.mp hv ], by nlinarith [ abs_lt.mp hv ] ⟩ ⟩
+
 
 
 /-- The relativistic rocket velocity (with c = 1). -/
@@ -37,9 +45,11 @@ def rocketVelocity (ve : ℝ) (massRatio : ℝ) : ℝ :=
   Real.tanh (ve * Real.log massRatio)
 
 
+
 theorem rocket_below_lightspeed (ve : ℝ) (R : ℝ) :
     |rocketVelocity ve R| < 1 := by
   apply Real.abs_tanh_lt_one
+
 
 
 theorem rocket_velocity_increasing (ve : ℝ) (hve : 0 < ve) {R₁ R₂ : ℝ}
@@ -52,6 +62,7 @@ theorem rocket_velocity_increasing (ve : ℝ) (hve : 0 < ve) {R₁ R₂ : ℝ}
   have h_sinh_cosh : Real.sinh (ve * Real.log R₂) * Real.cosh (ve * Real.log R₁) - Real.sinh (ve * Real.log R₁) * Real.cosh (ve * Real.log R₂) = Real.sinh (ve * (Real.log R₂ - Real.log R₁)) := by
     rw [ mul_sub, Real.sinh_sub ] ; ring;
   linarith [ Real.sinh_pos_iff.2 ( show 0 < ve * ( Real.log R₂ - Real.log R₁ ) by exact mul_pos hve ( sub_pos.2 ( Real.log_lt_log hR₁ h ) ) ) ]
+
 
 
 end

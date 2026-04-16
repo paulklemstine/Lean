@@ -9,8 +9,13 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # CatalogBuild.Logic.Foundations
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 34] -/
 theorem hammingWeight_le {n : ℕ} (x : BoolFn n) : hammingWeight x ≤ n := by
   exact le_trans ( Finset.card_filter_le _ _ ) ( by norm_num )
+
 
 
 theorem hammingDist_triangle {n : ℕ} (x y z : BoolFn n) :
@@ -21,9 +26,11 @@ theorem hammingDist_triangle {n : ℕ} (x y z : BoolFn n) :
       exact le_trans ( Finset.card_le_card h_filter ) ( Finset.card_union_le _ _ )
 
 
+
 theorem hammingDist_eq_zero_iff {n : ℕ} (x y : BoolFn n) :
     hammingDist x y = 0 ↔ x = y := by
       simp +decide [ hammingDist, funext_iff ]
+
 
 
 theorem empty_certificate_of_const {n : ℕ} (f : BoolFn n → Bool) (x : BoolFn n)
@@ -31,9 +38,11 @@ theorem empty_certificate_of_const {n : ℕ} (f : BoolFn n → Bool) (x : BoolFn
       exact fun y hy => hconst y
 
 
+
 theorem full_certificate {n : ℕ} (f : BoolFn n → Bool) (x : BoolFn n) :
     IsCertificate f x Finset.univ := by
       exact fun y _ => by simp +decide [ show y = x from funext fun i => by simpa using ‹∀ i ∈ Finset.univ, y i = x i› i ( Finset.mem_univ i ) ] ;
+
 
 
 /-- Pointwise ordering on Boolean strings -/
@@ -41,13 +50,16 @@ def boolLE {n : ℕ} (x y : BoolFn n) : Prop :=
   ∀ i : Fin n, x i = true → y i = true
 
 
+
 theorem boolLE_refl {n : ℕ} (x : BoolFn n) : boolLE x x := by
   exact fun i hi => hi
+
 
 
 theorem boolLE_trans {n : ℕ} (x y z : BoolFn n) :
     boolLE x y → boolLE y z → boolLE x z := by
       exact fun hxy hyz i hi => hyz i ( hxy i hi )
+
 
 
 theorem boolLE_antisymm {n : ℕ} (x y : BoolFn n) :
@@ -59,9 +71,11 @@ theorem boolLE_antisymm {n : ℕ} (x y : BoolFn n) :
       · cases h : x i <;> cases h' : y i <;> simp_all +decide [ boolLE ]
 
 
+
 theorem influence_const {n : ℕ} (b : Bool) (i : Fin n) :
     influence (fun _ : BoolFn n => b) i = 0 := by
       unfold influence; aesop;
+
 
 
 /-- A hypothesis space is a finite type equipped with a partial order
@@ -78,9 +92,11 @@ structure HypothesisSpace where
   nonempty : Nonempty Hyp
 
 
+
 /-- A belief state assigns a non-negative weight to each hypothesis.
 We represent it as a function from hypotheses to non-negative reals. -/
 def BeliefState (n : ℕ) := Fin n → ℝ
+
 
 
 /-- A belief state is valid if all weights are non-negative and sum to 1. -/
@@ -88,9 +104,11 @@ def BeliefState.IsValid {n : ℕ} (b : BeliefState n) : Prop :=
   (∀ i, 0 ≤ b i) ∧ ∑ i : Fin n, b i = 1
 
 
+
 /-- An experiment outcome is a likelihood function: for each hypothesis,
 what is the probability of seeing this outcome? -/
 def Likelihood (n : ℕ) := Fin n → ℝ
+
 
 
 /-- A likelihood is valid if all values are non-negative and at least one is positive. -/
@@ -98,9 +116,11 @@ def Likelihood.IsValid {n : ℕ} (l : Likelihood n) : Prop :=
   (∀ i, 0 ≤ l i) ∧ ∃ i, 0 < l i
 
 
+
 /-- The evidence (marginal likelihood) for a belief-likelihood pair. -/
 def evidence {n : ℕ} (b : BeliefState n) (l : Likelihood n) : ℝ :=
   ∑ i : Fin n, b i * l i
+
 
 
 /-- Bayesian update: posterior ∝ prior × likelihood.
@@ -111,10 +131,12 @@ def bayesianUpdate {n : ℕ} (b : BeliefState n) (l : Likelihood n) : BeliefStat
   else fun i => (b i * l i) / e
 
 
+
 theorem posterior_nonneg {n : ℕ} (b : BeliefState n) (l : Likelihood n)
     (hb : ∀ i, 0 ≤ b i) (hl : ∀ i, 0 ≤ l i) :
     ∀ i, 0 ≤ bayesianUpdate b l i := by
   exact fun i => by unfold bayesianUpdate; split_ifs <;> [ exact hb _; exact div_nonneg ( mul_nonneg ( hb _ ) ( hl _ ) ) ( Finset.sum_nonneg fun _ _ => mul_nonneg ( hb _ ) ( hl _ ) ) ] ;
+
 
 
 theorem posterior_normalized {n : ℕ} (b : BeliefState n) (l : Likelihood n)
@@ -126,11 +148,13 @@ theorem posterior_normalized {n : ℕ} (b : BeliefState n) (l : Likelihood n)
   exact div_self he.ne'
 
 
+
 theorem bayesian_update_valid {n : ℕ} (b : BeliefState n) (l : Likelihood n)
     (hb : BeliefState.IsValid b) (hl : Likelihood.IsValid l)
     (he : 0 < evidence b l) :
     BeliefState.IsValid (bayesianUpdate b l) := by
   exact ⟨ fun i => posterior_nonneg b l hb.1 hl.1 i, posterior_normalized b l hb hl he ⟩
+
 
 
 /-- The scientific iteration: apply Bayesian update repeatedly. -/
@@ -140,10 +164,12 @@ def scientificIteration {n : ℕ} (b₀ : BeliefState n)
   | k + 1 => bayesianUpdate (scientificIteration b₀ experiments k) (experiments k)
 
 
+
 /-- A hypothesis h* is the "true" hypothesis if every experiment's likelihood
 is maximized at h*. -/
 def IsTrueHypothesis {n : ℕ} (hstar : Fin n) (experiments : ℕ → Likelihood n) : Prop :=
   ∀ k i, experiments k i ≤ experiments k hstar
+
 
 
 theorem true_hypothesis_weight_increases {n : ℕ} (b : BeliefState n)
@@ -163,15 +189,18 @@ theorem true_hypothesis_weight_increases {n : ℕ} (b : BeliefState n)
   rw [ le_div_iff₀ he ] ; nlinarith [ hb.1 hstar, hl.1 hstar ]
 
 
+
 /-- A belief state is a fixed point of Bayesian updating with likelihood l
 if updating doesn't change it. -/
 def IsFixedPoint {n : ℕ} (b : BeliefState n) (l : Likelihood n) : Prop :=
   bayesianUpdate b l = b
 
 
+
 /-- A pure belief state concentrates all mass on one hypothesis. -/
 def pureBelief {n : ℕ} (i : Fin n) : BeliefState n :=
   fun j => if j = i then 1 else 0
+
 
 
 theorem pure_belief_is_fixed_point {n : ℕ} (i : Fin n)
@@ -180,6 +209,7 @@ theorem pure_belief_is_fixed_point {n : ℕ} (i : Fin n)
   refine' funext fun j => _;
   unfold bayesianUpdate pureBelief;
   unfold evidence; aesop;
+
 
 
 theorem fixed_point_is_pure {n : ℕ} (hn : 1 < n) (b : BeliefState n)
@@ -207,8 +237,10 @@ theorem fixed_point_is_pure {n : ℕ} (hn : 1 < n) (b : BeliefState n)
   specialize hfixed ⟨ fun k => by positivity, i, by aesop ⟩ hi.ne' ; have := congr_fun hfixed j ; aesop;
 
 
+
 /-- An oracle is a function answering yes/no queries. -/
 def SciOracle := ℕ → Bool
+
 
 
 /-- An experiment maps hypotheses to predicted outcomes. -/
@@ -219,10 +251,12 @@ structure Experiment (n : ℕ) where
   prediction : Fin n → Bool
 
 
+
 /-- Convert an experiment to an oracle: the oracle answers whether
 hypothesis i predicts the observed outcome correctly. -/
 def Experiment.toOracle {n : ℕ} (e : Experiment n) : Fin n → Bool :=
   fun i => e.prediction i == e.outcome
+
 
 
 theorem experiment_oracle_surjective {n : ℕ} (f : Fin n → Bool) :
@@ -235,12 +269,14 @@ theorem experiment_oracle_surjective {n : ℕ} (f : Fin n → Bool) :
   ext i; unfold Experiment.toOracle; aesop;
 
 
+
 /-- A scientific theory is a triple: hypothesis space, belief state, and
 a collection of validated experiments. -/
 structure ScientificTheory (n : ℕ) where
   belief : BeliefState n
   experiments : List (Likelihood n)
   valid : BeliefState.IsValid belief
+
 
 
 /-- Theory refinement: incorporate a new experiment. -/
@@ -252,11 +288,13 @@ def ScientificTheory.refine {n : ℕ} (T : ScientificTheory n)
   valid := bayesian_update_valid T.belief l T.valid hl he
 
 
+
 theorem refinement_increases_experiments {n : ℕ} (T : ScientificTheory n)
     (l : Likelihood n) (hl : Likelihood.IsValid l)
     (he : 0 < evidence T.belief l) :
     T.experiments.length < (T.refine l hl he).experiments.length := by
   exact Nat.lt_succ_self _
+
 
 
 end

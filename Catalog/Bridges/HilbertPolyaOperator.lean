@@ -15,6 +15,7 @@ structure SelfAdjointMatrix (n : ℕ) where
   symmetric : mat.IsSymm
 
 
+
 /-- The graph Laplacian is self-adjoint. -/
 theorem laplacian_is_selfadjoint {n : ℕ}
     (A : Matrix (Fin n) (Fin n) ℝ) (hA : A.IsSymm)
@@ -23,6 +24,11 @@ theorem laplacian_is_selfadjoint {n : ℕ}
   IsSymm.sub hD hA
 
 
+
+/-- [Section: # CatalogBuild.Bridges.HilbertPolyaOperator
+Auto-generated from theorem catalog database.
+Domain: Bridges
+Declarations: 15] -/
 theorem laplacian_psd {n : ℕ}
     (A : Matrix (Fin n) (Fin n) ℝ)
     (hA_symm : A.IsSymm)
@@ -45,6 +51,7 @@ theorem laplacian_psd {n : ℕ}
   exact h_sum.symm ▸ mul_nonneg ( by norm_num ) ( Finset.sum_nonneg fun i hi => Finset.sum_nonneg fun j hj => mul_nonneg ( hA_nonneg i j ) ( sq_nonneg _ ) )
 
 
+
 theorem laplacian_zero_eigenvalue {n : ℕ}
     (A : Matrix (Fin n) (Fin n) ℝ)
     (D : Matrix (Fin n) (Fin n) ℝ)
@@ -56,11 +63,13 @@ theorem laplacian_zero_eigenvalue {n : ℕ}
   rw [ sub_eq_zero, Finset.sum_eq_single i ] <;> aesop
 
 
+
 /-- An oriented edge of a graph. -/
 structure OrientedEdge (n : ℕ) where
   source : Fin n
   target : Fin n
   ne : source ≠ target
+
 
 
 /-- The Hashimoto (edge adjacency) operator. -/
@@ -70,6 +79,7 @@ def hashimotoMatrix {n m : ℕ}
     if (edges e1).target = (edges e2).source ∧
        ¬((edges e1).source = (edges e2).target ∧ (edges e1).target = (edges e2).source)
     then 1 else 0
+
 
 
 /-- For regular graphs, the determinant formula simplifies. -/
@@ -82,10 +92,12 @@ theorem ihara_det_simplification {n : ℕ} (q : ℕ)
   ring
 
 
+
 theorem ramanujan_critical_line (q : ℕ) (hq : q ≥ 1) (ev : ℝ)
     (h_ram : |ev| ≤ 2 * Real.sqrt q) :
     ev ^ 2 - 4 * q ≤ 0 := by
   nlinarith [ abs_le.mp h_ram, Real.mul_self_sqrt ( Nat.cast_nonneg q ) ]
+
 
 
 theorem vieta_sum_of_roots (q : ℕ) (hq : q ≥ 1) (ev u1 u2 : ℝ)
@@ -96,10 +108,12 @@ theorem vieta_sum_of_roots (q : ℕ) (hq : q ≥ 1) (ev u1 u2 : ℝ)
   exact eq_div_of_mul_eq ( by positivity ) ( mul_left_cancel₀ ( sub_ne_zero_of_ne hne ) <| by linarith )
 
 
+
 /-- The "Hilbert-Pólya operator" for a graph: the normalized adjacency matrix A/√q. -/
 def hilbertPolyaOperator {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) (q : ℕ) :
     Matrix (Fin n) (Fin n) ℝ :=
   (1 / Real.sqrt q) • A
+
 
 
 /-- The Hilbert-Pólya operator is self-adjoint when A is symmetric. -/
@@ -109,15 +123,18 @@ theorem hilbertPolya_selfadjoint {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ)
   IsSymm.smul hA _
 
 
+
 theorem hilbertPolya_ramanujan_bound (q : ℕ) (hq : q ≥ 1)
     (ev : ℝ) (h_ram : |ev| ≤ 2 * Real.sqrt q) :
     |ev / Real.sqrt q| ≤ 2 := by
   rwa [ abs_div, abs_of_nonneg ( Real.sqrt_nonneg _ ), div_le_iff₀ ( by positivity ) ]
 
 
+
 /-- The heat kernel trace: Tr(e^{-tL}) = Σ e^{-tλᵢ}. -/
 def heatTrace (eigenvalues : List ℝ) (t : ℝ) : ℝ :=
   eigenvalues.map (fun ev => Real.exp (-t * ev)) |>.sum
+
 
 
 /-- Each term of the heat trace is positive. -/
@@ -126,9 +143,11 @@ theorem heat_trace_term_pos (t ev : ℝ) :
   Real.exp_pos _
 
 
+
 /-- The spectral zeta function of the Laplacian. -/
 def spectralZeta (eigenvalues : List ℝ) (s : ℝ) : ℝ :=
   (eigenvalues.filter (· > 0)).map (fun ev => ev ^ (-s)) |>.sum
+
 
 
 end

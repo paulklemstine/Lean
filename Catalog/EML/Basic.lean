@@ -14,6 +14,7 @@ theorem spbH_neg_right (x : ℝ) : spbH x (-x) = 0 := by
   simp [spbH]
 
 
+
 /-- Wick duality: SPB with negated second argument equals the "difference"
 in the hyperbolic SPB. This is the real-variable manifestation of the
 Wick rotation t → it. -/
@@ -22,6 +23,7 @@ theorem wick_duality (x y : ℝ) :
   simp only [spb]
   have heq : (1 : ℝ) - x * (-y) = 1 + x * y := by ring
   rw [heq]; ring
+
 
 
 /-- The tangent addition law IS the stereographic sum.
@@ -33,6 +35,7 @@ theorem tan_add_eq_spb (α β : ℝ) (hα : Real.cos α ≠ 0) (hβ : Real.cos �
   field_simp
 
 
+
 /-- SPB expression trees — analogous to EML expression trees. -/
 inductive SPBExpr where
   | zero : SPBExpr
@@ -40,6 +43,7 @@ inductive SPBExpr where
   | var : ℕ → SPBExpr
   | node : SPBExpr → SPBExpr → SPBExpr
   deriving Repr, BEq
+
 
 
 /-- Evaluate an SPB expression. -/
@@ -51,12 +55,14 @@ def SPBExpr.eval (e : SPBExpr) (vars : ℕ → ℝ) : ℝ :=
   | .node l r => spb (l.eval vars) (r.eval vars)
 
 
+
 /-- Depth of an SPB expression. -/
 def SPBExpr.depth : SPBExpr → ℕ
   | .zero => 0
   | .one => 0
   | .var _ => 0
   | .node l r => 1 + max l.depth r.depth
+
 
 
 /-- Leaf count. -/
@@ -67,12 +73,14 @@ def SPBExpr.leafCount : SPBExpr → ℕ
   | .node l r => l.leafCount + r.leafCount
 
 
+
 /-- Internal node count. -/
 def SPBExpr.nodeCount : SPBExpr → ℕ
   | .zero => 0
   | .one => 0
   | .var _ => 0
   | .node l r => 1 + l.nodeCount + r.nodeCount
+
 
 
 /-- Binary tree identity: leaves = internal nodes + 1. -/
@@ -85,6 +93,7 @@ theorem SPBExpr.leaf_eq_node_succ (e : SPBExpr) :
   | node l r ihl ihr =>
     simp [SPBExpr.leafCount, SPBExpr.nodeCount, ihl, ihr]
     omega
+
 
 
 end

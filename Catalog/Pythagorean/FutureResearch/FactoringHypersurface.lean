@@ -11,6 +11,7 @@ import Mathlib
 def revealsFactorVia (x N : ℤ) : Prop := 1 < Int.gcd (N - x) N
 
 
+
 /-- The factoring set for a single prime factor: { x : p ∣ N - x }
 is an arithmetic progression with common difference p. -/
 theorem factoring_set_is_AP (p : ℤ) (hp : 0 < p) (N : ℤ) :
@@ -19,6 +20,7 @@ theorem factoring_set_is_AP (p : ℤ) (hp : 0 < p) (N : ℤ) :
   constructor
   · rintro ⟨k, hk⟩; exact ⟨k, by linarith⟩
   · rintro ⟨k, rfl⟩; exact ⟨k, by ring⟩
+
 
 
 /-- For N = p * q, the factoring channels are x ≡ 0 (mod p) or x ≡ 0 (mod q)
@@ -35,6 +37,11 @@ theorem semiprime_factoring_channels (p q x : ℤ) :
     exact dvd_sub this h
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.FutureResearch.FactoringHypersurface
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/FutureResearch
+Declarations: 9] -/
 theorem exists_revealing_value (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
     (hpq : p ≠ q) :
     ∃ x : ℤ, revealsFactorVia x (↑(p * q)) := by
@@ -44,9 +51,11 @@ theorem exists_revealing_value (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
   exact hp.one_lt
 
 
+
 /-- The GCD of N-x and N divides N. -/
 theorem gcd_divides_N' (x N : ℤ) : ↑(Int.gcd (N - x) N) ∣ N :=
   Int.gcd_dvd_right _ _
+
 
 
 theorem prime_divides_gcd (p : ℤ) (x N : ℤ)
@@ -55,10 +64,12 @@ theorem prime_divides_gcd (p : ℤ) (x N : ℤ)
   exact Int.dvd_coe_gcd ( dvd_sub hp_div_N hp_div_x ) hp_div_N
 
 
+
 /-- A single nontrivial GCD reveals a complete factorization. -/
 theorem single_gcd_suffices (N p : ℕ) (hp : Nat.Prime p) (hpN : p ∣ N) :
     N / p * p = N :=
   Nat.div_mul_cancel hpN
+
 
 
 /-- On the sphere Σxᵢ² = d², fixing xⱼ constrains the remaining variables. -/
@@ -70,9 +81,11 @@ theorem remaining_sum_after_peel {k : ℕ} (legs : Fin k → ℤ) (d : ℤ) (j :
   linarith
 
 
+
 /-- Higher k gives strictly more factoring channels. -/
 theorem more_channels_more_chances (k₁ k₂ : ℕ) (hk : k₁ < k₂) :
     k₁ + Nat.choose k₁ 2 < k₂ + Nat.choose k₂ 2 := by
   have : Nat.choose k₁ 2 ≤ Nat.choose k₂ 2 :=
     Nat.choose_le_choose 2 (le_of_lt hk)
   omega
+

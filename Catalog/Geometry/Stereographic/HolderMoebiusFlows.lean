@@ -22,6 +22,7 @@ structure MoebiusFlowParam where
   d_target : ℝ × ℝ
 
 
+
 /-- Linear interpolation between identity and target. -/
 def moebiusFlowAt (p : MoebiusFlowParam) (t : ℝ) : (ℝ × ℝ) × (ℝ × ℝ) × (ℝ × ℝ) × (ℝ × ℝ) :=
   let a := ((1 - t) * 1 + t * p.a_target.1, (1 - t) * 0 + t * p.a_target.2)
@@ -31,10 +32,12 @@ def moebiusFlowAt (p : MoebiusFlowParam) (t : ℝ) : (ℝ × ℝ) × (ℝ × ℝ
   (a, b, c, d)
 
 
+
 /-- At t=0, the flow is the identity transform. -/
 theorem moebiusFlowParam_at_zero (p : MoebiusFlowParam) :
     moebiusFlowAt p 0 = ((1, 0), (0, 0), (0, 0), (1, 0)) := by
   unfold moebiusFlowAt; simp
+
 
 
 /-- At t=1, the flow reaches the target transform. -/
@@ -43,15 +46,22 @@ theorem moebiusFlowParam_at_one (p : MoebiusFlowParam) :
   unfold moebiusFlowAt; simp
 
 
+
 /-- The conformal factor of the stereographic projection composed with a
 flow-parameterized Möbius transform. -/
 def moebiusFlowConformalFactor (n : ℕ) (x : Fin n → ℝ) : ℝ :=
   2 / (1 + ∑ i, (x i) ^ 2)
 
 
+
+/-- [Section: # CatalogBuild.Geometry.Stereographic.HolderMoebiusFlows
+Auto-generated from theorem catalog database.
+Domain: Geometry/Stereographic
+Declarations: 20] -/
 theorem moebiusFlowConformalFactor_pos (n : ℕ) (x : Fin n → ℝ) :
     0 < moebiusFlowConformalFactor n x := by
   unfold moebiusFlowConformalFactor; positivity
+
 
 
 theorem moebiusFlowConformalFactor_bounded (n : ℕ) (x : Fin n → ℝ) :
@@ -61,14 +71,17 @@ theorem moebiusFlowConformalFactor_bounded (n : ℕ) (x : Fin n → ℝ) :
     (le_add_of_nonneg_right (Finset.sum_nonneg fun _ _ => sq_nonneg _))
 
 
+
 /-- Hölder exponent for the flow. We require α ∈ (0, 1]. -/
 def holderExponent (alpha : ℝ) : Prop :=
   0 < alpha ∧ alpha ≤ 1
 
 
+
 /-- A valid Hölder exponent satisfies 0 < α ≤ 1. -/
 theorem holderExponent_valid (alpha : ℝ) (h1 : 0 < alpha) (h2 : alpha ≤ 1) :
     holderExponent alpha := ⟨h1, h2⟩
+
 
 
 /-- The Hölder seminorm bound for the flow interpolation.
@@ -77,10 +90,12 @@ def holderBound (C alpha t s : ℝ) : ℝ :=
   C * |t - s| ^ alpha
 
 
+
 theorem holderBound_nonneg (C alpha t s : ℝ) (hC : 0 ≤ C) (ha : 0 ≤ alpha) :
     0 ≤ holderBound C alpha t s := by
   unfold holderBound
   exact mul_nonneg hC (rpow_nonneg (abs_nonneg _) alpha)
+
 
 
 theorem holderBound_zero (C alpha t : ℝ) (hC : 0 ≤ C) (ha : 0 < alpha) :
@@ -88,9 +103,11 @@ theorem holderBound_zero (C alpha t : ℝ) (hC : 0 ≤ C) (ha : 0 < alpha) :
   unfold holderBound; simp [rpow_eq_zero_iff_of_nonneg (abs_nonneg _), ha.ne']
 
 
+
 /-- The flow interpolation parameter t ↦ t is monotone on [0,1]. -/
 theorem flowInterpolation_monotone :
     Monotone (fun t : ℝ => t) := fun _ _ h => h
+
 
 
 /-- The flow velocity (time derivative of the Möbius parameters). -/
@@ -101,8 +118,10 @@ def flowVelocity (p : MoebiusFlowParam) : (ℝ × ℝ) × (ℝ × ℝ) × (ℝ �
    (p.d_target.1 - 1, p.d_target.2))
 
 
+
 /-- The squared norm of a pair. -/
 def pairSqNorm (p : ℝ × ℝ) : ℝ := p.1 ^ 2 + p.2 ^ 2
+
 
 
 /-- The total velocity squared norm. -/
@@ -111,9 +130,11 @@ def flowVelocitySqNorm (p : MoebiusFlowParam) : ℝ :=
   pairSqNorm v.1 + pairSqNorm v.2.1 + pairSqNorm v.2.2.1 + pairSqNorm v.2.2.2
 
 
+
 theorem flowVelocitySqNorm_nonneg (p : MoebiusFlowParam) :
     0 ≤ flowVelocitySqNorm p := by
   unfold flowVelocitySqNorm pairSqNorm flowVelocity; positivity
+
 
 
 /-- The flow velocity is bounded (constant along the linear interpolation). -/
@@ -121,6 +142,7 @@ theorem flowVelocityBounded (p : MoebiusFlowParam) (B : ℝ)
     (hB : flowVelocitySqNorm p ≤ B ^ 2) (hBpos : 0 ≤ B) :
     Real.sqrt (flowVelocitySqNorm p) ≤ B := by
   rwa [Real.sqrt_le_left hBpos]
+
 
 
 /-- Riemannian gradient descent step on the Möbius flow parameter.
@@ -133,11 +155,13 @@ def flowGradientStep (p : MoebiusFlowParam) (lr : ℝ)
   d_target := (p.d_target.1 - lr * grad_d.1, p.d_target.2 - lr * grad_d.2)
 
 
+
 /-- Zero learning rate preserves parameters. -/
 theorem flowGradientStep_zero_lr (p : MoebiusFlowParam)
     (ga gb gc gd : ℝ × ℝ) :
     flowGradientStep p 0 ga gb gc gd = p := by
   unfold flowGradientStep; simp
+
 
 
 end

@@ -9,8 +9,13 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # CatalogBuild.Algebra.HarmonicAnalysis
+Auto-generated from theorem catalog database.
+Domain: Algebra
+Declarations: 5] -/
 noncomputable def discreteConv' (n : ℕ) [NeZero n] (f g : ZMod n → ℂ) : ZMod n → ℂ :=
   fun x => ∑ y : ZMod n, f y * g (x - y)
+
 
 
 theorem conv_delta' (n : ℕ) [NeZero n] (f : ZMod n → ℂ) :
@@ -22,9 +27,11 @@ theorem conv_delta' (n : ℕ) [NeZero n] (f : ZMod n → ℂ) :
   · intro h; exact absurd (Finset.mem_univ x) h
 
 
+
 theorem trivial_char_sum' (n : ℕ) [NeZero n] :
     ∑ _ : ZMod n, (1 : ℂ) = (Fintype.card (ZMod n) : ℂ) := by
   simp [Finset.sum_const, Finset.card_univ]
+
 
 
 theorem sum_sq_nonneg' {n : ℕ} (a : Fin n → ℝ) :
@@ -32,10 +39,12 @@ theorem sum_sq_nonneg' {n : ℕ} (a : Fin n → ℝ) :
   Finset.sum_nonneg fun k _ => sq_nonneg (a k)
 
 
+
 theorem energy_decomposition' {n : ℕ} (a : Fin n → ℝ) (S : Finset (Fin n)) :
     ∑ k, a k ^ 2 = ∑ k ∈ S, a k ^ 2 + ∑ k ∈ Finset.univ \ S, a k ^ 2 := by
   rw [add_comm, ← Finset.sum_union Finset.sdiff_disjoint,
       Finset.sdiff_union_of_subset (Finset.subset_univ S)]
+
 
 
 end

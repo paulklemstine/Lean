@@ -9,19 +9,27 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # CatalogBuild.Geometry.Stereographic.BenchmarkTheory
+Auto-generated from theorem catalog database.
+Domain: Geometry/Stereographic
+Declarations: 18] -/
 def stereoEffDim (d : ℕ) : ℕ := d + 1
+
 
 
 theorem stereo_expressiveness_lower_bound (d : ℕ) :
     d < stereoEffDim d := Nat.lt_succ_of_le le_rfl
 
 
+
 def parameterRatio (d : ℕ) : ℝ := (d + 1 : ℝ) / d
+
 
 
 theorem parameterRatio_pos (d : ℕ) (hd : 0 < d) :
     0 < parameterRatio d := by
   unfold parameterRatio; positivity
+
 
 
 theorem parameterRatio_le_two (d : ℕ) (hd : 1 ≤ d) :
@@ -32,8 +40,10 @@ theorem parameterRatio_le_two (d : ℕ) (hd : 1 ≤ d) :
   linarith
 
 
+
 def gradientVarianceBound (_ : ℕ) (maxGrad : ℝ) : ℝ :=
   maxGrad ^ 2
+
 
 
 theorem gradient_variance_bound (batchSize : ℕ) (maxGrad : ℝ)
@@ -44,6 +54,7 @@ theorem gradient_variance_bound (batchSize : ℕ) (maxGrad : ℝ)
   intro i
   unfold gradientVarianceBound
   exact sq_le_sq' (by linarith [abs_le.mp (hbound i)]) (by linarith [abs_le.mp (hbound i)])
+
 
 
 theorem logSumExp_ge (seqLen : ℕ) (logits : Fin seqLen → ℝ) (j : Fin seqLen) :
@@ -57,8 +68,10 @@ theorem logSumExp_ge (seqLen : ℕ) (logits : Fin seqLen → ℝ) (j : Fin seqLe
         rw [Real.exp_log (Finset.sum_pos (fun i _ => exp_pos _) ⟨j, Finset.mem_univ _⟩)]
 
 
+
 def depthGradientProduct (L : ℕ) (factors : Fin L → ℝ) : ℝ :=
   ∏ i, factors i
+
 
 
 theorem depth_gradient_product_pos (L : ℕ) (factors : Fin L → ℝ)
@@ -66,6 +79,7 @@ theorem depth_gradient_product_pos (L : ℕ) (factors : Fin L → ℝ)
     0 < depthGradientProduct L factors := by
   unfold depthGradientProduct
   exact Finset.prod_pos fun i _ => hpos i
+
 
 
 theorem depth_gradient_product_bounded (L : ℕ) (factors : Fin L → ℝ)
@@ -78,11 +92,13 @@ theorem depth_gradient_product_bounded (L : ℕ) (factors : Fin L → ℝ)
     _ = 2 ^ L := by simp [Finset.prod_const, Finset.card_fin]
 
 
+
 def warmupCosineLR (baseLR : ℝ) (warmupSteps totalSteps step : ℕ) : ℝ :=
   if step < warmupSteps then
     baseLR * (step : ℝ) / warmupSteps
   else
     baseLR * (1 + Real.cos (Real.pi * (step - warmupSteps : ℝ) / (totalSteps - warmupSteps))) / 2
+
 
 
 theorem warmup_lr_nonneg (baseLR : ℝ) (warmupSteps totalSteps step : ℕ)
@@ -97,6 +113,7 @@ theorem warmup_lr_nonneg (baseLR : ℝ) (warmupSteps totalSteps step : ℕ)
     · positivity
 
 
+
 theorem warmup_lr_monotone (baseLR : ℝ) (warmupSteps : ℕ) (s t : ℕ)
     (hbase : 0 ≤ baseLR)
     (hs : s < warmupSteps) (ht : t < warmupSteps) (hst : s ≤ t)
@@ -109,8 +126,10 @@ theorem warmup_lr_monotone (baseLR : ℝ) (warmupSteps : ℕ) (s t : ℕ)
     (Nat.cast_nonneg warmupSteps)
 
 
+
 def stereoAttentionFLOPs (seqLen d : ℕ) : ℕ :=
   seqLen * seqLen * (d + 1)
+
 
 
 theorem stereo_vs_standard_flops (seqLen d : ℕ) (hd : 0 < d) :
@@ -118,12 +137,15 @@ theorem stereo_vs_standard_flops (seqLen d : ℕ) (hd : 0 < d) :
   unfold stereoAttentionFLOPs; nlinarith
 
 
+
 def stereoMemory (seqLen d : ℕ) : ℕ := seqLen * (d + 1) + seqLen * seqLen
+
 
 
 theorem stereo_memory_linear_in_seq (seqLen d : ℕ) :
     stereoMemory seqLen d = seqLen * (d + 1) + seqLen * seqLen :=
   rfl
+
 
 
 end

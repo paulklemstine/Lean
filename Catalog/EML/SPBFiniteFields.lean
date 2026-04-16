@@ -13,8 +13,10 @@ noncomputable section
 theorem chi4_five : chi4 5 = 1 := by native_decide
 
 
+
 /-- χ₋₄(7) = -1 -/
 theorem chi4_seven : chi4 7 = -1 := by native_decide
+
 
 
 /-- **The p±1 Law (Statement)**: For odd prime p, the SPB group over 𝔽_p has order
@@ -28,12 +30,18 @@ theorem spb_group_order_mod4_statement (p : ℕ) [Fact (Nat.Prime p)] (hp : p > 
   ⟨fun _ => trivial, fun _ => trivial⟩
 
 
+
+/-- [Section: # CatalogBuild.EML.SPBFiniteFields
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 4] -/
 theorem neg_one_qr_iff_mod4 (p : ℕ) [hp : Fact (Nat.Prime p)] (hp2 : p ≠ 2) :
     IsSquare (-1 : ZMod p) ↔ p % 4 = 1 := by
   rw [ ZMod.isSquare_neg_one_iff ];
   · norm_num [ hp.1.primeFactors ];
     have := Nat.Prime.eq_two_or_odd hp.1; omega;
   · exact hp.1.squarefree
+
 
 
 end

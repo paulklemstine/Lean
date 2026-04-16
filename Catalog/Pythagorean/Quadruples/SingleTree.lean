@@ -12,9 +12,11 @@ def QF_eta4 : Matrix (Fin 4) (Fin 4) ℤ :=
   !![1, 0, 0, 0; 0, 1, 0, 0; 0, 0, 1, 0; 0, 0, 0, -1]
 
 
+
 /-- The reflection through (1,1,1,1) in (3,1)-Minkowski space -/
 def QF_R1111 : Matrix (Fin 4) (Fin 4) ℤ :=
   !![0, -1, -1, 1; -1, 0, -1, 1; -1, -1, 0, 1; -1, -1, -1, 2]
+
 
 
 /-- R₁₁₁₁ ∈ O(3,1;ℤ): it preserves the Lorentz form -/
@@ -22,8 +24,10 @@ theorem QF_R1111_isLorentz : QF_R1111.transpose * QF_eta4 * QF_R1111 = QF_eta4 :
   native_decide
 
 
+
 /-- R₁₁₁₁² = I: the reflection is an involution -/
 theorem QF_R1111_sq_eq_one : QF_R1111 * QF_R1111 = 1 := by native_decide
+
 
 
 /-- The descent preserves the Pythagorean property -/
@@ -31,6 +35,7 @@ theorem QF_descent_preserves_pyth (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     (d - b - c) ^ 2 + (d - a - c) ^ 2 + (d - a - b) ^ 2 =
     (2 * d - a - b - c) ^ 2 := by nlinarith [h]
+
 
 
 /-- a + b + c > d when b, c > 0 -/
@@ -41,12 +46,14 @@ theorem QF_sum_exceeds_hyp (a b c d : ℤ)
   nlinarith [sq_nonneg (a + b + c - d), sq_nonneg a, mul_pos hb hc]
 
 
+
 /-- a + b + c < 2d when a, b, c ≥ 0 -/
 theorem QF_sum_below_twice_hyp (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2)
     (ha : 0 ≤ a) (hb : 0 ≤ b) (hc : 0 ≤ c) (hd : 0 < d) :
     a + b + c < 2 * d := by
   nlinarith [sq_nonneg (a - b), sq_nonneg (b - c), sq_nonneg (c - a)]
+
 
 
 /-- The descent strictly decreases the hypotenuse: 0 < d' < d -/
@@ -57,6 +64,7 @@ theorem QF_descent_decreases (a b c d : ℤ)
   constructor
   · linarith [QF_sum_below_twice_hyp a b c d h ha (le_of_lt hb) (le_of_lt hc) hd]
   · linarith [QF_sum_exceeds_hyp a b c d h ha hb hc hd]
+
 
 
 /-- If a² + b² + c² = 1 then exactly one is ±1 and the rest are 0 -/
@@ -77,11 +85,17 @@ theorem QF_sum_three_sq_eq_one (a b c : ℤ)
   interval_cases a <;> interval_cases b <;> interval_cases c <;> simp_all
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.Quadruples.SingleTree
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Quadruples
+Declarations: 34] -/
 theorem QF_descended_parity (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     (2 * d - a - b - c) % 2 = d % 2 := by
   replace h := congr_arg Even h; simp_all +decide [ ← parity_simps ] ;
   grind
+
 
 
 theorem QF_descent_preserves_prim (a b c d : ℤ)
@@ -108,6 +122,7 @@ theorem QF_descent_preserves_prim (a b c d : ℤ)
   · intro ha hb hc hd; have := Nat.dvd_gcd ( Nat.dvd_gcd ha hb ) ( Nat.dvd_gcd hc hd ) ; aesop;
 
 
+
 theorem QF_sorted_has_two_pos (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2)
     (hprim : Int.gcd (Int.gcd a b) (Int.gcd c d) = 1)
@@ -125,10 +140,12 @@ theorem QF_sorted_has_two_pos (a b c d : ℤ)
   · nlinarith
 
 
+
 /-- Cauchy-Schwarz identity for three variables -/
 theorem QF_cauchy_schwarz_three (a b c : ℤ) :
     3 * (a ^ 2 + b ^ 2 + c ^ 2) - (a + b + c) ^ 2 =
     (a - b) ^ 2 + (a - c) ^ 2 + (b - c) ^ 2 := by ring
+
 
 
 /-- The Euler parametrization yields a Pythagorean quadruple -/
@@ -139,6 +156,7 @@ theorem QF_euler_param_valid (m n p q : ℤ) :
     (m ^ 2 + n ^ 2 + p ^ 2 + q ^ 2) ^ 2 := by ring
 
 
+
 /-- The four-square (quaternion norm) identity -/
 theorem QF_quaternion_norm_mult (a b c d e f g h : ℤ) :
     (a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2) * (e ^ 2 + f ^ 2 + g ^ 2 + h ^ 2) =
@@ -146,6 +164,7 @@ theorem QF_quaternion_norm_mult (a b c d e f g h : ℤ) :
     (a*f + b*e + c*h - d*g) ^ 2 +
     (a*g - b*h + c*e + d*f) ^ 2 +
     (a*h + b*g - c*f + d*e) ^ 2 := by ring
+
 
 
 /-- R₁₁₁₁ applied twice returns the original tuple -/
@@ -163,6 +182,7 @@ theorem QF_R1111_involution_tuple (a b c d : ℤ) :
   exact ⟨by ring, by ring, by ring, by ring⟩
 
 
+
 /-- The naive 5D analogue is FALSE: verified by counterexample -/
 theorem QF_5d_identity_fails :
     ¬ ((0:ℤ) ^ 2 + 0 ^ 2 + 1 ^ 2 + 0 ^ 2 = 1 ^ 2 →
@@ -171,12 +191,14 @@ theorem QF_5d_identity_fails :
     (3 * 1 - 0 - 0 - 1 - 0) ^ 2) := by norm_num
 
 
+
 /-- Worst-case depth: hypotenuse decreases by at least 1 each step -/
 theorem QF_depth_upper_bound (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2)
     (ha : 0 ≤ a) (hb : 0 < b) (hc : 0 < c) (hd : 0 < d) :
     2 * d - (a + b + c) ≤ d - 1 := by
   linarith [QF_sum_exceeds_hyp a b c d h ha hb hc hd]
+
 
 
 /-- The descended hypotenuse from Euler parameters simplifies to a quaternion expression -/
@@ -189,11 +211,13 @@ theorem QF_euler_descent_hyp (m n p q : ℤ) :
     2 * n * q + 2 * m * p := by ring
 
 
+
 /-- Berggren descent preserves triples -/
 theorem QF_berggren_preserves_triple (a b c : ℤ)
     (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (a - 2 * b + 2 * c) ^ 2 + (2 * a - b + 2 * c) ^ 2 =
     (2 * a - 2 * b + 3 * c) ^ 2 := by nlinarith [h]
+
 
 
 /-- Each spatial component ≤ hypotenuse -/
@@ -207,28 +231,35 @@ theorem QF_component_bound (a b c d : ℤ)
   · nlinarith [sq_nonneg a, sq_nonneg b, sq_nonneg (c - d)]
 
 
+
 def QF_perm01 : Matrix (Fin 4) (Fin 4) ℤ :=
   !![0, 1, 0, 0; 1, 0, 0, 0; 0, 0, 1, 0; 0, 0, 0, 1]
+
 
 
 def QF_perm12 : Matrix (Fin 4) (Fin 4) ℤ :=
   !![1, 0, 0, 0; 0, 0, 1, 0; 0, 1, 0, 0; 0, 0, 0, 1]
 
 
+
 def QF_signFlip0 : Matrix (Fin 4) (Fin 4) ℤ :=
   !![-1, 0, 0, 0; 0, 1, 0, 0; 0, 0, 1, 0; 0, 0, 0, 1]
+
 
 
 theorem QF_perm01_isLorentz : QF_perm01.transpose * QF_eta4 * QF_perm01 = QF_eta4 := by
   native_decide
 
 
+
 theorem QF_perm12_isLorentz : QF_perm12.transpose * QF_eta4 * QF_perm12 = QF_eta4 := by
   native_decide
 
 
+
 theorem QF_signFlip0_isLorentz : QF_signFlip0.transpose * QF_eta4 * QF_signFlip0 = QF_eta4 := by
   native_decide
+
 
 
 /-- The root (0,0,1,1) is a fixed point of R₁₁₁₁ -/
@@ -236,9 +267,11 @@ theorem QF_root_fixed_point : QF_R1111.mulVec ![(0:ℤ), 0, 1, 1] = ![(0:ℤ), 0
   native_decide
 
 
+
 /-- (1,2,2,3) descends to (-1,0,0,1) -/
 theorem QF_descent_1223 : QF_R1111.mulVec ![(1:ℤ), 2, 2, 3] = ![(-1:ℤ), 0, 0, 1] := by
   native_decide
+
 
 
 /-- ab bound from the Pythagorean equation -/
@@ -248,15 +281,18 @@ theorem QF_count_bound (a b c d : ℤ)
   nlinarith [sq_nonneg c]
 
 
+
 /-- Descent step -/
 def QF_descentStep (a b c d : ℕ) : ℤ × ℤ × ℤ × ℤ :=
   ((d : ℤ) - b - c, (d : ℤ) - a - c, (d : ℤ) - a - b, 2 * (d : ℤ) - a - b - c)
+
 
 
 /-- Normalize: abs and sort -/
 def QF_normalizeQuad (t : ℤ × ℤ × ℤ × ℤ) : ℕ × ℕ × ℕ × ℕ :=
   let vals := [t.1.natAbs, t.2.1.natAbs, t.2.2.1.natAbs].mergeSort (· ≤ ·)
   (vals[0]!, vals[1]!, vals[2]!, t.2.2.2.natAbs)
+
 
 
 /-- Full descent with fuel -/
@@ -277,6 +313,7 @@ def QF_fullDescent : ℕ × ℕ × ℕ × ℕ → ℕ → ℕ × ℕ × ℕ × �
 #eval QF_fullDescent (3, 4, 12, 13) 10
 
 
+
 /-- List primitive quadruples with hypotenuse ≤ N -/
 def QF_listPrimQuads (N : ℕ) : List (ℕ × ℕ × ℕ × ℕ) := do
   let d ← List.range (N + 1)
@@ -294,3 +331,4 @@ def QF_listPrimQuads (N : ℕ) : List (ℕ × ℕ × ℕ × ℕ) := do
   QF_fullDescent (a, b, c, d) 30 == (0, 0, 1, 1)
 
 #eval (QF_listPrimQuads 50).length
+

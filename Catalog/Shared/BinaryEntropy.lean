@@ -1,7 +1,7 @@
 /-! # CatalogBuild.Shared.BinaryEntropy
 
 Auto-generated from theorem catalog database.
-Domain: Algebra
+Domain: Shared
 Declarations: 1
 -/
 
@@ -13,6 +13,7 @@ noncomputable section
 We prove a simpler property: symmetry H(p) = H(1-p). -/
 noncomputable def binaryEntropy (p : ℝ) : ℝ :=
   -(p * Real.log p + (1 - p) * Real.log (1 - p))
+
 
 
 end

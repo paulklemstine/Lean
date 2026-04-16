@@ -9,13 +9,20 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # CatalogBuild.Speculative.DivisorFunctionLibrary
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 17] -/
 noncomputable def σ₀ (n : ℕ) : ℕ := n.divisors.card
+
 
 
 theorem sigma1_one : σ₁ 1 = 1 := by simp [σ₁, Nat.divisors_one]
 
 
+
 theorem sigma0_one : σ₀ 1 = 1 := by simp [σ₀, Nat.divisors_one]
+
 
 
 theorem sigma1_prime (p : ℕ) (hp : Nat.Prime p) : σ₁ p = p + 1 := by
@@ -23,8 +30,10 @@ theorem sigma1_prime (p : ℕ) (hp : Nat.Prime p) : σ₁ p = p + 1 := by
   rw [ hp.sum_divisors, add_comm ]
 
 
+
 theorem sigma0_prime (p : ℕ) (hp : Nat.Prime p) : σ₀ p = 2 := by
   unfold σ₀; rw [ hp.divisors, Finset.card_insert_of_notMem ] <;> aesop;
+
 
 
 theorem sigma1_prime_power_geom (p n : ℕ) (hp : Nat.Prime p) :
@@ -34,6 +43,7 @@ theorem sigma1_prime_power_geom (p n : ℕ) (hp : Nat.Prime p) :
   simp [Finset.sum_map, Function.Embedding.coeFn_mk]
 
 
+
 theorem sigma0_prime_power (p n : ℕ) (hp : Nat.Prime p) :
     σ₀ (p ^ n) = n + 1 := by
   unfold σ₀
@@ -41,15 +51,18 @@ theorem sigma0_prime_power (p n : ℕ) (hp : Nat.Prime p) :
   simp [Finset.card_map]
 
 
+
 theorem sigma1_multiplicative (m n : ℕ) (hcop : Nat.Coprime m n) :
     σ₁ (m * n) = σ₁ m * σ₁ n := by
   unfold σ₁; exact Coprime.sum_divisors_mul hcop
+
 
 
 theorem sigma0_multiplicative (m n : ℕ) (hcop : Nat.Coprime m n) :
     σ₀ (m * n) = σ₀ m * σ₀ n := by
   unfold σ₀;
   grind +suggestions
+
 
 
 theorem sigma1_lower_bound (n : ℕ) (hn : 1 < n) : n + 1 ≤ σ₁ n := by
@@ -65,6 +78,7 @@ theorem sigma1_lower_bound (n : ℕ) (hn : 1 < n) : n + 1 ≤ σ₁ n := by
         rcases hx with rfl | rfl <;> assumption
 
 
+
 theorem sigma1_semiprime_factoring (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
     (hpq : p ≠ q) :
     σ₁ (p * q) = (p + 1) * (q + 1) := by
@@ -74,11 +88,13 @@ theorem sigma1_semiprime_factoring (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prim
   rw [sigma1_multiplicative p q hcop, sigma1_prime p hp, sigma1_prime q hq]
 
 
+
 theorem factor_sum_from_sigma1 (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
     (hpq : p ≠ q) :
     σ₁ (p * q) - p * q - 1 = p + q := by
   rw [ Nat.sub_sub, Nat.sub_eq_of_eq_add ];
   convert sigma1_semiprime_factoring p q hp hq hpq using 1 ; ring
+
 
 
 theorem sigma1_three_prime_powers (p q r : ℕ) (a b c : ℕ)
@@ -97,6 +113,7 @@ theorem sigma1_three_prime_powers (p q r : ℕ) (a b c : ℕ)
   rw [sigma1_multiplicative _ _ hcop_pq_r, sigma1_multiplicative _ _ hcop_pq]
 
 
+
 theorem sigma0_semiprime (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q) (hpq : p ≠ q) :
     σ₀ (p * q) = 4 := by
   have hcop : Nat.Coprime p q :=
@@ -105,8 +122,10 @@ theorem sigma0_semiprime (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q) (hpq 
   rw [sigma0_multiplicative p q hcop, sigma0_prime p hp, sigma0_prime q hq]
 
 
+
 theorem totient_prime_val (p : ℕ) (hp : Nat.Prime p) :
     Nat.totient p = p - 1 := Nat.totient_prime hp
+
 
 
 theorem sigma1_totient_prime (p : ℕ) (hp : Nat.Prime p) :
@@ -115,9 +134,11 @@ theorem sigma1_totient_prime (p : ℕ) (hp : Nat.Prime p) :
   rcases p with ( _ | _ | p ) <;> simp_all +arith +decide [ Nat.totient_prime ]
 
 
+
 theorem sigma1_plus_totient_prime (p : ℕ) (hp : Nat.Prime p) :
     σ₁ p + Nat.totient p = 2 * p := by
   rw [ Nat.totient_prime hp, sigma1_prime p hp ];
   linarith [ Nat.sub_add_cancel hp.pos ]
+
 
 end

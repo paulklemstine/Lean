@@ -7,6 +7,10 @@ Declarations: 4
 
 import Mathlib
 
+/-- [Section: # CatalogBuild.Algebra.Core.PrimeSignatures
+Auto-generated from theorem catalog database.
+Domain: Algebra/Core
+Declarations: 4] -/
 theorem r4_prime_uniform (p : ℕ) (hp : Nat.Prime p) (hodd : Odd p) :
     (∑ d ∈ (Nat.divisors p).filter (fun d => ¬(4 ∣ d)), (d : ℤ)) = (p : ℤ) + 1 := by
   rw [ Finset.sum_eq_add ] <;> norm_num [ hp.ne_zero, hp.ne_one ] ; aesop;
@@ -15,6 +19,7 @@ theorem r4_prime_uniform (p : ℕ) (hp : Nat.Prime p) (hodd : Odd p) :
   · simp_all +decide [ hp.dvd_iff_eq ];
     grind;
   · norm_num +zetaDelta at *
+
 
 
 theorem signature_gap_constant :
@@ -27,6 +32,7 @@ theorem signature_gap_constant :
   norm_num [ Nat.odd_iff.mp hp_odd, Nat.odd_iff.mp hq_odd ]
 
 
+
 /-- The ratio r₈(p)/r₄(p) = 2(p² - p + 1), which is twice the Eisenstein norm.
 This follows from 16(1+p³)/(8(p+1)) = 2(p²-p+1). -/
 theorem channel_ratio_is_twice_eisenstein_norm (p : ℤ) :
@@ -34,8 +40,10 @@ theorem channel_ratio_is_twice_eisenstein_norm (p : ℤ) :
   ring
 
 
+
 /-- The factorization 1 + p³ = (p+1)(p²-p+1). -/
 theorem sum_of_cubes_factor (p : ℤ) :
     (1 + p ^ 3) = (p + 1) * (p ^ 2 - p + 1) := by
   ring
+
 

@@ -9,6 +9,10 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # CatalogBuild.Cryptography.Ethereum.MEVSupplyChain
+Auto-generated from theorem catalog database.
+Domain: Cryptography/Ethereum
+Declarations: 13] -/
 structure Builder where
   efficiency : ℝ
   cost : ℝ
@@ -17,8 +21,10 @@ structure Builder where
   hCost : 0 ≤ cost
 
 
+
 noncomputable def builderProfit (b : Builder) (totalMEV bid : ℝ) : ℝ :=
   b.efficiency * totalMEV - b.cost - bid
+
 
 
 theorem competition_drives_bids (b₁ b₂ : Builder) (totalMEV : ℝ)
@@ -31,6 +37,7 @@ theorem competition_drives_bids (b₁ b₂ : Builder) (totalMEV : ℝ)
   exact ⟨ ( b₁.efficiency * totalMEV - b₁.cost + b₂.efficiency * totalMEV - b₂.cost ) / 2, by linarith, by linarith [ show builderProfit b₂ totalMEV ( ( b₁.efficiency * totalMEV - b₁.cost + b₂.efficiency * totalMEV - b₂.cost ) / 2 ) = b₂.efficiency * totalMEV - b₂.cost - ( ( b₁.efficiency * totalMEV - b₁.cost + b₂.efficiency * totalMEV - b₂.cost ) / 2 ) by exact rfl ] ⟩
 
 
+
 structure SpecializedBuilder extends Builder where
   specialtyFraction : ℝ
   specialtyEfficiency : ℝ
@@ -40,13 +47,16 @@ structure SpecializedBuilder extends Builder where
   hSpecEff1 : specialtyEfficiency ≤ 1
 
 
+
 noncomputable def specializedCapture (sb : SpecializedBuilder) (totalMEV : ℝ) : ℝ :=
   sb.specialtyEfficiency * sb.specialtyFraction * totalMEV +
   sb.efficiency * (1 - sb.specialtyFraction) * totalMEV
 
 
+
 noncomputable def generalCapture (sb : SpecializedBuilder) (totalMEV : ℝ) : ℝ :=
   sb.efficiency * totalMEV
+
 
 
 theorem specialization_beneficial (sb : SpecializedBuilder)
@@ -56,8 +66,10 @@ theorem specialization_beneficial (sb : SpecializedBuilder)
   nlinarith [ mul_nonneg hMEV ( show 0 ≤ sb.specialtyFraction by linarith [ sb.hSpecFrac0 ] ), mul_nonneg hMEV ( show 0 ≤ sb.efficiency by linarith [ sb.hEff0 ] ),sb.hSpecEff, sb.hEff0, sb.hEff1 ]
 
 
+
 noncomputable def mevShareUserReturn (totalMEV userShare : ℝ) : ℝ :=
   userShare * totalMEV
+
 
 
 theorem mev_share_improves_welfare (totalMEV userShare : ℝ)
@@ -66,10 +78,12 @@ theorem mev_share_improves_welfare (totalMEV userShare : ℝ)
   unfold mevShareUserReturn; exact mul_pos hShare0 hMEV
 
 
+
 theorem mev_share_tradeoff (totalMEV s₁ s₂ : ℝ)
     (hMEV : 0 < totalMEV) (hle : s₁ ≤ s₂) :
     (1 - s₂) * totalMEV ≤ (1 - s₁) * totalMEV := by
   nlinarith
+
 
 
 theorem multi_relay_correctness (bid₁ bid₂ : ℝ) :
@@ -77,14 +91,17 @@ theorem multi_relay_correctness (bid₁ bid₂ : ℝ) :
   ⟨le_max_left _ _, le_max_right _ _⟩
 
 
+
 noncomputable def lateMevGain (baseMEV delayMs mevGrowthRate : ℝ) : ℝ :=
   baseMEV + delayMs * mevGrowthRate
+
 
 
 theorem delay_increases_mev (baseMEV delayMs mevGrowthRate : ℝ)
     (hDelay : 0 < delayMs) (hGrowth : 0 < mevGrowthRate) :
     lateMevGain baseMEV delayMs mevGrowthRate > baseMEV := by
   unfold lateMevGain; linarith [mul_pos hDelay hGrowth]
+
 
 
 end

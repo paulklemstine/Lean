@@ -18,6 +18,7 @@ theorem schnorr_completeness_exponent (x r c : ZMod q) :
 
 omit hq in
 
+
 /-- Schnorr completeness: The response s = r + c*x satisfies the verification
 equation when lifted to group exponents.
 Given:
@@ -33,6 +34,11 @@ theorem schnorr_completeness_mod (x r c : ZMod q) (s : ZMod q)
     s = r + c * x := hs
 
 
+
+/-- [Section: # CatalogBuild.Cryptography.ZeroKnowledge.Basic
+Auto-generated from theorem catalog database.
+Domain: Cryptography/ZeroKnowledge
+Declarations: 15] -/
 theorem schnorr_extraction (x r c₁ c₂ s₁ s₂ : ZMod q)
     (hc : c₁ ≠ c₂)
     (hs₁ : s₁ = r + c₁ * x)
@@ -41,10 +47,12 @@ theorem schnorr_extraction (x r c₁ c₂ s₁ s₂ : ZMod q)
   grind +locals
 
 
+
 theorem schnorr_simulator_valid (x c s : ZMod q) :
     let t_sim_exp := s - c * x
     s = t_sim_exp + c * x := by
   grind +ring
+
 
 
 theorem zmod_cancel_sub (a b x : ZMod q) (h : a ≠ b) :
@@ -52,8 +60,10 @@ theorem zmod_cancel_sub (a b x : ZMod q) (h : a ≠ b) :
   rw [ mul_right_comm, mul_inv_cancel₀ ( sub_ne_zero_of_ne h ), one_mul ]
 
 
+
 theorem cave_faker_bound (n : ℕ) : (1 : ℚ) / 2 ^ n ≤ 1 := by
   bound
+
 
 
 /-- The cave protocol has perfect completeness: an honest prover who
@@ -61,13 +71,16 @@ knows the secret passes with probability 1 (certainty). -/
 theorem cave_completeness : (1 : ℚ) = 1 := rfl
 
 
+
 theorem cave_20_rounds : (1 : ℚ) / 2 ^ 20 < 1 / 1000000 := by
   native_decide +revert
+
 
 
 theorem cave_monotone_decreasing (n : ℕ) :
     (1 : ℚ) / 2 ^ (n + 1) < 1 / 2 ^ n := by
   rw [ pow_succ' ] ; gcongr ; norm_num;
+
 
 
 /-- A commitment scheme is modeled as a pair (commit, open) where:
@@ -79,12 +92,14 @@ structure CommitmentScheme (V R C : Type*) where
   binding : ∀ v₁ v₂ r₁ r₂, commit v₁ r₁ = commit v₂ r₂ → v₁ = v₂
 
 
+
 /-- Given a perfectly binding commitment scheme, if two openings produce
 the same commitment, the values must be equal. -/
 theorem commitment_binding {V R C : Type*} (scheme : CommitmentScheme V R C)
     (v₁ v₂ : V) (r₁ r₂ : R) (h : scheme.commit v₁ r₁ = scheme.commit v₂ r₂) :
     v₁ = v₂ :=
   scheme.binding v₁ v₂ r₁ r₂ h
+
 
 
 /-- A Sigma protocol for proving knowledge of a witness w for statement x. -/
@@ -102,6 +117,7 @@ structure SigmaProtocol (Statement Witness Commitment Challenge Response : Type*
   extract : Statement → Commitment → Challenge → Response → Challenge → Response → Witness
 
 
+
 /-- Completeness of any Sigma protocol: the honest prover always convinces
 the honest verifier, regardless of the challenge. -/
 theorem sigma_completeness
@@ -112,6 +128,7 @@ theorem sigma_completeness
   σ.complete x w c
 
 
+
 /-- An NP relation: a relation R(x, w) where membership can be checked
 in polynomial time. -/
 structure NPRelation where
@@ -119,6 +136,7 @@ structure NPRelation where
   Witness : Type*
   relation : Statement → Witness → Prop
   -- In a full formalization, we'd also require polynomial-time decidability
+
 
 
 /-- The GMW universality principle (stated as a type):
@@ -131,4 +149,5 @@ The actual construction goes through graph 3-coloring. -/
 def ZKPSystemType (R : NPRelation) : Prop :=
   ∃ (Com Ch Resp : Type) ,
     Nonempty (SigmaProtocol R.Statement R.Witness Com Ch Resp)
+
 

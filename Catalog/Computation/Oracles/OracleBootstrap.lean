@@ -19,6 +19,7 @@ theorem oracle_image_eq_fixedPoints {α : Type*} (P : α → α) (hP : IsOracle 
   · intro h; exact ⟨x, h⟩
 
 
+
 /-- For an idempotent linear map, if P(v) = λv then λ ∈ {0, 1}.
 This is the Oracle Spectrum Theorem: perfect oracles have binary spectra. -/
 theorem oracle_spectrum {R : Type*} [CommRing R] [NoZeroDivisors R]
@@ -42,9 +43,11 @@ theorem oracle_spectrum {R : Type*} [CommRing R] [NoZeroDivisors R]
   · exact absurd h hv
 
 
+
 /-- The oracle bootstrap map f(x) = 3x² - 2x³ on scalars.
 Its fixed points are exactly {0, 1/2, 1}. -/
 def oracleBootstrapScalar (x : ℝ) : ℝ := 3 * x ^ 2 - 2 * x ^ 3
+
 
 
 /-- 0 is a fixed point of the bootstrap map. -/
@@ -52,14 +55,17 @@ theorem bootstrap_fixed_zero : oracleBootstrapScalar 0 = 0 := by
   simp [oracleBootstrapScalar]
 
 
+
 /-- 1 is a fixed point of the bootstrap map. -/
 theorem bootstrap_fixed_one : oracleBootstrapScalar 1 = 1 := by
   unfold oracleBootstrapScalar; ring
 
 
+
 /-- 1/2 is a fixed point of the bootstrap map (the unstable one). -/
 theorem bootstrap_fixed_half : oracleBootstrapScalar (1/2) = 1/2 := by
   unfold oracleBootstrapScalar; ring
+
 
 
 /-- The derivative of the bootstrap map is f'(x) = 6x - 6x² = 6x(1-x).
@@ -69,6 +75,7 @@ theorem bootstrap_derivative_at_fixed_points :
     (fun x : ℝ => 6 * x - 6 * x ^ 2) 0 = 0 ∧
     (fun x : ℝ => 6 * x - 6 * x ^ 2) 1 = 0 := by
   constructor <;> ring
+
 
 
 /-- In any metric space, a contracting map brings points closer together. -/
@@ -83,6 +90,7 @@ theorem contraction_closer {X : Type*} [MetricSpace X]
     _ = dist x y := by ring
 
 
+
 /-- An oracle is a zero-contraction on its range: it moves no points. -/
 theorem oracle_zero_contraction {X : Type*} [MetricSpace X]
     (P : X → X) (hP : IsOracle P) (y : X) (hy : y ∈ range P) :
@@ -91,12 +99,18 @@ theorem oracle_zero_contraction {X : Type*} [MetricSpace X]
   exact oracle_retraction P hP y hy
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.OracleBootstrap
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 13] -/
 theorem contraction_iterate {X : Type*} [MetricSpace X]
     (f : X → X) (c : ℝ) (hc : 0 ≤ c)
     (hf : ∀ x y, dist (f x) (f y) ≤ c * dist x y) :
     ∀ (n : ℕ) (x y : X), dist (f^[n] x) (f^[n] y) ≤ c ^ n * dist x y := by
   intro n x y; induction' n with n IH generalizing x y <;> simp_all +decide [ pow_succ', mul_assoc, Function.iterate_succ_apply' ] ;
   exact le_trans ( hf _ _ ) ( mul_le_mul_of_nonneg_left ( IH _ _ ) hc )
+
 
 
 theorem master_equation {α : Type*} [Fintype α] [DecidableEq α]
@@ -106,6 +120,7 @@ theorem master_equation {α : Type*} [Fintype α] [DecidableEq α]
   congr with x ; aesop
 
 
+
 /-- The anti-oracle of the anti-oracle is the original.
 In terms of sets (complements), this is double complement. -/
 theorem anti_oracle_involution {α : Type*} (S : Set α) :
@@ -113,11 +128,13 @@ theorem anti_oracle_involution {α : Type*} (S : Set α) :
   compl_compl S
 
 
+
 /-- An oracle on a Boolean algebra satisfies the excluded middle:
 For every element, the oracle says yes or the anti-oracle says yes. -/
 theorem oracle_excluded_middle {α : Type*} (S : Set α) (x : α) :
     x ∈ S ∨ x ∈ Sᶜ :=
   em (x ∈ S) |>.imp id id
+
 
 
 end

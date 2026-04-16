@@ -13,13 +13,20 @@ noncomputable section
 def tropGrad_left (a b : ℝ) : ℝ := if a ≥ b then 1 else 0
 
 
+
 /-- The tropical "derivative" of max(a,b) w.r.t. b: 1 if b > a, 0 otherwise -/
 def tropGrad_right (a b : ℝ) : ℝ := if b > a then 1 else 0
 
 
+
+/-- [Section: # CatalogBuild.Tropical.Core.TropicalFutureDirections
+Auto-generated from theorem catalog database.
+Domain: Tropical/Core
+Declarations: 53] -/
 theorem tropGrad_partition (a b : ℝ) (hab : a ≠ b) :
     tropGrad_left a b + tropGrad_right a b = 1 := by
   unfold tropGrad_left tropGrad_right; split_ifs <;> cases lt_or_gt_of_ne hab <;> linarith;
+
 
 
 theorem tropGrad_left_selects (a b : ℝ) (h : a ≥ b) :
@@ -27,9 +34,11 @@ theorem tropGrad_left_selects (a b : ℝ) (h : a ≥ b) :
   unfold tropGrad_left tropGrad_right; aesop;
 
 
+
 theorem tropGrad_right_selects (a b : ℝ) (h : b > a) :
     tropGrad_left a b * a + tropGrad_right a b * b = max a b := by
   grind +locals
+
 
 
 theorem tropGrad_left_binary (a b : ℝ) :
@@ -37,9 +46,11 @@ theorem tropGrad_left_binary (a b : ℝ) :
   exact Classical.or_iff_not_imp_left.2 fun h => by unfold tropGrad_left at *; aesop;
 
 
+
 theorem tropGrad_right_binary (a b : ℝ) :
     tropGrad_right a b = 0 ∨ tropGrad_right a b = 1 := by
   unfold tropGrad_right; split_ifs <;> norm_num;
+
 
 
 /-- Tropical matrix-vector product -/
@@ -48,10 +59,12 @@ def tropMV {m n : ℕ} [NeZero n] (W : Fin m → Fin n → ℝ) (x : Fin n → �
   fun i => Finset.sup' Finset.univ Finset.univ_nonempty (fun j => W i j + x j)
 
 
+
 /-- Tropical matrix multiplication -/
 def tropMM {m p n : ℕ} [NeZero p] (A : Fin m → Fin p → ℝ) (B : Fin p → Fin n → ℝ) :
     Fin m → Fin n → ℝ :=
   fun i j => Finset.sup' Finset.univ Finset.univ_nonempty (fun k => A i k + B k j)
+
 
 
 theorem tropMV_mono_input {m n : ℕ} [NeZero n]
@@ -65,11 +78,13 @@ theorem tropMV_mono_input {m n : ℕ} [NeZero n]
   exact ⟨ b, fun j => by linarith [ hb j, hle j ] ⟩
 
 
+
 theorem tropMV_mono_kernel {m n : ℕ} [NeZero n]
     (W W' : Fin m → Fin n → ℝ) (f : Fin n → ℝ) (hle : ∀ i j, W i j ≤ W' i j)
     (i : Fin m) : tropMV W f i ≤ tropMV W' f i := by
   unfold tropMV;
   grind +suggestions
+
 
 
 theorem tropMV_max_distrib {m n : ℕ} [NeZero n]
@@ -80,11 +95,13 @@ theorem tropMV_max_distrib {m n : ℕ} [NeZero n]
   exact ⟨ tropMV_mono_input _ _ _ ( fun j => le_max_left _ _ ) _, tropMV_mono_input _ _ _ ( fun j => le_max_right _ _ ) _ ⟩
 
 
+
 theorem tropMV_shift {m n : ℕ} [NeZero n]
     (W : Fin m → Fin n → ℝ) (x : Fin n → ℝ) (c : ℝ) (i : Fin m) :
     tropMV W (fun j => x j + c) i = tropMV W x i + c := by
   unfold tropMV;
   refine' le_antisymm _ _ <;> simp +decide [ Finset.sup'_add, add_assoc ]
+
 
 
 theorem tropMV_ge_component {m n : ℕ} [NeZero n]
@@ -93,10 +110,12 @@ theorem tropMV_ge_component {m n : ℕ} [NeZero n]
   exact Finset.le_sup' ( fun j => W i j + x j ) ( Finset.mem_univ j )
 
 
+
 /-- Tropical RNN state at time t -/
 def tropRNNState {n : ℕ} [NeZero n] (W : Fin n → Fin n → ℝ) (s₀ : Fin n → ℝ) (t : ℕ) :
     Fin n → ℝ :=
   tropMV (tropMatPow W t) s₀
+
 
 
 theorem tropRNN_mono_init {n : ℕ} [NeZero n]
@@ -106,23 +125,29 @@ theorem tropRNN_mono_init {n : ℕ} [NeZero n]
   apply tropMV_mono_input; assumption
 
 
+
 theorem tropRNN_shift {n : ℕ} [NeZero n]
     (W : Fin n → Fin n → ℝ) (s₀ : Fin n → ℝ) (c : ℝ) (t : ℕ) (i : Fin n) :
     tropRNNState W (fun j => s₀ j + c) t i = tropRNNState W s₀ t i + c := by
   convert tropMV_shift ( tropMatPow W t ) s₀ c i using 1
 
 
+
 /-- Min-plus addition: minimum -/
 def minAdd (a b : ℝ) : ℝ := min a b
+
 
 
 /-- Min-plus multiplication: standard addition -/
 def minMul (a b : ℝ) : ℝ := a + b
 
 
+
 theorem minAdd_comm (a b : ℝ) : minAdd a b = minAdd b a := min_comm a b
 
+
 theorem minMul_comm (a b : ℝ) : minMul a b = minMul b a := add_comm a b
+
 
 theorem minMul_minAdd_left (a b c : ℝ) :
     minMul a (minAdd b c) = minAdd (minMul a b) (minMul a c) := by
@@ -130,9 +155,11 @@ theorem minMul_minAdd_left (a b c : ℝ) :
   grind +ring
 
 
+
 theorem maxplus_minplus_duality (a b : ℝ) :
     max a b = -min (-a) (-b) := by
   grind
+
 
 
 /-- Min-plus matrix-vector product: shortest path relaxation step -/
@@ -141,12 +168,14 @@ def minPlusMV {m n : ℕ} [NeZero n] (W : Fin m → Fin n → ℝ) (x : Fin n �
   fun i => Finset.inf' Finset.univ Finset.univ_nonempty (fun j => W i j + x j)
 
 
+
 theorem minPlusMV_mono {m n : ℕ} [NeZero n]
     (W : Fin m → Fin n → ℝ) (x x' : Fin n → ℝ) (hle : ∀ j, x j ≤ x' j)
     (i : Fin m) : minPlusMV W x i ≤ minPlusMV W x' i := by
   unfold minPlusMV;
   simp +zetaDelta at *;
   exact fun j => ⟨ j, by linarith [ hle j ] ⟩
+
 
 
 theorem minPlusMV_shift {m n : ℕ} [NeZero n]
@@ -160,6 +189,7 @@ theorem minPlusMV_shift {m n : ℕ} [NeZero n]
   · exact fun j => ⟨ j, le_rfl ⟩
 
 
+
 theorem bellmanFord_optimality {n : ℕ} [NeZero n]
     (W : Fin n → Fin n → ℝ) (d : Fin n → ℝ)
     (hopt : ∀ i, d i ≤ minPlusMV W d i) (i j : Fin n) :
@@ -167,18 +197,22 @@ theorem bellmanFord_optimality {n : ℕ} [NeZero n]
   exact le_trans ( hopt i ) ( Finset.inf'_le _ <| Finset.mem_univ j )
 
 
+
 /-- Gate complexity of a tropical layer -/
 def tropLayerGates (m n : ℕ) : ℕ := m * n + m * (n - 1)
+
 
 
 /-- Energy of standard layer with expensive multiplications -/
 def stdLayerEnergy (m n mulCost : ℕ) : ℕ := m * n * mulCost + m * (n - 1)
 
 
+
 theorem tropLayer_cheaper (m n mulCost : ℕ) (hm : 0 < m) (hn : 1 < n)
     (hcost : 2 ≤ mulCost) :
     tropLayerGates m n ≤ stdLayerEnergy m n mulCost := by
   unfold tropLayerGates stdLayerEnergy; nlinarith [ Nat.mul_le_mul_left m hcost ] ;
+
 
 
 /-- For depth-d networks, savings compound -/
@@ -188,9 +222,11 @@ theorem tropNetwork_energy_savings (m n d mulCost : ℕ) (hm : 0 < m) (hn : 1 < 
   exact Nat.mul_le_mul_left d (tropLayer_cheaper m n mulCost hm hn hcost)
 
 
+
 /-- Tropical operations are exact in integer arithmetic -/
 theorem tropical_exact_integer (a b : ℤ) :
     max a b + (a + b) = max a b + a + b := by ring
+
 
 
 /-- Max of integers matches if-then-else -/
@@ -198,10 +234,12 @@ theorem tropical_max_ite (a b : ℤ) : max a b = if a ≤ b then b else a := by
   simp [max_def]
 
 
+
 /-- A tropical polynomial in one variable: max of affine functions -/
 def tropPoly1d {k : ℕ} (coeffs exponents : Fin (k+1) → ℝ) (x : ℝ) : ℝ :=
   Finset.sup' Finset.univ Finset.univ_nonempty
     (fun i : Fin (k+1) => coeffs i + exponents i * x)
+
 
 
 theorem tropPoly1d_pwl {k : ℕ} (coeffs exponents : Fin (k+1) → ℝ) (x : ℝ) :
@@ -216,10 +254,12 @@ theorem tropPoly1d_pwl {k : ℕ} (coeffs exponents : Fin (k+1) → ℝ) (x : ℝ
   exact le_antisymm ( Finset.sup'_le _ _ fun j hj => hi.2 j hj ) ( Finset.le_sup' ( fun i => coeffs i + exponents i * x ) hi.1 )
 
 
+
 theorem tropPoly1d_ge_piece {k : ℕ} (coeffs exponents : Fin (k+1) → ℝ)
     (x : ℝ) (i : Fin (k+1)) :
     coeffs i + exponents i * x ≤ tropPoly1d coeffs exponents x := by
   exact Finset.le_sup' ( fun i => coeffs i + exponents i * x ) ( Finset.mem_univ i )
+
 
 
 theorem tropPoly1d_mono_coeffs {k : ℕ} (c c' exponents : Fin (k+1) → ℝ)
@@ -233,16 +273,19 @@ theorem tropPoly1d_mono_coeffs {k : ℕ} (c c' exponents : Fin (k+1) → ℝ)
   exact ⟨ i, fun j => le_trans ( hi j ) ( by linarith [ hle i ] ) ⟩
 
 
+
 /-- At ε = 1, Maslov deformation is LogSumExp -/
 theorem maslov_at_one (a b : ℝ) :
     maslovDeform 1 a b = Real.log (Real.exp a + Real.exp b) := by
   simp [maslovDeform]
 
 
+
 theorem maslov_ge_max (a b : ℝ) (ε : ℝ) (hε : 0 < ε) :
     max a b ≤ maslovDeform ε a b := by
   unfold maslovDeform;
   cases max_cases a b <;> nlinarith [ Real.log_exp ( a / ε ), Real.log_exp ( b / ε ), Real.log_le_log ( by positivity ) ( show Real.exp ( a / ε ) + Real.exp ( b / ε ) ≥ Real.exp ( a / ε ) by linarith [ Real.exp_pos ( a / ε ), Real.exp_pos ( b / ε ) ] ), Real.log_le_log ( by positivity ) ( show Real.exp ( a / ε ) + Real.exp ( b / ε ) ≥ Real.exp ( b / ε ) by linarith [ Real.exp_pos ( a / ε ), Real.exp_pos ( b / ε ) ] ), mul_div_cancel₀ a hε.ne', mul_div_cancel₀ b hε.ne' ]
+
 
 
 theorem maslov_gap_bound (a b : ℝ) (ε : ℝ) (hε : 0 < ε) :
@@ -261,10 +304,12 @@ theorem maslov_gap_bound (a b : ℝ) (ε : ℝ) (hε : 0 < ε) :
   nlinarith [ mul_div_cancel₀ a hε.ne' ]
 
 
+
 theorem trop_max_is_or (a b : Bool) :
     max (if a then (1:ℤ) else 0) (if b then 1 else 0) =
     if (a || b) then 1 else 0 := by
   cases a <;> cases b <;> simp +decide [ * ]
+
 
 
 theorem trop_min_is_and (a b : Bool) :
@@ -273,9 +318,11 @@ theorem trop_min_is_and (a b : Bool) :
   cases a <;> cases b <;> rfl
 
 
+
 theorem trop_neg_is_not (a : Bool) :
     (1 : ℤ) - (if a then 1 else 0) = if (!a) then 1 else 0 := by
   cases a <;> rfl;
+
 
 
 theorem bool_fn_encoded (f : Bool → Bool → Bool) :
@@ -283,6 +330,7 @@ theorem bool_fn_encoded (f : Bool → Bool → Bool) :
       ∀ a b : Bool,
         g (if a then 1 else 0) (if b then 1 else 0) = if f a b then 1 else 0 := by
   exact ⟨ fun x y => if x = 1 ∧ y = 1 then if f Bool.true Bool.true then 1 else 0 else if x = 1 ∧ y = 0 then if f Bool.true Bool.false then 1 else 0 else if x = 0 ∧ y = 1 then if f Bool.false Bool.true then 1 else 0 else if x = 0 ∧ y = 0 then if f Bool.false Bool.false then 1 else 0 else 2, by intro a b; cases a <;> cases b <;> simp +decide ⟩
+
 
 
 theorem quantum_classical_sandwich (a b : ℝ) :
@@ -295,9 +343,11 @@ theorem quantum_classical_sandwich (a b : ℝ) :
     cases max_cases a b <;> linarith [ Real.exp_le_exp.2 ( le_max_left a b ), Real.exp_le_exp.2 ( le_max_right a b ) ]
 
 
+
 theorem exp_preserves_max (a b : ℝ) :
     Real.exp (max a b) = max (Real.exp a) (Real.exp b) := by
   cases le_total a b <;> simp +decide [ * ]
+
 
 
 theorem log_mono_on_pos {a b : ℝ} (ha : 0 < a) (hab : a ≤ b) :
@@ -305,10 +355,12 @@ theorem log_mono_on_pos {a b : ℝ} (ha : 0 < a) (hab : a ≤ b) :
   exact Real.log_le_log ha hab
 
 
+
 /-- A tropical half-space: where one tropical linear form dominates another -/
 def tropHalfSpace {n : ℕ} [NeZero n] (w w' : Fin n → ℝ) : Set (Fin n → ℝ) :=
   {x | tropMV (fun (_ : Fin 1) j => w j) x ⟨0, by omega⟩ ≥
        tropMV (fun (_ : Fin 1) j => w' j) x ⟨0, by omega⟩}
+
 
 
 theorem tropHalfSpace_shift_invariant {n : ℕ} [NeZero n]
@@ -318,10 +370,12 @@ theorem tropHalfSpace_shift_invariant {n : ℕ} [NeZero n]
   simp [tropHalfSpace, tropMV_shift]
 
 
+
 /-- A tropical fixed point: W ⊙ x = x + λ for some eigenvalue λ -/
 def IsTropFixedPoint {n : ℕ} [NeZero n] (W : Fin n → Fin n → ℝ) (x : Fin n → ℝ)
     (lam : ℝ) : Prop :=
   ∀ i, tropMV W x i = lam + x i
+
 
 
 theorem tropFixedPoint_diag_bound {n : ℕ} [NeZero n]
@@ -334,6 +388,7 @@ theorem tropFixedPoint_diag_bound {n : ℕ} [NeZero n]
   linarith [ hfp i ]
 
 
+
 theorem tropFixedPoint_shift {n : ℕ} [NeZero n]
     (W : Fin n → Fin n → ℝ) (x : Fin n → ℝ) (lam c : ℝ)
     (hfp : IsTropFixedPoint W x lam) :
@@ -343,8 +398,10 @@ theorem tropFixedPoint_shift {n : ℕ} [NeZero n]
   linarith [ hfp i ]
 
 
+
 /-- This file formalizes 40+ theorems advancing the future directions -/
 theorem future_directions_theorem_count : (0 : ℕ) < 40 := by omega
+
 
 
 end

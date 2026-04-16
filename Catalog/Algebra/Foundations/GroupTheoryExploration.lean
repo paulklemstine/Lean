@@ -7,6 +7,10 @@ Declarations: 11
 
 import Mathlib
 
+/-- [Section: # CatalogBuild.Algebra.Foundations.GroupTheoryExploration
+Auto-generated from theorem catalog database.
+Domain: Algebra/Foundations
+Declarations: 11] -/
 theorem prime_order_generates (G : Type*) [Group G] [Fintype G]
     (hp : Nat.Prime (Fintype.card G)) (g : G) (hg : g ≠ 1) :
     orderOf g = Fintype.card G := by
@@ -16,14 +20,17 @@ theorem prime_order_generates (G : Type*) [Group G] [Fintype G]
   rw [ Nat.dvd_prime hp ] at h_order_divides ; aesop
 
 
+
 theorem order_dvd_card (G : Type*) [Group G] [Fintype G] (g : G) :
     orderOf g ∣ Fintype.card G := by
   exact orderOf_dvd_card
 
 
+
 theorem pow_card_eq_one_gen (G : Type*) [Group G] [Fintype G] (g : G) :
     g ^ Fintype.card G = 1 := by
   convert pow_card_eq_one
+
 
 
 theorem sq_prime_is_comm (p : ℕ) (hp : Nat.Prime p)
@@ -70,6 +77,7 @@ theorem sq_prime_is_comm (p : ℕ) (hp : Nat.Prime p)
     rw [ Subgroup.mem_center_iff.mp z₁.2 _ ]
 
 
+
 theorem perm_prod_transpositions {n : ℕ} (σ : Equiv.Perm (Fin n)) :
     ∃ l : List (Equiv.Perm (Fin n)), σ = l.prod := by
   induction' σ using Equiv.Perm.swap_induction_on' with a b h₁ h₂ h₃;
@@ -77,9 +85,11 @@ theorem perm_prod_transpositions {n : ℕ} (σ : Equiv.Perm (Fin n)) :
   · exact Exists.elim h₃ fun l hl => ⟨ l ++ [ Equiv.swap b h₁ ], by simp +decide [ hl ] ⟩
 
 
+
 theorem sign_swap_neg {n : ℕ} (i j : Fin n) (hij : i ≠ j) :
     Equiv.Perm.sign (Equiv.swap i j) = -1 := by
   exact?
+
 
 
 theorem sign_one_perm {n : ℕ} :
@@ -87,13 +97,16 @@ theorem sign_one_perm {n : ℕ} :
   exact?
 
 
+
 theorem sign_mul_perm {n : ℕ} (σ τ : Equiv.Perm (Fin n)) :
     Equiv.Perm.sign (σ * τ) = Equiv.Perm.sign σ * Equiv.Perm.sign τ := by
   exact?
 
 
+
 theorem zmod_card_eq (n : ℕ) [NeZero n] : Fintype.card (ZMod n) = n := by
   convert ZMod.card n
+
 
 
 theorem order_prod_lcm (G H : Type*) [Group G] [Group H] (a : G) (b : H) :
@@ -101,7 +114,9 @@ theorem order_prod_lcm (G H : Type*) [Group G] [Group H] (a : G) (b : H) :
   exact?
 
 
+
 theorem card_prod_eq (G H : Type*) [Group G] [Group H] [Fintype G] [Fintype H] :
     Fintype.card (G × H) = Fintype.card G * Fintype.card H := by
   convert Fintype.card_prod G H using 1
+
 

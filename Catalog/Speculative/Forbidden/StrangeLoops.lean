@@ -23,12 +23,14 @@ theorem finite_function_has_cycle {α : Type*} [Fintype α] [DecidableEq α]
   exact h_contra ⟨ f^[i] x, j - i, Nat.sub_pos_of_lt hij, Nat.sub_le_of_le_add <| by linarith, h_period ⟩
 
 
+
 /-- Every function from a nonempty finite type to itself has a periodic point -/
 theorem finite_periodic_point {α : Type*} [Fintype α] [DecidableEq α]
     [Nonempty α] (f : α → α) :
     ∃ x : α, ∃ n : ℕ, 0 < n ∧ f^[n] x = x := by
   obtain ⟨x, n, hn, _, hfn⟩ := finite_function_has_cycle f
   exact ⟨x, n, hn, hfn⟩
+
 
 
 /-- The smallest period divides all periods -/
@@ -44,6 +46,7 @@ theorem min_period_divides {α : Type*} (f : α → α) (x : α)
   exact Nat.dvd_of_mod_eq_zero ( by_contra fun h => by have := hd_least.2 ( n % d ) ( Nat.pos_of_ne_zero h ) h_mod; linarith [ Nat.mod_lt n hd_pos ] )
 
 
+
 /-- A "contraction" that maps every value to a weakly smaller value
 always reaches a fixed point. The descending chain principle. -/
 theorem descending_chain_fixed_point (f : ℕ → ℕ) (h : ∀ n, f n ≤ n) (x : ℕ) :
@@ -52,6 +55,7 @@ theorem descending_chain_fixed_point (f : ℕ → ℕ) (h : ∀ n, f n ≤ n) (x
   have h_decreasing : StrictAnti (fun k => f^[k] x) := by
     exact strictAnti_nat_of_succ_lt fun k => lt_of_le_of_ne ( by simpa only [ Function.iterate_succ_apply' ] using h _ ) ( Ne.symm <| h_contra k );
   exact absurd ( Set.infinite_range_of_injective h_decreasing.injective ) ( Set.not_infinite.mpr <| Set.finite_iff_bddAbove.mpr ⟨ _, Set.forall_mem_range.mpr fun k => h_decreasing.antitone k.zero_le ⟩ )
+
 
 
 /-- The contraction iteration converges within x steps -/
@@ -68,6 +72,7 @@ theorem contraction_converges (f : ℕ → ℕ) (h : ∀ n, f n ≤ n) (x : ℕ)
   specialize h_seq x le_rfl ; specialize h_seq_decreasing x le_rfl ; aesop
 
 
+
 /-- Composing two idempotents that commute gives an idempotent -/
 theorem idem_compose_comm {α : Type*} (f g : α → α)
     (hf : IsIdempotent f) (hg : IsIdempotent g)
@@ -76,6 +81,7 @@ theorem idem_compose_comm {α : Type*} (f g : α → α)
   intro x
   simp [hcomm, hf, hg];
   rw [ hg, hf ]
+
 
 
 /-- A "mathematical quine": a fixed point of the evaluation map.
@@ -92,11 +98,13 @@ theorem mathematical_quine {α : Type*} (eval : α → α → α)
   exact h_contra q ( congr_fun hq q ▸ rfl ))
 
 
+
 /-- Kleene's recursion theorem (simplified): for any transformation of programs,
 there exists a "self-aware" program — one that knows its own code. -/
 theorem kleene_recursion {α : Type*} [Nonempty α] (f : (α → α) → (α → α)) :
     ∃ g : α → α, True := by
   exact ⟨fun x => x, trivial⟩
+
 
 
 /-- Li-Yorke core: if f has a 3-cycle a → b → c → a,
@@ -106,6 +114,7 @@ theorem period3_orbit_fixed (f : ℤ → ℤ)
     (ha : f a = b) (hb : f b = c) (hc : f c = a) :
     (f ∘ f ∘ f) a = a ∧ (f ∘ f ∘ f) b = b ∧ (f ∘ f ∘ f) c = c := by
   grind
+
 
 
 end

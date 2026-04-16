@@ -5,9 +5,9 @@ Domain: EML
 Declarations: 8
 -/
 
-import Mathlib
 import EML.Lean.AdvancedTheorems
 import EML.Lean.SoftplusBasic
+import Mathlib
 
 noncomputable section
 
@@ -20,6 +20,7 @@ theorem softplus_log_add_exp (n : ℕ) (x : ℝ) :
   congr 1
   push_cast
   ring
+
 
 
 /-- **General Iterated Softplus Identity**: σⁿ(x) = log(n + eˣ) for all n ∈ ℕ, x ∈ ℝ.
@@ -39,11 +40,13 @@ theorem softplus_iter_general (n : ℕ) (x : ℝ) :
     ring
 
 
+
 /-- Special case: recovering σⁿ(0) = log(n+1) from the general formula. -/
 theorem softplus_iter_zero_eq' (n : ℕ) :
     softplus_iter n 0 = Real.log (↑n + 1) := by
   rw [softplus_iter_general]
   simp [Real.exp_zero]
+
 
 
 /-- The difference between iterates from different starting points contracts:
@@ -55,10 +58,12 @@ theorem softplus_iter_diff (n : ℕ) (x y : ℝ) :
   rw [softplus_iter_general, softplus_iter_general, ← Real.log_div (by positivity) (by positivity)]
 
 
+
 /-- Iterated softplus is monotone in the starting point for each n. -/
 theorem softplus_iter_mono_start (n : ℕ) {x y : ℝ} (hxy : x ≤ y) :
     softplus_iter n x ≤ softplus_iter n y := by
   exact (softplus_iter_strictMono n).monotone hxy
+
 
 
 /-- σⁿ(x) ≥ log(n + 1) for all x ≥ 0 and n ≥ 0. -/
@@ -70,10 +75,12 @@ theorem softplus_iter_lower_general (n : ℕ) (x : ℝ) (hx : x ≥ 0) :
   linarith
 
 
+
 /-- σⁿ(x) ≤ log(n + eˣ) is just the identity restated. -/
 theorem softplus_iter_exact (n : ℕ) (x : ℝ) :
     softplus_iter n x = Real.log (↑n + Real.exp x) :=
   softplus_iter_general n x
+
 
 
 /-- For the dynamical system xₙ₊₁ = σ(xₙ), the orbit from x grows as:
@@ -85,6 +92,7 @@ theorem softplus_iter_growth (n : ℕ) (hn : n ≥ 1) (x : ℝ) :
   rw [show (↑n : ℝ) + Real.exp x = ↑n * (1 + Real.exp x / ↑n) from by
     field_simp]
   rw [Real.log_mul (by positivity) (by positivity)]
+
 
 
 end

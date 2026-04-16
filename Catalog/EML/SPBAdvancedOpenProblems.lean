@@ -2,16 +2,12 @@
 
 Auto-generated from theorem catalog database.
 Domain: EML
-Declarations: 25
+Declarations: 24
 -/
 
 import Mathlib
 
 noncomputable section
-
-/-- The SPB matrix. -/
-def spbMat (a : ℝ) : Matrix (Fin 2) (Fin 2) ℝ := !![1, a; -a, 1]
-
 
 /-- The characteristic polynomial of M(a) is λ² - 2λ + (1+a²).
 The eigenvalues are λ = 1 ± ai (complex conjugate pair). -/
@@ -19,10 +15,12 @@ theorem spbMat_charPoly_discriminant (a : ℝ) :
     (2 : ℝ) ^ 2 - 4 * (1 + a ^ 2) = -(4 * a ^ 2) := by ring
 
 
+
 /-- The eigenvalues of M(a) have modulus √(1+a²).
 This is |1 + ai| = √(1 + a²). -/
 theorem spbMat_eigenvalue_modulus (a : ℝ) :
     (1 : ℝ) ^ 2 + a ^ 2 = 1 + a ^ 2 := by ring
+
 
 
 /-- Four-point SPB identity:
@@ -36,9 +34,11 @@ theorem spb_four_point (a b c d : ℝ)
   unfold spb; field_simp
 
 
+
 /-- SPB is self-inverse via negation: spb(x, -x) = 0. -/
 theorem spb_self_inverse (x : ℝ) : spb x (-x) = 0 := by
   simp [spb]
+
 
 
 /-- SPB negation distributes: spb(-x, y) = -spb(x, -y). -/
@@ -46,11 +46,17 @@ theorem spb_neg_distrib (x y : ℝ) : spb (-x) y = -spb x (-y) := by
   unfold spb; ring
 
 
+
 /-- Projective SPB. -/
 def projSPB (x₁ x₂ y₁ y₂ : ℝ) : ℝ × ℝ :=
   (x₁ * y₂ + x₂ * y₁, x₂ * y₂ - x₁ * y₁)
 
 
+
+/-- [Section: # CatalogBuild.EML.SPBAdvancedOpenProblems
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 25] -/
 theorem projSPB_assoc (a₁ a₂ b₁ b₂ c₁ c₂ : ℝ) :
     let ab := projSPB a₁ a₂ b₁ b₂
     let bc := projSPB b₁ b₂ c₁ c₂
@@ -58,9 +64,11 @@ theorem projSPB_assoc (a₁ a₂ b₁ b₂ c₁ c₂ : ℝ) :
   unfold projSPB; ring;
 
 
+
 theorem projSPB_inv (x₁ x₂ : ℝ) :
     projSPB x₁ x₂ (-x₁) x₂ = (0, x₂ ^ 2 + x₁ ^ 2) := by
   unfold projSPB; ring;
+
 
 
 theorem tanh_add_eq_spbH (φ ψ : ℝ) :
@@ -69,12 +77,15 @@ theorem tanh_add_eq_spbH (φ ψ : ℝ) :
   field_simp
 
 
+
 /-- Hyperbolic SPB identity. -/
 theorem spbH_zero (x : ℝ) : spbH x 0 = x := by simp [spbH]
 
 
+
 /-- Hyperbolic SPB inverse. -/
 theorem spbH_neg (x : ℝ) : spbH x (-x) = 0 := by simp [spbH]
+
 
 
 /-- The SPB partial derivatives are symmetric in a beautiful way:
@@ -90,8 +101,10 @@ theorem spb_deriv_ratio (x y : ℝ) (hxy : 1 - x * y ≠ 0) :
   exact div_self this
 
 
+
 theorem arctan_one : Real.arctan 1 = Real.pi / 4 := by
   norm_num
+
 
 
 theorem machin_formula :
@@ -109,6 +122,7 @@ theorem machin_formula :
     linarith [ Real.pi_gt_three ]
 
 
+
 /-- SPB is the unique continuous function f : ℝ² → ℝ satisfying:
 1. f(x, 0) = x (identity)
 2. f(x, -x) = 0 (inverse)
@@ -118,7 +132,9 @@ Here we prove the easier direction: SPB satisfies all these properties. -/
 theorem spb_functional_identity (x : ℝ) : spb x 0 = x := by simp [spb]
 
 
+
 theorem spb_functional_inverse (x : ℝ) : spb x (-x) = 0 := by simp [spb]
+
 
 
 theorem spb_functional_assoc (x y z : ℝ)
@@ -128,8 +144,10 @@ theorem spb_functional_assoc (x y z : ℝ)
   simp only [spb]; field_simp; ring
 
 
+
 /-- spb(1, 1) is undefined (pole): 1 - 1·1 = 0. -/
 theorem spb_one_one_pole : (1 : ℝ) - 1 * 1 = 0 := by ring
+
 
 
 theorem spb_sqrt3_sqrt3 : spb (Real.sqrt 3) (Real.sqrt 3) = -(Real.sqrt 3) := by
@@ -137,18 +155,22 @@ theorem spb_sqrt3_sqrt3 : spb (Real.sqrt 3) (Real.sqrt 3) = -(Real.sqrt 3) := by
   grind
 
 
+
 /-- The SPB distance: d(x, y) = |arctan(x) - arctan(y)|.
 This is the chord distance on S¹ in the stereographic parameterization. -/
 def spbDist (x y : ℝ) : ℝ := |Real.arctan x - Real.arctan y|
+
 
 
 /-- SPB distance is a metric: d(x,x) = 0. -/
 theorem spbDist_self (x : ℝ) : spbDist x x = 0 := by simp [spbDist]
 
 
+
 /-- SPB distance is symmetric. -/
 theorem spbDist_symm (x y : ℝ) : spbDist x y = spbDist y x := by
   simp [spbDist, abs_sub_comm]
+
 
 
 theorem spbDist_translation_invariant (x y a : ℝ)
@@ -158,9 +180,11 @@ theorem spbDist_translation_invariant (x y a : ℝ)
   rw [ arctan_spb, arctan_spb ] <;> ring <;> nlinarith
 
 
+
 theorem spb_double_leading_term (x : ℝ) (hx : x * x ≠ 1) :
     spb x x - 2 * x = 2 * x ^ 3 / (1 - x * x) := by
   unfold spb; rw [ div_sub' ] <;> ring ; contrapose! hx ; nlinarith;
+
 
 
 end

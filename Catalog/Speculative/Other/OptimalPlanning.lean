@@ -35,12 +35,15 @@ structure MDP where
 attribute [instance] MDP.state_fin MDP.state_dec MDP.state_nonempty MDP.action_fin MDP.action_nonempty
 
 
+
 /-- A value function assigns a real number to each state. -/
 def ValueFn (M : MDP) := M.State → ℝ
 
 
+
 /-- A policy maps states to actions. -/
 def Policy (M : MDP) := M.State → M.Action
+
 
 
 /-- The Bellman optimality operator: (BV)(s) = max_a [R(s,a) + γ · V(T(s,a))].
@@ -51,10 +54,12 @@ def bellmanOp (M : MDP) (V : ValueFn M) : ValueFn M := fun s =>
     (fun a => M.reward s a + M.gamma * V (M.transition s a))
 
 
+
 /-- The greedy policy with respect to a value function:
 π(s) = argmax_a [R(s,a) + γ · V(T(s,a))]. -/
 def greedyPolicy (M : MDP) (V : ValueFn M) : Policy M := fun s =>
   (Finite.exists_max (fun a : M.Action => M.reward s a + M.gamma * V (M.transition s a))).choose
+
 
 
 /-- Value iteration: apply the Bellman operator n times starting from zero. -/
@@ -63,18 +68,26 @@ def valueIteration (M : MDP) : ℕ → ValueFn M
   | n + 1 => bellmanOp M (valueIteration M n)
 
 
+
 /-- The sup-norm distance between two value functions. -/
 def supDist (M : MDP) (V₁ V₂ : ValueFn M) : ℝ :=
   Finset.sup' Finset.univ Finset.univ_nonempty (fun s => |V₁ s - V₂ s|)
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.OptimalPlanning
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 20] -/
 theorem supDist_nonneg (M : MDP) (V₁ V₂ : ValueFn M) : 0 ≤ supDist M V₁ V₂ := by
   exact Finset.le_sup' ( fun s => |V₁ s - V₂ s| ) ( Finset.mem_univ ( Classical.arbitrary M.State ) ) |> le_trans ( abs_nonneg _ )
+
 
 
 theorem pointwise_le_supDist (M : MDP) (V₁ V₂ : ValueFn M) (s : M.State) :
     |V₁ s - V₂ s| ≤ supDist M V₁ V₂ := by
   exact Finset.le_sup' ( fun s => |V₁ s - V₂ s| ) ( Finset.mem_univ s )
+
 
 
 theorem bellman_monotone (M : MDP) (V₁ V₂ : ValueFn M) (h : ∀ s, V₁ s ≤ V₂ s) :
@@ -85,6 +98,7 @@ theorem bellman_monotone (M : MDP) (V₁ V₂ : ValueFn M) (h : ∀ s, V₁ s �
   intro a ha
   simp [h];
   exact ⟨ a, by nlinarith [ h ( M.transition s a ), M.gamma_nonneg ] ⟩
+
 
 
 theorem bellman_contraction (M : MDP) (V₁ V₂ : ValueFn M) :
@@ -107,9 +121,11 @@ theorem bellman_contraction (M : MDP) (V₁ V₂ : ValueFn M) :
   exact Finset.sup'_le _ _ fun s _ => h_sup_diff s
 
 
+
 /-- A value function is a fixed point of the Bellman operator. -/
 def isBellmanFixedPoint (M : MDP) (V : ValueFn M) : Prop :=
   bellmanOp M V = V
+
 
 
 theorem bellman_fixedPoint_unique (M : MDP) (V₁ V₂ : ValueFn M)
@@ -125,10 +141,12 @@ theorem bellman_fixedPoint_unique (M : MDP) (V₁ V₂ : ValueFn M)
   exact absurd ( bellman_contraction M V₁ V₂ ) ( by rw [ h₁, h₂ ] ; nlinarith [ M.gamma_nonneg, M.gamma_lt_one ] ))
 
 
+
 theorem bellman_idempotent_at_fixedPoint (M : MDP) (V : ValueFn M)
     (hV : isBellmanFixedPoint M V) :
     bellmanOp M (bellmanOp M V) = bellmanOp M V := by
   unfold isBellmanFixedPoint at hV; aesop;
+
 
 
 theorem gamma_pow_tendsto_zero (M : MDP) :
@@ -136,11 +154,13 @@ theorem gamma_pow_tendsto_zero (M : MDP) :
   exact tendsto_pow_atTop_nhds_zero_of_lt_one M.gamma_nonneg M.gamma_lt_one
 
 
+
 /-- **Bellman's Principle of Optimality** (recursive structure):
 Value iteration at step n+1 equals the Bellman operator applied to step n. -/
 theorem principle_of_optimality (M : MDP) (n : ℕ) :
     valueIteration M (n + 1) = bellmanOp M (valueIteration M n) := by
   rfl
+
 
 
 theorem valueIteration_error_bound (M : MDP) (V_star : ValueFn M)
@@ -157,11 +177,13 @@ theorem valueIteration_error_bound (M : MDP) (V_star : ValueFn M)
     · ring
 
 
+
 /-- A planning problem is an MDP with an initial state and horizon. -/
 structure PlanningProblem where
   mdp : MDP
   initialState : mdp.State
   horizon : ℕ
+
 
 
 /-- The meta-planning value: how good each problem is to solve. -/
@@ -170,11 +192,13 @@ def metaPlanningValue {n : ℕ} (problems : Fin n → PlanningProblem)
   fun i => values i (problems i).initialState
 
 
+
 /-- The meta-oracle selects the most valuable planning problem. -/
 def metaOracleSelect {n : ℕ} [NeZero n]
     (problems : Fin n → PlanningProblem)
     (values : (i : Fin n) → ValueFn (problems i).mdp) : Fin n :=
   (Finite.exists_max (metaPlanningValue problems values)).choose
+
 
 
 end

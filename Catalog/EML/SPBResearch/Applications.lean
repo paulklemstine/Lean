@@ -1,13 +1,17 @@
-import Mathlib
+/-! # CatalogBuild.EML.SPBResearch.Applications
 
-/-! # SPB Applications: Physics, Signal Processing, and Finance -/
+Auto-generated from theorem catalog database.
+Domain: EML/SPBResearch
+Declarations: 10
+-/
+
+import Mathlib
 
 noncomputable section
 
-open Real
-
 /-- The hyperbolic SPB (Einstein velocity addition) -/
 def einsteinAdd (u v : ℝ) : ℝ := (u + v) / (1 + u * v)
+
 
 /-- The circular SPB -/
 def spbApp (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
@@ -16,23 +20,6 @@ def spbApp (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
 -- § 1. Special Relativity
 -- ═══════════════════════════════════════════
 
-/-- Einstein velocity addition is bounded -/
-theorem einstein_bounded (u v : ℝ) (hu : |u| < 1) (hv : |v| < 1) :
-    |einsteinAdd u v| < 1 := by
-  rw [abs_lt] at *
-  constructor
-  · rw [einsteinAdd, lt_div_iff₀] <;> nlinarith
-  · rw [einsteinAdd, div_lt_iff₀] <;> nlinarith
-
-/-- Einstein addition is commutative -/
-theorem einstein_comm (u v : ℝ) : einsteinAdd u v = einsteinAdd v u := by
-  simp [einsteinAdd, add_comm, mul_comm]
-
-/-- Einstein addition has identity 0 -/
-theorem einstein_zero (v : ℝ) : einsteinAdd v 0 = v := by simp [einsteinAdd]
-
-/-- Einstein addition has inverse -v -/
-theorem einstein_neg (v : ℝ) : einsteinAdd v (-v) = 0 := by simp [einsteinAdd]
 
 /-- Doppler ratio multiplicativity -/
 theorem doppler_ratio_mul (u v : ℝ)
@@ -43,6 +30,7 @@ theorem doppler_ratio_mul (u v : ℝ)
   rw [div_mul_div_comm, div_eq_div_iff hd (mul_ne_zero hu hv)]
   unfold einsteinAdd; field_simp; ring
 
+
 /-- Lorentz gamma composition -/
 theorem lorentz_gamma_composition (u v : ℝ) (h : 1 + u * v ≠ 0) :
     (1 - einsteinAdd u v ^ 2) * (1 + u * v) ^ 2 = (1 - u ^ 2) * (1 - v ^ 2) := by
@@ -52,6 +40,7 @@ theorem lorentz_gamma_composition (u v : ℝ) (h : 1 + u * v ≠ 0) :
 -- § 2. Financial Mathematics
 -- ═══════════════════════════════════════════
 
+
 /-- Bounded returns stay bounded -/
 theorem bounded_return (r₁ r₂ : ℝ) (h1 : |r₁| < 1) (h2 : |r₂| < 1) :
     |einsteinAdd r₁ r₂| < 1 :=
@@ -60,6 +49,7 @@ theorem bounded_return (r₁ r₂ : ℝ) (h1 : |r₁| < 1) (h2 : |r₂| < 1) :
 -- ═══════════════════════════════════════════
 -- § 3. Rotation Composition
 -- ═══════════════════════════════════════════
+
 
 /-- The Cayley parametrization satisfies cos²+sin²=1 -/
 theorem cayley_unit_circle (t : ℝ) :
@@ -71,6 +61,7 @@ theorem cayley_unit_circle (t : ℝ) :
 -- § 4. Quantum Phase Gates
 -- ═══════════════════════════════════════════
 
+
 /-- Phase gate angle composition via SPB -/
 theorem phase_gate_spb (t₁ t₂ : ℝ) (h : t₁ * t₂ < 1) :
     arctan (spbApp t₁ t₂) = arctan t₁ + arctan t₂ := by
@@ -80,12 +71,12 @@ theorem phase_gate_spb (t₁ t₂ : ℝ) (h : t₁ * t₂ < 1) :
 -- § 5. Cross-ratio preservation
 -- ═══════════════════════════════════════════
 
+
 /-- The cross-ratio of four points -/
 def crossRatioApp (a b c d : ℝ) : ℝ := ((a - c) * (b - d)) / ((a - d) * (b - c))
 
-/-
-SPB translation preserves the cross-ratio
--/
+
+/-- [Section: # SPB Applications: Physics, Signal Processing, and Finance] -/
 theorem spb_preserves_cross_ratio_app (a b c d t : ℝ)
     (h1 : 1 - a * t ≠ 0) (h2 : 1 - b * t ≠ 0)
     (h3 : 1 - c * t ≠ 0) (h4 : 1 - d * t ≠ 0)
@@ -103,17 +94,11 @@ theorem spb_preserves_cross_ratio_app (a b c d t : ℝ)
 -- § 6. SPB norm identities
 -- ═══════════════════════════════════════════
 
-/-- Wick rotation: circular norm identity -/
-theorem wick_circular (x y : ℝ) :
-    (1 + x ^ 2) * (1 + y ^ 2) = (1 - x * y) ^ 2 + (x + y) ^ 2 := by ring
-
-/-- Wick rotation: hyperbolic norm identity -/
-theorem wick_hyperbolic (x y : ℝ) :
-    (1 - x ^ 2) * (1 - y ^ 2) = (1 + x * y) ^ 2 - (x + y) ^ 2 := by ring
 
 /-- The SPB Jacobian: ∂spb/∂x · ∂spb/∂y = (1+a²)²/(1-xa)²(1-ya)²
 for spb(x,a) with x = variable, a = parameter -/
 theorem spb_jacobian_identity (x y a : ℝ) :
     (1 + a ^ 2) ^ 2 = (1 + a ^ 2) * (1 + a ^ 2) := by ring
+
 
 end

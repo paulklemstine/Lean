@@ -14,10 +14,12 @@ def compilationError (f_true f_compiled : ℝ → ℝ) (x : ℝ) : ℝ :=
   |f_true x - f_compiled x|
 
 
+
 /-- The compilation error is non-negative. -/
 theorem compilationError_nonneg (f_true f_compiled : ℝ → ℝ) (x : ℝ) :
     0 ≤ compilationError f_true f_compiled x :=
   abs_nonneg _
+
 
 
 /-- If the compiled function agrees with the true function, the error is zero. -/
@@ -27,11 +29,17 @@ theorem compilationError_zero_of_eq (f_true f_compiled : ℝ → ℝ) (x : ℝ)
   simp [compilationError, h]
 
 
+
+/-- [Section: # CatalogBuild.MachineLearning.Neural.CompilationCompression
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/Neural
+Declarations: 48] -/
 theorem compilationError_triangle (f_true f1 f2 : ℝ → ℝ) (x : ℝ) :
     compilationError f_true f2 x ≤
     compilationError f_true f1 x + compilationError f1 f2 x := by
   simp only [compilationError]
   exact abs_sub_le (f_true x) (f1 x) (f2 x)
+
 
 
 /-- Adaptive switching theorem: using the compiled version when error < τ,
@@ -48,16 +56,19 @@ theorem adaptive_switching_correct (f_true f_compiled : ℝ → ℝ) (τ : ℝ)
   · simp [hτ]
 
 
+
 /-- An L-layer network with degree-d polynomial activations has degree d^L. -/
 theorem polynomial_degree_exponential (d L : ℕ) (hd : 2 ≤ d) (hL : 1 ≤ L) :
     d ≤ d ^ L := by
   exact Nat.le_self_pow (by omega) d
 
 
+
 /-- The composed degree grows strictly with depth for d ≥ 2. -/
 theorem polynomial_degree_strict_growth (d L : ℕ) (hd : 2 ≤ d) (hL : 1 ≤ L) :
     d ^ L < d ^ (L + 1) :=
   Nat.pow_lt_pow_right (by omega) (by omega)
+
 
 
 /-- The number of piecewise-linear regions in a ReLU network with
@@ -67,14 +78,17 @@ theorem relu_region_count_bound (w L : ℕ) (hw : 1 ≤ w) :
   Nat.one_le_pow L (2 * w) (by omega)
 
 
+
 /-- Tensor rank bound: a rank-r tensor has r degrees of freedom per mode. -/
 theorem tensor_rank_submultiplicative (rA rB : ℕ) (hrA : 1 ≤ rA) (hrB : 1 ≤ rB) :
     rA ≤ rA * rB ∧ rB ≤ rA * rB := by
   exact ⟨Nat.le_mul_of_pos_right rA (by omega), Nat.le_mul_of_pos_left rB (by omega)⟩
 
 
+
 /-- Koopman operator: lifts dynamics f to act on observables. -/
 def KoopmanOp {X : Type*} (f : X → X) (g : X → ℝ) : X → ℝ := g ∘ f
+
 
 
 /-- Koopman preserves constant observables. -/
@@ -83,10 +97,12 @@ theorem koopman_preserves_constants {X : Type*} (f : X → X) (c : ℝ) :
   ext x; simp [KoopmanOp]
 
 
+
 /-- Koopman is additive in observables. -/
 theorem koopman_additive {X : Type*} (f : X → X) (g₁ g₂ : X → ℝ) :
     KoopmanOp f (g₁ + g₂) = KoopmanOp f g₁ + KoopmanOp f g₂ := by
   ext x; simp [KoopmanOp]
+
 
 
 /-- Koopman respects scalar multiplication. -/
@@ -95,9 +111,11 @@ theorem koopman_smul {X : Type*} (f : X → X) (c : ℝ) (g : X → ℝ) :
   ext x; simp [KoopmanOp]
 
 
+
 /-- Equivariance definition. -/
 def IsEquivariant {X : Type*} (f : X → X) (σ : X → X) : Prop :=
   ∀ x, f (σ x) = σ (f x)
+
 
 
 /-- If f is equivariant w.r.t. σ, then K_f commutes with the induced action. -/
@@ -108,16 +126,19 @@ theorem koopman_equivariant {X : Type*} (f σ : X → X)
   simp [KoopmanOp, Function.comp, hequiv x]
 
 
+
 /-- Composition of Koopman operators: K_{f∘g} = K_g ∘ K_f. -/
 theorem koopman_comp {X : Type*} (f g : X → X) (obs : X → ℝ) :
     KoopmanOp (f ∘ g) obs = KoopmanOp g (KoopmanOp f obs) := by
   ext x; simp [KoopmanOp]
 
 
+
 /-- Identity dynamics has trivial Koopman operator. -/
 theorem koopman_id {X : Type*} (g : X → ℝ) :
     KoopmanOp _root_.id g = g := by
   ext x; simp [KoopmanOp]
+
 
 
 /-- Equivariance composes: if f₁ and f₂ are both σ-equivariant,
@@ -130,6 +151,7 @@ theorem equivariant_comp {X : Type*} (f₁ f₂ σ : X → X)
   rw [h₂, h₁]
 
 
+
 /-- For a finite set of k affine pieces, any single matrix compilation must
 have at least k parameters per input dimension. -/
 theorem single_multiply_param_bound (n k : ℕ) (hn : 1 ≤ n) (hk : 1 ≤ k) :
@@ -137,9 +159,11 @@ theorem single_multiply_param_bound (n k : ℕ) (hn : 1 ≤ n) (hk : 1 ≤ k) :
   Nat.le_mul_of_pos_left k (by omega)
 
 
+
 /-- The information content lower bound. -/
 theorem information_lower_bound (P b : ℕ) :
     P * b = P * b := rfl
+
 
 
 /-- Rounding to nearest integer introduces error ≤ 1/2. -/
@@ -148,10 +172,12 @@ theorem rounding_error_bound (x : ℝ) :
   ⟨round x, abs_sub_round x⟩
 
 
+
 /-- The round function error is at most 1/2. -/
 theorem round_error_le_half (x : ℝ) :
     |x - ↑(round x)| ≤ 1 / 2 :=
   abs_sub_round x
+
 
 
 /-- Crystallization preserves integer structure. -/
@@ -160,10 +186,12 @@ theorem crystallization_exact_on_integers (n : ℤ) :
   round_intCast n
 
 
+
 /-- Integer weights are closed under multiplication. -/
 theorem integer_weight_closed_mul (a b : ℤ) :
     ∃ c : ℤ, (a : ℝ) * (b : ℝ) = (c : ℝ) :=
   ⟨a * b, by push_cast; ring⟩
+
 
 
 /-- Integer weights are closed under addition. -/
@@ -172,10 +200,12 @@ theorem integer_weight_closed_add (a b : ℤ) :
   ⟨a + b, by push_cast; ring⟩
 
 
+
 theorem logsumexp_le_max_add_log2 (a b : ℝ) :
     Real.log (Real.exp a + Real.exp b) ≤ max a b + Real.log 2 := by
   rw [ Real.log_le_iff_le_exp ( by positivity ) ];
   rw [ Real.exp_add, Real.exp_log ] <;> cases max_cases a b <;> nlinarith [ Real.exp_pos a, Real.exp_pos b, Real.exp_le_exp.2 ( le_max_left a b ), Real.exp_le_exp.2 ( le_max_right a b ) ]
+
 
 
 /-- The log-sum-exp approximation error to max is in [0, log 2]. -/
@@ -185,8 +215,10 @@ theorem logsumexp_approximation_error (a b : ℝ) :
   exact ⟨by linarith [logsumexp_ge_max a b], by linarith [logsumexp_le_max_add_log2 a b]⟩
 
 
+
 /-- Tropical multiplication identity. -/
 theorem tropical_mul_identity (a : ℝ) : a + 0 = a := add_zero a
+
 
 
 /-- Tropical distributive law: a + max(b,c) = max(a+b, a+c). -/
@@ -195,9 +227,11 @@ theorem tropical_distributive (a b c : ℝ) :
   (max_add_add_left a b c).symm
 
 
+
 /-- A neural network layer. -/
 structure NNLayer where
   forward : ℝ → ℝ
+
 
 
 /-- Composition of layers. -/
@@ -205,8 +239,10 @@ def NNLayer.comp (l₁ l₂ : NNLayer) : NNLayer :=
   ⟨l₂.forward ∘ l₁.forward⟩
 
 
+
 /-- The identity layer. -/
 def NNLayer.idLayer : NNLayer := ⟨_root_.id⟩
+
 
 
 /-- Layer composition is associative. -/
@@ -216,10 +252,12 @@ theorem NNLayer.comp_assoc (l₁ l₂ l₃ : NNLayer) :
   simp [NNLayer.comp, Function.comp_assoc]
 
 
+
 /-- Identity is left unit. -/
 theorem NNLayer.idLayer_comp (l : NNLayer) :
     NNLayer.comp NNLayer.idLayer l = l := by
   cases l; simp [NNLayer.comp, NNLayer.idLayer]
+
 
 
 /-- Identity is right unit. -/
@@ -228,9 +266,11 @@ theorem NNLayer.comp_idLayer (l : NNLayer) :
   cases l; simp [NNLayer.comp, NNLayer.idLayer]
 
 
+
 /-- A compilation scheme. -/
 structure CompilationScheme where
   compile : NNLayer → (ℝ → ℝ)
+
 
 
 /-- Compositionality of a compilation scheme. -/
@@ -239,14 +279,17 @@ def CompilationScheme.IsCompositional (C : CompilationScheme) : Prop :=
     C.compile (NNLayer.comp l₁ l₂) = C.compile l₂ ∘ C.compile l₁
 
 
+
 /-- Faithfulness of a compilation scheme. -/
 def CompilationScheme.IsFaithful (C : CompilationScheme) (S : Set ℝ) : Prop :=
   ∀ l : NNLayer, ∀ x ∈ S, C.compile l x = l.forward x
 
 
+
 /-- The identity compilation scheme is compositional. -/
 def identityCompilation : CompilationScheme :=
   ⟨fun l => l.forward⟩
+
 
 
 theorem identityCompilation_compositional :
@@ -255,11 +298,13 @@ theorem identityCompilation_compositional :
   simp [identityCompilation, NNLayer.comp]
 
 
+
 /-- The identity compilation scheme is faithful on all of ℝ. -/
 theorem identityCompilation_faithful :
     identityCompilation.IsFaithful Set.univ := by
   intro l x _
   simp [identityCompilation]
+
 
 
 /-- A faithful compositional scheme preserves composition on the domain. -/
@@ -276,9 +321,11 @@ theorem faithful_compositional_preserves_comp
   exact hfaith l₂ (l₁.forward x) (hclosed l₁ x hx)
 
 
+
 /-- The training loss: task loss + compile_weight * compilation loss. -/
 def totalLoss (taskLoss compilationLoss compile_weight : ℝ) : ℝ :=
   taskLoss + compile_weight * compilationLoss
+
 
 
 /-- Total loss is monotone in compilation loss. -/
@@ -289,22 +336,27 @@ theorem totalLoss_mono_compilation (taskLoss c₁ c₂ compile_weight : ℝ)
   linarith [mul_le_mul_of_nonneg_left hc hw]
 
 
+
 /-- When compile_weight = 0, reduces to standard training. -/
 theorem totalLoss_standard_training (taskLoss compilationLoss : ℝ) :
     totalLoss taskLoss compilationLoss 0 = taskLoss := by
   simp [totalLoss]
 
 
+
 /-- GPT-2 Small: 124M parameters × 32 bits. -/
 theorem gpt2_bits : 124000000 * 32 = 3968000000 := by norm_num
+
 
 
 /-- GPT-2 vocabulary squared exceeds 1 billion. -/
 theorem gpt2_lookup_infeasible : 50257 ^ 2 > 10 ^ 9 := by norm_num
 
 
+
 /-- Attention matrix size for d_model = 768. -/
 theorem attention_matrix_size : 768 * 768 = 589824 := by norm_num
+
 
 
 end

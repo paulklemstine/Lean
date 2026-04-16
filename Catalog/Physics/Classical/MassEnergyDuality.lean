@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Physics/Classical
-Declarations: 16
+Declarations: 15
 -/
 
 import Mathlib
@@ -13,15 +13,22 @@ noncomputable section
 def stereoNorth (x y : ℝ) : ℝ := x / (1 - y)
 
 
+
 /-- Stereographic projection from the South pole (0,-1): x/(1+y). -/
 def stereoSouth (x y : ℝ) : ℝ := x / (1 + y)
 
 
+
+/-- [Section: # CatalogBuild.Physics.Classical.MassEnergyDuality
+Auto-generated from theorem catalog database.
+Domain: Physics/Classical
+Declarations: 16] -/
 theorem invStereoNorth_on_circle (t : ℝ) :
     (invStereoNorth' t).1 ^ 2 + (invStereoNorth' t).2 ^ 2 = 1 := by
   simp only [invStereoNorth']
   have h : (1 + t ^ 2) ≠ 0 := by positivity
   field_simp; ring
+
 
 
 theorem invStereoSouth_on_circle (s : ℝ) :
@@ -31,19 +38,10 @@ theorem invStereoSouth_on_circle (s : ℝ) :
   field_simp; ring
 
 
+
 /-- The mass-energy transition map: t ↦ 1/t. -/
 def massEnergyTransition (t : ℝ) : ℝ := 1 / t
 
-
-/-- **Core Theorem**: σ_S ∘ σ_N⁻¹ = inversion (t ↦ 1/t). -/
-theorem transition_map_is_inversion (t : ℝ) (ht : t ≠ 0) :
-    stereoSouth (invStereoNorth' t).1 (invStereoNorth' t).2 =
-    massEnergyTransition t := by
-  simp only [invStereoNorth', stereoSouth, massEnergyTransition]
-  have h1 : (1 + t ^ 2) ≠ 0 := by positivity
-  field_simp
-  have : 1 + t ^ 2 + (t ^ 2 - 1) = 2 * t ^ 2 := by ring
-  rw [this, div_self (by positivity : (2 : ℝ) * t ^ 2 ≠ 0)]
 
 
 /-- **Mass-Energy Isomorphism**: Bijection on ℝ \ {0}. -/
@@ -63,10 +61,12 @@ theorem mass_energy_bijection :
     exact ⟨1 / s, div_ne_zero one_ne_zero hs, by simp [massEnergyTransition, div_div]⟩
 
 
+
 /-- **Involutivity**: (1/(1/t)) = t. -/
 theorem mass_energy_involutive (t : ℝ) (_ht : t ≠ 0) :
     massEnergyTransition (massEnergyTransition t) = t := by
   simp [massEnergyTransition]
+
 
 
 /-- A physical state: a point on the unit circle.
@@ -77,12 +77,15 @@ structure PhysicalState where
   on_circle : x ^ 2 + y ^ 2 = 1
 
 
+
 /-- The mass of a physical state (north-pole projection). -/
 def PhysicalState.mass (p : PhysicalState) : ℝ := stereoNorth p.x p.y
 
 
+
 /-- The energy of a physical state (south-pole projection). -/
 def PhysicalState.energy (p : PhysicalState) : ℝ := stereoSouth p.x p.y
+
 
 
 /-- **The Duality Relation**: mass × energy = 1. -/
@@ -101,6 +104,7 @@ theorem mass_times_energy_eq_one (p : PhysicalState)
   exact div_self (pow_ne_zero 2 hx)
 
 
+
 /-- **Commutative Triangle**: energy = 1 / mass. -/
 theorem commutative_triangle (p : PhysicalState)
     (hyN' : p.y ≠ 1) (hyS' : p.y ≠ -1) (hx : p.x ≠ 0) :
@@ -111,6 +115,7 @@ theorem commutative_triangle (p : PhysicalState)
   rw [eq_div_iff hm]; linarith
 
 
+
 /-- **Location Theorem**: The photon sits on S¹, mass and energy are reciprocal. -/
 theorem photon_is_common_ancestor (p : PhysicalState)
     (_hyN : p.y ≠ 1) (_hyS : p.y ≠ -1) (hx : p.x ≠ 0) :
@@ -118,10 +123,12 @@ theorem photon_is_common_ancestor (p : PhysicalState)
   rw [commutative_triangle p _hyN _hyS hx]; rfl
 
 
+
 /-- Inversion is continuous on ℝ \ {0}. -/
 theorem inversion_continuous : ContinuousOn (fun t : ℝ => 1 / t) {t | t ≠ 0} := by
   apply ContinuousOn.div continuousOn_const continuousOn_id
   intro x hx; exact hx
+
 
 
 /-- **Mass-energy duality is a homeomorphism of ℝ \ {0} to itself.** -/
@@ -133,6 +140,7 @@ theorem mass_energy_homeomorphism :
     fun t ht => div_ne_zero one_ne_zero ht,
     fun t ht => by simp [one_div],
     inversion_continuous⟩
+
 
 
 end

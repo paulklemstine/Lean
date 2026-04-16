@@ -8,10 +8,15 @@ Declarations: 7
 import CatalogBuild.Cryptography.Factoring.Basic
 import Mathlib
 
+/-- [Section: # CatalogBuild.Cryptography.Factoring.Advanced
+Auto-generated from theorem catalog database.
+Domain: Cryptography/Factoring
+Declarations: 7] -/
 theorem collision_pigeonhole {α : Type*} [Fintype α] [DecidableEq α]
     (f : α → α) (x₀ : α) :
     ∃ i j, i < j ∧ j ≤ Fintype.card α ∧ orbitSeq f x₀ i = orbitSeq f x₀ j := by
   exact collision_within_card f x₀
+
 
 
 theorem brent_detection {α : Type*} [Fintype α] [DecidableEq α]
@@ -20,6 +25,7 @@ theorem brent_detection {α : Type*} [Fintype α] [DecidableEq α]
     ∃ m, m < k ∧ f^[m] x₀ = f^[k] x₀ := by
   obtain ⟨ i, j, hij, hj, h ⟩ := collision_pigeonhole f x₀;
   exact ⟨ j, by linarith, by linarith, i, hij, h ⟩
+
 
 
 theorem orbit_period_lcm_coprime {α β : Type*}
@@ -41,10 +47,12 @@ theorem orbit_period_lcm_coprime {α β : Type*}
   grind
 
 
+
 theorem multi_start_probability_bound {p_succ : ℝ} {k : ℕ}
     (hp : 0 ≤ p_succ) (hp1 : p_succ ≤ 1) :
     (1 - p_succ) ^ k ≤ 1 := by
   exact pow_le_one₀ ( by linarith ) ( by linarith )
+
 
 
 theorem multi_start_exponential_decay {p_succ : ℝ} {k : ℕ}
@@ -53,10 +61,12 @@ theorem multi_start_exponential_decay {p_succ : ℝ} {k : ℕ}
   exact pow_lt_one₀ ( by linarith ) ( by linarith ) ( by linarith )
 
 
+
 theorem pow_eq_one_of_order_dvd {n : ℕ} [NeZero n] (a : ZMod n)
     (d : ℕ) (hd : orderOf a ∣ d) :
     a ^ d = 1 := by
   rw [ ← orderOf_dvd_iff_pow_eq_one ] ; aesop
+
 
 
 theorem period_dvd_of_commute {α β : Type*}
@@ -69,4 +79,5 @@ theorem period_dvd_of_commute {α β : Type*}
   have h_ind : ∀ n, π (f^[n] x₀) = g^[n] (π x₀) := by
     exact fun n => orbit_map_commute f g π hcomm x₀ n;
   rw [ ← h_ind, hperiod ]
+
 

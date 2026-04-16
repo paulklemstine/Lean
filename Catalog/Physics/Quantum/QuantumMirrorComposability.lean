@@ -15,17 +15,24 @@ structure IdemMirror (α : Type*) where
   idem : ∀ x, reflect (reflect x) = reflect x
 
 
+
 /-- An **involutory mirror** satisfies f ∘ f = id. Looking twice restores. -/
 structure InvolMirror (α : Type*) where
   reflect : α → α
   invol : ∀ x, reflect (reflect x) = x
 
 
+
+/-- [Section: # CatalogBuild.Physics.Quantum.QuantumMirrorComposability
+Auto-generated from theorem catalog database.
+Domain: Physics/Quantum
+Declarations: 39] -/
 theorem InvolMirror.injective {α : Type*} (R : InvolMirror α) :
     Injective R.reflect := by
   -- Let's unfold the definition of InvolMirror.
   rcases R with ⟨f, hf⟩;
   exact fun x y hxy => by have := hf x; aesop;
+
 
 
 theorem InvolMirror.surjective {α : Type*} (R : InvolMirror α) :
@@ -36,18 +43,22 @@ theorem InvolMirror.surjective {α : Type*} (R : InvolMirror α) :
   exact?
 
 
+
 /-- Every involutory mirror is a bijection. -/
 theorem InvolMirror.bijective {α : Type*} (R : InvolMirror α) :
     Bijective R.reflect :=
   ⟨R.injective, R.surjective⟩
 
 
+
 /-- The identity is an idempotent mirror. -/
 def idIdemMirror (α : Type*) : IdemMirror α := ⟨id, fun _ => rfl⟩
 
 
+
 /-- The identity is an involutory mirror. -/
 def idInvolMirror (α : Type*) : InvolMirror α := ⟨id, fun _ => rfl⟩
+
 
 
 theorem id_unique_both {α : Type*} (f : α → α)
@@ -56,8 +67,10 @@ theorem id_unique_both {α : Type*} (f : α → α)
   grind
 
 
+
 /-- The **fixed set** of a mirror: points unchanged by reflection. -/
 def mirrorFixed {α : Type*} (f : α → α) : Set α := {x | f x = x}
+
 
 
 theorem idem_range_eq_fixed {α : Type*} (P : IdemMirror α) :
@@ -65,14 +78,17 @@ theorem idem_range_eq_fixed {α : Type*} (P : IdemMirror α) :
   exact Set.ext fun x => ⟨ fun ⟨ y, hy ⟩ => hy ▸ P.idem _, fun hx => ⟨ x, hx ⟩ ⟩
 
 
+
 /-- Constant map is an idempotent mirror: the "total collapse". -/
 def constIdemMirror {α : Type*} (c : α) : IdemMirror α :=
   ⟨fun _ => c, fun _ => rfl⟩
 
 
+
 theorem constMirror_range {α : Type*} (c : α) :
     range (constIdemMirror c).reflect = {c} := by
   aesop
+
 
 
 /-- A **MirrorChain** is a list of idempotent mirrors composed in sequence. -/
@@ -81,9 +97,11 @@ structure MirrorChainComp (α : Type*) where
   all_idem : ∀ f ∈ steps, ∀ x, f (f x) = f x
 
 
+
 /-- Execute a mirror chain. -/
 def MirrorChainComp.exec {α : Type*} (c : MirrorChainComp α) (x : α) : α :=
   c.steps.foldl (fun acc f => f acc) x
+
 
 
 /-- The empty chain is the identity. -/
@@ -92,8 +110,10 @@ def MirrorChainComp.empty (α : Type*) : MirrorChainComp α :=
 
 
 
+
 theorem MirrorChainComp.empty_exec {α : Type*} (x : α) :
     (MirrorChainComp.empty α).exec x = x := rfl
+
 
 
 /-- Composition of mirror chains: concatenation. -/
@@ -106,14 +126,17 @@ def MirrorChainComp.compose {α : Type*} (c₁ c₂ : MirrorChainComp α) :
     exact hf.elim (c₁.all_idem f) (c₂.all_idem f)
 
 
+
 /-- Composition is associative. -/
 theorem MirrorChainComp.compose_assoc {α : Type*} (a b c : MirrorChainComp α) :
     (a.compose b).compose c = a.compose (b.compose c) := by
   simp [MirrorChainComp.compose, List.append_assoc]
 
 
+
 /-- Computational cost is the chain length. -/
 def MirrorChainComp.cost {α : Type*} (c : MirrorChainComp α) : ℕ := c.steps.length
+
 
 
 /-- Cost is additive under composition. -/
@@ -122,10 +145,12 @@ theorem MirrorChainComp.cost_additive {α : Type*} (c₁ c₂ : MirrorChainComp 
   simp [MirrorChainComp.compose, MirrorChainComp.cost, List.length_append]
 
 
+
 /-- Negation on ZMod n is an involution. -/
 def negInvolMirror (n : ℕ) [NeZero n] : InvolMirror (ZMod n) where
   reflect := fun x => -x
   invol := fun x => by simp
+
 
 
 theorem two_invol_compose_periodic {α : Type*} [Fintype α]
@@ -138,11 +163,13 @@ theorem two_invol_compose_periodic {α : Type*} [Fintype α]
   exact ⟨ orderOf g, orderOf_pos g, by simp +decide [ hg, pow_orderOf_eq_one ] ⟩
 
 
+
 /-- A matrix mirror: a Hermitian idempotent (projector). -/
 structure MatMirror (n : ℕ) where
   mat : Matrix (Fin n) (Fin n) ℂ
   idem : mat * mat = mat
   herm : mat.conjTranspose = mat
+
 
 
 /-- The complement of a matrix mirror is a mirror. -/
@@ -155,9 +182,11 @@ def MatMirror.complement {n : ℕ} (P : MatMirror n) : MatMirror n where
     simp [map_sub, Matrix.conjTranspose_one, P.herm]
 
 
+
 theorem MatMirror.orthogonal_complement {n : ℕ} (P : MatMirror n) :
     P.mat * (1 - P.mat) = 0 := by
   simp +decide [ mul_sub, P.idem ]
+
 
 
 /-- Mirror and complement sum to identity: P + (I-P) = I. -/
@@ -166,9 +195,11 @@ theorem MatMirror.partition {n : ℕ} (P : MatMirror n) :
   simp [MatMirror.complement]
 
 
+
 /-- The Householder reflection matrix: R = I - 2vvᴴ for unit vector v. -/
 def householder (n : ℕ) (v : Fin n → ℂ) : Matrix (Fin n) (Fin n) ℂ :=
   1 - 2 • (Matrix.of fun i _ => v i) * (Matrix.of fun _ j => starRingEnd ℂ (v j))
+
 
 
 theorem householder_herm (n : ℕ) (v : Fin n → ℂ) :
@@ -178,9 +209,11 @@ theorem householder_herm (n : ℕ) (v : Fin n → ℂ) :
   norm_num
 
 
+
 theorem idem_fixed_nonempty {α : Type*} [Nonempty α] (P : IdemMirror α) :
     (mirrorFixed P.reflect).Nonempty := by
   exact ⟨ _, P.idem ( Classical.arbitrary α ) ⟩
+
 
 
 theorem commuting_idem_compose_idem {α : Type*} (P Q : IdemMirror α)
@@ -190,9 +223,11 @@ theorem commuting_idem_compose_idem {α : Type*} (P Q : IdemMirror α)
   simp +contextual [ hcomm, P.idem, Q.idem ]
 
 
+
 theorem fin2_involutions (f : Fin 2 → Fin 2) (hf : ∀ x, f (f x) = x) :
     f = id ∨ f = Equiv.swap 0 1 := by
   native_decide +revert
+
 
 
 /-- The Grover bound: √N queries suffice. -/
@@ -201,9 +236,11 @@ theorem grover_sqrt_bound (N : ℕ) (hN : 0 < N) :
   Nat.sqrt_le N
 
 
+
 theorem quantum_classical_gap (N : ℕ) (hN : 16 ≤ N) :
     Nat.sqrt N < N / 2 := by
   exact Nat.le_div_iff_mul_le zero_lt_two |>.2 ( by nlinarith [ Nat.sqrt_le N ] )
+
 
 
 /-- Two involutions compose to an isometry (distance-preserving). -/
@@ -213,10 +250,12 @@ theorem invol_compose_isometry {α : Type*} [PseudoMetricSpace α]
   hR.comp hS
 
 
+
 theorem bool_mirror_universality :
     ∀ f : Bool → Bool,
       f = id ∨ f = not ∨ f = (fun _ => true) ∨ f = (fun _ => false) := by
   native_decide +revert
+
 
 
 theorem involution_count_le_factorial (n : ℕ) :
@@ -231,11 +270,13 @@ theorem involution_count_le_factorial (n : ℕ) :
   simpa [ Fintype.card_perm ] using h_invol_le_perm
 
 
+
 theorem mirror_computation_bool (n : ℕ) (f : (Fin n → Bool) → Bool) :
     ∃ (chain : List ((Fin n → Bool) → (Fin n → Bool))),
       chain.length ≤ 2^n ∧
       (∀ g ∈ chain, ∀ x, g (g x) = g x) := by
   exact ⟨ [ ], by norm_num ⟩
+
 
 
 theorem invol_compose_finite_order {α : Type*} [Fintype α] [DecidableEq α]
@@ -250,9 +291,11 @@ theorem invol_compose_finite_order {α : Type*} [Fintype α] [DecidableEq α]
   convert hn' using 1
 
 
+
 theorem invol_partition {α : Type*} [Fintype α] (R : InvolMirror α) :
     ∀ x, R.reflect x = x ∨ (R.reflect x ≠ x ∧ R.reflect (R.reflect x) = x) := by
   exact fun x => Classical.or_iff_not_imp_left.2 fun hx => ⟨ hx, R.invol x ⟩
+
 
 
 end

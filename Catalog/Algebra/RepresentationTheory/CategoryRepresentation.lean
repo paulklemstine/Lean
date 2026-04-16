@@ -7,9 +7,14 @@ Declarations: 11
 
 import Mathlib
 
+/-- [Section: # CatalogBuild.Algebra.RepresentationTheory.CategoryRepresentation
+Auto-generated from theorem catalog database.
+Domain: Algebra/RepresentationTheory
+Declarations: 11] -/
 theorem id_functor_comp {C : Type*} [Category C] (X Y : C) (f : X ⟶ Y) :
     (𝟭 C).map f = f := by
   rfl
+
 
 
 theorem iso_has_inverse {C : Type*} [Category C] {X Y : C} (f : X ≅ Y) :
@@ -17,9 +22,11 @@ theorem iso_has_inverse {C : Type*} [Category C] {X Y : C} (f : X ≅ Y) :
   exact?
 
 
+
 theorem comp_id_left {C : Type*} [Category C] {X Y : C} (f : X ⟶ Y) :
     𝟙 X ≫ f = f := by
   grind
+
 
 
 theorem comp_id_right {C : Type*} [Category C] {X Y : C} (f : X ⟶ Y) :
@@ -28,9 +35,11 @@ theorem comp_id_right {C : Type*} [Category C] {X Y : C} (f : X ⟶ Y) :
   apply CategoryTheory.Category.comp_id
 
 
+
 theorem free_module_dim (F : Type*) [Field F] (n : ℕ) :
     Module.finrank F (Fin n → F) = n := by
   simp +decide [ Module.finrank ]
+
 
 
 theorem submodule_finite_dim {F V : Type*} [Field F] [AddCommGroup V] [Module F V]
@@ -39,10 +48,12 @@ theorem submodule_finite_dim {F V : Type*} [Field F] [AddCommGroup V] [Module F 
   infer_instance
 
 
+
 theorem submodule_dim_le {F V : Type*} [Field F] [AddCommGroup V] [Module F V]
     [FiniteDimensional F V] (W : Submodule F V) :
     Module.finrank F W ≤ Module.finrank F V := by
   exact?
+
 
 
 theorem rank_nullity {F V W : Type*} [Field F] [AddCommGroup V] [Module F V]
@@ -54,9 +65,11 @@ theorem rank_nullity {F V W : Type*} [Field F] [AddCommGroup V] [Module F V]
   ring
 
 
+
 theorem char_at_identity (n : ℕ) :
     Matrix.trace (1 : Matrix (Fin n) (Fin n) ℤ) = (n : ℤ) := by
   simp +decide [ Matrix.trace ]
+
 
 
 theorem det_one_by_one (a : ℤ) :
@@ -64,8 +77,10 @@ theorem det_one_by_one (a : ℤ) :
   simp +decide [ Matrix.det_succ_row ]
 
 
+
 theorem quotient_dim {F V : Type*} [Field F] [AddCommGroup V] [Module F V]
     [FiniteDimensional F V] (W : Submodule F V) :
     Module.finrank F V = Module.finrank F W + Module.finrank F (V ⧸ W) := by
   rw [ ← Submodule.finrank_quotient_add_finrank W, add_comm ]
+
 

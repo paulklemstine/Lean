@@ -5,12 +5,12 @@ Domain: EML
 Declarations: 13
 -/
 
-import Mathlib
 import EML.Lean.AdvancedTheorems
 import EML.Lean.ExtendedTheorems
 import EML.Lean.OpenQuestions
 import EML.Lean.ShefferAlgebra
 import EML.Lean.SoftplusBasic
+import Mathlib
 
 noncomputable section
 
@@ -31,11 +31,13 @@ theorem periodic_no_finite_limit {f : ℝ → ℝ} {T : ℝ} (hT : T > 0)
   aesop
 
 
+
 /-- cos does not converge at +∞. -/
 theorem cos_no_limit_atTop :
     ¬ (∃ L : ℝ, Tendsto (fun x : ℝ => Real.cos x) atTop (nhds L)) := by
   convert periodic_no_finite_limit (by positivity) Real.cos_periodic
     Real.continuous_cos (by exact ⟨0, Real.pi, by norm_num⟩) using 1
+
 
 
 /-- sin does not converge at +∞. -/
@@ -53,11 +55,17 @@ theorem sin_no_limit_atTop :
   linarith [abs_lt.mp h3, abs_lt.mp h4]
 
 
+
+/-- [Section: # CatalogBuild.EML.ThirdBarrier
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 13] -/
 theorem logisticSigmoid_tendsto_one :
     Tendsto logisticSigmoid atTop (nhds 1) := by
   refine' ( Metric.tendsto_nhds.mpr _ );
   norm_num [ dist_eq_norm, logisticSigmoid ];
   exact fun ε hε => ⟨ ε⁻¹, fun x hx => by rw [ abs_lt ] ; constructor <;> nlinarith [ Real.exp_pos x, mul_inv_cancel₀ hε.ne', Real.add_one_le_exp x, mul_div_cancel₀ ( Real.exp x ) ( by positivity : ( 1 + Real.exp x ) ≠ 0 ) ] ⟩
+
 
 
 theorem logisticSigmoid_tendsto_zero :
@@ -68,12 +76,14 @@ theorem logisticSigmoid_tendsto_zero :
   · exact Real.tendsto_exp_atBot
 
 
+
 theorem deriv_comp_tendsto_zero {f g : ℝ → ℝ}
     (hf_diff : Differentiable ℝ f) (hg_diff : Differentiable ℝ g)
     (hf_lip : ∃ C : ℝ, ∀ x, |deriv f x| ≤ C)
     (hg_zero : Tendsto (deriv g) atTop (nhds 0)) :
     Tendsto (fun x => deriv f (g x) * deriv g x) atTop (nhds 0) := by
   exact squeeze_zero_norm ( fun x => by simpa [ abs_mul ] using mul_le_mul_of_nonneg_right ( hf_lip.choose_spec ( g x ) ) ( abs_nonneg ( deriv g x ) ) ) ( by simpa using hg_zero.abs.const_mul _ )
+
 
 
 theorem tendsto_atTop_of_deriv_pos_limit {f : ℝ → ℝ}
@@ -92,6 +102,7 @@ theorem tendsto_atTop_of_deriv_pos_limit {f : ℝ → ℝ}
   exact fun b => ⟨ M + ⌈ ( b - f M ) / ( L / 2 ) ⌉₊ + 1, fun x hx => by obtain ⟨ c, ⟨ hc₁, hc₂ ⟩, hc ⟩ := h_mvt x ( by linarith ) ; nlinarith [ Nat.le_ceil ( ( b - f M ) / ( L / 2 ) ), hM c hc₁.le, mul_div_cancel₀ ( b - f M ) ( by linarith : ( L / 2 ) ≠ 0 ) ] ⟩
 
 
+
 theorem tendsto_atBot_of_deriv_neg_limit {f : ℝ → ℝ}
     (hf : Differentiable ℝ f)
     {L : ℝ} (hL : L < 0) (hf' : Tendsto (deriv f) atTop (nhds L)) :
@@ -107,6 +118,7 @@ theorem tendsto_atBot_of_deriv_neg_limit {f : ℝ → ℝ}
   have h_lim_neg_inf : ∀ x > x₀, f x ≤ f x₀ + (L / 2) * (x - x₀) := by
     intro x hx; obtain ⟨ c, hc₁, hc₂ ⟩ := h_mvt x₀ x hx; nlinarith [ hx₀ c hc₁.1 ] ;
   exact Filter.tendsto_atTop_atBot.mpr fun b => ⟨ x₀ + ⌈ ( b - f x₀ ) / ( L / 2 ) ⌉₊ + 1, fun x hx => by nlinarith [ Nat.le_ceil ( ( b - f x₀ ) / ( L / 2 ) ), h_lim_neg_inf x ( by linarith ), mul_div_cancel₀ ( b - f x₀ ) ( by linarith : ( L / 2 ) ≠ 0 ) ] ⟩
+
 
 
 theorem sheffer_expr_deriv_tendsto_both (e : ShefferExpr) :
@@ -237,10 +249,12 @@ theorem sheffer_expr_deriv_tendsto_both (e : ShefferExpr) :
           exact ⟨ _, by simpa only [ funext h_chain ] using h_e1_neg_inf.mul hL₂ ⟩
 
 
+
 /-- Every Sheffer expression's derivative converges at +∞. -/
 theorem sheffer_expr_deriv_tendsto (e : ShefferExpr) :
     ∃ L : ℝ, Tendsto (deriv e.eval) atTop (nhds L) :=
   (sheffer_expr_deriv_tendsto_both e).1
+
 
 
 /-- sin is NOT in the Sheffer algebra. -/
@@ -251,12 +265,14 @@ theorem sin_not_mem_sheffer : (fun x : ℝ => Real.sin x) ∉ ShefferAlgebra := 
   exact cos_no_limit_atTop ⟨L, by rwa [h_cos] at hL⟩
 
 
+
 /-- cos is NOT in the Sheffer algebra. -/
 theorem cos_not_mem_sheffer : (fun x : ℝ => Real.cos x) ∉ ShefferAlgebra := by
   rintro ⟨e, he⟩
   obtain ⟨L, hL⟩ := sheffer_expr_deriv_tendsto e
   have h_neg_sin : deriv e.eval = fun x => -Real.sin x := by rw [← he]; norm_num
   exact sin_no_limit_atTop ⟨-L, by simpa [h_neg_sin] using hL.neg⟩
+
 
 
 /-- No non-constant periodic function is in the Sheffer algebra. -/
@@ -293,6 +309,7 @@ theorem periodic_not_mem_sheffer {f : ℝ → ℝ} {T : ℝ} (hT : T > 0)
     have hcd := sheffer_expr_contDiff e
     exact hcd.continuous_deriv le_top
   exact periodic_no_finite_limit hT h_deriv_periodic h_deriv_cont h_deriv_nonconst h_deriv
+
 
 
 end

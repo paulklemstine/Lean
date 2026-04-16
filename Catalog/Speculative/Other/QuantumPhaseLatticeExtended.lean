@@ -19,6 +19,7 @@ theorem orthogonal_complement_antimono
   Submodule.orthogonal_le h
 
 
+
 /-- **Theorem 22 (Double orthogonal complement).**
 For a closed subspace with orthogonal projection, Kᗮᗮ = K. -/
 theorem double_orthogonal_eq
@@ -26,6 +27,7 @@ theorem double_orthogonal_eq
     (K : Submodule ℂ E) [K.HasOrthogonalProjection] :
     Kᗮᗮ = K :=
   Submodule.orthogonal_orthogonal K
+
 
 
 /-- **Theorem 23 (Orthogonal complement decomposition).**
@@ -37,6 +39,7 @@ theorem orthogonal_complement_spans_top
   Submodule.sup_orthogonal_of_hasOrthogonalProjection
 
 
+
 /-- **Theorem 24 (Orthogonal complement disjointness).**
 K ⊓ K⊥ = ⊥: a vector orthogonal to itself in an inner product space is zero. -/
 theorem orthogonal_complement_disjoint
@@ -46,6 +49,11 @@ theorem orthogonal_complement_disjoint
   Submodule.orthogonal_disjoint K
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.QuantumPhaseLatticeExtended
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 20] -/
 theorem orthomodular_law
     {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℂ E]
     (K L : Submodule ℂ E) [K.HasOrthogonalProjection]
@@ -61,6 +69,7 @@ theorem orthomodular_law
   · aesop
 
 
+
 /-- **Theorem 26 (De Morgan for orthogonal complements).**
 (K₁ ⊔ K₂)ᗮ = K₁ᗮ ⊓ K₂ᗮ — meets and joins dualize under orthocomplementation. -/
 theorem orthogonal_complement_sup
@@ -68,6 +77,7 @@ theorem orthogonal_complement_sup
     (K₁ K₂ : Submodule ℂ E) :
     (K₁ ⊔ K₂)ᗮ = K₁ᗮ ⊓ K₂ᗮ :=
   (Submodule.inf_orthogonal K₁ K₂).symm
+
 
 
 /-- **Theorem 27 (Adjoint inner product identity).**
@@ -81,6 +91,7 @@ theorem adjoint_inner_left'
   ContinuousLinearMap.adjoint_inner_left A x y
 
 
+
 theorem adjoint_adjoint'
     {E F : Type*} [NormedAddCommGroup E] [NormedAddCommGroup F]
     [InnerProductSpace ℂ E] [InnerProductSpace ℂ F]
@@ -88,6 +99,7 @@ theorem adjoint_adjoint'
     (A : E →L[ℂ] F) :
     adjoint (adjoint A) = A := by
   exact?
+
 
 
 theorem self_adjoint_real_inner
@@ -103,6 +115,7 @@ theorem self_adjoint_real_inner
   rw [ ← inner_conj_symm, ← Complex.conj_eq_iff_im ] at * ; aesop
 
 
+
 theorem adjoint_norm_eq'
     {E F : Type*} [NormedAddCommGroup E] [NormedAddCommGroup F]
     [InnerProductSpace ℂ E] [InnerProductSpace ℂ F]
@@ -110,6 +123,7 @@ theorem adjoint_norm_eq'
     (A : E →L[ℂ] F) :
     ‖adjoint A‖ = ‖A‖ := by
   simp_all +decide [ ContinuousLinearMap.adjointAux, ContinuousLinearMap.ext_iff ]
+
 
 
 /-- **Theorem 31 (Quantum channel norm-boundedness).**
@@ -122,6 +136,7 @@ theorem quantum_channel_norm_bound
   T.le_opNorm v
 
 
+
 /-- **Theorem 32 (Identity channel has norm 1).**
 The identity map on a nontrivial space has operator norm 1. -/
 theorem identity_channel_norm
@@ -129,6 +144,7 @@ theorem identity_channel_norm
     [Nontrivial E] :
     ‖ContinuousLinearMap.id ℂ E‖ = 1 :=
   ContinuousLinearMap.norm_id
+
 
 
 theorem contractive_channel_convergence
@@ -144,6 +160,7 @@ theorem contractive_channel_convergence
   exact squeeze_zero ( fun _ => norm_nonneg _ ) ( fun n => ContinuousLinearMap.le_opNorm _ _ |> le_trans <| mul_le_mul_of_nonneg_right ( h_norm_pow n ) <| norm_nonneg _ ) <| by simpa using Filter.Tendsto.mul ( tendsto_pow_atTop_nhds_zero_of_lt_one ( norm_nonneg _ ) hT ) tendsto_const_nhds;
 
 
+
 theorem adjoint_comp'
     {E F G : Type*} [NormedAddCommGroup E] [NormedAddCommGroup F]
     [NormedAddCommGroup G]
@@ -152,6 +169,7 @@ theorem adjoint_comp'
     (T₁ : E →L[ℂ] F) (T₂ : F →L[ℂ] G) :
     adjoint (T₂.comp T₁) = (adjoint T₁).comp (adjoint T₂) := by
   ext x y; simp +decide [ adjoint_inner_right ] ;
+
 
 
 theorem tensor_submodule_monotone
@@ -169,6 +187,7 @@ theorem tensor_submodule_monotone
   · case _ hx hy => obtain ⟨ y₁, hy₁ ⟩ := hx; obtain ⟨ y₂, hy₂ ⟩ := hy; exact ⟨ y₁ + y₂, by simp +decide [ hy₁, hy₂ ] ⟩ ;
 
 
+
 theorem tensor_sup_contains
     {V W : Type*} [AddCommGroup V] [AddCommGroup W]
     [Module ℂ V] [Module ℂ W]
@@ -184,6 +203,7 @@ theorem tensor_sup_contains
   · exact tensor_submodule_monotone _ _ _ _ le_sup_right le_rfl
 
 
+
 theorem eigenspace_is_submodule
     {E : Type*} [AddCommGroup E] [Module ℂ E]
     (T : E →ₗ[ℂ] E) (mu : ℂ) :
@@ -192,12 +212,14 @@ theorem eigenspace_is_submodule
   simp +decide [ sub_eq_zero ]
 
 
+
 theorem eigenspaces_disjoint
     {E : Type*} [AddCommGroup E] [Module ℂ E]
     (T : E →ₗ[ℂ] E) (mu1 mu2 : ℂ) (hne : mu1 ≠ mu2)
     (v : E) (h1 : T v = mu1 • v) (h2 : T v = mu2 • v) :
     v = 0 := by
   exact Classical.not_not.1 fun h => hne <| smul_left_injective _ h <| by aesop;
+
 
 
 theorem self_adjoint_eigenvalue_real
@@ -210,6 +232,7 @@ theorem self_adjoint_eigenvalue_real
     rw [ ← ContinuousLinearMap.adjoint_inner_right, hA ];
   simp_all +decide [ mul_comm, Complex.ext_iff, sq ];
   nlinarith [ norm_pos_iff.mpr hv, mul_pos ( norm_pos_iff.mpr hv ) ( norm_pos_iff.mpr hv ) ]
+
 
 
 theorem self_adjoint_eigenvectors_orthogonal
@@ -230,6 +253,7 @@ theorem self_adjoint_eigenvectors_orthogonal
     apply_rules [ self_adjoint_eigenvalue_real ];
     aesop;
   simp_all +decide [ RCLike.im ]
+
 
 
 end

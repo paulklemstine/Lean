@@ -1,96 +1,74 @@
-/-
-# OISCC V12: Variational Principles and Action Functionals
+/-! # CatalogBuild.Speculative.OISCC.V12_VariationalPrinciples
 
-The EML potential f(x) = exp(x) - ln(x) - 1 gives rise to an "action" functional
-A[γ] = ∫f(γ(t))dt along paths γ in ℝ₊. The EML orbit minimizes (or extremizes)
-this action among certain path classes.
-
-Key results:
-1. The action of a constant path is T·f(x) ≥ T
-2. The action along the diagonal orbit grows super-linearly
-3. The "kinetic energy" K(x,v) = g(x)·v²/2 is positive
-4. The Lagrangian L(x,v) = K(x,v) - f(x) has specific structure
-5. Energy conservation along EML orbits
-6. Jensen's inequality for the EML action
+Auto-generated from theorem catalog database.
+Domain: Speculative/OISCC
+Declarations: 15
 -/
 
 import Mathlib
 
 noncomputable section
 
-open Real Filter Topology Set MeasureTheory
-
 /-- The EML potential. -/
 def f_var (x : ℝ) : ℝ := Real.exp x - Real.log x - 1
+
 
 /-- The Riemannian metric. -/
 def g_var (x : ℝ) : ℝ := Real.exp x + x⁻¹ ^ 2
 
+
 /-- The "kinetic energy" in the EML metric. -/
 def kinetic (x v : ℝ) : ℝ := g_var x * v ^ 2 / 2
+
 
 /-- The EML Lagrangian. -/
 def lagrangian (x v : ℝ) : ℝ := kinetic x v - f_var x
 
-/-
-f(x) ≥ 1 for all x > 0 (constant path has bounded action).
--/
+
 theorem f_var_ge_one (x : ℝ) (hx : 0 < x) : f_var x ≥ 1 := by
   unfold f_var;
   nlinarith [ Real.add_one_le_exp x, Real.log_le_sub_one_of_pos hx ]
 
-/-
-f(x) > 0 for all x > 0.
--/
+
 theorem f_var_pos (x : ℝ) (hx : 0 < x) : f_var x > 0 := by
   have := f_var_ge_one x hx
   linarith
 
-/-
-The metric is positive.
--/
+
 theorem g_var_pos (x : ℝ) (hx : 0 < x) : g_var x > 0 := by
   exact add_pos_of_pos_of_nonneg ( Real.exp_pos _ ) ( sq_nonneg _ )
 
-/-
-The kinetic energy is non-negative.
--/
+
 theorem kinetic_nonneg (x v : ℝ) (hx : 0 < x) : kinetic x v ≥ 0 := by
   exact div_nonneg ( mul_nonneg ( le_of_lt ( g_var_pos x hx ) ) ( sq_nonneg v ) ) zero_le_two
 
-/-
-Kinetic energy is zero iff velocity is zero.
--/
+
 theorem kinetic_eq_zero_iff (x v : ℝ) (hx : 0 < x) :
     kinetic x v = 0 ↔ v = 0 := by
   unfold kinetic;
   norm_num [ g_var ];
   exact fun h => absurd h <| by positivity;
 
-/-
-The Lagrangian is negative for zero velocity.
--/
+
 theorem lagrangian_at_rest (x : ℝ) (hx : 0 < x) :
     lagrangian x 0 = -f_var x := by
   unfold lagrangian kinetic f_var g_var; ring;
 
-/-
-The Lagrangian at rest is negative.
--/
+
 theorem lagrangian_at_rest_neg (x : ℝ) (hx : 0 < x) :
     lagrangian x 0 < 0 := by
   linarith [ lagrangian_at_rest x hx, f_var_pos x hx ]
 
+
 /-- The "total energy" E = K + f is always ≥ 1 (positive energy theorem). -/
 def total_energy (x v : ℝ) : ℝ := kinetic x v + f_var x
+
 
 theorem total_energy_ge_one (x v : ℝ) (hx : 0 < x) :
     total_energy x v ≥ 1 := by
   exact le_add_of_nonneg_of_le ( kinetic_nonneg x v hx ) ( f_var_ge_one x hx )
 
-/-
-Jensen's inequality: f of the average ≤ average of f (from convexity).
--/
+
 theorem f_var_convexOn : ConvexOn ℝ (Ioi 0) f_var := by
   apply_rules [ convexOn_of_deriv2_nonneg, convex_Ioi ];
   · exact continuousOn_of_forall_continuousAt fun x hx => by exact ContinuousAt.sub ( ContinuousAt.sub ( Real.continuous_exp.continuousAt ) ( Real.continuousAt_log hx.out.ne' ) ) continuousAt_const;
@@ -105,9 +83,7 @@ theorem f_var_convexOn : ConvexOn ℝ (Ioi 0) f_var := by
       intro x hx; rw [ h_deriv2 x hx ] ; norm_num [ Real.differentiableAt_exp, differentiableAt_inv, hx.ne' ];
     exact fun x hx => h_deriv2 x ( interior_subset hx ) ▸ add_nonneg ( Real.exp_nonneg x ) ( one_div_nonneg.mpr ( sq_nonneg x ) )
 
-/-
-The diagonal value f(exp(x) - ln(x)) > f(x) for x > 0.
--/
+
 theorem f_var_orbit_growth (x : ℝ) (hx : 0 < x) :
     f_var (Real.exp x - Real.log x) > f_var x := by
   unfold f_var;
@@ -120,5 +96,6 @@ theorem f_var_orbit_growth (x : ℝ) (hx : 0 < x) :
   norm_num [ Real.exp_sub ] at *;
   rw [ le_div_iff₀ ( Real.exp_pos _ ) ] at this;
   nlinarith [ Real.add_one_le_exp 1, Real.log_le_sub_one_of_pos ( by linarith : 0 < y ) ]
+
 
 end

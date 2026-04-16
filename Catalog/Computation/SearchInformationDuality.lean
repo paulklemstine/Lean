@@ -15,15 +15,18 @@ structure IsProbDist {α : Type*} [Fintype α] (p : α → ℝ) : Prop where
   sum_one : ∑ x : α, p x = 1
 
 
+
 /-- The uniform distribution over a finite type. -/
 def uniformDist (α : Type*) [Fintype α] [Nonempty α] : α → ℝ :=
   fun _ => (1 : ℝ) / (Fintype.card α : ℝ)
+
 
 
 /-- The uniform distribution is a valid probability distribution. -/
 theorem uniformDist_isProbDist (α : Type*) [Fintype α] [Nonempty α] :
     IsProbDist (uniformDist α) := by
   exact ⟨fun x => by simp [uniformDist], by simp [uniformDist]⟩
+
 
 
 /-- Shannon entropy of the uniform distribution over n elements equals log₂(n).
@@ -35,9 +38,11 @@ theorem entropy_uniform {α : Type*} [Fintype α] [Nonempty α]
   rw [if_pos (Nat.cast_pos.mp hn), neg_neg]
 
 
+
 /-- A point mass distribution: all probability on one element. -/
 def pointMass {α : Type*} [Fintype α] [DecidableEq α] (a : α) : α → ℝ :=
   fun x => if x = a then 1 else 0
+
 
 
 /-- A point mass is a valid probability distribution. -/
@@ -48,12 +53,14 @@ theorem pointMass_isProbDist {α : Type*} [Fintype α] [DecidableEq α] (a : α)
   · unfold pointMass; aesop
 
 
+
 /-- **Entropy Collapse Theorem**: After measurement (learning the answer),
 the distribution collapses to a point mass and entropy drops to zero.
 This is the formal analog of "the photons have all collapsed." -/
 theorem entropy_collapse {α : Type*} [Fintype α] [DecidableEq α] (a : α) :
     shannonEntropy (pointMass a) = 0 := by
   unfold shannonEntropy pointMass; aesop
+
 
 
 /-- The information gained by solving a problem equals the entropy reduction:
@@ -66,11 +73,13 @@ theorem information_gain_equals_search_space {α : Type*} [Fintype α] [Nonempty
   rw [entropy_uniform hn, entropy_collapse a, sub_zero]
 
 
+
 /-- The minimum number of yes/no questions needed to identify one element
 among n = 2^k possibilities is exactly k. -/
 theorem binary_search_depth_pow2 (k : ℕ) :
     Nat.log 2 (2 ^ k) = k := by
   rw [Nat.log_pow (by norm_num)]
+
 
 
 /-- **Search-Information Duality (Main Theorem)**:
@@ -82,6 +91,7 @@ number of bits of information you gain by learning it. -/
 theorem search_information_duality (k : ℕ) (_hk : k > 0) :
     (Nat.log 2 (2 ^ k) : ℝ) = Real.logb 2 (2 ^ k : ℝ) := by
   norm_num [Real.logb]
+
 
 
 end

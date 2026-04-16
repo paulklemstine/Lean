@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: EML
-Declarations: 31
+Declarations: 27
 -/
 
 import Mathlib
@@ -13,6 +13,11 @@ noncomputable section
 def normSPB (x : ℝ) : ℝ := 1 + x ^ 2
 
 
+
+/-- [Section: # CatalogBuild.EML.SPBNewTheorems
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 31] -/
 theorem spb_preserves_cross_ratio (a b c d t : ℝ)
     (h1 : 1 - a * t ≠ 0) (h2 : 1 - b * t ≠ 0)
     (h3 : 1 - c * t ≠ 0) (h4 : 1 - d * t ≠ 0)
@@ -25,19 +30,11 @@ theorem spb_preserves_cross_ratio (a b c d t : ℝ)
   grind
 
 
-/-- The SPB matrix has trace 2. -/
-theorem spbMat_trace (a : ℝ) : (spbMat a).trace = 2 := by
-  simp [spbMat, Matrix.trace, Fin.sum_univ_two]; norm_num
-
-
-/-- The SPB matrix has determinant 1 + a². -/
-theorem spbMat_det (a : ℝ) : (spbMat a).det = 1 + a ^ 2 := by
-  simp [spbMat, Matrix.det_fin_two]; ring
-
 
 theorem spb_elliptic_classification (a : ℝ) (ha : a ≠ 0) :
     (spbMat a).trace ^ 2 < 4 * (spbMat a).det := by
   norm_num [ spbMat, Matrix.det_fin_two ] ; nlinarith [ mul_self_pos.2 ha ]
+
 
 
 theorem projSPB_eq_affine (x y : ℝ) (hd : 1 - x * y ≠ 0) :
@@ -45,14 +42,17 @@ theorem projSPB_eq_affine (x y : ℝ) (hd : 1 - x * y ≠ 0) :
   unfold projSPB spb; ring
 
 
+
 theorem projSPB_comm (x₁ x₂ y₁ y₂ : ℝ) :
     projSPB x₁ x₂ y₁ y₂ = projSPB y₁ y₂ x₁ x₂ := by
   unfold projSPB; ring;
 
 
+
 theorem projSPB_identity (x₁ x₂ : ℝ) :
     projSPB x₁ x₂ 0 1 = (x₁, x₂) := by
   unfold projSPB; aesop;
+
 
 
 theorem projSPB_norm_mul (x₁ x₂ y₁ y₂ : ℝ) :
@@ -61,14 +61,17 @@ theorem projSPB_norm_mul (x₁ x₂ y₁ y₂ : ℝ) :
   unfold projSPB; ring;
 
 
+
 theorem spb_infinitesimal_generator (x : ℝ) :
     HasDerivAt (fun ε => spb x ε) (1 + x ^ 2) 0 := by
   unfold spb; convert HasDerivAt.div ( hasDerivAt_id 0 |> HasDerivAt.const_add x ) ( HasDerivAt.sub ( hasDerivAt_const _ _ ) ( HasDerivAt.mul ( hasDerivAt_const _ _ ) ( hasDerivAt_id 0 ) ) ) _ using 1 <;> norm_num;
   ring
 
 
+
 /-- V(x) = 1 + x² is always positive (flow is always rightward). -/
 theorem spb_generator_pos (x : ℝ) : (1 : ℝ) + x ^ 2 > 0 := by positivity
+
 
 
 theorem cauchy_density_reciprocal (x : ℝ) :
@@ -77,14 +80,11 @@ theorem cauchy_density_reciprocal (x : ℝ) :
   rw [ ← div_div, div_self ( by positivity ) ]
 
 
-theorem gaussian_norm_spb (x y : ℝ) :
-    (1 + x^2) * (1 + y^2) = (1 - x*y)^2 + (x + y)^2 := by
-  ring
-
 
 theorem cocycle_geometric_series (x y : ℝ) (hxy : |x * y| < 1) :
     HasSum (fun n => (x * y) ^ n) (1 / (1 - x * y)) := by
   simpa using hasSum_geometric_of_abs_lt_one hxy
+
 
 
 theorem cocycle_two_cocycle (x y z : ℝ)
@@ -96,8 +96,10 @@ theorem cocycle_two_cocycle (x y z : ℝ)
   grind
 
 
+
 /-- spbPow 0 returns 0 (the identity). -/
 theorem spbPow_zero (x : ℝ) : spbPow 0 x = 0 := by simp [spbPow]
+
 
 
 /-- Key DH algebraic identity: (a+b) · arctan(g) = a · arctan(g) + b · arctan(g).
@@ -108,12 +110,14 @@ theorem spb_dh_angle_add (a b : ℕ) (g : ℝ) :
   push_cast; ring
 
 
+
 /-- The key Cauchy pullback identity: the SPB Jacobian transforms Cauchy densities correctly.
 1/(1 + spb(x,a)²) · (1+a²)/(1-xa)² = (1+a²)/((1+x²)(1+a²)/(1-xa)²) ... simplifies to
 the fundamental identity: (1 + spb(x,a)²) · (1-xa)² = (1+x²)(1+a²). -/
 theorem cauchy_pullback_identity (a x : ℝ) (h : 1 - x * a ≠ 0) :
     (1 + spb x a ^ 2) * (1 - x * a) ^ 2 = (1 + x ^ 2) * (1 + a ^ 2) := by
   unfold spb; field_simp; ring
+
 
 
 /-- The d=1 division algebra construction: given SPB on ℝ,
@@ -123,8 +127,10 @@ def complexMul (p q : ℝ × ℝ) : ℝ × ℝ :=
   (p.1 * q.1 - p.2 * q.2, p.1 * q.2 + p.2 * q.1)
 
 
+
 /-- The norm on ℝ² is N(a,b) = a² + b². -/
 def complexNorm (p : ℝ × ℝ) : ℝ := p.1 ^ 2 + p.2 ^ 2
+
 
 
 theorem complexNorm_mul (p q : ℝ × ℝ) :
@@ -132,9 +138,11 @@ theorem complexNorm_mul (p q : ℝ × ℝ) :
   unfold complexNorm complexMul; ring;
 
 
+
 theorem complex_mul_spb_connection (x y : ℝ) :
     complexMul (1, x) (1, y) = (1 - x * y, x + y) := by
   unfold complexMul; ring;
+
 
 
 theorem complex_norm_eq_spb_norm (x : ℝ) :
@@ -143,9 +151,11 @@ theorem complex_norm_eq_spb_norm (x : ℝ) :
   unfold normSPB; ring
 
 
+
 /-- For all a, tr(M(a)) = 2 (constant trace). -/
 theorem spbMat_trace_constant (a : ℝ) :
     (spbMat a).trace = 2 := spbMat_trace a
+
 
 
 theorem spb_discriminant_nonpos (a : ℝ) :
@@ -153,9 +163,11 @@ theorem spb_discriminant_nonpos (a : ℝ) :
   unfold spbMat; norm_num; ring;
 
 
+
 theorem spb_discriminant_neg (a : ℝ) (ha : a ≠ 0) :
     (spbMat a).trace ^ 2 - 4 * (spbMat a).det < 0 := by
   unfold spbMat; norm_num; nlinarith [ mul_self_pos.2 ha ] ;
+
 
 
 theorem spbH_contraction (x y : ℝ) (hx : |x| < 1) (hy : |y| < 1) :
@@ -163,9 +175,11 @@ theorem spbH_contraction (x y : ℝ) (hx : |x| < 1) (hy : |y| < 1) :
   exact abs_lt.mpr ⟨ by rw [ spbH ] ; rw [ lt_div_iff₀ ] <;> nlinarith [ abs_lt.mp hx, abs_lt.mp hy ], by rw [ spbH ] ; rw [ div_lt_iff₀ ] <;> nlinarith [ abs_lt.mp hx, abs_lt.mp hy ] ⟩
 
 
+
 theorem wick_norm_circular (x y : ℝ) :
     (1 + x^2) * (1 + y^2) = (1 - x*y)^2 + (x + y)^2 := by
   ring
+
 
 
 theorem wick_norm_hyperbolic (x y : ℝ) :
@@ -173,15 +187,12 @@ theorem wick_norm_hyperbolic (x y : ℝ) :
   ring
 
 
-theorem spbMat_det_mul (a b : ℝ) :
-    (spbMat a * spbMat b).det = (1 + a^2) * (1 + b^2) := by
-  rw [ ← spbMat_det a, ← spbMat_det b, ← Matrix.det_mul ]
-
 
 theorem spbMat_det_prod (as : List ℝ) :
     (as.map spbMat).prod.det = (as.map (fun a => 1 + a^2)).prod := by
   induction as <;> simp_all +decide [ Matrix.det_fin_two ];
   unfold spbMat; norm_num; ring; aesop;
+
 
 
 end

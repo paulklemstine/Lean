@@ -7,6 +7,10 @@ Declarations: 7
 
 import Mathlib
 
+/-- [Section: # CatalogBuild.Logic.HaltingProblem
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 7] -/
 theorem no_universal_decision :
     ¬ ∃ (f : ℕ → (ℕ → Prop)), Surjective f := by
   simp +zetaDelta at *;
@@ -16,9 +20,11 @@ theorem no_universal_decision :
   exact ⟨ fun n => ¬P n n, fun n hn => by simpa using congr_fun hn n ⟩
 
 
+
 theorem anti_diagonal_escapes (f : ℕ → (ℕ → Prop)) :
     (fun n => ¬ f n n) ∉ Set.range f := by
   exact fun ⟨ n, hn ⟩ => by have := congr_fun hn n; tauto;
+
 
 
 theorem turing_diagonal (decide : ℕ → ℕ → Bool) :
@@ -26,10 +32,12 @@ theorem turing_diagonal (decide : ℕ → ℕ → Bool) :
   exact ⟨ fun n => if decide n n = Bool.true then Bool.false else Bool.true, by aesop ⟩
 
 
+
 theorem predicates_not_enumerable :
     ¬ ∃ (enum : ℕ → (ℕ → Bool)), Surjective enum := by
   rintro ⟨ enum, henum ⟩;
   cases' henum ( fun x => if enum x x = Bool.true then Bool.false else Bool.true ) with n hn ; replace hn := congr_fun hn n ; aesop
+
 
 
 theorem no_universal_dominator :
@@ -44,6 +52,7 @@ theorem no_universal_dominator :
   exact lt_irrefl (f N + 1) (by linarith [hN N le_rfl])
 
 
+
 /-- **Productive Diagonalization**: Given any function f : ℕ → (ℕ → Prop),
 we can *constructively* produce a predicate not in its range.
 This is the computational content of Cantor's theorem. -/
@@ -51,7 +60,9 @@ def productive_witness (f : ℕ → (ℕ → Prop)) : ℕ → Prop :=
   fun n => ¬ f n n
 
 
+
 theorem productive_witness_not_in_range (f : ℕ → (ℕ → Prop)) :
     ∀ n : ℕ, productive_witness f ≠ f n := by
   intro n hn; have := congr_fun hn n; simp_all +decide [ productive_witness ] ;
+
 

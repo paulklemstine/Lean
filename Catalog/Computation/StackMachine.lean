@@ -13,14 +13,22 @@ noncomputable section
 def EML_sm (a b : ℝ) : ℝ := Real.exp a - Real.log b
 
 
+
+/-- [Section: # CatalogBuild.Computation.StackMachine
+Auto-generated from theorem catalog database.
+Domain: Computation
+Declarations: 20] -/
 inductive Instr where
   | PUSH : ℝ → Instr
   | EML : Instr
 
 
+
 abbrev Program := List Instr
 
+
 abbrev Stack := List ℝ
+
 
 
 def step (i : Instr) (s : Stack) : Option Stack :=
@@ -32,6 +40,7 @@ def step (i : Instr) (s : Stack) : Option Stack :=
     | _ => none
 
 
+
 def run : Program → Stack → Option Stack
   | [], s => some s
   | i :: rest, s =>
@@ -40,14 +49,17 @@ def run : Program → Stack → Option Stack
     | none => none
 
 
+
 theorem prog_exp (a : ℝ) :
     run [.PUSH a, .PUSH 1, .EML] [] = some [Real.exp a] := by
   simp [run, step, EML_sm, Real.log_one]
 
 
+
 theorem prog_one_minus_log (b : ℝ) :
     run [.PUSH 0, .PUSH b, .EML] [] = some [1 - Real.log b] := by
   simp [run, step, EML_sm]
+
 
 
 theorem prog_ln (b : ℝ) :
@@ -56,14 +68,17 @@ theorem prog_ln (b : ℝ) :
   simp [run, step, EML_sm, Real.log_one, Real.log_exp]
 
 
+
 theorem prog_sub (a b : ℝ) (ha : 0 < a) :
     run [.PUSH (Real.log a), .PUSH (Real.exp b), .EML] [] = some [a - b] := by
   simp [run, step, EML_sm, Real.exp_log ha, Real.log_exp]
 
 
+
 theorem prog_add (a b : ℝ) (ha : 0 < a) :
     run [.PUSH (Real.log a), .PUSH (Real.exp (-b)), .EML] [] = some [a + b] := by
   simp [run, step, EML_sm, Real.exp_log ha, Real.log_exp]
+
 
 
 theorem run_append (p1 p2 : Program) (s : Stack) :
@@ -80,16 +95,19 @@ theorem run_append (p1 p2 : Program) (s : Stack) :
     | some s' => exact ih s'
 
 
+
 def emlOps : Program → ℕ
   | [] => 0
   | .EML :: rest => 1 + emlOps rest
   | .PUSH _ :: rest => emlOps rest
 
 
+
 def pushOps : Program → ℕ
   | [] => 0
   | .PUSH _ :: rest => 1 + pushOps rest
   | .EML :: rest => pushOps rest
+
 
 
 theorem prog_length (p : Program) : p.length = emlOps p + pushOps p := by
@@ -101,15 +119,18 @@ theorem prog_length (p : Program) : p.length = emlOps p + pushOps p := by
     | EML => simp [emlOps, pushOps, ih]; omega
 
 
+
 /-- Program computing e↑↑n. -/
 def eTowerProg : ℕ → Program
   | 0 => [.PUSH 1]
   | n + 1 => eTowerProg n ++ [.PUSH 1, .EML]
 
 
+
 def eTow_sm : ℕ → ℝ
   | 0 => 1
   | n + 1 => Real.exp (eTow_sm n)
+
 
 
 theorem eTowerProg_correct (n : ℕ) :
@@ -118,6 +139,7 @@ theorem eTowerProg_correct (n : ℕ) :
   | zero => simp [eTowerProg, eTow_sm, run, step]
   | succ n ih =>
     simp [eTowerProg, run_append, ih, run, step, EML_sm, Real.log_one, eTow_sm]
+
 
 
 /-- emlOps for appended lists. -/
@@ -130,10 +152,12 @@ theorem emlOps_append (p1 p2 : Program) : emlOps (p1 ++ p2) = emlOps p1 + emlOps
     | EML => simp [emlOps, ih]; omega
 
 
+
 theorem eTowerProg_eml_count (n : ℕ) : emlOps (eTowerProg n) = n := by
   induction n with
   | zero => simp [eTowerProg, emlOps]
   | succ n ih => simp [eTowerProg, emlOps_append, ih, emlOps]
+
 
 
 end

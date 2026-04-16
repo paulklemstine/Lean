@@ -15,8 +15,10 @@ def spbPow' (x : ℝ) : ℕ → ℝ
   | n + 1 => spb' x (spbPow' x n)
 
 
+
 /-- Base case: spbPow'(x, 0) = 0 (the identity element). -/
 theorem spbPow'_zero (x : ℝ) : spbPow' x 0 = 0 := rfl
+
 
 
 /-- spbPow'(x, 1) = x. -/
@@ -24,11 +26,17 @@ theorem spbPow'_one (x : ℝ) : spbPow' x 1 = x := by
   simp [spbPow', spb']
 
 
+
 /-- spbPow'(x, 2) = 2x/(1-x²). -/
 theorem spbPow'_two (x : ℝ) : spbPow' x 2 = 2 * x / (1 - x * x) := by
   simp [spbPow', spb']; ring
 
 
+
+/-- [Section: # CatalogBuild.EML.ChebyshevConnection
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 11] -/
 theorem spbPow'_tan (θ : ℝ) (n : ℕ)
     (hcos : ∀ k : ℕ, k ≤ n → Real.cos (k * θ) ≠ 0) :
     spbPow' (Real.tan θ) n = Real.tan (n * θ) := by
@@ -40,6 +48,7 @@ theorem spbPow'_tan (θ : ℝ) (n : ℕ)
     · refine Or.inl ⟨ fun k hk => hcos n ( by linarith ) ?_, fun l hl => hcos 1 ( by linarith ) ?_ ⟩ <;> simp_all +decide [ Real.cos_eq_zero_iff ]
 
 
+
 theorem tan_progression (θ : ℝ) (m n : ℕ)
     (hm : Real.cos (m * θ) ≠ 0) (hn : Real.cos (n * θ) ≠ 0)
     (hmn : Real.cos ((m + n) * θ) ≠ 0)
@@ -49,9 +58,11 @@ theorem tan_progression (θ : ℝ) (m n : ℕ)
   grind +locals
 
 
+
 theorem spb_double_angle (θ : ℝ) (hc : Real.cos θ ≠ 0) :
     spb' (Real.tan θ) (Real.tan θ) = Real.tan (2 * θ) := by
   rw [ Real.tan_two_mul, spb' ] ; ring
+
 
 
 theorem spb_triple_angle (θ : ℝ)
@@ -63,9 +74,11 @@ theorem spb_triple_angle (θ : ℝ)
   · simp_all +decide [ Real.cos_eq_zero_iff ]
 
 
+
 /-- Double-angle via SPB iteration: spbPow'(x, 2) = spb'(x, x). -/
 theorem spbPow'_two_eq_double (x : ℝ) : spbPow' x 2 = spb' x x := by
   simp [spbPow', spb']
+
 
 
 theorem weierstrass_is_cayley_re (t : ℝ) :
@@ -73,9 +86,11 @@ theorem weierstrass_is_cayley_re (t : ℝ) :
   ring
 
 
+
 theorem weierstrass_is_cayley_im (t : ℝ) :
     2 * t / (1 + t^2) = 2 * t / (1 + t * t) := by
   ring
+
 
 
 end

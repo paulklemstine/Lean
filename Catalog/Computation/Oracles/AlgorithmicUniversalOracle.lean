@@ -13,6 +13,7 @@ noncomputable section
 def FixedPointSet {X : Type*} (f : X → X) : Set X := {x | f x = x}
 
 
+
 /-- **Master Equation, direction 1**: Every image point is a fixed point. -/
 theorem oracle_image_sub_fixed {X : Type*} (O : X → X) (hO : IsOracle O) :
     range O ⊆ FixedPointSet O := by
@@ -21,11 +22,13 @@ theorem oracle_image_sub_fixed {X : Type*} (O : X → X) (hO : IsOracle O) :
   rw [← hx, hO x]
 
 
+
 /-- **Master Equation, direction 2**: Every fixed point is in the image. -/
 theorem oracle_fixed_sub_image {X : Type*} (O : X → X) :
     FixedPointSet O ⊆ range O := by
   intro x (hx : O x = x)
   exact ⟨x, hx⟩
+
 
 
 /-- **The Master Equation**: image(O) = Fix(O) for any oracle O. -/
@@ -38,6 +41,7 @@ theorem oracle_master_equation {X : Type*} (O : X → X) (hO : IsOracle O) :
 -- ═══════════════════════════════════════════════════════════════════════════════
 
 
+
 /-- The image and fixed-point set of an oracle have the same cardinality. -/
 theorem oracle_rank_eq {X : Type*} (O : X → X) (hO : IsOracle O) :
     Set.ncard (range O) = Set.ncard (FixedPointSet O) := by
@@ -46,6 +50,7 @@ theorem oracle_rank_eq {X : Type*} (O : X → X) (hO : IsOracle O) :
 -- ═══════════════════════════════════════════════════════════════════════════════
 --  §3: ReLU IS AN ORACLE
 -- ═══════════════════════════════════════════════════════════════════════════════
+
 
 
 /-- An oracle maps every point in its range to itself (distance 0). -/
@@ -60,6 +65,7 @@ theorem oracle_zero_contraction_on_range {X : Type*} [MetricSpace X]
 -- ═══════════════════════════════════════════════════════════════════════════════
 
 
+
 /-- The crystallizer of an oracle is the oracle itself. -/
 theorem crystallizer_of_oracle {X : Type*} (O : X → X) (hO : IsOracle O) :
     ∀ x, O^[2] x = O x := by
@@ -70,6 +76,7 @@ theorem crystallizer_of_oracle {X : Type*} (O : X → X) (hO : IsOracle O) :
 -- ═══════════════════════════════════════════════════════════════════════════════
 
 
+
 /-- Fixed points of an oracle on a complete lattice are nonempty. -/
 theorem oracle_fixed_points_nonempty {α : Type*} [CompleteLattice α]
     (O : α → α) (hO : IsOracle O) :
@@ -77,6 +84,7 @@ theorem oracle_fixed_points_nonempty {α : Type*} [CompleteLattice α]
   refine ⟨O ⊥, ?_⟩
   show O (O ⊥) = O ⊥
   exact hO ⊥
+
 
 
 /-- The image of an oracle applied to any element is a fixed point. -/
@@ -90,10 +98,12 @@ theorem oracle_output_is_fixed {α : Type*} (O : α → α) (hO : IsOracle O) (x
 -- ═══════════════════════════════════════════════════════════════════════════════
 
 
+
 /-- The composition of an oracle with itself is the oracle. -/
 theorem oracle_comp_self {X : Type*} (O : X → X) (hO : IsOracle O) :
     O ∘ O = O := by
   ext x; exact hO x
+
 
 
 /-- If O₁ and O₂ commute and are both oracles, their composition is an oracle. -/
@@ -113,6 +123,7 @@ theorem oracle_comp_commuting {X : Type*} (O₁ O₂ : X → X)
 -- ═══════════════════════════════════════════════════════════════════════════════
 
 
+
 /-- A surjective oracle is the identity. -/
 theorem oracle_surjective_is_id {X : Type*} (O : X → X) (hO : IsOracle O)
     (hS : Function.Surjective O) : O = id := by
@@ -126,11 +137,13 @@ theorem oracle_surjective_is_id {X : Type*} (O : X → X) (hO : IsOracle O)
 -- ═══════════════════════════════════════════════════════════════════════════════
 
 
+
 /-- A strange loop: a pair of maps whose round-trip is idempotent. -/
 structure StrangeLoop (X : Type*) where
   up : X → X
   down : X → X
   loop_oracle : IsOracle (down ∘ up)
+
 
 
 /-- The meaning set (fixed points) of a strange loop is nonempty
@@ -140,6 +153,7 @@ theorem strange_loop_meaning_nonempty {X : Type*} [Nonempty X]
   refine ⟨(L.down ∘ L.up) (Classical.arbitrary X), ?_⟩
   show (L.down ∘ L.up) ((L.down ∘ L.up) _) = (L.down ∘ L.up) _
   exact L.loop_oracle _
+
 
 
 /-- Every output of a strange loop is a meaning (fixed point). -/
@@ -153,13 +167,16 @@ theorem strange_loop_output_is_meaning {X : Type*} (L : StrangeLoop X) (x : X) :
 -- ═══════════════════════════════════════════════════════════════════════════════
 
 
+
 /-- An element e of ZMod n is idempotent if e * e = e. -/
 def IsIdempotentMod (n : ℕ) (e : ZMod n) : Prop := e * e = e
+
 
 
 /-- 0 is always idempotent in ZMod n. -/
 theorem zero_idempotent_mod (n : ℕ) : IsIdempotentMod n 0 := by
   simp [IsIdempotentMod]
+
 
 
 /-- 1 is always idempotent in ZMod n. -/
@@ -171,9 +188,11 @@ theorem one_idempotent_mod (n : ℕ) [NeZero n] : IsIdempotentMod n 1 := by
 -- ═══════════════════════════════════════════════════════════════════════════════
 
 
+
 /-- A matrix P is a projection iff P² = P. -/
 def IsProjectionMatrix {n : ℕ} (P : Matrix (Fin n) (Fin n) ℝ) : Prop :=
   P * P = P
+
 
 
 /-- The image of a projection matrix is a fixed set under multiplication. -/
@@ -187,6 +206,7 @@ theorem projection_fixed_point {n : ℕ} (P : Matrix (Fin n) (Fin n) ℝ)
 -- ═══════════════════════════════════════════════════════════════════════════════
 
 
+
 /-- An oracle is a retraction: O restricted to its image is the identity. -/
 theorem oracle_is_retraction {X : Type*} (O : X → X) (hO : IsOracle O) :
     ∀ y ∈ range O, O y = y := by
@@ -194,10 +214,12 @@ theorem oracle_is_retraction {X : Type*} (O : X → X) (hO : IsOracle O) :
   rw [← hx, hO x]
 
 
+
 /-- The image of an oracle is a retract of the ambient space. -/
 theorem oracle_range_retract {X : Type*} (O : X → X) :
     ∀ x, O x ∈ range O := by
   intro x; exact ⟨x, rfl⟩
+
 
 
 end

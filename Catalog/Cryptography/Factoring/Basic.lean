@@ -14,14 +14,17 @@ noncomputable def orbitSeq {α : Type*} (f : α → α) (x₀ : α) (n : ℕ) : 
   f^[n] x₀
 
 
+
 /-- orbitSeq agrees with Function.iterate -/
 theorem orbitSeq_eq_iterate {α : Type*} (f : α → α) (x₀ : α) (n : ℕ) :
     orbitSeq f x₀ n = f^[n] x₀ := rfl
 
 
+
 /-- Base case: orbit at 0 is x₀ -/
 theorem orbitSeq_zero {α : Type*} (f : α → α) (x₀ : α) :
     orbitSeq f x₀ 0 = x₀ := rfl
+
 
 
 /-- Step case: orbit at n+1 is f applied to orbit at n -/
@@ -30,9 +33,11 @@ theorem orbitSeq_succ {α : Type*} (f : α → α) (x₀ : α) (n : ℕ) :
   simp [orbitSeq, iterate_succ_apply']
 
 
+
 /-- The Pollard map x ↦ x² + c on ZMod n -/
 def pollardMap (n : ℕ) (c : ZMod n) : ZMod n → ZMod n :=
   fun x => x * x + c
+
 
 
 /-- The Pollard map commutes with the canonical reduction ZMod n → ZMod p
@@ -44,6 +49,11 @@ theorem pollardMap_commutes_with_castHom {n p : ℕ} (hp : p ∣ n)
   simp [pollardMap, map_add, map_mul]
 
 
+
+/-- [Section: # CatalogBuild.Cryptography.Factoring.Basic
+Auto-generated from theorem catalog database.
+Domain: Cryptography/Factoring
+Declarations: 11] -/
 theorem factor_from_mod_collision {n p : ℕ} {x y : ℤ}
     (hn : 1 < n)
     (hp_dvd_n : (p : ℤ) ∣ (n : ℤ))
@@ -54,6 +64,7 @@ theorem factor_from_mod_collision {n p : ℕ} {x y : ℤ}
     (hne : x ≠ y) :
     1 < Int.gcd (x - y) n := by
   exact lt_of_lt_of_le hp_gt ( Nat.le_of_dvd ( Int.gcd_pos_of_ne_zero_right _ ( by positivity ) ) ( Int.natCast_dvd_natCast.mp ( Int.dvd_coe_gcd hcoll hp_dvd_n ) ) )
+
 
 
 theorem factor_from_mod_collision_lt {n p : ℕ} {x y : ℤ}
@@ -69,11 +80,13 @@ theorem factor_from_mod_collision_lt {n p : ℕ} {x y : ℤ}
   exact Int.dvd_trans ( by norm_num ) ( h ▸ Int.gcd_dvd_left _ _ )
 
 
+
 theorem collision_within_card {α : Type*} [Fintype α] [DecidableEq α]
     (f : α → α) (x₀ : α) :
     ∃ i j, i < j ∧ j ≤ Fintype.card α ∧ f^[i] x₀ = f^[j] x₀ := by
   by_contra h_contra;
   exact absurd ( Finset.card_le_univ ( Finset.image ( fun i => f^[i] x₀ ) ( Finset.range ( Fintype.card α + 1 ) ) ) ) ( by rw [ Finset.card_image_of_injOn fun i hi j hj hij => le_antisymm ( not_lt.mp fun hi' => h_contra ⟨ j, i, hi', by linarith [ Finset.mem_range.mp hi, Finset.mem_range.mp hj ], hij.symm ⟩ ) ( not_lt.mp fun hj' => h_contra ⟨ i, j, hj', by linarith [ Finset.mem_range.mp hi, Finset.mem_range.mp hj ], hij ⟩ ) ] ; simp +decide )
+
 
 
 theorem floyd_detection {α : Type*} [Fintype α] [DecidableEq α]
@@ -103,10 +116,12 @@ theorem floyd_detection {α : Type*} [Fintype α] [DecidableEq α]
   exact h_no_k ⟨ k', hk'.1, hk'.2.1, h_eq_k' ⟩
 
 
+
 theorem orbit_map_commute {α β : Type*} (f : α → α) (g : β → β) (π : α → β)
     (hcomm : ∀ x, π (f x) = g (π x)) (x₀ : α) (n : ℕ) :
     π (f^[n] x₀) = g^[n] (π x₀) := by
   induction n <;> simp +decide [ *, Function.iterate_succ_apply' ]
+
 
 
 end

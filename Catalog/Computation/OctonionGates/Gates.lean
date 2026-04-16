@@ -14,9 +14,11 @@ def IsOrthogonal (M : Matrix (Fin 8) (Fin 8) ℝ) : Prop :=
   M * Mᵀ = 1
 
 
+
 /-- SO(8) matrices additionally have determinant 1 -/
 def IsSpecialOrthogonal (M : Matrix (Fin 8) (Fin 8) ℝ) : Prop :=
   IsOrthogonal M ∧ M.det = 1
+
 
 
 /-- The identity matrix is in SO(8) -/
@@ -27,8 +29,10 @@ theorem identity_in_SO8 : IsSpecialOrthogonal (1 : Matrix (Fin 8) (Fin 8) ℝ) :
   · simp
 
 
+
 /-- The dimension of G₂ ⊂ SO(7) ⊂ SO(8) -/
 theorem g2_dimension : 14 = 14 := rfl
+
 
 
 /-- A Givens rotation matrix in the (p,q)-plane with angle θ.
@@ -45,6 +49,11 @@ noncomputable def givensMatrix (n : ℕ) (p q : Fin n) (θ : ℝ) :
     else 0
 
 
+
+/-- [Section: # CatalogBuild.Computation.OctonionGates.Gates
+Auto-generated from theorem catalog database.
+Domain: Computation/OctonionGates
+Declarations: 15] -/
 theorem givens_orthogonal (p q : Fin 8) (θ : ℝ) (hpq : p ≠ q) :
     (givensMatrix 8 p q θ) * (givensMatrix 8 p q θ)ᵀ = 1 := by
   ext i j;
@@ -54,6 +63,7 @@ theorem givens_orthogonal (p q : Fin 8) (θ : ℝ) (hpq : p ≠ q) :
   all_goals simp_all +decide [ Matrix.one_apply, mul_comm ];
   · rw [ if_neg ( Ne.symm hpq ) ] ; linarith [ Real.sin_sq_add_cos_sq θ ];
   · rw [ ← sq, ← sq, Real.cos_sq_add_sin_sq ]
+
 
 
 /-- The 7 lines of the Fano plane, encoded as triples of indices.
@@ -68,13 +78,16 @@ def fanoLines : Fin 7 → Fin 3 → Fin 7
   | ⟨6, _⟩ => ![⟨6, by omega⟩, ⟨0, by omega⟩, ⟨2, by omega⟩]  -- e₇e₁ = e₃
 
 
+
 /-- Each Fano line has exactly 3 points -/
 theorem fano_line_size : ∀ l : Fin 7, ∀ i : Fin 3, (fanoLines l i).val < 7 := by
   intro l i; exact (fanoLines l i).isLt
 
 
+
 /-- The Fano plane has exactly 7 lines -/
 theorem fano_num_lines : Fintype.card (Fin 7) = 7 := by simp
+
 
 
 theorem fano_point_on_three_lines (p : Fin 7) :
@@ -83,13 +96,16 @@ theorem fano_point_on_three_lines (p : Fin 7) :
   fin_cases p <;> aesop ( simp_config := { decide := true } ) ;
 
 
+
 /-- The codimension of G₂ in SO(7): dim SO(7) - dim G₂ = 7 = dim S⁶ -/
 theorem g2_codimension : Nat.choose 7 2 - g2_lie_algebra_dim = 7 := by
   decide
 
 
+
 /-- The number of G₂ generators needed for a universal gate set -/
 theorem g2_generators_count : g2_lie_algebra_dim = 14 := rfl
+
 
 
 /-- The Solovay-Kitaev-type bound for octonion gates:
@@ -100,8 +116,10 @@ by 28 parameters, each requiring O(log(1/ε)) bits. -/
 theorem gate_parameters : Nat.choose 8 2 = 28 := by decide
 
 
+
 /-- For G₂ transformations, we need fewer parameters: 14 -/
 theorem g2_gate_parameters : g2_lie_algebra_dim = 14 := rfl
+
 
 
 /-- The "octonion advantage": SO(8) has 28 parameters vs SU(8) with 63.
@@ -109,6 +127,7 @@ An octonion encodes 8 real dimensions naturally, whereas representing
 the same space with standard qubits requires 3 qubits = SU(8). -/
 theorem octonion_vs_standard_gates : 8^2 - 1 = 63 ∧ 8 * 7 / 2 = 28 := by
   constructor <;> norm_num
+
 
 
 end

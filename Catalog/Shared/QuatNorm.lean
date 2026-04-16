@@ -1,7 +1,7 @@
 /-! # CatalogBuild.Shared.QuatNorm
 
 Auto-generated from theorem catalog database.
-Domain: Speculative
+Domain: Shared
 Declarations: 3
 -/
 
@@ -11,6 +11,11 @@ import Mathlib
 def quatNorm (a b c d : ℤ) : ℤ := a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2
 
 
+
+/-- [Section: # CatalogBuild.Shared.QuatNorm
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 3] -/
 theorem quatNorm_zero_iff (a b c d : ℤ) :
     quatNorm a b c d = 0 ↔ a = 0 ∧ b = 0 ∧ c = 0 ∧ d = 0 := by
   unfold quatNorm
@@ -19,6 +24,8 @@ theorem quatNorm_zero_iff (a b c d : ℤ) :
   · rintro ⟨rfl, rfl, rfl, rfl⟩; ring
 
 
+
 theorem quatNorm_nonneg (a b c d : ℤ) : 0 ≤ quatNorm a b c d := by
   unfold quatNorm; positivity
+
 

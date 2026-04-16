@@ -21,15 +21,22 @@ structure Oct where
 
 @[ext]
 
+
+/-- [Section: # CatalogBuild.Physics.ArithmeticPhotons.PhotonResearchRound5
+Auto-generated from theorem catalog database.
+Domain: Physics/ArithmeticPhotons
+Declarations: 51] -/
 theorem Oct.ext' {a b : Oct} (h0 : a.c0 = b.c0) (h1 : a.c1 = b.c1) (h2 : a.c2 = b.c2)
     (h3 : a.c3 = b.c3) (h4 : a.c4 = b.c4) (h5 : a.c5 = b.c5) (h6 : a.c6 = b.c6)
     (h7 : a.c7 = b.c7) : a = b := by
   cases a; cases b; simp_all
 
 
+
 /-- The squared norm of an octonion -/
 def Oct.normSq (o : Oct) : ℤ :=
   o.c0^2 + o.c1^2 + o.c2^2 + o.c3^2 + o.c4^2 + o.c5^2 + o.c6^2 + o.c7^2
+
 
 
 /-- Octonion multiplication (using standard Fano plane rules) -/
@@ -44,27 +51,37 @@ def Oct.mul (a b : Oct) : Oct where
   c7 := a.c0*b.c7 - a.c1*b.c6 + a.c2*b.c5 + a.c3*b.c4 - a.c4*b.c3 - a.c5*b.c2 + a.c6*b.c1 + a.c7*b.c0
 
 
+
 /-- The unit octonions -/
 def Oct.one : Oct := ⟨1, 0, 0, 0, 0, 0, 0, 0⟩
 
+
 def Oct.e1 : Oct := ⟨0, 1, 0, 0, 0, 0, 0, 0⟩
+
 
 def Oct.e2 : Oct := ⟨0, 0, 1, 0, 0, 0, 0, 0⟩
 
+
 def Oct.e3 : Oct := ⟨0, 0, 0, 1, 0, 0, 0, 0⟩
+
 
 def Oct.e4 : Oct := ⟨0, 0, 0, 0, 1, 0, 0, 0⟩
 
+
 def Oct.e5 : Oct := ⟨0, 0, 0, 0, 0, 1, 0, 0⟩
+
 
 def Oct.e6 : Oct := ⟨0, 0, 0, 0, 0, 0, 1, 0⟩
 
+
 def Oct.e7 : Oct := ⟨0, 0, 0, 0, 0, 0, 0, 1⟩
+
 
 
 /-- Octonion multiplication is NOT commutative -/
 theorem oct_not_commutative : Oct.mul Oct.e1 Oct.e2 ≠ Oct.mul Oct.e2 Oct.e1 := by
   decide
+
 
 
 /-- Octonion multiplication is NOT associative -/
@@ -73,16 +90,20 @@ theorem oct_not_associative :
   decide
 
 
+
 /-- The octonion norm is multiplicative (8-square identity from first principles) -/
 theorem oct_norm_multiplicative (a b : Oct) :
     (Oct.mul a b).normSq = a.normSq * b.normSq := by
   simp only [Oct.mul, Oct.normSq]; ring
 
 
+
 /-- Unit basis octonions have norm 1 -/
 theorem oct_e1_norm : Oct.e1.normSq = 1 := by simp [Oct.normSq, Oct.e1]
 
+
 theorem oct_e2_norm : Oct.e2.normSq = 1 := by simp [Oct.normSq, Oct.e2]
+
 
 
 /-- The identity octonion is a left identity -/
@@ -90,13 +111,16 @@ theorem oct_one_mul (a : Oct) : Oct.mul Oct.one a = a := by
   ext <;> simp [Oct.mul, Oct.one]
 
 
+
 /-- The identity octonion is a right identity -/
 theorem oct_mul_one (a : Oct) : Oct.mul a Oct.one = a := by
   ext <;> simp [Oct.mul, Oct.one]
 
 
+
 /-- e₁² = -1 (like imaginary unit) -/
 theorem oct_e1_sq : Oct.mul Oct.e1 Oct.e1 = ⟨-1, 0, 0, 0, 0, 0, 0, 0⟩ := by decide
+
 
 
 /-- Octonion conjugate -/
@@ -104,10 +128,12 @@ def Oct.conj (o : Oct) : Oct :=
   ⟨o.c0, -o.c1, -o.c2, -o.c3, -o.c4, -o.c5, -o.c6, -o.c7⟩
 
 
+
 /-- Product with conjugate gives the norm (real part) -/
 theorem oct_mul_conj_real_part (a : Oct) :
     (Oct.mul a (Oct.conj a)).c0 = a.normSq := by
   simp [Oct.mul, Oct.conj, Oct.normSq]; ring
+
 
 
 /-- The imaginary parts of a*conj(a) are zero -/
@@ -123,8 +149,10 @@ theorem oct_mul_conj_imag_zero (a : Oct) :
   exact ⟨by ring, by ring, by ring, by ring, by ring, by ring, by ring⟩
 
 
+
 /-- A gate is a function Oct → Oct given by left-multiplication -/
 def octGate (g : Oct) (x : Oct) : Oct := Oct.mul g x
+
 
 
 /-- Composing two oct-gates is NOT the same as the gate of the product
@@ -137,20 +165,24 @@ theorem oct_gates_not_composable :
   exact Ne.symm oct_not_associative
 
 
+
 /-- For the quaternionic subalgebra {1, e₁, e₂, e₃}, gate composition DOES work. -/
 theorem quat_subalgebra_associative :
     Oct.mul (Oct.mul Oct.e1 Oct.e2) Oct.e3 = Oct.mul Oct.e1 (Oct.mul Oct.e2 Oct.e3) := by
   decide
 
 
+
 /-- The Minkowski form in (2+1)D: Q(t,x,y) = t² - x² - y² -/
 def minkForm (t x y : ℤ) : ℤ := t^2 - x^2 - y^2
+
 
 
 /-- The Minkowski form for a null photon is zero -/
 theorem null_mink_form (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     minkForm c a b = 0 := by
   simp [minkForm]; linarith
+
 
 
 /-- Two null vectors sum to a null vector iff Minkowski-orthogonal -/
@@ -161,9 +193,11 @@ theorem null_sum_null_orthogonal (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ)
   constructor <;> intro h <;> nlinarith
 
 
+
 /-- Reflection (a,b,c) → (b,a,c) preserves the Pythagorean property -/
 theorem leg_swap_preserves (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     b^2 + a^2 = c^2 := by linarith
+
 
 
 /-- Negation preserves the Pythagorean property -/
@@ -171,10 +205,12 @@ theorem neg_leg_preserves (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     (-a)^2 + b^2 = c^2 := by nlinarith
 
 
+
 /-- Sign changes on both legs preserve the Pythagorean property -/
 theorem sign_change_preserves (a b c : ℤ) (h : a^2 + b^2 = c^2)
     (s₁ s₂ : ℤ) (hs₁ : s₁^2 = 1) (hs₂ : s₂^2 = 1) :
     (s₁ * a)^2 + (s₂ * b)^2 = c^2 := by nlinarith
+
 
 
 /-- The Hurwitz dimensions are exactly 2^k for k = 0, 1, 2, 3 -/
@@ -188,17 +224,21 @@ theorem hurwitz_are_powers_of_two :
   · exact ⟨3, by omega, by norm_num⟩
 
 
+
 /-- Product of Hurwitz dimensions: 1 · 2 · 4 · 8 = 64 = 2⁶ -/
 theorem hurwitz_product : (1 : ℕ) * 2 * 4 * 8 = 2^6 := by norm_num
+
 
 
 /-- Sum of squares of Hurwitz dimensions: 1² + 2² + 4² + 8² = 85 -/
 theorem hurwitz_sum_sq : (1 : ℕ)^2 + 2^2 + 4^2 + 8^2 = 85 := by norm_num
 
 
+
 /-- Each Hurwitz dimension divides the next -/
 theorem hurwitz_divisibility : (1 : ℕ) ∣ 2 ∧ (2 : ℕ) ∣ 4 ∧ (4 : ℕ) ∣ 8 :=
   ⟨⟨2, rfl⟩, ⟨2, rfl⟩, ⟨2, rfl⟩⟩
+
 
 
 /-- Chirality of a photon: sign of the "angular momentum" ab -/
@@ -208,11 +248,13 @@ def photonChirality (a b : ℤ) : ℤ :=
   else 0
 
 
+
 /-- Chirality is in {-1, 0, 1} -/
 theorem chirality_values (a b : ℤ) :
     photonChirality a b ∈ ({-1, 0, 1} : Set ℤ) := by
   simp only [photonChirality, Set.mem_insert_iff, Set.mem_singleton_iff]
   split_ifs <;> omega
+
 
 
 /-- Chirality flips under conjugation (b → -b) -/
@@ -222,23 +264,30 @@ theorem chirality_conjugate (a b : ℤ) (hab : a * b ≠ 0) :
   split_ifs with h1 h2 h3 h4 <;> nlinarith
 
 
+
 /-- The (3,4,5) triple is primitive -/
 theorem triple_345_primitive : Int.gcd 3 4 = 1 := by native_decide
+
 
 
 /-- The (6,8,10) triple is NOT primitive -/
 theorem triple_6810_not_primitive : Int.gcd 6 8 ≠ 1 := by native_decide
 
 
+
 theorem fano_e1e2 : Oct.mul Oct.e1 Oct.e2 = Oct.e3 := by decide
 
+
 theorem fano_e2e4 : Oct.mul Oct.e2 Oct.e4 = Oct.e6 := by decide
+
 
 theorem fano_e1e4 : Oct.mul Oct.e1 Oct.e4 = Oct.e5 := by decide
 
 
+
 /-- e₄·e₁ = -e₅ (non-commutativity!) -/
 theorem fano_e4e1 : Oct.mul Oct.e4 Oct.e1 = ⟨0, 0, 0, 0, 0, -1, 0, 0⟩ := by decide
+
 
 
 /-- All basis octonions square to -1 -/
@@ -252,11 +301,13 @@ theorem oct_all_sq_minus_one :
     Oct.mul Oct.e7 Oct.e7 = ⟨-1,0,0,0,0,0,0,0⟩ := by decide
 
 
+
 /-- The left Moufang identity verified on specific elements:
 e₁(e₂(e₁·e₃)) = (e₁(e₂·e₁))e₃ -/
 theorem moufang_identity_example :
     Oct.mul Oct.e1 (Oct.mul Oct.e2 (Oct.mul Oct.e1 Oct.e3)) =
     Oct.mul (Oct.mul Oct.e1 (Oct.mul Oct.e2 Oct.e1)) Oct.e3 := by decide
+
 
 
 /-- The associator of three octonions -/
@@ -271,14 +322,17 @@ def Oct.associator (x y z : Oct) : Oct :=
    (Oct.mul (Oct.mul x y) z).c7 - (Oct.mul x (Oct.mul y z)).c7⟩
 
 
+
 /-- The associator is zero for quaternionic elements -/
 theorem associator_zero_quat :
     Oct.associator Oct.e1 Oct.e2 Oct.e3 = ⟨0, 0, 0, 0, 0, 0, 0, 0⟩ := by decide
 
 
+
 /-- The associator is nonzero for octonionic elements involving e₄ -/
 theorem associator_nonzero_oct :
     Oct.associator Oct.e1 Oct.e2 Oct.e4 ≠ ⟨0, 0, 0, 0, 0, 0, 0, 0⟩ := by decide
+
 
 
 /-- The associator is alternating: [x,y,z] = -[y,x,z] on basis elements -/
@@ -292,4 +346,5 @@ theorem associator_alternating_12 :
      -(Oct.associator Oct.e2 Oct.e1 Oct.e4).c5,
      -(Oct.associator Oct.e2 Oct.e1 Oct.e4).c6,
      -(Oct.associator Oct.e2 Oct.e1 Oct.e4).c7⟩ := by decide
+
 

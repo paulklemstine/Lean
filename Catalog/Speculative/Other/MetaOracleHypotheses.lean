@@ -16,19 +16,27 @@ noncomputable def goldbachRepCount (n : ℕ) : ℕ :=
     p.Prime ∧ (n - p).Prime ∧ p ≤ n - p ∧ p ≤ n)).card
 
 
+
 /-- Distance from a real number to the nearest integer. -/
 noncomputable def fracDist (x : ℝ) : ℝ :=
   min (Int.fract x) (1 - Int.fract x)
+
 
 
 /-- The Lonely Runner bound: for n runners, each achieves distance ≥ 1/(n+1). -/
 noncomputable def lonelyRunnerBound (n : ℕ) : ℝ := 1 / (n + 1 : ℝ)
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.MetaOracleHypotheses
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 17] -/
 theorem lonely_runner_two : ∃ t : ℝ, fracDist t ≥ 1/3 ∧ fracDist (2 * t) ≥ 1/3 := by
   -- Consider $t = 1/3$.
   use 1 / 3;
   unfold fracDist; norm_num;
+
 
 
 /-- For n = 3: 4/3 = 1/1 + 1/4 + 1/12. -/
@@ -37,10 +45,12 @@ theorem erdos_straus_three : isErdosStrausDecomp 3 1 4 12 := by
   norm_num
 
 
+
 /-- For n = 5: 4/5 = 1/2 + 1/4 + 1/20 -/
 theorem erdos_straus_five : isErdosStrausDecomp 5 2 4 20 := by
   unfold isErdosStrausDecomp
   norm_num
+
 
 
 /-- For n = 7: 4/7 = 1/2 + 1/15 + 1/210... let's just check a few. -/
@@ -49,10 +59,12 @@ theorem erdos_straus_seven : isErdosStrausDecomp 7 2 28 28 := by
   norm_num
 
 
+
 theorem erdos_straus_even (k : ℕ) (hk : 0 < k) :
     isErdosStrausDecomp (2 * k) k (2 * k) (2 * k) := by
       constructor <;> try linarith;
       exact ⟨ by positivity, by positivity, by linarith, by linarith, by push_cast; ring ⟩
+
 
 
 /-- π(n) ≤ n + 1 for all n. -/
@@ -63,14 +75,17 @@ theorem primeCount_le (n : ℕ) : primeCount n ≤ n + 1 := by
     _ = n + 1 := Finset.card_range (n + 1)
 
 
+
 /-- There are no primes ≤ 1. -/
 theorem primeCount_one : primeCount 1 = 0 := by
   unfold primeCount
   native_decide
 
 
+
 theorem primeCount_two : primeCount 2 = 1 := by
   decide +revert
+
 
 
 /-- **Hypothesis 1 (Constellation Rigidity):**
@@ -85,6 +100,7 @@ def constellationRigidity : Prop :=
   let G := (goldbachRepCount n : ℝ)
   let ρ := (primeCount n : ℝ) / n
   |G - α * n * ρ^2| < ε * n * ρ^2
+
 
 
 theorem irrational_orbit_dense (α : ℝ) (hα : Irrational α) (x : ℝ) (ε : ℝ) (hε : ε > 0) :
@@ -152,6 +168,7 @@ theorem irrational_orbit_dense (α : ℝ) (hα : Irrational α) (x : ℝ) (ε : 
       exact h_dense ε hε
 
 
+
 theorem erdos_straus_div4 (k : ℕ) (hk : 0 < k) :
     ∃ x y z : ℕ, isErdosStrausDecomp (4 * k) x y z := by
       use 2 * k, 4 * k, 4 * k;
@@ -160,10 +177,12 @@ theorem erdos_straus_div4 (k : ℕ) (hk : 0 < k) :
       exact ⟨ hk, by linarith, by ring ⟩
 
 
+
 theorem erdos_straus_div3 (k : ℕ) (hk : 0 < k) :
     ∃ x y z : ℕ, isErdosStrausDecomp (3 * k) x y z := by
       use k, 4 * k, 12 * k;
       exact ⟨ hk, by positivity, by positivity, by linarith, by linarith, by push_cast; ring ⟩
+
 
 
 /-- fracDist is nonneg -/
@@ -172,7 +191,9 @@ theorem fracDist_nonneg (x : ℝ) : 0 ≤ fracDist x := by
   exact le_min (Int.fract_nonneg x) (sub_nonneg.mpr (le_of_lt (Int.fract_lt_one x)))
 
 
+
 theorem fracDist_le_half (x : ℝ) : fracDist x ≤ 1 / 2 := by
   exact min_le_iff.mpr ( by cases le_or_gt ( Int.fract x ) ( 1 / 2 ) <;> [ left; right ] <;> linarith [ Int.fract_nonneg x, Int.fract_lt_one x ] )
+
 
 end

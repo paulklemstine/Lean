@@ -7,10 +7,15 @@ Declarations: 7
 
 import Mathlib
 
+/-- [Section: # CatalogBuild.Algebra.Analysis
+Auto-generated from theorem catalog database.
+Domain: Algebra
+Declarations: 7] -/
 theorem convergent_is_cauchy {X : Type*} [MetricSpace X] {f : ℕ → X}
     (hf : ∃ x, Filter.Tendsto f Filter.atTop (nhds x)) :
     CauchySeq f := by
       exact Filter.Tendsto.cauchySeq hf.choose_spec
+
 
 
 theorem contraction_has_fixed_point {X : Type*} [MetricSpace X] [CompleteSpace X]
@@ -29,12 +34,14 @@ theorem contraction_has_fixed_point {X : Type*} [MetricSpace X] [CompleteSpace X
       use x₀, tendsto_nhds_unique ( by erw [ ← Filter.tendsto_add_atTop_iff_nat 1 ] ; simpa only [ Function.iterate_succ_apply' ] using Filter.Tendsto.comp ( show Filter.Tendsto f _ _ from Metric.tendsto_nhds_nhds.2 fun ε εpos => ⟨ ε, εpos, by intros y hy; exact lt_of_le_of_lt ( hf _ _ ) <| by nlinarith ⟩ ) hx₀ ) hx₀;
 
 
+
 theorem mean_value_theorem (f f' : ℝ → ℝ) {a b : ℝ} (hab : a < b)
     (hf : ContinuousOn f (Set.Icc a b))
     (hf' : ∀ x ∈ Set.Ioo a b, HasDerivAt f (f' x) x) :
     ∃ c ∈ Set.Ioo a b, f b - f a = f' c * (b - a) := by
       have := exists_deriv_eq_slope f hab;
       exact this hf ( fun x hx => ( hf' x hx |> HasDerivAt.differentiableAt |> DifferentiableAt.differentiableWithinAt ) ) |> fun ⟨ c, hc₁, hc₂ ⟩ => ⟨ c, hc₁, by rw [ ← div_eq_iff ( sub_ne_zero_of_ne hab.ne' ), ← hc₂, hf' c hc₁ |> HasDerivAt.deriv ] ⟩
+
 
 
 theorem ftc_eval {f : ℝ → ℝ} {a b : ℝ} (hab : a ≤ b)
@@ -46,9 +53,11 @@ theorem ftc_eval {f : ℝ → ℝ} {a b : ℝ} (hab : a ≤ b)
       · exact hf'.intervalIntegrable_of_Icc hab
 
 
+
 theorem exponential_decay_tendsto (C α : ℝ) (hα : 0 < α) :
     Filter.Tendsto (fun t => C * Real.exp (-α * t)) Filter.atTop (nhds 0) := by
       simpa using tendsto_const_nhds.mul ( Real.tendsto_exp_atBot.comp <| Filter.tendsto_neg_atTop_atBot.comp <| Filter.tendsto_id.const_mul_atTop hα )
+
 
 
 theorem geometric_series_sum (r : ℝ) (hr : |r| < 1) :
@@ -56,6 +65,8 @@ theorem geometric_series_sum (r : ℝ) (hr : |r| < 1) :
       exact hasSum_geometric_of_abs_lt_one hr
 
 
+
 theorem cauchy_schwarz_finset {n : ℕ} (a b : Fin n → ℝ) :
     (∑ i, a i * b i) ^ 2 ≤ (∑ i, a i ^ 2) * (∑ i, b i ^ 2) := by
       exact?
+

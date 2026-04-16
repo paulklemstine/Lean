@@ -16,6 +16,7 @@ theorem oracle_divisor_count_multiplicative (m n : ℕ) (_hm : 0 < m) (_hn : 0 <
   Nat.Coprime.card_divisors_mul hcop
 
 
+
 /-- **Gauss's totient identity**: ∑_{d | n} φ(d) = n.
 Every oracle contributes: sums over divisors, divisibility structure,
 and the congruence-based definition of φ. -/
@@ -24,11 +25,13 @@ theorem oracle_totient_sum (n : ℕ) (_hn : 0 < n) :
   convert Nat.sum_totient n
 
 
+
 /-- **Euler's theorem**: a^φ(n) ≡ 1 (mod n) when gcd(a,n) = 1.
 This generalizes Fermat's little theorem from primes to all moduli. -/
 theorem oracle_euler_theorem (a n : ℕ) (_hn : 0 < n) (hcop : Nat.Coprime a n) :
     a ^ Nat.totient n ≡ 1 [MOD n] :=
   Nat.ModEq.pow_totient hcop
+
 
 
 /-- There are infinitely many primes congruent to 3 mod 4.
@@ -70,10 +73,12 @@ theorem oracle_primes_3_mod_4 : ∀ n : ℕ, ∃ p : ℕ, n < p ∧ Nat.Prime p 
   exact h_finite
 
 
+
 /-- **Möbius inversion setup**: The Möbius function μ satisfies
 ∑_{d | n} μ(d) = if n = 1 then 1 else 0.
 This is the heartbeat of arithmetic inversion. -/
 theorem oracle_mobius_sum (n : ℕ) (_hn : 0 < n) :
     ∑ d ∈ Nat.divisors n, ArithmeticFunction.moebius d = if n = 1 then 1 else 0 := by
   rw [← ArithmeticFunction.coe_mul_zeta_apply]; aesop
+
 

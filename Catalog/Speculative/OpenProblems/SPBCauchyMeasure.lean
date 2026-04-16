@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Speculative/OpenProblems
-Declarations: 4
+Declarations: 3
 -/
 
 import Mathlib
@@ -15,11 +15,6 @@ theorem cauchy_transform_identity (x a : ℝ) (h : 1 - x * a ≠ 0) :
   unfold spbC; field_simp; ring
 
 
-theorem cauchy_pullback (x a : ℝ) (h : 1 - x * a ≠ 0) :
-    (1 + a ^ 2) / ((1 + spbC x a ^ 2) * (1 - x * a) ^ 2) = 1 / (1 + x ^ 2) := by
-  field_simp;
-  grind +suggestions
-
 
 theorem arctan_spb_addition (x y : ℝ) (h : 0 < 1 - x * y) :
     arctan (spbC x y) = arctan x + arctan y := by
@@ -29,10 +24,12 @@ theorem arctan_spb_addition (x y : ℝ) (h : 0 < 1 - x * y) :
   linarith)
 
 
+
 /-- SPB scaling: spb(sx, sy) = s(x+y)/(1-s²xy). -/
 theorem spb_equal_scale (s x y : ℝ) :
     spbC (s * x) (s * y) = s * (x + y) / (1 - s ^ 2 * (x * y)) := by
   unfold spbC; congr 1 <;> ring
+
 
 
 end

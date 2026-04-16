@@ -9,10 +9,15 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # CatalogBuild.Computation.Oracles.OracleTopology
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 10] -/
 theorem oracle_orbit_stabilizes {X : Type*} (O : X → X) (hO : ∀ x, O (O x) = O x)
     (x : X) (n : ℕ) (hn : n ≥ 1) :
     O^[n] x = O x := by
       induction hn <;> simp +decide [ *, Function.iterate_succ_apply' ]
+
 
 
 theorem oracle_fixedPoints_closed {X : Type*} [TopologicalSpace X] [T2Space X]
@@ -21,9 +26,11 @@ theorem oracle_fixedPoints_closed {X : Type*} [TopologicalSpace X] [T2Space X]
       exact isClosed_eq hO continuous_id
 
 
+
 theorem retraction_identity_on_image {X : Type*} (O : X → X) (hO : ∀ x, O (O x) = O x)
     (y : X) (hy : y ∈ range O) : O y = y := by
       grind
+
 
 
 theorem image_idempotent_stable {X : Type*} (O : X → X) (hO : ∀ x, O (O x) = O x) :
@@ -31,9 +38,11 @@ theorem image_idempotent_stable {X : Type*} (O : X → X) (hO : ∀ x, O (O x) =
       aesop
 
 
+
 theorem idempotent_range_identity {X : Type*} (O : X → X) (hO : ∀ x, O (O x) = O x)
     (x : X) : O (O x) = O x := by
       exact hO x
+
 
 
 theorem oracle_sequence_eventually_const {X : Type*} (O : X → X) (hO : ∀ x, O (O x) = O x)
@@ -42,9 +51,11 @@ theorem oracle_sequence_eventually_const {X : Type*} (O : X → X) (hO : ∀ x, 
       grind
 
 
+
 theorem oracle_preimage_contains_fixedpoint {X : Type*} (O : X → X) (hO : ∀ x, O (O x) = O x)
     (y : X) (hy : O y = y) : y ∈ O ⁻¹' {y} := by
       aesop
+
 
 
 theorem oracle_fixedPoints_compact {X : Type*} [TopologicalSpace X] [T2Space X]
@@ -53,10 +64,12 @@ theorem oracle_fixedPoints_compact {X : Type*} [TopologicalSpace X] [T2Space X]
       convert isClosed_eq hO_cont continuous_id |> IsClosed.isCompact using 1
 
 
+
 theorem oracle_range_compact {X : Type*} [TopologicalSpace X] [CompactSpace X]
     (O : X → X) (hO : Continuous O) :
     IsCompact (range O) := by
       exact isCompact_range hO
+
 
 
 /-- An idempotent endomorphism squares to itself -/
@@ -65,6 +78,7 @@ theorem endo_idempotent_square {C : Type*} [Category C] (X : C)
     (e ≫ e) ≫ e = e ≫ e := by
       -- Since $e$ is idempotent, we have $e \circ e = e$. Therefore, $(e \circ e) \circ e = e \circ e = e$.
       simp [he]
+
 
 
 end

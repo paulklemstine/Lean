@@ -14,10 +14,12 @@ theorem group_reversal_identity {G : Type*} [Group G] (L : List G) :
   induction' L using List.reverseRecOn with G _ ih <;> simp +decide [*, mul_assoc]
 
 
+
 /-- The trace of the n×n identity matrix equals n. -/
 theorem trace_identity_eq (n : ℕ) :
     Matrix.trace (1 : Matrix (Fin n) (Fin n) ℝ) = (n : ℝ) := by
   simp +decide [Matrix.trace]
+
 
 
 /-- **The Drift-Free IMU Checksum Theorem.**
@@ -27,4 +29,5 @@ theorem imu_checksum {n : ℕ} (L : List (GL (Fin n) ℝ)) :
     Matrix.trace ((L.prod : GL (Fin n) ℝ) * (L.map (·⁻¹)).reverse.prod).1 = (n : ℝ) := by
   rw [group_reversal_identity]
   convert trace_identity_eq n
+
 

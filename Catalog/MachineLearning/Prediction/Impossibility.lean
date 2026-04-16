@@ -22,12 +22,14 @@ theorem no_free_lunch_finite
   rfl
 
 
+
 /-- The diagonal argument: no function can predict its own negation -/
 theorem cantor_diagonal_prediction {α : Type*}
     (f : α → (α → Bool)) :
     ∃ g : α → Bool, ∀ a, f a ≠ g := by
   use fun a => !f a a; intro a; simp [funext_iff];
   grobner
+
 
 
 /-- The uncertainty principle for prediction -/
@@ -38,16 +40,23 @@ theorem prediction_uncertainty_principle
   exact fun h => by nlinarith
 
 
+
+/-- [Section: # CatalogBuild.MachineLearning.Prediction.Impossibility
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/Prediction
+Declarations: 10] -/
 theorem goedel_prediction_diagonal
     (predict : ℕ → (ℕ → ℕ)) :
     ∃ f : ℕ → ℕ, ∀ n, f n ≠ predict n n := by
   exact ⟨ fun n => predict n n + 1, fun n => ne_of_gt ( Nat.lt_succ_self _ ) ⟩
 
 
+
 theorem prediction_liar_paradox
     (predictors : ℕ → (ℕ → Bool)) :
     ∃ f : ℕ → Bool, ∀ n, f n ≠ predictors n n := by
   exact ⟨ fun n => if predictors n n = Bool.true then Bool.false else Bool.true, fun n => by by_cases h : predictors n n = Bool.true <;> simp +decide [ h ] ⟩
+
 
 
 /-- If total information is fixed, reducing uncertainty in one variable
@@ -61,8 +70,10 @@ theorem prediction_conservation
   linarith
 
 
+
 /-- A social prediction function aggregates individual binary predictions -/
 def SocialPredictionFn (n : ℕ) := (Fin n → Bool) → Bool
+
 
 
 /-- Unanimity: if all predict true, aggregate is true (and vice versa) -/
@@ -70,9 +81,11 @@ def unanimous {n : ℕ} (f : SocialPredictionFn n) : Prop :=
   f (fun _ => true) = true ∧ f (fun _ => false) = false
 
 
+
 /-- Dictatorial: there exists an oracle whose prediction always wins -/
 def dictatorial {n : ℕ} (f : SocialPredictionFn n) : Prop :=
   ∃ d : Fin n, ∀ profile, f profile = profile d
+
 
 
 theorem two_oracle_mixed_implies_dictatorial
@@ -97,6 +110,7 @@ theorem two_oracle_mixed_implies_dictatorial
     · convert ‹ ( f fun i : Fin 2 => decide ( i = 0 ) ) = false › using 2 ; ext i ; fin_cases i <;> simp +decide [ * ];
     · convert ‹f ( fun i => !decide ( i = 0 ) ) = true› using 2 ; ext i ; fin_cases i <;> simp +decide [ * ];
     · convert hunan.2 using 2 ; ext i ; fin_cases i <;> aesop
+
 
 
 end

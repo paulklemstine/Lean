@@ -13,15 +13,18 @@ theorem bertrand_postulate (n : ℕ) (hn : 1 ≤ n) :
   Nat.bertrand n (by omega)
 
 
+
 /-- Infinitely many primes (Euclid's theorem). -/
 theorem infinitely_many_primes : ∀ N : ℕ, ∃ p, N ≤ p ∧ Nat.Prime p :=
   Nat.exists_infinite_primes
+
 
 
 /-- Primes are unbounded. -/
 theorem primes_unbounded (N : ℕ) : ∃ p, N < p ∧ Nat.Prime p := by
   obtain ⟨p, hp1, hp2⟩ := Nat.exists_infinite_primes (N + 1)
   exact ⟨p, by omega, hp2⟩
+
 
 
 /-- Prime gap: the gap after any prime p is at most p (from Bertrand). -/
@@ -32,11 +35,13 @@ theorem prime_gap_le (p : ℕ) (hp : Nat.Prime p) :
   · exact bertrand_postulate p (by omega)
 
 
+
 /-- Relative prime gap: the next prime after p is within distance p. -/
 theorem relative_prime_gap (p : ℕ) (hp : Nat.Prime p) :
     ∃ q, Nat.Prime q ∧ p < q ∧ q - p ≤ p := by
   obtain ⟨q, hq1, hq2, hq3⟩ := prime_gap_le p hp
   exact ⟨q, hq1, hq2, by omega⟩
+
 
 
 /-- Legendre's conjecture verified for all n from 1 to 50:
@@ -47,11 +52,13 @@ theorem legendre_verified_to_50 :
   native_decide
 
 
+
 /-- Legendre's conjecture verified for all n from 1 to 100. -/
 theorem legendre_verified_to_100 :
     ∀ n ∈ Finset.Icc 1 100,
       ∃ p ∈ Finset.Ioc (n ^ 2) ((n + 1) ^ 2), Nat.Prime p := by
   native_decide
+
 
 
 /-- Specific witnesses for Legendre's conjecture. -/
@@ -66,9 +73,11 @@ theorem legendre_witnesses :
   all_goals first | decide | omega
 
 
+
 /-- The prime counting function. -/
 def primeCountBP (x : ℕ) : ℕ :=
   ((Finset.range (x + 1)).filter Nat.Prime).card
+
 
 
 /-- π(2^k) ≥ k for k = 1..10 (consequence of iterated Bertrand). -/
@@ -87,6 +96,7 @@ theorem prime_count_pow2_ge_small :
   native_decide
 
 
+
 /-- The number of primes up to n for several key values. -/
 theorem prime_counting_values :
     primeCountBP 10 = 4 ∧
@@ -94,6 +104,7 @@ theorem prime_counting_values :
     primeCountBP 1000 = 168 := by
   unfold primeCountBP
   native_decide
+
 
 
 /-- π(n)/n approximation: the prime density decreases.
@@ -105,4 +116,5 @@ theorem prime_density_decreasing :
     primeCountBP 100 * 1000 > primeCountBP 1000 * 100 := by
   unfold primeCountBP
   native_decide
+
 

@@ -12,9 +12,11 @@ def berggren_B1_inv : Matrix (Fin 3) (Fin 3) ℤ :=
   !![1, 2, -2; -2, -1, 2; -2, -2, 3]
 
 
+
 /-- Berggren inverse matrix B₂⁻¹ -/
 def berggren_B2_inv : Matrix (Fin 3) (Fin 3) ℤ :=
   !![1, 2, -2; 2, 1, -2; -2, -2, 3]
+
 
 
 /-- Berggren inverse matrix B₃⁻¹ -/
@@ -22,9 +24,11 @@ def berggren_B3_inv : Matrix (Fin 3) (Fin 3) ℤ :=
   !![-1, -2, 2; 2, 1, -2; -2, -2, 3]
 
 
+
 /-- Price forward matrix P₁ = B₁ (same first generator) -/
 def price_P1 : Matrix (Fin 3) (Fin 3) ℤ :=
   !![1, -2, 2; 2, -1, 2; 2, -2, 3]
+
 
 
 /-- Price forward matrix P₂ = B₃ · B₂ (composition gives new generator) -/
@@ -32,9 +36,11 @@ def price_P2 : Matrix (Fin 3) (Fin 3) ℤ :=
   !![3, 2, -2; -2, 3, 2; -2, 2, 3]
 
 
+
 /-- Price forward matrix P₃ = B₂ · B₃ -/
 def price_P3 : Matrix (Fin 3) (Fin 3) ℤ :=
   !![-3, 2, 2; -2, -3, 2; 2, -2, 3]
+
 
 
 /-- Euclid parameter matrix E₁ -/
@@ -42,9 +48,11 @@ def euclid_E1 : Matrix (Fin 2) (Fin 2) ℤ :=
   !![2, -1; 1, 0]
 
 
+
 /-- Euclid parameter matrix E₂ -/
 def euclid_E2 : Matrix (Fin 2) (Fin 2) ℤ :=
   !![2, 1; 1, 0]
+
 
 
 /-- Euclid parameter matrix E₃ -/
@@ -52,10 +60,12 @@ def euclid_E3 : Matrix (Fin 2) (Fin 2) ℤ :=
   !![1, 2; 0, 1]
 
 
+
 /-- The root of all Pythagorean triple trees. -/
 def root_345 : PythTriple where
   a := 3; b := 4; c := 5
   pyth := by norm_num
+
 
 
 /-- **The Universal Parent Equation**: Given a PPT (a,b,c), find the unique
@@ -78,6 +88,7 @@ def universalParent (a b c : ℤ) : ℤ × ℤ × ℤ :=
     invB2 a b c
 
 
+
 /-- **Recursive parent function**: apply universalParent n times.
 f⁽⁰⁾(a,b,c) = (a,b,c)
 f⁽¹⁾(a,b,c) = parent(a,b,c)
@@ -93,6 +104,7 @@ def parentN : ℕ → ℤ × ℤ × ℤ → ℤ × ℤ × ℤ
     parentN n p
 
 
+
 /-- Alternative: collect the entire ancestry chain. -/
 def ancestryChain : ℤ × ℤ × ℤ → ℕ → List (ℤ × ℤ × ℤ)
   | _, 0 => []
@@ -103,6 +115,7 @@ def ancestryChain : ℤ × ℤ × ℤ → ℕ → List (ℤ × ℤ × ℤ)
       (a, b, c) :: ancestryChain p n
 
 
+
 /-- The depth to root: number of parent steps to reach (3,4,5). -/
 def depthToRoot : ℤ × ℤ × ℤ → ℕ → ℕ
   | _, 0 => 0
@@ -111,6 +124,7 @@ def depthToRoot : ℤ × ℤ × ℤ → ℕ → ℕ
     else 1 + depthToRoot (universalParent a b c) n
 
 end UniversalParent
+
 
 
 /-- **Theorem (Pythagorean Preservation)**: The universal parent of a Pythagorean
@@ -129,6 +143,7 @@ theorem universalParent_preserves_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
       simp only [invB2]; nlinarith
 
 
+
 /-- **Theorem (Hypotenuse Decrease)**: For any PPT with positive legs,
 the parent hypotenuse is strictly less than the child hypotenuse. -/
 theorem universalParent_hyp_decreases (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
@@ -140,6 +155,7 @@ theorem universalParent_hyp_decreases (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
   · split
     · simp only [invB3]; nlinarith [sq_nonneg (a + b - c)]
     · simp only [invB2]; nlinarith [sq_nonneg (a + b - c)]
+
 
 
 /-- **Theorem (Hypotenuse Positivity)**: The parent hypotenuse is positive. -/
@@ -154,6 +170,7 @@ theorem universalParent_hyp_pos (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 
     · simp only [invB2]; nlinarith [sq_nonneg (a - b), sq_nonneg (3*c - 2*(a+b))]
 
 
+
 /-- **Theorem (Lorentz Invariance)**: All three inverse branches preserve the
 Lorentz form a² + b² - c², making the parent equation a discrete Lorentz
 transformation. -/
@@ -162,14 +179,21 @@ theorem invB1_lorentz_invariant (a b c : ℤ) :
     a^2 + b^2 - c^2 := by ring
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.Core.UniversalParent
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Core
+Declarations: 44] -/
 theorem invB2_lorentz_invariant (a b c : ℤ) :
     (a + 2*b - 2*c)^2 + (2*a + b - 2*c)^2 - (-2*a - 2*b + 3*c)^2 =
     a^2 + b^2 - c^2 := by ring
 
 
+
 theorem invB3_lorentz_invariant (a b c : ℤ) :
     (-a - 2*b + 2*c)^2 + (2*a + b - 2*c)^2 - (-2*a - 2*b + 3*c)^2 =
     a^2 + b^2 - c^2 := by ring
+
 
 
 /-- **Theorem (Round Trip B₁)**: Forward ∘ Inverse = Identity. -/
@@ -181,6 +205,7 @@ theorem roundTrip_B1 (a b c : ℤ) :
   refine Prod.ext ?_ (Prod.ext ?_ ?_) <;> ring
 
 
+
 /-- **Theorem (Round Trip B₂)**: Forward ∘ Inverse = Identity. -/
 theorem roundTrip_B2 (a b c : ℤ) :
     let p := invB2 a b c
@@ -190,6 +215,7 @@ theorem roundTrip_B2 (a b c : ℤ) :
   refine Prod.ext ?_ (Prod.ext ?_ ?_) <;> ring
 
 
+
 /-- **Theorem (Round Trip B₃)**: Forward ∘ Inverse = Identity. -/
 theorem roundTrip_B3 (a b c : ℤ) :
     let p := invB3 a b c
@@ -197,6 +223,7 @@ theorem roundTrip_B3 (a b c : ℤ) :
     (a, b, c) := by
   simp only [invB3]
   refine Prod.ext ?_ (Prod.ext ?_ ?_) <;> ring
+
 
 
 /-- **Theorem (Universal Hypotenuse Formula)**: For ALL primitive Pythagorean
@@ -213,6 +240,7 @@ theorem universal_hypotenuse_formula (a b c : ℤ) :
     · simp [invB2]
 
 
+
 /-- **Theorem (Recursive Hypotenuse)**: The hypotenuse after n parent steps
 is determined by the chain of universal hypotenuse applications. -/
 theorem recursive_hyp_step (a b c : ℤ) (n : ℕ) :
@@ -220,9 +248,11 @@ theorem recursive_hyp_step (a b c : ℤ) (n : ℕ) :
   simp [parentN]
 
 
+
 /-- For any odd N, the trivial Pythagorean triple is (N, (N²-1)/2, (N²+1)/2). -/
 def trivialTriple (N : ℤ) : ℤ × ℤ × ℤ :=
   (N, (N^2 - 1) / 2, (N^2 + 1) / 2)
+
 
 
 /-- Extract a factor of N from the GCD with a leg of the current triple. -/
@@ -233,6 +263,7 @@ def tryFactor (N : ℕ) (a b : ℤ) : Option (ℕ × ℕ) :=
     let g' := Nat.gcd b.natAbs N
     if 1 < g' && g' < N then some (g', N / g')
     else none
+
 
 
 /-- **Factor by Parent Descent**: Ascend the Berggren tree from the trivial
@@ -255,6 +286,7 @@ where
           go N pa pb pc fuel
 
 
+
 /-- Collect ALL factors found during descent (not just the first). -/
 def allFactorsInDescent (N : ℕ) (maxSteps : ℕ) : List (ℕ × ℕ × ℤ × ℤ × ℤ) :=
   if N % 2 == 0 || N < 9 then []
@@ -274,11 +306,13 @@ where
         factors ++ go N pa pb pc fuel
 
 
+
 /-- **The Fermat Factorization at Each Step**: At each node (a,b,c),
 a = m²-n² = (m-n)(m+n) provides a difference-of-squares factorization.
 The GCD of a with N reveals shared factors. -/
 theorem fermat_at_each_step (m n : ℤ) :
     m ^ 2 - n ^ 2 = (m - n) * (m + n) := by ring
+
 
 
 def branchEncoding : ℤ × ℤ × ℤ → ℕ → List ℕ
@@ -298,9 +332,11 @@ def branchEncoding : ℤ × ℤ × ℤ → ℕ → List ℕ
 #eval branchEncoding (119, 120, 169) 20 -- branch path
 
 
+
 /-- The two candidate leg values (before sign correction). -/
 def candidateLegs (a b c : ℤ) : ℤ × ℤ :=
   (a + 2*b - 2*c, 2*a + b - 2*c)
+
 
 
 /-- **Key Identity**: The sum of candidate legs. -/
@@ -308,9 +344,11 @@ theorem candidate_legs_relation (a b c : ℤ) :
     (a + 2*b - 2*c) + (2*a + b - 2*c) = 3*a + 3*b - 4*c := by ring
 
 
+
 /-- The "third" candidate leg (from B₃⁻¹). -/
 theorem third_leg_relation (a b c : ℤ) :
     (-a - 2*b + 2*c) = -(a + 2*b - 2*c) := by ring
+
 
 
 /-- **Master Identity**: The three candidate first-components satisfy
@@ -319,11 +357,13 @@ theorem master_leg_identity (a b c : ℤ) :
     (-a - 2*b + 2*c) + (a + 2*b - 2*c) = 0 := by ring
 
 
+
 /-- **Theorem**: The parent hypotenuse in Euclid coordinates simplifies to
 c_parent = (m - 2n)² + n², i.e., it is always a sum of two squares. -/
 theorem parent_hyp_euclid_simplified (m n : ℤ) :
     -2 * (m ^ 2 - n ^ 2) - 2 * (2 * m * n) + 3 * (m ^ 2 + n ^ 2) =
     (m - 2 * n) ^ 2 + n ^ 2 := by ring
+
 
 
 /-- **Beautiful Identity**: The parent hypotenuse is itself a sum of two squares!
@@ -335,6 +375,7 @@ theorem parent_hyp_sum_of_squares (m n : ℤ) :
   ⟨m - 2*n, n, by simp [euclidToTriple]; ring⟩
 
 
+
 /-- **Theorem (Integral Chain)**: For any Pythagorean triple, the nth parent
 is also an integer triple (trivially true since all operations are ℤ → ℤ). -/
 theorem integral_chain (a b c : ℤ) (n : ℕ) :
@@ -342,10 +383,12 @@ theorem integral_chain (a b c : ℤ) (n : ℕ) :
   exact ⟨_, _, _, rfl⟩
 
 
+
 /-- **Descent Bound**: The hypotenuse decreases by at least
 2(a + b - c) at each step. -/
 theorem descent_decrease_bound (a b c : ℤ) :
     c - (-2*a - 2*b + 3*c) = 2*(a + b) - 2*c := by ring
+
 
 
 /-- **Triangle Inequality for PPTs**: For a Pythagorean triple with
@@ -356,6 +399,7 @@ theorem ppt_triangle_ineq (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
   nlinarith [sq_nonneg (a + b - c)]
 
 
+
 /-- **Corollary**: Each step reduces hypotenuse by at least 2. -/
 theorem descent_at_least_2 (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
     (h : a ^ 2 + b ^ 2 = c ^ 2) :
@@ -364,9 +408,11 @@ theorem descent_at_least_2 (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
   linarith
 
 
+
 /-- The odd leg always factors as a difference of squares. -/
 theorem odd_leg_factors (m n : ℤ) :
     m ^ 2 - n ^ 2 = (m - n) * (m + n) := by ring
+
 
 
 /-- If N divides the odd leg at some descent level, then gcd(N, m±n)
@@ -376,10 +422,12 @@ theorem gcd_factor_principle (N a : ℤ) :
   exact_mod_cast Int.gcd_dvd_right a N
 
 
+
 theorem ppt_parity_sum (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     (ha_odd : a % 2 = 1) (hb_even : b % 2 = 0) :
     (a + b + c) % 2 = 0 := by
   -- a odd, b even ⇒ a² odd, b² even ⇒ c² = a²+b² odd ⇒ c odd
   -- a+b+c = odd+even+odd = even
   replace h := congr_arg ( · % 4 ) h ; rcases Int.even_or_odd' a with ⟨ k, rfl | rfl ⟩ <;> rcases Int.even_or_odd' b with ⟨ l, rfl | rfl ⟩ <;> rcases Int.even_or_odd' c with ⟨ m, rfl | rfl ⟩ <;> ring_nf at * <;> norm_num at *;
+
 

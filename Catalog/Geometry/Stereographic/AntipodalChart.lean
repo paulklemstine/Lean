@@ -22,11 +22,13 @@ def inverseStereoNullAntipodal (w₁ w₂ ω : ℝ) : Fin 4 → ℝ := fun i =>
   | 3 => ω * (w₁ ^ 2 + w₂ ^ 2 - 1)
 
 
+
 /-- The antipodal chart also produces null vectors.
 The identity: (1+|w|²)² - (2w₁)² - (2w₂)² - (|w|²-1)² = 0. -/
 theorem inverseStereoNullAntipodal_is_null (w₁ w₂ ω : ℝ) :
     IsNull (inverseStereoNullAntipodal w₁ w₂ ω) := by
   unfold IsNull minkowskiInner inverseStereoNullAntipodal; ring
+
 
 
 /-- With positive energy, the antipodal chart is future-directed. -/
@@ -35,11 +37,13 @@ theorem inverseStereoNullAntipodal_future (w₁ w₂ ω : ℝ) (hω : ω > 0) :
   exact mul_pos hω (by positivity)
 
 
+
 /-- The antipodal chart lands in the future null cone. -/
 theorem inverseStereoNullAntipodal_in_future_cone (w₁ w₂ ω : ℝ) (hω : ω > 0) :
     inverseStereoNullAntipodal w₁ w₂ ω ∈ FutureNullCone :=
   ⟨inverseStereoNullAntipodal_is_null w₁ w₂ ω,
    inverseStereoNullAntipodal_future w₁ w₂ ω hω⟩
+
 
 
 /-- For a future null vector with k⁰ - k³ > 0, the antipodal reconstruction works. -/
@@ -59,6 +63,7 @@ lemma inverseStereoNullAntipodal_surj (k : Fin 4 → ℝ)
   · rw [div_eq_iff] <;> nlinarith! [null_condition_rearranged k hnull]
 
 
+
 /-- For any future null vector, either k⁰ + k³ > 0 or k⁰ - k³ > 0 (or both).
 This follows because k⁰ > 0 implies both cannot be ≤ 0 simultaneously. -/
 lemma future_null_chart_dichotomy (k : Fin 4 → ℝ) (hk : k ∈ FutureNullCone) :
@@ -67,12 +72,18 @@ lemma future_null_chart_dichotomy (k : Fin 4 → ℝ) (hk : k ∈ FutureNullCone
   contrapose! h_pos; linarith
 
 
+
+/-- [Section: # CatalogBuild.Geometry.Stereographic.AntipodalChart
+Auto-generated from theorem catalog database.
+Domain: Geometry/Stereographic
+Declarations: 9] -/
 theorem full_surjectivity (k : Fin 4 → ℝ) (hk : k ∈ FutureNullCone) :
     (∃ u v ω : ℝ, ω > 0 ∧ inverseStereoNull u v ω = k) ∨
     (∃ w₁ w₂ ω : ℝ, ω > 0 ∧ inverseStereoNullAntipodal w₁ w₂ ω = k) := by
   cases' future_null_chart_dichotomy k hk with h h;
   · exact Or.inl <| Exists.intro _ <| Exists.intro _ <| Exists.intro _ <| ⟨ by linarith, inverseStereoNull_surj_standard k hk.1 hk.2 h |>.2 ⟩;
   · exact Or.inr <| by rcases inverseStereoNullAntipodal_surj k hk.1 ( by simpa using hk.2 ) h with ⟨ h₁, h₂ ⟩ ; exact ⟨ _, _, _, h₁, h₂ ⟩ ;
+
 
 
 theorem chart_transition_coords (u v ω : ℝ) (hω : ω > 0)
@@ -93,6 +104,7 @@ theorem chart_transition_coords (u v ω : ℝ) (hω : ω > 0)
     ring
 
 
+
 /-- **The Complete Photon Universe Encoding Theorem**: Combining full surjectivity
 with unbounded information capacity. Every future-directed null vector (without
 exception) is parameterized by an inverse stereographic chart, and the information
@@ -103,6 +115,7 @@ theorem photon_universe_encoding_complete :
       (∃ u v ω : ℝ, ω > 0 ∧ inverseStereoNull u v ω = k) ∨
       (∃ w₁ w₂ ω : ℝ, ω > 0 ∧ inverseStereoNullAntipodal w₁ w₂ ω = k)) :=
   ⟨photonInfoCapacity_unbounded, full_surjectivity⟩
+
 
 
 end

@@ -9,14 +9,20 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # CatalogBuild.Tropical.Core.TropicalAgentDelta
+Auto-generated from theorem catalog database.
+Domain: Tropical/Core
+Declarations: 12] -/
 theorem tropZeta_nonpos (s : ℝ) (hs : 0 < s) (n : ℕ) (hn : 1 ≤ n) :
     -s * Real.log n ≤ 0 := by
   nlinarith [Real.log_nonneg (by exact_mod_cast hn : (1 : ℝ) ≤ n)]
 
 
+
 theorem dirichlet_term_exp (s : ℝ) (n : ℕ) (hn : 0 < n) :
     exp (-s * Real.log n) = (n : ℝ) ^ (-s) := by
       rw [ Real.rpow_def_of_pos ( by positivity ), mul_comm ]
+
 
 
 theorem lax_oleinik_monotone {n : ℕ} (S₀ T₀ : Fin (n+1) → ℝ)
@@ -30,20 +36,25 @@ theorem lax_oleinik_monotone {n : ℕ} (S₀ T₀ : Fin (n+1) → ℝ)
       exact ⟨ b, fun i => by linarith [ h i, hb i ] ⟩
 
 
+
 theorem tropical_gauge_abelian (A dl : ℝ) : A + dl = dl + A := add_comm A dl
+
 
 
 theorem tropical_yang_mills_linear (dA A : ℝ) :
     dA + max A A = dA + A := by rw [max_self]
 
 
+
 def IsLogConcave (a : ℕ → ℝ) (n : ℕ) : Prop :=
   ∀ k, 1 ≤ k → k + 1 ≤ n → a k ^ 2 ≥ a (k - 1) * a (k + 1)
+
 
 
 theorem const_log_concave (c : ℝ) (n : ℕ) :
     IsLogConcave (fun _ => c) n := by
   intro k _ _; nlinarith [sq_nonneg c]
+
 
 
 theorem geometric_log_concave (r : ℝ) (n : ℕ) :
@@ -54,7 +65,9 @@ theorem geometric_log_concave (r : ℝ) (n : ℕ) :
   linarith [this]
 
 
+
 noncomputable def fisherBernoulli (p : ℝ) : ℝ := 1 / (p * (1 - p))
+
 
 
 theorem fisher_bernoulli_pos (p : ℝ) (hp : 0 < p) (hp1 : p < 1) :
@@ -64,8 +77,10 @@ theorem fisher_bernoulli_pos (p : ℝ) (hp : 0 < p) (hp1 : p < 1) :
   exact mul_pos hp (by linarith)
 
 
+
 theorem l_inf_triangle (x y z : ℝ) : abs (x - z) ≤ abs (x - y) + abs (y - z) := by
   exact abs_sub_le x y z
+
 
 
 theorem factorial_superpolynomial (d : ℕ) :
@@ -94,6 +109,7 @@ theorem factorial_superpolynomial (d : ℕ) :
       by_cases h6 : n ≥ 6;
       · exact lt_of_le_of_lt ( pow_le_pow_right₀ ( by linarith ) ( Nat.le_div_iff_mul_le zero_lt_two |>.2 <| by linarith [ Nat.le_max_right 2 ( 2 * ( d + 1 ) ) ] ) ) ( h_factorial_gt_pow h6 );
       · rcases d with ( _ | _ | d ) <;> rcases n with ( _ | _ | _ | _ | _ | _ | n ) <;> simp_all +arith +decide [ Nat.factorial_succ ] ;
+
 
 
 end

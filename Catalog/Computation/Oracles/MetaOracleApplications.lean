@@ -15,10 +15,12 @@ theorem oracle_count_fin2 :
   decide
 
 
+
 /-- On Fin 1, there is exactly 1 oracle (the identity). -/
 theorem oracle_count_fin1 :
     (Finset.univ.filter (fun f : Fin 1 → Fin 1 => ∀ x, f (f x) = f x)).card = 1 := by
   decide
+
 
 
 /-- On Fin 3, there are exactly 10 idempotent functions. -/
@@ -27,10 +29,12 @@ theorem oracle_count_fin3 :
   native_decide
 
 
+
 /-- The identity has full image. -/
 theorem identity_image_full (n : ℕ) :
     (Finset.univ.image (id : Fin n → Fin n)).card = n := by
   simp [Finset.image_id, Finset.card_univ, Fintype.card_fin]
+
 
 
 /-- A constant function has image size 1 (when n > 0). -/
@@ -40,10 +44,12 @@ theorem constant_image_size {n : ℕ} (_hn : 0 < n) (c : Fin n) :
   rw [Finset.image_const Finset.univ_nonempty, Finset.card_singleton]
 
 
+
 /-- Iterating an oracle and then applying it again is redundant. -/
 theorem oracle_absorbs {X : Type*} (O : X → X) (hO : ∀ x, O (O x) = O x)
     (f : X → X) (x : X) :
     O (O (f x)) = O (f x) := hO _
+
 
 
 /-- Oracle iteration stabilizes: O^n = O for all n ≥ 1. -/
@@ -61,13 +67,16 @@ theorem oracle_iterate_const {X : Type*} (O : X → X) (hO : ∀ x, O (O x) = O 
       ext x; exact hO x
 
 
+
 /-- The zero oracle is idempotent. -/
 theorem zeroOracle_idem (n : ℕ) : ∀ x, zeroOracle n (zeroOracle n x) = zeroOracle n x :=
   fun _ => rfl
 
 
+
 /-- The squaring map on ZMod 2 is idempotent. -/
 theorem zmod2_square_idem : ∀ x : ZMod 2, x * x * (x * x) = x * x := by decide
+
 
 
 /-- An oracle on Fin n has image size at most n. -/
@@ -77,6 +86,7 @@ theorem oracle_image_bound {n : ℕ} (f : Fin n → Fin n) :
     _ = n := by simp [Fintype.card_fin]
 
 
+
 /-- For an idempotent f on Fin n, Fix(f) ⊆ Im(f). -/
 theorem oracle_fixed_subset_image {n : ℕ} (f : Fin n → Fin n) :
     ∀ y, f y = y → y ∈ Finset.univ.image f := by
@@ -84,11 +94,17 @@ theorem oracle_fixed_subset_image {n : ℕ} (f : Fin n → Fin n) :
   exact Finset.mem_image.mpr ⟨y, Finset.mem_univ y, hy⟩
 
 
+
 /-- The set of "interesting questions" — the non-fixed points. -/
 def interestingQueries {n : ℕ} (f : Fin n → Fin n) : Finset (Fin n) :=
   Finset.univ.filter (fun x => f x ≠ x)
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.MetaOracleApplications
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 14] -/
 theorem partition_queries {n : ℕ} (f : Fin n → Fin n) :
     (Finset.univ.filter (fun x => f x = x)).card +
     (interestingQueries f).card = n := by
@@ -98,12 +114,14 @@ theorem partition_queries {n : ℕ} (f : Fin n → Fin n) :
   aesop
 
 
+
 /-- For an oracle with k fixed points, there are n - k interesting questions. -/
 theorem interesting_count {n : ℕ} (f : Fin n → Fin n) :
     (interestingQueries f).card =
     n - (Finset.univ.filter (fun x => f x = x)).card := by
   have h := partition_queries f
   omega
+
 
 
 end

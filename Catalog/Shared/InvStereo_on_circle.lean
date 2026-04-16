@@ -1,7 +1,7 @@
 /-! # CatalogBuild.Shared.InvStereo_on_circle
 
 Auto-generated from theorem catalog database.
-Domain: Logic
+Domain: Shared
 Declarations: 3
 -/
 
@@ -17,14 +17,17 @@ theorem invStereo_on_circle (t : ℝ) :
   field_simp; ring
 
 
+
 /-- Inverse stereographic projection: ℝ → S¹ ⊂ ℝ².
 The encoding: a massive particle's state t maps to a photon state on S¹. -/
 def invStereo (t : ℝ) : ℝ × ℝ :=
   (2 * t / (1 + t ^ 2), (1 - t ^ 2) / (1 + t ^ 2))
 
 
+
 /-- The denominator 1 + t² is always positive. -/
 lemma invStereo_denom_pos (t : ℝ) : (0 : ℝ) < 1 + t ^ 2 := by positivity
+
 
 
 end

@@ -15,11 +15,13 @@ structure GWProcessor where
   relevance : LocalState → ℝ
 
 
+
 /-- A coalition of processors -/
 structure Coalition (n : ℕ) where
   processors : Fin n → GWProcessor
   members : Finset (Fin n)
   strength : ℝ
+
 
 
 /-- The global workspace: a broadcast channel -/
@@ -30,6 +32,7 @@ structure GlobalWorkspace (n : ℕ) where
   broadcast : Content → Fin n → GWProcessor → GWProcessor
 
 
+
 /-- The ignition event: when a coalition wins and broadcasts -/
 structure Ignition (n : ℕ) where
   workspace : GlobalWorkspace n
@@ -37,9 +40,15 @@ structure Ignition (n : ℕ) where
   global_access : ∀ i : Fin n, True
 
 
+
+/-- [Section: # CatalogBuild.MachineLearning.Consciousness.GlobalWorkspace
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/Consciousness
+Declarations: 7] -/
 theorem broadcasting_theorem {n : ℕ} (ign : Ignition n) (i : Fin n) :
     ign.global_access i = trivial := by
   rfl
+
 
 
 /-- The "spotlight of attention" selects content for the global workspace. -/
@@ -50,6 +59,8 @@ structure Spotlight where
   nonempty : ∃ c, inSpotlight c
 
 
+
 theorem spotlight_always_on (sp : Spotlight) : ∃ c, sp.inSpotlight c := by
   exact sp.nonempty
+
 

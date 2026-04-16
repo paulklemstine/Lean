@@ -1,7 +1,7 @@
 /-! # CatalogBuild.Shared.SpbA
 
 Auto-generated from theorem catalog database.
-Domain: EML
+Domain: Shared
 Declarations: 10
 -/
 
@@ -13,11 +13,18 @@ noncomputable section
 def spbA (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
 
 
+
+/-- [Section: # CatalogBuild.Shared.SpbA
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 10] -/
 theorem spbA_comm (x y : ℝ) : spbA x y = spbA y x := by
   simp [spbA, add_comm, mul_comm]
 
 
+
 theorem spbA_neg (x : ℝ) : spbA x (-x) = 0 := by simp [spbA]
+
 
 
 theorem spbA_hasDerivAt (x a : ℝ) (h : 1 - x * a ≠ 0) :
@@ -25,7 +32,9 @@ theorem spbA_hasDerivAt (x a : ℝ) (h : 1 - x * a ≠ 0) :
   convert HasDerivAt.div ( HasDerivAt.add ( hasDerivAt_id x ) ( hasDerivAt_const _ _ ) ) ( HasDerivAt.sub ( hasDerivAt_const _ _ ) ( HasDerivAt.mul ( hasDerivAt_id x ) ( hasDerivAt_const _ _ ) ) ) _ using 1 <;> norm_num [ h ] ; ring
 
 
+
 theorem spbA_zero (x : ℝ) : spbA x 0 = x := by simp [spbA]
+
 
 
 theorem spbA_compose (x a b : ℝ)
@@ -36,12 +45,14 @@ theorem spbA_compose (x a b : ℝ)
   grind
 
 
+
 /-- SPB derivative is always positive when denominator is nonzero. -/
 theorem spbA_deriv_pos (x a : ℝ) (h : 1 - x * a ≠ 0) :
     (1 + a ^ 2) / (1 - x * a) ^ 2 > 0 := by
   apply div_pos
   · linarith [sq_nonneg a]
   · positivity
+
 
 
 theorem spbA_rat (p q r s : ℤ) (hq : (q : ℝ) ≠ 0) (hs : (s : ℝ) ≠ 0)
@@ -51,9 +62,11 @@ theorem spbA_rat (p q r s : ℤ) (hq : (q : ℝ) ≠ 0) (hs : (s : ℝ) ≠ 0)
   grind
 
 
+
 theorem spbA_denom_pos (x y : ℝ) (hx : |x| < 1) (hy : |y| < 1) :
     1 - x * y > 0 := by
   nlinarith [ abs_lt.mp hx, abs_lt.mp hy ]
+
 
 
 theorem spbA_cancel (x y : ℝ) (h1 : 1 - x * y ≠ 0) (h2 : 1 - spbA x y * (-y) ≠ 0) :
@@ -63,6 +76,7 @@ theorem spbA_cancel (x y : ℝ) (h1 : 1 - x * y ≠ 0) (h2 : 1 - spbA x y * (-y)
   field_simp [h1, h2]
   ring;
   linarith [ inv_mul_cancel_left₀ ( by positivity : ( 1 + y ^ 2 ) ≠ 0 ) x ]
+
 
 
 end

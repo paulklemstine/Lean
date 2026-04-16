@@ -5,15 +5,16 @@ Domain: EML
 Declarations: 35
 -/
 
-import Mathlib
 import EML.Lean.FutureTheorems
 import EML.Lean.ShefferAlgebra
 import EML.Lean.SoftplusBasic
+import Mathlib
 
 noncomputable section
 
 /-- The hyperbolic SPB operator. -/
 def spbHA (x y : ℝ) : ℝ := (x + y) / (1 + x * y)
+
 
 
 /-- n-fold SPB iteration. -/
@@ -22,14 +23,22 @@ def spbPowA (x : ℝ) : ℕ → ℝ
   | n + 1 => spbA x (spbPowA x n)
 
 
+
+/-- [Section: # CatalogBuild.EML.AdvancedTheorems
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 35] -/
 theorem spbPowA_zero (x : ℝ) : spbPowA x 0 = 0 := rfl
+
 
 
 theorem spbPowA_one (x : ℝ) : spbPowA x 1 = x := by simp [spbPowA, spbA]
 
 
+
 theorem spbPowA_succ (x : ℝ) (n : ℕ) :
     spbPowA x (n + 1) = spbA x (spbPowA x n) := rfl
+
 
 
 /-- arctan is an SPB homomorphism: arctan(spb(x, y)) = arctan(x) + arctan(y)
@@ -40,9 +49,11 @@ theorem arctan_spbA (x y : ℝ) (hxy : x * y < 1) :
   exact (Real.arctan_add hxy).symm
 
 
+
 /-- The hyperbolic midpoint: spbHA(x, x) = 2x/(1+x²). -/
 theorem spbHA_self (x : ℝ) : spbHA x x = 2 * x / (1 + x * x) := by
   unfold spbHA; ring
+
 
 
 theorem weierstrass_cos (θ : ℝ) (h : cos (θ / 2) ≠ 0) :
@@ -52,6 +63,7 @@ theorem weierstrass_cos (θ : ℝ) (h : cos (θ / 2) ≠ 0) :
   rw [ Real.sin_sq, Real.cos_sq ] ; ring
 
 
+
 theorem weierstrass_sin (θ : ℝ) (h : cos (θ / 2) ≠ 0) :
     sin θ = 2 * tan (θ / 2) / (1 + tan (θ / 2) ^ 2) := by
   rw [ show θ = 2 * ( θ / 2 ) by ring, Real.sin_two_mul, Real.tan_eq_sin_div_cos ];
@@ -59,14 +71,17 @@ theorem weierstrass_sin (θ : ℝ) (h : cos (θ / 2) ≠ 0) :
   norm_num
 
 
+
 theorem spbHA_denom_pos (x y : ℝ) (hx : |x| < 1) (hy : |y| < 1) :
     1 + x * y > 0 := by
   nlinarith [ abs_lt.mp hx, abs_lt.mp hy ]
 
 
+
 /-- spbPowA(x, 2) = spbA(x, x). -/
 theorem spbPowA_two (x : ℝ) : spbPowA x 2 = spbA x x := by
   simp [spbPowA, spbA]
+
 
 
 theorem spbPowA_tan (θ : ℝ) (n : ℕ) (hcos : ∀ k : ℕ, k ≤ n → cos (k * θ) ≠ 0) :
@@ -82,6 +97,7 @@ theorem spbPowA_tan (θ : ℝ) (n : ℕ) (hcos : ∀ k : ℕ, k ≤ n → cos (k
   grind +splitIndPred
 
 
+
 theorem cauchy_spb_invariance (x a : ℝ) (h : 1 - x * a ≠ 0) :
     (1 + spbA x a ^ 2)⁻¹ * ((1 + a ^ 2) / (1 - x * a) ^ 2) =
     (1 + x ^ 2)⁻¹ := by
@@ -92,10 +108,12 @@ theorem cauchy_spb_invariance (x a : ℝ) (h : 1 - x * a ≠ 0) :
   ring
 
 
+
 /-- Iterated softplus: σⁿ(x) = σ(σ(...σ(x)...)) -/
 def softplus_iter : ℕ → ℝ → ℝ
   | 0 => id
   | n + 1 => softplus ∘ softplus_iter n
+
 
 
 /-- Iterated softplus is positive for n ≥ 1 -/
@@ -105,11 +123,13 @@ theorem softplus_iter_pos (n : ℕ) (x : ℝ) : softplus_iter (n + 1) x > 0 := b
   | succ n ih => exact softplus_pos (softplus_iter (n + 1) x)
 
 
+
 /-- Iterated softplus is strictly monotone -/
 theorem softplus_iter_strictMono (n : ℕ) : StrictMono (softplus_iter n) := by
   induction n with
   | zero => exact strictMono_id
   | succ n ih => exact softplus_strictMono.comp ih
+
 
 
 /-- Iterated softplus is in the Sheffer algebra -/
@@ -122,8 +142,10 @@ theorem softplus_iter_mem_sheffer (n : ℕ) : (softplus_iter n) ∈ ShefferAlgeb
     convert this using 1
 
 
+
 theorem logisticSigmoid_differentiable : Differentiable ℝ logisticSigmoid := by
   exact fun x => DifferentiableAt.div ( Real.differentiableAt_exp ) ( by norm_num ) ( by positivity )
+
 
 
 theorem sigmoid_deriv_eq (x : ℝ) :
@@ -133,10 +155,12 @@ theorem sigmoid_deriv_eq (x : ℝ) :
   norm_num [ Real.differentiableAt_exp, ne_of_gt ( add_pos zero_lt_one ( Real.exp_pos x ) ) ] ; ring
 
 
+
 theorem softplus_subadditive_nonneg (x y : ℝ) (_hx : x ≥ 0) (_hy : y ≥ 0) :
     softplus (x + y) ≤ softplus x + softplus y := by
   unfold softplus;
   rw [ ← Real.log_mul ( by positivity ) ( by positivity ) ] ; exact Real.log_le_log ( by positivity ) ( by rw [ Real.exp_add ] ; nlinarith [ Real.exp_pos x, Real.exp_pos y ] ) ;
+
 
 
 theorem softplus_jensen (x y : ℝ) :
@@ -148,6 +172,7 @@ theorem softplus_jensen (x y : ℝ) :
   convert @this ( 1 / 2 ) ( 1 / 2 ) ( by norm_num ) ( by norm_num ) ( by norm_num ) using 1 <;> norm_num <;> ring
 
 
+
 theorem softplus_upper_bound (x : ℝ) : softplus x ≤ max x 0 + Real.log 2 := by
   by_cases hx : x ≥ 0;
   · unfold softplus;
@@ -155,6 +180,7 @@ theorem softplus_upper_bound (x : ℝ) : softplus x ≤ max x 0 + Real.log 2 := 
     rw [ Real.exp_add, Real.exp_log ] <;> linarith [ Real.add_one_le_exp x ];
   · simp_all +decide [ softplus ];
     exact le_add_of_nonneg_of_le ( by positivity ) ( Real.log_le_log ( by positivity ) ( by linarith [ Real.exp_le_one_iff.mpr hx.le ] ) )
+
 
 
 theorem softplus_lower_bound_nonneg (x : ℝ) (hx : x ≥ 0) :
@@ -166,15 +192,18 @@ theorem softplus_lower_bound_nonneg (x : ℝ) (hx : x ≥ 0) :
   rw [ Real.log_mul ( by positivity ) ( by positivity ), Real.log_exp ] at h_log_ineq ; linarith [ Real.log_nonneg one_le_two ]
 
 
+
 /-- Double application: σ(σ(x)) > σ(x) (softplus maps to higher values) -/
 theorem softplus_softplus_gt (x : ℝ) : softplus (softplus x) > softplus x :=
   softplus_gt_id (softplus x)
+
 
 
 /-- exp(σ(σ(x))) = 1 + (1 + eˣ) = 2 + eˣ -/
 theorem softplus_double_exp (x : ℝ) :
     exp (softplus (softplus x)) = 1 + (1 + exp x) := by
   rw [softplus_exp_identity, softplus_exp_identity]
+
 
 
 theorem sheffer_expr_lipschitz (e : ShefferExpr) :
@@ -196,6 +225,7 @@ theorem sheffer_expr_lipschitz (e : ShefferExpr) :
     obtain ⟨ C₁, hC₁, hC₁' ⟩ := ih₁; obtain ⟨ C₂, hC₂, hC₂' ⟩ := ih₂; use C₁ * C₂; exact ⟨ mul_nonneg hC₁ hC₂, fun x y => by simpa only [ mul_assoc ] using le_trans ( hC₁' _ _ ) ( mul_le_mul_of_nonneg_left ( hC₂' _ _ ) hC₁ ) ⟩ ;
 
 
+
 theorem exp_not_mem_sheffer : (fun x : ℝ => Real.exp x) ∉ ShefferAlgebra := by
   rintro ⟨ e, he ⟩;
   have h_exp_lip : ∃ C : ℝ, C ≥ 0 ∧ ∀ x y : ℝ, |Real.exp x - Real.exp y| ≤ C * |x - y| := by
@@ -213,6 +243,7 @@ theorem exp_not_mem_sheffer : (fun x : ℝ => Real.exp x) ∉ ShefferAlgebra := 
   rw [ lt_div_iff₀ ] at hx <;> have := hC x 0 <;> norm_num at * <;> cases abs_cases ( Real.exp x - 1 ) <;> cases abs_cases x <;> nlinarith
 
 
+
 /-- The affine function x ↦ ax + b is in the Sheffer algebra -/
 theorem affine_mem_sheffer (a b : ℝ) : (fun x : ℝ => a * x + b) ∈ ShefferAlgebra := by
   have hid := id_mem_sheffer
@@ -222,9 +253,11 @@ theorem affine_mem_sheffer (a b : ℝ) : (fun x : ℝ => a * x + b) ∈ ShefferA
   ext x; ring
 
 
+
 /-- A base expression has width exactly 1 -/
 theorem sheffer_base_width : ShefferExpr.base.width = 1 := by
   simp [ShefferExpr.width]
+
 
 
 /-- Every Sheffer expression has width ≥ 1 -/
@@ -234,6 +267,7 @@ theorem sheffer_width_pos (e : ShefferExpr) : e.width ≥ 1 := by
   | affine_pre a b e ih => simp [ShefferExpr.width]; exact ih
   | affine_comb α β γ e₁ e₂ ih₁ ih₂ => simp [ShefferExpr.width]; omega
   | comp e₁ e₂ ih₁ ih₂ => simp [ShefferExpr.width]; omega
+
 
 
 /-- Every Sheffer expression has depth ≥ 1 -/
@@ -246,11 +280,13 @@ theorem sheffer_depth_pos (e : ShefferExpr) : e.depth ≥ 1 := by
   | comp e₁ e₂ ih₁ ih₂ => simp [ShefferExpr.depth]; omega
 
 
+
 theorem softplus_temp_strictMono {β : ℝ} (hβ : β > 0) :
     StrictMono (softplus_temp β) := by
   intro x y hxy;
   unfold softplus_temp;
   gcongr
+
 
 
 /-- Temperature softplus satisfies σ_β(0) = log(2)/β -/
@@ -259,6 +295,7 @@ theorem softplus_temp_zero {β : ℝ} (_hβ : β > 0) :
   unfold softplus_temp
   simp [mul_zero, exp_zero]
   ring
+
 
 
 theorem softplus_ge_half_exp (x : ℝ) (hx : x ≤ 0) :
@@ -271,12 +308,14 @@ theorem softplus_ge_half_exp (x : ℝ) (hx : x ≤ 0) :
   nlinarith [ Real.log_inv ( 1 + y ), Real.log_le_sub_one_of_pos ( inv_pos.mpr ( by linarith : 0 < 1 + y ) ), mul_inv_cancel₀ ( by linarith : ( 1 + y ) ≠ 0 ) ]
 
 
+
 theorem softplus_second_deriv_pos (x : ℝ) :
     deriv (deriv softplus) x > 0 := by
   unfold deriv;
   unfold softplus;
   norm_num [ Real.differentiableAt_exp, ne_of_gt ( add_pos zero_lt_one ( Real.exp_pos _ ) ) ];
   rw [ inv_mul_eq_div, div_mul_eq_mul_div, div_add_div, lt_div_iff₀ ] <;> nlinarith [ Real.exp_pos x, Real.add_one_le_exp x ]
+
 
 
 end

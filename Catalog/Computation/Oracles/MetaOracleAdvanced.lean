@@ -13,12 +13,18 @@ noncomputable section
 def metaOracleId {α : Type*} : α → α := id
 
 
+
 /-- The identity is a fixed point of any meta-oracle composition scheme. -/
 theorem metaOracleId_fixed {α : Type*} (f : (α → α) → (α → α))
     (hf : f id = id) : f metaOracleId = metaOracleId :=
   hf
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.MetaOracleAdvanced
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 12] -/
 theorem exists_fixed_quality_strict {n : ℕ} (hn : 0 < n)
     (M : Fin n → Fin n) (q : Fin n → ℝ)
     (h_strict : ∀ i, M i ≠ i → q i < q (M i)) :
@@ -30,8 +36,10 @@ theorem exists_fixed_quality_strict {n : ℕ} (hn : 0 < n)
   exact ⟨ i₀, h i₀, hi₀ _ ⟩
 
 
+
 /-- The improvement ratio after n steps of a contraction with rate k. -/
 def improvementRatio (k : ℝ) (n : ℕ) : ℝ := 1 - k ^ n
+
 
 
 /-- The improvement ratio approaches 1 (complete improvement) as n → ∞. -/
@@ -42,9 +50,11 @@ theorem improvementRatio_tendsto_one (k : ℝ) (hk : 0 < k) (hk1 : k < 1) :
   convert Filter.Tendsto.const_sub 1 h using 1 <;> ring
 
 
+
 /-- Number of iterations needed to achieve ε-optimality. -/
 def iterationsNeeded (k ε d₀ : ℝ) : ℝ :=
   Real.log (ε / d₀) / Real.log k
+
 
 
 /-- The number of iterations needed is proportional to 1/H where H is oracle entropy. -/
@@ -55,10 +65,12 @@ theorem iterations_proportional_to_inv_entropy
   ring
 
 
+
 /-- Meta-oracles on a fixed type form a semigroup under composition. -/
 instance metaOracleSemigroup (α : Type*) : Semigroup (α → α) where
   mul := Function.comp
   mul_assoc := Function.comp_assoc
+
 
 
 /-- Meta-oracles on a fixed type form a monoid with identity. -/
@@ -66,6 +78,7 @@ instance metaOracleMonoid (α : Type*) : Monoid (α → α) where
   one := id
   one_mul := Function.id_comp
   mul_one := Function.comp_id
+
 
 
 /-- If f and g both contract with rates k₁ and k₂, then f ∘ g contracts with rate k₁ * k₂. -/
@@ -84,9 +97,11 @@ theorem comp_contraction_rate {α : Type*} [PseudoMetricSpace α]
     _ = (k₁ * k₂) * dist x y := by ring
 
 
+
 /-- A weighted combination of quality values (portfolio quality). -/
 def portfolioQuality {n : ℕ} (weights : Fin n → ℝ) (qualities : Fin n → ℝ) : ℝ :=
   ∑ i, weights i * qualities i
+
 
 
 theorem portfolio_quality_bounded {n : ℕ} (hn : 0 < n)
@@ -103,6 +118,7 @@ theorem portfolio_quality_bounded {n : ℕ} (hn : 0 < n)
     have h_max : ∃ i, ∀ j, q j ≤ q i := by
       simpa using Finset.exists_max_image Finset.univ q ⟨ ⟨ 0, hn ⟩, Finset.mem_univ _ ⟩;
     exact ⟨ h_max.choose, le_trans ( Finset.sum_le_sum fun i _ => mul_le_mul_of_nonneg_left ( h_max.choose_spec i ) ( hw_nn i ) ) ( by simp +decide [ ← Finset.sum_mul, hw_sum ] ) ⟩
+
 
 
 end

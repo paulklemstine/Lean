@@ -17,8 +17,10 @@ structure SimplePool where
   hy : 0 < y
 
 
+
 /-- Spot price of A in terms of B -/
 noncomputable def SimplePool.price (p : SimplePool) : ℝ := p.y / p.x
+
 
 
 /-- Output when buying B with amount `dx` of A (no fees) -/
@@ -26,11 +28,17 @@ noncomputable def SimplePool.buyB (p : SimplePool) (dx : ℝ) : ℝ :=
   p.y * dx / (p.x + dx)
 
 
+
 /-- Output when buying A with amount `dy` of B (no fees) -/
 noncomputable def SimplePool.buyA (p : SimplePool) (dy : ℝ) : ℝ :=
   p.x * dy / (p.y + dy)
 
 
+
+/-- [Section: # CatalogBuild.Cryptography.Ethereum.ArbitrageProfit
+Auto-generated from theorem catalog database.
+Domain: Cryptography/Ethereum
+Declarations: 11] -/
 theorem arbitrage_profit_exists
     (pool1 pool2 : SimplePool)
     (h_price_diverge : pool1.price < pool2.price) :
@@ -41,11 +49,13 @@ theorem arbitrage_profit_exists
   exact ⟨ 1, by norm_num, div_pos ( by linarith [ pool1.hx, pool1.hy, pool2.hx, pool2.hy ] ) ( by linarith [ pool1.hx, pool1.hy, pool2.hx, pool2.hy ] ) ⟩
 
 
+
 /-- **Arbitrage Revenue Formula**: When buying `dx` of token A in pool1 and
 immediately selling in pool2, the gross revenue in token B is: -/
 noncomputable def arbitrageRevenue (p1 p2 : SimplePool) (dx : ℝ) : ℝ :=
   let dy1 := p1.buyB dx     -- B spent to buy dx of A in pool1... actually
   p2.buyB dx - p1.buyB dx
+
 
 
 theorem small_trade_profitable
@@ -64,9 +74,11 @@ theorem small_trade_profitable
   exact ⟨ ε, ε_pos, fun dx dx_pos dx_lt => by have := hε ⟨ mem_ball_zero_iff.mpr ( abs_lt.mpr ⟨ by linarith, by linarith ⟩ ), dx_pos ⟩ ; rw [ Set.mem_setOf_eq, lt_div_iff₀ dx_pos ] at this; linarith ⟩
 
 
+
 /-- A three-pool cycle: A→B→C→A. Profit if the product of exchange rates > 1. -/
 noncomputable def cyclicProfitRate (p_ab p_bc p_ca : SimplePool) : ℝ :=
   p_ab.price * p_bc.price * p_ca.price
+
 
 
 theorem cyclic_arbitrage_exists
@@ -92,12 +104,14 @@ theorem cyclic_arbitrage_exists
   have := h_limit.eventually ( lt_mem_nhds h_cycle ) ; have := this.and self_mem_nhdsWithin; obtain ⟨ x, hx₁, hx₂ ⟩ := this.exists; exact ⟨ x, hx₂, by rw [ div_eq_mul_inv ] at hx₁; nlinarith [ inv_mul_cancel₀ hx₂.ne' ] ⟩ ;
 
 
+
 /-- For two pools with different prices, the optimal trade size.
 When p2 has higher price than p1, buying A from p1 and selling to p2 is profitable.
 The optimal amount of A to trade is derived from setting the derivative of
 profit to zero. -/
 noncomputable def optimalTradeSize (p1 p2 : SimplePool) : ℝ :=
   Real.sqrt (p1.x * p2.x * p1.y * p2.y) / (p1.y + p2.y) - p1.x * p1.y / (p1.y + p2.y)
+
 
 
 theorem optimal_size_pos (p1 p2 : SimplePool)
@@ -107,6 +121,7 @@ theorem optimal_size_pos (p1 p2 : SimplePool)
   unfold optimalTradeSize;
   rw [ div_sub_div_same, lt_div_iff₀ ] <;> try nlinarith [ p1.hx, p1.hy, p2.hx, p2.hy ];
   rw [ lt_sub_iff_add_lt', Real.lt_sqrt ] <;> nlinarith [ p1.hx, p1.hy, p2.hx, p2.hy, mul_pos p1.hx p1.hy, mul_pos p2.hx p2.hy ]
+
 
 
 end

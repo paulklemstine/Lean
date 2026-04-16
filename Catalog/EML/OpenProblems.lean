@@ -13,6 +13,7 @@ noncomputable section
 def spbH' (x y : ℝ) : ℝ := (x + y) / (1 + x * y)
 
 
+
 /-- **Problem 7.4a solved**: The only element a such that spb(a, a) = 0 is a = 0.
 Proof: spb(a,a) = 2a/(1-a²). This is zero iff 2a = 0 iff a = 0. -/
 theorem spb_involution_only_zero (a : ℝ) (h : 1 - a * a ≠ 0) :
@@ -27,6 +28,7 @@ theorem spb_involution_only_zero (a : ℝ) (h : 1 - a * a ≠ 0) :
   · intro heq
     rw [heq]
     simp [spb']
+
 
 
 /-- spb(x, x) = x if and only if x = 0.
@@ -45,6 +47,7 @@ theorem spb_idempotent_iff_zero (x : ℝ) (h : 1 - x * x ≠ 0) :
     rw [heq]; simp [spb']
 
 
+
 /-- The quadruple SPB formula: spb applied four times. -/
 theorem spb_quadruple (x : ℝ) (h : 1 - x ^ 2 ≠ 0)
     (h2 : 1 - (2 * x / (1 - x ^ 2)) ^ 2 ≠ 0) :
@@ -56,6 +59,7 @@ theorem spb_quadruple (x : ℝ) (h : 1 - x ^ 2 ≠ 0)
   unfold spb'; field_simp; ring
 
 
+
 /-- The SPB denominators multiply: if we track denominators through
 spb composition, they satisfy a recurrence. -/
 theorem spb_denom_product (x y z : ℝ)
@@ -64,6 +68,11 @@ theorem spb_denom_product (x y z : ℝ)
     1 - y * (x + z) + x * y ^ 2 * z := by ring
 
 
+
+/-- [Section: # CatalogBuild.EML.OpenProblems
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 12] -/
 theorem spb_compose_deriv (x a b : ℝ)
     (ha : 1 - x * a ≠ 0) (hb : 1 - spb' x a * b ≠ 0) :
     HasDerivAt (fun t => spb' (spb' t a) b)
@@ -73,11 +82,13 @@ theorem spb_compose_deriv (x a b : ℝ)
   · convert hb using 1
 
 
+
 /-- If spb(a, b) is an integer and a, b are integers, then 1 - ab divides a + b. -/
 theorem spb_integer_condition (a b n : ℤ) (h : 1 - a * b ≠ 0)
     (heq : (a + b : ℤ) = n * (1 - a * b)) :
     (1 - a * b) ∣ (a + b) := by
   exact ⟨n, by linarith⟩
+
 
 
 /-- For |x|, |y| ≤ r < 1, we have |spbH(x,y)| ≤ 2r/(1+r²) < 1.
@@ -86,6 +97,7 @@ theorem spbH_contraction_bound (r : ℝ) (hr : 0 ≤ r) (hr1 : r < 1) :
     2 * r / (1 + r ^ 2) < 1 := by
   rw [div_lt_one (by positivity)]
   nlinarith [sq_nonneg (1 - r)]
+
 
 
 /-- SPB preserves positivity: if x > 0 and y > 0 and xy < 1, then spb(x,y) > 0. -/
@@ -97,10 +109,12 @@ theorem spb_pos_of_pos (x y : ℝ) (hx : 0 < x) (hy : 0 < y) (hxy : x * y < 1) :
   · linarith
 
 
+
 theorem spb_strictMono_fst (y : ℝ) (hd : ∀ x, 1 - x * y ≠ 0) :
     StrictMono (fun x => spb' x y) := by
   contrapose! hd;
   exact ⟨ 1 / y, by rw [ div_mul_cancel₀ _ ( by rintro rfl; exact hd fun x z hxz => by simpa [ spb' ] using hxz ) ] ; ring ⟩
+
 
 
 /-- The SPB difference identity: spb(a,b) - spb(a,c) = (b-c)(1+a²)/((1-ab)(1-ac)). -/
@@ -110,9 +124,11 @@ theorem spb_difference (a b c : ℝ)
   unfold spb'; field_simp; ring
 
 
+
 theorem log_deriv_one_plus_sq (x : ℝ) :
     HasDerivAt (fun t => Real.log (1 + t ^ 2)) (2 * x / (1 + x ^ 2)) x := by
   convert HasDerivAt.log ( HasDerivAt.add ( hasDerivAt_const _ _ ) ( hasDerivAt_pow 2 x ) ) _ using 1 <;> norm_num ; ring ; positivity
+
 
 
 end

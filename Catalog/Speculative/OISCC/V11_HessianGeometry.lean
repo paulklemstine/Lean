@@ -1,25 +1,20 @@
-/-
-# OISCC V11: Riemannian and Information Geometry of EML
+/-! # CatalogBuild.Speculative.OISCC.V11_HessianGeometry
 
-The EML potential f(x) = exp(x) - ln(x) - 1 has Hessian f''(x) = exp(x) + 1/x²,
-defining a Riemannian metric on ℝ₊.
-
-Key results:
-1. The Hessian is positive definite
-2. The dual coordinate η = f'(x) = exp(x) - 1/x is strictly monotone
-3. The Bregman divergence is non-negative and zero iff x = y
-4. The Pythagorean theorem for the Bregman divergence
+Auto-generated from theorem catalog database.
+Domain: Speculative/OISCC
+Declarations: 14
 -/
 
 import Mathlib
 
 noncomputable section
 
-open Real Filter Topology Set
-
 def f_hess (x : ℝ) : ℝ := Real.exp x - Real.log x - 1
+
 def f_hess_deriv (x : ℝ) : ℝ := Real.exp x - x⁻¹
+
 def g_metric (x : ℝ) : ℝ := Real.exp x + x⁻¹ ^ 2
+
 
 theorem f_hess_hasDerivAt (x : ℝ) (hx : 0 < x) :
     HasDerivAt f_hess (f_hess_deriv x) x := by
@@ -27,35 +22,33 @@ theorem f_hess_hasDerivAt (x : ℝ) (hx : 0 < x) :
   convert ((Real.hasDerivAt_exp x).sub (Real.hasDerivAt_log hx.ne')).sub
     (hasDerivAt_const x (1 : ℝ)) using 1; ring
 
+
 theorem g_metric_pos (x : ℝ) (hx : 0 < x) : g_metric x > 0 := by
   unfold g_metric; positivity
+
 
 theorem g_metric_ge_one (x : ℝ) (hx : 0 < x) : g_metric x ≥ 1 := by
   unfold g_metric
   have : Real.exp x ≥ 1 := Real.one_le_exp (le_of_lt hx)
   linarith [sq_nonneg x⁻¹]
 
+
 theorem g_metric_ge_exp (x : ℝ) : g_metric x ≥ Real.exp x := by
   unfold g_metric; linarith [sq_nonneg x⁻¹]
 
-/-- The dual coordinate η = f'(x) = exp(x) - 1/x. -/
-def eta (x : ℝ) : ℝ := Real.exp x - x⁻¹
 
-/-
-η is strictly increasing on (0, ∞).
--/
 theorem eta_strictMono : StrictMonoOn eta (Ioi 0) := by
   exact fun x _ y _ hxy => sub_lt_sub ( Real.exp_lt_exp.mpr hxy ) ( inv_strictAnti₀ ( by linarith [ Set.mem_Ioi.mp ‹x ∈ Set.Ioi 0› ] ) hxy )
+
 
 /-- The Bregman divergence of f. -/
 def B_hess (x y : ℝ) : ℝ := f_hess x - f_hess y - f_hess_deriv y * (x - y)
 
+
 theorem B_hess_self (x : ℝ) : B_hess x x = 0 := by
   unfold B_hess; ring
 
-/-
-B(x,y) ≥ 0 for x, y > 0 (from strict convexity).
--/
+
 theorem B_hess_nonneg (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
     B_hess x y ≥ 0 := by
   unfold B_hess f_hess f_hess_deriv;
@@ -69,9 +62,7 @@ theorem B_hess_nonneg (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
     nlinarith [ Real.add_one_le_exp ( ( x - y ) / y ), mul_div_cancel₀ ( x - y ) hy.ne' ];
   ring_nf at *; nlinarith [ inv_pos.mpr hy, mul_inv_cancel₀ hy.ne' ] ;
 
-/-
-B(x,y) = 0 iff x = y.
--/
+
 theorem B_hess_eq_zero_iff (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
     B_hess x y = 0 ↔ x = y := by
   -- Apply the Taylor expansion for the natural logarithm function.
@@ -87,14 +78,17 @@ theorem B_hess_eq_zero_iff (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
   · grind;
   · grind +revert
 
+
 /-- The Pythagorean theorem for the Bregman divergence. -/
 theorem bregman_pythagorean (x y z : ℝ) :
     B_hess x z = B_hess x y + B_hess y z + (f_hess_deriv y - f_hess_deriv z) * (x - y) := by
   simp [B_hess]; ring
 
+
 /-- The three-point identity. -/
 theorem bregman_three_point (x y z : ℝ) :
     B_hess x z - B_hess x y - B_hess y z = (f_hess_deriv y - f_hess_deriv z) * (x - y) := by
   simp [B_hess]; ring
+
 
 end

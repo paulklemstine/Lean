@@ -9,6 +9,10 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # CatalogBuild.Geometry.Stereographic.StereographicRationals
+Auto-generated from theorem catalog database.
+Domain: Geometry/Stereographic
+Declarations: 14] -/
 theorem stereo_on_circle (t : ℚ) : (stereoX t)^2 + (stereoY t)^2 = 1 := by
   -- By definition of $stereoX$ and $stereoY$, we know that $(stereoX t)^2 + (stereoY t)^2 = \frac{(1-t^2)^2 + (2t)^2}{(1+t^2)^2}$.
   have h_def : (stereoX t)^2 + (stereoY t)^2 = ((1 - t^2)^2 + (2 * t)^2) / (1 + t^2)^2 := by
@@ -17,13 +21,16 @@ theorem stereo_on_circle (t : ℚ) : (stereoX t)^2 + (stereoY t)^2 = 1 := by
   rw [ h_def, div_eq_iff ] <;> ring ; positivity;
 
 
+
 theorem stereo_injective : Function.Injective (fun t : ℚ => (stereoX t, stereoY t)) := by
   intro a b h; have := congr_arg Prod.fst h; ((have := congr_arg Prod.snd h; ((simp_all +decide [ stereoX, stereoY ])))) ;
   rw [ div_eq_div_iff, div_eq_div_iff ] at h <;> nlinarith [ sq_nonneg ( a - b ), mul_self_nonneg a, mul_self_nonneg b ]
 
 
+
 /-- The inverse map: from a rational point (x,y) on the circle (with x ≠ -1) back to ℚ -/
 noncomputable def stereoInv (x y : ℚ) (hx : x ≠ -1) : ℚ := y / (1 + x)
+
 
 
 theorem stereo_inv_left (t : ℚ) :
@@ -38,10 +45,12 @@ theorem stereo_inv_left (t : ℚ) :
         ring_nf
 
 
+
 /-- Clearing denominators in the stereographic map produces integer triples.
 For t = p/q, we get the Pythagorean triple (q² - p², 2pq, q² + p²). -/
 def pythagorean_from_params (p q : ℤ) : ℤ × ℤ × ℤ :=
   (q^2 - p^2, 2 * p * q, q^2 + p^2)
+
 
 
 theorem pythagorean_triple_parametric (p q : ℤ) :
@@ -50,10 +59,12 @@ theorem pythagorean_triple_parametric (p q : ℤ) :
       unfold pythagorean_from_params; ring;
 
 
+
 /-- The circle group law transported to ℚ via stereographic projection.
 This is the "addition" that the rationals are secretly performing. -/
 noncomputable def circleAdd (t₁ t₂ : ℚ) (h : t₁ * t₂ ≠ 1) : ℚ :=
   (t₁ + t₂) / (1 - t₁ * t₂)
+
 
 
 theorem circle_add_stereo_x (t₁ t₂ : ℚ) (h : t₁ * t₂ ≠ 1) :
@@ -65,6 +76,7 @@ theorem circle_add_stereo_x (t₁ t₂ : ℚ) (h : t₁ * t₂ ≠ 1) :
       grind
 
 
+
 theorem circle_add_stereo_y (t₁ t₂ : ℚ) (h : t₁ * t₂ ≠ 1) :
     stereoY (circleAdd t₁ t₂ h) =
     stereoX t₁ * stereoY t₂ + stereoY t₁ * stereoX t₂ := by
@@ -73,9 +85,11 @@ theorem circle_add_stereo_y (t₁ t₂ : ℚ) (h : t₁ * t₂ ≠ 1) :
       grind
 
 
+
 /-- A 2×2 rational rotation matrix determined by stereographic parameter t -/
 noncomputable def ratRotation (t : ℚ) : Matrix (Fin 2) (Fin 2) ℚ :=
   !![stereoX t, -(stereoY t); stereoY t, stereoX t]
+
 
 
 theorem ratRotation_det_one (t : ℚ) :
@@ -83,9 +97,11 @@ theorem ratRotation_det_one (t : ℚ) :
       convert stereo_on_circle t using 1 ; unfold ratRotation ; norm_num [ Matrix.det_fin_two ] ; ring
 
 
+
 /-- The mediant of two rational numbers, expressed via numerator/denominator -/
 def mediant (p₁ q₁ p₂ q₂ : ℤ) (hq : q₁ + q₂ ≠ 0) : ℚ :=
   (p₁ + p₂ : ℤ) / (q₁ + q₂ : ℤ)
+
 
 
 theorem farey_neighbor_det (a b c d : ℤ) (hab : 0 < b) (hcd : 0 < d)
@@ -95,8 +111,10 @@ theorem farey_neighbor_det (a b c d : ℤ) (hab : 0 < b) (hcd : 0 < d)
       exact ⟨ by rw [ div_lt_div_iff₀ ] <;> norm_cast <;> nlinarith, by rw [ div_lt_div_iff₀ ] <;> norm_cast <;> nlinarith ⟩
 
 
+
 /-- The norm of a Gaussian integer pair -/
 def gaussNorm (a b : ℤ) : ℤ := a^2 + b^2
+
 
 
 end

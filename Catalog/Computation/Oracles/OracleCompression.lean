@@ -9,13 +9,19 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # CatalogBuild.Computation.Oracles.OracleCompression
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 14] -/
 def IsRetractionV2 {X : Type*} (r : X → X) (A : Set X) : Prop :=
   (∀ x, r x ∈ A) ∧ (∀ a ∈ A, r a = a)
+
 
 
 theorem retraction_is_oracle_v2 {X : Type*} (r : X → X) (A : Set X)
     (hr : IsRetractionV2 r A) : ∀ x, r (r x) = r x :=
   fun x => hr.2 (r x) (hr.1 x)
+
 
 
 theorem retraction_range_v2 {X : Type*} (r : X → X) (A : Set X)
@@ -25,11 +31,14 @@ theorem retraction_range_v2 {X : Type*} (r : X → X) (A : Set X)
   · intro hy; exact ⟨y, hr.2 y hy⟩
 
 
+
 theorem fundamental_pythagorean_v2 : 3 ^ 2 + 4 ^ 2 = 5 ^ 2 := by norm_num
+
 
 
 theorem gcd_oracle_factors_v2 (N leg p : ℕ) (hp : p ∣ leg) (hpN : p ∣ N) :
     p ∣ Nat.gcd leg N := Nat.dvd_gcd hp hpN
+
 
 
 theorem gcd_nontrivial_v2 (N leg p : ℕ) (hp : Nat.Prime p)
@@ -40,12 +49,15 @@ theorem gcd_nontrivial_v2 (N leg p : ℕ) (hp : Nat.Prime p)
     _ ≤ Nat.gcd leg N := Nat.le_of_dvd (by positivity) h
 
 
+
 theorem factoring_via_gcd_v2 (p q : ℕ) (_hp : Nat.Prime p) (_hq : Nat.Prime q) :
     Nat.gcd p (p * q) = p := Nat.gcd_eq_left (dvd_mul_right p q)
 
 
+
 def distToTruthV2 {X : Type*} [DecidableEq X] (O : X → X) (x : X) : ℕ :=
   if O x = x then 0 else 1
+
 
 
 theorem oracle_reaches_min_v2 {X : Type*} [DecidableEq X]
@@ -53,9 +65,11 @@ theorem oracle_reaches_min_v2 {X : Type*} [DecidableEq X]
     distToTruthV2 O (O x) = 0 := by simp [distToTruthV2, hO x]
 
 
+
 theorem oracle_reduces_v2 {X : Type*} [DecidableEq X]
     (O : X → X) (hO : ∀ x, O (O x) = O x) (x : X) :
     distToTruthV2 O (O x) ≤ distToTruthV2 O x := by simp [distToTruthV2, hO x]
+
 
 
 theorem contraction_conv_v2 (c d₀ : ℝ) (hc : 0 ≤ c) (hc1 : c < 1) (hd : 0 ≤ d₀) (n : ℕ) :
@@ -63,12 +77,15 @@ theorem contraction_conv_v2 (c d₀ : ℝ) (hc : 0 ≤ c) (hc1 : c < 1) (hd : 0 
   le_of_le_of_eq (mul_le_mul_of_nonneg_right (pow_le_one₀ hc hc1.le) hd) (one_mul d₀)
 
 
+
 theorem contraction_nonneg_v2 (c d₀ : ℝ) (hc : 0 ≤ c) (hd : 0 ≤ d₀) (n : ℕ) :
     0 ≤ c ^ n * d₀ := mul_nonneg (pow_nonneg hc n) hd
 
 
+
 theorem truth_count_bound_v2 (n k : ℕ) (hkn : k ≤ n) :
     Nat.log 2 k ≤ Nat.log 2 n := Nat.log_mono_right hkn
+
 
 
 theorem compression_triangle_v2 {n : ℕ} (O : Fin n → Fin n)
@@ -76,6 +93,7 @@ theorem compression_triangle_v2 {n : ℕ} (O : Fin n → Fin n)
     Fintype.card (range O) + (n - Fintype.card (range O)) = n := by
   have h := Fintype.card_range_le O
   simp [Fintype.card_fin] at h ⊢; omega
+
 
 
 end

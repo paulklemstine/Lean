@@ -7,9 +7,14 @@ Declarations: 7
 
 import Mathlib
 
+/-- [Section: # CatalogBuild.Speculative.FibonacciEntryPoint
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 7] -/
 theorem fib_cassini_int (n : ℕ) :
     (Nat.fib (n + 1) : ℤ) ^ 2 - (Nat.fib n : ℤ) * (Nat.fib (n + 2) : ℤ) = (-1) ^ n := by
   induction n <;> simp_all +decide [ pow_succ, fib_add_two ] ; linarith
+
 
 
 theorem fib_cassini_variant (n : ℕ) :
@@ -17,9 +22,11 @@ theorem fib_cassini_variant (n : ℕ) :
   induction n <;> simp_all +decide [ pow_succ, Nat.fib_add_two ] ; linarith
 
 
+
 theorem fib_gcd_dvd (p k m : ℕ) (hk : p ∣ Nat.fib k) (hm : p ∣ Nat.fib m) :
     p ∣ Nat.fib (Nat.gcd k m) := by
   exact Nat.dvd_gcd hk hm |> fun h => by simpa [ Nat.fib_gcd ] using h;
+
 
 
 theorem fib_prime_mod (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2) (hp5 : p ≠ 5) :
@@ -84,9 +91,11 @@ theorem fib_prime_mod (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2) (hp5 : p ≠ 
   exact h_fib_mod.symm.dvd
 
 
+
 theorem fib_double' (n : ℕ) :
     Nat.fib (2 * n) = Nat.fib n * (2 * Nat.fib (n + 1) - Nat.fib n) :=
   Nat.fib_two_mul n
+
 
 
 theorem fib_double_plus_one (n : ℕ) :
@@ -94,6 +103,8 @@ theorem fib_double_plus_one (n : ℕ) :
   Nat.fib_two_mul_add_one n
 
 
+
 theorem cassini_factoring (n : ℕ) :
     (Nat.fib (n + 1) : ℤ) ^ 2 - 1 =
     ((Nat.fib (n + 1) : ℤ) - 1) * ((Nat.fib (n + 1) : ℤ) + 1) := by ring
+

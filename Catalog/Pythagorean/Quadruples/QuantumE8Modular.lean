@@ -16,9 +16,11 @@ theorem total_factoring_equations (k : ℕ) :
   congr 1; exact Nat.choose_two_right k
 
 
+
 /-- σ_k(n) = sum of k-th powers of divisors of n -/
 noncomputable def sigma_k (k n : ℕ) : ℕ :=
   (Nat.divisors n).sum (· ^ k)
+
 
 
 /-- σ_k(n) ≥ 1 for all n ≥ 1 (since n divides itself). -/
@@ -30,8 +32,10 @@ theorem sigma_k_pos (k n : ℕ) (hn : n ≥ 1) : sigma_k k n ≥ 1 := by
     _ ≥ 1 := Nat.one_le_pow k n (by omega)
 
 
+
 /-- Octonion norm (sum of 8 squares) -/
 def onorm (v : Fin 8 → ℤ) : ℤ := ∑ i, v i ^ 2
+
 
 
 /-- Onorm is nonneg -/
@@ -42,13 +46,21 @@ theorem onorm_nonneg (v : Fin 8 → ℤ) : onorm v ≥ 0 := by
   exact sq_nonneg (v i)
 
 
+
 /-- In dimension 8, each pair of representations gives C(8,2) = 28
 cross-collision pairs. -/
 theorem dim8_cross_collisions : Nat.choose 8 2 = 28 := by decide
 
+
+/-- [Section: # CatalogBuild.Pythagorean.Quadruples.QuantumE8Modular
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Quadruples
+Declarations: 18] -/
 theorem dim4_cross_collisions : Nat.choose 4 2 = 6 := by decide
 
+
 theorem dim2_cross_collisions : Nat.choose 2 2 = 1 := by decide
+
 
 
 /-- The first few r₈ values demonstrate representation richness. -/
@@ -56,9 +68,11 @@ theorem e8_representation_richness :
     16 < 112 ∧ 112 < 448 ∧ 448 < 1136 := by omega
 
 
+
 /-- Count divisors of n congruent to r mod m -/
 noncomputable def count_divisors_mod (n r m : ℕ) : ℕ :=
   ((Nat.divisors n).filter (fun d => d % m = r)).card
+
 
 
 /-- For a prime p ≡ 1 (mod 4), p has at least one divisor ≡ 1 (mod 4),
@@ -71,6 +85,7 @@ theorem r2_prime_1mod4_divisor_structure (p : ℕ) (hp : Nat.Prime p)
   use 1
   simp [Finset.mem_filter, Nat.mem_divisors]
   exact hp.ne_zero
+
 
 
 /-- Upper bound on σ_k(n): at most n^k times the number of divisors. -/
@@ -86,11 +101,13 @@ theorem sigma_k_upper_bound (k n : ℕ) (_hn : n ≥ 1) :
     _ = n ^ k * (Nat.divisors n).card := by rw [smul_eq_mul, mul_comm]
 
 
+
 /-- The hierarchy of factoring power: more channels, more collisions. -/
 theorem hierarchy_channels :
     1 * Nat.choose 2 2 < 2 * Nat.choose 2 2 ∧
     2 * Nat.choose 2 2 < 4 * Nat.choose 2 2 ∧
     4 * Nat.choose 2 2 < 8 * Nat.choose 2 2 := by decide
+
 
 
 /-- The cross term (ad - bc) squared is bounded by N². -/
@@ -102,10 +119,12 @@ theorem cross_term_squared_bound (a b c d N : ℤ)
   nlinarith [sq_nonneg (a * c + b * d)]
 
 
+
 /-- The cross term is zero iff the two representations are "parallel". -/
 theorem cross_term_zero_iff_parallel (a b c d : ℤ)
     (h_ad_bc : a * d - b * c = 0) :
     a * d = b * c := by linarith
+
 
 
 /-- If both the cross term and dot product are nonzero, the cross term
@@ -123,15 +142,18 @@ theorem collision_yields_factor_candidate (a b c d N : ℤ)
   linarith
 
 
+
 /-- Total channel count in the hierarchy for 2 representations -/
 theorem total_channels_two_reps :
     1 < 3 ∧ 3 < 10 ∧ 10 < 36 := by omega
+
 
 
 /-- The ratio of channels grows superlinearly with dimension. -/
 theorem channel_growth_superlinear :
     10 * 2 > 3 * 4 ∧
     36 * 4 > 10 * 8 := by omega
+
 
 
 end

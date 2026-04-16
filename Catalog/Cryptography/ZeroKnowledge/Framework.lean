@@ -17,6 +17,7 @@ structure Protocol (Statement Witness Commitment Challenge Response : Type) wher
   verify : Statement → Commitment → Challenge → Response → Prop
 
 
+
 /-- A Sigma protocol is complete if honest execution always verifies. -/
 def IsComplete {S W C Ch R : Type}
     (π : Protocol S W C Ch R) : Prop :=
@@ -25,6 +26,7 @@ def IsComplete {S W C Ch R : Type}
     ∀ (ch : Ch),
       π.verify stmt (π.commit stmt wit) ch
         (π.respond stmt wit (π.commit stmt wit) ch)
+
 
 
 /-- 2-Special soundness: two accepting transcripts with same commitment
@@ -38,6 +40,7 @@ def Has2SpecialSoundness {S W C Ch R : Type}
     ∃ wit : W, π.relation stmt wit
 
 
+
 /-- Honest-verifier zero-knowledge via simulation. -/
 structure HasHVZK {S W C Ch R : Type}
     (π : Protocol S W C Ch R) where
@@ -46,6 +49,7 @@ structure HasHVZK {S W C Ch R : Type}
   sim_verifies : ∀ (stmt : S) (ch : Ch),
     (∃ wit, π.relation stmt wit) →
     π.verify stmt (simulate_com stmt ch) ch (simulate_resp stmt ch)
+
 
 
 /-- The Schnorr exponent-level protocol over ZMod q. -/
@@ -57,6 +61,11 @@ noncomputable def schnorrExponent :
   verify stmt com ch resp := resp = com.1 + ch * stmt
 
 
+
+/-- [Section: # CatalogBuild.Cryptography.ZeroKnowledge.Framework
+Auto-generated from theorem catalog database.
+Domain: Cryptography/ZeroKnowledge
+Declarations: 17] -/
 theorem schnorrExponent_complete :
     IsComplete (schnorrExponent (q := q)) := by
   intro stmt wit hrel ch
@@ -64,11 +73,13 @@ theorem schnorrExponent_complete :
   rw [hrel]
 
 
+
 theorem schnorrExponent_2ss :
     Has2SpecialSoundness (schnorrExponent (q := q)) := by
   intro stmt _com _ch₁ _ch₂ _r₁ _r₂ _hne hv₁ hv₂
   simp only [schnorrExponent] at hv₁ hv₂
   exact ⟨stmt, rfl⟩
+
 
 
 /-- OR-composed relation: prover knows witness for at least one sub-relation -/
@@ -80,6 +91,7 @@ def OrRelation {S₁ S₂ W₁ W₂ : Type}
   | Sum.inr w₂ => R₂ stmt.2 w₂
 
 
+
 theorem or_relation_left {S₁ S₂ W₁ W₂ : Type}
     {R₁ : S₁ → W₁ → Prop} {R₂ : S₂ → W₂ → Prop}
     {s₁ : S₁} {s₂ : S₂} {w₁ : W₁}
@@ -87,11 +99,13 @@ theorem or_relation_left {S₁ S₂ W₁ W₂ : Type}
     OrRelation R₁ R₂ (s₁, s₂) (Sum.inl w₁) := h
 
 
+
 theorem or_relation_right {S₁ S₂ W₁ W₂ : Type}
     {R₁ : S₁ → W₁ → Prop} {R₂ : S₂ → W₂ → Prop}
     {s₁ : S₁} {s₂ : S₂} {w₂ : W₂}
     (h : R₂ s₂ w₂) :
     OrRelation R₁ R₂ (s₁, s₂) (Sum.inr w₂) := h
+
 
 
 /-- Soundness error bound: a cheating prover succeeds with probability ≤ 1/|Ch|. -/
@@ -103,6 +117,7 @@ theorem soundness_error_bound (n : ℕ) (hn : 0 < n)
   exact_mod_cast h_at_most_one
 
 
+
 /-- Parallel repetition reduces soundness error exponentially -/
 theorem parallel_repetition_soundness (n k : ℕ) (hn : 1 < n) (hk : 0 < k) :
     (1 / (n : ℝ)) ^ k < 1 := by
@@ -110,6 +125,7 @@ theorem parallel_repetition_soundness (n k : ℕ) (hn : 1 < n) (hk : 0 < k) :
   · rw [div_lt_one (by positivity : (0 : ℝ) < n)]
     exact_mod_cast hn
   · omega
+
 
 
 /-- Sequential repetition also reduces error -/
@@ -120,11 +136,13 @@ theorem sequential_repetition_bound (n k : ℕ) (hn : 2 ≤ n) :
   exact_mod_cast Nat.one_le_of_lt (by omega : 1 < n)
 
 
+
 /-- Non-interactive proof produced by Fiat-Shamir transform -/
 structure NIProof (C Ch R : Type) where
   commitment : C
   challenge : Ch
   response : R
+
 
 
 /-- Apply Fiat-Shamir to a Sigma protocol with a hash function -/
@@ -137,12 +155,14 @@ def fiatShamirProve {S W C Ch R : Type}
   ⟨com, ch, resp⟩
 
 
+
 /-- Verify a Fiat-Shamir proof -/
 def fiatShamirVerify {S W C Ch R : Type}
     (π : Protocol S W C Ch R) (hash : S → C → Ch)
     (stmt : S) (proof : NIProof C Ch R) : Prop :=
   proof.challenge = hash stmt proof.commitment ∧
   π.verify stmt proof.commitment proof.challenge proof.response
+
 
 
 /-- Fiat-Shamir completeness: honest proofs always verify. -/
@@ -154,6 +174,7 @@ theorem fiat_shamir_complete {S W C Ch R : Type}
   constructor
   · rfl
   · exact h_complete stmt wit hrel (hash stmt (π.commit stmt wit))
+
 
 
 end

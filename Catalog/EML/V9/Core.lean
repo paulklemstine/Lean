@@ -13,24 +13,34 @@ noncomputable section
 def emlNeg (x : ℝ) : ℝ := 1 - x
 
 
+
+/-- [Section: # CatalogBuild.EML.V9.Core
+Auto-generated from theorem catalog database.
+Domain: EML/V9
+Declarations: 18] -/
 theorem eml_one_one : eml 1 1 = Real.exp 1 := by
   simp [eml, Real.log_one]
+
 
 
 theorem eml_self_pair (x : ℝ) : eml x (Real.exp x) = Real.exp x - x := by
   simp [eml, Real.log_exp]
 
 
+
 theorem eml_power (x : ℝ) (n : ℕ) : eml (n * x) 1 = (Real.exp x) ^ n := by
   simp [eml, Real.log_one, Real.exp_nat_mul]
+
 
 
 theorem emlNeg_involution (x : ℝ) : emlNeg (emlNeg x) = x := by
   simp [emlNeg]
 
 
+
 theorem eml_negation_via_exp (x : ℝ) : eml 0 (Real.exp x) = 1 - x := by
   simp [eml, Real.log_exp]
+
 
 
 theorem eml_double_neg (x : ℝ) :
@@ -38,8 +48,10 @@ theorem eml_double_neg (x : ℝ) :
   simp [eml, Real.log_exp]
 
 
+
 theorem emlSelfPair_min_achieved : emlSelfPair 0 = 1 := by
   simp [emlSelfPair]
+
 
 
 theorem eml_hasDerivAt_x (x y : ℝ) :
@@ -49,6 +61,7 @@ theorem eml_hasDerivAt_x (x y : ℝ) :
   simp only [sub_zero] at h; exact h
 
 
+
 theorem eml_hasDerivAt_y (x y : ℝ) (hy : 0 < y) :
     HasDerivAt (fun y' => eml x y') (-y⁻¹) y := by
   unfold eml
@@ -56,9 +69,11 @@ theorem eml_hasDerivAt_y (x y : ℝ) (hy : 0 < y) :
   simp only [zero_sub] at h; exact h
 
 
+
 theorem eml_log_split (x y z : ℝ) (hy : 0 < y) (hz : 0 < z) :
     eml x (y * z) = eml x y - Real.log z := by
   unfold eml; rw [Real.log_mul hy.ne' hz.ne']; ring
+
 
 
 theorem eml_log_ratio (x y z : ℝ) (hy : 0 < y) (hz : 0 < z) :
@@ -66,9 +81,11 @@ theorem eml_log_ratio (x y z : ℝ) (hy : 0 < y) (hz : 0 < z) :
   unfold eml; rw [Real.log_div hy.ne' hz.ne']; ring
 
 
+
 theorem eml_exp_sum (x y : ℝ) :
     eml (x + y) 1 = Real.exp x * Real.exp y := by
   simp [eml, Real.log_one, Real.exp_add]
+
 
 
 theorem eml_antisymm (x y : ℝ) :
@@ -76,11 +93,14 @@ theorem eml_antisymm (x y : ℝ) :
   unfold eml; ring
 
 
+
 theorem eml_generates_e2 : eml 2 1 = Real.exp 2 := by simp [eml, Real.log_one]
+
 
 
 theorem eml_generates_eee : eml (eml (eml 1 1) 1) 1 = Real.exp (Real.exp (Real.exp 1)) := by
   simp [eml, Real.log_one]
+
 
 
 /-- EML generates addition via double application. -/
@@ -89,10 +109,12 @@ theorem eml_addition (a b : ℝ) (ha : 0 < a) :
   unfold eml; rw [Real.exp_log ha, Real.log_exp]; ring
 
 
+
 /-- σ(x) = eˣ − x is always positive. -/
 theorem emlSelfPair_pos (x : ℝ) : emlSelfPair x > 0 := by
   unfold emlSelfPair
   linarith [Real.add_one_le_exp x]
+
 
 
 end

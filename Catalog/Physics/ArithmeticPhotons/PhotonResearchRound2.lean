@@ -13,6 +13,11 @@ noncomputable section
 def minkQ (a b c : ℝ) : ℝ := a ^ 2 + b ^ 2 - c ^ 2
 
 
+
+/-- [Section: # CatalogBuild.Physics.ArithmeticPhotons.PhotonResearchRound2
+Auto-generated from theorem catalog database.
+Domain: Physics/ArithmeticPhotons
+Declarations: 24] -/
 theorem null_gaussian_product (a₁ b₁ c₁ a₂ b₂ c₂ : ℝ)
     (h₁ : IsNull a₁ b₁ c₁) (h₂ : IsNull a₂ b₂ c₂) :
     IsNull (a₁ * a₂ - b₁ * b₂) (a₁ * b₂ + a₂ * b₁) (c₁ * c₂) := by
@@ -21,9 +26,11 @@ theorem null_gaussian_product (a₁ b₁ c₁ a₂ b₂ c₂ : ℝ)
   unfold minkQ at *; nlinarith;
 
 
+
 theorem conjugate_photon (a b c : ℤ) (h : IsPythTriple a b c) :
     IsPythTriple a (-b) c := by
   unfold IsPythTriple at *; linarith [ pow_two_nonneg b ] ;
+
 
 
 theorem conjugate_photon' (a b c : ℤ) (h : IsPythTriple a b c) :
@@ -31,9 +38,11 @@ theorem conjugate_photon' (a b c : ℤ) (h : IsPythTriple a b c) :
   unfold IsPythTriple at *; linarith;
 
 
+
 theorem antipodal_photon (a b c : ℤ) (h : IsPythTriple a b c) :
     IsPythTriple (-a) (-b) c := by
   unfold IsPythTriple at *; linarith [ pow_two ( -a ), pow_two ( -b ) ] ;
+
 
 
 /-- Gaussian product operation on triples -/
@@ -43,14 +52,17 @@ def gaussProd (t₁ t₂ : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
    t₁.2.2 * t₂.2.2)
 
 
+
 theorem gaussProd_comm (t₁ t₂ : ℤ × ℤ × ℤ) :
     gaussProd t₁ t₂ = gaussProd t₂ t₁ := by
   unfold gaussProd; ring;
 
 
+
 theorem gaussProd_assoc (t₁ t₂ t₃ : ℤ × ℤ × ℤ) :
     gaussProd (gaussProd t₁ t₂) t₃ = gaussProd t₁ (gaussProd t₂ t₃) := by
   unfold gaussProd; ring;
+
 
 
 theorem gaussProd_identity (t : ℤ × ℤ × ℤ) :
@@ -59,13 +71,16 @@ theorem gaussProd_identity (t : ℤ × ℤ × ℤ) :
   simp [gaussProd]
 
 
+
 theorem identity_is_triple : IsPythTriple 1 0 1 := by
   exact?
+
 
 
 theorem photon_squared (a b c : ℤ) (h : IsPythTriple a b c) :
     IsPythTriple (a ^ 2 - b ^ 2) (2 * a * b) (c ^ 2) := by
   unfold IsPythTriple at *; nlinarith;
+
 
 
 theorem null_inner_vanishes_product (a₁ b₁ c₁ a₂ b₂ c₂ : ℝ)
@@ -74,10 +89,12 @@ theorem null_inner_vanishes_product (a₁ b₁ c₁ a₂ b₂ c₂ : ℝ)
   unfold IsNull at *; unfold minkQ at *; unfold minkInner at *; nlinarith;
 
 
+
 theorem light_cone_intersection (a b c dx dy dt : ℝ)
     (h₁ : IsNull a b c) (h₂ : IsNull (a - dx) (b - dy) (c - dt)) :
     2 * minkInner a b c dx dy dt = minkQ dx dy dt := by
   unfold IsNull minkInner minkQ at *; linarith;
+
 
 
 theorem photon_345_squared :
@@ -85,9 +102,11 @@ theorem photon_345_squared :
   decide +kernel
 
 
+
 theorem photon_345_squared_is_triple :
     IsPythTriple (-7) 24 25 := by
   norm_num [ IsPythTriple ]
+
 
 
 theorem photon_product_345_51213 :
@@ -95,9 +114,11 @@ theorem photon_product_345_51213 :
   native_decide +revert
 
 
+
 theorem photon_product_is_triple :
     IsPythTriple (-33) 56 65 := by
   exact show ( -33 ) ^ 2 + 56 ^ 2 = 65 ^ 2 by norm_num;
+
 
 
 theorem primitive_triple_odd_hypotenuse (a b c : ℤ)
@@ -106,9 +127,11 @@ theorem primitive_triple_odd_hypotenuse (a b c : ℤ)
   cases Int.emod_two_eq_zero_or_one c <;> ( unfold IsPythTriple at h ; ( replace h := congr_arg ( · % 4 ) h ; rcases Int.even_or_odd' a with ⟨ k, rfl | rfl ⟩ <;> rcases Int.even_or_odd' b with ⟨ l, rfl | rfl ⟩ <;> rcases Int.even_or_odd' c with ⟨ m, rfl | rfl ⟩ <;> ring_nf at * <;> norm_num [ Int.add_emod, Int.mul_emod ] at *; ) )
 
 
+
 /-- The identity matrix preserves the Minkowski form. -/
 theorem identity_preserves_minkQ (a b c : ℝ) :
     minkQ a b c = minkQ a b c := rfl
+
 
 
 theorem comp_preserves_minkQ
@@ -122,9 +145,11 @@ theorem comp_preserves_minkQ
   aesop
 
 
+
 theorem null_basis_vectors :
     IsNull 1 0 1 ∧ IsNull 1 0 (-1) := by
   exact ⟨ by unfold IsNull; unfold minkQ; norm_num, by unfold IsNull; unfold minkQ; norm_num ⟩
+
 
 
 /-- The null vectors (1,0,1) and (1,0,-1) are not proportional (linearly independent
@@ -134,9 +159,11 @@ theorem null_basis_inner :
   simp [minkInner]; norm_num
 
 
+
 theorem spacelike_basis :
     minkQ 0 1 0 > 0 := by
   unfold minkQ; norm_num;
+
 
 
 theorem photon_helicity_bound (a b c : ℝ) (h : IsNull a b c) (hc : c ≠ 0) :
@@ -144,6 +171,7 @@ theorem photon_helicity_bound (a b c : ℝ) (h : IsNull a b c) (hc : c ≠ 0) :
   rw [ div_le_iff₀ ] <;> norm_num [ IsNull ] at *;
   · unfold minkQ at h; nlinarith [ sq_nonneg ( |a| - |b| ), abs_mul_abs_self a, abs_mul_abs_self b ] ;
   · positivity
+
 
 
 end

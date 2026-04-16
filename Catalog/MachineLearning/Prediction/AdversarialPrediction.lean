@@ -17,9 +17,11 @@ structure PredictionGame where
   loss_bounded : ∀ p r, loss p r ≤ 1
 
 
+
 /-- Minimax value: the forecaster minimizes the worst case -/
 noncomputable def minimaxValue (n m : ℕ) (losses : Fin n → Fin m → ℝ) : ℝ :=
   ⨅ i, ⨆ j, losses i j
+
 
 
 /-- Maximin value: the adversary maximizes the best case -/
@@ -27,6 +29,11 @@ noncomputable def maximinValue (n m : ℕ) (losses : Fin n → Fin m → ℝ) : 
   ⨆ j, ⨅ i, losses i j
 
 
+
+/-- [Section: # CatalogBuild.MachineLearning.Prediction.AdversarialPrediction
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/Prediction
+Declarations: 14] -/
 theorem weak_duality (n m : ℕ) [NeZero n] [NeZero m]
     (losses : Fin n → Fin m → ℝ) :
     maximinValue n m losses ≤ minimaxValue n m losses := by
@@ -36,9 +43,11 @@ theorem weak_duality (n m : ℕ) [NeZero n] [NeZero m]
   exact fun i => le_trans ( ciInf_le ( Finite.bddBelow_range fun i => losses i j ) i ) ( le_ciSup ( Finite.bddAbove_range fun j => losses i j ) j )
 
 
+
 /-- Cumulative regret: how much worse we did than the best fixed action -/
 noncomputable def cumulativeRegret (T : ℕ) (losses : ℕ → ℝ) (bestLoss : ℝ) : ℝ :=
   (∑ t ∈ range T, losses t) - T * bestLoss
+
 
 
 /-- The regret bound √(T log n / 2) is nonneg (Hoeffding bound) -/
@@ -47,15 +56,18 @@ theorem expert_regret_bound_nonneg (n T : ℕ) (hn : 0 < n) (hT : 0 < T) :
   Real.sqrt_nonneg _
 
 
+
 theorem average_regret_vanishes (n : ℕ) (hn : 0 < n) :
     Filter.Tendsto (fun T : ℕ => Real.sqrt (Real.log n / (2 * T)))
       Filter.atTop (nhds 0) := by
   convert Filter.Tendsto.sqrt ( tendsto_const_nhds.div_atTop <| tendsto_natCast_atTop_atTop.const_mul_atTop zero_lt_two ) using 1 ; norm_num
 
 
+
 /-- A predictor is ε-robust if small perturbations change predictions by ≤ δ -/
 def isRobust (f : ℝ → ℝ) (ε δ : ℝ) : Prop :=
   ∀ x y, |x - y| ≤ ε → |f x - f y| ≤ δ
+
 
 
 /-- Lipschitz predictors are robust -/
@@ -68,6 +80,7 @@ theorem lipschitz_is_robust (f : ℝ → ℝ) (L : ℝ) (hL : 0 ≤ L)
     _ ≤ L * ε := mul_le_mul_of_nonneg_left hxy hL
 
 
+
 /-- There is a fundamental tradeoff: more robust ↔ less accurate -/
 theorem robustness_accuracy_tradeoff
     (accuracy : ℝ → ℝ)
@@ -77,10 +90,12 @@ theorem robustness_accuracy_tradeoff
   h_monotone δ₁ δ₂ h
 
 
+
 /-- An adversary has a budget for perturbing inputs -/
 structure AdversaryBudget where
   budget : ℝ
   budget_pos : 0 < budget
+
 
 
 /-- The adversary's optimal attack maximizes prediction error -/
@@ -94,6 +109,7 @@ theorem bounded_adversary_bounded_error
     _ ≤ L * adv.budget := mul_le_mul_of_nonneg_left hxx' hL
 
 
+
 /-- With fraction α of data corrupted, prediction error degrades linearly -/
 theorem corruption_error_bound (α baseline_error : ℝ)
     (_hα0 : 0 ≤ α) (_hα1 : α ≤ 1) (hb : 0 ≤ baseline_error) :
@@ -101,10 +117,12 @@ theorem corruption_error_bound (α baseline_error : ℝ)
   nlinarith
 
 
+
 /-- The breakdown point: no estimator works with arbitrary corruption above 50% -/
 theorem breakdown_point_principle (corruption_fraction : ℝ) (h : 1/2 < corruption_fraction) :
     corruption_fraction > 1 - corruption_fraction := by
   linarith
+
 
 
 end

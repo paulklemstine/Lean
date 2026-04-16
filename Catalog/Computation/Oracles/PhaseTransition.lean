@@ -9,11 +9,16 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # CatalogBuild.Computation.Oracles.PhaseTransition
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 9] -/
 theorem geometric_divergence (c : ℝ) (hc : 1 < |c|) :
     ¬ Tendsto (fun n => c ^ n) atTop (nhds 0) := by
       rw [ Metric.tendsto_nhds ];
       norm_num;
       exact ⟨ 1, by norm_num, fun n => ⟨ n, le_rfl, one_le_pow₀ hc.le ⟩ ⟩
+
 
 
 /-- A Lyapunov function for an oracle iteration. -/
@@ -27,10 +32,12 @@ structure LyapunovFn where
   V_decreasing : ∀ s, s ≠ eq → V (f s) < V s
 
 
+
 /-- **Lyapunov Stability**: If a Lyapunov function exists, V decreases along orbits. -/
 theorem lyapunov_V_iterate_decreasing (L : LyapunovFn)
     (s : L.State) (hs : s ≠ L.eq) :
     L.V (L.f s) < L.V s := L.V_decreasing s hs
+
 
 
 theorem lyapunov_sequence_antitone (L : LyapunovFn) (s0 : L.State)
@@ -40,11 +47,13 @@ theorem lyapunov_sequence_antitone (L : LyapunovFn) (s0 : L.State)
       simpa only [ Function.iterate_succ_apply' ] using L.V_decreasing _ ( h k )
 
 
+
 /-- Steps needed to reach accuracy eps with contraction factor c. -/
 def stepsToAccuracy (c eps : ℝ) : ℕ :=
   if hc : 0 < c ∧ c < 1 ∧ 0 < eps ∧ eps < 1
   then ⌈- Real.log eps / Real.log c⌉₊
   else 0
+
 
 
 theorem steps_grow_near_critical (eps : ℝ) (heps : 0 < eps) (heps1 : eps < 1) :
@@ -57,18 +66,22 @@ theorem steps_grow_near_critical (eps : ℝ) (heps : 0 < eps) (heps1 : eps < 1) 
         · filter_upwards [ Ioo_mem_nhdsLT zero_lt_one ] with x hx using Real.log_neg hx.1 hx.2
 
 
+
 /-- Binary entropy is zero at 0. -/
 theorem binaryEntropy_zero : binaryEntropy 0 = 0 := by simp [binaryEntropy]
+
 
 
 /-- Binary entropy is zero at 1. -/
 theorem binaryEntropy_one : binaryEntropy 1 = 0 := by simp [binaryEntropy]
 
 
+
 theorem binaryEntropy_symm (p : ℝ) (hp : 0 < p) (hp1 : p < 1) :
     binaryEntropy p = binaryEntropy (1 - p) := by
       unfold binaryEntropy;
       grind
+
 
 
 end

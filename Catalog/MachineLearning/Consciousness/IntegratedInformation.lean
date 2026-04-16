@@ -22,6 +22,7 @@ structure InfoSystem where
 attribute [instance] InfoSystem.stateFin InfoSystem.stateDec InfoSystem.stateNonempty
 
 
+
 /-- A partition of a system into two subsystems -/
 structure BiPartition (S : InfoSystem) where
   part : S.State → Prop
@@ -32,9 +33,11 @@ structure BiPartition (S : InfoSystem) where
 attribute [instance] BiPartition.partDec
 
 
+
 /-- Earth Mover's Distance between two distributions (simplified L1 version) -/
 noncomputable def earthMoverDistance {α : Type} [Fintype α] (p q : α → ℝ) : ℝ :=
   ∑ a : α, |p a - q a|
+
 
 
 /-- The disconnected transition: transition after cutting connections at a partition. -/
@@ -45,9 +48,11 @@ noncomputable def disconnectedTransition (S : InfoSystem) (P : BiPartition S)
   else 0
 
 
+
 /-- Information loss from a partition -/
 noncomputable def informationLoss (S : InfoSystem) (P : BiPartition S) (s : S.State) : ℝ :=
   earthMoverDistance (S.transition s) (disconnectedTransition S P s)
+
 
 
 /-- A system is decomposable if there exists a partition with zero information loss -/
@@ -55,14 +60,21 @@ def isDecomposable (S : InfoSystem) (P : BiPartition S) (s : S.State) : Prop :=
   informationLoss S P s = 0
 
 
+
+/-- [Section: # CatalogBuild.MachineLearning.Consciousness.IntegratedInformation
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/Consciousness
+Declarations: 11] -/
 theorem earthMoverDistance_nonneg {α : Type} [Fintype α] (p q : α → ℝ) :
     0 ≤ earthMoverDistance p q := by
   exact Finset.sum_nonneg fun _ _ => abs_nonneg _
 
 
+
 theorem informationLoss_nonneg (S : InfoSystem) (P : BiPartition S) (s : S.State) :
     0 ≤ informationLoss S P s := by
   exact Finset.sum_nonneg fun _ _ => abs_nonneg _
+
 
 
 theorem decomposable_iff_independent (S : InfoSystem) (P : BiPartition S) (s : S.State) :
@@ -75,10 +87,12 @@ theorem decomposable_iff_independent (S : InfoSystem) (P : BiPartition S) (s : S
   · exact fun h => Finset.sum_eq_zero fun x _ => by simp +decide [ h ] ;
 
 
+
 /-- A conscious system: one where every partition loses information -/
 structure ConsciousSystem extends InfoSystem where
   irreducible : ∀ (P : BiPartition toInfoSystem) (s : toInfoSystem.State),
     0 < informationLoss toInfoSystem P s
+
 
 
 theorem conscious_not_decomposable (C : ConsciousSystem)
@@ -88,6 +102,7 @@ theorem conscious_not_decomposable (C : ConsciousSystem)
   have h_pos : ∀ P : BiPartition (C.toInfoSystem), ∀ s : C.State, 0 < informationLoss (C.toInfoSystem) P s := by
     exact C.irreducible;
   exact ne_of_gt ( h_pos P s )
+
 
 
 end

@@ -7,12 +7,17 @@ Declarations: 4
 
 import Mathlib
 
+/-- [Section: # CatalogBuild.Physics.Classical.LightCone
+Auto-generated from theorem catalog database.
+Domain: Physics/Classical
+Declarations: 4] -/
 theorem PhotonState.fuse_assoc (p q r : PhotonState) :
     ((p.fuse q).fuse r).px = (p.fuse (q.fuse r)).px ∧
     ((p.fuse q).fuse r).py = (p.fuse (q.fuse r)).py ∧
     ((p.fuse q).fuse r).energy = (p.fuse (q.fuse r)).energy := by
   unfold PhotonState.fuse;
   grind +ring
+
 
 
 /-- The identity photon: (1, 0, 1) representing a photon
@@ -27,11 +32,13 @@ def PhotonState.identity : PhotonState where
   energy_pos := by norm_num
 
 
+
 theorem PhotonState.identity_fuse (p : PhotonState) :
     (PhotonState.identity.fuse p).px = p.px ∧
     (PhotonState.identity.fuse p).py = p.py ∧
     (PhotonState.identity.fuse p).energy = p.energy := by
   unfold PhotonState.fuse PhotonState.identity ; aesop;
+
 
 
 theorem light_cone_triangulation (x₁ x₂ r₁ r₂ x y : ℝ)
@@ -40,3 +47,4 @@ theorem light_cone_triangulation (x₁ x₂ r₁ r₂ x y : ℝ)
     (hne : x₁ ≠ x₂) :
     x = (r₁^2 - r₂^2 + x₂^2 - x₁^2) / (2 * (x₂ - x₁)) := by
   rw [ eq_div_iff ] <;> cases lt_or_gt_of_ne hne <;> nlinarith
+

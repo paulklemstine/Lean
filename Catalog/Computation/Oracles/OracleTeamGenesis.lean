@@ -19,15 +19,18 @@ structure TeamOracle (α : Type*) where
   stable : ∀ x, ask (ask x) = ask x
 
 
+
 /-- The knowledge base (fixed-point set) of an oracle. -/
 def TeamOracle.truths {α : Type*} (O : TeamOracle α) : Set α :=
   {x | O.ask x = x}
+
 
 
 /-- An oracle's output is always a truth (fixed point). -/
 theorem TeamOracle.output_is_truth {α : Type*} (O : TeamOracle α) (x : α) :
     O.ask x ∈ O.truths :=
   O.stable x
+
 
 
 /-- The image of an oracle equals its truth set. -/
@@ -42,15 +45,18 @@ theorem TeamOracle.range_eq_truths {α : Type*} (O : TeamOracle α) :
 -- ═══════════════════════════════════════════════════════════════════════════════
 
 
+
 /-- **Theos**: The God Oracle is the identity — it knows everything.
 Its knowledge base is the entire universe. -/
 def Theos (α : Type*) : TeamOracle α :=
   ⟨id, fun _ => rfl⟩
 
 
+
 /-- God's knowledge base is everything. -/
 theorem Theos.omniscient (α : Type*) : (Theos α).truths = univ := by
   ext x; simp [Theos, TeamOracle.truths]
+
 
 
 /-- Every element is a fixed point of God. -/
@@ -61,10 +67,12 @@ theorem Theos.all_fixed (α : Type*) (x : α) : (Theos α).ask x = x := rfl
 -- ═══════════════════════════════════════════════════════════════════════════════
 
 
+
 /-- **Empeira** (Experimenter): The Boolean oracle — tests propositions
 computationally. Returns true or false, always truthfully. -/
 def Empeira : TeamOracle Bool :=
   ⟨id, fun _ => rfl⟩
+
 
 
 /-- Empeira knows all Boolean values. -/
@@ -72,9 +80,11 @@ theorem Empeira.complete : Empeira.truths = univ := by
   ext x; simp [Empeira, TeamOracle.truths]
 
 
+
 /-- **Logos** (Theorist): Constant oracle — always returns the proven theorem. -/
 def Logos {α : Type*} (truth : α) : TeamOracle α :=
   ⟨fun _ => truth, fun _ => rfl⟩
+
 
 
 /-- Logos has exactly one truth. -/
@@ -87,11 +97,13 @@ theorem Logos.singleton_truth {α : Type*} (t : α) :
 -- ═══════════════════════════════════════════════════════════════════════════════
 
 
+
 /-- Composing two oracles (when the composition is idempotent). -/
 def TeamOracle.compose {α : Type*} (O₁ O₂ : TeamOracle α)
     (h : ∀ x, O₁.ask (O₂.ask (O₁.ask (O₂.ask x))) = O₁.ask (O₂.ask x)) :
     TeamOracle α :=
   ⟨O₁.ask ∘ O₂.ask, h⟩
+
 
 
 /-- When two oracles commute, their composition is an oracle. -/
@@ -103,6 +115,7 @@ theorem TeamOracle.commuting_compose {α : Type*} (O₁ O₂ : TeamOracle α)
       = O₁.ask (O₁.ask (O₂.ask (O₂.ask x))) := by rw [hcomm (O₂.ask x)]
     _ = O₁.ask (O₂.ask (O₂.ask x)) := by rw [O₁.stable]
     _ = O₁.ask (O₂.ask x) := by rw [O₂.stable]
+
 
 
 /-- Commuting oracles' fixed points of composition are fixed by both. -/
@@ -123,9 +136,11 @@ theorem TeamOracle.commuting_truths_subset {α : Type*} (O₁ O₂ : TeamOracle 
 -- ═══════════════════════════════════════════════════════════════════════════════
 
 
+
 /-- A research cycle: apply oracles in sequence. -/
 def researchCycle {α : Type*} (oracles : List (TeamOracle α)) : α → α :=
   oracles.foldl (fun f O => O.ask ∘ f) id
+
 
 
 /-- The empty research cycle is the identity. -/
@@ -134,10 +149,12 @@ theorem researchCycle_nil {α : Type*} :
   simp [researchCycle]
 
 
+
 /-- A single-oracle cycle is just consulting that oracle. -/
 theorem researchCycle_singleton {α : Type*} (O : TeamOracle α) :
     researchCycle [O] = O.ask := by
   simp [researchCycle]
+
 
 
 /-- Iterating a research cycle converges if the cycle is idempotent. -/
@@ -160,14 +177,17 @@ theorem researchCycle_convergence {α : Type*} (oracles : List (TeamOracle α))
 -- ═══════════════════════════════════════════════════════════════════════════════
 
 
+
 /-- An oracle O₂ refines O₁ if O₂'s truths ⊆ O₁'s truths. -/
 def TeamOracle.refines {α : Type*} (O₂ O₁ : TeamOracle α) : Prop :=
   O₂.truths ⊆ O₁.truths
 
 
+
 /-- Refinement is reflexive. -/
 theorem TeamOracle.refines_refl {α : Type*} (O : TeamOracle α) :
     O.refines O := Subset.rfl
+
 
 
 /-- Refinement is transitive. -/
@@ -177,10 +197,12 @@ theorem TeamOracle.refines_trans {α : Type*} (O₁ O₂ O₃ : TeamOracle α)
   Subset.trans h₁₂ h₂₃
 
 
+
 /-- Every oracle refines God (Theos knows everything). -/
 theorem TeamOracle.refines_god {α : Type*} (O : TeamOracle α) :
     O.refines (Theos α) := by
   intro x _; simp [Theos, TeamOracle.truths]
+
 
 
 /-- God refines only oracles with full knowledge. -/
@@ -191,6 +213,7 @@ theorem TeamOracle.god_refines_iff {α : Type*} (O : TeamOracle α) :
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- §7: CONVERGENCE AND CONSENSUS
 -- ═══════════════════════════════════════════════════════════════════════════════
+
 
 
 /-- For any oracle, iterating n ≥ 1 times equals applying once. -/
@@ -213,14 +236,17 @@ theorem oracle_iteration_stable {α : Type*} (O : TeamOracle α)
 -- ═══════════════════════════════════════════════════════════════════════════════
 
 
+
 /-- **Anakyklos** (Iterator): wraps any oracle and guarantees convergence.
 Since oracles are already idempotent, one step always suffices. -/
 def Anakyklos {α : Type*} (O : TeamOracle α) : TeamOracle α := O
 
 
+
 /-- Anakyklos preserves the oracle's truths. -/
 theorem Anakyklos.preserves_truths {α : Type*} (O : TeamOracle α) :
     (Anakyklos O).truths = O.truths := rfl
+
 
 
 /-- The distance from truth is zero after one consultation. -/
@@ -231,6 +257,7 @@ theorem one_step_to_truth {α : Type*} (O : TeamOracle α) (x : α) :
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- §9: RESEARCH NOTES — The Scribe's Log
 -- ═══════════════════════════════════════════════════════════════════════════════
+
 
 
 end

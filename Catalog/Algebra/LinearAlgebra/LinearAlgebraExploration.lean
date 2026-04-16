@@ -7,9 +7,14 @@ Declarations: 24
 
 import Mathlib
 
+/-- [Section: # CatalogBuild.Algebra.LinearAlgebra.LinearAlgebraExploration
+Auto-generated from theorem catalog database.
+Domain: Algebra/LinearAlgebra
+Declarations: 24] -/
 theorem det_mul_comm (n : ℕ) (A B : Matrix (Fin n) (Fin n) ℤ) :
     Matrix.det (A * B) = Matrix.det A * Matrix.det B := by
   exact Matrix.det_mul A B
+
 
 
 theorem det_transpose' (n : ℕ) (A : Matrix (Fin n) (Fin n) ℤ) :
@@ -17,13 +22,16 @@ theorem det_transpose' (n : ℕ) (A : Matrix (Fin n) (Fin n) ℤ) :
   rw [ Matrix.det_transpose ]
 
 
+
 theorem det_smul' (n : ℕ) (c : ℤ) (A : Matrix (Fin n) (Fin n) ℤ) :
     Matrix.det (c • A) = c ^ Fintype.card (Fin n) * Matrix.det A := by
   rw [ Matrix.det_smul, mul_comm ]
 
 
+
 theorem det_one' (n : ℕ) : Matrix.det (1 : Matrix (Fin n) (Fin n) ℤ) = 1 := by
   convert Matrix.det_one
+
 
 
 theorem det_2x2 (a b c d : ℤ) :
@@ -31,9 +39,11 @@ theorem det_2x2 (a b c d : ℤ) :
   bound
 
 
+
 theorem det_diag_2x2 (a d : ℤ) :
     Matrix.det !![a, 0; 0, d] = a * d := by
   simp +decide [ Matrix.det_fin_two ]
+
 
 
 theorem trace_add' (n : ℕ) (A B : Matrix (Fin n) (Fin n) ℤ) :
@@ -41,9 +51,11 @@ theorem trace_add' (n : ℕ) (A B : Matrix (Fin n) (Fin n) ℤ) :
   exact Matrix.trace_add A B
 
 
+
 theorem trace_smul' (n : ℕ) (c : ℤ) (A : Matrix (Fin n) (Fin n) ℤ) :
     Matrix.trace (c • A) = c * Matrix.trace A := by
   simp +decide [ Matrix.trace, Finset.mul_sum _ _ _, Matrix.smul_eq_diagonal_mul ]
+
 
 
 theorem trace_mul_comm' (n : ℕ) (A B : Matrix (Fin n) (Fin n) ℤ) :
@@ -51,9 +63,11 @@ theorem trace_mul_comm' (n : ℕ) (A B : Matrix (Fin n) (Fin n) ℤ) :
   rw [ Matrix.trace_mul_comm ]
 
 
+
 theorem trace_one' (n : ℕ) :
     Matrix.trace (1 : Matrix (Fin n) (Fin n) ℤ) = (n : ℤ) := by
   simp +decide [ Matrix.trace ]
+
 
 
 theorem nilpotent_2x2_sq : nilpotent_2x2 * nilpotent_2x2 = 0 := by
@@ -61,9 +75,11 @@ theorem nilpotent_2x2_sq : nilpotent_2x2 * nilpotent_2x2 = 0 := by
   ext i j; fin_cases i <;> fin_cases j <;> norm_num [ nilpotent_2x2 ]
 
 
+
 theorem nilpotent_2x2_trace : Matrix.trace nilpotent_2x2 = 0 := by
   -- The trace of a matrix is the sum of its diagonal elements.
   simp [nilpotent_2x2, Matrix.trace]
+
 
 
 theorem nilpotent_2x2_det : Matrix.det nilpotent_2x2 = 0 := by
@@ -71,8 +87,10 @@ theorem nilpotent_2x2_det : Matrix.det nilpotent_2x2 = 0 := by
   simp [nilpotent_2x2, Matrix.det_fin_two]
 
 
+
 /-- The rotation matrix R(90°) over ℤ: [[0,-1],[1,0]] -/
 def rotation_90 : Matrix (Fin 2) (Fin 2) ℤ := !![0, -1; 1, 0]
+
 
 
 theorem rotation_90_det : Matrix.det rotation_90 = 1 := by
@@ -80,9 +98,11 @@ theorem rotation_90_det : Matrix.det rotation_90 = 1 := by
   simp [rotation_90, Matrix.det_fin_two]
 
 
+
 theorem rotation_90_sq : rotation_90 * rotation_90 = -1 := by
   -- Let's compute the product of the rotation matrix with itself.
   ext i j; fin_cases i <;> fin_cases j <;> norm_num [rotation_90]
+
 
 
 theorem rotation_90_fourth : rotation_90 * rotation_90 * rotation_90 * rotation_90 = 1 := by
@@ -90,13 +110,16 @@ theorem rotation_90_fourth : rotation_90 * rotation_90 * rotation_90 * rotation_
   simp +decide [rotation_90]
 
 
+
 theorem proj_trace : Matrix.trace proj_2x2 = 1 := by
   -- The trace of a matrix is the sum of its diagonal elements. For the projection matrix proj_2x2, the diagonal elements are 1 and 0.
   simp [proj_2x2, Matrix.trace]
 
 
+
 theorem proj_det : Matrix.det proj_2x2 = 0 := by
   native_decide +revert
+
 
 
 theorem cayley_hamilton_2x2' (A : Matrix (Fin 2) (Fin 2) ℤ) :
@@ -105,9 +128,11 @@ theorem cayley_hamilton_2x2' (A : Matrix (Fin 2) (Fin 2) ℤ) :
   ext i j ; fin_cases i <;> fin_cases j <;> simpa [ Matrix.mul_apply, Matrix.smul_eq_diagonal_mul ] using by ring;
 
 
+
 theorem involution_det (A : Matrix (Fin 2) (Fin 2) ℤ) (hA : A * A = 1) :
     Matrix.det A = 1 ∨ Matrix.det A = -1 := by
   exact Int.eq_one_or_neg_one_of_mul_eq_one <| by simpa using congr_arg Matrix.det hA;
+
 
 
 theorem complex_structure_det (A : Matrix (Fin 2) (Fin 2) ℤ) (hA : A * A = -1) :
@@ -117,13 +142,16 @@ theorem complex_structure_det (A : Matrix (Fin 2) (Fin 2) ℤ) (hA : A * A = -1)
   cases le_or_gt 0 ( A 0 1 ) <;> cases le_or_gt 0 ( A 1 0 ) <;> nlinarith [ Matrix.det_fin_two A ]
 
 
+
 theorem kronecker_diag {n : ℕ} (i : Fin n) :
     (1 : Matrix (Fin n) (Fin n) ℤ) i i = 1 := by
   exact?
+
 
 
 theorem kronecker_off_diag {n : ℕ} (i j : Fin n) (hij : i ≠ j) :
     (1 : Matrix (Fin n) (Fin n) ℤ) i j = 0 := by
   -- Since $i \neq j$, the entry at $(i, j)$ in the identity matrix is $0$.
   simp [Matrix.one_apply, hij]
+
 

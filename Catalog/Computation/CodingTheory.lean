@@ -17,15 +17,18 @@ theorem singleton_bound_abstract {α β : Type*} [Fintype α] [Fintype β]
   le_trans (Fintype.card_le_of_injective f hf) hM
 
 
+
 /-- Hamming distance between two strings: number of positions where they differ. -/
 def hammingDist' {n : ℕ} {α : Type*} [DecidableEq α] (x y : Fin n → α) : ℕ :=
   (Finset.univ.filter fun i => x i ≠ y i).card
+
 
 
 /-- Hamming distance is symmetric. -/
 theorem hammingDist'_comm {n : ℕ} {α : Type*} [DecidableEq α] (x y : Fin n → α) :
     hammingDist' x y = hammingDist' y x := by
   unfold hammingDist'; congr 1; ext i; simp [ne_comm]
+
 
 
 /-- Hamming distance is zero iff strings are equal. -/
@@ -35,11 +38,13 @@ theorem hammingDist'_eq_zero {n : ℕ} {α : Type*} [DecidableEq α] (x y : Fin 
   simp [Finset.card_eq_zero, Finset.filter_eq_empty_iff, funext_iff]
 
 
+
 /-- Hamming distance is at most `n`. -/
 theorem hammingDist'_le {n : ℕ} {α : Type*} [DecidableEq α] (x y : Fin n → α) :
     hammingDist' x y ≤ n := by
   unfold hammingDist'
   exact le_trans (Finset.card_filter_le _ _) (by simp)
+
 
 
 /-- Triangle inequality for Hamming distance. -/
@@ -55,9 +60,11 @@ theorem hammingDist'_triangle {n : ℕ} {α : Type*} [DecidableEq α]
     _ ≤ _ := Finset.card_union_le _ _
 
 
+
 /-- Volume of a Hamming ball of radius `r` in `{0,...,q-1}^n`. -/
 noncomputable def hammingBallVolume (q n r : ℕ) : ℕ :=
   ∑ i ∈ Finset.range (r + 1), Nat.choose n i * (q - 1) ^ i
+
 
 
 /-- The Hamming ball volume is positive. -/
@@ -69,6 +76,7 @@ theorem hammingBallVolume_pos (q n r : ℕ) :
   simp at this
 
 
+
 /-- **Hamming bound**: `|C| * V(n, t) ≤ q^n` for a `t`-error-correcting code. -/
 theorem hamming_bound_abstract (q n t : ℕ)
     (C : Finset (Fin n → Fin q))
@@ -78,6 +86,11 @@ theorem hamming_bound_abstract (q n t : ℕ)
   exact Nat.le_div_iff_mul_le hV |>.mpr hpacking
 
 
+
+/-- [Section: # CatalogBuild.Computation.CodingTheory
+Auto-generated from theorem catalog database.
+Domain: Computation
+Declarations: 11] -/
 theorem plotkin_bound (n d : ℕ) (hd : n < 2 * d)
     (C : Finset (Fin n → Bool))
     (hmin_dist : ∀ x ∈ C, ∀ y ∈ C, x ≠ y → d ≤ hammingDist' x y)
@@ -116,10 +129,12 @@ theorem plotkin_bound (n d : ℕ) (hd : n < 2 * d)
   nlinarith [ mul_pos ( by linarith : 0 < List.length ‹_› + 1 ) ( by linarith : 0 < List.length ‹_› + 1 ) ]
 
 
+
 /-- **Compression-correction tradeoff**: An injective encoding from `n` bits to
 `n - k` bits means we've used fewer bits, but it requires `k ≥ 1` for nontrivial
 compression, consuming redundancy that could be used for error correction. -/
 theorem compression_correction_tradeoff (n k : ℕ) (hk : 0 < k) (hkn : k ≤ n) :
     n - k < n := by omega
+
 
 end

@@ -12,6 +12,11 @@ import Mathlib
 def antiDiagonal (f : α → Set α) : Set α := {x | x ∉ f x}
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Forbidden.CantorsDiabolicalDiagonal
+Auto-generated from theorem catalog database.
+Domain: Speculative/Forbidden
+Declarations: 6] -/
 theorem antiDiagonal_not_in_range (f : α → Set α) :
     antiDiagonal f ∉ Set.range f := by
   -- Assume for contradiction that the anti-diagonal is in the range of f.
@@ -19,6 +24,7 @@ theorem antiDiagonal_not_in_range (f : α → Set α) :
   obtain ⟨a, ha⟩ : ∃ a, f a = antiDiagonal f := by
     exact h_contra;
   unfold antiDiagonal at ha; replace ha := Set.ext_iff.mp ha a; aesop;
+
 
 
 theorem naturals_inject_but_cannot_surject :
@@ -31,8 +37,10 @@ theorem naturals_inject_but_cannot_surject :
   contrapose! h_card; aesop;
 
 
+
 theorem injection_to_powerset : ∃ f : α → Set α, Injective f := by
   exact ⟨ fun x => { x }, fun x y h => by simpa using h ⟩
+
 
 
 theorem powerset_strictly_dominates :
@@ -45,7 +53,9 @@ theorem powerset_strictly_dominates :
     exact?
 
 
+
 theorem diagonal_defeats_enumeration (enum : ℕ → (ℕ → Prop)) :
     ∃ g : ℕ → Prop, ∀ n, g ≠ enum n := by
   exact ⟨ fun n => ¬( enum n ) n, fun n => fun h => by have := congr_fun h n; tauto ⟩
+
 

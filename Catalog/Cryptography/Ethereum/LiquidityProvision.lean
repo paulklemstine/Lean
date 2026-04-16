@@ -17,9 +17,15 @@ noncomputable def impermanentLossFactor (r : ℝ) (hr : 0 < r) : ℝ :=
   2 * Real.sqrt r / (1 + r) - 1
 
 
+
+/-- [Section: # CatalogBuild.Cryptography.Ethereum.LiquidityProvision
+Auto-generated from theorem catalog database.
+Domain: Cryptography/Ethereum
+Declarations: 13] -/
 theorem il_nonpositive (r : ℝ) (hr : 0 < r) :
     impermanentLossFactor r hr ≤ 0 := by
   exact sub_nonpos_of_le ( by rw [ div_le_iff₀ <| by positivity ] ; nlinarith [ sq_nonneg ( r - 1 ), Real.mul_self_sqrt hr.le ] )
+
 
 
 theorem il_zero_iff (r : ℝ) (hr : 0 < r) :
@@ -28,10 +34,12 @@ theorem il_zero_iff (r : ℝ) (hr : 0 < r) :
   grind
 
 
+
 theorem il_symmetric (r : ℝ) (hr : 0 < r) :
     impermanentLossFactor r hr = impermanentLossFactor (1/r) (by positivity) := by
   simp +decide [ impermanentLossFactor ];
   grind
+
 
 
 /-- Parameters for LP profitability analysis -/
@@ -46,9 +54,11 @@ structure LPPosition where
   hPeriod : 0 < holdingPeriod
 
 
+
 /-- Value of hodling (not providing liquidity) -/
 noncomputable def hodlValue (lp : LPPosition) : ℝ :=
   lp.initialValue * (1 + lp.priceRatio) / 2
+
 
 
 /-- Value from LP position (pool value + fees earned) -/
@@ -57,11 +67,13 @@ noncomputable def lpValue (lp : LPPosition) : ℝ :=
   lp.initialValue * lp.feeAPR * lp.holdingPeriod
 
 
+
 theorem lp_profitable_iff_fees_exceed_il (lp : LPPosition) :
     hodlValue lp < lpValue lp ↔
     lp.feeAPR * lp.holdingPeriod >
       (1 + lp.priceRatio) / 2 - Real.sqrt lp.priceRatio := by
   unfold hodlValue lpValue; constructor <;> intro h <;> nlinarith [ lp.hValue, lp.hRatio, lp.hFee, lp.hPeriod ] ;
+
 
 
 /-- A concentrated liquidity position with price range [pₐ, p_b] -/
@@ -75,6 +87,7 @@ structure ConcentratedPosition where
   hLiq : 0 < liquidity
 
 
+
 /-- **Capital Efficiency Amplification**: Concentrated liquidity over range
 [pₐ, p_b] provides the same depth as (p_b/pₐ)^(1/2) times more capital
 in a full-range position. -/
@@ -82,9 +95,11 @@ noncomputable def capitalEfficiency (cp : ConcentratedPosition) : ℝ :=
   Real.sqrt (cp.pUpper / cp.pLower)
 
 
+
 theorem capital_efficiency_gt_one (cp : ConcentratedPosition) :
     1 < capitalEfficiency cp := by
   exact Real.lt_sqrt_of_sq_lt ( by rw [ lt_div_iff₀ ] <;> linarith [ cp.hLower, cp.hUpper, cp.hRange ] )
+
 
 
 theorem narrower_range_higher_efficiency
@@ -93,6 +108,7 @@ theorem narrower_range_higher_efficiency
     (h_narrower : cp1.pUpper / cp1.pLower < cp2.pUpper / cp2.pLower) :
     capitalEfficiency cp1 < capitalEfficiency cp2 := by
   exact Real.sqrt_lt_sqrt ( div_nonneg ( le_of_lt cp1.hUpper ) ( le_of_lt cp1.hLower ) ) h_narrower
+
 
 
 /-- **Optimal Fee Theorem**: For a given expected volatility σ and trading
@@ -104,6 +120,7 @@ theorem higher_vol_higher_fee
     -- Impermanent loss scales with σ², so compensation must too
     σ₁ ^ 2 < σ₂ ^ 2 := by
   nlinarith
+
 
 
 end

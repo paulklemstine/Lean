@@ -12,6 +12,7 @@ theorem gaussian_norm_mul' (a b c d : ℤ) :
     (a^2 + b^2) * (c^2 + d^2) = (a*c - b*d)^2 + (a*d + b*c)^2 := by ring
 
 
+
 /-- ℤ[√-5] norms: showing non-unique factorization of 6. -/
 theorem zsqrt_neg5_norms :
     2^2 + 0^2 * 5 = (4 : ℤ) ∧
@@ -21,9 +22,11 @@ theorem zsqrt_neg5_norms :
   ⟨by ring, by ring, by ring, by ring⟩
 
 
+
 /-- x² - 1 = (x-1)(x+1) over ℤ. -/
 theorem factor_diff_squares :
     (X : ℤ[X])^2 - 1 = (X - 1) * (X + 1) := by ring
+
 
 
 /-- x³ - 1 = (x-1)(x²+x+1) over ℤ. -/
@@ -31,9 +34,11 @@ theorem factor_cube_minus_one :
     (X : ℤ[X])^3 - 1 = (X - 1) * (X^2 + X + 1) := by ring
 
 
+
 /-- x⁴ - 1 = (x-1)(x+1)(x²+1) over ℤ. -/
 theorem factor_fourth_power :
     (X : ℤ[X])^4 - 1 = (X - 1) * (X + 1) * (X^2 + 1) := by ring
+
 
 
 /-- Cyclotomic factorization of x⁶ - 1. -/
@@ -41,13 +46,20 @@ theorem cyclotomic_6_divides :
     (X : ℤ[X])^6 - 1 = (X - 1) * (X + 1) * (X^2 + X + 1) * (X^2 - X + 1) := by ring
 
 
+
 /-- √2 is irrational. -/
 theorem sqrt2_irrational' : Irrational (Real.sqrt 2) :=
   irrational_sqrt_two
 
 
+
+/-- [Section: # CatalogBuild.Algebra.Foundations.AlgebraicStructures
+Auto-generated from theorem catalog database.
+Domain: Algebra/Foundations
+Declarations: 15] -/
 theorem sqrt3_irrational : Irrational (Real.sqrt 3) := by
   exact Nat.prime_three.irrational_sqrt
+
 
 
 /-- The quaternion norm is multiplicative (Euler four-square identity). -/
@@ -57,16 +69,19 @@ theorem quaternion_norm_mul' (a b c d e f g h : ℤ) :
     (a*g - b*h + c*e + d*f)^2 + (a*h + b*g - c*f + d*e)^2 := by ring
 
 
+
 /-- [e, f] = h -/
 theorem sl2_bracket_ef' : sl2_e' * sl2_f' - sl2_f' * sl2_e' = sl2_h' := by
   ext i j; fin_cases i <;> fin_cases j <;>
     simp [sl2_e', sl2_f', sl2_h', Matrix.mul_apply, Fin.sum_univ_two]
 
 
+
 /-- [h, e] = 2e -/
 theorem sl2_bracket_he' : sl2_h' * sl2_e' - sl2_e' * sl2_h' = 2 • sl2_e' := by
   ext i j; fin_cases i <;> fin_cases j <;>
     simp [sl2_e', sl2_h', Matrix.mul_apply, Matrix.smul_apply, Fin.sum_univ_two]
+
 
 
 /-- [h, f] = -2f -/
@@ -76,14 +91,18 @@ theorem sl2_bracket_hf' : sl2_h' * sl2_f' - sl2_f' * sl2_h' = -(2 • sl2_f') :=
           Fin.sum_univ_two]
 
 
+
 /-- Trace of sl(2) elements is 0. -/
 theorem sl2_trace_e' : Matrix.trace sl2_e' = 0 := by
   simp [sl2_e', Matrix.trace, Matrix.diag, Fin.sum_univ_two]
+
 
 
 theorem sl2_trace_f' : Matrix.trace sl2_f' = 0 := by
   simp [sl2_f', Matrix.trace, Matrix.diag, Fin.sum_univ_two]
 
 
+
 theorem sl2_trace_h' : Matrix.trace sl2_h' = 0 := by
   simp [sl2_h', Matrix.trace, Matrix.diag, Fin.sum_univ_two]
+

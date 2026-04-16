@@ -13,13 +13,16 @@ noncomputable section
 def EMLd (a b : ℝ) : ℝ := Real.exp a - Real.log b
 
 
+
 /-- The full EML closure (union over all depths). -/
 def fullEMLClosure (S : Set ℝ) : Set ℝ := ⋃ n, EMLClosure n S
+
 
 
 /-- 1 is in the seed set. -/
 theorem one_in_closure : (1 : ℝ) ∈ EMLClosure 0 {1} := by
   simp [EMLClosure]
+
 
 
 /-- EML closure is monotone in depth. -/
@@ -30,10 +33,12 @@ theorem EMLClosure_mono (S : Set ℝ) (n : ℕ) :
   exact Or.inl hx
 
 
+
 /-- Log-split: EML(x, y·z) = EML(x, y) - ln(z) for y, z > 0. -/
 theorem EMLd_log_split (x y z : ℝ) (hy : 0 < y) (hz : 0 < z) :
     EMLd x (y * z) = EMLd x y - Real.log z := by
   simp [EMLd, Real.log_mul hy.ne' hz.ne']; ring
+
 
 
 /-- EML(x, 1) = exp(x). -/
@@ -41,9 +46,11 @@ theorem EMLd_exp (x : ℝ) : EMLd x 1 = Real.exp x := by
   simp [EMLd, Real.log_one]
 
 
+
 /-- EML(0, x) = 1 - ln(x). -/
 theorem EMLd_one_minus_log (x : ℝ) : EMLd 0 x = 1 - Real.log x := by
   simp [EMLd]
+
 
 
 /-- EML(0, x) maps values in (1, e) to (0, 1). -/
@@ -58,11 +65,13 @@ theorem EMLd_maps_to_unit_interval (x : ℝ) (hx1 : 1 < x) (hxe : x < Real.exp 1
     linarith [Real.log_pos hx1]
 
 
+
 /-- exp maps any positive value to a value > 1. -/
 theorem EMLd_amplifies (x : ℝ) (hx : 0 < x) :
     EMLd x 1 > 1 := by
   simp [EMLd, Real.log_one]
   linarith [Real.add_one_le_exp x]
+
 
 
 /-- The composition EML(EML(0, x), 1) = exp(1 - ln(x)) = e/x for x > 0. -/
@@ -71,10 +80,12 @@ theorem EMLd_inv_scaled (x : ℝ) (hx : 0 < x) :
   simp [EMLd, Real.log_one, Real.exp_sub, Real.exp_log hx]
 
 
+
 /-- ln recovery: EML(0, exp(EML(0, x))) = ln(x). -/
 theorem EMLd_recovers_ln (x : ℝ) :
     EMLd 0 (Real.exp (EMLd 0 x)) = Real.log x := by
   simp [EMLd, Real.log_exp]
+
 
 
 /-- Double negation: EML(0, exp(EML(0, exp(x)))) = x. -/
@@ -83,12 +94,18 @@ theorem EMLd_double_neg (x : ℝ) :
   simp [EMLd, Real.log_exp]
 
 
+
 /-- Shift identity: EML(x + c, 1) = exp(c) · exp(x). -/
 theorem EMLd_shift (x c : ℝ) :
     EMLd (x + c) 1 = Real.exp c * Real.exp x := by
   simp [EMLd, Real.log_one, Real.exp_add, mul_comm]
 
 
+
+/-- [Section: # CatalogBuild.Computation.DensityTheory
+Auto-generated from theorem catalog database.
+Domain: Computation
+Declarations: 15] -/
 theorem e_irrational : Irrational (Real.exp 1) := by
   by_contra h;
   -- Assume that $e$ is rational, so there exist positive integers $p$ and $q$ such that $e = p/q$.
@@ -134,9 +151,11 @@ theorem e_irrational : Irrational (Real.exp 1) := by
   · linarith [ show ( 0 : ℝ ) ≤ ∑' k : ℕ, ( q.factorial : ℝ ) / ( q + 1 + k ).factorial by exact tsum_nonneg fun _ => by positivity ]
 
 
+
 /-- exp(exp(1)) is irrational. -/
 theorem exp_e_irrational : Irrational (Real.exp (Real.exp 1)) := by
   sorry
+
 
 
 end

@@ -19,6 +19,7 @@ class TemporalOrder (T : Type*) extends LinearOrder T, DenselyOrdered T,
 attribute [instance] TemporalOrder.nonempty
 
 
+
 /-- Between any two distinct real moments, there exists a rational moment.
 This is the density of ℚ in ℝ — time's rational skeleton. -/
 theorem rational_moment_between {t₁ t₂ : ℝ} (h : t₁ < t₂) :
@@ -26,8 +27,10 @@ theorem rational_moment_between {t₁ t₂ : ℝ} (h : t₁ < t₂) :
   exists_rat_btwn h
 
 
+
 /-- Duration between two moments on the real line. -/
 def duration (t₁ t₂ : ℝ) : ℝ := |t₂ - t₁|
+
 
 
 /-- Duration is symmetric. -/
@@ -35,14 +38,17 @@ theorem duration_symm (t₁ t₂ : ℝ) : duration t₁ t₂ = duration t₂ t�
   simp [duration, abs_sub_comm]
 
 
+
 /-- Duration is non-negative. -/
 theorem duration_nonneg (t₁ t₂ : ℝ) : 0 ≤ duration t₁ t₂ :=
   abs_nonneg _
 
 
+
 /-- Duration is zero iff the moments coincide. -/
 theorem duration_eq_zero_iff (t₁ t₂ : ℝ) : duration t₁ t₂ = 0 ↔ t₁ = t₂ := by
   simp [duration, abs_eq_zero, sub_eq_zero, eq_comm]
+
 
 
 /-- Duration satisfies the triangle inequality. -/
@@ -52,6 +58,7 @@ theorem duration_triangle (t₁ t₂ t₃ : ℝ) :
   have : t₃ - t₁ = (t₂ - t₁) + (t₃ - t₂) := by ring
   rw [this]
   exact abs_add_le (t₂ - t₁) (t₃ - t₂)
+
 
 
 /-- **Additivity of Duration**: When b is between a and c, duration splits cleanly.
@@ -64,13 +71,16 @@ theorem duration_additive {t₁ t₂ t₃ : ℝ} (h₁ : t₁ ≤ t₂) (h₂ : 
   ring
 
 
+
 /-- The rationals are countable — time has a countable skeleton. -/
 theorem rationals_countable : Countable ℚ := inferInstance
+
 
 
 /-- The rationals are dense in the reals — the skeleton is everywhere dense. -/
 theorem rationals_dense_in_reals : DenseRange ((↑) : ℚ → ℝ) :=
   Rat.isDenseEmbedding_coe_real.dense
+
 
 
 /-- A clock is a monotone (order-preserving) function from time to a display type. -/
@@ -81,10 +91,12 @@ structure Clock (T : Type*) (D : Type*) [Preorder T] [Preorder D] where
   monotone_read : Monotone read
 
 
+
 /-- An ideal clock is an order embedding — it perfectly preserves temporal order. -/
 structure IdealClock (T : Type*) (D : Type*) [Preorder T] [Preorder D] where
   /-- The embedding -/
   embed : T ↪o D
+
 
 
 /-- Every ideal clock is a clock. -/
@@ -94,9 +106,11 @@ def IdealClock.toClock {T D : Type*} [Preorder T] [Preorder D]
   monotone_read := c.embed.monotone
 
 
+
 /-- The identity function is an ideal clock — time reads itself perfectly. -/
 def IdealClock.identity (T : Type*) [Preorder T] : IdealClock T T where
   embed := (OrderIso.refl T).toOrderEmbedding
+
 
 
 /-- Composition of ideal clocks is an ideal clock. -/
@@ -105,10 +119,12 @@ def IdealClock.comp {T D₁ D₂ : Type*} [Preorder T] [Preorder D₁] [Preorder
   embed := c₁.embed.trans c₂.embed
 
 
+
 /-- A spacetime event in 1+1 dimensions (one time, one space). -/
 structure Event1 where
   t : ℝ  -- time coordinate
   x : ℝ  -- space coordinate
+
 
 
 /-- A spacetime event in 1+3 dimensions. -/
@@ -119,10 +135,12 @@ structure Event where
   z : ℝ  -- space coordinate 3
 
 
+
 /-- The Minkowski interval (squared) between two events in 1+1D.
 Negative = timelike, zero = lightlike, positive = spacelike. -/
 def minkowskiInterval1 (e₁ e₂ : Event1) : ℝ :=
   -(e₂.t - e₁.t)^2 + (e₂.x - e₁.x)^2
+
 
 
 /-- The Minkowski interval (squared) between two events in 1+3D. -/
@@ -130,9 +148,11 @@ def minkowskiInterval (e₁ e₂ : Event) : ℝ :=
   -(e₂.t - e₁.t)^2 + (e₂.x - e₁.x)^2 + (e₂.y - e₁.y)^2 + (e₂.z - e₁.z)^2
 
 
+
 /-- Two events are **timelike separated** if the interval is negative. -/
 def timelikeSeparated (e₁ e₂ : Event) : Prop :=
   minkowskiInterval e₁ e₂ < 0
+
 
 
 /-- Two events are **lightlike separated** if the interval is zero. -/
@@ -140,14 +160,17 @@ def lightlikeSeparated (e₁ e₂ : Event) : Prop :=
   minkowskiInterval e₁ e₂ = 0
 
 
+
 /-- Two events are **spacelike separated** if the interval is positive. -/
 def spacelikeSeparated (e₁ e₂ : Event) : Prop :=
   minkowskiInterval e₁ e₂ > 0
 
 
+
 /-- Two events are **causally connected** if timelike or lightlike separated. -/
 def causallyConnected (e₁ e₂ : Event) : Prop :=
   minkowskiInterval e₁ e₂ ≤ 0
+
 
 
 /-- The Minkowski interval is symmetric. -/
@@ -156,10 +179,12 @@ theorem minkowskiInterval_symm (e₁ e₂ : Event) :
   simp [minkowskiInterval]; ring
 
 
+
 /-- An event is lightlike separated from itself. -/
 theorem minkowskiInterval_self (e : Event) :
     minkowskiInterval e e = 0 := by
   simp [minkowskiInterval]
+
 
 
 /-- Every event is causally connected to itself. -/
@@ -167,10 +192,12 @@ theorem causallyConnected_self (e : Event) : causallyConnected e e := by
   simp [causallyConnected, minkowskiInterval_self]
 
 
+
 /-- Causal connection is symmetric. -/
 theorem causallyConnected_symm {e₁ e₂ : Event} :
     causallyConnected e₁ e₂ ↔ causallyConnected e₂ e₁ := by
   simp [causallyConnected, minkowskiInterval_symm]
+
 
 
 /-- **The Light Cone Theorem** (1+1D): An event at the origin is causally connected
@@ -187,8 +214,10 @@ theorem light_cone_characterization (t x : ℝ) :
   · intro h; nlinarith [abs_nonneg x, abs_nonneg t, sq_nonneg (|x| + |t|)]
 
 
+
 /-- The Lorentz factor γ for velocity v (|v| < 1). -/
 def lorentzGamma (v : ℝ) : ℝ := 1 / Real.sqrt (1 - v^2)
+
 
 
 /-- Apply a Lorentz boost with velocity v to a 1+1D event. -/
@@ -197,8 +226,14 @@ def lorentzBoost (v : ℝ) (e : Event1) : Event1 where
   x := lorentzGamma v * (e.x - v * e.t)
 
 
+
+/-- [Section: # CatalogBuild.Logic.FormalTime
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 57] -/
 theorem lorentzGamma_ge_one {v : ℝ} (hv : |v| < 1) : 1 ≤ lorentzGamma v := by
   exact one_le_one_div ( Real.sqrt_pos.mpr ( by nlinarith [ abs_lt.mp hv ] ) ) ( Real.sqrt_le_iff.mpr ⟨ by nlinarith [ abs_lt.mp hv ], by nlinarith [ abs_lt.mp hv ] ⟩ )
+
 
 
 theorem lorentz_boost_preserves_interval {v : ℝ} (hv : v^2 < 1) (e₁ e₂ : Event1) :
@@ -208,11 +243,13 @@ theorem lorentz_boost_preserves_interval {v : ℝ} (hv : v^2 < 1) (e₁ e₂ : E
   grind
 
 
+
 /-- **Time dilation**: A clock at rest measures Δt; a moving observer measures γ · Δt. -/
 theorem time_dilation (v Δt : ℝ) :
     let e₂ : Event1 := ⟨Δt, 0⟩
     (lorentzBoost v e₂).t = lorentzGamma v * Δt := by
   simp [lorentzBoost, lorentzGamma]
+
 
 
 /-- An **Arrow of Time** is a monotonically non-decreasing entropy function. -/
@@ -221,10 +258,12 @@ structure ArrowOfTime (T : Type*) [Preorder T] where
   monotone_entropy : Monotone entropy
 
 
+
 /-- A **Strict Arrow of Time** — entropy strictly increases. -/
 structure StrictArrow (T : Type*) [Preorder T] where
   entropy : T → ℝ
   strict_mono_entropy : StrictMono entropy
+
 
 
 /-- A strict arrow is an arrow. -/
@@ -233,9 +272,11 @@ def StrictArrow.toArrow {T : Type*} [LinearOrder T] (a : StrictArrow T) : ArrowO
   monotone_entropy := a.strict_mono_entropy.monotone
 
 
+
 /-- A strict arrow is injective — distinct moments have distinct entropies. -/
 theorem StrictArrow.injective {T : Type*} [LinearOrder T] (a : StrictArrow T) :
     Injective a.entropy := a.strict_mono_entropy.injective
+
 
 
 /-- **Time reversal breaks the arrow**: strictly increasing → time-reversed is
@@ -247,6 +288,7 @@ theorem time_reversal_breaks_strict_arrow {f : ℝ → ℝ} (hf : StrictMono f) 
   exact hf (neg_lt_neg hab)
 
 
+
 /-- The identity function on ℝ is a trivial strict arrow —
 "time is its own clock." -/
 def trivialArrow : StrictArrow ℝ where
@@ -254,9 +296,11 @@ def trivialArrow : StrictArrow ℝ where
   strict_mono_entropy := strictMono_id
 
 
+
 /-- A discrete dynamical system: a set with a "next step" function. -/
 structure DiscreteTimeDynamics (X : Type*) where
   step : X → X
+
 
 
 /-- The state after n steps. -/
@@ -265,16 +309,19 @@ def DiscreteTimeDynamics.evolve {X : Type*} (d : DiscreteTimeDynamics X) (x : X)
   | n + 1 => d.step (d.evolve x n)
 
 
+
 /-- A point is **periodic** with period p > 0. -/
 def DiscreteTimeDynamics.isPeriodic {X : Type*} (d : DiscreteTimeDynamics X)
     (x : X) (p : ℕ) : Prop :=
   0 < p ∧ d.evolve x p = x
 
 
+
 /-- A point is a **fixed point**. -/
 def DiscreteTimeDynamics.isFixedPoint {X : Type*} (d : DiscreteTimeDynamics X)
     (x : X) : Prop :=
   d.step x = x
+
 
 
 /-- A fixed point is periodic with period 1. -/
@@ -284,6 +331,7 @@ theorem DiscreteTimeDynamics.fixedPoint_isPeriodic {X : Type*}
   refine ⟨Nat.one_pos, ?_⟩
   simp [DiscreteTimeDynamics.evolve, DiscreteTimeDynamics.isFixedPoint] at *
   exact hx
+
 
 
 theorem periodic_orbit_finite {X : Type*} (d : DiscreteTimeDynamics X) (x : X)
@@ -304,8 +352,10 @@ theorem periodic_orbit_finite {X : Type*} (d : DiscreteTimeDynamics X) (x : X)
   exact Set.Finite.subset ( Set.toFinite _ ) ( Set.range_subset_iff.mpr fun n => h_orbit_subset n n.zero_le )
 
 
+
 /-- Projection from linear time to cyclic time (period 1). -/
 def toCyclicTime (t : ℝ) : ℝ := Int.fract t
+
 
 
 /-- Cyclic time projection is periodic with period 1. -/
@@ -314,9 +364,11 @@ theorem cyclicTime_periodic (t : ℝ) : toCyclicTime (t + 1) = toCyclicTime t :=
   exact_mod_cast Int.fract_add_natCast t 1
 
 
+
 /-- Cyclic time values lie in [0, 1). -/
 theorem cyclicTime_mem_Ico (t : ℝ) : toCyclicTime t ∈ Set.Ico (0 : ℝ) 1 :=
   ⟨Int.fract_nonneg t, Int.fract_lt_one t⟩
+
 
 
 /-- A proof is a finite sequence of steps — a temporal process. -/
@@ -325,9 +377,11 @@ structure FormalProof (State : Type*) where
   nonempty : states ≠ []
 
 
+
 /-- The initial state of a proof (the original goal). -/
 def FormalProof.initial {State : Type*} (p : FormalProof State) : State :=
   p.states.head p.nonempty
+
 
 
 /-- The final state of a proof (QED). -/
@@ -335,9 +389,11 @@ def FormalProof.final {State : Type*} (p : FormalProof State) : State :=
   p.states.getLast p.nonempty
 
 
+
 /-- The duration of a proof in steps. -/
 def FormalProof.proofLength {State : Type*} (p : FormalProof State) : ℕ :=
   p.states.length - 1
+
 
 
 /-- **The Oracle's Fixed Point**: the research function is idempotent at
@@ -346,12 +402,15 @@ def oracleFixedPoint {T : Type*} (research : T → T) (theory : T) : Prop :=
   research theory = theory
 
 
+
 /-- **ℤ is countable.** -/
 theorem int_countable : Countable ℤ := inferInstance
 
 
+
 /-- **ℝ is uncountable.** -/
 theorem real_uncountable : ¬ Countable ℝ := not_countable
+
 
 
 theorem clock_impossibility : ¬ ∃ f : ℤ → ℝ, Surjective f := by
@@ -361,6 +420,7 @@ theorem clock_impossibility : ¬ ∃ f : ℤ → ℝ, Surjective f := by
   have h_countable : Countable (Set.range f) := by
     exact Set.countable_range f;
   rw [ Set.range_eq_univ.mpr hf ] at h_countable ; exact absurd h_countable ( by simpa using Cardinal.not_countable_real ) ;
+
 
 
 /-- **Synthesis Theorem**: ℝ is the canonical model of time — it is ordered, dense,
@@ -375,6 +435,7 @@ theorem reals_are_time :
     (∃ _ : StrictArrow ℝ, True) := by
   exact ⟨inferInstance, inferInstance, inferInstance,
          rationals_dense_in_reals, real_uncountable, ⟨trivialArrow, trivial⟩⟩
+
 
 
 end

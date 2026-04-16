@@ -2,17 +2,12 @@
 
 Auto-generated from theorem catalog database.
 Domain: Geometry/Stereographic
-Declarations: 11
+Declarations: 10
 -/
 
 import Mathlib
 
 noncomputable section
-
-/-- The cocycle is symmetric: c(x,y) = c(y,x). -/
-theorem cocycle_symm (x y : ℝ) : cocycle x y = cocycle y x := by
-  unfold cocycle; ring_nf
-
 
 /-- The fundamental cocycle identity:
 N(spb(x,y)) · (1-xy)² = N(x) · N(y). -/
@@ -22,6 +17,7 @@ theorem cocycle_norm_identity (x y : ℝ) (hxy : x * y ≠ 1) :
   have h : (1 - x * y) ≠ 0 := sub_ne_zero.mpr (Ne.symm hxy)
   field_simp
   ring
+
 
 
 /-- The cocycle satisfies:
@@ -35,10 +31,16 @@ theorem cocycle_coboundary_simplified (x y : ℝ) (hxy : x * y ≠ 1) :
   ring
 
 
+
+/-- [Section: # CatalogBuild.Geometry.Stereographic.SPBDeepTheory
+Auto-generated from theorem catalog database.
+Domain: Geometry/Stereographic
+Declarations: 11] -/
 theorem spb_sum_conjugate (x y : ℝ) (hxy : x * y ≠ 1) (hxy' : x * y ≠ -1) :
     spb x y + spb x (-y) = 2 * x * (1 + y^2) / ((1 - x*y) * (1 + x*y)) := by
   unfold spb;
   grind
+
 
 
 theorem spb_prod_conjugate (x y : ℝ) (hxy : x * y ≠ 1) (hxy' : x * y ≠ -1) :
@@ -46,9 +48,11 @@ theorem spb_prod_conjugate (x y : ℝ) (hxy : x * y ≠ 1) (hxy' : x * y ≠ -1)
   unfold spb; rw [ div_mul_div_comm ] ; ring;
 
 
+
 theorem spbH_internal (u v : ℝ) (hu : |u| < 1) (hv : |v| < 1) :
     |spbH u v| < 1 := by
   exact abs_lt.mpr ⟨ by rw [ spbH ] ; rw [ lt_div_iff₀ ] <;> nlinarith [ abs_lt.mp hu, abs_lt.mp hv ], by rw [ spbH ] ; rw [ div_lt_iff₀ ] <;> nlinarith [ abs_lt.mp hu, abs_lt.mp hv ] ⟩
+
 
 
 theorem spb_of_spb_expanded (a b c d : ℝ) (hab : a * b ≠ 1) (hcd : c * d ≠ 1)
@@ -63,9 +67,11 @@ theorem spb_of_spb_expanded (a b c d : ℝ) (hab : a * b ≠ 1) (hcd : c * d ≠
   · grind
 
 
+
 /-- arctan(1/2) + arctan(1/3) = arctan(1) = π/4, verified algebraically. -/
 theorem spb_gregory_leibniz : spb (1/2 : ℝ) (1/3) = 1 := by
   unfold spb; norm_num
+
 
 
 /-- Machin-type identity: spb(1/5, 1/5) = 5/12. -/
@@ -73,9 +79,11 @@ theorem spb_double_fifth : spb (1/5 : ℝ) (1/5) = 5/12 := by
   unfold spb; norm_num
 
 
+
 /-- The negation map is an SPB automorphism. -/
 theorem spb_auto_neg (x y : ℝ) : spb (-x) (-y) = -(spb x y) :=
   spb_neg_neg x y
+
 
 
 /-- The inversion map is an SPB anti-automorphism on nonzero elements:
@@ -84,6 +92,7 @@ theorem spb_auto_inv (x y : ℝ) (hx : x ≠ 0) (hy : y ≠ 0)
     (hxy : x * y ≠ 1) :
     spb (1/x) (1/y) = -spb x y :=
   spb_reciprocal_neg x y hx hy hxy
+
 
 
 end

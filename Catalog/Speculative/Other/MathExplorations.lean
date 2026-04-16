@@ -14,6 +14,7 @@ theorem prime_mod_four (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2) :
   rw [Nat.odd_iff] at hodd; omega
 
 
+
 /-- Wilson's theorem: (p-1)! ≡ -1 (mod p). -/
 theorem wilson_theorem' (p : ℕ) (hp : Nat.Prime p) :
     ((Nat.factorial (p - 1) : ℤ) : ZMod p) = -1 := by
@@ -21,15 +22,24 @@ theorem wilson_theorem' (p : ℕ) (hp : Nat.Prime p) :
   exact_mod_cast ZMod.wilsons_lemma p
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.MathExplorations
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 34] -/
 theorem pell_equation_small : (3 : ℤ) ^ 2 - 2 * 2 ^ 2 = 1 := by norm_num
 
+
 theorem pell_equation_next : (17 : ℤ) ^ 2 - 2 * 12 ^ 2 = 1 := by norm_num
+
 
 
 theorem pell_matrix_det : (3 : ℤ) * 3 - 4 * 2 = 1 := by norm_num
 
 
+
 theorem seventeen_is_sum_of_squares : (17 : ℤ) = 1 ^ 2 + 4 ^ 2 := by norm_num
+
 
 
 /-- There are infinitely many primes. -/
@@ -37,7 +47,9 @@ theorem primes_infinite' : ∀ n, ∃ p, n ≤ p ∧ Nat.Prime p :=
   fun n => let ⟨p, hp⟩ := Nat.exists_infinite_primes n; ⟨p, hp.1, hp.2⟩
 
 
+
 theorem markov_111 : (1 : ℤ) ^ 2 + 1 ^ 2 + 1 ^ 2 = 3 * 1 * 1 * 1 := by norm_num
+
 
 
 /-- Markov solutions generate new ones via Vieta jumping. -/
@@ -45,25 +57,33 @@ theorem markov_generate (x y z : ℤ) (h : x ^ 2 + y ^ 2 + z ^ 2 = 3 * x * y * z
     x ^ 2 + y ^ 2 + (3 * x * y - z) ^ 2 = 3 * x * y * (3 * x * y - z) := by nlinarith
 
 
+
 theorem markov_112 : (1 : ℤ) ^ 2 + 1 ^ 2 + 2 ^ 2 = 3 * 1 * 1 * 2 := by norm_num
 
+
 theorem markov_125 : (1 : ℤ) ^ 2 + 2 ^ 2 + 5 ^ 2 = 3 * 1 * 2 * 5 := by norm_num
+
 
 
 theorem lagrange_four_sq_1 : ∃ a b c d : ℤ, 1 = a^2 + b^2 + c^2 + d^2 :=
   ⟨1, 0, 0, 0, by norm_num⟩
 
+
 theorem lagrange_four_sq_7 : ∃ a b c d : ℤ, 7 = a^2 + b^2 + c^2 + d^2 :=
   ⟨1, 1, 1, 2, by norm_num⟩
 
+
 theorem lagrange_four_sq_23 : ∃ a b c d : ℤ, 23 = a^2 + b^2 + c^2 + d^2 :=
   ⟨1, 2, 3, 3, by norm_num⟩
+
 
 theorem lagrange_four_sq_15 : ∃ a b c d : ℤ, 15 = a^2 + b^2 + c^2 + d^2 :=
   ⟨1, 1, 2, 3, by norm_num⟩
 
 
+
 theorem binary_tree_nodes (n : ℕ) : 2 ^ (n + 1) - 1 ≥ 2 ^ n := by omega
+
 
 
 /-- Geometric sum: ∑_{i=0}^{d} 3^i = (3^(d+1) - 1)/2. -/
@@ -77,8 +97,10 @@ theorem ternary_tree_sum (d : ℕ) :
     omega
 
 
+
 theorem factor_info_content (p q : ℕ) (hp : 2 ≤ p) (hq : 2 ≤ q) :
     p * q ≥ 4 := by nlinarith
+
 
 
 /-- A strictly decreasing sequence on ℕ terminates. -/
@@ -95,18 +117,22 @@ theorem contracting_terminates {f : ℕ → ℕ}
     · obtain ⟨m, hm1, hm2⟩ := ih; exact ⟨m, by omega, hm2⟩
 
 
+
 /-- Berggren descent is contracting. -/
 theorem parent_hyp_less (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
     (hpyth : a^2 + b^2 = c^2) :
     -2*a - 2*b + 3*c < c := by nlinarith [sq_nonneg (a + b - c)]
 
 
+
 theorem legendre_formula_example : padicValNat 2 (Nat.factorial 10) = 8 := by native_decide
+
 
 
 theorem congruent_5 : ∃ a b c : ℚ, a ^ 2 + b ^ 2 = c ^ 2 ∧
     a * b / 2 = 5 ∧ 0 < a ∧ 0 < b :=
   ⟨20/3, 3/2, 41/6, by norm_num, by norm_num, by norm_num, by norm_num⟩
+
 
 
 theorem smallest_factor_le_sqrt (n : ℕ) (hn : 2 ≤ n) (hnp : ¬Nat.Prime n) :
@@ -118,9 +144,11 @@ theorem smallest_factor_le_sqrt (n : ℕ) (hn : 2 ≤ n) (hnp : ¬Nat.Prime n) :
   · exact ⟨ k.minFac, Nat.minFac_prime ( by aesop_cat ), k.minFac_dvd.trans ( hk.symm ▸ dvd_mul_left _ _ ), by nlinarith [ Nat.minFac_le ( Nat.pos_of_ne_zero ( by aesop_cat : k ≠ 0 ) ) ] ⟩
 
 
+
 theorem sumset_singleton_card (A : Finset ℤ) (b : ℤ) :
     (A.image (· + b)).card = A.card :=
   Finset.card_image_of_injective A (fun _ _ h => by linarith)
+
 
 
 /-- Pythagorean triples lie on the light cone. -/
@@ -130,12 +158,15 @@ theorem pyth_on_lightcone (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
   linarith
 
 
+
 theorem lorentz_add_left (u v w : Fin 3 → ℤ) :
     lorentz_inner (u + v) w = lorentz_inner u w + lorentz_inner v w := by
   simp [lorentz_inner, Pi.add_apply]; ring
 
 
+
 theorem euler_char_genus (g : ℕ) : 2 - 2 * (g : ℤ) = 2 * (1 - (g : ℤ)) := by ring
+
 
 
 /-- Cayley-Hamilton for 2×2 (explicit). -/
@@ -148,12 +179,15 @@ theorem cayley_hamilton_2x2_identity (a b c d : ℤ) :
   simp only; constructor <;> [ring; constructor <;> [ring; constructor <;> [ring; ring]]]
 
 
+
 theorem Fp_card (p : ℕ) [Fact (Nat.Prime p)] : Fintype.card (ZMod p) = p :=
   ZMod.card p
 
 
+
 theorem Fp_star_cyclic (p : ℕ) [Fact (Nat.Prime p)] :
     IsCyclic (ZMod p)ˣ := inferInstance
+
 
 
 /-- R(3,3) > 5: there exists a 2-coloring of K₅ with no monochromatic triangle. -/
@@ -168,12 +202,14 @@ theorem ramsey_lower : ∃ (f : Fin 5 → Fin 5 → Bool),
   fin_cases a <;> fin_cases b <;> fin_cases c <;> simp_all
 
 
+
 theorem pyth_triples_finite (N : ℕ) :
     Set.Finite {t : ℕ × ℕ × ℕ | t.1 ^ 2 + t.2.1 ^ 2 = t.2.2 ^ 2 ∧ t.2.2 ≤ N} := by
   apply Set.Finite.subset (Set.finite_Icc (0, 0, 0) (N, N, N))
   intro ⟨a, b, c⟩ ⟨hpyth, hc⟩
   simp only [Set.mem_Icc, Prod.le_def]
   exact ⟨⟨Nat.zero_le _, Nat.zero_le _, Nat.zero_le _⟩, ⟨by nlinarith, by nlinarith, hc⟩⟩
+
 
 
 /-- The error signal E = 4δ(δ-1) is strictly positive for δ ∉ {0,1}. -/
@@ -188,5 +224,7 @@ theorem error_nonneg_over_Z (delta : ℤ) (hd : delta ≠ 0) (hd1 : delta ≠ 1)
   nlinarith
 
 
+
 theorem multi_form_total_work (p f : ℕ) :
     (p - 1) / 2 / f * f ≤ (p - 1) / 2 := Nat.div_mul_le_self _ _
+

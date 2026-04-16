@@ -12,6 +12,7 @@ def piCount (x : ℕ) : ℕ :=
   ((Finset.range (x + 1)).filter Nat.Prime).card
 
 
+
 /-- Prime counting table: exact values of π(n) for important thresholds. -/
 theorem prime_counting_table :
     piCount 10 = 4 ∧
@@ -25,6 +26,7 @@ theorem prime_counting_table :
   unfold piCount; native_decide
 
 
+
 /-- π is monotone. -/
 theorem piCount_monotone : Monotone piCount := by
   intro a b hab
@@ -34,11 +36,13 @@ theorem piCount_monotone : Monotone piCount := by
   exact Finset.range_mono (by omega)
 
 
+
 /-- π(n) > 0 for n ≥ 2. -/
 theorem piCount_pos (n : ℕ) (hn : 2 ≤ n) : 0 < piCount n := by
   have : piCount 2 = 1 := by unfold piCount; native_decide
   have : 0 < piCount 2 := by omega
   exact lt_of_lt_of_le this (piCount_monotone hn)
+
 
 
 /-- The ratio π(n)/n decreases, consistent with the Prime Number Theorem
@@ -49,12 +53,14 @@ theorem prime_density_ratios :
   unfold piCount; native_decide
 
 
+
 /-- The maximum prime gap for primes ≤ 100 is 8 (between 89 and 97). -/
 theorem max_prime_gap_100 :
     Nat.Prime 89 ∧ Nat.Prime 97 ∧
     (∀ p ∈ Finset.Ioc 89 96, ¬ Nat.Prime p) := by
   refine ⟨by decide, by decide, ?_⟩
   native_decide
+
 
 
 /-- The maximum prime gap for primes ≤ 1000 is 20 (between 887 and 907). -/
@@ -65,10 +71,12 @@ theorem max_prime_gap_1000 :
   native_decide
 
 
+
 /-- Primes ≡ 1 (mod 4) up to 100. -/
 theorem primes_4k1_count :
     ((Finset.range 100).filter (fun p => Nat.Prime p ∧ p % 4 = 1)).card = 11 := by
   native_decide
+
 
 
 /-- Primes ≡ 3 (mod 4) up to 100. -/
@@ -77,16 +85,19 @@ theorem primes_4k3_count :
   native_decide
 
 
+
 /-- Primes ≡ 1 (mod 6) up to 100. -/
 theorem primes_6k1_count :
     ((Finset.range 100).filter (fun p => Nat.Prime p ∧ p % 6 = 1)).card = 11 := by
   native_decide
 
 
+
 /-- Primes ≡ 5 (mod 6) up to 100. -/
 theorem primes_6k5_count :
     ((Finset.range 100).filter (fun p => Nat.Prime p ∧ p % 6 = 5)).card = 12 := by
   native_decide
+
 
 
 /-- Chebyshev's bias: more primes ≡ 3 (mod 4) than ≡ 1 (mod 4) up to 100. -/
@@ -96,11 +107,13 @@ theorem chebyshev_bias_100 :
   native_decide
 
 
+
 /-- Chebyshev's bias persists up to 1000. -/
 theorem chebyshev_bias_1000 :
     ((Finset.range 1000).filter (fun p => Nat.Prime p ∧ p % 4 = 3)).card >
     ((Finset.range 1000).filter (fun p => Nat.Prime p ∧ p % 4 = 1)).card := by
   native_decide
+
 
 
 /-- Some palindromic primes. -/
@@ -109,6 +122,7 @@ theorem palindromic_primes :
     Nat.Prime 11 ∧ Nat.Prime 101 ∧ Nat.Prime 131 ∧ Nat.Prime 151 ∧
     Nat.Prime 181 ∧ Nat.Prime 191 ∧ Nat.Prime 313 ∧ Nat.Prime 353 := by
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩ <;> decide
+
 
 
 /-- Emirp pairs: primes whose digit-reversal is also prime. -/
@@ -120,9 +134,11 @@ theorem emirp_examples :
   refine ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩⟩ <;> decide
 
 
+
 /-- Basic semiprime factorizations. -/
 theorem semiprime_examples :
     (4 = 2 * 2) ∧ (6 = 2 * 3) ∧ (9 = 3 * 3) ∧
     (10 = 2 * 5) ∧ (15 = 3 * 5) ∧ (21 = 3 * 7) := by
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩ <;> norm_num
+
 

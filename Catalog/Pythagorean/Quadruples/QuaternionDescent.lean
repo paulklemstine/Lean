@@ -18,9 +18,11 @@ structure IntQuat where
 namespace IntQuat
 
 
+
 /-- The conjugate of a quaternion -/
 def conj' (q : IntQuat) : IntQuat :=
   ⟨q.re, -q.im_i, -q.im_j, -q.im_k⟩
+
 
 
 /-- Quaternion multiplication -/
@@ -31,9 +33,11 @@ def qmul (p q : IntQuat) : IntQuat :=
    p.re * q.im_k + p.im_i * q.im_j - p.im_j * q.im_i + p.im_k * q.re⟩
 
 
+
 /-- Quaternion addition -/
 def qadd (p q : IntQuat) : IntQuat :=
   ⟨p.re + q.re, p.im_i + q.im_i, p.im_j + q.im_j, p.im_k + q.im_k⟩
+
 
 
 /-- Negation -/
@@ -41,10 +45,12 @@ def qneg (q : IntQuat) : IntQuat :=
   ⟨-q.re, -q.im_i, -q.im_j, -q.im_k⟩
 
 
+
 /-- The fundamental theorem: |pq|² = |p|²·|q|² (Euler's four-square identity) -/
 theorem IntQuat.sqNorm_qmul (p q : IntQuat) :
     (p.qmul q).sqNorm = p.sqNorm * q.sqNorm := by
   simp only [IntQuat.sqNorm, IntQuat.qmul]; ring
+
 
 
 /-- q · conj(q) has zero imaginary parts -/
@@ -54,10 +60,12 @@ theorem IntQuat.qmul_conj_im (q : IntQuat) :
   refine ⟨by ring, by ring, by ring⟩
 
 
+
 /-- q · conj(q) = |q|² (as real quaternion) -/
 theorem IntQuat.qmul_conj_re (q : IntQuat) :
     (q.qmul q.conj').re = q.sqNorm := by
   simp only [IntQuat.qmul, IntQuat.conj', IntQuat.sqNorm]; ring
+
 
 
 /-- The Euler parametrization: given quaternion α = (m, n, p, q),
@@ -70,6 +78,7 @@ def eulerFromQuat (α : IntQuat) : Fin 4 → ℤ := fun i =>
   | 3 => α.sqNorm
 
 
+
 /-- The Euler parametrization always gives a Pythagorean quadruple -/
 theorem eulerFromQuat_is_pyth (α : IntQuat) :
     (eulerFromQuat α 0) ^ 2 + (eulerFromQuat α 1) ^ 2 + (eulerFromQuat α 2) ^ 2 =
@@ -77,14 +86,17 @@ theorem eulerFromQuat_is_pyth (α : IntQuat) :
   unfold eulerFromQuat IntQuat.sqNorm; ring
 
 
+
 /-- The hypotenuse of the Euler quadruple equals the quaternion norm squared -/
 theorem euler_hyp_eq_sqNorm (α : IntQuat) :
     eulerFromQuat α 3 = α.sqNorm := rfl
 
 
+
 /-- |σ|² = 4 -/
 theorem sigma_sqNorm : sigma.sqNorm = 4 := by
   simp [sigma, IntQuat.sqNorm]
+
 
 
 /-- The Minkowski norm η(s,s) = 2 for s = (1,1,1,1) relates to |σ|² = 4 by factor 2 -/
@@ -93,9 +105,11 @@ theorem minkowski_vs_quaternion_norm :
   exact ⟨by norm_num, sigma_sqNorm⟩
 
 
+
 /-- The R₁₁₁₁ reflection matrix -/
 def R1111' : Matrix (Fin 4) (Fin 4) ℤ :=
   !![0, -1, -1, 1; -1, 0, -1, 1; -1, -1, 0, 1; -1, -1, -1, 2]
+
 
 
 /-- The Lorentz form Q₄(v) = v₀² + v₁² + v₂² − v₃² -/
@@ -103,15 +117,18 @@ def Q4' (v : Fin 4 → ℤ) : ℤ :=
   v 0 ^ 2 + v 1 ^ 2 + v 2 ^ 2 - v 3 ^ 2
 
 
+
 /-- R₁₁₁₁ is an involution -/
 theorem R1111'_involution : R1111' * R1111' = (1 : Matrix (Fin 4) (Fin 4) ℤ) := by
   native_decide
+
 
 
 /-- The descent identity: R₁₁₁₁ preserves the quadruple equation -/
 theorem descent_preserves_pyth (a b c d : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     (d - b - c) ^ 2 + (d - a - c) ^ 2 + (d - a - b) ^ 2 = (2*d - a - b - c) ^ 2 := by
   nlinarith [sq_nonneg (a - b), sq_nonneg (b - c), sq_nonneg (a - c)]
+
 
 
 /-- The descent strictly reduces the hypotenuse -/
@@ -124,10 +141,12 @@ theorem descent_reduces_hyp (a b c d : ℤ)
   · nlinarith [mul_pos hb hc]
 
 
+
 /-- The four-square identity is exactly norm multiplicativity of quaternions -/
 theorem four_square_is_norm_mult (p q : IntQuat) :
     p.sqNorm * q.sqNorm = (p.qmul q).sqNorm := by
   rw [IntQuat.sqNorm_qmul]
+
 
 
 /-- The identity quaternion (1,0,0,0) maps to (1,0,0,1): the root -/
@@ -136,10 +155,12 @@ theorem identity_quat_gives_root :
   ext i; fin_cases i <;> simp [eulerFromQuat, IntQuat.sqNorm]
 
 
+
 /-- The quaternion (1,1,1,0) maps to the first non-trivial quadruple with d=3 -/
 theorem quat_1110_gives_d3 :
     eulerFromQuat ⟨1, 1, 1, 0⟩ 3 = 3 := by
   simp [eulerFromQuat, IntQuat.sqNorm]
+
 
 
 /-- Full components of (1,1,1,0) → (1, 2, -2, 3) -/
@@ -148,16 +169,19 @@ theorem quat_1110_components :
   ext i; fin_cases i <;> simp [eulerFromQuat, IntQuat.sqNorm]
 
 
+
 /-- The quaternion (1,1,0,1) → (1, 2, 2, 3): the standard (1,2,2,3) -/
 theorem quat_1101_components :
     eulerFromQuat ⟨1, 1, 0, 1⟩ = ![1, 2, 2, 3] := by
   ext i; fin_cases i <;> simp [eulerFromQuat, IntQuat.sqNorm]
 
 
+
 /-- The squared norm of σ·α is 4·|α|² -/
 theorem sigma_qmul_norm (α : IntQuat) :
     (sigma.qmul α).sqNorm = 4 * α.sqNorm := by
   rw [IntQuat.sqNorm_qmul, sigma_sqNorm]
+
 
 
 /-- The Euler parametrization gives a²+b²+c² = d² by ring identity.
@@ -169,10 +193,12 @@ theorem euler_ring_identity (m n p q : ℤ) :
     = (m^2 + n^2 + p^2 + q^2)^2 := by ring
 
 
+
 /-- Verify: quaternion (1,1,1,0) has norm 3 and Euler gives d=3 -/
 theorem descent_chain_norm_3 :
     (IntQuat.mk 1 1 1 0).sqNorm = 3 ∧ eulerFromQuat ⟨1, 1, 1, 0⟩ 3 = 3 := by
   simp [IntQuat.sqNorm, eulerFromQuat]
+
 
 
 /-- Verify: quaternion (1,1,0,0) has norm 2 and Euler gives d=2 -/
@@ -181,11 +207,17 @@ theorem descent_chain_norm_2 :
   simp [IntQuat.sqNorm, eulerFromQuat]
 
 
+
 /-- A quadruple (a,b,c,d) is primitive -/
 def IsPrimitiveQuad' (a b c d : ℤ) : Prop :=
   Int.gcd (Int.gcd a b) (Int.gcd c d) = 1
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.Quadruples.QuaternionDescent
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Quadruples
+Declarations: 30] -/
 theorem quad_hyp_odd (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2)
     (hprim : IsPrimitiveQuad' a b c d) (hd_pos : 0 < d) :
     ¬ (2 ∣ d) := by
@@ -196,8 +228,10 @@ theorem quad_hyp_odd (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2)
   exact fun h => absurd ( h ▸ Int.dvd_coe_gcd ( Int.dvd_coe_gcd ( even_iff_two_dvd.mp h_even_abc.1 ) ( even_iff_two_dvd.mp h_even_abc.2.1 ) ) ( Int.dvd_coe_gcd ( even_iff_two_dvd.mp h_even_abc.2.2 ) ( even_iff_two_dvd.mp hprim ) ) ) ( by decide ) ;
 
 
+
 /-- The descent is well-founded: it terminates because d ∈ ℕ₊ strictly decreases -/
 theorem descent_well_founded' :
     WellFounded (fun (x y : ℕ) => x < y) :=
   Nat.lt_wfRel.wf
+
 

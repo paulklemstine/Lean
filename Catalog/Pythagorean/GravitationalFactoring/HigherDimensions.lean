@@ -12,8 +12,10 @@ theorem two_square_identity_alt (a b c d : ℤ) :
     (a^2 + b^2) * (c^2 + d^2) = (a*c + b*d)^2 + (a*d - b*c)^2 := by ring
 
 
+
 /-- Total factoring channels for k-dimensional Pythagorean tuples. -/
 def factoringChannels' (k : ℕ) : ℕ := k + Nat.choose k 2
+
 
 
 /-- The channel count satisfies 2·C(k) = k(k+1). -/
@@ -32,10 +34,12 @@ theorem channels_triangular_formula (k : ℕ) :
     nlinarith [ht]
 
 
+
 /-- GCD of Brahmagupta component with N divides N. -/
 theorem gaussian_factor_key (a b c d N : ℤ) :
     ↑(Int.gcd (a*c - b*d) N) ∣ N :=
   Int.gcd_dvd_right _ _
+
 
 
 /-- Triple peel: (c-a)(c+a) = b². -/
@@ -44,10 +48,12 @@ theorem triple_peel (a b c : ℤ)
     (c - a) * (c + a) = b ^ 2 := by nlinarith
 
 
+
 /-- Quadruple peel: (d-a)(d+a) = b² + c². -/
 theorem quadruple_peel (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     (d - a) * (d + a) = b ^ 2 + c ^ 2 := by nlinarith
+
 
 
 /-- 5-tuple peel: (d-a₄)(d+a₄) = a₁² + a₂² + a₃². -/
@@ -56,11 +62,13 @@ theorem five_tuple_peel (a₁ a₂ a₃ a₄ d : ℤ)
     (d - a₄) * (d + a₄) = a₁ ^ 2 + a₂ ^ 2 + a₃ ^ 2 := by nlinarith
 
 
+
 /-- A quadruple lifts to a 5-tuple. -/
 theorem quadruple_lifts_to_5tuple (a b c d e f : ℤ)
     (h_quad : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2)
     (h_triple : d ^ 2 + e ^ 2 = f ^ 2) :
     a ^ 2 + b ^ 2 + c ^ 2 + e ^ 2 = f ^ 2 := by linarith
+
 
 
 /-- Shared hypotenuse for 5-tuples implies equal sums. -/
@@ -72,17 +80,25 @@ theorem five_tuple_shared_hyp
       b₁ ^ 2 + b₂ ^ 2 + b₃ ^ 2 + b₄ ^ 2 := by linarith
 
 
+
 /-- For two distinct odd primes, the product of representation counts is large. -/
 theorem semiprime_r4_lower_bound (p q : ℕ) (hp : 3 ≤ p) (hq : 3 ≤ q) :
     1024 ≤ 8 * (1 + p) * (8 * (1 + q)) := by nlinarith
+
 
 
 /-- Cayley-Dickson dimensions. -/
 def cayleyDicksonDims : List ℕ := [1, 2, 4, 8]
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.GravitationalFactoring.HigherDimensions
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/GravitationalFactoring
+Declarations: 16] -/
 theorem cayley_dickson_dims_correct :
     cayleyDicksonDims = [1, 2, 4, 8] := rfl
+
 
 
 /-- 36 channels for k=8: a 12× improvement over k=2. -/
@@ -92,9 +108,11 @@ theorem octonionic_factoring_advantage :
   unfold factoringChannels'; decide
 
 
+
 theorem oct_vs_gauss :
     factoringChannels' 8 / factoringChannels' 2 = 12 := by
   unfold factoringChannels'; decide
+
 
 
 /-- If p*q divides d² and p is prime, then p divides d. -/
@@ -105,6 +123,7 @@ theorem semiprime_sq_div (d p q : ℤ) (hp : Prime p)
   exact this.elim id id
 
 
+
 /-- Cross-difference for 5-tuples. -/
 theorem five_tuple_cross_diff
     (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ d : ℤ)
@@ -112,4 +131,5 @@ theorem five_tuple_cross_diff
     (h2 : b₁ ^ 2 + b₂ ^ 2 + b₃ ^ 2 + b₄ ^ 2 = d ^ 2) :
     a₄ ^ 2 - b₄ ^ 2 = (b₁ ^ 2 - a₁ ^ 2) + (b₂ ^ 2 - a₂ ^ 2) + (b₃ ^ 2 - a₃ ^ 2) := by
   linarith
+
 

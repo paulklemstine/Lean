@@ -9,8 +9,13 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # CatalogBuild.Physics.Quantum.QuantumTropicalFunctor
+Auto-generated from theorem catalog database.
+Domain: Physics/Quantum
+Declarations: 14] -/
 def qtMaslovAdd (ε : ℝ) (x y : ℝ) : ℝ :=
   ε * Real.log (Real.exp (x / ε) + Real.exp (y / ε))
+
 
 
 theorem qt_logsumexp_ge_max (x y : ℝ) :
@@ -19,14 +24,17 @@ theorem qt_logsumexp_ge_max (x y : ℝ) :
       split_ifs <;> rw [ Real.le_log_iff_exp_le ] <;> linarith [ Real.exp_pos x, Real.exp_pos y ]
 
 
+
 theorem qt_logsumexp_le_max_log2 (x y : ℝ) :
     Real.log (Real.exp x + Real.exp y) ≤ max x y + Real.log 2 := by
       rw [ Real.log_le_iff_le_exp ( by positivity ) ];
       rw [ Real.exp_add, Real.exp_log ] <;> cases max_cases x y <;> linarith [ Real.exp_le_exp.2 ( le_max_left x y ), Real.exp_le_exp.2 ( le_max_right x y ) ]
 
 
+
 theorem qt_exp_sum_pos (x y : ℝ) : Real.exp x + Real.exp y > 0 := by
   linarith [Real.exp_pos x, Real.exp_pos y]
+
 
 
 theorem qtMaslovAdd_comm (ε : ℝ) (x y : ℝ) :
@@ -34,12 +42,16 @@ theorem qtMaslovAdd_comm (ε : ℝ) (x y : ℝ) :
   simp [qtMaslovAdd, add_comm]
 
 
+
 theorem qt_tropical_idempotent (x : ℝ) : max x x = x := by simp
+
 
 theorem qt_tropical_mul_identity (x : ℝ) : x + 0 = x := by ring
 
+
 theorem qt_tropical_distributive (a b c : ℝ) :
     max a b + c = max (a + c) (b + c) := by simp [max_add_add_right]
+
 
 
 theorem qt_dequantization_threshold (n : ℕ) (hn : 5 ≤ n) : 2 ^ n > n ^ 2 := by
@@ -58,7 +70,9 @@ theorem qt_dequantization_threshold (n : ℕ) (hn : 5 ≤ n) : 2 ^ n > n ^ 2 := 
       _ ≥ (k + 1) ^ 2 := h2
 
 
+
 theorem qt_barvinok_complexity (n r : ℕ) (hn : 0 < n) : n ^ r ≥ 1 := Nat.one_le_pow r n hn
+
 
 
 theorem qt_holevo_bound (n : ℕ) : n ≤ 2 ^ n := by
@@ -70,6 +84,7 @@ theorem qt_holevo_bound (n : ℕ) : n ≤ 2 ^ n := by
       _ ≤ 2 ^ k + 2 ^ k := by omega
       _ = 2 ^ k * 2 := by ring
       _ = 2 ^ (k + 1) := (pow_succ 2 k).symm
+
 
 
 theorem qt_quantum_advantage_superpolynomial (d : ℕ) :
@@ -88,11 +103,14 @@ theorem qt_quantum_advantage_superpolynomial (d : ℕ) :
       exact Filter.eventually_atTop.mp ( h_exp_growth.eventually ( gt_mem_nhds zero_lt_one ) ) |> fun ⟨ N, hN ⟩ ↦ ⟨ N, fun n hn ↦ by have := hN n hn; rw [ div_lt_one ( by positivity ) ] at this; exact_mod_cast this ⟩
 
 
+
 def qtSoftmaxKernel (ε : ℝ) (x y : ℝ) : ℝ := Real.exp (x * y / ε)
+
 
 
 theorem qtSoftmaxKernel_pos (ε x y : ℝ) : qtSoftmaxKernel ε x y > 0 := by
   simp [qtSoftmaxKernel, Real.exp_pos]
+
 
 
 end

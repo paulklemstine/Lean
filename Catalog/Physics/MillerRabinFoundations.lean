@@ -7,6 +7,10 @@ Declarations: 8
 
 import Mathlib
 
+/-- [Section: # CatalogBuild.Physics.MillerRabinFoundations
+Auto-generated from theorem catalog database.
+Domain: Physics
+Declarations: 8] -/
 theorem odd_decomp (n : ℕ) (hn : 2 < n) (hodd : ¬ 2 ∣ n) :
     ∃ s d : ℕ, 0 < s ∧ ¬ 2 ∣ d ∧ n - 1 = 2 ^ s * d := by
   -- Let $s$ be the 2-adic valuation of $n-1$, i.e., $s = \text{padicValNat } 2 (n-1)$.
@@ -20,6 +24,7 @@ theorem odd_decomp (n : ℕ) (hn : 2 < n) (hodd : ¬ 2 ∣ n) :
     · exact Nat.le_of_dvd ( Nat.sub_pos_of_lt ( by linarith ) ) ( Nat.ordProj_dvd _ _ )
 
 
+
 /-- A base a is a Miller-Rabin witness for n if the MR test detects compositeness. -/
 def IsMillerRabinWitness (a n : ℕ) (s d : ℕ) : Prop :=
   n - 1 = 2 ^ s * d ∧
@@ -27,11 +32,13 @@ def IsMillerRabinWitness (a n : ℕ) (s d : ℕ) : Prop :=
   ∀ r : ℕ, r < s → a ^ (2 ^ r * d) % n ≠ n - 1
 
 
+
 /-- A strong pseudoprime to base a passes the MR test despite being composite. -/
 def IsStrongPseudoprime (n a : ℕ) : Prop :=
   ¬ Nat.Prime n ∧ 1 < n ∧
   ∃ s d : ℕ, n - 1 = 2 ^ s * d ∧ ¬ 2 ∣ d ∧
     (a ^ d % n = 1 ∨ ∃ r : ℕ, r < s ∧ a ^ (2 ^ r * d) % n = n - 1)
+
 
 
 theorem prime_passes_miller_rabin (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2)
@@ -62,12 +69,14 @@ theorem prime_passes_miller_rabin (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2)
     exact ⟨ s, d, hs, hd, Or.inr ⟨ r - 1, Nat.lt_of_lt_of_le ( Nat.pred_lt hr ) hr₁, h_neg_one.symm ▸ Nat.mod_eq_of_lt ( Nat.sub_lt hp.pos zero_lt_one ) ⟩ ⟩
 
 
+
 /-- 341 = 11 × 31 is the smallest Fermat pseudoprime to base 2. -/
 theorem fermat_pseudoprime_341 :
     ¬ Nat.Prime 341 ∧ 2 ^ 340 % 341 = 1 := by
   constructor
   · native_decide
   · native_decide
+
 
 
 /-- 2047 is a strong pseudoprime to base 2 (the smallest one). -/
@@ -78,6 +87,7 @@ theorem strong_pseudoprime_2047_base2 :
   · native_decide
 
 
+
 theorem carmichael_561 :
     ¬ Nat.Prime 561 ∧
     (∀ a : ℕ, Nat.Coprime a 561 → a ^ 560 % 561 = 1) := by
@@ -85,8 +95,10 @@ theorem carmichael_561 :
   intro a ha; rw [ Nat.pow_mod ] ; rw [ Nat.Coprime, Nat.gcd_comm ] at ha; rw [ Nat.gcd_rec ] at ha; have := Nat.mod_lt a ( by decide : 561 > 0 ) ; interval_cases a % 561 <;> trivial;
 
 
+
 /-- Carmichael numbers are not strong pseudoprimes to ALL bases.
 For 561, base 7 is a Miller-Rabin witness. -/
 theorem carmichael_561_witness :
     (7 : ℕ) ^ 280 % 561 ≠ 1 ∧ (7 : ℕ) ^ 280 % 561 ≠ 560 := by
   constructor <;> native_decide
+

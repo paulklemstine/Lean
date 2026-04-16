@@ -14,9 +14,11 @@ def differenceSet (S : Finset ℤ) : Finset ℤ :=
   (S ×ˢ S).image (fun p => p.1 - p.2)
 
 
+
 /-- The nonzero difference set — excludes the trivial zero difference. -/
 def nonzeroDifferenceSet (S : Finset ℤ) : Finset ℤ :=
   (differenceSet S).filter (· ≠ 0)
+
 
 
 /-- Zero is always in the difference set of a nonempty set. -/
@@ -27,6 +29,11 @@ theorem zero_mem_differenceSet {S : Finset ℤ} (hS : S.Nonempty) :
   exact ⟨⟨x, x⟩, ⟨hx, hx⟩, sub_self x⟩
 
 
+
+/-- [Section: # CatalogBuild.Algebra.Core.MontgomeryPairCorrelation
+Auto-generated from theorem catalog database.
+Domain: Algebra/Core
+Declarations: 34] -/
 theorem nonzero_diff_card_le (S : Finset ℤ) :
     (nonzeroDifferenceSet S).card ≤ S.card ^ 2 - S.card := by
   refine' le_trans ( Finset.card_le_card _ ) _;
@@ -35,6 +42,7 @@ theorem nonzero_diff_card_le (S : Finset ℤ) :
     intro x hx; aesop;
   · refine' le_trans ( Finset.card_image_le ) _;
     rw [ show ( Finset.filter ( fun p : ℤ × ℤ => p.1 ≠ p.2 ) ( S ×ˢ S ) ) = Finset.offDiag S by ext ⟨ x, y ⟩ ; aesop ] ; simp +decide [ sq, Finset.offDiag_card ]
+
 
 
 theorem sidon_diff_card (S : Finset ℤ) (hS : IsSidonSet S) :
@@ -55,10 +63,12 @@ theorem sidon_diff_card (S : Finset ℤ) (hS : IsSidonSet S) :
   refine' Finset.one_lt_card.mpr ⟨ p, _, q, _, _ ⟩ <;> aesop
 
 
+
 /-- The autocorrelation energy: sum of squared autocorrelation values over
 the difference set. This measures departure from randomness. -/
 def autocorrelationEnergy (S : Finset ℤ) : ℕ :=
   ∑ d ∈ differenceSet S, (autocorrelation S d) ^ 2
+
 
 
 theorem autocorrelation_total_sum (S : Finset ℤ) :
@@ -71,15 +81,18 @@ theorem autocorrelation_total_sum (S : Finset ℤ) :
   · norm_num [ sq ]
 
 
+
 /-- The number of "additive quadruples" (a,b,c,d) with a-b = c-d. -/
 def additiveQuadruples (S : Finset ℤ) : ℕ :=
   ((S ×ˢ S).filter (fun p => p.1 - p.2 = 0)).card  -- simplified placeholder
+
 
 
 /-- The Sidon defect: number of nonzero differences with multiplicity ≥ 2. -/
 def sidonDefect (S : Finset ℤ) : ℕ :=
   ((S ×ˢ S).image (fun p => p.1 - p.2) |>.filter
     (fun d => d ≠ 0 ∧ 1 < autocorrelation S d)).card
+
 
 
 theorem sidon_iff_defect_zero (S : Finset ℤ) :
@@ -92,6 +105,7 @@ theorem sidon_iff_defect_zero (S : Finset ℤ) :
     obtain ⟨ p, hp ⟩ := Finset.card_pos.mp ( pos_of_gt h ) ; use p.1, by aesop, p.2; aesop;
 
 
+
 /-- Compute the Sidon defect of a list-represented set. -/
 def sidonDefectCompute (S : List ℤ) : ℕ :=
   let diffs := (S.product S).map (fun p => p.1 - p.2)
@@ -100,12 +114,14 @@ def sidonDefectCompute (S : List ℤ) : ℕ :=
     1 < (S.product S).countP (fun p => p.1 - p.2 = d))
 
 
+
 /-- Compute maximum autocorrelation value for d ≠ 0. -/
 def maxAutocorrCompute (S : List ℤ) : ℕ :=
   let diffs := (S.product S).map (fun p => p.1 - p.2)
   let nonzeroDiffs := diffs.filter (· ≠ 0) |>.eraseDups
   nonzeroDiffs.foldl (fun acc d =>
     max acc ((S.product S).countP (fun p => p.1 - p.2 = d))) 0
+
 
 
 /-- Compute autocorrelation energy. -/
@@ -159,9 +175,11 @@ def autocorrEnergyCompute (S : List ℤ) : ℕ :=
 
 -- Pair gap distributions
 
+
 /-- Count pairs with a given gap in a list. -/
 def gapCount (S : List ℤ) (g : ℤ) : ℕ :=
   (S.product S).countP (fun p => p.2 - p.1 = g ∧ p.1 < p.2)
+
 
 
 /-- Number of distinct nonzero differences. -/
@@ -177,14 +195,17 @@ def distinctDiffCount (S : List ℤ) : ℕ :=
 -- Dark: should be further from 12
 
 
+
 /-- The pair correlation count: number of ordered pairs with a given difference. -/
 def pairCorrelationCount (S : Finset ℤ) (d : ℤ) : ℕ :=
   ((S ×ˢ S).filter (fun p => p.1 - p.2 = d ∧ p.1 ≠ p.2)).card
 
 
+
 theorem pairCorr_eq_autocorr (S : Finset ℤ) (d : ℤ) (hd : d ≠ 0) :
     pairCorrelationCount S d = autocorrelation S d := by
   exact congr_arg Finset.card ( Finset.filter_congr fun x hx => by aesop )
+
 
 
 theorem total_pairCorr (S : Finset ℤ) :
@@ -203,6 +224,7 @@ theorem total_pairCorr (S : Finset ℤ) :
     exact Exists.elim ( Finset.card_pos.mp ( Nat.pos_of_ne_zero ( by aesop_cat : S.card ≠ 0 ) ) ) fun x hx => ⟨ x, x, hx, hx, sub_self x ⟩
 
 
+
 theorem bounded_autocorr_bounded_energy (S : Finset ℤ) (k : ℕ)
     (hk : ∀ d : ℤ, d ≠ 0 → autocorrelation S d ≤ k) :
     autocorrelationEnergy S ≤ S.card ^ 2 + k ^ 2 * (nonzeroDifferenceSet S).card := by
@@ -218,10 +240,12 @@ theorem bounded_autocorr_bounded_energy (S : Finset ℤ) (k : ℕ)
   rw [ h_sum, add_comm ] ; exact add_le_add ( by rw [ autocorrelation_zero ] ) h_bound;
 
 
+
 /-- The autocorrelation of a Sidon set at any d ≠ 0 is at most 1. (Restated for use.) -/
 theorem sidon_autocorr_le_one (S : Finset ℤ) (hS : IsSidonSet S) (d : ℤ) (hd : d ≠ 0) :
     autocorrelation S d ≤ 1 :=
   hS d hd
+
 
 
 /-- The autocorrelation energy equals the number of "additive quadruples" —
@@ -235,10 +259,12 @@ theorem autocorrelation_energy_is_sum_sq (S : Finset ℤ) :
   rfl
 
 
+
 theorem light_prime_sum_of_squares (p : ℕ) (hp : IsLightPrime p) :
     ∃ a b : ℕ, a ^ 2 + b ^ 2 = p := by
   obtain ⟨ hp₁, hp₂ ⟩ := hp;
   have := Fact.mk hp₁; have := @Nat.Prime.sq_add_sq p; aesop;
+
 
 
 theorem dark_prime_not_sum_of_squares (p : ℕ) (hp : IsDarkPrime p) :
@@ -249,16 +275,19 @@ theorem dark_prime_not_sum_of_squares (p : ℕ) (hp : IsDarkPrime p) :
   exact fun ⟨ a, b, ha, hb, hab ⟩ => h_mod hp.2 ⟨ a, b, hab ⟩
 
 
+
 /-- The first four light primes have Sidon defect 2 (only d = ±12 repeats). -/
 theorem light4_sidon_defect :
     sidonDefect ({5, 13, 17, 29} : Finset ℤ) = 2 := by
   native_decide
 
 
+
 /-- The first four dark primes have Sidon defect 4 (d = ±4 and d = ±8 repeat). -/
 theorem dark4_sidon_defect :
     sidonDefect ({3, 7, 11, 19} : Finset ℤ) = 4 := by
   native_decide
+
 
 
 /-- Light primes have strictly lower Sidon defect than dark primes (first 4). -/
@@ -268,15 +297,18 @@ theorem light_less_coherent_than_dark_4 :
   native_decide
 
 
+
 /-- A set is k-flat if its autocorrelation is bounded by k at every nonzero difference. -/
 def IsKFlat (S : Finset ℤ) (k : ℕ) : Prop :=
   ∀ d : ℤ, d ≠ 0 → autocorrelation S d ≤ k
+
 
 
 /-- Sidon sets are exactly the 1-flat sets. -/
 theorem sidon_iff_one_flat (S : Finset ℤ) :
     IsSidonSet S ↔ IsKFlat S 1 := by
   exact Iff.rfl
+
 
 
 /-- k-flatness is monotone: k-flat implies (k+1)-flat. -/
@@ -286,12 +318,14 @@ theorem kflat_mono (S : Finset ℤ) (k : ℕ) (hk : IsKFlat S k) :
   exact le_trans (hk d hd) (Nat.le_succ k)
 
 
+
 theorem light4_is_2flat :
     IsKFlat ({5, 13, 17, 29} : Finset ℤ) 2 := by
   intro d hd_ne;
   unfold autocorrelation;
   simp +decide [ Finset.filter ] ; (
   erw [ Multiset.filter_cons, Multiset.filter_cons, Multiset.filter_cons, Multiset.filter_cons, Multiset.filter_cons, Multiset.filter_cons, Multiset.filter_cons, Multiset.filter_cons, Multiset.filter_cons, Multiset.filter_cons, Multiset.filter_cons, Multiset.filter_cons, Multiset.filter_cons, Multiset.filter_cons, Multiset.filter_cons, Multiset.filter_singleton ] ; aesop_cat;);
+
 
 
 theorem dark4_is_2flat :
@@ -304,6 +338,7 @@ theorem dark4_is_2flat :
     · rw [ Multiset.filter_singleton ] ; aesop_cat;);
 
 
+
 theorem dark4_not_sidon :
     ¬ IsSidonSet ({3, 7, 11, 19} : Finset ℤ) := by
   -- By definition of IsSidonSet, we need to show that there exists some $d \neq 0$ such that the autocorrelation at $d$ is greater than 1.
@@ -311,6 +346,7 @@ theorem dark4_not_sidon :
   have h_autocorr : ∃ d : ℤ, d ≠ 0 ∧ autocorrelation ({3, 7, 11, 19} : Finset ℤ) d > 1 := by
     exists 4;
   obtain ⟨ d, hd, hd' ⟩ := h_autocorr; linarith [ h_contra d hd ] ;
+
 
 
 theorem light4_not_sidon :
@@ -321,12 +357,14 @@ theorem light4_not_sidon :
   exists 12
 
 
+
 theorem autocorrelation_symmetric (S : Finset ℤ) (d : ℤ) :
     autocorrelation S (-d) = autocorrelation S d := by
   fapply Finset.card_bij (fun p hp => (p.2, p.1));
   · grind;
   · grind +ring;
   · aesop
+
 
 
 end

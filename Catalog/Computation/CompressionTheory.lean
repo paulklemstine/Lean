@@ -14,6 +14,7 @@ theorem no_injection_larger_to_smaller {m n : ℕ} (h : n < m) :
   exact absurd (Fintype.card_le_of_injective f hf) (by simp; omega)
 
 
+
 /-- **Universal compression is impossible (binary case)**.
 There is no injective function from n-bit strings to (n-1)-bit strings.
 Equivalently, no algorithm can compress ALL inputs by even 1 bit. -/
@@ -23,6 +24,7 @@ theorem universal_compression_impossible (n : ℕ) (hn : 1 ≤ n) :
   apply Nat.pow_lt_pow_right <;> omega
 
 
+
 /-- No injective map from Fin (2^n) to strings strictly shorter than n bits.
 The total number of binary strings of length < n is 2^n - 1. -/
 theorem no_compress_all_strings (n : ℕ) (_hn : 1 ≤ n) :
@@ -30,6 +32,7 @@ theorem no_compress_all_strings (n : ℕ) (_hn : 1 ≤ n) :
   apply no_injection_larger_to_smaller
   have : 1 ≤ 2 ^ n := Nat.one_le_two_pow
   omega
+
 
 
 /-- **Key counting lemma**: If f : Fin M → Fin N is any function (not necessarily
@@ -45,6 +48,7 @@ theorem pigeonhole_collision_count {M N : ℕ} (hMN : N < M) (f : Fin M → Fin 
   exact absurd (Fintype.card_le_of_injective f hinj) (by simp; omega)
 
 
+
 /-- The fraction of incompressible strings: out of 2^n strings,
 at most 2^(n-k) can be assigned unique (n-k)-bit codewords.
 So at least 2^n - 2^(n-k) strings are incompressible by k bits.
@@ -56,10 +60,12 @@ theorem incompressible_fraction (n k : ℕ) (hn : k ≤ n) :
   omega
 
 
+
 /-- Concrete instance: can't compress all 8-bit strings to 1 bit. -/
 theorem incompressible_8bit_to_1bit :
     ¬ ∃ f : Fin 256 → Fin 2, Injective f :=
   no_injection_larger_to_smaller (by norm_num)
+
 
 
 /-- Kolmogorov complexity intuition: most strings have complexity ≈ their length.
@@ -67,6 +73,7 @@ For any compressor, the number of strings it can
 compress by at least k bits is at most 2^(n-k). -/
 theorem max_compressible_count (n k : ℕ) (hk : 1 ≤ k) (hn : k ≤ n) :
     2^(n - k) < 2^n := Nat.pow_lt_pow_right (by omega) (by omega)
+
 
 
 /-- **Codebook existence**: For any set of M symbols where M ≤ 2^k,
@@ -77,16 +84,19 @@ theorem codebook_exists {M k : ℕ} (h : M ≤ 2^k) :
     simp [Fin.ext_iff] at hab; exact Fin.ext hab⟩
 
 
+
 /-- **Codebook achieves O(1) lookup**: encoding and decoding via
 a finite map is computable in constant time per symbol. -/
 theorem codebook_bijection (M : ℕ) :
     ∃ f : Fin M → Fin M, Bijective f := ⟨id, bijective_id⟩
 
 
+
 /-- If the source has M distinct messages and M ≤ 2^k,
 then we can encode each message with k bits injectively. -/
 theorem source_encoding_sufficient {M k : ℕ} (h : M ≤ 2^k) :
     ∃ f : Fin M → Fin (2^k), Injective f := codebook_exists h
+
 
 
 /-- For a binary prefix-free code, n codewords need max length ≥ ⌈log₂ n⌉.
@@ -96,11 +106,13 @@ theorem prefix_free_min_length (n k : ℕ) (hk : 2^k < n) :
   no_injection_larger_to_smaller hk
 
 
+
 /-- **Data Processing Inequality (Cardinality Version)**:
 Applying a function to a finite set can only decrease cardinality. -/
 theorem data_processing_inequality {α β : Type*} [DecidableEq β]
     (S : Finset α) (f : α → β) :
     (S.image f).card ≤ S.card := Finset.card_image_le
+
 
 
 /-- **Composition reduces information**: applying two functions
@@ -113,10 +125,12 @@ theorem data_processing_composition {α β γ : Type*} [DecidableEq β] [Decidab
     _ ≤ (S.image f).card := Finset.card_image_le
 
 
+
 /-- **Injective functions preserve information exactly**. -/
 theorem injective_preserves_card {α β : Type*} [DecidableEq α] [DecidableEq β]
     (S : Finset α) (f : α → β) (hf : Injective f) :
     (S.image f).card = S.card := Finset.card_image_of_injective S hf
+
 
 
 /-- **Source coding: achievability direction**.
@@ -124,6 +138,7 @@ A uniform source over M symbols can be encoded with M bits (trivially). -/
 theorem source_coding_achievability (M : ℕ) (_hM : 1 ≤ M) :
     ∃ f : Fin M → Fin (2^M), Injective f :=
   codebook_exists (Nat.le_of_lt Nat.lt_two_pow_self)
+
 
 
 /-- **Source coding: converse direction**.
@@ -134,9 +149,11 @@ theorem source_coding_converse (M k : ℕ) (h : 2^k < M) :
   no_injection_larger_to_smaller h
 
 
+
 /-- The number of functions from Fin n to Fin m is m^n. -/
 theorem function_count (n m : ℕ) :
     Fintype.card (Fin n → Fin m) = m ^ n := by simp
+
 
 
 /-- You cannot compress all 4-bit strings to 3 bits. -/
@@ -145,16 +162,19 @@ theorem no_compress_4_to_3 :
   no_injection_larger_to_smaller (by norm_num)
 
 
+
 /-- You cannot compress all 8-bit strings to 7 bits. -/
 theorem no_compress_8_to_7 :
     ¬ ∃ f : Fin 256 → Fin 128, Injective f :=
   no_injection_larger_to_smaller (by norm_num)
 
 
+
 /-- You cannot compress all 16-bit strings to 15 bits. -/
 theorem no_compress_16_to_15 :
     ¬ ∃ f : Fin 65536 → Fin 32768, Injective f :=
   no_injection_larger_to_smaller (by norm_num)
+
 
 
 /-- **Lossless compression requires injectivity**.
@@ -167,6 +187,7 @@ theorem lossless_requires_injective {α β : Type*} (encode : α → β) (decode
   exact this
 
 
+
 /-- Combining: if encode-decode is lossless, and codomain is smaller,
 then not all inputs can be encoded — contradiction. -/
 theorem lossless_compression_limit (n : ℕ) (hn : 1 ≤ n)
@@ -176,8 +197,10 @@ theorem lossless_compression_limit (n : ℕ) (hn : 1 ≤ n)
   exact absurd ⟨encode, hinj⟩ (universal_compression_impossible n hn)
 
 
+
 /-- If f : Fin N → Fin N is injective (lossless on its range), it's bijective.
 So "recompressing" achieves nothing — a bijection doesn't reduce size. -/
 theorem recompression_futile (N : ℕ) (f : Fin N → Fin N) (hf : Injective f) :
     Bijective f := Finite.injective_iff_bijective.mp hf
+
 

@@ -7,8 +7,13 @@ Declarations: 6
 
 import Mathlib
 
+/-- [Section: # CatalogBuild.Computation.Oracles.SymmetryPrinciples
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 6] -/
 theorem am_gm_two_nat (a b : ℕ) : (a + b) ^ 2 ≥ 4 * (a * b) := by
   linarith [ sq_nonneg ( a - b : ℤ ) ]
+
 
 
 theorem cauchy_schwarz_discrete (n : ℕ) (a b : ℕ → ℤ) :
@@ -17,14 +22,17 @@ theorem cauchy_schwarz_discrete (n : ℕ) (a b : ℕ → ℤ) :
       exact?
 
 
+
 theorem am_ge_gm (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) :
     (a + b) ^ 2 ≥ 4 * (a * b) := by
       linarith [ sq_nonneg ( a - b ) ]
 
 
+
 theorem schur_ineq (a b c : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) (hc : 0 ≤ c) :
     a * (a - b) * (a - c) + b * (b - a) * (b - c) + c * (c - a) * (c - b) ≥ 0 := by
       cases le_total a b <;> cases le_total a c <;> cases le_total b c <;> nlinarith [ sq_nonneg ( a - b ), sq_nonneg ( a - c ), sq_nonneg ( b - c ) ]
+
 
 
 theorem sum_degrees_even (n : ℕ) (R : Fin n → Fin n → Prop) [DecidableRel R]
@@ -42,7 +50,9 @@ theorem sum_degrees_even (n : ℕ) (R : Fin n → Fin n → Prop) [DecidableRel 
       convert hS_even using 2 ; ext ; aesop
 
 
+
 theorem pigeonhole_simple (n : ℕ) (f : Fin (n + 2) → Fin (n + 1)) :
     ∃ i j, i ≠ j ∧ f i = f j := by
       by_contra! h;
       exact absurd ( Fintype.card_le_of_injective f fun i j hij => not_imp_not.mp ( h i j ) hij ) ( by simp +arith +decide )
+

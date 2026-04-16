@@ -1,60 +1,39 @@
-/-
-# OISCC V12: Fixed Point Theory and Periodic Orbit Exclusion
+/-! # CatalogBuild.Speculative.OISCC.V12_FixedPointTheory
 
-The diagonal map d(x) = exp(x) - ln(x) has no fixed points on ℝ₊,
-meaning EML has no "equilibrium" states. Every positive orbit escapes.
-
-Key results:
-1. d(x) > x for all x > 0 (no fixed points)
-2. d(x) - x ≥ 1 for all x > 0 (uniform escape speed)
-3. d(d(x)) > d(x) + 1 (iterated escape acceleration)
-4. The "displacement function" δ(x) = d(x) - x is convex
-5. The displacement has a minimum value at x₀ = W(1)
-6. EML(x,y) > x when y ∈ (0,1) (expansion region)
-7. Phi has no fixed points in ℝ²₊
+Auto-generated from theorem catalog database.
+Domain: Speculative/OISCC
+Declarations: 13
 -/
 
 import Mathlib
 
 noncomputable section
 
-open Real Filter Topology Set
-
 /-- The diagonal map d(x) = exp(x) - ln(x). -/
 def d_fp (x : ℝ) : ℝ := Real.exp x - Real.log x
+
 
 /-- The EML operation. -/
 def EML_fp (a b : ℝ) : ℝ := Real.exp a - Real.log b
 
-/-- The displacement function δ(x) = d(x) - x = exp(x) - ln(x) - x. -/
-def displacement (x : ℝ) : ℝ := Real.exp x - Real.log x - x
 
-/-
-d(x) > x for all x > 0 (no fixed points).
--/
 theorem d_fp_gt_id (x : ℝ) (hx : 0 < x) : d_fp x > x := by
   unfold d_fp;
   rw [ show x = 1 + ( x - 1 ) by ring, Real.exp_add ] at *;
   nlinarith [ Real.add_one_le_exp 1, Real.add_one_le_exp ( x - 1 ), Real.log_le_sub_one_of_pos hx ]
 
-/-
-d(x) - x ≥ 1 for all x > 0 (uniform escape speed).
--/
+
 theorem displacement_ge_one (x : ℝ) (hx : 0 < x) : displacement x ≥ 1 := by
   unfold displacement;
   have := Real.add_one_le_exp ( x - 1 );
   rw [ Real.exp_sub ] at this;
   rw [ le_div_iff₀ ] at this <;> nlinarith [ Real.add_one_le_exp 1, Real.log_le_sub_one_of_pos hx ]
 
-/-
-The displacement function is always positive.
--/
+
 theorem displacement_pos (x : ℝ) (hx : 0 < x) : displacement x > 0 := by
   exact lt_of_lt_of_le zero_lt_one ( displacement_ge_one x hx )
 
-/-
-δ(x) → ∞ as x → +∞.
--/
+
 theorem displacement_tendsto_atTop :
     Filter.Tendsto displacement atTop atTop := by
   refine' Filter.tendsto_atTop_atTop.mpr fun b ↦ _;
@@ -69,9 +48,7 @@ theorem displacement_tendsto_atTop :
     exact ⟨ Max.max i 2, fun a ha => by have := hi a ( le_trans ( le_max_left _ _ ) ha ) ; rw [ gt_iff_lt ] at this; rw [ lt_div_iff₀ ] at this <;> cases abs_cases b <;> nlinarith [ le_max_right i 2, Real.log_le_sub_one_of_pos ( by linarith [ le_max_right i 2 ] : 0 < a ) ] ⟩;
   exact ⟨ Max.max i 1, fun x hx => by unfold displacement; linarith [ hi x ( le_trans ( le_max_left _ _ ) hx ) ] ⟩
 
-/-
-δ(x) → ∞ as x → 0⁺.
--/
+
 theorem displacement_tendsto_atTop_at_zero :
     Filter.Tendsto displacement (nhdsWithin 0 (Ioi 0)) atTop := by
   -- To prove the limit is infinity, it suffices to show that $-\ln(x) \to \infty$ as $x \to 0^+$.
@@ -81,9 +58,7 @@ theorem displacement_tendsto_atTop_at_zero :
     convert h_displacement.add_atTop h_ln using 2 ; unfold displacement ; ring;
   have := Real.tendsto_log_nhdsGT_zero; aesop;
 
-/-
-The displacement function is convex on (0, ∞).
--/
+
 theorem displacement_convexOn : ConvexOn ℝ (Ioi 0) displacement := by
   apply_rules [ convexOn_of_deriv2_nonneg, convex_Ioi ];
   · exact continuousOn_of_forall_continuousAt fun x hx => by exact ContinuousAt.sub ( ContinuousAt.sub ( Real.continuous_exp.continuousAt ) ( Real.continuousAt_log hx.out.ne' ) ) continuousAt_id;
@@ -98,41 +73,22 @@ theorem displacement_convexOn : ConvexOn ℝ (Ioi 0) displacement := by
       intro x hx; rw [ h_second_deriv x hx ] ; norm_num [ Real.differentiableAt_exp, differentiableAt_inv, hx.ne' ];
     exact fun x hx => h_second_deriv x ( interior_subset hx ) ▸ add_nonneg ( Real.exp_nonneg x ) ( one_div_nonneg.mpr ( sq_nonneg x ) )
 
-/-
-EML(x, y) > x when 0 < y < 1.
--/
+
 theorem EML_fp_expansion (x y : ℝ) (hx : 0 < x) (hy : 0 < y) (hy1 : y < 1) :
     EML_fp x y > x := by
   exact lt_tsub_iff_left.mpr ( by linarith [ Real.add_one_le_exp x, Real.log_le_sub_one_of_pos hy ] )
 
-/-
-EML(x, y) > 0 when x > 0 and 0 < y ≤ 1.
--/
+
 theorem EML_fp_pos_small_y (x y : ℝ) (hx : 0 < x) (hy : 0 < y) (hy1 : y ≤ 1) :
     EML_fp x y > 0 := by
   exact sub_pos_of_lt ( lt_of_le_of_lt ( Real.log_nonpos hy.le hy1 ) ( by positivity ) )
 
-/-
-The 2D map Phi has no fixed points in ℝ²₊.
--/
-theorem Phi_no_fixed_point (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
-    ¬(EML_fp x y = x ∧ EML_fp y x = y) := by
-  unfold EML_fp;
-  -- Apply the displacement function inequality to each term.
-  have h_apply_displacement : Real.exp x - Real.log x > x ∧ Real.exp y - Real.log y > y := by
-    exact ⟨ d_fp_gt_id x hx, d_fp_gt_id y hy ⟩;
-  exact fun h => by linarith;
 
-/-
-d(x) ≥ 2 for all x > 0.
--/
 theorem d_fp_ge_two (x : ℝ) (hx : 0 < x) : d_fp x ≥ 2 := by
   unfold d_fp;
   linarith [ Real.add_one_le_exp x, Real.log_le_sub_one_of_pos hx ]
 
-/-
-d is strictly increasing on [1, ∞).
--/
+
 theorem d_fp_strictMono_Ici : StrictMonoOn d_fp (Ici 1) := by
   -- The derivative of $d(x) = e^x - \ln(x)$ is $d'(x) = e^x - \frac{1}{x}$.
   have h_deriv : ∀ x > 0, deriv (fun x => Real.exp x - Real.log x) x = Real.exp x - 1 / x := by
@@ -147,9 +103,7 @@ theorem d_fp_strictMono_Ici : StrictMonoOn d_fp (Ici 1) := by
     · exact DifferentiableOn.sub ( DifferentiableOn.exp differentiableOn_id ) ( DifferentiableOn.log differentiableOn_id fun x hx => by linarith [ hx.1 ] );
   intro x hx y hy hxy; obtain ⟨ c, hc₁, hc₂ ⟩ := h_mvt x y hx hxy; have := h_deriv_pos c ( by linarith [ hc₁.1, hx.out ] ) ; rw [ hc₂, lt_div_iff₀ ] at this <;> aesop
 
-/-
-The composition d ∘ d has strictly larger displacement: d(d(x)) - d(x) > d(x) - x for x ≥ 1.
--/
+
 theorem displacement_acceleration (x : ℝ) (hx : 1 ≤ x) :
     d_fp (d_fp x) - d_fp x ≥ d_fp x - x := by
   by_contra h_contra;
@@ -163,5 +117,6 @@ theorem displacement_acceleration (x : ℝ) (hx : 1 ≤ x) :
     have := exists_deriv_eq_slope displacement ht2;
     exact this ( continuousOn_of_forall_continuousAt fun t ht => by exact DifferentiableAt.continuousAt <| by exact differentiableAt_of_deriv_ne_zero <| ne_of_gt <| h_deriv_pos t <| by linarith [ ht.1 ] ) ( fun t ht => by exact DifferentiableAt.differentiableWithinAt <| by exact differentiableAt_of_deriv_ne_zero <| ne_of_gt <| h_deriv_pos t <| by linarith [ ht.1 ] ) |> fun ⟨ c, hc1, hc2 ⟩ => by nlinarith [ h_deriv_pos c <| by linarith [ hc1.1 ], mul_div_cancel₀ ( displacement t2 - displacement t1 ) ( sub_ne_zero_of_ne ht2.ne' ) ] ;
   exact h_contra <| le_of_lt <| h_monotone _ _ hx <| show d_fp x > x from d_fp_gt_id x <| lt_of_lt_of_le zero_lt_one hx;
+
 
 end

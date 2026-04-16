@@ -7,15 +7,23 @@ Declarations: 27
 
 import Mathlib
 
+/-- [Section: # CatalogBuild.Pythagorean.HyperbolicFactoring.HyperbolicShortcuts
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/HyperbolicFactoring
+Declarations: 27] -/
 theorem B₁_preserves_Q : B₁ᵀ * Q * B₁ = Q := by native_decide
 
+
 theorem B₂_preserves_Q : B₂ᵀ * Q * B₂ = Q := by native_decide
+
 
 theorem B₃_preserves_Q : B₃ᵀ * Q * B₃ = Q := by native_decide
 
 
+
 def dirMatrix : BDir → Matrix (Fin 3) (Fin 3) ℤ
   | .L => B₁ | .M => B₂ | .R => B₃
+
 
 
 def pathMatrix : BPath → Matrix (Fin 3) (Fin 3) ℤ
@@ -23,16 +31,20 @@ def pathMatrix : BPath → Matrix (Fin 3) (Fin 3) ℤ
   | d :: ds => dirMatrix d * pathMatrix ds
 
 
+
 def root : Fin 3 → ℤ := ![3, 4, 5]
+
 
 
 theorem dir_preserves_Q (d : BDir) : (dirMatrix d)ᵀ * Q * (dirMatrix d) = Q := by
   cases d <;> simp only [dirMatrix] <;> native_decide
 
 
+
 /-- Each direction matrix has |det| = 1 (they are in O(2,1)(ℤ)). -/
 theorem dir_det_abs (d : BDir) : |Matrix.det (dirMatrix d)| = 1 := by
   cases d <;> simp only [dirMatrix] <;> native_decide
+
 
 
 theorem pathMatrix_preserves_Q (p : BPath) :
@@ -44,6 +56,7 @@ theorem pathMatrix_preserves_Q (p : BPath) :
     simp +decide [ ← mul_assoc, ← Matrix.mul_assoc ( pathMatrix p |> Matrix.transpose ), ih, dir_preserves_Q ]
 
 
+
 /-- The absolute determinant of any path matrix is 1. -/
 theorem shortcut_det_abs (p : BPath) :
     |Matrix.det (pathMatrix p)| = 1 := by
@@ -53,16 +66,20 @@ theorem shortcut_det_abs (p : BPath) :
     simp only [pathMatrix, Matrix.det_mul, abs_mul, dir_det_abs, ih, one_mul]
 
 
+
 theorem B₁_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (a - 2*b + 2*c)^2 + (2*a - b + 2*c)^2 = (2*a - 2*b + 3*c)^2 := by nlinarith
+
 
 
 theorem B₂_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (a + 2*b + 2*c)^2 + (2*a + b + 2*c)^2 = (2*a + 2*b + 3*c)^2 := by nlinarith
 
 
+
 theorem B₃_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (-a + 2*b + 2*c)^2 + (-2*a + b + 2*c)^2 = (-2*a + 2*b + 3*c)^2 := by nlinarith
+
 
 
 theorem dir_preserves_pyth (d : BDir) (v : Fin 3 → ℤ)
@@ -79,6 +96,7 @@ theorem dir_preserves_pyth (d : BDir) (v : Fin 3 → ℤ)
     simp +decide [ B₃, Fin.sum_univ_three ] ; linarith
 
 
+
 /-- Every triple in the Berggren tree satisfies a² + b² = c². -/
 theorem tripleAt_pythagorean (p : BPath) :
     (tripleAt p) 0 ^ 2 + (tripleAt p) 1 ^ 2 = (tripleAt p) 2 ^ 2 := by
@@ -90,9 +108,11 @@ theorem tripleAt_pythagorean (p : BPath) :
     exact dir_preserves_pyth d _ ih
 
 
+
 /-- (c - a)(c + a) = b² when a² + b² = c². -/
 theorem factoring_identity' (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (c - a) * (c + a) = b ^ 2 := by ring_nf; linarith
+
 
 
 /-- Factoring from a Pythagorean triple with leg N. -/
@@ -100,6 +120,7 @@ theorem factoring_from_triple (N b c : ℤ)
     (h : N ^ 2 + b ^ 2 = c ^ 2) :
     (c - b) * (c + b) = N ^ 2 :=
   factoring_identity N b c h
+
 
 
 /-- Path concatenation = matrix multiplication. -/
@@ -110,6 +131,7 @@ theorem pathMatrix_append (p q : BPath) :
   | cons d ds ih => simp only [List.cons_append, pathMatrix, ih, Matrix.mul_assoc]
 
 
+
 theorem shortcut_preserves_information (p : BPath) :
     Function.Injective (pathMatrix p *ᵥ ·) := by
   have h_det : IsUnit (Matrix.det (pathMatrix p)) := by
@@ -118,25 +140,33 @@ theorem shortcut_preserves_information (p : BPath) :
   exact fun x y hxy => by simpa [ h_det ] using congr_arg ( fun z => ( pathMatrix p ) ⁻¹ *ᵥ z ) hxy;
 
 
+
 theorem B₁_inv_left : B₁_inv * B₁ = 1 := by native_decide
 
+
 theorem B₁_inv_right : B₁ * B₁_inv = 1 := by native_decide
+
 
 
 /-- det B₁ = 1, det B₃ = 1, but det B₂ = -1. B₁ and B₃ are in SO(2,1)(ℤ),
 while B₂ is in O(2,1)(ℤ) \ SO(2,1)(ℤ). -/
 theorem B₁_in_SO : Matrix.det B₁ = 1 := det_B₁
 
+
 theorem B₃_in_SO : Matrix.det B₃ = 1 := det_B₃
 
+
 theorem B₂_not_SO : Matrix.det B₂ = -1 := det_B₂
+
 
 
 def lorentzInner (u v : Fin 3 → ℤ) : ℤ := u 0 * v 0 + u 1 * v 1 - u 2 * v 2
 
 
+
 theorem root_lorentz_zero : lorentzInner root root = 0 := by
   simp [lorentzInner, root]
+
 
 
 theorem path_preserves_lorentz (p : BPath) (u v : Fin 3 → ℤ) :
@@ -154,4 +184,5 @@ theorem path_preserves_lorentz (p : BPath) (u v : Fin 3 → ℤ) :
     rw [ ← hLorentzForm, ← hLorentzForm ];
     simp_all +decide [ Matrix.mul_assoc, Matrix.dotProduct_mulVec, Matrix.vecMul_mulVec ];
   exact hpathMatrix_preserves_lorentzInner p u v
+
 

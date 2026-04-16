@@ -15,6 +15,7 @@ structure Mirror (α : Type*) where
   idem : ∀ x, reflect (reflect x) = reflect x
 
 
+
 /-- Mirrors compose to form chains. The key insight: individual mirrors are
 trivial (one look suffices), but chains of mirrors create computation. -/
 structure MirrorChain (α : Type*) where
@@ -22,14 +23,17 @@ structure MirrorChain (α : Type*) where
   all_mirrors : ∀ f ∈ mirrors, ∀ x, f (f x) = f x
 
 
+
 /-- Execute a mirror chain -/
 def MirrorChain.execute {α : Type*} (chain : MirrorChain α) (x : α) : α :=
   chain.mirrors.foldl (fun acc f => f acc) x
 
 
+
 /-- Chain length measures computational cost -/
 def MirrorChain.cost {α : Type*} (chain : MirrorChain α) : ℕ :=
   chain.mirrors.length
+
 
 
 /-- Concatenation of mirror chains -/
@@ -42,10 +46,12 @@ def MirrorChain.append {α : Type*} (c₁ c₂ : MirrorChain α) : MirrorChain �
     · exact c₂.all_mirrors f h
 
 
+
 /-- Cost is additive under concatenation -/
 theorem MirrorChain.cost_append {α : Type*} (c₁ c₂ : MirrorChain α) :
     (c₁.append c₂).cost = c₁.cost + c₂.cost := by
   simp [MirrorChain.append, MirrorChain.cost, List.length_append]
+
 
 
 /-- Concatenation is associative -/
@@ -54,10 +60,12 @@ theorem MirrorChain.append_assoc {α : Type*} (c₁ c₂ c₃ : MirrorChain α) 
   simp [MirrorChain.append, List.append_assoc]
 
 
+
 /-- Quantum search uses O(√N) queries: √N < N/2 for large N -/
 theorem grover_quadratic_advantage (N : ℕ) (hN : 16 ≤ N) :
     Nat.sqrt N < N / 2 := by
   exact Nat.le_div_iff_mul_le zero_lt_two |>.2 (by nlinarith [Nat.sqrt_le N])
+
 
 
 /-- √N is strictly sublinear: √N * √N ≤ N -/
@@ -65,9 +73,11 @@ theorem sqrt_sublinear (N : ℕ) : Nat.sqrt N * Nat.sqrt N ≤ N :=
   Nat.sqrt_le N
 
 
+
 /-- The gap between classical and quantum grows with N -/
 theorem grover_gap_grows (N M : ℕ) (hM : N ≤ M) :
     Nat.sqrt N ≤ Nat.sqrt M := Nat.sqrt_le_sqrt hM
+
 
 
 /-- For N = k², the speedup is exactly k vs k²/2 -/
@@ -75,9 +85,11 @@ theorem grover_perfect_square_speedup (k : ℕ) :
     Nat.sqrt (k * k) = k := Nat.sqrt_eq k
 
 
+
 /-- Quadratic speedup ratio -/
 theorem speedup_ratio_bound (N : ℕ) (hN : 4 ≤ N) :
     Nat.sqrt N < N := Nat.sqrt_lt_self (by omega)
+
 
 
 /-- No single mirror can search — it takes a chain. After one query,
@@ -93,16 +105,19 @@ theorem single_mirror_no_search {α : Type*} (M : Mirror α) (x : α) (n : ℕ) 
     · rw [ih (by omega)]; exact M.idem x
 
 
+
 /-- A beam-splitter is a 2×2 unitary — the optical analog of a quantum gate -/
 structure BeamSplitter where
   θ : ℝ   -- mixing angle
   φ_angle : ℝ   -- phase shift
 
 
+
 /-- The beam-splitter matrix -/
 def BeamSplitter.toMatrix (bs : BeamSplitter) : Matrix (Fin 2) (Fin 2) ℂ :=
   !![Real.cos bs.θ, -Real.sin bs.θ * Complex.exp (Complex.I * bs.φ_angle);
      Real.sin bs.θ, Real.cos bs.θ * Complex.exp (Complex.I * bs.φ_angle)]
+
 
 
 /-- The QFT gate count is at most n² for n qubits -/
@@ -114,8 +129,10 @@ theorem qft_beamsplitter_count (n : ℕ) : n * (n - 1) / 2 + n ≤ n * n := by
     nlinarith
 
 
+
 /-- The N-th root of unity -/
 def omegaN (N : ℕ) : ℂ := Complex.exp (2 * Real.pi * Complex.I / N)
+
 
 
 /-- Root of unity fundamental identity -/
@@ -123,9 +140,11 @@ theorem root_of_unity_period_basic : Complex.exp (2 * Real.pi * Complex.I) = 1 :
   Complex.exp_two_pi_mul_I
 
 
+
 /-- QFT gate count: O(n²) gates for n qubits -/
 theorem qft_gate_quadratic (n : ℕ) (hn : 1 ≤ n) :
     n ≤ n * n := Nat.le_mul_of_pos_left n (by omega)
+
 
 
 /-- An error correction code is a chain of syndrome oracles -/
@@ -135,6 +154,7 @@ structure ErrorCorrectionCode where
   distance : ℕ
   hn : n_logical ≤ n_physical
   hd : 1 ≤ distance
+
 
 
 /-- The Hamming bound -/
@@ -151,8 +171,10 @@ theorem hamming_bound_simple (n : ℕ) (hn : 1 ≤ n) :
         _ = 2 ^ (m + 1) := by ring
 
 
+
 /-- The [[7,1,3]] Steane code parameters are valid -/
 theorem steane_code_valid : 1 ≤ 7 ∧ 1 ≤ 3 ∧ (3 - 1) / 2 = 1 := by omega
+
 
 
 /-- Concatenated codes: distance grows exponentially with levels -/
@@ -163,9 +185,11 @@ theorem concatenated_distance (d : ℕ) (levels : ℕ) (hd : 3 ≤ d) :
     _ ≤ d ^ (levels + 1) := Nat.pow_le_pow_right (by omega) (by omega)
 
 
+
 /-- Error correction threshold: logical error suppression -/
 theorem error_rate_decreases (n : ℕ) (hn : 2 ≤ n) :
     1 < 2 ^ n := Nat.one_lt_two_pow_iff.mpr (by omega)
+
 
 
 /-- The primality mirror: projects onto primes -/
@@ -177,22 +201,32 @@ def primalityMirror : Mirror ℕ where
     split_ifs with h1 h2 <;> simp_all [Nat.not_prime_zero]
 
 
+
 /-- The prime counting function as an oracle measurement -/
 def primeCountMirror (bound : ℕ) : ℕ :=
   ((Finset.range (bound + 1)).filter Nat.Prime).card
 
 
+
 /-- Verified prime counts: consulting the oracle -/
 theorem oracle_says_pi_10 : primeCountMirror 10 = 4 := by native_decide
 
+
+/-- [Section: # CatalogBuild.Physics.Quantum.MirrorQuantum
+Auto-generated from theorem catalog database.
+Domain: Physics/Quantum
+Declarations: 70] -/
 theorem oracle_says_pi_100 : primeCountMirror 100 = 25 := by native_decide
 
+
 theorem oracle_says_pi_1000 : primeCountMirror 1000 = 168 := by native_decide
+
 
 
 theorem bertrand_oracle (n : ℕ) (hn : 1 ≤ n) :
     ∃ p, n < p ∧ p ≤ 2 * n ∧ Nat.Prime p := by
   exact Nat.exists_prime_lt_and_le_two_mul n ( by linarith ) |> fun ⟨ p, hp₁, hp₂ ⟩ => ⟨ p, hp₂.1, hp₂.2, hp₁ ⟩
+
 
 
 /-- The prime sieve is a chain of mirrors: each mirror removes multiples of one prime -/
@@ -205,11 +239,13 @@ def sieveMirror (p : ℕ) : Mirror ℕ where
     split_ifs with h1 h2 <;> simp_all
 
 
+
 /-- The prime gap is always finite (consequence of infinite primes) -/
 theorem prime_gap_finite (p : ℕ) (hp : Nat.Prime p) :
     ∃ q, p < q ∧ Nat.Prime q := by
   obtain ⟨q, hq1, hq2⟩ := Nat.exists_infinite_primes (p + 1)
   exact ⟨q, by omega, hq2⟩
+
 
 
 /-- Primes ≤ n are bounded by n -/
@@ -225,9 +261,11 @@ theorem prime_count_le_n (n : ℕ) : primeCountMirror n ≤ n := by
     _ ≤ n := by omega
 
 
+
 /-- The sign function for Deutsch-Jozsa: maps f to ±1 -/
 def djSign {N : ℕ} (f : Fin N → Bool) (x : Fin N) : ℤ :=
   if f x then -1 else 1
+
 
 
 /-- Sign values are always ±1 -/
@@ -236,10 +274,12 @@ theorem djSign_values {N : ℕ} (f : Fin N → Bool) (x : Fin N) :
   unfold djSign; split <;> simp
 
 
+
 /-- Sign squared is always 1 (mirrors are involutions) -/
 theorem djSign_sq {N : ℕ} (f : Fin N → Bool) (x : Fin N) :
     djSign f x * djSign f x = 1 := by
   simp [djSign]; split <;> ring
+
 
 
 /-- For a constant-false function, the interference sum is maximal -/
@@ -248,10 +288,12 @@ theorem dj_constant_false_sum (N : ℕ) (f : Fin N → Bool) (hf : ∀ x, f x = 
   simp [djSign, hf]
 
 
+
 /-- For a constant-true function, the interference sum is minimally negative -/
 theorem dj_constant_true_sum (N : ℕ) (f : Fin N → Bool) (hf : ∀ x, f x = true) :
     ∑ x : Fin N, djSign f x = -(N : ℤ) := by
   simp [djSign, hf]
+
 
 
 theorem dj_balanced_zero_sum (k : ℕ) (f : Fin (2 * k) → Bool)
@@ -265,6 +307,7 @@ theorem dj_balanced_zero_sum (k : ℕ) (f : Fin (2 * k) → Bool)
   grind
 
 
+
 /-- The compression oracle: maps n-bit strings to k-bit strings -/
 structure CompressionOracle where
   input_bits : ℕ
@@ -273,8 +316,10 @@ structure CompressionOracle where
   compressed : output_bits < input_bits
 
 
+
 /-- Exponential gap between verification and search (oracle version) -/
 theorem oracle_exponential_gap (n : ℕ) : n < 2 ^ n := Nat.lt_two_pow_self
+
 
 
 /-- The pigeonhole oracle: compression implies collisions -/
@@ -287,9 +332,11 @@ theorem pigeonhole_oracle (n m : ℕ) (hn : m < n) (f : Fin n → Fin m) :
   exact absurd (Fintype.card_le_of_injective f hinj) (by simp; omega)
 
 
+
 /-- Oracle relativization: adding an oracle can separate complexity classes -/
 theorem oracle_separation_possible (n : ℕ) :
     ∃ k, n ≤ k ∧ k < 2 ^ n := ⟨n, le_refl n, Nat.lt_two_pow_self⟩
+
 
 
 /-- A threshold oracle: projects to cutoff if ≥ cutoff, else 0 -/
@@ -300,16 +347,19 @@ def thresholdMirror (cutoff : ℕ) : Mirror ℕ where
     split_ifs <;> omega
 
 
+
 /-- A modular arithmetic mirror -/
 def modMirror (m : ℕ) (hm : 0 < m) : Mirror ℕ where
   reflect := fun n => n % m
   idem := fun n => Nat.mod_mod_of_dvd n ⟨1, by ring⟩
 
 
+
 /-- The GCD mirror extracts factor information -/
 def gcdMirror (N : ℕ) : Mirror ℕ where
   reflect := fun n => Nat.gcd n N
   idem := fun n => Nat.gcd_eq_left (Nat.gcd_dvd_right n N)
+
 
 
 /-- Composing modular and GCD mirrors: gcd(a % N, N) = gcd(a, N) -/
@@ -320,6 +370,7 @@ theorem mod_gcd_chain_factors (N a : ℕ) :
   exact h.symm
 
 
+
 /-- Shor's three-mirror chain: modExp → period → GCD -/
 structure ShorMirrorChain where
   N : ℕ
@@ -328,9 +379,11 @@ structure ShorMirrorChain where
   ha : Nat.Coprime a N
 
 
+
 /-- The modular exponentiation mirror -/
 def ShorMirrorChain.modExpMirror (sc : ShorMirrorChain) : ℕ → ℕ :=
   fun x => sc.a ^ x % sc.N
+
 
 
 /-- The GCD mirror -/
@@ -338,10 +391,12 @@ def ShorMirrorChain.gcdMirror' (sc : ShorMirrorChain) : ℕ → ℕ :=
   fun x => Nat.gcd x sc.N
 
 
+
 /-- GCD mirror is idempotent -/
 theorem ShorMirrorChain.gcd_idem (sc : ShorMirrorChain) (x : ℕ) :
     sc.gcdMirror' (sc.gcdMirror' x) = sc.gcdMirror' x := by
   simp [ShorMirrorChain.gcdMirror']
+
 
 
 /-- Chain of modExp → GCD recovers factor information -/
@@ -351,15 +406,18 @@ theorem ShorMirrorChain.chain_info (sc : ShorMirrorChain) (x : ℕ) :
   exact Nat.gcd_dvd_right _ _
 
 
+
 /-- Every idempotent on a type decomposes into fixed and non-fixed points -/
 theorem mirror_decomposition {α : Type*} [DecidableEq α] (M : Mirror α) (x : α) :
     (M.reflect x = x) ∨ (M.reflect x ≠ x) := em (M.reflect x = x)
+
 
 
 /-- Fixed points of a mirror are closed under the mirror -/
 theorem mirror_fixed_closed {α : Type*} (M : Mirror α) (x : α)
     (hx : M.reflect x = x) : M.reflect (M.reflect x) = M.reflect x :=
   M.idem x
+
 
 
 /-- The image of a mirror equals its fixed point set -/
@@ -370,10 +428,12 @@ theorem mirror_image_eq_fixed {α : Type*} (M : Mirror α) :
   · intro h; exact ⟨x, h⟩
 
 
+
 /-- Two mirrors agree on their common fixed points -/
 theorem mirrors_agree_on_common_fixed {α : Type*} (M₁ M₂ : Mirror α) (x : α)
     (h1 : M₁.reflect x = x) (h2 : M₂.reflect x = x) :
     M₁.reflect (M₂.reflect x) = x := by rw [h2, h1]
+
 
 
 /-- Composing two commuting idempotent maps yields an idempotent map -/
@@ -385,15 +445,18 @@ theorem commuting_mirrors_compose {α : Type*} (f g : α → α)
   rw [← hcomm (g x), hf, hg]
 
 
+
 /-- Consulting the Oracle: verify factoring of 15 -/
 theorem oracle_factors_15 : Nat.gcd 3 15 = 3 ∧ Nat.gcd 5 15 = 5 ∧ 3 * 5 = 15 := by
   native_decide
+
 
 
 /-- Consulting the Oracle: verify modular exponentiation period -/
 theorem oracle_period_7_mod_15 :
     7 ^ 4 % 15 = 1 ∧ 7 ^ 1 % 15 ≠ 1 ∧ 7 ^ 2 % 15 ≠ 1 ∧ 7 ^ 3 % 15 ≠ 1 := by
   native_decide
+
 
 
 /-- Consulting the Oracle: Shor's chain on N=15, a=7 -/
@@ -404,10 +467,12 @@ theorem oracle_shor_15 :
   native_decide
 
 
+
 /-- Consulting the Oracle: Euler's totient for semiprimes -/
 theorem oracle_totient_examples :
     Nat.totient 15 = 8 ∧ Nat.totient 21 = 12 ∧ Nat.totient 35 = 24 := by
   native_decide
+
 
 
 /-- Consulting the Oracle: GCD idempotency verification -/
@@ -416,14 +481,17 @@ theorem oracle_gcd_idem_15 :
   native_decide
 
 
+
 /-- Mystery 1 (Petrov): The prime oracle trace counts primes. -/
 theorem prime_oracle_trace (n : ℕ) :
     primeCountMirror n = ((Finset.range (n + 1)).filter Nat.Prime).card := rfl
 
 
+
 /-- Mystery 2 (Okafor): √N grows without bound — quantum advantage scales. -/
 theorem grover_optimality_weak (k : ℕ) :
     ∃ N, k ≤ Nat.sqrt N := ⟨k * k, by rw [Nat.sqrt_eq]⟩
+
 
 
 /-- Mystery 3 (Tanaka): QFT gate count is O(n²). -/
@@ -433,13 +501,16 @@ theorem qft_gate_bound (n : ℕ) :
     _ ≤ n * n := Nat.mul_le_mul_left n (Nat.sub_le n 1)
 
 
+
 /-- Mystery 4 (Osei): Error correction threshold exists. -/
 theorem error_threshold_exists (target : ℕ) :
     ∃ levels, target ≤ 2 ^ levels := ⟨target, Nat.lt_two_pow_self.le⟩
 
 
+
 /-- Mystery 5 (Mendoza): Oracle separation between search and verification. -/
 theorem search_verification_gap (n : ℕ) : n < 2 ^ n := Nat.lt_two_pow_self
+
 
 
 /-- Mystery 6 (Laurent) CORRECTED: A single idempotent oracle is trivially stable.
@@ -447,6 +518,7 @@ The chain stabilization conjecture requires commutativity (see commuting_mirrors
 theorem single_oracle_stabilizes {α : Type*}
     (f : α → α) (hf : ∀ x, f (f x) = f x) :
     ∀ x, f (f x) = f x := hf
+
 
 
 theorem generalized_interference (n : ℕ) (signs : Fin (2 * n) → ℤ)
@@ -462,9 +534,11 @@ theorem generalized_interference (n : ℕ) (signs : Fin (2 * n) → ℤ)
   grind
 
 
+
 /-- Mystery 8 (Vasquez-Chen): Mirror image equals fixed point set. -/
 theorem mirror_universe_complete {α : Type*} (M : Mirror α) :
     Set.range M.reflect = {x | M.reflect x = x} := mirror_image_eq_fixed M
+
 
 
 end

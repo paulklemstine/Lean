@@ -7,10 +7,15 @@ Declarations: 6
 
 import Mathlib
 
+/-- [Section: # CatalogBuild.Speculative.SubBinaryRecurrence
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 6] -/
 theorem fib_sub_binary (n : ℕ) (hn : 2 ≤ n) : fib (n + 2) < 2 ^ n := by
   rcases n with (_ | _ | n) <;> simp_all +arith +decide [Nat.pow_succ']
   induction' n with n ih <;> norm_num [Nat.pow_succ', fib_add_two] at *
   linarith [Nat.zero_le (2 ^ n)]
+
 
 
 theorem fib_le_pow_two (n : ℕ) : fib (n + 2) ≤ 2 ^ n := by
@@ -20,11 +25,13 @@ theorem fib_le_pow_two (n : ℕ) : fib (n + 2) ≤ 2 ^ n := by
     grind
 
 
+
 def padovan : ℕ → ℕ
   | 0 => 1
   | 1 => 1
   | 2 => 1
   | n + 3 => padovan (n + 1) + padovan n
+
 
 
 theorem padovan_sub_binary (n : ℕ) (hn : 1 ≤ n) : padovan n < 2 ^ n := by
@@ -35,6 +42,7 @@ theorem padovan_sub_binary (n : ℕ) (hn : 1 ≤ n) : padovan n < 2 ^ n := by
     by_cases hn : n = 0;
     · simp +arith +decide [ hn ];
     · grind +splitIndPred
+
 
 
 theorem two_term_recurrence_bound (a : ℕ → ℕ) (c₁ c₂ : ℕ)
@@ -48,6 +56,8 @@ theorem two_term_recurrence_bound (a : ℕ → ℕ) (c₁ c₂ : ℕ)
   · have := ih ( n + 1 ) le_rfl; ( have := ih n ( by linarith ) ; ( norm_num [ pow_succ' ] at * ; nlinarith; ) )
 
 
+
 theorem fibonacci_reduction_factor (n : ℕ) (hn : 2 ≤ n) : 2 ^ n - fib (n + 2) ≥ 1 := by
   have := fib_sub_binary n hn; omega
+
 

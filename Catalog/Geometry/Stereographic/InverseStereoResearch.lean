@@ -19,9 +19,11 @@ theorem inv_stereo_on_circle (t : ℝ) :
   ring
 
 
+
 /-- **Theorem Σ.2**: The denominator 1 + t² is always positive.
 This ensures the projection is well-defined everywhere on ℝ. -/
 theorem inv_stereo_denom_pos (t : ℝ) : (0 : ℝ) < 1 + t ^ 2 := by positivity
+
 
 
 /-- **Theorem Σ.3**: Inverse stereo at t=0 gives (0,1) — the "south pole". -/
@@ -29,14 +31,17 @@ theorem inv_stereo_at_zero : invStereo 0 = (0, 1) := by
   simp [invStereo]
 
 
+
 /-- **Theorem Σ.4**: Inverse stereo at t=1 gives (1,0) — the "east point". -/
 theorem inv_stereo_at_one : invStereo 1 = (1, 0) := by
   simp [invStereo]; norm_num
 
 
+
 /-- **Theorem Σ.5**: Inverse stereo at t=-1 gives (-1,0) — the "west point". -/
 theorem inv_stereo_at_neg_one : invStereo (-1) = (-1, 0) := by
   simp [invStereo]; norm_num
+
 
 
 /-- **Theorem Σ.6**: Stereo projection is odd in the first component and
@@ -49,6 +54,7 @@ theorem inv_stereo_symmetry (t : ℝ) :
   constructor <;> field_simp <;> ring
 
 
+
 /-- **Theorem Σ.7**: The double-angle identity underlying stereo projection. -/
 theorem inv_stereo_double_angle_identity (t : ℝ) :
     let d := 1 + t ^ 2
@@ -57,6 +63,7 @@ theorem inv_stereo_double_angle_identity (t : ℝ) :
   have h : (1 : ℝ) + t ^ 2 ≠ 0 := by positivity
   field_simp
   ring
+
 
 
 /-- **Theorem Σ.8**: Inverse stereo is injective — no two real numbers
@@ -75,12 +82,14 @@ theorem inv_stereo_injective : Function.Injective invStereo := by
   nlinarith [sq_nonneg (a - b), sq_nonneg (a + b)]
 
 
+
 /-- **Theorem Φ.1**: When t = p/q (rational), the stereo denominator is
 proportional to p² + q². This connects rational points on S¹ to
 sums of two squares — the gateway to factoring. -/
 theorem stereo_denominator_sum_squares (p q : ℝ) (hq : q ≠ 0) :
     1 + (p / q) ^ 2 = (p ^ 2 + q ^ 2) / q ^ 2 := by
   field_simp; ring
+
 
 
 /-- **Theorem Φ.2**: The stereo first coordinate with rational input
@@ -93,6 +102,7 @@ theorem stereo_rational_first_coord (p q : ℝ) (hq : q ≠ 0)
   field_simp; ring
 
 
+
 /-- **Theorem Φ.3**: The stereo second coordinate with rational input
 gives (q²-p²)/(p²+q²). Combined with Φ.2, this IS Euclid's formula. -/
 theorem stereo_rational_second_coord (p q : ℝ) (hq : q ≠ 0)
@@ -103,10 +113,12 @@ theorem stereo_rational_second_coord (p q : ℝ) (hq : q ≠ 0)
   field_simp; ring
 
 
+
 /-- **Theorem Φ.4**: Euclid's Pythagorean triple formula is a direct
 consequence of stereographic projection. -/
 theorem euclid_pythagorean_from_stereo (m n : ℤ) :
     (2 * m * n) ^ 2 + (m ^ 2 - n ^ 2) ^ 2 = (m ^ 2 + n ^ 2) ^ 2 := by ring
+
 
 
 /-- **Theorem Φ.5**: GCD extraction from stereo coordinates.
@@ -123,6 +135,7 @@ theorem stereo_gcd_factor_extraction (N p q : ℕ) (hN : N = p * q)
   exact lt_of_lt_of_le hp (Nat.le_of_dvd h2 h1)
 
 
+
 /-- **Theorem Ψ.1**: A qubit state parametrized by stereographic projection
 has unit norm. The Bloch sphere meets number theory. -/
 theorem bloch_stereo_norm (t : ℝ) :
@@ -131,16 +144,19 @@ theorem bloch_stereo_norm (t : ℝ) :
   field_simp
 
 
+
 /-- **Theorem Ψ.2**: Pauli-X matrix is an involution (X² = I). -/
 theorem pauli_x_squared :
     !![( 0 : ℤ), 1; 1, 0] * !![( 0 : ℤ), 1; 1, 0] = (1 : Matrix (Fin 2) (Fin 2) ℤ) := by
   ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.mul_apply, Fin.sum_univ_two]
 
 
+
 /-- **Theorem Ψ.3**: Pauli-Z matrix is an involution (Z² = I). -/
 theorem pauli_z_squared :
     !![( 1 : ℤ), 0; 0, -1] * !![( 1 : ℤ), 0; 0, -1] = (1 : Matrix (Fin 2) (Fin 2) ℤ) := by
   ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.mul_apply, Fin.sum_univ_two]
+
 
 
 /-- **Theorem Ψ.4**: The determinant of [[a, -b], [b, a]] is a² + b².
@@ -151,12 +167,14 @@ theorem gaussian_det (a b : ℤ) :
   simp [Matrix.det_fin_two]; ring
 
 
+
 /-- **Theorem Ψ.5**: Composition of two "Gaussian" matrices gives another one.
 Quantum gates representable by Gaussian integers form a group. -/
 theorem gaussian_matrix_compose (a b c d : ℤ) :
     !![a, -b; b, a] * !![c, -d; d, c] =
     !![a*c - b*d, -(a*d + b*c); a*d + b*c, a*c - b*d] := by
   ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.mul_apply, Fin.sum_univ_two] <;> ring
+
 
 
 /-- **Theorem Ψ.6**: The determinant of a composition of Gaussian matrices
@@ -167,6 +185,7 @@ theorem gaussian_det_multiplicative (a b c d : ℤ) :
   rw [Matrix.det_mul, gaussian_det, gaussian_det]
 
 
+
 /-- **Theorem Ψ.7**: Rotation trace formula. The trace of a rotation-like
 matrix determines the rotation angle. -/
 theorem rotation_trace_formula (a b : ℝ) :
@@ -174,18 +193,22 @@ theorem rotation_trace_formula (a b : ℝ) :
   simp [Matrix.trace, Matrix.diag, Fin.sum_univ_two]; ring
 
 
+
 /-- **Theorem Ω.1**: Stereo projection is injective — no compression possible. -/
 theorem stereo_no_compression : Function.Injective invStereo :=
   inv_stereo_injective
+
 
 
 /-- **Theorem Ω.2**: The crystallization loss sin²(πm) is always non-negative. -/
 theorem crystallization_loss_nonneg (m : ℝ) : 0 ≤ sin (π * m) ^ 2 := by positivity
 
 
+
 /-- **Theorem Ω.3**: The crystallization loss is bounded by 1. -/
 theorem crystallization_loss_bounded (m : ℝ) : sin (π * m) ^ 2 ≤ 1 :=
   sin_sq_le_one (π * m)
+
 
 
 /-- **Theorem Ω.4**: At integer points, crystallization loss vanishes.
@@ -196,6 +219,7 @@ theorem crystallization_at_integers (n : ℤ) : sin (π * (n : ℝ)) ^ 2 = 0 := 
   rw [this]; ring
 
 
+
 /-- **Theorem Ω.5**: When weights crystallize to integers m,n, the stereo
 projection produces a point on S¹. Crystallized neural networks compute
 with Pythagorean-rational weights. -/
@@ -203,6 +227,7 @@ theorem crystallized_weight_pythagorean (m n : ℤ) :
     let w := invStereo ((m : ℝ) / (n : ℝ))
     w.1 ^ 2 + w.2 ^ 2 = 1 :=
   inv_stereo_on_circle _
+
 
 
 /-- **Theorem Ω.6**: Universal compression is impossible — pigeonhole principle. -/
@@ -215,6 +240,7 @@ theorem universal_compression_impossible' {n : ℕ} (hn : 0 < n) :
   omega
 
 
+
 /-- **Theorem Ω.7**: The total crystallization loss over k parameters is bounded by k.
 This ensures training stability. -/
 theorem total_crystallization_bounded (k : ℕ) (params : Fin k → ℝ) :
@@ -224,6 +250,7 @@ theorem total_crystallization_bounded (k : ℕ) (params : Fin k → ℝ) :
     _ = k := by simp
 
 
+
 /-- **Theorem Λ.1**: The Lorentz form x² + y² - z² = 0 for stereo on S¹
 (embedded at z = 1). Points on the circle are lightlike! -/
 theorem stereo_lightlike (t : ℝ) :
@@ -231,10 +258,12 @@ theorem stereo_lightlike (t : ℝ) :
   rw [inv_stereo_on_circle]; ring
 
 
+
 /-- **Theorem Λ.2**: Möbius transformation determinant condition. -/
 theorem mobius_det_condition (a b c d : ℝ) (h : a * d - b * c = 1) :
     Matrix.det !![a, b; c, d] = 1 := by
   simp [Matrix.det_fin_two]; linarith
+
 
 
 /-- **Theorem Λ.3**: Composition of SL(2) matrices stays in SL(2).
@@ -244,6 +273,7 @@ theorem mobius_compose_det (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℝ)
     Matrix.det (!![a₁, b₁; c₁, d₁] * !![a₂, b₂; c₂, d₂]) = 1 := by
   rw [Matrix.det_mul, mobius_det_condition a₁ b₁ c₁ d₁ h1,
       mobius_det_condition a₂ b₂ c₂ d₂ h2]; ring
+
 
 
 /-- **Theorem Λ.4**: The Berggren matrix A preserves the Lorentz form
@@ -256,6 +286,7 @@ theorem berggren_A_lorentz_explicit (v : Fin 3 → ℤ) :
     w 0 ^ 2 + w 1 ^ 2 - w 2 ^ 2 = v 0 ^ 2 + v 1 ^ 2 - v 2 ^ 2 := by ring
 
 
+
 /-- **Theorem Λ.5**: The Berggren matrix B preserves the Lorentz form. -/
 theorem berggren_B_lorentz_explicit (v : Fin 3 → ℤ) :
     let w : Fin 3 → ℤ := fun i => match i with
@@ -263,6 +294,7 @@ theorem berggren_B_lorentz_explicit (v : Fin 3 → ℤ) :
       | 1 => 2 * v 0 + 1 * v 1 + 2 * v 2
       | 2 => 2 * v 0 + 2 * v 1 + 3 * v 2
     w 0 ^ 2 + w 1 ^ 2 - w 2 ^ 2 = v 0 ^ 2 + v 1 ^ 2 - v 2 ^ 2 := by ring
+
 
 
 /-- **Theorem Λ.6**: The Berggren matrix C preserves the Lorentz form. -/
@@ -274,9 +306,11 @@ theorem berggren_C_lorentz_explicit (v : Fin 3 → ℤ) :
     w 0 ^ 2 + w 1 ^ 2 - w 2 ^ 2 = v 0 ^ 2 + v 1 ^ 2 - v 2 ^ 2 := by ring
 
 
+
 /-- **Theorem Λ.7**: The critical strip reflection s ↦ 1-s.
 The functional equation of ζ is symmetric under this involution. -/
 theorem critical_strip_reflection (s : ℝ) : s + (1 - s) = 1 := by ring
+
 
 
 /-- **Theorem Λ.8**: The stereo image of 1/2 is (4/5, 3/5).
@@ -286,10 +320,12 @@ theorem stereo_critical_line : invStereo (1/2) = (4/5, 3/5) := by
   simp [invStereo]; constructor <;> norm_num
 
 
+
 /-- **Theorem Λ.9**: The number of primes up to 100 is 25.
 π(100) = 25, matching li(100) ≈ 30.1 with error ~20%. -/
 theorem prime_count_100_research :
     (Finset.filter Nat.Prime (Finset.range 101)).card = 25 := by native_decide
+
 
 
 /-- **Theorem Λ.10**: Primes that are sums of two squares correspond to
@@ -300,6 +336,7 @@ theorem sum_two_sq_primes_count :
   native_decide
 
 
+
 /-- **Theorem Λ.11**: Primes ≡ 3 mod 4 cannot be sums of two squares.
 These are "invisible" to stereographic projection — they have no
 rational preimage on S¹. -/
@@ -308,9 +345,11 @@ theorem sum_two_sq_primes_mod4_count :
   native_decide
 
 
+
 /-- **Theorem Λ.12**: Factor verification is polynomial-time checkable (NP certificate). -/
 theorem factor_verification (N p : ℕ) (hp : p ∣ N) : N % p = 0 :=
   Nat.mod_eq_zero_of_dvd hp
+
 
 
 /-- **Grand Synthesis Theorem**: Stereographic projection simultaneously provides:
@@ -325,6 +364,7 @@ theorem inverse_stereo_rosetta_stone (t : ℝ) :
   rw [inv_stereo_on_circle]; ring
 
 
+
 /-- **Research Direction**: The Euler product formula connects primes to ζ.
 For computational verification, we check: ∏_{p≤7} 1/(1-p⁻²) approximates ζ(2).
 Here we verify the partial product identity for the first few primes. -/
@@ -333,10 +373,12 @@ theorem euler_product_partial :
     (3:ℚ)/4 * (8/9) * (24/25) * (48/49) := by norm_num
 
 
+
 /-- The reciprocal of this partial product. -/
 theorem euler_product_partial_reciprocal :
     ((3:ℚ)/4 * (8/9) * (24/25) * (48/49))⁻¹ = 4 * 9 * 25 * 49 / (3 * 8 * 24 * 48) := by
   norm_num
+
 
 
 /-- The modular T matrix. -/
@@ -345,10 +387,12 @@ theorem modular_T_det :
   simp [Matrix.det_fin_two]
 
 
+
 /-- ST composition. -/
 theorem modular_ST_product :
     !![( 0 : ℤ), -1; 1, 0] * !![( 1 : ℤ), 1; 0, 1] = !![( 0 : ℤ), -1; 1, 1] := by
   ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.mul_apply, Fin.sum_univ_two]
+
 
 
 end

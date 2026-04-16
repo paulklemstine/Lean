@@ -17,6 +17,7 @@ structure PhotonVertex where
   deriving DecidableEq, Repr
 
 
+
 /-- A directed edge: a photon worldline from emission to absorption. -/
 structure PhotonArc where
   source : PhotonVertex
@@ -24,6 +25,7 @@ structure PhotonArc where
   null_condition : (target.x - source.x)^2 + (target.y - source.y)^2 =
                    (target.t - source.t)^2
   causal : source.t < target.t
+
 
 
 /-- The universal photon graph. -/
@@ -34,9 +36,11 @@ structure PhotonGraph where
   target_mem : ∀ a ∈ arcs, a.target ∈ vertices
 
 
+
 /-- Two arcs are connected if one's target is the other's source. -/
 def PhotonArc.connectedTo (a₁ a₂ : PhotonArc) : Prop :=
   a₁.target = a₂.source
+
 
 
 /-- A photon path: a sequence of connected arcs. -/
@@ -44,6 +48,7 @@ inductive PhotonPath : PhotonVertex → PhotonVertex → Prop where
   | single (a : PhotonArc) : PhotonPath a.source a.target
   | cons (a : PhotonArc) {v : PhotonVertex}
     (rest : PhotonPath a.target v) : PhotonPath a.source v
+
 
 
 /-- Time is strictly monotone along any photon path. -/
@@ -54,9 +59,11 @@ theorem PhotonPath.time_monotone {u v : PhotonVertex} (p : PhotonPath u v) :
   | cons a _ ih => linarith [a.causal]
 
 
+
 /-- **The graph is a DAG**: No vertex can reach itself. -/
 theorem photon_graph_acyclic (v : PhotonVertex) : ¬ PhotonPath v v := by
   intro h; have := h.time_monotone; omega
+
 
 
 /-- The in-degree of a vertex. -/
@@ -64,9 +71,11 @@ noncomputable def PhotonGraph.inDegree (G : PhotonGraph) (v : PhotonVertex) : �
   (G.arcs.filter (fun a => a.target = v)).card
 
 
+
 /-- The out-degree of a vertex. -/
 noncomputable def PhotonGraph.outDegree (G : PhotonGraph) (v : PhotonVertex) : ℕ :=
   (G.arcs.filter (fun a => a.source = v)).card
+
 
 
 /-- A scattering event has both incoming and outgoing photons. -/
@@ -74,9 +83,11 @@ def PhotonGraph.isScatteringEvent (G : PhotonGraph) (v : PhotonVertex) : Prop :=
   G.inDegree v > 0 ∧ G.outDegree v > 0
 
 
+
 /-- The state at a time slice: all active photons. -/
 def PhotonGraph.stateAtTime (G : PhotonGraph) (time : ℤ) : Finset PhotonArc :=
   G.arcs.filter (fun a => a.source.t ≤ time ∧ time < a.target.t)
+
 
 
 /-- **The photon graph IS a map**: it defines a unique state at each time. -/
@@ -85,9 +96,11 @@ theorem photon_graph_is_map (G : PhotonGraph) (t : ℤ) :
   ⟨G.stateAtTime t, rfl, fun _ h => h⟩
 
 
+
 /-- Two photons are adjacent if they share a spacetime event. -/
 def photonsAdjacent (a₁ a₂ : PhotonArc) : Prop :=
   a₁.target = a₂.source ∨ a₂.target = a₁.source
+
 
 
 /-- Adjacency is symmetric. -/
@@ -98,11 +111,13 @@ theorem photonsAdjacent_symm (a₁ a₂ : PhotonArc) :
   · exact Or.inl h
 
 
+
 /-- The undirected photon graph. -/
 structure UndirectedPhotonGraph where
   photons : Finset PhotonArc
   adj : PhotonArc → PhotonArc → Prop
   adj_symm : ∀ a₁ a₂, adj a₁ a₂ → adj a₂ a₁
+
 
 
 /-- Convert directed → undirected. -/
@@ -112,6 +127,7 @@ def PhotonGraph.toUndirected (G : PhotonGraph) : UndirectedPhotonGraph where
   adj_symm := photonsAdjacent_symm
 
 
+
 /-- Reachability in the undirected graph. -/
 inductive UndirectedReachable (G : UndirectedPhotonGraph) :
     PhotonArc → PhotonArc → Prop where
@@ -119,6 +135,7 @@ inductive UndirectedReachable (G : UndirectedPhotonGraph) :
   | step (a b c : PhotonArc) :
     a ∈ G.photons → b ∈ G.photons →
     G.adj a b → UndirectedReachable G b c → UndirectedReachable G a c
+
 
 
 /-- Reachability is transitive. -/
@@ -132,10 +149,12 @@ theorem UndirectedReachable.trans (G : UndirectedPhotonGraph)
   | step a' b' _ ha hb hadj _ ih => exact .step a' b' _ ha hb hadj (ih hbc)
 
 
+
 /-- A connected photon graph: all photons can reach each other. -/
 def PhotonGraph.isConnected (G : PhotonGraph) : Prop :=
   ∀ a₁ a₂, a₁ ∈ G.arcs → a₂ ∈ G.arcs →
     UndirectedReachable G.toUndirected a₁ a₂
+
 
 
 /-- **Is the universe one big connected graph?**
@@ -144,6 +163,7 @@ theorem universe_connectivity_principle (G : PhotonGraph) (hconn : G.isConnected
     (a₁ a₂ : PhotonArc) (h₁ : a₁ ∈ G.arcs) (h₂ : a₂ ∈ G.arcs) :
     UndirectedReachable G.toUndirected a₁ a₂ :=
   hconn a₁ a₂ h₁ h₂
+
 
 
 /-- A photon graph morphism. -/
@@ -155,6 +175,7 @@ structure PhotonGraphMorphism (G₁ G₂ : PhotonGraph) where
   preserves_target : ∀ a ∈ G₁.arcs, (onArcs a).target = onVertices a.target
 
 
+
 /-- The identity morphism. -/
 def PhotonGraphMorphism.id' (G : PhotonGraph) : PhotonGraphMorphism G G where
   onVertices := id
@@ -162,6 +183,7 @@ def PhotonGraphMorphism.id' (G : PhotonGraph) : PhotonGraphMorphism G G where
   arcs_mem := fun _ ha => ha
   preserves_source := fun _ _ => rfl
   preserves_target := fun _ _ => rfl
+
 
 
 /-- Composition of morphisms. -/
@@ -177,14 +199,17 @@ def PhotonGraphMorphism.comp' {G₁ G₂ G₃ : PhotonGraph}
     simp [Function.comp, f.preserves_target a ha, g.preserves_target _ (f.arcs_mem a ha)]
 
 
+
 /-- A photon graph is in equilibrium if the state is constant. -/
 def PhotonGraph.inEquilibrium (G : PhotonGraph) (t₁ t₂ : ℤ) : Prop :=
   G.stateAtTime t₁ = G.stateAtTime t₂
 
 
+
 /-- Equilibrium is reflexive. -/
 theorem equilibrium_refl (G : PhotonGraph) (t : ℤ) :
     G.inEquilibrium t t := rfl
+
 
 
 /-- Equilibrium is transitive (idempotent propagation). -/
@@ -193,6 +218,7 @@ theorem propagator_idempotent_at_equilibrium (G : PhotonGraph)
     (h₁₂ : G.inEquilibrium t₁ t₂) (h₂₃ : G.inEquilibrium t₂ t₃) :
     G.inEquilibrium t₁ t₃ := by
   exact h₁₂.trans h₂₃
+
 
 
 end

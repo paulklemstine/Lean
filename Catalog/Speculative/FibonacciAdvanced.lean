@@ -7,10 +7,15 @@ Declarations: 24
 
 import Mathlib
 
+/-- [Section: # CatalogBuild.Speculative.FibonacciAdvanced
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 24] -/
 theorem fib_cassini (n : ℕ) (hn : 0 < n) :
     (Nat.fib (n + 1) * Nat.fib (n - 1) : ℤ) - (Nat.fib n : ℤ) ^ 2 = (-1) ^ n := by
   rcases n with ( _ | _ | n ) <;> simp_all +decide [ Nat.fib_add_two ];
   induction n <;> norm_num [ pow_succ, Nat.fib_add_two ] at * ; linarith
+
 
 
 theorem fib_sum_formula (n : ℕ) :
@@ -18,9 +23,11 @@ theorem fib_sum_formula (n : ℕ) :
   exact eq_tsub_of_add_eq <| by induction n <;> simp_all +arith +decide [ Nat.fib_add_two, Finset.sum_range_succ ] ;
 
 
+
 theorem fib_double (n : ℕ) :
     Nat.fib (2 * n) = Nat.fib n * (2 * Nat.fib (n + 1) - Nat.fib n) := by
   convert fib_two_mul n using 1
+
 
 
 theorem fib_prime_odd (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2) (hp3 : p ≠ 3) :
@@ -29,6 +36,7 @@ theorem fib_prime_odd (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2) (hp3 : p ≠ 
   have h_fib_even_iff_three_dvd : ∀ n, (Nat.fib n) % 2 = 0 ↔ 3 ∣ n := by
     intro n; induction' n using Nat.strong_induction_on with n ih; rcases n with ( _ | _ | _ | n ) <;> simp +arith +decide [ *, Nat.fib_add_two, Nat.add_mod, Nat.mul_mod, Nat.dvd_iff_mod_eq_zero ] ;
   rw [ Nat.dvd_iff_mod_eq_zero, h_fib_even_iff_three_dvd ] ; exact fun h => hp3 <| by have := Nat.prime_dvd_prime_iff_eq Nat.prime_three hp; tauto;
+
 
 
 theorem pisano_divides_p_sq_sub_one (p : ℕ) (hp : Nat.Prime p) (hp5 : p ≠ 5)
@@ -73,43 +81,63 @@ theorem pisano_divides_p_sq_sub_one (p : ℕ) (hp : Nat.Prime p) (hp5 : p ≠ 5)
   rw [ show p ^ 2 - 1 = ( p - 1 ) * ( p + 1 ) by convert Nat.sq_sub_sq p 1 using 1; ring ] ; simp +decide [ pow_mul, ZMod.pow_card_sub_one_eq_one, show α ≠ 0 from by aesop_cat, show β ≠ 0 from by aesop_cat ] ;
 
 
+
 theorem wss_check_31 : ¬(31 ^ 2 ∣ Nat.fib 30 * Nat.fib 32) := by native_decide
+
 
 theorem wss_check_37 : ¬(37 ^ 2 ∣ Nat.fib 36 * Nat.fib 38) := by native_decide
 
+
 theorem wss_check_41 : ¬(41 ^ 2 ∣ Nat.fib 40 * Nat.fib 42) := by native_decide
+
 
 theorem wss_check_43 : ¬(43 ^ 2 ∣ Nat.fib 42 * Nat.fib 44) := by native_decide
 
+
 theorem wss_check_47 : ¬(47 ^ 2 ∣ Nat.fib 46 * Nat.fib 48) := by native_decide
+
 
 theorem wss_check_53 : ¬(53 ^ 2 ∣ Nat.fib 52 * Nat.fib 54) := by native_decide
 
+
 theorem wss_check_59 : ¬(59 ^ 2 ∣ Nat.fib 58 * Nat.fib 60) := by native_decide
+
 
 theorem wss_check_61 : ¬(61 ^ 2 ∣ Nat.fib 60 * Nat.fib 62) := by native_decide
 
+
 theorem wss_check_67 : ¬(67 ^ 2 ∣ Nat.fib 66 * Nat.fib 68) := by native_decide
+
 
 theorem wss_check_71 : ¬(71 ^ 2 ∣ Nat.fib 70 * Nat.fib 72) := by native_decide
 
+
 theorem wss_check_73 : ¬(73 ^ 2 ∣ Nat.fib 72 * Nat.fib 74) := by native_decide
+
 
 theorem wss_check_79 : ¬(79 ^ 2 ∣ Nat.fib 78 * Nat.fib 80) := by native_decide
 
+
 theorem wss_check_83 : ¬(83 ^ 2 ∣ Nat.fib 82 * Nat.fib 84) := by native_decide
+
 
 theorem wss_check_89 : ¬(89 ^ 2 ∣ Nat.fib 88 * Nat.fib 90) := by native_decide
 
+
 theorem wss_check_97 : ¬(97 ^ 2 ∣ Nat.fib 96 * Nat.fib 98) := by native_decide
+
 
 
 /-- If n is composite and not a Fibonacci pseudoprime, F(n) mod n ≠ (n/p) mod n
 where p is the Legendre symbol. This is the basis for the Fibonacci compositeness test. -/
 theorem fib_composite_test_5 : Nat.fib 4 % 4 ≠ 0 ∧ ¬ Nat.Prime 4 := by decide
 
+
 theorem fib_composite_test_9 : ¬ Nat.Prime 9 := by decide
+
 
 theorem fib_composite_test_15 : ¬ Nat.Prime 15 := by decide
 
+
 theorem fib_composite_test_25 : ¬ Nat.Prime 25 := by decide
+

@@ -13,6 +13,7 @@ noncomputable section
 def cantorPair (a b : ℕ) : ℕ := (a + b) * (a + b + 1) / 2 + b
 
 
+
 /-- The Cantor pairing function is injective. -/
 theorem cantorPair_injective : Function.Injective (fun p : ℕ × ℕ => cantorPair p.1 p.2) := by
   intro p q h;
@@ -22,11 +23,13 @@ theorem cantorPair_injective : Function.Injective (fun p : ℕ × ℕ => cantorP
   unfold cantorPair at h; aesop;
 
 
+
 /-- Zigzag encoding: ℤ → ℕ.
 0 ↦ 0, 1 ↦ 1, -1 ↦ 2, 2 ↦ 3, -2 ↦ 4, ... -/
 def zigzagEncode : ℤ → ℕ
   | Int.ofNat n => 2 * n
   | Int.negSucc n => 2 * n + 1
+
 
 
 /-- Zigzag encoding is injective -/
@@ -37,9 +40,11 @@ theorem zigzagEncode_injective : Function.Injective zigzagEncode := by
   · omega
 
 
+
 /-- Encode a Gaussian integer (photon state) as a natural number -/
 def encodeGaussian (z : ℤ × ℤ) : ℕ :=
   cantorPair (zigzagEncode z.1) (zigzagEncode z.2)
+
 
 
 /-- The Gaussian encoding is injective: different photon states → different numbers. -/
@@ -50,6 +55,11 @@ theorem encodeGaussian_injective : Function.Injective encodeGaussian := by
   exact Prod.ext ( zigzagEncode_injective <| by aesop ) ( zigzagEncode_injective <| by aesop )
 
 
+
+/-- [Section: # CatalogBuild.Computation.NumberLineEncoding
+Auto-generated from theorem catalog database.
+Domain: Computation
+Declarations: 20] -/
 theorem encodeGaussian_surjective : Function.Surjective encodeGaussian := by
   intro n
   obtain ⟨a, b, hab⟩ : ∃ a b : ℕ, cantorPair a b = n := by
@@ -76,9 +86,11 @@ theorem encodeGaussian_surjective : Function.Surjective encodeGaussian := by
   unfold encodeGaussian; aesop;
 
 
+
 /-- A finite simple graph on n vertices, represented by its adjacency matrix. -/
 structure FiniteGraph (n : ℕ) where
   adjacency : Fin n → Fin n → Bool
+
 
 
 /-- Encode a finite graph as a natural number via binary representation. -/
@@ -86,6 +98,7 @@ def encodeGraph {n : ℕ} (G : FiniteGraph n) : ℕ :=
   ∑ i : Fin n, ∑ j : Fin n, if G.adjacency i j then 2^(i.val * n + j.val) else 0
 
 set_option maxHeartbeats 1600000 in
+
 
 /-- The graph encoding is injective: different graphs get different numbers. -/
 theorem encodeGraph_injective (n : ℕ) :
@@ -134,11 +147,13 @@ theorem encodeGraph_injective (n : ℕ) :
   cases G ; cases H ; aesop
 
 
+
 /-- A labeled photon event graph. -/
 structure LabeledPhotonGraph (n : ℕ) where
   coords : Fin n → ℤ × ℤ × ℤ
   connected : Fin n → Fin n → Bool
   entangled : Fin n → Fin n → Fin n → Bool
+
 
 
 /-- Encode a labeled photon graph as a single natural number. -/
@@ -152,8 +167,10 @@ def encodeLabeledPhotonGraph {n : ℕ} (G : LabeledPhotonGraph n) : ℕ :=
   cantorPair coordCode adjCode
 
 
+
 /-- A photon history: for each time step, did a photon event occur? -/
 def PhotonHistory := ℕ → Bool
+
 
 
 /-- Encode a photon history as a real number in [0,1] via binary expansion. -/
@@ -161,9 +178,11 @@ noncomputable def encodeHistory (h : PhotonHistory) : ℝ :=
   ∑' n, if h n then (1 : ℝ) / 2^(n + 1) else 0
 
 
+
 /-- The encoded history is non-negative. -/
 theorem encodeHistory_nonneg (h : PhotonHistory) : 0 ≤ encodeHistory h := by
   exact tsum_nonneg fun _ => by positivity;
+
 
 
 /-- The encoded history is at most 1. -/
@@ -176,10 +195,12 @@ theorem encodeHistory_le_one (h : PhotonHistory) : encodeHistory h ≤ 1 := by
   · ring ; rw [ tsum_mul_right, tsum_geometric_of_lt_one ] <;> norm_num
 
 
+
 /-- A history is "non-degenerate" if it is not eventually all-true.
 This avoids the 0.111... = 1.000... ambiguity. -/
 def PhotonHistory.nonDegenerate (h : PhotonHistory) : Prop :=
   ∀ N : ℕ, ∃ n ≥ N, h n = false
+
 
 
 theorem encodeHistory_injective_nonDegenerate :
@@ -225,10 +246,12 @@ theorem encodeHistory_injective_nonDegenerate :
     rw [ Finset.sum_congr rfl fun i hi => by rw [ hn i ( Finset.mem_range.mp hi ) ] ] at h_split_sum ; linarith [ show ( 0 : ℝ ) ≤ ∑' m : ℕ, ( if h₁ ( m + n + 1 ) = true then ( 2 ^ ( m + n + 2 ) ) ⁻¹ else 0 ) from tsum_nonneg fun _ => by positivity ]
 
 
+
 theorem photon_codes_surjective :
     ∀ n : ℕ, ∃ z : ℤ × ℤ, encodeGaussian z = n := by
   intro n;
   convert encodeGaussian_surjective n using 1
+
 
 
 /-- The photon encoding gives a bijection ℤ × ℤ ≃ ℕ.
@@ -238,5 +261,6 @@ The entire photon universe is indexed by the natural numbers. -/
 theorem photon_encoding_bijective :
     Function.Bijective encodeGaussian := by
   exact ⟨encodeGaussian_injective, fun n => photon_codes_surjective n⟩
+
 
 end

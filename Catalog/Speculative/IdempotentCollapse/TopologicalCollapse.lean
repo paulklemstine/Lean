@@ -14,10 +14,12 @@ structure Retraction' (α : Type*) (S : Set α) where
   fixes_S : ∀ x ∈ S, map x = x
 
 
+
 /-- Every retraction is idempotent. -/
 theorem retraction_idempotent' {α : Type*} {S : Set α} (r : Retraction' α S) :
     ∀ x, r.map (r.map x) = r.map x :=
   fun x => r.fixes_S (r.map x) (r.maps_into x)
+
 
 
 /-- Image of retraction = target. -/
@@ -29,6 +31,11 @@ theorem retraction_range' {α : Type*} {S : Set α} (r : Retraction' α S) :
   · intro hx; exact ⟨x, r.fixes_S x hx⟩
 
 
+
+/-- [Section: # CatalogBuild.Speculative.IdempotentCollapse.TopologicalCollapse
+Auto-generated from theorem catalog database.
+Domain: Speculative/IdempotentCollapse
+Declarations: 8] -/
 theorem idempotent_almost_identity' {n : ℕ} (f : Fin (n+1) → Fin (n+1))
     (hf : ∀ x, f (f x) = f x)
     (h_image : Finset.card (Finset.image f Finset.univ) = n)
@@ -43,14 +50,17 @@ theorem idempotent_almost_identity' {n : ℕ} (f : Fin (n+1) → Fin (n+1))
       obtain ⟨ x, hx ⟩ := Finset.card_eq_one.mp h_not_fixed_points; use x; simp_all +decide [ Finset.ext_iff ] ;
 
 
+
 /-- An idempotent is the identity on its image. -/
 theorem collapse_is_id_on_image {α : Type*} (f : α → α) (hf : ∀ x, f (f x) = f x) :
     ∀ x ∈ range f, f x = x := by
   rintro x ⟨y, rfl⟩; exact hf y
 
 
+
 /-- The fiber of a map over a point. -/
 def retraction_fiber' {α : Type*} (f : α → α) (y : α) : Set α := {x | f x = y}
+
 
 
 /-- Every element is in its fiber. -/
@@ -58,6 +68,8 @@ theorem fiber_partition' {α : Type*} (f : α → α) :
     ∀ x, x ∈ retraction_fiber' f (f x) := fun _ => rfl
 
 
+
 /-- Fixed points are in their own fiber. -/
 theorem fixed_point_in_fiber' {α : Type*} (f : α → α)
     (y : α) (hy : f y = y) : y ∈ retraction_fiber' f y := hy
+

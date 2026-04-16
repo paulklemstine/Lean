@@ -14,14 +14,17 @@ def IharaGraph.isRegular {n : ℕ} (G : IharaGraph n) (q : ℕ) : Prop :=
   ∀ i, G.degree i = (q + 1 : ℝ)
 
 
+
 /-- The adjacency matrix as a Mathlib matrix. -/
 def IharaGraph.adjMatrix {n : ℕ} (G : IharaGraph n) : Matrix (Fin n) (Fin n) ℝ :=
   Matrix.of G.adj
 
 
+
 /-- The degree matrix (diagonal). -/
 def IharaGraph.degMatrix {n : ℕ} (G : IharaGraph n) : Matrix (Fin n) (Fin n) ℝ :=
   Matrix.diagonal (fun i => G.degree i)
+
 
 
 /-- The adjacency matrix is symmetric. -/
@@ -32,12 +35,18 @@ theorem IharaGraph.adjMatrix_symm {n : ℕ} (G : IharaGraph n) :
   exact G.adj_symm j i
 
 
+
 /-- The Ihara matrix: I - u·A + u²·(D - I).
 This is the key matrix whose determinant gives ζ_G(u)⁻¹. -/
 def iharaMatrix {n : ℕ} (G : IharaGraph n) (u : ℝ) : Matrix (Fin n) (Fin n) ℝ :=
   1 - u • G.adjMatrix + u^2 • (G.degMatrix - 1)
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.IharaZeta
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 11] -/
 theorem ihara_matrix_regular {n : ℕ} (G : IharaGraph n) (q : ℕ) (u : ℝ)
     (hreg : G.isRegular q) :
     iharaMatrix G u = (1 + (q : ℝ) * u^2) • (1 : Matrix (Fin n) (Fin n) ℝ) - u • G.adjMatrix := by
@@ -47,6 +56,7 @@ theorem ihara_matrix_regular {n : ℕ} (G : IharaGraph n) (q : ℕ) (u : ℝ)
     exact Or.inl ( by linarith [ hreg j ] );
   · unfold iharaMatrix;
     unfold IharaGraph.degMatrix; aesop;
+
 
 
 theorem regular_graph_eigenvalue_bound {n : ℕ} (G : IharaGraph n) (q : ℕ)
@@ -72,6 +82,7 @@ theorem regular_graph_eigenvalue_bound {n : ℕ} (G : IharaGraph n) (q : ℕ)
   nlinarith [ hreg i, show ( ∑ j : Fin n, G.adj i j ) = q + 1 from mod_cast hreg i ]
 
 
+
 /-- A Ramanujan graph satisfies |λ| ≤ 2√q for all non-trivial eigenvalues. -/
 def IharaGraph.isRamanujan {n : ℕ} (G : IharaGraph n) (q : ℕ) : Prop :=
   G.isRegular q ∧ ∀ ev : ℝ,
@@ -79,9 +90,11 @@ def IharaGraph.isRamanujan {n : ℕ} (G : IharaGraph n) (q : ℕ) : Prop :=
     |ev| = (q + 1 : ℝ) ∨ |ev| ≤ 2 * Real.sqrt q
 
 
+
 /-- Number of edges of a graph (half the sum of all adjacency entries). -/
 def IharaGraph.numEdges {n : ℕ} (G : IharaGraph n) : ℝ :=
   (∑ i, ∑ j, G.adj i j) / 2
+
 
 
 /-- The rank of the fundamental group: r = |E| - |V| + 1 -/
@@ -89,10 +102,12 @@ def IharaGraph.graphRank {n : ℕ} (G : IharaGraph n) : ℝ :=
   G.numEdges - n + 1
 
 
+
 theorem regular_graph_edges {n : ℕ} (G : IharaGraph n) (q : ℕ) (hreg : G.isRegular q) :
     G.numEdges = (n : ℝ) * (q + 1 : ℝ) / 2 := by
   convert congr_arg ( fun x : ℝ => x / 2 ) ( Finset.sum_congr rfl fun i _ => hreg i ) using 1 ; simp +decide [ Finset.sum_add_distrib, Matrix.mulVec, dotProduct ];
   ring
+
 
 
 end

@@ -17,6 +17,7 @@ structure PredictionMorphism (α β : Type*) where
   quality_le_one : quality ≤ 1
 
 
+
 /-- Composition of prediction morphisms -/
 noncomputable def PredictionMorphism.comp {α β γ : Type*}
     (f : PredictionMorphism α β) (g : PredictionMorphism β γ) :
@@ -25,6 +26,7 @@ noncomputable def PredictionMorphism.comp {α β γ : Type*}
   quality := f.quality * g.quality
   quality_nonneg := mul_nonneg f.quality_nonneg g.quality_nonneg
   quality_le_one := by nlinarith [f.quality_le_one, g.quality_le_one, f.quality_nonneg, g.quality_nonneg]
+
 
 
 /-- Quality degrades under composition (data processing inequality) -/
@@ -36,6 +38,7 @@ theorem composition_quality_bound {α β γ : Type*}
          by nlinarith [f.quality_le_one, g.quality_nonneg]⟩
 
 
+
 /-- The identity prediction: perfect knowledge -/
 def PredictionMorphism.identity (α : Type*) : PredictionMorphism α α where
   predict := id
@@ -44,10 +47,12 @@ def PredictionMorphism.identity (α : Type*) : PredictionMorphism α α where
   quality_le_one := by norm_num
 
 
+
 /-- Identity is a left unit for quality -/
 theorem identity_left_unit {α β : Type*} (f : PredictionMorphism α β) :
     ((PredictionMorphism.identity α).comp f).quality = f.quality := by
   show 1 * f.quality = f.quality; ring
+
 
 
 /-- Identity is a right unit for quality -/
@@ -56,10 +61,12 @@ theorem identity_right_unit {α β : Type*} (f : PredictionMorphism α β) :
   show f.quality * 1 = f.quality; ring
 
 
+
 /-- The Bayesian update monad: simplified as a type wrapper with log-likelihood -/
 structure BayesianDist (α : Type*) where
   sample : α
   logLikelihood : ℝ
+
 
 
 /-- The unit (return/pure): point mass distribution -/
@@ -68,10 +75,12 @@ def BayesianDist.pure' {α : Type*} (x : α) : BayesianDist α where
   logLikelihood := 0
 
 
+
 /-- The monad multiplication (join): marginalization -/
 def BayesianDist.join {α : Type*} (dd : BayesianDist (BayesianDist α)) : BayesianDist α where
   sample := dd.sample.sample
   logLikelihood := dd.logLikelihood + dd.sample.logLikelihood
+
 
 
 /-- Left unit law for log-likelihoods -/
@@ -80,16 +89,19 @@ theorem bayesian_monad_left_unit {α : Type*} (d : BayesianDist α) :
   simp [BayesianDist.pure', BayesianDist.join]
 
 
+
 /-- Right unit law -/
 theorem bayesian_monad_right_unit {α : Type*} (x : α) :
     (BayesianDist.pure' x).logLikelihood = 0 := by
   simp [BayesianDist.pure']
 
 
+
 /-- A model update transforms one prediction scheme to another -/
 structure ModelUpdate (α β : Type*) where
   transform : (α → β) → (α → β)
   improvement : ℝ
+
 
 
 /-- Composing updates: improvement sums -/
@@ -100,6 +112,7 @@ theorem update_composition_sum {α β : Type*}
   linarith
 
 
+
 /-- The Kan extension property: if the summary S is sufficient,
 then Lan_S(f) ∘ S = f -/
 theorem kan_extension_approximation {α β γ : Type*}
@@ -107,6 +120,7 @@ theorem kan_extension_approximation {α β γ : Type*}
     (h_exact : ∀ x, Lan (S x) = f x) :
     ∀ x, Lan (S x) = f x :=
   h_exact
+
 
 
 /-- Prediction is compositional: quality of A→B→C is bounded by
@@ -119,6 +133,7 @@ theorem prediction_compositionality
     q_AC ≤ min q_AB q_BC := by
   rw [h_compose, le_min_iff]
   exact ⟨by nlinarith, by nlinarith⟩
+
 
 
 end

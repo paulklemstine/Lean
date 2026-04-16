@@ -17,9 +17,11 @@ structure BlochVector where
   norm_le : rx ^ 2 + ry ^ 2 + rz ^ 2 ≤ 1
 
 
+
 /-- The purity parameter r = |Bloch vector|. -/
 def BlochVector.r (v : BlochVector) : ℝ :=
   Real.sqrt (v.rx ^ 2 + v.ry ^ 2 + v.rz ^ 2)
+
 
 
 /-- The LKT "knowledge content" of a qubit: how much a system knows about it.
@@ -31,10 +33,12 @@ def knowledgeContent (v : BlochVector) : ℝ :=
   1 - vonNeumannEntropy2 eig / log 2
 
 
+
 /-- Bloch vector norm is non-negative. -/
 theorem BlochVector.r_nonneg (v : BlochVector) : 0 ≤ v.r := by
   unfold BlochVector.r
   exact Real.sqrt_nonneg _
+
 
 
 /-- Bloch vector norm is at most 1. -/
@@ -44,8 +48,10 @@ theorem BlochVector.r_le_one (v : BlochVector) : v.r ≤ 1 := by
   exact Real.sqrt_le_sqrt v.norm_le
 
 
+
 /-- Number of independent real parameters in a qubit's knowledge table. -/
 def qubitTableSize : ℕ := 3
+
 
 
 /-- Information from a single projective measurement on a qubit.
@@ -57,6 +63,7 @@ def measurementInfoGain (r_component : ℝ) : ℝ :=
   else log 2 + (p * log p + (1 - p) * log (1 - p))
 
 
+
 /-- **Tomographic Lower Bound**: At least 3 measurement bases are needed to
 reconstruct a qubit knowledge table. -/
 theorem tomographic_lower_bound :
@@ -64,9 +71,11 @@ theorem tomographic_lower_bound :
   unfold qubitTableSize; norm_num
 
 
+
 /-- The total information in a qubit knowledge table. -/
 def totalTableInfo (v : BlochVector) : ℝ :=
   measurementInfoGain v.rx + measurementInfoGain v.ry + measurementInfoGain v.rz
+
 
 
 /-- Quantum Cramér-Rao bound for qubit tomography. -/
@@ -75,8 +84,10 @@ theorem cramer_rao_tomography (ε : ℝ) (hε : 0 < ε) (hε1 : ε < 1) :
   positivity
 
 
+
 /-- Model of decoherence as exponential decay of mutual information. -/
 def mutualInfoDecay (I₀ Gamma t : ℝ) : ℝ := I₀ * exp (-Gamma * t)
+
 
 
 /-- Mutual information decay is non-negative when starting non-negative. -/
@@ -84,6 +95,7 @@ theorem mutualInfoDecay_nonneg (I₀ Gamma t : ℝ) (hI : 0 ≤ I₀) (ht : 0 �
     0 ≤ mutualInfoDecay I₀ Gamma t := by
   unfold mutualInfoDecay
   exact mul_nonneg hI (exp_nonneg _)
+
 
 
 /-- Mutual information decay is monotonically decreasing for positive Γ. -/
@@ -95,18 +107,26 @@ theorem mutualInfoDecay_mono (I₀ Gamma : ℝ) (hI : 0 < I₀) (hGamma : 0 < Ga
   exact exp_le_exp.mpr (by nlinarith)
 
 
+
 /-- **Decoherence-Knowledge Conservation**: Total information is conserved. -/
 def totalInfo (I₀ Gamma t : ℝ) : ℝ :=
   mutualInfoDecay I₀ Gamma t + (I₀ - mutualInfoDecay I₀ Gamma t)
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.LKTExperiments
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 28] -/
 theorem totalInfo_conserved (I₀ Gamma t : ℝ) :
     totalInfo I₀ Gamma t = I₀ := by
   unfold totalInfo; ring
 
 
+
 /-- The "half-life" of knowledge: time for mutual info to drop by half. -/
 def knowledgeHalfLife (Gamma : ℝ) : ℝ := log 2 / Gamma
+
 
 
 /-- At the half-life time, mutual information is exactly I₀/2. -/
@@ -118,8 +138,10 @@ theorem info_at_halflife (I₀ Gamma : ℝ) (hGamma : 0 < Gamma) :
   ring
 
 
+
 /-- Tangle (squared concurrence) — measures entanglement between two qubits. -/
 def tangle (C : ℝ) : ℝ := C ^ 2
+
 
 
 /-- **CKW Monogamy Inequality**: For three qubits A, B, C:
@@ -134,8 +156,10 @@ theorem ckw_monogamy_structure
   constructor <;> linarith
 
 
+
 /-- **CHSH Bound**: Classical correlations satisfy |S| ≤ 2. -/
 def chshClassicalBound : ℝ := 2
+
 
 
 /-- Tsirelson bound is tight: (2√2)² = 8. -/
@@ -144,6 +168,7 @@ theorem tsirelson_value :
   unfold tsirelsonBound
   rw [mul_pow, Real.sq_sqrt (by norm_num : (2:ℝ) ≥ 0)]
   ring
+
 
 
 /-- n-partite monogamy: total bilateral information bounded by table capacity. -/
@@ -158,6 +183,7 @@ theorem npartite_monogamy
     _ ≤ n * SA := h_total
 
 
+
 /-- The LKT state of a system: its knowledge table entries. -/
 structure LKTState where
   dim : ℕ
@@ -165,9 +191,11 @@ structure LKTState where
   knowledge_range : ∀ i, 0 ≤ knowledge i ∧ knowledge i ≤ 1
 
 
+
 /-- Total knowledge in a table. -/
 def LKTState.totalKnowledge (s : LKTState) : ℝ :=
   ∑ i : Fin s.dim, s.knowledge i
+
 
 
 /-- Total knowledge is non-negative. -/
@@ -177,6 +205,7 @@ theorem LKTState.totalKnowledge_nonneg (s : LKTState) :
   apply Finset.sum_nonneg
   intro i _
   exact (s.knowledge_range i).1
+
 
 
 /-- Total knowledge is bounded by table dimension. -/
@@ -189,6 +218,7 @@ theorem LKTState.totalKnowledge_bounded (s : LKTState) :
         intro i _
         exact (s.knowledge_range i).2
     _ = s.dim := by simp
+
 
 
 /-- **LKT Master Theorem**: The three experiments are unified. -/
@@ -210,6 +240,7 @@ theorem lkt_master_unification
     _ ≤ s.dim := s.totalKnowledge_bounded
 
 
+
 /-- No-cloning theorem: a unitary cannot duplicate an arbitrary qubit state.
 In LKT terms: relational knowledge is partner-specific and cannot be copied. -/
 theorem no_cloning_information
@@ -218,6 +249,7 @@ theorem no_cloning_information
     (h_copy_attempt : H_out ≥ 2 * H_in)
     (h_positive : 0 < H_in) :
     False := by linarith
+
 
 
 end

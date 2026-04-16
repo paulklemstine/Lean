@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Geometry/Stereographic
-Declarations: 15
+Declarations: 12
 -/
 
 import Mathlib
@@ -14,29 +14,18 @@ def stereoConfFactor (n : ℕ) (y : Fin n → ℝ) : ℝ :=
   2 / (1 + ∑ i, (y i) ^ 2)
 
 
+
 /-- The stereographic kernel: measures similarity of two points via their
 spherical images under inverse stereographic projection. -/
 def stereoKernel (n : ℕ) (x y : Fin n → ℝ) : ℝ :=
   ∑ i, invStereo n x i * invStereo n y i
 
 
+
 /-- Inner product in ℝⁿ. -/
 def innerProd (n : ℕ) (x y : Fin n → ℝ) : ℝ :=
   ∑ i, x i * y i
 
-
-/-- The denominator D(y) = 1 + ‖y‖². Always positive. -/
-def stereoDenom (n : ℕ) (y : Fin n → ℝ) : ℝ :=
-  1 + sqNorm n y
-
-
-theorem stereoDenom_pos (n : ℕ) (y : Fin n → ℝ) : 0 < stereoDenom n y := by
-  unfold stereoDenom sqNorm
-  positivity
-
-
-theorem stereoDenom_ne_zero (n : ℕ) (y : Fin n → ℝ) : stereoDenom n y ≠ 0 := by
-  exact ne_of_gt (stereoDenom_pos n y)
 
 
 theorem stereoKernel_rational (n : ℕ) (x y : Fin n → ℝ) :
@@ -51,10 +40,12 @@ theorem stereoKernel_rational (n : ℕ) (x y : Fin n → ℝ) :
   ring
 
 
+
 /-- The stereographic softmax weight: exponential of the stereographic kernel,
 measuring how much token j attends to token i. -/
 def stereoSoftmaxWeight (n : ℕ) (temperature : ℝ) (q k : Fin n → ℝ) : ℝ :=
   Real.exp (stereoKernel n q k / temperature)
+
 
 
 /-- Stereographic softmax weights are always positive. -/
@@ -62,6 +53,7 @@ theorem stereoSoftmaxWeight_pos (n : ℕ) (T : ℝ) (q k : Fin n → ℝ) :
     0 < stereoSoftmaxWeight n T q k := by
   unfold stereoSoftmaxWeight
   exact exp_pos _
+
 
 
 /-- A 2D Möbius transformation: f(z) = (az+b)/(cz+d) where ad-bc ≠ 0.
@@ -80,6 +72,7 @@ def mobiusTransform2D (a b c d : ℝ × ℝ) (z : Fin 2 → ℝ) : Fin 2 → ℝ
     else (num_im * den_re - num_re * den_im) / den_sq
 
 
+
 /-- A stereographic attention head: given queries Q, keys K, values V
 (each as sequences of n-dimensional vectors), computes attention output.
 - `seqLen` is the sequence length
@@ -93,10 +86,12 @@ def stereoAttentionHead (seqLen d : ℕ) (T : ℝ)
     ∑ k : Fin seqLen, (weights k / totalWeight) * V k j
 
 
+
 /-- Each attention weight in the stereographic head is non-negative. -/
 theorem stereoAttention_weights_nonneg (d : ℕ) (T : ℝ) (q k : Fin d → ℝ) :
     0 ≤ stereoSoftmaxWeight d T q k :=
   le_of_lt (stereoSoftmaxWeight_pos d T q k)
+
 
 
 theorem stereoAttention_weight_sum_pos (seqLen d : ℕ) (T : ℝ)
@@ -104,6 +99,7 @@ theorem stereoAttention_weight_sum_pos (seqLen d : ℕ) (T : ℝ)
     (i : Fin seqLen) (hLen : 0 < seqLen) :
     0 < ∑ k : Fin seqLen, stereoSoftmaxWeight d T (Q i) (K k) := by
   exact Finset.sum_pos ( fun _ _ => Real.exp_pos _ ) ⟨ i, Finset.mem_univ _ ⟩
+
 
 
 theorem stereoKernel_bounded (n : ℕ) (x y : Fin n → ℝ) :
@@ -120,6 +116,7 @@ theorem stereoKernel_bounded (n : ℕ) (x y : Fin n → ℝ) :
   exact abs_le.mpr ⟨ by have := h_cauchy_schwarz ( invStereo n x ) ( invStereo n y ) ; have := h_norm_sq x; have := h_norm_sq y; norm_num [ stereoKernel ] at *; nlinarith, by have := h_cauchy_schwarz ( invStereo n x ) ( invStereo n y ) ; have := h_norm_sq x; have := h_norm_sq y; norm_num [ stereoKernel ] at *; nlinarith ⟩
 
 
+
 theorem invStereo_on_sphere (n : ℕ) (y : Fin n → ℝ) :
     ∑ i, (invStereo n y i) ^ 2 = 1 := by
   unfold invStereo;
@@ -127,6 +124,7 @@ theorem invStereo_on_sphere (n : ℕ) (y : Fin n → ℝ) :
   field_simp;
   norm_num [ ← Finset.mul_sum _ _ _, ← Finset.sum_div ];
   rw [ mul_div_cancel₀ ] <;> nlinarith [ show 0 ≤ ∑ i, y i ^ 2 by exact Finset.sum_nonneg fun _ _ => sq_nonneg _ ]
+
 
 
 end

@@ -1,34 +1,19 @@
-/-
-# New Berggren Theorems and Discoveries (V12)
+/-! # CatalogBuild.Pythagorean.Berggren.BerggrenNewTheoremsV12
 
-## New Results:
-1. B₁ⁿ closed-form matrix formula for ALL n (not just verified cases)
-2. det(B₁ⁿ) = 1 and det(B₃ⁿ) = 1 for ALL n
-3. det(B₂ⁿ) = (-1)ⁿ for ALL n
-4. Mixed branch B₂·B₁ⁿ·(3,4,5) explicit formula
-5. B₂ⁿ hypotenuse recurrence for ALL n
-6. Pell sequence: P(n)² + P(n+1)² satisfies companion Pell recurrence
-7. B₁ and B₃ generate infinite-order elements (B₁ⁿ ≠ I for n > 0)
-8. C-branch odd legs ≡ 3 mod 8
-
-Machine-verified in Lean 4 with Mathlib.
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Berggren
+Declarations: 19
 -/
+
 import Mathlib
 
-open Matrix
-
-/-! ## Matrix Definitions -/
-
+/-- [Section: ## Matrix Definitions] -/
 def BN₁ : Matrix (Fin 3) (Fin 3) ℤ := !![1, -2, 2; 2, -1, 2; 2, -2, 3]
+
 def BN₂ : Matrix (Fin 3) (Fin 3) ℤ := !![1, 2, 2; 2, 1, 2; 2, 2, 3]
+
 def BN₃ : Matrix (Fin 3) (Fin 3) ℤ := !![(-1), 2, 2; (-2), 1, 2; (-2), 2, 3]
 
-/-! ## Closed-Form Matrix for B₁ⁿ
-
-B₁ⁿ entries are polynomial in n:
-  (0,0)=1      (0,1)=-2n      (0,2)=2n
-  (1,0)=2n     (1,1)=1-2n²    (1,2)=2n²
-  (2,0)=2n     (2,1)=-2n²     (2,2)=1+2n² -/
 
 /-- Closed-form formula for B₁ⁿ -/
 def BN₁_pow_closed (n : ℕ) : Matrix (Fin 3) (Fin 3) ℤ :=
@@ -36,41 +21,34 @@ def BN₁_pow_closed (n : ℕ) : Matrix (Fin 3) (Fin 3) ℤ :=
      2 * ↑n, 1 - 2 * (↑n : ℤ)^2, 2 * (↑n : ℤ)^2;
      2 * ↑n, -(2 * (↑n : ℤ)^2), 1 + 2 * (↑n : ℤ)^2]
 
-/-
-B₁ⁿ = closed form for ALL n
--/
+
+/-- [Section: ## Closed-Form Matrix for B₁ⁿ
+B₁ⁿ entries are polynomial in n:
+(0,0)=1      (0,1)=-2n      (0,2)=2n
+(1,0)=2n     (1,1)=1-2n²    (1,2)=2n²
+(2,0)=2n     (2,1)=-2n²     (2,2)=1+2n²] -/
 theorem BN₁_pow_eq_closed (n : ℕ) : BN₁ ^ n = BN₁_pow_closed n := by
   induction' n with n ih;
   · native_decide +revert;
   · simp_all +decide [ pow_succ, BN₁_pow_closed ];
     simp +decide [ BN₁, Matrix.vecMul ] ; ring_nf ; aesop;
 
-/-! ## Determinant formulas for ALL n -/
 
-/-
-det(B₁ⁿ) = 1 for all n
--/
+/-- [Section: ## Determinant formulas for ALL n] -/
 theorem det_BN₁_pow (n : ℕ) : Matrix.det (BN₁ ^ n) = 1 := by
   induction n <;> simp_all +decide [ pow_succ, Matrix.det_fin_three ]
 
-/-
-det(B₂ⁿ) = (-1)ⁿ for all n
--/
+
 theorem det_BN₂_pow (n : ℕ) : Matrix.det (BN₂ ^ n) = (-1) ^ n := by
   induction n <;> simp_all +decide [ pow_succ, Matrix.det_fin_three ];
   simp_all +decide [ BN₂ ]
 
-/-
-det(B₃ⁿ) = 1 for all n
--/
+
 theorem det_BN₃_pow (n : ℕ) : Matrix.det (BN₃ ^ n) = 1 := by
   induction n <;> simp_all +decide [ pow_succ' ]
 
-/-! ## Infinite order -/
 
-/-
-B₁ⁿ ≠ I for n > 0 (B₁ has infinite order)
--/
+/-- [Section: ## Infinite order] -/
 theorem BN₁_infinite_order (n : ℕ) (hn : 0 < n) : BN₁ ^ n ≠ 1 := by
   -- By definition of $BN₁_pow_closed$, we know that its (0,1) entry is $-2n$.
   have h_entry : (BN₁_pow_closed n) 0 1 = -2 * n := by
@@ -78,9 +56,7 @@ theorem BN₁_infinite_order (n : ℕ) (hn : 0 < n) : BN₁ ^ n ≠ 1 := by
   rw [ BN₁_pow_eq_closed ];
   exact ne_of_apply_ne ( fun m => m 0 1 ) ( by norm_num; linarith )
 
-/-
-B₃ⁿ ≠ I for n > 0
--/
+
 theorem BN₃_infinite_order (n : ℕ) (hn : 0 < n) : BN₃ ^ n ≠ 1 := by
   -- By induction on $n$, we can show that the $(0,1)$ entry of $BN₃^n$ is $2n$.
   have h_entry : ∀ n : ℕ, (BN₃ ^ n) 0 1 = 2 * n := by
@@ -94,9 +70,7 @@ theorem BN₃_infinite_order (n : ℕ) (hn : 0 < n) : BN₃ ^ n ≠ 1 := by
     linarith [ h_ind k ];
   exact ne_of_apply_ne ( fun m => m 0 1 ) ( by simp +decide [ h_entry, hn.ne' ] )
 
-/-
-B₂ⁿ ≠ I for n > 0
--/
+
 theorem BN₂_infinite_order (n : ℕ) (hn : 0 < n) : BN₂ ^ n ≠ 1 := by
   -- By induction, we can show that the (0,2) entry of BN₂^n is always positive.
   have h_pos : ∀ n > 0, 0 < (BN₂ ^ n) 0 2 := by
@@ -110,7 +84,6 @@ theorem BN₂_infinite_order (n : ℕ) (hn : 0 < n) : BN₂ ^ n ≠ 1 := by
     exact add_pos_of_pos_of_nonneg ( add_pos_of_pos_of_nonneg ‹_› ( mul_nonneg zero_le_two ( h_nonneg _ _ _ ) ) ) ( mul_nonneg zero_le_two ( h_nonneg _ _ _ ) );
   exact fun h => by simpa [ h ] using h_pos n hn;
 
-/-! ## Pell Sequence Properties -/
 
 /-- Pell sequence -/
 def pellN : ℕ → ℤ
@@ -118,46 +91,39 @@ def pellN : ℕ → ℤ
   | 1 => 2
   | n + 2 => 2 * pellN (n + 1) + pellN n
 
-/-
-Sum of consecutive Pell squares satisfies companion Pell recurrence
--/
+
+/-- [Section: ## Pell Sequence Properties] -/
 theorem pell_sq_sum_recurrence (n : ℕ) :
     pellN (n + 2) ^ 2 + pellN (n + 3) ^ 2 =
     6 * (pellN (n + 1) ^ 2 + pellN (n + 2) ^ 2) -
     (pellN n ^ 2 + pellN (n + 1) ^ 2) := by
   erw [ show pellN ( n + 3 ) = 2 * pellN ( n + 2 ) + pellN ( n + 1 ) from rfl, show pellN ( n + 2 ) = 2 * pellN ( n + 1 ) + pellN n from rfl ] ; ring
 
-/-! ## Lorentz form preservation for all n -/
 
+/-- [Section: ## Lorentz form preservation for all n] -/
 def QN : Matrix (Fin 3) (Fin 3) ℤ := !![1, 0, 0; 0, 1, 0; 0, 0, (-1)]
+
 
 theorem BN₁_lorentz : BN₁ᵀ * QN * BN₁ = QN := by native_decide
 
-/-
-B₁ⁿ preserves Lorentz form for ALL n
--/
+
 theorem BN₁_pow_lorentz (n : ℕ) : (BN₁ ^ n)ᵀ * QN * (BN₁ ^ n) = QN := by
   induction n <;> simp_all +decide [ pow_succ', Matrix.mul_assoc ];
   simp_all +decide [ ← Matrix.mul_assoc, BN₁_lorentz ]
 
-/-
-B₂ⁿ preserves Lorentz form for ALL n
--/
+
 theorem BN₂_pow_lorentz (n : ℕ) : (BN₂ ^ n)ᵀ * QN * (BN₂ ^ n) = QN := by
   induction n <;> simp_all +decide [ pow_succ, ← mul_assoc ];
   simp_all +decide [ mul_assoc ]
 
-/-! ## C-branch odd legs mod 4 -/
 
-/-
-C-branch odd legs ≡ 3 mod 4 for all n
--/
+/-- [Section: ## C-branch odd legs mod 4] -/
 theorem C_odd_leg_mod4 (n : ℕ) :
     ((2 * (↑n : ℤ) + 1) * (2 * ↑n + 3)) % 4 = 3 := by
   ring_nf; norm_num [ Int.add_emod, Int.mul_emod ] ;
 
-/-! ## Verification -/
 
+/-- [Section: ## Verification] -/
 theorem BN₁_pow_closed_check :
     BN₁_pow_closed 0 = 1 ∧
     BN₁_pow_closed 1 = BN₁ ∧

@@ -9,6 +9,10 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # CatalogBuild.MachineLearning.Prediction.Convergence
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/Prediction
+Declarations: 9] -/
 theorem iterative_prediction_convergence
     (error : ℕ → ℝ) (c : ℝ) (hc0 : 0 ≤ c) (_hc1 : c < 1)
     (_h0 : 0 ≤ error 0)
@@ -16,6 +20,7 @@ theorem iterative_prediction_convergence
     (herr : ∀ n, 0 ≤ error n) :
     ∀ n, error n ≤ c ^ n * error 0 := by
   exact fun n => Nat.recOn n ( by norm_num ) fun n ih => by rw [ pow_succ', mul_assoc ] ; exact le_trans ( hstep _ ) ( mul_le_mul_of_nonneg_left ih hc0 ) ;
+
 
 
 theorem iterative_prediction_vanishes
@@ -34,11 +39,13 @@ theorem iterative_prediction_vanishes
   exact Filter.eventually_atTop.mp ( h_c_pow_zero.eventually ( gt_mem_nhds hε ) ) |> fun ⟨ N, hN ⟩ ↦ ⟨ N, fun n hn ↦ lt_of_le_of_lt ( h_iter n ) ( hN n hn ) ⟩
 
 
+
 theorem mwu_regret_bound_structure
     (N T : ℕ) (_η : ℝ) (_hη : 0 < _η) (_hN : 0 < N)
     (regret : ℝ)
     (hregret : regret ≤ Real.log N / _η + _η * T) :
     regret ≤ Real.log N / _η + _η * T := hregret
+
 
 
 theorem optimal_mwu_rate (N T : ℕ) (hN : 1 < N) (hT : 0 < T) :
@@ -51,6 +58,7 @@ theorem optimal_mwu_rate (N T : ℕ) (hN : 1 < N) (hT : 0 < T) :
   · exact ne_of_gt <| Real.sqrt_pos.mpr <| Real.log_pos <| Nat.one_lt_cast.mpr hN
 
 
+
 theorem brier_score_decomposition
     (n : ℕ) (_hn : 0 < n)
     (forecasts outcomes : Fin n → ℝ)
@@ -61,6 +69,7 @@ theorem brier_score_decomposition
     (n : ℝ) * (reliability - resolution + uncertainty) := hBS
 
 
+
 theorem discrete_opinion_merging
     (p₁ p₂ : ℕ → ℝ)
     (delta : ℕ → ℝ)
@@ -69,6 +78,7 @@ theorem discrete_opinion_merging
     (hdelta_vanish : Filter.Tendsto delta Filter.atTop (nhds 0)) :
     Filter.Tendsto (fun n => |p₁ n - p₂ n|) Filter.atTop (nhds 0) := by
   exact squeeze_zero ( fun n => abs_nonneg _ ) hdelta_bound hdelta_vanish
+
 
 
 theorem doob_decomposition_noise_zero_mean
@@ -82,14 +92,17 @@ theorem doob_decomposition_noise_zero_mean
   simp +decide [ *, mul_add, Finset.sum_add_distrib ]
 
 
+
 theorem ar1_autocorrelation_decay (rho : ℝ) (hrho : |rho| < 1) :
     Filter.Tendsto (fun k => rho ^ k) Filter.atTop (nhds 0) := by
   exact tendsto_pow_atTop_nhds_zero_of_abs_lt_one hrho
 
 
+
 theorem prediction_variance_growth (sigma_sq : ℝ) (hsig : 0 < sigma_sq) (k : ℕ) :
     sigma_sq ≤ (k + 1) * sigma_sq := by
   exact le_mul_of_one_le_left hsig.le ( by linarith )
+
 
 
 end

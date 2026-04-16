@@ -13,10 +13,12 @@ noncomputable section
 def evenOracle' : ℕ → ℕ := fun n => 2 * (n / 2)
 
 
+
 /-- The even oracle is idempotent. -/
 theorem evenOracle'_idempotent (n : ℕ) :
     evenOracle' (evenOracle' n) = evenOracle' n := by
   unfold evenOracle'; omega
+
 
 
 /-- The modular oracle is idempotent (for m > 0). -/
@@ -32,10 +34,12 @@ example : modOracle' 7 3 = 3 := by native_decide
 -- ═══════════════════════════════════════════════════════════════════════════════
 
 
+
 /-- AND with true is idempotent. -/
 theorem andTrue_idempotent' (x : Bool) :
     Bool.and (Bool.and x true) true = Bool.and x true := by
   cases x <;> rfl
+
 
 
 /-- NOT is NOT an oracle (not idempotent). -/
@@ -47,14 +51,17 @@ theorem not_not_idempotent' : ¬∀ x : Bool, (!!x) = (!x) := by
 -- ═══════════════════════════════════════════════════════════════════════════════
 
 
+
 /-- Tropical max with a threshold. -/
 def tropicalOracle' (threshold : ℝ) : ℝ → ℝ := fun x => max threshold x
+
 
 
 /-- The tropical oracle is idempotent. -/
 theorem tropicalOracle'_idempotent (t : ℝ) (x : ℝ) :
     tropicalOracle' t (tropicalOracle' t x) = tropicalOracle' t x := by
   simp [tropicalOracle', max_assoc]
+
 
 
 /-- Fixed points of the tropical oracle. -/
@@ -65,6 +72,7 @@ theorem tropicalOracle'_fixed_iff (t x : ℝ) :
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- EXPERIMENT 5: Convergence
 -- ═══════════════════════════════════════════════════════════════════════════════
+
 
 
 /-- For any n ≥ 1, f^n = f for idempotent f. -/
@@ -84,14 +92,17 @@ theorem convergence_is_immediate' {α : Type*} (f : α → α) (hf : ∀ x, f (f
 -- ═══════════════════════════════════════════════════════════════════════════════
 
 
+
 /-- Project onto the x-axis. -/
 def projectX' : ℝ × ℝ → ℝ × ℝ := fun p => (p.1, 0)
+
 
 
 /-- Projection onto x-axis is idempotent. -/
 theorem projectX'_idempotent (p : ℝ × ℝ) :
     projectX' (projectX' p) = projectX' p := by
   simp [projectX']
+
 
 
 /-- Fixed points are the x-axis. -/
@@ -110,12 +121,15 @@ theorem projectX'_fixed_iff (p : ℝ × ℝ) :
 -- ═══════════════════════════════════════════════════════════════════════════════
 
 
+
 /-- In tropical geometry, max(a, a) = a. -/
 theorem tropical_idempotent' (a : ℝ) : max a a = a := max_self a
 
 
+
 /-- Tropical addition is commutative. -/
 theorem tropical_comm' (a b : ℝ) : max a b = max b a := max_comm a b
+
 
 
 /-- Tropical addition is associative. -/
@@ -123,10 +137,12 @@ theorem tropical_assoc' (a b c : ℝ) : max (max a b) c = max a (max b c) :=
   max_assoc a b c
 
 
+
 /-- Tropical multiplication distributes over tropical addition. -/
 theorem tropical_distrib' (a b c : ℝ) :
     a + max b c = max (a + b) (a + c) := by
   simp [max_def]; split_ifs <;> linarith
+
 
 
 /-- The tropical oracle converges in one step. -/
@@ -137,6 +153,7 @@ theorem tropical_one_step' (t x : ℝ) :
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- SUMMARY
 -- ═══════════════════════════════════════════════════════════════════════════════
+
 
 
 end

@@ -9,9 +9,14 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # CatalogBuild.Computation.Oracles.OracleSearch
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 18] -/
 theorem lfp_is_le_fixed {α : Type*} [CompleteLattice α] (f : α → α)
     (hf : Monotone f) : sInf {x | f x ≤ x} ≤ f (sInf {x | f x ≤ x}) := by
   exact le_of_eq ( knaster_tarski_lfp f hf |> Eq.symm )
+
 
 
 theorem powerset_fixed_point {α : Type*} (f : Set α → Set α)
@@ -25,12 +30,15 @@ theorem powerset_fixed_point {α : Type*} (f : Set α → Set α)
   exact h_contra S ( subset_antisymm h_fS_subset_S <| Set.sInter_subset_of_mem <| hf h_fS_subset_S )
 
 
+
 theorem not_has_no_fixed_point : ¬ ∃ p : Prop, ¬p = p := by
   aesop
 
 
+
 /-- An involution on a type: a function that is its own inverse. -/
 def IsInvolution {α : Type*} (f : α → α) : Prop := ∀ x, f (f x) = x
+
 
 
 theorem involution_dichotomy {α : Type*} (f : α → α) (hf : IsInvolution f)
@@ -38,9 +46,11 @@ theorem involution_dichotomy {α : Type*} (f : α → α) (hf : IsInvolution f)
   exact Classical.or_iff_not_imp_left.2 fun h => ⟨ h, hf x ⟩
 
 
+
 theorem involution_fixed_iff {α : Type*} (f : α → α) (_hf : IsInvolution f)
     (x : α) : f x = x ↔ x ∈ {y | f y = y} := by
   rfl
+
 
 
 theorem involution_bijective {α : Type*} (f : α → α) (hf : IsInvolution f) :
@@ -48,9 +58,11 @@ theorem involution_bijective {α : Type*} (f : α → α) (hf : IsInvolution f) 
   exact ⟨ fun x y hxy => hf x ▸ hf y ▸ hxy ▸ rfl, fun x => ⟨ f x, hf x ⟩ ⟩
 
 
+
 theorem double_negation_involution : IsInvolution (fun p : Prop => ¬¬p) := by
   -- By definition of negation, we know that ¬¬p is equivalent to p.
   simp [IsInvolution]
+
 
 
 /-- **Iterative convergence principle**: If a value is a fixed point of f,
@@ -59,9 +71,11 @@ theorem iteration_fixed_point {α : Type*} (f : α → α) (c : α)
     (h : f c = c) : f c = c := h
 
 
+
 theorem idempotent_range_fixed {α : Type*} (f : α → α) (hf : IsIdempotent f)
     (y : α) (hy : y ∈ range f) : f y = y := by
   cases hy ; aesop
+
 
 
 theorem no_self_aware_predicate :
@@ -72,6 +86,7 @@ theorem no_self_aware_predicate :
   specialize h_oracle ( fun n => if n = 0 then 1 else 0 ) ; aesop
 
 
+
 theorem knowledge_fixed_point {α : Type*} [CompleteLattice α]
     (f : α → α) (hf : Monotone f) :
     f (sInf {x | f x ≤ x}) ≤ sInf {x | f x ≤ x} := by
@@ -79,6 +94,7 @@ theorem knowledge_fixed_point {α : Type*} [CompleteLattice α]
   have h_sInf_le : ∀ y ∈ {x | f x ≤ x}, sInf {x | f x ≤ x} ≤ y := by
     exact fun y hy => sInf_le hy;
   exact le_sInf fun x hx => hf ( h_sInf_le x hx ) |> le_trans <| hx
+
 
 
 /-- **Closure operators are idempotent, monotone, and extensive.**
@@ -91,9 +107,11 @@ structure ClosureOp (α : Type*) [Preorder α] where
   idempotent : ∀ x, toFun (toFun x) = toFun x
 
 
+
 theorem closure_fixed_iff {α : Type*} [Preorder α] (c : ClosureOp α)
     (x : α) : c.toFun x = x ↔ x ∈ {y | c.toFun y = y} := by
   rfl
+
 
 
 /-- **Galois connections create paired fixed-point sets.**
@@ -106,10 +124,12 @@ theorem galois_connection_closure {α β : Type*} [PartialOrder α] [Preorder β
   intro a; exact le_antisymm (gc.monotone_u (gc.l_u_le _)) (gc.le_u_l _)
 
 
+
 theorem galois_idempotent {α β : Type*} [Preorder α] [PartialOrder β]
     (l : α → β) (u : β → α) (gc : GaloisConnection l u) :
     ∀ b, l (u (l (u b))) = l (u b) := by
   intro b; exact le_antisymm (gc.l_u_le _) (gc.monotone_l (gc.le_u_l _))
+
 
 
 theorem schroder_bernstein_structure {α β : Type*}
@@ -127,6 +147,7 @@ theorem schroder_bernstein_structure {α β : Type*}
   obtain ⟨h⟩ := h_equiv
   use h
   exact h.bijective
+
 
 
 /-- Iterate a function n times -/
@@ -153,5 +174,6 @@ def iterateN {α : Type*} (f : α → α) : ℕ → α → α
   let iterate := fun start => List.range 5 |>.foldl (fun acc _ => sieve acc) start
   let result := iterate [2, 3]
   result.eraseDups
+
 
 end

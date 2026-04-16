@@ -16,6 +16,7 @@ def repulsionFactor (beta : ℝ) (ev : Fin n → ℝ) : ℝ :=
   |∏ i : Fin n, ∏ j ∈ Ioi i, (ev j - ev i)| ^ beta
 
 
+
 /-- The Coulomb energy of n point charges on the real line.
 E = -∑_{i<j} log|vᵢ - vⱼ|
 This is the 2D electrostatic energy of unit charges confined to a line. -/
@@ -23,9 +24,11 @@ def coulombEnergy (ev : Fin n → ℝ) : ℝ :=
   -∑ i : Fin n, ∑ j ∈ Ioi i, Real.log |ev j - ev i|
 
 
+
 /-- The confining potential energy in a quadratic well. -/
 def confiningEnergy (ev : Fin n → ℝ) : ℝ :=
   ∑ i : Fin n, ev i ^ 2 / 2
+
 
 
 /-- The total effective energy of the eigenvalue Coulomb gas.
@@ -35,6 +38,11 @@ def totalEnergy (beta : ℝ) (ev : Fin n → ℝ) : ℝ :=
   beta * coulombEnergy ev + confiningEnergy ev
 
 
+
+/-- [Section: # CatalogBuild.Algebra.EigenvalueRepulsion_2
+Auto-generated from theorem catalog database.
+Domain: Algebra
+Declarations: 13] -/
 theorem repulsion_at_coincidence {n : ℕ} {beta : ℝ} (hbeta : 0 < beta) (ev : Fin n → ℝ)
     (i j : Fin n) (hij : i ≠ j) (heq : ev i = ev j) :
     repulsionFactor beta ev = 0 := by
@@ -46,10 +54,12 @@ theorem repulsion_at_coincidence {n : ℕ} {beta : ℝ} (hbeta : 0 < beta) (ev :
       exact Real.zero_rpow hbeta.ne'
 
 
+
 theorem vandermonde_nonzero_iff_distinct {n : ℕ} (ev : Fin n → ℝ) :
     (vandermonde ev).det ≠ 0 ↔ Function.Injective ev := by
       convert Matrix.det_vandermonde_ne_zero_iff;
       infer_instance
+
 
 
 theorem repulsion_eq_exp_neg_coulomb {n : ℕ} {beta : ℝ} (_hbeta : 0 ≤ beta)
@@ -63,9 +73,11 @@ theorem repulsion_eq_exp_neg_coulomb {n : ℕ} {beta : ℝ} (_hbeta : 0 ≤ beta
       · exact Finset.prod_ne_zero_iff.mpr fun i hi => Finset.prod_ne_zero_iff.mpr fun j hj => sub_ne_zero_of_ne <| hdist.ne <| by aesop;
 
 
+
 theorem repulsionFactor_nonneg {n : ℕ} {beta : ℝ} (_hbeta : 0 ≤ beta)
     (ev : Fin n → ℝ) : 0 ≤ repulsionFactor beta ev := by
       exact Real.rpow_nonneg ( abs_nonneg _ ) _
+
 
 
 theorem two_point_repulsion (beta : ℝ) (_hbeta : 0 ≤ beta) (a b : ℝ) :
@@ -73,9 +85,11 @@ theorem two_point_repulsion (beta : ℝ) (_hbeta : 0 ≤ beta) (a b : ℝ) :
       unfold repulsionFactor; simp +decide [ Fin.prod_univ_succ ] ;
 
 
+
 theorem coulomb_energy_pair (a d : ℝ) (_hd : 0 < d) :
     coulombEnergy ![a, a + d] = -Real.log d := by
       unfold coulombEnergy; aesop;
+
 
 
 /-- The three classical Dyson indices corresponding to the three division algebras
@@ -87,6 +101,7 @@ inductive DysonIndex where
   deriving DecidableEq, Repr
 
 
+
 /-- The numerical value of each Dyson index. -/
 def DysonIndex.toReal : DysonIndex → ℝ
   | .GOE => 1
@@ -94,8 +109,10 @@ def DysonIndex.toReal : DysonIndex → ℝ
   | .GSE => 4
 
 
+
 theorem DysonIndex.toReal_pos (d : DysonIndex) : 0 < d.toReal := by
   cases d <;> simp [DysonIndex.toReal]
+
 
 
 end

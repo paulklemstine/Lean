@@ -15,9 +15,11 @@ maps to t = x / (1 + y). -/
 def stereoForward1 (x y : ℝ) : ℝ := x / (1 + y)
 
 
+
 /-- Inverse stereographic projection from ℝ to S¹. -/
 def invStereo1 (t : ℝ) : ℝ × ℝ :=
   (2 * t / (1 + t ^ 2), (1 - t ^ 2) / (1 + t ^ 2))
+
 
 
 /-- The inverse stereo map always lands on S¹. -/
@@ -28,6 +30,7 @@ theorem inv_stereo_1d_on_circle (t : ℝ) :
   field_simp; ring
 
 
+
 /-- Forward ∘ Inverse = id on ℝ (round-trip from ℝ). -/
 theorem stereo_round_trip_from_R (t : ℝ) :
     stereoForward1 (invStereo1 t).1 (invStereo1 t).2 = t := by
@@ -36,16 +39,23 @@ theorem stereo_round_trip_from_R (t : ℝ) :
   field_simp; ring
 
 
+
+/-- [Section: # CatalogBuild.Logic.DimensionalProjection
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 30] -/
 theorem stereo_round_trip_from_S1_fst (x y : ℝ) (hunit : x ^ 2 + y ^ 2 = 1) (hy : 1 + y ≠ 0) :
     (invStereo1 (stereoForward1 x y)).1 = x := by
   simp [stereoForward1, invStereo1] at *;
   grind
 
 
+
 theorem stereo_round_trip_from_S1_snd (x y : ℝ) (hunit : x ^ 2 + y ^ 2 = 1) (hy : 1 + y ≠ 0) :
     (invStereo1 (stereoForward1 x y)).2 = y := by
   unfold invStereo1 stereoForward1;
   grind
+
 
 
 /-- Forward stereographic projection from S² to ℝ².
@@ -55,12 +65,14 @@ def stereoForward2 (x y z : ℝ) : ℝ × ℝ :=
   (x / (1 + z), y / (1 + z))
 
 
+
 /-- Inverse stereographic projection from ℝ² to S².
 Given (u, v) ∈ ℝ², maps to S² via:
 (2u/(1+u²+v²), 2v/(1+u²+v²), (1-u²-v²)/(1+u²+v²)) -/
 def invStereo2 (u v : ℝ) : ℝ × ℝ × ℝ :=
   let d := 1 + u ^ 2 + v ^ 2
   (2 * u / d, 2 * v / d, (1 - u ^ 2 - v ^ 2) / d)
+
 
 
 /-- The inverse stereo map from ℝ² always lands on S². -/
@@ -72,6 +84,7 @@ theorem inv_stereo_2d_on_sphere (u v : ℝ) :
   field_simp; ring
 
 
+
 /-- Round-trip from ℝ² through S² and back. First component. -/
 theorem stereo_2d_round_trip_fst (u v : ℝ) :
     (stereoForward2 (invStereo2 u v).1 (invStereo2 u v).2.1 (invStereo2 u v).2.2).1 = u := by
@@ -80,12 +93,14 @@ theorem stereo_2d_round_trip_fst (u v : ℝ) :
   field_simp; ring
 
 
+
 /-- Round-trip from ℝ² through S² and back. Second component. -/
 theorem stereo_2d_round_trip_snd (u v : ℝ) :
     (stereoForward2 (invStereo2 u v).1 (invStereo2 u v).2.1 (invStereo2 u v).2.2).2 = v := by
   simp only [stereoForward2, invStereo2]
   have h : (1 : ℝ) + u ^ 2 + v ^ 2 ≠ 0 := by positivity
   field_simp; ring
+
 
 
 /-- Inverse stereographic projection from ℝ³ to S³.
@@ -99,12 +114,14 @@ def invStereo3 (u v w : ℝ) : Fin 4 → ℝ := fun i =>
   | 3 => (1 - u ^ 2 - v ^ 2 - w ^ 2) / d
 
 
+
 /-- The inverse stereo map from ℝ³ always lands on S³. -/
 theorem inv_stereo_3d_on_sphere (u v w : ℝ) :
     ∑ i : Fin 4, (invStereo3 u v w i) ^ 2 = 1 := by
   simp only [invStereo3, Fin.sum_univ_four, Fin.isValue]
   have h : (1 : ℝ) + u ^ 2 + v ^ 2 + w ^ 2 ≠ 0 := by positivity
   field_simp; ring
+
 
 
 /-- The general stereographic identity: for any S ≥ 0 representing the sum of
@@ -118,6 +135,7 @@ theorem stereo_general_unit_norm (S : ℝ) (hS : 0 ≤ S) :
   field_simp; ring
 
 
+
 /-- One step of the ascending ladder: ℝ → S¹ ↪ ℝ² → S².
 Start with t ∈ ℝ, map to S¹ via inv_stereo, embed in ℝ²,
 then lift to S² via inv_stereo again. -/
@@ -126,12 +144,14 @@ def liftRtoS2 (t : ℝ) : ℝ × ℝ × ℝ :=
   invStereo2 p.1 p.2     -- ℝ² → S²
 
 
+
 /-- The ascending ladder preserves the sphere property:
 lifting from ℝ to S² always lands on S². -/
 theorem lift_R_to_S2_on_sphere (t : ℝ) :
     let p := liftRtoS2 t
     p.1 ^ 2 + p.2.1 ^ 2 + p.2.2 ^ 2 = 1 := by
   exact inv_stereo_2d_on_sphere _ _
+
 
 
 /-- Key theorem: Rational stereographic coordinates produce rational sphere points.
@@ -144,6 +164,7 @@ theorem rational_stereo_rational_circle (p q : ℤ) (hq : (q : ℝ) ≠ 0)
   field_simp; ring
 
 
+
 /-- Rational points on S¹ give Pythagorean triples. -/
 theorem rational_circle_pythagorean (p q : ℤ) (hpq : (p : ℤ) ^ 2 + q ^ 2 ≠ 0) :
     ∃ a b c : ℤ, c ≠ 0 ∧
@@ -151,9 +172,11 @@ theorem rational_circle_pythagorean (p q : ℤ) (hpq : (p : ℤ) ^ 2 + q ^ 2 ≠
   exact ⟨2 * p * q, q ^ 2 - p ^ 2, p ^ 2 + q ^ 2, by exact_mod_cast hpq, by ring⟩
 
 
+
 /-- Two squares identity (Brahmagupta-Fibonacci). -/
 theorem two_squares_identity (a b c d : ℤ) :
     (a ^ 2 + b ^ 2) * (c ^ 2 + d ^ 2) = (a * c - b * d) ^ 2 + (a * d + b * c) ^ 2 := by ring
+
 
 
 /-- Three squares from a Pythagorean triple: lifting to S². -/
@@ -162,9 +185,11 @@ theorem three_squares_from_pythagorean (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     (c ^ 2 + a ^ 2 + b ^ 2) ^ 2 := by nlinarith [sq_nonneg a, sq_nonneg b, sq_nonneg c]
 
 
+
 theorem hopf_map_on_sphere (a b c d : ℝ) (h : a^2 + b^2 + c^2 + d^2 = 1) :
     (2*(a*c + b*d))^2 + (2*(b*c - a*d))^2 + (a^2 + b^2 - c^2 - d^2)^2 = 1 := by
   grind +ring
+
 
 
 /-- The fiber of the Hopf map over the south pole (0,0,-1) consists of
@@ -176,6 +201,7 @@ theorem hopf_fiber_south_pole (c d : ℝ) (h : c^2 + d^2 = 1) :
   refine ⟨by linarith, by ring, by ring, by linarith⟩
 
 
+
 /-- The Jacobian determinant of the 2D inverse stereographic projection.
 At point (u, v), det(J) = 4/(1+u²+v²)². This is always positive,
 confirming the map is orientation-preserving and locally invertible. -/
@@ -183,11 +209,13 @@ theorem stereo_2d_jacobian_positive (u v : ℝ) :
     0 < 4 / (1 + u ^ 2 + v ^ 2) ^ 2 := by positivity
 
 
+
 /-- The conformal factor of the stereographic projection.
 The metric on S² pulled back to ℝ² is (2/(1+u²+v²))² (du² + dv²).
 The conformal factor is always positive. -/
 theorem stereo_conformal_factor_positive (u v : ℝ) :
     0 < (2 / (1 + u ^ 2 + v ^ 2)) ^ 2 := by positivity
+
 
 
 /-- The north pole (0, -1) is the unique point NOT in the image of invStereo1. -/
@@ -201,6 +229,7 @@ theorem north_pole_not_in_image :
   nlinarith [sq_nonneg t]
 
 
+
 theorem every_non_north_pole_in_image (x y : ℝ) (hunit : x ^ 2 + y ^ 2 = 1) (hy : y ≠ -1) :
     ∃ t : ℝ, invStereo1 t = (x, y) := by
   unfold invStereo1;
@@ -208,11 +237,13 @@ theorem every_non_north_pole_in_image (x y : ℝ) (hunit : x ^ 2 + y ^ 2 = 1) (h
   grind
 
 
+
 /-- Iterated stereo produces sphere points at every level. -/
 theorem iterated_stereo_image (t : ℝ) :
     let p := liftRtoS2 t
     p.1 ^ 2 + p.2.1 ^ 2 + p.2.2 ^ 2 = 1 :=
   lift_R_to_S2_on_sphere t
+
 
 
 /-- The stereographic projection intertwines with rotations.
@@ -223,11 +254,13 @@ theorem stereo_rotation_at_east (α : ℝ) (h : 1 + sin α ≠ 0) :
   simp [stereoForward1]
 
 
+
 theorem inv_stereo_1d_injective : Function.Injective invStereo1 := by
   intros t1 t2 h_eq
   have h_comp : 2 * t1 / (1 + t1 ^ 2) = 2 * t2 / (1 + t2 ^ 2) ∧ (1 - t1 ^ 2) / (1 + t1 ^ 2) = (1 - t2 ^ 2) / (1 + t2 ^ 2) := by
     exact ⟨ congr_arg Prod.fst h_eq, congr_arg Prod.snd h_eq ⟩;
   rw [ div_eq_div_iff, div_eq_div_iff ] at h_comp <;> nlinarith [ mul_self_nonneg ( t1 - t2 ), mul_self_nonneg ( t1 + t2 ) ]
+
 
 
 theorem inv_stereo_2d_injective : Function.Injective (fun p : ℝ × ℝ => invStereo2 p.1 p.2) := by
@@ -239,6 +272,7 @@ theorem inv_stereo_2d_injective : Function.Injective (fun p : ℝ × ℝ => invS
   simp_all +decide [ div_eq_mul_inv ];
   simp_all +decide [ add_assoc ];
   exact Prod.ext ( h.1.resolve_right ( by positivity ) ) ( h.2.1.resolve_right ( by positivity ) )
+
 
 
 end

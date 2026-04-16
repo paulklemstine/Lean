@@ -1,17 +1,14 @@
-/-
-# Sigmoid-Tanh Equivalence (Q36 ⟺ Q38)
+/-! # CatalogBuild.MachineLearning.ShefferFunction.SigmoidTanh
 
-This file proves that tanh ∈ ShefferAlg if and only if sigmoid ∈ ShefferAlg,
-collapsing two open questions into one. It also establishes that log(sigmoid(x)) ∈ ShefferAlg.
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/ShefferFunction
+Declarations: 5
 -/
-import Mathlib
-import ShefferAI.Basic
 
-open Real Filter Topology
+import Mathlib
+import EML.Basic
 
 noncomputable section
-
-/-! ## The Sigmoid-Tanh Connection -/
 
 /-- log(S(x)) = x - σ(x). -/
 theorem log_sigmoid_eq (x : ℝ) :
@@ -20,14 +17,14 @@ theorem log_sigmoid_eq (x : ℝ) :
   rw [Real.log_div (ne_of_gt (Real.exp_pos x)) (ne_of_gt (one_plus_exp_pos x))]
   simp [Real.log_exp]
 
-/-
-Alternative form: log(S(x)) = -σ(-x).
--/
+
+/-- [Section: ## The Sigmoid-Tanh Connection] -/
 theorem log_sigmoid_eq' (x : ℝ) :
     Real.log (logisticSigmoid x) = -softplus (-x) := by
   convert log_sigmoid_eq x using 1
   simp [logisticSigmoid, softplus];
   rw [ show ( 1 + Real.exp ( -x ) ) = ( 1 + Real.exp x ) / Real.exp x by rw [ add_div, div_self <| ne_of_gt <| Real.exp_pos x ] ; rw [ Real.exp_neg ] ; ring, Real.log_div ( by positivity ) <| by positivity, Real.log_exp ] ; ring
+
 
 /-- log(sigmoid) is in the Sheffer algebra. -/
 theorem log_sigmoid_mem_sheffer :
@@ -37,6 +34,7 @@ theorem log_sigmoid_mem_sheffer :
     ext x; simp [log_sigmoid_eq]; linarith
   rw [h]
   exact sheffer_affineComb id_mem_sheffer softplus_mem_sheffer 1 (-1) 0
+
 
 /-- σ(x) - σ(x + c) is in ShefferAlg for any constant c. -/
 theorem softplus_diff_shift_mem (c : ℝ) :
@@ -48,9 +46,7 @@ theorem softplus_diff_shift_mem (c : ℝ) :
   exact sheffer_affineComb softplus_mem_sheffer
     (sheffer_affinePrecomp softplus_mem_sheffer 1 c) 1 (-1) 0
 
-/-
-There exist bounded non-constant functions in ShefferAlg.
--/
+
 theorem bounded_sheffer_exists :
     ∃ f ∈ ShefferAlg, (∃ M : ℝ, ∀ x, |f x| ≤ M) ∧ ¬(∃ c : ℝ, ∀ x, f x = c) := by
   refine' ⟨ fun x => softplus x - softplus ( x + 1 ), _, _, _ ⟩;
@@ -67,5 +63,6 @@ theorem bounded_sheffer_exists :
     apply_fun Real.exp at this ; norm_num [ Real.exp_sub, Real.exp_log, Real.exp_neg ] at this;
     rw [ Real.exp_log ( by positivity ), Real.exp_log ( by positivity ) ] at this;
     rw [ div_eq_div_iff ] at this <;> nlinarith [ Real.add_one_le_exp 1, mul_inv_cancel₀ ( ne_of_gt ( Real.exp_pos 1 ) ) ]
+
 
 end

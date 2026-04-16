@@ -19,6 +19,7 @@ theorem cantor_no_surjection_bool (α : Type*) :
   exact hg a (by rw [ha])
 
 
+
 /-- For any family of sets indexed by α, there exists a set of α not
 in the range — the "Russell set" that diagonalizes against the family.
 This is the constructive content of Russell's paradox. -/
@@ -30,6 +31,7 @@ theorem russell_diagonal {α : Type*} (f : α → Set α) :
   aesop
 
 
+
 /-- König's theorem: if κᵢ < μᵢ for all i, then Σᵢ κᵢ < Πᵢ μᵢ.
 This is a far-reaching generalization of Cantor's theorem that Rucker
 calls "the most important theorem in cardinal arithmetic." -/
@@ -37,6 +39,7 @@ theorem konig_cardinal {ι : Type*} (κ μ : ι → Cardinal)
     (h : ∀ i, κ i < μ i) :
     Cardinal.sum κ < Cardinal.prod μ := by
   convert Cardinal.sum_lt_prod _ _ _; aesop
+
 
 
 /-- Every order-preserving function on a complete lattice has a fixed point.
@@ -47,4 +50,5 @@ theorem knaster_tarski {α : Type*} [CompleteLattice α] (f : α → α)
   have hfx_ge_x : f x ≥ x :=
     sSup_le fun a ha => le_trans ha (hf (le_sSup ha))
   exact ⟨x, le_antisymm (le_sSup (by aesop)) hfx_ge_x⟩
+
 

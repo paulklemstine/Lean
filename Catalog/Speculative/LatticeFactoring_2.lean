@@ -7,11 +7,17 @@ Declarations: 9
 
 import Mathlib
 
+/-- [Section: # CatalogBuild.Speculative.LatticeFactoring_2
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 9] -/
 def normSq' (x y : ℤ) : ℤ := x ^ 2 + y ^ 2
+
 
 
 theorem normSq_nonneg' (x y : ℤ) : 0 ≤ normSq' x y := by
   unfold normSq'; positivity
+
 
 
 theorem normSq_zero_iff' (x y : ℤ) : normSq' x y = 0 ↔ x = 0 ∧ y = 0 := by
@@ -21,6 +27,7 @@ theorem normSq_zero_iff' (x y : ℤ) : normSq' x y = 0 ↔ x = 0 ∧ y = 0 := by
   · rintro ⟨rfl, rfl⟩; ring
 
 
+
 theorem factoring_lattice_exists' (N : ℕ) (hN : 1 < N) :
     ∃ a b c d : ℤ, a * d - b * c = N ∧ normSq' c d ≤ 2 * N := by
   refine ⟨N, 0, 0, 1, ?_, ?_⟩
@@ -28,8 +35,10 @@ theorem factoring_lattice_exists' (N : ℕ) (hN : 1 < N) :
   · simp [normSq']; omega
 
 
+
 def IsSmooth' (B n : ℕ) : Prop :=
   ∀ p, Nat.Prime p → p ∣ n → p ≤ B
+
 
 
 theorem one_is_smooth' (B : ℕ) : IsSmooth' B 1 := by
@@ -39,12 +48,14 @@ theorem one_is_smooth' (B : ℕ) : IsSmooth' B 1 := by
   omega
 
 
+
 theorem smooth_mul' (B a b : ℕ) (ha : IsSmooth' B a) (hb : IsSmooth' B b) :
     IsSmooth' B (a * b) := by
   intro p hp hd
   rcases hp.dvd_mul.mp hd with h | h
   · exact ha p hp h
   · exact hb p hp h
+
 
 
 theorem smooth_exists (N B : ℕ) (hB : 1 < B) (hBN : B ≤ N) :
@@ -56,6 +67,7 @@ theorem smooth_exists (N B : ℕ) (hB : 1 < B) (hBN : B ≤ N) :
     rcases hp.eq_one_or_self_of_dvd q hqp with h | h
     · exact absurd h hq.ne_one
     · rw [h]; exact le_of_dvd (by omega) hpB
+
 
 
 theorem coppersmith_deg1 (a b p : ℤ) (hp : 0 < p)
@@ -70,4 +82,5 @@ theorem coppersmith_deg1 (a b p : ℤ) (hp : 0 < p)
     have hk1 : 1 ≤ |k| := Int.one_le_abs (mt abs_eq_zero.mpr h)
     linarith [mul_le_mul_of_nonneg_left hk1 (le_of_lt hp)]
   simp [abs_eq_zero.mp this]
+
 

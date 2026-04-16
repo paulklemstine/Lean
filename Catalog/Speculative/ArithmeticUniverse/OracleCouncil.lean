@@ -15,6 +15,7 @@ structure OracleOfPrimes where
   infinite_atoms : ∀ n : ℕ, ∃ p : ℕ, n < p ∧ Nat.Prime p
 
 
+
 /-- The Oracle of Divisibility sees the lattice structure. -/
 structure OracleOfDivisibility where
   /-- Divisibility is a partial order. -/
@@ -23,10 +24,12 @@ structure OracleOfDivisibility where
   gcd_is_meet : ∀ a b d : ℕ, d = Nat.gcd a b → d ∣ a ∧ d ∣ b
 
 
+
 /-- The Oracle of Congruences sees the cyclic symmetry. -/
 structure OracleOfCongruences where
   /-- Fermat's little theorem: the prime clock resets. -/
   fermat_little : ∀ p a : ℕ, Nat.Prime p → ¬(p ∣ a) → a ^ (p - 1) ≡ 1 [MOD p]
+
 
 
 /-- The Oracle of Sums sees the accumulation of pattern. -/
@@ -35,8 +38,10 @@ structure OracleOfSums where
   gauss_sum : ∀ n : ℕ, 2 * (∑ i ∈ Finset.range (n + 1), i) = n * (n + 1)
 
 
+
 /-- The Oracle of Diophantine sees integer solutions. -/
 structure OracleOfDiophantine where
   /-- Fermat's Last Theorem for n=4: no solutions in positive integers. -/
   flt4 : ∀ a b c : ℕ, a ≠ 0 → b ≠ 0 → c ≠ 0 → a ^ 4 + b ^ 4 ≠ c ^ 4
+
 

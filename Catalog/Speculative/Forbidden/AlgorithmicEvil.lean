@@ -7,6 +7,10 @@ Declarations: 6
 
 import Mathlib
 
+/-- [Section: # CatalogBuild.Speculative.Forbidden.AlgorithmicEvil
+Auto-generated from theorem catalog database.
+Domain: Speculative/Forbidden
+Declarations: 6] -/
 theorem ackermann_gt_right (m n : ℕ) : ackermann m n > n := by
   induction' n with n ih generalizing m;
   · induction' m with m ih <;> simp +arith +decide [ * ];
@@ -20,18 +24,22 @@ theorem ackermann_gt_right (m n : ℕ) : ackermann m n > n := by
     linarith [ ih m ]
 
 
+
 theorem ackermann_zero (n : ℕ) : ackermann 0 n = n + 1 := by
   -- By definition, we have `ackermann 1 m = ackermann (0+1) m = ackermann 0 1`.
   rw [ackermann]
+
 
 
 theorem ackermann_one (n : ℕ) : ackermann 1 n = n + 2 := by
   induction' n with n ih <;> simp +arith +decide [ *, ackermann ]
 
 
+
 theorem pigeonhole_evil (n : ℕ) (f : Fin (n + 2) → Fin (n + 1)) :
     ¬ Injective f := by
   exact fun h => absurd ( Fintype.card_le_of_injective f h ) ( by simp +arith +decide )
+
 
 
 theorem infinite_pigeonhole (n : ℕ) (f : ℕ → Fin (n + 1)) :
@@ -41,6 +49,7 @@ theorem infinite_pigeonhole (n : ℕ) (f : ℕ → Fin (n + 1)) :
   have h_finite : ∀ c : Fin (n + 1), Set.Finite {m : ℕ | f m = c} := by
     exact fun c => Set.not_infinite.mp fun hi => h_contra ⟨ c, fun N => by rcases hi.exists_gt N with ⟨ m, hm₁, hm₂ ⟩ ; exact ⟨ m, hm₂.le, hm₁ ⟩ ⟩;
   exact Set.infinite_univ <| Set.Finite.subset ( Set.Finite.biUnion ( Set.toFinite ( Finset.univ : Finset ( Fin ( n + 1 ) ) ) ) fun c _ => h_finite c ) fun x hx => by aesop;
+
 
 
 theorem involution_odd_fixed_point (n : ℕ) (f : Fin (2 * n + 1) → Fin (2 * n + 1))
@@ -56,4 +65,5 @@ theorem involution_odd_fixed_point (n : ℕ) (f : Fin (2 * n + 1) → Fin (2 * n
       · ext x; aesop;
     obtain ⟨ S, hS₁, hS₂, hS₃ ⟩ := h_partition; rw [ hS₃, Finset.card_biUnion ] <;> aesop;
   simp_all +decide [ Finset.card_univ ]
+
 

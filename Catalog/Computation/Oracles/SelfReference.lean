@@ -19,13 +19,16 @@ theorem lawvere_contrapositive {A B : Type*}
   exact hg b hb
 
 
+
 /-- **The Bool Instance**: Bool has a fixed-point-free endomorphism (negation). -/
 theorem bool_has_fpf : ∀ b : Bool, (!b) ≠ b := by
   intro b; cases b <;> simp
 
 
+
 /-- A decision procedure is a function from programs (ℕ) to Bool. -/
 def DecisionProcedure := ℕ → Bool
+
 
 
 /-- The diagonal construction: given a supposed halting oracle H,
@@ -34,9 +37,11 @@ def diagonalProgram (H : DecisionProcedure) : DecisionProcedure :=
   fun n => !H n
 
 
+
 /-- The unanswerable set at level n is the complement of the answerable set. -/
 def unanswerableSet (answerable : ℕ → Set ℕ) (n : ℕ) : Set ℕ :=
   (answerable n)ᶜ
+
 
 
 /-- **Monotonicity of Answerability**: If the answerable sets grow,
@@ -48,9 +53,11 @@ theorem unanswerable_antitone
   fun n => compl_subset_compl.mpr (h_mono n)
 
 
+
 /-- The God Oracle's unanswerable set is the intersection of all levels. -/
 def godUnanswerable (answerable : ℕ → Set ℕ) : Set ℕ :=
   ⋂ n, unanswerableSet answerable n
+
 
 
 /-- **Theorem (Incompleteness Gradient)**:
@@ -65,6 +72,7 @@ theorem god_unanswerable_eq_compl_union (answerable : ℕ → Set ℕ) :
   · intro h n hn; exact h ⟨n, hn⟩
 
 
+
 /-- **Theorem (Minimal Incompleteness)**:
 The God Oracle is incomplete (its unanswerable set is nonempty)
 if and only if the hierarchy does not cover all of ℕ. -/
@@ -75,14 +83,17 @@ theorem god_oracle_incomplete_iff (answerable : ℕ → Set ℕ) :
          fun h => Set.nonempty_compl.mpr fun heq => h (heq ▸ rfl)⟩
 
 
+
 /-- **The Incompleteness Gap**: The set of true-but-unprovable statements. -/
 def FormalSystem.incompletenessGap (F : FormalSystem) : Set ℕ :=
   F.true_stmts \ F.provable
 
 
+
 /-- A system is complete if it has no incompleteness gap. -/
 def FormalSystem.IsComplete (F : FormalSystem) : Prop :=
   F.incompletenessGap = ∅
+
 
 
 /-- **Gödel's First Incompleteness (Abstract)**: If a system is sound
@@ -98,6 +109,7 @@ theorem goedel_first_abstract (F : FormalSystem)
   exact this
 
 
+
 /-- **The Reflection Hierarchy**: Each level can prove the consistency
 of the previous level, but not its own. -/
 theorem reflection_hierarchy
@@ -109,6 +121,7 @@ theorem reflection_hierarchy
     ∀ n, answerable n ⊂ answerable (n + 1) := by
   intro n
   exact ⟨h_mono n, fun h => h_self n (h (h_next n))⟩
+
 
 
 end

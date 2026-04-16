@@ -18,6 +18,11 @@ theorem peel_identity_sum {k : ℕ} (legs : Fin k → ℤ) (d : ℤ) (j : Fin k)
   nlinarith [peel_product_eq d (legs j)]
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.Research.DensityAndChannels
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Research
+Declarations: 7] -/
 theorem density_formula_primes (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
     (hne : p ≠ q) :
     (Finset.filter (fun x => ¬ Nat.Coprime x (p * q))
@@ -31,9 +36,11 @@ theorem density_formula_primes (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
   · simpa [ * ] using Nat.coprime_primes hp hq
 
 
+
 /-- For a balanced semiprime N = p², the density is (2p - 1)/p² ≈ 2/√N. -/
 theorem balanced_density_formula (p : ℕ) (hp : 0 < p) :
     p + p - 1 = 2 * p - 1 := by omega
+
 
 
 /-- The number of factoring-revealing residues grows with p + q. -/
@@ -42,10 +49,12 @@ theorem density_monotone (p₁ q₁ p₂ q₂ : ℕ)
     p₁ + q₁ - 1 ≤ p₂ + q₂ - 1 := by omega
 
 
+
 /-- If the quaternion norm equals N, each component is bounded by √N. -/
 theorem quaternion_component_bound (a b c d N : ℤ)
     (h : a^2 + b^2 + c^2 + d^2 = N) :
     a^2 ≤ N := by nlinarith [sq_nonneg b, sq_nonneg c, sq_nonneg d]
+
 
 
 /-- The peel product d² - x² preserves parity information. -/
@@ -54,5 +63,7 @@ theorem peel_parity (d x : ℤ) :
   congr 1; ring
 
 
+
 /-- 480 Fano planes × 36 channels per 8-tuple = 17280 total channels. -/
 theorem fano_plane_channels : 480 * (8 + Nat.choose 8 2) = 17280 := by decide
+

@@ -13,16 +13,19 @@ noncomputable section
 def TruthSet {X : Type*} (O : X → X) : Set X := {x | O x = x}
 
 
+
 /-- Every oracle output is already a truth (fixed point). -/
 theorem oracle_output_is_truth {X : Type*} (O : X → X) (hO : IsOracle O)
     (x : X) : O x ∈ TruthSet O := by
   simp [TruthSet, hO x]
 
 
+
 /-- The oracle restricted to truths is the identity — truth is self-consistent. -/
 theorem oracle_on_truth_is_id {X : Type*} (O : X → X) (_hO : IsOracle O)
     (x : X) (hx : x ∈ TruthSet O) : O x = x :=
   hx
+
 
 
 /-- The image of the oracle equals the truth set. -/
@@ -35,6 +38,7 @@ theorem oracle_range_eq_truth {X : Type*} (O : X → X) (hO : IsOracle O) :
   · intro hy; exact ⟨y, hy⟩
 
 
+
 /-- Composing two oracles that agree on truths yields another oracle. -/
 theorem oracle_compose_idem {X : Type*} (O₁ O₂ : X → X)
     (_h1 : IsOracle O₁) (h2 : IsOracle O₂)
@@ -43,6 +47,7 @@ theorem oracle_compose_idem {X : Type*} (O₁ O₂ : X → X)
     IsOracle (O₁ ∘ O₂) := by
   intro x
   simp [Function.comp, h_agree, h2 x]
+
 
 
 /-- The oracle converges in exactly one step. -/
@@ -57,6 +62,7 @@ theorem oracle_converges_in_one_step {X : Type*} (O : X → X) (hO : IsOracle O)
     | succ n => rw [ih (by omega)]; exact hO x
 
 
+
 /-- The truth set is invariant under the oracle. -/
 theorem truth_set_invariant {X : Type*} (O : X → X) (hO : IsOracle O) :
     O '' TruthSet O = TruthSet O := by
@@ -67,11 +73,13 @@ theorem truth_set_invariant {X : Type*} (O : X → X) (hO : IsOracle O) :
   · intro hy; exact ⟨y, hy, hy⟩
 
 
+
 /-- Oracle compression theorem: the oracle maps a finite type to a subset. -/
 theorem oracle_compresses {X : Type*} [Fintype X] [DecidableEq X]
     (O : X → X) (_hO : IsOracle O) :
     Fintype.card (Set.range O) ≤ Fintype.card X :=
   Fintype.card_range_le O
+
 
 
 /-- If the meta-oracle applied to any oracle produces an oracle, then
@@ -84,12 +92,14 @@ theorem meta_oracle_strange_loop {X : Type*}
   hM (M O) (hM O hO)
 
 
+
 /-- The Kleene fixed-point theorem for oracles: if F maps oracles to oracles
 and is monotone, then iterating F converges to a "universal oracle." -/
 theorem oracle_fixed_point_exists {α : Type*} [CompleteLattice α]
     (F : α → α) (hF : Monotone F) :
     ∃ x : α, F x = x :=
   ⟨OrderHom.lfp ⟨F, hF⟩, OrderHom.map_lfp ⟨F, hF⟩⟩
+
 
 
 /-- Cantor's theorem applied to oracles: no oracle can enumerate all
@@ -105,6 +115,7 @@ theorem no_universal_truth_oracle (X : Type*) :
   exact key.mp (key.mpr fun h => key.mp h h) (key.mpr fun h => key.mp h h)
 
 
+
 /-- The diagonal truth that no oracle can capture. -/
 theorem godel_diagonal {X : Type*} (O : X → (X → Prop)) :
     ∃ P : X → Prop, ∀ x, P ≠ O x := by
@@ -113,10 +124,12 @@ theorem godel_diagonal {X : Type*} (O : X → (X → Prop)) :
   simp at this
 
 
+
 /-- Refinement is reflexive. -/
 theorem oracle_refines_refl {X : Type*} (O : X → X) :
     OracleRefines O O :=
   Subset.rfl
+
 
 
 /-- Refinement is transitive. -/
@@ -126,10 +139,12 @@ theorem oracle_refines_trans {X : Type*} (O₁ O₂ O₃ : X → X)
   Subset.trans h12 h23
 
 
+
 /-- The identity function is the weakest oracle (everything is true). -/
 theorem id_is_weakest_oracle {X : Type*} (O : X → X) (_hO : IsOracle O) :
     OracleRefines O id :=
   fun _ hx => by simp [TruthSet] at hx ⊢
+
 
 
 /-- A constant function is the strongest oracle (only one truth). -/
@@ -138,10 +153,12 @@ theorem const_is_strong_oracle {X : Type*} (c : X) :
   fun _ => rfl
 
 
+
 /-- For a finite oracle, the "entropy loss" is the gap between input and output
 cardinalities. -/
 def oracleEntropyLoss {X : Type*} [Fintype X] [DecidableEq X] (O : X → X) : ℕ :=
   Fintype.card X - Fintype.card (Set.range O)
+
 
 
 /-- The entropy loss is nonneg (cardinality can only decrease). -/
@@ -149,6 +166,7 @@ theorem entropy_loss_nonneg {X : Type*} [Fintype X] [DecidableEq X]
     (O : X → X) (_hO : IsOracle O) :
     0 ≤ oracleEntropyLoss O :=
   Nat.zero_le _
+
 
 
 end

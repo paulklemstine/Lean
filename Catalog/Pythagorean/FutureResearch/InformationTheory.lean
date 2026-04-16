@@ -12,10 +12,12 @@ theorem gcd_symm' (a N : ℤ) : Int.gcd a N = Int.gcd N a :=
   Int.gcd_comm a N
 
 
+
 /-- Two peel channels on the same tuple give potentially different GCDs. -/
 theorem two_channels_different_gcds {k : ℕ} (legs : Fin k → ℤ) (d N : ℤ)
     (j₁ j₂ : Fin k) (hne : j₁ ≠ j₂) (hleg : legs j₁ ≠ legs j₂) :
     d - legs j₁ ≠ d - legs j₂ := by omega
+
 
 
 /-- Cross-collision gives an additional factoring equation. -/
@@ -36,8 +38,10 @@ theorem cross_collision_equation {k : ℕ}
   linarith
 
 
+
 /-- Total factoring channels = k + C(k,2) = k(k+1)/2. -/
 def totalChannels (k : ℕ) : ℕ := k + Nat.choose k 2
+
 
 
 /-- Channel counts for key dimensions. -/
@@ -51,16 +55,19 @@ theorem channel_counts :
   unfold totalChannels; decide
 
 
+
 /-- The octonionic advantage: k=8 gives 12× the channels of k=2. -/
 theorem octonionic_advantage_ratio :
     totalChannels 8 = 12 * totalChannels 2 := by
   unfold totalChannels; decide
 
 
+
 /-- The sedenionic advantage: k=16 gives 136 channels. -/
 theorem sedenionic_channels :
     totalChannels 16 = 136 := by
   unfold totalChannels; decide
+
 
 
 /-- A trivial GCD (= 1 or N) gives zero useful information,
@@ -76,6 +83,7 @@ theorem gcd_is_binary_oracle (g N : ℕ) (hN : 1 < N) (hg : g ∣ N) :
       exact ⟨by omega, lt_of_le_of_ne (Nat.le_of_dvd (by omega) hg) h2⟩
 
 
+
 /-- Once a nontrivial factor p is found, the cofactor N/p is also determined. -/
 theorem cofactor_determined (N p : ℕ) (hp : p ∣ N) (hp1 : 1 < p) (hpN : p < N) :
     N / p * p = N ∧ 1 < N / p := by
@@ -87,6 +95,7 @@ theorem cofactor_determined (N p : ℕ) (hp : p ∣ N) (hp1 : 1 < p) (hpN : p < 
   interval_cases k <;> omega
 
 
+
 /-- More channels strictly increase success probability (combinatorial version). -/
 theorem more_channels_better (k₁ k₂ : ℕ) (hk : k₁ < k₂) :
     totalChannels k₁ < totalChannels k₂ := by
@@ -94,4 +103,5 @@ theorem more_channels_better (k₁ k₂ : ℕ) (hk : k₁ < k₂) :
   have : Nat.choose k₁ 2 ≤ Nat.choose k₂ 2 :=
     Nat.choose_le_choose 2 (le_of_lt hk)
   omega
+
 

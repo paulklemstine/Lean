@@ -1,59 +1,42 @@
-/-
-# OISCC V12: Curvature Theory of the EML Riemannian Manifold
+/-! # CatalogBuild.Speculative.OISCC.V12_CurvatureTheory
 
-The EML metric g(x) = exp(x) + 1/x² on ℝ₊ defines a 1D Riemannian manifold.
-For a 1D manifold, the Gaussian curvature is related to g''/(2g) - (g')²/(4g²).
-
-Key results:
-1. The metric derivative g'(x) = exp(x) - 2/x³
-2. g'(x) > 0 for x ≥ 1 (metric is increasing)
-3. The arc length integral diverges at both ends
-4. The geodesic distance between any two points is finite and positive
-5. The metric grows exponentially: g(x) ≥ exp(x)
+Auto-generated from theorem catalog database.
+Domain: Speculative/OISCC
+Declarations: 15
 -/
 
 import Mathlib
 
 noncomputable section
 
-open Real Filter Topology Set
-
 /-- The EML Riemannian metric on ℝ₊. -/
 def g_curv (x : ℝ) : ℝ := Real.exp x + x⁻¹ ^ 2
+
 
 /-- The derivative of the metric: g'(x) = exp(x) - 2/x³. -/
 def g_curv_deriv (x : ℝ) : ℝ := Real.exp x - 2 * x⁻¹ ^ 3
 
+
 /-- The square root of the metric (for arc length). -/
 def sqrt_g (x : ℝ) : ℝ := Real.sqrt (g_curv x)
 
-/-
-The metric is strictly positive.
--/
+
 theorem g_curv_pos (x : ℝ) (hx : 0 < x) : g_curv x > 0 := by
   exact add_pos ( Real.exp_pos x ) ( sq_pos_of_pos ( inv_pos.mpr hx ) )
 
-/-
-The metric is at least 1.
--/
+
 theorem g_curv_ge_one (x : ℝ) (hx : 0 < x) : g_curv x ≥ 1 := by
   exact le_add_of_le_of_nonneg ( Real.one_le_exp hx.le ) ( sq_nonneg _ )
 
-/-
-The metric dominates the exponential.
--/
+
 theorem g_curv_ge_exp (x : ℝ) : g_curv x ≥ Real.exp x := by
   exact le_add_of_nonneg_right ( sq_nonneg _ )
 
-/-
-The metric dominates 1/x².
--/
+
 theorem g_curv_ge_inv_sq (x : ℝ) : g_curv x ≥ x⁻¹ ^ 2 := by
   exact le_add_of_nonneg_left <| Real.exp_nonneg x
 
-/-
-g has the stated derivative.
--/
+
 theorem g_curv_hasDerivAt (x : ℝ) (hx : 0 < x) :
     HasDerivAt g_curv (g_curv_deriv x) x := by
   unfold g_curv g_curv_deriv;
@@ -61,15 +44,11 @@ theorem g_curv_hasDerivAt (x : ℝ) (hx : 0 < x) :
   convert HasDerivAt.add ( Real.hasDerivAt_exp x ) ( HasDerivAt.div ( hasDerivAt_const _ _ ) ( hasDerivAt_pow 2 x ) ( by positivity ) ) using 1 ; ring;
   grind
 
-/-
-g'(x) > 0 for x ≥ 1 (the metric is increasing on [1,∞)).
--/
+
 theorem g_curv_deriv_pos (x : ℝ) (hx : 1 ≤ x) : g_curv_deriv x > 0 := by
   exact sub_pos_of_lt ( by have := Real.exp_one_gt_d9.le; norm_num1 at *; nlinarith [ Real.exp_pos x, Real.exp_le_exp.mpr hx, inv_pos.mpr ( by positivity : 0 < x ), mul_inv_cancel₀ ( by positivity : x ≠ 0 ), pow_pos ( inv_pos.mpr ( by positivity : 0 < x ) ) 2, pow_pos ( inv_pos.mpr ( by positivity : 0 < x ) ) 3 ] )
 
-/-
-g is strictly increasing on [1, ∞).
--/
+
 theorem g_curv_strictMono_Ici : StrictMonoOn g_curv (Ici 1) := by
   intro a ha b hb hab;
   -- By the mean value theorem, there exists some $c \in (a, b)$ such that $g'(c) = \frac{g(b) - g(a)}{b - a}$.
@@ -82,21 +61,15 @@ theorem g_curv_strictMono_Ici : StrictMonoOn g_curv (Ici 1) := by
     rw [ show deriv g_curv c = g_curv_deriv c from HasDerivAt.deriv ( g_curv_hasDerivAt c <| by linarith [ hc.1.1, ha.out ] ) ] ; exact g_curv_deriv_pos c <| by linarith [ hc.1.1, ha.out ];
   rw [ hc.2, gt_iff_lt, lt_div_iff₀ ] at h_deriv_pos <;> linarith
 
-/-
-sqrt(g(x)) ≥ 1 for x > 0.
--/
+
 theorem sqrt_g_ge_one (x : ℝ) (hx : 0 < x) : sqrt_g x ≥ 1 := by
   exact Real.le_sqrt_of_sq_le ( by linarith [ g_curv_ge_one x hx ] )
 
-/-
-sqrt(g(x)) ≥ 1/x for x > 0.
--/
+
 theorem sqrt_g_ge_inv (x : ℝ) (hx : 0 < x) : sqrt_g x ≥ x⁻¹ := by
   exact Real.le_sqrt_of_sq_le ( by exact le_trans ( by norm_num ) ( g_curv_ge_inv_sq x ) )
 
-/-
-The metric blows up near 0: g(x) → ∞ as x → 0⁺.
--/
+
 theorem g_curv_tendsto_atTop_zero :
     Filter.Tendsto g_curv (nhdsWithin 0 (Ioi 0)) atTop := by
   -- The term $x^{-1}^2$ goes to infinity as $x$ approaches $0^+$.
@@ -104,16 +77,12 @@ theorem g_curv_tendsto_atTop_zero :
     exact Filter.Tendsto.comp ( Filter.tendsto_pow_atTop ( by norm_num ) ) ( tendsto_inv_nhdsGT_zero );
   exact Filter.tendsto_atTop_mono ( fun x => by exact le_add_of_nonneg_left <| Real.exp_nonneg _ ) h_inv_sq
 
-/-
-The metric grows super-exponentially: g(x) → ∞ as x → ∞.
--/
+
 theorem g_curv_tendsto_atTop :
     Filter.Tendsto g_curv atTop atTop := by
   exact Filter.tendsto_atTop_mono ( fun x ↦ g_curv_ge_exp x ) ( Real.tendsto_exp_atTop )
 
-/-
-The metric is convex on (0, ∞).
--/
+
 theorem g_curv_convexOn : ConvexOn ℝ (Ioi 0) g_curv := by
   apply_rules [ convexOn_of_deriv2_nonneg, convex_Ioi ];
   · exact continuousOn_of_forall_continuousAt fun x hx => ContinuousAt.add ( Real.continuous_exp.continuousAt ) ( ContinuousAt.pow ( continuousAt_id.inv₀ hx.out.ne' ) 2 );
@@ -126,5 +95,6 @@ theorem g_curv_convexOn : ConvexOn ℝ (Ioi 0) g_curv := by
       norm_num [ show y ^ 4 = y ^ 3 * y by ring, hy.ne' ];
     simp +zetaDelta at *;
     intro x hx; rw [ h_second_deriv x hx ] ; norm_num [ Real.differentiableAt_exp, hx.ne', div_eq_mul_inv, differentiableAt_inv ] ; ring_nf; positivity;
+
 
 end

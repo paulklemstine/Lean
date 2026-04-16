@@ -7,6 +7,10 @@ Declarations: 5
 
 import Mathlib
 
+/-- [Section: # CatalogBuild.Algebra.MatroidTheory
+Auto-generated from theorem catalog database.
+Domain: Algebra
+Declarations: 5] -/
 structure RankFunction (E : Type*) [Fintype E] [DecidableEq E] where
   rank : Finset E → ℕ
   rank_le_card : ∀ S, rank S ≤ S.card
@@ -14,14 +18,17 @@ structure RankFunction (E : Type*) [Fintype E] [DecidableEq E] where
   rank_submod : ∀ S T, rank (S ∪ T) + rank (S ∩ T) ≤ rank S + rank T
 
 
+
 theorem rank_empty' {E : Type*} [Fintype E] [DecidableEq E]
     (r : RankFunction E) : r.rank ∅ = 0 := by
   have h := r.rank_le_card ∅; simp at h; omega
 
 
+
 theorem rank_le_ground' {E : Type*} [Fintype E] [DecidableEq E]
     (r : RankFunction E) (S : Finset E) : r.rank S ≤ Fintype.card E :=
   le_trans (r.rank_le_card S) (Finset.card_le_univ S)
+
 
 
 theorem rank_unit_increase' {E : Type*} [Fintype E] [DecidableEq E]
@@ -37,7 +44,9 @@ theorem rank_unit_increase' {E : Type*} [Fintype E] [DecidableEq E]
       linarith [ rank_empty' r ]
 
 
+
 theorem greedy_comparison' {n : ℕ} (w : Fin n → ℕ)
     (S T : Finset (Fin n)) :
     ∑ i ∈ S, w i ≤ ∑ i ∈ T, w i ∨ ∑ i ∈ T, w i ≤ ∑ i ∈ S, w i :=
   le_total _ _
+

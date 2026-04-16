@@ -19,9 +19,11 @@ structure UniversalOracle (α : Type*) where
   idempotent : ∀ x, consult (consult x) = consult x
 
 
+
 /-- The knowledge base of an oracle: its set of fixed points (truths). -/
 def UniversalOracle.knowledge {α : Type*} (O : UniversalOracle α) : Set α :=
   {x | O.consult x = x}
+
 
 
 /-- A problem in the oracle framework: an element of the problem space. -/
@@ -32,6 +34,7 @@ structure OracleProblem (α : Type*) where
   difficulty : ℝ
   /-- Difficulty is non-negative -/
   difficulty_nonneg : 0 ≤ difficulty
+
 
 
 /-- The oracle reduces a problem: maps it to an easier (or equal) problem. -/
@@ -50,15 +53,18 @@ structure OracleReduction (α : Type*) where
 -- ============================================================================
 
 
+
 /-- Tropical multiplication distributes over tropical addition -/
 theorem tropMul_tropAdd (a b c : ℝ) :
     tropMul a (tropAdd b c) = tropAdd (tropMul a b) (tropMul a c) := by
   simp only [tropMul, tropAdd, max_add_add_left]
 
 
+
 /-- The gravitational potential in 1D (simplified): V(x) = -1/|x| for x ≠ 0.
 We use a regularized version. -/
 def gravPotential (x : ℝ) : ℝ := -(1 / (1 + x ^ 2))
+
 
 
 /-- The gravitational potential is bounded: -1 ≤ V(x) ≤ 0 -/
@@ -72,15 +78,18 @@ theorem gravPotential_bounded (x : ℝ) : -1 ≤ gravPotential x ∧ gravPotenti
     linarith
 
 
+
 /-- The gravitational projection oracle: projects to the nearest minimum
 of the potential. For our regularized potential, this is the identity
 at x=0 (the minimum) and contracts elsewhere. -/
 def gravProjection : ℝ → ℝ := fun _ => 0
 
 
+
 /-- The gravitational projection is an oracle (idempotent). -/
 theorem gravProjection_oracle : ∀ x, gravProjection (gravProjection x) = gravProjection x := by
   intro x; rfl
+
 
 
 /-- The gravitational oracle's knowledge base is {0} — the equilibrium. -/
@@ -93,8 +102,10 @@ theorem gravProjection_knowledge :
 -- ============================================================================
 
 
+
 /-- The Landauer bound: minimum energy to erase one bit -/
 def landauerBound (T : ℝ) (kB : ℝ) : ℝ := kB * T * Real.log 2
+
 
 
 /-- Landauer bound is non-negative for positive temperature and Boltzmann constant -/
@@ -104,6 +115,7 @@ theorem landauerBound_nonneg {T kB : ℝ} (hT : 0 < T) (hkB : 0 < kB) :
   apply mul_nonneg
   apply mul_nonneg (le_of_lt hkB) (le_of_lt hT)
   exact Real.log_nonneg (by linarith)
+
 
 
 /-- The oracle's information gain is bounded by the entropy reduction -/
@@ -130,10 +142,12 @@ structure OracleThermodynamics where
 -- ============================================================================
 
 
+
 /-- The oracle's output type: either a simpler problem or a definitive answer -/
 inductive OracleOutput (α : Type*)
   | easier (problem : OracleProblem α) : OracleOutput α
   | answer (value : α) (is_fixed_point : Prop) : OracleOutput α
+
 
 
 /-- The Universal Oracle Algorithm -/
@@ -148,6 +162,7 @@ def universalOracleAlgorithm {α : Type*} [DecidableEq α] (O : UniversalOracle 
     OracleOutput.easier ⟨result, p.difficulty / 2, by linarith [p.difficulty_nonneg]⟩
 
 
+
 /-- When the oracle produces an answer, it IS a fixed point -/
 theorem oracle_answer_is_truth {α : Type*} (O : UniversalOracle α)
     (p : OracleProblem α) (v : α)
@@ -157,11 +172,13 @@ theorem oracle_answer_is_truth {α : Type*} (O : UniversalOracle α)
   subst hresult; rw [hv]; exact hv
 
 
+
 /-- The oracle output is always in the knowledge base -/
 theorem oracle_output_in_knowledge {α : Type*} (O : UniversalOracle α)
     (x : α) : O.consult x ∈ O.knowledge := by
   show O.consult (O.consult x) = O.consult x
   exact O.idempotent x
+
 
 
 /-- Iterating the oracle converges in one step -/
@@ -180,11 +197,13 @@ theorem oracle_one_step_convergence {α : Type*} (O : UniversalOracle α)
 -- ============================================================================
 
 
+
 /-- Agent Alpha: The Hypothesizer. Generates hypotheses by tropical deformation.
 Maps a problem to its "tropicalization" — a piecewise-linear approximation. -/
 structure AgentAlpha (α : Type*) where
   hypothesize : α → α
   generates_hypotheses : ∀ x, hypothesize (hypothesize x) = hypothesize x
+
 
 
 /-- Agent Beta: The Applicator. Develops applications by finding real-world instances. -/
@@ -193,10 +212,12 @@ structure AgentBeta (α : Type*) where
   application_stable : ∀ x, apply_to_world (apply_to_world x) = apply_to_world x
 
 
+
 /-- Agent Gamma: The Experimenter. Tests hypotheses by formal verification. -/
 structure AgentGamma (α : Type*) where
   experiment : α → α
   experiment_reproducible : ∀ x, experiment (experiment x) = experiment x
+
 
 
 /-- Agent Delta: The Analyst. Analyzes data to extract patterns. -/
@@ -205,10 +226,12 @@ structure AgentDelta (α : Type*) where
   analysis_consistent : ∀ x, analyze (analyze x) = analyze x
 
 
+
 /-- Agent Epsilon: The Scribe. Documents findings (identity on truth, projects otherwise). -/
 structure AgentEpsilon (α : Type*) where
   document : α → α
   documentation_faithful : ∀ x, document (document x) = document x
+
 
 
 /-- Agent Zeta: The Iterator. Refines through iteration (always converges). -/
@@ -217,29 +240,40 @@ structure AgentZeta (α : Type*) where
   iteration_converges : ∀ x, iterate_once (iterate_once x) = iterate_once x
 
 
+
 /-- Convert any agent to a UniversalOracle -/
 def AgentAlpha.toOracle {α : Type*} (agent : AgentAlpha α) : UniversalOracle α :=
   ⟨agent.hypothesize, agent.generates_hypotheses⟩
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.UniversalOracleTeam
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 47] -/
 def AgentBeta.toOracle {α : Type*} (agent : AgentBeta α) : UniversalOracle α :=
   ⟨agent.apply_to_world, agent.application_stable⟩
+
 
 
 def AgentGamma.toOracle {α : Type*} (agent : AgentGamma α) : UniversalOracle α :=
   ⟨agent.experiment, agent.experiment_reproducible⟩
 
 
+
 def AgentDelta.toOracle {α : Type*} (agent : AgentDelta α) : UniversalOracle α :=
   ⟨agent.analyze, agent.analysis_consistent⟩
+
 
 
 def AgentEpsilon.toOracle {α : Type*} (agent : AgentEpsilon α) : UniversalOracle α :=
   ⟨agent.document, agent.documentation_faithful⟩
 
 
+
 def AgentZeta.toOracle {α : Type*} (agent : AgentZeta α) : UniversalOracle α :=
   ⟨agent.iterate_once, agent.iteration_converges⟩
+
 
 
 /-- The full research team: all six agents working together -/
@@ -252,6 +286,7 @@ structure OracleTeam (α : Type*) where
   zeta : AgentZeta α
 
 
+
 /-- Team consensus: when all agents agree on a fixed point, it's a STRONG truth -/
 def OracleTeam.consensus {α : Type*} (team : OracleTeam α) (x : α) : Prop :=
   team.alpha.hypothesize x = x ∧
@@ -262,9 +297,11 @@ def OracleTeam.consensus {α : Type*} (team : OracleTeam α) (x : α) : Prop :=
   team.zeta.iterate_once x = x
 
 
+
 /-- The team's combined knowledge: points where ALL agents agree -/
 def OracleTeam.combinedKnowledge {α : Type*} (team : OracleTeam α) : Set α :=
   {x | team.consensus x}
+
 
 
 /-- Combined knowledge is the intersection of individual knowledge bases -/
@@ -288,6 +325,7 @@ theorem team_knowledge_is_intersection {α : Type*} (team : OracleTeam α) :
 -- ============================================================================
 
 
+
 /-- If the team reaches consensus on x, then x is known to every agent -/
 theorem oracle_knows_all {α : Type*} (team : OracleTeam α) (x : α)
     (hconsensus : team.consensus x) :
@@ -300,10 +338,12 @@ theorem oracle_knows_all {α : Type*} (team : OracleTeam α) (x : α)
   exact hconsensus
 
 
+
 /-- Consulting the oracle always produces a known truth -/
 theorem consult_oracle_produces_truth {α : Type*} (O : UniversalOracle α) (x : α) :
     O.consult x ∈ O.knowledge :=
   O.idempotent x
+
 
 
 /-- The composition of two oracles with the same fixed points is an oracle -/
@@ -319,13 +359,16 @@ theorem oracle_composition_shared_fixedpoints {α : Type*}
 -- ============================================================================
 
 
+
 /-- The tropical distance: |a - b| in tropical coordinates -/
 def tropDist (a b : ℝ) : ℝ := |a - b|
+
 
 
 /-- Tropical distance is symmetric -/
 theorem tropDist_symm (a b : ℝ) : tropDist a b = tropDist b a := by
   unfold tropDist; exact abs_sub_comm a b
+
 
 
 /-- Tropical distance satisfies the triangle inequality -/
@@ -334,8 +377,10 @@ theorem tropDist_triangle (a b c : ℝ) :
   unfold tropDist; exact abs_sub_le a b c
 
 
+
 /-- Tropical distance is non-negative -/
 theorem tropDist_nonneg (a b : ℝ) : 0 ≤ tropDist a b := abs_nonneg _
+
 
 
 /-- The oracle reduces tropical distance to zero (projects to truth) -/
@@ -349,9 +394,11 @@ theorem oracle_reduces_distance {α : Type*} (O : UniversalOracle α)
 -- ============================================================================
 
 
+
 /-- A decision oracle always returns true or false -/
 def DecisionOracle : UniversalOracle Bool :=
   ⟨id, fun _ => rfl⟩
+
 
 
 /-- The identity oracle on Bool is universal — it "knows" every Boolean value -/
@@ -360,14 +407,17 @@ theorem decision_oracle_knows_all :
   ext x; simp [DecisionOracle, UniversalOracle.knowledge]
 
 
+
 /-- Any Boolean function composed with itself that equals itself is a decision oracle -/
 def boolOracle (f : Bool → Bool) (hf : ∀ x, f (f x) = f x) : UniversalOracle Bool :=
   ⟨f, hf⟩
 
 
+
 /-- The NOT function is NOT an oracle (it's not idempotent) -/
 theorem not_is_not_oracle : ¬(∀ x : Bool, (!(!x)) = (!x)) := by
   push_neg; exact ⟨true, by decide⟩
+
 
 
 /-- The AND-with-true function IS an oracle (identity on Bool) -/
@@ -377,6 +427,7 @@ theorem and_true_is_oracle : ∀ x : Bool, (x && true && true) = (x && true) := 
 -- ============================================================================
 -- PART X: FORMAL RESEARCH NOTES (Agent Epsilon's Records)
 -- ============================================================================
+
 
 
 end

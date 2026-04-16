@@ -16,10 +16,12 @@ after traversing one circumference. -/
 def circumferenceS3 (R : ℝ) : ℝ := 2 * Real.pi * R
 
 
+
 /-- The circumference is positive for R > 0. -/
 theorem circumference_pos (R : ℝ) (hR : 0 < R) :
     0 < circumferenceS3 R := by
   unfold circumferenceS3; positivity
+
 
 
 /-- The time delay for a gravitational wave echo in S³.
@@ -31,14 +33,17 @@ so first-order echoes haven't had time to arrive — yet. -/
 def echoTimeDelay (R c : ℝ) : ℝ := circumferenceS3 R / c
 
 
+
 /-- The echo time delay is positive. -/
 theorem echo_delay_pos (R c : ℝ) (hR : 0 < R) (hc : 0 < c) :
     0 < echoTimeDelay R c := by
   unfold echoTimeDelay; exact div_pos (circumference_pos R hR) hc
 
 
+
 /-- The n-th echo arrives at time n × Δt. -/
 def nthEchoDelay (R c : ℝ) (n : ℕ) : ℝ := n * echoTimeDelay R c
+
 
 
 /-- Echo delays form an arithmetic progression. -/
@@ -47,14 +52,17 @@ theorem echo_delay_arithmetic (R c : ℝ) (n : ℕ) :
   unfold nthEchoDelay; push_cast; ring
 
 
+
 /-- On S³ of radius R, only wavelengths that "fit" around a great circle
 are allowed. The n-th allowed wavelength is λₙ = 2πR/n. -/
 def allowedWavelength (R : ℝ) (n : ℕ) : ℝ := 2 * Real.pi * R / n
 
 
+
 /-- The corresponding frequency for mode n, given speed c.
 fₙ = c/λₙ = nc/(2πR) -/
 def allowedFrequency (R c : ℝ) (n : ℕ) : ℝ := n * c / (2 * Real.pi * R)
+
 
 
 /-- The frequencies form a harmonic series: fₙ = n × f₁. -/
@@ -63,16 +71,19 @@ theorem frequency_harmonic (R c : ℝ) (n : ℕ) (hR : 0 < R) :
   unfold allowedFrequency; push_cast; ring
 
 
+
 /-- The fundamental frequency (lowest non-zero mode).
 f₁ = c/(2πR)
 For R = 100 Gly: f₁ ≈ 10⁻²⁰ Hz (far below any detector's range) -/
 def fundamentalFrequency (R c : ℝ) : ℝ := c / (2 * Real.pi * R)
 
 
+
 /-- The fundamental frequency equals the first allowed frequency. -/
 theorem fundamental_eq_first (R c : ℝ) (hR : 0 < R) :
     fundamentalFrequency R c = allowedFrequency R c 1 := by
   unfold fundamentalFrequency allowedFrequency; push_cast; ring
+
 
 
 /-- The dispersion relation for gravitational waves on S³.
@@ -84,11 +95,13 @@ def gwFrequencySquared (R c : ℝ) (ℓ : ℕ) : ℝ :=
   c ^ 2 * (ℓ * (ℓ + 2) : ℝ) / R ^ 2
 
 
+
 /-- The dispersion relation reduces to the flat-space limit for ℓ ≫ 1.
 For large ℓ: ℓ(ℓ+2) ≈ ℓ², so ω ≈ cℓ/R, recovering ω = ck
 with k = ℓ/R (the wavenumber). -/
 theorem dispersion_large_ell_bound (ℓ : ℕ) :
     (ℓ : ℝ) ^ 2 ≤ (ℓ : ℝ) * ((ℓ : ℝ) + 2) := by nlinarith
+
 
 
 /-- The group velocity of GW on S³.
@@ -103,6 +116,7 @@ theorem group_velocity_approaches_c (ℓ : ℕ) (hℓ : 0 < ℓ) :
   · nlinarith
 
 
+
 /-- The energy carried by the n-th GW echo.
 As the wave spreads on S³, the energy per solid angle varies.
 On S³, the area of a sphere of geodesic radius χ is:
@@ -112,6 +126,7 @@ creating a **conjugate point** (a natural focal point). -/
 def areaOnS3 (R χ : ℝ) : ℝ := 4 * Real.pi * R ^ 2 * Real.sin (χ / R) ^ 2
 
 
+
 /-- At the equator (χ = πR/2), the area is maximal: A = 4πR². -/
 theorem area_at_equator (R : ℝ) (hR : 0 < R) :
     areaOnS3 R (Real.pi * R / 2) = 4 * Real.pi * R ^ 2 := by
@@ -119,6 +134,7 @@ theorem area_at_equator (R : ℝ) (hR : 0 < R) :
   rw [show Real.pi * R / 2 / R = Real.pi / 2 by field_simp]
   rw [Real.sin_pi_div_two]
   ring
+
 
 
 /-- At the antipodal point (χ = πR), the area vanishes: the wave refocuses!
@@ -132,6 +148,7 @@ theorem area_at_antipode (R : ℝ) (hR : 0 < R) :
   ring
 
 
+
 /-- After a full circuit (χ = 2πR), the wave returns to the source
 with area 0 — it refocuses at the original emission point!
 This creates a natural "gravitational wave mirror." -/
@@ -141,6 +158,7 @@ theorem area_full_circuit (R : ℝ) (hR : 0 < R) :
   rw [show 2 * Real.pi * R / R = 2 * Real.pi by field_simp]
   rw [Real.sin_two_pi]
   ring
+
 
 
 /-- The minimum detectable GW amplitude for a given detector.
@@ -154,12 +172,14 @@ def detectorSensitivity (h_min f_center : ℝ) : Prop :=
   h_min > 0 ∧ f_center > 0
 
 
+
 /-- The number of GW modes in a frequency band [f_low, f_high] on S³.
 N = ⌊2πRf_high/c⌋ - ⌊2πRf_low/c⌋
 This is finite and computable — a key distinction from flat space
 where it would be infinite. -/
 def modesInBand (R c f_low f_high : ℝ) : ℤ :=
   ⌊2 * Real.pi * R * f_high / c⌋ - ⌊2 * Real.pi * R * f_low / c⌋
+
 
 
 /-- More modes exist in a higher frequency band (monotonicity). -/
@@ -173,6 +193,7 @@ theorem modes_nonneg (R c f_low f_high : ℝ) (hR : 0 < R) (hc : 0 < c)
   linarith [Int.floor_le_floor h1]
 
 
+
 /-- The energy density of the stochastic GW background in S³.
 Ω_gw(f) = (1/ρ_c) dρ_gw/d(ln f)
 On S³, this is a sum of delta functions (discrete spectrum)
@@ -182,12 +203,14 @@ def gwEnergyDensityDiscrete (R c : ℝ) (ℓ : ℕ) : ℝ :=
   (ℓ + 1 : ℝ) ^ 2 * gwFrequencySquared R c ℓ
 
 
+
 /-- The total GW energy is a convergent sum (on S³, unlike flat space
 where it diverges without a UV cutoff). The S³ topology provides
 a natural infrared cutoff at the fundamental frequency. -/
 theorem gw_energy_has_IR_cutoff (R c : ℝ) (hR : 0 < R) (hc : 0 < c) :
     gwFrequencySquared R c 0 = 0 := by
   unfold gwFrequencySquared; simp
+
 
 
 /-- If a gravitational wave event (e.g., binary neutron star merger) occurs
@@ -200,9 +223,16 @@ t₂ - t₁ = 2(πR - χ)/c
 t₃ - t₁ = 2πR/c  (independent of source position!) -/
 def directSignalTime (χ c : ℝ) : ℝ := χ / c
 
+
+/-- [Section: # CatalogBuild.Geometry.SphericalUniverse.GravitationalWaves
+Auto-generated from theorem catalog database.
+Domain: Geometry/SphericalUniverse
+Declarations: 28] -/
 def antipodalEchoTime (R χ c : ℝ) : ℝ := (2 * Real.pi * R - χ) / c
 
+
 def fullCircuitEchoTime (R χ c : ℝ) : ℝ := (2 * Real.pi * R + χ) / c
+
 
 
 /-- The full-circuit time delay is independent of source position.
@@ -214,6 +244,7 @@ theorem full_circuit_delay_universal (R χ c : ℝ) (hc : c ≠ 0) :
   ring
 
 
+
 /-- The antipodal echo delay determines source distance given R.
 Δt₂₁ = 2(πR - χ)/c, so χ = πR - cΔt₂₁/2 -/
 theorem antipodal_delay_determines_distance (R χ c : ℝ) (hc : c ≠ 0) :
@@ -221,6 +252,7 @@ theorem antipodal_delay_determines_distance (R χ c : ℝ) (hc : c ≠ 0) :
   unfold antipodalEchoTime directSignalTime
   field_simp
   ring
+
 
 
 end

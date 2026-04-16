@@ -20,11 +20,17 @@ theorem lawvere_fp {A B : Type*}
   exact this.symm
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.StrangeLoops
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 13] -/
 structure GodelSentenceV2 (X : Type*) where
   code : Prop → X
   provable : X → Prop
   G : Prop
   self_ref : G ↔ ¬ provable (code G)
+
 
 
 theorem godel_incompleteness_v2 {X : Type*} (gs : GodelSentenceV2 X)
@@ -35,22 +41,27 @@ theorem godel_incompleteness_v2 {X : Type*} (gs : GodelSentenceV2 X)
   exact ⟨gs.self_ref.mpr not_provable, not_provable⟩
 
 
+
 theorem pow2_not_div3' : ∀ k : ℕ, 2 ^ k % 3 ≠ 0 := by
   intro k; induction k with
   | zero => decide
   | succ n ih => omega
 
 
+
 theorem double_preserves_mod3' (n : ℕ) (h : n % 3 ≠ 0) : (2 * n) % 3 ≠ 0 := by omega
+
 
 
 theorem sub3_preserves_mod3' (n : ℕ) (h : n % 3 ≠ 0) (_h3 : 3 ≤ n) :
     (n - 3) % 3 ≠ 0 := by omega
 
 
+
 theorem no_self_negating_prop' : ¬ ∃ P : Prop, P ↔ ¬P := by
   intro ⟨P, hP⟩
   exact absurd (hP.mpr fun h => hP.mp h h) fun h => hP.mp h h
+
 
 
 theorem grelling_paradox_v2 :
@@ -59,15 +70,18 @@ theorem grelling_paradox_v2 :
   intro ⟨_, _, _, h⟩; exact no_self_negating_prop' ⟨_, h⟩
 
 
+
 theorem strange_loop_compose_v2 {X : Type*} (_f g : X → X)
     (x : X) (hf : _f x = x) (hg : g (_f x) = _f x) :
     g x = x := by rwa [hf] at hg
+
 
 
 theorem observer_stabilizes {X : Type*} (observe : X → X)
     (h_idem : ∀ x, observe (observe x) = observe x) (x : X) :
     observe (observe (observe x)) = observe x := by
   rw [h_idem]; exact h_idem x
+
 
 
 theorem observer_convergence' {X : Type*} (observe : X → X)
@@ -82,6 +96,7 @@ theorem observer_convergence' {X : Type*} (observe : X → X)
     | succ n => rw [ih (by omega)]; exact h_idem x
 
 
+
 theorem tarski_undefinability' :
     ¬ ∃ (T : Prop → Prop), (∀ P, T P ↔ P) ∧ (∃ L, L ↔ ¬ T L) := by
   intro ⟨T, hT, L, hL⟩
@@ -92,10 +107,12 @@ theorem tarski_undefinability' :
   exact no_self_negating_prop' ⟨L, key⟩
 
 
+
 theorem self_application_surj {X Y : Type*}
     (app : X → X → Y) (d : Y → X) (h : ∀ y, app (d y) (d y) = y) :
     Surjective (fun x => app x x) :=
   fun y => ⟨d y, h y⟩
+
 
 
 end

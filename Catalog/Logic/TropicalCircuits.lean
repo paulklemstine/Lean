@@ -9,8 +9,13 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # CatalogBuild.Logic.TropicalCircuits
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 12] -/
 theorem tropical_add_idem (a : Tropical ℝ) : a + a = a := by
   exact add_self a
+
 
 
 theorem trop_add_eq_min (a b : ℝ) :
@@ -18,9 +23,11 @@ theorem trop_add_eq_min (a b : ℝ) :
       exact Eq.symm (trop_min a b)
 
 
+
 theorem trop_mul_eq_add (a b : ℝ) :
     (Tropical.trop a) * (Tropical.trop b) = Tropical.trop (a + b) := by
       exact untrop_eq_iff_eq_trop.mp rfl
+
 
 
 /-- Evaluate a tropical monomial at a point -/
@@ -28,9 +35,11 @@ def TropicalMonomial.eval {n : ℕ} (m : TropicalMonomial n) (x : Fin n → ℝ)
   m.coeff + Finset.sum Finset.univ (fun i => m.exponents i * x i)
 
 
+
 /-- The degree of a tropical monomial -/
 def TropicalMonomial.degree {n : ℕ} (m : TropicalMonomial n) : ℝ :=
   Finset.sum Finset.univ (fun i => |m.exponents i|)
+
 
 
 /-- A tropical gate computes either min or plus -/
@@ -39,6 +48,7 @@ inductive TropGate
   | plusGate  -- tropical multiplication = plus
   | constGate (c : ℝ)  -- constant
   | inputGate (i : ℕ)  -- input variable
+
 
 
 /-- A tropical circuit is a DAG of tropical gates -/
@@ -50,8 +60,10 @@ structure TropicalCircuit (n : ℕ) where
   outputGate : Fin numGates
 
 
+
 /-- The size of a tropical circuit is its number of gates -/
 def TropicalCircuit.size {n : ℕ} (c : TropicalCircuit n) : ℕ := c.numGates
+
 
 
 /-- Min-plus matrix multiplication -/
@@ -59,6 +71,7 @@ noncomputable def minPlusMul {n : ℕ} [NeZero n] (A B : Fin n → Fin n → ℝ
     Fin n → Fin n → ℝ :=
   fun i j => Finset.inf' Finset.univ Finset.univ_nonempty
     (fun k => A i k + B k j)
+
 
 
 theorem minPlusMul_assoc {n : ℕ} [NeZero n] (A B C : Fin n → Fin n → ℝ) :
@@ -81,15 +94,18 @@ theorem minPlusMul_assoc {n : ℕ} [NeZero n] (A B C : Fin n → Fin n → ℝ) 
         · intro k; linarith [ hi_1 k, show sInf ( Set.range fun k => B i_1 k + C k j ) ≤ B i_1 b + C b j from csInf_le ( Set.finite_range _ |> Set.Finite.bddBelow ) ( Set.mem_range_self _ ) ] ;
 
 
+
 /-- The number of monomials computable by a tropical circuit of size s
 is at most 2^s (each min gate can at most double the number of monomials) -/
 theorem tropical_circuit_monomial_bound (s : ℕ) :
     ∀ k : ℕ, k ≤ 2^s → k ≤ 2^s := fun _ h => h
 
 
+
 theorem tropical_no_counting (a b : Tropical ℝ) :
     a + a = a := by
       exact tropical_add_idem a
+
 
 
 end

@@ -14,10 +14,12 @@ noncomputable def shannonEntropy' {α : Type*} [Fintype α] (p : α → ℝ) : �
   -∑ x : α, if p x > 0 then p x * Real.logb 2 (p x) else 0
 
 
+
 /-- Joint entropy of a distribution on a product type. -/
 noncomputable def jointEntropy {α β : Type*} [Fintype α] [Fintype β]
     (p : α × β → ℝ) : ℝ :=
   shannonEntropy' p
+
 
 
 /-- Conditional entropy H(Y|X) = H(X,Y) - H(X). -/
@@ -26,15 +28,18 @@ noncomputable def conditionalEntropy {α β : Type*} [Fintype α] [Fintype β]
   jointEntropy pXY - shannonEntropy' pX
 
 
+
 /-- Mutual information I(X;Y) = H(X) + H(Y) - H(X,Y). -/
 noncomputable def mutualInformation {α β : Type*} [Fintype α] [Fintype β]
     (pXY : α × β → ℝ) (pX : α → ℝ) (pY : β → ℝ) : ℝ :=
   shannonEntropy' pX + shannonEntropy' pY - jointEntropy pXY
 
 
+
 /-- **KL divergence** (relative entropy) between two distributions. -/
 noncomputable def klDivergence {α : Type*} [Fintype α] (p q : α → ℝ) : ℝ :=
   ∑ x : α, if p x > 0 then p x * Real.logb 2 (p x / q x) else 0
+
 
 
 /-- Entropy of a deterministic distribution (point mass) is 0. -/
@@ -47,6 +52,7 @@ theorem entropy_deterministic {α : Type*} [Fintype α] [DecidableEq α] (a : α
   by_cases hx : x = a
   · subst hx; simp [Real.logb]
   · simp [hx]
+
 
 
 /-- For positive reals, `log(p/q) ≥ (1 - q/p) / log(2)`. -/
@@ -62,6 +68,7 @@ lemma logb_div_ge {p q : ℝ} (hp : 0 < p) (hq : 0 < q) :
     Real.log_nonneg <| by norm_num) <| by unfold logb; aesop
 
 
+
 /-- Each term in KL divergence: `p * log(p/q) ≥ (p - q) / log(2)`. -/
 lemma kl_term_bound {p q : ℝ} (hp : 0 < p) (hq : 0 < q) :
     p * Real.logb 2 (p / q) ≥ (p - q) / Real.log 2 := by
@@ -70,6 +77,11 @@ lemma kl_term_bound {p q : ℝ} (hp : 0 < p) (hq : 0 < q) :
   linarith
 
 
+
+/-- [Section: # CatalogBuild.Computation.Entropy
+Auto-generated from theorem catalog database.
+Domain: Computation
+Declarations: 12] -/
 theorem gibbs_inequality {α : Type*} [Fintype α] (p q : α → ℝ)
     (hp_nonneg : ∀ x, 0 ≤ p x) (hq_nonneg : ∀ x, 0 ≤ q x)
     (hq_pos : ∀ x, p x > 0 → q x > 0)
@@ -86,6 +98,7 @@ theorem gibbs_inequality {α : Type*} [Fintype α] (p q : α → ℝ)
   refine' le_trans _ ( Finset.sum_le_sum fun x _ => show ( if p x > 0 then p x * Real.logb 2 ( p x / q x ) else 0 ) ≥ ( p x - q x ) / Real.log 2 from _ );
   · simp +decide [ ← Finset.sum_div _ _ _, hp_sum, hq_sum ];
   · split_ifs <;> [ exact h_term x; exact div_le_iff₀ ( Real.log_pos one_lt_two ) |>.2 ( by nlinarith [ hp_nonneg x, hq_nonneg x, hq_pos x, show q x ≥ 0 from hq_nonneg x ] ) ]
+
 
 
 theorem entropy_le_log_card {α : Type*} [Fintype α] [Nonempty α]
@@ -112,6 +125,7 @@ theorem entropy_le_log_card {α : Type*} [Fintype α] [Nonempty α]
       grind;
     · rw [ ← Finset.sum_mul _ _ _, hp_sum, one_mul, neg_neg ];
   exact h_max_entropy p hp_nonneg hp_sum
+
 
 
 theorem source_coding_lower_bound {α : Type*} [Fintype α]
@@ -157,6 +171,7 @@ theorem source_coding_lower_bound {α : Type*} [Fintype α]
   · exact fun x _ hx => lt_of_le_of_ne ( hp_nonneg x ) ( Ne.symm <| by aesop )
 
 
+
 /-- **Monotonicity of information under functions**: Composing functions
 cannot increase the number of distinct outputs. -/
 theorem data_processing_card {α β γ : Type*} [DecidableEq β] [DecidableEq γ]
@@ -167,5 +182,6 @@ theorem data_processing_card {α β γ : Type*} [DecidableEq β] [DecidableEq γ
     ext x; simp [Function.comp]
   rw [this]
   exact Finset.card_image_le
+
 
 end

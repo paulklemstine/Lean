@@ -14,10 +14,16 @@ theorem fib_matrix_base :
     Nat.fib 2 = Nat.fib 1 + Nat.fib 0 := by simp [Nat.fib]
 
 
+
+/-- [Section: # CatalogBuild.Speculative.PisanoPeriodFactoring
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 9] -/
 theorem fib_add (m n : ℕ) (hm : 0 < m) :
     Nat.fib (m + n) = Nat.fib m * Nat.fib (n + 1) + Nat.fib (m - 1) * Nat.fib n := by
   rcases m with ⟨ ⟩ <;> simp_all +arith +decide [ Nat.fib_add ];
   ring
+
 
 
 theorem fib_mod_periodic (m : ℕ) (hm : 2 ≤ m) :
@@ -45,9 +51,11 @@ theorem fib_mod_periodic (m : ℕ) (hm : 2 ≤ m) :
     grind
 
 
+
 /-- F(0) ≡ 0 (mod m) and F(π(m)) ≡ 0 (mod m). The Pisano period
 always starts with F(0) = 0, F(1) = 1. -/
 theorem fib_zero_mod (m : ℕ) : Nat.fib 0 % m = 0 := by simp
+
 
 
 theorem pisano_coprime_lcm (m₁ m₂ : ℕ) (hm1 : 2 ≤ m₁) (hm2 : 2 ≤ m₂)
@@ -70,6 +78,7 @@ theorem pisano_coprime_lcm (m₁ m₂ : ℕ) (hm1 : 2 ≤ m₁) (hm2 : 2 ≤ m�
   rw [ Nat.ModEq.symm ];
   rw [ ← Nat.modEq_and_modEq_iff_modEq_mul ] ; tauto;
   assumption
+
 
 
 theorem pisano_factor_constraint (p : ℕ) (hp : Nat.Prime p) (hp5 : p ≠ 5) :
@@ -119,11 +128,13 @@ theorem pisano_factor_constraint (p : ℕ) (hp : Nat.Prime p) (hp5 : p ≠ 5) :
     erw [ ← map_natCast ( algebraMap ( ZMod p ) ( AlgebraicClosure ( ZMod p ) ) ), ← map_natCast ( algebraMap ( ZMod p ) ( AlgebraicClosure ( ZMod p ) ) ) ] ; norm_cast
 
 
+
 theorem pisano_small_primes :
     (∀ n, Nat.fib (n + 3) % 2 = Nat.fib n % 2) ∧
     (∀ n, Nat.fib (n + 8) % 3 = Nat.fib n % 3) := by
   norm_num [ Nat.add_mod, Nat.mul_mod, Nat.pow_mod, Nat.fib_add_two ];
   grind
+
 
 
 theorem pisano_legendre_bound (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2) (hp5 : p ≠ 5) :
@@ -204,6 +215,7 @@ theorem pisano_legendre_bound (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2) (hp5 
     erw [ ← map_natCast ( algebraMap ( ZMod p ) ( AlgebraicClosure ( ZMod p ) ) ), ← map_natCast ( algebraMap ( ZMod p ) ( AlgebraicClosure ( ZMod p ) ) ) ] ; norm_cast
 
 
+
 theorem wall_divides_pisano (p : ℕ) (hp : Nat.Prime p) (hp5 : p ≠ 5) :
     ∃ α T, 0 < α ∧ 0 < T ∧ p ∣ Nat.fib α ∧
     (∀ n, Nat.fib (n + T) % p = Nat.fib n % p) ∧
@@ -218,3 +230,4 @@ theorem wall_divides_pisano (p : ℕ) (hp : Nat.Prime p) (hp5 : p ≠ 5) :
   have h_div : p ∣ Nat.fib T := by
     simpa [ Nat.dvd_iff_mod_eq_zero ] using hT_period 0;
   exact ⟨ T, T, hT_pos, hT_pos, h_div, hT_period, dvd_rfl ⟩
+

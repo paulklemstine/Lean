@@ -9,11 +9,17 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # CatalogBuild.MachineLearning.QuantumTransformer.CrystallizationTraining
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/QuantumTransformer
+Declarations: 13] -/
 def entry_crystal_loss (p : ℝ) : ℝ := p * (1 - p)
+
 
 
 def row_crystal_loss {n : ℕ} (w : Fin n → ℝ) : ℝ :=
   ∑ i, entry_crystal_loss (w i)
+
 
 
 theorem crystal_regularizer_nonneg {n : ℕ} (w : Fin n → ℝ)
@@ -25,10 +31,12 @@ theorem crystal_regularizer_nonneg {n : ℕ} (w : Fin n → ℝ)
   exact mul_nonneg (hw i).1 (by linarith [(hw i).2])
 
 
+
 theorem entry_loss_bounded (p : ℝ) (hp0 : 0 ≤ p) (hp1 : p ≤ 1) :
     entry_crystal_loss p ≤ 1 / 4 := by
   unfold entry_crystal_loss
   nlinarith [sq_nonneg (p - 1 / 2)]
+
 
 
 theorem crystal_regularizer_zero_iff_binary {n : ℕ} (w : Fin n → ℝ)
@@ -50,13 +58,16 @@ theorem crystal_regularizer_zero_iff_binary {n : ℕ} (w : Fin n → ℝ)
     rcases h i with h1 | h1 <;> simp [entry_crystal_loss, h1]
 
 
+
 def geometric_anneal (tau_0 alpha : ℝ) (t : ℕ) : ℝ := tau_0 * alpha ^ t
+
 
 
 theorem anneal_pos (tau_0 alpha : ℝ) (htau : 0 < tau_0) (halpha : 0 < alpha) (t : ℕ) :
     0 < geometric_anneal tau_0 alpha t := by
   unfold geometric_anneal
   exact mul_pos htau (pow_pos halpha t)
+
 
 
 theorem anneal_decreasing (tau_0 alpha : ℝ) (htau : 0 < tau_0) (halpha0 : 0 < alpha) (halpha1 : alpha < 1) (t : ℕ) :
@@ -70,6 +81,7 @@ theorem anneal_decreasing (tau_0 alpha : ℝ) (htau : 0 < tau_0) (halpha0 : 0 < 
     _ = tau_0 * alpha ^ t := by ring
 
 
+
 theorem anneal_converges (tau_0 alpha : ℝ) (htau : 0 < tau_0) (halpha0 : 0 < alpha) (halpha1 : alpha < 1) :
     Filter.Tendsto (geometric_anneal tau_0 alpha) Filter.atTop (nhds 0) := by
   unfold geometric_anneal
@@ -80,8 +92,10 @@ theorem anneal_converges (tau_0 alpha : ℝ) (htau : 0 < tau_0) (halpha0 : 0 < a
   simpa using h2
 
 
+
 def combined_loss (L_task L_cryst lambda_reg : ℝ) : ℝ :=
   L_task + lambda_reg * L_cryst
+
 
 
 theorem combined_loss_ge_task (L_task L_cryst lambda_reg : ℝ)
@@ -91,6 +105,7 @@ theorem combined_loss_ge_task (L_task L_cryst lambda_reg : ℝ)
   linarith [mul_nonneg hlambda hc]
 
 
+
 theorem combined_loss_nonneg (L_task L_cryst lambda_reg : ℝ)
     (ht : 0 ≤ L_task) (hc : 0 ≤ L_cryst) (hlambda : 0 ≤ lambda_reg) :
     0 ≤ combined_loss L_task L_cryst lambda_reg := by
@@ -98,10 +113,12 @@ theorem combined_loss_nonneg (L_task L_cryst lambda_reg : ℝ)
   linarith [mul_nonneg hlambda hc]
 
 
+
 /-- At equilibrium, the task gradient balances the crystallization gradient. -/
 theorem equilibrium_condition (p grad_task : ℝ) :
     grad_task + (1 - 2 * p) = 0 ↔ p = (1 + grad_task) / 2 := by
   constructor <;> intro h <;> linarith
+
 
 
 end

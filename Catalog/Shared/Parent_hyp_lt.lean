@@ -1,7 +1,7 @@
 /-! # CatalogBuild.Shared.Parent_hyp_lt
 
 Auto-generated from theorem catalog database.
-Domain: Pythagorean/Berggren
+Domain: Shared
 Declarations: 3
 -/
 
@@ -14,6 +14,11 @@ theorem parent_hyp_lt (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
   nlinarith [sq_nonneg (a + b - c), sq_nonneg (a - b)]
 
 
+
+/-- [Section: # CatalogBuild.Shared.Parent_hyp_lt
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Berggren
+Declarations: 3] -/
 theorem parent_exists (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (hpt : IsPT a b c) (hc5 : c > 5) (hprim : Int.gcd a b = 1) :
     (0 < (invB1 a b c).1 ∧ 0 < (invB1 a b c).2.1 ∧ 0 < (invB1 a b c).2.2) ∨
@@ -44,9 +49,11 @@ theorem parent_exists (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
       · exact False.elim <| not_both_neg a b c ha hb hpt ( le_of_not_gt h3 ) ( le_of_not_gt h4 )
 
 
+
 /-- The parent hypotenuse 3c - 2(a+b) is positive for any PPT with a,b,c > 0. -/
 theorem parent_hyp_pos (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (hpt : IsPT a b c) : 0 < -2*a - 2*b + 3*c := by
   unfold IsPT at hpt
   nlinarith [sq_nonneg (3*c - 2*a - 2*b), sq_nonneg (a - b), mul_pos ha hb]
+
 

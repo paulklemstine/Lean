@@ -7,10 +7,15 @@ Declarations: 9
 
 import Mathlib
 
+/-- [Section: # CatalogBuild.Computation.Oracles.GodConsultation
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 9] -/
 theorem oracle_god_strong_induction (P : ℕ → Prop)
     (h : ∀ n, (∀ m, m < n → P m) → P n) :
     ∀ n, P n := by
   exact fun n => Nat.strongRecOn n h
+
 
 
 theorem oracle_god_well_ordering (S : Set ℕ) (hne : S.Nonempty) :
@@ -31,17 +36,21 @@ theorem oracle_god_well_ordering (S : Set ℕ) (hne : S.Nonempty) :
   exact h_well_ordering S ⟨ n, hn ⟩
 
 
+
 theorem oracle_god_excluded_middle (P : Prop) : P ∨ ¬P := by
   grind
+
 
 
 theorem oracle_god_contradiction (P : Prop) (h : ¬P → False) : P := by
   grind
 
 
+
 theorem oracle_god_naturals_infinite :
     ∀ (S : Finset ℕ), ∃ n, n ∉ S := by
   exact fun S => S.exists_notMem
+
 
 
 theorem oracle_god_cantor {α : Type*} (f : α → Set α) :
@@ -51,9 +60,11 @@ theorem oracle_god_cantor {α : Type*} (f : α → Set α) :
   replace hg := Set.ext_iff.mp hg g; tauto;
 
 
+
 theorem oracle_god_leibniz {α : Type*} (a b : α) (h : a = b) (P : α → Prop) :
     P a ↔ P b := by
   grind +splitIndPred
+
 
 
 theorem oracle_god_cantor_bernstein {α β : Type*}
@@ -63,6 +74,8 @@ theorem oracle_god_cantor_bernstein {α β : Type*}
   exact?
 
 
+
 theorem oracle_god_no_solution_exists :
     ¬ ∃ (x y : ℤ), x ^ 2 + y ^ 2 = -1 := by
   exact fun ⟨ x, y, h ⟩ => by nlinarith;
+

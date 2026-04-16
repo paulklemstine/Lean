@@ -9,6 +9,10 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # CatalogBuild.Computation.Oracles.OracleUnified
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 17] -/
 theorem grand_unified_compression {n : ℕ} (hn : 0 < n) (O : Fin n → Fin n)
     (hO : ∀ x, O (O x) = O x) :
     (¬ Injective O) ↔ (Finset.image O Finset.univ).card < n := by
@@ -16,9 +20,11 @@ theorem grand_unified_compression {n : ℕ} (hn : 0 < n) (O : Fin n → Fin n)
       exact lt_of_lt_of_le ( Finset.card_lt_card <| Finset.ssubset_iff_subset_ne.mpr ⟨ Finset.image_subset_iff.mpr fun x _ => Finset.mem_univ _, fun con => h_inj <| Finite.injective_iff_surjective.mpr <| by simpa [ Finset.ext_iff ] using con ⟩ ) ( by simpa ) ;
 
 
+
 theorem oracle_inj_iff_surj {n : ℕ} (O : Fin n → Fin n) :
     Injective O ↔ Surjective O := by
       exact?
+
 
 
 theorem injective_oracle_is_id {n : ℕ} (O : Fin n → Fin n) (hO : ∀ x, O (O x) = O x)
@@ -26,8 +32,10 @@ theorem injective_oracle_is_id {n : ℕ} (O : Fin n → Fin n) (hO : ∀ x, O (O
       exact funext fun x => hinj <| hO x
 
 
+
 theorem oracle_monad_return {X : Type*} : ∀ x : X, id (id x) = id x := by
   aesop
+
 
 
 theorem oracle_monad_bind {X : Type*} (O₁ O₂ : X → X)
@@ -38,9 +46,11 @@ theorem oracle_monad_bind {X : Type*} (O₁ O₂ : X → X)
       grind
 
 
+
 theorem oracle_zeta_finite {n : ℕ} (O : Fin n → Fin n) (hO : ∀ x, O (O x) = O x) :
     (Finset.filter (fun x => O x = x) Finset.univ).card ≤ n := by
       exact le_trans ( Finset.card_le_univ _ ) ( by norm_num )
+
 
 
 theorem mobius_inversion_nat (f g : ℕ → ℤ) (n : ℕ)
@@ -49,8 +59,10 @@ theorem mobius_inversion_nat (f g : ℕ → ℤ) (n : ℕ)
       exact hfg n
 
 
+
 theorem oracle_cat_id {X : Type*} : (id : X → X) ∘ id = id := by
   rfl
+
 
 
 theorem oracle_cat_comp {X : Type*} (O₁ O₂ : X → X)
@@ -60,10 +72,12 @@ theorem oracle_cat_comp {X : Type*} (O₁ O₂ : X → X)
       exact funext fun x => h_factor x
 
 
+
 theorem kl_divergence_nonneg (p q : ℝ) (hp : 0 < p) (hq : 0 < q) :
     0 ≤ p * (Real.log p - Real.log q) - (p - q) := by
       have := Real.log_le_sub_one_of_pos ( div_pos hq hp );
       rw [ Real.log_div ] at this <;> nlinarith [ mul_div_cancel₀ q hp.ne' ]
+
 
 
 theorem oracle_dimension_reduction {n : ℕ} (O : Fin n → Fin n) (hO : ∀ x, O (O x) = O x)
@@ -79,16 +93,20 @@ theorem oracle_dimension_reduction {n : ℕ} (O : Fin n → Fin n) (hO : ∀ x, 
       grind +splitImp
 
 
+
 theorem math_oracle_em (P : Prop) : P ∨ ¬P := by
   exact em P
+
 
 
 theorem math_oracle_dne (P : Prop) (h : ¬¬P) : P := by
   grind
 
 
+
 theorem prop_oracle_hierarchy : ∀ P : Prop, (P → P) → P → P := by
   grind +splitIndPred
+
 
 
 theorem three_faces {X : Type*} (O : X → X) (hO : ∀ x, O (O x) = O x) :
@@ -99,14 +117,17 @@ theorem three_faces {X : Type*} (O : X → X) (hO : ∀ x, O (O x) = O x) :
       · exact Set.ext fun x => ⟨ fun hx => by obtain ⟨ y, rfl ⟩ := hx; exact hO y, fun hx => ⟨ x, hx ⟩ ⟩
 
 
+
 theorem oracle_is_fixpoint_theorem {X : Type*} (O : X → X) (hO : ∀ x, O (O x) = O x) :
     ∀ x, O x ∈ fixedPoints O := by
       exact fun x => hO x
 
 
+
 theorem fundamental_oracle_theorem {X : Type*} (O : X → X) (hO : ∀ x, O (O x) = O x)
     (x : X) : O (O (O x)) = O x := by
       rw [ hO, hO ]
+
 
 
 end

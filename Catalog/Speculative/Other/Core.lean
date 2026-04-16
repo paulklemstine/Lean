@@ -7,6 +7,10 @@ Declarations: 6
 
 import Mathlib
 
+/-- [Section: # CatalogBuild.Speculative.Other.Core
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 6] -/
 theorem adaptive_feedback_convergence
     {α : Type*} [MetricSpace α] [CompleteSpace α] [Nonempty α]
     {K : ℝ≥0} (f : α → α) (hf : ContractingWith K f) :
@@ -22,12 +26,14 @@ theorem adaptive_feedback_convergence
   exact dist_le_zero.mp ( le_of_not_gt fun h => by nlinarith [ show ( K : ℝ ) < 1 from mod_cast hf.1, show ( 0 : ℝ ) ≤ dist x h_fixed_point.choose from dist_nonneg ] )
 
 
+
 theorem transport_composition_lipschitz
     {α β γ : Type*} [PseudoEMetricSpace α] [PseudoEMetricSpace β] [PseudoEMetricSpace γ]
     (f : α → β) (g : β → γ) (Kf Kg : ℝ≥0)
     (hf : LipschitzWith Kf f) (hg : LipschitzWith Kg g) :
     LipschitzWith (Kg * Kf) (g ∘ f) := by
   exact hg.comp hf
+
 
 
 theorem self_repair_fixed_point
@@ -43,9 +49,11 @@ theorem self_repair_fixed_point
     exact le_sInf fun x hx => f.monotone ( sInf_le hx ) |> le_trans <| hx
 
 
+
 theorem shannon_entropy_term_nonneg (p : ℝ) (hp0 : 0 ≤ p) (hp1 : p ≤ 1) :
     0 ≤ -(p * Real.log p) := by
   by_cases h : p = 0 <;> simpa [ h ] using by nlinarith [ Real.log_nonpos hp0 hp1 ] ;
+
 
 
 theorem iterative_refinement_geometric_convergence
@@ -59,6 +67,7 @@ theorem iterative_refinement_geometric_convergence
   · simpa [ hfix, pow_succ', mul_assoc, Function.iterate_succ_apply', mul_left_comm ] using hf.edist_le_mul _ _ |> le_trans <| mul_le_mul_left' ih K
 
 
+
 theorem collaborative_convex_combination
     {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
     (n : ℕ) (agents : Fin n → V) (weights : Fin n → ℝ)
@@ -67,3 +76,4 @@ theorem collaborative_convex_combination
     ∑ i, weights i • agents i ∈ convexHull ℝ (Set.range agents) := by
   rw [ convexHull_eq ];
   refine' ⟨ Fin n, Finset.univ, weights, agents, _, _, _, _ ⟩ <;> simp_all +decide [ Finset.centerMass ]
+

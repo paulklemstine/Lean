@@ -7,6 +7,10 @@ Declarations: 8
 
 import Mathlib
 
+/-- [Section: # CatalogBuild.Logic.CantorDiagonal
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 8] -/
 theorem cantor_no_surjection (α : Type*) : ¬ ∃ f : α → (α → Prop), Surjective f := by
   norm_num at *;
   intro f hf
@@ -16,9 +20,11 @@ theorem cantor_no_surjection (α : Type*) : ¬ ∃ f : α → (α → Prop), Sur
   obtain ⟨ g, hg ⟩ := h_range ( fun x => ¬f x x ) ; specialize hg ; replace hg := congr_fun hg g ; tauto;
 
 
+
 theorem cantor_diagonal_not_in_range (α : Type*) (f : α → (α → Prop)) :
     (fun a => ¬ f a a) ∉ Set.range f := by
   rintro ⟨ a, ha ⟩ ; have := congr_fun ha a ; tauto;
+
 
 
 theorem cantor_no_injection_powerset (α : Type*) :
@@ -33,6 +39,7 @@ theorem cantor_no_injection_powerset (α : Type*) :
   grind +revert
 
 
+
 theorem lawvere_fixed_point {α β : Type*} (f : α → (α → β)) (hf : Surjective f)
     (g : β → β) : ∃ x : β, g x = x := by
   -- Let h : α → β be defined by h(x) = g(f(x)(x)).
@@ -41,13 +48,16 @@ theorem lawvere_fixed_point {α β : Type*} (f : α → (α → β)) (hf : Surje
   exact ⟨ _, congr_fun hx.symm x ⟩
 
 
+
 theorem cantor_via_lawvere (α : Type*) : ¬ ∃ f : α → (α → Prop), Surjective f := by
   -- Apply Lawvere's fixed point theorem to the surjective function f and the function g.
   apply cantor_no_surjection
 
 
+
 theorem russell_paradox : ¬ ∃ (P : Prop), P ↔ ¬P := by
   grind
+
 
 
 theorem no_universal_decider (α : Type*) (test : α → α → Prop) :
@@ -55,8 +65,10 @@ theorem no_universal_decider (α : Type*) (test : α → α → Prop) :
   exact ⟨ fun a => ¬test a a, fun a => fun h => by simpa using congr_fun h a ⟩
 
 
+
 theorem reals_uncountable : ¬ ∃ f : ℕ → ℝ, Surjective f := by
   convert Cardinal.not_countable_real;
   constructor <;> intro h <;> rw [ Set.countable_iff_exists_subset_range ] at * ; aesop;
   exact ⟨ _, fun x => by simpa using h.choose_spec ( Set.mem_univ x ) ⟩
+
 

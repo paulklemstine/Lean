@@ -15,6 +15,7 @@ structure IOFState where
   c : ℤ
 
 
+
 /-- Construct the IOF state at step k. -/
 def state (N : ℤ) (k : ℕ) : IOFState where
   a := N - 2 * k
@@ -22,12 +23,18 @@ def state (N : ℤ) (k : ℕ) : IOFState where
   c := ((N - 2 * k) ^ 2 + 1) / 2
 
 
+
+/-- [Section: # CatalogBuild.Computation.Factoring.IOFDynamical
+Auto-generated from theorem catalog database.
+Domain: Computation/Factoring
+Declarations: 9] -/
 theorem same_factor_same_step (p q₁ q₂ : ℕ) (hp : Nat.Prime p) (hp2 : 2 < p)
     (hq₁ : Nat.Prime q₁) (hq₂ : Nat.Prime q₂)
     (hle₁ : p ≤ q₁) (hle₂ : p ≤ q₂) :
     let k := (p - 1) / 2
     (state (↑(p * q₁)) k).a % ↑p = (state (↑(p * q₂)) k).a % ↑p := by
       unfold state; norm_num [ mul_comm p, Int.add_emod, Int.sub_emod, Int.mul_emod ] ;
+
 
 
 theorem energy_at_factor (p q : ℕ) (hp : 2 < p) (hq : 2 < q) (hp_odd : p % 2 = 1) :
@@ -37,10 +44,12 @@ theorem energy_at_factor (p q : ℕ) (hp : 2 < p) (hq : 2 < q) (hp_odd : p % 2 =
       grind +ring
 
 
+
 /-- The "velocity" of the descent in energy space at step k.
 v(k) = E(k) - E(k+1) = 4(N - 2k - 1).
 The velocity decreases linearly, meaning the system decelerates. -/
 def velocity (N : ℤ) (k : ℕ) : ℤ := 4 * (N - 2 * k - 1)
+
 
 
 theorem velocity_positive (N : ℕ) (k : ℕ) (hk : 2 * k + 1 < N) :
@@ -48,10 +57,12 @@ theorem velocity_positive (N : ℕ) (k : ℕ) (hk : 2 * k + 1 < N) :
       exact mul_pos zero_lt_four ( by linarith )
 
 
+
 theorem constant_deceleration (N : ℤ) (k : ℕ) :
     velocity N k - velocity N (k + 1) = 8 := by
       unfold velocity; ring;
       push_cast; ring;
+
 
 
 theorem multi_stride_gcd (N p : ℕ) (s : ℕ) (hs : 0 < s)
@@ -62,8 +73,10 @@ theorem multi_stride_gcd (N p : ℕ) (s : ℕ) (hs : 0 < s)
       aesop
 
 
+
 theorem at_least_one_step (N p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
     (hN : N = p * q) (hp2 : 2 < p) (hle : p ≤ q) :
     0 < (p - 1) / 2 := by
       grind
+
 

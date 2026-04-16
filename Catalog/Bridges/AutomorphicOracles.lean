@@ -17,9 +17,11 @@ structure ModularFormData where
   normalized : fourier 1 = 1
 
 
+
 /-- A cuspidal modular form (a(0) = 0). -/
 structure CuspFormData extends ModularFormData where
   cuspidal : fourier 0 = 0
+
 
 
 /-- Hecke eigenform: a cuspform that is an eigenfunction of all Hecke operators. -/
@@ -28,10 +30,12 @@ structure HeckeEigenform extends CuspFormData where
     fourier (m * n) = fourier m * fourier n
 
 
+
 /-- The Ramanujan-Petersson bound: |a(p)| ≤ 2p^{(k-1)/2}. -/
 def satisfiesRamanujanBound (f : ModularFormData) : Prop :=
   ∀ p : ℕ, Nat.Prime p →
     ‖f.fourier p‖ ≤ 2 * (p : ℝ) ^ ((f.weight - 1 : ℝ) / 2)
+
 
 
 /-- For weight 2, the bound becomes |a(p)| ≤ 2√p. -/
@@ -46,9 +50,11 @@ theorem ramanujan_weight2 (f : ModularFormData) (hk : f.weight = 2) (p : ℕ)
   norm_num
 
 
+
 /-- The partial L-function of a modular form. -/
 def modularLFunction (f : ModularFormData) (s : ℂ) (N : ℕ) : ℂ :=
   ∑ n ∈ Finset.range N, f.fourier (n + 1) * ((n + 1 : ℂ) ^ (-s))
+
 
 
 /-- The Euler factor at a prime. -/
@@ -57,16 +63,19 @@ def modularEulerFactor (f : ModularFormData) (p : ℕ) (s : ℂ) : ℂ :=
    (p : ℂ) ^ (f.weight - 1 : ℤ) * (p : ℂ) ^ (-2 * s))⁻¹
 
 
+
 /-- An elliptic curve over ℚ (by conductor and a_p values). -/
 structure EllipticCurveData where
   conductor : ℕ
   a_p : ℕ → ℤ
 
 
+
 /-- The Hasse bound: |a_p| ≤ 2√p. -/
 def satisfiesHasseBound (E : EllipticCurveData) : Prop :=
   ∀ p : ℕ, Nat.Prime p → ¬(p ∣ E.conductor) →
     |(E.a_p p : ℝ)| ≤ 2 * Real.sqrt p
+
 
 
 /-- The modularity theorem (Wiles et al.). -/
@@ -80,10 +89,12 @@ structure ModularityCorrespondence where
     form.fourier p = (curve.a_p p : ℂ)
 
 
+
 /-- Simultaneous Hecke eigenvalues. -/
 structure HeckeEigenvalueSystem where
   level : ℕ
   eigenvalues : ℕ → ℂ
+
 
 
 /-- Strong multiplicity one: a cuspidal automorphic representation is
@@ -94,9 +105,11 @@ def strongMultiplicityOne (sys1 sys2 : HeckeEigenvalueSystem) : Prop :=
   sys1.eigenvalues = sys2.eigenvalues
 
 
+
 /-- A Langlands oracle: given Galois data, predict automorphic data. -/
 structure LanglandsOracle where
   predict : ℤ → ℂ
+
 
 
 /-- An exact oracle is the identity map on integers. -/
@@ -104,9 +117,11 @@ def isExactOracle (oracle : LanglandsOracle) : Prop :=
   ∀ (a : ℤ), oracle.predict a = (a : ℂ)
 
 
+
 /-- The error of an approximate oracle. -/
 def oracleError (oracle : LanglandsOracle) (true_value : ℤ) : ℝ :=
   ‖oracle.predict true_value - (true_value : ℂ)‖
+
 
 
 /-- An exact oracle has zero error. -/
@@ -116,14 +131,21 @@ theorem exact_oracle_zero_error (oracle : LanglandsOracle)
   simp [oracleError, h a]
 
 
+
 /-- The oracle accuracy metric. -/
 def oracleAccuracy (k : ℕ) (predictions ground_truth : Fin k → ℂ) (eps : ℝ) : ℝ :=
   ((Finset.univ.filter (fun i => ‖predictions i - ground_truth i‖ < eps)).card : ℝ) / k
 
 
+
+/-- [Section: # CatalogBuild.Bridges.AutomorphicOracles
+Auto-generated from theorem catalog database.
+Domain: Bridges
+Declarations: 18] -/
 theorem perfect_accuracy (k : ℕ) (hk : k > 0) (f : Fin k → ℂ) (eps : ℝ) (heps : eps > 0) :
     oracleAccuracy k f f eps = 1 := by
   unfold oracleAccuracy; aesop;
+
 
 
 end
