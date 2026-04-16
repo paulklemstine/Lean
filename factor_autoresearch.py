@@ -445,8 +445,11 @@ def ecm_factor(n, B1=5000, curves=15):
     return None
 
 # === Best cascade ===
-def factor_best(n):
+def factor_best(n, deadline=None):
     if n < 2: return None
+    if deadline is None:
+        deadline = time.perf_counter() + 5  # 5s hard limit
+    t_start = time.perf_counter()
     for p in SP[:3000]:
         if p*p > n: break
         if n % p == 0: return (min(p,n//p), max(p,n//p))
@@ -465,6 +468,8 @@ def factor_best(n):
         a += 1
     # Quick rho (balanced: dual walk for 56+ bit)
     use_dual_walk = n.bit_length() >= 56
+    # After ECM: if > 3.5s elapsed, bail (ECM had its chance)
+    if time.perf_counter() - t_start > 3.5: return None
     # For 64+ bit: ECM FIRST (sub-exponential, extremely fast for balanced semiprimes)
     # Meta-oracle insight: GCD oracle is idempotent (SpectralOracle.gcdSpectralOracle)
     # Multiple parallel query channels maximize information rate
