@@ -564,7 +564,22 @@ def factor_best(n, deadline=None):
         if _rho_gmp is not None and time.perf_counter() - t_start < 3.1:
             r = _rho_gmp_factor(n, 5, use_dual=True)
             if r: return r
-        # Bail: ECM (2.8s) + rho (0.3s) = 3.1s used. No other method helps.
+        # SIQS fallback for 100-120 bit (DETERMINISTIC — catches ECM failures)
+        # Catalog: congruence_of_squares_zmod, smooth_relation_congruence
+        if n.bit_length() <= 115 and time.perf_counter() - t_start < 2.5:
+            try:
+                import importlib, io
+                qs_mod = importlib.import_module('pyfactorise_qs')
+                old_out = sys.stdout
+                sys.stdout = io.StringIO()
+                try:
+                    factors = qs_mod.factorise(n)
+                    sys.stdout = old_out
+                    if factors and len(factors) >= 2:
+                        f = min(factors)
+                        if 1 < f < n: return (f, n//f)
+                except: sys.stdout = old_out
+            except: pass
         return None
     else:
         r = pollard_rho_fast(n, 8, use_dual_walk=use_dual_walk)

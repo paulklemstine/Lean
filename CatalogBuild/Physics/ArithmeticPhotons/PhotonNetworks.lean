@@ -1,0 +1,193 @@
+/-! # CatalogBuild.Physics.ArithmeticPhotons.PhotonNetworks
+
+Auto-generated from theorem catalog database.
+Domain: Physics/ArithmeticPhotons
+Declarations: 22
+-/
+
+import Mathlib
+
+/-- An integer is "dark" if it has no sum-of-two-squares representation
+(no photon network). -/
+def IsDark (n : ℤ) : Prop := ¬ IsSumOfTwoSquares n
+
+
+
+/-- The Gaussian product of two pairs (Gaussian integer multiplication). -/
+def gaussianProd (a₁ b₁ a₂ b₂ : ℤ) : ℤ × ℤ :=
+  (a₁ * a₂ - b₁ * b₂, a₁ * b₂ + b₁ * a₂)
+
+
+
+/-- The set of sums of two squares is closed under multiplication. -/
+theorem sum_two_sq_mul_closed {m n : ℤ}
+    (hm : IsSumOfTwoSquares m) (hn : IsSumOfTwoSquares n) :
+    IsSumOfTwoSquares (m * n) := by
+  obtain ⟨a₁, b₁, rfl⟩ := hm
+  obtain ⟨a₂, b₂, rfl⟩ := hn
+  exact ⟨a₁ * a₂ - b₁ * b₂, a₁ * b₂ + b₁ * a₂, by ring⟩
+
+
+
+/-- The set of photon states for a given norm. -/
+def PhotonStates (n : ℤ) : Set (ℤ × ℤ) :=
+  {z | z.1 ^ 2 + z.2 ^ 2 = n}
+
+
+
+/-- Every non-negative integer is a sum of two squares (trivially: 0² + n²). -/
+theorem every_nat_sum_two_sq (n : ℕ) : IsSumOfTwoSquares (n ^ 2 : ℤ) :=
+  ⟨0, n, by ring⟩
+
+
+
+/-- 5 is bright: 5 = 1² + 2². -/
+theorem five_is_bright : IsSumOfTwoSquares 5 :=
+  ⟨1, 2, by norm_num⟩
+
+
+
+/-- 13 is bright: 13 = 2² + 3². -/
+theorem thirteen_is_bright : IsSumOfTwoSquares 13 :=
+  ⟨2, 3, by norm_num⟩
+
+
+
+/-- 1105 = 5 × 13 × 17 is bright: 1105 = 4² + 33². -/
+theorem n1105_is_bright : IsSumOfTwoSquares 1105 :=
+  ⟨4, 33, by norm_num⟩
+
+
+
+/-- 1105 has at least 4 essentially distinct representations. -/
+theorem n1105_four_reps :
+    (4 : ℤ) ^ 2 + 33 ^ 2 = 1105 ∧
+    (9 : ℤ) ^ 2 + 32 ^ 2 = 1105 ∧
+    (12 : ℤ) ^ 2 + 31 ^ 2 = 1105 ∧
+    (23 : ℤ) ^ 2 + 24 ^ 2 = 1105 := by omega
+
+
+
+/-- The Gaussian product of two Pythagorean triples is a Pythagorean triple. -/
+theorem gaussian_product_triple (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ)
+    (h₁ : IsPythTriple a₁ b₁ c₁) (h₂ : IsPythTriple a₂ b₂ c₂) :
+    IsPythTriple (a₁ * a₂ - b₁ * b₂) (a₁ * b₂ + a₂ * b₁) (c₁ * c₂) := by
+  unfold IsPythTriple at *; nlinarith [h₁, h₂, sq_nonneg (a₁ * a₂ - b₁ * b₂),
+    sq_nonneg (a₁ * b₂ + a₂ * b₁), sq_nonneg (c₁ * c₂)]
+
+
+
+/-- The Gaussian product is commutative. -/
+theorem gaussian_prod_comm (a₁ b₁ a₂ b₂ : ℤ) :
+    gaussianProd a₁ b₁ a₂ b₂ = gaussianProd a₂ b₂ a₁ b₁ := by
+  simp [gaussianProd]; constructor <;> ring
+
+
+
+/-- The identity photon (1, 0) is a unit for the Gaussian product. -/
+theorem gaussian_prod_one (a b : ℤ) :
+    gaussianProd a b 1 0 = (a, b) := by
+  simp [gaussianProd]
+
+
+
+/-- The conjugate photon (a, -b) has the same norm. -/
+theorem conjugate_same_norm (a b : ℤ) :
+    a ^ 2 + (-b) ^ 2 = a ^ 2 + b ^ 2 := by ring
+
+
+
+/-- Two grid vertices are adjacent if they differ in exactly one coordinate by 1. -/
+def gridAdj (dims : List ℕ) (u v : (i : Fin dims.length) → Fin (dims.get i + 1)) : Prop :=
+  ∃ d : Fin dims.length,
+    ((u d).val + 1 = (v d).val ∨ (v d).val + 1 = (u d).val) ∧
+    ∀ d' : Fin dims.length, d' ≠ d → u d' = v d'
+
+
+
+/-- [Section: # CatalogBuild.Physics.ArithmeticPhotons.PhotonNetworks
+Auto-generated from theorem catalog database.
+Domain: Physics/ArithmeticPhotons
+Declarations: 22] -/
+theorem sum_sq_mod4_obstruction (p : ℕ) (hp : Nat.Prime p) (hmod : p % 4 = 3)
+    (a b : ℤ) (h : (p : ℤ) ∣ (a ^ 2 + b ^ 2)) :
+    (p : ℤ) ∣ a ∧ (p : ℤ) ∣ b := by
+  -- By Fermat's theorem on sums of two squares, if $p \equiv 3 \pmod{4}$ and $p \mid a^2 + b^2$, then $p \mid a$ and $p \mid b$.
+  have h_fermat : ∀ (p : ℕ), Nat.Prime p → p % 4 = 3 → ∀ (a b : ZMod p), a^2 + b^2 = 0 → a = 0 ∧ b = 0 := by
+    intro p hp hmod a b hab
+    have h_fermat : ∀ (x : ZMod p), x^2 = -1 → False := by
+      intro x hx; haveI := Fact.mk hp; have := ZMod.exists_sq_eq_neg_one_iff ( p := p ) ; simp_all +decide [ ← ZMod.intCast_eq_intCast_iff ] ;
+      exact this ⟨ x, by rw [ sq ] at hx; aesop ⟩;
+    by_cases hb : b = 0 <;> simp_all +decide [ add_eq_zero_iff_eq_neg ];
+    · haveI := Fact.mk hp; aesop;
+    · haveI := Fact.mk hp; exact h_fermat ( a / b ) ( by simp +decide [ hb, div_pow, hab ] ) ;
+  haveI := Fact.mk hp; simpa [ ← ZMod.intCast_zmod_eq_zero_iff_dvd ] using h_fermat p hp hmod a b <| by simpa [ ← ZMod.intCast_zmod_eq_zero_iff_dvd ] using h;
+
+
+
+theorem prime_3mod4_dark (p : ℕ) (hp : Nat.Prime p) (hmod : p % 4 = 3) :
+    ¬ ∃ a b : ℤ, a ^ 2 + b ^ 2 = p := by
+  by_contra h_contra
+  obtain ⟨a, b, hab⟩ := h_contra
+  have h_div_a : (p : ℤ) ∣ a := by
+    have := sum_sq_mod4_obstruction p hp hmod a b ( hab.symm ▸ dvd_refl _ ) ; aesop;
+  have h_div_b : (p : ℤ) ∣ b := by
+    obtain ⟨ k, hk ⟩ := h_div_a; replace hab := congr_arg ( fun x => x : ℤ → ZMod p ) hab; simp_all +decide [ ← ZMod.intCast_zmod_eq_zero_iff_dvd ] ;
+    haveI := Fact.mk hp; aesop;
+  have h_contra : (p : ℤ) ^ 2 ∣ a ^ 2 + b ^ 2 := by
+    exact dvd_add ( pow_dvd_pow_of_dvd h_div_a 2 ) ( pow_dvd_pow_of_dvd h_div_b 2 )
+  have h_contra' : (p : ℤ) ^ 2 ∣ p := by
+    grind
+  have h_contra'' : (p : ℤ) ∣ 1 := by
+    exact Exists.elim h_contra' fun x hx => ⟨ x, by nlinarith [ hp.two_le ] ⟩
+  exact Nat.Prime.not_dvd_one hp (Int.natCast_dvd_natCast.mp h_contra'')
+
+
+
+/-- The photon network of 5 has vertices (1,2) and (2,1). Grid graph P₂. -/
+theorem network_5 :
+    (1 : ℤ) ^ 2 + 2 ^ 2 = 5 ∧ (2 : ℤ) ^ 2 + 1 ^ 2 = 5 := by omega
+
+
+
+/-- The photon network of 25 has 3 vertices. Grid graph P₃. -/
+theorem network_25 :
+    (0 : ℤ) ^ 2 + 5 ^ 2 = 25 ∧
+    (3 : ℤ) ^ 2 + 4 ^ 2 = 25 ∧
+    (4 : ℤ) ^ 2 + 3 ^ 2 = 25 := by omega
+
+
+
+/-- The photon network of 65 = 5 × 13 has 4 vertices. Grid graph P₂ × P₂. -/
+theorem network_65 :
+    (1 : ℤ) ^ 2 + 8 ^ 2 = 65 ∧
+    (4 : ℤ) ^ 2 + 7 ^ 2 = 65 ∧
+    (7 : ℤ) ^ 2 + 4 ^ 2 = 65 ∧
+    (8 : ℤ) ^ 2 + 1 ^ 2 = 65 := by omega
+
+
+
+/-- The photon network of 1105 = 5 × 13 × 17 has 8 vertices: a 3D cube.
+This is the smallest integer with three distinct split primes. -/
+theorem network_1105_cube :
+    (4 : ℤ) ^ 2 + 33 ^ 2 = 1105 ∧
+    (9 : ℤ) ^ 2 + 32 ^ 2 = 1105 ∧
+    (12 : ℤ) ^ 2 + 31 ^ 2 = 1105 ∧
+    (23 : ℤ) ^ 2 + 24 ^ 2 = 1105 := by omega
+
+
+
+/-- The Gaussian product is associative. -/
+theorem gaussian_prod_assoc (a₁ b₁ a₂ b₂ a₃ b₃ : ℤ) :
+    let z₁₂ := gaussianProd a₁ b₁ a₂ b₂
+    gaussianProd z₁₂.1 z₁₂.2 a₃ b₃ =
+    let z₂₃ := gaussianProd a₂ b₂ a₃ b₃
+    gaussianProd a₁ b₁ z₂₃.1 z₂₃.2 := by
+  simp [gaussianProd]; constructor <;> ring
+
+
+
+theorem pyth_not_both_odd' (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
+    (ha : ¬ 2 ∣ a) (hb : ¬ 2 ∣ b) : False := by
+  exact absurd ( congr_arg ( · % 4 ) h ) ( by rcases Int.even_or_odd' a with ⟨ k, rfl | rfl ⟩ <;> rcases Int.even_or_odd' b with ⟨ l, rfl | rfl ⟩ <;> rcases Int.even_or_odd' c with ⟨ m, rfl | rfl ⟩ <;> ring_nf <;> norm_num [ Int.add_emod, Int.mul_emod ] at * ) ;
+

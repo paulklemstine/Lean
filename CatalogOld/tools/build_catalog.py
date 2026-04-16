@@ -15,6 +15,7 @@ import json
 import os
 import re
 from collections import defaultdict
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
 
@@ -438,6 +439,21 @@ class CatalogBuilder:
         if self.verbose:
             print(f"  Wrote {out_file.relative_to(self.output_dir)}: {len(entries)} declarations")
 
+    # ── Synthetic name filter ──────────────────────────────────────────
+
+    @staticmethod
+    def _is_synthetic_name(name: str) -> bool:
+        """Filter out auto-generated instance and anonymous names."""
+        if name == '_anonymous_instance':
+            return True
+        if name.startswith('[') or name.startswith('(') or name.startswith('{'):
+            return True
+        if name.startswith('__') and name != '__init__':
+            return True
+        return False
+
+    # ── Master list generation ─────────────────────────────────────────
+
     def _generate_master_list(self, file_groups: dict, shared_modules: list[dict]):
         """Generate CATALOG.md and DECLARATION_INDEX.md from the database."""
         self._write_catalog_md(file_groups, shared_modules)
@@ -449,10 +465,11 @@ class CatalogBuilder:
         domains = self.db.get('domains', {})
         lines = []
 
+        now = datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')
+
         lines.append('# Master Theorem Catalog')
         lines.append('')
-        lines.append('A comprehensive catalog of all Lean 4 formalizations in this project,')
-        lines.append('organized by mathematical domain. Auto-generated from the catalog database.')
+        lines.append(f'*Auto-generated {now} from the catalog database.*')
         lines.append('')
 
         # Statistics
@@ -460,20 +477,32 @@ class CatalogBuilder:
         lines.append('')
         lines.append('| Metric | Count |')
         lines.append('|--------|-------|')
-        lines.append(f'| Total Lean files | {meta.get("total_files", 0)} |')
-        lines.append(f'| Total declarations | {meta.get("total_declarations", 0)} |')
-        lines.append(f'| Theorems & lemmas | {meta.get("total_theorems", 0)} |')
-        lines.append(f'| Definitions | {meta.get("total_defs", 0)} |')
-        lines.append(f'| Structures/classes/inductives | {meta.get("total_structures", 0)} |')
+        lines.append(f'| Total Lean files | {meta.get("total_files", 0):,} |')
+        lines.append(f'| Total declarations | {meta.get("total_declarations", 0):,} |')
+        lines.append(f'| Theorems & lemmas | {meta.get("total_theorems", 0):,} |')
+        lines.append(f'| Definitions | {meta.get("total_defs", 0):,} |')
+        lines.append(f'| Structures/classes/inductives | {meta.get("total_structures", 0):,} |')
         lines.append(f'| Total lines of Lean code | {meta.get("total_lines", 0):,} |')
         lines.append(f'| Remaining `sorry` count | {meta.get("total_sorry", 0)} |')
-        lines.append(f'| Canonical declarations | {meta.get("total_canonical", 0)} |')
-        lines.append(f'| Duplicate groups | {meta.get("total_duplicate_groups", 0)} |')
+        lines.append(f'| Canonical declarations | {meta.get("total_canonical", 0):,} |')
+        lines.append(f'| Duplicate groups resolved | {meta.get("total_duplicate_groups", 0):,} |')
         lines.append(f'| Consolidated domains | {len(domains)} |')
         lines.append('')
 
+        # Domain summary table
+        lines.append('## Domain Summary')
+        lines.append('')
+        lines.append('| Domain | Files | Declarations | Theorems | Defs | Structures |')
+        lines.append('|--------|-------|-------------|----------|------|------------|')
+        for dname in sorted(domains.keys()):
+            d = domains[dname]
+            lines.append(f'| {dname} | {d.get("file_count", 0)} | {d.get("declaration_count", 0):,} | '
+                         f'{d.get("theorem_count", 0):,} | {d.get("def_count", 0):,} | '
+                         f'{d.get("structure_count", 0):,} |')
+        lines.append('')
+
         # Build file groups by domain/subdomain for TOC and content
-        domain_tree = defaultdict(lambda: defaultdict(list))  # domain -> subdomain -> [file_info]
+        domain_tree = defaultdict(lambda: defaultdict(list))
         for key, fg in file_groups.items():
             if not fg['entries']:
                 continue
@@ -519,12 +548,10 @@ class CatalogBuilder:
                 for fi in files:
                     domain_files += 1
                     domain_decls += fi['entry_count']
-            if len(subdomains) == 1 and '' in subdomains:
-                anchor = domain.lower().replace('/', '')
-                toc_entries.append(f'- [{domain}](#{anchor}) — {domain_files} files, {domain_decls} declarations')
-            else:
-                anchor = domain.lower().replace('/', '')
-                toc_entries.append(f'- [{domain}](#{anchor}) — {domain_files} files, {domain_decls} declarations')
+            anchor = domain.lower().replace('/', '')
+            toc_line = f'- [{domain}](#{anchor}) — {domain_files} files, {domain_decls} declarations'
+            toc_entries.append(toc_line)
+            if not (len(subdomains) == 1 and '' in subdomains):
                 for sd in sorted(subdomains.keys()):
                     if sd:
                         sd_files = len(subdomains[sd])
@@ -553,55 +580,54 @@ class CatalogBuilder:
 
                 for fi in sorted(subdomains[sd], key=lambda x: x['path']):
                     filename = Path(fi['path']).name
-                    rel_path = fi['path']
-
-                    # Count lines from body lengths
-                    total_lines = sum(e.get('end_line', 0) - e.get('line_number', 0) + 1 for e in fi['entries'])
                     source = fi['entries'][0].get('source_file', '') if fi['entries'] else ''
+                    decl_count = fi['entry_count']
 
-                    lines.append(f'#### `{filename}` ({total_lines} lines)')
+                    lines.append(f'#### `{filename}` — {decl_count} declarations')
                     if source:
                         lines.append(f'*Source: `{source}`*')
                     lines.append('')
 
                     # Group declarations by kind
-                    theorems = [e['name'] for e in fi['entries'] if e.get('kind') == 'theorem']
-                    defs = [e['name'] for e in fi['entries'] if e.get('kind') == 'def']
-                    structs = [e['name'] for e in fi['entries'] if e.get('kind') in ('structure', 'class', 'inductive')]
+                    theorems = [e['name'] for e in fi['entries']
+                                if e.get('kind') == 'theorem' and not self._is_synthetic_name(e['name'])]
+                    defs = [e['name'] for e in fi['entries']
+                             if e.get('kind') == 'def' and not self._is_synthetic_name(e['name'])]
+                    structs = [e['name'] for e in fi['entries']
+                               if e.get('kind') in ('structure', 'class', 'inductive')
+                               and not self._is_synthetic_name(e['name'])]
+                    instances = [e['name'] for e in fi['entries']
+                                 if e.get('kind') == 'instance' and not self._is_synthetic_name(e['name'])]
 
                     if defs:
-                        def_list = ', '.join(f'`{n}`' for n in defs[:10])
-                        extra = f' ... +{len(defs) - 10} more' if len(defs) > 10 else ''
-                        lines.append(f'- **def**: {def_list}{extra}')
+                        lines.append(f'- **def** ({len(defs)}): {self._fmt_name_list(defs)}')
                     if theorems:
-                        thm_list = ', '.join(f'`{n}`' for n in theorems[:10])
-                        extra = f' ... +{len(theorems) - 10} more' if len(theorems) > 10 else ''
-                        lines.append(f'- **theorem**: {thm_list}{extra}')
+                        lines.append(f'- **theorem** ({len(theorems)}): {self._fmt_name_list(theorems)}')
                     if structs:
-                        st_list = ', '.join(f'`{n}`' for n in structs[:10])
-                        extra = f' ... +{len(structs) - 10} more' if len(structs) > 10 else ''
-                        lines.append(f'- **structure**: {st_list}{extra}')
+                        lines.append(f'- **structure** ({len(structs)}): {self._fmt_name_list(structs)}')
+                    if instances:
+                        lines.append(f'- **instance** ({len(instances)}): {self._fmt_name_list(instances)}')
                     lines.append('')
 
         # Shared section
         if shared_entries:
             lines.append('## Shared')
             lines.append('')
+            lines.append('Declarations extracted from multiple domains (occurrence count >= threshold).')
+            lines.append('')
             for fi in sorted(shared_entries, key=lambda x: x['path']):
                 filename = Path(fi['path']).name
-                total_lines = sum(e.get('end_line', 0) - e.get('line_number', 0) + 1 for e in fi['entries'])
-                lines.append(f'#### `{filename}` ({total_lines} lines)')
+                decl_count = fi['entry_count']
+                lines.append(f'#### `{filename}` — {decl_count} declarations')
                 lines.append('')
-                theorems = [e['name'] for e in fi['entries'] if e.get('kind') == 'theorem']
-                defs = [e['name'] for e in fi['entries'] if e.get('kind') == 'def']
+                theorems = [e['name'] for e in fi['entries']
+                            if e.get('kind') == 'theorem' and not self._is_synthetic_name(e['name'])]
+                defs = [e['name'] for e in fi['entries']
+                         if e.get('kind') == 'def' and not self._is_synthetic_name(e['name'])]
                 if defs:
-                    def_list = ', '.join(f'`{n}`' for n in defs[:10])
-                    extra = f' ... +{len(defs) - 10} more' if len(defs) > 10 else ''
-                    lines.append(f'- **def**: {def_list}{extra}')
+                    lines.append(f'- **def** ({len(defs)}): {self._fmt_name_list(defs)}')
                 if theorems:
-                    thm_list = ', '.join(f'`{n}`' for n in theorems[:10])
-                    extra = f' ... +{len(theorems) - 10} more' if len(theorems) > 10 else ''
-                    lines.append(f'- **theorem**: {thm_list}{extra}')
+                    lines.append(f'- **theorem** ({len(theorems)}): {self._fmt_name_list(theorems)}')
                 lines.append('')
 
         self.output_dir.mkdir(parents=True, exist_ok=True)
@@ -611,60 +637,61 @@ class CatalogBuilder:
         if self.verbose:
             print(f"  Wrote CATALOG.md ({len(lines)} lines)")
 
+    @staticmethod
+    def _fmt_name_list(names: list[str], max_show: int = 12) -> str:
+        """Format a list of declaration names for markdown output."""
+        shown = ', '.join(f'`{n}`' for n in names[:max_show])
+        extra = f' ... +{len(names) - max_show} more' if len(names) > max_show else ''
+        return shown + extra
+
     def _write_declaration_index_md(self, file_groups: dict, shared_modules: list[dict]):
         """Write DECLARATION_INDEX.md — alphabetical index of all declarations."""
-        meta = self.db.get('metadata', {})
         dup_groups = self.db.get('duplicate_groups', [])
         lines = []
 
-        # Collect all canonical declarations
-        all_entries = list(self.canonical)
+        now = datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')
 
-        # Build name -> occurrences mapping from duplicate groups
-        name_occurrences = {}
-        for g in dup_groups:
-            name_occurrences[g['name']] = g['occurrence_count']
+        # Collect all canonical declarations, filter synthetic
+        all_entries = [e for e in self.canonical if not self._is_synthetic_name(e.get('name', ''))]
 
-        # Count unique names and repeated names
+        # Count unique names
         name_counts = defaultdict(int)
         for e in all_entries:
             name_counts[e['name']] += 1
         unique_names = len(name_counts)
-        repeated_names = sum(1 for c in name_counts.values() if c > 1)
 
         lines.append('# Declaration Name Index')
         lines.append('')
-        lines.append(f'Total unique declaration names: {unique_names}')
-        lines.append(f'Names appearing in multiple files: {repeated_names}')
+        lines.append(f'*Auto-generated {now}.*')
+        lines.append('')
+        lines.append(f'Canonical declarations: {len(all_entries):,}')
+        lines.append(f'Unique names: {unique_names:,}')
+        lines.append(f'Duplicate groups resolved: {len(dup_groups):,}')
         lines.append('')
 
-        # Most repeated declaration names
-        sorted_dups = sorted(dup_groups, key=lambda g: g['occurrence_count'], reverse=True)
-        if sorted_dups:
+        # Map canonical name -> kind for quick lookup
+        name_to_kind = {}
+        for e in all_entries:
+            name_to_kind[e['name']] = e.get('kind', 'unknown')
+
+        # Most repeated declaration names — from duplicate groups (pre-dedup)
+        if dup_groups:
+            sorted_dups = sorted(dup_groups, key=lambda g: g['occurrence_count'], reverse=True)
             lines.append('## Most Repeated Declaration Names')
             lines.append('')
-            lines.append('These names appear across multiple files and may represent semantic duplicates')
-            lines.append('(same concept formalized multiple times) or intentional reuse.')
+            lines.append('These names appeared in multiple source files before deduplication.')
+            lines.append('Each group has been resolved to a single canonical declaration.')
             lines.append('')
-            lines.append('| Name | Occurrences | Files |')
-            lines.append('|------|-------------|-------|')
+            lines.append('| Name | Original files | Canonical kind |')
+            lines.append('|------|---------------|----------------|')
 
             for g in sorted_dups[:50]:
                 name = g['name']
+                if self._is_synthetic_name(name):
+                    continue
                 count = g['occurrence_count']
-                # Collect source files from entries in this group
-                group_entries = [e for e in g.get('entries', []) if isinstance(e, dict)]
-                file_names = []
-                for ge in group_entries[:3]:
-                    sf = ge.get('source_file', '')
-                    fn = Path(sf).name if sf else ''
-                    if fn:
-                        file_names.append(f'`{fn}`')
-                extra_files = count - len(file_names)
-                files_str = ', '.join(file_names)
-                if extra_files > 0:
-                    files_str += f' +{extra_files} more'
-                lines.append(f'| `{name}` | {count} | {files_str} |')
+                kind = name_to_kind.get(name, 'unknown')
+                lines.append(f'| `{name}` | {count} | {kind} |')
 
             lines.append('')
 
@@ -683,6 +710,9 @@ class CatalogBuilder:
                 first = '#'
             by_letter[first].append(e)
 
+        # Build occurrence lookup from duplicate groups for ×N suffix
+        dup_occurrences = {g['name']: g['occurrence_count'] for g in dup_groups}
+
         for letter in sorted(by_letter.keys()):
             entries_for_letter = sorted(by_letter[letter], key=lambda e: e['name'])
             lines.append(f'### {letter} ({len(entries_for_letter)} declarations)')
@@ -691,13 +721,13 @@ class CatalogBuilder:
             for e in entries_for_letter:
                 name = e['name']
                 kind = e.get('kind', 'unknown')
-                source = Path(e.get('source_file', '')).name
+                source = e.get('source_file', '')
                 kind_label = kind
-                if e.get('is_noncomputable'):
+                if e.get('is_noncomputable') and not kind.startswith('noncomputable'):
                     kind_label = f'noncomputable {kind}'
 
-                # Check if this name appears multiple times
-                occ = name_occurrences.get(name, 1)
+                # Show ×N suffix for names that had duplicates
+                occ = dup_occurrences.get(name, 1)
                 suffix = f' ×{occ}' if occ > 1 else ''
 
                 lines.append(f'- `{name}` ({kind_label}) — `{source}`{suffix}')
