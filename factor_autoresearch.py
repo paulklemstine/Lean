@@ -400,12 +400,34 @@ def factor_best(n):
             p,q = a-b, a+b
             if 1 < p < n: return (min(p,q), max(p,q))
         a += 1
-    # Quick rho (balanced: x²+c standard for small, x²+x+c for 56+ bit)
+    # Quick rho (balanced: dual walk for 56+ bit)
     use_dual_walk = n.bit_length() >= 56
-    # For 64+ bit: use GMP rho if available (2-3x faster, finds ~100% at 80-bit)
-    if n.bit_length() >= 64 and _rho_gmp is not None:
-        r = _rho_gmp_factor(n, 30, use_dual=True)
-        if r: return r
+    # For 64+ bit: ECM FIRST (sub-exponential, extremely fast for balanced semiprimes)
+    if n.bit_length() >= 64:
+        try:
+            import subprocess
+            t0_ecm = time.perf_counter()
+            # Try ECM with increasing B1 values
+            for B1 in [1000, 10000, 50000, 100000, 500000]:
+                n_ecm = 20 if B1 <= 10000 else 10
+                for _ in range(n_ecm):
+                    result = subprocess.run(['ecm', str(B1)], input=str(n), capture_output=True, text=True, timeout=5)
+                    if 'Factor found' in result.stdout:
+                        for line in result.stdout.split('\n'):
+                            if 'Factor found' in line and ':' in line:
+                                f_str = line.split(':')[-1].strip()
+                                try:
+                                    f = int(f_str)
+                                    if 1 < f < n: return (min(f,n//f), max(f,n//f))
+                                except: pass
+                        break
+                    if (time.perf_counter() - t0_ecm) > 2.5: break
+                if (time.perf_counter() - t0_ecm) > 2.5: break
+        except: pass
+        # Then GMP rho as fallback (if ECM doesn't find it)
+        if _rho_gmp is not None:
+            r = _rho_gmp_factor(n, 30, use_dual=True)
+            if r: return r
     else:
         r = pollard_rho_fast(n, 8, use_dual_walk=use_dual_walk)
         if r: return r
