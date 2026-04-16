@@ -407,9 +407,8 @@ def factor_best(n):
         try:
             import subprocess
             t0_ecm = time.perf_counter()
-            # Use -c flag to run multiple curves per subprocess call (much less overhead)
-            # Progressive B1 schedule: B1 * sqrt(5) each step
-            b1_schedule = [(2000, 30), (11000, 30), (50000, 50), (250000, 40), (1000000, 200), (5000000, 50)]
+            # Unified progressive B1 schedule with batched curves
+            b1_schedule = [(2000, 40), (50000, 50), (250000, 40), (1000000, 200), (5000000, 50)]
             for B1, ncurves in b1_schedule:
                 result = subprocess.run(
                     ['ecm', '-c', str(ncurves), str(B1)],
