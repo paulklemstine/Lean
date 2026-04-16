@@ -1,100 +1,127 @@
-/-! # CatalogBuild.Geometry.Stereographic.NovelTheorems
+/-
+# Novel Theorems on Stereographic Projection
 
-Auto-generated from theorem catalog database.
-Domain: Geometry/Stereographic
-Declarations: 9
+This file contains novel results connecting stereographic projection to
+conformal geometry, symmetry, and number theory.
+
+## Main results
+
+* `conformal_factor_eq_one_minus_last` — the conformal factor equals 1 minus the last coordinate
+* `invStereoN_neg_first_coords` — negating input reflects first N coordinates
+* `invStereoN_neg_last_coord` — negating input preserves last coordinate
+* `invStereoN_scale_last` — scaling behavior of the last coordinate
+* `energy_partition` — energy partition on the sphere
+* `rotation_preserves_sqNorm` — orthogonal transformations preserve sqNorm
+* `invStereoN_inversion_last` — inversion duality for the last coordinate
+* `pythagorean_stereo_general` — Pythagorean identity for stereographic projection
 -/
-
-import Geometry.Stereographic.NDimResearch.Basic
 import Mathlib
+import Geometry.Stereographic.Basic
+
+namespace StereographicProjection
+
+open Finset BigOperators
 
 noncomputable section
 
-theorem conformal_factor_eq_one_minus_last (N : ℕ) (y : Fin N → ℝ) :
-    2 / stereoDenom N y =
-    1 - invStereoN N y ⟨N, Nat.lt_succ_iff.mpr le_rfl⟩ := by
-  unfold invStereoN;
-  split_ifs <;> norm_num [ stereoDenom ];
-  · grind +extAll;
-  · rw [ one_sub_div ] <;> ring ; linarith [ show 0 ≤ sqNorm N y from Finset.sum_nonneg fun _ _ => sq_nonneg _ ]
+/-
+The conformal factor 2/D equals 1 minus the last coordinate of invStereoN
+-/
+theorem conformal_factor_eq_one_minus_last {N : ℕ} (y : Fin N → ℝ) :
+    2 / stereoDenom y = 1 - invStereoN y (lastIdx N) := by
+      rw [ invStereoN_last_coord ];
+      unfold stereoDenom;
+      rw [ one_sub_div ] <;> ring ; exact ne_of_gt <| add_pos_of_pos_of_nonneg zero_lt_one <| Finset.sum_nonneg fun _ _ => sq_nonneg _
 
+/-
+Squared conformal factor times sqNorm: (2/D)² · ‖y‖² = ∑ᵢ₌₀^{N-1} (invStereoN y i)²
+-/
+theorem conformal_factor_sq_times_sqNorm {N : ℕ} (y : Fin N → ℝ) :
+    (2 / stereoDenom y) ^ 2 * sqNormFin y =
+    ∑ i : Fin N, (invStereoN y ⟨i.val, Nat.lt_succ_of_lt i.isLt⟩) ^ 2 := by
+      unfold stereoDenom invStereoN;
+      norm_num [ Finset.sum_ite, Finset.mul_sum _ _ _, mul_pow, div_pow ];
+      rw [ ← Finset.sum_div _ _ _, ← Finset.mul_sum _ _ _ ] ; ring!;
+      unfold stereoDenom; rw [ inv_pow ] ; ring;
 
-theorem conformal_factor_sq_times_sqNorm (N : ℕ) (y : Fin N → ℝ) :
-    (2 / stereoDenom N y) ^ 2 * sqNorm N y =
-    ∑ i : Fin N, (invStereoN N y ⟨i, Nat.lt_succ_of_lt i.isLt⟩) ^ 2 := by
-  unfold invStereoN;
-  unfold stereoDenom sqNorm; norm_num [ Finset.mul_sum _ _ _, mul_pow, mul_assoc, mul_comm, mul_left_comm, div_pow ] ;
-  exact Finset.sum_congr rfl fun _ _ => by ring;
+/-
+Negating the input reflects the first N coordinates of invStereoN
+-/
+theorem invStereoN_neg_first_coords {N : ℕ} (y : Fin N → ℝ) (i : Fin N) :
+    invStereoN (fun j => -y j) ⟨i.val, Nat.lt_succ_of_lt i.isLt⟩ =
+    -(invStereoN y ⟨i.val, Nat.lt_succ_of_lt i.isLt⟩) := by
+      unfold invStereoN;
+      simp +decide [ stereoDenom ];
+      unfold sqNormFin; norm_num [ div_eq_mul_inv ] ;
 
+/-
+Negating the input preserves the last coordinate of invStereoN
+-/
+theorem invStereoN_neg_last_coord {N : ℕ} (y : Fin N → ℝ) :
+    invStereoN (fun j => -y j) (lastIdx N) =
+    invStereoN y (lastIdx N) := by
+      -- By definition of `invStereoN`, the last coordinate is given by `(sqNormFin y - 1) / stereoDenom y`.
+      simp [invStereoN, lastIdx];
+      unfold sqNormFin stereoDenom; norm_num;
+      unfold sqNormFin; norm_num;
 
-theorem invStereoN_neg_first_coords (N : ℕ) (y : Fin N → ℝ) (i : Fin (N + 1))
-    (hi : (i : ℕ) < N) :
-    invStereoN N (fun j => -(y j)) i = -(invStereoN N y i) := by
-  unfold invStereoN;
-  unfold stereoDenom; simp +decide [ hi, hi, div_neg, neg_div ];
-  unfold sqNorm; norm_num;
+/-
+Scaling behavior: the last coordinate of invStereoN(r·y)
+-/
+theorem invStereoN_scale_last {N : ℕ} (y : Fin N → ℝ) (r : ℝ) :
+    invStereoN (fun j => r * y j) (lastIdx N) =
+    (r ^ 2 * sqNormFin y - 1) / (1 + r ^ 2 * sqNormFin y) := by
+      unfold invStereoN; unfold lastIdx; ( unfold sqNormFin; );
+      unfold stereoDenom; simp +decide [ div_eq_mul_inv, mul_assoc, mul_comm, mul_left_comm, Finset.mul_sum _ _ _ ] ;
+      simp +decide only [sqNormFin, mul_pow, mul_comm]
 
+/-
+Energy partition: sum of squares of first N coords + last coord² = 1
+-/
+theorem energy_partition {N : ℕ} (y : Fin N → ℝ) :
+    (∑ i : Fin N, (invStereoN y ⟨i.val, Nat.lt_succ_of_lt i.isLt⟩) ^ 2) +
+    (invStereoN y (lastIdx N)) ^ 2 = 1 := by
+      conv_rhs => rw [ ← invStereoN_norm_sq y ];
+      rw [ Fin.sum_univ_castSucc ];
+      rfl
 
-theorem invStereoN_neg_last_coord (N : ℕ) (y : Fin N → ℝ) :
-    invStereoN N (fun j => -(y j)) ⟨N, Nat.lt_succ_iff.mpr le_rfl⟩ =
-    invStereoN N y ⟨N, Nat.lt_succ_iff.mpr le_rfl⟩ := by
-  unfold invStereoN;
-  unfold stereoDenom sqNorm; norm_num [ Finset.sum_neg_distrib ] ;
+/-
+Orthogonal transformations preserve sqNorm
+-/
+theorem rotation_preserves_sqNorm {N : ℕ} (R : Matrix (Fin N) (Fin N) ℝ)
+    (hR : R * R.transpose = 1) (y : Fin N → ℝ) :
+    sqNormFin (R.mulVec y) = sqNormFin y := by
+      -- By definition of Euclidean norm, we have:
+      unfold sqNormFin;
+      -- Apply the norm squared to both sides of the equation R.mulVec y = (R * R.transpose) * y.
+      have h_norm_sq : (Matrix.mulVec R y) ⬝ᵥ (Matrix.mulVec R y) = y ⬝ᵥ y := by
+        simp +decide [ Matrix.dotProduct_mulVec, Matrix.vecMul_mulVec, hR ];
+        rw [ mul_eq_one_comm.mp hR ];
+        norm_num;
+      simpa only [ sq, dotProduct ] using h_norm_sq
 
+/-
+Inversion duality: invStereoN(y/‖y‖²) has negated last coordinate,
+    provided y ≠ 0
+-/
+theorem invStereoN_inversion_last {N : ℕ} (y : Fin N → ℝ) (hy : sqNormFin y ≠ 0) :
+    invStereoN (fun j => y j / sqNormFin y) (lastIdx N) =
+    -(invStereoN y (lastIdx N)) := by
+      unfold invStereoN;
+      unfold sqNormFin stereoDenom;
+      norm_num [ lastIdx ];
+      unfold sqNormFin; norm_num [ ← Finset.sum_div _ _ _, ← Finset.sum_mul, div_pow ] ; ring;
+      field_simp;
+      linarith [ one_div_mul_cancel ( show ( ∑ i, y i ^ 2 ) ≠ 0 from by simpa [ sqNormFin ] using hy ) ]
 
-theorem invStereoN_scale_last (N : ℕ) (y : Fin N → ℝ) (r : ℝ) :
-    invStereoN N (fun j => r * y j) ⟨N, Nat.lt_succ_iff.mpr le_rfl⟩ =
-    (r ^ 2 * sqNorm N y - 1) / (1 + r ^ 2 * sqNorm N y) := by
-  norm_num [ invStereoN ];
-  unfold sqNorm stereoDenom;
-  simp only [mul_pow, sqNorm, Finset.mul_sum _ _ _]
-
-
-theorem energy_partition (N : ℕ) (y : Fin N → ℝ) :
-    (∑ i : Fin N, (invStereoN N y ⟨i, Nat.lt_succ_of_lt i.isLt⟩) ^ 2) +
-    (invStereoN N y ⟨N, Nat.lt_succ_iff.mpr le_rfl⟩) ^ 2 = 1 := by
-  convert invStereoN_norm_sq N y using 1;
-  refine' Eq.symm ( Fin.sum_univ_castSucc _ )
-
-
-/-- The general N-dimensional Pythagorean identity using Fin-indexed sums:
-(∑ (2·yᵢ)²) + (‖y‖² - 1)² = (‖y‖² + 1)². -/
-theorem pythagorean_stereo_general (N : ℕ) (y : Fin N → ℝ) :
-    4 * sqNorm N y + (sqNorm N y - 1) ^ 2 = (sqNorm N y + 1) ^ 2 := by
-  unfold sqNorm; ring
-
-
-theorem rotation_preserves_sqNorm (N : ℕ) (R : Fin N → Fin N → ℝ)
-    (hR : ∀ i j : Fin N, ∑ k, R i k * R j k = if i = j then 1 else 0)
-    (y : Fin N → ℝ) :
-    sqNorm N (fun i => ∑ j, R i j * y j) = sqNorm N y := by
-  -- Using the symmetry of R, we can rewrite the double sum as a dot product.
-  have h_dot_product : ∑ i, (∑ j, R i j * y j) ^ 2 = ∑ j, ∑ k, y j * y k * (∑ i, R i j * R i k) := by
-    simp +decide only [sq, Finset.mul_sum _ _ _, mul_comm, mul_left_comm];
-    exact Finset.sum_comm.trans ( Finset.sum_congr rfl fun _ _ => Finset.sum_comm );
-  convert h_dot_product using 1;
-  -- By the orthogonality condition, we know that $\sum_{i} R_{ij} R_{ik} = \delta_{jk}$, where $\delta_{jk}$ is the Kronecker delta.
-  have h_orthogonality : ∀ j k, ∑ i, R i j * R i k = if j = k then 1 else 0 := by
-    -- Apply the given hypothesis `hR` to rewrite the inner sum.
-    have h_inner_sum : ∀ j k, ∑ i, R i j * R i k = ∑ i, R j i * R k i := by
-      intro j k;
-      convert mul_eq_one_comm.mp ( show Matrix.of ( fun i j => R i j ) * Matrix.of ( fun i j => R j i ) = 1 from Matrix.ext fun i j => by simpa [ Matrix.mul_apply, mul_comm ] using hR i j ) |> congr_arg ( fun m => m k j ) using 1;
-      · simp +decide [ Matrix.mul_apply, mul_comm ];
-      · simpa [ mul_comm, Matrix.one_apply, eq_comm ] using hR j k;
-    aesop;
-  simp +decide [ h_orthogonality, sqNorm ];
-  exact Finset.sum_congr rfl fun _ _ => sq _
-
-
-theorem invStereoN_inversion_last (N : ℕ) (y : Fin N → ℝ)
-    (hy : sqNorm N y ≠ 0) :
-    invStereoN N (fun j => y j / sqNorm N y) ⟨N, Nat.lt_succ_iff.mpr le_rfl⟩ =
-    -(invStereoN N y ⟨N, Nat.lt_succ_iff.mpr le_rfl⟩) := by
-  simp +decide [ invStereoN, sqNorm ] at hy ⊢;
-  unfold stereoDenom; norm_num [ ← Finset.sum_div _ _ _, hy ] ;
-  unfold sqNorm; norm_num [ Finset.sum_div _ _ _, div_pow, hy ] ; ring;
-  norm_num [ ← Finset.mul_sum _ _ _, ← Finset.sum_mul, hy ] ; ring;
-  grind
-
+/-
+Pythagorean identity for stereographic projection:
+    4·S + (S - 1)² = (S + 1)² where S = ‖y‖²
+-/
+theorem pythagorean_stereo_general {N : ℕ} (y : Fin N → ℝ) :
+    4 * sqNormFin y + (sqNormFin y - 1) ^ 2 = (sqNormFin y + 1) ^ 2 := by
+      ring
 
 end
+
+end StereographicProjection

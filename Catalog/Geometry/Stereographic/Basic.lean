@@ -1,58 +1,134 @@
-/-! # CatalogBuild.Geometry.Stereographic.Basic
+/-
+# N-Dimensional Stereographic Projection: Core Definitions and Basic Properties
 
-Auto-generated from theorem catalog database.
-Domain: Geometry/Stereographic
-Declarations: 6
+This file defines the coordinate-based inverse stereographic projection `invStereoN`
+from ℝ^N to the unit sphere S^N ⊂ ℝ^{N+1}, and its inverse `stereoN`.
+
+## Main definitions
+
+* `sqNormFin y` — sum of squares of coordinates of `y : Fin N → ℝ`
+* `stereoDenom y` — the denominator `1 + ‖y‖²`, always positive
+* `invStereoN y` — inverse stereographic projection mapping ℝ^N → S^N ⊂ ℝ^{N+1}
+* `stereoN x` — forward stereographic projection from S^N \ {NP} → ℝ^N
+
+## Main results
+
+* `invStereoN_norm_sq` — the image of `invStereoN` lies on the unit sphere
+* `invStereoN_last_ne_one` — the last coordinate is never 1 (never hits north pole)
+* `stereoN_invStereoN` — `stereoN` is a left inverse of `invStereoN`
+* `invStereoN_injective` — `invStereoN` is injective
 -/
-
 import Mathlib
+
+namespace StereographicProjection
+
+open Finset BigOperators
 
 noncomputable section
 
-/-- The last coordinate of invStereoN is (‖y‖² - 1) / D. -/
-theorem invStereoN_last (N : ℕ) (y : Fin N → ℝ) :
-    invStereoN N y ⟨N, Nat.lt_succ_iff.mpr le_rfl⟩ = (sqNorm N y - 1) / stereoDenom N y := by
-  simp [invStereoN]
+/-- Sum of squares of coordinates -/
+def sqNormFin {N : ℕ} (y : Fin N → ℝ) : ℝ := ∑ i, y i ^ 2
 
+/-- Denominator for stereographic projection, always positive -/
+def stereoDenom {N : ℕ} (y : Fin N → ℝ) : ℝ := 1 + sqNormFin y
 
-/-- The i-th coordinate (for i < N) of invStereoN is 2·yᵢ / D. -/
-theorem invStereoN_lt (N : ℕ) (y : Fin N → ℝ) (i : Fin (N + 1)) (hi : (i : ℕ) < N) :
-    invStereoN N y i = 2 * y ⟨i, hi⟩ / stereoDenom N y := by
-  simp [invStereoN, hi]
+lemma sqNormFin_nonneg {N : ℕ} (y : Fin N → ℝ) : 0 ≤ sqNormFin y :=
+  Finset.sum_nonneg fun i _ => sq_nonneg (y i)
 
+lemma stereoDenom_pos {N : ℕ} (y : Fin N → ℝ) : 0 < stereoDenom y := by
+  unfold stereoDenom
+  linarith [sqNormFin_nonneg y]
 
-theorem invStereoN_norm_sq (N : ℕ) (y : Fin N → ℝ) :
-    ∑ i : Fin (N + 1), (invStereoN N y i) ^ 2 = 1 := by
-  unfold invStereoN;
-  rw [ Fin.sum_univ_castSucc ] ; norm_num [ div_pow, Finset.mul_sum _ _ _, Finset.sum_mul, Finset.sum_add_distrib, sqNorm ] ; ring;
-  unfold stereoDenom;
-  norm_num [ ← Finset.sum_mul _ _ _, sqNorm ];
-  -- Combine like terms and simplify the expression.
-  field_simp
-  ring
+lemma stereoDenom_ne_zero {N : ℕ} (y : Fin N → ℝ) : stereoDenom y ≠ 0 :=
+  ne_of_gt (stereoDenom_pos y)
 
+/-- Inverse stereographic projection from ℝ^N to S^N ⊂ ℝ^{N+1}.
+    For i < N: the i-th coordinate is `2 * y_i / (1 + ‖y‖²)`.
+    For i = N (last): the coordinate is `(‖y‖² - 1) / (1 + ‖y‖²)`. -/
+def invStereoN {N : ℕ} (y : Fin N → ℝ) : Fin (N + 1) → ℝ := fun i =>
+  if h : i.val < N then
+    2 * y ⟨i.val, h⟩ / stereoDenom y
+  else
+    (sqNormFin y - 1) / stereoDenom y
 
-/-- Forward stereographic projection from S^N \ {north pole} to ℝ^N. -/
-def stereoN (N : ℕ) (x : Fin (N + 1) → ℝ)
-    (hx_norm : ∑ i : Fin (N + 1), (x i) ^ 2 = 1)
-    (hx_np : x ⟨N, Nat.lt_succ_iff.mpr le_rfl⟩ ≠ 1) :
-    Fin N → ℝ := fun i =>
-  x ⟨i, Nat.lt_succ_of_lt i.isLt⟩ / (1 - x ⟨N, Nat.lt_succ_iff.mpr le_rfl⟩)
+/-- Forward stereographic projection from S^N \ {NP} to ℝ^N.
+    Projects from the north pole (0,...,0,1). -/
+def stereoN {N : ℕ} (x : Fin (N + 1) → ℝ) : Fin N → ℝ := fun i =>
+  x ⟨i.val, Nat.lt_succ_of_lt i.isLt⟩ / (1 - x ⟨N, Nat.lt_succ_iff.mpr le_rfl⟩)
 
+-- Helper: the last index
+def lastIdx (N : ℕ) : Fin (N + 1) := ⟨N, Nat.lt_succ_iff.mpr le_rfl⟩
 
-theorem invStereoN_last_ne_one (N : ℕ) (y : Fin N → ℝ) :
-    invStereoN N y ⟨N, Nat.lt_succ_iff.mpr le_rfl⟩ ≠ 1 := by
-  unfold invStereoN;
-  unfold stereoDenom;
-  grind
+lemma invStereoN_coord_lt {N : ℕ} (y : Fin N → ℝ) (i : Fin (N + 1)) (h : i.val < N) :
+    invStereoN y i = 2 * y ⟨i.val, h⟩ / stereoDenom y := by
+  simp [invStereoN, h]
 
+lemma invStereoN_last_coord {N : ℕ} (y : Fin N → ℝ) :
+    invStereoN y (lastIdx N) = (sqNormFin y - 1) / stereoDenom y := by
+  simp [invStereoN, lastIdx]
 
-theorem stereoN_invStereoN (N : ℕ) (y : Fin N → ℝ) :
-    stereoN N (invStereoN N y) (invStereoN_norm_sq N y) (invStereoN_last_ne_one N y) = y := by
-  unfold invStereoN stereoN;
-  unfold stereoDenom; norm_num;
-  field_simp;
-  rw [ mul_sub, mul_div_cancel₀ ] <;> ring ; exact ne_of_gt <| add_pos_of_pos_of_nonneg zero_lt_one <| Finset.sum_nonneg fun _ _ => sq_nonneg _
+/-
+The image of `invStereoN` lies on the unit sphere: ∑ (invStereoN y)_i² = 1
+-/
+theorem invStereoN_norm_sq {N : ℕ} (y : Fin N → ℝ) :
+    ∑ i : Fin (N + 1), (invStereoN y i) ^ 2 = 1 := by
+      unfold invStereoN;
+      simp +decide [ Fin.sum_univ_castSucc, sq ];
+      simp +decide [ stereoDenom, sqNormFin, mul_assoc, mul_comm, mul_left_comm, div_eq_mul_inv, Finset.mul_sum _ _ _, Finset.sum_mul ];
+      simp +decide [ ← mul_assoc, ← Finset.sum_mul _ _ _ ];
+      -- Combine like terms and simplify the expression.
+      field_simp
+      ring
 
+/-
+The last coordinate of invStereoN is never equal to 1
+-/
+theorem invStereoN_last_ne_one {N : ℕ} (y : Fin N → ℝ) :
+    invStereoN y (lastIdx N) ≠ 1 := by
+      rw [ invStereoN_last_coord ];
+      exact div_ne_one_of_ne ( by linarith [ show sqNormFin y ≥ 0 by exact ( by exact Finset.sum_nonneg fun i _ ↦ pow_two_nonneg _ ), show stereoDenom y > sqNormFin y by exact lt_add_of_pos_left _ ( by norm_num ) ] )
+
+/-
+stereoN is a left inverse of invStereoN
+-/
+theorem stereoN_invStereoN {N : ℕ} (y : Fin N → ℝ) :
+    stereoN (invStereoN y) = y := by
+      ext i;
+      unfold stereoN invStereoN;
+      split_ifs;
+      · grind;
+      · field_simp [stereoDenom_ne_zero];
+        unfold stereoDenom sqNormFin; ring;
+      · grobner;
+      · grind
+
+/-
+invStereoN is injective
+-/
+theorem invStereoN_injective {N : ℕ} : Function.Injective (@invStereoN N) := by
+  intro y1 y2 h_eq
+  have h_stereo : stereoN (invStereoN y1) = stereoN (invStereoN y2) := by
+    rw [h_eq];
+  rw [ stereoN_invStereoN, stereoN_invStereoN ] at h_stereo ; exact h_stereo
+
+/-
+The image of invStereoN is exactly the sphere minus the north pole
+-/
+theorem invStereoN_image_eq {N : ℕ} :
+    Set.range (@invStereoN N) = {x : Fin (N + 1) → ℝ |
+      (∑ i, x i ^ 2 = 1) ∧ x (lastIdx N) ≠ 1} := by
+        apply Set.eq_of_subset_of_subset;
+        · exact Set.range_subset_iff.mpr fun y => ⟨ invStereoN_norm_sq y, invStereoN_last_ne_one y ⟩;
+        · intro x hx;
+          use fun i => x ⟨i.val, Nat.lt_succ_of_lt i.isLt⟩ / (1 - x ⟨N, Nat.lt_succ_iff.mpr le_rfl⟩);
+          unfold invStereoN;
+          simp_all +decide [ Fin.sum_univ_castSucc, stereoDenom, sqNormFin ];
+          simp_all +decide [ ← Finset.sum_div _ _ _, div_pow ];
+          simp_all +decide [ Fin.castSucc, Fin.last, lastIdx ];
+          simp_all +decide [ Fin.castAdd, Fin.castSucc ];
+          simp_all +decide [ Fin.castLE, Fin.sum_univ_castSucc ];
+          grind
 
 end
+
+end StereographicProjection

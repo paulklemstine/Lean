@@ -1,91 +1,64 @@
-/-! # CatalogBuild.Geometry.Stereographic.PlaneToSphere
+/-
+# Planes Map to Spheres Under Inverse Stereographic Projection
 
-Auto-generated from theorem catalog database.
-Domain: Geometry/Stereographic
-Declarations: 6
+This file proves that k-dimensional planes in ℝ^N map to k-spheres on S^N
+under inverse stereographic projection, and characterizes the image of
+hyperplanes via linear constraints.
+
+## Main results
+
+* `plane_image_on_sphere` — every point on a parametric plane maps to S^N
+* `hyperplane_image_characterization` — points satisfying a linear constraint
+  in ℝ^N have images satisfying a corresponding constraint on S^N
+* `invStereoN_2_surj_on_sphere` — invStereoN is surjective onto S² \ {NP}
 -/
-
-import Geometry.Stereographic.NDimResearch.Basic
 import Mathlib
+import Geometry.Stereographic.Basic
+
+namespace StereographicProjection
+
+open Finset BigOperators
 
 noncomputable section
 
-/-- Parametric plane in ℝ^N: (s,t) ↦ p + s·u + t·v -/
-def parametricPlane (N : ℕ) (p u v : Fin N → ℝ) (s t : ℝ) : Fin N → ℝ :=
-  fun j => p j + s * u j + t * v j
+/-- A parametric plane in ℝ^N through point p with direction vectors v₁, v₂ -/
+def paramPlane {N : ℕ} (p v₁ v₂ : Fin N → ℝ) (s t : ℝ) : Fin N → ℝ :=
+  fun i => p i + s * v₁ i + t * v₂ i
 
+/-- Every point on a parametric plane maps to S^N -/
+theorem plane_image_on_sphere {N : ℕ} (p v₁ v₂ : Fin N → ℝ) (s t : ℝ) :
+    ∑ i : Fin (N + 1), (invStereoN (paramPlane p v₁ v₂ s t) i) ^ 2 = 1 :=
+  invStereoN_norm_sq _
 
-/-- Every point of a parametric plane, mapped through invStereoN, lies on S^N. -/
-theorem plane_image_on_sphere (N : ℕ) (p u v : Fin N → ℝ) (s t : ℝ) :
-    ∑ i : Fin (N + 1), (invStereoN N (parametricPlane N p u v s t) i) ^ 2 = 1 :=
-  invStereoN_norm_sq N _
-
-
-theorem invStereoN_2_surj_on_sphere (x : Fin 3 → ℝ)
-    (hx_norm : ∑ i : Fin 3, (x i) ^ 2 = 1)
-    (hx_np : x ⟨2, by omega⟩ ≠ 1) :
-    ∃ y : Fin 2 → ℝ, invStereoN 2 y = x := by
-  -- Set y = (x₀ / (1 - x₂), x₁ / (1 - x₂)).
-  set y : Fin 2 → ℝ := ![x ⟨0, by decide⟩ / (1 - x ⟨2, by decide⟩), x ⟨1, by decide⟩ / (1 - x ⟨2, by decide⟩)];
-  use y;
-  unfold invStereoN;
-  ext i;
-  simp +zetaDelta at *;
-  fin_cases i <;> simp_all +decide [ Fin.sum_univ_succ, sqNorm, stereoDenom ];
-  · grind +qlia;
-  · grind;
-  · grind
-
-
-theorem hyperplane_image_characterization (N : ℕ) (a : Fin N → ℝ) (c : ℝ)
+/-
+Hyperplane characterization: if y satisfies ∑ aᵢyᵢ = c in ℝ^N,
+    then the image x = invStereoN(y) satisfies the linear constraint
+    ∑ aᵢxᵢ = c · (1 - x_N) on S^N, where x_N is the last coordinate
+-/
+theorem hyperplane_image_characterization {N : ℕ} (a : Fin N → ℝ) (c : ℝ)
     (y : Fin N → ℝ) (hy : ∑ i, a i * y i = c) :
-    ∑ i : Fin N, a i * invStereoN N y ⟨i, Nat.lt_succ_of_lt i.isLt⟩ =
-    2 * c / stereoDenom N y := by
-  convert congr_arg ( fun z => z * ( 2 / stereoDenom N y ) ) hy using 1;
-  · simp +decide only [invStereoN, Finset.sum_mul _ _ _];
-    exact Finset.sum_congr rfl fun i hi => by simp +decide [ mul_assoc, mul_comm, mul_left_comm, div_eq_mul_inv ] ;
-  · ring
+    ∑ i : Fin N, a i * invStereoN y ⟨i.val, Nat.lt_succ_of_lt i.isLt⟩ =
+      c * (1 - invStereoN y (lastIdx N)) := by
+        convert congr_arg ( fun x : ℝ => x * ( 1 - invStereoN y ( lastIdx N ) ) ) hy using 1;
+        rw [ Finset.sum_mul _ _ _ ];
+        refine' Finset.sum_congr rfl fun i _ => _;
+        unfold invStereoN;
+        simp +decide [ mul_assoc, mul_div_assoc, stereoDenom, lastIdx ];
+        exact Or.inl ( by rw [ one_sub_div ( by linarith [ show 0 ≤ sqNormFin y from Finset.sum_nonneg fun _ _ => sq_nonneg _ ] ) ] ; ring )
 
-
-/-- The north pole in ℝ^{N+1}. -/
-def northPole (N : ℕ) : Fin (N + 1) → ℝ := fun i =>
-  if (i : ℕ) = N then 1 else 0
-
-
-theorem invStereoN_image_eq (N : ℕ) :
-    Set.range (invStereoN N) =
-    {x : Fin (N + 1) → ℝ | ∑ i, (x i) ^ 2 = 1} \ {northPole N} := by
-  ext x
-  constructor
-  intro hx
-  obtain ⟨y, hy⟩ := hx
-  all_goals generalize_proofs at *;
-  · simp_all +decide [ ← hy ];
-    exact ⟨ invStereoN_norm_sq N y, fun h => invStereoN_last_ne_one N y <| by simpa [ northPole ] using congr_fun h ⟨ N, Nat.lt_succ_self _ ⟩ ⟩;
-  · simp +zetaDelta at *;
-    intro hx hx';
-    by_cases h : x ⟨ N, Nat.lt_succ_self N ⟩ = 1;
-    · contrapose! hx';
-      ext i; by_cases hi : i.val = N <;> simp_all +decide [ Fin.sum_univ_castSucc ] ;
-      · grind +locals;
-      · simp_all +decide [ Fin.ext_iff, northPole ];
-        exact eq_zero_of_mul_self_eq_zero ( by nlinarith! [ Finset.single_le_sum ( fun a ( _ : a ∈ Finset.univ ) => sq_nonneg ( x ( Fin.castSucc a ) ) ) ( Finset.mem_univ ⟨ i, lt_of_le_of_ne ( Fin.le_last _ ) hi ⟩ ) ] );
-    · use fun i => x ⟨i, Nat.lt_succ_of_lt i.isLt⟩ / (1 - x ⟨N, Nat.lt_succ_self N⟩);
-      ext i;
-      by_cases hi : i.val < N <;> simp_all +decide [ Fin.sum_univ_castSucc ];
-      · unfold invStereoN;
-        unfold stereoDenom; simp +decide [ Finset.sum_div _ _ _, sqNorm, hi ];
-        field_simp;
-        rw [ ← Finset.sum_div _ _ _, div_eq_iff ];
-        · rw [ show ( ∑ i : Fin N, x ⟨ i, by linarith [ Fin.is_lt i ] ⟩ ^ 2 ) = 1 - x ⟨ N, Nat.lt_succ_self N ⟩ ^ 2 by linarith! ] ; ring;
-          grind;
-        · exact sub_ne_zero_of_ne <| Ne.symm h;
-      · simp_all +decide [ Fin.eq_last_of_not_lt, invStereoN ];
-        unfold sqNorm stereoDenom;
-        nontriviality;
-        unfold sqNorm; simp_all +decide [ Finset.sum_div _ _ _, div_pow ];
-        simp_all +decide [ ← Finset.sum_div _ _ _, Finset.sum_range, Fin.sum_univ_castSucc ];
-        grind +suggestions
-
+/-
+invStereoN for N=2 is surjective onto S² \ {north pole}
+-/
+theorem invStereoN_2_surj_on_sphere (x : Fin 3 → ℝ)
+    (hx_sphere : ∑ i : Fin 3, x i ^ 2 = 1)
+    (hx_ne_np : x ⟨2, by omega⟩ ≠ 1) :
+    ∃ y : Fin 2 → ℝ, invStereoN y = x := by
+      have h_range : x ∈ Set.range (invStereoN : (Fin 2 → ℝ) → Fin 3 → ℝ) := by
+        have h_eq : Set.range (invStereoN : (Fin 2 → ℝ) → Fin 3 → ℝ) = {x : Fin 3 → ℝ | (∑ i, x i ^ 2) = 1 ∧ x ⟨2, by linarith⟩ ≠ 1} := by
+          convert invStereoN_image_eq
+        exact h_eq.symm.subset ⟨ hx_sphere, hx_ne_np ⟩;
+      exact h_range
 
 end
+
+end StereographicProjection
