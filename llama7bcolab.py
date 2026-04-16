@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# VERSION: 2024-04-15-v4  <-- verify this line appears in Colab output
 """
 OISCC-EML LLaMA 7B Real Weight Compression
 
@@ -936,6 +937,7 @@ def run_pipeline(args):
     use_real = not args.synthetic
 
     print_header("OISCC-EML LLaMA 7B Compression Pipeline")
+    print(f"  Script version: 2024-04-15-v4 (scipy + teacher projection)")
     mode = "REAL WEIGHTS" if use_real else "SYNTHETIC WEIGHTS"
     print(f"  Mode: {mode}")
     if use_real:
