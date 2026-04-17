@@ -521,14 +521,14 @@ def factor_best(n, deadline=None):
                 # For 130-170b (20-26d): allocate 5/10 procs to B1=50K-110K
                 # For 100-130b (15-20d): allocate 7/10 procs to B1=50K
                 if bits >= 190:
-                    # 8 procs at B1=250K + 2 procs at B1=1M for 190+ bit
-                    # At 95+ bit factors (29-30d), B1=250K has best info/sec but
-                    # B1=1M catches factors with p-1 having a large prime 129M-600M
-                    # which B1=250K stage 2 can't reach. Portfolio diversification.
+                    # 7 ECM at B1=250K + 2 ECM at B1=1M + 1 P-1 B1=10M
+                    # P-1 at B1=10M is FREE (runs in parallel) and catches p-1
+                    # with factors up to ~10G (stage 2). ~0.2% probability.
                     b1_pairs = [
                         (250000, 50), (250000, 50), (250000, 50), (250000, 50),
-                        (250000, 50), (250000, 50), (250000, 50), (250000, 50),
-                        (1000000, 10), (1000000, 10),  # deep coverage
+                        (250000, 50), (250000, 50), (250000, 50),
+                        (1000000, 10), (1000000, 10),  # deep ECM
+                        ('pm1_10M', 1),  # P-1 B1=10M — deterministic channel
                     ]
                 elif bits >= 175:
                     # ALL 10 procs at B1=250K — maximum info rate for 26-30d factors
@@ -565,19 +565,30 @@ def factor_best(n, deadline=None):
                         (50000, 400),
                     ]
                 procs = []
+                procs = []
                 for B1, nc in b1_pairs:
                     try:
-                        p = subprocess.Popen(
-                            ['ecm', '-power', '6', '-c', str(nc), str(B1)],
-                            stdin=subprocess.PIPE, stdout=subprocess.PIPE,
-                            stderr=subprocess.DEVNULL, text=True
-                        )
+                        if isinstance(B1, str) and 'pm1' in B1:
+                            # P-1 channel: deterministic, runs in parallel
+                            p = subprocess.Popen(
+                                ['ecm', '-pm1', '10000000'],
+                                stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                                stderr=subprocess.DEVNULL, text=True
+                            )
+                        else:
+                            p = subprocess.Popen(
+                                ['ecm', '-power', '6', '-c', str(nc), str(B1)],
+                                stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                                stderr=subprocess.DEVNULL, text=True
+                            )
                         p.stdin.write(str(n) + '\n')
                         p.stdin.close()
                         procs.append((p, B1))
                     except: pass
                 # Poll for first result using select
-                deadline = t0_ecm + 2.85
+                # Adaptive deadline: use remaining time up to 3.0s budget
+                remaining = max(0.5, 3.0 - (time.perf_counter() - t_start))
+                deadline = t0_ecm + min(2.85, remaining - 0.15)  # 150ms safety margin
                 found = None
                 done = set()
                 while time.perf_counter() < deadline and len(done) < len(procs):
