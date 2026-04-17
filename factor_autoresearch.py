@@ -628,8 +628,22 @@ def factor_best(n, deadline=None):
         # For 100+ bit: after ECM fails, rho is O(p^{1/2}) - infeasible. Just bail.
         # (MetaOracle: if ECM crystallized queries failed, deterministic methods are needed)
         # GMP rho would take ~2^45 steps at 170b = hours. Skip.
-        # SIQS fallback for 100-115 bit (DETERMINISTIC — catches ECM failures)
+        # C QS fallback for ≤100 bit (DETERMINISTIC — catches ECM failures!)
         # Catalog: congruence_of_squares_zmod, smooth_relation_congruence
+        # C QS works up to ~100 bits in <3s. Much faster than Python SIQS.
+        if n.bit_length() <= 100 and time.perf_counter() - t_start < 2.5:
+            try:
+                import ctypes
+                _qs_lib = ctypes.CDLL('./qs_v3.so')
+                _qs_lib.qs_factor.restype = ctypes.c_int
+                _qs_lib.qs_factor.argtypes = [ctypes.c_char_p, ctypes.c_char_p, ctypes.c_int]
+                _qs_buf = ctypes.create_string_buffer(256)
+                _qs_ret = _qs_lib.qs_factor(str(n).encode(), _qs_buf, 256)
+                if _qs_ret > 0:
+                    f = int(_qs_buf.value.decode())
+                    if 1 < f < n: return (min(f,n//f), max(f,n//f))
+            except: pass
+        # Python SIQS for 100-115 bit
         if n.bit_length() <= 115 and time.perf_counter() - t_start < 2.5:
             try:
                 import importlib, io
