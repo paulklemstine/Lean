@@ -115,3 +115,42 @@ Fri Apr 17 03:02:36 2026  recovered 64 nontrivial dependencies
 Fri Apr 17 03:02:36 2026  prp32 factor: 14325704763637957717475873102983
 Fri Apr 17 03:02:36 2026  prp32 factor: 21945471377108029317294642448861
 Fri Apr 17 03:02:36 2026  elapsed time 00:00:02
+Fri Apr 17 05:27:20 2026  
+Fri Apr 17 05:27:20 2026  
+Fri Apr 17 05:27:20 2026  Msieve v. 1.46
+Fri Apr 17 05:27:20 2026  random seeds: 942a64e5 a7772e8a
+Fri Apr 17 05:27:20 2026  factoring 16267287902188300549314112993317693862733382594393738518798791 (62 digits)
+Fri Apr 17 05:27:20 2026  no P-1/P+1/ECM available, skipping
+Fri Apr 17 05:27:20 2026  commencing quadratic sieve (62-digit input)
+Fri Apr 17 05:27:20 2026  using multiplier of 7
+Fri Apr 17 05:27:20 2026  using generic 32kb sieve core
+Fri Apr 17 05:27:20 2026  sieve interval: 7 blocks of size 32768
+Fri Apr 17 05:27:20 2026  processing polynomials in batches of 29
+Fri Apr 17 05:27:20 2026  using a sieve bound of 78121 (3800 primes)
+Fri Apr 17 05:27:20 2026  using large prime bound of 3906050 (21 bits)
+Fri Apr 17 05:27:20 2026  using trial factoring cutoff of 22 bits
+Fri Apr 17 05:27:20 2026  polynomial 'A' values have 8 factors
+Fri Apr 17 05:27:23 2026  4343 relations (1858 full + 2485 combined from 20047 partial), need 3896
+Fri Apr 17 05:27:23 2026  begin with 21905 relations
+Fri Apr 17 05:27:23 2026  reduce to 6467 relations in 2 passes
+Fri Apr 17 05:27:23 2026  attempting to read 6467 relations
+Fri Apr 17 05:27:23 2026  recovered 6467 relations
+Fri Apr 17 05:27:23 2026  recovered 5548 polynomials
+Fri Apr 17 05:27:23 2026  attempting to build 4343 cycles
+Fri Apr 17 05:27:23 2026  found 4343 cycles in 1 passes
+Fri Apr 17 05:27:23 2026  distribution of cycle lengths:
+Fri Apr 17 05:27:23 2026     length 1 : 1858
+Fri Apr 17 05:27:23 2026     length 2 : 2485
+Fri Apr 17 05:27:23 2026  largest cycle: 2 relations
+Fri Apr 17 05:27:23 2026  matrix is 3800 x 4343 (0.6 MB) with weight 118399 (27.26/col)
+Fri Apr 17 05:27:23 2026  sparse part has weight 118399 (27.26/col)
+Fri Apr 17 05:27:23 2026  filtering completed in 4 passes
+Fri Apr 17 05:27:23 2026  matrix is 3550 x 3614 (0.5 MB) with weight 93899 (25.98/col)
+Fri Apr 17 05:27:23 2026  sparse part has weight 93899 (25.98/col)
+Fri Apr 17 05:27:23 2026  commencing Lanczos iteration
+Fri Apr 17 05:27:23 2026  memory use: 0.7 MB
+Fri Apr 17 05:27:23 2026  lanczos halted after 57 iterations (dim = 3547)
+Fri Apr 17 05:27:23 2026  recovered 63 nontrivial dependencies
+Fri Apr 17 05:27:23 2026  prp31 factor: 1830182667368170357915910256317
+Fri Apr 17 05:27:23 2026  prp31 factor: 8888341143335654161396073485523
+Fri Apr 17 05:27:23 2026  elapsed time 00:00:03

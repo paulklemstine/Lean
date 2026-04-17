@@ -492,7 +492,7 @@ def factor_best(n, deadline=None):
         # For < 210b: run msieve ALONE (it's fast enough)
         try:
             import subprocess as sp
-            msieve_result = sp.run(['/tmp/msieve/msieve', '-q', '-mb', '2048', str(n)],
+            msieve_result = sp.run(['/tmp/msieve/msieve', '-q', '-mb', '4096', str(n)],
                 capture_output=True, text=True, timeout=4)
             for line in msieve_result.stdout.strip().split('\n'):
                 if line.startswith('prp') or line.startswith('p'):
@@ -525,7 +525,7 @@ def factor_best(n, deadline=None):
     if n.bit_length() >= 210 and time.perf_counter() - t_start < 2.8:
         try:
             import subprocess as sp
-            msieve_proc = sp.Popen(['/tmp/msieve/msieve', '-q', '-mb', '2048', str(n)],
+            msieve_proc = sp.Popen(['/tmp/msieve/msieve', '-q', '-mb', '4096', str(n)],
                 stdout=sp.PIPE, stderr=sp.DEVNULL, text=True)
             msieve_launched = True
         except: pass
