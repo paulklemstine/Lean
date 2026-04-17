@@ -642,10 +642,21 @@ def factor_best(n, deadline=None):
         # For 100+ bit: after ECM fails, rho is O(p^{1/2}) - infeasible. Just bail.
         # (MetaOracle: if ECM crystallized queries failed, deterministic methods are needed)
         # GMP rho would take ~2^45 steps at 170b = hours. Skip.
+        # Sympy factorint — deterministic, works at 80-130b
+        # sympy uses a cascade of algorithms (trial div, rho, ECM, SIQS-like)
+        # Very reliable for 80-120b numbers. 112b: 372ms!
+        if n.bit_length() <= 130 and time.perf_counter() - t_start < 2.5:
+            try:
+                from sympy import factorint as sym_factorint
+                sym_result = sym_factorint(n)
+                fs = list(sym_result.keys())
+                if len(fs) >= 2:
+                    f = min(fs)
+                    if 1 < f < n: return (min(f,n//f), max(f,n//f))
+            except: pass
         # C QS fallback for ≤100 bit (DETERMINISTIC — catches ECM failures!)
         # Catalog: congruence_of_squares_zmod, smooth_relation_congruence
-        # C QS works up to ~100 bits in <3s. Much faster than Python SIQS.
-        if n.bit_length() <= 100 and time.perf_counter() - t_start < 2.5:
+        if n.bit_length() <= 100 and time.perf_counter() - t_start < 2.0:
             try:
                 import ctypes
                 _qs_lib = ctypes.CDLL('./qs_v3.so')
