@@ -568,7 +568,7 @@ def factor_best(n, deadline=None):
                 for B1, nc in b1_pairs:
                     try:
                         p = subprocess.Popen(
-                            ['ecm', '-c', str(nc), str(B1)],
+                            ['ecm', '-power', '6', '-c', str(nc), str(B1)],
                             stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                             stderr=subprocess.DEVNULL, text=True
                         )
@@ -611,7 +611,7 @@ def factor_best(n, deadline=None):
                 b1_schedule = [(2000, 40), (50000, 50), (250000, 40), (1000000, 200), (5000000, 50)]
                 for B1, ncurves in b1_schedule:
                     result = subprocess.run(
-                        ['ecm', '-c', str(ncurves), str(B1)],
+                        ['ecm', '-power', '6', '-c', str(ncurves), str(B1)],
                         input=str(n), capture_output=True, text=True, timeout=30
                     )
                     if 'Factor found' in result.stdout:
