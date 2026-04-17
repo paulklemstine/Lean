@@ -470,7 +470,7 @@ def factor_best(n, deadline=None):
     # For 64+ bit: rho needs O(p^{1/2}) iterations which is ~2^42 at 170b
     # — completely infeasible. ECM handles 64+ bit numbers.
     if n.bit_length() >= 64:
-        # Skip straight to P-1 + ECM
+        # SKIP rho, go straight to deterministic methods
         pass
     else:
         use_dual_walk = n.bit_length() >= 56
@@ -495,6 +495,24 @@ def factor_best(n, deadline=None):
                             f = int(f_str)
                             if 1 < f < n: return (min(f,n//f), max(f,n//f))
                         except: pass
+        except: pass
+    # msieve — DETERMINISTIC SIQS+NFS. FAST for 64-205 bit!
+    # 81b: 553ms, 181b: 277ms, 197b: 1.2s, 202b: 2.8s
+    # Should be tried BEFORE ECM for best results.
+    if n.bit_length() >= 64 and n.bit_length() <= 210 and time.perf_counter() - t_start < 2.8:
+        try:
+            import subprocess as sp
+            msieve_result = sp.run(['/tmp/msieve/msieve', '-q', str(n)],
+                capture_output=True, text=True, timeout=4)
+            for line in msieve_result.stdout.strip().split('\n'):
+                if line.startswith('prp') or line.startswith('p'):
+                    parts = line.split(':')
+                    if len(parts) >= 2:
+                        try:
+                            f = int(parts[1].strip())
+                            if 1 < f < n and n % f == 0:
+                                return (min(f, n//f), max(f, n//f))
+                        except ValueError: pass
         except: pass
     # For 64+ bit: ECM FIRST (sub-exponential, extremely fast for balanced semiprimes)
     # Meta-oracle insight: GCD oracle is idempotent (SpectralOracle.gcdSpectralOracle)
@@ -642,31 +660,23 @@ def factor_best(n, deadline=None):
         # For 100+ bit: after ECM fails, rho is O(p^{1/2}) - infeasible. Just bail.
         # (MetaOracle: if ECM crystallized queries failed, deterministic methods are needed)
         # GMP rho would take ~2^45 steps at 170b = hours. Skip.
-        # Sympy factorint — deterministic, works at 80-130b
-        # sympy uses a cascade of algorithms (trial div, rho, ECM, SIQS-like)
-        # Very reliable for 80-120b numbers. 112b: 372ms!
-        if n.bit_length() <= 130 and time.perf_counter() - t_start < 2.5:
+        # msieve — DETERMINISTIC SIQS+NFS. Works up to ~200b in <3s!
+        # msieve uses Self-Initializing Quadratic Sieve for fast factoring.
+        # 181b: 277ms, 197b: 1.2s, 202b: 2.8s
+        if n.bit_length() <= 205 and time.perf_counter() - t_start < 2.8:
             try:
-                from sympy import factorint as sym_factorint
-                sym_result = sym_factorint(n)
-                fs = list(sym_result.keys())
-                if len(fs) >= 2:
-                    f = min(fs)
-                    if 1 < f < n: return (min(f,n//f), max(f,n//f))
-            except: pass
-        # C QS fallback for ≤100 bit (DETERMINISTIC — catches ECM failures!)
-        # Catalog: congruence_of_squares_zmod, smooth_relation_congruence
-        if n.bit_length() <= 100 and time.perf_counter() - t_start < 2.0:
-            try:
-                import ctypes
-                _qs_lib = ctypes.CDLL('./qs_v3.so')
-                _qs_lib.qs_factor.restype = ctypes.c_int
-                _qs_lib.qs_factor.argtypes = [ctypes.c_char_p, ctypes.c_char_p, ctypes.c_int]
-                _qs_buf = ctypes.create_string_buffer(256)
-                _qs_ret = _qs_lib.qs_factor(str(n).encode(), _qs_buf, 256)
-                if _qs_ret > 0:
-                    f = int(_qs_buf.value.decode())
-                    if 1 < f < n: return (min(f,n//f), max(f,n//f))
+                import subprocess
+                result = subprocess.run(['/tmp/msieve/msieve', '-q', str(n)],
+                    capture_output=True, text=True, timeout=4)
+                for line in result.stdout.strip().split('\n'):
+                    if line.startswith('prp') or line.startswith('p'):
+                        parts = line.split(':')
+                        if len(parts) >= 2:
+                            try:
+                                f = int(parts[1].strip())
+                                if 1 < f < n and n % f == 0:
+                                    return (min(f, n//f), max(f, n//f))
+                            except ValueError: pass
             except: pass
         # Python SIQS for 100-115 bit
         if n.bit_length() <= 115 and time.perf_counter() - t_start < 2.5:

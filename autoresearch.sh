@@ -16,7 +16,7 @@ import factor_autoresearch as fa
 import time, random
 
 def find_max_bits(target_ms=3000):
-    lo, hi = 40, 200
+    lo, hi = 40, 220
     best_bits = lo
     while lo <= hi:
         mid = (lo + hi) // 2
