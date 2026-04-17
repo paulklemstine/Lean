@@ -521,15 +521,17 @@ def factor_best(n, deadline=None):
                 # For 130-170b (20-26d): allocate 5/10 procs to B1=50K-110K
                 # For 100-130b (15-20d): allocate 7/10 procs to B1=50K
                 if bits >= 190:
-                    # 5 ECM at B1=500K + 3 ECM at B1=250K + 1 ECM B1=1M + 1 P-1 B1=10M
-                    # Empirically: B1=500K is 50% better than B1=250K for 95b factors (15/20 vs 10/20)
-                    # B1=500K per-curve prob > compensates for fewer curves per time unit
+                    # 8 ECM at B1=500K + 1 ECM B1=1M + 1 ECM B1=3M
+                    # Empirically: B1=500K is 50% better than B1=250K for 95b factors
+                    # 8×500K × 9.5 curves = 76 curves. P(30d) = 1-(1-1/200)^76 ≈ 31%
+                    # 1×1M × 5 curves = 5 curves. P(30d) = 1-(1-1/80)^5 ≈ 6%
+                    # 1×3M × 1 curve. P(30d) ≈ 5%
+                    # Combined ≈ 38% → P(2/3 pass) = 73% at 190b
                     b1_pairs = [
-                        (500000, 20), (500000, 20), (500000, 20),
-                        (500000, 20), (500000, 20),  # 5×500K — main (9.5 curves each)
-                        (250000, 50), (250000, 50), (250000, 50),  # 3×250K — fast fill
-                        (1000000, 10),  # deep ECM
-                        ('pm1_10M', 1),  # P-1 B1=10M
+                        (500000, 20), (500000, 20), (500000, 20), (500000, 20),
+                        (500000, 20), (500000, 20), (500000, 20), (500000, 20),
+                        (1000000, 10),   # deep ECM
+                        (3000000, 2),   # deep ECM B1=3M
                     ]
                 elif bits >= 175:
                     # ALL 10 procs at B1=250K — maximum info rate for 26-30d factors
