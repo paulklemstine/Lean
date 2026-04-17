@@ -521,8 +521,10 @@ def factor_best(n, deadline=None):
                 # For 130-170b (20-26d): allocate 5/10 procs to B1=50K-110K
                 # For 100-130b (15-20d): allocate 7/10 procs to B1=50K
                 if bits >= 175:
-                    # 9/10 procs at B1=250K + 1 at B1=50K
+                    # ALL 10 procs at B1=250K — maximum info rate for 26-30d factors
                     # Catalog: oracle_query_max_info — maximize queries at optimal info rate
+                    # At 175+ bit, both factors are 26+ digits, B1=50K is useless
+                    # Each process gets ~20-24 curves in 2.8s → 200-240 total curves
                     b1_pairs = [
                         (250000, 50),    # 26d — main
                         (250000, 50),
@@ -533,7 +535,7 @@ def factor_best(n, deadline=None):
                         (250000, 50),
                         (250000, 50),
                         (250000, 50),
-                        (50000, 350),    # 18d — catches smooth p-1
+                        (250000, 50),
                     ]
                 elif bits >= 155:
                     b1_pairs = [
@@ -574,7 +576,7 @@ def factor_best(n, deadline=None):
                         procs.append((p, B1))
                     except: pass
                 # Poll for first result using select
-                deadline = t0_ecm + 2.8
+                deadline = t0_ecm + 2.85
                 found = None
                 done = set()
                 while time.perf_counter() < deadline and len(done) < len(procs):
