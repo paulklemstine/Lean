@@ -520,22 +520,23 @@ def factor_best(n, deadline=None):
                 # For 170-190b (26-29d): allocate 8/10 procs to B1=250K
                 # For 130-170b (20-26d): allocate 5/10 procs to B1=50K-110K
                 # For 100-130b (15-20d): allocate 7/10 procs to B1=50K
-                if bits >= 175:
-                    # ALL 10 procs at B1=250K — maximum info rate for 26-30d factors
-                    # Catalog: oracle_query_max_info — maximize queries at optimal info rate
-                    # At 175+ bit, both factors are 26+ digits, B1=50K is useless
-                    # Each process gets ~20-24 curves in 2.8s → 200-240 total curves
+                if bits >= 190:
+                    # 8 procs at B1=250K + 2 procs at B1=1M for 190+ bit
+                    # At 95+ bit factors (29-30d), B1=250K has best info/sec but
+                    # B1=1M catches factors with p-1 having a large prime 129M-600M
+                    # which B1=250K stage 2 can't reach. Portfolio diversification.
                     b1_pairs = [
-                        (250000, 50),    # 26d — main
-                        (250000, 50),
-                        (250000, 50),
-                        (250000, 50),
-                        (250000, 50),
-                        (250000, 50),
-                        (250000, 50),
-                        (250000, 50),
-                        (250000, 50),
-                        (250000, 50),
+                        (250000, 50), (250000, 50), (250000, 50), (250000, 50),
+                        (250000, 50), (250000, 50), (250000, 50), (250000, 50),
+                        (1000000, 10), (1000000, 10),  # deep coverage
+                    ]
+                elif bits >= 175:
+                    # ALL 10 procs at B1=250K — maximum info rate for 26-30d factors
+                    # At 175-189 bit, both factors are 26-28d, B1=250K is optimal
+                    b1_pairs = [
+                        (250000, 50), (250000, 50), (250000, 50), (250000, 50),
+                        (250000, 50), (250000, 50), (250000, 50), (250000, 50),
+                        (250000, 50), (250000, 50),
                     ]
                 elif bits >= 155:
                     b1_pairs = [
