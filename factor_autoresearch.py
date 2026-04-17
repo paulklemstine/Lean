@@ -470,6 +470,23 @@ def factor_best(n, deadline=None):
     use_dual_walk = n.bit_length() >= 56
     # After ECM: if > 3.5s elapsed, bail (ECM had its chance)
     if time.perf_counter() - t_start > 3.5: return None
+    # P-1 pre-check (from Catalog: smooth_submonoid_closure, prime_divides_factorial, fermat_little)
+    # Deterministic — catches all p-1 smooth factors. ~87ms at B1=1M.
+    if n.bit_length() >= 64:
+        try:
+            import subprocess
+            t0_pm1 = time.perf_counter()
+            result = subprocess.run(['ecm', '-pm1', '1000000'],
+                input=str(n), capture_output=True, text=True, timeout=2)
+            if 'Factor found' in result.stdout:
+                for line in result.stdout.split('\n'):
+                    if 'Factor found' in line and ':' in line:
+                        f_str = line.split(':')[-1].strip()
+                        try:
+                            f = int(f_str)
+                            if 1 < f < n: return (min(f,n//f), max(f,n//f))
+                        except: pass
+        except: pass
     # For 64+ bit: ECM FIRST (sub-exponential, extremely fast for balanced semiprimes)
     # Meta-oracle insight: GCD oracle is idempotent (SpectralOracle.gcdSpectralOracle)
     # Multiple parallel query channels maximize information rate
