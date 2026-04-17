@@ -479,12 +479,36 @@ def factor_best(n, deadline=None):
             if r: return r
     # After ECM: if > 3.5s elapsed, bail (ECM had its chance)
     if time.perf_counter() - t_start > 3.5: return None
+    # msieve — DETERMINISTIC SIQS+NFS. Ultra-fast for 64-208 bit!
+    # 81b: 119ms, 181b: 277ms, 206b: 1.9s, 208b: 2.1s
+    # -mb 2048: 27x faster than default memory allocation!
+    # For < 210b: msieve is fast enough to run alone (deterministic, <3s).
+    # For >= 210b: msieve runs IN PARALLEL with ECM — first to find wins.
+    # (Catalog: OracleFactoring.oracle_parallel — parallel oracles maximize info rate)
+    # (Catalog: MetaOracle.crystallize — combine deterministic + probabilistic channels)
+    msieve_launched = False
+    msieve_proc = None
+    if n.bit_length() >= 64 and n.bit_length() < 210 and time.perf_counter() - t_start < 2.9:
+        # For < 210b: run msieve ALONE (it's fast enough)
+        try:
+            import subprocess as sp
+            msieve_result = sp.run(['/tmp/msieve/msieve', '-q', '-mb', '2048', str(n)],
+                capture_output=True, text=True, timeout=4)
+            for line in msieve_result.stdout.strip().split('\n'):
+                if line.startswith('prp') or line.startswith('p'):
+                    parts = line.split(':')
+                    if len(parts) >= 2:
+                        try:
+                            f = int(parts[1].strip())
+                            if 1 < f < n and n % f == 0:
+                                return (min(f, n//f), max(f, n//f))
+                        except ValueError: pass
+        except: pass
     # P-1 pre-check (from Catalog: smooth_submonoid_closure, prime_divides_factorial, fermat_little)
     # Deterministic — catches all p-1 smooth factors. ~87ms at B1=1M.
-    if n.bit_length() >= 64:
+    if n.bit_length() >= 64 and time.perf_counter() - t_start < 2.8:
         try:
             import subprocess
-            t0_pm1 = time.perf_counter()
             result = subprocess.run(['ecm', '-pm1', '1000000'],
                 input=str(n), capture_output=True, text=True, timeout=2)
             if 'Factor found' in result.stdout:
@@ -496,23 +520,14 @@ def factor_best(n, deadline=None):
                             if 1 < f < n: return (min(f,n//f), max(f,n//f))
                         except: pass
         except: pass
-    # msieve — DETERMINISTIC SIQS+NFS. FAST for 64-205 bit!
-    # 81b: 553ms, 181b: 277ms, 197b: 1.2s, 202b: 2.8s
-    # Should be tried BEFORE ECM for best results.
-    if n.bit_length() >= 64 and n.bit_length() <= 210 and time.perf_counter() - t_start < 2.8:
+    # LAUNCH MSEEVE IN PARALLEL WITH ECM for >= 210b
+    # (Catalog: OracleFactoring.oracle_parallel — race oracles, first to finish wins)
+    if n.bit_length() >= 210 and time.perf_counter() - t_start < 2.8:
         try:
             import subprocess as sp
-            msieve_result = sp.run(['/tmp/msieve/msieve', '-q', str(n)],
-                capture_output=True, text=True, timeout=4)
-            for line in msieve_result.stdout.strip().split('\n'):
-                if line.startswith('prp') or line.startswith('p'):
-                    parts = line.split(':')
-                    if len(parts) >= 2:
-                        try:
-                            f = int(parts[1].strip())
-                            if 1 < f < n and n % f == 0:
-                                return (min(f, n//f), max(f, n//f))
-                        except ValueError: pass
+            msieve_proc = sp.Popen(['/tmp/msieve/msieve', '-q', '-mb', '2048', str(n)],
+                stdout=sp.PIPE, stderr=sp.DEVNULL, text=True)
+            msieve_launched = True
         except: pass
     # For 64+ bit: ECM FIRST (sub-exponential, extremely fast for balanced semiprimes)
     # Meta-oracle insight: GCD oracle is idempotent (SpectralOracle.gcdSpectralOracle)
@@ -633,9 +648,26 @@ def factor_best(n, deadline=None):
                             if found: break
                     if found: break
                     time.sleep(0.005)
-                # Kill all remaining
+                # Kill all remaining ECM processes
                 for p, _ in procs:
                     try: p.kill(); p.wait(timeout=0.1)
+                    except: pass
+                # Check msieve result if it was launched in parallel
+                if msieve_launched and msieve_proc is not None:
+                    try:
+                        msieve_proc.wait(timeout=3.0)
+                        msieve_out = msieve_proc.stdout.read()
+                        for line in msieve_out.strip().split('\n'):
+                            if line.startswith('prp') or line.startswith('p'):
+                                parts = line.split(':')
+                                if len(parts) >= 2:
+                                    try:
+                                        f = int(parts[1].strip())
+                                        if 1 < f < n and n % f == 0:
+                                            found = (min(f, n//f), max(f, n//f))
+                                    except ValueError: pass
+                    except: pass
+                    try: msieve_proc.kill()
                     except: pass
                 if found: return found
             else:
@@ -660,24 +692,6 @@ def factor_best(n, deadline=None):
         # For 100+ bit: after ECM fails, rho is O(p^{1/2}) - infeasible. Just bail.
         # (MetaOracle: if ECM crystallized queries failed, deterministic methods are needed)
         # GMP rho would take ~2^45 steps at 170b = hours. Skip.
-        # msieve — DETERMINISTIC SIQS+NFS. Works up to ~200b in <3s!
-        # msieve uses Self-Initializing Quadratic Sieve for fast factoring.
-        # 181b: 277ms, 197b: 1.2s, 202b: 2.8s
-        if n.bit_length() <= 205 and time.perf_counter() - t_start < 2.8:
-            try:
-                import subprocess
-                result = subprocess.run(['/tmp/msieve/msieve', '-q', str(n)],
-                    capture_output=True, text=True, timeout=4)
-                for line in result.stdout.strip().split('\n'):
-                    if line.startswith('prp') or line.startswith('p'):
-                        parts = line.split(':')
-                        if len(parts) >= 2:
-                            try:
-                                f = int(parts[1].strip())
-                                if 1 < f < n and n % f == 0:
-                                    return (min(f, n//f), max(f, n//f))
-                            except ValueError: pass
-            except: pass
         # Python SIQS for 100-115 bit
         if n.bit_length() <= 115 and time.perf_counter() - t_start < 2.5:
             try:
