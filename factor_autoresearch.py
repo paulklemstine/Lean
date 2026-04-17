@@ -486,18 +486,53 @@ def factor_best(n, deadline=None):
             if bits >= 100:
                 # ECM schedule: spread B1 with high curve counts at 1M and 3M
                 # Each process has 2.8s budget. Processes that find factors return early.
-                b1_pairs = [
-                    (50000, 1000),      # 18d - fast
-                    (110000, 1000),     # 20d - fast
-                    (250000, 1000),     # 22d
-                    (1000000, 2000),   # 25d sweet spot (most curves)
-                    (1000000, 2000),   # duplicate sweet spot
-                    (3000000, 1000),   # 28d
-                    (3000000, 1000),   # duplicate
-                    (11000000, 200),   # 32d
-                    (250000, 1000),     # extra 22d
-                    (250000, 1000),     # another extra 22d
-                ]
+                # Adaptive ECM schedule based on bit length
+                # Catalog: oracle_query_max_info — binary queries max 1 bit each
+                # Catalog: query_strategy_output_bound — k queries → 2^k outputs
+                # Catalog: MetaOracle.crystallize — ECM schedule is frozen crystal
+                # Optimal: B1=250K has highest info/sec for 26-30d factors
+                # For 170-190b (26-29d): allocate 8/10 procs to B1=250K
+                # For 130-170b (20-26d): allocate 5/10 procs to B1=50K-110K
+                # For 100-130b (15-20d): allocate 7/10 procs to B1=50K
+                if bits >= 175:
+                    b1_pairs = [
+                        (250000, 200),   # 26d — main workhorse
+                        (250000, 200),
+                        (250000, 200),
+                        (250000, 200),
+                        (250000, 200),
+                        (250000, 200),
+                        (250000, 200),
+                        (3000000, 9),    # 28d — deep backup
+                        (1000000, 35),  # 25d — backup
+                        (50000, 500),   # 18d — catches small factors
+                    ]
+                elif bits >= 155:
+                    b1_pairs = [
+                        (250000, 200),   # 26d — primary
+                        (250000, 200),
+                        (250000, 200),
+                        (250000, 200),
+                        (110000, 500),   # 20d
+                        (110000, 500),
+                        (50000, 1000),   # 18d
+                        (50000, 1000),
+                        (1000000, 35),   # 25d
+                        (1000000, 35),
+                    ]
+                else:
+                    b1_pairs = [
+                        (50000, 1000),    # 18d — most effective
+                        (50000, 1000),
+                        (50000, 1000),
+                        (110000, 500),   # 20d
+                        (110000, 500),
+                        (250000, 200),   # 22d backup
+                        (250000, 200),
+                        (1000000, 50),   # deep
+                        (50000, 1000),
+                        (50000, 1000),
+                    ]
                 procs = []
                 for B1, nc in b1_pairs:
                     try:
