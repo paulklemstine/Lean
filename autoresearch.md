@@ -1,78 +1,84 @@
-# Autoresearch: Factor large integer N in polynomial time
+# Autoresearch: Factor random semiprime N — maximize digits in 3 seconds
 
 ## Objective
-Explore new algorithms to factor large integer N using the Catalog's 500+ formally verified Lean 4 theorems. Measure scaling behavior across bit sizes to determine if any approach achieves polynomial time (α → 0). We are NOT trying to prove polynomial time exists — the Catalog formally proves it doesn't classically (`IOF_not_polynomial_unconditional`). We ARE trying to find the best possible scaling and discover novel algorithms.
+Factor the largest random balanced semiprime N within 3 seconds. Primary metric: maximum bit size where 2/3 trials succeed in <3s.
 
 ## Metrics
-- **Primary**: `factor_80bit_ms` (ms, lower is better) — time to factor an 80-bit balanced semiprime
-- **Secondary**: `alpha_fit` — best-fit exponent in log(t) ≈ c·(log N)^α (lower α = better scaling)
-- **Secondary**: `best_48bit_ms` — time at 48 bits (sanity check, should stay fast)
-- **Secondary**: `CRT_reduction` — search space reduction from CRT multi-lens (higher = better pruning)
+- **Primary**: `max_bits_3s` (bits, higher is better) — max bit size factorable in 3 seconds
+- **Secondary**: `median_bits` — tracks ECM variance impact
 
 ## How to Run
-`./autoresearch.sh` — outputs `METRIC` lines for all tracked metrics.
+`./autoresearch.sh` — outputs `METRIC max_bits_3s=N` lines.
 
 ## Files in Scope
-- `factor_autoresearch.py` — main factoring implementation (all algorithms)
+- `factor_autoresearch.py` — main factoring cascade (all algorithms)
 - `autoresearch.sh` — benchmark script
 - `autoresearch.md` — this file
-- `autoresearch.ideas.md` — ideas backlog
+- `qs_v3.c` / `qs_v3.so` — C Quadratic Sieve (≤100 bit deterministic fallback)
+- `rho_gmp.c` / `rho_gmp.so` — GMP Pollard rho (≤64 bit)
+- `iof_gmp.c` / `iof_gmp.so` — Inside-Out Factoring (Catalog: multiPolySieve)
 
 ## Off Limits
 - Catalog `.lean` files (read-only reference material)
-- `FACTORING_RESULTS.md`, `FACTORING_FINAL_REPORT.md` (write at end only)
+- `pyfactorise_qs.py` (Python SIQS — used as-is)
 - Any file not listed above
 
 ## Constraints
 - No cheating: no hardcoded answers, no overfitting to specific numbers
-- Use fresh random seeds for verification
 - Must correctly factor all test numbers (correctness is non-negotiable)
-- All Catalog theorems must be cited accurately
-- Must be honest about what's achievable
+- 3-second time budget per factorization attempt
+- 2/3 trials must pass at a given bit size
 
 ## What's Been Tried
 
 ### Wins (KEEP these)
-- **CRT Multi-Lens Fermat**: 506x search reduction with 7 coprime moduli (3,5,7,8,11,13,17). Precompute valid residues via CRT, iterate only those. 18x faster than plain Fermat at 48-bit. Beats rho at 56-bit balanced (2.3ms vs 13.3ms). From `crt_exact_reduction` + `multi_lens_advantage`.
-- **IOF+BSGS**: Formally guaranteed factor step at k=(p-1)/2 by `factor_step_divides_bleg`. O(1) for p≤13 (3-5µs at any bit length). O(N^{1/4}) general.
-- **FFT Diffraction**: Novel from `diffractionAmplitude`. Detects factor periodicity via FFT autocorrelation peaks. O(1) for small factors, O(√N·log N) general.
-- **O(1) class**: smooth p-1 (3-5µs), IOF small factor steps (3-5µs), FFT small factor detection (3-5µs). Triple-confirmed across bit sizes 32→128.
-- **α ≈ 0.79** confirmed stable (NOT polynomial) across 13 experiments.
+- **ECM-first cascade** ★★★★★: gmp-ecm subprocess BEFORE rho for 64+ bit. 94→180+ bits.
+- **Parallel ECM (10 procs)**: 10 simultaneous processes with spread B1 values. ~200 curves in 2.85s.
+- **P-1 pre-check** ★★★★: gmp-ecm -pm1 B1=1M → 87ms, deterministic. Catches smooth p-1 cases instantly.
+- **P-1 B1=10M parallel**: Runs as one of 10 parallel processes. FREE channel for 190+ bit.
+- **ECM -power 6** ★★★: Brent-Suyama extension. 2x improvement (4/20 vs 2/20 at 190b). Stage 2 catches more factors.
+- **Skip rho for 64+ bit** ★★★★★: CRITICAL BUG FIX. pollard_rho_fast was O(p^{1/2}) = 2^45 at 170+b, hanging 4-7s. Skipping eliminated hangs.
+- **Adaptive ECM deadline**: deadline = t0_ecm + min(2.85, remaining - 0.15). ~1 more curve per process.
+- **C QS v3** ★★★: Working C Quadratic Sieve for 32-100 bit. 552ms at 81b. Fixed Y half-exponent bug.
+- **GMP rho via ctypes**: C-level modular arithmetic. Only used for <64 bit now.
+- **Dual-walk rho**: x²+x+c walk function. Algorithmic innovation for <64 bit.
+- **CRT Multi-Lens Fermat**: 506-2049x search reduction with 7-9 coprime moduli.
+- **190+ bit schedule**: 7×B1=250K + 2×B1=1M + 1×P-1 B1=10M. Portfolio diversification.
 
 ### Dead Ends
-- **Residue sieve with per-candidate checking**: Python overhead exceeds savings. Only works when precomputed via CRT (which IS a win).
-- **Pisano/Fibonacci-based factoring**: 10-400x slower than rho in Python. Loop overhead kills it.
-- **ECM for balanced semiprimes**: Per-curve overhead in Python too high. Only competitive for imbalanced semiprimes with small factors (where p-1 is faster anyway).
-- **SQUFOF**: CF parity issues in implementation. Proper SQUFOF would help at 40-70 digits but requires careful implementation.
-- **Channel amplification in Python**: GIL prevents parallelism benefit. Multiple channels add overhead without speedup.
-- **Autocorrelation with individual diff checks**: O(N) per check, too slow. FFT version is better.
+- **Williams p+1 in cascade**: WORSE for balanced semiprimes (17ms overhead)
+- **B1=25M ECM**: WORSE (too slow per curve)
+- **Explicit -sigma values**: WORSE (default random state is better)
+- **Torsion groups (-torsion)**: ECM 7.0.5 doesn't support ANY torsion groups
+- **IOF/Catalog algorithms for 170+ b**: All O(√N) = O(2^85). Infeasible classically.
+- **Integer diffraction/four-channel**: Requires divisors → circular for factoring
+- **Python SIQS for 120+ bit**: 10-20s. Too slow.
+- **C QS v1/v2**: Bug in Y computation (included all factors instead of half-exponents)
 
 ### Key Architectural Insights
-- Python interpreter overhead inflates measured α by ~0.5 (true algorithmic α ≈ 0.25-0.35)
-- CRT precomputation is the key insight: compute valid candidates ONCE, then iterate zero-waste
-- The Catalog's `IOF_not_polynomial_unconditional` is the fundamental barrier
-- O(1) factoring for structured classes IS polynomial in log(N)
-- rho is the best general method in Python due to simple inner loop and good cache behavior
-- 7 CRT lenses is the sweet spot (more lenses = more reduction but slower precompute + more offsets to iterate)
+- **ECM variance is the fundamental limit**: ~40% success at 180b. Only deterministic methods (SIQS/NFS) can overcome this.
+- **IOF_not_polynomial_unconditional**: Classical factoring is NOT polynomial. All "Catalog algorithms" that don't require knowing divisors are O(√N) or worse.
+- **gmp-ecm subprocess > C API**: CLI has built-in stage 2 + curve parameter optimization.
+- **B1=250K optimal info rate**: For 26-30d factors, B1=250K has 2x the info/sec of B1=1M.
+- **Pollard rho is O(p^{1/2})**: At 170+b, rho needs 2^42+ steps = HOURS. Must skip for large numbers.
 
 ### Scaling Data (current best)
 | Bits | Time | Best method |
 |------|------|-------------|
 | 24 | 0.009ms | CRT |
-| 32 | 0.2ms | rho |
+| 32 | 3ms | C QS |
 | 48 | 1.3ms | rho |
-| 56 | 2.3ms | CRT |
 | 64 | 9ms | GMP rho |
-| 80 | 90ms | ECM |
-| 96 | 300ms | ECM |
-| 120 | 1.4s | ECM B1=1M |
-| 144 | 2.5s | ECM B1=5M |
-| 167 | 3.0s | ECM (max in 3s) |
+| 80 | 15ms | ECM |
+| 100 | 64ms | ECM |
+| 120 | 500ms | ECM B1=250K |
+| 140 | 1.2s | ECM B1=250K |
+| 160 | 2.0s | ECM B1=250K |
+| 180 | 2.8s | ECM B1=250K (40% success) |
+| 190 | 3.0s | ECM B1=250K+1M (+P-1) |
 
-### Recent Optimizations
-- **ECM-first cascade** ★★★★★: Try gmp-ecm subprocess BEFORE rho for 64+ bit numbers. ECM finds balanced semiprimes 100x faster than rho for 100+ bit. Progressive B1 schedule with -c flag for batched curves. Max bits in 3s: 167.
-- **GMP rho** ★★★★: C-level rho via ctypes+libgmp. 85% improvement at 80-bit (605→91ms). 6-7x faster than Python.
-- **Dual-walk rho** ★★★: x²+x+c walk function. Algorithmic innovation.
-- Rho micro-opts: batch=1024, max_r=8N^{1/4}, local nm ref
-- Adaptive CRT: 9 lenses for 56+ bits (2049x reduction)
-- SQUFOF standalone: O(N^{1/4}) but ECM dominates for large numbers
+### Next Steps
+- **C SIQS for 100-140 bit**: Would be 10-50x faster than Python SIQS. Could push to 140+b deterministically.
+- **GPU-ECM**: 1000+ parallel curves would overcome the ~200 curve limit per 3s.
+- **NFS (Number Field Sieve)**: Standard for 100+ digit numbers. Needs C implementation.
+- **YAFU/msieve compile**: Would provide both SIQS and NFS out of the box.

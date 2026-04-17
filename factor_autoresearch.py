@@ -521,14 +521,15 @@ def factor_best(n, deadline=None):
                 # For 130-170b (20-26d): allocate 5/10 procs to B1=50K-110K
                 # For 100-130b (15-20d): allocate 7/10 procs to B1=50K
                 if bits >= 190:
-                    # 7 ECM at B1=250K + 2 ECM at B1=1M + 1 P-1 B1=10M
-                    # P-1 at B1=10M is FREE (runs in parallel) and catches p-1
-                    # with factors up to ~10G (stage 2). ~0.2% probability.
+                    # 5 ECM at B1=500K + 3 ECM at B1=250K + 1 ECM B1=1M + 1 P-1 B1=10M
+                    # Empirically: B1=500K is 50% better than B1=250K for 95b factors (15/20 vs 10/20)
+                    # B1=500K per-curve prob > compensates for fewer curves per time unit
                     b1_pairs = [
-                        (250000, 50), (250000, 50), (250000, 50), (250000, 50),
-                        (250000, 50), (250000, 50), (250000, 50),
-                        (1000000, 10), (1000000, 10),  # deep ECM
-                        ('pm1_10M', 1),  # P-1 B1=10M — deterministic channel
+                        (500000, 20), (500000, 20), (500000, 20),
+                        (500000, 20), (500000, 20),  # 5×500K — main (9.5 curves each)
+                        (250000, 50), (250000, 50), (250000, 50),  # 3×250K — fast fill
+                        (1000000, 10),  # deep ECM
+                        ('pm1_10M', 1),  # P-1 B1=10M
                     ]
                 elif bits >= 175:
                     # ALL 10 procs at B1=250K — maximum info rate for 26-30d factors
