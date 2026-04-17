@@ -466,8 +466,17 @@ def factor_best(n, deadline=None):
             p,q = a-b, a+b
             if 1 < p < n: return (min(p,q), max(p,q))
         a += 1
-    # Quick rho (balanced: dual walk for 56+ bit)
-    use_dual_walk = n.bit_length() >= 56
+    # Quick rho ONLY for < 64 bit numbers.
+    # For 64+ bit: rho needs O(p^{1/2}) iterations which is ~2^42 at 170b
+    # — completely infeasible. ECM handles 64+ bit numbers.
+    if n.bit_length() >= 64:
+        # Skip straight to P-1 + ECM
+        pass
+    else:
+        use_dual_walk = n.bit_length() >= 56
+        if n.bit_length() < 64:
+            r = pollard_rho_fast(n, 8, use_dual_walk=use_dual_walk)
+            if r: return r
     # After ECM: if > 3.5s elapsed, bail (ECM had its chance)
     if time.perf_counter() - t_start > 3.5: return None
     # P-1 pre-check (from Catalog: smooth_submonoid_closure, prime_divides_factorial, fermat_little)
@@ -613,12 +622,10 @@ def factor_best(n, deadline=None):
                         break
                     if (time.perf_counter() - t0_ecm) > 2.8: break
         except: pass
-        # For 100+ bit: after ECM fails, try quick GMP rho check
-        # (MetaOracle: if ECM crystallized queries failed, GMP rho = alternative oracle)
-        if _rho_gmp is not None and time.perf_counter() - t_start < 3.1:
-            r = _rho_gmp_factor(n, 5, use_dual=True)
-            if r: return r
-        # SIQS fallback for 100-120 bit (DETERMINISTIC — catches ECM failures)
+        # For 100+ bit: after ECM fails, rho is O(p^{1/2}) - infeasible. Just bail.
+        # (MetaOracle: if ECM crystallized queries failed, deterministic methods are needed)
+        # GMP rho would take ~2^45 steps at 170b = hours. Skip.
+        # SIQS fallback for 100-115 bit (DETERMINISTIC — catches ECM failures)
         # Catalog: congruence_of_squares_zmod, smooth_relation_congruence
         if n.bit_length() <= 115 and time.perf_counter() - t_start < 2.5:
             try:
@@ -646,13 +653,14 @@ def factor_best(n, deadline=None):
         r = crt_lens_fermat(n, lens_mods, lens_steps)
         if r: return r
     if time.perf_counter() - t_start < 3.3:
-        # Extended sequential rho (GMP for 64+ bit)
-        if n.bit_length() >= 64 and _rho_gmp is not None:
+        # Extended sequential rho (GMP for 64+ bit) — but only if time permits
+        # Rho is O(p^{1/2}) which at 170b means ~2^45 steps. Skip for 100+ bit.
+        if n.bit_length() >= 64 and n.bit_length() < 100 and _rho_gmp is not None:
             r = _rho_gmp_factor(n, 20, use_dual=True)
             if r: return r
-    else:
-        r = pollard_rho_fast(n, 50, use_dual_walk=use_dual_walk)
-        if r: return r
+        elif n.bit_length() < 64:
+            r = pollard_rho_fast(n, 50, use_dual_walk=use_dual_walk)
+            if r: return r
     if time.perf_counter() - t_start < 3.4:
         # p-1 (smooth p-1 O(1) channel)
         r = pollard_pm1(n, 50000)
