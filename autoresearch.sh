@@ -21,7 +21,8 @@ def find_max_bits(target_ms=3000):
     while lo <= hi:
         mid = (lo + hi) // 2
         pass_count = 0
-        for seed in range(42, 45):
+        n_trials = 3  # 3 trials, need 2 to pass (standard 2/3)
+        for seed in range(42, 42+n_trials):
             random.seed(seed)
             p = fa.make_prime(mid//2+1)
             q = fa.make_prime(mid-mid//2+1)
@@ -37,7 +38,7 @@ def find_max_bits(target_ms=3000):
             if t_ms > 6000:
                 pass_count = 0
                 break
-        if pass_count >= 2:
+        if pass_count >= 2:  # 2/3 threshold — standard for ECM variance
             best_bits = mid
             lo = mid + 1
         else:
