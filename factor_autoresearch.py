@@ -486,6 +486,14 @@ def factor_best(n, deadline=None):
     # For >= 210b: msieve runs IN PARALLEL with ECM — first to find wins.
     # (Catalog: OracleFactoring.oracle_parallel — parallel oracles maximize info rate)
     # (Catalog: MetaOracle.crystallize — combine deterministic + probabilistic channels)
+    # (Catalog: collapse_spectrum — continuous spectral collapse preserves info;
+    #  IOF_not_polynomial_unconditional — no poly-time classical factoring;
+    #  residue_sieve_filter + multi_sieve_elimination — sieving IS spectral collapse)
+    # Clean msieve cache to ensure cold-start performance measurement
+    import os
+    for _cache in ['msieve.dat', '/tmp/msieve/msieve.dat']:
+        try: os.remove(_cache)
+        except: pass
     msieve_launched = False
     msieve_proc = None
     if n.bit_length() >= 64 and n.bit_length() < 210 and time.perf_counter() - t_start < 2.9:
@@ -520,8 +528,12 @@ def factor_best(n, deadline=None):
                             if 1 < f < n: return (min(f,n//f), max(f,n//f))
                         except: pass
         except: pass
-    # LAUNCH MSEEVE IN PARALLEL WITH ECM for >= 210b
-    # (Catalog: OracleFactoring.oracle_parallel — race oracles, first to finish wins)
+    # LAUNCH MSIEVE IN PARALLEL WITH ECM for >= 210b
+    # (Catalog: OracleFactoring.oracle_parallel — race oracles, first to finish wins;)
+    # Clean msieve cache again for the parallel case
+    for _cache in ['msieve.dat', '/tmp/msieve/msieve.dat']:
+        try: os.remove(_cache)
+        except: pass
     if n.bit_length() >= 210 and time.perf_counter() - t_start < 2.8:
         try:
             import subprocess as sp
