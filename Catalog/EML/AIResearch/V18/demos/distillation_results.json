@@ -1,0 +1,92 @@
+{
+  "distillation_history": [
+    {
+      "round": 1,
+      "teacher_params": 13189,
+      "student_params": 632,
+      "compression": 0.04791872014557586,
+      "accuracy": 0.23,
+      "estimated_quality": 0.3996,
+      "calibration_error": 0.212,
+      "eml_layers": 3,
+      "layer_widths": [
+        20,
+        76,
+        38,
+        19,
+        5
+      ]
+    },
+    {
+      "round": 2,
+      "teacher_params": 632,
+      "student_params": 372,
+      "compression": 0.5886075949367089,
+      "accuracy": 0.18,
+      "estimated_quality": 0.35568,
+      "calibration_error": 0.21960000000000002,
+      "eml_layers": 3,
+      "layer_widths": [
+        20,
+        45,
+        22,
+        11,
+        5
+      ]
+    },
+    {
+      "round": 3,
+      "teacher_params": 372,
+      "student_params": 279,
+      "compression": 0.75,
+      "accuracy": 0.19,
+      "estimated_quality": 0.32254400000000005,
+      "calibration_error": 0.16568,
+      "eml_layers": 2,
+      "layer_widths": [
+        20,
+        27,
+        13,
+        6,
+        5
+      ]
+    },
+    {
+      "round": 4,
+      "teacher_params": 279,
+      "student_params": 240,
+      "compression": 0.8602150537634409,
+      "accuracy": 0.2,
+      "estimated_quality": 0.29803520000000006,
+      "calibration_error": 0.12254400000000004,
+      "eml_layers": 1,
+      "layer_widths": [
+        20,
+        16,
+        7,
+        4,
+        5
+      ]
+    },
+    {
+      "round": 5,
+      "teacher_params": 240,
+      "student_params": 121,
+      "compression": 0.5041666666666667,
+      "accuracy": 0.18,
+      "estimated_quality": 0.27442816000000003,
+      "calibration_error": 0.11803520000000006,
+      "eml_layers": 1,
+      "layer_widths": [
+        20,
+        9,
+        4,
+        4,
+        5
+      ]
+    }
+  ],
+  "teacher_params": 13189,
+  "final_params": 121,
+  "compression_ratio": 0.009174311926605505
+}
