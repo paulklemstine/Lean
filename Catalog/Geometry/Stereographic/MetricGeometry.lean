@@ -1,3 +1,6 @@
+import Geometry.Stereographic.Basic
+import Mathlib
+
 /-! # CatalogBuild.Geometry.Stereographic.MetricGeometry
 
 Auto-generated from theorem catalog database.
@@ -5,8 +8,6 @@ Domain: Geometry/Stereographic
 Declarations: 10
 -/
 
-import Geometry.Stereographic.Basic
-import Mathlib
 
 noncomputable section
 

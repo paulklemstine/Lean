@@ -1,3 +1,7 @@
+import Mathlib
+import Geometry.Stereographic.Basic
+import Geometry.Stereographic.MetricGeometry
+
 /-
 # Geodesic and Curvature Theory via Stereographic Coordinates
 
@@ -17,9 +21,6 @@ to differential geometry and physics.
 * `stereoDenom_of_sum` — denominator of a sum expressed via dot product
 * `great_circle_parametrization` — great circles in stereographic coords
 -/
-import Mathlib
-import Geometry.Stereographic.Basic
-import Geometry.Stereographic.MetricGeometry
 
 namespace StereographicProjection
 

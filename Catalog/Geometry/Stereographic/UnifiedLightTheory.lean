@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Geometry.Stereographic.UnifiedLightTheory
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Geometry/Stereographic
 Declarations: 39
 -/
 
-import Mathlib
 
 noncomputable section
 

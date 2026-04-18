@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Geometry.Stereographic.SPBDeepTheory
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Geometry/Stereographic
 Declarations: 10
 -/
 
-import Mathlib
 
 noncomputable section
 

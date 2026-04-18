@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Geometry.Stereographic.AntipodalChart
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Geometry/Stereographic
 Declarations: 9
 -/
 
-import Mathlib
 
 noncomputable section
 

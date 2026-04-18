@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Geometry.Stereographic.GaugeTheory
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Geometry/Stereographic
 Declarations: 20
 -/
 
-import Mathlib
 
 noncomputable section
 

@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Geometry.Stereographic.Basic
 
 Auto-generated from theorem catalog database.
 Domain: Geometry/Stereographic
 Declarations: 13
 -/
-
-import Mathlib
 
 noncomputable section
 
@@ -34,6 +34,15 @@ lemma stereoDenom_ne_zero {N : ℕ} (y : Fin N → ℝ) : stereoDenom y ≠ 0 :=
 Projects from the north pole (0,...,0,1). -/
 def stereoN {N : ℕ} (x : Fin (N + 1) → ℝ) : Fin N → ℝ := fun i =>
   x ⟨i.val, Nat.lt_succ_of_lt i.isLt⟩ / (1 - x ⟨N, Nat.lt_succ_iff.mpr le_rfl⟩)
+
+/-- Inverse stereographic projection from ℝ^N to S^N ⊂ ℝ^{N+1}.
+    For i < N: coordinate is 2*y_i / (1 + ||y||²)
+    For i = N (last): coordinate is (||y||² - 1) / (1 + ||y||²) -/
+def invStereoN {N : ℕ} (y : Fin N → ℝ) : Fin (N + 1) → ℝ := fun i =>
+  if h : i.val < N then
+    2 * y ⟨i.val, h⟩ / stereoDenom y
+  else
+    (sqNormFin y - 1) / stereoDenom y
 
 -- Helper: the last index
 

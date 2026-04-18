@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Geometry.Stereographic.SphericalCombination
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Geometry/Stereographic
 Declarations: 5
 -/
 
-import Mathlib
 
 /-- The fundamental identity: cos²θ + sin²θ = 1, restated for our use. -/
 theorem cos_sq_add_sin_sq_eq_one' (θ : ℝ) : cos θ ^ 2 + sin θ ^ 2 = 1 := by

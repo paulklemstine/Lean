@@ -1,3 +1,6 @@
+import Mathlib
+import Geometry.Stereographic.Basic
+
 /-
 # Hyperbolic Geometry via Stereographic Projection
 
@@ -16,8 +19,6 @@ to stereographic projection.
 * `gnomonic_central` — gnomonic projection maps geodesics to lines
 * `stereo_vs_gnomonic` — relationship between the two projections
 -/
-import Mathlib
-import Geometry.Stereographic.Basic
 
 namespace StereographicProjection
 
