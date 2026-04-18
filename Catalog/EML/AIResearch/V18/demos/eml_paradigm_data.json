@@ -1,0 +1,797 @@
+{
+  "paradigms": {
+    "transformers": {
+      "name": "Transformers",
+      "version": "v1-v8",
+      "category": "Architecture",
+      "core_operation": "softmax = normalized exp",
+      "eml_connection": "Native EML",
+      "theorems": [
+        "eml_activation_pos",
+        "eml_activation_le_one"
+      ],
+      "compression_type": "native"
+    },
+    "ssm": {
+      "name": "State Space Models",
+      "version": "v13",
+      "category": "Architecture",
+      "core_operation": "exp(\u0394A) transition",
+      "eml_connection": "Native EML",
+      "theorems": [
+        "eml_ssm_transition"
+      ],
+      "compression_type": "native"
+    },
+    "diffusion": {
+      "name": "Diffusion Models",
+      "version": "v15",
+      "category": "Generative",
+      "core_operation": "exp(-\u03b2t) noise schedule",
+      "eml_connection": "Native EML",
+      "theorems": [
+        "eml_diffusion_schedule"
+      ],
+      "compression_type": "native"
+    },
+    "gnn": {
+      "name": "Graph Neural Networks",
+      "version": "v15",
+      "category": "Architecture",
+      "core_operation": "exp-based attention",
+      "eml_connection": "Native EML",
+      "theorems": [
+        "eml_gnn_attention"
+      ],
+      "compression_type": "native"
+    },
+    "moe": {
+      "name": "Mixture of Experts",
+      "version": "v14",
+      "category": "Scaling",
+      "core_operation": "exp-based gating/routing",
+      "eml_connection": "Native EML",
+      "theorems": [
+        "eml_moe_routing"
+      ],
+      "compression_type": "native"
+    },
+    "energy_based": {
+      "name": "Energy-Based Models",
+      "version": "v16",
+      "category": "Generative",
+      "core_operation": "p(x) \u221d exp(-E(x))",
+      "eml_connection": "Native EML",
+      "theorems": [
+        "eml_energy_model"
+      ],
+      "compression_type": "native"
+    },
+    "rl": {
+      "name": "Reinforcement Learning",
+      "version": "v14",
+      "category": "Decision",
+      "core_operation": "Boltzmann policy exp(Q/T)",
+      "eml_connection": "Native EML",
+      "theorems": [
+        "eml_rl_policy"
+      ],
+      "compression_type": "native"
+    },
+    "speculative_decoding": {
+      "name": "Speculative Decoding",
+      "version": "v17",
+      "category": "Inference",
+      "core_operation": "Draft model size",
+      "eml_connection": "Direct benefit",
+      "theorems": [
+        "eml_draft_compact",
+        "eml_spec_step_cheaper",
+        "eml_total_spec_cheaper"
+      ],
+      "compression_type": "direct"
+    },
+    "hypernetworks": {
+      "name": "Hypernetworks",
+      "version": "v17",
+      "category": "Adaptation",
+      "core_operation": "Weight generation cost",
+      "eml_connection": "Direct benefit",
+      "theorems": [
+        "eml_hypernet_compact",
+        "eml_weight_gen_cheaper"
+      ],
+      "compression_type": "direct"
+    },
+    "meta_learning": {
+      "name": "Meta-Learning",
+      "version": "v17",
+      "category": "Adaptation",
+      "core_operation": "Inner/outer loop cost",
+      "eml_connection": "Direct benefit",
+      "theorems": [
+        "eml_maml_inner_cheaper",
+        "eml_maml_outer_cheaper",
+        "eml_fewshot_cheaper"
+      ],
+      "compression_type": "direct"
+    },
+    "active_learning": {
+      "name": "Active Learning",
+      "version": "v17",
+      "category": "Data",
+      "core_operation": "Acquisition function cost",
+      "eml_connection": "Direct benefit",
+      "theorems": [
+        "eml_acquisition_cheaper",
+        "eml_mc_dropout_cheaper"
+      ],
+      "compression_type": "direct"
+    },
+    "synthetic_data": {
+      "name": "Synthetic Data",
+      "version": "v17",
+      "category": "Data",
+      "core_operation": "Generation cost",
+      "eml_connection": "Direct benefit",
+      "theorems": [
+        "eml_synthetic_cheaper",
+        "eml_self_instruct_cheaper"
+      ],
+      "compression_type": "direct"
+    },
+    "constitutional_ai": {
+      "name": "Constitutional AI",
+      "version": "v17",
+      "category": "Safety",
+      "core_operation": "Critique-revise cost",
+      "eml_connection": "Direct benefit",
+      "theorems": [
+        "eml_critique_cheaper",
+        "eml_cr_cycle_cheaper"
+      ],
+      "compression_type": "direct"
+    },
+    "neural_ode": {
+      "name": "Neural ODEs",
+      "version": "v17",
+      "category": "Architecture",
+      "core_operation": "f_\u03b8 evaluation cost",
+      "eml_connection": "Direct benefit",
+      "theorems": [
+        "eml_ode_func_compact",
+        "eml_solver_cheaper",
+        "eml_adjoint_cheaper"
+      ],
+      "compression_type": "direct"
+    },
+    "world_models": {
+      "name": "World Models",
+      "version": "v17",
+      "category": "Decision",
+      "core_operation": "Dynamics computation",
+      "eml_connection": "Direct benefit",
+      "theorems": [
+        "eml_dynamics_compact",
+        "eml_imagination_cheaper",
+        "eml_planning_cheaper"
+      ],
+      "compression_type": "direct"
+    },
+    "long_context": {
+      "name": "Long Context",
+      "version": "v17",
+      "category": "Inference",
+      "core_operation": "KV-cache size",
+      "eml_connection": "Direct benefit",
+      "theorems": [
+        "eml_kv_cache_compact",
+        "eml_compression_cheaper"
+      ],
+      "compression_type": "direct"
+    },
+    "multi_agent": {
+      "name": "Multi-Agent",
+      "version": "v17",
+      "category": "Collaboration",
+      "core_operation": "Per-agent cost",
+      "eml_connection": "Direct benefit",
+      "theorems": [
+        "eml_agent_cheaper",
+        "eml_communication_cheaper",
+        "eml_debate_cheaper"
+      ],
+      "compression_type": "direct"
+    },
+    "curriculum_learning": {
+      "name": "Curriculum Learning",
+      "version": "v18",
+      "category": "Training",
+      "core_operation": "Difficulty scoring cost",
+      "eml_connection": "Direct benefit",
+      "theorems": [
+        "eml_train_step_cheaper",
+        "eml_scoring_cheaper",
+        "eml_curriculum_cheaper"
+      ],
+      "compression_type": "direct"
+    },
+    "program_synthesis": {
+      "name": "Program Synthesis",
+      "version": "v18",
+      "category": "Generation",
+      "core_operation": "Code generation cost",
+      "eml_connection": "Direct benefit",
+      "theorems": [
+        "eml_codegen_cheaper",
+        "eml_multicand_cheaper",
+        "eml_refinement_cheaper"
+      ],
+      "compression_type": "direct"
+    },
+    "federated_finetuning": {
+      "name": "Federated Fine-Tuning",
+      "version": "v18",
+      "category": "Distributed",
+      "core_operation": "Communication bandwidth",
+      "eml_connection": "Direct benefit",
+      "theorems": [
+        "eml_local_cheaper",
+        "eml_comm_cheaper",
+        "eml_fed_total_cheaper"
+      ],
+      "compression_type": "direct"
+    },
+    "online_learning": {
+      "name": "Online Learning",
+      "version": "v18",
+      "category": "Training",
+      "core_operation": "Per-update latency",
+      "eml_connection": "Direct benefit",
+      "theorems": [
+        "eml_update_cheaper",
+        "eml_stream_cheaper",
+        "eml_drift_cheaper"
+      ],
+      "compression_type": "direct"
+    },
+    "prefix_tuning": {
+      "name": "Prefix Tuning",
+      "version": "v18",
+      "category": "Adaptation",
+      "core_operation": "Prefix parameter size",
+      "eml_connection": "Direct benefit",
+      "theorems": [
+        "eml_prefix_compact",
+        "eml_multitask_cheaper",
+        "eml_prefix_train_cheaper"
+      ],
+      "compression_type": "direct"
+    },
+    "model_routing": {
+      "name": "Model Routing",
+      "version": "v18",
+      "category": "Inference",
+      "core_operation": "Portfolio memory",
+      "eml_connection": "Direct benefit",
+      "theorems": [
+        "eml_portfolio_compact",
+        "eml_routed_cheaper",
+        "eml_cascade_cheaper"
+      ],
+      "compression_type": "direct"
+    },
+    "ensembles": {
+      "name": "Ensemble Methods",
+      "version": "v18",
+      "category": "Uncertainty",
+      "core_operation": "K\u00d7 model cost",
+      "eml_connection": "Direct benefit",
+      "theorems": [
+        "eml_ensemble_train_cheaper",
+        "eml_ensemble_memory_compact",
+        "eml_ensemble_inference_cheaper"
+      ],
+      "compression_type": "direct"
+    },
+    "causal_discovery": {
+      "name": "Causal Discovery",
+      "version": "v18",
+      "category": "Reasoning",
+      "core_operation": "SEM fitting cost",
+      "eml_connection": "Direct benefit",
+      "theorems": [
+        "eml_sem_cheaper",
+        "eml_search_cheaper",
+        "eml_causal_pipeline_cheaper"
+      ],
+      "compression_type": "direct"
+    },
+    "memory_augmented": {
+      "name": "Memory-Augmented Networks",
+      "version": "v18",
+      "category": "Architecture",
+      "core_operation": "Controller + memory access",
+      "eml_connection": "Direct benefit",
+      "theorems": [
+        "eml_controller_compact",
+        "eml_read_cheaper",
+        "eml_mann_cheaper"
+      ],
+      "compression_type": "direct"
+    },
+    "reward_hacking": {
+      "name": "Reward Hacking Detection",
+      "version": "v18",
+      "category": "Safety",
+      "core_operation": "Reward ensemble cost",
+      "eml_connection": "Direct benefit",
+      "theorems": [
+        "eml_reward_ensemble_cheaper",
+        "eml_redteam_cheaper",
+        "eml_safety_pipeline_cheaper"
+      ],
+      "compression_type": "direct"
+    }
+  },
+  "top_synergies": [
+    {
+      "pair": [
+        "rl",
+        "curriculum_learning"
+      ],
+      "description": "Reinforcement Learning (Boltzmann policy exp(Q/T)) \u00d7 Curriculum Learning (Difficulty scoring cost)",
+      "score": 6.5
+    },
+    {
+      "pair": [
+        "rl",
+        "online_learning"
+      ],
+      "description": "Reinforcement Learning (Boltzmann policy exp(Q/T)) \u00d7 Online Learning (Per-update latency)",
+      "score": 6.5
+    },
+    {
+      "pair": [
+        "rl",
+        "prefix_tuning"
+      ],
+      "description": "Reinforcement Learning (Boltzmann policy exp(Q/T)) \u00d7 Prefix Tuning (Prefix parameter size)",
+      "score": 6.5
+    },
+    {
+      "pair": [
+        "transformers",
+        "reward_hacking"
+      ],
+      "description": "Transformers (softmax = normalized exp) \u00d7 Reward Hacking Detection (Reward ensemble cost)",
+      "score": 5.5
+    },
+    {
+      "pair": [
+        "ssm",
+        "reward_hacking"
+      ],
+      "description": "State Space Models (exp(\u0394A) transition) \u00d7 Reward Hacking Detection (Reward ensemble cost)",
+      "score": 5.5
+    },
+    {
+      "pair": [
+        "diffusion",
+        "reward_hacking"
+      ],
+      "description": "Diffusion Models (exp(-\u03b2t) noise schedule) \u00d7 Reward Hacking Detection (Reward ensemble cost)",
+      "score": 5.5
+    },
+    {
+      "pair": [
+        "gnn",
+        "reward_hacking"
+      ],
+      "description": "Graph Neural Networks (exp-based attention) \u00d7 Reward Hacking Detection (Reward ensemble cost)",
+      "score": 5.5
+    },
+    {
+      "pair": [
+        "moe",
+        "reward_hacking"
+      ],
+      "description": "Mixture of Experts (exp-based gating/routing) \u00d7 Reward Hacking Detection (Reward ensemble cost)",
+      "score": 5.5
+    },
+    {
+      "pair": [
+        "energy_based",
+        "reward_hacking"
+      ],
+      "description": "Energy-Based Models (p(x) \u221d exp(-E(x))) \u00d7 Reward Hacking Detection (Reward ensemble cost)",
+      "score": 5.5
+    },
+    {
+      "pair": [
+        "rl",
+        "reward_hacking"
+      ],
+      "description": "Reinforcement Learning (Boltzmann policy exp(Q/T)) \u00d7 Reward Hacking Detection (Reward ensemble cost)",
+      "score": 5.5
+    },
+    {
+      "pair": [
+        "curriculum_learning",
+        "program_synthesis"
+      ],
+      "description": "Curriculum Learning (Difficulty scoring cost) \u00d7 Program Synthesis (Code generation cost)",
+      "score": 5.5
+    },
+    {
+      "pair": [
+        "curriculum_learning",
+        "model_routing"
+      ],
+      "description": "Curriculum Learning (Difficulty scoring cost) \u00d7 Model Routing (Portfolio memory)",
+      "score": 5.5
+    },
+    {
+      "pair": [
+        "program_synthesis",
+        "online_learning"
+      ],
+      "description": "Program Synthesis (Code generation cost) \u00d7 Online Learning (Per-update latency)",
+      "score": 5.5
+    },
+    {
+      "pair": [
+        "program_synthesis",
+        "prefix_tuning"
+      ],
+      "description": "Program Synthesis (Code generation cost) \u00d7 Prefix Tuning (Prefix parameter size)",
+      "score": 5.5
+    },
+    {
+      "pair": [
+        "online_learning",
+        "model_routing"
+      ],
+      "description": "Online Learning (Per-update latency) \u00d7 Model Routing (Portfolio memory)",
+      "score": 5.5
+    },
+    {
+      "pair": [
+        "prefix_tuning",
+        "model_routing"
+      ],
+      "description": "Prefix Tuning (Prefix parameter size) \u00d7 Model Routing (Portfolio memory)",
+      "score": 5.5
+    },
+    {
+      "pair": [
+        "rl",
+        "hypernetworks"
+      ],
+      "description": "Reinforcement Learning (Boltzmann policy exp(Q/T)) \u00d7 Hypernetworks (Weight generation cost)",
+      "score": 5.0
+    },
+    {
+      "pair": [
+        "rl",
+        "meta_learning"
+      ],
+      "description": "Reinforcement Learning (Boltzmann policy exp(Q/T)) \u00d7 Meta-Learning (Inner/outer loop cost)",
+      "score": 5.0
+    },
+    {
+      "pair": [
+        "rl",
+        "active_learning"
+      ],
+      "description": "Reinforcement Learning (Boltzmann policy exp(Q/T)) \u00d7 Active Learning (Acquisition function cost)",
+      "score": 5.0
+    },
+    {
+      "pair": [
+        "rl",
+        "synthetic_data"
+      ],
+      "description": "Reinforcement Learning (Boltzmann policy exp(Q/T)) \u00d7 Synthetic Data (Generation cost)",
+      "score": 5.0
+    },
+    {
+      "pair": [
+        "speculative_decoding",
+        "curriculum_learning"
+      ],
+      "description": "Speculative Decoding (Draft model size) \u00d7 Curriculum Learning (Difficulty scoring cost)",
+      "score": 4.5
+    },
+    {
+      "pair": [
+        "speculative_decoding",
+        "online_learning"
+      ],
+      "description": "Speculative Decoding (Draft model size) \u00d7 Online Learning (Per-update latency)",
+      "score": 4.5
+    },
+    {
+      "pair": [
+        "speculative_decoding",
+        "prefix_tuning"
+      ],
+      "description": "Speculative Decoding (Draft model size) \u00d7 Prefix Tuning (Prefix parameter size)",
+      "score": 4.5
+    },
+    {
+      "pair": [
+        "hypernetworks",
+        "program_synthesis"
+      ],
+      "description": "Hypernetworks (Weight generation cost) \u00d7 Program Synthesis (Code generation cost)",
+      "score": 4.5
+    },
+    {
+      "pair": [
+        "hypernetworks",
+        "model_routing"
+      ],
+      "description": "Hypernetworks (Weight generation cost) \u00d7 Model Routing (Portfolio memory)",
+      "score": 4.5
+    },
+    {
+      "pair": [
+        "meta_learning",
+        "program_synthesis"
+      ],
+      "description": "Meta-Learning (Inner/outer loop cost) \u00d7 Program Synthesis (Code generation cost)",
+      "score": 4.5
+    },
+    {
+      "pair": [
+        "meta_learning",
+        "model_routing"
+      ],
+      "description": "Meta-Learning (Inner/outer loop cost) \u00d7 Model Routing (Portfolio memory)",
+      "score": 4.5
+    },
+    {
+      "pair": [
+        "active_learning",
+        "program_synthesis"
+      ],
+      "description": "Active Learning (Acquisition function cost) \u00d7 Program Synthesis (Code generation cost)",
+      "score": 4.5
+    },
+    {
+      "pair": [
+        "active_learning",
+        "model_routing"
+      ],
+      "description": "Active Learning (Acquisition function cost) \u00d7 Model Routing (Portfolio memory)",
+      "score": 4.5
+    },
+    {
+      "pair": [
+        "synthetic_data",
+        "program_synthesis"
+      ],
+      "description": "Synthetic Data (Generation cost) \u00d7 Program Synthesis (Code generation cost)",
+      "score": 4.5
+    }
+  ],
+  "hypotheses": [
+    {
+      "title": "Constitutional Reward Monitoring",
+      "paradigms": [
+        "Reward Hacking Detection",
+        "Constitutional AI"
+      ],
+      "versions": [
+        "v18",
+        "v17"
+      ],
+      "description": "Use constitutional principles to detect reward hacking: if the model achieves high reward but violates constitutional principles, flag it. EML makes both the reward ensemble and the constitutional critic cheap.",
+      "impact_score": 10,
+      "formal_foundation": [
+        "eml_reward_ensemble_cheaper",
+        "eml_redteam_cheaper",
+        "eml_safety_pipeline_cheaper",
+        "eml_critique_cheaper",
+        "eml_cr_cycle_cheaper"
+      ],
+      "status": "HYPOTHESIS"
+    },
+    {
+      "title": "Ensemble-Guided Speculative Decoding",
+      "paradigms": [
+        "Ensemble Methods",
+        "Speculative Decoding"
+      ],
+      "versions": [
+        "v18",
+        "v17"
+      ],
+      "description": "Use ensemble disagreement to set the number of draft tokens: high agreement \u2192 more draft tokens (higher acceptance), high disagreement \u2192 fewer drafts (save wasted computation). EML makes both the ensemble and draft model cheap enough to combine.",
+      "impact_score": 9,
+      "formal_foundation": [
+        "eml_ensemble_train_cheaper",
+        "eml_ensemble_memory_compact",
+        "eml_ensemble_inference_cheaper",
+        "eml_draft_compact",
+        "eml_spec_step_cheaper",
+        "eml_total_spec_cheaper"
+      ],
+      "status": "HYPOTHESIS"
+    },
+    {
+      "title": "Causally-Structured World Models",
+      "paradigms": [
+        "Causal Discovery",
+        "World Models"
+      ],
+      "versions": [
+        "v18",
+        "v17"
+      ],
+      "description": "Learn a world model whose dynamics follow discovered causal structure. The causal graph constrains the dynamics model, improving sample efficiency and generalization. EML compresses both discovery and dynamics.",
+      "impact_score": 9,
+      "formal_foundation": [
+        "eml_sem_cheaper",
+        "eml_search_cheaper",
+        "eml_causal_pipeline_cheaper",
+        "eml_dynamics_compact",
+        "eml_imagination_cheaper",
+        "eml_planning_cheaper"
+      ],
+      "status": "HYPOTHESIS"
+    },
+    {
+      "title": "Hierarchical Memory for Ultra-Long Context",
+      "paradigms": [
+        "Memory-Augmented Networks",
+        "Long Context"
+      ],
+      "versions": [
+        "v18",
+        "v17"
+      ],
+      "description": "Use a memory-augmented network as a 'summary cache' for long contexts: recent tokens in KV-cache, older tokens compressed into external memory. EML compresses both the KV-cache and the memory controller.",
+      "impact_score": 9,
+      "formal_foundation": [
+        "eml_controller_compact",
+        "eml_read_cheaper",
+        "eml_mann_cheaper",
+        "eml_kv_cache_compact",
+        "eml_compression_cheaper"
+      ],
+      "status": "HYPOTHESIS"
+    },
+    {
+      "title": "Diverse Reward Ensembles for Robust Alignment",
+      "paradigms": [
+        "Ensemble Methods",
+        "Reward Hacking Detection"
+      ],
+      "versions": [
+        "v18",
+        "v18"
+      ],
+      "description": "Train reward models with diverse architectures (CNN, Transformer, GNN) in an EML-compressed ensemble. Diversity reduces reward hacking by preventing common failure modes.",
+      "impact_score": 9,
+      "formal_foundation": [
+        "eml_ensemble_train_cheaper",
+        "eml_ensemble_memory_compact",
+        "eml_ensemble_inference_cheaper",
+        "eml_reward_ensemble_cheaper",
+        "eml_redteam_cheaper",
+        "eml_safety_pipeline_cheaper"
+      ],
+      "status": "HYPOTHESIS"
+    },
+    {
+      "title": "Curriculum-Aware Synthetic Data Generation",
+      "paradigms": [
+        "Curriculum Learning",
+        "Synthetic Data"
+      ],
+      "versions": [
+        "v18",
+        "v17"
+      ],
+      "description": "Generate synthetic training data at the current difficulty level of the curriculum. As the model improves, generate harder examples. EML enables rapid generation + scoring cycles.",
+      "impact_score": 8,
+      "formal_foundation": [
+        "eml_train_step_cheaper",
+        "eml_scoring_cheaper",
+        "eml_curriculum_cheaper",
+        "eml_synthetic_cheaper",
+        "eml_self_instruct_cheaper"
+      ],
+      "status": "HYPOTHESIS"
+    },
+    {
+      "title": "Meta-Learned Model Routing",
+      "paradigms": [
+        "Model Routing",
+        "Meta-Learning"
+      ],
+      "versions": [
+        "v18",
+        "v17"
+      ],
+      "description": "Use meta-learning to train the router: given a few examples from a new task, quickly determine which specialist model to route to. EML compresses both the router and the specialists.",
+      "impact_score": 8,
+      "formal_foundation": [
+        "eml_portfolio_compact",
+        "eml_routed_cheaper",
+        "eml_cascade_cheaper",
+        "eml_maml_inner_cheaper",
+        "eml_maml_outer_cheaper",
+        "eml_fewshot_cheaper"
+      ],
+      "status": "HYPOTHESIS"
+    },
+    {
+      "title": "Prefix-Routed Specialization",
+      "paradigms": [
+        "Prefix Tuning",
+        "Model Routing"
+      ],
+      "versions": [
+        "v18",
+        "v18"
+      ],
+      "description": "Route inputs to different prefix configurations rather than different models. Same base model, different soft prompts. EML compresses both the base model and the prefix library.",
+      "impact_score": 8,
+      "formal_foundation": [
+        "eml_prefix_compact",
+        "eml_multitask_cheaper",
+        "eml_prefix_train_cheaper",
+        "eml_portfolio_compact",
+        "eml_routed_cheaper",
+        "eml_cascade_cheaper"
+      ],
+      "status": "HYPOTHESIS"
+    },
+    {
+      "title": "Federated Online Adaptation",
+      "paradigms": [
+        "Online Learning",
+        "Federated Fine-Tuning"
+      ],
+      "versions": [
+        "v18",
+        "v18"
+      ],
+      "description": "Each client performs online learning on its local data stream, periodically sharing compressed model updates. EML reduces both per-update cost and communication bandwidth.",
+      "impact_score": 7,
+      "formal_foundation": [
+        "eml_update_cheaper",
+        "eml_stream_cheaper",
+        "eml_drift_cheaper",
+        "eml_local_cheaper",
+        "eml_comm_cheaper",
+        "eml_fed_total_cheaper"
+      ],
+      "status": "HYPOTHESIS"
+    },
+    {
+      "title": "Active Program Synthesis",
+      "paradigms": [
+        "Program Synthesis",
+        "Active Learning"
+      ],
+      "versions": [
+        "v18",
+        "v17"
+      ],
+      "description": "Use active learning to select which test cases are most informative for validating synthesized programs. Focus testing effort where the synthesizer is most uncertain.",
+      "impact_score": 7,
+      "formal_foundation": [
+        "eml_codegen_cheaper",
+        "eml_multicand_cheaper",
+        "eml_refinement_cheaper",
+        "eml_acquisition_cheaper",
+        "eml_mc_dropout_cheaper"
+      ],
+      "status": "HYPOTHESIS"
+    }
+  ]
+}
