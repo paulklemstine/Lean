@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400">
+<rect width="600" height="400" fill="white"/>
+<text x="300" y="25" text-anchor="middle" font-size="16" font-weight="bold">SLNAS: Architecture Search Convergence</text>
+<line x1="60" y1="60" x2="60" y2="340" stroke="black" stroke-width="2"/>
+<line x1="60" y1="340" x2="540" y2="340" stroke="black" stroke-width="2"/>
+<text x="300" y="390" text-anchor="middle" font-size="12">Generation</text>
+<text x="15" y="200" text-anchor="middle" font-size="12" transform="rotate(-90,15,200)">Best Fitness</text>
+<polyline points="60.0,340.0 69.8,237.0 79.6,238.5 89.4,214.3 99.2,221.9 109.0,219.3 118.8,192.8 128.6,172.8 138.4,159.4 148.2,161.9 158.0,149.6 167.8,160.2 177.6,141.7 187.3,143.4 197.1,128.0 206.9,134.2 216.7,135.8 226.5,105.8 236.3,104.6 246.1,123.5 255.9,111.0 265.7,98.8 275.5,92.2 285.3,103.5 295.1,106.2 304.9,98.7 314.7,103.7 324.5,88.1 334.3,86.7 344.1,88.8 353.9,91.1 363.7,95.1 373.5,92.4 383.3,97.5 393.1,104.6 402.9,108.7 412.7,89.3 422.4,72.1 432.2,98.1 442.0,101.5 451.8,92.6 461.6,60.0 471.4,96.6 481.2,77.6 491.0,72.9 500.8,87.1 510.6,85.8 520.4,91.1 530.2,84.0 540.0,93.9" fill="none" stroke="#4CAF50" stroke-width="2.5"/>
+</svg>

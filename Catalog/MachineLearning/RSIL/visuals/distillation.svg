@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="400">
+<rect width="700" height="400" fill="white"/>
+<text x="350" y="25" text-anchor="middle" font-size="16" font-weight="bold">Recursive Self-Distillation Pipeline</text>
+<line x1="70" y1="70" x2="70" y2="330" stroke="black" stroke-width="2"/>
+<line x1="70" y1="330" x2="630" y2="330" stroke="black" stroke-width="2"/>
+<text x="350" y="390" text-anchor="middle" font-size="12">Distillation Round</text>
+<rect x="103.6" y="113.33333333333334" width="44.8" height="216.66666666666666" fill="#2196F3" opacity="0.7"/>
+<text x="126.0" y="345" text-anchor="middle" font-size="10">R1</text>
+<text x="126.0" y="108.33333333333334" text-anchor="middle" font-size="9">426645</text>
+<rect x="215.6" y="194.21876892185932" width="44.8" height="135.78123107814068" fill="#2196F3" opacity="0.7"/>
+<text x="238.0" y="345" text-anchor="middle" font-size="10">R2</text>
+<text x="238.0" y="189.21876892185932" text-anchor="middle" font-size="9">267371</text>
+<rect x="327.6" y="329.380437287831" width="44.8" height="0.6195627121689773" fill="#4CAF50" opacity="0.7"/>
+<text x="350.0" y="345" text-anchor="middle" font-size="10">R3</text>
+<text x="350.0" y="324.380437287831" text-anchor="middle" font-size="9">1220</text>
+<rect x="439.6" y="329.4230957040787" width="44.8" height="0.5769042959212772" fill="#4CAF50" opacity="0.7"/>
+<text x="462.0" y="345" text-anchor="middle" font-size="10">R4</text>
+<text x="462.0" y="324.4230957040787" text-anchor="middle" font-size="9">1136</text>
+<rect x="551.6" y="329.44747194193457" width="44.8" height="0.5525280580654487" fill="#4CAF50" opacity="0.7"/>
+<text x="574.0" y="345" text-anchor="middle" font-size="10">R5</text>
+<text x="574.0" y="324.44747194193457" text-anchor="middle" font-size="9">1088</text>
+<circle cx="126.0" cy="96.22136319138548" r="4" fill="#FF5722"/>
+<circle cx="238.0" cy="123.98136859639797" r="4" fill="#FF5722"/>
+<circle cx="350.0" cy="180.7018026191337" r="4" fill="#FF5722"/>
+<circle cx="462.0" cy="180.79590538408848" r="4" fill="#FF5722"/>
+<circle cx="574.0" cy="184.5656177032525" r="4" fill="#FF5722"/>
+<polyline points="126.0,96.2 238.0,124.0 350.0,180.7 462.0,180.8 574.0,184.6" fill="none" stroke="#FF5722" stroke-width="2"/>
+<rect x="80" y="80" width="155" height="60" fill="white" stroke="#ccc"/>
+<rect x="85" y="88" width="12" height="12" fill="#2196F3" opacity="0.7"/>
+<text x="102" y="99" font-size="10">Standard params</text>
+<rect x="85" y="104" width="12" height="12" fill="#4CAF50" opacity="0.7"/>
+<text x="102" y="115" font-size="10">EML params</text>
+<circle cx="91" cy="125" r="4" fill="#FF5722"/>
+<text x="102" y="129" font-size="10">Accuracy</text>
+</svg>
