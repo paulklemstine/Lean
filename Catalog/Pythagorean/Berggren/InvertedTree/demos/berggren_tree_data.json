@@ -1,0 +1,373 @@
+{
+  "triple": [
+    3,
+    4,
+    5
+  ],
+  "address": "",
+  "children": [
+    {
+      "triple": [
+        5,
+        12,
+        13
+      ],
+      "address": "1",
+      "children": [
+        {
+          "triple": [
+            7,
+            24,
+            25
+          ],
+          "address": "11",
+          "children": [
+            {
+              "triple": [
+                9,
+                40,
+                41
+              ],
+              "address": "111",
+              "children": []
+            },
+            {
+              "triple": [
+                105,
+                88,
+                137
+              ],
+              "address": "112",
+              "children": []
+            },
+            {
+              "triple": [
+                91,
+                60,
+                109
+              ],
+              "address": "113",
+              "children": []
+            }
+          ]
+        },
+        {
+          "triple": [
+            55,
+            48,
+            73
+          ],
+          "address": "12",
+          "children": [
+            {
+              "triple": [
+                105,
+                208,
+                233
+              ],
+              "address": "121",
+              "children": []
+            },
+            {
+              "triple": [
+                297,
+                304,
+                425
+              ],
+              "address": "122",
+              "children": []
+            },
+            {
+              "triple": [
+                187,
+                84,
+                205
+              ],
+              "address": "123",
+              "children": []
+            }
+          ]
+        },
+        {
+          "triple": [
+            45,
+            28,
+            53
+          ],
+          "address": "13",
+          "children": [
+            {
+              "triple": [
+                95,
+                168,
+                193
+              ],
+              "address": "131",
+              "children": []
+            },
+            {
+              "triple": [
+                207,
+                224,
+                305
+              ],
+              "address": "132",
+              "children": []
+            },
+            {
+              "triple": [
+                117,
+                44,
+                125
+              ],
+              "address": "133",
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "triple": [
+        21,
+        20,
+        29
+      ],
+      "address": "2",
+      "children": [
+        {
+          "triple": [
+            39,
+            80,
+            89
+          ],
+          "address": "21",
+          "children": [
+            {
+              "triple": [
+                57,
+                176,
+                185
+              ],
+              "address": "211",
+              "children": []
+            },
+            {
+              "triple": [
+                377,
+                336,
+                505
+              ],
+              "address": "212",
+              "children": []
+            },
+            {
+              "triple": [
+                299,
+                180,
+                349
+              ],
+              "address": "213",
+              "children": []
+            }
+          ]
+        },
+        {
+          "triple": [
+            119,
+            120,
+            169
+          ],
+          "address": "22",
+          "children": [
+            {
+              "triple": [
+                217,
+                456,
+                505
+              ],
+              "address": "221",
+              "children": []
+            },
+            {
+              "triple": [
+                697,
+                696,
+                985
+              ],
+              "address": "222",
+              "children": []
+            },
+            {
+              "triple": [
+                459,
+                220,
+                509
+              ],
+              "address": "223",
+              "children": []
+            }
+          ]
+        },
+        {
+          "triple": [
+            77,
+            36,
+            85
+          ],
+          "address": "23",
+          "children": [
+            {
+              "triple": [
+                175,
+                288,
+                337
+              ],
+              "address": "231",
+              "children": []
+            },
+            {
+              "triple": [
+                319,
+                360,
+                481
+              ],
+              "address": "232",
+              "children": []
+            },
+            {
+              "triple": [
+                165,
+                52,
+                173
+              ],
+              "address": "233",
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "triple": [
+        15,
+        8,
+        17
+      ],
+      "address": "3",
+      "children": [
+        {
+          "triple": [
+            33,
+            56,
+            65
+          ],
+          "address": "31",
+          "children": [
+            {
+              "triple": [
+                51,
+                140,
+                149
+              ],
+              "address": "311",
+              "children": []
+            },
+            {
+              "triple": [
+                275,
+                252,
+                373
+              ],
+              "address": "312",
+              "children": []
+            },
+            {
+              "triple": [
+                209,
+                120,
+                241
+              ],
+              "address": "313",
+              "children": []
+            }
+          ]
+        },
+        {
+          "triple": [
+            65,
+            72,
+            97
+          ],
+          "address": "32",
+          "children": [
+            {
+              "triple": [
+                115,
+                252,
+                277
+              ],
+              "address": "321",
+              "children": []
+            },
+            {
+              "triple": [
+                403,
+                396,
+                565
+              ],
+              "address": "322",
+              "children": []
+            },
+            {
+              "triple": [
+                273,
+                136,
+                305
+              ],
+              "address": "323",
+              "children": []
+            }
+          ]
+        },
+        {
+          "triple": [
+            35,
+            12,
+            37
+          ],
+          "address": "33",
+          "children": [
+            {
+              "triple": [
+                85,
+                132,
+                157
+              ],
+              "address": "331",
+              "children": []
+            },
+            {
+              "triple": [
+                133,
+                156,
+                205
+              ],
+              "address": "332",
+              "children": []
+            },
+            {
+              "triple": [
+                63,
+                16,
+                65
+              ],
+              "address": "333",
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
