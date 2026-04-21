@@ -1,0 +1,3 @@
+{"ts": 1776739592.3353765, "stage": "test", "action": "init", "vram_mb": 0.0, "vram_reserved_mb": 0.0, "info": "hello"}
+{"ts": 1776739594.4910944, "stage": "test", "action": "op_start", "vram_mb": 0.0, "vram_reserved_mb": 0.0}
+{"ts": 1776739594.501367, "stage": "test", "action": "op_end", "vram_mb": 0.0, "vram_reserved_mb": 0.0, "elapsed_s": 0.01}
