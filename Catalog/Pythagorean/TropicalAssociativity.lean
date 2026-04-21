@@ -17,6 +17,7 @@ theorem tspb_counterexample_wrong :
 
 
 
+
 /-- [Section: # CatalogBuild.Pythagorean.TropicalAssociativity
 Auto-generated from theorem catalog database.
 Domain: Pythagorean
@@ -27,12 +28,18 @@ theorem tspb_abs_formula (x y : ℝ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.TropicalAssociativity
+Auto-generated from theorem catalog database.
+Domain: Pythagorean
+Declarations: 3] -/
 theorem tspb_assoc (x y z : ℝ) :
     tspb (tspb x y) z = tspb x (tspb y z) := by
   -- Unfold the definition of tspb using the provided formula.
   have h_tspb_def : ∀ x y : ℝ, tspb x y = (|x - y| - |x + y|) / 2 := by
     exact?;
   grind
+
 
 
 

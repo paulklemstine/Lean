@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: EML/V10
-Declarations: 31
+Declarations: 28
 -/
 
 import Mathlib
@@ -13,11 +13,8 @@ noncomputable section
 Auto-generated from theorem catalog database.
 Domain: EML/V10
 Declarations: 31] -/
-theorem eml_def (x y : ℝ) : eml x y = Real.exp x - Real.log y := rfl
-
-
-
 theorem eml_exp (x : ℝ) : eml x 1 = Real.exp x := by simp [eml, Real.log_one]
+
 
 
 
@@ -25,13 +22,10 @@ theorem eml_zero_first (y : ℝ) : eml 0 y = 1 - Real.log y := by simp [eml]
 
 
 
-theorem eml_legendre (x y : ℝ) : eml x (Real.exp y) = Real.exp x - y := by
-  simp [eml, Real.log_exp]
-
-
 
 theorem eml_self_pair_eq (x : ℝ) : eml x (Real.exp x) = emlSelfPair x := by
   simp [eml, emlSelfPair, Real.log_exp]
+
 
 
 
@@ -53,11 +47,13 @@ theorem emlSelfPair_strictConvex : StrictConvexOn ℝ Set.univ emlSelfPair := by
 
 
 
+
 /-- σ'(x) = eˣ − 1. -/
 theorem emlSelfPair_deriv (x : ℝ) :
     HasDerivAt emlSelfPair (Real.exp x - 1) x := by
   unfold emlSelfPair
   exact (Real.hasDerivAt_exp x).sub (hasDerivAt_id x) |>.congr_deriv (by ring)
+
 
 
 
@@ -81,6 +77,7 @@ theorem emlDiag_ge_add_one (z : ℝ) : emlDiag z ≥ z + 1 := by
 
 
 
+
 /-- Orbit linear divergence: dⁿ(z) ≥ z + n. -/
 theorem emlDiag_orbit_diverge (z : ℝ) (n : ℕ) :
     emlDiagIter n z ≥ z + n := by
@@ -92,9 +89,11 @@ theorem emlDiag_orbit_diverge (z : ℝ) (n : ℕ) :
 
 
 
+
 /-- The gap function gap(z) = eᶻ − ln(z) − z ≥ 1. -/
 theorem emlGap_ge_one (z : ℝ) : Real.exp z - Real.log z - z ≥ 1 := by
   have := emlDiag_ge_add_one z; unfold emlDiag at this; linarith
+
 
 
 
@@ -105,8 +104,10 @@ theorem emlDiag_orbit_strictMono (z : ℝ) : StrictMono (fun n => emlDiagIter n 
 
 
 
+
 theorem eml_strictMono_x (y : ℝ) : StrictMono (fun x => eml x y) := by
   intro a b hab; simp only [eml]; linarith [Real.exp_lt_exp.mpr hab]
+
 
 
 
@@ -116,13 +117,16 @@ theorem eml_strictAnti_y (x : ℝ) : StrictAntiOn (fun y => eml x y) (Set.Ioi 0)
 
 
 
+
 theorem eml_noncomm : ∃ x y : ℝ, eml x y ≠ eml y x := by
   use 0, 1; simp [eml]; exact Ne.symm (by norm_num)
 
 
 
+
 theorem eml_nonassoc : ∃ x y z : ℝ, eml (eml x y) z ≠ eml x (eml y z) := by
   unfold eml; by_contra! h; have := h 0 0 0; norm_num at this
+
 
 
 
@@ -133,10 +137,12 @@ theorem eml_no_left_id : ¬∃ e₀ : ℝ, ∀ x : ℝ, eml e₀ x = x := by
 
 
 
+
 theorem eml_no_right_id : ¬∃ e₀ : ℝ, ∀ x : ℝ, eml x e₀ = x := by
   intro ⟨e₀, he₀⟩
   have h0 := he₀ 0; have h1 := he₀ 1
   simp [eml] at h0 h1; linarith [Real.exp_one_gt_d9]
+
 
 
 
@@ -154,17 +160,13 @@ theorem eml_no_finite_submagma :
 
 
 
+
 /-- EML is the unique function satisfying the Legendre bridge. -/
 theorem eml_unique_legendre {F : ℝ → ℝ → ℝ}
     (hF : ∀ x y, F x (Real.exp y) = Real.exp x - y)
     (x y : ℝ) (hy : 0 < y) : F x y = eml x y := by
   have h := hF x (Real.log y); rw [Real.exp_log hy] at h; rw [h]; simp [eml]
 
-
-
-theorem eml_trace (x y : ℝ) :
-    eml x y + eml y x = Real.exp x + Real.exp y - Real.log x - Real.log y := by
-  unfold eml; ring
 
 
 
@@ -176,10 +178,12 @@ theorem eml_trace_ge_two (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
 
 
 
+
 /-- Shannon entropy term decomposition. -/
 theorem eml_entropy_term (p : ℝ) :
     -p * Real.log p = p * eml 0 p - p := by
   unfold eml; simp; ring
+
 
 
 
@@ -190,8 +194,10 @@ theorem eml_kl_term (p q : ℝ) (hp : 0 < p) (hq : 0 < q) :
 
 
 
+
 theorem eml_generates_ee : eml (eml 1 1) 1 = Real.exp (Real.exp 1) := by
   simp [eml, Real.log_one]
+
 
 
 
@@ -200,10 +206,12 @@ theorem eTower_is_eml (n : ℕ) : eTower (n + 1) = eml (eTower n) 1 := by
 
 
 
+
 /-- ∫₀¹ eml(t, 1) dt = e − 1. -/
 theorem eml_integral_unit :
     ∫ t in (0:ℝ)..1, eml t 1 = Real.exp 1 - 1 := by
   simp [eml, Real.log_one]
+
 
 
 
@@ -215,15 +223,18 @@ theorem bregman_as_eml (x y : ℝ) :
 
 
 
+
 theorem eml_level_nonempty (c : ℝ) : ∃ x y : ℝ, 0 < y ∧ eml x y = c := by
   use 0, Real.exp (1 - c)
   exact ⟨Real.exp_pos _, by simp [eml, Real.log_exp]⟩
 
 
 
+
 theorem eml_level_parametrize (x c : ℝ) :
     eml x (Real.exp (Real.exp x - c)) = c := by
   simp [eml, Real.log_exp]
+
 
 
 
@@ -237,6 +248,7 @@ theorem eml_zero_set (x y : ℝ) (hy : 0 < y) :
 
 
 
+
 /-- exp(x) ≥ 1 + x + x²/2 for x ≥ 0. -/
 theorem exp_taylor_lower (x : ℝ) (hx : 0 ≤ x) :
     Real.exp x ≥ 1 + x + x ^ 2 / 2 := by
@@ -245,6 +257,7 @@ theorem exp_taylor_lower (x : ℝ) (hx : 0 ≤ x) :
     (Summable.sum_le_tsum (Finset.range 3)
       (fun i _ => by positivity)
       (Real.summable_pow_div_factorial x))
+
 
 
 

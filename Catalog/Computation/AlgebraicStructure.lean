@@ -14,12 +14,14 @@ def EMLa (a b : ℝ) : ℝ := Real.exp a - Real.log b
 
 
 
+
 /-- EML is non-commutative: EML(0,1) ≠ EML(1,0). -/
 theorem EMLa_noncomm : ∃ a b : ℝ, EMLa a b ≠ EMLa b a := by
   use 0, 1
   simp [EMLa, Real.log_one, Real.exp_zero, Real.log_zero]
   intro h
   linarith [Real.exp_one_gt_d9]
+
 
 
 
@@ -34,6 +36,7 @@ theorem EMLa_nonassoc :
 
 
 
+
 /-- EML has no right identity. -/
 theorem EMLa_no_right_id : ¬ ∃ e : ℝ, ∀ x, EMLa x e = x := by
   intro ⟨e, h⟩
@@ -44,9 +47,15 @@ theorem EMLa_no_right_id : ¬ ∃ e : ℝ, ∀ x, EMLa x e = x := by
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.AlgebraicStructure
+Auto-generated from theorem catalog database.
+Domain: Computation
+Declarations: 21] -/
 theorem EMLa_no_left_id : ¬ ∃ e : ℝ, ∀ x, EMLa e x = x := by
   unfold EMLa;
   rintro ⟨ e, he ⟩ ; have := he 0 ; have := he 1 ; norm_num at *
+
 
 
 
@@ -56,9 +65,11 @@ theorem EMLa_strictMono_fst (b : ℝ) : StrictMono (EMLa · b) :=
 
 
 
+
 /-- EML is strictly decreasing in the second argument on (0, ∞). -/
 theorem EMLa_strictAnti_snd (a : ℝ) : StrictAntiOn (EMLa a ·) (Set.Ioi 0) :=
   fun _ hy _ _ hyz => sub_lt_sub_left (Real.log_lt_log hy hyz) _
+
 
 
 
@@ -71,8 +82,10 @@ theorem EMLa_right_cancel (a₁ a₂ b : ℝ) :
 
 
 
+
 /-- T_c(x) = EML(x, c) = exp(x) - ln(c). -/
 def Tc (c : ℝ) (x : ℝ) : ℝ := EMLa x c
+
 
 
 
@@ -82,9 +95,11 @@ theorem Tc_one (x : ℝ) : Tc 1 x = Real.exp x := by
 
 
 
+
 /-- T_c is strictly monotone for all c. -/
 theorem Tc_strictMono (c : ℝ) : StrictMono (Tc c) :=
   EMLa_strictMono_fst c
+
 
 
 
@@ -92,6 +107,7 @@ theorem Tc_strictMono (c : ℝ) : StrictMono (Tc c) :=
 theorem Tc_compose (c₁ c₂ x : ℝ) :
     Tc c₁ (Tc c₂ x) = Real.exp (Real.exp x - Real.log c₂) - Real.log c₁ := by
   simp [Tc, EMLa]
+
 
 
 
@@ -104,11 +120,13 @@ theorem Tc_noncomm : ∃ c₁ c₂ : ℝ, ∃ x : ℝ,
 
 
 
+
 /-- EML satisfies a shifted exponential law:
 EML(a + b, 1) = exp(a) · exp(b). -/
 theorem EMLa_exp_add (a b : ℝ) :
     EMLa (a + b) 1 = Real.exp a * Real.exp b := by
   simp [EMLa, Real.log_one, Real.exp_add]
+
 
 
 
@@ -119,10 +137,12 @@ theorem EMLa_scaling (a b c : ℝ) (hb : 0 < b) (hc : 0 < c) :
 
 
 
+
 /-- EML distributes over exp: EML(exp(a), exp(b)) = exp(exp(a)) - b. -/
 theorem EMLa_exp_exp (a b : ℝ) :
     EMLa (Real.exp a) (Real.exp b) = Real.exp (Real.exp a) - b := by
   simp [EMLa, Real.log_exp]
+
 
 
 
@@ -135,6 +155,7 @@ theorem EMLa_diag_ge_two (x : ℝ) (hx : 0 < x) :
 
 
 
+
 /-- n-fold EML tower: EML(EML(...EML(1,1)..., 1), 1) = exp^n(1) = e↑↑n. -/
 def EMLTower : ℕ → ℝ
   | 0 => 1
@@ -142,8 +163,10 @@ def EMLTower : ℕ → ℝ
 
 
 
+
 theorem EMLTower_eq_exp (n : ℕ) : EMLTower (n + 1) = Real.exp (EMLTower n) := by
   simp [EMLTower, EMLa, Real.log_one]
+
 
 
 
@@ -154,11 +177,13 @@ theorem EMLTower_pos (n : ℕ) : 0 < EMLTower n := by
 
 
 
+
 theorem EMLTower_strictMono : StrictMono EMLTower := by
   apply strictMono_nat_of_lt_succ
   intro n
   rw [EMLTower_eq_exp]
   linarith [Real.add_one_le_exp (EMLTower n)]
+
 
 
 

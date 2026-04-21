@@ -16,10 +16,12 @@ def minkowskiQ (v : Fin 3 → ℝ) : ℝ :=
 
 
 
+
 /-- The (3+1)-dimensional Minkowski quadratic form with signature (+,−,−,−).
 Q(t,x,y,z) = t² − x² − y² − z². -/
 def minkowski4Q (v : Fin 4 → ℝ) : ℝ :=
   v 0 ^ 2 - v 1 ^ 2 - v 2 ^ 2 - v 3 ^ 2
+
 
 
 
@@ -28,8 +30,10 @@ def isNull (v : Fin 3 → ℝ) : Prop := minkowskiQ v = 0
 
 
 
+
 /-- A vector is timelike if Q(v) < 0 (inside the light cone). -/
 def isTimelike (v : Fin 3 → ℝ) : Prop := minkowskiQ v < 0
+
 
 
 
@@ -38,9 +42,11 @@ def isSpacelike (v : Fin 3 → ℝ) : Prop := 0 < minkowskiQ v
 
 
 
+
 /-- The Minkowski bilinear form: B(u,v) = u₀v₀ + u₁v₁ − u₂v₂. -/
 def minkowskiB (u v : Fin 3 → ℝ) : ℝ :=
   u 0 * v 0 + u 1 * v 1 - u 2 * v 2
+
 
 
 
@@ -51,10 +57,12 @@ theorem minkowskiB_self (v : Fin 3 → ℝ) :
 
 
 
+
 /-- The bilinear form is symmetric: B(u,v) = B(v,u). -/
 theorem minkowskiB_comm (u v : Fin 3 → ℝ) :
     minkowskiB u v = minkowskiB v u := by
   simp [minkowskiB]; ring
+
 
 
 
@@ -65,12 +73,14 @@ theorem null_iff_pythagorean (v : Fin 3 → ℝ) :
 
 
 
+
 /-- The light cone is closed under scaling. -/
 theorem null_scale (v : Fin 3 → ℝ) (c : ℝ) (hv : isNull v) :
     isNull (fun i => c * v i) := by
   simp only [isNull, minkowskiQ] at *
   ring_nf
   nlinarith [sq_nonneg c, sq_nonneg (v 0), sq_nonneg (v 1), sq_nonneg (v 2)]
+
 
 
 
@@ -85,11 +95,13 @@ theorem causal_trichotomy (v : Fin 3 → ℝ) :
 
 
 
+
 /-- A (2+1)-dimensional Lorentz boost matrix in the x-t plane with rapidity φ. -/
 def lorentzBoost2D (φ : ℝ) : Matrix (Fin 3) (Fin 3) ℝ :=
   !![1, 0, 0;
      0, Real.cosh φ, Real.sinh φ;
      0, Real.sinh φ, Real.cosh φ]
+
 
 
 
@@ -104,12 +116,14 @@ theorem lorentz_boost_preserves_Q (φ : ℝ) (v : Fin 3 → ℝ) :
 
 
 
+
 /-- A Lorentz boost preserves the null condition: if v is null, so is Λv. -/
 theorem lorentz_boost_preserves_null (φ : ℝ) (v : Fin 3 → ℝ) (hv : isNull v) :
     isNull (lorentzBoost2D φ *ᵥ v) := by
   simp [isNull] at *
   rw [lorentz_boost_preserves_Q]
   exact hv
+
 
 
 
@@ -122,10 +136,16 @@ theorem lorentz_boost_preserves_timelike (φ : ℝ) (v : Fin 3 → ℝ) (hv : is
 
 
 
+
+/-- [Section: # CatalogBuild.Physics.AlgebraicPhysics.AlgebraicSpacetime
+Auto-generated from theorem catalog database.
+Domain: Physics/AlgebraicPhysics
+Declarations: 46] -/
 theorem lorentz_boost_compose (φ₁ φ₂ : ℝ) :
     lorentzBoost2D φ₁ * lorentzBoost2D φ₂ = lorentzBoost2D (φ₁ + φ₂) := by
   unfold lorentzBoost2D;
   ext i j ; fin_cases i <;> fin_cases j <;> norm_num [ Real.cosh_add, Real.sinh_add ] <;> ring!;
+
 
 
 
@@ -136,10 +156,12 @@ theorem lorentz_boost_zero : lorentzBoost2D 0 = 1 := by
 
 
 
+
 /-- The inverse boost has negated rapidity. -/
 theorem lorentz_boost_inv (φ : ℝ) :
     lorentzBoost2D φ * lorentzBoost2D (-φ) = 1 := by
   rw [lorentz_boost_compose, add_neg_cancel, lorentz_boost_zero]
+
 
 
 
@@ -149,9 +171,11 @@ theorem velocity_subluminal (φ : ℝ) : |Real.tanh φ| < 1 :=
 
 
 
+
 /-- The Lorentz factor γ = cosh(φ) ≥ 1. -/
 theorem lorentz_factor_ge_one (φ : ℝ) : 1 ≤ Real.cosh φ :=
   Real.one_le_cosh φ
+
 
 
 
@@ -159,6 +183,7 @@ theorem lorentz_factor_ge_one (φ : ℝ) : 1 ≤ Real.cosh φ :=
 theorem rapidity_identity (φ : ℝ) :
     Real.cosh φ ^ 2 - Real.sinh φ ^ 2 = 1 := by
   have := Real.cosh_sq_sub_sinh_sq φ; linarith
+
 
 
 
@@ -170,8 +195,10 @@ structure EMField where
 
 
 
+
 /-- The first Lorentz invariant: E² − B² (invariant under Lorentz boosts). -/
 def EMField.lorentzInvariant (F : EMField) : ℝ := F.E ^ 2 - F.B ^ 2
+
 
 
 
@@ -180,8 +207,10 @@ def EMField.energyDensity (F : EMField) : ℝ := F.E ^ 2 + F.B ^ 2
 
 
 
+
 /-- The electromagnetic field is null (radiation) if E² = B². -/
 def EMField.isNull (F : EMField) : Prop := F.lorentzInvariant = 0
+
 
 
 
@@ -192,9 +221,11 @@ def EMField.dualRotate (F : EMField) (α : ℝ) : EMField where
 
 
 
+
 theorem EMField.dualRotate_preserves_energy (F : EMField) (α : ℝ) :
     (F.dualRotate α).energyDensity = F.energyDensity := by
   unfold EMField.dualRotate EMField.energyDensity; ring; norm_num [ Real.sin_sq, Real.cos_sq ] ; ring;
+
 
 
 
@@ -202,6 +233,7 @@ theorem EMField.dualRotate_preserves_energy (F : EMField) (α : ℝ) :
 theorem EMField.dualRotate_quarter (F : EMField) :
     (F.dualRotate (π / 2)).E = F.B ∧ (F.dualRotate (π / 2)).B = -F.E := by
   simp [EMField.dualRotate, Real.cos_pi_div_two, Real.sin_pi_div_two]
+
 
 
 
@@ -215,12 +247,14 @@ theorem EMField.dualRotate_zero (α : ℝ) :
 
 
 
+
 /-- Composing two duality rotations adds the angles. -/
 theorem EMField.dualRotate_compose (F : EMField) (α β : ℝ) :
     (F.dualRotate α).dualRotate β = F.dualRotate (α + β) := by
   ext
   · simp [EMField.dualRotate, Real.cos_add, Real.sin_add]; ring
   · simp [EMField.dualRotate, Real.cos_add, Real.sin_add]; ring
+
 
 
 
@@ -231,10 +265,12 @@ def rotationMatrix (θ : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
 
 
 
+
 /-- A full 2π rotation is the identity (for vectors). -/
 theorem rotation_full_turn : rotationMatrix (2 * π) = 1 := by
   ext i j; fin_cases i <;> fin_cases j <;>
   simp [rotationMatrix, Real.cos_two_pi, Real.sin_two_pi]
+
 
 
 
@@ -244,8 +280,10 @@ theorem spinor_sign_flip : Real.cos π = -1 := Real.cos_pi
 
 
 
+
 /-- Under a 4π rotation, the spinor rotor returns to +1. -/
 theorem spinor_full_return : Real.cos (2 * π) = 1 := Real.cos_two_pi
+
 
 
 
@@ -254,9 +292,11 @@ def minkowskiEta : Fin 4 → ℝ := ![1, -1, -1, -1]
 
 
 
+
 /-- The metric is its own inverse: η² = 1 (component-wise). -/
 theorem eta_sq (i : Fin 4) : minkowskiEta i ^ 2 = 1 := by
   fin_cases i <;> simp [minkowskiEta]
+
 
 
 
@@ -267,6 +307,7 @@ theorem clifford_relation_encodes_metric :
 
 
 
+
 /-- The pseudoscalar I² = −1 in (3+1) dimensions.
 I² = (−1)^6 · γ₀²γ₁²γ₂²γ₃² = (+1)(−1)(−1)(−1) = −1. -/
 theorem pseudoscalar_sq_neg_one :
@@ -274,9 +315,11 @@ theorem pseudoscalar_sq_neg_one :
 
 
 
+
 /-- The mass-shell condition: E² − p² = m² (in natural units, c=1). -/
 def onMassShell (E px py pz m : ℝ) : Prop :=
   E ^ 2 - px ^ 2 - py ^ 2 - pz ^ 2 = m ^ 2
+
 
 
 
@@ -288,11 +331,13 @@ theorem massless_energy_momentum (E px py pz : ℝ)
 
 
 
+
 /-- A particle at rest (p = 0) has E = m (Einstein's E = mc²). -/
 theorem rest_energy (E m : ℝ) (hE : 0 < E) (hm : 0 < m)
     (h : onMassShell E 0 0 0 m) : E = m := by
   simp [onMassShell] at h
   nlinarith [sq_nonneg (E - m), sq_nonneg (E + m)]
+
 
 
 
@@ -307,15 +352,18 @@ theorem mass_shell_boost_invariant (φ E px m : ℝ)
 
 
 
+
 /-- The spacetime interval between two events. -/
 def spacetimeInterval (x y : Fin 4 → ℝ) : ℝ :=
   (y 0 - x 0) ^ 2 - (y 1 - x 1) ^ 2 - (y 2 - x 2) ^ 2 - (y 3 - x 3) ^ 2
 
 
 
+
 /-- The interval is zero for the same event. -/
 theorem interval_self (x : Fin 4 → ℝ) : spacetimeInterval x x = 0 := by
   simp [spacetimeInterval]
+
 
 
 
@@ -326,11 +374,13 @@ theorem interval_comm (x y : Fin 4 → ℝ) :
 
 
 
+
 /-- A light signal travels on null intervals (s² = 0). -/
 theorem light_travels_null (t v : ℝ) (hv : v ^ 2 = 1) :
     spacetimeInterval (![0, 0, 0, 0]) (![t, v * t, 0, 0]) = 0 := by
   simp [spacetimeInterval]
   nlinarith [sq_nonneg t]
+
 
 
 

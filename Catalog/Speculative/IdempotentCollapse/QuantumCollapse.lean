@@ -21,6 +21,7 @@ variable (P : QProjection V)
 
 
 
+
 /-- The complement Q = 1 - P is idempotent: Q(Qx) = Qx.
 Proof: P(x - Px) = Px - P²x = 0, so Q(Qx) = (x-Px) - P(x-Px) = (x-Px) - 0 = x - Px = Qx. -/
 theorem complementary_is_idempotent (x : V) :
@@ -33,11 +34,13 @@ theorem complementary_is_idempotent (x : V) :
 
 
 
+
 /-- Image = fixed-point set. -/
 theorem image_eq_fixed : {x | P.toFun x = x} = Set.range P.toFun := by
   ext x; constructor
   · intro h; exact ⟨x, h⟩
   · rintro ⟨y, rfl⟩; exact P.idem y
+
 
 
 
@@ -54,6 +57,11 @@ theorem norm_le (x : V) : ‖P.toFun x‖ ≤ ‖x‖ := by
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.IdempotentCollapse.QuantumCollapse
+Auto-generated from theorem catalog database.
+Domain: Speculative/IdempotentCollapse
+Declarations: 9] -/
 theorem pythagorean (x : V) :
     ‖x‖ ^ 2 = ‖P.toFun x‖ ^ 2 + ‖x - P.toFun x‖ ^ 2 := by
       have := P.sa x ( x - P.toFun x );
@@ -62,8 +70,10 @@ theorem pythagorean (x : V) :
 
 
 
+
 /-- Post-measurement stability. -/
 theorem post_measurement_stable (x : V) : P.toFun (P.toFun x) = P.toFun x := P.idem x
+
 
 
 
@@ -71,6 +81,7 @@ theorem iterate_eq_self (n : ℕ) (hn : 1 ≤ n) (x : V) :
     (P.toFun)^[n] x = P.toFun x := by
       induction hn <;> simp_all +decide [ Function.iterate_succ_apply' ];
       exact P.idem x
+
 
 
 
@@ -82,6 +93,7 @@ structure PVM (V : Type*) [NormedAddCommGroup V] [InnerProductSpace ℝ V] (n : 
 
 
 
+
 /-- Decoherence: diagonal extraction is idempotent. -/
 theorem decoherence_is_idempotent {n : ℕ} (ρ : Matrix (Fin n) (Fin n) ℝ) :
     let diag := fun (M : Matrix (Fin n) (Fin n) ℝ) => Matrix.diagonal (fun i => M i i)
@@ -90,6 +102,7 @@ theorem decoherence_is_idempotent {n : ℕ} (ρ : Matrix (Fin n) (Fin n) ℝ) :
   ext i j
   simp only [Matrix.diagonal]
   by_cases h : i = j <;> simp [h]
+
 
 
 

@@ -1,5 +1,3 @@
-import Mathlib
-
 /-! # CatalogBuild.Geometry.Stereographic.StereographicLens
 
 Auto-generated from theorem catalog database.
@@ -7,6 +5,7 @@ Domain: Geometry/Stereographic
 Declarations: 15
 -/
 
+import Mathlib
 
 noncomputable section
 
@@ -18,10 +17,12 @@ def circleStereographic (p : ℝ × ℝ) : ℝ :=
 
 
 
+
 /-- Inverse stereographic projection from ℝ to the unit circle S¹ ⊂ ℝ².
 Maps t ∈ ℝ to the point ((2t)/(t²+1), (t²-1)/(t²+1)) on the circle. -/
 def circleStereographicInv (t : ℝ) : ℝ × ℝ :=
   (2 * t / (t ^ 2 + 1), (t ^ 2 - 1) / (t ^ 2 + 1))
+
 
 
 
@@ -39,12 +40,18 @@ theorem circleStereographicInv_on_circle (t : ℝ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Geometry.Stereographic.StereographicLens
+Auto-generated from theorem catalog database.
+Domain: Geometry/Stereographic
+Declarations: 15] -/
 theorem circleStereographic_inv_left (t : ℝ) :
     circleStereographic (circleStereographicInv t) = t := by
       unfold circleStereographic circleStereographicInv;
       -- Combine and simplify the fractions in the expression.
       field_simp
       ring
+
 
 
 
@@ -56,11 +63,13 @@ theorem circleStereographic_inv_right (x y : ℝ) (hcirc : x ^ 2 + y ^ 2 = 1)
 
 
 
+
 theorem idempotent_lens_circle (x y : ℝ) (hcirc : x ^ 2 + y ^ 2 = 1) (hy : y ≠ 1) :
     let L := circleStereographicInv ∘ circleStereographic
     L (L (x, y)) = L (x, y) := by
       -- By definition of L, we have L(x, y) = (x, y).
       simp [circleStereographic_inv_right x y hcirc hy]
+
 
 
 
@@ -71,10 +80,12 @@ theorem idempotent_dual_lens_circle (t : ℝ) :
 
 
 
+
 theorem circleStereographic_deriv_ne_zero (x y : ℝ) (hcirc : x ^ 2 + y ^ 2 = 1)
     (hy : y ≠ 1) (hx : x ≠ 0) :
     (1 : ℝ) / (1 - y) ≠ 0 := by
       exact one_div_ne_zero <| sub_ne_zero_of_ne <| Ne.symm hy
+
 
 
 
@@ -84,8 +95,10 @@ def parityOp : ℝ → ℝ := fun t => -t
 
 
 
+
 theorem parity_involution (t : ℝ) : parityOp (parityOp t) = t := by
   exact neg_neg t
+
 
 
 
@@ -97,14 +110,17 @@ theorem stereographic_antipodal (x y : ℝ) (hcirc : x ^ 2 + y ^ 2 = 1)
 
 
 
+
 theorem onepoint_real_compact : CompactSpace (OnePoint ℝ) := by
   infer_instance
+
 
 
 
 theorem onepoint_real_connected : ConnectedSpace (OnePoint ℝ) := by
   refine' ⟨ _ ⟩;
   exact ⟨ OnePoint.some 0 ⟩
+
 
 
 
@@ -115,10 +131,12 @@ def isLensFixedPoint (x y : ℝ) : Prop :=
 
 
 
+
 theorem lens_fixed_points (x y : ℝ) :
     isLensFixedPoint x y ↔
       (x = 1 ∧ y = 0) ∨ (x = -1 ∧ y = 0) ∨ (x = 0 ∧ y = -1) := by
         grind +locals
+
 
 
 

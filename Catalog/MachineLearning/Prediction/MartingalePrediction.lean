@@ -18,8 +18,14 @@ def isSupermartingale (X : ℕ → ℝ) : Prop :=
 
 
 
+
+/-- [Section: # CatalogBuild.MachineLearning.Prediction.MartingalePrediction
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/Prediction
+Declarations: 17] -/
 def isSubmartingale (X : ℕ → ℝ) : Prop :=
   ∀ n, X n ≤ X (n + 1)
+
 
 
 
@@ -28,9 +34,11 @@ def isMartingale (X : ℕ → ℝ) : Prop :=
 
 
 
+
 theorem martingale_is_super_and_sub (X : ℕ → ℝ) (hX : isMartingale X) :
     isSupermartingale X ∧ isSubmartingale X :=
   ⟨fun n => le_of_eq (hX n), fun n => le_of_eq (hX n).symm⟩
+
 
 
 
@@ -42,11 +50,13 @@ theorem martingale_constant_value (X : ℕ → ℝ) (hX : isMartingale X) (n : �
 
 
 
+
 theorem supermartingale_value_decreases (X : ℕ → ℝ) (hX : isSupermartingale X)
     (n : ℕ) : X n ≤ X 0 := by
   induction n with
   | zero => exact le_rfl
   | succ n ih => exact le_trans (hX n) ih
+
 
 
 
@@ -57,7 +67,9 @@ structure PredictionMarket where
 
 
 
+
 def MarketHistory := ℕ → PredictionMarket
+
 
 
 
@@ -66,10 +78,12 @@ def isEfficient (history : MarketHistory) : Prop :=
 
 
 
+
 theorem efficient_market_constant (history : MarketHistory)
     (h : isEfficient history) (n : ℕ) :
     (history n).price = (history 0).price :=
   martingale_constant_value _ h n
+
 
 
 
@@ -82,6 +96,7 @@ structure DoobDecomposition (X : ℕ → ℝ) where
 
 
 
+
 noncomputable def doobDecompose (X : ℕ → ℝ) : DoobDecomposition X where
   martingalePart := fun _ => X 0
   predictablePart := fun n => X n - X 0
@@ -91,8 +106,10 @@ noncomputable def doobDecompose (X : ℕ → ℝ) : DoobDecomposition X where
 
 
 
+
 def hasBoundedIncrements (X : ℕ → ℝ) (c : ℝ) : Prop :=
   ∀ n, |X (n + 1) - X n| ≤ c
+
 
 
 
@@ -105,8 +122,10 @@ theorem bounded_increments_total_bound (X : ℕ → ℝ) (c : ℝ) (hc : 0 ≤ c
 
 
 
+
 def predictionsConverge (predictions : ℕ → ℝ) (truth : ℝ) : Prop :=
   Filter.Tendsto predictions Filter.atTop (nhds truth)
+
 
 
 
@@ -114,6 +133,7 @@ def predictionsConverge (predictions : ℕ → ℝ) (truth : ℝ) : Prop :=
 noncomputable def exponentialSmoothing (seq : ℕ → ℝ) (α_param : ℝ) : ℕ → ℝ
   | 0 => seq 0
   | n + 1 => α_param * seq (n + 1) + (1 - α_param) * exponentialSmoothing seq α_param n
+
 
 
 
@@ -129,6 +149,7 @@ theorem exponentialSmoothing_convex (seq : ℕ → ℝ) (α_param : ℝ)
     constructor
     · nlinarith [(h_bound (n + 1)).1, ih.1]
     · nlinarith [(h_bound (n + 1)).2, ih.2]
+
 
 
 

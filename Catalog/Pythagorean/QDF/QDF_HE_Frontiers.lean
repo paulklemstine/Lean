@@ -14,6 +14,7 @@ theorem qdf_lorentz_signature (a b c d : ℤ)
 
 
 
+
 /-- Sum of two QDF vectors (as ℤ⁴ vectors) has a specific norm. -/
 theorem qdf_sum_norm (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
     (h1 : a₁ ^ 2 + b₁ ^ 2 + c₁ ^ 2 = d₁ ^ 2)
@@ -21,6 +22,7 @@ theorem qdf_sum_norm (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
     (a₁ + a₂) ^ 2 + (b₁ + b₂) ^ 2 + (c₁ + c₂) ^ 2 + (d₁ + d₂) ^ 2 =
     2 * (d₁ ^ 2 + d₂ ^ 2) + 2 * (a₁ * a₂ + b₁ * b₂ + c₁ * c₂ + d₁ * d₂) := by
   nlinarith
+
 
 
 
@@ -33,10 +35,12 @@ theorem qdf_z4_inner_product (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
 
 
 
+
 /-- Double quadruple: 2*(a,b,c,d) is a QDF quadruple. -/
 theorem qdf_double (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     (2 * a) ^ 2 + (2 * b) ^ 2 + (2 * c) ^ 2 = (2 * d) ^ 2 := by nlinarith
+
 
 
 
@@ -55,10 +59,12 @@ theorem qdf_even_sublattice (a b c d : ℤ)
 
 
 
+
 /-- For lattice attacks: the Minkowski-type bound on QDF norms. -/
 theorem qdf_minkowski_norm_bound (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 = 2 * d ^ 2 := by linarith
+
 
 
 
@@ -72,10 +78,12 @@ theorem qdf_basis_reduce (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ k : ℤ)
 
 
 
+
 /-- Parity constraint: the QDF identity mod 4 is preserved. -/
 theorem qdf_mod4_constraint (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     (a ^ 2 + b ^ 2 + c ^ 2) % 4 = d ^ 2 % 4 := by omega
+
 
 
 
@@ -92,12 +100,14 @@ theorem qdf_exact_homomorphism_iff (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : �
 
 
 
+
 /-- Noise magnitude: the cross-term is exactly 2*(inner_product - d₁*d₂). -/
 theorem qdf_noise_magnitude (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
     (h1 : a₁ ^ 2 + b₁ ^ 2 + c₁ ^ 2 = d₁ ^ 2)
     (h2 : a₂ ^ 2 + b₂ ^ 2 + c₂ ^ 2 = d₂ ^ 2) :
     (a₁ + a₂) ^ 2 + (b₁ + b₂) ^ 2 + (c₁ + c₂) ^ 2 - (d₁ + d₂) ^ 2 =
     2 * (a₁ * a₂ + b₁ * b₂ + c₁ * c₂ - d₁ * d₂) := by nlinarith
+
 
 
 
@@ -112,11 +122,13 @@ theorem qdf_noise_bound (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
 
 
 
+
 /-- Multiplicative structure: scaling preserves QDF under modular reduction. -/
 theorem qdf_mult_homomorphism (a b c d k m : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     ((k * a) ^ 2 + (k * b) ^ 2 + (k * c) ^ 2) % m = (k * d) ^ 2 % m := by
   congr 1; nlinarith [sq_nonneg k]
+
 
 
 
@@ -129,12 +141,14 @@ theorem qdf_subtraction_cross_term (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : �
 
 
 
+
 /-- Exact subtraction homomorphism. -/
 theorem qdf_exact_subtraction (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
     (h1 : a₁ ^ 2 + b₁ ^ 2 + c₁ ^ 2 = d₁ ^ 2)
     (h2 : a₂ ^ 2 + b₂ ^ 2 + c₂ ^ 2 = d₂ ^ 2)
     (hip : a₁ * a₂ + b₁ * b₂ + c₁ * c₂ = d₁ * d₂) :
     (a₁ - a₂) ^ 2 + (b₁ - b₂) ^ 2 + (c₁ - c₂) ^ 2 = (d₁ - d₂) ^ 2 := by nlinarith
+
 
 
 
@@ -146,10 +160,12 @@ theorem qdf_self_addition (a b c d : ℤ)
 
 
 
+
 /-- Noise accumulation: n copies of the same quadruple are noise-free. -/
 theorem qdf_n_copies (a b c d : ℤ) (n : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     (n * a) ^ 2 + (n * b) ^ 2 + (n * c) ^ 2 = (n * d) ^ 2 := by nlinarith [sq_nonneg n]
+
 
 
 
@@ -163,12 +179,14 @@ theorem qdf_noise_mod (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ m : ℤ)
 
 
 
+
 /-- Mixed modular-additive: scaling is always noise-free mod any m. -/
 theorem qdf_mixed_operation (a b c d k m : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     ((k * a) ^ 2 + (k * b) ^ 2 + (k * c) ^ 2 - (k * d) ^ 2) % m = 0 := by
   have : (k * a) ^ 2 + (k * b) ^ 2 + (k * c) ^ 2 = (k * d) ^ 2 := by nlinarith [sq_nonneg k]
   simp [this]
+
 
 
 
@@ -180,11 +198,13 @@ theorem qdf_two_component_error (a b c d e₁ e₂ : ℤ)
 
 
 
+
 /-- Three-component error detection. -/
 theorem qdf_three_component_error (a b c d e₁ e₂ e₃ : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     (a + e₁) ^ 2 + (b + e₂) ^ 2 + (c + e₃) ^ 2 - d ^ 2 =
     2 * a * e₁ + e₁ ^ 2 + 2 * b * e₂ + e₂ ^ 2 + 2 * c * e₃ + e₃ ^ 2 := by nlinarith
+
 
 
 
@@ -195,10 +215,12 @@ theorem qdf_weight1_syndrome_a (a b c d : ℤ)
 
 
 
+
 /-- Weight-1 error syndrome on component b. -/
 theorem qdf_weight1_syndrome_b (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     a ^ 2 + (b + 1) ^ 2 + c ^ 2 - d ^ 2 = 2 * b + 1 := by nlinarith
+
 
 
 
@@ -209,9 +231,11 @@ theorem qdf_weight1_syndrome_c (a b c d : ℤ)
 
 
 
+
 /-- Syndrome distinguishability: distinct components give distinct weight-1 syndromes. -/
 theorem qdf_syndrome_distinguishable (a b : ℤ) (hab : a ≠ b) :
     2 * a + 1 ≠ 2 * b + 1 := by omega
+
 
 
 
@@ -226,9 +250,11 @@ theorem qdf_frame_identity (a₁ b₁ c₁ a₂ b₂ c₂ a₃ b₃ c₃ d : ℤ
 
 
 
+
 /-- Error correction capacity: the minimum syndrome magnitude for weight-1 errors. -/
 theorem qdf_min_syndrome (a : ℤ) (ha : a ≥ 0) :
     2 * a + 1 ≥ 1 := by omega
+
 
 
 
@@ -247,9 +273,11 @@ theorem qdf_fidelity_bound (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ) (hd : d ≠ 0
 
 
 
+
 /-- The quadratic family hypotenuse d(n) = n²+n+1 is always positive for n ≥ 0. -/
 theorem qdf_hypotenuse_pos (n : ℤ) (hn : n ≥ 0) :
     n ^ 2 + n + 1 > 0 := by nlinarith [sq_nonneg n]
+
 
 
 
@@ -262,9 +290,11 @@ theorem qdf_hypotenuse_odd (n : ℤ) :
 
 
 
+
 /-- Consecutive hypotenuse decomposition. -/
 theorem qdf_hypotenuse_ratio (n : ℤ) :
     (n + 1) ^ 2 + (n + 1) + 1 = (n ^ 2 + n + 1) + (2 * n + 2) := by ring
+
 
 
 
@@ -274,9 +304,11 @@ theorem qdf_gap_linear (n : ℤ) :
 
 
 
+
 /-- The sum of consecutive quadratic family values. -/
 theorem qdf_telescoping_sum (n : ℤ) :
     (n ^ 2 + n + 1) + ((n + 1) ^ 2 + (n + 1) + 1) = 2 * (n + 1) ^ 2 + 2 := by ring
+
 
 
 
@@ -286,9 +318,11 @@ theorem qdf_density_bound (n : ℤ) (hn : n ≥ 1) :
 
 
 
+
 /-- Coprimality of consecutive integers (used for QDF leg coprimality). -/
 theorem qdf_coprime_consecutive (n : ℕ) :
     Nat.Coprime n (n + 1) := by simp [Nat.Coprime]
+
 
 
 
@@ -298,9 +332,11 @@ theorem qdf_filtration_nesting (m n : ℤ) (hmn : m < n) (hm : m ≥ 0) :
 
 
 
+
 /-- Symmetry group order: sign changes × permutations = 8 × 6 = 48. -/
 theorem qdf_symmetry_group_order :
     (2 ^ 3 : ℕ) * Nat.factorial 3 = 48 := by norm_num
+
 
 
 
@@ -314,12 +350,14 @@ theorem lattice_he_bridge (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
 
 
 
+
 /-- QEC-TDA bridge: code distance = TDA distance on the same sphere. -/
 theorem qec_tda_bridge (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
     (h1 : a₁ ^ 2 + b₁ ^ 2 + c₁ ^ 2 = d ^ 2)
     (h2 : a₂ ^ 2 + b₂ ^ 2 + c₂ ^ 2 = d ^ 2) :
     (a₁ - a₂) ^ 2 + (b₁ - b₂) ^ 2 + (c₁ - c₂) ^ 2 =
     2 * d ^ 2 - 2 * (a₁ * a₂ + b₁ * b₂ + c₁ * c₂) := by nlinarith
+
 
 
 
@@ -332,11 +370,13 @@ theorem qdf_four_way_identity (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
 
 
 
+
 /-- The parallelogram law specialized to QDF same-sphere quadruples. -/
 theorem qdf_parallelogram (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ) :
     (a₁ + a₂) ^ 2 + (b₁ + b₂) ^ 2 + (c₁ + c₂) ^ 2 +
     (a₁ - a₂) ^ 2 + (b₁ - b₂) ^ 2 + (c₁ - c₂) ^ 2 =
     2 * (a₁ ^ 2 + b₁ ^ 2 + c₁ ^ 2 + a₂ ^ 2 + b₂ ^ 2 + c₂ ^ 2) := by ring
+
 
 
 
@@ -347,10 +387,12 @@ theorem qdf_sextic_family (n : ℤ) :
 
 
 
+
 /-- Product family: if (a,b,c,d) is a quadruple, so is (da, db, dc, d²). -/
 theorem qdf_product_family (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     (d * a) ^ 2 + (d * b) ^ 2 + (d * c) ^ 2 = (d ^ 2) ^ 2 := by nlinarith [sq_nonneg d]
+
 
 
 
@@ -361,10 +403,12 @@ theorem qdf_shifted_family (n k : ℤ) :
 
 
 
+
 /-- Sum of two quadratic family hypotenuses. -/
 theorem qdf_hypotenuse_sum_formula (m n : ℤ) :
     (m ^ 2 + m + 1) + (n ^ 2 + n + 1) =
     m ^ 2 + n ^ 2 + m + n + 2 := by ring
+
 
 
 
@@ -375,9 +419,11 @@ theorem qdf_hypotenuse_product (m n : ℤ) :
 
 
 
+
 /-- The quadratic family satisfies a recurrence. -/
 theorem qdf_recurrence (n : ℤ) :
     (n + 1) ^ 2 + (n + 1) + 1 = (n ^ 2 + n + 1) + 2 * n + 2 := by ring
+
 
 
 
@@ -387,5 +433,6 @@ theorem qdf_double_compose (n : ℤ) :
     let d₂ := d₁ ^ 2 + d₁ + 1
     let d₃ := d₂ ^ 2 + d₂ + 1
     d₂ ^ 2 + (d₂ + 1) ^ 2 + (d₂ * (d₂ + 1)) ^ 2 = d₃ ^ 2 := by ring
+
 
 

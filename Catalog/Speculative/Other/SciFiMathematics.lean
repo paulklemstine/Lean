@@ -17,13 +17,20 @@ theorem koch_dimension_equation :
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.SciFiMathematics
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 11] -/
 theorem log_three_pos : (0 : ℝ) < Real.log 3 := by
   positivity
 
 
 
+
 theorem log_four_pos : (0 : ℝ) < Real.log 4 := by
   positivity
+
 
 
 
@@ -46,6 +53,7 @@ theorem koch_dimension_irrational : Irrational (Real.log 4 / Real.log 3) := by
 
 
 
+
 theorem hyperbolic_area_lower_bound (r : ℝ) (hr : 0 ≤ r) :
     Real.cosh r - 1 ≥ r ^ 2 / 2 := by
   -- Use the Taylor series expansion of cosh r, which is 1 + r^2 / 2! + r^4 / 4! + ...
@@ -58,8 +66,10 @@ theorem hyperbolic_area_lower_bound (r : ℝ) (hr : 0 ≤ r) :
 
 
 
+
 theorem cosh_ge_one (r : ℝ) : Real.cosh r ≥ 1 := by
   exact Real.one_le_cosh r
+
 
 
 
@@ -69,15 +79,18 @@ theorem marchenko_pastur_edge (σ γ : ℝ) (hσ : 0 < σ) (hγ : 0 < γ) :
 
 
 
+
 theorem det_mul_transpose_sq {n : Type*} [DecidableEq n] [Fintype n]
     (A : Matrix n n ℝ) : (A * A.transpose).det = A.det ^ 2 := by
   rw [ sq, Matrix.det_mul, Matrix.det_transpose ]
 
 
 
+
 theorem koch_self_similarities (n : ℕ) :
     4 ^ n = (4 : ℕ) ^ n := by
   grind
+
 
 
 
@@ -88,7 +101,9 @@ theorem koch_piece_length (n : ℕ) :
 
 
 
+
 theorem koch_length_diverges :
     Filter.Tendsto (fun n : ℕ => ((4 : ℝ) / 3) ^ n) Filter.atTop Filter.atTop := by
   exact tendsto_pow_atTop_atTop_of_one_lt ( by norm_num )
+
 

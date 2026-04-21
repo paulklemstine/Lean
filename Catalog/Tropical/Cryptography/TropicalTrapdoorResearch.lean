@@ -16,6 +16,7 @@ theorem tropical_distributive_dual (a b c : ℝ) :
 
 
 
+
 /-- Tropical matrix-vector product in max-plus.
 Requires n ≥ 1 for the sup' to be well-defined. -/
 def tropMaxMatVec {n : ℕ} [NeZero n] (m : ℕ) (A : Fin m → Fin n → ℝ) (x : Fin n → ℝ) :
@@ -24,14 +25,17 @@ def tropMaxMatVec {n : ℕ} [NeZero n] (m : ℕ) (A : Fin m → Fin n → ℝ) (
 
 
 
+
 /-- ReLU(x) = max(x, 0) is a tropical gate evaluation -/
 def reluAsTropical (x : ℝ) : ℝ := max x 0
+
 
 
 
 /-- Composition of k ReLU layers: at most 2^k linear regions -/
 theorem relu_composition_regions (k : ℕ) :
     2 ^ k ≥ 1 := Nat.one_le_two_pow
+
 
 
 
@@ -42,10 +46,12 @@ theorem tropical_duality_min_to_max (a b : ℝ) :
 
 
 
+
 /-- Negation converts max to min -/
 theorem tropical_duality_max_to_min (a b : ℝ) :
     -(max a b) = min (-a) (-b) := by
   simp [min_def, max_def]; split_ifs <;> linarith
+
 
 
 
@@ -60,6 +66,7 @@ theorem tropical_circuit_duality (a b : ℝ) :
 
 
 
+
 /-- [Section: # CatalogBuild.Tropical.Cryptography.TropicalTrapdoorResearch
 Auto-generated from theorem catalog database.
 Domain: Tropical/Cryptography
@@ -70,9 +77,15 @@ theorem max_gate_contraction (a₁ a₂ b₁ b₂ : ℝ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Tropical.Cryptography.TropicalTrapdoorResearch
+Auto-generated from theorem catalog database.
+Domain: Tropical/Cryptography
+Declarations: 17] -/
 theorem min_gate_contraction (a₁ a₂ b₁ b₂ : ℝ) :
     |min a₁ b₁ - min a₂ b₂| ≤ max |a₁ - a₂| |b₁ - b₂| := by
   cases max_cases |a₁ - a₂| |b₁ - b₂| <;> cases min_cases a₁ b₁ <;> cases min_cases a₂ b₂ <;> cases abs_cases ( min a₁ b₁ - min a₂ b₂ ) <;> cases abs_cases ( a₁ - a₂ ) <;> cases abs_cases ( b₁ - b₂ ) <;> linarith
+
 
 
 
@@ -83,6 +96,7 @@ theorem max_shift_fixed_point (c : ℝ) (hc : c ≤ 0) :
 
 
 
+
 /-- A min gate with non-negative shift has a fixed point -/
 theorem min_shift_fixed_point (c : ℝ) (hc : 0 ≤ c) :
     ∃ x : ℝ, min x (x + c) = x :=
@@ -90,10 +104,12 @@ theorem min_shift_fixed_point (c : ℝ) (hc : 0 ≤ c) :
 
 
 
+
 /-- For strict inequalities, min has a unique selection -/
 theorem min_strict_unique_selection (a b : ℝ) (h : a < b) :
     min a b = a ∧ min a b ≠ b := by
   exact ⟨min_eq_left (le_of_lt h), by rw [min_eq_left (le_of_lt h)]; linarith⟩
+
 
 
 
@@ -106,12 +122,14 @@ theorem max_strict_unique_selection (a b : ℝ) (h : a < b) :
 
 
 
+
 /-- Degeneracy is the only case where selection is non-unique -/
 theorem selection_ambiguity_iff_equal (a b : ℝ) :
     (min a b = a ∧ min a b = b) ↔ a = b := by
   constructor
   · rintro ⟨h1, h2⟩; linarith [h1.symm.trans h2]
   · rintro rfl; exact ⟨min_self a, min_self a⟩
+
 
 
 
@@ -125,6 +143,7 @@ structure InversionExperiment where
 
 
 
+
 /-- Validate experiment: total selections should be 2^k -/
 def validExperiment (exp : InversionExperiment) : Prop :=
   exp.totalSelections = 2 ^ exp.numMinMaxGates ∧
@@ -132,10 +151,12 @@ def validExperiment (exp : InversionExperiment) : Prop :=
 
 
 
+
 /-- The ratio of consistent to total selections measures "hardness" -/
 def consistencyRatio (exp : InversionExperiment) : ℚ :=
   if exp.totalSelections = 0 then 0
   else exp.consistentSelections / exp.totalSelections
+
 
 
 

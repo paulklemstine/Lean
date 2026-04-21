@@ -15,6 +15,7 @@ def truthSet {α : Type*} (O : α → α) : Set α :=
 
 
 
+
 /-- [Section: # CatalogBuild.Tropical.Core.TropicalOracle
 Auto-generated from theorem catalog database.
 Domain: Tropical/Core
@@ -25,9 +26,15 @@ theorem truthSet_eq_fixedPoints {α : Type*} (O : α → α) :
 
 
 
+
+/-- [Section: # CatalogBuild.Tropical.Core.TropicalOracle
+Auto-generated from theorem catalog database.
+Domain: Tropical/Core
+Declarations: 18] -/
 theorem oracle_range_eq_truthSet {α : Type*} (O : α → α) (hO : IsOracle O) :
     range O = truthSet O := by
       ext x; aesop;
+
 
 
 
@@ -37,9 +44,11 @@ theorem oracle_on_truthSet {α : Type*} (O : α → α) (hO : IsOracle O)
 
 
 
+
 /-- The tropical gate: f(x) = -max(-x, 0) = min(x, 0).
 This is the "soft min-plus" operation from tropical geometry. -/
 noncomputable def tropicalGate (x : ℝ) : ℝ := min x 0
+
 
 
 
@@ -49,8 +58,10 @@ theorem tropicalGate_eq_neg_relu_neg (x : ℝ) :
 
 
 
+
 theorem tropicalGate_idempotent : IsOracle tropicalGate := by
   grind +locals
+
 
 
 
@@ -61,8 +72,10 @@ theorem tropicalGate_truthSet : truthSet tropicalGate = Set.Iic 0 := by
 
 
 
+
 theorem tropicalGate_monotone : Monotone tropicalGate := by
   exact fun x y hxy => min_le_min hxy le_rfl;
+
 
 
 
@@ -71,8 +84,10 @@ theorem tropicalGate_le_zero (x : ℝ) : tropicalGate x ≤ 0 := by
 
 
 
+
 theorem tropicalGate_le_self (x : ℝ) : tropicalGate x ≤ x := by
   exact min_le_left _ _
+
 
 
 
@@ -92,6 +107,7 @@ theorem oracle_compression {α : Type*} [Fintype α] [DecidableEq α]
 
 
 
+
 /-- The geodesic update rule: θ ← θ - η · (∇/√g).
 This is equivalent to the RMSProp adaptive learning rate update. -/
 noncomputable def geodesicStep (theta grad g eta epsilon : ℝ) : ℝ :=
@@ -99,9 +115,11 @@ noncomputable def geodesicStep (theta grad g eta epsilon : ℝ) : ℝ :=
 
 
 
+
 theorem geodesicStep_zero_grad (theta g eta epsilon : ℝ) :
     geodesicStep theta 0 g eta epsilon = theta := by
       unfold geodesicStep; ring;
+
 
 
 
@@ -112,10 +130,12 @@ theorem geodesicStep_descent (theta grad g eta epsilon : ℝ)
 
 
 
+
 theorem strange_loop_convergence {α : Type*} (O : α → α) (hO : IsOracle O)
     (x : α) (n : ℕ) (hn : 0 < n) : O^[n] x = O x := by
       induction hn <;> simp +decide [ *, Function.iterate_succ_apply' ];
       exact hO x
+
 
 
 
@@ -126,9 +146,11 @@ theorem holographic_bottleneck_retraction {α : Type*}
 
 
 
+
 theorem oracle_range_subset_fixed {α : Type*} (O : α → α) (hO : IsOracle O) :
     ∀ y ∈ range O, O y = y := by
       aesop
+
 
 
 end

@@ -16,10 +16,12 @@ theorem Oracle.mem_truthSet_iff_fixed {α : Type*} (O : Oracle α) (x : α) :
 
 
 
+
 /-- The oracle maps everything into its truth set. -/
 theorem Oracle.apply_mem_truthSet {α : Type*} (O : Oracle α) (x : α) :
     O.apply x ∈ O.truthSet := by
   simp [Oracle.truthSet, O.idempotent]
+
 
 
 
@@ -29,6 +31,7 @@ def Oracle.compose {α : Type*} (O₁ O₂ : Oracle α)
     Oracle α where
   apply := O₁.apply ∘ O₂.apply
   idempotent := h
+
 
 
 
@@ -52,11 +55,13 @@ theorem Oracle.compose_truthSet_subset_left {α : Type*} (O₁ O₂ : Oracle α)
 
 
 
+
 /-- A tropical max-projection oracle: projects a signal to its "best n coordinates".
 This models extracting the sub-oracle from the universal integer oracle. -/
 def tropicalMaxOracle {n : ℕ} (hn : 0 < n) (threshold : ℝ) :
     (Fin n → ℝ) → (Fin n → ℝ) :=
   fun f i => max (f i) threshold
+
 
 
 
@@ -67,6 +72,7 @@ theorem tropicalMaxOracle_idempotent {n : ℕ} (hn : 0 < n) (τ : ℝ) (f : Fin 
 
 
 
+
 /-- Package as an Oracle structure. -/
 def tropicalMaxOracleStruct {n : ℕ} (hn : 0 < n) (τ : ℝ) : Oracle (Fin n → ℝ) where
   apply := tropicalMaxOracle hn τ
@@ -74,6 +80,11 @@ def tropicalMaxOracleStruct {n : ℕ} (hn : 0 < n) (τ : ℝ) : Oracle (Fin n �
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.SelfLearningOracle
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 24] -/
 theorem tropicalMaxOracle_truthSet {n : ℕ} (hn : 0 < n) (τ : ℝ) (f : Fin n → ℝ) :
     f ∈ (tropicalMaxOracleStruct hn τ).truthSet ↔ ∀ i, f i ≥ τ := by
   -- To prove the equivalence, we split it into two implications.
@@ -87,10 +98,12 @@ theorem tropicalMaxOracle_truthSet {n : ℕ} (hn : 0 < n) (τ : ℝ) (f : Fin n 
 
 
 
+
 theorem oracle_learns_in_one_step {α : Type*} (O : Oracle α) (x : α) (k : ℕ) (hk : 0 < k) :
     O.apply^[k] x = O.apply x := by
   induction hk <;> simp +decide [ *, Function.iterate_succ_apply' ];
   exact O.idempotent x
+
 
 
 
@@ -106,6 +119,7 @@ theorem oracle_eventually_constant {α : Type*} (O : Oracle α) (x : α) :
 
 
 
+
 /-- A sub-oracle is a restriction of an oracle to a subset of its domain. -/
 def Oracle.restrict {α : Type*} (O : Oracle α) (S : Set α) (hS : ∀ x ∈ S, O.apply x ∈ S) :
     Oracle S where
@@ -113,6 +127,7 @@ def Oracle.restrict {α : Type*} (O : Oracle α) (S : Set α) (hS : ∀ x ∈ S,
   idempotent := fun ⟨x, _⟩ => by
     simp [Subtype.ext_iff]
     exact O.idempotent x
+
 
 
 
@@ -129,15 +144,18 @@ theorem Oracle.restrict_truthSet {α : Type*} (O : Oracle α) (S : Set α)
 
 
 
+
 /-- An oracle O₁ refines O₂ if O₁'s truth set is contained in O₂'s. -/
 def Oracle.refines {α : Type*} (O₁ O₂ : Oracle α) : Prop :=
   O₁.truthSet ⊆ O₂.truthSet
 
 
 
+
 /-- Refinement is reflexive. -/
 theorem Oracle.refines_refl {α : Type*} (O : Oracle α) : O.refines O :=
   Set.Subset.refl _
+
 
 
 
@@ -152,6 +170,7 @@ theorem Oracle.refines_trans {α : Type*} (O₁ O₂ O₃ : Oracle α)
 
 
 
+
 /-- For any finite set of "truths" (reals), there exists a tropical max oracle
 whose truth set contains exactly those signals above the threshold.
 This models "working backwards" from the full set to find the best sub-oracle. -/
@@ -161,6 +180,7 @@ theorem exists_tropical_sub_oracle (n : ℕ) (hn : 0 < n) (truths : Fin n → �
   use Finset.univ.inf' (Finset.univ_nonempty_iff.mpr ⟨⟨0, hn⟩⟩) truths
   intro i hi
   simp [tropicalMaxOracle, max_eq_left hi]
+
 
 
 
@@ -180,6 +200,7 @@ theorem tropical_oracle_monotone_threshold {n : ℕ} (hn : 0 < n) (τ₁ τ₂ :
 
 
 
+
 /-- The "compression ratio" of an oracle: what fraction of the space are fixed points.
 For a finite oracle on {0,...,n-1} → ℝ with threshold τ, signals with all
 coordinates ≥ τ are fixed. Raising τ reduces the truth set (more compression). -/
@@ -194,6 +215,7 @@ theorem oracle_compression_increases {n : ℕ} (hn : 0 < n) (τ₁ τ₂ : ℝ)
 
 
 
+
 /-- Given a family of oracles, the consensus truth set is the intersection
 of all individual truth sets. This models the research team reaching
 consensus by intersecting their individual findings. -/
@@ -202,10 +224,12 @@ def consensusTruthSet {α : Type*} {ι : Type*} (Os : ι → Oracle α) : Set α
 
 
 
+
 /-- Consensus is more selective than any individual oracle. -/
 theorem consensus_subset {α : Type*} {ι : Type*} (Os : ι → Oracle α) (i : ι) :
     consensusTruthSet Os ⊆ (Os i).truthSet := by
   exact Set.iInter_subset _ i
+
 
 
 
@@ -220,11 +244,13 @@ theorem mem_consensus_iff {α : Type*} {ι : Type*} (Os : ι → Oracle α) (x :
 
 
 
+
 /-- The projective normalization oracle: normalizes signals to have max = 0.
 This is the tropical analogue of probability normalization. -/
 def projNormOracle {n : ℕ} (hn : 0 < n) :
     (Fin n → ℝ) → (Fin n → ℝ) :=
   fun f i => f i - Finset.univ.sup' (Finset.univ_nonempty_iff.mpr ⟨⟨0, hn⟩⟩) f
+
 
 
 
@@ -237,10 +263,12 @@ theorem projNormOracle_idempotent {n : ℕ} (hn : 0 < n) (f : Fin n → ℝ) :
 
 
 
+
 /-- The projective oracle as an Oracle structure. -/
 def projNormOracleStruct {n : ℕ} (hn : 0 < n) : Oracle (Fin n → ℝ) where
   apply := projNormOracle hn
   idempotent := projNormOracle_idempotent hn
+
 
 
 

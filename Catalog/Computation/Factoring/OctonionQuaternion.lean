@@ -19,9 +19,11 @@ namespace IntQuaternion
 
 
 
+
 /-- The norm of an integer quaternion: a² + b² + c² + d². -/
 def norm (q : IntQuaternion) : ℤ :=
   q.re^2 + q.im_i^2 + q.im_j^2 + q.im_k^2
+
 
 
 
@@ -34,6 +36,7 @@ def mul (q₁ q₂ : IntQuaternion) : IntQuaternion where
 
 
 
+
 /-- Quaternion conjugation. -/
 def conj (q : IntQuaternion) : IntQuaternion where
   re := q.re
@@ -43,11 +46,13 @@ def conj (q : IntQuaternion) : IntQuaternion where
 
 
 
+
 /-- The norm is multiplicative: N(q₁ · q₂) = N(q₁) · N(q₂). -/
 theorem norm_mul (q₁ q₂ : IntQuaternion) :
     (mul q₁ q₂).norm = q₁.norm * q₂.norm := by
   simp only [norm, mul]
   ring
+
 
 
 
@@ -62,19 +67,27 @@ theorem norm_eq_zero_iff (q : IntQuaternion) :
 
 
 
+
 /-- q · conj(q) has zero imaginary parts. -/
 theorem mul_conj_im_i (q : IntQuaternion) : (mul q (conj q)).im_i = 0 := by
   simp only [mul, conj]; ring
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Factoring.OctonionQuaternion
+Auto-generated from theorem catalog database.
+Domain: Computation/Factoring
+Declarations: 17] -/
 theorem mul_conj_im_j (q : IntQuaternion) : (mul q (conj q)).im_j = 0 := by
   simp only [mul, conj]; ring
 
 
 
+
 theorem mul_conj_im_k (q : IntQuaternion) : (mul q (conj q)).im_k = 0 := by
   simp only [mul, conj]; ring
+
 
 
 
@@ -84,9 +97,11 @@ theorem mul_conj_re (q : IntQuaternion) : (mul q (conj q)).re = q.norm := by
 
 
 
+
 /-- The norm of the conjugate equals the norm. -/
 theorem norm_conj (q : IntQuaternion) : (conj q).norm = q.norm := by
   simp [norm, conj]
+
 
 
 
@@ -95,8 +110,10 @@ def sl2z_S (m n : ℤ) : ℤ × ℤ := (n, -m)
 
 
 
+
 /-- The T generator of SL(2,ℤ) acting on (m,n): (m,n) ↦ (m+n, n). -/
 def sl2z_T (m n : ℤ) : ℤ × ℤ := (m + n, n)
+
 
 
 
@@ -104,6 +121,7 @@ def sl2z_T (m n : ℤ) : ℤ × ℤ := (m + n, n)
 theorem sl2z_S_preserves_norm (m n : ℤ) :
     (sl2z_S m n).1 ^ 2 + (sl2z_S m n).2 ^ 2 = m^2 + n^2 := by
   simp [sl2z_S]; ring
+
 
 
 
@@ -120,10 +138,12 @@ theorem sl2z_T_quadruple (m n p q : ℤ) :
 
 
 
+
 /-- Lagrange's four-square theorem: every natural number is the sum of four squares. -/
 theorem sum_four_squares_statement (n : ℕ) :
     ∃ a b c d : ℕ, a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 = n :=
   Nat.sum_four_squares n
+
 
 
 
@@ -132,5 +152,6 @@ theorem quat_mul_assoc (p q r : IntQuaternion) :
     IntQuaternion.mul (IntQuaternion.mul p q) r =
     IntQuaternion.mul p (IntQuaternion.mul q r) := by
   ext <;> simp [IntQuaternion.mul] <;> ring
+
 
 

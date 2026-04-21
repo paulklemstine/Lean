@@ -12,6 +12,7 @@ def harmonicQ' (n : ℕ) : ℚ := ∑ k ∈ Finset.range n, 1 / ((k : ℚ) + 1)
 
 
 
+
 /-- [Section: # CatalogBuild.Speculative.Other.MoonshotResearch
 Auto-generated from theorem catalog database.
 Domain: Speculative/Other
@@ -19,7 +20,13 @@ Declarations: 97] -/
 theorem harmonicQ'_zero : harmonicQ' 0 = 0 := by simp [harmonicQ']
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.MoonshotResearch
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 96] -/
 theorem harmonicQ'_one : harmonicQ' 1 = 1 := by simp [harmonicQ']
+
 
 
 
@@ -31,8 +38,10 @@ theorem harmonicQ'_pos (n : ℕ) (hn : 0 < n) : 0 < harmonicQ' n := by
 
 
 
+
 /-- Euler product partial check for ζ(2). -/
 theorem euler_zeta2_partial : (3 : ℚ)/4 * (8/9) * (24/25) = 576/900 := by norm_num
+
 
 
 
@@ -45,13 +54,16 @@ theorem pi_bound (n : ℕ) :
 
 
 
+
 /-- Average prime gap near 100. -/
 theorem avg_gap_100 : (97 - 2 : ℚ) / (25 - 1) = 95/24 := by norm_num
 
 
 
+
 /-- Mertens computation: sum of first few prime reciprocals weighted. -/
 theorem mertens_small : (2 : ℚ) * 1/2 + 3 * 1/3 + 5 * 1/5 + 7 * 1/7 = 4 := by norm_num
+
 
 
 
@@ -61,7 +73,9 @@ def parityB (n : ℕ) (x : Fin n → Bool) : Bool :=
 
 
 
+
 theorem parity_false (n : ℕ) : parityB n (fun _ => false) = false := by simp [parityB]
+
 
 
 
@@ -72,16 +86,20 @@ theorem shannon_count (n : ℕ) : 2 ^ n < 2 ^ (2 ^ n) := by
 
 
 
+
 /-- De Morgan's laws. -/
 theorem demorgan_and (a b : Bool) : !(a && b) = (!a || !b) := by cases a <;> cases b <;> rfl
+
 
 
 theorem demorgan_or (a b : Bool) : !(a || b) = (!a && !b) := by cases a <;> cases b <;> rfl
 
 
 
+
 /-- NAND universality: NOT via NAND. -/
 theorem not_via_nand (a : Bool) : !(a && a) = !a := by cases a <;> rfl
+
 
 
 
@@ -91,9 +109,11 @@ def isCongrWitness (n a b c : ℚ) : Prop :=
 
 
 
+
 /-- 6 is congruent: (3,4,5) triangle. -/
 theorem congr_6 : isCongrWitness 6 3 4 5 := by
   refine ⟨by norm_num, by norm_num, by norm_num, by norm_num, by norm_num⟩
+
 
 
 
@@ -103,9 +123,11 @@ theorem congr_5 : isCongrWitness 5 (3/2) (20/3) (41/6) := by
 
 
 
+
 /-- 7 is congruent: (24/5, 35/12, 337/60) triangle. -/
 theorem congr_7 : isCongrWitness 7 (24/5) (35/12) (337/60) := by
   refine ⟨by norm_num, by norm_num, by norm_num, by norm_num, by norm_num⟩
+
 
 
 
@@ -114,8 +136,10 @@ theorem mordell_pt : (3 : ℤ)^2 = 2^3 + 1 := by norm_num
 
 
 
+
 /-- E_5 rational point: (25/4, 75/8). -/
 theorem E5_pt : (75 : ℚ)^2 / 64 = (25 : ℚ)^3 / 64 - 25 * (25 : ℚ) / 4 := by norm_num
+
 
 
 
@@ -124,8 +148,10 @@ theorem E6_pt : (72 : ℤ)^2 = 18^3 - 36 * 18 := by norm_num
 
 
 
+
 /-- Discriminant of E_n: y² = x³ - n²x. -/
 theorem disc_En (n : ℤ) : -16 * (4 * (-n^2)^3 + 27 * 0^2) = 64 * n ^ 6 := by ring
+
 
 
 
@@ -136,8 +162,10 @@ theorem En_tors (n : ℤ) :
 
 
 
+
 /-- Nagell-Lutz discriminant. -/
 theorem nagell_lutz_d (n : ℤ) : 4 * (-n^2)^3 + 27 * (0 : ℤ)^2 = -4 * n ^ 6 := by ring
+
 
 
 
@@ -149,8 +177,10 @@ theorem enstrophy_nn (w : Fin 3 → Fin 3 → ℝ) :
 
 
 
+
 /-- NS scaling in 3D. -/
 theorem ns_scale : (3 : ℚ) / 2 - 1 = 1/2 := by norm_num
+
 
 
 
@@ -158,12 +188,15 @@ theorem ns_scale : (3 : ℚ) / 2 - 1 = 1/2 := by norm_num
 theorem serrin_46 : (2 : ℚ) / 4 + 3 / 6 = 1 := by norm_num
 
 
+
 theorem serrin_84 : (2 : ℚ) / 8 + 3 / 4 = 1 := by norm_num
+
 
 
 
 /-- Sobolev critical exponent: p* = 6 in 3D for p = 2. -/
 theorem sobolev_3d : (3 : ℚ) * 2 / (3 - 2) = 6 := by norm_num
+
 
 
 
@@ -173,8 +206,10 @@ theorem dissipation_nn (ν : ℝ) (hν : 0 < ν) (g : ℝ) (hg : 0 ≤ g) : 0 �
 
 
 
+
 /-- Ladyzhenskaya constant is positive. -/
 theorem ladyzhenskaya_pos : 1 / (2 * Real.pi) > 0 := by positivity
+
 
 
 
@@ -184,10 +219,13 @@ theorem adj_su (n : ℕ) (hn : 1 ≤ n) : n ^ 2 - 1 + 1 = n ^ 2 := by
   omega
 
 
+
 theorem adj_su2 : 2 ^ 2 - 1 = (3 : ℕ) := by norm_num
 
 
+
 theorem adj_su3 : 3 ^ 2 - 1 = (8 : ℕ) := by norm_num
+
 
 
 
@@ -196,13 +234,17 @@ def casimirVal (two_j : ℕ) : ℚ := (two_j : ℚ) / 2 * ((two_j : ℚ) / 2 + 1
 
 
 
+
 theorem casimir_1_2 : casimirVal 1 = 3/4 := by simp [casimirVal]; ring
+
 
 
 theorem casimir_1 : casimirVal 2 = 2 := by simp [casimirVal]; ring
 
 
+
 theorem casimir_3_2 : casimirVal 3 = 15/4 := by simp [casimirVal]; ring
+
 
 
 
@@ -211,8 +253,10 @@ theorem sm_dim : 8 + 3 + 1 = (12 : ℕ) := by norm_num
 
 
 
+
 /-- Anomaly cancellation for one generation. -/
 theorem anomaly_c : 3 * (2 : ℚ)/3 + 3 * (-1/3) + (-1) + 0 = 0 := by norm_num
+
 
 
 
@@ -220,7 +264,9 @@ theorem anomaly_c : 3 * (2 : ℚ)/3 + 3 * (-1/3) + (-1) + 0 = 0 := by norm_num
 theorem dynkin_su3 : ((9 : ℚ) - 1) / (2 * 9) = 4/9 := by norm_num
 
 
+
 theorem dynkin_su2 : ((4 : ℚ) - 1) / (2 * 4) = 3/8 := by norm_num
+
 
 
 
@@ -229,10 +275,13 @@ def bettiP (n k : ℕ) : ℕ := if k % 2 = 0 ∧ k ≤ 2 * n then 1 else 0
 
 
 
+
 theorem betti_p1 : (List.range 3).map (bettiP 1) = [1, 0, 1] := by decide
 
 
+
 theorem betti_p2 : (List.range 5).map (bettiP 2) = [1, 0, 1, 0, 1] := by decide
+
 
 
 
@@ -247,7 +296,9 @@ def hK3 (p q : ℕ) : ℕ :=
 
 
 
+
 theorem k3_chi : hK3 0 0 + hK3 2 0 + hK3 0 2 + hK3 1 1 + hK3 2 2 = 24 := by decide
+
 
 
 
@@ -256,17 +307,22 @@ theorem noether_k3 : (0 + 24 : ℚ) / 12 = 2 := by norm_num
 
 
 
+
 /-- Genus-degree formula. -/
 def gDeg (d : ℕ) : ℕ := (d - 1) * (d - 2) / 2
+
 
 
 theorem gDeg_3 : gDeg 3 = 1 := by norm_num [gDeg]
 
 
+
 theorem gDeg_4 : gDeg 4 = 3 := by norm_num [gDeg]
 
 
+
 theorem gDeg_6 : gDeg 6 = 10 := by norm_num [gDeg]
+
 
 
 
@@ -275,13 +331,16 @@ theorem hodge_sym_k3 : hK3 2 0 = hK3 0 2 := by decide
 
 
 
+
 /-- Quintic threefold Euler characteristic: χ = 2(h¹¹ - h²¹) = 2(1-101) = -200. -/
 theorem quintic_chi : 2 * ((1 : ℤ) - 101) = -200 := by norm_num
 
 
 
+
 /-- Spectral gap → mixing. -/
 theorem spectral_gap (l : ℚ) (h : l < 1) (h₀ : 0 ≤ l) : 0 < 1 - l := by linarith
+
 
 
 
@@ -294,14 +353,17 @@ theorem fib_prime_bd (n : ℕ) :
 
 
 
+
 /-- **Goldbach verification** for even numbers 4 through 100. -/
 def goldbachOK (n : ℕ) : Bool :=
   (Finset.range (n+1) |>.filter (fun p => p.Prime ∧ (n - p).Prime ∧ p ≤ n/2)).card > 0
 
 
 
+
 theorem goldbach_verified : ∀ k : Fin 49, goldbachOK (2 * (k.val + 2)) = true := by
   native_decide
+
 
 
 
@@ -312,7 +374,9 @@ def fourSqOK (n : ℕ) : Bool :=
 
 
 
+
 theorem lagrange_verified : ∀ k : Fin 31, fourSqOK k.val = true := by native_decide
+
 
 
 
@@ -322,7 +386,9 @@ def bertrandOK (n : ℕ) : Bool :=
 
 
 
+
 theorem bertrand_verified : ∀ k : Fin 50, bertrandOK (k.val + 1) = true := by native_decide
+
 
 
 
@@ -332,8 +398,10 @@ theorem irrat_identity (p q : ℤ) :
 
 
 
+
 /-- Collatz function and verification. -/
 def collatzS (n : ℕ) : ℕ := if n % 2 = 0 then n / 2 else 3 * n + 1
+
 
 
 
@@ -344,14 +412,18 @@ def collatzR1 : ℕ → ℕ → Bool
 
 
 
+
 /-- Berggren matrices. -/
 def B₁r : Matrix (Fin 3) (Fin 3) ℤ := !![1, -2, 2; 2, -1, 2; 2, -2, 3]
+
 
 
 def B₂r : Matrix (Fin 3) (Fin 3) ℤ := !![1, 2, 2; 2, 1, 2; 2, 2, 3]
 
 
+
 def B₃r : Matrix (Fin 3) (Fin 3) ℤ := !![-1, 2, 2; -2, 1, 2; -2, 2, 3]
+
 
 
 
@@ -360,8 +432,10 @@ theorem null_345 : lorentzQ ![3, 4, 5] = 0 := by native_decide
 
 
 
+
 /-- PPT count at depth d is 3^d (tree branching). -/
 theorem ppt_count_d (d : ℕ) : 3 ^ d ≥ 1 := Nat.one_le_pow d 3 (by norm_num)
+
 
 
 
@@ -371,7 +445,9 @@ def twinPrimeN (n : ℕ) : ℕ :=
 
 
 
+
 theorem twin_100 : twinPrimeN 100 = 8 := by native_decide
+
 
 
 
@@ -380,10 +456,13 @@ def sigD (n : ℕ) : ℕ := n.divisors.sum id
 
 
 
+
 theorem sig_6 : sigD 6 = 12 := by native_decide
 
 
+
 theorem sig_28 : sigD 28 = 56 := by native_decide
+
 
 
 
@@ -391,10 +470,13 @@ theorem sig_28 : sigD 28 = 56 := by native_decide
 theorem perf_6 : sigD 6 = 2 * 6 := by native_decide
 
 
+
 theorem perf_28 : sigD 28 = 2 * 28 := by native_decide
 
 
+
 theorem perf_496 : sigD 496 = 2 * 496 := by native_decide
+
 
 
 
@@ -404,27 +486,35 @@ theorem abundancy_perf (n : ℕ) (hn : 0 < n) (hp : sigD n = 2 * n) :
 
 
 
+
 /-- Catalan numbers C(2n,n)/(n+1). -/
 def catN (n : ℕ) : ℕ := Nat.choose (2 * n) n / (n + 1)
+
 
 
 
 theorem cat_0 : catN 0 = 1 := by norm_num [catN]
 
 
+
 theorem cat_1 : catN 1 = 1 := by norm_num [catN]
+
 
 
 theorem cat_2 : catN 2 = 2 := by norm_num [catN, Nat.choose]
 
 
+
 theorem cat_3 : catN 3 = 5 := by norm_num [catN, Nat.choose]
+
 
 
 theorem cat_4 : catN 4 = 14 := by norm_num [catN, Nat.choose]
 
 
+
 theorem cat_5 : catN 5 = 42 := by norm_num [catN, Nat.choose]
+
 
 
 
@@ -437,10 +527,13 @@ def stirl : ℕ → ℕ → ℕ
 
 
 
+
 theorem stirl_32 : stirl 3 2 = 3 := by native_decide
 
 
+
 theorem stirl_42 : stirl 4 2 = 7 := by native_decide
+
 
 
 
@@ -449,16 +542,21 @@ def bellN (n : ℕ) : ℕ := ∑ k ∈ Finset.range (n + 1), stirl n k
 
 
 
+
 theorem bell0 : bellN 0 = 1 := by native_decide
+
 
 
 theorem bell1 : bellN 1 = 1 := by native_decide
 
 
+
 theorem bell2 : bellN 2 = 2 := by native_decide
 
 
+
 theorem bell3 : bellN 3 = 5 := by native_decide
+
 
 
 
@@ -467,7 +565,9 @@ theorem kraft_ex : (1/2 : ℚ) + 1/4 + 1/8 + 1/8 = 1 := by norm_num
 
 
 
+
 /-- Source coding: uniform binary entropy = 1 bit. -/
 theorem source_binary : (1/2 : ℚ) * 1 + 1/2 * 1 = 1 := by norm_num
+
 
 

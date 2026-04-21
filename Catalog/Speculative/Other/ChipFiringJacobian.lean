@@ -15,9 +15,11 @@ def divisorDegree {n : ℕ} (D : GraphDivisor n) : ℤ :=
 
 
 
+
 /-- A principal divisor is one in the image of the Laplacian. -/
 def isPrincipal {n : ℕ} (L : Matrix (Fin n) (Fin n) ℤ) (D : GraphDivisor n) : Prop :=
   ∃ f : Fin n → ℤ, L.mulVec f = D
+
 
 
 
@@ -27,10 +29,12 @@ def linearEquiv {n : ℕ} (L : Matrix (Fin n) (Fin n) ℤ) (D₁ D₂ : GraphDiv
 
 
 
+
 /-- Linear equivalence is reflexive. -/
 theorem linearEquiv_refl {n : ℕ} (L : Matrix (Fin n) (Fin n) ℤ) (D : GraphDivisor n) :
     linearEquiv L D D := by
   exact ⟨0, by ext; simp [Matrix.mulVec, dotProduct]⟩
+
 
 
 
@@ -45,6 +49,11 @@ theorem linearEquiv_symm {n : ℕ} (L : Matrix (Fin n) (Fin n) ℤ) (D₁ D₂ :
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.ChipFiringJacobian
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 11] -/
 theorem linearEquiv_trans {n : ℕ} (L : Matrix (Fin n) (Fin n) ℤ)
     (D₁ D₂ D₃ : GraphDivisor n) :
     linearEquiv L D₁ D₂ → linearEquiv L D₂ D₃ → linearEquiv L D₁ D₃ := by
@@ -54,6 +63,7 @@ theorem linearEquiv_trans {n : ℕ} (L : Matrix (Fin n) (Fin n) ℤ)
   obtain ⟨g, hg⟩ := hD2
   use f + g;
   rw [ Matrix.mulVec_add, hf, hg, sub_add_sub_cancel ]
+
 
 
 
@@ -68,6 +78,7 @@ theorem principal_degree_zero {n : ℕ} (L : Matrix (Fin n) (Fin n) ℤ)
 
 
 
+
 theorem chipFire_equiv {n : ℕ} (L : Matrix (Fin n) (Fin n) ℤ)
     (hL_symm : L.transpose = L)
     (v : Fin n) (D : GraphDivisor n) :
@@ -79,12 +90,14 @@ theorem chipFire_equiv {n : ℕ} (L : Matrix (Fin n) (Fin n) ℤ)
 
 
 
+
 theorem canonical_degree {n : ℕ} (degrees : Fin n → ℤ) (numEdges : ℕ)
     (hdeg_sum : ∑ i, degrees i = 2 * (numEdges : ℤ)) :
     divisorDegree (canonicalDivisor degrees) =
       2 * graphGenus numEdges n - 2 := by
   unfold divisorDegree canonicalDivisor graphGenus;
   simpa [ Finset.sum_sub_distrib, hdeg_sum ] using by ring;
+
 
 
 
@@ -98,6 +111,7 @@ theorem kirchhoff_cofactor_independence {n : ℕ} (hn : 2 ≤ n)
 
 
 
+
 /-- The Langlands analogy table:
 - Vertices ↔ primes of the number field
 - Edges ↔ relationships between primes
@@ -106,6 +120,7 @@ theorem kirchhoff_cofactor_independence {n : ℕ} (hn : 2 ≤ n)
 - Ihara zeta ↔ Dedekind zeta -/
 theorem harmonic_jacobian_correspondence (numEdges numVertices : ℕ) :
     graphGenus numEdges numVertices = graphGenus numEdges numVertices := rfl
+
 
 
 

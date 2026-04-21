@@ -20,6 +20,7 @@ theorem cantor_no_surjection_bool (α : Type*) :
 
 
 
+
 /-- For any family of sets indexed by α, there exists a set of α not
 in the range — the "Russell set" that diagonalizes against the family.
 This is the constructive content of Russell's paradox. -/
@@ -29,6 +30,7 @@ theorem russell_diagonal {α : Type*} (f : α → Set α) :
   intro a ha
   replace ha := Set.ext_iff.mp ha a
   aesop
+
 
 
 
@@ -42,6 +44,7 @@ theorem konig_cardinal {ι : Type*} (κ μ : ι → Cardinal)
 
 
 
+
 /-- Every order-preserving function on a complete lattice has a fixed point.
 (Knaster-Tarski theorem) -/
 theorem knaster_tarski {α : Type*} [CompleteLattice α] (f : α → α)
@@ -50,5 +53,6 @@ theorem knaster_tarski {α : Type*} [CompleteLattice α] (f : α → α)
   have hfx_ge_x : f x ≥ x :=
     sSup_le fun a ha => le_trans ha (hf (le_sSup ha))
   exact ⟨x, le_antisymm (le_sSup (by aesop)) hfx_ge_x⟩
+
 
 

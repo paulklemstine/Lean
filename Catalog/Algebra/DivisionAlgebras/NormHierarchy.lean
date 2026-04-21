@@ -17,12 +17,14 @@ theorem brahmagupta_fibonacci_identity' (a b c d : ℤ) :
 
 
 
+
 /-- The two forms of the Brahmagupta-Fibonacci identity produce
 equal values — they are two different representations of the
 same product on the factoring circle. -/
 theorem two_composition_equality (a b c d : ℤ) :
     (a*c - b*d)^2 + (a*d + b*c)^2 = (a*c + b*d)^2 + (a*d - b*c)^2 := by
   ring
+
 
 
 
@@ -47,6 +49,7 @@ theorem degen_eight_square_identity
 
 
 
+
 /-- The collision-norm identity (the mathematical heart of collision-based factoring):
 If a²+b² = N and c²+d² = N, then (ad-bc)²+(ac+bd)² = N².
 Proof: by the Brahmagupta-Fibonacci identity applied to N·N. -/
@@ -59,12 +62,14 @@ theorem collision_norm_identity (a b c d N : ℤ)
 
 
 
+
 /-- The collision product identity: from two representations a²+b² = c²+d²,
 we get (a-c)(a+c) = (d-b)(d+b). -/
 theorem collision_product_identity (a b c d : ℤ)
     (h : a^2 + b^2 = c^2 + d^2) :
     (a - c) * (a + c) = (d - b) * (d + b) := by
   nlinarith [sq_abs (a - c), sq_abs (d - b)]
+
 
 
 
@@ -77,12 +82,14 @@ theorem cross_term_sq_le_N_sq (a b c d N : ℤ)
 
 
 
+
 /-- The symmetric cross-term ac+bd is also bounded: (ac+bd)² ≤ N². -/
 theorem symmetric_cross_term_bound (a b c d N : ℤ)
     (h1 : a^2 + b^2 = N) (h2 : c^2 + d^2 = N) :
     (a*c + b*d)^2 ≤ N^2 := by
   have := collision_norm_identity a b c d N h1 h2
   nlinarith [sq_nonneg (a*d - b*c)]
+
 
 
 
@@ -95,11 +102,13 @@ theorem collision_gcd_divides (a b c d N : ℤ)
 
 
 
+
 /-- GCD cascade for the symmetric cross-term: gcd(ac+bd, N) also divides N. -/
 theorem symmetric_gcd_divides (a b c d N : ℤ)
     (_h1 : a^2 + b^2 = N) (_h2 : c^2 + d^2 = N) :
     (Int.gcd (a*c + b*d) N : ℤ) ∣ N :=
   Int.gcd_dvd_right (a*c + b*d) N
+
 
 
 
@@ -110,6 +119,7 @@ theorem collision_factoring_complete {g N : ℕ} (hg1 : 1 < g) (hgN : g < N)
   intro hp
   exact (Nat.Prime.eq_one_or_self_of_dvd hp g hdvd).elim
     (fun h => by omega) (fun h => by omega)
+
 
 
 
@@ -128,6 +138,7 @@ theorem collision_norm_dim4 (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ N : ℤ)
 
 
 
+
 /-- Key algebraic identity for the GCD mechanism:
 If a² + b² = N and c² + d² = N, then
 (ad-bc)(ad+bc) = N(a+c)(a-c).
@@ -142,6 +153,7 @@ theorem gcd_mechanism_identity (a b c d N : ℤ)
 
 
 
+
 /-- The symmetric version:
 (ac+bd)(ac-bd) = N(c+b)(c-b). -/
 theorem gcd_mechanism_identity_symmetric (a b c d N : ℤ)
@@ -150,6 +162,7 @@ theorem gcd_mechanism_identity_symmetric (a b c d N : ℤ)
   have hab : b^2 = N - a^2 := by linarith
   have hcd : d^2 = N - c^2 := by linarith
   nlinarith [sq_nonneg (a*c), sq_nonneg (b*d)]
+
 
 
 
@@ -166,12 +179,14 @@ theorem N_divides_cross_product (a b c d N : ℤ)
 
 
 
+
 /-- If a natural number divides both the cross-term and N,
 it divides their GCD. This is how shared prime factors are detected. -/
 theorem shared_factor_divides_gcd (cross N : ℤ) (d : ℕ)
     (hc : (d : ℤ) ∣ cross) (hN : (d : ℤ) ∣ N) :
     d ∣ Int.gcd cross N :=
   Int.dvd_gcd hc hN
+
 
 
 
@@ -184,11 +199,13 @@ theorem four_square_representation_exists (n : ℕ) :
 
 
 
+
 /-- Fermat's theorem on sums of two squares (1640, proved by Euler 1749):
 A prime p with p % 4 ≠ 3 can be written as a sum of two squares. -/
 theorem prime_two_square_representation (p : ℕ) [Fact (Nat.Prime p)] (hp : p % 4 ≠ 3) :
     ∃ a b : ℕ, a^2 + b^2 = p :=
   Nat.Prime.sq_add_sq hp
+
 
 
 
@@ -204,6 +221,7 @@ theorem collision_guaranteed_dim2 (a b c d : ℤ) :
 
 
 
+
 /-- The two representations from `collision_guaranteed_dim2` are distinct
 when bd ≠ 0 (i.e., the representations of the factors are non-degenerate).
 The first components differ: (ac - bd) ≠ (ac + bd) when bd ≠ 0. -/
@@ -213,6 +231,7 @@ theorem collision_reps_distinct (a b c d : ℤ) (h : b * d ≠ 0) :
   have h1 := congr_arg Prod.fst heq
   simp at h1
   exact h (by linarith)
+
 
 
 
@@ -227,6 +246,7 @@ theorem eight_square_representation_exists (n : ℕ) :
 
 
 
+
 /-- The peel identity in dimension 2: for a²+b² = N,
 (N-a)(N+a) = b² + N(N-1). -/
 theorem peel_identity_dim2 (a b N : ℤ) (h : a^2 + b^2 = N) :
@@ -235,10 +255,12 @@ theorem peel_identity_dim2 (a b N : ℤ) (h : a^2 + b^2 = N) :
 
 
 
+
 /-- The peel identity in dimension 4. -/
 theorem peel_identity_dim4 (a b c d N : ℤ) (h : a^2 + b^2 + c^2 + d^2 = N) :
     (N - a) * (N + a) = b^2 + c^2 + d^2 + N * (N - 1) := by
   nlinarith
+
 
 
 
@@ -251,13 +273,16 @@ theorem peel_identity_dim8 (a₁ a₂ a₃ a₄ a₅ a₆ a₇ a₈ N : ℤ)
 
 
 
+
 /-- Cross-collision count in dimension 4: C(4,2) = 6. -/
 theorem cross_collision_count_dim4 : Nat.choose 4 2 = 6 := by decide
 
 
 
+
 /-- Cross-collision count in dimension 8: C(8,2) = 28. -/
 theorem cross_collision_count_dim8 : Nat.choose 8 2 = 28 := by decide
+
 
 
 
@@ -276,6 +301,7 @@ theorem cross_collision_count (k m : ℕ) (_hk : 1 ≤ k) (hm : 2 ≤ m) :
 
 
 
+
 /-- In a Pythagorean triple with positive legs and hypotenuse, the hypotenuse
 exceeds each leg. This ensures Pythagorean descent terminates. -/
 theorem hypotenuse_gt_leg {a b c : ℤ} (ha : 0 < a) (hb : 0 < b) (_hc : 0 < c)
@@ -283,6 +309,7 @@ theorem hypotenuse_gt_leg {a b c : ℤ} (ha : 0 < a) (hb : 0 < b) (_hc : 0 < c)
   constructor
   · nlinarith [sq_nonneg b]
   · nlinarith [sq_nonneg a]
+
 
 
 
@@ -295,10 +322,12 @@ theorem nontrivial_divisor_composite {N d : ℕ} (_hN : 1 < N) (hd1 : 1 < d)
 
 
 
+
 /-- The Gaussian integer norm is multiplicative: |z₁z₂|² = |z₁|²·|z₂|². -/
 theorem gaussian_integer_norm_multiplicative (a b c d : ℤ) :
     (a*c - b*d)^2 + (a*d + b*c)^2 = (a^2 + b^2) * (c^2 + d^2) := by
   ring
+
 
 
 
@@ -309,8 +338,10 @@ theorem gaussian_norm_both_forms (a b c d : ℤ) :
 
 
 
+
 /-- Dimension 2: 1 + 4 = 5 total channels. -/
 theorem dim2_total_channels : Nat.choose 2 2 + 2 * 2 = 5 := by decide
+
 
 
 
@@ -319,8 +350,10 @@ theorem dim4_total_channels : Nat.choose 4 2 + 2 * 4 = 14 := by decide
 
 
 
+
 /-- Dimension 8: 28 + 16 = 44 total channels. -/
 theorem dim8_total_channels : Nat.choose 8 2 + 2 * 8 = 44 := by decide
+
 
 
 
@@ -330,9 +363,11 @@ theorem e8_integer_roots : 4 * Nat.choose 8 2 = 112 := by decide
 
 
 
+
 /-- The Weyl group of E₈ has order 696,729,600 = 2¹⁴ · 3⁵ · 5² · 7. -/
 theorem e8_weyl_group_order_factored :
     696729600 = 2^14 * 3^5 * 5^2 * 7 := by decide
+
 
 
 
@@ -340,6 +375,7 @@ theorem e8_weyl_group_order_factored :
 theorem quaternion_norm_from_conjugate (a₁ a₂ a₃ a₄ : ℤ) :
     (a₁*a₁ - a₂*(-a₂) - a₃*(-a₃) - a₄*(-a₄)) = a₁^2 + a₂^2 + a₃^2 + a₄^2 := by
   ring
+
 
 
 
@@ -358,5 +394,6 @@ theorem quaternion_cross_product_norm (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ N
   have hb : b₁^2 + (-b₂)^2 + (-b₃)^2 + (-b₄)^2 = N := by ring_nf; linarith
   rw [hb] at this
   linarith
+
 
 

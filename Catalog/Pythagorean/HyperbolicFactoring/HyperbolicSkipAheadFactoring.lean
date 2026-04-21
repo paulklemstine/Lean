@@ -19,15 +19,22 @@ theorem trivial_triple_pyth (N : ℤ) (hN : N % 2 = 1) :
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.HyperbolicFactoring.HyperbolicSkipAheadFactoring
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/HyperbolicFactoring
+Declarations: 19] -/
 theorem trivial_triple_diff_sq_eq_one (N : ℤ) (hN : N % 2 = 1) :
     (N ^ 2 + 1) / 2 - (N ^ 2 - 1) / 2 = 1 := by
   omega
 
 
 
+
 theorem trivial_triple_even (k : ℤ) :
     (2 * k) ^ 2 + (k ^ 2 - 1) ^ 2 = (k ^ 2 + 1) ^ 2 := by
   ring
+
 
 
 
@@ -38,10 +45,12 @@ theorem nontrivial_factor_from_gcd (a N : ℤ) (hN : 0 < N)
 
 
 
+
 theorem factor_from_scaled_triple {a b c k N : ℤ} (h : a ^ 2 + b ^ 2 = c ^ 2)
     (ha : a = k * N) (hN : 0 < N) (hk : 0 < k) :
     (c - b) * (c + b) = k ^ 2 * N ^ 2 := by
   subst ha; linarith;
+
 
 
 
@@ -51,9 +60,11 @@ def is_on_light_cone (v : Fin 3 → ℤ) : Prop :=
 
 
 
+
 theorem berggren_B1_preserves_pyth {a b c : ℤ} (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (a - 2*b + 2*c) ^ 2 + (2*a - b + 2*c) ^ 2 = (2*a - 2*b + 3*c) ^ 2 := by
   grind
+
 
 
 
@@ -63,9 +74,11 @@ theorem berggren_B2_preserves_pyth {a b c : ℤ} (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 theorem berggren_B3_preserves_pyth {a b c : ℤ} (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (-a + 2*b + 2*c) ^ 2 + (-2*a + b + 2*c) ^ 2 = (-2*a + 2*b + 3*c) ^ 2 := by
   linarith
+
 
 
 
@@ -76,10 +89,12 @@ theorem hypotenuse_growth_B2 {a b c : ℤ} (h : a ^ 2 + b ^ 2 = c ^ 2)
 
 
 
+
 theorem hypotenuse_lower_bound_B2 {a b c : ℤ} (h : a ^ 2 + b ^ 2 = c ^ 2)
     (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
     3 * c ≤ 2*a + 2*b + 3*c := by
   linarith
+
 
 
 
@@ -91,11 +106,13 @@ inductive Branch where
 
 
 
+
 /-- Convert a branch choice to its Berggren matrix. -/
 def branchMatrix : Branch → Matrix (Fin 3) (Fin 3) ℤ
   | .left  => B₁
   | .mid   => B₂
   | .right => B₃
+
 
 
 
@@ -106,8 +123,10 @@ theorem uniform_path_is_power (b : Branch) (k : ℕ) :
 
 
 
+
 theorem det_B2 : Matrix.det B₂ = -1 := by
   native_decide +revert
+
 
 
 
@@ -116,8 +135,10 @@ theorem det_B1 : Matrix.det B₁ = 1 := by
 
 
 
+
 theorem det_B3 : Matrix.det B₃ = 1 := by
   native_decide
+
 
 
 
@@ -125,6 +146,7 @@ theorem factoring_completeness (N p : ℕ) (hN : 1 < N) (hp : Nat.Prime p) (hdvd
     (hlt : p < N) :
     ∃ (a b c : ℤ), a ^ 2 + b ^ 2 = c ^ 2 ∧ (p : ℤ) ∣ a := by
   exact ⟨ 0, 0, 0, by norm_num, by norm_num ⟩
+
 
 
 
@@ -137,5 +159,6 @@ theorem infinitely_many_triples_with_prime_leg (p : ℕ) (hp : Nat.Prime p) (hp2
   -- Consider the Pythagorean triple $(2kp, (kp)^2 - 1, (kp)^2 + 1)$.
   use 2 * k * p, (k * p) ^ 2 - 1, (k * p) ^ 2 + 1;
   exact ⟨ by ring, dvd_mul_left _ _, by norm_cast; nlinarith ⟩
+
 
 

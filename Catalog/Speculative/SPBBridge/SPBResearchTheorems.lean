@@ -16,6 +16,7 @@ theorem spbM_det_mul_expand (a b : ℝ) :
 
 
 
+
 /-- det(M(a)^n) = (1+a²)^n -/
 theorem spbM_pow_det (a : ℝ) (n : ℕ) :
     (spbM a ^ n).det = (1 + a ^ 2) ^ n := by
@@ -23,8 +24,14 @@ theorem spbM_pow_det (a : ℝ) (n : ℕ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.SPBBridge.SPBResearchTheorems
+Auto-generated from theorem catalog database.
+Domain: Speculative/SPBBridge
+Declarations: 8] -/
 theorem spb_one_right (x : ℝ) : spb 1 x = (1 + x) / (1 - x) := by
   unfold spb; ring
+
 
 
 
@@ -34,9 +41,11 @@ theorem spbF_neg_neg {F : Type*} [Field F] (x y : F) :
 
 
 
+
 theorem spbF_double {F : Type*} [Field F] (x : F) :
     spbF x x = 2 * x / (1 - x ^ 2) := by
   unfold spbF; ring
+
 
 
 
@@ -51,10 +60,12 @@ theorem spb_sum_neg_first (x y : ℝ) (h1 : 1 - x * y ≠ 0) (h2 : 1 + x * y ≠
 
 
 
+
 theorem weierstrass_spb (θ : ℝ) (_hcos : cos (θ / 2) ≠ 0) (_hcos2 : cos θ ≠ 0) :
     spb (tan (θ / 2)) (tan (θ / 2)) = tan θ := by
   rw [ show θ = 2 * ( θ / 2 ) by ring, Real.tan_two_mul ];
   unfold spb; ring;
+
 
 
 
@@ -63,6 +74,7 @@ In Lean, spb(x, 1/x) = 0 for all x ≠ 0. -/
 theorem spb_self_reciprocal_degen (x : ℝ) (hx : x ≠ 0) :
     spb x (1/x) = 0 := by
   simp only [spb, one_div, add_comm x, mul_inv_cancel₀ hx, sub_self, div_zero]
+
 
 
 

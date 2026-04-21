@@ -14,6 +14,7 @@ def IsIdempotentElem' {R : Type*} [Mul R] (e : R) : Prop := e * e = e
 
 
 
+
 /-- [Section: # CatalogBuild.Bridges.SpectralIdempotentBridge
 Auto-generated from theorem catalog database.
 Domain: Bridges
@@ -30,6 +31,11 @@ theorem idempotent_trace_in_set {a b c d : ℝ}
 
 
 
+
+/-- [Section: # CatalogBuild.Bridges.SpectralIdempotentBridge
+Auto-generated from theorem catalog database.
+Domain: Bridges
+Declarations: 24] -/
 theorem idempotent_det_squared {a b c d : ℝ}
     (h1 : a * a + b * c = a)
     (h2 : a * b + b * d = b)
@@ -37,6 +43,7 @@ theorem idempotent_det_squared {a b c d : ℝ}
     (h4 : c * b + d * d = d) :
     (a * d - b * c) * (a * d - b * c) = a * d - b * c := by
       grind +ring
+
 
 
 
@@ -50,10 +57,12 @@ theorem idempotent_trace_values {a b c d : ℝ}
 
 
 
+
 /-- Contraction powers are bounded by 1. -/
 theorem contraction_decay (r : ℝ) (hr0 : 0 ≤ r) (hr1 : r < 1)
     (n : ℕ) : r ^ n ≤ 1 :=
   pow_le_one₀ hr0 (le_of_lt hr1)
+
 
 
 
@@ -64,9 +73,11 @@ theorem contraction_powers_vanish (r : ℝ) (hr0 : 0 ≤ r) (hr1 : r < 1) :
 
 
 
+
 /-- For idempotent f, convergence is immediate: one step suffices. -/
 theorem idempotent_instant_convergence {α : Type*} (f : α → α)
     (hf : f ∘ f = f) (x : α) : f (f x) = f x := congr_fun hf x
+
 
 
 
@@ -80,6 +91,7 @@ theorem project_then_contract_stable {α : Type*} (proj : α → α) (f : α →
 
 
 
+
 /-- A stochastic vector: non-negative entries summing to 1. -/
 structure StochasticVec2 where
   p : ℝ
@@ -87,6 +99,7 @@ structure StochasticVec2 where
   hp : 0 ≤ p
   hq : 0 ≤ q
   hsum : p + q = 1
+
 
 
 
@@ -100,10 +113,12 @@ def uniformVec2 : StochasticVec2 where
 
 
 
+
 /-- Birkhoff (2×2): doubly stochastic rows and columns sum to 1. -/
 theorem birkhoff_2x2 (a : ℝ) (ha0 : 0 ≤ a) (ha1 : a ≤ 1) :
     a + (1 - a) = 1 ∧ (1 - a) + a = 1 :=
   ⟨by ring, by ring⟩
+
 
 
 
@@ -113,8 +128,10 @@ theorem doubly_stochastic_uniform (a : ℝ) :
 
 
 
+
 /-- Tropical eigenvalue: max of perfect matching weights. -/
 def tropicalEigenvalue2 (a b c d : ℝ) : ℝ := max (a + d) (b + c)
+
 
 
 
@@ -125,10 +142,12 @@ theorem tropical_eigenvalue_transpose (a b c d : ℝ) :
 
 
 
+
 /-- For a diagonal matrix, tropical eigenvalue = max of diagonal entries + 0. -/
 theorem tropical_eigenvalue_diagonal (a d : ℝ) :
     tropicalEigenvalue2 a 0 0 d = max (a + d) 0 := by
   simp [tropicalEigenvalue2]
+
 
 
 
@@ -140,9 +159,11 @@ theorem tropical_eigenvalue_monotone (a b c d a' b' c' d' : ℝ)
 
 
 
+
 /-- Classical trace ≤ tropical eigenvalue. -/
 theorem spectral_tropical_bound (a b c d : ℝ) :
     a + d ≤ tropicalEigenvalue2 a b c d := le_max_left _ _
+
 
 
 
@@ -153,9 +174,11 @@ theorem tropical_eigenvalue_identity :
 
 
 
+
 /-- Tropical eigenvalue of zero matrix. -/
 theorem tropical_eigenvalue_zero :
     tropicalEigenvalue2 0 0 0 0 = 0 := by simp [tropicalEigenvalue2]
+
 
 
 
@@ -169,10 +192,12 @@ theorem idempotent_spectral_tropical_bridge {t : ℝ}
 
 
 
+
 /-- Scalar power iteration convergence. -/
 theorem power_iteration_scalar (r : ℝ) (hr : |r| < 1) :
     Filter.Tendsto (fun n => r ^ n) Filter.atTop (nhds 0) :=
   tendsto_pow_atTop_nhds_zero_of_abs_lt_one hr
+
 
 
 
@@ -184,9 +209,11 @@ theorem cesaro_idempotent {α : Type*} [AddCommMonoid α] [Module ℝ α]
 
 
 
+
 /-- For symmetric web, PageRank is uniform. -/
 theorem pagerank_symmetric_uniform (d : ℝ) :
     d * (1/2 : ℝ) + (1 - d) * (1/2) = 1/2 := by ring
+
 
 
 
@@ -194,6 +221,7 @@ theorem pagerank_symmetric_uniform (d : ℝ) :
 theorem pagerank_contraction (d : ℝ) (hd : 0 ≤ d)
     (x y : ℝ) : |d * x - d * y| ≤ d * |x - y| := by
   rw [← mul_sub, abs_mul, abs_of_nonneg hd]
+
 
 
 

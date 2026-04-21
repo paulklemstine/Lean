@@ -16,6 +16,7 @@ theorem stereo_fundamental_identity (S b : ℝ) :
 
 
 
+
 /-- [Section: # CatalogBuild.Speculative.Other.CrystallizerFormalization
 Auto-generated from theorem catalog database.
 Domain: Speculative/Other
@@ -26,9 +27,11 @@ theorem stereo_proj_nd_unit_norm (S m_N c : ℝ) (hc : c ≠ 0) (hc_def : c = S 
 
 
 
+
 /-- The denominator c = S + m_N² is always non-negative when S ≥ 0. -/
 theorem stereo_denom_nonneg (S m_N : ℝ) (hS : 0 ≤ S) :
     0 ≤ S + m_N ^ 2 := by positivity
+
 
 
 
@@ -38,8 +41,10 @@ theorem stereo_denom_pos_of_nonzero (S m_N : ℝ) (hS : 0 ≤ S) (hm : m_N ≠ 0
 
 
 
+
 /-- The crystallization loss function for a single parameter. -/
 def crystallizationLoss (m : ℝ) : ℝ := sin (π * m) ^ 2
+
 
 
 
@@ -49,9 +54,11 @@ theorem crystallization_nonneg (m : ℝ) : 0 ≤ crystallizationLoss m := by
 
 
 
+
 /-- Crystallization loss is bounded above by 1. -/
 theorem crystallization_bounded (m : ℝ) : crystallizationLoss m ≤ 1 := by
   unfold crystallizationLoss; exact sin_sq_le_one _
+
 
 
 
@@ -64,6 +71,7 @@ theorem crystallization_vanishes_at_integers (n : ℤ) : crystallizationLoss (n 
 
 
 
+
 /-- Total crystallization loss over k parameters is bounded by k. -/
 theorem total_crystallization_bound (k : ℕ) (params : Fin k → ℝ) :
     ∑ i, crystallizationLoss (params i) ≤ (k : ℝ) := by
@@ -73,6 +81,11 @@ theorem total_crystallization_bound (k : ℕ) (params : Fin k → ℝ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.CrystallizerFormalization
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 20] -/
 theorem crystallization_zero_iff_integer (m : ℝ) :
     crystallizationLoss m = 0 ↔ ∃ n : ℤ, m = n := by
   unfold crystallizationLoss;
@@ -81,8 +94,10 @@ theorem crystallization_zero_iff_integer (m : ℝ) :
 
 
 
+
 /-- Inner product of two 2D vectors. -/
 def inner2 (v w : ℝ × ℝ) : ℝ := v.1 * w.1 + v.2 * w.2
+
 
 
 
@@ -91,9 +106,11 @@ def normSq2 (v : ℝ × ℝ) : ℝ := v.1 ^ 2 + v.2 ^ 2
 
 
 
+
 /-- The Gram-Schmidt projection: remove the component of w along v. -/
 def gramSchmidtProj (v w : ℝ × ℝ) : ℝ × ℝ :=
   (w.1 - inner2 v w * v.1, w.2 - inner2 v w * v.2)
+
 
 
 
@@ -105,12 +122,14 @@ theorem gram_schmidt_orthogonal (v w : ℝ × ℝ) (hv : normSq2 v = 1) :
 
 
 
+
 theorem spherical_interp_unit (w1 w2 : ℝ × ℝ) (θ : ℝ)
     (hw1 : normSq2 w1 = 1) (hw2 : normSq2 w2 = 1) (horth : inner2 w1 w2 = 0) :
     normSq2 (cos θ * w1.1 + sin θ * w2.1, cos θ * w1.2 + sin θ * w2.2) = 1 := by
   -- Apply the definitions of `normSq2` and `inner2`.
   unfold normSq2 inner2 at *;
   linear_combination' horth * 2 * Real.cos θ * Real.sin θ + hw1 * Real.cos θ ^ 2 + hw2 * Real.sin θ ^ 2 + Real.cos_sq_add_sin_sq θ
+
 
 
 
@@ -126,6 +145,7 @@ theorem tri_resonant_unit (w1 w2 w3 : ℝ × ℝ) (θ φ : ℝ)
 
 
 
+
 /-- When parameters crystallize to integers m, n (with m² + n² ≠ 0),
 the stereographic output is a rational point on S¹.
 The coordinates are 2mn/(m²+n²) and (n²-m²)/(m²+n²). -/
@@ -137,11 +157,13 @@ theorem crystallized_stereo_rational (m n : ℤ) (hc : (m : ℚ) ^ 2 + (n : ℚ)
 
 
 
+
 /-- The scale factor ‖w‖ can be separated from the direction w/‖w‖.
 The crystallizer stores scale separately and direction via stereo.
 This shows the decomposition is valid: ‖s · v‖² = s² · ‖v‖². -/
 theorem scale_direction_decomposition (s x y : ℝ) (hunit : x ^ 2 + y ^ 2 = 1) :
     (s * x) ^ 2 + (s * y) ^ 2 = s ^ 2 := by nlinarith
+
 
 
 
@@ -155,10 +177,12 @@ theorem crystallization_gradient_zero_at_integers (n : ℤ) :
 
 
 
+
 /-- The stereo map is smooth (no cusps or discontinuities) because
 the denominator 1 + t² > 0 everywhere. This is why gradient-based
 optimization on the latent parameters works. -/
 theorem stereo_smooth_denominator (t : ℝ) : 0 < 1 + t ^ 2 := by positivity
+
 
 
 

@@ -15,8 +15,10 @@ def minkowskiInner (v w : Fin 4 → ℤ) : ℤ :=
 
 
 
+
 /-- Convert a 4-tuple to a function Fin 4 → ℤ -/
 def toVec (a b c d : ℤ) : Fin 4 → ℤ := ![a, b, c, d]
+
 
 
 
@@ -29,10 +31,12 @@ theorem lorentzQ_eq_minkowski_self (a b c d : ℤ) :
 
 
 
+
 /-- The Minkowski inner product is symmetric -/
 theorem minkowskiInner_comm (v w : Fin 4 → ℤ) :
     minkowskiInner v w = minkowskiInner w v := by
   unfold minkowskiInner; ring
+
 
 
 
@@ -45,6 +49,7 @@ theorem minkowskiInner_add_left (u v w : Fin 4 → ℤ) :
 
 
 
+
 /-- Minkowski inner product scales correctly -/
 theorem minkowskiInner_smul_left (k : ℤ) (v w : Fin 4 → ℤ) :
     minkowskiInner (k • v) w = k * minkowskiInner v w := by
@@ -54,9 +59,11 @@ theorem minkowskiInner_smul_left (k : ℤ) (v w : Fin 4 → ℤ) :
 
 
 
+
 /-- The zero vector is null -/
 theorem zero_is_null : IsNull 0 := by
   unfold IsNull minkowskiInner; simp
+
 
 
 
@@ -69,8 +76,10 @@ theorem null_smul (v : Fin 4 → ℤ) (k : ℤ) (hv : IsNull v) :
 
 
 
+
 /-- Quaternion norm: |a + bi + cj + dk|² = a² + b² + c² + d² -/
 def quatNormSq (a b c d : ℤ) : ℤ := a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2
+
 
 
 
@@ -78,6 +87,7 @@ def quatNormSq (a b c d : ℤ) : ℤ := a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2
 theorem quatNormSq_nonneg (a b c d : ℤ) : 0 ≤ quatNormSq a b c d := by
   unfold quatNormSq
   positivity
+
 
 
 
@@ -100,6 +110,7 @@ theorem quatNormSq_eq_zero (a b c d : ℤ) :
 
 
 
+
 /-- Quaternion multiplication components -/
 def quatMul (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ) : ℤ × ℤ × ℤ × ℤ :=
   (a₁*a₂ - b₁*b₂ - c₁*c₂ - d₁*d₂,
@@ -109,8 +120,10 @@ def quatMul (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ) : ℤ × ℤ × ℤ 
 
 
 
+
 /-- The "energy" of an arithmetic photon (a,b,c,d) is |d| -/
 def photonEnergy (a b c d : ℤ) : ℤ := d.natAbs
+
 
 
 
@@ -121,6 +134,7 @@ noncomputable def r₃ (n : ℕ) : ℕ :=
     let b := (t.2.1 : ℤ) - n
     let c := (t.2.2 : ℤ) - n
     a ^ 2 + b ^ 2 + c ^ 2 = n) Finset.univ)
+
 
 
 
@@ -135,8 +149,10 @@ theorem rational_point_on_sphere (a b c d : ℤ) (hd : d ≠ 0)
 
 
 
+
 /-- The displacement vector between two lattice points -/
 def displacement (v w : Fin 4 → ℤ) : Fin 4 → ℤ := w - v
+
 
 
 
@@ -146,10 +162,12 @@ def PhotonAdj (v w : Fin 4 → ℤ) : Prop :=
 
 
 
+
 /-- Photon adjacency is reflexive -/
 theorem photonAdj_refl (v : Fin 4 → ℤ) : PhotonAdj v v := by
   unfold PhotonAdj displacement IsNull minkowskiInner
   simp
+
 
 
 
@@ -165,10 +183,12 @@ theorem photonAdj_symm (v w : Fin 4 → ℤ) (h : PhotonAdj v w) :
 
 
 
+
 /-- For null vectors, the spatial norm equals the temporal component squared -/
 theorem null_spatial_eq_temporal (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2 := h
+
 
 
 
@@ -180,9 +200,11 @@ theorem photon_speed_one (a b c d : ℤ) (hd : d ≠ 0)  -- hd needed for ration
 
 
 
+
 /-- A quadruple is primitive if gcd(a,b,c,d) = 1 -/
 def IsPrimitive (a b c d : ℤ) : Prop :=
   Int.gcd (Int.gcd a b) (Int.gcd c d) = 1
+
 
 
 
@@ -191,6 +213,7 @@ theorem scale_preserves_null (a b c d k : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     (k*a) ^ 2 + (k*b) ^ 2 + (k*c) ^ 2 = (k*d) ^ 2 := by
   nlinarith [sq_nonneg k]
+
 
 
 
@@ -208,9 +231,11 @@ theorem hopfMap_on_sphere (m n p q : ℝ) (h : m^2 + n^2 + p^2 + q^2 ≠ 0) :
 
 
 
+
 /-- If (a,b,c,d) is a quadruple, so is (a,b,c,-d) when d² = a²+b²+c² -/
 theorem neg_temporal (a b c d : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     a ^ 2 + b ^ 2 + c ^ 2 = (-d) ^ 2 := by linarith [neg_sq d]
+
 
 
 
@@ -224,8 +249,10 @@ theorem at_least_six_quadruples (d : ℤ) (hd : d ≠ 0) :
 
 
 
+
 /-- The (2+1)-dimensional Lorentz form -/
 def lorentzQ3 (a b c : ℤ) : ℤ := a ^ 2 + b ^ 2 - c ^ 2
+
 
 
 
@@ -235,6 +262,7 @@ theorem projection_to_3d (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     lorentzQ3 a b d = -(c ^ 2) := by
   unfold lorentzQ3; linarith
+
 
 
 
@@ -248,6 +276,7 @@ theorem cascade_timelike (a b c d : ℤ) (hc : c ≠ 0)
 
 
 
+
 /-- [Section: # CatalogBuild.Physics.ArithmeticPhotons.Advanced
 Auto-generated from theorem catalog database.
 Domain: Physics/ArithmeticPhotons
@@ -258,6 +287,7 @@ theorem photon_composition (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
     ∃ A B C D : ℤ, A ^ 2 + B ^ 2 + C ^ 2 + D ^ 2 =
       (d₁ ^ 2 + d₁ ^ 2) * (d₂ ^ 2 + d₂ ^ 2) := by
   exact ⟨ 2 * d₁ * d₂, 0, 0, 0, by ring ⟩
+
 
 
 

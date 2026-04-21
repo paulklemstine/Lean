@@ -18,6 +18,7 @@ theorem euler_criterion_neg_one (p : ℕ) [Fact (Nat.Prime p)] :
 
 
 
+
 /-- Pisano period mod 2 is 3. -/
 theorem fibonacci_period_mod2 :
     ∀ n, Nat.fib (n + 3) % 2 = Nat.fib n % 2 := by
@@ -25,6 +26,7 @@ theorem fibonacci_period_mod2 :
   induction n with
   | zero => decide
   | succ n ih => simp only [Nat.fib_add_two]; omega
+
 
 
 
@@ -38,6 +40,7 @@ theorem fibonacci_period_mod3 :
 
 
 
+
 /-- Entry point divisibility: if m | F(k) then m | F(k·j) for all j. -/
 theorem fib_entry_point_divides (k j : ℕ) :
     Nat.fib k ∣ Nat.fib (k * j) :=
@@ -45,9 +48,11 @@ theorem fib_entry_point_divides (k j : ℕ) :
 
 
 
+
 /-- Concrete hybrid speedup: 7 classical lenses ↔ 128× reduction. -/
 theorem grover_hybrid_concrete (S : ℕ) :
     S / 2 ^ 7 = S / 128 := by norm_num
+
 
 
 
@@ -58,10 +63,12 @@ theorem order_period_divides_card {G : Type*} [Group G] [Fintype G] (a : G) :
 
 
 
+
 /-- Birthday bound for Pollard rho. -/
 theorem pollard_rho_birthday (n : ℕ) :
     n < (Nat.sqrt n + 1) ^ 2 :=
   Nat.lt_succ_sqrt' n
+
 
 
 
@@ -71,11 +78,13 @@ theorem fermat_factor_bound (a b : ℤ) :
 
 
 
+
 /-- Tropical (p-adic) valuation is additive on positive naturals. -/
 theorem tropical_valuation_mult (p : ℕ) (a b : ℕ)
     (ha : a ≠ 0) (hb : b ≠ 0) :
     (a * b).factorization p = a.factorization p + b.factorization p := by
   simp [Nat.factorization_mul ha hb]
+
 
 
 
@@ -88,10 +97,12 @@ theorem norm_mult_preserves_divisibility (d : ℤ) (a b : ℤ√d)
 
 
 
+
 /-- Each lens reduces but cannot exceed original search space. -/
 theorem multi_lens_information_bound (S k : ℕ) :
     S / 2 ^ k ≤ S :=
   Nat.div_le_self S _
+
 
 
 
@@ -102,6 +113,7 @@ theorem coprime_lens_independence (m₁ m₂ : ℕ) (hcop : Nat.Coprime m₁ m�
 
 
 
+
 /-- Two sum-of-squares representations give a factoring equation. -/
 theorem two_square_reps_give_factor (a₁ b₁ a₂ b₂ : ℤ)
     (h : a₁ ^ 2 + b₁ ^ 2 = a₂ ^ 2 + b₂ ^ 2) :
@@ -109,10 +121,12 @@ theorem two_square_reps_give_factor (a₁ b₁ a₂ b₂ : ℤ)
 
 
 
+
 /-- Zeckendorf bound implies exponential bound. -/
 theorem zeckendorf_bound (n k : ℕ) (hk : 2 ≤ k) (hn : n < Nat.fib (k + 2)) :
     n < 2 ^ k :=
   lt_trans hn (MetaFactoring.fibonacci_search_reduction k hk)
+
 
 
 
@@ -127,6 +141,7 @@ theorem prime_one_mod4_sum_sq (p : ℕ) (hp : Nat.Prime p) (hmod : p % 4 = 1) :
 
 
 
+
 /-- The Euler 4-square identity (Cayley-Dickson 2→4). -/
 theorem cayley_dickson_2_to_4 (a b c d e f g h : ℤ) :
     (a^2 + b^2 + c^2 + d^2) * (e^2 + f^2 + g^2 + h^2) =
@@ -134,6 +149,7 @@ theorem cayley_dickson_2_to_4 (a b c d e f g h : ℤ) :
     (a*f + b*e + c*h - d*g)^2 +
     (a*g - b*h + c*e + d*f)^2 +
     (a*h + b*g - c*f + d*e)^2 := by ring
+
 
 
 
@@ -145,10 +161,12 @@ theorem lagrange_subgroup {G : Type*} [Group G] [Finite G]
 
 
 
+
 /-- Wilson's theorem: (p-1)! ≡ -1 (mod p) for prime p. -/
 theorem wilson_theorem (p : ℕ) [hp : Fact (Nat.Prime p)] :
     ((p - 1)! : ZMod p) = -1 :=
   ZMod.wilsons_lemma p
+
 
 
 
@@ -159,10 +177,12 @@ theorem fermat_in_zmod (p : ℕ) [Fact (Nat.Prime p)] (a : ZMod p) :
 
 
 
+
 /-- The multiplicative group (ZMod p)* is cyclic for prime p. -/
 theorem zmod_units_cyclic (p : ℕ) [Fact (Nat.Prime p)] :
     IsCyclic (ZMod p)ˣ :=
   inferInstance
+
 
 
 
@@ -174,9 +194,11 @@ theorem cos_factor_extraction (n x y : ℤ) (hn : 1 < n)
 
 
 
+
 /-- Three lenses compose: applying 3 independent halvings gives 8× reduction. -/
 theorem three_lens_compose (S : ℕ) :
     S / 2 ^ 3 = S / 8 := by norm_num
+
 
 
 
@@ -188,11 +210,13 @@ theorem lens_reduction_strict_mono (S : ℕ) (hS : 0 < S) (k₁ k₂ : ℕ)
 
 
 
+
 /-- Combined Fibonacci-CRT lens: coprime Fibonacci numbers give independent mod constraints. -/
 theorem fib_crt_lens (m n : ℕ) (hcop : Nat.Coprime m n) :
     Nat.Coprime (Nat.fib m) (Nat.fib n) → -- if F(m), F(n) are coprime
     Nat.totient (Nat.fib m * Nat.fib n) =
     Nat.totient (Nat.fib m) * Nat.totient (Nat.fib n) :=
   fun h => Nat.totient_mul h
+
 
 

@@ -1,4 +1,0 @@
-{"ts": 1776739613.550533, "stage": "test", "action": "hello", "vram_mb": 0.0, "vram_reserved_mb": 0.0}
-{"ts": 1776739614.5115263, "stage": "test", "action": "wait_start", "vram_mb": 0.0, "vram_reserved_mb": 0.0}
-{"ts": 1776739614.5217707, "stage": "test", "action": "wait_end", "vram_mb": 0.0, "vram_reserved_mb": 0.0, "elapsed_s": 0.01}
-{"ts": 1776739679.5956051, "stage": "test", "action": "hello", "vram_mb": 0.0, "vram_reserved_mb": 0.0}

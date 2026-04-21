@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: EML/V11
-Declarations: 16
+Declarations: 13
 -/
 
 import Mathlib
@@ -12,6 +12,7 @@ noncomputable section
 /-- Bregman divergence of exp: D_exp(x,y) = exp(x) - exp(y) - exp(y)(x-y). -/
 def bregmanExp (x y : ℝ) : ℝ :=
   Real.exp x - Real.exp y - Real.exp y * (x - y)
+
 
 
 
@@ -25,11 +26,13 @@ theorem eml_amgm (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
 
 
 
+
 /-- EML form of AM-GM: eml(ln a, a) = a − ln a ≥ 1 for a > 0. -/
 theorem eml_amgm_form (a : ℝ) (ha : 0 < a) :
     eml (Real.log a) a ≥ 1 := by
   unfold eml; rw [Real.exp_log ha]
   linarith [Real.log_le_sub_one_of_pos ha]
+
 
 
 
@@ -40,16 +43,12 @@ theorem eml_fundamental_ineq (x y : ℝ) :
 
 
 
-/-- EML at y = 1: eml(x, 1) = exp(x) ≥ x + 1. -/
-theorem eml_at_one_ge (x : ℝ) : eml x 1 ≥ x + 1 := by
-  unfold eml; simp [Real.log_one]; linarith [Real.add_one_le_exp x]
-
-
 
 /-- Reverse: eml(x,y) ≤ exp(x) for y ≥ 1. -/
 theorem eml_le_exp (x y : ℝ) (hy : 1 ≤ y) :
     eml x y ≤ Real.exp x := by
   unfold eml; linarith [Real.log_nonneg hy]
+
 
 
 
@@ -59,6 +58,7 @@ theorem bregmanExp_nonneg (x y : ℝ) : bregmanExp x y ≥ 0 := by
   have := Real.add_one_le_exp (x - y)
   rw [show x = y + (x - y) by ring, Real.exp_add]
   nlinarith [Real.exp_pos y, Real.exp_pos (x - y)]
+
 
 
 
@@ -76,6 +76,7 @@ theorem bregmanExp_eq_zero_iff (x y : ℝ) :
 
 
 
+
 /-- Bregman divergence is NOT symmetric. -/
 theorem bregmanExp_not_symmetric :
     ∃ x y : ℝ, bregmanExp x y ≠ bregmanExp y x := by
@@ -84,10 +85,12 @@ theorem bregmanExp_not_symmetric :
 
 
 
+
 /-- Young's inequality (special case p=q=2): ab ≤ (a² + b²)/2. -/
 theorem young_ineq_special (a b : ℝ) :
     a * b ≤ (a ^ 2 + b ^ 2) / 2 := by
   nlinarith [sq_nonneg (a - b)]
+
 
 
 
@@ -103,23 +106,17 @@ theorem emlSelfPair_ge_half_exp (x : ℝ) (hx : 1 ≤ x) :
 
 
 
-/-- d(1) = e (exact value). -/
-theorem emlDiag_at_one : emlDiag 1 = Real.exp 1 := by
-  unfold emlDiag; simp [Real.log_one]
 
-
-
+/-- [Section: # CatalogBuild.EML.V11.Inequalities
+Auto-generated from theorem catalog database.
+Domain: EML/V11
+Declarations: 16] -/
 theorem emlDiag_ge_e_ge_one (z : ℝ) (hz : 1 ≤ z) :
     emlDiag z ≥ Real.exp 1 := by
   unfold emlDiag;
   rw [ show z = 1 + ( z - 1 ) by ring, Real.exp_add ];
   nlinarith [ Real.add_one_le_exp 1, Real.add_one_le_exp ( z - 1 ), Real.log_le_sub_one_of_pos ( by linarith : 0 < 1 + ( z - 1 ) ) ]
 
-
-
-theorem eml_entropy_bound (p : ℝ) (hp : 0 < p) :
-    -p * Real.log p ≤ p * eml 0 p := by
-  unfold eml; nlinarith [ Real.add_one_le_exp 0, Real.log_le_sub_one_of_pos hp ] ;
 
 
 
@@ -130,6 +127,7 @@ theorem eml_compose_bound (x y : ℝ) :
 
 
 
+
 /-- For |x| ≤ 1: σ(x) ≥ x² (since σ(x) ≥ 1 ≥ x²). -/
 theorem emlSelfPair_dominates_sq_unit (x : ℝ) (hx : |x| ≤ 1) :
     emlSelfPair x ≥ x ^ 2 := by
@@ -137,6 +135,7 @@ theorem emlSelfPair_dominates_sq_unit (x : ℝ) (hx : |x| ≤ 1) :
   have h2 : x ^ 2 ≤ 1 := by
     rw [abs_le] at hx; nlinarith
   linarith
+
 
 
 

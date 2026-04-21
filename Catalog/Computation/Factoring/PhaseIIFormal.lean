@@ -18,6 +18,7 @@ theorem isSmooth_mono {B B' n : ℕ} (hBB : B ≤ B') (hn : IsSmooth B n) :
 
 
 
+
 /-- Any divisor of a B-smooth number is B-smooth. -/
 theorem isSmooth_of_dvd {B n d : ℕ} (hn : IsSmooth B n) (hd : d ∣ n) (hn0 : n ≠ 0) :
     IsSmooth B d := by
@@ -26,10 +27,12 @@ theorem isSmooth_of_dvd {B n d : ℕ} (hn : IsSmooth B n) (hd : d ∣ n) (hn0 : 
 
 
 
+
 /-- Prime numbers are self-smooth: p is p-smooth. -/
 theorem prime_isSmooth_self {p : ℕ} (hp : p.Prime) : IsSmooth p p := by
   intro q hq hqp
   exact le_of_eq (hp.eq_one_or_self_of_dvd q hqp |>.resolve_left hq.one_lt.ne')
+
 
 
 
@@ -42,9 +45,11 @@ noncomputable def dickmanOnePiece (u : ℝ) : ℝ :=
 
 
 
+
 /-- ρ(1) = 1. -/
 theorem dickman_one : dickmanOnePiece 1 = 1 := by
   simp [dickmanOnePiece]
+
 
 
 
@@ -56,6 +61,7 @@ theorem dickman_unit_interval {u : ℝ} (hu0 : 0 < u) (hu1 : u ≤ 1) :
 
 
 
+
 /-- ρ(2) = 1 - ln 2. -/
 theorem dickman_two : dickmanOnePiece 2 = 1 - Real.log 2 := by
   unfold dickmanOnePiece
@@ -63,9 +69,11 @@ theorem dickman_two : dickmanOnePiece 2 = 1 - Real.log 2 := by
 
 
 
+
 /-- The L-notation complexity function. -/
 noncomputable def Lnotation (N : ℝ) (α c : ℝ) : ℝ :=
   Real.exp (c * (Real.log N) ^ α * (Real.log (Real.log N)) ^ (1 - α))
+
 
 
 
@@ -77,8 +85,10 @@ theorem Lnotation_one (N c : ℝ) :
 
 
 
+
 /-- The MLC(k) search space after applying k independent lenses. -/
 def mlcReduction (S k : ℕ) : ℕ := S / 2 ^ k
+
 
 
 
@@ -90,10 +100,12 @@ theorem mlc_composition (S a b : ℕ) :
 
 
 
+
 /-- MLC commutativity: order of lens application doesn't matter. -/
 theorem mlc_comm (S a b : ℕ) :
     mlcReduction (mlcReduction S a) b = mlcReduction (mlcReduction S b) a := by
   rw [mlc_composition, mlc_composition, Nat.add_comm]
+
 
 
 
@@ -105,6 +117,7 @@ theorem mlc_max_lenses (S k : ℕ) (hk : S < 2 ^ k) :
 
 
 
+
 /-- The quantum speedup: √(S/512) ≤ √S for all S. -/
 theorem quantum_savings (S : ℕ) :
     Nat.sqrt (S / 512) ≤ Nat.sqrt S := by
@@ -112,10 +125,12 @@ theorem quantum_savings (S : ℕ) :
 
 
 
+
 /-- Tropical additivity: v_p(a · b) = v_p(a) + v_p(b). -/
 theorem tropical_additivity (p a b : ℕ) (ha : a ≠ 0) (hb : b ≠ 0) :
     (a * b).factorization p = a.factorization p + b.factorization p := by
   simp [Nat.factorization_mul ha hb]
+
 
 
 
@@ -128,12 +143,14 @@ theorem semiprime_tropical_profile (p q : ℕ) (hp : p.Prime) (hq : q.Prime) (hp
 
 
 
+
 /-- Tropical factorization constraint: any factorization N = a * b
 splits the tropical profile additively at every prime. -/
 theorem tropical_constraint (N a b ℓ : ℕ) (ha : a ≠ 0) (hb : b ≠ 0) (hN : N = a * b) :
     N.factorization ℓ = a.factorization ℓ + b.factorization ℓ := by
   subst hN
   exact tropical_additivity ℓ a b ha hb
+
 
 
 
@@ -148,9 +165,15 @@ theorem orbit_periodicity {n : ℕ} (hn : 0 < n) (f : Fin n → Fin n) (x : Fin 
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Factoring.PhaseIIFormal
+Auto-generated from theorem catalog database.
+Domain: Computation/Factoring
+Declarations: 20] -/
 theorem fib_lt_pow_two (n : ℕ) (hn : 2 ≤ n) : Nat.fib (n + 2) < 2 ^ n := by
   induction hn <;> simp_all +arith +decide [ Nat.fib_add_two, pow_succ' ];
   grind
+
 
 
 
@@ -160,6 +183,7 @@ theorem tribonacci_lt_pow_two (n : ℕ) (hn : 1 ≤ n) : tribonacci n < 2 ^ n :=
   · decide +revert;
   · induction n <;> norm_num [ pow_succ, tribonacci ] at *;
     grind
+
 
 
 

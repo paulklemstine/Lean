@@ -17,9 +17,11 @@ theorem total_factoring_equations (k : ℕ) :
 
 
 
+
 /-- σ_k(n) = sum of k-th powers of divisors of n -/
 noncomputable def sigma_k (k n : ℕ) : ℕ :=
   (Nat.divisors n).sum (· ^ k)
+
 
 
 
@@ -33,8 +35,10 @@ theorem sigma_k_pos (k n : ℕ) (hn : n ≥ 1) : sigma_k k n ≥ 1 := by
 
 
 
+
 /-- Octonion norm (sum of 8 squares) -/
 def onorm (v : Fin 8 → ℤ) : ℤ := ∑ i, v i ^ 2
+
 
 
 
@@ -47,9 +51,11 @@ theorem onorm_nonneg (v : Fin 8 → ℤ) : onorm v ≥ 0 := by
 
 
 
+
 /-- In dimension 8, each pair of representations gives C(8,2) = 28
 cross-collision pairs. -/
 theorem dim8_cross_collisions : Nat.choose 8 2 = 28 := by decide
+
 
 
 /-- [Section: # CatalogBuild.Pythagorean.Quadruples.QuantumE8Modular
@@ -59,7 +65,13 @@ Declarations: 18] -/
 theorem dim4_cross_collisions : Nat.choose 4 2 = 6 := by decide
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.Quadruples.QuantumE8Modular
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Quadruples
+Declarations: 18] -/
 theorem dim2_cross_collisions : Nat.choose 2 2 = 1 := by decide
+
 
 
 
@@ -69,9 +81,11 @@ theorem e8_representation_richness :
 
 
 
+
 /-- Count divisors of n congruent to r mod m -/
 noncomputable def count_divisors_mod (n r m : ℕ) : ℕ :=
   ((Nat.divisors n).filter (fun d => d % m = r)).card
+
 
 
 
@@ -85,6 +99,7 @@ theorem r2_prime_1mod4_divisor_structure (p : ℕ) (hp : Nat.Prime p)
   use 1
   simp [Finset.mem_filter, Nat.mem_divisors]
   exact hp.ne_zero
+
 
 
 
@@ -102,11 +117,13 @@ theorem sigma_k_upper_bound (k n : ℕ) (_hn : n ≥ 1) :
 
 
 
+
 /-- The hierarchy of factoring power: more channels, more collisions. -/
 theorem hierarchy_channels :
     1 * Nat.choose 2 2 < 2 * Nat.choose 2 2 ∧
     2 * Nat.choose 2 2 < 4 * Nat.choose 2 2 ∧
     4 * Nat.choose 2 2 < 8 * Nat.choose 2 2 := by decide
+
 
 
 
@@ -120,10 +137,12 @@ theorem cross_term_squared_bound (a b c d N : ℤ)
 
 
 
+
 /-- The cross term is zero iff the two representations are "parallel". -/
 theorem cross_term_zero_iff_parallel (a b c d : ℤ)
     (h_ad_bc : a * d - b * c = 0) :
     a * d = b * c := by linarith
+
 
 
 
@@ -143,9 +162,11 @@ theorem collision_yields_factor_candidate (a b c d N : ℤ)
 
 
 
+
 /-- Total channel count in the hierarchy for 2 representations -/
 theorem total_channels_two_reps :
     1 < 3 ∧ 3 < 10 ∧ 10 < 36 := by omega
+
 
 
 
@@ -153,6 +174,7 @@ theorem total_channels_two_reps :
 theorem channel_growth_superlinear :
     10 * 2 > 3 * 4 ∧
     36 * 4 > 10 * 8 := by omega
+
 
 
 

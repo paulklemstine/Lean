@@ -16,9 +16,15 @@ Declarations: 5] -/
 theorem spb_zero (x : ℝ) : spb x 0 = x := by simp [spb]
 
 
+
+/-- [Section: # CatalogBuild.Shared.Spb_zero
+Auto-generated from theorem catalog database.
+Domain: Shared
+Declarations: 5] -/
 theorem spb_norm_identity (x y : ℝ) (h : 1 - x * y ≠ 0) :
     (1 + (spb x y) ^ 2) * (1 - x * y) ^ 2 = (1 + x ^ 2) * (1 + y ^ 2) := by
   unfold spb; field_simp; ring
+
 
 
 
@@ -27,6 +33,7 @@ theorem spb_eml_decomposition (x y : ℝ) (hden : 0 < 1 - x * y) :
   unfold spb
   rw [Real.exp_neg, Real.exp_log hden]
   simp [spb, div_eq_mul_inv]
+
 
 
 
@@ -39,7 +46,9 @@ theorem spb_norm_ratio (x y : ℝ) (h : 1 - x * y ≠ 0) :
 
 
 
+
 theorem spb_neg (x : ℝ) : spb x (-x) = 0 := by simp [spb]
+
 
 
 

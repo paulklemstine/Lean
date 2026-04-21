@@ -26,8 +26,10 @@ theorem rational_density_quantitative (a b : ℝ) (hab : a < b) :
 
 
 
+
 /-- A simple continued fraction represented as a finite list of partial quotients -/
 def SimpleCF := List ℕ
+
 
 
 
@@ -39,6 +41,11 @@ def evalCF : SimpleCF → ℚ
 
 
 
+
+/-- [Section: # CatalogBuild.Logic.UniversalDecoder
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 16] -/
 theorem rat_has_cf (q : ℚ) (hq : 0 < q) :
     ∃ cf : SimpleCF, cf ≠ [] ∧ evalCF cf = q := by
       -- By definition of $evalCF$, we know that if $q = \frac{p}{r}$ with $p$ and $r$ being coprime integers, then $evalCF cf = q$ for some $cf$.
@@ -62,6 +69,7 @@ theorem rat_has_cf (q : ℚ) (hq : 0 < q) :
 
 
 
+
 /-- An element of SL(2,ℤ) represented by its four entries -/
 structure SL2Z where
   a : ℤ
@@ -72,8 +80,10 @@ structure SL2Z where
 
 
 
+
 /-- The identity element -/
 def SL2Z.one : SL2Z := ⟨1, 0, 0, 1, by ring⟩
+
 
 
 
@@ -82,8 +92,10 @@ def SL2Z.S : SL2Z := ⟨0, -1, 1, 0, by ring⟩
 
 
 
+
 /-- The T generator: z ↦ z + 1 -/
 def SL2Z.T : SL2Z := ⟨1, 1, 0, 1, by ring⟩
+
 
 
 
@@ -97,9 +109,11 @@ def SL2Z.mul (A B : SL2Z) : SL2Z where
 
 
 
+
 theorem SL2Z_S_sq : let S2 := SL2Z.mul SL2Z.S SL2Z.S
     S2.a = -1 ∧ S2.b = 0 ∧ S2.c = 0 ∧ S2.d = -1 := by
       exact ⟨ rfl, rfl, rfl, rfl ⟩
+
 
 
 
@@ -111,12 +125,14 @@ theorem SL2Z_ST_order :
 
 
 
+
 /-- The Möbius function -/
 noncomputable def moebius (n : ℕ) : ℤ :=
   if n = 0 then 0
   else if ¬ Squarefree n then 0
   else if Even (Nat.card (n.primeFactors)) then 1
   else -1
+
 
 
 
@@ -130,15 +146,18 @@ theorem moebius_sum_eq_indicator (n : ℕ) (hn : 0 < n) :
 
 
 
+
 theorem euler_product_finite_sq (S : Finset ℕ) (hS : ∀ p ∈ S, Nat.Prime p) :
     ∀ p ∈ S, (1 : ℚ) - 1 / (p : ℚ)^2 ≠ 0 := by
       exact fun p hp => sub_ne_zero_of_ne <| ne_of_gt <| by rw [ div_lt_iff₀ ] <;> norm_cast <;> nlinarith [ Nat.Prime.one_lt <| hS p hp ] ;
 
 
 
+
 /-- The signed area of a triangle with vertices (x₁,y₁), (x₂,y₂), (x₃,y₃) -/
 def triangleArea (x₁ y₁ x₂ y₂ x₃ y₃ : ℚ) : ℚ :=
   (x₁ * (y₂ - y₃) + x₂ * (y₃ - y₁) + x₃ * (y₁ - y₂)) / 2
+
 
 
 
@@ -153,6 +172,7 @@ theorem stereo_triangle_area (t₁ t₂ : ℚ) :
       -- Combine like terms and simplify the expression.
       field_simp
       ring
+
 
 
 end

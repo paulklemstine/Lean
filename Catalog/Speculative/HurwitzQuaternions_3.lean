@@ -20,6 +20,7 @@ theorem four_squares_identity (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ) :
 
 
 
+
 /-- [Section: # CatalogBuild.Speculative.HurwitzQuaternions_3
 Auto-generated from theorem catalog database.
 Domain: Speculative
@@ -30,9 +31,11 @@ theorem sum_two_squares_prime_1mod4 (p : ℕ) (hp : Nat.Prime p) (hmod : p % 4 =
 
 
 
+
 /-- 2 is a sum of two squares. -/
 theorem two_sum_two_squares : ∃ a b : ℤ, (2 : ℤ) = a ^ 2 + b ^ 2 :=
   ⟨1, 1, by ring⟩
+
 
 
 
@@ -46,8 +49,10 @@ theorem hurwitz_approx_bound (r₁ r₂ r₃ r₄ : ℤ) :
 
 
 
+
 /-- 5 = 1² + 2² (sum of two squares, p ≡ 1 mod 4) -/
 theorem five_two_squares : (5 : ℤ) = 1 ^ 2 + 2 ^ 2 := by ring
+
 
 
 
@@ -56,8 +61,10 @@ theorem thirteen_two_squares : (13 : ℤ) = 2 ^ 2 + 3 ^ 2 := by ring
 
 
 
+
 /-- 17 = 1² + 4² -/
 theorem seventeen_two_squares : (17 : ℤ) = 1 ^ 2 + 4 ^ 2 := by ring
+
 
 
 
@@ -66,6 +73,8 @@ theorem seven_four_squares : (7 : ℤ) = 1 ^ 2 + 1 ^ 2 + 1 ^ 2 + 2 ^ 2 := by rin
 
 
 
+
 /-- 15 = 1² + 1² + 2² + 3² -/
 theorem fifteen_four_squares : (15 : ℤ) = 1 ^ 2 + 1 ^ 2 + 2 ^ 2 + 3 ^ 2 := by ring
+
 

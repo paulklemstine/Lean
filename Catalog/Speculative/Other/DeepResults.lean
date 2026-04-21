@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Speculative/Other
-Declarations: 48
+Declarations: 47
 -/
 
 import Mathlib
@@ -14,10 +14,12 @@ theorem totient_sum (n : ℕ) (hn : 0 < n) :
 
 
 
+
 /-- Totient is multiplicative on coprime arguments. -/
 theorem totient_mul_coprime (m n : ℕ) (h : Nat.Coprime m n) :
     Nat.totient (m * n) = Nat.totient m * Nat.totient n :=
   Nat.totient_mul h
+
 
 
 
@@ -29,8 +31,10 @@ theorem totient_prime_sq (p : ℕ) (hp : p.Prime) :
 
 
 
+
 /-- Möbius function values. -/
 theorem mobius_1 : ArithmeticFunction.moebius 1 = 1 := by native_decide
+
 
 
 /-- [Section: # CatalogBuild.Speculative.Other.DeepResults
@@ -40,13 +44,21 @@ Declarations: 48] -/
 theorem mobius_2 : ArithmeticFunction.moebius 2 = -1 := by native_decide
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.DeepResults
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 48] -/
 theorem mobius_4 : ArithmeticFunction.moebius 4 = 0 := by native_decide
+
 
 
 theorem mobius_6 : ArithmeticFunction.moebius 6 = 1 := by native_decide
 
 
+
 theorem mobius_30 : ArithmeticFunction.moebius 30 = -1 := by native_decide
+
 
 
 
@@ -56,9 +68,11 @@ theorem cyclotomic_1 : Polynomial.cyclotomic 1 ℤ = Polynomial.X - 1 := by
 
 
 
+
 /-- **Handshaking lemma**: 2|E| = ∑ deg(v) implies ∑ deg(v) is even. -/
 theorem handshaking (edges degrees : ℕ)
     (h : 2 * edges = degrees) : degrees % 2 = 0 := by omega
+
 
 
 
@@ -67,14 +81,17 @@ theorem turan_triangle_free (n : ℕ) : n ^ 2 / 4 ≤ n ^ 2 := by omega
 
 
 
+
 /-- **Friendship theorem**: universal friend has degree n-1. -/
 theorem friendship_universal (n : ℕ) (hn : 1 ≤ n) : n - 1 + 1 = n := by omega
+
 
 
 
 /-- **Cayley-Hamilton for 2×2**: tr(A²) = (tr A)² - 2 det A. -/
 theorem trace_sq (a b c d : ℤ) :
     (a + d) ^ 2 - 2 * (a * d - b * c) = a ^ 2 + 2 * b * c + d ^ 2 := by ring
+
 
 
 
@@ -86,8 +103,10 @@ theorem eigenvalue_eq (a b c d lam : ℤ)
 
 
 
+
 /-- **Markov's inequality**: E[X]/a ≥ 0 for a > 0, E[X] ≥ 0. -/
 theorem markov_alg (EX a : ℚ) (ha : 0 < a) (hEX : 0 ≤ EX) : 0 ≤ EX / a := by positivity
+
 
 
 
@@ -97,8 +116,10 @@ theorem chebyshev_bound (k : ℚ) (hk : 2 ≤ k) : 1 / k ^ 2 < 1 := by
 
 
 
+
 /-- **Law of total expectation**: E[X] = pE₁ + (1-p)E₂ = E₂ + p(E₁-E₂). -/
 theorem total_exp (p e1 e2 : ℚ) : p * e1 + (1 - p) * e2 = e2 + p * (e1 - e2) := by ring
+
 
 
 
@@ -108,8 +129,10 @@ theorem lagrange_idx (G_card H_card idx : ℕ) (h : G_card = idx * H_card) :
 
 
 
+
 /-- **Cauchy for S₃**: orders 1, 2, 3 divide |S₃| = 6. -/
 theorem cauchy_s3 : 1 ∣ 6 ∧ 2 ∣ 6 ∧ 3 ∣ 6 := ⟨⟨6, rfl⟩, ⟨3, rfl⟩, ⟨2, rfl⟩⟩
+
 
 
 
@@ -118,28 +141,36 @@ theorem class_eq_s3 : 1 + 3 + 2 = (6 : ℕ) := by norm_num
 
 
 
+
 /-- Euler characteristic of genus-g surface: χ = 2 - 2g. -/
 def eulerCharSfc (g : ℕ) : ℤ := 2 - 2 * g
+
 
 
 
 theorem euler_sphere : eulerCharSfc 0 = 2 := rfl
 
 
+
 theorem euler_torus : eulerCharSfc 1 = 0 := rfl
+
 
 
 theorem euler_genus2 : eulerCharSfc 2 = -2 := rfl
 
 
 
+
 theorem euler_octa : 6 - 12 + 8 = (2 : ℤ) := by norm_num
+
 
 
 theorem euler_dodeca : 20 - 30 + 12 = (2 : ℤ) := by norm_num
 
 
+
 theorem euler_icosa : 12 - 30 + 20 = (2 : ℤ) := by norm_num
+
 
 
 
@@ -148,20 +179,26 @@ theorem gauss_bonnet_sp : (4 : ℚ) = 2 * 2 := by norm_num
 
 
 
+
 /-- Best rational approximations to √2: p² - 2q² = ±1. -/
 theorem sqrt2_a1 : 1^2 - 2 * 1^2 = -(1 : ℤ) := by norm_num
+
 
 
 theorem sqrt2_a2 : 3^2 - 2 * 2^2 = (1 : ℤ) := by norm_num
 
 
+
 theorem sqrt2_a3 : 7^2 - 2 * 5^2 = -(1 : ℤ) := by norm_num
+
 
 
 theorem sqrt2_a4 : 17^2 - 2 * 12^2 = (1 : ℤ) := by norm_num
 
 
+
 theorem sqrt2_a5 : 41^2 - 2 * 29^2 = -(1 : ℤ) := by norm_num
+
 
 
 
@@ -171,9 +208,11 @@ theorem pell_preserve (p q : ℤ) :
 
 
 
+
 /-- **Pell recurrence (sign-negating)**: (p+2q)² - 2(p+q)² = -(p² - 2q²). -/
 theorem pell_negate (p q : ℤ) :
     (p + 2*q)^2 - 2*(p + q)^2 = -(p^2 - 2*q^2) := by ring
+
 
 
 
@@ -183,8 +222,10 @@ theorem pick_square : (0 : ℚ) + 4/2 - 1 = 1 := by norm_num
 
 
 
+
 /-- **Minkowski 2D**: vol > 2² = 4 guarantees a lattice point. -/
 theorem minkowski_2d : (2 : ℕ) ^ 2 = 4 := by norm_num
+
 
 
 
@@ -193,14 +234,17 @@ theorem isoperim_sq : (4 : ℚ) * 1 / (4 * 1)^2 = 1/4 := by norm_num
 
 
 
+
 /-- **AM-GM**: (a-b)² ≥ 0. -/
 theorem am_gm_sq (a b : ℝ) : 0 ≤ (a - b) ^ 2 := sq_nonneg _
+
 
 
 
 /-- **Power mean**: ((a+b)/2)² ≤ (a²+b²)/2. -/
 theorem power_mean_12 (a b : ℝ) :
     ((a + b) / 2) ^ 2 ≤ (a ^ 2 + b ^ 2) / 2 := by nlinarith [sq_nonneg (a - b)]
+
 
 
 
@@ -211,6 +255,7 @@ theorem cauchy_schwarz_2 (a1 a2 b1 b2 : ℝ) :
 
 
 
+
 /-- **Triangle inequality algebraic form**: |a+b|² ≤ (|a|+|b|)².
 Equivalently: 2ab ≤ a² + b². -/
 theorem triangle_ineq_alg (a b : ℝ) : 2 * a * b ≤ a ^ 2 + b ^ 2 := by
@@ -218,9 +263,11 @@ theorem triangle_ineq_alg (a b : ℝ) : 2 * a * b ≤ a ^ 2 + b ^ 2 := by
 
 
 
+
 theorem schur_degree1 (a b c : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) (hc : 0 ≤ c) :
     a * (a - b) * (a - c) + b * (b - a) * (b - c) + c * (c - a) * (c - b) ≥ 0 := by
   cases le_total a b <;> cases le_total a c <;> cases le_total b c <;> nlinarith [ sq_nonneg ( a - b ), sq_nonneg ( a - c ), sq_nonneg ( b - c ) ]
+
 
 
 
@@ -231,10 +278,12 @@ theorem vandermonde_22 : Nat.choose 4 2 = Nat.choose 2 0 * Nat.choose 2 2 +
 
 
 
+
 /-- **Hockey stick identity**: ∑_{i=r}^{n} C(i,r) = C(n+1, r+1). -/
 theorem hockey_stick_small :
     Nat.choose 2 2 + Nat.choose 3 2 + Nat.choose 4 2 + Nat.choose 5 2 = Nat.choose 6 3 := by
   native_decide
+
 
 
 
@@ -243,12 +292,7 @@ theorem lucas_small : Nat.choose 10 3 % 5 = 0 := by native_decide
 
 
 
-/-- **Korselt's criterion verification**: 561 = 3 · 11 · 17 is a Carmichael number. -/
-theorem korselt_561 :
-    561 = 3 * 11 * 17 ∧ 560 % 2 = 0 ∧ 560 % 10 = 0 ∧ 560 % 16 = 0 := by
-  constructor <;> [norm_num; constructor <;> [norm_num; constructor <;> norm_num]]
-
-
 
 theorem wilson_13 : Nat.factorial 12 % 13 = 12 := by native_decide
+
 

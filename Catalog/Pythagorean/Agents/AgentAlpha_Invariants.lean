@@ -16,11 +16,13 @@ theorem euclid_inradius_num (m n : ℤ) :
 
 
 
+
 /-- The perimeter of a Euclid triple is 2m(m + n). -/
 theorem euclid_perimeter (m n : ℤ) :
     let t := euclidTriple m n
     t.1 + t.2.1 + t.2.2 = 2 * m * (m + n) := by
   simp [euclidTriple]; ring
+
 
 
 
@@ -32,15 +34,18 @@ theorem euclid_twice_area (m n : ℤ) :
 
 
 
+
 /-- The twice-area factors as 2mn(m−n)(m+n). -/
 theorem euclid_twice_area_factored (m n : ℤ) :
     2 * m * n * (m ^ 2 - n ^ 2) = 2 * m * n * (m - n) * (m + n) := by ring
 
 
 
+
 /-- Key identity: (a + b − c)(a + b + c) = 2ab for Pythagorean triples. -/
 theorem pyth_inradius_identity (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (a + b - c) * (a + b + c) = 2 * a * b := by nlinarith [sq_nonneg (a + b - c)]
+
 
 
 
@@ -51,10 +56,12 @@ theorem pyth_sum_minus_hyp_nonneg (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 
 
 
 
+
 /-- a + b > c for positive Pythagorean triples (strict triangle inequality). -/
 theorem pyth_triangle_strict (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (h : a ^ 2 + b ^ 2 = c ^ 2) : c < a + b := by
   nlinarith [sq_nonneg (a - b)]
+
 
 
 
@@ -68,8 +75,14 @@ theorem pyth_inradius_even (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.Agents.AgentAlpha_Invariants
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Agents
+Declarations: 28] -/
 theorem consecutive_even (k : ℤ) : 2 ∣ k * (k + 1) := by
   exact even_iff_two_dvd.mp ( by simp +arith +decide [ mul_add, parity_simps ] )
+
 
 
 
@@ -81,9 +94,11 @@ theorem euclid_leg_product_div4 (m n : ℤ) :
 
 
 
+
 /-- Under Berggren M₁: the new perimeter P' = 5a − 5b + 7c. -/
 theorem berggren_M1_perimeter (a b c : ℤ) :
     (a - 2*b + 2*c) + (2*a - b + 2*c) + (2*a - 2*b + 3*c) = 5*a - 5*b + 7*c := by ring
+
 
 
 
@@ -93,15 +108,18 @@ theorem berggren_M2_perimeter (a b c : ℤ) :
 
 
 
+
 /-- Under Berggren M₃: P' = −5a + 5b + 7c. -/
 theorem berggren_M3_perimeter (a b c : ℤ) :
     (-a + 2*b + 2*c) + (-2*a + b + 2*c) + (-2*a + 2*b + 3*c) = -5*a + 5*b + 7*c := by ring
 
 
 
+
 /-- Under Berggren M₁: the new inradius numerator (a'+b'−c') = a − b + c. -/
 theorem berggren_M1_inradius_num (a b c : ℤ) :
     (a - 2*b + 2*c) + (2*a - b + 2*c) - (2*a - 2*b + 3*c) = a - b + c := by ring
+
 
 
 
@@ -112,15 +130,18 @@ theorem berggren_M2_inradius_num (a b c : ℤ) :
 
 
 
+
 /-- Under Berggren M₃: a'+b'−c' = −a + b + c. -/
 theorem berggren_M3_inradius_num (a b c : ℤ) :
     (-a + 2*b + 2*c) + (-2*a + b + 2*c) - (-2*a + 2*b + 3*c) = -a + b + c := by ring
 
 
 
+
 /-- The product of the M₁ and M₃ inradius numerators equals 2ab. -/
 theorem inradius_num_product (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     (a - b + c) * (-a + b + c) = 2 * a * b := by nlinarith [sq_nonneg (a - b + c)]
+
 
 
 
@@ -131,9 +152,11 @@ theorem children_inradius_sum (a b c : ℤ) :
 
 
 
+
 theorem children_inradius_product (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     (a - b + c) * (a + b + c) * (-a + b + c) = 2 * a * b * (a + b + c) := by
   grind +ring
+
 
 
 
@@ -143,9 +166,11 @@ theorem euclid_defect1 (m n : ℤ) :
 
 
 
+
 /-- The second defect of a Euclid triple is (m − n)². -/
 theorem euclid_defect2 (m n : ℤ) :
     (m^2 + n^2) - 2*m*n = (m - n)^2 := by ring
+
 
 
 
@@ -156,10 +181,12 @@ theorem defect_product_eq_twice_inradius_sq (m n : ℤ) :
 
 
 
+
 /-- **ALPHA'S THEOREM (General form)**: For any Pythagorean triple,
 2·(c−a)·(c−b) = (a+b−c)². -/
 theorem defect_product_general (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     2 * (c - a) * (c - b) = (a + b - c) ^ 2 := by nlinarith [sq_nonneg (a + b - c)]
+
 
 
 
@@ -169,9 +196,11 @@ theorem consecutive_leg_a (n : ℤ) :
 
 
 
+
 /-- For consecutive parameters, c − b = 1. -/
 theorem consecutive_hyp_minus_leg (n : ℤ) :
     ((n + 1) ^ 2 + n ^ 2) - 2 * (n + 1) * n = 1 := by ring
+
 
 
 
@@ -181,9 +210,11 @@ theorem consecutive_hyp (n : ℤ) :
 
 
 
+
 /-- For consecutive parameters, inradius numerator = 2n, so inradius = n. -/
 theorem consecutive_inradius_num (n : ℤ) :
     (2 * n + 1) + 2 * (n + 1) * n - (2 * n ^ 2 + 2 * n + 1) = 2 * n := by ring
+
 
 
 
@@ -191,4 +222,5 @@ theorem consecutive_inradius_num (n : ℤ) :
 (±1)² + (±2)² and (±2)² + (±1)². -/
 theorem five_reps : ∀ a b : ZMod 5, a ^ 2 + b ^ 2 = 0 →
     (a = 0 ∧ b = 0) ∨ (a ≠ 0 ∧ b ≠ 0) := by decide
+
 

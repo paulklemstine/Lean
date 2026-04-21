@@ -14,14 +14,17 @@ def EMLd (a b : ℝ) : ℝ := Real.exp a - Real.log b
 
 
 
+
 /-- The full EML closure (union over all depths). -/
 def fullEMLClosure (S : Set ℝ) : Set ℝ := ⋃ n, EMLClosure n S
+
 
 
 
 /-- 1 is in the seed set. -/
 theorem one_in_closure : (1 : ℝ) ∈ EMLClosure 0 {1} := by
   simp [EMLClosure]
+
 
 
 
@@ -34,10 +37,12 @@ theorem EMLClosure_mono (S : Set ℝ) (n : ℕ) :
 
 
 
+
 /-- Log-split: EML(x, y·z) = EML(x, y) - ln(z) for y, z > 0. -/
 theorem EMLd_log_split (x y z : ℝ) (hy : 0 < y) (hz : 0 < z) :
     EMLd x (y * z) = EMLd x y - Real.log z := by
   simp [EMLd, Real.log_mul hy.ne' hz.ne']; ring
+
 
 
 
@@ -47,9 +52,11 @@ theorem EMLd_exp (x : ℝ) : EMLd x 1 = Real.exp x := by
 
 
 
+
 /-- EML(0, x) = 1 - ln(x). -/
 theorem EMLd_one_minus_log (x : ℝ) : EMLd 0 x = 1 - Real.log x := by
   simp [EMLd]
+
 
 
 
@@ -66,11 +73,13 @@ theorem EMLd_maps_to_unit_interval (x : ℝ) (hx1 : 1 < x) (hxe : x < Real.exp 1
 
 
 
+
 /-- exp maps any positive value to a value > 1. -/
 theorem EMLd_amplifies (x : ℝ) (hx : 0 < x) :
     EMLd x 1 > 1 := by
   simp [EMLd, Real.log_one]
   linarith [Real.add_one_le_exp x]
+
 
 
 
@@ -81,10 +90,12 @@ theorem EMLd_inv_scaled (x : ℝ) (hx : 0 < x) :
 
 
 
+
 /-- ln recovery: EML(0, exp(EML(0, x))) = ln(x). -/
 theorem EMLd_recovers_ln (x : ℝ) :
     EMLd 0 (Real.exp (EMLd 0 x)) = Real.log x := by
   simp [EMLd, Real.log_exp]
+
 
 
 
@@ -95,10 +106,12 @@ theorem EMLd_double_neg (x : ℝ) :
 
 
 
+
 /-- Shift identity: EML(x + c, 1) = exp(c) · exp(x). -/
 theorem EMLd_shift (x c : ℝ) :
     EMLd (x + c) 1 = Real.exp c * Real.exp x := by
   simp [EMLd, Real.log_one, Real.exp_add, mul_comm]
+
 
 
 
@@ -152,9 +165,11 @@ theorem e_irrational : Irrational (Real.exp 1) := by
 
 
 
+
 /-- exp(exp(1)) is irrational. -/
 theorem exp_e_irrational : Irrational (Real.exp (Real.exp 1)) := by
   sorry
+
 
 
 

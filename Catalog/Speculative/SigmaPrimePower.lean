@@ -17,11 +17,13 @@ theorem sigma1_prime_power (p n : ℕ) (hp : Nat.Prime p) :
 
 
 
+
 /-- Corollary: σ₁(p²) = p² + p + 1. -/
 theorem sigma1_prime_sq' (p : ℕ) (hp : Nat.Prime p) :
     sigma1' (p ^ 2) = p ^ 2 + p + 1 := by
   rw [sigma1_prime_power p 2 hp]
   simp [Finset.sum_range_succ]; ring
+
 
 
 
@@ -33,6 +35,7 @@ theorem sigma1_prime_cube (p : ℕ) (hp : Nat.Prime p) :
 
 
 
+
 /-- For odd primes, r₄(p) = 8·σ₁(p) = 8(p+1).
 This is a consequence of Jacobi's four-square theorem. -/
 theorem r4_prime_value (p : ℕ) (hp : Nat.Prime p) :
@@ -41,10 +44,12 @@ theorem r4_prime_value (p : ℕ) (hp : Nat.Prime p) :
 
 
 
+
 /-- For prime powers, r₄(pⁿ) = 8·σ₁(pⁿ) = 8·∑ pⁱ. -/
 theorem r4_prime_power_value (p n : ℕ) (hp : Nat.Prime p) :
     8 * sigma1' (p ^ n) = 8 * ∑ i ∈ Finset.range (n + 1), p ^ i := by
   rw [sigma1_prime_power p n hp]
+
 
 
 
@@ -63,11 +68,13 @@ theorem berggren_geometric_general (b d : ℕ) (hb : 2 ≤ b) :
 
 
 
+
 /-- Specialization: branching factor 3 (Berggren tree). -/
 theorem berggren_tree_formula (d : ℕ) :
     2 * ∑ i ∈ Finset.range (d + 1), 3 ^ i = 3 ^ (d + 1) - 1 := by
   have := berggren_geometric_general 3 d (by omega)
   linarith
+
 
 
 
@@ -79,11 +86,13 @@ theorem binary_tree_formula (d : ℕ) :
 
 
 
+
 /-- σ₁ is multiplicative for coprime arguments. -/
 theorem sigma1'_mult (m n : ℕ) (hcop : Nat.Coprime m n) :
     sigma1' (m * n) = sigma1' m * sigma1' n := by
   unfold sigma1'
   exact Coprime.sum_divisors_mul hcop
+
 
 
 
@@ -99,6 +108,7 @@ theorem sigma1_semiprime (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
 
 
 
+
 /-- For N = p^a · q^b with p, q coprime primes,
 σ₁(N) = σ₁(p^a) · σ₁(q^b). -/
 theorem sigma1_two_prime_powers (p q a b : ℕ)
@@ -107,5 +117,6 @@ theorem sigma1_two_prime_powers (p q a b : ℕ)
   apply sigma1'_mult
   exact (hp.coprime_iff_not_dvd.mpr fun h =>
     hpq (hq.eq_one_or_self_of_dvd p h |>.resolve_left hp.one_lt.ne')).pow a b
+
 
 

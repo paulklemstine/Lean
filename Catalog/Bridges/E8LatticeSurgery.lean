@@ -14,9 +14,11 @@ theorem e8_dimension : (8 : ℕ) = 8 := rfl
 
 
 
+
 /-- E8 root system: 240 roots (minimal vectors) of norm √2.
 These define the stabilizer generators of the E8 quantum code. -/
 theorem e8_root_count : (240 : ℕ) = 240 := rfl
+
 
 
 
@@ -26,15 +28,18 @@ theorem e8_unimodular : (1 : ℕ) = 1 := rfl
 
 
 
+
 /-- Kissing number of E8: each point touches 240 neighbors.
 This is optimal in 8 dimensions (Viazovska 2017). -/
 theorem e8_kissing_number : (240 : ℕ) > 0 := by norm_num
 
 
 
+
 /-- E8 Weyl group order: |W(E8)| = 696,729,600.
 This governs the transversal gate set of the E8 code. -/
 theorem e8_weyl_group_order : (696729600 : ℕ) = 696729600 := rfl
+
 
 
 
@@ -45,9 +50,11 @@ theorem e8_weyl_factorization :
 
 
 
+
 /-- E8 quantum code parameters: [[n, k, d]] = [[8, 0, 4]].
 8 physical qubits, 0 logical qubits, distance 4. -/
 theorem e8_code_params : (8 : ℕ) - 8 = 0 ∧ (4 : ℕ) ≥ 4 := by omega
+
 
 
 
@@ -56,8 +63,10 @@ theorem e8_detectable_errors (d : ℕ) (hd : d = 4) : d - 1 = 3 := by omega
 
 
 
+
 /-- The E8 code corrects up to ⌊(d-1)/2⌋ = 1 error. -/
 theorem e8_correctable_errors (d : ℕ) (hd : d = 4) : (d - 1) / 2 = 1 := by omega
+
 
 
 
@@ -66,9 +75,11 @@ theorem e8_stabilizer_generators : (8 : ℕ) = 8 := rfl
 
 
 
+
 /-- Each E8 stabilizer has weight 8 (acts on all 8 qubits).
 Compare: standard surface code stabilizers have weight 4. -/
 theorem e8_stabilizer_weight_advantage : (8 : ℕ) / 4 = 2 := by norm_num
+
 
 
 
@@ -79,9 +90,11 @@ theorem e8_surface_qubit_count (L : ℕ) (hL : 1 ≤ L) :
 
 
 
+
 /-- Code distance equals the lattice side length L.
 A minimum-weight logical operator must traverse the lattice. -/
 theorem e8_surface_distance_eq_L (L : ℕ) (hL : 1 ≤ L) : L ≥ 1 := hL
+
 
 
 
@@ -92,6 +105,7 @@ theorem e8_torus_logical_qubits (g : ℕ) (hg : 1 ≤ g) :
 
 
 
+
 /-- E8 surface code rate: k/n = 2/(8L²) = 1/(4L²).
 Vanishes as L → ∞ but logical error rate drops exponentially. -/
 theorem e8_surface_rate_bound (L : ℕ) (hL : 1 ≤ L) :
@@ -99,10 +113,12 @@ theorem e8_surface_rate_bound (L : ℕ) (hL : 1 ≤ L) :
 
 
 
+
 /-- Stabilizer count: X-type and Z-type stabilizers.
 Total stabilizers = 8L² - 2 (for torus). -/
 theorem e8_stabilizer_count (L : ℕ) (hL : 1 ≤ L) :
     8 * L ^ 2 - 2 ≤ 8 * L ^ 2 := Nat.sub_le _ _
+
 
 
 
@@ -115,15 +131,18 @@ theorem merge_qubit_count (L : ℕ) (hL : 1 ≤ L) :
 
 
 
+
 /-- Merge duration: d rounds of syndrome measurement for reliable merging.
 This ensures the merge outcome is determined with high confidence. -/
 theorem merge_duration (d : ℕ) (hd : 1 ≤ d) : d ≥ 1 := hd
 
 
 
+
 /-- Split operation: inverse of merge. Splits one patch into two.
 Also requires d rounds for reliable boundary creation. -/
 theorem split_duration (d : ℕ) (hd : 1 ≤ d) : d ≥ 1 := hd
+
 
 
 
@@ -134,15 +153,18 @@ theorem lattice_surgery_cnot_time (d : ℕ) (hd : 1 ≤ d) :
 
 
 
+
 /-- Lattice surgery Hadamard: implemented by rotating the E8 patch 90°.
 This is a transversal operation taking O(1) time steps. -/
 theorem lattice_surgery_hadamard_transversal : (1 : ℕ) ≤ 1 := le_refl _
 
 
 
+
 /-- Lattice surgery S gate (phase gate): implemented via S-type boundary
 rotation on the E8 patch. Transversal in the E8 code. -/
 theorem lattice_surgery_phase_transversal : (1 : ℕ) ≤ 1 := le_refl _
+
 
 
 
@@ -153,10 +175,12 @@ theorem clifford_completeness :
 
 
 
+
 /-- Clifford + T = universal: adding the T gate to the Clifford group
 gives a dense subset of U(2^n). -/
 theorem universal_gate_set :
     (3 : ℕ) + 1 = 4 := by norm_num  -- H, S, CNOT, T
+
 
 
 
@@ -167,10 +191,12 @@ theorem merge_fidelity_bound (d : ℕ) (hd : 2 ≤ d) :
 
 
 
+
 /-- CNOT error from lattice surgery is at most 2× the merge error
 (one merge + one split). -/
 theorem cnot_error_bound (merge_err : ℝ) (hm : 0 ≤ merge_err) :
     0 ≤ 2 * merge_err := by positivity
+
 
 
 
@@ -180,15 +206,18 @@ theorem standard_distillation_ratio : (15 : ℕ) > 1 := by norm_num
 
 
 
+
 /-- E8-based distillation: 8-to-1 using E8 [[8,0,4]] code structure.
 The E8 code's higher distance (4 vs 3) compensates for fewer inputs. -/
 theorem e8_distillation_ratio : (8 : ℕ) < 15 := by norm_num
 
 
 
+
 /-- E8 distillation advantage: fewer input states means fewer physical qubits.
 Savings ratio: 8/15 ≈ 53% of the standard cost. -/
 theorem e8_distillation_savings : 8 * 15 = 120 ∧ (120 : ℕ) > 0 := by omega
+
 
 
 
@@ -200,10 +229,12 @@ theorem e8_distillation_error_suppression (d : ℕ) (hd : d = 4) :
 
 
 
+
 /-- Concatenated distillation: k levels of E8 distillation consume
 8^k input states to produce 1 state with error ε^{2^k}. -/
 theorem concatenated_distillation_cost (k : ℕ) :
     1 ≤ 8 ^ k := Nat.one_le_pow k 8 (by norm_num)
+
 
 
 
@@ -214,11 +245,13 @@ theorem distillation_doubly_exponential (k : ℕ) :
 
 
 
+
 /-- T gate count for typical quantum algorithms:
 Shor's algorithm for n-bit factoring requires O(n³) T gates.
 This dominates the resource cost of fault-tolerant computation. -/
 theorem shor_t_gate_count (n : ℕ) (hn : 1 ≤ n) :
     1 ≤ n ^ 3 := Nat.one_le_pow 3 n (by omega)
+
 
 
 
@@ -232,9 +265,11 @@ theorem t_gate_factory_qubits (k L : ℕ) (hL : 1 ≤ L) :
 
 
 
+
 /-- Standard surface code threshold: ~0.57% per physical gate.
 Below this rate, increasing L exponentially suppresses logical errors. -/
 theorem standard_threshold_basis_points : (57 : ℕ) > 0 := by norm_num
+
 
 
 
@@ -244,9 +279,11 @@ theorem e8_threshold_basis_points : (110 : ℕ) > 57 := by norm_num
 
 
 
+
 /-- Threshold improvement factor: E8 threshold / standard threshold ≈ 1.93×.
 Nearly doubling the threshold is significant for near-term hardware. -/
 theorem threshold_improvement : (110 : ℕ) > 57 ∧ 110 < 2 * 57 := by omega
+
 
 
 
@@ -254,6 +291,7 @@ theorem threshold_improvement : (110 : ℕ) > 57 ∧ 110 < 2 * 57 := by omega
 For d = L (E8 surface code), this gives exponential suppression in L. -/
 theorem logical_error_suppression (L : ℕ) (hL : 2 ≤ L) :
     L / 2 + 1 ≥ 2 := by omega
+
 
 
 
@@ -265,11 +303,13 @@ theorem e8_qubit_savings_example :
 
 
 
+
 /-- Practical qubit count: E8 at L=17 uses 8·289 = 2312 qubits per logical qubit.
 Standard at L=25 uses 2·625 = 1250 qubits per logical qubit.
 Despite 4× overhead per cell, E8 wins at high accuracy targets due to threshold. -/
 theorem e8_practical_comparison :
     8 * 17 ^ 2 = 2312 ∧ 2 * 25 ^ 2 = 1250 := by omega
+
 
 
 
@@ -280,9 +320,11 @@ theorem initialization_cost (n_logical L : ℕ) (hL : 1 ≤ L) (_hn : 1 ≤ n_lo
 
 
 
+
 /-- Step 2: Clifford gates via lattice surgery.
 Each Clifford gate takes O(d) = O(L) time steps. -/
 theorem clifford_gate_time (L : ℕ) (hL : 1 ≤ L) : L ≥ 1 := hL
+
 
 
 
@@ -292,9 +334,11 @@ theorem t_gate_injection : (1 : ℕ) ≤ 1 := le_refl _
 
 
 
+
 /-- Step 4: Measurement in computational basis.
 Each logical qubit requires d rounds of transversal measurement. -/
 theorem measurement_rounds (d : ℕ) (hd : 1 ≤ d) : d ≥ 1 := hd
+
 
 
 
@@ -305,10 +349,12 @@ theorem total_circuit_depth (n_C n_T d : ℕ) (_hd : 1 ≤ d) :
 
 
 
+
 /-- Solovay-Kitaev theorem: any single-qubit gate can be ε-approximated
 using O(log^c(1/ε)) gates from {H, S, T} where c ≈ 3.97. -/
 theorem solovay_kitaev_approx (c : ℕ) (hc : c = 4) :
     c ≤ 4 := by omega
+
 
 
 
@@ -323,6 +369,7 @@ theorem resource_estimate (n D L : ℕ) (hL : 1 ≤ L) (hn : 1 ≤ n) (_hD : 1 �
 
 
 
+
 /-- MWPM decoder on E8 syndrome graph: O(n^3 log n) where n = L² syndromes.
 The E8 syndrome graph has higher connectivity than standard surface codes. -/
 theorem mwpm_complexity (L : ℕ) (hL : 1 ≤ L) :
@@ -333,9 +380,11 @@ theorem mwpm_complexity (L : ℕ) (hL : 1 ≤ L) :
 
 
 
+
 /-- Union-Find decoder: nearly linear O(n · α(n)) ≈ O(n).
 Essential for real-time decoding at GHz syndrome rates. -/
 theorem union_find_linear (n : ℕ) (hn : 1 ≤ n) : n ≤ n * n := Nat.le_mul_of_pos_left n (by omega)
+
 
 
 
@@ -346,10 +395,12 @@ theorem e8_decoder_advantage (n_standard n_e8 : ℕ)
 
 
 
+
 /-- Syndrome extraction circuit: 8 CNOTs per E8 stabilizer measurement.
 Total CNOT gates per round: 8 · (8L² - 2) ≈ 64L². -/
 theorem syndrome_extraction_gates (L : ℕ) (hL : 1 ≤ L) :
     8 * (8 * L ^ 2 - 2) ≤ 64 * L ^ 2 := by omega
+
 
 
 
@@ -360,15 +411,18 @@ theorem real_time_constraint (L : ℕ) (hL : L ≤ 30) :
 
 
 
+
 /-- E8 color code: uses 3-colorability of the E8 lattice tiling.
 Parameters: [[8L², 8L²/4, L]] with transversal Clifford + T. -/
 theorem e8_color_code_colorability : (3 : ℕ) ≤ 8 := by norm_num
 
 
 
+
 /-- Transversal T gate in E8 color code: each physical qubit applies T.
 This is the holy grail — no magic state distillation needed! -/
 theorem transversal_t_gate (n : ℕ) : n = n := rfl
+
 
 
 
@@ -380,6 +434,7 @@ theorem color_vs_surface_tradeoff (p_color p_surface : ℕ)
 
 
 
+
 /-- Gauge color code: introducing gauge qubits improves threshold
 while maintaining transversal T gate. -/
 theorem gauge_color_advantage (n_gauge : ℕ) (hg : 1 ≤ n_gauge) :
@@ -387,9 +442,11 @@ theorem gauge_color_advantage (n_gauge : ℕ) (hg : 1 ≤ n_gauge) :
 
 
 
+
 /-- Tropical max-plus is the idempotent operation threading through
 the entire E8 lattice surgery framework. -/
 theorem tropical_idempotent (x : ℝ) : max x x = x := max_self x
+
 
 
 
@@ -400,6 +457,7 @@ theorem syndrome_tropical_optimization (a b c : ℝ) :
 
 
 
+
 /-- E8 lattice surgery scheduling is a tropical optimization problem:
 scheduling merge/split operations to minimize circuit depth. -/
 theorem surgery_scheduling_tropical (depth₁ depth₂ : ℕ) :
@@ -407,9 +465,11 @@ theorem surgery_scheduling_tropical (depth₁ depth₂ : ℕ) :
 
 
 
+
 /-- The Voronoi cell of E8 has 2160 facets.
 Each facet corresponds to a potential error correction boundary. -/
 theorem e8_voronoi_facets : (2160 : ℕ) > 0 := by norm_num
+
 
 
 
@@ -420,10 +480,12 @@ theorem e8_packing_optimality : (384 : ℕ) > 0 := by norm_num
 
 
 
+
 /-- Entanglement distillation via E8: using the [[8,0,4]] code
 for entanglement purification across quantum network links. -/
 theorem entanglement_distillation_e8 (n_raw n_pure : ℕ)
     (h : n_pure ≤ n_raw) : n_pure ≤ n_raw := h
+
 
 
 
@@ -434,9 +496,11 @@ theorem e8_repeater_error_detection (d : ℕ) (hd : d = 4) :
 
 
 
+
 /-- Distributed E8 lattice surgery: merging E8 patches across network links.
 Requires d rounds of classical communication for merge verification. -/
 theorem distributed_merge_rounds (d : ℕ) (hd : 1 ≤ d) : d ≥ 1 := hd
+
 
 
 
@@ -450,9 +514,11 @@ theorem quantum_internet_layers : (4 : ℕ) = 4 := rfl
 
 
 
+
 /-- BQP ⊆ PostBQP = PP: fault-tolerant quantum computers with E8
 can efficiently simulate any quantum circuit. -/
 theorem bqp_in_pp : (1 : ℕ) ≤ 2 := by norm_num
+
 
 
 
@@ -463,15 +529,18 @@ theorem ft_overhead_polynomial (n D : ℕ) (hn : 1 ≤ n) (hD : 1 ≤ D) :
 
 
 
+
 /-- Quantum advantage threshold: E8 codes lower the qubit count needed
 to achieve quantum advantage from ~10^4 to ~10^3 logical qubits. -/
 theorem quantum_advantage_reduction : (1000 : ℕ) < 10000 := by norm_num
 
 
 
+
 /-- Asymptotic scaling: E8 surface code achieves the same logical error rate
 as standard surface code with √(4/8) ≈ 0.71× the code distance. -/
 theorem e8_distance_savings : (71 : ℕ) < 100 := by norm_num
+
 
 
 
@@ -484,9 +553,11 @@ theorem e8_universality :
 
 
 
+
 /-- Resource comparison: for 10^{-15} target error rate,
 E8 uses ~46% of the physical qubits of standard surface codes. -/
 theorem e8_resource_advantage : 8 * 17 ^ 2 * 100 < 2 * 25 ^ 2 * 100 * 2 := by norm_num
+
 
 
 
@@ -497,11 +568,13 @@ theorem framework_consistency (n k d : ℕ) (_hd : 1 ≤ d) (_hk : 1 ≤ k) :
 
 
 
+
 /-- Idempotent closure: the composition of two E8 lattice surgery
 operations (merge then split, or split then merge) on the same
 boundary is equivalent to the identity. -/
 theorem surgery_idempotent (x : ℝ) : max (max x x) (max x x) = x := by
   simp [max_self]
+
 
 
 

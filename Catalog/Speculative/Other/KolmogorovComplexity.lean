@@ -15,9 +15,11 @@ def DescriptionMethod := List Bool → Option (List Bool)
 
 
 
+
 /-- The set of valid programs for a given output under a description method. -/
 def validPrograms (φ : DescriptionMethod) (x : List Bool) : Set (List Bool) :=
   {p | φ p = some x}
+
 
 
 
@@ -26,6 +28,7 @@ the length of the shortest program `p` such that `φ p = some x`.
 Returns `⊤` (infinity) if no such program exists. -/
 noncomputable def complexity (φ : DescriptionMethod) (x : List Bool) : ℕ∞ :=
   ⨅ (p : List Bool) (_ : φ p = some x), (p.length : ℕ∞)
+
 
 
 
@@ -38,11 +41,13 @@ def IsUniversal (U : DescriptionMethod) : Prop :=
 
 
 
+
 /-- A description method `ψ` is optimal if for every other description method `φ`,
 there exists a constant `c` such that `K_ψ(x) ≤ K_φ(x) + c` for all x. -/
 def IsOptimal (ψ : DescriptionMethod) : Prop :=
   ∀ φ : DescriptionMethod, ∃ c : ℕ,
     ∀ x : List Bool, complexity ψ x ≤ complexity φ x + c
+
 
 
 
@@ -66,6 +71,11 @@ theorem universal_is_optimal (U : DescriptionMethod) (hU : IsUniversal U) :
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.KolmogorovComplexity
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 9] -/
 theorem complexity_le_length (U : DescriptionMethod)
     (hU : IsUniversal U) :
     ∃ c : ℕ, ∀ x : List Bool,
@@ -79,9 +89,11 @@ theorem complexity_le_length (U : DescriptionMethod)
 
 
 
+
 /-- A string is `c`-incompressible if K(x) ≥ |x| - c. -/
 def Incompressible (U : DescriptionMethod) (x : List Bool) (c : ℕ) : Prop :=
   complexity U x ≥ x.length - c
+
 
 
 
@@ -103,6 +115,7 @@ theorem incompressible_exist (φ : DescriptionMethod) (n : ℕ) :
           rw [ Finset.card_image_of_injective ] at h_programs <;> norm_num [ Function.Injective ] at *;
           exact Nat.not_le_of_gt ( Nat.sub_lt ( by norm_num ) ( by norm_num ) ) h_programs;
         · intro x hx y hy; have := hp₂ x; have := hp₂ y; aesop;
+
 
 
 

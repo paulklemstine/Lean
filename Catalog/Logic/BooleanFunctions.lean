@@ -14,9 +14,11 @@ abbrev BoolFn (n : ℕ) := (Fin n → Bool) → Bool
 
 
 
+
 /-- The Hamming weight of a Boolean string: the number of positions set to `true`. -/
 def hammingWeight {n : ℕ} (x : Fin n → Bool) : ℕ :=
   (Finset.univ.filter fun i => x i = true).card
+
 
 
 
@@ -26,9 +28,11 @@ def hammingDist {n : ℕ} (x y : Fin n → Bool) : ℕ :=
 
 
 
+
 /-- Flipping a single bit of a Boolean string. -/
 def flipBit {n : ℕ} (x : Fin n → Bool) (i : Fin n) : Fin n → Bool :=
   fun j => if j = i then !x i else x j
+
 
 
 
@@ -36,6 +40,7 @@ def flipBit {n : ℕ} (x : Fin n → Bool) (i : Fin n) : Fin n → Bool :=
 theorem hammingDist_comm {n : ℕ} (x y : Fin n → Bool) :
     hammingDist x y = hammingDist y x := by
   unfold hammingDist; congr 1; ext i; simp [ne_comm]
+
 
 
 
@@ -50,10 +55,12 @@ theorem hammingDist_eq_zero {n : ℕ} {x y : Fin n → Bool} :
 
 
 
+
 /-- Flipping a bit and flipping it back gives the original string. -/
 theorem flipBit_flipBit {n : ℕ} (x : Fin n → Bool) (i : Fin n) :
     flipBit (flipBit x i) i = x := by
   ext j; simp [flipBit]; split <;> simp_all
+
 
 
 
@@ -67,6 +74,7 @@ theorem flipBit_support {n : ℕ} (x : Fin n → Bool) (i : Fin n) :
 
 
 
+
 /-- The **sensitivity** of `f` at input `x`: the number of coordinates `i`
 such that flipping bit `i` changes `f(x)`. -/
 def sensitivityAt {n : ℕ} (f : BoolFn n) (x : Fin n → Bool) : ℕ :=
@@ -74,9 +82,11 @@ def sensitivityAt {n : ℕ} (f : BoolFn n) (x : Fin n → Bool) : ℕ :=
 
 
 
+
 /-- The **sensitivity** of `f`: the maximum of sensitivityAt over all inputs. -/
 noncomputable def sensitivity {n : ℕ} (f : BoolFn n) : ℕ :=
   Finset.univ.sup fun x => sensitivityAt f x
+
 
 
 
@@ -90,11 +100,13 @@ theorem sensitivityAt_le {n : ℕ} (f : BoolFn n) (x : Fin n → Bool) :
 
 
 
+
 /-- Sensitivity is at most n. -/
 theorem sensitivity_le {n : ℕ} (f : BoolFn n) : sensitivity f ≤ n := by
   unfold sensitivity
   simp [Finset.sup_le_iff]
   exact fun x => sensitivityAt_le f x
+
 
 
 
@@ -105,10 +117,12 @@ theorem sensitivity_const {n : ℕ} (b : Bool) :
 
 
 
+
 /-- A **certificate** for `f` at `x` is a set `S` of coordinates such that
 any input `y` agreeing with `x` on `S` satisfies `f(y) = f(x)`. -/
 def IsCertificate {n : ℕ} (f : BoolFn n) (x : Fin n → Bool) (S : Finset (Fin n)) : Prop :=
   ∀ y : Fin n → Bool, (∀ i ∈ S, y i = x i) → f y = f x
+
 
 
 
@@ -121,11 +135,13 @@ theorem isCertificate_univ {n : ℕ} (f : BoolFn n) (x : Fin n → Bool) :
 
 
 
+
 /-- Any superset of a certificate is a certificate. -/
 theorem IsCertificate.superset {n : ℕ} {f : BoolFn n} {x : Fin n → Bool}
     {S T : Finset (Fin n)} (hS : IsCertificate f x S) (hST : S ⊆ T) :
     IsCertificate f x T :=
   fun y hy => hS y (fun i hi => hy i (hST hi))
+
 
 
 
@@ -147,9 +163,11 @@ theorem sensitivityAt_le_certificate {n : ℕ} (f : BoolFn n) (x : Fin n → Boo
 
 
 
+
 /-- A Boolean function is **monotone** if x ≤ y pointwise implies f(x) ≤ f(y). -/
 def IsMonotone {n : ℕ} (f : BoolFn n) : Prop :=
   ∀ x y : Fin n → Bool, (∀ i, x i = true → y i = true) → f x = true → f y = true
+
 
 
 
@@ -160,6 +178,7 @@ theorem isMonotone_const_true (n : ℕ) :
 
 
 
+
 /-- The constant false function is monotone. -/
 theorem isMonotone_const_false (n : ℕ) :
     IsMonotone (fun _ : Fin n → Bool => false) :=
@@ -167,10 +186,12 @@ theorem isMonotone_const_false (n : ℕ) :
 
 
 
+
 /-- A collection of sets forms a **sunflower** with core `Y` if
 every set contains `Y` and every pair of distinct sets intersects exactly at `Y`. -/
 def IsSunflower {α : Type*} [DecidableEq α] (fam : Finset (Finset α)) (Y : Finset α) : Prop :=
   ∀ A ∈ fam, Y ⊆ A ∧ ∀ B ∈ fam, A ≠ B → A ∩ B = Y
+
 
 
 
@@ -187,6 +208,7 @@ theorem isSunflower_disjoint {α : Type*} [DecidableEq α]
 
 
 
+
 /-- The number of Boolean functions on n variables is 2^(2^n). -/
 theorem card_bool_fn (n : ℕ) :
     Fintype.card (BoolFn n) = 2 ^ 2 ^ n := by
@@ -194,9 +216,11 @@ theorem card_bool_fn (n : ℕ) :
 
 
 
+
 /-- There are exactly 2 Boolean functions on 0 variables. -/
 theorem card_bool_fn_zero : Fintype.card (BoolFn 0) = 2 := by
   rw [card_bool_fn]; norm_num
+
 
 
 
@@ -207,9 +231,11 @@ noncomputable def influence {n : ℕ} (f : BoolFn n) (i : Fin n) : ℚ :=
 
 
 
+
 /-- Total influence is the sum of individual influences. -/
 noncomputable def totalInfluence {n : ℕ} (f : BoolFn n) : ℚ :=
   ∑ i : Fin n, influence f i
+
 
 
 
@@ -217,6 +243,7 @@ noncomputable def totalInfluence {n : ℕ} (f : BoolFn n) : ℚ :=
 theorem influence_nonneg {n : ℕ} (f : BoolFn n) (i : Fin n) :
     0 ≤ influence f i := by
   unfold influence; positivity
+
 
 
 
@@ -232,6 +259,7 @@ theorem influence_le_one {n : ℕ} (f : BoolFn n) (i : Fin n) :
 
 
 
+
 /-- Total influence of a constant function is 0. -/
 theorem totalInfluence_const {n : ℕ} (b : Bool) :
     totalInfluence (fun _ : Fin n → Bool => b) = 0 := by
@@ -239,9 +267,11 @@ theorem totalInfluence_const {n : ℕ} (b : Bool) :
 
 
 
+
 /-- The parity function: XOR of all input bits. -/
 def parity {n : ℕ} (x : Fin n → Bool) : Bool :=
   (hammingWeight x) % 2 == 1
+
 
 
 
@@ -263,11 +293,17 @@ theorem parity_flipBit {n : ℕ} (x : Fin n → Bool) (i : Fin n) :
 
 
 
+
+/-- [Section: # CatalogBuild.Logic.BooleanFunctions
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 32] -/
 theorem sensitivity_parity_allfalse {n : ℕ} (hn : 0 < n) :
     sensitivityAt parity (fun _ : Fin n => false) = n := by
   rw [ show parity = fun x => ( Finset.univ.filter fun i => x i = true ).card % 2 == 1 from funext fun x => rfl ];
   unfold sensitivityAt;
   unfold flipBit; simp +decide [ Finset.filter_eq', Finset.filter_ne' ] ;
+
 
 
 

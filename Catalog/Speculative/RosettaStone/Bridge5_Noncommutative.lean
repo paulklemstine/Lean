@@ -14,10 +14,12 @@ def commutator (A B : Matrix (Fin n) (Fin n) ℝ) :
 
 
 
+
 /-- Diagonal matrices commute. -/
 theorem diagonal_commute (f g : Fin n → ℝ) :
     commutator (Matrix.diagonal f) (Matrix.diagonal g) = 0 := by
   simp [commutator, Matrix.diagonal_mul_diagonal, mul_comm, sub_self]
+
 
 
 
@@ -32,11 +34,13 @@ theorem commuting_projections_product
 
 
 
+
 /-- Diagonal matrices form a commutative subalgebra. -/
 theorem diagonal_mul_comm (f g : Fin n → ℝ) :
     Matrix.diagonal f * Matrix.diagonal g =
     Matrix.diagonal g * Matrix.diagonal f := by
   simp [Matrix.diagonal_mul_diagonal, mul_comm]
+
 
 
 
@@ -47,5 +51,6 @@ theorem trace_commutator_zero (A B : Matrix (Fin n) (Fin n) ℝ) :
   have hsub : (A * B - B * A).trace = (A * B).trace - (B * A).trace := by
     simp [Matrix.trace]
   rw [commutator, hsub, h, sub_self]
+
 
 

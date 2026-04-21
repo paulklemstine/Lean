@@ -16,6 +16,11 @@ theorem identity_gate_unitary (n : ℕ) : IsUnitaryGate (1 : Matrix (Fin n) (Fin
 
 
 
+
+/-- [Section: # CatalogBuild.Physics.Quantum.QuantumTypeTheory
+Auto-generated from theorem catalog database.
+Domain: Physics/Quantum
+Declarations: 10] -/
 theorem unitary_conjTranspose {n : ℕ} {U : Matrix (Fin n) (Fin n) ℂ}
     (hU : IsUnitaryGate U) :
     IsUnitaryGate U.conjTranspose := by
@@ -23,8 +28,10 @@ theorem unitary_conjTranspose {n : ℕ} {U : Matrix (Fin n) (Fin n) ℂ}
 
 
 
+
 /-- A bipartite state on systems of dimension m and n. -/
 def BipartiteState (m n : ℕ) := { v : Fin m × Fin n → ℂ // ∑ ij, ‖v ij‖ ^ 2 = 1 }
+
 
 
 
@@ -34,9 +41,11 @@ def isSeparable {m n : ℕ} (ψ : Fin m × Fin n → ℂ) : Prop :=
 
 
 
+
 /-- A state is entangled if it is not separable. -/
 def isEntangled {m n : ℕ} (ψ : Fin m × Fin n → ℂ) : Prop :=
   ¬isSeparable ψ
+
 
 
 
@@ -46,9 +55,11 @@ theorem tensorProduct_separable {m n : ℕ} (α : Fin m → ℂ) (β : Fin n →
 
 
 
+
 /-- A cloning map is "linear" if it respects scalar multiplication. -/
 def isLinearClone {n : ℕ} (clone : (Fin n → ℂ) → (Fin n × Fin n → ℂ)) : Prop :=
   ∀ (c : ℂ) (ψ : Fin n → ℂ), clone (c • ψ) = c • clone ψ
+
 
 
 
@@ -61,9 +72,11 @@ theorem no_cloning_simplified {n : ℕ} (hn : 0 < n) (clone : (Fin n → ℂ) �
 
 
 
+
 theorem id_channel_trace_preserving (n : ℕ) :
     ∀ ρ : Matrix (Fin n) (Fin n) ℂ, Matrix.trace (id ρ) = Matrix.trace ρ := by
   exact fun _ => rfl
+
 
 
 
@@ -74,4 +87,5 @@ theorem compose_trace_preserving {n m k : ℕ}
     (hg : ∀ ρ, Matrix.trace (g ρ) = Matrix.trace ρ) :
     ∀ ρ, Matrix.trace (g (f ρ)) = Matrix.trace ρ := by
   aesop
+
 

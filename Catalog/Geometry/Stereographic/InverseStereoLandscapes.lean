@@ -1,5 +1,3 @@
-import Mathlib
-
 /-! # CatalogBuild.Geometry.Stereographic.InverseStereoLandscapes
 
 Auto-generated from theorem catalog database.
@@ -7,6 +5,7 @@ Domain: Geometry/Stereographic
 Declarations: 30
 -/
 
+import Mathlib
 
 noncomputable section
 
@@ -16,11 +15,13 @@ theorem conformal_area_element (y : Fin N → ℝ) :
 
 
 
+
 /-- The conformal factor is bounded: 0 < λ ≤ 2. -/
 theorem conformal_factor_bounded (r : ℝ) :
     2 / (1 + r ^ 2) ≤ 2 := by
   have h : (0:ℝ) < 1 + r ^ 2 := by positivity
   exact div_le_of_le_mul₀ (by linarith) (by linarith) (by nlinarith [sq_nonneg r])
+
 
 
 
@@ -33,11 +34,13 @@ theorem conformal_factor_product (r₁ r₂ : ℝ) (hr₁ : 0 < 1 + r₁ ^ 2) (h
 
 
 
+
 /-- The total area of S^1 computed via stereographic projection:
 ∫ λ dt = ∫ 2/(1+t²) dt = 2π over ℝ. This is consistent with
 the circumference of the unit circle. Here we verify the integrand. -/
 theorem stereo_arc_length_integrand (t : ℝ) :
     0 < 2 / (1 + t ^ 2) := by positivity
+
 
 
 
@@ -49,11 +52,13 @@ theorem unit_inversion_involutive (t : ℝ) (ht : t ≠ 0) :
 
 
 
+
 /-- Sphere inversion preserves the "inversive distance" between two points.
 For 1D inversion t ↦ 1/t: |1/a - 1/b| = |a - b| / (|a| · |b|). -/
 theorem inversion_distance_formula (a b : ℝ) (ha : a ≠ 0) (hb : b ≠ 0) :
     1 / a - 1 / b = (b - a) / (a * b) := by
   field_simp
+
 
 
 
@@ -65,11 +70,13 @@ theorem mobius_inverse_det (a b c d : ℝ) (h : a * d - b * c = 1) :
 
 
 
+
 /-- Composition of two SL(2) matrices has determinant 1 × 1 = 1. -/
 theorem sl2_composition_det (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℝ)
     (h₁ : a₁ * d₁ - b₁ * c₁ = 1) (h₂ : a₂ * d₂ - b₂ * c₂ = 1) :
     (a₁ * a₂ + b₁ * c₂) * (c₁ * b₂ + d₁ * d₂) -
     (a₁ * b₂ + b₁ * d₂) * (c₁ * a₂ + d₁ * c₂) = 1 := by nlinarith
+
 
 
 
@@ -83,6 +90,7 @@ theorem cross_ratio_mobius_invariant (z₁ z₂ z₃ z₄ : ℝ)
 
 
 
+
 /-- Rational stereographic input produces a rational point on the sphere.
 If y = a/d, then the stereographic image has coordinates with
 denominator d² + a². -/
@@ -91,10 +99,12 @@ theorem rational_stereo_denom (a d : ℤ) :
 
 
 
+
 /-- The N-dimensional generalization: for any number of rational coordinates. -/
 theorem rational_stereo_denom_3d (a b d : ℤ) :
     (2 * a * d) ^ 2 + (2 * b * d) ^ 2 + (d ^ 2 - a ^ 2 - b ^ 2) ^ 2 =
     (d ^ 2 + a ^ 2 + b ^ 2) ^ 2 := by ring
+
 
 
 
@@ -107,11 +117,13 @@ theorem pythagorean_parity (a d : ℤ) (h : Even (a + d)) :
 
 
 
+
 /-- The denominators of stereographic fractions form a multiplicative structure
 (Brahmagupta-Fibonacci). -/
 theorem stereo_denom_multiplicative (a₁ b₁ a₂ b₂ : ℤ) :
     (a₁ ^ 2 + b₁ ^ 2) * (a₂ ^ 2 + b₂ ^ 2) =
     (a₁ * a₂ - b₁ * b₂) ^ 2 + (a₁ * b₂ + b₁ * a₂) ^ 2 := by ring
+
 
 
 
@@ -126,11 +138,13 @@ theorem stereo_denom_4d_multiplicative (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ 
 
 
 
+
 /-- The Hopf map expressed in quaternion notation: h(q) = q·i·q̄.
 Verify that |h(q)|² = |q|⁴ (since |q·i·q̄| = |q|²·|i| = |q|²). -/
 theorem hopf_norm_identity (a b c d : ℝ) :
     (2*(a*c + b*d))^2 + (2*(b*c - a*d))^2 + (a^2 + b^2 - c^2 - d^2)^2 =
     (a^2 + b^2 + c^2 + d^2)^2 := by ring
+
 
 
 
@@ -141,6 +155,7 @@ theorem hopf_base_equal_iff_ratio_real (a₁ b₁ a₂ b₂ : ℝ)
     (h₁ : a₁ ^ 2 + b₁ ^ 2 = 1) (h₂ : a₂ ^ 2 + b₂ ^ 2 = 1) :
     a₁ = a₂ ∧ b₁ = b₂ ↔ a₁ = a₂ ∧ b₁ = b₂ := by
   exact Iff.rfl
+
 
 
 
@@ -155,6 +170,7 @@ theorem stereo_null_cone_2d (u v : ℝ) :
 
 
 
+
 /-- The Lorentz quadratic form Q(x) = x₁² + x₂² - x₃² vanishes on S¹
 embedded as the slice x₃ = 1. -/
 theorem lorentz_form_on_stereo (t : ℝ) :
@@ -164,9 +180,11 @@ theorem lorentz_form_on_stereo (t : ℝ) :
 
 
 
+
 /-- The conformal group dimension formula: dim Möb(N) = (N+1)(N+2)/2.
 This equals dim SO(N+1,1). Verify for small N. -/
 theorem mobius_dim_1 : (1 + 1) * (1 + 2) / 2 = (3 : ℕ) := by norm_num
+
 
 
 /-- [Section: # CatalogBuild.Geometry.Stereographic.InverseStereoLandscapes
@@ -176,10 +194,17 @@ Declarations: 30] -/
 theorem mobius_dim_2 : (2 + 1) * (2 + 2) / 2 = (6 : ℕ) := by norm_num
 
 
+
+/-- [Section: # CatalogBuild.Geometry.Stereographic.InverseStereoLandscapes
+Auto-generated from theorem catalog database.
+Domain: Geometry/Stereographic
+Declarations: 30] -/
 theorem mobius_dim_3 : (3 + 1) * (3 + 2) / 2 = (10 : ℕ) := by norm_num
 
 
+
 theorem mobius_dim_4 : (4 + 1) * (4 + 2) / 2 = (15 : ℕ) := by norm_num
+
 
 
 
@@ -190,6 +215,7 @@ theorem descartes_2d_form (k₁ k₂ k₃ k₄ : ℝ)
   by_cases h₂ : 0 ≤ k₁ * k₂ + k₂ * k₃ + k₃ * k₁;
   · exact Classical.or_iff_not_imp_left.2 fun h₃ => mul_left_cancel₀ ( sub_ne_zero_of_ne h₃ ) <| by linarith [ Real.mul_self_sqrt h₂ ] ;
   · exact Or.inl <| by rw [ Real.sqrt_eq_zero_of_nonpos <| le_of_not_ge h₂ ] ; nlinarith;
+
 
 
 
@@ -205,6 +231,7 @@ theorem soddy_gossett_n2_consistent :
 
 
 
+
 /-- Integer closure of Apollonian packings: if the initial four curvatures
 satisfy the Descartes relation and are integers, the new curvature
 k₄' = 2(k₁+k₂+k₃) - k₄ is also an integer. -/
@@ -213,9 +240,11 @@ theorem apollonian_integer_step (k₁ k₂ k₃ k₄ : ℤ) :
 
 
 
+
 /-- The classic integral Apollonian packing (-1, 2, 2, 3) satisfies Descartes. -/
 theorem apollonian_classic :
     ((-1 : ℤ) + 2 + 2 + 3)^2 = 2*((-1)^2 + 2^2 + 2^2 + 3^2) := by norm_num
+
 
 
 
@@ -226,9 +255,11 @@ theorem apollonian_next_gen :
 
 
 
+
 /-- Replacing k₁ = -1 gives k₁' = 2(2+2+3) - (-1) = 15. -/
 theorem apollonian_gen_15 :
     2*((2 : ℤ) + 2 + 3) - (-1) = 15 := by norm_num
+
 
 
 
@@ -239,6 +270,7 @@ theorem apollonian_quadratic_form (k₁ k₂ k₃ : ℤ) :
     let k₄_minus := k₁ + k₂ + k₃
     k₄_plus = k₁ + k₂ + k₃ ∧ k₄_minus = k₁ + k₂ + k₃ := by
   constructor <;> ring
+
 
 
 
@@ -256,6 +288,7 @@ theorem rotation_stereo_180 (t : ℝ) (ht : t ≠ 0) :
   have ht_sq : t^2 ≠ 0 := pow_ne_zero 2 ht
   field_simp
   ring
+
 
 
 

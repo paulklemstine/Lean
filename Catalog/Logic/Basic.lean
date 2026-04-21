@@ -14,15 +14,18 @@ def FinOracle' (n : ℕ) := Fin n → Bool
 
 
 
+
 /-- The number of True values in an oracle. -/
 def oracleTrueCount' (O : FinOracle' n) : ℕ :=
   ((Finset.univ : Finset (Fin n)).filter (fun i => O i = true)).card
 
 
 
+
 /-- The number of False values in an oracle. -/
 def oracleFalseCount (O : FinOracle' n) : ℕ :=
   ((Finset.univ : Finset (Fin n)).filter (fun i => O i = false)).card
+
 
 
 
@@ -37,10 +40,12 @@ theorem oracle_partition (O : FinOracle' n) :
 
 
 
+
 /-- Agreement count on a path graph: adjacent pairs with same value. -/
 def oracleAgreements (n : ℕ) (O : FinOracle' (n + 1)) : ℕ :=
   ((Finset.univ : Finset (Fin n)).filter (fun i : Fin n =>
     O ⟨i.val, by omega⟩ == O ⟨i.val + 1, by omega⟩)).card
+
 
 
 
@@ -51,11 +56,17 @@ def oracleTransitions' (n : ℕ) (O : FinOracle' (n + 1)) : ℕ :=
 
 
 
+
+/-- [Section: # CatalogBuild.Logic.Basic
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 33] -/
 theorem agreements_plus_transitions (n : ℕ) (O : FinOracle' (n + 1)) :
     oracleAgreements n O + oracleTransitions' n O = n := by
       unfold oracleAgreements oracleTransitions';
       convert Finset.card_add_card_compl ( Finset.filter ( fun i : Fin n => ( O ⟨ i, by linarith [ Fin.is_lt i ] ⟩ == O ⟨ i + 1, by linarith [ Fin.is_lt i ] ⟩ ) ) Finset.univ ) using 2 ; aesop;
       norm_num
+
 
 
 
@@ -68,6 +79,7 @@ theorem oracle_euler_characteristic_path (n : ℕ) (O : FinOracle' (n + 2)) :
 
 
 
+
 /-- Oracle-weighted adjacency on a path graph.
 A_{ij} = 1 if |i-j| = 1 and O(i) ≠ O(j), else 0. -/
 def oracleAdjWeight (n : ℕ) (O : FinOracle' (n + 1)) (i j : Fin (n + 1)) : ℤ :=
@@ -75,9 +87,11 @@ def oracleAdjWeight (n : ℕ) (O : FinOracle' (n + 1)) (i j : Fin (n + 1)) : ℤ
 
 
 
+
 /-- Oracle degree: number of boundary-adjacent neighbors. -/
 def oracleDegree (n : ℕ) (O : FinOracle' (n + 1)) (i : Fin (n + 1)) : ℤ :=
   ∑ j : Fin (n + 1), oracleAdjWeight n O i j
+
 
 
 
@@ -108,10 +122,12 @@ theorem trace_oracle_laplacian (n : ℕ) (O : FinOracle' (n + 1)) :
 
 
 
+
 /-- Oracle energy on a general graph (given as edge list). -/
 def graphOracleEnergy {n : ℕ} (edges : Finset (Fin n × Fin n))
     (O : Fin n → Bool) : ℕ :=
   (edges.filter (fun e => O e.1 != O e.2)).card
+
 
 
 
@@ -122,9 +138,11 @@ theorem general_energy_symmetry {n : ℕ} (edges : Finset (Fin n × Fin n))
 
 
 
+
 theorem constant_energy_zero {n : ℕ} (edges : Finset (Fin n × Fin n)) (b : Bool) :
     graphOracleEnergy edges (fun _ => b) = 0 := by
       unfold graphOracleEnergy; aesop;
+
 
 
 
@@ -138,9 +156,11 @@ structure QuantumOracleState (n : ℕ) where
 
 
 
+
 /-- The probability of measuring a specific classical oracle. -/
 def measureProb (ψ : QuantumOracleState n) (O : Fin n → Bool) : ℝ :=
   ‖ψ.amplitude O‖^2
+
 
 
 
@@ -150,9 +170,11 @@ theorem measure_prob_nonneg (ψ : QuantumOracleState n) (O : Fin n → Bool) :
 
 
 
+
 theorem measure_prob_sum (ψ : QuantumOracleState n) :
     ∑ O : Fin n → Bool, measureProb ψ O = 1 := by
       exact ψ.normalized
+
 
 
 
@@ -163,10 +185,12 @@ def quantumExpectedEnergy {n : ℕ} (edges : Finset (Fin n × Fin n))
 
 
 
+
 theorem quantum_energy_nonneg {n : ℕ} (edges : Finset (Fin n × Fin n))
     (ψ : QuantumOracleState n) :
     0 ≤ quantumExpectedEnergy edges ψ := by
       exact Finset.sum_nonneg fun _ _ => mul_nonneg ( sq_nonneg _ ) ( Nat.cast_nonneg _ )
+
 
 
 
@@ -176,15 +200,18 @@ def hopfieldEnergy (n : ℕ) (W : Fin n → Fin n → ℝ) (σ : Fin n → ℝ) 
 
 
 
+
 /-- Symmetric weight matrix. -/
 def isSymmetric (n : ℕ) (W : Fin n → Fin n → ℝ) : Prop :=
   ∀ i j, W i j = W j i
 
 
 
+
 /-- Zero diagonal weight matrix. -/
 def zeroDiag (n : ℕ) (W : Fin n → Fin n → ℝ) : Prop :=
   ∀ i, W i i = 0
+
 
 
 
@@ -200,15 +227,18 @@ theorem hopfield_flip_energy_change (n : ℕ) (W : Fin n → Fin n → ℝ)
 
 
 
+
 /-- Oracle magnetization as a real number. -/
 def oracleMagnetization' (O : FinOracle' n) : ℝ :=
   ∑ i : Fin n, if O i then (1 : ℝ) else (-1 : ℝ)
 
 
 
+
 theorem magnetization_bound (O : FinOracle' n) :
     |oracleMagnetization' O| ≤ n := by
       exact le_trans ( Finset.abs_sum_le_sum_abs _ _ ) ( le_trans ( Finset.sum_le_sum fun i _ => show |if O i then ( 1 : ℝ ) else -1| ≤ 1 by split_ifs <;> norm_num ) ( by norm_num ) )
+
 
 
 
@@ -219,10 +249,12 @@ theorem anti_magnetization_real (O : FinOracle' n) :
 
 
 
+
 /-- Oracle energy bounds magnetization change:
 If two oracles differ on k sites, their magnetizations differ by at most 2k. -/
 def oracleHamming' (O₁ O₂ : FinOracle' n) : ℕ :=
   ((Finset.univ : Finset (Fin n)).filter (fun i => O₁ i != O₂ i)).card
+
 
 
 
@@ -240,11 +272,13 @@ theorem magnetization_lipschitz (O₁ O₂ : FinOracle' n) :
 
 
 
+
 /-- The boundary size of a subset S ⊆ V on a path graph.
 |∂S| = number of edges with exactly one endpoint in S. -/
 def subsetBoundary (n : ℕ) (S : Finset (Fin (n + 1))) : ℕ :=
   ((Finset.univ : Finset (Fin n)).filter (fun i : Fin n =>
     (⟨i.val, by omega⟩ ∈ S) ≠ (⟨i.val + 1, by omega⟩ ∈ S))).card
+
 
 
 
@@ -254,11 +288,13 @@ theorem boundary_complement (n : ℕ) (S : Finset (Fin (n + 1))) :
 
 
 
+
 theorem energy_eq_boundary (n : ℕ) (O : FinOracle' (n + 1)) :
     oracleTransitions' n O =
     subsetBoundary n ((Finset.univ : Finset (Fin (n + 1))).filter (fun i => O i = true)) := by
       unfold oracleTransitions' subsetBoundary;
       simp +zetaDelta at *
+
 
 
 
@@ -275,6 +311,7 @@ theorem path_cheeger (n : ℕ) (S : Finset (Fin (n + 2)))
           exact ih ( by simpa [ Fin.ext_iff ] using hne' |>.2 hk );
       · simp_all +decide [ subsetBoundary ];
         simpa using hne' |>.1 IH
+
 
 
 

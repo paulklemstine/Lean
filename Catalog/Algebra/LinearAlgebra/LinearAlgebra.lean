@@ -18,9 +18,15 @@ theorem det_mul_eq {n : Type*} [DecidableEq n] [Fintype n]
 
 
 
+
+/-- [Section: # CatalogBuild.Algebra.LinearAlgebra.LinearAlgebra
+Auto-generated from theorem catalog database.
+Domain: Algebra/LinearAlgebra
+Declarations: 5] -/
 theorem det_one_pf {n : Type*} [DecidableEq n] [Fintype n] :
     (1 : Matrix n n ℝ).det = 1 := by
       convert Matrix.det_one
+
 
 
 
@@ -28,6 +34,7 @@ theorem det_transpose_pf {n : Type*} [DecidableEq n] [Fintype n]
     (A : Matrix n n ℝ) :
     A.transpose.det = A.det := by
       exact?
+
 
 
 
@@ -39,8 +46,10 @@ theorem skew_symmetric_trace_zero {n : Type*} [DecidableEq n] [Fintype n]
 
 
 
+
 theorem orthogonal_det {n : Type*} [DecidableEq n] [Fintype n]
     (A : Matrix n n ℝ) (hA : A * A.transpose = 1) :
     A.det = 1 ∨ A.det = -1 := by
       exact mul_self_eq_one_iff.mp ( by simpa [ Matrix.det_transpose ] using congr_arg Matrix.det hA )
+
 

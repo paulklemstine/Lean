@@ -14,15 +14,18 @@ def spbHyp (x y : ℝ) : ℝ := (x + y) / (1 + x * y)
 
 
 
+
 /-- Hyperbolic SPB inverse. -/
 theorem spbHyp_neg (x : ℝ) : spbHyp x (-x) = 0 := by
   simp [spbHyp]
 
 
 
+
 /-- Hyperbolic SPB is commutative. -/
 theorem spbHyp_comm (x y : ℝ) : spbHyp x y = spbHyp y x := by
   simp [spbHyp, add_comm, mul_comm]
+
 
 
 
@@ -38,6 +41,11 @@ theorem spbHyp_tanh_add (α β : ℝ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Shared.SpbHyp
+Auto-generated from theorem catalog database.
+Domain: Shared
+Declarations: 6] -/
 theorem spbHyp_subluminal (x y : ℝ) (hx : |x| < 1) (hy : |y| < 1) :
     |spbHyp x y| < 1 := by
   unfold spbHyp;
@@ -46,9 +54,11 @@ theorem spbHyp_subluminal (x y : ℝ) (hx : |x| < 1) (hy : |y| < 1) :
 
 
 
+
 /-- Hyperbolic SPB identity. -/
 theorem spbHyp_zero (x : ℝ) : spbHyp x 0 = x := by
   simp [spbHyp]
+
 
 
 

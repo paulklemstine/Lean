@@ -16,10 +16,12 @@ def IsQuantumState {d : ℕ} (ψ : Fin d → ℂ) : Prop :=
 
 
 
+
 /-- A quantum gate is a unitary matrix: U† * U = I.
 Unitarity guarantees reversibility and probability conservation. -/
 def IsUnitaryGate {d : ℕ} (U : Matrix (Fin d) (Fin d) ℂ) : Prop :=
   U.conjTranspose * U = 1
+
 
 
 
@@ -33,12 +35,18 @@ theorem identity_is_unitary (d : ℕ) : IsUnitaryGate (1 : Matrix (Fin d) (Fin d
 
 
 
+
+/-- [Section: # CatalogBuild.Physics.Quantum.QuantumMathSimulation
+Auto-generated from theorem catalog database.
+Domain: Physics/Quantum
+Declarations: 26] -/
 theorem unitary_comp {d : ℕ} (U V : Matrix (Fin d) (Fin d) ℂ)
     (hU : IsUnitaryGate U) (hV : IsUnitaryGate V) :
     IsUnitaryGate (U * V) := by
   simp_all +decide [ IsUnitaryGate, Matrix.conjTranspose_mul ];
   simp +decide [ ← mul_assoc, hU, hV ];
   simp_all +decide [ mul_assoc ]
+
 
 
 
@@ -49,9 +57,11 @@ theorem unitary_adjoint {d : ℕ} (U : Matrix (Fin d) (Fin d) ℂ)
 
 
 
+
 /-- Born rule: measurement probabilities from a quantum state sum to 1. -/
 theorem born_rule_valid {d : ℕ} (ψ : Fin d → ℂ) (hψ : IsQuantumState ψ) :
     ∑ i : Fin d, ‖ψ i‖^2 = 1 := hψ
+
 
 
 
@@ -61,9 +71,11 @@ def QSeparable {d₁ d₂ : ℕ} (ψ : Fin d₁ → Fin d₂ → ℂ) : Prop :=
 
 
 
+
 /-- A state is entangled if and only if it is not separable. -/
 def QEntangled {d₁ d₂ : ℕ} (ψ : Fin d₁ → Fin d₂ → ℂ) : Prop :=
   ¬ QSeparable ψ
+
 
 
 
@@ -73,9 +85,11 @@ noncomputable def bellState : Fin 2 → Fin 2 → ℂ := fun i j =>
 
 
 
+
 theorem bell_state_entangled : QEntangled bellState := by
   rintro ⟨ a, b, h ⟩;
   unfold bellState at h; aesop;
+
 
 
 
@@ -83,6 +97,7 @@ theorem bell_state_entangled : QEntangled bellState := by
 noncomputable def applyGate {d : ℕ} (U : Matrix (Fin d) (Fin d) ℂ) (ψ : Fin d → ℂ) :
     Fin d → ℂ :=
   U.mulVec ψ
+
 
 
 
@@ -95,12 +110,14 @@ noncomputable def applyCircuit {d : ℕ} (gates : List (Matrix (Fin d) (Fin d) �
 
 
 
+
 /-- The total unitary of a circuit is the reversed product of its gates.
 For gates [U₁, U₂, ...], we apply U₁ first, then U₂, etc.
 So the total unitary is ... * U₂ * U₁. -/
 noncomputable def circuitUnitary {d : ℕ}
     (gates : List (Matrix (Fin d) (Fin d) ℂ)) : Matrix (Fin d) (Fin d) ℂ :=
   gates.foldl (fun acc U => U * acc) 1
+
 
 
 
@@ -120,9 +137,11 @@ theorem circuit_composition {d : ℕ} (gates : List (Matrix (Fin d) (Fin d) ℂ)
 
 
 
+
 theorem state_space_exponential (n : ℕ) :
     Fintype.card (Fin (2^n)) = 2^n := by
   convert Fintype.card_fin ( 2 ^ n )
+
 
 
 
@@ -132,9 +151,11 @@ theorem qubit_doubles_space (n : ℕ) :
 
 
 
+
 theorem simulation_dimension (n : ℕ) :
     Module.finrank ℂ (Fin (2^n) → ℂ) = 2^n := by
   norm_num +zetaDelta at *
+
 
 
 
@@ -144,8 +165,10 @@ noncomputable def hadamardGate : Matrix (Fin 2) (Fin 2) ℂ :=
 
 
 
+
 theorem pauliX_unitary : IsUnitaryGate pauliX := by
   ext i j; fin_cases i <;> fin_cases j <;> norm_num [ Matrix.mul_apply, pauliX ] ;
+
 
 
 
@@ -155,8 +178,10 @@ theorem pauliZ_unitary : IsUnitaryGate pauliZ := by
 
 
 
+
 theorem pauliX_involution : pauliX * pauliX = (1 : Matrix (Fin 2) (Fin 2) ℂ) := by
   ext i j ; fin_cases i <;> fin_cases j <;> norm_num [ pauliX ]
+
 
 
 
@@ -167,9 +192,11 @@ theorem pauliZ_involution : pauliZ * pauliZ = (1 : Matrix (Fin 2) (Fin 2) ℂ) :
 
 
 
+
 theorem hadamard_unitary : IsUnitaryGate hadamardGate := by
   unfold hadamardGate IsUnitaryGate;
   ext i j ; fin_cases i <;> fin_cases j <;> norm_num [ Matrix.mul_apply, Complex.ext_iff ] <;> ring <;> norm_num [ ← Complex.ofReal_pow ] <;> norm_cast <;> norm_num [ Real.sqrt_div_self ] at * <;> first | linarith | aesop | assumption;
+
 
 
 
@@ -181,6 +208,7 @@ theorem hadamard_conjugation :
 
 
 
+
 theorem no_cloning_inner_product {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
     (ψ φ : V) (_hψ : ‖ψ‖ = 1) (_hφ : ‖φ‖ = 1)
     (h_clone : @inner ℂ V _ ψ φ = (@inner ℂ V _ ψ φ) ^ 2) :
@@ -189,10 +217,12 @@ theorem no_cloning_inner_product {V : Type*} [NormedAddCommGroup V] [InnerProduc
 
 
 
+
 theorem quantum_is_linear_algebra {d : ℕ} (U : Matrix (Fin d) (Fin d) ℂ)
     (ψ₁ ψ₂ : Fin d → ℂ) (h : ψ₁ = ψ₂) :
     U.mulVec ψ₁ = U.mulVec ψ₂ := by
   rw [ h ]
+
 
 
 

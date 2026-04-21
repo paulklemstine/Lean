@@ -13,6 +13,7 @@ def phase_gate (s : Bool) (x : ℤ) : ℤ :=
 
 
 
+
 /-- [Section: # CatalogBuild.Physics.Quantum.QuantumGates
 Auto-generated from theorem catalog database.
 Domain: Physics/Quantum
@@ -25,14 +26,21 @@ theorem phase_gate_involutive (s : Bool) (x : ℤ) :
 
 
 
+
 /-- The four units of ℤ[i] -/
 def gaussian_units : List GaussianInt :=
   [⟨1, 0⟩, ⟨-1, 0⟩, ⟨0, 1⟩, ⟨0, -1⟩]
 
 
 
+
+/-- [Section: # CatalogBuild.Physics.Quantum.QuantumGates
+Auto-generated from theorem catalog database.
+Domain: Physics/Quantum
+Declarations: 4] -/
 theorem gaussian_unit_norm (u : GaussianInt) (hu : u ∈ gaussian_units) :
     Zsqrtd.norm u = 1 := by
   unfold gaussian_units at hu; aesop;
+
 
 

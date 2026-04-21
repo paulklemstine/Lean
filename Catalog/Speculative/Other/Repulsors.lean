@@ -15,10 +15,12 @@ structure DiscreteDynSystem (α : Type*) where
 
 
 
+
 /-- The n-th iterate of a discrete dynamical system. -/
 def DiscreteDynSystem.iterate {α : Type*} (ds : DiscreteDynSystem α) : ℕ → α → α
   | 0 => id
   | n + 1 => ds.step ∘ ds.iterate n
+
 
 
 
@@ -31,14 +33,21 @@ theorem DiscreteDynSystem.iterate_zero {α : Type*} (ds : DiscreteDynSystem α) 
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.Repulsors
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 16] -/
 theorem DiscreteDynSystem.iterate_succ {α : Type*} (ds : DiscreteDynSystem α) (n : ℕ) (x : α) :
     ds.iterate (n + 1) x = ds.step (ds.iterate n x) := rfl
+
 
 
 
 /-- A fixed point of a discrete dynamical system. -/
 def DiscreteDynSystem.IsFixedPoint {α : Type*} (ds : DiscreteDynSystem α) (x : α) : Prop :=
   ds.step x = x
+
 
 
 
@@ -52,11 +61,13 @@ theorem DiscreteDynSystem.iterate_fixed {α : Type*} (ds : DiscreteDynSystem α)
 
 
 
+
 /-- A set is an attractor if nearby orbits converge to it. -/
 def IsDiscreteAttractor {α : Type*} [PseudoMetricSpace α] (ds : DiscreteDynSystem α)
     (A : Set α) : Prop :=
   ∃ U : Set α, IsOpen U ∧ A ⊆ U ∧
     ∀ x ∈ U, Tendsto (fun n => infDist (ds.iterate n x) A) atTop (nhds 0)
+
 
 
 
@@ -68,6 +79,7 @@ def IsDiscreteRepulsor {α : Type*} [PseudoMetricSpace α] (ds : DiscreteDynSyst
 
 
 
+
 /-- The basin of attraction. -/
 def discreteBasinOfAttraction {α : Type*} [PseudoMetricSpace α]
     (ds : DiscreteDynSystem α) (A : Set α) : Set α :=
@@ -75,10 +87,12 @@ def discreteBasinOfAttraction {α : Type*} [PseudoMetricSpace α]
 
 
 
+
 /-- The basin of repulsion. -/
 def discreteBasinOfRepulsion {α : Type*} [PseudoMetricSpace α]
     (ds : DiscreteDynSystem α) (R : Set α) : Set α :=
   {x | Tendsto (fun n => infDist (ds.iterate n x) R) atTop atTop}
+
 
 
 
@@ -90,6 +104,7 @@ structure BijectiveDynSystem (α : Type*) extends DiscreteDynSystem α where
 
 
 
+
 /-- The reverse of a bijective system. -/
 def BijectiveDynSystem.reverse {α : Type*} (ds : BijectiveDynSystem α) :
     BijectiveDynSystem α where
@@ -97,6 +112,7 @@ def BijectiveDynSystem.reverse {α : Type*} (ds : BijectiveDynSystem α) :
   inv := ds.step
   left_inv := ds.right_inv
   right_inv := ds.left_inv
+
 
 
 
@@ -111,11 +127,13 @@ theorem repulsor_reverse_attractor {α : Type*} [PseudoMetricSpace α]
 
 
 
+
 /-- A probabilistic repulsor assigns escape probabilities. -/
 structure ProbRepulsor (α : Type*) where
   escapeProbability : α → ℝ
   escape_nonneg : ∀ x, 0 ≤ escapeProbability x
   escape_le_one : ∀ x, escapeProbability x ≤ 1
+
 
 
 
@@ -126,6 +144,7 @@ def repulsorSpectrum {α : Type*} [PseudoMetricSpace α] (ds : DiscreteDynSystem
 
 
 
+
 /-- The repulsor spectrum is nonempty for repulsors with exterior points. -/
 theorem repulsorSpectrum_nonempty_of_repulsor {α : Type*} [PseudoMetricSpace α]
     (ds : DiscreteDynSystem α) (R : Set α) (hR : IsDiscreteRepulsor ds R)
@@ -133,6 +152,7 @@ theorem repulsorSpectrum_nonempty_of_repulsor {α : Type*} [PseudoMetricSpace α
     ∃ x ∈ Set.univ \ R, ∃ n : ℕ, True := by
   obtain ⟨x, hx⟩ := h_nonempty
   exact ⟨x, hx, 0, trivial⟩
+
 
 
 

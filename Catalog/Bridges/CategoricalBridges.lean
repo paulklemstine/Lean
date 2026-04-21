@@ -19,12 +19,14 @@ def bridge_composition {C D E : Type*}
 
 
 
+
 /-- The mathematical bridge hierarchy. -/
 inductive BridgeLevel where
   | setTheoretic | stone | gelfand | pontryagin | galois
   | tannaka | langlands | geometricLanglands | derivedLanglands
   | motivic | hott
   deriving DecidableEq
+
 
 
 
@@ -44,10 +46,12 @@ def BridgeLevel.toNat : BridgeLevel → ℕ
 
 
 
+
 /-- HoTT subsumes all previous bridges. -/
 theorem hott_subsumes_all (b : BridgeLevel) :
     b.toNat ≤ BridgeLevel.hott.toNat := by
   cases b <;> simp [BridgeLevel.toNat]
+
 
 
 
@@ -59,9 +63,11 @@ theorem analysis_bridge_unique_limit {X : Type*} [TopologicalSpace X] [T2Space X
 
 
 
+
 /-- The Riemann sum of f on [0,1] with n uniform subdivisions. -/
 def riemannSum (f : ℝ → ℝ) (n : ℕ) : ℝ :=
   (1 / (n : ℝ)) * ∑ k ∈ Finset.range n, f ((k : ℝ) / (n : ℝ))
+
 
 
 
@@ -104,6 +110,7 @@ theorem riemann_sum_converges (f : ℝ → ℝ) (hf : Continuous f) :
 
 
 
+
 /-- L-function data. -/
 structure LFunctionData where
   degree : ℕ
@@ -111,9 +118,11 @@ structure LFunctionData where
 
 
 
+
 /-- L-function equivalence is reflexive. -/
 theorem lfunc_equiv_refl (L : LFunctionData) : L.degree = L.degree ∧ L.conductor = L.conductor :=
   ⟨rfl, rfl⟩
+
 
 
 
@@ -126,15 +135,18 @@ structure FunctionalEquation where
 
 
 
+
 /-- The root number has norm 1. -/
 theorem root_number_unit (fe : FunctionalEquation) :
     ‖fe.root_number‖ = 1 := fe.root_number_norm_one
 
 
 
+
 /-- Self-dual L-functions have root number ±1. -/
 def FunctionalEquation.isSelfDual (fe : FunctionalEquation) : Prop :=
   fe.root_number = 1 ∨ fe.root_number = -1
+
 
 
 

@@ -14,8 +14,10 @@ def spbW (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
 
 
 
+
 /-- The hyperbolic SPB (Einstein velocity addition) -/
 def spbHW (x y : ℝ) : ℝ := (x + y) / (1 + x * y)
+
 
 
 
@@ -25,11 +27,13 @@ theorem pythagorean_from_rational_point (p q : ℤ) :
 
 
 
+
 /-- SPB composition preserves the "norm" structure:
 N(spb(a,b)) · (1-ab)² = N(a) · N(b) where N(x) = 1 + x². -/
 theorem spb_norm_composition (a b : ℝ) (h : 1 - a * b ≠ 0) :
     (1 + (spbW a b) ^ 2) * (1 - a * b) ^ 2 = (1 + a ^ 2) * (1 + b ^ 2) := by
   unfold spbW; field_simp; ring
+
 
 
 
@@ -42,9 +46,11 @@ theorem spb_gaussian_norm_identity (a b : ℤ) :
 
 
 
+
 /-- Real version. -/
 theorem spb_gaussian_norm_identity_real (a b : ℝ) :
     (1 + a ^ 2) * (1 + b ^ 2) = (1 - a * b) ^ 2 + (a + b) ^ 2 := by ring
+
 
 
 

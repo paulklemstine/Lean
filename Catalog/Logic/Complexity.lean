@@ -16,10 +16,12 @@ theorem no_free_lunch_counting (n k : ℕ) (hn : 0 < n) (hk : k ≤ n) :
 
 
 
+
 /-- There are `2^(2^n)` Boolean functions on `n` variables. -/
 theorem count_boolean_functions (n : ℕ) :
     Fintype.card (Fin (2^n) → Bool) = 2 ^ 2 ^ n := by
   simp [Fintype.card_fun, Fintype.card_bool, Fintype.card_fin]
+
 
 
 
@@ -34,6 +36,7 @@ theorem circuit_counting_bound (n : ℕ) (num_circuits : ℕ)
 
 
 
+
 /-- The real circuit counting content: no injection from functions to small circuits. -/
 theorem no_injection_functions_to_circuits (n : ℕ) (num_circuits : ℕ)
     (h : num_circuits < 2 ^ 2 ^ n) :
@@ -45,11 +48,13 @@ theorem no_injection_functions_to_circuits (n : ℕ) (num_circuits : ℕ)
 
 
 
+
 /-- For any polynomial bound `p(n) < 2^n`, most functions require circuits
 of super-polynomial size. -/
 theorem most_functions_complex' (n : ℕ) (poly_bound : ℕ) (h : poly_bound < 2 ^ n) :
     2 ^ poly_bound < 2 ^ 2 ^ n :=
   Nat.pow_lt_pow_right (by omega) h
+
 
 
 
@@ -64,12 +69,14 @@ theorem cantor_diagonal :
 
 
 
+
 /-- **Cantor's theorem (finite version)**: `|Finset α| > |α|` for nonempty `α`.
 There is no surjection from a finite type to its power set. -/
 theorem cantor_finite {α : Type*} [Fintype α] [DecidableEq α] :
     Fintype.card α < Fintype.card (Finset α) := by
   rw [Fintype.card_finset]
   exact Nat.lt_two_pow_self
+
 
 
 
@@ -87,6 +94,7 @@ theorem natural_proofs_counting (n num_small_circuit : ℕ)
 
 
 
+
 /-- **Invariance theorem consequence**: For any two description schemes,
 the complexity functions differ by at most a constant.
 This is an abstract version — the real theorem requires Turing machines. -/
@@ -98,5 +106,6 @@ theorem description_complexity_comparison
     ∀ s : List Bool, ∃ d₁ d₂ : ℕ, D₁ d₁ = some s ∧ D₂ d₂ = some s := by
   intro s
   exact ⟨(hD₁ s).choose, (hD₂ s).choose, (hD₁ s).choose_spec, (hD₂ s).choose_spec⟩
+
 
 

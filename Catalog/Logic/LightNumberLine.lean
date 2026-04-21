@@ -13,9 +13,11 @@ theorem pythagorean_param (m n : ℤ) :
 
 
 
+
 /-- Alternative parametrization with swapped legs. -/
 theorem pythagorean_param_alt (m n : ℤ) :
     (2 * m * n) ^ 2 + (m ^ 2 - n ^ 2) ^ 2 = (m ^ 2 + n ^ 2) ^ 2 := by ring
+
 
 
 
@@ -24,6 +26,7 @@ This is the algebraic foundation of wave superposition. -/
 theorem brahmagupta_fibonacci_identity (a b c d : ℤ) :
     (a ^ 2 + b ^ 2) * (c ^ 2 + d ^ 2) =
     (a * c - b * d) ^ 2 + (a * d + b * c) ^ 2 := by ring
+
 
 
 
@@ -36,15 +39,18 @@ theorem unit_circle_from_pythagorean (m n : ℚ) (h : m ^ 2 + n ^ 2 ≠ 0) :
 
 
 
+
 /-- A Pythagorean triple defines a null (lightlike) direction. -/
 theorem lightlike_null (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     c ^ 2 - a ^ 2 - b ^ 2 = 0 := by linarith
 
 
 
+
 /-- Light cone scaling: if (a,b,c) is lightlike, so is (ka, kb, kc). -/
 theorem lightlike_scale (a b c k : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (k * a) ^ 2 + (k * b) ^ 2 = (k * c) ^ 2 := by nlinarith [sq_nonneg k]
+
 
 
 
@@ -56,11 +62,13 @@ theorem lightlike_compose (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ)
 
 
 
+
 /-- Rotation of a Pythagorean triple via Gaussian multiplication. -/
 theorem pythagorean_gaussian_rotate (a b c p q r : ℤ)
     (h1 : a ^ 2 + b ^ 2 = c ^ 2) (h2 : p ^ 2 + q ^ 2 = r ^ 2) :
     ∃ x y : ℤ, x ^ 2 + y ^ 2 = (c * r) ^ 2 := by
   exact ⟨a * p - b * q, a * q + b * p, by nlinarith [brahmagupta_fibonacci_identity a b p q]⟩
+
 
 
 
@@ -71,9 +79,11 @@ theorem gaussian_norm_mult (a b c d : ℤ) :
 
 
 
+
 /-- Gaussian conjugation preserves norm. -/
 theorem gaussian_conj_norm (a b : ℤ) :
     a ^ 2 + b ^ 2 = a ^ 2 + (-b) ^ 2 := by ring
+
 
 
 
@@ -82,13 +92,16 @@ theorem gaussian_unit_i_norm : (0 : ℤ) ^ 2 + 1 ^ 2 = 1 := by norm_num
 
 
 
+
 /-- Norm of (1+i) is 2: ramification of 2 in ℤ[i]. -/
 theorem gaussian_norm_one_plus_i : (1 : ℤ) ^ 2 + 1 ^ 2 = 2 := by norm_num
 
 
 
+
 /-- Primes ≡ 1 mod 4 that split in ℤ[i] — birefringent primes. -/
 theorem prime_5_splits : (2 : ℤ) ^ 2 + 1 ^ 2 = 5 := by norm_num
+
 
 
 /-- [Section: # CatalogBuild.Logic.LightNumberLine
@@ -98,13 +111,21 @@ Declarations: 67] -/
 theorem prime_13_splits : (3 : ℤ) ^ 2 + 2 ^ 2 = 13 := by norm_num
 
 
+
+/-- [Section: # CatalogBuild.Logic.LightNumberLine
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 67] -/
 theorem prime_17_splits : (4 : ℤ) ^ 2 + 1 ^ 2 = 17 := by norm_num
+
 
 
 theorem prime_29_splits : (5 : ℤ) ^ 2 + 2 ^ 2 = 29 := by norm_num
 
 
+
 theorem prime_37_splits : (6 : ℤ) ^ 2 + 1 ^ 2 = 37 := by norm_num
+
 
 
 
@@ -114,6 +135,7 @@ theorem triple_beam_split (a₁ b₁ a₂ b₂ a₃ b₃ : ℤ) :
       (a₁ ^ 2 + b₁ ^ 2) * (a₂ ^ 2 + b₂ ^ 2) * (a₃ ^ 2 + b₃ ^ 2) = e ^ 2 + f ^ 2 := by
   exact ⟨(a₁ * a₂ - b₁ * b₂) * a₃ - (a₁ * b₂ + b₁ * a₂) * b₃,
          (a₁ * a₂ - b₁ * b₂) * b₃ + (a₁ * b₂ + b₁ * a₂) * a₃, by ring⟩
+
 
 
 
@@ -132,6 +154,7 @@ theorem fermat_easy (p a b : ℕ) (hp : Nat.Prime p)
 
 
 
+
 /-- No prime ≡ 3 mod 4 is a sum of two squares.
 These primes are "opaque" — they cannot split a beam. -/
 theorem no_sum_two_squares_3_mod_4 (p a b : ℕ) (hp : Nat.Prime p)
@@ -144,31 +167,41 @@ theorem no_sum_two_squares_3_mod_4 (p a b : ℕ) (hp : Nat.Prime p)
 
 
 
+
 theorem triple_3_4_5' : (3 : ℕ) ^ 2 + 4 ^ 2 = 5 ^ 2 := by norm_num
+
 
 
 theorem triple_5_12_13' : (5 : ℕ) ^ 2 + 12 ^ 2 = 13 ^ 2 := by norm_num
 
 
+
 theorem triple_8_15_17' : (8 : ℕ) ^ 2 + 15 ^ 2 = 17 ^ 2 := by norm_num
+
 
 
 theorem triple_20_21_29 : (20 : ℕ) ^ 2 + 21 ^ 2 = 29 ^ 2 := by norm_num
 
 
+
 theorem triple_9_40_41 : (9 : ℕ) ^ 2 + 40 ^ 2 = 41 ^ 2 := by norm_num
+
 
 
 theorem triple_12_35_37 : (12 : ℕ) ^ 2 + 35 ^ 2 = 37 ^ 2 := by norm_num
 
 
+
 theorem triple_11_60_61 : (11 : ℕ) ^ 2 + 60 ^ 2 = 61 ^ 2 := by norm_num
+
 
 
 theorem triple_28_45_53 : (28 : ℕ) ^ 2 + 45 ^ 2 = 53 ^ 2 := by norm_num
 
 
+
 theorem triple_33_56_65 : (33 : ℕ) ^ 2 + 56 ^ 2 = 65 ^ 2 := by norm_num
+
 
 
 
@@ -176,7 +209,9 @@ theorem triple_33_56_65 : (33 : ℕ) ^ 2 + 56 ^ 2 = 65 ^ 2 := by norm_num
 theorem multi_representation_65_a : (1 : ℕ) ^ 2 + 8 ^ 2 = 65 := by norm_num
 
 
+
 theorem multi_representation_65_b : (4 : ℕ) ^ 2 + 7 ^ 2 = 65 := by norm_num
+
 
 
 
@@ -184,7 +219,9 @@ theorem multi_representation_65_b : (4 : ℕ) ^ 2 + 7 ^ 2 = 65 := by norm_num
 theorem interference_25_a : (7 : ℕ) ^ 2 + 24 ^ 2 = 25 ^ 2 := by norm_num
 
 
+
 theorem interference_25_b : (15 : ℕ) ^ 2 + 20 ^ 2 = 25 ^ 2 := by norm_num
+
 
 
 
@@ -196,6 +233,7 @@ theorem infinitely_many_triples :
 
 
 
+
 /-- For any m > 1, (m²-1, 2m, m²+1) is a Pythagorean triple. -/
 theorem family_m_squared (m : ℕ) (hm : 1 < m) :
     (m ^ 2 - 1) ^ 2 + (2 * m) ^ 2 = (m ^ 2 + 1) ^ 2 := by
@@ -203,9 +241,11 @@ theorem family_m_squared (m : ℕ) (hm : 1 < m) :
 
 
 
+
 /-- Pythagorean triples from consecutive integers. -/
 theorem family_consecutive (n : ℕ) :
     (2 * n + 1) ^ 2 + (2 * n ^ 2 + 2 * n) ^ 2 = (2 * n ^ 2 + 2 * n + 1) ^ 2 := by ring
+
 
 
 
@@ -216,6 +256,7 @@ theorem square_is_four_squares (n : ℤ) :
 
 
 
+
 /-- Sum of two squares embeds into sum of four squares. -/
 theorem two_squares_to_four (a b : ℤ) :
     ∃ c d : ℤ, a ^ 2 + b ^ 2 = a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 :=
@@ -223,10 +264,12 @@ theorem two_squares_to_four (a b : ℤ) :
 
 
 
+
 /-- The number of representations as sum of two squares is multiplicative. -/
 theorem r2_multiplicative_structure (a b c d : ℤ) :
     (a ^ 2 + b ^ 2) * (c ^ 2 + d ^ 2) =
     (a * c - b * d) ^ 2 + (a * d + b * c) ^ 2 := by ring
+
 
 
 
@@ -239,6 +282,7 @@ theorem pythagorean_compression (m n : ℤ) :
 
 
 
+
 /-- Composing two compressed triples: hierarchical compression. -/
 theorem composition_preserves_compression (m₁ n₁ m₂ n₂ : ℤ) :
     let a₁ := m₁ ^ 2 - n₁ ^ 2; let b₁ := 2 * m₁ * n₁; let c₁ := m₁ ^ 2 + n₁ ^ 2
@@ -248,9 +292,11 @@ theorem composition_preserves_compression (m₁ n₁ m₂ n₂ : ℤ) :
 
 
 
+
 theorem sum_squares_mod_4 (a b : ℤ) :
     (a ^ 2 + b ^ 2) % 4 = 0 ∨ (a ^ 2 + b ^ 2) % 4 = 1 ∨ (a ^ 2 + b ^ 2) % 4 = 2 := by
   rcases Int.even_or_odd' a with ⟨ x, rfl | rfl ⟩ <;> rcases Int.even_or_odd' b with ⟨ y, rfl | rfl ⟩ <;> ring_nf <;> norm_num [ Int.add_emod, Int.mul_emod ] at *;
+
 
 
 
@@ -261,15 +307,18 @@ theorem pythagorean_mod (m n k : ℤ) :
 
 
 
+
 /-- L² norm squared decomposition. -/
 theorem l2_norm_decomposition (a b : ℤ) :
     a ^ 2 + b ^ 2 = (a + b) ^ 2 - 2 * a * b := by ring
 
 
 
+
 /-- Polarization identity: inner product from norms. -/
 theorem polarization_identity (a b : ℤ) :
     4 * a * b = (a + b) ^ 2 - (a - b) ^ 2 := by ring
+
 
 
 
@@ -281,10 +330,12 @@ theorem lattice_triangle_sq (a₁ b₁ a₂ b₂ : ℤ) :
 
 
 
+
 /-- Sophie Germain identity: quartic sums and Gaussian factorization. -/
 theorem sophie_germain (a b : ℤ) :
     a ^ 4 + 4 * b ^ 4 = (a ^ 2 + 2 * b ^ 2 + 2 * a * b) * (a ^ 2 + 2 * b ^ 2 - 2 * a * b) := by
   ring
+
 
 
 
@@ -294,15 +345,18 @@ theorem lebesgue_identity (m n : ℤ) :
 
 
 
+
 /-- Sum of two fourth powers as sum of two squares. -/
 theorem fourth_power_decomp (a b : ℤ) :
     a ^ 4 + b ^ 4 = (a ^ 2) ^ 2 + (b ^ 2) ^ 2 := by ring
 
 
 
+
 /-- Vieta jumping for Pythagorean triples. -/
 theorem vieta_jump (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (c - a) ^ 2 + b ^ 2 = 2 * c * (c - a) := by nlinarith
+
 
 
 
@@ -314,10 +368,12 @@ theorem hypotenuse_difference (m₁ n₁ m₂ n₂ : ℤ) :
 
 
 
+
 /-- Gaussian integer product encodes multiplication: lattice cryptography. -/
 theorem gaussian_product_encode (a b c d : ℤ) :
     (a * c - b * d) ^ 2 + (a * d + b * c) ^ 2 =
     (a ^ 2 + b ^ 2) * (c ^ 2 + d ^ 2) := by ring
+
 
 
 
@@ -331,11 +387,14 @@ theorem angle_addition (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ)
 
 
 
+
 /-- 3D Pythagorean quadruples. -/
 theorem pythagorean_quadruple_1 : (1 : ℤ) ^ 2 + 2 ^ 2 + 2 ^ 2 = 3 ^ 2 := by norm_num
 
 
+
 theorem pythagorean_quadruple_2 : (2 : ℤ) ^ 2 + 3 ^ 2 + 6 ^ 2 = 7 ^ 2 := by norm_num
+
 
 
 
@@ -345,6 +404,7 @@ theorem r2_zero : ∃! (p : ℤ × ℤ), p.1 ^ 2 + p.2 ^ 2 = 0 :=
     simp at h
     exact Prod.ext (by nlinarith [sq_nonneg a, sq_nonneg b])
                    (by nlinarith [sq_nonneg a, sq_nonneg b])⟩
+
 
 
 
@@ -358,10 +418,12 @@ theorem r2_identity_at_1 :
 
 
 
+
 /-- cos²x + sin²x = 1: the Pythagorean identity for waves. -/
 theorem trig_pythagorean (x : ℝ) :
     Real.cos x ^ 2 + Real.sin x ^ 2 = 1 := by
   linarith [Real.sin_sq_add_cos_sq x]
+
 
 
 
@@ -372,6 +434,7 @@ theorem cos_addition (a b : ℝ) :
 
 
 
+
 /-- Interference intensity formula. -/
 theorem interference_amplitude (a₁ b₁ a₂ b₂ : ℝ) :
     (a₁ + a₂) ^ 2 + (b₁ + b₂) ^ 2 =
@@ -379,16 +442,21 @@ theorem interference_amplitude (a₁ b₁ a₂ b₂ : ℝ) :
 
 
 
+
 theorem chi4_at_1 : chi4 1 = 1 := by simp [chi4]
+
 
 
 theorem chi4_at_3 : chi4 3 = -1 := by simp [chi4]
 
 
+
 theorem chi4_at_5 : chi4 5 = 1 := by simp [chi4]
 
 
+
 theorem chi4_at_7 : chi4 7 = -1 := by simp [chi4]
+
 
 
 
@@ -398,9 +466,11 @@ theorem leibniz_partial (n : ℕ) :
 
 
 
+
 /-- Massless dispersion relation: E² = p² (c=1). -/
 theorem massless_dispersion (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     c ^ 2 = a ^ 2 + b ^ 2 := h.symm
+
 
 
 
@@ -408,5 +478,6 @@ theorem massless_dispersion (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 theorem momentum_conservation (a b c d : ℤ) :
     (a * c - b * d) ^ 2 + (a * d + b * c) ^ 2 =
     (a ^ 2 + b ^ 2) * (c ^ 2 + d ^ 2) := by ring
+
 
 

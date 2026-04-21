@@ -20,14 +20,21 @@ theorem sublevel_zero_eq_divisors (N : ℕ) (hN : 0 < N) :
 
 
 
+
 /-- Sublevel set: the set of x ∈ [1,N] with E(x) ≤ t. -/
 def sublevel_set (N t : ℕ) : Finset ℕ :=
   (Finset.Icc 1 N).filter (fun x => E N x ≤ t)
 
 
 
+
+/-- [Section: # CatalogBuild.Shared.Sublevel_zero_eq_divisors
+Auto-generated from theorem catalog database.
+Domain: Shared
+Declarations: 3] -/
 theorem sublevel_monotone (N t₁ t₂ : ℕ) (h : t₁ ≤ t₂) :
     sublevel_set N t₁ ⊆ sublevel_set N t₂ := by
   exact fun x hx => Finset.mem_filter.mpr ⟨ Finset.mem_filter.mp hx |>.1, le_trans ( Finset.mem_filter.mp hx |>.2 ) h ⟩
+
 
 

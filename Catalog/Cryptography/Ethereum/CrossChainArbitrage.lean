@@ -21,12 +21,19 @@ structure ChainPool where
 
 
 
+
+/-- [Section: # CatalogBuild.Cryptography.Ethereum.CrossChainArbitrage
+Auto-generated from theorem catalog database.
+Domain: Cryptography/Ethereum
+Declarations: 13] -/
 noncomputable def ChainPool.spotPrice (p : ChainPool) : ℝ := p.y / p.x
+
 
 
 
 noncomputable def ChainPool.swapOut (p : ChainPool) (dx : ℝ) (hdx : 0 < dx) : ℝ :=
   p.y * dx / (p.x + dx)
+
 
 
 
@@ -37,6 +44,7 @@ structure BridgeParams where
 
 
 
+
 noncomputable def crossChainProfit
     (poolA poolB : ChainPool)
     (bridge : BridgeParams)
@@ -44,6 +52,7 @@ noncomputable def crossChainProfit
   let dy := poolA.swapOut dx hdx
   let dy_after_fee := dy - bridge.fee
   dy_after_fee * (poolB.x / poolB.y) - dx
+
 
 
 
@@ -60,9 +69,11 @@ theorem no_arb_band (poolA poolB : ChainPool) (bridge : BridgeParams)
 
 
 
+
 /-- Minimum price discrepancy needed for profitable arbitrage -/
 noncomputable def minPriceDiscrepancy (bridge : BridgeParams) (tradeSize : ℝ) : ℝ :=
   bridge.fee / tradeSize
+
 
 
 
@@ -75,7 +86,9 @@ theorem larger_trades_easier (bridge : BridgeParams) (d₁ d₂ : ℝ)
 
 
 
+
 noncomputable def priceGap (pA pB : ℝ) : ℝ := |pA - pB|
+
 
 
 
@@ -91,6 +104,7 @@ theorem arbitrage_reduces_gap (pA pB : ℝ) (hA : 0 < pA) (hB : 0 < pB)
 
 
 
+
 theorem safe_arbitrage_condition (profit maxLoss : ℝ) (hprofit : 0 < profit)
     (hloss : 0 ≤ maxLoss) :
     0 < profit - maxLoss ↔ maxLoss < profit := by
@@ -98,8 +112,10 @@ theorem safe_arbitrage_condition (profit maxLoss : ℝ) (hprofit : 0 < profit)
 
 
 
+
 noncomputable def triangularProfit (rateAB rateBC rateCA : ℝ) (amount : ℝ) : ℝ :=
   amount * rateAB * rateBC * rateCA - amount
+
 
 
 
@@ -110,6 +126,7 @@ theorem triangular_profitable_iff (rateAB rateBC rateCA amount : ℝ)
     1 < rateAB * rateBC * rateCA := by
   unfold triangularProfit
   constructor <;> intro h <;> nlinarith
+
 
 
 

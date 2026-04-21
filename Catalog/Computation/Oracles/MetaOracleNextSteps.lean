@@ -17,9 +17,11 @@ def invStereoProj3D (u v : ℝ) : ℝ × ℝ × ℝ :=
 
 
 
+
 /-- Forward stereographic projection in 3D: S² \ {north pole} → ℝ² -/
 def stereoProj3D (p : ℝ × ℝ × ℝ) : ℝ × ℝ :=
   (p.1 / (1 + p.2.2), p.2.1 / (1 + p.2.2))
+
 
 
 
@@ -35,6 +37,7 @@ theorem invStereoProj3D_on_sphere (u v : ℝ) :
 
 
 
+
 /-- **Theorem 8.2**: 3D stereographic round-trip is the identity. -/
 theorem oracle_stereo_roundtrip_3D (u v : ℝ) :
     stereoProj3D (invStereoProj3D u v) = (u, v) := by
@@ -45,9 +48,11 @@ theorem oracle_stereo_roundtrip_3D (u v : ℝ) :
 
 
 
+
 /-- A Pythagorean quadruple (a, b, c, d) satisfies a² + b² + c² = d². -/
 def IsPythagoreanQuadruple (a b c d : ℤ) : Prop :=
   a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2
+
 
 
 
@@ -61,15 +66,18 @@ theorem rational_stereo_3D_quadruple (p q r : ℤ) :
 
 
 
+
 /-- **Theorem 8.4**: The (1, 2, 2, 3) quadruple. -/
 theorem pythagorean_quad_1223 : IsPythagoreanQuadruple 1 2 2 3 := by
   simp only [IsPythagoreanQuadruple]; norm_num
 
 
 
+
 /-- **Theorem 8.5**: The (2, 3, 6, 7) quadruple. -/
 theorem pythagorean_quad_2367 : IsPythagoreanQuadruple 2 3 6 7 := by
   simp only [IsPythagoreanQuadruple]; norm_num
+
 
 
 
@@ -80,10 +88,12 @@ theorem not_pythagorean_quad_1_2_14_15 :
 
 
 
+
 /-- **Theorem 8.7**: 3D parametrization identity (universal). -/
 theorem pythagorean_3D_parametrization (p q r : ℤ) :
     (2 * p * r) ^ 2 + (2 * q * r) ^ 2 + (r ^ 2 - p ^ 2 - q ^ 2) ^ 2 =
     (r ^ 2 + p ^ 2 + q ^ 2) ^ 2 := by ring
+
 
 
 
@@ -97,9 +107,11 @@ theorem experiment_3D_batch :
 
 
 
+
 /-- Truth set of a meta oracle. -/
 def MetaOracle.truthSet {X : Type*} (O : MetaOracle X) : Set X :=
   {x | O.apply x = x}
+
 
 
 
@@ -114,11 +126,13 @@ theorem oracle_dominance {X : Type*} (O₁ O₂ : MetaOracle X)
 
 
 
+
 /-- **Theorem 9.2 (Dual Oracle)**: Given f with f⁴ = f², the map f² is an oracle. -/
 theorem dual_oracle_from_square {X : Type*} (f : X → X)
     (h : ∀ x, f (f (f (f x))) = f (f x)) :
     ∀ x, (f ∘ f) ((f ∘ f) x) = (f ∘ f) x := by
   intro x; exact h x
+
 
 
 
@@ -132,11 +146,13 @@ def MetaOracle.prod {X Y : Type*} (O₁ : MetaOracle X) (O₂ : MetaOracle Y) :
 
 
 
+
 /-- **Theorem 9.4**: Truth set of product oracle = product of truth sets. -/
 theorem oracle_prod_truth {X Y : Type*} (O₁ : MetaOracle X) (O₂ : MetaOracle Y) :
     (O₁.prod O₂).truthSet = O₁.truthSet ×ˢ O₂.truthSet := by
   ext ⟨x, y⟩
   simp [MetaOracle.truthSet, MetaOracle.prod, Set.mem_prod]
+
 
 
 
@@ -147,10 +163,12 @@ def MetaOracle.id (X : Type*) : MetaOracle X where
 
 
 
+
 /-- A constant meta oracle. -/
 def MetaOracle.const {X : Type*} (c : X) : MetaOracle X where
   apply := fun _ => c
   idempotent _ := rfl
+
 
 
 
@@ -163,9 +181,11 @@ theorem MetaOracle.range_eq_truth {X : Type*} (O : MetaOracle X) :
 
 
 
+
 /-- **Theorem 9.6 (Oracle Retraction)**: An oracle is a retraction onto its truth set. -/
 theorem oracle_retraction {X : Type*} (O : MetaOracle X) (x : X) :
     O.apply x ∈ O.truthSet := O.idempotent x
+
 
 
 
@@ -181,6 +201,7 @@ def MetaOracle.comp_commuting {X : Type*} (O₁ O₂ : MetaOracle X)
 
 
 
+
 /-- **Theorem 10.1**: invStereo is continuous. -/
 theorem invStereo_continuous : Continuous invStereo := by
   unfold invStereo
@@ -192,10 +213,12 @@ theorem invStereo_continuous : Continuous invStereo := by
 
 
 
+
 /-- **Theorem 10.2**: The x-coordinate of invStereo is continuous. -/
 theorem invStereo_x_continuous :
     Continuous (fun t : ℝ => (invStereo t).1) :=
   invStereo_continuous.fst
+
 
 
 
@@ -206,9 +229,11 @@ theorem invStereo_y_continuous :
 
 
 
+
 /-- **Theorem 10.4**: invStereo maps 0 to (0, 1). -/
 theorem invStereo_zero : invStereo 0 = (0, 1) := by
   simp [invStereo]
+
 
 
 
@@ -218,9 +243,11 @@ theorem invStereo_one : invStereo 1 = (1, 0) := by
 
 
 
+
 /-- **Theorem 10.6**: invStereo maps -1 to (-1, 0). -/
 theorem invStereo_neg_one : invStereo (-1) = (-1, 0) := by
   unfold invStereo; norm_num
+
 
 
 
@@ -238,9 +265,11 @@ theorem invStereo_injective : Function.Injective invStereo := by
 
 
 
+
 /-- The "illusion set" — complement of the truth set. Points that the oracle changes. -/
 def MetaOracle.illusionSet {X : Type*} (O : MetaOracle X) : Set X :=
   {x | O.apply x ≠ x}
+
 
 
 
@@ -251,6 +280,7 @@ theorem truth_illusion_partition {X : Type*} (O : MetaOracle X) :
 
 
 
+
 /-- **Theorem 11.2**: Truth and illusion are disjoint. -/
 theorem truth_illusion_disjoint {X : Type*} (O : MetaOracle X) :
     O.truthSet ∩ O.illusionSet = ∅ := by
@@ -258,9 +288,11 @@ theorem truth_illusion_disjoint {X : Type*} (O : MetaOracle X) :
 
 
 
+
 /-- **Theorem 11.3**: The oracle maps illusions to truths (never to other illusions). -/
 theorem illusion_maps_to_truth {X : Type*} (O : MetaOracle X) (x : X) :
     O.apply x ∈ O.truthSet := O.idempotent x
+
 
 
 
@@ -271,6 +303,7 @@ theorem id_oracle_no_illusion :
 
 
 
+
 /-- **Theorem 11.5**: A constant oracle's illusion set is the complement of {c}. -/
 theorem const_oracle_illusion (c : ℝ) :
     (MetaOracle.const c).illusionSet = {c}ᶜ := by
@@ -278,6 +311,11 @@ theorem const_oracle_illusion (c : ℝ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.MetaOracleNextSteps
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 55] -/
 theorem four_square_up_to_30 :
     ∀ n ∈ Finset.range 31, ∃ a b c d : ℕ, a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 = n := by
   intro n hn
@@ -290,12 +328,14 @@ theorem four_square_up_to_30 :
 
 
 
+
 /-- **Theorem 12.4**: 3D lattice points on x²+y²+z²=3. -/
 theorem lattice_points_3D_sum3 :
     (Finset.filter (fun p : ℤ × ℤ × ℤ =>
       p.1 ^ 2 + p.2.1 ^ 2 + p.2.2 ^ 2 = 3)
       (Finset.Icc (-2) 2 ×ˢ (Finset.Icc (-2) 2 ×ˢ Finset.Icc (-2) 2))).card
     = 8 := by native_decide
+
 
 
 
@@ -309,8 +349,10 @@ theorem no_three_squares_for_7 :
 
 
 
+
 /-- **Theorem 12.6**: But 7 IS a sum of four squares: 7 = 1+1+1+4. -/
 theorem seven_is_four_squares : (1:ℤ)^2 + 1^2 + 1^2 + 2^2 = 7 := by norm_num
+
 
 
 
@@ -318,6 +360,7 @@ theorem seven_is_four_squares : (1:ℤ)^2 + 1^2 + 1^2 + 2^2 = 7 := by norm_num
 def projectionOracle : MetaOracle (ℝ × ℝ) where
   apply := fun p => (p.1, 0)
   idempotent := by intro ⟨x, y⟩; simp
+
 
 
 
@@ -332,6 +375,7 @@ theorem projection_truth_is_axis :
 
 
 
+
 /-- **Theorem 13.3**: The illusion set of the projection oracle is off-axis points. -/
 theorem projection_illusion_is_off_axis :
     projectionOracle.illusionSet = {p : ℝ × ℝ | p.2 ≠ 0} := by
@@ -343,10 +387,12 @@ theorem projection_illusion_is_off_axis :
 
 
 
+
 /-- Modular reduction oracle: project ℕ to {0, ..., n-1}. -/
 def modOracle (n : ℕ) (_ : n > 0) : MetaOracle ℕ where
   apply := fun x => x % n
   idempotent := fun x => Nat.mod_mod_of_dvd x (dvd_refl n)
+
 
 
 
@@ -359,10 +405,12 @@ theorem mod_oracle_truth (n : ℕ) (hn : n > 0) :
 
 
 
+
 /-- **Theorem 13.5**: The mod-2 oracle maps to {0, 1}. -/
 theorem mod2_parity_range :
     ∀ x : ℕ, (modOracle 2 (by norm_num)).apply x < 2 := by
   intro x; exact Nat.mod_lt x (by norm_num)
+
 
 
 
@@ -372,10 +420,12 @@ theorem fib_squares_check :
 
 
 
+
 /-- **Theorem 14.2**: Norm-squared on Gaussian integers is multiplicative. -/
 theorem gaussian_norm_sq_mult (a b c d : ℤ) :
     (a^2 + b^2) * (c^2 + d^2) =
     (a*c - b*d)^2 + (a*d + b*c)^2 := by ring
+
 
 
 
@@ -389,10 +439,12 @@ theorem hurwitz_norm_sq_mult (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ) :
 
 
 
+
 /-- **Theorem 14.4**: The Cayley-Dickson doubling: ℂ norm from ℝ norm. -/
 theorem cayley_dickson_2 (a b c d : ℤ) :
     (a^2 + b^2) * (c^2 + d^2) =
     (a*c + b*d)^2 + (a*d - b*c)^2 := by ring
+
 
 
 
@@ -415,6 +467,7 @@ theorem dimensional_hierarchy :
 
 
 
+
 /-- **Grand Theorem 15.2 (Oracle Tower Collapse)**:
 Applying oracles at each level of the hierarchy and projecting through
 the stereographic lens collapses to a single oracle consultation. -/
@@ -434,12 +487,14 @@ theorem oracle_tower_collapse (O : MetaOracle ℝ) (x : ℝ) :
 
 
 
+
 /-- **Grand Theorem 15.3 (Sum of Two Squares Closure)**:
 The set of integers representable as sums of two squares is closed
 under multiplication. -/
 theorem sum_two_squares_closure (a b c d : ℤ) :
     ∃ e f : ℤ, (a^2 + b^2) * (c^2 + d^2) = e^2 + f^2 := by
   exact ⟨a*c - b*d, a*d + b*c, by ring⟩
+
 
 
 
@@ -457,6 +512,7 @@ theorem sum_four_squares_closure (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℤ)
 
 
 
+
 /-- **Meta-theorem 15.5**: The number of primes ≡ 1 (mod 4) up to 200. -/
 theorem primes_1_mod4_up_to_200 :
     (Finset.filter (fun p => Nat.Prime p ∧ p % 4 = 1)
@@ -464,10 +520,12 @@ theorem primes_1_mod4_up_to_200 :
 
 
 
+
 /-- **Meta-theorem 15.6**: Count of primes that are sums of two squares ≤ 200. -/
 theorem sum_two_squares_primes_200 :
     (Finset.filter (fun p => Nat.Prime p ∧ (p % 4 = 1 ∨ p = 2))
       (Finset.range 201)).card = 22 := by native_decide
+
 
 
 
@@ -485,6 +543,7 @@ theorem hurwitz_witnesses :
       (a₁*b₁-a₂*b₂-a₃*b₃-a₄*b₄)^2+(a₁*b₂+a₂*b₁+a₃*b₄-a₄*b₃)^2+
       (a₁*b₃-a₂*b₄+a₃*b₁+a₄*b₂)^2+(a₁*b₄+a₂*b₃-a₃*b₂+a₄*b₁)^2) := by
   refine ⟨fun _ _ => rfl, fun a b c d => by ring, fun a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ => by ring⟩
+
 
 
 

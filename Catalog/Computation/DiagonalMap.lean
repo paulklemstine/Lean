@@ -14,12 +14,14 @@ def diagMap (x : ℝ) : ℝ := Real.exp x - Real.log x
 
 
 
+
 /-- d(x) > x for all x > 0. -/
 theorem diagMap_gt_id (x : ℝ) (hx : 0 < x) : diagMap x > x := by
   unfold diagMap
   have hexp : Real.exp x ≥ 1 + x + x ^ 2 / 2 := quadratic_le_exp_of_nonneg hx.le
   have hlog : Real.log x ≤ x - 1 := Real.log_le_sub_one_of_pos hx
   nlinarith [sq_nonneg x]
+
 
 
 
@@ -30,9 +32,11 @@ theorem diagMap_ge_two (x : ℝ) (hx : 0 < x) : diagMap x ≥ 2 := by
 
 
 
+
 /-- The diagonal map has no fixed points on ℝ₊. -/
 theorem diagMap_no_fixed_point (x : ℝ) (hx : 0 < x) : diagMap x ≠ x :=
   ne_of_gt (diagMap_gt_id x hx)
+
 
 
 
@@ -42,9 +46,11 @@ theorem diagMap_one : diagMap 1 = Real.exp 1 := by
 
 
 
+
 /-- d(x) is positive for all x > 0. -/
 theorem diagMap_pos (x : ℝ) (hx : 0 < x) : 0 < diagMap x := by
   linarith [diagMap_ge_two x hx]
+
 
 
 
@@ -55,6 +61,7 @@ theorem diagMap_differentiableAt (x : ℝ) (hx : 0 < x) :
 
 
 
+
 /-- d'(x) = exp(x) - 1/x. -/
 theorem diagMap_hasDerivAt (x : ℝ) (hx : 0 < x) :
     HasDerivAt diagMap (Real.exp x - x⁻¹) x := by
@@ -62,10 +69,12 @@ theorem diagMap_hasDerivAt (x : ℝ) (hx : 0 < x) :
 
 
 
+
 /-- Iterated diagonal map. -/
 def diagIter : ℕ → ℝ → ℝ
   | 0, x => x
   | n + 1, x => diagMap (diagIter n x)
+
 
 
 
@@ -86,12 +95,18 @@ theorem diagIter_strictly_increasing (n : ℕ) (x : ℝ) (hx : 0 < x) :
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.DiagonalMap
+Auto-generated from theorem catalog database.
+Domain: Computation
+Declarations: 11] -/
 theorem diagMap_convex : ConvexOn ℝ (Set.Ioi 0) diagMap := by
   apply ConvexOn.sub;
   · have h_convex_exp : ConvexOn ℝ (Set.univ : Set ℝ) Real.exp := by
       exact convexOn_exp;
     exact h_convex_exp.subset ( Set.subset_univ _ ) ( convex_Ioi _ );
   · exact ( StrictConcaveOn.concaveOn <| strictConcaveOn_log_Ioi )
+
 
 
 

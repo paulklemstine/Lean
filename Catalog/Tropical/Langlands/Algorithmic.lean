@@ -18,14 +18,21 @@ def isSorted (n : ℕ) (x : Fin n → ℝ) : Prop :=
 
 
 
+
+/-- [Section: # CatalogBuild.Tropical.Langlands.Algorithmic
+Auto-generated from theorem catalog database.
+Domain: Tropical/Langlands
+Declarations: 28] -/
 theorem const_sorted (n : ℕ) (c : ℝ) : isSorted n (fun _ : Fin n => c) :=
   fun _ _ _ => le_refl _
+
 
 
 
 theorem monotone_sorted (n : ℕ) (f : Fin n → ℝ) (hf : Monotone f) :
     isSorted n f :=
   fun _ _ h => hf h
+
 
 
 
@@ -36,10 +43,12 @@ def tropicalDet (n : ℕ) [NeZero n] (A : Fin n → Fin n → ℝ) : ℝ :=
 
 
 
+
 theorem tropicalDet_zero (n : ℕ) [NeZero n] :
     tropicalDet n (fun _ _ => (0 : ℝ)) = 0 := by
   -- By definition of tropical determinant, we know that
   simp [tropicalDet]
+
 
 
 
@@ -49,8 +58,10 @@ theorem tropicalDet_le_identity (n : ℕ) [NeZero n] (A : Fin n → Fin n → �
 
 
 
+
 def minPlusConv (f g : ℤ → ℝ) (n : ℤ) : ℝ :=
   ⨅ k : ℤ, f k + g (n - k)
+
 
 
 
@@ -61,8 +72,10 @@ theorem minPlusConv_comm (f g : ℤ → ℝ) (n : ℤ) :
 
 
 
+
 def graphLFunction (n : ℕ) (G : WeightedGraph n) (s t : Fin n) (scale : ℝ) : ℝ :=
   G.weight s t * scale
+
 
 
 
@@ -73,9 +86,11 @@ theorem graphLFunction_linear (n : ℕ) (G : WeightedGraph n) (s t : Fin n) (a b
 
 
 
+
 theorem graphLFunction_zero (n : ℕ) (G : WeightedGraph n) (s t : Fin n) :
     graphLFunction n G s t 0 = 0 := by
   simp [graphLFunction]
+
 
 
 
@@ -86,8 +101,10 @@ structure YoungDiagram' where
 
 
 
+
 def YoungDiagram'.size (Y : YoungDiagram') : ℕ :=
   ∑ i : Fin Y.numRows, Y.rowLengths i
+
 
 
 
@@ -98,8 +115,10 @@ def emptyYoung : YoungDiagram' where
 
 
 
+
 theorem emptyYoung_size : emptyYoung.size = 0 := by
   simp [YoungDiagram'.size, emptyYoung]
+
 
 
 
@@ -110,12 +129,15 @@ def singleRowYoung (k : ℕ) : YoungDiagram' where
 
 
 
+
 theorem singleRowYoung_size (k : ℕ) : (singleRowYoung k).size = k := by
   simp [YoungDiagram'.size, singleRowYoung, Fin.sum_univ_one]
 
 
 
+
 def sortingBound (n : ℕ) : ℕ := n * (Nat.log 2 n + 1)
+
 
 
 
@@ -124,7 +146,9 @@ theorem sortingBound_ge (n : ℕ) : sortingBound n ≥ n := by
 
 
 
+
 def assignmentComplexity (n : ℕ) : ℕ := n ^ 3
+
 
 
 
@@ -134,7 +158,9 @@ theorem assignment_ge_quadratic (n : ℕ) (hn : n ≥ 1) :
 
 
 
+
 def hookLength (arm leg : ℕ) : ℕ := arm + leg + 1
+
 
 
 
@@ -143,8 +169,10 @@ theorem hookLength_pos (arm leg : ℕ) : hookLength arm leg ≥ 1 := by
 
 
 
+
 def minPlusIdentity (n : ℕ) (bigVal : ℝ) : Fin n → Fin n → ℝ :=
   fun i j => if i = j then 0 else bigVal
+
 
 
 
@@ -154,9 +182,11 @@ theorem minPlusIdentity_diag (n : ℕ) (M : ℝ) (i : Fin n) :
 
 
 
+
 theorem minPlusIdentity_off_diag (n : ℕ) (M : ℝ) (i j : Fin n) (h : i ≠ j) :
     minPlusIdentity n M i j = M := by
   simp [minPlusIdentity, h]
+
 
 
 
@@ -167,10 +197,12 @@ def bellmanFordStep (n : ℕ) (hn : 0 < n) (G : WeightedGraph n) (dist : Fin n �
 
 
 
+
 theorem bellmanFord_monotone (n : ℕ) (hn : 0 < n) (G : WeightedGraph n)
     (dist : Fin n → ℝ) (v : Fin n) :
     bellmanFordStep n hn G dist v ≤ dist v := by
   exact min_le_left _ _
+
 
 
 

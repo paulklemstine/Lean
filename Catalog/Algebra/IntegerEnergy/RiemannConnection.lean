@@ -18,6 +18,7 @@ def RobinInequality : Prop :=
 
 
 
+
 /-- The Robin ratio R(n) = σ(n) / (e^γ · n · ln(ln(n))). RH ⟺ R(n) < 1 for n ≥ 5041. -/
 def robinRatio (n : ℕ) : ℝ :=
   if n ≤ 2 then 0
@@ -26,8 +27,10 @@ def robinRatio (n : ℕ) : ℝ :=
 
 
 
+
 /-- σ(5040) = 19344. -/
 theorem sigma_5040 : ArithmeticFunction.sigma 1 5040 = 19344 := by native_decide
+
 
 
 
@@ -36,13 +39,16 @@ theorem divisors_5040 : (5040 : ℕ).divisors.card = 60 := by native_decide
 
 
 
+
 /-- 5040 = 7! -/
 theorem five040_eq_factorial : 5040 = 7 ! := by native_decide
 
 
 
+
 /-- 5040 = 2⁴ · 3² · 5 · 7 -/
 theorem five040_factorization : 5040 = 2 ^ 4 * 3 ^ 2 * 5 * 7 := by norm_num
+
 
 
 
@@ -54,8 +60,10 @@ theorem hcn_exponents_5040 :
 
 
 
+
 /-- σ(10080) = 39312. -/
 theorem sigma_10080 : ArithmeticFunction.sigma 1 10080 = 39312 := by native_decide
+
 
 
 
@@ -64,13 +72,16 @@ theorem divisors_10080 : (10080 : ℕ).divisors.card = 72 := by native_decide
 
 
 
+
 /-- σ(2520) = 9360. -/
 theorem sigma_2520 : ArithmeticFunction.sigma 1 2520 = 9360 := by native_decide
 
 
 
+
 /-- d(2520) = 48. -/
 theorem divisors_2520 : (2520 : ℕ).divisors.card = 48 := by native_decide
+
 
 
 
@@ -83,15 +94,18 @@ theorem sigma_one_prime {p : ℕ} (hp : p.Prime) :
 
 
 
+
 /-- Any prime has exactly 2 divisors. -/
 theorem prime_divisor_count {p : ℕ} (hp : p.Prime) : p.divisors.card = 2 := by
   rw [hp.divisors, Finset.card_pair (Ne.symm hp.one_lt.ne')]
 
 
 
+
 /-- The abundance ratio σ(n)/n for a positive natural number. -/
 def abundanceRatio (n : ℕ) : ℚ :=
   if n = 0 then 0 else (ArithmeticFunction.sigma 1 n : ℚ) / n
+
 
 
 
@@ -106,10 +120,12 @@ theorem abundanceRatio_ge_one {n : ℕ} (hn : 0 < n) : 1 ≤ abundanceRatio n :=
 
 
 
+
 /-- σ is multiplicative: σ(n·m) = σ(n)·σ(m) when gcd(n,m) = 1. -/
 theorem sigma_multiplicative :
     ArithmeticFunction.IsMultiplicative (ArithmeticFunction.sigma 1) :=
   ArithmeticFunction.isMultiplicative_sigma
+
 
 
 
@@ -119,9 +135,11 @@ def IsHighlyComposite (n : ℕ) : Prop :=
 
 
 
+
 /-- 1 is highly composite. -/
 theorem isHighlyComposite_one : IsHighlyComposite 1 :=
   ⟨Nat.one_pos, fun m hm hm1 => by omega⟩
+
 
 
 
@@ -131,9 +149,11 @@ theorem isHighlyComposite_two : IsHighlyComposite 2 := by
 
 
 
+
 /-- 12 is highly composite: it has more divisors than any smaller positive integer. -/
 theorem isHighlyComposite_twelve : IsHighlyComposite 12 := by
   refine ⟨by omega, ?_⟩; intro m hm hm12; interval_cases m <;> decide
+
 
 
 
@@ -143,10 +163,12 @@ theorem isSuperabundant_two : IsSuperabundant 2 := by
 
 
 
+
 /-- 5040 has exactly 30 times as many divisors as any prime. -/
 theorem energy_advantage_5040_vs_prime {p : ℕ} (hp : p.Prime) :
     p.divisors.card * 30 ≤ (5040 : ℕ).divisors.card := by
   rw [prime_divisor_count hp, divisors_5040]
+
 
 
 
@@ -159,10 +181,12 @@ theorem hcn120_beats_primes (p : ℕ) (hp : p.Prime) :
 
 
 
+
 /-- 6 is more abundant than 5 (a prime). -/
 theorem six_more_abundant_than_five :
     abundanceRatio 6 > abundanceRatio 5 := by
   unfold abundanceRatio; native_decide
+
 
 
 
@@ -173,10 +197,12 @@ theorem twelve_more_abundant_than_eleven :
 
 
 
+
 /-- 5040 is more abundant than 5039 (a prime). -/
 theorem five040_more_abundant_than_5039 :
     abundanceRatio 5040 > abundanceRatio 5039 := by
   unfold abundanceRatio; native_decide
+
 
 
 
@@ -185,8 +211,10 @@ theorem prime_5039 : Nat.Prime 5039 := by native_decide
 
 
 
+
 /-- σ(5039) = 5040. Since 5039 is prime, σ(5039) = 5039 + 1 = 5040. -/
 theorem sigma_5039 : ArithmeticFunction.sigma 1 5039 = 5040 := by native_decide
+
 
 
 
@@ -195,8 +223,10 @@ theorem five041_eq : 5041 = 71 ^ 2 := by norm_num
 
 
 
+
 /-- σ(5041) = 5113 = 1 + 71 + 5041. -/
 theorem sigma_5041 : ArithmeticFunction.sigma 1 5041 = 5113 := by native_decide
+
 
 
 
@@ -205,9 +235,11 @@ theorem sigma_7560 : ArithmeticFunction.sigma 1 7560 = 28800 := by native_decide
 
 
 
+
 /-- The LCM of 1 through 10 is 2520. -/
 theorem lcm_one_to_ten :
     (Finset.Icc 1 10).lcm id = 2520 := by native_decide
+
 
 
 
@@ -218,10 +250,12 @@ theorem five040_divisible (k : ℕ) (hk1 : 1 ≤ k) (hk7 : k ≤ 7) :
 
 
 
+
 /-- Every integer from 1 to 10 divides 2520. -/
 theorem two520_divisible (k : ℕ) (hk1 : 1 ≤ k) (hk10 : k ≤ 10) :
     k ∣ 2520 := by
   interval_cases k <;> omega
+
 
 
 
@@ -237,10 +271,12 @@ theorem robin_abundance_bound (hRobin : RobinInequality) (n : ℕ) (hn : n ≥ 5
 
 
 
+
 /-- The number of divisors of n is at least 1 for positive n. -/
 theorem divisor_count_pos {n : ℕ} (hn : 0 < n) : 0 < n.divisors.card := by
   rw [Finset.card_pos]
   exact ⟨1, Nat.mem_divisors.mpr ⟨one_dvd n, by omega⟩⟩
+
 
 
 

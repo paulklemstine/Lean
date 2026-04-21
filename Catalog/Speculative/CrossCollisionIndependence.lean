@@ -15,8 +15,14 @@ theorem cross_channels (k : ℕ) : k * k = k ^ 2 := by ring
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.CrossCollisionIndependence
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 11] -/
 theorem within_channels (k : ℕ) : Nat.choose k 2 = k * (k - 1) / 2 :=
   Nat.choose_two_right k
+
 
 
 
@@ -26,10 +32,13 @@ theorem total_channels_formula (k : ℕ) (hk : 2 ≤ k) :
 
 
 
+
 theorem channels_k4_total : 4 ^ 2 + 2 * Nat.choose 4 2 = 28 := by decide
 
 
+
 theorem channels_k8_total : 8 ^ 2 + 2 * Nat.choose 8 2 = 120 := by decide
+
 
 
 
@@ -38,9 +47,11 @@ theorem channel_lower_bound (k : ℕ) :
 
 
 
+
 theorem channel_upper_bound (k : ℕ) :
     k ^ 2 + 2 * Nat.choose k 2 ≤ 2 * k ^ 2 := by
   induction k <;> simp +arith +decide [ Nat.choose ] at * ; linarith
+
 
 
 
@@ -51,10 +62,12 @@ theorem birthday_tuples_needed (N k : ℕ) (hk : 0 < k) :
 
 
 
+
 theorem marginal_channels (k : ℕ) (hk : 2 ≤ k) :
     (k + 1) ^ 2 + 2 * Nat.choose (k + 1) 2 -
     (k ^ 2 + 2 * Nat.choose k 2) = 4 * k + 1 := by
   exact Nat.sub_eq_of_eq_add <| by induction hk <;> norm_num [ Nat.choose ] at * ; linarith;
+
 
 
 
@@ -64,6 +77,8 @@ theorem nontrivial_divisor_count (m : ℕ) (hm : 2 ≤ m) :
 
 
 
+
 theorem channel_efficiency_bound (k : ℕ) (hk : 1 ≤ k) :
     1 ≤ k ^ 2 := by nlinarith
+
 

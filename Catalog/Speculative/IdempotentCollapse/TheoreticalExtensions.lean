@@ -18,6 +18,7 @@ theorem idem_image_eq_fixed (f : α → α) (hf : IsIdempotent' f) :
 
 
 
+
 /-- Every idempotent iterate equals the idempotent (n ≥ 1). -/
 theorem idem_iterate (f : α → α) (hf : IsIdempotent' f) (n : ℕ) (hn : 1 ≤ n) :
     f^[n] = f := by
@@ -31,10 +32,12 @@ theorem idem_iterate (f : α → α) (hf : IsIdempotent' f) (n : ℕ) (hn : 1 �
 
 
 
+
 /-- A collapse function is an idempotent endomorphism. -/
 structure CollapseFunction (α : Type*) where
   collapse : α → α
   idempotent : ∀ x, collapse (collapse x) = collapse x
+
 
 
 
@@ -47,10 +50,12 @@ theorem collapse_image_eq_fixed {α : Type*} (C : CollapseFunction α) :
 
 
 
+
 /-- The identity is a (trivial) collapse function. -/
 def idCollapse (α : Type*) : CollapseFunction α where
   collapse := id
   idempotent := fun _ => rfl
+
 
 
 
@@ -61,9 +66,11 @@ def constCollapse {α : Type*} (c : α) : CollapseFunction α where
 
 
 
+
 /-- The critical line projection: P(σ, t) = (1/2, t). -/
 def criticalLineProjection : ℝ × ℝ → ℝ × ℝ :=
   fun ⟨_, t⟩ => (1/2, t)
+
 
 
 
@@ -71,6 +78,7 @@ def criticalLineProjection : ℝ × ℝ → ℝ × ℝ :=
 theorem criticalLineProjection_idempotent :
     ∀ p : ℝ × ℝ, criticalLineProjection (criticalLineProjection p) = criticalLineProjection p := by
   intro ⟨_, _⟩; rfl
+
 
 
 
@@ -82,6 +90,7 @@ theorem criticalLine_fixed_points :
   constructor
   · rintro ⟨h, -⟩; linarith
   · intro h; exact ⟨by linarith, trivial⟩
+
 
 
 
@@ -97,14 +106,17 @@ theorem RH_via_fixed_points (zeros : Set (ℝ × ℝ))
 
 
 
+
 /-- The reflection operator T(σ, t) = (1-σ, t). -/
 def zetaReflection : ℝ × ℝ → ℝ × ℝ := fun ⟨σ, t⟩ => (1 - σ, t)
+
 
 
 
 /-- T is an involution: T ∘ T = id. -/
 theorem zetaReflection_involution : ∀ p : ℝ × ℝ, zetaReflection (zetaReflection p) = p := by
   intro ⟨σ, t⟩; simp [zetaReflection]
+
 
 
 
@@ -116,11 +128,13 @@ theorem projection_from_reflection (σ t : ℝ) :
 
 
 
+
 /-- A model for the RG flow: a continuous dynamical system on coupling space. -/
 structure RGFlow (α : Type*) [TopologicalSpace α] where
   flow : ℝ → α → α
   flow_zero : ∀ x, flow 0 x = x
   semigroup : ∀ s t x, flow (s + t) x = flow s (flow t x)
+
 
 
 
@@ -130,10 +144,12 @@ def RGFixedPoint {α : Type*} [TopologicalSpace α] (F : RGFlow α) (x : α) : P
 
 
 
+
 /-- Fixed points are preserved under flow. -/
 theorem fixed_preserved {α : Type*} [TopologicalSpace α] (F : RGFlow α)
     (x : α) (hx : RGFixedPoint F x) (t : ℝ) :
     F.flow t x = x := hx t
+
 
 
 
@@ -154,6 +170,7 @@ theorem rg_limit_is_fixed {α : Type*} [TopologicalSpace α] [T2Space α]
 
 
 
+
 /-- A theory has a mass gap if there's a positive lower bound on excitation energies. -/
 structure MassGap (EnergySpectrum : Set ℝ) where
   vacuum : ℝ
@@ -161,6 +178,7 @@ structure MassGap (EnergySpectrum : Set ℝ) where
   gap_pos : 0 < gap
   vacuum_in : vacuum ∈ EnergySpectrum
   spectral_gap : ∀ E ∈ EnergySpectrum, E = vacuum ∨ vacuum + gap ≤ E
+
 
 
 
@@ -174,9 +192,11 @@ theorem vacuum_isolated (S : Set ℝ) (mg : MassGap S) :
 
 
 
+
 /-- A Boolean gate is idempotent if g(x, x) = x. -/
 def BoolGateIdempotent (g : Bool → Bool → Bool) : Prop :=
   ∀ x, g x x = x
+
 
 
 
@@ -186,9 +206,11 @@ theorem xor_not_idempotent : ¬ BoolGateIdempotent (· ^^ ·) := by
 
 
 
+
 /-- NOT is NOT idempotent (it's an involution, not idempotent). -/
 theorem not_not_idempotent : ¬ (∀ x : Bool, (!(!x)) = (!x)) := by
   push_neg; exact ⟨true, by simp⟩
+
 
 
 
@@ -199,10 +221,12 @@ theorem and_bool_monotone (a b c d : Bool) (hac : a ≤ c) (hbd : b ≤ d) :
 
 
 
+
 /-- OR preserves the Boolean ordering. -/
 theorem or_bool_monotone (a b c d : Bool) (hac : a ≤ c) (hbd : b ≤ d) :
     (a || b) ≤ (c || d) := by
   cases a <;> cases b <;> cases c <;> cases d <;> simp_all
+
 
 
 
@@ -211,6 +235,7 @@ theorem idem_surj_is_id {α : Type*} [Fintype α] [DecidableEq α]
     (f : α → α) (hf : IsIdempotent' f) (hsurj : Surjective f) :
     f = id := by
   ext x; obtain ⟨y, rfl⟩ := hsurj x; exact hf y
+
 
 
 
@@ -224,11 +249,13 @@ theorem collapse_compose_comm {α : Type*}
 
 
 
+
 /-- Complete classification of idempotent functions on Bool:
 they are exactly id, const true, and const false. -/
 theorem bool_idempotent_classification (f : Bool → Bool) (hf : IsIdempotent' f) :
     f = id ∨ f = (fun _ => true) ∨ f = (fun _ => false) := by
   fin_cases f <;> simp +decide [IsIdempotent'] at hf ⊢
+
 
 
 

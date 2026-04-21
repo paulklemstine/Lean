@@ -19,8 +19,14 @@ theorem no_enumeration_of_functions (α : Type*) [Nonempty α] :
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.SciFi.Paradoxes
+Auto-generated from theorem catalog database.
+Domain: Speculative/SciFi
+Declarations: 3] -/
 theorem negation_no_fixed_point : ¬ ∃ b : Bool, (!b) = b := by
   decide +revert
+
 
 
 
@@ -28,5 +34,6 @@ theorem grandfather_paradox {α : Type*} (f : α → α)
     (h_no_fp : ∀ x, f x ≠ x) :
     ¬ ∃ x, f x = x := by
   exact fun ⟨ x, hx ⟩ => h_no_fp x hx
+
 
 

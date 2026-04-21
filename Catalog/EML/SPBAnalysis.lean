@@ -14,6 +14,7 @@ def cayleyTransform (x : ℝ) : ℂ := (↑x - Complex.I) / (↑x + Complex.I)
 
 
 
+
 /-- [Section: # CatalogBuild.EML.SPBAnalysis
 Auto-generated from theorem catalog database.
 Domain: EML
@@ -30,10 +31,16 @@ theorem spb_strictMono_snd (a b₁ b₂ : ℝ)
 
 
 
+
+/-- [Section: # CatalogBuild.EML.SPBAnalysis
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 5] -/
 theorem cayley_unit_modulus (x : ℝ) :
     ‖cayleyTransform x‖ = 1 := by
   norm_num [ Complex.normSq, Complex.norm_def, cayleyTransform ];
   exact ne_of_gt <| Real.sqrt_pos.mpr <| by nlinarith
+
 
 
 
@@ -47,11 +54,13 @@ theorem spb_is_tan_addition (α β : ℝ)
 
 
 
+
 /-- The SPB-ODE solution. -/
 theorem spb_ode_solution (a x₀ t : ℝ) :
     let x := Real.tan (Real.arctan x₀ + Real.arctan a * t)
     x = Real.tan (Real.arctan x₀ + Real.arctan a * t) := by
   rfl
+
 
 
 

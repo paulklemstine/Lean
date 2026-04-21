@@ -22,6 +22,7 @@ structure Oct where
 @[ext]
 
 
+
 /-- [Section: # CatalogBuild.Physics.ArithmeticPhotons.PhotonResearchRound5
 Auto-generated from theorem catalog database.
 Domain: Physics/ArithmeticPhotons
@@ -33,9 +34,11 @@ theorem Oct.ext' {a b : Oct} (h0 : a.c0 = b.c0) (h1 : a.c1 = b.c1) (h2 : a.c2 = 
 
 
 
+
 /-- The squared norm of an octonion -/
 def Oct.normSq (o : Oct) : ℤ :=
   o.c0^2 + o.c1^2 + o.c2^2 + o.c3^2 + o.c4^2 + o.c5^2 + o.c6^2 + o.c7^2
+
 
 
 
@@ -52,35 +55,49 @@ def Oct.mul (a b : Oct) : Oct where
 
 
 
+
 /-- The unit octonions -/
 def Oct.one : Oct := ⟨1, 0, 0, 0, 0, 0, 0, 0⟩
 
 
+
+/-- [Section: # CatalogBuild.Physics.ArithmeticPhotons.PhotonResearchRound5
+Auto-generated from theorem catalog database.
+Domain: Physics/ArithmeticPhotons
+Declarations: 51] -/
 def Oct.e1 : Oct := ⟨0, 1, 0, 0, 0, 0, 0, 0⟩
+
 
 
 def Oct.e2 : Oct := ⟨0, 0, 1, 0, 0, 0, 0, 0⟩
 
 
+
 def Oct.e3 : Oct := ⟨0, 0, 0, 1, 0, 0, 0, 0⟩
+
 
 
 def Oct.e4 : Oct := ⟨0, 0, 0, 0, 1, 0, 0, 0⟩
 
 
+
 def Oct.e5 : Oct := ⟨0, 0, 0, 0, 0, 1, 0, 0⟩
 
 
+
 def Oct.e6 : Oct := ⟨0, 0, 0, 0, 0, 0, 1, 0⟩
+
 
 
 def Oct.e7 : Oct := ⟨0, 0, 0, 0, 0, 0, 0, 1⟩
 
 
 
+
 /-- Octonion multiplication is NOT commutative -/
 theorem oct_not_commutative : Oct.mul Oct.e1 Oct.e2 ≠ Oct.mul Oct.e2 Oct.e1 := by
   decide
+
 
 
 
@@ -91,6 +108,7 @@ theorem oct_not_associative :
 
 
 
+
 /-- The octonion norm is multiplicative (8-square identity from first principles) -/
 theorem oct_norm_multiplicative (a b : Oct) :
     (Oct.mul a b).normSq = a.normSq * b.normSq := by
@@ -98,11 +116,14 @@ theorem oct_norm_multiplicative (a b : Oct) :
 
 
 
+
 /-- Unit basis octonions have norm 1 -/
 theorem oct_e1_norm : Oct.e1.normSq = 1 := by simp [Oct.normSq, Oct.e1]
 
 
+
 theorem oct_e2_norm : Oct.e2.normSq = 1 := by simp [Oct.normSq, Oct.e2]
+
 
 
 
@@ -112,14 +133,17 @@ theorem oct_one_mul (a : Oct) : Oct.mul Oct.one a = a := by
 
 
 
+
 /-- The identity octonion is a right identity -/
 theorem oct_mul_one (a : Oct) : Oct.mul a Oct.one = a := by
   ext <;> simp [Oct.mul, Oct.one]
 
 
 
+
 /-- e₁² = -1 (like imaginary unit) -/
 theorem oct_e1_sq : Oct.mul Oct.e1 Oct.e1 = ⟨-1, 0, 0, 0, 0, 0, 0, 0⟩ := by decide
+
 
 
 
@@ -129,10 +153,12 @@ def Oct.conj (o : Oct) : Oct :=
 
 
 
+
 /-- Product with conjugate gives the norm (real part) -/
 theorem oct_mul_conj_real_part (a : Oct) :
     (Oct.mul a (Oct.conj a)).c0 = a.normSq := by
   simp [Oct.mul, Oct.conj, Oct.normSq]; ring
+
 
 
 
@@ -150,8 +176,10 @@ theorem oct_mul_conj_imag_zero (a : Oct) :
 
 
 
+
 /-- A gate is a function Oct → Oct given by left-multiplication -/
 def octGate (g : Oct) (x : Oct) : Oct := Oct.mul g x
+
 
 
 
@@ -166,10 +194,12 @@ theorem oct_gates_not_composable :
 
 
 
+
 /-- For the quaternionic subalgebra {1, e₁, e₂, e₃}, gate composition DOES work. -/
 theorem quat_subalgebra_associative :
     Oct.mul (Oct.mul Oct.e1 Oct.e2) Oct.e3 = Oct.mul Oct.e1 (Oct.mul Oct.e2 Oct.e3) := by
   decide
+
 
 
 
@@ -178,10 +208,12 @@ def minkForm (t x y : ℤ) : ℤ := t^2 - x^2 - y^2
 
 
 
+
 /-- The Minkowski form for a null photon is zero -/
 theorem null_mink_form (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     minkForm c a b = 0 := by
   simp [minkForm]; linarith
+
 
 
 
@@ -194,9 +226,11 @@ theorem null_sum_null_orthogonal (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ)
 
 
 
+
 /-- Reflection (a,b,c) → (b,a,c) preserves the Pythagorean property -/
 theorem leg_swap_preserves (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     b^2 + a^2 = c^2 := by linarith
+
 
 
 
@@ -206,10 +240,12 @@ theorem neg_leg_preserves (a b c : ℤ) (h : a^2 + b^2 = c^2) :
 
 
 
+
 /-- Sign changes on both legs preserve the Pythagorean property -/
 theorem sign_change_preserves (a b c : ℤ) (h : a^2 + b^2 = c^2)
     (s₁ s₂ : ℤ) (hs₁ : s₁^2 = 1) (hs₂ : s₂^2 = 1) :
     (s₁ * a)^2 + (s₂ * b)^2 = c^2 := by nlinarith
+
 
 
 
@@ -225,8 +261,10 @@ theorem hurwitz_are_powers_of_two :
 
 
 
+
 /-- Product of Hurwitz dimensions: 1 · 2 · 4 · 8 = 64 = 2⁶ -/
 theorem hurwitz_product : (1 : ℕ) * 2 * 4 * 8 = 2^6 := by norm_num
+
 
 
 
@@ -235,9 +273,11 @@ theorem hurwitz_sum_sq : (1 : ℕ)^2 + 2^2 + 4^2 + 8^2 = 85 := by norm_num
 
 
 
+
 /-- Each Hurwitz dimension divides the next -/
 theorem hurwitz_divisibility : (1 : ℕ) ∣ 2 ∧ (2 : ℕ) ∣ 4 ∧ (4 : ℕ) ∣ 8 :=
   ⟨⟨2, rfl⟩, ⟨2, rfl⟩, ⟨2, rfl⟩⟩
+
 
 
 
@@ -249,11 +289,13 @@ def photonChirality (a b : ℤ) : ℤ :=
 
 
 
+
 /-- Chirality is in {-1, 0, 1} -/
 theorem chirality_values (a b : ℤ) :
     photonChirality a b ∈ ({-1, 0, 1} : Set ℤ) := by
   simp only [photonChirality, Set.mem_insert_iff, Set.mem_singleton_iff]
   split_ifs <;> omega
+
 
 
 
@@ -265,8 +307,10 @@ theorem chirality_conjugate (a b : ℤ) (hab : a * b ≠ 0) :
 
 
 
+
 /-- The (3,4,5) triple is primitive -/
 theorem triple_345_primitive : Int.gcd 3 4 = 1 := by native_decide
+
 
 
 
@@ -275,18 +319,23 @@ theorem triple_6810_not_primitive : Int.gcd 6 8 ≠ 1 := by native_decide
 
 
 
+
 theorem fano_e1e2 : Oct.mul Oct.e1 Oct.e2 = Oct.e3 := by decide
 
 
+
 theorem fano_e2e4 : Oct.mul Oct.e2 Oct.e4 = Oct.e6 := by decide
+
 
 
 theorem fano_e1e4 : Oct.mul Oct.e1 Oct.e4 = Oct.e5 := by decide
 
 
 
+
 /-- e₄·e₁ = -e₅ (non-commutativity!) -/
 theorem fano_e4e1 : Oct.mul Oct.e4 Oct.e1 = ⟨0, 0, 0, 0, 0, -1, 0, 0⟩ := by decide
+
 
 
 
@@ -302,11 +351,13 @@ theorem oct_all_sq_minus_one :
 
 
 
+
 /-- The left Moufang identity verified on specific elements:
 e₁(e₂(e₁·e₃)) = (e₁(e₂·e₁))e₃ -/
 theorem moufang_identity_example :
     Oct.mul Oct.e1 (Oct.mul Oct.e2 (Oct.mul Oct.e1 Oct.e3)) =
     Oct.mul (Oct.mul Oct.e1 (Oct.mul Oct.e2 Oct.e1)) Oct.e3 := by decide
+
 
 
 
@@ -323,15 +374,18 @@ def Oct.associator (x y z : Oct) : Oct :=
 
 
 
+
 /-- The associator is zero for quaternionic elements -/
 theorem associator_zero_quat :
     Oct.associator Oct.e1 Oct.e2 Oct.e3 = ⟨0, 0, 0, 0, 0, 0, 0, 0⟩ := by decide
 
 
 
+
 /-- The associator is nonzero for octonionic elements involving e₄ -/
 theorem associator_nonzero_oct :
     Oct.associator Oct.e1 Oct.e2 Oct.e4 ≠ ⟨0, 0, 0, 0, 0, 0, 0, 0⟩ := by decide
+
 
 
 
@@ -346,5 +400,6 @@ theorem associator_alternating_12 :
      -(Oct.associator Oct.e2 Oct.e1 Oct.e4).c5,
      -(Oct.associator Oct.e2 Oct.e1 Oct.e4).c6,
      -(Oct.associator Oct.e2 Oct.e1 Oct.e4).c7⟩ := by decide
+
 
 

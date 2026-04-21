@@ -15,6 +15,7 @@ def identityBridge (C : Type*) [Category C] : MathBridge C C :=
 
 
 
+
 /-- A bridge invariant is a property preserved by both directions. -/
 structure BridgeInvariant {C D : Type*} [Category C] [Category D]
     (bridge : MathBridge C D) where
@@ -25,10 +26,12 @@ structure BridgeInvariant {C D : Type*} [Category C] [Category D]
 
 
 
+
 /-- A bridge is an equivalence if the forward functor is. -/
 def isBridgeEquivalence {C D : Type*} [Category C] [Category D]
     (bridge : MathBridge C D) : Prop :=
   bridge.forward.IsEquivalence
+
 
 
 
@@ -45,11 +48,13 @@ def bridgeSubsumes : BridgeLevel → BridgeLevel → Prop
 
 
 
+
 /-- An analysis bridge extends a discrete bridge to handle limits. -/
 structure AnalysisBridge where
   discreteMap : ℕ → ℝ
   continuousLimit : ℝ
   hasLimit : Filter.Tendsto discreteMap Filter.atTop (nhds continuousLimit)
+
 
 
 
@@ -61,6 +66,7 @@ theorem analysis_bridge_unique (b₁ b₂ : AnalysisBridge)
   have h2 := b₂.hasLimit
   rw [h] at h1
   exact tendsto_nhds_unique h1 h2
+
 
 
 
@@ -106,6 +112,7 @@ theorem riemann_sum_bridge (f : ℝ → ℝ) (hf : Continuous f) :
 
 
 
+
 /-- An automorphic oracle maps Galois data to automorphic data.
 This is the Langlands correspondence at the highest level. -/
 structure AutomorphicOracle where
@@ -116,10 +123,12 @@ structure AutomorphicOracle where
 
 
 
+
 /-- The Langlands bridge preserves L-functions. -/
 theorem langlands_bridge_preserves_L (oracle : AutomorphicOracle) (s : ℂ) :
     oracle.galoisLFunction s = oracle.automorphicLFunction s := by
   rw [oracle.lfunction_match]
+
 
 
 
@@ -129,6 +138,7 @@ theorem type_prop_bridge (α : Type*) :
   constructor
   · intro ⟨a⟩; exact ⟨a, trivial⟩
   · intro ⟨a, _⟩; exact ⟨a⟩
+
 
 
 

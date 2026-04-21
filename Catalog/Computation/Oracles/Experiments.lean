@@ -14,10 +14,12 @@ def evenOracle' : ℕ → ℕ := fun n => 2 * (n / 2)
 
 
 
+
 /-- The even oracle is idempotent. -/
 theorem evenOracle'_idempotent (n : ℕ) :
     evenOracle' (evenOracle' n) = evenOracle' n := by
   unfold evenOracle'; omega
+
 
 
 
@@ -35,10 +37,12 @@ example : modOracle' 7 3 = 3 := by native_decide
 
 
 
+
 /-- AND with true is idempotent. -/
 theorem andTrue_idempotent' (x : Bool) :
     Bool.and (Bool.and x true) true = Bool.and x true := by
   cases x <;> rfl
+
 
 
 
@@ -52,8 +56,10 @@ theorem not_not_idempotent' : ¬∀ x : Bool, (!!x) = (!x) := by
 
 
 
+
 /-- Tropical max with a threshold. -/
 def tropicalOracle' (threshold : ℝ) : ℝ → ℝ := fun x => max threshold x
+
 
 
 
@@ -61,6 +67,7 @@ def tropicalOracle' (threshold : ℝ) : ℝ → ℝ := fun x => max threshold x
 theorem tropicalOracle'_idempotent (t : ℝ) (x : ℝ) :
     tropicalOracle' t (tropicalOracle' t x) = tropicalOracle' t x := by
   simp [tropicalOracle', max_assoc]
+
 
 
 
@@ -72,6 +79,7 @@ theorem tropicalOracle'_fixed_iff (t x : ℝ) :
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- EXPERIMENT 5: Convergence
 -- ═══════════════════════════════════════════════════════════════════════════════
+
 
 
 
@@ -93,8 +101,10 @@ theorem convergence_is_immediate' {α : Type*} (f : α → α) (hf : ∀ x, f (f
 
 
 
+
 /-- Project onto the x-axis. -/
 def projectX' : ℝ × ℝ → ℝ × ℝ := fun p => (p.1, 0)
+
 
 
 
@@ -102,6 +112,7 @@ def projectX' : ℝ × ℝ → ℝ × ℝ := fun p => (p.1, 0)
 theorem projectX'_idempotent (p : ℝ × ℝ) :
     projectX' (projectX' p) = projectX' p := by
   simp [projectX']
+
 
 
 
@@ -122,13 +133,16 @@ theorem projectX'_fixed_iff (p : ℝ × ℝ) :
 
 
 
+
 /-- In tropical geometry, max(a, a) = a. -/
 theorem tropical_idempotent' (a : ℝ) : max a a = a := max_self a
 
 
 
+
 /-- Tropical addition is commutative. -/
 theorem tropical_comm' (a b : ℝ) : max a b = max b a := max_comm a b
+
 
 
 
@@ -138,10 +152,12 @@ theorem tropical_assoc' (a b c : ℝ) : max (max a b) c = max a (max b c) :=
 
 
 
+
 /-- Tropical multiplication distributes over tropical addition. -/
 theorem tropical_distrib' (a b c : ℝ) :
     a + max b c = max (a + b) (a + c) := by
   simp [max_def]; split_ifs <;> linarith
+
 
 
 
@@ -153,6 +169,7 @@ theorem tropical_one_step' (t x : ℝ) :
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- SUMMARY
 -- ═══════════════════════════════════════════════════════════════════════════════
+
 
 
 

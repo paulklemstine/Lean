@@ -18,6 +18,7 @@ theorem master_equation_general {X : Type*} (O : X → X) (hO : ∀ x, O (O x) =
 
 
 
+
 /-- [Section: # CatalogBuild.Speculative.Other.Bridges
 Auto-generated from theorem catalog database.
 Domain: Speculative/Other
@@ -29,15 +30,22 @@ theorem idempotent_join_comm {R : Type*} [CommRing R] {e f : R}
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.Bridges
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 22] -/
 theorem peirce_decomp {R : Type*} [Ring R] (e x : R) (he : e * e = e) :
     x = e * x * e + e * x * (1 - e) + (1 - e) * x * e + (1 - e) * x * (1 - e) := by
   simp +decide [ mul_sub, sub_mul, mul_assoc, he ]
 
 
 
+
 /-- ReLU's image equals its fixed-point set. -/
 theorem relu_master_equation : range relu = {x : ℝ | relu x = x} :=
   master_equation_general relu relu_idempotent
+
 
 
 
@@ -49,10 +57,12 @@ theorem relu_scale_commute (c : ℝ) (hc : 0 ≤ c) (x : ℝ) :
 
 
 
+
 /-- The repulsion product for a finite collection of real numbers:
 ∏_{i<j} (v_j - v_i). When this vanishes, two values coincide. -/
 def repulsionProduct (n : ℕ) (v : Fin n → ℝ) : ℝ :=
   ∏ i : Fin n, ∏ j ∈ Finset.Ioi i, (v j - v i)
+
 
 
 
@@ -62,9 +72,11 @@ def coulombEnergyFinite (n : ℕ) (v : Fin n → ℝ) : ℝ :=
 
 
 
+
 /-- The confining energy in a quadratic potential. -/
 def confiningEnergyFinite (n : ℕ) (v : Fin n → ℝ) : ℝ :=
   ∑ i : Fin n, v i ^ 2 / 2
+
 
 
 
@@ -72,6 +84,7 @@ def confiningEnergyFinite (n : ℕ) (v : Fin n → ℝ) : ℝ :=
 structure MathBridge (C D : Type*) [Category C] [Category D] where
   forward : C ⥤ D
   backward : D ⥤ C
+
 
 
 
@@ -83,6 +96,7 @@ def composeBridges {C D E : Type*} [Category C] [Category D] [Category E]
 
 
 
+
 /-- An idempotent bridge: a bridge from a category to itself
 whose double application is naturally isomorphic to itself. -/
 def IsIdempotentBridge {C : Type*} [Category C] (B : MathBridge C C) : Prop :=
@@ -90,10 +104,12 @@ def IsIdempotentBridge {C : Type*} [Category C] (B : MathBridge C C) : Prop :=
 
 
 
+
 /-- The identity bridge is idempotent. -/
 theorem identity_bridge_idempotent {C : Type*} [Category C] :
     IsIdempotentBridge (⟨Functor.id C, Functor.id C⟩ : MathBridge C C) :=
   ⟨Functor.leftUnitor _⟩
+
 
 
 
@@ -105,10 +121,12 @@ def IsTropicalCharacter {G : Type*} [Group G] (χ : G → ℝ) : Prop :=
 
 
 
+
 /-- The trivial tropical character sends everything to 0. -/
 theorem trivial_tropical_character {G : Type*} [Group G] :
     IsTropicalCharacter (fun (_ : G) => (0 : ℝ)) :=
   ⟨rfl, fun _ _ => by ring⟩
+
 
 
 
@@ -118,11 +136,13 @@ def tropicalDirichletChar (n : ℕ) (k : ZMod n) : ZMod n → ℝ :=
 
 
 
+
 /-- The tropical Fourier transform on a finite group ℤ/nℤ.
 F̂(k) = max_m { f(m) + k·m/n }  (= Legendre transform). -/
 def tropicalFourierFinite (n : ℕ) [NeZero n] (f : ZMod n → ℝ) : ZMod n → ℝ :=
   fun k => Finset.sup' Finset.univ Finset.univ_nonempty
     (fun m => f m + (ZMod.val (k * m) : ℝ) / n)
+
 
 
 
@@ -144,15 +164,18 @@ section Unification
 
 
 
+
 /-- The central observation: in ANY monoid, the identity is idempotent. -/
 theorem identity_is_idempotent {M : Type*} [Monoid M] : IsIdempotent' (1 : M) :=
   mul_one 1
 
 
 
+
 /-- The zero element is idempotent in any ring. -/
 theorem zero_is_idempotent {R : Type*} [Ring R] : IsIdempotent' (0 : R) :=
   mul_zero 0
+
 
 
 
@@ -165,15 +188,18 @@ theorem idempotent_sublattice {R : Type*} [CommRing R] :
 
 
 
+
 /-- Bridge universality: the inf operation on any semilattice is idempotent. -/
 theorem inf_idempotent_universal {S : Type*} [SemilatticeInf S] (a : S) :
     a ⊓ a = a := inf_idem a
 
 
 
+
 /-- Bridge universality: the sup operation on any semilattice is idempotent. -/
 theorem sup_idempotent_universal {S : Type*} [SemilatticeSup S] (a : S) :
     a ⊔ a = a := sup_idem a
+
 
 
 

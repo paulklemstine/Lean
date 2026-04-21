@@ -14,8 +14,10 @@ def emlMetric11 (x : ℝ) : ℝ := Real.exp x
 
 
 
+
 /-- The (2,2) component: g₂₂(x,y) = 1/y² for y > 0. -/
 def emlMetric22 (y : ℝ) : ℝ := 1 / y ^ 2
+
 
 
 
@@ -26,10 +28,12 @@ theorem emlMetric_det (x y : ℝ) (hy : 0 < y) :
 
 
 
+
 /-- Metric determinant is positive for y > 0. -/
 theorem emlMetric_det_pos (x y : ℝ) (hy : 0 < y) :
     emlMetric11 x * emlMetric22 y > 0 := by
   rw [emlMetric_det x y hy]; positivity
+
 
 
 
@@ -38,14 +42,17 @@ def flatCoordU (x : ℝ) : ℝ := 2 * Real.exp (x / 2)
 
 
 
+
 /-- Flat coordinate v = ln(y) for y > 0. -/
 def flatCoordV (y : ℝ) : ℝ := Real.log y
+
 
 
 
 /-- The u-coordinate is always positive. -/
 theorem flatCoordU_pos (x : ℝ) : flatCoordU x > 0 := by
   unfold flatCoordU; positivity
+
 
 
 
@@ -59,11 +66,13 @@ theorem flatCoordU_strictMono : StrictMono flatCoordU := by
 
 
 
+
 /-- The v-coordinate is strictly monotone in y on (0,∞). -/
 theorem flatCoordV_strictMono : StrictMonoOn flatCoordV (Set.Ioi 0) := by
   intro a ha b _ hab
   unfold flatCoordV
   exact Real.log_lt_log ha hab
+
 
 
 
@@ -77,10 +86,12 @@ theorem flatCoordU_deriv (x : ℝ) :
 
 
 
+
 /-- (du/dx)² = exp(x) = g₁₁, confirming the flat coordinate transformation. -/
 theorem flatCoordU_deriv_sq (x : ℝ) :
     Real.exp (x / 2) ^ 2 = Real.exp x := by
   rw [sq, ← Real.exp_add]; congr 1; ring
+
 
 
 
@@ -92,10 +103,12 @@ theorem flatCoordV_deriv (y : ℝ) (hy : y ≠ 0) :
 
 
 
+
 /-- (dv/dy)² = 1/y² = g₂₂. -/
 theorem flatCoordV_deriv_sq (y : ℝ) :
     (y⁻¹) ^ 2 = 1 / y ^ 2 := by
   rw [inv_pow]; ring
+
 
 
 
@@ -105,9 +118,11 @@ def emlDistSq (x₁ y₁ x₂ y₂ : ℝ) : ℝ :=
 
 
 
+
 /-- Distance squared is nonneg. -/
 theorem emlDistSq_nonneg (x₁ y₁ x₂ y₂ : ℝ) : emlDistSq x₁ y₁ x₂ y₂ ≥ 0 := by
   unfold emlDistSq; positivity
+
 
 
 
@@ -127,6 +142,7 @@ theorem emlDistSq_eq_zero_iff (x₁ y₁ x₂ y₂ : ℝ) (hy₁ : 0 < y₁) (hy
 
 
 
+
 /-- Distance is symmetric. -/
 theorem emlDistSq_symm (x₁ y₁ x₂ y₂ : ℝ) :
     emlDistSq x₁ y₁ x₂ y₂ = emlDistSq x₂ y₂ x₁ y₁ := by
@@ -134,9 +150,11 @@ theorem emlDistSq_symm (x₁ y₁ x₂ y₂ : ℝ) :
 
 
 
+
 /-- Distance from a point to itself is zero. -/
 theorem emlDistSq_self (x y : ℝ) : emlDistSq x y x y = 0 := by
   unfold emlDistSq; ring
+
 
 
 
@@ -150,11 +168,13 @@ theorem geodesic_y_geometric (y₁ y₂ t : ℝ) (hy₁ : 0 < y₁) (hy₂ : 0 <
 
 
 
+
 /-- Translation in v (= scaling in y): v ↦ v + ln(c). -/
 theorem isometry_y_scaling (c y : ℝ) (hc : 0 < c) (hy : 0 < y) :
     flatCoordV (c * y) = flatCoordV y + Real.log c := by
   unfold flatCoordV
   rw [Real.log_mul (ne_of_gt hc) (ne_of_gt hy), add_comm]
+
 
 
 
@@ -164,10 +184,12 @@ theorem emlMetric11_at_zero : emlMetric11 0 = 1 := by
 
 
 
+
 /-- The y-part of EML metric matches the Poincaré half-plane metric. -/
 theorem eml_poincare_y_match (y : ℝ) :
     emlMetric22 y = 1 / y ^ 2 := by
   simp [emlMetric22]
+
 
 
 

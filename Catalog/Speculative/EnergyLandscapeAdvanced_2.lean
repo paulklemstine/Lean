@@ -15,13 +15,20 @@ def E' (N x : ℕ) : ℕ := N % x
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.EnergyLandscapeAdvanced_2
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 9] -/
 theorem energy_at_divisor' (N d : ℕ) (hd : d ∣ N) : E' N d = 0 :=
   Nat.mod_eq_zero_of_dvd hd
 
 
 
+
 theorem energy_lt_x (N x : ℕ) (hx : 0 < x) : E' N x < x :=
   Nat.mod_lt N hx
+
 
 
 
@@ -31,8 +38,10 @@ theorem energy_pos_nondivisor (N x : ℕ) (hx : 0 < x) (hnd : ¬(x ∣ N)) :
 
 
 
+
 def sublevel' (N t : ℕ) : Finset ℕ :=
   (Finset.Icc 1 N).filter (fun x => E' N x ≤ t)
+
 
 
 
@@ -41,6 +50,7 @@ theorem sublevel_antitone (N s t : ℕ) (hst : s ≤ t) :
   intro x hx
   simp only [sublevel', Finset.mem_filter] at hx ⊢
   exact ⟨hx.1, le_trans hx.2 hst⟩
+
 
 
 
@@ -54,12 +64,14 @@ theorem energy_max_between_divisors' (N d₁ d₂ : ℕ) (hlt : d₁ < d₂) :
 
 
 
+
 /-- At a divisor d, E(N,d) = 0 which is the global minimum.
 Therefore E(N,d) ≤ E(N,y) for all y, making d a global minimum point. -/
 theorem energy_global_min_at_divisor (N d y : ℕ) (hd : d ∣ N) :
     E' N d ≤ E' N y := by
   rw [energy_at_divisor' N d hd]
   exact Nat.zero_le _
+
 
 
 
@@ -72,5 +84,6 @@ theorem energy_sum_upper (N : ℕ) (hN : 0 < N) :
     _ ≤ N * N := by
         have : (Finset.Icc 1 N).card ≤ N := by rw [Nat.card_Icc]; omega
         exact Nat.mul_le_mul_right N this
+
 
 

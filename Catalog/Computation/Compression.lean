@@ -15,6 +15,7 @@ lemma card_binary_strings (n : ℕ) : Fintype.card (Fin n → Bool) = 2 ^ n := b
 
 
 
+
 /-- **Core impossibility theorem**: There is no injective function from binary strings of
 length `n` to binary strings of length `m` when `m < n`. This is because `2^n > 2^m`,
 so by the pigeonhole principle, any such function must have collisions. -/
@@ -27,6 +28,7 @@ theorem no_injective_compression {n m : ℕ} (h : m < n) :
 
 
 
+
 /-- There is no injective function from `n`-bit strings to strictly shorter strings.
 This is the "you can't compress everything" theorem. -/
 theorem no_universal_compression (n : ℕ) (hn : 0 < n) :
@@ -35,10 +37,12 @@ theorem no_universal_compression (n : ℕ) (hn : 0 < n) :
 
 
 
+
 /-- The geometric series: `∑_{i=0}^{n-1} 2^i = 2^n - 1`. -/
 lemma card_shorter_strings (n : ℕ) :
     ∑ i ∈ Finset.range n, 2 ^ i = 2 ^ n - 1 := by
   norm_num [Nat.geomSum_eq]
+
 
 
 
@@ -50,11 +54,13 @@ theorem incompressible_strings_lower_bound (n k : ℕ) (_hk : 1 ≤ k) (_hn : k 
 
 
 
+
 /-- `2^(n-k+1) ≤ 2^n` when `k ≥ 1, k ≤ n`. At most `2^(n-k+1)` strings of length
 `≤ n-k` exist, so most `n`-bit strings are incompressible. -/
 theorem incompressible_fraction_bound (n k : ℕ) (_hk : 1 ≤ k) (hn : k ≤ n) :
     2 ^ (n - k + 1) ≤ 2 ^ n := by
   exact pow_le_pow_right₀ (by decide) (by omega)
+
 
 
 
@@ -67,10 +73,12 @@ structure Codebook (Source : Type*) (Code : Type*) where
 
 
 
+
 /-- Any codebook provides injective encoding. -/
 theorem Codebook.encode_injective {Source Code : Type*} (cb : Codebook Source Code) :
     Injective cb.encode :=
   fun a b h => by have := cb.lossless a; have := cb.lossless b; aesop
+
 
 
 
@@ -82,12 +90,14 @@ def Codebook.identity (α : Type*) : Codebook α α where
 
 
 
+
 /-- Given a bijection between source and code, we get a perfect codebook. -/
 noncomputable def Codebook.ofEquiv {Source Code : Type*} (e : Source ≃ Code) :
     Codebook Source Code where
   encode := e
   decode := e.symm
   lossless := fun s => e.symm_apply_apply s
+
 
 
 
@@ -101,6 +111,7 @@ theorem codebook_exists_of_card_le {Source Code : Type*} [Fintype Source] [Finty
     have : Nonempty (Source ↪ Code) := Embedding.nonempty_of_card_le h
     exact ⟨this.some, trivial⟩
   exact ⟨⟨e, Function.invFun e, fun s => Function.leftInverse_invFun e.injective _⟩, e.injective⟩
+
 
 
 
@@ -122,9 +133,11 @@ theorem kraft_inequality_nat {n : ℕ} (lengths : Fin n → ℕ) (L : ℕ)
 
 
 
+
 /-- **Shannon entropy** of a probability distribution on a finite type, measured in bits. -/
 noncomputable def shannonEntropy {α : Type*} [Fintype α] (p : α → ℝ) : ℝ :=
   -∑ x : α, if p x > 0 then p x * Real.logb 2 (p x) else 0
+
 
 
 
@@ -136,6 +149,7 @@ theorem shannonEntropy_nonneg {α : Type*} [Fintype α] (p : α → ℝ)
     split_ifs <;> nlinarith [hp_nonneg x, Real.logb_nonpos one_lt_two (hp_nonneg x)
       (show p x ≤ 1 by linarith [hp_nonneg x,
         Finset.single_le_sum (fun a _ => hp_nonneg a) hx])])
+
 
 
 

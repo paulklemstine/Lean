@@ -18,6 +18,7 @@ theorem invStereo_on_circle (t : ℝ) :
 
 
 
+
 /-- Inverse stereographic projection: ℝ → S¹ ⊂ ℝ².
 The encoding: a massive particle's state t maps to a photon state on S¹. -/
 def invStereo (t : ℝ) : ℝ × ℝ :=
@@ -25,8 +26,10 @@ def invStereo (t : ℝ) : ℝ × ℝ :=
 
 
 
+
 /-- The denominator 1 + t² is always positive. -/
 lemma invStereo_denom_pos (t : ℝ) : (0 : ℝ) < 1 + t ^ 2 := by positivity
+
 
 
 

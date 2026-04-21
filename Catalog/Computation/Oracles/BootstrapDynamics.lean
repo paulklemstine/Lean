@@ -17,9 +17,11 @@ def bootstrapT (T : ℝ) (r : ℝ) : ℝ := (2 + T) * r ^ 2 - (1 + T) * r ^ 3
 
 
 
+
 /-- At T=1 the generalized map reduces to the standard bootstrap map. -/
 theorem bootstrapT_one (r : ℝ) : bootstrapT 1 r = 3 * r ^ 2 - 2 * r ^ 3 := by
   unfold bootstrapT; ring
+
 
 
 
@@ -29,9 +31,11 @@ theorem bootstrapT_fixed_zero (T : ℝ) : bootstrapT T 0 = 0 := by
 
 
 
+
 /-- r = 1 is always a fixed point for any temperature. -/
 theorem bootstrapT_fixed_one (T : ℝ) : bootstrapT T 1 = 1 := by
   unfold bootstrapT; ring
+
 
 
 
@@ -46,6 +50,11 @@ theorem bootstrapT_critical_point (T : ℝ) (hT : -1 < T) :
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.BootstrapDynamics
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 25] -/
 theorem bootstrapT_fixed_points (T : ℝ) (hT : 0 < T) (r : ℝ) :
     bootstrapT T r = r ↔ r = 0 ∨ r = 1 / (1 + T) ∨ r = 1 := by
   constructor <;> intro h;
@@ -57,11 +66,13 @@ theorem bootstrapT_fixed_points (T : ℝ) (hT : 0 < T) (r : ℝ) :
 
 
 
+
 theorem bootstrapT_improves_above_critical (T : ℝ) (hT : 0 < T) (r : ℝ)
     (hr1 : 1 / (1 + T) < r) (hr2 : r < 1) :
     r < bootstrapT T r := by
   rw [ div_lt_iff₀ ( by linarith ) ] at hr1;
   unfold bootstrapT; nlinarith [ mul_pos ( sub_pos.2 hr1 ) ( sub_pos.2 hr2 ) ] ;
+
 
 
 
@@ -74,14 +85,17 @@ theorem bootstrapT_degrades_below_critical (T : ℝ) (hT : 0 < T) (r : ℝ)
 
 
 
+
 theorem critical_point_decreasing (T₁ T₂ : ℝ) (hT1 : 0 < T₁) (hT2 : T₁ < T₂) :
     1 / (1 + T₂) < 1 / (1 + T₁) := by
   gcongr
 
 
 
+
 /-- The Lyapunov function V(r) = r²(1-r)². -/
 def lyapunovV (r : ℝ) : ℝ := r ^ 2 * (1 - r) ^ 2
+
 
 
 
@@ -92,14 +106,17 @@ theorem lyapunovV_zero_iff (r : ℝ) : lyapunovV r = 0 ↔ r = 0 ∨ r = 1 := by
 
 
 
+
 /-- V is nonneg everywhere. -/
 theorem lyapunovV_nonneg (r : ℝ) : 0 ≤ lyapunovV r := by
   unfold lyapunovV; positivity
 
 
 
+
 /-- An operator is an oracle (idempotent). -/
 def IsIdempotent {α : Type*} (P : α → α) : Prop := ∀ x, P (P x) = P x
+
 
 
 
@@ -117,6 +134,7 @@ theorem commuting_oracles_compose {α : Type*} (P Q : α → α)
 
 
 
+
 /-- The fixed point set of a composed oracle contains the intersection. -/
 theorem composed_fixed_points {α : Type*} (P Q : α → α)
     (_hP : IsIdempotent P) (_hQ : IsIdempotent Q)
@@ -128,11 +146,13 @@ theorem composed_fixed_points {α : Type*} (P Q : α → α)
 
 
 
+
 /-- The derivative of the standard bootstrap map at the stable fixed points is 0. -/
 theorem bootstrap_derivative_zero_at_stable :
     (fun r : ℝ => 6 * r * (1 - r)) 0 = 0 ∧
     (fun r : ℝ => 6 * r * (1 - r)) 1 = 0 := by
   constructor <;> ring
+
 
 
 
@@ -142,9 +162,11 @@ theorem bootstrap_derivative_at_half :
 
 
 
+
 theorem quadratic_convergence_near_one (e : ℝ) (he0 : 0 ≤ e) (he1 : e ≤ 1) :
     1 - (3 * (1 - e) ^ 2 - 2 * (1 - e) ^ 3) ≤ 3 * e ^ 2 := by
   nlinarith [ sq_nonneg ( e - 1 ) ]
+
 
 
 
@@ -158,9 +180,11 @@ theorem bootstrap_is_hermite :
 
 
 
+
 /-- Cosine similarity between two vectors. -/
 def cosineSim (n : ℕ) (u v : Fin n → ℝ) : ℝ :=
   (∑ i, u i * v i) / (Real.sqrt (∑ i, u i ^ 2) * Real.sqrt (∑ i, v i ^ 2))
+
 
 
 
@@ -171,6 +195,7 @@ theorem cosineSim_self (n : ℕ) (u : Fin n → ℝ)
   unfold cosineSim
   field_simp [hu];
   rw [ Real.sq_sqrt hu.le ]
+
 
 
 
@@ -187,10 +212,12 @@ theorem generalized_phase_transition (T : ℝ) (hT : 0 < T) :
 
 
 
+
 /-- The standard bootstrap map has the symmetry f(1-r) = 1 - f(r). -/
 theorem bootstrap_symmetry (r : ℝ) :
     3 * (1 - r) ^ 2 - 2 * (1 - r) ^ 3 = 1 - (3 * r ^ 2 - 2 * r ^ 3) := by
   ring
+
 
 
 
@@ -201,11 +228,13 @@ theorem bootstrap_maps_unit_interval (r : ℝ) (hr0 : 0 ≤ r) (hr1 : r ≤ 1) :
 
 
 
+
 theorem bootstrap_iterates_in_unit (r : ℝ) (hr0 : 0 ≤ r) (hr1 : r ≤ 1) (n : ℕ) :
     0 ≤ (fun r => 3 * r ^ 2 - 2 * r ^ 3)^[n] r ∧
     (fun r => 3 * r ^ 2 - 2 * r ^ 3)^[n] r ≤ 1 := by
   induction n <;> simp_all +decide [ Function.iterate_succ_apply' ];
   constructor <;> nlinarith [ sq_nonneg ( ( Nat.iterate ( fun r : ℝ => 3 * r ^ 2 - 2 * r ^ 3 ) ‹_› r ) - 1 ) ]
+
 
 
 

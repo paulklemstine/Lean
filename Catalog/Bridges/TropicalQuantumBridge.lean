@@ -16,6 +16,7 @@ def logsumexp (ε : ℝ) (x y : ℝ) : ℝ :=
 
 
 
+
 /-- [Section: # CatalogBuild.Bridges.TropicalQuantumBridge
 Auto-generated from theorem catalog database.
 Domain: Bridges
@@ -27,6 +28,11 @@ theorem logsumexp_symmetric (ε : ℝ) (x y : ℝ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Bridges.TropicalQuantumBridge
+Auto-generated from theorem catalog database.
+Domain: Bridges
+Declarations: 12] -/
 theorem logsumexp_diagonal (ε : ℝ) (hε : 0 < ε) (x : ℝ) :
     logsumexp ε x x = x + ε * Real.log 2 := by
   unfold logsumexp;
@@ -36,10 +42,12 @@ theorem logsumexp_diagonal (ε : ℝ) (hε : 0 < ε) (x : ℝ) :
 
 
 
+
 theorem logsumexp_ge_max (ε : ℝ) (hε : 0 < ε) (x y : ℝ) :
     max x y ≤ logsumexp ε x y := by
   unfold logsumexp;
   cases max_cases x y <;> nlinarith [ Real.log_exp ( x / ε ), Real.log_exp ( y / ε ), Real.log_le_log ( by positivity ) ( show Real.exp ( x / ε ) + Real.exp ( y / ε ) ≥ Real.exp ( x / ε ) by linarith [ Real.exp_pos ( x / ε ), Real.exp_pos ( y / ε ) ] ), Real.log_le_log ( by positivity ) ( show Real.exp ( x / ε ) + Real.exp ( y / ε ) ≥ Real.exp ( y / ε ) by linarith [ Real.exp_pos ( x / ε ), Real.exp_pos ( y / ε ) ] ), mul_div_cancel₀ x hε.ne.symm, mul_div_cancel₀ y hε.ne.symm ]
+
 
 
 
@@ -54,8 +62,10 @@ theorem logsumexp_le_max_add (ε : ℝ) (hε : 0 < ε) (x y : ℝ) :
 
 
 
+
 theorem tropical_add_comm (x y : ℝ) : max x y = max y x := by
   exact max_comm x y
+
 
 
 
@@ -64,8 +74,10 @@ theorem tropical_add_assoc (x y z : ℝ) : max (max x y) z = max x (max y z) := 
 
 
 
+
 theorem tropical_add_idempotent (x : ℝ) : max x x = x := by
   norm_num
+
 
 
 
@@ -74,8 +86,10 @@ theorem tropical_mul_distrib (a x y : ℝ) : a + max x y = max (a + x) (a + y) :
 
 
 
+
 theorem tropical_mul_distrib_right (x y a : ℝ) : max x y + a = max (x + a) (y + a) := by
   grind
+
 
 
 
@@ -84,11 +98,13 @@ theorem exp_sum_pos (x y : ℝ) : 0 < Real.exp x + Real.exp y := by
 
 
 
+
 theorem logsumexp_mono_left (ε : ℝ) (hε : 0 < ε) (y : ℝ) :
     Monotone (fun x => logsumexp ε x y) := by
   refine' fun x x' h ↦ mul_le_mul_of_nonneg_left ( Real.log_le_log _ _ ) hε.le;
   · positivity;
   · gcongr
+
 
 
 

@@ -12,14 +12,17 @@ def CAConfig := ℤ → Bool
 
 
 
+
 /-- A neighborhood rule for a 1D CA with radius 1 looks at 3 cells. -/
 def CArule := Bool → Bool → Bool → Bool
+
 
 
 
 /-- Apply a CA rule to evolve one step. -/
 def evolve (rule : CArule) (config : CAConfig) : CAConfig :=
   fun i => rule (config (i - 1)) (config i) (config (i + 1))
+
 
 
 
@@ -30,10 +33,12 @@ theorem evolve_deterministic (rule : CArule) (c₁ c₂ : CAConfig)
 
 
 
+
 /-- Iterated evolution of a CA for n steps. -/
 def evolve_n (rule : CArule) (config : CAConfig) : ℕ → CAConfig
   | 0 => config
   | n + 1 => evolve rule (evolve_n rule config n)
+
 
 
 
@@ -44,9 +49,11 @@ theorem evolve_n_succ (rule : CArule) (config : CAConfig) (n : ℕ) :
 
 
 
+
 /-- Shift a configuration by k positions. -/
 def shift (config : CAConfig) (k : ℤ) : CAConfig :=
   fun i => config (i + k)
+
 
 
 
@@ -59,9 +66,11 @@ theorem evolve_shift_commute (rule : CArule) (config : CAConfig) (k : ℤ) :
 
 
 
+
 /-- A Garden of Eden configuration has no predecessor under the given rule. -/
 def is_garden_of_eden (rule : CArule) (config : CAConfig) : Prop :=
   ¬ ∃ prev : CAConfig, evolve rule prev = config
+
 
 
 
@@ -71,11 +80,13 @@ def is_reversible (rule : CArule) : Prop :=
 
 
 
+
 /-- A reversible CA has no Garden of Eden configurations. -/
 theorem reversible_no_garden_of_eden (rule : CArule) (h : is_reversible rule) :
     ∀ config, ¬ is_garden_of_eden rule config := by
   intro config hgoe
   unfold is_garden_of_eden at hgoe
   exact hgoe ⟨_, (h.2 config).choose_spec⟩
+
 
 

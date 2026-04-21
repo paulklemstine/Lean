@@ -18,6 +18,7 @@ theorem no_surjection_to_powerset (A : Type*) : ¬ ∃ f : A → Set A, Surjecti
 
 
 
+
 /-- Rice's theorem (abstract): if a property P on functions is non-trivial
 (some function satisfies it, some doesn't), it cannot be decided by
 a computable function that only inspects the extensional behavior. -/
@@ -29,6 +30,11 @@ theorem rice_abstract {F : Type*} (P : F → Prop)
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.SciFi.Computability
+Auto-generated from theorem catalog database.
+Domain: Speculative/SciFi
+Declarations: 3] -/
 theorem abstract_incompleteness {Stmt : Type*} (True' : Stmt → Prop)
     (Provable : Stmt → Prop)
     (h_sound : ∀ s, Provable s → True' s)
@@ -36,4 +42,5 @@ theorem abstract_incompleteness {Stmt : Type*} (True' : Stmt → Prop)
     (h_goedel : True' goedel_sentence ↔ ¬ Provable goedel_sentence) :
     True' goedel_sentence ∧ ¬ Provable goedel_sentence := by
   grind
+
 

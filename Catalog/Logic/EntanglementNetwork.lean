@@ -21,6 +21,7 @@ structure EntanglementMatching (n : ℕ) where
 
 
 
+
 /-- [Section: # CatalogBuild.Logic.EntanglementNetwork
 Auto-generated from theorem catalog database.
 Domain: Logic
@@ -49,9 +50,15 @@ theorem entanglement_requires_even (n : ℕ) (M : EntanglementMatching n) :
 
 
 
+
+/-- [Section: # CatalogBuild.Logic.EntanglementNetwork
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 23] -/
 theorem partner_bijective (n : ℕ) (M : EntanglementMatching n) :
     Function.Bijective M.partner := by
   exact ⟨ fun a b h => by have := M.involution a; have := M.involution b; aesop, fun b => ⟨ M.partner b, by have := M.involution b; aesop ⟩ ⟩
+
 
 
 
@@ -62,8 +69,10 @@ structure MeasurementSetup (n : ℕ) where
 
 
 
+
 /-- A measurement outcome assignment: each photon gives +1 or -1 -/
 def MeasurementOutcome (n : ℕ) := Fin n → Bool
+
 
 
 
@@ -83,6 +92,7 @@ structure LocalModel (n : ℕ) where
 
 
 
+
 /-- The correlation between photons i and j in a local model:
 E(i,j) = Σ_λ P(λ) · a(i,λ) · a(j,λ)
 where a ∈ {+1, -1}. -/
@@ -94,6 +104,7 @@ noncomputable def localCorrelation {n : ℕ} (L : LocalModel n)
 
 
 
+
 /-- CHSH quantity: S = E(a,b) - E(a,b') + E(a',b) + E(a',b')
 Bell's theorem states |S| ≤ 2 for any local model,
 but quantum mechanics achieves |S| = 2√2. -/
@@ -101,6 +112,7 @@ noncomputable def chshQuantity {n : ℕ} (L : LocalModel n) (i j : Fin n)
     (s₁ s₂ : MeasurementSetup n) : ℚ :=
   localCorrelation L s₁ i j - localCorrelation L s₂ i j +
   localCorrelation L s₁ i j + localCorrelation L s₂ i j
+
 
 
 
@@ -117,6 +129,7 @@ theorem bell_chsh_bound {n : ℕ} (L : LocalModel n) (i j : Fin n)
 
 
 
+
 /-- An entanglement graph: vertices are photon pairs, edges connect
 pairs that share an entanglement source. -/
 structure EntanglementGraph (n : ℕ) where
@@ -124,6 +137,7 @@ structure EntanglementGraph (n : ℕ) where
   pairs : Fin n → Fin n × Fin n
   /-- Two pairs share a source (are connected in the entanglement graph) -/
   connected : Fin n → Fin n → Bool
+
 
 
 
@@ -135,11 +149,13 @@ def isKColorable {n : ℕ} (G : EntanglementGraph n) (k : ℕ) : Prop :=
 
 
 
+
 /-- A Gaussian integer -/
 structure GaussInt where
   re : ℤ
   im : ℤ
   deriving DecidableEq, Repr
+
 
 
 
@@ -149,10 +165,12 @@ def GaussInt.norm (z : GaussInt) : ℤ :=
 
 
 
+
 /-- Conjugate of a Gaussian integer -/
 def GaussInt.conj (z : GaussInt) : GaussInt where
   re := z.re
   im := -z.im
+
 
 
 
@@ -164,15 +182,18 @@ theorem GaussInt.mul_conj_eq_norm (z : GaussInt) :
 
 
 
+
 /-- Conjugation is an involution. -/
 theorem GaussInt.conj_involution (z : GaussInt) : z.conj.conj = z := by
   ext <;> simp [GaussInt.conj]
 
 
 
+
 /-- Conjugation preserves the norm (entangled photons have equal energy). -/
 theorem GaussInt.conj_norm (z : GaussInt) : z.conj.norm = z.norm := by
   simp [GaussInt.norm, GaussInt.conj]
+
 
 
 
@@ -186,11 +207,13 @@ structure GaussianEntangledPair where
 
 
 
+
 /-- The entangled partner's energy equals the original photon's energy. -/
 theorem GaussianEntangledPair.equal_energy (ep : GaussianEntangledPair) :
     ep.partner.norm = ep.photon.norm := by
   rw [ep.is_conjugate]
   exact GaussInt.conj_norm ep.photon
+
 
 
 
@@ -202,9 +225,11 @@ def encodeGI (z : GaussInt) : ℕ :=
 
 
 
+
 /-- Zigzag decoding: ℕ → ℤ (inverse of zigzag encoding). -/
 def zigzagDecode : ℕ → ℤ
   | n => if n % 2 = 0 then Int.ofNat (n / 2) else Int.negSucc (n / 2)
+
 
 
 
@@ -216,11 +241,13 @@ def cantorUnpair (n : ℕ) : ℕ × ℕ :=
 
 
 
+
 noncomputable def entangledPartnerCode (n : ℕ) : ℕ :=
   let pair := cantorUnpair n
   let re := zigzagDecode pair.1
   let im := zigzagDecode pair.2
   encodeGI { re := re, im := -im }
+
 
 
 end

@@ -20,11 +20,17 @@ theorem point_is_prime_ideal (R : Type*) [CommRing R]
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.UniversalTranslator
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 31] -/
 theorem point_in_zeroLocus_iff_ideal_contained (R : Type*) [CommRing R]
     (I : Ideal R) (x : PrimeSpectrum R) :
     x ∈ zeroLocus (I : Set R) ↔ I ≤ x.asIdeal :=
   by
     bound
+
 
 
 
@@ -40,11 +46,13 @@ theorem maximal_ideal_is_closed_point (R : Type*) [CommRing R]
 
 
 
+
 theorem basic_open_is_complement_of_vanishing (R : Type*) [CommRing R]
     (a : R) : (basicOpen a : Set (PrimeSpectrum R)) = (zeroLocus {a})ᶜ :=
   by
     simp +decide [ basicOpen, zeroLocus ];
     rfl
+
 
 
 
@@ -56,6 +64,7 @@ theorem basic_opens_form_basis (R : Type*) [CommRing R] :
 
 
 
+
 theorem basic_open_mul (R : Type*) [CommRing R] (a b : R) :
     basicOpen (a * b) = basicOpen a ⊓ basicOpen b :=
   by
@@ -64,10 +73,12 @@ theorem basic_open_mul (R : Type*) [CommRing R] (a b : R) :
 
 
 
+
 theorem basic_open_one (R : Type*) [CommRing R] :
     basicOpen (1 : R) = ⊤ :=
   by
     aesop
+
 
 
 
@@ -82,10 +93,12 @@ theorem basic_open_zero (R : Type*) [CommRing R] :
 
 
 
+
 theorem ring_hom_induces_continuous_map (R S : Type*) [CommRing R] [CommRing S]
     (φ : R →+* S) : Continuous (PrimeSpectrum.comap φ) :=
   by
     exact?
+
 
 
 
@@ -98,11 +111,13 @@ theorem comap_reverses_composition (R S T : Type*) [CommRing R] [CommRing S] [Co
 
 
 
+
 theorem comap_id_is_id (R : Type*) [CommRing R] :
     PrimeSpectrum.comap (RingHom.id R) = id :=
   by
     funext x
     simp [comap]
+
 
 
 
@@ -119,11 +134,13 @@ theorem comap_preimage_basic_open (R S : Type*) [CommRing R] [CommRing S]
 
 
 
+
 theorem vanishing_set_is_closed (R : Type*) [CommRing R] (I : Ideal R) :
     IsClosed (zeroLocus (I : Set R)) :=
   by
     -- The zero locus of an ideal is closed by definition.
     apply PrimeSpectrum.isClosed_zeroLocus
+
 
 
 
@@ -135,11 +152,13 @@ theorem galois_connection_V_I (R : Type*) [CommRing R]
 
 
 
+
 theorem vanishing_reverses_inclusion (R : Type*) [CommRing R]
     (I J : Set R) (h : I ⊆ J) :
     zeroLocus J ⊆ zeroLocus I :=
   by
     exact?
+
 
 
 
@@ -150,10 +169,12 @@ theorem vanishing_of_whole_ring (R : Type*) [CommRing R] :
 
 
 
+
 theorem vanishing_of_empty (R : Type*) [CommRing R] :
     zeroLocus (∅ : Set R) = Set.univ :=
   by
     aesop_cat
+
 
 
 
@@ -170,10 +191,12 @@ theorem vanishing_of_intersection_eq_union (R : Type*) [CommRing R]
 
 
 
+
 theorem krull_dim_eq_spectrum_dim (R : Type*) [CommRing R] :
     ringKrullDim R = Order.krullDim (PrimeSpectrum R) :=
   by
     convert rfl
+
 
 
 
@@ -188,15 +211,18 @@ theorem field_has_krull_dim_zero (k : Type*) [Field k] :
 
 
 
+
 def kahler_differentials_module (R S : Type*) [CommRing R] [CommRing S]
     [Algebra R S] : Module S (Ω[S⁄R]) :=
   inferInstance
 
 
 
+
 def universal_derivation (R S : Type*) [CommRing R] [CommRing S]
     [Algebra R S] : Derivation R S (Ω[S⁄R]) :=
   KaehlerDifferential.D R S
+
 
 
 
@@ -221,6 +247,7 @@ theorem universal_property_of_kahler (R S M : Type*) [CommRing R] [CommRing S]
 
 
 
+
 theorem idempotent_gives_clopen (R : Type*) [CommRing R]
     (e : R) (he : IsIdempotentElem e) :
     IsClopen (basicOpen e : Set (PrimeSpectrum R)) :=
@@ -231,6 +258,7 @@ theorem idempotent_gives_clopen (R : Type*) [CommRing R]
       contrapose! hp;
       grind +suggestions;
     · exact?
+
 
 
 
@@ -254,6 +282,7 @@ theorem no_nontrivial_idempotents_implies_connected (R : Type*) [CommRing R]
     obtain ⟨e, he⟩ : ∃ e : R, IsIdempotentElem e ∧ U = basicOpen e := by
       exact?;
     cases h e he.1 <;> simp_all +decide [ Set.ext_iff ]
+
 
 
 
@@ -294,6 +323,7 @@ theorem connected_implies_no_nontrivial_idempotents (R : Type*) [CommRing R]
 
 
 
+
 theorem projective_iff_surjection_splits (R M : Type*) [Ring R]
     [AddCommGroup M] [Module R M] :
     Module.Projective R M ↔
@@ -307,6 +337,7 @@ theorem projective_iff_surjection_splits (R M : Type*) [Ring R]
 
 
 
+
 theorem free_module_is_projective (R M : Type*) [Ring R]
     [AddCommGroup M] [Module R M] [Module.Free R M] :
     Module.Projective R M :=
@@ -316,6 +347,7 @@ theorem free_module_is_projective (R M : Type*) [Ring R]
 -- ═══════════════════════════════════════════════════════════════════════
 --  The Spec Functor  (Summary)
 -- ═══════════════════════════════════════════════════════════════════════
+
 
 
 
@@ -335,6 +367,7 @@ theorem spec_is_contravariant_functor :
 
 
 
+
 def gelfand_duality (X : Type*) (𝕜 : Type*) [TopologicalSpace X]
     [CompactSpace X] [T2Space X] [RCLike 𝕜] :
     X ≃ₜ WeakDual.characterSpace 𝕜 C(X, 𝕜) :=
@@ -346,12 +379,14 @@ def gelfand_duality (X : Type*) (𝕜 : Type*) [TopologicalSpace X]
 
 
 
+
 theorem weak_nullstellensatz (k : Type*) [Field k] [IsAlgClosed k]
     (I : Ideal (Polynomial k))
     (hI : (zeroLocus (I : Set (Polynomial k)) : Set (PrimeSpectrum (Polynomial k))) = ∅) :
     I = ⊤ :=
   by
     exact?
+
 
 
 

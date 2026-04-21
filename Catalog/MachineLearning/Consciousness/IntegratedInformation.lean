@@ -23,6 +23,7 @@ attribute [instance] InfoSystem.stateFin InfoSystem.stateDec InfoSystem.stateNon
 
 
 
+
 /-- A partition of a system into two subsystems -/
 structure BiPartition (S : InfoSystem) where
   part : S.State → Prop
@@ -34,9 +35,11 @@ attribute [instance] BiPartition.partDec
 
 
 
+
 /-- Earth Mover's Distance between two distributions (simplified L1 version) -/
 noncomputable def earthMoverDistance {α : Type} [Fintype α] (p q : α → ℝ) : ℝ :=
   ∑ a : α, |p a - q a|
+
 
 
 
@@ -49,15 +52,18 @@ noncomputable def disconnectedTransition (S : InfoSystem) (P : BiPartition S)
 
 
 
+
 /-- Information loss from a partition -/
 noncomputable def informationLoss (S : InfoSystem) (P : BiPartition S) (s : S.State) : ℝ :=
   earthMoverDistance (S.transition s) (disconnectedTransition S P s)
 
 
 
+
 /-- A system is decomposable if there exists a partition with zero information loss -/
 def isDecomposable (S : InfoSystem) (P : BiPartition S) (s : S.State) : Prop :=
   informationLoss S P s = 0
+
 
 
 
@@ -71,9 +77,15 @@ theorem earthMoverDistance_nonneg {α : Type} [Fintype α] (p q : α → ℝ) :
 
 
 
+
+/-- [Section: # CatalogBuild.MachineLearning.Consciousness.IntegratedInformation
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/Consciousness
+Declarations: 11] -/
 theorem informationLoss_nonneg (S : InfoSystem) (P : BiPartition S) (s : S.State) :
     0 ≤ informationLoss S P s := by
   exact Finset.sum_nonneg fun _ _ => abs_nonneg _
+
 
 
 
@@ -88,10 +100,12 @@ theorem decomposable_iff_independent (S : InfoSystem) (P : BiPartition S) (s : S
 
 
 
+
 /-- A conscious system: one where every partition loses information -/
 structure ConsciousSystem extends InfoSystem where
   irreducible : ∀ (P : BiPartition toInfoSystem) (s : toInfoSystem.State),
     0 < informationLoss toInfoSystem P s
+
 
 
 
@@ -102,6 +116,7 @@ theorem conscious_not_decomposable (C : ConsciousSystem)
   have h_pos : ∀ P : BiPartition (C.toInfoSystem), ∀ s : C.State, 0 < informationLoss (C.toInfoSystem) P s := by
     exact C.irreducible;
   exact ne_of_gt ( h_pos P s )
+
 
 
 

@@ -14,10 +14,12 @@ theorem cone_scaling (a b c d k : ℤ) (h : IsPythQuad a b c d) :
 
 
 
+
 /-- **Theorem 2.2a (Component Bound):** a² ≤ d² for any Pythagorean quadruple. -/
 theorem component_bound_a (a b c d : ℤ) (h : IsPythQuad a b c d) :
     a^2 ≤ d^2 := by
   unfold IsPythQuad at h; nlinarith [sq_nonneg b, sq_nonneg c]
+
 
 
 
@@ -28,6 +30,7 @@ theorem component_bound_b (a b c d : ℤ) (h : IsPythQuad a b c d) :
 
 
 
+
 /-- **Theorem 2.2c (Component Bound):** c² ≤ d² for any Pythagorean quadruple. -/
 theorem component_bound_c (a b c d : ℤ) (h : IsPythQuad a b c d) :
     c^2 ≤ d^2 := by
@@ -35,10 +38,12 @@ theorem component_bound_c (a b c d : ℤ) (h : IsPythQuad a b c d) :
 
 
 
+
 /-- **Theorem 2.3 (Gram Diagonal):** The ℤ⁴ squared norm equals 2d². -/
 theorem gram_diagonal (a b c d : ℤ) (h : IsPythQuad a b c d) :
     a^2 + b^2 + c^2 + d^2 = 2 * d^2 := by
   unfold IsPythQuad at h; linarith
+
 
 
 
@@ -53,6 +58,7 @@ theorem cauchy_schwarz_qdf (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
 
 
 
+
 /-- **Theorem 2.5 (Reduction / Parallelogram Formula):** -/
 theorem reduction_formula (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
     (h₁ : IsPythQuad a₁ b₁ c₁ d₁) (h₂ : IsPythQuad a₂ b₂ c₂ d₂) :
@@ -62,6 +68,11 @@ theorem reduction_formula (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
 
 
 
+
+/-- [Section: # CatalogBuild.Cryptography.Core.QDF
+Auto-generated from theorem catalog database.
+Domain: Cryptography/Core
+Declarations: 43] -/
 theorem primitive_reduction (a b c d g : ℤ) (hg : g ≠ 0)
     (ha : g ∣ a) (hb : g ∣ b) (hc : g ∣ c) (hd : g ∣ d)
     (h : IsPythQuad a b c d) :
@@ -78,10 +89,12 @@ theorem primitive_reduction (a b c d g : ℤ) (hg : g ≠ 0)
 
 
 
+
 /-- **Theorem 3.1 (Modular QDF):** The QDF identity is preserved mod m. -/
 theorem modular_qdf (a b c d m : ℤ) (h : IsPythQuad a b c d) :
     (a^2 + b^2 + c^2) % m = d^2 % m := by
   unfold IsPythQuad at h; rw [h]
+
 
 
 
@@ -93,11 +106,13 @@ theorem modular_radical (a b c d m : ℤ) (h : IsPythQuad a b c d) :
 
 
 
+
 /-- **Theorem 3.3 (Scaling Homomorphism):** Scaling preserves the identity mod m. -/
 theorem scaling_homomorphism (a b c d k m : ℤ) (h : IsPythQuad a b c d) :
     ((k*a)^2 + (k*b)^2 + (k*c)^2) % m = (k*d)^2 % m := by
   have h2 := cone_scaling a b c d k h
   unfold IsPythQuad at h2; rw [h2]
+
 
 
 
@@ -112,11 +127,13 @@ theorem additive_cross_term (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
 
 
 
+
 theorem exact_homomorphism (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
     (h₁ : IsPythQuad a₁ b₁ c₁ d₁) (h₂ : IsPythQuad a₂ b₂ c₂ d₂) :
     IsPythQuad (a₁ + a₂) (b₁ + b₂) (c₁ + c₂) (d₁ + d₂) ↔
     a₁*a₂ + b₁*b₂ + c₁*c₂ = d₁*d₂ := by
   grind +locals
+
 
 
 
@@ -127,10 +144,12 @@ theorem crt_compatibility (a b c d m₁ m₂ : ℤ) (h : IsPythQuad a b c d) :
 
 
 
+
 theorem rational_bloch_sphere (a b c d : ℤ) (hd : d ≠ 0) (h : IsPythQuad a b c d) :
     (a : ℚ)^2 / (d : ℚ)^2 + (b : ℚ)^2 / (d : ℚ)^2 + (c : ℚ)^2 / (d : ℚ)^2 = 1 := by
   rw [ ← add_div, ← add_div, div_eq_iff ] <;> norm_cast ; aesop;
   positivity
+
 
 
 
@@ -142,11 +161,13 @@ theorem error_syndrome (a b c d e : ℤ) (h : IsPythQuad a b c d) :
 
 
 
+
 /-- **Theorem 4.3 (Error Syndrome Factoring):**
 The syndrome factors as e·(2a + e), providing error magnitude info. -/
 theorem error_syndrome_factored (a b c d e : ℤ) (h : IsPythQuad a b c d) :
     (a + e)^2 + b^2 + c^2 - d^2 = 2*a*e + e^2 := by
   unfold IsPythQuad at h; nlinarith
+
 
 
 
@@ -159,12 +180,14 @@ theorem code_distance (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
 
 
 
+
 /-- **Theorem 5.1 (Distance Formula):** Distance for same-sphere quadruples. -/
 theorem tda_distance_formula (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
     (h₁ : IsPythQuad a₁ b₁ c₁ d) (h₂ : IsPythQuad a₂ b₂ c₂ d) :
     (a₁ - a₂)^2 + (b₁ - b₂)^2 + (c₁ - c₂)^2 =
     2*d^2 - 2*(a₁*a₂ + b₁*b₂ + c₁*c₂) := by
   unfold IsPythQuad at *; nlinarith
+
 
 
 
@@ -179,10 +202,12 @@ theorem max_distance (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
 
 
 
+
 /-- **Theorem 5.3 (Sign Symmetry):** Negating components preserves the quadruple. -/
 theorem sign_symmetry_a (a b c d : ℤ) (h : IsPythQuad a b c d) :
     IsPythQuad (-a) b c d := by
   unfold IsPythQuad at *; nlinarith [sq_nonneg a]
+
 
 
 
@@ -192,9 +217,11 @@ theorem sign_symmetry_b (a b c d : ℤ) (h : IsPythQuad a b c d) :
 
 
 
+
 theorem sign_symmetry_c (a b c d : ℤ) (h : IsPythQuad a b c d) :
     IsPythQuad a b (-c) d := by
   unfold IsPythQuad at *; nlinarith [sq_nonneg c]
+
 
 
 
@@ -205,9 +232,11 @@ theorem permutation_symmetry_12 (a b c d : ℤ) (h : IsPythQuad a b c d) :
 
 
 
+
 theorem permutation_symmetry_13 (a b c d : ℤ) (h : IsPythQuad a b c d) :
     IsPythQuad c b a d := by
   unfold IsPythQuad at *; linarith
+
 
 
 
@@ -217,9 +246,11 @@ theorem permutation_symmetry_23 (a b c d : ℤ) (h : IsPythQuad a b c d) :
 
 
 
+
 /-- **Theorem 5.5 (Filtration Bound):** Quadratic family hypotenuse ≥ 1. -/
 theorem filtration_bound (n : ℤ) (hn : 0 ≤ n) :
     n^2 + n + 1 ≥ 1 := by nlinarith [sq_nonneg n]
+
 
 
 
@@ -229,9 +260,11 @@ theorem monotone_birth_times (n : ℤ) (hn : 0 ≤ n) :
 
 
 
+
 /-- **Theorem 5.7 (Gap Size):** Gap between consecutive hypotenuses is 2n+2. -/
 theorem gap_size (n : ℤ) :
     (n+1)^2 + (n+1) + 1 - (n^2 + n + 1) = 2*n + 2 := by ring
+
 
 
 
@@ -239,6 +272,7 @@ theorem gap_size (n : ℤ) :
 theorem antipodal_involution (a b c d : ℤ) (h : IsPythQuad a b c d) :
     IsPythQuad (-a) (-b) (-c) d := by
   unfold IsPythQuad at *; nlinarith [sq_nonneg a, sq_nonneg b, sq_nonneg c]
+
 
 
 
@@ -250,6 +284,7 @@ theorem classical_embedding (m n : ℤ) :
 
 
 
+
 /-- **Theorem 6.2 (Quadratic Family):**
 n² + (n+1)² + (n(n+1))² = (n²+n+1)². -/
 theorem quadratic_family (n : ℤ) :
@@ -258,11 +293,13 @@ theorem quadratic_family (n : ℤ) :
 
 
 
+
 /-- **Theorem 6.2b (Negative Family):**
 The quadratic family is preserved under n → −n−1. -/
 theorem negative_family (n : ℤ) :
     IsPythQuad (-n) (-n-1) ((-n)*(-n-1)) (n^2+n+1) := by
   unfold IsPythQuad; ring
+
 
 
 
@@ -275,11 +312,13 @@ theorem triple_composition (n : ℤ) :
 
 
 
+
 /-- **Theorem 6.4 (Difference Identity):**
 Factoring the difference of two family hypotenuses squared. -/
 theorem difference_identity (m n : ℤ) :
     (m^2 + m + 1)^2 - (n^2 + n + 1)^2 =
     (m - n) * (m + n + 1) * (m^2 + m + n^2 + n + 2) := by ring
+
 
 
 
@@ -290,10 +329,12 @@ theorem quartic_family (n : ℤ) :
 
 
 
+
 /-- **Theorem 6.6 (Residue Class):** Hypotenuse ≡ 1 (mod n) for n ≠ 0. -/
 theorem residue_class (n : ℤ) :
     n ∣ (n^2 + n + 1 - 1) := by
   use (n + 1); ring
+
 
 
 
@@ -303,6 +344,7 @@ theorem fidelity_bound (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
     (hCS : (a₁*a₂ + b₁*b₂ + c₁*c₂)^2 ≤ d₁^2 * d₂^2) :
     (a₁*a₂ + b₁*b₂ + c₁*c₂ : ℚ)^2 / ((d₁ : ℚ)^2 * (d₂ : ℚ)^2) ≤ 1 := by
   exact div_le_one_of_le₀ ( mod_cast hCS ) ( by positivity )
+
 
 
 
@@ -316,6 +358,7 @@ theorem he_tda_bridge (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
 
 
 
+
 /-- **Theorem 6.9 (Midpoint Identity):** -/
 theorem midpoint_identity (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
     (h₁ : IsPythQuad a₁ b₁ c₁ d) (h₂ : IsPythQuad a₂ b₂ c₂ d) :
@@ -325,11 +368,13 @@ theorem midpoint_identity (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
 
 
 
+
 theorem noise_bounded_by_hypotenuse_product (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
     (h₁ : IsPythQuad a₁ b₁ c₁ d₁) (h₂ : IsPythQuad a₂ b₂ c₂ d₂)
     (hCS : (a₁*a₂ + b₁*b₂ + c₁*c₂)^2 ≤ d₁^2 * d₂^2) :
     (a₁*a₂ + b₁*b₂ + c₁*c₂ - d₁*d₂)^2 ≤ 4 * d₁^2 * d₂^2 := by
   linarith [ sq_nonneg ( a₁ * a₂ + b₁ * b₂ + c₁ * c₂ + d₁ * d₂ ) ]
+
 
 
 
@@ -344,9 +389,11 @@ theorem orthogonal_noise (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
 
 
 
+
 /-- Modular reduction chain: the QDF identity is preserved through any modular cascade. -/
 theorem modular_cascade (a b c d m₁ m₂ : ℤ) (h : IsPythQuad a b c d) :
     ((a^2 + b^2 + c^2) % m₁) % m₂ = (d^2 % m₁) % m₂ := by
   unfold IsPythQuad at h; rw [h]
+
 
 

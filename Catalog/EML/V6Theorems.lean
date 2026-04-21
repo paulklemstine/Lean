@@ -14,13 +14,16 @@ def eml6 (x y : ℝ) : ℝ := Real.exp x - Real.log y
 
 
 
+
 /-- The diagonal map: d(z) = exp(z) - ln(z). -/
 def diag6 (z : ℝ) : ℝ := Real.exp z - Real.log z
 
 
 
+
 /-- The semigroup action T_c(x) = eml(x, c) = exp(x) - ln(c). -/
 def semiT (c : ℝ) (x : ℝ) : ℝ := Real.exp x - Real.log c
+
 
 
 
@@ -30,8 +33,10 @@ def phi2D (p : ℝ × ℝ) : ℝ × ℝ :=
 
 
 
+
 /-- The sigmoid function σ(x) = 1/(1 + exp(-x)). -/
 def eml_sigmoid (x : ℝ) : ℝ := 1 / (1 + Real.exp (-x))
+
 
 
 
@@ -39,6 +44,7 @@ def eml_sigmoid (x : ℝ) : ℝ := 1 / (1 + Real.exp (-x))
 def eTow6 : ℕ → ℝ
   | 0 => 1
   | n + 1 => Real.exp (eTow6 n)
+
 
 
 
@@ -50,10 +56,12 @@ theorem diag6_deriv (x : ℝ) (hx : 0 < x) :
 
 
 
+
 /-- The second derivative of the diagonal map is exp(x) + 1/x². -/
 theorem diag6_second_deriv_pos (x : ℝ) (hx : 0 < x) :
     Real.exp x + x⁻¹ ^ 2 > 0 := by
   positivity
+
 
 
 
@@ -74,6 +82,11 @@ theorem diag6_convex_on : ConvexOn ℝ (Ioi 0) diag6 := by
 
 
 
+
+/-- [Section: # CatalogBuild.EML.V6Theorems
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 45] -/
 theorem diag6_critical_point (x : ℝ) (hx : 0 < x)
     (hcrit : Real.exp x - x⁻¹ = 0) :
     x * Real.exp x = 1 := by
@@ -81,9 +94,11 @@ theorem diag6_critical_point (x : ℝ) (hx : 0 < x)
 
 
 
+
 theorem diag6_ge_two (x : ℝ) (hx : 0 < x) : diag6 x ≥ 2 := by
   unfold diag6;
   linarith [ Real.add_one_le_exp x, Real.log_le_sub_one_of_pos hx ]
+
 
 
 
@@ -97,11 +112,13 @@ theorem diag6_no_fixed_points (x : ℝ) (hx : 0 < x) : diag6 x ≠ x := by
 
 
 
+
 /-- The Jacobian determinant formula for the 2D EML map. -/
 theorem phi2D_jacobian_det (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
     Real.exp x * Real.exp y - (x * y)⁻¹ =
     Real.exp (x + y) - (x * y)⁻¹ := by
   rw [Real.exp_add]
+
 
 
 
@@ -112,9 +129,11 @@ theorem phi2D_jacobian_pos (x y : ℝ) (hx : 1 < x) (hy : 1 < y) :
 
 
 
+
 theorem phi2D_no_symmetric_fixed (x : ℝ) (hx : 0 < x) :
     phi2D (x, x) ≠ (x, x) := by
   exact fun h => diag6_no_fixed_points x hx <| by injection h;
+
 
 
 
@@ -124,8 +143,10 @@ theorem semiT_one (x : ℝ) : semiT 1 x = Real.exp x := by
 
 
 
+
 theorem semiT_strictMono (c : ℝ) : StrictMono (semiT c) := by
   exact fun x y hxy => sub_lt_sub_right ( Real.exp_lt_exp.2 hxy ) _
+
 
 
 
@@ -136,11 +157,13 @@ theorem semiT_one_no_fixed (x : ℝ) : semiT 1 x > x := by
 
 
 
+
 theorem semiT_noncomm : ∃ c₁ c₂ x : ℝ,
     semiT c₁ (semiT c₂ x) ≠ semiT c₂ (semiT c₁ x) := by
   use 1, Real.exp 1, 0;
   unfold semiT; norm_num;
   exact ne_of_lt ( by have := Real.exp_one_gt_d9.le; norm_num1 at *; linarith )
+
 
 
 
@@ -155,9 +178,11 @@ theorem semiT_no_idempotent (c : ℝ) (hc : 0 < c) :
 
 
 
+
 theorem eml6_log_split (x y z : ℝ) (hy : 0 < y) (hz : 0 < z) :
     eml6 x (y * z) = eml6 x y - Real.log z := by
   unfold eml6; rw [ Real.log_mul hy.ne' hz.ne' ] ; ring;
+
 
 
 
@@ -166,8 +191,10 @@ theorem eml6_strictMono_fst (y : ℝ) : StrictMono (fun x => eml6 x y) := by
 
 
 
+
 theorem eml6_strictAnti_snd (x : ℝ) : StrictAntiOn (fun y => eml6 x y) (Ioi 0) := by
   exact fun y hy z hz hyz => sub_lt_sub_left ( Real.log_lt_log hy hyz ) _
+
 
 
 
@@ -175,6 +202,7 @@ theorem eml6_strictAnti_snd (x : ℝ) : StrictAntiOn (fun y => eml6 x y) (Ioi 0)
 theorem eml6_trace (x y : ℝ) :
     eml6 x y + eml6 y x = Real.exp x + Real.exp y - Real.log x - Real.log y := by
   unfold eml6; ring
+
 
 
 
@@ -186,10 +214,12 @@ theorem eml6_antisym_diff (x y : ℝ) :
 
 
 
+
 theorem eml6_hasDerivAt_fst (x y : ℝ) :
     HasDerivAt (fun x' => eml6 x' y) (Real.exp x) x := by
   convert HasDerivAt.sub ( Real.hasDerivAt_exp x ) ( hasDerivAt_const _ _ ) using 1;
   ring
+
 
 
 
@@ -199,8 +229,10 @@ theorem eml6_hasDerivAt_snd (x y : ℝ) (hy : 0 < y) :
 
 
 
+
 theorem eml_sigmoid_pos (x : ℝ) : 0 < eml_sigmoid x := by
   exact one_div_pos.mpr ( by positivity )
+
 
 
 
@@ -209,9 +241,11 @@ theorem eml_sigmoid_lt_one (x : ℝ) : eml_sigmoid x < 1 := by
 
 
 
+
 /-- σ(0) = 1/2. -/
 theorem eml_sigmoid_zero : eml_sigmoid 0 = 1 / 2 := by
   simp [eml_sigmoid]; ring
+
 
 
 
@@ -223,11 +257,13 @@ theorem depth_hierarchy_2_gt_1 :
 
 
 
+
 /-- The e-tower is always positive. -/
 theorem eTow6_pos (n : ℕ) : 0 < eTow6 n := by
   induction n with
   | zero => simp [eTow6]
   | succ n _ => exact Real.exp_pos _
+
 
 
 
@@ -239,12 +275,14 @@ theorem eTow6_strictMono : StrictMono eTow6 := by
 
 
 
+
 theorem eTow6_ge_exp_n (n : ℕ) : eTow6 n ≥ Real.exp 1 ^ n := by
   induction n <;> simp_all +decide [ pow_succ' ];
   · exact le_rfl;
   · rw [ ← Real.exp_add ];
     rename_i n hn;
     exact Real.exp_le_exp.mpr ( by linarith [ Real.add_one_le_exp n ] )
+
 
 
 
@@ -258,9 +296,11 @@ theorem eTow6_unbounded : ∀ M : ℝ, ∃ n : ℕ, eTow6 n > M := by
 
 
 
+
 /-- exp(x) = eml(x, 1). -/
 theorem eml6_recovers_exp (x : ℝ) : eml6 x 1 = Real.exp x := by
   simp [eml6, Real.log_one]
+
 
 
 
@@ -271,10 +311,12 @@ theorem eml6_subtraction (a b : ℝ) (ha : 0 < a) :
 
 
 
+
 /-- The addition identity: eml(ln(a), exp(-b)) = a + b for a > 0. -/
 theorem eml6_addition (a b : ℝ) (ha : 0 < a) :
     eml6 (Real.log a) (Real.exp (-b)) = a + b := by
   unfold eml6; rw [Real.exp_log ha, Real.log_exp]; ring
+
 
 
 
@@ -284,9 +326,11 @@ theorem eml6_zero : eml6 1 (Real.exp (Real.exp 1)) = 0 := by
 
 
 
+
 /-- The double negation identity: eml(0, exp(eml(0, exp(x)))) = x. -/
 theorem eml6_double_neg (x : ℝ) : eml6 0 (Real.exp (eml6 0 (Real.exp x))) = x := by
   unfold eml6; simp [Real.log_exp]
+
 
 
 
@@ -339,12 +383,14 @@ theorem eml6_one_one_irrational : Irrational (eml6 1 1) := by
 
 
 
+
 theorem eml6_double_tower_gt_four : eml6 (eml6 1 1) 1 > 4 := by
   -- We'll use that $e^e > 4$ to conclude the proof.
   have h_exp_exp : Real.exp (Real.exp 1) > 4 := by
     have := Real.exp_one_gt_d9.le;
     norm_num1 at *; rw [ show Real.exp ( Real.exp 1 ) = Real.exp 1 * Real.exp ( Real.exp 1 - 1 ) by rw [ ← Real.exp_add ] ; ring ] ; nlinarith [ Real.add_one_le_exp ( Real.exp 1 - 1 ) ] ;
   unfold eml6; aesop
+
 
 
 
@@ -356,15 +402,18 @@ theorem eml6_diag_compose (x : ℝ) :
 
 
 
+
 /-- The e-tower via iterated eml: eml(eml(1,1), 1) = e^e. -/
 theorem eml6_ee : eml6 (eml6 1 1) 1 = Real.exp (Real.exp 1) := by
   simp [eml6, Real.log_one]
 
 
 
+
 /-- The triple tower: eml(eml(eml(1,1),1), 1) = e^(e^e). -/
 theorem eml6_eee : eml6 (eml6 (eml6 1 1) 1) 1 = Real.exp (Real.exp (Real.exp 1)) := by
   simp [eml6, Real.log_one]
+
 
 
 

@@ -14,6 +14,7 @@ def r2 (n : ℕ) : ℤ :=
 
 
 
+
 /-- r₄(n): number of representations of n as a sum of 4 squares.
 Jacobi's four-square theorem: r₄(n) = 8 · Σ_{d|n, 4∤d} d. -/
 def r4 (n : ℕ) : ℤ :=
@@ -21,10 +22,12 @@ def r4 (n : ℕ) : ℤ :=
 
 
 
+
 /-- r₈(n): number of representations of n as a sum of 8 squares.
 Formula: r₈(n) = 16 · Σ_{d|n} (-1)^{n+d} · d³. -/
 def r8 (n : ℕ) : ℤ :=
   16 * ∑ d ∈ (Nat.divisors n), ((-1 : ℤ) ^ (n + d) * (d : ℤ) ^ 3)
+
 
 
 
@@ -38,6 +41,7 @@ structure IntSignature where
 
 
 
+
 /-- Compute the four-channel signature of n. -/
 def signature (n : ℕ) : IntSignature where
   ch1 := n
@@ -47,9 +51,11 @@ def signature (n : ℕ) : IntSignature where
 
 
 
+
 /-- Squared Euclidean distance between two signatures (using integer arithmetic). -/
 def sigDistSq (s t : IntSignature) : ℤ :=
   (s.ch1 - t.ch1)^2 + (s.ch2 - t.ch2)^2 + (s.ch3 - t.ch3)^2 + (s.ch4 - t.ch4)^2
+
 
 
 
@@ -63,6 +69,7 @@ structure NormSignature where
 
 
 
+
 /-- Compute the normalized signature. -/
 def normSignature (n : ℕ) (hn : n ≠ 0) : NormSignature :=
   let s := signature n
@@ -70,5 +77,6 @@ def normSignature (n : ℕ) (hn : n ≠ 0) : NormSignature :=
     ch2 := (s.ch2 : ℚ) / n
     ch3 := (s.ch3 : ℚ) / n
     ch4 := (s.ch4 : ℚ) / n }
+
 
 

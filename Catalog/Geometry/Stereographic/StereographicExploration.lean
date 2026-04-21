@@ -1,5 +1,3 @@
-import Mathlib
-
 /-! # CatalogBuild.Geometry.Stereographic.StereographicExploration
 
 Auto-generated from theorem catalog database.
@@ -7,6 +5,7 @@ Domain: Geometry/Stereographic
 Declarations: 26
 -/
 
+import Mathlib
 
 noncomputable section
 
@@ -16,11 +15,13 @@ noncomputable def invStereo2D (t : ℝ) : ℝ × ℝ :=
 
 
 
+
 /-- 3D inverse stereographic projection: ℝ² → S² -/
 noncomputable def invStereo3D (u v : ℝ) : ℝ × ℝ × ℝ :=
   (2 * u / (1 + u^2 + v^2),
    2 * v / (1 + u^2 + v^2),
    (1 - u^2 - v^2) / (1 + u^2 + v^2))
+
 
 
 
@@ -41,6 +42,11 @@ theorem invStereo2D_on_circle (t : ℝ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Geometry.Stereographic.StereographicExploration
+Auto-generated from theorem catalog database.
+Domain: Geometry/Stereographic
+Declarations: 26] -/
 theorem invStereo3D_on_sphere (u v : ℝ) :
     let p := invStereo3D u v
     p.1 ^ 2 + p.2.1 ^ 2 + p.2.2 ^ 2 = 1 := by
@@ -52,8 +58,10 @@ theorem invStereo3D_on_sphere (u v : ℝ) :
 
 
 
+
 theorem invStereo2D_zero : invStereo2D 0 = (0, 1) := by
   unfold invStereo2D; norm_num;
+
 
 
 
@@ -64,8 +72,10 @@ theorem invStereo2D_one : invStereo2D 1 = (1, 0) := by
 
 
 
+
 theorem invStereo2D_neg_one : invStereo2D (-1) = (-1, 0) := by
   unfold invStereo2D; norm_num;
+
 
 
 
@@ -76,9 +86,11 @@ def pythTriple (m n : ℤ) : ℤ × ℤ × ℤ :=
 
 
 
+
 theorem pyth_triple_identity (m n : ℤ) :
     (2 * m * n)^2 + (m^2 - n^2)^2 = (m^2 + n^2)^2 := by
   ring
+
 
 
 
@@ -89,9 +101,11 @@ def pythQuadruple (p q r : ℤ) : ℤ × ℤ × ℤ × ℤ :=
 
 
 
+
 theorem pyth_quadruple_identity (p q r : ℤ) :
     (2*p*r)^2 + (2*q*r)^2 + (r^2 - p^2 - q^2)^2 = (r^2 + p^2 + q^2)^2 := by
   ring
+
 
 
 
@@ -100,8 +114,10 @@ theorem classic_345 : 3^2 + 4^2 = 5^2 := by norm_num
 
 
 
+
 /-- Theorem 26.4: Classic triple (5, 12, 13). -/
 theorem classic_51213 : 5^2 + 12^2 = 13^2 := by norm_num
+
 
 
 
@@ -110,8 +126,10 @@ theorem classic_1223 : 1^2 + 2^2 + 2^2 = 3^2 := by norm_num
 
 
 
+
 /-- Theorem 26.6: Classic quadruple (2, 3, 6, 7). -/
 theorem classic_2367 : 2^2 + 3^2 + 6^2 = 7^2 := by norm_num
+
 
 
 
@@ -121,9 +139,11 @@ theorem tropAdd_idempotent (a : ℤ) : tropAdd a a = a := by
 
 
 
+
 theorem tropMul_distrib (a b c : ℤ) :
     tropMul a (tropAdd b c) = tropAdd (tropMul a b) (tropMul a c) := by
   unfold tropMul tropAdd; aesop;
+
 
 
 
@@ -136,9 +156,11 @@ theorem tropical_unit_circle_char (x y : ℤ) :
 
 
 
+
 theorem tropMul_zero (a : ℤ) : tropMul a 0 = a := by
   -- By definition of tropMul, we have tropMul a 0 = a + 0.
   simp [tropMul]
+
 
 
 
@@ -149,15 +171,18 @@ theorem sum_two_sq_mul_sum_two_sq (a b c d : ℤ) :
 
 
 
+
 /-- Theorem 28.4: 2 is a sum of two squares. -/
 theorem two_sum_two_sq : ∃ a b : ℤ, a^2 + b^2 = 2 := by
   exact ⟨1, 1, by norm_num⟩
 
 
 
+
 /-- Theorem 28.5: 5 is a sum of two squares. -/
 theorem five_sum_two_sq : ∃ a b : ℤ, a^2 + b^2 = 5 := by
   exact ⟨1, 2, by norm_num⟩
+
 
 
 
@@ -168,8 +193,10 @@ theorem ten_sum_two_sq : ∃ a b : ℤ, a^2 + b^2 = 10 := by
 
 
 
+
 theorem three_not_sum_two_sq : ¬ ∃ a b : ℤ, a^2 + b^2 = 3 ∧ 0 ≤ a ∧ 0 ≤ b ∧ a ≤ b := by
   exact fun ⟨ a, b, h1, h2, h3, h4 ⟩ => by nlinarith [ show a ≤ 1 by nlinarith, show b ≤ 1 by nlinarith ] ;
+
 
 
 
@@ -178,9 +205,11 @@ noncomputable def stereoOracle (t : ℝ) : ℝ := t
 
 
 
+
 /-- Theorem 29.1: The stereographic round-trip is the identity. -/
 theorem stereo_roundtrip_id (t : ℝ) : stereoOracle t = t := by
   rfl
+
 
 
 

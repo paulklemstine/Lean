@@ -17,10 +17,12 @@ class CorrespondenceAlgebra (α : Type*) extends Ring α where
 
 
 
+
 /-- An idempotent correspondence: the defining data of a Chow motive. -/
 structure IdempotentCorrespondence (α : Type*) [CorrespondenceAlgebra α] where
   corr : α
   idem : corr * corr = corr
+
 
 
 
@@ -32,11 +34,13 @@ def diagonal_correspondence (α : Type*) [CorrespondenceAlgebra α] :
 
 
 
+
 /-- Zero correspondence (the empty motive). -/
 def zero_correspondence (α : Type*) [CorrespondenceAlgebra α] :
     IdempotentCorrespondence α where
   corr := 0
   idem := mul_zero 0
+
 
 
 
@@ -55,6 +59,7 @@ theorem complement_idem_corr {α : Type*} [CorrespondenceAlgebra α]
 
 
 
+
 /-- Motivic weight structure. -/
 structure MotivicWeight where
   p : ℤ
@@ -62,8 +67,10 @@ structure MotivicWeight where
 
 
 
+
 /-- The Tate motive ℤ(n) has weight (2n, n). -/
 def tate_weight (n : ℤ) : MotivicWeight := ⟨2 * n, n⟩
+
 
 
 
@@ -74,12 +81,14 @@ theorem tate_slope (n : ℤ) (hn : n ≠ 0) :
 
 
 
+
 /-- A Künneth system: a complete system of orthogonal idempotents. -/
 structure KunnethSystem (α : Type*) [Ring α] (n : ℕ) where
   projectors : Fin (2 * n + 1) → α
   idempotent : ∀ i, projectors i * projectors i = projectors i
   orthogonal : ∀ i j, i ≠ j → projectors i * projectors j = 0
   complete : ∑ i, projectors i = 1
+
 
 
 
@@ -93,11 +102,13 @@ theorem kunneth_determined {α : Type*} [Ring α] {n : ℕ}
 
 
 
+
 /-- Orthogonal idempotents have zero product. -/
 theorem kunneth_zero_product {α : Type*} [Ring α] {n : ℕ}
     (K : KunnethSystem α n) (i j : Fin (2 * n + 1)) (hij : i ≠ j) :
     K.projectors i * K.projectors j = 0 :=
   K.orthogonal i j hij
+
 
 
 
@@ -113,12 +124,14 @@ theorem classical_to_motivic {R : Type*} [CommRing R]
 
 
 
+
 /-- Bridge 9→6: A Künneth system gives a module decomposition. -/
 theorem motivic_to_derived {R : Type*} [CommRing R] {n : ℕ}
     (K : KunnethSystem R n) (x : R) :
     x = ∑ i : Fin (2 * n + 1), K.projectors i * x := by
   conv_lhs => rw [← one_mul x, ← K.complete]
   rw [Finset.sum_mul]
+
 
 
 
@@ -130,9 +143,11 @@ theorem projective_space_full_density (n : ℕ) :
 
 
 
+
 /-- For a curve of genus g, the motivic density. -/
 noncomputable def curve_motivic_density (g : ℕ) : ℚ :=
   3 / (2 * g + 2)
+
 
 
 
@@ -142,6 +157,11 @@ theorem genus_zero_density : curve_motivic_density 0 = 3 / 2 := by
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.RosettaStone.Bridge9_Motivic
+Auto-generated from theorem catalog database.
+Domain: Speculative/RosettaStone
+Declarations: 18] -/
 theorem motivic_density_vanishes :
     ∀ ε : ℚ, 0 < ε → ∃ N : ℕ, ∀ g : ℕ, N ≤ g → curve_motivic_density g < ε := by
   intro ε hε
@@ -158,11 +178,13 @@ theorem motivic_density_vanishes :
 
 
 
+
 /-- The zeta function of ℙ¹ coefficients. -/
 theorem p1_zeta_coefficients :
     ∀ n : ℕ, (n + 1 : ℤ) = ∑ i ∈ Finset.range (n + 1), 1 := by
   intro n
   simp [Finset.sum_const, Finset.card_range]
+
 
 
 

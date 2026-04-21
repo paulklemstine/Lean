@@ -1,5 +1,3 @@
-import Mathlib
-
 /-! # CatalogBuild.Geometry.Stereographic.SPBDeepTheory
 
 Auto-generated from theorem catalog database.
@@ -7,6 +5,7 @@ Domain: Geometry/Stereographic
 Declarations: 10
 -/
 
+import Mathlib
 
 noncomputable section
 
@@ -18,6 +17,7 @@ theorem cocycle_norm_identity (x y : ℝ) (hxy : x * y ≠ 1) :
   have h : (1 - x * y) ≠ 0 := sub_ne_zero.mpr (Ne.symm hxy)
   field_simp
   ring
+
 
 
 
@@ -33,6 +33,7 @@ theorem cocycle_coboundary_simplified (x y : ℝ) (hxy : x * y ≠ 1) :
 
 
 
+
 /-- [Section: # CatalogBuild.Geometry.Stereographic.SPBDeepTheory
 Auto-generated from theorem catalog database.
 Domain: Geometry/Stereographic
@@ -44,15 +45,22 @@ theorem spb_sum_conjugate (x y : ℝ) (hxy : x * y ≠ 1) (hxy' : x * y ≠ -1) 
 
 
 
+
+/-- [Section: # CatalogBuild.Geometry.Stereographic.SPBDeepTheory
+Auto-generated from theorem catalog database.
+Domain: Geometry/Stereographic
+Declarations: 10] -/
 theorem spb_prod_conjugate (x y : ℝ) (hxy : x * y ≠ 1) (hxy' : x * y ≠ -1) :
     spb x y * spb x (-y) = (x^2 - y^2) / ((1 - x*y) * (1 + x*y)) := by
   unfold spb; rw [ div_mul_div_comm ] ; ring;
 
 
 
+
 theorem spbH_internal (u v : ℝ) (hu : |u| < 1) (hv : |v| < 1) :
     |spbH u v| < 1 := by
   exact abs_lt.mpr ⟨ by rw [ spbH ] ; rw [ lt_div_iff₀ ] <;> nlinarith [ abs_lt.mp hu, abs_lt.mp hv ], by rw [ spbH ] ; rw [ div_lt_iff₀ ] <;> nlinarith [ abs_lt.mp hu, abs_lt.mp hv ] ⟩
+
 
 
 
@@ -69,9 +77,11 @@ theorem spb_of_spb_expanded (a b c d : ℝ) (hab : a * b ≠ 1) (hcd : c * d ≠
 
 
 
+
 /-- arctan(1/2) + arctan(1/3) = arctan(1) = π/4, verified algebraically. -/
 theorem spb_gregory_leibniz : spb (1/2 : ℝ) (1/3) = 1 := by
   unfold spb; norm_num
+
 
 
 
@@ -81,9 +91,11 @@ theorem spb_double_fifth : spb (1/5 : ℝ) (1/5) = 5/12 := by
 
 
 
+
 /-- The negation map is an SPB automorphism. -/
 theorem spb_auto_neg (x y : ℝ) : spb (-x) (-y) = -(spb x y) :=
   spb_neg_neg x y
+
 
 
 
@@ -93,6 +105,7 @@ theorem spb_auto_inv (x y : ℝ) (hx : x ≠ 0) (hy : y ≠ 0)
     (hxy : x * y ≠ 1) :
     spb (1/x) (1/y) = -spb x y :=
   spb_reciprocal_neg x y hx hy hxy
+
 
 
 

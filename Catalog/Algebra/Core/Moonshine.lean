@@ -13,9 +13,11 @@ def berggren_M1 : Matrix.SpecialLinearGroup (Fin 2) ℤ :=
 
 
 
+
 /-- Berggren matrix M₃ in SL(2,ℤ). -/
 def berggren_M3 : Matrix.SpecialLinearGroup (Fin 2) ℤ :=
   ⟨!![1, 2; 0, 1], by decide +revert⟩
+
 
 
 
@@ -23,6 +25,7 @@ def berggren_M3 : Matrix.SpecialLinearGroup (Fin 2) ℤ :=
 theorem SL2_order_formula :
     3 * (3^2 - 1) = 24 ∧ 5 * (5^2 - 1) = 120 ∧ 7 * (7^2 - 1) = 336 := by
   norm_num
+
 
 
 
@@ -37,7 +40,9 @@ theorem dedekind_expansion {S : Type*} [CommRing S] [IsDedekindDomain S]
 
 
 
+
 /-- 1728 = 12³, a fundamental constant in the theory of modular forms. -/
 theorem j_value_cube : (1728 : ℤ) = 12 ^ 3 := by norm_num
+
 
 

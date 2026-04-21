@@ -17,11 +17,13 @@ def repulsionFactor (beta : ℝ) (ev : Fin n → ℝ) : ℝ :=
 
 
 
+
 /-- The Coulomb energy of n point charges on the real line.
 E = -∑_{i<j} log|vᵢ - vⱼ|
 This is the 2D electrostatic energy of unit charges confined to a line. -/
 def coulombEnergy (ev : Fin n → ℝ) : ℝ :=
   -∑ i : Fin n, ∑ j ∈ Ioi i, Real.log |ev j - ev i|
+
 
 
 
@@ -31,11 +33,13 @@ def confiningEnergy (ev : Fin n → ℝ) : ℝ :=
 
 
 
+
 /-- The total effective energy of the eigenvalue Coulomb gas.
 For the GUE (β=2): E_total = -2 ∑_{i<j} log|vᵢ - vⱼ| + ∑ vᵢ²/2
 This is the energy whose Boltzmann weight exp(-E) gives the joint eigenvalue density. -/
 def totalEnergy (beta : ℝ) (ev : Fin n → ℝ) : ℝ :=
   beta * coulombEnergy ev + confiningEnergy ev
+
 
 
 
@@ -55,10 +59,16 @@ theorem repulsion_at_coincidence {n : ℕ} {beta : ℝ} (hbeta : 0 < beta) (ev :
 
 
 
+
+/-- [Section: # CatalogBuild.Algebra.EigenvalueRepulsion_2
+Auto-generated from theorem catalog database.
+Domain: Algebra
+Declarations: 13] -/
 theorem vandermonde_nonzero_iff_distinct {n : ℕ} (ev : Fin n → ℝ) :
     (vandermonde ev).det ≠ 0 ↔ Function.Injective ev := by
       convert Matrix.det_vandermonde_ne_zero_iff;
       infer_instance
+
 
 
 
@@ -74,9 +84,11 @@ theorem repulsion_eq_exp_neg_coulomb {n : ℕ} {beta : ℝ} (_hbeta : 0 ≤ beta
 
 
 
+
 theorem repulsionFactor_nonneg {n : ℕ} {beta : ℝ} (_hbeta : 0 ≤ beta)
     (ev : Fin n → ℝ) : 0 ≤ repulsionFactor beta ev := by
       exact Real.rpow_nonneg ( abs_nonneg _ ) _
+
 
 
 
@@ -86,9 +98,11 @@ theorem two_point_repulsion (beta : ℝ) (_hbeta : 0 ≤ beta) (a b : ℝ) :
 
 
 
+
 theorem coulomb_energy_pair (a d : ℝ) (_hd : 0 < d) :
     coulombEnergy ![a, a + d] = -Real.log d := by
       unfold coulombEnergy; aesop;
+
 
 
 
@@ -102,6 +116,7 @@ inductive DysonIndex where
 
 
 
+
 /-- The numerical value of each Dyson index. -/
 def DysonIndex.toReal : DysonIndex → ℝ
   | .GOE => 1
@@ -110,8 +125,10 @@ def DysonIndex.toReal : DysonIndex → ℝ
 
 
 
+
 theorem DysonIndex.toReal_pos (d : DysonIndex) : 0 < d.toReal := by
   cases d <;> simp [DysonIndex.toReal]
+
 
 
 

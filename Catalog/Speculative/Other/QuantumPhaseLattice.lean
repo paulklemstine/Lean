@@ -20,12 +20,14 @@ theorem quantum_phase_lattice_is_complete_lattice
 
 
 
+
 /-- The norm of a quantum superposition is bounded by the sum of norms. -/
 theorem superposition_norm_bound
     {V : Type*} [SeminormedAddCommGroup V]
     (ψ φ : V) :
     ‖ψ + φ‖ ≤ ‖ψ‖ + ‖φ‖ :=
   norm_add_le ψ φ
+
 
 
 
@@ -38,12 +40,14 @@ theorem superposition_norm_bound_finset
 
 
 
+
 /-- The Born rule probability |⟨ψ|φ⟩|² is non-negative. -/
 theorem born_rule_nonneg
     {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
     (ψ φ : V) :
     0 ≤ ‖@inner ℂ V _ ψ φ‖ ^ 2 := by
   positivity
+
 
 
 
@@ -56,12 +60,14 @@ theorem born_rule_cauchy_schwarz
 
 
 
+
 /-- Global phase invariance of norm: ‖e^{iθ} · ψ‖ = ‖ψ‖. -/
 theorem phase_invariance_norm
     {V : Type*} [NormedAddCommGroup V] [NormedSpace ℂ V]
     (ψ : V) (θ : ℝ) :
     ‖Complex.exp (↑θ * Complex.I) • ψ‖ = ‖ψ‖ := by
   rw [norm_smul, Complex.norm_exp_ofReal_mul_I, one_mul]
+
 
 
 
@@ -76,6 +82,7 @@ theorem phase_invariance_inner_norm
 
 
 
+
 /-- The real part of the inner product (interference term) is bounded:
 |Re⟨ψ|φ⟩| ≤ ‖ψ‖·‖φ‖. -/
 theorem quantum_coherence_bound
@@ -85,6 +92,7 @@ theorem quantum_coherence_bound
   calc |RCLike.re (@inner ℂ V _ ψ φ)|
       ≤ ‖@inner ℂ V _ ψ φ‖ := Complex.abs_re_le_norm _
     _ ≤ ‖ψ‖ * ‖φ‖ := norm_inner_le_norm ψ φ
+
 
 
 
@@ -101,6 +109,11 @@ theorem quantum_interference_formula
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.QuantumPhaseLattice
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 18] -/
 theorem projection_norm_le
     {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
     (K : Submodule ℂ V) [K.HasOrthogonalProjection]
@@ -113,12 +126,14 @@ theorem projection_norm_le
 
 
 
+
 /-- Fidelity is symmetric: |⟨ψ|φ⟩| = |⟨φ|ψ⟩|. -/
 theorem fidelity_symmetric
     {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℂ V]
     (ψ φ : V) :
     ‖@inner ℂ V _ ψ φ‖ = ‖@inner ℂ V _ φ ψ‖ := by
   rw [← inner_conj_symm ψ φ, RCLike.norm_conj]
+
 
 
 
@@ -131,12 +146,14 @@ theorem fidelity_orthogonal
 
 
 
+
 /-- The submodule lattice is modular: if A ≤ C then A ⊔ (B ⊓ C) = (A ⊔ B) ⊓ C. -/
 theorem quantum_lattice_modular
     {V : Type*} [AddCommGroup V] [Module ℂ V]
     (A B C : Submodule ℂ V) (hAC : A ≤ C) :
     A ⊔ (B ⊓ C) = (A ⊔ B) ⊓ C :=
   (sup_inf_assoc_of_le B hAC).symm
+
 
 
 
@@ -151,6 +168,7 @@ theorem quantum_phase_sensitivity_bound
 
 
 
+
 /-- A norm-nonincreasing linear map is 1-Lipschitz, enabling application
 of the ECSTASIS fixed-point convergence framework. -/
 theorem quantum_channel_lipschitz
@@ -162,6 +180,7 @@ theorem quantum_channel_lipschitz
 
 
 
+
 /-- Composition of quantum channels: ‖T₂ ∘ T₁‖ ≤ ‖T₂‖ · ‖T₁‖. -/
 theorem quantum_channel_composition_bound
     {V W U : Type*} [NormedAddCommGroup V] [NormedAddCommGroup W]
@@ -170,6 +189,7 @@ theorem quantum_channel_composition_bound
     (T₁ : V →L[ℂ] W) (T₂ : W →L[ℂ] U) :
     ‖T₂.comp T₁‖ ≤ ‖T₂‖ * ‖T₁‖ :=
   ContinuousLinearMap.opNorm_comp_le T₂ T₁
+
 
 
 
@@ -185,6 +205,7 @@ theorem quantum_parallelogram_law
 
 
 
+
 /-- A norm-bounded linear self-map is Lipschitz, connecting to the
 ECSTASIS contraction/fixed-point framework for quantum channels. -/
 theorem quantum_phase_lattice_transport
@@ -192,6 +213,7 @@ theorem quantum_phase_lattice_transport
     (U : V →L[ℂ] V) (hU : ‖U‖ ≤ 1) :
     LipschitzWith 1 U :=
   U.lipschitz.weaken (by exact_mod_cast hU)
+
 
 
 

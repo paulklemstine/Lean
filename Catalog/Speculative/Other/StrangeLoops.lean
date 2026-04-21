@@ -21,6 +21,7 @@ theorem lawvere_fp {A B : Type*}
 
 
 
+
 /-- [Section: # CatalogBuild.Speculative.Other.StrangeLoops
 Auto-generated from theorem catalog database.
 Domain: Speculative/Other
@@ -33,12 +34,18 @@ structure GodelSentenceV2 (X : Type*) where
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.StrangeLoops
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 13] -/
 theorem godel_incompleteness_v2 {X : Type*} (gs : GodelSentenceV2 X)
     (sound : ∀ p : Prop, gs.provable (gs.code p) → p) :
     gs.G ∧ ¬ gs.provable (gs.code gs.G) := by
   have not_provable : ¬ gs.provable (gs.code gs.G) := fun h =>
     gs.self_ref.mp (sound gs.G h) h
   exact ⟨gs.self_ref.mpr not_provable, not_provable⟩
+
 
 
 
@@ -49,7 +56,9 @@ theorem pow2_not_div3' : ∀ k : ℕ, 2 ^ k % 3 ≠ 0 := by
 
 
 
+
 theorem double_preserves_mod3' (n : ℕ) (h : n % 3 ≠ 0) : (2 * n) % 3 ≠ 0 := by omega
+
 
 
 
@@ -58,9 +67,11 @@ theorem sub3_preserves_mod3' (n : ℕ) (h : n % 3 ≠ 0) (_h3 : 3 ≤ n) :
 
 
 
+
 theorem no_self_negating_prop' : ¬ ∃ P : Prop, P ↔ ¬P := by
   intro ⟨P, hP⟩
   exact absurd (hP.mpr fun h => hP.mp h h) fun h => hP.mp h h
+
 
 
 
@@ -71,9 +82,11 @@ theorem grelling_paradox_v2 :
 
 
 
+
 theorem strange_loop_compose_v2 {X : Type*} (_f g : X → X)
     (x : X) (hf : _f x = x) (hg : g (_f x) = _f x) :
     g x = x := by rwa [hf] at hg
+
 
 
 
@@ -81,6 +94,7 @@ theorem observer_stabilizes {X : Type*} (observe : X → X)
     (h_idem : ∀ x, observe (observe x) = observe x) (x : X) :
     observe (observe (observe x)) = observe x := by
   rw [h_idem]; exact h_idem x
+
 
 
 
@@ -97,6 +111,7 @@ theorem observer_convergence' {X : Type*} (observe : X → X)
 
 
 
+
 theorem tarski_undefinability' :
     ¬ ∃ (T : Prop → Prop), (∀ P, T P ↔ P) ∧ (∃ L, L ↔ ¬ T L) := by
   intro ⟨T, hT, L, hL⟩
@@ -108,10 +123,12 @@ theorem tarski_undefinability' :
 
 
 
+
 theorem self_application_surj {X Y : Type*}
     (app : X → X → Y) (d : Y → X) (h : ∀ y, app (d y) (d y) = y) :
     Surjective (fun x => app x x) :=
   fun y => ⟨d y, h y⟩
+
 
 
 

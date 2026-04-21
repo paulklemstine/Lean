@@ -14,6 +14,7 @@ theorem genus_two_exceeds_genus_one (p : ℕ) (hp : 2 ≤ p) :
 
 
 
+
 /-- Higher genus = exponentially more information. -/
 theorem genus_dimension_gap (p g₁ g₂ : ℕ) (hp : 2 ≤ p) (hg : g₁ < g₂) :
     p ^ g₁ < p ^ g₂ :=
@@ -21,10 +22,12 @@ theorem genus_dimension_gap (p g₁ g₂ : ℕ) (hp : 2 ≤ p) (hg : g₁ < g₂
 
 
 
+
 /-- Weil bound simplified: (p-1)^g ≤ p^g. -/
 theorem weil_bound_simplified (p g : ℕ) (hp : 1 ≤ p) :
     (p - 1) ^ g ≤ p ^ g :=
   Nat.pow_le_pow_left (by omega) g
+
 
 
 
@@ -40,10 +43,12 @@ theorem sumset_size_upper_bound {α : Type*} [DecidableEq α] [AddCommMonoid α]
 
 
 
+
 /-- Every element of ℤ/pℤ is expressible as a sum. -/
 theorem zmod_sumset_surjective (p : ℕ) :
     ∀ a : ZMod p, ∃ x y : ZMod p, x + y = a :=
   fun a => ⟨a, 0, by ring⟩
+
 
 
 
@@ -54,10 +59,12 @@ theorem factor_search_space (N p q : ℕ) (hN : N = p * q)
 
 
 
+
 /-- k independent lenses reduce the search space. -/
 theorem independent_lenses_exp_reduction (S k : ℕ) (hS : 0 < S) (hk : 1 ≤ k) :
     S / 2 ^ k < S :=
   Nat.div_lt_self hS (Nat.one_lt_pow (by omega) (by norm_num))
+
 
 
 
@@ -68,10 +75,12 @@ theorem lens_diminishing_returns (S k₁ k₂ : ℕ) (hle : k₁ ≤ k₂) :
 
 
 
+
 /-- The ceiling theorem: if 2^k > S, then S / 2^k = 0. -/
 theorem information_ceiling (S k : ℕ) (hk : S < 2 ^ k) :
     S / 2 ^ k = 0 :=
   Nat.div_eq_of_lt hk
+
 
 
 
@@ -84,10 +93,12 @@ theorem tropical_valuation_additive (p a b : ℕ) (hp : Nat.Prime p)
 
 
 
+
 /-- Multiple tropical primes compose via CRT. -/
 theorem tropical_primes_compose (m n : ℕ) (hcop : Nat.Coprime m n) :
     Nat.totient (m * n) = Nat.totient m * Nat.totient n :=
   Nat.totient_mul hcop
+
 
 
 
@@ -98,10 +109,12 @@ theorem fib_consecutive_coprime (n : ℕ) :
 
 
 
+
 /-- The Fibonacci addition formula. -/
 theorem fib_addition (m n : ℕ) :
     Nat.fib (m + n + 1) = Nat.fib m * Nat.fib n + Nat.fib (m + 1) * Nat.fib (n + 1) :=
   Nat.fib_add m n
+
 
 
 
@@ -116,6 +129,11 @@ theorem p_sub_one_dvd_p_sq_sub_one (p : ℕ) (_hp : 1 ≤ p) :
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.OpenDirections
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 42] -/
 theorem p_add_one_dvd_p_sq_sub_one (p : ℕ) (hp : 1 ≤ p) :
     (p + 1) ∣ (p * p - 1) := by
   cases p with
@@ -127,6 +145,7 @@ theorem p_add_one_dvd_p_sq_sub_one (p : ℕ) (hp : 1 ≤ p) :
       omega
     rw [this]
     exact dvd_mul_right _ _
+
 
 
 
@@ -179,6 +198,7 @@ theorem fib_entry_point (p : ℕ) (hp : Nat.Prime p) (hp5 : p ≠ 5) :
 
 
 
+
 /-- For any prime p ≠ 5, p | F(p² - 1).
 Proof: by fib_entry_point, either p | F(p-1) or p | F(p+1).
 Since (p-1) | (p²-1) and (p+1) | (p²-1), Nat.fib_dvd gives the result. -/
@@ -190,9 +210,11 @@ theorem pisano_p_divides_fib (p : ℕ) (hp : Nat.Prime p) (hp5 : p ≠ 5) :
 
 
 
+
 /-- Hurwitz barrier: 16 ∉ {1, 2, 4, 8}. -/
 theorem hurwitz_barrier_16 : 16 ∉ ({1, 2, 4, 8} : Set ℕ) := by
   simp [Set.mem_insert_iff]
+
 
 
 
@@ -209,10 +231,12 @@ theorem hurwitz_dimensions_are_powers_of_two :
 
 
 
+
 /-- Classical lenses reduce quantum queries: √(N/2^k) ≤ √N. -/
 theorem hybrid_query_reduction (N k : ℕ) :
     Nat.sqrt (N / 2 ^ k) ≤ Nat.sqrt N :=
   Nat.sqrt_le_sqrt (Nat.div_le_self N _)
+
 
 
 
@@ -223,8 +247,10 @@ theorem classical_preprocessing (N k : ℕ) (hN : 0 < N) (hk : 1 ≤ k) :
 
 
 
+
 /-- 9 lenses give 512× reduction. -/
 theorem nine_lens_factor : 2 ^ 9 = 512 := by norm_num
+
 
 
 
@@ -233,14 +259,17 @@ def lensReduce (S b : ℕ) : ℕ := S / b
 
 
 
+
 /-- Identity lens: S/1 = S. -/
 theorem lens_identity (S : ℕ) : lensReduce S 1 = S := by simp [lensReduce]
+
 
 
 
 /-- Composing two lens reductions. -/
 theorem lens_compose (S a b : ℕ) :
     lensReduce (lensReduce S a) b = S / a / b := rfl
+
 
 
 
@@ -251,10 +280,12 @@ theorem lens_monoidal_product (S a b : ℕ) (ha : 0 < a) (hb : 0 < b) :
 
 
 
+
 /-- Two independent halvings quarter the space. -/
 theorem pairwise_independent_reduction (S : ℕ) :
     S / 4 ≤ S / 2 :=
   Nat.div_le_div_left (by norm_num) (by positivity)
+
 
 
 
@@ -263,9 +294,11 @@ theorem nine_lens_reduction_factor : 2 ^ 9 = 512 := by norm_num
 
 
 
+
 /-- lcm(a,b) · gcd(a,b) = a · b. -/
 theorem lcm_gcd_product (a b : ℕ) : Nat.lcm a b * Nat.gcd a b = a * b :=
   Nat.lcm_mul_gcd a b
+
 
 
 
@@ -276,10 +309,12 @@ theorem pisano_lcm_factors (T_p T_q : ℕ) :
 
 
 
+
 /-- Euler's totient is multiplicative on coprimes. -/
 theorem totient_multiplicative (m n : ℕ) (hcop : Nat.Coprime m n) :
     Nat.totient (m * n) = Nat.totient m * Nat.totient n :=
   Nat.totient_mul hcop
+
 
 
 
@@ -292,14 +327,17 @@ theorem padic_additive (p : ℕ) (hp : Nat.Prime p)
 
 
 
+
 /-- √p ≤ p. -/
 theorem sqrt_le_self' (p : ℕ) : Nat.sqrt p ≤ p := Nat.sqrt_le_self p
+
 
 
 
 /-- GCD of trace differences divides N. -/
 theorem hasse_gcd_divides (t₁ t₂ N : ℤ) :
     ↑(Int.gcd (t₁ - t₂) N) ∣ N := Int.gcd_dvd_right _ _
+
 
 
 
@@ -310,8 +348,10 @@ theorem hasse_birthday_bound (p : ℕ) :
 
 
 
+
 /-- Search space after k lenses ≤ N. -/
 theorem search_space_bound (N k : ℕ) : N / 2 ^ k ≤ N := Nat.div_le_self N _
+
 
 
 
@@ -323,10 +363,12 @@ theorem sufficient_lenses (N : ℕ) :
 
 
 
+
 /-- An abstract lens: a monotone function on search spaces. -/
 structure AbstractLens where
   reduce : ℕ → ℕ
   monotone : ∀ S, reduce S ≤ S
+
 
 
 
@@ -337,6 +379,7 @@ def trivialLens : AbstractLens where
 
 
 
+
 /-- A halving lens: S ↦ S/2. -/
 def halvingLens : AbstractLens where
   reduce := fun S => S / 2
@@ -344,10 +387,12 @@ def halvingLens : AbstractLens where
 
 
 
+
 /-- Lens composition. -/
 def AbstractLens.compose (l₁ l₂ : AbstractLens) : AbstractLens where
   reduce := l₁.reduce ∘ l₂.reduce
   monotone := fun S => le_trans (l₁.monotone _) (l₂.monotone S)
+
 
 
 
@@ -360,5 +405,6 @@ theorem k_halvings (S k : ℕ) :
     rw [Function.iterate_succ_apply', ih]
     simp only [halvingLens]
     rw [Nat.div_div_eq_div_mul, pow_succ]
+
 
 

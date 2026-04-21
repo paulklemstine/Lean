@@ -30,6 +30,11 @@ theorem hermitian_eigenvalues_real {n : ℕ} (M : Matrix (Fin n) (Fin n) ℂ)
 
 
 
+
+/-- [Section: # CatalogBuild.Algebra.RiemannHypothesis.RiemannHypothesis
+Auto-generated from theorem catalog database.
+Domain: Algebra/RiemannHypothesis
+Declarations: 10] -/
 theorem bertrand_postulate' (n : ℕ) (hn : n ≥ 1) :
     ∃ p, n < p ∧ p ≤ 2 * n ∧ Nat.Prime p := by
   -- Apply Bertrand's postulate to find a prime $p$ such that $n < p \leq 2n$.
@@ -38,8 +43,10 @@ theorem bertrand_postulate' (n : ℕ) (hn : n ≥ 1) :
 
 
 
+
 theorem prime_ge_three_odd (p : ℕ) (hp : Nat.Prime p) (hp3 : p ≥ 3) : ¬ 2 ∣ p := by
   rw [ hp.dvd_iff_eq ] <;> linarith
+
 
 
 
@@ -50,9 +57,11 @@ theorem vandermonde_vanishes_at_collision {n : ℕ} (v : Fin n → ℂ)
 
 
 
+
 theorem vandermonde_det_product {n : ℕ} (v : Fin n → ℂ) :
     Matrix.det (Matrix.vandermonde v) = ∏ i : Fin n, ∏ j ∈ Finset.Ioi i, (v j - v i) := by
   rw [ Matrix.det_vandermonde ]
+
 
 
 
@@ -61,13 +70,16 @@ theorem two_is_prime : Nat.Prime 2 := by decide
 
 
 
+
 /-- 3 is prime. -/
 theorem three_is_prime : Nat.Prime 3 := by decide
 
 
 
+
 /-- The first prime gap: 3 - 2 = 1. -/
 theorem first_prime_gap : 3 - 2 = 1 := by norm_num
+
 
 
 
@@ -78,9 +90,11 @@ theorem hasse_example : (9 : ℤ) - (5 + 1) = 3 := by norm_num
 
 
 
+
 /-- The Hasse bound inequality for the specific case p = 5, a_p = 3:
 3² ≤ 4 · 5, i.e., a_p² ≤ 4p (equivalent to |a_p| ≤ 2√p). -/
 theorem hasse_bound_F5 : (3 : ℤ) ^ 2 ≤ 4 * 5 := by norm_num
+
 
 
 

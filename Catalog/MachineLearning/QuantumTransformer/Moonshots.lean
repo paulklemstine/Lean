@@ -18,14 +18,21 @@ theorem compression_benefit (n : ℕ) :
 
 
 
+
+/-- [Section: # CatalogBuild.MachineLearning.QuantumTransformer.Moonshots
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/QuantumTransformer
+Declarations: 12] -/
 theorem finite_crystallized_models (n H L : ℕ) :
     Fintype.card (Fin L → Fin H → Perm (Fin n)) = (n.factorial ^ H) ^ L := by
   simp [Fintype.card_pi, Fintype.card_perm, Fintype.card_fin]
 
 
 
+
 theorem quantum_exploration_space (n : ℕ) :
     2 ^ n > n := Nat.lt_pow_self (by norm_num : 1 < 2)
+
 
 
 
@@ -36,13 +43,16 @@ theorem hybrid_advantage (n : ℕ) (hn : 2 ≤ n) :
 
 
 
+
 theorem measurement_collapse (n : ℕ) :
     Fintype.card (Fin (2 ^ n)) = 2 ^ n := Fintype.card_fin _
 
 
 
+
 def crystallize_step (alpha : ℝ) (p : ℝ) : ℝ :=
   p + alpha * (2 * p - 1) * p * (1 - p)
+
 
 
 
@@ -68,6 +78,7 @@ theorem crystallize_pushes_apart (p alpha : ℝ) (hp0 : 0 < p) (hp1 : p < 1)
 
 
 
+
 theorem crystallize_fixed_points (p alpha : ℝ) (halpha : alpha ≠ 0) :
     crystallize_step alpha p = p ↔ p = 0 ∨ p = 1 ∨ p = 1/2 := by
   unfold crystallize_step
@@ -85,13 +96,16 @@ theorem crystallize_fixed_points (p alpha : ℝ) (halpha : alpha ≠ 0) :
 
 
 
+
 theorem zero_is_stable (alpha : ℝ) :
     crystallize_step alpha 0 = 0 := by simp [crystallize_step]
 
 
 
+
 theorem one_is_stable (alpha : ℝ) :
     crystallize_step alpha 1 = 1 := by simp [crystallize_step]
+
 
 
 
@@ -105,8 +119,10 @@ theorem self_crystallization_limit_exists :
 
 
 
+
 theorem integrated_info_additive (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) :
     0 ≤ a + b := by linarith
+
 
 
 

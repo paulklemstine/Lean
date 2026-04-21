@@ -18,6 +18,7 @@ theorem two_reps_identity (x y u v : ℤ)
 
 
 
+
 /-- **Sphere Point Pairing**: Two quadruples with the same d satisfy a
 bilinear identity in their components. This is the key to extracting
 factor information from multiple representations. -/
@@ -26,6 +27,7 @@ theorem sphere_point_pairing (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
     (h₂ : a₂^2 + b₂^2 + c₂^2 = d^2) :
     a₁^2 + b₁^2 + c₁^2 = a₂^2 + b₂^2 + c₂^2 := by
   linarith
+
 
 
 
@@ -38,12 +40,14 @@ theorem sphere_cross_identity (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
 
 
 
+
 /-- **Factor Orbit Lemma**: If d = p · q and (a,b,c,d) is a quadruple,
 then a²+b²+c² = p²q². The point (a,b,c) lies on a sphere whose
 radius squared has a known factorization. -/
 theorem factor_orbit_on_sphere (a b c p q : ℤ) (h : a^2 + b^2 + c^2 = (p*q)^2) :
     a^2 + b^2 + c^2 = p^2 * q^2 := by
   rwa [mul_pow] at h
+
 
 
 
@@ -56,6 +60,7 @@ theorem residue_on_factor_orbit (a b c d p : ℤ) (h : a^2 + b^2 + c^2 = d^2)
 
 
 
+
 /-- If p | d then a²+b²+c² ≡ 0 mod p² constrains the residues of a,b,c mod p. -/
 theorem factor_constrains_residues (a b c d p : ℤ) (h : a^2 + b^2 + c^2 = d^2)
     (hp : p ∣ d) :
@@ -64,8 +69,10 @@ theorem factor_constrains_residues (a b c d p : ℤ) (h : a^2 + b^2 + c^2 = d^2)
 
 
 
+
 /-- The Lorentz form Q(a,b,c,d) = a² + b² + c² - d². -/
 def lorentzFormQ (a b c d : ℤ) : ℤ := a^2 + b^2 + c^2 - d^2
+
 
 
 
@@ -74,6 +81,7 @@ the integer points on the null cone of the Lorentz form. -/
 theorem quad_iff_null_cone (a b c d : ℤ) :
     a^2 + b^2 + c^2 = d^2 ↔ lorentzFormQ a b c d = 0 := by
   unfold lorentzFormQ; omega
+
 
 
 
@@ -86,10 +94,12 @@ theorem bilinear_decomposition (a b c d : ℤ) (h : lorentzFormQ a b c d = 0) :
 
 
 
+
 /-- **Norm Preservation under Reflection**: Reflecting a quadruple
 (a,b,c,d) → (-a,b,c,d) preserves the quadruple property. -/
 theorem reflect_a (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
     (-a)^2 + b^2 + c^2 = d^2 := by rw [neg_sq]; exact h
+
 
 
 
@@ -102,8 +112,14 @@ theorem reflect_b (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.TreeFactoring.SharedFactorGeometry
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/TreeFactoring
+Declarations: 25] -/
 theorem reflect_c (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
     a^2 + b^2 + (-c)^2 = d^2 := by rw [neg_sq]; exact h
+
 
 
 
@@ -113,13 +129,16 @@ theorem permute_abc (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
 
 
 
+
 theorem permute_bac (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
     b^2 + a^2 + c^2 = d^2 := by linarith
 
 
 
+
 theorem permute_acb (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
     a^2 + c^2 + b^2 = d^2 := by linarith
+
 
 
 
@@ -133,13 +152,16 @@ theorem channel_1 (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
 
 
 
+
 theorem channel_2 (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
     (d - b) * (d + b) = a^2 + c^2 := by nlinarith
 
 
 
+
 theorem channel_3 (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
     (d - a) * (d + a) = b^2 + c^2 := by nlinarith
+
 
 
 
@@ -151,6 +173,7 @@ theorem triple_channel_sum (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
 
 
 
+
 theorem quadruple_sum_identity (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
     (h₁ : a₁^2 + b₁^2 + c₁^2 = d₁^2)
     (h₂ : a₂^2 + b₂^2 + c₂^2 = d₂^2) :
@@ -159,10 +182,12 @@ theorem quadruple_sum_identity (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
 
 
 
+
 theorem gcd_abc_divides_d_sq (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2)
     (g : ℤ) (hga : g ∣ a) (hgb : g ∣ b) (hgc : g ∣ c) :
     g^2 ∣ d^2 := by
   exact h ▸ dvd_add ( dvd_add ( pow_dvd_pow_of_dvd hga 2 ) ( pow_dvd_pow_of_dvd hgb 2 ) ) ( pow_dvd_pow_of_dvd hgc 2 )
+
 
 
 
@@ -174,9 +199,11 @@ theorem cross_channel_12 (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
 
 
 
+
 theorem cross_channel_13 (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
     (d-c)*(d+c) - (d-a)*(d+a) = a^2 - c^2 := by
   nlinarith
+
 
 
 
@@ -186,10 +213,12 @@ theorem cross_channel_23 (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
 
 
 
+
 /-- **Cross-Channel GCD**: The GCD of two channel values contains factor info.
 channel_1 - channel_2 = b² - c² = (b-c)(b+c). -/
 theorem cross_channel_gcd_factor (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
     (b - c) * (b + c) = (d-c)*(d+c) - (d-b)*(d+b) := by
   nlinarith
+
 
 

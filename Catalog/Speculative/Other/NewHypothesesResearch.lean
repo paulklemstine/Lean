@@ -20,6 +20,7 @@ theorem idem_meet_idempotent {X : Type*} (f g : X → X)
 
 
 
+
 /-- [Section: # CatalogBuild.Speculative.Other.NewHypothesesResearch
 Auto-generated from theorem catalog database.
 Domain: Speculative/Other
@@ -33,11 +34,13 @@ theorem idem_meet_fixed {X : Type*} (f g : X → X)
 
 
 
+
 /-- Tropical additive idempotency implies no additive cancellation. -/
 theorem tropical_no_cancellation :
     ¬(∀ a b c : ℝ, max a c = max b c → a = b) := by
   push_neg
   exact ⟨0, 1, 2, by norm_num, by norm_num⟩
+
 
 
 
@@ -50,6 +53,7 @@ theorem tropical_zero_test (a : ℝ) : max a 0 = 0 ↔ a ≤ 0 := by
 
 
 
+
 /-- ReLU composed with negation and ReLU decomposes any real number:
 x = ReLU(x) - ReLU(-x). This is the "tropical Peirce decomposition." -/
 theorem tropical_peirce (x : ℝ) : x = max x 0 - max (-x) 0 := by
@@ -59,9 +63,15 @@ theorem tropical_peirce (x : ℝ) : x = max x 0 - max (-x) 0 := by
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.NewHypothesesResearch
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 21] -/
 theorem peirce_decomposition {R : Type*} [Ring R] (e : R) (he : e * e = e) (x : R) :
     x = e * x * e + e * x * (1 - e) + (1 - e) * x * e + (1 - e) * x * (1 - e) := by
   simp +decide [ mul_sub, sub_mul, ← mul_assoc, he ]
+
 
 
 
@@ -71,9 +81,11 @@ theorem complement_idempotent {R : Type*} [Ring R] (e : R) (he : e * e = e) :
 
 
 
+
 theorem idem_complement_zero {R : Type*} [Ring R] (e : R) (he : e * e = e) :
     e * (1 - e) = 0 := by
   rw [ mul_sub, mul_one, he, sub_self ]
+
 
 
 
@@ -81,31 +93,40 @@ theorem idem_complement_zero {R : Type*} [Ring R] (e : R) (he : e * e = e) :
 theorem idemCount_2 : idemCount 2 = 2 := by native_decide
 
 
+
 theorem idemCount_3 : idemCount 3 = 2 := by native_decide
+
 
 
 theorem idemCount_5 : idemCount 5 = 2 := by native_decide
 
 
+
 theorem idemCount_6 : idemCount 6 = 4 := by native_decide
+
 
 
 theorem idemCount_7 : idemCount 7 = 2 := by native_decide
 
 
+
 theorem idemCount_10 : idemCount 10 = 4 := by native_decide
 
 
+
 theorem idemCount_15 : idemCount 15 = 4 := by native_decide
+
 
 
 theorem idemCount_30 : idemCount 30 = 8 := by native_decide
 
 
 
+
 theorem photon_parity (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
     2 ∣ (a + b + c + d) := by
   exact even_iff_two_dvd.mp ( by apply_fun Even at *; simp_all +decide [ parity_simps ] )
+
 
 
 
@@ -117,10 +138,12 @@ theorem critical_line_triple :
 
 
 
+
 theorem finite_idempotent_fixed_point {α : Type*} [Finite α] [Nonempty α]
     (f : α → α) (hf : ∀ x, f (f x) = f x) :
     ∃ x : α, f x = x := by
   exact ⟨ f ( Classical.arbitrary α ), hf _ ⟩
+
 
 
 
@@ -130,10 +153,12 @@ def idempotent_entropy (n : ℕ) (f : Fin n → Fin n) : ℝ :=
 
 
 
+
 theorem entropy_constant (n : ℕ) (hn : 1 < n) (c : Fin n) :
     idempotent_entropy n (fun _ => c) = 0 := by
   unfold idempotent_entropy;
   rw [ Finset.card_eq_one.mpr ] <;> aesop
+
 
 
 

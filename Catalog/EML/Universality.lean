@@ -14,15 +14,18 @@ def emlU (x y : ℂ) : ℂ := Complex.exp x - Complex.log y
 
 
 
+
 /-- exp(x) = emlU(x, 1) — the exponential is a depth-1 EML expression. -/
 theorem emlU_recovers_exp (x : ℂ) : emlU x 1 = Complex.exp x := by
   simp [emlU, Complex.log_one]
 
 
 
+
 /-- e = emlU(1, 1) — Euler's number from a depth-1 expression. -/
 theorem emlU_recovers_e : emlU 1 1 = Complex.exp 1 := by
   simp [emlU, Complex.log_one]
+
 
 
 
@@ -34,10 +37,12 @@ inductive EMLClosure : ℂ → Prop where
 
 
 
+
 /-- e = exp(1) is in the EML closure. -/
 theorem exp_one_in_closure : EMLClosure (Complex.exp 1) := by
   have h := EMLClosure.apply_eml EMLClosure.const_one EMLClosure.const_one
   rwa [emlU_recovers_e] at h
+
 
 
 
@@ -46,8 +51,10 @@ def edlU (x y : ℂ) : ℂ := Complex.exp x / Complex.log y
 
 
 
+
 /-- The anti-EML operator: antiEml(x,y) = log(x) - exp(y). -/
 def antiEmlU (x y : ℂ) : ℂ := Complex.log x - Complex.exp y
+
 
 
 
@@ -61,11 +68,13 @@ theorem antiEml_eq_neg_eml_swap (x y : ℂ) :
 
 
 
+
 /-- EML expression with variables. -/
 inductive EMLExprU where
   | one : EMLExprU
   | var : ℕ → EMLExprU
   | eml : EMLExprU → EMLExprU → EMLExprU
+
 
 
 
@@ -78,6 +87,7 @@ def EMLExprU.evalWith (e : EMLExprU) (vars : ℕ → ℂ) : ℂ :=
 
 
 
+
 /-- Depth of expression. -/
 def EMLExprU.depth : EMLExprU → ℕ
   | .one => 0
@@ -85,6 +95,9 @@ def EMLExprU.depth : EMLExprU → ℕ
   | .eml l r => 1 + max l.depth r.depth
 
 end
+
+end
+
 
 end
 

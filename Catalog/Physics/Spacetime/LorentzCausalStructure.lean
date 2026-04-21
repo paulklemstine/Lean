@@ -19,6 +19,11 @@ theorem minkowski_symmetric (u v : Fin 4 → ℝ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Physics.Spacetime.LorentzCausalStructure
+Auto-generated from theorem catalog database.
+Domain: Physics/Spacetime
+Declarations: 16] -/
 theorem temporal_is_timelike (t : ℝ) (ht : t ≠ 0) :
     isTimelike (fun i : Fin 4 => if i = 0 then t else 0) := by
   simp only [isTimelike, minkowskiInner]
@@ -27,6 +32,7 @@ theorem temporal_is_timelike (t : ℝ) (ht : t ≠ 0) :
   have h2 : (0 : Fin 4) ≠ (3 : Fin 4) := by decide
   simp [h0, h1, h2]
   exact ht
+
 
 
 
@@ -51,15 +57,18 @@ theorem lorentz_boost_preserves_inner (phi : ℝ) (u v : Fin 4 → ℝ) :
 
 
 
+
 theorem lorentz_preserves_timelike (phi : ℝ) (v : Fin 4 → ℝ)
     (h : isTimelike v) : isTimelike (lorentzBoostX phi v) := by
   simp [isTimelike] at *; rw [lorentz_boost_preserves_inner]; exact h
 
 
 
+
 theorem lorentz_preserves_null (phi : ℝ) (v : Fin 4 → ℝ)
     (h : isNull v) : isNull (lorentzBoostX phi v) := by
   simp [isNull] at *; rw [lorentz_boost_preserves_inner]; exact h
+
 
 
 
@@ -70,13 +79,16 @@ theorem strain_decay_monotone (h₀ r₁ r₂ : ℝ)
 
 
 
+
 theorem chirp_mass_bound (m1 m2 : ℝ) :
     m1 * m2 ≤ ((m1 + m2) / 2) ^ 2 := by nlinarith [sq_nonneg (m1 - m2)]
 
 
 
+
 theorem gw_energy_nonneg (coeff hdot : ℝ) (hcoeff : coeff ≥ 0) :
     coeff * hdot ^ 2 ≥ 0 := mul_nonneg hcoeff (sq_nonneg _)
+
 
 
 
@@ -87,14 +99,17 @@ theorem causal_diamond_scaling (tau1 tau2 k : ℝ)
 
 
 
+
 theorem bekenstein_hawking_positive (A lP : ℝ) (hA : A > 0) (hlP : lP > 0) :
     A / (4 * lP ^ 2) > 0 := by positivity
+
 
 
 
 theorem deflection_positive (G M c b : ℝ)
     (hG : G > 0) (hM : M > 0) (hc : c > 0) (hb : b > 0) :
     4 * G * M / (c ^ 2 * b) > 0 := by positivity
+
 
 
 
@@ -107,10 +122,12 @@ theorem deflection_monotone (G M c b1 b2 : ℝ)
 
 
 
+
 theorem gravitational_time_dilation (phi1 phi2 : ℝ)
     (h12 : phi1 < phi2) (hb2 : phi2 < 1) (h0 : 0 < phi1) :
     Real.sqrt (1 - phi2) < Real.sqrt (1 - phi1) :=
   Real.sqrt_lt_sqrt (by linarith) (by linarith)
+
 
 
 
@@ -121,13 +138,16 @@ theorem cosmological_redshift_positive (a_obs a_emit : ℝ)
 
 
 
+
 theorem hubble_law_monotone (H0 d1 d2 : ℝ) (hH : H0 > 0) (hd : d2 > d1) :
     H0 * d2 > H0 * d1 := mul_lt_mul_of_pos_left hd hH
 
 
 
+
 theorem friedmann_flat_positive (G rho : ℝ) (hG : G > 0) (hrho : rho > 0) :
     8 * Real.pi * G * rho / 3 > 0 := by positivity
+
 
 
 

@@ -17,10 +17,12 @@ structure EvasionStrategy (α : Type*) where
 
 
 
+
 /-- Whether the evader is caught at step n. -/
 def EvasionStrategy.isCaught {α : Type*} (e : EvasionStrategy α)
     (search : ℕ → Set α) (n : ℕ) : Prop :=
   e.hide search n ∈ search n
+
 
 
 
@@ -31,9 +33,11 @@ def EvasionStrategy.successfulEvasion {α : Type*} (e : EvasionStrategy α)
 
 
 
+
 /-- A perfect evasion strategy evades all searches. -/
 def EvasionStrategy.isPerfect {α : Type*} (e : EvasionStrategy α) : Prop :=
   ∀ search : ℕ → Set α, e.successfulEvasion search
+
 
 
 
@@ -42,9 +46,11 @@ def AdaptiveSearch (n : ℕ) := ℕ → Fin n
 
 
 
+
 /-- Whether search catches a static target within T steps. -/
 def catches (n : ℕ) (search : AdaptiveSearch n) (target : Fin n) (T : ℕ) : Prop :=
   ∃ t, t ≤ T ∧ search t = target
+
 
 
 
@@ -55,6 +61,7 @@ theorem exhaustive_search_catches {n : ℕ}
     catches n search target n := by
   obtain ⟨t, ht, heq⟩ := h_exhaustive target
   exact ⟨t, by omega, heq⟩
+
 
 
 
@@ -75,6 +82,7 @@ theorem evasion_lower_bound (n : ℕ) (hn : 2 ≤ n) :
 
 
 
+
 /-- A transfinite evasion strategy indexed by ordinals. -/
 structure TransfiniteEvasion (α : Type*) where
   hide : Ordinal → α
@@ -82,11 +90,17 @@ structure TransfiniteEvasion (α : Type*) where
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.Evasion
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 11] -/
 theorem transfinite_evasion_finite_bound {n : ℕ} (hn : 0 < n)
     (e : TransfiniteEvasion (Fin n)) :
     ∃ (search : Ordinal → Fin n), ∃ t : Ordinal, t < Ordinal.omega0 ∧
       search t = e.hide t := by
   exact ⟨ fun _ => e.hide 0, 0, Ordinal.omega0_pos, rfl ⟩
+
 
 
 
@@ -96,6 +110,9 @@ structure BoundedEvasionStrategy (α : Type*) extends EvasionStrategy α where
   poly_bounded : ∃ (c k : ℕ), ∀ n, complexity n ≤ c * n ^ k + c
 
 end
+
+end
+
 
 end
 

@@ -16,9 +16,11 @@ def anti (O : Oracle α) : Oracle α where
 
 
 
+
 /-- The anti-oracle is an involution: applying it twice returns the original. -/
 theorem anti_involution (O : Oracle α) : O.anti.anti = O := by
   ext x; simp [anti]
+
 
 
 
@@ -28,15 +30,18 @@ def empty : Oracle α where
 
 
 
+
 /-- The universal oracle: answers "yes" to everything. -/
 def universal : Oracle α where
   carrier := Set.univ
 
 
 
+
 /-- The empty and universal oracles are anti-oracles of each other. -/
 theorem empty_anti_universal : (empty : Oracle α).anti = universal := by
   ext x; simp [anti, empty, universal]
+
 
 
 
@@ -49,9 +54,11 @@ theorem universal_anti_empty : (universal : Oracle α).anti = empty := by
 
 
 
+
 /-- Union of two oracles (join in the lattice). -/
 def join (O₁ O₂ : Oracle α) : Oracle α where
   carrier := O₁.carrier ∪ O₂.carrier
+
 
 
 
@@ -61,12 +68,14 @@ def meet (O₁ O₂ : Oracle α) : Oracle α where
 
 
 
+
 /-- De Morgan's law for oracle anti-operation:
 anti(join) = meet(anti, anti) -/
 theorem anti_join (O₁ O₂ : Oracle α) :
     (O₁.join O₂).anti = O₁.anti.meet O₂.anti := by
   ext x; simp only [anti, join, meet, Set.mem_compl_iff, Set.mem_union, Set.mem_inter_iff,
     ]; push_neg; rfl
+
 
 
 
@@ -80,11 +89,13 @@ theorem anti_meet (O₁ O₂ : Oracle α) :
 
 
 
+
 /-- For surjective f, pushforward ∘ pullback = id on oracles. -/
 theorem pushforward_pullback_of_surjective (O : Oracle β) (f : α → β)
     (hf : Surjective f) :
     (O.pullback f).pushforward f = O := by
   ext x; simp [pullback, pushforward, Set.image_preimage_eq _ hf]
+
 
 
 
@@ -94,9 +105,11 @@ def xorOracle (O₁ O₂ : Oracle α) : Oracle α where
 
 
 
+
 /-- The symmetric difference with self is empty. -/
 theorem xor_self (O : Oracle α) : O.xorOracle O = empty := by
   ext x; simp [xorOracle, empty]
+
 
 
 
@@ -109,11 +122,13 @@ theorem xor_anti (O : Oracle α) : O.xorOracle O.anti = universal := by
 
 
 
+
 /-- An inverse oracle for the identity function is trivial. -/
 def idOracle : InverseOracle α α where
   forward := id
   preimage_oracle := fun a => {a}
   correct := by simp [Set.preimage]
+
 
 
 
@@ -130,6 +145,7 @@ theorem injective_preimage_singleton (O : InverseOracle α β)
 
 
 
+
 /-- For a bijective function, the inverse oracle defines a function β → α. -/
 def bijective_inverse (O : InverseOracle α β)
     (hbij : Bijective O.forward) : β → α :=
@@ -137,10 +153,16 @@ def bijective_inverse (O : InverseOracle α β)
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.OracleTheory
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 21] -/
 theorem bijective_inverse_spec (O : InverseOracle α β)
     (hbij : Bijective O.forward) (b : β) :
     O.forward (O.bijective_inverse hbij b) = b :=
   (hbij.surjective b).choose_spec
+
 
 
 
@@ -152,6 +174,7 @@ theorem bijective_inverse_left_inverse (O : InverseOracle α β)
 
 
 
+
 /-- The Contrarian Oracle Theorem: A "contrarian" that always gives the wrong answer
 is computationally equivalent to a correct oracle (just negate). -/
 theorem contrarian_oracle_equiv (α : Type*) (O : Oracle α) :
@@ -160,11 +183,13 @@ theorem contrarian_oracle_equiv (α : Type*) (O : Oracle α) :
 
 
 
+
 /-- The Information Content Theorem: An oracle and its anti-oracle
 carry exactly the same information (are inter-definable). -/
 theorem oracle_info_equiv (α : Type*) (O : Oracle α) :
     O.carrier = O.anti.carrierᶜ := by
   simp [Oracle.anti, compl_compl]
+
 
 
 

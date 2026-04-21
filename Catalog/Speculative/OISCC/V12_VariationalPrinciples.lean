@@ -13,21 +13,30 @@ noncomputable section
 def f_var (x : ℝ) : ℝ := Real.exp x - Real.log x - 1
 
 
+
 /-- The Riemannian metric. -/
 def g_var (x : ℝ) : ℝ := Real.exp x + x⁻¹ ^ 2
+
 
 
 /-- The "kinetic energy" in the EML metric. -/
 def kinetic (x v : ℝ) : ℝ := g_var x * v ^ 2 / 2
 
 
+
 /-- The EML Lagrangian. -/
 def lagrangian (x v : ℝ) : ℝ := kinetic x v - f_var x
 
 
+
+/-- [Section: # CatalogBuild.Speculative.OISCC.V12_VariationalPrinciples
+Auto-generated from theorem catalog database.
+Domain: Speculative/OISCC
+Declarations: 15] -/
 theorem f_var_ge_one (x : ℝ) (hx : 0 < x) : f_var x ≥ 1 := by
   unfold f_var;
   nlinarith [ Real.add_one_le_exp x, Real.log_le_sub_one_of_pos hx ]
+
 
 
 theorem f_var_pos (x : ℝ) (hx : 0 < x) : f_var x > 0 := by
@@ -35,12 +44,15 @@ theorem f_var_pos (x : ℝ) (hx : 0 < x) : f_var x > 0 := by
   linarith
 
 
+
 theorem g_var_pos (x : ℝ) (hx : 0 < x) : g_var x > 0 := by
   exact add_pos_of_pos_of_nonneg ( Real.exp_pos _ ) ( sq_nonneg _ )
 
 
+
 theorem kinetic_nonneg (x v : ℝ) (hx : 0 < x) : kinetic x v ≥ 0 := by
   exact div_nonneg ( mul_nonneg ( le_of_lt ( g_var_pos x hx ) ) ( sq_nonneg v ) ) zero_le_two
+
 
 
 theorem kinetic_eq_zero_iff (x v : ℝ) (hx : 0 < x) :
@@ -50,9 +62,11 @@ theorem kinetic_eq_zero_iff (x v : ℝ) (hx : 0 < x) :
   exact fun h => absurd h <| by positivity;
 
 
+
 theorem lagrangian_at_rest (x : ℝ) (hx : 0 < x) :
     lagrangian x 0 = -f_var x := by
   unfold lagrangian kinetic f_var g_var; ring;
+
 
 
 theorem lagrangian_at_rest_neg (x : ℝ) (hx : 0 < x) :
@@ -60,13 +74,16 @@ theorem lagrangian_at_rest_neg (x : ℝ) (hx : 0 < x) :
   linarith [ lagrangian_at_rest x hx, f_var_pos x hx ]
 
 
+
 /-- The "total energy" E = K + f is always ≥ 1 (positive energy theorem). -/
 def total_energy (x v : ℝ) : ℝ := kinetic x v + f_var x
+
 
 
 theorem total_energy_ge_one (x v : ℝ) (hx : 0 < x) :
     total_energy x v ≥ 1 := by
   exact le_add_of_nonneg_of_le ( kinetic_nonneg x v hx ) ( f_var_ge_one x hx )
+
 
 
 theorem f_var_convexOn : ConvexOn ℝ (Ioi 0) f_var := by
@@ -84,6 +101,7 @@ theorem f_var_convexOn : ConvexOn ℝ (Ioi 0) f_var := by
     exact fun x hx => h_deriv2 x ( interior_subset hx ) ▸ add_nonneg ( Real.exp_nonneg x ) ( one_div_nonneg.mpr ( sq_nonneg x ) )
 
 
+
 theorem f_var_orbit_growth (x : ℝ) (hx : 0 < x) :
     f_var (Real.exp x - Real.log x) > f_var x := by
   unfold f_var;
@@ -96,6 +114,7 @@ theorem f_var_orbit_growth (x : ℝ) (hx : 0 < x) :
   norm_num [ Real.exp_sub ] at *;
   rw [ le_div_iff₀ ( Real.exp_pos _ ) ] at this;
   nlinarith [ Real.add_one_le_exp 1, Real.log_le_sub_one_of_pos ( by linarith : 0 < y ) ]
+
 
 
 end

@@ -15,10 +15,12 @@ def OnHyperbola (n a b : ℕ) : Prop := a * b = n ∧ 0 < a ∧ 0 < b
 
 
 
+
 /-- Every divisor of n gives a lattice point on xy = n. -/
 theorem divisor_gives_lattice_point {n d : ℕ} (hn : 0 < n) (hd : d ∣ n) (hd_pos : 0 < d) :
     OnHyperbola n d (n / d) := by
   refine ⟨Nat.mul_div_cancel' hd, hd_pos, Nat.div_pos (Nat.le_of_dvd hn hd) hd_pos⟩
+
 
 
 
@@ -27,6 +29,7 @@ theorem lattice_point_gives_divisor {n a b : ℕ} (h : OnHyperbola n a b) :
     a ∣ n := by
   obtain ⟨hab, _, _⟩ := h
   exact ⟨b, hab.symm⟩
+
 
 
 
@@ -40,10 +43,12 @@ theorem divisor_iff_lattice_point {n d : ℕ} (hn : 0 < n) (hd : 0 < d) :
 
 
 
+
 /-- The hyperbola xy = n is symmetric under (a,b) ↦ (b,a). -/
 theorem hyperbola_symm {n a b : ℕ} :
     OnHyperbola n a b ↔ OnHyperbola n b a := by
   constructor <;> (intro ⟨h, ha, hb⟩; exact ⟨by linarith [mul_comm a b], hb, ha⟩)
+
 
 
 
@@ -56,10 +61,12 @@ noncomputable def hyperbolaPoints (n : ℕ) : Finset (ℕ × ℕ) :=
 
 
 
+
 /-- The number of lattice points on xy = n equals the number of divisors of n. -/
 theorem lattice_point_count_eq_num_divisors (n : ℕ) :
     (hyperbolaPoints n).card = (Nat.divisors n).card := by
   simp [hyperbolaPoints, Finset.card_map]
+
 
 
 
@@ -68,8 +75,10 @@ theorem n210_factorization : 210 = 2 * 3 * 5 * 7 := by norm_num
 
 
 
+
 /-- 210 has exactly 16 divisors. -/
 theorem n210_divisor_count : (Nat.divisors 210).card = 16 := by native_decide
+
 
 
 
@@ -80,11 +89,13 @@ theorem n210_divisors :
 
 
 
+
 /-- Each divisor pair of 210 satisfies d * (210/d) = 210. -/
 theorem n210_divisor_pair_product (d : ℕ) (hd : d ∈ Nat.divisors 210) :
     d * (210 / d) = 210 := by
   rw [Nat.mem_divisors] at hd
   exact Nat.mul_div_cancel' hd.1
+
 
 
 
@@ -98,11 +109,13 @@ theorem divisor_pair_sqrt_bound {n d : ℕ} (hn : 0 < n) (hd : d ∣ n) :
 
 
 
+
 /-- For prime p, the only lattice points on xy = p are (1, p) and (p, 1). -/
 theorem prime_hyperbola_two_points {p : ℕ} (hp : Nat.Prime p) :
     (Nat.divisors p).card = 2 := by
   rw [Nat.Prime.divisors hp]
   exact Finset.card_pair (Nat.Prime.one_lt hp).ne
+
 
 
 
@@ -115,6 +128,7 @@ theorem coprime_hyperbola_product {m n : ℕ} (hcop : Nat.Coprime m n) :
 
 
 
+
 /-- The area of the rectangle formed by a divisor pair (d, n/d) is always n.
 This is the geometric invariant that AI-based factoring can exploit. -/
 theorem rectangle_area_invariant {n d : ℕ} (hd : d ∣ n) :
@@ -123,11 +137,17 @@ theorem rectangle_area_invariant {n d : ℕ} (hd : d ∣ n) :
 
 
 
+
+/-- [Section: # CatalogBuild.Algebra.Factoring.HyperbolicFactoring
+Auto-generated from theorem catalog database.
+Domain: Algebra/Factoring
+Declarations: 16] -/
 theorem hyperbola_strictly_decreasing {n d₁ d₂ : ℕ}
     (hn : 0 < n) (hd₁ : d₁ ∣ n) (hd₂ : d₂ ∣ n)
     (hlt : d₁ < d₂) (hd₁_pos : 0 < d₁) :
     n / d₂ < n / d₁ := by
   exact Nat.div_lt_of_lt_mul <| by nlinarith [ Nat.div_mul_cancel hd₁, Nat.div_mul_cancel hd₂ ] ;
+
 
 
 

@@ -16,10 +16,17 @@ Declarations: 30] -/
 def eml8a (x y : ℝ) : ℝ := Real.exp x - Real.log y
 
 
+
+/-- [Section: # CatalogBuild.EML.EMLv8Advanced
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 30] -/
 def diag8a (z : ℝ) : ℝ := Real.exp z - Real.log z
 
 
+
 def gmap8a (z : ℝ) : ℝ := Real.exp 1 - Real.log z
+
 
 
 
@@ -29,13 +36,16 @@ def eTow8a : ℕ → ℝ
 
 
 
+
 def diagIter8a : ℕ → ℝ → ℝ
   | 0, z => z
   | n + 1, z => diag8a (diagIter8a n z)
 
 
 
+
 def trop8a (x y : ℝ) : ℝ := max x (-y)
+
 
 
 
@@ -46,10 +56,12 @@ theorem eTow8a_pos (n : ℕ) : 0 < eTow8a n := by
 
 
 
+
 theorem eTow8a_strict_mono : StrictMono eTow8a := by
   apply strictMono_nat_of_lt_succ
   intro n; simp only [eTow8a]
   linarith [Real.add_one_le_exp (eTow8a n)]
+
 
 
 
@@ -66,9 +78,11 @@ theorem diag8a_gt (z : ℝ) : diag8a z > z := by
 
 
 
+
 theorem diag8a_orbit_increasing (z : ℝ) (n : ℕ) :
     diagIter8a n z < diagIter8a (n + 1) z := by
   simp only [diagIter8a]; exact diag8a_gt _
+
 
 
 
@@ -90,10 +104,12 @@ theorem diag8a_orbit_diverge (z : ℝ) (n : ℕ) :
 
 
 
+
 theorem gmap8a_strictAnti : StrictAntiOn gmap8a (Ioi 0) := by
   intro a ha b _ hab
   simp only [gmap8a]
   linarith [Real.log_lt_log (mem_Ioi.mp ha) hab]
+
 
 
 
@@ -102,8 +118,10 @@ theorem gmap8a_one : gmap8a 1 = Real.exp 1 := by
 
 
 
+
 theorem gmap8a_e : gmap8a (Real.exp 1) = Real.exp 1 - 1 := by
   simp [gmap8a, Real.log_exp]
+
 
 
 
@@ -112,6 +130,7 @@ theorem gmap8a_deriv (z : ℝ) (hz : 0 < z) :
   unfold gmap8a
   have h := (hasDerivAt_const z (Real.exp 1)).sub (Real.hasDerivAt_log hz.ne')
   simp only [zero_sub] at h; exact h
+
 
 
 
@@ -124,10 +143,12 @@ theorem eml8a_not_medial :
 
 
 
+
 theorem eml8a_not_flexible :
     ∃ a b : ℝ, eml8a (eml8a a b) a ≠ eml8a a (eml8a b a) := by
   unfold eml8a;
   refine' ⟨ 1, 0, _ ⟩ ; norm_num
+
 
 
 
@@ -139,14 +160,17 @@ theorem eml8a_not_left_alt :
 
 
 
+
 theorem eml8a_not_right_alt :
     ∃ a b : ℝ, eml8a (eml8a a b) b ≠ eml8a a (eml8a b b) := by
   unfold eml8a; use 0, 1; norm_num;
 
 
 
+
 theorem eml8a_negation (x : ℝ) : eml8a 0 (Real.exp x) = 1 - x := by
   simp [eml8a, Real.log_exp]
+
 
 
 
@@ -156,8 +180,10 @@ theorem eml8a_double_neg (x : ℝ) :
 
 
 
+
 theorem trop8a_diag (x : ℝ) : trop8a x x = |x| := by
   simp only [trop8a, abs_eq_max_neg]
+
 
 
 
@@ -166,13 +192,16 @@ theorem trop8a_noncomm : ∃ x y : ℝ, trop8a x y ≠ trop8a y x := by
 
 
 
+
 theorem eml8a_ee : eml8a (eml8a 1 1) 1 = Real.exp (Real.exp 1) := by
   simp [eml8a, Real.log_one]
 
 
 
+
 theorem eml8a_eee : eml8a (eml8a (eml8a 1 1) 1) 1 = Real.exp (Real.exp (Real.exp 1)) := by
   simp [eml8a, Real.log_one]
+
 
 
 
@@ -182,15 +211,18 @@ theorem eml8a_diag_compose (x : ℝ) :
 
 
 
+
 theorem eml8a_subtraction (a b : ℝ) (ha : 0 < a) :
     eml8a (Real.log a) (Real.exp b) = a - b := by
   unfold eml8a; rw [Real.exp_log ha, Real.log_exp]
 
 
 
+
 theorem eml8a_addition (a b : ℝ) (ha : 0 < a) :
     eml8a (Real.log a) (Real.exp (-b)) = a + b := by
   unfold eml8a; rw [Real.exp_log ha, Real.log_exp]; ring
+
 
 
 
@@ -202,11 +234,13 @@ theorem eml8a_trace_ge_two (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
 
 
 
+
 theorem eml8a_exp_exp_gt4 : Real.exp (Real.exp 1) > 4 := by
   -- Since $\exp(1) > 2$, we have $\exp(\exp(1)) > \exp(2)$.
   have h_exp_exp1_gt_exp2 : Real.exp (Real.exp 1) > Real.exp 2 := by
     exact Real.exp_lt_exp.mpr ( Real.exp_one_gt_d9.trans_le' <| by norm_num );
   exact h_exp_exp1_gt_exp2.trans_le' ( by have := Real.exp_one_gt_d9.le; norm_num1 at *; rw [ show ( 2 : ℝ ) = 1 + 1 by norm_num, Real.exp_add ] ; nlinarith )
+
 
 
 

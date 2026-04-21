@@ -17,8 +17,14 @@ theorem sumset_card_le_mul' {G : Type*} [Add G] [DecidableEq G]
 
 
 
+
+/-- [Section: # CatalogBuild.Algebra.Core.ArithmeticCombinatorics
+Auto-generated from theorem catalog database.
+Domain: Algebra/Core
+Declarations: 3] -/
 theorem ap_compression_ratio' (k : ℕ) (hk : 3 ≤ k) : (3 : ℚ) / k ≤ 1 := by
   rw [div_le_one (by positivity)]; exact_mod_cast hk
+
 
 
 
@@ -28,5 +34,6 @@ theorem compression_pigeonhole' {n m : ℕ} (h : m < n)
   have hle := Fintype.card_le_of_injective f hf
   simp at hle
   exact absurd hle (not_le.mpr (Nat.pow_lt_pow_right (by omega) h))
+
 
 

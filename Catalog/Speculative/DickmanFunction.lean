@@ -18,7 +18,13 @@ noncomputable def dickman_base (u : ℝ) : ℝ :=
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.DickmanFunction
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 16] -/
 theorem dickman_base_le_one {u : ℝ} (hu : u ≤ 1) : dickman_base u = 1 := if_pos hu
+
 
 
 
@@ -27,7 +33,9 @@ theorem dickman_base_interval {u : ℝ} (hu1 : 1 < u) : dickman_base u = 1 - Rea
 
 
 
+
 theorem dickman_at_one : dickman_base 1 = 1 := if_pos le_rfl
+
 
 
 
@@ -35,10 +43,12 @@ theorem dickman_at_two : dickman_base 2 = 1 - Real.log 2 := if_neg (by norm_num)
 
 
 
+
 theorem dickman_base_pos {u : ℝ} (hu0 : 0 < u) (hu2 : u ≤ 2) :
     0 < dickman_base u := by
   unfold dickman_base; split_ifs <;> try linarith;
   linarith [ Real.log_lt_sub_one_of_pos hu0 ( by linarith ), Real.log_le_log ( by linarith ) hu2 ]
+
 
 
 
@@ -51,7 +61,9 @@ theorem dickman_base_antitone {u₁ u₂ : ℝ} (hu₁ : 0 < u₁) (_hu₂ : u�
 
 
 
+
 def IsSmooth (n y : ℕ) : Prop := ∀ p : ℕ, p.Prime → p ∣ n → p ≤ y
+
 
 
 
@@ -60,8 +72,10 @@ theorem one_isSmooth (y : ℕ) : IsSmooth 1 y :=
 
 
 
+
 theorem prime_self_smooth {p : ℕ} (hp : p.Prime) : IsSmooth p p :=
   fun q hq hqp => le_of_eq (hp.eq_one_or_self_of_dvd q hqp |>.resolve_left hq.one_lt.ne')
+
 
 
 
@@ -70,8 +84,10 @@ theorem IsSmooth.of_dvd {n m y : ℕ} (hn : IsSmooth n y) (hm : m ∣ n) : IsSmo
 
 
 
+
 theorem IsSmooth.mono {n y₁ y₂ : ℕ} (hn : IsSmooth n y₁) (h : y₁ ≤ y₂) : IsSmooth n y₂ :=
   fun p hp hpn => le_trans (hn p hp hpn) h
+
 
 
 
@@ -80,7 +96,9 @@ noncomputable def L_notation (n : ℝ) (α c : ℝ) : ℝ :=
 
 
 
+
 theorem L_notation_pos (n α c : ℝ) : 0 < L_notation n α c := Real.exp_pos _
+
 
 
 
@@ -89,8 +107,10 @@ theorem L_zero_is_polylog (n c : ℝ) :
 
 
 
+
 theorem L_one_is_polynomial (n c : ℝ) :
     L_notation n 1 c = Real.exp (c * n) := by unfold L_notation; simp
+
 
 
 

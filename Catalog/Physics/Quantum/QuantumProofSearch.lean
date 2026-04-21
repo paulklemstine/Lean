@@ -22,6 +22,7 @@ structure ClassicalSearch where
 
 
 
+
 /-- Classical search requires at least N/2 queries on average. -/
 theorem classical_lower_bound (S : ClassicalSearch) :
     S.numCandidates / 2 ≤ S.numCandidates := by
@@ -29,9 +30,11 @@ theorem classical_lower_bound (S : ClassicalSearch) :
 
 
 
+
 /-- Grover's search complexity is √N (rounded up). -/
 noncomputable def groverComplexity (N : ℕ) : ℕ :=
   Nat.sqrt N + 1
+
 
 
 
@@ -46,9 +49,11 @@ theorem grover_quadratic_speedup (N : ℕ) (hN : 4 ≤ N) :
 
 
 
+
 /-- A cloning map would duplicate proof vectors. -/
 def isCloningMap {n : ℕ} (clone : (Fin n → ℂ) → (Fin n → ℂ) × (Fin n → ℂ)) : Prop :=
   ∀ ψ : Fin n → ℂ, clone ψ = (ψ, ψ)
+
 
 
 
@@ -62,11 +67,17 @@ def isUnitary {n : ℕ} (U : (Fin n → ℂ) → (Fin n → ℂ) × (Fin n → �
 
 
 
+
+/-- [Section: # CatalogBuild.Physics.Quantum.QuantumProofSearch
+Auto-generated from theorem catalog database.
+Domain: Physics/Quantum
+Declarations: 12] -/
 theorem no_cloning {n : ℕ} (hn : 1 < n) :
     ¬∃ U : (Fin n → ℂ) → (Fin n → ℂ) × (Fin n → ℂ),
       isUnitary U ∧ isCloningMap U := by
   by_contra h;
   obtain ⟨ U, hU₁, hU₂ ⟩ := h; have := hU₁ ( fun _ ↦ 1 ) ( fun _ ↦ 1 ) ; simp_all +decide [ isUnitary, isCloningMap ] ;
+
 
 
 
@@ -77,10 +88,12 @@ def hasAlgebraicStructure (N : ℕ) (group_size : ℕ) : Prop :=
 
 
 
+
 theorem structured_quantum_advantage (N p : ℕ) (hN : 0 < N) (hp : 0 < p)
     (h_struct : hasAlgebraicStructure N p) :
     p ≤ N := by
   exact Nat.le_of_dvd hN h_struct.1
+
 
 
 
@@ -91,9 +104,11 @@ theorem quantum_lower_bound (N : ℕ) (hN : 0 < N) :
 
 
 
+
 theorem classical_quantum_gap (N : ℕ) (hN : 4 ≤ N) :
     Nat.sqrt N < N := by
   nlinarith [ Nat.sqrt_le N ]
+
 
 
 
@@ -102,6 +117,7 @@ theorem more_solutions_easier {n : ℕ} (O : QuantumOracle n)
     (hk_pos : 0 < k) :
     Nat.sqrt (n / k) ≤ n := by
   exact le_trans ( Nat.sqrt_le_self _ ) ( Nat.div_le_self _ _ )
+
 
 
 end

@@ -18,9 +18,11 @@ structure DensityMatrix (n : ℕ) where
 
 
 
+
 /-- A pure state density matrix is idempotent: ρ² = ρ. -/
 structure PureState (n : ℕ) extends DensityMatrix n where
   idempotent : mat * mat = mat
+
 
 
 
@@ -31,9 +33,11 @@ theorem pure_state_trace_sq {n : ℕ} (rho : PureState n) :
 
 
 
+
 /-- For a mixed state, tr(ρ²) < 1. -/
 def isMixedState {n : ℕ} (rho : DensityMatrix n) : Prop :=
   Matrix.trace (rho.mat * rho.mat) < 1
+
 
 
 
@@ -43,10 +47,12 @@ def purity {n : ℕ} (rho : DensityMatrix n) : ℝ :=
 
 
 
+
 /-- Purity of a pure state is exactly 1. -/
 theorem purity_of_pure {n : ℕ} (rho : PureState n) :
     purity rho.toDensityMatrix = 1 := by
   unfold purity; rw [rho.idempotent, rho.trace_one]
+
 
 
 
@@ -62,10 +68,12 @@ structure SpectralDecomposition (n : ℕ) where
 
 
 
+
 /-- The density matrix from its spectral decomposition. -/
 def SpectralDecomposition.toDensityMat {n : ℕ} (S : SpectralDecomposition n) :
     Matrix (Fin n) (Fin n) ℝ :=
   ∑ i, S.eigenvalues i • S.projectors i
+
 
 
 
@@ -82,6 +90,7 @@ theorem spectral_trace_one {n : ℕ} (S : SpectralDecomposition n)
 
 
 
+
 /-- [Section: # CatalogBuild.Bridges.QuantumIdempotent
 Auto-generated from theorem catalog database.
 Domain: Bridges
@@ -95,11 +104,13 @@ theorem purity_lower_bound_from_spectrum (k : ℕ) (hk : k > 0)
 
 
 
+
 /-- The von Neumann entropy S(ρ) = -Σ pᵢ log(pᵢ). -/
 def vonNeumannEntropy (k : ℕ) (eigenvalues : Fin k → ℝ) : ℝ :=
   -∑ i, if eigenvalues i > 0
     then eigenvalues i * Real.log (eigenvalues i)
     else 0
+
 
 
 
@@ -110,9 +121,11 @@ theorem pure_state_zero_entropy :
 
 
 
+
 /-- The Marchenko-Pastur distribution support bounds. -/
 def marchenkoPasturSupport (gamma : ℝ) : ℝ × ℝ :=
   ((1 - Real.sqrt gamma) ^ 2, (1 + Real.sqrt gamma) ^ 2)
+
 
 
 
@@ -123,10 +136,12 @@ theorem mp_support_width (gamma : ℝ) (hgamma : gamma > 0) :
 
 
 
+
 /-- A quantum channel as a trace-preserving map. -/
 structure QuantumChannel (n : ℕ) where
   channel_map : Matrix (Fin n) (Fin n) ℝ → Matrix (Fin n) (Fin n) ℝ
   trace_preserving : ∀ rho, Matrix.trace (channel_map rho) = Matrix.trace rho
+
 
 
 
@@ -136,12 +151,14 @@ structure UnitalChannel (n : ℕ) extends QuantumChannel n where
 
 
 
+
 /-- Unital channels preserve trace of idempotents. -/
 theorem unital_preserves_idempotent_trace {n : ℕ}
     (phi : UnitalChannel n) (P : Matrix (Fin n) (Fin n) ℝ)
     (hP : P * P = P) :
     Matrix.trace (phi.channel_map P) = Matrix.trace P :=
   phi.trace_preserving P
+
 
 
 

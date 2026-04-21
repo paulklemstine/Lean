@@ -1,6 +1,3 @@
-import Geometry.Stereographic.Basic
-import Mathlib
-
 /-! # CatalogBuild.Geometry.Stereographic.SouthPole
 
 Auto-generated from theorem catalog database.
@@ -8,6 +5,8 @@ Domain: Geometry/Stereographic
 Declarations: 11
 -/
 
+import Geometry.Stereographic.Basic
+import Mathlib
 
 noncomputable section
 
@@ -22,14 +21,21 @@ def invStereoS {N : ℕ} (y : Fin N → ℝ) : Fin (N + 1) → ℝ := fun i =>
     (1 - sqNormFin y) / stereoDenom y
 
 
+
 /-- Forward stereographic projection from the SOUTH pole (0,...,0,-1). -/
 def stereoS {N : ℕ} (x : Fin (N + 1) → ℝ) : Fin N → ℝ := fun i =>
   x ⟨i.val, Nat.lt_succ_of_lt i.isLt⟩ / (1 + x ⟨N, Nat.lt_succ_iff.mpr le_rfl⟩)
 
 
+
+/-- [Section: # CatalogBuild.Geometry.Stereographic.SouthPole
+Auto-generated from theorem catalog database.
+Domain: Geometry/Stereographic
+Declarations: 11] -/
 lemma invStereoS_coord_lt {N : ℕ} (y : Fin N → ℝ) (i : Fin (N + 1)) (h : i.val < N) :
     invStereoS y i = 2 * y ⟨i.val, h⟩ / stereoDenom y := by
   simp [invStereoS, h]
+
 
 
 lemma invStereoS_last_coord {N : ℕ} (y : Fin N → ℝ) :
@@ -37,11 +43,13 @@ lemma invStereoS_last_coord {N : ℕ} (y : Fin N → ℝ) :
   simp [invStereoS, lastIdx]
 
 
+
 theorem invStereoS_norm_sq {N : ℕ} (y : Fin N → ℝ) :
     ∑ i : Fin (N + 1), (invStereoS y i) ^ 2 = 1 := by
       convert StereographicProjection.invStereoN_norm_sq y using 2;
       unfold invStereoS invStereoN;
       split_ifs <;> ring
+
 
 
 theorem invStereoS_last_ne_neg_one {N : ℕ} (y : Fin N → ℝ) :
@@ -53,15 +61,18 @@ theorem invStereoS_last_ne_neg_one {N : ℕ} (y : Fin N → ℝ) :
       · rw [ div_eq_iff ] <;> first | linarith | unfold stereoDenom; linarith [ sqNormFin_nonneg y ]
 
 
+
 theorem invStereoN_invStereoS_first_coords {N : ℕ} (y : Fin N → ℝ) (i : Fin N) :
     invStereoN y ⟨i.val, Nat.lt_succ_of_lt i.isLt⟩ =
     invStereoS y ⟨i.val, Nat.lt_succ_of_lt i.isLt⟩ := by
       unfold invStereoN invStereoS; aesop;
 
 
+
 theorem invStereoS_last_neg_invStereoN {N : ℕ} (y : Fin N → ℝ) :
     invStereoS y (lastIdx N) = -(invStereoN y (lastIdx N)) := by
       rw [ invStereoS_last_coord, invStereoN_last_coord, ← neg_div ] ; ring
+
 
 
 theorem stereoS_invStereoS {N : ℕ} (y : Fin N → ℝ) :
@@ -74,6 +85,7 @@ theorem stereoS_invStereoS {N : ℕ} (y : Fin N → ℝ) :
       · rw [ add_div', div_eq_iff ] <;> nlinarith [ show 0 ≤ sqNormFin y from Finset.sum_nonneg fun _ _ => sq_nonneg _ ]
 
 
+
 theorem transition_map_is_inversion {N : ℕ} (y : Fin N → ℝ) (hy : sqNormFin y ≠ 0) (i : Fin N) :
     stereoS (invStereoN y) i = y i / sqNormFin y := by
       -- Substitute the expressions for invStereoN y i and invStereoN y (lastIdx N) into the equation.
@@ -84,6 +96,7 @@ theorem transition_map_is_inversion {N : ℕ} (y : Fin N → ℝ) (hy : sqNormFi
       unfold stereoDenom; ring;
 
 
+
 theorem transition_map_involution {N : ℕ} (y : Fin N → ℝ)
     (hy : sqNormFin y ≠ 0) (i : Fin N) :
     stereoS (invStereoN (fun j => stereoS (invStereoN y) j)) i = y i := by
@@ -92,6 +105,7 @@ theorem transition_map_involution {N : ℕ} (y : Fin N → ℝ)
       field_simp;
       norm_num [ ← Finset.mul_sum _ _ _, ← Finset.sum_div ] at *;
       grind
+
 
 
 end

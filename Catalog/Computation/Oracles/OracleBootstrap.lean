@@ -20,6 +20,7 @@ theorem oracle_image_eq_fixedPoints {α : Type*} (P : α → α) (hP : IsOracle 
 
 
 
+
 /-- For an idempotent linear map, if P(v) = λv then λ ∈ {0, 1}.
 This is the Oracle Spectrum Theorem: perfect oracles have binary spectra. -/
 theorem oracle_spectrum {R : Type*} [CommRing R] [NoZeroDivisors R]
@@ -44,9 +45,11 @@ theorem oracle_spectrum {R : Type*} [CommRing R] [NoZeroDivisors R]
 
 
 
+
 /-- The oracle bootstrap map f(x) = 3x² - 2x³ on scalars.
 Its fixed points are exactly {0, 1/2, 1}. -/
 def oracleBootstrapScalar (x : ℝ) : ℝ := 3 * x ^ 2 - 2 * x ^ 3
+
 
 
 
@@ -56,15 +59,18 @@ theorem bootstrap_fixed_zero : oracleBootstrapScalar 0 = 0 := by
 
 
 
+
 /-- 1 is a fixed point of the bootstrap map. -/
 theorem bootstrap_fixed_one : oracleBootstrapScalar 1 = 1 := by
   unfold oracleBootstrapScalar; ring
 
 
 
+
 /-- 1/2 is a fixed point of the bootstrap map (the unstable one). -/
 theorem bootstrap_fixed_half : oracleBootstrapScalar (1/2) = 1/2 := by
   unfold oracleBootstrapScalar; ring
+
 
 
 
@@ -75,6 +81,7 @@ theorem bootstrap_derivative_at_fixed_points :
     (fun x : ℝ => 6 * x - 6 * x ^ 2) 0 = 0 ∧
     (fun x : ℝ => 6 * x - 6 * x ^ 2) 1 = 0 := by
   constructor <;> ring
+
 
 
 
@@ -91,12 +98,14 @@ theorem contraction_closer {X : Type*} [MetricSpace X]
 
 
 
+
 /-- An oracle is a zero-contraction on its range: it moves no points. -/
 theorem oracle_zero_contraction {X : Type*} [MetricSpace X]
     (P : X → X) (hP : IsOracle P) (y : X) (hy : y ∈ range P) :
     dist (P y) y = 0 := by
   rw [dist_eq_zero]
   exact oracle_retraction P hP y hy
+
 
 
 
@@ -113,11 +122,17 @@ theorem contraction_iterate {X : Type*} [MetricSpace X]
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.OracleBootstrap
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 13] -/
 theorem master_equation {α : Type*} [Fintype α] [DecidableEq α]
     (P : α → α) (hP : IsOracle P) :
     Finset.card (Finset.filter (fun x => P x = x) Finset.univ) =
     (Finset.image P Finset.univ).card := by
   congr with x ; aesop
+
 
 
 
@@ -129,11 +144,13 @@ theorem anti_oracle_involution {α : Type*} (S : Set α) :
 
 
 
+
 /-- An oracle on a Boolean algebra satisfies the excluded middle:
 For every element, the oracle says yes or the anti-oracle says yes. -/
 theorem oracle_excluded_middle {α : Type*} (S : Set α) (x : α) :
     x ∈ S ∨ x ∈ Sᶜ :=
   em (x ∈ S) |>.imp id id
+
 
 
 

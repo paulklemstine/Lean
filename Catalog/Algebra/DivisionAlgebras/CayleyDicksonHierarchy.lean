@@ -17,6 +17,7 @@ theorem two_square_composition' (a₁ a₂ b₁ b₂ : ℤ) :
 
 
 
+
 /-- Euler's four-square identity (4-square composition).
 This is the norm multiplicativity for ℍ. -/
 theorem four_square_composition' (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℤ) :
@@ -25,6 +26,7 @@ theorem four_square_composition' (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℤ)
     (a₁*b₂ + a₂*b₁ + a₃*b₄ - a₄*b₃)^2 +
     (a₁*b₃ - a₂*b₄ + a₃*b₁ + a₄*b₂)^2 +
     (a₁*b₄ + a₂*b₃ - a₃*b₂ + a₄*b₁)^2 := by ring
+
 
 
 
@@ -46,6 +48,7 @@ theorem eight_square_composition'
 
 
 
+
 /-- Quaternion multiplication is not commutative (explicit witness). -/
 theorem quaternion_noncommutative' :
     ∃ (a b : Quaternion ℝ), a * b ≠ b * a := by
@@ -55,14 +58,17 @@ theorem quaternion_noncommutative' :
 
 
 
+
 /-- Mathlib's `associator` vanishes in any (associative) ring. -/
 theorem assoc_zero_in_ring {α : Type*} [NonUnitalRing α] :
     (associator : α → α → α → α) = 0 := associator_eq_zero
 
 
 
+
 /-- The ring-theoretic commutator [a, b] = ab - ba. -/
 def ringCommutator' {α : Type*} [Ring α] (a b : α) : α := a * b - b * a
+
 
 
 
@@ -73,10 +79,12 @@ theorem ringCommutator_zero_comm' {α : Type*} [CommRing α] (a b : α) :
 
 
 
+
 /-- The ringCommutator is antisymmetric. -/
 theorem ringCommutator_antisymm' {α : Type*} [Ring α] (a b : α) :
     ringCommutator' a b = -ringCommutator' b a := by
   simp only [ringCommutator', neg_sub]
+
 
 
 
@@ -89,13 +97,16 @@ theorem ringCommutator_jacobi' {α : Type*} [Ring α] (a b c : α) :
 
 
 
+
 /-- The k-th power divisor sum: σ_k(n) = Σ_{d|n} d^k. -/
 def sigma_k' (k n : ℕ) : ℤ := ∑ d ∈ Nat.divisors n, (d : ℤ) ^ k
 
 
 
+
 /-- σ_k(1) = 1 for all k. -/
 theorem sigma_k_one' (k : ℕ) : sigma_k' k 1 = 1 := by simp [sigma_k']
+
 
 
 
@@ -108,8 +119,10 @@ theorem sigma_k_prime' (k p : ℕ) (hp : Nat.Prime p) :
 
 
 
+
 /-- σ₁ multiplicativity: σ₁(6) = σ₁(2)·σ₁(3). -/
 theorem sigma1_mult_2_3' : sigma_k' 1 6 = sigma_k' 1 2 * sigma_k' 1 3 := by native_decide
+
 
 
 
@@ -118,13 +131,16 @@ theorem sigma3_mult_2_3' : sigma_k' 3 6 = sigma_k' 3 2 * sigma_k' 3 3 := by nati
 
 
 
+
 /-- σ₇ multiplicativity: σ₇(6) = σ₇(2)·σ₇(3). -/
 theorem sigma7_mult_2_3' : sigma_k' 7 6 = sigma_k' 7 2 * sigma_k' 7 3 := by native_decide
 
 
 
+
 /-- The Hurwitz dimensions: exactly {1, 2, 4, 8}. -/
 def hurwitzDims' : Finset ℕ := {1, 2, 4, 8}
+
 
 
 
@@ -136,6 +152,11 @@ theorem hurwitz_card' : hurwitzDims'.card = 4 := by decide
 
 
 
+
+/-- [Section: # CatalogBuild.Algebra.DivisionAlgebras.CayleyDicksonHierarchy
+Auto-generated from theorem catalog database.
+Domain: Algebra/DivisionAlgebras
+Declarations: 63] -/
 theorem hurwitz_are_powers_of_two' : ∀ d ∈ hurwitzDims', ∃ k, d = 2 ^ k := by
   intro d hd; simp [hurwitzDims'] at hd
   rcases hd with rfl | rfl | rfl | rfl
@@ -146,16 +167,21 @@ theorem hurwitz_are_powers_of_two' : ∀ d ∈ hurwitzDims', ∃ k, d = 2 ^ k :=
 
 
 
+
 theorem dim16_not_hurwitz' : 16 ∉ hurwitzDims' := by decide
+
 
 
 theorem dim32_not_hurwitz' : 32 ∉ hurwitzDims' := by decide
 
 
+
 theorem hurwitz_sum' : hurwitzDims'.sum id = 15 := by decide
 
 
+
 theorem hurwitz_prod' : hurwitzDims'.prod id = 64 := by decide
+
 
 
 
@@ -164,12 +190,15 @@ def cdDim' (n : ℕ) : ℕ := 2 ^ n
 
 
 
+
 theorem cdDim_pos' (n : ℕ) : cdDim' n > 0 := by simp [cdDim']
+
 
 
 
 theorem cdDim_succ' (n : ℕ) : cdDim' (n + 1) = 2 * cdDim' n := by
   unfold cdDim'; ring
+
 
 
 
@@ -182,6 +211,7 @@ theorem cdDim_sum' (n : ℕ) : ∑ i ∈ Finset.range (n + 1), cdDim' i = 2 ^ (n
     rw [Finset.sum_range_succ, ih]
     have : 1 ≤ 2 ^ (n + 1) := Nat.one_le_two_pow
     omega
+
 
 
 
@@ -202,10 +232,12 @@ theorem cdDim_dominates' (n : ℕ) (hn : n ≥ 1) :
 
 
 
+
 /-- The complex norm-squared is multiplicative. -/
 theorem complex_normSq_mul' (z w : ℂ) :
     Complex.normSq (z * w) = Complex.normSq z * Complex.normSq w :=
   map_mul Complex.normSq z w
+
 
 
 
@@ -216,10 +248,12 @@ theorem quaternion_normSq_mul' (p q : Quaternion ℝ) :
 
 
 
+
 /-- Every natural number is a sum of 4 squares (Lagrange's theorem). -/
 theorem lagrange_four_squares' (n : ℕ) :
     ∃ a b c d : ℕ, a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 = n :=
   Nat.sum_four_squares n
+
 
 
 
@@ -231,9 +265,11 @@ theorem sum_of_eight_squares' (n : ℕ) :
 
 
 
+
 /-- ℂ has no zero divisors (it is a field). -/
 theorem complex_no_zero_div' (a b : ℂ) (ha : a ≠ 0) (hb : b ≠ 0) :
     a * b ≠ 0 := mul_ne_zero ha hb
+
 
 
 
@@ -251,6 +287,7 @@ theorem quaternion_no_zero_div' (a b : Quaternion ℝ) (ha : a ≠ 0) (hb : b �
 
 
 
+
 /-- The 2-square identity implies no zero divisors at Channel 2. -/
 theorem two_sq_no_zero_div' (a b c d : ℤ)
     (h1 : a^2 + b^2 ≠ 0) (h2 : c^2 + d^2 ≠ 0) :
@@ -260,7 +297,9 @@ theorem two_sq_no_zero_div' (a b c d : ℤ)
 
 
 
+
 theorem bott_period' (n : ℕ) : 2^(n + 8) = 2^n * 256 := by ring
+
 
 
 
@@ -269,7 +308,9 @@ theorem bott_period_ratio' (n : ℕ) : 2^(n + 8) / 2^n = 256 := by
 
 
 
+
 theorem bott_sedenion_connection' : (256 : ℕ) = 16^2 := by norm_num
+
 
 
 
@@ -282,16 +323,21 @@ def cuspSpaceDim' : ℕ → ℕ
 
 
 
+
 theorem cusp_trivial_low' : cuspSpaceDim' 2 = 0 ∧ cuspSpaceDim' 4 = 0 := ⟨rfl, rfl⟩
+
 
 
 theorem cusp_barrier' : cuspSpaceDim' 8 = 1 := rfl
 
 
+
 theorem cusp_explosion' : cuspSpaceDim' 16 = 5 := rfl
 
 
+
 theorem cusp_growth' : cuspSpaceDim' 16 = 5 * cuspSpaceDim' 8 := rfl
+
 
 
 
@@ -301,9 +347,11 @@ theorem pow_assoc_nat' {α : Type*} [Monoid α] (a : α) (m n : ℕ) :
 
 
 
+
 /-- Power-associativity for integer exponents. -/
 theorem pow_assoc_int' {α : Type*} [Group α] (a : α) (m n : ℤ) :
     a ^ m * a ^ n = a ^ (m + n) := (zpow_add a m n).symm
+
 
 
 
@@ -314,6 +362,7 @@ structure CayleyDicksonLevel' where
   isComposition : Bool
   numCuspForms : ℕ
   deriving DecidableEq, Repr
+
 
 
 
@@ -328,6 +377,7 @@ def cdLevel' : ℕ → CayleyDicksonLevel'
 
 
 
+
 /-- All composition algebras have dimension ≤ 8. -/
 theorem composition_max_dim' (n : ℕ) :
     (cdLevel' n).isComposition = true → (cdLevel' n).dimension ≤ 8 := by
@@ -335,6 +385,7 @@ theorem composition_max_dim' (n : ℕ) :
   | 0 | 1 | 2 | 3 => simp [cdLevel']
   | 4 | 5 => simp [cdLevel']
   | n + 6 => simp [cdLevel']
+
 
 
 
@@ -348,6 +399,7 @@ theorem first_cusp_at_sedenion' :
 
 
 
+
 /-- The geometric sum: Σ_{i=0}^{n} 2^i = 2^{n+1} - 1. -/
 theorem geometric_sum_powers_of_two' (n : ℕ) :
     ∑ i ∈ Finset.range (n + 1), 2^i = 2^(n+1) - 1 := by
@@ -357,6 +409,7 @@ theorem geometric_sum_powers_of_two' (n : ℕ) :
     rw [Finset.sum_range_succ, ih]
     have : 1 ≤ 2 ^ (n + 1) := Nat.one_le_two_pow
     omega
+
 
 
 
@@ -376,6 +429,7 @@ theorem channel_dominance' (n : ℕ) (hn : n ≥ 1) :
 
 
 
+
 /-- No Cayley-Dickson algebra of dimension ≥ 16 is a composition algebra. -/
 theorem zero_divisors_propagate' (n : ℕ) (hn : n ≥ 4) :
     2^n ∉ hurwitzDims' := by
@@ -387,15 +441,19 @@ theorem zero_divisors_propagate' (n : ℕ) (hn : n ≥ 4) :
 
 
 
+
 /-- r₄(p) = 8(p+1) for odd prime p (Jacobi's formula). -/
 def r4_prime' (p : ℕ) : ℕ := 8 * (p + 1)
+
 
 
 
 theorem r4_of_5' : r4_prime' 5 = 48 := by norm_num [r4_prime']
 
 
+
 theorem r4_of_7' : r4_prime' 7 = 64 := by norm_num [r4_prime']
+
 
 
 
@@ -404,7 +462,9 @@ def r8_prime' (p : ℕ) : ℕ := 16 * (1 + p^3)
 
 
 
+
 theorem r8_of_3' : r8_prime' 3 = 448 := by norm_num [r8_prime']
+
 
 
 
@@ -415,10 +475,12 @@ def channelExponent' : ℕ → ℕ
 
 
 
+
 theorem channel_exponents_explicit' :
     (channelExponent' 0, channelExponent' 1, channelExponent' 2,
      channelExponent' 3, channelExponent' 4) = (0, 0, 1, 3, 7) := by
   simp [channelExponent']
+
 
 
 
@@ -428,8 +490,10 @@ theorem six_channel_dims :
 
 
 
+
 /-- Total dimension through 6 channels = 63 = 2⁶ - 1. -/
 theorem total_six_channels : (1 + 2 + 4 + 8 + 16 + 32 : ℕ) = 63 := by norm_num
+
 
 
 
@@ -438,13 +502,16 @@ theorem sixtythree_mersenne' : (63 : ℕ) = 2^6 - 1 := by norm_num
 
 
 
+
 /-- 31 = 2⁵ - 1 is a Mersenne prime. -/
 theorem thirtyone_mersenne_prime : Nat.Prime 31 := by decide
 
 
 
+
 /-- The first 5 channels sum to the Mersenne prime 31. -/
 theorem five_channel_sum : (1 + 2 + 4 + 8 + 16 : ℕ) = 31 := by norm_num
+
 
 
 

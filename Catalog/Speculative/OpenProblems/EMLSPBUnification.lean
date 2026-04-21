@@ -17,12 +17,18 @@ def spbU (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
 
 
 
+
 /-- Multiplication is exp-conjugate to addition. -/
 theorem mul_is_exp_conjugate (a b : ℝ) :
     exp a * exp b = exp (a + b) := by rw [← exp_add]
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.OpenProblems.EMLSPBUnification
+Auto-generated from theorem catalog database.
+Domain: Speculative/OpenProblems
+Declarations: 9] -/
 theorem spb_is_tan_conjugate (x y : ℝ) (h : 0 < 1 - x * y) :
     arctan (spbU x y) = arctan x + arctan y := by
   rw [ spbU, Real.arctan_eq_of_tan_eq ];
@@ -52,10 +58,12 @@ theorem spb_is_tan_conjugate (x y : ℝ) (h : 0 < 1 - x * y) :
 
 
 
+
 /-- Weierstrass Pythagorean identity. -/
 theorem weierstrass_pythagoras (t : ℝ) (h : 1 + t ^ 2 ≠ 0) :
     ((1 - t ^ 2) / (1 + t ^ 2)) ^ 2 + (2 * t / (1 + t ^ 2)) ^ 2 = 1 := by
   field_simp; ring
+
 
 
 
@@ -66,10 +74,13 @@ theorem eml_exp_is_mul (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
 
 
 
+
 theorem eml_identity_exp : exp (0 : ℝ) = 1 := exp_zero
 
 
+
 theorem eml_identity_spb : spbU 0 0 = 0 := by simp [spbU]
+
 
 
 
@@ -80,11 +91,13 @@ theorem double_angle_is_spb_self (t : ℝ) (h : 1 - t * t ≠ 0) :
 
 
 
+
 theorem triple_angle_spb (t : ℝ) (h1 : 1 - t * t ≠ 0)
     (h2 : 1 - t * spbU t t ≠ 0) :
     spbU t (spbU t t) = (3 * t - t ^ 3) / (1 - 3 * t ^ 2) := by
   unfold spbU;
   grind
+
 
 
 

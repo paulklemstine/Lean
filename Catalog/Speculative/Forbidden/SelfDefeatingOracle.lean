@@ -17,9 +17,15 @@ theorem no_complete_oracle_catalog (oracle : ℕ → (ℕ → Bool)) :
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Forbidden.SelfDefeatingOracle
+Auto-generated from theorem catalog database.
+Domain: Speculative/Forbidden
+Declarations: 5] -/
 theorem diagonal_adversary_defeats_all (oracle : ℕ → (ℕ → Bool)) :
     ∀ n : ℕ, (fun k => !oracle k k) ≠ oracle n := by
   intro n hn; have := congr_fun hn n; aesop
+
 
 
 
@@ -32,6 +38,7 @@ theorem no_surjection_to_arrow_prop (α : Type*) :
 
 
 
+
 theorem halting_diagonal_surjection (enum : ℕ → (ℕ → Bool)) :
     ¬ Surjective enum := by
   intro h;
@@ -39,9 +46,11 @@ theorem halting_diagonal_surjection (enum : ℕ → (ℕ → Bool)) :
 
 
 
+
 theorem constructive_fixed_point {α β : Type*} (e : α → α → β)
     (he : Surjective e) (f : β → β) :
     ∃ b : β, f b = b := by
   exact?
+
 
 

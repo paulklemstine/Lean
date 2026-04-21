@@ -18,6 +18,11 @@ def associator {α : Type*} [AddGroup α] (mul : α → α → α) (a b c : α) 
 -- For real numbers (associative), the associator is zero
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.OctonionicTropicalApplications
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 15] -/
 theorem real_associator_zero (a b c : ℝ) :
     associator (· * ·) a b c = 0 := by
   simp [associator, mul_assoc]
@@ -25,11 +30,13 @@ theorem real_associator_zero (a b c : ℝ) :
 -- Tropical max-plus is associative
 
 
+
 theorem tropical_associator_zero (a b c : ℝ) :
     max (max a b) c = max a (max b c) :=
   max_assoc a b c
 
 -- Error detection: nonzero associator means non-associative path
+
 
 
 theorem error_detection_principle {α : Type*} [AddGroup α]
@@ -42,15 +49,18 @@ theorem error_detection_principle {α : Type*} [AddGroup α]
 
 
 
+
 def unitSphere (n : ℕ) : Set (Fin n → ℝ) :=
   {v | ∑ i, (v i) ^ 2 = 1}
 
 -- The real Hopf map: (x, y) on S¹ ↦ x² - y²
 
 
+
 def realHopfMap (v : Fin 2 → ℝ) : ℝ := (v 0) ^ 2 - (v 1) ^ 2
 
 -- The Hopf map sends S¹ to [-1, 1]
+
 
 
 theorem hopf_bounded (v : Fin 2 → ℝ) (hv : v ∈ unitSphere 2) :
@@ -61,6 +71,7 @@ theorem hopf_bounded (v : Fin 2 → ℝ) (hv : v ∈ unitSphere 2) :
   constructor <;> nlinarith [sq_nonneg (v 0), sq_nonneg (v 1)]
 
 -- The Hopf map is not constant on S¹
+
 
 
 theorem hopf_nonconstant :
@@ -74,9 +85,11 @@ theorem hopf_nonconstant :
 
 
 
+
 theorem fano_line_count : fanoLines.length = 7 := by native_decide
 
 -- Each point appears in exactly 3 lines
+
 
 
 theorem fano_regularity_0 :
@@ -84,6 +97,7 @@ theorem fano_regularity_0 :
   native_decide
 
 -- Fano plane diameter is at most 2
+
 
 
 theorem fano_diameter_le_2 :
@@ -97,8 +111,10 @@ theorem fano_diameter_le_2 :
 
 
 
+
 theorem triality_triple_gap (g₁ g₂ g₃ : ℝ) (h₁ : g₁ = 1) (h₂ : g₂ = 1) (h₃ : g₃ = 1) :
     g₁ + g₂ + g₃ = 3 := by linarith
+
 
 
 
@@ -109,6 +125,7 @@ theorem tropical_moufang (a b c : ℝ) :
 -- One-way function: max preimage is not unique
 
 
+
 theorem max_preimage_nonunique (c : ℝ) :
     ∃ a b a' b' : ℝ, max a b = c ∧ max a' b' = c ∧ (a ≠ a' ∨ b ≠ b') := by
   refine ⟨c, c - 1, c - 1, c, ?_, ?_, ?_⟩
@@ -117,6 +134,7 @@ theorem max_preimage_nonunique (c : ℝ) :
   · left; linarith
 
 -- Catalan number C₃ = 5 (number of bracketings of 4 elements)
+
 
 
 theorem five_applications_summary :
@@ -136,6 +154,7 @@ theorem five_applications_summary :
    TropicalFanoRouting.fano_line_count,
    by norm_num,
    TropicalMoufangCrypto.max_preimage_nonunique⟩
+
 
 
 

@@ -17,10 +17,12 @@ def diffractionAmplitude (S : Finset ℤ) (θ : ℝ) : ℂ :=
 
 
 
+
 /-- The diffraction intensity — the physically observable quantity.
 This is the squared modulus of the amplitude. -/
 def diffractionIntensity (S : Finset ℤ) (θ : ℝ) : ℝ :=
   Complex.normSq (diffractionAmplitude S θ)
+
 
 
 
@@ -31,10 +33,12 @@ def autocorrelation (S : Finset ℤ) (d : ℤ) : ℕ :=
 
 
 
+
 /-- A set is a Sidon set (B₂ set) if all pairwise differences are distinct,
 i.e., the autocorrelation is at most 1 for d ≠ 0. -/
 def IsSidonSet (S : Finset ℤ) : Prop :=
   ∀ d : ℤ, d ≠ 0 → autocorrelation S d ≤ 1
+
 
 
 
@@ -45,10 +49,12 @@ def IsHomometric (S T : Finset ℤ) : Prop :=
 
 
 
+
 /-- The diffraction amplitude of a singleton set. -/
 theorem amplitude_singleton (a : ℤ) (θ : ℝ) :
     diffractionAmplitude {a} θ = Complex.exp (2 * Real.pi * a * θ * Complex.I) := by
   simp [diffractionAmplitude]
+
 
 
 
@@ -63,6 +69,11 @@ theorem intensity_singleton (a : ℤ) (θ : ℝ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Factoring.IntegerDiffraction
+Auto-generated from theorem catalog database.
+Domain: Computation/Factoring
+Declarations: 32] -/
 theorem amplitude_pair (a b : ℤ) (hab : a ≠ b) (θ : ℝ) :
     diffractionAmplitude {a, b} θ =
     Complex.exp (2 * Real.pi * a * θ * Complex.I) +
@@ -71,9 +82,11 @@ theorem amplitude_pair (a b : ℤ) (hab : a ≠ b) (θ : ℝ) :
 
 
 
+
 theorem intensity_nonneg (S : Finset ℤ) (θ : ℝ) :
     0 ≤ diffractionIntensity S θ := by
   exact Complex.normSq_nonneg _
+
 
 
 
@@ -84,9 +97,11 @@ theorem intensity_at_zero (S : Finset ℤ) :
 
 
 
+
 theorem intensity_empty (θ : ℝ) :
     diffractionIntensity ∅ θ = 0 := by
   unfold diffractionIntensity diffractionAmplitude ; norm_num
+
 
 
 
@@ -96,9 +111,11 @@ theorem amplitude_empty (θ : ℝ) :
 
 
 
+
 /-- Translate a set by an integer offset. -/
 def translateSet (S : Finset ℤ) (k : ℤ) : Finset ℤ :=
   S.map ⟨(· + k), add_left_injective k⟩
+
 
 
 
@@ -110,11 +127,13 @@ theorem amplitude_translate (S : Finset ℤ) (k : ℤ) (θ : ℝ) :
 
 
 
+
 theorem intensity_translate (S : Finset ℤ) (k : ℤ) (θ : ℝ) :
     diffractionIntensity (translateSet S k) θ = diffractionIntensity S θ := by
   unfold diffractionIntensity;
   rw [ amplitude_translate ];
   norm_num [ Complex.normSq_eq_norm_sq, Complex.norm_exp ]
+
 
 
 
@@ -127,9 +146,11 @@ theorem autocorrelation_zero (S : Finset ℤ) :
 
 
 
+
 theorem autocorrelation_singleton_zero (a : ℤ) :
     autocorrelation {a} 0 = 1 := by
   exact autocorrelation_zero _
+
 
 
 
@@ -139,10 +160,12 @@ theorem autocorrelation_singleton_ne (a : ℤ) (d : ℤ) (hd : d ≠ 0) :
 
 
 
+
 theorem sidon_singleton (a : ℤ) : IsSidonSet {a} := by
   -- For any d ≠ 0, the autocorrelation is zero, which is ≤ 1.
   intros d hd
   simp [IsSidonSet, autocorrelation_singleton_ne a d hd]
+
 
 
 
@@ -156,9 +179,11 @@ theorem sidon_pair (a b : ℤ) (hab : a ≠ b) : IsSidonSet {a, b} := by
 
 
 
+
 /-- The cross-amplitude between two sets. -/
 def crossAmplitude (S T : Finset ℤ) (θ : ℝ) : ℂ :=
   ∑ s ∈ S, ∑ t ∈ T, Complex.exp (2 * Real.pi * (↑(s - t) : ℝ) * θ * Complex.I)
+
 
 
 
@@ -169,9 +194,11 @@ theorem amplitude_disjoint_union (S T : Finset ℤ) (h : Disjoint S T) (θ : ℝ
 
 
 
+
 /-- Reflect a set through the origin. -/
 def reflectSet (S : Finset ℤ) : Finset ℤ :=
   S.map ⟨fun x => -x, neg_injective⟩
+
 
 
 
@@ -183,8 +210,10 @@ theorem intensity_reflect (S : Finset ℤ) (θ : ℝ) :
 
 
 
+
 /-- A prime is "light" if it is ≡ 1 (mod 4). -/
 def IsLightPrime (p : ℕ) : Prop := Nat.Prime p ∧ p % 4 = 1
+
 
 
 
@@ -193,11 +222,13 @@ def IsDarkPrime (p : ℕ) : Prop := Nat.Prime p ∧ p % 4 = 3
 
 
 
+
 /-- A set has "spiked diffraction" if its autocorrelation is concentrated
 on a few values. Formalized: the support of the autocorrelation
 (restricted to nonzero d) has size at most k. -/
 def HasSpikedDiffraction (S : Finset ℤ) (k : ℕ) : Prop :=
   ((S ×ˢ S).image (fun p => p.1 - p.2) |>.filter (· ≠ 0)).card ≤ k
+
 
 
 
@@ -234,14 +265,17 @@ def autocorrelationCompute (S : List ℤ) (d : ℤ) : ℕ :=
 
 
 
+
 /-- Homometricity is reflexive. -/
 theorem homometric_refl (S : Finset ℤ) : IsHomometric S S := fun _ => rfl
+
 
 
 
 /-- Homometricity is symmetric. -/
 theorem homometric_symm {S T : Finset ℤ} (h : IsHomometric S T) :
     IsHomometric T S := fun d => (h d).symm
+
 
 
 
@@ -252,12 +286,14 @@ theorem homometric_trans {S T U : Finset ℤ} (h1 : IsHomometric S T)
 
 
 
+
 theorem homometric_card {S T : Finset ℤ} (h : IsHomometric S T) :
     S.card = T.card := by
   -- By definition of homometricity, the autocorrelations at 0 are equal.
   have h_autocorrelation_zero : autocorrelation S 0 = autocorrelation T 0 := by
     exact h 0;
   rw [ ← autocorrelation_zero S, ← autocorrelation_zero T, h_autocorrelation_zero ]
+
 
 
 

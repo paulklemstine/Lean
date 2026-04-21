@@ -15,8 +15,10 @@ structure HTLC where
 
 
 
+
 /-- Standard Lightning HTLC parameters -/
 def standard_htlc : HTLC := ⟨256, 144, 0⟩
+
 
 
 
@@ -28,9 +30,11 @@ theorem htlc_hash_survives_quantum :
 
 
 
+
 /-- HTLC timelock in seconds (average 10 min per block). -/
 def htlc_timelock_seconds (htlc : HTLC) : ℕ :=
   htlc.timelock_blocks * 600
+
 
 
 
@@ -38,6 +42,7 @@ def htlc_timelock_seconds (htlc : HTLC) : ℕ :=
 theorem standard_htlc_timelock :
     htlc_timelock_seconds standard_htlc = 86400 := by
   simp [htlc_timelock_seconds, standard_htlc]
+
 
 
 
@@ -49,11 +54,13 @@ theorem grover_cannot_beat_timelock :
 
 
 
+
 /-- **Theorem**: The HTLC hash component is NOT the vulnerability.
 The vulnerability is the SIGNATURE that enforces the timelock. -/
 theorem htlc_sig_is_weak_link (hash_security sig_security : ℕ)
     (hh : hash_security = 128) (hs : sig_security = 0) :
     sig_security < hash_security := by omega
+
 
 
 
@@ -66,12 +73,14 @@ structure LightningChannel where
 
 
 
+
 /-- **Theorem (Channel Forge Attack)**: With both funding keys compromised,
 the attacker can steal the full channel balance. -/
 theorem channel_forge_steals_all
     (alice_key_broken bob_key_broken : Prop)
     (ha : alice_key_broken) (hb : bob_key_broken) :
     alice_key_broken ∧ bob_key_broken := ⟨ha, hb⟩
+
 
 
 
@@ -82,14 +91,17 @@ theorem channel_attack_cost :
 
 
 
+
 /-- **Theorem**: Channel attack runtime is 2 × 338 seconds = 676 seconds. -/
 theorem channel_attack_runtime :
     2 * 338 = 676 := by norm_num
 
 
 
+
 /-- Number of public Lightning channels. -/
 def lightning_channels : ℕ := 55000
+
 
 
 
@@ -100,8 +112,10 @@ theorem drain_lightning_time :
 
 
 
+
 /-- Onion routing layer count in Lightning (Sphinx). -/
 def sphinx_max_hops : ℕ := 20
+
 
 
 
@@ -113,9 +127,11 @@ theorem onion_forward_secrecy (compromised_hop total_hops : ℕ)
 
 
 
+
 /-- **Theorem**: Privacy degrades linearly with number of compromised nodes. -/
 theorem privacy_degradation (compromised total : ℕ) (h : compromised ≤ total) :
     total - compromised ≤ total := Nat.sub_le total compromised
+
 
 
 
@@ -129,9 +145,11 @@ structure AtomicSwap where
 
 
 
+
 /-- Standard atomic swap timelocks -/
 def standard_swap : AtomicSwap :=
   ⟨288, 144, by norm_num, 100000000, 50000000000⟩
+
 
 
 
@@ -142,6 +160,7 @@ theorem swap_attack_window :
 
 
 
+
 /-- **Theorem**: 86,400 seconds >> 338 seconds (Shor runtime).
 The attack easily fits within the atomic swap timelock. -/
 theorem swap_attack_fits :
@@ -149,8 +168,10 @@ theorem swap_attack_fits :
 
 
 
+
 /-- Watchtower response window (blocks). -/
 def watchtower_response_window : ℕ := 144
+
 
 
 
@@ -162,6 +183,7 @@ theorem quantum_beats_watchtower :
 
 
 
+
 /-- [Section: # CatalogBuild.Cryptography.QuantumSecurity.HTLCLightning
 Auto-generated from theorem catalog database.
 Domain: Cryptography/QuantumSecurity
@@ -169,7 +191,13 @@ Declarations: 26] -/
 def lightning_attack_qubits : ℕ := 893588
 
 
+
+/-- [Section: # CatalogBuild.Cryptography.QuantumSecurity.HTLCLightning
+Auto-generated from theorem catalog database.
+Domain: Cryptography/QuantumSecurity
+Declarations: 26] -/
 def lightning_attack_time : ℕ := 2 * 338
+
 
 
 
@@ -180,9 +208,11 @@ theorem lightning_attack_minutes :
 
 
 
+
 /-- **Theorem**: N channels attacked sequentially with same quantum computer. -/
 theorem lightning_sequential_efficiency (n_channels : ℕ) :
     n_channels * lightning_attack_time = n_channels * 676 := by
   simp [lightning_attack_time]
+
 
 

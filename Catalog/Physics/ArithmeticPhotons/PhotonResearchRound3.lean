@@ -26,6 +26,7 @@ theorem sedenion_zero_divisor_witness :
 
 
 
+
 /-- **The Photon Monoid**: The Gaussian product preserves the Pythagorean property.
 This is the fundamental algebraic law of photon composition.
 Proof: (a₁a₂-b₁b₂)² + (a₁b₂+b₁a₂)² = (a₁²+b₁²)(a₂²+b₂²) = c₁²c₂² = (c₁c₂)². -/
@@ -37,10 +38,12 @@ theorem photon_monoid_closure (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ)
 
 
 
+
 /-- The Gaussian product is commutative (photon fusion is symmetric). -/
 theorem gaussianProd_comm (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ) :
     gaussianProd a₁ b₁ c₁ a₂ b₂ c₂ = gaussianProd a₂ b₂ c₂ a₁ b₁ c₁ := by
   simp only [gaussianProd, Prod.mk.injEq]; constructor <;> [ring; constructor <;> ring]
+
 
 
 
@@ -51,10 +54,12 @@ theorem gaussianProd_one (a b c : ℤ) :
 
 
 
+
 /-- **Photon Conjugation**: complex conjugation gives the "anti-photon." -/
 theorem photon_conjugate (a b c : ℤ) (h : IsPythTriple' a b c) :
     IsPythTriple' a (-b) c := by
   unfold IsPythTriple' at *; nlinarith [sq_nonneg b]
+
 
 
 
@@ -66,10 +71,12 @@ theorem photon_annihilation (a b c : ℤ) (h : IsPythTriple' a b c) :
 
 
 
+
 /-- After annihilation, the result encodes pure energy: (c², 0, c²) is on the light cone. -/
 theorem annihilation_is_triple (a b c : ℤ) (h : IsPythTriple' a b c) :
     IsPythTriple' (a^2 + b^2) 0 (c^2) := by
   unfold IsPythTriple' at *; nlinarith [sq_nonneg (a^2 + b^2)]
+
 
 
 
@@ -83,15 +90,22 @@ theorem fermat_two_square_photon (p : ℕ) (hp : Nat.Prime p) (hmod : p % 4 = 1)
 
 
 
+
 /-- The prime 2 is the sum of two squares: 1² + 1² = 2.
 The corresponding photon is (1, 1, √2) — the "diagonal photon." -/
 theorem prime_2_photon : (1 : ℤ) ^ 2 + 1 ^ 2 = 2 := by norm_num
 
 
 
+
+/-- [Section: # CatalogBuild.Physics.ArithmeticPhotons.PhotonResearchRound3
+Auto-generated from theorem catalog database.
+Domain: Physics/ArithmeticPhotons
+Declarations: 40] -/
 theorem dark_prime_no_photon (p : ℕ) (hp : Nat.Prime p) (hmod : p % 4 = 3) :
     ¬ ∃ a b : ℤ, a ^ 2 + b ^ 2 = ↑p := by
       exact fun ⟨ a, b, h ⟩ => by have := congr_arg ( · % 4 ) h; norm_num [ sq, Int.add_emod, Int.mul_emod ] at this; have := Int.emod_nonneg a four_pos.ne'; have := Int.emod_nonneg b four_pos.ne'; have := Int.emod_lt_of_pos a four_pos; have := Int.emod_lt_of_pos b four_pos; interval_cases a % 4 <;> interval_cases b % 4 <;> norm_cast at this <;> simp_all +decide ;
+
 
 
 
@@ -104,10 +118,12 @@ theorem photon_energy_positive (a b c : ℤ) (h : IsPythTriple' a b c)
 
 
 
+
 /-- Energy is monotone under scaling: multiplying a photon by k scales energy by |k|. -/
 theorem photon_energy_scaling (a b c k : ℤ) (h : IsPythTriple' a b c) :
     IsPythTriple' (k*a) (k*b) (k*c) := by
   unfold IsPythTriple' at *; nlinarith [sq_nonneg k, sq_nonneg a, sq_nonneg b]
+
 
 
 
@@ -116,6 +132,7 @@ theorem direction_invariant_under_scaling (a b : ℤ) (k : ℤ) (hk : k ≠ 0) :
     (k * b : ℚ) / (k * a : ℚ) = (b : ℚ) / (a : ℚ) := by
   have hk' : (k : ℚ) ≠ 0 := Int.cast_ne_zero.mpr hk
   field_simp
+
 
 
 
@@ -130,9 +147,11 @@ theorem direction_composition (a₁ b₁ a₂ b₂ : ℤ) :
 
 
 
+
 /-- The quaternion conjugate is involutive (double time-reversal = identity). -/
 theorem quaternion_star_involutive (q : Quaternion ℝ) :
     star (star q) = q := star_star q
+
 
 
 
@@ -141,6 +160,7 @@ theorem unit_quaternion_product (q₁ q₂ : Quaternion ℝ)
     (h₁ : Quaternion.normSq q₁ = 1) (h₂ : Quaternion.normSq q₂ = 1) :
     Quaternion.normSq (q₁ * q₂) = 1 := by
   rw [quaternion_norm_multiplicative, h₁, h₂, mul_one]
+
 
 
 
@@ -153,9 +173,11 @@ theorem octonion_channel_example :
 
 
 
+
 /-- The sum 1² + 2² + ... + 8² = 204. -/
 theorem octonionic_energy :
     (1^2 + 2^2 + 3^2 + 4^2 + 5^2 + 6^2 + 7^2 + 8^2 : ℤ) = 204 := by norm_num
+
 
 
 
@@ -168,8 +190,10 @@ structure PhotonState where
 
 
 
+
 /-- The vacuum photon (identity element). -/
 def vacuum_photon : PhotonState := ⟨1, 0, 1, by norm_num⟩
+
 
 
 
@@ -178,8 +202,10 @@ def photon_345 : PhotonState := ⟨3, 4, 5, by norm_num⟩
 
 
 
+
 /-- The (5,12,13) photon. -/
 def photon_51213 : PhotonState := ⟨5, 12, 13, by norm_num⟩
+
 
 
 
@@ -194,12 +220,14 @@ def PhotonState.fuse (p q : PhotonState) : PhotonState where
 
 
 
+
 /-- Fusion is commutative. -/
 theorem PhotonState.fuse_comm (p q : PhotonState) :
     (p.fuse q).px = (q.fuse p).px ∧
     (p.fuse q).py = (q.fuse p).py ∧
     (p.fuse q).energy = (q.fuse p).energy := by
   simp [PhotonState.fuse]; constructor <;> [ring; constructor <;> ring]
+
 
 
 
@@ -212,6 +240,7 @@ def PhotonState.conjugate (p : PhotonState) : PhotonState where
 
 
 
+
 /-- Fusing a photon with its conjugate gives zero transverse momentum. -/
 theorem PhotonState.fuse_conjugate_py (p : PhotonState) :
     (p.fuse p.conjugate).py = 0 := by
@@ -219,10 +248,12 @@ theorem PhotonState.fuse_conjugate_py (p : PhotonState) :
 
 
 
+
 /-- The energy of a photon-antiphoton pair is the norm squared. -/
 theorem PhotonState.fuse_conjugate_energy (p : PhotonState) :
     (p.fuse p.conjugate).energy = p.energy ^ 2 := by
   simp [PhotonState.fuse, PhotonState.conjugate]; ring
+
 
 
 
@@ -235,6 +266,7 @@ theorem null_sum_null_iff_orthogonal (a₁ b₁ c₁ a₂ b₂ c₂ : ℝ)
 
 
 
+
 theorem photon_parity_conservation (a b c : ℤ)
     (h : a ^ 2 + b ^ 2 = c ^ 2) (ha : a % 2 = 1) (hb : b % 2 = 0) :
     c % 2 = 1 := by
@@ -242,10 +274,12 @@ theorem photon_parity_conservation (a b c : ℤ)
 
 
 
+
 /-- Every Pythagorean triple is proportional to one generated by the parametrization
 (m² - n², 2mn, m² + n²) for some m > n > 0. We verify the parametrization works. -/
 theorem parametrization_works (m n : ℤ) :
     (m^2 - n^2)^2 + (2*m*n)^2 = (m^2 + n^2)^2 := by ring
+
 
 
 
@@ -265,9 +299,11 @@ theorem parametrization_legs_distinct (m n : ℤ) (hmn : m ≠ n) (hm : m ≠ 0)
 
 
 
+
 /-- The (3,4,5) triple comes from m=2, n=1. -/
 theorem triple_345_parametrization :
     (2^2 - 1^2 : ℤ) = 3 ∧ 2*2*1 = 4 ∧ (2^2 + 1^2 : ℤ) = 5 := by norm_num
+
 
 
 
@@ -277,9 +313,11 @@ theorem triple_51213_parametrization :
 
 
 
+
 /-- The (8,15,17) triple comes from m=4, n=1. -/
 theorem triple_81517_parametrization :
     (4^2 - 1^2 : ℤ) = 15 ∧ 2*4*1 = 8 ∧ (4^2 + 1^2 : ℤ) = 17 := by norm_num
+
 
 
 
@@ -287,6 +325,7 @@ theorem triple_81517_parametrization :
 theorem gaussian_norm_is_sum_sq (a b : ℤ) :
     (⟨a, b⟩ : GaussianInt).norm = a ^ 2 + b ^ 2 := by
   simp [Zsqrtd.norm]; ring
+
 
 
 
@@ -315,12 +354,14 @@ theorem complex_not_ordered_field :
 
 
 
+
 /-- Verify: the first 5 primitive Pythagorean triples (ordered by hypotenuse). -/
 theorem first_primitive_triples :
     IsPythTriple' 3 4 5 ∧ IsPythTriple' 5 12 13 ∧
     IsPythTriple' 8 15 17 ∧ IsPythTriple' 7 24 25 ∧
     IsPythTriple' 20 21 29 := by
   unfold IsPythTriple'; omega
+
 
 
 
@@ -334,6 +375,7 @@ theorem fusion_345_51213 :
 
 
 
+
 /-- The "double" of the (3,4,5) photon via self-fusion. -/
 theorem self_fusion_345 :
     let p := gaussianProd 3 4 5 3 4 5
@@ -344,6 +386,7 @@ theorem self_fusion_345 :
 
 
 
+
 /-- Triple fusion: three (3,4,5) photons. -/
 theorem triple_fusion_345 :
     let p₂ := gaussianProd 3 4 5 3 4 5  -- (-7, 24, 25)
@@ -351,6 +394,7 @@ theorem triple_fusion_345 :
     IsPythTriple' p₃.1 p₃.2.1 p₃.2.2 := by
   simp [gaussianProd]
   unfold IsPythTriple'; ring
+
 
 
 

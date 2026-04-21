@@ -16,8 +16,14 @@ def rf3B₁ : Matrix (Fin 3) (Fin 3) ℤ :=
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.ModularForms.RamanujanFrontiers3
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/ModularForms
+Declarations: 67] -/
 def rf3B₂ : Matrix (Fin 3) (Fin 3) ℤ :=
   !![1, 2, 2; 2, 1, 2; 2, 2, 3]
+
 
 
 
@@ -26,13 +32,16 @@ def rf3B₃ : Matrix (Fin 3) (Fin 3) ℤ :=
 
 
 
+
 def rf3Q : Matrix (Fin 3) (Fin 3) ℤ :=
   !![1, 0, 0; 0, 1, 0; 0, 0, (-1)]
 
 
 
+
 def rf3matMod (N : ℕ) [NeZero N] (M : Matrix (Fin 3) (Fin 3) ℤ) :
     Matrix (Fin 3) (Fin 3) (ZMod N) := M.map (Int.cast)
+
 
 
 
@@ -44,6 +53,7 @@ theorem rf3_lorentz_mod5_all :
 
 
 
+
 theorem rf3_lorentz_mod7_all :
     (rf3matMod 7 rf3B₁)ᵀ * (rf3matMod 7 rf3Q) * (rf3matMod 7 rf3B₁) = rf3matMod 7 rf3Q ∧
     (rf3matMod 7 rf3B₂)ᵀ * (rf3matMod 7 rf3Q) * (rf3matMod 7 rf3B₂) = rf3matMod 7 rf3Q ∧
@@ -52,11 +62,13 @@ theorem rf3_lorentz_mod7_all :
 
 
 
+
 theorem rf3_lorentz_mod11_all :
     (rf3matMod 11 rf3B₁)ᵀ * (rf3matMod 11 rf3Q) * (rf3matMod 11 rf3B₁) = rf3matMod 11 rf3Q ∧
     (rf3matMod 11 rf3B₂)ᵀ * (rf3matMod 11 rf3Q) * (rf3matMod 11 rf3B₂) = rf3matMod 11 rf3Q ∧
     (rf3matMod 11 rf3B₃)ᵀ * (rf3matMod 11 rf3Q) * (rf3matMod 11 rf3B₃) = rf3matMod 11 rf3Q :=
   ⟨by native_decide, by native_decide, by native_decide⟩
+
 
 
 
@@ -70,10 +82,12 @@ theorem ramanujan_bound_6reg_bounds : 2 * Real.sqrt 5 < 5 ∧ 2 * Real.sqrt 5 > 
 
 
 
+
 /-- B₂ + I is singular: -1 is an eigenvalue of B₂. -/
 theorem rf3B₂_has_eigenvalue_neg1 :
     Matrix.det (rf3B₂ + (1 : Matrix (Fin 3) (Fin 3) ℤ)) = 0 := by
   native_decide
+
 
 
 
@@ -84,14 +98,17 @@ theorem rf3B₂_cayley_hamilton :
 
 
 
+
 /-- B₁ is strictly unipotent: (B₁-I)³ = 0 but (B₁-I)² ≠ 0. -/
 theorem rf3B₁_unipotent :
     (rf3B₁ - 1) ^ 3 = (0 : Matrix (Fin 3) (Fin 3) ℤ) := by native_decide
 
 
 
+
 theorem rf3B₁_nilindex_3 :
     (rf3B₁ - 1) ^ 2 ≠ (0 : Matrix (Fin 3) (Fin 3) ℤ) := by native_decide
+
 
 
 
@@ -101,8 +118,10 @@ theorem rf3B₃_unipotent :
 
 
 
+
 theorem rf3B₃_nilindex_3 :
     (rf3B₃ - 1) ^ 2 ≠ (0 : Matrix (Fin 3) (Fin 3) ℤ) := by native_decide
+
 
 
 
@@ -112,10 +131,12 @@ theorem rf3B₂_not_unipotent :
 
 
 
+
 /-- B₂ + I is singular but nonzero: -1 has multiplicity 1. -/
 theorem rf3B₂_neg1_simple :
     Matrix.det (rf3B₂ + 1) = 0 ∧ (rf3B₂ + 1) ≠ (0 : Matrix (Fin 3) (Fin 3) ℤ) :=
   ⟨by native_decide, by native_decide⟩
+
 
 
 
@@ -130,12 +151,14 @@ theorem rf3B₂_trace_seq :
 
 
 
+
 /-- The Chebyshev-I polynomial T_n(3) values. -/
 theorem chebyshev_at_3_values :
     17 = 6 * 3 - 1 ∧
     99 = 6 * 17 - 3 ∧
     577 = 6 * 99 - 17 ∧
     3363 = 6 * 577 - 99 := by omega
+
 
 
 
@@ -151,12 +174,14 @@ theorem chebyshev_trace_formula :
 
 
 
+
 /-- Trace recurrence from Cayley-Hamilton:
 tr(B₂ⁿ) = 5·tr(B₂ⁿ⁻¹) + 5·tr(B₂ⁿ⁻²) - tr(B₂ⁿ⁻³). -/
 theorem rf3B₂_trace_recurrence :
     (197 : ℤ) = 5 * 35 + 5 * 5 - 3 ∧
     (1155 : ℤ) = 5 * 197 + 5 * 35 - 5 ∧
     (6725 : ℤ) = 5 * 1155 + 5 * 197 - 35 := by omega
+
 
 
 
@@ -171,6 +196,7 @@ theorem eigenvalue_growth_rate :
 
 
 
+
 /-- The product of hyperbolic eigenvalues is 1. -/
 theorem hyperbolic_eigenvalue_product :
     ((3 : ℝ) + 2 * Real.sqrt 2) * (3 - 2 * Real.sqrt 2) = 1 := by
@@ -179,9 +205,11 @@ theorem hyperbolic_eigenvalue_product :
 
 
 
+
 /-- The sum of hyperbolic eigenvalues is 6. -/
 theorem hyperbolic_eigenvalue_sum :
     ((3 : ℝ) + 2 * Real.sqrt 2) + (3 - 2 * Real.sqrt 2) = 6 := by ring
+
 
 
 
@@ -193,6 +221,7 @@ theorem rf3B₁_strictly_unipotent :
 
 
 
+
 /-- B₃ is strictly unipotent (nilpotent index 3). -/
 theorem rf3B₃_strictly_unipotent :
     (rf3B₃ - 1) ^ 3 = (0 : Matrix (Fin 3) (Fin 3) ℤ) ∧
@@ -201,11 +230,13 @@ theorem rf3B₃_strictly_unipotent :
 
 
 
+
 /-- Parabolic generators have constant traces under powering. -/
 theorem rf3B₁_parabolic_trace :
     Matrix.trace (rf3B₁ ^ 10) = 3 ∧
     Matrix.trace (rf3B₁ ^ 20) = 3 :=
   ⟨by native_decide, by native_decide⟩
+
 
 
 
@@ -219,10 +250,12 @@ theorem rf3B₂_hyperbolic_trace :
 
 
 
+
 /-- Parabolic = determinant 1, Hyperbolic = determinant -1. -/
 theorem rf3_det_classification :
     Matrix.det rf3B₁ = 1 ∧ Matrix.det rf3B₂ = -1 ∧ Matrix.det rf3B₃ = 1 :=
   ⟨by native_decide, by native_decide, by native_decide⟩
+
 
 
 
@@ -235,6 +268,7 @@ theorem rf3_mixed_products_hyperbolic :
 
 
 
+
 /-- All generator pairs are non-commuting. -/
 theorem rf3_full_noncommutativity :
     rf3B₁ * rf3B₂ ≠ rf3B₂ * rf3B₁ ∧
@@ -244,9 +278,11 @@ theorem rf3_full_noncommutativity :
 
 
 
+
 /-- Triple product trace. -/
 theorem rf3B₁B₂B₃_trace :
     Matrix.trace (rf3B₁ * rf3B₂ * rf3B₃) = 65 := by native_decide
+
 
 
 
@@ -259,10 +295,12 @@ theorem rf3_on_345 :
 
 
 
+
 /-- Children of (3,4,5) are all Pythagorean. -/
 theorem rf3_children_pythagorean :
     (5:ℤ)^2 + 12^2 = 13^2 ∧ (21:ℤ)^2 + 20^2 = 29^2 ∧ (15:ℤ)^2 + 8^2 = 17^2 := by
   norm_num
+
 
 
 
@@ -271,14 +309,18 @@ def rf3Q5 : Matrix (Fin 5) (Fin 5) ℤ :=
 
 
 
+
 /-- Root quintuples satisfying a₁² + a₂² + a₃² + a₄² = d². -/
 theorem root_quintuple_1_0_0_0_1 : (1:ℤ)^2 + 0^2 + 0^2 + 0^2 = 1^2 := by norm_num
+
 
 
 theorem root_quintuple_1_1_1_1_2 : (1:ℤ)^2 + 1^2 + 1^2 + 1^2 = 2^2 := by norm_num
 
 
+
 theorem quintuple_1_2_2_0_3 : (1:ℤ)^2 + 2^2 + 2^2 + 0^2 = 3^2 := by norm_num
+
 
 
 
@@ -287,8 +329,10 @@ def rf3K₁ : Matrix (Fin 5) (Fin 5) ℤ :=
 
 
 
+
 def rf3K₂ : Matrix (Fin 5) (Fin 5) ℤ :=
   !![1,0,0,2,2; 0,1,0,0,0; 0,0,1,0,0; 2,0,0,1,2; 2,0,0,2,3]
+
 
 
 
@@ -297,8 +341,10 @@ def rf3K₃ : Matrix (Fin 5) (Fin 5) ℤ :=
 
 
 
+
 def rf3K₄ : Matrix (Fin 5) (Fin 5) ℤ :=
   !![1,0,0,0,0; 0,1,0,0,0; 0,0,(-1),2,2; 0,0,(-2),1,2; 0,0,(-2),2,3]
+
 
 
 
@@ -307,8 +353,10 @@ def rf3K₅ : Matrix (Fin 5) (Fin 5) ℤ :=
 
 
 
+
 def rf3K₆ : Matrix (Fin 5) (Fin 5) ℤ :=
   !![1,0,0,0,0; 0,1,0,2,2; 0,0,1,0,0; 0,2,0,1,2; 0,2,0,2,3]
+
 
 
 
@@ -325,11 +373,13 @@ theorem rf3K_lorentz_all :
 
 
 
+
 /-- 5D generator properties. -/
 theorem rf3K_ne_id :
     rf3K₁ ≠ 1 ∧ rf3K₂ ≠ 1 ∧ rf3K₃ ≠ 1 ∧ rf3K₄ ≠ 1 ∧ rf3K₅ ≠ 1 ∧ rf3K₆ ≠ 1 :=
   ⟨by native_decide, by native_decide, by native_decide,
    by native_decide, by native_decide, by native_decide⟩
+
 
 
 
@@ -342,12 +392,14 @@ theorem rf3K_traces :
 
 
 
+
 theorem rf3K_dets :
     Matrix.det rf3K₁ = 1 ∧ Matrix.det rf3K₂ = -1 ∧
     Matrix.det rf3K₃ = 1 ∧ Matrix.det rf3K₄ = 1 ∧
     Matrix.det rf3K₅ = -1 ∧ Matrix.det rf3K₆ = -1 :=
   ⟨by native_decide, by native_decide, by native_decide,
    by native_decide, by native_decide, by native_decide⟩
+
 
 
 
@@ -359,10 +411,12 @@ theorem rf3K₁_on_root :
 
 
 
+
 theorem rf3K₂_on_root :
     let v := ![(1:ℤ), 1, 1, 1, 2]
     let w := rf3K₂.mulVec v
     w 0 ^ 2 + w 1 ^ 2 + w 2 ^ 2 + w 3 ^ 2 = w 4 ^ 2 := by native_decide
+
 
 
 
@@ -373,10 +427,12 @@ theorem rf3K₃_on_root :
 
 
 
+
 theorem rf3K₄_on_root :
     let v := ![(1:ℤ), 1, 1, 1, 2]
     let w := rf3K₄.mulVec v
     w 0 ^ 2 + w 1 ^ 2 + w 2 ^ 2 + w 3 ^ 2 = w 4 ^ 2 := by native_decide
+
 
 
 
@@ -387,10 +443,12 @@ theorem rf3K₅_on_root :
 
 
 
+
 theorem rf3K₆_on_root :
     let v := ![(1:ℤ), 1, 1, 1, 2]
     let w := rf3K₆.mulVec v
     w 0 ^ 2 + w 1 ^ 2 + w 2 ^ 2 + w 3 ^ 2 = w 4 ^ 2 := by native_decide
+
 
 
 
@@ -401,9 +459,11 @@ theorem spectral_gap_pos_d6 : (6:ℝ) - 2 * Real.sqrt 5 > 0 := by
 
 
 
+
 theorem spectral_gap_pos_d8 : (8:ℝ) - 2 * Real.sqrt 7 > 0 := by
   have h7 : Real.sqrt 7 ^ 2 = 7 := Real.sq_sqrt (by norm_num : (7:ℝ) ≥ 0)
   nlinarith [Real.sqrt_nonneg 7, sq_nonneg (Real.sqrt 7 - 4)]
+
 
 
 
@@ -413,9 +473,11 @@ theorem spectral_gap_pos_d12 : (12:ℝ) - 2 * Real.sqrt 11 > 0 := by
 
 
 
+
 theorem spectral_gap_pos_d20 : (20:ℝ) - 2 * Real.sqrt 19 > 0 := by
   have h : Real.sqrt 19 ^ 2 = 19 := Real.sq_sqrt (by norm_num : (19:ℝ) ≥ 0)
   nlinarith [Real.sqrt_nonneg 19, sq_nonneg (Real.sqrt 19 - 10)]
+
 
 
 
@@ -443,6 +505,7 @@ theorem spectral_gap_full_monotone :
 
 
 
+
 /-- The relative gap is monotonically increasing. -/
 theorem relative_gap_increasing :
     8 * (6 - 2 * Real.sqrt 5) < 6 * (8 - 2 * Real.sqrt 7) ∧
@@ -461,11 +524,13 @@ theorem relative_gap_increasing :
 
 
 
+
 /-- The relative gap for d=100 exceeds 0.79: (100 - 2√99)/100 > 79/100. -/
 theorem relative_gap_d100 :
     (100 : ℝ) - 2 * Real.sqrt 99 > 79 := by
   have h99 : Real.sqrt 99 ^ 2 = 99 := Real.sq_sqrt (by norm_num : (99:ℝ) ≥ 0)
   nlinarith [Real.sqrt_nonneg 99, sq_nonneg (Real.sqrt 99 - 21/2)]
+
 
 
 
@@ -484,6 +549,7 @@ theorem spectral_gap_growth :
 
 
 
+
 /-- Products of 3D Lorentz transformations are Lorentz. -/
 theorem lorentz3_product_closure (M N : Matrix (Fin 3) (Fin 3) ℤ)
     (hM : Mᵀ * rf3Q * M = rf3Q) (hN : Nᵀ * rf3Q * N = rf3Q) :
@@ -495,9 +561,11 @@ theorem lorentz3_product_closure (M N : Matrix (Fin 3) (Fin 3) ℤ)
 
 
 
+
 theorem rf3B₂_pow5_from_CH :
     rf3B₂ ^ 5 = 5 • rf3B₂ ^ 4 + 5 • rf3B₂ ^ 3 - rf3B₂ ^ 2 := by
   native_decide
+
 
 
 
@@ -508,9 +576,11 @@ theorem rf3B₂_pow6_from_CH :
 
 
 
+
 /-- tr(B₂⁶) = 39203 -/
 theorem rf3B₂_trace_sixth :
     Matrix.trace (rf3B₂ ^ 6) = 39203 := by native_decide
+
 
 
 
@@ -518,5 +588,6 @@ theorem rf3B₂_trace_sixth :
 tr(B₂⁶) = 1 + 2·19601 = 39203. -/
 theorem chebyshev_n6 :
     (39203 : ℤ) = 1 + 2 * 19601 ∧ (19601 : ℤ) = 6 * 3363 - 577 := by omega
+
 
 

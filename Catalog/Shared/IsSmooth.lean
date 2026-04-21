@@ -15,3 +15,4 @@ Declarations: 1] -/
 def isSmooth (B n : ℕ) : Prop := ∀ p, Nat.Prime p → p ∣ n → p ≤ B
 
 
+

@@ -15,8 +15,10 @@ def ecdsa_sign_equation (k z r d : ZMod n) : ZMod n :=
 
 
 
+
 /-- The ECDSA verification parameters. -/
 def ecdsa_verify_u1 (z s : ZMod n) : ZMod n := z * s⁻¹
+
 
 
 /-- [Section: # CatalogBuild.Cryptography.QuantumSecurity.ShorECDSA
@@ -27,6 +29,11 @@ def ecdsa_verify_u2 (r s : ZMod n) : ZMod n := r * s⁻¹
 
 
 
+
+/-- [Section: # CatalogBuild.Cryptography.QuantumSecurity.ShorECDSA
+Auto-generated from theorem catalog database.
+Domain: Cryptography/QuantumSecurity
+Declarations: 78] -/
 theorem ecdsa_completeness (k z r d s : ZMod n)
     (hk : k ≠ 0)
     (hzrd : z + r * d ≠ 0)
@@ -37,12 +44,14 @@ theorem ecdsa_completeness (k z r d s : ZMod n)
 
 
 
+
 theorem ecdsa_key_from_nonce (k z r d s : ZMod n)
     (hr : r ≠ 0)
     (hs : s = k⁻¹ * (z + r * d))
     (hk : k ≠ 0) :
     d = r⁻¹ * (k * s - z) := by
   grobner
+
 
 
 
@@ -56,11 +65,13 @@ theorem ecdsa_nonce_reuse (k z₁ z₂ r s₁ s₂ d : ZMod n)
 
 
 
+
 theorem ecdsa_nonce_reuse_diff (k z₁ z₂ r s₁ s₂ d : ZMod n)
     (hs₁ : s₁ = k⁻¹ * (z₁ + r * d))
     (hs₂ : s₂ = k⁻¹ * (z₂ + r * d)) :
     s₁ - s₂ = k⁻¹ * (z₁ - z₂) := by
   linear_combination' hs₁ - hs₂
+
 
 
 
@@ -73,10 +84,12 @@ structure ECDLPOracle where
 
 
 
+
 /-- An ECDSA forger: given a message hash, produces a valid signature. -/
 structure ECDSAForger (n : ℕ) where
   /-- Produce signature (r, s) for message hash z -/
   forge : ZMod n → ZMod n × ZMod n
+
 
 
 
@@ -91,10 +104,12 @@ def ecdlp_implies_ecdsa_break (oracle : ECDLPOracle) (n : ℕ) [Fact (Nat.Prime 
 
 
 
+
 /-- Logical qubits for Shor's ECDLP on an n-bit curve.
 Based on Roetteler et al. (2017): 2n + O(log n) data qubits,
 plus ancilla for modular arithmetic. Conservative: 6n + 10. -/
 def shor_logical_qubits (bits : ℕ) : ℕ := 6 * bits + 10
+
 
 
 
@@ -107,8 +122,10 @@ def physical_per_logical_willow : ℕ := 578
 
 
 
+
 /-- Pre-Willow estimate: ~3000 physical per logical. -/
 def physical_per_logical_pre_willow : ℕ := 3000
+
 
 
 
@@ -120,9 +137,11 @@ theorem willow_improvement_factor :
 
 
 
+
 /-- Total physical qubits for secp256k1 attack with Willow-era error correction. -/
 def total_physical_willow : ℕ :=
   shor_logical_qubits 256 * physical_per_logical_willow
+
 
 
 
@@ -132,9 +151,11 @@ theorem total_physical_willow_count :
 
 
 
+
 /-- Pre-Willow estimate was 4,638,000. Improvement ratio: -/
 theorem willow_vs_pre_willow :
     4638000 / total_physical_willow = 5 := by native_decide
+
 
 
 
@@ -145,15 +166,18 @@ theorem willow_still_insufficient :
 
 
 
+
 /-- The gap with Willow-era EC is ~745× (vs 3865× pre-Willow). -/
 theorem willow_gap_factor :
     total_physical_willow / 1200 = 744 := by native_decide
 
 
 
+
 /-- **Theorem**: T-gate count for 256-bit ECDLP is ~335 million. -/
 theorem secp256k1_t_gates :
     shor_t_gate_count 256 = 335544320 := by native_decide
+
 
 
 
@@ -164,9 +188,11 @@ theorem t_gate_runtime_seconds :
 
 
 
+
 /-- At 10⁶ T-gates/second (optimistic future), ~336 seconds ≈ 5.6 minutes. -/
 theorem t_gate_runtime_fast :
     shor_t_gate_count 256 / 1000000 = 335 := by native_decide
+
 
 
 
@@ -179,10 +205,12 @@ inductive AddressExposure where
 
 
 
+
 /-- A cryptocurrency address with its exposure state -/
 structure CryptoAddress where
   exposure : AddressExposure
   balance : ℕ  -- In smallest units (satoshi/wei)
+
 
 
 
@@ -193,10 +221,12 @@ def isQuantumVulnerable (addr : CryptoAddress) : Prop :=
 
 
 
+
 /-- Unexposed addresses are not quantum-vulnerable, regardless of balance. -/
 theorem unexposed_safe (balance : ℕ) :
     ¬ isQuantumVulnerable ⟨AddressExposure.unexposed, balance⟩ := by
   simp [isQuantumVulnerable]
+
 
 
 
@@ -207,10 +237,12 @@ theorem zero_balance_safe (exp : AddressExposure) :
 
 
 
+
 /-- Permanently exposed addresses with funds are vulnerable. -/
 theorem permanent_exposure_vulnerable (balance : ℕ) (hb : balance > 0) :
     isQuantumVulnerable ⟨AddressExposure.permanent, balance⟩ := by
   simp [isQuantumVulnerable, hb]
+
 
 
 
@@ -219,6 +251,7 @@ def attackWindowSeconds : AddressExposure → ℕ
   | AddressExposure.unexposed => 0
   | AddressExposure.transient => 600      -- ~10 minutes (Bitcoin block time)
   | AddressExposure.permanent => 10^9     -- Effectively infinite
+
 
 
 
@@ -231,6 +264,7 @@ theorem bitcoin_transient_margin :
 
 
 
+
 /-- **Theorem**: For permanent exposure (Ethereum), there is no time pressure. -/
 theorem ethereum_no_time_pressure :
     attackWindowSeconds AddressExposure.permanent > shor_t_gate_count 256 := by
@@ -238,9 +272,11 @@ theorem ethereum_no_time_pressure :
 
 
 
+
 /-- Resource cost to break an m-of-n multisig wallet. -/
 def multisig_attack_cost (m _n : ℕ) (single_cost : ℕ) : ℕ :=
   m * single_cost
+
 
 
 
@@ -251,6 +287,7 @@ theorem multisig_3_of_5_cost :
 
 
 
+
 /-- **Theorem**: Parallel quantum computers reduce wall-clock time but not total qubits. -/
 theorem parallel_attack_time (m p single_time : ℕ) :
     m * single_time / p ≤ m * single_time :=
@@ -258,10 +295,12 @@ theorem parallel_attack_time (m p single_time : ℕ) :
 
 
 
+
 /-- A mixed multisig using both ECDSA and post-quantum signatures
 requires breaking BOTH schemes. -/
 def hybrid_multisig_secure (ecdsa_broken pq_broken : Prop) : Prop :=
   ¬(ecdsa_broken ∧ pq_broken)
+
 
 
 
@@ -274,8 +313,10 @@ theorem hybrid_security (ecdsa_broken pq_broken : Prop)
 
 
 
+
 /-- Classical mining difficulty: expected number of hash evaluations. -/
 def classical_mining_cost (difficulty : ℕ) : ℕ := difficulty
+
 
 
 
@@ -287,10 +328,12 @@ theorem grover_quadratic_bound (d : ℕ) :
 
 
 
+
 /-- Current Bitcoin difficulty (~2⁷⁶ expected hashes).
 Classical: 2⁷⁶ hashes. Quantum (Grover): 2³⁸ hashes. -/
 theorem bitcoin_grover_speedup :
     (76 : ℕ) / 2 = 38 := by norm_num
+
 
 
 
@@ -303,10 +346,12 @@ theorem grover_mining_not_existential
 
 
 
+
 /-- Quantum mining advantage: quantum gate speed (~10⁶/s) vs
 classical ASIC speed (~10¹⁸/s). -/
 theorem quantum_mining_hashrate_gap :
     10^18 / 10^6 = (10 : ℕ)^12 := by norm_num
+
 
 
 
@@ -315,8 +360,10 @@ def classical_preimage_security (hash_bits : ℕ) : ℕ := hash_bits
 
 
 
+
 /-- Quantum preimage security with Grover: n/2 bits. -/
 def quantum_preimage_security (hash_bits : ℕ) : ℕ := hash_bits / 2
+
 
 
 
@@ -324,7 +371,9 @@ def quantum_preimage_security (hash_bits : ℕ) : ℕ := hash_bits / 2
 theorem bitcoin_address_classical : classical_preimage_security 160 = 160 := rfl
 
 
+
 theorem bitcoin_address_quantum : quantum_preimage_security 160 = 80 := by native_decide
+
 
 
 
@@ -333,9 +382,11 @@ theorem ethereum_address_quantum : quantum_preimage_security 160 = 80 := by nati
 
 
 
+
 /-- **Theorem**: 80-bit quantum preimage security is marginal but not immediately broken. -/
 theorem quantum_preimage_still_large :
     2^80 > 10^23 := by norm_num
+
 
 
 
@@ -346,6 +397,7 @@ theorem sha256_quantum_collision_bits :
 
 
 
+
 /-- **Theorem**: ECDLP (Shor) is the dominant threat, not hash preimage.
 Hash preimage retains 80 bits of security; ECDLP falls completely. -/
 theorem ecdlp_dominates_hash_attack :
@@ -353,11 +405,14 @@ theorem ecdlp_dominates_hash_attack :
 
 
 
+
 /-- Error suppression ratio Λ from Willow: Λ ≈ 2.14. -/
 def willow_lambda_numerator : ℕ := 214
 
 
+
 def willow_lambda_denominator : ℕ := 100
+
 
 
 
@@ -367,13 +422,16 @@ def required_code_distance : ℕ := 17
 
 
 
+
 /-- Physical qubits per logical qubit = 2d² (surface code). -/
 def surface_code_physical (d : ℕ) : ℕ := 2 * d^2
 
 
 
+
 /-- With distance 17: 578 physical qubits per logical qubit. -/
 theorem surface_code_d17 : surface_code_physical 17 = 578 := by native_decide
+
 
 
 
@@ -386,9 +444,11 @@ theorem error_suppression_quadratic_benefit (d₁ d₂ : ℕ)
 
 
 
+
 /-- Years to reach target qubit count. -/
 def years_to_reach (current target period : ℕ) : ℕ :=
   period * (Nat.log 2 (target / current + 1))
+
 
 
 
@@ -398,9 +458,11 @@ theorem willow_doublings_needed :
 
 
 
+
 /-- At 2 years per doubling: ~18 years to break secp256k1. -/
 theorem willow_timeline_2yr :
     years_to_reach 1200 total_physical_willow 2 = 18 := by native_decide
+
 
 
 
@@ -410,17 +472,22 @@ theorem accelerated_timeline :
 
 
 
+
 /-- Signature sizes for different schemes (bytes). -/
 def ecdsa_sig_size : ℕ := 72
+
 
 
 def dilithium_sig_size : ℕ := 2420
 
 
+
 def falcon_sig_size : ℕ := 690
 
 
+
 def sphincs_sig_size : ℕ := 7856
+
 
 
 
@@ -430,13 +497,16 @@ theorem pq_sig_size_increase_dilithium :
 
 
 
+
 theorem pq_sig_size_increase_falcon :
     falcon_sig_size / ecdsa_sig_size = 9 := by native_decide
 
 
 
+
 theorem pq_sig_size_increase_sphincs :
     sphincs_sig_size / ecdsa_sig_size = 109 := by native_decide
+
 
 
 
@@ -447,14 +517,18 @@ theorem falcon_most_efficient :
 
 
 
+
 /-- Public key sizes (bytes). -/
 def ecdsa_pk_size : ℕ := 33  -- compressed
+
 
 
 def dilithium_pk_size : ℕ := 1312
 
 
+
 def falcon_pk_size : ℕ := 897
+
 
 
 
@@ -465,9 +539,11 @@ theorem falcon_tx_overhead :
 
 
 
+
 /-- Bitcoin block capacity impact with FALCON. -/
 theorem falcon_block_capacity :
     2000 / 15 = (133 : ℕ) := by norm_num
+
 
 
 
@@ -482,6 +558,7 @@ inductive DefenseStrategy where
 
 
 
+
 /-- Security level of each strategy against quantum attacks (bits). -/
 def strategySecurityBits : DefenseStrategy → ℕ
   | DefenseStrategy.doNothing => 0
@@ -489,6 +566,7 @@ def strategySecurityBits : DefenseStrategy → ℕ
   | DefenseStrategy.commitReveal => 80
   | DefenseStrategy.hybridSignatures => 128
   | DefenseStrategy.quantumKeyDistribution => 256
+
 
 
 
@@ -500,11 +578,13 @@ theorem commit_reveal_weaker :
 
 
 
+
 /-- **Theorem**: Hybrid signatures match post-quantum migration security. -/
 theorem hybrid_matches_pq :
     strategySecurityBits DefenseStrategy.hybridSignatures =
     strategySecurityBits DefenseStrategy.migrateToPostQuantum := by
   native_decide
+
 
 
 
@@ -514,9 +594,11 @@ theorem do_nothing_zero_security :
 
 
 
+
 /-- **Theorem**: All active defense strategies provide at least 80-bit security. -/
 theorem all_defenses_adequate (s : DefenseStrategy) (h : s ≠ DefenseStrategy.doNothing) :
     strategySecurityBits s ≥ 80 := by
   cases s <;> simp_all [strategySecurityBits]
+
 
 

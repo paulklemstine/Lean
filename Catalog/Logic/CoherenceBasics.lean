@@ -16,9 +16,11 @@ def landscapeEntropy (H_spectral : ℝ) (n : ℕ) (hn : 0 < n) : ℝ :=
 
 
 
+
 /-- The coherence C(f) = 1 - H(spectral distribution) / n. -/
 def coherenceMeasure (H_spectral : ℝ) (n : ℕ) (hn : 0 < n) : ℝ :=
   1 - H_spectral / n
+
 
 
 
@@ -33,6 +35,11 @@ theorem coherence_add_landscape_eq_one (H_spectral : ℝ) (n : ℕ) (hn : 0 < n)
 
 
 
+
+/-- [Section: # CatalogBuild.Logic.CoherenceBasics
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 6] -/
 theorem shannonEntropy_le_log (p : Fin k → ℝ) (hp : ∀ i, 0 ≤ p i)
     (hsum : ∑ i, p i = 1) (hk : 0 < k) :
     shannonEntropy p hp hsum ≤ Real.log k := by
@@ -51,15 +58,18 @@ theorem shannonEntropy_le_log (p : Fin k → ℝ) (hp : ∀ i, 0 ≤ p i)
 
 
 
+
 theorem coherence_nonneg (H_spectral : ℝ) (n : ℕ) (hn : 0 < n)
     (hH : H_spectral ≤ n) : 0 ≤ coherenceMeasure H_spectral n hn := by
   exact sub_nonneg_of_le ( div_le_one_of_le₀ hH <| Nat.cast_nonneg _ )
 
 
 
+
 theorem coherence_le_one (H_spectral : ℝ) (n : ℕ) (hn : 0 < n)
     (hH : 0 ≤ H_spectral) : coherenceMeasure H_spectral n hn ≤ 1 := by
   exact sub_le_self _ ( by positivity )
+
 
 
 

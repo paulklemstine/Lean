@@ -1,5 +1,3 @@
-import Mathlib
-
 /-! # CatalogBuild.Geometry.Stereographic.AntipodalChart2
 
 Auto-generated from theorem catalog database.
@@ -7,6 +5,7 @@ Domain: Geometry/Stereographic
 Declarations: 10
 -/
 
+import Mathlib
 
 noncomputable section
 
@@ -24,12 +23,14 @@ def stereoNullAnti (u v ω : ℝ) : Fin 4 → ℝ := fun i =>
 
 
 
+
 /-- **Core Theorem**: The antipodal stereographic chart produces null vectors.
 The algebraic identity is the same as for the standard chart:
 (1 + r²)² - (2u)² - (2v)² - (r² - 1)² = 0 -/
 theorem stereoNull_isNull (u v ω : ℝ) :
     IsNull (stereoNullAnti u v ω) := by
   unfold IsNull minkowskiInner stereoNullAnti; ring
+
 
 
 
@@ -40,10 +41,12 @@ theorem stereoNullAnti_future (u v ω : ℝ) (hω : ω > 0) :
 
 
 
+
 /-- The antipodal chart lands in the future null cone. -/
 theorem stereoNullAnti_in_future_cone (u v ω : ℝ) (hω : ω > 0) :
     stereoNullAnti u v ω ∈ FutureNullCone :=
   ⟨stereoNull_isNull u v ω, stereoNullAnti_future u v ω hω⟩
+
 
 
 
@@ -63,6 +66,11 @@ lemma stereoNullAnti_surj (k : Fin 4 → ℝ)
 
 
 
+
+/-- [Section: # CatalogBuild.Geometry.Stereographic.AntipodalChart2
+Auto-generated from theorem catalog database.
+Domain: Geometry/Stereographic
+Declarations: 10] -/
 lemma future_null_k0_minus_k3_nonneg (k : Fin 4 → ℝ) (hk : k ∈ FutureNullCone) :
     k 0 - k 3 ≥ 0 := by
   -- From the null condition, we know that $(k 0)^2 = (k 1)^2 + (k 2)^2 + (k 3)^2$.
@@ -72,9 +80,11 @@ lemma future_null_k0_minus_k3_nonneg (k : Fin 4 → ℝ) (hk : k ∈ FutureNullC
 
 
 
+
 theorem chart_coverage (k : Fin 4 → ℝ) (hk : k ∈ FutureNullCone) :
     k 0 + k 3 > 0 ∨ k 0 - k 3 > 0 := by
   exact Classical.or_iff_not_imp_left.2 fun h => by linarith [ hk.2, show ( k 0 : ℝ ) > 0 from hk.2 ] ;
+
 
 
 
@@ -84,6 +94,7 @@ theorem complete_surjectivity (k : Fin 4 → ℝ) (hk : k ∈ FutureNullCone) :
   obtain h|h := chart_coverage k hk;
   · exact Or.inl <| by exact ⟨ _, _, _, by linarith, inverseStereoNull_surj_standard k hk.1 hk.2 h |>.2 ⟩ ;
   · exact Or.inr <| by rcases stereoNullAnti_surj k hk.1 hk.2 h with ⟨ h₁, h₂ ⟩ ; exact ⟨ k 1 / ( k 0 - k 3 ), k 2 / ( k 0 - k 3 ), ( k 0 - k 3 ) / 2, by linarith, by aesop ⟩ ;
+
 
 
 
@@ -104,6 +115,7 @@ theorem full_encoding_theorem :
 
 
 
+
 theorem chart_transition_inversion (k : Fin 4 → ℝ) (hnull : IsNull k)
     (h1 : k 0 + k 3 > 0) (h2 : k 0 - k 3 > 0) :
     let z₁ := k 1 / (k 0 + k 3)
@@ -113,6 +125,7 @@ theorem chart_transition_inversion (k : Fin 4 → ℝ) (hnull : IsNull k)
     z₁ * w₁ + z₂ * w₂ = 1 := by
   field_simp;
   linarith [ null_condition_rearranged k hnull ]
+
 
 
 

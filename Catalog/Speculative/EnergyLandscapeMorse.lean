@@ -13,10 +13,12 @@ theorem energy_zero_at_divisor (N d : ℕ) (hd : d ∣ N) : E N d = 0 :=
 
 
 
+
 /-- Energy is strictly positive at non-divisors. -/
 theorem energy_pos_at_nondivisor (N x : ℕ) (hx : 0 < x) (hnd : ¬ x ∣ N) :
     0 < E N x :=
   Nat.pos_of_ne_zero fun h => hnd (Nat.dvd_of_mod_eq_zero h)
+
 
 
 
@@ -26,9 +28,11 @@ theorem energy_lt_modulus (N x : ℕ) (hx : 0 < x) : E N x < x :=
 
 
 
+
 /-- Forward difference of the energy function. -/
 def energy_forward_diff (N x : ℕ) : ℤ :=
   (E N (x + 1) : ℤ) - (E N x : ℤ)
+
 
 
 
@@ -38,11 +42,13 @@ def energy_laplacian (N x : ℕ) : ℤ :=
 
 
 
+
 /-- At a divisor d, the forward difference from d-1 to d drops to minimum. -/
 theorem energy_drops_at_divisor (N d : ℕ) (hd : d ∣ N) (hd1 : 1 < d) :
     (E N d : ℤ) ≤ (E N (d - 1) : ℤ) := by
   rw [energy_zero_at_divisor N d hd]
   exact Int.ofNat_nonneg _
+
 
 
 
@@ -59,6 +65,7 @@ theorem energy_sum_le_N_sq (N : ℕ) (hN : 0 < N) :
 
 
 
+
 /-- Between two consecutive divisors, the energy rises from 0.
 Specifically, if d | N and d < x < d' (next divisor), then E(N,x) > 0. -/
 theorem energy_pos_between_divisors (N d x : ℕ) (hd : d ∣ N)
@@ -68,11 +75,13 @@ theorem energy_pos_between_divisors (N d x : ℕ) (hd : d ∣ N)
 
 
 
+
 /-- The maximum energy between 1 and N is at most N - 1. -/
 theorem energy_max_bound (N x : ℕ) (hN : 0 < N) (hx : 0 < x) (hxN : x ≤ N) :
     E N x ≤ N - 1 := by
   unfold E
   have := Nat.mod_lt N hx
   omega
+
 
 

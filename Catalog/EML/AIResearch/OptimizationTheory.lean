@@ -17,13 +17,20 @@ def constLR (eta : ℝ) (_ : ℕ) : ℝ := eta
 
 
 
+
+/-- [Section: # CatalogBuild.EML.AIResearch.OptimizationTheory
+Auto-generated from theorem catalog database.
+Domain: EML/AIResearch
+Declarations: 18] -/
 def expDecayLR (eta gamma : ℝ) (t : ℕ) : ℝ := eta * gamma ^ t
+
 
 
 
 theorem exp_decay_pos (eta gamma : ℝ) (t : ℕ) (heta : 0 < eta) (hgamma : 0 < gamma) :
     0 < expDecayLR eta gamma t := by
   unfold expDecayLR; positivity
+
 
 
 
@@ -35,8 +42,10 @@ theorem exp_decay_mono (eta gamma : ℝ) (t1 t2 : ℕ) (heta : 0 < eta)
 
 
 
+
 def warmupLR (eta : ℝ) (W t : ℕ) : ℝ :=
   if t ≤ W then eta * ↑t / ↑W else eta
+
 
 
 
@@ -46,7 +55,9 @@ theorem warmup_reaches_target (eta : ℝ) (W : ℕ) (hW : 0 < W) :
 
 
 
+
 def momentumUpdate (beta v g : ℝ) : ℝ := beta * v + g
+
 
 
 
@@ -57,7 +68,9 @@ theorem higher_momentum_more_velocity (beta1 beta2 v g : ℝ) (hv : 0 ≤ v) (hg
 
 
 
+
 def clipGrad (g tau : ℝ) : ℝ := min (|g|) tau
+
 
 
 
@@ -67,9 +80,11 @@ theorem clip_bounded (g tau : ℝ) :
 
 
 
+
 theorem clip_preserves_small (g tau : ℝ) (h : |g| ≤ tau) :
     clipGrad g tau = |g| := by
   unfold clipGrad; exact min_eq_left h
+
 
 
 
@@ -79,7 +94,9 @@ theorem clip_reduces_large (g tau : ℝ) (h : tau ≤ |g|) :
 
 
 
+
 def optimalStepSize (L : ℝ) : ℝ := 1 / L
+
 
 
 
@@ -88,7 +105,9 @@ theorem optimal_step_pos (L : ℝ) (hL : 0 < L) : 0 < optimalStepSize L := by
 
 
 
+
 def emlCurvatureBound (maxWeight : ℝ) : ℝ := maxWeight ^ 2
+
 
 
 
@@ -99,8 +118,10 @@ theorem eml_curvature_scales (w1 w2 : ℝ) (hw : |w1| ≤ |w2|) :
 
 
 
+
 def emlConvergenceRate (L : ℝ) (d : ℕ) (t : ℕ) (R : ℝ) : ℝ :=
   L * R ^ 2 / (2 * ↑t * ↑d)
+
 
 
 
@@ -108,6 +129,7 @@ theorem eml_depth_helps_convergence (L R : ℝ) (d1 d2 t : ℕ) (hL : 0 < L) (hR
     (ht : 0 < t) (hd1 : 0 < d1) (hd : d1 ≤ d2) :
     emlConvergenceRate L d2 t R ≤ emlConvergenceRate L d1 t R := by
   exact div_le_div_of_nonneg_left ( by positivity ) ( by positivity ) ( by gcongr )
+
 
 
 

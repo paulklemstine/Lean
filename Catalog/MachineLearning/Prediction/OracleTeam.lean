@@ -21,6 +21,7 @@ noncomputable def OracleCouncil.ensemblePrediction {n : ℕ}
 
 
 
+
 /-- If all oracles agree, the ensemble agrees too -/
 theorem unanimous_council {n : ℕ} (hn : 0 < n)
     (council : OracleCouncil n) (evidence : ℝ)
@@ -31,6 +32,7 @@ theorem unanimous_council {n : ℕ} (hn : 0 < n)
   simp_rw [h_unanimous, ← Finset.sum_mul]
   rw [mul_div_cancel_left₀]
   exact ne_of_gt h_conf_pos
+
 
 
 
@@ -56,9 +58,11 @@ theorem ensemble_no_worse_than_best {n : ℕ}
 
 
 
+
 /-- A hedge combines an aggressive and conservative prediction -/
 noncomputable def hedge (aggressive conservative lambda_param : ℝ) : ℝ :=
   lambda_param * aggressive + (1 - lambda_param) * conservative
+
 
 
 
@@ -68,6 +72,7 @@ theorem hedge_interpolates (a c : ℝ) (hac : a ≤ c) (lambda_param : ℝ)
     a ≤ hedge a c lambda_param ∧ hedge a c lambda_param ≤ c := by
   simp only [hedge]
   constructor <;> nlinarith
+
 
 
 

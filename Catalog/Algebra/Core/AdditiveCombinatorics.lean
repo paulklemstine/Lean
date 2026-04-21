@@ -13,6 +13,7 @@ def sumset' {G : Type*} [Add G] [DecidableEq G] (A B : Finset G) : Finset G :=
 
 
 
+
 /-- A singleton set is trivially 3-AP-free. -/
 theorem singleton_ap_free (a : ℤ) :
     ∀ d : ℤ, d ≠ 0 →
@@ -23,10 +24,12 @@ theorem singleton_ap_free (a : ℤ) :
 
 
 
+
 /-- ∑_{i=0}^{n} C(n,i) = 2^n. -/
 theorem sum_binomial (n : ℕ) :
     ∑ i ∈ Finset.range (n + 1), Nat.choose n i = 2 ^ n :=
   Nat.sum_range_choose n
+
 
 
 
@@ -36,8 +39,10 @@ theorem gcd_divides_N (a N : ℕ) : Nat.gcd a N ∣ N :=
 
 
 
+
 /-- If N = p * q, then p divides N. -/
 theorem factor_divides (p q : ℕ) : p ∣ p * q := dvd_mul_right p q
+
 
 
 
@@ -52,5 +57,6 @@ theorem pigeonhole_intersection {α : Type*} [DecidableEq α] (S : Finset α)
   have hcard : (A ∪ B).card = A.card + B.card := Finset.card_union_of_disjoint hdisj
   have hle : (A ∪ B).card ≤ S.card := Finset.card_le_card (Finset.union_subset hA hB)
   omega
+
 
 

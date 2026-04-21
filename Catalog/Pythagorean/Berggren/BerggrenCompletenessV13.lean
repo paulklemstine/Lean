@@ -1,14 +1,11 @@
-/-
-Berggren Tree Completeness Theorem (V13 - Direction 56 RESOLVED)
+/-! # CatalogBuild.Pythagorean.Berggren.BerggrenCompletenessV13
 
-Every primitive Pythagorean triple (with a odd, b even) appears in the Berggren tree
-rooted at (3,4,5). This is the main completeness theorem of the EML-Pythagorean Bridge.
-
-Machine-verified in Lean 4 with Mathlib.
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Berggren
+Declarations: 30
 -/
-import Mathlib
 
-/-! ## Definitions -/
+import Mathlib
 
 /-- A step in the Berggren tree -/
 inductive BStepC where
@@ -17,6 +14,7 @@ inductive BStepC where
   | C  -- Apply B₃
   deriving Repr, DecidableEq
 
+
 /-- Forward Berggren map for a given step -/
 def applyStepC (s : BStepC) (t : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
   match s with
@@ -24,45 +22,51 @@ def applyStepC (s : BStepC) (t : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
   | .B => (t.1 + 2*t.2.1 + 2*t.2.2, 2*t.1 + t.2.1 + 2*t.2.2, 2*t.1 + 2*t.2.1 + 3*t.2.2)
   | .C => (-t.1 + 2*t.2.1 + 2*t.2.2, -2*t.1 + t.2.1 + 2*t.2.2, -2*t.1 + 2*t.2.1 + 3*t.2.2)
 
+
 /-- Apply a path (list of steps) starting from the root (3,4,5) -/
 def applyPathC (path : List BStepC) : ℤ × ℤ × ℤ :=
   path.foldl (fun t s => applyStepC s t) (3, 4, 5)
 
-/-! ## Inverse maps -/
 
+/-- [Section: ## Inverse maps] -/
 def invAC (a b c : ℤ) : ℤ × ℤ × ℤ := (a + 2*b - 2*c, -2*a - b + 2*c, -2*a - 2*b + 3*c)
+
 def invBC (a b c : ℤ) : ℤ × ℤ × ℤ := (a + 2*b - 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
+
 def invCC (a b c : ℤ) : ℤ × ℤ × ℤ := (-a - 2*b + 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
 
-/-! ## Forward-inverse cancellation -/
 
+/-- [Section: ## Forward-inverse cancellation] -/
 theorem fwd_invAC (a b c : ℤ) :
     applyStepC .A ((invAC a b c).1, (invAC a b c).2.1, (invAC a b c).2.2) = (a, b, c) := by
   simp only [invAC, applyStepC]; refine Prod.ext ?_ (Prod.ext ?_ ?_) <;> ring
+
 
 theorem fwd_invBC (a b c : ℤ) :
     applyStepC .B ((invBC a b c).1, (invBC a b c).2.1, (invBC a b c).2.2) = (a, b, c) := by
   simp only [invBC, applyStepC]; refine Prod.ext ?_ (Prod.ext ?_ ?_) <;> ring
 
+
 theorem fwd_invCC (a b c : ℤ) :
     applyStepC .C ((invCC a b c).1, (invCC a b c).2.1, (invCC a b c).2.2) = (a, b, c) := by
   simp only [invCC, applyStepC]; refine Prod.ext ?_ (Prod.ext ?_ ?_) <;> ring
 
-/-! ## Inverse maps preserve Pythagorean property -/
 
+/-- [Section: ## Inverse maps preserve Pythagorean property] -/
 theorem invAC_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (invAC a b c).1 ^ 2 + (invAC a b c).2.1 ^ 2 = (invAC a b c).2.2 ^ 2 := by
   simp only [invAC]; nlinarith [sq_nonneg a, sq_nonneg b, sq_nonneg c]
+
 
 theorem invBC_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (invBC a b c).1 ^ 2 + (invBC a b c).2.1 ^ 2 = (invBC a b c).2.2 ^ 2 := by
   simp only [invBC]; nlinarith [sq_nonneg a, sq_nonneg b, sq_nonneg c]
 
+
 theorem invCC_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (invCC a b c).1 ^ 2 + (invCC a b c).2.1 ^ 2 = (invCC a b c).2.2 ^ 2 := by
   simp only [invCC]; nlinarith [sq_nonneg a, sq_nonneg b, sq_nonneg c]
 
-/-! ## Parent hypotenuse properties -/
 
 /-- Parent hypotenuse is positive for PPTs with positive legs -/
 theorem parent_hyp_posC (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
@@ -70,13 +74,13 @@ theorem parent_hyp_posC (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     0 < -2 * a - 2 * b + 3 * c := by
   nlinarith [sq_nonneg (a - b), sq_nonneg (a + b - c)]
 
+
 /-- Parent hypotenuse is strictly less than c -/
 theorem parent_hyp_ltC (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     (ha : 0 < a) (hb : 0 < b) :
     -2 * a - 2 * b + 3 * c < c := by
   nlinarith [sq_nonneg (a + b - c)]
 
-/-! ## Case analysis: σ₁ and σ₂ -/
 
 /-- σ₁ = a + 2b - 2c and σ₂ = 2a + b - 2c cannot both be ≤ 0 -/
 theorem not_both_sigma_negC (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
@@ -84,6 +88,7 @@ theorem not_both_sigma_negC (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
     (h1 : a + 2 * b ≤ 2 * c) (h2 : 2 * a + b ≤ 2 * c) : False := by
   nlinarith [sq_nonneg (a - b), sq_nonneg a, sq_nonneg b, sq_nonneg (a + b - c),
     sq_nonneg (2 * a + b - 2 * c), sq_nonneg (a + 2 * b - 2 * c)]
+
 
 /-- When σ₁ < 0 for a PPT, σ₂ > 0 -/
 theorem sigma1_neg_sigma2_posC (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
@@ -93,14 +98,14 @@ theorem sigma1_neg_sigma2_posC (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
   push_neg at hle
   exact not_both_sigma_negC a b c ha hb h (by linarith) (by linarith)
 
+
 /-- σ₁ = 0 is impossible when a is odd (forces a to be even) -/
 theorem sigma1_zero_impossibleC (a b c : ℤ)
     (hodd : a % 2 = 1) (hs : a + 2 * b - 2 * c = 0) : False := by
   omega
 
-/-
-σ₂ = 0 forces (a,b,c) = (3,4,5) for a PPT with gcd = 1
--/
+
+/-- [Section: ## Case analysis: σ₁ and σ₂] -/
 theorem sigma2_zero_rootC (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (hcop : Int.gcd a b = 1)
@@ -115,13 +120,12 @@ theorem sigma2_zero_rootC (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
   simp_all +decide [ Int.gcd_mul_left, Int.gcd_mul_right ];
   linarith [ abs_of_pos ha ]
 
-/-! ## Coprimality preservation under inverse maps
 
+/-- [Section: ## Coprimality preservation under inverse maps
 Key argument: if p is any prime dividing both parent legs a' and b',
 then p | c' (since a'² + b'² = c'² and p | a', p | b' implies p | c'²,
 hence p | c' since p is prime). Then since (a,b,c) = fwd(a',b',c') is an
-integer linear combination, p | a and p | b, contradicting gcd(a,b) = 1. -/
-
+integer linear combination, p | a and p | b, contradicting gcd(a,b) = 1.] -/
 theorem coprime_invAC (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     (hcop : Int.gcd a b = 1) :
     Int.gcd (invAC a b c).1 (invAC a b c).2.1 = 1 := by
@@ -144,6 +148,7 @@ theorem coprime_invAC (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     linear_combination' hpb + hpa;
   exact Nat.Prime.not_dvd_one hp ( hcop ▸ Nat.dvd_gcd hpa' hpb' )
 
+
 theorem coprime_invBC (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     (hcop : Int.gcd a b = 1) :
     Int.gcd (invBC a b c).1 (invBC a b c).2.1 = 1 := by
@@ -165,6 +170,7 @@ theorem coprime_invBC (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     grind;
   exact Nat.Prime.not_dvd_one hp_prime ( hcop ▸ Int.natCast_dvd_natCast.mp ( Int.dvd_coe_gcd hp_div_a_b.1 hp_div_a_b.2 ) )
 
+
 theorem coprime_invCC (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     (hcop : Int.gcd a b = 1) :
     Int.gcd (invCC a b c).1 (invCC a b c).2.1 = 1 := by
@@ -184,26 +190,28 @@ theorem coprime_invCC (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     grind;
   exact Nat.Prime.not_dvd_one hp_prime ( hcop ▸ Nat.dvd_gcd hp_div_a hp_div_b )
 
-/-! ## Parity preservation: inverse maps preserve a-odd, b-even -/
 
+/-- [Section: ## Parity preservation: inverse maps preserve a-odd, b-even] -/
 theorem parity_invAC (a b c : ℤ) (hodd : a % 2 = 1) (heven : b % 2 = 0)
     (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (invAC a b c).1 % 2 = 1 ∧ (invAC a b c).2.1 % 2 = 0 := by
   norm_num [ invAC ];
   exact ⟨ hodd, dvd_sub ( dvd_neg.mpr ( dvd_mul_right _ _ ) ) ( Int.dvd_of_emod_eq_zero heven ) ⟩
 
+
 theorem parity_invBC (a b c : ℤ) (hodd : a % 2 = 1) (heven : b % 2 = 0)
     (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (invBC a b c).1 % 2 = 1 ∧ (invBC a b c).2.1 % 2 = 0 := by
   unfold invBC; simp +decide [ *, Int.add_emod, Int.sub_emod, Int.mul_emod ] ;
+
 
 theorem parity_invCC (a b c : ℤ) (hodd : a % 2 = 1) (heven : b % 2 = 0)
     (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (invCC a b c).1 % 2 = 1 ∧ (invCC a b c).2.1 % 2 = 0 := by
   unfold invCC; simp +decide [ *, Int.add_emod, Int.sub_emod, Int.mul_emod ] ;
 
-/-! ## Root classification -/
 
+/-- [Section: ## Root classification] -/
 theorem root_classC (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     (ha : 0 < a) (hb : 0 < b) (hc5 : c = 5)
     (hcop : Int.gcd a b = 1)
@@ -214,9 +222,7 @@ theorem root_classC (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
   have hb5 : b ≤ 4 := by nlinarith [sq_nonneg (b - 5)]
   interval_cases a <;> interval_cases b <;> simp_all
 
-/-
-c ≤ 5 for a PPT implies c = 5
--/
+
 theorem hyp_ge_5C (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (hcop : Int.gcd a b = 1)
@@ -228,18 +234,14 @@ theorem hyp_ge_5C (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
   · have : a ≤ 3 := Int.le_of_lt_add_one ( by nlinarith only [ h ] ) ; ( have : b ≤ 3 := Int.le_of_lt_add_one ( by nlinarith only [ h ] ) ; interval_cases a <;> interval_cases b <;> trivial; );
   · have : a ≤ 4 := Int.le_of_lt_add_one ( by nlinarith only [ h ] ) ; ( have : b ≤ 4 := Int.le_of_lt_add_one ( by nlinarith only [ h ] ) ; interval_cases a <;> interval_cases b <;> trivial; )
 
-/-! ## Path append lemma -/
 
+/-- [Section: ## Path append lemma] -/
 theorem applyPathC_append_step (path : List BStepC) (s : BStepC) :
     applyPathC (path ++ [s]) = applyStepC s (applyPathC path) := by
   simp only [applyPathC, List.foldl_append, List.foldl_cons, List.foldl_nil]
 
-/-! ## Descent step: finding a parent with all properties -/
 
-/-
-For any PPT with c > 5, a odd, b even, gcd = 1, there exists an inverse map
-    producing a valid parent PPT with smaller hypotenuse
--/
+/-- [Section: ## Descent step: finding a parent with all properties] -/
 theorem descent_stepC (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) (hc5 : 5 < c)
     (hcop : Int.gcd a b = 1)
@@ -282,12 +284,8 @@ theorem descent_stepC (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
         · unfold applyStepC; norm_num; ring;
           norm_num
 
-/-! ## Main completeness theorem -/
 
-/-
-**Berggren Completeness Theorem**: Every primitive Pythagorean triple
-    (a,b,c) with a odd, b even appears in the Berggren tree rooted at (3,4,5).
--/
+/-- [Section: ## Main completeness theorem] -/
 theorem berggren_complete (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (hcop : Int.gcd a b = 1)
@@ -307,10 +305,7 @@ theorem berggren_complete (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     use path' ++ [s];
     rw [ applyPathC_append_step, hpath', h₆.2.2.2 ]
 
-/-
-**General Berggren Completeness**: Every PPT appears in the Berggren tree
-    (up to leg swap).
--/
+
 theorem berggren_complete_general (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (hcop : Int.gcd a b = 1) :

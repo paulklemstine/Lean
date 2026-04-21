@@ -14,8 +14,10 @@ def IsOracle' {X : Type*} (O : X → X) : Prop := ∀ x, O (O x) = O x
 
 
 
+
 /-- A binary oracle: answers yes/no to queries from a type Q. -/
 def BinaryOracle (Q : Type*) := Q → Bool
+
 
 
 
@@ -27,10 +29,12 @@ inductive QueryTree (Q : Type*) (A : Type*) where
 
 
 
+
 /-- The depth (number of queries in worst case) of a query tree. -/
 def QueryTree.depth {Q A : Type*} : QueryTree Q A → ℕ
   | .leaf _ => 0
   | .query _ f => 1 + max (QueryTree.depth (f true)) (QueryTree.depth (f false))
+
 
 
 
@@ -42,9 +46,11 @@ def QueryTree.execute {Q A : Type*} (t : QueryTree Q A) (oracle : Q → Bool) : 
 
 
 
+
 /-- **Theorem 1.1**: A leaf query tree uses zero queries. -/
 theorem leaf_depth_zero {Q A : Type*} (a : A) :
     (QueryTree.leaf (Q := Q) a).depth = 0 := rfl
+
 
 
 
@@ -52,6 +58,7 @@ theorem leaf_depth_zero {Q A : Type*} (a : A) :
 theorem single_query_depth {Q A : Type*} (q : Q) (a₁ a₂ : A) :
     (QueryTree.query q (fun b => if b then .leaf a₁ else .leaf a₂)).depth = 1 := by
   simp [QueryTree.depth, Bool.cond_eq_ite]
+
 
 
 
@@ -79,15 +86,18 @@ theorem query_tree_distinguishing_power {Q : Type*} (A : Type*)
 
 
 
+
 /-- The number of leaves in a binary tree of depth d is at most 2^d. -/
 theorem binary_tree_leaves_bound (d : ℕ) :
     ∀ (n : ℕ), n ≤ 2 ^ d → n ≤ 2 ^ d := fun n h => h
 
 
 
+
 /-- Majority vote of n boolean values: returns true iff more than half are true. -/
 def majorityVote (votes : Fin n → Bool) : Bool :=
   (Finset.univ.filter (fun i => votes i = true)).card > n / 2
+
 
 
 
@@ -104,8 +114,10 @@ structure NoisyOracle (Q : Type*) where
 
 
 
+
 /-- The error rate of a noisy oracle. -/
 def NoisyOracle.errorRate {Q : Type*} (O : NoisyOracle Q) : ℝ := 1 - O.p
+
 
 
 
@@ -116,6 +128,7 @@ theorem NoisyOracle.errorRate_pos {Q : Type*} (O : NoisyOracle Q) :
 
 
 
+
 /-- **Theorem 3.2**: Error rate is less than 1/2. -/
 theorem NoisyOracle.errorRate_lt_half {Q : Type*} (O : NoisyOracle Q) :
     O.errorRate < 1 / 2 := by
@@ -123,15 +136,22 @@ theorem NoisyOracle.errorRate_lt_half {Q : Type*} (O : NoisyOracle Q) :
 
 
 
+
+/-- [Section: # CatalogBuild.Logic.QueryComplexity
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 41] -/
 theorem amplification_decay_factor (p : ℝ) (hp : 1 / 2 < p) (hp1 : p ≤ 1) :
     4 * p * (1 - p) < 1 := by
       nlinarith [ sq_nonneg ( p - 1 / 2 ) ]
 
 
 
+
 /-- **Theorem 3.4**: The amplification factor 4p(1-p) is non-negative. -/
 theorem amplification_factor_nonneg (p : ℝ) (hp : 0 ≤ p) (hp1 : p ≤ 1) :
     0 ≤ 4 * p * (1 - p) := by nlinarith
+
 
 
 
@@ -142,8 +162,10 @@ theorem oracle_comp_of_commuting {X : Type*} (O₁ O₂ : X → X)
 
 
 
+
 /-- The identity function is an oracle. -/
 theorem id_is_oracle {X : Type*} : IsOracle' (id : X → X) := fun _ => rfl
+
 
 
 
@@ -153,10 +175,12 @@ theorem const_is_oracle {X : Type*} (c : X) : IsOracle' (fun _ : X => c) :=
 
 
 
+
 /-- **Theorem 4.1 (Oracle Lattice)**: The set of oracles on a type X with
 composition forms a monoid with id as the identity. -/
 theorem oracle_comp_id {X : Type*} (O : X → X) (hO : IsOracle' O) :
     O ∘ id = O ∧ id ∘ O = O := ⟨rfl, rfl⟩
+
 
 
 
@@ -174,9 +198,11 @@ theorem fixed_point_comp_inter {X : Type*} (O₁ O₂ : X → X)
 
 
 
+
 /-- An oracle is contractive if it brings every point closer to its fixed-point set. -/
 def IsContractive {X : Type*} [PseudoMetricSpace X] (O : X → X) (c : ℝ) : Prop :=
   0 ≤ c ∧ c < 1 ∧ ∀ x y, dist (O x) (O y) ≤ c * dist x y
+
 
 
 
@@ -185,6 +211,7 @@ theorem contraction_iterate_bound {X : Type*} [PseudoMetricSpace X]
     dist (O^[n] x) (O^[n] y) ≤ c ^ n * dist x y := by
       induction' n with n ih generalizing x y <;> simp_all +decide [ Function.iterate_succ_apply', pow_succ', mul_assoc ];
       exact le_trans ( hc.2.2 _ _ ) ( mul_le_mul_of_nonneg_left ( ih _ _ ) hc.1 )
+
 
 
 
@@ -197,10 +224,12 @@ theorem contraction_power_bound (c : ℝ) (hc0 : 0 ≤ c) (hc1 : c < 1) (n : ℕ
 
 
 
+
 /-- **Theorem 5.3**: Contraction factor powers converge to zero. -/
 theorem contraction_power_tendsto_zero (c : ℝ) (hc0 : 0 ≤ c) (hc1 : c < 1) :
     Filter.Tendsto (fun n => c ^ n) Filter.atTop (nhds 0) := by
   exact tendsto_pow_atTop_nhds_zero_of_lt_one hc0 hc1
+
 
 
 
@@ -210,9 +239,11 @@ def IsWellFormedMeta {X : Type*} (M : MetaOracle X) : Prop :=
 
 
 
+
 /-- **Theorem 6.1 (Identity Meta-Oracle)**: The identity is a well-formed meta-oracle. -/
 theorem id_meta_well_formed {X : Type*} : IsWellFormedMeta (id : MetaOracle X) :=
   fun O hO => hO
+
 
 
 
@@ -222,6 +253,7 @@ theorem comp_meta_well_formed {X : Type*} (P : X → X) (hP : IsOracle' P)
     (hcomm : ∀ O, IsOracle' O → P ∘ O = O ∘ P) :
     IsWellFormedMeta (fun O => P ∘ O : MetaOracle X) :=
   fun O hO => oracle_comp_of_commuting P O hP hO (hcomm O hO)
+
 
 
 
@@ -235,9 +267,11 @@ theorem meta_oracle_collapse {X : Type*} (M : MetaOracle X)
 
 
 
+
 /-- The entropy of a belief state (Shannon entropy). -/
 def BeliefState.entropy {n : ℕ} (b : BeliefState n) : ℝ :=
   -∑ i, if b.weights i = 0 then 0 else b.weights i * Real.log (b.weights i)
+
 
 
 
@@ -246,6 +280,7 @@ def uniformBelief (n : ℕ) (hn : 0 < n) : BeliefState n where
   weights := fun _ => (1 : ℝ) / n
   nonneg := fun _ => by positivity
   sum_one := by simp [Finset.sum_const]; field_simp
+
 
 
 
@@ -275,6 +310,7 @@ theorem uniform_max_entropy {n : ℕ} (hn : 1 < n) (b : BeliefState n) :
 
 
 
+
 theorem oracle_query_max_info :
     ∀ (p : ℝ), 0 < p → p < 1 →
     -(p * Real.log p + (1 - p) * Real.log (1 - p)) ≤ Real.log 2 := by
@@ -292,8 +328,10 @@ theorem oracle_query_max_info :
 
 
 
+
 /-- An oracle improver takes an oracle and produces a (hopefully better) oracle. -/
 def OracleImprover (X : Type*) := (X → X) → (X → X)
+
 
 
 
@@ -306,6 +344,7 @@ def IsMonotoneImprover {X : Type*} [PseudoMetricSpace X] (I : OracleImprover X) 
 
 
 
+
 theorem bootstrap_deviation_nonincreasing {X : Type*} [PseudoMetricSpace X]
     (I : OracleImprover X) (hI : IsMonotoneImprover I)
     (O : X → X) (x : X) (n : ℕ) :
@@ -315,8 +354,10 @@ theorem bootstrap_deviation_nonincreasing {X : Type*} [PseudoMetricSpace X]
 
 
 
+
 /-- The complement (shadow) oracle: projects onto the kernel instead of the image. -/
 def shadowOracle {X : Type*} [AddGroup X] (O : X → X) : X → X := fun x => x - O x
+
 
 
 
@@ -328,6 +369,7 @@ theorem shadow_complement {X : Type*} [AddCommGroup X] (O : X → X)
     O x + shadowOracle O x = x := by
   simp only [shadowOracle]
   abel
+
 
 
 
@@ -343,6 +385,7 @@ theorem shadow_involution {X : Type*} [AddCommGroup X] (O : X → X)
 
 
 
+
 /-- An oracle on a real vector space has eigenvalues in {0, 1}.
 This is because O² = O implies l² = l, so l ∈ {0, 1}. -/
 theorem oracle_eigenvalues {l : ℝ} (hl : l ^ 2 = l) : l = 0 ∨ l = 1 := by
@@ -353,11 +396,13 @@ theorem oracle_eigenvalues {l : ℝ} (hl : l ^ 2 = l) : l = 0 ∨ l = 1 := by
 
 
 
+
 /-- **Theorem 10.1**: The trace of a finite-dimensional oracle equals
 the dimension of its truth set (number of eigenvalue-1 eigenspaces). -/
 theorem oracle_trace_eq_rank (n : ℕ) (O : Fin n → Fin n → ℝ)
     (hO : ∀ i j, ∑ k, O i k * O k j = O i j) :
     ∑ i, O i i = ∑ i, O i i := rfl  -- tautology; the deep version needs linear algebra
+
 
 
 

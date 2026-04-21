@@ -27,12 +27,18 @@ theorem adaptive_feedback_convergence
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.Core
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 6] -/
 theorem transport_composition_lipschitz
     {α β γ : Type*} [PseudoEMetricSpace α] [PseudoEMetricSpace β] [PseudoEMetricSpace γ]
     (f : α → β) (g : β → γ) (Kf Kg : ℝ≥0)
     (hf : LipschitzWith Kf f) (hg : LipschitzWith Kg g) :
     LipschitzWith (Kg * Kf) (g ∘ f) := by
   exact hg.comp hf
+
 
 
 
@@ -50,9 +56,11 @@ theorem self_repair_fixed_point
 
 
 
+
 theorem shannon_entropy_term_nonneg (p : ℝ) (hp0 : 0 ≤ p) (hp1 : p ≤ 1) :
     0 ≤ -(p * Real.log p) := by
   by_cases h : p = 0 <;> simpa [ h ] using by nlinarith [ Real.log_nonpos hp0 hp1 ] ;
+
 
 
 
@@ -68,6 +76,7 @@ theorem iterative_refinement_geometric_convergence
 
 
 
+
 theorem collaborative_convex_combination
     {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
     (n : ℕ) (agents : Fin n → V) (weights : Fin n → ℝ)
@@ -76,4 +85,5 @@ theorem collaborative_convex_combination
     ∑ i, weights i • agents i ∈ convexHull ℝ (Set.range agents) := by
   rw [ convexHull_eq ];
   refine' ⟨ Fin n, Finset.univ, weights, agents, _, _, _, _ ⟩ <;> simp_all +decide [ Finset.centerMass ]
+
 

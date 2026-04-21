@@ -18,6 +18,7 @@ theorem quad_parity_sum (a b c d : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
 
 
 
+
 /-- For a Pythagorean quintuple, (a+b+c+e-d) is even -/
 theorem quint_parity_sum (a b c e d : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 + e ^ 2 = d ^ 2) :
     2 ∣ (a + b + c + e - d) := by
@@ -27,6 +28,7 @@ theorem quint_parity_sum (a b c e d : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 + e ^ 2 = 
   obtain ⟨re, hre⟩ := sq_sub_self_even e
   obtain ⟨rd, hrd⟩ := sq_sub_self_even d
   exact ⟨rd - ra - rb - rc - re, by linarith⟩
+
 
 
 
@@ -44,14 +46,17 @@ theorem sext_parity_sum (a₁ a₂ a₃ a₄ a₅ a₆ : ℤ)
 
 
 
+
 /-- Q₅(v) = v₀² + v₁² + v₂² + v₃² - v₄² -/
 def Q5 (v : Fin 5 → ℤ) : ℤ :=
   v 0 ^ 2 + v 1 ^ 2 + v 2 ^ 2 + v 3 ^ 2 - v 4 ^ 2
 
 
 
+
 /-- The quintuple (1,1,1,1,2) satisfies 1² + 1² + 1² + 1² = 2² -/
 theorem quintuple_1_1_1_1_2 : (1 : ℤ) ^ 2 + 1 ^ 2 + 1 ^ 2 + 1 ^ 2 = 2 ^ 2 := by norm_num
+
 
 
 
@@ -61,9 +66,11 @@ theorem quintuple_null : Q5 ![1, 1, 1, 1, 2] = 0 := by
 
 
 
+
 /-- The Minkowski inner product η(s,v) for s = (1,1,1,1,1) in signature (4,1) -/
 def minkowski_inner_5 (v : Fin 5 → ℤ) : ℤ :=
   v 0 + v 1 + v 2 + v 3 - v 4
+
 
 
 
@@ -73,9 +80,11 @@ theorem eta_ss_5 : minkowski_inner_5 ![1, 1, 1, 1, 1] = 3 := by
 
 
 
+
 /-- For v = (1,1,1,1,2), η(s,v) = 2 -/
 theorem eta_sv_counterexample : minkowski_inner_5 ![1, 1, 1, 1, 2] = 2 := by
   unfold minkowski_inner_5; native_decide
+
 
 
 
@@ -85,10 +94,12 @@ theorem integrality_fails_k5 : ¬ (3 ∣ (2 * minkowski_inner_5 ![1, 1, 1, 1, 2]
 
 
 
+
 /-- There is no integer q with 3q = 4, confirming R(v) ∉ ℤ⁵ -/
 theorem reflection_coeff_not_integer :
     ¬ (∃ q : ℤ, 3 * q = 2 * minkowski_inner_5 ![1, 1, 1, 1, 2]) := by
   unfold minkowski_inner_5; simp +decide; omega
+
 
 
 
@@ -101,15 +112,18 @@ theorem allones_not_integral_k5 :
 
 
 
+
 /-- For k = 3: η(s,s) = 1, so 1 | anything. -/
 theorem allones_integral_k3 (v : Fin 3 → ℤ) :
     (1 : ℤ) ∣ (2 * (v 0 + v 1 - v 2)) := one_dvd _
 
 
 
+
 /-- For k = 4: η(s,s) = 2, and 2 | 2n always. -/
 theorem allones_integral_k4 (v : Fin 4 → ℤ) :
     (2 : ℤ) ∣ (2 * (v 0 + v 1 + v 2 - v 3)) := dvd_mul_right 2 _
+
 
 
 
@@ -123,8 +137,10 @@ theorem allones_integral_k6_null (a₁ a₂ a₃ a₄ a₅ a₆ : ℤ)
 
 
 
+
 /-- The root for k=6: (0,0,0,0,1,1) is a valid null vector -/
 theorem root_k6 : (0:ℤ)^2 + 0^2 + 0^2 + 0^2 + 1^2 = 1^2 := by norm_num
+
 
 
 
@@ -134,6 +150,7 @@ theorem k5_fails :
       a^2 + b^2 + c^2 + e^2 = d^2 ∧
       ¬ (3 ∣ (2 * (a + b + c + e - d))) := by
   exact ⟨1, 1, 1, 1, 2, by norm_num, by omega⟩
+
 
 
 
@@ -147,8 +164,10 @@ theorem k7_fails :
 
 
 
+
 /-- 3 does not divide 4 — obstruction for k = 5 -/
 theorem three_not_dvd_four : ¬ ((3 : ℤ) ∣ 4) := by omega
+
 
 
 
@@ -161,6 +180,7 @@ theorem universal_integrality_iff_dvd_2 (k : ℕ) (hk : 3 ≤ k) (hk' : k ≤ 10
 
 
 
+
 /-- Null-cone integrality: (k-2) | 4 iff k ∈ {3,4,6} -/
 theorem nullcone_integrality_iff_dvd_4 (k : ℕ) (hk : 3 ≤ k) (hk' : k ≤ 100) :
     (k - 2 : ℤ) ∣ 4 ↔ k = 3 ∨ k = 4 ∨ k = 6 := by
@@ -170,9 +190,11 @@ theorem nullcone_integrality_iff_dvd_4 (k : ℕ) (hk : 3 ≤ k) (hk' : k ≤ 100
 
 
 
+
 /-- (d-b-c)² + (d-a-c)² + (d-a-b)² = (2d-a-b-c)² when a²+b²+c² = d² -/
 theorem descent_identity_k4 (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
     (d-b-c)^2 + (d-a-c)^2 + (d-a-b)^2 = (2*d-a-b-c)^2 := by nlinarith
+
 
 
 
@@ -182,6 +204,7 @@ theorem sum_gt_hyp_k6 (a₁ a₂ a₃ a₄ a₅ d : ℤ)
     (h1 : 0 ≤ a₁) (h2 : 0 ≤ a₂) (h3 : 0 ≤ a₃) (h4 : 0 < a₄) (h5 : 0 < a₅) (hd : 0 < d) :
     a₁ + a₂ + a₃ + a₄ + a₅ > d := by
   nlinarith [mul_pos h4 h5]
+
 
 
 
@@ -197,9 +220,11 @@ theorem sum_lt_3d_k6 (a₁ a₂ a₃ a₄ a₅ d : ℤ)
 
 
 
+
 /-- The reflected vector for (1,1,1,1,2) is not in ℤ⁵ -/
 theorem k5_reflection_not_integral :
     ¬ (∃ r : ℤ, 3 * r = 2 * ((1:ℤ) + 1 + 1 + 1 - 2)) := by omega
+
 
 
 
@@ -213,6 +238,7 @@ def alt_reflect_5 : Matrix (Fin 5) (Fin 5) ℤ :=
 
 
 
+
 /-- [Section: # CatalogBuild.Pythagorean.Core.HigherDimDescent
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/Core
@@ -222,14 +248,21 @@ theorem alt_reflect_5_involution : alt_reflect_5 * alt_reflect_5 = 1 := by
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.Core.HigherDimDescent
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Core
+Declarations: 30] -/
 def eta5 : Matrix (Fin 5) (Fin 5) ℤ :=
   !![1, 0, 0, 0, 0; 0, 1, 0, 0, 0; 0, 0, 1, 0, 0; 0, 0, 0, 1, 0; 0, 0, 0, 0, -1]
+
 
 
 
 theorem alt_reflect_5_isLorentz :
     alt_reflect_5.transpose * eta5 * alt_reflect_5 = eta5 := by
   unfold alt_reflect_5 eta5; native_decide
+
 
 
 
@@ -247,5 +280,6 @@ def listPrimQuints (N : ℕ) : List (ℕ × ℕ × ℕ × ℕ × ℕ) := do
 
 #eval listPrimQuints 5
 #eval (listPrimQuints 10).length
+
 
 

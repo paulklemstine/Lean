@@ -20,9 +20,11 @@ theorem trivial_triple_is_pyth (N : ℤ) (hN : N % 2 = 1) :
 
 
 
+
 /-- B₁⁻¹ preserves the Pythagorean property. -/
 theorem inv_B1_preserves (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (a + 2*b - 2*c) ^ 2 + (-2*a - b + 2*c) ^ 2 = (-2*a - 2*b + 3*c) ^ 2 := by nlinarith
+
 
 
 
@@ -32,9 +34,11 @@ theorem inv_B2_preserves (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 /-- B₃⁻¹ preserves the Pythagorean property. -/
 theorem inv_B3_preserves (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (-a - 2*b + 2*c) ^ 2 + (2*a + b - 2*c) ^ 2 = (-2*a - 2*b + 3*c) ^ 2 := by nlinarith
+
 
 
 
@@ -48,6 +52,7 @@ theorem inv_B1_comp_B1 (a b c : ℤ) :
 
 
 
+
 /-- B₂⁻¹ ∘ B₂ = Id (component-wise) -/
 theorem inv_B2_comp_B2 (a b c : ℤ) :
     let a' := a + 2*b + 2*c
@@ -55,6 +60,7 @@ theorem inv_B2_comp_B2 (a b c : ℤ) :
     let c' := 2*a + 2*b + 3*c
     a' + 2*b' - 2*c' = a ∧ 2*a' + b' - 2*c' = b ∧ -2*a' - 2*b' + 3*c' = c :=
   ⟨by ring, by ring, by ring⟩
+
 
 
 
@@ -68,11 +74,13 @@ theorem inv_B3_comp_B3 (a b c : ℤ) :
 
 
 
+
 /-- If gcd(d, N) is non-trivial, it's a factor of N. -/
 theorem factor_from_gcd (N d : ℕ) (_hN : 1 < N)
     (hg_gt : 1 < Nat.gcd d N) (hg_lt : Nat.gcd d N < N) :
     Nat.gcd d N ∣ N ∧ 1 < Nat.gcd d N ∧ Nat.gcd d N < N :=
   ⟨Nat.gcd_dvd_right d N, hg_gt, hg_lt⟩
+
 
 
 
@@ -83,9 +91,11 @@ theorem semiprime_gcd (p q : ℕ) (_hp : Nat.Prime p) :
 
 
 
+
 /-- At most one inverse Berggren map produces positive first and second components. -/
 theorem inv_B1_B2_exclusive (a b c : ℤ)
     (h1 : 0 < -2*a - b + 2*c) (h2 : 0 < 2*a + b - 2*c) : False := by linarith
+
 
 
 
@@ -99,15 +109,22 @@ theorem inv_B1_lorentz (a b c : ℤ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.TreeFactoring.Core
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/TreeFactoring
+Declarations: 15] -/
 theorem inv_B2_lorentz (a b c : ℤ) :
     (a + 2*b - 2*c)^2 + (2*a + b - 2*c)^2 - (-2*a - 2*b + 3*c)^2 =
     a^2 + b^2 - c^2 := by ring
 
 
 
+
 theorem inv_B3_lorentz (a b c : ℤ) :
     (-a - 2*b + 2*c)^2 + (2*a + b - 2*c)^2 - (-2*a - 2*b + 3*c)^2 =
     a^2 + b^2 - c^2 := by ring
+
 
 
 
@@ -120,6 +137,7 @@ def findParent' (a b c : ℤ) : ℕ × ℤ × ℤ × ℤ :=
   else
     let (a3, b3, c3) := (-a - 2*b + 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
     (3, a3, b3, c3)
+
 
 
 
@@ -153,4 +171,5 @@ where
 #eval factorDescent 143 100   -- some (11, 13)
 #eval factorDescent 323 200   -- some (17, 19)
 #eval factorDescent 10403 500
+
 

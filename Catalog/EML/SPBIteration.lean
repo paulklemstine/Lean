@@ -16,6 +16,7 @@ def spbN (x : ℝ) : ℕ → ℝ
 
 
 
+
 /-- [Section: # CatalogBuild.EML.SPBIteration
 Auto-generated from theorem catalog database.
 Domain: EML
@@ -23,7 +24,13 @@ Declarations: 14] -/
 theorem spbN_zero (x : ℝ) : spbN x 0 = 0 := rfl
 
 
+
+/-- [Section: # CatalogBuild.EML.SPBIteration
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 14] -/
 theorem spbN_succ (x : ℝ) (n : ℕ) : spbN x (n + 1) = spbOp x (spbN x n) := rfl
+
 
 
 
@@ -31,8 +38,10 @@ theorem spbN_one (x : ℝ) : spbN x 1 = x := by simp [spbN, spbOp]
 
 
 
+
 theorem spbN_two (x : ℝ) : spbN x 2 = 2 * x / (1 - x ^ 2) := by
   simp [spbN, spbOp]; ring
+
 
 
 
@@ -42,6 +51,7 @@ theorem tan_add_eq_spbOp (α β : ℝ) (hα : cos α ≠ 0) (hβ : cos β ≠ 0)
   rw [spbOp, tan_eq_sin_div_cos, sin_add, cos_add,
       tan_eq_sin_div_cos, tan_eq_sin_div_cos]
   field_simp
+
 
 
 
@@ -57,11 +67,13 @@ theorem spbN_tan (θ : ℝ) (n : ℕ) (hcos : ∀ k : ℕ, k ≤ n → cos (k * 
 
 
 
+
 /-- SPB iteration of 0 is always 0. -/
 theorem spbN_zero_fixed (n : ℕ) : spbN 0 n = 0 := by
   induction n with
   | zero => rfl
   | succ n ih => simp [spbN, spbOp, ih]
+
 
 
 
@@ -73,12 +85,14 @@ theorem spbOp_tan_double (θ : ℝ) (hc : cos θ ≠ 0) :
 
 
 
+
 /-- The triple angle via SPB. -/
 theorem spbOp_tan_triple (θ : ℝ) (hc : cos θ ≠ 0) (hc2 : cos (2 * θ) ≠ 0) :
     spbOp (tan θ) (spbOp (tan θ) (tan θ)) = tan (3 * θ) := by
   rw [spbOp_tan_double θ hc]
   rw [show (3 : ℝ) * θ = θ + 2 * θ from by ring]
   exact (tan_add_eq_spbOp θ (2 * θ) hc hc2).symm
+
 
 
 
@@ -95,8 +109,10 @@ theorem spbN_tan_add (θ : ℝ) (m n : ℕ)
 
 
 
+
 /-- The Cauchy density function: f(x) = 1/(π(1+x²)). -/
 def cauchyDensity (x : ℝ) : ℝ := 1 / (Real.pi * (1 + x ^ 2))
+
 
 
 
@@ -105,9 +121,11 @@ theorem cauchyDensity_pos (x : ℝ) : cauchyDensity x > 0 := by
 
 
 
+
 /-- The Cauchy density is symmetric. -/
 theorem cauchyDensity_symm (x : ℝ) : cauchyDensity x = cauchyDensity (-x) := by
   simp [cauchyDensity]
+
 
 
 

@@ -14,8 +14,10 @@ def gradExpComp (w₁ b₁ x : ℝ) : ℝ := w₁ * Real.exp (w₁ * x + b₁)
 
 
 
+
 /-- The logarithmic gradient component. -/
 def gradLogComp (w₂ b₂ x : ℝ) : ℝ := w₂ / (w₂ * x + b₂)
+
 
 
 
@@ -24,6 +26,7 @@ theorem gradient_decomposition (w₁ b₁ w₂ b₂ x : ℝ) :
     gradExpComp w₁ b₁ x - gradLogComp w₂ b₂ x =
     w₁ * Real.exp (w₁ * x + b₁) - w₂ / (w₂ * x + b₂) := by
   simp [gradExpComp, gradLogComp]
+
 
 
 
@@ -41,6 +44,7 @@ theorem eml_grad_w1 (w₁ b₁ w₂ b₂ x : ℝ) (_h : w₂ * x + b₂ ≠ 0) :
 
 
 
+
 /-- Partial derivative of EML neuron w.r.t. bias b₁.
 ∂f/∂b₁ = exp(w₁x + b₁). -/
 theorem eml_grad_b1 (w₁ b₁ w₂ b₂ x : ℝ) (_h : w₂ * x + b₂ ≠ 0) :
@@ -51,6 +55,7 @@ theorem eml_grad_b1 (w₁ b₁ w₂ b₂ x : ℝ) (_h : w₂ * x + b₂ ≠ 0) :
       (hasDerivAt_id b₁).const_add _
     exact h1.exp.congr_deriv (by ring)
   exact this.sub_const _
+
 
 
 
@@ -69,6 +74,7 @@ theorem eml_grad_w2 (w₁ b₁ w₂ b₂ x : ℝ) (h : w₂ * x + b₂ ≠ 0) :
 
 
 
+
 /-- Partial derivative of EML neuron w.r.t. bias b₂.
 ∂f/∂b₂ = −1 / (w₂x + b₂). -/
 theorem eml_grad_b2 (w₁ b₁ w₂ b₂ x : ℝ) (h : w₂ * x + b₂ ≠ 0) :
@@ -83,10 +89,12 @@ theorem eml_grad_b2 (w₁ b₁ w₂ b₂ x : ℝ) (h : w₂ * x + b₂ ≠ 0) :
 
 
 
+
 /-- The exponential gradient component is always positive when w₁ > 0. -/
 theorem exp_gradient_pos (w₁ b₁ x : ℝ) (hw : 0 < w₁) :
     0 < gradExpComp w₁ b₁ x := by
   unfold gradExpComp; positivity
+
 
 
 
@@ -100,9 +108,11 @@ theorem log_gradient_bound (w₂ b₂ x : ℝ) (h : 1 ≤ |w₂ * x + b₂|) :
 
 
 
+
 /-- Mean squared error loss for a single EML neuron. -/
 def mseLoss (w₁ b₁ w₂ b₂ : ℝ) (data : List (ℝ × ℝ)) : ℝ :=
   (data.map fun ⟨x, y⟩ => (emlF w₁ b₁ w₂ b₂ x - y)^2).sum / data.length
+
 
 
 
@@ -120,15 +130,18 @@ theorem mse_nonneg (w₁ b₁ w₂ b₂ : ℝ) (data : List (ℝ × ℝ)) :
 
 
 
+
 /-- Maximum safe learning rate for the exponential component. -/
 def maxLRExp (w₁ b₁ M : ℝ) : ℝ :=
   1 / Real.exp (|w₁| * M + |b₁|)
 
 
 
+
 /-- The max learning rate is always positive. -/
 theorem maxLR_pos (w₁ b₁ M : ℝ) : 0 < maxLRExp w₁ b₁ M := by
   unfold maxLRExp; positivity
+
 
 
 
@@ -142,8 +155,10 @@ theorem maxLR_weight_monotone (b₁ M : ℝ) (w₁ w₂ : ℝ)
 
 
 
+
 /-- The gradient through a depth-d chain accumulates multiplicatively. -/
 def chainGradMag (d : ℕ) (avgGrad : ℝ) : ℝ := avgGrad ^ d
+
 
 
 
@@ -152,6 +167,7 @@ theorem chain_explodes (d : ℕ) (g : ℝ) (hg : 1 < g) (hd : 1 ≤ d) :
     g ≤ chainGradMag d g := by
   unfold chainGradMag
   exact le_self_pow₀ hg.le (by omega)
+
 
 
 
@@ -164,9 +180,11 @@ theorem chain_vanishes (d₁ d₂ : ℕ) (g : ℝ) (hg : 0 ≤ g) (hg1 : g ≤ 1
 
 
 
+
 /-- The "gradient ratio" measures exp vs log dominance. -/
 def gradRatio (w₁ b₁ w₂ b₂ x : ℝ) (_h : gradLogComp w₂ b₂ x ≠ 0) : ℝ :=
   |gradExpComp w₁ b₁ x| / |gradLogComp w₂ b₂ x|
+
 
 
 
@@ -180,10 +198,12 @@ theorem exploration_mode (w₁ b₁ w₂ b₂ x : ℝ)
 
 
 
+
 /-- The expressiveness of depth-d EML networks grows double-exponentially.
 A depth-d composition can produce exp^d(x) (tower of exponentials). -/
 theorem depth_expressiveness (d : ℕ) : d ≤ 2 ^ d :=
   Nat.lt_two_pow_self.le
+
 
 
 
@@ -192,9 +212,11 @@ def recommendedMaxDepth : ℕ := 5
 
 
 
+
 /-- At depth 5, gradient magnitude can vary by exp(exp(exp(exp(exp(1))))) ≈ 10^(10^6).
 This motivates the depth-5 recommendation. -/
 theorem depth5_gradient_range : recommendedMaxDepth = 5 := rfl
+
 
 
 

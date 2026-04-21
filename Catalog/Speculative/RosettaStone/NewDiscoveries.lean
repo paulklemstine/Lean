@@ -16,6 +16,7 @@ theorem idempotent_count_8 :
 
 
 
+
 /-- Product of idempotents is idempotent (= "meet"). -/
 theorem idempotent_mul (e f : R) (he : e * e = e) (hf : f * f = f) :
     (e * f) * (e * f) = e * f := by
@@ -23,14 +24,21 @@ theorem idempotent_mul (e f : R) (he : e * e = e) (hf : f * f = f) :
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.RosettaStone.NewDiscoveries
+Auto-generated from theorem catalog database.
+Domain: Speculative/RosettaStone
+Declarations: 15] -/
 theorem idempotent_join (e f : R) (he : e * e = e) (hf : f * f = f) :
     (e + f - e * f) * (e + f - e * f) = e + f - e * f := by
   grind
 
 
 
+
 /-- The "one" idempotent. -/
 theorem one_idempotent : (1 : R) * 1 = 1 := mul_one 1
+
 
 
 
@@ -45,11 +53,13 @@ theorem idempotent_le_trans (e f g : R)
 
 
 
+
 /-- Idempotent ordering is antisymmetric. -/
 theorem idempotent_le_antisymm (e f : R)
     (hef : e * f = e) (hfe : f * e = f) :
     e = f := by
   rw [mul_comm] at hfe; rw [← hef, hfe]
+
 
 
 
@@ -64,6 +74,7 @@ theorem newton_idempotent_step (e : R) :
 
 
 
+
 /-- Newton refinement preserves exact idempotents. -/
 theorem newton_preserves_idempotent (e : R) (he : e * e = e) :
     3 * e ^ 2 - 2 * e ^ 3 = e := by
@@ -74,10 +85,12 @@ theorem newton_preserves_idempotent (e : R) (he : e * e = e) :
 
 
 
+
 /-- Tropical distributivity (left). -/
 theorem tropical_distrib_left (a b c : ℝ) :
     a + min b c = min (a + b) (a + c) := by
   simp [min_def]; split_ifs <;> linarith
+
 
 
 
@@ -88,10 +101,12 @@ theorem tropical_distrib_right (a b c : ℝ) :
 
 
 
+
 /-- Every element decomposes via an idempotent. -/
 theorem fundamental_decomposition (e x : R) :
     x = e * x + (1 - e) * x := by
   simp [sub_mul, one_mul]
+
 
 
 
@@ -102,9 +117,11 @@ theorem fundamental_orthogonality (e : R) (he : e * e = e) (y : R) :
 
 
 
+
 /-- e acts as identity on eR. -/
 theorem idempotent_acts_as_identity (e : R) (he : e * e = e) (x : R) :
     e * (e * x) = e * x := by rw [← mul_assoc, he]
+
 
 
 
@@ -115,9 +132,11 @@ theorem peirce_11_stable (e : R) (he : e * e = e) (x : R) :
 
 
 
+
 /-- The (1,1)-Peirce component is stable under right multiplication by e. -/
 theorem peirce_11_stable_right (e : R) (he : e * e = e) (x : R) :
     (e * x * e) * e = e * x * e := by
   rw [mul_assoc, he]
+
 
 

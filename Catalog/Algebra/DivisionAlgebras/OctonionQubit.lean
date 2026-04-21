@@ -14,13 +14,16 @@ def UnitSphere (n : ℕ) := {v : Fin n → ℝ // ∑ i, v i ^ 2 = 1}
 
 
 
+
 /-- The 7-sphere: state space of a single octonion qubit. -/
 abbrev S7 := UnitSphere 8
 
 
 
+
 /-- The 2-sphere (Bloch sphere): state space of a standard qubit. -/
 abbrev S2 := UnitSphere 3
+
 
 
 
@@ -30,9 +33,11 @@ def RationalSphere (n : ℕ) :=
 
 
 
+
 /-- The inner product on ℝⁿ. -/
 def innerProduct (n : ℕ) (v w : Fin n → ℝ) : ℝ :=
   ∑ i, v i * w i
+
 
 
 
@@ -42,9 +47,11 @@ def sqNorm (n : ℕ) (v : Fin n → ℝ) : ℝ :=
 
 
 
+
 /-- The norm of a unit sphere element is 1. -/
 theorem unit_sphere_norm_one {n : ℕ} (v : UnitSphere n) :
     sqNorm n v.val = 1 := v.property
+
 
 
 
@@ -52,6 +59,7 @@ theorem unit_sphere_norm_one {n : ℕ} (v : UnitSphere n) :
 state φ given state ψ is the squared norm of their inner product. -/
 noncomputable def bornProbability (n : ℕ) (ψ φ : UnitSphere n) : ℝ :=
   (innerProduct n ψ.val φ.val) ^ 2
+
 
 
 
@@ -65,12 +73,18 @@ theorem born_probability_nonneg (n : ℕ) (ψ φ : UnitSphere n) :
 
 
 
+
+/-- [Section: # CatalogBuild.Algebra.DivisionAlgebras.OctonionQubit
+Auto-generated from theorem catalog database.
+Domain: Algebra/DivisionAlgebras
+Declarations: 15] -/
 theorem born_probability_le_one (n : ℕ) (ψ φ : UnitSphere n) :
     bornProbability n ψ φ ≤ 1 := by
   -- By the Cauchy-Schwarz inequality, we have that for any vectors $u$ and $v$, $(u \cdot v)^2 \leq \|u\|^2 \|v\|^2$.
   have h_cauchy_schwarz : ∀ (u v : Fin n → ℝ), (∑ i, u i * v i) ^ 2 ≤ (∑ i, u i ^ 2) * (∑ i, v i ^ 2) := by
     exact fun u v => Finset.sum_mul_sq_le_sq_mul_sq Finset.univ u v;
   exact le_trans ( h_cauchy_schwarz _ _ ) ( by nlinarith [ show ∑ i, ψ.val i ^ 2 = 1 from ψ.2, show ∑ i, φ.val i ^ 2 = 1 from φ.2 ] )
+
 
 
 
@@ -86,11 +100,13 @@ noncomputable def stereoProj (n : ℕ) (t : Fin n → ℝ) : Fin (n + 1) → ℝ
 
 
 
+
 theorem stereoProj_on_sphere (n : ℕ) (t : Fin n → ℝ) :
     ∑ i, stereoProj n t i ^ 2 = 1 := by
   simp +decide [ Fin.sum_univ_castSucc, stereoProj ];
   norm_num [ ← Finset.mul_sum _ _ _, ← Finset.sum_div, mul_pow, div_pow ];
   rw [ ← add_div, div_eq_iff ] <;> nlinarith [ show 0 ≤ ∑ i, t i ^ 2 from Finset.sum_nonneg fun _ _ => sq_nonneg _ ]
+
 
 
 
@@ -101,6 +117,7 @@ theorem stereoProj_rational (n : ℕ) (t : Fin n → ℚ) :
   split_ifs <;> norm_cast at * <;> norm_num at *;
   · exact ⟨ 2 * t ⟨ i, by linarith ⟩ / ( 1 + ∑ x : Fin n, t x ^ 2 ), by push_cast; rfl ⟩;
   · exact ⟨ ( ∑ x : Fin n, t x ^ 2 - 1 ) / ( 1 + ∑ x : Fin n, t x ^ 2 ), by push_cast; rfl ⟩
+
 
 
 
@@ -118,8 +135,10 @@ def fanoTriples : List (Fin 7 × Fin 7 × Fin 7) :=
 
 
 
+
 /-- The number of lines in the Fano plane is 7. -/
 theorem fano_card : fanoTriples.length = 7 := by decide
+
 
 
 end

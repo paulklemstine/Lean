@@ -24,9 +24,15 @@ theorem functor_preserves_iso {C D : Type*} [Category C] [Category D]
 
 
 
+
+/-- [Section: # CatalogBuild.Algebra.CategoryTheory
+Auto-generated from theorem catalog database.
+Domain: Algebra
+Declarations: 4] -/
 theorem id_functor_map {C : Type*} [Category C] {X Y : C} (f : X ⟶ Y) :
     (Functor.id C).map f = f := by
       grind
+
 
 
 
@@ -38,7 +44,9 @@ theorem functor_comp_assoc {A B C D : Type*}
 
 
 
+
 theorem functor_comp_id {C D : Type*} [Category C] [Category D] (F : C ⥤ D) :
     F ⋙ Functor.id D = F := by
       bound
+
 

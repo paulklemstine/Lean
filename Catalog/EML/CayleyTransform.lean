@@ -16,8 +16,10 @@ def spbCayley (x : ℝ) : ℂ := (1 + x * I) / (1 - x * I)
 
 
 
+
 /-- Complex version of the SPB-adapted Cayley transform. -/
 def spbCayleyC (z : ℂ) : ℂ := (1 + z * I) / (1 - z * I)
+
 
 
 
@@ -26,8 +28,10 @@ def stdCayley (x : ℝ) : ℂ := (↑x - I) / (↑x + I)
 
 
 
+
 /-- Inverse SPB-Cayley: C'⁻¹(w) = -i(w - 1)/(w + 1) = (1 - w)/(i(1 + w)). -/
 def spbCayleyInv (w : ℂ) : ℂ := (w - 1) / (I * (w + 1))
+
 
 
 
@@ -35,6 +39,7 @@ def spbCayleyInv (w : ℂ) : ℂ := (w - 1) / (I * (w + 1))
 theorem spbCayley_normSq_eq (x : ℝ) :
     Complex.normSq (1 + x * I) = Complex.normSq (1 - x * I) := by
   simp [Complex.normSq_apply]
+
 
 
 
@@ -48,10 +53,16 @@ theorem spbCayley_norm_eq_one (x : ℝ) : ‖spbCayley x‖ = 1 := by
 
 
 
+
+/-- [Section: # CatalogBuild.EML.CayleyTransform
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 19] -/
 theorem spbCayley_normSq_eq_one (x : ℝ) : Complex.normSq (spbCayley x) = 1 := by
   convert congr_arg ( · ^ 2 ) ( spbCayley_norm_eq_one x ) using 1;
   · exact?;
   · norm_num
+
 
 
 
@@ -61,9 +72,11 @@ theorem spbCayley_zero : spbCayley 0 = 1 := by
 
 
 
+
 /-- The standard Cayley maps 0 to -1. -/
 theorem stdCayley_zero : stdCayley 0 = -1 := by
   simp [stdCayley]
+
 
 
 
@@ -74,14 +87,17 @@ theorem stdCayley_normSq_num_eq_denom (x : ℝ) :
 
 
 
+
 theorem stdCayley_norm_eq_one (x : ℝ) : ‖stdCayley x‖ = 1 := by
   norm_num [ stdCayley, Complex.norm_def, Complex.normSq ];
   exact ne_of_gt <| Real.sqrt_pos.mpr <| by nlinarith;
 
 
 
+
 /-- The stereographic sum. -/
 def spbR (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
+
 
 
 
@@ -96,10 +112,12 @@ theorem spbCayley_intertwines (x y : ℝ)
 
 
 
+
 /-- Re(stdCayley(x)) = (x²-1)/(x²+1). -/
 theorem stdCayley_re (x : ℝ) : (stdCayley x).re = (x ^ 2 - 1) / (x ^ 2 + 1) := by
   unfold stdCayley
   norm_num [Complex.normSq, Complex.div_re]; ring
+
 
 
 
@@ -110,13 +128,16 @@ theorem stdCayley_im (x : ℝ) : (stdCayley x).im = -2 * x / (x ^ 2 + 1) := by
 
 
 
+
 theorem spbCayley_re (x : ℝ) : (spbCayley x).re = (1 - x ^ 2) / (1 + x ^ 2) := by
   unfold spbCayley; norm_num [ Complex.normSq, Complex.div_re ] ; ring;
 
 
 
+
 theorem spbCayley_im (x : ℝ) : (spbCayley x).im = 2 * x / (1 + x ^ 2) := by
   unfold spbCayley; norm_num [ Complex.normSq, Complex.div_im ] ; ring;
+
 
 
 
@@ -129,6 +150,7 @@ theorem spbCayley_eq_neg_stdCayley (x : ℝ)
 
 
 
+
 /-- The complex SPB-Cayley is differentiable. -/
 theorem spbCayleyC_differentiableAt (z : ℂ) (hz : 1 - z * I ≠ 0) :
     DifferentiableAt ℂ spbCayleyC z := by
@@ -137,6 +159,7 @@ theorem spbCayleyC_differentiableAt (z : ℂ) (hz : 1 - z * I ≠ 0) :
   · exact (differentiableAt_const 1).add (differentiableAt_id.mul (differentiableAt_const I))
   · exact (differentiableAt_const 1).sub (differentiableAt_id.mul (differentiableAt_const I))
   · exact hz
+
 
 
 

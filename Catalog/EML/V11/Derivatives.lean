@@ -16,12 +16,14 @@ theorem eml_differentiable_x (y : ℝ) : Differentiable ℝ (fun x => eml x y) :
 
 
 
+
 /-- EML is differentiable in y on (0,∞) (for any fixed x). -/
 theorem eml_differentiable_y_pos (x : ℝ) :
     DifferentiableOn ℝ (fun y => eml x y) (Set.Ioi 0) := by
   unfold eml
   exact (differentiableOn_const _).sub (Real.differentiableOn_log.mono (by
     intro y hy; simp [Set.mem_compl_iff]; exact ne_of_gt hy))
+
 
 
 
@@ -32,6 +34,7 @@ theorem emlSelfPair_differentiable : Differentiable ℝ emlSelfPair := by
 
 
 
+
 /-- σ'(0) = 0: the self-pairing has a critical point at x = 0. -/
 theorem emlSelfPair_deriv_zero :
     HasDerivAt emlSelfPair 0 0 := by
@@ -39,10 +42,12 @@ theorem emlSelfPair_deriv_zero :
 
 
 
+
 /-- σ'(x) > 0 for x > 0. -/
 theorem emlSelfPair_deriv_pos {x : ℝ} (hx : 0 < x) :
     Real.exp x - 1 > 0 := by
   linarith [Real.add_one_le_exp x]
+
 
 
 
@@ -55,6 +60,7 @@ theorem emlSelfPair_deriv_neg {x : ℝ} (hx : x < 0) :
 
 
 
+
 /-- σ''(x) = eˣ (the derivative of eˣ − 1). -/
 theorem emlSelfPair_second_deriv (x : ℝ) :
     HasDerivAt (fun x => Real.exp x - 1) (Real.exp x) x := by
@@ -64,15 +70,18 @@ theorem emlSelfPair_second_deriv (x : ℝ) :
 
 
 
+
 /-- ∂²eml/∂x² = exp(x) > 0. -/
 theorem eml_second_deriv_x_pos (x : ℝ) : Real.exp x > 0 :=
   Real.exp_pos x
 
 
 
+
 /-- ∂²eml/∂y² = 1/y² > 0 for y > 0. -/
 theorem eml_second_deriv_y_pos (y : ℝ) (hy : 0 < y) : 1 / y ^ 2 > 0 := by
   positivity
+
 
 
 
@@ -95,6 +104,7 @@ theorem emlDiag_strictMono_gt_one :
 
 
 
+
 /-- d'(z) = exp(z) - 1/z for z > 0. -/
 theorem emlDiag_deriv_pos (z : ℝ) (hz : 0 < z) :
     HasDerivAt emlDiag (Real.exp z - 1 / z) z := by
@@ -105,15 +115,22 @@ theorem emlDiag_deriv_pos (z : ℝ) (hz : 0 < z) :
 
 
 
+
+/-- [Section: # CatalogBuild.EML.V11.Derivatives
+Auto-generated from theorem catalog database.
+Domain: EML/V11
+Declarations: 15] -/
 theorem emlDiag_deriv_pos_ge_one (z : ℝ) (hz : 1 ≤ z) :
     Real.exp z - 1 / z > 0 := by
   exact sub_pos_of_lt ( by rw [ div_lt_iff₀ ( by positivity ) ] ; nlinarith [ Real.add_one_le_exp z ] )
 
 
 
+
 /-- σ is continuous. -/
 theorem emlSelfPair_continuous : Continuous emlSelfPair :=
   emlSelfPair_differentiable.continuous
+
 
 
 
@@ -124,9 +141,11 @@ theorem eml_grad_nonzero (x y : ℝ) (hy : 0 < y) :
 
 
 
+
 /-- σ has no inflection points (σ'' = eˣ > 0 everywhere). -/
 theorem emlSelfPair_no_inflection (x : ℝ) :
     Real.exp x > 0 := Real.exp_pos x
+
 
 
 

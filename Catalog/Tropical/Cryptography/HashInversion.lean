@@ -20,15 +20,22 @@ theorem hash_not_injective {α β : Type*} [Fintype α] [Fintype β]
 
 
 
+
+/-- [Section: # CatalogBuild.Tropical.Cryptography.HashInversion
+Auto-generated from theorem catalog database.
+Domain: Tropical/Cryptography
+Declarations: 28] -/
 theorem sha256_domain_exceeds_range :
     ∀ n : ℕ, 256 < n → 2 ^ 256 < 2 ^ n := by
   exact fun n hn => pow_lt_pow_right₀ ( by decide ) hn
 
 
 
+
 theorem information_loss (n m : ℕ) (h : m < n) :
     n - m ≥ 1 := by
   exact Nat.sub_pos_of_lt h
+
 
 
 
@@ -41,12 +48,14 @@ def tropicalMatMul (n : ℕ) (A B : Fin n → Fin n → WithTop ℤ) :
 
 
 
+
 lemma finset_inf_add_right (s : Finset ι) (f : ι → WithTop ℤ) (c : WithTop ℤ)
     (hs : s.Nonempty) :
     s.inf (fun k => f k + c) = s.inf f + c := by
   induction hs using Finset.Nonempty.cons_induction ; simp +decide [ * ];
   simp +decide [ *, Finset.inf_insert ];
   exact?
+
 
 
 
@@ -58,11 +67,13 @@ lemma finset_inf_add_left (s : Finset ι) (f : ι → WithTop ℤ) (c : WithTop 
 
 
 
+
 lemma finset_inf_inf_eq_inf_prod (s : Finset ι) (t : Finset κ)
     (f : ι → κ → WithTop ℤ) :
     s.inf (fun i => t.inf (fun j => f i j)) =
     (s ×ˢ t).inf (fun p => f p.1 p.2) := by
   grind +suggestions
+
 
 
 
@@ -92,9 +103,11 @@ theorem tropicalMatMul_assoc (n : ℕ)
 
 
 
+
 /-- The tropical identity matrix has 0 on diagonal, +∞ elsewhere. -/
 def tropicalIdentity (n : ℕ) : Fin n → Fin n → WithTop ℤ :=
   fun i j => if i = j then (0 : WithTop ℤ) else ⊤
+
 
 
 
@@ -112,6 +125,7 @@ theorem tropicalMatMul_identity_right (n : ℕ) (hn : 0 < n)
 
 
 
+
 theorem tropicalMatMul_identity_left (n : ℕ) (hn : 0 < n)
     (A : Fin n → Fin n → WithTop ℤ) :
     tropicalMatMul n (tropicalIdentity n) A = A := by
@@ -124,13 +138,16 @@ theorem tropicalMatMul_identity_left (n : ℕ) (hn : 0 < n)
 
 
 
+
 theorem xor_self_inverse (x k : Bool) : xor (xor x k) k = x := by
   cases x <;> cases k <;> rfl
 
 
 
+
 theorem xor_key_bijective (k : Bool) : Bijective (fun x => xor x k) := by
   native_decide +revert
+
 
 
 
@@ -143,11 +160,13 @@ theorem bitvec_xor_self_inverse (n : ℕ) (x k : Fin (2^n)) :
 
 
 
+
 theorem mod_add_surjective (m : ℕ) (hm : 0 < m) (b : Fin m) :
     Surjective (fun x : Fin m => x + b) := by
   intro y; use y - b; simp +decide [ Fin.add_def ] ;
   norm_num [ Fin.ext_iff, Fin.val_sub ];
   rw [ show m - ( b : ℕ ) + ( y : ℕ ) + ( b : ℕ ) = m + ( y : ℕ ) by linarith [ Nat.sub_add_cancel ( show ( b : ℕ ) ≤ m from b.2.le ) ] ] ; simp +decide [ Nat.add_mod, Nat.mod_eq_of_lt y.2 ]
+
 
 
 
@@ -159,6 +178,7 @@ theorem mod_add_not_injective (m : ℕ) (hm : 2 ≤ m) :
 
 
 
+
 theorem composition_not_injective_of_component {α β γ : Type*}
     (f : α → β) (g : β → γ) (hf : ¬ Injective f) :
     ¬ Injective (g ∘ f) := by
@@ -166,6 +186,7 @@ theorem composition_not_injective_of_component {α β γ : Type*}
   obtain ⟨a, b, hab⟩ : ∃ a b, a ≠ b ∧ f a = f b := by
     simpa [ Function.Injective, and_comm ] using hf;
   exact fun h => hab.1 ( h ( by simp +decide [ hab.2 ] ) )
+
 
 
 
@@ -186,6 +207,7 @@ theorem lossy_composition_not_invertible {α β γ : Type*}
 
 
 
+
 theorem reversible_iff_bijective {α : Type*} [Fintype α] (f : α → α) :
     (∃ g : α → α, g ∘ f = id ∧ f ∘ g = id) ↔ Bijective f := by
   constructor <;> intro h;
@@ -193,6 +215,7 @@ theorem reversible_iff_bijective {α : Type*} [Fintype α] (f : α → α) :
   · obtain ⟨ g, hg ⟩ := h;
     choose g hg using hg;
     aesop
+
 
 
 
@@ -209,6 +232,7 @@ theorem quantum_ancilla_requirement {α β : Type*} [Fintype α] [Fintype β]
 
 
 
+
 theorem quantum_sha256_inverse_needs_garbage
     (n : ℕ) (hn : 256 < n)
     (sha256 : Fin (2^n) → Fin (2^256))
@@ -219,9 +243,11 @@ theorem quantum_sha256_inverse_needs_garbage
 
 
 
+
 theorem tropical_rank_le_dim (n : ℕ) (A : Fin n → Fin n → WithTop ℤ) :
     ∃ r : ℕ, r ≤ n := by
   use n
+
 
 
 
@@ -231,6 +257,7 @@ Such matrices have full tropical rank and are invertible. -/
 def tropicalPermMatrix (n : ℕ) (σ : Equiv.Perm (Fin n)) :
     Fin n → Fin n → WithTop ℤ :=
   fun i j => if σ i = j then (0 : WithTop ℤ) else ⊤
+
 
 
 
@@ -246,6 +273,7 @@ theorem tropicalPerm_inverse (n : ℕ) (hn : 0 < n) (σ : Equiv.Perm (Fin n)) :
 
 
 
+
 theorem no_matrix_inverts_noninj_function {α β : Type*}
     (f : α → β) (hf : ¬ Injective f) :
     ¬ ∃ g : β → α, ∀ x, g (f x) = x := by
@@ -253,10 +281,12 @@ theorem no_matrix_inverts_noninj_function {α β : Type*}
 
 
 
+
 theorem surjective_has_right_inverse {α β : Type*}
     (f : α → β) (hf : Surjective f) :
     ∃ g : β → α, ∀ y, f (g y) = y := by
   exact ⟨ fun y => Classical.choose ( hf y ), fun y => Classical.choose_spec ( hf y ) ⟩
+
 
 
 
@@ -268,11 +298,13 @@ theorem bool_or_as_tropical_min :
 
 
 
+
 theorem bool_and_as_tropical_max :
     ∀ a b : Bool,
       (if a && b then (0 : WithTop ℤ) else ⊤) =
       max (if a then (0 : WithTop ℤ) else ⊤) (if b then (0 : WithTop ℤ) else ⊤) := by
   decide +revert
+
 
 
 

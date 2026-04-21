@@ -16,14 +16,17 @@ structure MigrationCost where
 
 
 
+
 /-- Estimated migration cost for a typical user. -/
 def typical_migration_cost : MigrationCost := ⟨50, 1500, 10, 100⟩
+
 
 
 
 /-- Total one-time migration cost (basis points). -/
 def total_cost (c : MigrationCost) : ℕ :=
   c.transaction_fee + c.complexity_risk + c.opportunity_cost
+
 
 
 
@@ -34,9 +37,11 @@ theorem typical_cost :
 
 
 
+
 /-- Expected loss from quantum attack. -/
 def expected_quantum_loss (prob_bps holdings : ℕ) : ℕ :=
   prob_bps * holdings / 10000
+
 
 
 
@@ -49,6 +54,7 @@ theorem higher_prob_higher_loss (p₁ p₂ holdings : ℕ)
 
 
 
+
 /-- **Theorem**: Data on a public blockchain is always SNDL-exposed. -/
 inductive StorableData where
   | publicKey | signedTransaction | encryptedComms
@@ -56,9 +62,11 @@ inductive StorableData where
 
 
 
+
 /-- All blockchain data is already exposed. -/
 def already_exposed : StorableData → Bool
   | _ => true
+
 
 
 
@@ -69,8 +77,10 @@ theorem sndl_irreversible (d : StorableData) :
 
 
 
+
 /-- New transactions per day across Bitcoin and Ethereum. -/
 def new_bitcoin_txns_per_day : ℕ := 300000
+
 
 
 /-- [Section: # CatalogBuild.Cryptography.QuantumSecurity.MigrationGameTheory
@@ -80,7 +90,13 @@ Declarations: 43] -/
 def new_ethereum_txns_per_day : ℕ := 1000000
 
 
+
+/-- [Section: # CatalogBuild.Cryptography.QuantumSecurity.MigrationGameTheory
+Auto-generated from theorem catalog database.
+Domain: Cryptography/QuantumSecurity
+Declarations: 43] -/
 def daily_sndl_growth : ℕ := new_bitcoin_txns_per_day + new_ethereum_txns_per_day
+
 
 
 
@@ -88,6 +104,7 @@ def daily_sndl_growth : ℕ := new_bitcoin_txns_per_day + new_ethereum_txns_per_
 theorem yearly_sndl_growth :
     daily_sndl_growth * 365 = 474500000 := by
   simp [daily_sndl_growth, new_bitcoin_txns_per_day, new_ethereum_txns_per_day]
+
 
 
 
@@ -100,9 +117,11 @@ structure GameParams where
 
 
 
+
 /-- Default game parameters (10-year horizon). -/
 def default_params : GameParams :=
   ⟨-160, -10000, 500, 50⟩
+
 
 
 
@@ -112,9 +131,11 @@ def payoff_migrate (p : GameParams) : ℤ :=
 
 
 
+
 /-- Expected payoff for staying (risk of quantum loss). -/
 def payoff_stay (p : GameParams) : ℤ :=
   (p.quantum_probability : ℤ) * p.quantum_loss / 10000
+
 
 
 
@@ -122,6 +143,7 @@ def payoff_stay (p : GameParams) : ℤ :=
 theorem migration_is_rational :
     payoff_migrate default_params > payoff_stay default_params := by
   simp [payoff_migrate, payoff_stay, default_params]
+
 
 
 
@@ -134,14 +156,17 @@ def prior_probability (years : ℕ) : ℕ :=
 
 
 
+
 /-- Likelihood ratio from Willow-class advances. -/
 def willow_likelihood_ratio : ℕ := 3
+
 
 
 
 /-- Posterior probability after Bayesian update. -/
 def posterior_probability (prior lr : ℕ) : ℕ :=
   min 10000 (prior * lr)
+
 
 
 
@@ -152,10 +177,12 @@ theorem willow_update_10yr :
 
 
 
+
 /-- **Theorem**: Willow triples the 15-year probability to 60%. -/
 theorem willow_update_15yr :
     posterior_probability (prior_probability 15) willow_likelihood_ratio = 6000 := by
   simp [posterior_probability, prior_probability, willow_likelihood_ratio]
+
 
 
 
@@ -166,10 +193,12 @@ theorem post_willow_urgency :
 
 
 
+
 /-- Fork readiness stages -/
 inductive ForkStage where
   | research | specification | implementation | testing | activation
   deriving DecidableEq, Repr
+
 
 
 
@@ -180,6 +209,7 @@ def stage_duration : ForkStage → ℕ
   | ForkStage.implementation => 12
   | ForkStage.testing         => 12
   | ForkStage.activation      => 6
+
 
 
 
@@ -194,15 +224,18 @@ theorem total_fork_timeline :
 
 
 
+
 /-- **Theorem**: Full migration takes ~333 days after fork activation. -/
 theorem user_migration_time :
     100000000 / 300000 = 333 := by norm_num
 
 
 
+
 /-- **Theorem (Total Migration Timeline)**: Fork + migration ≈ 5 years. -/
 theorem total_migration_timeline :
     48 + 12 = 60 := by norm_num
+
 
 
 
@@ -213,11 +246,14 @@ theorem must_start_by :
 
 
 
+
 /-- Bitcoin market cap (billions USD). -/
 def btc_market_cap_billion : ℕ := 1700
 
 
+
 def at_risk_pct : ℕ := 57
+
 
 
 
@@ -227,11 +263,14 @@ theorem at_risk_value :
 
 
 
+
 /-- Ethereum market cap (billions USD). -/
 def eth_market_cap_billion : ℕ := 450
 
 
+
 def eth_at_risk_pct : ℕ := 100
+
 
 
 
@@ -242,8 +281,10 @@ theorem total_at_risk_value :
 
 
 
+
 /-- DeFi TVL at risk. -/
 def defi_tvl_billion : ℕ := 50
+
 
 
 
@@ -254,11 +295,13 @@ theorem total_including_defi :
 
 
 
+
 /-- Migration strategies ordered by aggressiveness. -/
 inductive MigrationStrategy where
   | doNothing | monitorOnly | hybridAddresses
   | softForkPQOption | hardForkPQMandatory | emergencyFreeze
   deriving DecidableEq, Repr
+
 
 
 
@@ -273,12 +316,14 @@ def strategy_value_preserved : MigrationStrategy → ℕ
 
 
 
+
 /-- **Theorem**: Active strategies strictly dominate inaction. -/
 theorem active_beats_passive (s : MigrationStrategy)
     (h : s ≠ MigrationStrategy.doNothing)
     (h2 : s ≠ MigrationStrategy.monitorOnly) :
     strategy_value_preserved s ≥ strategy_value_preserved MigrationStrategy.doNothing := by
   cases s <;> simp_all [strategy_value_preserved]
+
 
 
 
@@ -290,8 +335,10 @@ theorem hard_fork_optimal :
 
 
 
+
 /-- **Theorem**: Phased approach fits within quantum timeline. -/
 theorem phased_approach_covers_timeline :
     0 + 5 + 3 = 8 ∧ 8 < 13 := by norm_num
+
 
 

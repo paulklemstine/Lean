@@ -19,14 +19,17 @@ theorem four_square_factoring_channel
 
 
 
+
 /-- GCD-based factor extraction from 4-square representations. -/
 theorem four_square_cross_collision (a₁ a₂ N : ℤ) :
     ↑(Int.gcd (a₁ - a₂) N) ∣ N := Int.gcd_dvd_right _ _
 
 
 
+
 /-- 4 + C(4,2) = 10 channels. -/
 theorem four_square_channel_count : 4 + Nat.choose 4 2 = 10 := by decide
+
 
 
 
@@ -42,9 +45,15 @@ theorem sigma1_pos (n : ℕ) (hn : 0 < n) : 0 < sigma1 n := by
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.LagrangeFourSquare
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 19] -/
 theorem complex_norm_mult (a₁ b₁ a₂ b₂ : ℤ) :
     (a₁^2 + b₁^2) * (a₂^2 + b₂^2) =
     (a₁*a₂ - b₁*b₂)^2 + (a₁*b₂ + b₁*a₂)^2 := by ring
+
 
 
 
@@ -57,7 +66,9 @@ theorem quaternion_norm_mult (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ) :
 
 
 
+
 theorem hurwitz_1248 : ({1, 2, 4, 8} : Finset ℕ).card = 4 := by decide
+
 
 
 
@@ -71,12 +82,14 @@ theorem cayley_dickson_channels :
 
 
 
+
 /-- gcd(mN - x, N) = gcd(x, N). -/
 theorem lattice_short_vector_gcd_eq (x N m : ℤ) :
     Int.gcd (m * N - x) N = Int.gcd x N := by
   rw [show m * N - x = -x + m * N by ring]
   rw [Int.gcd_add_mul_right_left]
   rw [Int.neg_gcd]
+
 
 
 
@@ -90,8 +103,10 @@ theorem lattice_product_factor (v₁ v₂ N : ℕ)
 
 
 
+
 def berggrenA (a b c : ℤ) : ℤ × ℤ × ℤ :=
   (a - 2*b + 2*c, 2*a - b + 2*c, 2*a - 2*b + 3*c)
+
 
 
 
@@ -100,8 +115,10 @@ def berggrenB (a b c : ℤ) : ℤ × ℤ × ℤ :=
 
 
 
+
 def berggrenC (a b c : ℤ) : ℤ × ℤ × ℤ :=
   (-a + 2*b + 2*c, -2*a + b + 2*c, -2*a + 2*b + 3*c)
+
 
 
 
@@ -112,10 +129,12 @@ theorem berggrenA_preserves_pyth (a b c : ℤ) (h : a^2 + b^2 = c^2) :
 
 
 
+
 theorem berggrenB_preserves_pyth (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     let (a', b', c') := berggrenB a b c
     a'^2 + b'^2 = c'^2 := by
   simp [berggrenB]; nlinarith
+
 
 
 
@@ -126,9 +145,11 @@ theorem berggrenC_preserves_pyth (a b c : ℤ) (h : a^2 + b^2 = c^2) :
 
 
 
+
 theorem quantum_fourth_root (N : ℕ) :
     Nat.sqrt (Nat.sqrt N) ≤ Nat.sqrt N :=
   Nat.sqrt_le_sqrt (Nat.sqrt_le_self N)
+
 
 
 
@@ -139,6 +160,8 @@ theorem info_theoretic_lower_bound (total_bits channels : ℕ)
 
 
 
+
 theorem channels_quadratic (k : ℕ) : k ≤ k + Nat.choose k 2 :=
   Nat.le_add_right k _
+
 

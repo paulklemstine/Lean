@@ -1,35 +1,22 @@
-import Mathlib
-import Pythagorean.ClosedFormAncestor.ClosedFormAncestor
-import Pythagorean.ClosedFormAncestor.GhostMatrixInduction
-import Pythagorean.ClosedFormAncestor.FactoringTheory
+/-! # CatalogBuild.Pythagorean.ClosedFormAncestor.NewTheorems
 
-/-!
-# New Theorems and Discoveries
-
-Additional formally verified results about Pythagorean tree ancestry:
-
-1. **Ghost ancestor composition**: Applying depth G₁ then G₂ = depth G₁+G₂
-2. **Determinant of M^n**: det(M^n) = (-1)^n
-3. **Trace of M^n**: tr(M^n) = 4P_n² + (-1)^n (alternative: 2H² + H² - ε)
-4. **M^n multiplicativity via closed form**
-5. **Exponential growth of hypotenuse**
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/ClosedFormAncestor
+Declarations: 9
 -/
 
-open Matrix ClosedFormAncestor FactoringTheory GhostMatrixInduction
-
-namespace NewTheorems
-
-/-! ### Ghost Ancestor Composition -/
+import Mathlib
+import Pythagorean.ClosedFormAncestor.ClosedFormAncestor
+import Pythagorean.ClosedFormAncestor.FactoringTheory
+import Pythagorean.ClosedFormAncestor.GhostMatrixInduction
 
 /-- Ghost ancestor at depth 0 is the identity. -/
 theorem ghostAncestor_zero (a b c : ℤ) :
     ghostAncestor 0 a b c = (a, b, c) := by
   simp [ghostAncestor, compPell, pellNum]
 
-/-
-Ghost ancestor composition: applying depth m then n equals depth m+n.
-    This follows from M^m · M^n = M^{m+n}.
--/
+
+/-- [Section: ### Ghost Ancestor Composition] -/
 theorem ghostAncestor_add (m n : ℕ) (a b c : ℤ) :
     let (p, q, h) := ghostAncestor n a b c
     ghostAncestor m p q h = ghostAncestor (m + n) a b c := by
@@ -43,43 +30,33 @@ theorem ghostAncestor_add (m n : ℕ) (a b c : ℤ) :
   simp +decide only [h_add] ; ring;
   rw [ show compPell m ^ 2 = 2 * pellNum m ^ 2 + ( -1 ) ^ m by linarith [ pell_sq_identity m ], show compPell n ^ 2 = 2 * pellNum n ^ 2 + ( -1 ) ^ n by linarith [ pell_sq_identity n ] ] ; ring
 
-/-! ### Determinant Formula -/
 
-/-
-det(ghostMatrix_closed n) = (-1)^n
--/
+/-- [Section: ### Determinant Formula] -/
 theorem ghostMatrix_closed_det (n : ℕ) :
     Matrix.det (ghostMatrix_closed n) = (-1 : ℤ) ^ n := by
   rw [ ← ghostMatrix_pow_eq_closed, Matrix.det_pow ];
   rfl
 
-/-! ### Trace Formula -/
 
-/-
-tr(M^n) = 4·H_n² - (-1)^n
--/
+/-- [Section: ### Trace Formula] -/
 theorem ghostMatrix_closed_trace (n : ℕ) :
     Matrix.trace (ghostMatrix_closed n) = 4 * compPell n ^ 2 - (-1 : ℤ) ^ n := by
   unfold ghostMatrix_closed; rw [ Matrix.trace ] ; simp +decide [ Fin.sum_univ_three ] ; ring;
 
-/-! ### Pellnum strictly positive for n ≥ 1 -/
 
+/-- [Section: ### Pellnum strictly positive for n ≥ 1] -/
 theorem pellNum_pos_of_pos {n : ℕ} (hn : 0 < n) : 0 < pellNum n := by
   induction' hn with n hn ih;
   · decide +revert;
   · rw [ pellNum_step ];
     exact add_pos_of_pos_of_nonneg ih ( le_of_lt ( compPell_pos n ) )
 
-/-! ### Key Pell Product Identity -/
 
-/-
-P_n · P_{n+2} = P_{n+1}² - (-1)^n (rearrangement of Cassini)
--/
+/-- [Section: ### Key Pell Product Identity] -/
 theorem pell_product_succ (n : ℕ) :
     pellNum n * pellNum (n + 2) = pellNum (n + 1) ^ 2 - (-1 : ℤ) ^ n := by
   exact Nat.recOn n ( by norm_num ) fun k ih => by norm_num [ pow_succ, pellNum_rec ] at * ; linarith;
 
-/-! ### The Hypotenuse Growth Bound -/
 
 /-- The hypotenuse of the ghost ancestor is always positive for a PPT. -/
 theorem ghost_hypotenuse_formula (G : ℕ) (a b c : ℤ) :
@@ -87,11 +64,8 @@ theorem ghost_hypotenuse_formula (G : ℕ) (a b c : ℤ) :
     -2 * pellNum G * compPell G * (a + b) + (2 * compPell G ^ 2 - (-1 : ℤ) ^ G) * c := by
   unfold ghost_h_G ghostAncestor; ring
 
-/-! ### Additional Pell recurrence identities -/
 
-/-
-P_{m+n} = P_m · H_n + H_m · P_n (addition formula)
--/
+/-- [Section: ### Additional Pell recurrence identities] -/
 theorem pellNum_add (m n : ℕ) :
     pellNum (m + n) = pellNum m * compPell n + compPell m * pellNum n := by
   -- By definition of Pell numbers, we can express them in terms of the roots of the characteristic equation.
@@ -105,9 +79,7 @@ theorem pellNum_add (m n : ℕ) :
     rw [ show compPell ( n + 2 ) = 2 * compPell ( n + 1 ) + compPell n from rfl ] ; push_cast [ ih _ <| Nat.le_succ _, ih _ <| Nat.le_refl _ ] ; ring ; norm_num ; ring;
   push_cast [ ← @Int.cast_inj ℝ, h_pell_def, h_compPell_def ] ; ring
 
-/-
-H_{m+n} = H_m · H_n + 2 · P_m · P_n (addition formula)
--/
+
 theorem compPell_add (m n : ℕ) :
     compPell (m + n) = compPell m * compPell n + 2 * pellNum m * pellNum n := by
   induction' n with n ih generalizing m;
@@ -117,4 +89,3 @@ theorem compPell_add (m n : ℕ) :
     rw [ h_step, ih, pellNum_add ];
     rw [ show compPell ( n + 1 ) = compPell n + 2 * pellNum n from compPell_step n ] ; rw [ show pellNum ( n + 1 ) = pellNum n + compPell n from pellNum_step n ] ; ring;
 
-end NewTheorems

@@ -1,5 +1,3 @@
-import Mathlib
-
 /-! # CatalogBuild.Geometry.Stereographic.StereographicBridge
 
 Auto-generated from theorem catalog database.
@@ -7,6 +5,7 @@ Domain: Geometry/Stereographic
 Declarations: 6
 -/
 
+import Mathlib
 
 noncomputable section
 
@@ -15,8 +14,10 @@ def stereoX (t : ℝ) : ℝ := 2 * t / (1 + t ^ 2)
 
 
 
+
 /-- y-coordinate of inverse stereographic projection. -/
 def stereoY (t : ℝ) : ℝ := (1 - t ^ 2) / (1 + t ^ 2)
+
 
 
 
@@ -30,8 +31,14 @@ theorem stereo_inv_on_circle (t : ℝ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Geometry.Stereographic.StereographicBridge
+Auto-generated from theorem catalog database.
+Domain: Geometry/Stereographic
+Declarations: 6] -/
 theorem stereo_y_upper_bound (t : ℝ) : stereoY t ≤ 1 := by
   exact div_le_one_of_le₀ ( by nlinarith ) ( by nlinarith )
+
 
 
 
@@ -40,9 +47,11 @@ theorem stereo_y_lower_bound (t : ℝ) : -1 ≤ stereoY t := by
 
 
 
+
 theorem stereo_frozen_crystal :
     {t : ℝ | stereoX t / (1 + stereoY t) = t} = Set.univ := by
       exact Set.eq_univ_of_forall fun t => stereo_round_trip t
+
 
 
 

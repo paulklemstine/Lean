@@ -12,8 +12,10 @@ def a (N : ℤ) (k : ℕ) : ℤ := N - 2 * k
 
 
 
+
 /-- The even leg at step k of the IOF descent. -/
 def b (N : ℤ) (k : ℕ) : ℤ := ((N - 2 * k) ^ 2 - 1) / 2
+
 
 
 
@@ -22,8 +24,10 @@ def c (N : ℤ) (k : ℕ) : ℤ := ((N - 2 * k) ^ 2 + 1) / 2
 
 
 
+
 /-- The energy function for the IOF descent. -/
 def energy (N : ℤ) (k : ℕ) : ℤ := (N - 2 * k) ^ 2
+
 
 
 
@@ -38,8 +42,14 @@ theorem pythagorean_invariant (N : ℤ) (k : ℕ) (hN : N % 2 = 1) :
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Factoring.IOFCore
+Auto-generated from theorem catalog database.
+Domain: Computation/Factoring
+Declarations: 13] -/
 theorem energy_nonneg (N : ℤ) (k : ℕ) : 0 ≤ energy N k := by
   exact sq_nonneg _
+
 
 
 
@@ -49,10 +59,12 @@ theorem energy_strict_decrease (N : ℤ) (k : ℕ) (h : 1 < a N k) :
 
 
 
+
 theorem a_at_factor_step (p q : ℕ) (hp : Odd p) (hq : Odd q)
     (hN : p * q > 0) :
     a (↑(p * q)) ((p - 1) / 2) = ↑(p * q) - ↑p + 1 := by
       unfold a; cases' hp with k hk; cases' hq with l hl; norm_num [ hk, hl ] ; ring;
+
 
 
 
@@ -71,13 +83,16 @@ theorem b_divisible_at_factor_step (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prim
 
 
 
+
 theorem initial_a (N : ℤ) : a N 0 = N := by
   unfold a; ring;
 
 
 
+
 theorem initial_b (N : ℤ) : b N 0 = (N ^ 2 - 1) / 2 := by
   unfold b; norm_num;
+
 
 
 
@@ -87,9 +102,11 @@ theorem initial_c (N : ℤ) : c N 0 = (N ^ 2 + 1) / 2 := by
 
 
 
+
 theorem lyapunov_termination (N : ℕ) (hN : 1 < N) (hOdd : Odd N) :
     ∀ k : ℕ, k < (N - 1) / 2 → energy (↑N) (k + 1) < energy (↑N) k := by
       intro k hk; convert energy_strict_decrease ( N : ℤ ) k _ using 1 ;
       unfold a; omega;
+
 
 

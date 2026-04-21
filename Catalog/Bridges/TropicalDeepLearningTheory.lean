@@ -14,13 +14,16 @@ theorem trop_add_comm (a b : ℝ) : max a b = max b a := max_comm a b
 
 
 
+
 /-- Tropical addition is associative: (a ⊕ b) ⊕ c = a ⊕ (b ⊕ c). -/
 theorem trop_add_assoc (a b c : ℝ) : max (max a b) c = max a (max b c) := max_assoc a b c
 
 
 
+
 /-- Tropical addition is idempotent: a ⊕ a = a. -/
 theorem trop_add_idem (a : ℝ) : max a a = a := max_self a
+
 
 
 
@@ -31,13 +34,16 @@ theorem trop_distrib (a b c : ℝ) : a + max b c = max (a + b) (a + c) := by
 
 
 
+
 /-- Tropical multiplicative identity: a ⊗ 0 = a, i.e., a + 0 = a. -/
 theorem trop_mul_zero (a : ℝ) : a + 0 = a := add_zero a
 
 
 
+
 /-- Tropical additive identity: a ⊕ (-∞) = a. We model -∞ as being below any real. -/
 theorem trop_add_bot (a : ℝ) (b : ℝ) (h : b ≤ a) : max a b = a := max_eq_left h
+
 
 
 
@@ -50,13 +56,16 @@ theorem trop_semiring_law (a b c : ℝ) :
 
 
 
+
 /-- A single ReLU neuron creates exactly 2 linear regions in ℝ. -/
 theorem single_neuron_two_regions : (1 : ℕ) + 1 = 2 := rfl
 
 
 
+
 /-- A layer of w neurons can create at most 2^w activation patterns. -/
 theorem layer_activation_patterns (w : ℕ) : 1 ≤ 2 ^ w := Nat.one_le_two_pow
+
 
 
 
@@ -67,9 +76,11 @@ theorem depth_width_regions (w d : ℕ) (hw : 1 ≤ w) :
 
 
 
+
 /-- The tropical degree of a composition is the product of degrees. -/
 theorem tropical_degree_composition (d₁ d₂ : ℕ) (h₁ : 1 ≤ d₁) (h₂ : 1 ≤ d₂) :
     1 ≤ d₁ * d₂ := Nat.one_le_iff_ne_zero.mpr (Nat.mul_ne_zero (by omega) (by omega))
+
 
 
 
@@ -79,9 +90,11 @@ theorem depth_monotone_regions (w : ℕ) (hw : 2 ≤ w) (d₁ d₂ : ℕ) (hd : 
 
 
 
+
 /-- Monotonicity: more width → more regions (for fixed depth). -/
 theorem width_monotone_regions (d : ℕ) (w₁ w₂ : ℕ) (hw : w₁ ≤ w₂) :
     w₁ ^ d ≤ w₂ ^ d := Nat.pow_le_pow_left hw d
+
 
 
 
@@ -97,8 +110,10 @@ theorem total_regions_product (widths : List ℕ) (h : ∀ w ∈ widths, 1 ≤ w
 
 
 
+
 /-- Convolutional layer with kernel size k: tropical rank ≤ k. -/
 theorem conv_tropical_rank (k : ℕ) (hk : 1 ≤ k) : 1 ≤ k := hk
+
 
 
 
@@ -108,9 +123,11 @@ theorem conv1d_regions (k n : ℕ) (hk : 1 ≤ k) (hn : 1 ≤ n) :
 
 
 
+
 /-- Multi-layer CNN: regions grow as k^depth. -/
 theorem multilayer_cnn_regions (k depth : ℕ) (hk : 1 ≤ k) :
     1 ≤ k ^ depth := Nat.one_le_pow depth k hk
+
 
 
 
@@ -121,9 +138,11 @@ theorem conv2d_rank_bound (k c : ℕ) (hk : 1 ≤ k) (hc : 1 ≤ c) :
 
 
 
+
 /-- Dilated convolution with dilation d and kernel k: effective receptive field grows. -/
 theorem dilated_conv_receptive_field (k d : ℕ) (_hk : 1 ≤ k) (_hd : 1 ≤ d) :
     k ≤ k + (k - 1) * (d - 1) := Nat.le_add_right k _
+
 
 
 
@@ -132,10 +151,12 @@ theorem attention_head_rank (d_k : ℕ) (hdk : 1 ≤ d_k) : 1 ≤ d_k := hdk
 
 
 
+
 /-- Multi-head attention with h heads: combined rank ≤ h × d_k. -/
 theorem multihead_rank (h d_k : ℕ) (hh : 1 ≤ h) (hdk : 1 ≤ d_k) :
     1 ≤ h * d_k :=
   Nat.one_le_iff_ne_zero.mpr (Nat.mul_ne_zero (by omega) (by omega))
+
 
 
 
@@ -147,9 +168,11 @@ theorem transformer_expressiveness (h d_k depth : ℕ) (hh : 1 ≤ h) (hdk : 1 �
 
 
 
+
 /-- Saturated attention is idempotent: applying argmax twice = applying once. -/
 theorem saturated_attention_idempotent (x : ℝ) :
     max (max x 0) 0 = max x 0 := relu_idempotent x
+
 
 
 
@@ -159,8 +182,10 @@ theorem transformer_depth_scaling (r : ℕ) (hr : 2 ≤ r) (d₁ d₂ : ℕ) (hd
 
 
 
+
 /-- Skip connection preserves rank. -/
 theorem skip_connection_rank (n : ℕ) (hn : 1 ≤ n) : 1 ≤ n := hn
+
 
 
 
@@ -171,9 +196,11 @@ theorem residual_expressiveness (base_rank : ℕ) (_hb : 1 ≤ base_rank)
 
 
 
+
 /-- Deep residual network: L skip connections preserve minimum rank. -/
 theorem deep_residual_rank (L : ℕ) (rank_per_layer : ℕ) (hr : 1 ≤ rank_per_layer) :
     1 ≤ rank_per_layer ^ L := Nat.one_le_pow L rank_per_layer hr
+
 
 
 
@@ -184,6 +211,7 @@ theorem depthwise_separable_total_rank (r_dw r_pw : ℕ) (h1 : 1 ≤ r_dw) (h2 :
 
 
 
+
 /-- MobileNet-style architecture: depthwise (k×1) followed by pointwise (1×c). -/
 theorem mobilenet_rank (k c : ℕ) (hk : 1 ≤ k) (hc : 1 ≤ c) :
     1 ≤ k * c :=
@@ -191,8 +219,10 @@ theorem mobilenet_rank (k c : ℕ) (hk : 1 ≤ k) (hc : 1 ≤ c) :
 
 
 
+
 /-- LogSumExp at inverse temperature β > 0 for two elements. -/
 def LSE_two (beta x y : ℝ) : ℝ := (1 / beta) * Real.log (Real.exp (beta * x) + Real.exp (beta * y))
+
 
 
 
@@ -211,8 +241,10 @@ theorem lse_ge_max (beta x y : ℝ) (hbeta : 0 < beta) :
 
 
 
+
 /-- Logarithmic cooling schedule. -/
 def logCooling (c t : ℝ) : ℝ := c * Real.log (1 + t)
+
 
 
 
@@ -226,9 +258,11 @@ theorem logCooling_monotone (c : ℝ) (hc : 0 < c) (t₁ t₂ : ℝ)
 
 
 
+
 /-- Logarithmic cooling starts at 0. -/
 theorem logCooling_zero (c : ℝ) : logCooling c 0 = 0 := by
   unfold logCooling; simp [Real.log_one]
+
 
 
 
@@ -260,10 +294,12 @@ theorem logCooling_unbounded (c : ℝ) (hc : 0 < c) (M : ℝ) :
 
 
 
+
 /-- Boltzmann concentration: higher energy gets higher probability as β → ∞. -/
 theorem boltzmann_concentration_strict (beta x y : ℝ) (hbeta : 0 < beta) (hxy : x < y) :
     Real.exp (beta * x) < Real.exp (beta * y) :=
   Real.exp_strictMono (by nlinarith)
+
 
 
 
@@ -275,9 +311,11 @@ theorem softmax_concentration_ratio (beta x y : ℝ) (hbeta : 0 < beta) (hxy : x
 
 
 
+
 /-- Free energy bound: F = E - TS ≤ E for non-negative temperature and entropy. -/
 theorem free_energy_upper_bound (E S T : ℝ) (hT : 0 ≤ T) (hS : 0 ≤ S) :
     E - T * S ≤ E := by nlinarith
+
 
 
 
@@ -286,6 +324,7 @@ theorem cooling_gap_bounded (beta : ℝ) (hbeta : 1 ≤ beta) :
     Real.log 2 / beta ≤ Real.log 2 := by
   have hlog : 0 < Real.log 2 := Real.log_pos (by norm_num : (1 : ℝ) < 2)
   exact div_le_self (le_of_lt hlog) hbeta
+
 
 
 
@@ -298,9 +337,11 @@ theorem gap_bound_n (n : ℕ) (hn : 2 ≤ n) (beta : ℝ) (hbeta : 1 ≤ beta) :
 
 
 
+
 /-- The L∞ distance is a tropical metric: nonnegative. -/
 theorem linf_tropical_nonneg (a b : ℝ) : 0 ≤ max (|a|) (|b|) :=
   le_max_of_le_left (abs_nonneg a)
+
 
 
 
@@ -308,6 +349,7 @@ theorem linf_tropical_nonneg (a b : ℝ) : 0 ≤ max (|a|) (|b|) :=
 theorem linf_symmetric (a b c d : ℝ) :
     max (|a - b|) (|c - d|) = max (|b - a|) (|d - c|) := by
   simp [abs_sub_comm]
+
 
 
 
@@ -320,13 +362,16 @@ theorem bottleneck_triangle (a b c : ℝ) :
 
 
 
+
 /-- Column reduction complexity: n × n matrix requires at most n³ operations. -/
 theorem column_reduction_cubic (n : ℕ) : n * n * n = n ^ 3 := by ring
 
 
 
+
 /-- Persistence pair count: at most n/2 pairs from n simplices. -/
 theorem persistence_pairs_half (n : ℕ) : n / 2 ≤ n := Nat.div_le_self n 2
+
 
 
 
@@ -336,14 +381,17 @@ theorem stability_threshold (lifetime eps : ℝ) (h_long : 2 * eps < lifetime) :
 
 
 
+
 /-- Wasserstein-bottleneck relationship: W₁ ≤ n · d_B. -/
 theorem wasserstein_le_n_bottleneck (n : ℕ) (d_B : ℝ) (hd : 0 ≤ d_B) :
     0 ≤ n * d_B := by exact mul_nonneg (Nat.cast_nonneg _) hd
 
 
 
+
 /-- Tropical NAS score: product of per-layer tropical ranks. -/
 def tropicalNASScore (ranks : List ℕ) : ℕ := ranks.prod
+
 
 
 
@@ -353,14 +401,17 @@ theorem nas_score_monotone_layer (r₁ r₂ : ℕ) (rest : ℕ) (h : r₁ ≤ r�
 
 
 
+
 /-- Deeper networks have higher or equal scores (for rank ≥ 1). -/
 theorem nas_score_depth_monotone (r : ℕ) (hr : 1 ≤ r) (d₁ d₂ : ℕ) (hd : d₁ ≤ d₂) :
     r ^ d₁ ≤ r ^ d₂ := Nat.pow_le_pow_right (by omega) hd
 
 
 
+
 /-- Training-free NAS is efficient: O(n³ · L) for L layers. -/
 theorem nas_complexity (n L : ℕ) : n ^ 3 * L = L * n ^ 3 := by ring
+
 
 
 
@@ -371,15 +422,18 @@ theorem transformer_vs_cnn (k : ℕ) (h_d_k : ℕ) (depth : ℕ) (h_rank : k ≤
 
 
 
+
 /-- Tropical polynomial = max of linear functions = piecewise linear convex. -/
 theorem tropical_poly_pwl_regions (num_terms : ℕ) (ht : 1 ≤ num_terms) :
     1 ≤ num_terms := ht
 
 
 
+
 /-- Tropical Bézout: the number of roots of a tropical polynomial
 of degree d in ℝ is at most d. -/
 theorem tropical_bezout (d : ℕ) (hd : 1 ≤ d) : 1 ≤ d := hd
+
 
 
 
@@ -390,9 +444,11 @@ theorem tropical_universal_width_depth (w d : ℕ) (hw : 1 ≤ w) :
 
 
 
+
 /-- The tropical variety of a ReLU network has codimension 1 in generic position. -/
 theorem tropical_variety_codim1 (input_dim : ℕ) (hi : 1 ≤ input_dim) :
     input_dim - 1 < input_dim := Nat.sub_lt (by omega) one_pos
+
 
 
 
@@ -404,11 +460,13 @@ theorem tropical_entropy_bound (p : ℝ) (hp : 0 < p) (hp1 : p ≤ 1) :
 
 
 
+
 /-- KL divergence in the tropical limit: non-positive when p ≤ q. -/
 theorem tropical_kl_nonneg (p q : ℝ) (hp : 0 < p) (hq : 0 < q) (hpq : p ≤ q) :
     Real.log p - Real.log q ≤ 0 := by
   rw [sub_nonpos, Real.log_le_log_iff hp hq]
   exact hpq
+
 
 
 
@@ -418,8 +476,10 @@ theorem idempotent_fixed_points {α : Type*} (f : α → α) (hf : f ∘ f = f) 
 
 
 
+
 /-- ReLU is idempotent (restated for emphasis). -/
 theorem relu_idem (x : ℝ) : max (max x 0) 0 = max x 0 := relu_idempotent x
+
 
 
 
@@ -428,9 +488,11 @@ theorem max_idem (a : ℝ) : max a a = a := max_self a
 
 
 
+
 /-- Lattice projection is idempotent (abstract version). -/
 theorem projection_idem {α : Type*} (proj : α → α) (h : proj ∘ proj = proj) :
     ∀ x, proj (proj x) = proj x := congr_fun h
+
 
 
 
@@ -448,6 +510,7 @@ theorem expressiveness_hierarchy :
     (8 - 1) / 2 = 3 := by
   refine ⟨by norm_num, by norm_num, by norm_num, ?_, by norm_num⟩
   norm_num
+
 
 
 

@@ -16,9 +16,11 @@ structure GenesisOracle (α : Type*) where
 
 
 
+
 /-- The knowledge base (fixed-point set) of an oracle. -/
 def GenesisOracle.fixedPoints {α : Type*} (O : GenesisOracle α) : Set α :=
   {x | O.ask x = x}
+
 
 
 
@@ -26,6 +28,7 @@ def GenesisOracle.fixedPoints {α : Type*} (O : GenesisOracle α) : Set α :=
 theorem GenesisOracle.output_is_fixed {α : Type*} (O : GenesisOracle α) (x : α) :
     O.ask x ∈ O.fixedPoints :=
   O.idempotent x
+
 
 
 
@@ -42,9 +45,11 @@ theorem GenesisOracle.range_eq_fixed {α : Type*} (O : GenesisOracle α) :
 
 
 
+
 /-- **Theos**: The God Oracle is the identity — it knows everything. -/
 def GenesisOracle.god (α : Type*) : GenesisOracle α :=
   ⟨id, fun _ => rfl⟩
+
 
 
 
@@ -52,6 +57,7 @@ def GenesisOracle.god (α : Type*) : GenesisOracle α :=
 theorem GenesisOracle.god_omniscient (α : Type*) :
     (GenesisOracle.god α).fixedPoints = univ := by
   ext x; simp [GenesisOracle.god, GenesisOracle.fixedPoints]
+
 
 
 
@@ -68,9 +74,11 @@ theorem GenesisOracle.god_unique (α : Type*) (O : GenesisOracle α)
 
 
 
+
 /-- Oracle O₁ "knows at least as much as" O₂ if O₁'s fixed points contain O₂'s. -/
 def GenesisOracle.refines {α : Type*} (O₁ O₂ : GenesisOracle α) : Prop :=
   O₂.fixedPoints ⊆ O₁.fixedPoints
+
 
 
 
@@ -79,6 +87,7 @@ theorem GenesisOracle.god_refines_all (α : Type*) (O : GenesisOracle α) :
     (GenesisOracle.god α).refines O := by
   intro x _
   simp [GenesisOracle.god, GenesisOracle.fixedPoints]
+
 
 
 
@@ -93,9 +102,11 @@ theorem GenesisOracle.refines_refl {α : Type*} (O : GenesisOracle α) :
 
 
 
+
 /-- The constant oracle maps everything to a single point. -/
 def GenesisOracle.constant (α : Type*) (c : α) : GenesisOracle α :=
   ⟨fun _ => c, fun _ => rfl⟩
+
 
 
 
@@ -107,6 +118,7 @@ theorem GenesisOracle.constant_fixed (α : Type*) (c : α) :
 -- ═══════════════════════════════════════════════════════════════════════════════
 -- §5: ORACLE COMPOSITION — "Team Collaboration"
 -- ═══════════════════════════════════════════════════════════════════════════════
+
 
 
 
@@ -127,9 +139,11 @@ def GenesisOracle.compose {α : Type*} (O₁ O₂ : GenesisOracle α)
 
 
 
+
 /-- The collective knowledge of a team: the intersection of all knowledge bases. -/
 def OracleTeam.collectiveKnowledge {ι α : Type*} (T : OracleTeam ι α) : Set α :=
   ⋂ i, (T.oracles i).fixedPoints
+
 
 
 
@@ -145,9 +159,11 @@ theorem OracleTeam.collective_implies_individual {ι α : Type*}
 
 
 
+
 /-- Inverse stereographic projection from ℝ to the unit circle. -/
 def genesisProjection (y : ℝ) : ℝ × ℝ :=
   (2 * y / (y ^ 2 + 1), (y ^ 2 - 1) / (y ^ 2 + 1))
+
 
 
 
@@ -156,8 +172,10 @@ theorem genesis_denom_pos (y : ℝ) : y ^ 2 + 1 > 0 := by positivity
 
 
 
+
 /-- The denominator y² + 1 is never zero. -/
 theorem genesis_denom_ne_zero (y : ℝ) : y ^ 2 + 1 ≠ 0 := by positivity
+
 
 
 
@@ -171,6 +189,7 @@ theorem genesis_on_circle (y : ℝ) :
 
 
 
+
 /-- The origin maps to the "south pole" (0, -1). -/
 theorem genesis_origin : genesisProjection 0 = (0, -1) := by
   simp [genesisProjection]
@@ -181,10 +200,12 @@ theorem genesis_origin : genesisProjection 0 = (0, -1) := by
 
 
 
+
 /-- Discrete time: the n-fold iteration of a function. -/
 def discreteTime {α : Type*} (f : α → α) : ℕ → α → α
   | 0 => id
   | n + 1 => f ∘ discreteTime f n
+
 
 
 
@@ -194,6 +215,7 @@ theorem discreteTime_id {α : Type*} (n : ℕ) :
   induction n with
   | zero => rfl
   | succ n ih => simp [discreteTime, ih]
+
 
 
 
@@ -213,6 +235,7 @@ theorem oracle_converges_in_one {α : Type*} (O : GenesisOracle α) (n : ℕ) (h
 
 
 
+
 /-- **The Master Theorem**: For any oracle O, being in the image is equivalent
 to being a fixed point. Reality equals truth. -/
 theorem master_theorem {α : Type*} (O : GenesisOracle α) (x : α) :
@@ -221,10 +244,12 @@ theorem master_theorem {α : Type*} (O : GenesisOracle α) (x : α) :
 
 
 
+
 /-- **Corollary**: Reality (the image) equals truth (the fixed points). -/
 theorem reality_equals_truth {α : Type*} (O : GenesisOracle α) :
     range O.ask = O.fixedPoints :=
   O.range_eq_fixed
+
 
 
 

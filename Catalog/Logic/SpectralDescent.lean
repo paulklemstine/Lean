@@ -16,12 +16,14 @@ deriving DecidableEq, Repr
 
 
 
+
 /-- Assign an RVT class to a Gaussian integer based on its norm mod 4. -/
 def gaussianRVT (a b : ℤ) : RVT :=
   let n := (a^2 + b^2) % 4
   if n = 1 then RVT.R
   else if n = 0 then RVT.V
   else RVT.T
+
 
 
 
@@ -35,14 +37,21 @@ theorem gauss_norm_mod_four (a b : ℤ) :
 
 
 
+
 /-- **Theorem**: The conformal factor is always positive -/
 theorem conformal_pos (t : ℝ) : conformalFactor t > 0 := by
   unfold conformalFactor; positivity
 
 
 
+
+/-- [Section: # CatalogBuild.Logic.SpectralDescent
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 10] -/
 theorem conformal_max (t : ℝ) : conformalFactor t ≤ 4 := by
   exact div_le_self ( by norm_num ) ( by nlinarith )
+
 
 
 
@@ -54,13 +63,16 @@ theorem conformal_integral_is_area :
 
 
 
+
 /-- **Theorem**: The identity (1,0) is a Gaussian integer on S¹. -/
 theorem unit_gaussian_on_circle : (1 : ℤ)^2 + (0 : ℤ)^2 = 1 := by norm_num
 
 
 
+
 /-- **Theorem**: (0,1) is a Gaussian integer on S¹. -/
 theorem imag_unit_on_circle : (0 : ℤ)^2 + (1 : ℤ)^2 = 1 := by norm_num
+
 
 
 
@@ -70,8 +82,10 @@ def descentOracle (k : ℕ) : (Fin (k+2) → ℝ) → (Fin (k+1) → ℝ) :=
 
 
 
+
 /-- **Theorem**: Composing descent oracles gives the full projection. -/
 theorem descent_composition (k : ℕ) (v : Fin (k+3) → ℝ) :
     descentOracle k (descentOracle (k+1) v) = fun i => v ⟨i.val, by omega⟩ := by
   ext i; simp [descentOracle]
+
 

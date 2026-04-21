@@ -13,9 +13,11 @@ def berg_A : Matrix (Fin 3) (Fin 3) ℤ :=
 
 
 
+
 /-- Berggren matrix B -/
 def berg_B : Matrix (Fin 3) (Fin 3) ℤ :=
   !![1, 2, 2; 2, 1, 2; 2, 2, 3]
+
 
 
 
@@ -25,9 +27,11 @@ def berg_C : Matrix (Fin 3) (Fin 3) ℤ :=
 
 
 
+
 /-- The swap matrix S that exchanges coordinates a and b -/
 def berg_S : Matrix (Fin 3) (Fin 3) ℤ :=
   !![0, 1, 0; 1, 0, 0; 0, 0, 1]
+
 
 
 
@@ -36,8 +40,10 @@ def vacuum : Fin 3 → ℤ := ![0, 1, 1]
 
 
 
+
 /-- The light triple (1, 0, 1) -/
 def light : Fin 3 → ℤ := ![1, 0, 1]
+
 
 
 
@@ -46,8 +52,10 @@ def triple345 : Fin 3 → ℤ := ![3, 4, 5]
 
 
 
+
 /-- The swapped first triple (4, 3, 5) -/
 def triple435 : Fin 3 → ℤ := ![4, 3, 5]
+
 
 
 
@@ -57,9 +65,11 @@ theorem vacuum_pythagorean : (vacuum 0) ^ 2 + (vacuum 1) ^ 2 = (vacuum 2) ^ 2 :=
 
 
 
+
 /-- **Theorem (Vacuum Fixed Point)**: A · (0,1,1) = (0,1,1) -/
 theorem vacuum_fixed_by_A : berg_A.mulVec vacuum = vacuum := by
   native_decide
+
 
 
 
@@ -69,9 +79,11 @@ theorem light_fixed_by_C : berg_C.mulVec light = light := by
 
 
 
+
 /-- **Theorem (Creation from Vacuum)**: B · (0,1,1) = (4,3,5) -/
 theorem creation_B_vacuum : berg_B.mulVec vacuum = triple435 := by
   native_decide
+
 
 
 
@@ -81,9 +93,11 @@ theorem creation_B_light : berg_B.mulVec light = triple345 := by
 
 
 
+
 /-- **Theorem (C also creates from vacuum)**: C · (0,1,1) = (4,3,5) -/
 theorem creation_C_vacuum : berg_C.mulVec vacuum = triple435 := by
   native_decide
+
 
 
 
@@ -93,9 +107,11 @@ theorem creation_A_light : berg_A.mulVec light = triple345 := by
 
 
 
+
 /-- **Theorem (B-C Degeneracy at Vacuum)**: B and C produce the same result from vacuum -/
 theorem BC_degenerate_at_vacuum : berg_B.mulVec vacuum = berg_C.mulVec vacuum := by
   native_decide
+
 
 
 
@@ -105,9 +121,11 @@ theorem AB_degenerate_at_light : berg_A.mulVec light = berg_B.mulVec light := by
 
 
 
+
 /-- The swap matrix exchanges vacuum and light -/
 theorem swap_vacuum_light : berg_S.mulVec vacuum = light := by
   native_decide
+
 
 
 
@@ -117,9 +135,11 @@ theorem swap_light_vacuum : berg_S.mulVec light = vacuum := by
 
 
 
+
 /-- **Theorem (Swap Conjugation: A ↔ C)**: S · A · S = C -/
 theorem swap_conjugates_A_to_C : berg_S * berg_A * berg_S = berg_C := by
   native_decide
+
 
 
 
@@ -129,9 +149,11 @@ theorem swap_conjugates_C_to_A : berg_S * berg_C * berg_S = berg_A := by
 
 
 
+
 /-- **Theorem (B is Self-Dual)**: S · B · S = B -/
 theorem swap_fixes_B : berg_S * berg_B * berg_S = berg_B := by
   native_decide
+
 
 
 
@@ -141,9 +163,11 @@ theorem A_unipotent : (berg_A - 1) ^ 3 = 0 := by
 
 
 
+
 /-- **Theorem (C is Unipotent of Order 3)**: (C - I)³ = 0 -/
 theorem C_unipotent : (berg_C - 1) ^ 3 = 0 := by
   native_decide
+
 
 
 
@@ -153,9 +177,11 @@ theorem A_minus_I_nonzero : berg_A - 1 ≠ 0 := by
 
 
 
+
 /-- (A - I)² is not zero (so A is not unipotent of order 2) -/
 theorem A_minus_I_sq_nonzero : (berg_A - 1) ^ 2 ≠ 0 := by
   native_decide
+
 
 
 
@@ -165,9 +191,11 @@ theorem det_berg_A : Matrix.det berg_A = 1 := by
 
 
 
+
 /-- det(B) = -1 -/
 theorem det_berg_B : Matrix.det berg_B = -1 := by
   native_decide
+
 
 
 
@@ -177,9 +205,11 @@ theorem det_berg_C : Matrix.det berg_C = 1 := by
 
 
 
+
 /-- det(S) = -1 -/
 theorem det_berg_S : Matrix.det berg_S = -1 := by
   native_decide
+
 
 
 
@@ -189,9 +219,11 @@ def lorentz_Q : Matrix (Fin 3) (Fin 3) ℤ :=
 
 
 
+
 /-- A preserves the Lorentz form: Aᵀ Q A = Q -/
 theorem A_preserves_lorentz : berg_A.transpose * lorentz_Q * berg_A = lorentz_Q := by
   native_decide
+
 
 
 
@@ -201,9 +233,11 @@ theorem B_preserves_lorentz : berg_B.transpose * lorentz_Q * berg_B = lorentz_Q 
 
 
 
+
 /-- C preserves the Lorentz form: Cᵀ Q C = Q -/
 theorem C_preserves_lorentz : berg_C.transpose * lorentz_Q * berg_C = lorentz_Q := by
   native_decide
+
 
 
 
@@ -211,6 +245,7 @@ theorem C_preserves_lorentz : berg_C.transpose * lorentz_Q * berg_C = lorentz_Q 
 a = 2d(d+1), b = 2d+1, c = d² + (d+1)² = 2d² + 2d + 1 -/
 theorem min_energy_is_pythagorean (d : ℤ) :
     (2 * d * (d + 1)) ^ 2 + (2 * d + 1) ^ 2 = (d ^ 2 + (d + 1) ^ 2) ^ 2 := by ring
+
 
 
 
@@ -229,10 +264,12 @@ theorem C_advances_min_energy (d : ℤ) :
 
 
 
+
 /-- The minimum energy at depth d equals 2d² + 2d + 1,
 which is the d-th centered square number (for d ≥ 0). -/
 theorem centered_square_identity (d : ℤ) :
     d ^ 2 + (d + 1) ^ 2 = 2 * d ^ 2 + 2 * d + 1 := by ring
+
 
 
 
@@ -245,10 +282,12 @@ theorem near_diagonal_hypotenuse (a : ℤ) :
 
 
 
+
 /-- The Brahmagupta-Fibonacci identity: the product of two sums of squares
 is itself a sum of squares. This underlies the Fibonacci-Pythagorean connection. -/
 theorem brahmagupta_fibonacci_genesis (a b c d : ℤ) :
     (a ^ 2 + b ^ 2) * (c ^ 2 + d ^ 2) =
     (a * c - b * d) ^ 2 + (a * d + b * c) ^ 2 := by ring
+
 
 

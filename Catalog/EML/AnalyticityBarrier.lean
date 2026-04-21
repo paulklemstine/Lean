@@ -19,6 +19,7 @@ theorem softplus_analyticAt (x : ℝ) : AnalyticAt ℝ softplus x := by
 
 
 
+
 /-- Every Sheffer expression defines a function that is analytic at every point.
 This is the **Analyticity Barrier**: functions that are C∞ but not analytic
 (like e^{-1/x²}) are excluded from the Sheffer algebra. -/
@@ -37,12 +38,14 @@ theorem sheffer_expr_analyticAt (e : ShefferExpr) (x : ℝ) :
 
 
 
+
 /-- Corollary: every function in the Sheffer algebra is analytic at every point. -/
 theorem sheffer_algebra_analyticAt {f : ℝ → ℝ} (hf : f ∈ ShefferAlgebra) (x : ℝ) :
     AnalyticAt ℝ f x := by
   obtain ⟨e, he⟩ := hf
   rw [he]
   exact sheffer_expr_analyticAt e x
+
 
 
 
@@ -55,11 +58,13 @@ theorem sheffer_algebra_analytic_and_lipschitz {f : ℝ → ℝ} (hf : f ∈ She
 
 
 
+
 /-- A function that is C∞ but not analytic at some point cannot be in ShefferAlg. -/
 theorem not_sheffer_of_not_analyticAt {f : ℝ → ℝ} {x : ℝ}
     (h : ¬AnalyticAt ℝ f x) : f ∉ ShefferAlgebra := by
   intro hf
   exact h (sheffer_algebra_analyticAt hf x)
+
 
 
 

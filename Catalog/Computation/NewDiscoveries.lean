@@ -17,9 +17,15 @@ def EML_new (a b : ℝ) : ℝ := Real.exp a - Real.log b
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.NewDiscoveries
+Auto-generated from theorem catalog database.
+Domain: Computation
+Declarations: 21] -/
 theorem EML_conjugation (a b c : ℝ) :
     EML_new a (Real.exp (EML_new b c)) = Real.exp a - Real.exp b + Real.log c := by
   simp [EML_new, Real.log_exp]; ring
+
 
 
 
@@ -29,10 +35,12 @@ theorem EML_self_conjugation (a c : ℝ) :
 
 
 
+
 theorem EML_diagonal_quadratic_bound (x : ℝ) (hx : 0 < x) :
     EML_new x x ≥ x ^ 2 / 2 + 2 := by
   unfold EML_new
   nlinarith [quadratic_le_exp_of_nonneg hx.le, Real.log_le_sub_one_of_pos hx]
+
 
 
 
@@ -53,12 +61,15 @@ theorem EML_diagonal_strictMono_ge_one :
 
 
 
+
 def EML_divergence (x y : ℝ) : ℝ := EML_new x y + EML_new y x - 2
+
 
 
 
 theorem EML_divergence_symm (x y : ℝ) : EML_divergence x y = EML_divergence y x := by
   simp [EML_divergence, EML_new]; ring
+
 
 
 
@@ -71,7 +82,9 @@ theorem EML_divergence_pos (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
 
 
 
+
 def symmetryDefect (a b : ℝ) : ℝ := EML_new a b - EML_new b a
+
 
 
 
@@ -81,14 +94,17 @@ theorem symmetryDefect_formula (a b : ℝ) :
 
 
 
+
 theorem symmetryDefect_antisymm (a b : ℝ) :
     symmetryDefect a b = -symmetryDefect b a := by
   simp [symmetryDefect, EML_new]
 
 
 
+
 theorem symmetryDefect_self (a : ℝ) : symmetryDefect a a = 0 := by
   simp [symmetryDefect]
+
 
 
 
@@ -98,13 +114,16 @@ theorem exp_minus_id_minus_log_pos (c : ℝ) (hc : 0 < c) :
 
 
 
+
 theorem EML_depth2_e_minus_1 : EML_new 1 (Real.exp 1) = Real.exp 1 - 1 := by
   simp [EML_new, Real.log_exp]
 
 
 
+
 theorem EML_depth2_exp_e : EML_new (Real.exp 1) 1 = Real.exp (Real.exp 1) := by
   simp [EML_new, Real.log_one]
+
 
 
 
@@ -114,15 +133,19 @@ theorem EML_depth2_exp_e_minus_1 :
 
 
 
+
 theorem K_EML_2_gt_1 : EML_new 1 1 ≠ 2 := by
   simp [EML_new, Real.log_one]; intro h; linarith [Real.exp_one_gt_d9]
+
 
 
 
 theorem e_minus_one_lt_two : Real.exp 1 - 1 < 2 := by linarith [Real.exp_one_lt_d9]
 
 
+
 theorem e_gt_two : Real.exp 1 > 2 := by linarith [Real.exp_one_gt_d9]
+
 
 
 
@@ -141,9 +164,11 @@ theorem EML_amplification (a b δ : ℝ) (ha : 0 ≤ a) (hδ : 0 < δ) :
 
 
 
+
 theorem EML_legendre_form (u v : ℝ) :
     EML_new u (Real.exp v) = Real.exp u - v := by
   simp [EML_new, Real.log_exp]
+
 
 
 

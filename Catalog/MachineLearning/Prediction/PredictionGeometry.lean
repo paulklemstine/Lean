@@ -17,9 +17,11 @@ structure PredictionOracle (α : Type*) where
 
 
 
+
 /-- The fixed points of an oracle — the "settled predictions" -/
 def PredictionOracle.fixedPoints {α : Type*} (O : PredictionOracle α) : Set α :=
   {x | O.predict x = x}
+
 
 
 
@@ -33,6 +35,11 @@ theorem PredictionOracle.predict_mem_fixedPoints {α : Type*} (O : PredictionOra
 
 
 
+
+/-- [Section: # CatalogBuild.MachineLearning.Prediction.PredictionGeometry
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/Prediction
+Declarations: 26] -/
 def PredictionOracle.identity (α : Type*) : PredictionOracle α where
   predict := id
   idempotent := by
@@ -40,9 +47,11 @@ def PredictionOracle.identity (α : Type*) : PredictionOracle α where
 
 
 
+
 theorem PredictionOracle.identity_fixedPoints (α : Type*) :
     (PredictionOracle.identity α).fixedPoints = Set.univ := by
   exact Set.eq_univ_iff_forall.mpr fun x => rfl
+
 
 
 
@@ -59,14 +68,17 @@ structure PredictionHorizon where
 
 
 
+
 /-- The prediction horizon formula: H = ln(δ/ε₀) / λ -/
 noncomputable def PredictionHorizon.horizon (h : PredictionHorizon) : ℝ :=
   Real.log (h.delta / h.epsilon_0) / h.lyapunov
 
 
 
+
 theorem PredictionHorizon.horizon_pos (h : PredictionHorizon) : 0 < h.horizon := by
   exact div_pos ( Real.log_pos <| by rw [ lt_div_iff₀ h.epsilon_pos ] ; linarith [ h.delta_gt_eps ] ) h.lyapunov_pos
+
 
 
 
@@ -87,6 +99,7 @@ theorem PredictionHorizon.doubling_precision_gain (h : PredictionHorizon) :
 
 
 
+
 theorem horizon_decreases_with_chaos (delta eps0 : ℝ) (hdelta : 0 < delta) (heps : 0 < eps0)
     (hlt : eps0 < delta)
     (lam1 lam2 : ℝ) (hlam1 : 0 < lam1) (hlam2 : 0 < lam2) (hlam : lam1 < lam2) :
@@ -94,6 +107,7 @@ theorem horizon_decreases_with_chaos (delta eps0 : ℝ) (hdelta : 0 < delta) (he
     let h1 : PredictionHorizon := ⟨lam1, eps0, delta, hlam1, heps, hdelta, hlt⟩
     h2.horizon < h1.horizon := by
   exact div_lt_div_of_pos_left ( Real.log_pos <| by rw [ lt_div_iff₀ heps ] ; linarith ) ( by positivity ) hlam
+
 
 
 
@@ -113,9 +127,11 @@ theorem max_entropy_uniform (n : ℕ) (hn : 0 < n) (p : Fin n → ℝ)
 
 
 
+
 /-- Predictability: how far below maximum entropy a source is. -/
 noncomputable def predictability {n : ℕ} (p : Fin n → ℝ) (hn : 0 < n) : ℝ :=
   Real.log n - shannonEntropy p
+
 
 
 
@@ -123,6 +139,7 @@ theorem predictability_nonneg {n : ℕ} (p : Fin n → ℝ) (hn : 0 < n)
     (hp_nonneg : ∀ i, 0 ≤ p i) (hp_sum : ∑ i, p i = 1) :
     0 ≤ predictability p hn := by
   exact sub_nonneg_of_le ( max_entropy_uniform n hn p hp_nonneg hp_sum )
+
 
 
 
@@ -134,11 +151,13 @@ structure ContractiveOracle (α : Type*) [PseudoMetricSpace α] extends Predicti
 
 
 
+
 theorem contractive_oracle_error_decay {α : Type*} [PseudoMetricSpace α]
     (O : ContractiveOracle α) (x y : α) (n : ℕ) :
     dist (O.predict^[n] x) (O.predict^[n] y) ≤ O.contraction_rate ^ n * dist x y := by
   induction' n with n ih generalizing x y <;> simp_all +decide [ Function.iterate_succ_apply', pow_succ' ];
   simpa only [ mul_assoc ] using le_trans ( O.contractive _ _ ) ( mul_le_mul_of_nonneg_left ( ih _ _ ) ( O.rate_bound.1 ) )
+
 
 
 
@@ -156,9 +175,11 @@ theorem contractive_oracle_unique_fixpoint {α : Type*} [MetricSpace α]
 
 
 
+
 /-- Two prediction oracles commute if their composition order doesn't matter -/
 def PredictionOracle.commute {α : Type*} (O₁ O₂ : PredictionOracle α) : Prop :=
   ∀ x, O₁.predict (O₂.predict x) = O₂.predict (O₁.predict x)
+
 
 
 
@@ -171,6 +192,7 @@ def PredictionOracle.compose {α : Type*} (O₁ O₂ : PredictionOracle α)
     rw [hc] -- Use the commutativity of O₁ and O₂;
     rw [ O₁.idempotent, hc ];
     exact O₂.idempotent _
+
 
 
 
@@ -200,9 +222,11 @@ theorem PredictionOracle.compose_fixedPoints {α : Type*} (O₁ O₂ : Predictio
 
 
 
+
 /-- Error probability after majority vote of (2k+1) queries -/
 noncomputable def majorityErrorBound (p : ℝ) (k : ℕ) : ℝ :=
   (4 * p * (1 - p)) ^ k
+
 
 
 
@@ -212,9 +236,11 @@ theorem amplification_factor_lt_one (p : ℝ) (hp : 1/2 < p) (hp1 : p ≤ 1) :
 
 
 
+
 theorem noisy_oracle_convergence (p : ℝ) (hp : 1/2 < p) (hp1 : p ≤ 1)
     (ε : ℝ) (hε : 0 < ε) : ∃ k : ℕ, majorityErrorBound p k < ε := by
   exact ( exists_pow_lt_of_lt_one hε ( by linarith [ show 4 * p * ( 1 - p ) < 1 by nlinarith [ mul_self_nonneg ( p - 1 / 2 ) ] ] ) )
+
 
 
 
@@ -225,10 +251,12 @@ def PredictionOracle.constant {α : Type*} (c : α) : PredictionOracle α where
 
 
 
+
 theorem PredictionOracle.restrict_fixedPoints_id {α : Type*}
     (O : PredictionOracle α) (x : α) (hx : x ∈ O.fixedPoints) :
     O.predict x = x := by
   exact?
+
 
 
 
@@ -240,10 +268,12 @@ theorem cramer_rao_informal (I_theta : ℝ) (hI : 0 < I_theta)
 
 
 
+
 theorem joint_horizon_min (h₁ h₂ : PredictionHorizon)
     (h_same_lyap : h₁.lyapunov = h₂.lyapunov) :
     min h₁.horizon h₂.horizon ≤ max h₁.horizon h₂.horizon := by
   exact min_le_max
+
 
 
 

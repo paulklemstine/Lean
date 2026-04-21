@@ -26,6 +26,11 @@ theorem monotone_has_fixed_point {L : Type*} [CompleteLattice L]
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.SciFi.TimeTravel
+Auto-generated from theorem catalog database.
+Domain: Speculative/SciFi
+Declarations: 3] -/
 theorem iterate_at_fixed_point {X : Type*} (f : X → X)
     (x : X) (hx : f x = x) (n : ℕ) :
     f^[n] x = x := by
@@ -33,9 +38,11 @@ theorem iterate_at_fixed_point {X : Type*} (f : X → X)
 
 
 
+
 theorem bootstrap_self_consistent {X : Type*} (f : X → X)
     (x : X) (hfx : f x = x) :
     f (f x) = f x := by
   grind +suggestions
+
 
 

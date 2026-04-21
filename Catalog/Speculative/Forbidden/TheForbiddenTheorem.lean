@@ -16,8 +16,14 @@ theorem russells_catastrophe (f : α → Set α) : ¬ Surjective f := by
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Forbidden.TheForbiddenTheorem
+Auto-generated from theorem catalog database.
+Domain: Speculative/Forbidden
+Declarations: 7] -/
 theorem russell_diagonal_contradiction (f : α → Set α) (hf : Surjective f) : False := by
   exact absurd ( russells_catastrophe f ) ( by tauto )
+
 
 
 
@@ -27,9 +33,11 @@ theorem compression_must_fail {n : ℕ} (f : Fin (n + 1) → Fin n) :
 
 
 
+
 theorem incompressible_strings_exist (n : ℕ) (hn : 0 < n) :
     2 ^ n > 2 ^ n - 1 := by
   exact Nat.sub_lt ( by positivity ) ( by positivity )
+
 
 
 
@@ -43,6 +51,7 @@ theorem the_forbidden_theorem (f : α → α → Prop) :
 
 
 
+
 theorem evil_is_constructive (f : α → Set α) :
     ∃ p : Set α, p ∉ Set.range f := by
   by_contra! h;
@@ -50,7 +59,9 @@ theorem evil_is_constructive (f : α → Set α) :
 
 
 
+
 theorem liar_cannot_exist : ¬ ∃ P : Prop, P ↔ ¬P := by
   tauto
+
 
 

@@ -16,9 +16,11 @@ structure OracleProjection (R M : Type*) [CommRing R] [AddCommGroup M] [Module R
 
 
 
+
 /-- The anti-projection: Q = id - P. -/
 def OracleProjection.anti (P : OracleProjection R M) : M →ₗ[R] M :=
   LinearMap.id - P.toLinearMap
+
 
 
 
@@ -34,6 +36,11 @@ theorem anti_idempotent (P : OracleProjection R M) :
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.OracleLaplacian
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 37] -/
 theorem dialectical_sq_zero (P : OracleProjection R M) :
     P.toLinearMap ∘ₗ P.anti + P.anti ∘ₗ P.toLinearMap = 0 := by
       -- By definition of anti, we have P.anti = id - P.toLinearMap.
@@ -44,6 +51,7 @@ theorem dialectical_sq_zero (P : OracleProjection R M) :
 
 
 
+
 theorem oracle_uncertainty (P₁ P₂ : OracleProjection R M) (x : M)
     (h₁ : P₁.toLinearMap x = x) (h₂ : P₂.toLinearMap x = x) :
     (P₁.toLinearMap ∘ₗ P₂.toLinearMap - P₂.toLinearMap ∘ₗ P₁.toLinearMap) x = 0 := by
@@ -51,8 +59,10 @@ theorem oracle_uncertainty (P₁ P₂ : OracleProjection R M) (x : M)
 
 
 
+
 /-- An oracle on a finite type. -/
 def FinOracle (n : ℕ) := Fin n → Bool
+
 
 
 
@@ -63,9 +73,11 @@ def oracleTransitions (n : ℕ) (O : FinOracle (n + 1)) : ℕ :=
 
 
 
+
 theorem constant_oracle_no_transitions (n : ℕ) (b : Bool) :
     oracleTransitions n (fun (_ : Fin (n + 1)) => b) = 0 := by
       unfold oracleTransitions; aesop;
+
 
 
 
@@ -75,8 +87,10 @@ theorem oracle_transitions_le (n : ℕ) (O : FinOracle (n + 1)) :
 
 
 
+
 /-- The anti-oracle. -/
 def FinOracle.anti (O : FinOracle n) : FinOracle n := fun i => !O i
+
 
 
 
@@ -89,8 +103,10 @@ theorem anti_oracle_same_boundary (n : ℕ) (O : FinOracle (n + 1)) :
 
 
 
+
 /-- The XOR oracle. -/
 def FinOracle.xor (O₁ O₂ : FinOracle n) : FinOracle n := fun i => O₁ i ^^ O₂ i
+
 
 
 
@@ -99,8 +115,10 @@ def oracleEnergy (n : ℕ) (O : FinOracle (n + 1)) : ℕ := oracleTransitions n 
 
 
 
+
 /-- Ground state = zero energy. -/
 def isGroundState (n : ℕ) (O : FinOracle (n + 1)) : Prop := oracleEnergy n O = 0
+
 
 
 
@@ -111,10 +129,12 @@ theorem energy_anti_symmetric (n : ℕ) (O : FinOracle (n + 1)) :
 
 
 
+
 /-- **Ground State Duality**: If O is ground state, so is ¬O. -/
 theorem ground_state_anti (n : ℕ) (O : FinOracle (n + 1))
     (h : isGroundState n O) : isGroundState n O.anti := by
   unfold isGroundState at *; rw [energy_anti_symmetric]; exact h
+
 
 
 
@@ -125,9 +145,11 @@ structure ConfidentOracle (n : ℕ) where
 
 
 
+
 /-- Blind spot size at a given threshold. -/
 def blindSpotSize (O : ConfidentOracle n) (threshold : ℕ) : ℕ :=
   ((Finset.univ : Finset (Fin n)).filter (fun i => O.confidence i < threshold)).card
+
 
 
 
@@ -137,10 +159,12 @@ theorem blind_spot_monotone (O : ConfidentOracle n) {t₁ t₂ : ℕ} (h : t₁ 
 
 
 
+
 theorem total_blindness (O : ConfidentOracle n) (bound : ℕ)
     (hmax : ∀ i, O.confidence i < bound) :
     blindSpotSize O bound = n := by
       unfold blindSpotSize; aesop;
+
 
 
 
@@ -152,6 +176,7 @@ theorem oracle_duality_partition (O : ConfidentOracle n) (threshold : ℕ) :
 
 
 
+
 /-- Oracle iteration via self-reference map φ. -/
 def oracleIterate (O : FinOracle n) (φ : Fin n → Fin n) : ℕ → FinOracle n
   | 0 => O
@@ -159,9 +184,11 @@ def oracleIterate (O : FinOracle n) (φ : Fin n → Fin n) : ℕ → FinOracle n
 
 
 
+
 /-- Fixed-point oracle: O = O ∘ φ. -/
 def isOracleFixedPoint (O : FinOracle n) (φ : Fin n → Fin n) : Prop :=
   ∀ i, O i = O (φ i)
+
 
 
 
@@ -179,9 +206,11 @@ theorem fixed_point_stable (O : FinOracle n) (φ : Fin n → Fin n)
 
 
 
+
 /-- Hamming distance between oracles. -/
 def oracleHamming (O₁ O₂ : FinOracle n) : ℕ :=
   ((Finset.univ : Finset (Fin n)).filter (fun i => O₁ i != O₂ i)).card
+
 
 
 
@@ -194,14 +223,17 @@ theorem hamming_symm (O₁ O₂ : FinOracle n) :
 
 
 
+
 theorem hamming_self (O : FinOracle n) : oracleHamming O O = 0 := by
   unfold oracleHamming; aesop;
+
 
 
 
 theorem hamming_anti_maximal (O : FinOracle n) :
     oracleHamming O O.anti = n := by
       unfold FinOracle.anti oracleHamming; aesop;
+
 
 
 
@@ -213,15 +245,18 @@ theorem hamming_triangle (O₁ O₂ O₃ : FinOracle n) :
 
 
 
+
 /-- AND-tensor. -/
 def oracleTensorAnd (O₁ : FinOracle n₁) (O₂ : FinOracle n₂) :
     Fin n₁ → Fin n₂ → Bool := fun i j => O₁ i && O₂ j
 
 
 
+
 /-- OR-tensor. -/
 def oracleTensorOr (O₁ : FinOracle n₁) (O₂ : FinOracle n₂) :
     Fin n₁ → Fin n₂ → Bool := fun i j => O₁ i || O₂ j
+
 
 
 
@@ -232,9 +267,11 @@ theorem tensor_de_morgan (O₁ : FinOracle n₁) (O₂ : FinOracle n₂)
 
 
 
+
 /-- True-count of an oracle. -/
 def oracleTrueCount (O : FinOracle n) : ℕ :=
   ((Finset.univ : Finset (Fin n)).filter (fun i => O i = true)).card
+
 
 
 
@@ -245,9 +282,11 @@ theorem true_count_complement (O : FinOracle n) :
 
 
 
+
 /-- Oracle → spin: true → 1, false → -1. -/
 def oracleToSpin (O : FinOracle n) : Fin n → ℤ :=
   fun i => if O i then 1 else -1
+
 
 
 
@@ -257,11 +296,13 @@ def oracleMagnetization (O : FinOracle n) : ℤ :=
 
 
 
+
 theorem anti_magnetization (O : FinOracle n) :
     oracleMagnetization O.anti = -oracleMagnetization O := by
       unfold oracleMagnetization;
       unfold oracleToSpin;
       rw [ ← Finset.sum_neg_distrib ] ; congr ; ext i ; unfold FinOracle.anti ; aesop
+
 
 
 

@@ -14,15 +14,18 @@ def trivialQuadruple (N : ℤ) : PythQuadruple where
 
 
 
+
 /-- (d-c)(d+c) = a² + b². -/
 theorem quad_diff_squares (a b c d : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     (d - c) * (d + c) = a ^ 2 + b ^ 2 := by nlinarith
 
 
 
+
 /-- a² + b² = d² - c². -/
 theorem quad_double_factor (a b c d : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     a ^ 2 + b ^ 2 = d ^ 2 - c ^ 2 := by linarith
+
 
 
 
@@ -34,9 +37,11 @@ def tripleToQuadruple (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 /-- Quadruple projects to sum-of-two-squares. -/
 theorem quad_projects (q : PythQuadruple) :
     q.a ^ 2 + q.b ^ 2 = q.d ^ 2 - q.c ^ 2 := by linarith [q.hyp]
+
 
 
 
@@ -45,8 +50,10 @@ theorem eta4_squared : eta4 * eta4 = 1 := by native_decide
 
 
 
+
 /-- N² = N² + 0² (trivial sum-of-squares decomposition). -/
 theorem trivial_decomp (N : ℕ) : N ^ 2 + 0 ^ 2 = N ^ 2 := by ring
+
 
 
 
@@ -55,8 +62,10 @@ theorem legendre_check : 7 % 8 = 7 := by norm_num
 
 
 
+
 /-- GCD extraction works for quadruples too. -/
 theorem quad_gcd (a d : ℕ) : Nat.gcd a (d ^ 2) ∣ d ^ 2 := Nat.gcd_dvd_right a (d ^ 2)
+
 
 
 
@@ -64,5 +73,6 @@ theorem quad_gcd (a d : ℕ) : Nat.gcd a (d ^ 2) ∣ d ^ 2 := Nat.gcd_dvd_right 
 theorem more_gcd_checks (N a b c : ℕ) :
     (Nat.gcd a N ∣ N) ∧ (Nat.gcd b N ∣ N) ∧ (Nat.gcd c N ∣ N) :=
   ⟨Nat.gcd_dvd_right a N, Nat.gcd_dvd_right b N, Nat.gcd_dvd_right c N⟩
+
 
 

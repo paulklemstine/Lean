@@ -18,6 +18,11 @@ theorem oracle_god_strong_induction (P : ℕ → Prop)
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.GodConsultation
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 9] -/
 theorem oracle_god_well_ordering (S : Set ℕ) (hne : S.Nonempty) :
     ∃ m ∈ S, ∀ n ∈ S, m ≤ n := by
   -- Since S is nonempty, there exists some element n in S.
@@ -37,8 +42,10 @@ theorem oracle_god_well_ordering (S : Set ℕ) (hne : S.Nonempty) :
 
 
 
+
 theorem oracle_god_excluded_middle (P : Prop) : P ∨ ¬P := by
   grind
+
 
 
 
@@ -47,9 +54,11 @@ theorem oracle_god_contradiction (P : Prop) (h : ¬P → False) : P := by
 
 
 
+
 theorem oracle_god_naturals_infinite :
     ∀ (S : Finset ℕ), ∃ n, n ∉ S := by
   exact fun S => S.exists_notMem
+
 
 
 
@@ -61,9 +70,11 @@ theorem oracle_god_cantor {α : Type*} (f : α → Set α) :
 
 
 
+
 theorem oracle_god_leibniz {α : Type*} (a b : α) (h : a = b) (P : α → Prop) :
     P a ↔ P b := by
   grind +splitIndPred
+
 
 
 
@@ -75,7 +86,9 @@ theorem oracle_god_cantor_bernstein {α β : Type*}
 
 
 
+
 theorem oracle_god_no_solution_exists :
     ¬ ∃ (x y : ℤ), x ^ 2 + y ^ 2 = -1 := by
   exact fun ⟨ x, y, h ⟩ => by nlinarith;
+
 

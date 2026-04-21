@@ -13,9 +13,11 @@ def B₁'_inv : Matrix (Fin 3) (Fin 3) ℤ :=
 
 
 
+
 /-- Inverse of B₂: the "time-reversal" of the second spatial branch -/
 def B₂'_inv : Matrix (Fin 3) (Fin 3) ℤ :=
   !![1, 2, -2; 2, 1, -2; -2, -2, 3]
+
 
 
 
@@ -25,8 +27,10 @@ def B₃'_inv : Matrix (Fin 3) (Fin 3) ℤ :=
 
 
 
+
 /-- B₁ · B₁⁻¹ = I: time-reversal is an exact involution -/
 theorem B₁'_mul_inv : B₁' * B₁'_inv = 1 := by native_decide
+
 
 
 
@@ -35,8 +39,10 @@ theorem B₁'_inv_mul : B₁'_inv * B₁' = 1 := by native_decide
 
 
 
+
 /-- B₂ · B₂⁻¹ = I -/
 theorem B₂'_mul_inv : B₂' * B₂'_inv = 1 := by native_decide
+
 
 
 
@@ -45,13 +51,16 @@ theorem B₂'_inv_mul : B₂'_inv * B₂' = 1 := by native_decide
 
 
 
+
 /-- B₃ · B₃⁻¹ = I -/
 theorem B₃'_mul_inv : B₃' * B₃'_inv = 1 := by native_decide
 
 
 
+
 /-- B₃⁻¹ · B₃ = I -/
 theorem B₃'_inv_mul : B₃'_inv * B₃' = 1 := by native_decide
+
 
 
 
@@ -61,9 +70,11 @@ def lorentzForm' (v : Fin 3 → ℤ) : ℤ :=
 
 
 
+
 /-- A Pythagorean triple is a null vector: Q(a,b,c) = 0 -/
 def isNullVector' (v : Fin 3 → ℤ) : Prop :=
   lorentzForm' v = 0
+
 
 
 
@@ -74,12 +85,14 @@ theorem root_is_null' : isNullVector' ![3, 4, 5] := by
 
 
 
+
 /-- Pythagorean equation ↔ null cone condition -/
 theorem pyth_iff_null' (a b c : ℤ) :
     a ^ 2 + b ^ 2 = c ^ 2 ↔ isNullVector' ![a, b, c] := by
   unfold isNullVector' lorentzForm'
   simp [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons, Matrix.head_fin_const]
   omega
+
 
 
 
@@ -93,12 +106,14 @@ inductive QPath where
 
 
 
+
 /-- The depth (proper time) of a path -/
 def QPath.depth : QPath → ℕ
   | .root    => 0
   | .child1 p => p.depth + 1
   | .child2 p => p.depth + 1
   | .child3 p => p.depth + 1
+
 
 
 
@@ -117,12 +132,14 @@ def qTriple : QPath → ℤ × ℤ × ℤ
 
 
 
+
 /-- The parent of a non-root path (the temporal/4th branch) -/
 def QPath.parent : QPath → Option QPath
   | .root    => none         -- The Big Bang has no parent
   | .child1 p => some p
   | .child2 p => some p
   | .child3 p => some p
+
 
 
 
@@ -135,12 +152,14 @@ theorem parent_is_some_of_ne_root (p : QPath)
 
 
 
+
 /-- The quaternary valence: each node has 3 children -/
 theorem quaternary_valence_description :
     ∀ (p : QPath),
     (∃ c1 c2 c3 : QPath, c1 = .child1 p ∧ c2 = .child2 p ∧ c3 = .child3 p) := by
   intro p
   exact ⟨.child1 p, .child2 p, .child3 p, rfl, rfl, rfl⟩
+
 
 
 
@@ -152,11 +171,13 @@ structure ArithPhoton where
 
 
 
+
 /-- The root photon: the Big Bang event -/
 def bigBangPhoton : ArithPhoton where
   path := .root
   triple := (3, 4, 5)
   on_tree := rfl
+
 
 
 
@@ -166,9 +187,11 @@ def ArithPhoton.wavelength (ph : ArithPhoton) : ℤ :=
 
 
 
+
 /-- A photon's "proper time" — its depth in the tree -/
 def ArithPhoton.properTime (ph : ArithPhoton) : ℕ :=
   ph.path.depth
+
 
 
 
@@ -177,13 +200,16 @@ theorem bigBang_properTime : bigBangPhoton.properTime = 0 := rfl
 
 
 
+
 /-- The Big Bang photon has wavelength 5 -/
 theorem bigBang_wavelength : bigBangPhoton.wavelength = 5 := rfl
 
 
 
+
 /-- All Berggren matrices have determinant ±1 (they're in GL(3,ℤ)) -/
 theorem det_B₁'' : Matrix.det B₁' = 1 := by native_decide
+
 
 
 /-- [Section: # CatalogBuild.Pythagorean.TreeFactoring.QuaternaryPythagoreanTree
@@ -193,7 +219,13 @@ Declarations: 50] -/
 theorem det_B₂'' : Matrix.det B₂' = -1 := by native_decide
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.TreeFactoring.QuaternaryPythagoreanTree
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/TreeFactoring
+Declarations: 50] -/
 theorem det_B₃'' : Matrix.det B₃' = 1 := by native_decide
+
 
 
 
@@ -201,10 +233,13 @@ theorem det_B₃'' : Matrix.det B₃' = 1 := by native_decide
 theorem det_B₁'_inv : Matrix.det B₁'_inv = 1 := by native_decide
 
 
+
 theorem det_B₂'_inv : Matrix.det B₂'_inv = -1 := by native_decide
 
 
+
 theorem det_B₃'_inv : Matrix.det B₃'_inv = 1 := by native_decide
+
 
 
 
@@ -214,8 +249,10 @@ def Q_lor' : Matrix (Fin 3) (Fin 3) ℤ :=
 
 
 
+
 /-- B₁ preserves the Lorentz form -/
 theorem B₁'_preserves_lorentz' : B₁'ᵀ * Q_lor' * B₁' = Q_lor' := by native_decide
+
 
 
 
@@ -224,8 +261,10 @@ theorem B₂'_preserves_lorentz' : B₂'ᵀ * Q_lor' * B₂' = Q_lor' := by nati
 
 
 
+
 /-- B₃ preserves the Lorentz form -/
 theorem B₃'_preserves_lorentz' : B₃'ᵀ * Q_lor' * B₃' = Q_lor' := by native_decide
+
 
 
 
@@ -234,11 +273,14 @@ theorem B₁'_inv_preserves_lorentz : B₁'_invᵀ * Q_lor' * B₁'_inv = Q_lor'
 
 
 
+
 theorem B₂'_inv_preserves_lorentz : B₂'_invᵀ * Q_lor' * B₂'_inv = Q_lor' := by native_decide
 
 
 
+
 theorem B₃'_inv_preserves_lorentz : B₃'_invᵀ * Q_lor' * B₃'_inv = Q_lor' := by native_decide
+
 
 
 
@@ -249,6 +291,7 @@ theorem B₁'_preserves_pyth' (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 /-- B₂ preserves the Pythagorean property (spatial branch 2) -/
 theorem B₂'_preserves_pyth' (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (a + 2*b + 2*c) ^ 2 + (2*a + b + 2*c) ^ 2 = (2*a + 2*b + 3*c) ^ 2 := by
@@ -256,10 +299,12 @@ theorem B₂'_preserves_pyth' (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 /-- B₃ preserves the Pythagorean property (spatial branch 3) -/
 theorem B₃'_preserves_pyth' (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (-a + 2*b + 2*c) ^ 2 + (-2*a + b + 2*c) ^ 2 = (-2*a + 2*b + 3*c) ^ 2 := by
   nlinarith [sq_nonneg (a - b), sq_nonneg (a + b)]
+
 
 
 
@@ -273,6 +318,7 @@ theorem B₁'_temporal_inverse' (a b c : ℤ) :
     (-2*a' - b' + 2*c' = b) ∧
     (-2*a' - 2*b' + 3*c' = c) := by
   constructor <;> [ring; constructor <;> ring]
+
 
 
 
@@ -292,8 +338,10 @@ def treeLevel' : ℕ → List (ℤ × ℤ × ℤ)
 
 
 
+
 /-- The number of spatial branches at any node -/
 def spatialBranchCount : ℕ := 3
+
 
 
 
@@ -302,13 +350,16 @@ def temporalBranchCount : ℕ := 1
 
 
 
+
 /-- The total valence at a non-root node -/
 theorem total_valence : spatialBranchCount + temporalBranchCount = 4 := rfl
 
 
 
+
 /-- The signature is always (3+1) -/
 theorem signature_is_3_1 : signatureStr = "(3+1)" := rfl
+
 
 
 
@@ -324,11 +375,13 @@ structure EmissionEvent where
 
 
 
+
 /-- A photon "absorption" event: a child being traced back to its parent -/
 structure AbsorptionEvent where
   child : ArithPhoton
   parent : ArithPhoton
   parent_of_child : child.path.parent = some parent.path
+
 
 
 
@@ -341,5 +394,6 @@ theorem oracle_conservation' (p : QPath) :
   · rename_i p hp;
     convert B₂'_preserves_pyth' _ _ _ hp using 1;
   · rename_i p ih; rw [ show qTriple p.child3 = ( - ( qTriple p |> Prod.fst ) + 2 * ( qTriple p |> Prod.snd |> Prod.fst ) + 2 * ( qTriple p |> Prod.snd |> Prod.snd ), -2 * ( qTriple p |> Prod.fst ) + ( qTriple p |> Prod.snd |> Prod.fst ) + 2 * ( qTriple p |> Prod.snd |> Prod.snd ), -2 * ( qTriple p |> Prod.fst ) + 2 * ( qTriple p |> Prod.snd |> Prod.fst ) + 3 * ( qTriple p |> Prod.snd |> Prod.snd ) ) from rfl ] ; linarith;
+
 
 

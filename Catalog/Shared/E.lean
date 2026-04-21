@@ -11,3 +11,4 @@ import Mathlib
 def E (N x : ℕ) : ℕ := N % x
 
 
+

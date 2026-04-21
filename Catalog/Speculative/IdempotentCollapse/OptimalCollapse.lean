@@ -15,6 +15,7 @@ def collapseDisplacement {α : Type*} [Fintype α] [PseudoMetricSpace α] (f : �
 
 
 
+
 /-- [Section: # CatalogBuild.Speculative.IdempotentCollapse.OptimalCollapse
 Auto-generated from theorem catalog database.
 Domain: Speculative/IdempotentCollapse
@@ -30,6 +31,11 @@ theorem zero_displacement_is_id {α : Type*} [Fintype α] [MetricSpace α]
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.IdempotentCollapse.OptimalCollapse
+Auto-generated from theorem catalog database.
+Domain: Speculative/IdempotentCollapse
+Declarations: 4] -/
 theorem collapse_transport_bound {α : Type*} [Fintype α] [PseudoMetricSpace α]
     [BoundedSpace α] (f : α → α) :
     collapseDisplacement f ≤
@@ -50,10 +56,12 @@ theorem collapse_transport_bound {α : Type*} [Fintype α] [PseudoMetricSpace α
 
 
 
+
 /-- Composing with any map can only shrink the range. -/
 theorem idempotent_range_inclusion {α : Type*} (f g : α → α) :
     range (f ∘ g) ⊆ range f := by
   intro x ⟨y, hy⟩; exact ⟨g y, hy⟩
+
 
 
 

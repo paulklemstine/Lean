@@ -19,12 +19,14 @@ theorem stereographic_round_trip {v : E} (hv : ‖v‖ = 1) :
 
 
 
+
 /-- The dual round-trip: from the orthogonal complement through the sphere and back
 is also the identity, on the target set. -/
 theorem stereographic_dual_round_trip {v : E} (hv : ‖v‖ = 1) :
     ∀ w ∈ (stereographic (E := E) hv).target,
       (stereographic hv) ((stereographic hv).symm w) = w :=
   fun w hw => (stereographic hv).right_inv hw
+
 
 
 
@@ -37,13 +39,20 @@ theorem conformal_factor_pos (y : ℝ) (hy : y < 1) : (2 : ℝ) / (1 - y) > 0 :=
 
 
 
+
+/-- [Section: # CatalogBuild.Logic.HigherDimensional
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 10] -/
 theorem conformal_factor_south_pole : (2 : ℝ) / (1 - (-1 : ℝ)) = 1 := by
   norm_num +zetaDelta at *
 
 
 
+
 theorem conformal_factor_equator : (2 : ℝ) / (1 - (0 : ℝ)) = 2 := by
   grind
+
 
 
 
@@ -57,9 +66,11 @@ structure MoebiusTransform where
 
 
 
+
 /-- Apply a Möbius transformation. -/
 def MoebiusTransform.apply (M : MoebiusTransform) (t : ℝ) : ℝ :=
   (M.a * t + M.b) / (M.c * t + M.d)
+
 
 
 
@@ -73,9 +84,11 @@ def MoebiusTransform.id : MoebiusTransform where
 
 
 
+
 theorem MoebiusTransform.id_apply (t : ℝ) :
     MoebiusTransform.id.apply t = t := by
       exact show ( 1 * t + 0 ) / ( 0 * t + 1 ) = t from by norm_num;
+
 
 
 
@@ -87,6 +100,7 @@ def MoebiusTransform.inversion : MoebiusTransform where
   c := 1
   d := 0
   det_ne_zero := by norm_num
+
 
 
 

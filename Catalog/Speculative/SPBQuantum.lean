@@ -18,6 +18,7 @@ theorem weierstrass_cos_formula (t : ℝ) :
 
 
 
+
 /-- An X-rotation by angle α on the Bloch sphere acts as SPB on tan(θ/2). -/
 theorem x_rotation_as_spb (θ α : ℝ)
     (hc1 : Real.cos (θ / 2) ≠ 0) (hc2 : Real.cos (α / 2) ≠ 0) :
@@ -29,6 +30,7 @@ theorem x_rotation_as_spb (θ α : ℝ)
 
 
 
+
 /-- Z-rotation by angle α multiplies the stereographic coordinate by e^{iα}. -/
 theorem z_rotation_stereo (θ φ α : ℝ) :
     blochStereo θ (φ + α) = Complex.exp (↑α * I) * blochStereo θ φ := by
@@ -37,10 +39,12 @@ theorem z_rotation_stereo (θ φ α : ℝ) :
 
 
 
+
 /-- The Hadamard gate maps |0⟩ (t=0) to |+⟩ (t=1) on the xz-plane.
 In SPB: spb(0, 1) = 1 = tan(π/4). -/
 theorem hadamard_spb_action : spbQ 0 1 = 1 := by
   simp [spbQ]
+
 
 
 

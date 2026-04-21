@@ -15,9 +15,11 @@ theorem sigma1'_one : sigma1' 1 = 1 := by
 
 
 
+
 /-- σ₁(p) < 2p for any prime p. -/
 theorem sigma1_upper_bound_prime (p : ℕ) (hp : Nat.Prime p) : sigma1' p < 2 * p := by
   rw [sigma1'_prime p hp]; linarith [hp.one_lt]
+
 
 
 
@@ -29,10 +31,12 @@ theorem sigma1'_multiplicative (m n : ℕ) (hcop : Nat.Coprime m n) :
 
 
 
+
 /-- A number is superabundant if its abundancy exceeds all smaller numbers. -/
 def IsSuperabundant (n : ℕ) : Prop :=
   0 < n ∧ ∀ m : ℕ, 0 < m → m < n →
     (sigma1' m : ℚ) / m < (sigma1' n : ℚ) / n
+
 
 
 
@@ -41,6 +45,7 @@ def IsSuperabundant (n : ℕ) : Prop :=
 def IsColossallyAbundant (n : ℕ) : Prop :=
   0 < n ∧ ∃ ε : ℝ, 0 < ε ∧ ∀ m : ℕ, 0 < m →
     (sigma1' n : ℝ) / (n : ℝ) ^ (1 + ε) ≥ (sigma1' m : ℝ) / (m : ℝ) ^ (1 + ε)
+
 
 
 
@@ -55,9 +60,11 @@ theorem sigma1_ge_n_plus_one (n : ℕ) (hn : 2 ≤ n) : sigma1' n ≥ n + 1 := b
 
 
 
+
 /-- Robin's inequality: verified at n = 12. σ₁(12) = 28. -/
 theorem robin_check_12 : sigma1' 12 = 28 := by
   native_decide
+
 
 
 
@@ -67,10 +74,12 @@ theorem robin_check_60 : sigma1' 60 = 168 := by
 
 
 
+
 /-- 5040 is the boundary value for Robin's inequality.
 σ₁(5040) = 19344. -/
 theorem sigma1_5040 : sigma1' 5040 = 19344 := by
   native_decide
+
 
 
 

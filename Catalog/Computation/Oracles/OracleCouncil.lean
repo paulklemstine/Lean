@@ -16,13 +16,16 @@ def stereoForward (x y : ℝ) : ℝ := x / (1 - y)
 
 
 
+
 /-- The denominator 1 + t² is always positive. -/
 theorem one_plus_sq_pos (t : ℝ) : 0 < 1 + t ^ 2 := by positivity
 
 
 
+
 /-- The denominator 1 + t² is never zero. -/
 theorem one_plus_sq_ne_zero (t : ℝ) : 1 + t ^ 2 ≠ 0 := ne_of_gt (one_plus_sq_pos t)
+
 
 
 
@@ -37,6 +40,11 @@ theorem stereo_inverse_on_circle (t : ℝ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.OracleCouncil
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 14] -/
 theorem inverse_stereo_roundtrip (x y : ℝ) (hcirc : x ^ 2 + y ^ 2 = 1) (hy : y ≠ 1) :
     stereoInverse (stereoForward x y) = (x, y) := by
   unfold stereoForward stereoInverse;
@@ -44,8 +52,10 @@ theorem inverse_stereo_roundtrip (x y : ℝ) (hcirc : x ^ 2 + y ^ 2 = 1) (hy : y
 
 
 
+
 theorem stereo_conformal_factor_pos (t : ℝ) : 0 < 2 / (1 + t ^ 2) := by
   positivity
+
 
 
 
@@ -65,11 +75,13 @@ structure LocalGlobalPrinciple (α : Type*) where
 
 
 
+
 /-- When both directions hold, local and global are equivalent — an isomorphism
 of truth values, the propositional analog of stereographic projection. -/
 theorem LocalGlobalPrinciple.iff {α : Type*} (P : LocalGlobalPrinciple α) (a : α) :
     P.localProp a ↔ P.globalProp a :=
   ⟨P.local_to_global a, P.global_to_local a⟩
+
 
 
 
@@ -86,9 +98,11 @@ def poincare_local_global : LocalGlobalPrinciple (Type*) where
 
 
 
+
 theorem unit_circle_nonempty :
     (Metric.sphere (0 : EuclideanSpace ℝ (Fin 2)) 1).Nonempty := by
   simp +zetaDelta at *
+
 
 
 
@@ -98,10 +112,12 @@ theorem stereo_jacobian_sq (t : ℝ) :
 
 
 
+
 theorem stereo_inverse_range (x y : ℝ) (hcirc : x ^ 2 + y ^ 2 = 1) (hy : y ≠ 1) :
     ∃ t : ℝ, stereoInverse t = (x, y) := by
   use x / ( 1 - y );
   convert inverse_stereo_roundtrip x y hcirc hy using 1
+
 
 
 
@@ -118,6 +134,7 @@ theorem oracle_council_isomorphism (x y : ℝ) (hcirc : x ^ 2 + y ^ 2 = 1) (hy :
 
 
 
+
 theorem oracle_council_injective :
     Injective (fun t : ℝ => stereoInverse t) := by
   intros t1 t2 h_eq
@@ -126,6 +143,7 @@ theorem oracle_council_injective :
   have := congr_arg Prod.snd h_eq
   simp [stereoInverse] at this;
   rw [ div_eq_div_iff ] at * <;> nlinarith [ sq_nonneg ( t1 - t2 ) ]
+
 
 
 

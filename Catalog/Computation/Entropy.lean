@@ -15,10 +15,12 @@ noncomputable def shannonEntropy' {α : Type*} [Fintype α] (p : α → ℝ) : �
 
 
 
+
 /-- Joint entropy of a distribution on a product type. -/
 noncomputable def jointEntropy {α β : Type*} [Fintype α] [Fintype β]
     (p : α × β → ℝ) : ℝ :=
   shannonEntropy' p
+
 
 
 
@@ -29,6 +31,7 @@ noncomputable def conditionalEntropy {α β : Type*} [Fintype α] [Fintype β]
 
 
 
+
 /-- Mutual information I(X;Y) = H(X) + H(Y) - H(X,Y). -/
 noncomputable def mutualInformation {α β : Type*} [Fintype α] [Fintype β]
     (pXY : α × β → ℝ) (pX : α → ℝ) (pY : β → ℝ) : ℝ :=
@@ -36,9 +39,11 @@ noncomputable def mutualInformation {α β : Type*} [Fintype α] [Fintype β]
 
 
 
+
 /-- **KL divergence** (relative entropy) between two distributions. -/
 noncomputable def klDivergence {α : Type*} [Fintype α] (p q : α → ℝ) : ℝ :=
   ∑ x : α, if p x > 0 then p x * Real.logb 2 (p x / q x) else 0
+
 
 
 
@@ -52,6 +57,7 @@ theorem entropy_deterministic {α : Type*} [Fintype α] [DecidableEq α] (a : α
   by_cases hx : x = a
   · subst hx; simp [Real.logb]
   · simp [hx]
+
 
 
 
@@ -69,12 +75,14 @@ lemma logb_div_ge {p q : ℝ} (hp : 0 < p) (hq : 0 < q) :
 
 
 
+
 /-- Each term in KL divergence: `p * log(p/q) ≥ (p - q) / log(2)`. -/
 lemma kl_term_bound {p q : ℝ} (hp : 0 < p) (hq : 0 < q) :
     p * Real.logb 2 (p / q) ≥ (p - q) / Real.log 2 := by
   have := logb_div_ge hp hq
   field_simp [hp.ne'] at *
   linarith
+
 
 
 
@@ -101,6 +109,11 @@ theorem gibbs_inequality {α : Type*} [Fintype α] (p q : α → ℝ)
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Entropy
+Auto-generated from theorem catalog database.
+Domain: Computation
+Declarations: 12] -/
 theorem entropy_le_log_card {α : Type*} [Fintype α] [Nonempty α]
     (p : α → ℝ) (hp_nonneg : ∀ x, 0 ≤ p x)
     (hp_sum : ∑ x : α, p x = 1) :
@@ -125,6 +138,7 @@ theorem entropy_le_log_card {α : Type*} [Fintype α] [Nonempty α]
       grind;
     · rw [ ← Finset.sum_mul _ _ _, hp_sum, one_mul, neg_neg ];
   exact h_max_entropy p hp_nonneg hp_sum
+
 
 
 
@@ -172,6 +186,7 @@ theorem source_coding_lower_bound {α : Type*} [Fintype α]
 
 
 
+
 /-- **Monotonicity of information under functions**: Composing functions
 cannot increase the number of distinct outputs. -/
 theorem data_processing_card {α β γ : Type*} [DecidableEq β] [DecidableEq γ]
@@ -182,6 +197,7 @@ theorem data_processing_card {α β γ : Type*} [DecidableEq β] [DecidableEq γ
     ext x; simp [Function.comp]
   rw [this]
   exact Finset.card_image_le
+
 
 
 end

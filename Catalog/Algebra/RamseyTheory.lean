@@ -31,6 +31,11 @@ theorem ramsey_3_3_upper :
 
 
 
+
+/-- [Section: # CatalogBuild.Algebra.RamseyTheory
+Auto-generated from theorem catalog database.
+Domain: Algebra
+Declarations: 6] -/
 theorem ramsey_3_3_lower :
     ∃ (f : Fin 5 → Fin 5 → Bool),
       (∀ i j, f i j = f j i) ∧
@@ -43,11 +48,13 @@ theorem ramsey_3_3_lower :
 
 
 
+
 theorem schur_two_colors :
     ∀ (f : Fin 5 → Bool),
       ∃ x y z : Fin 5, f x = f y ∧ f y = f z ∧
         (x.val + 1) + (y.val + 1) = (z.val + 1) := by
   native_decide +revert
+
 
 
 
@@ -58,10 +65,12 @@ theorem pigeonhole_mod (n : ℕ) (hn : 0 < n) (f : Fin (n + 1) → ℤ) :
 
 
 
+
 /-- Among any 5 integers, two have the same remainder mod 4. -/
 theorem five_ints_mod4 (f : Fin 5 → ℤ) :
     ∃ i j : Fin 5, i ≠ j ∧ f i % 4 = f j % 4 := by
   exact pigeonhole_mod 4 (by omega) f
+
 
 
 
@@ -73,4 +82,5 @@ theorem combinatorial_line_exists (n : ℕ) (hn : 2 ≤ n) :
         f (fun j => if j = i then b else false) =
         f (fun j => if j = i then false else false) := by
   induction hn <;> simp_all +decide [ Fin.forall_fin_succ ]
+
 

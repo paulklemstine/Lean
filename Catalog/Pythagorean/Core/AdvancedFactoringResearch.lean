@@ -14,10 +14,12 @@ theorem cascade_channel_d (a b c d N : ℤ)
 
 
 
+
 /-- Primary channel: removing component c -/
 theorem cascade_channel_c (a b c d N : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 = N ^ 2) :
     (N - c) * (N + c) = a ^ 2 + b ^ 2 + d ^ 2 := by nlinarith
+
 
 
 
@@ -28,10 +30,12 @@ theorem cascade_channel_b (a b c d N : ℤ)
 
 
 
+
 /-- Primary channel: removing component a -/
 theorem cascade_channel_a (a b c d N : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 = N ^ 2) :
     (N - a) * (N + a) = b ^ 2 + c ^ 2 + d ^ 2 := by nlinarith
+
 
 
 
@@ -41,10 +45,12 @@ theorem pairwise_ab (a b : ℤ) :
 
 
 
+
 /-- Pairwise channel cd: removing both c and d simultaneously -/
 theorem pairwise_cd (a b c d N : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 = N ^ 2) :
     (N - c) * (N + c) - d ^ 2 = a ^ 2 + b ^ 2 := by nlinarith
+
 
 
 
@@ -58,9 +64,11 @@ theorem full_cascade (a b c d N : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 = N ^ 
 
 
 
+
 /-- The R₁₁₁₁ reflection applied to a lifted triple (a,b,0,c). -/
 def liftAndReflect (a b c : ℤ) : ℤ × ℤ × ℤ × ℤ :=
   (c - b, c - a, c - a - b, 2*c - a - b)
+
 
 
 
@@ -73,6 +81,7 @@ theorem complementary_channels (a b c : ℤ) :
 
 
 
+
 /-- The lifted-reflected quadruple preserves the Pythagorean equation. -/
 theorem liftReflect_preserves (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (c - b) ^ 2 + (c - a) ^ 2 + (c - a - b) ^ 2 = (2*c - a - b) ^ 2 := by
@@ -80,10 +89,12 @@ theorem liftReflect_preserves (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 /-- **New Factoring Channel via Lifting**: gcd(c-b, N) and gcd(c-a, N) provide
 channels when N = c (the hypotenuse). -/
 theorem lift_channel_cb (a b c : ℤ) :
     ↑(Int.gcd (c - b) c) ∣ c := Int.gcd_dvd_right _ _
+
 
 
 
@@ -96,9 +107,11 @@ theorem lift_channel_ca (a b c : ℤ) :
 
 
 
+
 /-- **Triple lift factor identity**: (c-b)(c+b) = a², so gcd(c-b, a) divides a. -/
 theorem lift_diff_sq (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (c - b) * (c + b) = a ^ 2 := by nlinarith
+
 
 
 
@@ -111,6 +124,7 @@ theorem two_rep_factor (a b c d N : ℤ)
 
 
 
+
 /-- **Brahmagupta identity for energy composition** -/
 theorem energy_composition (a b c d : ℤ) :
     (a ^ 2 + b ^ 2) * (c ^ 2 + d ^ 2) =
@@ -118,10 +132,12 @@ theorem energy_composition (a b c d : ℤ) :
 
 
 
+
 /-- **Alternative Brahmagupta form** -/
 theorem energy_composition_alt (a b c d : ℤ) :
     (a ^ 2 + b ^ 2) * (c ^ 2 + d ^ 2) =
     (a * c + b * d) ^ 2 + (a * d - b * c) ^ 2 := by ring
+
 
 
 
@@ -139,11 +155,13 @@ theorem two_reps_give_relation (a b c d N : ℤ)
 
 
 
+
 /-- **IOF-to-quintuplet**: If x² = a² + b² + c² + d² with d² = N·q,
 then we have a quintuplet. -/
 theorem iof_to_quintuplet (x a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 = x ^ 2) :
     a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 = x ^ 2 := h
+
 
 
 
@@ -157,11 +175,13 @@ theorem congruence_surplus (x a b N : ℤ) (hN : N ≠ 0)
 
 
 
+
 /-- B₁ preserves the Pythagorean property. -/
 theorem fwdB1_preserves (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     let t := fwdB1 a b c
     t.1 ^ 2 + t.2.1 ^ 2 = t.2.2 ^ 2 := by
   simp only [fwdB1]; ring_nf; nlinarith [h]
+
 
 
 
@@ -173,6 +193,7 @@ theorem fwdB2_preserves (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 /-- B₃ preserves the Pythagorean property. -/
 theorem fwdB3_preserves (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     let t := fwdB3 a b c
@@ -181,10 +202,12 @@ theorem fwdB3_preserves (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 /-- **Hypotenuse growth**: B₂ child's hypotenuse is strictly larger (always). -/
 theorem fwdB2_hyp_grows (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
     c < (fwdB2 a b c).2.2 := by
   simp [fwdB2]; nlinarith
+
 
 
 
@@ -196,11 +219,13 @@ theorem fwdB1_hyp_grows (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
 
 
 
+
 /-- **Hypotenuse growth for B₃**: requires Pythagorean condition (b+c > a). -/
 theorem fwdB3_hyp_grows (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (h : a ^ 2 + b ^ 2 = c ^ 2) :
     c < (fwdB3 a b c).2.2 := by
   simp [fwdB3]; nlinarith [sq_nonneg (a - b)]
+
 
 
 
@@ -213,10 +238,12 @@ theorem descent_ascent_B2 (a b c : ℤ) :
 
 
 
+
 /-- At each descent step, the GCD with N divides N. -/
 theorem descent_step_gcd (a b N : ℤ) :
     ↑(Int.gcd a N) ∣ N ∧ ↑(Int.gcd b N) ∣ N := by
   exact ⟨Int.gcd_dvd_right _ _, Int.gcd_dvd_right _ _⟩
+
 
 
 
@@ -226,6 +253,7 @@ theorem cascade_quad_triple (a b c d e f g h : ℤ)
     (ht : e ^ 2 + f ^ 2 = g ^ 2)
     (hh : d ^ 2 + g ^ 2 = h ^ 2) :
     a ^ 2 + b ^ 2 + c ^ 2 + e ^ 2 + f ^ 2 = h ^ 2 := by linarith
+
 
 
 
@@ -241,9 +269,11 @@ theorem cascade_five_channels (a b c e f h : ℤ)
 
 
 
+
 /-- The GCD of a Berggren child's leg with N divides N. -/
 theorem gcd_flows_B2 (a b c N : ℤ) :
     ↑(Int.gcd (a + 2*b + 2*c) N) ∣ N := Int.gcd_dvd_right _ _
+
 
 
 
@@ -254,8 +284,14 @@ theorem gcd_berggren_reduction (a b c N : ℤ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.Core.AdvancedFactoringResearch
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Core
+Declarations: 35] -/
 theorem gcd_mod_N (a N k : ℤ) : Int.gcd (a + k * N) N = Int.gcd a N := by
   exact Int.gcd_add_mul_right_left N a k
+
 
 
 
@@ -267,6 +303,7 @@ theorem factor_65_complete :
 
 
 
+
 /-- N = 85 = 5 × 17: 85 = 2² + 9² = 6² + 7².
 gcd(2·6 - 9·7, 85) = 17,  gcd(2·6 + 9·7, 85) = 5. -/
 theorem factor_85_complete :
@@ -275,7 +312,9 @@ theorem factor_85_complete :
 
 
 
+
 /-- Sextuplet factoring channel: octuplet (1,2,3,4,5,6,3) with w=10 = 2×5. -/
 theorem octuplet_factor_10 : Int.gcd (10 - 6) 10 = 2 := by native_decide
+
 
 

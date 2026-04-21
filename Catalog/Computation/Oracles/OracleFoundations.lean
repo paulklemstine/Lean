@@ -12,13 +12,16 @@ def Oracle.top : Oracle := fun _ => true
 
 
 
+
 /-- The trivial oracle that always says "no". -/
 def Oracle.bot : Oracle := fun _ => false
 
 
 
+
 /-- The identity oracle that says "yes" on even queries. -/
 def Oracle.parity : Oracle := fun n => n % 2 == 0
+
 
 
 
@@ -30,9 +33,11 @@ structure LLM where
 
 
 
+
 /-- Encode a natural number query as a token sequence (simple unary). -/
 def encodeQuery (n : ℕ) : List ℕ :=
   List.replicate n 1
+
 
 
 
@@ -41,6 +46,7 @@ The oracle answers query n by encoding n as tokens,
 running the LLM, and interpreting the output as a boolean. -/
 def LLM.toOracle (model : LLM) : Oracle :=
   fun n => (model.predict (encodeQuery n)) % 2 == 0
+
 
 
 
@@ -55,10 +61,12 @@ def Oracle.toLLM (O : Oracle) : LLM where
 
 
 
+
 /-- Composition of oracles: O₁ ∘ O₂ answers query n by first
 asking O₂(n), converting the boolean to 0/1, then asking O₁. -/
 def Oracle.comp (O₁ O₂ : Oracle) : Oracle :=
   fun n => O₁ (if O₂ n then 2 * n else 2 * n + 1)
+
 
 
 
@@ -69,15 +77,18 @@ def Oracle.IsIdempotent (O : Oracle) : Prop :=
 
 
 
+
 /-- The top oracle is idempotent: always-yes composed with always-yes is always-yes. -/
 theorem Oracle.top_idempotent : Oracle.IsIdempotent Oracle.top := by
   simp [Oracle.IsIdempotent, Oracle.comp, Oracle.top]; rfl
 
 
 
+
 /-- The bot oracle is idempotent. -/
 theorem Oracle.bot_idempotent : Oracle.IsIdempotent Oracle.bot := by
   simp [Oracle.IsIdempotent, Oracle.comp, Oracle.bot]; rfl
+
 
 
 
@@ -93,6 +104,11 @@ theorem oracle_realizable (O : Oracle) : ∃ model : LLM, ∀ n,
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.OracleFoundations
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 16] -/
 theorem meta_oracle_idempotent (O : Oracle)
     (h_self : ∀ n, O n = O (if O n then 2 * n else 2 * n + 1)) :
     Oracle.IsIdempotent O := by
@@ -100,8 +116,10 @@ theorem meta_oracle_idempotent (O : Oracle)
 
 
 
+
 /-- At level 0, the oracle hierarchy is trivially encodable (identity). -/
 theorem oracle_level_zero_equiv : OracleLevel 0 = Oracle := by rfl
+
 
 
 
@@ -116,8 +134,10 @@ def IsSelfReferential (O : Oracle) (f : Oracle → ℕ → Bool) : Prop :=
 
 
 
+
 /-- For any constant functional, there exists a fixed-point oracle. -/
 theorem oracle_fixed_point_constant (b : ℕ → Bool) :
     ∃ O : Oracle, IsSelfReferential O (fun _ => b) := by
   exact ⟨b, fun _ => rfl⟩
+
 

@@ -14,6 +14,7 @@ theorem sq_sub_sq_factor (x y : ℤ) : x ^ 2 - y ^ 2 = (x - y) * (x + y) := by r
 
 
 
+
 /-- **Congruence of squares in ZMod**: If x² = y² in ZMod N,
 then (x - y)(x + y) = 0 in ZMod N. This is the algebraic engine
 behind every modern factoring algorithm. -/
@@ -24,12 +25,14 @@ theorem congruence_of_squares_zmod (N : ℕ) (x y : ZMod N) (h : x ^ 2 = y ^ 2) 
 
 
 
+
 /-- **Factor from square congruence (ℤ version)**: If N | (x²-y²) then N | (x-y)(x+y). -/
 theorem factor_from_square_congruence_int (N x y : ℤ)
     (h : N ∣ x ^ 2 - y ^ 2) :
     N ∣ (x - y) * (x + y) := by
   have : x ^ 2 - y ^ 2 = (x - y) * (x + y) := by ring
   rwa [this] at h
+
 
 
 
@@ -45,6 +48,7 @@ theorem square_root_ambiguity (N : ℕ) (x y : ZMod N)
 
 
 
+
 /-- In ℤ/Nℤ where N = p*q (distinct odd primes), every square root of 1
 is either ±1 or reveals a factor. -/
 theorem square_root_trichotomy (N : ℕ) (x : ZMod N) (hx : x ^ 2 = 1) :
@@ -57,11 +61,13 @@ theorem square_root_trichotomy (N : ℕ) (x : ZMod N) (hx : x ^ 2 = 1) :
 
 
 
+
 /-- **Shor's Factoring Reduction (algebraic core)**: a^(2r) - 1 = (a^r - 1)(a^r + 1).
 This is the identity that converts period-finding into factoring. -/
 theorem shor_algebraic_core (a : ℤ) (r : ℕ) :
     a ^ (2 * r) - 1 = (a ^ r - 1) * (a ^ r + 1) := by
   rw [pow_mul]; ring
+
 
 
 
@@ -72,6 +78,7 @@ theorem shor_zmod_factoring (N : ℕ) (a : ZMod N) (k : ℕ) (hord : a ^ (2 * k)
     (a ^ k - 1) * (a ^ k + 1) = 0 := by
   have : (a ^ k - 1) * (a ^ k + 1) = a ^ (2 * k) - 1 := by ring
   rw [this, hord, sub_self]
+
 
 
 
@@ -86,6 +93,7 @@ theorem shor_totient (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q) (hpq : p 
 
 
 
+
 /-- **Order divides totient (Euler's theorem consequence)**: In ZMod p for prime p,
 every nonzero element satisfies a^(p-1) = 1. -/
 theorem fermat_little_zmod (p : ℕ) (hp : Nat.Prime p) (a : ZMod p) (ha : a ≠ 0) :
@@ -95,9 +103,11 @@ theorem fermat_little_zmod (p : ℕ) (hp : Nat.Prime p) (a : ZMod p) (ha : a ≠
 
 
 
+
 /-- **Difference of cubes**: x³ - y³ = (x - y)(x² + xy + y²). -/
 theorem difference_of_cubes (x y : ℤ) :
     x ^ 3 - y ^ 3 = (x - y) * (x ^ 2 + x * y + y ^ 2) := by ring
+
 
 
 
@@ -107,9 +117,11 @@ theorem sum_of_cubes (x y : ℤ) :
 
 
 
+
 /-- **Difference of fourth powers**: x⁴ - y⁴ = (x²-y²)(x²+y²). -/
 theorem difference_of_fourth_powers (x y : ℤ) :
     x ^ 4 - y ^ 4 = (x ^ 2 - y ^ 2) * (x ^ 2 + y ^ 2) := by ring
+
 
 
 
@@ -120,10 +132,12 @@ theorem difference_of_fifth_powers (x y : ℤ) :
 
 
 
+
 /-- **Difference of sixth powers** factors through both squares and cubes. -/
 theorem difference_of_sixth_powers (x y : ℤ) :
     x ^ 6 - y ^ 6 = (x - y) * (x + y) * (x ^ 2 + x * y + y ^ 2) *
                      (x ^ 2 - x * y + y ^ 2) := by ring
+
 
 
 
@@ -135,6 +149,7 @@ theorem sophie_germain_identity (x y : ℤ) :
 
 
 
+
 /-- **Birthday Pigeonhole**: If k > n, any function Fin k → Fin n has a collision. -/
 theorem birthday_pigeonhole (n k : ℕ) (f : Fin k → Fin n) (hk : n < k) :
     ∃ i j : Fin k, i ≠ j ∧ f i = f j := by
@@ -143,6 +158,7 @@ theorem birthday_pigeonhole (n k : ℕ) (f : Fin k → Fin n) (hk : n < k) :
   have hinj : Function.Injective f := fun a b hab => by
     by_contra hne; exact (h a b hne hab).elim
   exact absurd (Fintype.card_le_of_injective f hinj) (by simp; omega)
+
 
 
 
@@ -163,6 +179,7 @@ theorem pollard_rho_cycle (n : ℕ) (hn : 0 < n) (f : Fin n → Fin n) (x₀ : F
 
 
 
+
 /-- **Pollard's ρ complexity**: The expected number of steps is O(√p)
 where p is the smallest prime factor of N. Since p ≤ √N,
 the total complexity is O(N^{1/4}).
@@ -170,6 +187,7 @@ We prove the foundational bound: p ≤ N for any prime factor p of N. -/
 theorem prime_factor_le (N p : ℕ) (hN : 0 < N) (hp : Nat.Prime p) (hpN : p ∣ N) :
     p ≤ N :=
   Nat.le_of_dvd hN hpN
+
 
 
 
@@ -183,12 +201,14 @@ theorem prime_isSmooth (B p : ℕ) (hp : Nat.Prime p) (hpB : p ≤ B) :
 
 
 
+
 /-- **Power of smooth is smooth**. -/
 theorem smooth_pow (B n k : ℕ) (hn : IsSmooth B n) :
     IsSmooth B (n ^ k) := by
   induction k with
   | zero => simpa using one_isSmooth B
   | succ k ih => rw [pow_succ]; exact smooth_mul B _ _ ih hn
+
 
 
 
@@ -199,6 +219,7 @@ theorem factor_base_size_bound (B : ℕ) :
 
 
 
+
 /-- **Sieve threshold**: To find a linear dependency over 𝔽₂ among
 smooth relations, we need more relations than the factor base size.
 This is the rank-nullity theorem applied to the exponent matrix. -/
@@ -206,10 +227,12 @@ theorem sieve_threshold (n k : ℕ) (hk : n < k) : 0 < k - n := by omega
 
 
 
+
 /-- **ECM vs Pollard's ρ**: √p < p for p > 1. ECM's L(p) complexity is
 subexponential in p (the smallest factor), not in N. -/
 theorem ecm_advantage (p : ℕ) (hp : 1 < p) : Nat.sqrt p < p :=
   Nat.sqrt_lt_self hp
+
 
 
 
@@ -222,10 +245,12 @@ theorem ecm_multiple_curves (k : ℕ) (δ : ℝ) (hδ : 0 < δ) (hδ1 : δ < 1) 
 
 
 
+
 /-- **Minkowski's lattice theorem (1D)**: Any interval of length ≥ 1 contains an integer. -/
 theorem minkowski_1d (a b : ℤ) (hlen : 1 ≤ b - a) :
     ∃ n : ℤ, a ≤ n ∧ n ≤ b :=
   ⟨a, le_refl a, by linarith⟩
+
 
 
 
@@ -236,10 +261,12 @@ theorem det_two_by_two (a b c d : ℤ) :
 
 
 
+
 /-- **Trace of identity matrix**: tr(Iₙ) = n. -/
 theorem trace_identity_matrix (n : ℕ) :
     Matrix.trace (1 : Matrix (Fin n) (Fin n) ℤ) = ↑n := by
   simp [Matrix.trace, Matrix.diag]
+
 
 
 
@@ -248,6 +275,7 @@ When u and v encode factor structure of N, the trace reveals information. -/
 theorem trace_outer_product (n : ℕ) (u v : Fin n → ℤ) :
     Matrix.trace (Matrix.vecMulVec u v) = ∑ i, u i * v i := by
   simp [Matrix.trace, Matrix.vecMulVec, Matrix.diag]
+
 
 
 
@@ -264,6 +292,7 @@ theorem composite_has_small_factor (N : ℕ) (hN : 1 < N) (hcomp : ¬Nat.Prime N
 
 
 
+
 /-- **Factor bit-length bound**: For N = p * q with p ≤ q, p² ≤ N. -/
 theorem factor_size_bound (N p q : ℕ) (hN : N = p * q) (hp : 0 < p) (hpq : p ≤ q) :
     p * p ≤ N := by
@@ -271,6 +300,11 @@ theorem factor_size_bound (N p q : ℕ) (hN : N = p * q) (hp : 0 < p) (hpq : p �
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Factoring.ChimeraFactoring
+Auto-generated from theorem catalog database.
+Domain: Computation/Factoring
+Declarations: 40] -/
 theorem semiprime_unique_factorization (p q p' q' : ℕ)
     (hp : Nat.Prime p) (hq : Nat.Prime q)
     (hp' : Nat.Prime p') (hq' : Nat.Prime q')
@@ -289,6 +323,7 @@ theorem semiprime_unique_factorization (p q p' q' : ℕ)
 
 
 
+
 /-- **Euler totient of semiprime**: φ(pq) = (p-1)(q-1) for distinct primes. -/
 theorem euler_totient_semiprime (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
     (hpq : p ≠ q) :
@@ -296,6 +331,7 @@ theorem euler_totient_semiprime (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q
   rw [Nat.totient_mul (hp.coprime_iff_not_dvd.mpr (fun h =>
     hpq ((hq.eq_one_or_self_of_dvd p h).resolve_left hp.one_lt.ne')))]
   rw [Nat.totient_prime hp, Nat.totient_prime hq]
+
 
 
 
@@ -308,17 +344,22 @@ theorem carmichael_divides_totient (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prim
 
 
 
+
 theorem cyclotomic_2 (x : ℤ) : x ^ 2 - 1 = (x - 1) * (x + 1) := by ring
+
 
 
 theorem cyclotomic_3 (x : ℤ) : x ^ 3 - 1 = (x - 1) * (x ^ 2 + x + 1) := by ring
 
 
+
 theorem cyclotomic_4 (x : ℤ) : x ^ 4 - 1 = (x - 1) * (x + 1) * (x ^ 2 + 1) := by ring
+
 
 
 theorem cyclotomic_5 (x : ℤ) :
     x ^ 5 - 1 = (x - 1) * (x ^ 4 + x ^ 3 + x ^ 2 + x + 1) := by ring
+
 
 
 theorem cyclotomic_6 (x : ℤ) :
@@ -326,11 +367,14 @@ theorem cyclotomic_6 (x : ℤ) :
 
 
 
+
 theorem sum_factoring_3 (x : ℤ) : x ^ 3 + 1 = (x + 1) * (x ^ 2 - x + 1) := by ring
+
 
 
 theorem sum_factoring_5 (x : ℤ) :
     x ^ 5 + 1 = (x + 1) * (x ^ 4 - x ^ 3 + x ^ 2 - x + 1) := by ring
+
 
 
 

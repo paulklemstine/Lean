@@ -15,6 +15,7 @@ theorem proj_id_right (x₁ x₂ : ℝ) : proj x₁ x₂ 0 1 = (x₁, x₂) := b
 
 
 
+
 /-- [Section: # CatalogBuild.Speculative.SPBProjectiveGroup
 Auto-generated from theorem catalog database.
 Domain: Speculative
@@ -24,9 +25,11 @@ theorem proj_id_left (x₁ x₂ : ℝ) : proj 0 1 x₁ x₂ = (x₁, x₂) := by
 
 
 
+
 /-- Commutativity. -/
 theorem proj_comm (x₁ x₂ y₁ y₂ : ℝ) : proj x₁ x₂ y₁ y₂ = proj y₁ y₂ x₁ x₂ := by
   simp only [proj, Prod.mk.injEq]; constructor <;> ring
+
 
 
 
@@ -34,6 +37,7 @@ theorem proj_comm (x₁ x₂ y₁ y₂ : ℝ) : proj x₁ x₂ y₁ y₂ = proj 
 theorem proj_inv (x₁ x₂ : ℝ) :
     proj x₁ x₂ (-x₁) x₂ = (0, x₂ ^ 2 + x₁ ^ 2) := by
   simp only [proj, Prod.mk.injEq]; constructor <;> ring
+
 
 
 
@@ -47,6 +51,7 @@ theorem proj_assoc (x₁ x₂ y₁ y₂ z₁ z₂ : ℝ) :
 
 
 
+
 /-- The projective "norm" x₁² + x₂² is multiplicative:
 N([x₁:x₂] ⊕ [y₁:y₂]) = N([x₁:x₂]) · N([y₁:y₂]). -/
 theorem proj_norm_mul (x₁ x₂ y₁ y₂ : ℝ) :
@@ -56,15 +61,22 @@ theorem proj_norm_mul (x₁ x₂ y₁ y₂ : ℝ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.SPBProjectiveGroup
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 18] -/
 theorem proj_to_affine (x y : ℝ) (h : 1 - x * y ≠ 0) :
     (proj x 1 y 1).1 / (proj x 1 y 1).2 = spb x y := by
   unfold proj spb; aesop;
 
 
 
+
 /-- The projective norm of [x:1] is 1 + x² = x² + 1. -/
 theorem proj_affine_norm (x : ℝ) :
     x ^ 2 + 1 ^ 2 = 1 + x ^ 2 := by ring
+
 
 
 
@@ -75,6 +87,7 @@ theorem proj_infinity (y : ℝ) : proj 1 0 y 1 = (1, -y) := by
 
 
 
+
 /-- In affine coordinates, spb(∞, y) = -1/y (for y ≠ 0). -/
 theorem proj_infinity_affine (y : ℝ) (hy : y ≠ 0) :
     (proj 1 0 y 1).1 / (proj 1 0 y 1).2 = -1 / y := by
@@ -82,9 +95,11 @@ theorem proj_infinity_affine (y : ℝ) (hy : y ≠ 0) :
 
 
 
+
 /-- ∞ ⊕ ∞ = [1:0] ⊕ [1:0] = [0:-1] = [0:1] (i.e., 0). -/
 theorem proj_infinity_self : proj 1 0 1 0 = (0, -1) := by
   simp [proj]
+
 
 
 
@@ -95,12 +110,15 @@ def projIter (x₁ x₂ : ℝ) : ℕ → ℝ × ℝ
 
 
 
+
 theorem projIter_zero (x₁ x₂ : ℝ) : projIter x₁ x₂ 0 = (0, 1) := rfl
+
 
 
 
 theorem projIter_one (x₁ x₂ : ℝ) : projIter x₁ x₂ 1 = (x₁, x₂) := by
   simp [projIter, proj]
+
 
 
 
@@ -114,6 +132,7 @@ theorem projIter_norm (x₁ x₂ : ℝ) (n : ℕ) :
 
 
 
+
 /-- The projective SPB is literally Gaussian integer multiplication:
 (x₂ + x₁·i)(y₂ + y₁·i) = (x₂y₂ - x₁y₁) + (x₁y₂ + x₂y₁)·i
 Reading off: real part = second component, imag part = first component. -/
@@ -121,6 +140,7 @@ theorem proj_is_gaussian_mul (x₁ x₂ y₁ y₂ : ℤ) :
     let z := (⟨x₂, x₁⟩ : GaussianInt) * ⟨y₂, y₁⟩
     z.re = (x₂ * y₂ - x₁ * y₁ : ℤ) ∧ z.im = (x₁ * y₂ + x₂ * y₁ : ℤ) := by
   constructor <;> simp [GaussianInt, Zsqrtd.ext_iff, Zsqrtd.mul_re, Zsqrtd.mul_im] <;> ring
+
 
 
 
@@ -133,10 +153,12 @@ theorem quadratic_form_multiplicative (x₁ x₂ y₁ y₂ : ℝ) :
 
 
 
+
 /-- Specialising to integers, this is the Brahmagupta-Fibonacci identity. -/
 theorem brahmagupta_fibonacci_proj (a b c d : ℤ) :
     (a * d + b * c) ^ 2 + (b * d - a * c) ^ 2 =
     (a ^ 2 + b ^ 2) * (c ^ 2 + d ^ 2) := by ring
+
 
 
 

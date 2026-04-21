@@ -17,9 +17,11 @@ theorem smooth_number_closure (B a b : ℕ) (ha : IsSmooth B a) (hb : IsSmooth B
 
 
 
+
 /-- Divisors of B-smooth numbers are B-smooth. -/
 theorem smooth_number_divisor (B n d : ℕ) (hn : IsSmooth B n) (hd : d ∣ n) :
     IsSmooth B d := fun p hp hpd => hn p hp (dvd_trans hpd hd)
+
 
 
 
@@ -30,9 +32,11 @@ theorem smooth_number_gcd (B a b : ℕ) (ha : IsSmooth B a) :
 
 
 
+
 /-- Any positive number ≤ B is B-smooth. -/
 theorem smooth_all_below_base (B n : ℕ) (hn : 0 < n) (hnB : n ≤ B) : IsSmooth B n :=
   fun _p _hp hpn => le_trans (Nat.le_of_dvd hn hpn) hnB
+
 
 
 
@@ -42,8 +46,10 @@ theorem smooth_monotone (B B' n : ℕ) (hBB : B ≤ B') (hn : IsSmooth B n) :
 
 
 
+
 /-- Lucas recurrence. -/
 theorem lucas_recurrence (n : ℕ) : lucas (n + 2) = lucas (n + 1) + lucas n := rfl
+
 
 
 
@@ -54,16 +60,25 @@ Declarations: 34] -/
 theorem lucas_val_0 : lucas 0 = 2 := rfl
 
 
+
+/-- [Section: # CatalogBuild.Computation.Factoring.FutureExploration
+Auto-generated from theorem catalog database.
+Domain: Computation/Factoring
+Declarations: 34] -/
 theorem lucas_val_1 : lucas 1 = 1 := rfl
+
 
 
 theorem lucas_val_2 : lucas 2 = 3 := rfl
 
 
+
 theorem lucas_val_3 : lucas 3 = 4 := rfl
 
 
+
 theorem lucas_val_4 : lucas 4 = 7 := rfl
+
 
 
 
@@ -71,6 +86,7 @@ theorem lucas_growth (n : ℕ) (hn : 1 ≤ n) : n ≤ lucas n := by
   induction' n using Nat.strong_induction_on with n ih;
   rcases n with ( _ | _ | _ | k ) <;> simp_all! +arith +decide;
   grind +locals
+
 
 
 
@@ -82,10 +98,12 @@ theorem tribonacci_bound (n : ℕ) (hn : 1 ≤ n) : tribonacci n < 2 ^ n := by
 
 
 
+
 /-- Birthday collision: n+1 values in [0,n) must collide. -/
 theorem birthday_collision (n : ℕ) (f : Fin (n + 1) → Fin n) :
     ∃ i j : Fin (n + 1), i ≠ j ∧ f i = f j :=
   Fintype.exists_ne_map_eq_of_card_lt f (by simp)
+
 
 
 
@@ -94,6 +112,7 @@ theorem orbit_eventually_periodic (n : ℕ) (_hn : 0 < n) (f : Fin n → Fin n)
     ∃ i j : ℕ, i < j ∧ j ≤ n ∧ f^[i] x = f^[j] x := by
   by_contra! h_contra;
   exact absurd ( Finset.card_le_univ ( Finset.image ( fun i => f^[i] x ) ( Finset.Icc 0 n ) ) ) ( by rw [ Finset.card_image_of_injOn fun i hi j hj hij => le_antisymm ( le_of_not_gt fun hi' => h_contra _ _ hi' ( Finset.mem_Icc.mp hi |>.2 ) hij.symm ) ( le_of_not_gt fun hj' => h_contra _ _ hj' ( Finset.mem_Icc.mp hj |>.2 ) hij ) ] ; simp +arith +decide )
+
 
 
 
@@ -106,6 +125,7 @@ theorem residue_count_bound (m : ℕ) (hm : 0 < m) (S : Finset ℕ) :
         simp only [Finset.mem_image] at hx; obtain ⟨a, _, ha⟩ := hx
         subst ha; exact Finset.mem_range.mpr (Nat.mod_lt a hm)
     _ = m := Finset.card_range m
+
 
 
 
@@ -124,10 +144,12 @@ theorem crt_residue_count (m₁ m₂ : ℕ) (hm₁ : 0 < m₁) (hm₂ : 0 < m₂
 
 
 
+
 /-- CRT gives multiplicative reduction for coprime moduli. -/
 theorem coprime_product_reduction (m₁ m₂ : ℕ) (hcop : Nat.Coprime m₁ m₂) :
     Nat.totient (m₁ * m₂) = Nat.totient m₁ * Nat.totient m₂ :=
   Nat.totient_mul hcop
+
 
 
 
@@ -138,6 +160,7 @@ theorem prime_divides_factorial (B p : ℕ) (hp : Nat.Prime p) (hpB : p ≤ B) :
 
 
 
+
 /-- Trivial bound on prime counting function. -/
 theorem prime_count_trivial_bound (N : ℕ) :
     ((Finset.range (N + 1)).filter Nat.Prime).card ≤ N + 1 :=
@@ -145,9 +168,11 @@ theorem prime_count_trivial_bound (N : ℕ) :
 
 
 
+
 /-- Element order divides group order. -/
 theorem element_order_divides {G : Type*} [Group G] [Fintype G] (g : G) :
     orderOf g ∣ Fintype.card G := orderOf_dvd_card
+
 
 
 
@@ -158,9 +183,11 @@ theorem symmetric_group_order (n : ℕ) :
 
 
 
+
 /-- Wilson's theorem. -/
 theorem wilson_zmod (p : ℕ) [Fact (Nat.Prime p)] :
     ((p - 1)! : ZMod p) = -1 := ZMod.wilsons_lemma p
+
 
 
 
@@ -171,15 +198,18 @@ theorem mlc_strict_hierarchy (S k : ℕ) (hS : 2 ^ (k + 1) ≤ S) :
 
 
 
+
 /-- At most S lenses are meaningful. -/
 theorem mlc_ceiling (S : ℕ) : S / 2 ^ S = 0 :=
   Nat.div_eq_of_lt (Nat.lt_pow_self (by omega : 1 < 2))
 
 
 
+
 /-- MLC separation witness. -/
 theorem mlc_separation_witness (k : ℕ) :
     2 ^ k / 2 ^ k = 1 := Nat.div_self (by positivity)
+
 
 
 
@@ -190,10 +220,12 @@ theorem lens_power_law (S a b : ℕ) :
 
 
 
+
 /-- Lens commutativity. -/
 theorem lens_commutativity (S a b : ℕ) :
     S / 2 ^ a / 2 ^ b = S / 2 ^ b / 2 ^ a := by
   rw [lens_power_law, lens_power_law, Nat.add_comm]
+
 
 
 
@@ -204,10 +236,12 @@ theorem qubit_savings_bound (S k : ℕ) :
 
 
 
+
 theorem nine_lens_qubit_savings (S : ℕ) (hS : 512 ≤ S) :
     Nat.sqrt (S / 512) < Nat.sqrt S := by
   rw [ Nat.sqrt_lt ];
   nlinarith [ Nat.lt_succ_sqrt S, Nat.div_mul_le_self S 512 ]
+
 
 
 
@@ -217,10 +251,12 @@ theorem norm_mult_zsqrtd (d : ℤ) (a b : ℤ√d) :
 
 
 
+
 /-- Polynomial roots bounded by degree. -/
 theorem poly_roots_bounded {R : Type*} [CommRing R] [IsDomain R]
     (f : Polynomial R) :
     Multiset.card f.roots ≤ f.natDegree := Polynomial.card_roots' f
+
 
 
 
@@ -233,9 +269,11 @@ theorem neg_one_qr_mod_4 (p : ℕ) [Fact (Nat.Prime p)] (hp4 : p % 4 = 1) :
 
 
 
+
 /-- Smooth numbers up to B: for any n with 0 < n ≤ B, n is B-smooth. -/
 theorem all_up_to_B_smooth (B : ℕ) :
     ∀ n, 0 < n → n ≤ B → IsSmooth B n :=
   fun n hn hnB => smooth_all_below_base B n hn hnB
+
 
 

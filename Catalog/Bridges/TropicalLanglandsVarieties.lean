@@ -14,8 +14,10 @@ abbrev TropicalReal := WithTop ℝ
 
 
 
+
 /-- Tropical addition is min. -/
 def tropAdd (a b : TropicalReal) : TropicalReal := min a b
+
 
 
 
@@ -28,9 +30,11 @@ def tropMul (a b : TropicalReal) : TropicalReal :=
 
 
 
+
 /-- Tropical addition is commutative. -/
 theorem tropAdd_comm (a b : TropicalReal) : tropAdd a b = tropAdd b a := by
   simp [tropAdd, min_comm]
+
 
 
 
@@ -41,15 +45,18 @@ theorem tropAdd_assoc (a b c : TropicalReal) :
 
 
 
+
 /-- ⊤ is the tropical additive identity. -/
 theorem tropAdd_top (a : TropicalReal) : tropAdd a ⊤ = a := by
   simp [tropAdd]
 
 
 
+
 /-- Tropical multiplication is commutative. -/
 theorem tropMul_comm (a b : TropicalReal) : tropMul a b = tropMul b a := by
   cases a <;> cases b <;> simp [tropMul, add_comm]
+
 
 
 
@@ -64,8 +71,10 @@ structure TropicalValuation (K : Type*) [Field K] where
 
 
 
+
 /-- A tropical variety is a subset of ℝⁿ. -/
 def TropicalVariety (n : ℕ) := Set (Fin n → ℝ)
+
 
 
 
@@ -77,11 +86,13 @@ structure TropicalizationData (K : Type*) [Field K] (n : ℕ) where
 
 
 
+
 /-- A polyhedral complex (simplified). -/
 structure PolyhedralComplex (n : ℕ) where
   num_cones : ℕ
   cone_dims : Fin num_cones → ℕ
   dim_bound : ∀ i, cone_dims i ≤ n
+
 
 
 
@@ -91,10 +102,12 @@ structure TropicalDivisorPC (n : ℕ) (pc : PolyhedralComplex n) where
 
 
 
+
 /-- Degree of a tropical divisor. -/
 def TropicalDivisorPC.degree {n : ℕ} {pc : PolyhedralComplex n}
     (D : TropicalDivisorPC n pc) : ℤ :=
   ∑ i : Fin pc.num_cones, D.multiplicities i
+
 
 
 
@@ -107,14 +120,17 @@ structure MetricGraph where
 
 
 
+
 /-- The genus of a metric graph. -/
 def MetricGraph.genus (G : MetricGraph) : ℤ :=
   (G.num_edges : ℤ) - (G.num_vertices : ℤ) + 1
 
 
 
+
 /-- A graph divisor in the tropical varieties framework. -/
 def MetricGraph.divisor (G : MetricGraph) := Fin G.num_vertices → ℤ
+
 
 
 
@@ -124,10 +140,12 @@ def MetricGraph.divisorDeg (G : MetricGraph) (D : G.divisor) : ℤ :=
 
 
 
+
 /-- The canonical divisor on a metric graph assigns valence - 2 to each vertex. -/
 def MetricGraph.canonicalDivisor (G : MetricGraph) (valence : Fin G.num_vertices → ℕ) :
     G.divisor :=
   fun v => (valence v : ℤ) - 2
+
 
 
 
@@ -142,11 +160,13 @@ theorem metric_graph_canonical_degree (G : MetricGraph)
 
 
 
+
 /-- A tropicalization map between a curve and its tropical image. -/
 structure CurveTropicalization where
   algebraic_genus : ℕ
   tropical_genus : ℤ
   genus_preserved : (algebraic_genus : ℤ) = tropical_genus
+
 
 
 
@@ -157,9 +177,11 @@ theorem tropicalization_genus_invariance (T : CurveTropicalization) :
 
 
 
+
 /-- A morphism of metric graphs. -/
 structure MetricGraphMorphism (G H : MetricGraph) where
   vertex_map : Fin G.num_vertices → Fin H.num_vertices
+
 
 
 
@@ -174,9 +196,11 @@ theorem tropicalization_functorial
 
 
 
+
 /-- Identity morphism. -/
 def MetricGraphMorphism.id (G : MetricGraph) : MetricGraphMorphism G G where
   vertex_map := _root_.id
+
 
 
 
@@ -185,6 +209,7 @@ def MetricGraphMorphism.comp {G H K : MetricGraph}
     (f : MetricGraphMorphism G H) (g : MetricGraphMorphism H K) :
     MetricGraphMorphism G K where
   vertex_map := g.vertex_map ∘ f.vertex_map
+
 
 
 
@@ -197,10 +222,14 @@ theorem MetricGraphMorphism.comp_assoc {G H K L : MetricGraph}
 
 
 
+
 /-- The tropical Jacobian of a metric graph. -/
 structure TropicalJacobian (G : MetricGraph) where
   dimension : ℕ
   dim_eq_genus : (dimension : ℤ) = G.genus
+
+end
+
 
 end
 

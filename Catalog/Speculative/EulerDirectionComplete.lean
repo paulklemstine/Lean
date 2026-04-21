@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Speculative
-Declarations: 10
+Declarations: 8
 -/
 
 import Mathlib
@@ -17,9 +17,15 @@ noncomputable def σ₁' (n : ℕ) : ℕ := ∑ d ∈ n.divisors, d
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.EulerDirectionComplete
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 10] -/
 theorem mersenne_prime_exponent_prime (n : ℕ) (hn : 1 < n)
     (hm : Nat.Prime (2 ^ n - 1)) : Nat.Prime n := by
   exact?
+
 
 
 
@@ -28,11 +34,13 @@ theorem sigma1'_prime (p : ℕ) (hp : Nat.Prime p) : σ₁' p = p + 1 := by
 
 
 
+
 theorem sigma1'_ge_one_plus (n : ℕ) (hn : 1 < n) : 1 + n ≤ σ₁' n := by
   -- Since 1 and n are distinct divisors of n, we have {1, n} ⊆ n.divisors.
   have h_subset : ({1, n} : Finset ℕ) ⊆ n.divisors := by
     exact Finset.insert_subset_iff.mpr ⟨ Nat.mem_divisors.mpr ⟨ one_dvd _, by linarith ⟩, Finset.singleton_subset_iff.mpr ( Nat.mem_divisors.mpr ⟨ dvd_rfl, by linarith ⟩ ) ⟩;
   exact le_trans ( by rw [ Finset.sum_pair ( by linarith ) ] ) ( Finset.sum_le_sum_of_subset h_subset )
+
 
 
 
@@ -60,16 +68,12 @@ theorem euler_m_equals_mersenne (k m : ℕ) (hk : 0 < k) (hm : 0 < m)
 
 
 
+
 theorem six_is_perfect' : σ₁' 6 = 2 * 6 := by unfold σ₁'; native_decide
 
 
+
 theorem twentyeight_is_perfect' : σ₁' 28 = 2 * 28 := by unfold σ₁'; native_decide
-
-
-theorem perfect_496' : σ₁' 496 = 2 * 496 := by unfold σ₁'; native_decide
-
-
-theorem perfect_8128' : σ₁' 8128 = 2 * 8128 := by unfold σ₁'; native_decide
 
 
 
@@ -79,6 +83,7 @@ theorem triangular_formula (n : ℕ) :
   induction n with
   | zero => simp
   | succ n ih => rw [Finset.sum_range_succ]; linarith
+
 
 
 end

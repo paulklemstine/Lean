@@ -14,14 +14,17 @@ def emlLipschitz (a b : ℝ) : ℝ := |a| * |b|
 
 
 
+
 /-- EML robustness radius: ε / L. -/
 def certifiedRadius (eps L : ℝ) : ℝ := eps / L
+
 
 
 
 /-- Certified radius is positive when both positive. -/
 theorem certified_radius_pos (eps L : ℝ) (he : 0 < eps) (hL : 0 < L) :
     0 < certifiedRadius eps L := div_pos he hL
+
 
 
 
@@ -34,8 +37,10 @@ theorem smaller_lipschitz_larger_radius (eps L1 L2 : ℝ) (he : 0 < eps)
 
 
 
+
 /-- Network Lipschitz: product over layers. -/
 def networkLipschitz (layerLips : List ℝ) : ℝ := layerLips.prod
+
 
 
 
@@ -46,8 +51,10 @@ theorem network_lipschitz_grow (ls : List ℝ) (l : ℝ) :
 
 
 
+
 /-- ε-differential privacy noise scale: sensitivity / ε. -/
 def dpNoiseScale (sensitivity eps : ℝ) : ℝ := sensitivity / eps
+
 
 
 
@@ -57,13 +64,16 @@ theorem dp_noise_pos (s eps : ℝ) (hs : 0 < s) (heps : 0 < eps) :
 
 
 
+
 /-- Composition: k queries → kε total privacy loss (basic). -/
 def composedPrivacy (eps : ℝ) (k : ℕ) : ℝ := eps * ↑k
 
 
 
+
 /-- Advanced composition: √k · ε for small ε. -/
 def advancedComposition (eps : ℝ) (k : ℕ) : ℝ := Real.sqrt ↑k * eps
+
 
 
 
@@ -80,6 +90,11 @@ theorem advanced_better (eps : ℝ) (k : ℕ) (heps : 0 < eps) (hk : 4 ≤ k) :
 
 
 
+
+/-- [Section: # CatalogBuild.EML.EMLCryptographicML
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 34] -/
 theorem eml_sensitivity_advantage (depth width : ℕ) (maxGrad : ℝ)
     (hd : 0 < depth) (hw : 5 ≤ width) (hg : 0 < maxGrad) :
     emlSensitivity depth width maxGrad <
@@ -88,13 +103,16 @@ theorem eml_sensitivity_advantage (depth width : ℕ) (maxGrad : ℝ)
 
 
 
+
 /-- Multiplicative depth of EML neuron: exp ∘ mult ∘ log = 3. -/
 def emlMultDepth : ℕ := 3
 
 
 
+
 /-- Total HE depth for d-layer EML network. -/
 def heDepth (layers : ℕ) : ℕ := emlMultDepth * layers
+
 
 
 
@@ -104,8 +122,10 @@ theorem he_depth_linear (l : ℕ) : heDepth l = 3 * l := by
 
 
 
+
 /-- HE bootstrapping threshold: need refresh every B levels. -/
 def bootstrapFrequency (totalDepth B : ℕ) : ℕ := totalDepth / B
+
 
 
 
@@ -116,8 +136,10 @@ theorem bootstrap_mono (d1 d2 B : ℕ) (hB : 0 < B) (h : d1 ≤ d2) :
 
 
 
+
 /-- EML is branch-free: constant time per neuron. -/
 def emlBranches : ℕ := 0
+
 
 
 
@@ -126,8 +148,10 @@ def reluBranches (neurons : ℕ) : ℕ := neurons
 
 
 
+
 /-- EML has zero timing leakage from branches. -/
 theorem eml_constant_time : emlBranches = 0 := rfl
+
 
 
 
@@ -137,13 +161,16 @@ theorem eml_timing_safe (n : ℕ) : emlBranches ≤ reluBranches n := by
 
 
 
+
 /-- Lattice dimension for security level λ. -/
 def latticeDimension (secLevel : ℕ) : ℕ := 2 * secLevel
 
 
 
+
 /-- LWE noise bound: √n · σ. -/
 def lweBound (n : ℕ) (sigma : ℝ) : ℝ := Real.sqrt ↑n * sigma
+
 
 
 
@@ -155,8 +182,10 @@ theorem lwe_bound_mono (n1 n2 : ℕ) (sigma : ℝ) (hs : 0 < sigma) (h : n1 ≤ 
 
 
 
+
 /-- EML in lattice cryptography: key size for n-dimensional lattice. -/
 def emlLatticeKeySize (n : ℕ) : ℕ := n * (Nat.log 2 n + 1)
+
 
 
 
@@ -169,11 +198,13 @@ theorem lattice_key_bound (n : ℕ) (hn : 2 ≤ n) :
 
 
 
+
 /-- NIST security level classification. -/
 def nistLevel (bits : ℕ) : ℕ :=
   if bits ≤ 128 then 1
   else if bits ≤ 192 then 3
   else 5
+
 
 
 
@@ -185,8 +216,10 @@ theorem nist_level_mono (b1 b2 : ℕ) (h : b1 ≤ b2) :
 
 
 
+
 /-- Level 1 minimum: 128 bits. -/
 theorem nist_level1_min : nistLevel 128 = 1 := by simp [nistLevel]
+
 
 
 
@@ -195,8 +228,10 @@ theorem nist_level5 : nistLevel 256 = 5 := by simp [nistLevel]
 
 
 
+
 /-- Communication cost per round: params × precision bits. -/
 def commCost (params bits : ℕ) : ℕ := params * bits
+
 
 
 
@@ -207,8 +242,10 @@ theorem eml_comm_advantage (d w bits : ℕ) (hd : 0 < d) (hw : 5 ≤ w) (hb : 0 
 
 
 
+
 /-- Convergence bound after T rounds with k clients: 1/(√T · k). -/
 def federatedBound (T k : ℕ) : ℝ := 1 / (Real.sqrt ↑T * ↑k)
+
 
 
 
@@ -216,6 +253,7 @@ theorem federated_rounds_help (T1 T2 k : ℕ) (hT1 : 0 < T1) (hk : 0 < k)
     (h : T1 ≤ T2) :
     federatedBound T2 k ≤ federatedBound T1 k := by
   exact one_div_le_one_div_of_le ( by positivity ) ( by gcongr )
+
 
 
 

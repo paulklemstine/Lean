@@ -17,9 +17,15 @@ theorem bf_identity_1 (a b c d : ℤ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.BrahmaguptaFibonacciFactoring
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 9] -/
 theorem bf_identity_2 (a b c d : ℤ) :
     (a ^ 2 + b ^ 2) * (c ^ 2 + d ^ 2) =
     (a * c + b * d) ^ 2 + (a * d - b * c) ^ 2 := by ring
+
 
 
 
@@ -28,10 +34,12 @@ theorem bf_cross_term_product (a b c d : ℤ) :
 
 
 
+
 theorem bf_N_divides_cross_product (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 = c ^ 2 + d ^ 2) :
     (a ^ 2 + b ^ 2) ∣ (a * d - b * c) * (a * d + b * c) := by
   exact ⟨ a ^ 2 - c ^ 2, by nlinarith ⟩
+
 
 
 
@@ -44,9 +52,11 @@ theorem bf_two_representations (a b c d : ℤ) :
 
 
 
+
 theorem bf_representations_distinct (a b c d : ℤ) (hbc : b * c ≠ 0) :
     a * d + b * c ≠ a * d - b * c := by
   grind
+
 
 
 
@@ -60,6 +70,7 @@ theorem bf_nontrivial_factor_criterion (N g : ℕ) (hg_dvd : g ∣ N)
 
 
 
+
 theorem fermat_two_squares (p : ℕ) (hp : Nat.Prime p) (hmod : p % 4 = 1) :
     ∃ a b : ℕ, a ^ 2 + b ^ 2 = p := by
   have := Fact.mk hp;
@@ -68,6 +79,8 @@ theorem fermat_two_squares (p : ℕ) (hp : Nat.Prime p) (hmod : p % 4 = 1) :
 
 
 
+
 theorem bf_gcd_divides_N (N t : ℕ) : Nat.gcd N t ∣ N :=
   Nat.gcd_dvd_left N t
+
 

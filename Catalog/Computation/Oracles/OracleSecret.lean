@@ -18,9 +18,15 @@ theorem divisor_count_multiplicative (m n : ℕ) (hm : 0 < m) (hn : 0 < n)
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.OracleSecret
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 10] -/
 theorem egyptian_two_term (n : ℕ) (hn : 2 ≤ n) :
     (1 : ℚ) / n = 1 / (n + 1) + 1 / (n * (n + 1)) := by
   rw [ div_add_div, div_eq_div_iff ] <;> ring <;> positivity;
+
 
 
 
@@ -34,6 +40,7 @@ theorem greedy_step_valid (p q : ℕ) (hp : 0 < p) (hpq : p < q) :
 
 
 
+
 /-- If a property is always false, the corresponding predicate is decidable.
 This captures: "if blow-up never occurs, blow-up prediction is trivially decidable." -/
 def never_blowup_decidable {α : Type*} (P : α → Prop) (hP : ∀ a, ¬ P a) :
@@ -42,11 +49,13 @@ def never_blowup_decidable {α : Type*} (P : α → Prop) (hP : ∀ a, ¬ P a) :
 
 
 
+
 /-- If a property is always true, the corresponding predicate is decidable.
 This captures: "if regularity always holds, regularity checking is trivially decidable." -/
 def always_regular_decidable {α : Type*} (P : α → Prop) (hP : ∀ a, P a) :
     DecidablePred P :=
   fun a => isTrue (hP a)
+
 
 
 
@@ -65,9 +74,11 @@ def heat_equation_blowup_decidable
 
 
 
+
 theorem spectral_gap_positive (l0 l1 : ℝ) (h : l0 < l1) :
     0 < l1 - l0 := by
   linarith
+
 
 
 
@@ -78,9 +89,11 @@ theorem thooft_scaling_to_zero {f : ℕ → ℝ} {L : ℝ}
 
 
 
+
 theorem egyptian_two_term_exists (n : ℕ) (hn : 2 ≤ n) :
     ∃ a b : ℕ, a < b ∧ (1 : ℚ) / n = 1 / a + 1 / b := by
   exact ⟨ n + 1, n * ( n + 1 ), by nlinarith, by push_cast; rw [ div_add_div, div_eq_div_iff ] <;> ring <;> positivity ⟩
+
 
 
 
@@ -102,4 +115,5 @@ theorem mass_gap_subquadratic {delta : ℕ → ℝ} {f : ℝ → ℝ}
   have h_f_lt_eps : f (delta N) < ε * (N : ℝ) ^ 2 := by
     simpa only [ div_lt_iff₀ hN_sq_pos ] using hN₀ N ( Nat.le_of_succ_le hN )
   exact h_f_lt_eps
+
 

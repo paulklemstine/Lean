@@ -15,11 +15,13 @@ theorem prime_mod_four (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2) :
 
 
 
+
 /-- Wilson's theorem: (p-1)! ≡ -1 (mod p). -/
 theorem wilson_theorem' (p : ℕ) (hp : Nat.Prime p) :
     ((Nat.factorial (p - 1) : ℤ) : ZMod p) = -1 := by
   haveI : Fact (Nat.Prime p) := ⟨hp⟩
   exact_mod_cast ZMod.wilsons_lemma p
+
 
 
 
@@ -30,7 +32,13 @@ Declarations: 34] -/
 theorem pell_equation_small : (3 : ℤ) ^ 2 - 2 * 2 ^ 2 = 1 := by norm_num
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.MathExplorations
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 34] -/
 theorem pell_equation_next : (17 : ℤ) ^ 2 - 2 * 12 ^ 2 = 1 := by norm_num
+
 
 
 
@@ -38,7 +46,9 @@ theorem pell_matrix_det : (3 : ℤ) * 3 - 4 * 2 = 1 := by norm_num
 
 
 
+
 theorem seventeen_is_sum_of_squares : (17 : ℤ) = 1 ^ 2 + 4 ^ 2 := by norm_num
+
 
 
 
@@ -48,7 +58,9 @@ theorem primes_infinite' : ∀ n, ∃ p, n ≤ p ∧ Nat.Prime p :=
 
 
 
+
 theorem markov_111 : (1 : ℤ) ^ 2 + 1 ^ 2 + 1 ^ 2 = 3 * 1 * 1 * 1 := by norm_num
+
 
 
 
@@ -58,10 +70,13 @@ theorem markov_generate (x y z : ℤ) (h : x ^ 2 + y ^ 2 + z ^ 2 = 3 * x * y * z
 
 
 
+
 theorem markov_112 : (1 : ℤ) ^ 2 + 1 ^ 2 + 2 ^ 2 = 3 * 1 * 1 * 2 := by norm_num
 
 
+
 theorem markov_125 : (1 : ℤ) ^ 2 + 2 ^ 2 + 5 ^ 2 = 3 * 1 * 2 * 5 := by norm_num
+
 
 
 
@@ -69,12 +84,15 @@ theorem lagrange_four_sq_1 : ∃ a b c d : ℤ, 1 = a^2 + b^2 + c^2 + d^2 :=
   ⟨1, 0, 0, 0, by norm_num⟩
 
 
+
 theorem lagrange_four_sq_7 : ∃ a b c d : ℤ, 7 = a^2 + b^2 + c^2 + d^2 :=
   ⟨1, 1, 1, 2, by norm_num⟩
 
 
+
 theorem lagrange_four_sq_23 : ∃ a b c d : ℤ, 23 = a^2 + b^2 + c^2 + d^2 :=
   ⟨1, 2, 3, 3, by norm_num⟩
+
 
 
 theorem lagrange_four_sq_15 : ∃ a b c d : ℤ, 15 = a^2 + b^2 + c^2 + d^2 :=
@@ -82,7 +100,9 @@ theorem lagrange_four_sq_15 : ∃ a b c d : ℤ, 15 = a^2 + b^2 + c^2 + d^2 :=
 
 
 
+
 theorem binary_tree_nodes (n : ℕ) : 2 ^ (n + 1) - 1 ≥ 2 ^ n := by omega
+
 
 
 
@@ -98,8 +118,10 @@ theorem ternary_tree_sum (d : ℕ) :
 
 
 
+
 theorem factor_info_content (p q : ℕ) (hp : 2 ≤ p) (hq : 2 ≤ q) :
     p * q ≥ 4 := by nlinarith
+
 
 
 
@@ -118,6 +140,7 @@ theorem contracting_terminates {f : ℕ → ℕ}
 
 
 
+
 /-- Berggren descent is contracting. -/
 theorem parent_hyp_less (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
     (hpyth : a^2 + b^2 = c^2) :
@@ -125,13 +148,16 @@ theorem parent_hyp_less (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
 
 
 
+
 theorem legendre_formula_example : padicValNat 2 (Nat.factorial 10) = 8 := by native_decide
+
 
 
 
 theorem congruent_5 : ∃ a b c : ℚ, a ^ 2 + b ^ 2 = c ^ 2 ∧
     a * b / 2 = 5 ∧ 0 < a ∧ 0 < b :=
   ⟨20/3, 3/2, 41/6, by norm_num, by norm_num, by norm_num, by norm_num⟩
+
 
 
 
@@ -145,9 +171,11 @@ theorem smallest_factor_le_sqrt (n : ℕ) (hn : 2 ≤ n) (hnp : ¬Nat.Prime n) :
 
 
 
+
 theorem sumset_singleton_card (A : Finset ℤ) (b : ℤ) :
     (A.image (· + b)).card = A.card :=
   Finset.card_image_of_injective A (fun _ _ h => by linarith)
+
 
 
 
@@ -159,13 +187,16 @@ theorem pyth_on_lightcone (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 theorem lorentz_add_left (u v w : Fin 3 → ℤ) :
     lorentz_inner (u + v) w = lorentz_inner u w + lorentz_inner v w := by
   simp [lorentz_inner, Pi.add_apply]; ring
 
 
 
+
 theorem euler_char_genus (g : ℕ) : 2 - 2 * (g : ℤ) = 2 * (1 - (g : ℤ)) := by ring
+
 
 
 
@@ -180,13 +211,16 @@ theorem cayley_hamilton_2x2_identity (a b c d : ℤ) :
 
 
 
+
 theorem Fp_card (p : ℕ) [Fact (Nat.Prime p)] : Fintype.card (ZMod p) = p :=
   ZMod.card p
 
 
 
+
 theorem Fp_star_cyclic (p : ℕ) [Fact (Nat.Prime p)] :
     IsCyclic (ZMod p)ˣ := inferInstance
+
 
 
 
@@ -203,12 +237,14 @@ theorem ramsey_lower : ∃ (f : Fin 5 → Fin 5 → Bool),
 
 
 
+
 theorem pyth_triples_finite (N : ℕ) :
     Set.Finite {t : ℕ × ℕ × ℕ | t.1 ^ 2 + t.2.1 ^ 2 = t.2.2 ^ 2 ∧ t.2.2 ≤ N} := by
   apply Set.Finite.subset (Set.finite_Icc (0, 0, 0) (N, N, N))
   intro ⟨a, b, c⟩ ⟨hpyth, hc⟩
   simp only [Set.mem_Icc, Prod.le_def]
   exact ⟨⟨Nat.zero_le _, Nat.zero_le _, Nat.zero_le _⟩, ⟨by nlinarith, by nlinarith, hc⟩⟩
+
 
 
 
@@ -225,6 +261,8 @@ theorem error_nonneg_over_Z (delta : ℤ) (hd : delta ≠ 0) (hd1 : delta ≠ 1)
 
 
 
+
 theorem multi_form_total_work (p f : ℕ) :
     (p - 1) / 2 / f * f ≤ (p - 1) / 2 := Nat.div_mul_le_self _ _
+
 

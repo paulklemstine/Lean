@@ -26,9 +26,11 @@ theorem binaryEntropy_max :
 
 
 
+
 /-- Shannon entropy of a distribution. -/
 def ProbDist.entropy {n : ℕ} (d : ProbDist n) : ℝ :=
   -∑ i : Fin n, if d.prob i = 0 then 0 else d.prob i * Real.log (d.prob i)
+
 
 
 
@@ -38,6 +40,11 @@ theorem minimax_detection_value {n : ℕ} (hn : 2 ≤ n) :
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.InformationBounds
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 4] -/
 theorem infinite_horizon_optimal {n : ℕ} (hn : 2 ≤ n) (d : ProbDist n) :
     ∃ target : Fin n, 1 - d.prob target ≥ 1 - 1 / (n : ℝ) := by
   by_contra h;
@@ -46,6 +53,7 @@ theorem infinite_horizon_optimal {n : ℕ} (hn : 2 ≤ n) (d : ProbDist n) :
     grind;
   have := Finset.sum_lt_sum_of_nonempty ⟨ ⟨ 0, by linarith ⟩, Finset.mem_univ _ ⟩ fun i hi => h_all_gt i; simp_all +decide [ Finset.sum_const, nsmul_eq_mul ] ;
   rw [ mul_inv_cancel₀ ( by positivity ), d.prob_sum ] at this ; linarith
+
 
 
 

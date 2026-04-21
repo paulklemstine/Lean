@@ -30,6 +30,11 @@ theorem chain_01_complete : ∀ n : ℤ,
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.Core.IntegerChains
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Core
+Declarations: 17] -/
 theorem chain_1_neg1_complete (n : ℤ) (hn : (n : ℚ) ≠ 0) :
     (∃ m : ℤ, twoPole 1 (-1) (n : ℚ) = (m : ℚ)) ↔ (n = 1 ∨ n = -1) := by
       unfold twoPole;
@@ -41,8 +46,10 @@ theorem chain_1_neg1_complete (n : ℤ) (hn : (n : ℚ) ≠ 0) :
 
 
 
+
 theorem twoPole_02_at_0 : twoPole 0 2 0 = 2 := by
   norm_num [ twoPole ]
+
 
 
 
@@ -51,8 +58,10 @@ theorem twoPole_02_at_1 : twoPole 0 2 1 = -3 := by
 
 
 
+
 theorem twoPole_02_at_neg2 : twoPole 0 2 (-2) = 0 := by
   unfold twoPole; norm_num
+
 
 
 
@@ -61,8 +70,10 @@ theorem twoPole_02_at_3 : twoPole 0 2 3 = -1 := by
 
 
 
+
 theorem twoPole_03_at_0 : twoPole 0 3 0 = 3 := by
   decide +kernel
+
 
 
 
@@ -71,13 +82,16 @@ theorem twoPole_03_at_2 : twoPole 0 3 2 = -1 := by
 
 
 
+
 theorem twoPole_03_at_neg3 : twoPole 0 3 (-3) = 0 := by
   decide +kernel
 
 
 
+
 theorem twoPole_03_at_1 : twoPole 0 3 1 = -2 := by
   decide +kernel
+
 
 
 
@@ -87,9 +101,11 @@ theorem twoPole_12_at_2 : twoPole 1 2 2 = 7 := by
 
 
 
+
 theorem twoPole_12_at_4 : twoPole 1 2 4 = -13 := by
   -- Substitute a=1 and b=2 into the twoPole function and simplify.
   norm_num [ twoPole ]
+
 
 
 
@@ -98,8 +114,10 @@ theorem twoPole_12_at_neg2 : twoPole 1 2 (-2) = -1 := by
 
 
 
+
 theorem twoPole_12_at_5 : twoPole 1 2 5 = -8 := by
   rw [ twoPole ] ; norm_num
+
 
 
 
@@ -108,12 +126,15 @@ theorem twoPole_12_at_neg7 : twoPole 1 2 (-7) = -2 := by
 
 
 
+
 theorem twoPole_12_at_8 : twoPole 1 2 8 = -5 := by
   unfold twoPole; norm_num;
 
 
 
+
 theorem twoPole_12_at_13 : twoPole 1 2 13 = -4 := by
   norm_num [ twoPole ]
+
 
 

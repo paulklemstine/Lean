@@ -16,9 +16,11 @@ structure SolverOracle (X : Type*) where
 
 
 
+
 /-- The truth set (fixed points) of an oracle — the "frozen solution crystal." -/
 def SolverOracle.truthSet {X : Type*} (O : SolverOracle X) : Set X :=
   {x | O.apply x = x}
+
 
 
 
@@ -29,10 +31,12 @@ def SolverOracle.trivial (X : Type*) : SolverOracle X where
 
 
 
+
 /-- A constant oracle: projects everything to a single solution. -/
 def SolverOracle.constant {X : Type*} (c : X) : SolverOracle X where
   apply := fun _ => c
   idempotent _ := rfl
+
 
 
 
@@ -43,12 +47,14 @@ theorem SolverOracle.output_is_fixed {X : Type*} (O : SolverOracle X) (x : X) :
 
 
 
+
 /-- **Theorem 1.2**: The range of an oracle equals its truth set. -/
 theorem SolverOracle.range_eq_truth {X : Type*} (O : SolverOracle X) :
     range O.apply = O.truthSet := by
   ext y; constructor
   · rintro ⟨x, rfl⟩; exact O.output_is_fixed x
   · intro hy; exact ⟨y, hy⟩
+
 
 
 
@@ -63,6 +69,7 @@ theorem SolverOracle.iterate_stable {X : Type*} (O : SolverOracle X)
 
 
 
+
 /-- **Theorem 1.4**: The truth set of a constant oracle is a singleton. -/
 theorem SolverOracle.constant_truth {X : Type*} (c : X) :
     (SolverOracle.constant c).truthSet = {c} := by
@@ -70,9 +77,11 @@ theorem SolverOracle.constant_truth {X : Type*} (c : X) :
 
 
 
+
 /-- Inverse stereographic projection: ℝ → S¹ ⊂ ℝ² -/
 def invStereoProj (t : ℝ) : ℝ × ℝ :=
   (2 * t / (1 + t ^ 2), (1 - t ^ 2) / (1 + t ^ 2))
+
 
 
 
@@ -83,6 +92,7 @@ theorem invStereoProj_on_circle (t : ℝ) :
   have h : (1 : ℝ) + t ^ 2 ≠ 0 := by positivity
   field_simp
   ring
+
 
 
 
@@ -98,6 +108,7 @@ theorem oracle_stereo_roundtrip (t : ℝ) :
 
 
 
+
 /-- **Theorem 2.4**: The y-coordinate of invStereo is bounded above by 1. -/
 theorem invStereo_y_le_one (t : ℝ) : (invStereoProj t).2 ≤ 1 := by
   simp only [invStereoProj]
@@ -107,8 +118,14 @@ theorem invStereo_y_le_one (t : ℝ) : (invStereoProj t).2 ≤ 1 := by
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.OracleStereoSolver
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 39] -/
 theorem invStereo_y_ge_neg_one (t : ℝ) : -1 ≤ (invStereoProj t).2 := by
   exact ( by rw [ invStereoProj ] ; rw [ le_div_iff₀ ] <;> nlinarith )
+
 
 
 
@@ -118,14 +135,17 @@ theorem invStereo_at_zero : invStereoProj 0 = (0, 1) := by
 
 
 
+
 /-- **Theorem 2.7**: At t=1, invStereo gives (1,0). -/
 theorem invStereo_at_one : invStereoProj 1 = (1, 0) := by
   unfold invStereoProj; norm_num
 
 
 
+
 /-- A Pythagorean triple (a, b, c) satisfies a² + b² = c². -/
 def IsPythagoreanTriple (a b c : ℤ) : Prop := a ^ 2 + b ^ 2 = c ^ 2
+
 
 
 
@@ -137,6 +157,7 @@ theorem rational_stereo_pythagorean (p q : ℤ) :
 
 
 
+
 /-- **Theorem 3.6 (Universality)**: The parametrization identity. -/
 theorem pythagorean_parametrization_complete (m n : ℤ) :
     (2 * m * n) ^ 2 + (m ^ 2 - n ^ 2) ^ 2 = (m ^ 2 + n ^ 2) ^ 2 := by
@@ -144,10 +165,12 @@ theorem pythagorean_parametrization_complete (m n : ℤ) :
 
 
 
+
 /-- **Theorem 3.7 (Sum of Two Squares Primes ≤ 100)**: 12 such primes. -/
 theorem sum_two_squares_primes_count :
     (Finset.filter (fun p => Nat.Prime p ∧ (p % 4 = 1 ∨ p = 2))
       (Finset.range 101)).card = 12 := by native_decide
+
 
 
 
@@ -160,6 +183,7 @@ theorem experiment_pythagorean_batch :
 
 
 
+
 /-- **Experiment 2**: The oracle-stereo roundtrip is exact at rationals. -/
 theorem experiment_roundtrip (p q : ℤ) (hq : (q : ℝ) ≠ 0) :
     stereoProj (invStereoProj ((p : ℝ) / q)) = (p : ℝ) / q :=
@@ -167,9 +191,11 @@ theorem experiment_roundtrip (p q : ℤ) (hq : (q : ℝ) ≠ 0) :
 
 
 
+
 /-- **Theorem 5.1 (Crystallization at Integers)**: sin(πn) = 0 for n ∈ ℤ. -/
 theorem crystallization_integers (n : ℤ) : Real.sin (π * ↑n) = 0 := by
   rw [mul_comm]; exact sin_int_mul_pi n
+
 
 
 
@@ -180,10 +206,12 @@ theorem lattice_point_25 :
 
 
 
+
 /-- **Theorem 5.3**: Lattice points on x²+y²=1. -/
 theorem lattice_point_1 :
     (Finset.filter (fun p : ℤ × ℤ => p.1 ^ 2 + p.2 ^ 2 = 1)
       (Finset.Icc (-1) 1 ×ˢ Finset.Icc (-1) 1)).card = 4 := by native_decide
+
 
 
 
@@ -194,10 +222,12 @@ theorem no_lattice_points_3 :
 
 
 
+
 /-- **Theorem 5.5**: r₂(5) = 8. -/
 theorem lattice_points_5 :
     (Finset.filter (fun p : ℤ × ℤ => p.1 ^ 2 + p.2 ^ 2 = 5)
       (Finset.Icc (-3) 3 ×ˢ Finset.Icc (-3) 3)).card = 8 := by native_decide
+
 
 
 
@@ -207,9 +237,11 @@ theorem mobius_identity (x : ℝ) : mobiusTransform 1 0 0 1 x = x := by
 
 
 
+
 theorem mobius_inversion_involution (x : ℝ) (hx : x ≠ 0) :
     mobiusTransform 0 1 1 0 (mobiusTransform 0 1 1 0 x) = x := by
   unfold mobiusTransform; aesop;
+
 
 
 
@@ -220,10 +252,12 @@ theorem modular_S_det :
 
 
 
+
 /-- **Theorem 6.4**: S² = -I in SL₂(ℤ). -/
 theorem modular_S_squared :
     !![( 0 : ℤ), -1; 1, 0] * !![( 0 : ℤ), -1; 1, 0] = !![(-1 : ℤ), 0; 0, -1] := by
   ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.mul_apply, Fin.sum_univ_two]
+
 
 
 
@@ -236,9 +270,11 @@ theorem modular_ST_cubed :
 
 
 
+
 /-- **Application 1**: The floor function is an oracle on integers. -/
 theorem floor_oracle_idempotent (x : ℤ) : ⌊(x : ℝ)⌋ = x :=
   Int.floor_intCast x
+
 
 
 
@@ -248,14 +284,17 @@ theorem mod_oracle_idempotent (x n : ℕ) : (x % n) % n = x % n :=
 
 
 
+
 /-- **Application 3**: The parity oracle is idempotent. -/
 theorem parity_oracle_idempotent (x : ℕ) : (x % 2) % 2 = x % 2 := by omega
+
 
 
 
 theorem gcd_oracle_idempotent (a b : ℕ) :
     Nat.gcd (Nat.gcd a b) b = Nat.gcd a b := by
   rw [ Nat.gcd_assoc, Nat.gcd_self ]
+
 
 
 
@@ -267,11 +306,13 @@ theorem solution_lens_identity :
 
 
 
+
 /-- **The Solution Lens Oracle**: The stereo round-trip is the identity oracle. -/
 def solutionLensOracle : SolverOracle ℝ where
   apply := fun t => stereoProj (invStereoProj t)
   idempotent := by
     intro x; simp [solution_lens_identity]
+
 
 
 
@@ -282,11 +323,13 @@ theorem oracle_lens_collapse (O : SolverOracle ℝ) (x : ℝ) :
 
 
 
+
 /-- **The Frozen Crystal Theorem**: The truth set of the solution lens oracle
 is all of ℝ — every point is a fixed point of the identity. -/
 theorem frozen_crystal_is_everything :
     solutionLensOracle.truthSet = Set.univ := by
   ext x; simp [SolverOracle.truthSet, solutionLensOracle, solution_lens_identity]
+
 
 
 

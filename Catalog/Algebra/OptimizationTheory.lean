@@ -17,6 +17,11 @@ theorem sq_convex (a b : ℝ) (t : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
 
 
 
+
+/-- [Section: # CatalogBuild.Algebra.OptimizationTheory
+Auto-generated from theorem catalog database.
+Domain: Algebra
+Declarations: 5] -/
 theorem jensen_sq (n : ℕ) (hn : 0 < n) (x : Fin n → ℝ) :
     ((∑ i, x i) / n) ^ 2 ≤ (∑ i, (x i) ^ 2) / n := by
   -- Applying the Cauchy-Schwarz inequality in its generalized form for sequences in Euclidean space.
@@ -27,9 +32,11 @@ theorem jensen_sq (n : ℕ) (hn : 0 < n) (x : Fin n → ℝ) :
 
 
 
+
 /-- 2^n ≤ 4^n (gate count lower bound for n qubits). -/
 theorem gate_count_lower_bound (n : ℕ) : 2 ^ n ≤ 4 ^ n :=
   Nat.pow_le_pow_left (by norm_num : 2 ≤ 4) n
+
 
 
 
@@ -40,7 +47,9 @@ theorem trace_linear_2x2 (A B : Matrix (Fin 2) (Fin 2) ℝ) (c : ℝ) :
 
 
 
+
 /-- For f(x) = x²/2, one step of GD with step size 1 from x gives 0. -/
 theorem gd_quadratic_one_step (x : ℝ) :
     x - 1 * x = (0 : ℝ) := by ring
+
 

@@ -9,17 +9,25 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # CatalogBuild.Speculative.OISCC.V11_MetricGeometry
+Auto-generated from theorem catalog database.
+Domain: Speculative/OISCC
+Declarations: 17] -/
 def f_met (x : ℝ) : ℝ := Real.exp x - Real.log x - 1
 
 
+
 def d_met (x y : ℝ) : ℝ := |f_met x - f_met y|
+
 
 
 theorem d_met_symm (x y : ℝ) : d_met x y = d_met y x := by
   simp [d_met, abs_sub_comm]
 
 
+
 theorem d_met_self (x : ℝ) : d_met x x = 0 := by simp [d_met]
+
 
 
 theorem d_met_triangle (x y z : ℝ) :
@@ -30,7 +38,9 @@ theorem d_met_triangle (x y z : ℝ) :
     _ ≤ |f_met x - f_met y| + |f_met y - f_met z| := abs_add_le _ _
 
 
+
 theorem d_met_nonneg (x y : ℝ) : 0 ≤ d_met x y := abs_nonneg _
+
 
 
 theorem d_met_eq_zero_iff (x y : ℝ) :
@@ -38,14 +48,17 @@ theorem d_met_eq_zero_iff (x y : ℝ) :
   simp [d_met, abs_eq_zero, sub_eq_zero]
 
 
+
 theorem f_met_pos (x : ℝ) (hx : 0 < x) : f_met x > 0 := by
   unfold f_met
   nlinarith [Real.add_one_le_exp x, Real.log_le_sub_one_of_pos hx]
 
 
+
 theorem f_met_ge_one (x : ℝ) (hx : 0 < x) : f_met x ≥ 1 := by
   unfold f_met
   linarith [Real.add_one_le_exp x, Real.log_le_sub_one_of_pos hx]
+
 
 
 theorem f_met_tendsto_atTop :
@@ -59,6 +72,7 @@ theorem f_met_tendsto_atTop :
   filter_upwards [ h_exp_growth.eventually_gt_atTop ( |b| + 2 ), Filter.eventually_gt_atTop ( |b| + 2 ) ] with x hx₁ hx₂ using by cases abs_cases b <;> nlinarith [ Real.add_one_le_exp x, Real.log_le_sub_one_of_pos ( by linarith : 0 < x ), mul_div_cancel₀ ( Real.exp x ) ( by linarith : x ≠ 0 ) ] ;
 
 
+
 theorem d_met_unbounded : ∀ M : ℝ, ∃ x y : ℝ, 0 < x ∧ 0 < y ∧ d_met x y > M := by
   intro M
   obtain ⟨x, hx⟩ : ∃ x : ℝ, 0 < x ∧ f_met x > (abs M) + f_met 1 + 1 := by
@@ -66,6 +80,7 @@ theorem d_met_unbounded : ∀ M : ℝ, ∃ x y : ℝ, 0 < x ∧ 0 < y ∧ d_met 
       exact?;
     exact Filter.Eventually.and ( Filter.eventually_gt_atTop 0 ) ( h_tendsto.eventually_gt_atTop _ ) |> fun h => h.exists;
   exact ⟨ x, 1, hx.1, by norm_num, by rw [ d_met ] ; rw [ abs_of_nonneg ] <;> cases abs_cases M <;> linarith ⟩
+
 
 
 theorem f_met_strictMono_Ici : StrictMonoOn f_met (Ici 1) := by
@@ -82,6 +97,7 @@ theorem f_met_strictMono_Ici : StrictMonoOn f_met (Ici 1) := by
   have := h_deriv_pos c ( le_trans hx.out hc.1.1.le ) ; rw [ hc.2, lt_div_iff₀ ] at this <;> linarith;
 
 
+
 theorem d_met_definite_on_Ici (x y : ℝ) (hx : 1 ≤ x) (hy : 1 ≤ y) :
     d_met x y = 0 ↔ x = y := by
   rw [d_met_eq_zero_iff]
@@ -90,16 +106,20 @@ theorem d_met_definite_on_Ici (x y : ℝ) (hx : 1 ≤ x) (hy : 1 ≤ y) :
   · intro h; rw [h]
 
 
+
 theorem f_met_one : f_met 1 = Real.exp 1 - 1 := by simp [f_met, Real.log_one]
 
 
+
 def D_met (x y : ℝ) : ℝ := f_met x + f_met y
+
 
 
 theorem D_ge_d (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
     D_met x y ≥ d_met x y := by
   unfold D_met d_met;
   exact abs_le.mpr ⟨ by linarith [ f_met_pos x hx, f_met_pos y hy ], by linarith [ f_met_pos x hx, f_met_pos y hy ] ⟩
+
 
 
 theorem D_decomposition (x y : ℝ) :
@@ -109,6 +129,7 @@ theorem D_decomposition (x y : ℝ) :
   · rw [min_eq_left h, abs_of_nonpos (sub_nonpos.mpr h)]; ring
   · push_neg at h
     rw [min_eq_right (le_of_lt h), abs_of_pos (sub_pos.mpr h)]; ring
+
 
 
 end

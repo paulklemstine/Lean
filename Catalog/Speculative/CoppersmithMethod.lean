@@ -21,6 +21,7 @@ theorem small_mod_root_zero (a N : ℤ) (hN : 0 < N) (hmod : N ∣ a) (hsmall : 
 
 
 
+
 /-- For a linear polynomial f(x) = ax + b, if N | f(x₀) and |f(x₀)| < N, then f(x₀) = 0. -/
 theorem coppersmith_linear (a b x₀ N : ℤ) (hN : 0 < N)
     (hmod : N ∣ a * x₀ + b) (hsmall : |a * x₀ + b| < N) :
@@ -29,11 +30,13 @@ theorem coppersmith_linear (a b x₀ N : ℤ) (hN : 0 < N)
 
 
 
+
 /-- For a monic quadratic f(x) = x² + bx + c, if N | f(x₀) and |f(x₀)| < N, then f(x₀) = 0. -/
 theorem coppersmith_quadratic_bound (x₀ b c N : ℤ) (hN : 0 < N)
     (hmod : N ∣ x₀ ^ 2 + b * x₀ + c) (hsmall : |x₀ ^ 2 + b * x₀ + c| < N) :
     x₀ ^ 2 + b * x₀ + c = 0 :=
   small_mod_root_zero _ N hN hmod hsmall
+
 
 
 
@@ -49,6 +52,7 @@ theorem exists_mod_cancel (b k p : ℤ) (hp : Nat.Prime p.toNat) (hb : ¬ p ∣ 
     have := Int.gcd_eq_gcd_ab b n;
     exact ⟨ Int.gcdA b n, Int.modEq_iff_dvd.mpr ⟨ Int.gcdB b n, by linarith [ show Int.gcd b n = 1 from Nat.coprime_comm.mp <| hp.coprime_iff_not_dvd.mpr hb ] ⟩ ⟩;
   exact ⟨ -k * b_inv, by rw [ ← Int.natCast_dvd ] ; simpa using hb_inv.symm.dvd.trans ⟨ -k, by ring ⟩ ⟩
+
 
 
 
@@ -69,7 +73,13 @@ theorem hensel_lift_square (a c p : ℤ) (hp : 0 < p) (hprime : Nat.Prime p.toNa
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.CoppersmithMethod
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 9] -/
 theorem coppersmith_lattice_det (N : ℤ) : N * N = N ^ 2 := by ring
+
 
 
 
@@ -81,12 +91,15 @@ theorem fermat_factoring_odd (p q : ℤ) (hp : 0 < p) (hq : 0 < q)
 
 
 
+
 /-- The difference of squares identity. -/
 theorem diff_sq_factor (a b : ℤ) : a ^ 2 - b ^ 2 = (a - b) * (a + b) := by ring
+
 
 
 
 /-- Fermat's factoring identity. -/
 theorem fermat_identity (a b : ℤ) :
     4 * (a * b) = (a + b) ^ 2 - (a - b) ^ 2 := by ring
+
 

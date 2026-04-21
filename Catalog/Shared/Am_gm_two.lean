@@ -16,3 +16,4 @@ theorem am_gm_two (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) :
       exact Real.sqrt_le_iff.mpr ⟨ by positivity, by linarith [ sq_nonneg ( a - b ) ] ⟩
 
 
+

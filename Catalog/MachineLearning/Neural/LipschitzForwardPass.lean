@@ -1,45 +1,44 @@
-import Mathlib
+/-! # CatalogBuild.MachineLearning.Neural.LipschitzForwardPass
 
-/-! # Phase 3: Equivalence & Integrity Verification
-
-We prove that the mutated (compressed/approximated) architecture preserves
-the structural integrity of the baseline model through:
-
-1. **Lipschitz continuity** of the forward pass components.
-2. **ε-bound** on the worst-case divergence between baseline and compressed
-   model outputs across all valid input tensors.
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/Neural
+Declarations: 15
 -/
 
+import Mathlib
+
 noncomputable section
-
-open BigOperators Real Finset
-
-/-! ## Section 1: Lipschitz Continuity of Forward Pass Components -/
 
 /-- L² norm squared of a vector. -/
 def vecNormSq (n : ℕ) (v : Fin n → ℝ) : ℝ := ∑ i : Fin n, v i ^ 2
 
+
 /-- L² norm of a vector. -/
 def vecNorm (n : ℕ) (v : Fin n → ℝ) : ℝ := Real.sqrt (vecNormSq n v)
+
 
 /-- vecNormSq is non-negative. -/
 theorem vecNormSq_nonneg (n : ℕ) (v : Fin n → ℝ) : 0 ≤ vecNormSq n v := by
   apply Finset.sum_nonneg; intro i _; exact sq_nonneg _
 
+
 /-- vecNorm is non-negative. -/
 theorem vecNorm_nonneg (n : ℕ) (v : Fin n → ℝ) : 0 ≤ vecNorm n v :=
   Real.sqrt_nonneg _
+
 
 /-- A function f : ℝ^n → ℝ^m is Lipschitz with constant L. -/
 def IsLipschitzFn (n m : ℕ) (L : ℝ) (f : (Fin n → ℝ) → (Fin m → ℝ)) : Prop :=
   0 ≤ L ∧ ∀ x y : Fin n → ℝ,
     vecNorm m (fun i => f x i - f y i) ≤ L * vecNorm n (fun i => x i - y i)
 
+
 /-- The identity function is 1-Lipschitz. -/
 theorem id_lipschitz (n : ℕ) : IsLipschitzFn n n 1 id := by
   constructor
   · linarith
   · intro x y; simp [one_mul]
+
 
 /-- Composition of Lipschitz functions: L₁·L₂-Lipschitz. -/
 theorem lipschitz_compose (n m k : ℕ) (L₁ L₂ : ℝ)
@@ -56,37 +55,23 @@ theorem lipschitz_compose (n m k : ℕ) (L₁ L₂ : ℝ)
           mul_le_mul_of_nonneg_left (hg.2 x y) hf.1
       _ = (L₁ * L₂) * vecNorm n (fun i => x i - y i) := by ring
 
-/-
-ReLU is 1-Lipschitz (scalar version): |max(x,0) - max(y,0)| ≤ |x-y|.
--/
+
+/-- [Section: ## Section 1: Lipschitz Continuity of Forward Pass Components] -/
 theorem relu_lipschitz_scalar (x y : ℝ) :
     |max x 0 - max y 0| ≤ |x - y| := by
   cases max_cases x 0 <;> cases max_cases y 0 <;> cases abs_cases ( x - y ) <;> cases abs_cases ( Max.max x 0 - Max.max y 0 ) <;> linarith
 
-/-
-Component-wise ReLU is 1-Lipschitz in vecNorm.
--/
+
 theorem relu_vecNorm_lipschitz (n : ℕ) (x y : Fin n → ℝ) :
     vecNormSq n (fun i => max (x i) 0 - max (y i) 0) ≤
     vecNormSq n (fun i => x i - y i) := by
   exact Finset.sum_le_sum fun i _ => by cases max_cases ( x i ) 0 <;> cases max_cases ( y i ) 0 <;> nlinarith [ abs_le.mp ( relu_lipschitz_scalar ( x i ) ( y i ) ) ] ;
 
-/-- Component-wise ReLU is 1-Lipschitz. -/
-theorem relu_lipschitz (n : ℕ) :
-    IsLipschitzFn n n 1 (fun x i => max (x i) 0) := by
-  constructor
-  · linarith
-  · intro x y
-    simp only [one_mul]
-    unfold vecNorm
-    apply Real.sqrt_le_sqrt
-    exact relu_vecNorm_lipschitz n x y
-
-/-! ## Section 2: ε-Bound on Output Divergence -/
 
 /-- Architecture integrity: f' is an ε-approximation of f. -/
 def IsEpsilonApprox (n m : ℕ) (ε : ℝ) (f f' : (Fin n → ℝ) → (Fin m → ℝ)) : Prop :=
   0 ≤ ε ∧ ∀ x : Fin n → ℝ, vecNorm m (fun i => f x i - f' x i) ≤ ε
+
 
 /-- Reflexivity: any function is a 0-approximation of itself. -/
 theorem epsilon_approx_self (n m : ℕ) (f : (Fin n → ℝ) → (Fin m → ℝ)) :
@@ -95,9 +80,8 @@ theorem epsilon_approx_self (n m : ℕ) (f : (Fin n → ℝ) → (Fin m → ℝ)
   · linarith
   · intro x; simp; unfold vecNorm vecNormSq; simp
 
-/-
-Two-layer error propagation bound.
--/
+
+/-- [Section: ## Section 2: ε-Bound on Output Divergence] -/
 theorem two_layer_error_bound (n m k : ℕ) (L₂ δ₁ δ₂ : ℝ)
     (hL₂ : 0 ≤ L₂) (hδ₁ : 0 ≤ δ₁) (hδ₂ : 0 ≤ δ₂)
     (f₁ f₁' : (Fin n → ℝ) → (Fin m → ℝ))
@@ -116,6 +100,7 @@ theorem two_layer_error_bound (n m k : ℕ) (L₂ δ₁ δ₂ : ℝ)
     exact fun x => by simpa using h_triangle ( fun i => f₂ ( f₁ x ) i - f₂ ( f₁' x ) i ) ( fun i => f₂ ( f₁' x ) i - f₂' ( f₁' x ) i ) ;
   exact fun x => le_trans ( h_triangle x ) ( add_le_add ( hf₂_lip.2 _ _ |> le_trans <| mul_le_mul_of_nonneg_left ( hf₁_close _ ) hL₂ ) ( hf₂_close _ ) )
 
+
 /-- The main guardrail theorem: bounded perturbation implies ε-approximation. -/
 theorem integrity_guardrail (n k : ℕ) (δ : ℝ) (hδ : 0 ≤ δ)
     (f f' : (Fin n → ℝ) → (Fin k → ℝ))
@@ -123,11 +108,8 @@ theorem integrity_guardrail (n k : ℕ) (δ : ℝ) (hδ : 0 ≤ δ)
     IsEpsilonApprox n k δ f f' :=
   ⟨hδ, h_param_close⟩
 
-/-! ## Section 3: Lipschitz Bound for Full Forward Pass -/
 
-/-
-Triangle inequality for vecNorm.
--/
+/-- [Section: ## Section 3: Lipschitz Bound for Full Forward Pass] -/
 theorem vecNorm_triangle (n : ℕ) (u v : Fin n → ℝ) :
     vecNorm n (fun i => u i + v i) ≤ vecNorm n u + vecNorm n v := by
   refine' Real.sqrt_le_iff.mpr _;
@@ -141,6 +123,7 @@ theorem vecNorm_triangle (n : ℕ) (u v : Fin n → ℝ) :
   have h_cauchy : (∑ i, u i * v i) ^ 2 ≤ (∑ i, u i ^ 2) * (∑ i, v i ^ 2) := by
     exact?;
   nlinarith! [ show 0 ≤ Real.sqrt ( vecNormSq n u ) * Real.sqrt ( vecNormSq n v ) by positivity, Real.mul_self_sqrt ( show 0 ≤ vecNormSq n u by exact Finset.sum_nonneg fun _ _ => sq_nonneg _ ), Real.mul_self_sqrt ( show 0 ≤ vecNormSq n v by exact Finset.sum_nonneg fun _ _ => sq_nonneg _ ) ]
+
 
 /-- Residual connection preserves Lipschitz with constant 1 + L. -/
 theorem residual_lipschitz (n : ℕ) (L : ℝ) (hL : 0 ≤ L)
@@ -159,5 +142,6 @@ theorem residual_lipschitz (n : ℕ) (L : ℝ) (hL : 0 ≤ L)
       _ ≤ vecNorm n (fun i => x i - y i) + L * vecNorm n (fun i => x i - y i) := by
           linarith [hg.2 x y]
       _ = (1 + L) * vecNorm n (fun i => x i - y i) := by ring
+
 
 end

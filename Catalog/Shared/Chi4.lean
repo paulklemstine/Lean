@@ -17,8 +17,10 @@ def chi4 (n : ℤ) : ℤ :=
 
 
 
+
 /-- χ₄(1) = 1. -/
 theorem chi4_one : chi4 1 = 1 := by native_decide
+
 
 
 
@@ -34,8 +36,10 @@ theorem chi4_mul_odd (a b : ℤ) (ha : a % 2 = 1) (hb : b % 2 = 1) :
 
 
 
+
 /-- χ₄(3) = -1. -/
 theorem chi4_three : chi4 3 = -1 := by native_decide
+
 
 
 

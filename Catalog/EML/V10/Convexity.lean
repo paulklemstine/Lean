@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: EML/V10
-Declarations: 17
+Declarations: 16
 -/
 
 import Mathlib
@@ -13,6 +13,7 @@ noncomputable section
 theorem eml_convex_x (y : ℝ) : ConvexOn ℝ Set.univ (fun x => eml x y) := by
   show ConvexOn ℝ Set.univ (fun x => Real.exp x + (-Real.log y))
   exact convexOn_exp.add (convexOn_const _ convex_univ)
+
 
 
 
@@ -42,36 +43,11 @@ theorem eml_convex_y (x : ℝ) : ConvexOn ℝ (Set.Ioi 0) (fun y => eml x y) := 
 
 
 
-/-- EML is jointly convex on ℝ × (0,∞). -/
-theorem eml_jointly_convex :
-    ConvexOn ℝ (Set.univ ×ˢ Set.Ioi 0)
-      (fun p : ℝ × ℝ => eml p.1 p.2) := by
-  constructor
-  · exact convex_univ.prod (convex_Ioi 0)
-  · intro p hp q hq t s ht hs hts
-    simp only [eml, Prod.smul_fst, Prod.smul_snd, smul_eq_mul, Prod.fst_add, Prod.snd_add]
-    have hp2 : (0:ℝ) < p.2 := (Set.mem_prod.mp hp).2
-    have hq2 : (0:ℝ) < q.2 := (Set.mem_prod.mp hq).2
-    have hmix : (0:ℝ) < t * p.2 + s * q.2 := by
-      rcases (ht.lt_or_eq) with ht' | ht'
-      · exact add_pos_of_pos_of_nonneg (mul_pos ht' hp2) (mul_nonneg hs hq2.le)
-      · rw [← ht'] at hts; simp at hts; rw [← ht', hts]; simp; exact hq2
-    have hexp := convexOn_exp.2 (Set.mem_univ p.1) (Set.mem_univ q.1) ht hs hts
-    simp at hexp
-    have hconv := convexOn_exp.2 (Set.mem_univ (Real.log p.2))
-      (Set.mem_univ (Real.log q.2)) ht hs hts
-    simp at hconv; rw [Real.exp_log hp2, Real.exp_log hq2] at hconv
-    have hlog : t * Real.log p.2 + s * Real.log q.2 ≤ Real.log (t * p.2 + s * q.2) := by
-      rw [← Real.exp_le_exp]; exact le_trans hconv (Real.exp_log hmix).symm.le
-    linarith [show t * Real.exp p.1 + s * Real.exp q.1 -
-      (t * Real.log p.2 + s * Real.log q.2) =
-      t * (Real.exp p.1 - Real.log p.2) + s * (Real.exp q.1 - Real.log q.2) from by ring]
-
-
 
 /-- σ(x) ≥ 1 for all x. -/
 theorem emlSelfPair_ge_one (x : ℝ) : emlSelfPair x ≥ 1 := by
   unfold emlSelfPair; linarith [Real.add_one_le_exp x]
+
 
 
 
@@ -80,6 +56,7 @@ theorem emlSelfPair_eq_one_iff (x : ℝ) : emlSelfPair x = 1 ↔ x = 0 := by
   unfold emlSelfPair; constructor
   · intro h; by_contra hne; linarith [Real.add_one_lt_exp hne]
   · intro h; subst h; simp
+
 
 
 
@@ -101,11 +78,13 @@ theorem emlSelfPair_strict_convex : StrictConvexOn ℝ Set.univ emlSelfPair := b
 
 
 
+
 /-- σ'(x) = eˣ − 1. -/
 theorem emlSelfPair_hasDerivAt (x : ℝ) :
     HasDerivAt emlSelfPair (Real.exp x - 1) x := by
   unfold emlSelfPair
   exact (Real.hasDerivAt_exp x).sub (hasDerivAt_id x) |>.congr_deriv (by ring)
+
 
 
 
@@ -120,6 +99,7 @@ theorem emlSelfPair_strictMono_nonneg : StrictMonoOn emlSelfPair (Set.Ici 0) := 
 
 
 
+
 /-- σ is strictly antitone on (−∞, 0]. -/
 theorem emlSelfPair_strictAnti_nonpos : StrictAntiOn emlSelfPair (Set.Iic 0) := by
   apply strictAntiOn_of_deriv_neg (convex_Iic 0)
@@ -128,6 +108,7 @@ theorem emlSelfPair_strictAnti_nonpos : StrictAntiOn emlSelfPair (Set.Iic 0) := 
     have : deriv emlSelfPair x = Real.exp x - 1 :=
       ((Real.hasDerivAt_exp x).sub (hasDerivAt_id x) |>.congr_deriv (by ring)).deriv
     rw [this]; linarith [show Real.exp x < 1 from by rw [← Real.exp_zero]; exact Real.exp_lt_exp.mpr hx]
+
 
 
 
@@ -140,12 +121,14 @@ theorem eml_deriv_x (x y : ℝ) :
 
 
 
+
 /-- ∂eml/∂y = −1/y for y > 0. -/
 theorem eml_deriv_y (x y : ℝ) (hy : 0 < y) :
     HasDerivAt (fun y' => eml x y') (-y⁻¹) y := by
   unfold eml
   exact ((hasDerivAt_const y (Real.exp x)).sub (Real.hasDerivAt_log hy.ne'))
     |>.congr_deriv (by ring)
+
 
 
 
@@ -162,6 +145,7 @@ theorem bregman_exp_zero_iff (x y : ℝ) :
 
 
 
+
 /-- The critical point of σ: eˣ = 1 iff x = 0. -/
 theorem emlSelfPair_critical_point (x : ℝ) :
     Real.exp x - 1 = 0 ↔ x = 0 := by
@@ -171,10 +155,12 @@ theorem emlSelfPair_critical_point (x : ℝ) :
 
 
 
+
 /-- Newton's method step for σ. -/
 theorem emlSelfPair_newton_step (x : ℝ) :
     x - (Real.exp x - 1) / Real.exp x = x - 1 + Real.exp (-x) := by
   rw [Real.exp_neg]; field_simp; ring
+
 
 
 
@@ -189,6 +175,7 @@ theorem emlSelfPair_growth (x : ℝ) (hx : 0 ≤ x) :
       (Summable.sum_le_tsum (Finset.range 3)
         (fun i _ => by positivity) (Real.summable_pow_div_factorial x))
   nlinarith [sq_nonneg (x - 1)]
+
 
 
 
@@ -209,6 +196,7 @@ theorem emlSelfPair_tendsto_top :
 
 
 
+
 /-- σ → ∞ as x → −∞. -/
 theorem emlSelfPair_tendsto_top_neg :
     Filter.Tendsto emlSelfPair Filter.atBot Filter.atTop := by
@@ -216,6 +204,7 @@ theorem emlSelfPair_tendsto_top_neg :
   simp only [Filter.eventually_atBot]
   use min (-b) 0; intro x hx; unfold emlSelfPair
   linarith [Real.exp_pos x, le_trans hx (min_le_left _ _), le_trans hx (min_le_right _ _)]
+
 
 
 

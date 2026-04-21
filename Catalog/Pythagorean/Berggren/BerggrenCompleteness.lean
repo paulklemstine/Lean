@@ -13,9 +13,11 @@ def invB1 (a b c : ℤ) : ℤ × ℤ × ℤ :=
 
 
 
+
 /-- Apply inverse Berggren B₂⁻¹ -/
 def invB2 (a b c : ℤ) : ℤ × ℤ × ℤ :=
   (a + 2*b - 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
+
 
 
 
@@ -25,9 +27,11 @@ def invB3 (a b c : ℤ) : ℤ × ℤ × ℤ :=
 
 
 
+
 /-- Apply forward Berggren B₁ -/
 def fwdB1 (a b c : ℤ) : ℤ × ℤ × ℤ :=
   (a - 2*b + 2*c, 2*a - b + 2*c, 2*a - 2*b + 3*c)
+
 
 
 
@@ -37,9 +41,11 @@ def fwdB2 (a b c : ℤ) : ℤ × ℤ × ℤ :=
 
 
 
+
 /-- Apply forward Berggren B₃ -/
 def fwdB3 (a b c : ℤ) : ℤ × ℤ × ℤ :=
   (-a + 2*b + 2*c, -2*a + b + 2*c, -2*a + 2*b + 3*c)
+
 
 
 
@@ -53,9 +59,15 @@ theorem invB1_fwdB1 (a b c : ℤ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.Berggren.BerggrenCompleteness
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Berggren
+Declarations: 33] -/
 theorem invB2_fwdB2 (a b c : ℤ) :
     invB2 (fwdB2 a b c).1 (fwdB2 a b c).2.1 (fwdB2 a b c).2.2 = (a, b, c) := by
   unfold invB2 fwdB2; ext <;> simp <;> ring
+
 
 
 
@@ -65,9 +77,11 @@ theorem invB3_fwdB3 (a b c : ℤ) :
 
 
 
+
 theorem fwdB1_invB1 (a b c : ℤ) :
     fwdB1 (invB1 a b c).1 (invB1 a b c).2.1 (invB1 a b c).2.2 = (a, b, c) := by
   unfold invB1 fwdB1; ext <;> simp <;> ring
+
 
 
 
@@ -77,9 +91,11 @@ theorem fwdB2_invB2 (a b c : ℤ) :
 
 
 
+
 theorem fwdB3_invB3 (a b c : ℤ) :
     fwdB3 (invB3 a b c).1 (invB3 a b c).2.1 (invB3 a b c).2.2 = (a, b, c) := by
   unfold invB3 fwdB3; ext <;> simp <;> ring
+
 
 
 
@@ -90,10 +106,12 @@ theorem invB1_preserves_pt (a b c : ℤ) (h : IsPT a b c) :
 
 
 
+
 theorem invB2_preserves_pt (a b c : ℤ) (h : IsPT a b c) :
     IsPT (invB2 a b c).1 (invB2 a b c).2.1 (invB2 a b c).2.2 := by
   unfold IsPT invB2 at *; nlinarith [h, sq_nonneg a, sq_nonneg b, sq_nonneg c,
     sq_nonneg (a - b), sq_nonneg (a + b), sq_nonneg (a - c), sq_nonneg (b - c)]
+
 
 
 
@@ -104,10 +122,12 @@ theorem invB3_preserves_pt (a b c : ℤ) (h : IsPT a b c) :
 
 
 
+
 /-- The first components of invB1 and invB2 are equal -/
 theorem invB1_invB2_first_eq (a b c : ℤ) :
     (invB1 a b c).1 = (invB2 a b c).1 := by
   unfold invB1 invB2; ring
+
 
 
 
@@ -118,10 +138,12 @@ theorem invB3_neg_invB1_first (a b c : ℤ) :
 
 
 
+
 /-- The second component of invB1 is the negation of invB2's second component -/
 theorem invB1_neg_invB2_second (a b c : ℤ) :
     (invB1 a b c).2.1 = -(invB2 a b c).2.1 := by
   unfold invB1 invB2; ring
+
 
 
 
@@ -132,11 +154,13 @@ theorem invB2_invB3_second_eq (a b c : ℤ) :
 
 
 
+
 /-- All three inverse transforms share the same third component (hypotenuse) -/
 theorem inv_same_hyp (a b c : ℤ) :
     (invB1 a b c).2.2 = (invB2 a b c).2.2 ∧
     (invB2 a b c).2.2 = (invB3 a b c).2.2 := by
   unfold invB1 invB2 invB3; exact ⟨rfl, rfl⟩
+
 
 
 
@@ -151,6 +175,7 @@ theorem invB2_pos_case (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
 
 
 
+
 /-- If a + 2b > 2c and 2a + b < 2c, then invB1 has all positive components -/
 theorem invB1_pos_case (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (hpt : IsPT a b c)
@@ -162,6 +187,7 @@ theorem invB1_pos_case (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
 
 
 
+
 /-- If a + 2b < 2c and 2a + b > 2c, then invB3 has all positive components -/
 theorem invB3_pos_case (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (hpt : IsPT a b c)
@@ -170,6 +196,7 @@ theorem invB3_pos_case (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
   refine ⟨?_, ?_, parent_hyp_pos a b c ha hb hc hpt⟩
   · show 0 < -a - 2 * b + 2 * c; linarith
   · show 0 < 2 * a + b - 2 * c; linarith
+
 
 
 
@@ -190,6 +217,7 @@ theorem no_simultaneous_zero (a b c : ℤ) (ha : 0 < a)
 
 
 
+
 /-- Both a+2b ≤ 2c and 2a+b ≤ 2c is impossible for a PPT with positive legs -/
 theorem not_both_neg (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
     (hpt : IsPT a b c)
@@ -197,6 +225,7 @@ theorem not_both_neg (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
   unfold IsPT at hpt
   nlinarith [sq_nonneg (a - b), sq_nonneg a, sq_nonneg b, sq_nonneg (a + b - c),
     sq_nonneg (2*a + b - 2*c), sq_nonneg (a + 2*b - 2*c)]
+
 
 
 
@@ -209,9 +238,11 @@ theorem root_no_parent :
 
 
 
+
 /-- (5,12,13) descends to (3,4,5) via invB1 -/
 theorem descent_5_12_13 : invB1 5 12 13 = (3, 4, 5) := by
   unfold invB1; norm_num
+
 
 
 
@@ -221,15 +252,18 @@ theorem descent_21_20_29 : invB2 21 20 29 = (3, 4, 5) := by
 
 
 
+
 /-- (15,8,17) descends to (3,4,5) via invB3 -/
 theorem descent_15_8_17 : invB3 15 8 17 = (3, 4, 5) := by
   unfold invB3; norm_num
 
 
 
+
 /-- (7,24,25) descends to (5,12,13) via invB1 -/
 theorem descent_7_24_25 : invB1 7 24 25 = (5, 12, 13) := by
   unfold invB1; norm_num
+
 
 
 
@@ -241,13 +275,16 @@ theorem descent_7_24_25_full :
 
 
 
+
 /-- (9,40,41) descends via invB1 -/
 theorem descent_9_40_41 : invB1 9 40 41 = (7, 24, 25) := by
   unfold invB1; norm_num
 
 
 
+
 /-- (119,120,169) descends via invB2 -/
 theorem descent_119_120_169 : invB2 119 120 169 = (21, 20, 29) := by
   unfold invB2; norm_num
+
 

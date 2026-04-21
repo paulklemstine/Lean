@@ -16,9 +16,11 @@ theorem euclid_param (m n : ℤ) :
 
 
 
+
 /-- Berggren matrix M₁ (type A). -/
 def berggrenA' (a b c : ℤ) : ℤ × ℤ × ℤ :=
   (a - 2 * b + 2 * c, 2 * a - b + 2 * c, 2 * a - 2 * b + 3 * c)
+
 
 
 
@@ -28,9 +30,11 @@ def berggrenB' (a b c : ℤ) : ℤ × ℤ × ℤ :=
 
 
 
+
 /-- Berggren matrix M₃ (type C). -/
 def berggrenC' (a b c : ℤ) : ℤ × ℤ × ℤ :=
   (-a + 2 * b + 2 * c, -2 * a + b + 2 * c, -2 * a + 2 * b + 3 * c)
+
 
 
 
@@ -41,10 +45,12 @@ theorem berggrenA_preserves' (a b c : ℤ) (h : IsPythTriple a b c) :
 
 
 
+
 /-- M₂ preserves the Pythagorean property. -/
 theorem berggrenB_preserves' (a b c : ℤ) (h : IsPythTriple a b c) :
     IsPythTriple (berggrenB' a b c).1 (berggrenB' a b c).2.1 (berggrenB' a b c).2.2 := by
   unfold IsPythTriple berggrenB' at *; nlinarith [h]
+
 
 
 
@@ -55,8 +61,10 @@ theorem berggrenC_preserves' (a b c : ℤ) (h : IsPythTriple a b c) :
 
 
 
+
 /-- The EML operator on reals. -/
 def emlOp (x y : ℝ) : ℝ := Real.exp x - Real.log y
+
 
 
 
@@ -66,10 +74,12 @@ theorem eml_is_exp (x : ℝ) : emlOp x 1 = Real.exp x := by
 
 
 
+
 /-- log(x) = 1 - eml(0, x) for x > 0 (since eml(0,x) = 1 - log(x)). -/
 theorem eml_recovers_log (x : ℝ) (hx : 0 < x) :
     1 - emlOp 0 x = Real.log x := by
   simp [emlOp, Real.exp_zero]
+
 
 
 
@@ -82,12 +92,14 @@ inductive EMLPythExpr where
 
 
 
+
 /-- Evaluate an EML expression. -/
 def EMLPythExpr.eval (e : EMLPythExpr) (vars : ℕ → ℝ) : ℝ :=
   match e with
   | .one => 1
   | .var n => vars n
   | .eml l r => emlOp (l.eval vars) (r.eval vars)
+
 
 
 
@@ -99,11 +111,13 @@ def EMLPythExpr.depth : EMLPythExpr → ℕ
 
 
 
+
 /-- Size (total nodes) of an EML expression tree. -/
 def EMLPythExpr.size : EMLPythExpr → ℕ
   | .one => 1
   | .var _ => 1
   | .eml l r => 1 + l.size + r.size
+
 
 
 
@@ -115,11 +129,13 @@ def EMLPythExpr.leafCount : EMLPythExpr → ℕ
 
 
 
+
 /-- Internal node count. -/
 def EMLPythExpr.nodeCount : EMLPythExpr → ℕ
   | .one => 0
   | .var _ => 0
   | .eml l r => 1 + l.nodeCount + r.nodeCount
+
 
 
 
@@ -134,8 +150,10 @@ theorem EMLPythExpr.leaf_eq_node_succ (e : EMLPythExpr) :
 
 
 
+
 /-- EML expression for exp(x₀). -/
 def emlExpExpr : EMLPythExpr := .eml (.var 0) .one
+
 
 
 
@@ -146,10 +164,12 @@ theorem emlExpExpr_eval (vars : ℕ → ℝ) :
 
 
 
+
 /-- Multiplication via exp-log for positive reals: x * y = exp(log(x) + log(y)). -/
 theorem mul_via_eml (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
     Real.exp (Real.log x + Real.log y) = x * y := by
   rw [Real.exp_add, Real.exp_log hx, Real.exp_log hy]
+
 
 
 
@@ -163,6 +183,7 @@ theorem sq_via_eml (x : ℝ) (hx : 0 < x) :
 
 
 
+
 /-- For positive integer triples, the log-space Pythagorean condition:
 exp(2 log a) + exp(2 log b) = exp(2 log c). -/
 theorem pyth_log_space (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
@@ -173,12 +194,14 @@ theorem pyth_log_space (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
 
 
 
+
 /-- Depth of a Berggren path. -/
 def BerggrenPath.depth : BerggrenPath → ℕ
   | .root => 0
   | .applyA p => p.depth + 1
   | .applyB p => p.depth + 1
   | .applyC p => p.depth + 1
+
 
 
 
@@ -194,6 +217,7 @@ def BerggrenPath.eval : BerggrenPath → ℤ × ℤ × ℤ
   | .applyC p =>
     let (a, b, c) := p.eval
     berggrenC' a b c
+
 
 
 
@@ -214,13 +238,16 @@ theorem BerggrenPath.eval_is_pyth (p : BerggrenPath) :
 
 
 
+
 /-- The simplest Pythagorean quadruple: (1, 2, 2, 3). -/
 theorem quad_1_2_2_3 : IsPythQuad 1 2 2 3 := by norm_num [IsPythQuad]
 
 
 
+
 /-- Another quadruple: (2, 3, 6, 7). -/
 theorem quad_2_3_6_7 : IsPythQuad 2 3 6 7 := by norm_num [IsPythQuad]
+
 
 
 
@@ -231,10 +258,12 @@ theorem triple_embeds_in_quad (a b c : ℤ) (h : IsPythTriple a b c) :
 
 
 
+
 /-- Quadruples satisfy the real-valued constraint. -/
 theorem quad_real_constraint (a b c d : ℤ) (h : IsPythQuad a b c d) :
     (a : ℝ) ^ 2 + (b : ℝ) ^ 2 + (c : ℝ) ^ 2 = (d : ℝ) ^ 2 := by
   unfold IsPythQuad at h; exact_mod_cast h
+
 
 
 
@@ -243,6 +272,7 @@ def IsPythNTuple (xs : List ℤ) : Prop :=
   xs.length ≥ 3 ∧
   ∃ init last, xs = init ++ [last] ∧
     (init.map (· ^ 2)).sum = last ^ 2
+
 
 
 
@@ -255,12 +285,14 @@ theorem triple_is_3tuple (a b c : ℤ) (h : IsPythTriple a b c) :
 
 
 
+
 /-- Every quadruple is a 4-tuple. -/
 theorem quad_is_4tuple (a b c d : ℤ) (h : IsPythQuad a b c d) :
     IsPythNTuple [a, b, c, d] := by
   constructor
   · simp
   · exact ⟨[a, b, c], d, by simp, by simp [IsPythQuad] at h ⊢; linarith⟩
+
 
 
 
@@ -274,15 +306,18 @@ theorem pythagorean_eml_bridge (p : BerggrenPath) :
 
 
 
+
 /-- The EML expression for exp(x₀) has depth 1. -/
 theorem emlExpExpr_depth : emlExpExpr.depth = 1 := by
   simp [emlExpExpr, EMLPythExpr.depth]
 
 
 
+
 /-- The EML expression for exp(x₀) has size 3. -/
 theorem emlExpExpr_size : emlExpExpr.size = 3 := by
   simp [emlExpExpr, EMLPythExpr.size]
+
 
 
 
@@ -306,9 +341,11 @@ theorem EMLPythExpr.leaves_le_pow_depth (e : EMLPythExpr) :
 
 
 
+
 /-- The first child of (3,4,5) via M₁ is (5,12,13). -/
 theorem berggren_child_A : BerggrenPath.eval (.applyA .root) = (5, 12, 13) := by
   native_decide
+
 
 
 
@@ -318,9 +355,11 @@ theorem berggren_child_B : BerggrenPath.eval (.applyB .root) = (21, 20, 29) := b
 
 
 
+
 /-- The third child via M₃ is (15,8,17). -/
 theorem berggren_child_C : BerggrenPath.eval (.applyC .root) = (15, 8, 17) := by
   native_decide
+
 
 
 

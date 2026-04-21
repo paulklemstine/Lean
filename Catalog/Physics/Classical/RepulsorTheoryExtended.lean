@@ -15,10 +15,12 @@ def IsRepulsor' (g : ℕ → ℕ) (enum : ℕ → (ℕ → ℕ)) : Prop :=
 
 
 
+
 /-- The diagonal shift is always a repulsor. -/
 theorem repulsor_exists_diagonal' (enum : ℕ → (ℕ → ℕ)) :
     IsRepulsor' (fun i => enum i i + 1) enum := by
   intro i; simp
+
 
 
 
@@ -29,11 +31,13 @@ theorem repulsor_family' (enum : ℕ → (ℕ → ℕ)) (c : ℕ) (hc : 0 < c) :
 
 
 
+
 /-- Different offsets give different repulsors. -/
 theorem repulsor_family_injective' (enum : ℕ → (ℕ → ℕ)) (c₁ c₂ : ℕ)
     (hc : c₁ ≠ c₂) :
     (fun i => enum i i + c₁) ≠ (fun i => enum i i + c₂) := by
   intro h; have := congr_fun h 0; omega
+
 
 
 
@@ -47,8 +51,10 @@ theorem repulsor_abundance' (enum : ℕ → (ℕ → ℕ)) :
 
 
 
+
 /-- The diagonal evader. -/
 def diagEvader (enum : ℕ → (ℕ → ℕ)) : ℕ → ℕ := fun i => enum i i + 1
+
 
 
 
@@ -59,12 +65,14 @@ def diagTower (base : ℕ → (ℕ → ℕ)) : ℕ → (ℕ → ℕ)
 
 
 
+
 /-- Tower values strictly exceed base values. -/
 theorem diagTower_gt_base (base : ℕ → (ℕ → ℕ)) (n : ℕ) :
     ∀ i, base i i < diagTower base n i := by
   intro i; induction n with
   | zero => simp [diagTower, diagEvader]
   | succ n ih => simp [diagTower]; omega
+
 
 
 
@@ -82,6 +90,7 @@ theorem diagTower_strict_mono (base : ℕ → (ℕ → ℕ)) :
 
 
 
+
 /-- Tower levels are distinct functions. -/
 theorem diagTower_injective (base : ℕ → (ℕ → ℕ)) :
     Injective (diagTower base) := by
@@ -93,6 +102,7 @@ theorem diagTower_injective (base : ℕ → (ℕ → ℕ)) :
 
 
 
+
 /-- Each tower level evades the base enumeration. -/
 theorem diagTower_evades (base : ℕ → (ℕ → ℕ)) (n : ℕ) :
     IsRepulsor' (diagTower base n) base := by
@@ -100,8 +110,10 @@ theorem diagTower_evades (base : ℕ → (ℕ → ℕ)) (n : ℕ) :
 
 
 
+
 /-- Fixed-point-free predicate. -/
 def IsFixedPointFree' {α : Type*} (f : α → α) : Prop := ∀ x, f x ≠ x
+
 
 
 
@@ -113,11 +125,13 @@ theorem fpf_composition_increasing
 
 
 
+
 /-- Iterate formula for successor. -/
 theorem succ_iter_eq (n x : ℕ) : Nat.succ^[n] x = x + n := by
   induction n generalizing x with
   | zero => simp
   | succ k ih => rw [iterate_succ', comp_apply, ih]; omega
+
 
 
 
@@ -128,6 +142,7 @@ theorem succ_iterate_fpf' (n : ℕ) (hn : 0 < n) :
 
 
 
+
 /-- Positive shifts compose: closure under addition. -/
 theorem shift_closure (a b : ℕ) (ha : 0 < a) (hb : 0 < b) :
     (∀ n : ℕ, n + a ≠ n) ∧ (∀ n : ℕ, n + b ≠ n) ∧ (∀ n : ℕ, n + (a + b) ≠ n) :=
@@ -135,8 +150,10 @@ theorem shift_closure (a b : ℕ) (ha : 0 < a) (hb : 0 < b) :
 
 
 
+
 /-- A repulsor point for f is a displaced point. -/
 def IsRepulsorPt' {α : Type*} (f : α → α) (x : α) : Prop := f x ≠ x
+
 
 
 
@@ -147,6 +164,7 @@ theorem oracle_repulsor_partition' {α : Type*} (f : α → α) (x : α) :
 
 
 
+
 /-- The oracle and repulsor sets are complementary. -/
 theorem oracle_repulsor_complement' {α : Type*} (f : α → α) :
     {x | IsOracle' f x} = {x | IsRepulsorPt' f x}ᶜ := by
@@ -154,9 +172,11 @@ theorem oracle_repulsor_complement' {α : Type*} (f : α → α) :
 
 
 
+
 /-- A mixed object: oracle at even positions, repulsor at odd. -/
 def mixedOracleRepulsor (enum : ℕ → (ℕ → ℕ)) : ℕ → ℕ :=
   fun i => if i % 2 = 0 then enum i i else enum i i + 1
+
 
 
 
@@ -170,15 +190,22 @@ theorem mixed_oracle_even (enum : ℕ → (ℕ → ℕ)) (i : ℕ) (hi : i % 2 =
 
 
 
+
+/-- [Section: # CatalogBuild.Physics.Classical.RepulsorTheoryExtended
+Auto-generated from theorem catalog database.
+Domain: Physics/Classical
+Declarations: 68] -/
 theorem mixed_repulsor_odd (enum : ℕ → (ℕ → ℕ)) (i : ℕ) (hi : i % 2 = 1) :
     mixedOracleRepulsor enum i ≠ enum i i := by
   simp [mixedOracleRepulsor]; omega
 
 
 
+
 /-- Positions where g disagrees diagonally with enum. -/
 def evasionSet (g : ℕ → ℕ) (enum : ℕ → (ℕ → ℕ)) : Set ℕ :=
   {i | g i ≠ enum i i}
+
 
 
 
@@ -189,8 +216,10 @@ theorem total_repulsor_evasion (g : ℕ → ℕ) (enum : ℕ → (ℕ → ℕ))
 
 
 
+
 /-- After k queries in n positions, remaining hiding spots. -/
 def remainingPositions (n k : ℕ) : ℕ := n - k
+
 
 
 
@@ -201,10 +230,12 @@ theorem searcher_deficit' (n k : ℕ) (hk : k < n) :
 
 
 
+
 /-- More queries reduce hiding spots. -/
 theorem query_monotone' (n k₁ k₂ : ℕ) (h : k₁ ≤ k₂) (hk : k₂ ≤ n) :
     remainingPositions n k₂ ≤ remainingPositions n k₁ := by
   simp [remainingPositions]; omega
+
 
 
 
@@ -222,15 +253,18 @@ theorem last_query_essential' (n : ℕ) (hn : 0 < n) :
 
 
 
+
 /-- A point is wandering if its orbit exceeds any bound. -/
 def IsWandering' (f : ℕ → ℕ) (x : ℕ) : Prop :=
   ∀ B : ℕ, ∃ n : ℕ, B < f^[n] x
 
 
 
+
 /-- Every point wanders under successor. -/
 theorem succ_wandering' (x : ℕ) : IsWandering' Nat.succ x := by
   intro B; use B + 1; rw [succ_iter_eq]; omega
+
 
 
 
@@ -242,10 +276,12 @@ theorem shift_iterate (c x n : ℕ) : (· + c)^[n] x = x + n * c := by
 
 
 
+
 /-- Every point wanders under x ↦ x + c for c > 0. -/
 theorem shift_wandering' (c : ℕ) (hc : 0 < c) (x : ℕ) :
     IsWandering' (· + c) x := by
   intro B; use B + 1; rw [shift_iterate]; nlinarith
+
 
 
 
@@ -258,11 +294,13 @@ theorem fixed_iterate' (f : ℕ → ℕ) (x : ℕ) (hfx : f x = x) :
 
 
 
+
 /-- Fixed points don't wander. -/
 theorem fixed_not_wandering' (f : ℕ → ℕ) (x : ℕ) (hfx : f x = x) :
     ¬ IsWandering' f x := by
   intro hw; obtain ⟨n, hn⟩ := hw (x + 1)
   rw [fixed_iterate' f x hfx n] at hn; omega
+
 
 
 
@@ -274,12 +312,14 @@ theorem doubling_iterate' (x n : ℕ) : (· * 2)^[n] x = x * 2 ^ n := by
 
 
 
+
 theorem doubling_wandering' (x : ℕ) (hx : 0 < x) :
     IsWandering' (· * 2) x := by
   intro B;
   -- Choose $n = B + 1$.
   use B + 1;
   induction' B with B ih <;> simp_all +decide [ Function.iterate_succ_apply' ] ; nlinarith [ Nat.one_le_pow B 2 zero_lt_two ] ;
+
 
 
 
@@ -299,6 +339,7 @@ theorem monotone_orbit_dichotomy' (f : ℕ → ℕ) (hf : Monotone f) (x : ℕ) 
 
 
 
+
 /-- The diagonal gives a Bool-valued repulsor. -/
 theorem cantor_repulsor' (enum : ℕ → (ℕ → Bool)) :
     ∃ g : ℕ → Bool, ∀ i, g i ≠ enum i i :=
@@ -306,8 +347,10 @@ theorem cantor_repulsor' (enum : ℕ → (ℕ → Bool)) :
 
 
 
+
 theorem zoo_successor : IsFixedPointFree' (fun n : ℕ => n + 1) := by
   intro n; dsimp; omega
+
 
 
 
@@ -319,14 +362,17 @@ theorem zoo_squaring : IsFixedPointFree' (fun n : ℕ => n * n + 1) := by
 
 
 
+
 theorem zoo_fib_shift : IsFixedPointFree' (fun n : ℕ => n + Nat.fib n + 1) := by
   intro n; dsimp; omega
+
 
 
 
 theorem zoo_polynomial (c : ℕ) (hc : 0 < c) :
     IsFixedPointFree' (fun n : ℕ => n + c) := by
   intro n; dsimp; omega
+
 
 
 
@@ -339,14 +385,17 @@ theorem product_repulsor' (f g : ℕ → ℕ) (hf : IsFixedPointFree' f)
 
 
 
+
 /-- Level-k repulsor: displaces by k+1. -/
 def levelRepulsor (k : ℕ) : ℕ → ℕ := fun n => n + k + 1
+
 
 
 
 /-- Every level repulsor is fpf. -/
 theorem levelRepulsor_fpf (k : ℕ) : IsFixedPointFree' (levelRepulsor k) := by
   intro n; simp [levelRepulsor]; omega
+
 
 
 
@@ -357,10 +406,12 @@ theorem levelRepulsor_increasing (j k : ℕ) (hjk : j < k) :
 
 
 
+
 /-- No two levels are the same function. -/
 theorem levelRepulsor_strict (j k : ℕ) (hjk : j ≠ k) :
     levelRepulsor j ≠ levelRepulsor k := by
   intro h; have := congr_fun h 0; simp [levelRepulsor] at this; omega
+
 
 
 
@@ -377,10 +428,12 @@ theorem repulsor_extension' (enum : ℕ → (ℕ → ℕ)) (g : ℕ → ℕ) (k 
 
 
 
+
 /-- A total repulsor always exists. -/
 theorem total_repulsor_exists' (enum : ℕ → (ℕ → ℕ)) :
     ∃ g : ℕ → ℕ, IsRepulsor' g enum :=
   ⟨fun i => enum i i + 1, repulsor_exists_diagonal' enum⟩
+
 
 
 
@@ -393,14 +446,17 @@ theorem grand_evasion_principle' (n : ℕ) (f : Fin n → Fin n) :
 
 
 
+
 /-- Negation is a repulsor on nonzero integers. -/
 theorem negation_repulsor' : ∀ n : ℤ, n ≠ 0 → -n ≠ n := by omega
+
 
 
 
 /-- A derangement is a total repulsor. -/
 theorem derangement_total {n : ℕ} (σ : Equiv.Perm (Fin n))
     (hσ : ∀ x, σ x ≠ x) : IsFixedPointFree' σ := hσ
+
 
 
 
@@ -420,10 +476,12 @@ theorem monotone_fin_fixed_point' (n : ℕ) (f : Fin (n + 1) → Fin (n + 1))
 
 
 
+
 /-- Positive displacement implies fpf. -/
 theorem positive_displacement_fpf (f : ℕ → ℕ) (h : ∀ x, 0 < displacement f x) :
     IsFixedPointFree' f := by
   intro x; have := h x; simp [displacement] at this; omega
+
 
 
 
@@ -434,9 +492,11 @@ theorem negative_displacement_fpf (f : ℕ → ℕ) (h : ∀ x, displacement f x
 
 
 
+
 /-- Total displacement over first n points. -/
 def totalDisplacement (f : ℕ → ℕ) (n : ℕ) : ℤ :=
   (Finset.range n).sum (fun i => displacement f i)
+
 
 
 
@@ -447,6 +507,7 @@ theorem succ_total_displacement' (n : ℕ) :
 
 
 
+
 /-- Shift by c has total displacement n * c. -/
 theorem shift_total_displacement' (c : ℕ) (n : ℕ) :
     totalDisplacement (· + c) n = n * c := by
@@ -454,10 +515,12 @@ theorem shift_total_displacement' (c : ℕ) (n : ℕ) :
 
 
 
+
 /-- Any finite set in an infinite type has elements outside it. -/
 theorem infinite_evades_finite {α : Type*} [Infinite α]
     (S : Finset α) : ∃ x : α, x ∉ S :=
   Infinite.exists_notMem_finset S
+
 
 
 
@@ -471,6 +534,7 @@ theorem two_evade_finite {α : Type*} [Infinite α]
 
 
 
+
 /-- Evasion depth: how many initial entries g evades. -/
 def evasionDepth (g : ℕ → ℕ) (enum : ℕ → (ℕ → ℕ)) : ℕ → Prop
   | 0 => True
@@ -478,10 +542,12 @@ def evasionDepth (g : ℕ → ℕ) (enum : ℕ → (ℕ → ℕ)) : ℕ → Prop
 
 
 
+
 /-- Evasion depth is monotone. -/
 theorem evasionDepth_mono (g : ℕ → ℕ) (enum : ℕ → (ℕ → ℕ)) (n : ℕ) :
     evasionDepth g enum (n + 1) → evasionDepth g enum n :=
   fun ⟨_, h⟩ => h
+
 
 
 
@@ -494,10 +560,12 @@ theorem diagEvader_infinite_depth (enum : ℕ → (ℕ → ℕ)) :
 
 
 
+
 /-- Minimum displacement over first n points. -/
 def minDisplacement (f : ℕ → ℕ) (n : ℕ) : ℤ :=
   if h : n = 0 then 0
   else (Finset.range n).inf' (by simp [h]) (fun i => displacement f i)
+
 
 
 
@@ -507,9 +575,11 @@ def StrongerRepulsor (f g : ℕ → ℕ) : Prop :=
 
 
 
+
 /-- Stronger-repulsor is reflexive. -/
 theorem strongerRepulsor_refl (f : ℕ → ℕ) : StrongerRepulsor f f :=
   fun _ => le_refl _
+
 
 
 
@@ -521,10 +591,12 @@ theorem strongerRepulsor_trans (f g h : ℕ → ℕ)
 
 
 
+
 /-- Level k+1 repulsor is stronger than level k. -/
 theorem levelRepulsor_stronger (k : ℕ) :
     StrongerRepulsor (levelRepulsor (k + 1)) (levelRepulsor k) := by
   intro n; simp [displacement, levelRepulsor]
+
 
 
 

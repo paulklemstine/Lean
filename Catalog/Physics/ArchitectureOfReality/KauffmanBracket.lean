@@ -17,8 +17,10 @@ deriving DecidableEq, Fintype
 
 
 
+
 /-- A state of a knot diagram with n crossings -/
 def KnotState (n : ℕ) := Fin n → Smoothing
+
 
 
 
@@ -30,6 +32,7 @@ instance (n : ℕ) : Fintype (KnotState n) := inferInstanceAs (Fintype (Fin n �
 
 
 
+
 /-- The sigma of a state: (# A-smoothings) - (# B-smoothings) -/
 def stateSigma {n : ℕ} (s : KnotState n) : ℤ :=
   let a_count := (Finset.univ.filter (fun i => s i = Smoothing.A_smooth)).card
@@ -38,6 +41,11 @@ def stateSigma {n : ℕ} (s : KnotState n) : ℤ :=
 
 
 
+
+/-- [Section: # CatalogBuild.Physics.ArchitectureOfReality.KauffmanBracket
+Auto-generated from theorem catalog database.
+Domain: Physics/ArchitectureOfReality
+Declarations: 14] -/
 theorem smoothing_count_sum {n : ℕ} (s : KnotState n) :
     (Finset.univ.filter (fun i : Fin n => s i = Smoothing.A_smooth)).card +
     (Finset.univ.filter (fun i : Fin n => s i = Smoothing.B_smooth)).card = n := by
@@ -47,21 +55,26 @@ theorem smoothing_count_sum {n : ℕ} (s : KnotState n) :
 
 
 
+
 /-- The writhe of a knot diagram (sum of crossing signs) -/
 def writhe (crossingSigns : List ℤ) : ℤ := crossingSigns.sum
+
 
 
 
 theorem trefoil_writhe : writhe [-1, -1, -1] = -3 := by decide
 
 
+
 theorem unknot_writhe : writhe [] = 0 := by decide
+
 
 
 
 /-- The Temperley-Lieb relation: idempotent up to scalar -/
 def IsTLIdempotent {R : Type*} [Ring R] (e : R) (delta : R) : Prop :=
   e * e = delta • e
+
 
 
 
@@ -72,7 +85,9 @@ theorem TL_at_delta_one {R : Type*} [Ring R] (e : R)
 
 
 
+
 theorem smoothing_card : Fintype.card Smoothing = 2 := by decide
+
 
 
 
@@ -82,8 +97,10 @@ theorem state_count (n : ℕ) : Fintype.card (KnotState n) = 2 ^ n := by
 
 
 
+
 /-- Primitive root of unity for level k -/
 def rootOfUnity (k : ℕ) : ℂ := Complex.exp (2 * Real.pi * Complex.I / k)
+
 
 
 
@@ -91,6 +108,7 @@ def rootOfUnity (k : ℕ) : ℂ := Complex.exp (2 * Real.pi * Complex.I / k)
 def braidingEigenvalues (k : ℕ) : ℂ × ℂ :=
   let q := rootOfUnity (2 * k)
   (q, -q⁻¹)
+
 
 
 

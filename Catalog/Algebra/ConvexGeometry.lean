@@ -17,9 +17,15 @@ theorem convex_inter' {E : Type*} [AddCommMonoid E] [Module ℝ E]
 
 
 
+
+/-- [Section: # CatalogBuild.Algebra.ConvexGeometry
+Auto-generated from theorem catalog database.
+Domain: Algebra
+Declarations: 6] -/
 theorem convex_hull_minimal' {E : Type*} [AddCommMonoid E] [Module ℝ E]
     (S C : Set E) (hSC : S ⊆ C) (hC : Convex ℝ C) :
     convexHull ℝ S ⊆ C := convexHull_min hSC hC
+
 
 
 
@@ -28,10 +34,12 @@ theorem subset_convex_hull' {E : Type*} [AddCommMonoid E] [Module ℝ E]
 
 
 
+
 theorem jensen_two_point' {f : ℝ → ℝ} {a b t : ℝ}
     (hf : ConvexOn ℝ Set.univ f) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
     f (t * a + (1 - t) * b) ≤ t * f a + (1 - t) * f b :=
   hf.2 (Set.mem_univ a) (Set.mem_univ b) ht0 (by linarith) (by linarith)
+
 
 
 
@@ -45,9 +53,11 @@ theorem sq_convex' : ConvexOn ℝ Set.univ (fun x : ℝ => x ^ 2) := by
 
 
 
+
 theorem lp_weak_duality' {n : ℕ} (c : Fin n → ℝ) (x : Fin n → ℝ)
     (hc : ∀ i, 0 ≤ c i) (hx : ∀ i, 0 ≤ x i) :
     0 ≤ ∑ i, c i * x i :=
   Finset.sum_nonneg fun i _ => mul_nonneg (hc i) (hx i)
+
 
 

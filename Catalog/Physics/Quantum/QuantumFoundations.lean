@@ -17,9 +17,15 @@ theorem norm_triangle_pf {V : Type*} [SeminormedAddCommGroup V] (x y : V) :
 
 
 
+
+/-- [Section: # CatalogBuild.Physics.Quantum.QuantumFoundations
+Auto-generated from theorem catalog database.
+Domain: Physics/Quantum
+Declarations: 5] -/
 theorem inner_mul_le_norm_pf {V : Type*} [SeminormedAddCommGroup V] [InnerProductSpace ℝ V] (x y : V) :
     @inner ℝ V _ x y ≤ ‖x‖ * ‖y‖ := by
       exact?
+
 
 
 
@@ -31,10 +37,12 @@ theorem unitary_mul_unitary {n : Type*} [DecidableEq n] [Fintype n]
 
 
 
+
 theorem unitary_inv_eq_star {n : Type*} [DecidableEq n] [Fintype n]
     (U : Matrix n n ℂ) (hU : U * star U = 1) :
     star U * U = 1 := by
       rw [ ← mul_eq_one_comm, hU ]
+
 
 
 
@@ -44,5 +52,6 @@ theorem tensor_normalized (a b c d : ℂ)
     Complex.normSq (a * c) + Complex.normSq (a * d) +
     Complex.normSq (b * c) + Complex.normSq (b * d) = 1 := by
       simpa [ Complex.normSq_mul ] using by linear_combination' h1 * h2;
+
 
 

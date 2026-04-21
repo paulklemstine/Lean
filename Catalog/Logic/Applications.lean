@@ -17,10 +17,12 @@ structure Codebook' (Source : Type*) (Code : Type*) where
 
 
 
+
 /-- Any codebook has injective encoding. -/
 theorem Codebook'.encode_injective {Source Code : Type*} (cb : Codebook' Source Code) :
     Injective cb.encode :=
   fun a b h => by rw [← cb.lossless a, ← cb.lossless b, h]
+
 
 
 
@@ -33,6 +35,7 @@ noncomputable def binaryCodebook {n m : ℕ} (h : n ≤ m) :
 
 
 
+
 /-- The binary codebook has injective encoding. -/
 theorem binaryCodebook_injective {n m : ℕ} (h : n ≤ m) :
     Injective (binaryCodebook h).encode :=
@@ -40,9 +43,11 @@ theorem binaryCodebook_injective {n m : ℕ} (h : n ≤ m) :
 
 
 
+
 /-- DNA bases: 4 symbols. -/
 inductive DNABase | A | C | G | T
   deriving Fintype, DecidableEq
+
 
 
 
@@ -64,9 +69,11 @@ def dnaCodebook : Codebook' DNABase (Fin 2 → Bool) where
 
 
 
+
 /-- DNA codebook is injective. -/
 theorem dnaCodebook_injective : Injective dnaCodebook.encode :=
   dnaCodebook.encode_injective
+
 
 
 
@@ -80,11 +87,13 @@ theorem dna_needs_two_bits :
 
 
 
+
 /-- For a two-symbol source, the optimal code uses 1 bit per symbol. -/
 theorem two_symbol_optimal :
     ∃ cb : Codebook' Bool (Fin 1 → Bool), Injective cb.encode := by
   exact ⟨⟨fun b => ![b], fun bits => bits 0, fun b => by simp⟩,
     fun a b h => by simpa using congr_fun h 0⟩
+
 
 
 
@@ -96,10 +105,12 @@ structure Run (α : Type*) where
 
 
 
+
 /-- Decode a list of runs back to a string. -/
 def decodeRuns {α : Type*} : List (Run α) → List α
   | [] => []
   | r :: rs => List.replicate r.count r.symbol ++ decodeRuns rs
+
 
 
 
@@ -110,12 +121,14 @@ theorem decodeRuns_singleton_length {α : Type*} (r : Run α) :
 
 
 
+
 /-- Decoding preserves concatenation. -/
 theorem decodeRuns_append {α : Type*} (rs₁ rs₂ : List (Run α)) :
     decodeRuns (rs₁ ++ rs₂) = decodeRuns rs₁ ++ decodeRuns rs₂ := by
   induction rs₁ with
   | nil => simp [decodeRuns]
   | cons r rs ih => simp [decodeRuns, ih, List.append_assoc]
+
 
 
 
@@ -132,10 +145,12 @@ theorem column_encoding_exists (k : ℕ) (Values : Type*) [Fintype Values] [None
 
 
 
+
 /-- The identity codebook always exists and achieves ratio 1. -/
 theorem identity_always_works (α : Type*) :
     ∃ cb : Codebook' α α, Injective cb.encode :=
   ⟨⟨id, id, fun _ => rfl⟩, fun _ _ h => h⟩
+
 
 
 
@@ -144,6 +159,7 @@ but our impossibility theorem says you cannot achieve ratio < 1 universally. -/
 theorem compression_ratio_one (n : ℕ) :
     ∃ cb : Codebook' (Fin n → Bool) (Fin n → Bool), Injective cb.encode :=
   identity_always_works _
+
 
 
 

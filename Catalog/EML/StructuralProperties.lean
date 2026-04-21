@@ -21,10 +21,12 @@ theorem sheffer_zero' : (fun _ : ℝ => (0 : ℝ)) ∈ ShefferAlgebra :=
 
 
 
+
 /-- The Sheffer algebra is closed under addition (restated for emphasis) -/
 theorem sheffer_add' {f g : ℝ → ℝ} (hf : f ∈ ShefferAlgebra) (hg : g ∈ ShefferAlgebra) :
     (fun x => f x + g x) ∈ ShefferAlgebra :=
   sheffer_add_closed hf hg
+
 
 
 
@@ -35,10 +37,12 @@ theorem sheffer_smul' {f : ℝ → ℝ} (c : ℝ) (hf : f ∈ ShefferAlgebra) :
 
 
 
+
 /-- Left identity for composition: id ∘ f = f -/
 theorem sheffer_comp_id_left (f : ℝ → ℝ) :
     (fun x => (fun y : ℝ => y) (f x)) = f := by
   ext x; simp
+
 
 
 
@@ -49,10 +53,12 @@ theorem sheffer_comp_id_right (f : ℝ → ℝ) :
 
 
 
+
 /-- Composition is associative: (f ∘ g) ∘ h = f ∘ (g ∘ h) -/
 theorem sheffer_comp_assoc (f g h : ℝ → ℝ) :
     (fun x => f (g (h x))) = (fun x => (fun y => f (g y)) (h x)) := by
   ext x; simp
+
 
 
 
@@ -65,6 +71,7 @@ theorem softplus_range : Set.range softplus = Set.Ioi 0 := by
     exact softplus_pos x
   · intro hy
     exact softplus_surjective_pos y hy
+
 
 
 
@@ -83,10 +90,12 @@ theorem softplus_iter_gt (n : ℕ) (hn : n ≥ 1) (x : ℝ) :
 
 
 
+
 /-- The softplus dynamical system is fixed-point-free: σⁿ(x) ≠ x for all n ≥ 1. -/
 theorem softplus_iter_no_periodic (n : ℕ) (hn : n ≥ 1) (x : ℝ) :
     softplus_iter n x ≠ x :=
   ne_of_gt (softplus_iter_gt n hn x)
+
 
 
 
@@ -98,10 +107,12 @@ theorem softplus_orbit_increasing (x : ℝ) (n : ℕ) :
 
 
 
+
 /-- σ(x) + c is in the Sheffer algebra for any c -/
 theorem softplus_add_const_mem (c : ℝ) :
     (fun x => softplus x + c) ∈ ShefferAlgebra := by
   exact sheffer_add_const_closed softplus_mem_sheffer c
+
 
 
 
@@ -112,9 +123,11 @@ theorem softplus_smul_mem (c : ℝ) :
 
 
 
+
 /-- σ(σ(x)) is in the Sheffer algebra -/
 theorem softplus_comp_mem : (fun x => softplus (softplus x)) ∈ ShefferAlgebra := by
   exact sheffer_comp_closed softplus_mem_sheffer softplus_mem_sheffer
+
 
 
 
@@ -128,10 +141,12 @@ theorem softplus_diff_neg_is_id :
 
 
 
+
 /-- The logistic sigmoid satisfies S(x) = 1 - S(-x). -/
 theorem sigmoid_reflection' (x : ℝ) :
     logisticSigmoid x = 1 - logisticSigmoid (-x) := by
   linarith [logisticSigmoid_symmetry x]
+
 
 
 
@@ -150,6 +165,7 @@ theorem id_sheffer_width_le_two :
 
 
 
+
 /-- Constants can be expressed with depth 1 and width 2. -/
 theorem const_sheffer_width_le_two (c : ℝ) :
     ∃ e : ShefferExpr, (∀ x, e.eval x = c) ∧ e.width ≤ 2 := by
@@ -157,6 +173,7 @@ theorem const_sheffer_width_le_two (c : ℝ) :
   · intro x
     simp [ShefferExpr.eval]
   · simp [ShefferExpr.width]
+
 
 
 

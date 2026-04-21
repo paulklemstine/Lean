@@ -31,9 +31,15 @@ theorem binaryEntropy_le_log2 (p : ℝ) (hp0 : 0 ≤ p) (hp1 : p ≤ 1) :
 
 
 
+
+/-- [Section: # CatalogBuild.Physics.ArithmeticPhotons.PhotonEpistemicBridge
+Auto-generated from theorem catalog database.
+Domain: Physics/ArithmeticPhotons
+Declarations: 37] -/
 theorem binaryEntropy_max_at_half :
     binaryEntropy (1/2) = log 2 := by
       unfold binaryEntropy; norm_num; ring_nf; norm_num [ Real.log_div ] ;
+
 
 
 
@@ -42,9 +48,11 @@ def vonNeumannEntropy2 (ev : ℝ) : ℝ := binaryEntropy ev
 
 
 
+
 theorem holevo_single_qubit_bound (ev : ℝ) (h0 : 0 ≤ ev) (h1 : ev ≤ 1) :
     vonNeumannEntropy2 ev ≤ log 2 := by
       convert binaryEntropy_le_log2 ev h0 h1 using 1
+
 
 
 
@@ -63,8 +71,10 @@ structure MutualInfo where
 
 
 
+
 /-- The mutual information value. -/
 def MutualInfo.value (m : MutualInfo) : ℝ := m.H_X + m.H_Y - m.H_XY
+
 
 
 
@@ -73,8 +83,10 @@ theorem mutual_info_nonneg (m : MutualInfo) : 0 ≤ m.value := by
 
 
 
+
 theorem mutual_info_le_source (m : MutualInfo) : m.value ≤ m.H_X := by
   exact sub_le_iff_le_add.mpr ( by linarith! [ m.H_X_nonneg, m.H_Y_nonneg, m.H_XY_nonneg, m.subadditivity, m.conditioning_X, m.conditioning_Y ] )
+
 
 
 
@@ -83,9 +95,11 @@ theorem mutual_info_le_observer (m : MutualInfo) : m.value ≤ m.H_Y := by
 
 
 
+
 theorem mutual_info_le_min (m : MutualInfo) :
     m.value ≤ min m.H_X m.H_Y := by
       exact le_min ( by linarith [ mutual_info_le_source m ] ) ( by linarith [ mutual_info_le_observer m ] )
+
 
 
 
@@ -96,6 +110,7 @@ theorem knowledge_additivity (N : ℕ) (I_photon : Fin N → ℝ)
 
 
 
+
 theorem knowledge_monotone (N : ℕ) (I_photon : Fin (N + 1) → ℝ)
     (h_nonneg : ∀ i, 0 ≤ I_photon i) :
     ∑ i : Fin N, I_photon (Fin.castSucc i) ≤ ∑ i : Fin (N + 1), I_photon i := by
@@ -103,10 +118,12 @@ theorem knowledge_monotone (N : ℕ) (I_photon : Fin (N + 1) → ℝ)
 
 
 
+
 theorem decoherence_decreases_info (total_photon_info D : ℝ)
     (hD : 0 ≤ D) :
     total_photon_info - D ≤ total_photon_info := by
       linarith
+
 
 
 
@@ -118,9 +135,11 @@ def malusLaw (θ_source θ_detector : ℝ) : ℝ :=
 
 
 
+
 theorem malus_valid_prob (θ_s θ_d : ℝ) :
     0 ≤ malusLaw θ_s θ_d ∧ malusLaw θ_s θ_d ≤ 1 := by
       exact ⟨ sq_nonneg _, Real.cos_sq_le_one _ ⟩
+
 
 
 
@@ -130,9 +149,11 @@ theorem relational_basis_dependence (θ_s θ_d δ : ℝ) :
 
 
 
+
 theorem observer_observed_duality (θ_s θ_d : ℝ) :
     malusLaw θ_s θ_d = malusLaw θ_d θ_s := by
       unfold malusLaw; rw [ ← Real.cos_neg ] ; ring;
+
 
 
 
@@ -142,9 +163,11 @@ theorem malus_perfect_alignment (θ : ℝ) :
 
 
 
+
 theorem malus_orthogonal_block (θ : ℝ) :
     malusLaw θ (θ + π / 2) = 0 := by
       unfold malusLaw; norm_num;
+
 
 
 
@@ -152,6 +175,7 @@ theorem malus_orthogonal_block (θ : ℝ) :
 by a shared classical variable λ. The CHSH expression is bounded by 2. -/
 def chsh_classical (E : Fin 2 → Fin 2 → ℝ) : ℝ :=
   E 0 0 - E 0 1 + E 1 0 + E 1 1
+
 
 
 
@@ -163,10 +187,12 @@ theorem bell_ineq_classical_bound_det (a₀ a₁ b₀ b₁ : ℝ)
 
 
 
+
 /-- **Quantum CHSH value**: The quantum correlation for entangled photons
 at optimal angles gives E(a,b) = -cos(2(a-b)). At the optimal CHSH
 angles, this yields S = 2√2 (Tsirelson's bound). -/
 def quantum_correlation (a b : ℝ) : ℝ := -(cos (2 * (a - b)))
+
 
 
 
@@ -175,9 +201,11 @@ theorem quantum_exceeds_classical_bound : (2 : ℝ) < 2 * √2 := by
 
 
 
+
 /-- **Tsirelson's bound**: No quantum correlations can exceed 2√2.
 This is the maximum capacity of a quantum knowledge table. -/
 theorem tsirelson_bound : 2 * √2 ≤ 2 * √2 := le_refl _
+
 
 
 
@@ -188,15 +216,18 @@ structure SpacetimeEvent where
 
 
 
+
 theorem null_iff_speed_of_light (p q : SpacetimeEvent) :
     isNull p q ↔ |q.x - p.x| = |q.t - p.t| := by
       unfold isNull minkowskiInterval; constructor <;> intro <;> cases abs_cases ( q.x - p.x ) <;> cases abs_cases ( q.t - p.t ) <;> nlinarith;
 
 
 
+
 theorem photon_zero_proper_time (p q : SpacetimeEvent) (h : isNull p q) :
     minkowskiInterval p q = 0 := by
       exact h
+
 
 
 
@@ -210,6 +241,7 @@ theorem causal_speed_bound (p q : SpacetimeEvent) (h : q.t ≥ p.t)
 
 
 
+
 /-- A knowledge relation between two systems, mediated by photon exchange. -/
 structure KnowledgeRelation (System : Type*) where
   source : System
@@ -219,10 +251,12 @@ structure KnowledgeRelation (System : Type*) where
 
 
 
+
 /-- The total knowledge in a network is the sum of all relation weights. -/
 def totalKnowledge {System : Type*} [Fintype System]
     (relations : List (KnowledgeRelation System)) : ℝ :=
   relations.map (·.info) |>.sum
+
 
 
 
@@ -234,11 +268,13 @@ theorem total_knowledge_nonneg {System : Type*} [Fintype System]
 
 
 
+
 theorem knowledge_network_monotone {System : Type*} [Fintype System]
     (relations : List (KnowledgeRelation System))
     (new_relation : KnowledgeRelation System) :
     totalKnowledge relations ≤ totalKnowledge (new_relation :: relations) := by
       exact le_add_of_nonneg_left ( new_relation.info_nonneg ) |> le_trans ( by rfl ) ;
+
 
 
 
@@ -251,6 +287,7 @@ theorem entropy_growth_from_photon_proliferation
 
 
 
+
 theorem information_uncertainty (C I_X I_Y : ℝ)
     (hC : 0 < C) (hX : 0 ≤ I_X) (hY : 0 ≤ I_Y)
     (h_total : I_X + I_Y ≤ C) :
@@ -259,9 +296,11 @@ theorem information_uncertainty (C I_X I_Y : ℝ)
 
 
 
+
 theorem complementarity (C I_X : ℝ) (_hC : 0 < C) (hX : I_X = C) :
     C - I_X = 0 := by
       rw [ hX, sub_self ]
+
 
 
 
@@ -280,6 +319,7 @@ structure LKT_Framework where
 
 
 
+
 theorem lkt_framework_consistent : Nonempty LKT_Framework := by
   constructor;
   constructor;
@@ -288,6 +328,7 @@ theorem lkt_framework_consistent : Nonempty LKT_Framework := by
   · exact fun p q a => photon_zero_proper_time p q a;
   · norm_num [ Real.lt_sqrt ];
   · exact fun a b ha hb => le_add_of_nonneg_right hb
+
 
 
 

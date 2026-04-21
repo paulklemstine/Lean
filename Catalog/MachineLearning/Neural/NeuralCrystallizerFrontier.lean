@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: MachineLearning/Neural
-Declarations: 32
+Declarations: 31
 -/
 
 import Mathlib
@@ -17,6 +17,7 @@ theorem crystallization_gradient_zero_at_int (n : ℤ) :
 
 
 
+
 /-- [Section: # CatalogBuild.MachineLearning.Neural.NeuralCrystallizerFrontier
 Auto-generated from theorem catalog database.
 Domain: MachineLearning/Neural
@@ -27,6 +28,11 @@ theorem crystallization_gradient_zero_at_half_int (n : ℤ) :
 
 
 
+
+/-- [Section: # CatalogBuild.MachineLearning.Neural.NeuralCrystallizerFrontier
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/Neural
+Declarations: 32] -/
 theorem crystallization_max_at_half_int (n : ℤ) :
     Real.sin (π * ((n : ℝ) + 1/2)) ^ 2 = 1 := by
       rw [ ← Real.cos_sub_pi_div_two ] ; ring_nf; norm_num [ mul_assoc, mul_comm Real.pi _, mul_div ] ;
@@ -34,10 +40,12 @@ theorem crystallization_max_at_half_int (n : ℤ) :
 
 
 
+
 /-- The double-angle identity for the crystallization gradient. -/
 theorem crystallization_double_angle (m : ℝ) :
     Real.sin (2 * (π * m)) = 2 * Real.sin (π * m) * Real.cos (π * m) :=
   sin_two_mul (π * m)
+
 
 
 
@@ -50,10 +58,12 @@ theorem crystallization_pendulum_potential (m : ℝ) :
 
 
 
+
 /-- The Brahmagupta-Fibonacci identity over ℝ. -/
 theorem gaussian_norm_multiplicative_real (a b c d : ℝ) :
     (a ^ 2 + b ^ 2) * (c ^ 2 + d ^ 2) =
     (a * c - b * d) ^ 2 + (a * d + b * c) ^ 2 := by ring
+
 
 
 
@@ -65,6 +75,7 @@ theorem gaussian_composition_unit (a b c d : ℝ)
 
 
 
+
 /-- Triple composition: three crystallized layers compose to another unit vector. -/
 theorem triple_gaussian_composition_unit (a b c d e f : ℝ)
     (h1 : a ^ 2 + b ^ 2 = 1) (h2 : c ^ 2 + d ^ 2 = 1) (h3 : e ^ 2 + f ^ 2 = 1) :
@@ -73,6 +84,7 @@ theorem triple_gaussian_composition_unit (a b c d e f : ℝ)
     (p * e - q * f) ^ 2 + (p * f + q * e) ^ 2 = 1 := by
   have h12 := gaussian_composition_unit a b c d h1 h2
   exact gaussian_composition_unit _ _ e f h12 h3
+
 
 
 
@@ -88,10 +100,12 @@ theorem gaussian_composition_assoc (a b c d e f : ℝ) :
 
 
 
+
 /-- The determinant of a 2D rotation matrix is 1. -/
 theorem rotation_det_is_one (θ : ℝ) :
     Real.cos θ * Real.cos θ - (- Real.sin θ) * Real.sin θ = 1 := by
   have := Real.sin_sq_add_cos_sq θ; nlinarith
+
 
 
 
@@ -102,10 +116,12 @@ theorem rotation_char_poly_discriminant (θ : ℝ) :
 
 
 
+
 theorem integer_points_in_range (B : ℕ) :
     Finset.card (Finset.Icc (-(B : ℤ)) (B : ℤ)) = 2 * B + 1 := by
       norm_num +zetaDelta at *;
       ring ; norm_cast
+
 
 
 
@@ -115,9 +131,11 @@ theorem inv_stereo_zero :
 
 
 
+
 /-- Inverse stereographic projection maps 1 to (1, 0). -/
 theorem inv_stereo_one :
     (2 * (1 : ℝ) / (1 + 1 ^ 2), (1 - 1 ^ 2) / (1 + 1 ^ 2)) = (1, 0) := by norm_num
+
 
 
 
@@ -127,9 +145,11 @@ theorem stereo_round_trip_fst (x y : ℝ) (h : x ^ 2 + y ^ 2 = 1) (hy : 1 + y �
 
 
 
+
 theorem stereo_round_trip_snd (x y : ℝ) (h : x ^ 2 + y ^ 2 = 1) (hy : 1 + y ≠ 0) :
     (1 - (x / (1 + y)) ^ 2) / (1 + (x / (1 + y)) ^ 2) = y := by
       grind +ring
+
 
 
 
@@ -143,12 +163,14 @@ theorem euler_four_squares_identity (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : �
 
 
 
+
 /-- The Hopf map preserves the sphere: S³ → S². -/
 theorem hopf_map_sphere (a b c d : ℝ) (h : a^2 + b^2 + c^2 + d^2 = 1) :
     (2*(a*c + b*d))^2 + (2*(b*c - a*d))^2 + (a^2 + b^2 - c^2 - d^2)^2 = 1 := by
   nlinarith [sq_nonneg (a*c + b*d), sq_nonneg (b*c - a*d),
              sq_nonneg (a^2 + b^2 - c^2 - d^2),
              sq_nonneg a, sq_nonneg b, sq_nonneg c, sq_nonneg d]
+
 
 
 
@@ -164,11 +186,13 @@ theorem quaternion_composition_sphere (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ :
 
 
 
+
 /-- Cauchy-Schwarz for unit vectors: inner product bounded by input norm. -/
 theorem unit_vector_bounded_output (w₁ w₂ x₁ x₂ : ℝ)
     (hw : w₁ ^ 2 + w₂ ^ 2 = 1) :
     (w₁ * x₁ + w₂ * x₂) ^ 2 ≤ x₁ ^ 2 + x₂ ^ 2 := by
   nlinarith [sq_nonneg (w₁ * x₂ - w₂ * x₁)]
+
 
 
 
@@ -180,10 +204,12 @@ theorem crystallized_layer_lipschitz (w₁ w₂ x₁ x₂ y₁ y₂ : ℝ)
 
 
 
+
 /-- Composition of Lipschitz-1 maps remains Lipschitz-1. -/
 theorem deep_lipschitz_bound (L₁ L₂ : ℝ) (hL1 : 0 ≤ L₁) (hL1b : L₁ ≤ 1)
     (_hL2 : 0 ≤ L₂) (hL2b : L₂ ≤ 1) :
     L₁ * L₂ ≤ 1 := by nlinarith
+
 
 
 
@@ -196,9 +222,11 @@ theorem crystallization_periodic (m : ℝ) (n : ℤ) :
 
 
 
+
 /-- Total crystallization energy is non-negative. -/
 theorem total_crystallization_nonneg (m₁ m₂ : ℝ) :
     0 ≤ Real.sin (π * m₁) ^ 2 + Real.sin (π * m₂) ^ 2 := by positivity
+
 
 
 
@@ -210,6 +238,7 @@ theorem stereo_general_unit (S : ℝ) (hS : 0 ≤ S) :
 
 
 
+
 /-- Post-training quantization: every real is within 1/2 of an integer. -/
 theorem quantization_error_bound (m : ℝ) :
     ∃ n : ℤ, |m - n| ≤ 1 / 2 :=
@@ -217,10 +246,12 @@ theorem quantization_error_bound (m : ℝ) :
 
 
 
+
 /-- At any integer, crystallization loss is 0. -/
 theorem crystallization_at_integer (n : ℤ) :
     Real.sin (π * (n : ℝ)) ^ 2 = 0 := by
   rw [mul_comm, sin_int_mul_pi]; ring
+
 
 
 
@@ -236,18 +267,10 @@ theorem stereo_injective_on_int (m n : ℤ) (hm : m ≠ n) :
 
 
 
-/-- The fiber over the north pole. -/
-theorem hopf_fiber_north_pole (a b : ℝ) (h : a ^ 2 + b ^ 2 = 1) :
-    2*(a*(0:ℝ) + b*(0:ℝ)) = 0 ∧ 2*(b*(0:ℝ) - a*(0:ℝ)) = 0 ∧
-    a^2 + b^2 - (0:ℝ)^2 - (0:ℝ)^2 = 1 := by
-  constructor; · ring
-  constructor; · ring
-  linarith
-
-
 
 /-- The crystallization loss is a valid Lyapunov function: non-negative. -/
 theorem lyapunov_nonneg (m : ℝ) : 0 ≤ Real.sin (π * m) ^ 2 := sq_nonneg _
+
 
 
 
@@ -257,10 +280,12 @@ theorem lyapunov_zero_iff_equilibrium (m : ℝ) :
 
 
 
+
 /-- Sum of Lyapunov functions is non-negative (product space). -/
 theorem lyapunov_sum_nonneg (params : Finset ℝ) :
     0 ≤ ∑ m ∈ params, Real.sin (π * m) ^ 2 :=
   Finset.sum_nonneg (fun _ _ => sq_nonneg _)
+
 
 
 

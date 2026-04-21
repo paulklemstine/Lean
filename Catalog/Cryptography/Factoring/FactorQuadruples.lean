@@ -17,10 +17,12 @@ structure FactorPair (n : ℕ) where
 
 
 
+
 /-- A factor quadruple of n consists of two factor pairs (a,b) and (c,d) with ab = cd = n. -/
 structure FactorQuadruple (n : ℕ) where
   pair1 : FactorPair n
   pair2 : FactorPair n
+
 
 
 
@@ -30,12 +32,14 @@ def FactorQuadruple.swap {n : ℕ} (q : FactorQuadruple n) : FactorQuadruple n :
 
 
 
+
 /-- If two factor pairs (a,b) and (c,d) both multiply to n,
 then gcd(a,c) divides n. -/
 theorem quadruple_gcd_dvd_n {n a b c d : ℕ}
     (hab : a * b = n) (hcd : c * d = n) :
     Nat.gcd a c ∣ n :=
   dvd_trans (Nat.gcd_dvd_left a c) ⟨b, hab.symm⟩
+
 
 
 
@@ -53,11 +57,13 @@ theorem divisor_pair_gcd_nontrivial {n a b c d : ℕ}
 
 
 
+
 /-- Every divisor d of n with 0 < d corresponds to the lattice point (d, n/d)
 on the hyperbola xy = n. -/
 theorem lattice_point_on_hyperbola {n d : ℕ} (hd : d ∣ n) :
     d * (n / d) = n :=
   Nat.mul_div_cancel' hd
+
 
 
 
@@ -71,10 +77,16 @@ theorem lattice_points_eq_divisor_count (n : ℕ) (hn : 0 < n) :
 
 
 
+
+/-- [Section: # CatalogBuild.Cryptography.Factoring.FactorQuadruples
+Auto-generated from theorem catalog database.
+Domain: Cryptography/Factoring
+Declarations: 12] -/
 theorem fermat_factoring_from_difference_of_squares {n x y : ℕ}
     (hxy : y < x) (heq : x ^ 2 - y ^ 2 = n) (hn : 0 < n) :
     (x - y) * (x + y) = n := by
   rwa [ Nat.sq_sub_sq, mul_comm ] at heq
+
 
 
 
@@ -87,6 +99,7 @@ theorem fermat_factor_symmetry {n x y : ℕ}
 
 
 
+
 /-- If n has k distinct prime factors all ≤ B, then n has at least 2^k divisors,
 meaning more potential factor quadruples. -/
 theorem smooth_has_many_divisors {n : ℕ} (hn : 1 < n)
@@ -96,6 +109,7 @@ theorem smooth_has_many_divisors {n : ℕ} (hn : 1 < n)
   intro p hp
   simp [Nat.mem_divisors]
   exact ⟨(hfactors p hp).2, by omega⟩
+
 
 
 
@@ -113,10 +127,12 @@ theorem quadruple_gcd_decomposition {n a b c d : ℕ}
 
 
 
+
 /-- Cross-ratio property: if ab = cd, then a/gcd(a,c) and c/gcd(a,c) are coprime,
 and their product structure encodes complementary factor information. -/
 theorem cross_ratio_coprime {a c : ℕ} (ha : 0 < a) (hc : 0 < c) :
     Nat.Coprime (a / Nat.gcd a c) (c / Nat.gcd a c) :=
   Nat.coprime_div_gcd_div_gcd (Nat.gcd_pos_of_pos_left c ha)
+
 
 

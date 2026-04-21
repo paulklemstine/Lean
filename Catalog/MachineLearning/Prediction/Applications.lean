@@ -22,9 +22,15 @@ theorem market_prices_probability
 
 
 
+
+/-- [Section: # CatalogBuild.MachineLearning.Prediction.Applications
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/Prediction
+Declarations: 12] -/
 theorem lmsr_loss_bound (n : ℕ) (hn : 1 < n) :
     0 < Real.log n := by
   exact Real.log_pos <| Nat.one_lt_cast.mpr hn
+
 
 
 
@@ -39,6 +45,7 @@ theorem epidemic_prediction_equilibrium
 
 
 
+
 theorem kelly_criterion_optimal
     (p b : ℝ) (hp : 0 < p) (hp1 : p < 1) (hb : 0 < b)
     (f_star : ℝ) (hf : f_star = p - (1 - p) / b)
@@ -46,6 +53,7 @@ theorem kelly_criterion_optimal
     (hedge : b * p > 1 - p) :
     0 < f_star := by
   nlinarith [ mul_div_cancel₀ ( 1 - p ) hb.ne' ]
+
 
 
 
@@ -57,10 +65,12 @@ theorem kelly_fraction_bounded
 
 
 
+
 /-- PPI estimator: θ̂_PPI = θ̂_gold + (μ̂_pred_all - μ̂_pred_gold)
 The correction term μ̂_pred_all - μ̂_pred_gold removes ML bias. -/
 def ppi_estimator (θ_gold μ_pred_all μ_pred_gold : ℝ) : ℝ :=
   θ_gold + (μ_pred_all - μ_pred_gold)
+
 
 
 
@@ -69,6 +79,7 @@ theorem ppi_unbiased
     (h_gold_unbiased : θ_gold = θ_true + (μ_pred_gold - μ_pred_all)) :
     ppi_estimator θ_gold μ_pred_all μ_pred_gold = θ_true := by
   unfold ppi_estimator; linarith;
+
 
 
 
@@ -82,6 +93,7 @@ theorem ppi_variance_reduction
 
 
 
+
 theorem chsh_classical_bound
     (E₁₁ E₁₂ E₂₁ E₂₂ : ℝ)
     (h₁₁ : |E₁₁| ≤ 1) (h₁₂ : |E₁₂| ≤ 1)
@@ -89,6 +101,7 @@ theorem chsh_classical_bound
     (S : ℝ) (hS : S = E₁₁ + E₁₂ + E₂₁ - E₂₂) :
     |S| ≤ 4 := by
   exact abs_le.mpr ⟨ by linarith [ abs_le.mp h₁₁, abs_le.mp h₁₂, abs_le.mp h₂₁, abs_le.mp h₂₂ ], by linarith [ abs_le.mp h₁₁, abs_le.mp h₁₂, abs_le.mp h₂₁, abs_le.mp h₂₂ ] ⟩
+
 
 
 
@@ -100,6 +113,7 @@ theorem tsirelson_bound_statement
 
 
 
+
 theorem prediction_value_decay
     (V₀ r : ℝ) (hV : 0 < V₀) (hr : 0 < r)
     (t : ℕ) :
@@ -108,10 +122,12 @@ theorem prediction_value_decay
 
 
 
+
 theorem prediction_stream_finite_value
     (V₀ r : ℝ) (hV : 0 < V₀) (hr : 0 < r) :
     ∃ S : ℝ, 0 < S := by
   grind
+
 
 
 

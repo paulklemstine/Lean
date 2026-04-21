@@ -18,6 +18,7 @@ theorem brahmagupta_two_reps (a b c d : ℤ) :
 
 
 
+
 /-- Key algebraic identity: if N = a²+b² = c²+d², then
 N² = (ac+bd)² + (ad-bc)² = (ac-bd)² + (ad+bc)².
 Moreover, N divides (ac+bd)(ac-bd) = a²c² - b²d² and
@@ -29,6 +30,7 @@ theorem two_reps_product_identity (a b c d N : ℤ)
 
 
 
+
 /-- N divides (a²-c²) when N = a²+b² = c²+d², since a²-c² = d²-b². -/
 theorem two_reps_divisibility (a b c d N : ℤ)
     (h1 : N = a ^ 2 + b ^ 2) (h2 : N = c ^ 2 + d ^ 2) :
@@ -36,9 +38,11 @@ theorem two_reps_divisibility (a b c d N : ℤ)
 
 
 
+
 /-- The cross-product identity: (ad+bc)(ad-bc) = a²d² - b²c². -/
 theorem cross_product_identity (a b c d : ℤ) :
     (a * d + b * c) * (a * d - b * c) = a ^ 2 * d ^ 2 - b ^ 2 * c ^ 2 := by ring
+
 
 
 
@@ -53,11 +57,13 @@ theorem N_divides_cross (a b c d N : ℤ)
 
 
 
+
 /-- A sum-of-squares representation of a natural number. -/
 structure SumOfSquaresRep (N : ℤ) where
   x : ℤ
   y : ℤ
   eq : N = x ^ 2 + y ^ 2
+
 
 
 
@@ -67,10 +73,12 @@ def SumOfSquaresRep.distinct (r1 r2 : SumOfSquaresRep N) : Prop :=
 
 
 
+
 /-- The Euclid parametrization gives a Pythagorean triple from a sum-of-squares rep.
 If c = m²+n², then (m²-n², 2mn, c) is a Pythagorean triple. -/
 theorem euclid_from_rep (m n : ℤ) :
     (m ^ 2 - n ^ 2) ^ 2 + (2 * m * n) ^ 2 = (m ^ 2 + n ^ 2) ^ 2 := by ring
+
 
 
 
@@ -82,6 +90,7 @@ theorem paired_triples_share_hypotenuse (m₁ n₁ m₂ n₂ : ℤ)
     (m₁ ^ 2 - n₁ ^ 2) ^ 2 + (2 * m₁ * n₁) ^ 2 = (m₁ ^ 2 + n₁ ^ 2) ^ 2 ∧
     (m₂ ^ 2 - n₂ ^ 2) ^ 2 + (2 * m₂ * n₂) ^ 2 = (m₂ ^ 2 + n₂ ^ 2) ^ 2 := by
   exact ⟨by ring, by ring⟩
+
 
 
 
@@ -104,11 +113,13 @@ theorem paired_triple_factor_divides (m₁ n₁ m₂ n₂ c : ℤ)
 
 
 
+
 /-- The cross-term also divides: c | (m₁n₂ + n₁m₂)(m₁n₂ - n₁m₂). -/
 theorem paired_triple_cross_divides (m₁ n₁ m₂ n₂ c : ℤ)
     (h1 : c = m₁ ^ 2 + n₁ ^ 2) (h2 : c = m₂ ^ 2 + n₂ ^ 2) :
     c ∣ (m₁ * n₂ + n₁ * m₂) * (m₁ * n₂ - n₁ * m₂) := by
   exact N_divides_cross m₁ n₁ m₂ n₂ c h1 h2
+
 
 
 
@@ -119,12 +130,14 @@ noncomputable def pairingFactor (m₁ n₁ m₂ n₂ : ℤ) : ℕ :=
 
 
 
+
 /-- When both products and cross-terms are nonzero, the GCD is a proper factor. -/
 theorem pairing_factor_divides (m₁ n₁ m₂ n₂ : ℤ)
     (h : m₁ ^ 2 + n₁ ^ 2 = m₂ ^ 2 + n₂ ^ 2) :
     (pairingFactor m₁ n₁ m₂ n₂ : ℤ) ∣ (m₁ ^ 2 + n₁ ^ 2) := by
   unfold pairingFactor
   exact Int.gcd_dvd_right (m₁ * m₂ + n₁ * n₂) (m₁ ^ 2 + n₁ ^ 2)
+
 
 
 
@@ -140,6 +153,7 @@ theorem product_has_two_reps (α β γ δ : ℤ)
 
 
 
+
 /-- The Brahmagupta-Fibonacci identity gives two representations simultaneously. -/
 theorem bf_two_reps (α β γ δ : ℤ) :
     ∃ (a b c d : ℤ),
@@ -149,6 +163,7 @@ theorem bf_two_reps (α β γ δ : ℤ) :
       (c, d) = (α * γ + β * δ, α * δ - β * γ) := by
   exact ⟨α * γ - β * δ, α * δ + β * γ, α * γ + β * δ, α * δ - β * γ,
          brahmagupta_fibonacci α β γ δ, brahmagupta_fibonacci_alt α β γ δ, rfl, rfl⟩
+
 
 
 
@@ -174,6 +189,7 @@ theorem conversion_formula (α β γ δ : ℤ) :
 
 
 
+
 /-- In ℤ[i], the norm N(a+bi) = a²+b² is multiplicative.
 Paired representations correspond to different ℤ[i] factorizations. -/
 theorem gaussian_norm_pair (m₁ n₁ m₂ n₂ : ℤ)
@@ -181,6 +197,7 @@ theorem gaussian_norm_pair (m₁ n₁ m₂ n₂ : ℤ)
     Zsqrtd.norm (⟨m₁, n₁⟩ : GaussianInt) =
     Zsqrtd.norm (⟨m₂, n₂⟩ : GaussianInt) := by
   simp [Zsqrtd.norm]; linarith
+
 
 
 
@@ -195,6 +212,7 @@ def findReps (N : Nat) : List (Nat × Nat) := Id.run do
       if b * b == b2 && a ≤ b then
         result := result ++ [(a, b)]
   return result
+
 
 
 
@@ -223,6 +241,7 @@ def findPairedTriples (m n : Nat) : List (Nat × Nat × Nat × Nat) := Id.run do
 
 
 
+
 /-- [Section: # CatalogBuild.Pythagorean.Core.PythagoreanPairing
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/Core
@@ -232,6 +251,7 @@ theorem fermat_sum_two_squares_1mod4 (p : ℕ) (hp : Nat.Prime p) (hmod : p % 4 
   have := Fact.mk hp; have := @Nat.Prime.sq_add_sq p; aesop;
 
 -- This requires deep number theory (Wilson's theorem + descent)
+
 
 
 
@@ -256,6 +276,7 @@ theorem two_primes_two_reps (p q : ℕ) (_hp : Nat.Prime p) (_hq : Nat.Prime q) 
     have h2 : (↑q : ℤ) = (↑γ) ^ 2 + (↑δ) ^ 2 := by exact_mod_cast hγδ.symm
     have := brahmagupta_fibonacci_alt (↑α) (↑β) (↑γ) (↑δ)
     push_cast at h1 h2 ⊢; nlinarith
+
 
 
 end

@@ -12,9 +12,11 @@ def twoPole_trace (a b : ℚ) : ℚ := 2 * (a * b + 1)
 
 
 
+
 /-- Brahmagupta–Fibonacci identity variant: (1+a²)(1+b²) = (ab+1)² + (a-b)² -/
 theorem brahmagupta_fibonacci_1 (a b : ℤ) :
     (1 + a ^ 2) * (1 + b ^ 2) = (a * b + 1) ^ 2 + (a - b) ^ 2 := by ring
+
 
 
 
@@ -28,9 +30,15 @@ theorem order2_trace_zero (a b : ℤ) (h : a * b = -1) :
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.Core.OrderClassification
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Core
+Declarations: 12] -/
 theorem order2_integer_solutions (a b : ℤ) (h : a * b = -1) :
     (a = 1 ∧ b = -1) ∨ (a = -1 ∧ b = 1) := by
       rw [ Int.mul_eq_neg_one_iff_eq_one_or_neg_one ] at h ; tauto
+
 
 
 
@@ -40,11 +48,13 @@ theorem twoPole_1_neg1 (t : ℚ) (ht : 2 * t ≠ 0) :
 
 
 
+
 theorem twoPole_1_neg1_order2 (t : ℚ) (ht : t ≠ 0) (ht2 : (-1 : ℚ) / t ≠ 0) :
     twoPole 1 (-1) (twoPole 1 (-1) t) = t := by
       convert twoPole_1_neg1 ( -1 / t ) ( by aesop ) using 1 ; ring;
       · unfold twoPole; ring;
       · grind
+
 
 
 
@@ -58,12 +68,14 @@ theorem order4_condition (a b : ℤ) :
 
 
 
+
 theorem order4_case2_solutions (a b : ℤ) (h : (a - 1) * (b + 1) = -2) :
     (a = 2 ∧ b = -3) ∨ (a = 0 ∧ b = 1) ∨ (a = 3 ∧ b = -2) ∨ (a = -1 ∧ b = 0) := by
       have : a - 1 ∣ -2 := h ▸ dvd_mul_right _ _; ( have : a - 1 ∣ 2 := dvd_neg.mp this; ( have : a - 1 ≤ 2 := Int.le_of_dvd ( by decide ) this; ( have : a - 1 ≥ -2 := neg_le_of_abs_le ( Int.le_of_dvd ( by decide ) ( by simpa ) ) ; interval_cases _ : a - 1 <;> simp_all +decide [ sub_eq_iff_eq_add' ] ; ) ) );
       · linarith;
       · linarith;
       · linarith
+
 
 
 
@@ -77,6 +89,7 @@ theorem order4_case1_solutions (a b : ℤ) (h : (a + 1) * (b - 1) = -2) :
 
 
 
+
 theorem no_order3 (a b : ℤ) (hab : a ≠ b) :
     3 * (a * b + 1) ^ 2 ≠ (a - b) ^ 2 := by
       by_contra h;
@@ -86,6 +99,7 @@ theorem no_order3 (a b : ℤ) (hab : a ≠ b) :
         rw [ div_pow, div_eq_iff ] <;> norm_cast ; cases lt_or_gt_of_ne hab <;> nlinarith;
         nlinarith [ mul_self_pos.2 ( sub_ne_zero.2 hab ) ];
       exact h_contra.elim fun r hr => by apply_fun fun x => x.num at hr; norm_num [ sq, Rat.mul_self_num ] at hr; nlinarith [ show r.num ≤ 1 by nlinarith, show r.num ≥ -1 by nlinarith ] ;
+
 
 
 
@@ -105,9 +119,11 @@ theorem no_order6 (a b : ℤ) (hab : a ≠ b) :
 
 
 
+
 theorem rotation_angle_rational (a b : ℤ) (hab : a ≠ b) :
     ∃ (p q : ℤ), q ≠ 0 ∧
     p * ((1 + a ^ 2) * (1 + b ^ 2)) = q * (a * b + 1) ^ 2 := by
       exact ⟨ ( a * b + 1 ) ^ 2, ( 1 + a ^ 2 ) * ( 1 + b ^ 2 ), by exact mul_ne_zero ( by nlinarith ) ( by nlinarith ), by ring ⟩
+
 
 

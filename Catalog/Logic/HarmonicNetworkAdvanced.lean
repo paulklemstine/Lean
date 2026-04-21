@@ -12,6 +12,7 @@ theorem relu_rational (q : ℚ) : ∃ r : ℚ, r = max 0 q := ⟨max 0 q, rfl⟩
 
 
 
+
 /-- [Section: # CatalogBuild.Logic.HarmonicNetworkAdvanced
 Auto-generated from theorem catalog database.
 Domain: Logic
@@ -22,6 +23,11 @@ theorem stereo_first_component_bounded (m n : ℝ) (h : m ^ 2 + n ^ 2 ≠ 0) :
 
 
 
+
+/-- [Section: # CatalogBuild.Logic.HarmonicNetworkAdvanced
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 23] -/
 theorem stereo_second_component_bounded (m n : ℝ) (h : m ^ 2 + n ^ 2 ≠ 0) :
     |(n ^ 2 - m ^ 2) / (m ^ 2 + n ^ 2)| ≤ 1 := by
   exact abs_le.mpr ⟨ by rw [ le_div_iff₀ <| by positivity ] ; nlinarith, by rw [ div_le_iff₀ <| by positivity ] ; nlinarith ⟩
@@ -32,6 +38,7 @@ theorem stereo_second_component_bounded (m n : ℝ) (h : m ^ 2 + n ^ 2 ≠ 0) :
 
 
 
+
 /-- Negating both parameters preserves the first component. -/
 theorem stereo_neg_both (m n : ℚ) :
     2 * (-m) * (-n) / ((-m) ^ 2 + (-n) ^ 2) = 2 * m * n / (m ^ 2 + n ^ 2) := by
@@ -39,10 +46,12 @@ theorem stereo_neg_both (m n : ℚ) :
 
 
 
+
 /-- Negating only the first parameter negates the first component. -/
 theorem stereo_neg_first (m n : ℚ) :
     2 * (-m) * n / ((-m) ^ 2 + n ^ 2) = -(2 * m * n / (m ^ 2 + n ^ 2)) := by
   ring
+
 
 
 
@@ -57,6 +66,7 @@ theorem stereo_swap_second (m n : ℚ) :
 
 
 
+
 /-- Sum of squares of a list of integers is nonnegative. -/
 theorem sum_sq_nonneg_list (ms : List ℤ) : 0 ≤ (ms.map (· ^ 2)).sum := by
   apply List.sum_nonneg
@@ -64,6 +74,7 @@ theorem sum_sq_nonneg_list (ms : List ℤ) : 0 ≤ (ms.map (· ^ 2)).sum := by
   simp only [List.mem_map] at hx
   obtain ⟨a, _, rfl⟩ := hx
   positivity
+
 
 
 
@@ -81,9 +92,11 @@ theorem sum_sq_eq_zero_iff (ms : List ℤ) :
 
 
 
+
 /-- The dot product of two rational vectors is rational (closure of ℚ). -/
 theorem rational_dot_product (v w : Fin n → ℚ) :
     ∃ r : ℚ, r = ∑ i, v i * w i := ⟨∑ i, v i * w i, rfl⟩
+
 
 
 
@@ -91,6 +104,7 @@ theorem rational_dot_product (v w : Fin n → ℚ) :
 theorem relu_pointwise_rational (v : Fin n → ℚ) :
     ∃ w : Fin n → ℚ, ∀ i, w i = max 0 (v i) :=
   ⟨fun i => max 0 (v i), fun _ => rfl⟩
+
 
 
 
@@ -109,6 +123,7 @@ theorem stereo_second_lipschitz (t₁ t₂ : ℝ) (ht₁ : |t₁| ≤ 1) (ht₂ 
 
 
 
+
 theorem rational_approx_error (t₀ : ℚ) (N : ℕ) (hN : 0 < N) :
     ∃ p : ℤ, |p / (N : ℚ) - t₀| ≤ 1 / (2 * N) := by
   refine' ⟨ ⌊t₀ * N + 1 / 2⌋, _ ⟩ ; rw [ abs_le ] ; constructor <;> norm_num [ mul_assoc, mul_comm, mul_left_comm ] at * <;> ring_nf at * <;> norm_num [ hN.ne' ] at *;
@@ -120,6 +135,7 @@ theorem rational_approx_error (t₀ : ℚ) (N : ℕ) (hN : 0 < N) :
 -- =====================================================================
 -- SECTION 8: SCALE INVARIANCE
 -- =====================================================================
+
 
 
 
@@ -135,6 +151,7 @@ theorem stereo_scale_invariant (m n k : ℚ) (hk : k ≠ 0) (_h : m ^ 2 + n ^ 2 
 
 
 
+
 /-- The second component is also scale-invariant. -/
 theorem stereo_scale_invariant_second (m n k : ℚ) (hk : k ≠ 0) (_h : m ^ 2 + n ^ 2 ≠ 0) :
     ((k * n) ^ 2 - (k * m) ^ 2) / ((k * m) ^ 2 + (k * n) ^ 2) =
@@ -147,6 +164,7 @@ theorem stereo_scale_invariant_second (m n k : ℚ) (hk : k ≠ 0) (_h : m ^ 2 +
 -- =====================================================================
 -- SECTION 9: EULER'S FOUR-SQUARE IDENTITY
 -- =====================================================================
+
 
 
 
@@ -170,8 +188,10 @@ theorem stereo_closure_under_multiplication (m₁ n₁ m₂ n₂ : ℤ)
 
 
 
+
 /-- The stereographic map t ↦ 2t/(1+t²) maps 0 to 0. -/
 theorem stereo_calibration_zero : (2 : ℚ) * 0 / (1 + 0 ^ 2) = 0 := by norm_num
+
 
 
 
@@ -180,9 +200,11 @@ theorem stereo_calibration_one : (2 : ℚ) * 1 / (1 + 1 ^ 2) = 1 := by norm_num
 
 
 
+
 /-- The first component is an odd function. -/
 theorem stereo_first_odd (t : ℚ) :
     2 * (-t) / (1 + (-t) ^ 2) = -(2 * t / (1 + t ^ 2)) := by ring
+
 
 
 
@@ -193,6 +215,7 @@ theorem stereo_second_even (t : ℚ) :
 -- =====================================================================
 -- SECTION 12: ALTERNATIVE NORM PRODUCT
 -- =====================================================================
+
 
 
 
@@ -209,6 +232,7 @@ theorem cayley_dickson_norm (a b c d : ℤ) :
 
 
 
+
 /-- Composing two unit vectors via complex multiplication preserves unit norm.
 This is the key lemma for network depth composition. -/
 theorem unit_complex_mul_norm (a b c d : ℚ)
@@ -220,6 +244,7 @@ theorem unit_complex_mul_norm (a b c d : ℚ)
 -- =====================================================================
 -- SECTION 14: PROJECTION CROSS-RATIO
 -- =====================================================================
+
 
 
 
@@ -238,6 +263,7 @@ theorem stereo_cross_ratio (m₁ n₁ m₂ n₂ : ℚ)
 
 
 
+
 /-- The N-dimensional projection numerator identity using Finset.sum.
 This is the type-safe version of `projection_numerator_eq_sq`. -/
 theorem projection_numerator_fin (n : ℕ) (t : ℤ) (m : Fin n → ℤ) :
@@ -249,4 +275,5 @@ theorem projection_numerator_fin (n : ℕ) (t : ℤ) (m : Fin n → ℤ) :
     rw [Finset.mul_sum]
     congr 1; ext i; ring
   linarith [generalized_pythagorean_identity t (∑ i : Fin n, (m i) ^ 2)]
+
 

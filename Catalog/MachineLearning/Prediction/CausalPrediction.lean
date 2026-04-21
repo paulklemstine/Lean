@@ -23,10 +23,12 @@ structure CausalModel where
 
 
 
+
 /-- The causal effect differs from the observational effect by the confounding bias -/
 theorem causal_observational_gap (model : CausalModel) (x : ℝ) :
     model.E_Y_given_X x - model.E_Y_given_doX x = model.bias x := by
   linarith [model.observational_decomp x]
+
 
 
 
@@ -35,6 +37,7 @@ theorem no_confounding_identification (model : CausalModel)
     (h_no_conf : ∀ x, model.bias x = 0) :
     ∀ x, model.E_Y_given_X x = model.E_Y_given_doX x := by
   intro x; linarith [model.observational_decomp x, h_no_conf x]
+
 
 
 
@@ -48,6 +51,7 @@ theorem backdoor_adjustment (n : ℕ)
     (h_adj : causal_effect = ∑ i, E_Y_XZ i * P_Z i) :
     causal_effect = ∑ i, E_Y_XZ i * P_Z i :=
   h_adj
+
 
 
 
@@ -73,6 +77,7 @@ theorem adjustment_bounded (n : ℕ) (E_Y_XZ P_Z : Fin n → ℝ)
 
 
 
+
 /-- An instrumental variable Z satisfies:
 1. Z → X (relevance)
 2. Z ⊥ U (independence from confounders)
@@ -84,9 +89,11 @@ structure InstrumentalVariable where
 
 
 
+
 /-- The IV estimator: β_IV = Cov(Z,Y)/Cov(Z,X) -/
 noncomputable def ivEstimator (iv : InstrumentalVariable) : ℝ :=
   iv.cov_ZY / iv.cov_ZX
+
 
 
 
@@ -97,6 +104,7 @@ theorem weak_instrument_problem (iv : InstrumentalVariable) (σ : ℝ) (hσ : 0 
 
 
 
+
 /-- Without adjustment, the causal effect lies in a bounded interval -/
 theorem causal_effect_bounds
     (observational_effect confounding_bound : ℝ)
@@ -104,6 +112,7 @@ theorem causal_effect_bounds
     observational_effect - confounding_bound ≤
     observational_effect + confounding_bound := by
   linarith
+
 
 
 
@@ -121,6 +130,7 @@ theorem manski_bounds (p_treated E_Y1_treated E_Y0_control : ℝ)
 
 
 
+
 /-- Causal prediction is invariant under distribution shift,
 while observational prediction is not -/
 theorem causal_prediction_invariance
@@ -132,11 +142,13 @@ theorem causal_prediction_invariance
 
 
 
+
 /-- The value of causal knowledge: it eliminates the confounding bias -/
 theorem causal_knowledge_value (model : CausalModel) (x : ℝ)
     (h_bias : |model.bias x| > 0) :
     |model.E_Y_given_X x - model.E_Y_given_doX x| > 0 := by
   rw [causal_observational_gap]; exact h_bias
+
 
 
 

@@ -26,6 +26,11 @@ theorem trial_division_correct (n : ℕ) (hn : 1 < n) :
 
 
 
+
+/-- [Section: # CatalogBuild.Physics.SieveAndPrimality
+Auto-generated from theorem catalog database.
+Domain: Physics
+Declarations: 14] -/
 theorem composite_small_factor (n : ℕ) (hn : 1 < n) (hc : ¬ Nat.Prime n) :
     ∃ d : ℕ, 1 < d ∧ d * d ≤ n ∧ d ∣ n := by
   -- Let $p$ be the smallest prime factor of $n$. By definition, $p$ divides $n$ and $p \leq \sqrt{n}$.
@@ -33,6 +38,7 @@ theorem composite_small_factor (n : ℕ) (hn : 1 < n) (hc : ¬ Nat.Prime n) :
     exact Nat.exists_prime_and_dvd hn.ne';
   cases' hp_div with k hk;
   cases le_total p k <;> [ exact ⟨ p, hp_prime.one_lt, by nlinarith [ hp_prime.two_le ], hk.symm ▸ dvd_mul_right _ _ ⟩ ; exact ⟨ k, Nat.one_lt_iff_ne_zero_and_ne_one.mpr ⟨ by aesop_cat, by aesop_cat ⟩, by nlinarith [ hp_prime.two_le ], hk.symm ▸ dvd_mul_left _ _ ⟩ ]
+
 
 
 
@@ -49,6 +55,7 @@ theorem wilson_examples :
 
 
 
+
 /-- Wilson's theorem: the converse direction for composites.
 If n > 1 is composite, then (n-1)! ≡ 0 (mod n) (for most composites). -/
 theorem wilson_composite_examples :
@@ -62,11 +69,13 @@ theorem wilson_composite_examples :
 
 
 
+
 /-- Wilson's theorem for all primes up to 50. -/
 theorem wilson_all_primes_to_50 :
     ∀ p ∈ (Finset.Icc 2 50).filter Nat.Prime,
       (p - 1).factorial % p = p - 1 := by
   native_decide
+
 
 
 
@@ -82,6 +91,7 @@ structure PrattCertificate (p : ℕ) where
 
 
 
+
 /-- Pratt certificate for p = 7: witness g = 3.
 p - 1 = 6 = 2 × 3.
 3^3 mod 7 = 6 ≠ 1 (test for q=2)
@@ -89,6 +99,7 @@ p - 1 = 6 = 2 × 3.
 theorem pratt_cert_7 : ∃ g : ℕ, g ^ 6 % 7 = 1 ∧
     g ^ 3 % 7 ≠ 1 ∧ g ^ 2 % 7 ≠ 1 :=
   ⟨3, by native_decide, by native_decide, by native_decide⟩
+
 
 
 
@@ -102,6 +113,7 @@ theorem pratt_cert_13 : ∃ g : ℕ, g ^ 12 % 13 = 1 ∧
 
 
 
+
 /-- Pratt certificate for p = 101: witness g = 2.
 p - 1 = 100 = 2² × 5².
 2^50 mod 101 = 100 ≠ 1 (test for q=2)
@@ -109,6 +121,7 @@ p - 1 = 100 = 2² × 5².
 theorem pratt_cert_101 : ∃ g : ℕ, g ^ 100 % 101 = 1 ∧
     g ^ 50 % 101 ≠ 1 ∧ g ^ 20 % 101 ≠ 1 :=
   ⟨2, by native_decide, by native_decide, by native_decide⟩
+
 
 
 
@@ -120,6 +133,7 @@ theorem sieve_correctness_small :
 
 
 
+
 /-- Sieve gives correct counts for larger ranges. -/
 theorem sieve_count_500 :
     ((Finset.Icc 2 500).filter Nat.Prime).card = 95 := by
@@ -127,9 +141,11 @@ theorem sieve_count_500 :
 
 
 
+
 theorem sieve_count_1000 :
     ((Finset.Icc 2 1000).filter Nat.Prime).card = 168 := by
   native_decide
+
 
 
 
@@ -141,6 +157,7 @@ theorem small_crypto_primes :
 
 
 
+
 /-- Numbers of the form 2^k - 1 that are prime (Mersenne primes). -/
 theorem mersenne_primality_table :
     Nat.Prime (2^2 - 1) ∧ Nat.Prime (2^3 - 1) ∧
@@ -149,4 +166,5 @@ theorem mersenne_primality_table :
     ¬ Nat.Prime (2^8 - 1) ∧ ¬ Nat.Prime (2^9 - 1) ∧
     ¬ Nat.Prime (2^10 - 1) ∧ ¬ Nat.Prime (2^11 - 1) := by
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩ <;> native_decide
+
 

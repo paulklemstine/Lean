@@ -13,9 +13,11 @@ def LQ : Matrix (Fin 3) (Fin 3) ℤ :=
 
 
 
+
 /-- Berggren matrix B₁. -/
 def LB₁ : Matrix (Fin 3) (Fin 3) ℤ :=
   !![1, -2, 2; 2, -1, 2; 2, -2, 3]
+
 
 
 
@@ -25,9 +27,11 @@ def LB₂ : Matrix (Fin 3) (Fin 3) ℤ :=
 
 
 
+
 /-- Berggren matrix B₃. -/
 def LB₃ : Matrix (Fin 3) (Fin 3) ℤ :=
   !![(-1), 2, 2; (-2), 1, 2; (-2), 2, 3]
+
 
 
 
@@ -37,8 +41,10 @@ def LBinv₁ : Matrix (Fin 3) (Fin 3) ℤ :=
 
 
 
+
 /-- B₁ preserves the Lorentz form: B₁ᵀ Q B₁ = Q. -/
 theorem LB1_preserves_lorentz : LB₁ᵀ * LQ * LB₁ = LQ := by native_decide
+
 
 
 
@@ -47,8 +53,10 @@ theorem LB2_preserves_lorentz : LB₂ᵀ * LQ * LB₂ = LQ := by native_decide
 
 
 
+
 /-- B₃ preserves the Lorentz form: B₃ᵀ Q B₃ = Q. -/
 theorem LB3_preserves_lorentz : LB₃ᵀ * LQ * LB₃ = LQ := by native_decide
+
 
 
 
@@ -57,8 +65,10 @@ theorem LBinv1_preserves_lorentz : LBinv₁ᵀ * LQ * LBinv₁ = LQ := by native
 
 
 
+
 /-- B₁⁻¹ is the actual inverse of B₁. -/
 theorem LBinv1_is_inverse : LB₁ * LBinv₁ = 1 := by native_decide
+
 
 
 
@@ -67,8 +77,10 @@ theorem Q_squared_is_identity : LQ * LQ = 1 := by native_decide
 
 
 
+
 /-- The inverse formula: B₁⁻¹ = Q · B₁ᵀ · Q. -/
 theorem LBinv1_formula : LBinv₁ = LQ * LB₁ᵀ * LQ := by native_decide
+
 
 
 
@@ -77,8 +89,10 @@ theorem LB1_det : Matrix.det LB₁ = 1 := by native_decide
 
 
 
+
 /-- det(B₂) = -1. -/
 theorem LB2_det : Matrix.det LB₂ = -1 := by native_decide
+
 
 
 
@@ -87,13 +101,16 @@ theorem LB3_det : Matrix.det LB₃ = 1 := by native_decide
 
 
 
+
 /-- det(B₁²) = 1: the square is in SO(2,1;ℤ). -/
 theorem LB1_sq_det : Matrix.det (LB₁ * LB₁) = 1 := by native_decide
 
 
 
+
 /-- The trace of B₁⁻¹ equals 3 (= 1 + (-1) + 3). -/
 theorem LBinv1_trace : Matrix.trace LBinv₁ = 3 := by native_decide
+
 
 
 
@@ -104,9 +121,11 @@ theorem char_poly_identity (x : ℤ) :
 
 
 
+
 /-- The bilinear Lorentz form on two triples. -/
 def lorentzBilinear (u v : Fin 3 → ℤ) : ℤ :=
   u 0 * v 0 + u 1 * v 1 - u 2 * v 2
+
 
 
 
@@ -117,10 +136,12 @@ theorem lorentz_bilinear_comm (u v : Fin 3 → ℤ) :
 
 
 
+
 /-- The Lorentz form vanishes on Pythagorean triples. -/
 theorem lorentz_bilinear_self_zero (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     lorentzBilinear ![a, b, c] ![a, b, c] = 0 := by
   simp [lorentzBilinear]; linarith
+
 
 
 
@@ -134,11 +155,13 @@ theorem lorentz_descent_contracts (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 
 
 
 
+
 /-- The cross-Lorentz form between a Pythagorean triple and its B₁⁻¹ parent
 equals -2(c-b)², capturing the "boost angle" of the descent step. -/
 theorem lorentz_cross_term (a b c : ℤ) (hpyth : a ^ 2 + b ^ 2 = c ^ 2) :
     a * (a + 2 * b - 2 * c) + b * (-2 * a - b + 2 * c)
       - c * (-2 * a - 2 * b + 3 * c) = -2 * (c - b) ^ 2 := by nlinarith
+
 
 
 
@@ -148,9 +171,11 @@ theorem contracting_eigenvalue_sq :
 
 
 
+
 /-- The Pell equation x² - 2y² = 1 gives a sum-of-squares identity. -/
 theorem pell_sum_of_squares (x y : ℤ) :
     (x + y) ^ 2 + (x - y) ^ 2 = 2 * x ^ 2 + 2 * y ^ 2 := by ring
+
 
 
 
@@ -159,5 +184,6 @@ theorem depth_upper_bound (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
     (hpyth : a ^ 2 + b ^ 2 = c ^ 2) :
     -2 * a - 2 * b + 3 * c ≤ c - 1 := by
   nlinarith [sq_nonneg (a + b - c)]
+
 
 

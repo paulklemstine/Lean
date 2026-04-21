@@ -15,6 +15,7 @@ def invB1' (v : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
 
 
 
+
 /-- Inverse Berggren B₂⁻¹ as a function on integer triples. -/
 def invB2' (v : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
   (v.1 + 2 * v.2.1 - 2 * v.2.2,
@@ -23,11 +24,13 @@ def invB2' (v : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
 
 
 
+
 /-- Inverse Berggren B₃⁻¹ as a function on integer triples. -/
 def invB3' (v : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
   (-v.1 - 2 * v.2.1 + 2 * v.2.2,
    2 * v.1 + v.2.1 - 2 * v.2.2,
    -2 * v.1 - 2 * v.2.1 + 3 * v.2.2)
+
 
 
 
@@ -40,12 +43,14 @@ inductive BerggrenBranch : Type
 
 
 
+
 /-- Apply the inverse Berggren matrix corresponding to a branch choice. -/
 def applyInvBranch (br : BerggrenBranch) (v : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
   match br with
   | .b1 => invB1' v
   | .b2 => invB2' v
   | .b3 => invB3' v
+
 
 
 
@@ -56,10 +61,12 @@ def descentChain (branches : List BerggrenBranch) (v : ℤ × ℤ × ℤ) : ℤ 
 
 
 
+
 /-- Each inverse branch preserves the Pythagorean property. -/
 theorem invBranch_preserves_pyth (br : BerggrenBranch) (v : ℤ × ℤ × ℤ)
     (h : isPythagorean v) : isPythagorean (applyInvBranch br v) := by
   cases br <;> simp only [applyInvBranch, isPythagorean, invB1', invB2', invB3'] at * <;> nlinarith
+
 
 
 
@@ -75,8 +82,10 @@ theorem descentChain_preserves_pyth (branches : List BerggrenBranch)
 
 
 
+
 /-- The parent hypotenuse formula: c' = -2a - 2b + 3c. -/
 def parentHyp (a b c : ℤ) : ℤ := -2 * a - 2 * b + 3 * c
+
 
 
 
@@ -84,6 +93,7 @@ def parentHyp (a b c : ℤ) : ℤ := -2 * a - 2 * b + 3 * c
 theorem all_branches_same_hyp (br : BerggrenBranch) (v : ℤ × ℤ × ℤ) :
     (applyInvBranch br v).2.2 = -2 * v.1 - 2 * v.2.1 + 3 * v.2.2 := by
   cases br <;> simp [applyInvBranch, invB1', invB2', invB3']
+
 
 
 
@@ -95,6 +105,7 @@ theorem descent_depth_bound (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
 
 
 
+
 /-- The Lorentz form vanishes on Pythagorean triples. -/
 theorem lorentz_form_zero_of_pyth (v : ℤ × ℤ × ℤ)
     (h : isPythagorean v) : lorentzForm v = 0 := by
@@ -102,10 +113,12 @@ theorem lorentz_form_zero_of_pyth (v : ℤ × ℤ × ℤ)
 
 
 
+
 /-- The Lorentz form is preserved by all inverse Berggren matrices. -/
 theorem lorentz_form_preserved (br : BerggrenBranch) (v : ℤ × ℤ × ℤ) :
     lorentzForm (applyInvBranch br v) = lorentzForm v := by
   cases br <;> simp only [applyInvBranch, lorentzForm, invB1', invB2', invB3'] <;> ring
+
 
 
 
@@ -123,11 +136,13 @@ theorem lorentz_form_chain_preserved (branches : List BerggrenBranch)
 
 
 
+
 /-- Consequently, the Lorentz form vanishes at every level of descent. -/
 theorem lorentz_form_zero_descent (branches : List BerggrenBranch)
     (v : ℤ × ℤ × ℤ) (h : isPythagorean v) :
     lorentzForm (descentChain branches v) = 0 := by
   rw [lorentz_form_chain_preserved]
   exact lorentz_form_zero_of_pyth v h
+
 
 

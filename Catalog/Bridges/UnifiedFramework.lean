@@ -15,9 +15,11 @@ theorem relu_monotone : Monotone relu :=
 
 
 
+
 /-- Maslov deformed addition (the quantum-tropical interpolation). -/
 def maslovAdd (ε : ℝ) (x y : ℝ) : ℝ :=
   ε * Real.log (Real.exp (x / ε) + Real.exp (y / ε))
+
 
 
 
@@ -25,6 +27,7 @@ def maslovAdd (ε : ℝ) (x y : ℝ) : ℝ :=
 theorem maslov_comm (ε : ℝ) (x y : ℝ) :
     maslovAdd ε x y = maslovAdd ε y x := by
   simp [maslovAdd, add_comm]
+
 
 
 
@@ -41,12 +44,14 @@ theorem logsumexp_le_max_plus_log2 (x y : ℝ) :
 
 
 
+
 /-- The LogSumExp sandwich: max ≤ LSE ≤ max + log 2.
 This is the fundamental bound showing tropical = quantum up to log 2. -/
 theorem logsumexp_sandwich (x y : ℝ) :
     max x y ≤ Real.log (Real.exp x + Real.exp y) ∧
     Real.log (Real.exp x + Real.exp y) ≤ max x y + Real.log 2 :=
   ⟨logsumexp_ge_max x y, logsumexp_le_max_plus_log2 x y⟩
+
 
 
 
@@ -60,10 +65,12 @@ theorem karoubi_complement {R : Type*} [Ring R] (e : R) (he : e * e = e) :
 
 
 
+
 /-- Orthogonality: e·(1-e) = 0 for any idempotent e. -/
 theorem karoubi_orthogonal {R : Type*} [Ring R] (e : R) (he : e * e = e) :
     e * (1 - e) = 0 := by
   rw [mul_sub, mul_one, he, sub_self]
+
 
 
 
@@ -74,10 +81,12 @@ theorem karoubi_complete {R : Type*} [Ring R] (e : R) :
 
 
 
+
 /-- Complex norm-squared is a sum of two squares (Pythagorean identity). -/
 theorem complex_norm_sq_pythagorean (z : ℂ) :
     Complex.normSq z = z.re ^ 2 + z.im ^ 2 := by
   simp [Complex.normSq_apply, sq]
+
 
 
 
@@ -86,13 +95,16 @@ theorem sum_sq_nonneg (a b : ℝ) : 0 ≤ a ^ 2 + b ^ 2 := by positivity
 
 
 
+
 /-- Berggren matrix M₁ acting on Euclid parameters. -/
 def berggrenM₁ : Matrix (Fin 2) (Fin 2) ℤ := !![2, -1; 1, 0]
 
 
 
+
 /-- Berggren matrix M₃. -/
 def berggrenM₃ : Matrix (Fin 2) (Fin 2) ℤ := !![1, 2; 0, 1]
+
 
 
 
@@ -102,9 +114,11 @@ theorem berggren_M1_det : Matrix.det berggrenM₁ = 1 := by
 
 
 
+
 /-- M₃ has determinant 1 — it lies in SL₂(ℤ). -/
 theorem berggren_M3_det : Matrix.det berggrenM₃ = 1 := by
   simp [berggrenM₃, Matrix.det_fin_two]
+
 
 
 
@@ -114,8 +128,10 @@ theorem berggren_M3_parabolic : berggrenM₃ - 1 = !![0, 2; 0, 0] := by
 
 
 
+
 /-- The Pythagorean quadratic form Q(a,b,c) = a² + b² - c². -/
 def pythagQ (v : Fin 3 → ℤ) : ℤ := v 0 ^ 2 + v 1 ^ 2 - v 2 ^ 2
+
 
 
 
@@ -125,13 +141,16 @@ theorem root_triple_pythagorean : pythagQ ![3, 4, 5] = 0 := by
 
 
 
+
 /-- 1D stereographic projection (circle to line). -/
 def stereo1D (x : ℝ) : ℝ := 2 * x / (1 + x ^ 2)
 
 
 
+
 /-- The denominator 1 + x² is always positive. -/
 theorem stereo_denom_pos (x : ℝ) : 0 < 1 + x ^ 2 := by positivity
+
 
 
 
@@ -144,8 +163,10 @@ theorem stereo1D_bounded (x : ℝ) : |stereo1D x| ≤ 1 := by
 
 
 
+
 /-- stereo1D(0) = 0: the origin maps to itself. -/
 theorem stereo1D_zero : stereo1D 0 = 0 := by simp [stereo1D]
+
 
 
 
@@ -164,9 +185,11 @@ theorem depth_region_growth (d : ℕ) (hd : 1 ≤ d) : 2 ^ d ≥ d + 1 := by
 
 
 
+
 /-- Number of idempotents in ℤ/nℤ. -/
 def idempotentCount (n : ℕ) [NeZero n] : ℕ :=
   (Finset.univ.filter (fun e : ZMod n => e * e = e)).card
+
 
 
 
@@ -175,13 +198,16 @@ theorem idempotent_count_2 : idempotentCount 2 = 2 := by native_decide
 
 
 
+
 /-- ℤ/6ℤ has exactly 4 idempotents (0, 1, 3, 4). -/
 theorem idempotent_count_6 : idempotentCount 6 = 4 := by native_decide
 
 
 
+
 /-- ℤ/30ℤ has exactly 8 idempotents. -/
 theorem idempotent_count_30 : idempotentCount 30 = 8 := by native_decide
+
 
 
 

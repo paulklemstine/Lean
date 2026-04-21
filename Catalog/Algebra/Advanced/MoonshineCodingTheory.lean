@@ -14,8 +14,10 @@ theorem e8_type_a_count : Nat.choose 8 2 * 4 = 112 := by native_decide
 
 
 
+
 /-- Type B roots of E8: (±1/2)^8 with even # of minus signs. Count: 2^8 / 2 = 128. -/
 theorem e8_type_b_count : 2 ^ 8 / 2 = 128 := by norm_num
+
 
 
 
@@ -24,8 +26,10 @@ theorem e8_root_norm_sq : (2 : ℕ) = 2 := rfl
 
 
 
+
 /-- E8 is unimodular: det = 1. -/
 theorem e8_unimodular_det : (1 : ℤ) = 1 := rfl
+
 
 
 
@@ -34,8 +38,10 @@ theorem e8_self_dual_code_dim : (8 : ℕ) / 2 = 4 := by norm_num
 
 
 
+
 /-- E8 Dynkin diagram: 8 nodes, 7 edges, branch node has degree 3. -/
 theorem e8_dynkin_data : (8 : ℕ) - 1 = 7 ∧ (3 : ℕ) = 3 := ⟨by norm_num, rfl⟩
+
 
 
 
@@ -44,8 +50,10 @@ theorem e8_coxeter_number : (30 : ℕ) = 30 := rfl
 
 
 
+
 /-- E8 × E8 heterotic string: dimension 8 + 8 = 16. -/
 theorem e8_heterotic_dim : (8 : ℕ) + 8 = 16 := by norm_num
+
 
 
 
@@ -54,8 +62,10 @@ theorem golay_code_length : (24 : ℕ) = 2 * 12 := by norm_num
 
 
 
+
 /-- Golay code dimension k = 12. -/
 theorem golay_code_dimension : (12 : ℕ) = 12 := rfl
+
 
 
 
@@ -64,8 +74,10 @@ theorem golay_code_distance : (8 : ℕ) = 2 ^ 3 := by norm_num
 
 
 
+
 /-- Number of Golay codewords: 2^12 = 4096. -/
 theorem golay_codeword_count : (2 : ℕ) ^ 12 = 4096 := by norm_num
+
 
 
 
@@ -74,8 +86,10 @@ theorem golay_doubly_even : ∀ w ∈ ({0, 8, 12, 16, 24} : Finset ℕ), 4 ∣ w
 
 
 
+
 /-- Number of weight-8 codewords: 759. These form the Steiner system S(5,8,24). -/
 theorem golay_steiner_blocks : (759 : ℕ) = 759 := rfl
+
 
 
 
@@ -84,8 +98,10 @@ theorem steiner_system_count : Nat.choose 24 5 / Nat.choose 8 5 = 759 := by nati
 
 
 
+
 /-- Golay weight enumerator consistency: 1 + 759 + 2576 + 759 + 1 = 4096. -/
 theorem golay_weight_enum_check : 1 + 759 + 2576 + 759 + 1 = (4096 : ℕ) := by norm_num
+
 
 
 
@@ -96,8 +112,10 @@ theorem golay_hamming_bound :
 
 
 
+
 /-- |M₂₄| = 244823040 (order of the Mathieu group, Aut(G₂₄)). -/
 theorem m24_order : (244823040 : ℕ) = 2^10 * 3^3 * 5 * 7 * 11 * 23 := by norm_num
+
 
 
 
@@ -106,8 +124,10 @@ theorem leech_dim_eq : (24 : ℕ) = 3 * 8 := by norm_num
 
 
 
+
 /-- Leech lattice is constructed from 3 copies of E8 (conceptual dimension). -/
 theorem leech_from_three_e8 : 3 * (8 : ℕ) = 24 := by norm_num
+
 
 
 
@@ -116,8 +136,10 @@ theorem leech_kissing_factored : (196560 : ℕ) = 2^4 * 3 * 5 * 819 := by norm_n
 
 
 
+
 /-- Ratio of Leech to E8 kissing numbers. -/
 theorem leech_to_e8_ratio : (196560 : ℕ) / 240 = 819 := by norm_num
+
 
 
 
@@ -127,8 +149,10 @@ theorem niemeier_count : (24 : ℕ) = 24 := rfl
 
 
 
+
 /-- Second shell of Leech lattice (norm² = 6): 16773120 vectors. -/
 theorem leech_second_shell : (16773120 : ℕ) = 16773120 := rfl
+
 
 
 
@@ -137,8 +161,10 @@ theorem leech_third_shell : (398034000 : ℕ) = 398034000 := rfl
 
 
 
+
 /-- |Co₀| = 2^22 · 3^9 · 5^4 · 7^2 · 11 · 13 · 23. -/
 theorem co0_order_factor : (2 : ℕ) ^ 22 = 4194304 := by norm_num
+
 
 
 
@@ -147,8 +173,10 @@ theorem co1_from_co0 : (8315553613086720000 : ℕ) / 2 = 4157776806543360000 := 
 
 
 
+
 /-- |M₂₄| divides |Co₀| (M₂₄ is a subgroup of Co₀). -/
 theorem m24_divides_co0 : (244823040 : ℕ) ∣ 8315553613086720000 := ⟨33965568000, by norm_num⟩
+
 
 
 
@@ -159,8 +187,10 @@ theorem moonshine_196884 : (196884 : ℕ) = 1 + 196883 := by norm_num
 
 
 
+
 /-- Second moonshine decomposition: 21493760 = 1 + 196883 + 21296876. -/
 theorem moonshine_21493760 : (21493760 : ℕ) = 1 + 196883 + 21296876 := by norm_num
+
 
 
 
@@ -170,8 +200,10 @@ theorem moonshine_864299970 :
 
 
 
+
 /-- The constant term of j(τ): 744. -/
 theorem j_constant_term : (744 : ℕ) = 744 := rfl
+
 
 
 
@@ -180,8 +212,10 @@ theorem monster_conjugacy_classes : (194 : ℕ) = 194 := rfl
 
 
 
+
 /-- Smallest faithful representation of the Monster has dimension 196883. -/
 theorem monster_smallest_rep : (196883 : ℕ) = 196883 := rfl
+
 
 
 
@@ -192,13 +226,16 @@ theorem monster_prime_count : ({2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 41, 47, 
 
 
 
+
 /-- The Griess algebra (Monster vertex algebra at grade 2) has dimension 196884. -/
 theorem griess_algebra_dim : (196884 : ℕ) = 196884 := rfl
 
 
 
+
 /-- Moonshine module V♮ has central charge c = 24. -/
 theorem moonshine_module_central_charge : (24 : ℕ) = 24 := rfl
+
 
 
 
@@ -208,8 +245,10 @@ theorem mckay_thompson_identity : (196884 : ℕ) - 0 = 196884 := by norm_num
 
 
 
+
 /-- CSS construction from self-dual Golay code: [[24, 0, 8]]. -/
 theorem css_golay_quantum : (24 : ℕ) - 12 - (24 - 12) = 0 := by norm_num
+
 
 
 
@@ -218,13 +257,16 @@ theorem css_e8_quantum : (8 : ℕ) - 4 - (8 - 4) = 0 := by norm_num
 
 
 
+
 /-- Golay quantum code corrects ⌊(8-1)/2⌋ = 3 errors. -/
 theorem golay_quantum_errors : (8 - 1) / 2 = (3 : ℕ) := by norm_num
 
 
 
+
 /-- E8 quantum code corrects ⌊(4-1)/2⌋ = 1 error. -/
 theorem e8_quantum_errors : (4 - 1) / 2 = (1 : ℕ) := by norm_num
+
 
 
 
@@ -235,8 +277,10 @@ theorem quantum_error_correction (d : ℕ) (hd : 1 ≤ d) :
 
 
 
+
 /-- Comparing quantum codes: Leech corrects 3× more errors than E8. -/
 theorem leech_vs_e8_quantum_errors : (3 : ℕ) = 3 * 1 := by norm_num
+
 
 
 
@@ -246,14 +290,17 @@ theorem e4_equals_e8_theta : (240 : ℕ) = 240 := rfl
 
 
 
+
 /-- j = E₄³ / Δ. The j-invariant is built from the E8 theta series! -/
 theorem j_from_e4_and_delta : (1728 : ℤ) = 12 ^ 3 := by norm_num
+
 
 
 
 /-- The modular discriminant: Δ = η^24 where η is the Dedekind eta function.
 The exponent 24 = dim(Λ₂₄) is not a coincidence. -/
 theorem discriminant_eta_power : (24 : ℕ) = 24 := rfl
+
 
 
 
@@ -264,10 +311,12 @@ theorem optimal_packing_dims : ({8, 24} : Finset ℕ).card = 2 := by native_deci
 
 
 
+
 /-- Lattice decoding is idempotent: projecting a lattice point to the
 nearest lattice point returns itself. -/
 theorem lattice_decode_idempotent {α : Type*} (π : α → α) (hπ : π ∘ π = π)
     (x : α) : π (π x) = π x := congr_fun hπ x
+
 
 
 
@@ -277,10 +326,12 @@ theorem dimension_ladder_multiples : ∀ d ∈ ({8, 16, 24} : Finset ℕ), 8 ∣
 
 
 
+
 /-- The complete subgroup chain: M₂₄ ≤ Co₁ ≤ Monster.
 All three are sporadic simple groups (or close relatives). -/
 theorem sporadic_chain_cardinalities :
     (244823040 : ℕ) < 4157776806543360000 := by norm_num
+
 
 
 

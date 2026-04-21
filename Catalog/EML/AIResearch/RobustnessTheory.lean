@@ -19,10 +19,16 @@ theorem larger_margin_more_robust (m1 m2 L : ℝ) (hL : 0 < L) (hm : m1 ≤ m2) 
 
 
 
+
+/-- [Section: # CatalogBuild.EML.AIResearch.RobustnessTheory
+Auto-generated from theorem catalog database.
+Domain: EML/AIResearch
+Declarations: 17] -/
 theorem smaller_lipschitz_more_robust (m L1 L2 : ℝ)
     (hm : 0 < m) (hL1 : 0 < L1) (hL : L1 ≤ L2) :
     certifiedRadius m L2 ≤ certifiedRadius m L1 := by
   unfold certifiedRadius; exact div_le_div_of_nonneg_left (le_of_lt hm) hL1 hL
+
 
 
 
@@ -31,8 +37,10 @@ def stdAdvTrainingCost (samples pgdSteps fwdCost : ℕ) : ℕ :=
 
 
 
+
 def emlAdvTrainingCost (samples pgdSteps emlFwdCost : ℕ) : ℕ :=
   samples * pgdSteps * emlFwdCost
+
 
 
 
@@ -43,7 +51,9 @@ theorem eml_adv_training_cheaper (n k c_eml c_std : ℕ) (hc : c_eml ≤ c_std) 
 
 
 
+
 def emlEnergy (logitSum : ℝ) : ℝ := -Real.log (Real.exp logitSum)
+
 
 
 
@@ -52,12 +62,15 @@ theorem eml_energy_simplified (s : ℝ) : emlEnergy s = -s := by
 
 
 
+
 def binCalibrationError (confidence accuracy : ℝ) : ℝ := |confidence - accuracy|
+
 
 
 
 theorem perfect_calibration (p : ℝ) : binCalibrationError p p = 0 := by
   unfold binCalibrationError; simp
+
 
 
 
@@ -67,7 +80,9 @@ theorem calibration_triangle (c a m : ℝ) :
 
 
 
+
 def safetyMargin (currentState unsafeBoundary : ℝ) : ℝ := unsafeBoundary - currentState
+
 
 
 
@@ -76,7 +91,9 @@ theorem positive_margin_safe (s b : ℝ) (h : s < b) : 0 < safetyMargin s b := b
 
 
 
+
 def emlResponseTime (depth : ℕ) (opTime : ℝ) : ℝ := ↑depth * opTime
+
 
 
 
@@ -86,8 +103,10 @@ theorem deeper_slower (d1 d2 : ℕ) (t : ℝ) (ht : 0 ≤ t) (hd : d1 ≤ d2) :
 
 
 
+
 def robustnessAccuracyTradeoff (baseAcc robustnessLevel tradeoffRate : ℝ) : ℝ :=
   baseAcc - tradeoffRate * robustnessLevel
+
 
 
 
@@ -98,10 +117,12 @@ theorem robustness_costs_accuracy (acc rate r1 r2 : ℝ)
 
 
 
+
 theorem eml_better_tradeoff (acc r rate_eml rate_std : ℝ)
     (hr : 0 ≤ r) (hrate : rate_eml ≤ rate_std) :
     robustnessAccuracyTradeoff acc r rate_std ≤ robustnessAccuracyTradeoff acc r rate_eml := by
   unfold robustnessAccuracyTradeoff; nlinarith
+
 
 
 

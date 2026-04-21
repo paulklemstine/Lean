@@ -16,10 +16,12 @@ def emlNeuronFn (w₁ b₁ w₂ b₂ : ℝ) : ℝ → ℝ :=
 
 
 
+
 /-- A single-layer EML network: weighted sum of EML neurons plus bias. -/
 def emlNetworkLayer (neurons : List (ℝ × ℝ × ℝ × ℝ × ℝ)) (bias : ℝ) : ℝ → ℝ :=
   fun x => bias + (neurons.map fun ⟨α, w₁, b₁, w₂, b₂⟩ =>
     α * emlNeuronFn w₁ b₁ w₂ b₂ x).sum
+
 
 
 
@@ -36,6 +38,7 @@ theorem eml_separates_points :
 
 
 
+
 /-- EML neurons are nonvanishing: for any point x₀, there exists an EML neuron
 that is nonzero at x₀. -/
 theorem eml_nonvanishing (x₀ : ℝ) :
@@ -46,10 +49,12 @@ theorem eml_nonvanishing (x₀ : ℝ) :
 
 
 
+
 /-- The exp-only EML neuron is continuous everywhere. -/
 theorem eml_exp_neuron_continuous (w₁ b₁ : ℝ) :
     Continuous (fun x => Real.exp (w₁ * x + b₁)) := by
   exact continuous_exp.comp (continuous_const.mul continuous_id |>.add continuous_const)
+
 
 
 
@@ -60,10 +65,12 @@ theorem exp_is_eml_neuron :
 
 
 
+
 /-- Constants are exactly representable by EML networks. -/
 theorem const_is_eml_neuron (c : ℝ) :
     (fun _ : ℝ => c) = emlNetworkLayer [] c := by
   ext x; simp [emlNetworkLayer]
+
 
 
 
@@ -73,8 +80,10 @@ def emlLayerParams (n : ℕ) : ℕ := 5 * n + 1
 
 
 
+
 /-- A depth-D EML network with uniform width W has this many parameters. -/
 def emlDeepNetParams (D W : ℕ) : ℕ := D * emlLayerParams W
+
 
 
 
@@ -84,9 +93,11 @@ theorem width1_params (D : ℕ) : emlDeepNetParams D 1 = 6 * D := by
 
 
 
+
 /-- Width-W depth-1 network has 5W+1 parameters. -/
 theorem depth1_params (W : ℕ) : emlDeepNetParams 1 W = 5 * W + 1 := by
   simp [emlDeepNetParams, emlLayerParams]
+
 
 
 
@@ -94,6 +105,7 @@ theorem depth1_params (W : ℕ) : emlDeepNetParams 1 W = 5 * W + 1 := by
 theorem zero_neurons_is_const (b : ℝ) (x : ℝ) :
     emlNetworkLayer [] b x = b := by
   simp [emlNetworkLayer]
+
 
 
 
@@ -105,6 +117,7 @@ theorem double_exp_composition (a b c d : ℝ) (x : ℝ) :
 
 
 
+
 /-- [Section: # CatalogBuild.EML.UniversalApproximation
 Auto-generated from theorem catalog database.
 Domain: EML
@@ -112,16 +125,25 @@ Declarations: 29] -/
 theorem catalan_0 : catalanNum 0 = 1 := rfl
 
 
+
+/-- [Section: # CatalogBuild.EML.UniversalApproximation
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 29] -/
 theorem catalan_1 : catalanNum 1 = 1 := by native_decide
+
 
 
 theorem catalan_2 : catalanNum 2 = 2 := by native_decide
 
 
+
 theorem catalan_3 : catalanNum 3 = 5 := by native_decide
 
 
+
 theorem catalan_4 : catalanNum 4 = 14 := by native_decide
+
 
 
 
@@ -131,8 +153,10 @@ def totalTopologies (n : ℕ) : ℕ :=
 
 
 
+
 /-- The total number of EML topologies with up to 5 leaves is 1+1+2+5+14 = 23. -/
 theorem total_topologies_5 : totalTopologies 5 = 23 := by native_decide
+
 
 
 
@@ -143,9 +167,11 @@ theorem eml_gradient_decomposition (w₁ b₁ w₂ b₂ x : ℝ) :
 
 
 
+
 /-- The exponential gradient component is always positive when w₁ > 0. -/
 theorem exp_gradient_positive (w₁ b₁ x : ℝ) (hw : 0 < w₁) :
     0 < w₁ * Real.exp (w₁ * x + b₁) := by positivity
+
 
 
 
@@ -159,6 +185,7 @@ theorem log_gradient_bounded (w₂ b₂ x : ℝ) (h : 1 ≤ |w₂ * x + b₂|) :
 
 
 
+
 /-- A depth-1 Sheffer expression: Σᵢ wᵢ σ(aᵢx + bᵢ) + c -/
 structure Depth1ShefferExpr where
   n : ℕ
@@ -169,9 +196,11 @@ structure Depth1ShefferExpr where
 
 
 
+
 /-- Evaluate a depth-1 Sheffer expression -/
 def Depth1ShefferExpr.eval (e : Depth1ShefferExpr) (x : ℝ) : ℝ :=
   (∑ i : Fin e.n, e.weights i * softplus (e.slopes i * x + e.biases i)) + e.offset
+
 
 
 
@@ -183,9 +212,11 @@ theorem softplus_separates_points {x₁ x₂ : ℝ} (hne : x₁ ≠ x₂) :
 
 
 
+
 /-- The softplus family does not vanish: for every x, there exist a, b with σ(ax + b) ≠ 0 -/
 theorem softplus_nonvanishing (x : ℝ) : ∃ a b : ℝ, softplus (a * x + b) ≠ 0 := by
   exact ⟨1, 0, ne_of_gt (softplus_pos (1 * x + 0))⟩
+
 
 
 
@@ -195,10 +226,12 @@ theorem softplus_continuous : Continuous softplus :=
 
 
 
+
 /-- Each member of the softplus family σ(ax + b) is continuous -/
 theorem softplus_family_continuous (a b : ℝ) :
     Continuous (fun x => softplus (a * x + b)) :=
   softplus_continuous.comp ((continuous_const.mul continuous_id).add continuous_const)
+
 
 
 

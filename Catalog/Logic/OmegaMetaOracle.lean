@@ -18,6 +18,7 @@ theorem compact_onePoint (X : Type*) [TopologicalSpace X]
 
 
 
+
 /-- On a compact space, every continuous real-valued function attains its supremum.
 This is the "Solve" step: solutions exist on the compactified space. -/
 theorem continuous_achieves_sup_on_compact {X : Type*} [TopologicalSpace X]
@@ -26,6 +27,7 @@ theorem continuous_achieves_sup_on_compact {X : Type*} [TopologicalSpace X]
   obtain ⟨x, _, hx⟩ := IsCompact.exists_isMaxOn isCompact_univ Set.univ_nonempty
     hf.continuousOn
   exact ⟨x, fun y => hx (Set.mem_univ y)⟩
+
 
 
 
@@ -41,6 +43,7 @@ theorem lift_solve_project {X : Type*} [TopologicalSpace X]
 
 
 
+
 /-- Points in X are separated from ∞ in the one-point compactification. -/
 theorem finite_ne_omega (X : Type*) (x : X) :
     (OnePoint.some x : OnePoint X) ≠ OnePoint.infty :=
@@ -48,10 +51,12 @@ theorem finite_ne_omega (X : Type*) (x : X) :
 
 
 
+
 /-- The embedding X ↪ OnePoint X is an open embedding. -/
 theorem onePoint_isOpenEmbedding (X : Type*) [TopologicalSpace X] :
     Topology.IsOpenEmbedding (OnePoint.some : X → OnePoint X) :=
   OnePoint.isOpenEmbedding_coe
+
 
 
 
@@ -71,6 +76,7 @@ attribute [instance] MetaOracleSystem.instMetric MetaOracleSystem.instComplete
 
 
 
+
 /-- A MetaOracleSystem determines a ContractingWith structure. -/
 def MetaOracleSystem.contractingWith (S : MetaOracleSystem) :
     ContractingWith S.k S.improve := by
@@ -85,6 +91,7 @@ def MetaOracleSystem.contractingWith (S : MetaOracleSystem) :
 
 
 
+
 /-- Every meta-oracle system has a unique fixed point (the "Omega Point" of
 the oracle hierarchy). This is the Banach fixed-point theorem. -/
 theorem meta_oracle_has_unique_fixed_point (S : MetaOracleSystem) :
@@ -96,6 +103,7 @@ theorem meta_oracle_has_unique_fixed_point (S : MetaOracleSystem) :
 
 
 
+
 /-- The iterates of a contractive meta-oracle converge to the fixed point. -/
 theorem meta_oracle_iterates_converge (S : MetaOracleSystem)
     (x₀ : S.Space) :
@@ -103,6 +111,7 @@ theorem meta_oracle_iterates_converge (S : MetaOracleSystem)
       Tendsto (fun n => S.improve^[n] x₀) atTop (nhds ω) := by
   have hc := S.contractingWith
   exact ⟨_, hc.fixedPoint_isFixedPt, hc.tendsto_iterate_fixedPoint x₀⟩
+
 
 
 
@@ -121,12 +130,14 @@ theorem contraction_comp {X : Type*} [PseudoMetricSpace X]
 
 
 
+
 /-- The improvement rate of composed meta-oracles: entropy is additive. -/
 theorem meta_oracle_entropy_additive {k₁ k₂ : ℝ}
     (hk₁ : 0 < k₁) (hk₂ : 0 < k₂) :
     -Real.log (k₁ * k₂) = -Real.log k₁ + (-Real.log k₂) := by
   rw [Real.log_mul (ne_of_gt hk₁) (ne_of_gt hk₂)]
   ring
+
 
 
 
@@ -137,9 +148,11 @@ theorem oracle_entropy_pos {k : ℝ} (hk_pos : 0 < k) (hk_lt : k < 1) :
 
 
 
+
 /-- max is continuous as a function ℝ × ℝ → ℝ -/
 theorem max_continuous' : Continuous (fun p : ℝ × ℝ => max p.1 p.2) :=
   continuous_fst.max continuous_snd
+
 
 
 
@@ -155,12 +168,14 @@ theorem tropical_softmax_bound {n : ℕ} [NeZero n] (x : Fin n → ℝ) (i : Fin
 
 
 
+
 /-- Exponential preserves max (since it's strictly monotone). -/
 theorem exp_preserves_max' (x y : ℝ) :
     Real.exp (max x y) = max (Real.exp x) (Real.exp y) := by
   rcases le_total x y with h | h
   · simp [max_eq_right h, max_eq_right (Real.exp_le_exp.mpr h)]
   · simp [max_eq_left h, max_eq_left (Real.exp_le_exp.mpr h)]
+
 
 
 
@@ -171,6 +186,7 @@ theorem pauli_X_sq :
 
 
 
+
 /-- Pauli Z matrix squares to identity -/
 theorem pauli_Z_sq :
     !![1, 0; 0, -1] * !![1, 0; 0, -1] = (1 : Matrix (Fin 2) (Fin 2) ℤ) := by
@@ -178,10 +194,12 @@ theorem pauli_Z_sq :
 
 
 
+
 /-- Hadamard-like: H² = 2·I -/
 theorem hadamard_sq :
     !![1, 1; 1, -1] * !![1, 1; 1, -1] = (2 : ℤ) • (1 : Matrix (Fin 2) (Fin 2) ℤ) := by
   ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.mul_apply, Fin.sum_univ_two]
+
 
 
 
@@ -195,6 +213,7 @@ theorem omega_meta_oracle_convergence
     (x₀ : X) :
     ∃ ω : X, T ω = ω ∧ Tendsto (fun n => T^[n] x₀) atTop (nhds ω) :=
   meta_oracle_iterates_converge ⟨X, T, k, hk1, hT⟩ x₀
+
 
 
 
@@ -216,6 +235,7 @@ theorem meta_oracle_geometric_decay
       _ ≤ k * (k ^ n * dist x₀ (T x₀)) := by
           apply mul_le_mul_of_nonneg_left ih (NNReal.coe_nonneg k)
       _ = ↑k ^ (n + 1) * dist x₀ (T x₀) := by push_cast; ring
+
 
 
 

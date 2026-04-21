@@ -1,6 +1,3 @@
-import Geometry.Stereographic.Basic
-import Mathlib
-
 /-! # CatalogBuild.Geometry.Stereographic.PlaneToSphere
 
 Auto-generated from theorem catalog database.
@@ -8,6 +5,8 @@ Domain: Geometry/Stereographic
 Declarations: 4
 -/
 
+import Geometry.Stereographic.Basic
+import Mathlib
 
 noncomputable section
 
@@ -16,12 +15,18 @@ def paramPlane {N : ℕ} (p v₁ v₂ : Fin N → ℝ) (s t : ℝ) : Fin N → �
   fun i => p i + s * v₁ i + t * v₂ i
 
 
+
 /-- Every point on a parametric plane maps to S^N -/
 theorem plane_image_on_sphere {N : ℕ} (p v₁ v₂ : Fin N → ℝ) (s t : ℝ) :
     ∑ i : Fin (N + 1), (invStereoN (paramPlane p v₁ v₂ s t) i) ^ 2 = 1 :=
   invStereoN_norm_sq _
 
 
+
+/-- [Section: # CatalogBuild.Geometry.Stereographic.PlaneToSphere
+Auto-generated from theorem catalog database.
+Domain: Geometry/Stereographic
+Declarations: 4] -/
 theorem hyperplane_image_characterization {N : ℕ} (a : Fin N → ℝ) (c : ℝ)
     (y : Fin N → ℝ) (hy : ∑ i, a i * y i = c) :
     ∑ i : Fin N, a i * invStereoN y ⟨i.val, Nat.lt_succ_of_lt i.isLt⟩ =
@@ -34,6 +39,7 @@ theorem hyperplane_image_characterization {N : ℕ} (a : Fin N → ℝ) (c : ℝ
         exact Or.inl ( by rw [ one_sub_div ( by linarith [ show 0 ≤ sqNormFin y from Finset.sum_nonneg fun _ _ => sq_nonneg _ ] ) ] ; ring )
 
 
+
 theorem invStereoN_2_surj_on_sphere (x : Fin 3 → ℝ)
     (hx_sphere : ∑ i : Fin 3, x i ^ 2 = 1)
     (hx_ne_np : x ⟨2, by omega⟩ ≠ 1) :
@@ -43,6 +49,7 @@ theorem invStereoN_2_surj_on_sphere (x : Fin 3 → ℝ)
           convert invStereoN_image_eq
         exact h_eq.symm.subset ⟨ hx_sphere, hx_ne_np ⟩;
       exact h_range
+
 
 
 end

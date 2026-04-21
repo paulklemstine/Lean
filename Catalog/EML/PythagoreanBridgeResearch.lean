@@ -14,10 +14,12 @@ def eml' (x y : ℝ) : ℝ := Real.exp x - Real.log y
 
 
 
+
 /-- M₁ preserves the Pythagorean relation. -/
 theorem M₁_preserves (v : ℤ × ℤ × ℤ) (h : IsPythTriple' v.1 v.2.1 v.2.2) :
     IsPythTriple' (M₁ v).1 (M₁ v).2.1 (M₁ v).2.2 := by
   unfold IsPythTriple' M₁ at *; nlinarith
+
 
 
 
@@ -28,10 +30,12 @@ theorem M₂_preserves (v : ℤ × ℤ × ℤ) (h : IsPythTriple' v.1 v.2.1 v.2.
 
 
 
+
 /-- M₃ preserves the Pythagorean relation. -/
 theorem M₃_preserves (v : ℤ × ℤ × ℤ) (h : IsPythTriple' v.1 v.2.1 v.2.2) :
     IsPythTriple' (M₃ v).1 (M₃ v).2.1 (M₃ v).2.2 := by
   unfold IsPythTriple' M₃ at *; nlinarith
+
 
 
 
@@ -42,10 +46,12 @@ theorem M₁_preserves_lorentz (v : ℤ × ℤ × ℤ) :
 
 
 
+
 /-- M₂ preserves the Lorentz form. -/
 theorem M₂_preserves_lorentz (v : ℤ × ℤ × ℤ) :
     lorentzForm (M₂ v) = lorentzForm v := by
   unfold lorentzForm M₂; ring
+
 
 
 
@@ -56,6 +62,7 @@ theorem M₃_preserves_lorentz (v : ℤ × ℤ × ℤ) :
 
 
 
+
 /-- The Lorentz form vanishes on Pythagorean triples. -/
 theorem lorentz_zero_iff_pyth (v : ℤ × ℤ × ℤ) :
     lorentzForm v = 0 ↔ IsPythTriple' v.1 v.2.1 v.2.2 := by
@@ -63,9 +70,11 @@ theorem lorentz_zero_iff_pyth (v : ℤ × ℤ × ℤ) :
 
 
 
+
 /-- The hypotenuse of M₂(a,b,c) is 2a + 2b + 3c. -/
 theorem M₂_hyp (a b c : ℤ) : (M₂ (a, b, c)).2.2 = 2*a + 2*b + 3*c := by
   unfold M₂; ring_nf
+
 
 
 
@@ -77,9 +86,11 @@ theorem M₂_hyp_growth (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
 
 
 
+
 /-- eml(x, 1) = exp(x): exponential recovery. -/
 theorem eml'_exp (x : ℝ) : eml' x 1 = Real.exp x := by
   simp [eml', Real.log_one]
+
 
 
 
@@ -89,9 +100,11 @@ theorem eml'_zero_left (y : ℝ) : eml' 0 y = 1 - Real.log y := by
 
 
 
+
 /-- eml(eml(x, 1), 1) = exp(exp(x)): double exponential via EML. -/
 theorem eml'_double_exp (x : ℝ) : eml' (eml' x 1) 1 = Real.exp (Real.exp x) := by
   simp [eml', Real.log_one]
+
 
 
 
@@ -99,6 +112,7 @@ theorem eml'_double_exp (x : ℝ) : eml' (eml' x 1) 1 = Real.exp (Real.exp x) :=
 theorem eml'_triple_exp (x : ℝ) :
     eml' (eml' (eml' x 1) 1) 1 = Real.exp (Real.exp (Real.exp x)) := by
   simp [eml', Real.log_one]
+
 
 
 
@@ -111,10 +125,12 @@ theorem eml_exp_no_fixed_point : ∀ x : ℝ, eml' x 1 ≠ x := by
 
 
 
+
 /-- Addition in log-space: log(exp(a) * exp(b)) = a + b. -/
 theorem eml_add_encoding (a b : ℝ) :
     Real.log (Real.exp a * Real.exp b) = a + b := by
   rw [← Real.exp_add, Real.log_exp]
+
 
 
 
@@ -125,6 +141,7 @@ theorem eml_sub_encoding (a b : ℝ) :
 
 
 
+
 /-- Multiplication in log-space: exp(log a + log b) = a * b for positive reals. -/
 theorem eml_mul_encoding (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
     Real.exp (Real.log a + Real.log b) = a * b := by
@@ -132,10 +149,12 @@ theorem eml_mul_encoding (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
 
 
 
+
 /-- Squaring in log-space: exp(2 * log a) = a² for positive reals. -/
 theorem eml_sq_encoding (a : ℝ) (ha : 0 < a) :
     Real.exp (2 * Real.log a) = a ^ 2 := by
   rw [mul_comm, Real.exp_mul, Real.exp_log ha]; norm_num
+
 
 
 
@@ -148,10 +167,12 @@ theorem pyth_hyp_product (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ)
 
 
 
+
 /-- Every Pythagorean triple satisfies a² + b² - c² = 0. -/
 theorem pyth_mod_c (a b c : ℤ) (h : IsPythTriple' a b c) :
     c ∣ (a ^ 2 + b ^ 2 - c ^ 2) := by
   unfold IsPythTriple' at h; simp [h]
+
 
 
 
@@ -160,8 +181,10 @@ def IsPythQuad' (a b c d : ℤ) : Prop := a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2
 
 
 
+
 /-- Basic quadruple examples. -/
 theorem quad_basic : IsPythQuad' 1 2 2 3 := by norm_num [IsPythQuad']
+
 
 
 /-- [Section: # CatalogBuild.EML.PythagoreanBridgeResearch
@@ -171,7 +194,13 @@ Declarations: 69] -/
 theorem quad_237 : IsPythQuad' 2 3 6 7 := by norm_num [IsPythQuad']
 
 
+
+/-- [Section: # CatalogBuild.EML.PythagoreanBridgeResearch
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 69] -/
 theorem quad_1489 : IsPythQuad' 1 4 8 9 := by norm_num [IsPythQuad']
+
 
 
 
@@ -182,8 +211,10 @@ theorem triple_to_quad (a b c : ℤ) (h : IsPythTriple' a b c) :
 
 
 
+
 /-- Quadruple Lorentz form. -/
 def lorentzForm4 (a b c d : ℤ) : ℤ := a ^ 2 + b ^ 2 + c ^ 2 - d ^ 2
+
 
 
 
@@ -194,14 +225,17 @@ theorem quad_lorentz_zero (a b c d : ℤ) :
 
 
 
+
 /-- A Berggren path is a list of steps. -/
 abbrev BPath := List BStep
+
 
 
 
 /-- Evaluate a path from the root (3, 4, 5). -/
 def evalPath (p : BPath) : ℤ × ℤ × ℤ :=
   p.foldl (fun v s => applyStep s v) (3, 4, 5)
+
 
 
 
@@ -216,6 +250,7 @@ theorem applyStep_preserves (s : BStep) (v : ℤ × ℤ × ℤ)
 
 
 
+
 /-- Every single step preserves the Lorentz form. -/
 theorem applyStep_preserves_lorentz (s : BStep) (v : ℤ × ℤ × ℤ) :
     lorentzForm (applyStep s v) = lorentzForm v := by
@@ -223,6 +258,7 @@ theorem applyStep_preserves_lorentz (s : BStep) (v : ℤ × ℤ × ℤ) :
   · exact M₁_preserves_lorentz v
   · exact M₂_preserves_lorentz v
   · exact M₃_preserves_lorentz v
+
 
 
 
@@ -237,10 +273,12 @@ theorem foldl_preserves_pyth (p : BPath) (v : ℤ × ℤ × ℤ)
 
 
 
+
 /-- **Main Theorem**: Every Berggren path produces a Pythagorean triple. -/
 theorem evalPath_is_pyth (p : BPath) :
     IsPythTriple' (evalPath p).1 (evalPath p).2.1 (evalPath p).2.2 := by
   exact foldl_preserves_pyth p (3, 4, 5) (by norm_num [IsPythTriple'])
+
 
 
 
@@ -256,10 +294,12 @@ theorem foldl_preserves_lorentz (p : BPath) (v : ℤ × ℤ × ℤ) :
 
 
 
+
 /-- The Lorentz form is invariant along any Berggren path. -/
 theorem evalPath_lorentz (p : BPath) :
     lorentzForm (evalPath p) = lorentzForm (3, 4, 5) := by
   exact foldl_preserves_lorentz p (3, 4, 5)
+
 
 
 
@@ -269,8 +309,10 @@ theorem root_lorentz : lorentzForm (3, 4, 5) = 0 := by
 
 
 
+
 /-- The root triple. -/
 theorem evalPath_root : evalPath [] = (3, 4, 5) := by rfl
+
 
 
 
@@ -278,10 +320,13 @@ theorem evalPath_root : evalPath [] = (3, 4, 5) := by rfl
 theorem evalPath_A : evalPath [.A] = (5, 12, 13) := by native_decide
 
 
+
 theorem evalPath_B : evalPath [.B] = (21, 20, 29) := by native_decide
 
 
+
 theorem evalPath_C : evalPath [.C] = (15, 8, 17) := by native_decide
+
 
 
 
@@ -289,7 +334,9 @@ theorem evalPath_C : evalPath [.C] = (15, 8, 17) := by native_decide
 theorem evalPath_AA : evalPath [.A, .A] = (7, 24, 25) := by native_decide
 
 
+
 theorem evalPath_AB : evalPath [.A, .B] = (55, 48, 73) := by native_decide
+
 
 
 
@@ -300,10 +347,12 @@ theorem first_gen_all_pyth :
 
 
 
+
 /-- The log-space Pythagorean variety:
 { (α, β, γ) | exp(2α) + exp(2β) = exp(2γ) }. -/
 def pythLogVariety (α β γ : ℝ) : Prop :=
   Real.exp (2 * α) + Real.exp (2 * β) = Real.exp (2 * γ)
+
 
 
 
@@ -318,11 +367,13 @@ theorem pyth_to_log_variety (a b c : ℝ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
 
 
 
+
 /-- The inverse of M₁: recovers the parent triple from an M₁-child. -/
 def M₁_inv (v : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
   (v.1 + 2 * v.2.1 - 2 * v.2.2,
    -2 * v.1 - v.2.1 + 2 * v.2.2,
    -2 * v.1 - 2 * v.2.1 + 3 * v.2.2)
+
 
 
 
@@ -332,9 +383,11 @@ theorem M₁_inv_left (v : ℤ × ℤ × ℤ) : M₁_inv (M₁ v) = v := by
 
 
 
+
 /-- M₁_inv is a right inverse of M₁. -/
 theorem M₁_inv_right (v : ℤ × ℤ × ℤ) : M₁ (M₁_inv v) = v := by
   ext <;> simp [M₁, M₁_inv] <;> ring
+
 
 
 
@@ -343,10 +396,12 @@ theorem M₁_inv_example : M₁_inv (5, 12, 13) = (3, 4, 5) := by native_decide
 
 
 
+
 /-- Euclid's parametrization produces Pythagorean triples. -/
 theorem euclid_produces_triple (m n : ℤ) :
     IsPythTriple' (m ^ 2 - n ^ 2) (2 * m * n) (m ^ 2 + n ^ 2) := by
   unfold IsPythTriple'; ring
+
 
 
 
@@ -360,6 +415,7 @@ theorem euclid_eml_bounded :
 
 
 
+
 /-- Scaling a Pythagorean triple preserves the property. -/
 theorem pyth_scale (a b c k : ℤ) (h : IsPythTriple' a b c) :
     IsPythTriple' (k * a) (k * b) (k * c) := by
@@ -367,10 +423,12 @@ theorem pyth_scale (a b c k : ℤ) (h : IsPythTriple' a b c) :
 
 
 
+
 /-- In log-space, scaling corresponds to translation. -/
 theorem log_scale (k a : ℝ) (hk : 0 < k) (ha : 0 < a) :
     Real.log (k * a) = Real.log k + Real.log a :=
   Real.log_mul (ne_of_gt hk) (ne_of_gt ha)
+
 
 
 
@@ -382,11 +440,13 @@ inductive EMLExprTree where
 
 
 
+
 /-- Size of an EML expression tree. -/
 def EMLExprTree.size : EMLExprTree → ℕ
   | .one => 1
   | .var _ => 1
   | .eml l r => 1 + l.size + r.size
+
 
 
 
@@ -398,6 +458,7 @@ def EMLExprTree.depth : EMLExprTree → ℕ
 
 
 
+
 /-- Leaf count. -/
 def EMLExprTree.leafCount : EMLExprTree → ℕ
   | .one => 1
@@ -406,11 +467,13 @@ def EMLExprTree.leafCount : EMLExprTree → ℕ
 
 
 
+
 /-- Internal node count. -/
 def EMLExprTree.nodeCount : EMLExprTree → ℕ
   | .one => 0
   | .var _ => 0
   | .eml l r => 1 + l.nodeCount + r.nodeCount
+
 
 
 
@@ -425,6 +488,7 @@ theorem EMLExprTree.leaf_eq_node_succ (e : EMLExprTree) :
 
 
 
+
 /-- Size = 2 * nodeCount + 1. -/
 theorem EMLExprTree.size_eq (e : EMLExprTree) :
     e.size = 2 * e.nodeCount + 1 := by
@@ -436,9 +500,11 @@ theorem EMLExprTree.size_eq (e : EMLExprTree) :
 
 
 
+
 /-- Parity predicate: a is odd, b is even, c is odd. -/
 def OddEvenOdd (v : ℤ × ℤ × ℤ) : Prop :=
   ¬ Even v.1 ∧ Even v.2.1 ∧ ¬ Even v.2.2
+
 
 
 
@@ -453,6 +519,7 @@ theorem M₁_preserves_parity (a b c : ℤ) (h : OddEvenOdd (a, b, c)) :
 
 
 
+
 /-- M₂ preserves the (odd, even, odd) parity pattern. -/
 theorem M₂_preserves_parity (a b c : ℤ) (h : OddEvenOdd (a, b, c)) :
     OddEvenOdd (M₂ (a, b, c)) := by
@@ -461,6 +528,7 @@ theorem M₂_preserves_parity (a b c : ℤ) (h : OddEvenOdd (a, b, c)) :
   exact ⟨by rw [Int.not_even_iff_odd, Int.odd_iff]; omega,
          by rw [Int.even_iff]; omega,
          by rw [Int.not_even_iff_odd, Int.odd_iff]; omega⟩
+
 
 
 
@@ -475,9 +543,11 @@ theorem M₃_preserves_parity (a b c : ℤ) (h : OddEvenOdd (a, b, c)) :
 
 
 
+
 /-- The root (3, 4, 5) has the (odd, even, odd) pattern. -/
 theorem root_parity : OddEvenOdd (3, 4, 5) := by
   unfold OddEvenOdd; decide
+
 
 
 
@@ -492,6 +562,7 @@ theorem applyStep_preserves_parity (s : BStep) (v : ℤ × ℤ × ℤ)
 
 
 
+
 /-- Helper: foldl preserves parity. -/
 theorem foldl_preserves_parity (p : BPath) (v : ℤ × ℤ × ℤ)
     (h : OddEvenOdd v) :
@@ -502,10 +573,12 @@ theorem foldl_preserves_parity (p : BPath) (v : ℤ × ℤ × ℤ)
 
 
 
+
 /-- **Parity Invariant Theorem**: Every triple in the Berggren tree
 has the pattern (odd, even, odd). -/
 theorem evalPath_parity (p : BPath) : OddEvenOdd (evalPath p) :=
   foldl_preserves_parity p (3, 4, 5) root_parity
+
 
 
 

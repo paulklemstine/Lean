@@ -16,10 +16,16 @@ theorem unit_interval_compact : IsCompact (Set.Icc (0 : ℝ) 1) := by
 
 
 
+
+/-- [Section: # CatalogBuild.Algebra.Topology
+Auto-generated from theorem catalog database.
+Domain: Algebra
+Declarations: 8] -/
 theorem compact_image_continuous {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]
     {f : X → Y} {K : Set X} (hK : IsCompact K) (hf : Continuous f) :
     IsCompact (f '' K) := by
       exact hK.image hf
+
 
 
 
@@ -28,6 +34,7 @@ theorem compact_attains_max {X : Type*} [TopologicalSpace X]
     {f : X → ℝ} (hf : ContinuousOn f K) :
     ∃ x ∈ K, ∀ y ∈ K, f y ≤ f x := by
       convert hK.exists_isMaxOn hne hf
+
 
 
 
@@ -40,8 +47,10 @@ theorem ivt {f : ℝ → ℝ} {a b : ℝ} (hab : a ≤ b)
 
 
 
+
 theorem real_connected : ConnectedSpace ℝ := by
   infer_instance
+
 
 
 
@@ -60,13 +69,16 @@ theorem brouwer_1d (f : ℝ → ℝ) (hf : ContinuousOn f (Set.Icc 0 1))
 
 
 
+
 theorem compact_metric_complete {X : Type*} [MetricSpace X] [CompactSpace X] :
     CompleteSpace X := by
       exact?
 
 
 
+
 theorem compact_metric_totally_bounded {X : Type*} [MetricSpace X] [CompactSpace X] :
     TotallyBounded (Set.univ : Set X) := by
       exact isCompact_univ.totallyBounded
+
 

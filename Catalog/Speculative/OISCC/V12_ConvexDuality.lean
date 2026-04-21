@@ -13,18 +13,26 @@ noncomputable section
 def f_cd (x : ℝ) : ℝ := Real.exp x - Real.log x - 1
 
 
+
 /-- The derivative of f. -/
 def f_cd_deriv (x : ℝ) : ℝ := Real.exp x - x⁻¹
 
 
+
+/-- [Section: # CatalogBuild.Speculative.OISCC.V12_ConvexDuality
+Auto-generated from theorem catalog database.
+Domain: Speculative/OISCC
+Declarations: 14] -/
 theorem f_cd_differentiableOn : DifferentiableOn ℝ f_cd (Ioi 0) := by
   exact DifferentiableOn.sub ( DifferentiableOn.sub ( differentiableOn_id.exp ) ( Real.differentiableOn_log.mono fun x hx => ne_of_gt hx ) ) ( differentiableOn_const _ )
+
 
 
 theorem f_cd_hasDerivAt (x : ℝ) (hx : 0 < x) :
     HasDerivAt f_cd (f_cd_deriv x) x := by
   convert HasDerivAt.sub ( HasDerivAt.sub ( Real.hasDerivAt_exp x ) ( Real.hasDerivAt_log hx.ne' ) ) ( hasDerivAt_const x 1 ) using 1 ; ring!;
   exact?
+
 
 
 theorem f_cd_strictConvexOn : StrictConvexOn ℝ (Ioi 0) f_cd := by
@@ -34,8 +42,10 @@ theorem f_cd_strictConvexOn : StrictConvexOn ℝ (Ioi 0) f_cd := by
     intro x x_pos; rw [ show deriv ( fun x => deriv ( fun x => Real.exp x - Real.log x ) x ) x = deriv ( fun y => Real.exp y - 1 / y ) x from by refine' Filter.EventuallyEq.deriv_eq _ ; filter_upwards [ lt_mem_nhds x_pos ] with y hy using by norm_num [ Real.differentiableAt_exp, Real.differentiableAt_log, hy.ne' ] ] ; norm_num [ Real.differentiableAt_exp, Real.differentiableAt_log, x_pos.ne', differentiableAt_inv ] ; positivity;
 
 
+
 theorem f_cd_at_one : f_cd 1 = Real.exp 1 - 1 := by
   unfold f_cd; norm_num;
+
 
 
 theorem f_cd_at_one_pos : f_cd 1 > 0 := by
@@ -43,8 +53,10 @@ theorem f_cd_at_one_pos : f_cd 1 > 0 := by
   norm_num
 
 
+
 theorem f_cd_pos (x : ℝ) (hx : 0 < x) : f_cd x > 0 := by
   exact sub_pos_of_lt ( by linarith [ Real.add_one_lt_exp hx.ne', Real.log_le_sub_one_of_pos hx ] )
+
 
 
 theorem f_cd_tendsto_atTop_zero :
@@ -55,6 +67,7 @@ theorem f_cd_tendsto_atTop_zero :
   rw [ Filter.tendsto_atTop ] at *;
   intro b;
   filter_upwards [ h_log ( b + 1 ), self_mem_nhdsWithin ] with x hx₁ hx₂ using by unfold f_cd; linarith [ Real.exp_pos x, Real.log_le_sub_one_of_pos hx₂ ] ;
+
 
 
 theorem f_cd_tendsto_atTop :
@@ -69,17 +82,21 @@ theorem f_cd_tendsto_atTop :
   filter_upwards [ h_exp_growth.eventually_gt_atTop ( |b| + 2 ), Filter.eventually_gt_atTop 1 ] with x hx₁ hx₂ using by cases abs_cases b <;> nlinarith [ Real.log_le_sub_one_of_pos ( zero_lt_one.trans hx₂ ), Real.add_one_le_exp x, mul_div_cancel₀ ( Real.exp x ) ( ne_of_gt ( zero_lt_one.trans hx₂ ) ) ] ;
 
 
+
 theorem f_cd_deriv_neg_half : f_cd_deriv (1/2) < 0 := by
   exact sub_neg_of_lt ( by have := Real.exp_one_lt_d9; norm_num1 at *; rw [ show ( ( 1:ℝ ) :ℝ ) = 1/2+1/2 by norm_num, Real.exp_add ] at this; nlinarith [ Real.add_one_le_exp ( 1/2 ) ] )
+
 
 
 theorem f_cd_deriv_pos_one : f_cd_deriv 1 > 0 := by
   exact sub_pos_of_lt <| Real.exp_one_gt_d9.trans_le' <| by norm_num
 
 
+
 theorem f_cd_lower_bound_exp (x : ℝ) (hx : 1 ≤ x) :
     f_cd x ≥ Real.exp x - x - 1 := by
   exact sub_le_sub_right ( sub_le_sub_left ( le_trans ( Real.log_le_sub_one_of_pos ( by positivity ) ) ( by linarith ) ) _ ) _
+
 
 
 theorem f_cd_quadratic_lower (x : ℝ) (hx : 0 < x) :
@@ -91,6 +108,7 @@ theorem f_cd_quadratic_lower (x : ℝ) (hx : 0 < x) :
       exact?;
     grind;
   unfold f_cd; linarith [ Real.log_le_sub_one_of_pos hx ] ;
+
 
 
 end

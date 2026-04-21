@@ -17,7 +17,13 @@ def expSmoothing (alpha x_t s_prev : ℝ) : ℝ := alpha * x_t + (1 - alpha) * s
 
 
 
+
+/-- [Section: # CatalogBuild.EML.AIResearch.TimeSeriesTheory
+Auto-generated from theorem catalog database.
+Domain: EML/AIResearch
+Declarations: 47] -/
 def expWeight (alpha : ℝ) (k : ℕ) : ℝ := alpha * (1 - alpha) ^ k
+
 
 
 
@@ -30,8 +36,10 @@ theorem weights_decay (alpha : ℝ) (k1 k2 : ℕ) (ha0 : 0 ≤ alpha) (ha1 : alp
 
 
 
+
 theorem no_smoothing (x s : ℝ) : expSmoothing 0 x s = s := by
   unfold expSmoothing; ring
+
 
 
 
@@ -40,12 +48,15 @@ theorem full_smoothing (x s : ℝ) : expSmoothing 1 x s = x := by
 
 
 
+
 def stdTemporalParams (inputDim hiddenDim numLayers : ℕ) : ℕ :=
   numLayers * (4 * inputDim * hiddenDim + 4 * hiddenDim * hiddenDim)
 
 
 
+
 def emlTemporalParams (inputDim numLayers : ℕ) : ℕ := numLayers * 4 * inputDim
+
 
 
 
@@ -60,7 +71,9 @@ theorem eml_temporal_efficient (d h L : ℕ) (hh : 1 ≤ h) :
 
 
 
+
 def anomalyScore (predicted actual : ℝ) : ℝ := (predicted - actual) ^ 2
+
 
 
 
@@ -69,13 +82,16 @@ theorem perfect_prediction_no_anomaly (x : ℝ) : anomalyScore x x = 0 := by
 
 
 
+
 theorem anomaly_nonneg (p a : ℝ) : 0 ≤ anomalyScore p a := by
   unfold anomalyScore; exact sq_nonneg _
 
 
 
+
 def horizonError (baseError growthRate : ℝ) (horizon : ℕ) : ℝ :=
   baseError * growthRate ^ horizon
+
 
 
 
@@ -86,6 +102,7 @@ theorem longer_horizon_more_error (e g : ℝ) (h1 h2 : ℕ) (he : 0 ≤ e)
 
 
 
+
 theorem eml_slower_error_growth (e g_eml g_std : ℝ) (h : ℕ) (he : 0 ≤ e)
     (hg_eml : 0 ≤ g_eml) (hg : g_eml ≤ g_std) :
     horizonError e g_eml h ≤ horizonError e g_std h := by
@@ -93,12 +110,15 @@ theorem eml_slower_error_growth (e g_eml g_std : ℝ) (h : ℕ) (he : 0 ≤ e)
 
 
 
+
 def fusionProjectParams (numInputs inputDim outputDim : ℕ) : ℕ :=
   numInputs * inputDim * outputDim
 
 
+
 def emlFusionProjectParams (numInputs inputDim : ℕ) : ℕ :=
   numInputs * 4 * inputDim
+
 
 
 
@@ -111,8 +131,10 @@ theorem eml_fusion_cheaper (n d o : ℕ) (ho : 4 ≤ o) :
 
 
 
+
 def cusumStat (prevStat deviation threshold : ℝ) : ℝ :=
   max 0 (prevStat + deviation - threshold)
+
 
 
 
@@ -121,12 +143,15 @@ theorem cusum_nonneg (s d t : ℝ) : 0 ≤ cusumStat s d t := by
 
 
 
+
 theorem cusum_resets (t : ℝ) (ht : 0 ≤ t) : cusumStat 0 0 t = 0 := by
   unfold cusumStat; simp; linarith
 
 
 
+
 def combinedForecast (w1 f1 w2 f2 : ℝ) : ℝ := w1 * f1 + w2 * f2
+
 
 
 
@@ -136,16 +161,20 @@ theorem equal_weight_average (f1 f2 : ℝ) :
 
 
 
+
 theorem single_forecast (f1 f2 : ℝ) :
     combinedForecast 1 f1 0 f2 = f1 := by
   unfold combinedForecast; ring
 
 
 
+
 def arParams (order : ℕ) : ℕ := order + 1
 
 
+
 def emlARParams (order : ℕ) : ℕ := 4 * order
+
 
 
 
@@ -154,10 +183,13 @@ theorem eml_ar_richer (p : ℕ) (hp : 2 ≤ p) : arParams p ≤ emlARParams p :=
 
 
 
+
 def fourierParams (numHarmonics : ℕ) : ℕ := 2 * numHarmonics
 
 
+
 def emlSeasonalParams (numHarmonics : ℕ) : ℕ := 4 * numHarmonics
+
 
 
 
@@ -166,13 +198,16 @@ theorem eml_seasonal_richer (k : ℕ) : fourierParams k ≤ emlSeasonalParams k 
 
 
 
+
 /-- [Section: ## §1. Exponential Smoothing] -/
 def expSmoothWeight (alpha : ℝ) (lag : ℕ) : ℝ := (1 - alpha) ^ lag
+
 
 
 theorem smooth_weight_nonneg (α : ℝ) (k : ℕ) (_hα : 0 ≤ α) (hα1 : α ≤ 1) :
     0 ≤ expSmoothWeight α k := by
   unfold expSmoothWeight; exact pow_nonneg (by linarith) k
+
 
 
 theorem smooth_weight_decays (α : ℝ) (k1 k2 : ℕ) (hα : 0 ≤ α) (hα1 : α ≤ 1)
@@ -182,9 +217,11 @@ theorem smooth_weight_decays (α : ℝ) (k1 k2 : ℕ) (hα : 0 ≤ α) (hα1 : �
   exact pow_le_pow_of_le_one (by linarith) (by linarith) hk
 
 
+
 theorem smooth_weight_one_at_zero (α : ℝ) :
     expSmoothWeight α 0 = 1 := by
   unfold expSmoothWeight; simp
+
 
 
 /-- [Section: ## §2. Autoregressive Models] -/
@@ -192,9 +229,11 @@ def stdARParams (d_model numLayers : ℕ) : ℕ :=
   numLayers * (d_model * d_model)
 
 
+
 theorem eml_ar_compact (dm nL : ℕ) (hd : 4 ≤ dm) :
     emlARParams dm nL ≤ stdARParams dm nL := by
   unfold emlARParams stdARParams; gcongr
+
 
 
 /-- [Section: ## §3. Temporal Attention] -/
@@ -202,8 +241,10 @@ def stdTemporalAttnParams (d_model numHeads d_head : ℕ) : ℕ :=
   3 * (d_model * numHeads * d_head) + d_model * d_model
 
 
+
 def emlTemporalAttnParams (numHeads d_head d_model : ℕ) : ℕ :=
   3 * (4 * numHeads * d_head) + 4 * d_model
+
 
 
 theorem eml_temporal_attn_compact (dm nh dh : ℕ) (hd : 4 ≤ dm) :
@@ -214,8 +255,10 @@ theorem eml_temporal_attn_compact (dm nh dh : ℕ) (hd : 4 ≤ dm) :
   nlinarith
 
 
+
 /-- [Section: ## §4. Forecast Horizon] -/
 def forecastCost (modelParams horizon : ℕ) : ℕ := modelParams * horizon
+
 
 
 theorem longer_horizon_costlier (mp h1 h2 : ℕ) (hh : h1 ≤ h2) :
@@ -223,13 +266,16 @@ theorem longer_horizon_costlier (mp h1 h2 : ℕ) (hh : h1 ≤ h2) :
   unfold forecastCost; exact Nat.mul_le_mul_left mp hh
 
 
+
 theorem eml_forecast_cheaper (p_eml p_std h : ℕ) (hp : p_eml ≤ p_std) :
     forecastCost p_eml h ≤ forecastCost p_std h := by
   unfold forecastCost; exact Nat.mul_le_mul_right h hp
 
 
+
 /-- [Section: ## §5. Sliding Window] -/
 def windowMemory (windowSize featureDim : ℕ) : ℕ := windowSize * featureDim
+
 
 
 theorem larger_window_more_memory (w1 w2 fd : ℕ) (hw : w1 ≤ w2) :
@@ -237,13 +283,16 @@ theorem larger_window_more_memory (w1 w2 fd : ℕ) (hw : w1 ≤ w2) :
   unfold windowMemory; exact Nat.mul_le_mul_right fd hw
 
 
+
 /-- [Section: ## §6. Multi-Variate Forecasting] -/
 def stdMultiVarParams (numVariables d_model : ℕ) : ℕ :=
   numVariables * (numVariables * d_model)
 
 
+
 def emlMultiVarParams (numVariables d_model : ℕ) : ℕ :=
   numVariables * (4 * d_model)
+
 
 
 theorem eml_multivar_compact (nv dm : ℕ) (hv : 4 ≤ nv) :
@@ -251,8 +300,10 @@ theorem eml_multivar_compact (nv dm : ℕ) (hv : 4 ≤ nv) :
   unfold emlMultiVarParams stdMultiVarParams; gcongr
 
 
+
 /-- [Section: ## §7. Ensemble Forecasting] -/
 def ensembleForecastCost (numModels modelCost : ℕ) : ℕ := numModels * modelCost
+
 
 
 end

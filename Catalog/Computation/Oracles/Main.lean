@@ -14,6 +14,7 @@ def IsNPotent {α : Type*} (P : α → α) (n : ℕ) : Prop := P^[n] = P
 
 
 
+
 /-- Standard idempotency (2-potent) is a special case. -/
 theorem isNPotent_two_iff_idempotent {α : Type*} (P : α → α) :
     IsNPotent P 2 ↔ ∀ x, P (P x) = P x := by
@@ -26,6 +27,7 @@ theorem isNPotent_two_iff_idempotent {α : Type*} (P : α → α) :
     ext x
     simp [Function.iterate_succ, Function.iterate_one, Function.comp]
     exact h x
+
 
 
 
@@ -50,6 +52,11 @@ theorem npotent_spectrum {R : Type*} [CommRing R] [NoZeroDivisors R]
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.Main
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 21] -/
 theorem oracle_spectrum_binary {R : Type*} [CommRing R] [NoZeroDivisors R]
     {M : Type*} [AddCommGroup M] [Module R M] [NoZeroSMulDivisors R M]
     (P : M →ₗ[R] M) (hP : ∀ x, P (P x) = P x)
@@ -61,6 +68,7 @@ theorem oracle_spectrum_binary {R : Type*} [CommRing R] [NoZeroDivisors R]
 
 
 
+
 theorem tripotent_spectrum {R : Type*} [CommRing R] [NoZeroDivisors R]
     {M : Type*} [AddCommGroup M] [Module R M] [NoZeroSMulDivisors R M]
     (P : M →ₗ[R] M) (hP : ∀ x, (P ^ 3) x = P x)
@@ -68,6 +76,7 @@ theorem tripotent_spectrum {R : Type*} [CommRing R] [NoZeroDivisors R]
     ev = 0 ∨ ev = 1 ∨ ev = -1 := by
       have h := npotent_spectrum P 3 ( by decide ) hP v hv ev hev; simp_all +decide [ pow_succ' ] ;
       exact Classical.or_iff_not_imp_left.2 fun h₀ => Classical.or_iff_not_imp_left.2 fun h₁ => mul_left_cancel₀ ( sub_ne_zero_of_ne h₁ ) <| mul_left_cancel₀ ( sub_ne_zero_of_ne h₀ ) <| by linear_combination' h;
+
 
 
 
@@ -83,14 +92,17 @@ theorem npotent_hierarchy {α : Type*} (P : α → α) (m n : ℕ)
 
 
 
+
 theorem idempotent_is_npotent {α : Type*} (P : α → α) (n : ℕ) (hn : 2 ≤ n)
     (hP : P^[2] = P) : P^[n] = P := by
       refine' Nat.le_induction _ _ n hn <;> aesop
 
 
 
+
 /-- The bootstrap map f(x) = 3x² - 2x³. -/
 def bootstrapMap (x : ℝ) : ℝ := 3 * x ^ 2 - 2 * x ^ 3
+
 
 
 
@@ -100,14 +112,17 @@ theorem bootstrap_fixed_points (x : ℝ) :
 
 
 
+
 /-- The derivative at x = 1/2 is 3/2 > 1, so 1/2 is repelling. -/
 theorem bootstrap_deriv_at_half :
     6 * (1/2 : ℝ) * (1 - 1/2) = 3/2 := by ring
 
 
 
+
 /-- The generalized bootstrap family: f_α(x) = (1+α)x² - αx³. -/
 def bootstrapFamily (α x : ℝ) : ℝ := (1 + α) * x ^ 2 - α * x ^ 3
+
 
 
 
@@ -117,15 +132,18 @@ theorem family_fixed_zero (α : ℝ) : bootstrapFamily α 0 = 0 := by
 
 
 
+
 /-- f_α(1) = 1 for all α. -/
 theorem family_fixed_one (α : ℝ) : bootstrapFamily α 1 = 1 := by
   unfold bootstrapFamily; ring
 
 
 
+
 /-- The standard bootstrap is f_2. -/
 theorem family_at_two (x : ℝ) : bootstrapFamily 2 x = bootstrapMap x := by
   unfold bootstrapFamily bootstrapMap; ring
+
 
 
 
@@ -137,6 +155,7 @@ theorem family_symmetry_iff_alpha_two (α : ℝ) :
 
 
 
+
 /-- For a commutative ring element satisfying a³ = a, we can define
 the "positive part" e₊ = (a + a²) * (2⁻¹). -/
 def tripotentPlus {R : Type*} [Field R] (a : R) : R :=
@@ -144,9 +163,11 @@ def tripotentPlus {R : Type*} [Field R] (a : R) : R :=
 
 
 
+
 /-- The "negative part" e₋ = (a² - a) * (2⁻¹). -/
 def tripotentMinus {R : Type*} [Field R] (a : R) : R :=
   (a ^ 2 - a) / 2
+
 
 
 
@@ -158,12 +179,14 @@ theorem tripotentPlus_idem {R : Type*} [Field R] [CharZero R]
 
 
 
+
 theorem tripotentMinus_idem {R : Type*} [Field R] [CharZero R]
     (a : R) (ha : a ^ 3 = a) :
     (tripotentMinus a) ^ 2 = tripotentMinus a := by
       unfold tripotentMinus; rw [ div_pow, eq_div_iff ] <;> ring;
       · rw [ show a ^ 4 = a ^ 3 * a by ring, ha ] ; ring;
       · norm_num
+
 
 
 
@@ -177,11 +200,13 @@ theorem tripotent_decomposition {R : Type*} [Field R] [CharZero R]
 
 
 
+
 theorem tripotent_orthogonal {R : Type*} [Field R] [CharZero R]
     (a : R) (ha : a ^ 3 = a) :
     tripotentPlus a * tripotentMinus a = 0 := by
       by_cases ha' : a = 0 <;> simp_all +decide [ tripotentPlus, tripotentMinus, pow_succ' ];
       grind
+
 
 
 

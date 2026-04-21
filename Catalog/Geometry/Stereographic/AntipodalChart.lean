@@ -1,5 +1,3 @@
-import Mathlib
-
 /-! # CatalogBuild.Geometry.Stereographic.AntipodalChart
 
 Auto-generated from theorem catalog database.
@@ -7,6 +5,7 @@ Domain: Geometry/Stereographic
 Declarations: 9
 -/
 
+import Mathlib
 
 noncomputable section
 
@@ -24,11 +23,13 @@ def inverseStereoNullAntipodal (w₁ w₂ ω : ℝ) : Fin 4 → ℝ := fun i =>
 
 
 
+
 /-- The antipodal chart also produces null vectors.
 The identity: (1+|w|²)² - (2w₁)² - (2w₂)² - (|w|²-1)² = 0. -/
 theorem inverseStereoNullAntipodal_is_null (w₁ w₂ ω : ℝ) :
     IsNull (inverseStereoNullAntipodal w₁ w₂ ω) := by
   unfold IsNull minkowskiInner inverseStereoNullAntipodal; ring
+
 
 
 
@@ -39,11 +40,13 @@ theorem inverseStereoNullAntipodal_future (w₁ w₂ ω : ℝ) (hω : ω > 0) :
 
 
 
+
 /-- The antipodal chart lands in the future null cone. -/
 theorem inverseStereoNullAntipodal_in_future_cone (w₁ w₂ ω : ℝ) (hω : ω > 0) :
     inverseStereoNullAntipodal w₁ w₂ ω ∈ FutureNullCone :=
   ⟨inverseStereoNullAntipodal_is_null w₁ w₂ ω,
    inverseStereoNullAntipodal_future w₁ w₂ ω hω⟩
+
 
 
 
@@ -65,12 +68,14 @@ lemma inverseStereoNullAntipodal_surj (k : Fin 4 → ℝ)
 
 
 
+
 /-- For any future null vector, either k⁰ + k³ > 0 or k⁰ - k³ > 0 (or both).
 This follows because k⁰ > 0 implies both cannot be ≤ 0 simultaneously. -/
 lemma future_null_chart_dichotomy (k : Fin 4 → ℝ) (hk : k ∈ FutureNullCone) :
     k 0 + k 3 > 0 ∨ k 0 - k 3 > 0 := by
   have h_pos : k 0 > 0 := hk.2
   contrapose! h_pos; linarith
+
 
 
 
@@ -87,6 +92,11 @@ theorem full_surjectivity (k : Fin 4 → ℝ) (hk : k ∈ FutureNullCone) :
 
 
 
+
+/-- [Section: # CatalogBuild.Geometry.Stereographic.AntipodalChart
+Auto-generated from theorem catalog database.
+Domain: Geometry/Stereographic
+Declarations: 9] -/
 theorem chart_transition_coords (u v ω : ℝ) (hω : ω > 0)
     (hr : u ^ 2 + v ^ 2 ≠ 0) :
     let r2 := u ^ 2 + v ^ 2
@@ -106,6 +116,7 @@ theorem chart_transition_coords (u v ω : ℝ) (hω : ω > 0)
 
 
 
+
 /-- **The Complete Photon Universe Encoding Theorem**: Combining full surjectivity
 with unbounded information capacity. Every future-directed null vector (without
 exception) is parameterized by an inverse stereographic chart, and the information
@@ -116,6 +127,7 @@ theorem photon_universe_encoding_complete :
       (∃ u v ω : ℝ, ω > 0 ∧ inverseStereoNull u v ω = k) ∨
       (∃ w₁ w₂ ω : ℝ, ω > 0 ∧ inverseStereoNullAntipodal w₁ w₂ ω = k)) :=
   ⟨photonInfoCapacity_unbounded, full_surjectivity⟩
+
 
 
 

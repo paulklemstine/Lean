@@ -18,6 +18,11 @@ noncomputable def discreteConv' (n : ℕ) [NeZero n] (f g : ZMod n → ℂ) : ZM
 
 
 
+
+/-- [Section: # CatalogBuild.Algebra.HarmonicAnalysis
+Auto-generated from theorem catalog database.
+Domain: Algebra
+Declarations: 5] -/
 theorem conv_delta' (n : ℕ) [NeZero n] (f : ZMod n → ℂ) :
     discreteConv' n f (fun x => if x = 0 then 1 else 0) = f := by
   ext x; simp [discreteConv']
@@ -28,9 +33,11 @@ theorem conv_delta' (n : ℕ) [NeZero n] (f : ZMod n → ℂ) :
 
 
 
+
 theorem trivial_char_sum' (n : ℕ) [NeZero n] :
     ∑ _ : ZMod n, (1 : ℂ) = (Fintype.card (ZMod n) : ℂ) := by
   simp [Finset.sum_const, Finset.card_univ]
+
 
 
 
@@ -40,10 +47,12 @@ theorem sum_sq_nonneg' {n : ℕ} (a : Fin n → ℝ) :
 
 
 
+
 theorem energy_decomposition' {n : ℕ} (a : Fin n → ℝ) (S : Finset (Fin n)) :
     ∑ k, a k ^ 2 = ∑ k ∈ S, a k ^ 2 + ∑ k ∈ Finset.univ \ S, a k ^ 2 := by
   rw [add_comm, ← Finset.sum_union Finset.sdiff_disjoint,
       Finset.sdiff_union_of_subset (Finset.subset_univ S)]
+
 
 
 

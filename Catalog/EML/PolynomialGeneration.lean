@@ -14,10 +14,12 @@ def emlP (x y : ℝ) : ℝ := Real.exp x - Real.log y
 
 
 
+
 /-- For a, b > 0: a · b = exp(ln(a) + ln(b)). -/
 theorem mul_via_log (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
     a * b = Real.exp (Real.log a + Real.log b) := by
   rw [Real.exp_add, Real.exp_log ha, Real.exp_log hb]
+
 
 
 
@@ -28,6 +30,7 @@ theorem add_via_eml (a b : ℝ) (ha : 0 < a) :
 
 
 
+
 /-- Subtraction via EML: eml(ln(a), exp(b)) = a - b for a > 0. -/
 theorem sub_via_eml (a b : ℝ) (ha : 0 < a) :
     emlP (Real.log a) (Real.exp b) = a - b := by
@@ -35,9 +38,11 @@ theorem sub_via_eml (a b : ℝ) (ha : 0 < a) :
 
 
 
+
 /-- The exponential function from EML: exp(x) = eml(x, 1). -/
 theorem exp_via_eml (x : ℝ) : emlP x 1 = Real.exp x := by
   unfold emlP; simp
+
 
 
 
@@ -48,9 +53,11 @@ theorem log_recovery (x : ℝ) (hx : 0 < x) :
 
 
 
+
 /-- e = eml(1, 1). -/
 theorem eml_const_e : emlP 1 1 = Real.exp 1 := by
   unfold emlP; simp
+
 
 
 
@@ -60,10 +67,12 @@ theorem eml_const_zero : emlP 1 (Real.exp (Real.exp 1)) = 0 := by
 
 
 
+
 /-- 1 - e from EML. -/
 theorem eml_const_one_minus_e :
     emlP 0 (Real.exp (Real.exp 1)) = 1 - Real.exp 1 := by
   unfold emlP; simp
+
 
 
 
@@ -77,10 +86,12 @@ theorem pow_via_eml (x : ℝ) (n : ℕ) (hx : 0 < x) :
 
 
 
+
 /-- Double exponential: eml(eml(x, 1), 1) = exp(exp(x)). -/
 theorem double_exp_via_eml (x : ℝ) :
     emlP (emlP x 1) 1 = Real.exp (Real.exp x) := by
   unfold emlP; simp
+
 
 
 
@@ -91,10 +102,12 @@ theorem triple_exp_via_eml (x : ℝ) :
 
 
 
+
 /-- The n-fold exponential via EML iteration. -/
 def iterExp : ℕ → ℝ → ℝ
   | 0 => id
   | n + 1 => Real.exp ∘ iterExp n
+
 
 
 
@@ -108,11 +121,17 @@ def iterEml : ℕ → ℝ → ℝ
 
 
 
+
+/-- [Section: # CatalogBuild.EML.PolynomialGeneration
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 23] -/
 theorem iterEml_eq_iterExp (n : ℕ) (x : ℝ) :
     iterEml n x = iterExp n x := by
   induction n with
   | zero => simp [iterEml, iterExp]
   | succ n ih => simp [iterEml, iterExp, emlP, ih, Real.log_one]
+
 
 
 
@@ -123,10 +142,12 @@ theorem div_via_log (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
 
 
 
+
 /-- Reciprocal: 1/x = exp(-ln(x)) for x > 0. -/
 theorem recip_via_eml (x : ℝ) (hx : 0 < x) :
     1 / x = Real.exp (-Real.log x) := by
   rw [Real.exp_neg, Real.exp_log hx, one_div]
+
 
 
 
@@ -139,11 +160,13 @@ inductive EMLTree' where
 
 
 
+
 /-- Count internal nodes. -/
 def EMLTree'.size : EMLTree' → ℕ
   | .one => 0
   | .var _ => 0
   | .node l r => 1 + l.size + r.size
+
 
 
 
@@ -155,8 +178,10 @@ def EMLTree'.depth : EMLTree' → ℕ
 
 
 
+
 /-- The tree for exp(x) has size 1. -/
 theorem exp_tree_size : (EMLTree'.node (.var 0) .one).size = 1 := by rfl
+
 
 
 
@@ -166,8 +191,10 @@ theorem double_exp_tree_size :
 
 
 
+
 /-- The tree for e = eml(1,1) has size 1. -/
 theorem e_tree_size : (EMLTree'.node .one .one).size = 1 := by rfl
+
 
 
 

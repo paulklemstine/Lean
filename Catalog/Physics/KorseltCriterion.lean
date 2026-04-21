@@ -2,16 +2,10 @@
 
 Auto-generated from theorem catalog database.
 Domain: Physics
-Declarations: 11
+Declarations: 10
 -/
 
 import Mathlib
-
-/-- A Carmichael number is a composite n such that a^(n-1) ≡ 1 (mod n) for all a coprime to n. -/
-def IsCarmichael (n : ℕ) : Prop :=
-  2 < n ∧ ¬ Nat.Prime n ∧ ∀ a : ℕ, Nat.Coprime a n → a ^ (n - 1) ≡ 1 [MOD n]
-
-
 
 /-- Korselt's criterion: n satisfies the criterion if n > 1, composite, squarefree, and
 (p-1) | (n-1) for every prime p dividing n. -/
@@ -21,8 +15,10 @@ def SatisfiesKorselt (n : ℕ) : Prop :=
 
 
 
+
 /-- 561 = 3 × 11 × 17. -/
 theorem carmichael_561_factors : 561 = 3 * 11 * 17 := by norm_num
+
 
 
 
@@ -31,8 +27,10 @@ theorem carmichael_561_composite : ¬ Nat.Prime 561 := by native_decide
 
 
 
+
 /-- 561 is squarefree. -/
 theorem carmichael_561_squarefree : Squarefree 561 := by native_decide
+
 
 
 
@@ -43,8 +41,10 @@ theorem korselt_561_divs : (2 ∣ 560) ∧ (10 ∣ 560) ∧ (16 ∣ 560) := by
 
 
 
+
 /-- 1729 = 7 × 13 × 19, the third Carmichael number (Hardy-Ramanujan taxicab number). -/
 theorem carmichael_1729_factors : 1729 = 7 * 13 * 19 := by norm_num
+
 
 
 
@@ -54,8 +54,10 @@ theorem hardy_ramanujan_1729 : 1729 = 1^3 + 12^3 ∧ 1729 = 9^3 + 10^3 := by
 
 
 
+
 /-- 1729 is squarefree. -/
 theorem carmichael_1729_squarefree : Squarefree 1729 := by native_decide
+
 
 
 
@@ -63,6 +65,7 @@ theorem carmichael_1729_squarefree : Squarefree 1729 := by native_decide
 (7-1)|1728, (13-1)|1728, (19-1)|1728. -/
 theorem korselt_1729_divs : (6 ∣ 1728) ∧ (12 ∣ 1728) ∧ (18 ∣ 1728) := by
   exact ⟨⟨288, by norm_num⟩, ⟨144, by norm_num⟩, ⟨96, by norm_num⟩⟩
+
 
 
 
@@ -76,5 +79,6 @@ theorem first_carmichael_numbers :
     6601 = 7 * 23 * 41 ∧
     8911 = 7 * 19 * 67 := by
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_⟩ <;> norm_num
+
 
 

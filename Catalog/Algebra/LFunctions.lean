@@ -15,9 +15,11 @@ def zetaPartialSum (s : ℂ) (N : ℕ) : ℂ :=
 
 
 
+
 /-- The Basel problem statement: sum 1/n^2 = pi^2/6. -/
 def basel_problem_statement : Prop :=
   HasSum (fun n : ℕ => (1 : ℝ) / ((n + 1) ^ 2)) (Real.pi ^ 2 / 6)
+
 
 
 
@@ -27,9 +29,11 @@ def zeta_pole_statement : Prop :=
 
 
 
+
 /-- A Dirichlet L-function partial sum. -/
 def dirichletL (q : ℕ) (chi : ZMod q → ℂ) (s : ℂ) (N : ℕ) : ℂ :=
   ∑ n ∈ range N, chi (↑(n + 1) : ZMod q) / (↑(n + 1) : ℂ) ^ s
+
 
 
 
@@ -40,9 +44,11 @@ theorem trivial_char_gives_zeta (s : ℂ) (N : ℕ) :
 
 
 
+
 /-- Euler factor for an elliptic curve L-function at a good prime. -/
 def ecLFactor (a_p : ℤ) (p : ℕ) (s : ℂ) : ℂ :=
   (1 - (↑a_p : ℂ) * (↑p : ℂ) ^ (-s) + (↑p : ℂ) ^ (1 - 2 * s))⁻¹
+
 
 
 
@@ -56,11 +62,13 @@ structure SelbergClassAxioms where
 
 
 
+
 /-- BSD data: algebraic rank should equal analytic rank. -/
 structure BSDData where
   algebraic_rank : ℕ
   analytic_rank : ℕ
   bsd_conjecture : algebraic_rank = analytic_rank
+
 
 
 
@@ -70,10 +78,12 @@ def rankinSelbergPartial (f g : ℕ → ℂ) (s : ℂ) (N : ℕ) : ℂ :=
 
 
 
+
 /-- Status of symmetric power functoriality. -/
 inductive SymmetricPowerStatus where
   | proved : String → SymmetricPowerStatus
   | open_ : SymmetricPowerStatus
+
 
 
 
@@ -91,10 +101,17 @@ def symmetricPowerResults : ℕ → SymmetricPowerStatus
 
 
 
+
+/-- [Section: # CatalogBuild.Algebra.LFunctions
+Auto-generated from theorem catalog database.
+Domain: Algebra
+Declarations: 15] -/
 theorem sym2_is_proved : symmetricPowerResults 2 = .proved "Gelbart-Jacquet 1978" := rfl
 
 
+
 theorem sym3_is_proved : symmetricPowerResults 3 = .proved "Kim-Shahidi 2002" := rfl
+
 
 
 
@@ -104,11 +121,13 @@ def ec_32_ap : List (ℕ × ℤ) :=
 
 
 
+
 /-- The a_p matching between curve and form is exact. -/
 theorem ap_matching_is_exact :
     ∀ pair ∈ ec_32_ap, True := by
   intro pair _
   trivial
+
 
 
 

@@ -18,6 +18,11 @@ theorem convergent_is_cauchy {X : Type*} [MetricSpace X] {f : ℕ → X}
 
 
 
+
+/-- [Section: # CatalogBuild.Algebra.Analysis
+Auto-generated from theorem catalog database.
+Domain: Algebra
+Declarations: 7] -/
 theorem contraction_has_fixed_point {X : Type*} [MetricSpace X] [CompleteSpace X]
     [Nonempty X] (f : X → X) (k : ℝ) (hk : 0 ≤ k) (hk1 : k < 1)
     (hf : ∀ x y, dist (f x) (f y) ≤ k * dist x y) :
@@ -35,12 +40,14 @@ theorem contraction_has_fixed_point {X : Type*} [MetricSpace X] [CompleteSpace X
 
 
 
+
 theorem mean_value_theorem (f f' : ℝ → ℝ) {a b : ℝ} (hab : a < b)
     (hf : ContinuousOn f (Set.Icc a b))
     (hf' : ∀ x ∈ Set.Ioo a b, HasDerivAt f (f' x) x) :
     ∃ c ∈ Set.Ioo a b, f b - f a = f' c * (b - a) := by
       have := exists_deriv_eq_slope f hab;
       exact this hf ( fun x hx => ( hf' x hx |> HasDerivAt.differentiableAt |> DifferentiableAt.differentiableWithinAt ) ) |> fun ⟨ c, hc₁, hc₂ ⟩ => ⟨ c, hc₁, by rw [ ← div_eq_iff ( sub_ne_zero_of_ne hab.ne' ), ← hc₂, hf' c hc₁ |> HasDerivAt.deriv ] ⟩
+
 
 
 
@@ -54,9 +61,11 @@ theorem ftc_eval {f : ℝ → ℝ} {a b : ℝ} (hab : a ≤ b)
 
 
 
+
 theorem exponential_decay_tendsto (C α : ℝ) (hα : 0 < α) :
     Filter.Tendsto (fun t => C * Real.exp (-α * t)) Filter.atTop (nhds 0) := by
       simpa using tendsto_const_nhds.mul ( Real.tendsto_exp_atBot.comp <| Filter.tendsto_neg_atTop_atBot.comp <| Filter.tendsto_id.const_mul_atTop hα )
+
 
 
 
@@ -66,7 +75,9 @@ theorem geometric_series_sum (r : ℝ) (hr : |r| < 1) :
 
 
 
+
 theorem cauchy_schwarz_finset {n : ℕ} (a b : Fin n → ℝ) :
     (∑ i, a i * b i) ^ 2 ≤ (∑ i, a i ^ 2) * (∑ i, b i ^ 2) := by
       exact?
+
 

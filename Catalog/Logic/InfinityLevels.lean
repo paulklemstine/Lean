@@ -12,6 +12,7 @@ theorem aleph0_infinite : ℵ₀ ≥ ℵ₀ := le_refl _
 
 
 
+
 /-- [Section: # CatalogBuild.Logic.InfinityLevels
 Auto-generated from theorem catalog database.
 Domain: Logic
@@ -23,9 +24,15 @@ theorem aleph_one_gt_aleph_zero : aleph 0 < aleph 1 := by
 
 
 
+
+/-- [Section: # CatalogBuild.Logic.InfinityLevels
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 17] -/
 theorem aleph_lt_of_lt {α β : Ordinal} (h : α < β) : aleph α < aleph β := by
   convert Cardinal.aleph_lt_aleph.mpr _;
   assumption
+
 
 
 
@@ -39,8 +46,10 @@ theorem every_infinite_cardinal_is_aleph (κ : Cardinal) (hκ : ℵ₀ ≤ κ) :
 
 
 
+
 theorem beth_zero : beth 0 = ℵ₀ := by
   exact?
+
 
 
 
@@ -50,9 +59,11 @@ theorem beth_one : beth 1 = 2 ^ ℵ₀ := by
 
 
 
+
 theorem beth_strictMono : StrictMono beth := by
   refine' fun α β h => _;
   cases' lt_or_eq_of_le ( show α ≤ β from le_of_lt h ) with h h <;> simp_all +decide [ beth ]
+
 
 
 
@@ -61,13 +72,16 @@ theorem beth_ge_aleph (α : Ordinal) : aleph α ≤ beth α := by
 
 
 
+
 theorem aleph0_add_self : ℵ₀ + ℵ₀ = ℵ₀ := by
   simp +zetaDelta at *
 
 
 
+
 theorem aleph0_mul_self : ℵ₀ * ℵ₀ = ℵ₀ := by
   norm_num +zetaDelta at *
+
 
 
 
@@ -77,8 +91,10 @@ theorem infinite_add_self (κ : Cardinal) (hκ : ℵ₀ ≤ κ) : κ + κ = κ :
 
 
 
+
 theorem infinite_mul_self (κ : Cardinal) (hκ : ℵ₀ ≤ κ) : κ * κ = κ := by
   rw [ Cardinal.mul_eq_self ] ; aesop
+
 
 
 
@@ -89,8 +105,10 @@ theorem infinite_add_finite (κ : Cardinal) (hκ : ℵ₀ ≤ κ) (n : ℕ) :
 
 
 
+
 theorem omega_cof : Ordinal.cof ω = ℵ₀ := by
   aesop
+
 
 
 
@@ -99,12 +117,15 @@ theorem aleph0_regular : (aleph 0).ord.cof = aleph 0 := by
 
 
 
+
 theorem cantor_cardinal (κ : Cardinal) : κ < 2 ^ κ := by
   exact?
 
 
 
+
 theorem continuum_uncountable : ℵ₀ < 2 ^ ℵ₀ := by
   exact?
+
 
 

@@ -12,15 +12,18 @@ def isSumTwoSquares (n : ℤ) : Prop := ∃ a b : ℤ, a ^ 2 + b ^ 2 = n
 
 
 
+
 /-- 5 is a sum of two squares -/
 theorem five_sum_two_squares : isSumTwoSquares 5 :=
   ⟨1, 2, by ring⟩
 
 
 
+
 /-- 13 is a sum of two squares -/
 theorem thirteen_sum_two_squares : isSumTwoSquares 13 :=
   ⟨2, 3, by ring⟩
+
 
 
 
@@ -31,10 +34,12 @@ theorem fermat_christmas_instances :
 
 
 
+
 /-- The norm form is multiplicative: N(z₁)·N(z₂) = N(z₁z₂) via Brahmagupta-Fibonacci -/
 theorem norm_multiplicative (a b c d : ℤ) :
     (a ^ 2 + b ^ 2) * (c ^ 2 + d ^ 2) = (a * c - b * d) ^ 2 + (a * d + b * c) ^ 2 := by
   ring
+
 
 
 
@@ -44,9 +49,11 @@ theorem sixty_five_sum_two_squares : isSumTwoSquares 65 :=
 
 
 
+
 /-- Alternate representation: 65 = 4² + 7² -/
 theorem sixty_five_alt : isSumTwoSquares 65 :=
   ⟨4, 7, by ring⟩
+
 
 
 
@@ -60,15 +67,18 @@ theorem stereographic_circle (t : ℚ) (ht : 1 + t ^ 2 ≠ 0) :
 
 
 
+
 /-- Rational point (3/5, 4/5) lies on the unit circle -/
 theorem rational_point_345 : (3 / 5 : ℚ) ^ 2 + (4 / 5 : ℚ) ^ 2 = 1 := by
   norm_num
 
 
 
+
 /-- Rational point (5/13, 12/13) lies on the unit circle -/
 theorem rational_point_51213 : (5 / 13 : ℚ) ^ 2 + (12 / 13 : ℚ) ^ 2 = 1 := by
   norm_num
+
 
 
 
@@ -81,9 +91,11 @@ theorem circle_group_law (a b c d : ℚ) (h1 : a ^ 2 + b ^ 2 = 1)
 
 
 
+
 /-- S has order 4: S⁴ = I -/
 theorem S_order_four : S_mat * S_mat * S_mat * S_mat = 1 := by
   native_decide +revert
+
 
 
 
@@ -93,10 +105,12 @@ theorem T_unipotent : (T_mat - 1) * (T_mat - 1) = 0 := by
 
 
 
+
 /-- The commutator [S, T] = STS⁻¹T⁻¹ -/
 theorem ST_commutator :
     S_mat * T_mat * (S_mat * S_mat * S_mat) * !![1, -1; 0, 1] = !![1, -1; -1, 2] := by
   native_decide +revert
+
 
 
 
@@ -109,10 +123,12 @@ theorem curvature_identity (a b : ℤ) (_h : a ^ 2 + b ^ 2 ≠ 0) :
 
 
 
+
 /-- Arc length element: ds² = dx² + dy² (Pythagorean theorem in differential form) -/
 theorem arc_length_element (dx dy : ℤ) :
     dx ^ 2 + dy ^ 2 = dx ^ 2 + dy ^ 2 := by
   rfl
+
 
 
 
@@ -124,8 +140,10 @@ theorem right_triangle_angle_sum :
 
 
 
+
 /-- The fixed point of the parent map is (3,4,5) — verified by B₁⁻¹(3,4,5) ∉ PPT -/
 theorem berggren_root_345 : (3 : ℤ) ^ 2 + 4 ^ 2 = 5 ^ 2 := by norm_num
+
 
 
 
@@ -138,11 +156,13 @@ theorem children_345_are_ppts :
 
 
 
+
 /-- There are exactly 5 lattice points with x²+y² ≤ 1 -/
 theorem gauss_circle_count_R1 :
     ((Finset.Icc (-1 : ℤ) 1 ×ˢ Finset.Icc (-1 : ℤ) 1).filter
       (fun p => p.1 ^ 2 + p.2 ^ 2 ≤ 1)).card = 5 := by
   native_decide +revert
+
 
 
 
@@ -154,11 +174,13 @@ theorem gauss_circle_count_R2 :
 
 
 
+
 /-- RSA-style identity: (a²+b²)(c²+d²) can be factored two ways -/
 theorem rsa_two_ways (a b c d : ℤ) :
     (a * c - b * d) ^ 2 + (a * d + b * c) ^ 2 =
     (a * c + b * d) ^ 2 + (a * d - b * c) ^ 2 := by
   ring
+
 
 
 
@@ -168,13 +190,16 @@ theorem fermat_little_instance : 2 ^ 4 % 5 = 1 := by norm_num
 
 
 
+
 /-- Wilson's theorem instance: (p-1)! ≡ -1 (mod p). Verified: 4! ≡ -1 (mod 5) -/
 theorem wilson_instance : 24 % 5 = 4 := by norm_num
 
 
 
+
 /-- A quantum state (α, β) with α = 3/5, β = 4/5 is normalized -/
 theorem qubit_normalized : (3 / 5 : ℚ) ^ 2 + (4 / 5 : ℚ) ^ 2 = 1 := by norm_num
+
 
 
 
@@ -185,9 +210,11 @@ theorem schmidt_pythagorean (α β : ℚ) (h : α ^ 2 + β ^ 2 = 1) :
 
 
 
+
 /-- The Bloch sphere radius is 1: x² + y² + z² = 1 for pure states -/
 theorem bloch_sphere_pure_state (x y z : ℚ) (h : x ^ 2 + y ^ 2 + z ^ 2 = 1) :
     x ^ 2 + y ^ 2 = 1 - z ^ 2 := by linarith
+
 
 
 
@@ -197,8 +224,10 @@ theorem parseval_identity_2 (a b : ℤ) :
 
 
 
+
 /-- Plancherel for the (3,4,5) triple: squared norms are preserved -/
 theorem plancherel_345 : (3 : ℤ) ^ 2 + 4 ^ 2 = 5 ^ 2 := by norm_num
+
 
 
 
@@ -209,9 +238,11 @@ theorem convolution_norm (a b c d : ℤ) :
 
 
 
+
 /-- The expected number of nodes visited in a random walk of depth n
 on a ternary tree is n+1 -/
 theorem ternary_walk_depth (n : ℕ) : n + 1 ≥ 1 := Nat.succ_pos n
+
 
 
 
@@ -220,8 +251,10 @@ theorem uniform_branch_prob : (1 : ℚ) / 3 + 1 / 3 + 1 / 3 = 1 := by norm_num
 
 
 
+
 /-- The Pythagorean triple (3,4,5) passes the decidable check -/
 theorem check_345 : (3 : ℤ) ^ 2 + 4 ^ 2 = 5 ^ 2 := by norm_num
+
 
 
 
@@ -232,13 +265,16 @@ theorem small_ppt_exists :
 
 
 
+
 /-- The Pythagorean map ℤ² → ℤ sending (a,b) ↦ a²+b² -/
 def pythMap (v : ℤ × ℤ) : ℤ := v.1 ^ 2 + v.2 ^ 2
 
 
 
+
 /-- pythMap is not a group homomorphism (it's quadratic), but pythMap (0,0) = 0 -/
 theorem pythMap_zero : pythMap (0, 0) = 0 := by simp [pythMap]
+
 
 
 
@@ -248,10 +284,12 @@ theorem pythMap_fiber (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 /-- Short exact sequence of norms: N(z₁z₂) = N(z₁)N(z₂) -/
 theorem norm_exact_sequence (a b c d : ℤ) :
     pythMap (a * c - b * d, a * d + b * c) = pythMap (a, b) * pythMap (c, d) := by
   simp [pythMap]; ring
+
 
 
 
@@ -264,9 +302,11 @@ theorem small_hypotenuses :
 
 
 
+
 /-- The number of PPTs with hypotenuse ≤ N grows: there are ≥ 1 PPT with c ≤ 5 -/
 theorem ppt_count_lower : ∃ a b : ℕ, 0 < a ∧ 0 < b ∧ a ^ 2 + b ^ 2 = 5 ^ 2 :=
   ⟨3, 4, by norm_num, by norm_num, by norm_num⟩
+
 
 
 
@@ -276,8 +316,10 @@ theorem grundy_root_nonzero : (3 : ℕ) ≠ 0 := by norm_num
 
 
 
+
 /-- In any ternary branching game, the Grundy value is bounded by the depth + 2 -/
 theorem grundy_bound (depth : ℕ) : depth + 2 ≥ 2 := by omega
+
 
 
 
@@ -287,9 +329,11 @@ theorem nim_xor_zero : Nat.xor (Nat.xor 1 2) 3 = 0 := by native_decide
 
 
 
+
 /-- Minimum Hamming weight of the Pythagorean code: the (3,4,5) triple gives
 minimum distance 3 (the leg) -/
 theorem min_distance_pyth : min 3 4 = (3 : ℕ) := by norm_num
+
 
 
 
@@ -299,9 +343,11 @@ theorem code_rate_identity : 2 * 5 = (10 : ℕ) := by norm_num
 
 
 
+
 /-- Singleton bound: a code with minimum distance d can correct ⌊(d-1)/2⌋ errors.
 For d = 3: corrects 1 error -/
 theorem singleton_instance : (3 - 1) / 2 = (1 : ℕ) := by norm_num
+
 
 
 
@@ -313,10 +359,12 @@ theorem ST_cubed :
 
 
 
+
 /-- The trace of the trefoil representation matrix (ST)² -/
 theorem trace_ST_squared :
     Matrix.trace ((S_mat * T_mat) * (S_mat * T_mat)) = -1 := by
   native_decide +revert
+
 
 
 
@@ -327,9 +375,11 @@ theorem braid_relation_check :
 
 
 
+
 /-- The light cone equation: a vector (a,b,c) with a²+b²=c² lies on the
 future light cone (assuming c > 0) -/
 theorem light_cone_345 : (3 : ℤ) ^ 2 + 4 ^ 2 - 5 ^ 2 = 0 := by norm_num
+
 
 
 
@@ -339,9 +389,11 @@ theorem minkowski_inner_ppt (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 /-- Boost parameter: for B₁, the "rapidity" is related to arccosh(tr/2).
 tr(B₁) = 3, so cosh(η) = 3/2. We verify 3² > 2² (hyperbolic). -/
 theorem boost_hyperbolic : (3 : ℤ) ^ 2 > 2 ^ 2 := by norm_num
+
 
 
 
@@ -355,9 +407,11 @@ theorem lorentz_invariance_345 :
 
 
 
+
 /-- Frobenius norm squared of B₁: sum of squares of all entries -/
 def frobenius_sq (M : Matrix (Fin 3) (Fin 3) ℤ) : ℤ :=
   ∑ i, ∑ j, (M i j) ^ 2
+
 
 
 
@@ -367,9 +421,11 @@ theorem frobenius_B1 : frobenius_sq !![1, -2, 2; 2, -1, 2; 2, -2, 3] = 35 := by
 
 
 
+
 /-- ‖B₂‖_F² = 1+4+4+4+1+4+4+4+9 = 35 -/
 theorem frobenius_B2 : frobenius_sq !![1, 2, 2; 2, 1, 2; 2, 2, 3] = 35 := by
   native_decide +revert
+
 
 
 
@@ -381,11 +437,13 @@ theorem frobenius_equal :
 
 
 
+
 /-- Trace bound: tr(MᵀM) = ‖M‖_F² (verified for B₁) -/
 theorem trace_frobenius_B1 :
     Matrix.trace ((!![1, -2, 2; 2, -1, 2; 2, -2, 3] : Matrix (Fin 3) (Fin 3) ℤ)ᵀ *
       !![1, -2, 2; 2, -1, 2; 2, -2, 3]) = 35 := by
   native_decide +revert
+
 
 
 
@@ -395,9 +453,11 @@ theorem B1_K1_class : Matrix.det (!![1, -2, 2; 2, -1, 2; 2, -2, 3] : Matrix (Fin
 
 
 
+
 /-- B₂ has det = -1, so [B₂] = 1 in K₁(ℤ) ≅ ℤ/2 -/
 theorem B2_K1_class : Matrix.det (!![1, 2, 2; 2, 1, 2; 2, 2, 3] : Matrix (Fin 3) (Fin 3) ℤ) = -1 := by
   native_decide +revert
+
 
 
 
@@ -409,9 +469,11 @@ theorem B1B3_K1_class :
 
 
 
+
 /-- The elliptic curve E₆: y² = x³ - 36x has a rational point (rational right triangle
 with area 6 exists). Point: (-3, 9) → verify: 9² = (-3)³ - 36(-3) = -27 + 108 = 81 ✓ -/
 theorem E6_rational_point : (9 : ℤ) ^ 2 = (-3) ^ 3 - 36 * (-3) := by norm_num
+
 
 
 
@@ -425,9 +487,11 @@ theorem sum_two_sq_primes :
 
 
 
+
 /-- **P vs NP Connection**: The Pythagorean triple checking function runs in O(1) -/
 theorem pyth_check_poly_time (a b c : ℤ) :
     (a ^ 2 + b ^ 2 = c ^ 2) ↔ (a ^ 2 + b ^ 2 - c ^ 2 = 0) := by omega
+
 
 
 
@@ -442,11 +506,13 @@ theorem discrete_yang_mills :
 
 
 
+
 /-- **Navier-Stokes Connection (speculative)**: The Pythagorean constraint on velocity
 components in incompressible flow: |v|² = vx² + vy² = const on streamlines.
 For unit-speed flow: vx² + vy² = 1. -/
 theorem incompressible_unit_speed (vx vy : ℚ) (h : vx ^ 2 + vy ^ 2 = 1) :
     vx ^ 2 = 1 - vy ^ 2 := by linarith
+
 
 
 
@@ -460,6 +526,7 @@ theorem berggren_bsd_bridge (a b c : ℤ) (_h : a ^ 2 + b ^ 2 = c ^ 2)
 
 
 
+
 /-- **Theorem (Spectral-Combinatorial Duality)**: The trace tr(B₁ⁿ) encodes
 both spectral data (eigenvalue sums) and combinatorial data (fixed points
 of the Berggren action at depth n). For n=1: tr=3, matching 3 children. -/
@@ -469,6 +536,7 @@ theorem spectral_combinatorial :
   constructor
   · native_decide +revert
   · rfl
+
 
 
 
@@ -486,5 +554,6 @@ theorem master_unification (a b c d e f : ℤ)
     (a * d - b * e) ^ 2 + (a * e + b * d) ^ 2 = (c * f) ^ 2 := by
   nlinarith [sq_nonneg (a * d - b * e), sq_nonneg (a * e + b * d),
              sq_nonneg a, sq_nonneg b, sq_nonneg c, sq_nonneg d, sq_nonneg e, sq_nonneg f]
+
 
 

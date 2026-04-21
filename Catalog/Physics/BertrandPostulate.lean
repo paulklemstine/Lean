@@ -14,9 +14,11 @@ theorem bertrand_postulate (n : ℕ) (hn : 1 ≤ n) :
 
 
 
+
 /-- Infinitely many primes (Euclid's theorem). -/
 theorem infinitely_many_primes : ∀ N : ℕ, ∃ p, N ≤ p ∧ Nat.Prime p :=
   Nat.exists_infinite_primes
+
 
 
 
@@ -24,6 +26,7 @@ theorem infinitely_many_primes : ∀ N : ℕ, ∃ p, N ≤ p ∧ Nat.Prime p :=
 theorem primes_unbounded (N : ℕ) : ∃ p, N < p ∧ Nat.Prime p := by
   obtain ⟨p, hp1, hp2⟩ := Nat.exists_infinite_primes (N + 1)
   exact ⟨p, by omega, hp2⟩
+
 
 
 
@@ -36,11 +39,13 @@ theorem prime_gap_le (p : ℕ) (hp : Nat.Prime p) :
 
 
 
+
 /-- Relative prime gap: the next prime after p is within distance p. -/
 theorem relative_prime_gap (p : ℕ) (hp : Nat.Prime p) :
     ∃ q, Nat.Prime q ∧ p < q ∧ q - p ≤ p := by
   obtain ⟨q, hq1, hq2, hq3⟩ := prime_gap_le p hp
   exact ⟨q, hq1, hq2, by omega⟩
+
 
 
 
@@ -53,11 +58,13 @@ theorem legendre_verified_to_50 :
 
 
 
+
 /-- Legendre's conjecture verified for all n from 1 to 100. -/
 theorem legendre_verified_to_100 :
     ∀ n ∈ Finset.Icc 1 100,
       ∃ p ∈ Finset.Ioc (n ^ 2) ((n + 1) ^ 2), Nat.Prime p := by
   native_decide
+
 
 
 
@@ -74,9 +81,11 @@ theorem legendre_witnesses :
 
 
 
+
 /-- The prime counting function. -/
 def primeCountBP (x : ℕ) : ℕ :=
   ((Finset.range (x + 1)).filter Nat.Prime).card
+
 
 
 
@@ -97,6 +106,7 @@ theorem prime_count_pow2_ge_small :
 
 
 
+
 /-- The number of primes up to n for several key values. -/
 theorem prime_counting_values :
     primeCountBP 10 = 4 ∧
@@ -104,6 +114,7 @@ theorem prime_counting_values :
     primeCountBP 1000 = 168 := by
   unfold primeCountBP
   native_decide
+
 
 
 
@@ -116,5 +127,6 @@ theorem prime_density_decreasing :
     primeCountBP 100 * 1000 > primeCountBP 1000 * 100 := by
   unfold primeCountBP
   native_decide
+
 
 

@@ -1,5 +1,3 @@
-import Mathlib
-
 /-! # CatalogBuild.Geometry.Stereographic.SphericalNormalization
 
 Auto-generated from theorem catalog database.
@@ -7,6 +5,7 @@ Domain: Geometry/Stereographic
 Declarations: 8
 -/
 
+import Mathlib
 
 noncomputable section
 
@@ -16,10 +15,12 @@ def vecSqNorm (n : ℕ) (v : Fin n → ℝ) : ℝ :=
 
 
 
+
 /-- Spherical normalization: project a nonzero vector to the unit sphere
 via v ↦ v / ‖v‖. This is the simplest spherical normalization. -/
 def sphericalNorm (n : ℕ) (v : Fin n → ℝ) (hv : vecSqNorm n v ≠ 0) : Fin n → ℝ :=
   fun i => v i / Real.sqrt (vecSqNorm n v)
+
 
 
 
@@ -31,6 +32,7 @@ def stereoSphericalNorm (n : ℕ) (v : Fin n → ℝ) : Fin (n + 1) → ℝ := f
     2 * v ⟨i.val, h⟩ / D
   else
     (vecSqNorm n v - 1) / D
+
 
 
 
@@ -49,10 +51,16 @@ theorem stereo_spherical_norm_unit (n : ℕ) (v : Fin n → ℝ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Geometry.Stereographic.SphericalNormalization
+Auto-generated from theorem catalog database.
+Domain: Geometry/Stereographic
+Declarations: 8] -/
 theorem stereo_norm_zero_is_south_pole (n : ℕ) (hn : 0 < n) :
     stereoSphericalNorm n (fun _ => 0) ⟨n, Nat.lt_succ_iff.mpr (le_refl n)⟩ = -1 := by
   unfold stereoSphericalNorm;
   unfold vecSqNorm; aesop
+
 
 
 
@@ -61,6 +69,7 @@ theorem stereo_norm_last_coord_bound (n : ℕ) (v : Fin n → ℝ) :
   unfold stereoSphericalNorm;
   norm_num [ div_le_iff₀, vecSqNorm ];
   rw [ div_le_iff₀ ] <;> linarith [ show 0 ≤ ∑ i, v i ^ 2 by exact Finset.sum_nonneg fun _ _ => sq_nonneg _ ]
+
 
 
 
@@ -78,11 +87,13 @@ def expMapNorm (θ : ℝ) (v : Fin 2 → ℝ) : Fin 3 → ℝ := fun i =>
 
 
 
+
 theorem expMapNorm_unit (θ : ℝ) (v : Fin 2 → ℝ) :
     (expMapNorm θ v 0) ^ 2 + (expMapNorm θ v 1) ^ 2 + (expMapNorm θ v 2) ^ 2 = 1 := by
   by_cases h : Real.sqrt ( ( v 0 ) ^ 2 + ( v 1 ) ^ 2 ) = 0 <;> simp_all +decide [ expMapNorm ];
   field_simp;
   rw [ Real.sq_sqrt ( add_nonneg ( sq_nonneg _ ) ( sq_nonneg _ ) ) ] ; rw [ Real.sin_sq, Real.cos_sq ] ; ring
+
 
 
 

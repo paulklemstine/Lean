@@ -31,8 +31,10 @@ variable {W : Type*} (P : GazingPool W)
 
 
 
+
 /-- The **gaze** operation: the strange loop of observation. -/
 def gaze : W → W := P.reconstruct ∘ P.shadow ∘ P.reflect
+
 
 
 
@@ -41,13 +43,16 @@ def IsConscious (w : W) : Prop := P.gaze w = w
 
 
 
+
 /-- The **shadow self**: what an observer sees in the pool. -/
 def shadowSelf (w : W) : P.S := P.shadow (P.reflect w)
 
 
 
+
 /-- Two world-elements are **shadow equivalent** if they cast the same shadow. -/
 def ShadowEquiv (w₁ w₂ : W) : Prop := P.shadow w₁ = P.shadow w₂
+
 
 
 
@@ -59,10 +64,12 @@ theorem shadowEquiv_equiv : Equivalence (P.ShadowEquiv) where
 
 
 
+
 /-- Iterated gazing. -/
 def gazeIter (P : GazingPool W) : ℕ → W → W
   | 0 => id
   | n + 1 => P.gaze ∘ P.gazeIter n
+
 
 
 
@@ -77,11 +84,13 @@ theorem conscious_stable (w : W) (hw : P.IsConscious w) (n : ℕ) :
 
 
 
+
 /-- The reconstruct ∘ shadow operation is idempotent (a retraction). -/
 theorem retraction_idempotent (w : W) :
     P.reconstruct (P.shadow (P.reconstruct (P.shadow w))) =
     P.reconstruct (P.shadow w) := by
   congr 1; exact P.shadow_reconstruct _
+
 
 
 
@@ -95,11 +104,13 @@ theorem shadow_incompleteness {W S : Type*} (shadow : W → S)
 
 
 
+
 /-- **Information Loss Lemma**: shadow ∘ reconstruct ∘ shadow = shadow. -/
 theorem shadow_idempotent {W S : Type*} (shadow : W → S) (reconstruct : S → W)
     (h : ∀ s, shadow (reconstruct s) = s) :
     shadow ∘ reconstruct ∘ shadow = shadow := by
   ext w; simp [Function.comp, h]
+
 
 
 
@@ -111,6 +122,7 @@ theorem gazing_pool_consciousness_exists {Observer Response : Type*}
     (process : Response → Response) :
     ∃ r : Response, process r = r :=
   lawvere_fixed_point model h_expressive process
+
 
 
 
@@ -137,6 +149,7 @@ theorem strange_loop_periodic {X : Type*} [Fintype X] [DecidableEq X] [Nonempty 
 
 
 
+
 /-- An **Observer Hierarchy** is a chain of increasingly refined observations. -/
 structure ObserverHierarchy where
   levels : ℕ
@@ -144,6 +157,7 @@ structure ObserverHierarchy where
   State : Fin levels → Type*
   observe : ∀ i : Fin (levels - 1),
     State ⟨i.val + 1, by omega⟩ → State ⟨i.val, by omega⟩
+
 
 
 
@@ -157,6 +171,7 @@ structure ContractiveGazingPool (W : Type*) extends GazingPool W where
   κ_lt_one : κ < 1
   gaze_contractive : ∀ w₁ w₂,
     dist (toGazingPool.gaze w₁) (toGazingPool.gaze w₂) ≤ κ * dist w₁ w₂
+
 
 
 
@@ -178,11 +193,13 @@ theorem contractive_convergence {W : Type*} (P : ContractiveGazingPool W)
 
 
 
+
 /-- **Cantor's Shadow Theorem**: No surjection from a type to its power type. -/
 theorem cantor_shadow (X : Type*) :
     ¬ ∃ f : X → Set X, Surjective f := by
   intro ⟨f, hf⟩
   exact cantor_surjective f hf
+
 
 
 
@@ -204,10 +221,12 @@ theorem observer_incompleteness {Observer Truth : Type*}
 
 
 
+
 /-- The **Liar's Paradox**: No proposition can be equivalent to its own negation. -/
 theorem liars_paradox : ¬ ∃ P : Prop, (P ↔ ¬P) := by
   intro ⟨P, h⟩
   exact absurd (h.mpr fun hp => h.mp hp hp) fun hp => h.mp hp hp
+
 
 
 
@@ -220,11 +239,13 @@ theorem mirror_prop_satisfiable :
 
 
 
+
 /-- However, a **Direct Self-Reference** proposition `P ↔ ¬P` leads to
 contradiction. The shadow world resolves paradoxes by introducing
 a level of indirection, much like Russell's type theory. -/
 theorem direct_self_reference_paradox (P : Prop) (h : P ↔ ¬P) : False := by
   exact absurd (h.mpr fun hp => h.mp hp hp) fun hp => h.mp hp hp
+
 
 
 
@@ -237,11 +258,13 @@ structure CategoricalGazingPool
 
 
 
+
 /-- The **Gazing Monad**: The composition shadow ⋙ reconstruct. -/
 noncomputable def gazingMonad {C : Type u₁} {D : Type u₂}
     [Category.{v₁} C] [Category.{v₂} D]
     (P : CategoricalGazingPool C D) : C ⥤ C :=
   P.shadow_functor ⋙ P.reconstruct_functor
+
 
 
 
@@ -254,12 +277,14 @@ structure QuantumGazingPool where
 
 
 
+
 /-- **Quantum Observer Theorem**: Post-measurement states are fixed points.
 If Pv = v, then P(Pv) = Pv (measurement is idempotent). -/
 theorem quantum_observer_fixed (P : QuantumGazingPool)
     (v : Fin P.dim → ℂ) (hv : P.proj.mulVec v = v) :
     P.proj.mulVec (P.proj.mulVec v) = P.proj.mulVec v := by
   simp [hv]
+
 
 
 
@@ -276,10 +301,12 @@ theorem quantum_idempotence (P : QuantumGazingPool) (v : Fin P.dim → ℂ) :
 
 
 
+
 /-- The kernel of a ring homomorphism is an ideal — the "invisible" elements. -/
 theorem invisible_ideal {W S : Type*} [CommRing W] [CommRing S] (φ : W →+* S) :
     ∃ I : Ideal W, ∀ w, φ w = 0 ↔ w ∈ I := by
   use Ideal.comap φ ⊥; aesop
+
 
 
 
@@ -291,6 +318,7 @@ theorem shadow_entropy_loss {W S : Type*} [Fintype W] [Fintype S]
 
 
 
+
 /-- **Conscious Observer Minimizes Surprise**: Zero prediction error at fixed points. -/
 theorem conscious_zero_surprise {W : Type*} (P : GazingPool W)
     (w : W) (hw : P.IsConscious w) :
@@ -298,6 +326,11 @@ theorem conscious_zero_surprise {W : Type*} (P : GazingPool W)
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.GazingPool
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 32] -/
 theorem symmetric_pool_consciousness
     {W : Type*} [Nonempty W] (P : GazingPool W)
     (h_symm : ∀ w, P.shadow (P.reflect w) = P.shadow w) :
@@ -308,6 +341,7 @@ theorem symmetric_pool_consciousness
   -- By definition of IsConscious, we need to show that P.gaze w = w.
   use w
   simp [GazingPool.IsConscious, GazingPool.gaze, hw, h_symm]
+
 
 
 
@@ -323,6 +357,7 @@ theorem consciousness_unique {W : Type*} (P : ContractiveGazingPool W)
 
 
 
+
 theorem universe_stratification :
     ¬ ∃ (U : Type) (f : U → Type), ∀ T : Type, ∃ u : U, f u = T := by
   intro ⟨ U, f, hf ⟩;
@@ -333,6 +368,7 @@ theorem universe_stratification :
   refine' hu.not_lt _;
   refine' lt_of_le_of_lt _ ( Cardinal.cantor _ );
   exact Cardinal.le_sum ( fun i => Cardinal.mk ( f i ) ) u
+
 
 
 

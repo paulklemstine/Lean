@@ -17,14 +17,21 @@ theorem isometry_dist' {X Y : Type*} [PseudoMetricSpace X] [PseudoMetricSpace Y]
 
 
 
+
+/-- [Section: # CatalogBuild.Algebra.MetricGeometry
+Auto-generated from theorem catalog database.
+Domain: Algebra
+Declarations: 7] -/
 theorem isometry_comp' {X Y Z : Type*} [PseudoMetricSpace X] [PseudoMetricSpace Y]
     [PseudoMetricSpace Z] (f : X → Y) (g : Y → Z) (hf : Isometry f) (hg : Isometry g) :
     Isometry (g ∘ f) := hg.comp hf
 
 
 
+
 theorem completion_complete' (X : Type*) [MetricSpace X] :
     CompleteSpace (UniformSpace.Completion X) := inferInstance
+
 
 
 
@@ -34,8 +41,10 @@ theorem hausdorff_dist_comm' {X : Type*} [PseudoMetricSpace X]
 
 
 
+
 theorem euclidean_dist_eq_norm (x y : EuclideanSpace ℝ (Fin 2)) :
     dist x y = ‖x - y‖ := dist_eq_norm x y
+
 
 
 
@@ -44,9 +53,11 @@ theorem euclidean_triangle' (x y z : EuclideanSpace ℝ (Fin 2)) :
 
 
 
+
 theorem nearest_neighbor_exists' {X : Type*} [MetricSpace X]
     (S : Finset X) (hS : S.Nonempty) (q : X) :
     ∃ s ∈ S, ∀ t ∈ S, dist q s ≤ dist q t :=
   Finset.exists_min_image S (fun s => dist q s) hS
+
 
 

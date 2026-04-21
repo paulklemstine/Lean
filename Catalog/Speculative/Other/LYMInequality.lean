@@ -12,3 +12,4 @@ def IsAntichain (𝒜 : Finset (Finset (Fin n))) : Prop :=
   ∀ A ∈ 𝒜, ∀ B ∈ 𝒜, A ⊆ B → A = B
 
 
+

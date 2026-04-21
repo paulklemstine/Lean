@@ -16,7 +16,13 @@ Declarations: 17] -/
 def emlFedCommBits (depth width precision : ℕ) : ℕ := 4 * depth * width * precision
 
 
+
+/-- [Section: # CatalogBuild.EML.AIResearch.FederatedPrivacy
+Auto-generated from theorem catalog database.
+Domain: EML/AIResearch
+Declarations: 17] -/
 def mlpFedCommBits (depth width precision : ℕ) : ℕ := depth * width * width * precision
+
 
 
 
@@ -26,7 +32,9 @@ theorem eml_comm_savings (d w p : ℕ) (hw : 5 ≤ w) :
 
 
 
+
 def totalFedComm (commPerRound rounds : ℕ) : ℕ := commPerRound * rounds
+
 
 
 
@@ -36,7 +44,9 @@ theorem eml_total_comm_savings (d w p R : ℕ) (hw : 5 ≤ w) :
 
 
 
+
 def gaussianNoiseScale (sensitivity epsilon : ℝ) : ℝ := sensitivity / epsilon
+
 
 
 
@@ -47,8 +57,10 @@ theorem eml_lower_sensitivity (g : ℝ) (p1 p2 : ℕ) (hg : 0 ≤ g) (hp : p1 �
 
 
 
+
 def composedEpsilon (baseEps : ℝ) (rounds : ℕ) : ℝ :=
   baseEps * Real.sqrt ↑rounds
+
 
 
 
@@ -60,7 +72,9 @@ theorem more_rounds_less_privacy (eps : ℝ) (r1 r2 : ℕ)
 
 
 
+
 def secAggCost (numParams numClients : ℕ) : ℕ := numParams * numClients
+
 
 
 
@@ -71,8 +85,10 @@ theorem eml_sec_agg_cheaper (d w c : ℕ) (hw : 5 ≤ w) :
 
 
 
+
 def clientDivergence (localSteps learningRate gradVariance : ℝ) : ℝ :=
   localSteps * learningRate ^ 2 * gradVariance
+
 
 
 
@@ -85,8 +101,10 @@ theorem more_local_steps_more_divergence (s1 s2 lr gv : ℝ)
 
 
 
+
 def dpUtilityLoss (noiseScale : ℝ) (numParams : ℕ) : ℝ :=
   noiseScale ^ 2 * ↑numParams
+
 
 
 
@@ -99,13 +117,16 @@ theorem eml_dp_less_utility_loss (sigma : ℝ) (d w : ℕ) (hw : 5 ≤ w) :
 
 
 
+
 def membershipAdvantage (trainLoss testLoss : ℝ) : ℝ := trainLoss - testLoss
+
 
 
 
 theorem smaller_gap_more_resistant (trL1 trL2 teL : ℝ) (h : trL1 ≤ trL2) :
     membershipAdvantage trL1 teL ≤ membershipAdvantage trL2 teL := by
   unfold membershipAdvantage; linarith
+
 
 
 

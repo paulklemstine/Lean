@@ -15,9 +15,11 @@ def stereoFromNorth' (x y : ℝ) : ℝ := x / (1 - y)
 
 
 
+
 /-- Forward stereographic projection from the **south pole** (0,-1).
 σ_S(x, y) = x / (1 + y) for (x,y) on S¹ with y ≠ -1. -/
 def stereoFromSouth' (x y : ℝ) : ℝ := x / (1 + y)
+
 
 
 
@@ -28,10 +30,12 @@ def invStereoNorth' (t : ℝ) : ℝ × ℝ :=
 
 
 
+
 /-- Inverse stereographic projection from the **south pole**.
 σ_S⁻¹(t) = (2t/(1+t²), (1-t²)/(1+t²)) -/
 def invStereoSouth' (t : ℝ) : ℝ × ℝ :=
   (2 * t / (1 + t ^ 2), (1 - t ^ 2) / (1 + t ^ 2))
+
 
 
 
@@ -43,6 +47,7 @@ def dualProjection' (t : ℝ) : ℝ :=
 
 
 
+
 /-- The mirror dual: lift from north pole, project from south pole.
 D*(t) = σ_S(σ_N⁻¹(t)) -/
 def mirrorDualProjection' (t : ℝ) : ℝ :=
@@ -51,8 +56,10 @@ def mirrorDualProjection' (t : ℝ) : ℝ :=
 
 
 
+
 /-- 1 + t² is always positive. -/
 theorem one_plus_sq_pos' (t : ℝ) : (0 : ℝ) < 1 + t ^ 2 := by positivity
+
 
 
 
@@ -65,12 +72,14 @@ theorem invStereoSouth'_on_circle (t : ℝ) :
 
 
 
+
 /-- The inverse stereographic projection from the north pole lands on S¹. -/
 theorem invStereoNorth'_on_circle (t : ℝ) :
     (invStereoNorth' t).1 ^ 2 + (invStereoNorth' t).2 ^ 2 = 1 := by
   simp only [invStereoNorth']
   have h : (1 : ℝ) + t ^ 2 ≠ 0 := by positivity
   field_simp; ring
+
 
 
 
@@ -85,6 +94,7 @@ theorem invStereoSouth'_avoids_south (t : ℝ) :
 
 
 
+
 /-- The north-pole inverse never hits the north pole (y ≠ 1). -/
 theorem invStereoNorth'_avoids_north (t : ℝ) :
     (invStereoNorth' t).2 ≠ 1 := by
@@ -93,6 +103,7 @@ theorem invStereoNorth'_avoids_north (t : ℝ) :
   intro heq
   have := (div_eq_iff h).mp heq
   nlinarith [sq_nonneg t]
+
 
 
 
@@ -109,6 +120,11 @@ theorem dualProjection'_eq_inv (t : ℝ) (ht : t ≠ 0) :
 
 
 
+
+/-- [Section: # CatalogBuild.Logic.UniversalSolver
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 37] -/
 theorem mirrorDualProjection'_eq_inv (t : ℝ) (ht : t ≠ 0) :
     mirrorDualProjection' t = 1 / t := by
   unfold mirrorDualProjection' invStereoNorth' stereoFromSouth';
@@ -117,10 +133,12 @@ theorem mirrorDualProjection'_eq_inv (t : ℝ) (ht : t ≠ 0) :
 
 
 
+
 /-- The dual projections are equal: D = D*. The mirror is symmetric. -/
 theorem dual_eq_mirror' (t : ℝ) (ht : t ≠ 0) :
     dualProjection' t = mirrorDualProjection' t := by
   rw [dualProjection'_eq_inv t ht, mirrorDualProjection'_eq_inv t ht]
+
 
 
 
@@ -134,10 +152,12 @@ theorem dualProjection'_involution (t : ℝ) (ht : t ≠ 0) :
 
 
 
+
 /-- A Problem is a pair: a state space and a goal predicate. -/
 structure Problem' (X : Type*) where
   state : X
   goal : X → Prop
+
 
 
 
@@ -149,10 +169,12 @@ structure Reducer' (X Y : Type*) where
 
 
 
+
 /-- A ProjectionReducer works via idempotent projection. -/
 structure ProjectionReducer' (n : ℕ) where
   project : (Fin n → ℝ) → (Fin n → ℝ)
   idem : ∀ v, project (project v) = project v
+
 
 
 
@@ -161,6 +183,7 @@ def ProjectionReducer'.toOracle {n : ℕ} (P : ProjectionReducer' n) :
     Oracle (Fin n → ℝ) where
   consult := P.project
   idem := P.idem
+
 
 
 
@@ -178,10 +201,12 @@ theorem idem_comp_of_comm' {X : Type*}
 
 
 
+
 /-- A linear oracle: an idempotent linear map (= projection matrix). -/
 structure LinearOracle' (n : ℕ) where
   toFun : (Fin n → ℝ) →ₗ[ℝ] (Fin n → ℝ)
   idem : toFun.comp toFun = toFun
+
 
 
 
@@ -194,6 +219,7 @@ theorem LinearOracle'.range_projection {n : ℕ} (P : LinearOracle' n) (v : Fin 
   have := LinearMap.ext_iff.mp P.idem w
   simp [LinearMap.comp_apply] at this
   exact this
+
 
 
 
@@ -212,6 +238,7 @@ def LinearOracle'.compose {n : ℕ} (P Q : LinearOracle' n)
 
 
 
+
 /-- The Universal Solver Theorem (finite-dimensional):
 commuting linear projections compose to a single matrix multiply. -/
 theorem universal_solver_finite' {n : ℕ} (P Q : LinearOracle' n)
@@ -221,10 +248,12 @@ theorem universal_solver_finite' {n : ℕ} (P Q : LinearOracle' n)
 
 
 
+
 /-- A SolverOracle: idempotent consultation. -/
 structure SolverOracle' (X : Type*) where
   consult : X → X
   idem : ∀ x, consult (consult x) = consult x
+
 
 
 
@@ -237,9 +266,11 @@ structure MetaSolver' (X : Type*) where
 
 
 
+
 /-- One step of meta-oracle guided solving. -/
 def MetaSolver'.step {X : Type*} (M : MetaSolver' X) (x : X) : X :=
   (M.select x).consult x
+
 
 
 
@@ -249,10 +280,12 @@ def SolverOracle'.solved {X : Type*} (O : SolverOracle' X) : Set X :=
 
 
 
+
 /-- Consulting the oracle always produces a solved state. -/
 theorem SolverOracle'.consult_solves {X : Type*} (O : SolverOracle' X) (x : X) :
     O.consult x ∈ O.solved := by
   simp [SolverOracle'.solved, O.idem]
+
 
 
 
@@ -264,11 +297,13 @@ def oracleOfIdem' {X : Type*} (f : X → X) (hf : ∀ x, f (f x) = f x) :
 
 
 
+
 /-- The Universal Solver Principle: one consultation suffices. -/
 theorem universal_solver_principle' {X : Type*} (f : X → X)
     (hf : ∀ x, f (f x) = f x) (x : X) :
     (oracleOfIdem' f hf).consult x ∈ (oracleOfIdem' f hf).solved :=
   SolverOracle'.consult_solves _ x
+
 
 
 
@@ -283,6 +318,7 @@ structure FrozenCrystalSolver' (X : Type*) where
 
 
 
+
 /-- The frozen crystal solves everything in one step. -/
 theorem FrozenCrystalSolver'.one_step_solution {X : Type*}
     (C : FrozenCrystalSolver' X) (x : X) :
@@ -290,6 +326,7 @@ theorem FrozenCrystalSolver'.one_step_solution {X : Type*}
   have h := C.crystallized x
   simp only [MetaSolver'.step, SolverOracle'.solved, mem_setOf_eq] at h ⊢
   exact h
+
 
 
 
@@ -301,6 +338,7 @@ def mobiusRotation' (θ t : ℝ) : ℝ :=
 
 
 
+
 /-- The identity Möbius transformation (θ = 0) is the identity. -/
 theorem mobiusRotation'_zero (t : ℝ) :
     mobiusRotation' 0 t = t := by
@@ -308,10 +346,12 @@ theorem mobiusRotation'_zero (t : ℝ) :
 
 
 
+
 /-- The modular oracle projects to residues. -/
 def modOracle' (m : ℤ) (hm : m ≠ 0) : SolverOracle' ℤ where
   consult := fun n => n % m
   idem := by intro n; exact Int.emod_emod_of_dvd n (dvd_refl m)
+
 
 
 
@@ -325,6 +365,7 @@ theorem modOracle'_solved (m : ℤ) (hm : 0 < m) :
     · linarith [Int.emod_nonneg n (ne_of_gt hm)]
     · linarith [Int.emod_lt_of_pos n hm]
   · intro ⟨h1, h2⟩; exact Int.emod_eq_of_lt h1 h2
+
 
 
 

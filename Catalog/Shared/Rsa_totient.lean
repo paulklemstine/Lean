@@ -20,3 +20,4 @@ theorem rsa_totient (p q : â„•) (hp : Nat.Prime p) (hq : Nat.Prime q) (hpq : p â
   rw [Nat.totient_mul hcop, Nat.totient_prime hp, Nat.totient_prime hq]
 
 
+

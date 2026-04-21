@@ -14,6 +14,7 @@ def leg_product (N : ℤ) (start len : ℕ) : ℤ :=
 
 
 
+
 /-- If any term in the product shares a factor p with N,
 then the product also shares that factor. -/
 theorem factor_in_product (N : ℤ) (p : ℤ) (start len : ℕ) (j : ℕ)
@@ -23,11 +24,13 @@ theorem factor_in_product (N : ℤ) (p : ℤ) (start len : ℕ) (j : ℕ)
 
 
 
+
 /-- The product of even legs (b_k values) in a batch. Since b_k = ((N-2k)² - 1)/2,
 and p | b_k at the factor step, the product of b_k values will share factor p with N.
 We use the squared-minus-one formulation to avoid integer division issues. -/
 def bleg_product (N : ℤ) (start len : ℕ) : ℤ :=
   (Finset.range len).prod (fun i => (N - 2 * (↑start + ↑i)) ^ 2 - 1)
+
 
 
 
@@ -47,8 +50,10 @@ theorem factor_step_divides_bleg (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime 
 
 
 
+
 /-- The energy at a jumped position. Jumping by Δ steps at once. -/
 def energy_at (N : ℤ) (k : ℕ) : ℤ := (N - 2 * k) ^ 2
+
 
 
 
@@ -67,11 +72,13 @@ theorem energy_monotone_decreasing (N : ℕ) (j k : ℕ)
 
 
 
+
 /-- A factor step lies in exactly one stride interval. -/
 theorem factor_in_unique_interval (p : ℕ) (hp : 2 < p) (stride : ℕ) (hs : 0 < stride) :
     ∃ i : ℕ, i * stride ≤ (p - 1) / 2 ∧ (p - 1) / 2 < (i + 1) * stride := by
   exact ⟨(p - 1) / 2 / stride, Nat.div_mul_le_self _ _,
     by linarith [Nat.div_add_mod ((p - 1) / 2) stride, Nat.mod_lt ((p - 1) / 2) hs]⟩
+
 
 
 
@@ -84,6 +91,7 @@ theorem energy_drop_formula (N : ℤ) (k : ℕ) :
 
 
 
+
 /-- The cumulative energy dissipated after K steps. -/
 theorem cumulative_energy_drop (N : ℤ) (K : ℕ) :
     energy_at N 0 - energy_at N K = 4 * N * ↑K - 4 * (↑K : ℤ) ^ 2 := by
@@ -91,6 +99,11 @@ theorem cumulative_energy_drop (N : ℤ) (K : ℕ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Factoring.IOFSpeedup
+Auto-generated from theorem catalog database.
+Domain: Computation/Factoring
+Declarations: 10] -/
 theorem factor_square_condition (N p : ℕ) (k : ℕ) (hp : Nat.Prime p) (hdvd : p ∣ N)
     (hp2 : p ≠ 2) :
     (↑p : ℤ) ∣ ((↑N - 2 * ↑k) ^ 2 - 1) →
@@ -104,5 +117,6 @@ theorem factor_square_condition (N p : ℕ) (k : ℕ) (hp : Nat.Prime p) (hdvd :
       · norm_num [ ZMod.cast, ZMod.val ];
         rcases p with ( _ | _ | p ) <;> norm_num at *;
         erw [ Fin.val_mk ] ; norm_num
+
 
 

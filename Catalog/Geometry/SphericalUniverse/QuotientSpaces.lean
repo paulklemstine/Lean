@@ -1,5 +1,3 @@
-import Mathlib
-
 /-! # CatalogBuild.Geometry.SphericalUniverse.QuotientSpaces
 
 Auto-generated from theorem catalog database.
@@ -7,6 +5,7 @@ Domain: Geometry/SphericalUniverse
 Declarations: 26
 -/
 
+import Mathlib
 
 noncomputable section
 
@@ -16,10 +15,12 @@ def volumeQuotient (R : ℝ) (groupOrder : ℕ) : ℝ :=
 
 
 
+
 /-- The quotient volume is positive. -/
 theorem volume_quotient_pos (R : ℝ) (hR : 0 < R) (g : ℕ) (hg : 0 < g) :
     0 < volumeQuotient R g := by
   unfold volumeQuotient; positivity
+
 
 
 
@@ -36,13 +37,16 @@ theorem volume_quotient_lt (R : ℝ) (hR : 0 < R) (g : ℕ) (hg : 1 < g) :
 
 
 
+
 /-- A lens space L(p, q) has group order p. -/
 def lensSpaceOrder (p : ℕ) : ℕ := p
 
 
 
+
 /-- The volume of lens space L(p, q). -/
 def volumeLensSpace (R : ℝ) (p : ℕ) : ℝ := volumeQuotient R p
+
 
 
 
@@ -53,10 +57,12 @@ theorem lens_space_trivial_volume (R : ℝ) :
 
 
 
+
 /-- Simplified degeneracy for L(p, 1). -/
 def lensSpaceDegeneracy (p ℓ : ℕ) : ℕ :=
   if p = 0 then 0
   else ((ℓ + 1) ^ 2 + p - 1) / p
+
 
 
 
@@ -67,8 +73,10 @@ theorem lens_space_degeneracy_p1 (ℓ : ℕ) :
 
 
 
+
 /-- ℝP³ = L(2,1). -/
 theorem rp3_is_lens_space : lensSpaceOrder 2 = 2 := rfl
+
 
 
 
@@ -77,8 +85,10 @@ def binaryIcosahedralOrder : ℕ := 120
 
 
 
+
 /-- The volume of PDS. -/
 def volumePDS (R : ℝ) : ℝ := volumeQuotient R binaryIcosahedralOrder
+
 
 
 
@@ -90,9 +100,11 @@ theorem pds_volume_fraction (R : ℝ) :
 
 
 
+
 /-- The first few ℓ values contributing to the PDS spectrum.
 ℓ = 2, 3, 4, 5 are ABSENT — this suppresses low CMB multipoles! -/
 def pdsAllowedModes : List ℕ := [0, 6, 10, 12, 15, 16, 18, 20, 21, 22, 24, 25, 26, 27, 28, 30]
+
 
 
 
@@ -100,8 +112,10 @@ def pdsAllowedModes : List ℕ := [0, 6, 10, 12, 15, 16, 18, 20, 21, 22, 24, 25,
 theorem pds_no_quadrupole : 2 ∉ pdsAllowedModes := by decide
 
 
+
 /-- The octupole (ℓ=3) is also absent. -/
 theorem pds_no_octupole : 3 ∉ pdsAllowedModes := by decide
+
 
 
 /-- The first non-trivial PDS mode is ℓ = 6. -/
@@ -109,10 +123,17 @@ theorem pds_first_mode : pdsAllowedModes[1]! = 6 := by decide
 
 
 
+
+/-- [Section: # CatalogBuild.Geometry.SphericalUniverse.QuotientSpaces
+Auto-generated from theorem catalog database.
+Domain: Geometry/SphericalUniverse
+Declarations: 26] -/
 def binaryTetrahedralOrder : ℕ := 24
 
 
+
 def binaryOctahedralOrder : ℕ := 48
+
 
 
 
@@ -126,8 +147,10 @@ theorem volume_hierarchy (R : ℝ) (hR : 0 < R) :
 
 
 
+
 /-- Matched circle pairs for S³/Γ. -/
 def matchedCirclePairs (groupOrder : ℕ) : ℕ := groupOrder - 1
+
 
 
 
@@ -137,8 +160,10 @@ theorem pds_matched_circles : matchedCirclePairs binaryIcosahedralOrder = 119 :=
 
 
 
+
 /-- Lens space classification: L(p, q₁) ≅ L(p, q₂) iff q₁ ≡ ±q₂±¹ mod p. -/
 theorem lens_space_classification_example : ¬ (2 ≡ 3 [MOD 7]) := by decide
+
 
 
 
@@ -147,8 +172,10 @@ theorem pds_quadrupole_suppression : (0 : ℝ) / (2 + 1) ^ 2 = 0 := by norm_num
 
 
 
+
 /-- PDS is rigid: the topology is determined by the group alone. -/
 theorem pds_is_rigid : binaryIcosahedralOrder = 120 := rfl
+
 
 
 
@@ -158,9 +185,11 @@ def shortestGeodesic (R : ℝ) (groupOrder : ℕ) : ℝ :=
 
 
 
+
 /-- The fundamental domain angle. -/
 def fundamentalDomainAngle (R R_ls : ℝ) (groupOrder : ℕ) : ℝ :=
   2 * Real.arcsin (R_ls / R) / (groupOrder : ℝ) ^ (1/3 : ℝ)
+
 
 
 

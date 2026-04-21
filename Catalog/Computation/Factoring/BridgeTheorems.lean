@@ -18,10 +18,12 @@ theorem cassini_identity (n : ℕ) (hn : 1 ≤ n) :
 
 
 
+
 /-- For prime p, totient(p) = p - 1. -/
 theorem totient_prime (p : ℕ) (hp : Nat.Prime p) :
     Nat.totient p = p - 1 :=
   Nat.totient_prime hp
+
 
 
 
@@ -33,9 +35,15 @@ theorem units_card_prime (p : ℕ) [Fact (Nat.Prime p)] :
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Factoring.BridgeTheorems
+Auto-generated from theorem catalog database.
+Domain: Computation/Factoring
+Declarations: 9] -/
 theorem orbit_size_bound (n : ℕ) (hn : 0 < n) (f : Fin n → Fin n) (x : Fin n) :
     (Finset.image (fun k => f^[k] x) (Finset.range (n + 1))).card ≤ n := by
   exact le_trans ( Finset.card_le_univ _ ) ( by simpa )
+
 
 
 
@@ -49,9 +57,11 @@ theorem min_divisor_bound (n : ℕ) (hn : 1 < n) (hc : ¬ Nat.Prime n) :
 
 
 
+
 theorem fib_ratio_bound (n : ℕ) (hn : 1 ≤ n) :
     Nat.fib (n + 1) ≤ 2 * Nat.fib n := by
   rcases n with ( _ | _ | n ) <;> simp_all +arith +decide [ Nat.fib_add_two ]
+
 
 
 
@@ -61,9 +71,11 @@ theorem fib_monotone (n : ℕ) : Nat.fib n ≤ Nat.fib (n + 1) :=
 
 
 
+
 /-- In dimension 2, two representations give peel equations via the difference identity. -/
 theorem norm_channel_dim2 (a b c d : ℤ) :
     (a*d - b*c) * (a*d + b*c) = a^2 * d^2 - b^2 * c^2 := by ring
+
 
 
 
@@ -74,5 +86,6 @@ theorem quaternion_norm_multiplicative (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ 
     (a₁*b₂ + a₂*b₁ + a₃*b₄ - a₄*b₃)^2 +
     (a₁*b₃ - a₂*b₄ + a₃*b₁ + a₄*b₂)^2 +
     (a₁*b₄ + a₂*b₃ - a₃*b₂ + a₄*b₁)^2 := by ring
+
 
 

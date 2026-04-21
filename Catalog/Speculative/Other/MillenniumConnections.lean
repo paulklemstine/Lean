@@ -13,12 +13,14 @@ theorem elliptic_discriminant_En (n : ℤ) (hn : n ≠ 0) :
 
 
 
+
 /-- E_n has three rational 2-torsion points. -/
 theorem En_2_torsion (n : ℤ) :
     (0 : ℤ) * ((0 : ℤ) - n) * ((0 : ℤ) + n) = 0 ∧
     n * (n - n) * (n + n) = 0 ∧
     (-n) * ((-n) - n) * ((-n) + n) = 0 := by
   constructor <;> [ring; constructor <;> ring]
+
 
 
 
@@ -32,9 +34,11 @@ theorem ppt_to_En_point (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 /-- Nagell-Lutz discriminant for E_n. -/
 theorem nagell_lutz_discriminant (n : ℤ) :
     4 * (-n^2)^3 + 27 * (0 : ℤ)^2 = -4 * n ^ 6 := by ring
+
 
 
 
@@ -63,10 +67,12 @@ theorem hypotenuse_prime_iff_1mod4 (p : ℕ) (hp : Nat.Prime p) (hp2 : p > 2) :
 
 
 
+
 /-- The Berggren B₁ transformation preserves Q(a,b,c) = a² + b² - c². -/
 theorem lorentz_form_preserved_B1 (a b c : ℤ) :
     (a - 2*b + 2*c) ^ 2 + (2*a - b + 2*c) ^ 2 - (2*a - 2*b + 3*c) ^ 2 =
     a ^ 2 + b ^ 2 - c ^ 2 := by ring
+
 
 
 
@@ -77,10 +83,12 @@ theorem lorentz_form_preserved_B2 (a b c : ℤ) :
 
 
 
+
 /-- The Berggren B₃ transformation preserves Q(a,b,c) = a² + b² - c². -/
 theorem lorentz_form_preserved_B3 (a b c : ℤ) :
     (-a + 2*b + 2*c) ^ 2 + (-2*a + b + 2*c) ^ 2 - (-2*a + 2*b + 3*c) ^ 2 =
     a ^ 2 + b ^ 2 - c ^ 2 := by ring
+
 
 
 
@@ -89,8 +97,10 @@ theorem moonshine_numerology : 196884 = 196883 + 1 := by norm_num
 
 
 
+
 /-- Second coefficient: 21493760 = 21296876 + 196883 + 1. -/
 theorem moonshine_second : 21493760 = 21296876 + 196883 + 1 := by norm_num
+
 
 
 
@@ -101,10 +111,12 @@ theorem monster_order :
 
 
 
+
 /-- The Berggren Cayley graph mod p has |SL(2,𝔽_p)| vertices. -/
 theorem berggren_cayley_vertices :
     Fintype.card (Matrix.SpecialLinearGroup (Fin 2) (ZMod 3)) = 24 ∧
     Fintype.card (Matrix.SpecialLinearGroup (Fin 2) (ZMod 5)) = 120 ∧
     Fintype.card (Matrix.SpecialLinearGroup (Fin 2) (ZMod 7)) = 336 := by
   exact ⟨by native_decide, by native_decide, by native_decide⟩
+
 

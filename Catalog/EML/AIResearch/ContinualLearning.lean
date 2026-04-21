@@ -18,8 +18,14 @@ def standardForgetting (overlap : ℝ) (taskDifficulty : ℕ) : ℝ :=
 
 
 
+
+/-- [Section: # CatalogBuild.EML.AIResearch.ContinualLearning
+Auto-generated from theorem catalog database.
+Domain: EML/AIResearch
+Declarations: 16] -/
 def emlForgetting (overlap invertibilityFactor : ℝ) (taskDifficulty : ℕ) : ℝ :=
   overlap * (1 - invertibilityFactor) * ↑taskDifficulty
+
 
 
 
@@ -32,7 +38,9 @@ theorem eml_less_forgetting (overlap invFactor : ℝ) (td : ℕ)
 
 
 
+
 def ewcPenalty (fisher paramShift : ℝ) : ℝ := fisher * paramShift ^ 2
+
 
 
 
@@ -41,8 +49,10 @@ def emlEWCCost (d w : ℕ) (avgFisher avgShift : ℝ) : ℝ :=
 
 
 
+
 def stdEWCCost (d w : ℕ) (avgFisher avgShift : ℝ) : ℝ :=
   ↑(d * w * w) * ewcPenalty avgFisher avgShift
+
 
 
 
@@ -55,7 +65,9 @@ theorem eml_cheaper_ewc (d w : ℕ) (f s : ℝ) (hw : 5 ≤ w) (hf : 0 ≤ f) :
 
 
 
+
 def taskCapacity (totalParams paramsPerTask : ℕ) : ℕ := totalParams / paramsPerTask
+
 
 
 
@@ -66,7 +78,9 @@ theorem eml_more_tasks (totalParams emlPerTask stdPerTask : ℕ)
 
 
 
+
 def replayBufferSize (paramsPerTask numTasks : ℕ) : ℕ := paramsPerTask * numTasks
+
 
 
 
@@ -77,10 +91,13 @@ theorem eml_smaller_replay (d w numTasks : ℕ) (hw : 5 ≤ w) :
 
 
 
+
 def emlGrowthCost (newWidth : ℕ) : ℕ := 4 * newWidth
 
 
+
 def stdGrowthCost (existingWidth newWidth : ℕ) : ℕ := existingWidth * newWidth
+
 
 
 
@@ -90,14 +107,17 @@ theorem eml_cheaper_growth (existingWidth newWidth : ℕ) (hw : 4 ≤ existingWi
 
 
 
+
 def transferBenefit (sharedFraction : ℝ) (baseCost : ℕ) : ℝ :=
   (1 - sharedFraction) * ↑baseCost
+
 
 
 
 theorem more_sharing_less_cost (s1 s2 : ℝ) (c : ℕ) (h : s1 ≤ s2) :
     transferBenefit s2 c ≤ transferBenefit s1 c := by
   unfold transferBenefit; nlinarith [Nat.cast_nonneg (α := ℝ) c]
+
 
 
 

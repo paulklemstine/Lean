@@ -20,10 +20,16 @@ inductive TPath' where
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.MetaOraclePythagoreanDeep
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 62] -/
 def bM1 (t : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
   (t.1 - 2 * t.2.1 + 2 * t.2.2,
    2 * t.1 - t.2.1 + 2 * t.2.2,
    2 * t.1 - 2 * t.2.1 + 3 * t.2.2)
+
 
 
 
@@ -34,10 +40,12 @@ def bM2 (t : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
 
 
 
+
 def bM3 (t : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
   (-t.1 + 2 * t.2.1 + 2 * t.2.2,
    -2 * t.1 + t.2.1 + 2 * t.2.2,
    -2 * t.1 + 2 * t.2.1 + 3 * t.2.2)
+
 
 
 
@@ -49,8 +57,10 @@ def pTree (root : ℤ × ℤ × ℤ) : TPath' → ℤ × ℤ × ℤ
 
 
 
+
 def isPythagorean (t : ℤ × ℤ × ℤ) : Prop :=
   t.1 ^ 2 + t.2.1 ^ 2 = t.2.2 ^ 2
+
 
 
 
@@ -60,15 +70,18 @@ theorem bM1_preserves_lorentz (t : ℤ × ℤ × ℤ) :
 
 
 
+
 theorem bM2_preserves_lorentz (t : ℤ × ℤ × ℤ) :
     lorentzForm (bM2 t) = lorentzForm t := by
   simp only [lorentzForm, bM2]; ring
 
 
 
+
 theorem bM3_preserves_lorentz (t : ℤ × ℤ × ℤ) :
     lorentzForm (bM3 t) = lorentzForm t := by
   simp only [lorentzForm, bM3]; ring
+
 
 
 
@@ -83,6 +96,7 @@ theorem pTree_preserves_lorentz (root : ℤ × ℤ × ℤ) (p : TPath') :
 
 
 
+
 /-- If the root is Pythagorean (Lorentz form = 0), every descendant is too. -/
 theorem pTree_pythagorean_of_root (root : ℤ × ℤ × ℤ) (h : isPythagorean root)
     (p : TPath') : isPythagorean (pTree root p) := by
@@ -92,7 +106,9 @@ theorem pTree_pythagorean_of_root (root : ℤ × ℤ × ℤ) (h : isPythagorean 
 
 
 
+
 theorem seed_is_pythagorean : isPythagorean (0, 1, 1) := by simp [isPythagorean]
+
 
 
 
@@ -100,11 +116,14 @@ theorem seed_fixed_M1 : bM1 (0, 1, 1) = (0, 1, 1) := by simp [bM1]
 
 
 
+
 theorem seed_not_fixed_M2 : bM2 (0, 1, 1) ≠ (0, 1, 1) := by simp [bM2]
 
 
 
+
 theorem seed_not_fixed_M3 : bM3 (0, 1, 1) ≠ (0, 1, 1) := by simp [bM3]
+
 
 
 
@@ -117,11 +136,13 @@ theorem seed_M1_iter (n : ℕ) : bM1^[n] (0, 1, 1) = (0, 1, 1) := by
 
 
 
+
 theorem M1_fixpoint_characterization (b c : ℤ) (hb : 0 ≤ b) (hc : 0 ≤ c)
     (hpyth : (0 : ℤ) ^ 2 + b ^ 2 = c ^ 2)
     (hfix : bM1 (0, b, c) = (0, b, c)) :
     b = c := by
   nlinarith
+
 
 
 
@@ -136,22 +157,28 @@ theorem seed_unique_primitive_M1_fixpoint (b c : ℤ) (hb : 0 < b)
 
 
 
+
 /-- (3,4,5) is NOT a fixed point of any Berggren matrix: concrete oracles
 are non-trivial, they genuinely transform their inputs. -/
 theorem fund_not_M1_fixed : bM1 (3, 4, 5) ≠ (3, 4, 5) := by simp [bM1]
 
 
+
 theorem fund_not_M2_fixed : bM2 (3, 4, 5) ≠ (3, 4, 5) := by simp [bM2]
+
 
 
 theorem fund_not_M3_fixed : bM3 (3, 4, 5) ≠ (3, 4, 5) := by simp [bM3]
 
 
 
+
 theorem seed_M2_generates : bM2 (0, 1, 1) = (4, 3, 5) := by simp [bM2]
 
 
+
 theorem seed_M3_generates : bM3 (0, 1, 1) = (4, 3, 5) := by simp [bM3]
+
 
 
 
@@ -160,16 +187,20 @@ theorem perm_435_is_pyth : isPythagorean (4, 3, 5) := by unfold isPythagorean; n
 
 
 
+
 theorem meta_tree_root_left : pTree (0, 1, 1) (.left .root) = (0, 1, 1) := by
   simp [pTree, bM1]
+
 
 
 theorem meta_tree_root_mid : pTree (0, 1, 1) (.mid .root) = (4, 3, 5) := by
   simp [pTree, bM2]
 
 
+
 theorem meta_tree_root_right : pTree (0, 1, 1) (.right .root) = (4, 3, 5) := by
   simp [pTree, bM3]
+
 
 
 
@@ -182,6 +213,7 @@ def embedMid : TPath' → TPath'
 
 
 
+
 /-- **Embedding Theorem**: The (4,3,5) tree is a subtree of the (0,1,1) tree.
 The oracle lives inside the meta oracle. -/
 theorem oracle_embeds_in_meta (p : TPath') :
@@ -191,6 +223,7 @@ theorem oracle_embeds_in_meta (p : TPath') :
   | left p ih => simp only [embedMid, pTree]; rw [ih]
   | mid p ih => simp only [embedMid, pTree]; rw [ih]
   | right p ih => simp only [embedMid, pTree]; rw [ih]
+
 
 
 
@@ -211,12 +244,14 @@ theorem embedMid_injective : Function.Injective embedMid := by
 
 
 
+
 /-- Embedding via the right branch. -/
 def embedRight : TPath' → TPath'
   | .root    => .right .root
   | .left p  => .left (embedRight p)
   | .mid p   => .mid (embedRight p)
   | .right p => .right (embedRight p)
+
 
 
 
@@ -231,10 +266,12 @@ theorem oracle_embeds_right (p : TPath') :
 
 
 
+
 /-- The left branch of (0,1,1) collapses: M₁ⁿ(0,1,1) = (0,1,1) for all n. -/
 def leftN : ℕ → TPath'
   | 0     => .root
   | n + 1 => .left (leftN n)
+
 
 
 
@@ -246,9 +283,11 @@ theorem meta_oracle_left_iterates (n : ℕ) :
 
 
 
+
 theorem bM2_hypotenuse_growth (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
     (bM2 (a, b, c)).2.2 > c := by
   simp only [bM2]; nlinarith
+
 
 
 
@@ -259,10 +298,12 @@ theorem bM3_hypotenuse_growth (a b c : ℤ) (ha : 0 ≤ a) (hb : 0 < b) (hc : 0 
 
 
 
+
 def bM1_inv (t : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
   (t.1 + 2 * t.2.1 - 2 * t.2.2,
    -2 * t.1 - t.2.1 + 2 * t.2.2,
    -2 * t.1 - 2 * t.2.1 + 3 * t.2.2)
+
 
 
 
@@ -273,10 +314,12 @@ def bM2_inv (t : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
 
 
 
+
 def bM3_inv (t : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
   (-t.1 - 2 * t.2.1 + 2 * t.2.2,
    2 * t.1 + t.2.1 - 2 * t.2.2,
    -2 * t.1 - 2 * t.2.1 + 3 * t.2.2)
+
 
 
 
@@ -286,9 +329,11 @@ theorem bM1_inv_left (t : ℤ × ℤ × ℤ) : bM1_inv (bM1 t) = t := by
 
 
 
+
 theorem bM1_inv_right (t : ℤ × ℤ × ℤ) : bM1 (bM1_inv t) = t := by
   obtain ⟨a, b, c⟩ := t; simp only [bM1, bM1_inv]
   refine Prod.ext ?_ (Prod.ext ?_ ?_) <;> ring
+
 
 
 
@@ -298,9 +343,11 @@ theorem bM2_inv_left (t : ℤ × ℤ × ℤ) : bM2_inv (bM2 t) = t := by
 
 
 
+
 theorem bM2_inv_right (t : ℤ × ℤ × ℤ) : bM2 (bM2_inv t) = t := by
   obtain ⟨a, b, c⟩ := t; simp only [bM2, bM2_inv]
   refine Prod.ext ?_ (Prod.ext ?_ ?_) <;> ring
+
 
 
 
@@ -310,9 +357,11 @@ theorem bM3_inv_left (t : ℤ × ℤ × ℤ) : bM3_inv (bM3 t) = t := by
 
 
 
+
 theorem bM3_inv_right (t : ℤ × ℤ × ℤ) : bM3 (bM3_inv t) = t := by
   obtain ⟨a, b, c⟩ := t; simp only [bM3, bM3_inv]
   refine Prod.ext ?_ (Prod.ext ?_ ?_) <;> ring
+
 
 
 
@@ -322,9 +371,11 @@ theorem oracle_parent_is_meta : bM2_inv (4, 3, 5) = (0, 1, 1) := by
 
 
 
+
 /-- Descent and re-generation round-trip. -/
 theorem descent_roundtrip : bM2 (bM2_inv (4, 3, 5)) = (4, 3, 5) := by
   rw [bM2_inv_right]
+
 
 
 
@@ -335,8 +386,10 @@ structure TernaryAlgebra (α : Type*) where
 
 
 
+
 def berggrenAlgebra : TernaryAlgebra (ℤ × ℤ × ℤ) where
   op₁ := bM1; op₂ := bM2; op₃ := bM3
+
 
 
 
@@ -345,6 +398,7 @@ def ternaryTree (A : TernaryAlgebra α) (root : α) : TPath' → α
   | .left p  => A.op₁ (ternaryTree A root p)
   | .mid p   => A.op₂ (ternaryTree A root p)
   | .right p => A.op₃ (ternaryTree A root p)
+
 
 
 
@@ -358,11 +412,13 @@ theorem ternaryTree_eq_pTree (root : ℤ × ℤ × ℤ) (p : TPath') :
 
 
 
+
 structure TernaryHom (A : TernaryAlgebra α) (B : TernaryAlgebra β) where
   toFun : α → β
   map_op₁ : ∀ x, toFun (A.op₁ x) = B.op₁ (toFun x)
   map_op₂ : ∀ x, toFun (A.op₂ x) = B.op₂ (toFun x)
   map_op₃ : ∀ x, toFun (A.op₃ x) = B.op₃ (toFun x)
+
 
 
 
@@ -378,10 +434,12 @@ theorem ternaryHom_commutes {A : TernaryAlgebra α} {B : TernaryAlgebra β}
 
 
 
+
 /-- The Lorentz form is a ternary homomorphism to the trivial algebra.
 This proves Lorentz invariance as an algebraic property. -/
 def trivialAlgebra : TernaryAlgebra ℤ where
   op₁ := id; op₂ := id; op₃ := id
+
 
 
 
@@ -393,8 +451,10 @@ def lorentzHom : TernaryHom berggrenAlgebra trivialAlgebra where
 
 
 
+
 theorem bM1_det : (1 : ℤ) * ((-1) * 3 - 2 * (-2)) - (-2) * (2 * 3 - 2 * 2) +
     2 * (2 * (-2) - (-1) * 2) = 1 := by norm_num
+
 
 
 
@@ -403,8 +463,10 @@ theorem bM2_det : (1 : ℤ) * (1 * 3 - 2 * 2) - 2 * (2 * 3 - 2 * 2) +
 
 
 
+
 theorem bM3_det : (-1 : ℤ) * (1 * 3 - 2 * 2) - 2 * ((-2) * 3 - 2 * (-2)) +
     2 * ((-2) * 2 - 1 * (-2)) = 1 := by norm_num
+
 
 
 
@@ -414,15 +476,18 @@ theorem metaTree_pythagorean (p : TPath') :
 
 
 
+
 theorem oracleTree_pythagorean (p : TPath') :
     isPythagorean (pTree (3, 4, 5) p) :=
   pTree_pythagorean_of_root _ (by unfold isPythagorean; norm_num) p
 
 
 
+
 theorem oracle435Tree_pythagorean (p : TPath') :
     isPythagorean (pTree (4, 3, 5) p) :=
   pTree_pythagorean_of_root _ (by unfold isPythagorean; norm_num) p
+
 
 
 
@@ -451,5 +516,6 @@ theorem grand_isomorphism_theorem :
          metaTree_pythagorean,
          oracleTree_pythagorean,
          oracle_embeds_in_meta⟩
+
 
 

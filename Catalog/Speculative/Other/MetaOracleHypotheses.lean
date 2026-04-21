@@ -17,14 +17,17 @@ noncomputable def goldbachRepCount (n : ℕ) : ℕ :=
 
 
 
+
 /-- Distance from a real number to the nearest integer. -/
 noncomputable def fracDist (x : ℝ) : ℝ :=
   min (Int.fract x) (1 - Int.fract x)
 
 
 
+
 /-- The Lonely Runner bound: for n runners, each achieves distance ≥ 1/(n+1). -/
 noncomputable def lonelyRunnerBound (n : ℕ) : ℝ := 1 / (n + 1 : ℝ)
+
 
 
 
@@ -39,10 +42,12 @@ theorem lonely_runner_two : ∃ t : ℝ, fracDist t ≥ 1/3 ∧ fracDist (2 * t)
 
 
 
+
 /-- For n = 3: 4/3 = 1/1 + 1/4 + 1/12. -/
 theorem erdos_straus_three : isErdosStrausDecomp 3 1 4 12 := by
   unfold isErdosStrausDecomp
   norm_num
+
 
 
 
@@ -53,6 +58,7 @@ theorem erdos_straus_five : isErdosStrausDecomp 5 2 4 20 := by
 
 
 
+
 /-- For n = 7: 4/7 = 1/2 + 1/15 + 1/210... let's just check a few. -/
 theorem erdos_straus_seven : isErdosStrausDecomp 7 2 28 28 := by
   unfold isErdosStrausDecomp
@@ -60,10 +66,16 @@ theorem erdos_straus_seven : isErdosStrausDecomp 7 2 28 28 := by
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.MetaOracleHypotheses
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 17] -/
 theorem erdos_straus_even (k : ℕ) (hk : 0 < k) :
     isErdosStrausDecomp (2 * k) k (2 * k) (2 * k) := by
       constructor <;> try linarith;
       exact ⟨ by positivity, by positivity, by linarith, by linarith, by push_cast; ring ⟩
+
 
 
 
@@ -76,6 +88,7 @@ theorem primeCount_le (n : ℕ) : primeCount n ≤ n + 1 := by
 
 
 
+
 /-- There are no primes ≤ 1. -/
 theorem primeCount_one : primeCount 1 = 0 := by
   unfold primeCount
@@ -83,8 +96,10 @@ theorem primeCount_one : primeCount 1 = 0 := by
 
 
 
+
 theorem primeCount_two : primeCount 2 = 1 := by
   decide +revert
+
 
 
 
@@ -100,6 +115,7 @@ def constellationRigidity : Prop :=
   let G := (goldbachRepCount n : ℝ)
   let ρ := (primeCount n : ℝ) / n
   |G - α * n * ρ^2| < ε * n * ρ^2
+
 
 
 
@@ -169,12 +185,14 @@ theorem irrational_orbit_dense (α : ℝ) (hα : Irrational α) (x : ℝ) (ε : 
 
 
 
+
 theorem erdos_straus_div4 (k : ℕ) (hk : 0 < k) :
     ∃ x y z : ℕ, isErdosStrausDecomp (4 * k) x y z := by
       use 2 * k, 4 * k, 4 * k;
       -- We need to verify that $1/(2k) + 1/(4k) + 1/(4k) = 4/(4k)$.
       simp [isErdosStrausDecomp];
       exact ⟨ hk, by linarith, by ring ⟩
+
 
 
 
@@ -185,6 +203,7 @@ theorem erdos_straus_div3 (k : ℕ) (hk : 0 < k) :
 
 
 
+
 /-- fracDist is nonneg -/
 theorem fracDist_nonneg (x : ℝ) : 0 ≤ fracDist x := by
   unfold fracDist
@@ -192,8 +211,10 @@ theorem fracDist_nonneg (x : ℝ) : 0 ≤ fracDist x := by
 
 
 
+
 theorem fracDist_le_half (x : ℝ) : fracDist x ≤ 1 / 2 := by
   exact min_le_iff.mpr ( by cases le_or_gt ( Int.fract x ) ( 1 / 2 ) <;> [ left; right ] <;> linarith [ Int.fract_nonneg x, Int.fract_lt_one x ] )
+
 
 
 end

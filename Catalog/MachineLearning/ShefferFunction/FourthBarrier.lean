@@ -5,12 +5,12 @@ Domain: MachineLearning/ShefferFunction
 Declarations: 5
 -/
 
-import Mathlib
 import EML.Lean.AdvancedTheorems
 import EML.Lean.OpenQuestions
 import EML.Lean.ShefferAlgebra
 import EML.Lean.SoftplusBasic
 import EML.Lean.ThirdBarrier
+import Mathlib
 
 noncomputable section
 
@@ -28,6 +28,11 @@ theorem sigmoid_mem_of_tanh_mem
   norm_num [ ← Real.exp_add ] ; ring
 
 
+
+/-- [Section: # CatalogBuild.MachineLearning.ShefferFunction.FourthBarrier
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/ShefferFunction
+Declarations: 5] -/
 theorem tanh_mem_of_sigmoid_mem
     (h : (fun x : ℝ => logisticSigmoid x) ∈ ShefferAlgebra) :
     (fun x : ℝ => Real.tanh x) ∈ ShefferAlgebra := by
@@ -42,11 +47,13 @@ theorem tanh_mem_of_sigmoid_mem
   norm_num [ ← Real.exp_add ] ; ring
 
 
+
 /-- Q36 ⟺ Q38: tanh ∈ ShefferAlg if and only if sigmoid ∈ ShefferAlg. -/
 theorem tanh_iff_sigmoid :
     (fun x : ℝ => Real.tanh x) ∈ ShefferAlgebra ↔
     (fun x : ℝ => logisticSigmoid x) ∈ ShefferAlgebra :=
   ⟨sigmoid_mem_of_tanh_mem, tanh_mem_of_sigmoid_mem⟩
+
 
 
 /-- [Section: ## No Higher-Degree Polynomial in ShefferAlg] -/
@@ -65,6 +72,7 @@ theorem no_higher_poly_in_sheffer' (n : ℕ) (hn : n ≥ 2) :
   exact not_tendsto_atTop_of_tendsto_nhds hL ( Filter.Tendsto.const_mul_atTop ( by positivity ) ( Filter.tendsto_pow_atTop ( Nat.sub_ne_zero_of_lt hn ) ) )
 
 
+
 /-- eˣ is not in the Sheffer algebra (new proof via derivative convergence). -/
 theorem exp_not_mem_sheffer' : (fun x : ℝ => Real.exp x) ∉ ShefferAlgebra := by
   intro ⟨e, he⟩
@@ -73,6 +81,7 @@ theorem exp_not_mem_sheffer' : (fun x : ℝ => Real.exp x) ∉ ShefferAlgebra :=
     rw [← he]; ext x; simp
   rw [h_deriv] at hL
   exact not_tendsto_nhds_of_tendsto_atTop Real.tendsto_exp_atTop L hL
+
 
 
 end

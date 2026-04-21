@@ -15,10 +15,12 @@ theorem group_reversal_identity {G : Type*} [Group G] (L : List G) :
 
 
 
+
 /-- The trace of the n×n identity matrix equals n. -/
 theorem trace_identity_eq (n : ℕ) :
     Matrix.trace (1 : Matrix (Fin n) (Fin n) ℝ) = (n : ℝ) := by
   simp +decide [Matrix.trace]
+
 
 
 
@@ -29,5 +31,6 @@ theorem imu_checksum {n : ℕ} (L : List (GL (Fin n) ℝ)) :
     Matrix.trace ((L.prod : GL (Fin n) ℝ) * (L.map (·⁻¹)).reverse.prod).1 = (n : ℝ) := by
   rw [group_reversal_identity]
   convert trace_identity_eq n
+
 
 

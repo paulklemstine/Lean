@@ -20,6 +20,7 @@ theorem eTower_strictMono : StrictMono eTower := by
 
 
 
+
 /-- The e-tower is strictly positive. -/
 theorem eTower_pos (n : ℕ) : 0 < eTower n := by
   induction n with
@@ -28,12 +29,18 @@ theorem eTower_pos (n : ℕ) : 0 < eTower n := by
 
 
 
+
+/-- [Section: # CatalogBuild.Shared.ETower_strictMono
+Auto-generated from theorem catalog database.
+Domain: Shared
+Declarations: 5] -/
 theorem eTower_ge_pow2 (n : ℕ) (hn : 1 ≤ n) : eTower n ≥ 2^n := by
   induction' hn with n hn ih <;> simp_all +decide [ pow_succ', eTower ];
   · linarith [ Real.add_one_le_exp 1 ];
   · have h_exp_growth : Real.exp (2^n) ≥ 2 * 2^n := by
       exact?;
     exact le_trans h_exp_growth ( Real.exp_le_exp.mpr ih )
+
 
 
 
@@ -47,10 +54,14 @@ theorem eTower_ge_n (n : ℕ) : eTower n ≥ n := by
 
 
 
+
 /-- The e-tower: e↑↑n. -/
 def eTower : ℕ → ℝ
   | 0 => 1
   | n + 1 => Real.exp (eTower n)
+
+
+end
 
 
 end

@@ -13,6 +13,7 @@ def antiDiagonal (f : α → Set α) : Set α := {x | x ∉ f x}
 
 
 
+
 /-- [Section: # CatalogBuild.Speculative.Forbidden.CantorsDiabolicalDiagonal
 Auto-generated from theorem catalog database.
 Domain: Speculative/Forbidden
@@ -27,6 +28,11 @@ theorem antiDiagonal_not_in_range (f : α → Set α) :
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Forbidden.CantorsDiabolicalDiagonal
+Auto-generated from theorem catalog database.
+Domain: Speculative/Forbidden
+Declarations: 6] -/
 theorem naturals_inject_but_cannot_surject :
     (∃ f : ℕ → ℝ, Injective f) ∧ (¬ ∃ f : ℕ → ℝ, Surjective f) := by
   refine' ⟨ ⟨ _, Nat.cast_injective ⟩, _ ⟩;
@@ -38,8 +44,10 @@ theorem naturals_inject_but_cannot_surject :
 
 
 
+
 theorem injection_to_powerset : ∃ f : α → Set α, Injective f := by
   exact ⟨ fun x => { x }, fun x y h => by simpa using h ⟩
+
 
 
 
@@ -54,8 +62,10 @@ theorem powerset_strictly_dominates :
 
 
 
+
 theorem diagonal_defeats_enumeration (enum : ℕ → (ℕ → Prop)) :
     ∃ g : ℕ → Prop, ∀ n, g ≠ enum n := by
   exact ⟨ fun n => ¬( enum n ) n, fun n => fun h => by have := congr_fun h n; tauto ⟩
+
 
 

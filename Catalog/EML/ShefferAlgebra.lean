@@ -20,12 +20,14 @@ inductive ShefferExpr : Type where
 
 
 
+
 /-- Evaluate a Sheffer expression at a point -/
 def ShefferExpr.eval : ShefferExpr → ℝ → ℝ
   | .base => softplus
   | .affine_pre a b e => fun x => e.eval (a * x + b)
   | .affine_comb α β γ e₁ e₂ => fun x => α * e₁.eval x + β * e₂.eval x + γ
   | .comp e₁ e₂ => fun x => e₁.eval (e₂.eval x)
+
 
 
 
@@ -38,6 +40,7 @@ def ShefferExpr.depth : ShefferExpr → ℕ
 
 
 
+
 /-- The width of a Sheffer expression (number of base activations) -/
 def ShefferExpr.width : ShefferExpr → ℕ
   | .base => 1
@@ -47,9 +50,11 @@ def ShefferExpr.width : ShefferExpr → ℕ
 
 
 
+
 /-- The Sheffer algebra: the set of all functions representable as Sheffer expressions -/
 def ShefferAlgebra : Set (ℝ → ℝ) :=
   { f | ∃ e : ShefferExpr, f = e.eval }
+
 
 
 
@@ -59,11 +64,13 @@ theorem softplus_mem_sheffer : softplus ∈ ShefferAlgebra :=
 
 
 
+
 /-- The Sheffer algebra is closed under affine pre-composition -/
 theorem sheffer_affine_pre_closed {f : ℝ → ℝ} (hf : f ∈ ShefferAlgebra) (a b : ℝ) :
     (fun x => f (a * x + b)) ∈ ShefferAlgebra := by
   obtain ⟨e, he⟩ := hf
   exact ⟨ShefferExpr.affine_pre a b e, by ext x; simp [ShefferExpr.eval, he]⟩
+
 
 
 
@@ -77,6 +84,7 @@ theorem sheffer_affine_comb_closed {f g : ℝ → ℝ} (hf : f ∈ ShefferAlgebr
 
 
 
+
 /-- The Sheffer algebra is closed under composition -/
 theorem sheffer_comp_closed {f g : ℝ → ℝ} (hf : f ∈ ShefferAlgebra)
     (hg : g ∈ ShefferAlgebra) :
@@ -87,12 +95,14 @@ theorem sheffer_comp_closed {f g : ℝ → ℝ} (hf : f ∈ ShefferAlgebra)
 
 
 
+
 /-- Constants are in the Sheffer algebra -/
 theorem const_mem_sheffer (c : ℝ) : (fun _ : ℝ => c) ∈ ShefferAlgebra := by
   have h := softplus_mem_sheffer
   have := sheffer_affine_comb_closed h h 1 (-1) c
   convert this using 1
   ext x; ring
+
 
 
 
@@ -110,9 +120,11 @@ theorem id_mem_sheffer : (fun x : ℝ => x) ∈ ShefferAlgebra := by
 
 
 
+
 /-- The Sheffer degree of a function: the minimum depth needed to represent it -/
 noncomputable def shefferDegree (f : ℝ → ℝ) : ℕ∞ :=
   ⨅ (e : ShefferExpr) (_ : f = e.eval), (e.depth : ℕ∞)
+
 
 
 

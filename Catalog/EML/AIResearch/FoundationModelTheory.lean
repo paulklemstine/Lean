@@ -16,7 +16,13 @@ Declarations: 20] -/
 def chinchillaTokens (params : ℕ) : ℕ := 20 * params
 
 
+
+/-- [Section: # CatalogBuild.EML.AIResearch.FoundationModelTheory
+Auto-generated from theorem catalog database.
+Domain: EML/AIResearch
+Declarations: 20] -/
 def emlOptTokens (params : ℕ) : ℕ := 10 * params
+
 
 
 
@@ -25,7 +31,9 @@ theorem eml_half_data (N : ℕ) : emlOptTokens N ≤ chinchillaTokens N := by
 
 
 
+
 def trainingFLOPs (params tokens : ℕ) : ℕ := 6 * params * tokens
+
 
 
 
@@ -35,10 +43,13 @@ theorem eml_training_flops_savings (N : ℕ) :
 
 
 
+
 def loraParams (d_model r numLayers : ℕ) : ℕ := 2 * numLayers * d_model * r
 
 
+
 def emlFinetuneParams (depth width : ℕ) : ℕ := 4 * depth * width
+
 
 
 
@@ -49,10 +60,13 @@ theorem eml_finetune_vs_lora (d_model r L depth width : ℕ)
 
 
 
+
 def emergenceThreshold (taskComplexity : ℕ) : ℕ := 2 ^ taskComplexity
 
 
+
 def emlEmergenceThreshold (taskComplexity : ℕ) : ℕ := taskComplexity
+
 
 
 
@@ -62,10 +76,13 @@ theorem eml_earlier_emergence (c : ℕ) (hc : 2 ≤ c) :
 
 
 
+
 def stdFusionParams (dimA dimB fusionDim : ℕ) : ℕ := (dimA + dimB) * fusionDim
 
 
+
 def emlFusionParams (dimA dimB : ℕ) : ℕ := 4 * (dimA + dimB)
+
 
 
 
@@ -76,7 +93,9 @@ theorem eml_fusion_efficiency (dA dB fDim : ℕ) (hf : 4 ≤ fDim) :
 
 
 
+
 def unsharedEmbeddingParams (vocabSize d_model : ℕ) : ℕ := 2 * vocabSize * d_model
+
 
 
 
@@ -86,7 +105,9 @@ theorem shared_embedding_saves (v d : ℕ) :
 
 
 
+
 def modelThroughput (batchSize totalParams : ℕ) : ℝ := ↑batchSize / ↑totalParams
+
 
 
 
@@ -98,13 +119,16 @@ theorem smaller_model_faster (p1 p2 b : ℕ) (hp1 : 0 < p1)
 
 
 
+
 def carbonCost (flops energyPerFlop : ℕ) : ℕ := flops * energyPerFlop
+
 
 
 
 theorem eml_greener (f_eml f_std e : ℕ) (hf : f_eml ≤ f_std) :
     carbonCost f_eml e ≤ carbonCost f_std e := by
   unfold carbonCost; exact Nat.mul_le_mul_right e hf
+
 
 
 

@@ -26,6 +26,11 @@ theorem fixed_point_stability' (f : ℝ → ℝ) (x_star : ℝ) (c : ℝ)
 
 
 
+
+/-- [Section: # CatalogBuild.Algebra.DifferentialEquations
+Auto-generated from theorem catalog database.
+Domain: Algebra
+Declarations: 6] -/
 theorem discrete_gronwall' (u : ℕ → ℝ) (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b)
     (hu : ∀ n, u n ≤ a + b * ∑ k ∈ Finset.range n, u k)
     (hu_nn : ∀ n, 0 ≤ u n) :
@@ -39,9 +44,11 @@ theorem discrete_gronwall' (u : ℕ → ℝ) (a b : ℝ) (ha : 0 ≤ a) (hb : 0 
 
 
 
+
 theorem logistic_fixed_point' (r : ℝ) (hr : r ≠ 0) :
     r * (1 - 1 / r) * (1 - (1 - 1 / r)) = 1 - 1 / r := by
   field_simp; ring
+
 
 
 
@@ -50,6 +57,7 @@ theorem geometric_sum_formula' (x : ℝ) (hx : x ≠ 1) (n : ℕ) :
   induction n with
   | zero => simp
   | succ n ih => rw [Finset.sum_range_succ, mul_add, ih]; ring
+
 
 
 
@@ -68,6 +76,8 @@ theorem fib_bound' : ∀ n : ℕ, Nat.fib n ≤ 2 ^ n := by
 
 
 
+
 theorem euler_total_steps' (T : ℝ) (n : ℕ) (hn : (n : ℝ) ≠ 0) :
     T / n * n = T := by field_simp
+
 

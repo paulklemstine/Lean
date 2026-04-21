@@ -17,8 +17,14 @@ theorem bridge_arith_comb (n : ℕ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.UnifyingBridges
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 6] -/
 theorem number_as_choose (k : ℕ) : k = k.choose 1 := by
   norm_num +zetaDelta at *
+
 
 
 
@@ -29,9 +35,11 @@ theorem choose_factorial_identity (n k : ℕ) (hk : k ≤ n) :
 
 
 
+
 theorem binomial_row_sum_bridge (n : ℕ) :
     ∑ k ∈ range (n + 1), n.choose k = 2 ^ n := by
       rw [ Nat.sum_range_choose ]
+
 
 
 
@@ -41,7 +49,9 @@ theorem euler_totient_sum (n : ℕ) (hn : 0 < n) :
 
 
 
+
 theorem geometric_series_int (r : ℤ) (n : ℕ) :
     (r - 1) * ∑ i ∈ range n, r ^ i = r ^ n - 1 := by
       rw [ mul_comm, geom_sum_mul ]
+
 

@@ -12,6 +12,7 @@ def Q_form (a b c : ℤ) : ℤ := a ^ 2 + b ^ 2 - c ^ 2
 
 
 
+
 /-- An arithmetic particle: an integer triple with its mass classification -/
 structure ArithParticle where
   a : ℤ
@@ -23,9 +24,11 @@ structure ArithParticle where
 
 
 
+
 /-- The mass-squared of a particle -/
 def ArithParticle.massSq (p : ArithParticle) : ℤ :=
   p.c ^ 2 - p.a ^ 2 - p.b ^ 2
+
 
 
 
@@ -35,9 +38,11 @@ def ArithParticle.isPhoton (p : ArithParticle) : Prop :=
 
 
 
+
 /-- A particle is massive (timelike) -/
 def ArithParticle.isMassive' (p : ArithParticle) : Prop :=
   p.massSq > 0
+
 
 
 
@@ -47,9 +52,11 @@ def ArithParticle.isTachyon (p : ArithParticle) : Prop :=
 
 
 
+
 /-- The mass spectrum: which mass-squared values are realized? -/
 def massIsRealized (m_sq : ℤ) : Prop :=
   ∃ a b c : ℤ, 0 < a ∧ 0 < b ∧ 0 < c ∧ c ^ 2 - a ^ 2 - b ^ 2 = m_sq
+
 
 
 
@@ -71,9 +78,11 @@ theorem every_nonneg_mass_realized (m_sq : ℕ) :
 
 
 
+
 /-- The Berggren B₁ matrix action on a triple -/
 def berggren_B1 (a b c : ℤ) : ℤ × ℤ × ℤ :=
   (a - 2*b + 2*c, 2*a - b + 2*c, 2*a - 2*b + 3*c)
+
 
 
 
@@ -86,12 +95,18 @@ theorem B1_preserves_Q (a b c : ℤ) :
 
 
 
+
 /-- B₂ also preserves Q -/
 def berggren_B2 (a b c : ℤ) : ℤ × ℤ × ℤ :=
   (a + 2*b + 2*c, 2*a + b + 2*c, 2*a + 2*b + 3*c)
 
 
 
+
+/-- [Section: # CatalogBuild.Algebra.Core.ArithmeticDarkMatter
+Auto-generated from theorem catalog database.
+Domain: Algebra/Core
+Declarations: 24] -/
 theorem B2_preserves_Q (a b c : ℤ) :
     Q_form (berggren_B2 a b c).1 (berggren_B2 a b c).2.1 (berggren_B2 a b c).2.2
     = Q_form a b c := by
@@ -100,9 +115,11 @@ theorem B2_preserves_Q (a b c : ℤ) :
 
 
 
+
 /-- B₃ also preserves Q -/
 def berggren_B3 (a b c : ℤ) : ℤ × ℤ × ℤ :=
   (-a + 2*b + 2*c, -2*a + b + 2*c, -2*a + 2*b + 3*c)
+
 
 
 
@@ -114,6 +131,7 @@ theorem B3_preserves_Q (a b c : ℤ) :
 
 
 
+
 /-- A path in the dark matter tree (same branching as the photon tree) -/
 inductive DarkPath where
   | root : DarkPath
@@ -121,6 +139,7 @@ inductive DarkPath where
   | b2 : DarkPath → DarkPath
   | b3 : DarkPath → DarkPath
   deriving Repr
+
 
 
 
@@ -136,6 +155,7 @@ def darkTriple (seed : ℤ × ℤ × ℤ) : DarkPath → ℤ × ℤ × ℤ
   | .b3 p =>
     let (a, b, c) := darkTriple seed p
     (-a + 2*b + 2*c, -2*a + b + 2*c, -2*a + 2*b + 3*c)
+
 
 
 
@@ -175,6 +195,7 @@ theorem dark_mass_conservation (seed : ℤ × ℤ × ℤ) (p : DarkPath) :
 
 
 
+
 /-- Count triples by mass-squared value up to bound N -/
 def massCensus (N : ℕ) : List (ℤ × ℕ) :=
   let triples := do
@@ -196,6 +217,7 @@ def massCensus (N : ℕ) : List (ℤ × ℕ) :=
 
 
 
+
 /-- The fraction of Pythagorean triples among all positive triples -/
 def photonFraction (N : ℕ) : ℕ × ℕ :=
   let triples := do
@@ -211,6 +233,7 @@ def photonFraction (N : ℕ) : ℕ × ℕ :=
 #eval photonFraction 20   -- photons vs total
 #eval photonFraction 50
 #eval photonFraction 100
+
 
 
 
@@ -242,6 +265,7 @@ def darkTreeLevel (seed : ℤ × ℤ × ℤ) : ℕ → List (ℤ × ℤ × ℤ)
 
 
 
+
 /-- The universal branching number (independent of mass) -/
 theorem universal_branching : ∀ (seed : ℤ × ℤ × ℤ),
     (darkTreeLevel seed 1).length = 3 * (darkTreeLevel seed 0).length := by
@@ -250,13 +274,16 @@ theorem universal_branching : ∀ (seed : ℤ × ℤ × ℤ),
 
 
 
+
 /-- The number of possible photon states at depth n -/
 def photonStates (n : ℕ) : ℕ := 3 ^ n
 
 
 
+
 /-- The number of possible dark matter states at depth n with m mass choices -/
 def darkStates (n m : ℕ) : ℕ := m * 3 ^ n
+
 
 
 
@@ -266,5 +293,6 @@ theorem dark_has_more_states (n : ℕ) (m : ℕ) (hm : 1 < m) :
   unfold photonStates darkStates
   have h3 : 0 < 3 ^ n := Nat.pos_of_ne_zero (by positivity)
   nlinarith
+
 
 

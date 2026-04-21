@@ -18,8 +18,10 @@ theorem divisor_pair_triple (N d e : ℤ) (hprod : d * e = N ^ 2)
 
 
 
+
 /-- gcd(d, N) divides N. -/
 theorem gcd_divides (N d : ℕ) : Nat.gcd d N ∣ N := Nat.gcd_dvd_right d N
+
 
 
 
@@ -29,6 +31,11 @@ theorem semiprime_shortcut (p q : ℕ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.Research.NontrivialShortcuts
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Research
+Declarations: 8] -/
 theorem nontrivial_pair_implies_factor (N d e : ℕ) (hN : 1 < N)
     (hprod : d * e = N ^ 2) (hd1 : 1 < d) (hdN : d < N) :
     1 < Nat.gcd d N := by
@@ -41,6 +48,7 @@ theorem nontrivial_pair_implies_factor (N d e : ℕ) (hN : 1 < N)
 
 
 
+
 /-- Any factor gives a non-trivial divisor pair. -/
 theorem factor_gives_pair (N g : ℕ) (hN : 1 < N)
     (hg_dvd : g ∣ N) (hg1 : 1 < g) (hgN : g < N) :
@@ -50,9 +58,11 @@ theorem factor_gives_pair (N g : ℕ) (hN : 1 < N)
 
 
 
+
 /-- Fermat identity. -/
 theorem fermat_two_square_triple (a b : ℤ) :
     (a ^ 2 - b ^ 2) ^ 2 + (2 * a * b) ^ 2 = (a ^ 2 + b ^ 2) ^ 2 := by ring
+
 
 
 
@@ -66,7 +76,9 @@ theorem four_pairs_semiprimes (p q : ℕ) :
 
 
 
+
 /-- Odd leg = difference of squares. -/
 theorem optimal_start_params (m n : ℤ) :
     m ^ 2 - n ^ 2 = (m - n) * (m + n) := by ring
+
 

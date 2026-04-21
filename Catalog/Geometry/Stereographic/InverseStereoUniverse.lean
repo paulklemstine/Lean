@@ -1,5 +1,3 @@
-import Mathlib
-
 /-! # CatalogBuild.Geometry.Stereographic.InverseStereoUniverse
 
 Auto-generated from theorem catalog database.
@@ -7,6 +5,7 @@ Domain: Geometry/Stereographic
 Declarations: 46
 -/
 
+import Mathlib
 
 noncomputable section
 
@@ -19,14 +18,17 @@ def invStereoCircle' (t : ℝ) : ℝ × ℝ :=
 
 
 
+
 /-- Forward stereographic projection S¹ → ℝ.
 The "observation" map: decoding the sphere back to the line. -/
 def stereoForwardCircle' (p : ℝ × ℝ) : ℝ := p.1 / (1 + p.2)
 
 
 
+
 /-- The denominator 1 + t² is always positive — the encoding is always well-defined. -/
 theorem inv_stereo_denom_pos' (t : ℝ) : (0 : ℝ) < 1 + t ^ 2 := by positivity
+
 
 
 
@@ -37,6 +39,7 @@ theorem inv_stereo_on_circle' (t : ℝ) :
   simp only [invStereoCircle']
   have h : (1 : ℝ) + t ^ 2 ≠ 0 := by positivity
   field_simp; ring
+
 
 
 
@@ -55,6 +58,7 @@ theorem inv_stereo_injective' : Function.Injective invStereoCircle' := by
 
 
 
+
 /-- **Encoding Theorem 3**: Perfect round-trip decoding.
 Forward projection after inverse projection recovers the original value. -/
 theorem stereo_round_trip' (t : ℝ) :
@@ -62,6 +66,7 @@ theorem stereo_round_trip' (t : ℝ) :
   simp only [stereoForwardCircle', invStereoCircle']
   have h : (1 : ℝ) + t ^ 2 ≠ 0 := by positivity
   field_simp; ring
+
 
 
 
@@ -73,12 +78,14 @@ theorem inv_stereo_conformal_factor' (t : ℝ) :
 
 
 
+
 /-- Inverse stereographic projection ℝ² → S².
 Two real numbers encode a point on the 2-sphere.
 This is the Bloch sphere map in quantum mechanics. -/
 def invStereoSphere' (u v : ℝ) : ℝ × ℝ × ℝ :=
   let d := 1 + u ^ 2 + v ^ 2
   (2 * u / d, 2 * v / d, (1 - u ^ 2 - v ^ 2) / d)
+
 
 
 
@@ -92,12 +99,14 @@ theorem inv_stereo_on_sphere' (u v : ℝ) :
 
 
 
+
 /-- Inverse stereographic projection ℝ³ → S³.
 Three real numbers encode a point on the 3-sphere.
 This connects to quaternions and the Hopf fibration. -/
 def invStereoHyper' (u v w : ℝ) : ℝ × ℝ × ℝ × ℝ :=
   let d := 1 + u ^ 2 + v ^ 2 + w ^ 2
   (2 * u / d, 2 * v / d, 2 * w / d, (1 - u ^ 2 - v ^ 2 - w ^ 2) / d)
+
 
 
 
@@ -111,14 +120,17 @@ theorem inv_stereo_on_hypersphere' (u v w : ℝ) :
 
 
 
+
 /-- The stereographic denominator for rational parameter p/q. -/
 def stereoDenom' (p q : ℤ) : ℤ := p ^ 2 + q ^ 2
+
 
 
 
 /-- The stereographic denominator is always nonneg. -/
 theorem stereo_denom_nonneg' (p q : ℤ) : 0 ≤ stereoDenom' p q := by
   unfold stereoDenom'; positivity
+
 
 
 
@@ -132,6 +144,7 @@ theorem stereo_denom_pos' (p q : ℤ) (h : ¬(p = 0 ∧ q = 0)) :
 
 
 
+
 /-- A Gaussian integer, representing a potential "particle" in the PRISM framework. -/
 structure PrismGaussian where
   re : ℤ
@@ -140,8 +153,10 @@ structure PrismGaussian where
 
 
 
+
 /-- The norm of a Gaussian integer (its "mass-energy"). -/
 def PrismGaussian.norm (z : PrismGaussian) : ℤ := z.re ^ 2 + z.im ^ 2
+
 
 
 
@@ -152,10 +167,12 @@ def PrismGaussian.mul (a b : PrismGaussian) : PrismGaussian where
 
 
 
+
 /-- The norm is multiplicative — "mass-energy" is conserved under composition. -/
 theorem gaussian_norm_multiplicative' (a b : PrismGaussian) :
     (PrismGaussian.mul a b).norm = a.norm * b.norm := by
   simp only [PrismGaussian.mul, PrismGaussian.norm]; ring
+
 
 
 
@@ -169,15 +186,22 @@ theorem stereo_denom_is_gaussian_norm' (p q : ℤ) :
 
 
 
+
 /-- For integer parameter t = n (i.e., q = 1), the denominator is 1 + n².
 The factorization of 1 + n² over ℤ[i] determines the particle content. -/
 def integerParticleEnergy' (n : ℤ) : ℤ := stereoDenom' n 1
 
 
 
+
+/-- [Section: # CatalogBuild.Geometry.Stereographic.InverseStereoUniverse
+Auto-generated from theorem catalog database.
+Domain: Geometry/Stereographic
+Declarations: 46] -/
 theorem integer_particle_energy_eq' (n : ℤ) :
     integerParticleEnergy' n = 1 + n ^ 2 := by
   simp [integerParticleEnergy', stereoDenom']; ring
+
 
 
 
@@ -187,9 +211,11 @@ theorem vacuum_energy' : integerParticleEnergy' 0 = 1 := by
 
 
 
+
 /-- At t = 1: energy = 2 = (1+i)(1−i), a single "photon-particle". -/
 theorem single_particle_energy' : integerParticleEnergy' 1 = 2 := by
   simp [integerParticleEnergy', stereoDenom']
+
 
 
 
@@ -199,15 +225,18 @@ theorem gaussian_prime_particle' : integerParticleEnergy' 2 = 5 := by
 
 
 
+
 /-- At t = 3: energy = 10 = 2 × 5 = (1+i)(1−i)(2+i)(2−i), two particles! -/
 theorem two_particle_energy' : integerParticleEnergy' 3 = 10 := by
   simp [integerParticleEnergy', stereoDenom']
 
 
 
+
 /-- At t = 7: energy = 50 = 2 × 5², three Gaussian prime factors. -/
 theorem three_factor_energy' : integerParticleEnergy' 7 = 50 := by
   simp [integerParticleEnergy', stereoDenom']
+
 
 
 
@@ -224,9 +253,11 @@ inductive PrismPhotonChannel where
 
 
 
+
 /-- There are exactly 7 channels. -/
 theorem photon_info_channel_count' : Fintype.card PrismPhotonChannel = 7 := by
   decide
+
 
 
 
@@ -242,10 +273,12 @@ def prismIsInfiniteChannel : PrismPhotonChannel → Bool
 
 
 
+
 /-- 6 out of 7 channels are infinite-dimensional. -/
 theorem six_infinite_channels' :
     (Finset.univ.filter (fun c : PrismPhotonChannel => prismIsInfiniteChannel c)).card = 6 := by
   decide
+
 
 
 
@@ -256,9 +289,11 @@ theorem only_polarization_finite' :
 
 
 
+
 /-- The 1D encoding is injective (no information loss). -/
 theorem encoding_faithful : Function.Injective invStereoCircle' :=
   inv_stereo_injective'
+
 
 
 
@@ -266,6 +301,7 @@ theorem encoding_faithful : Function.Injective invStereoCircle' :=
 theorem encoding_on_compact (t : ℝ) :
     (invStereoCircle' t).1 ^ 2 + (invStereoCircle' t).2 ^ 2 = 1 :=
   inv_stereo_on_circle' t
+
 
 
 
@@ -277,9 +313,11 @@ theorem conformal_factor_bounded' (t : ℝ) :
 
 
 
+
 /-- The conformal factor achieves its maximum at t = 0 (the "center of the universe"). -/
 theorem conformal_factor_max_at_zero' :
     2 / (1 + (0 : ℝ) ^ 2) = 2 := by ring
+
 
 
 
@@ -290,12 +328,14 @@ def ladderR1toS2' (t : ℝ) : ℝ × ℝ × ℝ :=
 
 
 
+
 /-- The ladder encoding always produces a valid point on S². -/
 theorem ladder_on_sphere' (t : ℝ) :
     let p := ladderR1toS2' t
     p.1 ^ 2 + p.2.1 ^ 2 + p.2.2 ^ 2 = 1 := by
   simp only [ladderR1toS2']
   exact inv_stereo_on_sphere' _ _
+
 
 
 
@@ -309,6 +349,7 @@ theorem cayley_on_unit_circle' (t : ℝ) :
 
 
 
+
 /-- The Cayley transform's real part matches inverse stereo's y-coordinate. -/
 theorem cayley_real_eq_stereo_y' (t : ℝ) :
     (1 - t ^ 2) / (1 + t ^ 2) = (invStereoCircle' t).2 := by
@@ -316,10 +357,12 @@ theorem cayley_real_eq_stereo_y' (t : ℝ) :
 
 
 
+
 /-- The Cayley transform's imaginary part matches inverse stereo's x-coordinate. -/
 theorem cayley_imag_eq_stereo_x' (t : ℝ) :
     2 * t / (1 + t ^ 2) = (invStereoCircle' t).1 := by
   simp [invStereoCircle']
+
 
 
 
@@ -331,10 +374,12 @@ theorem inv_stereo_Z2_x' (t : ℝ) :
 
 
 
+
 /-- Z₂ symmetry: negation preserves the y-coordinate. -/
 theorem inv_stereo_Z2_y' (t : ℝ) :
     (invStereoCircle' (-t)).2 = (invStereoCircle' t).2 := by
   simp [invStereoCircle']
+
 
 
 
@@ -345,8 +390,10 @@ theorem pythagorean_from_stereo' (n : ℤ) :
 
 
 
+
 /-- The number of distinguishable states in k bits. -/
 def statesInBits' (k : ℕ) : ℕ := 2 ^ k
+
 
 
 
@@ -356,10 +403,12 @@ theorem photon_min_states' :
 
 
 
+
 /-- The observable universe has roughly 10^80 baryons ≈ 2^266 particles.
 A photon with ~266 bits of information (38 bits/channel) could index every one. -/
 theorem universe_particle_index' :
     statesInBits' 266 > 10 ^ 79 := by native_decide
+
 
 
 

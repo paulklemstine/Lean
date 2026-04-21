@@ -29,6 +29,11 @@ theorem dickian_fixed_point_exists
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.DickianMath
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 11] -/
 theorem black_iron_prison_unique
     {L : Type*} [CompleteLattice L] (Φ : L →o L)
     (h_deflate : ∀ x : L, x ≠ ⊥ → Φ x < x) :
@@ -37,9 +42,11 @@ theorem black_iron_prison_unique
 
 
 
+
 theorem ubik_collapse_time_formula :
     (1 : ℝ) ^ ((1 : ℝ) - 2) / (1 * (2 - 1)) = 1 := by
   norm_num +zetaDelta at *
+
 
 
 
@@ -50,11 +57,13 @@ theorem ubik_stabilizer_formula (a C_target b : ℝ) (ha : 0 < a) (hC : 0 < C_ta
 
 
 
+
 theorem connected_image_connected
     {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]
     [ConnectedSpace X] (f : X → Y) (hf : Continuous f) (hfs : Function.Surjective f) :
     ConnectedSpace Y := by
   grind +suggestions
+
 
 
 
@@ -74,11 +83,13 @@ theorem no_retraction_to_disconnected
 
 
 
+
 theorem perfect_precog_no_free_will
     {X Y : Type*} (act predict : X → Y)
     (h_perfect : ∀ x, predict x = act x) :
     ∀ x, act x = predict x := by
   exact fun x => h_perfect x ▸ rfl
+
 
 
 
@@ -91,11 +102,13 @@ theorem minority_report_paradox
 
 
 
+
 theorem mercerism_instability_condition
     (decay spec_rad coupling : ℝ) (hd : 0 < decay) (hs : 0 < spec_rad)
     (hw : decay / spec_rad < coupling) :
     0 < coupling * spec_rad - decay := by
   nlinarith [ div_mul_cancel₀ decay hs.ne' ]
+
 
 
 
@@ -107,10 +120,12 @@ theorem below_critical_stable
 
 
 
+
 theorem self_reference_bound
     {α : Type*} [Fintype α] [DecidableEq α] (f : α → α)
     (h_not_id : f ≠ id) :
     (Finset.univ.filter (fun x => f x = x)).card < Fintype.card α := by
   exact Finset.card_lt_card ( Finset.ssubset_iff_subset_ne.mpr ⟨ Finset.filter_subset _ _, by intro h; exact h_not_id ( funext fun x => by simpa using Finset.ext_iff.mp h x ) ⟩ )
+
 
 

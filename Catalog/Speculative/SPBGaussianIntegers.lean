@@ -19,6 +19,7 @@ theorem gaussian_norm_of_spb (n : ℤ) :
 
 
 
+
 /-- Gaussian integer multiplication is norm-multiplicative. -/
 theorem gaussian_mul_norm (z w : GaussianInt) :
     (z * w).norm = z.norm * w.norm :=
@@ -26,9 +27,15 @@ theorem gaussian_mul_norm (z w : GaussianInt) :
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.SPBGaussianIntegers
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 4] -/
 theorem spb_det_product (a b : ℤ) :
     ((⟨1, a⟩ : GaussianInt) * ⟨1, b⟩).norm = (1 + a ^ 2) * (1 + b ^ 2) := by
   exact Eq.symm ( by erw [ Zsqrtd.norm_def ] ; norm_num ; ring )
+
 
 
 
@@ -36,6 +43,7 @@ theorem spb_det_product (a b : ℤ) :
 theorem spbZMod_zero {p : ℕ} [Fact (Nat.Prime p)] (x : ZMod p) :
     spbZMod x 0 = x := by
   simp [spbZMod]
+
 
 
 

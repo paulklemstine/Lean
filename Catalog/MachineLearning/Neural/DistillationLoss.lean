@@ -1,29 +1,18 @@
-import Mathlib
+/-! # CatalogBuild.MachineLearning.Neural.DistillationLoss
 
-/-! # Knowledge Distillation Loss Functions — Formal Verification
-
-This module formalizes the mathematics of knowledge distillation (KD),
-where a large "Teacher" model trains a smaller "Student" model.
-
-## Key results
-
-1. **Softmax normalization**: outputs form a valid probability distribution.
-2. **KL divergence non-negativity** (Gibbs' inequality).
-3. **Temperature scaling**: higher temperature → softer distribution.
-4. **Distillation loss decomposition**: combined loss decomposes into
-   a task loss and a divergence penalty.
-5. **Student-teacher output bound**: matching logits within ε bounds KL.
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/Neural
+Declarations: 16
 -/
 
+import Mathlib
+
 noncomputable section
-
-open BigOperators Real Finset
-
-/-! ## Section 1: Softmax and Probability Distributions -/
 
 /-- Softmax function: maps logits to a probability distribution. -/
 def softmax' (n : ℕ) (T : ℝ) (logits : Fin n → ℝ) (i : Fin n) : ℝ :=
   Real.exp (logits i / T) / ∑ j : Fin n, Real.exp (logits j / T)
+
 
 /-- The softmax partition function is positive. -/
 theorem softmax_partition_pos' (n : ℕ) (hn : 0 < n) (T : ℝ) (hT : 0 < T)
@@ -34,12 +23,14 @@ theorem softmax_partition_pos' (n : ℕ) (hn : 0 < n) (T : ℝ) (hT : 0 < T)
   · haveI : Nonempty (Fin n) := ⟨⟨0, hn⟩⟩
     exact Finset.univ_nonempty
 
+
 /-- Each softmax output is non-negative. -/
 theorem softmax_nonneg' (n : ℕ) (hn : 0 < n) (T : ℝ) (hT : 0 < T)
     (logits : Fin n → ℝ) (i : Fin n) :
     0 ≤ softmax' n T logits i := by
   apply div_nonneg (le_of_lt (Real.exp_pos _))
     (le_of_lt (softmax_partition_pos' n hn T hT logits))
+
 
 /-- Softmax outputs sum to 1. -/
 theorem softmax_sum_eq_one' (n : ℕ) (hn : 0 < n) (T : ℝ) (hT : 0 < T)
@@ -49,13 +40,13 @@ theorem softmax_sum_eq_one' (n : ℕ) (hn : 0 < n) (T : ℝ) (hT : 0 < T)
   rw [← Finset.sum_div]
   exact div_self (ne_of_gt (softmax_partition_pos' n hn T hT logits))
 
-/-
-Each softmax output is at most 1.
--/
+
+/-- [Section: ## Section 1: Softmax and Probability Distributions] -/
 theorem softmax_le_one' (n : ℕ) (hn : 0 < n) (T : ℝ) (hT : 0 < T)
     (logits : Fin n → ℝ) (i : Fin n) :
     softmax' n T logits i ≤ 1 := by
   exact div_le_one_of_le₀ ( Finset.single_le_sum ( fun a _ => Real.exp_nonneg ( logits a / T ) ) ( Finset.mem_univ i ) ) ( Finset.sum_nonneg fun _ _ => Real.exp_nonneg _ )
+
 
 /-- Each softmax output is strictly positive. -/
 theorem softmax_pos' (n : ℕ) (hn : 0 < n) (T : ℝ) (hT : 0 < T)
@@ -63,11 +54,11 @@ theorem softmax_pos' (n : ℕ) (hn : 0 < n) (T : ℝ) (hT : 0 < T)
     0 < softmax' n T logits i := by
   apply div_pos (Real.exp_pos _) (softmax_partition_pos' n hn T hT logits)
 
-/-! ## Section 2: KL Divergence -/
 
 /-- KL divergence between two discrete distributions over Fin n. -/
 def klDiv' (n : ℕ) (p q : Fin n → ℝ) : ℝ :=
   ∑ i : Fin n, if p i = 0 then 0 else p i * Real.log (p i / q i)
+
 
 /-- KL divergence of a distribution with itself is zero. -/
 theorem klDiv_self' (n : ℕ) (p : Fin n → ℝ) (hp_pos : ∀ i, 0 < p i) :
@@ -78,7 +69,6 @@ theorem klDiv_self' (n : ℕ) (p : Fin n → ℝ) (hp_pos : ∀ i, 0 < p i) :
   have hpi : p i ≠ 0 := ne_of_gt (hp_pos i)
   simp [hpi]
 
-/-! ## Section 3: Temperature Scaling Properties -/
 
 /-- The softmax of a constant vector is uniform. -/
 theorem softmax_constant_is_uniform' (n : ℕ) (hn : 0 < n) (T : ℝ) (hT : 0 < T)
@@ -89,16 +79,16 @@ theorem softmax_constant_is_uniform' (n : ℕ) (hn : 0 < n) (T : ℝ) (hT : 0 < 
   rw [Finset.sum_const, Finset.card_fin, nsmul_eq_mul]
   field_simp
 
-/-! ## Section 4: Distillation Loss -/
 
 /-- The distillation loss: weighted combination of hard-label cross-entropy
-    and soft-label KL divergence from teacher. -/
+and soft-label KL divergence from teacher. -/
 def distillationLoss' (n : ℕ) (α : ℝ)
     (studentLogits teacherLogits : Fin n → ℝ)
     (trueLabel : Fin n) (T : ℝ) : ℝ :=
   let hardLoss := -Real.log (softmax' n 1 studentLogits trueLabel)
   let softLoss := klDiv' n (softmax' n T teacherLogits) (softmax' n T studentLogits)
   (1 - α) * hardLoss + α * T ^ 2 * softLoss
+
 
 /-- When α = 0, distillation loss reduces to standard cross-entropy. -/
 theorem distillationLoss_alpha_zero' (n : ℕ)
@@ -108,6 +98,7 @@ theorem distillationLoss_alpha_zero' (n : ℕ)
     -Real.log (softmax' n 1 studentLogits trueLabel) := by
   simp [distillationLoss']
 
+
 /-- When α = 1, distillation loss reduces to pure KD loss. -/
 theorem distillationLoss_alpha_one' (n : ℕ)
     (studentLogits teacherLogits : Fin n → ℝ)
@@ -116,7 +107,6 @@ theorem distillationLoss_alpha_one' (n : ℕ)
     T ^ 2 * klDiv' n (softmax' n T teacherLogits) (softmax' n T studentLogits) := by
   simp [distillationLoss']
 
-/-! ## Section 5: Logit Matching Bounds -/
 
 /-- If student logits match teacher logits exactly, the soft KL loss is zero. -/
 theorem logit_match_zero_kl' (n : ℕ) (hn : 0 < n) (T : ℝ) (hT : 0 < T)
@@ -125,16 +115,17 @@ theorem logit_match_zero_kl' (n : ℕ) (hn : 0 < n) (T : ℝ) (hT : 0 < T)
   apply klDiv_self'
   intro i; exact softmax_pos' n hn T hT logits i
 
+
 /-- Quadratic bound on logit perturbation. -/
 def logitPerturbationSqBound' (n : ℕ) (T ε : ℝ) : ℝ :=
   n * (ε / T) ^ 2
+
 
 /-- The perturbation bound is non-negative. -/
 theorem logitPerturbationSqBound_nonneg' (n : ℕ) (T ε : ℝ) :
     0 ≤ logitPerturbationSqBound' n T ε := by
   unfold logitPerturbationSqBound'; positivity
 
-/-! ## Section 6: Monotonicity of Distillation Loss -/
 
 /-- The distillation loss is monotone in α when soft loss dominates. -/
 theorem distillationLoss_mono_alpha'
@@ -144,5 +135,6 @@ theorem distillationLoss_mono_alpha'
     (1 - α₁) * hardLoss + α₁ * T ^ 2 * softLoss ≤
     (1 - α₂) * hardLoss + α₂ * T ^ 2 * softLoss := by
   nlinarith
+
 
 end

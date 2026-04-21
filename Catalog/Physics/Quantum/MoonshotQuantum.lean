@@ -16,13 +16,20 @@ theorem no_cloning_core_real (x : ℝ) (h : x = x ^ 2) : x = 0 ∨ x = 1 := by
 
 
 
+
+/-- [Section: # CatalogBuild.Physics.Quantum.MoonshotQuantum
+Auto-generated from theorem catalog database.
+Domain: Physics/Quantum
+Declarations: 61] -/
 theorem no_cloning_core_complex (z : ℂ) (h : z = z ^ 2) : z = 0 ∨ z = 1 := by
   exact or_iff_not_imp_left.mpr fun h0 => mul_left_cancel₀ h0 <| by linear_combination' h.symm;
 
 
 
+
 theorem no_cloning_core_int (n : ℤ) (h : n = n ^ 2) : n = 0 ∨ n = 1 := by
   cases le_or_gt n 0 <;> [ left; right ] <;> nlinarith
+
 
 
 
@@ -35,11 +42,13 @@ theorem idempotent_function_binary (f : α → ℝ) (h : ∀ x, f x = (f x) ^ 2)
 
 
 
+
 /-- **Time-reversal for 2×2 integer matrices with det = ±1**.
 If det(M) = ±1, then M is invertible over ℤ. We construct the
 explicit inverse using the adjugate (classical adjoint). -/
 def time_reverse_matrix (M : Matrix (Fin 2) (Fin 2) ℤ) : Matrix (Fin 2) (Fin 2) ℤ :=
   !![M 1 1, -(M 0 1); -(M 1 0), M 0 0]
+
 
 
 
@@ -49,9 +58,11 @@ theorem time_reverse_mul (M : Matrix (Fin 2) (Fin 2) ℤ) :
 
 
 
+
 theorem time_reverse_det_one (M : Matrix (Fin 2) (Fin 2) ℤ) (hdet : M.det = 1) :
     M * (time_reverse_matrix M) = 1 := by
   convert time_reverse_mul M using 1 ; aesop
+
 
 
 
@@ -61,9 +72,11 @@ theorem time_reverse_det_neg_one (M : Matrix (Fin 2) (Fin 2) ℤ) (hdet : M.det 
 
 
 
+
 theorem double_time_reverse (M : Matrix (Fin 2) (Fin 2) ℤ) :
     time_reverse_matrix (time_reverse_matrix M) = M := by
   unfold time_reverse_matrix; ext i j; fin_cases i <;> fin_cases j <;> norm_num;
+
 
 
 
@@ -75,9 +88,11 @@ theorem pauli_X_adjugate :
 
 
 
+
 theorem pauli_Z_self_adjoint :
     time_reverse_matrix (!![1, 0; 0, -1] : Matrix (Fin 2) (Fin 2) ℤ) = !![-1, 0; 0, 1] := by
   native_decide +revert
+
 
 
 
@@ -92,8 +107,10 @@ theorem time_reverse_antimorphism (A B : Matrix (Fin 2) (Fin 2) ℤ)
 
 
 
+
 /-- The identity matrix (encoding "00"). -/
 def pauli_I : Matrix (Fin 2) (Fin 2) ℤ := 1
+
 
 
 
@@ -102,13 +119,16 @@ def sd_X : Matrix (Fin 2) (Fin 2) ℤ := !![0, 1; 1, 0]
 
 
 
+
 /-- Pauli Z (encoding "10"). -/
 def sd_Z : Matrix (Fin 2) (Fin 2) ℤ := !![1, 0; 0, -1]
 
 
 
+
 /-- Pauli XZ (encoding "11"). -/
 def sd_XZ : Matrix (Fin 2) (Fin 2) ℤ := !![0, -1; 1, 0]
+
 
 
 
@@ -119,8 +139,10 @@ theorem trace_orth_I_X : Matrix.trace (pauli_Iᵀ * sd_X) = 0 := by
 
 
 
+
 theorem trace_orth_I_Z : Matrix.trace (pauli_Iᵀ * sd_Z) = 0 := by
   native_decide
+
 
 
 
@@ -129,8 +151,10 @@ theorem trace_orth_I_XZ : Matrix.trace (pauli_Iᵀ * sd_XZ) = 0 := by
 
 
 
+
 theorem trace_orth_X_Z : Matrix.trace (sd_Xᵀ * sd_Z) = 0 := by
   native_decide
+
 
 
 
@@ -139,8 +163,10 @@ theorem trace_orth_X_XZ : Matrix.trace (sd_Xᵀ * sd_XZ) = 0 := by
 
 
 
+
 theorem trace_orth_Z_XZ : Matrix.trace (sd_Zᵀ * sd_XZ) = 0 := by
   native_decide
+
 
 
 
@@ -148,13 +174,17 @@ theorem trace_orth_Z_XZ : Matrix.trace (sd_Zᵀ * sd_XZ) = 0 := by
 theorem trace_norm_I : Matrix.trace (pauli_Iᵀ * pauli_I) = 2 := by native_decide
 
 
+
 theorem trace_norm_X : Matrix.trace (sd_Xᵀ * sd_X) = 2 := by native_decide
+
 
 
 theorem trace_norm_Z : Matrix.trace (sd_Zᵀ * sd_Z) = 2 := by native_decide
 
 
+
 theorem trace_norm_XZ : Matrix.trace (sd_Xᵀ * sd_XZ) = 0 := by native_decide
+
 
 
 
@@ -165,16 +195,20 @@ theorem superdense_capacity : (Fintype.card (Fin 2)) ^ 2 = 4 := by norm_num
 
 
 
+
 /-- **The Pauli group structure**: The four Pauli matrices form a group
 under multiplication (up to signs). -/
 theorem pauli_group_closure_X_sq : sd_X * sd_X = 1 := by native_decide
 
 
+
 theorem pauli_group_closure_Z_sq : sd_Z * sd_Z = 1 := by native_decide
+
 
 
 theorem pauli_group_closure_XZ_sq : sd_XZ * sd_XZ = -(1 : Matrix (Fin 2) (Fin 2) ℤ) := by
   native_decide
+
 
 
 
@@ -186,6 +220,7 @@ theorem classical_CHSH_bound (a a' b b' : ℤ)
 
 
 
+
 theorem classical_CHSH_bound_abs (a a' b b' : ℤ)
     (ha : a = 1 ∨ a = -1) (ha' : a' = 1 ∨ a' = -1)
     (hb : b = 1 ∨ b = -1) (hb' : b' = 1 ∨ b' = -1) :
@@ -194,13 +229,16 @@ theorem classical_CHSH_bound_abs (a a' b b' : ℤ)
 
 
 
+
 theorem quantum_exceeds_classical : (2 : ℝ) < 2 * Real.sqrt 2 := by
   nlinarith [ Real.sqrt_nonneg 2, Real.sq_sqrt zero_le_two ]
 
 
 
+
 theorem tsirelson_bound_sq : (2 * Real.sqrt 2) ^ 2 = (8 : ℝ) := by
   norm_num [ mul_pow ]
+
 
 
 
@@ -215,6 +253,7 @@ def symplectic_inner (n : ℕ) (a b : Fin n → ZMod 2 × ZMod 2) : ZMod 2 :=
 
 
 
+
 /-- **The [[5,1,3]] perfect code**: Smallest code correcting 1 error.
 5 physical qubits protect 1 logical qubit with distance 3.
 We verify the Singleton bound: k ≤ n - 2(d-1). -/
@@ -222,8 +261,10 @@ theorem perfect_code_singleton : 1 ≤ 5 - 2 * (3 - 1) := by norm_num
 
 
 
+
 /-- **The [[7,1,3]] Steane code satisfies the Singleton bound**. -/
 theorem steane_code_singleton : 1 ≤ 7 - 2 * (3 - 1) := by norm_num
+
 
 
 
@@ -234,8 +275,10 @@ theorem quantum_hamming_bound_5_1_3 :
 
 
 
+
 /-- **Error correction rate**: For the Steane code, the code rate is k/n = 1/7. -/
 theorem steane_code_rate : (1 : ℚ) / 7 < 1 := by norm_num
+
 
 
 
@@ -248,9 +291,11 @@ theorem gate_counting_lower_bound (k d n : ℕ) (hk : 2 ≤ k) (hn : 1 ≤ n) :
 
 
 
+
 theorem depth_log_bound (k d : ℕ) (hk : 2 ≤ k) (hd : 0 < d) :
     k ^ d > d := by
   exact Nat.le_induction ( by linarith ) ( fun n hn ih => by rw [ pow_succ' ] ; nlinarith ) d hd
+
 
 
 
@@ -259,8 +304,10 @@ theorem exponential_beats_polynomial (n : ℕ) (hn : 13 ≤ n) : 2 ^ n > n ^ 3 :
 
 
 
+
 theorem knill_lower_bound_base (n : ℕ) (hn : 1 ≤ n) : 4 ^ n ≥ 4 * n := by
   induction hn <;> norm_num [ pow_succ' ] at * ; linarith
+
 
 
 
@@ -270,9 +317,11 @@ theorem bloch_sphere_constraint (x y z : ℝ) (h : x ^ 2 + y ^ 2 + z ^ 2 = 1) :
 
 
 
+
 theorem purity_bound_bloch (x y z : ℝ) (h : x ^ 2 + y ^ 2 + z ^ 2 ≤ 1) :
     (1 + (x ^ 2 + y ^ 2 + z ^ 2)) / 2 ≤ 1 := by
   linarith
+
 
 
 
@@ -282,9 +331,11 @@ theorem max_entropy_qubit : Real.log 2 > 0 := Real.log_pos (by norm_num)
 
 
 
+
 /-- Elliptic gates rotate the Bloch sphere. -/
 def is_elliptic (M : Matrix (Fin 2) (Fin 2) ℤ) : Prop :=
   M.det = 1 ∧ |M.trace| < 2
+
 
 
 
@@ -294,9 +345,11 @@ def is_parabolic (M : Matrix (Fin 2) (Fin 2) ℤ) : Prop :=
 
 
 
+
 /-- Hyperbolic gates squeeze. -/
 def is_hyperbolic (M : Matrix (Fin 2) (Fin 2) ℤ) : Prop :=
   M.det = 1 ∧ |M.trace| > 2
+
 
 
 
@@ -306,8 +359,10 @@ theorem sl2_trichotomy (M : Matrix (Fin 2) (Fin 2) ℤ) (hdet : M.det = 1) :
 
 
 
+
 theorem S_is_elliptic : is_elliptic !![0, -1; 1, 0] := by
   constructor <;> norm_num [ Matrix.det_fin_two, Matrix.trace_fin_two ]
+
 
 
 
@@ -316,8 +371,10 @@ theorem T_sq_is_parabolic : is_parabolic !![1, 2; 0, 1] := by
 
 
 
+
 theorem M1_is_parabolic : is_parabolic !![2, -1; 1, 0] := by
   exact ⟨ by decide, by decide ⟩
+
 
 
 
@@ -331,6 +388,7 @@ theorem sl2_preserves_pythagorean_structure (M : Matrix (Fin 2) (Fin 2) ℤ)
 
 
 
+
 theorem no_signaling_trace (A : Matrix (Fin 2) (Fin 2) ℤ)
     (h : A * Aᵀ = 1) : Matrix.trace (A * Aᵀ) = 2 := by
   aesop
@@ -341,9 +399,11 @@ theorem no_signaling_trace (A : Matrix (Fin 2) (Fin 2) ℤ)
 
 
 
+
 theorem quantum_parallelism (n : ℕ) (hn : 1 ≤ n) :
     2 ^ n ≥ 2 * n := by
   induction hn <;> simp +decide [ pow_succ' ] at * ; linarith [ Nat.one_le_pow ‹_› 2 zero_lt_two ]
+
 
 
 
@@ -355,9 +415,11 @@ theorem simon_gap (n : ℕ) (hn : 6 ≤ n) : n < 2 ^ (n / 2) := by
 
 
 
+
 theorem quantum_supremacy_base :
     ∃ (f : ℕ → ℕ), ∀ n, f n < 2 ^ n ∧ f n ≥ n := by
   exact ⟨ fun n => n, fun n => ⟨ by induction' n with n ih <;> norm_num [ pow_succ' ] at * ; linarith, le_rfl ⟩ ⟩
+
 
 
 
@@ -370,14 +432,17 @@ theorem entanglement_monogamy_base (a b c : ℝ)
 
 
 
+
 theorem decoherence_decay (t : ℝ) (γ : ℝ) (hγ : 0 < γ) (ht : 0 < t) :
     Real.exp (-γ * t) < 1 := by
   exact Real.exp_lt_one_iff.mpr ( by nlinarith )
 
 
 
+
 theorem born_rule_normalization (p q : ℝ) (hp : 0 ≤ p) (hq : 0 ≤ q)
     (h : p + q = 1) : p ≤ 1 ∧ q ≤ 1 := by
   constructor <;> linarith
+
 
 

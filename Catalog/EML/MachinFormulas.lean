@@ -17,9 +17,11 @@ def spbM (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
 
 
 
+
 /-- Euler's π formula via SPB: spb(1/2, 1/3) = 1. -/
 theorem euler_spb_pi : spbM (1/2) (1/3) = 1 := by
   unfold spbM; norm_num
+
 
 
 
@@ -29,9 +31,11 @@ theorem hutton_double : spbM (1/3) (1/3) = 3/4 := by
 
 
 
+
 /-- spb(3/4, 1/7) = 1. -/
 theorem hutton_spb_pi : spbM (3/4) (1/7) = 1 := by
   unfold spbM; norm_num
+
 
 
 
@@ -41,9 +45,11 @@ theorem hutton_full : spbM (spbM (1/3) (1/3)) (1/7) = 1 := by
 
 
 
+
 /-- Step 1 of Machin: spb(1/5, 1/5) = 5/12. -/
 theorem machin_step1 : spbM (1/5) (1/5) = 5/12 := by
   unfold spbM; norm_num
+
 
 
 
@@ -53,9 +59,11 @@ theorem machin_step2 : spbM (5/12) (5/12) = 120/119 := by
 
 
 
+
 /-- Step 3: spb(120/119, -1/239) = 1. -/
 theorem machin_step3 : spbM (120/119) (-1/239) = 1 := by
   unfold spbM; norm_num
+
 
 
 
@@ -67,16 +75,23 @@ theorem machin_full :
 
 
 
+
 /-- Størmer step: spb(1/8, 1/8) = 16/63. -/
 theorem stormer_step1 : spbM (1/8) (1/8) = 16/63 := by
   unfold spbM; norm_num
 
 
 
+
+/-- [Section: # CatalogBuild.EML.MachinFormulas
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 16] -/
 theorem arctan_sum_spb (a b : ℝ) (hab : a * b < 1) :
     Real.arctan a + Real.arctan b = Real.arctan (spbM a b) := by
   unfold spbM;
   exact?
+
 
 
 
@@ -89,6 +104,7 @@ theorem rational_circle_x (p q : ℤ) (hq : (q : ℝ) ≠ 0)
 
 
 
+
 /-- The y-coordinate on S¹ is 2pq/(q²+p²). -/
 theorem rational_circle_y (p q : ℤ) (hq : (q : ℝ) ≠ 0)
     (hab : (q : ℝ) ^ 2 + (p : ℝ) ^ 2 ≠ 0) :
@@ -98,9 +114,11 @@ theorem rational_circle_y (p q : ℤ) (hq : (q : ℝ) ≠ 0)
 
 
 
+
 /-- Gauss's formula building block: spb(1/18, 1/18) = 36/323. -/
 theorem gauss_step1 : spbM (1/18) (1/18) = 36/323 := by
   unfold spbM; norm_num
+
 
 
 
@@ -110,9 +128,11 @@ theorem spb_half_fifth : spbM (1/2) (1/5) = 7/9 := by
 
 
 
+
 /-- spb(1/4, 1/5) = 9/19. -/
 theorem spb_quarter_fifth : spbM (1/4) (1/5) = 9/19 := by
   unfold spbM; norm_num
+
 
 
 

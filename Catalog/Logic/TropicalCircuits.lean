@@ -18,9 +18,15 @@ theorem tropical_add_idem (a : Tropical ℝ) : a + a = a := by
 
 
 
+
+/-- [Section: # CatalogBuild.Logic.TropicalCircuits
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 12] -/
 theorem trop_add_eq_min (a b : ℝ) :
     (Tropical.trop a) + (Tropical.trop b) = Tropical.trop (min a b) := by
       exact Eq.symm (trop_min a b)
+
 
 
 
@@ -30,9 +36,11 @@ theorem trop_mul_eq_add (a b : ℝ) :
 
 
 
+
 /-- Evaluate a tropical monomial at a point -/
 def TropicalMonomial.eval {n : ℕ} (m : TropicalMonomial n) (x : Fin n → ℝ) : ℝ :=
   m.coeff + Finset.sum Finset.univ (fun i => m.exponents i * x i)
+
 
 
 
@@ -42,12 +50,14 @@ def TropicalMonomial.degree {n : ℕ} (m : TropicalMonomial n) : ℝ :=
 
 
 
+
 /-- A tropical gate computes either min or plus -/
 inductive TropGate
   | minGate   -- tropical addition = min
   | plusGate  -- tropical multiplication = plus
   | constGate (c : ℝ)  -- constant
   | inputGate (i : ℕ)  -- input variable
+
 
 
 
@@ -61,8 +71,10 @@ structure TropicalCircuit (n : ℕ) where
 
 
 
+
 /-- The size of a tropical circuit is its number of gates -/
 def TropicalCircuit.size {n : ℕ} (c : TropicalCircuit n) : ℕ := c.numGates
+
 
 
 
@@ -71,6 +83,7 @@ noncomputable def minPlusMul {n : ℕ} [NeZero n] (A B : Fin n → Fin n → ℝ
     Fin n → Fin n → ℝ :=
   fun i j => Finset.inf' Finset.univ Finset.univ_nonempty
     (fun k => A i k + B k j)
+
 
 
 
@@ -95,6 +108,7 @@ theorem minPlusMul_assoc {n : ℕ} [NeZero n] (A B C : Fin n → Fin n → ℝ) 
 
 
 
+
 /-- The number of monomials computable by a tropical circuit of size s
 is at most 2^s (each min gate can at most double the number of monomials) -/
 theorem tropical_circuit_monomial_bound (s : ℕ) :
@@ -102,9 +116,11 @@ theorem tropical_circuit_monomial_bound (s : ℕ) :
 
 
 
+
 theorem tropical_no_counting (a b : Tropical ℝ) :
     a + a = a := by
       exact tropical_add_idem a
+
 
 
 

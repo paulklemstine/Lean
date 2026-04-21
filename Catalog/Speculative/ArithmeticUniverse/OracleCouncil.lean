@@ -16,12 +16,14 @@ structure OracleOfPrimes where
 
 
 
+
 /-- The Oracle of Divisibility sees the lattice structure. -/
 structure OracleOfDivisibility where
   /-- Divisibility is a partial order. -/
   div_refl : ∀ n : ℕ, 0 < n → n ∣ n
   /-- GCD is the meet in the divisibility lattice. -/
   gcd_is_meet : ∀ a b d : ℕ, d = Nat.gcd a b → d ∣ a ∧ d ∣ b
+
 
 
 
@@ -32,6 +34,7 @@ structure OracleOfCongruences where
 
 
 
+
 /-- The Oracle of Sums sees the accumulation of pattern. -/
 structure OracleOfSums where
   /-- Gauss's identity: the triangle numbers. -/
@@ -39,9 +42,11 @@ structure OracleOfSums where
 
 
 
+
 /-- The Oracle of Diophantine sees integer solutions. -/
 structure OracleOfDiophantine where
   /-- Fermat's Last Theorem for n=4: no solutions in positive integers. -/
   flt4 : ∀ a b c : ℕ, a ≠ 0 → b ≠ 0 → c ≠ 0 → a ^ 4 + b ^ 4 ≠ c ^ 4
+
 
 

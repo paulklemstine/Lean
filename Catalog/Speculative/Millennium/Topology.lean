@@ -16,10 +16,16 @@ theorem real_simply_connected : SimplyConnectedSpace ℝ := by
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Millennium.Topology
+Auto-generated from theorem catalog database.
+Domain: Speculative/Millennium
+Declarations: 9] -/
 theorem simply_connected_of_trivial_pi1 {X : Type*} [TopologicalSpace X]
     [PathConnectedSpace X] [SimplyConnectedSpace X] :
     ∀ (x : X) (p : Path x x), p.Homotopic (Path.refl x) := by
   exact?
+
 
 
 
@@ -29,8 +35,10 @@ theorem euler_char_sphere : 2 - 2 * (0 : ℤ) = 2 := by ring
 
 
 
+
 /-- The Euler characteristic of a torus (genus 1) is 0. -/
 theorem euler_char_torus : 2 - 2 * (1 : ℤ) = 0 := by ring
+
 
 
 
@@ -42,11 +50,13 @@ theorem euler_char_from_betti_sphere :
 
 
 
+
 /-- For a K3 surface, the Hodge numbers give Euler characteristic = 24.
 h^{0,0} = 1, h^{1,0} = 0, h^{2,0} = 1, h^{1,1} = 20
 χ = 1 - 0 + (1 + 20 + 1) - 0 + 1 = 24 -/
 theorem euler_char_k3 :
     (1 : ℤ) - 0 + (1 + 20 + 1) - 0 + 1 = 24 := by ring
+
 
 
 
@@ -56,8 +66,10 @@ theorem ricci_flow_sphere_collapse_time (r₀ : ℝ) (n : ℕ) (hr₀ : 0 < r₀
 
 
 
+
 /-- The fundamental group of S¹ is ℤ (not simply connected). -/
 theorem fundamental_group_circle_infinite : Infinite ℤ := inferInstance
+
 
 
 
@@ -100,4 +112,5 @@ theorem simply_connected_prod {X Y : Type*} [TopologicalSpace X] [TopologicalSpa
                                                                                                                   exact ⟨ p.default.out, trivial ⟩ ) )⟧ ⟩
     generalize_proofs at *;
     rintro ⟨ p ⟩ ; exact Quotient.sound ( h_homotopy p _ ) ;
+
 

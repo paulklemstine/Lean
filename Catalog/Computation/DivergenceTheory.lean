@@ -14,8 +14,10 @@ def EMLv (a b : ℝ) : ℝ := Real.exp a - Real.log b
 
 
 
+
 /-- The 2D EML map. -/
 def Phi (p : ℝ × ℝ) : ℝ × ℝ := (EMLv p.1 p.2, EMLv p.2 p.1)
+
 
 
 
@@ -24,13 +26,16 @@ def diagEML (x : ℝ) : ℝ := Real.exp x - Real.log x
 
 
 
+
 /-- The Lyapunov candidate: V(x,y) = exp(x) + exp(y). -/
 def lyapV (p : ℝ × ℝ) : ℝ := Real.exp p.1 + Real.exp p.2
 
 
 
+
 /-- The trace: Tr(x,y) = EML(x,y) + EML(y,x). -/
 def traceEML (p : ℝ × ℝ) : ℝ := EMLv p.1 p.2 + EMLv p.2 p.1
+
 
 
 
@@ -43,9 +48,11 @@ theorem diagEML_gt_id (x : ℝ) (hx : 0 < x) : diagEML x > x := by
 
 
 
+
 /-- The diagonal map has no fixed points on (0, ∞). -/
 theorem diagEML_no_fixed_point (x : ℝ) (hx : 0 < x) :
     diagEML x ≠ x := ne_of_gt (diagEML_gt_id x hx)
+
 
 
 
@@ -56,6 +63,7 @@ theorem diagEML_ge_two (x : ℝ) (hx : 0 < x) : diagEML x ≥ 2 := by
 
 
 
+
 /-- The trace formula. -/
 theorem traceEML_eq (x y : ℝ) :
     traceEML (x, y) = Real.exp x + Real.exp y - Real.log x - Real.log y := by
@@ -63,9 +71,11 @@ theorem traceEML_eq (x y : ℝ) :
 
 
 
+
 /-- The trace is symmetric. -/
 theorem traceEML_symm (x y : ℝ) : traceEML (x, y) = traceEML (y, x) := by
   simp [traceEML, EMLv]; ring
+
 
 
 
@@ -78,9 +88,11 @@ theorem traceEML_ge_four (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
 
 
 
+
 /-- The Lyapunov function is always positive. -/
 theorem lyapV_pos (p : ℝ × ℝ) : 0 < lyapV p := by
   simp [lyapV]; positivity
+
 
 
 
@@ -91,12 +103,14 @@ theorem exp_EML_formula (x y : ℝ) (hy : 0 < y) :
 
 
 
+
 /-- Lyapunov growth: V(Φ(x,y)) = exp(exp(x))/y + exp(exp(y))/x for x,y > 0. -/
 theorem lyapV_growth (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
     lyapV (Phi (x, y)) = Real.exp (Real.exp x) / y +
                           Real.exp (Real.exp y) / x := by
   simp [lyapV, Phi]
   rw [exp_EML_formula x y hy, exp_EML_formula y x hx]
+
 
 
 
@@ -118,6 +132,11 @@ theorem Phi_no_fixed_point (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.DivergenceTheory
+Auto-generated from theorem catalog database.
+Domain: Computation
+Declarations: 16] -/
 theorem max_coord_growth (x y : ℝ) (hx : 0 < x) (hy : 0 < y)
     (hbig : max x y ≥ 2) :
     max (EMLv x y) (EMLv y x) > max x y := by
@@ -138,6 +157,7 @@ theorem max_coord_growth (x y : ℝ) (hx : 0 < x) (hy : 0 < y)
       rw [ NormedSpace.exp_eq_tsum_div ];
       refine' lt_of_lt_of_le _ ( Summable.sum_le_tsum ( Finset.range 4 ) ( fun _ _ => by positivity ) ( by simpa using Real.summable_pow_div_factorial y ) ) ; norm_num [ Finset.sum_range_succ, Nat.factorial ] ; nlinarith [ pow_pos hy 3 ];
     nlinarith [ Real.log_le_sub_one_of_pos hx ]
+
 
 
 

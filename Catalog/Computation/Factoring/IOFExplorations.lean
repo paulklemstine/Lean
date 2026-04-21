@@ -17,8 +17,14 @@ theorem totient_sum_divisors' (n : ℕ) (hn : 0 < n) :
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Factoring.IOFExplorations
+Auto-generated from theorem catalog database.
+Domain: Computation/Factoring
+Declarations: 27] -/
 theorem pyth_variety_scale' (a b c k : ℤ) (h : a^2 + b^2 = c^2) :
     (k*a)^2 + (k*b)^2 = (k*c)^2 := by ring_nf; nlinarith [sq k]
+
 
 
 
@@ -28,12 +34,15 @@ theorem circle_param (t : ℚ) (ht : 1 + t^2 ≠ 0) :
 
 
 
+
 theorem euler_char' (V E F : ℤ) (h : V - E + F = 2) : V + F = E + 2 := by omega
+
 
 
 
 theorem char_mult {G H : Type*} [Mul G] [Mul H] (χ : G →ₙ* H) (g h : G) :
     χ (g * h) = χ g * χ h := map_mul χ g h
+
 
 
 
@@ -43,8 +52,10 @@ theorem measure_mono_iof {α : Type*} [MeasurableSpace α] (μ : MeasureTheory.M
 
 
 
+
 theorem norm_triangle_iof {E : Type*} [SeminormedAddCommGroup E] (x y : E) :
     ‖x + y‖ ≤ ‖x‖ + ‖y‖ := norm_add_le x y
+
 
 
 
@@ -54,7 +65,9 @@ theorem cauchy_schwarz_iof {E : Type*} [SeminormedAddCommGroup E]
 
 
 
+
 theorem zero_sum_game' (a b : ℤ) (h : a + b = 0) : b = -a := by omega
+
 
 
 
@@ -63,8 +76,10 @@ theorem contraction_pow (c : ℝ) (hc0 : 0 ≤ c) (hc1 : c < 1) (n : ℕ) :
 
 
 
+
 theorem fermat_little' (p : ℕ) [hp : Fact (Nat.Prime p)] (a : ZMod p) :
     a ^ p = a := ZMod.pow_card a
+
 
 
 
@@ -72,6 +87,7 @@ theorem hamming_symm_iof {n : ℕ} (x y : Fin n → Bool) :
     (univ.filter fun i => x i ≠ y i).card =
     (univ.filter fun i => y i ≠ x i).card := by
   congr 1; ext i; simp [ne_comm]
+
 
 
 
@@ -86,10 +102,12 @@ theorem graph_pigeonhole {α : Type*} [DecidableEq α] (S : Finset α)
 
 
 
+
 theorem sq_convex_iof (a b t : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
     (t * a + (1 - t) * b) ^ 2 ≤ t * a ^ 2 + (1 - t) * b ^ 2 := by
   have h1 : 0 ≤ t * (1 - t) := mul_nonneg ht0 (by linarith)
   nlinarith [sq_nonneg (a - b)]
+
 
 
 
@@ -99,14 +117,17 @@ theorem union_bound_iof {Ω : Type*} [MeasurableSpace Ω] (μ : MeasureTheory.Me
 
 
 
+
 theorem exp_basic : Real.exp 0 = 1 ∧ ∀ x : ℝ, 0 < Real.exp x :=
   ⟨Real.exp_zero, Real.exp_pos⟩
+
 
 
 
 theorem product_card' {G H : Type*} [Fintype G] [Fintype H] :
     Fintype.card (G × H) = Fintype.card G * Fintype.card H :=
   Fintype.card_prod G H
+
 
 
 
@@ -117,9 +138,11 @@ theorem pid_principal' {R : Type*} [CommRing R] [IsDomain R]
 
 
 
+
 theorem jacobi' {L : Type*} [LieRing L] (x y z : L) :
     ⁅x, ⁅y, z⁆⁆ + ⁅y, ⁅z, x⁆⁆ + ⁅z, ⁅x, y⁆⁆ = 0 :=
   lie_jacobi x y z
+
 
 
 
@@ -128,12 +151,15 @@ theorem norm_sq_nonneg_iof {E : Type*} [SeminormedAddCommGroup E] (x : E) :
 
 
 
+
 theorem log_one_iof : Real.log 1 = 0 := Real.log_one
+
 
 
 
 theorem log_mul_iof (a b : ℝ) (ha : a ≠ 0) (hb : b ≠ 0) :
     Real.log (a * b) = Real.log a + Real.log b := Real.log_mul ha hb
+
 
 
 
@@ -149,9 +175,11 @@ theorem iof_gcd_detection (a p N : ℕ) (hp : p ∣ a) (hpN : p ∣ N)
 
 
 
+
 theorem invB1_form (a b c : ℤ) :
     (a + 2*b - 2*c)^2 + (-2*a - b + 2*c)^2 - (-2*a - 2*b + 3*c)^2 =
     a^2 + b^2 - c^2 := by ring
+
 
 
 
@@ -161,13 +189,16 @@ theorem invB2_form (a b c : ℤ) :
 
 
 
+
 theorem invB3_form (a b c : ℤ) :
     (-a - 2*b + 2*c)^2 + (2*a + b - 2*c)^2 - (-2*a - 2*b + 3*c)^2 =
     a^2 + b^2 - c^2 := by ring
 
 
 
+
 theorem euclid_pyth (m n : ℤ) :
     (m^2 - n^2)^2 + (2*m*n)^2 = (m^2 + n^2)^2 := by ring
+
 
 

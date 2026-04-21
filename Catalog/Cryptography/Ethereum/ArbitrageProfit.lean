@@ -18,8 +18,10 @@ structure SimplePool where
 
 
 
+
 /-- Spot price of A in terms of B -/
 noncomputable def SimplePool.price (p : SimplePool) : ℝ := p.y / p.x
+
 
 
 
@@ -29,9 +31,11 @@ noncomputable def SimplePool.buyB (p : SimplePool) (dx : ℝ) : ℝ :=
 
 
 
+
 /-- Output when buying A with amount `dy` of B (no fees) -/
 noncomputable def SimplePool.buyA (p : SimplePool) (dy : ℝ) : ℝ :=
   p.x * dy / (p.y + dy)
+
 
 
 
@@ -50,6 +54,7 @@ theorem arbitrage_profit_exists
 
 
 
+
 /-- **Arbitrage Revenue Formula**: When buying `dx` of token A in pool1 and
 immediately selling in pool2, the gross revenue in token B is: -/
 noncomputable def arbitrageRevenue (p1 p2 : SimplePool) (dx : ℝ) : ℝ :=
@@ -58,6 +63,11 @@ noncomputable def arbitrageRevenue (p1 p2 : SimplePool) (dx : ℝ) : ℝ :=
 
 
 
+
+/-- [Section: # CatalogBuild.Cryptography.Ethereum.ArbitrageProfit
+Auto-generated from theorem catalog database.
+Domain: Cryptography/Ethereum
+Declarations: 11] -/
 theorem small_trade_profitable
     (p1 p2 : SimplePool)
     (h_diverge : p1.price < p2.price) :
@@ -75,9 +85,11 @@ theorem small_trade_profitable
 
 
 
+
 /-- A three-pool cycle: A→B→C→A. Profit if the product of exchange rates > 1. -/
 noncomputable def cyclicProfitRate (p_ab p_bc p_ca : SimplePool) : ℝ :=
   p_ab.price * p_bc.price * p_ca.price
+
 
 
 
@@ -105,12 +117,14 @@ theorem cyclic_arbitrage_exists
 
 
 
+
 /-- For two pools with different prices, the optimal trade size.
 When p2 has higher price than p1, buying A from p1 and selling to p2 is profitable.
 The optimal amount of A to trade is derived from setting the derivative of
 profit to zero. -/
 noncomputable def optimalTradeSize (p1 p2 : SimplePool) : ℝ :=
   Real.sqrt (p1.x * p2.x * p1.y * p2.y) / (p1.y + p2.y) - p1.x * p1.y / (p1.y + p2.y)
+
 
 
 
@@ -121,6 +135,7 @@ theorem optimal_size_pos (p1 p2 : SimplePool)
   unfold optimalTradeSize;
   rw [ div_sub_div_same, lt_div_iff₀ ] <;> try nlinarith [ p1.hx, p1.hy, p2.hx, p2.hy ];
   rw [ lt_sub_iff_add_lt', Real.lt_sqrt ] <;> nlinarith [ p1.hx, p1.hy, p2.hx, p2.hy, mul_pos p1.hx p1.hy, mul_pos p2.hx p2.hy ]
+
 
 
 

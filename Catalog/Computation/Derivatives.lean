@@ -16,7 +16,13 @@ Declarations: 10] -/
 def EML_calc (a b : ℝ) : ℝ := Real.exp a - Real.log b
 
 
+
+/-- [Section: # CatalogBuild.Computation.Derivatives
+Auto-generated from theorem catalog database.
+Domain: Computation
+Declarations: 10] -/
 def diag_calc (x : ℝ) : ℝ := Real.exp x - Real.log x
+
 
 
 
@@ -26,9 +32,11 @@ theorem EML_hasDerivAt_fst (a b : ℝ) :
 
 
 
+
 theorem EML_hasDerivAt_snd (a b : ℝ) (hb : 0 < b) :
     HasDerivAt (EML_calc a ·) (-(b⁻¹)) b := by
   convert (hasDerivAt_const b (Real.exp a)).sub (Real.hasDerivAt_log hb.ne') using 1; ring
+
 
 
 
@@ -38,8 +46,10 @@ theorem diag_hasDerivAt (x : ℝ) (hx : 0 < x) :
 
 
 
+
 theorem diag_differentiable : DifferentiableOn ℝ diag_calc (Set.Ioi 0) :=
   fun x hx => (diag_hasDerivAt x hx).differentiableAt.differentiableWithinAt
+
 
 
 
@@ -50,12 +60,15 @@ theorem diag_deriv_pos (x : ℝ) (hx : 1 ≤ x) : Real.exp x - x⁻¹ > 0 := by
 
 
 
+
 theorem EML_gradient_nonzero (a : ℝ) : Real.exp a ≠ 0 := (Real.exp_pos a).ne'
+
 
 
 
 theorem EML_gradient_norm_sq (a b : ℝ) (hb : 0 < b) :
     (Real.exp a) ^ 2 + (b⁻¹) ^ 2 > 0 := by positivity
+
 
 
 
@@ -65,6 +78,7 @@ theorem diag_convex_on : ConvexOn ℝ (Set.Ioi 0) diag_calc := by
       exact convexOn_exp;
     exact h_convex.subset ( Set.subset_univ _ ) ( convex_Ioi _ );
   · exact ( StrictConcaveOn.concaveOn <| strictConcaveOn_log_Ioi )
+
 
 
 

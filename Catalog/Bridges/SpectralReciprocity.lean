@@ -16,6 +16,7 @@ theorem trace_adj_diagonal' {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ)
 
 
 
+
 /-- Tr(A²) = Σᵢⱼ Aᵢⱼ · Aⱼᵢ. -/
 theorem trace_sq_eq_sum {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) :
     Matrix.trace (A * A) = ∑ i : Fin n, ∑ j : Fin n, A i j * A j i := by
@@ -23,9 +24,11 @@ theorem trace_sq_eq_sum {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) :
 
 
 
+
 /-- Partial Euler product. -/
 def partialEulerProduct (f : ℕ → ℂ) (primes : Finset ℕ) (s : ℂ) : ℂ :=
   ∏ p ∈ primes, (1 - f p * (↑p : ℂ) ^ (-s))⁻¹
+
 
 
 
@@ -37,11 +40,13 @@ theorem euler_product_trivial_char (primes : Finset ℕ) (s : ℂ) :
 
 
 
+
 /-- A Hecke operator at a prime. -/
 structure HeckeOperator (n : ℕ) where
   matrix : Matrix (Fin n) (Fin n) ℂ
   prime : ℕ
   is_prime : Nat.Prime prime
+
 
 
 
@@ -55,9 +60,15 @@ theorem ramanujan_gap_explicit (q : ℕ) (hq : q ≥ 1) :
 
 
 
+
+/-- [Section: # CatalogBuild.Bridges.SpectralReciprocity
+Auto-generated from theorem catalog database.
+Domain: Bridges
+Declarations: 10] -/
 theorem ramanujan_gap_nonneg (q : ℕ) (hq : q ≥ 1) :
     (q : ℝ) + 1 - 2 * Real.sqrt q ≥ 0 := by
   nlinarith [ sq_nonneg ( Real.sqrt q - 1 ), Real.mul_self_sqrt ( Nat.cast_nonneg q ) ]
+
 
 
 
@@ -71,11 +82,13 @@ structure SpectralArithmeticBridge where
 
 
 
+
 /-- The Selberg-Ihara correspondence. -/
 structure SelbergIharaBridge where
   continuous_side : String
   discrete_side : String
   correspondence : String
+
 
 
 
@@ -86,6 +99,7 @@ def selbergIharaInstances : List SelbergIharaBridge :=
     { continuous_side := "Closed geodesics"
       discrete_side := "Prime cycles"
       correspondence := "Length spectrum" } ]
+
 
 
 

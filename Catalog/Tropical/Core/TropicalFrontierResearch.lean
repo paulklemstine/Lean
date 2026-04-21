@@ -16,10 +16,12 @@ def IsTropicalEigen {n : ℕ} (A : Fin (n+1) → Fin (n+1) → ℝ)
 
 
 
+
 /-- For a 1×1 "matrix", the entry is a tropical eigenvalue -/
 theorem trop_eigen_1x1 (a : ℝ) :
     IsTropicalEigen (fun _ _ : Fin 1 => a) a (fun _ => 0) := by
   intro i; simp [tropMatVec, Finset.sup'_singleton]
+
 
 
 
@@ -40,6 +42,11 @@ theorem tropMatVec_mono {n : ℕ} (A : Fin (n+1) → Fin (n+1) → ℝ)
 
 
 
+
+/-- [Section: # CatalogBuild.Tropical.Core.TropicalFrontierResearch
+Auto-generated from theorem catalog database.
+Domain: Tropical/Core
+Declarations: 56] -/
 theorem tropMatVec_shift {n : ℕ} (A : Fin (n+1) → Fin (n+1) → ℝ)
     (x : Fin (n+1) → ℝ) (c : ℝ) :
     ∀ i, tropMatVec A (fun j => x j + c) i = tropMatVec A x i + c := by
@@ -50,9 +57,11 @@ theorem tropMatVec_shift {n : ℕ} (A : Fin (n+1) → Fin (n+1) → ℝ)
 
 
 
+
 /-- A tropical monomial: c + a₁x₁ + ... (classical affine function) -/
 def tropMonomial {n : ℕ} (c : ℝ) (a : Fin n → ℝ) (x : Fin n → ℝ) : ℝ :=
   c + ∑ i, a i * x i
+
 
 
 
@@ -62,9 +71,11 @@ theorem relu_is_tropPoly (x : ℝ) :
 
 
 
+
 /-- Deep ReLU network: at most (2w)^L tropical terms -/
 theorem deep_relu_tropical_terms (w L : ℕ) (hw : 1 ≤ w) :
     1 ≤ (2 * w) ^ L := Nat.one_le_pow L (2 * w) (by omega)
+
 
 
 
@@ -81,9 +92,11 @@ theorem tropMatVec_nonexpansion {n : ℕ} (A : Fin (n+1) → Fin (n+1) → ℝ)
 
 
 
+
 /-- Young's inequality: xy ≤ f(x) + f*(y) -/
 theorem tropical_young_ineq (x y fx fstar_y : ℝ) (h : x * y - fx ≤ fstar_y) :
     x * y ≤ fx + fstar_y := by linarith
+
 
 
 
@@ -93,14 +106,17 @@ theorem legendre_quadratic_identity (y : ℝ) :
 
 
 
+
 /-- ReLU derivative: the Heaviside step function -/
 noncomputable def reluDeriv (x : ℝ) : ℝ := if 0 < x then 1 else 0
+
 
 
 
 /-- ReLU derivative is binary (0 or 1) -/
 theorem reluDeriv_binary (x : ℝ) : reluDeriv x = 0 ∨ reluDeriv x = 1 := by
   unfold reluDeriv; split_ifs <;> simp
+
 
 
 
@@ -113,6 +129,7 @@ theorem tropical_gradient_selector (a b : ℝ) (h : a ≠ b) :
 
 
 
+
 /-- Backpropagation through ReLU: a tropical gate -/
 theorem backprop_relu_gate (x upstream : ℝ) :
     reluDeriv x * upstream = if 0 < x then upstream else 0 := by
@@ -120,9 +137,11 @@ theorem backprop_relu_gate (x upstream : ℝ) :
 
 
 
+
 /-- Chain rule through ReLU layers -/
 theorem tropical_chain_rule (x₁ x₂ : ℝ) (g : ℝ) :
     reluDeriv x₁ * (reluDeriv x₂ * g) = (reluDeriv x₁ * reluDeriv x₂) * g := by ring
+
 
 
 
@@ -134,6 +153,7 @@ theorem selector_product_binary (a b : ℝ) :
 
 
 
+
 theorem gradient_path_binary (n : ℕ) (xs : Fin n → ℝ) :
     (∏ i, reluDeriv (xs i)) = 0 ∨ (∏ i, reluDeriv (xs i)) = 1 := by
   induction' n with n ih <;> simp_all +decide [ Fin.prod_univ_succ ];
@@ -142,9 +162,11 @@ theorem gradient_path_binary (n : ℕ) (xs : Fin n → ℝ) :
 
 
 
+
 /-- Tropical entropy: -log(max p_i) = min-entropy (Rényi ∞) -/
 def tropicalEntropy {n : ℕ} (p : Fin (n+1) → ℝ) (hp : ∀ i, 0 < p i) : ℝ :=
   -Real.log (Finset.sup' Finset.univ ⟨0, Finset.mem_univ 0⟩ p)
+
 
 
 
@@ -159,9 +181,11 @@ theorem tropicalEntropy_nonneg {n : ℕ} (p : Fin (n+1) → ℝ)
 
 
 
+
 /-- Temperature parameter: log(exp(β·x)) = β·x -/
 theorem temperature_scaling (β x : ℝ) :
     Real.log (Real.exp (β * x)) = β * x := Real.log_exp (β * x)
+
 
 
 
@@ -177,9 +201,11 @@ theorem shannon_ge_minEntropy {n : ℕ} (p : Fin (n+1) → ℝ)
 
 
 
+
 /-- L-layer width-w network: at least 4^L regions -/
 theorem region_count_lower (w L : ℕ) (hw : 2 ≤ w) :
     4 ^ L ≤ (2 * w) ^ L := Nat.pow_le_pow_left (by omega) L
+
 
 
 
@@ -192,12 +218,14 @@ theorem compression_ratio_bound (w L : ℕ) (hw : 2 ≤ w) :
 
 
 
+
 /-- Negation sends max to min -/
 theorem negation_max_to_min (a b : ℝ) :
     -(max a b) = min (-a) (-b) := by
   rcases le_total a b with h | h
   · rw [max_eq_right h, min_eq_right (neg_le_neg h)]
   · rw [max_eq_left h, min_eq_left (neg_le_neg h)]
+
 
 
 
@@ -210,13 +238,16 @@ theorem negation_min_to_max (a b : ℝ) :
 
 
 
+
 /-- Double negation = identity (Fourier inversion) -/
 theorem tropical_fourier_inversion (a : ℝ) : -(-a) = a := neg_neg a
 
 
 
+
 /-- Negation preserves tropical multiplication (ordinary addition) -/
 theorem negation_preserves_add (a b : ℝ) : -(a + b) = (-a) + (-b) := by ring
+
 
 
 
@@ -228,8 +259,10 @@ theorem dual_relu (x : ℝ) : min x 0 = -(max (-x) 0) := by
 
 
 
+
 /-- Min-plus associativity -/
 theorem minAdd_assoc (a b c : ℝ) : min (min a b) c = min a (min b c) := min_assoc a b c
+
 
 
 
@@ -238,11 +271,13 @@ theorem minAdd_idem (a : ℝ) : min a a = a := min_self a
 
 
 
+
 /-- p-adic valuation satisfies tropical multiplication: v_p(ab) = v_p(a) + v_p(b) -/
 theorem padic_tropical_mul (p a b : ℕ) (hp : Nat.Prime p) (ha : a ≠ 0) (hb : b ≠ 0) :
     padicValNat p (a * b) = padicValNat p a + padicValNat p b := by
   haveI : Fact (Nat.Prime p) := ⟨hp⟩
   exact padicValNat.mul ha hb
+
 
 
 
@@ -255,8 +290,10 @@ theorem tropical_fundamental_arithmetic (a b : ℕ) (ha : 0 < a) (hb : 0 < b)
 
 
 
+
 /-- p-adic valuation is always non-negative -/
 theorem padic_val_nonneg (p n : ℕ) : 0 ≤ padicValNat p n := Nat.zero_le _
+
 
 
 
@@ -268,9 +305,11 @@ def tropAutomatonRun {n : ℕ} (A : Fin (n+1) → Fin (n+1) → ℝ)
 
 
 
+
 /-- Output after 0 steps = initial state -/
 theorem tropAutomaton_zero {n : ℕ} (A : Fin (n+1) → Fin (n+1) → ℝ)
     (init : Fin (n+1) → ℝ) : tropAutomatonRun A init 0 = init := rfl
+
 
 
 
@@ -284,9 +323,11 @@ theorem tropAutomaton_mono {n : ℕ} (A : Fin (n+1) → Fin (n+1) → ℝ)
 
 
 
+
 /-- Softmax at inverse temperature β -/
 def scaledSoftmax {n : ℕ} (β : ℝ) (v : Fin (n+1) → ℝ) (i : Fin (n+1)) : ℝ :=
   Real.exp (β * v i) / ∑ j, Real.exp (β * v j)
+
 
 
 
@@ -294,6 +335,7 @@ def scaledSoftmax {n : ℕ} (β : ℝ) (v : Fin (n+1) → ℝ) (i : Fin (n+1)) :
 theorem scaledSoftmax_pos {n : ℕ} (β : ℝ) (v : Fin (n+1) → ℝ) (i : Fin (n+1)) :
     0 < scaledSoftmax β v i :=
   div_pos (Real.exp_pos _) (Finset.sum_pos (fun j _ => Real.exp_pos _) Finset.univ_nonempty)
+
 
 
 
@@ -305,9 +347,11 @@ theorem scaledSoftmax_sum {n : ℕ} (β : ℝ) (v : Fin (n+1) → ℝ) :
 
 
 
+
 theorem scaledSoftmax_le_one {n : ℕ} (β : ℝ) (v : Fin (n+1) → ℝ) (i : Fin (n+1)) :
     scaledSoftmax β v i ≤ 1 := by
   exact div_le_one_of_le₀ ( Finset.single_le_sum ( fun a _ => Real.exp_nonneg ( β * v a ) ) ( Finset.mem_univ i ) ) ( Finset.sum_nonneg fun a _ => Real.exp_nonneg ( β * v a ) )
+
 
 
 
@@ -315,6 +359,7 @@ theorem lse_ge_component {n : ℕ} (β : ℝ) (hβ : 0 < β) (v : Fin (n+1) → 
     (i : Fin (n+1)) : v i ≤ logSumExp β v := by
   rw [ logSumExp, le_div_iff₀ hβ ];
   exact le_trans ( by norm_num; linarith ) ( Real.log_le_log ( by positivity ) ( Finset.single_le_sum ( fun i _ => Real.exp_nonneg ( β * v i ) ) ( Finset.mem_univ i ) ) )
+
 
 
 
@@ -333,10 +378,12 @@ theorem lse_le_max_log {n : ℕ} (β : ℝ) (hβ : 0 < β) (v : Fin (n+1) → �
 
 
 
+
 /-- Tropical Bellman: V(s) = max_a (R(s,a) + γ·V(s')) — a tropical linear equation -/
 def tropBellman {n : ℕ} (R : Fin (n+1) → Fin (n+1) → ℝ) (γ_coeff : ℝ)
     (V : Fin (n+1) → ℝ) (s : Fin (n+1)) : ℝ :=
   Finset.sup' Finset.univ ⟨s, Finset.mem_univ s⟩ (fun a => R s a + γ_coeff * V a)
+
 
 
 
@@ -349,9 +396,11 @@ theorem tropBellman_mono {n : ℕ} (R : Fin (n+1) → Fin (n+1) → ℝ) (γ_coe
 
 
 
+
 /-- Riemann zeta: Dirichlet series tropicalizes to max(-s·log(n)) -/
 theorem tropical_zeta_term (s : ℝ) (n : ℕ) :
     -s * Real.log n = -(s * Real.log n) := by ring
+
 
 
 
@@ -362,9 +411,11 @@ theorem tropical_product_to_sum (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
 
 
 
+
 /-- Exp preserves multiplicative structure -/
 theorem exp_preserves_mul (a b : ℝ) : Real.exp (a + b) = Real.exp a * Real.exp b :=
   Real.exp_add a b
+
 
 
 
@@ -375,9 +426,11 @@ theorem stationary_phase {n : ℕ} (actions : Fin (n+1) → ℝ) (i : Fin (n+1))
 
 
 
+
 /-- Classical limit = tropical limit -/
 theorem classical_tropical_limit {n : ℕ} (v : Fin (n+1) → ℝ) (i : Fin (n+1)) :
     scaledSoftmax 1 v i ≤ 1 := scaledSoftmax_le_one 1 v i
+
 
 
 
@@ -388,9 +441,11 @@ theorem residual_recovers_input {n : ℕ} (f : (Fin n → ℝ) → Fin n → ℝ
 
 
 
+
 /-- Layer normalization is affine (preserved under compilation) -/
 theorem layernorm_is_affine (γ β_param μ σ : ℝ) (x : ℝ) :
     γ * (x - μ) / σ + β_param = (γ / σ) * x + (β_param - γ * μ / σ) := by ring
+
 
 
 
@@ -401,9 +456,11 @@ theorem pruning_error_bound {n : ℕ} (w x : Fin n → ℝ)
 
 
 
+
 /-- Deep networks have exponentially many linear regions -/
 theorem exponential_regions (w : ℕ) (hw : 2 ≤ w) (L : ℕ) :
     2 ^ L ≤ (2 * w) ^ L := Nat.pow_le_pow_left (by omega) L
+
 
 
 
@@ -411,6 +468,7 @@ theorem exponential_regions (w : ℕ) (hw : 2 ≤ w) (L : ℕ) :
 theorem compilation_error_vanishes (β : ℝ) (hβ : 0 < β) (n : ℕ) (hn : 2 ≤ n) :
     0 < Real.log n / β :=
   div_pos (Real.log_pos (by exact_mod_cast hn)) hβ
+
 
 
 
@@ -432,8 +490,10 @@ theorem relu_not_polynomial : ¬∃ (p : Polynomial ℝ), ∀ x : ℝ, p.eval x 
 
 
 
+
 /-- Total new frontier theorems -/
 theorem frontier_theorem_count : (0 : ℕ) < 50 := by omega
+
 
 
 

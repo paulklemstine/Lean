@@ -13,28 +13,39 @@ noncomputable section
 def g_curv (x : ℝ) : ℝ := Real.exp x + x⁻¹ ^ 2
 
 
+
 /-- The derivative of the metric: g'(x) = exp(x) - 2/x³. -/
 def g_curv_deriv (x : ℝ) : ℝ := Real.exp x - 2 * x⁻¹ ^ 3
+
 
 
 /-- The square root of the metric (for arc length). -/
 def sqrt_g (x : ℝ) : ℝ := Real.sqrt (g_curv x)
 
 
+
+/-- [Section: # CatalogBuild.Speculative.OISCC.V12_CurvatureTheory
+Auto-generated from theorem catalog database.
+Domain: Speculative/OISCC
+Declarations: 15] -/
 theorem g_curv_pos (x : ℝ) (hx : 0 < x) : g_curv x > 0 := by
   exact add_pos ( Real.exp_pos x ) ( sq_pos_of_pos ( inv_pos.mpr hx ) )
+
 
 
 theorem g_curv_ge_one (x : ℝ) (hx : 0 < x) : g_curv x ≥ 1 := by
   exact le_add_of_le_of_nonneg ( Real.one_le_exp hx.le ) ( sq_nonneg _ )
 
 
+
 theorem g_curv_ge_exp (x : ℝ) : g_curv x ≥ Real.exp x := by
   exact le_add_of_nonneg_right ( sq_nonneg _ )
 
 
+
 theorem g_curv_ge_inv_sq (x : ℝ) : g_curv x ≥ x⁻¹ ^ 2 := by
   exact le_add_of_nonneg_left <| Real.exp_nonneg x
+
 
 
 theorem g_curv_hasDerivAt (x : ℝ) (hx : 0 < x) :
@@ -45,8 +56,10 @@ theorem g_curv_hasDerivAt (x : ℝ) (hx : 0 < x) :
   grind
 
 
+
 theorem g_curv_deriv_pos (x : ℝ) (hx : 1 ≤ x) : g_curv_deriv x > 0 := by
   exact sub_pos_of_lt ( by have := Real.exp_one_gt_d9.le; norm_num1 at *; nlinarith [ Real.exp_pos x, Real.exp_le_exp.mpr hx, inv_pos.mpr ( by positivity : 0 < x ), mul_inv_cancel₀ ( by positivity : x ≠ 0 ), pow_pos ( inv_pos.mpr ( by positivity : 0 < x ) ) 2, pow_pos ( inv_pos.mpr ( by positivity : 0 < x ) ) 3 ] )
+
 
 
 theorem g_curv_strictMono_Ici : StrictMonoOn g_curv (Ici 1) := by
@@ -62,12 +75,15 @@ theorem g_curv_strictMono_Ici : StrictMonoOn g_curv (Ici 1) := by
   rw [ hc.2, gt_iff_lt, lt_div_iff₀ ] at h_deriv_pos <;> linarith
 
 
+
 theorem sqrt_g_ge_one (x : ℝ) (hx : 0 < x) : sqrt_g x ≥ 1 := by
   exact Real.le_sqrt_of_sq_le ( by linarith [ g_curv_ge_one x hx ] )
 
 
+
 theorem sqrt_g_ge_inv (x : ℝ) (hx : 0 < x) : sqrt_g x ≥ x⁻¹ := by
   exact Real.le_sqrt_of_sq_le ( by exact le_trans ( by norm_num ) ( g_curv_ge_inv_sq x ) )
+
 
 
 theorem g_curv_tendsto_atTop_zero :
@@ -78,9 +94,11 @@ theorem g_curv_tendsto_atTop_zero :
   exact Filter.tendsto_atTop_mono ( fun x => by exact le_add_of_nonneg_left <| Real.exp_nonneg _ ) h_inv_sq
 
 
+
 theorem g_curv_tendsto_atTop :
     Filter.Tendsto g_curv atTop atTop := by
   exact Filter.tendsto_atTop_mono ( fun x ↦ g_curv_ge_exp x ) ( Real.tendsto_exp_atTop )
+
 
 
 theorem g_curv_convexOn : ConvexOn ℝ (Ioi 0) g_curv := by
@@ -95,6 +113,7 @@ theorem g_curv_convexOn : ConvexOn ℝ (Ioi 0) g_curv := by
       norm_num [ show y ^ 4 = y ^ 3 * y by ring, hy.ne' ];
     simp +zetaDelta at *;
     intro x hx; rw [ h_second_deriv x hx ] ; norm_num [ Real.differentiableAt_exp, hx.ne', div_eq_mul_inv, differentiableAt_inv ] ; ring_nf; positivity;
+
 
 
 end

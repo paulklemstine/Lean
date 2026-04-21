@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/GravitationalFactoring
-Declarations: 19
+Declarations: 15
 -/
 
 import Mathlib
@@ -14,6 +14,11 @@ theorem sophie_germain_mod3 (p : ℕ) (hp : Nat.Prime p) (hp3 : 3 < p)
   exact absurd ( Nat.dvd_of_mod_eq_zero ( by norm_num [ *, Nat.add_mod, Nat.mul_mod ] : ( 2 * p + 1 ) % 3 = 0 ) ) ( by rw [ hsg.dvd_iff_eq ] <;> linarith )
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.GravitationalFactoring.NewTheoremsV15
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/GravitationalFactoring
+Declarations: 19] -/
 theorem safe_prime_mod12 (q : ℕ) (hq : Nat.Prime q) (hq7 : 7 < q)
     (hsafe : Nat.Prime ((q - 1) / 2)) : q % 12 = 11 := by
   -- Since q is odd, q ≡ 1 (mod 2).
@@ -25,9 +30,11 @@ theorem safe_prime_mod12 (q : ℕ) (hq : Nat.Prime q) (hq7 : 7 < q)
   have := Nat.Prime.eq_two_or_odd hsafe; omega;
 
 
+
 /-- [Section: ## Fermat Number Theory] -/
 theorem fermat_num_odd (n : ℕ) : (2 ^ (2 ^ n) + 1) % 2 = 1 := by
   norm_num [ Nat.add_mod, Nat.pow_mod ]
+
 
 
 theorem fermat_prime_exp_power_of_two (n : ℕ) (hn : 0 < n)
@@ -46,16 +53,19 @@ theorem fermat_prime_exp_power_of_two (n : ℕ) (hn : 0 < n)
   simp_all +decide [ Nat.dvd_prime ]
 
 
+
 theorem fermat_product_identity (n : ℕ) :
     (∏ i ∈ Finset.range n, (2 ^ (2 ^ i) + 1)) + 2 = 2 ^ (2 ^ n) + 1 := by
   induction n <;> simp_all +decide [ Finset.prod_range_succ, pow_succ, pow_mul ];
   grind
 
 
+
 theorem fermat_coprime_adjacent (n : ℕ) :
     Nat.Coprime (2 ^ (2 ^ n) + 1) (2 ^ (2 ^ (n + 1)) + 1) := by
   norm_num [ show 2 ^ 2 ^ ( n + 1 ) + 1 = ( 2 ^ 2 ^ n + 1 ) * ( 2 ^ 2 ^ n - 1 ) + 2 by zify ; norm_num ; ring ];
   simp +decide [ parity_simps ]
+
 
 
 theorem fermat_coprime_general (m n : ℕ) (hmn : m ≠ n) :
@@ -73,10 +83,12 @@ theorem fermat_coprime_general (m n : ℕ) (hmn : m ≠ n) :
   norm_num [ show 2 ^ 2 ^ n + 1 = ( 2 ^ 2 ^ m + 1 ) * k + 2 by linarith [ Nat.sub_add_cancel ( Nat.one_le_pow ( 2 ^ n ) 2 zero_lt_two ) ] ]
 
 
+
 /-- [Section: ## Prime Desert — Strengthened] -/
 theorem prime_desert_explicit (k : ℕ) (hk : 2 ≤ k) (j : ℕ) (hj2 : 2 ≤ j) (hjk : j ≤ k + 1) :
     ¬ Nat.Prime ((k + 1).factorial + j) := by
   exact fun H => absurd ( Nat.dvd_of_mod_eq_zero ( show ( ( k + 1 ) ! + j ) % j = 0 from Nat.mod_eq_zero_of_dvd <| by simpa using Nat.dvd_factorial ( by linarith ) hjk ) ) ( by rw [ H.dvd_iff_eq ] <;> linarith [ Nat.self_le_factorial ( k + 1 ) ] )
+
 
 
 /-- Goldbach's conjecture verified for all even numbers in [4, 2000]:
@@ -88,18 +100,13 @@ theorem goldbach_verified_2000 :
   native_decide
 
 
+
 /-- Legendre's conjecture: there is always a prime between n² and (n+1)² for n ≤ 200. -/
 theorem legendre_verified_200 :
     ∀ n ∈ Finset.Icc 1 200,
       ∃ p ∈ Finset.Ioc (n * n) ((n + 1) * (n + 1)), Nat.Prime p := by
   native_decide
 
-
-/-- Chebyshev bias persists mod 4 up to 1000. -/
-theorem chebyshev_bias_mod4 :
-    ((Finset.range 1000).filter (fun p => Nat.Prime p ∧ p % 4 = 3)).card >
-    ((Finset.range 1000).filter (fun p => Nat.Prime p ∧ p % 4 = 1)).card := by
-  native_decide
 
 
 /-- Chebyshev bias mod 4: exact counts. -/
@@ -109,14 +116,6 @@ theorem chebyshev_mod4_counts :
   constructor <;> native_decide
 
 
-/-- Chebyshev bias mod 5: non-residues dominate.
-Non-residues mod 5: {2, 3}, Residues: {1, 4}.
-89 non-residue primes vs 78 residue primes up to 1000. -/
-theorem chebyshev_bias_mod5 :
-    ((Finset.range 1000).filter (fun p => Nat.Prime p ∧ (p % 5 = 2 ∨ p % 5 = 3))).card >
-    ((Finset.range 1000).filter (fun p => Nat.Prime p ∧ (p % 5 = 1 ∨ p % 5 = 4))).card := by
-  native_decide
-
 
 /-- Chebyshev bias mod 5: exact counts. -/
 theorem chebyshev_mod5_counts :
@@ -125,12 +124,14 @@ theorem chebyshev_mod5_counts :
   constructor <;> native_decide
 
 
+
 /-- An arithmetic progression of 10 primes:
 199, 409, 619, 829, 1039, 1249, 1459, 1669, 1879, 2089
 with common difference 210 = 2·3·5·7. -/
 theorem green_tao_10 :
     ∀ i ∈ Finset.range 10, Nat.Prime (199 + 210 * i) := by
   native_decide
+
 
 
 /-- Every residue class coprime to 10 contains a prime ≤ 100. -/
@@ -143,15 +144,6 @@ theorem linnik_evidence_mod10 :
          ⟨7, by simp; decide⟩, ⟨19, by simp; decide⟩⟩
 
 
-/-- π(2000) = 303. -/
-theorem prime_count_2000 :
-    ((Finset.range 2001).filter Nat.Prime).card = 303 := by native_decide
-
-
-/-- π(5000) = 669. -/
-theorem prime_count_5000 :
-    ((Finset.range 5001).filter Nat.Prime).card = 669 := by native_decide
-
 
 /-- [Section: ## Cunningham Chain Modular Analysis] -/
 theorem cunningham_mod3_analysis :
@@ -159,3 +151,4 @@ theorem cunningham_mod3_analysis :
     (∀ p, p % 3 = 1 → (2 * p + 1) % 3 = 0) ∧
     (∀ p, p % 3 = 2 → (2 * p + 1) % 3 = 2) := by
   grind
+

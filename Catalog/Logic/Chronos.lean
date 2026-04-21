@@ -14,8 +14,10 @@ def isLightPrime (p : ℕ) : Prop := p.Prime ∧ p % 4 = 1
 
 
 
+
 /-- A prime is "dark" (space) if it is ≡ 3 mod 4. -/
 def isDarkPrime (p : ℕ) : Prop := p.Prime ∧ p % 4 = 3
+
 
 
 
@@ -24,8 +26,10 @@ def isTwilightPrime (p : ℕ) : Prop := p.Prime ∧ p = 2
 
 
 
+
 /-- 5 is a light prime (photon). -/
 theorem five_is_light : isLightPrime 5 := by constructor <;> decide
+
 
 
 
@@ -34,8 +38,10 @@ theorem thirteen_is_light : isLightPrime 13 := by constructor <;> decide
 
 
 
+
 /-- 3 is a dark prime (space). -/
 theorem three_is_dark : isDarkPrime 3 := by constructor <;> decide
+
 
 
 
@@ -44,13 +50,16 @@ theorem seven_is_dark : isDarkPrime 7 := by constructor <;> decide
 
 
 
+
 /-- 11 is a dark prime (space). -/
 theorem eleven_is_dark : isDarkPrime 11 := by constructor <;> decide
 
 
 
+
 /-- 2 is the twilight prime. -/
 theorem two_is_twilight : isTwilightPrime 2 := by constructor <;> decide
+
 
 
 
@@ -60,13 +69,16 @@ theorem light_dark_disjoint (p : ℕ) : ¬(isLightPrime p ∧ isDarkPrime p) := 
 
 
 
+
 /-- 2 is not light. -/
 theorem two_not_light : ¬isLightPrime 2 := by intro ⟨_, h⟩; omega
 
 
 
+
 /-- 2 is not dark. -/
 theorem two_not_dark : ¬isDarkPrime 2 := by intro ⟨_, h⟩; omega
+
 
 
 
@@ -81,6 +93,7 @@ theorem odd_prime_light_or_dark (p : ℕ) (hp : p.Prime) (hodd : p ≠ 2) :
 
 
 
+
 /-- The trichotomy: every prime is exactly one of twilight, light, or dark. -/
 theorem prime_trichotomy (p : ℕ) (hp : p.Prime) :
     isTwilightPrime p ∨ isLightPrime p ∨ isDarkPrime p := by
@@ -90,9 +103,11 @@ theorem prime_trichotomy (p : ℕ) (hp : p.Prime) :
 
 
 
+
 /-- Count of light primes up to n. -/
 def lightPrimeCount (n : ℕ) : ℕ :=
   ((Finset.range (n + 1)).filter (fun p => p.Prime ∧ p % 4 = 1)).card
+
 
 
 
@@ -102,8 +117,10 @@ def darkPrimeCount (n : ℕ) : ℕ :=
 
 
 
+
 /-- There are 4 light primes up to 30: {5, 13, 17, 29}. -/
 theorem light_count_30 : lightPrimeCount 30 = 4 := by native_decide
+
 
 
 
@@ -112,8 +129,10 @@ theorem dark_count_30 : darkPrimeCount 30 = 5 := by native_decide
 
 
 
+
 /-- Dark primes slightly outnumber light primes up to 30 — space dominates light! -/
 theorem dark_exceeds_light_30 : darkPrimeCount 30 > lightPrimeCount 30 := by native_decide
+
 
 
 
@@ -122,8 +141,10 @@ theorem light_count_100 : lightPrimeCount 100 = 11 := by native_decide
 
 
 
+
 /-- Dark prime count up to 100. -/
 theorem dark_count_100 : darkPrimeCount 100 = 13 := by native_decide
+
 
 
 
@@ -132,6 +153,7 @@ theorem factorial_plus_k_divisible (n k : ℕ) (hk2 : 2 ≤ k) (hkn : k ≤ n) :
     k ∣ n.factorial + k := by
   have h1 : k ∣ n.factorial := Nat.dvd_factorial (by omega) hkn
   exact dvd_add h1 (dvd_refl k)
+
 
 
 
@@ -145,6 +167,7 @@ theorem factorial_plus_k_composite (n k : ℕ) (_hn : 2 ≤ n) (hk2 : 2 ≤ k) (
     have : 0 < n.factorial := Nat.factorial_pos n
     omega
   exact (hp.eq_one_or_self_of_dvd k hdvd).elim (by omega) (by omega)
+
 
 
 
@@ -166,6 +189,7 @@ theorem space_expands (G : ℕ) :
 
 
 
+
 /-- A sum-of-two-squares representation witnesses that a number is "luminous." -/
 structure SumOfSquaresWitness (n : ℕ) where
   a : ℕ
@@ -173,6 +197,7 @@ structure SumOfSquaresWitness (n : ℕ) where
   ha : 0 < a
   hb : 0 < b
   eq : a ^ 2 + b ^ 2 = n
+
 
 
 
@@ -186,6 +211,7 @@ def photon_5 : SumOfSquaresWitness 5 where
 
 
 
+
 /-- 13 = 2² + 3²: another photon. -/
 def photon_13 : SumOfSquaresWitness 13 where
   a := 2
@@ -193,6 +219,7 @@ def photon_13 : SumOfSquaresWitness 13 where
   ha := by omega
   hb := by omega
   eq := by norm_num
+
 
 
 
@@ -206,6 +233,7 @@ def photon_29 : SumOfSquaresWitness 29 where
 
 
 
+
 /-- 2 = 1² + 1²: the twilight prime is also a sum of squares. -/
 def photon_2 : SumOfSquaresWitness 2 where
   a := 1
@@ -216,11 +244,13 @@ def photon_2 : SumOfSquaresWitness 2 where
 
 
 
+
 /-- The Gaussian norm is multiplicative: combining photons creates new photons.
 This is wave superposition in the arithmetic universe. -/
 theorem photon_superposition (a b c d : ℤ) :
     (a ^ 2 + b ^ 2) * (c ^ 2 + d ^ 2) = (a * c - b * d) ^ 2 + (a * d + b * c) ^ 2 := by
   ring
+
 
 
 
@@ -235,8 +265,10 @@ theorem luminous_product {m n : ℕ} (hm : ∃ a b : ℕ, a ^ 2 + b ^ 2 = m)
 
 
 
+
 /-- Gravitational weight of a moment on the timeline. -/
 def timelineWeight (n : ℕ) : ℕ := n.divisors.card
+
 
 
 
@@ -248,8 +280,10 @@ theorem prime_minimal_weight (p : ℕ) (hp : p.Prime) : timelineWeight p = 2 := 
 
 
 
+
 /-- 1 has weight 1 — the vacuum. -/
 theorem vacuum_weight : timelineWeight 1 = 1 := by native_decide
+
 
 
 
@@ -261,13 +295,16 @@ theorem prime_power_weight (p k : ℕ) (hp : p.Prime) :
 
 
 
+
 /-- 12 = 2² × 3 has weight 6 — a "gravitational well" on the timeline. -/
 theorem heavy_moment_12 : timelineWeight 12 = 6 := by native_decide
 
 
 
+
 /-- 6 is a "balanced" moment: weight 4. -/
 theorem balanced_moment_6 : timelineWeight 6 = 4 := by native_decide
+
 
 
 
@@ -277,14 +314,17 @@ def spaceCount (n : ℕ) : ℕ :=
 
 
 
+
 /-- The photon (prime) count up to n. -/
 def photonCount (n : ℕ) : ℕ :=
   ((Finset.range (n + 1)).filter (fun k => k.Prime)).card
 
 
 
+
 /-- Space always exceeds light after the first few moments. -/
 theorem space_dominates_10 : spaceCount 10 > photonCount 10 := by native_decide
+
 
 
 
@@ -296,15 +336,18 @@ theorem space_dominates_100 : spaceCount 100 > photonCount 100 := by native_deci
 
 
 
+
 /-- By moment 30: 19 composites vs 10 primes — space is ~2x light. -/
 theorem space_ratio_30 : spaceCount 30 = 19 ∧ photonCount 30 = 10 := by
   constructor <;> native_decide
 
 
 
+
 /-- By moment 100: 74 composites vs 25 primes — space is ~3x light. -/
 theorem space_ratio_100 : spaceCount 100 = 74 ∧ photonCount 100 = 25 := by
   constructor <;> native_decide
+
 
 
 
@@ -315,9 +358,11 @@ structure ResearchOracle (H : Type*) where
 
 
 
+
 /-- The knowledge base is the fixed-point set of the research oracle. -/
 def ResearchOracle.knowledgeBase {H : Type*} (R : ResearchOracle H) : Set H :=
   {h | R.validate h = h}
+
 
 
 
@@ -328,12 +373,14 @@ theorem ResearchOracle.validation_enters_kb {H : Type*} (R : ResearchOracle H) (
 
 
 
+
 /-- The knowledge base is exactly the range of validation. -/
 theorem ResearchOracle.kb_eq_range {H : Type*} (R : ResearchOracle H) :
     R.knowledgeBase = range R.validate := by
   ext y; constructor
   · intro hy; exact ⟨y, hy⟩
   · rintro ⟨x, rfl⟩; exact R.stable x
+
 
 
 
@@ -347,11 +394,13 @@ theorem compose_research_oracles {H : Type*} (R S : ResearchOracle H)
 
 
 
+
 /-- The "Chebyshev bias": among small primes, dark primes tend to outnumber light ones. -/
 theorem chebyshev_bias_small :
     ∀ n ∈ ({10, 20, 30, 50} : Finset ℕ),
     darkPrimeCount n ≥ lightPrimeCount n := by
   decide
+
 
 
 
@@ -362,10 +411,12 @@ theorem bias_reversal_exists :
 
 
 
+
 /-- A moment's "light content": number of prime factors ≡ 1 mod 4
 (counted with multiplicity via primeFactorsList). -/
 def lightContent (n : ℕ) : ℕ :=
   n.primeFactorsList.countP (fun p => p % 4 == 1)
+
 
 
 
@@ -376,9 +427,11 @@ def darkContent (n : ℕ) : ℕ :=
 
 
 
+
 /-- 15 = 3 × 5 has equal light and dark content — a balanced moment. -/
 theorem balanced_15 : lightContent 15 = 1 ∧ darkContent 15 = 1 := by
   constructor <;> native_decide
+
 
 
 
@@ -388,15 +441,18 @@ theorem dark_21 : lightContent 21 = 0 ∧ darkContent 21 = 2 := by
 
 
 
+
 /-- 65 = 5 × 13 is pure light — a photon burst. -/
 theorem light_65 : lightContent 65 = 2 ∧ darkContent 65 = 0 := by
   constructor <;> native_decide
 
 
 
+
 /-- 2310 = 2 × 3 × 5 × 7 × 11 — a primordial moment mixing light and dark. -/
 theorem primordial_2310 : lightContent 2310 = 1 ∧ darkContent 2310 = 3 := by
   constructor <;> native_decide
+
 
 
 
@@ -408,8 +464,10 @@ def nthPrime : ℕ → ℕ
 
 
 
+
 /-- The prime gap: how much space lies between consecutive primes. -/
 def primeGap (n : ℕ) : ℕ := nthPrime (n + 1) - nthPrime n
+
 
 
 
@@ -418,13 +476,16 @@ theorem gap_0 : primeGap 0 = 1 := by decide
 
 
 
+
 /-- Gap between 7 and 11: space = 4 (expanding!). -/
 theorem gap_3 : primeGap 3 = 4 := by decide
 
 
 
+
 /-- Gap between 23 and 29: space = 6 (still expanding!). -/
 theorem gap_8 : primeGap 8 = 6 := by decide
+
 
 
 
@@ -436,8 +497,10 @@ theorem first_gaps :
 
 
 
+
 /-- Two moments are entangled if their sum is a perfect square. -/
 def areEntangled (a b : ℕ) : Prop := ∃ k, a + b = k ^ 2
+
 
 
 
@@ -446,8 +509,10 @@ theorem entangled_1_3 : areEntangled 1 3 := ⟨2, by norm_num⟩
 
 
 
+
 /-- 5 and 11 are entangled: 5 + 11 = 16 = 4². -/
 theorem entangled_5_11 : areEntangled 5 11 := ⟨4, by norm_num⟩
+
 
 
 
@@ -457,12 +522,14 @@ theorem entangled_symm (a b : ℕ) : areEntangled a b ↔ areEntangled b a := by
 
 
 
+
 /-- Every number is entangled with a perfect square complement. -/
 theorem universal_entanglement (n : ℕ) :
     ∃ m, areEntangled n m := by
   refine ⟨(n + 1) ^ 2 - n, n + 1, ?_⟩
   have : (n + 1) ^ 2 ≥ n := by nlinarith
   omega
+
 
 
 
@@ -477,6 +544,7 @@ theorem every_moment_has_prime_character (n : ℕ) (hn : 2 ≤ n) :
 
 
 
+
 /-- The timeline never ends: for every moment, there's a later prime moment. -/
 theorem timeline_infinite (n : ℕ) : ∃ p, n < p ∧ p.Prime := by
   obtain ⟨p, hn, hp⟩ := Nat.exists_infinite_primes (n + 1)
@@ -484,6 +552,11 @@ theorem timeline_infinite (n : ℕ) : ∃ p, n < p ∧ p.Prime := by
 
 
 
+
+/-- [Section: # CatalogBuild.Logic.Chronos
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 70] -/
 theorem universe_stretches : ∀ G : ℕ, ∃ a b : ℕ, a.Prime ∧ b.Prime ∧
     a < b ∧ G ≤ b - a ∧ (∀ k, a < k → k < b → ¬k.Prime) := by
   intro G;
@@ -507,6 +580,7 @@ theorem universe_stretches : ∀ G : ℕ, ∃ a b : ℕ, a.Prime ∧ b.Prime ∧
   · grind;
   · grind;
   · grind
+
 
 
 

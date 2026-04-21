@@ -17,8 +17,14 @@ theorem diff_of_squares_poly :
 
 
 
+
+/-- [Section: # CatalogBuild.Algebra.Foundations.PolynomialTheory
+Auto-generated from theorem catalog database.
+Domain: Algebra/Foundations
+Declarations: 13] -/
 theorem x2_plus_1_no_root : ∀ a : ℤ, a ^ 2 + 1 ≠ 0 := by
   exact fun a => by positivity;
+
 
 
 
@@ -28,13 +34,16 @@ theorem geom_series_poly (n : ℕ) :
 
 
 
+
 /-- ℤ is an integral domain -/
 theorem int_domain : IsDomain ℤ := inferInstance
 
 
 
+
 /-- ℤ is a PID -/
 theorem int_pid : IsPrincipalIdealRing ℤ := inferInstance
+
 
 
 
@@ -44,9 +53,11 @@ theorem field_unit {F : Type*} [Field F] (a : F) (ha : a ≠ 0) :
 
 
 
+
 theorem zmod_field (p : ℕ) (hp : Nat.Prime p) :
     IsField (ZMod p) := by
   haveI := Fact.mk hp; exact @Field.toIsField ( ZMod p ) _;
+
 
 
 
@@ -56,8 +67,10 @@ theorem finite_domain_field (R : Type*) [CommRing R] [IsDomain R] [Fintype R] [N
 
 
 
+
 theorem gf_card_eq (p : ℕ) [Fact (Nat.Prime p)] : Fintype.card (ZMod p) = p := by
   convert ZMod.card p
+
 
 
 
@@ -67,9 +80,11 @@ theorem fermat_gf_p (p : ℕ) [Fact (Nat.Prime p)] (a : ZMod p) :
 
 
 
+
 theorem gf_mult_cyclic (p : ℕ) [Fact (Nat.Prime p)] :
     IsCyclic (ZMod p)ˣ := by
   infer_instance
+
 
 
 
@@ -94,7 +109,9 @@ theorem x2_minus_2_irred : Irreducible (X ^ 2 - 2 : Polynomial ℚ) := by
 
 
 
+
 theorem sqrt2_irrat : Irrational (Real.sqrt 2) := by
   decide +kernel
+
 
 

@@ -12,10 +12,12 @@ theorem cayley_dickson_dim (k : ℕ) : 2 ^ k ≥ 1 := Nat.one_le_two_pow
 
 
 
+
 /-- Channels 1-4 correspond to dimensions 1, 2, 4, 8.
 Channel 5 corresponds to dimension 16. -/
 theorem channel_dimensions :
     (2^0, 2^1, 2^2, 2^3, 2^4) = (1, 2, 4, 8, 16) := by native_decide
+
 
 
 
@@ -24,8 +26,10 @@ theorem hurwitz_dimensions : {1, 2, 4, 8} = ({1, 2, 4, 8} : Finset ℕ) := rfl
 
 
 
+
 /-- 16 is NOT a Hurwitz dimension — the sedenion boundary. -/
 theorem sixteen_not_hurwitz : 16 ∉ ({1, 2, 4, 8} : Finset ℕ) := by decide
+
 
 
 
@@ -46,14 +50,17 @@ theorem eight_square_identity
 
 
 
+
 /-- The seventh power divisor sum σ₇(n) = Σ_{d|n} d⁷. -/
 def sigma7 (n : ℕ) : ℤ := ∑ d ∈ Nat.divisors n, (d : ℤ) ^ 7
+
 
 
 
 /-- σ₇(1) = 1. -/
 theorem sigma7_one : sigma7 1 = 1 := by
   simp [sigma7]
+
 
 
 
@@ -66,9 +73,11 @@ theorem sigma7_prime (p : ℕ) (hp : Nat.Prime p) :
 
 
 
+
 /-- The "Eisenstein part" of r₁₆: the divisor-sum contribution.
 E₁₆(n) = (32/17) · σ₇(n) is the "expected" count from Eisenstein series. -/
 def eisenstein_r16 (n : ℕ) : ℚ := (32 : ℚ) / 17 * (sigma7 n : ℚ)
+
 
 
 
@@ -85,14 +94,17 @@ def cusp_correction : ℕ → ℤ
 
 
 
+
 /-- r₁₆(1) = 1 (the trivial representation: 1 = 1² + 0² + ... + 0²).
 Actually r₁₆(1) = 32 counting signs and permutations. -/
 theorem r16_one_value : (32 : ℤ) = 2 * 16 := by norm_num
 
 
 
+
 /-- r₁₆(2) = 480. This is a known value. -/
 theorem r16_two_value : (480 : ℤ) = 32 * 15 := by norm_num
+
 
 
 
@@ -104,10 +116,12 @@ theorem sigma1_multiplicative_example :
 
 
 
+
 /-- Cube divisor-sum multiplicativity example.
 σ₃(6) = σ₃(2) · σ₃(3) since gcd(2,3) = 1. -/
 theorem sigma3_multiplicative_example :
     (1 + 2^3 + 3^3 + 6^3 : ℤ) = (1 + 2^3 : ℤ) * (1 + 3^3 : ℤ) := by norm_num
+
 
 
 
@@ -117,9 +131,11 @@ theorem sigma7_multiplicative_example :
 
 
 
+
 /-- Channel 2 is bounded for primes: r₂(p) ∈ {0, 8}. -/
 theorem r2_prime_bounded : ∀ x : ℤ, x = 0 ∨ x = 8 → |x| ≤ 8 := by
   intro x hx; cases hx with | inl h => simp [h] | inr h => simp [h]
+
 
 
 
@@ -128,10 +144,12 @@ theorem r4_growth (p : ℕ) (hp : p ≥ 2) : 8 * ((p : ℤ) + 1) ≥ 8 * 3 := by
 
 
 
+
 /-- Channel 4 grows cubically: r₈(p) = 16(1+p³) ~ 16p³. -/
 theorem r8_growth (p : ℕ) (hp : p ≥ 2) : 16 * (1 + (p : ℤ)^3) ≥ 16 * 9 := by
   have : (p : ℤ) ≥ 2 := by omega
   nlinarith [sq_nonneg ((p : ℤ) - 2), sq_nonneg (p : ℤ)]
+
 
 
 
@@ -143,15 +161,18 @@ theorem r16_eisenstein_growth (p : ℕ) (hp : p ≥ 2) :
 
 
 
+
 /-- The channel dominance ratio: r₈(p)/r₄(p) = 2(p²-p+1) grows quadratically. -/
 theorem channel_4_over_3 (p : ℤ) :
     2 * (1 + p^3) = (p + 1) * (2 * (p^2 - p + 1)) := by ring
 
 
 
+
 /-- The channel dominance: r₁₆ Eisenstein / r₈ ~ p⁴ for large primes. -/
 theorem channel_5_over_4_growth (p : ℤ) (hp : p > 0) :
     (1 + p^7) * 16 = 16 + 16 * p^7 := by ring
+
 
 
 
@@ -171,6 +192,7 @@ theorem complex_no_zero_divisors (a b c d : ℤ)
 
 
 
+
 /-- At the sedenion level (Channel 5), the composition property fails.
 There is no identity of the form:
 (Σ¹⁶ aᵢ²)(Σ¹⁶ bᵢ²) = Σ¹⁶ cᵢ²
@@ -178,6 +200,7 @@ where each cᵢ is bilinear in the a's and b's.
 This is the content of the Hurwitz theorem (1898).
 We express this as: 16 > 8, so 16 is beyond the Hurwitz bound. -/
 theorem sedenion_beyond_hurwitz : 16 > (8 : ℕ) := by norm_num
+
 
 
 
@@ -189,11 +212,13 @@ def stokes_constraint (S₀ S₁ S₂ S₃ : ℝ) : Prop :=
 
 
 
+
 /-- The Stokes constraint is equivalent to a null condition on the
 4-vector (S₁, S₂, S₃, S₀) in Minkowski space. -/
 theorem stokes_is_null (S₀ S₁ S₂ S₃ : ℝ) :
     stokes_constraint S₀ S₁ S₂ S₃ ↔ S₁^2 + S₂^2 + S₃^2 - S₀^2 = 0 := by
   simp [stokes_constraint]; constructor <;> intro h <;> linarith
+
 
 
 
@@ -205,6 +230,7 @@ def jones_intensity (Ex Ey : ℂ) : ℝ :=
 
 
 
+
 /-- The intensity is always non-negative (Channel 2 is "positive"). -/
 theorem jones_intensity_nonneg (Ex Ey : ℂ) :
     jones_intensity Ex Ey ≥ 0 := by
@@ -213,8 +239,10 @@ theorem jones_intensity_nonneg (Ex Ey : ℂ) :
 
 
 
+
 /-- Horizontal polarization: Jones vector (1, 0). -/
 def horizontal_pol : ℂ × ℂ := (1, 0)
+
 
 
 
@@ -223,11 +251,13 @@ def vertical_pol : ℂ × ℂ := (0, 1)
 
 
 
+
 /-- H and V polarizations have the same intensity. -/
 theorem h_v_equal_intensity :
     jones_intensity horizontal_pol.1 horizontal_pol.2 =
     jones_intensity vertical_pol.1 vertical_pol.2 := by
   simp [jones_intensity, horizontal_pol, vertical_pol, Complex.normSq]
+
 
 
 
@@ -242,8 +272,10 @@ inductive LightChannel where
 
 
 
+
 /-- There are exactly 5 light channels. -/
 theorem five_light_channels : Fintype.card LightChannel = 5 := by native_decide
+
 
 
 
@@ -257,6 +289,7 @@ def channel_dimension : LightChannel → ℕ
 
 
 
+
 /-- Channel dimensions follow the Cayley-Dickson doubling pattern. -/
 theorem channel_doubling :
     channel_dimension .polarization = 2 * channel_dimension .energy ∧
@@ -264,6 +297,7 @@ theorem channel_doubling :
     channel_dimension .orbital = 2 * channel_dimension .stokes ∧
     channel_dimension .spacetime = 2 * channel_dimension .orbital := by
   simp [channel_dimension]
+
 
 
 
@@ -278,11 +312,13 @@ def modular_weight : ℕ → ℕ
 
 
 
+
 /-- Channels 1-4 have modular weight ≤ 4, where cusp space is trivial. -/
 theorem channels_1_to_4_no_cusps :
     modular_weight 1 ≤ 4 ∧ modular_weight 2 ≤ 4 ∧
     modular_weight 3 ≤ 4 ∧ modular_weight 4 ≤ 8 := by
   simp [modular_weight]
+
 
 
 
@@ -292,10 +328,12 @@ theorem channel_5_cusp_weight : modular_weight 4 = 8 := by
 
 
 
+
 /-- The Eisenstein prediction for r₁₆ at small primes.
 E(p) = (32/17)(1 + p⁷) for prime p. -/
 theorem eisenstein_prediction_2 :
     (32 : ℚ) / 17 * (1 + 2^7) = 32 * 129 / 17 := by norm_num
+
 
 
 
@@ -307,10 +345,12 @@ theorem r16_actual_2 : (480 : ℤ) > 0 := by norm_num
 
 
 
+
 /-- For n = 1: r₁₆(1) = 32. E(1) = 32/17. C(1) = 32 - 32/17 = 512/17.
 Even at n=1, the cusp correction dominates! -/
 theorem r16_vs_eisenstein_1 :
     (32 : ℚ) - 32/17 = 512/17 := by norm_num
+
 
 
 
@@ -322,11 +362,13 @@ theorem poincare_sphere_is_light_cone (S₀ S₁ S₂ S₃ : ℝ) :
 
 
 
+
 /-- Partial polarization: S₁² + S₂² + S₃² ≤ S₀² (inside the light cone = timelike).
 Partially polarized light is "massive" in the Minkowski analogy! -/
 theorem partial_pol_is_timelike (S₀ S₁ S₂ S₃ : ℝ)
     (h : S₁^2 + S₂^2 + S₃^2 ≤ S₀^2) :
     S₁^2 + S₂^2 + S₃^2 - S₀^2 ≤ 0 := by linarith
+
 
 
 
@@ -337,6 +379,7 @@ theorem unpolarized_is_pure_timelike (S₀ : ℝ) (hS₀ : S₀ > 0) :
 
 
 
+
 /-- Bott periodicity: Cl(n+8) ≅ Cl(n) ⊗ M₁₆(ℝ). At the level of
 dimensions, 2^{n+8} = 2^n · 256 = 2^n · 16². -/
 theorem bott_period_dimensions (n : ℕ) :
@@ -344,10 +387,12 @@ theorem bott_period_dimensions (n : ℕ) :
 
 
 
+
 /-- The period-8 pattern: after 8 doublings, the structure repeats
 (up to Morita equivalence). The 8 = 2³ reflects the 3 independent
 signs in the Clifford algebra classification. -/
 theorem eight_equals_two_cubed : (8 : ℕ) = 2^3 := by norm_num
+
 
 
 
@@ -364,6 +409,7 @@ theorem channel_5_no_dark_matter :
 
 
 
+
 /-- The ratio hierarchy for a prime p ≥ 5:
 r₂(p) ≤ 8 < r₄(p) < r₈(p) < r₁₆_eisenstein(p) -/
 theorem channel_hierarchy_prime_5 :
@@ -371,6 +417,7 @@ theorem channel_hierarchy_prime_5 :
     8 * (5 + 1) < 16 * (1 + 5^3) ∧
     16 * (1 + 5^3) < 32 * (1 + 5^7) / 17 + 32 * (1 + 5^7) := by
   constructor <;> [norm_num; constructor <;> norm_num]
+
 
 
 
@@ -382,8 +429,10 @@ theorem fock_dim_two_modes (n : ℕ) :
 
 
 
+
 /-- For m = 4 modes (Stokes-quaternionic), the Fock dimension grows polynomially. -/
 theorem fock_dim_four_modes_example :
     Nat.choose (3 + 3) 3 = 20 := by native_decide
+
 
 

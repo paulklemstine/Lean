@@ -17,13 +17,16 @@ noncomputable def chebyT : ℕ → Polynomial ℤ
 
 
 
+
 /-- **THEOREM 17**: T₀ = 1 -/
 theorem chebyT_zero : chebyT 0 = 1 := by rfl
 
 
 
+
 /-- **THEOREM 18**: T₁ = X -/
 theorem chebyT_one : chebyT 1 = Polynomial.X := by rfl
+
 
 
 
@@ -43,6 +46,11 @@ theorem chebyT_degree (n : ℕ) (hn : 1 ≤ n) :
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.DeepConnections
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 12] -/
 theorem chebyT_comp (m n : ℕ) :
     (chebyT m).comp (chebyT n) = chebyT (m * n) := by
       -- By definition of Chebyshev polynomials, we know that $T_{m}(T_{n}(x))$ satisfies the same recurrence relation as $T_{mn}(x)$.
@@ -77,6 +85,7 @@ theorem chebyT_comp (m n : ℕ) :
 
 
 
+
 /-- A solution to the Pell equation x² - D·y² = 1 -/
 structure PellSolution (D : ℤ) where
   x : ℤ
@@ -85,8 +94,10 @@ structure PellSolution (D : ℤ) where
 
 
 
+
 /-- The trivial solution -/
 def PellSolution.trivial (D : ℤ) : PellSolution D := ⟨1, 0, by ring⟩
+
 
 
 
@@ -101,6 +112,7 @@ def PellSolution.compose (D : ℤ) (s₁ s₂ : PellSolution D) : PellSolution D
 
 
 
+
 theorem pell_compose_assoc (D : ℤ) (s₁ s₂ s₃ : PellSolution D) :
     PellSolution.compose D (PellSolution.compose D s₁ s₂) s₃ =
     PellSolution.compose D s₁ (PellSolution.compose D s₂ s₃) := by
@@ -110,9 +122,11 @@ theorem pell_compose_assoc (D : ℤ) (s₁ s₂ s₃ : PellSolution D) :
 
 
 
+
 theorem pell_compose_trivial_left (D : ℤ) (s : PellSolution D) :
     PellSolution.compose D (PellSolution.trivial D) s = s := by
       cases s ; unfold PellSolution.trivial PellSolution.compose ; aesop
+
 
 
 
@@ -121,6 +135,7 @@ theorem sum_two_sq_mod (p : ℕ) (hp : Nat.Prime p) (hp4 : p % 4 = 1) :
       haveI := Fact.mk hp;
       obtain ⟨ x, hx ⟩ := ZMod.exists_sq_eq_neg_one_iff ( p := p );
       exact Exists.elim ( hx ( by rw [ hp4 ] ; decide ) ) fun a ha => ⟨ a, by rw [ sq, ha ] ⟩
+
 
 
 
@@ -133,6 +148,7 @@ theorem padic_val_add_ge_min (p a b : ℕ) (hp : Nat.Prime p)
         exact fun k hk₁ hk₂ => Nat.dvd_add hk₁ hk₂;
       simp_all +decide [ ← Nat.factorization_le_iff_dvd, padicValNat_dvd_iff ];
       contrapose! h_div; aesop;
+
 
 
 

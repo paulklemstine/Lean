@@ -12,6 +12,7 @@ theorem dimension_hierarchy : ∀ d ∈ ({1, 2, 4, 8} : Finset ℕ), d ∣ 8 := 
 
 
 
+
 /-- [Section: # CatalogBuild.Computation.Factoring.NewTheorems
 Auto-generated from theorem catalog database.
 Domain: Computation/Factoring
@@ -22,6 +23,7 @@ theorem fib_doubling (n : ℕ) :
 
 
 
+
 /-- The product of a divisor pair equals N (lattice constraint). -/
 theorem divisor_pair_product (N d : ℕ) (hd : d ∣ N) :
     d * (N / d) = N :=
@@ -29,10 +31,12 @@ theorem divisor_pair_product (N d : ℕ) (hd : d ∣ N) :
 
 
 
+
 /-- Divisors come in complementary pairs: if d | N then (N/d) | N. -/
 theorem complementary_divisor (N d : ℕ) (hd : d ∣ N) :
     (N / d) ∣ N :=
   Nat.div_dvd_of_dvd hd
+
 
 
 
@@ -44,6 +48,11 @@ theorem constraint_intersection_nat (S k : ℕ) (hS : 0 < S) (hk : 1 ≤ k) :
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Factoring.NewTheorems
+Auto-generated from theorem catalog database.
+Domain: Computation/Factoring
+Declarations: 12] -/
 theorem exponential_advantage_unbounded (S : ℕ) (hS : 0 < S) :
     ∀ ε : ℕ, 0 < ε → ∃ k : ℕ, S / 2 ^ k < ε := by
   -- Let's choose k such that 2^k > S / ε.
@@ -51,6 +60,7 @@ theorem exponential_advantage_unbounded (S : ℕ) (hS : 0 < S) :
   obtain ⟨k, hk⟩ : ∃ k, 2 ^ k > S / ε := by
     exact pow_unbounded_of_one_lt _ one_lt_two;
   exact ⟨ k, Nat.div_lt_of_lt_mul <| by nlinarith [ Nat.div_add_mod S ε, Nat.mod_lt S hε_pos ] ⟩
+
 
 
 
@@ -62,10 +72,12 @@ theorem two_reps_norm_square (a b c d N : ℤ)
 
 
 
+
 /-- The difference of two representations gives a factoring identity. -/
 theorem two_reps_factor_identity (a b c d N : ℤ)
     (h1 : a^2 + b^2 = N) (h2 : c^2 + d^2 = N) :
     (a - c) * (a + c) = (d - b) * (d + b) := by nlinarith
+
 
 
 
@@ -79,9 +91,11 @@ theorem fib_exponential_lower (n : ℕ) (hn : 2 ≤ n) :
 
 
 
+
 /-- The success probability of congruence of squares: 2/4 = 1/2. -/
 theorem congruence_success_probability :
     (2 : ℚ) / 4 = 1 / 2 := by norm_num
+
 
 
 
@@ -94,8 +108,10 @@ theorem fermat_near_sqrt (N p q : ℕ)
 
 
 
+
 /-- CRT cardinality: |ℤ/mnℤ| = |ℤ/mℤ| · |ℤ/nℤ| when m,n > 0. -/
 theorem crt_card (m n : ℕ) (hm : 0 < m) (hn : 0 < n) :
     m * n = m * n := rfl
+
 
 

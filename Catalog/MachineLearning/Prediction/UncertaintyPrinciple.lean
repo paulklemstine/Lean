@@ -21,10 +21,12 @@ theorem prediction_information_bound
 
 
 
+
 /-- You cannot reduce uncertainty below zero -/
 theorem prediction_floor (_H_prior I : ℝ) (h_info_bound : I ≤ H_prior) :
     0 ≤ H_prior - I :=
   sub_nonneg.mpr h_info_bound
+
 
 
 
@@ -36,6 +38,7 @@ theorem information_efficiency_bound (H_prior I : ℝ)
 
 
 
+
 /-- More data reduces the Cramér-Rao bound -/
 theorem cramer_rao_scaling (I₁ : ℝ) (hI : 0 < I₁) (n : ℕ) (hn : 0 < n) :
     1 / (n * I₁) ≤ 1 / I₁ := by
@@ -44,10 +47,12 @@ theorem cramer_rao_scaling (I₁ : ℝ) (hI : 0 < I₁) (n : ℕ) (hn : 0 < n) :
 
 
 
+
 /-- The Cramér-Rao bound is tight for Gaussian models -/
 theorem gaussian_achieves_cramer_rao (σ_sq : ℝ) (hσ : 0 < σ_sq) (n : ℕ) (hn : 0 < n) :
     σ_sq / n > 0 := by
   exact div_pos hσ (by exact_mod_cast hn)
+
 
 
 
@@ -61,6 +66,7 @@ structure PredictionInterval where
 
 
 
+
 /-- Wider intervals have higher coverage -/
 theorem wider_more_coverage (σ : ℝ) (hσ : 0 < σ)
     (w₁ w₂ : ℝ) (hw : w₁ ≤ w₂) :
@@ -69,9 +75,11 @@ theorem wider_more_coverage (σ : ℝ) (hσ : 0 < σ)
 
 
 
+
 /-- The entropy power: N(X) = (1/(2πe)) · exp(2H(X)) -/
 noncomputable def entropyPower (H : ℝ) : ℝ :=
   (1 / (2 * Real.pi * Real.exp 1)) * Real.exp (2 * H)
+
 
 
 
@@ -86,6 +94,7 @@ theorem entropy_power_pos (H : ℝ) :
 
 
 
+
 /-- Adding noise increases entropy power -/
 theorem entropy_power_inequality (H_X H_Z H_sum : ℝ)
     (h : entropyPower H_sum ≥ entropyPower H_X + entropyPower H_Z) :
@@ -94,11 +103,13 @@ theorem entropy_power_inequality (H_X H_Z H_sum : ℝ)
 
 
 
+
 /-- As information increases, the minimum achievable error decreases
 but never reaches zero -/
 theorem error_floor_positive (I : ℝ) (hI : 0 < I) :
     0 < 1 / I :=
   div_pos one_pos hI
+
 
 
 

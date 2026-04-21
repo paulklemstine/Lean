@@ -14,13 +14,16 @@ def uniformEntropy (N : ℕ) : ℝ := Real.log N / Real.log 2
 
 
 
+
 /-- Information gained by learning the answer from a uniform distribution. -/
 def informationGain (N : ℕ) : ℝ := uniformEntropy N
 
 
 
+
 /-- Minimum binary search depth for a search space of size N. -/
 def searchWork (N : ℕ) : ℝ := uniformEntropy N
+
 
 
 
@@ -30,9 +33,11 @@ theorem search_info_isomorphism (N : ℕ) :
 
 
 
+
 /-- **Theorem 1.2**: Entropy of a trivial search space is zero. -/
 theorem entropy_one : uniformEntropy 1 = 0 := by
   simp [uniformEntropy, Real.log_one]
+
 
 
 
@@ -40,6 +45,7 @@ theorem entropy_one : uniformEntropy 1 = 0 := by
 theorem entropy_two : uniformEntropy 2 = 1 := by
   simp only [uniformEntropy, Nat.cast_ofNat]
   exact div_self (ne_of_gt (Real.log_pos (by norm_num : (1 : ℝ) < 2)))
+
 
 
 
@@ -52,10 +58,12 @@ theorem entropy_doubling (N : ℕ) (hN : (N : ℝ) > 0) :
 
 
 
+
 /-- **Theorem 1.5**: Entropy is monotone. -/
 theorem entropy_monotone {M N : ℕ} (hM : 0 < M) (h : M ≤ N) :
     uniformEntropy M ≤ uniformEntropy N := by
       exact div_le_div_of_nonneg_right ( Real.log_le_log ( by positivity ) ( by norm_cast ) ) ( by positivity )
+
 
 
 
@@ -69,10 +77,12 @@ theorem entropy_nonneg {N : ℕ} (hN : 1 ≤ N) :
 
 
 
+
 /-- A collapse operator is an idempotent endomorphism. -/
 structure CollapseOperator (X : Type*) where
   collapse : X → X
   idempotent : ∀ x, collapse (collapse x) = collapse x
+
 
 
 
@@ -82,9 +92,11 @@ def CollapseOperator.collapsedSet {X : Type*} (C : CollapseOperator X) : Set X :
 
 
 
+
 /-- The "superposition set" — non-fixed points. -/
 def CollapseOperator.superpositionSet {X : Type*} (C : CollapseOperator X) : Set X :=
   {x | C.collapse x ≠ x}
+
 
 
 
@@ -95,6 +107,7 @@ theorem collapse_partition {X : Type*} (C : CollapseOperator X) :
 
 
 
+
 /-- **Theorem 2.2**: Collapsed and superposition sets are disjoint. -/
 theorem collapse_disjoint {X : Type*} (C : CollapseOperator X) :
     C.collapsedSet ∩ C.superpositionSet = ∅ := by
@@ -102,9 +115,11 @@ theorem collapse_disjoint {X : Type*} (C : CollapseOperator X) :
 
 
 
+
 /-- **Theorem 2.3 (Collapse Irreversibility)** -/
 theorem collapse_to_collapsed {X : Type*} (C : CollapseOperator X) (x : X) :
     C.collapse x ∈ C.collapsedSet := C.idempotent x
+
 
 
 
@@ -117,10 +132,12 @@ theorem collapse_range_eq {X : Type*} (C : CollapseOperator X) :
 
 
 
+
 /-- Identity collapse. -/
 def CollapseOperator.identity (X : Type*) : CollapseOperator X where
   collapse := id
   idempotent _ := rfl
+
 
 
 
@@ -131,10 +148,12 @@ theorem identity_no_superposition :
 
 
 
+
 /-- Constant collapse. -/
 def CollapseOperator.total {X : Type*} (answer : X) : CollapseOperator X where
   collapse := fun _ => answer
   idempotent _ := rfl
+
 
 
 
@@ -145,9 +164,11 @@ theorem total_collapse_singleton (c : ℝ) :
 
 
 
+
 /-- Binary query entropy after k queries. -/
 def binaryQueryEntropy (N : ℕ) (k : ℕ) : ℝ :=
   uniformEntropy N - k
+
 
 
 
@@ -161,15 +182,22 @@ theorem full_search_collapses (N : ℕ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.SearchInfoIsomorphism
+Auto-generated from theorem catalog database.
+Domain: Computation
+Declarations: 63] -/
 theorem query_reduces_entropy (N : ℕ) (k : ℕ) :
     binaryQueryEntropy N k - binaryQueryEntropy N (k + 1) = 1 := by
   simp only [binaryQueryEntropy]; push_cast; ring
 
 
 
+
 theorem entropy_reduction_additive (N k₁ k₂ : ℕ) :
     binaryQueryEntropy N k₁ - binaryQueryEntropy N (k₁ + k₂) = k₂ := by
   simp only [binaryQueryEntropy]; push_cast; ring
+
 
 
 
@@ -180,9 +208,11 @@ theorem information_conservation (N k : ℕ) :
 
 
 
+
 /-- Landauer energy cost. -/
 def landauerCost (n_bits : ℝ) (kT : ℝ) : ℝ :=
   n_bits * kT * Real.log 2
+
 
 
 
@@ -194,9 +224,11 @@ theorem landauer_nonneg (n : ℝ) (kT : ℝ) (hn : 0 ≤ n) (hkT : 0 ≤ kT) :
 
 
 
+
 theorem landauer_linear (n₁ n₂ kT : ℝ) :
     landauerCost (n₁ + n₂) kT = landauerCost n₁ kT + landauerCost n₂ kT := by
   unfold landauerCost; ring
+
 
 
 
@@ -205,9 +237,11 @@ theorem search_energy_isomorphism (N : ℕ) (kT : ℝ) :
 
 
 
+
 theorem zero_search_zero_cost (kT : ℝ) :
     landauerCost (searchWork 1) kT = 0 := by
   simp [landauerCost, searchWork, uniformEntropy, Real.log_one]
+
 
 
 
@@ -220,6 +254,7 @@ theorem landauer_monotone (n₁ n₂ kT : ℝ) (hn : n₁ ≤ n₂) (hkT : 0 ≤
 
 
 
+
 structure MeasurementScenario where
   N : ℕ
   hN : 0 < N
@@ -229,8 +264,10 @@ structure MeasurementScenario where
 
 
 
+
 def MeasurementScenario.preMeasurementEntropy (m : MeasurementScenario) : ℝ :=
   -∑ i : Fin m.N, m.prob i * Real.log (m.prob i)
+
 
 
 
@@ -238,8 +275,10 @@ def postMeasurementEntropy : ℝ := 0
 
 
 
+
 def MeasurementScenario.infoGained (m : MeasurementScenario) : ℝ :=
   m.preMeasurementEntropy - postMeasurementEntropy
+
 
 
 
@@ -250,12 +289,14 @@ theorem collapse_is_full_info_gain (m : MeasurementScenario) :
 
 
 
+
 /-- **Theorem 5.2**: For a uniform measurement, info gained = log(N). -/
 theorem uniform_measurement_info (N : ℕ) (hN : 0 < N) :
     -∑ i : Fin N, (1 / (N : ℝ)) * Real.log (1 / (N : ℝ)) =
     Real.log N := by
       simp +zetaDelta
       rw [← mul_assoc, mul_inv_cancel₀ (by positivity : (N : ℝ) ≠ 0), one_mul]
+
 
 
 
@@ -270,12 +311,14 @@ def uniformMeasurement (N : ℕ) (hN : 0 < N) : MeasurementScenario where
 
 
 
+
 structure SearchMeasurementInfo where
   search_work : ℕ → ℝ
   info_gained : ℕ → ℝ
   energy_cost : ℕ → ℝ
   search_eq_info : search_work = info_gained
   info_eq_energy : info_gained = energy_cost
+
 
 
 
@@ -288,8 +331,10 @@ theorem grand_isomorphism : ∃ (_ : SearchMeasurementInfo), True :=
 
 
 
+
 theorem collapse_functor (C : CollapseOperator ℕ) (N : ℕ) :
     searchWork (C.collapse N) = informationGain (C.collapse N) := rfl
+
 
 
 
@@ -302,11 +347,13 @@ theorem search_additivity (M N : ℕ) (hM : (M : ℝ) > 0) (hN : (N : ℝ) > 0) 
 
 
 
+
 def CollapseOperator.product {X Y : Type*}
     (C₁ : CollapseOperator X) (C₂ : CollapseOperator Y) :
     CollapseOperator (X × Y) where
   collapse := fun p => (C₁.collapse p.1, C₂.collapse p.2)
   idempotent := fun ⟨x, y⟩ => by simp [C₁.idempotent, C₂.idempotent]
+
 
 
 
@@ -318,9 +365,11 @@ theorem product_collapsed_set {X Y : Type*}
 
 
 
+
 def CollapseOperator.iterate {X : Type*} (C : CollapseOperator X) : ℕ → X → X
   | 0 => id
   | n + 1 => C.collapse ∘ C.iterate n
+
 
 
 
@@ -334,10 +383,12 @@ theorem iterate_stabilizes {X : Type*} (C : CollapseOperator X) (n : ℕ) (x : X
 
 
 
+
 /-- **Theorem 8.2 (One Collapse Suffices)** -/
 theorem one_collapse_suffices {X : Type*} (C : CollapseOperator X) (x : X) :
     C.iterate 2 x = C.iterate 1 x :=
   iterate_stabilizes C 1 x
+
 
 
 
@@ -350,10 +401,12 @@ structure PhotonObservation where
 
 
 
+
 theorem photon_is_search_is_info (obs : PhotonObservation) :
     obs.photon_capacity = searchWork obs.source_states ∧
     obs.photon_capacity = informationGain obs.source_states :=
   ⟨obs.h_capacity, obs.h_capacity⟩
+
 
 
 
@@ -363,7 +416,9 @@ theorem photon_collapse_theorem (obs : PhotonObservation) (state : Fin obs.sourc
 
 
 
+
 theorem no_photon_no_info : uniformEntropy 1 = 0 := entropy_one
+
 
 
 
@@ -373,9 +428,11 @@ theorem experiment_binary_8 : uniformEntropy 8 = 3 := by
 
 
 
+
 theorem experiment_binary_1024 : uniformEntropy 1024 = 10 := by
   show Real.log (1024 : ℝ) / Real.log 2 = 10
   rw [show (1024 : ℝ) = 2 ^ 10 from by norm_num]; exact log_pow2_div 10
+
 
 
 
@@ -386,8 +443,10 @@ theorem power_of_two_entropy (k : ℕ) : uniformEntropy (2 ^ k) = k := by
 
 
 
+
 theorem experiment_retraction (C : CollapseOperator ℝ) :
     ∀ x, C.collapse x ∈ range C.collapse := fun x => ⟨x, rfl⟩
+
 
 
 
@@ -397,9 +456,11 @@ theorem experiment_landauer_byte :
 
 
 
+
 theorem recursive_collapse (M N : ℕ) (hM : (M : ℝ) > 0) (hN : (N : ℝ) > 0) :
     uniformEntropy (M * N) = uniformEntropy M + uniformEntropy N :=
   search_additivity M N hM hN
+
 
 
 
@@ -407,6 +468,7 @@ theorem info_has_mass (kT c_squared : ℝ) (hc : c_squared > 0)
     (n_bits : ℝ) (hn : 0 ≤ n_bits) (hkT : 0 ≤ kT) :
     landauerCost n_bits kT / c_squared ≥ 0 :=
   div_nonneg (landauer_nonneg n_bits kT hn hkT) (le_of_lt hc)
+
 
 
 
@@ -420,6 +482,7 @@ def collapse_compose {X : Type*} (C₁ C₂ : CollapseOperator X)
 
 
 
+
 theorem collapse_refinement {X : Type*} (C₁ C₂ : CollapseOperator X)
     (h : C₂.collapsedSet ⊆ C₁.collapsedSet)
     (h_range : ∀ x, C₂.collapse x ∈ C₂.collapsedSet) :
@@ -428,10 +491,12 @@ theorem collapse_refinement {X : Type*} (C₁ C₂ : CollapseOperator X)
 
 
 
+
 /-- **H5 (Information Speed Limit)**: |Δx| ≤ |Δt| for causal signals. -/
 theorem information_speed_limit (Δx Δt : ℝ) (h_causal : Δx ^ 2 ≤ Δt ^ 2) :
     |Δx| ≤ |Δt| := by
       simpa only [ sq_le_sq ] using h_causal
+
 
 
 
@@ -446,6 +511,7 @@ structure GrandSynthesis where
 
 
 
+
 /-- **The Grand Theorem**: The synthesis is internally consistent. -/
 theorem grand_synthesis_consistent : Nonempty GrandSynthesis :=
   ⟨{ search_is_info := fun _ => rfl
@@ -453,6 +519,7 @@ theorem grand_synthesis_consistent : Nonempty GrandSynthesis :=
      info_costs_energy := fun n kT hn hkT => landauer_nonneg n kT hn hkT
      entropy_log := power_of_two_entropy
      search_additive := search_additivity }⟩
+
 
 
 

@@ -14,8 +14,10 @@ def emlFreeParams (k : ℕ) : ℕ := k
 
 
 
+
 /-- Topology bound: 4^k as an upper bound for Catalan number C(k). -/
 def topologyBound (k : ℕ) : ℕ := 4 ^ k
+
 
 
 
@@ -25,8 +27,10 @@ theorem topologyBound_pos (k : ℕ) : 0 < topologyBound k := by
 
 
 
+
 /-- VC dimension bound for EML class with k parameters: at most 2k. -/
 def vcDimBound (k : ℕ) : ℕ := 2 * k
+
 
 
 
@@ -37,8 +41,10 @@ theorem vc_dim_linear (k₁ k₂ : ℕ) (h : k₁ ≤ k₂) :
 
 
 
+
 /-- The VC dimension of a single EML neuron (4 parameters) is at most 8. -/
 theorem vc_dim_single_neuron : vcDimBound 4 = 8 := by rfl
+
 
 
 
@@ -47,9 +53,11 @@ def networkVCDim (W : ℕ) : ℕ := 2 * (5 * W + 1)
 
 
 
+
 /-- VC dimension of a width-10 EML network. -/
 theorem vc_dim_width10 : networkVCDim 10 = 102 := by
   simp [networkVCDim]
+
 
 
 
@@ -61,8 +69,10 @@ def emlMDL (k b : ℕ) : ℕ :=
 
 
 
+
 /-- MDL for a 10-leaf tree with 32-bit params = 340 bits. -/
 theorem mdl_10_32 : emlMDL 10 32 = 340 := by native_decide
+
 
 
 
@@ -71,13 +81,16 @@ theorem mdl_50_64 : emlMDL 50 64 = 3300 := by native_decide
 
 
 
+
 /-- A standard NN with L layers, width W, using b bits per param. -/
 def nnMDL (L W b : ℕ) : ℕ := L * W * (W + 1) * b
 
 
 
+
 /-- NN MDL for 5×100 network with 32-bit params = 1,616,000 bits. -/
 theorem nn_mdl_5_100 : nnMDL 5 100 32 = 1616000 := by native_decide
+
 
 
 
@@ -88,13 +101,16 @@ theorem mdl_compression_ratio :
 
 
 
+
 /-- The generalization gap numerator: k · ⌈log₂(n)⌉. -/
 def genGapNumerator (k n : ℕ) : ℕ := k * (Nat.log 2 n + 1)
 
 
 
+
 /-- For k=20 leaves and n=10000 samples, numerator = 280. -/
 theorem gen_gap_example : genGapNumerator 20 10000 = 280 := by native_decide
+
 
 
 
@@ -106,8 +122,10 @@ theorem gen_gap_sample_monotone (k n₁ n₂ : ℕ) (h : n₁ ≤ n₂) :
 
 
 
+
 /-- Optimal complexity k* for n samples (heuristic: fourth root). -/
 def optimalComplexity (n : ℕ) : ℕ := Nat.sqrt (Nat.sqrt n) + 1
+
 
 
 
@@ -116,8 +134,10 @@ theorem optimal_complexity_1M : optimalComplexity 1000000 = 32 := by native_deci
 
 
 
+
 /-- K-fold cross-validation: training size per fold. -/
 def cvTrainSize (n K : ℕ) : ℕ := n - n / K
+
 
 
 
@@ -126,8 +146,10 @@ theorem cv_5fold_1000 : cvTrainSize 1000 5 = 800 := by native_decide
 
 
 
+
 /-- 10-fold CV with 10000 samples: 9000 training per fold. -/
 theorem cv_10fold_10000 : cvTrainSize 10000 10 = 9000 := by native_decide
+
 
 
 
@@ -138,9 +160,11 @@ theorem generalization_advantage (k : ℕ) (hk : 4 ≤ k) :
 
 
 
+
 /-- Sample complexity bound for EML learning. -/
 def sampleComplexityBound (k : ℕ) (inv_eps inv_delta : ℕ) : ℕ :=
   2 * k * inv_eps * (Nat.log 2 (2 * k * inv_delta) + 1)
+
 
 
 
@@ -150,10 +174,12 @@ theorem more_leaves_more_samples (k : ℕ) :
 
 
 
+
 /-- The EML advantage: k parameters vs k² for equivalent NN accuracy. -/
 theorem eml_sample_advantage (k : ℕ) (hk : 2 ≤ k) :
     emlFreeParams k < emlFreeParams k * emlFreeParams k := by
   simp [emlFreeParams]; nlinarith
+
 
 
 

@@ -14,8 +14,10 @@ def stereoNorth (x y : ℝ) : ℝ := x / (1 - y)
 
 
 
+
 /-- Stereographic projection from the South pole (0,-1): x/(1+y). -/
 def stereoSouth (x y : ℝ) : ℝ := x / (1 + y)
+
 
 
 
@@ -31,6 +33,11 @@ theorem invStereoNorth_on_circle (t : ℝ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Physics.Classical.MassEnergyDuality
+Auto-generated from theorem catalog database.
+Domain: Physics/Classical
+Declarations: 15] -/
 theorem invStereoSouth_on_circle (s : ℝ) :
     (invStereoSouth' s).1 ^ 2 + (invStereoSouth' s).2 ^ 2 = 1 := by
   simp only [invStereoSouth']
@@ -39,8 +46,10 @@ theorem invStereoSouth_on_circle (s : ℝ) :
 
 
 
+
 /-- The mass-energy transition map: t ↦ 1/t. -/
 def massEnergyTransition (t : ℝ) : ℝ := 1 / t
+
 
 
 
@@ -62,10 +71,12 @@ theorem mass_energy_bijection :
 
 
 
+
 /-- **Involutivity**: (1/(1/t)) = t. -/
 theorem mass_energy_involutive (t : ℝ) (_ht : t ≠ 0) :
     massEnergyTransition (massEnergyTransition t) = t := by
   simp [massEnergyTransition]
+
 
 
 
@@ -78,13 +89,16 @@ structure PhysicalState where
 
 
 
+
 /-- The mass of a physical state (north-pole projection). -/
 def PhysicalState.mass (p : PhysicalState) : ℝ := stereoNorth p.x p.y
 
 
 
+
 /-- The energy of a physical state (south-pole projection). -/
 def PhysicalState.energy (p : PhysicalState) : ℝ := stereoSouth p.x p.y
+
 
 
 
@@ -105,6 +119,7 @@ theorem mass_times_energy_eq_one (p : PhysicalState)
 
 
 
+
 /-- **Commutative Triangle**: energy = 1 / mass. -/
 theorem commutative_triangle (p : PhysicalState)
     (hyN' : p.y ≠ 1) (hyS' : p.y ≠ -1) (hx : p.x ≠ 0) :
@@ -116,6 +131,7 @@ theorem commutative_triangle (p : PhysicalState)
 
 
 
+
 /-- **Location Theorem**: The photon sits on S¹, mass and energy are reciprocal. -/
 theorem photon_is_common_ancestor (p : PhysicalState)
     (_hyN : p.y ≠ 1) (_hyS : p.y ≠ -1) (hx : p.x ≠ 0) :
@@ -124,10 +140,12 @@ theorem photon_is_common_ancestor (p : PhysicalState)
 
 
 
+
 /-- Inversion is continuous on ℝ \ {0}. -/
 theorem inversion_continuous : ContinuousOn (fun t : ℝ => 1 / t) {t | t ≠ 0} := by
   apply ContinuousOn.div continuousOn_const continuousOn_id
   intro x hx; exact hx
+
 
 
 
@@ -140,6 +158,7 @@ theorem mass_energy_homeomorphism :
     fun t ht => div_ne_zero one_ne_zero ht,
     fun t ht => by simp [one_div],
     inversion_continuous⟩
+
 
 
 

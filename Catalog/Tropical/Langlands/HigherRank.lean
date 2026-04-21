@@ -16,9 +16,11 @@ def positiveRoots (n : ℕ) (Φ : TropicalRootSystem n) (height : (Fin n → ℝ
 
 
 
+
 /-- The dominant weight for type A: decreasingly sorted coordinates -/
 def isDominantTypeA (n : ℕ) (x : Fin n → ℝ) : Prop :=
   ∀ i j : Fin n, i ≤ j → x i ≥ x j
+
 
 
 
@@ -26,6 +28,7 @@ def isDominantTypeA (n : ℕ) (x : Fin n → ℝ) : Prop :=
 structure TropicalDoubleCoset (n : ℕ) where
   factors : Fin n → ℝ
   sorted : ∀ i j : Fin n, i ≤ j → factors i ≥ factors j
+
 
 
 
@@ -37,11 +40,13 @@ theorem invariant_factors_sum_eq_tropDet (n : ℕ) (d : Fin n → ℝ) :
 
 
 
+
 /-- A W-invariant function on the apartment -/
 structure TropicalHeckeElement (n : ℕ) where
   toFun : (Fin n → ℝ) → ℝ
   weyl_invariant : ∀ σ : Equiv.Perm (Fin n), ∀ x,
     toFun (fun i => x (σ i)) = toFun x
+
 
 
 
@@ -56,14 +61,17 @@ theorem hecke_factors_through_sorted (n : ℕ) (h : TropicalHeckeElement n)
 
 
 
+
 /-- The tropical Satake parameter space -/
 def TropicalSatakeSpace (n : ℕ) :=
   { x : Fin n → ℝ // ∀ i j : Fin n, i ≤ j → x i ≤ x j }
 
 
 
+
 /-- For type A_n, the Langlands dual is also type A_n -/
 def tropLanglandsDualTypeA (n : ℕ) : (Fin n → ℝ) → (Fin n → ℝ) := id
+
 
 
 
@@ -74,9 +82,11 @@ theorem tropLanglandsDual_involution (n : ℕ) (x : Fin n → ℝ) :
 
 
 
+
 /-- For type B_n / C_n duality: SO_{2n+1} ↔ Sp_{2n} -/
 def tropLanglandsDualTypeBC (n : ℕ) (x : Fin n → ℝ) : Fin n → ℝ :=
   fun i => 2 * x i
+
 
 
 
@@ -87,10 +97,12 @@ theorem tropLanglandsDual_BC_scaling (n : ℕ) (x : Fin n → ℝ) (c : ℝ) :
 
 
 
+
 /-- Tropical parabolic induction: concatenate Satake parameters -/
 def tropParabolicInduction (n₁ n₂ : ℕ)
     (params1 : Fin n₁ → ℝ) (params2 : Fin n₂ → ℝ) : Fin (n₁ + n₂) → ℝ :=
   Fin.addCases params1 params2
+
 
 
 
@@ -105,6 +117,7 @@ theorem tropL_parabolic_additive (n₁ n₂ : ℕ)
   have h_split : ∑ i : Fin (n₁ + n₂), (s - tropParabolicInduction n₁ n₂ params1 params2 i) = (∑ i : Fin n₁, (s - tropParabolicInduction n₁ n₂ params1 params2 (Fin.castAdd n₂ i))) + (∑ i : Fin n₂, (s - tropParabolicInduction n₁ n₂ params1 params2 (Fin.natAdd n₁ i))) := by
     exact?;
   unfold tropParabolicInduction at * ; aesop
+
 
 
 

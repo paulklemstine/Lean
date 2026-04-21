@@ -22,9 +22,11 @@ structure BulkBoundaryProof where
 
 
 
+
 /-- A proof is "holographic" if boundary grows as a root of bulk. -/
 def isHolographicProof (P : BulkBoundaryProof) (d : ℕ) : Prop :=
   P.boundarySize ^ d ≤ P.bulkSize
+
 
 
 
@@ -39,6 +41,7 @@ structure PartitionedProof (n : ℕ) where
 
 
 
+
 /-- The "cut" of a partition: edges crossing the boundary. -/
 noncomputable def cutSize {n : ℕ} (P : PartitionedProof n)
     [∀ i j, Decidable (P.edge i j)] : ℕ :=
@@ -47,9 +50,11 @@ noncomputable def cutSize {n : ℕ} (P : PartitionedProof n)
 
 
 
+
 /-- The size of region A (true partition). -/
 noncomputable def regionSize {n : ℕ} (P : PartitionedProof n) (side : Bool) : ℕ :=
   (Finset.univ.filter (fun i : Fin n => P.partition i = side)).card
+
 
 
 
@@ -64,12 +69,14 @@ structure BoundarySearch where
 
 
 
+
 /-- A bulk search strategy explores full proof trees. -/
 structure BulkSearch where
   /-- Size of search space -/
   searchSpace : ℕ → ℕ
   /-- Search space is exponential -/
   search_exp : ∃ b : ℕ, 1 < b ∧ ∀ n, n ≤ searchSpace n
+
 
 
 
@@ -87,6 +94,7 @@ theorem boundary_faster_than_bulk (cert_size proof_size : ℕ)
 
 
 
+
 /-- An entanglement wedge for a proof: given boundary lemmas S,
 the wedge W(S) contains all proof steps recoverable from S. -/
 structure EntanglementWedge (n m : ℕ) where
@@ -97,6 +105,11 @@ structure EntanglementWedge (n m : ℕ) where
 
 
 
+
+/-- [Section: # CatalogBuild.Logic.HolographicSearch
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 15] -/
 theorem wedge_monotone {n m : ℕ}
     (W : Finset (Fin m) → Finset (Fin n))
     (h_mono : ∀ S₁ S₂ : Finset (Fin m), S₁ ⊆ S₂ → W S₁ ⊆ W S₂)
@@ -106,11 +119,13 @@ theorem wedge_monotone {n m : ℕ}
 
 
 
+
 theorem full_boundary_full_wedge {n m : ℕ} (hn : 0 < n)
     (W : Finset (Fin m) → Finset (Fin n))
     (h_complete : W Finset.univ = Finset.univ) :
     (W Finset.univ).card = n := by
   rw [ h_complete, Finset.card_fin ]
+
 
 
 
@@ -123,10 +138,12 @@ def isResilient (n k : ℕ) (essential : Finset (Fin n)) : Prop :=
 
 
 
+
 theorem zero_resilient (n : ℕ) (essential : Finset (Fin n))
     (h : essential.card ≤ n) :
     isResilient n 0 essential := by
   intro removed hremoved; use Finset.univ; simp_all +decide ;
+
 
 
 
@@ -135,6 +152,7 @@ essential steps untouched (essential and removed are disjoint). -/
 def isStrongResilient (n k : ℕ) (essential : Finset (Fin n)) : Prop :=
   ∀ removed : Finset (Fin n), removed.card = k →
     ¬(essential ⊆ removed)
+
 
 
 
@@ -152,6 +170,7 @@ theorem resilience_bound (n k : ℕ) (essential : Finset (Fin n))
       obtain ⟨ removed, hremoved ⟩ := Finset.exists_subset_card_eq h_card; use removed; aesop;
     exact ⟨ h_card.choose, h_card.choose_spec.1, fun x hx => Finset.mem_compl.mpr fun hx' => Finset.disjoint_left.mp h_card.choose_spec.2 hx hx' ⟩;
   obtain ⟨ removed, hremoved₁, hremoved₂ ⟩ := h_compl; have := Finset.card_le_card hremoved₂; simp_all +decide [ Finset.card_compl ] ;
+
 
 
 end

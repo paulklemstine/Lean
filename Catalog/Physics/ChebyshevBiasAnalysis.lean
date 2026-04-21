@@ -1,35 +1,30 @@
-import Mathlib
-/-! # Chebyshev Bias Analysis
+/-! # CatalogBuild.Physics.ChebyshevBiasAnalysis
 
-Formal verification of Chebyshev's bias across multiple moduli.
-The Chebyshev bias is the phenomenon where there tend to be more primes
-≡ 3 (mod 4) than ≡ 1 (mod 4) up to a given bound.
-
-## Main results
-- Exact counts for primes in each residue class mod 3, 4, 5
-- The remarkable fact that mod 3 and mod 4 give identical non-residue counts below 1000
+Auto-generated from theorem catalog database.
+Domain: Physics
+Declarations: 6
 -/
+
+import Mathlib
 
 /-- Count primes in a residue class. -/
 def primeCountInClass (bound modulus residue : ℕ) : ℕ :=
   ((Finset.range bound).filter (fun p => Nat.Prime p ∧ p % modulus = residue)).card
+
 
 /-- Chebyshev bias mod 4: 87 primes ≡ 3 vs 80 primes ≡ 1 (mod 4) below 1000. -/
 theorem chebyshev_bias_mod4 :
     primeCountInClass 1000 4 3 = 87 ∧ primeCountInClass 1000 4 1 = 80 := by
   unfold primeCountInClass; constructor <;> native_decide
 
-/-- Chebyshev bias mod 3: 87 primes ≡ 2 vs 80 primes ≡ 1 (mod 3) below 1000. -/
-theorem chebyshev_bias_mod3 :
-    primeCountInClass 1000 3 2 = 87 ∧ primeCountInClass 1000 3 1 = 80 := by
-  unfold primeCountInClass; constructor <;> native_decide
 
 /-- Chebyshev bias universality: mod 3 and mod 4 give EXACTLY identical counts
-    for non-residues (87) and residues (80) below 1000. -/
+for non-residues (87) and residues (80) below 1000. -/
 theorem chebyshev_bias_universality :
     primeCountInClass 1000 4 3 = primeCountInClass 1000 3 2 ∧
     primeCountInClass 1000 4 1 = primeCountInClass 1000 3 1 := by
   unfold primeCountInClass; constructor <;> native_decide
+
 
 /-- Mod 5 bias: non-residues vs residues. -/
 theorem chebyshev_bias_mod5 :
@@ -39,6 +34,7 @@ theorem chebyshev_bias_mod5 :
     primeCountInClass 1000 5 1 = 40 := by
   unfold primeCountInClass; refine ⟨?_, ?_, ?_, ?_⟩ <;> native_decide
 
+
 /-- Prime race mod 4: the bias at several milestones. -/
 theorem prime_race_mod4_milestones :
     primeCountInClass 100 4 3 = 13 ∧ primeCountInClass 100 4 1 = 11 ∧
@@ -46,9 +42,11 @@ theorem prime_race_mod4_milestones :
     primeCountInClass 1000 4 3 = 87 ∧ primeCountInClass 1000 4 1 = 80 := by
   unfold primeCountInClass; refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩ <;> native_decide
 
+
 /-- The mod 6 distribution: primes > 3 are in classes 1 or 5.
-    86 primes ≡ 5 and 80 primes ≡ 1 (mod 6) below 1000.
-    (The extra prime ≡ 2 mod 3 vs mod 6 is p=2, since 2%3=2 but 2%6=2.) -/
+86 primes ≡ 5 and 80 primes ≡ 1 (mod 6) below 1000.
+(The extra prime ≡ 2 mod 3 vs mod 6 is p=2, since 2%3=2 but 2%6=2.) -/
 theorem prime_mod6_distribution :
     primeCountInClass 1000 6 1 = 80 ∧ primeCountInClass 1000 6 5 = 86 := by
   unfold primeCountInClass; constructor <;> native_decide
+

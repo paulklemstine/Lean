@@ -17,9 +17,15 @@ def factoring_energy (N x : ℕ) : ℕ := N % x
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.FactoringEnergyLandscape
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 10] -/
 theorem energy_zero_iff_factor (N x : ℕ) (hx : 0 < x) :
     factoring_energy N x = 0 ↔ x ∣ N := by
   unfold factoring_energy; exact Nat.dvd_iff_mod_eq_zero.symm
+
 
 
 
@@ -28,13 +34,16 @@ theorem energy_upper_bound (N x : ℕ) (hx : 0 < x) :
 
 
 
+
 theorem factor_set_is_zero_energy (N x : ℕ) (hx : 0 < x) (hdvd : x ∣ N) :
     factoring_energy N x = 0 := (energy_zero_iff_factor N x hx).mpr hdvd
 
 
 
+
 theorem factor_count_finite (N : ℕ) (hN : 0 < N) : N.divisors.card > 0 :=
   Finset.card_pos.mpr ⟨1, Nat.mem_divisors.mpr ⟨one_dvd N, by omega⟩⟩
+
 
 
 
@@ -50,13 +59,16 @@ theorem semiprime_four_minima (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
 
 
 
+
 noncomputable def partition_count (N t : ℕ) : ℕ :=
   (Finset.range N).filter (fun x => N % (x + 1) ≤ t) |>.card
 
 
 
+
 theorem energy_near_factor (N d : ℕ) (hd : d ∣ N) (hd_pos : 0 < d) :
     factoring_energy N d = 0 := factor_set_is_zero_energy N d hd_pos hd
+
 
 
 
@@ -67,12 +79,14 @@ theorem energy_at_predecessor (N : ℕ) (hN : 2 < N) :
 
 
 
+
 theorem gradient_at_factor (N d : ℕ) (hd : d ∣ N) (hd_pos : 0 < d)
     (hd_lt : d < N) :
     energy_gradient N d = (N % (d + 1) : ℤ) := by
   unfold energy_gradient;
   unfold factoring_energy;
   cases hd ; aesop
+
 
 
 end

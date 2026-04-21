@@ -19,12 +19,14 @@ inductive CoherenceTier
 
 
 
+
 /-- Natural ordering on tiers -/
 def CoherenceTier.toNat : CoherenceTier → ℕ
   | .tier0 => 0
   | .tier1 => 1
   | .tier2 => 2
   | .tier3 => 3
+
 
 
 
@@ -37,10 +39,12 @@ instance : LE CoherenceTier where
 
 
 
+
 /-- Tier 0 ≤ all tiers -/
 theorem tier0_le (t : CoherenceTier) : CoherenceTier.tier0 ≤ t := by
   show (0 : ℕ) ≤ t.toNat
   exact Nat.zero_le _
+
 
 
 
@@ -51,10 +55,12 @@ theorem tier_total (a b : CoherenceTier) : a ≤ b ∨ b ≤ a := by
 
 
 
+
 /-- All tiers ≤ tier3 -/
 theorem le_tier3 (t : CoherenceTier) : t ≤ CoherenceTier.tier3 := by
   show t.toNat ≤ 3
   cases t <;> simp [CoherenceTier.toNat] <;> omega
+
 
 
 
@@ -64,9 +70,11 @@ structure CommComplexity where
 
 
 
+
 /-- Constant communication -/
 def isConstantComm (cc : CommComplexity) : Prop :=
   ∃ c, ∀ n, cc.commBits n ≤ c
+
 
 
 
@@ -76,17 +84,24 @@ def isLogComm (cc : CommComplexity) : Prop :=
 
 
 
+
 /-- Polynomial communication -/
 def isPolyComm (cc : CommComplexity) : Prop :=
   ∃ c k, ∀ n, 0 < n → cc.commBits n ≤ c * n ^ k
 
 
 
+
+/-- [Section: # CatalogBuild.Logic.CoherenceStratified
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 27] -/
 theorem log_implies_poly (cc : CommComplexity) (h : isLogComm cc) :
     isPolyComm cc := by
       obtain ⟨ c, hc ⟩ := h;
       use c, 1;
       exact fun n hn => le_trans ( hc n hn ) ( Nat.mul_le_mul_left _ ( Nat.le_of_lt ( Nat.log_lt_of_lt_pow ( by linarith ) ( by exact Nat.recOn n ( by norm_num ) fun n ihn => by norm_num [ Nat.pow_succ ] at * ; nlinarith ) ) ) )
+
 
 
 
@@ -96,8 +111,10 @@ theorem binomial_sum (n : ℕ) :
 
 
 
+
 theorem info_lower_bound (k : ℕ) : k ≤ Nat.log 2 (2 ^ k) + 1 := by
   rw [ Nat.log_pow ] <;> norm_num
+
 
 
 
@@ -108,9 +125,11 @@ structure CircuitDepth where
 
 
 
+
 /-- Constant-depth circuits correspond to Tier 0/1 -/
 def isConstantDepth (cd : CircuitDepth) : Prop :=
   ∃ d, ∀ n, cd.depth n ≤ d
+
 
 
 
@@ -120,9 +139,11 @@ def isLogDepth (cd : CircuitDepth) : Prop :=
 
 
 
+
 /-- Polynomial-depth circuits correspond to Tier 2/3 -/
 def isPolyDepth (cd : CircuitDepth) : Prop :=
   ∃ c k, ∀ n, cd.depth n ≤ c * n ^ k
+
 
 
 
@@ -132,9 +153,11 @@ theorem bool_fn_count (n : ℕ) :
 
 
 
+
 theorem tier0_fraction (n : ℕ) (hn : 2 ≤ n) :
     2 ^ (n + 1) ≤ 2 ^ (2 ^ n) := by
       exact pow_le_pow_right₀ ( by norm_num ) ( Nat.recOn n ( by norm_num ) fun n ihn => by rw [ pow_succ' ] ; linarith [ Nat.pow_le_pow_right ( by norm_num : 1 ≤ 2 ) ihn ] )
+
 
 
 
@@ -145,8 +168,10 @@ structure Defect where
 
 
 
+
 /-- Zero defect means perfect solution -/
 def Defect.zero : Defect := ⟨0, le_refl _⟩
+
 
 
 
@@ -156,14 +181,17 @@ def Defect.add (d1 d2 : Defect) : Defect :=
 
 
 
+
 /-- Zero is the least defect -/
 theorem defect_zero_le (d : Defect) : Defect.zero ≤ d := d.hnneg
+
 
 
 
 /-- Approximation ratio via defect -/
 noncomputable def approxRatio (optimal achieved : ℝ) (hopt : 0 < optimal) : ℝ :=
   achieved / optimal
+
 
 
 
@@ -174,9 +202,11 @@ theorem approxRatio_ge_one (opt ach : ℝ) (hopt : 0 < opt) (hge : opt ≤ ach) 
 
 
 
+
 /-- FPT: solvable in f(k) · n^c time -/
 def IsFPT (time : ℕ → ℕ → ℕ) : Prop :=
   ∃ f : ℕ → ℕ, ∃ c : ℕ, ∀ n k, time n k ≤ f k * n ^ c + f k
+
 
 
 
@@ -185,6 +215,7 @@ theorem fpt_tier_bound :
     CoherenceTier.tier0 ≤ CoherenceTier.tier1 := by
   show (0 : ℕ) ≤ 1
   exact Nat.zero_le _
+
 
 
 

@@ -19,11 +19,13 @@ theorem chord_distance_le_two {n : ℕ} (x y : EuclideanSpace ℝ (Fin n))
 
 
 
+
 /-- The triangle inequality: a fundamental constraint of metric spaces.
 In a fixed metric space, you cannot "cheat" distance. -/
 theorem triangle_inequality_metric {X : Type*} [PseudoMetricSpace X]
     (x y z : X) : dist x z ≤ dist x y + dist y z :=
   dist_triangle x y z
+
 
 
 
@@ -33,9 +35,11 @@ theorem dist_nonneg' {X : Type*} [PseudoMetricSpace X] (x y : X) : 0 ≤ dist x 
 
 
 
+
 /-- Distance is symmetric. -/
 theorem dist_symm' {X : Type*} [PseudoMetricSpace X] (x y : X) : dist x y = dist y x :=
   dist_comm x y
+
 
 
 

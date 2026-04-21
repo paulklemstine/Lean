@@ -15,9 +15,11 @@ theorem max_affine_dominates (a₁ b₁ a₂ b₂ x : ℝ) :
 
 
 
+
 /-- Tropical gradient selection: max selects the active function -/
 theorem tropical_gradient_selection (f₁ f₂ : ℝ) (h : f₁ ≥ f₂) :
     max f₁ f₂ = f₁ := max_eq_left h
+
 
 
 
@@ -32,10 +34,12 @@ theorem tropical_jensen (a₁ a₂ b₁ b₂ : ℝ) :
 
 
 
+
 /-- A tropical dynamical system: x(t+1) = A ⊗ x(t) -/
 def tropDynamicsStep {n : ℕ} (A : Fin (n+1) → Fin (n+1) → ℝ)
     (x : Fin (n+1) → ℝ) : Fin (n+1) → ℝ :=
   fun i => Finset.sup' Finset.univ ⟨0, Finset.mem_univ 0⟩ (fun j => A i j + x j)
+
 
 
 
@@ -45,6 +49,11 @@ def tropicalLyapunov {n : ℕ} (x : Fin (n+1) → ℝ) : ℝ :=
 
 
 
+
+/-- [Section: # CatalogBuild.Tropical.Core.TropicalDeepResearch
+Auto-generated from theorem catalog database.
+Domain: Tropical/Core
+Declarations: 56] -/
 theorem tropical_spectral_bound {n : ℕ} (A : Fin (n+1) → Fin (n+1) → ℝ)
     (x : Fin (n+1) → ℝ) (M : ℝ)
     (hM : ∀ i j, A i j ≤ M) :
@@ -52,6 +61,7 @@ theorem tropical_spectral_bound {n : ℕ} (A : Fin (n+1) → Fin (n+1) → ℝ)
   intro i
   simp [tropDynamicsStep, tropicalLyapunov];
   exact fun j => add_le_add ( hM i j ) ( Finset.le_sup' ( fun i => x i ) ( Finset.mem_univ j ) )
+
 
 
 
@@ -63,9 +73,11 @@ theorem tropical_contraction_principle {n : ℕ} (A : Fin (n+1) → Fin (n+1) �
 
 
 
+
 /-- The Gumbel CDF -/
 def gumbelCDF (x μ β : ℝ) (hβ : 0 < β) : ℝ :=
   exp (-exp (-(x - μ) / β))
+
 
 
 
@@ -75,9 +87,11 @@ theorem gumbelCDF_pos (x μ β : ℝ) (hβ : 0 < β) :
 
 
 
+
 theorem gumbelCDF_le_one (x μ β : ℝ) (hβ : 0 < β) :
     gumbelCDF x μ β hβ ≤ 1 := by
   exact Real.exp_le_one_iff.mpr ( neg_nonpos.mpr ( Real.exp_nonneg _ ) )
+
 
 
 
@@ -87,15 +101,18 @@ theorem gumbel_softmax_deterministic (v₁ v₂ : ℝ) :
 
 
 
+
 /-- Max of n i.i.d. values grows as log n (tropical central limit theorem) -/
 theorem tropical_clt_growth_bound (n : ℕ) (hn : 0 < n) :
     0 ≤ Real.log (n : ℝ) := Real.log_nonneg (by exact_mod_cast hn)
 
 
 
+
 /-- Tropical distance (L∞ distance) -/
 def tropicalDistance {n : ℕ} (x y : Fin (n+1) → ℝ) : ℝ :=
   Finset.sup' Finset.univ ⟨0, Finset.mem_univ 0⟩ (fun i => |x i - y i|)
+
 
 
 
@@ -106,10 +123,12 @@ theorem tropicalDistance_nonneg {n : ℕ} (x y : Fin (n+1) → ℝ) :
 
 
 
+
 theorem tropicalDistance_symm {n : ℕ} (x y : Fin (n+1) → ℝ) :
     tropicalDistance x y = tropicalDistance y x := by
   unfold tropicalDistance;
   simp +decide only [abs_sub_comm]
+
 
 
 
@@ -120,8 +139,10 @@ theorem tropicalDistance_triangle {n : ℕ} (x y z : Fin (n+1) → ℝ) :
 
 
 
+
 /-- Identity morphisms have tropical cost 0 -/
 theorem tropical_identity_cost (x : ℝ) : (0 : ℝ) + x = x := zero_add x
+
 
 
 
@@ -132,9 +153,11 @@ theorem tropical_yoneda_preservation (a b c : ℝ) :
 
 
 
+
 theorem tropical_depth_lower_bound (n : ℕ) (hn : 2 ≤ n) :
     1 ≤ Nat.log 2 n := by
   exact Nat.le_log_of_pow_le ( by decide ) hn
+
 
 
 
@@ -144,9 +167,11 @@ theorem skip_connection_rank_bound (rank_g : ℕ) :
 
 
 
+
 theorem kl_ge_tropical_divergence (q_max : ℝ) (hq : 0 < q_max) (hqle : q_max ≤ 1) :
     -Real.log q_max ≥ 0 := by
   exact neg_nonneg_of_nonpos ( Real.log_nonpos hq.le hqle )
+
 
 
 
@@ -156,15 +181,18 @@ theorem tropical_fisher_info (x : ℝ) (hx : 0 < x) :
 
 
 
+
 /-- Tropical Haar wavelet scaling: max of two adjacent samples -/
 def tropicalHaarScaling (f : ℕ → ℝ) (n : ℕ) : ℝ :=
   max (f (2 * n)) (f (2 * n + 1))
 
 
 
+
 /-- Tropical Haar wavelet detail: difference of two adjacent samples -/
 def tropicalHaarDetail (f : ℕ → ℝ) (n : ℕ) : ℝ :=
   f (2 * n) - f (2 * n + 1)
+
 
 
 
@@ -176,9 +204,11 @@ theorem tropicalHaar_bound (f : ℕ → ℝ) (n : ℕ) :
 
 
 
+
 /-- Perfect reconstruction from tropical wavelet coefficients -/
 theorem tropicalHaar_reconstruction (f : ℕ → ℝ) (n : ℕ) :
     tropicalHaarScaling f n = max (f (2 * n)) (f (2 * n + 1)) := rfl
+
 
 
 
@@ -188,9 +218,11 @@ theorem tropical_euler_characteristic (V E : ℕ) :
 
 
 
+
 /-- Persistent homology: features have non-negative lifetimes -/
 theorem tropical_persistence_interval (birth death : ℝ) (h : birth ≤ death) :
     0 ≤ death - birth := by linarith
+
 
 
 
@@ -200,9 +232,11 @@ theorem maslov_approximation (a b h : ℝ) (hh : 0 < h) :
 
 
 
+
 theorem tropical_bellman_contraction (V₁ V₂ : ℝ) (γ : ℝ) (hγ : 0 ≤ γ) (hγ1 : γ < 1) :
     |γ * V₁ - γ * V₂| ≤ γ * |V₁ - V₂| := by
   rw [ ← mul_sub, abs_mul, abs_of_nonneg hγ ]
+
 
 
 
@@ -213,8 +247,10 @@ theorem value_iteration_convergence (γ : ℝ) (hγ : 0 ≤ γ) (hγ1 : γ < 1)
 
 
 
+
 /-- Double negation is involutive (tropical Legendre transform property) -/
 theorem tropical_mirror_duality (a : ℝ) : - (- a) = a := neg_neg a
+
 
 
 
@@ -223,10 +259,12 @@ theorem tropical_gw_count_nonneg (count : ℕ) : 0 ≤ count := Nat.zero_le _
 
 
 
+
 /-- Tropical rank is at most min(n, m) -/
 theorem tropical_rank_bound (n m : ℕ) :
     min n m ≤ n ∧ min n m ≤ m :=
   ⟨min_le_left n m, min_le_right n m⟩
+
 
 
 
@@ -238,15 +276,18 @@ theorem tropical_compression_bound (n m k : ℕ) (hn : k ≤ n) (hm : k ≤ m) :
 
 
 
+
 theorem tropical_zeta_positive (s : ℝ) (hs : 0 < s) :
     ∀ n : ℕ, 0 < n → -s * Real.log (n : ℝ) ≤ 0 := by
   exact fun n hn => mul_nonpos_of_nonpos_of_nonneg ( neg_nonpos_of_nonneg hs.le ) ( Real.log_nonneg ( Nat.one_le_cast.mpr hn ) )
 
 
 
+
 /-- The functional equation symmetry about s = 1/2 -/
 theorem tropical_functional_equation_symmetry :
     (1 : ℝ) - (1 / 2 : ℝ) = 1 / 2 := by norm_num
+
 
 
 
@@ -258,9 +299,11 @@ theorem log_gamma_convexity_helper (x y t : ℝ) (hx : 0 < x) (hy : 0 < y)
 
 
 
+
 /-- The Hopf-Cole transform bridge -/
 theorem hopf_cole_bridge (phi : ℝ) :
     Real.log (Real.exp phi) = phi := Real.log_exp phi
+
 
 
 
@@ -270,9 +313,11 @@ theorem burgers_tropical_limit (u₁ u₂ : ℝ) :
 
 
 
+
 /-- Hypothesis: Tropical Neural Turing Machines require width proportional to states × alphabet -/
 theorem turing_simulation_width_bound (states alphabet : ℕ) :
     states * alphabet ≤ states * alphabet := le_refl _
+
 
 
 
@@ -280,7 +325,9 @@ theorem turing_simulation_width_bound (states alphabet : ℕ) :
 theorem codon_redundancy : 4 ^ 3 = 64 := by norm_num
 
 
+
 theorem amino_acid_redundancy : 64 ≥ 20 := by norm_num
+
 
 
 
@@ -291,10 +338,12 @@ theorem market_clearing_tropical (supply demand : ℝ) :
 
 
 
+
 /-- The loss landscape of a ReLU network is piecewise polynomial.
 Each linear region defines a quadratic loss surface. -/
 theorem piecewise_quadratic_loss (w b x y : ℝ) :
     (max (w * x + b) 0 - y) ^ 2 ≥ 0 := sq_nonneg _
+
 
 
 
@@ -305,9 +354,11 @@ theorem loss_gradient_classical (w x : ℝ) :
 
 
 
+
 theorem tropical_interior_convex (a b t : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
     t * a + (1 - t) * b ≤ max a b := by
   cases max_cases a b <;> nlinarith
+
 
 
 
@@ -317,9 +368,11 @@ theorem max_aggregation_tropical (a b c : ℝ) :
 
 
 
+
 /-- The Weisfeiler-Lehman test computes tropical hash functions -/
 theorem wl_tropical_hash (h₁ h₂ : ℝ) :
     max h₁ h₂ = max h₂ h₁ := max_comm h₁ h₂
+
 
 
 
@@ -328,9 +381,11 @@ theorem gnn_expressivity_bound (k : ℕ) : k ≤ k := le_refl k
 
 
 
+
 /-- Self-attention score: Q·K^T / √d is a tropical inner product in the limit -/
 theorem attention_score_tropical_limit (q k : ℝ) :
     q * k = q * k := rfl
+
 
 
 
@@ -341,9 +396,11 @@ theorem multi_head_tropical (h₁ h₂ : ℝ) :
 
 
 
+
 /-- Layer normalization preserves tropical structure up to scaling -/
 theorem layer_norm_scaling (x μ σ : ℝ) (_hσ : 0 < σ) :
     (x - μ) / σ = x / σ - μ / σ := by ring
+
 
 
 
@@ -354,15 +411,18 @@ theorem score_tropical_gradient (log_p : ℝ) :
 
 
 
+
 /-- The DDPM loss is a tropical-regularized MSE -/
 theorem ddpm_loss_nonneg (predicted actual : ℝ) :
     (predicted - actual) ^ 2 ≥ 0 := sq_nonneg _
 
 
 
+
 /-- Classifier-free guidance = tropical interpolation between conditional and unconditional -/
 theorem cfg_interpolation (cond uncond w : ℝ) :
     uncond + w * (cond - uncond) = (1 - w) * uncond + w * cond := by ring
+
 
 
 

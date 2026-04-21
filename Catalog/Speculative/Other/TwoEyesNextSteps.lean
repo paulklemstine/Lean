@@ -19,12 +19,14 @@ theorem invStereoS_on_sphere (t : ℝ) :
 
 
 
+
 /-- **H14.2**: The antipodal map negates the x-coordinate on S¹. -/
 theorem antipodal_reverses_x (t : ℝ) (ht : t ≠ 0) :
     (invStereoS (antipodalMap t)).1 = -(invStereoS t).1 := by
   unfold antipodalMap invStereoS
   ring; norm_num [ht]; ring
   grind +ring
+
 
 
 
@@ -35,6 +37,7 @@ theorem antipodal_reverses_y (t : ℝ) (ht : t ≠ 0) :
   ring; norm_num [ht]; ring
   field_simp
   ring
+
 
 
 
@@ -49,6 +52,7 @@ theorem antipodal_max_distance (t : ℝ) (ht : t ≠ 0) :
 
 
 
+
 /-- **H15.1**: The cross-ratio is preserved by Möbius inversion x ↦ 1/x. -/
 theorem cross_ratio_preserved_by_inversion
     (a b c d : ℝ) (ha : a ≠ 0) (hb : b ≠ 0) (hc : c ≠ 0) (hd : d ≠ 0)
@@ -58,11 +62,13 @@ theorem cross_ratio_preserved_by_inversion
 
 
 
+
 /-- **H15.2**: The cross-ratio is preserved by translation x ↦ x + s. -/
 theorem cross_ratio_preserved_by_translation (a b c d s : ℝ)
     (h2 : (a - d) * (b - c) ≠ 0) :
     crossRatio (a + s) (b + s) (c + s) (d + s) = crossRatio a b c d := by
   unfold crossRatio; ring
+
 
 
 
@@ -75,8 +81,10 @@ theorem cross_ratio_preserved_by_scaling (a b c d k : ℝ) (hk : k ≠ 0)
 
 
 
+
 /-- Four points are harmonic when their cross-ratio equals −1. -/
 def IsHarmonic (a b c d : ℝ) : Prop := crossRatio a b c d = -1
+
 
 
 
@@ -86,8 +94,10 @@ theorem harmonic_example : IsHarmonic 1 (-1) 2 (1/2) := by
 
 
 
+
 /-- The inverse Cayley transform. -/
 def invCayleyTransform (s : ℝ) : ℝ := (s - 1) / (s + 1)
+
 
 
 
@@ -101,8 +111,10 @@ theorem inv_cayley_round_trip (s : ℝ) (hs : s ≠ -1) :
 
 
 
+
 /-- **H16.4**: Left boundary maps to origin. -/
 theorem cayley_at_neg_one : cayleyTransform (-1) = 0 := by simp [cayleyTransform]
+
 
 
 
@@ -112,8 +124,10 @@ theorem cayley_at_third : cayleyTransform (1/3) = 2 := by
 
 
 
+
 /-- The attention function: area distortion of stereographic projection. -/
 def attentionFunction (t : ℝ) : ℝ := 4 / (1 + t ^ 2) ^ 2
+
 
 
 
@@ -126,9 +140,11 @@ theorem attention_is_conformal_squared (t : ℝ) :
 
 
 
+
 /-- **H17.2**: Maximum attention at center. -/
 theorem max_attention_at_center : attentionFunction 0 = 4 := by
   simp [attentionFunction]
+
 
 
 
@@ -138,9 +154,11 @@ theorem attention_positive (t : ℝ) : attentionFunction t > 0 := by
 
 
 
+
 /-- **H17.4**: Attention is bounded above by 4. -/
 theorem attention_bounded (t : ℝ) : attentionFunction t ≤ 4 := by
   exact div_le_self (by norm_num) (by nlinarith)
+
 
 
 
@@ -150,10 +168,12 @@ theorem attention_at_equator : attentionFunction 1 = 1 := by
 
 
 
+
 /-- **H17.6**: Attention is even — symmetric under t ↦ −t. -/
 theorem attention_symmetric (t : ℝ) :
     attentionFunction (-t) = attentionFunction t := by
   unfold attentionFunction; ring_nf
+
 
 
 
@@ -167,8 +187,10 @@ theorem attention_inversion_duality (t : ℝ) (ht : t ≠ 0) :
 
 
 
+
 /-- **H18.2–5**: Concrete Pythagorean triples. -/
 theorem pythag_345 : IsPythTriple 3 4 5 := by unfold IsPythTriple; norm_num
+
 
 
 /-- [Section: # CatalogBuild.Speculative.Other.TwoEyesNextSteps
@@ -178,10 +200,17 @@ Declarations: 53] -/
 theorem pythag_5_12_13 : IsPythTriple 5 12 13 := by unfold IsPythTriple; norm_num
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.TwoEyesNextSteps
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 52] -/
 theorem pythag_8_15_17 : IsPythTriple 8 15 17 := by unfold IsPythTriple; norm_num
 
 
+
 theorem pythag_7_24_25 : IsPythTriple 7 24 25 := by unfold IsPythTriple; norm_num
+
 
 
 
@@ -191,22 +220,28 @@ theorem rational_stereo_identity (p q : ℤ) :
 
 
 
+
 /-- The four Möbius symmetries of the stereographic self-gaze. -/
 def mobiusId (t : ℝ) : ℝ := t
+
 
 
 def mobiusInv (t : ℝ) : ℝ := 1 / t
 
 
+
 def mobiusNeg (t : ℝ) : ℝ := -t
+
 
 
 def mobiusAnti (t : ℝ) : ℝ := -(1 / t)
 
 
 
+
 /-- **H19.1a**: Identity is trivially an involution. -/
 theorem mobiusId_invol (t : ℝ) : mobiusId (mobiusId t) = t := rfl
+
 
 
 
@@ -217,9 +252,11 @@ theorem mobiusInv_invol (t : ℝ) (ht : t ≠ 0) :
 
 
 
+
 /-- **H19.1c**: Negation is an involution. -/
 theorem mobiusNeg_invol (t : ℝ) : mobiusNeg (mobiusNeg t) = t := by
   unfold mobiusNeg; ring
+
 
 
 
@@ -230,10 +267,12 @@ theorem mobiusAnti_invol (t : ℝ) (ht : t ≠ 0) :
 
 
 
+
 /-- **H19.2**: Klein four-group multiplication table. -/
 theorem klein_inv_neg (t : ℝ) :
     mobiusInv (mobiusNeg t) = mobiusAnti t := by
   unfold mobiusInv mobiusNeg mobiusAnti; ring
+
 
 
 
@@ -243,15 +282,18 @@ theorem klein_neg_inv (t : ℝ) :
 
 
 
+
 theorem klein_anti_inv (t : ℝ) (ht : t ≠ 0) :
     mobiusAnti (mobiusInv t) = mobiusNeg t := by
   unfold mobiusAnti mobiusInv mobiusNeg; field_simp
 
 
 
+
 theorem klein_anti_neg (t : ℝ) :
     mobiusAnti (mobiusNeg t) = mobiusInv t := by
   unfold mobiusAnti mobiusNeg mobiusInv; ring
+
 
 
 
@@ -263,9 +305,11 @@ theorem inv_fixed_points (t : ℝ) (ht : t ≠ 0) :
 
 
 
+
 /-- At t = 0, the stereographic derivative is 2 (maximal "speed"). -/
 theorem stereo_x_derivative_at_zero :
     2 * (1 - (0:ℝ) ^ 2) / (1 + (0:ℝ) ^ 2) ^ 2 = 2 := by norm_num
+
 
 
 
@@ -276,8 +320,10 @@ theorem winding_waypoints :
 
 
 
+
 /-- **E1**: Antipodal of equator point t=1 is t=−1. -/
 theorem exp_antipodal_equator : antipodalMap 1 = -1 := by unfold antipodalMap; norm_num
+
 
 
 
@@ -286,9 +332,11 @@ theorem exp_antipodal_2 : antipodalMap 2 = -(1/2) := by unfold antipodalMap; nor
 
 
 
+
 /-- **E3**: Cross-ratio of (0, 1, 2, 3) = 4/3. -/
 theorem exp_cross_ratio_0123 : crossRatio 0 1 2 3 = 4/3 := by
   unfold crossRatio; norm_num
+
 
 
 
@@ -302,11 +350,13 @@ theorem exp_cayley_values :
 
 
 
+
 /-- **E5**: First five Pythagorean triples from Euclid's formula. -/
 theorem exp_five_triples :
     IsPythTriple 3 4 5 ∧ IsPythTriple 5 12 13 ∧ IsPythTriple 8 15 17 ∧
     IsPythTriple 7 24 25 ∧ IsPythTriple 20 21 29 := by
   refine ⟨?_, ?_, ?_, ?_, ?_⟩ <;> unfold IsPythTriple <;> norm_num
+
 
 
 
@@ -318,10 +368,12 @@ theorem exp_klein_at_3 :
 
 
 
+
 /-- **E7**: Inversion maps t=2 (encoding (4/5,−3/5)) to t=1/2 (encoding (4/5,3/5)). -/
 theorem exp_inversion_triple :
     invStereoS (1/2) = (4/5, 3/5) := by
   unfold invStereoS; ext <;> simp <;> norm_num
+
 
 
 
@@ -340,6 +392,7 @@ theorem meta_klein_four_group :
 
 
 
+
 /-- **Meta-Theorem 5**: Attention and depth are both unity at the equator. -/
 theorem meta_attention_depth_unity :
     attentionFunction 1 = 1 ∧ (1 + (0:ℝ)) / (1 - (0:ℝ)) = 1 := by
@@ -349,11 +402,13 @@ theorem meta_attention_depth_unity :
 
 
 
+
 /-- **Meta-Theorem 6**: Universal Pythagorean generator from stereography. -/
 theorem meta_universal_pythag (m n : ℤ) :
     IsPythTriple (m^2 - n^2) (2*m*n) (m^2 + n^2) ∧
     ((m^2 - n^2) : ℤ) ^ 2 + (2*m*n) ^ 2 = (m^2 + n^2) ^ 2 :=
   ⟨euclid_parametrization m n, by ring⟩
+
 
 
 
@@ -366,6 +421,7 @@ theorem meta_antipodal_completeness (t : ℝ) (ht : t ≠ 0) :
   exact ⟨invStereoS_on_sphere t, invStereoS_on_sphere _,
     by rw [antipodal_reverses_x t ht]; ring,
     by rw [antipodal_reverses_y t ht]; ring⟩
+
 
 
 

@@ -16,10 +16,12 @@ theorem spbMat_charPoly_discriminant (a : ℝ) :
 
 
 
+
 /-- The eigenvalues of M(a) have modulus √(1+a²).
 This is |1 + ai| = √(1 + a²). -/
 theorem spbMat_eigenvalue_modulus (a : ℝ) :
     (1 : ℝ) ^ 2 + a ^ 2 = 1 + a ^ 2 := by ring
+
 
 
 
@@ -35,9 +37,11 @@ theorem spb_four_point (a b c d : ℝ)
 
 
 
+
 /-- SPB is self-inverse via negation: spb(x, -x) = 0. -/
 theorem spb_self_inverse (x : ℝ) : spb x (-x) = 0 := by
   simp [spb]
+
 
 
 
@@ -47,9 +51,11 @@ theorem spb_neg_distrib (x y : ℝ) : spb (-x) y = -spb x (-y) := by
 
 
 
+
 /-- Projective SPB. -/
 def projSPB (x₁ x₂ y₁ y₂ : ℝ) : ℝ × ℝ :=
   (x₁ * y₂ + x₂ * y₁, x₂ * y₂ - x₁ * y₁)
+
 
 
 
@@ -65,9 +71,15 @@ theorem projSPB_assoc (a₁ a₂ b₁ b₂ c₁ c₂ : ℝ) :
 
 
 
+
+/-- [Section: # CatalogBuild.EML.SPBAdvancedOpenProblems
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 24] -/
 theorem projSPB_inv (x₁ x₂ : ℝ) :
     projSPB x₁ x₂ (-x₁) x₂ = (0, x₂ ^ 2 + x₁ ^ 2) := by
   unfold projSPB; ring;
+
 
 
 
@@ -78,13 +90,16 @@ theorem tanh_add_eq_spbH (φ ψ : ℝ) :
 
 
 
+
 /-- Hyperbolic SPB identity. -/
 theorem spbH_zero (x : ℝ) : spbH x 0 = x := by simp [spbH]
 
 
 
+
 /-- Hyperbolic SPB inverse. -/
 theorem spbH_neg (x : ℝ) : spbH x (-x) = 0 := by simp [spbH]
+
 
 
 
@@ -102,8 +117,10 @@ theorem spb_deriv_ratio (x y : ℝ) (hxy : 1 - x * y ≠ 0) :
 
 
 
+
 theorem arctan_one : Real.arctan 1 = Real.pi / 4 := by
   norm_num
+
 
 
 
@@ -123,6 +140,7 @@ theorem machin_formula :
 
 
 
+
 /-- SPB is the unique continuous function f : ℝ² → ℝ satisfying:
 1. f(x, 0) = x (identity)
 2. f(x, -x) = 0 (inverse)
@@ -133,7 +151,9 @@ theorem spb_functional_identity (x : ℝ) : spb x 0 = x := by simp [spb]
 
 
 
+
 theorem spb_functional_inverse (x : ℝ) : spb x (-x) = 0 := by simp [spb]
+
 
 
 
@@ -145,8 +165,10 @@ theorem spb_functional_assoc (x y z : ℝ)
 
 
 
+
 /-- spb(1, 1) is undefined (pole): 1 - 1·1 = 0. -/
 theorem spb_one_one_pole : (1 : ℝ) - 1 * 1 = 0 := by ring
+
 
 
 
@@ -156,9 +178,11 @@ theorem spb_sqrt3_sqrt3 : spb (Real.sqrt 3) (Real.sqrt 3) = -(Real.sqrt 3) := by
 
 
 
+
 /-- The SPB distance: d(x, y) = |arctan(x) - arctan(y)|.
 This is the chord distance on S¹ in the stereographic parameterization. -/
 def spbDist (x y : ℝ) : ℝ := |Real.arctan x - Real.arctan y|
+
 
 
 
@@ -167,9 +191,11 @@ theorem spbDist_self (x : ℝ) : spbDist x x = 0 := by simp [spbDist]
 
 
 
+
 /-- SPB distance is symmetric. -/
 theorem spbDist_symm (x y : ℝ) : spbDist x y = spbDist y x := by
   simp [spbDist, abs_sub_comm]
+
 
 
 
@@ -181,9 +207,11 @@ theorem spbDist_translation_invariant (x y a : ℝ)
 
 
 
+
 theorem spb_double_leading_term (x : ℝ) (hx : x * x ≠ 1) :
     spb x x - 2 * x = 2 * x ^ 3 / (1 - x * x) := by
   unfold spb; rw [ div_sub' ] <;> ring ; contrapose! hx ; nlinarith;
+
 
 
 

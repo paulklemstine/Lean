@@ -1,5 +1,0 @@
-{"ts": 1776742913.1000729, "model": "test", "stage": "test", "action": "event", "vram_mb": 0.0, "vram_reserved_mb": 0.0, "peak_vram_mb": 0.0, "data": 42}
-{"ts": 1776742915.0608115, "model": "test", "stage": "stage1", "action": "op_start", "vram_mb": 0.0, "vram_reserved_mb": 0.0, "peak_vram_mb": 0.0}
-{"ts": 1776742915.0715146, "model": "test", "stage": "stage1", "action": "op_end", "vram_mb": 0.0, "vram_reserved_mb": 0.0, "peak_vram_mb": 0.0, "elapsed_s": 0.011}
-{"ts": 1776742993.2484782, "model": "test", "stage": "t", "action": "x_start", "vram_mb": 0.0, "vram_reserved_mb": 0.0, "peak_vram_mb": 0.0}
-{"ts": 1776742995.160547, "model": "test", "stage": "t", "action": "x_end", "vram_mb": 0.0, "vram_reserved_mb": 0.0, "peak_vram_mb": 0.0, "elapsed_s": 1.912}

@@ -20,10 +20,12 @@ theorem relu_convex (x y t : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
 
 
 
+
 /-- A single-layer tropical neural network -/
 def tropicalLayer (n m : ℕ) (W : Fin m → Fin n → ℝ) (b : Fin m → ℝ)
     (x : Fin n → ℝ) : Fin m → ℝ :=
   fun i => min (⨅ j : Fin n, W i j + x j) (b i)
+
 
 
 
@@ -33,9 +35,11 @@ def maxPlusLayer (n m : ℕ) (W : Fin m → Fin n → ℝ) (x : Fin n → ℝ) :
 
 
 
+
 /-- The dual (transpose) of a network layer -/
 def dualLayer (n m : ℕ) (W : Fin m → Fin n → ℝ) : Fin n → Fin m → ℝ :=
   fun j i => W i j
+
 
 
 
@@ -46,6 +50,11 @@ theorem dualLayer_involution (n m : ℕ) (W : Fin m → Fin n → ℝ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Tropical.Langlands.MachineLearning
+Auto-generated from theorem catalog database.
+Domain: Tropical/Langlands
+Declarations: 14] -/
 theorem dual_preserves_tropDet (n : ℕ) (W : Fin n → Fin n → ℝ) :
     (⨅ σ : Equiv.Perm (Fin n), ∑ i, W i (σ i)) =
     (⨅ σ : Equiv.Perm (Fin n), ∑ i, (dualLayer n n W) i (σ i)) := by
@@ -55,9 +64,11 @@ theorem dual_preserves_tropDet (n : ℕ) (W : Fin n → Fin n → ℝ) :
 
 
 
+
 /-- L¹ tropical loss function -/
 def tropicalLoss (n : ℕ) (target output : Fin n → ℝ) : ℝ :=
   ∑ i : Fin n, |target i - output i|
+
 
 
 
@@ -65,6 +76,7 @@ def tropicalLoss (n : ℕ) (target output : Fin n → ℝ) : ℝ :=
 theorem tropicalLoss_nonneg (n : ℕ) (target output : Fin n → ℝ) :
     tropicalLoss n target output ≥ 0 :=
   Finset.sum_nonneg fun i _ => abs_nonneg _
+
 
 
 
@@ -76,6 +88,7 @@ theorem tropicalLoss_zero_iff (n : ℕ) (target output : Fin n → ℝ) :
 
 
 
+
 theorem tropicalLoss_triangle (n : ℕ) (x y z : Fin n → ℝ) :
     tropicalLoss n x z ≤ tropicalLoss n x y + tropicalLoss n y z := by
   unfold tropicalLoss;
@@ -83,9 +96,11 @@ theorem tropicalLoss_triangle (n : ℕ) (x y z : Fin n → ℝ) :
 
 
 
+
 /-- A tropical polynomial: sup of affine functions -/
 def tropPolynomial (n : ℕ) (coeffs offsets : Fin n → ℝ) (x : ℝ) : ℝ :=
   ⨆ i : Fin n, coeffs i * x + offsets i
+
 
 
 
@@ -103,6 +118,7 @@ theorem tropPolynomial_convex (n : ℕ) [hn : Nonempty (Fin n)]
 
 
 
+
 /-- Tropical attention: (min, +) analogue of dot-product attention -/
 def tropicalAttention (n d : ℕ)
     (Q K V : Fin n → Fin d → ℝ) : Fin n → Fin d → ℝ :=
@@ -110,10 +126,12 @@ def tropicalAttention (n d : ℕ)
 
 
 
+
 /-- ReLU difference gives arbitrary piecewise-linear pieces -/
 theorem relu_difference_is_pl (a b : ℝ) (x : ℝ) :
     relu (x - a) - relu (x - b) = max (x - a) 0 - max (x - b) 0 := by
   simp [relu]
+
 
 
 

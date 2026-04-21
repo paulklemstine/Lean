@@ -2,13 +2,14 @@
 
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/Core
-Declarations: 25
+Declarations: 24
 -/
 
 import Mathlib
 
 /-- The quadruple Lorentz form Q₄(a,b,c,d) = a² + b² + c² - d² -/
 def lorentzQ4 (a b c d : ℤ) : ℤ := a ^ 2 + b ^ 2 + c ^ 2 - d ^ 2
+
 
 
 
@@ -19,8 +20,10 @@ theorem quadruple_null_cone {a b c d : ℤ} (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) 
 
 
 
+
 /-- The fundamental Pythagorean quadruple (1,2,2,3) -/
 theorem fundamental_quadruple : (1 : ℤ) ^ 2 + 2 ^ 2 + 2 ^ 2 = 3 ^ 2 := by norm_num
+
 
 
 
@@ -28,13 +31,6 @@ theorem fundamental_quadruple : (1 : ℤ) ^ 2 + 2 ^ 2 + 2 ^ 2 = 3 ^ 2 := by norm
 theorem quadruple_scaling (a b c d k : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     (k * a) ^ 2 + (k * b) ^ 2 + (k * c) ^ 2 = (k * d) ^ 2 := by nlinarith [sq_nonneg k]
 
-
-
-/-- Pell numbers: P(0)=0, P(1)=1, P(n+2)=2P(n+1)+P(n) -/
-def pellNum : ℕ → ℤ
-  | 0 => 0
-  | 1 => 1
-  | (n + 2) => 2 * pellNum (n + 1) + pellNum n
 
 
 
@@ -46,6 +42,7 @@ def pellComp : ℕ → ℤ
 
 
 
+
 /-- [Section: # CatalogBuild.Pythagorean.Core.NewHypotheses
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/Core
@@ -53,16 +50,25 @@ Declarations: 25] -/
 theorem pellNum_0 : pellNum 0 = 0 := rfl
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.Core.NewHypotheses
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Core
+Declarations: 25] -/
 theorem pellNum_1 : pellNum 1 = 1 := rfl
+
 
 
 theorem pellNum_2 : pellNum 2 = 2 := by simp [pellNum]
 
 
+
 theorem pellNum_3 : pellNum 3 = 5 := by simp [pellNum]
 
 
+
 theorem pellNum_5 : pellNum 5 = 29 := by simp [pellNum]
+
 
 
 
@@ -84,9 +90,11 @@ theorem pell_equation_holds (n : ℕ) :
 
 
 
+
 /-- The trivial PPT identity: (2N)² + (N²-1)² = (N²+1)² -/
 theorem trivial_ppt_identity (N : ℤ) :
     (2 * N) ^ 2 + (N ^ 2 - 1) ^ 2 = (N ^ 2 + 1) ^ 2 := by ring
+
 
 
 
@@ -96,8 +104,10 @@ theorem hypotenuse_exceeds_leg (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
 
 
 
+
 /-- Difference of squares factorization -/
 theorem diff_squares_factor (a b : ℤ) : a ^ 2 - b ^ 2 = (a - b) * (a + b) := by ring
+
 
 
 
@@ -106,8 +116,10 @@ def BA' : Matrix (Fin 3) (Fin 3) ℤ := !![1, -2, 2; 2, -1, 2; 2, -2, 3]
 
 
 
+
 /-- Inverse of B_A -/
 def BA'_inv : Matrix (Fin 3) (Fin 3) ℤ := !![1, 2, (-2); (-2), (-1), 2; (-2), (-2), 3]
+
 
 
 
@@ -116,8 +128,10 @@ def QLorentz' : Matrix (Fin 3) (Fin 3) ℤ := !![1, 0, 0; 0, 1, 0; 0, 0, (-1)]
 
 
 
+
 /-- B_A * B_A⁻¹ = I -/
 theorem BA'_mul_inv : BA' * BA'_inv = 1 := by native_decide
+
 
 
 
@@ -127,9 +141,11 @@ theorem BA'_inv_preserves_lorentz : BA'_invᵀ * QLorentz' * BA'_inv = QLorentz'
 
 
 
+
 /-- The lattice condition: (c-b)(c+b) = N² when N is a leg -/
 theorem lattice_condition' (N b c : ℤ) (h : N ^ 2 + b ^ 2 = c ^ 2) :
     (c - b) * (c + b) = N ^ 2 := by nlinarith
+
 
 
 
@@ -137,6 +153,7 @@ theorem lattice_condition' (N b c : ℤ) (h : N ^ 2 + b ^ 2 = c ^ 2) :
 theorem gcd_factor_relation' (p q b c : ℤ)
     (h : (p * q) ^ 2 + b ^ 2 = c ^ 2) :
     (c - b) * (c + b) = p ^ 2 * q ^ 2 := by nlinarith
+
 
 
 
@@ -155,6 +172,7 @@ theorem A_inv_descent (m : ℤ) :
 
 
 
+
 /-- Quadruple parametrization: (2mp, 2mq, 2mr, ...) -/
 theorem three_square_factor' (m p q r : ℤ) :
     (2 * m * p) ^ 2 + (2 * m * q) ^ 2 + (2 * m * r) ^ 2 =
@@ -162,8 +180,10 @@ theorem three_square_factor' (m p q r : ℤ) :
 
 
 
+
 /-- For factoring: a² = (c-b)(c+b) from a²+b²=c² -/
 theorem sum_of_squares_factoring' (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     a ^ 2 = (c - b) * (c + b) := by nlinarith
+
 
 

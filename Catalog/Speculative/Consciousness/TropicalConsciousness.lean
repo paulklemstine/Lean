@@ -16,12 +16,19 @@ Declarations: 15] -/
 def tropZero : WithBot ℝ := ⊥
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Consciousness.TropicalConsciousness
+Auto-generated from theorem catalog database.
+Domain: Speculative/Consciousness
+Declarations: 15] -/
 def tropOne : WithBot ℝ := (0 : ℝ)
+
 
 
 
 theorem tropAdd_zero (a : WithBot ℝ) : tropAdd a tropZero = a :=
   sup_bot_eq a
+
 
 
 
@@ -32,7 +39,9 @@ theorem tropMul_one (a : WithBot ℝ) : tropMul a tropOne = a := by
 
 
 
+
 def TropicalMatrix (n : ℕ) := Fin n → Fin n → WithBot ℝ
+
 
 
 
@@ -42,15 +51,18 @@ def tropMatVecMul {n : ℕ} (M : TropicalMatrix n) (v : Fin n → WithBot ℝ) :
 
 
 
+
 def isTropicalEigenvalue {n : ℕ} (M : TropicalMatrix n) (lam : ℝ)
     (v : Fin n → WithBot ℝ) : Prop :=
   ∀ i, tropMatVecMul M v i = tropMul (↑lam) (v i)
 
 
 
+
 structure TropicalReflector (n : ℕ) where
   matrix : TropicalMatrix n
   self_aware : ∀ i : Fin n, matrix i i ≠ ⊥
+
 
 
 
@@ -61,6 +73,7 @@ def tropicalIterate {n : ℕ} (R : TropicalReflector n)
 
 
 
+
 def isTropConvex (n : ℕ) (S : Set (Fin n → ℝ)) : Prop :=
   ∀ x y : Fin n → ℝ, x ∈ S → y ∈ S →
     ∀ t : ℝ, 0 ≤ t → t ≤ 1 →
@@ -68,8 +81,10 @@ def isTropConvex (n : ℕ) (S : Set (Fin n → ℝ)) : Prop :=
 
 
 
+
 def tropConvexHull (n : ℕ) (S : Set (Fin n → ℝ)) : Set (Fin n → ℝ) :=
   sInter { T | S ⊆ T ∧ isTropConvex n T }
+
 
 
 
@@ -80,8 +95,10 @@ theorem subset_tropConvexHull (n : ℕ) (S : Set (Fin n → ℝ)) :
 
 
 
+
 def tropicalDist {n : ℕ} (x y : Fin (n + 1) → ℝ) : ℝ :=
   Finset.univ.sup' ⟨⟨0, Nat.zero_lt_succ n⟩, Finset.mem_univ _⟩ (fun i => |x i - y i|)
+
 
 
 
@@ -91,9 +108,11 @@ theorem tropicalDist_symm {n : ℕ} (x y : Fin (n + 1) → ℝ) :
 
 
 
+
 theorem tropicalDist_self {n : ℕ} (x : Fin (n + 1) → ℝ) :
     tropicalDist x x = 0 := by
   simp [tropicalDist]
+
 
 
 

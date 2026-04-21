@@ -15,10 +15,12 @@ def IsTropChar {G : Type*} [Group G] (χ : G → ℝ) : Prop :=
 
 
 
+
 /-- The trivial tropical character sends everything to 0 -/
 theorem trop_char_trivial {G : Type*} [Group G] :
     IsTropChar (fun (_ : G) => (0 : ℝ)) :=
   ⟨rfl, fun _ _ => (add_zero 0).symm⟩
+
 
 
 
@@ -31,12 +33,14 @@ theorem trop_char_inv {G : Type*} [Group G] (χ : G → ℝ) (hχ : IsTropChar �
 
 
 
+
 /-- Tropical character of powers: χ(gⁿ) = n · χ(g) -/
 theorem trop_char_pow {G : Type*} [Group G] (χ : G → ℝ) (hχ : IsTropChar χ)
     (g : G) (n : ℕ) : χ (g ^ n) = n * χ g := by
   induction n with
   | zero => simp [hχ.1]
   | succ n ih => rw [pow_succ, hχ.2, ih]; push_cast; ring
+
 
 
 
@@ -54,6 +58,7 @@ theorem trop_char_finite_trivial {G : Type*} [Group G] [Fintype G]
 
 
 
+
 /-- The sum of two tropical characters is a tropical character -/
 theorem trop_char_add {G : Type*} [Group G] (χ ψ : G → ℝ)
     (hχ : IsTropChar χ) (hψ : IsTropChar ψ) :
@@ -61,6 +66,7 @@ theorem trop_char_add {G : Type*} [Group G] (χ ψ : G → ℝ)
   constructor
   · simp [hχ.1, hψ.1]
   · intro g h; simp [hχ.2 g h, hψ.2 g h]; ring
+
 
 
 
@@ -74,10 +80,12 @@ theorem trop_char_scale {G : Type*} [Group G] (χ : G → ℝ) (c : ℝ)
 
 
 
+
 /-- The tropical Fourier transform of f at character χ. -/
 def tropFourier {G : Type*} [Fintype G] [Nonempty G] [DecidableEq G]
     (f : G → ℝ) (χ : G → ℝ) : ℝ :=
   Finset.sup' Finset.univ Finset.univ_nonempty (fun g => f g + χ g)
+
 
 
 
@@ -88,9 +96,11 @@ def tropConv {G : Type*} [Group G] [Fintype G] [Nonempty G] [DecidableEq G]
 
 
 
+
 /-- A tropical Hecke operator acts on functions f : G → ℝ -/
 structure TropHeckeOp (G : Type*) where
   action : (G → ℝ) → G → ℝ
+
 
 
 
@@ -100,8 +110,10 @@ def IsTropEigenform {G : Type*} (T : TropHeckeOp G) (f : G → ℝ) (eigenval : 
 
 
 
+
 /-- In the tropical semiring, every element is additively idempotent. -/
 theorem tropical_universal_idempotent (a : ℝ) : max a a = a := max_self a
+
 
 
 

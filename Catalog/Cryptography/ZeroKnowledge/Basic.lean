@@ -19,6 +19,7 @@ theorem schnorr_completeness_exponent (x r c : ZMod q) :
 omit hq in
 
 
+
 /-- Schnorr completeness: The response s = r + c*x satisfies the verification
 equation when lifted to group exponents.
 Given:
@@ -35,6 +36,7 @@ theorem schnorr_completeness_mod (x r c : ZMod q) (s : ZMod q)
 
 
 
+
 /-- [Section: # CatalogBuild.Cryptography.ZeroKnowledge.Basic
 Auto-generated from theorem catalog database.
 Domain: Cryptography/ZeroKnowledge
@@ -48,10 +50,16 @@ theorem schnorr_extraction (x r c₁ c₂ s₁ s₂ : ZMod q)
 
 
 
+
+/-- [Section: # CatalogBuild.Cryptography.ZeroKnowledge.Basic
+Auto-generated from theorem catalog database.
+Domain: Cryptography/ZeroKnowledge
+Declarations: 15] -/
 theorem schnorr_simulator_valid (x c s : ZMod q) :
     let t_sim_exp := s - c * x
     s = t_sim_exp + c * x := by
   grind +ring
+
 
 
 
@@ -61,8 +69,10 @@ theorem zmod_cancel_sub (a b x : ZMod q) (h : a ≠ b) :
 
 
 
+
 theorem cave_faker_bound (n : ℕ) : (1 : ℚ) / 2 ^ n ≤ 1 := by
   bound
+
 
 
 
@@ -72,14 +82,17 @@ theorem cave_completeness : (1 : ℚ) = 1 := rfl
 
 
 
+
 theorem cave_20_rounds : (1 : ℚ) / 2 ^ 20 < 1 / 1000000 := by
   native_decide +revert
+
 
 
 
 theorem cave_monotone_decreasing (n : ℕ) :
     (1 : ℚ) / 2 ^ (n + 1) < 1 / 2 ^ n := by
   rw [ pow_succ' ] ; gcongr ; norm_num;
+
 
 
 
@@ -93,12 +106,14 @@ structure CommitmentScheme (V R C : Type*) where
 
 
 
+
 /-- Given a perfectly binding commitment scheme, if two openings produce
 the same commitment, the values must be equal. -/
 theorem commitment_binding {V R C : Type*} (scheme : CommitmentScheme V R C)
     (v₁ v₂ : V) (r₁ r₂ : R) (h : scheme.commit v₁ r₁ = scheme.commit v₂ r₂) :
     v₁ = v₂ :=
   scheme.binding v₁ v₂ r₁ r₂ h
+
 
 
 
@@ -118,6 +133,7 @@ structure SigmaProtocol (Statement Witness Commitment Challenge Response : Type*
 
 
 
+
 /-- Completeness of any Sigma protocol: the honest prover always convinces
 the honest verifier, regardless of the challenge. -/
 theorem sigma_completeness
@@ -126,6 +142,7 @@ theorem sigma_completeness
     (x : S) (w : W) (c : Ch) :
     σ.verify x (σ.prover_commit w) c (σ.prover_respond w (σ.prover_commit w) c) :=
   σ.complete x w c
+
 
 
 
@@ -139,6 +156,7 @@ structure NPRelation where
 
 
 
+
 /-- The GMW universality principle (stated as a type):
 For any NP relation, there exists a zero-knowledge proof system.
 This is the formal statement of:
@@ -149,5 +167,6 @@ The actual construction goes through graph 3-coloring. -/
 def ZKPSystemType (R : NPRelation) : Prop :=
   ∃ (Com Ch Resp : Type) ,
     Nonempty (SigmaProtocol R.Statement R.Witness Com Ch Resp)
+
 
 

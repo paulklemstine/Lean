@@ -16,12 +16,14 @@ structure SelfAdjointMatrix (n : ℕ) where
 
 
 
+
 /-- The graph Laplacian is self-adjoint. -/
 theorem laplacian_is_selfadjoint {n : ℕ}
     (A : Matrix (Fin n) (Fin n) ℝ) (hA : A.IsSymm)
     (D : Matrix (Fin n) (Fin n) ℝ) (hD : D.IsSymm) :
     (D - A).IsSymm :=
   IsSymm.sub hD hA
+
 
 
 
@@ -52,6 +54,11 @@ theorem laplacian_psd {n : ℕ}
 
 
 
+
+/-- [Section: # CatalogBuild.Bridges.HilbertPolyaOperator
+Auto-generated from theorem catalog database.
+Domain: Bridges
+Declarations: 15] -/
 theorem laplacian_zero_eigenvalue {n : ℕ}
     (A : Matrix (Fin n) (Fin n) ℝ)
     (D : Matrix (Fin n) (Fin n) ℝ)
@@ -64,11 +71,13 @@ theorem laplacian_zero_eigenvalue {n : ℕ}
 
 
 
+
 /-- An oriented edge of a graph. -/
 structure OrientedEdge (n : ℕ) where
   source : Fin n
   target : Fin n
   ne : source ≠ target
+
 
 
 
@@ -79,6 +88,7 @@ def hashimotoMatrix {n m : ℕ}
     if (edges e1).target = (edges e2).source ∧
        ¬((edges e1).source = (edges e2).target ∧ (edges e1).target = (edges e2).source)
     then 1 else 0
+
 
 
 
@@ -93,10 +103,12 @@ theorem ihara_det_simplification {n : ℕ} (q : ℕ)
 
 
 
+
 theorem ramanujan_critical_line (q : ℕ) (hq : q ≥ 1) (ev : ℝ)
     (h_ram : |ev| ≤ 2 * Real.sqrt q) :
     ev ^ 2 - 4 * q ≤ 0 := by
   nlinarith [ abs_le.mp h_ram, Real.mul_self_sqrt ( Nat.cast_nonneg q ) ]
+
 
 
 
@@ -109,10 +121,12 @@ theorem vieta_sum_of_roots (q : ℕ) (hq : q ≥ 1) (ev u1 u2 : ℝ)
 
 
 
+
 /-- The "Hilbert-Pólya operator" for a graph: the normalized adjacency matrix A/√q. -/
 def hilbertPolyaOperator {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ) (q : ℕ) :
     Matrix (Fin n) (Fin n) ℝ :=
   (1 / Real.sqrt q) • A
+
 
 
 
@@ -124,6 +138,7 @@ theorem hilbertPolya_selfadjoint {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ)
 
 
 
+
 theorem hilbertPolya_ramanujan_bound (q : ℕ) (hq : q ≥ 1)
     (ev : ℝ) (h_ram : |ev| ≤ 2 * Real.sqrt q) :
     |ev / Real.sqrt q| ≤ 2 := by
@@ -131,9 +146,11 @@ theorem hilbertPolya_ramanujan_bound (q : ℕ) (hq : q ≥ 1)
 
 
 
+
 /-- The heat kernel trace: Tr(e^{-tL}) = Σ e^{-tλᵢ}. -/
 def heatTrace (eigenvalues : List ℝ) (t : ℝ) : ℝ :=
   eigenvalues.map (fun ev => Real.exp (-t * ev)) |>.sum
+
 
 
 
@@ -144,9 +161,11 @@ theorem heat_trace_term_pos (t ev : ℝ) :
 
 
 
+
 /-- The spectral zeta function of the Laplacian. -/
 def spectralZeta (eigenvalues : List ℝ) (s : ℝ) : ℝ :=
   (eigenvalues.filter (· > 0)).map (fun ev => ev ^ (-s)) |>.sum
+
 
 
 

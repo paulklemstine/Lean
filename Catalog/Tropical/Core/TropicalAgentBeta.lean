@@ -19,6 +19,11 @@ noncomputable def softAttention {n d : ℕ} (β : ℝ) (scores : Fin (n+1) → �
 
 
 
+
+/-- [Section: # CatalogBuild.Tropical.Core.TropicalAgentBeta
+Auto-generated from theorem catalog database.
+Domain: Tropical/Core
+Declarations: 16] -/
 theorem softAttention_zero {n d : ℕ} (scores : Fin (n+1) → ℝ)
     (V : Fin (n+1) → Fin d → ℝ) (k : Fin d) :
     softAttention 0 scores V k = (∑ i, V i k) / (↑(n + 1) : ℝ) := by
@@ -26,8 +31,10 @@ theorem softAttention_zero {n d : ℕ} (scores : Fin (n+1) → ℝ)
 
 
 
+
 noncomputable def layerMean {n : ℕ} [NeZero n] (x : Fin n → ℝ) : ℝ :=
   (∑ i, x i) / n
+
 
 
 
@@ -38,8 +45,10 @@ theorem centered_mean_zero {n : ℕ} [NeZero n] (x : Fin n → ℝ) :
 
 
 
+
 noncomputable def layerVar {n : ℕ} [NeZero n] (x : Fin n → ℝ) : ℝ :=
   (∑ i, (x i - layerMean x) ^ 2) / n
+
 
 
 
@@ -49,14 +58,17 @@ theorem layerVar_nonneg {n : ℕ} [NeZero n] (x : Fin n → ℝ) : 0 ≤ layerVa
 
 
 
+
 theorem residual_recovers {n : ℕ} (x fx : Fin n → ℝ) (i : Fin n) :
     (x i + fx i) - x i = fx i := by ring
+
 
 
 
 theorem multihead_split (d_model n_heads : ℕ) (h : n_heads ∣ d_model) :
     n_heads * (d_model / n_heads) = d_model :=
   Nat.mul_div_cancel' h
+
 
 
 
@@ -67,8 +79,10 @@ theorem trop_dominant_term {n : ℕ} (v : Fin (n+1) → ℝ) (k : Fin (n+1))
 
 
 
+
 noncomputable def perplexity {n : ℕ} (logprobs : Fin (n+1) → ℝ) : ℝ :=
   exp (-(∑ i, logprobs i) / (n + 1))
+
 
 
 
@@ -79,8 +93,10 @@ theorem perplexity_mono {n : ℕ} (p q : Fin (n+1) → ℝ)
 
 
 
+
 theorem relu_subgrad_pos (x : ℝ) (hx : 0 < x) :
     max x 0 = 1 * x + 0 := by rw [max_eq_left (le_of_lt hx)]; ring
+
 
 
 
@@ -89,7 +105,9 @@ theorem relu_subgrad_neg (x : ℝ) (hx : x < 0) :
 
 
 
+
 noncomputable def gradStep (θ grad η : ℝ) : ℝ := θ - η * grad
+
 
 
 
@@ -98,8 +116,10 @@ theorem grad_descent_reduces (θ grad η : ℝ) (hη : 0 < η) (hg : 0 < grad) :
 
 
 
+
 theorem grad_fixed_point (θ η : ℝ) : gradStep θ 0 η = θ := by
   unfold gradStep; ring
+
 
 
 

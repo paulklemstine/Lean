@@ -12,9 +12,11 @@ def qnorm (a b c d : ℤ) : ℤ := a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2
 
 
 
+
 /-- Quaternion norm is always nonneg. -/
 theorem qnorm_nonneg (a b c d : ℤ) : 0 ≤ qnorm a b c d := by
   unfold qnorm; positivity
+
 
 
 
@@ -31,6 +33,7 @@ theorem qnorm_eq_zero (a b c d : ℤ) :
 
 
 
+
 /-- Euler's four-square identity: the product of two sums of four squares
 is itself a sum of four squares. -/
 theorem euler_four_square_identity (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ) :
@@ -40,6 +43,7 @@ theorem euler_four_square_identity (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : �
           (a₁ * c₂ - b₁ * d₂ + c₁ * a₂ + d₁ * b₂)
           (a₁ * d₂ + b₁ * c₂ - c₁ * b₂ + d₁ * a₂) := by
   unfold qnorm; ring
+
 
 
 
@@ -54,10 +58,12 @@ theorem four_square_mul_closure (n₁ n₂ : ℤ)
 
 
 
+
 /-- Second BF decomposition. -/
 theorem brahmagupta_fibonacci' (a b c d : ℤ) :
     (a ^ 2 + b ^ 2) * (c ^ 2 + d ^ 2) =
     (a * c + b * d) ^ 2 + (a * d - b * c) ^ 2 := by ring
+
 
 
 
@@ -68,6 +74,7 @@ theorem bf_gcd_factor_principle (a b c d N : ℤ)
     N = (a * c - b * d) ^ 2 + (a * d + b * c) ^ 2 ∧
     N = (a * c + b * d) ^ 2 + (a * d - b * c) ^ 2 := by
   constructor <;> linarith [brahmagupta_fibonacci a b c d, brahmagupta_fibonacci' a b c d]
+
 
 
 
@@ -89,13 +96,20 @@ theorem short_vector_pair_factor (v w N : ℕ) (hN : 1 < N)
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.HurwitzQuaternions
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 39] -/
 theorem lll_poly_dimension (n : ℕ) (hn : 0 < n) : n ≤ n ^ 6 := by
   exact Nat.le_self_pow ( by decide ) _
 
 
 
+
 /-- k² cross-collision pairs from two k-tuples. -/
 theorem cross_collision_pairs (k : ℕ) : k * k = k ^ 2 := by ring
+
 
 
 
@@ -105,17 +119,22 @@ theorem within_tuple_channels (k : ℕ) :
 
 
 
+
 /-- Concrete channel counts for various k. -/
 theorem channels_k2 : Nat.choose 2 2 + 2 ^ 2 = 5 := by decide
+
 
 
 theorem channels_k4 : Nat.choose 4 2 + 4 ^ 2 = 22 := by decide
 
 
+
 theorem channels_k8 : Nat.choose 8 2 + 8 ^ 2 = 92 := by decide
 
 
+
 theorem channels_k16 : Nat.choose 16 2 + 16 ^ 2 = 376 := by decide
+
 
 
 
@@ -123,6 +142,7 @@ theorem channels_k16 : Nat.choose 16 2 + 16 ^ 2 = 376 := by decide
 theorem birthday_cross_collisions (m k : ℕ) :
     Nat.choose m 2 * k ^ 2 = m * (m - 1) / 2 * k ^ 2 := by
   rw [Nat.choose_two_right]
+
 
 
 
@@ -136,6 +156,7 @@ theorem berggren_A (a b c p : ℤ) (hp : p ∣ (a ^ 2 + b ^ 2 - c ^ 2)) :
 
 
 
+
 /-- Berggren matrix B preserves Pythagorean property. -/
 theorem berggren_B (a b c p : ℤ) (hp : p ∣ (a ^ 2 + b ^ 2 - c ^ 2)) :
     p ∣ ((a + 2 * b + 2 * c) ^ 2 + (2 * a + b + 2 * c) ^ 2 -
@@ -143,6 +164,7 @@ theorem berggren_B (a b c p : ℤ) (hp : p ∣ (a ^ 2 + b ^ 2 - c ^ 2)) :
   have : (a + 2 * b + 2 * c) ^ 2 + (2 * a + b + 2 * c) ^ 2 -
          (2 * a + 2 * b + 3 * c) ^ 2 = a ^ 2 + b ^ 2 - c ^ 2 := by ring
   rw [this]; exact hp
+
 
 
 
@@ -156,8 +178,10 @@ theorem berggren_C (a b c p : ℤ) (hp : p ∣ (a ^ 2 + b ^ 2 - c ^ 2)) :
 
 
 
+
 /-- Tree size at depth d. -/
 theorem berggren_tree_count (d : ℕ) : 3 ^ d ≥ 1 := Nat.one_le_pow d 3 (by omega)
+
 
 
 
@@ -166,13 +190,17 @@ We verify for concrete small values. -/
 theorem berggren_tree_total_0 : ∑ i ∈ range 1, 3 ^ i = 1 := by decide
 
 
+
 theorem berggren_tree_total_1 : ∑ i ∈ range 2, 3 ^ i = 4 := by decide
+
 
 
 theorem berggren_tree_total_2 : ∑ i ∈ range 3, 3 ^ i = 13 := by decide
 
 
+
 theorem berggren_tree_total_3 : ∑ i ∈ range 4, 3 ^ i = 40 := by decide
+
 
 
 
@@ -183,9 +211,11 @@ theorem berggren_tree_total (d : ℕ) :
 
 
 
+
 /-- Tropical Pythagorean: min(2a, 2b) = 2c ⟺ min(a,b) = c. -/
 theorem tropical_pythagorean (a b c : ℤ) :
     min (2 * a) (2 * b) = 2 * c ↔ min a b = c := by omega
+
 
 
 
@@ -199,9 +229,11 @@ theorem tropical_variety_cases (a b c : ℤ) (h : min a b = c) :
 
 
 
+
 theorem channel_quadratic (k : ℕ) (hk : 2 ≤ k) :
     k ≤ k * (k + 1) / 2 := by
   rw [ Nat.le_div_iff_mul_le ] <;> nlinarith
+
 
 
 
@@ -213,10 +245,12 @@ theorem sigma1_prime_sq (p : ℕ) (hp : Nat.Prime p) :
 
 
 
+
 /-- Jacobi formula consequence: r₄(p) = 8(p + 1) for primes. -/
 theorem r4_prime (p : ℕ) (hp : Nat.Prime p) :
     8 * sigma1 p = 8 * (p + 1) := by
   rw [sigma1_prime p hp]
+
 
 
 
@@ -225,6 +259,7 @@ theorem sigma1_mult (m n : ℕ) (hcop : Nat.Coprime m n) :
     sigma1 (m * n) = sigma1 m * sigma1 n := by
   unfold sigma1
   exact Coprime.sum_divisors_mul hcop
+
 
 
 
@@ -243,14 +278,17 @@ theorem sigma1_ge (n : ℕ) (hn : 1 < n) : n + 1 ≤ sigma1 n := by
 
 
 
+
 /-- Peel products are differences of squares. -/
 theorem peel_diff_sq (d x : ℤ) : d ^ 2 - x ^ 2 = (d - x) * (d + x) := by ring
+
 
 
 
 /-- Each peel factor has controlled size. -/
 theorem peel_factor_bound (d x : ℕ) (hle : x ≤ d) :
     d + x ≤ 2 * d := by omega
+
 
 
 
@@ -261,10 +299,12 @@ theorem peel_smooth (d x B : ℕ) (h1 : IsSmooth (d - x) B) (h2 : IsSmooth (d + 
 
 
 
+
 /-- Grover on k-channel reduced space. -/
 theorem grover_channels (N k : ℕ) :
     Nat.sqrt (N / k ^ 2) ≤ Nat.sqrt N :=
   Nat.sqrt_le_sqrt (Nat.div_le_self N _)
+
 
 
 
@@ -274,13 +314,16 @@ theorem classical_channels (N k : ℕ) :
 
 
 
+
 /-- Quantum walk on tree: √(b^d) ≤ b^d. -/
 theorem quantum_tree (b d : ℕ) :
     Nat.sqrt (b ^ d) ≤ b ^ d := Nat.sqrt_le_self _
 
 
 
+
 /-- Grover speedup is strict for T > 1. -/
 theorem grover_strict (T : ℕ) (hT : 1 < T) : Nat.sqrt T < T :=
   Nat.sqrt_lt_self hT
+
 

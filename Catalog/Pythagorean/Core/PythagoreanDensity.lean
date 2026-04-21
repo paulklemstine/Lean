@@ -13,6 +13,7 @@ def pythagoreanParam (m n : ℤ) : ℤ × ℤ × ℤ :=
 
 
 
+
 /-- The parametrization produces Pythagorean triples. -/
 theorem param_is_pythagorean (m n : ℤ) :
     let t := pythagoreanParam m n
@@ -22,9 +23,11 @@ theorem param_is_pythagorean (m n : ℤ) :
 
 
 
+
 /-- (3, 4, 5) is a Pythagorean triple. -/
 theorem pyth_3_4_5 : IsPythagoreanTriple 3 4 5 := by
   unfold IsPythagoreanTriple; norm_num
+
 
 
 
@@ -34,15 +37,18 @@ theorem pyth_5_12_13 : IsPythagoreanTriple 5 12 13 := by
 
 
 
+
 /-- (8, 15, 17) is a Pythagorean triple. -/
 theorem pyth_8_15_17 : IsPythagoreanTriple 8 15 17 := by
   unfold IsPythagoreanTriple; norm_num
 
 
 
+
 /-- (7, 24, 25) is a Pythagorean triple. -/
 theorem pyth_7_24_25 : IsPythagoreanTriple 7 24 25 := by
   unfold IsPythagoreanTriple; norm_num
+
 
 
 
@@ -57,10 +63,12 @@ theorem pyth_comm {a b c : ℤ} (h : IsPythagoreanTriple a b c) :
 
 
 
+
 /-- A triple is Pythagorean iff its Lorentz form vanishes. -/
 theorem pyth_iff_lorentz_zero {a b c : ℤ} :
     IsPythagoreanTriple a b c ↔ lorentzQ a b c = 0 := by
   unfold IsPythagoreanTriple lorentzQ; omega
+
 
 
 
@@ -70,12 +78,14 @@ theorem lorentzQ_neg_a (a b c : ℤ) : lorentzQ (-a) b c = lorentzQ a b c := by
 
 
 
+
 /-- [Section: # CatalogBuild.Pythagorean.Core.PythagoreanDensity
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/Core
 Declarations: 23] -/
 theorem lorentzQ_neg_b (a b c : ℤ) : lorentzQ a (-b) c = lorentzQ a b c := by
   unfold lorentzQ; ring
+
 
 
 
@@ -89,10 +99,12 @@ theorem lorentzQ_swap (a b c : ℤ) : lorentzQ b a c = lorentzQ a b c := by
 
 
 
+
 /-- The hypotenuse strictly increases under Berggren B when a,b,c > 0. -/
 theorem berggrenB_hyp_grows {a b c : ℤ} (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
     c < (berggrenB a b c).2.2 := by
   simp only [berggrenB]; linarith
+
 
 
 
@@ -108,9 +120,11 @@ theorem berggrenC_hyp_grows {a b c : ℤ} (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
 
 
 
+
 /-- A number is expressible as a sum of two squares. -/
 def IsSumTwoSquares (n : ℤ) : Prop :=
   ∃ a b : ℤ, a ^ 2 + b ^ 2 = n
+
 
 
 
@@ -125,6 +139,7 @@ theorem hypotenuse_sq_sum_two_squares {a b c : ℤ} (h : IsPythagoreanTriple a b
 
 
 
+
 /-- In a Pythagorean triple, each leg squared is at most the hypotenuse squared. -/
 theorem pyth_hyp_ge_leg {a b c : ℤ} (h : IsPythagoreanTriple a b c) :
     a ^ 2 ≤ c ^ 2 ∧ b ^ 2 ≤ c ^ 2 := by
@@ -134,6 +149,7 @@ theorem pyth_hyp_ge_leg {a b c : ℤ} (h : IsPythagoreanTriple a b c) :
 -- ═══════════════════════════════════════════════════════════════════════════════
 --  §9: INFINITUDE OF PYTHAGOREAN TRIPLES
 -- ═══════════════════════════════════════════════════════════════════════════════
+
 
 
 
@@ -151,6 +167,7 @@ theorem infinitely_many_pyth_triples :
 
 
 
+
 /-- There are infinitely many primitive Pythagorean triples (via parametrization). -/
 theorem infinitely_many_primitive_pyth :
     ∀ N : ℕ, ∃ a b c : ℕ, a > 0 ∧ b > 0 ∧ c > N ∧
@@ -160,8 +177,14 @@ theorem infinitely_many_primitive_pyth :
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.Core.PythagoreanDensity
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Core
+Declarations: 23] -/
 theorem sq_mod4 (n : ℤ) : n ^ 2 % 4 = 0 ∨ n ^ 2 % 4 = 1 := by
   rcases Int.even_or_odd' n with ⟨ k, rfl | rfl ⟩ <;> ring_nf <;> norm_num
+
 
 
 
@@ -170,10 +193,12 @@ theorem sq_mod3 (n : ℤ) : n ^ 2 % 3 = 0 ∨ n ^ 2 % 3 = 1 := by
 
 
 
+
 theorem pyth_div3 {a b c : ℤ} (h : IsPythagoreanTriple a b c) :
     3 ∣ a ∨ 3 ∣ b := by
   replace := congr_arg ( · % 3 ) h; norm_num [ sq, Int.add_emod, Int.mul_emod ] at this; ( have := Int.emod_nonneg a three_pos.ne'; ( have := Int.emod_nonneg b three_pos.ne'; ( have := Int.emod_nonneg c three_pos.ne'; ( have := Int.emod_lt_of_pos a three_pos; ( have := Int.emod_lt_of_pos b three_pos; ( have := Int.emod_lt_of_pos c three_pos; interval_cases _ : a % 3 <;> interval_cases _ : b % 3 <;> interval_cases _ : c % 3 <;> simp_all +decide only ; ) ) ) ) ) );
   all_goals simp_all +decide only [Int.dvd_iff_emod_eq_zero] ;
+
 
 
 
@@ -195,6 +220,7 @@ theorem pyth_4_div_ab {a b c : ℤ} (h : IsPythagoreanTriple a b c) :
 
 
 
+
 theorem pyth_12_div_abc {a b c : ℤ} (h : IsPythagoreanTriple a b c) :
     12 ∣ a * b * c := by
   -- We know 3|a or 3|b (pyth_div3), and 4|ab (pyth_4_div_ab). So 12 | ab, hence 12 | abc.
@@ -209,5 +235,6 @@ theorem pyth_12_div_abc {a b c : ℤ} (h : IsPythagoreanTriple a b c) :
 -- ═══════════════════════════════════════════════════════════════════════════════
 --  §12: DESCENT STRUCTURE
 -- ═══════════════════════════════════════════════════════════════════════════════
+
 
 

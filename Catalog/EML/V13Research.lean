@@ -14,13 +14,16 @@ def eml13 (x y : ℝ) : ℝ := Real.exp x - Real.log y
 
 
 
+
 /-- The diagonal map: d(z) = exp(z) − ln(z). -/
 def diag13 (z : ℝ) : ℝ := Real.exp z - Real.log z
 
 
 
+
 /-- The off-diagonal g-map: g(z) = e − ln(z). -/
 def gmap13 (z : ℝ) : ℝ := Real.exp 1 - Real.log z
+
 
 
 
@@ -31,6 +34,7 @@ def eTow13 : ℕ → ℝ
 
 
 
+
 /-- Iterated diagonal map: d^n(z). -/
 def diagIter13 : ℕ → ℝ → ℝ
   | 0, z => z
@@ -38,8 +42,10 @@ def diagIter13 : ℕ → ℝ → ℝ
 
 
 
+
 /-- Tropical EML: trop(x,y) = max(x, −y). -/
 def trop13 (x y : ℝ) : ℝ := max x (-y)
+
 
 
 
@@ -51,11 +57,13 @@ theorem eml13_not_comm : ∃ x y : ℝ, eml13 x y ≠ eml13 y x := by
 
 
 
+
 /-- EML is NOT associative: eml(eml(1,1), 1) = e^e but eml(1, eml(1,1)) = e − 1. -/
 theorem eml13_not_assoc :
     ∃ x y z : ℝ, eml13 (eml13 x y) z ≠ eml13 x (eml13 y z) := by
   use 1, 1, 1; norm_num [eml13]
   linarith [Real.add_one_le_exp 1, Real.add_one_le_exp (Real.exp 1)]
+
 
 
 
@@ -68,12 +76,14 @@ theorem eml13_no_left_identity : ¬∃ e₀ : ℝ, ∀ x : ℝ, eml13 e₀ x = x
 
 
 
+
 /-- EML has no right identity element. -/
 theorem eml13_no_right_identity : ¬∃ e₀ : ℝ, ∀ x : ℝ, eml13 x e₀ = x := by
   unfold eml13
   intro ⟨e₀, h⟩
   have := h 0; have := h 1; have := h (-1); norm_num at *
   linarith [Real.add_one_le_exp 1, Real.exp_pos (-1)]
+
 
 
 
@@ -92,10 +102,12 @@ theorem eml13_no_idempotent : ¬∃ a : ℝ, eml13 a a = a := by
 
 
 
+
 /-- EML generates multiplication: eml(ln(a) + ln(b), 1) = a * b. -/
 theorem eml13_generates_mult (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
     eml13 (Real.log a + Real.log b) 1 = a * b := by
   unfold eml13; rw [Real.exp_add, Real.exp_log ha, Real.exp_log hb]; norm_num
+
 
 
 
@@ -108,6 +120,7 @@ theorem eml13_generates_div (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
 
 
 
+
 /-- EML generates all natural numbers: eml(ln(n), 1) = n for n ≥ 1. -/
 theorem eml13_generates_nat (n : ℕ) (hn : 1 ≤ n) :
     eml13 (Real.log n) 1 = n := by
@@ -116,10 +129,12 @@ theorem eml13_generates_nat (n : ℕ) (hn : 1 ≤ n) :
 
 
 
+
 /-- EML generates all integer powers of e: eml(n, 1) = exp(n). -/
 theorem eml13_generates_exp_int (n : ℤ) :
     eml13 n 1 = Real.exp n := by
   unfold eml13; norm_num
+
 
 
 
@@ -131,6 +146,7 @@ theorem eml13_deriv_fst (x y : ℝ) (_hy : y ≠ 0) :
 
 
 
+
 /-- Partial derivative of eml w.r.t. y equals -1/y for y > 0. -/
 theorem eml13_deriv_snd (x y : ℝ) (hy : 0 < y) :
     HasDerivAt (fun t => eml13 x t) (-1 / y) y := by
@@ -139,10 +155,12 @@ theorem eml13_deriv_snd (x y : ℝ) (hy : 0 < y) :
 
 
 
+
 /-- The gradient of eml never vanishes for y > 0. -/
 theorem eml13_gradient_nonzero (x : ℝ) (y : ℝ) (_hy : 0 < y) :
     Real.exp x ≠ 0 :=
   ne_of_gt (Real.exp_pos x)
+
 
 
 
@@ -173,9 +191,11 @@ theorem diag13_ge_succ (z : ℝ) : diag13 z ≥ z + 1 := by
 
 
 
+
 /-- d(z) > z for all z ∈ ℝ (orbit always increases). -/
 theorem diag13_gt (z : ℝ) : diag13 z > z := by
   linarith [diag13_ge_succ z]
+
 
 
 
@@ -186,6 +206,7 @@ theorem eml13_lower_bound (x y : ℝ) :
 
 
 
+
 /-- EML upper bound for y ≥ 1: eml(x, y) ≤ exp(x). -/
 theorem eml13_upper_bound (x y : ℝ) (hy : 1 ≤ y) :
     eml13 x y ≤ Real.exp x :=
@@ -193,10 +214,12 @@ theorem eml13_upper_bound (x y : ℝ) (hy : 1 ≤ y) :
 
 
 
+
 /-- Diagonal orbit is strictly increasing. -/
 theorem diagIter13_increasing (z : ℝ) (n : ℕ) :
     diagIter13 n z < diagIter13 (n + 1) z := by
   simp only [diagIter13]; exact diag13_gt _
+
 
 
 
@@ -212,10 +235,12 @@ theorem diagIter13_diverge (z : ℝ) (n : ℕ) :
 
 
 
+
 /-- The g-map satisfies |g(x) - g(y)| = |ln(x) - ln(y)| for all x, y > 0. -/
 theorem gmap13_lipschitz_log (x y : ℝ) (_hx : 0 < x) (_hy : 0 < y) :
     |gmap13 x - gmap13 y| = |Real.log x - Real.log y| := by
   unfold gmap13; simp only [sub_sub_sub_cancel_left]; rw [abs_sub_comm]
+
 
 
 
@@ -247,10 +272,12 @@ theorem gmap13_contraction_on_pos (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
 
 
 
+
 /-- Double exponential: eml(eml(x,1), 1) = exp(exp(x)). -/
 theorem eml13_double_exp (x : ℝ) :
     eml13 (eml13 x 1) 1 = Real.exp (Real.exp x) := by
   unfold eml13; norm_num
+
 
 
 
@@ -261,10 +288,12 @@ theorem eml13_triple_exp (x : ℝ) :
 
 
 
+
 /-- EML involution ("double negation"): eml(0, exp(eml(0, exp(x)))) = x. -/
 theorem eml13_involution (x : ℝ) :
     eml13 0 (Real.exp (eml13 0 (Real.exp x))) = x := by
   unfold eml13; norm_num
+
 
 
 
@@ -275,10 +304,12 @@ theorem eml13_rdiv_involution (a b : ℝ) :
 
 
 
+
 /-- The Legendre transform identity: eml(x, exp(y)) = exp(x) - y. -/
 theorem eml13_legendre (x y : ℝ) :
     eml13 x (Real.exp y) = Real.exp x - y := by
   norm_num [eml13, Real.log_exp]
+
 
 
 
@@ -288,9 +319,11 @@ theorem eml13_recovers_exp (x : ℝ) : eml13 x 1 = Real.exp x :=
 
 
 
+
 /-- eml(0, y) = 1 - ln(y). -/
 theorem eml13_zero_left (y : ℝ) : eml13 0 y = 1 - Real.log y := by
   show Real.exp 0 - Real.log y = 1 - Real.log y; norm_num
+
 
 
 
@@ -301,11 +334,13 @@ theorem eml13_trace (x y : ℝ) :
 
 
 
+
 /-- Tropical EML is NOT associative. -/
 theorem trop13_not_assoc :
     ∃ x y z : ℝ, trop13 (trop13 x y) z ≠ trop13 x (trop13 y z) := by
   refine ⟨0, 1, -1, ?_⟩
   unfold trop13; norm_num
+
 
 
 
@@ -319,6 +354,7 @@ theorem trop13_bound (x y : ℝ) :
 
 
 
+
 /-- Tropical EML averaging bound: trop(x,y) ≥ (x - y) / 2. -/
 theorem trop13_avg_bound (x y : ℝ) :
     trop13 x y ≥ (x - y) / 2 := by
@@ -329,10 +365,12 @@ theorem trop13_avg_bound (x y : ℝ) :
 
 
 
+
 /-- The EML curvature K = -exp(x)/(4y²) is strictly negative for y > 0. -/
 theorem eml13_curvature_neg (x y : ℝ) (hy : 0 < y) :
     -(Real.exp x) / (4 * y ^ 2) < 0 :=
   div_neg_of_neg_of_pos (neg_neg_of_pos (Real.exp_pos x)) (by positivity)
+
 
 
 
@@ -346,9 +384,11 @@ theorem eml13_curvature_unbounded :
 
 
 
+
 /-- The y-geodesic y(t) = C·exp(kt) stays positive for C > 0. -/
 theorem eml13_ygeodesic_pos (C k t : ℝ) (hC : 0 < C) :
     0 < C * Real.exp (k * t) := by positivity
+
 
 
 
@@ -361,11 +401,13 @@ theorem eml13_xgeodesic_ode (a b t : ℝ) (h : 0 < a * t + b) :
 
 
 
+
 /-- The e-tower is strictly increasing. -/
 theorem eTow13_strictMono : StrictMono eTow13 := by
   apply strictMono_nat_of_lt_succ
   intro n; simp only [eTow13]
   linarith [Real.add_one_le_exp (eTow13 n)]
+
 
 
 
@@ -377,14 +419,17 @@ theorem eTow13_pos (n : ℕ) : 0 < eTow13 n := by
 
 
 
+
 /-- E-tower connects to iterated EML: e↑↑(n+1) = eml(e↑↑n, 1). -/
 theorem eTow13_eml (n : ℕ) : eTow13 (n + 1) = eml13 (eTow13 n) 1 := by
   simp [eTow13, eml13, Real.log_one]
 
 
 
+
 /-- EML generates 0: eml(0, e) = 0. -/
 theorem eml13_generates_zero : eml13 0 (Real.exp 1) = 0 := by simp [eml13]
+
 
 
 
@@ -394,14 +439,17 @@ theorem eml13_generates_neg_one : eml13 0 (Real.exp 2) = -1 := by
 
 
 
+
 /-- EML generates e: eml(1, 1) = e. -/
 theorem eml13_generates_e : eml13 1 1 = Real.exp 1 := by simp [eml13, Real.log_one]
+
 
 
 
 /-- EML generates e^e: eml(e, 1) = e^e. -/
 theorem eml13_generates_ee : eml13 (Real.exp 1) 1 = Real.exp (Real.exp 1) := by
   simp [eml13, Real.log_one]
+
 
 
 

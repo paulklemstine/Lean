@@ -1,5 +1,3 @@
-import Mathlib
-
 /-! # CatalogBuild.Geometry.Stereographic.ConformalBackprop
 
 Auto-generated from theorem catalog database.
@@ -7,6 +5,7 @@ Domain: Geometry/Stereographic
 Declarations: 10
 -/
 
+import Mathlib
 
 noncomputable section
 
@@ -16,9 +15,11 @@ def conformalGradScale (lambda : ℝ) (gradNorm : ℝ) : ℝ :=
 
 
 
+
 /-- The stereographic conformal factor. -/
 def stereoLambda (n : ℕ) (x : Fin n → ℝ) : ℝ :=
   2 / (1 + ∑ i, (x i) ^ 2)
+
 
 
 
@@ -30,6 +31,7 @@ theorem stereoLambda_bounded (n : ℕ) (x : Fin n → ℝ) :
   · unfold stereoLambda
     exact div_le_self (by positivity)
       (le_add_of_nonneg_right (Finset.sum_nonneg fun _ _ => sq_nonneg _))
+
 
 
 
@@ -45,6 +47,7 @@ theorem stereo_gradient_bounded (n : ℕ) (x : Fin n → ℝ) (gradNorm : ℝ)
 
 
 
+
 /-- Gradient magnitude through stereographic layer is positive when
 the upstream gradient is positive. This prevents gradient vanishing. -/
 theorem stereo_gradient_nonvanishing (n : ℕ) (x : Fin n → ℝ) (gradNorm : ℝ)
@@ -52,6 +55,7 @@ theorem stereo_gradient_nonvanishing (n : ℕ) (x : Fin n → ℝ) (gradNorm : �
     0 < conformalGradScale (stereoLambda n x) gradNorm := by
   unfold conformalGradScale
   exact mul_pos (stereoLambda_bounded n x).1 hg
+
 
 
 
@@ -63,12 +67,14 @@ def composedGradScale (L : ℕ) (lambdas : Fin L → ℝ) : ℝ :=
 
 
 
+
 /-- The composed gradient scale is positive when all factors are positive. -/
 theorem composedGradScale_pos (L : ℕ) (lambdas : Fin L → ℝ)
     (hpos : ∀ i, 0 < lambdas i) :
     0 < composedGradScale L lambdas := by
   unfold composedGradScale
   exact Finset.prod_pos fun i _ => hpos i
+
 
 
 
@@ -83,12 +89,14 @@ theorem composedGradScale_bounded (L : ℕ) (lambdas : Fin L → ℝ)
 
 
 
+
 /-- The attention weight gradient magnitude is bounded by the
 conformal factor times the key-query distance. -/
 theorem attention_grad_bound (lambda dist : ℝ)
     (hl : 0 < lambda) (hla : lambda ≤ 2) (hd : 0 ≤ dist) :
     lambda * dist ≤ 2 * dist := by
   exact mul_le_mul_of_nonneg_right hla hd
+
 
 
 
@@ -101,6 +109,7 @@ theorem stereo_vs_standard_gradient (R sqrtD : ℝ) (hR : 1 ≤ R) (hd : 0 < sqr
     ∃ (bound : ℝ), bound = 2 ∧ ∀ (lambda : ℝ), 0 < lambda → lambda ≤ 2 →
       lambda ≤ bound := by
   exact ⟨2, rfl, fun _ _ h => h⟩
+
 
 
 

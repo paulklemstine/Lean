@@ -35,10 +35,12 @@ theorem pisano_period_exists (m : ℕ) (hm : 0 < m) :
 
 
 
+
 /-- For prime p, the Pisano period divides p² - 1. -/
 theorem pisano_period_divides_prime_bound (p : ℕ) (hp : Nat.Prime p) (hp5 : p ≠ 5) :
     ∃ T : ℕ, 0 < T ∧ T ∣ (p^2 - 1) ∧ ∀ n, Nat.fib (n + T) % p = Nat.fib n % p := by
   obtain ⟨T, hT_pos, hT_dvd, hT_period⟩ := pisano_factor_constraint p hp hp5
   exact ⟨T, hT_pos, by rwa [sq], hT_period⟩
+
 
 

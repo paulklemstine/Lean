@@ -22,9 +22,15 @@ theorem diagonal_nonsurjective {α : Type*} {β : Type*}
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.SciFi.Computability_2
+Auto-generated from theorem catalog database.
+Domain: Speculative/SciFi
+Declarations: 4] -/
 theorem cantor_nat_bool : ¬ ∃ f : ℕ → (ℕ → Bool), Function.Surjective f := by
   rintro ⟨ f, hf ⟩;
   exact absurd ( hf fun n => if f n n = Bool.true then Bool.false else Bool.true ) ( by rintro ⟨ n, hn ⟩ ; by_cases h : f n n = Bool.true <;> simpa [ h ] using congr_fun hn n )
+
 
 
 
@@ -34,8 +40,10 @@ theorem no_complete_enumeration :
 
 
 
+
 theorem self_reference_constraint {α : Type*} (f : α → α)
     (h : f ∘ f = id) : ∀ x, f (f x) = x := by
   exact congr_fun h
+
 
 

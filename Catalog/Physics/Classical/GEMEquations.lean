@@ -20,6 +20,11 @@ theorem gravity_em_ratio_bound :
 
 
 
+
+/-- [Section: # CatalogBuild.Physics.Classical.GEMEquations
+Auto-generated from theorem catalog database.
+Domain: Physics/Classical
+Declarations: 11] -/
 theorem casimir_energy_monotone :
     ∀ (a₁ a₂ : ℝ) (C : ℝ),
     0 < a₁ → 0 < a₂ → a₁ < a₂ → C > 0 →
@@ -29,9 +34,11 @@ theorem casimir_energy_monotone :
 
 
 
+
 theorem casimir_energy_negative :
     ∀ (a : ℝ) (C : ℝ), 0 < a → C > 0 → -C / a ^ 4 < 0 := by
   exact fun a C ha hC => div_neg_of_neg_of_pos ( neg_neg_of_pos hC ) ( pow_pos ha 4 )
+
 
 
 
@@ -41,6 +48,7 @@ theorem warp_shaping_bounded :
     (∀ x, f x ≤ 1) →
     (∀ x, 0 ≤ f x ∧ f x ≤ 1) := by
   exact fun f hf₁ hf₂ x => ⟨ hf₁ x, hf₂ x ⟩
+
 
 
 
@@ -54,6 +62,7 @@ theorem warp_energy_scaling :
 
 
 
+
 theorem gravitomagnetic_field_scaling :
     ∀ (G M ω c R : ℝ),
     G > 0 → M > 0 → ω > 0 → c > 0 → R > 0 →
@@ -62,11 +71,13 @@ theorem gravitomagnetic_field_scaling :
 
 
 
+
 theorem gemr_amplification :
     ∀ (B_standard Q : ℝ),
     B_standard > 0 → Q > 1 →
     Q * B_standard > B_standard := by
   exact fun B Q hB hQ => lt_mul_of_one_lt_left hB hQ
+
 
 
 
@@ -79,11 +90,13 @@ theorem levitation_equilibrium :
 
 
 
+
 theorem gravitomagnetic_levitation_bound :
     ∀ (m g v : ℝ),
     m > 0 → g > 0 → v > 0 →
     m * g / (m * v) = g / v := by
   exact fun m g v hm hg hv => mul_div_mul_left _ _ hm.ne'
+
 
 
 
@@ -95,7 +108,9 @@ theorem vdb_optimization :
 
 
 
+
 theorem gem_coupling_positive :
     ∀ (G c : ℝ), G > 0 → c > 0 → G / c ^ 2 > 0 := by
   exact fun G c hG hc => div_pos hG ( sq_pos_of_pos hc )
+
 

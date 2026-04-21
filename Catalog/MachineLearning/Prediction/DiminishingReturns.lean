@@ -17,6 +17,7 @@ noncomputable def ensembleVariance (σ_sq : ℝ) (ρ : ℝ) (n : ℕ) : ℝ :=
 
 
 
+
 /-- [Section: # CatalogBuild.MachineLearning.Prediction.DiminishingReturns
 Auto-generated from theorem catalog database.
 Domain: MachineLearning/Prediction
@@ -35,6 +36,7 @@ theorem ensemble_variance_limit (σ_sq : ℝ) (ρ : ℝ) (hσ : 0 < σ_sq) (hρ 
 
 
 
+
 /-- The marginal improvement from adding the (n+1)-th oracle to an
 equally-weighted i.i.d. ensemble with zero correlation -/
 noncomputable def marginalImprovement (σ_sq : ℝ) (n : ℕ) : ℝ :=
@@ -42,9 +44,15 @@ noncomputable def marginalImprovement (σ_sq : ℝ) (n : ℕ) : ℝ :=
 
 
 
+
+/-- [Section: # CatalogBuild.MachineLearning.Prediction.DiminishingReturns
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/Prediction
+Declarations: 10] -/
 theorem marginal_improvement_formula (σ_sq : ℝ) (n : ℕ) (hn : 0 < n) :
     marginalImprovement σ_sq n = σ_sq / (n * (n + 1)) := by
   unfold marginalImprovement; rw [ div_sub_div ] <;> ring <;> positivity;
+
 
 
 
@@ -57,6 +65,7 @@ theorem marginal_improvement_decreasing (σ_sq : ℝ) (hσ : 0 < σ_sq) (n : ℕ
 
 
 
+
 theorem marginal_improvement_bound (σ_sq : ℝ) (hσ : 0 < σ_sq) (n : ℕ) (hn : 0 < n) :
     marginalImprovement σ_sq n ≤ σ_sq / n ^ 2 := by
   convert div_le_div_of_nonneg_left hσ.le _ _ using 1 <;> norm_num [ mul_comm, sq, hn ];
@@ -64,9 +73,11 @@ theorem marginal_improvement_bound (σ_sq : ℝ) (hσ : 0 < σ_sq) (n : ℕ) (hn
 
 
 
+
 /-- The cost of adding an oracle -/
 noncomputable def totalCost (σ_sq : ℝ) (costPerOracle : ℝ) (n : ℕ) : ℝ :=
   σ_sq / n + costPerOracle * n
+
 
 
 
@@ -78,6 +89,7 @@ theorem optimal_ensemble_size_bound (σ_sq c : ℝ) (hσ : 0 < σ_sq) (hc : 0 < 
 
 
 
+
 theorem correlated_ensemble_floor (σ_sq ρ : ℝ) (n : ℕ) (hn : 0 < n)
     (hρ : 0 ≤ ρ) (hρ1 : ρ ≤ 1) (hσ : 0 < σ_sq) :
     ensembleVariance σ_sq ρ n ≥ ρ * σ_sq := by
@@ -86,10 +98,12 @@ theorem correlated_ensemble_floor (σ_sq ρ : ℝ) (n : ℕ) (hn : 0 < n)
 
 
 
+
 /-- The total improvement from n oracles over a single oracle is bounded -/
 theorem total_improvement_bounded (σ_sq : ℝ) (hσ : 0 < σ_sq) (n : ℕ) (hn : 0 < n) :
     σ_sq - σ_sq / n ≤ σ_sq := by
   linarith [div_nonneg (le_of_lt hσ) (Nat.cast_nonneg' n)]
+
 
 
 

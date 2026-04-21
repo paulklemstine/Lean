@@ -16,10 +16,12 @@ def berggrenM₂ (v : Fin 3 → ℤ) : Fin 3 → ℤ := fun i =>
 
 
 
+
 /-- M₁ preserves the light cone. -/
 theorem M₁_preserves_null (v : Fin 3 → ℤ) (h : isNull v) :
     isNull (berggrenM₁ v) := by
   simp only [isNull, minkowskiQ, berggrenM₁] at h ⊢; nlinarith
+
 
 
 
@@ -30,10 +32,12 @@ theorem M₂_preserves_null (v : Fin 3 → ℤ) (h : isNull v) :
 
 
 
+
 /-- M₃ preserves the light cone. -/
 theorem M₃_preserves_null (v : Fin 3 → ℤ) (h : isNull v) :
     isNull (berggrenM₃ v) := by
   simp only [isNull, minkowskiQ, berggrenM₃] at h ⊢; nlinarith
+
 
 
 
@@ -42,6 +46,7 @@ keeps vectors on the null surface. A photon traced backward is still a photon. -
 theorem parent_preserves_null (v : Fin 3 → ℤ) (h : isNull v) :
     isNull (berggrenParent v) := by
   simp only [isNull, minkowskiQ, berggrenParent] at h ⊢; nlinarith
+
 
 
 
@@ -57,6 +62,7 @@ theorem all_branches_preserve_minkowski (v : Fin 3 → ℤ) :
 
 
 
+
 /-- The parent map is the inverse of M₂: M₂⁻¹ ∘ M₂ = id.
 "The 4th branch reverses the 2nd branch." -/
 theorem parent_inverse_M₂ (v : Fin 3 → ℤ) :
@@ -65,10 +71,12 @@ theorem parent_inverse_M₂ (v : Fin 3 → ℤ) :
 
 
 
+
 /-- Conversely, M₂ ∘ M₂⁻¹ = id. -/
 theorem M₂_inverse_parent (v : Fin 3 → ℤ) :
     berggrenM₂ (berggrenParent v) = v := by
   ext i; fin_cases i <;> simp [berggrenParent, berggrenM₂] <;> ring
+
 
 
 
@@ -85,6 +93,7 @@ inductive TetraPath where
 
 
 
+
 /-- Evaluate a tetrabranch path to get the ℤ³ vector. -/
 def tetraEval : TetraPath → (Fin 3 → ℤ)
   | .root      => ![3, 4, 5]
@@ -92,6 +101,7 @@ def tetraEval : TetraPath → (Fin 3 → ℤ)
   | .spatial₂ p => berggrenM₂ (tetraEval p)
   | .spatial₃ p => berggrenM₃ (tetraEval p)
   | .temporal p => berggrenParent (tetraEval p)
+
 
 
 
@@ -107,11 +117,13 @@ theorem tetrabranch_on_light_cone (p : TetraPath) : isNull (tetraEval p) := by
 
 
 
+
 /-- The M₂ spatial branch increases the hypotenuse (energy grows forward in time). -/
 theorem spatial_branch_increases_hypotenuse (v : Fin 3 → ℤ)
     (ha : 0 < v 0) (hb : 0 < v 1) (hc : 0 < v 2) :
     v 2 < (berggrenM₂ v) 2 := by
   simp [berggrenM₂]; linarith
+
 
 
 
@@ -121,5 +133,6 @@ theorem photon_interval_zero (p : TetraPath) :
     (tetraEval p) 0 ^ 2 + (tetraEval p) 1 ^ 2 - (tetraEval p) 2 ^ 2 = 0 := by
   have h := tetrabranch_on_light_cone p
   simp [isNull, minkowskiQ] at h; linarith
+
 
 

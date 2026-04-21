@@ -16,8 +16,14 @@ theorem pythagorean_3_4_5 : IsPythagoreanTriple 3 4 5 := by
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.Core.PythagoreanTriples
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Core
+Declarations: 13] -/
 theorem pythagorean_8_15_17 : IsPythagoreanTriple 8 15 17 := by
   exact show 8 ^ 2 + 15 ^ 2 = 17 ^ 2 by decide;
+
 
 
 
@@ -27,9 +33,11 @@ theorem pythagorean_scale (a b c k : ℤ) (h : IsPythagoreanTriple a b c) :
 
 
 
+
 theorem pythagorean_swap (a b c : ℤ) (h : IsPythagoreanTriple a b c) :
     IsPythagoreanTriple b a c := by
       exact Eq.trans ( by ring ) h
+
 
 
 
@@ -39,9 +47,11 @@ theorem euclid_formula (m n : ℤ) :
 
 
 
+
 theorem berggren_A_preserves (a b c : ℤ) (h : IsPythagoreanTriple a b c) :
     IsPythagoreanTriple (a - 2*b + 2*c) (2*a - b + 2*c) (2*a - 2*b + 3*c) := by
       unfold IsPythagoreanTriple at *; linarith;
+
 
 
 
@@ -51,15 +61,18 @@ theorem berggren_B_preserves (a b c : ℤ) (h : IsPythagoreanTriple a b c) :
 
 
 
+
 theorem berggren_C_preserves (a b c : ℤ) (h : IsPythagoreanTriple a b c) :
     IsPythagoreanTriple (-a + 2*b + 2*c) (-2*a + b + 2*c) (-2*a + 2*b + 3*c) := by
       exact Eq.symm ( by linarith [ h.symm ] )
 
 
 
+
 theorem pythagorean_even_leg (a b c : ℤ) (h : IsPythagoreanTriple a b c) :
     2 ∣ a ∨ 2 ∣ b := by
       replace h := congr_arg ( · % 4 ) h ; rcases Int.even_or_odd' a with ⟨ d, rfl | rfl ⟩ <;> ( rcases Int.even_or_odd' b with ⟨ e, rfl | rfl ⟩ <;> ( rcases Int.even_or_odd' c with ⟨ f, rfl | rfl ⟩ <;> ring_nf at * <;> norm_num at *; ) )
+
 
 
 
@@ -77,8 +90,10 @@ theorem fermat_n4_no_solution (a b c : ℤ) (ha : a ≠ 0) (hb : b ≠ 0) :
 
 
 
+
 theorem sum_two_squares_5 : ∃ a b : ℤ, a ^ 2 + b ^ 2 = 5 := by
   exists 1, 2
+
 
 
 
@@ -87,7 +102,9 @@ theorem sum_two_squares_13 : ∃ a b : ℤ, a ^ 2 + b ^ 2 = 13 := by
 
 
 
+
 theorem no_sum_two_squares_mod4 (n : ℕ) (hn : n % 4 = 3) :
     ¬ ∃ a b : ℕ, a ^ 2 + b ^ 2 = n := by
       exact fun ⟨ a, b, h ⟩ => by have := congr_arg ( · % 4 ) h; norm_num [ Nat.add_mod, Nat.pow_mod, hn ] at this; have := Nat.mod_lt a zero_lt_four; have := Nat.mod_lt b zero_lt_four; interval_cases a % 4 <;> interval_cases b % 4 <;> contradiction;
+
 

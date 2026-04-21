@@ -13,9 +13,11 @@ def IntLattice2 : Set (ℝ × ℝ) :=
 
 
 
+
 /-- A set S ⊆ ℝ² is discrete if every point has a neighborhood containing no other points of S. -/
 def IsDiscreteSet (S : Set (ℝ × ℝ)) : Prop :=
   ∀ p ∈ S, ∃ ε > 0, ∀ q ∈ S, q ≠ p → dist p q ≥ ε
+
 
 
 
@@ -34,9 +36,11 @@ theorem intLattice2_discrete : IsDiscreteSet IntLattice2 := by
 
 
 
+
 /-- A Pythagorean triple is primitive if gcd(a, b, c) = 1 and all are positive. -/
 def IsPrimitivePythTriple (a b c : ℤ) : Prop :=
   IsPythTriple a b c ∧ 0 < a ∧ 0 < b ∧ 0 < c ∧ Int.gcd a (Int.gcd b c) = 1
+
 
 
 
@@ -52,12 +56,18 @@ inductive InBerggrenTree : ℤ → ℤ → ℤ → Prop where
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.Core.SpacetimeLattice
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Core
+Declarations: 19] -/
 theorem berggrenTree_all_pythagorean {a b c : ℤ} (h : InBerggrenTree a b c) :
     IsPythTriple a b c := by
       induction h <;> simp_all +decide [ IsPythTriple ];
       · linarith;
       · grobner;
       · lia
+
 
 
 
@@ -69,11 +79,13 @@ theorem berggren_three_children (a b c : ℤ) (h : InBerggrenTree a b c) :
 
 
 
+
 /-- The depth-n triples in the Berggren tree. -/
 def berggrenDepth : ℕ → Set (ℤ × ℤ × ℤ)
   | 0 => {(3, 4, 5)}
   | n + 1 => { t | ∃ a b c, (a, b, c) ∈ berggrenDepth n ∧
       (t = berggrenA a b c ∨ t = berggrenB a b c ∨ t = berggrenC a b c) }
+
 
 
 
@@ -83,9 +95,11 @@ def PhotonReachable (p : ℤ × ℤ) : Prop :=
 
 
 
+
 theorem photon_reach_from_triple {a b c : ℤ} (h : IsPythTriple a b c) (hc : 0 < c) :
     PhotonReachable (a, b) := by
       simpa using ⟨ a, b, |c|, by simpa [ abs_of_pos hc ] using h, rfl, abs_pos.mpr hc.ne' ⟩
+
 
 
 
@@ -95,9 +109,11 @@ theorem pythagorean_is_null_cone (a b c : ℤ) :
 
 
 
+
 /-- The rational light cone: directions (a/c, b/c) from Pythagorean triples. -/
 def RationalLightDirection (x y : ℚ) : Prop :=
   x ^ 2 + y ^ 2 = 1
+
 
 
 
@@ -111,14 +127,17 @@ theorem pyth_gives_rational_circle_point (a b c : ℤ) (h : IsPythTriple a b c) 
 
 
 
+
 /-- The set of all Pythagorean triples. -/
 def PythSet : Set (ℤ × ℤ × ℤ) :=
   { t | IsPythTriple t.1 t.2.1 t.2.2 }
 
 
 
+
 theorem pythSet_countable : Set.Countable PythSet := by
   refine Set.countable_range ( fun t : ℤ × ℤ × ℤ => t ) |> Set.Countable.mono fun t ht => ?_ ; aesop
+
 
 
 
@@ -128,9 +147,11 @@ theorem lattice_min_distance (p q : ℤ × ℤ) (hne : p ≠ q) :
 
 
 
+
 theorem pyth_integer_distance {a b c : ℤ} (h : IsPythTriple a b c) :
     (a : ℤ) ^ 2 + b ^ 2 = c ^ 2 := by
       exact h
+
 
 
 
@@ -138,6 +159,7 @@ theorem no_pyth_triple_leg_one :
     ¬ ∃ b c : ℤ, IsPrimitivePythTriple 1 b c := by
       norm_num [ IsPrimitivePythTriple ];
       intros b c h₁ h₂; unfold IsPythTriple at h₁; nlinarith [ show c ≥ -b by nlinarith, show c ≤ b by nlinarith ] ;
+
 
 
 
@@ -159,4 +181,5 @@ theorem min_primitive_triple (a b c : ℤ)
 #check @pythSet_countable
 #check @photon_composition
 #check @lattice_min_distance
+
 

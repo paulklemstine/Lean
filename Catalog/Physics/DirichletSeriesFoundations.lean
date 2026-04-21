@@ -19,9 +19,11 @@ noncomputable def mobiusFn : ℕ → ℤ := fun n =>
 
 
 
+
 /-- μ(1) = 1. -/
 theorem mobius_one : mobiusFn 1 = 1 := by
   simp [mobiusFn]
+
 
 
 
@@ -31,14 +33,17 @@ theorem mobius_prime' (p : ℕ) (hp : Nat.Prime p) : mobiusFn p = -1 := by
 
 
 
+
 /-- Dirichlet convolution of arithmetic functions. -/
 noncomputable def dirichletConv (f g : ℕ → ℤ) (n : ℕ) : ℤ :=
   ∑ d ∈ n.divisors, f d * g (n / d)
 
 
 
+
 /-- The identity function for Dirichlet convolution: ε(1) = 1, ε(n) = 0 for n > 1. -/
 def dirichletId : ℕ → ℤ := fun n => if n = 1 then 1 else 0
+
 
 
 
@@ -59,15 +64,18 @@ theorem mobius_sum_eq_indicator (n : ℕ) (hn : 0 < n) :
 
 
 
+
 /-- The prime-counting function π(x). -/
 def primeCountFn (x : ℕ) : ℕ :=
   ((Finset.Icc 2 x).filter Nat.Prime).card
 
 
 
+
 /-- π(10) = 4: the primes up to 10 are 2, 3, 5, 7. -/
 theorem prime_counting_10' : primeCountFn 10 = 4 := by
   native_decide
+
 
 
 
@@ -78,9 +86,11 @@ def liouvilleFn (n : ℕ) : ℤ :=
 
 
 
+
 /-- λ(1) = 1. -/
 theorem liouville_one : liouvilleFn 1 = 1 := by
   simp [liouvilleFn]
+
 
 
 
@@ -90,6 +100,11 @@ theorem liouville_prime' (p : ℕ) (hp : Nat.Prime p) : liouvilleFn p = -1 := by
 
 
 
+
+/-- [Section: # CatalogBuild.Physics.DirichletSeriesFoundations
+Auto-generated from theorem catalog database.
+Domain: Physics
+Declarations: 12] -/
 theorem liouville_completely_multiplicative :
     IsCompletelyMultiplicative liouvilleFn := by
   constructor;
@@ -99,6 +114,7 @@ theorem liouville_completely_multiplicative :
     have h_prime_factors : (m * n).primeFactorsList.Perm (m.primeFactorsList ++ n.primeFactorsList) := by
       exact perm_primeFactorsList_mul hm hn;
     rw [ ← pow_add, h_prime_factors.length_eq, List.length_append ]
+
 
 
 end

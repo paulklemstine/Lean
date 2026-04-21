@@ -14,11 +14,13 @@ def crystal_loss (p : ℝ) : ℝ := p * (1 - p)
 
 
 
+
 /-- Crystallization loss is non-negative for p ∈ [0, 1]. -/
 theorem crystal_loss_nonneg (p : ℝ) (hp0 : 0 ≤ p) (hp1 : p ≤ 1) :
     0 ≤ crystal_loss p := by
   unfold crystal_loss
   exact mul_nonneg hp0 (by linarith)
+
 
 
 
@@ -35,6 +37,7 @@ theorem crystal_loss_eq_zero_iff (p : ℝ) (hp0 : 0 ≤ p) (hp1 : p ≤ 1) :
 
 
 
+
 /-- Crystallization loss is maximized at p = 1/2 with value 1/4. -/
 theorem crystal_loss_max (p : ℝ) (hp0 : 0 ≤ p) (hp1 : p ≤ 1) :
     crystal_loss p ≤ 1 / 4 := by
@@ -43,9 +46,11 @@ theorem crystal_loss_max (p : ℝ) (hp0 : 0 ≤ p) (hp1 : p ≤ 1) :
 
 
 
+
 /-- The maximum crystallization loss is achieved at p = 1/2. -/
 theorem crystal_loss_at_half : crystal_loss (1 / 2) = 1 / 4 := by
   unfold crystal_loss; ring
+
 
 
 
@@ -56,10 +61,12 @@ theorem perm_comp_is_perm {n : Type*} [DecidableEq n] [Fintype n]
 
 
 
+
 /-- The identity is a permutation. -/
 theorem perm_id_exists {n : Type*} [DecidableEq n] [Fintype n] :
     ∃ e : Equiv.Perm n, ∀ x, e x = x :=
   ⟨1, fun x => rfl⟩
+
 
 
 
@@ -70,6 +77,7 @@ theorem perm_inv_exists {n : Type*} [DecidableEq n] [Fintype n]
 
 
 
+
 /-- Permutation composition is associative. -/
 theorem perm_comp_assoc {n : Type*} [DecidableEq n] [Fintype n]
     (σ τ ρ : Equiv.Perm n) : σ * τ * ρ = σ * (τ * ρ) :=
@@ -77,9 +85,11 @@ theorem perm_comp_assoc {n : Type*} [DecidableEq n] [Fintype n]
 
 
 
+
 /-- n! is positive for all n. -/
 theorem factorial_pos_nat (n : ℕ) : 0 < n.factorial :=
   Nat.factorial_pos n
+
 
 
 
@@ -93,10 +103,12 @@ theorem factorial_ge_pow (n : ℕ) (hn : 1 ≤ n) : 2 ^ (n - 1) ≤ n.factorial 
 
 
 
+
 /-- The number of possible crystallized states for H heads is (n!)^H. -/
 theorem crystallized_state_count (n H : ℕ) (hn : 0 < n) :
     0 < n.factorial ^ H := by
   positivity
+
 
 
 
@@ -109,8 +121,10 @@ theorem composed_crystallized_count (n L : ℕ) (hn : 0 < n) (hL : 0 < L) :
 
 
 
+
 /-- The number of qubits needed to represent n states is at least 1 for n > 0. -/
 theorem qubit_lower_bound (n : ℕ) (hn : 0 < n) : 1 ≤ n := hn
+
 
 
 
@@ -120,8 +134,14 @@ theorem quantum_depth_advantage (n : ℕ) (hn : 2 ≤ n) : n < n * n := by
 
 
 
+
+/-- [Section: # CatalogBuild.MachineLearning.QuantumTransformer.CrystallizationTheory
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/QuantumTransformer
+Declarations: 22] -/
 theorem exp_ge_linear (k : ℕ) (hk : 1 ≤ k) : k + 1 ≤ 2 ^ k := by
   exact Nat.recOn k ( by norm_num ) fun n ihn => by rw [ Nat.pow_succ' ] ; linarith;
+
 
 
 
@@ -133,9 +153,11 @@ theorem at_most_one_large {n : ℕ} (w : Fin n → ℝ)
 
 
 
+
 /-- ReLU of a non-positive input is zero. -/
 theorem relu_of_nonpos (x : ℝ) (hx : x ≤ 0) : max x 0 = 0 :=
   max_eq_right hx
+
 
 
 
@@ -143,6 +165,7 @@ theorem relu_of_nonpos (x : ℝ) (hx : x ≤ 0) : max x 0 = 0 :=
 each with width d, is at most (2d)^L. -/
 theorem relu_region_bound (d L : ℕ) (hd : 0 < d) : 1 ≤ (2 * d) ^ L :=
   Nat.one_le_pow L (2 * d) (by omega)
+
 
 
 
@@ -155,10 +178,12 @@ theorem layer_collapse {n : Type*} [DecidableEq n] [Fintype n]
 
 
 
+
 /-- The symmetric group S_n has exactly n! elements. -/
 theorem symmetric_group_card (n : ℕ) :
     Fintype.card (Equiv.Perm (Fin n)) = n.factorial := by
   simp [Fintype.card_perm, Fintype.card_fin]
+
 
 
 
@@ -167,6 +192,7 @@ the total number of configurations is (n!)^H. -/
 theorem total_configurations (n H : ℕ) :
     Fintype.card (Fin H → Equiv.Perm (Fin n)) = n.factorial ^ H := by
   simp [Fintype.card_pi, Fintype.card_perm, Fintype.card_fin]
+
 
 
 

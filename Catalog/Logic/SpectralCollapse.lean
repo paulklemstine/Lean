@@ -14,9 +14,11 @@ def AdjacencyMatrix (m n : ℕ) := Fin m → Fin n → ℝ
 
 
 
+
 /-- The degree of a clause (number of variables it contains) -/
 def clauseDegree {m n : ℕ} (A : AdjacencyMatrix m n) (i : Fin m) : ℝ :=
   Finset.sum Finset.univ (fun j => A i j)
+
 
 
 
@@ -26,9 +28,11 @@ def varDegree {m n : ℕ} (A : AdjacencyMatrix m n) (j : Fin n) : ℝ :=
 
 
 
+
 /-- Character function χ_S(x) = (-1)^(sum of x_i for i in S) -/
 noncomputable def chiChar {n : ℕ} (S : Finset (Fin n)) (x : Fin n → Bool) : ℝ :=
   (-1 : ℝ) ^ ((Finset.filter (fun i => x i = true) S).card)
+
 
 
 
@@ -43,6 +47,11 @@ theorem chiChar_sq {n : ℕ} (S : Finset (Fin n)) (x : Fin n → Bool) :
 
 
 
+
+/-- [Section: # CatalogBuild.Logic.SpectralCollapse
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 76] -/
 theorem chiChar_mul_disjoint {n : ℕ} (S T : Finset (Fin n))
     (hST : Disjoint S T) (x : Fin n → Bool) :
     chiChar S x * chiChar T x = chiChar (S ∪ T) x := by
@@ -52,9 +61,11 @@ theorem chiChar_mul_disjoint {n : ℕ} (S T : Finset (Fin n))
 
 
 
+
 /-- Represent a Boolean function as f: {-1,1}^n → ℝ via x ↦ (-1)^(x_i) encoding -/
 noncomputable def boolToReal {n : ℕ} (f : Fin n → Bool → ℝ) : (Fin n → Bool) → ℝ :=
   fun x => Finset.sum Finset.univ (fun i => f i (x i))
+
 
 
 
@@ -65,15 +76,18 @@ noncomputable def spectralEnergy (n k : ℕ) (weights : Finset (Fin n) → ℝ) 
 
 
 
+
 /-- Total spectral energy (Parseval's identity) -/
 noncomputable def totalSpectralEnergy (n : ℕ) (weights : Finset (Fin n) → ℝ) : ℝ :=
   Finset.sum Finset.univ (fun S : Finset (Fin n) => weights S ^ 2)
 
 
 
+
 theorem spectralEnergy_nonneg (n k : ℕ) (weights : Finset (Fin n) → ℝ) :
     0 ≤ spectralEnergy n k weights := by
       exact Finset.sum_nonneg fun _ _ => sq_nonneg _
+
 
 
 
@@ -88,6 +102,7 @@ theorem spectralEnergy_sum (n : ℕ) (weights : Finset (Fin n) → ℝ) :
 
 
 
+
 /-- The clause density α = m/n parameterizes random k-SAT -/
 structure SATInstance where
   numVars : ℕ
@@ -97,9 +112,11 @@ structure SATInstance where
 
 
 
+
 /-- Clause density ratio -/
 noncomputable def SATInstance.density (inst : SATInstance) : ℝ :=
   (inst.numClauses : ℝ) / (inst.numVars : ℝ)
+
 
 
 
@@ -110,11 +127,13 @@ noncomputable def spectralGap (n : ℕ) (eigenvalues : Fin n → ℝ) : ℝ :=
 
 
 
+
 theorem spectralGap_nonneg {n : ℕ} (eigenvalues : Fin n → ℝ)
     (hsorted : ∀ i j : Fin n, i ≤ j → eigenvalues j ≤ eigenvalues i) :
     0 ≤ spectralGap n eigenvalues := by
       unfold spectralGap;
       split_ifs <;> aesop
+
 
 
 
@@ -132,10 +151,12 @@ structure SpectralCollapseThreshold where
 
 
 
+
 theorem sat_threshold_lower_bound (k : ℕ) (hk : 2 ≤ k) :
     (2 : ℝ) ^ (k - 1) * Real.log 2 - 1 ≤ (2 : ℝ) ^ k * Real.log 2 := by
       rcases k with ( _ | _ | k ) <;> norm_num [ pow_succ' ] at *;
       nlinarith [ Real.log_nonneg one_le_two, pow_pos ( zero_lt_two' ℝ ) k ]
+
 
 
 
@@ -148,6 +169,7 @@ structure LovaszTheta where
 
 
 
+
 theorem lovasz_sandwich (omega theta chi : ℝ)
     (h_omega_pos : 0 < omega) (h_theta_pos : 0 < theta) (h_chi_pos : 0 < chi)
     (h1 : omega ≤ theta) (h2 : theta ≤ chi) :
@@ -156,8 +178,10 @@ theorem lovasz_sandwich (omega theta chi : ℝ)
 
 
 
+
 /-- An oracle is an idempotent function: O ∘ O = O. -/
 def IsOracle {α : Type*} (O : α → α) : Prop := ∀ x, O (O x) = O x
+
 
 
 
@@ -166,8 +190,10 @@ def FixedPoints' {α : Type*} (f : α → α) : Set α := {x | f x = x}
 
 
 
+
 /-- The image of a function. -/
 def ImageSet' {α : Type*} (f : α → α) : Set α := Set.range f
+
 
 
 
@@ -181,6 +207,7 @@ theorem oracle_image_subset_fixed {α : Type*} {O : α → α}
 
 
 
+
 /-- Fixed points are exactly the image of an oracle. -/
 theorem oracle_fixed_eq_image {α : Type*} {O : α → α}
     (hO : IsOracle O) : FixedPoints' O = ImageSet' O := by
@@ -191,6 +218,7 @@ theorem oracle_fixed_eq_image {α : Type*} {O : α → α}
   · intro ⟨y, hy⟩
     rw [← hy]
     exact hO y
+
 
 
 
@@ -211,10 +239,12 @@ theorem oracle_power_collapse {α : Type*} {O : α → α}
 
 
 
+
 /-- The composition of an oracle with itself is the oracle (direct statement). -/
 theorem oracle_self_compose {α : Type*} {O : α → α}
     (hO : IsOracle O) : O ∘ O = O := by
   ext x; exact hO x
+
 
 
 
@@ -224,9 +254,11 @@ def oracle_rank' {α : Type*} [Fintype α] [DecidableEq α] (O : α → α) : �
 
 
 
+
 /-- Oracle rank is the cardinality of fixed points. -/
 theorem oracle_rank_eq_fixed {α : Type*} [Fintype α] [DecidableEq α]
     (O : α → α) : oracle_rank' O = (Finset.univ.filter (fun x => O x = x)).card := rfl
+
 
 
 
@@ -240,6 +272,7 @@ theorem oracle_fixed_card_eq_image_card {α : Type*} [Fintype α] [DecidableEq �
 
 
 
+
 /-- A literal is a variable index with a polarity. -/
 structure Literal' where
   var : ℕ
@@ -248,8 +281,10 @@ deriving DecidableEq
 
 
 
+
 /-- A clause is a list of literals (disjunction). -/
 abbrev SATClause' := List Literal'
+
 
 
 
@@ -258,8 +293,10 @@ abbrev CNFFormula' := List SATClause'
 
 
 
+
 /-- An assignment maps variable indices to boolean values. -/
 abbrev Assignment' := ℕ → Bool
+
 
 
 
@@ -269,9 +306,11 @@ def eval_literal' (a : Assignment') (l : Literal') : Bool :=
 
 
 
+
 /-- A clause is satisfied if any literal is true. -/
 def eval_clause' (a : Assignment') (c : SATClause') : Bool :=
   c.any (eval_literal' a)
+
 
 
 
@@ -281,15 +320,18 @@ def eval_formula' (a : Assignment') (f : CNFFormula') : Bool :=
 
 
 
+
 /-- A formula is satisfiable if there exists a satisfying assignment. -/
 def Satisfiable' (f : CNFFormula') : Prop :=
   ∃ a : Assignment', eval_formula' a f = true
 
 
 
+
 /-- Empty formula is trivially satisfiable. -/
 theorem empty_formula_sat' : Satisfiable' [] := by
   exact ⟨fun _ => true, rfl⟩
+
 
 
 
@@ -302,6 +344,7 @@ theorem empty_clause_unsat' (f : CNFFormula') (h : [] ∈ f) : ¬Satisfiable' f 
 
 
 
+
 /-- The number of possible assignments for n variables. -/
 theorem assignment_count' (n : ℕ) :
     Fintype.card (Fin n → Bool) = 2 ^ n := by
@@ -309,8 +352,10 @@ theorem assignment_count' (n : ℕ) :
 
 
 
+
 /-- ReLU function: max(0, x). -/
 noncomputable def relu' (x : ℝ) : ℝ := max 0 x
+
 
 
 
@@ -320,8 +365,10 @@ theorem relu_idempotent' : ∀ x : ℝ, relu' (relu' x) = relu' x := by
 
 
 
+
 /-- ReLU is an oracle. -/
 theorem relu_is_oracle' : IsOracle relu' := relu_idempotent'
+
 
 
 
@@ -331,9 +378,11 @@ theorem relu_of_nonneg' {x : ℝ} (hx : 0 ≤ x) : relu' x = x := by
 
 
 
+
 /-- ReLU of non-positive input is zero. -/
 theorem relu_of_nonpos' {x : ℝ} (hx : x ≤ 0) : relu' x = 0 := by
   simp [relu', max_eq_left hx]
+
 
 
 
@@ -342,8 +391,10 @@ theorem relu_fixed_iff' (x : ℝ) : relu' x = x ↔ 0 ≤ x := by
 
 
 
+
 /-- Tropical addition is max. -/
 noncomputable def tropical_add' (a b : ℝ) : ℝ := max a b
+
 
 
 
@@ -353,9 +404,11 @@ theorem tropical_add_idem' : ∀ a : ℝ, tropical_add' a a = a := by
 
 
 
+
 /-- Tropical addition is commutative. -/
 theorem tropical_add_comm' : ∀ a b : ℝ, tropical_add' a b = tropical_add' b a := by
   intro a b; simp [tropical_add', max_comm]
+
 
 
 
@@ -366,13 +419,16 @@ theorem tropical_add_assoc' : ∀ a b c : ℝ,
 
 
 
+
 /-- A Pythagorean triple satisfies a² + b² = c². -/
 def IsPythagoreanTriple' (a b c : ℤ) : Prop := a^2 + b^2 = c^2
 
 
 
+
 /-- The light cone condition: a² + b² - c² = 0. -/
 def OnLightCone' (a b c : ℤ) : Prop := a^2 + b^2 - c^2 = 0
+
 
 
 
@@ -383,10 +439,12 @@ theorem pythagorean_iff_light_cone' (a b c : ℤ) :
 
 
 
+
 /-- The Berggren matrix A preserves the Pythagorean property. -/
 theorem berggren_A_preserves' (a b c : ℤ) (h : IsPythagoreanTriple' a b c) :
     IsPythagoreanTriple' (a - 2*b + 2*c) (2*a - b + 2*c) (2*a - 2*b + 3*c) := by
   simp only [IsPythagoreanTriple'] at *; nlinarith [h]
+
 
 
 
@@ -397,10 +455,12 @@ theorem berggren_B_preserves' (a b c : ℤ) (h : IsPythagoreanTriple' a b c) :
 
 
 
+
 /-- The Berggren matrix C preserves the Pythagorean property. -/
 theorem berggren_C_preserves' (a b c : ℤ) (h : IsPythagoreanTriple' a b c) :
     IsPythagoreanTriple' (-a + 2*b + 2*c) (-2*a + b + 2*c) (-2*a + 2*b + 3*c) := by
   simp only [IsPythagoreanTriple'] at *; nlinarith [h]
+
 
 
 
@@ -410,8 +470,10 @@ theorem idempotent_eigenvalue' {R : Type*} [CommRing R] [IsDomain R]
 
 
 
+
 theorem nat_sq_eq_self' (n : ℕ) (h : n ^ 2 = n) : n = 0 ∨ n = 1 := by
   exact or_iff_not_imp_left.mpr fun hn => mul_left_cancel₀ hn <| by linarith;
+
 
 
 
@@ -423,9 +485,11 @@ theorem oracle_compose' {α : Type*} {O₁ O₂ : α → α}
 
 
 
+
 /-- The identity is an oracle (trivially). -/
 theorem id_is_oracle' {α : Type*} : IsOracle (id : α → α) := by
   intro x; rfl
+
 
 
 
@@ -435,10 +499,12 @@ theorem const_is_oracle' {α : Type*} (c : α) : IsOracle (fun _ => c) := by
 
 
 
+
 /-- The compression ratio of an oracle on a finite type. -/
 noncomputable def compression_ratio' {α : Type*} [Fintype α] [DecidableEq α]
     (O : α → α) : ℚ :=
   (oracle_rank' O : ℚ) / (Fintype.card α : ℚ)
+
 
 
 
@@ -450,9 +516,11 @@ theorem const_oracle_rank {α : Type*} [Fintype α] [DecidableEq α]
 
 
 
+
 /-- Prime counting: π(10) = 4. -/
 theorem prime_count_10' :
     (Finset.filter Nat.Prime (Finset.range 11)).card = 4 := by native_decide
+
 
 
 
@@ -462,9 +530,11 @@ theorem prime_count_100' :
 
 
 
+
 /-- Goldbach verification for small even numbers. -/
 theorem goldbach_4' : ∃ p q : ℕ, Nat.Prime p ∧ Nat.Prime q ∧ p + q = 4 :=
   ⟨2, 2, by decide, by decide, by omega⟩
+
 
 
 
@@ -473,8 +543,10 @@ theorem goldbach_6' : ∃ p q : ℕ, Nat.Prime p ∧ Nat.Prime q ∧ p + q = 6 :
 
 
 
+
 theorem goldbach_8' : ∃ p q : ℕ, Nat.Prime p ∧ Nat.Prime q ∧ p + q = 8 :=
   ⟨3, 5, by decide, by decide, by omega⟩
+
 
 
 
@@ -483,8 +555,10 @@ theorem goldbach_10' : ∃ p q : ℕ, Nat.Prime p ∧ Nat.Prime q ∧ p + q = 10
 
 
 
+
 theorem goldbach_100' : ∃ p q : ℕ, Nat.Prime p ∧ Nat.Prime q ∧ p + q = 100 :=
   ⟨3, 97, by decide, by decide, by omega⟩
+
 
 
 
@@ -494,8 +568,10 @@ def collatz' (n : ℕ) : ℕ :=
 
 
 
+
 /-- Collatz terminates for n = 27 (known to take 111 steps). -/
 theorem collatz_27_reaches_1' : collatz'^[111] 27 = 1 := by native_decide
+
 
 
 
@@ -505,8 +581,10 @@ theorem fermat_sum_two_squares_5' : ∃ a b : ℤ, a ^ 2 + b ^ 2 = 5 :=
 
 
 
+
 theorem fermat_sum_two_squares_13' : ∃ a b : ℤ, a ^ 2 + b ^ 2 = 13 :=
   ⟨2, 3, by ring⟩
+
 
 
 
@@ -515,9 +593,11 @@ theorem fermat_sum_two_squares_17' : ∃ a b : ℤ, a ^ 2 + b ^ 2 = 17 :=
 
 
 
+
 /-- Partial sum of 1/k² for k = 1..6. -/
 theorem partial_zeta2_bound' :
     (1 : ℚ) + 1/4 + 1/9 + 1/16 + 1/25 + 1/36 > 1 := by norm_num
+
 
 
 

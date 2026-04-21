@@ -14,11 +14,13 @@ def emlI (x y : ℝ) : ℝ := Real.exp x - Real.log y
 
 
 
+
 /-- EML is strictly increasing in its first argument. -/
 theorem emlI_strictMono_fst (y : ℝ) : StrictMono (fun x => emlI x y) := by
   intro a b hab
   simp only [emlI]
   linarith [Real.exp_strictMono hab]
+
 
 
 
@@ -28,11 +30,13 @@ theorem emlI_mono_fst (y : ℝ) : Monotone (fun x => emlI x y) :=
 
 
 
+
 /-- EML is strictly decreasing in its second argument on (0, ∞). -/
 theorem emlI_strictAnti_snd (x : ℝ) : StrictAntiOn (fun y => emlI x y) (Ioi 0) := by
   intro a ha b hb hab
   simp only [emlI]
   linarith [Real.log_lt_log (mem_Ioi.mp ha) hab]
+
 
 
 
@@ -58,11 +62,13 @@ theorem emlI_interval_enclosure
 
 
 
+
 /-- EML(x, y) ≥ 1 + x - ln(y) (from exp(x) ≥ 1 + x). -/
 theorem emlI_lower_bound (x y : ℝ) :
     x + 1 - Real.log y ≤ emlI x y := by
   simp only [emlI]
   linarith [Real.add_one_le_exp x]
+
 
 
 
@@ -74,10 +80,12 @@ theorem emlI_zero_ge_one (y : ℝ) (hy : 1 ≤ y) :
 
 
 
+
 /-- For any y, EML(0, y) = 1 - ln(y). -/
 theorem emlI_at_zero (y : ℝ) :
     emlI 0 y = 1 - Real.log y := by
   simp [emlI, Real.exp_zero]
+
 
 
 
@@ -88,10 +96,12 @@ theorem emlI_double_exp (x : ℝ) :
 
 
 
+
 /-- Triple exp tower: eml(eml(eml(x, 1), 1), 1) = exp(exp(exp(x))). -/
 theorem emlI_triple_exp (x : ℝ) :
     emlI (emlI (emlI x 1) 1) 1 = Real.exp (Real.exp (Real.exp x)) := by
   simp [emlI, Real.log_one]
+
 
 
 
@@ -102,6 +112,7 @@ theorem emlDiag_ge_one (x : ℝ) (hx : 0 < x) (hx1 : x ≤ 1) :
   have h1 : x + 1 ≤ Real.exp x := Real.add_one_le_exp x
   have h2 : Real.log x ≤ 0 := Real.log_nonpos (le_of_lt hx) hx1
   linarith
+
 
 
 
@@ -118,6 +129,7 @@ theorem emlDiag_no_fixed_point (x : ℝ) (hx : 0 < x) :
     rw [ show x = ( x - 1 ) + 1 by ring, Real.exp_add ];
     have := Real.exp_one_gt_d9.le ; norm_num1 at * ; nlinarith [ Real.log_le_sub_one_of_pos ( by linarith : 0 < x - 1 + 1 ) ];
   exact h_exp_ln_x_gt_x x hx
+
 
 
 

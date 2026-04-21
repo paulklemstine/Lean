@@ -16,10 +16,12 @@ theorem list_dedup_idempotent {α : Type*} [DecidableEq α] (l : List α) :
 
 
 
+
 /-- Deduplication of a multiset is idempotent. -/
 theorem multiset_dedup_idempotent {α : Type*} [DecidableEq α] (s : Multiset α) :
     s.dedup.dedup = s.dedup :=
   Multiset.dedup_idem
+
 
 
 
@@ -28,6 +30,7 @@ theorem closure_operator_idempotent {α : Type*} [PartialOrder α]
     (c : ClosureOperator α) (x : α) :
     c (c x) = c x :=
   c.idempotent x
+
 
 
 
@@ -41,15 +44,18 @@ theorem normalization_idempotent_iff {α : Type*} (normalize : α → α) :
 
 
 
+
 /-- In any semilattice, meet with self is idempotent. -/
 theorem lattice_meet_idempotent {α : Type*} [SemilatticeInf α] (a : α) :
     a ⊓ a = a := inf_idem a
 
 
 
+
 /-- In any semilattice, join with self is idempotent. -/
 theorem lattice_join_idempotent {α : Type*} [SemilatticeSup α] (a : α) :
     a ⊔ a = a := sup_idem a
+
 
 
 
@@ -62,12 +68,14 @@ theorem galois_connection_kernel {α β : Type*} [Preorder α] [PartialOrder β]
 
 
 
+
 /-- Error correction is idempotent: correcting a correct state does nothing. -/
 theorem error_correction_idempotent {α : Type*} (valid : Set α)
     (correct : α → α) (h_into : ∀ x, correct x ∈ valid)
     (h_fixes : ∀ x ∈ valid, correct x = x) :
     ∀ x, correct (correct x) = correct x :=
   fun x => h_fixes (correct x) (h_into x)
+
 
 
 
@@ -82,6 +90,7 @@ theorem master_equation_one_step {α : Type*} (f : α → α)
 
 
 
+
 /-- The image of an idempotent computation is its set of stable states. -/
 theorem computation_stable_states {α : Type*} (f : α → α)
     (hf : ∀ x, f (f x) = f x) :
@@ -91,11 +100,17 @@ theorem computation_stable_states {α : Type*} (f : α → α)
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.IdempotentCollapse.MasterEquationComputation
+Auto-generated from theorem catalog database.
+Domain: Speculative/IdempotentCollapse
+Declarations: 13] -/
 theorem idempotent_splits_through_image {α : Type*} (f : α → α)
     (hf : ∀ x, f (f x) = f x) :
     ∃ (ι : range f → α) (π : α → range f),
       (∀ b, π (ι b) = b) ∧ (∀ a, ι (π a) = f a) := by
   exact ⟨ fun ⟨ x, hx ⟩ => x, fun x => ⟨ f x, x, rfl ⟩, fun ⟨ x, hx ⟩ => by aesop, fun x => by aesop ⟩
+
 
 
 
@@ -110,10 +125,12 @@ theorem commuting_idempotent_computations {α : Type*}
 
 
 
+
 theorem finite_iteration_periodic {α : Type*} [Fintype α]
     (f : α → α) : ∃ n m : ℕ, 0 < n ∧ n < m ∧ f^[n] = f^[m] := by
   by_contra! h_contra;
   exact absurd ( Set.infinite_range_of_injective ( show Function.Injective ( fun n : ℕ => f^[n+1] ) from fun m n hmn => le_antisymm ( not_lt.1 fun hmn' => h_contra _ _ ( Nat.succ_pos _ ) ( Nat.succ_lt_succ hmn' ) hmn.symm ) ( not_lt.1 fun hmn' => h_contra _ _ ( Nat.succ_pos _ ) ( Nat.succ_lt_succ hmn' ) hmn ) ) ) ( Set.not_infinite.mpr <| Set.toFinite _ )
+
 
 
 

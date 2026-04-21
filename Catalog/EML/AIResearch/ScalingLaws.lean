@@ -17,6 +17,11 @@ def scalingLaw (A alpha L_inf : ℝ) (N : ℕ) : ℝ := A * (↑N : ℝ) ^ (-alp
 
 
 
+
+/-- [Section: # CatalogBuild.EML.AIResearch.ScalingLaws
+Auto-generated from theorem catalog database.
+Domain: EML/AIResearch
+Declarations: 45] -/
 theorem loss_bounded_below (A alpha L_inf : ℝ) (N : ℕ) (hA : 0 ≤ A) (hN : 0 < N)
     (halpha : 0 ≤ alpha) :
     L_inf ≤ scalingLaw A alpha L_inf N := by
@@ -25,18 +30,23 @@ theorem loss_bounded_below (A alpha L_inf : ℝ) (N : ℕ) (hA : 0 ≤ A) (hN : 
 
 
 
+
 def totalCompute (N D : ℕ) : ℕ := 6 * N * D
 
 
+
 def chinchillaData (N : ℕ) : ℕ := 20 * N
+
 
 
 def emlOptimalData (N : ℕ) : ℕ := 10 * N
 
 
 
+
 theorem eml_less_data (N : ℕ) : emlOptimalData N ≤ chinchillaData N := by
   unfold emlOptimalData chinchillaData; omega
+
 
 
 
@@ -46,13 +56,16 @@ theorem eml_compute_savings (N : ℕ) :
 
 
 
+
 theorem compute_linear_N (N1 N2 D : ℕ) (h : N1 ≤ N2) :
     totalCompute N1 D ≤ totalCompute N2 D := by
   unfold totalCompute; nlinarith
 
 
 
+
 def capabilityThreshold (taskComplexity : ℕ) : ℕ := 2 ^ taskComplexity
+
 
 
 
@@ -62,10 +75,13 @@ theorem harder_tasks_bigger_models (c1 c2 : ℕ) (h : c1 ≤ c2) :
 
 
 
+
 def emlEffectiveCapacity (d w : ℕ) : ℕ := 3 ^ d * w
 
 
+
 def mlpEffectiveCapacity (d w : ℕ) : ℕ := d * w
+
 
 
 
@@ -75,8 +91,10 @@ theorem eml_capacity_advantage (d w : ℕ) (hd : 2 ≤ d) (hw : 1 ≤ w) :
 
 
 
+
 def dominates (accA accB : ℝ) (paramsA paramsB : ℕ) : Prop :=
   accB ≤ accA ∧ paramsA ≤ paramsB
+
 
 
 
@@ -87,10 +105,13 @@ theorem dominates_trans (a1 a2 a3 : ℝ) (p1 p2 p3 : ℕ)
 
 
 
+
 def emlFlops (d w : ℕ) : ℕ := 4 * d * w + 2 * d
 
 
+
 def mlpFlops (d w : ℕ) : ℕ := d * w * w
+
 
 
 
@@ -100,7 +121,9 @@ theorem eml_flop_efficiency (d w : ℕ) (hw : 5 ≤ w) (hd : 0 < d) :
 
 
 
+
 def standardSamples (params : ℕ) (targetAcc : ℝ) : ℝ := ↑params / targetAcc
+
 
 
 
@@ -109,9 +132,11 @@ def emlSamples (params : ℕ) (targetAcc efficiencyFactor : ℝ) : ℝ :=
 
 
 
+
 theorem eml_data_efficiency (p : ℕ) (a eff : ℝ) (ha : 0 < a) (heff : 1 ≤ eff) :
     emlSamples p a eff ≤ standardSamples p a := by
   exact div_le_div_of_nonneg_left ( by positivity ) ( by positivity ) ( by nlinarith )
+
 
 
 
@@ -122,10 +147,12 @@ theorem eml_param_scaling_linear (d : ℕ) (hd : 5 ≤ d) :
 
 
 
+
 /-- The compression factor for square layers is (d+1)/4. -/
 theorem eml_compression_factor_sq (d : ℕ) (_hd : 1 ≤ d) :
     emlParams d * (d + 1) ≤ denseParams d d * 4 := by
   unfold emlParams denseParams; nlinarith
+
 
 
 
@@ -134,8 +161,10 @@ def bitsPerFloat32 : ℕ := 32
 
 
 
+
 /-- Memory for a dense layer with float32 weights (in bits). -/
 def denseMemoryBits (d_in d_out : ℕ) : ℕ := denseParams d_in d_out * bitsPerFloat32
+
 
 
 
@@ -144,13 +173,16 @@ def emlMemoryBitsB (d_out bitsPerWeight : ℕ) : ℕ := emlParams d_out * bitsPe
 
 
 
+
 /-- FLOPs for dense matrix-vector multiply: 2 × d_in × d_out. -/
 def denseFLOPs (d_in d_out : ℕ) : ℕ := 2 * d_in * d_out
 
 
 
+
 /-- FLOPs for EML layer inference: 6 × d_out (mul, add, exp, mul, add, log per neuron). -/
 def emlFLOPs (d_out : ℕ) : ℕ := 6 * d_out
+
 
 
 
@@ -169,13 +201,16 @@ theorem eml_moe_param_savings (n d_model d_ff : ℕ) (hd : 4 ≤ d_model) :
 
 
 
+
 /-- Standard attention head parameters: 3 × d_model × d_head (Q, K, V projections). -/
 def stdAttentionParams (d_model d_head : ℕ) : ℕ := 3 * d_model * d_head
 
 
 
+
 /-- EML attention head: 3 × 4 × d_head (EML projections for Q, K, V). -/
 def emlAttentionParams (d_head : ℕ) : ℕ := 3 * 4 * d_head
+
 
 
 
@@ -186,10 +221,12 @@ theorem eml_attention_compression (d_model d_head : ℕ) (hd : 4 ≤ d_model) :
 
 
 
+
 /-- Multi-head attention savings scale with number of heads. -/
 theorem eml_multihead_savings (n_heads d_model d_head : ℕ) (hd : 4 ≤ d_model) :
     n_heads * emlAttentionParams d_head ≤ n_heads * stdAttentionParams d_model d_head :=
   Nat.mul_le_mul_left n_heads (eml_attention_compression d_model d_head hd)
+
 
 
 
@@ -199,9 +236,11 @@ def stdTransformerBlock (d_model d_head n_heads d_ff : ℕ) : ℕ :=
 
 
 
+
 /-- EML transformer block parameters. -/
 def emlTransformerBlock (d_head n_heads d_ff : ℕ) : ℕ :=
   n_heads * emlAttentionParams d_head + 2 * emlParams d_ff
+
 
 
 
@@ -218,20 +257,26 @@ theorem eml_transformer_compression (d_model d_head n_heads d_ff : ℕ)
 
 
 
+
 /-- LLaMA 7B approximate config. -/
 def llama7b_d_model : ℕ := 4096
+
 
 
 def llama7b_d_head : ℕ := 128
 
 
+
 def llama7b_n_heads : ℕ := 32
+
 
 
 def llama7b_d_ff : ℕ := 11008
 
 
+
 def llama7b_n_layers : ℕ := 32
+
 
 
 
@@ -240,8 +285,10 @@ def llama7b_std_attn : ℕ := stdAttentionParams llama7b_d_model llama7b_d_head 
 
 
 
+
 /-- EML LLaMA attention params per layer. -/
 def llama7b_eml_attn : ℕ := emlAttentionParams llama7b_d_head * llama7b_n_heads
+
 
 
 
@@ -251,11 +298,13 @@ theorem llama_attention_ratio :
 
 
 
+
 /-- EML transformer block compression for LLaMA dimensions. -/
 theorem llama_block_compression :
     emlTransformerBlock llama7b_d_head llama7b_n_heads llama7b_d_ff ≤
     stdTransformerBlock llama7b_d_model llama7b_d_head llama7b_n_heads llama7b_d_ff :=
   eml_transformer_compression _ _ _ _ (by norm_num [llama7b_d_model])
+
 
 
 

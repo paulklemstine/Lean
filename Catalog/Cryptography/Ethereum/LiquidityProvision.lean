@@ -18,6 +18,7 @@ noncomputable def impermanentLossFactor (r : ℝ) (hr : 0 < r) : ℝ :=
 
 
 
+
 /-- [Section: # CatalogBuild.Cryptography.Ethereum.LiquidityProvision
 Auto-generated from theorem catalog database.
 Domain: Cryptography/Ethereum
@@ -28,6 +29,11 @@ theorem il_nonpositive (r : ℝ) (hr : 0 < r) :
 
 
 
+
+/-- [Section: # CatalogBuild.Cryptography.Ethereum.LiquidityProvision
+Auto-generated from theorem catalog database.
+Domain: Cryptography/Ethereum
+Declarations: 13] -/
 theorem il_zero_iff (r : ℝ) (hr : 0 < r) :
     impermanentLossFactor r hr = 0 ↔ r = 1 := by
   unfold impermanentLossFactor;
@@ -35,10 +41,12 @@ theorem il_zero_iff (r : ℝ) (hr : 0 < r) :
 
 
 
+
 theorem il_symmetric (r : ℝ) (hr : 0 < r) :
     impermanentLossFactor r hr = impermanentLossFactor (1/r) (by positivity) := by
   simp +decide [ impermanentLossFactor ];
   grind
+
 
 
 
@@ -55,9 +63,11 @@ structure LPPosition where
 
 
 
+
 /-- Value of hodling (not providing liquidity) -/
 noncomputable def hodlValue (lp : LPPosition) : ℝ :=
   lp.initialValue * (1 + lp.priceRatio) / 2
+
 
 
 
@@ -68,11 +78,13 @@ noncomputable def lpValue (lp : LPPosition) : ℝ :=
 
 
 
+
 theorem lp_profitable_iff_fees_exceed_il (lp : LPPosition) :
     hodlValue lp < lpValue lp ↔
     lp.feeAPR * lp.holdingPeriod >
       (1 + lp.priceRatio) / 2 - Real.sqrt lp.priceRatio := by
   unfold hodlValue lpValue; constructor <;> intro h <;> nlinarith [ lp.hValue, lp.hRatio, lp.hFee, lp.hPeriod ] ;
+
 
 
 
@@ -88,6 +100,7 @@ structure ConcentratedPosition where
 
 
 
+
 /-- **Capital Efficiency Amplification**: Concentrated liquidity over range
 [pₐ, p_b] provides the same depth as (p_b/pₐ)^(1/2) times more capital
 in a full-range position. -/
@@ -96,9 +109,11 @@ noncomputable def capitalEfficiency (cp : ConcentratedPosition) : ℝ :=
 
 
 
+
 theorem capital_efficiency_gt_one (cp : ConcentratedPosition) :
     1 < capitalEfficiency cp := by
   exact Real.lt_sqrt_of_sq_lt ( by rw [ lt_div_iff₀ ] <;> linarith [ cp.hLower, cp.hUpper, cp.hRange ] )
+
 
 
 
@@ -111,6 +126,7 @@ theorem narrower_range_higher_efficiency
 
 
 
+
 /-- **Optimal Fee Theorem**: For a given expected volatility σ and trading
 volume V, the optimal fee rate γ* that maximizes LP profit satisfies:
 Higher volatility → higher optimal fee (to compensate for larger IL) -/
@@ -120,6 +136,7 @@ theorem higher_vol_higher_fee
     -- Impermanent loss scales with σ², so compensation must too
     σ₁ ^ 2 < σ₂ ^ 2 := by
   nlinarith
+
 
 
 

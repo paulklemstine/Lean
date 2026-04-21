@@ -1,5 +1,3 @@
-import Mathlib
-
 /-! # CatalogBuild.Geometry.Stereographic.InverseStereoMobiusNext
 
 Auto-generated from theorem catalog database.
@@ -7,6 +5,7 @@ Domain: Geometry/Stereographic
 Declarations: 32
 -/
 
+import Mathlib
 
 noncomputable section
 
@@ -15,13 +14,16 @@ def twoPole_den (a b n : ℤ) : ℤ := (a - b) * n + (a * b + 1)
 
 
 
+
 /-- The numerator of F_{a,b}(n). -/
 def twoPole_num (a b n : ℤ) : ℤ := (a * b + 1) * n + (b - a)
 
 
 
+
 /-- The determinant (1+a²)(1+b²). -/
 def twoPole_det (a b : ℤ) : ℤ := (1 + a ^ 2) * (1 + b ^ 2)
+
 
 
 
@@ -40,6 +42,7 @@ theorem complete_criterion_forward (a b n : ℤ) :
 
 
 
+
 /-- **Complete Criterion, Backward**: If d | det then d | (b-a)·num.
 Combined with coprimality conditions, this gives sufficiency. -/
 theorem complete_criterion_backward (a b n : ℤ) :
@@ -54,10 +57,12 @@ theorem complete_criterion_backward (a b n : ℤ) :
 
 
 
+
 /-- **Denominator-numerator identity**: d and num satisfy a linear relation with det. -/
 theorem den_num_linear_relation (a b n : ℤ) :
     (b - a) * twoPole_num a b n + (a * b + 1) * twoPole_den a b n = twoPole_det a b := by
   unfold twoPole_num twoPole_den twoPole_det; ring
+
 
 
 
@@ -71,6 +76,7 @@ theorem divisor_bound (a b n : ℤ)
 
 
 
+
 /-- [Section: # CatalogBuild.Geometry.Stereographic.InverseStereoMobiusNext
 Auto-generated from theorem catalog database.
 Domain: Geometry/Stereographic
@@ -81,6 +87,11 @@ theorem den_injective (a b : ℤ) (hab : a ≠ b) (n m : ℤ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Geometry.Stereographic.InverseStereoMobiusNext
+Auto-generated from theorem catalog database.
+Domain: Geometry/Stereographic
+Declarations: 32] -/
 theorem integer_inputs_finite_set (a b : ℤ) (hab : a ≠ b) :
     Set.Finite {n : ℤ | twoPole_den a b n ∣ twoPole_det a b} := by
   -- The set of integers n where n divides a non-zero integer is finite.
@@ -92,10 +103,12 @@ theorem integer_inputs_finite_set (a b : ℤ) (hab : a ≠ b) :
 
 
 
+
 /-- The Möbius matrix for F_{a,b}.
 M = [[ab+1, b-a], [a-b, ab+1]] -/
 def mobiusMatrix (a b : ℤ) : Matrix (Fin 2) (Fin 2) ℤ :=
   !![a * b + 1, b - a; a - b, a * b + 1]
+
 
 
 
@@ -106,15 +119,18 @@ theorem mobius_matrix_det (a b : ℤ) :
 
 
 
+
 theorem mobius_matrix_trace (a b : ℤ) :
     (mobiusMatrix a b).trace = 2 * (a * b + 1) := by
   simp +arith +decide [ mobiusMatrix, Matrix.trace ]
 
 
 
+
 theorem mobius_elliptic (a b : ℤ) (hab : a ≠ b) :
     (2 * (a * b + 1)) ^ 2 < 4 * ((1 + a ^ 2) * (1 + b ^ 2)) := by
   nlinarith [ mul_self_pos.2 ( sub_ne_zero.2 hab ) ]
+
 
 
 
@@ -130,6 +146,7 @@ theorem orbit_pairing (a b n : ℤ)
 
 
 
+
 theorem no_integer_fixed_points (a b n : ℤ) (hab : a ≠ b) :
     twoPole_den a b n ≠ 0 →
     twoPole_num a b n ≠ n * twoPole_den a b n := by
@@ -141,10 +158,12 @@ theorem no_integer_fixed_points (a b n : ℤ) (hab : a ≠ b) :
 
 
 
+
 /-- **Alternative factorization**: The other Brahmagupta decomposition. -/
 theorem gaussian_norm_multiplicative_alt (a b c d : ℤ) :
     (a ^ 2 + b ^ 2) * (c ^ 2 + d ^ 2) =
     (a * c + b * d) ^ 2 + (a * d - b * c) ^ 2 := by ring
+
 
 
 
@@ -156,9 +175,11 @@ theorem det_two_representations (a b : ℤ) :
 
 
 
+
 /-- **Det is always ≥ 1** for integer poles. -/
 theorem det_pos (a b : ℤ) : 0 < twoPole_det a b := by
   unfold twoPole_det; positivity
+
 
 
 
@@ -173,8 +194,10 @@ theorem det_eq_two (a b : ℤ) :
 
 
 
+
 theorem F01_at_0 : twoPole_num 0 1 0 / twoPole_den 0 1 0 = 1 := by
   unfold twoPole_num twoPole_den; norm_num
+
 
 
 
@@ -183,14 +206,17 @@ theorem F01_at_neg1 : twoPole_num 0 1 (-1) / twoPole_den 0 1 (-1) = 0 := by
 
 
 
+
 theorem F01_at_2 : twoPole_num 0 1 2 / twoPole_den 0 1 2 = -3 := by
   unfold twoPole_num twoPole_den; norm_num
+
 
 
 
 /-- F_{1,0}(-3) = 2, the reverse map takes -3 back to 2. -/
 theorem F10_at_neg3 : twoPole_num 1 0 (-3) / twoPole_den 1 0 (-3) = 2 := by
   unfold twoPole_num twoPole_den; norm_num
+
 
 
 
@@ -202,11 +228,13 @@ theorem F01_orbit_2_neg3 :
 
 
 
+
 /-- The orbit pairing {0, 1}: F_{0,1}(0) = 1 and F_{1,0}(1) = 0. -/
 theorem F01_orbit_0_1 :
     twoPole_num 0 1 0 / twoPole_den 0 1 0 = 1 ∧
     twoPole_num 1 0 1 / twoPole_den 1 0 1 = 0 := by
   constructor <;> (unfold twoPole_num twoPole_den; norm_num)
+
 
 
 
@@ -217,9 +245,11 @@ theorem pythagorean_from_poles (a b : ℤ) :
 
 
 
+
 /-- Poles (1,2) give: 3² + 1² = 2 · 5 = 10. -/
 theorem poles_1_2_sum_of_squares :
     ((1 : ℤ) * 2 + 1) ^ 2 + (1 - 2) ^ 2 = 10 := by norm_num
+
 
 
 
@@ -229,9 +259,11 @@ theorem poles_1_3_sum_of_squares :
 
 
 
+
 /-- Poles (2,3) give: 7² + 1² = 5 · 10 = 50. -/
 theorem poles_2_3_sum_of_squares :
     ((2 : ℤ) * 3 + 1) ^ 2 + (2 - 3) ^ 2 = 50 := by norm_num
+
 
 
 
@@ -241,9 +273,11 @@ theorem poles_0_k_trivial (k : ℤ) :
 
 
 
+
 /-- **Example**: 50 = 5 · 10 = (1+2²)(1+3²), recovering poles 2 and 3. -/
 theorem factor_50_recovery :
     (50 : ℤ) = (1 + 2 ^ 2) * (1 + 3 ^ 2) := by norm_num
+
 
 
 
@@ -251,6 +285,7 @@ theorem factor_50_recovery :
 theorem fifty_two_reps :
     (50 : ℤ) = 7 ^ 2 + 1 ^ 2 ∧ (50 : ℤ) = 5 ^ 2 + 5 ^ 2 := by
   constructor <;> norm_num
+
 
 
 

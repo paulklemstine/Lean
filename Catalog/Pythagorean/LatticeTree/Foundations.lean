@@ -12,15 +12,18 @@ def factorCong (N : ℤ) (x y : ℤ) : Prop := (N : ℤ) ∣ (x ^ 2 - y ^ 2)
 
 
 
+
 /-- factorCong is reflexive. -/
 theorem factorCong_refl (N : ℤ) (x : ℤ) : factorCong N x x := by
   simp [factorCong]
 
 
 
+
 /-- The origin is in the factor lattice. -/
 theorem factorCong_zero (N : ℤ) : factorCong N 0 0 := by
   simp [factorCong]
+
 
 
 
@@ -36,6 +39,7 @@ theorem factorCong_diff_of_squares (N x y : ℤ) :
 
 
 
+
 /-- If x² ≡ y² (mod N) and 1 < gcd(x-y, N) < N, then gcd(x-y, N) is a factor. -/
 theorem factorCong_gcd_factor (N x y : ℤ) (_hN : 1 < N)
     (_hcong : factorCong N x y)
@@ -43,6 +47,7 @@ theorem factorCong_gcd_factor (N x y : ℤ) (_hN : 1 < N)
     (_hgN : (Int.gcd (x - y) N : ℤ) < N) :
     ↑(Int.gcd (x - y) N) ∣ N ∧ 1 < Int.gcd (x - y) N :=
   ⟨Int.gcd_dvd_right (x - y) N, hg1⟩
+
 
 
 
@@ -55,15 +60,18 @@ theorem sqNorm_add_le (u v : Fin 2 → ℤ) :
 
 
 
+
 /-- For Euclid parameters, m²-n² = (m-n)(m+n) over ℤ reveals factors. -/
 theorem euclid_factors_int (m n : ℤ) :
     m ^ 2 - n ^ 2 = (m - n) * (m + n) := by ring
 
 
 
+
 /-- The (m,n) parameter satisfying m²-n² = N encodes factoring (over ℤ). -/
 theorem mn_encodes_factoring_int (m n N : ℤ) (hmn : m ^ 2 - n ^ 2 = N) :
     (m - n) * (m + n) = N := by linarith
+
 
 
 
@@ -74,9 +82,11 @@ theorem mn_divisors (m n N : ℤ) (hmn : (m - n) * (m + n) = N) :
 
 
 
+
 /-- M₁ preserves the odd-leg identity. -/
 theorem M1_preserves_leg (m n : ℤ) :
     (2*m - n) ^ 2 - m ^ 2 = m ^ 2 - n ^ 2 + 2*(m - n)^2 := by ring
+
 
 
 
@@ -86,10 +96,12 @@ theorem M3_preserves_diff (m n : ℤ) :
 
 
 
+
 /-- M₁⁻¹ applied to consecutive params (m, m-1) gives (m-1, m-2). -/
 theorem M1_inv_consecutive (m : ℤ) :
     (0 * m + 1 * (m - 1) = m - 1) ∧ ((-1) * m + 2 * (m - 1) = m - 2) := by
   constructor <;> ring
+
 
 
 
@@ -101,6 +113,7 @@ theorem minkowski_2d_bound_consequence (Δ : ℤ) (hΔ : 0 < Δ) :
 
 
 
+
 /-- For N near a perfect square k², the remainder is small. -/
 theorem special_structure_advantage (N k : ℕ) (hk : k * k ≤ N) (hN : N < (k+1)*(k+1)) :
     N - k * k < 2 * k + 1 := by
@@ -109,8 +122,10 @@ theorem special_structure_advantage (N k : ℕ) (hk : k * k ≤ N) (hN : N < (k+
 
 
 
+
 /-- Berggren tree descent = Gauss lattice reduction in 2D. -/
 theorem gauss_berggren_correspondence : True := trivial
+
 
 
 
@@ -118,5 +133,6 @@ theorem gauss_berggren_correspondence : True := trivial
 theorem higher_dim_opportunity (d : ℕ) (hd : 3 ≤ d) :
     2 ^ (d - 1) ≥ 2 ^ 2 :=
   Nat.pow_le_pow_right (by norm_num) (by omega)
+
 
 

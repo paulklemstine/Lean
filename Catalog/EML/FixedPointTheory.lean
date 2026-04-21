@@ -18,6 +18,7 @@ theorem exp_gt_id (x : ℝ) : Real.exp x > x := by
 
 
 
+
 /-- Consequently, exp has no real fixed point. -/
 theorem exp_no_real_fixed_point : ∀ x : ℝ, Real.exp x ≠ x := by
   intro x h
@@ -25,10 +26,12 @@ theorem exp_no_real_fixed_point : ∀ x : ℝ, Real.exp x ≠ x := by
 
 
 
+
 /-- eml(x, y) = x iff exp(x) = x + log(y). -/
 theorem eml_fixed_point_iff (x y : ℝ) :
     Real.exp x - Real.log y = x ↔ Real.exp x = x + Real.log y := by
   constructor <;> intro h <;> linarith
+
 
 
 
@@ -42,6 +45,7 @@ theorem eml_no_fixed_point_at_one :
 
 
 
+
 /-- When y = e, x = 0 is a fixed point: exp(0) - log(e) = 0. -/
 theorem eml_fixed_point_at_e :
     Real.exp 0 - Real.log (Real.exp 1) = 0 := by
@@ -49,10 +53,12 @@ theorem eml_fixed_point_at_e :
 
 
 
+
 /-- At y = e, x = 0 is a tangent point: the derivative of exp at 0 equals 1,
 matching the slope of the line x + 1. -/
 theorem eml_tangent_at_e : Real.exp 0 = 0 + Real.log (Real.exp 1) := by
   simp [Real.log_exp, Real.exp_zero]
+
 
 
 
@@ -64,11 +70,18 @@ theorem exp_deriv_at_zero : HasDerivAt Real.exp 1 0 := by
 
 
 
+
+/-- [Section: # CatalogBuild.EML.FixedPointTheory
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 12] -/
 theorem exp_strict_mono' : StrictMono Real.exp := Real.exp_strictMono
 
 
 
+
 theorem exp_convex' : ConvexOn ℝ Set.univ Real.exp := convexOn_exp
+
 
 
 
@@ -79,8 +92,10 @@ def emlIterate (y : ℝ) : ℕ → ℝ → ℝ
 
 
 
+
 theorem emlIterate_one (y z : ℝ) :
     emlIterate y 1 z = Real.exp z - Real.log y := rfl
+
 
 
 
@@ -89,6 +104,7 @@ theorem eml_iterate_diverges_y1 (z : ℝ) :
     emlIterate 1 1 z > z := by
   simp [emlIterate, Real.log_one]
   exact exp_gt_id z
+
 
 
 

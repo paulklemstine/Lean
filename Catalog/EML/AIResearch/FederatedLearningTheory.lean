@@ -15,6 +15,7 @@ def commCostPerRound (numClients modelParams bitsPerParam : ℕ) : ℕ :=
 
 
 
+
 /-- [Section: # CatalogBuild.EML.AIResearch.FederatedLearningTheory
 Auto-generated from theorem catalog database.
 Domain: EML/AIResearch
@@ -27,12 +28,18 @@ theorem eml_comm_cheaper (n p_eml p_std b : ℕ) (hp : p_eml ≤ p_std) :
 
 
 
+
 /-- Total communication over all rounds -/
 def totalCommCost (numRounds numClients modelParams bitsPerParam : ℕ) : ℕ :=
   numRounds * commCostPerRound numClients modelParams bitsPerParam
 
 
 
+
+/-- [Section: # CatalogBuild.EML.AIResearch.FederatedLearningTheory
+Auto-generated from theorem catalog database.
+Domain: EML/AIResearch
+Declarations: 20] -/
 theorem eml_total_comm_cheaper (r n p_eml p_std b : ℕ) (hp : p_eml ≤ p_std) :
     totalCommCost r n p_eml b ≤ totalCommCost r n p_std b := by
   unfold totalCommCost
@@ -40,8 +47,10 @@ theorem eml_total_comm_cheaper (r n p_eml p_std b : ℕ) (hp : p_eml ≤ p_std) 
 
 
 
+
 /-- FedAvg aggregation cost: sum weighted models -/
 def aggregationCost (numClients modelParams : ℕ) : ℕ := numClients * modelParams
+
 
 
 
@@ -51,8 +60,10 @@ theorem eml_aggregation_cheaper (n p_eml p_std : ℕ) (hp : p_eml ≤ p_std) :
 
 
 
+
 /-- DP noise magnitude: proportional to sensitivity / epsilon, sensitivity ∝ √params -/
 def dpNoiseMagnitude (params : ℝ) (epsilon : ℝ) : ℝ := Real.sqrt params / epsilon
+
 
 
 
@@ -64,6 +75,7 @@ theorem eml_less_noise (p_eml p_std eps : ℝ) (_hpe : 0 ≤ p_eml)
 
 
 
+
 theorem higher_epsilon_less_noise (p eps1 eps2 : ℝ) (_hp : 0 ≤ p) (he1 : 0 < eps1)
     (he : eps1 ≤ eps2) :
     dpNoiseMagnitude p eps2 ≤ dpNoiseMagnitude p eps1 := by
@@ -72,8 +84,10 @@ theorem higher_epsilon_less_noise (p eps1 eps2 : ℝ) (_hp : 0 ≤ p) (he1 : 0 <
 
 
 
+
 /-- On-device model memory -/
 def clientModelMemory (params bitsPerParam : ℕ) : ℕ := params * bitsPerParam
+
 
 
 
@@ -83,9 +97,11 @@ theorem eml_client_smaller (p_eml p_std b : ℕ) (hp : p_eml ≤ p_std) :
 
 
 
+
 /-- With K out of N clients per round -/
 def partialCommCost (activeClients modelParams bitsPerParam : ℕ) : ℕ :=
   activeClients * modelParams * bitsPerParam
+
 
 
 
@@ -97,11 +113,14 @@ theorem fewer_clients_cheaper (k1 k2 p b : ℕ) (hk : k1 ≤ k2) :
 
 
 
+
 /-- Per-client adapter: small personalization layer -/
 def stdAdapterParams (d_model d_adapter : ℕ) : ℕ := 2 * d_model * d_adapter
 
 
+
 def emlAdapterParams (d_adapter : ℕ) : ℕ := 4 * d_adapter
+
 
 
 
@@ -111,9 +130,11 @@ theorem eml_adapter_compact (dm da : ℕ) (hm : 2 ≤ dm) :
 
 
 
+
 /-- Secure aggregation: pairwise key exchange + encrypted updates -/
 def secureAggCost (numClients modelParams cryptoOverhead : ℕ) : ℕ :=
   numClients * numClients * cryptoOverhead + numClients * modelParams
+
 
 
 
@@ -125,14 +146,17 @@ theorem eml_secure_agg_cheaper (n p_eml p_std c : ℕ) (hp : p_eml ≤ p_std) :
 
 
 
+
 /-- Compressed gradient communication -/
 def compressedGradSize (modelParams comprRatio : ℕ) : ℕ := modelParams / comprRatio
+
 
 
 
 theorem eml_gradient_smaller (p_eml p_std r : ℕ) (hp : p_eml ≤ p_std) :
     compressedGradSize p_eml r ≤ compressedGradSize p_std r := by
   unfold compressedGradSize; exact Nat.div_le_div_right hp
+
 
 
 

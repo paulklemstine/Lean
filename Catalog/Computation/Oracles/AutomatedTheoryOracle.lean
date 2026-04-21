@@ -15,9 +15,11 @@ def FormalSystem.theorems {S P : Type*} (F : FormalSystem S P) : Set S :=
 
 
 
+
 /-- A Theory Oracle enumerates statements one at a time. -/
 structure TheoryOracle (Statement : Type*) where
   enumerate : ℕ → Statement
+
 
 
 
@@ -27,9 +29,11 @@ def TheoryOracle.Sound {S P : Type*} (O : TheoryOracle S) (F : FormalSystem S P)
 
 
 
+
 /-- An oracle is **complete** if it eventually outputs every provable statement. -/
 def TheoryOracle.Complete {S P : Type*} (O : TheoryOracle S) (F : FormalSystem S P) : Prop :=
   ∀ s ∈ F.theorems, ∃ n, O.enumerate n = s
+
 
 
 
@@ -56,10 +60,12 @@ theorem sound_complete_oracle_exists {S P : Type*}
 
 
 
+
 /-- **Theorem 2.1**: Cantor pairing at the boundary. -/
 theorem cantor_pair_diagonal (n : ℕ) :
     cantorPair 0 n = n * (n + 1) / 2 + n := by
   simp [cantorPair]
+
 
 
 
@@ -71,6 +77,7 @@ theorem dovetail_pairs_at_depth (d : ℕ) :
 
 
 
+
 /-- **Theorem 2.3 (Dovetail Coverage)**: Every pair (a,b) with a+b ≤ d
 has Cantor index less than the (d+1)-th triangular number. -/
 theorem dovetail_coverage (a b d : ℕ) (h : a + b ≤ d) :
@@ -78,6 +85,7 @@ theorem dovetail_coverage (a b d : ℕ) (h : a + b ≤ d) :
   unfold cantorPair
   rw [Nat.lt_iff_add_one_le, Nat.le_div_iff_mul_le] <;>
     nlinarith [Nat.div_mul_le_self ((a + b) * (a + b + 1)) 2]
+
 
 
 
@@ -94,11 +102,13 @@ theorem oracle_hierarchy_strict (solvable : ℕ → Set ℕ)
 
 
 
+
 /-- Oracle composition: combine outputs of two oracles. -/
 def composeOracles (A B : TheoryOracle ℕ) : TheoryOracle ℕ where
   enumerate n :=
     let (a, b) := cantorUnpair n
     A.enumerate a + B.enumerate b
+
 
 
 
@@ -132,6 +142,7 @@ theorem compose_range_contains_left (A B : TheoryOracle ℕ)
 
 
 
+
 /-- **Theorem 4.1 (Incompressibility counting)**: At most 2^(n-c) elements
 of {0,...,2^n-1} have value below 2^(n-c). -/
 theorem incompressibility_counting (n c : ℕ) (_hc : c ≤ n) :
@@ -143,11 +154,13 @@ theorem incompressibility_counting (n c : ℕ) (_hc : c ≤ n) :
 
 
 
+
 /-- **Theorem 4.2 (Oracle Speed Limit)**: An oracle running for T steps
 can output at most T distinct values. -/
 theorem oracle_speed_limit (T : ℕ) (f : Fin T → ℕ) :
     (Finset.image (fun i => f i) Finset.univ).card ≤ T := by
   exact le_trans Finset.card_image_le (by simp)
+
 
 
 
@@ -157,9 +170,11 @@ def isInteresting (proofLength : ℕ → ℕ) (threshold : ℕ) (s : ℕ) : Prop
 
 
 
+
 /-- The Busy Beaver domination property. -/
 def EventuallyDominates (f g : ℕ → ℕ) : Prop :=
   ∃ N, ∀ n, n ≥ N → f n > g n
+
 
 
 
@@ -171,9 +186,11 @@ theorem busybeaver_dominance
 
 
 
+
 /-- **Theorem 6.1**: Oracle ordering is reflexive. -/
 theorem oracle_le_refl (O : TheoryOracle ℕ) : O ≤ O :=
   Set.Subset.refl _
+
 
 
 
@@ -184,9 +201,11 @@ theorem oracle_le_trans (O₁ O₂ O₃ : TheoryOracle ℕ)
 
 
 
+
 /-- The "union oracle": interleaves outputs of two oracles. -/
 def unionOracle (O₁ O₂ : TheoryOracle ℕ) : TheoryOracle ℕ where
   enumerate n := if n % 2 = 0 then O₁.enumerate (n / 2) else O₂.enumerate (n / 2)
+
 
 
 
@@ -195,6 +214,7 @@ theorem union_oracle_contains_left (O₁ O₂ : TheoryOracle ℕ) :
     Set.range O₁.enumerate ⊆ Set.range (unionOracle O₁ O₂).enumerate := by
   intro x ⟨k, hk⟩
   exact ⟨2 * k, by simp [hk, unionOracle]⟩
+
 
 
 
@@ -209,9 +229,11 @@ theorem union_oracle_contains_right (O₁ O₂ : TheoryOracle ℕ) :
 
 
 
+
 /-- Discovery count: distinct theorems with value ≤ L found in first T steps. -/
 def discoveryCount (oracle : TheoryOracle ℕ) (T L : ℕ) : ℕ :=
   ((Finset.range T).image oracle.enumerate |>.filter (· ≤ L)).card
+
 
 
 
@@ -220,6 +242,7 @@ theorem discovery_monotone_T (oracle : TheoryOracle ℕ) (T₁ T₂ L : ℕ) (h 
     discoveryCount oracle T₁ L ≤ discoveryCount oracle T₂ L :=
   Finset.card_mono <| Finset.filter_subset_filter _ <|
     Finset.image_subset_image <| Finset.range_mono h
+
 
 
 
@@ -232,11 +255,13 @@ theorem discovery_bounded (oracle : TheoryOracle ℕ) (T L : ℕ) :
 
 
 
+
 /-- **Theorem 8.1 (Diagonal Lemma)**: The diagonal function
 differs from every enumerated function at its own index. -/
 theorem diagonal_lemma (enum : ℕ → ℕ → Bool) :
     ∀ n, (fun k => !(enum k k)) n ≠ enum n n := by
   intro n; simp
+
 
 
 
@@ -256,6 +281,7 @@ theorem abstract_fixed_point {α : Type*} (F : (ℕ → α) → (ℕ → α))
       exact ⟨fun n => Classical.choose (h_nt n), fun n => Classical.choose_spec (h_nt n)⟩
     · simp_all +decide [funext_iff]
   exact ⟨hg.choose, fun n hn => hg.choose_spec n <| hn ▸ rfl⟩
+
 
 
 

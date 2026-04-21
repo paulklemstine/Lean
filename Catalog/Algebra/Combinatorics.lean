@@ -29,12 +29,14 @@ theorem generalized_pigeonhole {α β : Type*} [Fintype α] [Fintype β] [Decida
 
 
 
+
 /-- **Pigeonhole corollary**: If `|A| > |B|`, then no injection `A → B` exists. -/
 theorem pigeonhole_not_injective {α β : Type*} [Fintype α] [Fintype β]
     (h : Fintype.card β < Fintype.card α) :
     ¬ ∃ f : α → β, Injective f := by
   intro ⟨f, hf⟩
   exact absurd (Fintype.card_le_of_injective f hf) (not_le.mpr h)
+
 
 
 
@@ -47,10 +49,12 @@ theorem double_counting {α β : Type*} [Fintype α] [Fintype β] [DecidableEq �
 
 
 
+
 /-- Sum of binomial coefficients: `∑_{i=0}^{n} C(n,i) = 2^n`. -/
 theorem sum_binomial' (n : ℕ) :
     ∑ i ∈ Finset.range (n + 1), Nat.choose n i = 2 ^ n :=
   Nat.sum_range_choose n
+
 
 
 
@@ -64,6 +68,7 @@ theorem partial_binomial_sum_le (n k : ℕ) :
     by_contra h; push_neg at h
     simp [Nat.choose_eq_zero_of_lt (by omega : n < i)] at hne
   · exact le_of_eq (Nat.sum_range_choose n)
+
 
 
 
@@ -91,9 +96,11 @@ theorem sperner_bound (n : ℕ) (𝒜 : Finset (Finset (Fin n)))
 
 
 
+
 /-- A set system **shatters** `S` if every subset of `S` appears as an intersection. -/
 def shatters' {n : ℕ} (𝒜 : Finset (Finset (Fin n))) (S : Finset (Fin n)) : Prop :=
   ∀ T : Finset (Fin n), T ⊆ S → ∃ A ∈ 𝒜, A ∩ S = T
+
 
 
 
@@ -128,6 +135,7 @@ theorem sauer_shelah' {n d : ℕ} (𝒜 : Finset (Finset (Fin n)))
 
 
 
+
 /-- [Section: # CatalogBuild.Algebra.Combinatorics
 Auto-generated from theorem catalog database.
 Domain: Algebra
@@ -153,10 +161,12 @@ theorem lym_inequality (n : ℕ) (𝒜 : Finset (Finset (Fin n)))
 
 
 
+
 /-- The compression impossibility is a special case of the pigeonhole principle. -/
 theorem compression_from_pigeonhole {n m : ℕ} (h : m < n) :
     ¬ ∃ f : (Fin n → Bool) → (Fin m → Bool), Injective f := by
   exact pigeonhole_not_injective (by
     simp [Fintype.card_bool]
     exact Nat.pow_lt_pow_right (by omega) h)
+
 

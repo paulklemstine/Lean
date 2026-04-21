@@ -22,6 +22,7 @@ inductive PhotonChannel where
 
 
 
+
 /-- [Section: # CatalogBuild.Physics.ArithmeticPhotons.PhotonChannels
 Auto-generated from theorem catalog database.
 Domain: Physics/ArithmeticPhotons
@@ -31,12 +32,14 @@ theorem PhotonChannel.card : Fintype.card PhotonChannel = 7 := by
 
 
 
+
 /-- Classification of Hilbert space dimension type for each channel. -/
 inductive HilbertDimType where
   | finite (d : ℕ)      -- Finite-dimensional (d-dimensional)
   | countablyInfinite    -- Countably infinite (ℓ²)
   | continuous           -- Continuous / uncountably infinite (L²)
   deriving DecidableEq, Repr
+
 
 
 
@@ -59,9 +62,15 @@ def hilbertDimType : PhotonChannel → HilbertDimType
 
 
 
+
+/-- [Section: # CatalogBuild.Physics.ArithmeticPhotons.PhotonChannels
+Auto-generated from theorem catalog database.
+Domain: Physics/ArithmeticPhotons
+Declarations: 30] -/
 theorem polarization_unique_finite :
     ∀ c : PhotonChannel, (∃ d, hilbertDimType c = .finite d) ↔ c = .polarization := by
   intro c; unfold hilbertDimType; aesop;
+
 
 
 
@@ -75,8 +84,10 @@ inductive ConjugatePair where
 
 
 
+
 theorem ConjugatePair.card : Fintype.card ConjugatePair = 4 := by
   decide +kernel
+
 
 
 
@@ -89,12 +100,14 @@ def ConjugatePair.primaryChannel : ConjugatePair → PhotonChannel
 
 
 
+
 /-- The secondary channel in each conjugate pair. -/
 def ConjugatePair.secondaryChannel : ConjugatePair → PhotonChannel
   | .freqTime => .temporalMode
   | .dirPos => .direction      -- direction and position are conjugate
   | .oamAngle => .orbitalAM   -- OAM and angular position are conjugate
   | .numPhase => .photonNumber -- number and phase are conjugate
+
 
 
 
@@ -113,15 +126,18 @@ noncomputable def channelInfoCapacity : PhotonChannel → ℝ
 
 
 
+
 /-- The total information capacity of a single photon across all seven channels. -/
 noncomputable def totalInfoCapacity : ℝ :=
   (Finset.univ : Finset PhotonChannel).sum channelInfoCapacity
 
 
 
+
 theorem totalInfoCapacity_eq : totalInfoCapacity = 99 := by
   unfold totalInfoCapacity channelInfoCapacity;
   rw [ show ( Finset.univ : Finset PhotonChannel ) = { PhotonChannel.frequency, PhotonChannel.polarization, PhotonChannel.direction, PhotonChannel.orbitalAM, PhotonChannel.radialMode, PhotonChannel.temporalMode, PhotonChannel.photonNumber } by rfl, Finset.sum_insert, Finset.sum_insert, Finset.sum_insert, Finset.sum_insert, Finset.sum_insert, Finset.sum_insert ] <;> simp +decide ; linarith
+
 
 
 
@@ -137,9 +153,11 @@ def hasClassicalAnalogue : PhotonChannel → Bool
 
 
 
+
 theorem photonNumber_unique_nonclassical :
     ∀ c : PhotonChannel, hasClassicalAnalogue c = false ↔ c = .photonNumber := by
   decide +kernel
+
 
 
 
@@ -150,11 +168,13 @@ def isBounded : PhotonChannel → Bool
 
 
 
+
 theorem polarization_unique_bounded :
     ∀ c : PhotonChannel, isBounded c = true ↔ c = .polarization := by
   intro c
   unfold isBounded
   aesop
+
 
 
 
@@ -171,6 +191,7 @@ inductive SymmetryOrigin where
 
 
 
+
 /-- Map from channels to their symmetry origins. -/
 def symmetryOrigin : PhotonChannel → SymmetryOrigin
   | .frequency => .timeTranslation
@@ -180,6 +201,7 @@ def symmetryOrigin : PhotonChannel → SymmetryOrigin
   | .radialMode => .scaleSymmetry
   | .temporalMode => .temporalStructure
   | .photonNumber => .gaugeSymmetry
+
 
 
 
@@ -195,8 +217,10 @@ noncomputable def uncertaintyBound : ConjugatePair → ℝ
 
 
 
+
 theorem uncertaintyBound_pos : ∀ p : ConjugatePair, uncertaintyBound p > 0 := by
   exact fun p => by cases p <;> unfold uncertaintyBound <;> norm_num;
+
 
 
 
@@ -216,8 +240,10 @@ def practicalDim : PhotonChannel → ℕ
 
 
 
+
 theorem practicalDim_pos : ∀ c : PhotonChannel, practicalDim c > 0 := by
   exact fun c => by cases c <;> decide;
+
 
 
 
@@ -227,14 +253,17 @@ def hyperEntanglementDim : ℕ :=
 
 
 
+
 theorem hyperEntanglementDim_pos : hyperEntanglementDim > 0 := by
   decide +revert
+
 
 
 
 theorem massless_polarization_states (s : ℕ) (hs : s ≥ 1) :
     (2 : ℕ) ≤ 2 * s + 1 := by
   grind
+
 
 
 
@@ -249,14 +278,17 @@ noncomputable def zeroPointEnergy (ω : ℝ) : ℝ := ω / 2
 
 
 
+
 theorem zeroPointEnergy_pos {ω : ℝ} (hω : ω > 0) : zeroPointEnergy ω > 0 := by
   exact div_pos hω zero_lt_two
+
 
 
 
 theorem zeroPointEnergy_mono {ω₁ ω₂ : ℝ} (h : ω₁ < ω₂) :
     zeroPointEnergy ω₁ < zeroPointEnergy ω₂ := by
   unfold zeroPointEnergy; linarith;
+
 
 
 
@@ -268,8 +300,10 @@ theorem shannonCapacity_mono {d₁ d₂ : ℕ} (h : d₁ ≤ d₂) :
 
 
 
+
 theorem shannonCapacity_polarization : shannonCapacity 2 = 1 := by
   unfold shannonCapacity; norm_num;
+
 
 
 end

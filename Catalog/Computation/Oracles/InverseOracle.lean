@@ -17,6 +17,7 @@ namespace InverseOracle
 
 
 
+
 /-- Construct the canonical inverse oracle for any function. -/
 def canonical (f : α → β) : InverseOracle α β where
   func := f
@@ -25,11 +26,13 @@ def canonical (f : α → β) : InverseOracle α β where
 
 
 
+
 /-- For a bijective function, the inverse oracle returns singletons. -/
 theorem bijective_singleton (f : α → β) (hf : Function.Bijective f) (y : β) :
     ∃! x, x ∈ (canonical f).invert y := by
   obtain ⟨x, hx⟩ := hf.surjective y
   exact ⟨x, hx, fun x' hx' => hf.injective (hx' ▸ hx ▸ rfl)⟩
+
 
 
 
@@ -50,11 +53,13 @@ def compose (Og : InverseOracle β γ) (Of : InverseOracle α β) :
 
 
 
+
 /-- The identity function has a trivial inverse oracle. -/
 def identity : InverseOracle α α where
   func := id
   invert := fun y => {y}
   correct := fun y x => by simp [id]
+
 
 
 
@@ -70,9 +75,11 @@ theorem compose_identity (O : InverseOracle α β) :
 
 
 
+
 /-- Pullback of an oracle along a function. -/
 def pullback (O : Oracle β) (f : α → β) : Oracle α :=
   ⟨f ⁻¹' O.carrier⟩
+
 
 
 
@@ -81,6 +88,7 @@ def pushforward (O : Oracle α) (f : α → β) : Oracle β :=
   ⟨f '' O.carrier⟩
 
 @[simp]
+
 
 
 /-- [Section: # CatalogBuild.Computation.Oracles.InverseOracle
@@ -92,6 +100,11 @@ theorem mem_pullback (O : Oracle β) (f : α → β) (x : α) :
 @[simp]
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.InverseOracle
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 22] -/
 theorem mem_pushforward (O : Oracle α) (f : α → β) (y : β) :
     y ∈ (O.pushforward f).carrier ↔ ∃ x ∈ O.carrier, f x = y := Set.mem_image f O.carrier y
 
@@ -101,9 +114,11 @@ theorem mem_pushforward (O : Oracle α) (f : α → β) (y : β) :
 
 
 
+
 /-- Pullback along identity is the identity. -/
 theorem pullback_id (O : Oracle α) : O.pullback id = O := by
   ext x; simp [pullback]
+
 
 
 
@@ -114,10 +129,12 @@ theorem pullback_comp (O : Oracle γ) (g : β → γ) (f : α → β) :
 
 
 
+
 /-- Pullback commutes with anti. -/
 theorem pullback_anti (O : Oracle β) (f : α → β) :
     O.anti.pullback f = (O.pullback f).anti := by
   ext x; simp [pullback, anti]
+
 
 
 
@@ -128,10 +145,12 @@ theorem pullback_join (O₁ O₂ : Oracle β) (f : α → β) :
 
 
 
+
 /-- Pullback commutes with meet. -/
 theorem pullback_meet (O₁ O₂ : Oracle β) (f : α → β) :
     (O₁.meet O₂).pullback f = (O₁.pullback f).meet (O₂.pullback f) := by
   ext x; simp [pullback, meet, Set.mem_inter_iff]
+
 
 
 
@@ -145,6 +164,7 @@ theorem pushforward_pullback_surj (O : Oracle β) (f : α → β) (hf : Function
   · intro hy
     obtain ⟨x, rfl⟩ := hf y
     exact ⟨x, hy, rfl⟩
+
 
 
 
@@ -163,9 +183,11 @@ variable {α : Type*}
 
 
 
+
 /-- Given an oracle and an encoding, produce a ℕ-indexed oracle (a subset of ℕ). -/
 def natOracle (enc : OracleEncoding α) (O : Oracle α) : Set ℕ :=
   {n : ℕ | ∃ x : α, enc.encode x = n ∧ x ∈ O.carrier}
+
 
 
 
@@ -183,11 +205,13 @@ theorem lookup_correct (enc : OracleEncoding α) (O : Oracle α) (x : α) :
 
 
 
+
 /-- Construct an encoding from Mathlib's `Encodable` typeclass. -/
 def fromEncodable [Encodable α] : OracleEncoding α where
   encode := Encodable.encode
   decode := Encodable.decode
   decode_encode := Encodable.encodek
+
 
 
 
@@ -203,7 +227,9 @@ theorem oracle_integer_lookup [Encodable α] (O : Oracle α) (x : α) :
 -- Example: The primality oracle on ℕ, looked up by integer index
 
 
+
 /-- The primality oracle: answers "yes" iff the query is prime. -/
 def primeOracle : Oracle ℕ := ⟨{n | Nat.Prime n}⟩
+
 
 

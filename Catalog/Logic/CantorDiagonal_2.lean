@@ -18,6 +18,11 @@ theorem cantor_antidiagonal_not_in_range (f : α → Set α) :
 
 
 
+
+/-- [Section: # CatalogBuild.Logic.CantorDiagonal_2
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 14] -/
 theorem cantor_no_injection_powerset_to_base [Nonempty α] :
     ¬∃ g : Set α → α, Function.Injective g := by
   by_contra! h_inj;
@@ -29,6 +34,7 @@ theorem cantor_no_injection_powerset_to_base [Nonempty α] :
 
 
 
+
 theorem binary_sequences_uncountable :
     ¬∃ f : ℕ → (ℕ → Bool), Function.Surjective f := by
   simp +zetaDelta at *;
@@ -37,8 +43,10 @@ theorem binary_sequences_uncountable :
 
 
 
+
 theorem unit_interval_uncountable : ¬Countable (Set.Icc (0 : ℝ) 1) := by
   aesop
+
 
 
 
@@ -47,8 +55,10 @@ theorem cantor_cardinal_strict_lt (κ : Cardinal) : κ < 2 ^ κ := by
 
 
 
+
 theorem no_largest_cardinal (κ : Cardinal) : ∃ μ, κ < μ := by
   exact ⟨ _, Cardinal.cantor κ ⟩
+
 
 
 
@@ -62,10 +72,12 @@ theorem nat_lt_real_cardinal : Cardinal.mk ℕ < Cardinal.mk ℝ := by
 
 
 
+
 theorem no_surjection_nat_to_nat_nat :
     ¬∃ f : ℕ → (ℕ → ℕ), Function.Surjective f := by
   simp +zetaDelta at *;
   exact fun f hf => by have := hf ( fun n => f n n + 1 ) ; obtain ⟨ n, hn ⟩ := this; have := congr_fun hn n; norm_num at this;
+
 
 
 
@@ -75,14 +87,17 @@ theorem russell_as_diagonalization :
 
 
 
+
 theorem aleph0_lt_continuum : Cardinal.aleph0 < Cardinal.continuum := by
   exact Cardinal.aleph0_lt_continuum
+
 
 
 
 theorem schroder_bernstein_cardinal (κ μ : Cardinal) (h1 : κ ≤ μ) (h2 : μ ≤ κ) :
     κ = μ := by
   exact le_antisymm h1 h2
+
 
 
 
@@ -95,10 +110,12 @@ theorem cantor_space_uncountable : ¬Countable (ℕ → Bool) := by
 
 
 
+
 /-- **The Continuum Hypothesis as a formal statement.**
 CH asserts that the cardinality of the continuum equals ℵ₁. -/
 def ContinuumHypothesis : Prop :=
   Cardinal.continuum.{0} = Cardinal.aleph.{0} 1
+
 
 
 
@@ -107,4 +124,5 @@ theorem bolzano_weierstrass_real (a : ℕ → ℝ) (M : ℝ) (hM : ∀ n, |a n| 
   have h_compact : IsCompact (Metric.closedBall (0 : ℝ) M) := by
     exact ProperSpace.isCompact_closedBall _ _;
   have := h_compact.isSeqCompact fun n => mem_closedBall_zero_iff.mpr ( hM n ) ; aesop;
+
 

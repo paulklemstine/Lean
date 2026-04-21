@@ -13,9 +13,11 @@ theorem energy_zero_iff (N x : ℕ) (hx : 0 < x) : E N x = 0 ↔ x ∣ N := by
 
 
 
+
 /-- Energy is strictly less than x. -/
 theorem energy_lt (N x : ℕ) (hx : 0 < x) : E N x < x :=
   Nat.mod_lt N hx
+
 
 
 
@@ -33,14 +35,21 @@ theorem zero_energy_count (N : ℕ) (hN : 0 < N) :
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.EnergyLandscapeAdvanced
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 11] -/
 theorem energy_predecessor (N : ℕ) (hN : 2 < N) : E N (N - 1) = 1 := by
   rcases N with ( _ | _ | _ | _ | _ | N ) <;> simp_all +arith +decide [ E ];
   norm_num [ ( by ring : N + 5 = N + 4 + 1 ) ]
 
 
 
+
 /-- Energy at x = 2 classifies parity. -/
 theorem energy_parity (N : ℕ) : E N 2 = N % 2 := by rfl
+
 
 
 
@@ -50,6 +59,7 @@ theorem total_energy_bound (N : ℕ) (hN : 0 < N) :
   have h_term_bound : ∀ x ∈ Finset.Icc 1 N, E N x ≤ x := by
     exact fun x hx => Nat.le_of_lt <| Nat.mod_lt _ <| Finset.mem_Icc.mp hx |>.1;
   exact le_trans ( Finset.sum_le_sum h_term_bound ) ( by exact le_trans ( Finset.sum_le_sum fun x hx => Finset.mem_Icc.mp hx |>.2 ) ( by norm_num ) )
+
 
 
 
@@ -63,6 +73,7 @@ theorem average_energy_bound (N : ℕ) (hN : 1 ≤ N) :
 
 
 
+
 theorem prime_two_zeros (N : ℕ) (hN : Nat.Prime N) :
     (Finset.Icc 1 N |>.filter (fun x => E N x = 0)).card = 2 := by
   convert zero_energy_count N hN.pos using 1;
@@ -70,8 +81,10 @@ theorem prime_two_zeros (N : ℕ) (hN : Nat.Prime N) :
 
 
 
+
 /-- The energy gradient: ΔE(x) = E(x+1) - E(x). -/
 def energy_gradient (N x : ℕ) : ℤ := (E N (x + 1) : ℤ) - (E N x : ℤ)
+
 
 
 
@@ -85,6 +98,7 @@ theorem gradient_nonneg_at_factor (N d : ℕ) (hd : d ∣ N) (hd_pos : 0 < d)
 
 
 
+
 theorem semiprime_minima_count (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
     (hpq : p ≠ q) :
     (Finset.Icc 1 (p * q) |>.filter (fun x => E (p * q) x = 0)).card = 4 := by
@@ -95,4 +109,5 @@ theorem semiprime_minima_count (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
     simpa [ Finset.ext_iff, Finset.mem_mul ] using by tauto;
   rw [ h_divisors, Finset.card_insert_of_notMem, Finset.card_insert_of_notMem, Finset.card_insert_of_notMem ] <;> norm_num [ hp.ne_zero, hq.ne_zero, hp.ne_one, hq.ne_one, hpq ];
   exact ⟨ Ne.symm hp.ne_one, Ne.symm hq.ne_one, Nat.ne_of_lt ( one_lt_mul'' hp.one_lt hq.one_lt ) ⟩
+
 

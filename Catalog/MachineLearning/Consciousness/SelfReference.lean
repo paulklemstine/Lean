@@ -16,6 +16,7 @@ structure ReflexiveDomain where
 
 
 
+
 /-- In a reflexive domain, every endofunction has a fixed point.
 This is the mathematical core of self-reference: in any system that can
 encode its own functions, every transformation has a fixed point. -/
@@ -26,6 +27,7 @@ theorem reflexive_domain_fixed_point (D : ReflexiveDomain) (f : D.carrier → D.
   obtain ⟨d, hd⟩ : ∃ d, D.decode d = fun x => f (D.decode x x) :=
     ⟨D.encode (fun x => f (D.decode x x)), D.decode_encode _⟩
   exact ⟨_, congr_fun hd d |> Eq.symm⟩
+
 
 
 
@@ -41,12 +43,14 @@ theorem uncreated_theory_exists (T : TheorySpace)
 
 
 
+
 /-- A self-modeling system contains a model of itself -/
 structure SelfModelingSystem where
   State : Type
   dynamics : State → State
   internalModel : State → State
   model_accurate : ∀ s, internalModel s = dynamics s
+
 
 
 
@@ -58,10 +62,16 @@ theorem self_model_fixed_point (S : SelfModelingSystem) :
 
 
 
+
+/-- [Section: # CatalogBuild.MachineLearning.Consciousness.SelfReference
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/Consciousness
+Declarations: 8] -/
 theorem idempotent_self_reference {α : Type} (f : α → α)
     (idem : ∀ x, f (f x) = f x) (x : α) :
     f (f x) = f x := by
   exact idem x
+
 
 
 
@@ -72,8 +82,10 @@ theorem retraction_has_fixed_points {α : Type} (f : α → α)
 
 
 
+
 theorem quine_exists_in_reflexive_domain (D : ReflexiveDomain) :
     ∃ x : D.carrier, D.decode x x = x := by
   have := reflexive_domain_fixed_point D ( fun x => D.decode x x ) ; aesop;
+
 
 

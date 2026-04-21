@@ -16,23 +16,34 @@ Declarations: 54] -/
 theorem tAdd_comm (a b : ℝ) : tAdd a b = tAdd b a := max_comm a b
 
 
+
+/-- [Section: # CatalogBuild.Tropical.NeuralNetworks.TropicalLLMConversion
+Auto-generated from theorem catalog database.
+Domain: Tropical/NeuralNetworks
+Declarations: 54] -/
 theorem tAdd_assoc (a b c : ℝ) : tAdd (tAdd a b) c = tAdd a (tAdd b c) := max_assoc _ _ _
+
 
 
 theorem tAdd_idem (a : ℝ) : tAdd a a = a := max_self a
 
 
+
 theorem tMul_comm (a b : ℝ) : tMul a b = tMul b a := add_comm a b
+
 
 
 theorem tMul_assoc (a b c : ℝ) : tMul (tMul a b) c = tMul a (tMul b c) := by
   unfold tMul; ring
 
 
+
 theorem tMul_zero_right (a : ℝ) : tMul a 0 = a := add_zero a
 
 
+
 theorem tMul_zero_left (a : ℝ) : tMul 0 a = a := zero_add a
+
 
 
 
@@ -43,10 +54,12 @@ theorem tMul_tAdd_left (a b c : ℝ) :
 
 
 
+
 /-- Right distributivity -/
 theorem tMul_tAdd_right (a b c : ℝ) :
     tMul (tAdd a b) c = tAdd (tMul a c) (tMul b c) := by
   simp only [tMul, tAdd]; exact max_add a b c
+
 
 
 
@@ -58,9 +71,11 @@ theorem relu_piecewise (x : ℝ) : relu x = if x ≤ 0 then 0 else x := by
 
 
 
+
 /-- exp preserves tropical multiplication (becomes ordinary multiplication) -/
 theorem exp_tMul (a b : ℝ) : exp (tMul a b) = exp a * exp b :=
   exp_add a b
+
 
 
 
@@ -69,13 +84,16 @@ theorem exp_tropical_one : exp (0 : ℝ) = 1 := exp_zero
 
 
 
+
 /-- exp is order-preserving (connects tropical ordering to standard ordering) -/
 theorem exp_mono_iff (a b : ℝ) : a ≤ b ↔ exp a ≤ exp b := exp_le_exp.symm
 
 
 
+
 /-- exp is strictly order-preserving -/
 theorem exp_strict_mono_iff' (a b : ℝ) : a < b ↔ exp a < exp b := Real.exp_lt_exp.symm
+
 
 
 
@@ -86,10 +104,12 @@ theorem log_recovers_tMul (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
 
 
 
+
 /-- Sum of exp is positive for nonempty types -/
 theorem sum_exp_pos' {n : ℕ} [NeZero n] (v : Fin n → ℝ) :
     0 < ∑ j, exp (v j) :=
   Finset.sum_pos (fun _ _ => exp_pos _) Finset.univ_nonempty
+
 
 
 
@@ -102,11 +122,13 @@ theorem softmax_shift {n : ℕ} (v : Fin n → ℝ) (c : ℝ) (i : Fin n) :
 
 
 
+
 /-- Softmax is bounded above by 1 -/
 theorem softmax_le_one {n : ℕ} [NeZero n] (v : Fin n → ℝ) (i : Fin n) :
     softmax v i ≤ 1 :=
   (div_le_one₀ (sum_exp_pos' v)).mpr
     (Finset.single_le_sum (fun _ _ => exp_nonneg _) (Finset.mem_univ i))
+
 
 
 
@@ -116,10 +138,12 @@ theorem scaledSoftmax_one {n : ℕ} (v : Fin n → ℝ) (i : Fin n) :
 
 
 
+
 /-- Sum of exp is positive -/
 theorem sum_exp_pos {n : ℕ} (v : Fin (n + 1) → ℝ) :
     0 < ∑ i, exp (v i) :=
   Finset.sum_pos (fun _ _ => exp_pos _) Finset.univ_nonempty
+
 
 
 
@@ -136,6 +160,7 @@ theorem logSumExp_le {n : ℕ} (v : Fin (n + 1) → ℝ) :
 
 
 
+
 /-- Attention score scales linearly in q -/
 theorem attentionScore_scale {d : ℕ} (c : ℝ) (q k : Fin d → ℝ) :
     attentionScore (fun i => c * q i) k = c * attentionScore q k := by
@@ -143,10 +168,12 @@ theorem attentionScore_scale {d : ℕ} (c : ℝ) (q k : Fin d → ℝ) :
 
 
 
+
 /-- Transplantation preserves the linear map exactly -/
 theorem transplant_exact {m n : ℕ} (W : Fin m → Fin n → ℝ) (b : Fin m → ℝ)
     (x : Fin n → ℝ) :
     linearLayer W b x = fun i => (∑ j, W i j * x j) + b i := rfl
+
 
 
 
@@ -159,8 +186,10 @@ theorem compose_linear {l m n : ℕ}
 
 
 
+
 /-- Residual connection: out = x + f(x) -/
 def residualConn {n : ℕ} (x fx : Fin n → ℝ) : Fin n → ℝ := fun i => x i + fx i
+
 
 
 
@@ -170,9 +199,11 @@ theorem residual_sub {n : ℕ} (x fx : Fin n → ℝ) (i : Fin n) :
 
 
 
+
 /-- Layer norm mean -/
 noncomputable def layerNormMean {n : ℕ} [NeZero n] (x : Fin n → ℝ) : ℝ :=
   (∑ i, x i) / n
+
 
 
 
@@ -183,16 +214,20 @@ theorem layerNormMean_const {n : ℕ} [NeZero n] (c : ℝ) :
 
 
 
+
 /-- Causal mask: position i can attend to position j iff j ≤ i -/
 def causalMask (i j : ℕ) : Prop := j ≤ i
+
 
 
 
 theorem causalMask_refl (i : ℕ) : causalMask i i := le_refl i
 
 
+
 theorem causalMask_trans {i j k : ℕ} (hkj : causalMask k j) (hji : causalMask j i) :
     causalMask k i := by unfold causalMask at *; omega
+
 
 
 
@@ -203,26 +238,34 @@ theorem causal_attention_count (i : ℕ) :
 
 
 
+
 def gpt2_n_layer : ℕ := 12
+
 
 
 def gpt2_n_head : ℕ := 12
 
 
+
 def gpt2_n_embd : ℕ := 768
+
 
 
 def gpt2_head_dim : ℕ := gpt2_n_embd / gpt2_n_head
 
 
 
+
 theorem gpt2_head_dim_val : gpt2_head_dim = 64 := by native_decide
+
 
 
 theorem gpt2_heads_divide : gpt2_n_head ∣ gpt2_n_embd := by native_decide
 
 
+
 theorem gpt2_each_head : gpt2_n_embd / gpt2_n_head = 64 := by native_decide
+
 
 
 
@@ -230,12 +273,15 @@ theorem gpt2_attn_params :
     3 * gpt2_n_embd ^ 2 + gpt2_n_embd ^ 2 = 4 * gpt2_n_embd ^ 2 := by ring
 
 
+
 theorem gpt2_mlp_params :
     4 * gpt2_n_embd ^ 2 + 4 * gpt2_n_embd ^ 2 = 8 * gpt2_n_embd ^ 2 := by ring
 
 
+
 theorem gpt2_layer_params :
     4 * gpt2_n_embd ^ 2 + 8 * gpt2_n_embd ^ 2 = 12 * gpt2_n_embd ^ 2 := by ring
+
 
 
 
@@ -246,13 +292,16 @@ theorem multihead_dim_split (n_embd n_head : ℕ) (h : n_head ∣ n_embd) :
 
 
 
+
 /-- GELU approximation via sigmoid: x · σ(1.702x) -/
 noncomputable def geluApprox (x : ℝ) : ℝ :=
   x * (1 / (1 + exp (-(1.702 * x))))
 
 
 
+
 theorem geluApprox_zero : geluApprox 0 = 0 := by simp [geluApprox]
+
 
 
 
@@ -261,8 +310,10 @@ theorem sigmoid_pos (x : ℝ) : 0 < 1 / (1 + exp (-x)) := by
 
 
 
+
 theorem geluApprox_pos {x : ℝ} (hx : 0 < x) : 0 < geluApprox x :=
   mul_pos hx (sigmoid_pos (1.702 * x))
+
 
 
 
@@ -273,9 +324,11 @@ theorem one_hot_zero_entropy {n : ℕ} [NeZero n] (k : Fin n) :
 
 
 
+
 /-- Addition distributes over max (tropical perspective) -/
 theorem add_max_distrib (a b c : ℝ) : a + max b c = max (a + b) (a + c) :=
   (max_add_add_left a b c).symm
+
 
 
 
@@ -288,13 +341,16 @@ theorem max_mul_nonneg (a b c : ℝ) (hc : 0 ≤ c) :
 
 
 
+
 /-- GPT-2 vocabulary size -/
 def gpt2_vocab : ℕ := 50257
 
 
 
+
 /-- Naive lookup table is astronomically large -/
 theorem gpt2_lookup_huge : gpt2_vocab ^ 1024 > 10 ^ 100 := by native_decide
+
 
 
 
@@ -304,10 +360,12 @@ theorem relu_two_pieces (x : ℝ) : relu x = max (1 * x + 0) (0 * x + 0) := by
 
 
 
+
 /-- Composition of ReLU layers creates more linear regions -/
 theorem relu_compose_pieces (x : ℝ) :
     relu (relu x - 1) = max (max x 0 - 1) 0 := by
   simp [relu]
+
 
 
 

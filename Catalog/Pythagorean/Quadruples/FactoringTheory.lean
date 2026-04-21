@@ -20,6 +20,7 @@ theorem coprime_quotient_useless (p q k N : ℕ)
 
 
 
+
 /-- [Section: # CatalogBuild.Pythagorean.Quadruples.FactoringTheory
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/Quadruples
@@ -34,6 +35,7 @@ theorem factoring_works_iff (p q k : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
 
 
 
+
 /-- N^4 > N^3 for N ≥ 2, encoding the fact that N^{2/3} > N^{1/2}.
 (Since (N^{2/3})^6 = N^4 and (N^{1/2})^6 = N^3, N^4 > N^3
 implies N^{2/3} > N^{1/2}.) -/
@@ -43,10 +45,12 @@ theorem minkowski_worse_than_sqrt (N : ℕ) (hN : 2 ≤ N) :
 
 
 
+
 /-- The only dimension where k/d = 1/2 with k = d-1 is d = 2. -/
 theorem optimal_dimension_is_two :
     ∀ d : ℕ, 2 ≤ d → (2 * (d - 1) = d ↔ d = 2) := by
   intro d hd; omega
+
 
 
 
@@ -61,6 +65,7 @@ theorem quad_param_in_L4 (m n p q : ℤ) :
 
 
 
+
 /-- If coprime moduli both divide a sum of squares, their product does too. -/
 theorem coprime_lattice_intersection (N₁ N₂ x y z : ℤ)
     (hcop : IsCoprime N₁ N₂)
@@ -68,6 +73,7 @@ theorem coprime_lattice_intersection (N₁ N₂ x y z : ℤ)
     (h2 : N₂ ∣ (x ^ 2 + y ^ 2 + z ^ 2)) :
     (N₁ * N₂) ∣ (x ^ 2 + y ^ 2 + z ^ 2) :=
   hcop.mul_dvd h1 h2
+
 
 
 
@@ -79,4 +85,5 @@ theorem quad_unit_sphere (a b c d : ℤ) (hd : d ≠ 0)
   have hd2_ne : (d : ℚ) ^ 2 ≠ 0 := pow_ne_zero 2 hd_ne
   field_simp
   exact_mod_cast hpyth
+
 

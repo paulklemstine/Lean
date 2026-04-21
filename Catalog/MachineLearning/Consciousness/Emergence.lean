@@ -17,10 +17,12 @@ structure MicroMacroSystem where
 
 
 
+
 /-- A macro-property is weakly emergent if it is determined by the micro-state
 through coarse-graining -/
 def WeaklyEmergent (S : MicroMacroSystem) : Prop :=
   ∀ m : S.Micro, S.coarseGrain (S.microDynamics m) = S.macroDynamics (S.coarseGrain m)
+
 
 
 
@@ -34,6 +36,7 @@ theorem weakly_emergent_commutes (S : MicroMacroSystem) (h : WeaklyEmergent S) :
 
 
 
+
 /-- A property is strongly emergent if the macro-dynamics cannot be recovered
 from micro-dynamics alone -/
 def StronglyEmergent (S : MicroMacroSystem) : Prop :=
@@ -41,10 +44,16 @@ def StronglyEmergent (S : MicroMacroSystem) : Prop :=
 
 
 
+
+/-- [Section: # CatalogBuild.MachineLearning.Consciousness.Emergence
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/Consciousness
+Declarations: 13] -/
 theorem strong_emergence_means_novelty (S : MicroMacroSystem) (h : StronglyEmergent S) :
     ∃ m : S.Micro,
       S.coarseGrain (S.microDynamics m) ≠ S.macroDynamics (S.coarseGrain m) := by
   contrapose! h; aesop;
+
 
 
 
@@ -56,9 +65,11 @@ def Supervenes (S : MicroMacroSystem) : Prop :=
 
 
 
+
 theorem supervenience_of_well_defined (S : MicroMacroSystem) :
     Supervenes S := by
   exact fun m₁ m₂ h => by rw [ h ] ;
+
 
 
 
@@ -70,10 +81,12 @@ structure DownwardCausation (S : MicroMacroSystem) where
 
 
 
+
 theorem downward_causation_preserves (S : MicroMacroSystem)
     (dc : DownwardCausation S) (m : S.Micro) (h : dc.constraint (S.coarseGrain m)) :
     dc.constraint (S.coarseGrain (S.microDynamics m)) := by
   exact dc.restricts m h
+
 
 
 
@@ -84,9 +97,11 @@ structure EmergenceLevel where
 
 
 
+
 theorem top_level_exists (n : ℕ) (h : 1 < n) :
     ∃ top : Fin n, top.val = n - 1 := by
   exact ⟨ ⟨ n - 1, Nat.sub_lt ( by linarith ) ( by linarith ) ⟩, rfl ⟩
+
 
 
 
@@ -97,9 +112,11 @@ structure EmergentConsciousness (S : MicroMacroSystem) where
 
 
 
+
 theorem consciousness_requires_whole (S : MicroMacroSystem)
     (ec : EmergentConsciousness S) :
     ∃ m : S.Macro, ec.conscious m := by
   exact ec.exists_conscious
+
 
 

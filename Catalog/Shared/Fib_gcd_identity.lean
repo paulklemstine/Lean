@@ -15,9 +15,11 @@ theorem fib_gcd_identity (m n : ℕ) :
 
 
 
+
 /-- Fibonacci divisibility: m | n implies F(m) | F(n). -/
 theorem fib_dvd_chain (m n : ℕ) (h : m ∣ n) : Nat.fib m ∣ Nat.fib n :=
   Nat.fib_dvd _ _ h
+
 
 
 
@@ -28,6 +30,7 @@ theorem fib_primitive_divisor_existence :
   sorry
 
 
+
 /-- [Section: # CatalogBuild.Shared.Fib_gcd_identity
 Auto-generated from theorem catalog database.
 Domain: Speculative
@@ -35,6 +38,7 @@ Declarations: 8] -/
 theorem fib_linear_lower (n : ℕ) (hn : 6 ≤ n) : n ≤ Nat.fib n := by
   rcases n with ( _ | _ | _ | _ | _ | _ | _ | n ) <;> simp_all +arith +decide;
   exact Nat.recOn n ( by decide ) fun n ihn => by norm_num [ Nat.fib_add_two ] at * ; linarith
+
 
 
 
@@ -54,6 +58,11 @@ theorem fib_exp_bound (n : ℕ) : Nat.fib n ≤ 2^n := by
 
 
 
+
+/-- [Section: # CatalogBuild.Shared.Fib_gcd_identity
+Auto-generated from theorem catalog database.
+Domain: Shared
+Declarations: 8] -/
 theorem fib_sq_mod_prime (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2) (hp5 : p ≠ 5) :
     (Nat.fib p ^ 2) % p = 1 % p := by
   haveI := Fact.mk hp; norm_num [ ← ZMod.natCast_eq_natCast_iff' ] ; ring_nf;
@@ -99,6 +108,7 @@ theorem fib_sq_mod_prime (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2) (hp5 : p �
 
 
 
+
 theorem fib_composite_test (n : ℕ) (hn : 1 < n) (hn2 : n ≠ 2) (hn5 : n ≠ 5)
     (h : (Nat.fib n ^ 2) % n ≠ 1 % n) :
     ¬Nat.Prime n := by
@@ -106,7 +116,9 @@ theorem fib_composite_test (n : ℕ) (hn : 1 < n) (hn2 : n ≠ 2) (hn5 : n ≠ 5
 
 
 
+
 /-- F(4) = 3. -/
 theorem fib_four_val : Nat.fib 4 = 3 := by native_decide
+
 
 

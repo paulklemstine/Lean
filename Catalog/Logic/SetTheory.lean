@@ -16,8 +16,14 @@ theorem nat_int_equipollent : Cardinal.mk ℕ = Cardinal.mk ℤ := by
 
 
 
+
+/-- [Section: # CatalogBuild.Logic.SetTheory
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 6] -/
 theorem nat_countable : Cardinal.mk ℕ = Cardinal.aleph0 := by
   simp +zetaDelta at *
+
 
 
 
@@ -27,9 +33,11 @@ theorem nat_well_ordered (S : Set ℕ) (hS : S.Nonempty) :
 
 
 
+
 theorem strong_induction (P : ℕ → Prop)
     (h : ∀ n, (∀ m, m < n → P m) → P n) : ∀ n, P n := by
       exact?
+
 
 
 
@@ -39,7 +47,9 @@ theorem de_morgan_union {α : Type*} (A B : Set α) :
 
 
 
+
 theorem de_morgan_inter {α : Type*} (A B : Set α) :
     (A ∩ B)ᶜ = Aᶜ ∪ Bᶜ := by
       grind
+
 

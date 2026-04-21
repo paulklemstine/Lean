@@ -15,10 +15,12 @@ noncomputable def σ (k n : ℕ) : ℕ :=
 
 
 
+
 /-- For a prime p, the number of divisors is exactly 2. -/
 theorem prime_divisor_count' (p : ℕ) (hp : Nat.Prime p) :
     (Nat.divisors p).card = 2 :=
   Nat.Prime.divisors hp ▸ Finset.card_pair (Ne.symm (Nat.Prime.one_lt hp).ne')
+
 
 
 
@@ -29,6 +31,7 @@ theorem sigma_multiplicative_coprime (_k m n : ℕ) (_hm : 1 ≤ m) (_hn : 1 ≤
     (hcop : Nat.Coprime m n) :
     (Nat.divisors (m * n)).card = (Nat.divisors m).card * (Nat.divisors n).card :=
   hcop.card_divisors_mul
+
 
 
 
@@ -44,10 +47,12 @@ theorem semiprime_divisor_count (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q
 
 
 
+
 /-- Two coprime factors both dividing N combine. -/
 theorem coprime_factor_combine (a b N : ℕ) (ha : a ∣ N) (hb : b ∣ N)
     (hcop : Nat.Coprime a b) : a * b ∣ N :=
   Nat.Coprime.mul_dvd_of_dvd_of_dvd hcop ha hb
+
 
 
 
@@ -70,9 +75,11 @@ theorem distinct_rep_nonzero_cross (a b c d : ℤ) (_h_distinct : (a, b) ≠ (c,
 
 
 
+
 /-- E₈ kissing number: each vertex has 240 nearest neighbors.
 A quantum walk on this graph has degree 240. -/
 def e8_degree : ℕ := 240
+
 
 
 
@@ -80,6 +87,7 @@ def e8_degree : ℕ := 240
 theorem e8_walk_degree_advantage :
     e8_degree > 2 ∧ e8_degree > 6 ∧ e8_degree > 12 := by
   unfold e8_degree; omega
+
 
 
 
@@ -91,11 +99,13 @@ theorem spectral_gap_advantage (d : ℕ) (hd : 1 < d) : d * d > d := by
 
 
 
+
 /-- E₈ root system has 240 vectors. Each provides a search direction.
 The Weyl group orbit structure means many directions are equivalent,
 reducing effective search to orbits.
 Bound: 240 / 8 = 30 independent direction classes. -/
 theorem e8_direction_classes : 240 / 8 = 30 := by decide
+
 
 
 
@@ -106,6 +116,7 @@ The constant factor 240 is negligible vs polynomial improvement.
 Formalized: 240 < 240^2 (walk steps dominate update cost). -/
 theorem bht_e8_constant_factor : e8_degree < e8_degree ^ 2 := by
   unfold e8_degree; norm_num
+
 
 
 
@@ -120,10 +131,12 @@ theorem cube_root_scaling (n : ℕ) (hn : 1 ≤ n) : n ^ 3 ≥ n := by
 
 
 
+
 /-- The Moufang identity: (xy)(zx) = x(yz)x.
 In the associative case, this follows from associativity. -/
 theorem moufang_assoc (x y z : ℤ) :
     (x * y) * (z * x) = x * (y * z) * x := by ring
+
 
 
 
@@ -134,10 +147,12 @@ theorem left_alternative (x y : ℤ) :
 
 
 
+
 /-- The right alternative identity: (yx)x = yx².
 This also holds in octonions. -/
 theorem right_alternative (x y : ℤ) :
     (y * x) * x = y * x ^ 2 := by ring
+
 
 
 
@@ -148,10 +163,12 @@ theorem flexible_identity (x y : ℤ) :
 
 
 
+
 /-- Non-associative obstruction for descent:
 The NORM is always associative and multiplicative. -/
 theorem norm_always_associative (a b c : ℕ) :
     a * b * c = a * (b * c) := by ring
+
 
 
 
@@ -163,9 +180,11 @@ theorem collision_only_needs_norm (a b N : ℤ)
 
 
 
+
 /-- The Moufang loop condition: (xy)(zx) = x((yz)x). -/
 theorem moufang_right (x y z : ℤ) :
     (x * y) * (z * x) = x * ((y * z) * x) := by ring
+
 
 
 
@@ -180,8 +199,10 @@ theorem artin_two_gen (a b : ℤ) :
 
 
 
+
 /-- Dimension 2 channel count. -/
 theorem dim2_channels : 2 + Nat.choose 2 2 = 3 := by decide
+
 
 
 
@@ -190,13 +211,16 @@ theorem dim4_channels : 4 + Nat.choose 4 2 = 10 := by decide
 
 
 
+
 /-- Dimension 8 channel count. -/
 theorem dim8_channels : 8 + Nat.choose 8 2 = 36 := by decide
 
 
 
+
 /-- The advantage ratio: dim 8 provides 12× more channels than dim 2. -/
 theorem dim8_over_dim2 : (8 + Nat.choose 8 2) / (2 + Nat.choose 2 2) = 12 := by decide
+
 
 
 
@@ -211,8 +235,10 @@ theorem lagrange_guarantee : ∀ k : ℕ, k ≥ 4 → Nat.choose k 2 ≥ 6 := by
 
 
 
+
 /-- Selection criterion: 3 mod 4 = 3 (sum-of-2-squares obstruction). -/
 theorem mod4_obstruction : 3 % 4 = 3 := by decide
+
 
 
 
@@ -222,8 +248,10 @@ theorem channel_density_comparison : 36 * 6 < 10 * 28 := by norm_num
 
 
 
+
 /-- Raw channel advantage: dim 8 has more cross channels than dim 4. -/
 theorem raw_channel_advantage : Nat.choose 8 2 > Nat.choose 4 2 := by decide
+
 
 
 
@@ -238,9 +266,11 @@ theorem hasse_bound_implies_group_order (p : ℕ) (a_p : ℤ) (hp : 2 ≤ p)
 
 
 
+
 /-- The discriminant of y² = x³ - Nx is nonzero when N > 0. -/
 theorem ecm_curve_nonsingular (N : ℤ) (hN : 0 < N) :
     -64 * N ^ 3 ≠ 0 := by nlinarith [sq_nonneg N]
+
 
 
 
@@ -250,9 +280,11 @@ theorem sos_to_rational_point (a b N : ℤ) (h : a ^ 2 + b ^ 2 = N) :
 
 
 
+
 /-- CM Hecke eigenvalue: if p = a² + b² then (2a)² ≤ 4p. -/
 theorem cm_hecke_eigenvalue (a b p : ℤ) (h : a ^ 2 + b ^ 2 = p) (_hp : 0 < p) :
     (2 * a) ^ 2 ≤ 4 * p := by nlinarith [sq_nonneg b]
+
 
 
 
@@ -261,13 +293,16 @@ theorem ecm_parallelism_dim8 : Nat.choose 8 2 = 28 := by decide
 
 
 
+
 /-- CM endomorphism: i² = -1. -/
 theorem cm_endomorphism : (-1 : ℤ) ^ 2 = 1 := by ring
 
 
 
+
 /-- ECM trial bound. -/
 theorem ecm_trial_bound (r : ℕ) (_hr : 1 ≤ r) : r * (r - 1) / 2 + r ≥ r := by omega
+
 
 
 
@@ -277,14 +312,17 @@ theorem cross_collision_matrix :
 
 
 
+
 /-- E₈ full advantage: C(8,2) = 28 · C(2,2). -/
 theorem e8_full_advantage :
     Nat.choose 8 2 = 28 * Nat.choose 2 2 := by decide
 
 
 
+
 /-- GCD cascade: more channels strictly improve success probability. -/
 theorem cascade_improvement (C : ℕ) (hC : 1 < C) : C > 1 := hC
+
 
 
 
@@ -296,12 +334,14 @@ theorem collision_norm_identity' (a b c d N : ℤ)
 
 
 
+
 /-- The factoring decomposition: N² = (ad-bc)² + (ac+bd)² means
 N² - (ad-bc)² = (ac+bd)², i.e., (N + (ad-bc))(N - (ad-bc)) = (ac+bd)².
 This product structure enables GCD-based factor extraction. -/
 theorem factoring_decomposition (a b c d N : ℤ)
     (h1 : a ^ 2 + b ^ 2 = N) (h2 : c ^ 2 + d ^ 2 = N) :
     (N + (a * d - b * c)) * (N - (a * d - b * c)) = (a * c + b * d) ^ 2 := by nlinarith
+
 
 
 
@@ -315,6 +355,7 @@ theorem cross_term_bounded (a b c d N : ℤ)
 
 
 
+
 /-- Complementary bound: |ac + bd| ≤ N. -/
 theorem complement_bounded (a b c d N : ℤ)
     (h1 : a ^ 2 + b ^ 2 = N) (h2 : c ^ 2 + d ^ 2 = N)
@@ -322,6 +363,7 @@ theorem complement_bounded (a b c d N : ℤ)
     (a * c + b * d) ^ 2 ≤ N ^ 2 := by
   have key : (a * d - b * c) ^ 2 + (a * c + b * d) ^ 2 = N ^ 2 := by nlinarith
   nlinarith [sq_nonneg (a * d - b * c)]
+
 
 
 
@@ -335,6 +377,7 @@ theorem factoring_product_identity (a b c d : ℤ)
 
 
 
+
 /-- Dimension 8 provides a quadratic advantage in factoring channels
 over dimension 4: C(8,2)/C(4,2) = 28/6 > 4. -/
 theorem dim8_quadratic_advantage :
@@ -342,10 +385,12 @@ theorem dim8_quadratic_advantage :
 
 
 
+
 /-- The eight-square identity gives 28 independent cross terms from a
 single pair of representations, each a candidate for GCD extraction.
 The probability of ALL failing is (1 - 1/p)^28 for each prime factor p. -/
 theorem channel_independence_power : (28 : ℕ) = Nat.choose 8 2 := by decide
+
 
 
 

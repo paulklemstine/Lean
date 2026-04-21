@@ -14,10 +14,12 @@ theorem real_add_left_cancel (a b c : ℝ) (h : a + b = a + c) : b = c := by lin
 
 
 
+
 /-- Tropical addition (max) is NOT left-cancellative. -/
 theorem max_not_left_cancel :
     ∃ (a b c : ℝ), max a b = max a c ∧ b ≠ c :=
   ⟨10, 3, 5, by norm_num, by norm_num⟩
+
 
 
 
@@ -35,9 +37,11 @@ theorem selective_idempotent_not_cancellative
 
 
 
+
 /-- In tropical algebra, the self-referential equation max(x, c) = x always has solutions. -/
 theorem tropical_self_ref_has_fixpoint (c : ℝ) :
     ∃ x : ℝ, max x c = x := ⟨c, max_self c⟩
+
 
 
 
@@ -48,12 +52,14 @@ theorem tropical_self_ref_fixpoints (c : ℝ) :
 
 
 
+
 /-- In contrast, x + c = x has a solution iff c = 0 (rigid self-reference). -/
 theorem classical_self_ref_unique (c : ℝ) :
     (∃ x : ℝ, x + c = x) ↔ c = 0 := by
   constructor
   · rintro ⟨x, h⟩; linarith
   · rintro rfl; exact ⟨0, by ring⟩
+
 
 
 
@@ -67,12 +73,14 @@ theorem idempotent_self_ref_is_id
 
 
 
+
 /-- In a tropical-style encoding using max, distinct inputs can map to the same output.
 This is the fundamental obstruction to Gödel numbering in idempotent arithmetic. -/
 theorem tropical_encoding_collision :
     ∃ (f : ℝ → ℝ → ℝ), (∀ x, f x x = x) ∧
     (∃ a b c, f a b = f a c ∧ b ≠ c) := by
   exact ⟨max, fun x => max_self x, 10, 3, 5, by norm_num, by norm_num⟩
+
 
 
 
@@ -86,6 +94,7 @@ theorem diagonal_dissolution (f : ℝ → ℝ) :
 
 
 
+
 /-- The diagonal fixed point set is always non-empty (it contains sufficiently large elements). -/
 theorem diagonal_fixpoints_nonempty (f : ℝ → ℝ) (hf : ∃ M, ∀ x, f x ≤ M) :
     {x : ℝ | max (f x) x = x}.Nonempty := by
@@ -93,6 +102,7 @@ theorem diagonal_fixpoints_nonempty (f : ℝ → ℝ) (hf : ∃ M, ∀ x, f x �
   refine ⟨M, ?_⟩
   simp only [mem_setOf_eq]
   exact max_eq_right (hM M)
+
 
 
 

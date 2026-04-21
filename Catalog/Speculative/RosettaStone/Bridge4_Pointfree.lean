@@ -12,8 +12,10 @@ theorem inf_idempotent [SemilatticeInf α] (a : α) : a ⊓ a = a := inf_idem a
 
 
 
+
 /-- In any semilattice, join is idempotent. -/
 theorem sup_idempotent [SemilatticeSup α] (a : α) : a ⊔ a = a := sup_idem a
+
 
 
 
@@ -22,14 +24,17 @@ theorem absorption_inf_sup [Lattice α] (a b : α) : a ⊓ (a ⊔ b) = a := inf_
 
 
 
+
 /-- Absorption law: a ⊔ (a ⊓ b) = a. -/
 theorem absorption_sup_inf [Lattice α] (a b : α) : a ⊔ (a ⊓ b) = a := sup_inf_self
+
 
 
 
 /-- Distributivity: a ⊓ (b ⊔ c) = (a ⊓ b) ⊔ (a ⊓ c). -/
 theorem frame_distrib [DistribLattice α] (a b c : α) :
     a ⊓ (b ⊔ c) = (a ⊓ b) ⊔ (a ⊓ c) := inf_sup_left a b c
+
 
 
 
@@ -41,6 +46,7 @@ theorem complemented_decomposition [DistribLattice α] [BoundedOrder α]
 
 
 
+
 /-- Closure is idempotent. -/
 theorem closure_idempotent_set (s : Set X) :
     closure (closure s) = closure s :=
@@ -48,10 +54,12 @@ theorem closure_idempotent_set (s : Set X) :
 
 
 
+
 /-- Interior ⊆ set ⊆ closure. -/
 theorem interior_subset_closure (s : Set X) :
     interior s ⊆ closure s :=
   interior_subset.trans subset_closure
+
 
 
 
@@ -66,6 +74,7 @@ theorem clopen_iff_interior_eq_closure_eq (s : Set X) :
 
 
 
+
 /-- [Section: # CatalogBuild.Speculative.RosettaStone.Bridge4_Pointfree
 Auto-generated from theorem catalog database.
 Domain: Speculative/RosettaStone
@@ -75,8 +84,14 @@ theorem open_inter {U V : Set X} (hU : IsOpen U) (hV : IsOpen V) :
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.RosettaStone.Bridge4_Pointfree
+Auto-generated from theorem catalog database.
+Domain: Speculative/RosettaStone
+Declarations: 13] -/
 theorem open_union {U V : Set X} (hU : IsOpen U) (hV : IsOpen V) :
     IsOpen (U ∪ V) := hU.union hV
+
 
 
 
@@ -84,6 +99,8 @@ theorem open_univ_set : IsOpen (Set.univ : Set X) := isOpen_univ
 
 
 
+
 theorem open_empty_set : IsOpen (∅ : Set X) := isOpen_empty
+
 
 

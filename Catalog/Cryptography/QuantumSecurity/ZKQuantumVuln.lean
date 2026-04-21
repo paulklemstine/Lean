@@ -12,11 +12,13 @@ def pedersen_commit (v r g h : ZMod n) : ZMod n := v * g + r * h
 
 
 
+
 /-- **Theorem (Pedersen Binding Break via DLog)**: If an attacker knows
 dlog (i.e., h = dlog · g), the commitment collapses to a single-generator form. -/
 theorem pedersen_binding_broken (v r g dlog : ZMod n) :
     pedersen_commit v r g (dlog * g) = (v + r * dlog) * g := by
   simp [pedersen_commit]; ring
+
 
 
 
@@ -37,12 +39,14 @@ theorem pedersen_forge_opening (v r g dlog v_target : ZMod n)
 
 
 
+
 /-- **Theorem (Counterfeit Coin Creation)**: Breaking Pedersen binding
 allows creating "proofs" of non-existent value. -/
 theorem counterfeit_via_binding_break
     (real_amount fake_amount : ℕ)
     (h : fake_amount > real_amount) :
     fake_amount - real_amount > 0 := by omega
+
 
 
 
@@ -56,9 +60,11 @@ inductive MoneroPrimitive where
 
 
 
+
 /-- ALL Monero cryptographic primitives fall to Shor. -/
 def monero_quantum_security : MoneroPrimitive → ℕ
   | _ => 0
+
 
 
 
@@ -69,8 +75,10 @@ theorem monero_total_quantum_break (p : MoneroPrimitive) :
 
 
 
+
 /-- Monero blockchain: ~45M transactions. -/
 def monero_total_transactions : ℕ := 45000000
+
 
 
 
@@ -80,9 +88,11 @@ theorem monero_deanon_time_years :
 
 
 
+
 /-- **Theorem**: With 1000 parallel quantum computers: ~176 days. -/
 theorem monero_deanon_parallel :
     monero_total_transactions * 338 / (1000 * 24 * 3600) = 176 := by native_decide
+
 
 
 
@@ -90,7 +100,13 @@ theorem monero_deanon_parallel :
 def bn254_bits : ℕ := 254
 
 
+
+/-- [Section: # CatalogBuild.Cryptography.QuantumSecurity.ZKQuantumVuln
+Auto-generated from theorem catalog database.
+Domain: Cryptography/QuantumSecurity
+Declarations: 32] -/
 def bls12_381_bits : ℕ := 255
+
 
 
 
@@ -100,9 +116,11 @@ theorem bn254_similar_cost :
 
 
 
+
 /-- **Theorem**: Physical qubit requirements are essentially the same. -/
 theorem snark_qubits_similar :
     (6 * bn254_bits + 10) * 578 = 886652 := by norm_num [bn254_bits]
+
 
 
 
@@ -113,9 +131,11 @@ inductive SNARKSystem where
 
 
 
+
 /-- All pairing-based SNARKs share the same quantum vulnerability. -/
 def snark_quantum_security : SNARKSystem → ℕ
   | _ => 0
+
 
 
 
@@ -123,6 +143,7 @@ def snark_quantum_security : SNARKSystem → ℕ
 theorem all_snarks_broken (s : SNARKSystem) :
     snark_quantum_security s = 0 := by
   cases s <;> rfl
+
 
 
 
@@ -134,6 +155,7 @@ theorem zcash_counterfeit_risk
 
 
 
+
 /-- **Theorem (Undetectable Inflation)**: Quantum-forged transactions
 creating new coins would be undetectable on-chain. -/
 theorem undetectable_inflation (apparent_supply real_supply forged : ℕ)
@@ -142,10 +164,12 @@ theorem undetectable_inflation (apparent_supply real_supply forged : ℕ)
 
 
 
+
 /-- STARK hash function options -/
 inductive STARKHash where
   | poseidon | rescue | sha256 | blake3 | keccak256
   deriving DecidableEq, Repr
+
 
 
 
@@ -159,10 +183,12 @@ def stark_hash_quantum_bits : STARKHash → ℕ
 
 
 
+
 /-- **Theorem**: STARKs with SHA-256 retain 128-bit quantum security. -/
 theorem stark_sha256_secure :
     stark_hash_quantum_bits STARKHash.sha256 ≥ 128 := by
   norm_num [stark_hash_quantum_bits]
+
 
 
 
@@ -173,10 +199,12 @@ theorem poseidon_concern :
 
 
 
+
 /-- **Theorem**: STARK quantum security is strictly better than SNARK security. -/
 theorem stark_beats_snark (h : STARKHash) :
     stark_hash_quantum_bits h > snark_quantum_security SNARKSystem.zcashSapling := by
   cases h <;> simp [stark_hash_quantum_bits, snark_quantum_security]
+
 
 
 
@@ -187,9 +215,11 @@ inductive PrivacyCoin where
 
 
 
+
 /-- All current privacy coins have zero quantum security. -/
 def privacy_coin_quantum_bits : PrivacyCoin → ℕ
   | _ => 0
+
 
 
 
@@ -197,6 +227,7 @@ def privacy_coin_quantum_bits : PrivacyCoin → ℕ
 theorem all_privacy_coins_broken (c : PrivacyCoin) :
     privacy_coin_quantum_bits c = 0 := by
   cases c <;> rfl
+
 
 
 
@@ -208,10 +239,12 @@ theorem privacy_destruction_permanent
 
 
 
+
 /-- Post-quantum ZK proof systems -/
 inductive PQZKSystem where
   | stark_sha256 | stark_poseidon | lattice_snark | isogeny_zk
   deriving DecidableEq, Repr
+
 
 
 
@@ -224,6 +257,7 @@ def pqzk_maturity : PQZKSystem → ℕ
 
 
 
+
 /-- **Theorem**: Only STARKs are production-ready. -/
 theorem only_starks_ready (s : PQZKSystem)
     (h : pqzk_maturity s ≥ 5) :
@@ -232,8 +266,10 @@ theorem only_starks_ready (s : PQZKSystem)
 
 
 
+
 /-- SNARK→STARK proof size blowup: ~1000×. -/
 theorem snark_to_stark_blowup :
     200000 / 200 = (1000 : ℕ) := by norm_num
+
 
 

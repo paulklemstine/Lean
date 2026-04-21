@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: EML
-Declarations: 33
+Declarations: 32
 -/
 
 import Mathlib
@@ -14,10 +14,12 @@ def eml_op (a b : ℝ) : ℝ := Real.exp a - Real.log b
 
 
 
+
 /-- The OISCC has exactly two instructions: PUSH a constant, or EML. -/
 inductive OISCCInstr where
   | PUSH : ℝ → OISCCInstr
   | EML : OISCCInstr
+
 
 
 
@@ -26,8 +28,10 @@ abbrev OISCCProgram := List OISCCInstr
 
 
 
+
 /-- The machine state is just a stack of real numbers. -/
 abbrev OISCCStack := List ℝ
+
 
 
 
@@ -42,6 +46,7 @@ def execInstr (instr : OISCCInstr) (stack : OISCCStack) : Option OISCCStack :=
 
 
 
+
 /-- Execute a program (list of instructions) on a stack. -/
 def execProgram : OISCCProgram → OISCCStack → Option OISCCStack
   | [], stack => some stack
@@ -52,9 +57,11 @@ def execProgram : OISCCProgram → OISCCStack → Option OISCCStack
 
 
 
+
 /-- exp(a) = EML(a, 1): The exponential is recovered by EML with second argument 1. -/
 theorem eml_recovers_exp (a : ℝ) : eml_op a 1 = Real.exp a := by
   simp [eml_op, Real.log_one]
+
 
 
 
@@ -65,9 +72,11 @@ theorem oiscc_computes_exp (a : ℝ) :
 
 
 
+
 /-- EML(0, b) = 1 - ln(b): The "one minus log" operation. -/
 theorem eml_one_minus_log (b : ℝ) : eml_op 0 b = 1 - Real.log b := by
   simp [eml_op]
+
 
 
 
@@ -75,6 +84,7 @@ theorem eml_one_minus_log (b : ℝ) : eml_op 0 b = 1 - Real.log b := by
 theorem oiscc_computes_one_minus_log (b : ℝ) :
     execProgram [.PUSH 0, .PUSH b, .EML] [] = some [1 - Real.log b] := by
   simp [execProgram, execInstr, eml_one_minus_log]
+
 
 
 
@@ -86,11 +96,13 @@ theorem eml_recovers_ln (b : ℝ) :
 
 
 
+
 /-- The program [PUSH 0, PUSH 0, PUSH b, EML, PUSH 1, EML, EML] computes ln(b). -/
 theorem oiscc_computes_ln (b : ℝ) :
     execProgram [.PUSH 0, .PUSH 0, .PUSH b, .EML, .PUSH 1, .EML, .EML] [] =
     some [Real.log b] := by
   simp [execProgram, execInstr, eml_op, Real.log_one, Real.log_exp]
+
 
 
 
@@ -103,11 +115,13 @@ theorem eml_recovers_sub (a b : ℝ) (ha : 0 < a) :
 
 
 
+
 /-- a + b = EML(ln(a), exp(-b)) for a > 0.
 Proof: exp(ln(a)) − ln(exp(-b)) = a − (-b) = a + b. -/
 theorem eml_recovers_add (a b : ℝ) (ha : 0 < a) :
     eml_op (Real.log a) (Real.exp (-b)) = a + b := by
   simp [eml_op, Real.exp_log ha, Real.log_exp]
+
 
 
 
@@ -118,10 +132,12 @@ theorem eml_mul_final (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
 
 
 
+
 /-- a / b = EML(ln(a) - ln(b), 1) for a, b > 0. -/
 theorem eml_div_final (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
     eml_op (Real.log a - Real.log b) 1 = a / b := by
   simp [eml_op, Real.log_one, Real.exp_sub, Real.exp_log ha, Real.exp_log hb]
+
 
 
 
@@ -132,8 +148,10 @@ theorem rpow_via_eml (a b : ℝ) (ha : 0 < a) :
 
 
 
+
 /-- x is a fixed point of the diagonal EML map if eml(x, x) = x. -/
 def isEMLFixedPoint (x : ℝ) : Prop := eml_op x x = x
+
 
 
 
@@ -144,6 +162,7 @@ theorem eml_fixed_point_equiv (x : ℝ) :
   constructor
   · intro h; linarith
   · intro h; linarith
+
 
 
 
@@ -165,10 +184,12 @@ theorem eml_no_positive_fixed_point (x : ℝ) (hx : 0 < x) :
 
 
 
+
 /-- EML(1, 1) = e: Euler's number. -/
 theorem oiscc_constant_e :
     eml_op 1 1 = Real.exp 1 := by
   simp [eml_op, Real.log_one]
+
 
 
 
@@ -179,6 +200,7 @@ theorem oiscc_constant_one :
 
 
 
+
 /-- EML(0, exp(1)) = 0: Zero from EML. -/
 theorem oiscc_constant_zero :
     eml_op 0 (Real.exp 1) = 0 := by
@@ -186,10 +208,12 @@ theorem oiscc_constant_zero :
 
 
 
+
 /-- EML(EML(1,1), 1) = exp(e): A tower of exponentiation. -/
 theorem oiscc_constant_exp_e :
     eml_op (eml_op 1 1) 1 = Real.exp (Real.exp 1) := by
   simp [eml_op, Real.log_one]
+
 
 
 
@@ -209,6 +233,7 @@ theorem execProgram_append (p1 p2 : OISCCProgram) (s : OISCCStack) :
 
 
 
+
 /-- The number of EML operations in a program. -/
 def emlCount : OISCCProgram → ℕ
   | [] => 0
@@ -217,11 +242,13 @@ def emlCount : OISCCProgram → ℕ
 
 
 
+
 /-- The number of PUSH operations in a program. -/
 def pushCount : OISCCProgram → ℕ
   | [] => 0
   | .PUSH _ :: rest => 1 + pushCount rest
   | .EML :: rest => pushCount rest
+
 
 
 
@@ -234,6 +261,7 @@ theorem length_eq_eml_plus_push (p : OISCCProgram) :
     cases instr with
     | PUSH v => simp [emlCount, pushCount, ih]; omega
     | EML => simp [emlCount, pushCount, ih]; omega
+
 
 
 
@@ -254,12 +282,6 @@ theorem oiscc_arithmetic_complete (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
 
 
 
-/-- Applying EML(·, 1) twice gives exp(exp(a)). -/
-theorem eml_double_exp (a : ℝ) :
-    eml_op (eml_op a 1) 1 = Real.exp (Real.exp a) := by
-  simp [eml_op, Real.log_one]
-
-
 
 /-- EML is an involution in a composed sense:
 EML(0, exp(EML(0, exp(a)))) = a.
@@ -267,6 +289,7 @@ That is, 1 - ln(exp(1 - a)) = 1 - (1-a) = a. -/
 theorem eml_log_exp_involution (a : ℝ) :
     eml_op 0 (Real.exp (eml_op 0 (Real.exp a))) = a := by
   simp [eml_op, Real.log_exp]
+
 
 
 
@@ -278,10 +301,12 @@ def maxStackDepth : OISCCProgram → ℕ → ℕ
 
 
 
+
 /-- The exp program [PUSH a, PUSH 1, EML] has max stack depth 2. -/
 theorem exp_program_depth (a : ℝ) :
     maxStackDepth [.PUSH a, .PUSH 1, .EML] 0 = 1 := by
   simp [maxStackDepth]
+
 
 
 

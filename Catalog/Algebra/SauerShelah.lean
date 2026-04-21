@@ -14,9 +14,11 @@ def Shatters {n : ℕ} (F : Finset (Finset (Fin n))) (A : Finset (Fin n)) : Prop
 
 
 
+
 /-- Drop the last coordinate: keep `i : Fin n` iff `castSucc i ∈ S`. -/
 def proj {n : ℕ} (S : Finset (Fin (n + 1))) : Finset (Fin n) :=
   Finset.univ.filter fun i => i.castSucc ∈ S
+
 
 
 
@@ -33,6 +35,7 @@ def embed {n : ℕ} (T : Finset (Fin n)) : Finset (Fin (n + 1)) :=
 
 
 
+
 /-- [Section: # CatalogBuild.Algebra.SauerShelah
 Auto-generated from theorem catalog database.
 Domain: Algebra
@@ -43,9 +46,15 @@ lemma last_not_mem_embed {n : ℕ} (T : Finset (Fin n)) :
 
 
 
+
+/-- [Section: # CatalogBuild.Algebra.SauerShelah
+Auto-generated from theorem catalog database.
+Domain: Algebra
+Declarations: 17] -/
 lemma proj_embed {n : ℕ} (T : Finset (Fin n)) : proj (embed T) = T := by
   -- By definition of `proj`, we have `proj (embed T) = Finset.univ.filter (fun i => i.castSucc ∈ T.image Fin.castSucc)`.
   simp [proj, embed]
+
 
 
 
@@ -55,8 +64,10 @@ lemma proj_embed_union_last {n : ℕ} (T : Finset (Fin n)) :
 
 
 
+
 lemma embed_card {n : ℕ} (T : Finset (Fin n)) : (embed T).card = T.card := by
   exact Finset.card_image_of_injective _ ( Fin.castSucc_injective _ )
+
 
 
 
@@ -66,10 +77,12 @@ lemma embed_union_last_card {n : ℕ} (T : Finset (Fin n)) :
 
 
 
+
 lemma embed_inter_eq {n : ℕ} (A : Finset (Fin n)) (S : Finset (Fin (n + 1))) :
     embed A ∩ S = embed (A ∩ proj S) := by
       ext x; simp [embed, proj] ;
       grind +ring
+
 
 
 
@@ -81,12 +94,14 @@ lemma eq_embed_proj_of_last_not_mem {n : ℕ} {S : Finset (Fin (n + 1))}
 
 
 
+
 lemma eq_embed_proj_union_last {n : ℕ} {S : Finset (Fin (n + 1))}
     (h : Fin.last n ∈ S) : S = embed (proj S) ∪ {Fin.last n} := by
       ext x; by_cases hx : x = last n <;> simp_all +decide [ Fin.ext_iff, Fin.val_add, Fin.val_one ] ;
       · rwa [ show x = last n from Fin.ext hx ];
       · simp +decide [ Fin.ext_iff, Fin.val_add, Fin.val_one, hx, embed, proj ];
         exact ⟨ fun hx' => ⟨ ⟨ x, lt_of_le_of_ne ( Fin.le_last _ ) hx ⟩, by simpa [ Fin.ext_iff ] using hx', rfl ⟩, by rintro ⟨ a, ha, ha' ⟩ ; convert ha; aesop ⟩
+
 
 
 
@@ -108,6 +123,7 @@ lemma shatters_embed_of_union {n : ℕ} (F : Finset (Finset (Fin (n + 1))))
         intro h_last_in_B; have := hB h_last_in_B; simp_all +decide [ embed ] ;
       convert embed_inter_eq A S using 1;
       simpa only [ ← hS.2, hT.2 ] using h_eq
+
 
 
 
@@ -148,6 +164,7 @@ lemma shatters_embed_union_last_of_inter {n : ℕ} (F : Finset (Finset (Fin (n +
 
 
 
+
 lemma card_split {n : ℕ} (F : Finset (Finset (Fin (n + 1)))) :
     F.card = ((F.filter (Fin.last n ∉ ·)).image proj ∪
               (F.filter (Fin.last n ∈ ·)).image proj).card +
@@ -171,6 +188,7 @@ lemma card_split {n : ℕ} (F : Finset (Finset (Fin (n + 1)))) :
 
 
 
+
 lemma binomial_pascal_sum (n d : ℕ) :
     (∑ i ∈ Finset.range (d + 1), n.choose i) +
      ∑ i ∈ Finset.range d, n.choose i =
@@ -178,6 +196,7 @@ lemma binomial_pascal_sum (n d : ℕ) :
       induction' d with d ih;
       · norm_num;
       · simp_all +arith +decide [ Nat.choose, Finset.sum_range_succ ]
+
 
 
 
@@ -194,6 +213,7 @@ lemma card_le_one_of_vc_zero {n : ℕ} (F : Finset (Finset (Fin n)))
         unfold Shatters; aesop;
       · use {x};
         unfold Shatters; aesop;
+
 
 
 
@@ -225,5 +245,6 @@ theorem sauer_shelah : ∀ (n d : ℕ) (F : Finset (Finset (Fin n))),
       have h_inter := ih d (F₀ ∩ F₁) hvc₁
       have hpascal := binomial_pascal_sum n (d + 1)
       linarith
+
 
 

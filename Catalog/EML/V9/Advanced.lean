@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: EML/V9
-Declarations: 25
+Declarations: 24
 -/
 
 import Mathlib
@@ -16,16 +16,24 @@ Declarations: 25] -/
 def emlA (x y : ℝ) : ℝ := Real.exp x - Real.log y
 
 
+
+/-- [Section: # CatalogBuild.EML.V9.Advanced
+Auto-generated from theorem catalog database.
+Domain: EML/V9
+Declarations: 25] -/
 def diagA (z : ℝ) : ℝ := Real.exp z - Real.log z
+
 
 
 def gmapA (z : ℝ) : ℝ := Real.exp 1 - Real.log z
 
 
 
+
 def diagIterA : ℕ → ℝ → ℝ
   | 0, z => z
   | n + 1, z => diagA (diagIterA n z)
+
 
 
 
@@ -41,6 +49,7 @@ theorem diagA_gt_z (z : ℝ) : diagA z > z := by
 
 
 
+
 theorem diagA_ge_z_add_one (z : ℝ) : diagA z ≥ z + 1 := by
   unfold diagA;
   by_cases h : 0 < z;
@@ -53,9 +62,11 @@ theorem diagA_ge_z_add_one (z : ℝ) : diagA z ≥ z + 1 := by
 
 
 
+
 theorem diagA_strong_bound (z : ℝ) (hz : 1 ≤ z) :
     diagA z ≥ Real.exp z - z + 1 := by
   unfold diagA; nlinarith [ Real.add_one_le_exp 1, Real.exp_pos z, Real.log_le_sub_one_of_pos ( by linarith : 0 < z ) ] ;
+
 
 
 
@@ -63,6 +74,7 @@ theorem diagA_orbit_linear (z : ℝ) (n : ℕ) :
     diagIterA n z ≥ z + n := by
   induction' n with n ih generalizing z <;> norm_num [ diagIterA ] at *;
   linarith [ ih z, diagA_ge_z_add_one ( diagIterA n z ) ]
+
 
 
 
@@ -98,6 +110,7 @@ theorem diagA_orbit_gap_mono (z : ℝ) (hz : 0 < z) (n : ℕ) :
 
 
 
+
 /-- The Bregman divergence for f(x) = eˣ is D_f(x,y) = eˣ − eʸ − eʸ(x−y).
 This connects to EML via: D_f(x,y) = eml(x,1) − eml(y,1) − eʸ(x−y). -/
 theorem eml_bregman_exp (x y : ℝ) :
@@ -107,9 +120,11 @@ theorem eml_bregman_exp (x y : ℝ) :
 
 
 
+
 /-- Chain identity: eml(eml(x,1), 1) = exp(exp(x)). -/
 theorem eml_chain (x : ℝ) : emlA (emlA x 1) 1 = Real.exp (Real.exp x) := by
   simp [emlA, Real.log_one]
+
 
 
 
@@ -117,6 +132,7 @@ theorem eml_chain (x : ℝ) : emlA (emlA x 1) 1 = Real.exp (Real.exp x) := by
 theorem eml_triple_chain (x : ℝ) :
     emlA (emlA (emlA x 1) 1) 1 = Real.exp (Real.exp (Real.exp x)) := by
   simp [emlA, Real.log_one]
+
 
 
 
@@ -128,18 +144,12 @@ theorem eml_shift (x a y : ℝ) :
 
 
 
-/-- Scale identity for the second argument.
-eml(x, y^n) = eml(x, y) − (n−1)·ln(y) for y > 0. -/
-theorem eml_power_snd (x y : ℝ) (n : ℕ) (hy : 0 < y) :
-    emlA x (y ^ n) = emlA x y - (n - 1) * Real.log y := by
-  simp [emlA, Real.log_pow]; ring
-
-
 
 theorem eml_integral_log :
     ∫ t in (1:ℝ)..Real.exp 1, emlA 0 t = Real.exp 1 - 2 := by
       norm_num [ emlA ];
       ring
+
 
 
 
@@ -149,9 +159,11 @@ theorem exp_sub_x_ge_one (x : ℝ) : Real.exp x - x ≥ 1 := by
 
 
 
+
 /-- exp(x) − x is minimized at x = 0. -/
 theorem exp_sub_x_min_at_zero : ∀ x : ℝ, Real.exp x - x ≥ Real.exp 0 - 0 := by
   intro x; simp; linarith [Real.add_one_le_exp x]
+
 
 
 
@@ -161,9 +173,11 @@ theorem gmapA_at_e : gmapA (Real.exp 1) = Real.exp 1 - 1 := by
 
 
 
+
 /-- g(1) = e > 1. -/
 theorem gmapA_at_one : gmapA 1 = Real.exp 1 := by
   simp [gmapA, Real.log_one]
+
 
 
 
@@ -176,11 +190,13 @@ theorem gmapA_deriv (z : ℝ) (hz : 0 < z) :
 
 
 
+
 /-- For a, b > 0: eml(ln a, b) + eml(ln b, a) ≥ 2. -/
 theorem eml_amgm_trace_ge_two (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
     emlA (Real.log a) b + emlA (Real.log b) a ≥ 2 := by
   simp [emlA, Real.exp_log ha, Real.exp_log hb]
   linarith [Real.log_le_sub_one_of_pos ha, Real.log_le_sub_one_of_pos hb]
+
 
 
 
@@ -193,8 +209,10 @@ theorem diagA_ge_two (z : ℝ) (hz : 0 < z) : diagA z ≥ 2 := by
 
 
 
+
 theorem tropEml_noncomm : ∃ x y : ℝ, tropEml x y ≠ tropEml y x := by
   use 0, 1; simp [tropEml]
+
 
 
 
@@ -203,10 +221,12 @@ theorem tropEml_diag (x : ℝ) : tropEml x x = |x| := by
 
 
 
+
 /-- Tropical EML is idempotent when x = −y is impossible:
 trop(x, −x) = max(x, x) = x. -/
 theorem tropEml_neg_snd (x : ℝ) : tropEml x (-x) = x := by
   simp [tropEml]
+
 
 
 

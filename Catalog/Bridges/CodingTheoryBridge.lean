@@ -15,10 +15,12 @@ def hammingVolume (n t q : ℕ) : ℕ :=
 
 
 
+
 /-- For binary codes (q=2), Hamming sphere of radius 1 has volume n + 1. -/
 theorem binary_hamming_volume_1 (n : ℕ) :
     hammingVolume n 1 2 = n + 1 := by
   simp [hammingVolume, Finset.sum_range_succ]; ring
+
 
 
 
@@ -28,9 +30,11 @@ theorem singleton_bound (n k d : ℕ) (hle : k + d ≤ n + 1) :
 
 
 
+
 /-- The 2-square identity (Brahmagupta-Fibonacci). -/
 theorem two_square_identity (a b c d : ℤ) :
     (a^2 + b^2) * (c^2 + d^2) = (a*c - b*d)^2 + (a*d + b*c)^2 := by ring
+
 
 
 
@@ -41,8 +45,10 @@ theorem four_square_special_case :
 
 
 
+
 /-- Verified instances of Fermat's two-squares theorem. -/
 theorem fermat_sum_two_squares_5 : (5 : ℤ) = 1^2 + 2^2 := by norm_num
+
 
 
 /-- [Section: # CatalogBuild.Bridges.CodingTheoryBridge
@@ -52,10 +58,17 @@ Declarations: 29] -/
 theorem fermat_sum_two_squares_13 : (13 : ℤ) = 2^2 + 3^2 := by norm_num
 
 
+
+/-- [Section: # CatalogBuild.Bridges.CodingTheoryBridge
+Auto-generated from theorem catalog database.
+Domain: Bridges
+Declarations: 29] -/
 theorem fermat_sum_two_squares_17 : (17 : ℤ) = 1^2 + 4^2 := by norm_num
 
 
+
 theorem fermat_sum_two_squares_29 : (29 : ℤ) = 2^2 + 5^2 := by norm_num
+
 
 
 
@@ -64,8 +77,10 @@ theorem lagrange_four_squares_7 :
     (7 : ℤ) = 1^2 + 1^2 + 1^2 + 2^2 := by norm_num
 
 
+
 theorem lagrange_four_squares_15 :
     (15 : ℤ) = 1^2 + 1^2 + 2^2 + 3^2 := by norm_num
+
 
 
 theorem lagrange_four_squares_23 :
@@ -73,8 +88,10 @@ theorem lagrange_four_squares_23 :
 
 
 
+
 /-- Gaussian integer norm: N(a + bi) = a² + b². -/
 def gaussianNorm (a b : ℤ) : ℤ := a^2 + b^2
+
 
 
 
@@ -86,9 +103,11 @@ theorem gaussianNorm_mul (a b c d : ℤ) :
 
 
 
+
 /-- Gaussian norm is non-negative. -/
 theorem gaussianNorm_nonneg (a b : ℤ) : 0 ≤ gaussianNorm a b := by
   simp [gaussianNorm]; positivity
+
 
 
 
@@ -101,8 +120,10 @@ theorem gaussianNorm_eq_zero (a b : ℤ) :
 
 
 
+
 /-- Minimum nonzero Gaussian norm is 1. -/
 theorem gaussianNorm_min : gaussianNorm 1 0 = 1 := by simp [gaussianNorm]
+
 
 
 
@@ -111,9 +132,11 @@ def eisensteinNorm (a b : ℤ) : ℤ := a^2 - a*b + b^2
 
 
 
+
 /-- Eisenstein norm is non-negative. -/
 theorem eisensteinNorm_nonneg (a b : ℤ) : 0 ≤ eisensteinNorm a b := by
   simp [eisensteinNorm]; nlinarith [sq_nonneg (2*a - b), sq_nonneg b]
+
 
 
 
@@ -125,8 +148,10 @@ theorem eisensteinNorm_eq_zero (a b : ℤ) :
 
 
 
+
 /-- The Cayley-Dickson dimensions: 1, 2, 4, 8. -/
 def cayleyDicksonDimensions : List ℕ := [1, 2, 4, 8]
+
 
 
 
@@ -138,8 +163,10 @@ theorem cayleyDickson_powers_of_two :
 
 
 
+
 /-- Sum: 1 + 2 + 4 + 8 = 15. -/
 theorem cayleyDickson_sum : cayleyDicksonDimensions.sum = 15 := by native_decide
+
 
 
 
@@ -148,8 +175,10 @@ theorem cayleyDickson_prod : cayleyDicksonDimensions.prod = 64 := by native_deci
 
 
 
+
 /-- Code rate R = k/n. -/
 def codeRate (k n : ℕ) : ℚ := (k : ℚ) / (n : ℚ)
+
 
 
 
@@ -162,14 +191,18 @@ theorem codeRate_le_one (k n : ℕ) (hn : 0 < n) (hkn : k ≤ n) :
 
 
 
+
 /-- E8 lattice properties. -/
 theorem e8_kissing_number_val : 240 = (240 : ℕ) := rfl
+
 
 
 theorem leech_dimension_decomp : 24 = 3 * 8 := by norm_num
 
 
+
 theorem e8_density_denom : 384 = 2^7 * 3 := by norm_num
+
 
 
 

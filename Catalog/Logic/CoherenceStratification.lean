@@ -15,9 +15,11 @@ def CoherenceVal (H_spectral : ℝ) (n : ℕ) (hn : 0 < n) : ℝ :=
 
 
 
+
 /-- Spectral landscape entropy, dual to coherence. -/
 def LandscapeVal (H_spectral : ℝ) (n : ℕ) (hn : 0 < n) : ℝ :=
   H_spectral / n
+
 
 
 
@@ -25,6 +27,7 @@ def LandscapeVal (H_spectral : ℝ) (n : ℕ) (hn : 0 < n) : ℝ :=
 theorem coherence_duality (H : ℝ) (n : ℕ) (hn : 0 < n) :
     CoherenceVal H n hn + LandscapeVal H n hn = 1 := by
   simp [CoherenceVal, LandscapeVal]
+
 
 
 
@@ -37,6 +40,7 @@ theorem coherence_nonneg' (H : ℝ) (n : ℕ) (hn : 0 < n) (hH : H ≤ n) :
 
 
 
+
 /-- Coherence is at most 1 when spectral entropy ≥ 0. -/
 theorem coherence_le_one' (H : ℝ) (n : ℕ) (hn : 0 < n) (hH : 0 ≤ H) :
     CoherenceVal H n hn ≤ 1 := by
@@ -46,11 +50,13 @@ theorem coherence_le_one' (H : ℝ) (n : ℕ) (hn : 0 < n) (hH : 0 ≤ H) :
 
 
 
+
 /-- Coherence lies in [0, 1] when spectral entropy ∈ [0, n]. -/
 theorem coherence_bounded (H : ℝ) (n : ℕ) (hn : 0 < n)
     (hH0 : 0 ≤ H) (hHn : H ≤ n) :
     0 ≤ CoherenceVal H n hn ∧ CoherenceVal H n hn ≤ 1 :=
   ⟨coherence_nonneg' H n hn hHn, coherence_le_one' H n hn hH0⟩
+
 
 
 
@@ -65,10 +71,12 @@ theorem coherence_restriction_monotone (H H' : ℝ) (n k : ℕ)
 
 
 
+
 /-- A coherence class at threshold γ: the set of all problems whose coherence ≥ γ.
 We model this as a predicate on coherence values. -/
 def InCoherenceClass (coherence_val : ℝ) (gamma : ℝ) : Prop :=
   coherence_val ≥ gamma
+
 
 
 
@@ -79,6 +87,7 @@ theorem coherence_class_nested (c gamma delta : ℝ) (hgd : gamma ≥ delta) :
 
 
 
+
 /-- Every problem is in NP₀ (the class with threshold 0). -/
 theorem coherence_class_zero (c : ℝ) (hc : 0 ≤ c) :
     InCoherenceClass c 0 := by
@@ -86,10 +95,12 @@ theorem coherence_class_zero (c : ℝ) (hc : 0 ≤ c) :
 
 
 
+
 /-- The coherence class at threshold 1 contains only maximally coherent problems. -/
 theorem coherence_class_one (c : ℝ) :
     InCoherenceClass c 1 ↔ c ≥ 1 := by
   unfold InCoherenceClass; exact Iff.rfl
+
 
 
 
@@ -105,6 +116,7 @@ theorem strict_stratification (c gamma_high gamma_low : ℝ)
 
 
 
+
 /-- The four-level NP hierarchy is correctly nested. -/
 theorem four_level_hierarchy (c : ℝ) (hc0 : 0 ≤ c) (hc1 : c ≤ 1) :
     (InCoherenceClass c 1 → InCoherenceClass c (3/4)) ∧
@@ -113,6 +125,7 @@ theorem four_level_hierarchy (c : ℝ) (hc0 : 0 ≤ c) (hc1 : c ≤ 1) :
     (InCoherenceClass c (1/4) → InCoherenceClass c 0) := by
   unfold InCoherenceClass
   exact ⟨fun h => by linarith, fun h => by linarith, fun h => by linarith, fun h => by linarith⟩
+
 
 
 
@@ -126,12 +139,14 @@ theorem coherence_gap_exists (gamma1 gamma2 : ℝ) (h : gamma1 > gamma2) :
 
 
 
+
 /-- Quantum coherence of a state via l1-norm of off-diagonals:
 C_l1 = (Σ|αᵢ|)² - 1 for a state with real nonneg amplitudes. -/
 def quantumCoherence_l1 {n : ℕ} (amplitudes : Fin n → ℝ)
     (h_nonneg : ∀ i, 0 ≤ amplitudes i)
     (h_norm : ∑ i, amplitudes i ^ 2 = 1) : ℝ :=
   (∑ i, amplitudes i) ^ 2 - 1
+
 
 
 
@@ -151,6 +166,11 @@ theorem quantum_coherence_nonneg {n : ℕ} (hn : 0 < n)
 
 
 
+
+/-- [Section: # CatalogBuild.Logic.CoherenceStratification
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 25] -/
 theorem basis_state_zero_coherence {n : ℕ} (hn : 1 ≤ n)
     (amplitudes : Fin n → ℝ)
     (h_nonneg : ∀ i, 0 ≤ amplitudes i)
@@ -160,6 +180,7 @@ theorem basis_state_zero_coherence {n : ℕ} (hn : 1 ≤ n)
   unfold quantumCoherence_l1;
   simp_all +decide [ Finset.sum_eq_single j ];
   cases h_norm <;> simp +decide [ * ]
+
 
 
 
@@ -175,6 +196,7 @@ theorem max_coherence_uniform {n : ℕ} (hn : 0 < n)
 
 
 
+
 theorem coherence_monotone_dephasing {n : ℕ}
     (a a' : Fin n → ℝ)
     (ha : ∀ i, 0 ≤ a i) (ha' : ∀ i, 0 ≤ a' i)
@@ -182,6 +204,7 @@ theorem coherence_monotone_dephasing {n : ℕ}
     (h_dephase : ∀ i, a' i ≤ a i) :
     quantumCoherence_l1 a' ha' hn2 ≤ quantumCoherence_l1 a ha hn1 := by
   exact sub_le_sub_right ( pow_le_pow_left₀ ( Finset.sum_nonneg fun _ _ => ha' _ ) ( Finset.sum_le_sum fun _ _ => h_dephase _ ) _ ) _
+
 
 
 
@@ -198,10 +221,12 @@ theorem tensor_coherence_decomposition
 
 
 
+
 theorem bell_state_coherence :
     let a : Fin 4 → ℝ := ![1 / Real.sqrt 2, 0, 0, 1 / Real.sqrt 2]
     (∑ i, a i) ^ 2 - 1 = 1 := by
   norm_num [ Fin.sum_univ_succ ] ; ring ; norm_num;
+
 
 
 
@@ -212,9 +237,11 @@ theorem superposition_search_advantage (n : ℕ) (hn : 1 < n) :
 
 
 
+
 theorem ghz_coherence_dimension_independent :
     (Real.sqrt 2) ^ 2 - 1 = (1 : ℝ) := by
   norm_num +zetaDelta at *
+
 
 
 
@@ -231,10 +258,12 @@ theorem coherence_search_exponent (n : ℕ) (C : ℝ)
 
 
 
+
 /-- Conservation law: coherence + entropy rate = 1. -/
 theorem coherence_entropy_conservation (C entropy_rate : ℝ)
     (h : C + entropy_rate = 1) : entropy_rate = 1 - C := by
   linarith
+
 
 
 

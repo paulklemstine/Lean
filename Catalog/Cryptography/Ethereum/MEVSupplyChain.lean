@@ -22,8 +22,14 @@ structure Builder where
 
 
 
+
+/-- [Section: # CatalogBuild.Cryptography.Ethereum.MEVSupplyChain
+Auto-generated from theorem catalog database.
+Domain: Cryptography/Ethereum
+Declarations: 13] -/
 noncomputable def builderProfit (b : Builder) (totalMEV bid : ℝ) : ℝ :=
   b.efficiency * totalMEV - b.cost - bid
+
 
 
 
@@ -38,6 +44,7 @@ theorem competition_drives_bids (b₁ b₂ : Builder) (totalMEV : ℝ)
 
 
 
+
 structure SpecializedBuilder extends Builder where
   specialtyFraction : ℝ
   specialtyEfficiency : ℝ
@@ -48,14 +55,17 @@ structure SpecializedBuilder extends Builder where
 
 
 
+
 noncomputable def specializedCapture (sb : SpecializedBuilder) (totalMEV : ℝ) : ℝ :=
   sb.specialtyEfficiency * sb.specialtyFraction * totalMEV +
   sb.efficiency * (1 - sb.specialtyFraction) * totalMEV
 
 
 
+
 noncomputable def generalCapture (sb : SpecializedBuilder) (totalMEV : ℝ) : ℝ :=
   sb.efficiency * totalMEV
+
 
 
 
@@ -67,8 +77,10 @@ theorem specialization_beneficial (sb : SpecializedBuilder)
 
 
 
+
 noncomputable def mevShareUserReturn (totalMEV userShare : ℝ) : ℝ :=
   userShare * totalMEV
+
 
 
 
@@ -79,10 +91,12 @@ theorem mev_share_improves_welfare (totalMEV userShare : ℝ)
 
 
 
+
 theorem mev_share_tradeoff (totalMEV s₁ s₂ : ℝ)
     (hMEV : 0 < totalMEV) (hle : s₁ ≤ s₂) :
     (1 - s₂) * totalMEV ≤ (1 - s₁) * totalMEV := by
   nlinarith
+
 
 
 
@@ -92,8 +106,10 @@ theorem multi_relay_correctness (bid₁ bid₂ : ℝ) :
 
 
 
+
 noncomputable def lateMevGain (baseMEV delayMs mevGrowthRate : ℝ) : ℝ :=
   baseMEV + delayMs * mevGrowthRate
+
 
 
 
@@ -101,6 +117,7 @@ theorem delay_increases_mev (baseMEV delayMs mevGrowthRate : ℝ)
     (hDelay : 0 < delayMs) (hGrowth : 0 < mevGrowthRate) :
     lateMevGain baseMEV delayMs mevGrowthRate > baseMEV := by
   unfold lateMevGain; linarith [mul_pos hDelay hGrowth]
+
 
 
 

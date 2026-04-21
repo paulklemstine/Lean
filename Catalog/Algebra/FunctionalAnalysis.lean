@@ -13,9 +13,11 @@ theorem norm_triangle' {E : Type*} [SeminormedAddCommGroup E] (x y : E) :
 
 
 
+
 /-- Reverse triangle inequality. -/
 theorem norm_reverse_triangle' {E : Type*} [SeminormedAddCommGroup E] (x y : E) :
     |‖x‖ - ‖y‖| ≤ ‖x - y‖ := abs_norm_sub_norm_le x y
+
 
 
 
@@ -23,6 +25,7 @@ theorem norm_reverse_triangle' {E : Type*} [SeminormedAddCommGroup E] (x y : E) 
 theorem norm_smul_eq' {𝕜 E : Type*} [NontriviallyNormedField 𝕜]
     [SeminormedAddCommGroup E] [NormedSpace 𝕜 E] (c : 𝕜) (x : E) :
     ‖c • x‖ = ‖c‖ * ‖x‖ := norm_smul c x
+
 
 
 
@@ -35,10 +38,12 @@ theorem opnorm_comp_le' {E F G : Type*}
 
 
 
+
 /-- Identity operator has norm ≤ 1. -/
 theorem id_opnorm_le_one' {E : Type*}
     [SeminormedAddCommGroup E] [NormedSpace ℝ E] :
     ‖ContinuousLinearMap.id ℝ E‖ ≤ 1 := ContinuousLinearMap.norm_id_le
+
 
 
 
@@ -50,14 +55,17 @@ theorem cauchy_schwarz_inner' {E : Type*} [SeminormedAddCommGroup E]
 
 
 
+
 /-- ℝ is a complete metric space. -/
 theorem real_complete' : CompleteSpace ℝ := inferInstance
+
 
 
 
 /-- ℝⁿ is a complete metric space. -/
 theorem euclidean_complete' (n : ℕ) : CompleteSpace (EuclideanSpace ℝ (Fin n)) :=
   inferInstance
+
 
 
 
@@ -90,4 +98,5 @@ theorem banach_fixed_point' {X : Type*} [MetricSpace X] [CompleteSpace X]
     exact Filter.Tendsto.comp ( show Filter.Tendsto f ( nhds x₀ ) ( nhds ( f x₀ ) ) from ContinuousAt.tendsto ( show ContinuousAt f x₀ from by rw [ Metric.continuousAt_iff ] ; intro ε εpos; exact ⟨ ε / 2, half_pos εpos, by intro y hy; exact lt_of_le_of_lt ( hf _ _ ) ( by nlinarith [ @dist_nonneg _ _ y x₀ ] ) ⟩ ) ) hx₀;
   refine' hnonunique ⟨ x₀, hx₀, fun x hx => _ ⟩;
   exact Classical.not_not.1 fun h => absurd ( hf x x₀ ) ( by simp [ * ] )
+
 

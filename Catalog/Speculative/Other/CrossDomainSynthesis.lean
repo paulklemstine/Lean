@@ -16,6 +16,7 @@ theorem minkQ_homogeneous (t : ℝ) (v : ℝ × ℝ × ℝ) :
 
 
 
+
 /-- [Section: # CatalogBuild.Speculative.Other.CrossDomainSynthesis
 Auto-generated from theorem catalog database.
 Domain: Speculative/Other
@@ -23,6 +24,7 @@ Declarations: 28] -/
 theorem signOracle_values (x : ℝ) :
     signOracle x = -1 ∨ signOracle x = 0 ∨ signOracle x = 1 := by
   unfold signOracle; split_ifs <;> simp
+
 
 
 
@@ -35,8 +37,10 @@ def causalOracle (v : ℝ × ℝ × ℝ) : ℤ := signOracle (minkQ v)
 
 
 
+
 /-- The "tropical GCD oracle". -/
 def tropGCDOracle (a : ℤ) : ℤ → ℤ := fun x => min a x
+
 
 
 
@@ -44,6 +48,7 @@ def tropGCDOracle (a : ℤ) : ℤ → ℤ := fun x => min a x
 theorem tropGCDOracle_idem (a : ℤ) :
     ∀ x, tropGCDOracle a (tropGCDOracle a x) = tropGCDOracle a x := by
   intro x; simp [tropGCDOracle, min_def]; split_ifs <;> omega
+
 
 
 
@@ -56,8 +61,10 @@ theorem tropGCDOracle_truthSet (a x : ℤ) :
 
 
 
+
 /-- Classical GCD is idempotent. -/
 theorem gcd_self_idem (n : ℕ) : Nat.gcd n n = n := Nat.gcd_self n
+
 
 
 
@@ -73,11 +80,17 @@ theorem factoring_oracle_principle (a N g : ℕ) (hg : g = Nat.gcd a N)
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.CrossDomainSynthesis
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 28] -/
 theorem relu_truthSet (x : ℝ) : relu x = x ↔ 0 ≤ x := by
   -- By definition of max, if max 0 x = x, then x must be greater than or equal to 0.
   apply Iff.intro (fun h => by
     exact le_trans ( le_max_left _ _ ) h.le) (fun h => by
     exact max_eq_right h)
+
 
 
 
@@ -87,8 +100,10 @@ theorem relu_comp_relu : relu ∘ relu = relu := by
 
 
 
+
 /-- Special case: affine ReLU with w=1, b=0 is relu. -/
 def affineRelu (w b : ℝ) (x : ℝ) : ℝ := relu (w * x + b)
+
 
 
 
@@ -101,9 +116,11 @@ theorem affineRelu_identity : affineRelu 1 0 = relu := by
 
 
 
+
 /-- The Minkowski bilinear form. -/
 def minkBilinear (u v : ℝ × ℝ × ℝ) : ℝ :=
   u.1 * v.1 + u.2.1 * v.2.1 - u.2.2 * v.2.2
+
 
 
 
@@ -115,6 +132,7 @@ theorem minkQ_sum (u v : ℝ × ℝ × ℝ) :
 
 
 
+
 theorem sum_null_iff_ortho (u v : ℝ × ℝ × ℝ)
     (hu : isNull u) (hv : isNull v) :
     isNull (u.1 + v.1, u.2.1 + v.2.1, u.2.2 + v.2.2) ↔
@@ -123,6 +141,7 @@ theorem sum_null_iff_ortho (u v : ℝ × ℝ × ℝ)
   have h_expand : minkQ (u.1 + v.1, u.2.1 + v.2.1, u.2.2 + v.2.2) = minkQ u + minkQ v + 2 * minkBilinear u v := by
     exact?;
   unfold isNull at *; aesop;
+
 
 
 
@@ -140,9 +159,11 @@ theorem pyth_triple_null (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 /-- Brahmagupta-Fibonacci identity. -/
 theorem brahmagupta_light_cone (a b c d : ℤ) :
     (a^2 + b^2) * (c^2 + d^2) = (a*c - b*d)^2 + (a*d + b*c)^2 := by ring
+
 
 
 
@@ -156,15 +177,18 @@ theorem two_reps_factor_principle (a b c d : ℤ) :
 
 
 
+
 theorem idempotent_fixedPt_eq_range {α : Type*} (f : α → α) (hf : IsIdempotent f) :
     fixedPoints f = range f := by
   exact Set.ext fun x => ⟨ fun hx => ⟨ x, by tauto ⟩, fun hx => by cases hx; aesop ⟩
 
 
 
+
 /-- An idempotent map converges in one step. -/
 theorem neural_convergence {α : Type*} (f : α → α) (hf : IsIdempotent f) (x : α) :
     f (f x) = f x := hf x
+
 
 
 
@@ -179,6 +203,7 @@ theorem compose_commuting_idempotents {α : Type*} (f g : α → α)
 
 
 
+
 /-- Every idempotent endomorphism is a retraction onto its image. -/
 theorem idempotent_is_retraction {α : Type*} (f : α → α) (hf : IsIdempotent f) :
     ∀ y ∈ range f, f y = y := by
@@ -190,9 +215,11 @@ theorem idempotent_is_retraction {α : Type*} (f : α → α) (hf : IsIdempotent
 
 
 
+
 /-- The (3,4,5) triple is null. -/
 theorem experiment_345_null : isNull ((3 : ℝ), (4 : ℝ), (5 : ℝ)) := by
   simp [isNull, minkQ]; norm_num
+
 
 
 
@@ -202,14 +229,17 @@ theorem experiment_tropGCD : tropGCDOracle 5 7 = 5 := by
 
 
 
+
 /-- The 65 = 4² + 7² = 1² + 8² double representation. -/
 theorem experiment_65_reps : (4 : ℤ)^2 + 7^2 = 65 ∧ (1 : ℤ)^2 + 8^2 = 65 := by
   constructor <;> norm_num
 
 
 
+
 /-- gcd(15, 65) = 5, revealing the factor 5. -/
 theorem experiment_gcd_factor : Nat.gcd 15 65 = 5 := by native_decide
+
 
 
 
@@ -220,10 +250,12 @@ theorem projection_matrix_oracle (n : ℕ) (P : Matrix (Fin n) (Fin n) ℝ)
 
 
 
+
 theorem meet_projections (n : ℕ) (P Q : Matrix (Fin n) (Fin n) ℝ)
     (hP : P * P = P) (hQ : Q * Q = Q) (hPQ : P * Q = Q * P) :
     (P * Q) * (P * Q) = P * Q := by
   grind
+
 
 
 

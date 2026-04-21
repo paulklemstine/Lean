@@ -15,6 +15,7 @@ theorem spbHyp_def (x y : ℝ) :
 
 
 
+
 /-- [Section: # CatalogBuild.EML.WickRotation_2
 Auto-generated from theorem catalog database.
 Domain: EML
@@ -22,19 +23,28 @@ Declarations: 8] -/
 theorem spbCirc_identity (x : ℝ) : spbCirc x 0 = x := by simp [spbCirc]
 
 
+
+/-- [Section: # CatalogBuild.EML.WickRotation_2
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 8] -/
 theorem spbHyp_identity (x : ℝ) : spbHyp x 0 = x := by simp [spbHyp]
+
 
 
 
 theorem spbCirc_inverse (x : ℝ) : spbCirc x (-x) = 0 := by simp [spbCirc]
 
 
+
 theorem spbHyp_inverse (x : ℝ) : spbHyp x (-x) = 0 := by simp [spbHyp]
+
 
 
 
 /-- The rapidity-velocity relationship: v = tanh(φ). -/
 def rapidityToVelocity (φ : ℝ) : ℝ := tanh φ
+
 
 
 
@@ -49,9 +59,11 @@ theorem rapidity_addition (a b : ℝ) :
 
 
 
+
 /-- γ(v₁ ⊕ v₂) expressed via spbHyp. -/
 theorem lorentz_factor_composition (v₁ v₂ : ℝ) :
     spbHyp v₁ v₂ = (v₁ + v₂) / (1 + v₁ * v₂) := rfl
+
 
 
 

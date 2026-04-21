@@ -14,6 +14,7 @@ noncomputable def pythagorean_energy_density (a b c : ℝ) : ℝ := a * b / (2 *
 
 
 
+
 /-- [Section: # CatalogBuild.Physics.Classical.CMBLandscape
 Auto-generated from theorem catalog database.
 Domain: Physics/Classical
@@ -25,9 +26,15 @@ theorem pythagorean_energy_density_bound (a b c : ℝ) (hc : c ≠ 0)
 
 
 
+
+/-- [Section: # CatalogBuild.Physics.Classical.CMBLandscape
+Auto-generated from theorem catalog database.
+Domain: Physics/Classical
+Declarations: 17] -/
 theorem energy_density_345 :
     pythagorean_energy_density 3 4 5 = 6 / 25 := by
   unfold pythagorean_energy_density; norm_num;
+
 
 
 
@@ -36,9 +43,11 @@ theorem pythagorean_696_697_985 : (696 : ℤ) ^ 2 + 697 ^ 2 = 985 ^ 2 := by
 
 
 
+
 theorem most_energy_rich_comparison :
     pythagorean_energy_density 3 4 5 < pythagorean_energy_density 696 697 985 := by
   unfold pythagorean_energy_density; norm_num;
+
 
 
 
@@ -51,8 +60,10 @@ noncomputable def inverse_stereo (x y : ℝ) : ℝ × ℝ × ℝ :=
 
 
 
+
 theorem inverse_stereo_origin : inverse_stereo 0 0 = (0, 0, -1) := by
   unfold inverse_stereo; norm_num;
+
 
 
 
@@ -63,6 +74,7 @@ noncomputable def inverse_stereo_1d (t : ℝ) : ℝ × ℝ :=
 
 
 
+
 /-- The Pythagorean rational point from Euclid parameters (m, n):
 ((m²-n²)/(m²+n²), 2mn/(m²+n²)). -/
 noncomputable def pythagorean_rational_point (m n : ℝ) : ℝ × ℝ :=
@@ -70,10 +82,12 @@ noncomputable def pythagorean_rational_point (m n : ℝ) : ℝ × ℝ :=
 
 
 
+
 theorem stereo_pyth_correspondence (m n : ℝ) (hm : m ≠ 0) (hsum : m ^ 2 + n ^ 2 ≠ 0) :
     pythagorean_rational_point m n = inverse_stereo_1d (n / m) := by
   unfold pythagorean_rational_point inverse_stereo_1d;
   grind
+
 
 
 
@@ -85,10 +99,12 @@ noncomputable def energy_euclid (m n : ℝ) : ℝ :=
 
 
 
+
 /-- The energy density in terms of the ratio t = n/m is E(t) = t(1-t²)/(1+t²)²,
 which reaches its maximum at t = √2 - 1 (equivalently m/n = 1 + √2, the silver ratio). -/
 noncomputable def energy_ratio (t : ℝ) : ℝ :=
   t * (1 - t ^ 2) / (1 + t ^ 2) ^ 2
+
 
 
 
@@ -102,8 +118,10 @@ theorem energy_euclid_eq_ratio (m n : ℝ) (hm : m ≠ 0) (hsum : m ^ 2 + n ^ 2 
 
 
 
+
 theorem two_mul_le_sq_add_sq (a b : ℝ) : 2 * a * b ≤ a ^ 2 + b ^ 2 := by
   linarith [ sq_nonneg ( a - b ) ]
+
 
 
 
@@ -112,14 +130,17 @@ noncomputable def silver_ratio : ℝ := 1 + Real.sqrt 2
 
 
 
+
 /-- The optimal ratio for maximum energy density is t* = √2 - 1 = 1/σ. -/
 noncomputable def optimal_ratio : ℝ := Real.sqrt 2 - 1
+
 
 
 
 theorem optimal_ratio_eq_inv_silver :
     optimal_ratio * silver_ratio = 1 := by
   exact show ( Real.sqrt 2 - 1 ) * ( 1 + Real.sqrt 2 ) = 1 from by ring_nf; norm_num;
+
 
 
 end

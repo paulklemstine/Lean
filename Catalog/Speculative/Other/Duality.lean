@@ -16,9 +16,11 @@ structure SearchObj where
 
 
 
+
 /-- Observation data: which elements are observed. -/
 structure ObservationData (X : SearchObj) where
   observed : Finset (Fin X.n)
+
 
 
 
@@ -28,10 +30,12 @@ structure RepulsionData (X : SearchObj) where
 
 
 
+
 /-- The observation-repulsion pairing: overlap between observed and hidden. -/
 def observationRepulsionPairing (X : SearchObj) (o : ObservationData X)
     (r : RepulsionData X) : ℕ :=
   (o.observed ∩ r.hidden).card
+
 
 
 
@@ -46,15 +50,18 @@ theorem observation_repulsion_complementarity (X : SearchObj)
 
 
 
+
 /-- Search information gained by observing a set in a uniform space. -/
 def searchInfo (n : ℕ) (k : ℕ) : ℝ :=
   Real.log n - Real.log (n - k)
 
 
 
+
 /-- Evasion information: remaining uncertainty. -/
 def evasionInfo (n : ℕ) (k : ℕ) : ℝ :=
   Real.log (n - k)
+
 
 
 
@@ -65,10 +72,12 @@ theorem search_info_conservation (n k : ℕ) :
 
 
 
+
 /-- A quantum search state: superposition over n locations. -/
 structure QuantumSearchState (n : ℕ) where
   amplitudes : Fin n → ℂ
   normalized : ∑ i : Fin n, Complex.normSq (amplitudes i) = 1
+
 
 
 
@@ -80,10 +89,12 @@ structure OneWayFunction where
 
 
 
+
 /-- The search problem induced by a one-way function. -/
 def owfSearchProblem (owf : OneWayFunction) (target : Fin owf.range_size) :
     Set (Fin owf.domain_size) :=
   {x | owf.f x = target}
+
 
 
 
@@ -96,12 +107,16 @@ theorem owf_unique_preimage (owf : OneWayFunction) (h_inj : Function.Injective o
 
 
 
+
 /-- A zero-knowledge search proof structure. -/
 structure ZKSearchProof where
   n : ℕ
   hn : 0 < n
   commitment : Fin n → ℕ
   complete : ∀ x : Fin n, commitment x ≠ 0
+
+end
+
 
 end
 

@@ -22,15 +22,18 @@ variable {α β : Type*} [PartialOrder α] [PartialOrder β]
 
 
 
+
 /-- The descent-ascent composition is inflationary. -/
 theorem ascend_descend_le (D : DescentDatum α β) (a : α) : a ≤ D.ascend (D.descend a) :=
   (D.galois _ _).1 le_rfl
 
 
 
+
 /-- The ascent-descent composition is deflationary. -/
 theorem descend_ascend_ge (D : DescentDatum α β) (b : β) : D.descend (D.ascend b) ≤ b :=
   (D.galois _ _).2 le_rfl
+
 
 
 
@@ -43,12 +46,14 @@ theorem descent_idempotent (D : DescentDatum α β) (a : α) :
 
 
 
+
 /-- Ascent followed by descent followed by ascent equals ascent (idempotency). -/
 theorem ascent_idempotent (D : DescentDatum α β) (b : β) :
     D.ascend (D.descend (D.ascend b)) = D.ascend b := by
   apply le_antisymm
   · exact D.ascend.monotone (D.descend_ascend_ge b)
   · exact D.ascend_descend_le (D.ascend b)
+
 
 
 
@@ -60,11 +65,13 @@ noncomputable def matrixRank (R : Type*) [CommRing R] [IsDomain R]
 
 
 
+
 /-- A descent chain is a sequence of descent data composable end-to-end. -/
 structure DescentChain (n : ℕ) where
   level : Fin (n + 1) → Type*
   order : ∀ i, Preorder (level i)
   step : ∀ i : Fin n, @DescentDatum (level i.castSucc) (level i.succ) (order i.castSucc) (order i.succ)
+
 
 
 
@@ -75,10 +82,12 @@ structure QDim where
 
 
 
+
 /-- The set of "crystalline dimensions" where the crystallizer lattice
 has exceptional symmetry. -/
 def isCrystalline (d : ℕ) : Prop :=
   d ∈ ({2, 3, 4, 6, 8, 12, 24} : Finset ℕ)
+
 
 
 
@@ -88,15 +97,18 @@ theorem two_crystalline : isCrystalline 2 := by
 
 
 
+
 /-- 24 is a crystalline dimension. -/
 theorem twentyfour_crystalline : isCrystalline 24 := by
   unfold isCrystalline; norm_num
 
 
 
+
 /-- 5 is not a crystalline dimension. -/
 theorem five_not_crystalline : ¬ isCrystalline 5 := by
   simp +decide [isCrystalline]
+
 
 
 
@@ -112,6 +124,11 @@ theorem crystalline_sparse (n : ℕ) (hn : 24 < n) :
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.Core.DescentTheory
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Core
+Declarations: 16] -/
 theorem descent_rank_bound {α β : Type*} [Fintype α] [Fintype β]
     [Preorder α] [Preorder β] (D : DescentDatum α β)
     (hα : Fintype.card α > 0) :
@@ -124,15 +141,18 @@ theorem descent_rank_bound {α β : Type*} [Fintype α] [Fintype β]
 
 
 
+
 theorem quantum_descent_pow_dvd (d₁ d₂ : ℕ) (hdvd : d₁ ∣ d₂) (n : ℕ) :
     d₁^n ∣ d₂^n := by
   exact pow_dvd_pow_of_dvd hdvd _
 
 
 
+
 theorem descent_dim_dvd (d k n : ℕ) (hd : 0 < d) :
     d^n ∣ (d * k)^n := by
   exact pow_dvd_pow_of_dvd ( dvd_mul_right _ _ ) _
+
 
 
 end

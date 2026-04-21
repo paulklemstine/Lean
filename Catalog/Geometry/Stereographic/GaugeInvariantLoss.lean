@@ -1,5 +1,3 @@
-import Mathlib
-
 /-! # CatalogBuild.Geometry.Stereographic.GaugeInvariantLoss
 
 Auto-generated from theorem catalog database.
@@ -7,6 +5,7 @@ Domain: Geometry/Stereographic
 Declarations: 16
 -/
 
+import Mathlib
 
 noncomputable section
 
@@ -15,6 +14,7 @@ between predictions and targets on the sphere. -/
 def geodesicLoss (seqLen : ℕ)
     (pred target : Fin seqLen → ℝ) : ℝ :=
   ∑ i, (pred i - target i) ^ 2
+
 
 
 
@@ -29,10 +29,16 @@ theorem geodesicLoss_nonneg (seqLen : ℕ) (pred target : Fin seqLen → ℝ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Geometry.Stereographic.GaugeInvariantLoss
+Auto-generated from theorem catalog database.
+Domain: Geometry/Stereographic
+Declarations: 16] -/
 theorem geodesicLoss_symmetric (seqLen : ℕ) (pred target : Fin seqLen → ℝ) :
     geodesicLoss seqLen pred target = geodesicLoss seqLen target pred := by
   unfold geodesicLoss
   congr 1; ext i; ring
+
 
 
 
@@ -42,9 +48,11 @@ theorem geodesicLoss_zero_self (seqLen : ℕ) (x : Fin seqLen → ℝ) :
 
 
 
+
 /-- Conformal factor at a point. -/
 def confFactor (d : ℕ) (x : Fin d → ℝ) : ℝ :=
   2 / (1 + ∑ i, (x i) ^ 2)
+
 
 
 
@@ -58,9 +66,11 @@ def conformalWeightedLoss (seqLen d : ℕ)
 
 
 
+
 theorem confFactor_pos (d : ℕ) (x : Fin d → ℝ) :
     0 < confFactor d x := by
   unfold confFactor; positivity
+
 
 
 
@@ -72,6 +82,7 @@ theorem conformalWeightedLoss_nonneg (seqLen d : ℕ)
   unfold conformalWeightedLoss
   exact Finset.sum_nonneg fun i _ =>
     mul_nonneg (le_of_lt (confFactor_pos d (X i))) (hlosses i)
+
 
 
 
@@ -87,10 +98,12 @@ def gaugeInvariantCE (seqLen : ℕ) (logits : Fin seqLen → ℝ)
 
 
 
+
 theorem gaugeInvariantCE_nonneg (seqLen : ℕ) (logits : Fin seqLen → ℝ)
     (target : Fin seqLen) (hseq : 0 < seqLen) :
     0 ≤ gaugeInvariantCE seqLen logits target := by
   exact sub_nonneg_of_le ( Real.le_log_iff_exp_le ( Finset.sum_pos ( fun _ _ => Real.exp_pos _ ) ⟨ target, Finset.mem_univ _ ⟩ ) |>.2 <| by nth_rw 1 [ Finset.sum_eq_add_sum_diff_singleton <| Finset.mem_univ target ] ; exact le_add_of_le_of_nonneg ( by simp +decide [ Real.exp_sub ] ) <| Finset.sum_nonneg fun _ _ => by positivity )
+
 
 
 
@@ -102,6 +115,7 @@ def sphericalVariance (seqLen d : ℕ) (X : Fin seqLen → Fin d → ℝ) : ℝ 
 
 
 
+
 /-- The spherical mean squared norm is non-negative. -/
 theorem sphericalMeanSqNorm_nonneg (seqLen d : ℕ) (X : Fin seqLen → Fin d → ℝ) :
     0 ≤ ∑ j : Fin d, ((∑ i : Fin seqLen, X i j) / seqLen) ^ 2 :=
@@ -109,10 +123,12 @@ theorem sphericalMeanSqNorm_nonneg (seqLen d : ℕ) (X : Fin seqLen → Fin d �
 
 
 
+
 /-- A distance function on ℝⁿ that transforms covariantly under the conformal
 factor: d_conf(x,y) = cf(x) · cf(y) · ‖x - y‖². -/
 def conformalDistance (d : ℕ) (x y : Fin d → ℝ) : ℝ :=
   confFactor d x * confFactor d y * ∑ i, (x i - y i) ^ 2
+
 
 
 
@@ -125,6 +141,7 @@ theorem conformalDistance_nonneg (d : ℕ) (x y : Fin d → ℝ) :
 
 
 
+
 theorem conformalDistance_symmetric (d : ℕ) (x y : Fin d → ℝ) :
     conformalDistance d x y = conformalDistance d y x := by
   unfold conformalDistance
@@ -134,9 +151,11 @@ theorem conformalDistance_symmetric (d : ℕ) (x y : Fin d → ℝ) :
 
 
 
+
 theorem conformalDistance_zero_self (d : ℕ) (x : Fin d → ℝ) :
     conformalDistance d x x = 0 := by
   unfold conformalDistance; simp
+
 
 
 

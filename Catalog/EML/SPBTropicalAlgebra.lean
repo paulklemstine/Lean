@@ -14,6 +14,7 @@ def tropSPB' (x y : ℝ) : ℝ := min x y - max 0 (x + y)
 
 
 
+
 /-- [Section: # CatalogBuild.EML.SPBTropicalAlgebra
 Auto-generated from theorem catalog database.
 Domain: EML
@@ -25,9 +26,11 @@ theorem tropSPB_eq_neg_max_abs (a b : ℝ) :
 
 
 
+
 /-- Tropical SPB is commutative. -/
 theorem tropSPB'_comm (x y : ℝ) : tropSPB' x y = tropSPB' y x := by
   simp [tropSPB', min_comm, add_comm]
+
 
 
 
@@ -37,12 +40,18 @@ theorem tropSPB_zero_not_identity : ∃ x : ℝ, tropSPB' x 0 ≠ x := by
 
 
 
+
 /-- tropSPB(x, 0) for positive x equals -x. -/
 theorem tropSPB_zero_pos (x : ℝ) (hx : 0 < x) : tropSPB' x 0 = -x := by
   simp [tropSPB', min_eq_right (le_of_lt hx), max_eq_right (le_of_lt hx)]
 
 
 
+
+/-- [Section: # CatalogBuild.EML.SPBTropicalAlgebra
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 9] -/
 theorem tropSPB_no_identity : ¬∃ e : ℝ, ∀ x : ℝ, tropSPB' x e = x := by
   intro h
   obtain ⟨e, he⟩ := h
@@ -54,11 +63,13 @@ theorem tropSPB_no_identity : ¬∃ e : ℝ, ∀ x : ℝ, tropSPB' x e = x := by
 
 
 
+
 /-- For negative x, tropSPB(x, x) = x (idempotent). -/
 theorem tropSPB_idempotent_neg (x : ℝ) (hx : x < 0) :
     tropSPB' x x = x := by
   unfold tropSPB'
   simp [max_eq_left (show x + x ≤ 0 by linarith)]
+
 
 
 
@@ -70,10 +81,12 @@ theorem tropSPB_not_idempotent_pos (x : ℝ) (hx : 0 < x) :
 
 
 
+
 /-- Tropical SPB has no left-identity. -/
 theorem tropSPB_no_left_identity : ¬∃ e : ℝ, ∀ x : ℝ, tropSPB' e x = x := by
   intro ⟨e, he⟩
   exact tropSPB_no_identity ⟨e, fun x => by rw [tropSPB'_comm]; exact he x⟩
+
 
 
 

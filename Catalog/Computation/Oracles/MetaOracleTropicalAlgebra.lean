@@ -16,10 +16,12 @@ theorem tropMul_assoc (a b c : ℝ) :
 
 
 
+
 /-- Left distributivity: a ⊗ (b ⊕ c) = (a ⊗ b) ⊕ (a ⊗ c) -/
 theorem tropMul_dist_left (a b c : ℝ) :
     tropMul a (tropAdd b c) = tropAdd (tropMul a b) (tropMul a c) := by
   simp [tropMul, tropAdd, max_add_add_left]
+
 
 
 
@@ -31,15 +33,18 @@ theorem tropMul_dist_right (a b c : ℝ) :
 
 
 
+
 /-- Tropical addition is idempotent: a ⊕ a = a -/
 theorem tropAdd_idem (a : ℝ) : tropAdd a a = a := by
   unfold tropAdd; exact max_self a
 
 
 
+
 /-- 0 is the multiplicative identity -/
 theorem tropMul_zero_left (a : ℝ) : tropMul 0 a = a := by
   unfold tropMul; ring
+
 
 
 
@@ -56,13 +61,16 @@ theorem tropMul_zero_right (a : ℝ) : tropMul a 0 = a := by
 
 
 
+
 /-- An oracle is an idempotent function: O(O(x)) = O(x) for all x -/
 def TropIsOracle {α : Type*} (O : α → α) : Prop := ∀ x, O (O x) = O x
 
 
 
+
 /-- The truth set of an oracle: the set of fixed points -/
 def TropTruthSet {α : Type*} (O : α → α) : Set α := {x | O x = x}
+
 
 
 
@@ -73,9 +81,11 @@ theorem oracle_image_eq_truthSet {α : Type*} (O : α → α) (hO : TropIsOracle
 
 
 
+
 /-- An oracle is the identity on its truth set -/
 theorem oracle_identity_on_truth {α : Type*} (O : α → α)
     (x : α) (hx : x ∈ TropTruthSet O) : O x = x := hx
+
 
 
 
@@ -83,6 +93,7 @@ theorem oracle_identity_on_truth {α : Type*} (O : α → α)
 theorem oracle_compose_self {α : Type*} (O : α → α) (hO : TropIsOracle O) :
     O ∘ O = O := by
   funext x; exact hO x
+
 
 
 
@@ -97,14 +108,17 @@ theorem oracle_iterate_stable {α : Type*} (O : α → α) (hO : TropIsOracle O)
 
 
 
+
 /-- The tropical threshold oracle: O_c(x) = max(x, c) -/
 def tropThresholdOracle (c : ℝ) (x : ℝ) : ℝ := max x c
+
 
 
 
 /-- The tropical threshold oracle is idempotent -/
 theorem tropThreshold_oracle (c : ℝ) : TropIsOracle (tropThresholdOracle c) := by
   intro x; unfold tropThresholdOracle; simp [max_assoc, max_self]
+
 
 
 
@@ -115,8 +129,10 @@ theorem tropThreshold_truthSet (c : ℝ) :
 
 
 
+
 /-- The tropical clamp oracle: O_{a,b}(x) = min(max(x, a), b) -/
 def tropClampOracle (a b : ℝ) (x : ℝ) : ℝ := min (max x a) b
+
 
 
 
@@ -127,10 +143,12 @@ theorem tropClamp_oracle (a b : ℝ) (hab : a ≤ b) :
 
 
 
+
 /-- Truth set of clamp oracle: [a, b] -/
 theorem tropClamp_truthSet (a b : ℝ) (hab : a ≤ b) :
     TropTruthSet (tropClampOracle a b) = Set.Icc a b := by
   grind +locals
+
 
 
 
@@ -139,9 +157,11 @@ def tropFloorOracle (c : ℝ) (x : ℝ) : ℝ := min x c
 
 
 
+
 /-- The floor oracle is idempotent -/
 theorem tropFloor_oracle (c : ℝ) : TropIsOracle (tropFloorOracle c) := by
   intro x; unfold tropFloorOracle; simp [min_assoc, min_self]
+
 
 
 
@@ -156,12 +176,14 @@ theorem tropFloor_truthSet (c : ℝ) :
 
 
 
+
 /-- Commuting oracles compose to form an oracle -/
 theorem oracle_compose_comm {α : Type*} (O₁ O₂ : α → α)
     (h₁ : TropIsOracle O₁) (h₂ : TropIsOracle O₂)
     (hcomm : O₁ ∘ O₂ = O₂ ∘ O₁) :
     TropIsOracle (O₁ ∘ O₂) := by
   simp_all +decide [funext_iff, TropIsOracle]
+
 
 
 
@@ -178,9 +200,11 @@ theorem oracle_compose_truth_intersection {α : Type*} (O₁ O₂ : α → α) :
 
 
 
+
 /-- The meta oracle for a finite family: component-wise infimum -/
 def tropMetaOracle {n : ℕ} (hn : 0 < n) (oracles : Fin n → (ℝ → ℝ)) (x : ℝ) : ℝ :=
   Finset.inf' Finset.univ ⟨⟨0, hn⟩, Finset.mem_univ _⟩ (fun i => oracles i x)
+
 
 
 
@@ -196,6 +220,7 @@ theorem meta_oracle_preserves_universal_truth {n : ℕ} (hn : 0 < n)
 
 
 
+
 /-- The meta oracle's truth set contains ⋂ᵢ TruthSet(Oᵢ) -/
 theorem meta_oracle_truth_superset {n : ℕ} (hn : 0 < n)
     (oracles : Fin n → (ℝ → ℝ)) :
@@ -206,11 +231,13 @@ theorem meta_oracle_truth_superset {n : ℕ} (hn : 0 < n)
 
 
 
+
 /-- The meta oracle output is ≤ every component oracle output (soundness) -/
 theorem meta_oracle_le_component {n : ℕ} (hn : 0 < n)
     (oracles : Fin n → (ℝ → ℝ)) (x : ℝ) (i : Fin n) :
     tropMetaOracle hn oracles x ≤ oracles i x := by
   unfold tropMetaOracle; exact Finset.inf'_le _ (Finset.mem_univ i)
+
 
 
 
@@ -227,6 +254,7 @@ theorem meta_oracle_is_glb {n : ℕ} (hn : 0 < n)
 
 
 
+
 /-- Monotone idempotent oracles: applying oracle i to the meta oracle output
 gives a result ≤ applying oracle i to the original input -/
 theorem meta_oracle_convergence_bound {n : ℕ} (hn : 0 < n)
@@ -238,6 +266,7 @@ theorem meta_oracle_convergence_bound {n : ℕ} (hn : 0 < n)
   have h_le : tropMetaOracle hn oracles x ≤ oracles i x :=
     meta_oracle_le_component hn oracles x i
   exact le_trans (hMono i h_le) (le_of_eq (hOracles i x))
+
 
 
 
@@ -260,6 +289,7 @@ theorem meta_oracle_contraction {n : ℕ} (hn : 0 < n)
 
 
 
+
 /-- Oracle tower: level k meta oracle, applying min with O at each level -/
 def tropOracleTower : ℕ → (ℝ → ℝ) → (ℝ → ℝ)
   | 0, O => O
@@ -267,10 +297,12 @@ def tropOracleTower : ℕ → (ℝ → ℝ) → (ℝ → ℝ)
 
 
 
+
 /-- The oracle tower is monotonically decreasing at each level -/
 theorem tropOracleTower_decreasing (O : ℝ → ℝ) (n : ℕ) (x : ℝ) :
     tropOracleTower (n + 1) O x ≤ tropOracleTower n O x :=
   min_le_left _ _
+
 
 
 
@@ -289,13 +321,16 @@ theorem tropOracleTower_stable (O : ℝ → ℝ)
 
 
 
+
 /-- Computable threshold oracle on rationals -/
 def compThresholdOracle (c : ℚ) (x : ℚ) : ℚ := max x c
 
 
 
+
 /-- Computable clamp oracle on rationals -/
 def compClampOracle (a b : ℚ) (x : ℚ) : ℚ := min (max x a) b
+
 
 
 
@@ -323,12 +358,14 @@ def compMetaOracle (oracles : List (ℚ → ℚ)) (x : ℚ) : ℚ :=
 
 
 
+
 /-- Completeness: universal truths are preserved by the meta oracle -/
 theorem meta_oracle_completeness {n : ℕ} (hn : 0 < n)
     (oracles : Fin n → (ℝ → ℝ))
     (x : ℝ) (hx : x ∈ ⋂ i, TropTruthSet (oracles i)) :
     tropMetaOracle hn oracles x = x :=
   meta_oracle_preserves_universal_truth hn oracles x (fun i => Set.mem_iInter.mp hx i)
+
 
 
 
@@ -344,10 +381,12 @@ theorem meta_oracle_detects_universal_truth {n : ℕ} (hn : 0 < n)
 
 
 
+
 /-- Product oracle: acts component-wise on a dependent product space -/
 def productOracle {ι : Type*} {X : ι → Type*}
     (oracles : ∀ i, X i → X i) : (∀ i, X i) → (∀ i, X i) :=
   fun v i => oracles i (v i)
+
 
 
 
@@ -360,6 +399,7 @@ theorem productOracle_isOracle {ι : Type*} {X : ι → Type*}
 
 
 
+
 /-- Truth set of the product oracle is the product of component truth sets -/
 theorem productOracle_truthSet {ι : Type*} {X : ι → Type*}
     (oracles : ∀ i, X i → X i) :
@@ -369,10 +409,12 @@ theorem productOracle_truthSet {ι : Type*} {X : ι → Type*}
 
 
 
+
 /-- The ultimate meta oracle: aggregate all component oracles via infimum -/
 def ultimateMetaOracle {n : ℕ} (hn : 0 < n)
     (oracles : Fin n → (ℝ → ℝ)) : ℝ → ℝ :=
   tropMetaOracle hn oracles
+
 
 
 
@@ -385,11 +427,13 @@ theorem ultimateMetaOracle_preserves_truth {n : ℕ} (hn : 0 < n)
 
 
 
+
 /-- The ultimate meta oracle is bounded by all components -/
 theorem ultimateMetaOracle_bounded {n : ℕ} (hn : 0 < n)
     (oracles : Fin n → (ℝ → ℝ)) (x : ℝ) (i : Fin n) :
     ultimateMetaOracle hn oracles x ≤ oracles i x :=
   meta_oracle_le_component hn oracles x i
+
 
 
 

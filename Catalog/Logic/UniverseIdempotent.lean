@@ -15,9 +15,11 @@ def unitCircle : Set (ℝ × ℝ) :=
 
 
 
+
 /-- The real line ℝ, embedded in ℝ² as the x-axis, representing massive particle states. -/
 def realLine : Set (ℝ × ℝ) :=
   {p | p.2 = 0}
+
 
 
 
@@ -26,6 +28,7 @@ state space (ℝ) are subsets of the same ambient space ℝ². They literally co
 theorem coexistence_ambient :
     unitCircle ⊆ Set.univ ∧ realLine ⊆ Set.univ :=
   ⟨Set.subset_univ _, Set.subset_univ _⟩
+
 
 
 
@@ -38,9 +41,11 @@ theorem coexistence_intersection_nonempty :
 
 
 
+
 /-- Forward stereographic projection: S¹ \ {south pole} → ℝ.
 The decoding: a photon state maps back to a massive particle state. -/
 def fwdStereo (p : ℝ × ℝ) : ℝ := p.1 / (1 + p.2)
+
 
 
 
@@ -55,8 +60,10 @@ theorem stereo_round_trip_idempotent (t : ℝ) :
 
 
 
+
 /-- A function is idempotent if applying it twice is the same as applying it once. -/
 def IsIdempotentFn {α : Type*} (f : α → α) : Prop := ∀ x, f (f x) = f x
+
 
 
 
@@ -71,10 +78,16 @@ theorem meta_oracle_is_oracle {α : Type*} (f : α → α)
 
 
 
+
+/-- [Section: # CatalogBuild.Logic.UniverseIdempotent
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 23] -/
 theorem oracle_hierarchy_collapse {α : Type*} (f : α → α)
     (hf : IsIdempotentFn f) (n : ℕ) (hn : n ≥ 1) :
     f^[n] = f := by
       induction hn <;> aesop
+
 
 
 
@@ -87,6 +100,7 @@ theorem universe_encoding_idempotent :
 
 
 
+
 /-- **The Universe is a Fixed Point**: Every point in ℝ is a fixed point of
 the universe encoding, because the encoding-decoding is the identity.
 The universe IS its own oracle — every query returns the truth. -/
@@ -96,14 +110,17 @@ theorem universe_is_fixed_point (t : ℝ) :
 
 
 
+
 /-- The identity map is idempotent. -/
 theorem id_is_idempotent {α : Type*} : IsIdempotentFn (id : α → α) := by
   intro x; rfl
 
 
 
+
 theorem id_image_univ {α : Type*} [Nonempty α] : range (id : α → α) = univ := by
   aesop
+
 
 
 
@@ -116,10 +133,12 @@ theorem diagonal_fixed {α : Type*} (f : α → α) (hf : IsIdempotentFn f) (a :
 
 
 
+
 theorem meta_oracle_sequence_constant {α : Type*} (f : α → α)
     (hf : IsIdempotentFn f) (n m : ℕ) (hn : n ≥ 1) (hm : m ≥ 1) :
     f^[n] = f^[m] := by
       rw [ oracle_hierarchy_collapse f hf n hn, oracle_hierarchy_collapse f hf m hm ]
+
 
 
 
@@ -133,10 +152,12 @@ theorem conformalFactor_bounded (t : ℝ) :
 
 
 
+
 /-- The conformal factor achieves its maximum at t = 0 (the "center of the universe"). -/
 theorem conformalFactor_max :
     conformalFactor 0 = 2 := by
   unfold conformalFactor; norm_num
+
 
 
 
@@ -149,8 +170,10 @@ theorem conformal_preserves_structure (t : ℝ) :
 
 
 
+
 /-- The universe map: encode then decode. -/
 def universeMap : ℝ → ℝ := fun t => fwdStereo (invStereo t)
+
 
 
 
@@ -158,6 +181,7 @@ def universeMap : ℝ → ℝ := fun t => fwdStereo (invStereo t)
 theorem universeMap_eq_id : universeMap = id := by
   ext t
   exact stereo_round_trip_idempotent t
+
 
 
 
@@ -169,11 +193,13 @@ theorem oracle_is_everything :
 
 
 
+
 /-- The meta-oracle: oracle ∘ oracle = oracle. -/
 theorem metaOracle_eq_oracle :
     universeMap ∘ universeMap = universeMap := by
   ext t
   simp [universeMap, stereo_round_trip_idempotent]
+
 
 
 
@@ -189,6 +215,7 @@ theorem universe_oracle_metaoracle_unified :
   intro n hn
   rw [universeMap_eq_id]
   simp [Function.iterate_id]
+
 
 
 

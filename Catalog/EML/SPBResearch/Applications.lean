@@ -13,12 +13,14 @@ noncomputable section
 def einsteinAdd (u v : ℝ) : ℝ := (u + v) / (1 + u * v)
 
 
+
 /-- The circular SPB -/
 def spbApp (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
 
 -- ═══════════════════════════════════════════
 -- § 1. Special Relativity
 -- ═══════════════════════════════════════════
+
 
 
 /-- Doppler ratio multiplicativity -/
@@ -31,6 +33,7 @@ theorem doppler_ratio_mul (u v : ℝ)
   unfold einsteinAdd; field_simp; ring
 
 
+
 /-- Lorentz gamma composition -/
 theorem lorentz_gamma_composition (u v : ℝ) (h : 1 + u * v ≠ 0) :
     (1 - einsteinAdd u v ^ 2) * (1 + u * v) ^ 2 = (1 - u ^ 2) * (1 - v ^ 2) := by
@@ -41,6 +44,7 @@ theorem lorentz_gamma_composition (u v : ℝ) (h : 1 + u * v ≠ 0) :
 -- ═══════════════════════════════════════════
 
 
+
 /-- Bounded returns stay bounded -/
 theorem bounded_return (r₁ r₂ : ℝ) (h1 : |r₁| < 1) (h2 : |r₂| < 1) :
     |einsteinAdd r₁ r₂| < 1 :=
@@ -49,6 +53,7 @@ theorem bounded_return (r₁ r₂ : ℝ) (h1 : |r₁| < 1) (h2 : |r₂| < 1) :
 -- ═══════════════════════════════════════════
 -- § 3. Rotation Composition
 -- ═══════════════════════════════════════════
+
 
 
 /-- The Cayley parametrization satisfies cos²+sin²=1 -/
@@ -62,6 +67,7 @@ theorem cayley_unit_circle (t : ℝ) :
 -- ═══════════════════════════════════════════
 
 
+
 /-- Phase gate angle composition via SPB -/
 theorem phase_gate_spb (t₁ t₂ : ℝ) (h : t₁ * t₂ < 1) :
     arctan (spbApp t₁ t₂) = arctan t₁ + arctan t₂ := by
@@ -72,8 +78,10 @@ theorem phase_gate_spb (t₁ t₂ : ℝ) (h : t₁ * t₂ < 1) :
 -- ═══════════════════════════════════════════
 
 
+
 /-- The cross-ratio of four points -/
 def crossRatioApp (a b c d : ℝ) : ℝ := ((a - c) * (b - d)) / ((a - d) * (b - c))
+
 
 
 /-- [Section: # SPB Applications: Physics, Signal Processing, and Finance] -/
@@ -95,10 +103,12 @@ theorem spb_preserves_cross_ratio_app (a b c d t : ℝ)
 -- ═══════════════════════════════════════════
 
 
+
 /-- The SPB Jacobian: ∂spb/∂x · ∂spb/∂y = (1+a²)²/(1-xa)²(1-ya)²
 for spb(x,a) with x = variable, a = parameter -/
 theorem spb_jacobian_identity (x y a : ℝ) :
     (1 + a ^ 2) ^ 2 = (1 + a ^ 2) * (1 + a ^ 2) := by ring
+
 
 
 end

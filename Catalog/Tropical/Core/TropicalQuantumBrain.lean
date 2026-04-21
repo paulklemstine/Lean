@@ -14,14 +14,17 @@ def tropAdd' (a b : ℝ) : ℝ := max a b
 
 
 
+
 /-- Tropical multiplication is ordinary addition -/
 def tropMul' (a b : ℝ) : ℝ := a + b
+
 
 
 
 /-- Tropical addition is commutative -/
 theorem tropAdd'_comm (a b : ℝ) : tropAdd' a b = tropAdd' b a := by
   unfold tropAdd'; exact max_comm a b
+
 
 
 
@@ -32,9 +35,11 @@ theorem tropAdd'_assoc (a b c : ℝ) :
 
 
 
+
 /-- Tropical addition is idempotent: a ⊕ a = a -/
 theorem tropAdd'_idem (a : ℝ) : tropAdd' a a = a := by
   unfold tropAdd'; exact max_self a
+
 
 
 
@@ -42,6 +47,7 @@ theorem tropAdd'_idem (a : ℝ) : tropAdd' a a = a := by
 theorem tropMul'_distrib_left (a b c : ℝ) :
     tropMul' a (tropAdd' b c) = tropAdd' (tropMul' a b) (tropMul' a c) := by
   simp [tropMul', tropAdd', max_add_add_left]
+
 
 
 
@@ -56,10 +62,12 @@ theorem tropMul'_distrib_right (a b c : ℝ) :
 
 
 
+
 /-- ReLU is tropical addition with the multiplicative identity:
 ReLU(x) = x ⊕ 0 = max(x, 0) -/
 theorem relu'_eq_tropAdd_zero (x : ℝ) : relu' x = tropAdd' x 0 := by
   rfl
+
 
 
 
@@ -70,11 +78,13 @@ theorem relu'_idem (x : ℝ) : relu' (relu' x) = relu' x := by
 
 
 
+
 /-- ReLU is monotone -/
 theorem relu'_mono : Monotone relu' := by
   intro a b h
   unfold relu'
   exact max_le_max_right 0 h
+
 
 
 
@@ -87,6 +97,7 @@ theorem relu'_nonneg (x : ℝ) : 0 ≤ relu' x := le_max_right x 0
 
 
 
+
 /-- The Tropical Hadamard Gate: H_T(a,b) = (max(a,b), max(a,b))
 Tropicalization of the quantum Hadamard gate H = (1/√2)[[1,1],[1,-1]].
 Neural interpretation: Winner-Take-All broadcast circuit.
@@ -95,11 +106,13 @@ def tropicalHadamard (a b : ℝ) : ℝ × ℝ := (max a b, max a b)
 
 
 
+
 /-- The Tropical CNOT Gate: CNOT_T(a,b) = (a, a+b)
 Tropicalization of the quantum CNOT gate.
 Neural interpretation: Synaptic integration (control adds to target).
 Quantum entanglement → tropical synaptic binding. -/
 def tropicalCNOT (a b : ℝ) : ℝ × ℝ := (a, a + b)
+
 
 
 
@@ -114,6 +127,7 @@ def tropicalPhase (phi a : ℝ) : ℝ := a + phi
 
 
 
+
 /-- KEY THEOREM: The tropical Hadamard gate is idempotent: H_T² = H_T
 This contrasts with the quantum Hadamard which is involutive (H² = I).
 Superposition (quantum) becomes selection (tropical) under tropicalization. -/
@@ -124,10 +138,12 @@ theorem tropicalHadamard_idempotent (a b : ℝ) :
 
 
 
+
 /-- Tropical Hadamard is commutative (symmetric in inputs) -/
 theorem tropicalHadamard_comm (a b : ℝ) :
     tropicalHadamard a b = tropicalHadamard b a := by
   simp [tropicalHadamard, max_comm]
+
 
 
 
@@ -138,9 +154,11 @@ theorem tropicalHadamard_components_eq (a b : ℝ) :
 
 
 
+
 /-- Tropical Hadamard output ≥ both inputs -/
 theorem tropicalHadamard_ge_left (a b : ℝ) :
     a ≤ (tropicalHadamard a b).1 := le_max_left a b
+
 
 
 
@@ -157,6 +175,7 @@ theorem tropicalHadamard_ge_right (a b : ℝ) :
 
 
 
+
 /-- KEY THEOREM: Tropical CNOT is NOT self-inverse (unlike quantum CNOT).
 Quantum CNOT satisfies CNOT² = I. But tropical CNOT satisfies
 CNOT_T²(a,b) = (a, 2a+b) ≠ (a,b) in general. -/
@@ -167,10 +186,12 @@ theorem tropicalCNOT_not_involutive :
 
 
 
+
 /-- Tropical CNOT squared: CNOT_T²(a,b) = (a, 2a+b) -/
 theorem tropicalCNOT_squared (a b : ℝ) :
     tropicalCNOT (tropicalCNOT a b).1 (tropicalCNOT a b).2 = (a, 2*a + b) := by
   simp [tropicalCNOT]; ring
+
 
 
 
@@ -184,6 +205,7 @@ theorem tropicalCNOT_preserves_first (a b : ℝ) :
 
 
 
+
 /-- Phase gates compose by adding phases: P_T(φ₁) ∘ P_T(φ₂) = P_T(φ₁+φ₂) -/
 theorem tropicalPhase_compose (phi1 phi2 a : ℝ) :
     tropicalPhase phi1 (tropicalPhase phi2 a) = tropicalPhase (phi1 + phi2) a := by
@@ -191,9 +213,11 @@ theorem tropicalPhase_compose (phi1 phi2 a : ℝ) :
 
 
 
+
 /-- Zero phase is identity -/
 theorem tropicalPhase_zero (a : ℝ) : tropicalPhase 0 a = a := by
   simp [tropicalPhase]
+
 
 
 
@@ -208,11 +232,13 @@ theorem tropicalPhase_inv (phi a : ℝ) :
 
 
 
+
 /-- Hadamard after CNOT: a cortical column computation -/
 theorem hadamard_after_cnot (a b : ℝ) :
     tropicalHadamard (tropicalCNOT a b).1 (tropicalCNOT a b).2 =
     (max a (a + b), max a (a + b)) := by
   unfold tropicalCNOT tropicalHadamard; rfl
+
 
 
 
@@ -228,6 +254,7 @@ theorem phase_before_hadamard (phi a b : ℝ) :
 
 
 
+
 /-- Tropical broadcast: maps all components to the max value.
 This is the n-ary tropical Hadamard gate. -/
 def tropicalBroadcast {n : ℕ} (hn : 0 < n) (v : Fin n → ℝ) : Fin n → ℝ :=
@@ -235,6 +262,11 @@ def tropicalBroadcast {n : ℕ} (hn : 0 < n) (v : Fin n → ℝ) : Fin n → ℝ
 
 
 
+
+/-- [Section: # CatalogBuild.Tropical.Core.TropicalQuantumBrain
+Auto-generated from theorem catalog database.
+Domain: Tropical/Core
+Declarations: 32] -/
 theorem tropicalBroadcast_idempotent {n : ℕ} (hn : 0 < n) (v : Fin n → ℝ) :
     tropicalBroadcast hn (tropicalBroadcast hn v) = tropicalBroadcast hn v := by
       unfold tropicalBroadcast; aesop;
@@ -242,6 +274,7 @@ theorem tropicalBroadcast_idempotent {n : ℕ} (hn : 0 < n) (v : Fin n → ℝ) 
 -- ============================================================================
 -- PART X: CONSCIOUSNESS HYPOTHESIS — FORMAL FRAMEWORK
 -- ============================================================================
+
 
 
 
@@ -255,10 +288,12 @@ def consciousnessFunctional (beta beta_c sigma : ℝ) : ℝ :=
 
 
 
+
 /-- The consciousness functional is zero at β = 0 (no computation) -/
 theorem consciousness_zero_at_zero (beta_c sigma : ℝ) :
     consciousnessFunctional 0 beta_c sigma = 0 := by
   simp [consciousnessFunctional]
+
 
 
 
@@ -268,6 +303,7 @@ theorem consciousness_positive {beta beta_c sigma : ℝ}
     0 < consciousnessFunctional beta beta_c sigma := by
   unfold consciousnessFunctional
   exact mul_pos hbeta (exp_pos _)
+
 
 
 

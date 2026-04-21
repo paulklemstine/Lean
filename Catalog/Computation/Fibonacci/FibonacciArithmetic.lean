@@ -15,6 +15,7 @@ theorem fibonacci_carry_rule (n : ℕ) (hn : n ≥ 1) :
 
 
 
+
 /-- The double carry rule: when two copies of the same Fibonacci number appear,
 they can be decomposed. Specifically: 2 * F(n+2) = F(n+3) + F(n). -/
 theorem fibonacci_double_carry (n : ℕ) :
@@ -23,11 +24,13 @@ theorem fibonacci_double_carry (n : ℕ) :
 
 
 
+
 /-- The classical identity: gcd(F_m, F_n) = F_{gcd(m, n)}.
 This is the foundation of the Fibonacci GCD descent factoring method. -/
 theorem fibonacci_gcd_identity (m n : ℕ) :
     Nat.gcd (Nat.fib m) (Nat.fib n) = Nat.fib (Nat.gcd m n) :=
   (Nat.fib_gcd m n).symm
+
 
 
 
@@ -40,12 +43,14 @@ theorem euclid_pythagorean (m n : ℕ) (hmn : n ≤ m) :
 
 
 
+
 /-- The mediant of two fractions a/b < c/d satisfies a/b < (a+c)/(b+d) < c/d.
 (Stated for natural numbers to avoid division.) -/
 theorem mediant_between (a b c d : ℕ) (hb : b > 0) (hd : d > 0)
     (h : a * d < c * b) :
     a * (b + d) < (a + c) * b ∧ (a + c) * d < c * (b + d) := by
   constructor <;> nlinarith
+
 
 
 
@@ -76,8 +81,14 @@ theorem mediant_coprime (a b c d : ℕ)
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Fibonacci.FibonacciArithmetic
+Auto-generated from theorem catalog database.
+Domain: Computation/Fibonacci
+Declarations: 7] -/
 theorem fib_sum (n : ℕ) :
     (Finset.range n).sum Nat.fib = Nat.fib (n + 1) - 1 := by
   exact eq_tsub_of_add_eq <| by induction n <;> simp_all +decide [ Finset.sum_range_succ, Nat.fib_add_two ] ; linarith
+
 
 

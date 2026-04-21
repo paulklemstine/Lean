@@ -18,13 +18,20 @@ theorem kinetic_energy_nonneg (rho v : ℝ) (hrho : rho > 0) :
 
 
 
+
+/-- [Section: # CatalogBuild.Physics.Spacetime.FluidGravity
+Auto-generated from theorem catalog database.
+Domain: Physics/Spacetime
+Declarations: 20] -/
 theorem viscous_dissipation_negative (nu gradv_sq : ℝ)
     (hnu : nu > 0) (hg : gradv_sq ≥ 0) :
     -(2 * nu * gradv_sq) ≤ 0 := by nlinarith
 
 
 
+
 def reynoldsNumber (rho v L mu : ℝ) : ℝ := rho * v * L / mu
+
 
 
 
@@ -38,11 +45,14 @@ theorem kolmogorov_decay (C eps k1 k2 : ℝ)
 
 
 
+
 theorem kss_bound_positive : (1 : ℝ) / (4 * Real.pi) > 0 := by positivity
+
 
 
 theorem diffusion_positive (eta rhoP : ℝ) (heta : eta > 0) (hrhoP : rhoP > 0) :
     eta / rhoP > 0 := by positivity
+
 
 
 
@@ -51,13 +61,16 @@ theorem dominant_energy (T00 T0i : ℝ) (h : T00 ≥ |T0i|) : T00 ≥ 0 := by
 
 
 
+
 theorem rt_entropy_positive (area GN : ℝ) (ha : area > 0) (hG : GN > 0) :
     area / (4 * GN) > 0 := by positivity
 
 
 
+
 theorem strong_subadditivity (SABC SB SAB SBC : ℝ) (h : SABC + SB ≤ SAB + SBC) :
     SABC - SAB ≤ SBC - SB := by linarith
+
 
 
 
@@ -71,9 +84,11 @@ theorem bekenstein_bound_scales (R1 R2 E : ℝ) (hE : E > 0) (h : R1 < R2) :
 
 
 
+
 theorem scrambling_time_positive (T S : ℝ) (hT : T > 0) (hS : S > 1) :
     Real.log S / (2 * Real.pi * T) > 0 :=
   div_pos (Real.log_pos hS) (by positivity)
+
 
 
 
@@ -81,7 +96,9 @@ theorem lloyd_bound (M : ℝ) (hM : M > 0) : 2 * M / Real.pi > 0 := by positivit
 
 
 
+
 def pageEntropy (t S_BH : ℝ) : ℝ := min t (S_BH - t)
+
 
 
 
@@ -91,9 +108,11 @@ theorem page_time_maximum (S_BH : ℝ) (hS : S_BH > 0) :
 
 
 
+
 theorem page_symmetric (t S_BH : ℝ) :
     pageEntropy t S_BH = pageEntropy (S_BH - t) S_BH := by
   simp only [pageEntropy]; rw [min_comm]; ring_nf
+
 
 
 
@@ -103,13 +122,16 @@ theorem page_nonneg (t S_BH : ℝ) (ht : 0 ≤ t) (hS : t ≤ S_BH) :
 
 
 
+
 def blackeningFactor (r rH : ℝ) (d : ℕ) : ℝ := 1 - (rH / r) ^ d
+
 
 
 
 theorem blackening_at_horizon (rH : ℝ) (d : ℕ) (hrH : rH > 0) :
     blackeningFactor rH rH d = 0 := by
   simp [blackeningFactor, div_self (ne_of_gt hrH)]
+
 
 
 
@@ -126,8 +148,10 @@ theorem blackening_outside_horizon (r rH : ℝ) (d : ℕ)
 
 
 
+
 theorem hawking_temp_positive (d : ℕ) (rH : ℝ) (hd : d ≥ 1) (hrH : rH > 0) :
     (d : ℝ) * rH / (4 * Real.pi) > 0 := by positivity
+
 
 
 

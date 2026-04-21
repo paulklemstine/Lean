@@ -16,9 +16,11 @@ def emlNeuron (w₁ b₁ w₂ b₂ x : ℝ) : ℝ :=
 
 
 
+
 /-- A simplified EML neuron with unit weights: exp(x + b₁) − ln(x + b₂). -/
 def emlNeuronSimple (b₁ b₂ x : ℝ) : ℝ :=
   Real.exp (x + b₁) - Real.log (x + b₂)
+
 
 
 
@@ -29,10 +31,12 @@ theorem emlNeuron_is_exp (x : ℝ) :
 
 
 
+
 /-- When w₁=0, b₁=0, w₂=1, b₂=0, with x > 0, the neuron computes 1 − ln(x). -/
 theorem emlNeuron_is_one_sub_log (x : ℝ) (_hx : 0 < x) :
     emlNeuron 0 0 1 0 x = 1 - Real.log x := by
   simp [emlNeuron]
+
 
 
 
@@ -43,6 +47,7 @@ theorem emlNeuron_const_one (x : ℝ) :
 
 
 
+
 /-- The EML neuron is differentiable whenever w₂·x + b₂ ≠ 0. -/
 theorem emlNeuron_differentiableAt (w₁ b₁ w₂ b₂ x : ℝ) (h : w₂ * x + b₂ ≠ 0) :
     DifferentiableAt ℝ (fun x' => emlNeuron w₁ b₁ w₂ b₂ x') x := by
@@ -50,6 +55,7 @@ theorem emlNeuron_differentiableAt (w₁ b₁ w₂ b₂ x : ℝ) (h : w₂ * x +
   apply DifferentiableAt.sub
   · exact (differentiableAt_id.const_mul w₁ |>.add (differentiableAt_const b₁)).exp
   · exact (differentiableAt_id.const_mul w₂ |>.add (differentiableAt_const b₂)).log h
+
 
 
 
@@ -73,9 +79,11 @@ theorem emlNeuron_hasDerivAt (w₁ b₁ w₂ b₂ x : ℝ) (h : w₂ * x + b₂ 
 
 
 
+
 /-- An EML layer: a list of EML neurons applied to the same input. -/
 def emlLayer (params : List (ℝ × ℝ × ℝ × ℝ)) (x : ℝ) : List ℝ :=
   params.map fun ⟨w₁, b₁, w₂, b₂⟩ => emlNeuron w₁ b₁ w₂ b₂ x
+
 
 
 
@@ -86,13 +94,16 @@ theorem emlLayer_length (params : List (ℝ × ℝ × ℝ × ℝ)) (x : ℝ) :
 
 
 
+
 /-- The parameter count of an EML neuron (4 parameters: w₁, b₁, w₂, b₂). -/
 def emlNeuronParamCount : ℕ := 4
 
 
 
+
 /-- The parameter count of a dense EML layer with n neurons and m inputs. -/
 def emlDenseLayerParams (n m : ℕ) : ℕ := n * (2 * m + 2)
+
 
 
 
@@ -103,8 +114,10 @@ theorem emlDenseLayerParams_single_input (n : ℕ) :
 
 
 
+
 /-- EML tree leaf count as a complexity measure. -/
 def emlTreeComplexity (leaves : ℕ) : ℕ := leaves
+
 
 
 
@@ -113,8 +126,10 @@ def stdNNLayerParams (n m : ℕ) : ℕ := n * (m + 1)
 
 
 
+
 /-- For a depth-d balanced EML tree, the number of leaves is 2^d. -/
 theorem balanced_tree_leaves (d : ℕ) : 2^d = 2^d := rfl
+
 
 
 
@@ -122,6 +137,7 @@ theorem balanced_tree_leaves (d : ℕ) : 2^d = 2^d := rfl
 This theorem states the exponential compression ratio. -/
 theorem eml_compression_bound (k : ℕ) (_hk : 1 ≤ k) :
     k ≤ 2^k := Nat.lt_two_pow_self.le
+
 
 
 
@@ -137,10 +153,12 @@ theorem eml_neuron_composition_structure (w₁ b₁ w₂ b₂ w₃ b₃ w₄ b�
 
 
 
+
 /-- The exponential part of the EML neuron gradient grows exponentially.
 This means EML neurons can exhibit gradient explosion — a key training consideration. -/
 theorem eml_gradient_exp_part (w₁ b₁ x : ℝ) :
     w₁ * Real.exp (w₁ * x + b₁) = w₁ * Real.exp (w₁ * x + b₁) := rfl
+
 
 
 
@@ -153,6 +171,7 @@ theorem eml_gradient_log_bounded (w₂ b₂ x : ℝ) (h : 1 ≤ |w₂ * x + b₂
 
 
 
+
 /-- After training, an EML neuron's symbolic formula is immediately readable.
 The function is exactly exp(w₁·x + b₁) − ln(w₂·x + b₂) with trained parameters. -/
 theorem eml_symbolic_readout (w₁ b₁ w₂ b₂ : ℝ) :
@@ -161,8 +180,10 @@ theorem eml_symbolic_readout (w₁ b₁ w₂ b₂ : ℝ) :
 
 
 
+
 /-- Sigmoid function: σ(x) = 1/(1 + exp(-x)). -/
 def emlSigmoid (x : ℝ) : ℝ := 1 / (1 + Real.exp (-x))
+
 
 
 
@@ -177,6 +198,7 @@ theorem emlSigmoid_range (x : ℝ) : 0 < emlSigmoid x ∧ emlSigmoid x < 1 := by
 
 
 
+
 /-- The EML complexity of a function is the minimum leaf count of any
 EML tree computing it. This is formalized as a type. -/
 structure EMLComplexity where
@@ -184,6 +206,7 @@ structure EMLComplexity where
   depth : ℕ
   nodeCount : ℕ
   leaf_node_rel : leafCount = nodeCount + 1
+
 
 
 
@@ -196,8 +219,10 @@ def mkEMLComplexity (leaves : ℕ) (h : 0 < leaves) : EMLComplexity where
 
 
 
+
 /-- A standard feedforward NN with L layers, width W, needs O(L·W²) parameters. -/
 def stdNNTotalParams (L W : ℕ) : ℕ := L * W * (W + 1)
+
 
 
 
@@ -207,9 +232,11 @@ def emlTreeTotalParams (n : ℕ) : ℕ := 4 * (n - 1)
 
 
 
+
 /-- The compression ratio: for large NN vs small EML tree. -/
 theorem compression_ratio_example :
     stdNNTotalParams 5 100 / emlTreeTotalParams 50 > 250 := by native_decide
+
 
 
 

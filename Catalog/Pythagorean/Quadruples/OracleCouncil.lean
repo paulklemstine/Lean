@@ -14,6 +14,7 @@ theorem quadruple_perm_abc (a b c d : ℤ) (h : IsPythQuadruple a b c d) :
 
 
 
+
 /-- [Section: # CatalogBuild.Pythagorean.Quadruples.OracleCouncil
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/Quadruples
@@ -24,15 +25,18 @@ theorem quadruple_perm_acb (a b c d : ℤ) (h : IsPythQuadruple a b c d) :
 
 
 
+
 /-- The (1, 2, 2, 3) quadruple is the smallest primitive one. -/
 theorem quad_1_2_2_3' : IsPythQuadruple 1 2 2 3 := by
   unfold IsPythQuadruple; norm_num
 
 
 
+
 /-- The (1, 4, 8, 9) quadruple. -/
 theorem quad_1_4_8_9' : IsPythQuadruple 1 4 8 9 := by
   unfold IsPythQuadruple; norm_num
+
 
 
 
@@ -47,13 +51,20 @@ theorem euler_four_square' (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.Quadruples.OracleCouncil
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Quadruples
+Declarations: 22] -/
 theorem square_mod_8' (d : ℤ) : d ^ 2 % 8 = 0 ∨ d ^ 2 % 8 = 1 ∨ d ^ 2 % 8 = 4 := by
   rw [ sq, Int.mul_emod ] ; have := Int.emod_nonneg d ( by decide : ( 8 : ℤ ) ≠ 0 ) ; have := Int.emod_lt_of_pos d ( by decide : ( 0 : ℤ ) < 8 ) ; interval_cases d % 8 <;> trivial;
 
 
 
+
 theorem square_avoids_legendre' (d : ℤ) : d ^ 2 % 8 ≠ 7 := by
   rw [ sq, Int.mul_emod ] ; have := Int.emod_nonneg d ( by decide : ( 8 : ℤ ) ≠ 0 ) ; have := Int.emod_lt_of_pos d ( by decide : ( 8 : ℤ ) > 0 ) ; interval_cases d % 8 <;> trivial;
+
 
 
 
@@ -63,10 +74,12 @@ def IntSphere (R : ℤ) : Set (ℤ × ℤ × ℤ) :=
 
 
 
+
 /-- Quadruples with hypotenuse d correspond to lattice points on IntSphere(d²). -/
 theorem quad_is_lattice_point (a b c d : ℤ) :
     IsPythQuadruple a b c d ↔ (a, b, c) ∈ IntSphere (d ^ 2) := by
   unfold IsPythQuadruple IntSphere; simp
+
 
 
 
@@ -89,10 +102,12 @@ theorem int_sphere_zero : IntSphere 0 = {(0, 0, 0)} := by
 
 
 
+
 /-- Rotational symmetry: swapping coordinates preserves membership. -/
 theorem sphere_rotation_symmetry (a b c R : ℤ) (h : (a, b, c) ∈ IntSphere R) :
     (b, a, c) ∈ IntSphere R := by
   simp [IntSphere] at *; linarith
+
 
 
 
@@ -103,11 +118,13 @@ theorem hopf_map_norm' (a b c d : ℤ) :
 
 
 
+
 /-- The Hopf map sends an integer 3-sphere to an integer 2-sphere. -/
 theorem hopf_maps_sphere' (a b c d R : ℤ)
     (h : a^2 + b^2 + c^2 + d^2 = R) :
     (2*(a*c + b*d))^2 + (2*(b*c - a*d))^2 + (a^2 + b^2 - c^2 - d^2)^2 = R^2 := by
   nlinarith [hopf_map_norm' a b c d]
+
 
 
 
@@ -123,9 +140,11 @@ theorem hopf_generates_quadruple' (a b c d : ℤ) :
 
 
 
+
 /-- The sum of four squares is non-negative. -/
 theorem four_sq_nonneg' (a b c d : ℤ) : 0 ≤ a^2 + b^2 + c^2 + d^2 := by
   nlinarith [sq_nonneg a, sq_nonneg b, sq_nonneg c, sq_nonneg d]
+
 
 
 
@@ -135,11 +154,13 @@ theorem three_sq_is_four_sq' (a b c : ℤ) :
 
 
 
+
 /-- Every Pythagorean quadruple hypotenuse squared is a sum of 3 squares. -/
 theorem quad_hypotenuse_is_three_sq (a b c d : ℤ)
     (h : IsPythQuadruple a b c d) :
     d^2 = a^2 + b^2 + c^2 := by
   unfold IsPythQuadruple at h; linarith
+
 
 
 
@@ -152,11 +173,13 @@ theorem divine_quaternion_norm' (a b c d : ℤ)
 
 
 
+
 /-- The converse: if |q|² = 2·(Re q)², then Im(q) forms a Pythagorean quadruple. -/
 theorem divine_converse' (a b c d : ℤ)
     (h : d^2 + a^2 + b^2 + c^2 = 2 * d^2) :
     IsPythQuadruple a b c d := by
   unfold IsPythQuadruple; linarith
+
 
 
 
@@ -173,10 +196,12 @@ theorem three_sq_product (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ) :
 
 
 
+
 /-- Every positive integer is a sum of four squares (we state a key lemma:
 1 is a sum of four squares). -/
 theorem one_is_four_squares : ∃ a b c d : ℤ, a^2 + b^2 + c^2 + d^2 = 1 := by
   exact ⟨1, 0, 0, 0, by norm_num⟩
+
 
 
 
@@ -187,4 +212,5 @@ theorem sum_four_sq_mul' (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ) :
     (a₁^2 + b₁^2 + c₁^2 + d₁^2) * (a₂^2 + b₂^2 + c₂^2 + d₂^2) =
     x₁^2 + x₂^2 + x₃^2 + x₄^2 :=
   ⟨_, _, _, _, euler_four_square' a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂⟩
+
 

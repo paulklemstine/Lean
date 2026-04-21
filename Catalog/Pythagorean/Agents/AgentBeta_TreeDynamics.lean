@@ -17,6 +17,7 @@ deriving Repr
 
 
 
+
 /-- Compute the Pythagorean triple at a given tree path. -/
 def berggrenTripleAux : TreePath → ℤ × ℤ × ℤ
   | .root => (3, 4, 5)
@@ -32,9 +33,11 @@ def berggrenTripleAux : TreePath → ℤ × ℤ × ℤ
 
 
 
+
 /-- M₂ always produces positive components from positive inputs. -/
 theorem berggren_M2_pos_a (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
     0 < a + 2*b + 2*c := by linarith
+
 
 
 
@@ -47,8 +50,14 @@ theorem berggren_M2_pos_b (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.Agents.AgentBeta_TreeDynamics
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Agents
+Declarations: 20] -/
 theorem berggren_M2_pos_c (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
     0 < 2*a + 2*b + 3*c := by linarith
+
 
 
 
@@ -59,10 +68,12 @@ theorem berggren_M1_pos_a (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
 
 
 
+
 /-- M₁ produces positive second component. -/
 theorem berggren_M1_pos_b (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (h : a ^ 2 + b ^ 2 = c ^ 2) :
     0 < 2*a - b + 2*c := by nlinarith [sq_nonneg a]
+
 
 
 
@@ -73,6 +84,7 @@ theorem berggren_M3_pos_a (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
 
 
 
+
 /-- M₃ produces positive second component. -/
 theorem berggren_M3_pos_b (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (h : a ^ 2 + b ^ 2 = c ^ 2) :
@@ -80,10 +92,12 @@ theorem berggren_M3_pos_b (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
 
 
 
+
 /-- The set of tree paths at exactly depth d. -/
 def pathsAtDepth : ℕ → List TreePath
   | 0     => [.root]
   | d + 1 => (pathsAtDepth d).flatMap fun p => [.left p, .mid p, .right p]
+
 
 
 
@@ -95,6 +109,7 @@ theorem pathsAtDepth_length : ∀ d : ℕ, (pathsAtDepth d).length = 3 ^ d := by
   have h_flatMap : pathsAtDepth (n + 1) = (pathsAtDepth n).flatMap fun p => [.left p, .mid p, .right p] := by
     exact?;
   rw [ h_flatMap, List.length_flatMap, List.sum_eq_card_nsmul ] <;> aesop
+
 
 
 
@@ -114,6 +129,7 @@ def m2_branch : ℕ → ℤ × ℤ × ℤ
 
 
 
+
 /-- Every M₂-branch triple is Pythagorean. -/
 theorem m2_branch_pyth (n : ℕ) :
     let t := m2_branch n
@@ -124,10 +140,12 @@ theorem m2_branch_pyth (n : ℕ) :
 
 
 
+
 /-- Sum of the three children's hypotenuses. -/
 theorem children_hyp_sum (a b c : ℤ) :
     (2*a - 2*b + 3*c) + (2*a + 2*b + 3*c) + (-2*a + 2*b + 3*c) = 2*a + 2*b + 9*c := by
   ring
+
 
 
 
@@ -137,9 +155,11 @@ theorem children_leg_a_sum (a b c : ℤ) :
 
 
 
+
 /-- Sum of the three children's second legs. -/
 theorem children_leg_b_sum (a b c : ℤ) :
     (2*a - b + 2*c) + (2*a + b + 2*c) + (-2*a + b + 2*c) = 2*a + b + 6*c := by ring
+
 
 
 
@@ -152,6 +172,7 @@ theorem children_perimeter_sum (a b c : ℤ) :
 
 
 
+
 /-- The M₂ hypotenuse recurrence: c_{n+2} = 6c_{n+1} - c_n. -/
 theorem m2_hyp_recurrence :
     ∀ n : ℕ, (m2_branch (n + 2)).2.2 = 6 * (m2_branch (n + 1)).2.2 - (m2_branch n).2.2 := by
@@ -159,6 +180,7 @@ theorem m2_hyp_recurrence :
   induction n with
   | zero => norm_num [m2_branch]
   | succ n ih => simp only [m2_branch]; linarith
+
 
 
 
@@ -174,9 +196,11 @@ def m2_perimeter (n : ℕ) : ℤ :=
 
 
 
+
 /-- The minimum hypotenuse growth factor is > 1 for each transformation. -/
 theorem min_hyp_growth (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (h : a ^ 2 + b ^ 2 = c ^ 2) :
     c + 2 ≤ 2 * a + 2 * b + 3 * c := by linarith
+
 
 

@@ -18,8 +18,14 @@ def stdPolicyParams (stateDim actionDim hiddenWidth : ℕ) : ℕ :=
 
 
 
+
+/-- [Section: # CatalogBuild.EML.AIResearch.ReinforcementLearning
+Auto-generated from theorem catalog database.
+Domain: EML/AIResearch
+Declarations: 18] -/
 def emlPolicyParams (stateDim actionDim : ℕ) : ℕ :=
   4 * (stateDim + actionDim)
+
 
 
 
@@ -29,7 +35,9 @@ theorem eml_policy_compact (s a h : ℕ) (hh : 5 ≤ h) :
 
 
 
+
 def bellmanError (gamma : ℝ) (k : ℕ) (initError : ℝ) : ℝ := gamma ^ k * initError
+
 
 
 
@@ -41,10 +49,13 @@ theorem bellman_contracts (gamma initErr : ℝ) (k1 k2 : ℕ)
 
 
 
+
 def emlValueConvergence (d w n : ℕ) : ℝ := Real.sqrt (↑(4 * d * w) / ↑n)
 
 
+
 def stdValueConvergence (d w n : ℕ) : ℝ := Real.sqrt (↑(d * w * w) / ↑n)
+
 
 
 
@@ -58,7 +69,9 @@ theorem eml_value_converges_faster (d w n : ℕ) (hw : 5 ≤ w) (hn : 0 < n) :
 
 
 
+
 def explorationBonus (visits : ℕ) : ℝ := 1 / Real.sqrt ↑visits
+
 
 
 
@@ -68,10 +81,13 @@ theorem exploration_decays (v1 v2 : ℕ) (hv1 : 0 < v1) (h : v1 ≤ v2) :
 
 
 
+
 def stdCommCost (stateDim : ℕ) : ℕ := stateDim
 
 
+
 def emlCommCost (stateDim comprRatio : ℕ) : ℕ := stateDim / comprRatio
+
 
 
 
@@ -81,8 +97,10 @@ theorem eml_comm_efficiency (s c : ℕ) :
 
 
 
+
 def shapedReward (baseReward potential_diff gamma : ℝ) : ℝ :=
   baseReward + gamma * potential_diff
+
 
 
 
@@ -92,13 +110,16 @@ theorem shaping_zero_preserves (r gamma : ℝ) :
 
 
 
+
 def stdRLSamples (stateSpace actionSpace : ℕ) (eps : ℝ) : ℝ :=
   ↑(stateSpace * actionSpace) / eps ^ 2
 
 
 
+
 def emlRLSamples (stateSpace actionSpace : ℕ) (eps efficiencyGain : ℝ) : ℝ :=
   ↑(stateSpace * actionSpace) / (eps ^ 2 * efficiencyGain)
+
 
 
 
@@ -108,6 +129,7 @@ theorem eml_rl_sample_efficiency (s a : ℕ) (eps eff : ℝ)
   unfold emlRLSamples stdRLSamples
   apply div_le_div_of_nonneg_left (by positivity) (by positivity)
   nlinarith [sq_nonneg eps]
+
 
 
 

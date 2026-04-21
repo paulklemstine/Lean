@@ -16,9 +16,11 @@ structure GeodesicOracle (X : Type*) where
 
 
 
+
 /-- The solution set of a geodesic oracle. -/
 def GeodesicOracle.solutionSet {X : Type*} (O : GeodesicOracle X) : Set X :=
   {x | O.seek x = x}
+
 
 
 
@@ -28,11 +30,13 @@ theorem GeodesicOracle.output_is_solution {X : Type*} (O : GeodesicOracle X) (x 
 
 
 
+
 /-- The range of the oracle equals its solution set. -/
 theorem GeodesicOracle.range_eq_solutions {X : Type*} (O : GeodesicOracle X) :
     range O.seek = O.solutionSet := by
   ext y; simp only [GeodesicOracle.solutionSet, mem_range, mem_setOf_eq]
   exact ⟨fun ⟨x, hx⟩ => hx ▸ O.idempotent x, fun hy => ⟨y, hy⟩⟩
+
 
 
 
@@ -47,9 +51,11 @@ theorem stereo_left_inverse (t : ℝ) : stereoProj (invStereo t) = t := by
 
 
 
+
 /-- Lift an oracle from ℝ to S¹ via stereographic projection. -/
 def liftOracle (O : GeodesicOracle ℝ) : ℝ × ℝ → ℝ × ℝ :=
   invStereo ∘ O.seek ∘ stereoProj
+
 
 
 
@@ -60,6 +66,7 @@ theorem liftOracle_on_circle (O : GeodesicOracle ℝ) (p : ℝ × ℝ) :
 
 
 
+
 /-- Idempotency of lifted oracle on invStereo image. -/
 theorem liftOracle_idempotent_on_image (O : GeodesicOracle ℝ) (t : ℝ) :
     liftOracle O (liftOracle O (invStereo t)) = liftOracle O (invStereo t) := by
@@ -67,8 +74,10 @@ theorem liftOracle_idempotent_on_image (O : GeodesicOracle ℝ) (t : ℝ) :
 
 
 
+
 /-- Angular position via inverse stereo: θ(t) = 2 · arctan(t). -/
 def invStereoAngle (t : ℝ) : ℝ := 2 * arctan t
+
 
 
 
@@ -78,12 +87,19 @@ def geodesicDist (t₁ t₂ : ℝ) : ℝ :=
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.Foundation
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 28] -/
 theorem geodesicDist_symm (t₁ t₂ : ℝ) : geodesicDist t₁ t₂ = geodesicDist t₂ t₁ := by
   simp [geodesicDist, abs_sub_comm]
 
 
 
+
 theorem geodesicDist_self (t : ℝ) : geodesicDist t t = 0 := by simp [geodesicDist]
+
 
 
 
@@ -93,13 +109,16 @@ theorem geodesicDist_triangle (t₁ t₂ t₃ : ℝ) :
 
 
 
+
 theorem geodesicDist_nonneg (t₁ t₂ : ℝ) : 0 ≤ geodesicDist t₁ t₂ := abs_nonneg _
+
 
 
 
 /-- A geodesic-seeking oracle contracts under geodesic distance. -/
 structure GeodesicSeekingOracle extends GeodesicOracle ℝ where
   contractive : ∀ x, geodesicDist (seek x) (seek (seek x)) ≤ geodesicDist x (seek x)
+
 
 
 
@@ -110,13 +129,16 @@ theorem oracle_geodesic_bridge (O : GeodesicSeekingOracle) (x : ℝ) :
 
 
 
+
 /-- Information gain = geodesic distance traveled. -/
 def infoGain (O : GeodesicOracle ℝ) (x : ℝ) : ℝ := geodesicDist x (O.seek x)
 
 
 
+
 theorem infoGain_nonneg (O : GeodesicOracle ℝ) (x : ℝ) : 0 ≤ infoGain O x :=
   geodesicDist_nonneg x (O.seek x)
+
 
 
 
@@ -128,14 +150,17 @@ theorem infoGain_at_fixed_point (O : GeodesicOracle ℝ) (x : ℝ)
 
 
 
+
 /-- Fisher information: squared geodesic displacement. -/
 def fisherInfoOracle (O : GeodesicOracle ℝ) (x : ℝ) : ℝ :=
   (geodesicDist x (O.seek x)) ^ 2
 
 
 
+
 theorem fisherInfoOracle_nonneg (O : GeodesicOracle ℝ) (x : ℝ) :
     0 ≤ fisherInfoOracle O x := sq_nonneg _
+
 
 
 
@@ -147,9 +172,11 @@ theorem fisherInfoOracle_zero_at_solution (O : GeodesicOracle ℝ) (x : ℝ)
 
 
 
+
 def constOracle (c : ℝ) : GeodesicOracle ℝ where
   seek := fun _ => c
   idempotent _ := rfl
+
 
 
 
@@ -159,9 +186,11 @@ def clampOracle : GeodesicOracle ℝ where
 
 
 
+
 def zeroOracle : GeodesicOracle ℝ where
   seek := fun _ => 0
   idempotent _ := rfl
+
 
 
 
@@ -171,9 +200,11 @@ def sqrtOracle (a : ℝ) : GeodesicOracle ℝ where
 
 
 
+
 theorem geodesicDist_bounded (t₁ t₂ : ℝ) : geodesicDist t₁ t₂ < 2 * π := by
   unfold geodesicDist invStereoAngle;
   exact abs_lt.mpr ⟨ by linarith [ Real.neg_pi_div_two_lt_arctan t₁, Real.arctan_lt_pi_div_two t₁, Real.neg_pi_div_two_lt_arctan t₂, Real.arctan_lt_pi_div_two t₂ ], by linarith [ Real.neg_pi_div_two_lt_arctan t₁, Real.arctan_lt_pi_div_two t₁, Real.neg_pi_div_two_lt_arctan t₂, Real.arctan_lt_pi_div_two t₂ ] ⟩
+
 
 
 
@@ -181,6 +212,7 @@ theorem geodesicDist_bounded (t₁ t₂ : ℝ) : geodesicDist t₁ t₂ < 2 * π
 theorem constOracle_info (c x : ℝ) :
     infoGain (constOracle c) x = geodesicDist x c := by
   simp [infoGain, constOracle]
+
 
 
 

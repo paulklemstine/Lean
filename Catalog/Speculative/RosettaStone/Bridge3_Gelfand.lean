@@ -14,6 +14,7 @@ structure Projection (R : Type*) [Ring R] where
 
 
 
+
 /-- The complement of a projection is a projection. -/
 def Projection.complement (p : Projection R) : Projection R where
   val := 1 - p.val
@@ -26,11 +27,13 @@ def Projection.complement (p : Projection R) : Projection R where
 
 
 
+
 /-- Two complementary projections are orthogonal. -/
 theorem projection_orthogonal (p : Projection R) :
     p.val * p.complement.val = 0 := by
   simp only [Projection.complement]
   rw [mul_sub, mul_one, p.idem, sub_self]
+
 
 
 
@@ -42,6 +45,7 @@ theorem projection_sum_one (p : Projection R) :
 
 
 
+
 /-- Evaluation at a point is a ring homomorphism from (X → ℝ) to ℝ. -/
 def evalHomomorphism (X : Type*) (x : X) : (X → ℝ) →+* ℝ where
   toFun f := f x
@@ -49,5 +53,6 @@ def evalHomomorphism (X : Type*) (x : X) : (X → ℝ) →+* ℝ where
   map_mul' _ _ := rfl
   map_zero' := rfl
   map_add' _ _ := rfl
+
 
 

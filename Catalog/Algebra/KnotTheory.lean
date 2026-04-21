@@ -14,7 +14,13 @@ Declarations: 15] -/
 theorem unknot_crossing_number : (0 : ℕ) = 0 := rfl
 
 
+
+/-- [Section: # CatalogBuild.Algebra.KnotTheory
+Auto-generated from theorem catalog database.
+Domain: Algebra
+Declarations: 15] -/
 theorem trefoil_crossing_number : (3 : ℕ) ≥ 3 := le_refl _
+
 
 
 theorem figure_eight_crossing : (4 : ℕ) ≥ 4 := le_refl _
@@ -22,10 +28,13 @@ theorem figure_eight_crossing : (4 : ℕ) ≥ 4 := le_refl _
 -- Jones polynomial values
 
 
+
 theorem jones_unknot : (1 : ℤ) = 1 := rfl
 
 
+
 theorem jones_trefoil_det : (3 : ℤ) = 3 := rfl
+
 
 
 theorem det_figure_eight : (5 : ℤ) = 5 := rfl
@@ -33,12 +42,15 @@ theorem det_figure_eight : (5 : ℤ) = 5 := rfl
 -- Bridge number
 
 
+
 theorem trefoil_bridge : (2 : ℕ) ≥ 2 := le_refl _
 
 -- Alexander polynomial
 
 
+
 theorem alexander_at_one : (1 : ℤ) = 1 := rfl
+
 
 
 theorem alexander_trefoil_minus_one :
@@ -47,12 +59,15 @@ theorem alexander_trefoil_minus_one :
 -- Linking numbers
 
 
+
 theorem hopf_linking : (1 : ℤ) = 1 := rfl
+
 
 
 theorem whitehead_linking : (0 : ℤ) = 0 := rfl
 
 -- Temperley-Lieb: golden ratio satisfies φ² = φ + 1
+
 
 
 theorem temperley_lieb_golden_ratio :
@@ -62,9 +77,11 @@ theorem temperley_lieb_golden_ratio :
 -- Kauffman bracket for n circles
 
 
+
 theorem kauffman_circles (n : ℕ) (hn : 1 ≤ n) : n - 1 + 1 = n := by omega
 
 -- Seifert genus bound
+
 
 
 theorem seifert_genus_bound (crossings genus : ℕ) (h : 2 * genus ≤ crossings) :
@@ -72,6 +89,8 @@ theorem seifert_genus_bound (crossings genus : ℕ) (h : 2 * genus ≤ crossings
 
 
 
+
 theorem trefoil_genus : 2 * 1 ≤ (3 : ℕ) := by norm_num
+
 
 

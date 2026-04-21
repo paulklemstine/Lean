@@ -14,8 +14,10 @@ abbrev GraphDivisor (n : ℕ) := Fin n → ℤ
 
 
 
+
 /-- The degree of a divisor. -/
 def divisorDeg (D : GraphDivisor n) : ℤ := ∑ i : Fin n, D i
+
 
 
 
@@ -27,9 +29,11 @@ structure GraphLapl (n : ℕ) where
 
 
 
+
 /-- A principal divisor. -/
 def IsPrincipal (grL : GraphLapl n) (D : GraphDivisor n) : Prop :=
   ∃ f : Fin n → ℤ, ∀ i, D i = ∑ j : Fin n, grL.L i j * f j
+
 
 
 
@@ -39,9 +43,11 @@ def GraphLinEquiv (grL : GraphLapl n) (D₁ D₂ : GraphDivisor n) : Prop :=
 
 
 
+
 /-- Linear equivalence is reflexive. -/
 theorem lin_equiv_refl (grL : GraphLapl n) (D : GraphDivisor n) :
     GraphLinEquiv grL D D := ⟨0, by simp⟩
+
 
 
 
@@ -57,6 +63,11 @@ theorem lin_equiv_symm (grL : GraphLapl n) (D₁ D₂ : GraphDivisor n) :
 
 
 
+
+/-- [Section: # CatalogBuild.Bridges.ChipFiring
+Auto-generated from theorem catalog database.
+Domain: Bridges
+Declarations: 19] -/
 theorem lin_equiv_trans (grL : GraphLapl n) (D₁ D₂ D₃ : GraphDivisor n) :
     GraphLinEquiv grL D₁ D₂ → GraphLinEquiv grL D₂ D₃ → GraphLinEquiv grL D₁ D₃ := by
   intro h₁ h₂;
@@ -68,11 +79,13 @@ theorem lin_equiv_trans (grL : GraphLapl n) (D₁ D₂ D₃ : GraphDivisor n) :
 
 
 
+
 /-- Linear equivalence is an equivalence relation. -/
 theorem lin_equiv_is_equivalence (grL : GraphLapl n) :
     Equivalence (GraphLinEquiv grL) :=
   ⟨lin_equiv_refl grL, fun h => lin_equiv_symm grL _ _ h,
    fun h₁ h₂ => lin_equiv_trans grL _ _ _ h₁ h₂⟩
+
 
 
 
@@ -90,6 +103,7 @@ theorem principal_divisor_degree_zero (grL : GraphLapl n) (D : GraphDivisor n)
 
 
 
+
 theorem lin_equiv_preserves_degree (grL : GraphLapl n) (D₁ D₂ : GraphDivisor n)
     (h : GraphLinEquiv grL D₁ D₂) : divisorDeg D₁ = divisorDeg D₂ := by
   -- Factor out the common degree term from the numerator and denominator of the fraction.
@@ -99,9 +113,11 @@ theorem lin_equiv_preserves_degree (grL : GraphLapl n) (D₁ D₂ : GraphDivisor
 
 
 
+
 /-- Chip-firing at vertex v. -/
 def chipFire (grL : GraphLapl n) (D : GraphDivisor n) (v : Fin n) : GraphDivisor n :=
   fun i => D i - grL.L v i
+
 
 
 
@@ -113,9 +129,11 @@ theorem chip_fire_preserves_class (grL : GraphLapl n) (D : GraphDivisor n) (v : 
 
 
 
+
 /-- The graph genus: g = |E| - |V| + 1. -/
 def graphGenus (numEdges numVertices : ℕ) : ℤ :=
   (numEdges : ℤ) - (numVertices : ℤ) + 1
+
 
 
 
@@ -124,9 +142,11 @@ def vertexDegree (grL : GraphLapl n) (i : Fin n) : ℤ := -grL.L i i
 
 
 
+
 /-- The canonical divisor K(v) = deg(v) - 2. -/
 def canonicalDivisor (grL : GraphLapl n) : GraphDivisor n :=
   fun i => vertexDegree grL i - 2
+
 
 
 
@@ -139,6 +159,7 @@ theorem canonical_divisor_degree (grL : GraphLapl n) (numEdges : ℕ)
 
 
 
+
 /-- Analogies between number theory, algebraic geometry, and graph theory. -/
 structure LanglandsAnalogy where
   numberTheory : String
@@ -147,10 +168,12 @@ structure LanglandsAnalogy where
 
 
 
+
 def jacobianAnalogy : LanglandsAnalogy :=
   { numberTheory := "Ideal class group Cl(K)"
     algebraicGeometry := "Jacobian variety Jac(C)"
     graphTheory := "Tropical Jacobian Jac(G)" }
+
 
 
 

@@ -25,8 +25,10 @@ variable {W : Type*} (P : GazingPool' W)
 
 
 
+
 /-- The **retract**: image of `reconstruct ∘ shadow`. -/
 def retract : Set W := {w | P.reconstruct (P.shadow w) = w}
+
 
 
 
@@ -34,6 +36,7 @@ def retract : Set W := {w | P.reconstruct (P.shadow w) = w}
 def IsConsciousAdmitting {W S : Type*} (shadow : W → S) (reconstruct : S → W)
     (reflect : W → W) : Prop :=
   ∃ w : W, reconstruct (shadow (reflect w)) = w
+
 
 
 
@@ -54,6 +57,7 @@ theorem spectrum_characterization {W S : Type*} (shadow : W → S) (reconstruct 
 
 
 
+
 /-- The identity is always conscious-admitting (when S is nonempty). -/
 theorem id_conscious_admitting {W S : Type*} [Nonempty S]
     (shadow : W → S) (reconstruct : S → W)
@@ -61,6 +65,7 @@ theorem id_conscious_admitting {W S : Type*} [Nonempty S]
     IsConsciousAdmitting shadow reconstruct id := by
   obtain ⟨s⟩ := ‹Nonempty S›
   exact ⟨reconstruct s, by simp [h_section]⟩
+
 
 
 
@@ -72,6 +77,7 @@ theorem symmetric_conscious_admitting {W S : Type*} [Nonempty S]
     IsConsciousAdmitting shadow reconstruct reflect := by
   obtain ⟨s⟩ := ‹Nonempty S›
   exact ⟨reconstruct s, by rw [h_symm, h_section]⟩
+
 
 
 
@@ -93,10 +99,16 @@ theorem knaster_tarski_consciousness {W : Type*} [CompleteLattice W]
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.GazingPoolOpenQuestions
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 20] -/
 theorem fixed_points_nonempty {W : Type*} [CompleteLattice W]
     (f : W → W) (hf : Monotone f) :
     {w : W | f w = w}.Nonempty := by
   exact ⟨ _, knaster_tarski_lfp f hf |> Classical.choose_spec |> And.left ⟩
+
 
 
 
@@ -108,15 +120,18 @@ structure StochMatrix (n : ℕ) where
 
 
 
+
 /-- Apply a stochastic matrix to a distribution: (πM)_j = Σ_i π_i M_{ij}. -/
 def StochMatrix.apply {n : ℕ} (M : StochMatrix n) (π : ProbDist n) : Fin n → ℝ :=
   fun j => ∑ i, π.val i * M.val i j
 
 
 
+
 /-- A distribution is **stationary** (probabilistically conscious). -/
 def IsStationary {n : ℕ} (M : StochMatrix n) (π : ProbDist n) : Prop :=
   ∀ j, M.apply π j = π.val j
+
 
 
 
@@ -131,10 +146,12 @@ theorem doubly_stochastic_uniform_stationary {n : ℕ} (hn : 0 < n)
 
 
 
+
 theorem fixed_points_closed {X : Type*} [TopologicalSpace X] [T2Space X]
     (f : X → X) (hf : Continuous f) :
     IsClosed {x | f x = x} := by
   exact isClosed_eq hf continuous_id
+
 
 
 
@@ -147,9 +164,11 @@ theorem conscious_set_is_closed {W : Type*} [TopologicalSpace W] [T2Space W]
 
 
 
+
 /-- The finset of all conscious observers (fixed points of gaze). -/
 def consciousFinset {W : Type*} [Fintype W] [DecidableEq W] (gaze : W → W) : Finset W :=
   Finset.univ.filter (fun w => gaze w = w)
+
 
 
 
@@ -161,11 +180,13 @@ theorem conscious_iff_finset_nonempty {W : Type*} [Fintype W] [DecidableEq W]
 
 
 
+
 theorem periodic_orbit_from_any {X : Type*} [Fintype X] [DecidableEq X]
     (f : X → X) (x : X) :
     ∃ i j : ℕ, i < j ∧ j ≤ Fintype.card X ∧ f^[i] x = f^[j] x := by
   by_contra h;
   exact absurd ( Finset.card_le_univ ( Finset.image ( fun i => f^[i] x ) ( Finset.Iic ( Fintype.card X ) ) ) ) ( by rw [ Finset.card_image_of_injOn fun i hi j hj hij => le_antisymm ( not_lt.mp fun hi' => h ⟨ j, i, hi', by aesop, hij.symm ⟩ ) ( not_lt.mp fun hj' => h ⟨ i, j, hj', by aesop, hij ⟩ ) ] ; simpa )
+
 
 
 
@@ -180,12 +201,14 @@ theorem finite_endo_periodic {X : Type*} [Fintype X] [Nonempty X]
 
 
 
+
 /-- **The Gazing Pool Conjecture (THEOREM)**: Every gazing pool on a finite
 nonempty world has a periodic point of the gaze operation. -/
 theorem gazing_pool_conjecture {W : Type*} [Fintype W] [Nonempty W]
     (P : GazingPool' W) :
     ∃ w : W, ∃ k : ℕ, 0 < k ∧ P.gaze^[k] w = w :=
   finite_endo_periodic P.gaze
+
 
 
 
@@ -198,6 +221,7 @@ theorem gazing_pool_conjecture_bounded {W : Type*} [Fintype W] [DecidableEq W] [
     aesop;
   refine' ⟨ P.gaze^[i] ( Classical.arbitrary W ), j - i, _, _, _ ⟩ <;> try omega;
   rw [ ← Function.iterate_add_apply, Nat.sub_add_cancel h_eq.1.le, h_eq.2.2 ]
+
 
 
 

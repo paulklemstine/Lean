@@ -15,8 +15,14 @@ def isPerfect (n : ℕ) : Prop := σ₁ n = 2 * n
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.EvenPerfectNumbers
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 14] -/
 theorem perfect_ge_six (n : ℕ) (hn : isPerfect n) (hn1 : 1 < n) : 6 ≤ n := by
   exact le_of_not_gt fun h : n < 6 => by revert hn; interval_cases n <;> simp_all +decide [ isPerfect ] ;
+
 
 
 
@@ -28,9 +34,11 @@ theorem no_small_odd_perfect :
 
 
 
+
 theorem sigma1_two_pow (k : ℕ) : σ₁ (2 ^ k) = 2 ^ (k + 1) - 1 := by
   unfold σ₁;
   norm_num [ Nat.geomSum_eq ]
+
 
 
 
@@ -38,6 +46,7 @@ theorem sigma1_coprime_mul (a b : ℕ) (h : Nat.Coprime a b) :
     σ₁ (a * b) = σ₁ a * σ₁ b := by
   unfold σ₁;
   exact?
+
 
 
 
@@ -52,9 +61,11 @@ theorem euclid_direction (p : ℕ) (hp : 2 ≤ p) (hm : Nat.Prime (2 ^ p - 1)) :
 
 
 
+
 theorem even_decomposition (n : ℕ) (hn : 0 < n) (heven : 2 ∣ n) :
     ∃ k m : ℕ, 0 < k ∧ ¬(2 ∣ m) ∧ 0 < m ∧ n = 2 ^ k * m := by
   exact ⟨ Nat.factorization n 2, n / 2 ^ Nat.factorization n 2, Nat.pos_of_ne_zero fun con => by simp_all +decide [ Nat.factorization ], Nat.not_dvd_ordCompl ( by decide ) ( by aesop ), Nat.div_pos ( Nat.le_of_dvd hn ( Nat.ordProj_dvd _ _ ) ) ( pow_pos ( by decide ) _ ), by rw [ Nat.mul_div_cancel' ( Nat.ordProj_dvd _ _ ) ] ⟩
+
 
 
 
@@ -70,12 +81,14 @@ theorem euler_key_equation (k m : ℕ) (hk : 0 < k) (hm_odd : ¬(2 ∣ m)) (hm :
 
 
 
+
 theorem euler_m_divisible (k m : ℕ) (hk : 0 < k) (hm : 0 < m)
     (hm_odd : ¬(2 ∣ m))
     (heq : (2 ^ (k + 1) - 1) * σ₁ m = 2 ^ (k + 1) * m) :
     (2 ^ (k + 1) - 1) ∣ m := by
   refine Nat.Coprime.dvd_of_dvd_mul_left ?_ <| heq ▸ dvd_mul_right _ _;
   simp +decide [ Nat.one_le_iff_ne_zero, parity_simps ]
+
 
 
 
@@ -94,9 +107,11 @@ theorem euler_m_is_prime (k m : ℕ) (hk : 0 < k) (hm : 0 < m)
 
 
 
+
 /-- 6 = 2^1 * 3 = 2^(2-1) * (2^2 - 1) is perfect. -/
 theorem six_perfect : isPerfect 6 := by
   unfold isPerfect σ₁; native_decide
+
 
 
 
@@ -106,13 +121,16 @@ theorem twentyeight_perfect : isPerfect 28 := by
 
 
 
+
 /-- 496 = 2^4 * 31 = 2^(5-1) * (2^5 - 1) is perfect. -/
 theorem four_ninety_six_perfect : isPerfect 496 := by
   unfold isPerfect σ₁; native_decide
 
 
 
+
 /-- 8128 = 2^6 * 127 = 2^(7-1) * (2^7 - 1) is perfect. -/
 theorem eight_one_two_eight_perfect : isPerfect 8128 := by
   unfold isPerfect σ₁; native_decide
+
 

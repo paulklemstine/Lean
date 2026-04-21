@@ -15,10 +15,12 @@ structure Retraction' (α : Type*) (S : Set α) where
 
 
 
+
 /-- Every retraction is idempotent. -/
 theorem retraction_idempotent' {α : Type*} {S : Set α} (r : Retraction' α S) :
     ∀ x, r.map (r.map x) = r.map x :=
   fun x => r.fixes_S (r.map x) (r.maps_into x)
+
 
 
 
@@ -29,6 +31,7 @@ theorem retraction_range' {α : Type*} {S : Set α} (r : Retraction' α S) :
   constructor
   · rintro ⟨y, rfl⟩; exact r.maps_into y
   · intro hx; exact ⟨x, r.fixes_S x hx⟩
+
 
 
 
@@ -51,6 +54,7 @@ theorem idempotent_almost_identity' {n : ℕ} (f : Fin (n+1) → Fin (n+1))
 
 
 
+
 /-- An idempotent is the identity on its image. -/
 theorem collapse_is_id_on_image {α : Type*} (f : α → α) (hf : ∀ x, f (f x) = f x) :
     ∀ x ∈ range f, f x = x := by
@@ -58,8 +62,10 @@ theorem collapse_is_id_on_image {α : Type*} (f : α → α) (hf : ∀ x, f (f x
 
 
 
+
 /-- The fiber of a map over a point. -/
 def retraction_fiber' {α : Type*} (f : α → α) (y : α) : Set α := {x | f x = y}
+
 
 
 
@@ -69,7 +75,9 @@ theorem fiber_partition' {α : Type*} (f : α → α) :
 
 
 
+
 /-- Fixed points are in their own fiber. -/
 theorem fixed_point_in_fiber' {α : Type*} (f : α → α)
     (y : α) (hy : f y = y) : y ∈ retraction_fiber' f y := hy
+
 

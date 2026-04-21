@@ -17,11 +17,13 @@ theorem mutual_information_nonneg (H_X H_X_given_Y : ℝ)
 
 
 
+
 /-- Mutual information ≤ H(X): you can't predict more than there is -/
 theorem mutual_information_le_entropy (H_X H_X_given_Y : ℝ)
     (h : 0 ≤ H_X_given_Y) :
     mutualInformation H_X H_X_given_Y ≤ H_X :=
   sub_le_self _ h
+
 
 
 
@@ -36,9 +38,11 @@ theorem prediction_compression_duality
 
 
 
+
 /-- The rate-distortion function: minimum bits needed to predict with distortion ≤ D -/
 noncomputable def rateDistortion (H_source D : ℝ) : ℝ :=
   max 0 (H_source - D)
+
 
 
 
@@ -46,6 +50,7 @@ noncomputable def rateDistortion (H_source D : ℝ) : ℝ :=
 theorem lossless_prediction_cost (H_source : ℝ) (hH : 0 ≤ H_source) :
     rateDistortion H_source 0 = H_source := by
   simp [rateDistortion, sub_zero, hH]
+
 
 
 
@@ -57,10 +62,12 @@ theorem more_distortion_less_cost (H_source D₁ D₂ : ℝ) (hD : D₁ ≤ D₂
 
 
 
+
 /-- If distortion ≥ entropy, prediction is free -/
 theorem free_prediction_high_distortion (H_source D : ℝ) (hD : H_source ≤ D) :
     rateDistortion H_source D = 0 := by
   simp [rateDistortion, sub_nonpos.mpr hD]
+
 
 
 

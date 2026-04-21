@@ -13,10 +13,12 @@ def IsCarmichaelNum (n : ℕ) : Prop :=
 
 
 
+
 /-- Korselt's criterion predicate. -/
 def SatisfiesKorseltCrit (n : ℕ) : Prop :=
   1 < n ∧ ¬ Nat.Prime n ∧ Squarefree n ∧
   ∀ p : ℕ, Nat.Prime p → p ∣ n → (p - 1) ∣ (n - 1)
+
 
 
 
@@ -28,11 +30,13 @@ theorem korselt_561_verified :
 
 
 
+
 /-- 1105 satisfies Korselt's criterion. -/
 theorem korselt_1105_verified :
     ¬ Nat.Prime 1105 ∧ Squarefree 1105 ∧
     Nat.primeFactorsList 1105 = [5, 13, 17] := by
   refine ⟨by native_decide, by native_decide, by native_decide⟩
+
 
 
 
@@ -44,10 +48,12 @@ theorem korselt_1729_verified :
 
 
 
+
 /-- Korselt divisibility conditions: (p-1) | (n-1) for each prime factor p. -/
 theorem korselt_561_divs_full :
     (2 ∣ 560) ∧ (10 ∣ 560) ∧ (16 ∣ 560) := by
   exact ⟨⟨280, by norm_num⟩, ⟨56, by norm_num⟩, ⟨35, by norm_num⟩⟩
+
 
 
 
@@ -61,9 +67,15 @@ theorem korselt_1105_divs :
 
 
 
+
+/-- [Section: # CatalogBuild.Physics.KorseltCriterionFull
+Auto-generated from theorem catalog database.
+Domain: Physics
+Declarations: 16] -/
 theorem korselt_2465_divs :
     (4 ∣ 2464) ∧ (16 ∣ 2464) ∧ (28 ∣ 2464) := by
   exact ⟨⟨616, by norm_num⟩, ⟨154, by norm_num⟩, ⟨88, by norm_num⟩⟩
+
 
 
 
@@ -73,15 +85,18 @@ theorem korselt_2821_divs :
 
 
 
+
 theorem korselt_6601_divs :
     (6 ∣ 6600) ∧ (22 ∣ 6600) ∧ (40 ∣ 6600) := by
   exact ⟨⟨1100, by norm_num⟩, ⟨300, by norm_num⟩, ⟨165, by norm_num⟩⟩
 
 
 
+
 theorem korselt_8911_divs :
     (6 ∣ 8910) ∧ (18 ∣ 8910) ∧ (66 ∣ 8910) := by
   exact ⟨⟨1485, by norm_num⟩, ⟨495, by norm_num⟩, ⟨135, by norm_num⟩⟩
+
 
 
 
@@ -97,6 +112,7 @@ theorem all_carmichael_to_10000 :
 
 
 
+
 theorem carmichael_odd (n : ℕ) (hc : IsCarmichaelNum n) : ¬ Even n := by
   rcases hc with ⟨ hn₁, hn₂, hn₃ ⟩;
   -- If $n$ is even, then $n-1$ is odd, so $(-1)^{n-1} = -1$.
@@ -109,6 +125,7 @@ theorem carmichael_odd (n : ℕ) (hc : IsCarmichaelNum n) : ¬ Even n := by
     simp_all +decide [ ← ZMod.intCast_eq_intCast_iff ];
   rcases n with ( _ | _ | n ) <;> simp_all +decide [ parity_simps ];
   nlinarith [ Int.le_of_dvd ( by linarith ) h_neg_one.dvd, show n > 0 from Nat.pos_of_ne_zero ( by rintro rfl; contradiction ) ]
+
 
 
 
@@ -139,6 +156,7 @@ theorem carmichael_not_prime_power (n : ℕ) (hc : IsCarmichaelNum n) :
       rw [ Nat.pow_two, mul_dvd_mul_iff_right hp.ne_zero ] at h_div;
       haveI := Fact.mk hp; simp_all +decide [ ← ZMod.natCast_eq_zero_iff, Nat.cast_sub ( Nat.one_le_pow _ _ hp.pos ) ] ;
       cases k <;> simp_all +decide
+
 
 
 
@@ -189,6 +207,7 @@ theorem no_carmichael_semiprime (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q
 
 
 
+
 theorem korselt_forward (n : ℕ) (hk : SatisfiesKorseltCrit n) :
     IsCarmichaelNum n := by
       refine' ⟨ hk.1, hk.2.1, _ ⟩;
@@ -209,4 +228,5 @@ theorem korselt_forward (n : ℕ) (hk : SatisfiesKorseltCrit n) :
       have h_prod_prime_factors : ∏ p ∈ Nat.primeFactors n, (p : ℤ) = n := by
         rw [ ← Nat.cast_prod, Nat.prod_primeFactors_of_squarefree hk.2.2.1 ];
       rw [ ← h_prod_prime_factors ] ; exact Finset.prod_dvd_of_coprime ( fun p hp q hq hpq ↦ by have := Nat.coprime_primes ( Nat.prime_of_mem_primeFactors hp ) ( Nat.prime_of_mem_primeFactors hq ) ; aesop ) fun p hp ↦ h_cauchy p ( Nat.prime_of_mem_primeFactors hp ) ( Nat.dvd_of_mem_primeFactors hp ) ( by aesop ) ;
+
 

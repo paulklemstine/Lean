@@ -1,5 +1,3 @@
-import Mathlib
-
 /-! # CatalogBuild.Geometry.Stereographic.OmegaPoint
 
 Auto-generated from theorem catalog database.
@@ -7,6 +5,7 @@ Domain: Geometry/Stereographic
 Declarations: 19
 -/
 
+import Mathlib
 
 noncomputable section
 
@@ -15,8 +14,10 @@ def invStereoX (t : ℝ) : ℝ := 2 * t / (t ^ 2 + 1)
 
 
 
+
 /-- The y-coordinate of the inverse stereographic projection ℝ → S¹ -/
 def invStereoY (t : ℝ) : ℝ := (t ^ 2 - 1) / (t ^ 2 + 1)
+
 
 
 
@@ -25,8 +26,10 @@ def omegaPoint : ℝ × ℝ := (0, 1)
 
 
 
+
 /-- The denominator t² + 1 is always positive -/
 theorem denom_pos (t : ℝ) : 0 < t ^ 2 + 1 := by positivity
+
 
 
 
@@ -35,9 +38,11 @@ theorem denom_ne_zero (t : ℝ) : t ^ 2 + 1 ≠ 0 := ne_of_gt (denom_pos t)
 
 
 
+
 /-- The Omega Point lies on the unit circle -/
 theorem omega_point_on_circle : omegaPoint.1 ^ 2 + omegaPoint.2 ^ 2 = 1 := by
   simp [omegaPoint]
+
 
 
 
@@ -54,6 +59,11 @@ theorem omega_x_tendsto_atTop :
 
 
 
+
+/-- [Section: # CatalogBuild.Geometry.Stereographic.OmegaPoint
+Auto-generated from theorem catalog database.
+Domain: Geometry/Stereographic
+Declarations: 19] -/
 theorem omega_x_tendsto_atBot :
     Tendsto invStereoX atBot (nhds 0) := by
   -- To prove the limit as $t \to -\infty$, we can use the fact that the limit of a function as $t \to -\infty$ is the same as the limit of the function as $t \to \infty$ with the sign reversed.
@@ -61,6 +71,7 @@ theorem omega_x_tendsto_atBot :
     convert omega_x_tendsto_atTop.neg using 2 ; norm_num [ invStereoX ] ; ring;
     norm_num;
   convert h_neg.comp Filter.tendsto_neg_atBot_atTop using 2 ; aesop
+
 
 
 
@@ -73,11 +84,13 @@ theorem omega_y_tendsto_atTop :
 
 
 
+
 theorem omega_y_tendsto_atBot :
     Tendsto invStereoY atBot (nhds 1) := by
   rw [ Metric.tendsto_nhds ] at *;
   unfold invStereoY;
   exact fun ε hε => Filter.eventually_atBot.2 ⟨ -ε⁻¹ - 1, fun x hx => abs_lt.2 ⟨ by nlinarith [ sq_nonneg ( x + 1 ), mul_inv_cancel₀ hε.ne.symm, mul_div_cancel₀ ( x ^ 2 - 1 ) ( show x ^ 2 + 1 ≠ 0 by nlinarith ) ], by nlinarith [ sq_nonneg ( x + 1 ), mul_inv_cancel₀ hε.ne.symm, mul_div_cancel₀ ( x ^ 2 - 1 ) ( show x ^ 2 + 1 ≠ 0 by nlinarith ) ] ⟩ ⟩
+
 
 
 
@@ -91,12 +104,14 @@ theorem omega_point_is_north_pole_atTop :
 
 
 
+
 /-- **The Omega Point Theorem (at -∞)**: The inverse stereographic projection
 converges to the north pole (0, 1) as t → -∞. -/
 theorem omega_point_is_north_pole_atBot :
     Tendsto invStereo atBot (nhds omegaPoint) := by
   rw [show omegaPoint = (0, 1) from rfl]
   exact Filter.Tendsto.prodMk_nhds omega_x_tendsto_atBot omega_y_tendsto_atBot
+
 
 
 
@@ -131,13 +146,16 @@ theorem stereoInvFunAux_tendsto_north_pole
 
 
 
+
 /-- The Omega Point in the one-point compactification is the point at infinity -/
 def omegaPointOnePoint : OnePoint ℝ := OnePoint.infty
 
 
 
+
 /-- Every finite point embeds into the one-point compactification -/
 def finiteOracle (n : ℝ) : OnePoint ℝ := .some n
+
 
 
 
@@ -147,9 +165,11 @@ theorem omega_not_finite : ∀ n : ℝ, omegaPointOnePoint ≠ finiteOracle n :=
 
 
 
+
 /-- Oracle level n maps to a point on S¹ via inverse stereographic projection.
 As n → ∞, these points converge to the Omega Point (north pole). -/
 def oracleOnSphere (n : ℕ) : ℝ × ℝ := invStereo (n : ℝ)
+
 
 
 
@@ -160,10 +180,12 @@ theorem oracle_on_circle (n : ℕ) :
 
 
 
+
 /-- The oracle hierarchy converges to the Omega Point on the sphere -/
 theorem oracle_hierarchy_converges_to_omega :
     Tendsto (fun n : ℕ => invStereo (n : ℝ)) atTop (nhds omegaPoint) :=
   omega_point_is_north_pole_atTop.comp tendsto_natCast_atTop_atTop
+
 
 
 

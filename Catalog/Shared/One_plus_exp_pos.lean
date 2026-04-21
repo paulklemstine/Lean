@@ -15,9 +15,11 @@ lemma one_plus_exp_pos (x : ℝ) : (1 : ℝ) + Real.exp x > 0 := by
 
 
 
+
 /-- 1 + eˣ > 1 for all x -/
 lemma one_plus_exp_gt_one (x : ℝ) : (1 : ℝ) + Real.exp x > 1 := by
   linarith [Real.exp_pos x]
+
 
 
 

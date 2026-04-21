@@ -1,10 +1,29 @@
-import Mathlib
+/-! # CatalogBuild.Geometry.Stereographic.StereographicConvexity
+
+Auto-generated from theorem catalog database.
+Domain: Geometry/Stereographic
+Declarations: 12
+-/
+
 import Geometry.Stereographic.Basic
+import Mathlib
 
-/-! # Convexity and Optimization on the Sphere via Stereographic Projection
+noncomputable section
 
+/-- The stereographic midpoint of two points -/
+def stereoMidpoint {N : ℕ} (y z : Fin N → ℝ) : Fin N → ℝ :=
+  fun i => (y i * stereoDenom z + z i * stereoDenom y) /
+            (stereoDenom y + stereoDenom z)
+
+
+/-- Midpoint is symmetric -/
+theorem stereoMidpoint_comm {N : ℕ} (y z : Fin N → ℝ) :
+    stereoMidpoint y z = stereoMidpoint z y := by
+  ext i; unfold stereoMidpoint; ring
+
+
+/-- [Section: # Convexity and Optimization on the Sphere via Stereographic Projection
 ## Main Results
-
 * `stereoMidpoint_comm` — midpoint is symmetric
 * `stereoMidpoint_self` — midpoint of a point with itself
 * `chordalDistSq` — squared chordal distance definition
@@ -13,34 +32,17 @@ import Geometry.Stereographic.Basic
 * `chordalDistSq_nonneg` — nonnegativity
 * `chordalDistSq_le_four` — diameter bound
 * `unit_ball_southern` — unit ball maps to southern hemisphere
-* `stereoDenom_first_order` — first-order expansion
--/
-
-noncomputable section
-
-open Finset BigOperators
-
-/-- The stereographic midpoint of two points -/
-def stereoMidpoint {N : ℕ} (y z : Fin N → ℝ) : Fin N → ℝ :=
-  fun i => (y i * stereoDenom z + z i * stereoDenom y) /
-            (stereoDenom y + stereoDenom z)
-
-/-- Midpoint is symmetric -/
-theorem stereoMidpoint_comm {N : ℕ} (y z : Fin N → ℝ) :
-    stereoMidpoint y z = stereoMidpoint z y := by
-  ext i; unfold stereoMidpoint; ring
-
-/-
-Midpoint of a point with itself
--/
+* `stereoDenom_first_order` — first-order expansion] -/
 theorem stereoMidpoint_self {N : ℕ} (y : Fin N → ℝ) :
     stereoMidpoint y y = y := by
   ext i; unfold stereoMidpoint; unfold stereoDenom; ring;
   linarith [ inv_mul_cancel_left₀ ( show ( 2 + sqNormFin y * 2 ) ≠ 0 by linarith [ show 0 ≤ sqNormFin y by exact Finset.sum_nonneg fun _ _ => sq_nonneg _ ] ) ( y i ) ]
 
+
 /-- Squared chordal distance -/
 def chordalDistSq {N : ℕ} (y z : Fin N → ℝ) : ℝ :=
   4 * (∑ i, (y i - z i)^2) / (stereoDenom y * stereoDenom z)
+
 
 /-- Chordal distance is symmetric -/
 theorem chordalDistSq_comm {N : ℕ} (y z : Fin N → ℝ) :
@@ -50,10 +52,12 @@ theorem chordalDistSq_comm {N : ℕ} (y z : Fin N → ℝ) :
   · congr 1; apply Finset.sum_congr rfl; intro i _; ring
   · ring
 
+
 /-- Distance to self is zero -/
 theorem chordalDistSq_self {N : ℕ} (y : Fin N → ℝ) :
     chordalDistSq y y = 0 := by
   unfold chordalDistSq; simp
+
 
 /-- Chordal distance is nonneg -/
 theorem chordalDistSq_nonneg {N : ℕ} (y z : Fin N → ℝ) :
@@ -63,9 +67,7 @@ theorem chordalDistSq_nonneg {N : ℕ} (y z : Fin N → ℝ) :
   · exact mul_nonneg (by positivity) (Finset.sum_nonneg fun i _ => sq_nonneg _)
   · exact (mul_pos (stereoDenom_pos y) (stereoDenom_pos z)).le
 
-/-
-The diameter of S^N is 2: chordalDistSq ≤ 4
--/
+
 theorem chordalDistSq_le_four {N : ℕ} (y z : Fin N → ℝ) :
     chordalDistSq y z ≤ 4 := by
   unfold chordalDistSq;
@@ -77,17 +79,13 @@ theorem chordalDistSq_le_four {N : ℕ} (y z : Fin N → ℝ) :
   norm_num [ ← Finset.sum_mul _ _ _, sqNormFin ];
   nlinarith [ sq_nonneg ( ∑ i, y i * z i + 1 ), show 0 ≤ ∑ i, y i ^ 2 from Finset.sum_nonneg fun _ _ => sq_nonneg _, show 0 ≤ ∑ i, z i ^ 2 from Finset.sum_nonneg fun _ _ => sq_nonneg _ ]
 
-/-
-The kissing number constraint
--/
+
 theorem kissing_number_constraint {N : ℕ} (y z : Fin N → ℝ)
     (h : chordalDistSq y z ≥ 1) :
     4 * ∑ i, (y i - z i) ^ 2 ≥ stereoDenom y * stereoDenom z := by
   rwa [ chordalDistSq, ge_iff_le, one_le_div ( mul_pos ( stereoDenom_pos _ ) ( stereoDenom_pos _ ) ) ] at h
 
-/-
-Unit ball maps to southern hemisphere
--/
+
 theorem unit_ball_southern {N : ℕ} (y : Fin N → ℝ) (hy : sqNormFin y ≤ 1) :
     invStereoN y (lastIdx N) ≤ 0 := by
   -- Since $sqNormFin y \leq 1$, we have $sqNormFin y - 1 \leq 0$.
@@ -96,18 +94,18 @@ theorem unit_ball_southern {N : ℕ} (y : Fin N → ℝ) (hy : sqNormFin y ≤ 1
   unfold invStereoN lastIdx;
   norm_num [ div_nonpos_of_nonpos_of_nonneg, h_num_nonpos, stereoDenom_pos y |> le_of_lt ]
 
+
 /-- Gradient descent preserves finiteness -/
 theorem gradient_descent_denom_pos {N : ℕ} (y step : Fin N → ℝ) :
     0 < stereoDenom (fun i => y i - step i) :=
   stereoDenom_pos _
 
-/-
-First-order expansion of stereoDenom
--/
+
 theorem stereoDenom_first_order {N : ℕ} (y v : Fin N → ℝ) (t : ℝ) :
     stereoDenom (fun i => y i + t * v i) =
     stereoDenom y + 2 * t * ∑ i, y i * v i + t^2 * sqNormFin v := by
   unfold stereoDenom sqNormFin;
   simp +decide only [add_sq, mul_comm, mul_left_comm, mul_assoc, sum_add_distrib, Finset.mul_sum _ _ _] ; ring
+
 
 end

@@ -12,8 +12,10 @@ def berggren_M₁' : Matrix (Fin 2) (Fin 2) ℤ := !![2, -1; 1, 0]
 
 
 
+
 /-- Berggren 2×2 matrix M₃ ∈ SL(2,ℤ) -/
 def berggren_M₃' : Matrix (Fin 2) (Fin 2) ℤ := !![1, 2; 0, 1]
+
 
 
 
@@ -22,8 +24,10 @@ def berggren_M₁_inv' : Matrix (Fin 2) (Fin 2) ℤ := !![0, 1; -1, 2]
 
 
 
+
 /-- M₃ inverse -/
 def berggren_M₃_inv' : Matrix (Fin 2) (Fin 2) ℤ := !![1, -2; 0, 1]
+
 
 
 
@@ -36,8 +40,14 @@ theorem berggren_M₁'_det : Matrix.det berggren_M₁' = 1 := by
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.TreeFactoring.LatticeTreeCorrespondence
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/TreeFactoring
+Declarations: 48] -/
 theorem berggren_M₃'_det : Matrix.det berggren_M₃' = 1 := by
   simp [berggren_M₃', Matrix.det_fin_two]
+
 
 
 
@@ -48,10 +58,12 @@ theorem berggren_M₁'_mul_inv :
 
 
 
+
 theorem berggren_M₃'_mul_inv :
     berggren_M₃' * berggren_M₃_inv' = (1 : Matrix (Fin 2) (Fin 2) ℤ) := by
   ext i j; fin_cases i <;> fin_cases j <;>
     simp [berggren_M₃', berggren_M₃_inv', Matrix.mul_apply, Fin.sum_univ_two]
+
 
 
 
@@ -65,6 +77,7 @@ theorem lattice_tree_correspondence_M₃ (m n : ℤ) :
 
 
 
+
 /-- **Lattice-Tree Correspondence, Part 2**: M₁⁻¹ is the swap step.
 M₁⁻¹ · (m, n) = (n, 2n - m), corresponding to the basis exchange
 step in Gauss's algorithm. -/
@@ -75,9 +88,11 @@ theorem lattice_tree_correspondence_M₁ (m n : ℤ) :
 
 
 
+
 /-- The smaller factor of a balanced semiprime divides N. -/
 theorem smaller_factor_divides (N p q : ℕ) (hN : N = p * q) : p ∣ N := by
   exact ⟨q, hN⟩
+
 
 
 
@@ -91,12 +106,14 @@ theorem trial_division_tree_equivalence (N p q : ℕ)
 
 
 
+
 /-- A Pythagorean triple with first leg n. -/
 structure PythTripleN (n : ℕ) where
   b : ℕ
   c : ℕ
   pyth : n ^ 2 + b ^ 2 = c ^ 2
   b_pos : 0 < b
+
 
 
 
@@ -110,8 +127,10 @@ structure DivisorPairN (n : ℕ) where
 
 
 
+
 /-- **Euclid parameter factoring**: m² - n² = (m-n)(m+n) encodes divisor pairs. -/
 theorem euclid_param_factor (m n : ℤ) : m ^ 2 - n ^ 2 = (m - n) * (m + n) := by ring
+
 
 
 
@@ -124,8 +143,10 @@ theorem euclid_divisors (m n N : ℤ) (h : m ^ 2 - n ^ 2 = N) :
 
 
 
+
 /-- The factor congruence: N | (x² - y²). -/
 def FactorCongruence (N x y : ℤ) : Prop := N ∣ (x ^ 2 - y ^ 2)
+
 
 
 
@@ -143,9 +164,11 @@ theorem factor_cong_iff (N x y : ℤ) :
 
 
 
+
 /-- If x² ≡ y² (mod N), then gcd(x-y, N) divides N. -/
 theorem factor_cong_gcd_divides (N x y : ℤ) :
     ↑(Int.gcd (x - y) N) ∣ N := Int.gcd_dvd_right (x - y) N
+
 
 
 
@@ -155,9 +178,11 @@ def InQuadLattice' (N : ℤ) (x y z : ℤ) : Prop :=
 
 
 
+
 /-- The zero vector is always in L₄(N). -/
 theorem quad_lattice_zero (N : ℤ) : InQuadLattice' N 0 0 0 := by
   simp [InQuadLattice']
+
 
 
 
@@ -167,6 +192,7 @@ theorem quad_lattice_scalar (N k x y z : ℤ) (h : InQuadLattice' N x y z) :
   simp only [InQuadLattice'] at *
   have : (k * x) ^ 2 + (k * y) ^ 2 + (k * z) ^ 2 = k ^ 2 * (x ^ 2 + y ^ 2 + z ^ 2) := by ring
   rw [this]; exact dvd_mul_of_dvd_right h _
+
 
 
 
@@ -183,11 +209,13 @@ theorem quad_lattice_add (N x₁ y₁ z₁ x₂ y₂ z₂ : ℤ)
 
 
 
+
 /-- **GCD Factor Extraction**: gcd(x² + y², N) gives a factor candidate. -/
 theorem gcd_factor_candidate (N x y z : ℤ) (hN : 0 < N)
     (hsum : x ^ 2 + y ^ 2 + z ^ 2 = N) :
     ↑(Int.gcd (x ^ 2 + y ^ 2) N) ∣ N :=
   Int.gcd_dvd_right _ _
+
 
 
 
@@ -197,8 +225,10 @@ def IsThreeSquareRep' (N : ℤ) (x y z : ℤ) : Prop :=
 
 
 
+
 /-- Example: 3 = 1² + 1² + 1². -/
 theorem three_sq_3 : IsThreeSquareRep' 3 1 1 1 := by simp [IsThreeSquareRep']
+
 
 
 
@@ -207,8 +237,10 @@ theorem three_sq_6 : IsThreeSquareRep' 6 2 1 1 := by simp [IsThreeSquareRep']
 
 
 
+
 /-- Example: 35 = 5² + 3² + 1². -/
 theorem three_sq_35 : IsThreeSquareRep' 35 5 3 1 := by simp [IsThreeSquareRep']
+
 
 
 
@@ -217,9 +249,11 @@ theorem lll_approx_dim3 : (2 : ℕ) ^ ((3 - 1) / 2) = 2 := by norm_num
 
 
 
+
 /-- In dimension 2, Gauss's algorithm is exact (approximation factor 1).
 In dimension d ≥ 3, LLL gives factor 2^{(d-1)/2} > 1. -/
 theorem gauss_optimal_dim2 : (2 : ℕ) ^ ((2 - 1) / 2) = 1 := by norm_num
+
 
 
 
@@ -231,9 +265,11 @@ theorem lll_factor_monotone (d₁ d₂ : ℕ) (h : d₁ ≤ d₂) :
 
 
 
+
 /-- The Lorentz form η = diag(1, 1, 1, -1) for O(3,1). -/
 def lorentzEta' : Matrix (Fin 4) (Fin 4) ℤ :=
   Matrix.diagonal ![1, 1, 1, -1]
+
 
 
 
@@ -243,9 +279,11 @@ def IsIntLorentz (M : Matrix (Fin 4) (Fin 4) ℤ) : Prop :=
 
 
 
+
 /-- The identity is in O(3,1;ℤ). -/
 theorem id_in_lorentz : IsIntLorentz (1 : Matrix (Fin 4) (Fin 4) ℤ) := by
   simp [IsIntLorentz]
+
 
 
 
@@ -259,6 +297,7 @@ theorem M₃_is_T_squared :
 
 
 
+
 /-- M₁ acts as: (m,n) ↦ (2m-n, m). This is a hyperbolic element of SL(2,ℤ). -/
 theorem M₁_action (m n : ℤ) :
     berggren_M₁'.mulVec ![m, n] = ![2 * m - n, m] := by
@@ -267,11 +306,13 @@ theorem M₁_action (m n : ℤ) :
 
 
 
+
 /-- M₃ acts as: (m,n) ↦ (m + 2n, n). This is a parabolic element. -/
 theorem M₃_action (m n : ℤ) :
     berggren_M₃'.mulVec ![m, n] = ![m + 2 * n, n] := by
   ext i; fin_cases i <;>
     simp [berggren_M₃', Matrix.mulVec, dotProduct, Fin.sum_univ_two] <;> ring
+
 
 
 
@@ -284,6 +325,7 @@ theorem two_M₃_inv_steps (m n : ℤ) :
 
 
 
+
 /-- M₁⁻¹ followed by M₃⁻¹ gives the combined step. -/
 theorem M₁_inv_then_M₃_inv (m n : ℤ) :
     berggren_M₃_inv'.mulVec (berggren_M₁_inv'.mulVec ![m, n]) = ![n - 2 * (2 * n - m), 2 * n - m] := by
@@ -293,14 +335,17 @@ theorem M₁_inv_then_M₃_inv (m n : ℤ) :
 
 
 
+
 /-- The squared Euclidean norm of a 2D integer vector. -/
 def sqNorm' (v : Fin 2 → ℤ) : ℤ := v 0 ^ 2 + v 1 ^ 2
+
 
 
 
 /-- The squared norm is non-negative. -/
 theorem sqNorm'_nonneg (v : Fin 2 → ℤ) : 0 ≤ sqNorm' v := by
   unfold sqNorm'; positivity
+
 
 
 
@@ -311,15 +356,18 @@ theorem M₃_inv_decreases_norm (m n : ℤ) (hm : 2 * n < m) (hn : 0 < n) :
 
 
 
+
 /-- For balanced semiprimes: the number of tree nodes to explore is at least p. -/
 theorem tree_search_lower_bound (p q : ℕ) (hp : 2 ≤ p) (hpq : p ≤ q) :
     1 ≤ p := by omega
 
 
 
+
 /-- The GCD computation at each node costs O(log N) bit operations. -/
 theorem gcd_bit_cost (N : ℕ) (hN : 2 ≤ N) : 1 ≤ Nat.log 2 N := by
   exact Nat.log_pos (by norm_num) (by omega)
+
 
 
 
@@ -330,6 +378,7 @@ theorem total_bit_complexity (N p q : ℕ) (hN : N = p * q)
   apply Nat.mul_le_mul_right
   calc p ≤ p * q := Nat.le_mul_of_pos_right p (by omega)
     _ = N := hN.symm
+
 
 
 
@@ -346,11 +395,13 @@ theorem dimensional_escape (d : ℕ) (hd : 3 ≤ d) :
 
 
 
+
 /-- In dimension ≥ 3, BKZ with block β can achieve approximation 2^{d/(2β)}.
 For d = 3, β = 3: factor = 2^{1/2} ≈ 1.41, beating the trivial bound. -/
 theorem bkz_improvement (d β : ℕ) (hd : 3 ≤ d) (hβ : 1 ≤ β) :
     d / (2 * β) ≤ d / 2 := by
   apply Nat.div_le_div_left (by omega) (by omega)
+
 
 
 
@@ -377,5 +428,6 @@ theorem grand_summary :
          fun N p q hN hp hpq => trial_division_tree_equivalence N p q hN hp hpq,
          quad_lattice_zero,
          dimensional_escape⟩
+
 
 

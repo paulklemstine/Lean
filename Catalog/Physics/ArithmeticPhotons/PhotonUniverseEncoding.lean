@@ -15,15 +15,18 @@ def NullCone : Set (Fin 4 → ℝ) :=
 
 
 
+
 /-- A 4-vector is future-directed if its time component is positive. -/
 def IsFutureDirected (k : Fin 4 → ℝ) : Prop :=
   k 0 > 0
 
 
 
+
 /-- The future null cone: future-directed null vectors. -/
 def FutureNullCone : Set (Fin 4 → ℝ) :=
   {k | IsNull k ∧ IsFutureDirected k}
+
 
 
 
@@ -41,6 +44,7 @@ def inverseStereoNull (u v ω : ℝ) : Fin 4 → ℝ := fun i =>
 
 
 
+
 /-- [Section: # CatalogBuild.Physics.ArithmeticPhotons.PhotonUniverseEncoding
 Auto-generated from theorem catalog database.
 Domain: Physics/ArithmeticPhotons
@@ -51,9 +55,11 @@ theorem inverseStereoNull_in_future_cone (u v ω : ℝ) (hω : ω > 0) :
 
 
 
+
 /-- A point on the unit sphere S² in ℝ³. -/
 def IsOnSphere (x y z : ℝ) : Prop :=
   x ^ 2 + y ^ 2 + z ^ 2 = 1
+
 
 
 
@@ -68,12 +74,18 @@ def inverseStereo (u v : ℝ) : Fin 3 → ℝ := fun i =>
 
 
 
+
+/-- [Section: # CatalogBuild.Physics.ArithmeticPhotons.PhotonUniverseEncoding
+Auto-generated from theorem catalog database.
+Domain: Physics/ArithmeticPhotons
+Declarations: 29] -/
 theorem inverseStereo_on_sphere (u v : ℝ) :
     IsOnSphere (inverseStereo u v 0) (inverseStereo u v 1) (inverseStereo u v 2) := by
       unfold inverseStereo IsOnSphere; ring_nf; norm_num;
       -- Combine like terms and simplify the expression.
       field_simp
       ring
+
 
 
 
@@ -90,6 +102,7 @@ def celestialDirection (u v : ℝ) : Fin 3 → ℝ := fun i =>
 
 
 
+
 theorem celestialDirection_on_sphere (u v : ℝ) :
     IsOnSphere (celestialDirection u v 0) (celestialDirection u v 1)
                (celestialDirection u v 2) := by
@@ -97,6 +110,7 @@ theorem celestialDirection_on_sphere (u v : ℝ) :
                  -- Combine like terms and simplify the expression.
                  field_simp
                  ring
+
 
 
 
@@ -110,9 +124,11 @@ theorem celestialDirection_is_normalized_null (u v ω : ℝ) (hω : ω ≠ 0) :
 
 
 
+
 /-- The determinant condition for Möbius transformations: ad - bc = 1. -/
 def IsMobiusNormalized (a b c d : ℝ) : Prop :=
   a * d - b * c = 1
+
 
 
 
@@ -122,9 +138,11 @@ theorem bekensteinBound_nonneg (area : ℝ) (h : area ≥ 0) :
 
 
 
+
 theorem bekensteinBound_mono {a₁ a₂ : ℝ} (h : a₁ ≤ a₂) :
     bekensteinBound a₁ ≤ bekensteinBound a₂ := by
       exact div_le_div_of_nonneg_right h zero_le_four
+
 
 
 
@@ -133,9 +151,11 @@ def celestialSphereArea (r : ℝ) : ℝ := 4 * Real.pi * r ^ 2
 
 
 
+
 theorem celestialSphereArea_nonneg (r : ℝ) :
     celestialSphereArea r ≥ 0 := by
       exact mul_nonneg ( mul_nonneg zero_le_four Real.pi_pos.le ) ( sq_nonneg r )
+
 
 
 
@@ -147,9 +167,11 @@ def photonInfoCapacity (r : ℝ) : ℝ :=
 
 
 
+
 theorem photonInfoCapacity_eq (r : ℝ) :
     photonInfoCapacity r = Real.pi * r ^ 2 := by
       unfold photonInfoCapacity; unfold bekensteinBound; unfold celestialSphereArea; ring;
+
 
 
 
@@ -165,6 +187,7 @@ theorem photonInfoCapacity_unbounded :
 
 
 
+
 /-- A twistor is a pair (ω, π) ∈ ℂ² × ℂ² ≅ ℂ⁴.
 We represent it using real coordinates as a point in ℝ⁸.
 For a null twistor (one that corresponds to a null geodesic in spacetime),
@@ -177,10 +200,12 @@ structure Twistor where
 
 
 
+
 /-- A twistor is null if ω · π̄ + ω̄ · π = 0.
 In real coordinates: Σᵢ ωᵢ πᵢ = 0. -/
 def Twistor.isNull (Z : Twistor) : Prop :=
   ∑ i : Fin 4, Z.omega i * Z.pi i = 0
+
 
 
 
@@ -193,8 +218,10 @@ def zPhotonTwistor : Twistor where
 
 
 
+
 theorem zPhotonTwistor_isNull : zPhotonTwistor.isNull := by
   exact show ∑ i : Fin 4, ( if i.val = 0 then 0 else if i.val = 1 then 0 else if i.val = 2 then 0 else 0 ) * ( if i.val = 0 then 1 else if i.val = 1 then 0 else if i.val = 2 then 0 else 0 ) = 0 from by norm_num [ Fin.sum_univ_four ] ;
+
 
 
 
@@ -209,9 +236,11 @@ lemma future_null_k0_plus_k3_nonneg (k : Fin 4 → ℝ) (hk : k ∈ FutureNullCo
 
 
 
+
 lemma null_condition_rearranged (k : Fin 4 → ℝ) (hnull : IsNull k) :
     (k 0) ^ 2 = (k 1) ^ 2 + (k 2) ^ 2 + (k 3) ^ 2 := by
       unfold IsNull minkowskiInner at hnull; cases lt_or_ge ( k 0 ) 0 <;> cases lt_or_ge ( k 1 ) 0 <;> nlinarith;
+
 
 
 
@@ -222,6 +251,7 @@ lemma future_null_south_pole (k : Fin 4 → ℝ) (hk : k ∈ FutureNullCone)
       have null_cond : (k 0) ^ 2 = (k 1) ^ 2 + (k 2) ^ 2 + (k 3) ^ 2 := by
         convert null_condition_rearranged k hk.1 using 1;
       simp_all +decide [ show k 3 = -k 0 by linarith ] ; constructor <;> nlinarith;
+
 
 
 
@@ -237,6 +267,7 @@ lemma inverseStereoNull_surj_standard (k : Fin 4 → ℝ)
 
 
 
+
 theorem photon_worldline_is_inverseStereo_standard :
     ∀ k : Fin 4 → ℝ, k ∈ FutureNullCone → k 0 + k 3 > 0 →
       ∃ u v ω : ℝ, ω > 0 ∧ inverseStereoNull u v ω = k := by
@@ -246,11 +277,13 @@ theorem photon_worldline_is_inverseStereo_standard :
 
 
 
+
 theorem photon_universe_encoding :
     (∀ M : ℝ, ∃ r : ℝ, photonInfoCapacity r > M) ∧
     (∀ k : Fin 4 → ℝ, k ∈ FutureNullCone → k 0 + k 3 > 0 →
       ∃ u v ω : ℝ, ω > 0 ∧ inverseStereoNull u v ω = k) := by
         exact ⟨ photonInfoCapacity_unbounded, fun k hk hk' => by obtain ⟨ u, v, ω, hω, h ⟩ := photon_worldline_is_inverseStereo_standard k hk hk'; exact ⟨ u, v, ω, hω, h ⟩ ⟩
+
 
 
 

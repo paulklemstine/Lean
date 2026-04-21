@@ -16,15 +16,18 @@ structure OracleChain (α : Type*) where
 
 
 
+
 /-- Apply an oracle chain to an input -/
 def OracleChain.apply {α : Type*} (chain : OracleChain α) (x : α) : α :=
   chain.oracles.foldl (fun acc f => f acc) x
 
 
 
+
 /-- The empty chain is the identity -/
 def OracleChain.empty (α : Type*) : OracleChain α :=
   ⟨[], by simp⟩
+
 
 
 
@@ -38,6 +41,7 @@ theorem OracleChain.empty_apply {α : Type*} (x : α) :
 
 
 
+
 /-- A singleton chain wraps one oracle -/
 def OracleChain.singleton {α : Type*} (f : α → α) (hf : ∀ x, f (f x) = f x) :
     OracleChain α :=
@@ -45,9 +49,15 @@ def OracleChain.singleton {α : Type*} (f : α → α) (hf : ∀ x, f (f x) = f 
 
 
 
+
+/-- [Section: # CatalogBuild.Physics.Quantum.QuantumOracleChain
+Auto-generated from theorem catalog database.
+Domain: Physics/Quantum
+Declarations: 48] -/
 theorem OracleChain.singleton_apply {α : Type*} (f : α → α) (hf : ∀ x, f (f x) = f x)
     (x : α) : (OracleChain.singleton f hf).apply x = f x := by
   simp [OracleChain.apply, OracleChain.singleton]
+
 
 
 
@@ -63,9 +73,11 @@ def OracleChain.concat {α : Type*} (c₁ c₂ : OracleChain α) : OracleChain �
 
 
 
+
 theorem OracleChain.concat_apply {α : Type*} (c₁ c₂ : OracleChain α) (x : α) :
     (c₁.concat c₂).apply x = c₂.apply (c₁.apply x) := by
   simp [OracleChain.apply, OracleChain.concat, List.foldl_append]
+
 
 
 
@@ -76,10 +88,12 @@ theorem OracleChain.concat_assoc {α : Type*} (c₁ c₂ c₃ : OracleChain α) 
 
 
 
+
 /-- A quantum state is a unit vector in ℂⁿ -/
 structure QState (n : ℕ) where
   amplitudes : Fin n → ℂ
   normalized : ∑ i : Fin n, ‖amplitudes i‖ ^ 2 = 1
+
 
 
 
@@ -90,9 +104,11 @@ theorem measureProb_nonneg {n : ℕ} (ψ : QState n) (k : Fin n) :
 
 
 
+
 /-- Measurement probabilities sum to 1 -/
 theorem measureProb_sum {n : ℕ} (ψ : QState n) :
     ∑ k : Fin n, measureProb ψ k = 1 := ψ.normalized
+
 
 
 
@@ -100,6 +116,7 @@ theorem measureProb_sum {n : ℕ} (ψ : QState n) :
 structure QGate (n : ℕ) where
   mat : Matrix (Fin n) (Fin n) ℂ
   unitary : mat * star mat = 1
+
 
 
 
@@ -111,10 +128,12 @@ def QGate.compose {n : ℕ} (g₁ g₂ : QGate n) : QGate n where
 
 
 
+
 /-- The identity gate -/
 def QGate.id' (n : ℕ) : QGate n where
   mat := 1
   unitary := by simp [star_one]
+
 
 
 
@@ -125,9 +144,11 @@ theorem QGate.compose_id {n : ℕ} (g : QGate n) :
 
 
 
+
 theorem QGate.id_compose {n : ℕ} (g : QGate n) :
     ((QGate.id' n).compose g).mat = g.mat := by
   simp [QGate.compose, QGate.id']
+
 
 
 
@@ -138,9 +159,11 @@ theorem QGate.compose_assoc {n : ℕ} (g₁ g₂ g₃ : QGate n) :
 
 
 
+
 /-- The Deutsch-Jozsa oracle sign function: maps x to (-1)^f(x) -/
 def deutschJozsaSign {n : ℕ} (f : BoolFn n) (x : Fin (2^n)) : ℤ :=
   if f x then -1 else 1
+
 
 
 
@@ -151,11 +174,13 @@ theorem deutschJozsaSign_sq {n : ℕ} (f : BoolFn n) (x : Fin (2^n)) :
 
 
 
+
 /-- Sum of signs for a constant-false function equals 2^n -/
 theorem deutschJozsa_constant_sum {n : ℕ} (f : BoolFn n)
     (hf : ∀ x, f x = false) :
     ∑ x : Fin (2^n), deutschJozsaSign f x = 2^n := by
   simp [deutschJozsaSign, hf]
+
 
 
 
@@ -168,6 +193,7 @@ theorem deutschJozsa_balanced_sum {n : ℕ} (f : BoolFn n)
   simp_all +decide [ BoolFn.isBalanced ];
   rw [ show ( Finset.univ.filter fun x => f x = false ) = Finset.univ \ ( Finset.univ.filter fun x => f x = true ) by ext x; aesop, Finset.card_sdiff ] ; norm_num [ Finset.filter_congr, Finset.card_sdiff, Finset.card_singleton, Finset.card_univ, hbal ] ; ring;
   rw [ Nat.cast_sub ( by linarith [ Nat.one_le_pow n 2 zero_lt_two ] ) ] ; push_cast ; linarith
+
 
 
 
@@ -184,10 +210,12 @@ theorem iterate_idem {α : Type*} (O : α → α) (hO : ∀ x, O (O x) = O x)
 
 
 
+
 /-- Each power-of-2 iteration of an idempotent oracle equals the oracle -/
 theorem phase_estimation_idem {α : Type*} (O : α → α) (hO : ∀ x, O (O x) = O x)
     (k : ℕ) (hk : 0 < k) (x : α) : O^[2^k] x = O x :=
   iterate_idem O hO (2^k) Nat.one_le_two_pow x
+
 
 
 
@@ -198,8 +226,10 @@ theorem unitary_power_adjoint {n : ℕ} (U : Matrix (Fin n) (Fin n) ℂ) (k : �
 
 
 
+
 /-- The N-th root of unity -/
 def rootOfUnity' (N : ℕ) (k : ℕ) : ℂ := Complex.exp (2 * Real.pi * Complex.I * k / N)
+
 
 
 
@@ -210,10 +240,12 @@ inductive QInstruction (n : ℕ) where
 
 
 
+
 /-- Execute a quantum instruction as a matrix -/
 def QInstruction.toMatrix {n : ℕ} : QInstruction n → Matrix (Fin n) (Fin n) ℂ
   | .gate g => g.mat
   | .oracle P => P
+
 
 
 
@@ -223,9 +255,11 @@ def executeProgram {n : ℕ} (prog : List (QInstruction n)) : Matrix (Fin n) (Fi
 
 
 
+
 /-- Empty program is identity -/
 theorem executeProgram_empty {n : ℕ} : executeProgram ([] : List (QInstruction n)) = 1 := by
   simp [executeProgram]
+
 
 
 
@@ -236,6 +270,7 @@ theorem executeProgram_single_gate {n : ℕ} (g : QGate n) :
 
 
 
+
 /-- Gate then oracle = matrix product -/
 theorem oracle_gate_composition {n : ℕ} (g : QGate n) (O : Matrix (Fin n) (Fin n) ℂ) :
     executeProgram [QInstruction.gate g, QInstruction.oracle O] = O * g.mat := by
@@ -243,9 +278,11 @@ theorem oracle_gate_composition {n : ℕ} (g : QGate n) (O : Matrix (Fin n) (Fin
 
 
 
+
 /-- Modular exponentiation oracle: f(x) = a^x mod N -/
 def modExpOracle (a N : ℕ) (hN : 0 < N) : ℕ → ℕ :=
   fun x => a ^ x % N
+
 
 
 
@@ -257,6 +294,7 @@ theorem modExp_periodic (a N : ℕ) (hN : 0 < N) (r : ℕ) (hr : a ^ r % N = 1)
   simp only [modExpOracle]
   rw [pow_add, Nat.mul_mod, hr, mul_one, Nat.mod_mod_of_dvd]
   exact ⟨1, by ring⟩
+
 
 
 
@@ -272,11 +310,13 @@ theorem period_to_factor (a N r : ℕ) (hN : 1 < N) (hr : a ^ r % N = 1)
 
 
 
+
 /-- A stabilizer code is defined by commuting projectors -/
 structure StabilizerCode (n k : ℕ) where
   stabilizers : Fin (n - k) → Matrix (Fin (2^n)) (Fin (2^n)) ℝ
   are_projectors : ∀ i, stabilizers i * stabilizers i = stabilizers i
   commute : ∀ i j, stabilizers i * stabilizers j = stabilizers j * stabilizers i
+
 
 
 
@@ -287,8 +327,10 @@ def StabilizerCode.codeProjector {n k : ℕ} (code : StabilizerCode n k) :
 
 
 
+
 /-- Classical query complexity for unstructured search -/
 theorem classical_search_bound (N : ℕ) : N / 2 ≤ N := Nat.div_le_self N 2
+
 
 
 
@@ -298,8 +340,10 @@ theorem quantum_search_speedup (N : ℕ) (hN : 16 ≤ N) :
 
 
 
+
 /-- Exponential separation for structured problems (Simon's) -/
 theorem simon_speedup (n : ℕ) : n < 2^n := Nat.lt_two_pow_self
+
 
 
 
@@ -313,6 +357,7 @@ structure QAlgorithm (n : ℕ) where
 
 
 
+
 /-- Composing quantum algorithms (sequential execution) -/
 def QAlgorithm.compose {n : ℕ} (a₁ a₂ : QAlgorithm n) : QAlgorithm n where
   circuit := a₁.circuit ++ a₂.circuit
@@ -323,9 +368,11 @@ def QAlgorithm.compose {n : ℕ} (a₁ a₂ : QAlgorithm n) : QAlgorithm n where
 
 
 
+
 /-- Oracle query complexity is additive -/
 theorem algorithm_compose_queries {n : ℕ} (a₁ a₂ : QAlgorithm n) :
     (a₁.compose a₂).oracle_queries = a₁.oracle_queries + a₂.oracle_queries := rfl
+
 
 
 
@@ -339,9 +386,11 @@ structure ShorChain where
 
 
 
+
 /-- The GCD oracle is the first link -/
 def ShorChain.gcdOracle (sc : ShorChain) : ℕ → ℕ :=
   fun x => Nat.gcd x sc.N
+
 
 
 
@@ -353,6 +402,7 @@ theorem ShorChain.gcd_idem (sc : ShorChain) (x : ℕ) :
 
 
 
+
 /-- Composing GCD and modExp oracles extracts factor information -/
 theorem ShorChain.chain_extracts_info (sc : ShorChain) (x : ℕ)
     (hx : 1 < Nat.gcd (x ^ sc.a % sc.N) sc.N) :
@@ -361,10 +411,12 @@ theorem ShorChain.chain_extracts_info (sc : ShorChain) (x : ℕ)
 
 
 
+
 /-- Grover iteration count is sublinear -/
 theorem grover_iterations_sublinear (N : ℕ) (hN : 4 ≤ N) :
     Nat.sqrt N < N :=
   Nat.sqrt_lt_self (by omega)
+
 
 
 

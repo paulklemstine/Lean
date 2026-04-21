@@ -14,10 +14,12 @@ def metaOracleId {α : Type*} : α → α := id
 
 
 
+
 /-- The identity is a fixed point of any meta-oracle composition scheme. -/
 theorem metaOracleId_fixed {α : Type*} (f : (α → α) → (α → α))
     (hf : f id = id) : f metaOracleId = metaOracleId :=
   hf
+
 
 
 
@@ -37,8 +39,10 @@ theorem exists_fixed_quality_strict {n : ℕ} (hn : 0 < n)
 
 
 
+
 /-- The improvement ratio after n steps of a contraction with rate k. -/
 def improvementRatio (k : ℝ) (n : ℕ) : ℝ := 1 - k ^ n
+
 
 
 
@@ -51,9 +55,11 @@ theorem improvementRatio_tendsto_one (k : ℝ) (hk : 0 < k) (hk1 : k < 1) :
 
 
 
+
 /-- Number of iterations needed to achieve ε-optimality. -/
 def iterationsNeeded (k ε d₀ : ℝ) : ℝ :=
   Real.log (ε / d₀) / Real.log k
+
 
 
 
@@ -66,10 +72,12 @@ theorem iterations_proportional_to_inv_entropy
 
 
 
+
 /-- Meta-oracles on a fixed type form a semigroup under composition. -/
 instance metaOracleSemigroup (α : Type*) : Semigroup (α → α) where
   mul := Function.comp
   mul_assoc := Function.comp_assoc
+
 
 
 
@@ -78,6 +86,7 @@ instance metaOracleMonoid (α : Type*) : Monoid (α → α) where
   one := id
   one_mul := Function.id_comp
   mul_one := Function.comp_id
+
 
 
 
@@ -98,12 +107,18 @@ theorem comp_contraction_rate {α : Type*} [PseudoMetricSpace α]
 
 
 
+
 /-- A weighted combination of quality values (portfolio quality). -/
 def portfolioQuality {n : ℕ} (weights : Fin n → ℝ) (qualities : Fin n → ℝ) : ℝ :=
   ∑ i, weights i * qualities i
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.MetaOracleAdvanced
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 12] -/
 theorem portfolio_quality_bounded {n : ℕ} (hn : 0 < n)
     (w : Fin n → ℝ) (q : Fin n → ℝ)
     (hw_nn : ∀ i, 0 ≤ w i)
@@ -118,6 +133,7 @@ theorem portfolio_quality_bounded {n : ℕ} (hn : 0 < n)
     have h_max : ∃ i, ∀ j, q j ≤ q i := by
       simpa using Finset.exists_max_image Finset.univ q ⟨ ⟨ 0, hn ⟩, Finset.mem_univ _ ⟩;
     exact ⟨ h_max.choose, le_trans ( Finset.sum_le_sum fun i _ => mul_le_mul_of_nonneg_left ( h_max.choose_spec i ) ( hw_nn i ) ) ( by simp +decide [ ← Finset.sum_mul, hw_sum ] ) ⟩
+
 
 
 

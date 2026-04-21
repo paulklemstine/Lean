@@ -19,12 +19,14 @@ theorem lse2_assoc (x y z : ℝ) :
 
 
 
+
 /-- The fundamental lower bound: max ≤ LSE. -/
 theorem lse2_ge_max (x y : ℝ) : max x y ≤ lse2 x y := by
   rw [lse2, max_le_iff]
   constructor <;> rw [Real.le_log_iff_exp_le (by positivity)]
   · linarith [exp_pos y]
   · linarith [exp_pos x]
+
 
 
 
@@ -38,6 +40,7 @@ theorem lse2_le_max_add_log2 (x y : ℝ) : lse2 x y ≤ max x y + Real.log 2 := 
 
 
 
+
 /-- The tropical-entropy gap is bounded by [0, log 2]. -/
 theorem lse2_tropical_error (x y : ℝ) :
     0 ≤ lse2 x y - max x y ∧ lse2 x y - max x y ≤ Real.log 2 := by
@@ -47,8 +50,10 @@ theorem lse2_tropical_error (x y : ℝ) :
 
 
 
+
 /-- Softmax function for two arguments. -/
 def softmax2_fst (x y : ℝ) : ℝ := Real.exp x / (Real.exp x + Real.exp y)
+
 
 
 /-- [Section: # CatalogBuild.Bridges.EntropyTropicalDuality
@@ -59,14 +64,21 @@ def softmax2_snd (x y : ℝ) : ℝ := Real.exp y / (Real.exp x + Real.exp y)
 
 
 
+
 /-- Softmax components are non-negative. -/
 theorem softmax2_fst_nonneg (x y : ℝ) : 0 ≤ softmax2_fst x y :=
   div_nonneg (le_of_lt (exp_pos x)) (by positivity)
 
 
 
+
+/-- [Section: # CatalogBuild.Bridges.EntropyTropicalDuality
+Auto-generated from theorem catalog database.
+Domain: Bridges
+Declarations: 30] -/
 theorem softmax2_snd_nonneg (x y : ℝ) : 0 ≤ softmax2_snd x y :=
   div_nonneg (le_of_lt (exp_pos y)) (by positivity)
+
 
 
 
@@ -78,6 +90,7 @@ theorem softmax2_sum_one (x y : ℝ) :
 
 
 
+
 /-- Softmax components are at most 1. -/
 theorem softmax2_fst_le_one (x y : ℝ) : softmax2_fst x y ≤ 1 := by
   rw [softmax2_fst, div_le_one (by positivity)]
@@ -85,9 +98,11 @@ theorem softmax2_fst_le_one (x y : ℝ) : softmax2_fst x y ≤ 1 := by
 
 
 
+
 theorem softmax2_monotone (x y : ℝ) (h : x ≤ y) :
     softmax2_fst x y ≤ softmax2_snd x y := by
   exact div_le_div_of_nonneg_right ( Real.exp_le_exp.mpr h ) ( by positivity )
+
 
 
 
@@ -99,9 +114,11 @@ theorem softmax2_equal (x : ℝ) : softmax2_fst x x = 1 / 2 := by
 
 
 
+
 theorem softmax_respects_order (x y : ℝ) (h : x < y) :
     softmax2_fst x y < softmax2_snd x y := by
   exact div_lt_div_iff_of_pos_right ( by positivity ) |>.2 ( Real.exp_lt_exp.2 h )
+
 
 
 
@@ -110,13 +127,16 @@ def negXLogX (x : ℝ) : ℝ := -(x * Real.log x)
 
 
 
+
 /-- At p = 0, the self-information is 0. -/
 theorem negXLogX_zero : negXLogX 0 = 0 := by simp [negXLogX]
 
 
 
+
 /-- At p = 1, the self-information is 0. -/
 theorem negXLogX_one : negXLogX 1 = 0 := by simp [negXLogX]
+
 
 
 
@@ -126,9 +146,11 @@ theorem young_ineq_sq_half (x y : ℝ) :
 
 
 
+
 /-- The conjugate of x²/2 is bounded by y²/2. -/
 theorem sq_half_self_dual_bound (x y : ℝ) :
     x * y - x ^ 2 / 2 ≤ y ^ 2 / 2 := by nlinarith [sq_nonneg (x - y)]
+
 
 
 
@@ -138,15 +160,18 @@ def TropicallyConvex (f : ℝ → ℝ) : Prop :=
 
 
 
+
 theorem monotone_tropically_convex {f : ℝ → ℝ} (hf : Monotone f) :
     TropicallyConvex f := by
   intro x y; cases le_total x y <;> simp +decide [ * ] ;
 
 
 
+
 /-- The identity function is tropically convex. -/
 theorem id_tropically_convex : TropicallyConvex id := by
   intro x y; simp
+
 
 
 
@@ -157,8 +182,10 @@ theorem tropically_convex_comp {f g : ℝ → ℝ}
 
 
 
+
 /-- Temperature-scaled LogSumExp. -/
 def lse2_temp (T : ℝ) (x y : ℝ) : ℝ := T * Real.log (Real.exp (x/T) + Real.exp (y/T))
+
 
 
 
@@ -168,9 +195,11 @@ theorem lse2_temp_one (x y : ℝ) : lse2_temp 1 x y = lse2 x y := by
 
 
 
+
 /-- Gibbs free energy for two states. -/
 def gibbsFreeEnergy (T : ℝ) (E₁ E₂ : ℝ) : ℝ :=
   -T * Real.log (Real.exp (-E₁/T) + Real.exp (-E₂/T))
+
 
 
 
@@ -183,8 +212,10 @@ theorem gibbs_equal_energies (E : ℝ) :
 
 
 
+
 /-- Binary log is positive. -/
 theorem info_content_of_uniform_pair : Real.log 2 > 0 := Real.log_pos one_lt_two
+
 
 
 
@@ -195,6 +226,7 @@ theorem uniform_entropy_eq_log (n : ℕ) (hn : 1 ≤ n) :
 
 
 
+
 /-- The dequantization cost: the error from replacing quantum with tropical. -/
 theorem dequantization_cost (x y : ℝ) :
     0 ≤ lse2 x y - max x y ∧ lse2 x y - max x y ≤ Real.log 2 :=
@@ -202,9 +234,11 @@ theorem dequantization_cost (x y : ℝ) :
 
 
 
+
 /-- ReLU ∘ softmax preserves non-negativity. -/
 theorem relu_softmax_nonneg (x y : ℝ) :
     0 ≤ max (softmax2_fst x y) 0 := le_max_right _ _
+
 
 
 

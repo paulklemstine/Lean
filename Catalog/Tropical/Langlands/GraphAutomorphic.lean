@@ -15,9 +15,11 @@ def graphLaplacian (n : ℕ) (A : Fin n → Fin n → ℝ) : Fin n → Fin n →
 
 
 
+
 /-- A function is harmonic if Lf = 0 -/
 def isHarmonic (n : ℕ) (A : Fin n → Fin n → ℝ) (f : Fin n → ℝ) : Prop :=
   ∀ v : Fin n, ∑ w : Fin n, graphLaplacian n A v w * f w = 0
+
 
 
 
@@ -32,12 +34,18 @@ theorem graphLaplacian_symmetric (n : ℕ) (A : Fin n → Fin n → ℝ)
 
 
 
+
 /-- The adjacency (Hecke) operator -/
 def classicalHeckeOperator (n : ℕ) (A : Fin n → Fin n → ℝ) (f : Fin n → ℝ) : Fin n → ℝ :=
   fun v => ∑ w : Fin n, A v w * f w
 
 
 
+
+/-- [Section: # CatalogBuild.Tropical.Langlands.GraphAutomorphic
+Auto-generated from theorem catalog database.
+Domain: Tropical/Langlands
+Declarations: 10] -/
 theorem hecke_selfadjoint (n : ℕ) (A : Fin n → Fin n → ℝ)
     (hA : ∀ i j, A i j = A j i) (f g : Fin n → ℝ) :
     ∑ v, f v * classicalHeckeOperator n A g v =
@@ -47,9 +55,11 @@ theorem hecke_selfadjoint (n : ℕ) (A : Fin n → Fin n → ℝ)
 
 
 
+
 /-- A divisor is effective if all entries ≥ 0 -/
 def isEffective (n : ℕ) (D : GraphDivisor n) : Prop :=
   ∀ v : Fin n, D v ≥ 0
+
 
 
 
@@ -62,9 +72,11 @@ theorem canonical_degree_regular (n : ℕ) (A : Fin n → Fin n → ℝ)
 
 
 
+
 /-- Energy of a function (quadratic form) -/
 def divisorEnergy (n : ℕ) (A : Fin n → Fin n → ℝ) (D : Fin n → ℝ) : ℝ :=
   ∑ v : Fin n, ∑ w : Fin n, A v w * (D v - D w) ^ 2
+
 
 
 
@@ -75,10 +87,12 @@ theorem energy_zero_constant (n : ℕ) (A : Fin n → Fin n → ℝ) (c : ℝ) :
 
 
 
+
 /-- A graph is Ramanujan if nontrivial eigenvalues satisfy |λ| ≤ 2√q -/
 def isRamanujan (n : ℕ) (eigenvalues : Fin n → ℝ) (q : ℝ) : Prop :=
   ∀ i : Fin n, eigenvalues i ≠ q + 1 → eigenvalues i ≠ -(q + 1) →
     |eigenvalues i| ≤ 2 * Real.sqrt q
+
 
 
 

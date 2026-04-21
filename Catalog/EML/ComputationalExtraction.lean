@@ -96,6 +96,7 @@ MAX_REPL_HISTORY = 200          # sliding window for conversation state
 
 
 
+
 /-- [Section: # CatalogBuild.EML.ComputationalExtraction
 Auto-generated from theorem catalog database.
 Domain: EML
@@ -114,6 +115,11 @@ def spb(x: np.ndarray, delta: np.ndarray) -> np.ndarray:
 
 
 
+
+/-- [Section: # CatalogBuild.EML.ComputationalExtraction
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 17] -/
 def spb_inverse(y: np.ndarray, delta: np.ndarray) -> np.ndarray:
     \"\"\"Inverse SPB (hyperbolic variant).
 
@@ -123,6 +129,7 @@ def spb_inverse(y: np.ndarray, delta: np.ndarray) -> np.ndarray:
     Satisfies  spb_inverse(spb(x, d), d) == x  up to numerical precision.
     \"\"\"
     return (y - delta) / (1.0 + y * delta + EML_EPSILON)
+
 
 
 
@@ -137,9 +144,11 @@ def eml(x: np.ndarray, y: np.ndarray) -> np.ndarray:
 
 
 
+
 def tropical_max_plus(a: np.ndarray, b: np.ndarray) -> np.ndarray:
     \"\"\"Tropical addition in the (max, +) semiring.\"\"\"
     return np.maximum(a, b)
+
 
 
 
@@ -152,6 +161,7 @@ def tropical_dot(a: np.ndarray, b: np.ndarray, axis: int = -1) -> np.ndarray:
 # ---------------------------------------------------------------------------
 # 2. Crystallization Engine
 # ---------------------------------------------------------------------------
+
 
 
 
@@ -254,6 +264,7 @@ class CrystallizationEngine:
 
 
 
+
 class EMLLayer:
     \"\"\"A single EML neural layer.
 
@@ -284,6 +295,7 @@ class EMLLayer:
 # ---------------------------------------------------------------------------
 # 4. Tropical Vision Transformer (TropicalViT) Attention
 # ---------------------------------------------------------------------------
+
 
 
 
@@ -340,6 +352,7 @@ class TropicalAttention:
 
 
 
+
 class PythagoreanNeuralArch:
     \"\"\"Combines EML layers with Tropical attention into a small
     demonstration network.
@@ -370,6 +383,7 @@ class PythagoreanNeuralArch:
 
 
 
+
 def load_base_model(model_id: str, device: str = DEFAULT_DEVICE):
     \"\"\"Load a Hugging Face causal-LM and return its tokenizer and model.\"\"\"
     try:
@@ -388,6 +402,7 @@ def load_base_model(model_id: str, device: str = DEFAULT_DEVICE):
     model.eval()
     logger.info('Model loaded. Parameters: %s', sum(p.numel() for p in model.parameters()))
     return tokenizer, model
+
 
 
 
@@ -426,6 +441,7 @@ def crystallize_model(model, rank: int = CRYSTALLIZATION_RANK) -> Dict[str, Any]
 
 
 
+
 def generate_with_base_model(tokenizer, model, prompt: str, max_new_tokens: int = 256) -> str:
     \"\"\"Generate text using the base Hugging Face model.\"\"\"
     import torch
@@ -445,6 +461,7 @@ def generate_with_base_model(tokenizer, model, prompt: str, max_new_tokens: int 
 # ---------------------------------------------------------------------------
 # 7. Tool Execution (for Agentic REPL)
 # ---------------------------------------------------------------------------
+
 
 
 
@@ -492,6 +509,7 @@ class ToolExecutor:
 # ---------------------------------------------------------------------------
 # 8. Agentic REPL Loop
 # ---------------------------------------------------------------------------
+
 
 
 
@@ -621,6 +639,7 @@ class AgenticREPL:
 
 
 
+
 def main() -> None:
     parser = argparse.ArgumentParser(description='EML-SPB Orchestrator')
     parser.add_argument('--model', type=str, default=DEFAULT_MODEL_ID,
@@ -656,9 +675,11 @@ if __name__ == '__main__':
 
 
 
+
 /-- The reference implementation string is non-empty, witnessing that the
 computational extraction is non-trivial. -/
 theorem orchestrator_is_well_formed : demo_orchestrator_python_code.length > 0 := by
   native_decide
+
 
 

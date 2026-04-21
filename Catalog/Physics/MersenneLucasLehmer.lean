@@ -12,8 +12,10 @@ theorem mersenne_prime_2 : Nat.Prime (mersenne 2) := by native_decide
 
 
 
+
 /-- M_3 = 7 is prime. -/
 theorem mersenne_prime_3 : Nat.Prime (mersenne 3) := by native_decide
+
 
 
 
@@ -22,8 +24,10 @@ theorem mersenne_prime_5 : Nat.Prime (mersenne 5) := by native_decide
 
 
 
+
 /-- M_7 = 127 is prime. -/
 theorem mersenne_prime_7 : Nat.Prime (mersenne 7) := by native_decide
+
 
 
 
@@ -32,8 +36,10 @@ theorem mersenne_prime_13 : Nat.Prime (mersenne 13) := by native_decide
 
 
 
+
 /-- M_17 = 131071 is prime. -/
 theorem mersenne_prime_17 : Nat.Prime (mersenne 17) := by native_decide
+
 
 
 
@@ -42,8 +48,10 @@ theorem mersenne_prime_19 : Nat.Prime (mersenne 19) := by native_decide
 
 
 
+
 /-- M_4 = 15 is composite. -/
 theorem mersenne_composite_4 : ¬ Nat.Prime (mersenne 4) := by native_decide
+
 
 
 
@@ -52,9 +60,11 @@ theorem mersenne_composite_6 : ¬ Nat.Prime (mersenne 6) := by native_decide
 
 
 
+
 /-- M_11 = 2047 = 23 × 89 is composite (smallest composite Mersenne with prime exponent). -/
 theorem mersenne_composite_11 : ¬ Nat.Prime (mersenne 11) ∧ mersenne 11 = 23 * 89 := by
   constructor <;> native_decide
+
 
 
 
@@ -68,8 +78,10 @@ theorem mersenne_prime_exponent_prime'' (n : ℕ) (hn : 2 ≤ n)
 
 
 
+
 /-- The n-th Fermat number F_n = 2^(2^n) + 1. -/
 def fermatNum (n : ℕ) : ℕ := 2 ^ (2 ^ n) + 1
+
 
 
 
@@ -78,8 +90,10 @@ theorem fermat_F0_prime : Nat.Prime (fermatNum 0) := by native_decide
 
 
 
+
 /-- F_1 = 5 is prime. -/
 theorem fermat_F1_prime : Nat.Prime (fermatNum 1) := by native_decide
+
 
 
 
@@ -88,13 +102,16 @@ theorem fermat_F2_prime : Nat.Prime (fermatNum 2) := by native_decide
 
 
 
+
 /-- F_3 = 257 is prime. -/
 theorem fermat_F3_prime : Nat.Prime (fermatNum 3) := by native_decide
 
 
 
+
 /-- F_4 = 65537 is prime. -/
 theorem fermat_F4_prime : Nat.Prime (fermatNum 4) := by native_decide
+
 
 
 
@@ -104,6 +121,11 @@ theorem fermat_F5_composite : ¬ Nat.Prime (fermatNum 5) ∧ fermatNum 5 = 641 *
 
 
 
+
+/-- [Section: # CatalogBuild.Physics.MersenneLucasLehmer
+Auto-generated from theorem catalog database.
+Domain: Physics
+Declarations: 21] -/
 theorem mersenne_prime_gives_perfect (p : ℕ) (hp : 2 ≤ p)
     (hm : Nat.Prime (2 ^ p - 1)) :
     Nat.Perfect (2 ^ (p - 1) * (2 ^ p - 1)) := by
@@ -119,6 +141,7 @@ theorem mersenne_prime_gives_perfect (p : ℕ) (hp : 2 ≤ p)
 
 
 
+
 theorem primorial_values' :
     primorial 2 = 2 ∧
     primorial 3 = 6 ∧
@@ -127,6 +150,7 @@ theorem primorial_values' :
     primorial 11 = 2310 ∧
     primorial 13 = 30030 := by
   unfold primorial; native_decide
+
 
 
 
@@ -142,4 +166,5 @@ theorem mersenne_exponent_table :
     (Nat.Prime 19 ∧ Nat.Prime (mersenne 19)) := by
   refine ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩,
          ⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩⟩ <;> native_decide
+
 

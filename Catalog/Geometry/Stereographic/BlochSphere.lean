@@ -1,46 +1,47 @@
-import Mathlib
-import Geometry.Stereographic.Basic
+/-! # CatalogBuild.Geometry.Stereographic.BlochSphere
 
-/-! # The Bloch Sphere: Quantum Computing via Stereographic Projection
-
-This file formalizes the connection between stereographic projection and
-quantum computing through the Bloch sphere representation of qubits.
-
-## Main Results
-
-* `bloch_on_sphere` — Bloch vector lies on S²
-* `fidelity_chordal_identity` — quantum fidelity ↔ chordal distance
-* `pauli_x_flips_z` — X gate negates z-component
-* `rotation_preserves_norm` — phase gate preserves norm
-* `two_qubit_on_s3` — two-qubit states on S³
+Auto-generated from theorem catalog database.
+Domain: Geometry/Stereographic
+Declarations: 13
 -/
 
-noncomputable section
+import Geometry.Stereographic.Basic
+import Mathlib
 
-open Finset BigOperators
+noncomputable section
 
 /-- The Bloch vector parameterized by stereographic coordinates (u, v) ∈ ℝ² -/
 def blochVector (u v : ℝ) : Fin 3 → ℝ :=
   invStereoN (fun j : Fin 2 => if j.val = 0 then u else v)
+
 
 /-- The Bloch vector lies on S² -/
 theorem bloch_on_sphere (u v : ℝ) :
     ∑ i : Fin 3, (blochVector u v i) ^ 2 = 1 := by
   unfold blochVector; exact invStereoN_norm_sq _
 
-/-
-Quantum fidelity identity: for unit vectors, ||a-b||² = 2 - 2⟨a,b⟩
--/
+
+/-- [Section: # The Bloch Sphere: Quantum Computing via Stereographic Projection
+This file formalizes the connection between stereographic projection and
+quantum computing through the Bloch sphere representation of qubits.
+## Main Results
+* `bloch_on_sphere` — Bloch vector lies on S²
+* `fidelity_chordal_identity` — quantum fidelity ↔ chordal distance
+* `pauli_x_flips_z` — X gate negates z-component
+* `rotation_preserves_norm` — phase gate preserves norm
+* `two_qubit_on_s3` — two-qubit states on S³] -/
 theorem fidelity_chordal_identity {N : ℕ} (a b : Fin N → ℝ)
     (ha : ∑ i, a i ^ 2 = 1) (hb : ∑ i, b i ^ 2 = 1) :
     ∑ i, (a i - b i) ^ 2 = 2 - 2 * ∑ i, a i * b i := by
   simp +decide [ sub_sq, Finset.sum_add_distrib, Finset.mul_sum _ _ _, mul_assoc, ha, hb ];
   ring
 
+
 /-- The Pauli X gate negates the z-component -/
 theorem pauli_x_flips_z (u v : ℝ) :
     -(u^2 + v^2 - 1) / (1 + u^2 + v^2) = (1 - u^2 - v^2) / (1 + u^2 + v^2) := by
   ring
+
 
 /-- Antipodal Bloch vectors have dot product -1 -/
 theorem antipodal_dot_neg_one {N : ℕ} (a : Fin N → ℝ) (ha : ∑ i, a i ^ 2 = 1) :
@@ -50,22 +51,19 @@ theorem antipodal_dot_neg_one {N : ℕ} (a : Fin N → ℝ) (ha : ∑ i, a i ^ 2
     apply Finset.sum_congr rfl; intro i _; ring
   linarith
 
-/-
-Origin maps to south pole
--/
+
 theorem origin_maps_to_south_pole :
     invStereoN (fun _ : Fin 2 => (0 : ℝ)) (lastIdx 2) = -1 := by
   unfold invStereoN lastIdx;
   unfold stereoDenom sqNormFin; norm_num
 
-/-
-|+⟩ state is on the equator (sqNormFin = 1 ⟹ last coord = 0)
--/
+
 theorem plus_state_on_equator :
     let y : Fin 2 → ℝ := fun j => if j.val = 0 then 1 else 0
     invStereoN y (lastIdx 2) = 0 := by
   unfold invStereoN;
   unfold lastIdx stereoDenom sqNormFin; norm_num [ Fin.sum_univ_succ ] ;
+
 
 /-- Hadamard is an involution -/
 theorem hadamard_involution (t : ℝ) (ht : t ≠ 1) (ht' : (t + 1) / (t - 1) ≠ 1) :
@@ -73,9 +71,7 @@ theorem hadamard_involution (t : ℝ) (ht : t ≠ 1) (ht' : (t + 1) / (t - 1) �
   have h1 : t - 1 ≠ 0 := sub_ne_zero.mpr ht
   field_simp; ring
 
-/-
-Bloch distance bounded by 4 for unit vectors
--/
+
 theorem bloch_distance_bounded {N : ℕ} (a b : Fin N → ℝ)
     (ha : ∑ i, a i ^ 2 = 1) (hb : ∑ i, b i ^ 2 = 1) :
     ∑ i, (a i - b i) ^ 2 ≤ 4 := by
@@ -86,6 +82,7 @@ theorem bloch_distance_bounded {N : ℕ} (a b : Fin N → ℝ)
   ring_nf;
   norm_num [ Finset.sum_add_distrib, ← Finset.sum_mul _ _ _ ] ; linarith
 
+
 /-- Phase rotation preserves u² + v² -/
 theorem rotation_preserves_norm (u v θ : ℝ) :
     (u * Real.cos θ - v * Real.sin θ) ^ 2 +
@@ -95,6 +92,7 @@ theorem rotation_preserves_norm (u v θ : ℝ) :
              sq_nonneg (u * Real.sin θ + v * Real.cos θ),
              sq_nonneg u, sq_nonneg v,
              sq_nonneg (Real.cos θ), sq_nonneg (Real.sin θ)]
+
 
 /-- Phase rotation preserves z-component -/
 theorem rotation_preserves_z (u v θ : ℝ) :
@@ -107,17 +105,17 @@ theorem rotation_preserves_z (u v θ : ℝ) :
   have h := rotation_preserves_norm u v θ
   nlinarith
 
+
 /-- Two-qubit states live on S³ -/
 theorem two_qubit_on_s3 (y : Fin 3 → ℝ) :
     ∑ i : Fin 4, (invStereoN y i) ^ 2 = 1 :=
   invStereoN_norm_sq y
 
-/-
-Origin maps to south pole (general N)
--/
+
 theorem maximally_mixed_origin (N : ℕ) :
     invStereoN (fun _ : Fin N => (0 : ℝ)) (lastIdx N) = -1 := by
   unfold lastIdx invStereoN stereoDenom;
   unfold sqNormFin; norm_num
+
 
 end

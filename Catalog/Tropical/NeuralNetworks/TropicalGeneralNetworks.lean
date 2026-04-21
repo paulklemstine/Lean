@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Tropical/NeuralNetworks
-Declarations: 30
+Declarations: 29
 -/
 
 import Mathlib
@@ -16,12 +16,6 @@ noncomputable def neuralLayer {m n : ℕ} (W : Fin m → Fin n → ℝ)
 
 
 
-/-- Pure linear layer (no activation) -/
-def linearLayer {m n : ℕ} (W : Fin m → Fin n → ℝ)
-    (b : Fin m → ℝ) (x : Fin n → ℝ) : Fin m → ℝ :=
-  fun i => (∑ j, W i j * x j) + b i
-
-
 
 /-- ReLU layer equivalence: each output is max(affine, 0) -/
 theorem reluLayer_eq {m n : ℕ} (W : Fin m → Fin n → ℝ)
@@ -30,8 +24,10 @@ theorem reluLayer_eq {m n : ℕ} (W : Fin m → Fin n → ℝ)
 
 
 
+
 /-- Tropical addition: max -/
 def tAdd (a b : ℝ) : ℝ := max a b
+
 
 
 
@@ -40,9 +36,11 @@ def tMul (a b : ℝ) : ℝ := a + b
 
 
 
+
 /-- Tropical inner product: max_j (w_j + x_j) -/
 noncomputable def tropInner {n : ℕ} (w x : Fin (n+1) → ℝ) : ℝ :=
   Finset.sup' Finset.univ ⟨0, Finset.mem_univ 0⟩ (fun j => w j + x j)
+
 
 
 
@@ -55,6 +53,7 @@ theorem linear_compose_linear {l m n : ℕ}
 
 
 
+
 /-- Weight transplantation is exact for linear layers (any network) -/
 theorem transplant_exact_general {m n : ℕ} (W : Fin m → Fin n → ℝ)
     (b : Fin m → ℝ) (x : Fin n → ℝ) :
@@ -62,9 +61,11 @@ theorem transplant_exact_general {m n : ℕ} (W : Fin m → Fin n → ℝ)
 
 
 
+
 /-- General residual connection: out = x + f(x) -/
 def residualBlock {n : ℕ} (f : (Fin n → ℝ) → Fin n → ℝ) (x : Fin n → ℝ) :
     Fin n → ℝ := fun i => x i + f x i
+
 
 
 
@@ -75,10 +76,12 @@ theorem residual_tropical_compat {n : ℕ} (f : (Fin n → ℝ) → Fin n → �
 
 
 
+
 /-- Scaled softmax is nonnegative -/
 theorem scaledSoftmax_nonneg {n : ℕ} (β : ℝ) (v : Fin n → ℝ) (i : Fin n) :
     0 ≤ scaledSoftmax β v i :=
   div_nonneg (Real.exp_nonneg _) (Finset.sum_nonneg fun _ _ => Real.exp_nonneg _)
+
 
 
 
@@ -88,6 +91,7 @@ theorem scaledSoftmax_sum_one {n : ℕ} [NeZero n] (β : ℝ) (v : Fin n → ℝ
   unfold scaledSoftmax
   rw [← Finset.sum_div]
   exact div_self (ne_of_gt (Finset.sum_pos (fun _ _ => Real.exp_pos _) Finset.univ_nonempty))
+
 
 
 
@@ -101,6 +105,7 @@ theorem softmax_eq_scaled_one {n : ℕ} (v : Fin n → ℝ) (i : Fin n) :
 
 
 
+
 /-- Softmax preserves ordering -/
 theorem softmax_preserves_order {n : ℕ} [NeZero n] (v : Fin n → ℝ) {i j : Fin n}
     (h : v j < v i) : softmax v j < softmax v i := by
@@ -111,10 +116,12 @@ theorem softmax_preserves_order {n : ℕ} [NeZero n] (v : Fin n → ℝ) {i j : 
 
 
 
+
 /-- Attention score linearity in queries -/
 theorem attention_linear_in_query {d : ℕ} (c : ℝ) (q k : Fin d → ℝ) :
     (∑ j, (c * q j) * k j) = c * (∑ j, q j * k j) := by
   simp_rw [mul_assoc]; rw [← Finset.mul_sum]
+
 
 
 
@@ -125,10 +132,12 @@ theorem general_region_bound (w L : ℕ) (hw : 0 < w) :
 
 
 
+
 /-- Deep network region count grows exponentially with depth -/
 theorem deep_network_exponential (w : ℕ) (hw : 2 ≤ w) (L₁ L₂ : ℕ) (hL : L₁ ≤ L₂) :
     (2 * w) ^ L₁ ≤ (2 * w) ^ L₂ :=
   Nat.pow_le_pow_right (by omega) hL
+
 
 
 
@@ -140,10 +149,16 @@ def tropicalRank (f : ℝ → ℝ) (k : ℕ) : Prop :=
 
 
 
+
+/-- [Section: # CatalogBuild.Tropical.NeuralNetworks.TropicalGeneralNetworks
+Auto-generated from theorem catalog database.
+Domain: Tropical/NeuralNetworks
+Declarations: 30] -/
 theorem relu_tropical_rank_le2 : tropicalRank relu 1 := by
   refine ⟨![0, 0], ![1, 0], fun x => ?_⟩
   simp only [relu]
   norm_num [ Fin.univ_succ ]
+
 
 
 
@@ -152,9 +167,11 @@ def leakyRelu (α : ℝ) (x : ℝ) : ℝ := max x (α * x)
 
 
 
+
 /-- Leaky ReLU is a tropical operation: max(x, αx) -/
 theorem leakyRelu_tropical (α : ℝ) (x : ℝ) :
     leakyRelu α x = tAdd x (α * x) := rfl
+
 
 
 
@@ -165,8 +182,10 @@ theorem leakyRelu_zero_is_relu (x : ℝ) :
 
 
 
+
 /-- Hard tanh as a double tropical operation -/
 def hardTanh (x : ℝ) : ℝ := max (-1) (min x 1)
+
 
 
 
@@ -179,10 +198,12 @@ theorem hardTanh_bounded (x : ℝ) : -1 ≤ hardTanh x ∧ hardTanh x ≤ 1 := b
 
 
 
+
 /-- Wider networks have more regions per layer -/
 theorem width_increases_regions (w₁ w₂ L : ℕ) (h : w₁ ≤ w₂) :
     (2 * w₁) ^ L ≤ (2 * w₂) ^ L :=
   Nat.pow_le_pow_left (by omega) L
+
 
 
 
@@ -193,10 +214,12 @@ theorem depth_exponential_regions (w L : ℕ) (hw : 2 ≤ w) :
 
 
 
+
 /-- Batch norm is an affine transform (during inference) -/
 noncomputable def batchNormInference {n : ℕ} (γ μ σ_sq : Fin n → ℝ) (ε : ℝ)
     (beta : Fin n → ℝ) (x : Fin n → ℝ) : Fin n → ℝ :=
   fun i => γ i * (x i - μ i) / (Real.sqrt (σ_sq i + ε)) + beta i
+
 
 
 
@@ -209,6 +232,7 @@ theorem batchNorm_affine {n : ℕ} (γ μ σ_sq : Fin n → ℝ) (ε : ℝ)
 
 
 
+
 /-- Since batch norm is affine, it is exactly preserved under weight transplantation -/
 theorem batchNorm_transplant_exact {n : ℕ} (γ μ σ_sq : Fin n → ℝ) (ε : ℝ)
     (beta x : Fin n → ℝ) :
@@ -216,8 +240,10 @@ theorem batchNorm_transplant_exact {n : ℕ} (γ μ σ_sq : Fin n → ℝ) (ε :
 
 
 
+
 /-- Formal verification summary -/
 theorem theorem_count_positive : (0 : ℕ) < 40 := by omega
+
 
 
 

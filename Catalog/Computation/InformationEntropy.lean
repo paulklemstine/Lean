@@ -16,10 +16,12 @@ def shannonInfo {α : Type*} [Fintype α] (p : α → ℝ) : ℝ :=
 
 
 
+
 /-- A valid probability distribution: nonneg values that sum to 1. -/
 structure ProbDist {α : Type*} [Fintype α] (p : α → ℝ) : Prop where
   nonneg : ∀ x, 0 ≤ p x
   sum_one : ∑ x, p x = 1
+
 
 
 
@@ -33,6 +35,11 @@ theorem shannonInfo_nonneg {α : Type*} [Fintype α] (p : α → ℝ)
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.InformationEntropy
+Auto-generated from theorem catalog database.
+Domain: Computation
+Declarations: 21] -/
 theorem shannonInfo_max_uniform {α : Type*} [Fintype α] [Nonempty α]
     (p : α → ℝ) (hp : ProbDist p) :
     shannonInfo p ≤ Real.logb 2 (Fintype.card α) := by
@@ -59,15 +66,18 @@ theorem shannonInfo_max_uniform {α : Type*} [Fintype α] [Nonempty α]
 
 
 
+
 /-- Boltzmann entropy: S = k_B ln(Ω) where Ω is the number of microstates. -/
 def boltzmannEntropy (k_B : ℝ) (numMicrostates : ℕ) : ℝ :=
   k_B * Real.log numMicrostates
 
 
 
+
 /-- Gibbs entropy: S = -k_B ∑ pᵢ ln(pᵢ) -/
 def gibbsEntropy {α : Type*} [Fintype α] (k_B : ℝ) (p : α → ℝ) : ℝ :=
   -k_B * ∑ x : α, if p x > 0 then p x * Real.log (p x) else 0
+
 
 
 
@@ -80,9 +90,11 @@ theorem gibbs_shannon_bridge {α : Type*} [Fintype α] (k_B : ℝ) (p : α → �
 
 
 
+
 /-- The minimum energy dissipated when erasing one bit of information
 at temperature T. E_min = k_B × T × ln(2). -/
 def landauerLimit (k_B T : ℝ) : ℝ := k_B * T * Real.log 2
+
 
 
 
@@ -90,6 +102,7 @@ def landauerLimit (k_B T : ℝ) : ℝ := k_B * T * Real.log 2
 It is necessarily a many-to-one function. -/
 def IsErasure {α : Type*} [Fintype α] (f : α → α) (blank : α) : Prop :=
   ∀ x, f x = blank
+
 
 
 
@@ -105,6 +118,7 @@ theorem landauer_principle {α : Type*} [Fintype α] [Nonempty α]
 
 
 
+
 /-- A Maxwell's demon is modeled as an information-processing agent
 that measures a system, stores information in memory, and acts. -/
 structure MaxwellDemon (α : Type*) where
@@ -117,10 +131,12 @@ structure MaxwellDemon (α : Type*) where
 
 
 
+
 /-- The information stored by the demon after measurement. -/
 def demonInfoGain {α : Type*} [Fintype α] (demon : MaxwellDemon α)
     (initialMemory : ℕ) (p : α → ℝ) : ℝ :=
   shannonInfo p  -- Information gained = entropy of what was measured
+
 
 
 
@@ -134,9 +150,11 @@ theorem demon_resolution (ΔS_system ΔS_memory : ℝ)
 
 
 
+
 /-- The fundamental conversion: n bits of information correspond to
 n × k_B × ln(2) units of thermodynamic entropy. -/
 def infoToEntropy (k_B : ℝ) (bits : ℝ) : ℝ := bits * k_B * Real.log 2
+
 
 
 
@@ -146,10 +164,12 @@ def entropyToInfo (k_B : ℝ) (entropy : ℝ) : ℝ := entropy / (k_B * Real.log
 
 
 
+
 theorem info_entropy_roundtrip (k_B bits : ℝ) (hk : k_B ≠ 0)
     (hlog : Real.log 2 ≠ 0) :
     entropyToInfo k_B (infoToEntropy k_B bits) = bits := by
   grind +locals
+
 
 
 
@@ -161,10 +181,12 @@ theorem entropy_info_roundtrip (k_B S : ℝ) (hk : k_B ≠ 0)
 
 
 
+
 /-- The Bekenstein bound: maximum information in a sphere of radius R
 containing energy E is bounded by 2πRE / (ℏc ln 2). -/
 def bekensteinBound (R E ℏ c : ℝ) : ℝ :=
   2 * Real.pi * R * E / (ℏ * c * Real.log 2)
+
 
 
 
@@ -175,9 +197,11 @@ theorem bekenstein_nonneg (R E ℏ c : ℝ)
 
 
 
+
 /-- A computation is reversible if the function is injective (no information loss). -/
 def IsReversibleComputation {α : Type*} (f : α → α) : Prop :=
   Function.Injective f
+
 
 
 
@@ -187,6 +211,7 @@ theorem reversible_zero_entropy_cost {α : Type*} [Fintype α] (f : α → α)
     (hf : IsReversibleComputation f) (k_B T : ℝ) :
     infoToEntropy k_B 0 = 0 := by
   simp [infoToEntropy]
+
 
 
 

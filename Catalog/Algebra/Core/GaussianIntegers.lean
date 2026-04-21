@@ -14,6 +14,7 @@ theorem gaussian_norm_eq (a b : ℤ) :
 
 
 
+
 /-- A Pythagorean triple a² + b² = c² is equivalent to N(a + bi) = c². -/
 theorem gaussian_norm_pyth (a b c : ℤ) :
     a ^ 2 + b ^ 2 = c ^ 2 ↔ Zsqrtd.norm (⟨a, b⟩ : GaussianInt) = c ^ 2 := by
@@ -21,10 +22,12 @@ theorem gaussian_norm_pyth (a b c : ℤ) :
 
 
 
+
 /-- The fundamental factorization: a² + b² = (a + bi)(a - bi) in ℤ[i]. -/
 theorem sum_two_sq_factored (a b : ℤ) :
     (⟨a, b⟩ : GaussianInt) * ⟨a, -b⟩ = ⟨a ^ 2 + b ^ 2, 0⟩ := by
   ext <;> simp <;> ring
+
 
 
 
@@ -36,10 +39,12 @@ theorem gaussian_square_parametrization (m n : ℤ) :
 
 
 
+
 /-- The norm of (m + ni)² equals (m² + n²)², giving the Euclid parametrization. -/
 theorem gaussian_square_norm (m n : ℤ) :
     Zsqrtd.norm ((⟨m, n⟩ : GaussianInt) * ⟨m, n⟩) = (m ^ 2 + n ^ 2) ^ 2 := by
   rw [gaussian_norm_mul, gaussian_norm_eq]; ring
+
 
 
 
@@ -50,8 +55,10 @@ theorem euclid_from_gaussian (m n : ℤ) :
 
 
 
+
 /-- r₂(5) includes (1,2), (2,1) and sign variants: 5 = 1² + 2² = 2² + 1². -/
 theorem r2_five : (1 : ℤ) ^ 2 + 2 ^ 2 = 5 ∧ 2 ^ 2 + 1 ^ 2 = 5 := by norm_num
+
 
 
 
@@ -72,8 +79,10 @@ theorem no_sum_two_sq_3mod4 (p : ℕ) (hp : Nat.Prime p) (h3 : p % 4 = 3) :
 
 
 
+
 /-- 7 is not a sum of two squares. -/
 theorem seven_not_sum_two_sq : ∀ a b : ℕ, a ^ 2 + b ^ 2 ≠ 7 :=
   no_sum_two_sq_3mod4 7 (by norm_num) (by norm_num)
+
 
 

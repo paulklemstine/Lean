@@ -17,6 +17,7 @@ theorem leg_product_strict_bound (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
 
 
 
+
 /-- For a Pythagorean triple with a ≠ b, the leg product satisfies
 2·a·b + 1 ≤ c², giving an integer gap. -/
 theorem leg_product_integer_bound (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
@@ -29,12 +30,14 @@ theorem leg_product_integer_bound (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
 
 
 
+
 /-- Under the B₂ transform, the new leg product expands as
 a polynomial in the old triple components. -/
 theorem B2_product_growth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (a + 2*b + 2*c) * (2*a + b + 2*c) =
     2*a^2 + 5*a*b + 2*b^2 + 6*a*c + 6*b*c + 4*c^2 := by
   ring
+
 
 
 
@@ -46,11 +49,13 @@ theorem B2_hypotenuse_sq (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 /-- The B₁ branch increases the hypotenuse for positive triples. -/
 theorem B1_hyp_increase (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (h : a ^ 2 + b ^ 2 = c ^ 2) :
     c < 2 * a - 2 * b + 3 * c := by
   nlinarith
+
 
 
 
@@ -62,6 +67,7 @@ theorem euclid_sum_bounds_product (m n : ℤ) (hm : 0 < m) (hn : 0 < n) (hmn : n
 
 
 
+
 /-- The Euclid parameter product 2mn < m²+n² when m ≠ n. -/
 theorem euclid_param_bound (m n : ℤ) (hm : 0 < m) (hn : 0 < n) (hne : m ≠ n) :
     2 * m * n < m ^ 2 + n ^ 2 := by
@@ -69,6 +75,7 @@ theorem euclid_param_bound (m n : ℤ) (hm : 0 < m) (hn : 0 < n) (hne : m ≠ n)
     have : m - n ≠ 0 := sub_ne_zero.mpr hne
     nlinarith [sq_abs (m - n), abs_pos.mpr this]
   nlinarith
+
 
 
 
@@ -98,11 +105,13 @@ theorem primitive_euclid_coprime_legs (m n : ℤ)
 
 
 
+
 /-- For Pythagorean triples with leg N, c² - N² = b². -/
 theorem tree_sieve_quadratic_connection (N b c : ℤ) (hN : 0 < N)
     (h : N ^ 2 + b ^ 2 = c ^ 2) :
     c ^ 2 - N ^ 2 = b ^ 2 := by
   linarith
+
 
 
 
@@ -115,9 +124,11 @@ theorem two_triple_same_N_sq (N b₁ c₁ b₂ c₂ : ℤ)
 
 
 
+
 /-- B₁ and B₂ do not commute (as transformations on triples). -/
 theorem berggren_noncommutative :
     (55 : ℤ) ≠ 39 := by decide
+
 
 
 
@@ -130,15 +141,22 @@ theorem berggren_traces :
 
 
 
+
 /-- Grover's bound: √(3^d) ≤ 3^d for tree search. -/
 theorem grover_bound_tree (d : ℕ) :
     Nat.sqrt (3 ^ d) ≤ 3 ^ d := Nat.sqrt_le_self _
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.ThreeRoads.OpenProblems
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/ThreeRoads
+Declarations: 21] -/
 theorem total_search_space (d : ℕ) :
     3 ^ (d + 1) - 1 ≥ 2 * (3 ^ d) := by
   grind
+
 
 
 
@@ -151,6 +169,7 @@ theorem semiprime_factorizations (p q : ℤ) (hp : 0 < p) (hq : 0 < q) :
 
 
 
+
 /-- Different divisor pairs give different triples (at least one component differs). -/
 theorem different_divisors_different_triples (d₁ e₁ d₂ e₂ : ℤ)
     (hne : d₁ ≠ d₂) :
@@ -159,6 +178,7 @@ theorem different_divisors_different_triples (d₁ e₁ d₂ e₂ : ℤ)
   push_neg at h
   obtain ⟨h1, h2⟩ := h
   omega
+
 
 
 
@@ -174,10 +194,12 @@ theorem tree_invariant_pythagorean (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
 
 
 
+
 /-- Modular residue is preserved: a²+b² mod N = c² mod N. -/
 theorem modular_pruning (a b c N : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) (hN : 0 < N) :
     (a ^ 2 + b ^ 2) % N = c ^ 2 % N := by
   rw [h]
+
 
 
 
@@ -193,10 +215,12 @@ theorem children_larger (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
 
 
 
+
 /-- For any Pythagorean triple with leg N, N² divides c² - b². -/
 theorem fundamental_congruence (N b c : ℤ) (h : N ^ 2 + b ^ 2 = c ^ 2) :
     N ^ 2 ∣ (c ^ 2 - b ^ 2) := by
   exact ⟨1, by linarith⟩
+
 
 
 
@@ -205,4 +229,5 @@ theorem factor_from_congruence (N b c : ℤ) (hN : 1 < N)
     (h : N ^ 2 + b ^ 2 = c ^ 2) :
     (Int.gcd (c - b) N : ℤ) ∣ N := by
   exact Int.gcd_dvd_right _ _
+
 

@@ -16,9 +16,11 @@ structure HierarchicalSystem where
 
 
 
+
 /-- A tangled hierarchy: a hierarchical system with a strange loop -/
 structure TangledHierarchy extends HierarchicalSystem where
   loop : StrangeLoop toHierarchicalSystem
+
 
 
 
@@ -32,6 +34,7 @@ structure SelfModel where
 
 
 
+
 /-- [Section: # CatalogBuild.MachineLearning.Consciousness.StrangeLoops
 Auto-generated from theorem catalog database.
 Domain: MachineLearning/Consciousness
@@ -39,6 +42,7 @@ Declarations: 8] -/
 theorem self_model_is_strange_loop (S : SelfModel) :
     Function.LeftInverse S.project S.embed := by
   exact S.reflects
+
 
 
 
@@ -51,6 +55,11 @@ structure SelfAsFixedPoint where
 
 
 
+
+/-- [Section: # CatalogBuild.MachineLearning.Consciousness.StrangeLoops
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/Consciousness
+Declarations: 8] -/
 theorem unique_self_from_contraction
     (X : Type) [MetricSpace X] [CompleteSpace X] [Nonempty X]
     (f : X → X) (k : ℝ) (hk : k < 1) (hk0 : 0 ≤ k)
@@ -78,6 +87,7 @@ theorem unique_self_from_contraction
 
 
 
+
 /-- A Gödel-style strange loop -/
 structure GoedelLoop where
   Sentence : Type
@@ -87,10 +97,12 @@ structure GoedelLoop where
 
 
 
+
 /-- Isomorphism between strange loops -/
 def StrangeLoopIso (H : HierarchicalSystem) (l₁ l₂ : StrangeLoop H) : Prop :=
   ∃ (f : H.Content l₁.start → H.Content l₂.start)
     (g : H.Content l₂.start → H.Content l₁.start),
     Function.LeftInverse g f ∧ Function.RightInverse g f
+
 
 

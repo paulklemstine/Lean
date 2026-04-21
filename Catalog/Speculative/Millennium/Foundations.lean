@@ -22,6 +22,11 @@ theorem critical_line_implies_unit_disk (ρ : ℂ) (hρ : ρ.re = 1/2)
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Millennium.Foundations
+Auto-generated from theorem catalog database.
+Domain: Speculative/Millennium
+Declarations: 24] -/
 theorem li_positivity_from_critical_line (roots : Fin k → ℂ)
     (h_line : ∀ i, (roots i).re = 1/2)
     (h_nonzero : ∀ i, roots i ≠ 0)
@@ -37,12 +42,14 @@ theorem li_positivity_from_critical_line (roots : Fin k → ℂ)
 
 
 
+
 /-- **Trace formula**: For a matrix, the trace equals the sum of
 diagonal entries. This is the finite analog of the explicit formula
 connecting ζ-zeros to primes. -/
 theorem trace_eq_sum_diagonal {n : ℕ} (M : Matrix (Fin n) (Fin n) ℝ) :
     M.trace = ∑ i, M i i := by
   simp [Matrix.trace, Matrix.diag]
+
 
 
 
@@ -54,6 +61,7 @@ theorem real_symmetric_eigenvalue_real {n : ℕ}
     (μ : ℝ) (v : Fin n → ℝ) (hv : v ≠ 0)
     (hev : M.mulVec v = μ • v) :
     ∃ r : ℝ, μ = r := ⟨μ, rfl⟩
+
 
 
 
@@ -70,6 +78,7 @@ theorem cantor_diagonal_bool :
 
 
 
+
 /-- **Padding time reduction**: The fundamental inequality behind
 padding lemma arguments in complexity theory. -/
 theorem padding_time_reduction (f g : ℕ → ℕ)
@@ -77,6 +86,7 @@ theorem padding_time_reduction (f g : ℕ → ℕ)
     (h_mono : ∀ n, g n ≤ f n) (n : ℕ) :
     f n / g n ≤ f n :=
   Nat.div_le_self (f n) (g n)
+
 
 
 
@@ -90,12 +100,14 @@ theorem boolean_function_count (n : ℕ) :
 
 
 
+
 theorem discrete_gronwall (a : ℕ → ℝ) (c : ℝ) (hc : 0 ≤ c)
     (h : ∀ n, a (n + 1) ≤ (1 + c) * a n) (ha0 : 0 ≤ a 0)
     (n : ℕ) : a n ≤ (1 + c) ^ n * a 0 := by
   induction' n with n ih;
   · norm_num;
   · convert le_trans ( h n ) ( mul_le_mul_of_nonneg_left ih ( by positivity ) ) using 1 ; ring
+
 
 
 
@@ -110,9 +122,11 @@ theorem energy_decay_discrete (E : ℕ → ℝ) (ν : ℝ) (hν : 0 < ν) (hν1 
 
 
 
+
 theorem youngs_inequality_eps (a b ε : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) (hε : 0 < ε) :
     a * b ≤ ε / 2 * a ^ 2 + 1 / (2 * ε) * b ^ 2 := by
   nlinarith [ sq_nonneg ( a * ε - b ), mul_div_cancel₀ ( 1 : ℝ ) ( by positivity : ( 2 * ε ) ≠ 0 ) ]
+
 
 
 
@@ -123,8 +137,10 @@ def collatzIter : ℕ → ℕ → ℕ
 
 
 
+
 /-- **Collatz trajectory verification**: 1 → 4 → 2 → 1 is a cycle. -/
 theorem collatz_cycle : collatzIter 3 1 = 1 := by native_decide
+
 
 
 
@@ -132,6 +148,7 @@ theorem collatz_cycle : collatzIter 3 1 = 1 := by native_decide
 theorem collatz_even_decreases (n : ℕ) (hn : n ≥ 2) (heven : n % 2 = 0) :
     collatz n < n := by
   unfold collatz; simp [heven]; omega
+
 
 
 
@@ -144,13 +161,16 @@ theorem collatz_two_step (n : ℕ) (hodd : n % 2 = 1) :
 
 
 
+
 /-- **Collatz reaches 1 starting from 27** (which has a long trajectory of 111 steps). -/
 theorem collatz_27 : collatzIter 111 27 = 1 := by native_decide
 
 
 
+
 /-- Brocard's equation: n! + 1 = m². -/
 def isBrocardSolution (n m : ℕ) : Prop := n.factorial + 1 = m ^ 2
+
 
 
 
@@ -162,15 +182,18 @@ theorem brocard_4 : isBrocardSolution 4 5 := by
 
 
 
+
 /-- n = 5, m = 11 is a Brocard solution: 5! + 1 = 121 = 11². -/
 theorem brocard_5 : isBrocardSolution 5 11 := by
   unfold isBrocardSolution; norm_num [Nat.factorial]
 
 
 
+
 /-- n = 7, m = 71 is a Brocard solution: 7! + 1 = 5041 = 71². -/
 theorem brocard_7 : isBrocardSolution 7 71 := by
   unfold isBrocardSolution; norm_num [Nat.factorial]
+
 
 
 
@@ -181,9 +204,11 @@ def isErdosStrausDecomp (n x y z : ℕ) : Prop :=
 
 
 
+
 /-- Erdős-Straus holds for n = 2: 4/2 = 1/1 + 1/2 + 1/2. -/
 theorem erdos_straus_2 : isErdosStrausDecomp 2 1 2 2 := by
   unfold isErdosStrausDecomp; omega
+
 
 
 
@@ -193,15 +218,18 @@ theorem erdos_straus_3 : isErdosStrausDecomp 3 1 4 12 := by
 
 
 
+
 /-- Erdős-Straus holds for n = 5: 4/5 = 1/2 + 1/4 + 1/20. -/
 theorem erdos_straus_5 : isErdosStrausDecomp 5 2 4 20 := by
   unfold isErdosStrausDecomp; omega
 
 
 
+
 /-- Erdős-Straus holds for n = 7: 4/7 = 1/2 + 1/15 + 1/210. -/
 theorem erdos_straus_7 : isErdosStrausDecomp 7 2 15 210 := by
   unfold isErdosStrausDecomp; omega
+
 
 
 

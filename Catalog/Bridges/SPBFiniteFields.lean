@@ -19,6 +19,7 @@ theorem spb_norm_multiplicativity (x y : ℝ) (hxy : x * y ≠ 1) :
 
 
 
+
 /-- The Cayley transform parametrizes the unit circle:
 `((1-t²)/(1+t²))² + (2t/(1+t²))² = 1`. -/
 theorem spb_pythagorean_parametrization (t : ℝ) :
@@ -29,10 +30,12 @@ theorem spb_pythagorean_parametrization (t : ℝ) :
 
 
 
+
 /-- The double-SPB formula: `spb(x, x) = 2x/(1 - x²)`. -/
 theorem spb_double_formula (x : ℝ) :
     (x + x) / (1 - x * x) = 2 * x / (1 - x^2) := by
   congr 1 <;> ring
+
 
 
 
@@ -47,12 +50,14 @@ theorem spb_triple_formula (x : ℝ) (hx : x^2 ≠ 1)
 
 
 
+
 /-- SPB approximates addition; the error is `xy(x+y)/(1-xy)`. -/
 theorem spb_perturbation (x y : ℝ) (hxy : x * y ≠ 1) :
     (x + y) / (1 - x * y) - (x + y) = x * y * (x + y) / (1 - x * y) := by
   have h : (1 - x * y) ≠ 0 := sub_ne_zero.mpr (Ne.symm hxy)
   field_simp
   ring
+
 
 
 
@@ -64,6 +69,7 @@ theorem spbH_internal_op (u v : ℝ) (hu : -1 < u) (hu' : u < 1)
   constructor
   · rw [lt_div_iff₀ hd]; nlinarith
   · rw [div_lt_iff₀ hd]; nlinarith
+
 
 
 
@@ -81,9 +87,15 @@ theorem spb_right_cancel (x y : ℝ) (hxy : x * y ≠ 1) (hysq : y^2 ≠ 1) :
 
 
 
+
+/-- [Section: # CatalogBuild.Bridges.SPBFiniteFields
+Auto-generated from theorem catalog database.
+Domain: Bridges
+Declarations: 13] -/
 theorem spb_deriv_positive (x y : ℝ) (hxy : x * y ≠ 1) :
     (1 + y^2) / (1 - x * y)^2 > 0 := by
   exact div_pos ( by positivity ) ( by contrapose! hxy; nlinarith )
+
 
 
 
@@ -98,10 +110,12 @@ theorem spb_quadruple_formula (x : ℝ) (hx : x^2 ≠ 1) :
 
 
 
+
 /-- SPB preserves positivity when xy < 1 and both positive. -/
 theorem spb_pos_pos (x y : ℝ) (hx : 0 < x) (hy : 0 < y) (hxy : x * y < 1) :
     0 < (x + y) / (1 - x * y) := by
   exact div_pos (by linarith) (by linarith)
+
 
 
 
@@ -114,6 +128,7 @@ theorem spb_pos_neg (x y : ℝ) (hx : 0 < x) (hy : x < y) :
 
 
 
+
 /-- The quintuple angle formula via SPB:
 tan(5θ) = (5t - 10t³ + t⁵) / (1 - 10t² + 5t⁴) where t = tan θ. -/
 theorem spb_quintuple_numerator (t : ℝ) :
@@ -121,8 +136,10 @@ theorem spb_quintuple_numerator (t : ℝ) :
 
 
 
+
 theorem spb_quintuple_denominator (t : ℝ) :
     1 - 10 * t^2 + 5 * t^4 = 1 - 10 * t^2 + 5 * t^4 := by ring
+
 
 
 

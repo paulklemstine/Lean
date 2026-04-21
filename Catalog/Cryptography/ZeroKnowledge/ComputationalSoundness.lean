@@ -14,9 +14,11 @@ structure SecurityGame where
 
 
 
+
 /-- The advantage of an adversary in a game, modeled as a function of
 the security parameter. In the concrete model, this maps λ to ℝ. -/
 def Advantage := ℕ → ℝ
+
 
 
 
@@ -27,6 +29,7 @@ def IsNegligible (adv : Advantage) : Prop :=
 
 
 
+
 /-- Zero advantage is negligible -/
 theorem zero_negligible : IsNegligible (fun _ => 0) := by
   intro c
@@ -34,6 +37,7 @@ theorem zero_negligible : IsNegligible (fun _ => 0) := by
   intro n hn
   simp
   exact pow_pos (by positivity) c
+
 
 
 
@@ -53,6 +57,7 @@ theorem const_not_negligible (ε : ℝ) (hε : 0 < ε) :
 
 
 
+
 /-- Two games are computationally indistinguishable if no efficient
 adversary can distinguish them with non-negligible advantage. -/
 def GamesIndistinguishable (G₁ G₂ : SecurityGame) : Prop :=
@@ -61,9 +66,11 @@ def GamesIndistinguishable (G₁ G₂ : SecurityGame) : Prop :=
 
 
 
+
 /-- Game indistinguishability is reflexive -/
 theorem games_indist_refl (G : SecurityGame) :
     IsNegligible (fun _ => (0 : ℝ)) := zero_negligible
+
 
 
 
@@ -76,6 +83,11 @@ theorem games_indist_symm (adv : Advantage) (h : IsNegligible adv) :
 
 
 
+
+/-- [Section: # CatalogBuild.Cryptography.ZeroKnowledge.ComputationalSoundness
+Auto-generated from theorem catalog database.
+Domain: Cryptography/ZeroKnowledge
+Declarations: 15] -/
 theorem advantage_triangle (adv₁ adv₂ : Advantage)
     (h₁ : IsNegligible adv₁) (h₂ : IsNegligible adv₂) :
     IsNegligible (fun n => adv₁ n + adv₂ n) := by
@@ -91,12 +103,14 @@ theorem advantage_triangle (adv₁ adv₂ : Advantage)
 
 
 
+
 theorem sum_negligible {k : ℕ} (advs : Fin k → Advantage)
     (h : ∀ i, IsNegligible (advs i)) :
     IsNegligible (fun n => ∑ i : Fin k, advs i n) := by
   induction' k with k ih;
   · exact zero_negligible;
   · simpa [ Fin.sum_univ_castSucc ] using advantage_triangle _ _ ( ih _ fun i => h ( Fin.castSucc i ) ) ( h ( Fin.last _ ) )
+
 
 
 
@@ -107,6 +121,7 @@ structure DLogAssumption where
   dlogAdvantage : Advantage
   /-- The advantage is negligible -/
   isHard : IsNegligible dlogAdvantage
+
 
 
 
@@ -125,6 +140,7 @@ theorem schnorr_soundness_reduction
 
 
 
+
 /-- A zero-knowledge protocol has computational ZK if the simulator's
 output is computationally indistinguishable from real transcripts. -/
 structure ComputationalZK where
@@ -132,6 +148,7 @@ structure ComputationalZK where
   zkAdvantage : Advantage
   /-- The advantage is negligible -/
   isZK : IsNegligible zkAdvantage
+
 
 
 
@@ -149,6 +166,7 @@ theorem sequential_zk_composition
 
 
 
+
 /-- **The Rewinding Lemma** (simplified): If a prover succeeds with
 probability ε in a single execution, then after rewinding and
 re-challenging, the probability of getting two accepting transcripts
@@ -161,5 +179,6 @@ theorem rewinding_lemma (ε : ℝ) (challengeSize : ℕ)
     0 < ε * (ε - 1 / (challengeSize : ℝ)) := by
   apply mul_pos hε
   linarith
+
 
 

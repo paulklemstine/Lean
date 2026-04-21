@@ -14,13 +14,16 @@ def tropInv (a : ℝ) : ℝ := -a
 
 
 
+
 /-- Tropical division is subtraction -/
 def tropDiv (a b : ℝ) : ℝ := a - b
 
 
 
+
 /-- Tropical absolute value -/
 def tropAbs (a : ℝ) : ℝ := max a (-a)
+
 
 
 
@@ -31,9 +34,11 @@ theorem tropAdd_selective (a b : ℝ) : tropAdd a b = a ∨ tropAdd a b = b := b
 
 
 
+
 /-- Tropical absolute value equals ordinary absolute value -/
 theorem tropAbs_eq_abs (a : ℝ) : tropAbs a = |a| := by
   simp [tropAbs, abs_eq_max_neg]
+
 
 
 
@@ -43,9 +48,11 @@ theorem tropInv_involutive (a : ℝ) : tropInv (tropInv a) = a := by
 
 
 
+
 /-- Tropical division undoes tropical multiplication -/
 theorem tropDiv_tropMul_cancel (a b : ℝ) : tropDiv (tropMul a b) b = a := by
   simp [tropDiv, tropMul]
+
 
 
 
@@ -64,10 +71,12 @@ theorem logSumExp_le_max_add_log2 (a b : ℝ) :
 
 
 
+
 /-- The Maslov dequantization bound: error ≤ ε · log 2 -/
 theorem maslov_bound (a b : ℝ) :
     logSumExp a b - max a b ≤ Real.log 2 := by
   linarith [logSumExp_le_max_add_log2 a b]
+
 
 
 
@@ -76,13 +85,16 @@ theorem isOracle_id {α : Type*} : IsOracle (id : α → α) := fun _ => rfl
 
 
 
+
 /-- Constant functions are oracles -/
 theorem isOracle_const {α : Type*} (c : α) : IsOracle (fun _ => c) := fun _ => rfl
 
 
 
+
 /-- ReLU is an oracle -/
 theorem isOracle_relu : IsOracle relu := relu_idempotent
+
 
 
 
@@ -93,12 +105,14 @@ theorem oracle_range_eq_fixedPoints {α : Type*} (O : α → α) (hO : IsOracle 
 
 
 
+
 /-- Composition of commuting oracles is an oracle -/
 theorem isOracle_comp_comm {α : Type*} (O₁ O₂ : α → α)
     (h₁ : IsOracle O₁) (h₂ : IsOracle O₂)
     (hcomm : ∀ x, O₁ (O₂ x) = O₂ (O₁ x)) :
     IsOracle (O₁ ∘ O₂) := by
   intro x; have := h₁ (O₂ x); have := h₂ (O₁ x); aesop
+
 
 
 
@@ -117,8 +131,10 @@ theorem fixedPoints_comp_comm {α : Type*} (O₁ O₂ : α → α)
 
 
 
+
 /-- Tropical OR gate -/
 def tropOR (a b : ℝ) : ℝ := max a b
+
 
 
 
@@ -127,8 +143,10 @@ def tropAND (a b : ℝ) : ℝ := min a b
 
 
 
+
 /-- Tropical NOT gate (on {0, 1}) -/
 def tropNOT (a : ℝ) : ℝ := 1 - a
+
 
 
 
@@ -138,9 +156,15 @@ theorem tropNOT_involutive (a : ℝ) : tropNOT (tropNOT a) = a := by
 
 
 
+
+/-- [Section: # CatalogBuild.Tropical.Core.TropicalAlphabet
+Auto-generated from theorem catalog database.
+Domain: Tropical/Core
+Declarations: 22] -/
 theorem trop_deMorgan_or (a b : ℝ) :
     tropNOT (tropOR a b) = tropAND (tropNOT a) (tropNOT b) := by
   grind +locals
+
 
 
 
@@ -151,8 +175,10 @@ theorem trop_deMorgan_and (a b : ℝ) :
 
 
 
+
 /-- Tropical XOR: max(min(a, 1-b), min(1-a, b)) -/
 def tropXOR (a b : ℝ) : ℝ := max (min a (1 - b)) (min (1 - a) b)
+
 
 
 

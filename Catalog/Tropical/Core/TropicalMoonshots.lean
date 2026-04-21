@@ -15,10 +15,12 @@ def scaledLSE {n : ℕ} (β : ℝ) (x : Fin n → ℝ) : ℝ :=
 
 
 
+
 /-- At β=1, scaled LSE is just standard LSE -/
 theorem scaledLSE_one {n : ℕ} [NeZero n] (x : Fin n → ℝ) :
     scaledLSE 1 x = Real.log (∑ i, Real.exp (x i)) := by
   simp [scaledLSE]
+
 
 
 
@@ -28,9 +30,11 @@ def softMin {n : ℕ} (x : Fin n → ℝ) : ℝ :=
 
 
 
+
 /-- softMin definition -/
 theorem softMin_dual {n : ℕ} (x : Fin n → ℝ) :
     softMin x = -Real.log (∑ i, Real.exp (-x i)) := rfl
+
 
 
 
@@ -42,6 +46,7 @@ theorem max_pow_le_sum_pow (a b : ℝ) (n : ℕ) (ha : 0 ≤ a) (hb : 0 ≤ b) (
     linarith [pow_nonneg ha n]
   · rw [max_eq_left hab]
     linarith [pow_nonneg hb n]
+
 
 
 
@@ -58,8 +63,10 @@ theorem sum_pow_le_two_max_pow (a b : ℝ) (n : ℕ) (ha : 0 ≤ a) (hb : 0 ≤ 
 
 
 
+
 /-- The Heaviside step function (tropical derivative of ReLU) -/
 def heaviside (x : ℝ) : ℝ := if 0 < x then 1 else 0
+
 
 
 
@@ -68,14 +75,17 @@ theorem heaviside_pos (x : ℝ) (hx : 0 < x) : heaviside x = 1 := if_pos hx
 
 
 
+
 /-- Heaviside is 0 for non-positive inputs -/
 theorem heaviside_nonpos (x : ℝ) (hx : x ≤ 0) : heaviside x = 0 := if_neg (not_lt.mpr hx)
+
 
 
 
 /-- Heaviside values are in {0, 1} -/
 theorem heaviside_range (x : ℝ) : heaviside x = 0 ∨ heaviside x = 1 := by
   unfold heaviside; split_ifs <;> simp
+
 
 
 
@@ -88,9 +98,11 @@ theorem relu_eq_mul_heaviside (x : ℝ) (hx : x ≠ 0) :
 
 
 
+
 /-- Chain rule for ReLU: relu(f(x)) = f(x) when f(x) > 0 -/
 theorem relu_chain_pos (f : ℝ → ℝ) (x : ℝ) (hf : 0 < f x) :
     max (f x) 0 = f x := max_eq_left (le_of_lt hf)
+
 
 
 
@@ -100,9 +112,11 @@ theorem max_subgradient_at_tie (a t : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
 
 
 
+
 /-- Tropical matrix-vector product for 2×2: (A ⊙ v)_i = max(A_{i0} + v_0, A_{i1} + v_1) -/
 def tropicalMatVec2 (A : Fin 2 → Fin 2 → ℝ) (v : Fin 2 → ℝ) (i : Fin 2) : ℝ :=
   max (A i 0 + v 0) (A i 1 + v 1)
+
 
 
 
@@ -112,9 +126,11 @@ theorem tropicalMatVec2_ge_fst (A : Fin 2 → Fin 2 → ℝ) (v : Fin 2 → ℝ)
 
 
 
+
 /-- Tropical mat-vec product is at least the second term -/
 theorem tropicalMatVec2_ge_snd (A : Fin 2 → Fin 2 → ℝ) (v : Fin 2 → ℝ) (i : Fin 2) :
     A i 1 + v 1 ≤ tropicalMatVec2 A v i := le_max_right _ _
+
 
 
 
@@ -124,9 +140,11 @@ def tropicalScalarMul (c : ℝ) (A : Fin 2 → Fin 2 → ℝ) (i j : Fin 2) : �
 
 
 
+
 /-- Tropical matrix sum (entrywise max) -/
 def tropicalMatAdd (A B : Fin 2 → Fin 2 → ℝ) (i j : Fin 2) : ℝ :=
   max (A i j) (B i j)
+
 
 
 
@@ -140,10 +158,16 @@ theorem regularization_gap_nonneg (a b : ℝ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Tropical.Core.TropicalMoonshots
+Auto-generated from theorem catalog database.
+Domain: Tropical/Core
+Declarations: 76] -/
 theorem regularization_gap_le_log2 (a b : ℝ) :
     Real.log (Real.exp a + Real.exp b) - max a b ≤ Real.log 2 := by
   rw [ sub_le_iff_le_add', Real.log_le_iff_le_exp ] <;> try positivity;
   rw [ Real.exp_add, Real.exp_log ] <;> cases max_cases a b <;> nlinarith [ Real.exp_pos a, Real.exp_le_exp.2 ( le_max_left a b ), Real.exp_le_exp.2 ( le_max_right a b ) ]
+
 
 
 
@@ -164,9 +188,11 @@ theorem max_entropy_is_uniform {n : ℕ} [NeZero n] (p : Fin n → ℝ)
 
 
 
+
 /-- Hilbert projective pseudo-metric for two elements -/
 def hilbertDist (a₁ a₂ b₁ b₂ : ℝ) : ℝ :=
   max (a₁ - b₁) (a₂ - b₂) - min (a₁ - b₁) (a₂ - b₂)
+
 
 
 
@@ -177,15 +203,18 @@ theorem hilbertDist_nonneg (a₁ a₂ b₁ b₂ : ℝ) :
 
 
 
+
 /-- Hilbert distance is zero when differences are equal -/
 theorem hilbertDist_zero_of_eq (a₁ a₂ b₁ b₂ : ℝ) (h : a₁ - b₁ = a₂ - b₂) :
     hilbertDist a₁ a₂ b₁ b₂ = 0 := by simp [hilbertDist, h]
 
 
 
+
 theorem hilbertDist_symm (a₁ a₂ b₁ b₂ : ℝ) :
     hilbertDist a₁ a₂ b₁ b₂ = hilbertDist b₁ b₂ a₁ a₂ := by
   grind +locals
+
 
 
 
@@ -196,6 +225,7 @@ theorem hilbertDist_translate (a₁ a₂ b₁ b₂ c : ℝ) :
 
 
 
+
 /-- Tropical scaling preserves Hilbert distance -/
 theorem hilbertDist_tropical_scale (a₁ a₂ b₁ b₂ c d : ℝ) :
     hilbertDist (a₁ + c) (a₂ + d) (b₁ + c) (b₂ + d) = hilbertDist a₁ a₂ b₁ b₂ := by
@@ -203,9 +233,11 @@ theorem hilbertDist_tropical_scale (a₁ a₂ b₁ b₂ c d : ℝ) :
 
 
 
+
 /-- Max-plus convolution is commutative (simplified) -/
 theorem maxPlusConv_comm_simple (a b c d : ℝ) :
     max (a + c) (b + d) = max (c + a) (d + b) := by ring_nf
+
 
 
 
@@ -217,9 +249,11 @@ theorem tropical_young_conv (a₁ a₂ b₁ b₂ : ℝ) :
 
 
 
+
 theorem galois_max_le_lse (a b : ℝ) :
     max a b ≤ Real.log (Real.exp a + Real.exp b) := by
   exact regularization_gap_nonneg a b
+
 
 
 
@@ -229,9 +263,11 @@ theorem galois_gap_le_log2 (a b : ℝ) :
 
 
 
+
 /-- Repeated tropical addition: max iterated -/
 theorem iterated_max_assoc (a b c d : ℝ) :
     max (max (max a b) c) d = max a (max b (max c d)) := by simp [max_assoc]
+
 
 
 
@@ -241,9 +277,11 @@ theorem exp_tropical_product (a b : ℝ) :
 
 
 
+
 /-- log transforms classical product to tropical product -/
 theorem log_classical_product (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
     Real.log (a * b) = Real.log a + Real.log b := Real.log_mul (ne_of_gt ha) (ne_of_gt hb)
+
 
 
 
@@ -252,14 +290,18 @@ def tropSign (x : ℝ) : ℝ := if 0 < x then 1 else if x < 0 then -1 else 0
 
 
 
+
 theorem tropSign_pos (x : ℝ) (hx : 0 < x) : tropSign x = 1 := by simp [tropSign, hx]
+
 
 
 theorem tropSign_neg (x : ℝ) (hx : x < 0) : tropSign x = -1 := by
   simp [tropSign, not_lt.mpr (le_of_lt hx), hx]
 
 
+
 theorem tropSign_zero : tropSign 0 = 0 := by simp [tropSign]
+
 
 
 
@@ -271,10 +313,12 @@ theorem abs_eq_mul_tropSign (x : ℝ) (hx : x ≠ 0) : |x| = x * tropSign x := b
 
 
 
+
 /-- ReLU network gradient: ∂relu(wx+b)/∂w = x·heaviside(wx+b) -/
 theorem relu_network_gradient (w b x : ℝ) :
     x * heaviside (w * x + b) = if 0 < w * x + b then x else 0 := by
   simp [heaviside]
+
 
 
 
@@ -284,9 +328,11 @@ def tropicalOuter {m n : ℕ} (u : Fin m → ℝ) (v : Fin n → ℝ) (i : Fin m
 
 
 
+
 /-- Tropical rank-1 matrix: all 2×2 "tropical minors" satisfy Monge condition -/
 theorem tropical_rank1_minor (u₁ u₂ v₁ v₂ : ℝ) :
     (u₁ + v₁) + (u₂ + v₂) = (u₁ + v₂) + (u₂ + v₁) := by ring
+
 
 
 
@@ -295,10 +341,12 @@ def tropicalPerm2 (a₁₁ a₁₂ a₂₁ a₂₂ : ℝ) : ℝ := max (a₁₁ 
 
 
 
+
 /-- Tropical permanent is symmetric under transpose -/
 theorem tropicalPerm2_symm (a₁₁ a₁₂ a₂₁ a₂₂ : ℝ) :
     tropicalPerm2 a₁₁ a₁₂ a₂₁ a₂₂ = tropicalPerm2 a₂₂ a₂₁ a₁₂ a₁₁ := by
   simp [tropicalPerm2, add_comm]
+
 
 
 
@@ -311,8 +359,10 @@ theorem relu_partition (w b x : ℝ) :
 
 
 
+
 /-- Width w gives at most w+1 linear regions in 1D -/
 theorem width_regions_1d (w : ℕ) : w + 1 ≥ 1 := Nat.succ_pos w
+
 
 
 
@@ -325,8 +375,10 @@ theorem bellmanOp_monotone (r γ : ℝ) (hγ : 0 ≤ γ) :
 
 
 
+
 /-- Bellman operator preserves non-negativity -/
 theorem bellmanOp_nonneg (r γ v : ℝ) : 0 ≤ bellmanOp r γ v := le_max_right _ _
+
 
 
 
@@ -336,9 +388,11 @@ theorem quadratic_self_dual (y x : ℝ) :
 
 
 
+
 /-- Young's inequality: ab ≤ a²/2 + b²/2 -/
 theorem young_ineq_squares (a b : ℝ) : a * b ≤ a ^ 2 / 2 + b ^ 2 / 2 := by
   nlinarith [sq_nonneg (a - b)]
+
 
 
 
@@ -349,12 +403,14 @@ theorem conjugate_exp_bound (x : ℝ) :
 
 
 
+
 /-- Multi-head attention: heads are independent -/
 theorem multihead_independent {n : ℕ} (v₁ v₂ : Fin n → ℝ)
     (w₁ w₂ : Fin n → ℝ) :
     ∑ i, w₁ i * v₁ i + ∑ i, w₂ i * v₂ i =
     ∑ i, (w₁ i * v₁ i + w₂ i * v₂ i) := by
   rw [← Finset.sum_add_distrib]
+
 
 
 
@@ -368,6 +424,7 @@ theorem attention_convex_bound {n : ℕ} [NeZero n] (w v : Fin n → ℝ)
 
 
 
+
 theorem attention_lower_bound {n : ℕ} [NeZero n] (w v : Fin n → ℝ)
     (hw_nn : ∀ i, 0 ≤ w i) (hw_sum : ∑ i, w i = 1) :
     Finset.inf' Finset.univ Finset.univ_nonempty v ≤ ∑ i, w i * v i := by
@@ -378,9 +435,11 @@ theorem attention_lower_bound {n : ℕ} [NeZero n] (w v : Fin n → ℝ)
 
 
 
+
 /-- KL divergence between two Bernoulli distributions -/
 def klBernoulli (p q : ℝ) : ℝ :=
   p * Real.log (p / q) + (1 - p) * Real.log ((1 - p) / (1 - q))
+
 
 
 
@@ -388,6 +447,7 @@ def klBernoulli (p q : ℝ) : ℝ :=
 theorem klBernoulli_self (p : ℝ) (hp0 : 0 < p) (hp1 : p < 1) :
     klBernoulli p p = 0 := by
   simp [klBernoulli, div_self (ne_of_gt hp0), div_self (ne_of_gt (show 0 < 1 - p by linarith))]
+
 
 
 
@@ -400,8 +460,10 @@ theorem softmax_jacobian_diag (a b : ℝ) :
 
 
 
+
 /-- A tropical linear function -/
 def tropicalLinear (a b : ℝ) (x : ℝ) : ℝ := a * x + b
+
 
 
 
@@ -409,6 +471,7 @@ def tropicalLinear (a b : ℝ) (x : ℝ) : ℝ := a * x + b
 theorem tropical_interp_two (v₀ v₁ : ℝ) :
     tropicalLinear (v₁ - v₀) v₀ 0 = v₀ ∧ tropicalLinear (v₁ - v₀) v₀ 1 = v₁ := by
   constructor <;> simp [tropicalLinear]
+
 
 
 
@@ -422,6 +485,7 @@ theorem tropical_max_linear_bend (a₁ b₁ a₂ b₂ : ℝ) (ha : a₁ ≠ a₂
 
 
 
+
 /-- Tropical polynomial evaluation is piecewise linear -/
 theorem tropical_poly_eval_pwl (a₁ b₁ a₂ b₂ x : ℝ) :
     max (a₁ * x + b₁) (a₂ * x + b₂) =
@@ -430,8 +494,10 @@ theorem tropical_poly_eval_pwl (a₁ b₁ a₂ b₂ x : ℝ) :
 
 
 
+
 /-- Each ReLU unit adds at most one bend: w*L units → at most w*L+1 pieces -/
 theorem network_pieces_bound (w L : ℕ) : w * L + 1 ≥ 1 := Nat.succ_pos _
+
 
 
 
@@ -440,9 +506,11 @@ theorem pwl_approx_doubling (ε : ℝ) (hε : 0 < ε) : ε / 2 < ε := by linari
 
 
 
+
 /-- Approximation error is positive -/
 theorem pwl_approx_lipschitz (L : ℝ) (k : ℕ) (hk : 0 < k) (hL : 0 < L) :
     0 < L / (2 * k) := by positivity
+
 
 
 
@@ -457,10 +525,12 @@ theorem affine_preserves_max (c d : ℝ) (hc : 0 < c) (a b : ℝ) :
 
 
 
+
 /-- Composition of tropical homomorphisms is a tropical homomorphism -/
 theorem tropical_hom_comp (c₁ d₁ c₂ d₂ : ℝ) (hc₁ : 0 < c₁) (hc₂ : 0 < c₂) (a b : ℝ) :
     c₂ * (c₁ * max a b + d₁) + d₂ = max (c₂ * (c₁ * a + d₁) + d₂) (c₂ * (c₁ * b + d₁) + d₂) := by
   rw [affine_preserves_max c₁ d₁ hc₁, affine_preserves_max c₂ d₂ hc₂]
+
 
 
 
@@ -471,9 +541,11 @@ theorem lipschitz_bound (f : ℝ → ℝ) (hf : LipschitzWith 1 f) (x y : ℝ) :
 
 
 
+
 /-- Tropical expectation: sup(log p + x) for two outcomes -/
 def tropicalExpectation (logp x : Fin 2 → ℝ) : ℝ :=
   max (logp 0 + x 0) (logp 1 + x 1)
+
 
 
 
@@ -482,8 +554,10 @@ def tropicalSpread (x : Fin 2 → ℝ) : ℝ := |x 0 - x 1|
 
 
 
+
 /-- Tropical spread is non-negative -/
 theorem tropicalSpread_nonneg (x : Fin 2 → ℝ) : 0 ≤ tropicalSpread x := abs_nonneg _
+
 
 
 
@@ -497,8 +571,10 @@ theorem tropical_exp_le_max (logp x : Fin 2 → ℝ)
 
 
 
+
 /-- An activation pattern for a width-w layer -/
 def ActivationPattern (w : ℕ) := Fin w → Bool
+
 
 
 
@@ -509,8 +585,10 @@ theorem same_pattern_nonneg (w b x₁ x₂ : ℝ) :
 
 
 
+
 /-- Number of activation patterns bounds expressivity -/
 theorem activation_pattern_count (w : ℕ) : 2 ^ w ≥ 1 := Nat.one_le_two_pow
+
 
 
 
@@ -524,9 +602,11 @@ theorem neuron_boundary_codim1 (w b : ℝ) (hw : w ≠ 0) :
 
 
 
+
 theorem binary_entropy_nonneg (p : ℝ) (hp0 : 0 < p) (hp1 : p < 1) :
     0 ≤ -(p * Real.log p + (1 - p) * Real.log (1 - p)) := by
   nlinarith [ Real.log_le_sub_one_of_pos hp0, Real.log_le_sub_one_of_pos ( by linarith : 0 < 1 - p ) ]
+
 
 
 

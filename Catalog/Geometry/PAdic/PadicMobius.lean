@@ -24,14 +24,17 @@ variable {p : ℕ} [hp : Fact (Nat.Prime p)]
 
 
 
+
 /-- The determinant of a Möbius transformation. -/
 noncomputable def det (M : PadicMobius p) : ℚ_[p] := M.a * M.d - M.b * M.c
+
 
 
 
 /-- Apply a Möbius transformation to an element of ℚ_p (when the denominator is nonzero). -/
 noncomputable def apply (M : PadicMobius p) (z : ℚ_[p]) (h : M.c * z + M.d ≠ 0) : ℚ_[p] :=
   (M.a * z + M.b) / (M.c * z + M.d)
+
 
 
 
@@ -42,6 +45,7 @@ noncomputable def id : PadicMobius p where
   c := 0
   d := 1
   det_ne_zero := by simp
+
 
 
 
@@ -59,6 +63,7 @@ noncomputable def inv (M : PadicMobius p) : PadicMobius p where
 
 
 
+
 /-- A translation z ↦ z + t. -/
 noncomputable def translation (t : ℚ_[p]) : PadicMobius p where
   a := 1
@@ -66,6 +71,7 @@ noncomputable def translation (t : ℚ_[p]) : PadicMobius p where
   c := 0
   d := 1
   det_ne_zero := by simp
+
 
 
 
@@ -79,6 +85,7 @@ noncomputable def scaling (s : ℚ_[p]) (hs : s ≠ 0) : PadicMobius p where
 
 
 
+
 /-- The inversion z ↦ 1/z. -/
 noncomputable def inversion : PadicMobius p where
   a := 0
@@ -89,9 +96,11 @@ noncomputable def inversion : PadicMobius p where
 
 
 
+
 /-- The determinant of the identity is 1. -/
 theorem det_id : (PadicMobius.id : PadicMobius p).det = 1 := by
   unfold det PadicMobius.id; ring
+
 
 
 
@@ -102,10 +111,12 @@ theorem det_comp (M N : PadicMobius p) :
 
 
 
+
 /-- The determinant of the inverse. -/
 theorem det_inv (M : PadicMobius p) :
     (inv M).det = M.det := by
   unfold det inv; ring
+
 
 
 
@@ -117,11 +128,13 @@ theorem apply_id (z : ℚ_[p])
 
 
 
+
 /-- Translation applies correctly. -/
 theorem apply_translation (t z : ℚ_[p])
     (h : (translation t : PadicMobius p).c * z + (translation t).d ≠ 0) :
     (translation t).apply z h = z + t := by
   unfold apply translation; simp
+
 
 
 
@@ -133,11 +146,17 @@ theorem apply_scaling (s : ℚ_[p]) (hs : s ≠ 0) (z : ℚ_[p])
 
 
 
+
+/-- [Section: # CatalogBuild.Geometry.PAdic.PadicMobius
+Auto-generated from theorem catalog database.
+Domain: Geometry/PAdic
+Declarations: 35] -/
 theorem fixed_point_equation (M : PadicMobius p) (z : ℚ_[p]) (h : M.c * z + M.d ≠ 0) :
     IsFixedPoint M z h ↔ M.c * z ^ 2 + (M.d - M.a) * z - M.b = 0 := by
   unfold PadicMobius.IsFixedPoint;
   unfold PadicMobius.apply;
   grind
+
 
 
 
@@ -147,8 +166,10 @@ noncomputable def fixedPointDiscriminant (M : PadicMobius p) : ℚ_[p] :=
 
 
 
+
 /-- The trace of a Möbius transformation. -/
 noncomputable def trace (M : PadicMobius p) : ℚ_[p] := M.a + M.d
+
 
 
 
@@ -159,9 +180,11 @@ theorem trace_sq_and_discriminant (M : PadicMobius p) :
 
 
 
+
 /-- A transformation is parabolic iff its discriminant is zero. -/
 def isParabolic (M : PadicMobius p) : Prop :=
   M.fixedPointDiscriminant = 0
+
 
 
 
@@ -176,9 +199,11 @@ theorem parabolic_iff_trace (M : PadicMobius p) :
 
 
 
+
 theorem padic_ultrametric (x y : ℚ_[p]) :
     ‖x + y‖ ≤ max ‖x‖ ‖y‖ := by
   exact Padic.nonarchimedean x y
+
 
 
 
@@ -188,10 +213,12 @@ theorem padic_isosceles (x y : ℚ_[p]) (h : ‖x‖ ≠ ‖y‖) :
 
 
 
+
 /-- The p-adic norm of a product. -/
 theorem padic_norm_mul (x y : ℚ_[p]) :
     ‖x * y‖ = ‖x‖ * ‖y‖ :=
   norm_mul x y
+
 
 
 
@@ -212,9 +239,11 @@ theorem mobius_maps_unit_disk (M : PadicMobius p)
 
 
 
+
 /-- A p-adic disk (closed ball) in ℚ_p. -/
 def padicDisk (center : ℚ_[p]) (r : ℝ) : Set ℚ_[p] :=
   {z | ‖z - center‖ ≤ r}
+
 
 
 
@@ -225,6 +254,7 @@ theorem padic_disk_dichotomy (a b : ℚ_[p]) (r s : ℝ) (hr : 0 < r) (hs : 0 < 
   have := @IsUltrametricDist.closedBall_subset_trichotomy;
   specialize this a b r s;
   grind
+
 
 
 
@@ -239,9 +269,11 @@ noncomputable def orbit (M : PadicMobius p) (z₀ : ℚ_[p]) : ℕ → ℚ_[p]
 
 
 
+
 /-- The set of accumulation points of an orbit. -/
 noncomputable def limitPoint (M : PadicMobius p) (z₀ : ℚ_[p]) : Set ℚ_[p] :=
   {w | ∀ ε > 0, ∃ n : ℕ, n > 0 ∧ ‖orbit M z₀ n - w‖ < ε}
+
 
 
 
@@ -250,6 +282,7 @@ det(M)/(cz+d)². -/
 noncomputable def derivative (M : PadicMobius p) (z : ℚ_[p])
     (_h : M.c * z + M.d ≠ 0) : ℚ_[p] :=
   M.det / (M.c * z + M.d) ^ 2
+
 
 
 
@@ -269,10 +302,12 @@ theorem derivative_comp (M N : PadicMobius p) (z : ℚ_[p])
 
 
 
+
 theorem norm_derivative (M : PadicMobius p) (z : ℚ_[p]) (h : M.c * z + M.d ≠ 0) :
     ‖derivative M z h‖ = ‖M.det‖ / ‖M.c * z + M.d‖ ^ 2 := by
   unfold PadicMobius.derivative;
   rw [ norm_div, norm_pow ]
+
 
 
 
@@ -288,6 +323,7 @@ theorem conformal_distortion (M : PadicMobius p)
 
 
 
+
 /-- A vertex in the Bruhat-Tits tree is represented by a homothety class
 of ℤ_p-lattices in ℚ_p². We model this abstractly. -/
 structure BTVertex (p : ℕ) [Fact (Nat.Prime p)] where
@@ -298,10 +334,12 @@ structure BTVertex (p : ℕ) [Fact (Nat.Prime p)] where
 
 
 
+
 /-- Two vertices are adjacent in the Bruhat-Tits tree if they differ by one level. -/
 def BTAdjacent (v w : BTVertex p) : Prop :=
   (v.level - w.level = 1 ∨ v.level - w.level = -1) ∧
   ‖v.center - w.center‖ ≤ (p : ℝ) ^ (-min v.level w.level)
+
 
 
 
@@ -332,6 +370,7 @@ theorem mobius_preserves_bt_adjacency (M : PadicMobius p)
   refine le_trans ( mul_le_mul_of_nonneg_left hk <| by positivity ) ?_;
   rw [ ← zpow_neg, ← zpow_add₀ ( Nat.cast_ne_zero.mpr hp.1.ne_zero ) ] ; ring_nf ; norm_num;
   rw [ ← zpow_neg ] ; ring_nf ; norm_num
+
 
 
 

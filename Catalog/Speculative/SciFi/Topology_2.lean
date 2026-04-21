@@ -15,10 +15,12 @@ theorem euler_formula_planar (V E F : ℤ)
 
 
 
+
 /-- For a toroidal space station, the Euler characteristic is 0: V - E + F = 0. -/
 theorem torus_euler (V E F : ℤ)
     (h_torus : V - E + F = 0) : E = V + F := by
   omega
+
 
 
 
@@ -33,6 +35,7 @@ theorem torus_triangulation (V E F : ℤ)
 
 
 
+
 /-- A surface that reverses orientation along some loop is non-orientable.
 If traversing a closed path yields orientation reversal, we get a contradiction. -/
 theorem orientation_reversal_implies_nonorientable
@@ -43,5 +46,6 @@ theorem orientation_reversal_implies_nonorientable
   by_cases h : orientation p
   · exact (h_reversed.mp h) h
   · exact h (h_reversed.mpr h)
+
 
 

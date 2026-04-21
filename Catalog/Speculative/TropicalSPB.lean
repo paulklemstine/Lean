@@ -16,10 +16,12 @@ theorem tropSPB_nonneg (x y : ℝ) (hx : 0 ≤ x) (hy : 0 ≤ y) :
 
 
 
+
 /-- Tropical SPB with 0 on the right, for x ≥ 0: tropSPB(x, 0) = 0. -/
 theorem tropSPB_zero_right_nonneg (x : ℝ) (hx : 0 ≤ x) :
     tropSPB x 0 = 0 := by
   simp [tropSPB, min_eq_right hx, min_eq_left (by linarith : (0 : ℝ) ≤ x)]
+
 
 
 
@@ -30,10 +32,12 @@ theorem tropSPB_zero_left_nonneg (y : ℝ) (hy : 0 ≤ y) :
 
 
 
+
 /-- Tropical SPB is always non-negative when both inputs are non-negative. -/
 theorem tropSPB_nonneg_result (x y : ℝ) (hx : 0 ≤ x) (hy : 0 ≤ y) :
     0 ≤ tropSPB x y := by
   rw [tropSPB_nonneg x y hx hy]; exact le_min hx hy
+
 
 
 
@@ -43,9 +47,11 @@ theorem tropSPB_self (x : ℝ) : tropSPB x x = x - min 0 (2 * x) := by
 
 
 
+
 /-- For x ≥ 0: tropSPB(x, x) = x (idempotent). -/
 theorem tropSPB_self_nonneg (x : ℝ) (hx : 0 ≤ x) : tropSPB x x = x := by
   rw [tropSPB_nonneg x x hx hx, min_self]
+
 
 
 
@@ -60,10 +66,12 @@ theorem tropSPB_alt (x y : ℝ) :
 
 
 
+
 /-- When x + y ≤ 0: tropSPB(x,y) = min(x,y) - (x+y) = max(-x, -y) -/
 theorem tropSPB_neg_sum (x y : ℝ) (h : x + y ≤ 0) :
     tropSPB x y = min x y - (x + y) := by
   simp [tropSPB, min_eq_right h]
+
 
 
 

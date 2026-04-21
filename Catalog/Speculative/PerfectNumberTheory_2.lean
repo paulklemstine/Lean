@@ -26,6 +26,7 @@ theorem mersenne_prime_exponent_prime' (p : ℕ) (hp : 1 < p)
 
 
 
+
 /-- If n is prime and perfect, that's a contradiction (σ₁(p) = p+1 ≠ 2p for p ≥ 2). -/
 theorem perfect_has_two_prime_factors (n : ℕ) (hn : 1 < n) (hperf : σ₁ n = 2 * n)
     (hp : Nat.Prime n) : False := by
@@ -34,6 +35,11 @@ theorem perfect_has_two_prime_factors (n : ℕ) (hn : 1 < n) (hperf : σ₁ n = 
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.PerfectNumberTheory_2
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 4] -/
 theorem sigma1_le_sq (n : ℕ) (hn : 0 < n) : σ₁ n ≤ n * n := by
   -- By definition of divisors, each divisor $d$ of $n$ satisfies $1 \leq d \leq n$.
   have h_divisors : ∀ d ∈ n.divisors, d ≤ n := by
@@ -42,8 +48,10 @@ theorem sigma1_le_sq (n : ℕ) (hn : 0 < n) : σ₁ n ≤ n * n := by
 
 
 
+
 theorem sigma1_multiplicative_coprime (m n : ℕ) (hm : 0 < m) (hn : 0 < n)
     (hcop : Nat.Coprime m n) : σ₁ (m * n) = σ₁ m * σ₁ n := by
   unfold σ₁;
   grind +suggestions
+
 

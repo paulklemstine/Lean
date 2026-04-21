@@ -15,6 +15,7 @@ def SubsetSum (weights : List ℤ) (target : ℤ) : Prop :=
 
 
 
+
 /-- [Section: # CatalogBuild.Logic.PvsNP
 Auto-generated from theorem catalog database.
 Domain: Logic
@@ -25,10 +26,12 @@ instance SubsetSum.instDecidable (weights : List ℤ) (target : ℤ) :
 
 
 
+
 /-- Given a candidate subset, we can verify the sum. -/
 def verifySubsetSum (weights : List ℤ) (target : ℤ)
     (S : Finset (Fin weights.length)) : Prop :=
   (∑ i ∈ S, weights.get i) = target
+
 
 
 
@@ -40,9 +43,11 @@ theorem subsetSum_iff_exists_certificate (weights : List ℤ) (target : ℤ) :
 
 
 
+
 /-- The number of subsets of an n-element set is 2^n. -/
 theorem num_subsets (n : ℕ) : Fintype.card (Finset (Fin n)) = 2 ^ n := by
   simp [Fintype.card_finset, Fintype.card_fin]
+
 
 
 
@@ -52,12 +57,18 @@ theorem exponential_exceeds_linear (n : ℕ) : n < 2 ^ n :=
 
 
 
+
 /-- Berggren tree has at least one node at every depth. -/
 theorem berggren_nodes_at_depth (d : ℕ) : 3 ^ d ≥ 1 :=
   Nat.one_le_pow d 3 (by omega)
 
 
 
+
+/-- [Section: # CatalogBuild.Logic.PvsNP
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 12] -/
 theorem berggren_superpolynomial (k : ℕ) : ∃ N, ∀ d, N ≤ d → d ^ k < 3 ^ d := by
   -- We can use the fact that exponential functions grow faster than any polynomial function. Specifically, for any fixed $k$, $3^d$ will eventually outpace $d^k$ as $d$ increases.
   have h_exp_growth : Filter.Tendsto (fun d : ℕ => (d ^ k : ℝ) / 3 ^ d) Filter.atTop (nhds 0) := by
@@ -72,11 +83,13 @@ theorem berggren_superpolynomial (k : ℕ) : ∃ N, ∀ d, N ≤ d → d ^ k < 3
 
 
 
+
 /-- Any algorithm examining all subsets of an n-element set
 must consider 2^n candidates. No tree structure changes this. -/
 theorem subset_enumeration_exponential (n : ℕ) :
     Fintype.card (Finset (Fin n)) = 2 ^ n :=
   num_subsets n
+
 
 
 
@@ -98,9 +111,11 @@ theorem no_poly_covering (k : ℕ) :
 
 
 
+
 /-- The empty subset always sums to 0. -/
 theorem empty_subset_sum (weights : List ℤ) : SubsetSum weights 0 :=
   ⟨∅, by simp⟩
+
 
 
 
@@ -108,5 +123,6 @@ theorem empty_subset_sum (weights : List ℤ) : SubsetSum weights 0 :=
 theorem full_subset_sum (weights : List ℤ) :
     SubsetSum weights (∑ i : Fin weights.length, weights.get i) :=
   ⟨Finset.univ, by simp⟩
+
 
 

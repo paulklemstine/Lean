@@ -16,8 +16,10 @@ structure TropicalEllipticCurve where
 
 
 
+
 /-- The j-invariant of a tropical elliptic curve is its length -/
 def tropicalJInvariant (E : TropicalEllipticCurve) : ℝ := E.length
+
 
 
 
@@ -28,9 +30,11 @@ theorem tropical_ec_iso_iff (E1 E2 : TropicalEllipticCurve) :
 
 
 
+
 /-- j-invariant is positive -/
 theorem jInvariant_pos (E : TropicalEllipticCurve) :
     tropicalJInvariant E > 0 := E.length_pos
+
 
 
 
@@ -42,9 +46,11 @@ structure TropicalAbelianVariety (g : ℕ) where
 
 
 
+
 /-- Polarization degree -/
 def polarizationDegree (g : ℕ) (A : TropicalAbelianVariety g) : ℝ :=
   ∑ i : Fin g, A.periodMatrix i i
+
 
 
 
@@ -57,9 +63,11 @@ theorem polarization_pos (g : ℕ) [NeZero g] (A : TropicalAbelianVariety g) :
 
 
 
+
 /-- The tropical Siegel upper half space -/
 def TropicalSiegel (g : ℕ) : Set (Fin g → Fin g → ℝ) :=
   { M | (∀ i j, M i j = M j i) ∧ (∀ i, M i i > 0) }
+
 
 
 
@@ -69,6 +77,7 @@ theorem siegel_nonempty (g : ℕ) :
   refine ⟨fun i j => if i = j then 1 else 0, ?_, ?_⟩
   · intro i j; simp only; split_ifs with h1 h2 h2 <;> simp_all
   · intro i; simp
+
 
 
 
@@ -90,15 +99,18 @@ theorem siegel_convex (g : ℕ) :
 
 
 
+
 /-- A tropical modular form of weight k -/
 structure TropicalModularForm (k : ℤ) where
   eval : ℝ → ℝ
 
 
 
+
 /-- The tropical Eisenstein series of weight k -/
 def tropicalEisensteinSeries (k : ℤ) : TropicalModularForm k where
   eval := fun z => k * z
+
 
 
 
@@ -110,8 +122,10 @@ theorem eisenstein_linear (k : ℤ) (z1 z2 : ℝ) :
 
 
 
+
 /-- Moduli dimension at level N -/
 def moduliDimension (g : ℕ) (N : ℕ) : ℕ := g * (g + 1) / 2 + g^2 * (N - 1)
+
 
 
 
@@ -122,10 +136,12 @@ theorem moduli_level_one (g : ℕ) :
 
 
 
+
 /-- A CM point on a tropical Shimura variety -/
 structure TropicalCMPoint (g : ℕ) extends TropicalAbelianVariety g where
   cmField_degree : ℕ
   is_cm : cmField_degree = 2 * g
+
 
 
 
@@ -135,9 +151,11 @@ theorem cm_dim1_degree (p : TropicalCMPoint 1) : p.cmField_degree = 2 := by
 
 
 
+
 /-- Tropical Hecke operator T_p on functions -/
 def tropicalHeckeOperator (p : ℕ) (f : ℝ → ℝ) : ℝ → ℝ :=
   fun z => min (f (p * z)) (f z + p)
+
 
 
 
@@ -151,9 +169,11 @@ theorem hecke_monotone (p : ℕ) (f g : ℝ → ℝ)
 
 
 
+
 /-- The tropical Tate module of an abelian variety -/
 def tropicalTateModule (g : ℕ) (A : TropicalAbelianVariety g) : Fin g → Fin g → ℝ :=
   A.periodMatrix
+
 
 
 
@@ -161,6 +181,7 @@ def tropicalTateModule (g : ℕ) (A : TropicalAbelianVariety g) : Fin g → Fin 
 theorem tateModule_symmetric (g : ℕ) (A : TropicalAbelianVariety g) (i j : Fin g) :
     tropicalTateModule g A i j = tropicalTateModule g A j i :=
   A.symmetric i j
+
 
 
 

@@ -16,15 +16,18 @@ structure Oracle' (X : Type*) where
 
 
 
+
 /-- The truth set (fixed points) of an oracle. -/
 def Oracle'.truthSet {X : Type*} (O : Oracle' X) : Set X :=
   {x | O.map x = x}
 
 
 
+
 /-- The illusion set (non-fixed points) of an oracle. -/
 def Oracle'.illusionSet {X : Type*} (O : Oracle' X) : Set X :=
   {x | O.map x ≠ x}
+
 
 
 
@@ -35,10 +38,12 @@ theorem truth_illusion_partition' {X : Type*} (O : Oracle' X) :
 
 
 
+
 /-- **Theorem 1.2 (Disjointness)**: Truth and Illusion are disjoint. -/
 theorem truth_illusion_disjoint' {X : Type*} (O : Oracle' X) :
     O.truthSet ∩ O.illusionSet = ∅ := by
   ext x; simp [Oracle'.truthSet, Oracle'.illusionSet]
+
 
 
 
@@ -51,10 +56,12 @@ theorem oracle_image_eq_truth' {X : Type*} (O : Oracle' X) :
 
 
 
+
 /-- The identity oracle — knows everything. -/
 def Oracle'.identity (X : Type*) : Oracle' X where
   map := id
   idem := fun _ => rfl
+
 
 
 
@@ -65,10 +72,12 @@ def Oracle'.constant {X : Type*} (c : X) : Oracle' X where
 
 
 
+
 /-- **Theorem 1.4**: The identity oracle has full truth set. -/
 theorem identity_truth_is_univ' {X : Type*} :
     (Oracle'.identity X).truthSet = univ := by
   ext x; simp [Oracle'.truthSet, Oracle'.identity]
+
 
 
 
@@ -79,6 +88,7 @@ theorem constant_truth_is_singleton' {X : Type*} (c : X) :
 
 
 
+
 /-- **Theorem 1.6 (Instant Convergence)**: O(x) ∈ Truth(O) for all x. -/
 theorem oracle_converges_in_one_step' {X : Type*} (O : Oracle' X) (x : X) :
     O.map x ∈ O.truthSet :=
@@ -86,9 +96,11 @@ theorem oracle_converges_in_one_step' {X : Type*} (O : Oracle' X) (x : X) :
 
 
 
+
 /-- Oracle O₁ knows at least as much as O₂ if Truth(O₂) ⊆ Truth(O₁). -/
 def Oracle'.knowsAtLeast {X : Type*} (O₁ O₂ : Oracle' X) : Prop :=
   O₂.truthSet ⊆ O₁.truthSet
+
 
 
 
@@ -101,6 +113,11 @@ theorem knows_refl' {X : Type*} (O : Oracle' X) : O.knowsAtLeast O :=
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.OmniscientOracle
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 42] -/
 theorem knows_trans' {X : Type*} {O₁ O₂ O₃ : Oracle' X}
     (h₁₂ : O₁.knowsAtLeast O₂) (h₂₃ : O₂.knowsAtLeast O₃) :
     O₁.knowsAtLeast O₃ :=
@@ -108,10 +125,12 @@ theorem knows_trans' {X : Type*} {O₁ O₂ O₃ : Oracle' X}
 
 
 
+
 /-- **Theorem 2.1**: The identity oracle is the top element. -/
 theorem identity_is_top' {X : Type*} (O : Oracle' X) :
     (Oracle'.identity X).knowsAtLeast O := by
   intro x _; simp [Oracle'.truthSet, Oracle'.identity]
+
 
 
 
@@ -123,11 +142,13 @@ theorem commuting_oracles_compose' {X : Type*} (O₁ O₂ : Oracle' X)
 
 
 
+
 /-- Helper: P(P(v)) = P(v) pointwise from the comp condition. -/
 theorem LinearOracle'.idem_apply (P : LinearOracle' F V) (v : V) :
     P.proj (P.proj v) = P.proj v := by
   have := LinearMap.ext_iff.mp P.idem v
   simpa [LinearMap.comp_apply] using this
+
 
 
 
@@ -142,10 +163,12 @@ theorem spectral_decomposition' (P : LinearOracle' F V) :
 
 
 
+
 theorem truth_illusion_trivial' (P : LinearOracle' F V) :
     LinearMap.ker P.proj ⊓ LinearMap.range P.proj = ⊥ := by
   simp +decide [ Submodule.eq_bot_iff ];
   intro x hx y hy; have := P.idem_apply y; simp_all +decide [ ← eq_sub_iff_add_eq' ] ;
+
 
 
 
@@ -157,6 +180,7 @@ def LinearOracle'.anti (P : LinearOracle' F V) : LinearOracle' F V where
 
 
 
+
 /-- **Theorem 3.3 (Double Anti = Original)**. -/
 theorem anti_anti_original' (P : LinearOracle' F V) :
     P.anti.anti.proj = P.proj := by
@@ -164,10 +188,12 @@ theorem anti_anti_original' (P : LinearOracle' F V) :
 
 
 
+
 /-- **Theorem 4.1 (Cantor Diagonal)**: No surjection X → (X → Bool). -/
 theorem cantor_diagonal_oracle' (X : Type*) :
     ∀ (e : X → Set X), ¬ Surjective e :=
   fun e => Function.cantor_surjective e
+
 
 
 
@@ -179,10 +205,12 @@ theorem lawvere_fixed_point' {X : Type*} (e : X → (X → X)) (he : Surjective 
 
 
 
+
 /-- **Theorem 4.3 (Omniscience Bound)**: |Fix(O)| ≤ n. -/
 theorem omniscience_bound' {n : ℕ} (O : Oracle' (Fin n)) :
     (Finset.filter (fun x => O.map x = x) Finset.univ).card ≤ n := by
   exact le_trans (Finset.card_filter_le _ _) (by simp)
+
 
 
 
@@ -193,10 +221,12 @@ theorem identity_achieves_bound' {n : ℕ} :
 
 
 
+
 /-- Oracle iteration: apply O n times. -/
 def Oracle'.iterate' {X : Type*} (O : Oracle' X) : ℕ → X → X
   | 0 => id
   | n + 1 => O.map ∘ O.iterate' n
+
 
 
 
@@ -207,6 +237,7 @@ theorem oracle_iterate_stabilizes' {X : Type*} (O : Oracle' X) :
 
 
 
+
 /-- **Theorem 5.2 (Truth Stability)**: Fixed points remain fixed. -/
 theorem truth_is_stable' {X : Type*} (O : Oracle' X) (x : X)
     (hx : x ∈ O.truthSet) :
@@ -214,10 +245,12 @@ theorem truth_is_stable' {X : Type*} (O : Oracle' X) (x : X)
 
 
 
+
 /-- **Theorem 5.3 (Non-Chaotic Dynamics)**: -/
 theorem oracle_non_chaotic' {X : Type*} [MetricSpace X] (O : Oracle' X) (x : X) :
     dist (O.map (O.map x)) (O.map x) = 0 := by
   rw [O.idem x, dist_self]
+
 
 
 
@@ -232,10 +265,12 @@ theorem master_equation' {n : ℕ} (O : Oracle' (Fin n)) :
 
 
 
+
 /-- Compression ratio for finite oracles. -/
 def compressionRatio' (n : ℕ) (O : Oracle' (Fin n)) : ℚ :=
   if n = 0 then 1
   else (Finset.filter (fun x => O.map x = x) Finset.univ).card / n
+
 
 
 
@@ -246,10 +281,12 @@ theorem compression_ratio_le_one' {n : ℕ} (hn : 0 < n) (O : Oracle' (Fin n)) :
 
 
 
+
 /-- **Theorem 6.2**: Identity has perfect ratio. -/
 theorem identity_ratio_one' {n : ℕ} (hn : 0 < n) :
     compressionRatio' n (Oracle'.identity (Fin n)) = 1 := by
   simp [compressionRatio', Oracle'.identity, show n ≠ 0 from Nat.pos_iff_ne_zero.mp hn]
+
 
 
 
@@ -260,11 +297,13 @@ theorem omniscient_oracle_theorem' {X : Type*} (O : Oracle' X)
 
 
 
+
 /-- **Corollary**: The omniscient oracle is unique. -/
 theorem omniscient_unique' {X : Type*} (O₁ O₂ : Oracle' X)
     (h₁ : O₁.truthSet = univ) (h₂ : O₂.truthSet = univ) :
     O₁.map = O₂.map := by
   rw [omniscient_oracle_theorem' O₁ h₁, omniscient_oracle_theorem' O₂ h₂]
+
 
 
 
@@ -279,12 +318,14 @@ theorem fundamental_theorem_oracle' {X : Type*} (O : Oracle' X) :
 
 
 
+
 /-- The Omniscient Oracle Axioms. -/
 structure OmniscientOracleAxioms (X : Type*) where
   oracle : Oracle' X
   convergence : ∀ x, oracle.map x ∈ oracle.truthSet
   partition : oracle.truthSet ∪ oracle.illusionSet = univ
   stability : ∀ x ∈ oracle.truthSet, oracle.map x = x
+
 
 
 
@@ -298,9 +339,11 @@ def every_oracle_is_omniscient_system {X : Type*} (O : Oracle' X) :
 
 
 
+
 /-- **Truth Extraction**: restrict f to Fix(O). -/
 def truthExtract {X Y : Type*} (O : Oracle' X) (f : X → Y) : Set Y :=
   f '' O.truthSet
+
 
 
 
@@ -311,6 +354,7 @@ theorem truth_extract_subset_range {X Y : Type*} (O : Oracle' X) (f : X → Y) :
 
 
 
+
 /-- **Theorem 9.2 (Oracle Factorization)**: O factors through Truth(O). -/
 theorem oracle_factors_through_truth {X : Type*} (O : Oracle' X) (x : X) :
     ∃ t ∈ O.truthSet, O.map x = t :=
@@ -318,10 +362,12 @@ theorem oracle_factors_through_truth {X : Type*} (O : Oracle' X) (x : X) :
 
 
 
+
 /-- **Theorem 9.3 (Oracle Preserves Truth)**: O(f(x)) ∈ Truth(O). -/
 theorem oracle_preserves_truth {X : Type*} (O : Oracle' X) (f : X → X) (x : X) :
     O.map (f x) ∈ O.truthSet :=
   O.idem (f x)
+
 
 
 

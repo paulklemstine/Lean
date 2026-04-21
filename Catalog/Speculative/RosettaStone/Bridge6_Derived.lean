@@ -21,10 +21,16 @@ theorem idempotent_range_ker_sup (e : M →ₗ[R] M) (he : e ∘ₗ e = e) :
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.RosettaStone.Bridge6_Derived
+Auto-generated from theorem catalog database.
+Domain: Speculative/RosettaStone
+Declarations: 4] -/
 theorem idempotent_range_ker_inf (e : M →ₗ[R] M) (he : e ∘ₗ e = e) :
     LinearMap.range e ⊓ LinearMap.ker e = ⊥ := by
   simp_all +decide [ Submodule.eq_bot_iff ];
   simp_all +decide [ LinearMap.ext_iff ]
+
 
 
 
@@ -34,9 +40,11 @@ theorem idempotent_restrict_range (e : M →ₗ[R] M) (he : e ∘ₗ e = e)
 
 
 
+
 /-- Trace is invariant under cyclic permutation: Tr(AB) = Tr(BA). -/
 theorem trace_cyclic (n : ℕ) (A B : Matrix (Fin n) (Fin n) ℝ) :
     (A * B).trace = (B * A).trace :=
   Matrix.trace_mul_comm A B
+
 
 

@@ -14,6 +14,7 @@ def spbOp (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
 
 
 
+
 /-- The set of values reachable from a seed x using SPB and constants 0, 1. -/
 inductive SPBReachable (x : ℝ) : ℝ → Prop where
   | seed : SPBReachable x x
@@ -23,13 +24,16 @@ inductive SPBReachable (x : ℝ) : ℝ → Prop where
 
 
 
+
 /-- The identity function is SPB-reachable. -/
 theorem spb_reachable_id (x : ℝ) : SPBReachable x x := SPBReachable.seed
 
 
 
+
 /-- Constants are SPB-reachable. -/
 theorem spb_reachable_zero (x : ℝ) : SPBReachable x 0 := SPBReachable.zero
+
 
 
 /-- [Section: # CatalogBuild.EML.Approximation
@@ -40,11 +44,13 @@ theorem spb_reachable_one (x : ℝ) : SPBReachable x 1 := SPBReachable.one
 
 
 
+
 /-- SPB expression trees over ℝ. -/
 inductive SPBTree where
   | const : ℝ → SPBTree
   | var : SPBTree
   | app : SPBTree → SPBTree → SPBTree
+
 
 
 
@@ -57,9 +63,11 @@ def SPBTree.eval (t : SPBTree) (x : ℝ) : ℝ :=
 
 
 
+
 /-- The set of functions expressible as SPB trees. -/
 def spbFunctions : Set (ℝ → ℝ) :=
   { f | ∃ t : SPBTree, ∀ x, f x = t.eval x }
+
 
 
 
@@ -69,9 +77,11 @@ theorem id_in_spbFunctions : (fun x : ℝ => x) ∈ spbFunctions :=
 
 
 
+
 /-- Constant functions are in spbFunctions. -/
 theorem const_in_spbFunctions (c : ℝ) : (fun _ : ℝ => c) ∈ spbFunctions :=
   ⟨SPBTree.const c, fun _ => rfl⟩
+
 
 
 
@@ -84,12 +94,14 @@ theorem spbFunctions_closed_spb {f g : ℝ → ℝ} (hf : f ∈ spbFunctions) (h
 
 
 
+
 /-- SPB trees generate 2x/(1-x²) = tan(2·arctan(x)) from the variable x. -/
 theorem spb_generates_double_angle :
     (fun x : ℝ => 2 * x / (1 - x * x)) ∈ spbFunctions := by
   refine ⟨SPBTree.app SPBTree.var SPBTree.var, fun x => ?_⟩
   simp [SPBTree.eval, spbOp]
   ring
+
 
 
 

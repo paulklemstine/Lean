@@ -19,6 +19,7 @@ theorem spb_expand_right (a b c : ℝ) (hbc : b * c ≠ 1) (h : a * spb b c ≠ 
 
 
 
+
 /-- The difference spb(x,ε) - x ≈ ε(1+x²) for small ε. Exact identity. -/
 theorem spb_linear_approx (x ε : ℝ) (hxε : x * ε ≠ 1) :
     spb x ε - x = ε * (1 + x^2) / (1 - x * ε) := by
@@ -26,6 +27,7 @@ theorem spb_linear_approx (x ε : ℝ) (hxε : x * ε ≠ 1) :
   have h : (1 - x * ε) ≠ 0 := sub_ne_zero.mpr (Ne.symm hxε)
   field_simp
   ring
+
 
 
 
@@ -39,6 +41,7 @@ theorem spb_anti_involution (x y : ℝ) :
 
 
 
+
 /-- SPB satisfies the "cross-ratio" identity:
 spb(a,b) * spb(-a,-b) = ... when well-defined -/
 theorem spb_product_neg (a b : ℝ) (hab : a * b ≠ 1) :
@@ -46,6 +49,7 @@ theorem spb_product_neg (a b : ℝ) (hab : a * b ≠ 1) :
   unfold spb
   simp [neg_mul, neg_neg]
   ring
+
 
 
 
@@ -58,6 +62,7 @@ theorem spb_pythagorean_triple (m n : ℤ) (hn : m^2 + n^2 ≠ 0) :
 
 
 
+
 /-- The Weierstrass substitution: t = tan(θ/2) gives
 cos θ = (1-t²)/(1+t²) and sin θ = 2t/(1+t²).
 Sum of squares is 1. -/
@@ -66,6 +71,7 @@ theorem weierstrass_unit_circle (t : ℝ) :
   have h : (1 + t^2) ≠ 0 := by positivity
   field_simp
   ring
+
 
 
 
@@ -82,6 +88,7 @@ theorem spb_triple_chain (x : ℝ) (hx2 : x^2 ≠ 1) (hx3 : 3 * x^2 ≠ 1)
 
 
 
+
 /-- SPB chain of four equal arguments (quadruple angle):
 tan(4θ) = 4t(1-t²)/((1-t²)² - 4t²). -/
 theorem spb_quadruple_chain (t : ℝ) (ht : t^2 ≠ 1)
@@ -92,6 +99,7 @@ theorem spb_quadruple_chain (t : ℝ) (ht : t^2 ≠ 1)
   have h1 : (1 - t^2) ≠ 0 := sub_ne_zero.mpr (Ne.symm ht)
   field_simp
   ring
+
 
 
 
@@ -112,11 +120,13 @@ theorem spb_second_deriv (x y : ℝ) (hxy : x * y ≠ 1) :
 
 
 
+
 /-- Conjugation in the SPB group: spb(a, spb(x, -a)) simplifies. -/
 theorem spb_conjugation (a x : ℝ) (hax : a * x ≠ 1) (ha2 : a^2 ≠ 1)
     (h : a * ((x + (-a)) / (1 - x * (-a))) ≠ 1) :
     spb a (spb x (-a)) = spb a (spb x (-a)) := by
   rfl
+
 
 
 
@@ -133,10 +143,16 @@ theorem spb_telescope_two (a b c : ℝ) (hab : a * b ≠ 1) (hbc : b * c ≠ 1) 
 
 
 
+
+/-- [Section: # CatalogBuild.Bridges.SPBNewTheorems
+Auto-generated from theorem catalog database.
+Domain: Bridges
+Declarations: 25] -/
 theorem spb_half_angle (t θ : ℝ) (ht : t = tan (θ / 2))
     (hcos : cos (θ / 2) ≠ 0) (hcos2 : cos θ ≠ 0) :
     tan θ = (2 * t) / (1 - t^2) := by
   rw [ ht, ← Real.tan_two_mul ] ; ring
+
 
 
 
@@ -150,10 +166,13 @@ def spb_pow : ℕ → ℝ → ℝ
 
 
 
+
 theorem spb_pow_zero (x : ℝ) : spb_pow 0 x = 0 := rfl
 
 
+
 theorem spb_pow_one (x : ℝ) : spb_pow 1 x = x := rfl
+
 
 
 
@@ -161,6 +180,7 @@ theorem spb_pow_two (x : ℝ) :
     spb_pow 2 x = (2 * x) / (1 - x * x) := by
   simp [spb_pow, spb]
   ring
+
 
 
 
@@ -173,6 +193,7 @@ theorem spb_approx_sum (x y : ℝ) (hxy : |x * y| < 1) :
     · linarith;
     · grind +splitIndPred;
   · linarith [ abs_lt.mp hxy ]
+
 
 
 
@@ -190,8 +211,10 @@ theorem spb_no_fixed_point (a : ℝ) (ha : a ≠ 0) :
 
 
 
+
 /-- SPB over the complex numbers. -/
 def spbC (z w : ℂ) : ℂ := (z + w) / (1 - z * w)
+
 
 
 
@@ -201,15 +224,18 @@ theorem spbC_comm (z w : ℂ) : spbC z w = spbC w z := by
 
 
 
+
 /-- Complex SPB has identity 0. -/
 theorem spbC_zero (z : ℂ) : spbC z 0 = z := by
   unfold spbC; simp
 
 
 
+
 /-- Complex SPB inverse. -/
 theorem spbC_neg (z : ℂ) : spbC z (-z) = 0 := by
   unfold spbC; simp
+
 
 
 
@@ -227,11 +253,13 @@ theorem spb_ode_generator (x : ℝ) (hx : cos x ≠ 0) :
 
 
 
+
 theorem cayley_spb_mul (x y : ℝ) (hxy : x * y ≠ 1) :
     cayley (spb x y) = cayley x * cayley y := by
   unfold cayley spb; norm_num [ Complex.ext_iff ] ; ring;
   norm_num [ Complex.normSq, Complex.ext_iff ];
   grind +splitImp
+
 
 
 
@@ -242,6 +270,7 @@ theorem generalized_spb_assoc (c : ℝ) (x y z : ℝ)
     ((x + y) / (1 + c * x * y) + z) / (1 + c * ((x + y) / (1 + c * x * y)) * z) =
     (x + (y + z) / (1 + c * y * z)) / (1 + c * x * ((y + z) / (1 + c * y * z))) := by
   grind
+
 
 
 

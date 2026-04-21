@@ -18,10 +18,12 @@ theorem spbMatrix_mul (a b : ℝ) :
 
 
 
+
 /-- The (0,0) entry of spbMatrix(a) * spbMatrix(b) is 1 - ab. -/
 theorem spbMatrix_mul_entry_00 (a b : ℝ) :
     (spbMatrix a * spbMatrix b) 0 0 = 1 - a * b := by
   simp [spbMatrix, mul_apply, Fin.sum_univ_two]; ring
+
 
 
 
@@ -32,10 +34,12 @@ theorem spbMatrix_mul_entry_01 (a b : ℝ) :
 
 
 
+
 /-- The SPB matrix for -a. -/
 theorem spbMatrix_neg (a : ℝ) : spbMatrix (-a) =
     !![1, -a; a, 1] := by
   ext i j; fin_cases i <;> fin_cases j <;> simp [spbMatrix]
+
 
 
 
@@ -47,10 +51,12 @@ theorem spbMatrix_mul_neg (a : ℝ) :
 
 
 
+
 /-- The trace of the SPB matrix is 2. -/
 theorem spbMatrix_trace (a : ℝ) :
     (spbMatrix a).trace = 2 := by
   simp [spbMatrix, trace, Fin.sum_univ_two]; norm_num
+
 
 
 

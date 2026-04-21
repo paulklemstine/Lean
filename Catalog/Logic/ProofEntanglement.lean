@@ -20,10 +20,12 @@ structure ProofGraph (n : ℕ) where
 
 
 
+
 /-- The in-degree of a node (number of dependencies). -/
 def ProofGraph.inDegree {n : ℕ} (G : ProofGraph n)
     [∀ i, DecidablePred (G.edge i)] (v : Fin n) : ℕ :=
   (Finset.univ.filter (fun u => G.edge v u)).card
+
 
 
 
@@ -34,15 +36,18 @@ def ProofGraph.outDegree {n : ℕ} (G : ProofGraph n) [∀ i, DecidablePred (G.e
 
 
 
+
 /-- A proof graph is "independent" if it has no edges (zero entanglement). -/
 def ProofGraph.isIndependent {n : ℕ} (G : ProofGraph n) : Prop :=
   ∀ i j, ¬G.edge i j
 
 
 
+
 /-- A proof graph is "linear" if each node depends on at most one other. -/
 def ProofGraph.isLinear {n : ℕ} (G : ProofGraph n) : Prop :=
   ∀ i, (∃ j, G.edge i j) → ∃! j, G.edge i j
+
 
 
 
@@ -56,10 +61,12 @@ theorem entropy_point_mass (n : ℕ) (hn : 0 < n) (k : Fin n) :
 
 
 
+
 /-- The dependency weight of node i is its in-degree divided by total edges. -/
 noncomputable def dependencyWeight {n : ℕ} (degrees : Fin n → ℕ) (totalEdges : ℕ)
     (ht : 0 < totalEdges) (i : Fin n) : ℝ :=
   (degrees i : ℝ) / (totalEdges : ℝ)
+
 
 
 
@@ -71,15 +78,22 @@ noncomputable def proofEntanglement {n : ℕ} (degrees : Fin n → ℕ) (totalEd
 
 
 
+
+/-- [Section: # CatalogBuild.Logic.ProofEntanglement
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 13] -/
 theorem independent_zero_entanglement {n : ℕ} (hn : 0 < n) :
     shannonEntropy (fun (_ : Fin n) => (0 : ℝ)) = 0 := by
   unfold shannonEntropy; aesop;
 
 
 
+
 theorem max_entanglement_is_log (n : ℕ) (hn : 0 < n) :
     shannonEntropy (fun (_ : Fin n) => (1 : ℝ) / n) = Real.log n := by
   exact?
+
 
 
 
@@ -90,9 +104,11 @@ theorem shannonEntropy_nonneg_of_sum_one {n : ℕ} (p : Fin n → ℝ)
 
 
 
+
 theorem independent_description_additive {n : ℕ} (stepLengths : Fin n → ℕ) :
     ∑ i, stepLengths i = ∑ i, stepLengths i := by
   rfl
+
 
 
 
@@ -101,6 +117,7 @@ theorem compression_lower_bound {n : ℕ} (hn : 0 < n)
     (compressedLength : ℝ) (hcl : 0 < compressedLength) :
     0 < compressedLength / proofLength := by
   positivity
+
 
 
 end

@@ -9,31 +9,42 @@ import Mathlib
 
 noncomputable section
 
+/-- [Section: # CatalogBuild.Speculative.OISCC.V11_FunctionalEquation
+Auto-generated from theorem catalog database.
+Domain: Speculative/OISCC
+Declarations: 17] -/
 def EML_fe (a b : ℝ) : ℝ := Real.exp a - Real.log b
+
 
 
 /-- The "shadow" operator: S(x) = exp(x) - x. -/
 def shadow (x : ℝ) : ℝ := Real.exp x - x
 
 
+
 theorem shadow_pos (x : ℝ) : shadow x > 0 := by
   unfold shadow; linarith [Real.add_one_le_exp x]
+
 
 
 theorem shadow_ge_one (x : ℝ) : shadow x ≥ 1 := by
   unfold shadow; linarith [Real.add_one_le_exp x]
 
 
+
 theorem shadow_convex : ConvexOn ℝ Set.univ shadow := by
   exact convexOn_exp.sub (concaveOn_id (convex_univ))
+
 
 
 theorem shadow_min_at_zero : shadow 0 = 1 := by simp [shadow]
 
 
+
 theorem shadow_deriv_zero : HasDerivAt shadow 0 0 := by
   have h := (Real.hasDerivAt_exp (0 : ℝ)).sub (hasDerivAt_id (0 : ℝ))
   simp at h; exact h
+
 
 
 theorem shadow_strictMono_pos : StrictMonoOn shadow (Ici 0) := by
@@ -52,21 +63,26 @@ theorem shadow_strictMono_pos : StrictMonoOn shadow (Ici 0) := by
   have := h_deriv_pos_interval c hc.1; rw [ hc.2, gt_iff_lt ] at this; rw [ lt_div_iff₀ ] at this <;> linarith;
 
 
+
 theorem depth_1_e : EML_fe 1 1 = Real.exp 1 := by
   simp [EML_fe, Real.log_one]
+
 
 
 theorem depth_2_e_minus_1 : EML_fe 1 (Real.exp 1) = Real.exp 1 - 1 := by
   simp [EML_fe, Real.log_exp]
 
 
+
 theorem depth_2_exp_e : EML_fe (Real.exp 1) 1 = Real.exp (Real.exp 1) := by
   simp [EML_fe, Real.log_one]
+
 
 
 theorem depth_2_exp_e_minus_1 :
     EML_fe (Real.exp 1) (Real.exp 1) = Real.exp (Real.exp 1) - 1 := by
   simp [EML_fe, Real.log_exp]
+
 
 
 theorem depth_2_all_positive :
@@ -79,8 +95,10 @@ theorem depth_2_all_positive :
   linarith
 
 
+
 theorem two_not_depth_1 : EML_fe 1 1 ≠ 2 := by
   simp [EML_fe, Real.log_one]; linarith [Real.exp_one_gt_d9]
+
 
 
 theorem two_not_depth_2 :
@@ -92,15 +110,18 @@ theorem two_not_depth_2 :
     · exact absurd h ( by have := Real.exp_one_gt_d9.le; norm_num1 at *; linarith [ Real.add_one_le_exp ( Real.exp 1 ) ] )
 
 
+
 /-- The EML entropy of a finite sequence. -/
 def EML_entropy {n : ℕ} (x : Fin n → ℝ) : ℝ :=
   -(Finset.univ.sum (fun i => Real.exp (x i) - Real.log (x i) - 1))
+
 
 
 theorem EML_entropy_nonpos {n : ℕ} (x : Fin n → ℝ) (hx : ∀ i, 0 < x i) :
     EML_entropy x ≤ 0 := by
   refine' neg_nonpos.mpr ( Finset.sum_nonneg fun i _ => _ );
   linarith [ hx i, Real.add_one_le_exp ( x i ), Real.log_le_sub_one_of_pos ( hx i ) ]
+
 
 
 end

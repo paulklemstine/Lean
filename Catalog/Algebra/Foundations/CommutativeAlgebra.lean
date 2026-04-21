@@ -16,12 +16,19 @@ theorem ideal_mul_le_inf' {R : Type*} [CommRing R] (I J : Ideal R) :
 
 
 
+
+/-- [Section: # CatalogBuild.Algebra.Foundations.CommutativeAlgebra
+Auto-generated from theorem catalog database.
+Domain: Algebra/Foundations
+Declarations: 7] -/
 theorem maximal_is_prime' {R : Type*} [CommRing R] (I : Ideal R)
     [hI : I.IsMaximal] : I.IsPrime := Ideal.IsMaximal.isPrime hI
 
 
 
+
 theorem int_noetherian' : IsNoetherianRing ℤ := inferInstance
+
 
 
 
@@ -30,8 +37,10 @@ theorem quotient_noetherian' {R : Type*} [CommRing R] [IsNoetherianRing R]
 
 
 
+
 theorem polynomial_noetherian' {R : Type*} [CommRing R] [IsNoetherianRing R] :
     IsNoetherianRing R[X] := inferInstance
+
 
 
 
@@ -41,8 +50,10 @@ theorem crt_coprime' {R : Type*} [CommRing R] (I J : Ideal R) (h : I ⊔ J = ⊤
 
 
 
+
 theorem finite_domain_is_field' (R : Type*) [CommRing R] [IsDomain R]
     [Finite R] : IsField R :=
   Finite.isField_of_domain R
+
 
 

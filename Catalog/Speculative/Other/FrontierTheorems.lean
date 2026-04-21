@@ -15,9 +15,11 @@ theorem fibonacci_pythagorean_345 :
 
 
 
+
 /-- The next Fibonacci quadruple (1,2,3,5) produces (5,12,13). -/
 theorem fibonacci_pythagorean_51213 :
     5 ^ 2 + 12 ^ 2 = 13 ^ 2 := by norm_num
+
 
 
 
@@ -31,6 +33,7 @@ theorem fibonacci_pythagorean_general (a b c d : ℤ)
 
 
 
+
 /-- [Section: # CatalogBuild.Speculative.Other.FrontierTheorems
 Auto-generated from theorem catalog database.
 Domain: Speculative/Other
@@ -41,6 +44,11 @@ theorem pyth_3_dvd_ab (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.FrontierTheorems
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 35] -/
 theorem pyth_2_dvd_ab (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (2 : ℤ) ∣ a * b := by
       rcases Int.even_or_odd' a with ⟨ x, rfl | rfl ⟩ <;> rcases Int.even_or_odd' b with ⟨ y, rfl | rfl ⟩ <;> ring_nf <;> norm_num [ ← even_iff_two_dvd, parity_simps ] at *;
@@ -48,9 +56,11 @@ theorem pyth_2_dvd_ab (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 theorem pyth_6_dvd_ab (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (6 : ℤ) ∣ a * b := by
       exact dvd_trans ( by norm_num ) ( Int.coe_lcm_dvd ( pyth_2_dvd_ab a b c h ) ( pyth_3_dvd_ab a b c h ) )
+
 
 
 
@@ -62,11 +72,13 @@ theorem berggren_trace_sum :
 
 
 
+
 theorem berggren_det_product :
     Matrix.det !![(1:ℤ), -2, 2; 2, -1, 2; 2, -2, 3] *
     Matrix.det !![(1:ℤ), 2, 2; 2, 1, 2; 2, 2, 3] *
     Matrix.det !![(-1:ℤ), 2, 2; -2, 1, 2; -2, 2, 3] = -1 := by
       native_decide +revert
+
 
 
 
@@ -78,20 +90,26 @@ theorem B1_preserves_pyth_def (v : Fin 3 → ℤ) (h : v 0 ^ 2 + v 1 ^ 2 = v 2 ^
 
 
 
+
 /-- All primes up to 40 that are ≡ 1 (mod 4) can be written as sum of two squares. -/
 theorem sum_two_sq_5 : ∃ a b : ℕ, a ^ 2 + b ^ 2 = 5 := ⟨1, 2, by norm_num⟩
+
 
 
 theorem sum_two_sq_13 : ∃ a b : ℕ, a ^ 2 + b ^ 2 = 13 := ⟨2, 3, by norm_num⟩
 
 
+
 theorem sum_two_sq_17 : ∃ a b : ℕ, a ^ 2 + b ^ 2 = 17 := ⟨1, 4, by norm_num⟩
+
 
 
 theorem sum_two_sq_29 : ∃ a b : ℕ, a ^ 2 + b ^ 2 = 29 := ⟨2, 5, by norm_num⟩
 
 
+
 theorem sum_two_sq_37 : ∃ a b : ℕ, a ^ 2 + b ^ 2 = 37 := ⟨1, 6, by norm_num⟩
+
 
 
 
@@ -101,8 +119,10 @@ theorem iof_energy_decreasing (N : ℤ) (k : ℤ) (hk : 0 ≤ k) (hN : 2 * k + 1
 
 
 
+
 /-- The descent terminates: energy reaches minimum at k = (N-1)/2. -/
 theorem iof_energy_nonneg (N k : ℤ) : 0 ≤ (N - 2 * k) ^ 2 := sq_nonneg _
+
 
 
 
@@ -114,8 +134,10 @@ theorem hypotenuse_product_sum_sq (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ)
 
 
 
+
 /-- The triangle (3,4,5) has area 6, making 6 a congruent number. -/
 theorem congruent_6 : 3 * 4 = 2 * 6 := by norm_num
+
 
 
 
@@ -124,8 +146,10 @@ theorem congruent_30 : 5 * 12 = 2 * 30 := by norm_num
 
 
 
+
 /-- The triangle (20,21,29) has area 210, making 210 a congruent number. -/
 theorem congruent_210 : 20 * 21 = 2 * 210 := by norm_num
+
 
 
 
@@ -135,9 +159,11 @@ theorem bsd_curve_6 : (36 : ℤ) ^ 2 = 12 ^ 3 - 36 * 12 := by norm_num
 
 
 
+
 /-- For n=210: y² = x³ - 44100x has point (x, y) = (441, 9261 - 44100)...
 We verify the simpler fact that 210 = 5·6·7, connecting to triangular numbers. -/
 theorem congruent_210_factored : 210 = 2 * 3 * 5 * 7 := by norm_num
+
 
 
 
@@ -146,8 +172,10 @@ def leg_swap : Matrix (Fin 3) (Fin 3) ℤ := !![0, 1, 0; 1, 0, 0; 0, 0, 1]
 
 
 
+
 theorem leg_swap_involution : leg_swap * leg_swap = (1 : Matrix (Fin 3) (Fin 3) ℤ) := by
   native_decide +revert
+
 
 
 
@@ -156,20 +184,26 @@ theorem leg_swap_det : Matrix.det leg_swap = -1 := by
 
 
 
+
 /-- Every prime p ≡ 1 (mod 4) with p ≤ 37 is a sum of two squares. -/
 theorem sum_two_sq_5' : 1 ^ 2 + 2 ^ 2 = (5 : ℕ) := by norm_num
+
 
 
 theorem sum_two_sq_13' : 2 ^ 2 + 3 ^ 2 = (13 : ℕ) := by norm_num
 
 
+
 theorem sum_two_sq_17' : 1 ^ 2 + 4 ^ 2 = (17 : ℕ) := by norm_num
+
 
 
 theorem sum_two_sq_29' : 2 ^ 2 + 5 ^ 2 = (29 : ℕ) := by norm_num
 
 
+
 theorem sum_two_sq_37' : 1 ^ 2 + 6 ^ 2 = (37 : ℕ) := by norm_num
+
 
 
 
@@ -180,10 +214,12 @@ theorem M1_cayley_hamilton :
 
 
 
+
 /-- M₁'s characteristic polynomial is x² - 2x + 1 = (x-1)².
 The discriminant is 0, so M₁ has eigenvalue 1 with multiplicity 2. -/
 theorem M1_char_poly_discriminant :
     2 ^ 2 - 4 * 1 * 1 = (0 : ℤ) := by norm_num
+
 
 
 
@@ -193,8 +229,10 @@ theorem pell_3_base_solution : (2 : ℤ) ^ 2 - 3 * 1 ^ 2 = 1 := by norm_num
 
 
 
+
 /-- The next Pell solution: (7, 4) satisfies 7² - 3·4² = 1. -/
 theorem pell_3_next_solution : (7 : ℤ) ^ 2 - 3 * 4 ^ 2 = 1 := by norm_num
+
 
 
 
@@ -202,4 +240,5 @@ theorem pell_3_next_solution : (7 : ℤ) ^ 2 - 3 * 4 ^ 2 = 1 := by norm_num
 (2,1)·(2,1) = (7,4) via the formula (a₁a₂+3b₁b₂, a₁b₂+a₂b₁). -/
 theorem pell_3_composition :
     2 * 2 + 3 * (1 * 1) = 7 ∧ 2 * 1 + 1 * 2 = 4 := by constructor <;> norm_num
+
 

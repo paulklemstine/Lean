@@ -15,10 +15,12 @@ noncomputable def expertWeight (η : ℝ) (cumulativeLoss : ℝ) : ℝ :=
 
 
 
+
 /-- Weights are always positive -/
 theorem expert_weight_pos (η cumulativeLoss : ℝ) :
     0 < expertWeight η cumulativeLoss :=
   exp_pos _
+
 
 
 
@@ -30,9 +32,11 @@ theorem better_expert_higher_weight (η : ℝ) (hη : 0 < η) (l₁ l₂ : ℝ) 
 
 
 
+
 /-- The potential function Φ = log(∑ weights) -/
 noncomputable def potential (n : ℕ) (weights : Fin n → ℝ) : ℝ :=
   Real.log (∑ i, weights i)
+
 
 
 
@@ -45,6 +49,7 @@ theorem multiplicative_weights_regret (n T : ℕ) (η : ℝ)
   apply add_nonneg
   · apply div_nonneg (Real.log_nonneg (by exact_mod_cast hn)) (le_of_lt hη)
   · apply div_nonneg (mul_nonneg (le_of_lt hη) (Nat.cast_nonneg' T)) (by norm_num)
+
 
 
 
@@ -64,6 +69,7 @@ theorem optimal_learning_rate (n T : ℕ) (hn : 1 < n) (hT : 0 < T) :
 
 
 
+
 /-- Follow-the-leader picks the expert with lowest cumulative loss -/
 def FTL_consistent (n : ℕ) (losses : Fin n → ℕ → ℝ) (T : ℕ) : Prop :=
   ∀ t, t < T → ∀ i j : Fin n,
@@ -72,10 +78,12 @@ def FTL_consistent (n : ℕ) (losses : Fin n → ℕ → ℝ) (T : ℕ) : Prop :
 
 
 
+
 /-- FTL has O(n·max_loss) regret for stable environments -/
 theorem ftl_stable_regret (n : ℕ) (maxLoss : ℝ) (hmL : 0 ≤ maxLoss) :
     n * maxLoss ≥ 0 := by
   exact mul_nonneg (Nat.cast_nonneg' n) hmL
+
 
 
 
@@ -89,10 +97,16 @@ theorem online_to_batch (T : ℕ) (_hT : 0 < T) (regret bestError : ℝ)
 
 
 
+
+/-- [Section: # CatalogBuild.MachineLearning.Prediction.OnlineLearning
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/Prediction
+Declarations: 12] -/
 theorem online_to_batch_converges (bestError C : ℝ) (hC : 0 < C) :
     Filter.Tendsto (fun T : ℕ => bestError + C / Real.sqrt T)
       Filter.atTop (nhds bestError) := by
   simpa using tendsto_const_nhds.add ( tendsto_const_nhds.mul ( tendsto_inv_atTop_nhds_zero_nat.sqrt ) )
+
 
 
 
@@ -105,10 +119,12 @@ theorem online_regression_regret (d T : ℕ) (_hd : 0 < d) (hT : 1 ≤ T) :
 
 
 
+
 /-- The price of adaptivity: online algorithms pay O(√T) extra -/
 theorem adaptivity_price (T : ℕ) :
     Real.sqrt T ≥ 0 :=
   Real.sqrt_nonneg _
+
 
 
 

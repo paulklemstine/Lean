@@ -1,5 +1,3 @@
-import Mathlib
-
 /-! # CatalogBuild.Geometry.Stereographic.AdvancedTheory
 
 Auto-generated from theorem catalog database.
@@ -7,6 +5,7 @@ Domain: Geometry/Stereographic
 Declarations: 15
 -/
 
+import Mathlib
 
 noncomputable section
 
@@ -29,15 +28,22 @@ theorem invStereoN_injective (n : ℕ) : Function.Injective (invStereoN n) := by
 
 
 
+
 /-- The N-dimensional conformal factor. -/
 def conformalFactorN (n : ℕ) (y : Fin n → ℝ) : ℝ :=
   2 / (1 + ∑ i, (y i) ^ 2)
 
 
 
+
+/-- [Section: # CatalogBuild.Geometry.Stereographic.AdvancedTheory
+Auto-generated from theorem catalog database.
+Domain: Geometry/Stereographic
+Declarations: 15] -/
 theorem conformal_factor_1d (t : ℝ) :
     conformalFactorN 1 (fun _ => t) = 2 / (1 + t ^ 2) := by
   unfold conformalFactorN; aesop
+
 
 
 
@@ -52,9 +58,11 @@ theorem sphere_is_quadric (x : Fin (n + 1) → ℝ) (hx : ∑ i, (x i) ^ 2 = 1) 
 
 
 
+
 theorem conic_stereo_parametrization (t : ℝ) :
     ((1 - t ^ 2) / (1 + t ^ 2)) ^ 2 + (2 * t / (1 + t ^ 2)) ^ 2 = 1 := by
   rw [ div_pow, div_pow, ← add_div, div_eq_iff ] <;> nlinarith
+
 
 
 
@@ -64,15 +72,18 @@ theorem schottky_loxodromic_growth (k : ℝ) (hk : 1 < k) (z : ℝ) (hz : 0 < z)
 
 
 
+
 /-- The Descartes quadratic form Q(k) = (Σkᵢ)² - 2Σkᵢ². -/
 def descartesForm (k : Fin 4 → ℝ) : ℝ :=
   (∑ i, k i) ^ 2 - 2 * ∑ i, (k i) ^ 2
 
 
 
+
 /-- The Apollonian reflection Sⱼ replaces kⱼ with 2(Σᵢ≠ⱼ kᵢ) - kⱼ. -/
 def apollonianReflect (k : Fin 4 → ℝ) (j : Fin 4) : Fin 4 → ℝ :=
   fun i => if i = j then 2 * (∑ l, k l) - 3 * k j else k i
+
 
 
 
@@ -85,6 +96,7 @@ theorem apollonian_preserves_descartes (k : Fin 4 → ℝ) (j : Fin 4)
   · linarith;
   · linarith;
   · linarith
+
 
 
 
@@ -103,6 +115,7 @@ theorem bloch_fidelity_stereo (t s : ℝ) :
 
 
 
+
 theorem stereo_chordal_sq (t s : ℝ) :
     let d_sq := 4 * (t - s) ^ 2 / ((1 + t ^ 2) * (1 + s ^ 2))
     -- This equals 2 - 2·cos(angle), where cos(angle) is the dot product of unit vectors
@@ -116,6 +129,7 @@ theorem stereo_chordal_sq (t s : ℝ) :
 
 
 
+
 /-- The stereographic softmax: a natural probability distribution on the sphere.
 The stereographic kernel K(t, s) = 1/(1 + (t-s)²) is the Cauchy distribution,
 which arises naturally as the pushforward of uniform measure on S¹ under
@@ -126,15 +140,18 @@ theorem stereo_kernel_symmetric (t s : ℝ) :
 
 
 
+
 theorem lorentz_boost_identity (η : ℝ) :
     Real.cosh η ^ 2 - Real.sinh η ^ 2 = 1 := by
   exact Real.cosh_sq_sub_sinh_sq η
 
 
 
+
 theorem lorentz_boost_det_one (η : ℝ) :
     Real.cosh η * Real.cosh η - Real.sinh η * Real.sinh η = 1 := by
   rw [ ← sq, ← sq, Real.cosh_sq_sub_sinh_sq ]
+
 
 
 
@@ -151,6 +168,7 @@ theorem sum_of_squares_cross_ratio (a b c d : ℤ) (n : ℤ)
     -- The product of norms is preserved: (a²+b²)(c²+d²) = n²
     (a ^ 2 + b ^ 2) * (c ^ 2 + d ^ 2) = n ^ 2 := by
   rw [h₁, h₂]; ring
+
 
 
 

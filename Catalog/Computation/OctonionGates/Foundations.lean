@@ -17,6 +17,7 @@ namespace OctGate.Oct
 
 
 
+
 /-- [Section: # CatalogBuild.Computation.OctonionGates.Foundations
 Auto-generated from theorem catalog database.
 Domain: Computation/OctonionGates
@@ -26,13 +27,16 @@ theorem ext {x y : OctGate.Oct} (h : ∀ i, x.c i = y.c i) : x = y := by
 
 
 
+
 /-- The squared norm of an octonion: ‖x‖² = Σᵢ xᵢ² -/
 noncomputable def normSq (x : OctGate.Oct) : ℝ := ∑ i, x.c i ^ 2
 
 
 
+
 /-- The real part of an octonion -/
 def re (x : OctGate.Oct) : ℝ := x.c 0
+
 
 
 
@@ -42,9 +46,11 @@ def basis (i : Fin 8) : OctGate.Oct :=
 
 
 
+
 /-- The norm squared is non-negative -/
 theorem normSq_nonneg (x : OctGate.Oct) : 0 ≤ normSq x :=
   Finset.sum_nonneg fun i _ => sq_nonneg _
+
 
 
 
@@ -54,9 +60,11 @@ theorem conj_conj (x : OctGate.Oct) : conj (conj x) = x := by
 
 
 
+
 /-- The real part of a conjugate equals the real part -/
 theorem re_conj (x : OctGate.Oct) : re (conj x) = re x := by
   simp [re, conj]
+
 
 
 
@@ -69,10 +77,12 @@ namespace OctGate
 
 
 
+
 /-- The identity gate -/
 def idGate : OctGate where
   toFun := _root_.id
   preserves_norm := fun _ => rfl
+
 
 
 
@@ -85,12 +95,14 @@ def comp (G₁ G₂ : OctGate) : OctGate where
 
 
 
+
 /-- A permutation gate: permutes the 8 coordinates -/
 def permGate (σ : Equiv.Perm (Fin 8)) : OctGate where
   toFun := fun v => v ∘ σ.invFun
   preserves_norm := fun v => by
     simp [Function.comp]
     exact Equiv.sum_comp σ.symm (fun i => v i ^ 2)
+
 
 
 
@@ -104,6 +116,11 @@ def signFlip (i : Fin 8) : OctGate where
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.OctonionGates.Foundations
+Auto-generated from theorem catalog database.
+Domain: Computation/OctonionGates
+Declarations: 37] -/
 noncomputable def givensRotation (i j : Fin 8) (θ : ℝ) (hij : i ≠ j) :
     OctGate where
   toFun := fun v k =>
@@ -121,9 +138,11 @@ noncomputable def givensRotation (i j : Fin 8) (θ : ℝ) (hij : i ≠ j) :
 
 
 
+
 theorem comp_assoc (G₁ G₂ G₃ : OctGate) :
     comp G₁ (comp G₂ G₃) = comp (comp G₁ G₂) G₃ := by
   convert rfl using 1
+
 
 
 
@@ -132,13 +151,16 @@ theorem idGate_comp (G : OctGate) : comp idGate G = G := by
 
 
 
+
 theorem comp_idGate (G : OctGate) : comp G idGate = G := by
   cases G ; aesop
 
 
 
+
 /-- The sum 1 + 2 + 4 + 8 = 15 = 2⁴ - 1 -/
 theorem hurwitz_sum : 1 + 2 + 4 + 8 = 15 := by norm_num
+
 
 
 
@@ -151,12 +173,14 @@ inductive TrialityRep
 
 
 
+
 /-- Triality rotates the three representations cyclically:
 8_v → 8_s → 8_c → 8_v -/
 def trialityRotation : TrialityRep → TrialityRep
   | .vector    => .leftSpin
   | .leftSpin  => .rightSpin
   | .rightSpin => .vector
+
 
 
 
@@ -167,9 +191,11 @@ theorem triality_order_three (r : TrialityRep) :
 
 
 
+
 /-- The dimension of each triality representation is 8 -/
 def trialityDim : TrialityRep → ℕ
   | _ => 8
+
 
 
 
@@ -178,8 +204,10 @@ theorem triality_all_dim_eight (r : TrialityRep) : trialityDim r = 8 := by
 
 
 
+
 /-- A standard qubit lives on S² (3 real parameters, 1 constraint) = 2 real dof -/
 def qubit_real_dof : ℕ := 2
+
 
 
 
@@ -188,9 +216,11 @@ def octonion_qubit_real_dof : ℕ := 7
 
 
 
+
 /-- The ratio of degrees of freedom: octonionic vs standard -/
 theorem dof_ratio : octonion_qubit_real_dof = 7 ∧ qubit_real_dof = 2 := by
   constructor <;> rfl
+
 
 
 
@@ -202,8 +232,10 @@ theorem octonion_dof_advantage :
 
 
 
+
 /-- The dimension of SO(8): the number of independent rotation planes -/
 theorem so8_dimension : Nat.choose 8 2 = 28 := by decide
+
 
 
 
@@ -212,8 +244,10 @@ def g2_lie_algebra_dim : ℕ := 14
 
 
 
+
 /-- G₂ has 14 dimensions, related to SO(7) by: dim SO(7) - dim S⁶ = 21 - 7 = 14 -/
 theorem g2_dim_formula : Nat.choose 7 2 - 7 = 14 := by decide
+
 
 
 
@@ -224,9 +258,11 @@ theorem g2_in_so7_in_so8 : g2_lie_algebra_dim ≤ Nat.choose 7 2 ∧
 
 
 
+
 /-- The "octonion advantage": G₂ uses exactly half the parameters of SO(8) -/
 theorem g2_parameter_ratio : 2 * g2_lie_algebra_dim = Nat.choose 8 2 := by
   decide
+
 
 
 
@@ -235,8 +271,10 @@ theorem su2_dim : 2^2 - 1 = 3 := by norm_num
 
 
 
+
 /-- SU(4) has dimension 15: two-qubit gates -/
 theorem su4_dim : 4^2 - 1 = 15 := by norm_num
+
 
 
 
@@ -245,13 +283,16 @@ theorem so8_dim_value : 8 * 7 / 2 = 28 := by norm_num
 
 
 
+
 /-- The efficiency ratio: 28 * 9 = 63 * 4 -/
 theorem gate_efficiency_ratio : 28 * 9 = 63 * 4 := by norm_num
 
 
 
+
 /-- Maximum Givens rotations needed for SO(8) decomposition -/
 theorem max_givens_for_SO8 : 8 * (8 - 1) / 2 = 28 := by norm_num
+
 
 
 end

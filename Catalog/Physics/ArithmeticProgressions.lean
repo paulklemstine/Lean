@@ -14,10 +14,12 @@ theorem primes_mod3_1_count :
 
 
 
+
 /-- Primes ≡ 2 (mod 3) up to 1000. -/
 theorem primes_mod3_2_count :
     ((Finset.range 1000).filter (fun p => Nat.Prime p ∧ p % 3 = 2)).card = 87 := by
   native_decide
+
 
 
 
@@ -29,10 +31,12 @@ theorem chebyshev_bias_mod3 :
 
 
 
+
 /-- Primes ending in 1 up to 1000. -/
 theorem primes_ending_1 :
     ((Finset.range 1000).filter (fun p => Nat.Prime p ∧ p % 10 = 1)).card = 40 := by
   native_decide
+
 
 
 
@@ -43,10 +47,12 @@ theorem primes_ending_3 :
 
 
 
+
 /-- Primes ending in 7 up to 1000. -/
 theorem primes_ending_7 :
     ((Finset.range 1000).filter (fun p => Nat.Prime p ∧ p % 10 = 7)).card = 46 := by
   native_decide
+
 
 
 
@@ -57,10 +63,12 @@ theorem primes_ending_9 :
 
 
 
+
 /-- A 3-term AP of primes: 3, 5, 7. -/
 theorem green_tao_3 : Nat.Prime 3 ∧ Nat.Prime 5 ∧ Nat.Prime 7 ∧
     5 - 3 = 7 - 5 := by
   refine ⟨?_, ?_, ?_, ?_⟩ <;> decide
+
 
 
 
@@ -72,6 +80,7 @@ theorem green_tao_5 :
 
 
 
+
 /-- A 6-term AP of primes: 7, 37, 67, 97, 127, 157 (common difference 30). -/
 theorem green_tao_6 :
     Nat.Prime 7 ∧ Nat.Prime 37 ∧ Nat.Prime 67 ∧
@@ -79,6 +88,7 @@ theorem green_tao_6 :
     37 - 7 = 30 ∧ 67 - 37 = 30 ∧ 97 - 67 = 30 ∧
     127 - 97 = 30 ∧ 157 - 127 = 30 := by
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩ <;> first | decide | omega
+
 
 
 
@@ -93,6 +103,7 @@ theorem green_tao_7 :
 
 
 
+
 /-- Evidence for Dirichlet: every valid residue class mod 12 contains large primes. -/
 theorem dirichlet_mod12_evidence :
     (∃ p, Nat.Prime p ∧ p % 12 = 1 ∧ p > 100) ∧
@@ -103,6 +114,7 @@ theorem dirichlet_mod12_evidence :
          ⟨101, by decide, by native_decide, by omega⟩,
          ⟨103, by decide, by native_decide, by omega⟩,
          ⟨107, by decide, by native_decide, by omega⟩⟩
+
 
 
 
@@ -121,5 +133,6 @@ theorem linnik_evidence_mod_7 :
          ⟨11, by decide, by native_decide, by omega⟩,
          ⟨5, by decide, by native_decide, by omega⟩,
          ⟨13, by decide, by native_decide, by omega⟩⟩
+
 
 

@@ -21,12 +21,19 @@ theorem markov_inequality_nat (f : ℕ → ℝ) (w : ℕ → ℝ) (n : ℕ) (hn 
 
 
 
+
+/-- [Section: # CatalogBuild.Algebra.Probability
+Auto-generated from theorem catalog database.
+Domain: Algebra
+Declarations: 3] -/
 theorem log_monotone_on : MonotoneOn (fun x : ℝ => Real.log x) (Set.Ioi 0) := by
   exact fun x hx y hy hxy => Real.log_le_log hx hxy
+
 
 
 
 theorem binary_entropy_symmetric (p : ℝ) :
     binaryEntropy p = binaryEntropy (1 - p) := by
       unfold binaryEntropy; ring;
+
 

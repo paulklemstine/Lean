@@ -17,13 +17,16 @@ theorem sort_idempotent {α : Type*} [LinearOrder α] [DecidableLE α] (l : List
 
 
 
+
 /-- |x| is idempotent: ||x|| = |x| for any real number. -/
 theorem abs_idempotent (x : ℝ) : |( |x| )| = |x| := abs_abs x
 
 
 
+
 /-- For natural numbers, min self is idempotent. -/
 theorem min_self_idempotent (n : ℕ) : min n n = n := Nat.min_self n
+
 
 
 
@@ -35,11 +38,13 @@ structure MemoTable (α β : Type*) where
 
 
 
+
 /-- Looking up a memoized value is idempotent:
 if the value is cached, looking it up again gives the same result. -/
 theorem memo_lookup_idempotent {α β : Type*} (memo : MemoTable α β)
     (a : α) (b : β) (h : memo.table a = some b) :
     b = memo.func a := memo.consistent a b h
+
 
 
 
@@ -51,9 +56,11 @@ structure Normalizer (α : Type*) where
 
 
 
+
 /-- Two elements are equivalent under normalization iff they have the same normal form. -/
 def Normalizer.equiv {α : Type*} (N : Normalizer α) (x y : α) : Prop :=
   N.normalize x = N.normalize y
+
 
 
 
@@ -63,9 +70,11 @@ theorem normalizer_equiv_refl {α : Type*} (N : Normalizer α) :
 
 
 
+
 /-- The equivalence relation induced by normalization is symmetric. -/
 theorem normalizer_equiv_symm {α : Type*} (N : Normalizer α) :
     ∀ x y, N.equiv x y → N.equiv y x := fun _ _ h => h.symm
+
 
 
 
@@ -76,11 +85,13 @@ theorem normalizer_equiv_trans {α : Type*} (N : Normalizer α) :
 
 
 
+
 /-- The normalization of x is equivalent to x. -/
 theorem normalizer_normalize_equiv {α : Type*} (N : Normalizer α) (x : α) :
     N.equiv x (N.normalize x) := by
   unfold Normalizer.equiv
   rw [N.idempotent]
+
 
 
 
@@ -93,10 +104,16 @@ theorem normal_forms_eq_fixed {α : Type*} (N : Normalizer α) :
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.IdempotentCollapse.ComputationalCollapse
+Auto-generated from theorem catalog database.
+Domain: Speculative/IdempotentCollapse
+Declarations: 17] -/
 theorem compiler_pass_convergence {α : Type*} (opt : α → α)
     (h_idem : ∀ x, opt (opt x) = opt x) (n : ℕ) (hn : 1 ≤ n) :
     opt^[n] = opt := by
   induction hn <;> aesop
+
 
 
 
@@ -107,10 +124,12 @@ theorem proof_irrelevance_collapse (P : Prop) (h1 h2 : P) : h1 = h2 :=
 
 
 
+
 /-- Quotient types implement idempotent collapse: the quotient map q satisfies
 q(q(x)) = q(x) in the sense that representatives are already canonical. -/
 theorem quotient_mk_idempotent {α : Type*} (r : Setoid α)
     (x : α) : Quotient.mk r x = Quotient.mk r x := rfl
+
 
 
 
@@ -121,10 +140,12 @@ theorem insert_idempotent {α : Type*} [DecidableEq α] (s : Finset α) (a : α)
 
 
 
+
 /-- **The Computational Collapse Theorem**: Any finite-state idempotent
 transformation has a computable fixed-point decomposition. -/
 theorem computational_collapse_partition {n : ℕ} (f : Fin n → Fin n)
     (hf : ∀ x, f (f x) = f x) :
     ∀ x : Fin n, f x ∈ {y | f y = y} := by
   intro x; simp; exact hf x
+
 

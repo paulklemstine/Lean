@@ -17,6 +17,7 @@ theorem quadruple_hypotenuse_nonneg (m n p q : ℤ) :
 
 
 
+
 /-- The lattice L₄(N) consists of all integer triples (x, y, z) such that
 x² + y² + z² ≡ 0 (mod N). A short vector in this lattice can reveal
 factors of N. -/
@@ -25,13 +26,20 @@ def inQuadLattice (N : ℤ) (x y z : ℤ) : Prop :=
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Factoring.QuaternionNorm
+Auto-generated from theorem catalog database.
+Domain: Computation/Factoring
+Declarations: 4] -/
 theorem zero_in_quadLattice (N : ℤ) : inQuadLattice N 0 0 0 := by
   exact ⟨ 0, by simp +decide ⟩
+
 
 
 
 theorem neg_in_quadLattice (N : ℤ) (x y z : ℤ) (h : inQuadLattice N x y z) :
     inQuadLattice N (-x) (-y) (-z) := by
   simp_all +decide [ inQuadLattice ]
+
 
 

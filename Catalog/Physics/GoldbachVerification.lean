@@ -16,6 +16,7 @@ theorem goldbach_verified_to_100 :
 
 
 
+
 /-- Goldbach's conjecture verified for all even n with 4 ≤ n ≤ 500. -/
 theorem goldbach_verified_to_500 :
     ∀ n ∈ (Finset.Icc 4 500).filter (fun n => Even n),
@@ -25,12 +26,14 @@ theorem goldbach_verified_to_500 :
 
 
 
+
 /-- Goldbach's conjecture verified for all even n with 4 ≤ n ≤ 1000. -/
 theorem goldbach_verified_to_1000 :
     ∀ n ∈ (Finset.Icc 4 1000).filter (fun n => Even n),
       ∃ p ∈ Finset.range (n + 1), ∃ q ∈ Finset.range (n + 1),
         Nat.Prime p ∧ Nat.Prime q ∧ n = p + q := by
   native_decide
+
 
 
 
@@ -44,6 +47,7 @@ theorem goldbach_explicit_witnesses :
 
 
 
+
 /-- Weak Goldbach: every odd n ≥ 7 is sum of three primes, verified to 100. -/
 theorem weak_goldbach_verified_to_100 :
     ∀ n ∈ (Finset.Icc 7 100).filter (fun n => ¬ Even n),
@@ -51,6 +55,7 @@ theorem weak_goldbach_verified_to_100 :
         ∃ r ∈ Finset.range (n + 1),
           Nat.Prime p ∧ Nat.Prime q ∧ Nat.Prime r ∧ n = p + q + r := by
   native_decide
+
 
 
 
@@ -64,6 +69,7 @@ theorem weak_goldbach_verified_to_500 :
 
 
 
+
 /-- Count of twin prime pairs (p, p+2) with both prime, p ≤ 98. -/
 theorem twin_prime_count_100 :
     ((Finset.range 99).filter (fun p => Nat.Prime p ∧ Nat.Prime (p + 2))).card = 8 := by
@@ -71,10 +77,12 @@ theorem twin_prime_count_100 :
 
 
 
+
 /-- Count of twin prime pairs up to 1000. -/
 theorem twin_prime_count_1000 :
     ((Finset.range 999).filter (fun p => Nat.Prime p ∧ Nat.Prime (p + 2))).card = 35 := by
   native_decide
+
 
 
 
@@ -92,10 +100,12 @@ theorem twin_primes_list :
 
 
 
+
 /-- Count of cousin prime pairs up to 100. -/
 theorem cousin_prime_count_100 :
     ((Finset.range 97).filter (fun p => Nat.Prime p ∧ Nat.Prime (p + 4))).card = 8 := by
   native_decide
+
 
 
 
@@ -106,10 +116,12 @@ theorem sexy_prime_count_100 :
 
 
 
+
 /-- Sophie Germain primes: p is a Sophie Germain prime if both p and 2p+1 are prime. -/
 theorem sophie_germain_count_100 :
     ((Finset.range 100).filter (fun p => Nat.Prime p ∧ Nat.Prime (2 * p + 1))).card = 10 := by
   native_decide
+
 
 
 
@@ -127,5 +139,6 @@ theorem sophie_germain_examples :
     (Nat.Prime 89 ∧ Nat.Prime 179) := by
   refine ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩,
          ⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩⟩ <;> native_decide
+
 
 

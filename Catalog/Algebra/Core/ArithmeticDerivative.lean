@@ -19,12 +19,14 @@ def arithmeticDerivative (n : ℕ) : ℕ :=
 
 
 
+
 /-- The arithmetic derivative of a prime is 1. -/
 theorem arithmeticDerivative_prime {p : ℕ} (hp : p.Prime) :
     arithmeticDerivative p = 1 := by
   unfold arithmeticDerivative
   simp [hp]
   rcases p with (_ | _ | p) <;> simp_all +arith +decide [Nat.div_self]
+
 
 
 
@@ -37,10 +39,12 @@ theorem ppow_self_div_mul_exp (p : ℕ) (hp : p.Prime) :
 
 
 
+
 /-- The prime factorization of p^p has support {p}. -/
 theorem primeFactors_prime_pow_self {p : ℕ} (hp : p.Prime) :
     (p ^ p).primeFactors = {p} := by
   rw [Nat.primeFactors_pow] <;> aesop
+
 
 
 
@@ -50,6 +54,7 @@ theorem arithmeticDerivative_ppow_eq_self {p : ℕ} (hp : p.Prime) :
   simp +decide [hp, arithmeticDerivative]
   rcases p with (_ | _ | p) <;> simp_all +decide [Nat.primeFactors_pow]
   rw [Nat.div_mul_cancel (dvd_pow_self _ (Nat.succ_ne_zero _))]
+
 
 
 

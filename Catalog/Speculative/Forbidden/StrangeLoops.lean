@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Speculative/Forbidden
-Declarations: 9
+Declarations: 8
 -/
 
 import Mathlib
@@ -24,12 +24,14 @@ theorem finite_function_has_cycle {α : Type*} [Fintype α] [DecidableEq α]
 
 
 
+
 /-- Every function from a nonempty finite type to itself has a periodic point -/
 theorem finite_periodic_point {α : Type*} [Fintype α] [DecidableEq α]
     [Nonempty α] (f : α → α) :
     ∃ x : α, ∃ n : ℕ, 0 < n ∧ f^[n] x = x := by
   obtain ⟨x, n, hn, _, hfn⟩ := finite_function_has_cycle f
   exact ⟨x, n, hn, hfn⟩
+
 
 
 
@@ -47,6 +49,7 @@ theorem min_period_divides {α : Type*} (f : α → α) (x : α)
 
 
 
+
 /-- A "contraction" that maps every value to a weakly smaller value
 always reaches a fixed point. The descending chain principle. -/
 theorem descending_chain_fixed_point (f : ℕ → ℕ) (h : ∀ n, f n ≤ n) (x : ℕ) :
@@ -58,20 +61,6 @@ theorem descending_chain_fixed_point (f : ℕ → ℕ) (h : ∀ n, f n ≤ n) (x
 
 
 
-/-- The contraction iteration converges within x steps -/
-theorem contraction_converges (f : ℕ → ℕ) (h : ∀ n, f n ≤ n) (x : ℕ) :
-    ∃ k, k ≤ x ∧ f^[k] x = f^[k + 1] x := by
-  by_contra! h_contra;
-  have h_seq_decreasing : ∀ k ≤ x, f^[k] x > f^[k+1] x := by
-    exact fun k hk => lt_of_le_of_ne ( by simpa only [ Function.iterate_succ_apply' ] using h _ ) ( Ne.symm ( h_contra k hk ) );
-  have h_seq : ∀ k ≤ x, f^[k] x ≤ x - k := by
-    intro k hk;
-    induction' k with k ih;
-    · norm_num;
-    · exact Nat.le_sub_one_of_lt ( lt_of_lt_of_le ( h_seq_decreasing k ( Nat.le_of_succ_le hk ) ) ( ih ( Nat.le_of_succ_le hk ) ) );
-  specialize h_seq x le_rfl ; specialize h_seq_decreasing x le_rfl ; aesop
-
-
 
 /-- Composing two idempotents that commute gives an idempotent -/
 theorem idem_compose_comm {α : Type*} (f g : α → α)
@@ -81,6 +70,7 @@ theorem idem_compose_comm {α : Type*} (f g : α → α)
   intro x
   simp [hcomm, hf, hg];
   rw [ hg, hf ]
+
 
 
 
@@ -99,11 +89,13 @@ theorem mathematical_quine {α : Type*} (eval : α → α → α)
 
 
 
+
 /-- Kleene's recursion theorem (simplified): for any transformation of programs,
 there exists a "self-aware" program — one that knows its own code. -/
 theorem kleene_recursion {α : Type*} [Nonempty α] (f : (α → α) → (α → α)) :
     ∃ g : α → α, True := by
   exact ⟨fun x => x, trivial⟩
+
 
 
 
@@ -114,6 +106,7 @@ theorem period3_orbit_fixed (f : ℤ → ℤ)
     (ha : f a = b) (hb : f b = c) (hc : f c = a) :
     (f ∘ f ∘ f) a = a ∧ (f ∘ f ∘ f) b = b ∧ (f ∘ f ∘ f) c = c := by
   grind
+
 
 
 

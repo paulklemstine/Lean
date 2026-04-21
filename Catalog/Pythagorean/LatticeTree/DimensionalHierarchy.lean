@@ -13,9 +13,11 @@ theorem exponent_strictly_decreases (d : ℕ) (hd : 1 ≤ d) :
 
 
 
+
 /-- For any N ≥ 2, N^2 < N^3 (the cube is strictly larger). -/
 theorem power_strict_increase (N : ℕ) (hN : 2 ≤ N) : N ^ 2 < N ^ 3 := by
   nlinarith [Nat.one_le_pow 2 N (by omega)]
+
 
 
 
@@ -24,10 +26,12 @@ theorem hermite_bound_ordering : (4 : ℚ) / 3 < (2 : ℚ) := by norm_num
 
 
 
+
 /-- The 3D lattice determinant divides N³ (for the standard L₄ construction). -/
 theorem lattice_det_bound (N : ℕ) (hN : 1 ≤ N) : N ≤ N ^ 3 := by
   calc N = N ^ 1 := by ring
     _ ≤ N ^ 3 := Nat.pow_le_pow_right (by omega) (by omega)
+
 
 
 
@@ -39,11 +43,13 @@ theorem quad_lattice_add_identity (x₁ y₁ z₁ x₂ y₂ z₂ : ℤ) :
 
 
 
+
 /-- The quadruple lattice is closed under negation. -/
 theorem quad_lattice_neg_closed (N x y z : ℤ)
     (h : N ∣ (x^2 + y^2 + z^2)) :
     N ∣ ((-x)^2 + (-y)^2 + (-z)^2) := by
   convert h using 1; ring
+
 
 
 
@@ -56,12 +62,14 @@ theorem quad_lattice_scalar_closed (N x y z k : ℤ)
 
 
 
+
 /-- The equation l² - mu² = 1 has only solutions with mu = 0.
 This is the fundamental obstruction to single-plane boosts in O(3,1;ℤ). -/
 theorem pell_minus_trivial (l mu : ℤ) (h : l^2 - mu^2 = 1) : mu = 0 := by
   have : (l - mu) * (l + mu) = 1 := by ring_nf; linarith
   have h1 := Int.eq_one_or_neg_one_of_mul_eq_one' this
   omega
+
 
 
 
@@ -76,9 +84,11 @@ theorem pell_minus_lambda_unit (l mu : ℤ) (h : l^2 - mu^2 = 1) :
 
 
 
+
 /-- Brahmagupta-Fibonacci: products of sums of two squares are sums of two squares. -/
 theorem sum_two_sq_mul (a b c d : ℤ) :
     (a^2 + b^2) * (c^2 + d^2) = (a*c + b*d)^2 + (a*d - b*c)^2 := by ring
+
 
 
 
@@ -88,11 +98,13 @@ theorem sum_two_sq_mul' (a b c d : ℤ) :
 
 
 
+
 /-- If N = p*q where p = a²+b² and q = c²+d², then N is a sum of two squares. -/
 theorem composite_sum_two_sq (p q a b c d : ℤ)
     (hp : p = a^2 + b^2) (hq : q = c^2 + d^2) :
     p * q = (a*c + b*d)^2 + (a*d - b*c)^2 := by
   rw [hp, hq]; ring
+
 
 
 
@@ -105,13 +117,16 @@ theorem prime_divides_gcd_or_not (p N x y z : ℤ) (hp : Prime p)
 
 
 
+
 /-- For 3 basis vectors after BKZ, we get 9 distinct GCD candidates. -/
 theorem bkz_candidates : 3 * 3 = 9 := by norm_num
 
 
 
+
 /-- Including ± variants of 3 vectors gives 6 vectors, hence 18 candidates. -/
 theorem bkz_full_candidates : 3 * 6 = 18 := by norm_num
+
 
 
 
@@ -122,8 +137,10 @@ theorem cauchy_schwarz_3d (a b c x y z : ℤ) :
 
 
 
+
 /-- The norm squared of a lattice vector is always non-negative. -/
 theorem norm_sq_nonneg (x y z : ℤ) : 0 ≤ x^2 + y^2 + z^2 := by positivity
+
 
 
 
@@ -144,6 +161,7 @@ theorem min_norm_sq_bound (N x y z : ℤ) (hN : 0 < N)
 
 
 
+
 /-- The parametric d-value m²+n²+p²+q² is always positive when (m,n,p,q) ≠ 0. -/
 theorem param_d_pos (m n p q : ℤ) (h : m ≠ 0 ∨ n ≠ 0 ∨ p ≠ 0 ∨ q ≠ 0) :
     0 < m^2 + n^2 + p^2 + q^2 := by
@@ -151,10 +169,12 @@ theorem param_d_pos (m n p q : ℤ) (h : m ≠ 0 ∨ n ≠ 0 ∨ p ≠ 0 ∨ q �
 
 
 
+
 /-- The parametric a-value satisfies |a| ≤ d. -/
 theorem param_a_le_d (m n p q : ℤ) :
     (m^2 + n^2 - p^2 - q^2)^2 ≤ (m^2 + n^2 + p^2 + q^2)^2 := by
   nlinarith [sq_nonneg p, sq_nonneg q, sq_nonneg m, sq_nonneg n]
+
 
 
 
@@ -171,6 +191,7 @@ theorem sl2z_preserves_quad (a' b' c' d' m n p q : ℤ)
 
 
 
+
 /-- The exponential gap grows: for n-bit RSA, the advantage is 2^(n/6) which
 is exponential in the key size. -/
 theorem exponential_gap (n : ℕ) (hn : 6 ≤ n) : 1 < 2^(n/6) := by
@@ -180,11 +201,13 @@ theorem exponential_gap (n : ℕ) (hn : 6 ≤ n) : 1 < 2^(n/6) := by
 
 
 
+
 /-- **Proposed Theorem (Lattice Membership Certificate):**
 A vector v = (x,y,z) is in L₄(N) iff x²+y²+z² ≡ 0 (mod N). -/
 theorem lattice_membership_iff (N x y z : ℤ) :
     N ∣ (x^2 + y^2 + z^2) ↔ (x^2 + y^2 + z^2) % N = 0 :=
   Int.dvd_iff_emod_eq_zero
+
 
 
 
@@ -200,7 +223,13 @@ theorem factor_extraction_sound (N g : ℤ) (hN : 1 < N) (hg : g ∣ N)
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.LatticeTree.DimensionalHierarchy
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/LatticeTree
+Declarations: 25] -/
 theorem minkowski_exponent_gap (d₁ d₂ : ℕ) (h1 : 1 ≤ d₁) (h2 : d₁ < d₂) :
     (1 : ℚ) / d₂ < 1 / d₁ := by
       gcongr
+
 

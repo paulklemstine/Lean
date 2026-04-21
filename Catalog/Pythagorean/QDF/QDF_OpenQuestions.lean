@@ -14,6 +14,7 @@ theorem quadruple_exists_trivial (d : ℤ) :
 
 
 
+
 /-- [Section: # CatalogBuild.Pythagorean.QDF.QDF_OpenQuestions
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/QDF
@@ -26,6 +27,11 @@ theorem trivial_gcd_coprime (N c d : ℤ)
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.QDF.QDF_OpenQuestions
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/QDF
+Declarations: 26] -/
 theorem trivial_gcd_implies_coprime_sum (a b c d N : ℤ)
     (h_quad : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2)
     (h1 : Int.gcd (d - c) N = 1) (h2 : Int.gcd (d + c) N = 1) :
@@ -33,6 +39,7 @@ theorem trivial_gcd_implies_coprime_sum (a b c d N : ℤ)
   simp_all +decide [ Int.gcd_eq_natAbs, Int.natAbs_mul ];
   rw [ show a ^ 2 + b ^ 2 = ( d - c ) * ( d + c ) by linarith ] ; simp_all +decide [ Int.natAbs_mul, Nat.coprime_mul_iff_left, Nat.coprime_mul_iff_right ] ;
   exact ⟨ h1, h2 ⟩
+
 
 
 
@@ -45,12 +52,14 @@ theorem shared_component_factor (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
 
 
 
+
 /-- Parametric deformation: changing m by 1 changes 'a' by 2m+1. -/
 theorem param_deformation_bound (m n p q : ℤ) :
     let a := m ^ 2 + n ^ 2 - p ^ 2 - q ^ 2
     let a' := (m + 1) ^ 2 + n ^ 2 - p ^ 2 - q ^ 2
     a' - a = 2 * m + 1 := by
   simp only; ring
+
 
 
 
@@ -62,11 +71,13 @@ theorem grover_good_pair_exists (p : ℤ) (hp_pos : p > 0)
 
 
 
+
 /-- k-Tuple Composition: triples compose to quadruples. -/
 theorem ktuple_composition_3_to_4 (a b c k d : ℤ)
     (h1 : a ^ 2 + b ^ 2 = c ^ 2)
     (h2 : c ^ 2 + k ^ 2 = d ^ 2) :
     a ^ 2 + b ^ 2 + k ^ 2 = d ^ 2 := by linarith
+
 
 
 
@@ -78,10 +89,12 @@ theorem ktuple_composition_4_to_5 (a b c k e d : ℤ)
 
 
 
+
 /-- 5-tuple factor identity: (e-d)(e+d) = a²+b²+c². -/
 theorem quintuple_factor_identity (a b c d e : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 = e ^ 2) :
     (e - d) * (e + d) = a ^ 2 + b ^ 2 + c ^ 2 := by nlinarith
+
 
 
 
@@ -93,6 +106,7 @@ theorem quintuple_gcd_cascade (a b c d e : ℤ)
     (e - b) * (e + b) = a ^ 2 + c ^ 2 + d ^ 2 ∧
     (e - a) * (e + a) = b ^ 2 + c ^ 2 + d ^ 2 := by
   exact ⟨by nlinarith, by nlinarith, by nlinarith, by nlinarith⟩
+
 
 
 
@@ -116,9 +130,11 @@ theorem quintuple_four_factorizations (a b c d e : ℤ)
 
 
 
+
 /-- General factor identity for dimension k=3. -/
 theorem general_factor_identity_k3 (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (c - b) * (c + b) = a ^ 2 := by nlinarith
+
 
 
 
@@ -128,9 +144,11 @@ theorem general_factor_identity_k4 (a b c d : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 = 
 
 
 
+
 /-- General factor identity for dimension k=5. -/
 theorem general_factor_identity_k5 (a b c d e : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 = e ^ 2) :
     (e - d) * (e + d) = a ^ 2 + b ^ 2 + c ^ 2 := by nlinarith
+
 
 
 
@@ -138,6 +156,7 @@ theorem general_factor_identity_k5 (a b c d e : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 
 theorem general_factor_identity_k6 (a b c d e f : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 + e ^ 2 = f ^ 2) :
     (f - e) * (f + e) = a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 := by nlinarith
+
 
 
 
@@ -151,10 +170,12 @@ theorem berggrenM1_oq_preserves (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 /-- Berggren M₁ determinant is +1 (preserves orientation). -/
 theorem berggren_M1_det_one :
     let M : Matrix (Fin 3) (Fin 3) ℤ := !![1, -2, 2; 2, -1, 2; 2, -2, 3]
     M.det = 1 := by decide
+
 
 
 
@@ -164,6 +185,7 @@ theorem bridge_creates_adjacency (a b c k d e : ℤ)
     (h_quad : a ^ 2 + b ^ 2 + k ^ 2 = d ^ 2)
     (h_proj : a ^ 2 + k ^ 2 = e ^ 2) :
     e ^ 2 + b ^ 2 = d ^ 2 := by linarith
+
 
 
 
@@ -178,6 +200,7 @@ theorem bridge_hypotenuse_gt (a b c k d : ℤ)
 
 
 
+
 /-- Bridge can decrease hypotenuse via different projection axis. -/
 theorem bridge_can_decrease (a b c d : ℤ)
     (h_quad : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2)
@@ -186,11 +209,13 @@ theorem bridge_can_decrease (a b c d : ℤ)
 
 
 
+
 theorem even_hyp_parity (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2)
     (hd : 2 ∣ d) (ha : ¬2 ∣ a) (hb : ¬2 ∣ b) :
     2 ∣ c := by
   replace h := congr_arg ( · % 4 ) h; rcases hd with ⟨ k, rfl ⟩ ; rcases Int.even_or_odd' a with ⟨ m, rfl | rfl ⟩ <;> rcases Int.even_or_odd' b with ⟨ n, rfl | rfl ⟩ <;> rcases Int.even_or_odd' c with ⟨ o, rfl | rfl ⟩ <;> ring_nf at * <;> norm_num at *;
+
 
 
 
@@ -205,9 +230,11 @@ theorem quaternion_norm_preserved (m n p q : ℤ) :
 
 
 
+
 theorem division_decreasing (d g : ℤ) (hg : g > 1) (hd_pos : d > 0) (hgd : g ∣ d) :
     d / g < d := by
   nlinarith [ Int.ediv_mul_cancel hgd ]
+
 
 
 
@@ -220,6 +247,7 @@ theorem cross_quad_factor (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
 
 
 
+
 /-- GCD of cross-differences with N always divides N. -/
 theorem cross_gcd_divides (c₁ c₂ N : ℤ) :
     (↑(Int.gcd (c₁ ^ 2 - c₂ ^ 2) N) : ℤ) ∣ N := by
@@ -227,7 +255,9 @@ theorem cross_gcd_divides (c₁ c₂ N : ℤ) :
 
 
 
+
 /-- Cross-difference factors multiplicatively. -/
 theorem cross_diff_factors (c₁ c₂ : ℤ) :
     c₁ ^ 2 - c₂ ^ 2 = (c₁ - c₂) * (c₁ + c₂) := by ring
+
 

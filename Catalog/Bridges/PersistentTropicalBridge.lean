@@ -15,10 +15,12 @@ theorem PersistenceInterval.trivial_lifetime (b : ℝ) :
 
 
 
+
 /-- The L∞ distance between two persistence points.
 d∞((b₁,d₁), (b₂,d₂)) = max(|b₁-b₂|, |d₁-d₂|). -/
 def bottleneckPointDist (I J : PersistenceInterval) : ℝ :=
   max (|I.birth - J.birth|) (|I.death - J.death|)
+
 
 
 
@@ -29,10 +31,12 @@ theorem bottleneckPointDist_comm (I J : PersistenceInterval) :
 
 
 
+
 /-- The bottleneck distance is non-negative. -/
 theorem bottleneckPointDist_nonneg (I J : PersistenceInterval) :
     0 ≤ bottleneckPointDist I J :=
   le_max_of_le_left (abs_nonneg _)
+
 
 
 
@@ -47,10 +51,16 @@ theorem bottleneckPointDist_eq_zero_iff (I J : PersistenceInterval) :
 
 
 
+
+/-- [Section: # CatalogBuild.Bridges.PersistentTropicalBridge
+Auto-generated from theorem catalog database.
+Domain: Bridges
+Declarations: 20] -/
 theorem bottleneckPointDist_triangle (I J K : PersistenceInterval) :
     bottleneckPointDist I K ≤ bottleneckPointDist I J + bottleneckPointDist J K := by
   unfold bottleneckPointDist;
   exact max_le_iff.mpr ⟨ by cases max_cases |I.birth - J.birth| |I.death - J.death| <;> cases max_cases |J.birth - K.birth| |J.death - K.death| <;> linarith [ abs_sub_le I.birth J.birth K.birth, abs_sub_le I.death J.death K.death ], by cases max_cases |I.birth - J.birth| |I.death - J.death| <;> cases max_cases |J.birth - K.birth| |J.death - K.death| <;> linarith [ abs_sub_le I.birth J.birth K.birth, abs_sub_le I.death J.death K.death ] ⟩
+
 
 
 
@@ -63,6 +73,7 @@ theorem persistence_stability_single (b₁ d₁ b₂ d₂ ε : ℝ)
 
 
 
+
 theorem lifetime_lipschitz (I J : PersistenceInterval) :
     |I.lifetime - J.lifetime| ≤ 2 * bottleneckPointDist I J := by
   unfold bottleneckPointDist;
@@ -71,10 +82,12 @@ theorem lifetime_lipschitz (I J : PersistenceInterval) :
 
 
 
+
 /-- A tropical monomial. -/
 structure TropicalMonomial where
   coefficient : ℝ
   degree : ℕ
+
 
 
 
@@ -87,9 +100,11 @@ def tropicalEval (monomials : List TropicalMonomial) (x : ℝ) : ℝ :=
 
 
 
+
 /-- A single tropical monomial is linear. -/
 theorem tropical_monomial_linear (a : ℝ) (n : ℕ) (x : ℝ) :
     tropicalEval [⟨a, n⟩] x = a + n * x := by simp [tropicalEval]
+
 
 
 
@@ -100,15 +115,18 @@ theorem tropical_union_is_max (a₁ a₂ : ℝ) (n₁ n₂ : ℕ) (x : ℝ) :
 
 
 
+
 /-- Diagonal distance = half lifetime. -/
 theorem diagonalDist_eq_half_lifetime (I : PersistenceInterval) :
     diagonalDist I = I.lifetime / 2 := rfl
 
 
 
+
 /-- Diagonal distance is non-negative. -/
 theorem diagonalDist_nonneg (I : PersistenceInterval) :
     0 ≤ diagonalDist I := div_nonneg (sub_nonneg.mpr I.valid) (by positivity)
+
 
 
 
@@ -120,10 +138,12 @@ def diagonalProjection (I : PersistenceInterval) : PersistenceInterval where
 
 
 
+
 /-- The diagonal projection has zero lifetime. -/
 theorem diagonal_projection_trivial (I : PersistenceInterval) :
     (diagonalProjection I).lifetime = 0 := by
   simp [diagonalProjection, PersistenceInterval.lifetime]
+
 
 
 
@@ -136,8 +156,10 @@ theorem projection_distance (I : PersistenceInterval) :
 
 
 
+
 /-- Significance of a loss landscape feature = its persistence. -/
 def significance (f : PersistenceInterval) : ℝ := f.lifetime
+
 
 
 
@@ -149,11 +171,13 @@ theorem significance_monotone (I J : PersistenceInterval)
 
 
 
+
 theorem topological_simplification_bound (I : PersistenceInterval) (ε : ℝ)
     (hε : 0 < ε) (hsmall : I.lifetime < ε) :
     bottleneckPointDist I (diagonalProjection I) < ε := by
   rw [PersistentTropicalBridge.projection_distance];
   linarith [PersistentTropicalBridge.diagonalDist_eq_half_lifetime I]
+
 
 
 

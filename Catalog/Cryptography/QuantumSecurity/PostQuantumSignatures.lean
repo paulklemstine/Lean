@@ -21,6 +21,11 @@ structure SignatureScheme (Message PublicKey SecretKey Signature : Type) where
 
 
 
+
+/-- [Section: # CatalogBuild.Cryptography.QuantumSecurity.PostQuantumSignatures
+Auto-generated from theorem catalog database.
+Domain: Cryptography/QuantumSecurity
+Declarations: 11] -/
 structure LatticeParams where
   n : ℕ
   q : ℕ
@@ -31,9 +36,11 @@ structure LatticeParams where
 
 
 
+
 structure SISHardness where
   sisAdvantage : ℕ → ℝ
   isHard : ∀ c : ℕ, ∃ N : ℕ, ∀ n : ℕ, N ≤ n → |sisAdvantage n| < (1 / (n : ℝ)) ^ c
+
 
 
 
@@ -53,10 +60,13 @@ theorem lattice_sig_security (sis : SISHardness)
 
 
 
+
 noncomputable def blsSigSize : ℝ := 48
 
 
+
 noncomputable def latticeSigSize (n : ℕ) : ℝ := 2 * (n : ℝ)
+
 
 
 
@@ -68,11 +78,13 @@ theorem bls_more_compact_small (n : ℕ) (hn : n < 24) :
 
 
 
+
 theorem lattice_larger_for_security (n : ℕ) (hn : 24 ≤ n) :
     blsSigSize ≤ latticeSigSize n := by
   unfold latticeSigSize blsSigSize
   have : (24 : ℝ) ≤ (n : ℝ) := by exact_mod_cast hn
   linarith
+
 
 
 
@@ -85,10 +97,12 @@ theorem aggregation_space_saving (k : ℕ) (sigSize aggSize : ℝ)
 
 
 
+
 theorem quantum_lattice_exponential (n : ℕ) (hn : 2 ≤ n) :
     (1 : ℝ) < 2 ^ n := by
   have : (1:ℝ) < 2 := by norm_num
   exact one_lt_pow₀ this (by omega)
+
 
 
 
@@ -97,6 +111,7 @@ theorem bls_quantum_broken
     (h_shor : ∀ n, blsBreakComplexity n ≤ (n : ℝ) ^ 3) :
     ∀ n : ℕ, blsBreakComplexity n ≤ (n : ℝ) ^ 3 :=
   h_shor
+
 
 
 

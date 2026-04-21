@@ -16,8 +16,14 @@ theorem tropical_circuit_leaves (d : ℕ) : 2 ^ d ≥ 1 :=
 
 
 
+
+/-- [Section: # CatalogBuild.Tropical.Core.TropicalAgentGamma
+Auto-generated from theorem catalog database.
+Domain: Tropical/Core
+Declarations: 11] -/
 theorem rate_distortion_levels (k : ℕ) : 0 < 2 ^ k :=
   Nat.pos_of_ne_zero (by positivity)
+
 
 
 
@@ -27,9 +33,11 @@ theorem log_preserves_order (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
 
 
 
+
 theorem factoring_tropical (p q : ℕ) (hp : 0 < p) (hq : 0 < q) :
     Real.log ((p : ℝ) * (q : ℝ)) = Real.log (p : ℝ) + Real.log (q : ℝ) := by
   exact Real.log_mul (Nat.cast_ne_zero.mpr (by omega)) (Nat.cast_ne_zero.mpr (by omega))
+
 
 
 
@@ -39,8 +47,10 @@ theorem gcd_lcm_identity (a b : ℕ) :
 
 
 
+
 def isTropRankOne {m n : ℕ} (M : Fin m → Fin n → ℝ) : Prop :=
   ∃ (a : Fin m → ℝ) (b : Fin n → ℝ), ∀ i j, M i j = a i + b j
+
 
 
 
@@ -50,14 +60,17 @@ theorem zero_trop_rank_one {m n : ℕ} :
 
 
 
+
 theorem const_trop_rank_one {m n : ℕ} (c : ℝ) :
     isTropRankOne (fun (_ : Fin m) (_ : Fin n) => c) :=
   ⟨fun _ => c, fun _ => 0, fun _ _ => by ring⟩
 
 
 
+
 theorem source_coding_bound (n : ℕ) (hn : 1 < n) : 1 ≤ Nat.log 2 n :=
   Nat.log_pos (by norm_num) hn
+
 
 
 
@@ -68,8 +81,10 @@ theorem tropical_separation (a b : ℝ) (hab : a < b) :
 
 
 
+
 theorem pruning_preserves_max (a b c : ℝ) (hc : c ≤ max a b) :
     max (max a b) c = max a b :=
   max_eq_left hc
+
 
 

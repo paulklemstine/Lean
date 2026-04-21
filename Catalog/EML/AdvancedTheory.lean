@@ -15,10 +15,12 @@ def ensembleComplexity (ks : List ℕ) : ℕ := ks.sum
 
 
 
+
 /-- Ensemble complexity is additive. -/
 theorem ensemble_complexity_additive (ks₁ ks₂ : List ℕ) :
     ensembleComplexity (ks₁ ++ ks₂) = ensembleComplexity ks₁ + ensembleComplexity ks₂ := by
   simp [ensembleComplexity]
+
 
 
 
@@ -29,13 +31,16 @@ theorem uniform_ensemble_complexity (m k : ℕ) :
 
 
 
+
 /-- Ensemble VC dimension: at most 2 × total leaves (linear growth). -/
 def ensembleVCDim (ks : List ℕ) : ℕ := 2 * ensembleComplexity ks
 
 
 
+
 /-- Bagging factor: √m variance reduction. -/
 def baggingFactor (m : ℕ) : ℝ := Real.sqrt m
+
 
 
 
@@ -49,11 +54,13 @@ theorem bagging_sublinear (m : ℕ) (hm : 1 ≤ m) :
 
 
 
+
 /-- Ensemble generalization: variance decreases as 1/m. -/
 theorem ensemble_variance_reduction (sigma_sq : ℝ) (m : ℕ) (hm : 0 < m)
     (hs : 0 ≤ sigma_sq) :
     sigma_sq / m ≤ sigma_sq := by
   exact div_le_self hs (by exact_mod_cast hm)
+
 
 
 
@@ -63,10 +70,12 @@ def structuralPenalty (k n : ℕ) : ℝ :=
 
 
 
+
 /-- The penalty is nonneg. -/
 theorem structural_penalty_nonneg (k n : ℕ) :
     0 ≤ structuralPenalty k n := by
   exact Real.sqrt_nonneg _
+
 
 
 
@@ -83,9 +92,11 @@ theorem penalty_increases_with_k (k₁ k₂ n : ℕ) (h : k₁ ≤ k₂) (hn : 2
 
 
 
+
 /-- EML-based attention score: softmax via exp component.
 score(q, k) = exp(q · k) which is exactly eml(q·k, 1). -/
 def emlAttentionScore (q k : ℝ) : ℝ := Real.exp (q * k)
+
 
 
 
@@ -95,9 +106,11 @@ theorem attention_score_pos (q k : ℝ) : 0 < emlAttentionScore q k := by
 
 
 
+
 /-- Attention weights sum normalization factor. -/
 def emlAttentionNorm (q : ℝ) (keys : List ℝ) : ℝ :=
   (keys.map (emlAttentionScore q)).sum
+
 
 
 
@@ -114,9 +127,11 @@ theorem attention_norm_pos (q : ℝ) (keys : List ℝ) (hne : keys ≠ []) :
 
 
 
+
 /-- The sensitivity of an EML neuron's exp component on [-M, M]. -/
 def emlSensitivity (w₁ b₁ M : ℝ) : ℝ :=
   |w₁| * Real.exp (|w₁| * M + |b₁|)
+
 
 
 
@@ -126,9 +141,11 @@ theorem sensitivity_nonneg (w₁ b₁ M : ℝ) : 0 ≤ emlSensitivity w₁ b₁ 
 
 
 
+
 /-- Noise scale for differential privacy. -/
 def laplacianNoiseScale (sensitivity epsilon : ℝ) : ℝ :=
   sensitivity / epsilon
+
 
 
 
@@ -137,6 +154,7 @@ theorem eml_noise_scale (w₁ b₁ M epsilon : ℝ) (_hε : 0 < epsilon) :
     laplacianNoiseScale (emlSensitivity w₁ b₁ M) epsilon =
     |w₁| * Real.exp (|w₁| * M + |b₁|) / epsilon := by
   simp [laplacianNoiseScale, emlSensitivity]
+
 
 
 
@@ -152,14 +170,17 @@ theorem smaller_weights_better_privacy (w₁ w₂ b M ε : ℝ)
 
 
 
+
 /-- KAN network parameter count. -/
 def kanParams (widths : List ℕ) (G p : ℕ) : ℕ :=
   (widths.zip widths.tail).map (fun ⟨a, b⟩ => a * b * (G + p)) |>.sum
 
 
 
+
 /-- EML parameters for k-leaf tree. -/
 def emlParams (k : ℕ) : ℕ := 4 * (k - 1)
+
 
 
 
@@ -170,10 +191,12 @@ theorem eml_vs_kan_2var :
 
 
 
+
 /-- EML vs KAN for 5-variable problems: 7.2× fewer parameters. -/
 theorem eml_vs_kan_5var :
     kanParams [5, 10, 5, 1] 5 3 = 840 ∧ emlParams 30 = 116 := by
   constructor <;> native_decide
+
 
 
 
@@ -185,11 +208,13 @@ inductive EMLTree where
 
 
 
+
 /-- Count occurrences of variable i in an EML tree. -/
 def EMLTree.varCount (i : ℕ) : EMLTree → ℕ
   | .leaf j => if i = j then 1 else 0
   | .const _ => 0
   | .eml l r => l.varCount i + r.varCount i
+
 
 
 
@@ -201,12 +226,14 @@ def EMLTree.leafCount : EMLTree → ℕ
 
 
 
+
 /-- Leaf count is always positive. -/
 theorem EMLTree.leafCount_pos (t : EMLTree) : 0 < t.leafCount := by
   induction t with
   | leaf _ => simp [EMLTree.leafCount]
   | const _ => simp [EMLTree.leafCount]
   | eml l r ihl ihr => simp [EMLTree.leafCount]; omega
+
 
 
 
@@ -220,9 +247,11 @@ theorem EMLTree.varCount_le_leafCount (t : EMLTree) (i : ℕ) :
 
 
 
+
 /-- Variable importance as a fraction of total leaves. -/
 def EMLTree.varImportance (t : EMLTree) (i : ℕ) : ℝ :=
   (t.varCount i : ℝ) / (t.leafCount : ℝ)
+
 
 
 
@@ -236,10 +265,12 @@ theorem var_importance_le_one (t : EMLTree) (i : ℕ) :
 
 
 
+
 /-- A variable not appearing in the tree has zero importance. -/
 theorem absent_var_zero_importance (t : EMLTree) (i : ℕ)
     (h : t.varCount i = 0) : t.varImportance i = 0 := by
   simp [EMLTree.varImportance, h]
+
 
 
 
@@ -249,11 +280,13 @@ def gdConvergenceBound (dist_sq : ℝ) (eta : ℝ) (T : ℕ) : ℝ :=
 
 
 
+
 /-- Convergence bound is nonneg. -/
 theorem gd_convergence_nonneg (d η : ℝ) (T : ℕ)
     (hd : 0 ≤ d) (hη : 0 < η) (hT : 0 < T) :
     0 ≤ gdConvergenceBound d η T := by
   unfold gdConvergenceBound; positivity
+
 
 
 
@@ -268,8 +301,10 @@ theorem gd_convergence_improves (d η : ℝ) (T₁ T₂ : ℕ)
 
 
 
+
 /-- Optimal learning rate for EML: 1/L where L is the Lipschitz constant. -/
 def emlOptimalLR (lipschitz : ℝ) : ℝ := 1 / lipschitz
+
 
 
 
@@ -279,8 +314,10 @@ theorem optimal_lr_pos (L : ℝ) (hL : 0 < L) : 0 < emlOptimalLR L := by
 
 
 
+
 /-- Prunable nodes in a k-leaf tree. -/
 def prunableNodes (k : ℕ) : ℕ := k - 1
+
 
 
 
@@ -290,9 +327,11 @@ theorem pruning_reduces (k : ℕ) (hk : 2 ≤ k) : prunableNodes k < k := by
 
 
 
+
 /-- Quantization error: k · 2^(-b) · Lip(tree). -/
 def quantizationError (k b : ℕ) (lip : ℝ) : ℝ :=
   k * (1 / 2^b) * lip
+
 
 
 
@@ -303,10 +342,12 @@ theorem quantization_nonneg (k b : ℕ) (lip : ℝ) (hlip : 0 ≤ lip) :
 
 
 
+
 /-- 8-bit quantization of 50-leaf tree. -/
 theorem quantization_8bit_50leaf (lip : ℝ) :
     quantizationError 50 8 lip = 50 * (1 / 256) * lip := by
   simp [quantizationError]; norm_num
+
 
 
 
@@ -315,8 +356,10 @@ def transferParams (k : ℕ) : ℕ := k
 
 
 
+
 /-- Full search: topology + values ≈ k² parameters. -/
 def fullSearchParams (k : ℕ) : ℕ := k * k
+
 
 
 
@@ -324,6 +367,7 @@ def fullSearchParams (k : ℕ) : ℕ := k * k
 theorem transfer_advantage (k : ℕ) (hk : 2 ≤ k) :
     transferParams k < fullSearchParams k := by
   simp [transferParams, fullSearchParams]; nlinarith
+
 
 
 
@@ -336,10 +380,12 @@ def EMLTree.compose (outer inner : EMLTree) (var_idx : ℕ) : EMLTree :=
 
 
 
+
 /-- Composing two constants gives a constant-complexity tree. -/
 theorem compose_const (c : ℝ) (inner : EMLTree) (i : ℕ) :
     (EMLTree.const c).compose inner i = EMLTree.const c := by
   rfl
+
 
 
 
@@ -348,10 +394,12 @@ def maxInterpolationPoints (k : ℕ) : ℕ := k
 
 
 
+
 /-- Interpolation needs enough leaves. -/
 theorem interpolation_requires_leaves (n k : ℕ) (h : k < n) :
     n > maxInterpolationPoints k := by
   simp [maxInterpolationPoints]; omega
+
 
 
 
@@ -363,9 +411,11 @@ def depthWidthProduct (depth width : ℕ) : ℕ := depth * width
 
 
 
+
 /-- EML chain has depth-width product = d (linear). -/
 theorem eml_chain_product (d : ℕ) : depthWidthProduct d 1 = d := by
   simp [depthWidthProduct]
+
 
 
 
@@ -375,9 +425,11 @@ theorem relu_equivalent_product (d : ℕ) : depthWidthProduct 1 (2^d) = 2^d := b
 
 
 
+
 /-- The ratio grows exponentially for d ≥ 1. -/
 theorem product_ratio_exponential (d : ℕ) (_hd : 1 ≤ d) :
     d ≤ 2^d := Nat.lt_two_pow_self.le
+
 
 
 

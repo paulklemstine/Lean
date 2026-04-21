@@ -20,6 +20,11 @@ structure KalmanState where
 
 
 
+
+/-- [Section: # CatalogBuild.MachineLearning.Prediction.KalmanFilter
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/Prediction
+Declarations: 10] -/
 structure SystemModel where
   A : ℝ
   Q : ℝ
@@ -30,6 +35,7 @@ structure SystemModel where
 
 
 
+
 noncomputable def predict (model : SystemModel) (state : KalmanState) : KalmanState where
   estimate := model.A * state.estimate
   variance := model.A ^ 2 * state.variance + model.Q
@@ -37,8 +43,10 @@ noncomputable def predict (model : SystemModel) (state : KalmanState) : KalmanSt
 
 
 
+
 noncomputable def kalmanGain (model : SystemModel) (predicted_var : ℝ) : ℝ :=
   (predicted_var * model.H) / (model.H ^ 2 * predicted_var + model.R)
+
 
 
 
@@ -50,10 +58,12 @@ theorem kalman_gain_nonneg (model : SystemModel) (P : ℝ) (hP : 0 ≤ P) (hH : 
 
 
 
+
 noncomputable def riccatiStep (model : SystemModel) (P : ℝ) : ℝ :=
   let P_pred := model.A ^ 2 * P + model.Q
   let K := kalmanGain model P_pred
   (1 - K * model.H) * P_pred
+
 
 
 
@@ -67,11 +77,13 @@ theorem riccati_nonneg (model : SystemModel) (P : ℝ) (hP : 0 ≤ P) :
 
 
 
+
 /-- When H = 0 (no observation), variance grows without bound -/
 theorem no_observation_variance_grows (model : SystemModel) (hH : model.H = 0)
     (P : ℝ) :
     riccatiStep model P = model.A ^ 2 * P + model.Q := by
   simp [riccatiStep, kalmanGain, hH]
+
 
 
 
@@ -89,10 +101,12 @@ theorem kalman_unbiased (model : SystemModel) (state : KalmanState)
 
 
 
+
 /-- The steady-state Kalman gain for a simple system (A=1, H=1) -/
 noncomputable def steadyStateGain (Q R : ℝ) : ℝ :=
   let P := (-R + Real.sqrt (R ^ 2 + 4 * Q * R)) / 2
   P / (P + R)
+
 
 
 

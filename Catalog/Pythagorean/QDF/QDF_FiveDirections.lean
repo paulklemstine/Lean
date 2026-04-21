@@ -15,6 +15,7 @@ theorem qdf_lattice_scaling (a b c d k : ℤ)
 
 
 
+
 /-- Lattice point count bound: each component is bounded by the hypotenuse. -/
 theorem lattice_component_bound (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
@@ -25,6 +26,7 @@ theorem lattice_component_bound (a b c d : ℤ)
 
 
 
+
 /-- Gap identity: the QDF constraint means d²-(a²+b²+c²) = 0 exactly. -/
 theorem lattice_shortest_vector_gap (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
@@ -32,10 +34,12 @@ theorem lattice_shortest_vector_gap (a b c d : ℤ)
 
 
 
+
 /-- Gram matrix diagonal: the ℤ⁴-norm of (a,b,c,d) is 2d². -/
 theorem qdf_gram_diagonal (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 = 2 * d ^ 2 := by linarith
+
 
 
 
@@ -50,12 +54,14 @@ theorem qdf_lattice_inner_bound (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
 
 
 
+
 /-- Lattice reduction: difference of two QDF vectors. -/
 theorem qdf_lattice_reduction (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
     (h1 : a₁ ^ 2 + b₁ ^ 2 + c₁ ^ 2 = d₁ ^ 2)
     (h2 : a₂ ^ 2 + b₂ ^ 2 + c₂ ^ 2 = d₂ ^ 2) :
     (a₁ - a₂) ^ 2 + (b₁ - b₂) ^ 2 + (c₁ - c₂) ^ 2 =
     d₁ ^ 2 + d₂ ^ 2 - 2 * (a₁ * a₂ + b₁ * b₂ + c₁ * c₂) := by nlinarith
+
 
 
 
@@ -76,15 +82,18 @@ theorem qdf_primitive_reduction (a b c d g : ℤ) (hg : g ≠ 0)
 
 
 
+
 /-- Quadratic family gap: consecutive hypotenuses differ by 2n+2. -/
 theorem qdf_family_gap (n : ℤ) :
     (n + 1) ^ 2 + (n + 1) + 1 - (n ^ 2 + n + 1) = 2 * n + 2 := by ring
 
 
 
+
 /-- Quadratic family: n² + (n+1)² + (n(n+1))² = (n²+n+1)². -/
 theorem qdf_family_density (n : ℤ) :
     n ^ 2 + (n + 1) ^ 2 + (n * (n + 1)) ^ 2 = (n ^ 2 + n + 1) ^ 2 := by ring
+
 
 
 
@@ -96,11 +105,13 @@ theorem qdf_mod_preservation (a b c d m : ℤ)
 
 
 
+
 /-- Modular radical decomposition is preserved. -/
 theorem qdf_mod_radical (a b c d m : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     ((d - c) * (d + c)) % m = (a ^ 2 + b ^ 2) % m := by
   congr 1; nlinarith
+
 
 
 
@@ -115,11 +126,13 @@ theorem qdf_factoring_channel_mod (a b c d p : ℤ)
 
 
 
+
 /-- Homomorphic scaling modulo m. -/
 theorem qdf_homomorphic_scaling (a b c d k m : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     ((k * a) ^ 2 + (k * b) ^ 2 + (k * c) ^ 2) % m = ((k * d) ^ 2) % m := by
   congr 1; nlinarith [sq_nonneg k]
+
 
 
 
@@ -129,6 +142,7 @@ theorem qdf_additive_cross_term (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
     (h2 : a₂ ^ 2 + b₂ ^ 2 + c₂ ^ 2 = d₂ ^ 2) :
     (a₁ + a₂) ^ 2 + (b₁ + b₂) ^ 2 + (c₁ + c₂) ^ 2 - (d₁ + d₂) ^ 2 =
     2 * (a₁ * a₂ + b₁ * b₂ + c₁ * c₂ - d₁ * d₂) := by nlinarith
+
 
 
 
@@ -142,11 +156,13 @@ theorem qdf_exact_homomorphism (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
 
 
 
+
 /-- CRT compatibility. -/
 theorem qdf_crt_compatible (a b c d m₁ m₂ : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     (a ^ 2 + b ^ 2 + c ^ 2) % (m₁ * m₂) = d ^ 2 % (m₁ * m₂) := by
   congr 1
+
 
 
 
@@ -156,6 +172,7 @@ theorem qdf_bloch_sphere (a b c d : ℤ) (hd : d ≠ 0)
     (a : ℚ) ^ 2 / d ^ 2 + (b : ℚ) ^ 2 / d ^ 2 + (c : ℚ) ^ 2 / d ^ 2 = 1 := by
   have hd' : (d : ℚ) ≠ 0 := Int.cast_ne_zero.mpr hd
   field_simp; exact_mod_cast h
+
 
 
 
@@ -170,10 +187,12 @@ theorem qdf_orthogonal_states (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
 
 
 
+
 /-- Syndrome parity: QDF preserves mod-2 structure. -/
 theorem qdf_syndrome_parity (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     (a ^ 2 + b ^ 2 + c ^ 2) % 2 = d ^ 2 % 2 := by omega
+
 
 
 
@@ -184,10 +203,12 @@ theorem qdf_error_detection (a b c d e : ℤ)
 
 
 
+
 /-- Error syndrome: the residual factors as e(2a+e). -/
 theorem qdf_error_syndrome (a b c d e : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     (a + e) ^ 2 + b ^ 2 + c ^ 2 - d ^ 2 = e * (2 * a + e) := by nlinarith
+
 
 
 
@@ -206,6 +227,7 @@ theorem qdf_stabilizer_triple (a₁ b₁ c₁ a₂ b₂ c₂ a₃ b₃ c₃ d : 
 
 
 
+
 /-- Dual code distance: for same-hypotenuse quadruples. -/
 theorem qdf_dual_code_distance (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
     (h1 : a₁ ^ 2 + b₁ ^ 2 + c₁ ^ 2 = d ^ 2)
@@ -215,12 +237,14 @@ theorem qdf_dual_code_distance (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
 
 
 
+
 /-- Distance squared between two quadruples on the same sphere. -/
 theorem qdf_distance_sq (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
     (h1 : a₁ ^ 2 + b₁ ^ 2 + c₁ ^ 2 = d ^ 2)
     (h2 : a₂ ^ 2 + b₂ ^ 2 + c₂ ^ 2 = d ^ 2) :
     (a₁ - a₂) ^ 2 + (b₁ - b₂) ^ 2 + (c₁ - c₂) ^ 2 =
     2 * d ^ 2 - 2 * (a₁ * a₂ + b₁ * b₂ + c₁ * c₂) := by nlinarith
+
 
 
 
@@ -235,9 +259,11 @@ theorem qdf_max_distance (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
 
 
 
+
 /-- Filtration bound: hypotenuse ≥ 1 for n ≥ 0 in the quadratic family. -/
 theorem qdf_filtration_bound (n : ℤ) (hn : n ≥ 0) :
     n ^ 2 + n + 1 ≥ 1 := by nlinarith [sq_nonneg n]
+
 
 
 
@@ -245,6 +271,7 @@ theorem qdf_filtration_bound (n : ℤ) (hn : n ≥ 0) :
 theorem qdf_antipodal (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     (-a) ^ 2 + (-b) ^ 2 + (-c) ^ 2 = d ^ 2 := by linarith
+
 
 
 
@@ -258,6 +285,7 @@ theorem qdf_sign_symmetry (a b c d : ℤ)
 
 
 
+
 /-- Permutation symmetry. -/
 theorem qdf_perm_symmetry (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
@@ -268,9 +296,11 @@ theorem qdf_perm_symmetry (a b c d : ℤ)
 
 
 
+
 /-- Birth time monotonicity: larger n gives larger hypotenuse. -/
 theorem qdf_birth_time_monotone (n : ℤ) (hn : n ≥ 0) :
     (n + 1) ^ 2 + (n + 1) + 1 > n ^ 2 + n + 1 := by nlinarith
+
 
 
 
@@ -280,9 +310,11 @@ theorem qdf_neighbor_bound (n : ℤ) :
 
 
 
+
 /-- Classical Pythagorean triple embedded as a quadruple. -/
 theorem qdf_classical_embed (m n : ℤ) :
     (2 * m * n) ^ 2 + (m ^ 2 - n ^ 2) ^ 2 + 0 ^ 2 = (m ^ 2 + n ^ 2) ^ 2 := by ring
+
 
 
 
@@ -292,15 +324,18 @@ theorem qdf_extended_pyth (m n : ℤ) :
 
 
 
+
 /-- Sum of cubes factoring. -/
 theorem sum_cubes_factor (a b : ℤ) :
     a ^ 3 + b ^ 3 = (a + b) * (a ^ 2 - a * b + b ^ 2) := by ring
 
 
 
+
 /-- Negative parameter: the quadratic family works for negative n. -/
 theorem qdf_negative_family (n : ℤ) :
     (-n) ^ 2 + (-n - 1) ^ 2 + ((-n) * (-n - 1)) ^ 2 = (n ^ 2 + n + 1) ^ 2 := by ring
+
 
 
 
@@ -312,6 +347,7 @@ theorem qdf_triple_compose (n : ℤ) :
 
 
 
+
 /-- Difference of two quadratic family hypotenuses. -/
 theorem qdf_difference_identity (m n : ℤ) :
     (m ^ 2 + m + 1) ^ 2 - (n ^ 2 + n + 1) ^ 2 =
@@ -319,9 +355,11 @@ theorem qdf_difference_identity (m n : ℤ) :
 
 
 
+
 /-- Residue class: n²+n+1 ≡ 1 (mod n). -/
 theorem qdf_residue_class (n : ℤ) :
     n ∣ (n ^ 2 + n + 1 - 1) := ⟨n + 1, by ring⟩
+
 
 
 
@@ -332,9 +370,11 @@ theorem qdf_quartic_family (n : ℤ) :
 
 
 
+
 /-- Consecutive hypotenuse sum. -/
 theorem qdf_consecutive_sum (n : ℤ) :
     (n ^ 2 + n + 1) + ((n + 1) ^ 2 + (n + 1) + 1) = 2 * n ^ 2 + 4 * n + 4 := by ring
+
 
 
 
@@ -347,6 +387,7 @@ theorem qdf_compose_by_scaling (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
 
 
 
+
 /-- Involution: negating all legs preserves the identity. -/
 theorem qdf_involution (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
@@ -354,10 +395,12 @@ theorem qdf_involution (a b c d : ℤ)
 
 
 
+
 /-- Reflection: d → -d is also valid. -/
 theorem qdf_reflection (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     a ^ 2 + b ^ 2 + c ^ 2 = (-d) ^ 2 := by nlinarith
+
 
 
 
@@ -378,6 +421,7 @@ theorem qdf_lattice_qec_bridge (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
 
 
 
+
 /-- HE ↔ TDA bridge: additive cross-term equals distance formula. -/
 theorem qdf_he_tda_bridge (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
     (h1 : a₁ ^ 2 + b₁ ^ 2 + c₁ ^ 2 = d ^ 2)
@@ -387,11 +431,13 @@ theorem qdf_he_tda_bridge (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
 
 
 
+
 /-- Midpoint identity for same-sphere quadruples. -/
 theorem qdf_midpoint_identity (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
     (h1 : a₁ ^ 2 + b₁ ^ 2 + c₁ ^ 2 = d ^ 2)
     (h2 : a₂ ^ 2 + b₂ ^ 2 + c₂ ^ 2 = d ^ 2) :
     (a₁ + a₂) ^ 2 + (b₁ + b₂) ^ 2 + (c₁ + c₂) ^ 2 =
     2 * d ^ 2 + 2 * (a₁ * a₂ + b₁ * b₂ + c₁ * c₂) := by nlinarith
+
 
 

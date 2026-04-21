@@ -16,6 +16,7 @@ theorem inv_hyp_formula (a b c : ℤ) :
 
 
 
+
 /-- The parent hypotenuse is strictly less than the child's. -/
 theorem parent_hyp_decrease (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
     (h : a ^ 2 + b ^ 2 = c ^ 2) :
@@ -24,9 +25,11 @@ theorem parent_hyp_decrease (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
 
 
 
+
 /-- The hypotenuse decreases by exactly 2(a + b - c). -/
 theorem hyp_decrease_amount (a b c : ℤ) :
     c - (-2*a - 2*b + 3*c) = 2*(a + b) - 2*c := by ring
+
 
 
 
@@ -37,10 +40,12 @@ theorem branch_exclusive_12 (a b c : ℤ)
 
 
 
+
 /-- B₁⁻¹/B₂⁻¹ and B₃⁻¹ cannot both have positive first components. -/
 theorem branch_exclusive_123 (a b c : ℤ)
     (h1 : 0 < (a + 2*b - 2*c))
     (h2 : 0 < (-a - 2*b + 2*c)) : False := by linarith
+
 
 
 
@@ -56,6 +61,7 @@ def parentTriple (t : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
 
 
 
+
 /-- The chain function: f(d) = parent^d(t). -/
 def chainF (t : ℤ × ℤ × ℤ) : ℕ → ℤ × ℤ × ℤ
   | 0 => t
@@ -63,8 +69,10 @@ def chainF (t : ℤ × ℤ × ℤ) : ℕ → ℤ × ℤ × ℤ
 
 
 
+
 /-- f(0) = t. -/
 theorem chain_zero (t : ℤ × ℤ × ℤ) : chainF t 0 = t := rfl
+
 
 
 
@@ -74,8 +82,10 @@ theorem chain_succ (t : ℤ × ℤ × ℤ) (d : ℕ) :
 
 
 
+
 /-- The hypotenuse of a triple. -/
 def tripleHyp (t : ℤ × ℤ × ℤ) : ℤ := t.2.2
+
 
 
 
@@ -92,9 +102,11 @@ theorem parent_preserves_pyth_any_branch (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 
 
 
 
+
 /-- The trivial PPT for an odd N: (N, (N²-1)/2, (N²+1)/2). -/
 def trivialPPT (N : ℤ) : ℤ × ℤ × ℤ :=
   (N, (N ^ 2 - 1) / 2, (N ^ 2 + 1) / 2)
+
 
 
 
@@ -110,11 +122,17 @@ theorem trivial_ppt_is_pyth (N : ℤ) (hodd : N % 2 = 1) (hN : 1 < N) :
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.InverseTree.ChainFactoring
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/InverseTree
+Declarations: 33] -/
 theorem trivial_ppt_diff (N : ℤ) (hodd : N % 2 = 1) :
     let t := trivialPPT N
     t.2.2 - t.2.1 = 1 ∧ t.2.2 + t.2.1 = N ^ 2 := by
   simp only [trivialPPT]
   constructor <;> linarith [ Int.ediv_mul_cancel ( show 2 ∣ N ^ 2 + 1 from Int.dvd_of_emod_eq_zero ( by norm_num [ sq, Int.add_emod, Int.mul_emod, hodd ] ) ), Int.ediv_mul_cancel ( show 2 ∣ N ^ 2 - 1 from Int.dvd_of_emod_eq_zero ( by norm_num [ sq, Int.sub_emod, Int.mul_emod, hodd ] ) ) ]
+
 
 
 
@@ -126,6 +144,7 @@ theorem divisor_pair_gives_triple_Z (N d e : ℤ)
 
 
 
+
 theorem composite_nontrivial_factorization (p q : ℤ) (hp : 1 < p) (hq : 1 < q)
     (hodd_p : p % 2 = 1) (hodd_q : q % 2 = 1) :
     let N := p * q
@@ -134,10 +153,12 @@ theorem composite_nontrivial_factorization (p q : ℤ) (hp : 1 < p) (hq : 1 < q)
 
 
 
+
 /-- For an odd prime p ≥ 5, the Berggren tree depth of the trivial PPT
 is at most (p - 3) / 2. -/
 theorem depth_bound_prime (p : ℕ) (hodd : p % 2 = 1) (hp5 : 5 ≤ p) :
     (p + 1) / 2 ≥ 2 ∧ (p + 1) / 2 - 2 = (p - 3) / 2 := by omega
+
 
 
 
@@ -149,6 +170,7 @@ theorem invB1_lorentz_form (a b c : ℤ) :
 
 
 
+
 theorem invB2_lorentz_form (a b c : ℤ) :
     let t := invB2 a b c
     t.1 ^ 2 + t.2.1 ^ 2 - t.2.2 ^ 2 = a ^ 2 + b ^ 2 - c ^ 2 := by
@@ -156,10 +178,12 @@ theorem invB2_lorentz_form (a b c : ℤ) :
 
 
 
+
 theorem invB3_lorentz_form (a b c : ℤ) :
     let t := invB3 a b c
     t.1 ^ 2 + t.2.1 ^ 2 - t.2.2 ^ 2 = a ^ 2 + b ^ 2 - c ^ 2 := by
   simp only [invB3]; ring
+
 
 
 
@@ -171,10 +195,12 @@ theorem fwdB1_lorentz_form (a b c : ℤ) :
 
 
 
+
 theorem fwdB2_lorentz_form (a b c : ℤ) :
     let t := fwdB2 a b c
     t.1 ^ 2 + t.2.1 ^ 2 - t.2.2 ^ 2 = a ^ 2 + b ^ 2 - c ^ 2 := by
   simp only [fwdB2]; ring
+
 
 
 
@@ -185,6 +211,7 @@ theorem fwdB3_lorentz_form (a b c : ℤ) :
 
 
 
+
 /-- GCD of the chain components with N at each depth.
 This computes gcd(a_d, N) for the chain from triple t. -/
 def chainGcdA (t : ℤ × ℤ × ℤ) (N : ℤ) (d : ℕ) : ℤ :=
@@ -192,8 +219,10 @@ def chainGcdA (t : ℤ × ℤ × ℤ) (N : ℤ) (d : ℕ) : ℤ :=
 
 
 
+
 def chainGcdB (t : ℤ × ℤ × ℤ) (N : ℤ) (d : ℕ) : ℤ :=
   Int.gcd (chainF t d).2.1 N
+
 
 
 
@@ -205,10 +234,12 @@ theorem chainGcdA_dvd_N (t : ℤ × ℤ × ℤ) (N : ℤ) (d : ℕ) :
 
 
 
+
 theorem chainGcdB_dvd_N (t : ℤ × ℤ × ℤ) (N : ℤ) (d : ℕ) :
     (chainGcdB t N d : ℤ) ∣ N := by
   simp [chainGcdB]
   exact_mod_cast Int.gcd_dvd_right (chainF t d).2.1 N
+
 
 
 
@@ -217,6 +248,7 @@ theorem nontrivial_gcd_gives_factor (t : ℤ × ℤ × ℤ) (N : ℤ) (d : ℕ)
     (hgcd : 1 < chainGcdA t N d) (hgcd2 : chainGcdA t N d < N) :
     (chainGcdA t N d : ℤ) ∣ N ∧ 1 < chainGcdA t N d ∧ chainGcdA t N d < N :=
   ⟨chainGcdA_dvd_N t N d, hgcd, hgcd2⟩
+
 
 
 
@@ -230,6 +262,7 @@ theorem factor_15 : ∃ d : ℕ, d ≤ 10 ∧
 
 
 
+
 /-- Verify: factoring N = 21 = 3 × 7 via the chain. -/
 theorem factor_21 : ∃ d : ℕ, d ≤ 10 ∧
     let t := trivialPPT 21
@@ -237,6 +270,7 @@ theorem factor_21 : ∃ d : ℕ, d ≤ 10 ∧
     1 < g ∧ g < 21 := by
   use 1
   native_decide
+
 
 
 
@@ -250,6 +284,7 @@ theorem factor_77 : ∃ d : ℕ, d ≤ 10 ∧
 
 
 
+
 /-- Verify: factoring N = 143 = 11 × 13 via the chain. -/
 theorem factor_143 : ∃ d : ℕ, d ≤ 10 ∧
     let t := trivialPPT 143
@@ -260,6 +295,7 @@ theorem factor_143 : ∃ d : ℕ, d ≤ 10 ∧
 
 
 
+
 /-- Verify: factoring N = 221 = 13 × 17 via the chain. -/
 theorem factor_221 : ∃ d : ℕ, d ≤ 10 ∧
     let t := trivialPPT 221
@@ -267,4 +303,5 @@ theorem factor_221 : ∃ d : ℕ, d ≤ 10 ∧
     1 < g ∧ g < 221 := by
   use 6
   native_decide
+
 

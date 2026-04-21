@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/Core
-Declarations: 22
+Declarations: 21
 -/
 
 import Mathlib
@@ -16,10 +16,12 @@ theorem pyth_diff_sq (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 /-- Stereographic projection maps t=-1 to (-1, 0), the "west pole" of S¹. -/
 theorem stereo_at_neg_one :
     (2 * (-1 : ℝ) / (1 + (-1) ^ 2), (1 - (-1) ^ 2) / (1 + (-1) ^ 2)) = (-1, 0) := by
   norm_num
+
 
 
 
@@ -30,9 +32,11 @@ theorem stereo_y_even (t : ℝ) :
 
 
 
+
 /-- The stereographic x-coordinate is odd: x(-t) = -x(t). -/
 theorem stereo_x_odd (t : ℝ) :
     2 * (-t) / (1 + (-t) ^ 2) = -(2 * t / (1 + t ^ 2)) := by ring
+
 
 
 
@@ -42,6 +46,7 @@ theorem sl2_det_mul (a b c d e f g h : ℤ)
     (hM : a * d - b * c = 1) (hN : e * h - f * g = 1) :
     (a * e + b * g) * (c * f + d * h) - (a * f + b * h) * (c * e + d * g) = 1 := by
   nlinarith [mobius_compose_det a b c d e f g h]
+
 
 
 
@@ -56,10 +61,12 @@ theorem pauli_xz_anticommute :
 
 
 
+
 /-- The trace of Pauli X is zero. -/
 theorem pauli_x_trace :
     Matrix.trace !![(0:ℤ), 1; 1, 0] = 0 := by
   simp [Matrix.trace, Fin.sum_univ_two]
+
 
 
 
@@ -70,10 +77,12 @@ theorem pauli_z_trace :
 
 
 
+
 /-- For a Bloch vector (x,y,z) on S², the corresponding density matrix
 has Tr(ρ) = 1 (proper normalization). -/
 theorem bloch_density_trace_one (x y z : ℝ) (h : x ^ 2 + y ^ 2 + z ^ 2 = 1) :
     (1 + z) / 2 + (1 - z) / 2 = 1 := by ring
+
 
 
 
@@ -86,6 +95,7 @@ theorem bloch_purity (x y z : ℝ) (h : x ^ 2 + y ^ 2 + z ^ 2 = 1) :
 
 
 
+
 /-- The crystallization potential has period 1 (ℤ-periodicity).
 sin²(π(m+1)) = sin²(πm). -/
 theorem crystal_period_one (m : ℝ) :
@@ -94,6 +104,7 @@ theorem crystal_period_one (m : ℝ) :
     rw [show π * (m + 1) = π * m + π by ring]
     simp [sin_add, sin_pi, cos_pi]
   rw [this]; ring
+
 
 
 
@@ -112,6 +123,7 @@ theorem crystal_reflection_symmetry (n : ℤ) (t : ℝ) :
 
 
 
+
 /-- The maximum of the crystallization loss on any period is exactly 1,
 achieved at half-integers. -/
 theorem crystal_max_value :
@@ -121,10 +133,12 @@ theorem crystal_max_value :
 
 
 
+
 /-- The stereographic energy vanishes when t = 0 (south pole has y=1 ∈ ℤ). -/
 theorem stereo_energy_zero_at_origin :
     sin (π * ((1 - (0 : ℝ) ^ 2) / (1 + 0 ^ 2))) ^ 2 = 0 := by
   norm_num [sin_pi]
+
 
 
 
@@ -140,6 +154,7 @@ theorem euler_four_squares_team (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℤ) 
 
 
 
+
 /-- Consequence: the set of integers representable as sums of four squares
 is closed under multiplication. -/
 theorem sum_four_sq_mul (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℤ) :
@@ -147,6 +162,7 @@ theorem sum_four_sq_mul (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℤ) :
     (a₁^2 + a₂^2 + a₃^2 + a₄^2) * (b₁^2 + b₂^2 + b₃^2 + b₄^2) =
     x₁^2 + x₂^2 + x₃^2 + x₄^2 :=
   ⟨_, _, _, _, euler_four_squares_team a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄⟩
+
 
 
 
@@ -167,9 +183,11 @@ theorem degen_eight_squares
 
 
 
+
 /-- Dimension 1: trivial identity a²·b² = (ab)². -/
 theorem hurwitz_dim1 (a b : ℤ) :
     a ^ 2 * b ^ 2 = (a * b) ^ 2 := by ring
+
 
 
 
@@ -180,17 +198,6 @@ theorem hurwitz_dim2 (a₁ a₂ b₁ b₂ : ℤ) :
 
 
 
-/-- The Hopf map preserves the sphere: if a²+b²+c²+d²=1, then
-(2(ac+bd))² + (2(bc-ad))² + (a²+b²-c²-d²)² = 1. -/
-theorem hopf_preserves_sphere (a b c d : ℝ)
-    (h : a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 = 1) :
-    (2*(a*c + b*d))^2 + (2*(b*c - a*d))^2 + (a^2 + b^2 - c^2 - d^2)^2 = 1 := by
-  nlinarith [sq_nonneg (a^2 + b^2 - c^2 - d^2),
-             sq_nonneg (a*c + b*d), sq_nonneg (b*c - a*d),
-             sq_nonneg (a*c - b*d), sq_nonneg (b*c + a*d),
-             sq_nonneg a, sq_nonneg b, sq_nonneg c, sq_nonneg d]
-
-
 
 /-- The conformal factor of 2D stereographic projection is positive. -/
 theorem conformal_factor_2d (u v : ℝ) :
@@ -198,10 +205,12 @@ theorem conformal_factor_2d (u v : ℝ) :
 
 
 
+
 /-- Composing conformal factors: the product of two positive conformal factors
 is positive, ensuring the composed map remains conformal. -/
 theorem conformal_chain (f₁ f₂ : ℝ) (h1 : 0 < f₁) (h2 : 0 < f₂) :
     0 < f₁ * f₂ := by positivity
+
 
 
 

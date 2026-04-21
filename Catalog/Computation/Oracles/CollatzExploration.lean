@@ -13,6 +13,7 @@ def collatz (n : ℕ) : ℕ :=
 
 
 
+
 /-- [Section: # CatalogBuild.Computation.Oracles.CollatzExploration
 Auto-generated from theorem catalog database.
 Domain: Computation/Oracles
@@ -22,8 +23,14 @@ theorem collatz_even (n : ℕ) (h : 2 ∣ n) : collatz n = n / 2 := by
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.CollatzExploration
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 10] -/
 theorem collatz_odd (n : ℕ) (h : ¬ 2 ∣ n) : collatz n = 3 * n + 1 := by
   unfold collatz; aesop;
+
 
 
 
@@ -32,8 +39,10 @@ theorem collatz_pos (n : ℕ) (hn : n > 0) : collatz n > 0 := by
 
 
 
+
 theorem collatz_power_of_two (k : ℕ) : collatz (2 ^ (k + 1)) = 2 ^ k := by
   unfold collatz; norm_num [ pow_succ' ] ;
+
 
 
 
@@ -44,6 +53,7 @@ theorem collatz_even_descent (n : ℕ) (hn : n > 0) (he : 2 ∣ n) :
 
 
 
+
 theorem collatz_odd_then_even (n : ℕ) (hn : n > 0) (ho : ¬ 2 ∣ n) :
     2 ∣ collatz n := by
   unfold collatz; split_ifs <;> simp_all +arith +decide [ Nat.add_mod, Nat.mul_mod ] ;
@@ -51,9 +61,11 @@ theorem collatz_odd_then_even (n : ℕ) (hn : n > 0) (ho : ¬ 2 ∣ n) :
 
 
 
+
 theorem collatz_mod2_zero (n : ℕ) (hn : n > 0) (h : n % 2 = 0) :
     collatz n < n := by
   exact collatz_even_descent n hn ( Nat.dvd_of_mod_eq_zero h )
+
 
 
 
@@ -64,6 +76,7 @@ theorem collatz_two_steps_odd (n : ℕ) (hn : n > 0) (ho : ¬ 2 ∣ n) :
 
 
 
+
 theorem collatz_descent_engine (n : ℕ) (hn : n > 0) (ho : n % 2 = 1) :
     ∃ k, k ≥ 1 ∧ (3 * n + 1) = 2 ^ k * ((3 * n + 1) / 2 ^ k) ∧
     ¬ 2 ∣ ((3 * n + 1) / 2 ^ k) := by
@@ -71,4 +84,5 @@ theorem collatz_descent_engine (n : ℕ) (hn : n > 0) (ho : n % 2 = 1) :
   · norm_num [ Nat.factorization_eq_zero_iff, Nat.dvd_iff_mod_eq_zero, Nat.add_mod, Nat.mul_mod, ho ];
   · rw [ Nat.mul_div_cancel' ( Nat.ordProj_dvd _ _ ) ];
   · exact Nat.not_dvd_ordCompl ( by norm_num ) ( by norm_num )
+
 

@@ -14,9 +14,11 @@ def trigEnergy (N : ℕ) (x : ℝ) : ℝ := Real.sin (π * ↑N / x) ^ 2
 
 
 
+
 /-- Energy is nonneg. -/
 theorem trig_energy_nonneg (N : ℕ) (x : ℝ) : 0 ≤ trigEnergy N x :=
   sq_nonneg _
+
 
 
 
@@ -26,9 +28,11 @@ theorem trig_energy_le_one (N : ℕ) (x : ℝ) : trigEnergy N x ≤ 1 :=
 
 
 
+
 /-- |sin(2θ)| ≤ 1. -/
 theorem sin_two_bounded (θ : ℝ) : |Real.sin (2 * θ)| ≤ 1 :=
   abs_sin_le_one _
+
 
 
 
@@ -39,8 +43,10 @@ theorem gradient_formula (θ : ℝ) :
 
 
 
+
 /-- Safe learning rate: η = 1/(2L). -/
 def safeLR (L : ℝ) : ℝ := 1 / (2 * L)
+
 
 
 
@@ -50,14 +56,17 @@ theorem safe_lr_pos (L : ℝ) (hL : 0 < L) : 0 < safeLR L := by
 
 
 
+
 /-- Descent gain is positive when gradient ≠ 0. -/
 theorem descent_gain_pos (g eta : ℝ) (hg : g ≠ 0) (heta : 0 < eta) :
     0 < eta * g ^ 2 / 2 := by positivity
 
 
 
+
 /-- Geometric decay sequence. -/
 def geomDecay (L0 r : ℝ) (t : ℕ) : ℝ := (1 - r) ^ t * L0
+
 
 
 
@@ -72,6 +81,7 @@ theorem geom_decay_tendsto (L0 r : ℝ) (_ : 0 < L0) (hr : 0 < r) (hr1 : r < 1) 
 
 
 
+
 /-- Decay is bounded by initial loss. -/
 theorem geom_decay_bound (L0 r : ℝ) (hL : 0 ≤ L0) (_ : 0 < r) (hr1 : r < 1)
     (t : ℕ) : geomDecay L0 r t ≤ L0 := by
@@ -83,8 +93,10 @@ theorem geom_decay_bound (L0 r : ℝ) (hL : 0 ≤ L0) (_ : 0 < r) (hr1 : r < 1)
 
 
 
+
 /-- Adam LR: η / (√v + ε). -/
 def adamLR (eta v eps : ℝ) : ℝ := eta / (Real.sqrt v + eps)
+
 
 
 
@@ -93,6 +105,7 @@ theorem adam_lr_pos (eta v eps : ℝ) (heta : 0 < eta) (_ : 0 ≤ v) (heps : 0 <
     0 < adamLR eta v eps := by
   unfold adamLR
   exact div_pos heta (by linarith [Real.sqrt_nonneg v])
+
 
 
 
@@ -106,8 +119,10 @@ theorem adam_lr_mono (eta eps v1 v2 : ℝ)
 
 
 
+
 /-- With k channels, variance = base/k. -/
 def varianceReduction (base : ℝ) (k : ℕ) : ℝ := base / k
+
 
 
 
@@ -120,8 +135,10 @@ theorem variance_mono (base : ℝ) (hb : 0 < base)
 
 
 
+
 /-- Search window at scale s. -/
 def searchWindow (s : ℕ) : ℕ := 2 ^ (s + 1)
+
 
 
 
@@ -133,8 +150,10 @@ theorem window_mono (s1 s2 : ℕ) (h : s1 ≤ s2) :
 
 
 
+
 /-- Expressiveness grows with depth. -/
 def emlExpressiveness (d : ℕ) : ℕ := 2 ^ d
+
 
 
 
@@ -142,6 +161,7 @@ def emlExpressiveness (d : ℕ) : ℕ := 2 ^ d
 theorem expressiveness_mono (d1 d2 : ℕ) (h : d1 ≤ d2) :
     emlExpressiveness d1 ≤ emlExpressiveness d2 :=
   Nat.pow_le_pow_right (by omega) h
+
 
 
 
@@ -153,8 +173,10 @@ theorem expressiveness_exp (d : ℕ) :
 
 
 
+
 /-- Proximity: N mod k. -/
 def factorProximity (N k : ℕ) : ℕ := N % k
+
 
 
 
@@ -165,10 +187,12 @@ theorem proximity_zero_iff (N k : ℕ) (_ : 0 < k) :
 
 
 
+
 /-- Proximity < k. -/
 theorem proximity_bounded (N k : ℕ) (hk : 0 < k) :
     factorProximity N k < k :=
   Nat.mod_lt N hk
+
 
 
 

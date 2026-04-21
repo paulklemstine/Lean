@@ -18,15 +18,18 @@ structure PredictionGame where
 
 
 
+
 /-- Minimax value: the forecaster minimizes the worst case -/
 noncomputable def minimaxValue (n m : ℕ) (losses : Fin n → Fin m → ℝ) : ℝ :=
   ⨅ i, ⨆ j, losses i j
 
 
 
+
 /-- Maximin value: the adversary maximizes the best case -/
 noncomputable def maximinValue (n m : ℕ) (losses : Fin n → Fin m → ℝ) : ℝ :=
   ⨆ j, ⨅ i, losses i j
+
 
 
 
@@ -44,9 +47,11 @@ theorem weak_duality (n m : ℕ) [NeZero n] [NeZero m]
 
 
 
+
 /-- Cumulative regret: how much worse we did than the best fixed action -/
 noncomputable def cumulativeRegret (T : ℕ) (losses : ℕ → ℝ) (bestLoss : ℝ) : ℝ :=
   (∑ t ∈ range T, losses t) - T * bestLoss
+
 
 
 
@@ -57,6 +62,11 @@ theorem expert_regret_bound_nonneg (n T : ℕ) (hn : 0 < n) (hT : 0 < T) :
 
 
 
+
+/-- [Section: # CatalogBuild.MachineLearning.Prediction.AdversarialPrediction
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/Prediction
+Declarations: 14] -/
 theorem average_regret_vanishes (n : ℕ) (hn : 0 < n) :
     Filter.Tendsto (fun T : ℕ => Real.sqrt (Real.log n / (2 * T)))
       Filter.atTop (nhds 0) := by
@@ -64,9 +74,11 @@ theorem average_regret_vanishes (n : ℕ) (hn : 0 < n) :
 
 
 
+
 /-- A predictor is ε-robust if small perturbations change predictions by ≤ δ -/
 def isRobust (f : ℝ → ℝ) (ε δ : ℝ) : Prop :=
   ∀ x y, |x - y| ≤ ε → |f x - f y| ≤ δ
+
 
 
 
@@ -81,6 +93,7 @@ theorem lipschitz_is_robust (f : ℝ → ℝ) (L : ℝ) (hL : 0 ≤ L)
 
 
 
+
 /-- There is a fundamental tradeoff: more robust ↔ less accurate -/
 theorem robustness_accuracy_tradeoff
     (accuracy : ℝ → ℝ)
@@ -91,10 +104,12 @@ theorem robustness_accuracy_tradeoff
 
 
 
+
 /-- An adversary has a budget for perturbing inputs -/
 structure AdversaryBudget where
   budget : ℝ
   budget_pos : 0 < budget
+
 
 
 
@@ -110,6 +125,7 @@ theorem bounded_adversary_bounded_error
 
 
 
+
 /-- With fraction α of data corrupted, prediction error degrades linearly -/
 theorem corruption_error_bound (α baseline_error : ℝ)
     (_hα0 : 0 ≤ α) (_hα1 : α ≤ 1) (hb : 0 ≤ baseline_error) :
@@ -118,10 +134,12 @@ theorem corruption_error_bound (α baseline_error : ℝ)
 
 
 
+
 /-- The breakdown point: no estimator works with arbitrary corruption above 50% -/
 theorem breakdown_point_principle (corruption_fraction : ℝ) (h : 1/2 < corruption_fraction) :
     corruption_fraction > 1 - corruption_fraction := by
   linarith
+
 
 
 

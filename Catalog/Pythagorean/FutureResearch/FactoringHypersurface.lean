@@ -12,6 +12,7 @@ def revealsFactorVia (x N : ℤ) : Prop := 1 < Int.gcd (N - x) N
 
 
 
+
 /-- The factoring set for a single prime factor: { x : p ∣ N - x }
 is an arithmetic progression with common difference p. -/
 theorem factoring_set_is_AP (p : ℤ) (hp : 0 < p) (N : ℤ) :
@@ -20,6 +21,7 @@ theorem factoring_set_is_AP (p : ℤ) (hp : 0 < p) (N : ℤ) :
   constructor
   · rintro ⟨k, hk⟩; exact ⟨k, by linarith⟩
   · rintro ⟨k, rfl⟩; exact ⟨k, by ring⟩
+
 
 
 
@@ -38,6 +40,7 @@ theorem semiprime_factoring_channels (p q x : ℤ) :
 
 
 
+
 /-- [Section: # CatalogBuild.Pythagorean.FutureResearch.FactoringHypersurface
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/FutureResearch
@@ -52,12 +55,18 @@ theorem exists_revealing_value (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
 
 
 
+
 /-- The GCD of N-x and N divides N. -/
 theorem gcd_divides_N' (x N : ℤ) : ↑(Int.gcd (N - x) N) ∣ N :=
   Int.gcd_dvd_right _ _
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.FutureResearch.FactoringHypersurface
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/FutureResearch
+Declarations: 9] -/
 theorem prime_divides_gcd (p : ℤ) (x N : ℤ)
     (hp_div_x : p ∣ x) (hp_div_N : p ∣ N) :
     p ∣ ↑(Int.gcd (N - x) N) := by
@@ -65,10 +74,12 @@ theorem prime_divides_gcd (p : ℤ) (x N : ℤ)
 
 
 
+
 /-- A single nontrivial GCD reveals a complete factorization. -/
 theorem single_gcd_suffices (N p : ℕ) (hp : Nat.Prime p) (hpN : p ∣ N) :
     N / p * p = N :=
   Nat.div_mul_cancel hpN
+
 
 
 
@@ -82,10 +93,12 @@ theorem remaining_sum_after_peel {k : ℕ} (legs : Fin k → ℤ) (d : ℤ) (j :
 
 
 
+
 /-- Higher k gives strictly more factoring channels. -/
 theorem more_channels_more_chances (k₁ k₂ : ℕ) (hk : k₁ < k₂) :
     k₁ + Nat.choose k₁ 2 < k₂ + Nat.choose k₂ 2 := by
   have : Nat.choose k₁ 2 ≤ Nat.choose k₂ 2 :=
     Nat.choose_le_choose 2 (le_of_lt hk)
   omega
+
 

@@ -16,6 +16,7 @@ noncomputable def r₂ (n : ℕ) : ℕ :=
 
 
 
+
 /-- Count representations of n as a sum of 4 squares: #{(a,b,c,d) ∈ ℤ⁴ : a²+b²+c²+d² = n} -/
 noncomputable def r₄ (n : ℕ) : ℕ :=
   Finset.card (Finset.filter
@@ -25,9 +26,11 @@ noncomputable def r₄ (n : ℕ) : ℕ :=
 
 
 
+
 /-- Count divisors of n that are ≡ 1 (mod 4) -/
 def d₁ (n : ℕ) : ℕ :=
   ((Nat.divisors n).filter (fun d => d % 4 = 1)).card
+
 
 
 
@@ -37,9 +40,11 @@ def d₃ (n : ℕ) : ℕ :=
 
 
 
+
 /-- Jacobi's formula helper: sum of divisors of n not divisible by 4 -/
 def jacobi_sum (n : ℕ) : ℕ :=
   ((Nat.divisors n).filter (fun d => ¬(4 ∣ d))).sum id
+
 
 
 
@@ -58,6 +63,7 @@ structure FourChannelSig where
 
 
 
+
 /-- Compute the four-channel signature of n -/
 def fourChannelSig (n : ℕ) : FourChannelSig where
   is_square := Nat.sqrt n ^ 2 == n
@@ -66,6 +72,7 @@ def fourChannelSig (n : ℕ) : FourChannelSig where
   octonionic_signal :=
     ((Nat.divisors n).sum fun d =>
       if (n + d) % 2 == 0 then (↑d : ℤ) ^ 3 else -(↑d : ℤ) ^ 3)
+
 
 
 
@@ -80,9 +87,15 @@ theorem channel_2_implies_4 {n : ℕ}
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Factoring.IntegerDecoder
+Auto-generated from theorem catalog database.
+Domain: Computation/Factoring
+Declarations: 12] -/
 theorem fermat_sum_two_squares {p : ℕ} (hp : Nat.Prime p) (hmod : p % 4 = 1) :
     ∃ a b : ℤ, a ^ 2 + b ^ 2 = ↑p := by
   have := Fact.mk hp; have := @Nat.Prime.sq_add_sq p; aesop;
+
 
 
 
@@ -111,8 +124,10 @@ theorem eight_square_identity_exists (x y : Fin 8 → ℤ) :
 
 
 
+
 theorem jacobi_sum_pos {n : ℕ} (hn : n ≥ 1) : jacobi_sum n ≥ 1 := by
   exact Finset.sum_pos ( fun x hx => Nat.pos_of_mem_divisors <| Finset.mem_filter.mp hx |>.1 ) ⟨ 1, Finset.mem_filter.mpr ⟨ Nat.mem_divisors.mpr ⟨ by norm_num, by linarith ⟩, by norm_num ⟩ ⟩
+
 
 
 
@@ -137,6 +152,7 @@ theorem d₁_multiplicative {m n : ℕ} (hcop : Nat.Coprime m n) :
   rw [ Finset.sum_product, Finset.sum_mul, Finset.sum_mul ];
   simp +decide only [Finset.mul_sum _ _ _];
   simpa only [ ← Finset.sum_add_distrib ] using Finset.sum_congr rfl fun i hi => Finset.sum_congr rfl fun j hj => by norm_num [ Nat.mul_mod ] ; have := Nat.mod_lt i zero_lt_four; have := Nat.mod_lt j zero_lt_four; interval_cases i % 4 <;> interval_cases j % 4 <;> trivial;
+
 
 
 end

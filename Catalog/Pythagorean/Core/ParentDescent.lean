@@ -13,9 +13,11 @@ def B₁_inv : Matrix (Fin 3) (Fin 3) ℤ :=
 
 
 
+
 /-- Inverse Berggren matrix B₂⁻¹ -/
 def B₂_inv : Matrix (Fin 3) (Fin 3) ℤ :=
   !![1, 2, -2; 2, 1, -2; -2, -2, 3]
+
 
 
 
@@ -25,9 +27,11 @@ def B₃_inv : Matrix (Fin 3) (Fin 3) ℤ :=
 
 
 
+
 /-- Apply B₁⁻¹ to a triple -/
 def applyInvB1 (a b c : ℤ) : ℤ × ℤ × ℤ :=
   (a + 2*b - 2*c, -2*a - b + 2*c, -2*a - 2*b + 3*c)
+
 
 
 
@@ -37,9 +41,11 @@ def applyInvB2 (a b c : ℤ) : ℤ × ℤ × ℤ :=
 
 
 
+
 /-- Apply B₃⁻¹ to a triple -/
 def applyInvB3 (a b c : ℤ) : ℤ × ℤ × ℤ :=
   (-a - 2*b + 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
+
 
 
 
@@ -50,10 +56,12 @@ theorem invB1_comp_B1 (a b c : ℤ) :
 
 
 
+
 /-- B₂⁻¹ ∘ B₂ = Identity -/
 theorem invB2_comp_B2 (a b c : ℤ) :
     applyInvB2 (a + 2*b + 2*c) (2*a + b + 2*c) (2*a + 2*b + 3*c) = (a, b, c) := by
   unfold applyInvB2; ext <;> simp <;> ring
+
 
 
 
@@ -64,9 +72,11 @@ theorem invB3_comp_B3 (a b c : ℤ) :
 
 
 
+
 /-- B₁_inv is the inverse of the Berggren B₁ matrix -/
 theorem B₁_inv_mul_B₁ : B₁_inv * !![1, -2, 2; 2, -1, 2; 2, -2, 3] = 1 := by
   native_decide
+
 
 
 
@@ -76,9 +86,11 @@ theorem B₂_inv_mul_B₂ : B₂_inv * !![1, 2, 2; 2, 1, 2; 2, 2, 3] = 1 := by
 
 
 
+
 /-- B₃_inv is the inverse of B₃ -/
 theorem B₃_inv_mul_B₃ : B₃_inv * !![-1, 2, 2; -2, 1, 2; -2, 2, 3] = 1 := by
   native_decide
+
 
 
 
@@ -89,6 +101,7 @@ theorem invB1_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 /-- B₂⁻¹ preserves the Pythagorean property. -/
 theorem invB2_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (a + 2*b - 2*c) ^ 2 + (2*a + b - 2*c) ^ 2 = (-2*a - 2*b + 3*c) ^ 2 := by
@@ -96,10 +109,12 @@ theorem invB2_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 /-- B₃⁻¹ preserves the Pythagorean property. -/
 theorem invB3_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (-a - 2*b + 2*c) ^ 2 + (2*a + b - 2*c) ^ 2 = (-2*a - 2*b + 3*c) ^ 2 := by
   nlinarith
+
 
 
 
@@ -113,12 +128,14 @@ theorem parent_hypotenuse_lt (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
 
 
 
+
 /-- The inverse hypotenuse is positive for any Pythagorean triple with a, b, c > 0. -/
 theorem parent_hypotenuse_pos (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (h : a ^ 2 + b ^ 2 = c ^ 2) :
     0 < -2*a - 2*b + 3*c := by
   have h1 : 9 * c ^ 2 > 4 * (a + b) ^ 2 := by nlinarith [sq_nonneg (a - b)]
   nlinarith [sq_nonneg (3 * c - 2 * (a + b))]
+
 
 
 
@@ -130,10 +147,12 @@ theorem descent_step_bound (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
 
 
 
+
 /-- B₁⁻¹ and B₂⁻¹ cannot both produce positive second components. -/
 theorem invB1_invB2_exclusive (a b c : ℤ)
     (h1 : 0 < -2*a - b + 2*c) (h2 : 0 < 2*a + b - 2*c) : False := by
   linarith
+
 
 
 
@@ -144,12 +163,14 @@ theorem invB12_invB3_exclusive (a b c : ℤ)
 
 
 
+
 /-- **At most one** inverse Berggren map gives all-positive components.
 This follows from the sign-exclusivity of the first and second components. -/
 theorem at_most_one_positive_inverse (a b c : ℤ) :
     ¬ ((0 < a + 2*b - 2*c ∧ 0 < -2*a - b + 2*c) ∧
        (0 < a + 2*b - 2*c ∧ 0 < 2*a + b - 2*c)) := by
   intro ⟨⟨_, h1⟩, ⟨_, h2⟩⟩; linarith
+
 
 
 
@@ -165,6 +186,7 @@ def findParentBranch (a b c : ℤ) : ℕ × ℤ × ℤ × ℤ :=
 
 
 
+
 /-- Descent: repeatedly find parent until reaching (3,4,5). Returns the path. -/
 def descentPath : ℤ × ℤ × ℤ → ℕ → List (ℕ × ℤ × ℤ × ℤ)
   | _, 0 => []
@@ -173,6 +195,7 @@ def descentPath : ℤ × ℤ × ℤ → ℕ → List (ℕ × ℤ × ℤ × ℤ)
     else
       let (branch, pa, pb, pc) := findParentBranch a b c
       (branch, a, b, c) :: descentPath (pa, pb, pc) n
+
 
 
 
@@ -187,6 +210,7 @@ def descentDepth : ℤ × ℤ × ℤ → ℕ → ℕ
 
 
 
+
 /-- Extract nontrivial factors of N from a triple (a, b, c) via GCD. -/
 def extractFactors (N : ℕ) (a b : ℤ) : List (ℕ × ℕ) :=
   let gA := Nat.gcd a.natAbs N
@@ -194,6 +218,7 @@ def extractFactors (N : ℕ) (a b : ℤ) : List (ℕ × ℕ) :=
   let results : List (ℕ × ℕ) := []
   let results := if 1 < gA && gA < N then results ++ [(gA, N / gA)] else results
   if 1 < gB && gB < N then results ++ [(gB, N / gB)] else results
+
 
 
 
@@ -230,10 +255,12 @@ where
 
 
 
+
 /-- B₁⁻¹ preserves the Lorentz form. -/
 theorem invB1_lorentz (a b c : ℤ) :
     (a + 2*b - 2*c) ^ 2 + (-2*a - b + 2*c) ^ 2 - (-2*a - 2*b + 3*c) ^ 2 =
     a ^ 2 + b ^ 2 - c ^ 2 := by ring
+
 
 
 
@@ -244,10 +271,12 @@ theorem invB2_lorentz (a b c : ℤ) :
 
 
 
+
 /-- B₃⁻¹ preserves the Lorentz form. -/
 theorem invB3_lorentz (a b c : ℤ) :
     (-a - 2*b + 2*c) ^ 2 + (2*a + b - 2*c) ^ 2 - (-2*a - 2*b + 3*c) ^ 2 =
     a ^ 2 + b ^ 2 - c ^ 2 := by ring
+
 
 
 
@@ -257,15 +286,18 @@ theorem leg_factorization (m n : ℤ) :
 
 
 
+
 /-- GCD of consecutive odd legs in the B₁ chain. -/
 theorem B1_leg_relation (a b c : ℤ) :
     a + 2*b - 2*c = a - 2*(c - b) := by ring
 
 
 
+
 /-- The B₃ inverse maps the odd leg to -a - 2b + 2c = 2(c-b) - a. -/
 theorem B3_leg_relation (a b c : ℤ) :
     -a - 2*b + 2*c = 2*(c - b) - a := by ring
+
 
 
 
@@ -285,6 +317,7 @@ def pathEncoding : ℤ × ℤ × ℤ → ℕ → List ℕ
 #eval pathEncoding (55, 48, 73) 20     -- [2, 1]
 #eval pathEncoding (119, 120, 169) 20  -- [2, 2]
 #eval pathEncoding (697, 696, 985) 20  -- [2, 2, 2]
+
 
 
 
@@ -310,14 +343,17 @@ def factorizationComplexity (N : ℕ) (fuel : ℕ) : ℕ :=
 
 
 
+
 /-- The descent hypotenuse satisfies c' ≤ c - 2 for legs ≥ 1. -/
 theorem descent_decreases_at_least_2 (a b c : ℤ) (ha : 1 ≤ a) (hb : 1 ≤ b) :
     -2*a - 2*b + 3*c ≤ 3*c - 4 := by linarith
 
 
 
+
 /-- The descent reduces hypotenuse by exactly 2(a+b-c), which is positive. -/
 theorem descent_hyp_diff (a b c : ℤ) :
     c - (-2*a - 2*b + 3*c) = 2*(a + b) - 2*c := by ring
+
 
 

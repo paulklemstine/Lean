@@ -19,9 +19,15 @@ theorem no_match_prob_tendsto_zero (k : ℕ) (A : ℕ) (hA : 1 < A) (hk : 0 < k)
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.SciFi.AlienLife
+Auto-generated from theorem catalog database.
+Domain: Speculative/SciFi
+Declarations: 6] -/
 theorem trial_prob_lt_one (k : ℕ) (A : ℕ) (hA : 1 < A) (hk : 0 < k) :
     (1 : ℝ) - 1 / (A : ℝ) ^ k < 1 := by
   exact sub_lt_self _ ( by positivity )
+
 
 
 
@@ -31,9 +37,11 @@ theorem trial_prob_nonneg (k : ℕ) (A : ℕ) (hA : 1 < A) (hk : 0 < k) :
 
 
 
+
 /-- CDF of the nearest-neighbor distance in a 3D Poisson process. -/
 def poissonNearestCDF (ρ r : ℝ) : ℝ :=
   1 - Real.exp (-(4 * Real.pi * ρ * r ^ 3 / 3))
+
 
 
 
@@ -42,9 +50,11 @@ theorem poissonNearestCDF_zero (ρ : ℝ) : poissonNearestCDF ρ 0 = 0 := by
 
 
 
+
 theorem poissonNearestCDF_tendsto_one (ρ : ℝ) (hρ : 0 < ρ) :
     Filter.Tendsto (poissonNearestCDF ρ) Filter.atTop (nhds 1) := by
   exact le_trans ( tendsto_const_nhds.sub <| Real.tendsto_exp_atBot.comp <| Filter.tendsto_neg_atTop_atBot.comp <| Filter.Tendsto.atTop_div_const ( by positivity ) <| Filter.Tendsto.const_mul_atTop ( by positivity ) <| Filter.tendsto_pow_atTop ( by positivity ) ) <| by norm_num;
+
 
 
 

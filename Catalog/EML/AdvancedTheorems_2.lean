@@ -16,7 +16,13 @@ Declarations: 13] -/
 def spb_adv (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
 
 
+
+/-- [Section: # CatalogBuild.EML.AdvancedTheorems_2
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 13] -/
 def spbH_adv (x y : ℝ) : ℝ := (x + y) / (1 + x * y)
+
 
 
 
@@ -26,9 +32,11 @@ theorem spbH_denom_pos (v₁ v₂ : ℝ) (h1 : |v₁| < 1) (h2 : |v₂| < 1) :
 
 
 
+
 theorem spbH_subluminal (v₁ v₂ : ℝ) (h1 : |v₁| < 1) (h2 : |v₂| < 1) :
     |spbH_adv v₁ v₂| < 1 := by
   exact abs_lt.mpr ⟨ by rw [ spbH_adv ] ; rw [ lt_div_iff₀ ] <;> cases abs_cases v₁ <;> cases abs_cases v₂ <;> push_cast [ * ] at * <;> nlinarith, by rw [ spbH_adv ] ; rw [ div_lt_iff₀ ] <;> cases abs_cases v₁ <;> cases abs_cases v₂ <;> push_cast [ * ] at * <;> nlinarith ⟩
+
 
 
 
@@ -41,9 +49,11 @@ theorem spbH_light_invariance (v : ℝ) (hv : 1 + v ≠ 0) :
 
 
 
+
 /-- When a = 0, every point is a fixed point. -/
 theorem spb_fixed_trivial (x : ℝ) : spb_adv x 0 = x := by
   simp [spb_adv]
+
 
 
 
@@ -54,9 +64,11 @@ theorem spb_as_mobius (a x : ℝ) :
 
 
 
+
 theorem arctan_spb (x y : ℝ) (h : 1 - x * y > 0) :
     arctan (spb_adv x y) = arctan x + arctan y := by
   grind +suggestions
+
 
 
 
@@ -69,9 +81,11 @@ theorem spb_deriv_pos (x y : ℝ) (h : 1 - x * y ≠ 0) :
 
 
 
+
 /-- spb(x, x) = 2x/(1-x²). -/
 theorem spb_self_eq (x : ℝ) : spb_adv x x = 2 * x / (1 - x * x) := by
   unfold spb_adv; ring
+
 
 
 
@@ -81,9 +95,11 @@ theorem spbH_self_eq (x : ℝ) : spbH_adv x x = 2 * x / (1 + x * x) := by
 
 
 
+
 theorem spb_product_identity (x y : ℝ) (h1 : 1 - x * y ≠ 0) (h2 : 1 + x * y ≠ 0) :
     spb_adv x y * spb_adv x (-y) = (x ^ 2 - y ^ 2) / (1 - x ^ 2 * y ^ 2) := by
   unfold spb_adv; rw [ div_mul_div_comm ] ; ring;
+
 
 
 
@@ -91,6 +107,7 @@ theorem spb_difference_identity (x y : ℝ) (h1 : 1 - x * y ≠ 0) (h2 : 1 + x *
     spb_adv x y - spb_adv x (-y) = 2 * y * (1 + x ^ 2) / (1 - x ^ 2 * y ^ 2) := by
   unfold spb_adv;
   grind
+
 
 
 

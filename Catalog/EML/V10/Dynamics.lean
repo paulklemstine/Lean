@@ -2,31 +2,12 @@
 
 Auto-generated from theorem catalog database.
 Domain: EML/V10
-Declarations: 13
+Declarations: 11
 -/
 
 import Mathlib
 
 noncomputable section
-
-/-- d(z) > z for all z (no real fixed points). -/
-theorem emlDiag_gt_z (z : ℝ) : emlDiag z > z := by
-  unfold emlDiag
-  by_cases hz : 0 < z
-  · have h5 : Real.exp z ≥ 1 + z + z ^ 2 / 2 := by
-      rw [Real.exp_eq_exp_ℝ, NormedSpace.exp_eq_tsum_div]
-      exact le_trans (by norm_num [Finset.sum_range_succ])
-        (Summable.sum_le_tsum (Finset.range 3)
-          (fun i _ => by positivity) (Real.summable_pow_div_factorial z))
-    nlinarith [Real.log_le_sub_one_of_pos hz, sq_nonneg z]
-  · push_neg at hz
-    by_cases hz0 : z = 0
-    · subst hz0; simp
-    · rw [show Real.log z = Real.log (-z) from by rw [← Real.log_neg_eq_log]]
-      linarith [Real.exp_pos z,
-        Real.log_le_sub_one_of_pos (neg_pos.mpr (lt_of_le_of_ne hz hz0))]
-
-
 
 /-- d(z) ≥ z + 1 for all z. -/
 theorem emlDiag_ge_z_add_one (z : ℝ) : emlDiag z ≥ z + 1 := by
@@ -47,10 +28,12 @@ theorem emlDiag_ge_z_add_one (z : ℝ) : emlDiag z ≥ z + 1 := by
 
 
 
+
 /-- d(z) ≥ 2 for z > 0. -/
 theorem emlDiag_ge_two_pos (z : ℝ) (hz : 0 < z) : emlDiag z ≥ 2 := by
   unfold emlDiag
   linarith [Real.add_one_le_exp z, Real.log_le_sub_one_of_pos hz]
+
 
 
 
@@ -59,6 +42,7 @@ theorem emlDiag_strong_bound (z : ℝ) (hz : 1 ≤ z) :
     emlDiag z ≥ Real.exp z - z + 1 := by
   unfold emlDiag
   nlinarith [Real.log_le_sub_one_of_pos (by linarith : 0 < z)]
+
 
 
 
@@ -79,6 +63,7 @@ theorem emlDiag_ge_half_exp (z : ℝ) (hz : 2 ≤ z) :
 
 
 
+
 /-- Orbit linear divergence: dⁿ(z) ≥ z + n. -/
 theorem emlDiag_orbit_linear (z : ℝ) (n : ℕ) :
     emlDiagIter n z ≥ z + n := by
@@ -87,6 +72,7 @@ theorem emlDiag_orbit_linear (z : ℝ) (n : ℕ) :
   | succ n ih =>
     simp only [emlDiagIter]; push_cast
     linarith [emlDiag_ge_z_add_one (emlDiagIter n z)]
+
 
 
 
@@ -101,14 +87,17 @@ theorem emlDiag_orbit_ge_two (z : ℝ) (hz : 0 < z) (n : ℕ) (hn : 1 ≤ n) :
 
 
 
+
 /-- g(1) = e. -/
 theorem emlGmap_one : emlGmap 1 = Real.exp 1 := by simp [emlGmap, Real.log_one]
+
 
 
 
 /-- g(e) = e − 1. -/
 theorem emlGmap_e : emlGmap (Real.exp 1) = Real.exp 1 - 1 := by
   simp [emlGmap, Real.log_exp]
+
 
 
 
@@ -120,13 +109,6 @@ theorem emlGmap_hasDerivAt (z : ℝ) (hz : 0 < z) :
 
 
 
-/-- g is strictly decreasing on (0,∞). -/
-theorem emlGmap_strictAnti : StrictAntiOn emlGmap (Set.Ioi 0) := by
-  intro a ha b _ hab
-  unfold emlGmap
-  linarith [Real.log_lt_log ha hab]
-
-
 
 /-- Gap derivative at z > 0. -/
 theorem emlGap_deriv (z : ℝ) (hz : 0 < z) :
@@ -136,11 +118,13 @@ theorem emlGap_deriv (z : ℝ) (hz : 0 < z) :
 
 
 
+
 /-- For z ≥ 2: d(z) ≥ eᶻ − z. -/
 theorem emlDiag_lower_exp (z : ℝ) (hz : 2 ≤ z) :
     emlDiag z ≥ Real.exp z - z := by
   unfold emlDiag
   linarith [Real.log_le_sub_one_of_pos (by linarith : 0 < z)]
+
 
 
 

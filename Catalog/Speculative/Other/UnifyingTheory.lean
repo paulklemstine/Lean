@@ -18,8 +18,10 @@ theorem oracle_truth_eq_range {X : Type*} (O : UniversalOracle X) :
 
 
 
+
 /-- The Minkowski form Q(a,b,c) = a² + b² - c². -/
 def Q_unif (a b c : ℤ) : ℤ := a ^ 2 + b ^ 2 - c ^ 2
+
 
 
 
@@ -30,10 +32,12 @@ theorem pythagorean_is_light_cone (a b c : ℤ) :
 
 
 
+
 /-- Stereographic projection lands on the unit circle. -/
 theorem stereo_on_circle' (t : ℚ) (ht : 1 + t ^ 2 ≠ 0) :
     ((1 - t ^ 2) / (1 + t ^ 2)) ^ 2 + ((2 * t) / (1 + t ^ 2)) ^ 2 = 1 := by
   field_simp; ring
+
 
 
 
@@ -44,9 +48,11 @@ theorem brahmagupta_fibonacci_unifying (a b c d : ℤ) :
 
 
 
+
 /-- Pythagorean parametrization. -/
 theorem pythagorean_parametrization_unifying (m n : ℤ) :
     (m ^ 2 - n ^ 2) ^ 2 + (2 * m * n) ^ 2 = (m ^ 2 + n ^ 2) ^ 2 := by ring
+
 
 
 
@@ -58,11 +64,13 @@ structure UnifyingStrangeLoop (X : Type*) where
 
 
 
+
 /-- Every strange loop has an associated oracle. -/
 def UnifyingStrangeLoop.toOracle {X : Type*} (L : UnifyingStrangeLoop X) :
     UniversalOracle X where
   observe := L.descend ∘ L.ascend
   idempotent := L.is_oracle
+
 
 
 
@@ -73,8 +81,10 @@ theorem strange_loop_outputs_meaningful {X : Type*} (L : UnifyingStrangeLoop X) 
 
 
 
+
 /-- The Hurwitz dimensions: only 1, 2, 4, 8 support normed division algebras. -/
 def hurwitzDimensions : Finset ℕ := {1, 2, 4, 8}
+
 
 
 
@@ -88,12 +98,14 @@ theorem quaternion_norm_mult_unif (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ
 
 
 
+
 /-- Oracle compression: image size ≤ domain size. -/
 theorem oracle_compresses_unif {n : ℕ} (O : Fin n → Fin n) :
     (Finset.image O Finset.univ).card ≤ n := by
   calc (Finset.image O Finset.univ).card
       ≤ (Finset.univ : Finset (Fin n)).card := Finset.card_image_le
     _ = n := Finset.card_fin n
+
 
 
 
@@ -115,6 +127,7 @@ theorem master_equation_unif {n : ℕ} (O : Fin n → Fin n) (hO : ∀ x, O (O x
 
 
 
+
 /-- The grand unification structure: a retract in a self-enriched category. -/
 structure GrandUnification (X : Type*) where
   project : X → X
@@ -124,11 +137,13 @@ structure GrandUnification (X : Type*) where
 
 
 
+
 /-- Every grand unification gives an oracle. -/
 def GrandUnification.toOracle {X : Type*} (G : GrandUnification X) :
     UniversalOracle X where
   observe := G.project
   idempotent := G.oracle
+
 
 
 
@@ -144,6 +159,7 @@ theorem grand_unification_theorem {X : Type*} (G : GrandUnification X) :
 
 
 
+
 /-- [Section: # CatalogBuild.Speculative.Other.UnifyingTheory
 Auto-generated from theorem catalog database.
 Domain: Speculative/Other
@@ -151,13 +167,21 @@ Declarations: 29] -/
 theorem the_answer_factorization : 42 = 2 * 3 * 7 := by norm_num
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.UnifyingTheory
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 29] -/
 theorem the_answer_catalan : Nat.choose 10 5 / 6 = 42 := by native_decide
+
 
 
 theorem the_answer_sum_evens : (Finset.range 6).sum (fun i => 2 * (i + 1)) = 42 := by native_decide
 
 
+
 theorem the_answer_pronic : 42 = 6 * 7 := by norm_num
+
 
 
 
@@ -168,10 +192,12 @@ theorem oracle_measurement {X : Type*} (O : UniversalOracle X) :
 
 
 
+
 /-- The truth set is closed under the oracle. -/
 theorem truth_set_closed {X : Type*} (O : UniversalOracle X) :
     ∀ x, O.observe x = x → O.observe (O.observe x) = O.observe x := by
   intro x _; exact O.idempotent x
+
 
 
 
@@ -185,15 +211,18 @@ theorem pell_group_law_unif (x₁ y₁ x₂ y₂ D : ℤ)
 
 
 
+
 /-- Berggren A preserves the light cone. -/
 theorem berggren_A_unif (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     (a - 2*b + 2*c)^2 + (2*a - b + 2*c)^2 = (2*a - 2*b + 3*c)^2 := by nlinarith
 
 
 
+
 /-- Berggren B preserves the light cone. -/
 theorem berggren_B_unif (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     (a + 2*b + 2*c)^2 + (2*a + b + 2*c)^2 = (2*a + 2*b + 3*c)^2 := by nlinarith
+
 
 
 
@@ -204,10 +233,12 @@ theorem berggren_C_unif (a b c : ℤ) (h : a^2 + b^2 = c^2) :
 
 
 
+
 /-- The Fundamental Theorem: Pythagorean = Light Cone. -/
 theorem fundamental_theorem_algebraic_light' (a b c : ℤ) :
     (a ^ 2 + b ^ 2 = c ^ 2) ↔ (Q_unif a b c = 0) := by
   unfold Q_unif; omega
+
 
 
 
@@ -216,11 +247,13 @@ theorem berggren_seed : 3^2 + 4^2 = 5^2 := by norm_num
 
 
 
+
 /-- Oracle invariance: all three Berggren matrices preserve the light cone. -/
 theorem light_cone_oracle_invariant' (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     (a - 2*b + 2*c)^2 + (2*a - b + 2*c)^2 = (2*a - 2*b + 3*c)^2 ∧
     (a + 2*b + 2*c)^2 + (2*a + b + 2*c)^2 = (2*a + 2*b + 3*c)^2 := by
   constructor <;> nlinarith
+
 
 
 

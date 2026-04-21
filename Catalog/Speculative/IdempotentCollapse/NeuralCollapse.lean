@@ -20,6 +20,7 @@ theorem centroid_projection_idempotent
 
 
 
+
 /-- In neural collapse, the inter-class angle is arccos(-1/(K-1)).
 We prove -1/(K-1) < 0 for K ≥ 2. -/
 theorem etf_angle_negative (K : ℕ) (hK : 2 ≤ K) :
@@ -28,6 +29,7 @@ theorem etf_angle_negative (K : ℕ) (hK : 2 ≤ K) :
   · norm_num
   · have : (2 : ℝ) ≤ (K : ℝ) := by exact_mod_cast hK
     linarith
+
 
 
 
@@ -43,6 +45,7 @@ theorem full_collapse_zero_variance
 
 
 
+
 /-- The collapse map sends each point to its class centroid. -/
 def collapseMap {d K N : ℕ}
     (_features : Fin N → EuclideanSpace ℝ (Fin d))
@@ -50,6 +53,7 @@ def collapseMap {d K N : ℕ}
     (centroids : Fin K → EuclideanSpace ℝ (Fin d)) :
     Fin N → EuclideanSpace ℝ (Fin d) :=
   fun i => centroids (labels i)
+
 
 
 
@@ -65,11 +69,13 @@ theorem collapse_map_stable {d K N : ℕ}
 
 
 
+
 /-- The collapse degree is bounded between 0 and 1. -/
 theorem collapse_degree_bounds (σ_within σ_total : ℝ)
     (hw : 0 ≤ σ_within) (ht : 0 < σ_total) (h_le : σ_within ≤ σ_total) :
     0 ≤ σ_within / σ_total ∧ σ_within / σ_total ≤ 1 := by
   exact ⟨div_nonneg hw (le_of_lt ht), div_le_one_iff.mpr (Or.inl ⟨ht, h_le⟩)⟩
+
 
 
 

@@ -13,6 +13,7 @@ def twoPole (a b t : ℚ) : ℚ :=
 
 
 
+
 /-- [Section: # CatalogBuild.Logic.Hypotheses
 Auto-generated from theorem catalog database.
 Domain: Logic
@@ -23,8 +24,14 @@ theorem pythagorean_from_stereo (t : ℤ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Logic.Hypotheses
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 7] -/
 theorem twoPole_0b_at_0 (b : ℚ) (hb : b ≠ 0) : twoPole 0 b 0 = b := by
   unfold twoPole; norm_num [ hb ] ;
+
 
 
 
@@ -38,9 +45,11 @@ theorem twoPole_transitivity (a b c t : ℚ)
 
 
 
+
 theorem matrix_product_identity (a b c : ℤ) :
     (b * c + 1) * (a * b + 1) + (c - b) * (a - b) = (1 + b ^ 2) * (a * c + 1) := by
       ring
+
 
 
 
@@ -50,7 +59,9 @@ theorem matrix_product_identity' (a b c : ℤ) :
 
 
 
+
 /-- The Gaussian norm identity: |1+ai|² = 1+a². -/
 theorem gaussian_norm (a : ℤ) : 1 + a ^ 2 = 1 + a ^ 2 := rfl
+
 
 

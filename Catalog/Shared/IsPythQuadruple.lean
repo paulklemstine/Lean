@@ -12,3 +12,4 @@ def IsPythQuadruple (a b c d : ℤ) : Prop :=
   a^2 + b^2 + c^2 = d^2
 
 
+

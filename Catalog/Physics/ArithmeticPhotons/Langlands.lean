@@ -15,9 +15,11 @@ def sumThreeSquaresReps (n : ℤ) : Set (ℤ × ℤ × ℤ) :=
 
 
 
+
 /-- The Jacobi theta function partial sum: θ₃(q) ≈ Σ_{n=-N}^{N} q^{n²} -/
 def thetaPartial (q : ℂ) (N : ℕ) : ℂ :=
   ∑ n ∈ Finset.Icc (-(N : ℤ)) N, q ^ (n ^ 2).toNat
+
 
 
 
@@ -30,12 +32,14 @@ structure ThetaCubeData where
 
 
 
+
 /-- Shimura lift data: maps weight (2k+1)/2 to weight 2k -/
 structure ShimuraLiftData where
   source_weight_num : ℕ
   source_level : ℕ
   target_weight : ℕ
   target_level : ℕ
+
 
 
 
@@ -48,6 +52,7 @@ def shimuraLift_3_2 : ShimuraLiftData where
 
 
 
+
 /-- The character χ₋₄ : ℤ → ℤ (Kronecker symbol (-4/·)) -/
 def chi_neg4 (n : ℤ) : ℤ :=
   if n % 4 == 1 then 1
@@ -56,8 +61,10 @@ def chi_neg4 (n : ℤ) : ℤ :=
 
 
 
+
 /-- χ₋₄(1) = 1 -/
 theorem chi_neg4_at_1 : chi_neg4 1 = 1 := by simp [chi_neg4]
+
 
 
 
@@ -66,13 +73,16 @@ theorem chi_neg4_at_3 : chi_neg4 3 = -1 := by simp [chi_neg4]
 
 
 
+
 /-- χ₋₄(5) = 1 (since 5 ≡ 1 mod 4) -/
 theorem chi_neg4_at_5 : chi_neg4 5 = 1 := by simp [chi_neg4]
 
 
 
+
 /-- χ₋₄(2) = 0 (even numbers) -/
 theorem chi_neg4_at_2 : chi_neg4 2 = 0 := by simp [chi_neg4]
+
 
 
 
@@ -87,12 +97,14 @@ structure ArithmeticPhotonLanglandsBridge where
 
 
 
+
 /-- Construct the Langlands bridge for a given energy d -/
 def mkLanglandsBridge (d : ℕ) : ArithmeticPhotonLanglandsBridge where
   d := d
   photon_count_set := sumThreeSquaresReps (↑d ^ 2)
   gl1_character := chi_neg4
   gl2_level := 4
+
 
 
 
@@ -108,10 +120,12 @@ theorem sq_not_7_mod_8 (d : ℤ) : d ^ 2 % 8 ≠ 7 := by
 
 
 
+
 /-- The form a² + b² + c² - d² represents zero nontrivially -/
 theorem lorentz_form_represents_zero : ∃ a b c d : ℤ,
     a ^ 2 + b ^ 2 + c ^ 2 - d ^ 2 = 0 ∧ (a, b, c, d) ≠ (0, 0, 0, 0) := by
   exact ⟨1, 0, 0, 1, by ring, by simp⟩
+
 
 
 
@@ -120,6 +134,7 @@ theorem lorentz_form_many_zeros : ∀ d : ℕ, d ≥ 1 →
     ∃ a b c : ℤ, a ^ 2 + b ^ 2 + c ^ 2 = (↑d) ^ 2 := by
   intro d _
   exact ⟨↑d, 0, 0, by ring⟩
+
 
 
 
@@ -135,6 +150,7 @@ theorem six_axis_representations (d : ℤ) (_hd : d ≠ 0) :
 
 
 
+
 /-- The modularity-photon dictionary (formal witness) -/
 inductive PhotonLanglandsCorrespondence where
   | energyToFourier : ℕ → PhotonLanglandsCorrespondence
@@ -146,6 +162,7 @@ inductive PhotonLanglandsCorrespondence where
 
 
 
+
 /-- Hecke eigenvalue data -/
 structure HeckeEigenvalueData where
   prime : ℕ
@@ -154,9 +171,11 @@ structure HeckeEigenvalueData where
 
 
 
+
 /-- For any prime p ≡ 1 (mod 4), p is a sum of two squares -/
 def fermatTwoSquares (p : ℕ) : Prop :=
   Nat.Prime p → p % 4 = 1 → ∃ a b : ℕ, a ^ 2 + b ^ 2 = p
+
 
 
 

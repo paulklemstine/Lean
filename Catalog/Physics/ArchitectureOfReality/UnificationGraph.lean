@@ -27,8 +27,10 @@ open MathDomain
 
 
 
+
 /-- There are exactly 12 domains -/
 theorem domain_count : Fintype.card MathDomain = 12 := by decide
+
 
 
 
@@ -37,6 +39,7 @@ structure Bridge where
   source : MathDomain
   target : MathDomain
   source_ne_target : source ≠ target
+
 
 
 
@@ -60,8 +63,10 @@ def establishedBridges : List (MathDomain × MathDomain) :=
 
 
 
+
 /-- There are 14 established bridges -/
 theorem established_bridge_count : establishedBridges.length = 14 := by decide
+
 
 
 
@@ -83,8 +88,10 @@ def newBridges : List (MathDomain × MathDomain) :=
 
 
 
+
 /-- There are 12 new bridges -/
 theorem new_bridge_count : newBridges.length = 12 := by decide
+
 
 
 
@@ -93,8 +100,10 @@ def maxEdges (n : ℕ) : ℕ := n * (n - 1) / 2
 
 
 
+
 /-- Max edges for 12 domains = 66 -/
 theorem max_edges_12 : maxEdges 12 = 66 := by decide
+
 
 
 
@@ -103,9 +112,11 @@ theorem total_bridges : establishedBridges.length + newBridges.length = 26 := by
 
 
 
+
 /-- The density exceeds 20% (26/66 ≈ 39.4%): 26 * 5 = 130 ≥ 66 = 66 * 1 -/
 theorem density_exceeds_twenty_pct :
     5 * (establishedBridges.length + newBridges.length) ≥ maxEdges 12 := by decide
+
 
 
 
@@ -126,9 +137,11 @@ def hasIdempotentStructure : MathDomain → Prop
 
 
 
+
 /-- All domains have idempotent structure -/
 theorem universal_idempotent : ∀ d : MathDomain, hasIdempotentStructure d := by
   intro d; cases d <;> trivial
+
 
 
 
@@ -138,9 +151,11 @@ def allBridges : List (MathDomain × MathDomain) :=
 
 
 
+
 /-- Check if two domains are connected by a bridge -/
 def connected (d₁ d₂ : MathDomain) : Prop :=
   (d₁, d₂) ∈ allBridges ∨ (d₂, d₁) ∈ allBridges
+
 
 
 
@@ -151,11 +166,13 @@ theorem tropical_is_hub :
 
 
 
+
 /-- Classical algebra is the most connected domain -/
 theorem algebra_most_connected :
     (allBridges.filter (fun p =>
       p.1 = ClassicalAlgebra ∨ p.2 = ClassicalAlgebra)).length ≥ 6 := by
   native_decide
+
 
 
 
@@ -169,6 +186,7 @@ structure BridgeTransformation where
 
 
 
+
 /-- Example: Stone duality and Gelfand duality both connect
 Algebra to Topology/NCGeometry, related by inclusion -/
 def stone_gelfand_transformation : BridgeTransformation where
@@ -176,5 +194,6 @@ def stone_gelfand_transformation : BridgeTransformation where
   target_bridge := (ClassicalAlgebra, Topology)
   same_endpoints := ⟨rfl, rfl⟩
   name := "Compact Hausdorff ↪ Sober inclusion"
+
 
 

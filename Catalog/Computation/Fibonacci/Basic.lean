@@ -13,6 +13,7 @@ theorem fib_pos (n : ℕ) (hn : 1 ≤ n) : 0 < Nat.fib n := by
 
 
 
+
 /-- [Section: # CatalogBuild.Computation.Fibonacci.Basic
 Auto-generated from theorem catalog database.
 Domain: Computation/Fibonacci
@@ -21,6 +22,7 @@ theorem fib_ge_half (n : ℕ) (hn : 1 ≤ n) : n ≤ 2 * Nat.fib n := by
   induction' n using Nat.strong_induction_on with n ih;
   rcases n with ( _ | _ | _ | _ | _ | _ | _ | n ) <;> simp +arith +decide [ Nat.fib_add_two ] at *;
   grind
+
 
 
 
@@ -33,10 +35,12 @@ def IsValidZeckendorf (indices : List ℕ) : Prop :=
 
 
 
+
 /-- The value of a Zeckendorf representation is the sum of the corresponding
 Fibonacci numbers. -/
 def zeckendorfValue (indices : List ℕ) : ℕ :=
   indices.foldl (fun acc i => acc + Nat.fib i) 0
+
 
 
 
@@ -50,6 +54,7 @@ def noAdjacentOnes : ℕ → ℕ
 
 
 
+
 /-- The count of binary strings of length n with no two consecutive 1s
 equals F(n+2). -/
 theorem noAdjacentOnes_eq_fib (n : ℕ) : noAdjacentOnes n = Nat.fib (n + 2) := by
@@ -59,12 +64,14 @@ theorem noAdjacentOnes_eq_fib (n : ℕ) : noAdjacentOnes n = Nat.fib (n + 2) := 
 
 
 
+
 /-- For all n ≥ 2, 2^n > F(n+2), i.e., the Zeckendorf search space is
 strictly smaller than the binary search space. -/
 theorem zeckendorf_search_space_smaller (n : ℕ) (hn : 2 ≤ n) :
     Nat.fib (n + 2) < 2 ^ n := by
   induction hn <;> simp_all +decide [ Nat.fib_add_two, pow_succ' ];
   grind
+
 
 
 
@@ -78,12 +85,14 @@ theorem zeckendorf_fraction_decreasing (n : ℕ) (hn : 2 ≤ n) :
 
 
 
+
 /-- Cassini's identity (even case):
 F(n)·F(n+2) + 1 = F(n+1)² when n is even. -/
 theorem cassini_even (n : ℕ) (hn : n % 2 = 0) :
     Nat.fib n * Nat.fib (n + 2) + 1 = Nat.fib (n + 1) ^ 2 := by
   rcases Nat.even_or_odd' n with ⟨ k, rfl | rfl ⟩ <;> simp_all +decide [ Nat.fib_add_two ];
   induction k <;> simp_all +decide [ Nat.fib_add_two, Nat.mul_succ ] ; linarith
+
 
 
 
@@ -96,6 +105,11 @@ theorem cassini_odd (n : ℕ) (hn : n % 2 = 1) :
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Fibonacci.Basic
+Auto-generated from theorem catalog database.
+Domain: Computation/Fibonacci
+Declarations: 21] -/
 theorem fib_docagne_even (m n : ℕ) (hmn : n ≤ m) (hn : n % 2 = 0) :
     Nat.fib m * Nat.fib (n + 1) = Nat.fib (m + 1) * Nat.fib n + Nat.fib (m - n) := by
   -- We prove the general d'Ocagne identity by induction on $m - n$.
@@ -105,6 +119,7 @@ theorem fib_docagne_even (m n : ℕ) (hmn : n ≤ m) (hn : n % 2 = 0) :
     grind;
   convert h_ind ( m - n ) n using 1 ; norm_num [ Nat.add_sub_of_le hmn ];
   rw [ ← Nat.mod_add_div n 2, hn ] ; norm_num [ pow_add, pow_mul ] ; norm_cast;
+
 
 
 
@@ -123,6 +138,7 @@ theorem fib_vajda_even (n i j : ℕ) (hn : n % 2 = 0) :
 
 
 
+
 theorem fib_vajda_odd (n i j : ℕ) (hn : n % 2 = 1) :
     Nat.fib (n + i) * Nat.fib (n + j) + Nat.fib i * Nat.fib j =
     Nat.fib n * Nat.fib (n + i + j) := by
@@ -136,6 +152,7 @@ theorem fib_vajda_odd (n i j : ℕ) (hn : n % 2 = 1) :
 
 
 
+
 /-- The carry cascade from position n can reach position n-2 (downward carry).
 This is the fundamental bidirectional carry property. -/
 theorem carry_reaches_down (n : ℕ) (hn : 4 ≤ n) :
@@ -146,9 +163,11 @@ theorem carry_reaches_down (n : ℕ) (hn : 4 ≤ n) :
 
 
 
+
 theorem fib_triple (n : ℕ) (hn : 2 ≤ n) :
     3 * Nat.fib n = Nat.fib (n + 2) + Nat.fib (n - 2) := by
   rcases n with ( _ | _ | n ) <;> simp_all +arith +decide [ Nat.fib_add_two ]
+
 
 
 
@@ -157,8 +176,10 @@ theorem pisano_period_5 (n : ℕ) : Nat.fib (n + 20) % 5 = Nat.fib n % 5 := by
 
 
 
+
 theorem fib_3k_even (k : ℕ) (hk : 1 ≤ k) : 2 ∣ Nat.fib (3 * k) := by
   exact Nat.dvd_of_mod_eq_zero ( by induction hk <;> simp_all +arith +decide [ Nat.mul_succ, Nat.fib_add_two, Nat.add_mod ] )
+
 
 
 
@@ -168,9 +189,11 @@ theorem fib_3k1_odd (k : ℕ) : ¬ 2 ∣ Nat.fib (3 * k + 1) := by
 
 
 
+
 theorem fib_3k2_odd (k : ℕ) : ¬ 2 ∣ Nat.fib (3 * k + 2) := by
   induction ‹ℕ› <;> simp_all +arith +decide [ Nat.fib_add_two, Nat.mul_succ ];
   omega
+
 
 
 
@@ -180,9 +203,11 @@ theorem fib_add_formula (m n : ℕ) :
 
 
 
+
 /-- The constraint density advantage: F(i+2)·F(j+2) > 0 for all i, j,
 meaning every pair of factor digits contributes to the product. -/
 theorem fib_product_positive (i j : ℕ) : 0 < Nat.fib (i + 2) * Nat.fib (j + 2) := by
   apply Nat.mul_pos <;> exact fib_pos _ (by omega)
+
 
 

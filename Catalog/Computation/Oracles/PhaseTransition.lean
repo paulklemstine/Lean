@@ -21,6 +21,7 @@ theorem geometric_divergence (c : ℝ) (hc : 1 < |c|) :
 
 
 
+
 /-- A Lyapunov function for an oracle iteration. -/
 structure LyapunovFn where
   State : Type*
@@ -33,6 +34,7 @@ structure LyapunovFn where
 
 
 
+
 /-- **Lyapunov Stability**: If a Lyapunov function exists, V decreases along orbits. -/
 theorem lyapunov_V_iterate_decreasing (L : LyapunovFn)
     (s : L.State) (hs : s ≠ L.eq) :
@@ -40,6 +42,11 @@ theorem lyapunov_V_iterate_decreasing (L : LyapunovFn)
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.PhaseTransition
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 9] -/
 theorem lyapunov_sequence_antitone (L : LyapunovFn) (s0 : L.State)
     (h : ∀ k, L.f^[k] s0 ≠ L.eq) :
     StrictAnti (fun k => L.V (L.f^[k] s0)) := by
@@ -48,11 +55,13 @@ theorem lyapunov_sequence_antitone (L : LyapunovFn) (s0 : L.State)
 
 
 
+
 /-- Steps needed to reach accuracy eps with contraction factor c. -/
 def stepsToAccuracy (c eps : ℝ) : ℕ :=
   if hc : 0 < c ∧ c < 1 ∧ 0 < eps ∧ eps < 1
   then ⌈- Real.log eps / Real.log c⌉₊
   else 0
+
 
 
 
@@ -67,8 +76,10 @@ theorem steps_grow_near_critical (eps : ℝ) (heps : 0 < eps) (heps1 : eps < 1) 
 
 
 
+
 /-- Binary entropy is zero at 0. -/
 theorem binaryEntropy_zero : binaryEntropy 0 = 0 := by simp [binaryEntropy]
+
 
 
 
@@ -77,10 +88,12 @@ theorem binaryEntropy_one : binaryEntropy 1 = 0 := by simp [binaryEntropy]
 
 
 
+
 theorem binaryEntropy_symm (p : ℝ) (hp : 0 < p) (hp1 : p < 1) :
     binaryEntropy p = binaryEntropy (1 - p) := by
       unfold binaryEntropy;
       grind
+
 
 
 

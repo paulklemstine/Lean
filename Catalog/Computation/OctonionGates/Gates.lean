@@ -15,9 +15,11 @@ def IsOrthogonal (M : Matrix (Fin 8) (Fin 8) ℝ) : Prop :=
 
 
 
+
 /-- SO(8) matrices additionally have determinant 1 -/
 def IsSpecialOrthogonal (M : Matrix (Fin 8) (Fin 8) ℝ) : Prop :=
   IsOrthogonal M ∧ M.det = 1
+
 
 
 
@@ -30,8 +32,10 @@ theorem identity_in_SO8 : IsSpecialOrthogonal (1 : Matrix (Fin 8) (Fin 8) ℝ) :
 
 
 
+
 /-- The dimension of G₂ ⊂ SO(7) ⊂ SO(8) -/
 theorem g2_dimension : 14 = 14 := rfl
+
 
 
 
@@ -47,6 +51,7 @@ noncomputable def givensMatrix (n : ℕ) (p q : Fin n) (θ : ℝ) :
     else if i = q ∧ j = p then Real.sin θ
     else if i = j then 1
     else 0
+
 
 
 
@@ -66,6 +71,7 @@ theorem givens_orthogonal (p q : Fin 8) (θ : ℝ) (hpq : p ≠ q) :
 
 
 
+
 /-- The 7 lines of the Fano plane, encoded as triples of indices.
 Line {a, b, c} means eₐ · eᵦ = eᵧ (with appropriate signs). -/
 def fanoLines : Fin 7 → Fin 3 → Fin 7
@@ -79,9 +85,11 @@ def fanoLines : Fin 7 → Fin 3 → Fin 7
 
 
 
+
 /-- Each Fano line has exactly 3 points -/
 theorem fano_line_size : ∀ l : Fin 7, ∀ i : Fin 3, (fanoLines l i).val < 7 := by
   intro l i; exact (fanoLines l i).isLt
+
 
 
 
@@ -90,10 +98,16 @@ theorem fano_num_lines : Fintype.card (Fin 7) = 7 := by simp
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.OctonionGates.Gates
+Auto-generated from theorem catalog database.
+Domain: Computation/OctonionGates
+Declarations: 15] -/
 theorem fano_point_on_three_lines (p : Fin 7) :
     (Finset.univ.filter (fun l : Fin 7 =>
       ∃ i : Fin 3, fanoLines l i = p)).card = 3 := by
   fin_cases p <;> aesop ( simp_config := { decide := true } ) ;
+
 
 
 
@@ -103,8 +117,10 @@ theorem g2_codimension : Nat.choose 7 2 - g2_lie_algebra_dim = 7 := by
 
 
 
+
 /-- The number of G₂ generators needed for a universal gate set -/
 theorem g2_generators_count : g2_lie_algebra_dim = 14 := rfl
+
 
 
 
@@ -117,8 +133,10 @@ theorem gate_parameters : Nat.choose 8 2 = 28 := by decide
 
 
 
+
 /-- For G₂ transformations, we need fewer parameters: 14 -/
 theorem g2_gate_parameters : g2_lie_algebra_dim = 14 := rfl
+
 
 
 
@@ -127,6 +145,7 @@ An octonion encodes 8 real dimensions naturally, whereas representing
 the same space with standard qubits requires 3 qubits = SU(8). -/
 theorem octonion_vs_standard_gates : 8^2 - 1 = 63 ∧ 8 * 7 / 2 = 28 := by
   constructor <;> norm_num
+
 
 
 

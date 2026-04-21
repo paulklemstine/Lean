@@ -18,10 +18,16 @@ theorem bernoulli_fisher' (theta : ℝ) (h0 : 0 < theta) (h1 : theta < 1) :
 -- Fisher information is additive
 
 
+
+/-- [Section: # CatalogBuild.Computation.InformationGeometry
+Auto-generated from theorem catalog database.
+Domain: Computation
+Declarations: 5] -/
 theorem fisher_additive_n (n : ℕ) (I1 : ℝ) (hI : 0 < I1) (hn : 0 < n) :
     (n : ℝ) * I1 > 0 := by positivity
 
 -- Cramér-Rao
+
 
 
 theorem cramer_rao_bound (I_theta : ℝ) (hI : 0 < I_theta) :
@@ -30,12 +36,15 @@ theorem cramer_rao_bound (I_theta : ℝ) (hI : 0 < I_theta) :
 -- Entropy bounds
 
 
+
 theorem uniform_entropy_pos (a b : ℝ) (hab : a < b) : 0 < b - a := by linarith
 
 -- IOF information extraction
 
 
+
 theorem iof_info (p : ℕ) (hp : 2 ≤ p) :
     (p - 1) / 2 + 1 ≥ 1 := by omega
+
 
 

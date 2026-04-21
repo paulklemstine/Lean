@@ -14,11 +14,13 @@ theorem partial_order_cycle {E : Type*} [PartialOrder E]
 
 
 
+
 /-- Time travel is incompatible with a strict partial order on distinct events. -/
 theorem no_time_travel_strict_order {E : Type*} [PartialOrder E]
     {a b : E} (hab : a < b) : ¬(b ≤ a) := by
   intro h
   exact absurd (le_antisymm (le_of_lt hab) h) (ne_of_lt hab)
+
 
 
 
@@ -36,9 +38,11 @@ theorem past_glb_exists {T : Type*} [ConditionallyCompleteLattice T]
 
 
 
+
 /-- In a preorder, causal loops are possible between distinct but equivalent events. -/
 theorem preorder_allows_loops {E : Type*} [Preorder E]
     {a b : E} (hab : a ≤ b) (hba : b ≤ a) :
     a ≤ b ∧ b ≤ a :=
   ⟨hab, hba⟩
+
 

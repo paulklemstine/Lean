@@ -17,11 +17,13 @@ inductive EMLCTree where
 
 
 
+
 /-- The number of leaves. -/
 def EMLCTree.leaves : EMLCTree → ℕ
   | .const _ => 1
   | .input _ => 1
   | .eml l r => l.leaves + r.leaves
+
 
 
 
@@ -33,11 +35,13 @@ def EMLCTree.emlNodes : EMLCTree → ℕ
 
 
 
+
 /-- Total tree size. -/
 def EMLCTree.size : EMLCTree → ℕ
   | .const _ => 1
   | .input _ => 1
   | .eml l r => 1 + l.size + r.size
+
 
 
 
@@ -49,12 +53,14 @@ def EMLCTree.depth : EMLCTree → ℕ
 
 
 
+
 /-- Size = leaves + emlNodes. -/
 theorem EMLCTree.size_eq (t : EMLCTree) : t.size = t.leaves + t.emlNodes := by
   induction t with
   | const _ => simp [size, leaves, emlNodes]
   | input _ => simp [size, leaves, emlNodes]
   | eml l r ihl ihr => simp [size, leaves, emlNodes, ihl, ihr]; omega
+
 
 
 
@@ -68,9 +74,11 @@ theorem EMLCTree.leaves_eq_emlNodes_succ (t : EMLCTree) :
 
 
 
+
 /-- Any EML tree has at least 1 leaf. -/
 theorem EMLCTree.leaves_pos (t : EMLCTree) : 0 < t.leaves := by
   have := t.leaves_eq_emlNodes_succ; omega
+
 
 
 
@@ -80,6 +88,7 @@ theorem EMLCTree.size_from_nodes (t : EMLCTree) :
   have h1 := t.size_eq
   have h2 := t.leaves_eq_emlNodes_succ
   omega
+
 
 
 
@@ -101,12 +110,14 @@ theorem EMLCTree.leaves_le_two_pow_depth (t : EMLCTree) :
 
 
 
+
 /-- emlNodes ≤ 2^depth - 1. -/
 theorem EMLCTree.emlNodes_le (t : EMLCTree) :
     t.emlNodes + 1 ≤ 2 ^ t.depth := by
   have := t.leaves_le_two_pow_depth
   have := t.leaves_eq_emlNodes_succ
   omega
+
 
 
 
@@ -120,6 +131,7 @@ structure InstrCount where
 
 
 
+
 /-- [Section: # CatalogBuild.EML.Complexity
 Auto-generated from theorem catalog database.
 Domain: EML
@@ -127,13 +139,21 @@ Declarations: 19] -/
 def expCount : InstrCount := ⟨1, 2, 3, rfl⟩
 
 
+
+/-- [Section: # CatalogBuild.EML.Complexity
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 19] -/
 def lnCount : InstrCount := ⟨3, 4, 7, rfl⟩
+
 
 
 def subCount : InstrCount := ⟨5, 6, 11, rfl⟩
 
 
+
 def addCount : InstrCount := ⟨5, 6, 11, rfl⟩
+
 
 
 
@@ -144,13 +164,16 @@ theorem push_eq_eml_plus_one (c : InstrCount)
 
 
 
+
 /-- exp satisfies the PUSH = EML + 1 relation. -/
 theorem exp_push_eml_relation : expCount.pushOps = expCount.emlOps + 1 := rfl
 
 
 
+
 /-- ln satisfies the PUSH = EML + 1 relation. -/
 theorem ln_push_eml_relation : lnCount.pushOps = lnCount.emlOps + 1 := rfl
+
 
 
 

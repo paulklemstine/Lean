@@ -32,11 +32,13 @@ theorem periodic_no_finite_limit {f : ℝ → ℝ} {T : ℝ} (hT : T > 0)
 
 
 
+
 /-- cos does not converge at +∞. -/
 theorem cos_no_limit_atTop :
     ¬ (∃ L : ℝ, Tendsto (fun x : ℝ => Real.cos x) atTop (nhds L)) := by
   convert periodic_no_finite_limit (by positivity) Real.cos_periodic
     Real.continuous_cos (by exact ⟨0, Real.pi, by norm_num⟩) using 1
+
 
 
 
@@ -56,6 +58,7 @@ theorem sin_no_limit_atTop :
 
 
 
+
 /-- [Section: # CatalogBuild.EML.ThirdBarrier
 Auto-generated from theorem catalog database.
 Domain: EML
@@ -68,6 +71,11 @@ theorem logisticSigmoid_tendsto_one :
 
 
 
+
+/-- [Section: # CatalogBuild.EML.ThirdBarrier
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 13] -/
 theorem logisticSigmoid_tendsto_zero :
     Tendsto logisticSigmoid atBot (nhds 0) := by
   refine' squeeze_zero_norm' _ _;
@@ -77,12 +85,14 @@ theorem logisticSigmoid_tendsto_zero :
 
 
 
+
 theorem deriv_comp_tendsto_zero {f g : ℝ → ℝ}
     (hf_diff : Differentiable ℝ f) (hg_diff : Differentiable ℝ g)
     (hf_lip : ∃ C : ℝ, ∀ x, |deriv f x| ≤ C)
     (hg_zero : Tendsto (deriv g) atTop (nhds 0)) :
     Tendsto (fun x => deriv f (g x) * deriv g x) atTop (nhds 0) := by
   exact squeeze_zero_norm ( fun x => by simpa [ abs_mul ] using mul_le_mul_of_nonneg_right ( hf_lip.choose_spec ( g x ) ) ( abs_nonneg ( deriv g x ) ) ) ( by simpa using hg_zero.abs.const_mul _ )
+
 
 
 
@@ -103,6 +113,7 @@ theorem tendsto_atTop_of_deriv_pos_limit {f : ℝ → ℝ}
 
 
 
+
 theorem tendsto_atBot_of_deriv_neg_limit {f : ℝ → ℝ}
     (hf : Differentiable ℝ f)
     {L : ℝ} (hL : L < 0) (hf' : Tendsto (deriv f) atTop (nhds L)) :
@@ -118,6 +129,7 @@ theorem tendsto_atBot_of_deriv_neg_limit {f : ℝ → ℝ}
   have h_lim_neg_inf : ∀ x > x₀, f x ≤ f x₀ + (L / 2) * (x - x₀) := by
     intro x hx; obtain ⟨ c, hc₁, hc₂ ⟩ := h_mvt x₀ x hx; nlinarith [ hx₀ c hc₁.1 ] ;
   exact Filter.tendsto_atTop_atBot.mpr fun b => ⟨ x₀ + ⌈ ( b - f x₀ ) / ( L / 2 ) ⌉₊ + 1, fun x hx => by nlinarith [ Nat.le_ceil ( ( b - f x₀ ) / ( L / 2 ) ), h_lim_neg_inf x ( by linarith ), mul_div_cancel₀ ( b - f x₀ ) ( by linarith : ( L / 2 ) ≠ 0 ) ] ⟩
+
 
 
 
@@ -250,10 +262,12 @@ theorem sheffer_expr_deriv_tendsto_both (e : ShefferExpr) :
 
 
 
+
 /-- Every Sheffer expression's derivative converges at +∞. -/
 theorem sheffer_expr_deriv_tendsto (e : ShefferExpr) :
     ∃ L : ℝ, Tendsto (deriv e.eval) atTop (nhds L) :=
   (sheffer_expr_deriv_tendsto_both e).1
+
 
 
 
@@ -266,12 +280,14 @@ theorem sin_not_mem_sheffer : (fun x : ℝ => Real.sin x) ∉ ShefferAlgebra := 
 
 
 
+
 /-- cos is NOT in the Sheffer algebra. -/
 theorem cos_not_mem_sheffer : (fun x : ℝ => Real.cos x) ∉ ShefferAlgebra := by
   rintro ⟨e, he⟩
   obtain ⟨L, hL⟩ := sheffer_expr_deriv_tendsto e
   have h_neg_sin : deriv e.eval = fun x => -Real.sin x := by rw [← he]; norm_num
   exact sin_no_limit_atTop ⟨-L, by simpa [h_neg_sin] using hL.neg⟩
+
 
 
 
@@ -309,6 +325,7 @@ theorem periodic_not_mem_sheffer {f : ℝ → ℝ} {T : ℝ} (hT : T > 0)
     have hcd := sheffer_expr_contDiff e
     exact hcd.continuous_deriv le_top
   exact periodic_no_finite_limit hT h_deriv_periodic h_deriv_cont h_deriv_nonconst h_deriv
+
 
 
 

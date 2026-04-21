@@ -15,6 +15,7 @@ def emlNetwork (params : Fin n → ℝ × ℝ × ℝ × ℝ) (coeffs : Fin n →
 
 
 
+
 /-- The approximation error of an EML network to a target function. -/
 def emlApproxError (f : ℝ → ℝ) (a b : ℝ)
     (params : Fin n → ℝ × ℝ × ℝ × ℝ) (coeffs : Fin n → ℝ) : ℝ :=
@@ -22,9 +23,11 @@ def emlApproxError (f : ℝ → ℝ) (a b : ℝ)
 
 
 
+
 /-- The number of EML neurons needed for ε-approximation of a Lipschitz function. -/
 def emlNeuronCount (L : ℝ) (epsilon : ℝ) : ℕ :=
   ⌈L ^ 2 / epsilon ^ 2⌉₊
+
 
 
 
@@ -37,13 +40,16 @@ theorem eml_neuron_count_bound (L epsilon : ℝ) (_hL : 0 < L) (he : 0 < epsilon
 
 
 
+
 /-- Parameters for an EML layer with n neurons. -/
 def emlLayerP (n : ℕ) : ℕ := 4 * n
 
 
 
+
 /-- Parameters for a dense ReLU layer with n neurons and d inputs. -/
 def reluLayerP (n d : ℕ) : ℕ := n * (d + 1)
+
 
 
 
@@ -55,10 +61,12 @@ theorem eml_vs_relu_param_efficiency (n d : ℕ) (hd : 4 ≤ d) :
 
 
 
+
 /-- For dimension d, the EML compression factor is (d+1)/4. -/
 theorem eml_compression_factor (d : ℕ) (_hd : 4 ≤ d) :
     4 * reluLayerP 1 d ≥ (d + 1) * emlLayerP 1 := by
   unfold reluLayerP emlLayerP; nlinarith
+
 
 
 
@@ -69,9 +77,11 @@ theorem crystal_approx_degradation (n : ℕ) (_weights : Fin n → ℝ)
 
 
 
+
 /-- Per-weight crystallization error is bounded. -/
 theorem crystal_per_weight (w : ℝ) : |w - ↑(round w)| ≤ 1 / 2 :=
   abs_sub_round w
+
 
 
 
@@ -85,12 +95,14 @@ theorem crystal_total_error (n : ℕ) (w : Fin n → ℝ) :
 
 
 
+
 /-- The set of EML functions is closed under addition. -/
 theorem eml_add_closure (w₁ b₁ w₂ b₂ w₃ b₃ w₄ b₄ : ℝ) (x : ℝ) :
     emlN w₁ b₁ w₂ b₂ x + emlN w₃ b₃ w₄ b₄ x =
     (Real.exp (w₁ * x + b₁) + Real.exp (w₃ * x + b₃)) -
     (Real.log (w₂ * x + b₂) + Real.log (w₄ * x + b₄)) := by
   simp [emlN]; ring
+
 
 
 
@@ -103,6 +115,7 @@ theorem eml_continuous_on (w₁ b₁ w₂ b₂ : ℝ) :
   · exact ContinuousOn.log
       (continuous_const.mul continuous_id |>.add continuous_const |>.continuousOn)
       (fun x hx => ne_of_gt hx)
+
 
 
 

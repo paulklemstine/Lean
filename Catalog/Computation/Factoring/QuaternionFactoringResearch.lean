@@ -16,10 +16,16 @@ theorem quaternion_norm_nonneg (q : Quaternion ℝ) : 0 ≤ Quaternion.normSq q 
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Factoring.QuaternionFactoringResearch
+Auto-generated from theorem catalog database.
+Domain: Computation/Factoring
+Declarations: 11] -/
 theorem quaternion_norm_eq_zero (q : Quaternion ℝ) :
     Quaternion.normSq q = 0 ↔ q = 0 := by
   simp +decide [ Quaternion.ext_iff, Quaternion.normSq ];
   exact ⟨ fun h => ⟨ by nlinarith, by nlinarith, by nlinarith, by nlinarith ⟩, fun h => by simp +decide [ h ] ⟩
+
 
 
 
@@ -30,10 +36,12 @@ theorem gaussian_norm_conj_product (a b : ℤ) :
 
 
 
+
 theorem gaussian_norm_divides (z : GaussianInt) (p : ℤ) (hp : 0 < p)
     (hnorm : Zsqrtd.norm z = p) :
     (p : ℤ) ∣ Zsqrtd.norm z := by
   rw [ hnorm ]
+
 
 
 
@@ -48,9 +56,11 @@ theorem lipschitz_unit_norm_one :
 
 
 
+
 theorem hurwitz_half_unit_norm :
     Quaternion.normSq (⟨1/2, 1/2, 1/2, 1/2⟩ : Quaternion ℝ) = 1 := by
   norm_num [ Quaternion.normSq, Complex.ext_iff ]
+
 
 
 
@@ -59,6 +69,7 @@ theorem balanced_factor_bound (N p q : ℝ)
     (hpq : N = p * q) (hle : p ≤ q) :
     p ≤ Real.sqrt N := by
   exact Real.le_sqrt_of_sq_le ( by nlinarith )
+
 
 
 
@@ -74,11 +85,13 @@ theorem norm_factor_le_product (q₁ q₂ : Quaternion ℤ)
 
 
 
+
 theorem quaternion_commutator_ij :
     (⟨0, 1, 0, 0⟩ : Quaternion ℝ) * ⟨0, 0, 1, 0⟩ -
     (⟨0, 0, 1, 0⟩ : Quaternion ℝ) * ⟨0, 1, 0, 0⟩ =
     ⟨0, 0, 0, 2⟩ := by
   norm_num [ Quaternion.ext_iff ]
+
 
 
 
@@ -91,6 +104,7 @@ theorem norm_factor_divides (q₁ q₂ : Quaternion ℤ) :
 
 
 
+
 theorem norm_factoring_gives_divisor (q₁ q₂ : Quaternion ℤ) (N : ℤ)
     (hN : Quaternion.normSq (q₁ * q₂) = N) :
     Quaternion.normSq q₁ ∣ N := by
@@ -99,4 +113,5 @@ theorem norm_factoring_gives_divisor (q₁ q₂ : Quaternion ℤ) (N : ℤ)
     convert hN.symm using 1;
     exact norm_factor_divides q₁ q₂
   exact hN_factor ▸ dvd_mul_right (Quaternion.normSq q₁) (Quaternion.normSq q₂)
+
 

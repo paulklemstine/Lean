@@ -18,8 +18,10 @@ def evalGate (g : TropGate) (a b : ℝ) : ℝ :=
 
 
 
+
 /-- MinGate selects the smaller input -/
 theorem evalGate_min (a b : ℝ) : evalGate .MinGate a b = min a b := rfl
+
 
 
 
@@ -28,8 +30,10 @@ theorem evalGate_max (a b : ℝ) : evalGate .MaxGate a b = max a b := rfl
 
 
 
+
 /-- AddGate sums inputs (tropical multiplication) -/
 theorem evalGate_add (a b : ℝ) : evalGate .AddGate a b = a + b := rfl
+
 
 
 
@@ -42,13 +46,20 @@ theorem gate_min_comm (a b : ℝ) : evalGate .MinGate a b = evalGate .MinGate b 
 
 
 
+
+/-- [Section: # CatalogBuild.Tropical.Cryptography.TropicalTrapdoor
+Auto-generated from theorem catalog database.
+Domain: Tropical/Cryptography
+Declarations: 52] -/
 theorem gate_max_comm (a b : ℝ) : evalGate .MaxGate a b = evalGate .MaxGate b a :=
   max_comm a b
 
 
 
+
 theorem gate_add_comm (a b : ℝ) : evalGate .AddGate a b = evalGate .AddGate b a :=
   add_comm a b
+
 
 
 
@@ -59,10 +70,12 @@ theorem gate_min_assoc (a b c : ℝ) :
 
 
 
+
 theorem gate_max_assoc (a b c : ℝ) :
     evalGate .MaxGate (evalGate .MaxGate a b) c =
     evalGate .MaxGate a (evalGate .MaxGate b c) :=
   max_assoc a b c
+
 
 
 
@@ -72,15 +85,18 @@ def minGatePreimage (c : ℝ) : Set (ℝ × ℝ) :=
 
 
 
+
 /-- The preimage of a max gate output is a union of two half-spaces -/
 def maxGatePreimage (c : ℝ) : Set (ℝ × ℝ) :=
   {p | max p.1 p.2 = c}
 
 
 
+
 /-- The preimage of an add gate output is a line (1-dimensional) -/
 def addGatePreimage (c : ℝ) : Set (ℝ × ℝ) :=
   {p | p.1 + p.2 = c}
+
 
 
 
@@ -92,11 +108,13 @@ theorem minPreimage_left (c : ℝ) :
 
 
 
+
 /-- Min gate preimage contains the "right-selecting" region -/
 theorem minPreimage_right (c : ℝ) :
     ∀ a : ℝ, c ≤ a → (a, c) ∈ minGatePreimage c := by
   intro a ha
   simp [minGatePreimage, min_eq_right ha]
+
 
 
 
@@ -108,11 +126,13 @@ theorem maxPreimage_left (c : ℝ) :
 
 
 
+
 /-- Max gate preimage contains the "right-selecting" region -/
 theorem maxPreimage_right (c : ℝ) :
     ∀ a : ℝ, a ≤ c → (a, c) ∈ maxGatePreimage c := by
   intro a ha
   simp [maxGatePreimage, max_eq_right ha]
+
 
 
 
@@ -126,8 +146,10 @@ structure TropInstruction where
 
 
 
+
 /-- Register file: maps register indices to real values -/
 def RegFile := ℕ → ℝ
+
 
 
 
@@ -138,8 +160,10 @@ def execInstrs (regs : RegFile) : List TropInstruction → RegFile
 
 
 
+
 /-- Initialize register file from input vector -/
 def initRegs (inputs : ℕ → ℝ) : RegFile := inputs
+
 
 
 
@@ -150,8 +174,10 @@ def evalCircuit (circ : TropCircuit) (inputs : ℕ → ℝ) : ℝ :=
 
 
 
+
 /-- Number of gates in a circuit -/
 def circuitSize (circ : TropCircuit) : ℕ := circ.instrs.length
+
 
 
 
@@ -162,8 +188,10 @@ theorem execInstr_preserve (regs : RegFile) (instr : TropInstruction) (i : ℕ)
 
 
 
+
 /-- Empty instruction list is identity -/
 theorem execInstrs_nil (regs : RegFile) : execInstrs regs [] = regs := rfl
+
 
 
 
@@ -171,6 +199,7 @@ theorem execInstrs_nil (regs : RegFile) : execInstrs regs [] = regs := rfl
 theorem execInstrs_cons (regs : RegFile) (instr : TropInstruction)
     (rest : List TropInstruction) :
     execInstrs regs (instr :: rest) = execInstrs (execInstr regs instr) rest := rfl
+
 
 
 
@@ -183,9 +212,11 @@ structure TropTrapdoorFn where
 
 
 
+
 /-- The public evaluation function -/
 def TropTrapdoorFn.eval (tf : TropTrapdoorFn) (inputs : ℕ → ℝ) : ℝ :=
   evalCircuit tf.circuit inputs
+
 
 
 
@@ -195,8 +226,10 @@ def TropTrapdoorFn.invert (tf : TropTrapdoorFn) (output : ℝ) (idx : ℕ) : ℝ
 
 
 
+
 theorem min_gate_mono_left (b : ℝ) : Monotone (fun a => min a b) :=
   fun _ _ h => min_le_min_right b h
+
 
 
 
@@ -205,8 +238,10 @@ theorem max_gate_mono_left (b : ℝ) : Monotone (fun a => max a b) :=
 
 
 
+
 theorem add_gate_mono_left (b : ℝ) : Monotone (fun a => a + b) :=
   fun _ _ h => by dsimp; linarith
+
 
 
 
@@ -215,8 +250,10 @@ theorem min_gate_mono_right (a : ℝ) : Monotone (fun b => min a b) :=
 
 
 
+
 theorem max_gate_mono_right (a : ℝ) : Monotone (fun b => max a b) :=
   fun _ _ h => max_le_max_left a h
+
 
 
 
@@ -227,10 +264,12 @@ theorem add_distrib_min (a b c : ℝ) :
 
 
 
+
 /-- Addition distributes over max (dual tropical semiring law) -/
 theorem add_distrib_max (a b c : ℝ) :
     a + max b c = max (a + b) (a + c) := by
   simp [max_add_add_left]
+
 
 
 
@@ -241,8 +280,10 @@ theorem min_max_neg_duality (a b : ℝ) :
 
 
 
+
 /-- Idempotency of min gate -/
 theorem min_gate_idem (a : ℝ) : min a a = a := min_self a
+
 
 
 
@@ -251,8 +292,10 @@ theorem max_gate_idem (a : ℝ) : max a a = a := max_self a
 
 
 
+
 /-- A gate selection is a choice of which argument each min/max gate selects -/
 def GateSelection (numGates : ℕ) := Fin numGates → Bool
+
 
 
 
@@ -263,10 +306,12 @@ theorem gate_selection_card (n : ℕ) :
 
 
 
+
 /-- Min of two linear functions is piecewise linear with at most 2 pieces -/
 theorem min_linear_pwl (a₁ b₁ a₂ b₂ : ℝ) :
     ∃ (f : ℝ → ℝ), (∀ x, f x = min (a₁ * x + b₁) (a₂ * x + b₂)) :=
   ⟨fun x => min (a₁ * x + b₁) (a₂ * x + b₂), fun _ => rfl⟩
+
 
 
 
@@ -277,9 +322,11 @@ theorem max_linear_pwl (a₁ b₁ a₂ b₂ : ℝ) :
 
 
 
+
 /-- The preimage set of a circuit at output value c -/
 def circuitPreimage (circ : TropCircuit) (c : ℝ) : Set (ℕ → ℝ) :=
   {inputs | evalCircuit circ inputs = c}
+
 
 
 
@@ -291,9 +338,11 @@ theorem preimage_identity (reg : ℕ) (c : ℝ) :
 
 
 
+
 /-- A reversal witness: for each min/max gate, which argument was selected -/
 structure ReversalWitness (circ : TropCircuit) where
   selections : Fin circ.instrs.length → Bool
+
 
 
 
@@ -303,9 +352,11 @@ def forwardProblem (circ : TropCircuit) (x : ℕ → ℝ) : ℝ :=
 
 
 
+
 /-- The reverse problem: find a preimage -/
 def reverseProblem (circ : TropCircuit) (y : ℝ) : Prop :=
   ∃ x : ℕ → ℝ, evalCircuit circ x = y
+
 
 
 
@@ -316,9 +367,11 @@ theorem add_gate_surjective (c : ℝ) :
 
 
 
+
 theorem min_gate_surjective (c : ℝ) :
     ∃ (a b : ℝ), evalGate .MinGate a b = c :=
   ⟨c, c, by simp [evalGate]⟩
+
 
 
 
@@ -328,15 +381,18 @@ theorem max_gate_surjective (c : ℝ) :
 
 
 
+
 /-- min(min(a,b), c) = min(a, min(b,c)) -/
 theorem compose_min_assoc (a b c : ℝ) :
     min (min a b) c = min a (min b c) := min_assoc a b c
 
 
 
+
 /-- max(max(a,b), c) = max(a, max(b,c)) -/
 theorem compose_max_assoc (a b c : ℝ) :
     max (max a b) c = max a (max b c) := max_assoc a b c
+
 
 
 

@@ -16,8 +16,14 @@ def sat_formula (x : Fin 3 → Bool) : Bool :=
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.MillenniumProblems
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 19] -/
 theorem sat_formula_satisfiable : ∃ x : Fin 3 → Bool, sat_formula x = true :=
   ⟨![false, true, true], by native_decide⟩
+
 
 
 
@@ -26,13 +32,17 @@ theorem sat_assignments (n : ℕ) : Fintype.card (Fin n → Bool) = 2 ^ n := by
 
 
 
+
 theorem euler_product_first_factor : (1 : ℚ) - 1/4 = 3/4 := by norm_num
+
 
 
 theorem euler_product_second_factor : (1 : ℚ) - 1/9 = 8/9 := by norm_num
 
 
+
 theorem euler_product_third_factor : (1 : ℚ) - 1/25 = 24/25 := by norm_num
+
 
 
 
@@ -44,8 +54,10 @@ theorem E_neg1_torsion :
 
 
 
+
 theorem nagell_lutz_discriminant' :
     -16 * (-4 * (-1 : ℤ)^3 + 27 * 0^2) = -64 := by ring
+
 
 
 
@@ -57,23 +69,30 @@ theorem identity_eigenvalue :
 
 
 
+
 def genus_plane_curve (d : ℕ) : ℕ := (d - 1) * (d - 2) / 2
+
 
 
 
 theorem genus_line : genus_plane_curve 1 = 0 := rfl
 
 
+
 theorem genus_conic : genus_plane_curve 2 = 0 := rfl
+
 
 
 theorem genus_cubic : genus_plane_curve 3 = 1 := rfl
 
 
+
 theorem genus_quartic : genus_plane_curve 4 = 3 := rfl
 
 
+
 theorem genus_quintic : genus_plane_curve 5 = 6 := rfl
+
 
 
 
@@ -81,7 +100,9 @@ theorem riemann_hurwitz_example : 2 * 3 - 2 = 2 * (2 * 2 - 2) + (0 : ℤ) := by 
 
 
 
+
 def euler_char_surface (g : ℕ) : ℤ := 2 - 2 * g
+
 
 
 
@@ -89,7 +110,9 @@ theorem euler_char_genus2 : euler_char_surface 2 = -2 := rfl
 
 
 
+
 theorem surface_classification (g : ℕ) :
     euler_char_surface g = 2 - 2 * (g : ℤ) := by simp [euler_char_surface]
+
 
 

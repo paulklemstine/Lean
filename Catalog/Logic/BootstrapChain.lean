@@ -13,9 +13,11 @@ theorem vacuous_bootstrap (P : Empty → Prop) : ∀ x : Empty, P x :=
 
 
 
+
 /-- From nothing, something: PUnit has exactly one element -/
 theorem something_from_nothing : ∃! x : PUnit, True := by
   simp [show ∀ x : PUnit, x = PUnit.unit from fun x => rfl]
+
 
 
 
@@ -26,15 +28,18 @@ theorem nat_bootstrap : ∀ n : ℕ, n = 0 ∨ ∃ m : ℕ, n = m + 1 :=
 
 
 
+
 /-- Every integer bootstraps from a pair of natural numbers -/
 theorem int_from_nat_pair : ∀ z : ℤ, ∃ a b : ℕ, z = (a : ℤ) - (b : ℤ) :=
   fun z => ⟨Int.toNat z, Int.toNat (-z), by rw [Int.toNat_sub_toNat_neg]⟩
 
 
 
+
 /-- The integers bootstrap additive inverses: for every z, -z exists -/
 theorem int_bootstrap_inverse : ∀ z : ℤ, ∃ w : ℤ, z + w = 0 :=
   fun z => ⟨-z, add_neg_cancel z⟩
+
 
 
 
@@ -45,9 +50,11 @@ theorem rat_from_int_pair : ∀ q : ℚ, ∃ a : ℤ, ∃ b : ℕ, 0 < b ∧ q =
 
 
 
+
 /-- The rationals are dense: between any two rationals, another bootstraps into existence -/
 theorem rat_bootstrap_density (p q : ℚ) (h : p < q) : ∃ r : ℚ, p < r ∧ r < q :=
   exists_between h
+
 
 
 
@@ -55,6 +62,7 @@ theorem rat_bootstrap_density (p q : ℚ) (h : p < q) : ∃ r : ℚ, p < r ∧ r
 theorem real_bootstrap_completeness (S : Set ℝ) (hne : S.Nonempty)
     (hbdd : BddAbove S) : ∃ x : ℝ, IsLUB S x :=
   ⟨_, isLUB_csSup hne hbdd⟩
+
 
 
 
@@ -67,10 +75,12 @@ theorem real_from_rational_limits (x : ℝ) :
 
 
 
+
 /-- The fundamental theorem of algebra: ℂ bootstraps algebraic closure.
 Every non-constant polynomial has a root. -/
 theorem complex_bootstrap_algebraic_closure : IsAlgClosed ℂ :=
   inferInstance
+
 
 
 
@@ -80,9 +90,11 @@ theorem complex_from_real_pair (z : ℂ) : ∃ a b : ℝ, z = ⟨a, b⟩ :=
 
 
 
+
 /-- The bootstrap chain is order-preserving: each inclusion is monotone -/
 theorem bootstrap_chain_monotone : ∀ n : ℕ, (n : ℤ) = Int.ofNat n := by
   aesop
+
 
 
 
@@ -90,5 +102,6 @@ theorem bootstrap_chain_monotone : ∀ n : ℕ, (n : ℤ) = Int.ofNat n := by
 theorem grand_bootstrap (n : ℕ) :
     ∃ z : ℂ, z = (n : ℂ) ∧ z.re = (n : ℝ) ∧ z.im = 0 := by
   aesop
+
 
 

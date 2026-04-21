@@ -13,6 +13,7 @@ theorem smooth_density_gap_square (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 /-- The minimum gap when a ≠ b is 1, giving 2ab ≤ c² - 1. -/
 theorem smooth_density_min_gap (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
     (h : a ^ 2 + b ^ 2 = c ^ 2) (hne : a ≠ b) :
@@ -23,9 +24,11 @@ theorem smooth_density_min_gap (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
 
 
 
+
 /-- Leg sum identities for each branch. -/
 theorem B1_leg_sum (a b c : ℤ) :
     (a - 2*b + 2*c) + (2*a - b + 2*c) = 3*a - 3*b + 4*c := by ring
+
 
 
 
@@ -38,8 +41,14 @@ theorem B2_leg_sum (a b c : ℤ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.ThreeRoads.DeepOpenProblems
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/ThreeRoads
+Declarations: 35] -/
 theorem B3_leg_sum (a b c : ℤ) :
     (-a + 2*b + 2*c) + (-2*a + b + 2*c) = -3*a + 3*b + 4*c := by ring
+
 
 
 
@@ -50,14 +59,17 @@ theorem B2_leg_product_expanded (a b c : ℤ) :
 
 
 
+
 /-- B₂ has determinant -1. -/
 theorem B2_det_value : (1 : ℤ) * (1*3 - 2*2) - 2 * (2*3 - 2*2) +
     2 * (2*2 - 1*2) = -1 := by norm_num
 
 
 
+
 /-- The product of two matrices with det ±1 has det 1. -/
 theorem berggren_product_det_one : (-1 : ℤ) * (-1) = 1 := by norm_num
+
 
 
 
@@ -69,11 +81,14 @@ theorem berggren_path_det (d : ℕ) : (-1 : ℤ) ^ d = 1 ∨ (-1 : ℤ) ^ d = -1
 
 
 
+
 theorem B2_quadratic_discriminant : (4 : ℤ)^2 - 4*1*1 = 12 := by norm_num
 
 
 
+
 theorem eigenvalue_one_B2 : (1 : ℤ)^3 - 5*(1)^2 + 5*1 - 1 = 0 := by norm_num
+
 
 
 
@@ -87,8 +102,10 @@ theorem spectral_radius_B2_equation :
 
 
 
+
 theorem B1_char_poly_factored (x : ℤ) :
     x^3 - 3*x^2 + 3*x - 1 = (x - 1)^3 := by ring
+
 
 
 
@@ -99,9 +116,11 @@ theorem B2_eigenvalue_product :
 
 
 
+
 theorem B2_hyp_growth_factor (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
     (h : a ^ 2 + b ^ 2 = c ^ 2) :
     3 * c ≤ 2*a + 2*b + 3*c := by nlinarith
+
 
 
 
@@ -114,9 +133,11 @@ theorem B2_hyp_growth_upper (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
 
 
 
+
 theorem total_paths_bound (d : ℕ) : 3^(d+1) - 1 ≥ 2 * 3^d := by
   have : 3^(d+1) = 3^d * 3 := pow_succ 3 d
   omega
+
 
 
 
@@ -127,7 +148,9 @@ theorem euclid_B1_transform (m n : ℤ) :
 
 
 
+
 theorem grover_cost_bound (d : ℕ) : Nat.sqrt (3^d) ≤ 3^d := Nat.sqrt_le_self _
+
 
 
 
@@ -140,8 +163,10 @@ theorem classical_tree_search_lower (d : ℕ) : 3^d ≥ d + 1 := by
 
 
 
+
 theorem qs_tree_sieve_bridge (N x : ℤ) :
     x^2 - N^2 = (x - N) * (x + N) := by ring
+
 
 
 
@@ -150,12 +175,15 @@ theorem tree_sieve_value_divides (N b c : ℤ) (h : N^2 + b^2 = c^2) :
 
 
 
+
 theorem tree_sieve_complement_divides (N b c : ℤ) (h : N^2 + b^2 = c^2) :
     (c + b) ∣ N^2 := ⟨c - b, by linarith⟩
 
 
 
+
 theorem root_triple : (3 : ℤ)^2 + 4^2 = 5^2 := by norm_num
+
 
 
 
@@ -164,8 +192,10 @@ theorem level1_products :
 
 
 
+
 theorem level1_all_7_smooth :
     60 = 2^2 * 3 * 5 ∧ 420 = 2^2 * 3 * 5 * 7 ∧ 120 = 2^3 * 3 * 5 := by norm_num
+
 
 
 
@@ -179,6 +209,7 @@ theorem berggren_B1_injective (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ)
 
 
 
+
 theorem berggren_B2_injective (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ)
     (h_a : a₁ + 2*b₁ + 2*c₁ = a₂ + 2*b₂ + 2*c₂)
     (h_b : 2*a₁ + b₁ + 2*c₁ = 2*a₂ + b₂ + 2*c₂)
@@ -186,6 +217,7 @@ theorem berggren_B2_injective (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ)
     a₁ = a₂ ∧ b₁ = b₂ ∧ c₁ = c₂ := by
   constructor; · linarith
   constructor <;> linarith
+
 
 
 
@@ -199,12 +231,14 @@ theorem berggren_B3_injective (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ)
 
 
 
+
 theorem poincare_on_circle (a b c : ℤ) (hc : c ≠ 0)
     (h : a^2 + b^2 = c^2) :
     (a : ℚ)^2 / (c : ℚ)^2 + (b : ℚ)^2 / (c : ℚ)^2 = 1 := by
   have hc' : (c : ℚ) ≠ 0 := Int.cast_ne_zero.mpr hc
   field_simp
   exact_mod_cast h
+
 
 
 
@@ -216,9 +250,11 @@ theorem berggren_from_root :
 
 
 
+
 theorem first_level_pythagorean :
     (5:ℤ)^2 + 12^2 = 13^2 ∧ 21^2 + 20^2 = 29^2 ∧ 15^2 + 8^2 = 17^2 := by
   norm_num
+
 
 
 
@@ -228,12 +264,15 @@ theorem factoring_example_15 :
 
 
 
+
 theorem factoring_example_21 :
     (29 - 20 : ℤ) * (29 + 20) = 21^2 ∧ Int.gcd 9 21 = 3 := by norm_num
 
 
 
+
 theorem factoring_example_35 :
     (35:ℤ)^2 + 12^2 = 37^2 ∧ Int.gcd (37 - 12) 35 = 5 := by norm_num
+
 
 

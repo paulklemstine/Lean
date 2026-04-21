@@ -15,9 +15,11 @@ noncomputable def brierScore (p : ℝ) (outcome : ℝ) : ℝ :=
 
 
 
+
 /-- Brier score is always non-negative -/
 theorem brierScore_nonneg (p outcome : ℝ) : 0 ≤ brierScore p outcome :=
   sq_nonneg _
+
 
 
 
@@ -28,10 +30,12 @@ theorem brierScore_eq_zero_iff (p outcome : ℝ) :
 
 
 
+
 /-- Bayes' theorem: P(H|E) = P(E|H)·P(H)/P(E) -/
 theorem bayes_theorem (pH pE pE_given_H : ℝ) :
     bayesUpdate pH pE_given_H pE = pE_given_H * pH / pE := by
   simp [bayesUpdate]
+
 
 
 
@@ -40,6 +44,7 @@ theorem bayes_update_nonneg (prior likelihood evidence : ℝ)
     (h_prior : 0 ≤ prior) (h_lik : 0 ≤ likelihood) (h_ev : 0 < evidence) :
     0 ≤ bayesUpdate prior likelihood evidence :=
   div_nonneg (mul_nonneg h_lik h_prior) (le_of_lt h_ev)
+
 
 
 
@@ -53,10 +58,12 @@ theorem brier_optimal_prediction (p q : ℝ) :
 
 
 
+
 /-- Corollary: The expected Brier score of the true probability equals p(1-p) -/
 theorem expected_brier_at_optimum (p : ℝ) :
     p * brierScore p 1 + (1 - p) * brierScore p 0 = p * (1 - p) := by
   simp [brierScore]; ring
+
 
 
 
@@ -67,10 +74,12 @@ theorem expected_brier_le_quarter (p : ℝ) (hp0 : 0 ≤ p) (hp1 : p ≤ 1) :
 
 
 
+
 /-- Convex combination of predictions -/
 noncomputable def ensemblePrediction {n : ℕ} (predictions : Fin n → ℝ)
     (weights : Fin n → ℝ) : ℝ :=
   ∑ i, weights i * predictions i
+
 
 
 
@@ -90,11 +99,13 @@ theorem ambiguity_decomposition {n : ℕ} (predictions : Fin n → ℝ)
 
 
 
+
 /-- Diversity is always non-negative -/
 theorem ensemble_diversity_nonneg {n : ℕ} (predictions : Fin n → ℝ)
     (weights : Fin n → ℝ) (hw_nonneg : ∀ i, 0 ≤ weights i) :
     0 ≤ ∑ i, weights i * (predictions i - ensemblePrediction predictions weights) ^ 2 :=
   Finset.sum_nonneg fun i _ => mul_nonneg (hw_nonneg i) (sq_nonneg _)
+
 
 
 
@@ -104,9 +115,11 @@ noncomputable def cumulativeLoss (loss : ℕ → ℝ) (T : ℕ) : ℝ :=
 
 
 
+
 /-- Regret: excess loss over the best fixed strategy in hindsight -/
 noncomputable def regret (our_loss best_loss : ℕ → ℝ) (T : ℕ) : ℝ :=
   cumulativeLoss our_loss T - cumulativeLoss best_loss T
+
 
 
 
@@ -114,6 +127,7 @@ noncomputable def regret (our_loss best_loss : ℕ → ℝ) (T : ℕ) : ℝ :=
 def isNoRegret (our_loss best_loss : ℕ → ℝ) : Prop :=
   Filter.Tendsto (fun T => regret our_loss best_loss T / T)
     Filter.atTop (nhds 0)
+
 
 
 
@@ -128,6 +142,7 @@ theorem no_clairvoyance (values : ℕ → ℝ) (n : ℕ)
 
 
 
+
 /-- Prediction error for a convergent sequence eventually becomes small -/
 theorem convergent_eventually_predictable (seq : ℕ → ℝ) (L : ℝ)
     (h : Filter.Tendsto seq Filter.atTop (nhds L))
@@ -135,6 +150,7 @@ theorem convergent_eventually_predictable (seq : ℕ → ℝ) (L : ℝ)
     ∃ N, ∀ n, N ≤ n → |seq n - L| < ε := by
   rw [Metric.tendsto_atTop] at h
   exact h ε hε
+
 
 
 

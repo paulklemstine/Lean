@@ -14,6 +14,7 @@ theorem pythQuad_iff_null (a b c d : ℤ) :
 
 
 
+
 /-- Causal classification -/
 inductive CausalClass where
   | null : CausalClass      -- photon: Q = 0
@@ -23,11 +24,13 @@ inductive CausalClass where
 
 
 
+
 /-- Every integer vector has exactly one causal type -/
 def classify (a b c d : ℤ) : CausalClass :=
   if lorentzQ a b c d = 0 then .null
   else if lorentzQ a b c d < 0 then .timelike
   else .spacelike
+
 
 
 
@@ -40,12 +43,14 @@ theorem null_classifies_null (a b c d : ℤ) (h : IsPythQuad a b c d) :
 
 
 
+
 /-- The standard parametrization of Pythagorean quadruples -/
 def quadParam (m n p q : ℤ) : ℤ × ℤ × ℤ × ℤ :=
   (m^2 + n^2 - p^2 - q^2,
    2 * (m * q + n * p),
    2 * (n * q - m * p),
    m^2 + n^2 + p^2 + q^2)
+
 
 
 
@@ -58,6 +63,7 @@ theorem quadParam_valid (m n p q : ℤ) :
 
 
 
+
 /-- [Section: # CatalogBuild.Physics.ArithmeticPhotons.Basic
 Auto-generated from theorem catalog database.
 Domain: Physics/ArithmeticPhotons
@@ -65,13 +71,21 @@ Declarations: 37] -/
 theorem quad_1_4_8_9 : IsPythQuad 1 4 8 9 := by unfold IsPythQuad; norm_num
 
 
+
+/-- [Section: # CatalogBuild.Physics.ArithmeticPhotons.Basic
+Auto-generated from theorem catalog database.
+Domain: Physics/ArithmeticPhotons
+Declarations: 37] -/
 theorem quad_4_4_7_9 : IsPythQuad 4 4 7 9 := by unfold IsPythQuad; norm_num
+
 
 
 theorem quad_2_6_9_11 : IsPythQuad 2 6 9 11 := by unfold IsPythQuad; norm_num
 
 
+
 theorem quad_6_6_7_11 : IsPythQuad 6 6 7 11 := by unfold IsPythQuad; norm_num
+
 
 
 
@@ -82,10 +96,12 @@ theorem projection_deficit (a b c d : ℤ) (h : IsPythQuad a b c d) :
 
 
 
+
 /-- A quadruple with c = 0 degenerates to a Pythagorean triple -/
 theorem quad_c_zero_is_triple (a b d : ℤ) (h : IsPythQuad a b 0 d) :
     a ^ 2 + b ^ 2 = d ^ 2 := by
   unfold IsPythQuad at h; linarith
+
 
 
 
@@ -96,15 +112,18 @@ theorem pythQuad_perm_ab (a b c d : ℤ) (h : IsPythQuad a b c d) :
 
 
 
+
 theorem pythQuad_perm_ac (a b c d : ℤ) (h : IsPythQuad a b c d) :
     IsPythQuad c b a d := by
   unfold IsPythQuad at *; linarith
 
 
 
+
 theorem pythQuad_perm_bc (a b c d : ℤ) (h : IsPythQuad a b c d) :
     IsPythQuad a c b d := by
   unfold IsPythQuad at *; linarith
+
 
 
 
@@ -115,15 +134,18 @@ theorem pythQuad_neg_a (a b c d : ℤ) (h : IsPythQuad a b c d) :
 
 
 
+
 theorem pythQuad_neg_b (a b c d : ℤ) (h : IsPythQuad a b c d) :
     IsPythQuad a (-b) c d := by
   unfold IsPythQuad at *; ring_nf; linarith
 
 
 
+
 theorem pythQuad_neg_c (a b c d : ℤ) (h : IsPythQuad a b c d) :
     IsPythQuad a b (-c) d := by
   unfold IsPythQuad at *; ring_nf; linarith
+
 
 
 
@@ -134,9 +156,11 @@ theorem pythQuad_scale (a b c d k : ℤ) (h : IsPythQuad a b c d) :
 
 
 
+
 /-- The Minkowski metric η = diag(1,1,1,-1) -/
 def minkowskiMetric : Matrix (Fin 4) (Fin 4) ℤ :=
   !![1, 0, 0, 0; 0, 1, 0, 0; 0, 0, 1, 0; 0, 0, 0, (-1)]
+
 
 
 
@@ -146,15 +170,18 @@ def IsLorentzMatrix (M : Matrix (Fin 4) (Fin 4) ℤ) : Prop :=
 
 
 
+
 /-- The identity is a Lorentz transformation -/
 theorem id_is_lorentz : IsLorentzMatrix 1 := by
   unfold IsLorentzMatrix; simp
 
 
 
+
 /-- The trivial family: (0, 0, d, d) is always a quadruple -/
 theorem trivial_quadruple (d : ℤ) : IsPythQuad 0 0 d d := by
   unfold IsPythQuad; ring
+
 
 
 
@@ -166,11 +193,13 @@ theorem euclid_embed (m n : ℤ) :
 
 
 
+
 /-- The sum of two null vectors is generally NOT null -/
 theorem null_sum_not_null :
     IsPythQuad 1 2 2 3 ∧ IsPythQuad 2 3 6 7 ∧
     ¬ IsPythQuad (1 + 2) (2 + 3) (2 + 6) (3 + 7) := by
   refine ⟨?_, ?_, ?_⟩ <;> unfold IsPythQuad <;> norm_num
+
 
 
 
@@ -180,6 +209,7 @@ theorem lorentz_additivity (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ) :
     lorentzQ a₁ b₁ c₁ d₁ + lorentzQ a₂ b₂ c₂ d₂ +
     2 * (a₁ * a₂ + b₁ * b₂ + c₁ * c₂ - d₁ * d₂) := by
   unfold lorentzQ; ring
+
 
 
 
@@ -195,6 +225,7 @@ theorem null_sum_null_iff (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
 
 
 
+
 /-- The Lorentz form is a quadratic form: Q(kv) = k²Q(v) -/
 theorem lorentz_homogeneous (a b c d k : ℤ) :
     lorentzQ (k*a) (k*b) (k*c) (k*d) = k^2 * lorentzQ a b c d := by
@@ -202,9 +233,11 @@ theorem lorentz_homogeneous (a b c d k : ℤ) :
 
 
 
+
 /-- Q(0) = 0: the origin is null -/
 theorem lorentz_zero : lorentzQ 0 0 0 0 = 0 := by
   unfold lorentzQ; ring
+
 
 
 
@@ -215,9 +248,11 @@ theorem lorentz_neg (a b c d : ℤ) :
 
 
 
+
 /-- A number n is a sum of three squares means ∃ a b c, a² + b² + c² = n -/
 def IsSumThreeSquares (n : ℤ) : Prop :=
   ∃ a b c : ℤ, a ^ 2 + b ^ 2 + c ^ 2 = n
+
 
 
 
@@ -231,9 +266,11 @@ theorem hypotenuse_iff_sum3sq (d : ℤ) :
 
 
 
+
 /-- d² is always a sum of three squares (constructive: d² = d² + 0² + 0²) -/
 theorem d_sq_is_sum3sq (d : ℤ) : IsSumThreeSquares (d ^ 2) := by
   exact ⟨d, 0, 0, by ring⟩
+
 
 
 
@@ -243,9 +280,11 @@ theorem every_d_is_hypotenuse (d : ℤ) : ∃ a b c : ℤ, IsPythQuad a b c d :=
 
 
 
+
 /-- Two lattice points are photon-connected if their displacement is a quadruple -/
 def PhotonConnected (v w : Fin 4 → ℤ) : Prop :=
   IsPythQuad (w 0 - v 0) (w 1 - v 1) (w 2 - v 2) (w 3 - v 3)
+
 
 
 
@@ -261,10 +300,12 @@ theorem photon_connected_symm (v w : Fin 4 → ℤ) :
 
 
 
+
 /-- Every point is photon-connected to itself (trivially, with zero displacement) -/
 theorem photon_connected_refl (v : Fin 4 → ℤ) :
     PhotonConnected v v := by
   unfold PhotonConnected IsPythQuad
   simp
+
 
 

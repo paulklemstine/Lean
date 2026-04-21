@@ -14,8 +14,10 @@ def EML9 (a b : ℝ) : ℝ := Real.exp a - Real.log b
 
 
 
+
 /-- The diagonal map: d(x) = exp(x) - ln(x). -/
 def diagMap9 (x : ℝ) : ℝ := Real.exp x - Real.log x
+
 
 
 
@@ -24,8 +26,10 @@ def EMLTrace9 (x y : ℝ) : ℝ := EML9 x y + EML9 y x
 
 
 
+
 /-- The semigroup element T_c(x) = exp(x) - ln(c). -/
 def T9 (c x : ℝ) : ℝ := Real.exp x - Real.log c
+
 
 
 
@@ -33,6 +37,7 @@ def T9 (c x : ℝ) : ℝ := Real.exp x - Real.log c
 def eTow9 : ℕ → ℝ
   | 0 => 1
   | n + 1 => Real.exp (eTow9 n)
+
 
 
 
@@ -45,8 +50,14 @@ theorem EML9_exp (x : ℝ) : EML9 x 1 = Real.exp x := by
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.NewTheorems
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 49] -/
 theorem EML9_one_minus_log (x : ℝ) : EML9 0 x = 1 - Real.log x := by
   simp [EML9]
+
 
 
 
@@ -55,8 +66,10 @@ theorem EML9_generates_e : EML9 1 1 = Real.exp 1 := by
 
 
 
+
 theorem EML9_generates_zero : EML9 0 (Real.exp 1) = 0 := by
   simp [EML9, Real.log_exp]
+
 
 
 
@@ -65,14 +78,17 @@ theorem EML9_generates_ee : EML9 (EML9 1 1) 1 = Real.exp (Real.exp 1) := by
 
 
 
+
 theorem EML9_generates_eee : EML9 (EML9 (EML9 1 1) 1) 1 = Real.exp (Real.exp (Real.exp 1)) := by
   simp [EML9, Real.log_one]
+
 
 
 
 /-- ln recovery: EML(0, exp(EML(0, x))) = ln(x). -/
 theorem EML9_recovers_ln (x : ℝ) : EML9 0 (Real.exp (EML9 0 x)) = Real.log x := by
   simp [EML9, Real.log_exp]
+
 
 
 
@@ -83,10 +99,12 @@ theorem EML9_sub (a b : ℝ) (ha : 0 < a) :
 
 
 
+
 /-- Addition: EML(ln a, exp(-b)) = a + b for a > 0. -/
 theorem EML9_add (a b : ℝ) (ha : 0 < a) :
     EML9 (Real.log a) (Real.exp (-b)) = a + b := by
   simp [EML9, Real.exp_log ha, Real.log_exp]
+
 
 
 
@@ -97,6 +115,7 @@ theorem EML9_mul (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
 
 
 
+
 /-- Division: EML(ln a - ln b, 1) = a / b for a, b > 0. -/
 theorem EML9_div (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
     EML9 (Real.log a - Real.log b) 1 = a / b := by
@@ -104,9 +123,11 @@ theorem EML9_div (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
 
 
 
+
 /-- Double negation: EML(0, exp(EML(0, exp(x)))) = x. -/
 theorem EML9_double_neg (x : ℝ) : EML9 0 (Real.exp (EML9 0 (Real.exp x))) = x := by
   simp [EML9, Real.log_exp]
+
 
 
 
@@ -117,11 +138,13 @@ theorem diagMap9_ge_two (x : ℝ) (hx : 0 < x) : diagMap9 x ≥ 2 := by
 
 
 
+
 theorem diagMap9_no_fixed_point (x : ℝ) (hx : 0 < x) : diagMap9 x ≠ x := by
   -- Use that exp(x) ≥ 1 + x + x²/2 and ln(x) ≤ x - 1.
   have h_exp_ln : Real.exp x ≥ 1 + x + x^2 / 2 ∧ Real.log x ≤ x - 1 := by
     exact ⟨ by rw [ Real.exp_eq_exp_ℝ ] ; rw [ NormedSpace.exp_eq_tsum_div ] ; exact le_trans ( by norm_num [ Finset.sum_range_succ ] ) ( Summable.sum_le_tsum ( Finset.range 3 ) ( fun _ _ => by positivity ) ( by simpa using Real.summable_pow_div_factorial x ) ), Real.log_le_sub_one_of_pos hx ⟩;
   unfold diagMap9; nlinarith;
+
 
 
 
@@ -134,10 +157,12 @@ theorem diagMap9_gt_id (x : ℝ) (hx : 0 < x) : diagMap9 x > x := by
 
 
 
+
 /-- The first derivative of diagMap is exp(x) - 1/x. -/
 theorem diagMap9_hasDerivAt (x : ℝ) (hx : 0 < x) :
     HasDerivAt diagMap9 (Real.exp x - x⁻¹) x := by
   exact (hasDerivAt_exp x).sub (Real.hasDerivAt_log hx.ne')
+
 
 
 
@@ -147,10 +172,12 @@ theorem diagMap9_second_deriv_pos (x : ℝ) (hx : 0 < x) :
 
 
 
+
 /-- At a critical point, x · exp(x) = 1. -/
 theorem diagMap9_critical_lambert (x : ℝ) (hx : 0 < x)
     (hcrit : Real.exp x = x⁻¹) : x * Real.exp x = 1 := by
   rw [hcrit]; exact mul_inv_cancel₀ hx.ne'
+
 
 
 
@@ -163,10 +190,12 @@ theorem diagMap9_critical_equiv (x : ℝ) (hx : 0 < x) :
 
 
 
+
 theorem depth9_sep_exp_exp :
     ¬ ∃ a b : ℝ, ∀ x : ℝ, Real.exp (Real.exp x) = Real.exp (a * x + b) := by
   simp +zetaDelta at *;
   grind +suggestions
+
 
 
 
@@ -180,6 +209,7 @@ theorem depth9_sep_square :
 
 
 
+
 /-- sin(x) ≠ exp(ax + b) for any constants a, b. -/
 theorem depth9_sep_sin :
     ¬ ∃ a b : ℝ, ∀ x : ℝ, Real.sin x = Real.exp (a * x + b) := by
@@ -190,6 +220,7 @@ theorem depth9_sep_sin :
 
 
 
+
 /-- The EML trace formula. -/
 theorem EMLTrace9_eq (x y : ℝ) :
     EMLTrace9 x y = Real.exp x + Real.exp y - Real.log x - Real.log y := by
@@ -197,9 +228,11 @@ theorem EMLTrace9_eq (x y : ℝ) :
 
 
 
+
 /-- EML trace is symmetric. -/
 theorem EMLTrace9_symm (x y : ℝ) : EMLTrace9 x y = EMLTrace9 y x := by
   unfold EMLTrace9 EML9; ring
+
 
 
 
@@ -212,10 +245,12 @@ theorem EMLTrace9_ge_four (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
 
 
 
+
 /-- The EML anti-symmetric difference formula. -/
 theorem EML9_antisym (x y : ℝ) :
     EML9 x y - EML9 y x = (Real.exp x - Real.exp y) + (Real.log x - Real.log y) := by
   unfold EML9; ring
+
 
 
 
@@ -226,9 +261,11 @@ theorem EML9_log_split (x y z : ℝ) (hy : 0 < y) (hz : 0 < z) :
 
 
 
+
 /-- Shift identity: EML(x + c, 1) = exp(c) · exp(x). -/
 theorem EML9_shift (x c : ℝ) : EML9 (x + c) 1 = Real.exp c * Real.exp x := by
   simp [EML9, Real.log_one, Real.exp_add, mul_comm]
+
 
 
 
@@ -238,9 +275,11 @@ theorem EML9_strictMono_fst (y : ℝ) : StrictMono (fun x => EML9 x y) :=
 
 
 
+
 /-- EML is strictly decreasing in the second argument for y > 0. -/
 theorem EML9_strictAnti_snd (x : ℝ) : StrictAntiOn (fun y => EML9 x y) (Ioi 0) :=
   fun _ hy _ _ hyz => sub_lt_sub_left (Real.log_lt_log hy hyz) _
+
 
 
 
@@ -250,9 +289,11 @@ theorem T9_one (x : ℝ) : T9 1 x = Real.exp x := by
 
 
 
+
 /-- T_c is strictly monotone. -/
 theorem T9_strictMono (c : ℝ) : StrictMono (T9 c) :=
   fun _ _ h => sub_lt_sub_right (Real.exp_lt_exp.mpr h) _
+
 
 
 
@@ -263,10 +304,12 @@ theorem T9_one_no_fixed (x : ℝ) : T9 1 x > x := by
 
 
 
+
 theorem T9_noncomm : ∃ c₁ c₂ x : ℝ, T9 c₁ (T9 c₂ x) ≠ T9 c₂ (T9 c₁ x) := by
   unfold T9;
   refine' ⟨ 1, Real.exp 1, 0, _ ⟩ ; norm_num;
   linarith [ Real.add_one_lt_exp one_ne_zero ]
+
 
 
 
@@ -277,10 +320,12 @@ theorem eTow9_pos (n : ℕ) : 0 < eTow9 n := by
 
 
 
+
 theorem eTow9_strictMono : StrictMono eTow9 := by
   apply strictMono_nat_of_lt_succ
   intro n; simp only [eTow9]
   linarith [Real.add_one_le_exp (eTow9 n)]
+
 
 
 
@@ -295,9 +340,11 @@ theorem eTow9_ge_succ (n : ℕ) : eTow9 n ≥ (n : ℝ) + 1 := by
 
 
 
+
 theorem eTow9_unbounded : ∀ M : ℝ, ∃ n : ℕ, eTow9 n > M := by
   intro M
   exact ⟨⌊M⌋₊, by linarith [Nat.lt_floor_add_one M, eTow9_ge_succ ⌊M⌋₊]⟩
+
 
 
 
@@ -308,11 +355,13 @@ theorem EML9_double_exp (x : ℝ) :
 
 
 
+
 /-- Diagonal iteration: diagMap(diagMap(x)) explicit form. -/
 theorem diagMap9_compose (x : ℝ) :
     diagMap9 (diagMap9 x) = Real.exp (Real.exp x - Real.log x) -
       Real.log (Real.exp x - Real.log x) := by
   simp [diagMap9]
+
 
 
 
@@ -325,6 +374,7 @@ theorem exp_exp9_gt_four : Real.exp (Real.exp 1) > 4 := by
 
 
 
+
 theorem EML9_noncomm : ∃ x y : ℝ, EML9 x y ≠ EML9 y x := by
   unfold EML9;
   use 0, 1; norm_num;
@@ -332,10 +382,12 @@ theorem EML9_noncomm : ∃ x y : ℝ, EML9 x y ≠ EML9 y x := by
 
 
 
+
 theorem EML9_nonassoc :
     ∃ x y z : ℝ, EML9 (EML9 x y) z ≠ EML9 x (EML9 y z) := by
   use 0, 1, 1;
   norm_num [ EML9 ]
+
 
 
 
@@ -348,6 +400,7 @@ theorem EML9_arithmetic_complete (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
     EML9 (Real.log a - Real.log b) 1 = a / b := by
   exact ⟨EML9_exp a, EML9_sub a b ha, EML9_add a b ha,
          EML9_mul a b ha hb, EML9_div a b ha hb⟩
+
 
 
 

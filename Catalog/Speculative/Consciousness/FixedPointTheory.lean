@@ -15,9 +15,11 @@ def SelfModelingSystem.isConscious (S : SelfModelingSystem) (s : S.State) : Prop
 
 
 
+
 /-- A system has consciousness if it has at least one conscious state. -/
 def SelfModelingSystem.hasConsciousness (S : SelfModelingSystem) : Prop :=
   ∃ s : S.State, S.isConscious s
+
 
 
 
@@ -29,6 +31,7 @@ theorem consciousness_fixed_point_lawvere {A B : Type*}
     ∃ b : B, g b = b := by
   obtain ⟨a₀, ha₀⟩ := hφ (fun a => g (φ a a))
   exact ⟨φ a₀ a₀, (congr_fun ha₀ a₀).symm⟩
+
 
 
 
@@ -44,6 +47,7 @@ theorem consciousness_exists_from_surjection
 
 
 
+
 /-- **Consciousness via Lattice Fixed Points**: If states form a complete lattice
 and self-reflection is monotone, consciousness exists as the least fixed point. -/
 theorem consciousness_lattice_fixed_point
@@ -53,10 +57,12 @@ theorem consciousness_lattice_fixed_point
 
 
 
+
 /-- The least conscious state: the minimal fixed point of reflection. -/
 def leastConsciousState {S : Type*} [CompleteLattice S]
     (reflect : S → S) (hm : Monotone reflect) : S :=
   OrderHom.lfp ⟨reflect, hm⟩
+
 
 
 
@@ -68,11 +74,13 @@ theorem least_conscious_is_fixed {S : Type*} [CompleteLattice S]
 
 
 
+
 /-- The least conscious state is below all other conscious states. -/
 theorem least_conscious_is_least {S : Type*} [CompleteLattice S]
     (reflect : S → S) (hm : Monotone reflect) (s : S) (hs : reflect s = s) :
     leastConsciousState reflect hm ≤ s :=
   OrderHom.lfp_le ⟨reflect, hm⟩ (le_of_eq hs)
+
 
 
 
@@ -86,6 +94,7 @@ theorem no_perfect_self_model (S : Type*) :
 
 
 
+
 /-- Corollary: Any self-modeling system necessarily has blind spots. -/
 theorem consciousness_has_blind_spots (S : Type*)
     (model : S → (S → Prop)) :
@@ -96,10 +105,12 @@ theorem consciousness_has_blind_spots (S : Type*)
 
 
 
+
 /-- Iterated reflection: applying self-modeling n times. -/
 def iterReflect (S : SelfModelingSystem) : ℕ → S.State → S.State
   | 0 => id
   | n + 1 => S.reflect ∘ iterReflect S n
+
 
 
 
@@ -108,6 +119,7 @@ theorem idempotent_reflection_conscious (S : SelfModelingSystem)
     (h_idem : ∀ s, S.reflect (S.reflect s) = S.reflect s) (s : S.State) :
     S.isConscious (S.reflect s) :=
   h_idem s
+
 
 
 
@@ -128,11 +140,13 @@ theorem idempotent_stabilizes (S : SelfModelingSystem)
 
 
 
+
 /-- A system with bounded depth: reflection always eventually stabilizes. -/
 structure BoundedDepthSystem extends SelfModelingSystem where
   bound : ℕ
   stabilizes : ∀ s, iterReflect toSelfModelingSystem bound s =
                iterReflect toSelfModelingSystem (bound + 1) s
+
 
 
 
@@ -146,12 +160,14 @@ theorem bounded_depth_consciousness (S : BoundedDepthSystem) (s : S.State) :
 
 
 
+
 /-- A hierarchy of consciousness levels. -/
 structure ConsciousnessHierarchy where
   Level : Type*
   awareness : Level → Level → Prop
   self_aware : Level → Prop
   self_aware_def : ∀ l, self_aware l ↔ awareness l l
+
 
 
 
@@ -162,6 +178,7 @@ theorem universal_awareness_implies_self_awareness
     H.self_aware l := by
   rw [H.self_aware_def]
   exact h_universal l
+
 
 
 

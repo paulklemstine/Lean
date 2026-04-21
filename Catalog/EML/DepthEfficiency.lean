@@ -18,8 +18,10 @@ def expTower : ℕ → ℝ → ℝ
 
 
 
+
 /-- Tower of depth 1 is exp. -/
 theorem expTower_one (x : ℝ) : expTower 1 x = Real.exp x := rfl
+
 
 
 
@@ -28,11 +30,13 @@ theorem expTower_two (x : ℝ) : expTower 2 x = Real.exp (Real.exp x) := rfl
 
 
 
+
 /-- Tower functions are always positive for depth ≥ 1. -/
 theorem expTower_pos (n : ℕ) (x : ℝ) (hn : 0 < n) : 0 < expTower n x := by
   induction n with
   | zero => omega
   | succ n _ => exact Real.exp_pos _
+
 
 
 
@@ -49,6 +53,7 @@ theorem expTower_strictMono (n : ℕ) (hn : 0 < n) : StrictMono (expTower n) := 
 
 
 
+
 /-- Tower functions are continuous. -/
 theorem expTower_continuous (n : ℕ) : Continuous (expTower n) := by
   induction n with
@@ -57,8 +62,10 @@ theorem expTower_continuous (n : ℕ) : Continuous (expTower n) := by
 
 
 
+
 /-- An EML chain of depth d needs only 2d+1 leaves (one variable, rest constants). -/
 def emlChainLeaves (d : ℕ) : ℕ := 2 * d + 1
+
 
 
 
@@ -69,8 +76,10 @@ theorem emlChainLeaves_linear (d₁ d₂ : ℕ) (h : d₁ ≤ d₂) :
 
 
 
+
 /-- A depth-5 EML chain has only 11 leaves but represents exp^5. -/
 theorem depth5_chain_leaves : emlChainLeaves 5 = 11 := by rfl
+
 
 
 
@@ -87,15 +96,22 @@ theorem eml_neuron_lipschitz_bound (w₁ b₁ : ℝ) (M : ℝ) (hM : 0 < M) :
 
 
 
+
 /-- EML complexity of composition is at most the sum of complexities. -/
 theorem eml_complexity_subadditive (m n : ℕ) (hm : 1 ≤ m) (hn : 1 ≤ n) :
     m + n - 1 ≤ m + n := by omega
 
 
 
+
+/-- [Section: # CatalogBuild.EML.DepthEfficiency
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 20] -/
 theorem eml_complexity_strictly_subadditive (m n : ℕ) (hm : 2 ≤ m) (hn : 2 ≤ n) :
     m + n - 1 < m * n := by
   rw [ tsub_lt_iff_left ] <;> nlinarith
+
 
 
 
@@ -108,9 +124,11 @@ theorem real_subalgebra_self_adjoint :
 
 
 
+
 /-- ReLU networks need width 2^d to represent functions that depth-d EML
 chains handle with constant width. -/
 def reluWidthForTower (d : ℕ) : ℕ := 2^d
+
 
 
 
@@ -120,9 +138,11 @@ theorem width_ratio_exponential (d : ℕ) (hd : 3 ≤ d) :
 
 
 
+
 /-- The gradient magnitude at depth d with average per-layer gradient g
 is g^d. Training is feasible when g^d is neither too large nor too small. -/
 def chainGradientMagnitude (g : ℝ) (d : ℕ) : ℝ := g ^ d
+
 
 
 
@@ -134,11 +154,13 @@ theorem gradient_explosion (g : ℝ) (hg : 1 < g) (d : ℕ) (hd : 0 < d) :
 
 
 
+
 /-- If average gradient < 1 (and positive), the chain gradient vanishes. -/
 theorem gradient_vanishing (g : ℝ) (hg0 : 0 < g) (hg1 : g < 1) (d : ℕ) (hd : 0 < d) :
     chainGradientMagnitude g d < 1 := by
   simp [chainGradientMagnitude]
   exact pow_lt_one₀ hg0.le hg1 hd.ne'
+
 
 
 
@@ -149,11 +171,13 @@ theorem gradient_critical (d : ℕ) :
 
 
 
+
 /-- For practical training, depth should satisfy g^d ∈ [ε, 1/ε].
 With g = 2 and depth 5: 2^5 = 32 (manageable with clipping). -/
 theorem practical_depth_bound_example :
     (2 : ℝ)^5 = 32 ∧ (2 : ℝ)^7 = 128 := by
   constructor <;> norm_num
+
 
 
 

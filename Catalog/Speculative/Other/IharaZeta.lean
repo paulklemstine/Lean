@@ -15,15 +15,18 @@ def IharaGraph.isRegular {n : ℕ} (G : IharaGraph n) (q : ℕ) : Prop :=
 
 
 
+
 /-- The adjacency matrix as a Mathlib matrix. -/
 def IharaGraph.adjMatrix {n : ℕ} (G : IharaGraph n) : Matrix (Fin n) (Fin n) ℝ :=
   Matrix.of G.adj
 
 
 
+
 /-- The degree matrix (diagonal). -/
 def IharaGraph.degMatrix {n : ℕ} (G : IharaGraph n) : Matrix (Fin n) (Fin n) ℝ :=
   Matrix.diagonal (fun i => G.degree i)
+
 
 
 
@@ -36,10 +39,12 @@ theorem IharaGraph.adjMatrix_symm {n : ℕ} (G : IharaGraph n) :
 
 
 
+
 /-- The Ihara matrix: I - u·A + u²·(D - I).
 This is the key matrix whose determinant gives ζ_G(u)⁻¹. -/
 def iharaMatrix {n : ℕ} (G : IharaGraph n) (u : ℝ) : Matrix (Fin n) (Fin n) ℝ :=
   1 - u • G.adjMatrix + u^2 • (G.degMatrix - 1)
+
 
 
 
@@ -59,6 +64,11 @@ theorem ihara_matrix_regular {n : ℕ} (G : IharaGraph n) (q : ℕ) (u : ℝ)
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.IharaZeta
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 11] -/
 theorem regular_graph_eigenvalue_bound {n : ℕ} (G : IharaGraph n) (q : ℕ)
     (hreg : G.isRegular q)
     (hadj_nn : ∀ i j, 0 ≤ G.adj i j)  -- adjacency entries are non-negative
@@ -83,11 +93,13 @@ theorem regular_graph_eigenvalue_bound {n : ℕ} (G : IharaGraph n) (q : ℕ)
 
 
 
+
 /-- A Ramanujan graph satisfies |λ| ≤ 2√q for all non-trivial eigenvalues. -/
 def IharaGraph.isRamanujan {n : ℕ} (G : IharaGraph n) (q : ℕ) : Prop :=
   G.isRegular q ∧ ∀ ev : ℝ,
     (∃ v : Fin n → ℝ, v ≠ 0 ∧ G.adjMatrix.mulVec v = ev • v) →
     |ev| = (q + 1 : ℝ) ∨ |ev| ≤ 2 * Real.sqrt q
+
 
 
 
@@ -97,9 +109,11 @@ def IharaGraph.numEdges {n : ℕ} (G : IharaGraph n) : ℝ :=
 
 
 
+
 /-- The rank of the fundamental group: r = |E| - |V| + 1 -/
 def IharaGraph.graphRank {n : ℕ} (G : IharaGraph n) : ℝ :=
   G.numEdges - n + 1
+
 
 
 
@@ -107,6 +121,7 @@ theorem regular_graph_edges {n : ℕ} (G : IharaGraph n) (q : ℕ) (hreg : G.isR
     G.numEdges = (n : ℝ) * (q + 1 : ℝ) / 2 := by
   convert congr_arg ( fun x : ℝ => x / 2 ) ( Finset.sum_congr rfl fun i _ => hreg i ) using 1 ; simp +decide [ Finset.sum_add_distrib, Matrix.mulVec, dotProduct ];
   ring
+
 
 
 

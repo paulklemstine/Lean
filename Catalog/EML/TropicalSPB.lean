@@ -18,9 +18,11 @@ def tropSPB (x y : ℝ) : ℝ := min x y - max 0 (x + y)
 
 
 
+
 /-- Tropical SPB is commutative. -/
 theorem tropSPB_comm (x y : ℝ) : tropSPB x y = tropSPB y x := by
   simp [tropSPB, min_comm, add_comm]
+
 
 
 
@@ -32,9 +34,11 @@ theorem tropSPB_zero_neg (x : ℝ) (hx : x < 0) :
 
 
 
+
 /-- Alternative tropical SPB using max instead of min:
 tspb_max(x, y) = max(x, y) - max(0, x + y). -/
 def tropSPBMax (x y : ℝ) : ℝ := max x y - max 0 (x + y)
+
 
 
 
@@ -44,12 +48,14 @@ theorem tropSPBMax_comm (x y : ℝ) : tropSPBMax x y = tropSPBMax y x := by
 
 
 
+
 /-- For negative inputs, tropical SPB has a clean form. -/
 theorem tropSPB_neg_neg (x y : ℝ) (hx : x < 0) (hy : y < 0) :
     tropSPB x y = min x y := by
   unfold tropSPB
   have hxy : x + y < 0 := by linarith
   simp [max_eq_left (le_of_lt hxy)]
+
 
 
 

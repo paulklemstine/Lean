@@ -17,6 +17,11 @@ def EML_den (a b : ℝ) : ℝ := Real.exp a - Real.log b
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Density
+Auto-generated from theorem catalog database.
+Domain: Computation
+Declarations: 15] -/
 def EMLReach : ℕ → Set ℝ → Set ℝ
   | 0, S => S
   | n + 1, S =>
@@ -25,13 +30,16 @@ def EMLReach : ℕ → Set ℝ → Set ℝ
 
 
 
+
 def EMLFull (S : Set ℝ) : Set ℝ := ⋃ n, EMLReach n S
+
 
 
 
 theorem EMLReach_mono (S : Set ℝ) (n : ℕ) :
     EMLReach n S ⊆ EMLReach (n + 1) S :=
   fun _ hx => Or.inl hx
+
 
 
 
@@ -43,13 +51,16 @@ theorem EMLReach_mono_gen (S : Set ℝ) {m n : ℕ} (h : m ≤ n) :
 
 
 
+
 theorem mem_EMLFull_of_mem_reach (S : Set ℝ) (n : ℕ) (x : ℝ) (hx : x ∈ EMLReach n S) :
     x ∈ EMLFull S :=
   Set.mem_iUnion.mpr ⟨n, hx⟩
 
 
 
+
 theorem one_in_reach : (1 : ℝ) ∈ EMLReach 0 {1} := Set.mem_singleton 1
+
 
 
 
@@ -60,9 +71,11 @@ theorem e_in_reach : Real.exp 1 ∈ EMLReach 1 {1} := by
 
 
 
+
 def eTow : ℕ → ℝ
   | 0 => 1
   | n + 1 => Real.exp (eTow n)
+
 
 
 
@@ -70,6 +83,7 @@ theorem eTow_pos (n : ℕ) : 0 < eTow n := by
   induction n with
   | zero => norm_num [eTow]
   | succ _ _ => exact Real.exp_pos _
+
 
 
 
@@ -84,10 +98,12 @@ theorem eTow_in_reach (n : ℕ) : eTow n ∈ EMLReach n {1} := by
 
 
 
+
 theorem eTow_strictMono : StrictMono eTow := by
   apply strictMono_nat_of_lt_succ
   intro n; simp [eTow]
   linarith [Real.add_one_le_exp (eTow n)]
+
 
 
 
@@ -108,13 +124,16 @@ theorem EMLFull_unbounded_above :
 
 
 
+
 theorem one_minus_log_lt_one (y : ℝ) (hy : 1 < y) :
     EML_den 0 y < 1 := by
   simp [EML_den]; linarith [Real.log_pos hy]
 
 
 
+
 theorem depth_zero_singleton : EMLReach 0 {1} = {1} := rfl
+
 
 
 

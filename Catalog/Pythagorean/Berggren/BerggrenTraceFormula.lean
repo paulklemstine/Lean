@@ -1,20 +1,13 @@
-/-
-# Trace Formula for B₂ⁿ: tr(B₂ⁿ) = 2·pellX(n) + (-1)ⁿ (V18 - Direction 85)
+/-! # CatalogBuild.Pythagorean.Berggren.BerggrenTraceFormula
 
-We prove the trace formula for ALL n by combining:
-1. Cayley-Hamilton: B₂³ = 5·B₂² + 5·B₂ - I
-2. The resulting trace recurrence: tr(n+3) = 5·tr(n+2) + 5·tr(n+1) - tr(n)
-3. The Pell recurrence: pellX(n+2) = 6·pellX(n+1) - pellX(n)
-4. Both sequences satisfy the SAME recurrence with the SAME initial values.
-
-Machine-verified in Lean 4 with Mathlib.
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Berggren
+Declarations: 13
 -/
+
 import Mathlib
 
-open Matrix
-
-/-! ## Section 1: Pell Sequence (self-contained) -/
-
+/-- [Section: ## Section 1: Pell Sequence (self-contained)] -/
 def pellXt : ℕ → ℤ
   | 0 => 1
   | 1 => 3
@@ -22,18 +15,21 @@ def pellXt : ℕ → ℤ
 
 @[simp] theorem pellXt_0 : pellXt 0 = 1 := rfl
 @[simp] theorem pellXt_1 : pellXt 1 = 3 := rfl
+
 theorem pellXt_rec (n : ℕ) : pellXt (n + 2) = 6 * pellXt (n + 1) - pellXt n := rfl
 
-/-! ## Section 2: The Target Sequence f(n) = 2·pellX(n) + (-1)ⁿ -/
 
+/-- [Section: ## Section 2: The Target Sequence f(n) = 2·pellX(n) + (-1)ⁿ] -/
 def traceTarget (n : ℕ) : ℤ := 2 * pellXt n + (-1 : ℤ) ^ n
 
+
 theorem traceTarget_0 : traceTarget 0 = 3 := by simp [traceTarget]
+
 theorem traceTarget_1 : traceTarget 1 = 5 := by simp [traceTarget]
+
 theorem traceTarget_2 : traceTarget 2 = 35 := by
   simp [traceTarget]; native_decide
 
-/-! ## Section 3: The Key Recurrence -/
 
 /-- traceTarget satisfies the recurrence f(n+3) = 5f(n+2) + 5f(n+1) - f(n) -/
 theorem traceTarget_recurrence (n : ℕ) :
@@ -43,16 +39,15 @@ theorem traceTarget_recurrence (n : ℕ) :
   have h2 : pellXt (n + 2) = 6 * pellXt (n + 1) - pellXt n := pellXt_rec n
   rw [h1, h2]; ring
 
-/-! ## Section 4: B₂ Matrix -/
 
+/-- [Section: ## Section 4: B₂ Matrix] -/
 def BN₂t : Matrix (Fin 3) (Fin 3) ℤ := !![1, 2, 2; 2, 1, 2; 2, 2, 3]
 
-/-! ## Section 5: Cayley-Hamilton for B₂ -/
 
+/-- [Section: ## Section 5: Cayley-Hamilton for B₂] -/
 theorem BN₂t_cayley_hamilton : BN₂t ^ 3 = 5 • BN₂t ^ 2 + 5 • BN₂t - 1 := by
   native_decide
 
-/-! ## Section 6: Trace Recurrence from Cayley-Hamilton -/
 
 /-- From Cayley-Hamilton: tr(B₂^(n+3)) = 5·tr(B₂^(n+2)) + 5·tr(B₂^(n+1)) - tr(B₂^n) -/
 theorem BN₂t_trace_rec (n : ℕ) :
@@ -72,7 +67,6 @@ theorem BN₂t_trace_rec (n : ℕ) :
       Matrix.trace_smul]
   simp
 
-/-! ## Section 7: THE MAIN THEOREM -/
 
 /-- **Main Theorem**: tr(B₂ⁿ) = 2·pellX(n) + (-1)ⁿ for all n ∈ ℕ -/
 theorem traceB2_eq_pellX (n : ℕ) :
@@ -90,11 +84,8 @@ theorem traceB2_eq_pellX (n : ℕ) :
     have h2 : pellXt (n + 2) = 6 * pellXt (n + 1) - pellXt n := rfl
     rw [h1, h2]; ring
 
-/-! ## Section 8: Corollaries -/
 
-/-
-Trace is always positive
--/
+/-- [Section: ## Section 8: Corollaries] -/
 theorem BN₂t_trace_pos (n : ℕ) : 0 < trace (BN₂t ^ n) := by
   -- From traceB2_eq_pellX, we have $trace (BN₂t ^ n) = 2 * pellXt n + (-1 : ℤ) ^ n$.
   have h_trace : trace (BN₂t ^ n) = 2 * pellXt n + (-1 : ℤ) ^ n := by
@@ -108,9 +99,7 @@ theorem BN₂t_trace_pos (n : ℕ) : 0 < trace (BN₂t ^ n) := by
   by_cases h : Even n <;> simp_all +decide ; linarith [ h_pell_pos n ];
   linarith [ h_pell_pos n ]
 
-/-
-Trace is always odd
--/
+
 theorem BN₂t_trace_odd (n : ℕ) : trace (BN₂t ^ n) % 2 = 1 := by
   rw [ traceB2_eq_pellX ];
   cases Nat.even_or_odd n <;> simp +decide [ *, Int.add_emod, Int.mul_emod ]

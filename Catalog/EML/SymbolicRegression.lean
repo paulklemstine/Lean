@@ -17,12 +17,14 @@ inductive EMLRegTree where
 
 
 
+
 /-- Evaluate an EML regression tree. -/
 def EMLRegTree.eval (t : EMLRegTree) (vars : ℕ → ℝ) : ℝ :=
   match t with
   | .leaf c => c
   | .var n => vars n
   | .node l r => Real.exp (l.eval vars) - Real.log (r.eval vars)
+
 
 
 
@@ -34,6 +36,7 @@ def EMLRegTree.leafCount : EMLRegTree → ℕ
 
 
 
+
 /-- Node count of a regression tree. -/
 def EMLRegTree.nodeCount : EMLRegTree → ℕ
   | .leaf _ => 0
@@ -42,11 +45,13 @@ def EMLRegTree.nodeCount : EMLRegTree → ℕ
 
 
 
+
 /-- Parameter count: number of real-valued leaf parameters. -/
 def EMLRegTree.paramCount : EMLRegTree → ℕ
   | .leaf _ => 1
   | .var _ => 0
   | .node l r => l.paramCount + r.paramCount
+
 
 
 
@@ -60,11 +65,13 @@ theorem EMLRegTree.leaf_eq_node_succ (t : EMLRegTree) :
 
 
 
+
 /-- The EML search space includes the exponential function.
 exp(x) = eml(x, 1) = exp(x) - ln(1) = exp(x). -/
 theorem search_space_has_exp :
     ∃ t : EMLRegTree, ∀ x : ℝ, t.eval (fun _ => x) = Real.exp x := by
   exact ⟨.node (.var 0) (.leaf 1), fun x => by simp [EMLRegTree.eval, Real.log_one]⟩
+
 
 
 
@@ -82,6 +89,7 @@ theorem search_space_has_log :
 
 
 
+
 /-- The search space includes addition (via log(exp(x)·exp(y)) = x + y). -/
 theorem search_space_has_addition :
     ∀ a b : ℝ, Real.log (Real.exp a * Real.exp b) = a + b := by
@@ -90,11 +98,13 @@ theorem search_space_has_addition :
 
 
 
+
 /-- The search space includes subtraction (via log(exp(x)/exp(y)) = x - y). -/
 theorem search_space_has_subtraction :
     ∀ a b : ℝ, Real.log (Real.exp a / Real.exp b) = a - b := by
   intro a b
   rw [← Real.exp_sub, Real.log_exp]
+
 
 
 
@@ -107,6 +117,7 @@ theorem search_space_has_multiplication :
 
 
 
+
 /-- For a fixed EML tree topology, the evaluation function is differentiable
 in the leaf parameters (when log arguments are positive).
 This enables gradient-based continuous optimization. -/
@@ -116,14 +127,17 @@ theorem eml_leaf_differentiable :
 
 
 
+
 /-- Minimum depth needed for n leaves. -/
 def minDepthForLeaves (n : ℕ) : ℕ := Nat.log 2 n
+
 
 
 
 /-- Nat.log is at most the number itself. -/
 theorem depth_lower_bound (n : ℕ) (_hn : 1 ≤ n) :
     Nat.log 2 n ≤ n := Nat.log_le_self 2 n
+
 
 
 
@@ -143,8 +157,10 @@ theorem kepler_third_law_log_form (k a T : ℝ) (hk : 0 < k) (ha : 0 < a) (hT : 
 
 
 
+
 /-- The level-n EML master formula parameter count. -/
 def regressionMasterParams (n : ℕ) : ℕ := 5 * 2^n - 6
+
 
 
 
@@ -153,8 +169,10 @@ theorem regression_level2_params : regressionMasterParams 2 = 14 := by native_de
 
 
 
+
 /-- Level-3 master formula has 34 free parameters — sufficient for complex models. -/
 theorem regression_level3_params : regressionMasterParams 3 = 34 := by native_decide
+
 
 
 

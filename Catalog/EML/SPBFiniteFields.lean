@@ -14,8 +14,10 @@ theorem chi4_five : chi4 5 = 1 := by native_decide
 
 
 
+
 /-- χ₋₄(7) = -1 -/
 theorem chi4_seven : chi4 7 = -1 := by native_decide
+
 
 
 
@@ -31,6 +33,7 @@ theorem spb_group_order_mod4_statement (p : ℕ) [Fact (Nat.Prime p)] (hp : p > 
 
 
 
+
 /-- [Section: # CatalogBuild.EML.SPBFiniteFields
 Auto-generated from theorem catalog database.
 Domain: EML
@@ -41,6 +44,7 @@ theorem neg_one_qr_iff_mod4 (p : ℕ) [hp : Fact (Nat.Prime p)] (hp2 : p ≠ 2) 
   · norm_num [ hp.1.primeFactors ];
     have := Nat.Prime.eq_two_or_odd hp.1; omega;
   · exact hp.1.squarefree
+
 
 
 

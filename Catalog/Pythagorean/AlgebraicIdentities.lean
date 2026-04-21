@@ -17,6 +17,7 @@ theorem norm_identity (x y : ℝ) (h : 1 - x * y ≠ 0) :
 
 
 
+
 /-- Hyperbolic norm: (1+uv)²(1-spbH(u,v)²) = (1-u²)(1-v²). -/
 theorem hyp_norm_identity (u v : ℝ) (h : 1 + u * v ≠ 0) :
     (1 + u * v) ^ 2 * (1 - spbH u v ^ 2) = (1 - u ^ 2) * (1 - v ^ 2) := by
@@ -24,6 +25,11 @@ theorem hyp_norm_identity (u v : ℝ) (h : 1 + u * v ≠ 0) :
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.AlgebraicIdentities
+Auto-generated from theorem catalog database.
+Domain: Pythagorean
+Declarations: 12] -/
 theorem spb_cross_ratio (a b c d t : ℝ)
     (ha : 1 - a * t ≠ 0) (hb : 1 - b * t ≠ 0)
     (hc : 1 - c * t ≠ 0) (hd : 1 - d * t ≠ 0)
@@ -39,10 +45,12 @@ theorem spb_cross_ratio (a b c d t : ℝ)
 
 
 
+
 /-- Sum identity: spb(x,y) + spbH(x,y) = 2(x+y)/((1-xy)(1+xy)). -/
 theorem spb_spbH_sum (x y : ℝ) (hc : 1 - x * y ≠ 0) (hh : 1 + x * y ≠ 0) :
     spb x y + spbH x y = 2 * (x + y) / ((1 - x * y) * (1 + x * y)) := by
   unfold spb spbH; field_simp; ring
+
 
 
 
@@ -53,10 +61,12 @@ theorem spb_spbH_product (x y : ℝ) (hc : 1 - x * y ≠ 0) (hh : 1 + x * y ≠ 
 
 
 
+
 /-- Difference: spb(x,y) - spbH(x,y) = 2xy(x+y)/((1-xy)(1+xy)). -/
 theorem spb_spbH_diff (x y : ℝ) (hc : 1 - x * y ≠ 0) (hh : 1 + x * y ≠ 0) :
     spb x y - spbH x y = 2 * x * y * (x + y) / ((1 - x * y) * (1 + x * y)) := by
   unfold spb spbH; field_simp; ring
+
 
 
 
@@ -77,6 +87,7 @@ theorem spb_reciprocal (x y : ℝ) (hx : x ≠ 0) (hy : y ≠ 0) (h : x * y ≠ 
 
 
 
+
 /-- spb(a,b) ∈ ℤ iff (1-ab) | (a+b). -/
 theorem spb_integer_criterion (a b : ℤ) (h : 1 - a * b ≠ 0) :
     (1 - a * b) ∣ (a + b) ↔ ∃ q : ℤ, a + b = q * (1 - a * b) := by
@@ -84,14 +95,18 @@ theorem spb_integer_criterion (a b : ℤ) (h : 1 - a * b ≠ 0) :
 
 
 
+
 /-- Specific computations. -/
 theorem spb_2_3 : spb (2 : ℝ) 3 = -1 := by unfold spb; norm_num
+
 
 
 theorem spb_1_2 : spb (1 : ℝ) 2 = -3 := by unfold spb; norm_num
 
 
+
 theorem spb_1_3 : spb (1 : ℝ) 3 = -2 := by unfold spb; norm_num
+
 
 
 
@@ -100,6 +115,7 @@ theorem rapidity_product (u v : ℝ) (_hu : u ≠ 1) (_hv : v ≠ 1)
     (huv : 1 + u * v ≠ 0) (_hs : spbH u v ≠ 1) :
     (1 + spbH u v) / (1 - spbH u v) = (1 + u) / (1 - u) * ((1 + v) / (1 - v)) := by
   unfold spbH; field_simp; ring
+
 
 
 

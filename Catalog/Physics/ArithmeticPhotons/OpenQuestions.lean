@@ -18,9 +18,11 @@ theorem photon_parity_constraint (a b c d : ℤ)
 
 
 
+
 /-- The unit vector (1,0,0) is a valid photon direction: 1² + 0² + 0² = 1² -/
 theorem unit_x_is_photonic : (1 : ℤ) ^ 2 + (0 : ℤ) ^ 2 + (0 : ℤ) ^ 2 = (1 : ℤ) ^ 2 := by
   norm_num
+
 
 
 
@@ -30,9 +32,11 @@ theorem unit_y_is_photonic : (0 : ℤ) ^ 2 + (1 : ℤ) ^ 2 + (0 : ℤ) ^ 2 = (1 
 
 
 
+
 /-- The unit vector (0,0,1) is a valid photon direction -/
 theorem unit_z_is_photonic : (0 : ℤ) ^ 2 + (0 : ℤ) ^ 2 + (1 : ℤ) ^ 2 = (1 : ℤ) ^ 2 := by
   norm_num
+
 
 
 
@@ -47,6 +51,7 @@ theorem photon_sublattice_even (a b c d : ℤ)
 
 
 
+
 /-- Specific quadruples generate: verify the four generators are valid -/
 theorem quadruple_generators_check :
     (1 : ℤ)^2 + 0^2 + 0^2 = 1^2 ∧
@@ -57,6 +62,7 @@ theorem quadruple_generators_check :
 
 
 
+
 /-- A Pythagorean quadruple gives a rational point on S² -/
 theorem rational_sphere_point (a b c d : ℤ) (hd : d ≠ 0)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
@@ -64,6 +70,7 @@ theorem rational_sphere_point (a b c d : ℤ) (hd : d ≠ 0)
   have hd' : (d : ℚ) ≠ 0 := Int.cast_ne_zero.mpr hd
   field_simp
   exact_mod_cast h
+
 
 
 
@@ -81,12 +88,14 @@ theorem inv_stereo_rational (s t : ℚ) :
 
 
 
+
 /-- The photon Hilbert space at energy d has the same cardinality as
 {(a,b,c) ∈ Z³ : a² + b² + c² = d²}. We define this as a Finset
 for computability within a bounded range. -/
 def photonBasis (d : ℕ) : Finset (ℤ × ℤ × ℤ) :=
   (Finset.Icc (-d : ℤ) d ×ˢ Finset.Icc (-d : ℤ) d ×ˢ Finset.Icc (-d : ℤ) d).filter
     (fun t => t.1 ^ 2 + t.2.1 ^ 2 + t.2.2 ^ 2 = (d : ℤ) ^ 2)
+
 
 
 
@@ -98,6 +107,7 @@ theorem photonBasis_valid (d : ℕ) (t : ℤ × ℤ × ℤ) (ht : t ∈ photonBa
 
 
 
+
 /-- The octahedral group acts on photon states: permuting (a,b,c) ↦ (b,a,c)
 preserves the null cone equation -/
 theorem octahedral_perm_ab (a b c d : ℤ)
@@ -106,10 +116,12 @@ theorem octahedral_perm_ab (a b c d : ℤ)
 
 
 
+
 /-- Sign change (a,b,c) ↦ (-a,b,c) preserves the null cone equation -/
 theorem octahedral_neg_a (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     (-a) ^ 2 + b ^ 2 + c ^ 2 = d ^ 2 := by ring_nf; linarith
+
 
 
 
@@ -124,14 +136,22 @@ theorem null_sum_expansion (a b c d a' b' c' d' : ℤ)
 
 
 
+
 /-- The Lorentz form in various dimensions -/
 def lorentzForm1 (a d : ℤ) : ℤ := a ^ 2 - d ^ 2
 
 
+
+/-- [Section: # CatalogBuild.Physics.ArithmeticPhotons.OpenQuestions
+Auto-generated from theorem catalog database.
+Domain: Physics/ArithmeticPhotons
+Declarations: 31] -/
 def lorentzForm2 (a b d : ℤ) : ℤ := a ^ 2 + b ^ 2 - d ^ 2
 
 
+
 def lorentzForm3 (a b c d : ℤ) : ℤ := a ^ 2 + b ^ 2 + c ^ 2 - d ^ 2
+
 
 
 
@@ -148,10 +168,12 @@ theorem null_1d (a d : ℤ) : lorentzForm1 a d = 0 ↔ a = d ∨ a = -d := by
 
 
 
+
 /-- (2+1)D: the null cone equation is Pythagorean triples -/
 theorem null_2d_is_triple (a b d : ℤ) :
     lorentzForm2 a b d = 0 ↔ a ^ 2 + b ^ 2 = d ^ 2 := by
   simp [lorentzForm2]; omega
+
 
 
 
@@ -162,9 +184,11 @@ theorem null_3d_is_quad (a b c d : ℤ) :
 
 
 
+
 theorem seven_not_sum_three_squares :
     ¬ ∃ a b c : ℤ, a ^ 2 + b ^ 2 + c ^ 2 = 7 := by
   exact fun ⟨ a, b, c, h ⟩ => by have := ( show a ≤ 2 by nlinarith ) ; have := ( show a ≥ -2 by nlinarith ) ; have := ( show b ≤ 2 by nlinarith ) ; have := ( show b ≥ -2 by nlinarith ) ; have := ( show c ≤ 2 by nlinarith ) ; have := ( show c ≥ -2 by nlinarith ) ; interval_cases a <;> interval_cases b <;> interval_cases c <;> trivial;
+
 
 
 
@@ -174,10 +198,12 @@ theorem fifteen_not_sum_three_squares :
 
 
 
+
 /-- The Lorentz form is homogeneous of degree 2 -/
 theorem lorentz_scale (a b c d k : ℤ) :
     lorentzForm3 (k*a) (k*b) (k*c) (k*d) = k^2 * lorentzForm3 a b c d := by
   simp [lorentzForm3]; ring
+
 
 
 
@@ -189,9 +215,11 @@ theorem null_spatial_zero (d : ℤ)
 
 
 
+
 /-- In (1+1)D, null vectors are parametrized by 1 integer (a = d) -/
 theorem dim_1_param (d : ℤ) : lorentzForm1 d d = 0 := by
   simp [lorentzForm1]
+
 
 
 
@@ -202,10 +230,12 @@ theorem dim_2_param (m n : ℤ) :
 
 
 
+
 /-- In (3+1)D, null vectors are parametrized by 4 integers (quaternion formula) -/
 theorem dim_3_param (m n p q : ℤ) :
     lorentzForm3 (m^2+n^2-p^2-q^2) (2*(m*q+n*p)) (2*(n*q-m*p)) (m^2+n^2+p^2+q^2) = 0 := by
   simp [lorentzForm3]; ring
+
 
 
 
@@ -219,6 +249,7 @@ theorem quat_norm_mult (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ) :
 
 
 
+
 /-- Two Minkowski-orthogonal null vectors sum to a null vector -/
 theorem orthogonal_null_sum (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
     (h₁ : a₁^2 + b₁^2 + c₁^2 = d₁^2)
@@ -228,12 +259,14 @@ theorem orthogonal_null_sum (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
 
 
 
+
 /-- Conversely, if two null vectors sum to null, they are Minkowski-orthogonal -/
 theorem null_sum_implies_orthogonal (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
     (h₁ : a₁^2 + b₁^2 + c₁^2 = d₁^2)
     (h₂ : a₂^2 + b₂^2 + c₂^2 = d₂^2)
     (hsum : (a₁+a₂)^2 + (b₁+b₂)^2 + (c₁+c₂)^2 = (d₁+d₂)^2) :
     a₁*a₂ + b₁*b₂ + c₁*c₂ = d₁*d₂ := by nlinarith
+
 
 
 
@@ -247,6 +280,7 @@ theorem photon_speed (a b c d : ℤ) (hd : d ≠ 0)
 
 
 
+
 /-- Timelike vectors have spatial speed < 1 -/
 theorem timelike_subluminal (a b c d : ℤ) (hd : (0 : ℤ) < d)
     (h : a^2 + b^2 + c^2 < d^2) :
@@ -255,5 +289,6 @@ theorem timelike_subluminal (a b c d : ℤ) (hd : (0 : ℤ) < d)
   have hd'' : (d : ℚ) ≠ 0 := ne_of_gt hd'
   rw [div_pow, div_pow, div_pow, ← add_div, ← add_div, div_lt_one (by positivity)]
   exact_mod_cast h
+
 
 

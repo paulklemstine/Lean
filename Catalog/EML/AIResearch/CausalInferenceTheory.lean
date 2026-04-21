@@ -14,8 +14,10 @@ def stdSEMParams (numParents outputDim : ℕ) : ℕ := numParents * outputDim
 
 
 
+
 /-- EML structural equation: 4 params per output -/
 def emlSEMParams (outputDim : ℕ) : ℕ := 4 * outputDim
+
 
 
 
@@ -29,21 +31,29 @@ theorem eml_sem_compact (np od : ℕ) (hn : 4 ≤ np) :
 
 
 
+
 /-- Cost to compute intervened model: recompute downstream -/
 def interventionCost (numDescendants modelCostPerNode : ℕ) : ℕ :=
   numDescendants * modelCostPerNode
 
 
 
+
+/-- [Section: # CatalogBuild.EML.AIResearch.CausalInferenceTheory
+Auto-generated from theorem catalog database.
+Domain: EML/AIResearch
+Declarations: 24] -/
 theorem eml_intervention_cheaper (nd mc_eml mc_std : ℕ) (hm : mc_eml ≤ mc_std) :
     interventionCost nd mc_eml ≤ interventionCost nd mc_std := by
   unfold interventionCost; exact Nat.mul_le_mul_left nd hm
 
 
 
+
 /-- Sample complexity for estimating ATE -/
 def ateSampleComplexity (modelDim : ℕ) (epsilon : ℝ) : ℝ :=
   ↑modelDim / epsilon ^ 2
+
 
 
 
@@ -56,9 +66,11 @@ theorem eml_ate_sample_efficient (d_eml d_std : ℕ) (eps : ℝ) (_heps : 0 < ep
 
 
 
+
 /-- Cost to compute counterfactual: abduction + intervention + prediction -/
 def counterfactualCost (abductionCost interventionCost predictionCost : ℕ) : ℕ :=
   abductionCost + interventionCost + predictionCost
+
 
 
 
@@ -69,9 +81,11 @@ theorem eml_counterfactual_cheaper (a_eml a_std i_eml i_std p_eml p_std : ℕ)
 
 
 
+
 /-- Score-based causal discovery: evaluate DAGs -/
 def causalDiscoveryCost (numVariables scoringCost : ℕ) : ℕ :=
   numVariables * numVariables * scoringCost
+
 
 
 
@@ -81,9 +95,11 @@ theorem eml_discovery_cheaper (n sc_eml sc_std : ℕ) (hs : sc_eml ≤ sc_std) :
 
 
 
+
 /-- IV estimation cost: two-stage regression -/
 def ivEstimationCost (firstStageCost secondStageCost : ℕ) : ℕ :=
   firstStageCost + secondStageCost
+
 
 
 
@@ -94,9 +110,11 @@ theorem eml_iv_cheaper (fs_eml fs_std ss_eml ss_std : ℕ)
 
 
 
+
 /-- Mediation: direct effect + indirect effect estimation -/
 def mediationCost (directEffectCost indirectEffectCost : ℕ) : ℕ :=
   directEffectCost + indirectEffectCost
+
 
 
 
@@ -107,9 +125,11 @@ theorem eml_mediation_cheaper (de_eml de_std ie_eml ie_std : ℕ)
 
 
 
+
 /-- Sensitivity: how much does estimate change with unmeasured confounding -/
 def sensitivityBound (effectEstimate confoundStrength : ℝ) : ℝ :=
   effectEstimate + confoundStrength
+
 
 
 
@@ -119,8 +139,10 @@ theorem stronger_confounding_weaker_bound (e c1 c2 : ℝ) (hc : c1 ≤ c2) :
 
 
 
+
 theorem no_confounding_exact (e : ℝ) : sensitivityBound e 0 = e := by
   unfold sensitivityBound; ring
+
 
 
 
@@ -128,7 +150,9 @@ theorem no_confounding_exact (e : ℝ) : sensitivityBound e 0 = e := by
 def propensityModelParams (numCovariates hiddenDim : ℕ) : ℕ := numCovariates * hiddenDim
 
 
+
 def emlPropensityParams (numCovariates : ℕ) : ℕ := 4 * numCovariates
+
 
 
 
@@ -140,13 +164,16 @@ theorem eml_propensity_compact (nc hd : ℕ) (hh : 4 ≤ hd) :
 
 
 
+
 /-- Learn causal variables from raw observations -/
 def causalRepParams (inputDim numCausalVars hiddenDim : ℕ) : ℕ :=
   inputDim * hiddenDim + hiddenDim * numCausalVars
 
 
 
+
 def emlCausalRepParams (numCausalVars : ℕ) : ℕ := 4 * numCausalVars
+
 
 
 
@@ -155,6 +182,7 @@ theorem eml_causal_rep_compact (di ncv hd : ℕ) (_hdi : 4 ≤ di) (hhd : 4 ≤ 
   unfold emlCausalRepParams causalRepParams
   have : 4 * ncv ≤ hd * ncv := Nat.mul_le_mul_right ncv hhd
   omega
+
 
 
 

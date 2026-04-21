@@ -16,7 +16,13 @@ Declarations: 10] -/
 theorem spbIter_zero : spbIter 0 = fun _ => 0 := rfl
 
 
+
+/-- [Section: # CatalogBuild.Speculative.SPBChebyshevFlow
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 10] -/
 theorem spbIter_one : spbIter 1 = id := rfl
+
 
 
 
@@ -24,6 +30,7 @@ theorem spbIter_one : spbIter 1 = id := rfl
 theorem spbIter_two_eq (x : ℝ) (h : 1 - x * x ≠ 0) :
     spbIter 2 x = 2 * x / (1 - x * x) := by
   simp [spbIter, spb]; field_simp; ring
+
 
 
 
@@ -36,10 +43,12 @@ theorem spbIter_three_eq (x : ℝ) (h1 : 1 - x * x ≠ 0)
 
 
 
+
 theorem tan_ode (t : ℝ) (h : cos t ≠ 0) :
     HasDerivAt tan (1 + tan t ^ 2) t := by
   convert Real.hasDerivAt_tan h using 1;
   rw [ ← Real.inv_one_add_tan_sq h, one_div, inv_inv ]
+
 
 
 
@@ -49,6 +58,7 @@ theorem tan_flow_value (x₀ t : ℝ) (hc : cos t ≠ 0)
   rw [ Real.tan_add, Real.tan_arctan ];
   · rfl;
   · exact Or.inl ⟨ fun k hk => hc <| by rw [ hk ] ; exact Real.cos_eq_zero_iff.mpr ⟨ k, by ring ⟩, fun k hk => by cases k <;> ring_nf at hk <;> norm_num at hk <;> nlinarith [ Real.neg_pi_div_two_lt_arctan x₀, Real.arctan_lt_pi_div_two x₀ ] ⟩
+
 
 
 
@@ -63,6 +73,7 @@ theorem arctan_spbIter_two (x : ℝ) (h : 0 < 1 - x * x) :
 
 
 
+
 theorem cauchy_invariance_algebraic (x a : ℝ) (h : 1 - x * a ≠ 0) :
     (1 + a ^ 2) / ((1 + spb x a ^ 2) * (1 - x * a) ^ 2) =
     1 / (1 + x ^ 2) := by
@@ -72,9 +83,11 @@ theorem cauchy_invariance_algebraic (x a : ℝ) (h : 1 - x * a ≠ 0) :
 
 
 
+
 /-- The difference of squares identity for SPB denominators. -/
 theorem denom_identity (x y : ℝ) :
     (1 - x * y) * (1 + x * y) = 1 - (x * y) ^ 2 := by ring
+
 
 
 
@@ -82,6 +95,7 @@ theorem denom_identity (x y : ℝ) :
 theorem cocycle_identity (x y z : ℝ) (h1 : 1 - x * y ≠ 0) (h2 : 1 - y * z ≠ 0) :
     (1 - x * y) * (1 - spb x y * z) = (1 - y * z) * (1 - x * spb y z) := by
   unfold spb; field_simp; ring
+
 
 
 

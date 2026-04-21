@@ -20,10 +20,12 @@ structure DiffusionModel where
 
 
 
+
 /-- The continuous-time prediction error variance satisfies the Riccati ODE:
 dP/dt = 2A·P + σ² - H²P²/R -/
 noncomputable def riccatiODE (model : DiffusionModel) (P : ℝ) : ℝ :=
   2 * model.drift * P + model.diffusion ^ 2 - model.observation ^ 2 * P ^ 2 / model.obs_noise
+
 
 
 
@@ -33,6 +35,7 @@ noncomputable def steadyStateVariance (model : DiffusionModel) : ℝ :=
    Real.sqrt (model.drift ^ 2 * model.obs_noise ^ 2 +
               model.observation ^ 2 * model.diffusion ^ 2 * model.obs_noise)) /
   (model.observation ^ 2)
+
 
 
 
@@ -52,12 +55,14 @@ theorem steady_state_is_equilibrium (model : DiffusionModel)
 
 
 
+
 /-- Innovations are uncorrelated with past observations (orthogonality) -/
 theorem innovation_orthogonality
     (cov_innov_past : ℝ)
     (h : cov_innov_past = 0) :
     cov_innov_past = 0 :=
   h
+
 
 
 
@@ -71,12 +76,18 @@ theorem stable_prediction_bounded (A σ : ℝ) (hA : A < 0) (hσ : 0 < σ) :
 
 
 
+
+/-- [Section: # CatalogBuild.MachineLearning.Prediction.ContinuousTime
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/Prediction
+Declarations: 11] -/
 theorem unstable_prediction_grows (A : ℝ) (hA : 0 < A) (σ : ℝ) (hσ : 0 < σ) :
     ∀ M : ℝ, ∃ h : ℝ, h > 0 ∧ σ ^ 2 * Real.exp (2 * A * h) > M := by
   -- Since σ² * exp(2Ah) tends to infinity as h tends to infinity, for any M, there exists an h such that σ² * exp(2Ah) > M.
   have h_exp_growth : Filter.Tendsto (fun h => σ^2 * Real.exp (2 * A * h)) Filter.atTop Filter.atTop := by
     exact Filter.Tendsto.const_mul_atTop ( sq_pos_of_pos hσ ) ( Real.tendsto_exp_atTop.comp <| Filter.tendsto_id.const_mul_atTop <| by positivity );
   exact fun M => by have := h_exp_growth.eventually_gt_atTop M; have := this.and ( Filter.eventually_gt_atTop 0 ) ; obtain ⟨ h, hh₁, hh₂ ⟩ := this.exists; exact ⟨ h, hh₂, hh₁ ⟩ ;
+
 
 
 
@@ -89,11 +100,13 @@ theorem estimation_error_ordering (filterErr smoothErr predErr : ℝ)
 
 
 
+
 /-- The ratio of prediction to filtering error is always ≥ 1 -/
 theorem prediction_filter_ratio (P_filter h A : ℝ)
     (hP : 0 < P_filter) (_hh : 0 < h) :
     P_filter * Real.exp (2 * A * h) > 0 :=
   mul_pos hP (exp_pos _)
+
 
 
 
@@ -104,11 +117,13 @@ theorem multiscale_error_decomposition (n : ℕ) (errors : Fin n → ℝ)
 
 
 
+
 /-- Slow components are better predicted than fast ones -/
 theorem slow_better_predicted (τ_slow τ_fast : ℝ)
     (h : τ_slow > τ_fast) (hf : 0 < τ_fast) :
     1 / τ_slow < 1 / τ_fast := by
   exact div_lt_div_of_pos_left one_pos (by linarith) h
+
 
 
 

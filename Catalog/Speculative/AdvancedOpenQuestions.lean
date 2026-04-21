@@ -14,9 +14,11 @@ theorem smaller_factor_sqrt_bound (N p q : ℕ) (hN : N = p * q) (hle : p ≤ q)
 
 
 
+
 /-- If x * y = N then x divides N. -/
 theorem short_vector_factor (N x y : ℕ) (hxy : x * y = N) : x ∣ N :=
   ⟨y, hxy.symm⟩
+
 
 
 
@@ -27,9 +29,11 @@ theorem min_factor_le_sqrt (p q : ℕ) (hle : p ≤ q) :
 
 
 
+
 /-- Hasse interval width: 4√p ≤ 4p. -/
 theorem hasse_interval_width (p : ℕ) : 4 * Nat.sqrt p ≤ 4 * p :=
   Nat.mul_le_mul_left 4 (Nat.sqrt_le_self p)
+
 
 
 
@@ -39,9 +43,11 @@ theorem distinct_traces_informative (t₁ t₂ : ℤ) (h : t₁ ≠ t₂) : t₁
 
 
 
+
 /-- Information ceiling: if 2^k > √N, search space collapses. -/
 theorem information_ceiling_sqrt (N k : ℕ) (hk : Nat.sqrt N < 2 ^ k) :
     Nat.sqrt N / 2 ^ k = 0 := Nat.div_eq_of_lt hk
+
 
 
 
@@ -52,10 +58,12 @@ theorem information_reduction (S k : ℕ) (hS : 0 < S) (hk : 1 ≤ k) :
 
 
 
+
 /-- A factoring lens: a monotone reduction of the search space. -/
 structure FactoringLens where
   apply : ℕ → ℕ
   reduces : ∀ N, apply N ≤ N
+
 
 
 
@@ -68,8 +76,14 @@ def idLens : FactoringLens where
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.AdvancedOpenQuestions
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 45] -/
 def halvLens : FactoringLens where
   apply := fun N => N / 2; reduces := fun N => Nat.div_le_self N 2
+
 
 
 
@@ -79,12 +93,15 @@ def FactoringLens.comp (l₁ l₂ : FactoringLens) : FactoringLens where
 
 
 
+
 theorem lens_comp_assoc (l₁ l₂ l₃ : FactoringLens) :
     (l₁.comp l₂).comp l₃ = l₁.comp (l₂.comp l₃) := rfl
 
 
 
+
 theorem lens_comp_id_left (l : FactoringLens) : idLens.comp l = l := rfl
+
 
 
 
@@ -100,6 +117,7 @@ theorem k_halvings_eq (S k : ℕ) :
 
 
 
+
 /-- v_p(ab) = v_p(a) + v_p(b). -/
 theorem tropical_mult_addition (p a b : ℕ) (hp : Nat.Prime p)
     (ha : a ≠ 0) (hb : b ≠ 0) :
@@ -108,8 +126,10 @@ theorem tropical_mult_addition (p a b : ℕ) (hp : Nat.Prime p)
 
 
 
+
 /-- e+1 split possibilities for valuation e. -/
 theorem tropical_split_count (e : ℕ) : (Finset.range (e + 1)).card = e + 1 := by simp
+
 
 
 
@@ -118,9 +138,11 @@ theorem tropical_crt (e₁ e₂ : ℕ) : (e₁ + 1) * (e₂ + 1) ≥ e₁ + e₂
 
 
 
+
 /-- Totient is multiplicative on coprimes. -/
 theorem totient_mult (m n : ℕ) (h : Nat.Coprime m n) :
     Nat.totient (m * n) = Nat.totient m * Nat.totient n := Nat.totient_mul h
+
 
 
 
@@ -134,8 +156,10 @@ theorem euler_four_square (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ) :
 
 
 
+
 /-- gcd(a, N) divides N. -/
 theorem four_square_gcd (a N : ℕ) : Nat.gcd a N ∣ N := Nat.gcd_dvd_right a N
+
 
 
 
@@ -145,14 +169,17 @@ theorem hybrid_grover (N k : ℕ) : Nat.sqrt (N / 2 ^ k) ≤ Nat.sqrt N :=
 
 
 
+
 /-- Qubit savings. -/
 theorem qubit_savings (N k : ℕ) : Nat.log 2 (N / 2 ^ k) ≤ Nat.log 2 N :=
   Nat.log_mono_right (Nat.div_le_self N _)
 
 
 
+
 /-- 9 lenses = 512× reduction. -/
 theorem nine_lens : 2 ^ 9 = 512 := by norm_num
+
 
 
 
@@ -164,10 +191,12 @@ theorem birthday_bound (k : ℕ) : k * (k - 1) / 2 ≤ k ^ 2 := by
 
 
 
+
 /-- k lenses give 2^k fold improvement. -/
 theorem multi_lens_exp (k : ℕ) (hk : 1 ≤ k) : 2 ≤ 2 ^ k := by
   calc 2 = 2 ^ 1 := by norm_num
     _ ≤ 2 ^ k := Nat.pow_le_pow_right (by norm_num) hk
+
 
 
 
@@ -177,9 +206,11 @@ theorem fib_gcd (m n : ℕ) :
 
 
 
+
 /-- F(n) | F(nm). -/
 theorem fib_divides_mult (m n : ℕ) : Nat.fib n ∣ Nat.fib (n * m) :=
   Nat.fib_dvd n (n * m) (dvd_mul_right n m)
+
 
 
 
@@ -189,9 +220,11 @@ theorem fib_coprime (n : ℕ) : Nat.Coprime (Nat.fib n) (Nat.fib (n + 1)) :=
 
 
 
+
 /-- Pisano period divides lcm. -/
 theorem fib_lcm_dvd (m n k : ℕ) (hm : m ∣ Nat.fib k) (hn : n ∣ Nat.fib k) :
     Nat.lcm m n ∣ Nat.fib k := Nat.lcm_dvd hm hn
+
 
 
 
@@ -202,11 +235,13 @@ theorem rank_apparition (p : ℕ) (hp : Nat.Prime p) (hp5 : p ≠ 5) :
 
 
 
+
 theorem one_smooth (B : ℕ) : isSmooth B 1 := by
   intro p hp hd
   have := hp.one_lt
   have := Nat.le_of_dvd (by omega) hd
   omega
+
 
 
 
@@ -219,6 +254,7 @@ theorem smooth_mul (B a b : ℕ) (ha : isSmooth B a) (hb : isSmooth B b) :
 
 
 
+
 /-- Upper bound on prime count. -/
 theorem prime_count (B : ℕ) :
     (Finset.filter Nat.Prime (Finset.range (B + 1))).card ≤ B + 1 :=
@@ -226,7 +262,9 @@ theorem prime_count (B : ℕ) :
 
 
 
+
 theorem mlc_zero (N : ℕ) : N / 2 ^ 0 = N := by simp
+
 
 
 
@@ -235,8 +273,10 @@ theorem mlc_reduction (N k : ℕ) (hN : 0 < N) (hk : 1 ≤ k) : N / 2 ^ k < N :=
 
 
 
+
 theorem mlc_hierarchy (N k₁ k₂ : ℕ) (h : k₁ ≤ k₂) : N / 2 ^ k₂ ≤ N / 2 ^ k₁ :=
   Nat.div_le_div_left (Nat.pow_le_pow_right (by norm_num) h) (by positivity)
+
 
 
 
@@ -245,9 +285,11 @@ theorem mlc_sufficient (N : ℕ) : N / 2 ^ (Nat.log 2 N + 1) = 0 :=
 
 
 
+
 /-- gcd(a^(k/2)-1, N) divides N. -/
 theorem fermat_candidate (a k N : ℕ) : Nat.gcd (a ^ (k / 2) - 1) N ∣ N :=
   Nat.gcd_dvd_right _ _
+
 
 
 
@@ -259,7 +301,9 @@ theorem qr_bound (p q : ℕ) (hp : 2 < p) (hq : 2 < q) :
 
 
 
+
 theorem genus2_size (p : ℕ) (hp : 2 ≤ p) : p < p ^ 2 := by nlinarith
+
 
 
 
@@ -267,7 +311,9 @@ theorem genus_dim_total : 1 + 2 = 3 := by norm_num
 
 
 
+
 theorem lwe_noise (q η : ℕ) (h : 2 * η < q) : η < q := by omega
+
 
 
 
@@ -276,11 +322,14 @@ theorem sum_product (p q : ℕ) (hp : 1 ≤ p) (hq : 1 ≤ q) :
 
 
 
+
 theorem prime_le (n : ℕ) (hn : 2 ≤ n) : ∃ p, Nat.Prime p ∧ p ≤ n :=
   ⟨2, by decide, hn⟩
 
 
 
+
 theorem proof_comp {A B C : Prop} (f : A → B) (g : B → C) : A → C := g ∘ f
+
 
 

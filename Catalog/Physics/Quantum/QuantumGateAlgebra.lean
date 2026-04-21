@@ -11,8 +11,10 @@ import Mathlib
 def σX : Matrix (Fin 2) (Fin 2) ℤ := !![0, 1; 1, 0]
 
 
+
 /-- Pauli Z -/
 def σZ : Matrix (Fin 2) (Fin 2) ℤ := !![1, 0; 0, -1]
+
 
 
 /-- Pauli iY = XZ -/
@@ -20,10 +22,12 @@ def σXZ : Matrix (Fin 2) (Fin 2) ℤ := !![0, -1; 1, 0]
 
 
 
+
 /-- X · Z = XZ -/
 theorem sigma_X_mul_Z : σX * σZ = σXZ := by
   ext i j; fin_cases i <;> fin_cases j <;>
     simp [σX, σZ, σXZ, Matrix.mul_apply, Fin.sum_univ_two]
+
 
 
 
@@ -37,11 +41,13 @@ theorem sigma_Z_mul_X : σZ * σX = -σXZ := by
 
 
 
+
 /-- The commutator [X, Z] = XZ - ZX = 2·XZ -/
 theorem pauli_commutator_XZ : σX * σZ - σZ * σX = 2 • σXZ := by
   ext i j; fin_cases i <;> fin_cases j <;>
     simp [σX, σZ, σXZ, Matrix.mul_apply, Fin.sum_univ_two,
           Matrix.sub_apply, Matrix.smul_apply]
+
 
 
 
@@ -52,6 +58,7 @@ theorem pauli_anticommutator_XZ : σX * σZ + σZ * σX = 0 := by
 
 
 
+
 /-- XZ has order 4: (XZ)² = -I -/
 theorem sigma_XZ_sq : σXZ * σXZ = -1 := by
   ext i j; fin_cases i <;> fin_cases j <;>
@@ -59,9 +66,15 @@ theorem sigma_XZ_sq : σXZ * σXZ = -1 := by
 
 
 
+
+/-- [Section: # CatalogBuild.Physics.Quantum.QuantumGateAlgebra
+Auto-generated from theorem catalog database.
+Domain: Physics/Quantum
+Declarations: 83] -/
 theorem sigma_XZ_fourth : σXZ * σXZ * (σXZ * σXZ) = 1 := by
   rw [sigma_XZ_sq]; ext i j; fin_cases i <;> fin_cases j <;>
     simp [Matrix.neg_apply, Matrix.mul_apply, Fin.sum_univ_two]
+
 
 
 
@@ -69,16 +82,20 @@ theorem sigma_XZ_fourth : σXZ * σXZ * (σXZ * σXZ) = 1 := by
 theorem trace_sigma_X : Matrix.trace σX = 0 := by simp [σX, Matrix.trace, Fin.sum_univ_two]
 
 
+
 theorem trace_sigma_Z : Matrix.trace σZ = 0 := by simp [σZ, Matrix.trace, Fin.sum_univ_two]
+
 
 
 theorem trace_sigma_XZ : Matrix.trace σXZ = 0 := by simp [σXZ, Matrix.trace, Fin.sum_univ_two]
 
 
 
+
 /-- Paulis are traceless: the hallmark of su(2) generators -/
 theorem paulis_traceless : Matrix.trace σX = 0 ∧ Matrix.trace σZ = 0 ∧ Matrix.trace σXZ = 0 :=
   ⟨trace_sigma_X, trace_sigma_Z, trace_sigma_XZ⟩
+
 
 
 
@@ -90,20 +107,26 @@ def kron2 (A B : Matrix (Fin 2) (Fin 2) ℤ) : Matrix (Fin 4) (Fin 4) ℤ :=
 
 
 
+
 def X_tensor_I : Matrix (Fin 4) (Fin 4) ℤ := kron2 σX I₂
 
 
+
 def I_tensor_X : Matrix (Fin 4) (Fin 4) ℤ := kron2 I₂ σX
+
 
 
 def X_tensor_X : Matrix (Fin 4) (Fin 4) ℤ := kron2 σX σX
 
 
 
+
 theorem X_tensor_I_squared : X_tensor_I * X_tensor_I = 1 := by native_decide
 
 
+
 theorem I_tensor_X_squared : I_tensor_X * I_tensor_X = 1 := by native_decide
+
 
 
 
@@ -112,13 +135,17 @@ theorem tensor_X_commute : X_tensor_I * I_tensor_X = I_tensor_X * X_tensor_I := 
 
 
 
+
 theorem X_tensor_X_squared : X_tensor_X * X_tensor_X = 1 := by native_decide
+
 
 
 theorem det_X_tensor_I : Matrix.det X_tensor_I = 1 := by native_decide
 
 
+
 theorem det_X_tensor_X : Matrix.det X_tensor_X = 1 := by native_decide
+
 
 
 
@@ -127,12 +154,15 @@ def CNOT₂ : Matrix (Fin 4) (Fin 4) ℤ :=
 
 
 
+
 def CNOT_rev : Matrix (Fin 4) (Fin 4) ℤ :=
   !![1, 0, 0, 0; 0, 0, 0, 1; 0, 0, 1, 0; 0, 1, 0, 0]
 
 
 
+
 theorem CNOT_ne_rev : CNOT₂ ≠ CNOT_rev := by native_decide
+
 
 
 
@@ -141,15 +171,19 @@ theorem CNOT_propagates_X : CNOT₂ * X_tensor_I * CNOT₂ = X_tensor_X := by na
 
 
 
+
 /-- CNOT · (I⊗X) · CNOT = I⊗X (CNOT preserves X on target) -/
 theorem CNOT_preserves_target_X : CNOT₂ * I_tensor_X * CNOT₂ = I_tensor_X := by native_decide
+
 
 
 
 def Z_tensor_I : Matrix (Fin 4) (Fin 4) ℤ := kron2 σZ I₂
 
 
+
 def I_tensor_Z : Matrix (Fin 4) (Fin 4) ℤ := kron2 I₂ σZ
+
 
 
 
@@ -158,14 +192,17 @@ theorem CNOT_propagates_Z_backward : CNOT₂ * I_tensor_Z * CNOT₂ = kron2 σZ 
 
 
 
+
 /-- CNOT · (Z⊗I) · CNOT = Z⊗I (CNOT preserves Z on control) -/
 theorem CNOT_preserves_control_Z : CNOT₂ * Z_tensor_I * CNOT₂ = Z_tensor_I := by native_decide
+
 
 
 
 /-- Matrix commutator [A,B] = AB - BA -/
 def mat_commutator (A B : Matrix (Fin 2) (Fin 2) ℤ) : Matrix (Fin 2) (Fin 2) ℤ :=
   A * B - B * A
+
 
 
 
@@ -176,10 +213,12 @@ theorem commutator_antisymmetric (A B : Matrix (Fin 2) (Fin 2) ℤ) :
 
 
 
+
 /-- Commutator of A with itself is zero -/
 theorem commutator_self (A : Matrix (Fin 2) (Fin 2) ℤ) :
     mat_commutator A A = 0 := by
   simp [mat_commutator]
+
 
 
 
@@ -192,9 +231,11 @@ theorem jacobi_identity (A B C : Matrix (Fin 2) (Fin 2) ℤ) :
 
 
 
+
 /-- The Pauli commutator [X, Z] = 2·XZ -/
 theorem trotter_error_pauli : mat_commutator σX σZ = 2 • σXZ :=
   pauli_commutator_XZ
+
 
 
 
@@ -203,6 +244,7 @@ theorem commuting_operators_exact_trotter (A B : Matrix (Fin 2) (Fin 2) ℤ)
     (h : mat_commutator A B = 0) : A * B = B * A := by
   have : A * B - B * A = 0 := h
   exact sub_eq_zero.mp this
+
 
 
 
@@ -215,8 +257,10 @@ theorem commutator_zero_iff_commute (A B : Matrix (Fin 2) (Fin 2) ℤ) :
 
 
 
+
 /-- The T-count of a circuit (T gates are the expensive resource). -/
 def T_count (circuit : List Bool) : ℕ := circuit.count true
+
 
 
 
@@ -227,7 +271,9 @@ theorem T_count_append (c₁ c₂ : List Bool) :
 
 
 
+
 theorem T_count_nil : T_count [] = 0 := rfl
+
 
 
 
@@ -238,8 +284,10 @@ structure QuantumWalk where
 
 
 
+
 /-- The Grover coin (scaled): [[1, 1], [1, -1]] -/
 def grover_coin_scaled : Matrix (Fin 2) (Fin 2) ℤ := !![1, 1; 1, -1]
+
 
 
 
@@ -250,9 +298,11 @@ theorem grover_coin_sq : grover_coin_scaled * grover_coin_scaled = (2 : ℤ) •
 
 
 
+
 inductive PauliType where
   | I | X | Z | XZ
   deriving Repr, DecidableEq
+
 
 
 
@@ -264,6 +314,7 @@ def PauliType.toMatrix : PauliType → Matrix (Fin 2) (Fin 2) ℤ
 
 
 
+
 structure SignedPauli where
   sign : Int
   pauli : PauliType
@@ -271,8 +322,10 @@ structure SignedPauli where
 
 
 
+
 def SignedPauli.toMatrix (sp : SignedPauli) : Matrix (Fin 2) (Fin 2) ℤ :=
   sp.sign • sp.pauli.toMatrix
+
 
 
 
@@ -292,16 +345,21 @@ def PauliType.mul : PauliType → PauliType → PauliType × Int
 
 
 
+
 theorem pauli_mul_XX : PauliType.mul .X .X = (.I, 1) := rfl
+
 
 
 theorem pauli_mul_ZZ : PauliType.mul .Z .Z = (.I, 1) := rfl
 
 
+
 theorem pauli_mul_XZ : PauliType.mul .X .Z = (.XZ, 1) := rfl
 
 
+
 theorem pauli_mul_ZX : PauliType.mul .Z .X = (.XZ, -1) := rfl
+
 
 
 
@@ -314,8 +372,10 @@ def hadamard_conjugate : PauliType → PauliType
 
 
 
+
 theorem hadamard_conjugate_involutive : Function.Involutive hadamard_conjugate := by
   intro p; cases p <;> rfl
+
 
 
 
@@ -328,9 +388,11 @@ def S_conjugate : PauliType → PauliType
 
 
 
+
 theorem S_conjugate_order :
     ∀ p : PauliType, S_conjugate (S_conjugate (S_conjugate (S_conjugate p))) = p := by
   intro p; cases p <;> rfl
+
 
 
 
@@ -340,8 +402,10 @@ structure HamiltonianTerm (n : ℕ) where
 
 
 
+
 structure QHamiltonian (n : ℕ) where
   terms : List (HamiltonianTerm n)
+
 
 
 
@@ -349,12 +413,15 @@ def QHamiltonian.termCount {n : ℕ} (H : QHamiltonian n) : ℕ := H.terms.lengt
 
 
 
+
 def simulation_gate_cost (k r : ℕ) : ℕ := k * r
+
 
 
 
 theorem simulation_cost_linear (k r : ℕ) :
     simulation_gate_cost k r = k * r := rfl
+
 
 
 
@@ -368,8 +435,10 @@ theorem CHSH_classical_bound (a b c d : ℤ)
 
 
 
+
 /-- Quantum beats classical: (2√2)² = 8 > 4 = 2² -/
 theorem quantum_exceeds_classical_CHSH : (2 : ℚ) ^ 2 < 8 := by norm_num
+
 
 
 
@@ -378,8 +447,10 @@ def SWAP_from_CNOT : Matrix (Fin 4) (Fin 4) ℤ := CNOT₂ * CNOT_rev * CNOT₂
 
 
 
+
 theorem SWAP_decomposition : SWAP_from_CNOT = !![1,0,0,0; 0,0,1,0; 0,1,0,0; 0,0,0,1] := by
   native_decide
+
 
 
 
@@ -388,7 +459,9 @@ def CZ₂ : Matrix (Fin 4) (Fin 4) ℤ :=
 
 
 
+
 def Z_tensor_Z : Matrix (Fin 4) (Fin 4) ℤ := kron2 σZ σZ
+
 
 
 
@@ -396,10 +469,12 @@ theorem Z_tensor_Z_squared : Z_tensor_Z * Z_tensor_Z = 1 := by native_decide
 
 
 
+
 /-- Repeated squaring: U^(2^k) -/
 def matrix_pow_2k (U : Matrix (Fin 2) (Fin 2) ℤ) : ℕ → Matrix (Fin 2) (Fin 2) ℤ
   | 0     => U
   | k + 1 => let Uk := matrix_pow_2k U k; Uk * Uk
+
 
 
 
@@ -412,8 +487,10 @@ theorem det_matrix_pow_2k (U : Matrix (Fin 2) (Fin 2) ℤ) (hU : Matrix.det U = 
 
 
 
+
 theorem hilbert_space_dimension (n : ℕ) : 2 ^ n ≥ 1 :=
   Nat.one_le_pow n 2 (by norm_num)
+
 
 
 
@@ -431,6 +508,7 @@ theorem quantum_parallelism_advantage (n : ℕ) (hn : 1 ≤ n) :
 
 
 
+
 structure CSSCode where
   n : ℕ
   k₁ : ℕ
@@ -439,7 +517,9 @@ structure CSSCode where
 
 
 
+
 def CSSCode.logicalQubits (c : CSSCode) : ℕ := c.n - c.k₁ - c.k₂
+
 
 
 
@@ -448,8 +528,10 @@ def steane_code : CSSCode where
 
 
 
+
 theorem steane_logical : steane_code.logicalQubits = 1 := by
   simp [CSSCode.logicalQubits, steane_code]
+
 
 
 
@@ -458,8 +540,10 @@ def reed_muller_15 : CSSCode where
 
 
 
+
 theorem reed_muller_logical : reed_muller_15.logicalQubits = 1 := by
   simp [CSSCode.logicalQubits, reed_muller_15]
+
 
 
 
@@ -468,8 +552,10 @@ def golay_code : CSSCode where
 
 
 
+
 theorem golay_logical : golay_code.logicalQubits = 1 := by
   simp [CSSCode.logicalQubits, golay_code]
+
 
 
 
@@ -478,5 +564,6 @@ def surface_code (d : ℕ) (_hd : 2 ≤ d) : CSSCode where
   k₁ := d * d + (d - 1) * (d - 1) - 1
   k₂ := 0
   hk := by omega
+
 
 

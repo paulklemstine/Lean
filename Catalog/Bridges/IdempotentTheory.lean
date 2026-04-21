@@ -16,10 +16,12 @@ theorem idempotent_orthogonal_right {R : Type*} [Ring R] (e : R) (he : e * e = e
 
 
 
+
 /-- (1-e)·e = 0 for an idempotent. -/
 theorem idempotent_orthogonal_left {R : Type*} [Ring R] (e : R) (he : e * e = e) :
     (1 - e) * e = 0 := by
   rw [sub_mul, one_mul, he, sub_self]
+
 
 
 
@@ -28,6 +30,7 @@ theorem isIdempotentElem_complement {R : Type*} [Ring R] (e : R)
     (he : IsIdempotentElem e) : IsIdempotentElem (1 - e) := by
   rw [IsIdempotentElem] at he ⊢
   exact idempotent_complement e he
+
 
 
 
@@ -40,12 +43,14 @@ structure OrthogonalIdempotentSystem (R : Type*) [Ring R] (k : ℕ) where
 
 
 
+
 /-- A diagonal matrix with {0,1} entries is idempotent. -/
 theorem diagonal_01_idempotent {n : ℕ} (d : Fin n → ℝ) (hd : ∀ i, d i = 0 ∨ d i = 1) :
     (Matrix.diagonal d) * (Matrix.diagonal d) = Matrix.diagonal d := by
   rw [Matrix.diagonal_mul_diagonal]
   congr 1; ext i
   rcases hd i with h | h <;> simp [h]
+
 
 
 
@@ -59,10 +64,12 @@ theorem diagonal_01_trace_nonneg {n : ℕ} (d : Fin n → ℝ) (hd : ∀ i, d i 
 
 
 
+
 /-- At δ=2, Temperley-Lieb generators become rescaled idempotents. -/
 theorem temperley_lieb_at_delta2 (ei : ℝ) (h : ei * ei = 2 * ei) :
     (ei / 2) * (ei / 2) = ei / 2 := by
   field_simp; linarith
+
 
 
 
@@ -77,10 +84,12 @@ theorem jones_wenzl_well_defined (n : ℕ) (hn : n > 0) :
 
 
 
+
 /-- For any idempotent, tr(P²) = tr(P). -/
 theorem idempotent_trace_eq {n : ℕ} (P : Matrix (Fin n) (Fin n) ℝ)
     (hP : P * P = P) : Matrix.trace (P * P) = Matrix.trace P := by
   rw [hP]
+
 
 
 
@@ -89,6 +98,7 @@ theorem complete_system_idempotent {R : Type*} [Ring R] {k : ℕ}
     (sys : OrthogonalIdempotentSystem R k) :
     (∑ i : Fin k, sys.idem i) * (∑ j : Fin k, sys.idem j) = ∑ i : Fin k, sys.idem i := by
   rw [sys.is_complete, one_mul]
+
 
 
 

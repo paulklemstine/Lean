@@ -14,6 +14,7 @@ theorem relu_eq_max (x : ℝ) : relu x = max x 0 := rfl
 
 
 
+
 /-- [Section: # CatalogBuild.Tropical.Core.TropicalSemiring
 Auto-generated from theorem catalog database.
 Domain: Tropical/Core
@@ -23,9 +24,15 @@ theorem relu_relu (x : ℝ) : relu (relu x) = relu x := by
 
 
 
+
+/-- [Section: # CatalogBuild.Tropical.Core.TropicalSemiring
+Auto-generated from theorem catalog database.
+Domain: Tropical/Core
+Declarations: 14] -/
 theorem le_logSumExp {ι : Type*} {s : Finset ι} {f : ι → ℝ} {i : ι}
     (hi : i ∈ s) : f i ≤ logSumExp s f := by
   exact Real.le_log_iff_exp_le ( Finset.sum_pos ( fun _ _ => Real.exp_pos _ ) ⟨ i, hi ⟩ ) |>.2 ( Finset.single_le_sum ( fun j _ => Real.exp_nonneg ( f j ) ) hi )
+
 
 
 
@@ -43,15 +50,18 @@ theorem logSumExp_le_sup_add_log {ι : Type*} [DecidableEq ι] {s : Finset ι}
 
 
 
+
 /-- Softmax function for a single component -/
 def softmax_component {n : ℕ} (x : Fin n → ℝ) (i : Fin n) : ℝ :=
   Real.exp (x i) / ∑ j, Real.exp (x j)
 
 
 
+
 theorem softmax_sum_eq_one {n : ℕ} [NeZero n] (x : Fin n → ℝ) :
     ∑ i, softmax_component x i = 1 := by
   unfold softmax_component; rw [ ← Finset.sum_div _ _ _, div_self <| ne_of_gt <| Finset.sum_pos ( fun _ _ ↦ Real.exp_pos _ ) ⟨ ⟨ 0, NeZero.pos n ⟩, Finset.mem_univ _ ⟩ ] ;
+
 
 
 
@@ -63,10 +73,12 @@ theorem softmax_shift_invariant {n : ℕ} (x : Fin n → ℝ) (c : ℝ) (i : Fin
 
 
 
+
 /-- exp preserves addition → multiplication -/
 theorem exp_add_eq_mul (x y : ℝ) :
     Real.exp (x + y) = Real.exp x * Real.exp y :=
   Real.exp_add x y
+
 
 
 
@@ -78,15 +90,18 @@ theorem exp_max_eq_max (x y : ℝ) :
 
 
 
+
 /-- exp is strictly monotone -/
 theorem exp_strictMono : StrictMono Real.exp :=
   Real.exp_strictMono
 
 
 
+
 /-- exp is positive -/
 theorem exp_pos_forall (x : ℝ) : 0 < Real.exp x :=
   Real.exp_pos x
+
 
 
 
@@ -100,15 +115,18 @@ theorem max_affine_is_relu_computable (a b c d : ℝ) :
 
 
 
+
 theorem relu_as_max_affine (x : ℝ) : relu x = max (1 * x + 0) (0 * x + 0) := by
   simp +zetaDelta at *;
   rfl
 
 
 
+
 theorem monotone_preserves_max {f : ℝ → ℝ} (hf : Monotone f) (x y : ℝ) :
     f (max x y) = max (f x) (f y) := by
   cases le_total x y <;> aesop
+
 
 
 

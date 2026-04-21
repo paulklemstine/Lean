@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: EML/V11
-Declarations: 17
+Declarations: 16
 -/
 
 import Mathlib
@@ -18,6 +18,7 @@ theorem eml_injective_x (y : ℝ) : Function.Injective (fun x => eml x y) := by
 
 
 
+
 /-- eml(x, ·) is injective on (0,∞) (for any fixed x), since log is injective there. -/
 theorem eml_injective_y_pos (x : ℝ) :
     Set.InjOn (fun y => eml x y) (Set.Ioi 0) := by
@@ -28,10 +29,12 @@ theorem eml_injective_y_pos (x : ℝ) :
 
 
 
+
 /-- Range lower bound: eml(x, y) > −log(y) for all x, when y > 0. -/
 theorem eml_range_lower (x y : ℝ) :
     eml x y > -Real.log y := by
   unfold eml; linarith [Real.exp_pos x]
+
 
 
 
@@ -42,6 +45,7 @@ theorem eml_not_surjective_x (y : ℝ) :
   obtain ⟨x, hx⟩ := h (-Real.log y - 1)
   have := eml_range_lower x y
   linarith
+
 
 
 
@@ -56,6 +60,7 @@ theorem eml_surjective_y (x : ℝ) :
 
 
 
+
 /-- For y = 1: eml(·, 1) = exp is surjective onto (0,∞). -/
 theorem eml_y1_range_pos (c : ℝ) (hc : 0 < c) :
     ∃ x : ℝ, eml x 1 = c := by
@@ -64,16 +69,11 @@ theorem eml_y1_range_pos (c : ℝ) (hc : 0 < c) :
 
 
 
-/-- The level set eml(x,y) = c has the explicit form y = exp(exp(x) − c). -/
-theorem eml_level_set (x c : ℝ) :
-    eml x (Real.exp (Real.exp x - c)) = c := by
-  unfold eml; rw [Real.log_exp]; ring
-
-
 
 /-- Level set values are always positive. -/
 theorem eml_level_set_pos (x c : ℝ) :
     Real.exp (Real.exp x - c) > 0 := Real.exp_pos _
+
 
 
 
@@ -84,6 +84,7 @@ theorem eml_fixed_x (x : ℝ) :
 
 
 
+
 /-- The equation eml(x,y) = y requires exp(x) = y + log(y). -/
 theorem eml_fixed_y_condition (x y : ℝ) :
     eml x y = y ↔ Real.exp x = y + Real.log y := by
@@ -91,9 +92,11 @@ theorem eml_fixed_y_condition (x y : ℝ) :
 
 
 
+
 /-- eml(x,x) = emlDiag(x). -/
 theorem eml_diag_eq (x : ℝ) : eml x x = emlDiag x := by
   simp [eml, emlDiag]
+
 
 
 
@@ -104,9 +107,11 @@ theorem emlSelfPair_range_ge_one :
 
 
 
+
 /-- σ(0) = 1 (the minimum). -/
 theorem emlSelfPair_min : emlSelfPair 0 = 1 := by
   unfold emlSelfPair; simp
+
 
 
 
@@ -124,6 +129,7 @@ theorem emlSelfPair_achieves_nonneg (c : ℝ) (hc : 1 ≤ c) :
 
 
 
+
 /-- Solving eml(x,y) = c for x: x = ln(c + ln(y)) when c + ln(y) > 0. -/
 theorem eml_solve_x (c y : ℝ) (h : c + Real.log y > 0) :
     eml (Real.log (c + Real.log y)) y = c := by
@@ -132,9 +138,11 @@ theorem eml_solve_x (c y : ℝ) (h : c + Real.log y > 0) :
 
 
 
+
 /-- Solving eml(x,y) = c for y: y = exp(exp(x) − c). -/
 theorem eml_solve_y (x c : ℝ) :
     eml x (Real.exp (Real.exp x - c)) = c := eml_level_set x c
+
 
 
 
@@ -149,6 +157,7 @@ theorem eml_image_x (y : ℝ) :
     use Real.log (c + Real.log y)
     have hpos : c + Real.log y > 0 := by linarith
     exact eml_solve_x c y hpos
+
 
 
 

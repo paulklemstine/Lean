@@ -17,6 +17,7 @@ theorem pigeonhole_description {n m : ℕ} (hn : m < n)
 
 
 
+
 /-- A partition of a system into two parts, with information flow between them. -/
 structure SystemPartition where
   n : ℕ
@@ -28,10 +29,12 @@ structure SystemPartition where
 
 
 
+
 /-- Integrated information Φ: the minimum mutual information over all partitions. -/
 def integratedInformation (partitions : Set SystemPartition)
     (hne : partitions.Nonempty) : ℝ :=
   sInf (SystemPartition.mutual_info '' partitions)
+
 
 
 
@@ -45,6 +48,7 @@ theorem phi_nonneg (partitions : Set SystemPartition) (hne : partitions.Nonempty
 
 
 
+
 /-- A self-referential information system. -/
 structure SelfRefInfo where
   State : Type*
@@ -55,9 +59,11 @@ structure SelfRefInfo where
 
 
 
+
 /-- The self-referential gap: information NOT about the self. -/
 def SelfRefInfo.gap (S : SelfRefInfo) (s : S.State) : ℝ :=
   S.info s - S.self_info s
+
 
 
 
@@ -65,6 +71,7 @@ def SelfRefInfo.gap (S : SelfRefInfo) (s : S.State) : ℝ :=
 theorem SelfRefInfo.gap_nonneg (S : SelfRefInfo) (s : S.State) :
     0 ≤ S.gap s := by
   unfold SelfRefInfo.gap; linarith [S.self_info_bounded s]
+
 
 
 
@@ -76,10 +83,12 @@ theorem SelfRefInfo.full_self_knowledge (S : SelfRefInfo) (s : S.State)
 
 
 
+
 /-- A system is conscious if its Φ exceeds a threshold. -/
 structure ConsciousnessThreshold where
   threshold : ℝ
   threshold_pos : 0 < threshold
+
 
 
 
@@ -90,6 +99,7 @@ Declarations: 14] -/
 def isConscious (ct : ConsciousnessThreshold)
     (partitions : Set SystemPartition) (hne : partitions.Nonempty) : Prop :=
   ct.threshold ≤ integratedInformation partitions hne
+
 
 
 
@@ -104,10 +114,12 @@ theorem combined_conscious (ct : ConsciousnessThreshold)
 
 
 
+
 /-- The self-reference tower: iterating self-description. -/
 def selfRefTower (describe : ℕ → ℕ) : ℕ → ℕ
   | 0 => 0
   | n + 1 => describe (selfRefTower describe n)
+
 
 
 
@@ -125,6 +137,7 @@ theorem selfRefTower_unbounded (describe : ℕ → ℕ)
 
 
 
+
 /-- If description is bounded, the tower stabilizes. -/
 theorem selfRefTower_bounded_stabilizes (describe : ℕ → ℕ) (bound : ℕ)
     (h_bound : ∀ n, describe n ≤ bound) :
@@ -133,6 +146,7 @@ theorem selfRefTower_bounded_stabilizes (describe : ℕ → ℕ) (bound : ℕ)
   induction k with
   | zero => simp [selfRefTower]
   | succ n _ => simp [selfRefTower]; exact h_bound _
+
 
 
 

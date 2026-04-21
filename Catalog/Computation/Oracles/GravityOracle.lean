@@ -15,15 +15,18 @@ def IsGravOracle {X : Type*} (O : X → X) : Prop :=
 
 
 
+
 /-- The truth set (fixed points) of an oracle. -/
 def GravTruthSet {X : Type*} (O : X → X) : Set X :=
   {x | O x = x}
 
 
 
+
 /-- The geodesic oracle is idempotent. -/
 theorem geodesic_oracle_idempotent {X : Type*} (G : X → X) (hG : IsGravOracle G) :
     ∀ x, G (G x) = G x := hG
+
 
 
 
@@ -34,12 +37,14 @@ theorem grav_oracle_output_is_truth {X : Type*} (O : X → X) (hO : IsGravOracle
 
 
 
+
 /-- The truth set equals the range of the oracle. -/
 theorem grav_truth_set_eq_range {X : Type*} (O : X → X) (hO : IsGravOracle O) :
     GravTruthSet O = Set.range O := by
   ext y; constructor
   · intro (hy : O y = y); exact ⟨y, hy⟩
   · rintro ⟨x, hx⟩; show O y = y; rw [← hx, hO x]
+
 
 
 
@@ -54,9 +59,11 @@ theorem grav_oracle_iterate_eq {X : Type*} (O : X → X) (hO : IsGravOracle O)
 
 
 
+
 /-- The identity is the trivial oracle. -/
 theorem grav_id_is_oracle {X : Type*} : IsGravOracle (id : X → X) :=
   fun _ => rfl
+
 
 
 
@@ -66,9 +73,11 @@ theorem grav_const_is_oracle {X : Type*} (c : X) : IsGravOracle (fun _ => c) :=
 
 
 
+
 /-- The universe is a fixed point of its own gravitational oracle. -/
 theorem universe_is_grav_fixed_point {X : Type*} (G : X → X) (hG : IsGravOracle G) (U : X) :
     G (G U) = G U := hG U
+
 
 
 
@@ -77,8 +86,10 @@ def gravMinkowskiQ (a b c : ℝ) : ℝ := a ^ 2 + b ^ 2 - c ^ 2
 
 
 
+
 /-- A vector is null (light-like) if Q = 0. -/
 def gravIsNull (a b c : ℝ) : Prop := gravMinkowskiQ a b c = 0
+
 
 
 
@@ -89,10 +100,12 @@ theorem grav_null_iff_pythagorean (a b c : ℝ) :
 
 
 
+
 /-- The light cone is closed under scaling. -/
 theorem grav_light_cone_scaling (a b c t : ℝ) (h : gravIsNull a b c) :
     gravIsNull (t * a) (t * b) (t * c) := by
   simp [gravIsNull, gravMinkowskiQ] at *; nlinarith [sq_nonneg t]
+
 
 
 
@@ -102,20 +115,28 @@ theorem grav_holographic_entropy_nonneg (A : ℝ) (hA : 0 ≤ A) :
 
 
 
+
 /-- Bekenstein-Hawking entropy is monotone in area. -/
 theorem grav_bekenstein_entropy_monotone (A₁ A₂ : ℝ) (h : A₁ ≤ A₂) :
     A₁ / 4 ≤ A₂ / 4 := by linarith
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.GravityOracle
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 58] -/
 theorem grav_area_beats_volume (L : ℝ) (hL : 6 < L) :
     6 * L ^ 2 < L ^ 3 := by
       nlinarith [ sq_nonneg ( L - 6 ) ]
 
 
 
+
 /-- Schwarzschild horizon area: A = 16π M². -/
 def gravSchwarzschildArea (M : ℝ) : ℝ := 16 * Real.pi * M ^ 2
+
 
 
 
@@ -127,8 +148,10 @@ theorem grav_schwarzschild_area_nonneg (M : ℝ) :
 
 
 
+
 /-- Bekenstein-Hawking entropy of a Schwarzschild black hole. -/
 def gravSchwarzschildEntropy (M : ℝ) : ℝ := gravSchwarzschildArea M / 4
+
 
 
 
@@ -138,10 +161,12 @@ theorem grav_black_hole_entropy_monotone (M₁ M₂ : ℝ) (h1 : 0 ≤ M₁) (h2
 
 
 
+
 /-- Gravitational redshift factor is positive outside the horizon. -/
 theorem grav_redshift_factor_positive (M r : ℝ) (hr : 0 < r) (hMr : 2 * M < r) :
     0 < 1 - 2 * M / r := by
   rw [sub_pos, div_lt_one hr]; linarith
+
 
 
 
@@ -153,9 +178,11 @@ theorem grav_redshift_at_horizon (M : ℝ) (hM : 0 < M) :
 
 
 
+
 /-- The Minkowski inner product in (2+1) dimensions. -/
 def gravMinkowskiInner (a₁ b₁ c₁ a₂ b₂ c₂ : ℝ) : ℝ :=
   a₁ * a₂ + b₁ * b₂ - c₁ * c₂
+
 
 
 
@@ -163,6 +190,7 @@ def gravMinkowskiInner (a₁ b₁ c₁ a₂ b₂ c₂ : ℝ) : ℝ :=
 theorem grav_null_self_orthogonal (a b c : ℝ) (h : gravIsNull a b c) :
     gravMinkowskiInner a b c a b c = 0 := by
   simp [gravMinkowskiInner, gravIsNull, gravMinkowskiQ] at *; nlinarith
+
 
 
 
@@ -176,8 +204,10 @@ theorem grav_sum_null_iff_orthogonal (a₁ b₁ c₁ a₂ b₂ c₂ : ℝ)
 
 
 
+
 /-- Gravitational lensing deflection angle: α = 4M/b. -/
 def gravLensingDeflection (M b : ℝ) : ℝ := 4 * M / b
+
 
 
 
@@ -185,6 +215,7 @@ def gravLensingDeflection (M b : ℝ) : ℝ := 4 * M / b
 theorem grav_lensing_deflection_pos (M b : ℝ) (hM : 0 < M) (hb : 0 < b) :
     0 < gravLensingDeflection M b := by
   unfold gravLensingDeflection; positivity
+
 
 
 
@@ -196,14 +227,17 @@ theorem grav_lensing_monotone_mass (M₁ M₂ b : ℝ) (hb : 0 < b) (hM : M₁ �
 
 
 
+
 /-- The Einstein ring radius. -/
 def gravEinsteinRingRadius (M D : ℝ) : ℝ := Real.sqrt (4 * M / D)
+
 
 
 
 /-- The Einstein ring radius is non-negative. -/
 theorem grav_einstein_ring_nonneg (M D : ℝ) :
     0 ≤ gravEinsteinRingRadius M D := Real.sqrt_nonneg _
+
 
 
 
@@ -214,15 +248,18 @@ theorem grav_pythagorean_is_null (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 /-- Parametric Pythagorean triple generation. -/
 theorem grav_parametric_pythagorean (m n : ℤ) :
     (m ^ 2 - n ^ 2) ^ 2 + (2 * m * n) ^ 2 = (m ^ 2 + n ^ 2) ^ 2 := by ring
 
 
 
+
 /-- A deformed quadratic form (gravity's effect on the light cone). -/
 def gravDeformedQ (g₁₁ g₂₂ g₃₃ a b c : ℝ) : ℝ :=
   g₁₁ * a ^ 2 + g₂₂ * b ^ 2 + g₃₃ * c ^ 2
+
 
 
 
@@ -233,10 +270,12 @@ theorem grav_flat_spacetime_reduces (a b c : ℝ) :
 
 
 
+
 /-- Brahmagupta-Fibonacci identity. -/
 theorem grav_brahmagupta_fibonacci (a₁ b₁ a₂ b₂ : ℤ) :
     (a₁ ^ 2 + b₁ ^ 2) * (a₂ ^ 2 + b₂ ^ 2) =
     (a₁ * a₂ - b₁ * b₂) ^ 2 + (a₁ * b₂ + b₁ * a₂) ^ 2 := by ring
+
 
 
 
@@ -248,14 +287,17 @@ theorem grav_ricci_flow_converges {X : Type*} [DecidableEq X]
 
 
 
+
 /-- The KSS viscosity bound: η/s ≥ 1/(4π). -/
 theorem grav_kss_bound : (1 : ℝ) / (4 * Real.pi) > 0 := by positivity
+
 
 
 
 /-- Holographic dimension reduction: boundary has one fewer dimension. -/
 theorem grav_holographic_dim_reduction (d : ℕ) (hd : 0 < d) : d - 1 < d :=
   Nat.sub_lt hd Nat.one_pos
+
 
 
 
@@ -269,10 +311,12 @@ theorem grav_oracle_preserves_truth {X : Type*} (O : X → X) (hO : IsGravOracle
 
 
 
+
 /-- Bekenstein bound: information ≤ 2πRE. -/
 theorem grav_bekenstein_bound (R E : ℝ) (hR : 0 ≤ R) (hE : 0 ≤ E) :
     0 ≤ 2 * Real.pi * R * E := by
   apply mul_nonneg (mul_nonneg (mul_nonneg (by linarith) Real.pi_nonneg) hR) hE
+
 
 
 
@@ -282,9 +326,11 @@ theorem grav_weak_cosmic_censorship {X : Type*} (O : X → X) (hO : IsGravOracle
 
 
 
+
 /-- The Penrose process bound. -/
 theorem grav_penrose_bound (M_irr M : ℝ) (_h : M_irr ≤ M) (hp : 0 < M_irr) :
     M - M_irr < M := by linarith
+
 
 
 
@@ -293,8 +339,10 @@ theorem grav_natural_gradient (v g : ℝ) (hg : g ≠ 0) : (v / g) * g = v := by
 
 
 
+
 /-- Two anti-parallel photons create mass. -/
 theorem grav_antiparallel_mass (c : ℝ) (hc : 0 < c) : 0 < (2 * c) ^ 2 := by positivity
+
 
 
 
@@ -303,8 +351,10 @@ theorem grav_bh_compression (M : ℝ) (hM : 1 ≤ M) : 4 * M ^ 2 < 32 / 3 * M ^ 
 
 
 
+
 /-- Hawking temperature: T = 1/(8πM). -/
 def gravHawkingTemp (M : ℝ) : ℝ := 1 / (8 * Real.pi * M)
+
 
 
 
@@ -314,9 +364,11 @@ theorem grav_hawking_temp_pos (M : ℝ) (hM : 0 < M) :
 
 
 
+
 theorem grav_smaller_bh_hotter (M₁ M₂ : ℝ) (h1 : 0 < M₁) (_h2 : 0 < M₂) (hM : M₁ < M₂) :
     gravHawkingTemp M₂ < gravHawkingTemp M₁ := by
   unfold gravHawkingTemp; gcongr;
+
 
 
 
@@ -326,9 +378,11 @@ theorem grav_area_monotone (M₁ M₂ : ℝ) (h1 : 0 ≤ M₁) (hM : M₁ ≤ M�
 
 
 
+
 /-- Oracle iteration count: converges in exactly 1 step. -/
 theorem grav_one_step_convergence {X : Type*} (O : X → X) (hO : IsGravOracle O) (x : X) :
     O (O^[1] x) = O^[1] x := by simp [hO x]
+
 
 
 
@@ -338,11 +392,14 @@ def GravOracleEquiv {X : Type*} (O₁ O₂ : X → X) : Prop :=
 
 
 
+
 theorem grav_equiv_refl {X : Type*} (O : X → X) : GravOracleEquiv O O := rfl
+
 
 
 theorem grav_equiv_symm {X : Type*} {O₁ O₂ : X → X} (h : GravOracleEquiv O₁ O₂) :
     GravOracleEquiv O₂ O₁ := h.symm
+
 
 
 theorem grav_equiv_trans {X : Type*} {O₁ O₂ O₃ : X → X}
@@ -351,8 +408,10 @@ theorem grav_equiv_trans {X : Type*} {O₁ O₂ O₃ : X → X}
 
 
 
+
 /-- Oracle density on Fin 3: ~37% of functions are oracles. -/
 theorem grav_oracle_density_fin3 : (10 : ℚ) / 27 > 1 / 3 := by norm_num
+
 
 
 
@@ -362,15 +421,18 @@ theorem grav_fundamental_photon : gravIsNull 3 4 5 := by
 
 
 
+
 /-- The (5,12,13) triple is on the light cone. -/
 theorem grav_photon_5_12_13 : gravIsNull 5 12 13 := by
   simp [gravIsNull, gravMinkowskiQ]; norm_num
 
 
 
+
 /-- The (8,15,17) triple is on the light cone. -/
 theorem grav_photon_8_15_17 : gravIsNull 8 15 17 := by
   simp [gravIsNull, gravMinkowskiQ]; norm_num
+
 
 
 

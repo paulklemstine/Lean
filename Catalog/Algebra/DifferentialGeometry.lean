@@ -12,8 +12,10 @@ theorem gauss_bonnet_sphere : 2 * (2 : ℤ) = 4 := by norm_num
 
 
 
+
 /-- Gauss-Bonnet for torus: 2 * χ(T²) = 0. -/
 theorem gauss_bonnet_torus : 2 * (0 : ℤ) = 0 := by norm_num
+
 
 
 
@@ -23,8 +25,10 @@ theorem gauss_bonnet_genus (g : ℕ) :
 
 
 
+
 /-- The generator of so(2): J = [[0,-1],[1,0]]. -/
 def so2_generator : Matrix (Fin 2) (Fin 2) ℤ := !![0, -1; 1, 0]
+
 
 
 
@@ -32,6 +36,7 @@ def so2_generator : Matrix (Fin 2) (Fin 2) ℤ := !![0, -1; 1, 0]
 theorem so2_antisymmetric : so2_generator.transpose = -so2_generator := by
   ext i j; fin_cases i <;> fin_cases j <;>
     simp [so2_generator, Matrix.transpose_apply, Matrix.neg_apply]
+
 
 
 
@@ -43,9 +48,11 @@ theorem so2_generator_squared :
 
 
 
+
 /-- ℤ² acts on ℤ² by translation. -/
 theorem z2_action_period (m n : ℤ) (x y : ℤ) :
     (x + m, y + n) = (x + m, y + n) := rfl
+
 
 
 
@@ -54,7 +61,9 @@ theorem harmonic_path : (0 + 1 : ℚ) / 2 = 1/2 := by norm_num
 
 
 
+
 /-- Chern numbers are integers (Dirac quantization). -/
 theorem chern_number_quantized (c : ℤ) : c = c := rfl
+
 
 

@@ -17,9 +17,11 @@ def preFixedPoints {α : Type*} [Preorder α] (f : α → α) : Set α :=
 
 
 
+
 /-- The post-fixed points: x ≤ f(x). Dual to pre-fixed points. -/
 def postFixedPoints {α : Type*} [Preorder α] (f : α → α) : Set α :=
   {x | x ≤ f x}
+
 
 
 
@@ -33,6 +35,7 @@ theorem bootstrap_lemma {α : Type*} [CompleteLattice α] {f : α → α}
 
 
 
+
 /-- **Knaster-Tarski Fixed Point Theorem**: Every monotone function on a complete
 lattice has a least fixed point, equal to ⊓ {x | f(x) ≤ x}.
 The fixed point bootstraps itself into existence. -/
@@ -40,6 +43,7 @@ theorem knaster_tarski_lfp {α : Type*} [CompleteLattice α] {f : α → α}
     (hf : Monotone f) : f (sInf (preFixedPoints f)) = sInf (preFixedPoints f) := by
   refine le_antisymm (bootstrap_lemma hf) ?_
   exact sInf_le (hf (bootstrap_lemma hf))
+
 
 
 
@@ -52,11 +56,13 @@ theorem knaster_tarski_gfp {α : Type*} [CompleteLattice α] {f : α → α}
 
 
 
+
 /-- The least fixed point is indeed the least among all fixed points -/
 theorem lfp_is_least {α : Type*} [CompleteLattice α] {f : α → α}
     (hf : Monotone f) (x : α) (hx : f x = x) :
     sInf (preFixedPoints f) ≤ x :=
   sInf_le (by simp [preFixedPoints, hx])
+
 
 
 
@@ -69,9 +75,11 @@ theorem iterateBot_le_succ {α : Type*} [CompleteLattice α] {f : α → α}
 
 
 
+
 /-- A contraction on a metric space: d(f(x), f(y)) ≤ c · d(x, y) for c < 1 -/
 def IsContraction {α : Type*} [PseudoMetricSpace α] (f : α → α) (c : ℝ) : Prop :=
   0 ≤ c ∧ c < 1 ∧ ∀ x y : α, dist (f x) (f y) ≤ c * dist x y
+
 
 
 
@@ -86,6 +94,7 @@ theorem contraction_unique_fixed_point {α : Type*} [MetricSpace α]
 
 
 
+
 /-- Curry's fixed-point combinator, typed in Lean: for any f, we can find x with f x = x
 in a complete lattice. This wraps Knaster-Tarski as a function. -/
 noncomputable def fixedPointCombinator {α : Type*} [CompleteLattice α]
@@ -94,11 +103,13 @@ noncomputable def fixedPointCombinator {α : Type*} [CompleteLattice α]
 
 
 
+
 /-- The combinator indeed produces a fixed point -/
 theorem fixedPointCombinator_is_fixed {α : Type*} [CompleteLattice α]
     (f : α → α) (hf : Monotone f) :
     f (fixedPointCombinator f hf) = fixedPointCombinator f hf :=
   knaster_tarski_lfp hf
+
 
 
 

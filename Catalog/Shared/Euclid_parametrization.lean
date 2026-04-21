@@ -16,3 +16,4 @@ theorem euclid_parametrization (m n : ℤ) :
   unfold IsPythTriple'; ring
 
 
+

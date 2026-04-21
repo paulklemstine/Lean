@@ -19,6 +19,7 @@ theorem eml_continuousOn_joint :
       (fun ⟨_, y⟩ hy => ne_of_gt (Set.mem_prod.mp hy).2))
 
 
+
 /-- Preimage of (c, ∞) under eml(·, y). -/
 theorem eml_preimage_Ioi (y c : ℝ) (h : c + Real.log y > 0) :
     (fun x => eml x y) ⁻¹' (Set.Ioi c) = Set.Ioi (Real.log (c + Real.log y)) := by
@@ -33,6 +34,7 @@ theorem eml_preimage_Ioi (y c : ℝ) (h : c + Real.log y > 0) :
     linarith
 
 
+
 /-- Preimage of {c} under eml(·, y) is a singleton. -/
 theorem eml_preimage_singleton (y c : ℝ) (h : c + Real.log y > 0) :
     (fun x => eml x y) ⁻¹' {c} = {Real.log (c + Real.log y)} := by
@@ -45,10 +47,12 @@ theorem eml_preimage_singleton (y c : ℝ) (h : c + Real.log y > 0) :
     rw [hx, Real.exp_log h]; ring
 
 
+
 /-- Level set equation: eml(x, exp(exp(x) − c)) = c. -/
 theorem eml_level_set_graph (c : ℝ) :
     ∀ x : ℝ, eml x (Real.exp (Real.exp x - c)) = c := by
   intro x; unfold eml; rw [Real.log_exp]; ring
+
 
 
 /-- Level curves are graphs of continuous functions. -/
@@ -57,9 +61,11 @@ theorem eml_level_curve_continuous (c : ℝ) :
   Real.continuous_exp.comp (Real.continuous_exp.sub continuous_const)
 
 
+
 /-- Level curve values are always positive. -/
 theorem eml_level_curve_pos (c x : ℝ) :
     Real.exp (Real.exp x - c) > 0 := Real.exp_pos _
+
 
 
 /-- Level curves are strictly increasing. -/
@@ -67,6 +73,7 @@ theorem eml_level_curve_strictMono (c : ℝ) :
     StrictMono (fun x => Real.exp (Real.exp x - c)) := by
   intro a b hab
   exact Real.exp_strictMono (by linarith [Real.exp_lt_exp.mpr hab])
+
 
 
 /-- σ → +∞ as x → +∞. -/
@@ -81,6 +88,7 @@ theorem emlSelfPair_tendsto_atTop :
   nlinarith [le_abs_self b, sq_nonneg (x - 2), abs_nonneg b]
 
 
+
 /-- σ → +∞ as x → −∞. -/
 theorem emlSelfPair_tendsto_atBot :
     Tendsto emlSelfPair atBot atTop := by
@@ -88,6 +96,7 @@ theorem emlSelfPair_tendsto_atBot :
   filter_upwards [Filter.Iio_mem_atBot (-(b + 1))] with x hx
   unfold emlSelfPair; simp only [Set.mem_Iio] at hx
   linarith [Real.exp_pos x]
+
 
 
 /-- The range of σ is [1, ∞). -/
@@ -119,6 +128,7 @@ theorem emlSelfPair_range : Set.range emlSelfPair = Set.Ici 1 := by
         rw [h0]; exact Set.mem_uIcc.mpr (Or.inl ⟨hc, hx₀⟩)
       obtain ⟨t, _, ht⟩ := h_ivt h0c
       exact ⟨t, ht⟩
+
 
 
 /-- The sublevel set {x | σ(x) ≤ c} is bounded for c ≥ 1. -/
@@ -161,10 +171,12 @@ theorem emlSelfPair_sublevel_bounded (c : ℝ) (hc : 1 ≤ c) :
     nlinarith [sq_nonneg x, sq_nonneg (x - 1)]
 
 
+
 /-- The sublevel set {x | σ(x) ≤ c} is closed. -/
 theorem emlSelfPair_sublevel_closed (c : ℝ) :
     IsClosed {x : ℝ | emlSelfPair x ≤ c} :=
   isClosed_le emlSelfPair_continuous continuous_const
+
 
 
 end

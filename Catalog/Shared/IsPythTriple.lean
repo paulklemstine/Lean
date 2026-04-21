@@ -14,4 +14,5 @@ def IsPythTriple (a b c : ℤ) : Prop := a ^ 2 + b ^ 2 = c ^ 2
 
 
 
+
 end

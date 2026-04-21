@@ -19,6 +19,11 @@ theorem spbH_bounded (u v : ℝ) (hu : |u| < 1) (hv : |v| < 1) :
 
 
 
+
+/-- [Section: # CatalogBuild.Shared.SpbH_bounded
+Auto-generated from theorem catalog database.
+Domain: Shared
+Declarations: 3] -/
 theorem spbH_assoc (u v w : ℝ) (huv : u * v ≠ -1) (hvw : v * w ≠ -1)
     (huvw : spbH u v * w ≠ -1) (huvw' : u * spbH v w ≠ -1) :
     spbH (spbH u v) w = spbH u (spbH v w) := by
@@ -27,9 +32,11 @@ theorem spbH_assoc (u v w : ℝ) (huv : u * v ≠ -1) (hvw : v * w ≠ -1)
 
 
 
+
 /-- Inverse in hyperbolic SPB. -/
 theorem spbH_neg_self (u : ℝ) : spbH u (-u) = 0 := by
   simp [spbH]
+
 
 
 

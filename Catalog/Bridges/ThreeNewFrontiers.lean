@@ -18,6 +18,7 @@ theorem qubo_coefficient_count (n : ℕ) (hn : 1 ≤ n) :
 
 
 
+
 /-- D-Wave connectivity: Pegasus graph has ~15n qubits for n logical variables
 after minor embedding. Each logical qubit uses a chain of physical qubits. -/
 theorem dwave_pegasus_embedding (n : ℕ) (hn : 1 ≤ n) :
@@ -25,10 +26,12 @@ theorem dwave_pegasus_embedding (n : ℕ) (hn : 1 ≤ n) :
 
 
 
+
 /-- Chain strength bound: for embedding with chain length L, the chain strength
 J_chain must satisfy J_chain ≥ L · max|J_ij| for chain integrity. -/
 theorem chain_strength_bound (L : ℕ) (J_max : ℝ) (hL : 1 ≤ L) (hJ : 0 < J_max) :
     0 < L * J_max := by positivity
+
 
 
 
@@ -41,12 +44,14 @@ theorem schedule_discretization_error (T : ℕ) (hT : 1 ≤ T) :
 
 
 
+
 /-- Trotterization for IBM gate decomposition: the Suzuki-Trotter formula
 ||e^{A+B} - (e^{A/n} e^{B/n})^n|| ≤ [A,B] · t²/(2n).
 For n Trotter steps, error is O(1/n). -/
 theorem trotter_error_bound (n : ℕ) (hn : 1 ≤ n) (comm_norm t : ℝ)
     (hc : 0 ≤ comm_norm) (ht : 0 ≤ t) :
     0 ≤ comm_norm * t ^ 2 / (2 * n) := by positivity
+
 
 
 
@@ -59,9 +64,11 @@ theorem trotter_gate_count (n T : ℕ) (hn : 1 ≤ n) (hT : 1 ≤ T) :
 
 
 
+
 /-- IBM native gate decomposition: any SU(4) gate decomposes into ≤ 3 CNOT gates
 plus single-qubit rotations. -/
 theorem su4_cnot_decomposition : (3 : ℕ) ≤ 3 := le_refl _
+
 
 
 
@@ -69,6 +76,7 @@ theorem su4_cnot_decomposition : (3 : ℕ) ≤ 3 := le_refl _
 2p · n CNOT gates for n qubits. Tropical score guides optimal p. -/
 theorem qaoa_gate_depth (p n : ℕ) (hp : 1 ≤ p) (hn : 1 ≤ n) :
     1 ≤ 2 * p * n := by nlinarith
+
 
 
 
@@ -81,10 +89,12 @@ theorem dwave_schedule_normalized (β β_max : ℝ) (hβ : 0 ≤ β) (hm : 0 < �
 
 
 
+
 /-- Reverse annealing on D-Wave: start from classical solution, anneal backward
 then forward. The pause-and-quench technique samples local minima. -/
 theorem reverse_anneal_schedule (s_pause : ℝ) (hs : 0 ≤ s_pause) (hs1 : s_pause ≤ 1) :
     1 - s_pause ≥ 0 := by linarith
+
 
 
 
@@ -96,9 +106,11 @@ theorem hybrid_overhead (T anneal_us readout_us latency_ms : ℕ) :
 
 
 
+
 /-- Error mitigation on IBM: zero-noise extrapolation requires ≥ 3 noise levels.
 Each level multiplies circuit depth by stretch factor. -/
 theorem zne_noise_levels : (3 : ℕ) ≥ 3 := le_refl _
+
 
 
 
@@ -106,6 +118,7 @@ theorem zne_noise_levels : (3 : ℕ) ≥ 3 := le_refl _
 the probability of correct readout is f^n. -/
 theorem readout_fidelity (n : ℕ) (f : ℝ) (hf : 0 < f) (hf1 : f ≤ 1) :
     0 < f ^ n := by positivity
+
 
 
 
@@ -117,9 +130,11 @@ theorem tropical_qubo_correspondence (a w : ℝ) :
 
 
 
+
 /-- D-Wave advantage: 5000+ qubits in Pegasus topology.
 Advantage2: 7000+ qubits in Zephyr topology. -/
 theorem dwave_advantage_qubits : (5000 : ℕ) < 7000 := by norm_num
+
 
 
 
@@ -129,9 +144,11 @@ theorem ibm_processor_scaling : (127 : ℕ) < 1121 := by norm_num
 
 
 
+
 /-- Standard column reduction: O(n³) sequential operations for n simplices. -/
 theorem sequential_reduction_complexity (n : ℕ) :
     n * n * n = n ^ 3 := by ring
+
 
 
 
@@ -142,8 +159,10 @@ theorem parallel_chunk_size (n p : ℕ) (hp : 1 ≤ p) :
 
 
 
+
 /-- GPU warp size: 32 threads per warp. Columns processed in groups of 32. -/
 theorem gpu_warp_columns : (32 : ℕ) = 2 ^ 5 := by norm_num
+
 
 
 
@@ -151,6 +170,7 @@ theorem gpu_warp_columns : (32 : ℕ) = 2 ^ 5 := by norm_num
 map directly to GPU warp-level primitives (warp reduce max). -/
 theorem tropical_matmul_gpu (n : ℕ) :
     n ^ 2 * n = n ^ 3 := by ring
+
 
 
 
@@ -162,10 +182,12 @@ theorem parallel_pivot_search (n : ℕ) (hn : 2 ≤ n) :
 
 
 
+
 /-- Column independence lemma: column j can be reduced independently of column k
 if pivot(j) ≠ pivot(k). This enables parallel processing. -/
 theorem column_independence (j k pivot_j pivot_k : ℕ) (h : pivot_j ≠ pivot_k) :
     pivot_j ≠ pivot_k := h
+
 
 
 
@@ -176,10 +198,12 @@ theorem spectral_sequence_passes (n d : ℕ) (hd : 1 ≤ d) :
 
 
 
+
 /-- GPU memory bound: storing the boundary matrix requires n² entries.
 For n = 10^6, this is 10^12 entries — requires sparse representation. -/
 theorem sparse_memory_bound (n nnz : ℕ) (h : nnz ≤ n * n) :
     nnz ≤ n ^ 2 := by linarith [sq n]
+
 
 
 
@@ -189,10 +213,12 @@ theorem csr_memory (nnz n : ℕ) : nnz + n = nnz + n := rfl
 
 
 
+
 /-- Parallel Betti number computation: β_k = #columns with zero in R_k.
 Counting zeros is embarrassingly parallel. -/
 theorem parallel_betti_count (n_zero n_total : ℕ) (h : n_zero ≤ n_total) :
     n_zero ≤ n_total := h
+
 
 
 
@@ -207,6 +233,7 @@ theorem gpu_speedup_bound (W n : ℕ) (hW : 1 ≤ W) (hn : 32 ≤ n) :
 
 
 
+
 /-- Tropical semiring operations on GPU: max and + are both associative
 and commutative, enabling warp-level reduction. -/
 theorem tropical_gpu_assoc (a b c : ℝ) :
@@ -214,9 +241,11 @@ theorem tropical_gpu_assoc (a b c : ℝ) :
 
 
 
+
 /-- Persistent cohomology dual: transposing the boundary matrix.
 On GPU, transpose is a scatter/gather operation in O(nnz). -/
 theorem transpose_complexity (nnz : ℕ) : nnz = nnz := rfl
+
 
 
 
@@ -227,10 +256,12 @@ theorem multi_gpu_scaling (n k : ℕ) (hk : 1 ≤ k) :
 
 
 
+
 /-- Ripser optimization: apparent pairs can be detected in O(1) per column.
 On GPU, this eliminates up to 90% of columns before reduction. -/
 theorem apparent_pair_speedup (n n_apparent : ℕ) (h : n_apparent ≤ n) :
     n - n_apparent ≤ n := Nat.sub_le n n_apparent
+
 
 
 
@@ -241,10 +272,12 @@ theorem tropical_numerical_stability (a b : ℝ) :
 
 
 
+
 /-- Batch persistence: computing persistence for multiple filtrations simultaneously.
 k filtrations on GPU: amortized cost O(n³/k) per filtration. -/
 theorem batch_amortized_cost (n k : ℕ) (hk : 1 ≤ k) :
     n ^ 3 / k ≤ n ^ 3 := Nat.div_le_self (n ^ 3) k
+
 
 
 
@@ -255,10 +288,12 @@ theorem e8_surface_code_qubits (L : ℕ) (hL : 1 ≤ L) :
 
 
 
+
 /-- Surface code distance: for L×L patch, code distance d = L.
 Minimum weight logical operator crosses the lattice. -/
 theorem e8_surface_distance (L : ℕ) (hL : 1 ≤ L) :
     1 ≤ L := hL
+
 
 
 
@@ -269,9 +304,11 @@ theorem e8_surface_logical_qubits (g : ℕ) (hg : 1 ≤ g) :
 
 
 
+
 /-- Stabilizer weight: E8 surface code has weight-8 stabilizers (from E8 roots).
 Standard surface code has weight-4 stabilizers. Higher weight = better rate. -/
 theorem e8_stabilizer_weight : (8 : ℕ) = 2 * 4 := by norm_num
+
 
 
 
@@ -282,10 +319,12 @@ theorem e8_surface_rate (g L : ℕ) (hg : 1 ≤ g) (hL : 1 ≤ L) (hgL : g ≤ 4
 
 
 
+
 /-- Threshold theorem: below a critical error rate p_th, the logical error
 rate decreases exponentially with L: p_L ∝ (p/p_th)^{L/2}. -/
 theorem threshold_exponential_suppression (L : ℕ) (hL : 2 ≤ L) :
     1 ≤ L / 2 := by omega
+
 
 
 
@@ -295,9 +334,11 @@ theorem e8_threshold_advantage : (10 : ℕ) > 6 := by norm_num
 
 
 
+
 /-- Syndrome extraction circuit depth: E8 stabilizer measurement requires
 8 CNOT gates per stabilizer (one per qubit in the support). -/
 theorem syndrome_circuit_depth : (8 : ℕ) = 8 := rfl
+
 
 
 
@@ -308,10 +349,12 @@ theorem mwpm_decoder_complexity (L : ℕ) :
 
 
 
+
 /-- Union-Find decoder: O(n · α(n)) ≈ O(n) for n syndromes.
 Much faster than MWPM for real-time decoding. -/
 theorem union_find_near_linear (n : ℕ) (hn : 1 ≤ n) :
     1 ≤ n := hn
+
 
 
 
@@ -322,9 +365,11 @@ theorem e8_toric_code_params (L : ℕ) (hL : 1 ≤ L) :
 
 
 
+
 /-- Color code variant: E8 lattice is 3-colorable (as a hypergraph).
 This enables transversal implementation of the T gate. -/
 theorem e8_three_colorable : (3 : ℕ) ≤ 8 := by norm_num
+
 
 
 
@@ -334,9 +379,11 @@ theorem clifford_transversal (n : ℕ) : n + 0 = n := Nat.add_zero n
 
 
 
+
 /-- Magic state distillation: 15-to-1 protocol using Reed-Muller code.
 E8 code may enable a more efficient 8-to-1 protocol. -/
 theorem magic_state_e8_advantage : (8 : ℕ) < 15 := by norm_num
+
 
 
 
@@ -347,10 +394,12 @@ theorem lattice_surgery_rounds (d : ℕ) (hd : 1 ≤ d) :
 
 
 
+
 /-- E8 surface code overhead: for target logical error rate ε_L,
 need L ≥ c · log(1/ε_L) / log(p_th/p) physical patches. -/
 theorem surface_code_overhead (L : ℕ) (hL : 1 ≤ L) :
     8 * L ^ 2 ≥ 8 := by nlinarith
+
 
 
 
@@ -363,10 +412,12 @@ theorem e8_vs_standard_qubits (L : ℕ) :
 
 
 
+
 /-- The [[8,3,2]] E8 color code: 8 qubits, 3 logical qubits, distance 2.
 Detects any single error. -/
 theorem e8_color_code_params :
     8 - 3 = (5 : ℕ) := by norm_num
+
 
 
 
@@ -377,10 +428,12 @@ theorem concatenated_threshold (k : ℕ) :
 
 
 
+
 /-- E8 subsystem code: gauging some stabilizers creates a subsystem code
 with improved threshold at the cost of reduced rate. -/
 theorem subsystem_code_tradeoff (n_gauge n_stab : ℕ)
     (h : n_gauge + n_stab ≤ 8) : n_gauge ≤ 8 := by omega
+
 
 
 
@@ -391,10 +444,12 @@ theorem dwave_tropical_limit (x : ℝ) :
 
 
 
+
 /-- GPU tropical operations mirror D-Wave annealing:
 both compute max-plus over the same solution space. -/
 theorem gpu_dwave_correspondence (a b : ℝ) :
     max a b = max b a := max_comm a b
+
 
 
 
@@ -408,9 +463,11 @@ theorem e8_gpu_synergy (n : ℕ) :
 
 
 
+
 /-- Hardware hierarchy: D-Wave (annealing) → IBM (gates) → E8 surface (fault-tolerant).
 Each level adds error correction capability. -/
 theorem hardware_hierarchy : (1 : ℕ) ≤ 2 ∧ 2 ≤ 3 := ⟨by omega, by omega⟩
+
 
 
 
@@ -421,12 +478,14 @@ theorem unified_error_exponent (d : ℕ) (hd : d = 4) :
 
 
 
+
 /-- The idempotent thread through hardware:
 D-Wave: max(max(x,y),max(x,y)) = max(x,y) — idempotent readout
 GPU:    max(max(a,b),max(a,b)) = max(a,b) — idempotent reduction
 E8:     π(π(v)) = π(v) — idempotent syndrome projection -/
 theorem hardware_idempotent_thread (x y : ℝ) :
     max (max x y) (max x y) = max x y := max_self (max x y)
+
 
 
 

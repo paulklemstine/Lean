@@ -13,6 +13,7 @@ theorem gaussian_norm_mul' (a b c d : ℤ) :
 
 
 
+
 /-- ℤ[√-5] norms: showing non-unique factorization of 6. -/
 theorem zsqrt_neg5_norms :
     2^2 + 0^2 * 5 = (4 : ℤ) ∧
@@ -23,9 +24,11 @@ theorem zsqrt_neg5_norms :
 
 
 
+
 /-- x² - 1 = (x-1)(x+1) over ℤ. -/
 theorem factor_diff_squares :
     (X : ℤ[X])^2 - 1 = (X - 1) * (X + 1) := by ring
+
 
 
 
@@ -35,9 +38,11 @@ theorem factor_cube_minus_one :
 
 
 
+
 /-- x⁴ - 1 = (x-1)(x+1)(x²+1) over ℤ. -/
 theorem factor_fourth_power :
     (X : ℤ[X])^4 - 1 = (X - 1) * (X + 1) * (X^2 + 1) := by ring
+
 
 
 
@@ -47,9 +52,11 @@ theorem cyclotomic_6_divides :
 
 
 
+
 /-- √2 is irrational. -/
 theorem sqrt2_irrational' : Irrational (Real.sqrt 2) :=
   irrational_sqrt_two
+
 
 
 
@@ -62,11 +69,13 @@ theorem sqrt3_irrational : Irrational (Real.sqrt 3) := by
 
 
 
+
 /-- The quaternion norm is multiplicative (Euler four-square identity). -/
 theorem quaternion_norm_mul' (a b c d e f g h : ℤ) :
     (a^2 + b^2 + c^2 + d^2) * (e^2 + f^2 + g^2 + h^2) =
     (a*e - b*f - c*g - d*h)^2 + (a*f + b*e + c*h - d*g)^2 +
     (a*g - b*h + c*e + d*f)^2 + (a*h + b*g - c*f + d*e)^2 := by ring
+
 
 
 
@@ -77,10 +86,12 @@ theorem sl2_bracket_ef' : sl2_e' * sl2_f' - sl2_f' * sl2_e' = sl2_h' := by
 
 
 
+
 /-- [h, e] = 2e -/
 theorem sl2_bracket_he' : sl2_h' * sl2_e' - sl2_e' * sl2_h' = 2 • sl2_e' := by
   ext i j; fin_cases i <;> fin_cases j <;>
     simp [sl2_e', sl2_h', Matrix.mul_apply, Matrix.smul_apply, Fin.sum_univ_two]
+
 
 
 
@@ -92,17 +103,25 @@ theorem sl2_bracket_hf' : sl2_h' * sl2_f' - sl2_f' * sl2_h' = -(2 • sl2_f') :=
 
 
 
+
 /-- Trace of sl(2) elements is 0. -/
 theorem sl2_trace_e' : Matrix.trace sl2_e' = 0 := by
   simp [sl2_e', Matrix.trace, Matrix.diag, Fin.sum_univ_two]
 
 
 
+
+/-- [Section: # CatalogBuild.Algebra.Foundations.AlgebraicStructures
+Auto-generated from theorem catalog database.
+Domain: Algebra/Foundations
+Declarations: 15] -/
 theorem sl2_trace_f' : Matrix.trace sl2_f' = 0 := by
   simp [sl2_f', Matrix.trace, Matrix.diag, Fin.sum_univ_two]
 
 
 
+
 theorem sl2_trace_h' : Matrix.trace sl2_h' = 0 := by
   simp [sl2_h', Matrix.trace, Matrix.diag, Fin.sum_univ_two]
+
 

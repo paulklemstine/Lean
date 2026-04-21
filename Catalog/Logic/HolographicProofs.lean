@@ -18,15 +18,18 @@ structure ModularProof where
 
 
 
+
 /-- The "holographic ratio" of a proof: interface to total steps. -/
 noncomputable def holographicRatio (P : ModularProof) (h : 0 < P.totalSteps) : ℚ :=
   P.interfaceSteps / P.totalSteps
 
 
 
+
 /-- A proof is "holographic" if its interface is much smaller than its bulk. -/
 def isHolographic (P : ModularProof) (bound : ℕ) : Prop :=
   P.interfaceSteps ≤ bound ∧ bound < P.totalSteps
+
 
 
 
@@ -40,8 +43,14 @@ theorem area_law_proof {n : ℕ} (hn : 4 ≤ n) :
 
 
 
+
+/-- [Section: # CatalogBuild.Logic.HolographicProofs
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 15] -/
 theorem area_law_square (n : ℕ) : Nat.sqrt (n * n) ≤ n * n := by
   exact Nat.sqrt_le_self _
+
 
 
 
@@ -51,10 +60,12 @@ theorem area_law_compression {n : ℕ} (hn : 2 ≤ n) :
 
 
 
+
 /-- The bulk-boundary decomposition preserves total size. -/
 theorem bulk_boundary_decomposition (P : ModularProof) :
     P.totalSteps = P.interfaceSteps + P.internalSteps :=
   P.decomposition
+
 
 
 
@@ -66,10 +77,12 @@ theorem modular_interface_bound (k b : ℕ) :
 
 
 
+
 theorem holographic_compression_bound {interface internal : ℕ}
     (hi : 0 < interface) (hin : 0 < internal) :
     0 < interface * internal := by
   positivity
+
 
 
 
@@ -84,9 +97,11 @@ structure ProofTranslation where
 
 
 
+
 /-- A translation is "compressing" if the target is always smaller. -/
 def ProofTranslation.isCompressing (T : ProofTranslation) : Prop :=
   ∀ n, T.targetSize n ≤ T.sourceSize n
+
 
 
 
@@ -96,10 +111,12 @@ def ProofTranslation.isHolographicCompression (T : ProofTranslation) : Prop :=
 
 
 
+
 theorem compressing_compose {f g : ℕ → ℕ}
     (hf : ∀ n, f n ≤ n) (hg : ∀ n, g n ≤ n) :
     ∀ n, f (g n) ≤ n := by
   exact fun n => le_trans ( hf _ ) ( hg _ )
+
 
 
 
@@ -112,11 +129,13 @@ def hasWedgeReconstruction (total interface : ℕ) (dependsOn : Fin total → Fi
 
 
 
+
 theorem monotone_wedge_reconstruction (n m : ℕ) (hn : 0 < n) (hm : 0 < m)
     (dep : Fin n → Fin m → Prop)
     (hmono : ∀ (i : Fin n) (j : Fin m), dep i j → j.val ≤ i.val) :
     hasWedgeReconstruction n m dep := by
   intro S; use ∅; aesop;
+
 
 
 end

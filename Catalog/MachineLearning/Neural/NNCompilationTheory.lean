@@ -15,6 +15,7 @@ theorem relu_neg (x : ℝ) (hx : x ≤ 0) : relu x = 0 := by
 
 
 
+
 /-- ReLU is not a linear function: key impossibility result.
 If ReLU were linear, then relu(-1) = -relu(1) = -1, but relu(-1) = 0. -/
 theorem relu_not_additive : ¬ ∀ x y : ℝ, relu (x + y) = relu x + relu y := by
@@ -23,6 +24,7 @@ theorem relu_not_additive : ¬ ∀ x y : ℝ, relu (x + y) = relu x + relu y := 
   have h2 : relu (-1) = 0 := relu_neg (-1) (by norm_num)
   have h3 := h 1 (-1)
   simp [relu] at h3
+
 
 
 
@@ -38,8 +40,10 @@ theorem relu_not_affine :
 
 
 
+
 /-- ReLU is tropical addition with the tropical identity: max(x, 0) = x ⊕_trop 0 -/
 theorem relu_is_tropical_add (x : ℝ) : relu x = max x 0 := rfl
+
 
 
 
@@ -48,8 +52,10 @@ def tropical_mul (a b : ℝ) : ℝ := a + b
 
 
 
+
 /-- Tropical "addition" is the max operation -/
 def tropical_add (a b : ℝ) : ℝ := max a b
+
 
 
 
@@ -59,10 +65,12 @@ theorem tropical_mul_comm (a b : ℝ) : tropical_mul a b = tropical_mul b a := b
 
 
 
+
 /-- Tropical multiplication is associative (inherits from ℝ addition) -/
 theorem tropical_mul_assoc (a b c : ℝ) :
     tropical_mul (tropical_mul a b) c = tropical_mul a (tropical_mul b c) := by
   simp [tropical_mul, add_assoc]
+
 
 
 
@@ -77,9 +85,11 @@ theorem tropical_distrib (a b c : ℝ) :
 
 
 
+
 /-- 0 is the tropical multiplicative identity -/
 theorem tropical_mul_zero (a : ℝ) : tropical_mul a 0 = a := by
   simp [tropical_mul]
+
 
 
 
@@ -103,6 +113,7 @@ theorem exp_not_affine :
 
 
 
+
 /-- Softmax normalizes: the outputs sum to 1 (for vectors as functions Fin n → ℝ). -/
 theorem softmax_sums_to_one (n : ℕ) (x : Fin n → ℝ)
     (hpos : 0 < ∑ i, Real.exp (x i)) :
@@ -112,10 +123,12 @@ theorem softmax_sums_to_one (n : ℕ) (x : Fin n → ℝ)
 
 
 
+
 /-- The Koopman operator K_F for a dynamical system F acts on observables g by
 (K_F g)(x) = g(F(x)). This is linear in g even when F is nonlinear. -/
 def koopman_operator {α : Type*} (F : α → α) (g : α → ℝ) : α → ℝ :=
   g ∘ F
+
 
 
 
@@ -129,6 +142,7 @@ theorem koopman_is_linear {α : Type*} (F : α → α) :
 
 
 
+
 /-- The identity function on observables is the Koopman operator of the identity dynamics -/
 theorem koopman_identity {α : Type*} (g : α → ℝ) :
     koopman_operator id g = g := by
@@ -137,8 +151,10 @@ theorem koopman_identity {α : Type*} (g : α → ℝ) :
 
 
 
+
 /-- A 2×2 Möbius transformation on ℝ (where defined) -/
 noncomputable def mobius (a b c d : ℝ) (x : ℝ) : ℝ := (a * x + b) / (c * x + d)
+
 
 
 
@@ -148,9 +164,11 @@ def is_exact {α β : Type*} (f : α → β) (C : CompilationScheme α β) : Pro
 
 
 
+
 /-- A compilation is compact if its size is polynomial in some parameter -/
 def is_compact {α β : Type*} (C : CompilationScheme α β) (poly_bound : ℕ) : Prop :=
   C.size ≤ poly_bound
+
 
 
 
@@ -167,11 +185,13 @@ theorem trilemma_relu_component :
 
 
 
+
 /-- Any function on a finite domain can be compiled exactly (but possibly with
 exponential size). This shows Exact + General is achievable at the cost of Compactness. -/
 theorem exact_general_possible {n : ℕ} (f : Fin n → ℝ) :
     ∃ (C : CompilationScheme (Fin n) ℝ), is_exact f C := by
   exact ⟨⟨f, n⟩, fun x => rfl⟩
+
 
 
 
@@ -184,10 +204,12 @@ theorem region_count_bound (L w : ℕ) (hw : 0 < w) :
 
 
 
+
 /-- Contracting two tensors of orders p and q over k shared indices
 yields a tensor of order p + q - 2k. -/
 theorem tensor_contraction_order' (p q k : ℕ) (hk_p : k ≤ p) (hk_q : k ≤ q) :
     p + q - 2 * k ≤ p + q := by omega
+
 
 
 
@@ -198,10 +220,12 @@ theorem transformer_tensor_order (L : ℕ) (hL : 0 < L) :
 
 
 
+
 /-- Tensor train decomposition: a tensor of order N with dimensions d
 and TT-rank r requires O(N * d * r²) parameters. -/
 theorem tt_parameter_count (N d r : ℕ) :
     N * d * r ^ 2 ≤ N * d * r ^ 2 := le_refl _
+
 
 
 
@@ -212,10 +236,12 @@ theorem gpt2_parameter_info : 124000000 * 32 = 3968000000 := by norm_num
 
 
 
+
 /-- The lookup table size for GPT-2 (vocab=50257, context=1024) has
 more than 10^9 entries, vastly exceeding practical limits. -/
 theorem gpt2_lookup_impractical :
     50257 ^ 2 > 10 ^ 9 := by norm_num
+
 
 
 
@@ -226,6 +252,7 @@ theorem composed_polynomial_degree (d L : ℕ) (hd : 1 ≤ d) :
 
 
 
+
 /-- The number of monomials in n variables of total degree ≤ D is C(n+D, D).
 This gives the dimension of the polynomial feature space. -/
 theorem polynomial_feature_dim (n D : ℕ) :
@@ -233,10 +260,12 @@ theorem polynomial_feature_dim (n D : ℕ) :
 
 
 
+
 /-- For the Koopman approximation, error accumulates at most linearly across layers. -/
 theorem koopman_error_linear_accumulation (L : ℕ) (per_layer_error : ℝ)
     (hε : 0 ≤ per_layer_error) :
     0 ≤ L * per_layer_error := by positivity
+
 
 
 
@@ -250,6 +279,7 @@ theorem nonlinearity_barrier_core :
     simp only [smul_eq_mul, mul_one] at h
     linarith
   linarith
+
 
 
 end

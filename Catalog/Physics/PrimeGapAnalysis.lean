@@ -15,11 +15,13 @@ theorem prime_gaps_max_100 :
 
 
 
+
 /-- No prime gap exceeds 20 for primes up to 1000. -/
 theorem prime_gaps_max_1000 :
     ∀ p ∈ (Finset.Icc 2 983).filter Nat.Prime,
       ∃ q ∈ (Finset.Ioc p (p + 20)).filter Nat.Prime, True := by
   native_decide
+
 
 
 
@@ -47,6 +49,7 @@ theorem prime_gap_sizes_exist :
 
 
 
+
 /-- [Section: # CatalogBuild.Physics.PrimeGapAnalysis
 Auto-generated from theorem catalog database.
 Domain: Physics
@@ -62,10 +65,12 @@ theorem prime_desert (k : ℕ) (hk : 2 ≤ k) :
 
 
 
+
 /-- Twin prime pairs (gap 2) up to 1000. -/
 theorem gap2_count_1000 :
     ((Finset.range 999).filter (fun p => Nat.Prime p ∧ Nat.Prime (p + 2))).card = 35 := by
   native_decide
+
 
 
 
@@ -76,10 +81,12 @@ theorem gap4_count_1000 :
 
 
 
+
 /-- Sexy prime pairs (gap 6) up to 1000. -/
 theorem gap6_count_1000 :
     ((Finset.range 995).filter (fun p => Nat.Prime p ∧ Nat.Prime (p + 6))).card = 74 := by
   native_decide
+
 
 
 
@@ -94,10 +101,12 @@ theorem first_gap_occurrences :
 
 
 
+
 /-- Cramér's conjecture states that prime gaps satisfy g(p) = O((log p)²).
 For primes up to 1000, the maximum gap is 20, while (ln 1000)² ≈ 47.7.
 The ratio gap/(log p)² is well below 1 for all primes in this range. -/
 theorem cramer_evidence :
     -- Max gap 20 at p = 887, and 20 < 48 ≈ (ln 1000)²
     (20 : ℕ) < 48 := by omega
+
 

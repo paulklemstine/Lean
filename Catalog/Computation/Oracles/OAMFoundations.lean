@@ -23,9 +23,15 @@ theorem fourier_mode_integral_zero {n : ℤ} (hn : n ≠ 0) :
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.OAMFoundations
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 35] -/
 theorem fourier_mode_integral_id :
     ∫ φ : ℝ in (0 : ℝ)..2 * π, Complex.exp (↑((0 : ℤ) * φ) * Complex.I) = ↑(2 * π) := by
   simp +decide [ mul_comm ]
+
 
 
 
@@ -39,8 +45,10 @@ theorem oam_orthogonality {l m : ℤ} (hlm : l ≠ m) :
 
 
 
+
 /-- Shannon capacity for a single channel with bandwidth B and signal-to-noise ratio SNR. -/
 def shannonCapacity (B : ℝ) (SNR : ℝ) : ℝ := B * Real.log (1 + SNR) / Real.log 2
+
 
 
 
@@ -50,8 +58,10 @@ theorem shannonCapacity_nonneg {B SNR : ℝ} (hB : 0 ≤ B) (hSNR : 0 ≤ SNR) :
 
 
 
+
 /-- Total capacity with N orthogonal modes equals N times single-channel capacity. -/
 def totalCapacity (N : ℕ) (B : ℝ) (SNR : ℝ) : ℝ := N * shannonCapacity B SNR
+
 
 
 
@@ -62,10 +72,12 @@ theorem capacity_doubles_with_modes (N : ℕ) (B SNR : ℝ) :
 
 
 
+
 /-- Adding one more mode increases capacity by exactly one channel's worth. -/
 theorem capacity_additive (N : ℕ) (B SNR : ℝ) :
     totalCapacity (N + 1) B SNR = totalCapacity N B SNR + shannonCapacity B SNR := by
   simp [totalCapacity]; ring
+
 
 
 
@@ -75,8 +87,10 @@ theorem capacity_mono {N M : ℕ} (h : N ≤ M) (B SNR : ℝ) (hB : 0 ≤ B) (hS
 
 
 
+
 /-- The total topological charge of a collection of beams. -/
 def totalCharge (charges : List ℤ) : ℤ := charges.sum
+
 
 
 
@@ -86,10 +100,12 @@ theorem charge_conservation_split (l : ℤ) (r : ℤ) (hr : 0 ≤ r) :
 
 
 
+
 /-- Combining two beams: the total charge is the sum of individual charges. -/
 theorem charge_additivity (charges₁ charges₂ : List ℤ) :
     totalCharge (charges₁ ++ charges₂) = totalCharge charges₁ + totalCharge charges₂ := by
   simp [totalCharge, List.sum_append]
+
 
 
 
@@ -102,8 +118,10 @@ structure StokesVector where
 
 
 
+
 /-- Horizontal linear polarization. -/
 def horizontal : StokesVector := ⟨1, 0, 0, by norm_num⟩
+
 
 
 
@@ -112,8 +130,10 @@ def vertical : StokesVector := ⟨-1, 0, 0, by norm_num⟩
 
 
 
+
 /-- Right circular polarization. -/
 def rightCircular : StokesVector := ⟨0, 0, 1, by norm_num⟩
+
 
 
 
@@ -122,9 +142,11 @@ def leftCircular : StokesVector := ⟨0, 0, -1, by norm_num⟩
 
 
 
+
 /-- The "distance" between two polarization states on the Poincaré sphere. -/
 def stokesInnerProduct (a b : StokesVector) : ℝ :=
   a.s1 * b.s1 + a.s2 * b.s2 + a.s3 * b.s3
+
 
 
 
@@ -135,10 +157,12 @@ theorem orthogonal_antipodal :
 
 
 
+
 /-- Same polarization has inner product 1. -/
 theorem same_polarization_ip :
     stokesInnerProduct horizontal horizontal = 1 := by
   simp [stokesInnerProduct, horizontal]
+
 
 
 
@@ -149,9 +173,11 @@ theorem circular_orthogonal :
 
 
 
+
 theorem stokes_ip_bounded (a b : StokesVector) :
     -1 ≤ stokesInnerProduct a b ∧ stokesInnerProduct a b ≤ 1 := by
   constructor <;> unfold stokesInnerProduct <;> nlinarith [ sq_nonneg ( a.s1 - b.s1 ), sq_nonneg ( a.s1 + b.s1 ), sq_nonneg ( a.s2 - b.s2 ), sq_nonneg ( a.s2 + b.s2 ), sq_nonneg ( a.s3 - b.s3 ), sq_nonneg ( a.s3 + b.s3 ), a.on_sphere, b.on_sphere ]
+
 
 
 
@@ -162,10 +188,12 @@ def berryPhase (solidAngle : ℝ) : ℝ := solidAngle / 2
 
 
 
+
 /-- A great circle on the Poincaré sphere subtends solid angle 2π,
 giving a Berry phase of π. -/
 theorem greatCircle_berryPhase : berryPhase (2 * π) = π := by
   simp [berryPhase]
+
 
 
 
@@ -174,9 +202,11 @@ theorem hemisphere_berry : berryPhase (2 * π) = π := greatCircle_berryPhase
 
 
 
+
 /-- Total WDM capacity: N_λ wavelength channels × N_OAM modes × single capacity. -/
 def wdmOamCapacity (N_wavelengths N_modes : ℕ) (B SNR : ℝ) : ℝ :=
   N_wavelengths * N_modes * shannonCapacity B SNR
+
 
 
 
@@ -187,8 +217,10 @@ theorem wdm_oam_multiplicative (Nw Nm : ℕ) (B SNR : ℝ) :
 
 
 
+
 /-- The number of distinguishable states using k binary DOFs. -/
 def distinguishableStates (k : ℕ) : ℕ := 2 ^ k
+
 
 
 
@@ -199,10 +231,12 @@ theorem dof_product (k₁ k₂ : ℕ) :
 
 
 
+
 /-- Three independent DOFs (polarization, OAM mode, time bin) with
 2, N, and M states respectively give 2NM total states. -/
 theorem three_dof_capacity (N M : ℕ) :
     2 * N * M = 2 * N * M := rfl
+
 
 
 
@@ -212,6 +246,7 @@ structure BSMatrix where
   b : ℂ  -- transmission coefficient (input 2 → output 1)
   c : ℂ  -- transmission coefficient (input 1 → output 2)
   d : ℂ  -- reflection coefficient (input 2 → output 2)
+
 
 
 
@@ -225,6 +260,7 @@ def BSMatrix.isUnitary (m : BSMatrix) : Prop :=
 
 
 
+
 /-- The standard 50:50 beam splitter matrix. -/
 def bs5050 : BSMatrix where
   a := 1 / Complex.ofReal (Real.sqrt 2)
@@ -234,9 +270,11 @@ def bs5050 : BSMatrix where
 
 
 
+
 def qubitPlus : Qubit := ⟨1 / Complex.ofReal (Real.sqrt 2),
   1 / Complex.ofReal (Real.sqrt 2), by
   norm_num [ Complex.normSq ]⟩
+
 
 
 
@@ -245,6 +283,7 @@ theorem qubit0_ne_qubit1 : qubit0 ≠ qubit1 := by
   intro h
   have := congr_arg Qubit.alpha h
   simp [qubit0, qubit1] at this
+
 
 
 

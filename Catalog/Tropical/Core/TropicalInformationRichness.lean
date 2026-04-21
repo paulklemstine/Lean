@@ -18,10 +18,12 @@ theorem exp_tropical_scalar {p : ℕ} (hp : Nat.Prime p) (a n : ℕ) (ha : a ≠
 
 
 
+
 /-- Squaring doubles the tropical coordinate -/
 theorem square_doubles_tropical {p : ℕ} (hp : Nat.Prime p) (a : ℕ) (ha : a ≠ 0) :
     padicValNat p (a ^ 2) = 2 * padicValNat p a :=
   exp_tropical_scalar hp a 2 ha
+
 
 
 
@@ -32,10 +34,12 @@ theorem cube_triples_tropical {p : ℕ} (hp : Nat.Prime p) (a : ℕ) (ha : a ≠
 
 
 
+
 /-- Multiplication of k numbers produces combinatorial growth
 in the number of possible factorizations -/
 theorem factoring_space_grows_with_product (v₁ v₂ : ℕ) :
     (v₁ + 1) * (v₂ + 1) ≥ v₁ + v₂ + 1 := by nlinarith
+
 
 
 
@@ -45,9 +49,11 @@ theorem exp_information_density (v : ℕ) (k : ℕ) (hk : 1 ≤ k) :
 
 
 
+
 /-- Squaring is the minimal nontrivial exponentiation that doubles information -/
 theorem square_minimal_doubling (v : ℕ) :
     2 * v = v + v := by ring
+
 
 
 
@@ -58,9 +64,11 @@ theorem uniform_entropy_bound (n : ℕ) (hn : 1 ≤ n) :
 
 
 
+
 /-- Addition preserves range: a + b ∈ [0, 2N] for a, b ∈ [0, N] -/
 theorem add_range_bound (a b N : ℕ) (ha : a ≤ N) (hb : b ≤ N) :
     a + b ≤ 2 * N := by omega
+
 
 
 
@@ -70,9 +78,11 @@ theorem mul_range_bound (a b N : ℕ) (ha : a ≤ N) (hb : b ≤ N) :
 
 
 
+
 /-- Exponentiation expands range super-exponentially -/
 theorem exp_range_bound (a N : ℕ) (ha : a ≤ N) (k : ℕ) :
     a ^ k ≤ N ^ k := Nat.pow_le_pow_left ha k
+
 
 
 
@@ -84,9 +94,11 @@ theorem mul_vs_add_output_space (N : ℕ) (hN : 1 ≤ N) :
 
 
 
+
 /-- The energy-frequency relation E = hν is linear (tropical multiplication) -/
 theorem photon_energy_tropical (h_planck ν : ℝ) (hν : 0 < ν) (hh : 0 < h_planck) :
     0 < h_planck * ν := mul_pos hh hν
+
 
 
 
@@ -101,9 +113,11 @@ theorem superposition_tropical (a₁ a₂ : ℝ) :
 
 
 
+
 /-- Photon number states |n⟩ have energy nℏω — tropical scalar multiplication -/
 theorem photon_number_energy (n : ℕ) (ω : ℝ) (hω : 0 < ω) :
     (n : ℝ) * ω ≥ 0 := by positivity
+
 
 
 
@@ -114,13 +128,16 @@ theorem squeeze_information (r : ℝ) (hr : 0 ≤ r) :
 
 
 
+
 /-- Squaring is a 2-to-1 map on nonzero elements (modulo sign) -/
 theorem square_two_to_one (a : ℤ) : (-a) ^ 2 = a ^ 2 := by ring
 
 
 
+
 /-- Squaring creates a trapdoor: easy to compute, hard to invert -/
 theorem square_easy_forward (n : ℕ) : n * n = n ^ 2 := by ring
+
 
 
 
@@ -130,9 +147,11 @@ theorem jacobi_multiplicativity (a b : ℤ) :
 
 
 
+
 /-- Quadratic residues mod p: exactly (p-1)/2 nonzero elements are squares -/
 theorem quadratic_residue_count (p : ℕ) (hp : 2 < p) :
     (p - 1) / 2 ≤ p := by omega
+
 
 
 
@@ -145,9 +164,11 @@ theorem square_mod_three (n : ℕ) : n ^ 2 % 3 = 0 ∨ n ^ 2 % 3 = 1 := by
 
 
 
+
 /-- Discrete log is the inverse of discrete exponentiation -/
 theorem discrete_exp_mod_bound (g x p : ℕ) (hp : 0 < p) :
     g ^ x % p < p := Nat.mod_lt _ hp
+
 
 
 
@@ -161,9 +182,11 @@ theorem fermat_little_period (a p : ℕ) (hp : Nat.Prime p) (ha : ¬p ∣ a) :
 
 
 
+
 /-- RSA is based on the hardness of inverting x ↦ x^e mod n -/
 theorem rsa_encryption_bound (m e n : ℕ) (hn : 0 < n) :
     m ^ e % n < n := Nat.mod_lt _ hn
+
 
 
 
@@ -173,13 +196,16 @@ theorem diffie_hellman_commutativity (g a b : ℕ) :
 
 
 
+
 /-- Addition grows linearly -/
 theorem addition_linear_growth (n : ℕ) : n + n = 2 * n := by ring
 
 
 
+
 /-- Multiplication grows quadratically -/
 theorem multiplication_quadratic_growth (n : ℕ) : n * n = n ^ 2 := by ring
+
 
 
 
@@ -194,6 +220,7 @@ theorem exponentiation_exponential_growth (n : ℕ) : 2 ^ n ≥ n + 1 := by
 
 
 
+
 /-- Tetration grows super-exponentially -/
 def tetration : ℕ → ℕ → ℕ
   | _, 0 => 1
@@ -201,6 +228,11 @@ def tetration : ℕ → ℕ → ℕ
 
 
 
+
+/-- [Section: # CatalogBuild.Tropical.Core.TropicalInformationRichness
+Auto-generated from theorem catalog database.
+Domain: Tropical/Core
+Declarations: 50] -/
 theorem tetration_dominates_exp (n : ℕ) : tetration 2 n ≥ n := by
   induction n with
   | zero => simp [tetration]
@@ -211,10 +243,12 @@ theorem tetration_dominates_exp (n : ℕ) : tetration 2 n ≥ n := by
 
 
 
+
 /-- A depth-d ReLU network with width w computes a tropical polynomial
 of degree at most w^d -/
 theorem network_tropical_degree (w d : ℕ) (hw : 1 ≤ w) :
     w ^ d ≥ 1 := Nat.one_le_pow d w hw
+
 
 
 
@@ -240,6 +274,7 @@ theorem depth_efficiency (w d : ℕ) (hw : 2 ≤ w) (hd : 1 ≤ d) :
 
 
 
+
 /-- The number of linear regions of a ReLU network bounds its information capacity -/
 theorem linear_regions_bound (w d : ℕ) :
     w * d + 1 ≤ (w + 1) ^ d := by
@@ -254,14 +289,17 @@ theorem linear_regions_bound (w d : ℕ) :
 
 
 
+
 /-- The bit complexity of multiplication: O(n²) naive, O(n log n) optimal -/
 theorem mul_bit_complexity_bound (n : ℕ) (hn : 1 ≤ n) :
     n ≤ n * n := by nlinarith
 
 
 
+
 /-- Squaring has the same bit complexity as general multiplication -/
 theorem square_bit_complexity (n : ℕ) : n * n = n ^ 2 := by ring
+
 
 
 
@@ -272,10 +310,12 @@ theorem bose_einstein_tropical_limit (E : ℝ) (hE : 0 < E) :
 
 
 
+
 /-- The partition function Z tropicalizes to min(Eᵢ) as T → 0 -/
 theorem partition_function_tropical (E₁ E₂ : ℝ) :
     min E₁ E₂ ≤ E₁ ∧ min E₁ E₂ ≤ E₂ :=
   ⟨min_le_left _ _, min_le_right _ _⟩
+
 
 
 
@@ -285,9 +325,11 @@ theorem coherent_state_mean_photon (alpha : ℝ) :
 
 
 
+
 /-- The Hong-Ou-Mandel effect: two-photon interference -/
 theorem hom_interference (r t : ℝ) :
     (r * t) ^ 2 + (r * t) ^ 2 = 2 * (r * t) ^ 2 := by ring
+
 
 
 
@@ -298,10 +340,12 @@ theorem tropical_simplicity_of_mul (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
 
 
 
+
 /-- Tropical simplicity: exponentiation is just scaling in log space -/
 theorem tropical_simplicity_of_exp (a : ℝ) (n : ℕ) :
     Real.log (a ^ n) = (n : ℝ) * Real.log a :=
   Real.log_pow a n
+
 
 
 
@@ -311,9 +355,11 @@ theorem information_asymmetry_mul (a b : ℕ) :
 
 
 
+
 /-- The information richness hierarchy: add < mul < exp -/
 theorem information_richness_hierarchy (N : ℕ) (hN : 2 ≤ N) :
     N + N ≤ N * N := by nlinarith
+
 
 
 
@@ -323,9 +369,11 @@ theorem squaring_minimal_trapdoor (n : ℕ) :
 
 
 
+
 /-- Stefan-Boltzmann law: power ∝ T⁴ — exponentiation in thermodynamics -/
 theorem stefan_boltzmann_positivity (T : ℝ) (hT : 0 < T) :
     0 < T ^ 4 := by positivity
+
 
 
 
@@ -335,9 +383,11 @@ theorem wien_displacement (T : ℝ) (hT : 0 < T) :
 
 
 
+
 /-- Classical limit: path integral tropicalizes to stationary action -/
 theorem classical_limit_tropical (S₁ S₂ : ℝ) :
     min S₁ S₂ ≤ S₁ := min_le_left _ _
+
 
 
 
@@ -349,9 +399,11 @@ theorem information_operation_physics_triangle :
 
 
 
+
 /-- Prediction 1: x² activations should learn multiplicative structure faster -/
 theorem quadratic_activation_bound (x : ℝ) :
     x ^ 2 ≥ 0 := sq_nonneg _
+
 
 
 
@@ -364,10 +416,12 @@ theorem optimal_depth_bound (n : ℕ) (hn : 1 ≤ n) :
 
 
 
+
 /-- Prediction 3: Tropical compression excels for multiplicative data -/
 theorem tropical_compression_advantage (rank full : ℕ)
     (hr : rank ≤ full) :
     rank ≤ full := hr
+
 
 
 

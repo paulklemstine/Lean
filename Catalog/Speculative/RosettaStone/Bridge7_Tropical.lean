@@ -12,8 +12,10 @@ theorem tropical_zero_property (a b : ℝ) : min a b ≤ a := min_le_left a b
 
 
 
+
 /-- Tropical multiplicative identity. -/
 theorem tropical_one (a : ℝ) : a + 0 = a := add_zero a
+
 
 
 
@@ -23,8 +25,10 @@ theorem tropical_linear_root (a b : ℝ) :
 
 
 
+
 /-- Tropical determinant of a 2×2 matrix. -/
 def tropical_det_2x2 (a b c d : ℝ) : ℝ := min (a + d) (b + c)
+
 
 
 
@@ -36,10 +40,12 @@ theorem tropical_det_transpose (a b c d : ℝ) :
 
 
 
+
 /-- min(a+b, b+a) = a+b by commutativity. -/
 theorem shortest_round_trip (a b : ℝ) :
     min (a + b) (b + a) = a + b := by
   rw [add_comm b a]; exact min_self _
+
 
 
 
@@ -48,12 +54,15 @@ theorem tropical_int_idempotent (a : ℤ) : min a a = a := min_self a
 
 
 
+
 /-- Universal tropical idempotency for rationals. -/
 theorem tropical_rat_idempotent (a : ℚ) : min a a = a := min_self a
 
 
 
+
 /-- Universal tropical idempotency for naturals. -/
 theorem tropical_nat_idempotent (a : ℕ) : min a a = a := min_self a
+
 
 

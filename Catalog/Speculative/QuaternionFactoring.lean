@@ -17,14 +17,17 @@ theorem euler_four_square_identity_alt (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ 
 
 
 
+
 /-- Define the quaternion norm as sum of four squares. -/
 def quat_norm (a b c d : ℤ) : ℤ := a^2 + b^2 + c^2 + d^2
+
 
 
 
 /-- Quaternion norm is always nonneg. -/
 theorem quat_norm_nonneg (a b c d : ℤ) : 0 ≤ quat_norm a b c d := by
   unfold quat_norm; positivity
+
 
 
 
@@ -36,6 +39,7 @@ theorem quat_norm_mul (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℤ) :
               (a₁*b₄ + a₂*b₃ - a₃*b₂ + a₄*b₁) =
     quat_norm a₁ a₂ a₃ a₄ * quat_norm b₁ b₂ b₃ b₄ := by
   unfold quat_norm; ring
+
 
 
 
@@ -54,9 +58,15 @@ theorem four_square_hamilton_product (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : 
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.QuaternionFactoring
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 9] -/
 theorem four_squares_zero (a b c d : ℤ)
     (h : a^2 + b^2 + c^2 + d^2 = 0) : a = 0 ∧ b = 0 ∧ c = 0 ∧ d = 0 := by
   exact ⟨ by nlinarith, by nlinarith, by nlinarith, by nlinarith ⟩
+
 
 
 
@@ -64,6 +74,7 @@ theorem quaternion_factor_criterion (N g : ℕ) (hN : 1 < N)
     (hg_dvd : g ∣ N) (hg_gt : 1 < g) (hg_lt : g < N) :
     ∃ k : ℕ, N = g * k ∧ 1 < k ∧ k < N := by
   exact Exists.elim hg_dvd fun k hk => ⟨ k, hk, by nlinarith, by nlinarith ⟩
+
 
 
 
@@ -84,6 +95,7 @@ theorem four_square_multiple_reps (N : ℕ) (hN : 5 ≤ N) :
 
 
 
+
 /-- Euler's identity gives two different 4-square decompositions of a product. -/
 theorem euler_two_decompositions (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℤ) :
     (a₁^2 + a₂^2 + a₃^2 + a₄^2) * (b₁^2 + b₂^2 + b₃^2 + b₄^2) =
@@ -97,4 +109,5 @@ theorem euler_two_decompositions (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℤ)
     (a₁*b₃ - a₂*b₄ - a₃*b₁ + a₄*b₂)^2 +
     (a₁*b₄ + a₂*b₃ - a₃*b₂ - a₄*b₁)^2 := by
   exact ⟨by ring, by ring⟩
+
 

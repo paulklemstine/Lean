@@ -18,11 +18,13 @@ structure OracleSystem where
 
 
 
+
 /-- A meta-oracle is strictly improving if it increases quality for
 any non-optimal oracle. -/
 def MetaOracle.StrictlyImproving {S : OracleSystem} (M : MetaOracle S)
     (optimal : S.Oracle → Prop) : Prop :=
   ∀ f, ¬optimal f → S.q f < S.q (M.improve f)
+
 
 
 
@@ -33,10 +35,12 @@ def MetaOracle.comp {S : OracleSystem} (M₁ M₂ : MetaOracle S) : MetaOracle S
 
 
 
+
 /-- Iterated application of a meta-oracle n times. -/
 def MetaOracle.iterate {S : OracleSystem} (M : MetaOracle S) : ℕ → S.Oracle → S.Oracle
   | 0 => id
   | n + 1 => M.improve ∘ M.iterate n
+
 
 
 
@@ -49,6 +53,7 @@ theorem MetaOracle.quality_mono {S : OracleSystem} (M : MetaOracle S)
   | succ n ih =>
     simp [MetaOracle.iterate, Function.comp]
     exact le_trans ih (M.improving _)
+
 
 
 
@@ -65,6 +70,7 @@ attribute [instance] MetricOracleSpace.instMetric
 
 
 
+
 /-- A contraction meta-oracle on a metric oracle space. -/
 structure ContractionMetaOracle (S : MetricOracleSpace) where
   improve : S.Oracle → S.Oracle
@@ -72,6 +78,7 @@ structure ContractionMetaOracle (S : MetricOracleSpace) where
   k_pos : 0 < k
   k_lt_one : k < 1
   contraction : ∀ f g, dist (improve f) (improve g) ≤ k * dist f g
+
 
 
 
@@ -95,11 +102,13 @@ theorem contraction_geometric_decrease
 
 
 
+
 /-- The contraction ratio k^n converges to 0, so the oracle converges to optimal. -/
 theorem contraction_ratio_tendsto_zero
     (k : ℝ) (hk_pos : 0 < k) (hk_lt : k < 1) :
     Filter.Tendsto (fun n => k ^ n) Filter.atTop (nhds 0) := by
   exact tendsto_pow_atTop_nhds_zero_of_lt_one (le_of_lt hk_pos) hk_lt
+
 
 
 
@@ -111,12 +120,14 @@ def oracleEntropy (k : ℝ) (_hk_pos : 0 < k) (_hk_lt : k < 1) : ℝ :=
 
 
 
+
 /-- Oracle entropy is positive for genuine contractions. -/
 theorem oracleEntropy_pos (k : ℝ) (hk_pos : 0 < k) (hk_lt : k < 1) :
     0 < oracleEntropy k hk_pos hk_lt := by
   unfold oracleEntropy
   simp
   exact Real.log_neg hk_pos hk_lt
+
 
 
 
@@ -134,11 +145,13 @@ theorem oracleEntropy_additive (k₁ k₂ : ℝ)
 
 
 
+
 /-- A task is a pair of an oracle space and a quality measure on it. -/
 structure OracleTask where
   Oracle : Type*
   q : Oracle → ℝ
   best : ℝ
+
 
 
 
@@ -155,12 +168,14 @@ theorem no_free_lunch_avg {n : ℕ} (hn : 0 < n)
 
 
 
+
 /-- An adaptive meta-oracle maintains a parameter that controls its behavior.
 The adaptation rule updates the parameter based on observed improvement. -/
 structure AdaptiveMetaOracle (S : OracleSystem) (P : Type*) where
   improve : P → S.Oracle → S.Oracle
   adapt : P → S.Oracle → S.Oracle → P  -- old param → old oracle → new oracle → new param
   improving : ∀ p f, S.q f ≤ S.q (improve p f)
+
 
 
 
@@ -173,11 +188,13 @@ def AdaptiveMetaOracle.step {S : OracleSystem} {P : Type*}
 
 
 
+
 /-- Iterated adaptive improvement. -/
 def AdaptiveMetaOracle.iterateAdaptive {S : OracleSystem} {P : Type*}
     (M : AdaptiveMetaOracle S P) : ℕ → P × S.Oracle → P × S.Oracle
   | 0 => id
   | n + 1 => M.step ∘ M.iterateAdaptive n
+
 
 
 
@@ -191,6 +208,7 @@ theorem AdaptiveMetaOracle.quality_mono_adaptive {S : OracleSystem} {P : Type*}
     simp [AdaptiveMetaOracle.iterateAdaptive, Function.comp,
           AdaptiveMetaOracle.step]
     exact le_trans ih (M.improving _ _)
+
 
 
 

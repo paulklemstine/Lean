@@ -1,5 +1,3 @@
-import Mathlib
-
 /-! # CatalogBuild.Geometry.Stereographic.MoebiusTransforms
 
 Auto-generated from theorem catalog database.
@@ -7,6 +5,7 @@ Domain: Geometry/Stereographic
 Declarations: 14
 -/
 
+import Mathlib
 
 noncomputable section
 
@@ -22,14 +21,21 @@ structure MoebiusParams where
 
 
 
+
+/-- [Section: # CatalogBuild.Geometry.Stereographic.MoebiusTransforms
+Auto-generated from theorem catalog database.
+Domain: Geometry/Stereographic
+Declarations: 14] -/
 def moebiusDet (p : MoebiusParams) : ℝ × ℝ :=
   (p.a.1 * p.d.1 - p.a.2 * p.d.2 - (p.b.1 * p.c.1 - p.b.2 * p.c.2),
    p.a.1 * p.d.2 + p.a.2 * p.d.1 - (p.b.1 * p.c.2 + p.b.2 * p.c.1))
 
 
 
+
 def moebiusDetSqNorm (p : MoebiusParams) : ℝ :=
   (moebiusDet p).1 ^ 2 + (moebiusDet p).2 ^ 2
+
 
 
 
@@ -41,6 +47,7 @@ def applyMoebius (p : MoebiusParams) (z : ℝ × ℝ) : ℝ × ℝ :=
   let den_sq := den.1 ^ 2 + den.2 ^ 2
   ((num.1 * den.1 + num.2 * den.2) / den_sq,
    (num.2 * den.1 - num.1 * den.2) / den_sq)
+
 
 
 
@@ -56,11 +63,13 @@ def composeMoebius (p q : MoebiusParams) : MoebiusParams where
 
 
 
+
 theorem moebiusDet_composition (p q : MoebiusParams) :
     moebiusDet (composeMoebius p q) =
     (  (moebiusDet p).1 * (moebiusDet q).1 - (moebiusDet p).2 * (moebiusDet q).2,
        (moebiusDet p).1 * (moebiusDet q).2 + (moebiusDet p).2 * (moebiusDet q).1) := by
   unfold moebiusDet composeMoebius; ring;
+
 
 
 
@@ -72,8 +81,10 @@ def idMoebius : MoebiusParams where
 
 
 
+
 theorem idMoebius_det : moebiusDet idMoebius = (1, 0) := by
   unfold moebiusDet idMoebius; norm_num
+
 
 
 
@@ -85,12 +96,14 @@ def moebiusConfFactor (p : MoebiusParams) (z : ℝ × ℝ) : ℝ :=
 
 
 
+
 theorem moebiusConfFactor_nonneg (p : MoebiusParams) (z : ℝ × ℝ) :
     0 ≤ moebiusConfFactor p z := by
   unfold moebiusConfFactor
   apply div_nonneg
   · exact Real.sqrt_nonneg _
   · positivity
+
 
 
 
@@ -112,6 +125,7 @@ def moebiusAttentionHead (seqLen : ℕ) (T : ℝ)
 
 
 
+
 def learnableMoebiusParams (params : Fin 8 → ℝ) : MoebiusParams where
   a := (params 0, params 1)
   b := (params 2, params 3)
@@ -120,7 +134,9 @@ def learnableMoebiusParams (params : Fin 8 → ℝ) : MoebiusParams where
 
 
 
+
 theorem moebius_param_dim : Fintype.card (Fin 8) = 8 := by simp
+
 
 
 
@@ -128,6 +144,7 @@ theorem moebius_param_dim : Fintype.card (Fin 8) = 8 := by simp
 Möbius attention uses only 8 parameters per head (in 2D). -/
 theorem moebius_param_efficiency (d : ℕ) (hd : 3 ≤ d) :
     8 ≤ d * d := by nlinarith
+
 
 
 

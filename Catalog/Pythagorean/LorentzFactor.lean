@@ -15,10 +15,12 @@ def lorentzGammaSq (v : ℝ) : ℝ := 1 / (1 - v ^ 2)
 
 
 
+
 /-- The key identity: (1 - spbH(u,v)²) = (1-u²)(1-v²)/(1+uv)². -/
 theorem lorentz_gamma_sq_composition (u v : ℝ) (huv : 1 + u * v ≠ 0) :
     1 - spbH u v ^ 2 = (1 - u ^ 2) * (1 - v ^ 2) / (1 + u * v) ^ 2 := by
   unfold spbH; field_simp; ring
+
 
 
 
@@ -35,6 +37,7 @@ theorem lorentz_gamma_sq_factorization (u v : ℝ)
 
 
 
+
 /-- Four-velocity composition. -/
 theorem four_velocity_composition (u v : ℝ)
     (hu : u ^ 2 ≠ 1) (hv : v ^ 2 ≠ 1) (huv : 1 + u * v ≠ 0) :
@@ -48,6 +51,7 @@ theorem four_velocity_composition (u v : ℝ)
 
 
 
+
 /-- Rapidity ratio multiplicativity. -/
 theorem rapidity_multiplicative (u v : ℝ)
     (hu : u ≠ 1) (hv : v ≠ 1) (huv : 1 + u * v ≠ 0) (hs : spbH u v ≠ 1) :
@@ -57,8 +61,10 @@ theorem rapidity_multiplicative (u v : ℝ)
 
 
 
+
 /-- The Doppler factor k(v) = (1+v)/(1-v) satisfies k(spbH(u,v)) = k(u)·k(v). -/
 def dopplerFactor (v : ℝ) : ℝ := (1 + v) / (1 - v)
+
 
 
 
@@ -73,10 +79,12 @@ theorem doppler_multiplicative (u v : ℝ)
 
 
 
+
 /-- Spacetime interval invariance under velocity boost. -/
 theorem spacetime_interval_transform (u w : ℝ) (huw : 1 + u * w ≠ 0) :
     1 - spbH u w ^ 2 = (1 - u ^ 2) * (1 - w ^ 2) / (1 + u * w) ^ 2 :=
   lorentz_gamma_sq_composition u w huw
+
 
 
 

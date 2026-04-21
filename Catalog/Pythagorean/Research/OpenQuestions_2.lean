@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/Research
-Declarations: 30
+Declarations: 29
 -/
 
 import Mathlib
@@ -10,6 +10,7 @@ import Mathlib
 /-- The Lorentz form Q₆(v) = v₀² + v₁² + v₂² + v₃² + v₄² - v₅² -/
 def Q6 (v : Fin 6 → ℤ) : ℤ :=
   v 0 ^ 2 + v 1 ^ 2 + v 2 ^ 2 + v 3 ^ 2 + v 4 ^ 2 - v 5 ^ 2
+
 
 
 
@@ -24,11 +25,17 @@ theorem null_cone_eta_even (v : Fin 6 → ℤ)
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.Research.OpenQuestions_2
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Research
+Declarations: 30] -/
 theorem descent_identity_k6 (a₁ a₂ a₃ a₄ a₅ d : ℤ)
     (h : a₁^2 + a₂^2 + a₃^2 + a₄^2 + a₅^2 = d^2)
     (σ : ℤ) (hσ : 2 * σ = a₁ + a₂ + a₃ + a₄ + a₅ - d) :
     (a₁-σ)^2 + (a₂-σ)^2 + (a₃-σ)^2 + (a₄-σ)^2 + (a₅-σ)^2 = (d-σ)^2 := by
   grind
+
 
 
 
@@ -48,8 +55,10 @@ theorem descent_strict_k6 (a₁ a₂ a₃ a₄ a₅ d : ℤ)
 
 
 
+
 /-- The root sextuple (0,0,0,0,1,1) -/
 theorem root_sextuple : (0:ℤ)^2 + 0^2 + 0^2 + 0^2 + 1^2 = 1^2 := by norm_num
+
 
 
 
@@ -62,6 +71,7 @@ theorem descent_terminates_k6 (a₁ a₂ a₃ a₄ a₅ : ℤ)
     (a₁ = 0 ∧ a₂ = 1 ∧ a₃ = 0 ∧ a₄ = 0 ∧ a₅ = 0) ∨
     (a₁ = 1 ∧ a₂ = 0 ∧ a₃ = 0 ∧ a₄ = 0 ∧ a₅ = 0) := by
   have : a₁ ≤ 1 := Int.le_of_lt_add_one ( by nlinarith only [ h, h1, h2, h3, h4, h5 ] ) ; ( have : a₂ ≤ 1 := Int.le_of_lt_add_one ( by nlinarith only [ h, h1, h2, h3, h4, h5 ] ) ; ( have : a₃ ≤ 1 := Int.le_of_lt_add_one ( by nlinarith only [ h, h1, h2, h3, h4, h5 ] ) ; ( have : a₄ ≤ 1 := Int.le_of_lt_add_one ( by nlinarith only [ h, h1, h2, h3, h4, h5 ] ) ; ( have : a₅ ≤ 1 := Int.le_of_lt_add_one ( by nlinarith only [ h, h1, h2, h3, h4, h5 ] ) ; interval_cases a₁ <;> interval_cases a₂ <;> interval_cases a₃ <;> interval_cases a₄ <;> interval_cases a₅ <;> trivial; ) ) ) )
+
 
 
 
@@ -80,9 +90,11 @@ theorem k5_uniform_reflection_fails (a : ℤ) (ha : a ≠ 0) :
 
 
 
+
 /-- The Minkowski inner product for signature (4,1) -/
 def eta5_form (u v : Fin 5 → ℤ) : ℤ :=
   u 0 * v 0 + u 1 * v 1 + u 2 * v 2 + u 3 * v 3 - u 4 * v 4
+
 
 
 
@@ -90,7 +102,9 @@ def eta5_form (u v : Fin 5 → ℤ) : ℤ :=
 def s5_a : Fin 5 → ℤ := ![1, 1, 1, 1, 1]
 
 
+
 def s5_b : Fin 5 → ℤ := ![1, 1, 0, 0, 1]
+
 
 
 
@@ -100,9 +114,11 @@ theorem eta_sa : eta5_form s5_a s5_a = 3 := by
 
 
 
+
 /-- η(s_b, s_b) = 1 in signature (4,1) -/
 theorem eta_sb : eta5_form s5_b s5_b = 1 := by
   unfold eta5_form s5_b; native_decide
+
 
 
 
@@ -110,6 +126,7 @@ theorem eta_sb : eta5_form s5_b s5_b = 1 := by
 theorem reflect_sb_integral (v : Fin 5 → ℤ) :
     ∀ i, (1 : ℤ) ∣ (2 * eta5_form s5_b v * s5_b i) := by
   intro i; exact one_dvd _
+
 
 
 
@@ -122,9 +139,11 @@ theorem k5_allones_gives_rational :
 
 
 
+
 /-- k-2 ∈ {1,2,4} = dimensions of ℝ, ℂ, ℍ -/
 theorem hurwitz_connection : ∀ k ∈ ({3, 4, 6} : Finset ℕ), k - 2 ∈ ({1, 2, 4} : Finset ℕ) := by
   decide
+
 
 
 
@@ -133,19 +152,16 @@ theorem octonion_case_fails : ¬ ((8 : ℤ) ∣ 4) := by omega
 
 
 
-/-- The algebraic identity underlying k = 4 descent -/
-theorem k4_algebraic_identity (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
-    (d-b-c)^2 + (d-a-c)^2 + (d-a-b)^2 = (2*d-a-b-c)^2 := by nlinarith
-
-
 
 /-- k = 5 barrier prime is 3 -/
 theorem k5_barrier_prime : (5 : ℤ) - 2 = 3 := by norm_num
 
 
 
+
 /-- k = 7 barrier prime is 5 -/
 theorem k7_barrier_prime : (7 : ℤ) - 2 = 5 := by norm_num
+
 
 
 
@@ -160,6 +176,7 @@ theorem general_null_cone_parity_3 (a b d : ℤ) (h : a^2 + b^2 = d^2) :
 
 
 
+
 theorem general_null_cone_parity_4 (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
     2 ∣ (a + b + c - d) := by
   obtain ⟨ra, hra⟩ := sq_sub_self_even' a
@@ -167,6 +184,7 @@ theorem general_null_cone_parity_4 (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
   obtain ⟨rc, hrc⟩ := sq_sub_self_even' c
   obtain ⟨rd, hrd⟩ := sq_sub_self_even' d
   exact ⟨rd - ra - rb - rc, by linarith⟩
+
 
 
 
@@ -178,6 +196,7 @@ theorem general_null_cone_parity_5 (a b c e d : ℤ) (h : a^2 + b^2 + c^2 + e^2 
   obtain ⟨re, hre⟩ := sq_sub_self_even' e
   obtain ⟨rd, hrd⟩ := sq_sub_self_even' d
   exact ⟨rd - ra - rb - rc - re, by linarith⟩
+
 
 
 
@@ -194,9 +213,11 @@ theorem general_null_cone_parity_6 (a₁ a₂ a₃ a₄ a₅ d : ℤ)
 
 
 
+
 theorem k_minus_2_dvd_4_characterization (k : ℕ) (hk : 3 ≤ k) (hk' : k ≤ 100) :
     (↑(k - 2) : ℤ) ∣ 4 ↔ k = 3 ∨ k = 4 ∨ k = 6 := by
   interval_cases k <;> trivial
+
 
 
 
@@ -218,10 +239,12 @@ def listPrimSextuples (N : ℕ) : List (ℕ × ℕ × ℕ × ℕ × ℕ × ℕ) 
 
 
 
+
 /-- Apply one step of descent for k = 6 -/
 def descentStep6 (a₁ a₂ a₃ a₄ a₅ d : ℤ) : ℤ × ℤ × ℤ × ℤ × ℤ × ℤ :=
   let σ := (a₁ + a₂ + a₃ + a₄ + a₅ - d) / 2
   (a₁ - σ, a₂ - σ, a₃ - σ, a₄ - σ, a₅ - σ, d - σ)
+
 
 
 
@@ -243,8 +266,10 @@ def verifyDescent6 (a₁ a₂ a₃ a₄ a₅ d : ℤ) (fuel : ℕ) : Bool :=
 
 
 
+
 /-- Cl⁺(2,0) dimension = 2 (≅ ℂ) -/
 theorem cliff_even_2 : 2^(2-1) = (2 : ℕ) := by norm_num
+
 
 
 
@@ -253,6 +278,8 @@ theorem cliff_even_3 : 2^(3-1) = (4 : ℕ) := by norm_num
 
 
 
+
 /-- Cl⁺(5,0) dimension = 16 (≅ M₂(ℍ)) -/
 theorem cliff_even_5 : 2^(5-1) = (16 : ℕ) := by norm_num
+
 

@@ -16,10 +16,12 @@ theorem sum_of_squares_mul_four (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℤ) 
 
 
 
+
 /-- Lipschitz unit i has norm 1. -/
 theorem lipschitz_unit_i_norm :
     Quaternion.normSq (⟨0, 1, 0, 0⟩ : Quaternion ℤ) = 1 := by
   native_decide
+
 
 
 
@@ -30,10 +32,12 @@ theorem lipschitz_unit_j_norm :
 
 
 
+
 /-- Lipschitz unit k has norm 1. -/
 theorem lipschitz_unit_k_norm :
     Quaternion.normSq (⟨0, 0, 0, 1⟩ : Quaternion ℤ) = 1 := by
   native_decide
+
 
 
 
@@ -45,11 +49,13 @@ theorem unit_rotation_preserves_norm (q u : Quaternion ℝ)
 
 
 
+
 /-- A factor p of semiprime N = pq with p ≤ q satisfies p² ≤ N. -/
 theorem factor_sqrt_bound {N p q : ℕ} (hN : N = p * q) (hpq : p ≤ q) :
     p * p ≤ N := by
   calc p * p ≤ p * q := Nat.mul_le_mul_left p hpq
     _ = N := hN.symm
+
 
 
 
@@ -61,12 +67,14 @@ theorem semiprime_factor_lt {N p q : ℕ} (hN : N = p * q) (hp : 1 < p) (hq : 1 
 
 
 
+
 /-- If we find a non-trivial divisor m of N (1 < m < N), we have factored N. -/
 theorem factor_extraction_correct {N m : ℕ} (hN : 1 < N) (hm1 : 1 < m)
     (hm2 : m < N) (hdvd : m ∣ N) :
     ∃ k, N = m * k ∧ 1 < k := by
   obtain ⟨k, hk⟩ := hdvd
   exact ⟨k, hk, by nlinarith⟩
+
 
 
 
@@ -83,9 +91,11 @@ theorem gcd_nontrivial_factor {N m : ℕ} (hN : 1 < N)
 
 
 
+
 /-- The determinant of the quaternion factoring lattice equals N. -/
 theorem lattice_det_eq_N (N : ℤ) :
     (1 : ℤ) * 1 * 1 * 1 * N = N := by ring
+
 
 
 
@@ -96,13 +106,16 @@ theorem partial_norm_complement {a b c d N : ℤ}
 
 
 
+
 /-- A sum of two squares is non-negative. -/
 theorem sum_two_sq_nonneg (a b : ℤ) : 0 ≤ a^2 + b^2 := by positivity
 
 
 
+
 /-- A sum of four squares is non-negative. -/
 theorem sum_four_sq_nonneg (a b c d : ℤ) : 0 ≤ a^2 + b^2 + c^2 + d^2 := by positivity
+
 
 
 
@@ -113,6 +126,7 @@ Declarations: 17] -/
 theorem not_sum_two_sq_of_3_mod_4 (n : ℕ) (hn : n % 4 = 3) :
     ¬ ∃ a b : ℕ, a^2 + b^2 = n := by
   rintro ⟨ a, b, rfl ⟩ ; exact absurd ( congr_arg ( · % 4 ) hn ) ( by norm_num [ Nat.add_mod, Nat.pow_mod ] ; have := Nat.mod_lt a zero_lt_four; have := Nat.mod_lt b zero_lt_four; interval_cases a % 4 <;> interval_cases b % 4 <;> trivial )
+
 
 
 
@@ -133,6 +147,7 @@ theorem norm_factoring_principle (p q : ℤ)
 
 
 
+
 /-- The two-square identity. -/
 theorem sum_of_squares_mul_two (a₁ a₂ b₁ b₂ : ℤ) :
     (a₁^2 + a₂^2) * (b₁^2 + b₂^2) =
@@ -140,8 +155,10 @@ theorem sum_of_squares_mul_two (a₁ a₂ b₁ b₂ : ℤ) :
 
 
 
+
 /-- Gaussian integer factorization: a² + b² = (a + bi)(a - bi) in ℤ[i]. -/
 theorem gaussian_factorization (a b : ℤ) :
     (⟨a, b⟩ : GaussianInt) * ⟨a, -b⟩ = ⟨a^2 + b^2, 0⟩ := by
   ext <;> simp <;> ring
+
 

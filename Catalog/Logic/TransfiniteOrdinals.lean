@@ -18,13 +18,20 @@ theorem one_add_omega : 1 + ω = ω := by
 
 
 
+
+/-- [Section: # CatalogBuild.Logic.TransfiniteOrdinals
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 16] -/
 theorem omega_add_one_gt : ω < ω + 1 := by
   exact?
 
 
 
+
 theorem ordinal_add_not_comm : (1 : Ordinal) + ω ≠ ω + 1 := by
   exact ne_of_lt ( by simp +decide [ Ordinal.one_lt_omega0 ] )
+
 
 
 
@@ -35,8 +42,10 @@ theorem two_mul_omega : 2 * ω = ω := by
 
 
 
+
 theorem omega_mul_two_gt : ω < ω * 2 := by
   norm_num [ Ordinal.omega0_ne_zero ]
+
 
 
 
@@ -45,14 +54,17 @@ theorem ordinal_mul_not_comm : (2 : Ordinal) * ω ≠ ω * 2 := by
 
 
 
+
 theorem epsilon_zero_fixed_point : omega0 ^ Ordinal.epsilon 0 = Ordinal.epsilon 0 := by
   exact?
+
 
 
 
 theorem epsilon_is_fixed_point (i : Ordinal) :
     omega0 ^ Ordinal.epsilon i = Ordinal.epsilon i := by
       exact?
+
 
 
 
@@ -65,8 +77,10 @@ theorem epsilon_zero_is_limit : Order.IsSuccLimit (Ordinal.epsilon 0) := by
 
 
 
+
 theorem omega_lt_epsilon_zero : ω < Ordinal.epsilon 0 := by
   exact?
+
 
 
 
@@ -77,11 +91,13 @@ noncomputable def omegaTower : ℕ → Ordinal
 
 
 
+
 theorem omegaTower_lt_epsilon_zero (n : ℕ) : omegaTower n < Ordinal.epsilon 0 := by
   induction' n with n ih;
   · exact Rucker.TransfiniteOrdinals.omega_lt_epsilon_zero;
   · refine' lt_of_lt_of_le ( Ordinal.opow_lt_opow_iff_right ( by norm_num ) |>.2 ih ) _;
     simp +zetaDelta at *
+
 
 
 
@@ -95,13 +111,16 @@ theorem omegaTower_strictMono : StrictMono omegaTower := by
 
 
 
+
 theorem omega_pow_zero : omega0 ^ (0 : Ordinal) = 1 := by
   norm_num +zetaDelta at *
 
 
 
+
 theorem omega_pow_one : omega0 ^ (1 : Ordinal) = ω := by
   norm_num +zetaDelta at *
+
 
 
 
@@ -111,6 +130,7 @@ theorem omega_sq_gt : ω < omega0 ^ (2 : Ordinal) := by
   · rw [ Ordinal.opow_one ];
   · exact Ordinal.one_lt_omega0;
   · norm_num +zetaDelta at *
+
 
 
 

@@ -18,11 +18,13 @@ structure TropicalWDRep (n : ℕ) where
 
 
 
+
 /-- A tropical smooth representation of GL_n(F) -/
 structure TropicalSmoothRep (n : ℕ) where
   satakeParameters : Fin n → ℝ
   sorted : ∀ i j : Fin n, i ≤ j → satakeParameters i ≤ satakeParameters j
   conductor : ℕ
+
 
 
 
@@ -34,9 +36,11 @@ def tropicalLLC (n : ℕ) (rho : TropicalWDRep n) : TropicalSmoothRep n where
 
 
 
+
 /-- LLC preserves parameters -/
 theorem LLC_preserves_parameters (n : ℕ) (rho : TropicalWDRep n) :
     (tropicalLLC n rho).satakeParameters = rho.frobeniusEigenvalues := rfl
+
 
 
 
@@ -47,9 +51,11 @@ theorem LLC_preserves_sorting (n : ℕ) (rho : TropicalWDRep n) (i j : Fin n) (h
 
 
 
+
 /-- Tropical local L-factor -/
 def tropicalLocalL (n : ℕ) (rho : TropicalWDRep n) (s : ℝ) : ℝ :=
   (∑ i : Fin n, rho.frobeniusEigenvalues i) * s
+
 
 
 
@@ -60,10 +66,12 @@ theorem localL_zero (n : ℕ) (rho : TropicalWDRep n) :
 
 
 
+
 /-- L-factor is linear -/
 theorem localL_linear (n : ℕ) (rho : TropicalWDRep n) (s t : ℝ) :
     tropicalLocalL n rho (s + t) = tropicalLocalL n rho s + tropicalLocalL n rho t := by
   simp [tropicalLocalL, mul_add]
+
 
 
 
@@ -75,9 +83,11 @@ theorem LLC_preserves_L (n : ℕ) (rho : TropicalWDRep n) (s : ℝ) :
 
 
 
+
 /-- Tropical epsilon-factor -/
 def tropicalEpsilon (n : ℕ) (rho : TropicalWDRep n) : ℝ :=
   (-1)^n * ∑ i : Fin n, rho.frobeniusEigenvalues i
+
 
 
 
@@ -89,9 +99,11 @@ theorem local_functional_equation (n : ℕ) (rho : TropicalWDRep n) (s : ℝ) :
 
 
 
+
 /-- Newton polygon point -/
 def newtonPolygonPoint (n : ℕ) (rho : TropicalWDRep n) (k : Fin n) : ℝ × ℝ :=
   (k.val, ∑ i ∈ Finset.filter (· ≤ k) Finset.univ, rho.frobeniusEigenvalues i)
+
 
 
 
@@ -102,10 +114,12 @@ theorem newton_start (n : ℕ) [NeZero n] (rho : TropicalWDRep n) :
 
 
 
+
 /-- Newton polygon is convex (slopes non-decreasing) -/
 theorem newton_convex (n : ℕ) (rho : TropicalWDRep n) (i j : Fin n) (h : i ≤ j) :
     rho.frobeniusEigenvalues i ≤ rho.frobeniusEigenvalues j :=
   rho.sorted i j h
+
 
 
 
@@ -115,10 +129,12 @@ def isUnramified (n : ℕ) (rho : TropicalWDRep n) : Prop :=
 
 
 
+
 /-- Unramified reps have conductor 0 -/
 theorem unramified_conductor_zero (n : ℕ) (rho : TropicalWDRep n)
     (h : isUnramified n rho) :
     (tropicalLLC n rho).conductor = 0 := h
+
 
 
 
@@ -131,9 +147,11 @@ def unramifiedWDRep (n : ℕ) (a : ℝ) : TropicalWDRep n where
 
 
 
+
 /-- The constant rep is unramified -/
 theorem unramifiedWDRep_is_unramified (n : ℕ) (a : ℝ) :
     isUnramified n (unramifiedWDRep n a) := rfl
+
 
 
 
@@ -152,6 +170,7 @@ theorem localL_add (m n : ℕ) (rho1 : TropicalWDRep m) (rho2 : TropicalWDRep n)
 
 
 
+
 /-- Global-to-local restriction -/
 def globalToLocal (n : ℕ) (globalParams : Fin n → ℝ)
     (hsorted : ∀ i j : Fin n, i ≤ j → globalParams i ≤ globalParams j) :
@@ -163,10 +182,12 @@ def globalToLocal (n : ℕ) (globalParams : Fin n → ℝ)
 
 
 
+
 /-- Global-to-local gives unramified reps -/
 theorem globalToLocal_unramified (n : ℕ) (globalParams : Fin n → ℝ)
     (hsorted : ∀ i j : Fin n, i ≤ j → globalParams i ≤ globalParams j) :
     isUnramified n (globalToLocal n globalParams hsorted) := rfl
+
 
 
 
@@ -177,6 +198,7 @@ theorem local_global_compatibility (n : ℕ) (globalParams : Fin n → ℝ)
     tropicalLocalL n (globalToLocal n globalParams hsorted) s =
     (∑ i : Fin n, globalParams i) * s := by
   simp [tropicalLocalL, globalToLocal]
+
 
 
 

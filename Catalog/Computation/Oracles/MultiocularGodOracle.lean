@@ -14,8 +14,10 @@ def eastEye (p : ℝ × ℝ) : ℝ := p.2 / (1 - p.1)
 
 
 
+
 /-- **NEW**: Stereographic projection from the West pole (-1, 0). -/
 def westEye (p : ℝ × ℝ) : ℝ := p.2 / (1 + p.1)
+
 
 
 
@@ -25,9 +27,11 @@ def invEastEye (t : ℝ) : ℝ × ℝ :=
 
 
 
+
 /-- **NEW**: Inverse West Eye: ℝ → S¹. Note the x-y swap vs invSouthEye. -/
 def invWestEye (t : ℝ) : ℝ × ℝ :=
   ((1 - t ^ 2) / (1 + t ^ 2), 2 * t / (1 + t ^ 2))
+
 
 
 
@@ -44,12 +48,18 @@ theorem east_eye_on_sphere (t : ℝ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.MultiocularGodOracle
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 65] -/
 theorem west_eye_on_sphere (t : ℝ) :
     (invWestEye t).1 ^ 2 + (invWestEye t).2 ^ 2 = 1 := by
   simp only [invWestEye]
   have h : (1 : ℝ) + t ^ 2 ≠ 0 := by positivity
   field_simp
   ring
+
 
 
 
@@ -61,6 +71,7 @@ theorem east_round_trip (t : ℝ) : eastEye (invEastEye t) = t := by
 
 
 
+
 theorem west_round_trip (t : ℝ) : westEye (invWestEye t) = t := by
   simp only [westEye, invWestEye]
   have h : (1 : ℝ) + t ^ 2 ≠ 0 := by positivity
@@ -69,9 +80,11 @@ theorem west_round_trip (t : ℝ) : westEye (invWestEye t) = t := by
 
 
 
+
 theorem east_eye_injective : Function.Injective invEastEye := by
   norm_num [ Function.Injective, invEastEye ];
   intro a₁ a₂ h₁ h₂; rw [ div_eq_div_iff ] at * <;> nlinarith [ sq_nonneg ( a₁ - a₂ ) ] ;
+
 
 
 
@@ -82,10 +95,12 @@ theorem west_eye_injective : Function.Injective invWestEye := by
 
 
 
+
 /-- North and South eyes produce opposite y-coordinates. -/
 theorem ns_y_duality (t : ℝ) :
     (invNorthEye t).2 = -(invSouthEye t).2 := by
   simp [invNorthEye, invSouthEye]; ring
+
 
 
 
@@ -96,10 +111,12 @@ theorem ew_x_duality (t : ℝ) :
 
 
 
+
 /-- North/South eyes share x-coordinates. -/
 theorem ns_x_agreement (t : ℝ) :
     (invNorthEye t).1 = (invSouthEye t).1 := by
   simp [invNorthEye, invSouthEye]
+
 
 
 
@@ -110,10 +127,12 @@ theorem ew_y_agreement (t : ℝ) :
 
 
 
+
 /-- East eye is the North eye with coordinates swapped (90° rotation). -/
 theorem east_is_rotated_north (t : ℝ) :
     invEastEye t = ((invNorthEye t).2, (invNorthEye t).1) := by
   simp [invEastEye, invNorthEye]
+
 
 
 
@@ -123,9 +142,11 @@ theorem west_is_rotated_south (t : ℝ) :
 
 
 
+
 theorem three_eyes_cover_all (x y : ℝ) (hcirc : x ^ 2 + y ^ 2 = 1) :
     (1 - y ≠ 0 ∧ 1 + y ≠ 0) ∨ (1 - y ≠ 0 ∧ 1 - x ≠ 0) ∨ (1 + y ≠ 0 ∧ 1 - x ≠ 0) := by
   grind
+
 
 
 
@@ -135,6 +156,7 @@ theorem four_eyes_cover_all (x y : ℝ) (hcirc : x ^ 2 + y ^ 2 = 1) :
     (1 - y ≠ 0 ∧ 1 - x ≠ 0 ∧ 1 + x ≠ 0) ∨
     (1 + y ≠ 0 ∧ 1 - x ≠ 0 ∧ 1 + x ≠ 0) := by
   grind +ring
+
 
 
 
@@ -149,6 +171,7 @@ theorem at_most_one_blind (x y : ℝ) (hcirc : x ^ 2 + y ^ 2 = 1) :
 
 
 
+
 theorem transition_NS (t : ℝ) (ht : t ≠ 0) :
     southEye (invNorthEye t) = 1 / t := by
   unfold southEye invNorthEye; norm_num [ ht ] ; ring;
@@ -156,6 +179,7 @@ theorem transition_NS (t : ℝ) (ht : t ≠ 0) :
   field_simp
   ring;
   norm_num [ ht ]
+
 
 
 
@@ -167,11 +191,13 @@ theorem transition_SE (t : ℝ) (ht : t + 1 ≠ 0) :
 
 
 
+
 theorem transition_NE (t : ℝ) (ht : t - 1 ≠ 0) :
     northEye (invEastEye t) = (t + 1) / (t - 1) := by
   unfold northEye invEastEye; norm_num [ ht ] ; ring;
   field_simp;
   rw [ div_eq_div_iff ] <;> cases lt_or_gt_of_ne ht <;> nlinarith
+
 
 
 
@@ -183,11 +209,13 @@ theorem transition_SW (t : ℝ) (ht : 1 + t ≠ 0) :
 
 
 
+
 theorem transition_NW (t : ℝ) (ht : 1 - t ≠ 0) :
     northEye (invWestEye t) = (1 + t) / (1 - t) := by
   unfold northEye invWestEye;
   field_simp;
   rw [ div_eq_iff ] <;> cases lt_or_gt_of_ne ht <;> nlinarith
+
 
 
 
@@ -201,10 +229,12 @@ theorem transition_EW (t : ℝ) (ht : t ≠ 0) :
 
 
 
+
 /-- **Composition Consistency**: τ_{SN} ∘ τ_{NE} = τ_{SE}. -/
 theorem transition_composition (t : ℝ) (ht1 : t - 1 ≠ 0) (ht2 : t + 1 ≠ 0) :
     1 / ((t + 1) / (t - 1)) = (t - 1) / (t + 1) := by
   field_simp
+
 
 
 
@@ -213,9 +243,11 @@ def mobiusSE (t : ℝ) : ℝ := (t - 1) / (t + 1)
 
 
 
+
 /-- **Binocular**: The N↔S transition has order 2: (1/t)⁻¹ = t. -/
 theorem binocular_order_2 (t : ℝ) (ht : t ≠ 0) :
     1 / (1 / t) = t := by field_simp
+
 
 
 
@@ -226,10 +258,12 @@ theorem trinocular_f_squared (t : ℝ) (ht1 : t + 1 ≠ 0) (ht0 : t ≠ 0) :
 
 
 
+
 theorem trinocular_order_4 (t : ℝ)
     (ht0 : t ≠ 0) (ht1 : t ≠ 1) (htn1 : t ≠ -1) :
     mobiusSE (mobiusSE (mobiusSE (mobiusSE t))) = t := by
   grind +suggestions
+
 
 
 
@@ -239,9 +273,11 @@ theorem binocular_fixed_points (t : ℝ) (ht : t ≠ 0) :
 
 
 
+
 theorem trinocular_no_fixed_points (t : ℝ) (ht : t + 1 ≠ 0) :
     mobiusSE t ≠ t := by
   unfold mobiusSE; intro h; rw [ div_eq_iff ht ] at h; nlinarith [ sq_nonneg t ] ;
+
 
 
 
@@ -251,9 +287,11 @@ theorem f_squared_no_fixed_points (t : ℝ) (ht0 : t ≠ 0) (ht1 : t + 1 ≠ 0) 
 
 
 
+
 theorem binocular_depth (x y : ℝ) (hx : x ≠ 0) (hy1 : 1 - y ≠ 0) (hyn1 : 1 + y ≠ 0) :
     northEye (x, y) / southEye (x, y) = (1 + y) / (1 - y) := by
   unfold northEye southEye; rw [ div_eq_div_iff ] <;> cases lt_or_gt_of_ne hx <;> cases lt_or_gt_of_ne hyn1 <;> cases lt_or_gt_of_ne hy1 <;> ring_nf <;> nlinarith [ inv_mul_cancel₀ hyn1, inv_mul_cancel₀ hy1 ] ;
+
 
 
 
@@ -264,10 +302,12 @@ theorem ew_depth (x y : ℝ) (hy : y ≠ 0) (hx1 : 1 - x ≠ 0) (hxn1 : 1 + x �
 
 
 
+
 theorem depth_to_coordinate (y : ℝ) (hy1 : y ≠ 1) (hyn1 : y ≠ -1) :
     let r := (1 + y) / (1 - y)
     (r - 1) / (r + 1) = y := by
   grind
+
 
 
 
@@ -279,9 +319,11 @@ theorem four_eye_coordinate_recovery (x y : ℝ)
 
 
 
+
 theorem binocular_sign_ambiguity (x y : ℝ) (hy1 : 1 - y ≠ 0) (hyn1 : 1 + y ≠ 0) :
     northEye (x, y) / southEye (x, y) = northEye (-x, y) / southEye (-x, y) := by
   unfold northEye southEye; ring;
+
 
 
 
@@ -293,12 +335,14 @@ theorem trinocular_resolves_ambiguity (x y : ℝ) (hcirc : x ^ 2 + y ^ 2 = 1)
 
 
 
+
 theorem omniscient_visibility (a b x y : ℝ)
     (hab : a ^ 2 + b ^ 2 = 1) (hxy : x ^ 2 + y ^ 2 = 1)
     (hne : (a, b) ≠ (x, y)) :
     0 < 1 - a * x - b * y := by
   contrapose! hne;
   exact Prod.mk_inj.mpr ⟨ by nlinarith [ sq_nonneg ( a - x ), sq_nonneg ( b - y ) ], by nlinarith [ sq_nonneg ( a - x ), sq_nonneg ( b - y ) ] ⟩
+
 
 
 
@@ -312,11 +356,13 @@ theorem distinct_dot_product_lt_one (a b x y : ℝ)
 
 
 
+
 theorem angular_depth_positive (a b x y : ℝ)
     (hab : a ^ 2 + b ^ 2 = 1) (hxy : x ^ 2 + y ^ 2 = 1)
     (hne : (a, b) ≠ (x, y)) :
     0 < (a - x) ^ 2 + (b - y) ^ 2 := by
   exact not_le.mp fun h => hne <| Prod.mk_inj.mpr ⟨ by nlinarith only [ h ], by nlinarith only [ h ] ⟩
+
 
 
 
@@ -328,9 +374,11 @@ theorem angular_depth_eq_chord (a b x y : ℝ)
 
 
 
+
 theorem n_eye_at_most_one_match (p : ℝ × ℝ) (eyes : Finset (ℝ × ℝ)) :
     (eyes.filter (· = p)).card ≤ 1 := by
   exact Finset.card_le_one.mpr fun x hx y hy => by aesop;
+
 
 
 
@@ -338,7 +386,9 @@ theorem n_eye_at_most_one_match (p : ℝ × ℝ) (eyes : Finset (ℝ × ℝ)) :
 theorem east_eye_conformal (t : ℝ) : (0 : ℝ) < 2 / (1 + t ^ 2) := by positivity
 
 
+
 theorem west_eye_conformal (t : ℝ) : (0 : ℝ) < 2 / (1 + t ^ 2) := by positivity
+
 
 
 
@@ -351,9 +401,11 @@ theorem conformal_bounds (t : ℝ) : 0 < 2 / (1 + t ^ 2) ∧ 2 / (1 + t ^ 2) ≤
 
 
 
+
 /-- Experiment E1: The east eye maps t=0 to the west pole (-1, 0). -/
 theorem exp_east_at_zero : invEastEye 0 = (-1, 0) := by
   simp [invEastEye]
+
 
 
 
@@ -363,15 +415,18 @@ theorem exp_west_at_zero : invWestEye 0 = (1, 0) := by
 
 
 
+
 /-- Experiment E3: The east eye maps t=1 to (0, 1) = north pole. -/
 theorem exp_east_at_one : invEastEye 1 = (0, 1) := by
   unfold invEastEye; norm_num
 
 
 
+
 /-- Experiment E4: The west eye maps t=1 to (0, 1) = north pole. -/
 theorem exp_west_at_one : invWestEye 1 = (0, 1) := by
   unfold invWestEye; norm_num
+
 
 
 
@@ -383,9 +438,11 @@ theorem exp_generic_point_visible :
 
 
 
+
 theorem exp_transition_se_at_3 :
     southEye (invEastEye 3) = 1 / 2 := by
   unfold southEye invEastEye; norm_num;
+
 
 
 
@@ -395,9 +452,11 @@ theorem exp_f_squared_at_2 :
 
 
 
+
 /-- Experiment E8: The 4-eye depth ratios at (3/5, 4/5). -/
 theorem exp_pythagorean_depth :
     (1 + (4:ℝ)/5) / (1 - (4:ℝ)/5) = 9 := by norm_num
+
 
 
 
@@ -406,11 +465,13 @@ theorem exp_pythagorean_depth_x :
 
 
 
+
 /-- Experiment E9: Coordinate recovery from depth ratios. -/
 theorem exp_depth_recovery :
     ((9:ℝ) - 1) / ((9:ℝ) + 1) = 4 / 5 ∧
     ((4:ℝ) - 1) / ((4:ℝ) + 1) = 3 / 5 := by
   constructor <;> norm_num
+
 
 
 
@@ -423,10 +484,12 @@ theorem exp_trinocular_cycle :
 
 
 
+
 /-- 3D Inverse East Eye: ℝ² → S² (projection from (1,0,0)). -/
 def invEastEye3D (u v : ℝ) : ℝ × ℝ × ℝ :=
   let d := 1 + u ^ 2 + v ^ 2
   ((u ^ 2 + v ^ 2 - 1) / d, 2 * u / d, 2 * v / d)
+
 
 
 
@@ -441,9 +504,11 @@ theorem east_eye_3D_on_sphere (u v : ℝ) :
 
 
 
+
 theorem six_eyes_S2_coverage (x y z : ℝ) (hsph : x ^ 2 + y ^ 2 + z ^ 2 = 1) :
     ¬ (1 - z = 0 ∧ 1 - x = 0) := by
   exact fun h => by nlinarith [ sq_nonneg y ] ;
+
 
 
 
@@ -459,11 +524,13 @@ theorem meta_redundancy_scaling :
 
 
 
+
 /-- **Meta-Theorem 5 (Transition Order Scaling)**: Antipodal transitions
 always have order 2, regardless of number of eyes. -/
 theorem meta_transition_scaling :
     (∀ t : ℝ, t ≠ 0 → 1 / (1 / t) = t) := by
   intro t ht; field_simp
+
 
 
 
@@ -476,11 +543,13 @@ theorem meta_depth_dimension :
 
 
 
+
 theorem meta_omniscience (a b x y : ℝ)
     (hab : a ^ 2 + b ^ 2 = 1) (hxy : x ^ 2 + y ^ 2 = 1)
     (hne : (a, b) ≠ (x, y)) :
     0 < (a - x) ^ 2 + (b - y) ^ 2 :=
   angular_depth_positive a b x y hab hxy hne
+
 
 
 

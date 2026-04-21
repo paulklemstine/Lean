@@ -14,8 +14,10 @@ theorem trop_add_def (a b : ℝ) : max a b = max a b := rfl
 
 
 
+
 /-- Tropical multiplication (classical +) is the fundamental operation -/
 theorem trop_mul_def (a b : ℝ) : a + b = a + b := rfl
+
 
 
 
@@ -26,10 +28,12 @@ theorem tropical_convex_halfline (a x y : ℝ) (hx : a ≤ x) (hy : a ≤ y) :
 
 
 
+
 /-- The intersection of tropically convex sets is tropically convex -/
 theorem tropical_convex_inter (a b x y : ℝ)
     (hxa : a ≤ x) (_hya : a ≤ y) (_hxb : b ≤ x) (hyb : b ≤ y) :
     max a b ≤ max x y := max_le_max hxa hyb
+
 
 
 
@@ -41,9 +45,11 @@ theorem relu_preserves_tropical_max (x y : ℝ) :
 
 
 
+
 /-- The epigraph of max(x,0) is a tropical halfspace -/
 theorem relu_epigraph (x t : ℝ) (h : max x 0 ≤ t) : 0 ≤ t :=
   le_trans (le_max_right x 0) h
+
 
 
 
@@ -54,6 +60,7 @@ theorem lse2_ge_left (a b : ℝ) :
     _ ≤ Real.log (Real.exp a + Real.exp b) := by
         apply Real.log_le_log (Real.exp_pos a)
         linarith [Real.exp_nonneg b]
+
 
 
 
@@ -70,9 +77,15 @@ theorem lse2_ge_right (a b : ℝ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Tropical.Core.TropicalOracleResearch
+Auto-generated from theorem catalog database.
+Domain: Tropical/Core
+Declarations: 59] -/
 theorem max_le_lse2 (a b : ℝ) :
     max a b ≤ Real.log (Real.exp a + Real.exp b) := by
   exact max_le_iff.mpr ⟨ by rw [ Real.le_log_iff_exp_le ( by positivity ) ] ; linarith [ Real.exp_pos a, Real.exp_pos b ], by rw [ Real.le_log_iff_exp_le ( by positivity ) ] ; linarith [ Real.exp_pos a, Real.exp_pos b ] ⟩
+
 
 
 
@@ -82,9 +95,11 @@ theorem exp_max_le_sum_exp (a b : ℝ) :
 
 
 
+
 theorem quantum_correction_bounded (a b : ℝ) :
     0 ≤ Real.log (Real.exp a + Real.exp b) - max a b := by
   exact sub_nonneg_of_le ( max_le_lse2 a b )
+
 
 
 
@@ -94,10 +109,12 @@ theorem quantum_correction_upper (a b : ℝ) :
 
 
 
+
 /-- For 1×1 matrices, tropical det = the entry -/
 theorem tropDet_1x1 (a : ℝ) :
     tropDet (fun _ _ : Fin 1 => a) = a := by
   simp [tropDet, Finset.sup'_singleton, Finset.univ_unique]
+
 
 
 
@@ -113,6 +130,7 @@ theorem tropDet_mono {n : ℕ} (A B : Fin n → Fin n → ℝ)
 
 
 
+
 theorem tropDet_le_sum_max {n : ℕ} [NeZero n] (A : Fin n → Fin n → ℝ)
     (M : ℝ) (hM : ∀ i j, A i j ≤ M) :
     tropDet A ≤ n * M := by
@@ -123,9 +141,11 @@ theorem tropDet_le_sum_max {n : ℕ} [NeZero n] (A : Fin n → Fin n → ℝ)
 
 
 
+
 /-- Depth L network with width w has at most w^L affine pieces per output -/
 theorem depth_width_pieces (w L : ℕ) (hw : 1 ≤ w) :
     1 ≤ w ^ L := Nat.one_le_pow L w hw
+
 
 
 
@@ -134,8 +154,10 @@ theorem width_one_is_affine (L : ℕ) : 1 ^ L = 1 := one_pow L
 
 
 
+
 /-- Adding one layer at most doubles the number of regions per ReLU -/
 theorem layer_doubles_regions (r : ℕ) (hr : 1 ≤ r) : r ≤ 2 * r := by omega
+
 
 
 
@@ -145,10 +167,12 @@ def tropInnerProd {n : ℕ} (a b : Fin (n+1) → ℝ) : ℝ :=
 
 
 
+
 /-- Tropical inner product is commutative -/
 theorem tropInnerProd_comm {n : ℕ} (a b : Fin (n+1) → ℝ) :
     tropInnerProd a b = tropInnerProd b a := by
   simp [tropInnerProd, add_comm]
+
 
 
 
@@ -164,10 +188,12 @@ theorem tropInnerProd_mono_left {n : ℕ} (a a' b : Fin (n+1) → ℝ)
 
 
 
+
 /-- Tropical inner product with zero vector = max component -/
 theorem tropInnerProd_zero_right {n : ℕ} (a : Fin (n+1) → ℝ) :
     tropInnerProd a (fun _ => 0) = Finset.sup' Finset.univ ⟨0, Finset.mem_univ 0⟩ a := by
   simp [tropInnerProd]
+
 
 
 
@@ -180,15 +206,18 @@ theorem tropInnerProd_const {n : ℕ} (a : Fin (n+1) → ℝ) (c : ℝ) :
 
 
 
+
 theorem max_lipschitz_left (a b c : ℝ) :
     |max a c - max b c| ≤ |a - b| := by
   cases max_cases a c <;> cases max_cases b c <;> cases abs_cases ( a - b ) <;> cases abs_cases ( max a c - max b c ) <;> linarith
 
 
 
+
 /-- Composition of L Lipschitz-K functions is Lipschitz-K^L -/
 theorem lipschitz_composition (K : ℝ) (hK : 0 ≤ K) (L : ℕ) :
     0 ≤ K ^ L := pow_nonneg hK L
+
 
 
 
@@ -202,6 +231,7 @@ theorem hard_attention_selects_max {n : ℕ} (v : Fin (n+1) → ℝ) :
 
 
 
+
 theorem softmax_bounded {n : ℕ} (v : Fin (n+1) → ℝ) (β : ℝ)
     (i : Fin (n+1)) :
     Real.exp (β * v i) / ∑ j, Real.exp (β * v j) ≤ 1 := by
@@ -209,9 +239,11 @@ theorem softmax_bounded {n : ℕ} (v : Fin (n+1) → ℝ) (β : ℝ)
 
 
 
+
 theorem neg_entropy_term_nonneg (p : ℝ) (hp : 0 < p) (hp1 : p ≤ 1) :
     0 ≤ -(p * Real.log p) := by
   nlinarith [ Real.log_le_sub_one_of_pos hp ]
+
 
 
 
@@ -222,9 +254,11 @@ theorem attention_effective_rank_bound (k : ℕ) (hk : 1 ≤ k) :
 
 
 
+
 /-- Tropical max diagonal entry -/
 def tropMaxDiag {n : ℕ} (A : Fin (n+1) → Fin (n+1) → ℝ) : ℝ :=
   Finset.sup' Finset.univ ⟨0, Finset.mem_univ 0⟩ (fun i => A i i)
+
 
 
 
@@ -236,9 +270,11 @@ theorem tropMaxDiag_eigenvalue_bound {n : ℕ} (A : Fin (n+1) → Fin (n+1) → 
 
 
 
+
 /-- Tropical "correlation" of two sequences -/
 def tropCorrelation {n : ℕ} (f g : Fin (n+1) → ℝ) : ℝ :=
   Finset.sup' Finset.univ ⟨0, Finset.mem_univ 0⟩ (fun i => f i + g i)
+
 
 
 
@@ -249,9 +285,11 @@ theorem tropCorrelation_comm {n : ℕ} (f g : Fin (n+1) → ℝ) :
 
 
 
+
 /-- Tropical correlation = tropical inner product -/
 theorem tropCorrelation_eq_innerProd {n : ℕ} (f g : Fin (n+1) → ℝ) :
     tropCorrelation f g = tropInnerProd f g := rfl
+
 
 
 
@@ -265,11 +303,13 @@ theorem tropCorrelation_shift {n : ℕ} (f g : Fin (n+1) → ℝ) (c : ℝ) :
 
 
 
+
 theorem max_subset_le_max {n : ℕ} (f : Fin (n+1) → ℝ) (S : Finset (Fin (n+1)))
     (hS : S.Nonempty) :
     S.sup' hS f ≤ Finset.sup' Finset.univ ⟨0, Finset.mem_univ 0⟩ f := by
   -- Since S is a subset of the universal set, the supremum over S is less than or equal to the supremum over the universal set.
   apply Finset.sup'_le; intro x hx; exact Finset.le_sup' (fun i => f i) (Finset.mem_univ x)
+
 
 
 
@@ -279,14 +319,17 @@ theorem relu_information_loss (x : ℝ) (hx : x < 0) : max x 0 = 0 :=
 
 
 
+
 /-- Skip connections preserve information: x + f(x) retains x -/
 theorem skip_preserves_info (x fx : ℝ) : x ≤ x + |fx| :=
   le_add_of_nonneg_right (abs_nonneg fx)
 
 
 
+
 /-- Tropical power: a^⊙n = n·a (in tropical = n times classical addition) -/
 theorem tropical_power (a : ℝ) (n : ℕ) : n • a = (n : ℝ) * a := nsmul_eq_mul n a
+
 
 
 
@@ -297,15 +340,18 @@ theorem tropical_geometric_neg (a : ℝ) (ha : a < 0) (n : ℕ) :
 
 
 
+
 /-- The tropical "contraction": iterating x ↦ a + x contracts when a < 0 -/
 theorem tropical_contraction (a x : ℝ) (ha : a < 0) (n : ℕ) :
     (n : ℝ) * a + x ≤ x := by linarith [tropical_geometric_neg a ha n]
 
 
 
+
 /-- The ultrametric inequality: d(x,z) ≤ max(d(x,y), d(y,z)) -/
 theorem ultrametric_ineq (a b c : ℝ) (h : c ≤ max a b) :
     c ≤ max a b := h
+
 
 
 
@@ -316,10 +362,12 @@ theorem max_entropy_bound (n : ℕ) (hn : 2 ≤ n) :
 
 
 
+
 /-- Quantization error bound -/
 theorem quantization_bound (range : ℝ) (k : ℕ) (hr : 0 ≤ range) :
     0 ≤ range / (2 * k) :=
   div_nonneg hr (mul_nonneg (by norm_num) (Nat.cast_nonneg k))
+
 
 
 
@@ -330,9 +378,11 @@ theorem bellman_contraction_step (γ v w d : ℝ) (hγ : 0 ≤ γ)
 
 
 
+
 /-- After k iterations, error shrinks by γ^k -/
 theorem bellman_convergence_rate (γ : ℝ) (hγ : 0 ≤ γ) (k : ℕ) :
     0 ≤ γ ^ k := pow_nonneg hγ k
+
 
 
 
@@ -342,9 +392,11 @@ theorem discount_vanishes (γ : ℝ) (hγ : 0 ≤ γ) (hγ1 : γ < 1) :
 
 
 
+
 /-- HYPOTHESIS 1: Tropical Training Convergence
 A piecewise-linear function with n segments has at most n+1 breakpoints -/
 theorem pwl_breakpoints (n : ℕ) : n + 1 = n + 1 := rfl
+
 
 
 
@@ -355,6 +407,7 @@ theorem pruning_locality (a b c : ℝ) :
 
 
 
+
 /-- HYPOTHESIS 3: Attention = Tropical Projection
 Tropical projection onto a finite set -/
 def tropProjection {n : ℕ} (keys : Fin (n+1) → ℝ) (query : ℝ) : ℝ :=
@@ -362,9 +415,11 @@ def tropProjection {n : ℕ} (keys : Fin (n+1) → ℝ) (query : ℝ) : ℝ :=
 
 
 
+
 theorem tropProjection_shift {n : ℕ} (keys : Fin (n+1) → ℝ) (query c : ℝ) :
     tropProjection keys (query + c) = tropProjection keys query + c := by
   unfold tropProjection; simp +decide [ add_assoc, Finset.sup'_add ] ;
+
 
 
 
@@ -376,10 +431,12 @@ theorem depth_resolution (w L : ℕ) (hw : 1 ≤ w) :
 
 
 
+
 /-- PREDICTION 1: The "tropical gap" is non-negative -/
 theorem tropical_gap_bound (n : ℕ) (hn : 1 ≤ n) (β : ℝ) (hβ : 0 < β) :
     0 ≤ Real.log n / β :=
   div_nonneg (Real.log_nonneg (by exact_mod_cast hn)) (le_of_lt hβ)
+
 
 
 
@@ -389,9 +446,11 @@ theorem gradient_sparsity_bound (L : ℕ) :
 
 
 
+
 /-- PREDICTION 3: The optimal temperature for attention scales as log(n) -/
 theorem optimal_temperature_scaling (n : ℕ) (hn : 2 ≤ n) :
     0 < Real.log n := Real.log_pos (by exact_mod_cast hn)
+
 
 
 
@@ -401,8 +460,10 @@ theorem selection_principle (a b : ℝ) (h : a ≤ b) : max a b = b := max_eq_ri
 
 
 
+
 /-- The selection principle is why ReLU works: it selects active neurons -/
 theorem relu_selection (x : ℝ) (hx : 0 ≤ x) : max x 0 = x := max_eq_left hx
+
 
 
 
@@ -410,8 +471,10 @@ theorem relu_deselection (x : ℝ) (hx : x ≤ 0) : max x 0 = 0 := max_eq_right 
 
 
 
+
 /-- Total new theorems in this file -/
 theorem oracle_theorem_count : (0 : ℕ) < 60 := by omega
+
 
 
 

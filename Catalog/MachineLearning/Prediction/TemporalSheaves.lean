@@ -17,9 +17,11 @@ structure TimeInterval where
 
 
 
+
 /-- Two time intervals overlap -/
 def TimeInterval.overlaps (I J : TimeInterval) : Prop :=
   I.left < J.right ∧ J.left < I.right
+
 
 
 
@@ -33,9 +35,11 @@ structure Ensemble where
 
 
 
+
 /-- The ensemble prediction at time t -/
 noncomputable def Ensemble.predict (E : Ensemble) (t : ℝ) : ℝ :=
   ∑ i, E.weights i * E.predictors i t
+
 
 
 
@@ -51,10 +55,12 @@ theorem Ensemble.predict_convex (E : Ensemble) (t : ℝ)
 
 
 
+
 /-- A discrete prediction sequence -/
 structure PredictionSequence where
   values : ℕ → ℝ
   bounded : ∃ M : ℝ, ∀ n, |values n| ≤ M
+
 
 
 
@@ -64,9 +70,15 @@ noncomputable def mspe (prediction actual : ℕ → ℝ) (N : ℕ) : ℝ :=
 
 
 
+
+/-- [Section: # CatalogBuild.MachineLearning.Prediction.TemporalSheaves
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/Prediction
+Declarations: 12] -/
 theorem mspe_nonneg (prediction actual : ℕ → ℝ) (N : ℕ) (hN : 0 < N) :
     0 ≤ mspe prediction actual N := by
   exact mul_nonneg ( by positivity ) ( Finset.sum_nonneg fun _ _ => sq_nonneg _ )
+
 
 
 
@@ -81,6 +93,7 @@ inductive PredictionClass where
 
 
 
+
 /-- The prediction class determines the achievable horizon -/
 noncomputable def horizonByClass : PredictionClass → ENNReal
   | .deterministic => ⊤
@@ -91,15 +104,18 @@ noncomputable def horizonByClass : PredictionClass → ENNReal
 
 
 
+
 /-- Deterministic systems have infinite prediction horizon -/
 theorem deterministic_infinite_horizon :
     horizonByClass .deterministic = ⊤ := by rfl
 
 
 
+
 /-- Incomputable systems have zero prediction horizon -/
 theorem incomputable_zero_horizon :
     horizonByClass .incomputable = 0 := by rfl
+
 
 
 

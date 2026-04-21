@@ -18,6 +18,7 @@ structure PredictionMorphism (α β : Type*) where
 
 
 
+
 /-- Composition of prediction morphisms -/
 noncomputable def PredictionMorphism.comp {α β γ : Type*}
     (f : PredictionMorphism α β) (g : PredictionMorphism β γ) :
@@ -26,6 +27,7 @@ noncomputable def PredictionMorphism.comp {α β γ : Type*}
   quality := f.quality * g.quality
   quality_nonneg := mul_nonneg f.quality_nonneg g.quality_nonneg
   quality_le_one := by nlinarith [f.quality_le_one, g.quality_le_one, f.quality_nonneg, g.quality_nonneg]
+
 
 
 
@@ -39,12 +41,14 @@ theorem composition_quality_bound {α β γ : Type*}
 
 
 
+
 /-- The identity prediction: perfect knowledge -/
 def PredictionMorphism.identity (α : Type*) : PredictionMorphism α α where
   predict := id
   quality := 1
   quality_nonneg := by norm_num
   quality_le_one := by norm_num
+
 
 
 
@@ -55,10 +59,12 @@ theorem identity_left_unit {α β : Type*} (f : PredictionMorphism α β) :
 
 
 
+
 /-- Identity is a right unit for quality -/
 theorem identity_right_unit {α β : Type*} (f : PredictionMorphism α β) :
     (f.comp (PredictionMorphism.identity β)).quality = f.quality := by
   show f.quality * 1 = f.quality; ring
+
 
 
 
@@ -69,10 +75,12 @@ structure BayesianDist (α : Type*) where
 
 
 
+
 /-- The unit (return/pure): point mass distribution -/
 def BayesianDist.pure' {α : Type*} (x : α) : BayesianDist α where
   sample := x
   logLikelihood := 0
+
 
 
 
@@ -83,10 +91,12 @@ def BayesianDist.join {α : Type*} (dd : BayesianDist (BayesianDist α)) : Bayes
 
 
 
+
 /-- Left unit law for log-likelihoods -/
 theorem bayesian_monad_left_unit {α : Type*} (d : BayesianDist α) :
     (BayesianDist.pure' d).join.logLikelihood = d.logLikelihood := by
   simp [BayesianDist.pure', BayesianDist.join]
+
 
 
 
@@ -97,10 +107,12 @@ theorem bayesian_monad_right_unit {α : Type*} (x : α) :
 
 
 
+
 /-- A model update transforms one prediction scheme to another -/
 structure ModelUpdate (α β : Type*) where
   transform : (α → β) → (α → β)
   improvement : ℝ
+
 
 
 
@@ -110,6 +122,7 @@ theorem update_composition_sum {α β : Type*}
     (h1 : 0 ≤ u₁.improvement) (h2 : 0 ≤ u₂.improvement) :
     0 ≤ u₁.improvement + u₂.improvement := by
   linarith
+
 
 
 
@@ -123,6 +136,7 @@ theorem kan_extension_approximation {α β γ : Type*}
 
 
 
+
 /-- Prediction is compositional: quality of A→B→C is bounded by
 the product of individual qualities -/
 theorem prediction_compositionality
@@ -133,6 +147,7 @@ theorem prediction_compositionality
     q_AC ≤ min q_AB q_BC := by
   rw [h_compose, le_min_iff]
   exact ⟨by nlinarith, by nlinarith⟩
+
 
 
 

@@ -15,6 +15,7 @@ def OracleRefines {X : Type*} (O₁ O₂ : X → X) : Prop :=
 
 
 
+
 /-- [Section: # CatalogBuild.Computation.Oracles.Advanced
 Auto-generated from theorem catalog database.
 Domain: Computation/Oracles
@@ -24,6 +25,11 @@ theorem oracleRefines_refl {X : Type*} (O : X → X) : OracleRefines O O :=
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.Advanced
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 16] -/
 theorem oracleRefines_trans {X : Type*} (O₁ O₂ O₃ : X → X)
     (h₁₂ : OracleRefines O₁ O₂) (h₂₃ : OracleRefines O₂ O₃) :
     OracleRefines O₁ O₃ :=
@@ -31,8 +37,10 @@ theorem oracleRefines_trans {X : Type*} (O₁ O₂ O₃ : X → X)
 
 
 
+
 theorem idem_compose_self {X : Type*} (f : X → X) (hf : ∀ x, f (f x) = f x) :
     f ∘ f = f := funext hf
+
 
 
 
@@ -43,9 +51,11 @@ theorem binaryEntropy_nonneg (p : ℝ) (hp0 : 0 < p) (hp1 : p < 1) :
 
 
 
+
 theorem binaryEntropy_half : binaryEntropy (1/2 : ℝ) = 1 := by
   unfold binaryEntropy; norm_num;
   norm_num [ Real.logb_div ]
+
 
 
 
@@ -56,9 +66,11 @@ theorem constant_unique_fixed_point (c : ℝ) :
 
 
 
+
 /-- Idempotent maps converge in one step. -/
 theorem idem_one_step (f : ℝ → ℝ) (hf : ∀ x, f (f x) = f x) (x : ℝ) :
     f x = f (f x) := (hf x).symm
+
 
 
 
@@ -73,6 +85,7 @@ theorem mobius_compose (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ x : ℝ)
 
 
 
+
 /-- Meta-oracle: selects the best oracle from a family. -/
 structure MetaGeodesicOracle (α : Type*) where
   family : α → (ℝ → ℝ)
@@ -81,9 +94,11 @@ structure MetaGeodesicOracle (α : Type*) where
 
 
 
+
 /-- Meta-oracle consultation. -/
 def MetaGeodesicOracle.consult {α : Type*} (M : MetaGeodesicOracle α) (x : ℝ) : ℝ :=
   M.family (M.selectIdx x) x
+
 
 
 
@@ -94,6 +109,7 @@ theorem MetaGeodesicOracle.constant_selector_is_oracle {α : Type*}
   intro x
   simp only [MetaGeodesicOracle.consult, hsel]
   exact M.idem i _
+
 
 
 
@@ -108,6 +124,7 @@ def invStereoN (n : ℕ) (x : Fin n → ℝ) : Fin (n + 1) → ℝ :=
 
 
 
+
 theorem invStereoN_on_sphere (n : ℕ) (x : Fin n → ℝ) :
     ∑ i : Fin (n + 1), (invStereoN n x i) ^ 2 = 1 := by
   unfold invStereoN;
@@ -118,10 +135,12 @@ theorem invStereoN_on_sphere (n : ℕ) (x : Fin n → ℝ) :
 
 
 
+
 theorem hypothesis_crystallization (f : ℝ → ℝ) (hf : ∀ x, f (f x) = f x) (x : ℝ) :
     f (f x) = f x := hf x
 
 -- H4: Idempotent partition into fixed/non-fixed
+
 
 
 theorem idem_partition {α : Type*} [DecidableEq α] (f : α → α)
@@ -130,6 +149,7 @@ theorem idem_partition {α : Type*} [DecidableEq α] (f : α → α)
   by_cases h : f x = x
   · exact Or.inl h
   · exact Or.inr ⟨h, hf x⟩
+
 
 
 

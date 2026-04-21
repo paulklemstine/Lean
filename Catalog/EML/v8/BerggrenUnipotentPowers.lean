@@ -14,10 +14,17 @@ Declarations: 17] -/
 def BM1_u : Matrix (Fin 3) (Fin 3) ℤ := !![1, -2, 2; 2, -1, 2; 2, -2, 3]
 
 
+
+/-- [Section: # CatalogBuild.EML.v8.BerggrenUnipotentPowers
+Auto-generated from theorem catalog database.
+Domain: EML/v8
+Declarations: 17] -/
 def BM3_u : Matrix (Fin 3) (Fin 3) ℤ := !![(-1), 2, 2; (-2), 1, 2; (-2), 2, 3]
 
 
+
 def Sswap_u : Matrix (Fin 3) (Fin 3) ℤ := !![0, 1, 0; 1, 0, 0; 0, 0, 1]
+
 
 
 
@@ -28,10 +35,12 @@ theorem B1_minus_I_cubed_zero :
 
 
 
+
 /-- (B₁ - I)² ≠ 0, so nilpotency index is exactly 3 -/
 theorem B1_minus_I_sq_ne_zero :
     (BM1_u - 1) * (BM1_u - 1) ≠ (0 : Matrix (Fin 3) (Fin 3) ℤ) := by
   native_decide
+
 
 
 
@@ -42,6 +51,7 @@ theorem B3_minus_I_cubed_zero :
 
 
 
+
 /-- (B₃ - I)² ≠ 0 -/
 theorem B3_minus_I_sq_ne_zero :
     (BM3_u - 1) * (BM3_u - 1) ≠ (0 : Matrix (Fin 3) (Fin 3) ℤ) := by
@@ -49,7 +59,9 @@ theorem B3_minus_I_sq_ne_zero :
 
 
 
+
 theorem B1_sq : BM1_u * BM1_u = !![1, (-4 : ℤ), 4; 4, -7, 8; 4, -8, 9] := by native_decide
+
 
 
 
@@ -58,7 +70,9 @@ theorem B1_cubed : BM1_u * BM1_u * BM1_u =
 
 
 
+
 theorem B1_sq_root : (BM1_u * BM1_u) * !![(3:ℤ); 4; 5] = !![(7:ℤ); 24; 25] := by native_decide
+
 
 
 theorem B1_cubed_root :
@@ -72,20 +86,26 @@ theorem B1_cubed_root :
 
 
 
+
 theorem ppt_5_12_13 : (5:ℤ)^2 + 12^2 = 13^2 := by norm_num
 
 
+
 theorem ppt_7_24_25 : (7:ℤ)^2 + 24^2 = 25^2 := by norm_num
+
 
 
 theorem ppt_9_40_41 : (9:ℤ)^2 + 40^2 = 41^2 := by norm_num
 
 
 
+
 theorem B3_conj_u : Sswap_u * BM1_u * Sswap_u = BM3_u := by native_decide
 
 
+
 theorem S_involution_u : Sswap_u * Sswap_u = (1 : Matrix (Fin 3) (Fin 3) ℤ) := by native_decide
+
 
 
 
@@ -94,5 +114,6 @@ theorem B1_cayley :
     BM1_u * BM1_u * BM1_u - 3 • (BM1_u * BM1_u) + 3 • BM1_u - 1
     = (0 : Matrix (Fin 3) (Fin 3) ℤ) := by
   native_decide
+
 
 

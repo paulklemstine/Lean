@@ -13,11 +13,13 @@ def IsPythagorean5Tuple (a₁ a₂ a₃ a₄ a₅ : ℤ) : Prop :=
 
 
 
+
 /-- The factor identity for 5-tuples: (a₅ - a₄)(a₅ + a₄) = a₁² + a₂² + a₃². -/
 theorem five_tuple_factor_identity (a₁ a₂ a₃ a₄ a₅ : ℤ)
     (h : IsPythagorean5Tuple a₁ a₂ a₃ a₄ a₅) :
     (a₅ - a₄) * (a₅ + a₄) = a₁ ^ 2 + a₂ ^ 2 + a₃ ^ 2 := by
   unfold IsPythagorean5Tuple at h; nlinarith
+
 
 
 
@@ -29,11 +31,13 @@ theorem five_tuple_factor_peel_third (a₁ a₂ a₃ a₄ a₅ : ℤ)
 
 
 
+
 /-- Factor extraction for 5-tuples: GCD products divide a₁². -/
 theorem five_tuple_factor_extraction (a₁ a₂ a₃ a₄ a₅ : ℤ)
     (h : IsPythagorean5Tuple a₁ a₂ a₃ a₄ a₅) :
     (↑(Int.gcd (a₅ - a₄) a₁) : ℤ) * ↑(Int.gcd (a₅ + a₄) a₁) ∣ a₁ ^ 2 := by
   convert mul_dvd_mul (Int.gcd_dvd_right (a₅ - a₄) a₁) (Int.gcd_dvd_right (a₅ + a₄) a₁) using 1; ring
+
 
 
 
@@ -46,12 +50,14 @@ theorem quadruple_lift_to_5tuple (a b c d e f : ℤ)
 
 
 
+
 /-- Direct construction: any quadruple (a,b,c,d) gives a 5-tuple via d²+k²=f². -/
 theorem quadruple_to_5tuple_via_leg (a b c d k f : ℤ)
     (h_quad : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2)
     (h_ext : d ^ 2 + k ^ 2 = f ^ 2) :
     a ^ 2 + b ^ 2 + c ^ 2 + k ^ 2 = f ^ 2 := by
   linarith
+
 
 
 
@@ -65,6 +71,7 @@ theorem five_tuple_shared_hypotenuse
 
 
 
+
 /-- Cross-difference for 5-tuples: richer factor structure. -/
 theorem five_tuple_cross_difference
     (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ d : ℤ)
@@ -75,10 +82,12 @@ theorem five_tuple_cross_difference
 
 
 
+
 /-- A Pythagorean k-tuple: the sum of squares of all components except the last
 equals the square of the last component. -/
 def IsPythagoreanKTuple (v : Fin n → ℤ) (d : ℤ) : Prop :=
   (∑ i, (v i) ^ 2) = d ^ 2
+
 
 
 
@@ -90,11 +99,13 @@ theorem ktuple_factor_identity_last (v : Fin n → ℤ) (c d : ℤ)
 
 
 
+
 /-- GCD extraction for k-tuples: gcd(d-c, v 0) · gcd(d+c, v 0) ∣ (v 0)². -/
 theorem ktuple_gcd_extraction (v : Fin (n + 1) → ℤ) (c d : ℤ)
     (h : (∑ i, (v i) ^ 2) + c ^ 2 = d ^ 2) :
     (↑(Int.gcd (d - c) (v 0)) : ℤ) * ↑(Int.gcd (d + c) (v 0)) ∣ (v 0) ^ 2 := by
   convert mul_dvd_mul (Int.gcd_dvd_right (d - c) (v 0)) (Int.gcd_dvd_right (d + c) (v 0)) using 1; ring
+
 
 
 
@@ -106,12 +117,14 @@ theorem ktuple_shared_hypotenuse (v w : Fin n → ℤ) (d : ℤ)
 
 
 
+
 /-- Lifting: a k-tuple extends to a (k+1)-tuple. -/
 theorem ktuple_lift (v : Fin n → ℤ) (d e f : ℤ)
     (hk : IsPythagoreanKTuple v d)
     (hext : d ^ 2 + e ^ 2 = f ^ 2) :
     (∑ i, (v i) ^ 2) + e ^ 2 = f ^ 2 := by
   unfold IsPythagoreanKTuple at hk; linarith
+
 
 
 
@@ -127,6 +140,7 @@ theorem quadruple_composition (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℤ)
 
 
 
+
 /-- In a 5-tuple, we have 4 "peel" channels instead of 1.
 Each channel gives a different factor identity. -/
 theorem five_tuple_multi_channel (a₁ a₂ a₃ a₄ a₅ : ℤ)
@@ -139,12 +153,18 @@ theorem five_tuple_multi_channel (a₁ a₂ a₃ a₄ a₅ : ℤ)
 
 
 
+
 /-- The total number of GCD channels in a k-tuple is k-1. -/
 theorem ktuple_channel_count :
     ∀ n : ℕ, n ≥ 2 → (n - 1 : ℕ) ≥ 1 := by omega
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.Core.HigherDimQuadruples
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Core
+Declarations: 28] -/
 theorem five_tuple_parity (a₁ a₂ a₃ a₄ a₅ : ℤ)
     (h : IsPythagorean5Tuple a₁ a₂ a₃ a₄ a₅)
     (h5_even : 2 ∣ a₅)
@@ -154,6 +174,7 @@ theorem five_tuple_parity (a₁ a₂ a₃ a₄ a₅ : ℤ)
   obtain ⟨ k₁, rfl ⟩ := h5_even; obtain ⟨ k₂, rfl | rfl ⟩ := Int.even_or_odd' a₁ <;> obtain ⟨ k₃, rfl | rfl ⟩ := Int.even_or_odd' a₂ <;> obtain ⟨ k₄, rfl | rfl ⟩ := Int.even_or_odd' a₃ <;> obtain ⟨ k₅, rfl | rfl ⟩ := Int.even_or_odd' a₄ <;> ring_nf at h ⊢ ;
   all_goals norm_num [ ← even_iff_two_dvd, parity_simps ] at *;
   exact absurd ( congr_arg ( · % 4 ) h ) ( by ring_nf; norm_num [ Int.add_emod, Int.mul_emod ] )
+
 
 
 
@@ -175,6 +196,7 @@ theorem ktuple_even_hypotenuse_parity (v : Fin n → ℤ) (d : ℤ)
 
 
 
+
 theorem iterated_reduction_preserves (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2)
     (g₁ g₂ : ℤ) (hg₁ : g₁ > 0) (hg₂ : g₂ > 0)
@@ -185,6 +207,7 @@ theorem iterated_reduction_preserves (a b c d : ℤ)
   cases ha₁ ; cases hb₁ ; cases hc₁ ; cases hd₁ ; simp_all +decide [ ne_of_gt, Int.neg_ediv_of_dvd ];
   obtain ⟨ k₁, hk₁ ⟩ := ha₂; obtain ⟨ k₂, hk₂ ⟩ := hb₂; obtain ⟨ k₃, hk₃ ⟩ := hc₂; obtain ⟨ k₄, hk₄ ⟩ := hd₂; simp_all +decide [ mul_pow ];
   rw [ Int.mul_ediv_cancel_left _ hg₂.ne', Int.mul_ediv_cancel_left _ hg₂.ne', Int.mul_ediv_cancel_left _ hg₂.ne', Int.mul_ediv_cancel_left _ hg₂.ne' ] ; nlinarith [ mul_pos ( sq_pos_of_pos hg₁ ) ( sq_pos_of_pos hg₂ ) ]
+
 
 
 
@@ -200,11 +223,13 @@ theorem parametric_quadruple (m n p q : ℤ) :
 
 
 
+
 /-- The parametric hypotenuse is the quaternion norm squared. -/
 theorem parametric_hypotenuse_is_norm (m n p q : ℤ) :
     m ^ 2 + n ^ 2 + p ^ 2 + q ^ 2 =
     (m ^ 2 + n ^ 2 + p ^ 2 + q ^ 2) := by
   rfl
+
 
 
 
@@ -218,6 +243,7 @@ theorem parametric_compose (m₁ n₁ p₁ q₁ m₂ n₂ p₂ q₂ : ℤ) :
 
 
 
+
 /-- Bridge theorem for 5-tuples: projecting a 5-tuple onto a 4D subspace
 can yield a new Pythagorean quadruple at a "distant" location. -/
 theorem five_tuple_bridge (a₁ a₂ a₃ a₄ a₅ e : ℤ)
@@ -225,6 +251,7 @@ theorem five_tuple_bridge (a₁ a₂ a₃ a₄ a₅ e : ℤ)
     (he : a₁ ^ 2 + a₄ ^ 2 = e ^ 2) :
     e ^ 2 + a₂ ^ 2 + a₃ ^ 2 = a₅ ^ 2 := by
   unfold IsPythagorean5Tuple at h5; linarith
+
 
 
 
@@ -239,11 +266,13 @@ theorem five_tuple_double_bridge (a₁ a₂ a₃ a₄ a₅ e₁ e₂ : ℤ)
 
 
 
+
 /-- Integer points on the (n-1)-sphere of radius d are exactly the Pythagorean n-tuples.
 The density of such points is related to sums-of-squares representation numbers r_n(d²). -/
 theorem sphere_point_is_ktuple (v : Fin n → ℤ) (d : ℤ) :
     IsPythagoreanKTuple v d ↔ (∑ i, (v i) ^ 2) = d ^ 2 := by
   rfl
+
 
 
 
@@ -259,11 +288,13 @@ theorem sphere_reduction (v : Fin n → ℤ) (d g : ℤ) (hg : g > 0)
 
 
 
+
 /-- A single 5-tuple (a₁,a₂,a₃,a₄,a₅) gives rise to C(4,2)=6 possible
 2D projections, each potentially a Pythagorean pair or part of a triple.
 This multiplicity is a key advantage of higher dimensions. -/
 theorem five_tuple_projection_count :
     Nat.choose 4 2 = 6 := by decide
+
 
 
 
@@ -274,4 +305,5 @@ theorem projection_bridge (a₁ a₂ a₃ a₄ a₅ e : ℤ)
     (he : a₁ ^ 2 + a₂ ^ 2 = e ^ 2) :
     IsPythagoreanQuadruple e a₃ a₄ a₅ := by
   unfold IsPythagoreanQuadruple IsPythagorean5Tuple at *; linarith
+
 

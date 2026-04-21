@@ -1,5 +1,3 @@
-import Mathlib
-
 /-! # CatalogBuild.Geometry.Stereographic.InverseStereoMobius
 
 Auto-generated from theorem catalog database.
@@ -7,6 +5,7 @@ Domain: Geometry/Stereographic
 Declarations: 42
 -/
 
+import Mathlib
 
 noncomputable section
 
@@ -17,10 +16,12 @@ def poleMap (a t : ℝ) : ℝ := (a * t + 1) / (t - a)
 
 
 
+
 /-- **Theorem Α.2**: M_0(t) = 1/t, the classical north-south swap. -/
 theorem pole_map_at_zero (t : ℝ) (ht : t ≠ 0) :
     poleMap 0 t = 1 / t := by
   simp [poleMap]
+
 
 
 
@@ -38,9 +39,15 @@ theorem pole_map_involution (a t : ℝ) (ht : t ≠ a)
 
 
 
+
+/-- [Section: # CatalogBuild.Geometry.Stereographic.InverseStereoMobius
+Auto-generated from theorem catalog database.
+Domain: Geometry/Stereographic
+Declarations: 42] -/
 theorem pole_map_antipodal (a : ℝ) (ha : a ≠ 0) :
     poleMap a (-1/a) = 0 := by
   unfold poleMap; ring_nf; aesop;
+
 
 
 
@@ -51,9 +58,11 @@ def twoPoleMap (a b t : ℝ) : ℝ :=
 
 
 
+
 theorem two_pole_same_is_id (a t : ℝ) :
     twoPoleMap a a t = t := by
   exact div_eq_iff ( by nlinarith [ sq_nonneg a ] ) |>.2 ( by ring )
+
 
 
 
@@ -66,9 +75,11 @@ theorem two_pole_det_identity (a b t : ℝ) :
 
 
 
+
 /-- **Theorem Β.3**: The determinant factors as (1+a²)(1+b²). -/
 theorem two_pole_det_factored (a b : ℝ) :
     (a * b + 1) ^ 2 + (b - a) ^ 2 = (1 + a ^ 2) * (1 + b ^ 2) := by ring
+
 
 
 
@@ -81,10 +92,12 @@ theorem two_pole_reverse_inverse (a b t : ℝ)
 
 
 
+
 /-- **Theorem Β.5**: F_{0,1}(t) = (t+1)/(1-t). South-to-east-point map. -/
 theorem two_pole_south_east (t : ℝ) (ht : (1:ℝ) - t ≠ 0) :
     twoPoleMap 0 1 t = (t + 1) / (1 - t) := by
   unfold twoPoleMap; congr 1 <;> ring
+
 
 
 
@@ -95,10 +108,12 @@ theorem two_pole_01_at_zero :
 
 
 
+
 /-- **Theorem Β.7**: F_{0,1}(-1) = 0. -/
 theorem two_pole_01_at_neg_one :
     twoPoleMap 0 1 (-1) = 0 := by
   unfold twoPoleMap; norm_num
+
 
 
 
@@ -109,10 +124,12 @@ theorem two_pole_01_at_two :
 
 
 
+
 /-- **Theorem Β.9**: F_{0,1}(3) = -2. -/
 theorem two_pole_01_at_three :
     twoPoleMap 0 1 3 = -2 := by
   unfold twoPoleMap; norm_num
+
 
 
 
@@ -125,10 +142,12 @@ theorem two_pole_composition_formula (a b c t : ℝ)
 
 
 
+
 theorem integer_map_necessary (a b n : ℤ) :
     (a - b) * n + (a * b + 1) ∣ (a * b + 1) * n + (b - a) →
     (a - b) * n + (a * b + 1) ∣ (1 + a ^ 2) * (1 + b ^ 2) := by
   exact fun h => by convert dvd_add ( h.mul_left ( b - a ) ) ( dvd_mul_right ( ( a - b ) * n + ( a * b + 1 ) ) ( a * b + 1 ) ) using 1; ring;
+
 
 
 
@@ -143,11 +162,13 @@ theorem integer_map_weak_criterion (a b n : ℤ) :
 
 
 
+
 /-- **Theorem Γ.2**: The key algebraic identity in ℤ. -/
 theorem two_pole_det_identity_int (a b n : ℤ) :
     (b - a) * ((a * b + 1) * n + (b - a)) +
     (a * b + 1) * ((a - b) * n + (a * b + 1)) =
     (1 + a ^ 2) * (1 + b ^ 2) := by ring
+
 
 
 
@@ -157,8 +178,10 @@ theorem two_pole_det_factored_int (a b : ℤ) :
 
 
 
+
 /-- **Theorem Γ.4**: det for (0,1) is 4. -/
 theorem det_south_east : (1 + (0:ℤ)^2) * (1 + (1:ℤ)^2) = 2 := by norm_num
+
 
 
 
@@ -167,8 +190,10 @@ theorem det_one_two : (1 + (1:ℤ)^2) * (1 + (2:ℤ)^2) = 10 := by norm_num
 
 
 
+
 /-- **Theorem Γ.6**: det for (2,3) is 50. -/
 theorem det_two_three : (1 + (2:ℤ)^2) * (1 + (3:ℤ)^2) = 50 := by norm_num
+
 
 
 
@@ -177,14 +202,18 @@ theorem one_plus_sq_pos_int (n : ℤ) : 0 < 1 + n ^ 2 := by positivity
 
 
 
+
 /-- F_{0,1}: numerator at n=2 is 3, denominator is -1, quotient is -3. -/
 theorem chain_01_2_num : (0 * 1 + 1) * 2 + (1 - 0) = (3 : ℤ) := by norm_num
+
 
 
 theorem chain_01_2_den : (0 - 1) * 2 + (0 * 1 + 1) = (-1 : ℤ) := by norm_num
 
 
+
 theorem chain_01_2 : (3 : ℤ) / (-1) = -3 := by norm_num
+
 
 
 
@@ -192,10 +221,13 @@ theorem chain_01_2 : (3 : ℤ) / (-1) = -3 := by norm_num
 theorem chain_01_3_num : (0 * 1 + 1) * 3 + (1 - 0) = (4 : ℤ) := by norm_num
 
 
+
 theorem chain_01_3_den : (0 - 1) * 3 + (0 * 1 + 1) = (-2 : ℤ) := by norm_num
 
 
+
 theorem chain_01_3 : (4 : ℤ) / (-2) = -2 := by norm_num
+
 
 
 
@@ -205,9 +237,11 @@ theorem chain_12_1 :
 
 
 
+
 /-- F_{1,2}(2) = 7. -/
 theorem chain_12_2 :
     ((1 * 2 + 1) * 2 + (2 - 1)) / ((1 - 2) * 2 + (1 * 2 + 1)) = (7 : ℤ) := by norm_num
+
 
 
 
@@ -217,9 +251,11 @@ theorem chain_13_1 :
 
 
 
+
 /-- F_{1,3}(3) = -7. -/
 theorem chain_13_3 :
     ((1 * 3 + 1) * 3 + (3 - 1)) / ((1 - 3) * 3 + (1 * 3 + 1)) = (-7 : ℤ) := by norm_num
+
 
 
 
@@ -229,10 +265,12 @@ theorem chain_13_neg3 :
 
 
 
+
 /-- **Grand Synthesis**: The determinant equals (1+a²)(1+b²) = N(1+ai)·N(1+bi)
 in Gaussian integer norms. -/
 theorem gaussian_norm_connection (a b : ℤ) :
     (a * b + 1) ^ 2 + (b - a) ^ 2 = (1 + a ^ 2) * (1 + b ^ 2) := by ring
+
 
 
 
@@ -244,10 +282,12 @@ theorem brahmagupta_from_poles (a b : ℤ) :
 
 
 
+
 /-- **All integer-pole maps are elliptic**: 4·det - trace² = 4(a-b)² ≥ 0. -/
 theorem all_integer_poles_elliptic (a b : ℤ) :
     4 * ((1 + a ^ 2) * (1 + b ^ 2)) - (2 * (a * b + 1)) ^ 2 = 4 * (a - b) ^ 2 := by
   ring
+
 
 
 
@@ -258,10 +298,12 @@ theorem two_pole_01_order_four (t : ℝ) (ht0 : t ≠ 0) (ht1 : t ≠ 1) (htm1 :
 
 
 
+
 theorem two_pole_01_squared (t : ℝ) (ht0 : t ≠ 0) (ht1 : t ≠ 1) :
     twoPoleMap 0 1 (twoPoleMap 0 1 t) = -(1/t) := by
   unfold twoPoleMap; norm_num [ ht0, ht1 ] ; ring;
   grind
+
 
 
 
@@ -273,6 +315,7 @@ theorem eigenvalue_gaussian_factorization (a b : ℤ) :
 
 
 
+
 /-- **The Pythagorean triple (3,4,5) from poles (1,2)**: p=3, q=1, 3²+1²=10=2·5. -/
 theorem pythagorean_from_poles_1_2 :
     let p := (1:ℤ) * 2 + 1
@@ -281,9 +324,11 @@ theorem pythagorean_from_poles_1_2 :
 
 
 
+
 /-- **South-east elliptic**: trace² < 4·det for (0,1). -/
 theorem south_east_elliptic :
     (2 * ((0:ℤ) * 1 + 1)) ^ 2 < 4 * ((1 + 0 ^ 2) * (1 + 1 ^ 2)) := by norm_num
+
 
 
 

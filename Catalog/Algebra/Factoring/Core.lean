@@ -16,6 +16,7 @@ noncomputable def castToFactor (p q : ℕ) (hp : Fact (Nat.Prime p)) :
 
 
 
+
 /-- [Section: # CatalogBuild.Algebra.Factoring.Core
 Auto-generated from theorem catalog database.
 Domain: Algebra/Factoring
@@ -28,6 +29,11 @@ theorem orbit_CRT_decomposition (p q : ℕ) (hp : Fact (Nat.Prime p))
 
 
 
+
+/-- [Section: # CatalogBuild.Algebra.Factoring.Core
+Auto-generated from theorem catalog database.
+Domain: Algebra/Factoring
+Declarations: 15] -/
 theorem orbit_period_divides_lcm (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
     (hcoprime : Nat.Coprime p q) (x : ZMod (p * q))
     (a b : ℕ)
@@ -53,8 +59,10 @@ theorem orbit_period_divides_lcm (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime 
 
 
 
+
 instance (B m : ℕ) : Decidable (IsSmooth B m) :=
   inferInstanceAs (Decidable (∀ p ∈ m.primeFactors, p ≤ B))
+
 
 
 
@@ -64,8 +72,10 @@ def factorBase (B : ℕ) : Finset ℕ :=
 
 
 
+
 theorem factorBase_card_le (B : ℕ) : (factorBase B).card ≤ B := by
   exact le_trans ( Finset.card_le_card <| show factorBase B ⊆ Finset.Ico 1 ( B + 1 ) from fun x hx => Finset.mem_Ico.mpr ⟨ Nat.Prime.pos <| Finset.mem_filter.mp hx |>.2, Nat.lt_succ_of_le <| Finset.mem_range_succ_iff.mp <| Finset.mem_filter.mp hx |>.1 ⟩ ) ( by simpa )
+
 
 
 
@@ -79,6 +89,7 @@ theorem gcd_extraction (n x y : ℕ) (hn : 1 < n)
   · contrapose! hne_sub;
     exact False.elim <| hne_add <| ( Nat.Coprime.symm hne_sub ) |> fun h => h.dvd_of_dvd_mul_left <| by convert hcong using 1; rw [ Nat.sq_sub_sq ] ; ring;
   · exact fun h => hne_sub <| h ▸ Nat.gcd_dvd_left _ _
+
 
 
 
@@ -112,12 +123,14 @@ theorem gcd_success_for_semiprime (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime
 
 
 
+
 theorem factoring_correctness (B : ℕ) (hB : 0 < B)
     (relations : Finset ℕ)
     (hsmooth : ∀ r ∈ relations, IsSmooth B r)
     (hcount : (factorBase B).card < relations.card) :
     ∃ S : Finset ℕ, S ⊆ relations ∧ S.Nonempty := by
   exact ⟨ relations, Finset.Subset.refl _, Finset.card_pos.mp ( pos_of_gt hcount ) ⟩
+
 
 
 
@@ -144,10 +157,12 @@ theorem subexponential_bound (c : ℝ) (hc : 0 < c) (ε : ℝ) (hε : 0 < ε) :
 
 
 
+
 theorem not_polynomial_unconditional (B : ℕ) :
     ∃ m : ℕ, B < m ∧ ¬ IsSmooth B m := by
   have := Nat.exists_infinite_primes ( B + 1 );
   obtain ⟨ p, hp₁, hp₂ ⟩ := this; exact ⟨ p, hp₁, fun hp₃ => by have := hp₃ p ( by aesop ) ; linarith ⟩ ;
+
 
 
 
@@ -158,10 +173,12 @@ theorem relation_verification_poly (B m : ℕ) (hB : 0 < B) :
 
 
 
+
 theorem orbit_correlation (n : ℕ) (x : ZMod n) (k : ℕ) :
     sqIter n x (k + 1) = (sqIter n x k) ^ 2 := by
   rw [ sqIter ];
   rw [ sqMap, sq ]
+
 
 
 
@@ -171,12 +188,14 @@ theorem smooth_probability_bound (B N : ℕ) :
 
 
 
+
 theorem sieve_enhanced_relations (B m p : ℕ) (hm : IsSmooth B m)
     (hp : Nat.Prime p) (hpB : p ≤ B) :
     IsSmooth B (m * p) := by
   by_contra h_contra; contrapose! h_contra; simp_all +decide [ IsSmooth ] ;
   intro q hq hq' hm' hp'; simp_all +decide [ Nat.Prime.dvd_mul ] ;
   exact hq'.elim ( fun h => hm q hq h ) fun h => Nat.le_trans ( Nat.le_of_dvd hp.pos h ) hpB
+
 
 
 

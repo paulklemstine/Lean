@@ -19,11 +19,17 @@ theorem translation_preserves_max (c a b : ℝ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Tropical.Core.TropicalAgentEpsilon
+Auto-generated from theorem catalog database.
+Domain: Tropical/Core
+Declarations: 16] -/
 theorem nonneg_scale_preserves_max (c : ℝ) (hc : 0 ≤ c) (a b : ℝ) :
     c * max a b = max (c * a) (c * b) := by
   rcases le_total a b with h | h
   · rw [max_eq_right h, max_eq_right (mul_le_mul_of_nonneg_left h hc)]
   · rw [max_eq_left h, max_eq_left (mul_le_mul_of_nonneg_left h hc)]
+
 
 
 
@@ -40,6 +46,7 @@ theorem partition_function_bound {n : ℕ} (E : Fin (n+1) → ℝ) (β : ℝ) :
 
 
 
+
 theorem successive_updates (logPrior : ℝ) (xs : List ℝ) :
     logPrior + xs.sum = (logPrior :: xs).sum := by
   induction xs with
@@ -48,9 +55,11 @@ theorem successive_updates (logPrior : ℝ) (xs : List ℝ) :
 
 
 
+
 theorem learning_rate_sum_pos (N : ℕ) (hN : 0 < N) :
     (0 : ℝ) < Finset.sum (Finset.range N) (fun k => (1 : ℝ) / (k + 1)) := by
   exact Finset.sum_pos (fun k _ => by positivity) (Finset.nonempty_range_iff.mpr (by omega))
+
 
 
 
@@ -68,6 +77,7 @@ theorem max_preserves_convexity (f g : ℝ → ℝ)
 
 
 
+
 theorem affine_convex (a b : ℝ) : ConvexOn ℝ Set.univ (fun x => a * x + b) := by
   -- To prove convexity, we use the definition of convexity.
   unfold ConvexOn;
@@ -76,10 +86,12 @@ theorem affine_convex (a b : ℝ) : ConvexOn ℝ Set.univ (fun x => a * x + b) :
 
 
 
+
 noncomputable def tropContract {m n p : ℕ}
     (A : Fin (m+1) → Fin (p+1) → ℝ) (B : Fin (p+1) → Fin (n+1) → ℝ) :
     Fin (m+1) → Fin (n+1) → ℝ :=
   fun i j => Finset.sup' Finset.univ ⟨0, Finset.mem_univ 0⟩ (fun k => A i k + B k j)
+
 
 
 
@@ -94,8 +106,10 @@ theorem tropContract_mono {m n p : ℕ}
 
 
 
+
 def tropHamming {n : ℕ} (a b : Fin n → ℝ) : ℝ :=
   ∑ i : Fin n, |a i - b i|
+
 
 
 
@@ -105,8 +119,10 @@ theorem tropHamming_symm {n : ℕ} (a b : Fin n → ℝ) :
 
 
 
+
 theorem tropHamming_nonneg {n : ℕ} (a b : Fin n → ℝ) : 0 ≤ tropHamming a b :=
   Finset.sum_nonneg (fun _ _ => abs_nonneg _)
+
 
 
 
@@ -118,8 +134,10 @@ theorem tropHamming_eq_zero {n : ℕ} (a b : Fin n → ℝ) :
 
 
 
+
 noncomputable def tropEntropy {n : ℕ} [NeZero n] (v : Fin n → ℝ) : ℝ :=
   Finset.sup' Finset.univ ⟨0, Finset.mem_univ 0⟩ v - (∑ i, v i) / n
+
 
 
 
@@ -131,11 +149,13 @@ theorem tropEntropy_nonneg {n : ℕ} [NeZero n] (v : Fin n → ℝ) : 0 ≤ trop
 
 
 
+
 theorem tropEntropy_const {n : ℕ} [NeZero n] (c : ℝ) :
     tropEntropy (fun _ : Fin n => c) = 0 := by
       -- By definition of tropEntropy, we have:
       simp [tropEntropy];
       rw [ mul_div_cancel_left₀ _ ( NeZero.ne _ ), sub_self ]
+
 
 
 

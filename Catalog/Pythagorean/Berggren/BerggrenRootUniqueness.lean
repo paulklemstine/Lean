@@ -1,23 +1,18 @@
-/-
-Primitive Root Theorem (V13 - Direction 68 RESOLVED)
+/-! # CatalogBuild.Pythagorean.Berggren.BerggrenRootUniqueness
 
-(3,4,5) is the UNIQUE primitive Pythagorean triple with the smallest possible
-hypotenuse. Since c ≥ 5 for any PPT, and (3,4,5) is the unique PPT with c = 5
-(up to leg swap), the Berggren tree root is uniquely determined.
-
-Machine-verified in Lean 4 with Mathlib.
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Berggren
+Declarations: 4
 -/
+
 import Mathlib
 
-/-! ## Main result -/
-
-/-
-Any PPT has hypotenuse ≥ 5
--/
+/-- [Section: ## Main result] -/
 theorem ppt_hyp_ge_5 (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (hcop : Int.gcd a b = 1) : 5 ≤ c := by
   contrapose! hcop; interval_cases c <;> ( ( have : a ≤ 4 := Int.le_of_lt_add_one ( by nlinarith only [ h, ha, hb ] ) ; have : b ≤ 4 := Int.le_of_lt_add_one ( by nlinarith only [ h, ha, hb ] ) ; interval_cases a <;> interval_cases b <;> norm_num at *; ) )
+
 
 /-- The unique PPT with c = 5 (up to leg swap) -/
 theorem ppt_c5_unique (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
@@ -29,18 +24,14 @@ theorem ppt_c5_unique (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
   have hb5 : b ≤ 4 := by nlinarith [sq_nonneg (b - 5)]
   interval_cases a <;> interval_cases b <;> simp_all
 
-/-
-Root uniqueness: the only PPT with c ≤ 5 is (3,4,5) up to swap
--/
+
 theorem root_unique (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (hcop : Int.gcd a b = 1) (hle : c ≤ 5) :
     (a = 3 ∧ b = 4 ∧ c = 5) ∨ (a = 4 ∧ b = 3 ∧ c = 5) := by
   interval_cases c <;> ( have : a ≤ 5 := Int.le_of_lt_add_one ( by nlinarith only [ h, hb ] ) ; ( have : b ≤ 5 := Int.le_of_lt_add_one ( by nlinarith only [ h, ha ] ) ; interval_cases a <;> interval_cases b <;> simp_all +decide only; ) )
 
-/-
-(3,4,5) is the minimal PPT
--/
+
 theorem minimal_ppt : ∀ a b c : ℤ,
     a ^ 2 + b ^ 2 = c ^ 2 → 0 < a → 0 < b → 0 < c →
     Int.gcd a b = 1 → c < 5 → False := by

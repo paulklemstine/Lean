@@ -16,10 +16,12 @@ structure TropicalTestFn where
 
 
 
+
 /-- The tropical spherical function: f(a,b) = a + b -/
 def sphericalFn : TropicalTestFn where
   eval := fun a b => a + b
   symmetric := fun a b => by ring
+
 
 
 
@@ -30,9 +32,11 @@ def pointEvalFn (c : ℝ) : TropicalTestFn where
 
 
 
+
 /-- Tropical orbital integral for GL₂ -/
 def GL2OrbitalIntegral (f : TropicalTestFn) (a b : ℝ) : ℝ :=
   f.eval a b
+
 
 
 
@@ -42,9 +46,11 @@ def centralContribution (f : TropicalTestFn) (a : ℝ) : ℝ :=
 
 
 
+
 /-- Regular contribution -/
 def regularContribution (f : TropicalTestFn) (a b : ℝ) : ℝ :=
   f.eval a b
+
 
 
 
@@ -52,6 +58,7 @@ def regularContribution (f : TropicalTestFn) (a b : ℝ) : ℝ :=
 theorem trace_formula_symmetric (f : TropicalTestFn) (a b : ℝ) :
     GL2OrbitalIntegral f a b = GL2OrbitalIntegral f b a := by
   simp [GL2OrbitalIntegral, f.symmetric]
+
 
 
 
@@ -63,9 +70,11 @@ structure TropicalHeckeEigenvalue where
 
 
 
+
 /-- Spectral evaluation -/
 def spectralEval (f : TropicalTestFn) (rep : TropicalHeckeEigenvalue) : ℝ :=
   f.eval rep.lam1 rep.lam2
+
 
 
 
@@ -77,8 +86,10 @@ theorem tropical_trace_formula_GL2 (f : TropicalTestFn) (a b : ℝ) (h : a ≤ b
 
 
 
+
 /-- Tropical Weyl discriminant for GL₂ -/
 def weylDiscriminant (a b : ℝ) : ℝ := |a - b|
+
 
 
 
@@ -89,10 +100,12 @@ theorem weylDiscriminant_symm (a b : ℝ) :
 
 
 
+
 /-- Discriminant is non-negative -/
 theorem weylDiscriminant_nonneg (a b : ℝ) :
     weylDiscriminant a b ≥ 0 :=
   abs_nonneg _
+
 
 
 
@@ -103,9 +116,11 @@ theorem weylDiscriminant_zero_iff (a b : ℝ) :
 
 
 
+
 /-- Weighted orbital integral -/
 def weightedOrbitalIntegral (f : TropicalTestFn) (a b : ℝ) : ℝ :=
   weylDiscriminant a b * f.eval a b
+
 
 
 
@@ -116,9 +131,11 @@ theorem weightedOrbital_symm (f : TropicalTestFn) (a b : ℝ) :
 
 
 
+
 /-- Tropical Eisenstein series for GL₂ -/
 def tropicalEisenstein (s : ℝ) (a b : ℝ) : ℝ :=
   min (s * a + (1 - s) * b) ((1 - s) * a + s * b)
+
 
 
 
@@ -129,6 +146,7 @@ theorem eisenstein_zero (a b : ℝ) :
 
 
 
+
 /-- Eisenstein at s = 1 -/
 theorem eisenstein_one (a b : ℝ) :
     tropicalEisenstein 1 a b = min a b := by
@@ -136,9 +154,11 @@ theorem eisenstein_one (a b : ℝ) :
 
 
 
+
 /-- Tropical L-function for GL₂ -/
 def tropicalL_GL2 (rep : TropicalHeckeEigenvalue) (s : ℝ) : ℝ :=
   (rep.lam1 + rep.lam2) * s
+
 
 
 
@@ -149,10 +169,12 @@ theorem tropicalL_GL2_zero (rep : TropicalHeckeEigenvalue) :
 
 
 
+
 /-- L-function is linear in s -/
 theorem tropicalL_GL2_linear (rep : TropicalHeckeEigenvalue) (s t : ℝ) :
     tropicalL_GL2 rep (s + t) = tropicalL_GL2 rep s + tropicalL_GL2 rep t := by
   simp [tropicalL_GL2, mul_add]
+
 
 
 
@@ -162,10 +184,12 @@ def tropicalLambda_GL2 (rep : TropicalHeckeEigenvalue) (s : ℝ) : ℝ :=
 
 
 
+
 /-- Norm equals spherical function evaluation -/
 theorem norm_eq_det (a b : ℝ) :
     tropicalNorm a b = sphericalFn.eval a b := by
   simp [tropicalNorm, sphericalFn]
+
 
 
 
@@ -178,10 +202,12 @@ theorem jacquet_langlands_L_match
 
 
 
+
 /-- A tropical Maass form on GL₂: eigenfunction of the tropical Laplacian -/
 structure TropicalMaassForm where
   spectralParam : ℝ
   eval : ℝ → ℝ → ℝ
+
 
 
 
@@ -190,11 +216,13 @@ def TropicalMaassForm.eigenvalue (f : TropicalMaassForm) : ℝ := f.spectralPara
 
 
 
+
 /-- Two Maass forms with equal spectral parameters have equal eigenvalues -/
 theorem maass_eigenvalue_eq (f g : TropicalMaassForm)
     (h : f.spectralParam = g.spectralParam) :
     f.eigenvalue = g.eigenvalue := by
   unfold TropicalMaassForm.eigenvalue; rw [h]
+
 
 
 

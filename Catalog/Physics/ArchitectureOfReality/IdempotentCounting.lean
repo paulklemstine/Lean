@@ -15,8 +15,10 @@ def idemSet (n : ℕ) [NeZero n] : Finset (ZMod n) :=
 
 
 
+
 /-- Count of idempotents in ℤ/nℤ -/
 def idemCount (n : ℕ) [NeZero n] : ℕ := (idemSet n).card
+
 
 
 
@@ -27,49 +29,69 @@ Declarations: 28] -/
 theorem idem_count_1 : idemCount 1 = 1 := by native_decide
 
 
+
+/-- [Section: # CatalogBuild.Physics.ArchitectureOfReality.IdempotentCounting
+Auto-generated from theorem catalog database.
+Domain: Physics/ArchitectureOfReality
+Declarations: 28] -/
 theorem idem_count_2 : idemCount 2 = 2 := by native_decide
+
 
 
 theorem idem_count_3 : idemCount 3 = 2 := by native_decide
 
 
+
 theorem idem_count_4 : idemCount 4 = 2 := by native_decide
+
 
 
 theorem idem_count_5 : idemCount 5 = 2 := by native_decide
 
 
+
 theorem idem_count_6 : idemCount 6 = 4 := by native_decide
+
 
 
 theorem idem_count_7 : idemCount 7 = 2 := by native_decide
 
 
+
 theorem idem_count_8 : idemCount 8 = 2 := by native_decide
+
 
 
 theorem idem_count_9 : idemCount 9 = 2 := by native_decide
 
 
+
 theorem idem_count_10 : idemCount 10 = 4 := by native_decide
+
 
 
 theorem idem_count_12 : idemCount 12 = 4 := by native_decide
 
 
+
 theorem idem_count_15 : idemCount 15 = 4 := by native_decide
+
 
 
 theorem idem_count_30 : idemCount 30 = 8 := by native_decide
 
 
+
 theorem idem_count_42 : idemCount 42 = 8 := by native_decide
+
 
 
 theorem idem_count_105 : idemCount 105 = 8 := by native_decide
 
 
+
 theorem idem_count_210 : idemCount 210 = 16 := by native_decide
+
 
 
 
@@ -78,6 +100,7 @@ theorem idem_mul {R : Type*} [CommRing R] {e f : R}
     (he : IsIdem e) (hf : IsIdem f) : IsIdem (e * f) := by
   unfold IsIdem at *
   rw [mul_mul_mul_comm, he, hf]
+
 
 
 
@@ -92,15 +115,18 @@ theorem idem_complement {R : Type*} [Ring R] {e : R} (he : IsIdem e) :
 
 
 
+
 /-- 0 is always idempotent -/
 theorem idem_zero {R : Type*} [MulZeroClass R] : IsIdem (0 : R) :=
   mul_zero 0
 
 
 
+
 /-- 1 is always idempotent -/
 theorem idem_one {R : Type*} [MulOneClass R] : IsIdem (1 : R) :=
   one_mul 1
+
 
 
 
@@ -112,11 +138,13 @@ theorem idem_orthogonal {R : Type*} [Ring R] {e : R} (he : IsIdem e) :
 
 
 
+
 /-- Gaussian binomial coefficient [n choose k]_q -/
 def gaussBinom : ℕ → ℕ → ℕ → ℕ
   | _, 0, _ => 1
   | 0, _ + 1, _ => 0
   | n + 1, k + 1, q => q^(k+1) * gaussBinom n k q + gaussBinom n (k+1) q
+
 
 
 
@@ -133,9 +161,11 @@ theorem gaussBinom_at_one (n k : ℕ) : gaussBinom n k 1 = n.choose k := by
 
 
 
+
 /-- Total idempotent-analog count for matrix rings: Σ [n choose k]_q -/
 def totalProjections (n q : ℕ) : ℕ :=
   ∑ r ∈ Finset.range (n + 1), gaussBinom n r q
+
 
 
 
@@ -143,6 +173,7 @@ def totalProjections (n q : ℕ) : ℕ :=
 theorem totalProjections_one (n : ℕ) : totalProjections n 1 = 2^n := by
   simp only [totalProjections, gaussBinom_at_one]
   exact Nat.sum_range_choose n
+
 
 
 
@@ -158,6 +189,7 @@ theorem boolean_ring_comm {R : Type*} [Ring R]
     convert congr_arg ( fun x => a * x ) h_ab using 1 <;> simp +decide [ mul_add, add_mul, mul_assoc ];
     rw [ ← mul_assoc, h ];
   simp_all +decide [ mul_assoc, add_eq_zero_iff_eq_neg ]
+
 
 
 

@@ -16,28 +16,40 @@ Declarations: 46] -/
 theorem idempotent_count_3 : idempotentCount 3 = 2 := by native_decide
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.NewTheorems
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 46] -/
 theorem idempotent_count_4 : idempotentCount 4 = 2 := by native_decide
+
 
 
 theorem idempotent_count_5 : idempotentCount 5 = 2 := by native_decide
 
 
+
 theorem idempotent_count_10 : idempotentCount 10 = 4 := by native_decide
+
 
 
 theorem idempotent_count_12 : idempotentCount 12 = 4 := by native_decide
 
 
+
 theorem idempotent_count_15 : idempotentCount 15 = 4 := by native_decide
+
 
 
 theorem idempotent_count_210 : idempotentCount 210 = 16 := by native_decide
 
 
 
+
 theorem idem_meet {e f : R} (he : IsIdem e) (hf : IsIdem f) :
     IsIdem (e * f) := by
   unfold IsIdem at *; rw [mul_mul_mul_comm, he, hf]
+
 
 
 
@@ -48,15 +60,18 @@ theorem idem_join {e f : R} (he : IsIdem e) (hf : IsIdem f) :
 
 
 
+
 theorem idem_complement_orthogonal {e : R} (he : IsIdem e) :
     e * (1 - e) = 0 := by
   rw [ mul_sub, mul_one, he, sub_self ]
 
 
 
+
 theorem orthogonal_idem_sum {e f : R} (he : IsIdem e) (hf : IsIdem f) (hef : e * f = 0) :
     IsIdem (e + f) := by
   unfold IsIdem at *; ring_nf at *; simp_all +decide [ mul_assoc, mul_comm, mul_left_comm ] ;
+
 
 
 
@@ -68,11 +83,13 @@ structure CompleteOrthogonalSystem (n : ℕ) (R : Type*) [Ring R] where
 
 
 
+
 def trivialSystem : CompleteOrthogonalSystem 1 R where
   idems := fun _ => 1
   is_idem := fun _ => mul_one 1
   orthogonal := fun i j hij => absurd (Fin.ext_iff.mpr (by omega)) hij
   complete := by simp
+
 
 
 
@@ -84,10 +101,13 @@ theorem peirce_full_decomp {n : ℕ} (sys : CompleteOrthogonalSystem n R) (x : R
 
 
 
+
 theorem tropical_max_idem (a : ℝ) : max a a = a := max_self a
 
 
+
 theorem tropical_min_idem (a : ℝ) : min a a = a := min_self a
+
 
 
 
@@ -97,7 +117,9 @@ theorem tropical_max_distrib_min (a b c : ℝ) :
 
 
 
+
 def reluFn (x : ℝ) : ℝ := max 0 x
+
 
 
 
@@ -109,9 +131,11 @@ theorem reluFn_idem : ∀ x, reluFn (reluFn x) = reluFn x := by
 
 
 
+
 theorem reluFn_preserves_max (a b : ℝ) :
     reluFn (max a b) = max (reluFn a) (reluFn b) := by
   unfold reluFn; simp [max_assoc, max_comm, max_left_comm]
+
 
 
 
@@ -122,8 +146,10 @@ theorem reluFn_master : range reluFn = {x : ℝ | reluFn x = x} := by
 
 
 
+
 def vandermondeProd (n : ℕ) (v : Fin n → ℝ) : ℝ :=
   ∏ i : Fin n, ∏ j ∈ (Finset.univ.filter (· > i)), (v j - v i)
+
 
 
 
@@ -138,8 +164,10 @@ theorem vandermonde_collision {n : ℕ} (v : Fin n → ℝ)
 
 
 
+
 def gueJointDensity (n : ℕ) (v : Fin n → ℝ) : ℝ :=
   (vandermondeProd n v) ^ 2 * Real.exp (-∑ i : Fin n, v i ^ 2 / 2)
+
 
 
 
@@ -150,14 +178,17 @@ theorem gue_vanishes_collision {n : ℕ} (v : Fin n → ℝ)
 
 
 
+
 theorem gue_nonneg (n : ℕ) (v : Fin n → ℝ) : 0 ≤ gueJointDensity n v :=
   mul_nonneg (sq_nonneg _) (le_of_lt (Real.exp_pos _))
+
 
 
 
 structure MathBridge' (C D : Type*) [Category C] [Category D] where
   fwd : C ⥤ D
   bwd : D ⥤ C
+
 
 
 
@@ -168,9 +199,11 @@ def MathBridge'.comp {C D E : Type*} [Category C] [Category D] [Category E]
 
 
 
+
 def MathBridge'.idBridge (C : Type*) [Category C] : MathBridge' C C where
   fwd := 𝟭 C
   bwd := 𝟭 C
+
 
 
 
@@ -179,9 +212,11 @@ def MathBridge'.IsIdem {C : Type*} [Category C] (B : MathBridge' C C) : Prop :=
 
 
 
+
 theorem mathbridge_id_idempotent (C : Type*) [Category C] :
     (MathBridge'.idBridge C).IsIdem :=
   ⟨Functor.leftUnitor _⟩
+
 
 
 
@@ -192,10 +227,12 @@ structure KaroubiObj (C : Type*) [Category C] where
 
 
 
+
 structure KaroubiHom {C : Type*} [Category C] (X Y : KaroubiObj C) where
   hom : X.obj ⟶ Y.obj
   compat_left : X.idem ≫ hom = hom
   compat_right : hom ≫ Y.idem = hom
+
 
 
 
@@ -206,10 +243,12 @@ def karoubiEmbed {C : Type*} [Category C] (X : C) : KaroubiObj C where
 
 
 
+
 def karoubiId {C : Type*} [Category C] (X : KaroubiObj C) : KaroubiHom X X where
   hom := X.idem
   compat_left := X.idem_eq
   compat_right := X.idem_eq
+
 
 
 
@@ -218,7 +257,9 @@ def idemLE (e f : R) : Prop :=
 
 
 
+
 theorem idemLE_refl (e : R) (he : e * e = e) : idemLE e e := ⟨he, he, he, he⟩
+
 
 
 
@@ -238,13 +279,16 @@ theorem idemLE_trans (e f g : R)
 
 
 
+
 theorem idemLE_zero (e : R) (he : e * e = e) : idemLE 0 e :=
   ⟨by simp, he, by simp, by simp⟩
 
 
 
+
 theorem idemLE_one (e : R) (he : e * e = e) : idemLE e 1 :=
   ⟨he, one_mul 1, mul_one e, one_mul e⟩
+
 
 
 
@@ -254,9 +298,11 @@ def tropicalFourier {G : Type*} [Fintype G] [Nonempty G] [DecidableEq G]
 
 
 
+
 theorem idem_identity_on_image {X : Type*} (O : X → X) (hO : ∀ x, O (O x) = O x)
     (y : X) (hy : y ∈ range O) : O y = y := by
   rw [master_equation' O hO] at hy; exact hy
+
 
 
 
@@ -269,16 +315,20 @@ theorem idem_comp_comm {X : Type*} (O₁ O₂ : X → X)
 
 
 
+
 theorem image_comp_subset {X : Type*} (O₁ O₂ : X → X) :
     range (O₁ ∘ O₂) ⊆ range O₁ := by
   rintro y ⟨x, rfl⟩; exact ⟨O₂ x, rfl⟩
 
 
 
+
 theorem inf_universal_idem {S : Type*} [SemilatticeInf S] (a : S) : a ⊓ a = a := inf_idem a
 
 
+
 theorem sup_universal_idem {S : Type*} [SemilatticeSup S] (a : S) : a ⊔ a = a := sup_idem a
+
 
 
 

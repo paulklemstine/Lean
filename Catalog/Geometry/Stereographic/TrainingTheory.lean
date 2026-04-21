@@ -1,5 +1,3 @@
-import Mathlib
-
 /-! # CatalogBuild.Geometry.Stereographic.TrainingTheory
 
 Auto-generated from theorem catalog database.
@@ -7,12 +5,14 @@ Domain: Geometry/Stereographic
 Declarations: 13
 -/
 
+import Mathlib
 
 noncomputable section
 
 /-- The stereographic conformal factor. -/
 def stereoConfFactor' (d : ℕ) (x : Fin d → ℝ) : ℝ :=
   2 / (1 + ∑ i, (x i) ^ 2)
+
 
 
 
@@ -25,11 +25,17 @@ def stereoLearningRate (baseRate : ℝ) (step : ℕ) : ℝ :=
 
 
 
+
+/-- [Section: # CatalogBuild.Geometry.Stereographic.TrainingTheory
+Auto-generated from theorem catalog database.
+Domain: Geometry/Stereographic
+Declarations: 13] -/
 theorem stereoLearningRate_pos (baseRate : ℝ) (step : ℕ)
     (hb : 0 < baseRate) :
     0 < stereoLearningRate baseRate step := by
   unfold stereoLearningRate
   positivity
+
 
 
 
@@ -43,7 +49,9 @@ theorem stereoLearningRate_decreasing (baseRate : ℝ) (s t : ℕ)
 
 
 
+
 def stereoEffectiveDim (n : ℕ) : ℕ := n + 1
+
 
 
 
@@ -52,8 +60,10 @@ theorem stereoEffectiveDim_gt (n : ℕ) : n < stereoEffectiveDim n := by
 
 
 
+
 theorem stereo_capacity_lower_bound (n : ℕ) :
     stereoEffectiveDim n = n + 1 := rfl
+
 
 
 
@@ -62,8 +72,10 @@ def standardGradMagnitude (qNorm kNorm sqrtD : ℝ) : ℝ :=
 
 
 
+
 def stereoGradMagnitude (d : ℕ) (x : Fin d → ℝ) : ℝ :=
   stereoConfFactor' d x
+
 
 
 
@@ -75,10 +87,12 @@ theorem stereo_gradient_advantage (d : ℕ) (x : Fin d → ℝ) :
 
 
 
+
 theorem standard_gradient_unbounded (R : ℝ) (hR : 1 ≤ R) :
     ∃ (qNorm kNorm : ℝ), qNorm ≤ R ∧ kNorm ≤ R ∧
     R ≤ standardGradMagnitude qNorm kNorm 1 := by
   exact ⟨R, 1, le_refl _, hR, by unfold standardGradMagnitude; simp⟩
+
 
 
 
@@ -90,10 +104,12 @@ def sphericalRegularizer (seqLen d : ℕ) (X : Fin seqLen → Fin d → ℝ)
 
 
 
+
 theorem sphericalRegularizer_nonneg (seqLen d : ℕ) (X : Fin seqLen → Fin d → ℝ)
     (invStereo : (Fin d → ℝ) → Fin (d + 1) → ℝ) :
     0 ≤ sphericalRegularizer seqLen d X invStereo := by
   unfold sphericalRegularizer; positivity
+
 
 
 

@@ -13,10 +13,12 @@ def pythRotation (a b : ℤ) : Matrix (Fin 2) (Fin 2) ℤ :=
 
 
 
+
 /-- The determinant of a Pythagorean rotation matrix is a² + b². -/
 theorem det_pythRotation (a b : ℤ) :
     Matrix.det (pythRotation a b) = a ^ 2 + b ^ 2 := by
   simp [pythRotation, Matrix.det_fin_two]; ring
+
 
 
 
@@ -27,10 +29,12 @@ theorem det_pythRotation_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 /-- The transpose of a Pythagorean rotation matrix. -/
 theorem pythRotation_transpose (a b : ℤ) :
     (pythRotation a b)ᵀ = pythRotation a (-b) := by
   ext i j; fin_cases i <;> fin_cases j <;> simp [pythRotation, Matrix.transpose_apply]
+
 
 
 
@@ -39,6 +43,7 @@ theorem pythRotation_mul (a b c d : ℤ) :
     pythRotation a b * pythRotation c d = pythRotation (a*c - b*d) (a*d + b*c) := by
   ext i j; fin_cases i <;> fin_cases j <;>
     simp [pythRotation, Matrix.mul_apply, Fin.sum_univ_two]; ring
+
 
 
 
@@ -51,9 +56,11 @@ theorem pythRotation_product_pyth (a b c d r s : ℤ)
 
 
 
+
 /-- The identity rotation is pythRotation 1 0. -/
 theorem pythRotation_one : pythRotation 1 0 = (1 : Matrix (Fin 2) (Fin 2) ℤ) := by
   ext i j; fin_cases i <;> fin_cases j <;> simp [pythRotation]
+
 
 
 
@@ -63,6 +70,7 @@ theorem pythRotation_inv (a b : ℤ) :
   rw [pythRotation_mul]
   ext i j; fin_cases i <;> fin_cases j <;>
     simp [pythRotation, Matrix.smul_apply, Matrix.one_apply]; ring
+
 
 
 
@@ -76,9 +84,11 @@ structure BerggrenGate where
 
 
 
+
 /-- The integer-scaled matrix representation. -/
 def BerggrenGate.toMatrix (g : BerggrenGate) : Matrix (Fin 2) (Fin 2) ℤ :=
   pythRotation g.a g.b
+
 
 
 
@@ -89,8 +99,10 @@ theorem BerggrenGate.det_eq (g : BerggrenGate) :
 
 
 
+
 /-- The root gate from (3,4,5). -/
 def rootGate : BerggrenGate := ⟨3, 4, 5, by norm_num, by norm_num⟩
+
 
 
 
@@ -99,13 +111,16 @@ def gate_5_12_13 : BerggrenGate := ⟨5, 12, 13, by norm_num, by norm_num⟩
 
 
 
+
 /-- Gate from (8,15,17). -/
 def gate_8_15_17 : BerggrenGate := ⟨8, 15, 17, by norm_num, by norm_num⟩
 
 
 
+
 /-- Gate from (7,24,25). -/
 def gate_7_24_25 : BerggrenGate := ⟨7, 24, 25, by norm_num, by norm_num⟩
+
 
 
 
@@ -117,6 +132,7 @@ def R_345 : Matrix (Fin 2) (Fin 2) ℤ := pythRotation 3 4
 
 
 
+
 /-- R(3,4)² = R(-7, 24). The triple (7, 24, 25). -/
 theorem R345_squared :
     pythRotation 3 4 * pythRotation 3 4 = pythRotation (-7) 24 := by
@@ -124,8 +140,10 @@ theorem R345_squared :
 
 
 
+
 /-- (-7)² + 24² = 625 = 25² -/
 theorem R345_squared_pyth : (-7 : ℤ)^2 + 24^2 = 25^2 := by norm_num
+
 
 
 
@@ -136,8 +154,10 @@ theorem R345_cubed :
 
 
 
+
 /-- 117² + 44² = 15625 = 125² -/
 theorem R345_cubed_norm : (117 : ℤ)^2 + 44^2 = 125^2 := by norm_num
+
 
 
 
@@ -148,8 +168,10 @@ theorem compose_345_51213 :
 
 
 
+
 /-- (-33)² + 56² = 4225 = 65² = (5·13)² -/
 theorem compose_345_51213_pyth : (-33 : ℤ)^2 + 56^2 = 65^2 := by norm_num
+
 
 
 
@@ -158,9 +180,11 @@ def onLightCone (a b c : ℤ) : Prop := a^2 + b^2 - c^2 = 0
 
 
 
+
 /-- The root triple (3,4,5) is on the light cone. -/
 theorem root_on_light_cone : onLightCone 3 4 5 := by
   simp [onLightCone]; norm_num
+
 
 
 
@@ -171,10 +195,12 @@ theorem berggren_M1_preserves_cone (a b c : ℤ) (h : onLightCone a b c) :
 
 
 
+
 /-- Berggren M₂ preserves the light cone. -/
 theorem berggren_M2_preserves_cone (a b c : ℤ) (h : onLightCone a b c) :
     onLightCone (a + 2*b + 2*c) (2*a + b + 2*c) (2*a + 2*b + 3*c) := by
   simp only [onLightCone] at *; nlinarith
+
 
 
 
@@ -185,13 +211,16 @@ theorem berggren_M3_preserves_cone (a b c : ℤ) (h : onLightCone a b c) :
 
 
 
+
 /-- Pauli X matrix. -/
 def pauli_X' : Matrix (Fin 2) (Fin 2) ℤ := !![0, 1; 1, 0]
 
 
 
+
 /-- Pauli Z matrix. -/
 def pauli_Z' : Matrix (Fin 2) (Fin 2) ℤ := !![1, 0; 0, -1]
+
 
 
 
@@ -203,11 +232,13 @@ theorem pauliX_conjugate_pythRot (a b : ℤ) :
 
 
 
+
 /-- Z conjugation inverts rotation: Z · R(a,b) · Z = R(a,-b). -/
 theorem pauliZ_conjugate_pythRot (a b : ℤ) :
     pauli_Z' * pythRotation a b * pauli_Z' = pythRotation a (-b) := by
   ext i j; fin_cases i <;> fin_cases j <;>
     simp [pauli_Z', pythRotation, Matrix.mul_apply, Fin.sum_univ_two]; ring
+
 
 
 
@@ -219,10 +250,12 @@ theorem pauli_conjugation_inverts (a b : ℤ) :
 
 
 
+
 /-- The trace of a Pythagorean rotation is 2a. -/
 theorem trace_pythRotation (a b : ℤ) :
     Matrix.trace (pythRotation a b) = 2 * a := by
   simp [pythRotation, Matrix.trace, Fin.sum_univ_two]; ring
+
 
 
 
@@ -234,8 +267,10 @@ theorem trace_composition (a₁ b₁ a₂ b₂ : ℤ) :
 
 
 
+
 /-- The norm squared of a Gaussian integer pair. -/
 def gaussNormSq (a b : ℤ) : ℤ := a^2 + b^2
+
 
 
 
@@ -247,10 +282,12 @@ theorem gaussNormSq_mul (a₁ b₁ a₂ b₂ : ℤ) :
 
 
 
+
 /-- Evaluate a single-qubit Berggren circuit. -/
 def evalBerggrenCircuit1 : List BerggrenGate → Matrix (Fin 2) (Fin 2) ℤ
   | [] => 1
   | g :: gs => g.toMatrix * evalBerggrenCircuit1 gs
+
 
 
 
@@ -264,11 +301,13 @@ theorem det_evalBerggrenCircuit1 (gs : List BerggrenGate) :
 
 
 
+
 /-- Circuit composition = Gaussian integer product. -/
 theorem circuit_composition_formula (g₁ g₂ : BerggrenGate) :
     evalBerggrenCircuit1 [g₁, g₂] =
     pythRotation (g₁.a * g₂.a - g₁.b * g₂.b) (g₁.a * g₂.b + g₁.b * g₂.a) := by
   simp [evalBerggrenCircuit1, BerggrenGate.toMatrix, pythRotation_mul]
+
 
 
 
@@ -278,6 +317,7 @@ def controlledBerggrenGate (g : BerggrenGate) : Matrix (Fin 4) (Fin 4) ℤ :=
      0,   g.c, 0,    0;
      0,   0,   g.a, -g.b;
      0,   0,   g.b,  g.a]
+
 
 
 
@@ -294,10 +334,12 @@ theorem det_controlledBerggrenGate (g : BerggrenGate) :
 
 
 
+
 /-- A Pythagorean rotation over 𝔽_p = ZMod p. -/
 def pythRotation_mod (a b : ℤ) (p : ℕ) : Matrix (Fin 2) (Fin 2) (ZMod p) :=
   !![((a : ℤ) : ZMod p), ((-b : ℤ) : ZMod p);
      ((b : ℤ) : ZMod p), ((a : ℤ) : ZMod p)]
+
 
 
 
@@ -307,15 +349,18 @@ def berggren_rot_M1 (a b c : ℤ) : ℤ × ℤ × ℤ :=
 
 
 
+
 /-- Berggren M₂ transformation. -/
 def berggren_rot_M2 (a b c : ℤ) : ℤ × ℤ × ℤ :=
   (a + 2*b + 2*c, 2*a + b + 2*c, 2*a + 2*b + 3*c)
 
 
 
+
 /-- Berggren M₃ transformation. -/
 def berggren_rot_M3 (a b c : ℤ) : ℤ × ℤ × ℤ :=
   (-a + 2*b + 2*c, -2*a + b + 2*c, -2*a + 2*b + 3*c)
+
 
 
 
@@ -326,6 +371,7 @@ def berggrenRotations : List (ℤ × ℤ × ℤ) :=
   root :: level1
 
 #eval berggrenRotations
+
 
 
 
@@ -345,12 +391,14 @@ def rotationPowers (a₀ b₀ : ℤ) (N : ℕ) : List (ℤ × ℤ) :=
 
 
 
+
 /-- The "Cayley parameter" of a Pythagorean rotation:
 τ = (a + bi)/c maps to the unit circle. -/
 def cayleyParam (a b c : ℤ) : ℚ × ℚ :=
   ((a : ℚ) / (c : ℚ), (b : ℚ) / (c : ℚ))
 
 #eval berggrenRotations.map fun (a, b, c) => cayleyParam a b c
+
 
 
 
@@ -364,5 +412,6 @@ def matrixOrder (M : Matrix (Fin 2) (Fin 2) ℤ) (p : ℕ) (maxIter : ℕ := 200
       if current = 1 then maxIter - n
       else go n (M_mod * current)
   go maxIter M_mod
+
 
 

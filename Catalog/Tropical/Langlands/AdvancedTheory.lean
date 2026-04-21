@@ -15,10 +15,12 @@ def tropOrbitalIntegral (f : ℝ → ℝ) (gamma : ℝ) : ℝ :=
 
 
 
+
 /-- Tropical orbital integral simplifies when f is translation-invariant -/
 theorem tropOrbitalIntegral_simp (f : ℝ → ℝ) (gamma : ℝ) :
     tropOrbitalIntegral f gamma = ⨅ _ : ℝ, f gamma := by
   simp [tropOrbitalIntegral, add_sub_cancel_left]
+
 
 
 
@@ -28,9 +30,11 @@ def tropSpectralSide (eigenvalues : Finset ℝ) (f : ℝ → ℝ) : ℝ :=
 
 
 
+
 /-- Geometric side of the tropical trace formula for GL_1 -/
 def tropGeometricSide (conjugacyClasses : Finset ℝ) (f : ℝ → ℝ) : ℝ :=
   ⨅ gamma ∈ conjugacyClasses, f gamma
+
 
 
 
@@ -39,6 +43,7 @@ theorem tropTraceFormula_GL1
     (S : Finset ℝ) (f : ℝ → ℝ) :
     tropSpectralSide S f = tropGeometricSide S f := by
   simp [tropSpectralSide, tropGeometricSide]
+
 
 
 
@@ -53,6 +58,7 @@ structure TropicalLHomomorphism (m n : ℕ) where
 
 
 
+
 /-- The symmetric power L-homomorphism: GL_2 → GL_{n+1}
 sends Satake parameters (a, b) to (na, (n-1)a+b, ..., nb) -/
 def tropSymPower (n : ℕ) : (Fin 2 → ℝ) → (Fin (n + 1) → ℝ) :=
@@ -60,6 +66,7 @@ def tropSymPower (n : ℕ) : (Fin 2 → ℝ) → (Fin (n + 1) → ℝ) :=
     let a := params 0
     let b := params 1
     (n - i.val) * a + i.val * b
+
 
 
 
@@ -75,11 +82,13 @@ theorem tropSymPower_ordered (n : ℕ) (params : Fin 2 → ℝ)
 
 
 
+
 /-- A tropical representation of the graph's fundamental group -/
 structure TropicalRepresentation (G : MetricGraph) (n : ℕ) where
   generators : Fin G.vertices → (Fin n → ℝ) → (Fin n → ℝ)
   is_translation : ∀ v, ∃ shift : Fin n → ℝ,
     ∀ x : Fin n → ℝ, generators v x = fun i => x i + shift i
+
 
 
 
@@ -89,9 +98,11 @@ structure TropicalLineBundle (G : MetricGraph) where
 
 
 
+
 /-- The degree of a tropical line bundle -/
 def TropicalLineBundle.degree (G : MetricGraph) (L : TropicalLineBundle G) : ℤ :=
   ∑ v : Fin G.vertices, L.degree_at v
+
 
 
 
@@ -104,6 +115,11 @@ def tropEquivalent (G : MetricGraph) (D1 D2 : TropicalLineBundle G) : Prop :=
 
 
 
+
+/-- [Section: # CatalogBuild.Tropical.Langlands.AdvancedTheory
+Auto-generated from theorem catalog database.
+Domain: Tropical/Langlands
+Declarations: 24] -/
 theorem tropEquiv_same_degree (G : MetricGraph) (D1 D2 : TropicalLineBundle G)
     (h : tropEquivalent G D1 D2) :
     TropicalLineBundle.degree G D1 = TropicalLineBundle.degree G D2 := by
@@ -118,6 +134,7 @@ theorem tropEquiv_same_degree (G : MetricGraph) (D1 D2 : TropicalLineBundle G)
 
 
 
+
 /-- Finite Kantorovich problem: optimal transport between finitely supported measures -/
 def kantorovichCost (n m : ℕ) (c : Fin n → Fin m → ℝ)
     (coupling : Fin n → Fin m → ℝ) : ℝ :=
@@ -125,10 +142,12 @@ def kantorovichCost (n m : ℕ) (c : Fin n → Fin m → ℝ)
 
 
 
+
 /-- Kantorovich dual objective -/
 def kantorovichDual (n m : ℕ) (phi : Fin n → ℝ) (psi : Fin m → ℝ)
     (mu : Fin n → ℝ) (nu : Fin m → ℝ) : ℝ :=
   ∑ i : Fin n, phi i * mu i + ∑ j : Fin m, psi j * nu j
+
 
 
 
@@ -149,9 +168,11 @@ theorem kantorovich_weak_duality
 
 
 
+
 /-- Tropical norm map for a degree-d covering of metric graphs -/
 def tropNormMap (d : ℕ) (f : Fin d → ℝ) : ℝ :=
   ∑ i : Fin d, f i
+
 
 
 
@@ -161,14 +182,17 @@ theorem tropNormMap_additive (d : ℕ) (f g : Fin d → ℝ) :
 
 
 
+
 /-- Tropical local Langlands for GL_1: the identity correspondence -/
 def tropLocalLanglands_GL1 : ℝ → ℝ := id
+
 
 
 
 /-- Tropical local Langlands for GL_1 is a bijection -/
 theorem tropLocalLanglands_GL1_bijective : Function.Bijective tropLocalLanglands_GL1 :=
   Function.bijective_id
+
 
 
 
@@ -179,9 +203,11 @@ theorem tropLocalLanglands_GL1_preserves_L (s a : ℝ) :
 
 
 
+
 /-- Chip-firing Laplacian on a complete graph K_n -/
 def chipFireLaplacian (n : ℕ) (f : Fin n → ℝ) : Fin n → ℝ :=
   fun v => (n - 1) * f v - ∑ w : Fin n, if v = w then 0 else f w
+
 
 
 
@@ -193,12 +219,14 @@ theorem chipFire_constant_kernel (n : ℕ) (c : ℝ) :
 
 
 
+
 theorem chipFire_selfadjoint (n : ℕ) (f g : Fin n → ℝ) :
     ∑ v : Fin n, f v * chipFireLaplacian n g v =
     ∑ v : Fin n, chipFireLaplacian n f v * g v := by
   simp +decide only [chipFireLaplacian, mul_comm];
   simp +decide [ mul_sub, Finset.sum_ite, Finset.filter_ne ];
   simp +decide only [← sum_mul, mul_left_comm, mul_comm]
+
 
 
 

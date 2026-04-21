@@ -16,11 +16,13 @@ theorem swap_order_two {n : Type*} [DecidableEq n]
 
 
 
+
 /-- Transpositions are self-inverse. -/
 theorem swap_involutive {n : Type*} [DecidableEq n]
     (a b : n) : (Equiv.swap a b)⁻¹ = Equiv.swap a b := by
   have h := Equiv.swap_mul_self a b
   exact mul_left_cancel (a := Equiv.swap a b) (by rw [h, mul_inv_cancel])
+
 
 
 
@@ -31,9 +33,11 @@ theorem bubble_sort_swaps_bound (n : ℕ) : n * (n - 1) / 2 ≤ n * n := by
 
 
 
+
 /-- Parallel execution reduces depth: n parallel layers suffice. -/
 theorem parallel_depth (n : ℕ) (hn : 1 ≤ n) : n ≤ n * n :=
   Nat.le_mul_of_pos_right n hn
+
 
 
 
@@ -43,8 +47,10 @@ theorem quantum_speedup (n : ℕ) (hn : 0 < n) : n * n / n = n :=
 
 
 
+
 /-- k qubits give 2^k states. -/
 theorem qubit_space_dimension (k : ℕ) : 0 < 2 ^ k := by positivity
+
 
 
 
@@ -57,10 +63,12 @@ theorem exp_dominates_linear (k : ℕ) (hk : 1 ≤ k) : k < 2 ^ k := by
 
 
 
+
 /-- For any n, there exist enough qubits to represent n states. -/
 theorem sufficient_qubits (n : ℕ) (_hn : 0 < n) :
     ∃ k : ℕ, n ≤ 2 ^ k :=
   ⟨n, (Nat.lt_pow_self (by norm_num : 1 < 2)).le⟩
+
 
 
 
@@ -71,10 +79,12 @@ theorem perm_bijective {n : Type*} [DecidableEq n] [Fintype n]
 
 
 
+
 /-- Permutations preserve the cardinality of sets (orthogonality). -/
 theorem perm_preserves_card {n : Type*} [DecidableEq n] [Fintype n]
     (σ : Perm n) (s : Finset n) : (s.image σ).card = s.card :=
   s.card_image_of_injective σ.injective
+
 
 
 
@@ -85,10 +95,12 @@ theorem perm_inverse_identity {n : Type*} [DecidableEq n] [Fintype n]
 
 
 
+
 /-- The inverse of the inverse is the original permutation. -/
 theorem inverse_involutive {n : Type*} [DecidableEq n] [Fintype n]
     (σ : Perm n) : (σ⁻¹)⁻¹ = σ :=
   inv_inv σ
+
 
 
 
@@ -97,6 +109,7 @@ theorem multi_head_gate_bound (H n : ℕ) (hn : 1 ≤ n) :
     H * n ≤ H * (n * n) := by
   apply Nat.mul_le_mul_left
   exact Nat.le_mul_of_pos_right n hn
+
 
 
 
@@ -114,6 +127,7 @@ theorem crystallized_transformer_structure (n L H : ℕ)
 
 
 
+
 /-- The composed permutation is still a permutation (trivially, since Perm is a type). -/
 theorem composed_is_perm {n : Type*} [DecidableEq n] [Fintype n]
     (σ τ : Perm n) : Function.Bijective (σ * τ) :=
@@ -121,10 +135,12 @@ theorem composed_is_perm {n : Type*} [DecidableEq n] [Fintype n]
 
 
 
+
 /-- Compilation preserves invertibility: the compiled circuit can be reversed. -/
 theorem compiled_reversible {n : Type*} [DecidableEq n] [Fintype n]
     (σ : Perm n) : σ * σ⁻¹ = 1 ∧ σ⁻¹ * σ = 1 :=
   ⟨mul_inv_cancel σ, inv_mul_cancel σ⟩
+
 
 
 

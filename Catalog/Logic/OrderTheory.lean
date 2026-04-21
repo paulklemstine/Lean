@@ -16,9 +16,15 @@ theorem distrib_lattice_meet_sup' {α : Type*} [DistribLattice α] (a b c : α) 
 
 
 
+
+/-- [Section: # CatalogBuild.Logic.OrderTheory
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 9] -/
 theorem modular_law' {α : Type*} [Lattice α] [IsModularLattice α]
     (a b c : α) (h : a ≤ c) : a ⊔ (b ⊓ c) = (a ⊔ b) ⊓ c :=
   (sup_inf_assoc_of_le b h).symm
+
 
 
 
@@ -27,8 +33,10 @@ theorem complement_unique' {α : Type*} [BooleanAlgebra α] (a : α) :
 
 
 
+
 theorem double_complement' {α : Type*} [BooleanAlgebra α] (a : α) :
     aᶜᶜ = a := compl_compl a
+
 
 
 
@@ -37,8 +45,10 @@ theorem demorgan_inf' {α : Type*} [BooleanAlgebra α] (a b : α) :
 
 
 
+
 theorem demorgan_sup' {α : Type*} [BooleanAlgebra α] (a b : α) :
     (a ⊔ b)ᶜ = aᶜ ⊓ bᶜ := compl_sup
+
 
 
 
@@ -48,13 +58,16 @@ theorem knaster_tarski_lfp' {α : Type*} [CompleteLattice α] (f : α → α)
 
 
 
+
 theorem knaster_tarski_gfp' {α : Type*} [CompleteLattice α] (f : α → α)
     (hf : Monotone f) : f (OrderHom.gfp ⟨f, hf⟩) = OrderHom.gfp ⟨f, hf⟩ :=
   (OrderHom.isGreatest_gfp ⟨f, hf⟩).1
 
 
 
+
 theorem nat_well_order' (S : Set ℕ) (hS : S.Nonempty) : ∃ m ∈ S, ∀ n ∈ S, m ≤ n :=
   ⟨sInf S, Nat.sInf_mem hS, fun n hn => Nat.sInf_le hn⟩
+
 
 

@@ -14,6 +14,7 @@ def modelScalingLoss (baseline : ℝ) (modelSize : ℕ) : ℝ :=
   baseline / (↑modelSize + 1)
 
 
+
 /-- [Section: ## §1. Scaling Law Basics] -/
 theorem larger_model_lower_loss (b : ℝ) (n1 n2 : ℕ) (hb : 0 ≤ b) (hn : n1 ≤ n2) :
     modelScalingLoss b n2 ≤ modelScalingLoss b n1 := by
@@ -24,14 +25,21 @@ theorem larger_model_lower_loss (b : ℝ) (n1 n2 : ℕ) (hb : 0 ≤ b) (hn : n1 
     linarith
 
 
+
+/-- [Section: # CatalogBuild.EML.AIResearch.ScalingLawsTheory
+Auto-generated from theorem catalog database.
+Domain: EML/AIResearch
+Declarations: 14] -/
 theorem scaling_loss_nonneg (b : ℝ) (n : ℕ) (hb : 0 ≤ b) :
     0 ≤ modelScalingLoss b n := by
   unfold modelScalingLoss; positivity
 
 
+
 /-- [Section: ## §2. Data Scaling] -/
 def dataScalingLoss (baseline : ℝ) (dataSize : ℕ) : ℝ :=
   baseline / (↑dataSize + 1)
+
 
 
 theorem more_data_lower_loss (b : ℝ) (d1 d2 : ℕ) (hb : 0 ≤ b) (hd : d1 ≤ d2) :
@@ -43,9 +51,11 @@ theorem more_data_lower_loss (b : ℝ) (d1 d2 : ℕ) (hb : 0 ≤ b) (hd : d1 ≤
     linarith
 
 
+
 theorem eml_less_flops (p_eml p_std dt : ℕ) (hp : p_eml ≤ p_std) :
     trainingFLOPs p_eml dt ≤ trainingFLOPs p_std dt := by
   unfold trainingFLOPs; nlinarith
+
 
 
 theorem more_data_more_flops (mp d1 d2 : ℕ) (hd : d1 ≤ d2) :
@@ -53,8 +63,10 @@ theorem more_data_more_flops (mp d1 d2 : ℕ) (hd : d1 ≤ d2) :
   unfold trainingFLOPs; nlinarith
 
 
+
 /-- [Section: ## §4. Inference Cost] -/
 def inferenceCostPerToken (modelParams : ℕ) : ℕ := 2 * modelParams
+
 
 
 theorem eml_cheaper_inference (p_eml p_std : ℕ) (hp : p_eml ≤ p_std) :
@@ -62,14 +74,17 @@ theorem eml_cheaper_inference (p_eml p_std : ℕ) (hp : p_eml ≤ p_std) :
   unfold inferenceCostPerToken; omega
 
 
+
 def totalInferenceCost (numTokens modelParams : ℕ) : ℕ :=
   numTokens * inferenceCostPerToken modelParams
+
 
 
 theorem eml_total_inference_cheaper (nt p_eml p_std : ℕ) (hp : p_eml ≤ p_std) :
     totalInferenceCost nt p_eml ≤ totalInferenceCost nt p_std := by
   unfold totalInferenceCost
   exact Nat.mul_le_mul_left nt (eml_cheaper_inference p_eml p_std hp)
+
 
 
 /-- [Section: ## §5. Compute-Optimal Allocation] -/
@@ -79,13 +94,16 @@ theorem smaller_model_needs_less_data (mp1 mp2 targetRatio : ℕ)
   exact Nat.mul_le_mul_left targetRatio hm
 
 
+
 /-- [Section: ## §6. Emergent Capabilities] -/
 def hasCapability (modelSize threshold : ℕ) : Prop := threshold ≤ modelSize
+
 
 
 theorem larger_model_more_capable (t n1 n2 : ℕ) (hn : n1 ≤ n2)
     (h1 : hasCapability n1 t) : hasCapability n2 t := by
   unfold hasCapability at *; omega
+
 
 
 end

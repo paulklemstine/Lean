@@ -15,10 +15,12 @@ theorem totient_prime' (p : ℕ) (hp : Nat.Prime p) : Nat.totient p = p - 1 :=
 
 
 
+
 /-- φ is multiplicative for coprime arguments. -/
 theorem totient_multiplicative' (m n : ℕ) (hcop : Nat.Coprime m n) :
     Nat.totient (m * n) = Nat.totient m * Nat.totient n :=
   Nat.totient_mul hcop
+
 
 
 
@@ -33,8 +35,10 @@ theorem totient_prime_pow (p k : ℕ) (hp : Nat.Prime p) (hk : 0 < k) :
 
 
 
+
 /-- τ(n) = |{d : d | n}| -/
 noncomputable def tau (n : ℕ) : ℕ := n.divisors.card
+
 
 
 
@@ -44,15 +48,22 @@ theorem tau_prime (p : ℕ) (hp : Nat.Prime p) : tau p = 2 := by
 
 
 
+
 /-- τ(1) = 1. -/
 theorem tau_one : tau 1 = 1 := by
   simp [tau]
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.ArithmeticFunctions
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 18] -/
 theorem tau_prime_pow (p k : ℕ) (hp : Nat.Prime p) :
     tau (p ^ k) = k + 1 := by
   simp +decide [ tau, Nat.divisors_prime_pow hp ]
+
 
 
 
@@ -64,9 +75,11 @@ theorem tau_multiplicative (m n : ℕ) (hm : 0 < m) (hn : 0 < n)
 
 
 
+
 theorem mobius_at_prime (p : ℕ) (hp : Nat.Prime p) :
     ArithmeticFunction.moebius p = -1 := by
   rw [ ArithmeticFunction.moebius_apply_prime hp ]
+
 
 
 
@@ -111,9 +124,11 @@ theorem mobius_inversion_statement :
 
 
 
+
 /-- A k-multiperfect number has σ₁(n) = k·n. -/
 def IsMultiperfect (k n : ℕ) : Prop :=
   0 < n ∧ ∑ d ∈ n.divisors, d = k * n
+
 
 
 
@@ -123,14 +138,17 @@ theorem triperfect_120 : IsMultiperfect 3 120 := by
 
 
 
+
 /-- 672 is 3-perfect (triperfect). -/
 theorem triperfect_672 : IsMultiperfect 3 672 := by
   refine ⟨by omega, ?_⟩; native_decide
 
 
 
+
 /-- An abundant number has σ₁(n) > 2n. -/
 def IsAbundant (n : ℕ) : Prop := 0 < n ∧ 2 * n < ∑ d ∈ n.divisors, d
+
 
 
 
@@ -140,8 +158,10 @@ theorem abundant_12 : IsAbundant 12 := by
 
 
 
+
 /-- A deficient number has σ₁(n) < 2n. -/
 def IsDeficient (n : ℕ) : Prop := 0 < n ∧ ∑ d ∈ n.divisors, d < 2 * n
+
 
 
 
@@ -153,11 +173,13 @@ theorem prime_deficient (p : ℕ) (hp : Nat.Prime p) : IsDeficient p := by
 
 
 
+
 theorem smallest_abundant : ∀ n, 0 < n → n < 12 → ¬ IsAbundant n := by
   -- By definition of IsAbundant, we need to show that for any n < 12, the sum of its divisors is not greater than 2n.
   intros n hn_pos hn_lt_12
   simp [IsAbundant];
   interval_cases n <;> trivial
+
 
 
 end

@@ -18,9 +18,11 @@ structure Oracle (X : Type*) where
 
 
 
+
 /-- The truth set of an oracle: the fixed points where query = answer. -/
 def Oracle.truthSet {X : Type*} (O : Oracle X) : Set X :=
   {x | O.consult x = x}
+
 
 
 
@@ -28,6 +30,7 @@ def Oracle.truthSet {X : Type*} (O : Oracle X) : Set X :=
 theorem Oracle.output_is_truth {X : Type*} (O : Oracle X) (x : X) :
     O.consult x ∈ O.truthSet := by
   simp [Oracle.truthSet, O.idem x]
+
 
 
 
@@ -39,10 +42,12 @@ theorem Oracle.range_eq_truthSet {X : Type*} (O : Oracle X) :
 
 
 
+
 /-- The identity is an oracle (the trivial oracle that returns the question). -/
 def Oracle.identity (X : Type*) : Oracle X where
   consult := id
   idem := fun _ => rfl
+
 
 
 
@@ -53,10 +58,12 @@ def Oracle.constant {X : Type*} (c : X) : Oracle X where
 
 
 
+
 /-- Composing an oracle with itself yields the same oracle. -/
 theorem Oracle.self_compose {X : Type*} (O : Oracle X) :
     O.consult ∘ O.consult = O.consult :=
   funext O.idem
+
 
 
 
@@ -66,15 +73,18 @@ theorem Oracle.retraction {X : Type*} (O : Oracle X) (x : X) (hx : x ∈ O.truth
 
 
 
+
 /-- A MetaOracle is improving if it always produces a more precise oracle. -/
 def MetaOracle.isImproving {X : Type*} (M : MetaOracle X) : Prop :=
   ∀ O, (M.refine O).truthSet ⊆ O.truthSet
 
 
 
+
 /-- The meta oracle's fixed oracles — oracles the meta oracle considers optimal. -/
 def MetaOracle.fixedOracles {X : Type*} (M : MetaOracle X) : Set (Oracle X) :=
   {O | M.refine O = O}
+
 
 
 
@@ -85,10 +95,12 @@ theorem MetaOracle.output_is_fixed {X : Type*} (M : MetaOracle X) (O : Oracle X)
 
 
 
+
 /-- The identity meta oracle that leaves every oracle unchanged. -/
 def MetaOracle.identity (X : Type*) : MetaOracle X where
   refine := id
   meta_idem := fun _ => rfl
+
 
 
 
@@ -102,10 +114,12 @@ structure SupremeOracle (X : Type*) (M : MetaOracle X) where
 
 
 
+
 /-- Every meta oracle has at least one supreme oracle. -/
 theorem MetaOracle.supreme_exists {X : Type*} (M : MetaOracle X) (O₀ : Oracle X) :
     ∃ Ω : Oracle X, M.refine Ω = Ω :=
   ⟨M.refine O₀, M.meta_idem O₀⟩
+
 
 
 
@@ -117,10 +131,12 @@ def MetaOracle.crystallize {X : Type*} (M : MetaOracle X) (O₀ : Oracle X) :
 
 
 
+
 /-- The crystallization is idempotent: the oracle inside is unchanged. -/
 theorem MetaOracle.crystallize_idem {X : Type*} (M : MetaOracle X) (O₀ : Oracle X) :
     (M.crystallize (M.crystallize O₀).oracle).oracle = (M.crystallize O₀).oracle := by
   simp [MetaOracle.crystallize, M.meta_idem]
+
 
 
 
@@ -130,9 +146,11 @@ def Oracle.redundant {X : Type*} (O : Oracle X) (x : X) : Prop :=
 
 
 
+
 /-- A question is informative if the oracle changes it. -/
 def Oracle.informative {X : Type*} (O : Oracle X) (x : X) : Prop :=
   O.consult x ≠ x
+
 
 
 
@@ -144,10 +162,12 @@ theorem Oracle.redundant_or_informative {X : Type*} (O : Oracle X) (x : X) :
 
 
 
+
 /-- Informative questions are exactly the non-truths. -/
 theorem Oracle.informative_iff_not_truth {X : Type*} (O : Oracle X) (x : X) :
     O.informative x ↔ x ∉ O.truthSet := by
   simp [Oracle.informative, Oracle.truthSet]
+
 
 
 
@@ -158,14 +178,17 @@ theorem Oracle.truth_inter {X : Type*} (O₁ O₂ : Oracle X) :
 
 
 
+
 /-- An oracle tower is a sequence of oracles. -/
 def OracleTower (X : Type*) := ℕ → Oracle X
+
 
 
 
 /-- A tower converges if it stabilizes. -/
 def OracleTower.converges {X : Type*} (T : OracleTower X) : Prop :=
   ∃ N, ∀ n, N ≤ n → T n = T N
+
 
 
 
@@ -182,10 +205,12 @@ structure FrozenCrystal (X : Type*) where
 
 
 
+
 /-- A frozen crystal's truth set is self-referential. -/
 theorem FrozenCrystal.self_referential {X : Type*} (C : FrozenCrystal X) :
     ∀ x ∈ C.theOracle.truthSet, C.theOracle.consult x = x :=
   fun _ hx => hx
+
 
 
 
@@ -195,6 +220,7 @@ def FrozenCrystal.crystallize {X : Type*} (M : MetaOracle X) (O₀ : Oracle X) :
   theOracle := M.refine O₀
   theMeta := M
   frozen := M.meta_idem O₀
+
 
 
 
@@ -209,10 +235,12 @@ theorem FrozenCrystal.further_refinement_trivial {X : Type*} (C : FrozenCrystal 
 
 
 
+
 /-- The truth set of a frozen crystal is complete: range = truth set. -/
 theorem FrozenCrystal.complete {X : Type*} (C : FrozenCrystal X) :
     range C.theOracle.consult = C.theOracle.truthSet :=
   C.theOracle.range_eq_truthSet
+
 
 
 
@@ -223,9 +251,11 @@ def parityOracle : Oracle ℤ where
 
 
 
+
 /-- The parity oracle's truth set is {0, 1}. -/
 theorem parity_truthSet : parityOracle.truthSet = {0, 1} := by
   ext x; simp [Oracle.truthSet, parityOracle]; omega
+
 
 
 
@@ -238,6 +268,7 @@ def signOracle : Oracle ℤ where
 
 
 
+
 /-- A meta oracle that always returns the identity oracle. -/
 def trivialMeta : MetaOracle ℤ where
   refine := fun _ => Oracle.identity ℤ
@@ -245,9 +276,11 @@ def trivialMeta : MetaOracle ℤ where
 
 
 
+
 /-- The frozen crystal arising from trivialMeta. -/
 def trivialCrystal : FrozenCrystal ℤ :=
   FrozenCrystal.crystallize trivialMeta signOracle
+
 
 
 
@@ -260,10 +293,12 @@ structure MetaMetaOracle (X : Type*) where
 
 
 
+
 /-- The hierarchy collapses: every level is equivalent after one step. -/
 theorem hierarchy_collapse {X : Type*} (H : MetaMetaOracle X) (M₀ : MetaOracle X) :
     H.hyperRefine (H.hyperRefine M₀) = H.hyperRefine M₀ :=
   H.hyper_idem M₀
+
 
 
 
@@ -283,6 +318,7 @@ theorem hierarchy_iteration {X : Type*} (H : MetaMetaOracle X) (M₀ : MetaOracl
 
 
 
+
 /-- Oracle iteration stabilizes: O^n = O for all n ≥ 1. -/
 theorem oracle_iterate_stabilizes {X : Type*} (O : Oracle X)
     (n : ℕ) (hn : 1 ≤ n) : O.consult^[n] = O.consult := by
@@ -299,10 +335,12 @@ theorem oracle_iterate_stabilizes {X : Type*} (O : Oracle X)
 
 
 
+
 /-- The orbit of any point under an oracle stabilizes in one step. -/
 theorem oracle_orbit_bound {X : Type*} (O : Oracle X) (x : X) (n : ℕ) (hn : 1 ≤ n) :
     O.consult^[n] x = O.consult x :=
   congr_fun (oracle_iterate_stabilizes O n hn) x
+
 
 
 

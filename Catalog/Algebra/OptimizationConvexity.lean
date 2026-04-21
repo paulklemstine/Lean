@@ -18,8 +18,14 @@ theorem convex_inter_sets {E : Type*} [AddCommMonoid E] [Module ℝ E]
 
 
 
+
+/-- [Section: # CatalogBuild.Algebra.OptimizationConvexity
+Auto-generated from theorem catalog database.
+Domain: Algebra
+Declarations: 10] -/
 theorem convex_Icc_interval (a b : ℝ) : Convex ℝ (Set.Icc a b) := by
   exact convex_Icc a b
+
 
 
 
@@ -30,6 +36,7 @@ theorem convexOn_max_fn (f g : ℝ → ℝ) (hf : ConvexOn ℝ Set.univ f) (hg :
 
 
 
+
 theorem linear_is_convex (a b : ℝ) : ConvexOn ℝ Set.univ (fun x : ℝ => a * x + b) := by
   -- The constant function $a*x + b$ is convex because it is linear.
   simp [ConvexOn];
@@ -37,8 +44,10 @@ theorem linear_is_convex (a b : ℝ) : ConvexOn ℝ Set.univ (fun x : ℝ => a *
 
 
 
+
 theorem linear_is_concave (a b : ℝ) : ConcaveOn ℝ Set.univ (fun x : ℝ => a * x + b) := by
   exact ⟨ convex_univ, fun x _ y _ a b ha hb hab => by norm_num; rw [ ← eq_sub_iff_add_eq' ] at hab; subst hab; nlinarith ⟩
+
 
 
 
@@ -48,15 +57,18 @@ theorem sq_strict_convex :
 
 
 
+
 /-- Zero-sum property -/
 theorem zero_sum (payoff_A payoff_B : ℤ) (h : payoff_A + payoff_B = 0) :
     payoff_A = -payoff_B := by linarith
 
 
 
+
 /-- Prisoner's dilemma: defection dominates -/
 theorem prisoners_dilemma :
     (1 : ℤ) > 0 ∧ (5 : ℤ) > 3 := by omega
+
 
 
 
@@ -68,8 +80,10 @@ theorem minimax_ex :
 
 
 
+
 theorem finite_argmax_exists {n : ℕ} (f : Fin (n + 1) → ℤ) :
     ∃ i : Fin (n + 1), ∀ j : Fin (n + 1), f j ≤ f i := by
   simpa using Finset.exists_max_image Finset.univ f ( Finset.univ_nonempty )
+
 
 

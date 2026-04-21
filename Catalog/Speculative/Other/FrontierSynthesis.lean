@@ -17,9 +17,11 @@ theorem triple_trichotomy (a b c : ℤ) :
 
 
 
+
 /-- Null and timelike are mutually exclusive. -/
 theorem null_not_timelike {a b c : ℤ} (h : IsNull a b c) : ¬IsTimelike a b c := by
   unfold IsNull IsTimelike lorentzForm at *; omega
+
 
 
 
@@ -29,13 +31,16 @@ theorem null_not_spacelike {a b c : ℤ} (h : IsNull a b c) : ¬IsSpacelike a b 
 
 
 
+
 /-- A prime is light (mod 4) if p ≡ 1 (mod 4). -/
 def IsLightPrime_mod4 (p : ℕ) : Prop := Nat.Prime p ∧ p % 4 = 1
 
 
 
+
 /-- A prime is dark (mod 4) if p ≡ 3 (mod 4). -/
 def IsDarkPrime_mod4 (p : ℕ) : Prop := Nat.Prime p ∧ p % 4 = 3
+
 
 
 
@@ -46,8 +51,10 @@ theorem id_is_unique_idempotent_identity {α : Type*} (f : α → α)
 
 
 
+
 /-- Every element is a fixed point of the identity. -/
 theorem id_all_fixed {α : Type*} (x : α) : id x = x := rfl
+
 
 
 
@@ -57,9 +64,11 @@ theorem all_fixed_implies_id {α : Type*} (f : α → α) (h : ∀ x, f x = x) :
 
 
 
+
 /-- Composition with identity preserves any function. -/
 theorem id_preserves_composition {α : Type*} (f : α → α) : f ∘ id = f ∧ id ∘ f = f := by
   exact ⟨Function.comp_id f, Function.id_comp f⟩
+
 
 
 
@@ -73,6 +82,7 @@ theorem vandermonde_vanishes_at_coincidence {n : ℕ} (ev : Fin n → ℝ)
   cases lt_or_gt_of_ne hij <;> simp_all +decide [ Finset.prod_eq_zero_iff, sub_eq_iff_eq_add ];
   · exact ⟨ i, j, by assumption, heq.symm ⟩;
   · exact ⟨ j, i, by assumption, by linarith ⟩
+
 
 
 

@@ -14,8 +14,10 @@ def eml14 (x y : ℝ) : ℝ := Real.exp x - Real.log y
 
 
 
+
 /-- The diagonal map: d(z) = exp(z) − ln(z). -/
 def diag14 (z : ℝ) : ℝ := Real.exp z - Real.log z
+
 
 
 
@@ -24,8 +26,10 @@ def gmap14 (z : ℝ) : ℝ := Real.exp 1 - Real.log z
 
 
 
+
 /-- The σ-EML activation function: σ_eml(x) = exp(x) - ln(1 + exp(-x)). -/
 def sigma_eml (x : ℝ) : ℝ := Real.exp x - Real.log (1 + Real.exp (-x))
+
 
 
 
@@ -33,6 +37,7 @@ def sigma_eml (x : ℝ) : ℝ := Real.exp x - Real.log (1 + Real.exp (-x))
 def diagIter14 : ℕ → ℝ → ℝ
   | 0, z => z
   | n + 1, z => diag14 (diagIter14 n z)
+
 
 
 
@@ -44,12 +49,14 @@ theorem eml14_strictMono_fst (y : ℝ) : StrictMono (fun x => eml14 x y) := by
 
 
 
+
 /-- EML is strictly decreasing in its second argument for y > 0. -/
 theorem eml14_strictAnti_snd (x : ℝ) :
     StrictAntiOn (fun y => eml14 x y) (Set.Ioi 0) := by
   intro a ha b hb hab
   simp only [eml14, Set.mem_Ioi] at *
   linarith [Real.log_lt_log ha hab]
+
 
 
 
@@ -76,11 +83,13 @@ theorem diag14_ge_succ (z : ℝ) : diag14 z ≥ z + 1 := by
 
 
 
+
 /-- The diagonal map is bounded below by exp: d(z) ≥ exp(z) - z + 1 for z > 0. -/
 theorem diag14_lower_exp (z : ℝ) (hz : 0 < z) :
     diag14 z ≥ Real.exp z - z + 1 := by
   unfold diag14
   linarith [Real.log_le_sub_one_of_pos hz]
+
 
 
 
@@ -92,6 +101,7 @@ theorem diagIter14_diverge (z : ℝ) (n : ℕ) :
   | succ n ih =>
     simp only [diagIter14, Nat.cast_succ]
     linarith [diag14_ge_succ (diagIter14 n z)]
+
 
 
 
@@ -108,9 +118,15 @@ theorem gmap14_entry_lemma (z : ℝ) (hz_pos : 0 < z) (hz_lt : z < 2) :
 
 
 
+
+/-- [Section: # CatalogBuild.EML.V14Research
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 44] -/
 theorem gmap14_pos (z : ℝ) (hz : 0 < z) (hz_lt : z < Real.exp (Real.exp 1)) :
     gmap14 z > 0 := by
   exact sub_pos_of_lt ( by simpa using Real.log_lt_iff_lt_exp hz |>.2 hz_lt )
+
 
 
 
@@ -118,6 +134,7 @@ theorem gmap14_pos (z : ℝ) (hz : 0 < z) (hz_lt : z < Real.exp (Real.exp 1)) :
 theorem gmap14_lipschitz_log (x y : ℝ) (_hx : 0 < x) (_hy : 0 < y) :
     |gmap14 x - gmap14 y| = |Real.log x - Real.log y| := by
   unfold gmap14; simp only [sub_sub_sub_cancel_left]; rw [abs_sub_comm]
+
 
 
 
@@ -134,10 +151,12 @@ theorem gmap14_half_contraction (x y : ℝ) (hx : 2 ≤ x) (hy : 2 ≤ y) :
 
 
 
+
 /-- EML x-shift identity: eml(x + c, y) = eml(x, y) + exp(x)(exp(c) - 1). -/
 theorem eml14_x_shift (x c y : ℝ) :
     eml14 (x + c) y = eml14 x y + Real.exp x * (Real.exp c - 1) := by
   unfold eml14; rw [Real.exp_add]; ring
+
 
 
 
@@ -148,10 +167,12 @@ theorem eml14_y_scale (x a y : ℝ) (ha : 0 < a) (hy : 0 < y) :
 
 
 
+
 /-- EML difference in second argument: eml(x,y) - eml(x,z) = ln(z) - ln(y). -/
 theorem eml14_diff_snd (x y z : ℝ) :
     eml14 x y - eml14 x z = Real.log z - Real.log y := by
   unfold eml14; ring
+
 
 
 
@@ -162,10 +183,12 @@ theorem eml14_comp_exp (a b y : ℝ) :
 
 
 
+
 /-- EML self-inverse via exp: eml(ln(eml(x,y)), 1) = eml(x,y) for eml(x,y) > 0. -/
 theorem eml14_self_inverse (x y : ℝ) (h : 0 < eml14 x y) :
     eml14 (Real.log (eml14 x y)) 1 = eml14 x y := by
   unfold eml14 at *; rw [Real.exp_log h, Real.log_one, sub_zero]
+
 
 
 
@@ -176,10 +199,12 @@ theorem eml14_double_exp (x : ℝ) :
 
 
 
+
 /-- EML additive decomposition: eml(x,y) = (exp(x) - 1) + (1 - ln(y)). -/
 theorem eml14_decomposition (x y : ℝ) :
     eml14 x y = (Real.exp x - 1) + (1 - Real.log y) := by
   unfold eml14; ring
+
 
 
 
@@ -190,10 +215,12 @@ theorem eml14_at_t_one (a : ℝ) :
 
 
 
+
 theorem eml14_surj_snd (x t : ℝ) :
     ∃ y : ℝ, 0 < y ∧ eml14 x y = t := by
   use Real.exp (Real.exp x - t);
   exact ⟨ Real.exp_pos _, by unfold eml14; norm_num ⟩
+
 
 
 
@@ -203,8 +230,10 @@ theorem eml14_surj_fst (y t : ℝ) (hy : 0 < y) (ht : t > -Real.log y) :
 
 
 
+
 theorem eml14_amgm_core (p : ℝ) (hp : 0 < p) : p - Real.log p ≥ 1 := by
   linarith [ Real.log_le_sub_one_of_pos hp ]
+
 
 
 
@@ -215,10 +244,12 @@ theorem eml14_self_apply (x : ℝ) :
 
 
 
+
 /-- The "EML entropy" of a single value: eml(ln(p), p) = p - ln(p) ≥ 1 for p > 0. -/
 theorem eml14_entropy_single (p : ℝ) (hp : 0 < p) :
     eml14 (Real.log p) p = p - Real.log p := by
   unfold eml14; rw [Real.exp_log hp]
+
 
 
 
@@ -230,10 +261,12 @@ theorem eml14_kl_block (p q : ℝ) (_hp : 0 < p) :
 
 
 
+
 /-- σ-EML alternative form: σ_eml(x) = exp(x) - ln(1 + exp(-x)). -/
 theorem sigma_eml_alt (x : ℝ) :
     sigma_eml x = Real.exp x - Real.log (1 + Real.exp (-x)) := by
   rfl
+
 
 
 
@@ -248,10 +281,12 @@ theorem sigma_eml_pos_nonneg (x : ℝ) (hx : 0 ≤ x) : sigma_eml x > 0 := by
 
 
 
+
 /-- σ-EML at 0: σ_eml(0) = 1 - ln(2). Wait, exp(0) - ln(1+exp(0)) = 1 - ln(2).
 Actually that's 1 - ln 2 ≈ 0.307. -/
 theorem sigma_eml_zero : sigma_eml 0 = 1 - Real.log 2 := by
   unfold sigma_eml; norm_num [Real.exp_zero]
+
 
 
 
@@ -268,10 +303,12 @@ theorem sigma_eml_lower (x : ℝ) :
 
 
 
+
 /-- σ-EML is an EML instance: σ_eml(x) = eml(x, 1 + exp(-x)). -/
 theorem sigma_eml_is_eml (x : ℝ) :
     sigma_eml x = eml14 x (1 + Real.exp (-x)) := by
   rfl
+
 
 
 
@@ -281,6 +318,7 @@ theorem diag14_second_iterate (z : ℝ) :
   have h1 := diag14_ge_succ z
   have h2 := diag14_ge_succ (diag14 z)
   linarith
+
 
 
 
@@ -302,10 +340,12 @@ theorem diagIter14_superexp (z : ℝ) (hz : 0 < z) (n : ℕ) :
 
 
 
+
 theorem eml14_diag_amgm (a : ℝ) (_ha : 0 < a) :
     eml14 (Real.log a) a ≥ 1 := by
   unfold eml14;
   linarith [ Real.add_one_le_exp ( Real.log a ) ]
+
 
 
 
@@ -321,11 +361,13 @@ theorem eml14_exp_log_gap (x : ℝ) :
 
 
 
+
 /-- EML and the Lambert W function connection:
 The diagonal fixed point equation d(z) = z is equivalent to exp(z) = z + ln(z),
 which has no real solution (proved via d(z) > z). -/
 theorem eml14_no_diagonal_fixed_point (z : ℝ) : diag14 z ≠ z := by
   intro h; linarith [diag14_ge_succ z]
+
 
 
 
@@ -336,10 +378,12 @@ theorem eml14_exp_conjugate (x y : ℝ) (hy : 0 < y) :
 
 
 
+
 /-- EML log conjugation: ln(eml(x,y)) is defined when eml(x,y) > 0. -/
 theorem eml14_log_of_pos (x y : ℝ) (_h : 0 < eml14 x y) :
     Real.log (eml14 x y) = Real.log (Real.exp x - Real.log y) := by
   rfl
+
 
 
 
@@ -351,10 +395,12 @@ theorem eml14_antidiag (z : ℝ) (hz : z < 0) :
 
 
 
+
 /-- The g-map fixed point equation: g(z) = z iff exp(1) - ln(z) = z iff z + ln(z) = e. -/
 theorem gmap14_fixed_point_eq (z : ℝ) (_hz : 0 < z) :
     gmap14 z = z ↔ z + Real.log z = Real.exp 1 := by
   unfold gmap14; constructor <;> intro h <;> linarith
+
 
 
 
@@ -371,11 +417,13 @@ theorem gmap14_fixed_in_interval (z : ℝ) (hz : 0 < z) (hfp : gmap14 z = z) :
 
 
 
+
 /-- EML at the g-fixed-point: if g(z*) = z*, then eml(1, z*) = z*,
 meaning z* is a fixed point of eml(1, ·). -/
 theorem eml14_gfixed (z : ℝ) (hz : gmap14 z = z) :
     eml14 1 z = z := by
   unfold eml14; unfold gmap14 at hz; linarith
+
 
 
 

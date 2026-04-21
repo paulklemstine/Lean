@@ -14,8 +14,10 @@ def stdExpertParams (d_model d_ff : ℕ) : ℕ := 2 * d_model * d_ff
 
 
 
+
 /-- EML expert: 4 parameters per output dimension -/
 def emlExpertParams (d_ff : ℕ) : ℕ := 4 * d_ff
+
 
 
 
@@ -29,14 +31,21 @@ theorem eml_expert_compact (d_model d_ff : ℕ) (hd : 2 ≤ d_model) :
 
 
 
+
 /-- Total MoE model: numExperts × expert_params + router -/
 def stdMoEParams (numExperts d_model d_ff : ℕ) : ℕ :=
   numExperts * stdExpertParams d_model d_ff + d_model * numExperts
 
 
 
+
+/-- [Section: # CatalogBuild.EML.AIResearch.MixtureOfExpertsTheory
+Auto-generated from theorem catalog database.
+Domain: EML/AIResearch
+Declarations: 24] -/
 def emlMoEParams (numExperts d_model d_ff : ℕ) : ℕ :=
   numExperts * emlExpertParams d_ff + d_model * numExperts
+
 
 
 
@@ -48,13 +57,16 @@ theorem eml_moe_total_savings (n dm df : ℕ) (hd : 2 ≤ dm) :
 
 
 
+
 /-- Standard router: d_model → numExperts linear projection -/
 def stdRouterParams (d_model numExperts : ℕ) : ℕ := d_model * numExperts
 
 
 
+
 /-- EML router: uses 4-param EML neurons -/
 def emlRouterParams (numExperts : ℕ) : ℕ := 4 * numExperts
+
 
 
 
@@ -67,14 +79,17 @@ theorem eml_router_compact (d_model numExperts : ℕ) (hd : 4 ≤ d_model) :
 
 
 
+
 /-- Load balancing auxiliary loss: sum of (fraction routed × fraction capacity used) -/
 def loadBalanceLoss (fracRouted fracCapacity : ℝ) : ℝ := fracRouted * fracCapacity
+
 
 
 
 theorem load_balance_nonneg (fr fc : ℝ) (hfr : 0 ≤ fr) (hfc : 0 ≤ fc) :
     0 ≤ loadBalanceLoss fr fc := by
   unfold loadBalanceLoss; exact mul_nonneg hfr hfc
+
 
 
 
@@ -86,8 +101,10 @@ theorem perfect_balance (n : ℕ) (hn : 0 < n) :
 
 
 
+
 /-- Active parameters per token with top-k routing -/
 def activeParamsPerToken (expertParams k : ℕ) : ℕ := k * expertParams
+
 
 
 
@@ -97,15 +114,18 @@ theorem fewer_experts_cheaper (ep k1 k2 : ℕ) (hk : k1 ≤ k2) :
 
 
 
+
 theorem eml_active_cheaper (ep_eml ep_std k : ℕ) (hp : ep_eml ≤ ep_std) :
     activeParamsPerToken ep_eml k ≤ activeParamsPerToken ep_std k := by
   unfold activeParamsPerToken; exact Nat.mul_le_mul_left k hp
 
 
 
+
 /-- Capacity factor: max tokens per expert = CF × (tokens / numExperts) -/
 def expertCapacity (totalTokens numExperts capacityFactor : ℕ) : ℕ :=
   capacityFactor * totalTokens / numExperts
+
 
 
 
@@ -116,9 +136,11 @@ theorem higher_capacity_more_tokens (t n cf1 cf2 : ℕ) (hcf : cf1 ≤ cf2) :
 
 
 
+
 /-- Specialization score: higher with more training -/
 def specialization (baseScore learnRate : ℝ) (steps : ℕ) : ℝ :=
   baseScore + learnRate * ↑steps
+
 
 
 
@@ -128,15 +150,18 @@ theorem more_training_more_specialized (b lr : ℝ) (s1 s2 : ℕ) (hlr : 0 ≤ l
 
 
 
+
 /-- All-to-all communication cost for distributed MoE -/
 def allToAllCost (numGPUs tokensPerGPU expertSize : ℕ) : ℕ :=
   numGPUs * tokensPerGPU * expertSize
 
 
 
+
 /-- Fine-grained MoE: more experts, each smaller -/
 def fineGrainedMoEParams (numExperts paramsPerExpert routerParams : ℕ) : ℕ :=
   numExperts * paramsPerExpert + routerParams
+
 
 
 
@@ -148,14 +173,17 @@ theorem eml_fine_grained_advantage (n pe_eml pe_std r_eml r_std : ℕ)
 
 
 
+
 /-- Cost to merge k experts into one -/
 def expertMergeCost (k expertParams : ℕ) : ℕ := k * expertParams
+
 
 
 
 theorem eml_merge_cheaper (k ep_eml ep_std : ℕ) (hp : ep_eml ≤ ep_std) :
     expertMergeCost k ep_eml ≤ expertMergeCost k ep_std := by
   unfold expertMergeCost; exact Nat.mul_le_mul_left k hp
+
 
 
 

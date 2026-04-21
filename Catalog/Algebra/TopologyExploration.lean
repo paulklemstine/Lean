@@ -18,10 +18,16 @@ theorem discrete_metric_triangle (α : Type*) [DecidableEq α] (x y z : α) :
 
 
 
+
+/-- [Section: # CatalogBuild.Algebra.TopologyExploration
+Auto-generated from theorem catalog database.
+Domain: Algebra
+Declarations: 8] -/
 theorem closed_subset_compact' {α : Type*} [TopologicalSpace α]
     {K S : Set α} (hK : IsCompact K) (hS : IsClosed S) (hSK : S ⊆ K) :
     IsCompact S := by
   exact?
+
 
 
 
@@ -31,10 +37,12 @@ theorem Icc_connected' (a b : ℝ) (h : a ≤ b) : IsConnected (Set.Icc a b) := 
 
 
 
+
 theorem connected_image' {α β : Type*} [TopologicalSpace α] [TopologicalSpace β]
     {f : α → β} {S : Set α} (hf : Continuous f) (hS : IsConnected S) :
     IsConnected (f '' S) := by
   exact hS.image _ hf.continuousOn
+
 
 
 
@@ -58,15 +66,18 @@ theorem integers_closed' : IsClosed (Set.range (Int.cast : ℤ → ℝ)) := by
 
 
 
+
 theorem rationals_dense' : Dense (Set.range (Rat.cast : ℚ → ℝ)) := by
   convert Rat.denseRange_cast using 1;
   all_goals infer_instance
 
 
 
+
 /-- Product of compact spaces is compact (Tychonoff for finite products). -/
 theorem product_compact' {α β : Type*} [TopologicalSpace α] [TopologicalSpace β]
     [CompactSpace α] [CompactSpace β] : CompactSpace (α × β) := inferInstance
+
 
 
 
@@ -77,4 +88,5 @@ theorem cantor_diagonal' {α : Type*} (f : α → Set α) : ¬ Function.Surjecti
     exact ⟨ { x | ¬x ∈ f x }, fun ⟨ y, hy ⟩ => by have := congr_arg ( fun s => y ∈ s ) hy; simp +decide at this ⟩
   generalize_proofs at *; (
   exact hS ( h_surj S ))
+
 

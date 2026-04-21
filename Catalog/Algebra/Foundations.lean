@@ -15,9 +15,11 @@ def IsMultiplicativeArithFn (f : ℕ → ℂ) : Prop :=
 
 
 
+
 /-- A completely multiplicative function satisfies f(mn) = f(m)f(n) for ALL m, n. -/
 def IsCompletelyMultiplicative (f : ℕ → ℂ) : Prop :=
   f 1 = 1 ∧ ∀ m n : ℕ, f (m * n) = f m * f n
+
 
 
 
@@ -28,9 +30,11 @@ theorem complMult_implies_mult (f : ℕ → ℂ) (h : IsCompletelyMultiplicative
 
 
 
+
 /-- The trivial character mod q. -/
 def trivialChar (q : ℕ) : ℕ → ℂ :=
   fun n => if Nat.Coprime n q then 1 else 0
+
 
 
 
@@ -40,15 +44,18 @@ theorem trivialChar_one (q : ℕ) : trivialChar q 1 = 1 := by
 
 
 
+
 /-- Partial sum of a Dirichlet series: sum_{n=1}^{N} f(n)/n^s. -/
 def partialDirichletSum (f : ℕ → ℂ) (s : ℂ) (N : ℕ) : ℂ :=
   ∑ n ∈ Finset.range N, f (n + 1) / (↑(n + 1) : ℂ) ^ s
 
 
 
+
 /-- The Riemann zeta partial sum. -/
 def riemannZetaPartial (s : ℂ) (N : ℕ) : ℂ :=
   ∑ n ∈ Finset.range N, 1 / (↑(n + 1) : ℂ) ^ s
+
 
 
 
@@ -59,15 +66,18 @@ theorem zetaPartial_eq_dirichletSum (s : ℂ) (N : ℕ) :
 
 
 
+
 /-- An Euler factor at prime p: (1 - alpha * p^{-s})^{-1}. -/
 def eulerFactor (α : ℂ) (p : ℕ) (s : ℂ) : ℂ :=
   (1 - α * (↑p : ℂ) ^ (-s))⁻¹
 
 
 
+
 /-- Product of Euler factors over a finite set of primes. -/
 def eulerProduct (f : ℕ → ℂ) (primes : Finset ℕ) (s : ℂ) : ℂ :=
   ∏ p ∈ primes, eulerFactor (f p) p s
+
 
 
 
@@ -78,10 +88,12 @@ theorem zeta_euler_factor (p : ℕ) (s : ℂ) :
 
 
 
+
 /-- A Dirichlet character data structure. -/
 structure DirichletCharData (q : ℕ) where
   toFun : ZMod q → ℂ
   map_mul : ∀ a b : ZMod q, toFun (a * b) = toFun a * toFun b
+
 
 
 
@@ -93,10 +105,12 @@ structure GL1LanglandsData (q : ℕ) where
 
 
 
+
 /-- The Legendre symbol is multiplicative. -/
 theorem legendre_mul (p : ℕ) [hp : Fact (Nat.Prime p)] (a b : ℤ) :
     legendreSym p (a * b) = legendreSym p a * legendreSym p b :=
   legendreSym.mul p a b
+
 
 
 
@@ -106,9 +120,11 @@ def modularFormLPartial (f : ModularFormData) (s : ℂ) (N : ℕ) : ℂ :=
 
 
 
+
 /-- The trace of Frobenius: a_p(E) = p + 1 - #E(F_p). -/
 def traceOfFrobeniusVal (a_p_count : ℤ) (p : ℕ) : ℤ :=
   p + 1 - a_p_count
+
 
 
 
@@ -116,6 +132,7 @@ def traceOfFrobeniusVal (a_p_count : ℤ) (p : ℕ) : ℤ :=
 Every elliptic curve E/Q is modular. -/
 def ModularityTheorem : Prop :=
   ∀ _E : EllipticCurveData, ∃ f : ModularFormData, f.weight = 2
+
 
 
 
@@ -128,9 +145,11 @@ inductive LanglandsDualPair where
 
 
 
+
 /-- GL(n) is self-dual. -/
 theorem GL_is_self_dual (n : ℕ) :
     LanglandsDualPair.GL_GL n = LanglandsDualPair.GL_GL n := rfl
+
 
 
 
@@ -143,8 +162,10 @@ inductive FunctorialityInstance where
 
 
 
+
 /-- The curve y^2 = x^3 - x has nonzero discriminant. -/
 theorem ec_y2_x3_minus_x_disc : (4 : ℤ) * (-1) ^ 3 + 27 * 0 ^ 2 ≠ 0 := by norm_num
+
 
 
 
@@ -156,14 +177,17 @@ def ec_y2_x3_minus_x : EllipticCurveData where
 
 
 
+
 /-- a_5(E) = -2 for E: y^2 = x^3 - x. -/
 theorem ec_minus_x_a5 : traceOfFrobeniusVal 8 5 = -2 := by
   simp [traceOfFrobeniusVal]
 
 
 
+
 /-- Ramanujan tau values. -/
 theorem ramanujan_tau_2 : (-24 : ℤ) = -24 := rfl
+
 
 
 /-- [Section: # CatalogBuild.Algebra.Foundations
@@ -173,12 +197,19 @@ Declarations: 28] -/
 theorem ramanujan_tau_3 : (252 : ℤ) = 252 := rfl
 
 
+
+/-- [Section: # CatalogBuild.Algebra.Foundations
+Auto-generated from theorem catalog database.
+Domain: Algebra
+Declarations: 28] -/
 theorem ramanujan_tau_5 : (4830 : ℤ) = 4830 := rfl
+
 
 
 
 /-- Ramanujan bound for p=2: |tau(2)| = 24 <= 64 = 2*2^5 <= 2*2^{11/2}. -/
 theorem ramanujan_conj_p2_weak : (24 : ℤ) ≤ 2 * 2 ^ 5 := by norm_num
+
 
 
 
@@ -189,6 +220,7 @@ theorem quadratic_solution_count (p : ℕ) [Fact (Nat.Prime p)]
   by_cases h : IsSquare a
   · exact ⟨2, Or.inr rfl⟩
   · exact ⟨0, Or.inl rfl⟩
+
 
 
 

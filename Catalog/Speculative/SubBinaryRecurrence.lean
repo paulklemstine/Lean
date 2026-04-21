@@ -18,11 +18,17 @@ theorem fib_sub_binary (n : ℕ) (hn : 2 ≤ n) : fib (n + 2) < 2 ^ n := by
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.SubBinaryRecurrence
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 6] -/
 theorem fib_le_pow_two (n : ℕ) : fib (n + 2) ≤ 2 ^ n := by
   induction' n with n ih;
   · decide +revert;
   · rcases n with ( _ | _ | n ) <;> simp_all +arith +decide [ Nat.fib_add_two ];
     grind
+
 
 
 
@@ -34,6 +40,7 @@ def padovan : ℕ → ℕ
 
 
 
+
 theorem padovan_sub_binary (n : ℕ) (hn : 1 ≤ n) : padovan n < 2 ^ n := by
   induction' n using Nat.strong_induction_on with n ih;
   rcases n with ( _ | _ | _ | n ) <;> simp +arith +decide [ *, pow_succ' ];
@@ -42,6 +49,7 @@ theorem padovan_sub_binary (n : ℕ) (hn : 1 ≤ n) : padovan n < 2 ^ n := by
     by_cases hn : n = 0;
     · simp +arith +decide [ hn ];
     · grind +splitIndPred
+
 
 
 
@@ -57,7 +65,9 @@ theorem two_term_recurrence_bound (a : ℕ → ℕ) (c₁ c₂ : ℕ)
 
 
 
+
 theorem fibonacci_reduction_factor (n : ℕ) (hn : 2 ≤ n) : 2 ^ n - fib (n + 2) ≥ 1 := by
   have := fib_sub_binary n hn; omega
+
 
 

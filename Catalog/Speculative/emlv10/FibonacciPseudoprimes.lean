@@ -14,9 +14,11 @@ theorem fib_coprime_consecutive (n : ℕ) :
 
 
 
+
 /-- F(m) | F(mn) for all m, n. -/
 theorem fib_dvd_mul (m n : ℕ) : Nat.fib m ∣ Nat.fib (m * n) :=
   Nat.fib_dvd _ _ (dvd_mul_right m n)
+
 
 
 
@@ -27,14 +29,17 @@ def IsFibPseudoprime (n : ℕ) : Prop :=
 
 
 
+
 /-- 323 = 17 × 19 is not prime. -/
 theorem not_prime_323 : ¬ Nat.Prime 323 := by native_decide
+
 
 
 
 /-- 323 is the smallest Fibonacci pseudoprime. 323 = 17 × 19,
 and F(324) ≡ 0 (mod 323). Verified computationally in Python demo. -/
 theorem composite_exists : 17 * 19 = 323 := by ring
+
 
 
 
@@ -50,6 +55,11 @@ theorem lucas_fib_relation (n : ℕ) (hn : 0 < n) :
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.emlv10.FibonacciPseudoprimes
+Auto-generated from theorem catalog database.
+Domain: Speculative/emlv10
+Declarations: 8] -/
 theorem fib_double_lucas (n : ℕ) :
     Nat.fib (2 * n) = Nat.fib n * lucas n := by
   induction' n using Nat.strong_induction_on with n ih;
@@ -59,8 +69,10 @@ theorem fib_double_lucas (n : ℕ) :
 
 
 
+
 /-- There are only finitely many Fibonacci pseudoprimes below any bound. -/
 theorem fib_pseudoprime_finite (B : ℕ) :
     Set.Finite {n : ℕ | n < B ∧ IsFibPseudoprime n} := by
   exact Set.Finite.subset (Set.finite_Iio B) (fun n hn => hn.1)
+
 

@@ -1,5 +1,3 @@
-import Mathlib
-
 /-! # CatalogBuild.Geometry.Stereographic.MultiHeadStereographic
 
 Auto-generated from theorem catalog database.
@@ -7,6 +5,7 @@ Domain: Geometry/Stereographic
 Declarations: 16
 -/
 
+import Mathlib
 
 noncomputable section
 
@@ -19,6 +18,11 @@ def generalStereoDenom (n : ℕ) (y : Fin n → ℝ) : ℝ :=
 
 
 
+
+/-- [Section: # CatalogBuild.Geometry.Stereographic.MultiHeadStereographic
+Auto-generated from theorem catalog database.
+Domain: Geometry/Stereographic
+Declarations: 16] -/
 def generalInvStereo (n : ℕ) (y : Fin n → ℝ) : Fin (n + 1) → ℝ := fun i =>
   let D := generalStereoDenom n y
   if h : i.val < n then
@@ -28,9 +32,11 @@ def generalInvStereo (n : ℕ) (y : Fin n → ℝ) : Fin (n + 1) → ℝ := fun 
 
 
 
+
 theorem generalStereoDenom_pos (n : ℕ) (y : Fin n → ℝ) :
     0 < generalStereoDenom n y := by
   unfold generalStereoDenom; positivity
+
 
 
 
@@ -44,13 +50,16 @@ theorem generalInvStereo_on_sphere (n : ℕ) (y : Fin n → ℝ) :
 
 
 
+
 def headKernel (n : ℕ) (x y : Fin n → ℝ) : ℝ :=
   ∑ i, generalInvStereo n x i * generalInvStereo n y i
 
 
 
+
 def rotatedInput (n : ℕ) (R : Fin n → Fin n → ℝ) (x : Fin n → ℝ) : Fin n → ℝ :=
   fun i => ∑ j, R i j * x j
+
 
 
 
@@ -61,10 +70,12 @@ def multiHeadKernel (numHeads n : ℕ)
 
 
 
+
 theorem headKernel_symmetric (n : ℕ) (x y : Fin n → ℝ) :
     headKernel n x y = headKernel n y x := by
   unfold headKernel
   exact Finset.sum_congr rfl fun i _ => mul_comm _ _
+
 
 
 
@@ -78,9 +89,11 @@ theorem multiHeadKernel_symmetric (numHeads n : ℕ)
 
 
 
+
 def headSoftmaxWeight (n : ℕ) (T : ℝ)
     (R : Fin n → Fin n → ℝ) (q k : Fin n → ℝ) : ℝ :=
   Real.exp (headKernel n (rotatedInput n R q) (rotatedInput n R k) / T)
+
 
 
 
@@ -88,6 +101,7 @@ theorem headSoftmaxWeight_pos (n : ℕ) (T : ℝ)
     (R : Fin n → Fin n → ℝ) (q k : Fin n → ℝ) :
     0 < headSoftmaxWeight n T R q k := by
   unfold headSoftmaxWeight; exact exp_pos _
+
 
 
 
@@ -104,6 +118,7 @@ def multiHeadStereoAttention (numHeads seqLen d : ℕ) (T : ℝ)
 
 
 
+
 theorem multihead_weight_sum_pos (seqLen d : ℕ) (T : ℝ)
     (R : Fin d → Fin d → ℝ)
     (Q K : Fin seqLen → Fin d → ℝ) (i : Fin seqLen) :
@@ -113,8 +128,10 @@ theorem multihead_weight_sum_pos (seqLen d : ℕ) (T : ℝ)
 
 
 
+
 def headConformalFactor (n : ℕ) (y : Fin n → ℝ) : ℝ :=
   2 / generalStereoDenom n y
+
 
 
 
@@ -127,6 +144,7 @@ theorem headConformalFactor_bounded (n : ℕ) (y : Fin n → ℝ) :
 
 
 
+
 theorem multihead_gradient_bounded (numHeads : ℕ) (headGrads : Fin numHeads → ℝ)
     (hbound : ∀ h, |headGrads h| ≤ 2) :
     |∑ h, headGrads h| ≤ 2 * numHeads := by
@@ -134,6 +152,7 @@ theorem multihead_gradient_bounded (numHeads : ℕ) (headGrads : Fin numHeads �
       ≤ ∑ h, |headGrads h| := Finset.abs_sum_le_sum_abs _ _
     _ ≤ ∑ _ : Fin numHeads, (2 : ℝ) := Finset.sum_le_sum fun h _ => hbound h
     _ = 2 * numHeads := by simp [Finset.sum_const, nsmul_eq_mul]; ring
+
 
 
 

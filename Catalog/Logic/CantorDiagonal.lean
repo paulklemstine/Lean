@@ -21,9 +21,15 @@ theorem cantor_no_surjection (α : Type*) : ¬ ∃ f : α → (α → Prop), Sur
 
 
 
+
+/-- [Section: # CatalogBuild.Logic.CantorDiagonal
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 8] -/
 theorem cantor_diagonal_not_in_range (α : Type*) (f : α → (α → Prop)) :
     (fun a => ¬ f a a) ∉ Set.range f := by
   rintro ⟨ a, ha ⟩ ; have := congr_fun ha a ; tauto;
+
 
 
 
@@ -40,6 +46,7 @@ theorem cantor_no_injection_powerset (α : Type*) :
 
 
 
+
 theorem lawvere_fixed_point {α β : Type*} (f : α → (α → β)) (hf : Surjective f)
     (g : β → β) : ∃ x : β, g x = x := by
   -- Let h : α → β be defined by h(x) = g(f(x)(x)).
@@ -49,14 +56,17 @@ theorem lawvere_fixed_point {α β : Type*} (f : α → (α → β)) (hf : Surje
 
 
 
+
 theorem cantor_via_lawvere (α : Type*) : ¬ ∃ f : α → (α → Prop), Surjective f := by
   -- Apply Lawvere's fixed point theorem to the surjective function f and the function g.
   apply cantor_no_surjection
 
 
 
+
 theorem russell_paradox : ¬ ∃ (P : Prop), P ↔ ¬P := by
   grind
+
 
 
 
@@ -66,9 +76,11 @@ theorem no_universal_decider (α : Type*) (test : α → α → Prop) :
 
 
 
+
 theorem reals_uncountable : ¬ ∃ f : ℕ → ℝ, Surjective f := by
   convert Cardinal.not_countable_real;
   constructor <;> intro h <;> rw [ Set.countable_iff_exists_subset_range ] at * ; aesop;
   exact ⟨ _, fun x => by simpa using h.choose_spec ( Set.mem_univ x ) ⟩
+
 
 

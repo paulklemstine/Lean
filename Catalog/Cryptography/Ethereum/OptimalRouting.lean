@@ -18,9 +18,11 @@ noncomputable def swapOut (p : Pool) (dx : ℝ) (hdx : 0 < dx) : ℝ :=
 
 
 
+
 /-- Marginal price: d/d(dx) [y·dx/(x+dx)] = x·y/(x+dx)² -/
 noncomputable def marginalPrice (p : Pool) (dx : ℝ) : ℝ :=
   p.x * p.y / (p.x + dx) ^ 2
+
 
 
 
@@ -35,11 +37,13 @@ theorem diminishing_marginal_output (p : Pool) (d₁ d₂ : ℝ)
 
 
 
+
 /-- Swap output is positive -/
 theorem swapOut_pos (p : Pool) (dx : ℝ) (hdx : 0 < dx) :
     0 < swapOut p dx hdx := by
   unfold swapOut
   exact div_pos (mul_pos p.hy hdx) (by linarith [p.hx])
+
 
 
 
@@ -52,18 +56,25 @@ theorem swapOut_lt_reserve (p : Pool) (dx : ℝ) (hdx : 0 < dx) :
 
 
 
+
 /-- Price impact: percentage difference between spot and effective price -/
 noncomputable def priceImpact (p : Pool) (dx : ℝ) (hdx : 0 < dx) : ℝ :=
   1 - swapOut p dx hdx / (dx * (p.y / p.x))
 
 
 
+
+/-- [Section: # CatalogBuild.Cryptography.Ethereum.OptimalRouting
+Auto-generated from theorem catalog database.
+Domain: Cryptography/Ethereum
+Declarations: 12] -/
 theorem price_impact_nonneg (p : Pool) (dx : ℝ) (hdx : 0 < dx) :
     0 ≤ priceImpact p dx hdx := by
   unfold priceImpact;
   unfold swapOut;
   field_simp;
   rw [ sub_nonneg, div_le_iff₀ ] <;> nlinarith [ p.hx, p.hy ]
+
 
 
 
@@ -80,10 +91,12 @@ theorem price_impact_mono (p : Pool) (d₁ d₂ : ℝ)
 
 
 
+
 /-- A routing across n pools -/
 structure Routing (n : ℕ) where
   amounts : Fin n → ℝ
   nonneg : ∀ i, 0 ≤ amounts i
+
 
 
 
@@ -92,8 +105,10 @@ noncomputable def Pool.output (p : Pool) (dx : ℝ) : ℝ :=
 
 
 
+
 noncomputable def routingOutput {n : ℕ} (pools : Fin n → Pool) (r : Routing n) : ℝ :=
   ∑ i, (pools i).output (r.amounts i)
+
 
 
 
@@ -102,6 +117,7 @@ theorem split_beats_single (p : Pool) (D : ℝ) (hD : 0 < D) :
     swapOut p D hD ∨ D ≤ 0 := by
   unfold swapOut; ring_nf; norm_num [ hD.le ] ;
   exact Or.inl ( mul_le_mul_of_nonneg_left ( inv_anti₀ ( by linarith [ p.hx ] ) ( by linarith [ p.hx ] ) ) ( mul_nonneg p.hy.le hD.le ) )
+
 
 
 

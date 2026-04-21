@@ -13,10 +13,12 @@ def bip32_child_key (parent_key offset : ZMod n) : ZMod n :=
 
 
 
+
 /-- **Theorem (Child Key Recovery)**: If the parent private key is known,
 any child private key can be computed given the derivation offset. -/
 theorem child_key_from_parent (parent_key offset : ZMod n) :
     bip32_child_key parent_key offset = parent_key + offset := rfl
+
 
 
 
@@ -31,9 +33,11 @@ theorem parent_key_from_child (parent_key child_key offset : ZMod n)
 
 
 
+
 /-- Multi-level derivation: grandchild from parent through child. -/
 def bip32_grandchild_key (parent_key offset₁ offset₂ : ZMod n) : ZMod n :=
   bip32_child_key (bip32_child_key parent_key offset₁) offset₂
+
 
 
 
@@ -45,11 +49,13 @@ theorem grandchild_collapse (parent_key o₁ o₂ : ZMod n) :
 
 
 
+
 /-- **Theorem (Derivation Path Independence for Offsets)**: The final key
 depends only on the sum of offsets, not their order. -/
 theorem derivation_commutes (parent_key o₁ o₂ : ZMod n) :
     bip32_grandchild_key parent_key o₁ o₂ = bip32_grandchild_key parent_key o₂ o₁ := by
   simp [bip32_grandchild_key, bip32_child_key]; ring
+
 
 
 
@@ -59,13 +65,16 @@ def bip32_derive_path (parent_key : ZMod n) (offsets : List (ZMod n)) : ZMod n :
 
 
 
+
 /-- Number of non-hardened child keys per parent in BIP-32. -/
 def bip32_children_per_level : ℕ := 2^31
 
 
 
+
 /-- BIP-44 non-hardened keys: change (2) × address_index (2^31). -/
 def bip44_nonhardened_keys : ℕ := 2 * 2^31
+
 
 
 
@@ -76,9 +85,11 @@ theorem bip44_cascade_size :
 
 
 
+
 /-- Cost per key with cascade attack vs individual attacks. -/
 def cascade_cost_per_key (ecdlp_cost : ℕ) : ℚ :=
   (ecdlp_cost : ℚ) / bip44_nonhardened_keys
+
 
 
 
@@ -89,8 +100,10 @@ theorem cascade_cost_efficiency :
 
 
 
+
 /-- Practical keys per wallet (typical usage). -/
 def practical_keys_per_wallet : ℕ := 1000
+
 
 
 
@@ -104,6 +117,7 @@ theorem cascade_dominates (n_addresses ecdlp_cost : ℕ)
 
 
 
+
 /-- Key derivation type -/
 inductive DerivationType where
   | hardened
@@ -112,6 +126,11 @@ inductive DerivationType where
 
 
 
+
+/-- [Section: # CatalogBuild.Cryptography.QuantumSecurity.HDWalletCascade
+Auto-generated from theorem catalog database.
+Domain: Cryptography/QuantumSecurity
+Declarations: 19] -/
 theorem nonhardened_upward_attack {n : ℕ} [Fact (Nat.Prime n)]
     (parent_priv child_priv offset : ZMod n)
     (h_derive : child_priv = parent_priv + offset) :
@@ -120,10 +139,12 @@ theorem nonhardened_upward_attack {n : ℕ} [Fact (Nat.Prime n)]
 
 
 
+
 /-- **Theorem**: Within an account, all non-hardened keys are reachable. -/
 theorem within_account_cascade (n_used : ℕ) (h : n_used ≤ 2^31) :
     n_used ≤ bip32_children_per_level := by
   simp [bip32_children_per_level]; omega
+
 
 
 
@@ -135,9 +156,11 @@ theorem xpub_total_compromise
 
 
 
+
 /-- **Theorem**: Number of entities with xpub access multiplies
 the attack surface. Each sharing increases exposure. -/
 theorem xpub_sharing_risk (n_services : ℕ) (h : n_services > 0) :
     n_services ≥ 1 := h
+
 
 

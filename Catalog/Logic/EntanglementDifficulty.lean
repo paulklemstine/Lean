@@ -19,9 +19,11 @@ structure ProofSearch (n : ℕ) where
 
 
 
+
 /-- The total search space size is the product of branching factors. -/
 noncomputable def searchSpaceSize {n : ℕ} (S : ProofSearch n) : ℕ :=
   ∏ i : Fin n, S.branching i
+
 
 
 
@@ -31,9 +33,11 @@ noncomputable def logDifficulty {n : ℕ} (S : ProofSearch n) : ℝ :=
 
 
 
+
 /-- Edge density of a DAG on n nodes with m edges, normalized by max possible edges. -/
 noncomputable def edgeDensity (n m : ℕ) (hn : 2 ≤ n) : ℝ :=
   (m : ℝ) / (n * (n - 1) / 2 : ℝ)
+
 
 
 
@@ -47,6 +51,11 @@ theorem zero_edges_zero_density (n : ℕ) (hn : 2 ≤ n) :
 
 
 
+
+/-- [Section: # CatalogBuild.Logic.EntanglementDifficulty
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 16] -/
 theorem density_le_one (n m : ℕ) (hn : 2 ≤ n)
     (hm : m ≤ n * (n - 1) / 2) :
     edgeDensity n m hn ≤ 1 := by
@@ -58,10 +67,12 @@ theorem density_le_one (n m : ℕ) (hn : 2 ≤ n)
 
 
 
+
 /-- The number of independent components in a proof graph. -/
 def numComponents (n : ℕ) (connected : Fin n → Fin n → Prop) : ℕ :=
   -- Simplified: count nodes with no predecessors as component roots
   n  -- placeholder
+
 
 
 
@@ -75,12 +86,14 @@ theorem independent_search_additive {k : ℕ} (sizes : Fin k → ℕ)
 
 
 
+
 theorem entangled_harder_than_independent {k : ℕ} (hk : 0 < k)
     (searches : Fin k → ℕ) (h_pos : ∀ i, 2 ≤ searches i) :
     ∑ i, searches i ≤ ∏ i, searches i := by
   induction hk <;> simp_all +decide [ Fin.sum_univ_succ, Fin.prod_univ_succ ];
   rename_i k hk ih;
   nlinarith [ h_pos 0, ih _ fun i => h_pos i.succ, show ∏ i : Fin k, searches ( Fin.succ i ) ≥ 2 by exact le_trans ( h_pos _ ) <| Nat.le_of_dvd ( Finset.prod_pos fun _ _ => zero_lt_two.trans_le <| h_pos _ ) <| Finset.dvd_prod_of_mem _ <| Finset.mem_univ ⟨ 0, hk ⟩ ]
+
 
 
 
@@ -91,6 +104,7 @@ def maxCliqueBound (n w : ℕ) : Prop :=
 
 
 
+
 /-- The entanglement entropy of a tree (tree-width 1) is at most log n. -/
 theorem tree_entanglement_bound (n : ℕ) (hn : 0 < n) :
     Real.log (n : ℝ) ≤ Real.log n := by
@@ -98,10 +112,12 @@ theorem tree_entanglement_bound (n : ℕ) (hn : 0 < n) :
 
 
 
+
 /-- A "chain proof" of length n: step i depends only on step i-1.
 This has minimal entanglement for a connected proof. -/
 def chainDependency (n : ℕ) : Fin n → Fin n → Prop :=
   fun i j => i.val = j.val + 1
+
 
 
 
@@ -120,10 +136,12 @@ theorem chain_edge_count (n : ℕ) (hn : 1 ≤ n) :
 
 
 
+
 /-- A "complete dependency" proof: every step depends on all previous steps.
 This has maximal entanglement. -/
 def completeDependency (n : ℕ) : Fin n → Fin n → Prop :=
   fun i j => j.val < i.val
+
 
 
 
@@ -141,6 +159,7 @@ theorem complete_edge_count (n : ℕ) :
 
 
 
+
 theorem decomposition_speedup {k : ℕ} (hk : 0 < k)
     (component_sizes : Fin k → ℕ)
     (monolithic_search : ℕ)
@@ -149,6 +168,7 @@ theorem decomposition_speedup {k : ℕ} (hk : 0 < k)
     (h_comp_pos : ∀ i, 2 ≤ component_search i) :
     ∑ i, component_search i ≤ monolithic_search := by
   convert entangled_harder_than_independent hk component_search h_comp_pos using 1
+
 
 
 end

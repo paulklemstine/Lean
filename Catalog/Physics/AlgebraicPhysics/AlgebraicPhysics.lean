@@ -15,11 +15,13 @@ theorem lie_bracket_antisymm {L : Type*}
 
 
 
+
 /-- The Lie bracket satisfies the Jacobi identity -/
 theorem lie_bracket_jacobi {L : Type*}
     [LieRing L] [LieAlgebra ℝ L] (x y z : L) :
     ⁅x, ⁅y, z⁆⁆ + ⁅y, ⁅z, x⁆⁆ + ⁅z, ⁅x, y⁆⁆ = 0 :=
   lie_jacobi x y z
+
 
 
 
@@ -31,10 +33,12 @@ theorem lie_bracket_self_zero {L : Type*}
 
 
 
+
 /-- In a star ring, the star of a sum equals the sum of stars -/
 theorem star_add_distrib {R : Type*} [NonUnitalNonAssocSemiring R] [StarRing R]
     (a b : R) : star (a + b) = star a + star b :=
   star_add a b
+
 
 
 
@@ -45,10 +49,12 @@ theorem star_star_eq_self {R : Type*} [InvolutiveStar R] (a : R) :
 
 
 
+
 /-- In a star ring, star of a product reverses order: (ab)* = b*a* -/
 theorem star_mul_reverse {R : Type*} [NonUnitalNonAssocSemiring R] [StarRing R]
     (a b : R) : star (a * b) = star b * star a :=
   star_mul a b
+
 
 
 
@@ -60,6 +66,7 @@ theorem clifford_sq_eq_Q {R : Type*} [CommRing R] {M : Type*} [AddCommGroup M]
 
 
 
+
 /-- The Clifford algebra map ι is linear -/
 theorem clifford_ι_linear {R : Type*} [CommRing R]
     {M : Type*} [AddCommGroup M] [Module R M] (Q : QuadraticForm R M)
@@ -67,6 +74,7 @@ theorem clifford_ι_linear {R : Type*} [CommRing R]
     CliffordAlgebra.ι Q (r • u + v) =
     r • CliffordAlgebra.ι Q u + CliffordAlgebra.ι Q v := by
   simp [map_add, map_smul]
+
 
 
 
@@ -83,6 +91,7 @@ theorem clifford_anticommutator {R : Type*} [CommRing R] [Invertible (2 : R)]
 
 
 
+
 /-- A Lie algebra homomorphism preserves brackets -/
 theorem lie_hom_bracket {L₁ L₂ : Type*}
     [LieRing L₁] [LieAlgebra ℝ L₁]
@@ -90,6 +99,7 @@ theorem lie_hom_bracket {L₁ L₂ : Type*}
     (f : L₁ →ₗ⁅ℝ⁆ L₂) (x y : L₁) :
     f ⁅x, y⁆ = ⁅f x, f y⁆ := by
   convert f.map_lie x y using 1
+
 
 
 
@@ -104,6 +114,7 @@ theorem linear_map_comp_assoc {R : Type*} [CommSemiring R]
 
 
 
+
 /-- The addition of linear maps is pointwise -/
 theorem linear_map_add_apply {R : Type*} [CommSemiring R]
     {M N : Type*}
@@ -112,6 +123,7 @@ theorem linear_map_add_apply {R : Type*} [CommSemiring R]
     (f₁ f₂ : M →ₗ[R] N) (x : M) :
     (f₁ + f₂) x = f₁ x + f₂ x :=
   rfl
+
 
 
 
@@ -126,10 +138,12 @@ theorem self_adjoint_real_eigenvalue {n : ℕ} (A : Matrix (Fin n) (Fin n) ℝ)
 
 
 
+
 /-- The commutator is antisymmetric: [a,b] = -[b,a] -/
 theorem commutator_antisymm {R : Type*} [Ring R] (a b : R) :
     a * b - b * a = -(b * a - a * b) :=
   (neg_sub (b * a) (a * b)).symm
+
 
 
 
@@ -143,10 +157,12 @@ theorem commutator_jacobi {R : Type*} [Ring R] (a b c : R) :
 
 
 
+
 /-- An element commutes with itself: [a, a] = 0 -/
 theorem commutator_self_zero {R : Type*} [Ring R] (a : R) :
     a * a - a * a = 0 :=
   sub_self (a * a)
+
 
 
 
@@ -155,5 +171,6 @@ theorem double_commutator {R : Type*} [Ring R] (a b c : R) :
     a * (b * c - c * b) - (b * c - c * b) * a =
     a * b * c - a * c * b - b * c * a + c * b * a := by
   simp only [mul_sub, sub_mul, mul_assoc]; abel
+
 
 

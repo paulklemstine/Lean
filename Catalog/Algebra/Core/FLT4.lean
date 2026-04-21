@@ -18,12 +18,14 @@ theorem flt4_strong : ∀ x y z : ℕ, 0 < x → 0 < y → 0 < z →
 
 
 
+
 /-- **Fermat's Last Theorem for n = 4.**
 The equation x⁴ + y⁴ = z⁴ has no solutions in positive integers. -/
 theorem flt4 : ∀ x y z : ℕ, 0 < x → 0 < y → 0 < z →
     x ^ 4 + y ^ 4 ≠ z ^ 4 := by
   intro x y z hx hy hz h
   exact flt4_strong x y (z ^ 2) hx hy (by positivity) (by linarith [sq_nonneg z])
+
 
 
 
@@ -35,5 +37,6 @@ theorem no_square_legs_pyth : ∀ a b c : ℕ, 0 < a → 0 < b → 0 < c →
   subst ha2; subst hb2
   have : p ^ 4 + q ^ 4 = c ^ 2 := by nlinarith
   exact flt4_strong p q c hp hq hc this
+
 
 

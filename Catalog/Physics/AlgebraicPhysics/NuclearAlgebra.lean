@@ -14,8 +14,10 @@ theorem nuclear_algebra_generators : 6 ^ 2 = 36 := by norm_num
 
 
 
+
 /-- U(5) subalgebra has 5² = 25 generators. -/
 theorem u5_generators : 5 ^ 2 = 25 := by norm_num
+
 
 
 
@@ -24,8 +26,10 @@ theorem su3_generators : 3 ^ 2 - 1 = 8 := by norm_num
 
 
 
+
 /-- O(6) subalgebra has 6·5/2 = 15 generators. -/
 theorem o6_generators : 6 * 5 / 2 = 15 := by norm_num
+
 
 
 
@@ -34,8 +38,10 @@ theorem o5_generators : 5 * 4 / 2 = 10 := by norm_num
 
 
 
+
 /-- O(3) subalgebra has 3·2/2 = 3 generators. -/
 theorem o3_generators : 3 * 2 / 2 = 3 := by norm_num
+
 
 
 
@@ -43,6 +49,7 @@ theorem o3_generators : 3 * 2 / 2 = 3 := by norm_num
 U(6) > U(5) > O(6) > O(5) > SU(3) > O(3) -/
 theorem subalgebra_chain_dimensions :
     3 < 8 ∧ 8 < 10 ∧ 10 < 15 ∧ 15 < 25 ∧ 25 < 36 := by omega
+
 
 
 
@@ -56,12 +63,19 @@ theorem boson_hilbert_dim (N : ℕ) :
 
 
 
+
 /-- Concrete Hilbert space dimensions for small boson numbers. -/
 theorem boson_hilbert_dim_N1 : Nat.choose 6 5 = 6 := by native_decide
 
 
 
+
+/-- [Section: # CatalogBuild.Physics.AlgebraicPhysics.NuclearAlgebra
+Auto-generated from theorem catalog database.
+Domain: Physics/AlgebraicPhysics
+Declarations: 63] -/
 theorem boson_hilbert_dim_N6 : Nat.choose 11 5 = 462 := by native_decide
+
 
 
 
@@ -69,7 +83,9 @@ theorem boson_hilbert_dim_N10 : Nat.choose 15 5 = 3003 := by native_decide
 
 
 
+
 theorem boson_hilbert_dim_N15 : Nat.choose 20 5 = 15504 := by native_decide
+
 
 
 
@@ -78,8 +94,10 @@ def casimir_U5 (n_d : ℕ) : ℕ := n_d * (n_d + 4)
 
 
 
+
 /-- C₂[SU(3)] eigenvalue: λ² + μ² + λμ + 3(λ + μ) -/
 def casimir_SU3 (lam mu : ℕ) : ℕ := lam^2 + mu^2 + lam * mu + 3 * (lam + mu)
+
 
 
 
@@ -88,13 +106,16 @@ def casimir_O6 (sigma : ℕ) : ℕ := sigma * (sigma + 4)
 
 
 
+
 /-- C₂[O(5)] eigenvalue: τ(τ + 3) -/
 def casimir_O5 (tau : ℕ) : ℕ := tau * (tau + 3)
 
 
 
+
 /-- C₂[O(3)] eigenvalue: L(L + 1) -/
 def casimir_O3 (L : ℕ) : ℕ := L * (L + 1)
+
 
 
 
@@ -104,20 +125,26 @@ theorem casimir_U5_eq_O6_form (n : ℕ) : casimir_U5 n = casimir_O6 n := by
 
 
 
+
 /-- Casimir eigenvalue examples for verification. -/
 theorem casimir_U5_example : casimir_U5 2 = 12 := by native_decide
+
 
 
 theorem casimir_SU3_example : casimir_SU3 6 0 = 54 := by native_decide
 
 
+
 theorem casimir_O6_example : casimir_O6 6 = 60 := by native_decide
+
 
 
 theorem casimir_O5_example : casimir_O5 3 = 18 := by native_decide
 
 
+
 theorem casimir_O3_example : casimir_O3 2 = 6 := by native_decide
+
 
 
 
@@ -129,10 +156,12 @@ theorem casimir_SU3_ground_band (N : ℕ) :
 
 
 
+
 /-- In the U(5) vibrational limit, R₄/₂ = E(4⁺)/E(2⁺) = 2.
 E(L) = ε·n_d + small corrections. For 4⁺: n_d = 2. For 2⁺: n_d = 1.
 So R₄/₂ = 2ε/ε = 2. -/
 theorem R42_vibrational : (2 : ℚ) / 1 = 2 := by norm_num
+
 
 
 
@@ -143,10 +172,12 @@ theorem R42_rotational : (20 : ℚ) / 6 = 10 / 3 := by norm_num
 
 
 
+
 /-- In the O(6) γ-unstable limit, R₄/₂ = E(4⁺)/E(2⁺) = 5/2.
 E(τ, L) ∝ τ(τ+3). For 4⁺: τ=2, C₂ = 10. For 2⁺: τ=1, C₂ = 4.
 So R₄/₂ = 10/4 = 5/2. -/
 theorem R42_gamma_unstable : (10 : ℚ) / 4 = 5 / 2 := by norm_num
+
 
 
 
@@ -156,9 +187,11 @@ theorem R42_ordering : (2 : ℚ) < 5 / 2 ∧ 5 / 2 < 10 / 3 := by
 
 
 
+
 /-- For any nucleus, 1 ≤ R₄/₂ ≤ 10/3. The upper bound is the rigid rotor. -/
 theorem R42_upper_bound_is_rotor : ∀ R : ℚ, R ≤ 10 / 3 → R ≤ 10 / 3 := by
   intro R h; exact h
+
 
 
 
@@ -168,17 +201,22 @@ def shell_degeneracy (n : ℕ) : ℕ := (n + 1) * (n + 2)
 
 
 
+
 /-- The first few shell degeneracies. -/
 theorem shell_deg_0 : shell_degeneracy 0 = 2 := by native_decide
+
 
 
 theorem shell_deg_1 : shell_degeneracy 1 = 6 := by native_decide
 
 
+
 theorem shell_deg_2 : shell_degeneracy 2 = 12 := by native_decide
 
 
+
 theorem shell_deg_3 : shell_degeneracy 3 = 20 := by native_decide
+
 
 
 
@@ -189,10 +227,12 @@ def ho_cumulative : ℕ → ℕ
 
 
 
+
 /-- The first three harmonic oscillator magic numbers are 2, 8, 20. -/
 theorem first_three_magic :
     ho_cumulative 0 = 2 ∧ ho_cumulative 1 = 8 ∧ ho_cumulative 2 = 20 := by
   simp [ho_cumulative, shell_degeneracy]
+
 
 
 
@@ -202,8 +242,10 @@ theorem no_spin_orbit_fourth : ho_cumulative 3 = 40 := by
 
 
 
+
 /-- The nuclear magic numbers as a list. -/
 def magic_numbers : List ℕ := [2, 8, 20, 28, 50, 82, 126]
+
 
 
 
@@ -214,9 +256,11 @@ def spin_orbit_shell_sizes : List ℕ := [2, 6, 12, 8, 22, 32, 44]
 
 
 
+
 /-- The magic numbers are cumulative sums of the spin-orbit shell sizes. -/
 theorem magic_numbers_from_shells :
     magic_numbers = (spin_orbit_shell_sizes.scanl (· + ·) 0).tail := by native_decide
+
 
 
 
@@ -225,8 +269,10 @@ theorem total_shells_126 : spin_orbit_shell_sizes.sum = 126 := by native_decide
 
 
 
+
 /-- The spin-orbit intruder orbital 1f₇/₂ has degeneracy 2j+1 = 8 for j = 7/2. -/
 theorem f72_degeneracy : 2 * 3 + 2 = 8 := by norm_num  -- 2*(7/2) + 1 = 8
+
 
 
 
@@ -235,8 +281,10 @@ theorem g92_degeneracy : 2 * 4 + 2 = 10 := by norm_num  -- 2*(9/2) + 1 = 10
 
 
 
+
 /-- The spin-orbit intruder orbital 1h₁₁/₂ has degeneracy 12. -/
 theorem h112_degeneracy : 2 * 5 + 2 = 12 := by norm_num  -- 2*(11/2) + 1 = 12
+
 
 
 
@@ -245,10 +293,12 @@ theorem i132_degeneracy : 2 * 6 + 2 = 14 := by norm_num  -- 2*(13/2) + 1 = 14
 
 
 
+
 /-- There are exactly 3 maximal dynamical symmetry chains of U(6) → O(3). -/
 theorem three_symmetry_chains : ["U(6) ⊃ U(5) ⊃ O(5) ⊃ O(3)",
     "U(6) ⊃ SU(3) ⊃ O(3)",
     "U(6) ⊃ O(6) ⊃ O(5) ⊃ O(3)"].length = 3 := by native_decide
+
 
 
 
@@ -260,10 +310,12 @@ def isospin_casimir (neutrons protons : ℕ) : ℕ :=
 
 
 
+
 /-- The isospin asymmetry for a symmetric nucleus (N=Z) is zero. -/
 theorem symmetric_nucleus_no_asymmetry (A : ℕ) :
     isospin_casimir A A = 0 := by
   simp [isospin_casimir]
+
 
 
 
@@ -285,6 +337,7 @@ theorem mirror_nuclei_same_isospin (N Z : ℕ) :
 
 
 
+
 /-- Pairing energy changes sign between even-even and odd-odd nuclei.
 Even-even: δ > 0 (extra binding). Odd-odd: δ < 0 (less binding). -/
 def pairing_sign (A Z : ℕ) : Int :=
@@ -294,18 +347,23 @@ def pairing_sign (A Z : ℕ) : Int :=
 
 
 
+
 theorem pairing_even_even : pairing_sign 56 26 = 1 := by native_decide  -- ⁵⁶Fe
 
 
+
 theorem pairing_odd_odd : pairing_sign 14 7 = -1 := by native_decide     -- ¹⁴N
+
 
 
 theorem pairing_odd_A : pairing_sign 13 6 = 0 := by native_decide        -- ¹³C
 
 
 
+
 /-- In the spherical (U(5)) phase, the ground state deformation β₀ = 0. -/
 theorem spherical_phase_beta_zero : (0 : ℝ) = 0 := rfl
+
 
 
 
@@ -317,6 +375,7 @@ theorem E5_R42_prediction :
 
 
 
+
 /-- The X(5) critical point symmetry predicts R₄/₂ ≈ 2.904. -/
 theorem X5_R42_prediction :
     (290 : ℚ) / 100 < 2904 / 1000 ∧ (2904 : ℚ) / 1000 < 291 / 100 := by
@@ -324,10 +383,12 @@ theorem X5_R42_prediction :
 
 
 
+
 /-- The critical point η_c for U(5)→SU(3) transition satisfies 0 < η_c < 1. -/
 theorem critical_point_in_unit_interval :
     (0 : ℚ) < 4 / 5 ∧ (4 : ℚ) / 5 < 1 := by
   constructor <;> norm_num
+
 
 
 
@@ -339,8 +400,10 @@ theorem gd156_boson_number : (64 - 50) / 2 + (92 - 82) / 2 = 12 := by norm_num
 
 
 
+
 /-- For ¹⁹⁶Pt (Z=78, N=118): N = (82-78)/2 + (126-118)/2 = 2 + 4 = 6 (hole counting). -/
 theorem pt196_boson_number : (82 - 78) / 2 + (126 - 118) / 2 = 6 := by norm_num
+
 
 
 
@@ -352,11 +415,13 @@ theorem casimir_U5_monotone (a b : ℕ) (h : a < b) :
 
 
 
+
 /-- The Casimir C₂[O(3)] = L(L+1) is strictly increasing. -/
 theorem casimir_O3_monotone (a b : ℕ) (h : a < b) :
     casimir_O3 a < casimir_O3 b := by
   simp [casimir_O3]
   nlinarith
+
 
 
 
@@ -368,11 +433,13 @@ theorem casimir_O5_monotone (a b : ℕ) (h : a < b) :
 
 
 
+
 /-- The SU(3) Casimir for ground band reps (2N, 0) is strictly increasing in N. -/
 theorem casimir_SU3_ground_monotone (a b : ℕ) (h : a < b) :
     casimir_SU3 (2 * a) 0 < casimir_SU3 (2 * b) 0 := by
   simp [casimir_SU3]
   nlinarith
+
 
 
 

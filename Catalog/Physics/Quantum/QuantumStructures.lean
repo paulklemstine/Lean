@@ -16,8 +16,14 @@ theorem qubit_hilbert_dim (n : ℕ) : Fintype.card (Fin (2^n)) = 2^n := by
 
 
 
+
+/-- [Section: # CatalogBuild.Physics.Quantum.QuantumStructures
+Auto-generated from theorem catalog database.
+Domain: Physics/Quantum
+Declarations: 10] -/
 theorem pauliX_trace : Matrix.trace pauliX = 0 := by
   unfold pauliX; norm_num;
+
 
 
 
@@ -26,8 +32,10 @@ theorem pauliZ_trace : Matrix.trace pauliZ = 0 := by
 
 
 
+
 theorem pauliX_det : Matrix.det pauliX = -1 := by
   unfold pauliX; norm_num;
+
 
 
 
@@ -36,6 +44,7 @@ theorem kronecker_id_2 :
       (1 : Matrix (Fin 2) (Fin 2) ℂ) (1 : Matrix (Fin 2) (Fin 2) ℂ) =
     (1 : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ) := by
   exact?
+
 
 
 
@@ -48,13 +57,16 @@ def gaussianBinomial (q n k : ℕ) : ℕ :=
 
 
 
+
 theorem gaussianBinomial_zero (q n : ℕ) : gaussianBinomial q n 0 = 1 := by
   unfold gaussianBinomial; aesop;
 
 
 
+
 theorem gaussianBinomial_gt (q n k : ℕ) (h : k > n) : gaussianBinomial q n k = 0 := by
   unfold gaussianBinomial; aesop;
+
 
 
 
@@ -64,8 +76,10 @@ theorem crystallizer_lattice_bound (q n : ℕ) (hq : 2 ≤ q) (hn : 1 ≤ n) :
 
 
 
+
 /-- The partial trace formula: for a product state, partial trace is proportional. -/
 theorem separable_partial_trace_rank
     (A B : Matrix (Fin 2) (Fin 2) ℂ) :
     Matrix.trace B • A = Matrix.trace B • A := rfl
+
 

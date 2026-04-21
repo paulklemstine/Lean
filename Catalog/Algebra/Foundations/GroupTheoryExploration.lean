@@ -21,15 +21,22 @@ theorem prime_order_generates (G : Type*) [Group G] [Fintype G]
 
 
 
+
+/-- [Section: # CatalogBuild.Algebra.Foundations.GroupTheoryExploration
+Auto-generated from theorem catalog database.
+Domain: Algebra/Foundations
+Declarations: 11] -/
 theorem order_dvd_card (G : Type*) [Group G] [Fintype G] (g : G) :
     orderOf g ∣ Fintype.card G := by
   exact orderOf_dvd_card
 
 
 
+
 theorem pow_card_eq_one_gen (G : Type*) [Group G] [Fintype G] (g : G) :
     g ^ Fintype.card G = 1 := by
   convert pow_card_eq_one
+
 
 
 
@@ -78,11 +85,13 @@ theorem sq_prime_is_comm (p : ℕ) (hp : Nat.Prime p)
 
 
 
+
 theorem perm_prod_transpositions {n : ℕ} (σ : Equiv.Perm (Fin n)) :
     ∃ l : List (Equiv.Perm (Fin n)), σ = l.prod := by
   induction' σ using Equiv.Perm.swap_induction_on' with a b h₁ h₂ h₃;
   · exists [ ];
   · exact Exists.elim h₃ fun l hl => ⟨ l ++ [ Equiv.swap b h₁ ], by simp +decide [ hl ] ⟩
+
 
 
 
@@ -92,9 +101,11 @@ theorem sign_swap_neg {n : ℕ} (i j : Fin n) (hij : i ≠ j) :
 
 
 
+
 theorem sign_one_perm {n : ℕ} :
     Equiv.Perm.sign (1 : Equiv.Perm (Fin n)) = 1 := by
   exact?
+
 
 
 
@@ -104,8 +115,10 @@ theorem sign_mul_perm {n : ℕ} (σ τ : Equiv.Perm (Fin n)) :
 
 
 
+
 theorem zmod_card_eq (n : ℕ) [NeZero n] : Fintype.card (ZMod n) = n := by
   convert ZMod.card n
+
 
 
 
@@ -115,8 +128,10 @@ theorem order_prod_lcm (G H : Type*) [Group G] [Group H] (a : G) (b : H) :
 
 
 
+
 theorem card_prod_eq (G H : Type*) [Group G] [Group H] [Fintype G] [Fintype H] :
     Fintype.card (G × H) = Fintype.card G * Fintype.card H := by
   convert Fintype.card_prod G H using 1
+
 
 

@@ -15,8 +15,10 @@ theorem tropical_path_idempotent (a b c : ℝ) :
 
 
 
+
 /-- min is idempotent. -/
 theorem min_idempotent' (a : ℝ) : min a a = a := min_self a
+
 
 
 
@@ -27,6 +29,7 @@ def is_tree_metric {X : Type*} (d : X → X → ℝ) : Prop :=
 
 
 
+
 /-- A quantum error correcting code is defined by a projection. -/
 structure QECC (n : ℕ) where
   projection : Matrix (Fin n) (Fin n) ℂ
@@ -34,9 +37,11 @@ structure QECC (n : ℕ) where
 
 
 
+
 /-- The code space dimension = trace of the projection. -/
 noncomputable def code_dimension {n : ℕ} (C : QECC n) : ℂ :=
   Matrix.trace C.projection
+
 
 
 
@@ -47,6 +52,7 @@ Declarations: 10] -/
 theorem complement_code {n : ℕ} (C : QECC n) :
     (1 - C.projection) * (1 - C.projection) = 1 - C.projection := by
   norm_num [ sub_mul, mul_sub, C.is_projection ]
+
 
 
 
@@ -61,11 +67,13 @@ theorem orthogonal_codes_sum {n : ℕ} (C₁ C₂ : QECC n)
 
 
 
+
 /-- Projection matrices in neural networks: PCA = idempotent projection. -/
 theorem pca_projection_property {n : ℕ} (P : Matrix (Fin n) (Fin n) ℝ)
     (hP : P * P = P) (x : Fin n → ℝ) :
     P.mulVec (P.mulVec x) = P.mulVec x := by
   simp [Matrix.mulVec_mulVec, hP]
+
 
 
 
@@ -79,9 +87,11 @@ theorem crt_shares_sum_to_one :
 
 
 
+
 /-- ℤ/6ℤ has 4 idempotents (2² since 6 = 2·3). -/
 theorem zmod6_idem_count :
     (Finset.univ.filter (fun e : ZMod 6 => e * e = e)).card = 4 := by decide
+
 
 
 

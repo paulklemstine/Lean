@@ -18,12 +18,18 @@ theorem pyth_not_both_odd (a b c : ℤ) (h : a^2 + b^2 = c^2)
 
 
 
+
+/-- [Section: # CatalogBuild.Physics.ArithmeticPhotons.PhotonParity
+Auto-generated from theorem catalog database.
+Domain: Physics/ArithmeticPhotons
+Declarations: 4] -/
 theorem pyth_hypotenuse_odd (a b c : ℕ) (h : a^2 + b^2 = c^2)
     (hcop : Nat.Coprime a b) : ¬ 2 ∣ c := by
   contrapose! hcop; have := congr_arg ( · % 4 ) h; rcases Nat.even_or_odd' a with ⟨ b₁, rfl | rfl ⟩ <;> rcases Nat.even_or_odd' b with ⟨ b₂, rfl | rfl ⟩ <;> rcases Nat.even_or_odd' c with ⟨ b₃, rfl | rfl ⟩ <;> ring_nf at * <;> norm_num [ Nat.add_mod, Nat.mul_mod ] at *;
   · norm_num [ Nat.gcd_mul_right, Nat.gcd_mul_left ];
   · grind +ring;
   · grind +ring
+
 
 
 
@@ -36,7 +42,9 @@ theorem pyth_one_leg_even (a b c : ℕ) (h : a^2 + b^2 = c^2)
 
 
 
+
 theorem pyth_parametrization (m n : ℤ) :
     (m^2 - n^2)^2 + (2*m*n)^2 = (m^2 + n^2)^2 := by
   ring
+
 

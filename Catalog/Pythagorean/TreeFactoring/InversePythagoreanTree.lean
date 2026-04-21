@@ -13,15 +13,18 @@ def invBerggrenA (a b c : ℤ) : ℤ × ℤ × ℤ :=
 
 
 
+
 /-- Inverse of Branch B. -/
 def invBerggrenB (a b c : ℤ) : ℤ × ℤ × ℤ :=
   (a + 2*b - 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
 
 
 
+
 /-- Inverse of Branch C. -/
 def invBerggrenC (a b c : ℤ) : ℤ × ℤ × ℤ :=
   (-a - 2*b + 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
+
 
 
 
@@ -33,11 +36,13 @@ theorem berggrenA'_preserves_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 /-- Branch B preserves the Pythagorean property. -/
 theorem berggrenB'_preserves_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     let t := berggrenB' a b c
     t.1 ^ 2 + t.2.1 ^ 2 = t.2.2 ^ 2 := by
   simp only [berggrenB']; nlinarith [h]
+
 
 
 
@@ -49,8 +54,10 @@ theorem berggrenC'_preserves_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 /-- The fundamental triple (3, 4, 5) is Pythagorean. -/
 theorem fundamental_triple' : (3 : ℤ) ^ 2 + 4 ^ 2 = 5 ^ 2 := by norm_num
+
 
 
 
@@ -63,12 +70,14 @@ theorem invA_after_A (a b c : ℤ) :
 
 
 
+
 /-- B is invertible: applying B then B⁻¹ returns to the original triple. -/
 theorem invB_after_B (a b c : ℤ) :
     let t := berggrenB' a b c
     invBerggrenB t.1 t.2.1 t.2.2 = (a, b, c) := by
   simp only [berggrenB', invBerggrenB]
   ext <;> ring
+
 
 
 
@@ -81,12 +90,14 @@ theorem invC_after_C (a b c : ℤ) :
 
 
 
+
 /-- The other direction: A⁻¹ then A also returns to the original. -/
 theorem A_after_invA (a b c : ℤ) :
     let t := invBerggrenA a b c
     berggrenA' t.1 t.2.1 t.2.2 = (a, b, c) := by
   simp only [invBerggrenA, berggrenA']
   ext <;> ring
+
 
 
 
@@ -102,11 +113,17 @@ theorem B_after_invB (a b c : ℤ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.TreeFactoring.InversePythagoreanTree
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/TreeFactoring
+Declarations: 44] -/
 theorem C_after_invC (a b c : ℤ) :
     let t := invBerggrenC a b c
     berggrenC' t.1 t.2.1 t.2.2 = (a, b, c) := by
   simp only [invBerggrenC, berggrenC']
   ext <;> ring
+
 
 
 
@@ -127,6 +144,7 @@ theorem berggren_hypotenuse_increases (a b c : ℤ)
 
 
 
+
 /-- A Minkowski null vector in (3+1)D spacetime with integer coordinates. -/
 structure MinkowskiNullVector' where
   x : ℤ
@@ -134,6 +152,7 @@ structure MinkowskiNullVector' where
   z : ℤ
   t : ℤ
   null_condition : x ^ 2 + y ^ 2 + z ^ 2 = t ^ 2
+
 
 
 
@@ -148,8 +167,10 @@ def embedTripleToNull' (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 /-- A Pythagorean quadruple: a²+b²+c²=d². -/
 def IsPythQuadruple' (a b c d : ℤ) : Prop := a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2
+
 
 
 
@@ -159,9 +180,11 @@ theorem quadruple_1_2_2_3' : IsPythQuadruple' 1 2 2 3 := by
 
 
 
+
 /-- (2, 3, 6, 7) is a Pythagorean quadruple. -/
 theorem quadruple_2_3_6_7' : IsPythQuadruple' 2 3 6 7 := by
   simp [IsPythQuadruple']
+
 
 
 
@@ -169,6 +192,7 @@ theorem quadruple_2_3_6_7' : IsPythQuadruple' 2 3 6 7 := by
 theorem triple_to_quadruple' (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     IsPythQuadruple' a b 0 c := by
   simp [IsPythQuadruple', h]
+
 
 
 
@@ -180,14 +204,17 @@ def quadrupleToNull' (a b c d : ℤ) (h : IsPythQuadruple' a b c d) :
 
 
 
+
 /-- The Minkowski inner product in 3+1 dimensions. -/
 def minkowski4' (v w : ℤ × ℤ × ℤ × ℤ) : ℤ :=
   v.1 * w.1 + v.2.1 * w.2.1 + v.2.2.1 * w.2.2.1 - v.2.2.2 * w.2.2.2
 
 
 
+
 /-- A 4-vector is null iff its Minkowski norm is zero. -/
 def isNull4' (v : ℤ × ℤ × ℤ × ℤ) : Prop := minkowski4' v v = 0
+
 
 
 
@@ -200,10 +227,12 @@ theorem null4_iff' (x y z t : ℤ) :
 
 
 
+
 /-- A Pythagorean triple defines a null 4-vector. -/
 theorem pyth_triple_is_null' (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     isNull4' (a, b, 0, c) := by
   rw [null4_iff']; simpa using h
+
 
 
 
@@ -217,10 +246,12 @@ theorem null_sum_not_null' :
 
 
 
+
 /-- The Berggren A matrix has determinant 1. -/
 theorem berggrenA_det' :
     let M := !![( 1 : ℤ), -2, 2; 2, -1, 2; 2, -2, 3]
     M.det = 1 := by native_decide
+
 
 
 
@@ -231,10 +262,12 @@ theorem berggrenB_det' :
 
 
 
+
 /-- The Berggren C matrix has determinant 1. -/
 theorem berggrenC_det' :
     let M := !![( -1 : ℤ), 2, 2; -2, 1, 2; -2, 2, 3]
     M.det = 1 := by native_decide
+
 
 
 
@@ -249,6 +282,7 @@ def fourBranchChildren' (a b c : ℤ) :
 
 
 
+
 /-- The four parents of a node in the inverse tree:
 3 spatial (inverse Berggren) + 1 temporal. -/
 def fourParents' (a b c : ℤ) :
@@ -257,6 +291,7 @@ def fourParents' (a b c : ℤ) :
     invBerggrenB a b c,
     invBerggrenC a b c,
     (a, b, c) )
+
 
 
 
@@ -269,11 +304,13 @@ theorem children_of_345' :
 
 
 
+
 /-- All three children of (3,4,5) are Pythagorean. -/
 theorem children_of_345_pyth' :
     (5:ℤ)^2 + 12^2 = 13^2 ∧
     (21:ℤ)^2 + 20^2 = 29^2 ∧
     (15:ℤ)^2 + 8^2 = 17^2 := by norm_num
+
 
 
 
@@ -286,10 +323,12 @@ theorem berggren_sum_mod2_A' (a b c : ℤ) :
 
 
 
+
 theorem berggren_sum_mod2_B' (a b c : ℤ) :
     ((berggrenB' a b c).1 + (berggrenB' a b c).2.1 + (berggrenB' a b c).2.2) % 2 =
     (a + b + c) % 2 := by
   simp only [berggrenB']; omega
+
 
 
 
@@ -300,8 +339,10 @@ theorem berggren_sum_mod2_C' (a b c : ℤ) :
 
 
 
+
 /-- The time-reversed branch: negate the time component. -/
 def timeReverseBranch' (a b c d : ℤ) : ℤ × ℤ × ℤ × ℤ := (a, b, c, -d)
+
 
 
 
@@ -313,11 +354,13 @@ theorem timeReverse_preserves' (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
 
 
 
+
 /-- Time reversal is an involution. -/
 theorem timeReverse_involution (a b c d : ℤ) :
     let r := timeReverseBranch' a b c d
     timeReverseBranch' r.1 r.2.1 r.2.2.1 r.2.2.2 = (a, b, c, d) := by
   simp [timeReverseBranch']
+
 
 
 
@@ -330,10 +373,12 @@ theorem photon_round_trip_A' (a b c : ℤ) :
 
 
 
+
 theorem photon_round_trip_B' (a b c : ℤ) :
     let emitted := berggrenB' a b c
     let absorbed := invBerggrenB emitted.1 emitted.2.1 emitted.2.2
     absorbed = (a, b, c) := invB_after_B a b c
+
 
 
 
@@ -344,10 +389,12 @@ theorem photon_round_trip_C' (a b c : ℤ) :
 
 
 
+
 theorem photon_round_trip_time' (a b c d : ℤ) :
     let reversed := timeReverseBranch' a b c d
     timeReverseBranch' reversed.1 reversed.2.1 reversed.2.2.1 reversed.2.2.2 = (a, b, c, d) :=
   timeReverse_involution a b c d
+
 
 
 
@@ -368,5 +415,6 @@ where
 -- Verify some Pythagorean quadruples (3+1D null vectors)
 #eval (1^2 + 2^2 + 2^2 : ℤ) == 3^2   -- true: (1,2,2,3)
 #eval (2^2 + 3^2 + 6^2 : ℤ) == 7^2   -- true: (2,3,6,7)
+
 
 

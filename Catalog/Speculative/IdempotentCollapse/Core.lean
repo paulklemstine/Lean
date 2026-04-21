@@ -14,10 +14,12 @@ def Idempotent (f : α → α) : Prop := ∀ x, f (f x) = f x
 
 
 
+
 /-- Every point in the image of an idempotent is a fixed point. -/
 theorem idempotent_fixes_image (f : α → α) (hf : Idempotent f) (y : α)
     (hy : y ∈ range f) : f y = y := by
   obtain ⟨a, rfl⟩ := hy; exact hf a
+
 
 
 
@@ -31,10 +33,16 @@ theorem idempotent_iterate_eq (f : α → α) (hf : Idempotent f) (n : ℕ) (hn 
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.IdempotentCollapse.Core
+Auto-generated from theorem catalog database.
+Domain: Speculative/IdempotentCollapse
+Declarations: 17] -/
 theorem idempotent_comp_comm (f g : α → α) (hf : Idempotent f) (hg : Idempotent g)
     (hcomm : ∀ x, f (g x) = g (f x)) :
     Idempotent (f ∘ g) := by
       unfold Idempotent at *; aesop;
+
 
 
 
@@ -43,8 +51,10 @@ theorem idempotent_id : Idempotent (id : α → α) := fun _ => rfl
 
 
 
+
 /-- A constant function is idempotent. -/
 theorem idempotent_const (c : α) : Idempotent (fun _ => c) := fun _ => rfl
+
 
 
 
@@ -53,6 +63,7 @@ theorem retraction_is_idempotent (f : α → α) (S : Set α)
     (h_into : ∀ x, f x ∈ S) (h_fixes : ∀ x ∈ S, f x = x) :
     Idempotent f :=
   fun x => h_fixes (f x) (h_into x)
+
 
 
 
@@ -69,6 +80,7 @@ theorem retraction_exists (S : Set α) (hS : S.Nonempty) :
 
 
 
+
 /-- **Universal Collapse Theorem**: For ANY nonempty S ⊆ α, there exists an
 idempotent f with range f = S. -/
 theorem universal_collapse_exists (S : Set α) (hS : S.Nonempty) :
@@ -78,6 +90,7 @@ theorem universal_collapse_exists (S : Set α) (hS : S.Nonempty) :
   ext x; constructor
   · rintro ⟨a, rfl⟩; exact h_into a
   · intro hx; exact ⟨x, h_fixes x hx⟩
+
 
 
 
@@ -95,10 +108,12 @@ theorem universal_forced_collapse (S : Set α) (hS : S.Nonempty) :
 
 
 
+
 /-- Collapse is injective on its image. -/
 theorem collapse_inj_on_image (f : α → α) (hf : Idempotent f) : InjOn f (range f) := by
   intro a ha b hb hab
   rwa [idempotent_fixes_image f hf a ha, idempotent_fixes_image f hf b hb] at hab
+
 
 
 
@@ -110,11 +125,13 @@ theorem total_collapse_exists [Nonempty α] :
 
 
 
+
 /-- The identity is the unique surjective idempotent. -/
 theorem identity_unique_total_preserving (f : α → α)
     (hf : Idempotent f) (h_surj : Surjective f) :
     f = id := by
   ext x; exact idempotent_fixes_image f hf x (h_surj x)
+
 
 
 
@@ -127,8 +144,10 @@ theorem fixed_point_iterate' (f : α → α) (x : α) (hx : f x = x) (n : ℕ) :
 
 
 
+
 /-- Tropical: max is idempotent as a self-operation. -/
 theorem tropical_self_max_idempotent (a : ℝ) : max a a = a := max_self a
+
 
 
 
@@ -136,6 +155,7 @@ theorem tropical_self_max_idempotent (a : ℝ) : max a a = a := max_self a
 theorem complex_norm_real_idempotent (r : ℝ) :
     ‖(r : ℂ)‖ = |r| :=
   Complex.norm_real r
+
 
 
 
@@ -151,6 +171,7 @@ theorem collapse_spectrum {n m : ℕ} (hm : 0 < m) (hmn : m ≤ n) :
           · aesop;
           · aesop;
           · aesop
+
 
 
 

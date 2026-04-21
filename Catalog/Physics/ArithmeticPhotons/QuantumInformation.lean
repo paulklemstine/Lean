@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Physics/ArithmeticPhotons
-Declarations: 35
+Declarations: 34
 -/
 
 import Mathlib
@@ -13,6 +13,7 @@ structure RatSpherePoint where
   y : ℚ
   z : ℚ
   on_sphere : x ^ 2 + y ^ 2 + z ^ 2 = 1
+
 
 
 
@@ -29,6 +30,7 @@ def quadToBloch (a b c d : ℤ) (hd : d ≠ 0)
 
 
 
+
 /-- Rational inverse stereographic projection: ℚ² → S²(ℚ) -/
 def ratInvStereo (s t : ℚ) : RatSpherePoint where
   x := 2 * s / (1 + s ^ 2 + t ^ 2)
@@ -42,6 +44,7 @@ def ratInvStereo (s t : ℚ) : RatSpherePoint where
 
 
 
+
 /-- Converting a rational stereo pair to a Pythagorean quadruple.
 Given s = p/r, t = q/r, we get the quadruple
 (2pr, 2qr, p²+q²-r², p²+q²+r²). -/
@@ -51,8 +54,10 @@ theorem stereo_to_quad (p q r : ℤ) (hr : r ≠ 0) :
 
 
 
+
 /-- The 2×2 identity matrix -/
 def pauliI : Matrix (Fin 2) (Fin 2) ℚ := 1
+
 
 
 
@@ -63,10 +68,12 @@ theorem pauliX_sq : pauliX * pauliX = pauliI := by
 
 
 
+
 /-- Pauli Z is an involution: Z² = I -/
 theorem pauliZ_sq : pauliZ * pauliZ = pauliI := by
   unfold pauliZ pauliI
   ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.mul_apply, Fin.sum_univ_two]
+
 
 
 
@@ -77,10 +84,12 @@ theorem pauliXZ_anticommute : pauliX * pauliZ = -(pauliZ * pauliX) := by
 
 
 
+
 /-- The density matrix of a Z-eigenstate (|0⟩) has Bloch vector (0,0,1) -/
 def blochUp : RatSpherePoint where
   x := 0; y := 0; z := 1
   on_sphere := by norm_num
+
 
 
 
@@ -91,6 +100,7 @@ def blochDown : RatSpherePoint where
 
 
 
+
 /-- The |+⟩ state has Bloch vector (1,0,0) -/
 def blochPlus : RatSpherePoint where
   x := 1; y := 0; z := 0
@@ -98,10 +108,12 @@ def blochPlus : RatSpherePoint where
 
 
 
+
 /-- The |-⟩ state has Bloch vector (-1,0,0) -/
 def blochMinus : RatSpherePoint where
   x := -1; y := 0; z := 0
   on_sphere := by norm_num
+
 
 
 
@@ -116,6 +128,7 @@ def hadamardBloch (p : RatSpherePoint) : RatSpherePoint where
 
 
 
+
 /-- The S gate's action on Bloch coordinates -/
 def sGateBloch (p : RatSpherePoint) : RatSpherePoint where
   x := -p.y
@@ -124,6 +137,7 @@ def sGateBloch (p : RatSpherePoint) : RatSpherePoint where
   on_sphere := by
     have h := p.on_sphere
     ring_nf; linarith
+
 
 
 
@@ -138,6 +152,7 @@ def xGateBloch (p : RatSpherePoint) : RatSpherePoint where
 
 
 
+
 /-- Pauli Z gate's action on Bloch coordinates -/
 def zGateBloch (p : RatSpherePoint) : RatSpherePoint where
   x := -p.x
@@ -147,15 +162,6 @@ def zGateBloch (p : RatSpherePoint) : RatSpherePoint where
     have h := p.on_sphere
     ring_nf; linarith
 
-
-
-/-- H applied twice is the identity (on Bloch sphere, up to Y-negation pattern) -/
-theorem hadamard_involution (p : RatSpherePoint) :
-    (hadamardBloch (hadamardBloch p)).x = p.x ∧
-    (hadamardBloch (hadamardBloch p)).y = p.y ∧
-    (hadamardBloch (hadamardBloch p)).z = p.z := by
-  unfold hadamardBloch
-  exact ⟨rfl, by ring, rfl⟩
 
 
 
@@ -168,6 +174,7 @@ theorem sGate_order_four (p : RatSpherePoint) :
 
 
 
+
 /-- The Hadamard gate maps Pythagorean quadruples to Pythagorean quadruples -/
 theorem hadamard_preserves_quad (a b c d : ℤ) (hd : d ≠ 0)
     (hq : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
@@ -175,10 +182,12 @@ theorem hadamard_preserves_quad (a b c d : ℤ) (hd : d ≠ 0)
 
 
 
+
 /-- The S gate maps Pythagorean quadruples to Pythagorean quadruples -/
 theorem sGate_preserves_quad (a b c d : ℤ) (hd : d ≠ 0)
     (hq : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     b ^ 2 + a ^ 2 + c ^ 2 = d ^ 2 := by linarith
+
 
 
 
@@ -196,6 +205,7 @@ def quaternionHopf (m n p q : ℤ) (h : m^2 + n^2 + p^2 + q^2 ≠ 0) :
 
 
 
+
 /-- The Hopf map is exactly the quadruple parametrization!
 This is the fundamental bridge between quaternion topology and
 arithmetic photons. -/
@@ -208,8 +218,10 @@ theorem hopf_is_parametrization (m n p q : ℤ) :
 
 
 
+
 /-- 90° rotation about z-axis: (x,y,z) → (-y,x,z) -/
 def rot90z : Matrix (Fin 3) (Fin 3) ℚ := !![0, -1, 0; 1, 0, 0; 0, 0, 1]
+
 
 
 
@@ -220,8 +232,10 @@ theorem rot90z_orthogonal : rot90zᵀ * rot90z = 1 := by
 
 
 
+
 /-- The exchange matrix (x,y,z) → (z,-y,x) representing Hadamard -/
 def hadamardRot : Matrix (Fin 3) (Fin 3) ℚ := !![0, 0, 1; 0, -1, 0; 1, 0, 0]
+
 
 
 
@@ -229,6 +243,7 @@ def hadamardRot : Matrix (Fin 3) (Fin 3) ℚ := !![0, 0, 1; 0, -1, 0; 1, 0, 0]
 theorem hadamardRot_orthogonal : hadamardRotᵀ * hadamardRot = 1 := by
   unfold hadamardRot
   ext i j; fin_cases i <;> fin_cases j <;> simp [Matrix.mul_apply, Fin.sum_univ_three]
+
 
 
 
@@ -244,11 +259,13 @@ def isStabilizerState (p : RatSpherePoint) : Prop :=
 
 
 
+
 /-- Hadamard maps |0⟩ to |+⟩ (Z-eigenstate to X-eigenstate) -/
 theorem hadamard_maps_up_to_plus :
     let p := hadamardBloch blochUp
     p.x = 1 ∧ p.y = 0 ∧ p.z = 0 := by
   unfold hadamardBloch blochUp; simp
+
 
 
 
@@ -260,11 +277,13 @@ theorem hadamard_maps_plus_to_up :
 
 
 
+
 /-- S gate maps |+⟩ to |+i⟩ (X-eigenstate to Y-eigenstate) -/
 theorem sGate_maps_plus_to_plusY :
     let p := sGateBloch blochPlus
     p.x = 0 ∧ p.y = 1 ∧ p.z = 0 := by
   unfold sGateBloch blochPlus; simp
+
 
 
 
@@ -280,9 +299,11 @@ def countPrimQuads (d : ℕ) : ℕ :=
 
 
 
+
 /-- A rational rotation matrix on ℚ³ -/
 def IsRatRotation (M : Matrix (Fin 3) (Fin 3) ℚ) : Prop :=
   Mᵀ * M = 1 ∧ Matrix.det M = 1
+
 
 
 
@@ -311,6 +332,11 @@ theorem rat_rotation_preserves_rational (M : Matrix (Fin 3) (Fin 3) ℚ)
 
 
 
+
+/-- [Section: # CatalogBuild.Physics.ArithmeticPhotons.QuantumInformation
+Auto-generated from theorem catalog database.
+Domain: Physics/ArithmeticPhotons
+Declarations: 35] -/
 theorem rational_bloch_from_quadruple (p : RatSpherePoint) :
     ∃ (a b c d : ℤ), d ≠ 0 ∧ a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2 ∧
     (a : ℚ) / d = p.x ∧ (b : ℚ) / d = p.y ∧ (c : ℚ) / d = p.z := by
@@ -330,8 +356,10 @@ theorem rational_bloch_from_quadruple (p : RatSpherePoint) :
 
 
 
+
 /-- The number of arithmetic qubits at resolution d equals r₃(d²) -/
 theorem arithmetic_qubit_count (d : ℕ) (hd : 0 < d) :
     ∃ a b c : ℤ, a ^ 2 + b ^ 2 + c ^ 2 = (d : ℤ) ^ 2 := by
   exact ⟨d, 0, 0, by ring⟩
+
 

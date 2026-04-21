@@ -13,9 +13,11 @@ def countDivisorsMod4 (n : ℕ) (r : ℕ) : ℕ :=
 
 
 
+
 /-- d₁(n) - d₃(n): the Channel 2 signal -/
 def complexSignal (n : ℕ) : Int :=
   ↑(countDivisorsMod4 n 1) - ↑(countDivisorsMod4 n 3)
+
 
 
 
@@ -25,10 +27,12 @@ def jacobiSumC (n : ℕ) : ℕ :=
 
 
 
+
 /-- Channel 4 signal: Σ_{d|n} (-1)^{n+d} d³ -/
 def octonionicSignal (n : ℕ) : Int :=
   (Nat.divisors n).sum fun d =>
     if (n + d) % 2 = 0 then (↑d : Int) ^ 3 else -(↑d : Int) ^ 3
+
 
 
 
@@ -42,8 +46,10 @@ def signatureStr (n : ℕ) : String :=
 
 
 
+
 /-- Predicted r₂(n) = 4 * complexSignal(n) -/
 def predicted_r₂ (n : ℕ) : Int := 4 * complexSignal n
+
 
 
 
@@ -52,7 +58,9 @@ def predicted_r₄ (n : ℕ) : ℕ := 8 * jacobiSumC n
 
 
 
+
 /-- Predicted r₈(n) = 16 * octonionicSignal(n) -/
 def predicted_r₈ (n : ℕ) : Int := 16 * octonionicSignal n
+
 
 

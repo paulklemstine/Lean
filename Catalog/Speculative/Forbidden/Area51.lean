@@ -18,10 +18,16 @@ theorem euclid_infinitude : ∀ n : ℕ, ∃ p, p > n ∧ Nat.Prime p := by
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Forbidden.Area51
+Auto-generated from theorem catalog database.
+Domain: Speculative/Forbidden
+Declarations: 8] -/
 theorem prime_gap_arbitrarily_large :
     ∀ k : ℕ, ∃ n : ℕ, ∀ i : ℕ, i < k → ¬ Nat.Prime (n + i + 2) := by
   intro k; use Nat.factorial ( k + 2 ) !; intro i hi; have := Nat.dvd_factorial ( by linarith ) ( show i + 2 ≤ ( k + 2 ) ! from by linarith [ Nat.self_le_factorial ( k + 2 ) ] ) ; simp_all +decide [ Nat.factorial_succ ] ;
   rw [ show ( ( k + 1 + 1 ) * ( ( k + 1 ) * k ! ) ) ! + i + 2 = ( i + 2 ) * ( ( ( k + 1 + 1 ) * ( ( k + 1 ) * k ! ) ) ! / ( i + 2 ) + 1 ) by linarith [ Nat.div_mul_cancel this ] ] ; exact Nat.not_prime_mul ( by linarith ) ( by linarith [ Nat.div_pos ( Nat.le_of_dvd ( by positivity ) this ) ( by linarith : 0 < i + 2 ) ] ) ;
+
 
 
 
@@ -32,8 +38,10 @@ theorem wilson_forward (p : ℕ) (hp : Nat.Prime p) :
 
 
 
+
 theorem div3_digit_sum (n : ℕ) : n % 3 = (n % 10 + n / 10) % 3 := by
   omega
+
 
 
 
@@ -42,8 +50,10 @@ theorem div9_digit_sum (n : ℕ) : n % 9 = (n % 10 + n / 10) % 9 := by
 
 
 
+
 theorem sqrt2_irrational : Irrational (Real.sqrt 2) := by
   exact irrational_sqrt_two
+
 
 
 
@@ -66,8 +76,10 @@ theorem pigeonhole_coprime (n : ℕ) (hn : 0 < n)
 
 
 
+
 theorem exists_prime_le (n : ℕ) (hn : 2 ≤ n) : ∃ p, Nat.Prime p ∧ p ≤ n := by
   exact ⟨ 2, Nat.prime_two, hn ⟩
+
 
 
 

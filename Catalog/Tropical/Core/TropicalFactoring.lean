@@ -20,8 +20,14 @@ theorem padic_val_mul_eq_add {p : ℕ} (hp : Nat.Prime p) {a b : ℕ}
 
 
 
+
+/-- [Section: # CatalogBuild.Tropical.Core.TropicalFactoring
+Auto-generated from theorem catalog database.
+Domain: Tropical/Core
+Declarations: 30] -/
 theorem padic_val_one (p : ℕ) : padicValNat p 1 = 0 := by
   simp
+
 
 
 
@@ -35,12 +41,14 @@ theorem padic_val_self {p : ℕ} (hp : Nat.Prime p) : padicValNat p p = 1 := by
 
 
 
+
 theorem tropical_fundamental_theorem_of_arithmetic {a b : ℕ} (ha : 0 < a) (hb : 0 < b)
     (h : ∀ p : ℕ, Nat.Prime p → padicValNat p a = padicValNat p b) :
     a = b := by
   apply_mod_cast Nat.factorization_inj ; aesop;
   · aesop;
   · ext p; by_cases hp : Nat.Prime p <;> simp_all +decide [ Nat.factorization ] ;
+
 
 
 
@@ -55,6 +63,7 @@ theorem padic_val_gcd {p : ℕ} (hp : Nat.Prime p) {a b : ℕ}
 
 
 
+
 theorem padic_val_lcm {p : ℕ} (hp : Nat.Prime p) {a b : ℕ}
     (ha : 0 < a) (hb : 0 < b) :
     padicValNat p (Nat.lcm a b) = max (padicValNat p a) (padicValNat p b) := by
@@ -63,11 +72,13 @@ theorem padic_val_lcm {p : ℕ} (hp : Nat.Prime p) {a b : ℕ}
 
 
 
+
 theorem tropical_gcd_lcm_identity {p : ℕ} (hp : Nat.Prime p) {a b : ℕ}
     (ha : 0 < a) (hb : 0 < b) :
     padicValNat p (Nat.gcd a b) + padicValNat p (Nat.lcm a b) =
     padicValNat p a + padicValNat p b := by
   have := @padic_val_lcm p hp a b ha hb; ( have := @padic_val_gcd p hp a b ha hb; aesop; )
+
 
 
 
@@ -82,6 +93,7 @@ theorem dvd_iff_padic_le {a b : ℕ} (ha : 0 < a) (hb : 0 < b) :
 
 
 
+
 /-- A "tropical factoring" of n is a pair (a, b) with a * b = n,
 which in tropical coordinates means v_p(a) + v_p(b) = v_p(n) for all p -/
 def IsTropicalFactoring (n a b : ℕ) : Prop :=
@@ -89,10 +101,12 @@ def IsTropicalFactoring (n a b : ℕ) : Prop :=
 
 
 
+
 theorem tropical_factoring_decomposition {n a b : ℕ} {p : ℕ} (hp : Nat.Prime p)
     (hf : IsTropicalFactoring n a b) :
     padicValNat p n = padicValNat p a + padicValNat p b := by
   convert padic_val_mul_eq_add hp ( show a ≠ 0 by linarith [ hf.2 ] ) ( show b ≠ 0 by linarith [ hf.2 ] ) using 1 ; rw [ hf.1 ]
+
 
 
 
@@ -104,8 +118,10 @@ theorem coprime_tropical_disjoint {a b : ℕ} (ha : 0 < a) (hb : 0 < b)
 
 
 
+
 /-- The "tropical norm" of n at prime p: how many times p divides n -/
 def tropicalNorm (p n : ℕ) : ℕ := padicValNat p n
+
 
 
 
@@ -113,6 +129,7 @@ def tropicalNorm (p n : ℕ) : ℕ := padicValNat p n
 For n = p₁^a₁ · ... · pₖ^aₖ, this is a₁ + ... + aₖ -/
 def totalTropicalWeight (n : ℕ) (primes : Finset ℕ) : ℕ :=
   primes.sum (fun p => padicValNat p n)
+
 
 
 
@@ -127,10 +144,12 @@ theorem totalTropicalWeight_mul {a b : ℕ} (ha : a ≠ 0) (hb : b ≠ 0)
 
 
 
+
 /-- Ω(n) = total tropical weight gives the number of prime factors with multiplicity -/
 theorem bigOmega_eq_tropical_weight (n : ℕ) (hn : 0 < n) :
     Nat.log 2 n ≥ 0 := by
   omega
+
 
 
 
@@ -143,10 +162,12 @@ theorem trial_division_clears_coordinate {n p : ℕ} (hp : Nat.Prime p)
 
 
 
+
 theorem full_division_zeros_coordinate {n p : ℕ} (hp : Nat.Prime p) (hn : 0 < n) :
     padicValNat p (n / p ^ padicValNat p n) = 0 := by
   haveI := Fact.mk hp;
   grind +suggestions
+
 
 
 
@@ -156,15 +177,18 @@ theorem sum_of_squares_tropical (a b : ℤ) :
 
 
 
+
 /-- A cycle in the Pollard rho sequence corresponds to finding
 tropical relations between iterates modulo unknown factors -/
 def pollardRhoStep (x n : ℕ) : ℕ := (x * x + 1) % n
 
 
 
+
 /-- The Pollard rho iteration is well-bounded -/
 theorem pollardRho_bounded (x n : ℕ) (hn : 0 < n) :
     pollardRhoStep x n < n := Nat.mod_lt _ hn
+
 
 
 
@@ -176,9 +200,11 @@ theorem birthday_bound_sqrt (n : ℕ) (hn : 1 < n) :
 
 
 
+
 theorem tropical_lattice_min_max (a b c : ℕ) :
     min a (max b c) = max (min a b) (min a c) := by
   grind
+
 
 
 
@@ -188,9 +214,11 @@ theorem tropical_absorption_min_max (a b : ℕ) :
 
 
 
+
 theorem tropical_absorption_max_min (a b : ℕ) :
     max a (min a b) = a := by
   cases le_total a b <;> simp +decide [ * ]
+
 
 
 
@@ -200,9 +228,11 @@ theorem even_valuations_implies_square {n : ℕ} (_hn : 0 < n) :
 
 
 
+
 theorem tropical_gf2_combination (a b : ℕ) :
     (a + b) % 2 = 0 ↔ a % 2 = b % 2 := by
   grind +ring
+
 
 
 
@@ -210,6 +240,7 @@ theorem period_divides_order {a n : ℕ} (ha : Nat.Coprime a n) (r : ℕ) (_hr :
     (hperiod : a ^ r ≡ 1 [MOD n]) :
     ∀ k : ℕ, a ^ (r * k) ≡ 1 [MOD n] := by
   exact fun k => by simpa [ pow_mul ] using hperiod.pow k;
+
 
 
 
@@ -228,6 +259,7 @@ theorem shor_factoring_step {a n : ℕ} (hn : 1 < n)
 
 
 
+
 theorem factoring_tropical_hyperplane {p : ℕ} (hp : Nat.Prime p) {n : ℕ} (hn : 0 < n)
     (v : ℕ) (hv : padicValNat p n = v) :
     ∀ a b : ℕ, a ≠ 0 → b ≠ 0 → a * b = n →
@@ -236,9 +268,11 @@ theorem factoring_tropical_hyperplane {p : ℕ} (hp : Nat.Prime p) {n : ℕ} (hn
 
 
 
+
 theorem factoring_count_bound (v : ℕ) :
     v + 1 = Finset.card (Finset.range (v + 1)) := by
   grind +locals
+
 
 
 

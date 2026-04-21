@@ -15,6 +15,7 @@ theorem berggren_A_pyth_eq (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 /-- Berggren matrix M₂ preserves the Pythagorean property. -/
 theorem berggren_B_pyth_eq (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (a + 2 * b + 2 * c) ^ 2 + (2 * a + b + 2 * c) ^ 2 =
@@ -23,11 +24,13 @@ theorem berggren_B_pyth_eq (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 /-- Berggren matrix M₃ preserves the Pythagorean property. -/
 theorem berggren_C_pyth_eq (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (-a + 2 * b + 2 * c) ^ 2 + (-2 * a + b + 2 * c) ^ 2 =
     (-2 * a + 2 * b + 3 * c) ^ 2 := by
   nlinarith
+
 
 
 
@@ -40,12 +43,14 @@ def rootTriple : PythTriple where
 
 
 
+
 /-- The depth of a tree path. -/
 def TreePath.depth : TreePath → ℕ
   | .root    => 0
   | .left p  => p.depth + 1
   | .mid p   => p.depth + 1
   | .right p => p.depth + 1
+
 
 
 
@@ -67,16 +72,23 @@ theorem berggrenTripleAux_pyth (p : TreePath) :
 
 
 
+
 /-- The set of all triples reachable at depth ≤ d. -/
 def treeTriplesAtDepth (d : ℕ) : Set (ℤ × ℤ × ℤ) :=
   { t | ∃ p : TreePath, p.depth ≤ d ∧ berggrenTripleAux p = t }
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.Berggren.BerggrenTree
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Berggren
+Declarations: 11] -/
 theorem berggren_A_iff (a b c : ℤ) :
     (a - 2 * b + 2 * c) ^ 2 + (2 * a - b + 2 * c) ^ 2 =
     (2 * a - 2 * b + 3 * c) ^ 2 ↔ a ^ 2 + b ^ 2 = c ^ 2 := by
   grind
+
 
 
 
@@ -87,10 +99,12 @@ theorem berggren_B_iff (a b c : ℤ) :
 
 
 
+
 theorem berggren_C_iff (a b c : ℤ) :
     (-a + 2 * b + 2 * c) ^ 2 + (-2 * a + b + 2 * c) ^ 2 =
     (-2 * a + 2 * b + 3 * c) ^ 2 ↔ a ^ 2 + b ^ 2 = c ^ 2 := by
   constructor <;> intro h <;> linarith [ berggren_C_pyth_eq a b c ( by linarith ) ]
+
 
 
 
@@ -99,5 +113,6 @@ when a, b > 0. This implies exponential growth: max hypotenuse at depth d ≥ 3^
 theorem hypotenuse_growth (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) :
     2 * a + 2 * b + 3 * c ≥ 3 * c := by
   linarith
+
 
 

@@ -14,9 +14,11 @@ def emlActivation (x : ℝ) : ℝ := Real.exp (-x ^ 2)
 
 
 
+
 /-- EML activation is always positive. -/
 theorem eml_activation_pos (x : ℝ) : 0 < emlActivation x :=
   Real.exp_pos _
+
 
 
 
@@ -28,9 +30,11 @@ theorem eml_activation_le_one (x : ℝ) : emlActivation x ≤ 1 := by
 
 
 
+
 /-- EML activation at 0 equals 1 (peak response). -/
 theorem eml_activation_zero : emlActivation 0 = 1 := by
   simp [emlActivation]
+
 
 
 
@@ -40,8 +44,10 @@ theorem eml_activation_mem_Icc (x : ℝ) : emlActivation x ∈ Set.Icc 0 1 :=
 
 
 
+
 /-- VC dimension bound for EML trees of depth d with w-width. -/
 def emlVCDim (d w : ℕ) : ℕ := 4 * d * w
+
 
 
 
@@ -50,8 +56,10 @@ def rademacherBound (vc n : ℕ) : ℝ := Real.sqrt (↑vc / ↑n)
 
 
 
+
 /-- PAC sample complexity: n ≥ (VC/ε²) · ln(1/δ) simplified to VC * k / ε². -/
 def pacSampleBound (vc : ℕ) (eps : ℝ) (k : ℕ) : ℝ := ↑vc * ↑k / eps ^ 2
+
 
 
 
@@ -61,6 +69,7 @@ theorem eml_sample_complexity (d w k : ℕ) (eps : ℝ) :
   simp only [pacSampleBound, emlVCDim]
   push_cast
   ring
+
 
 
 
@@ -76,6 +85,7 @@ theorem eml_sample_depth_mono (d1 d2 w k : ℕ) (eps : ℝ)
 
 
 
+
 /-- Rademacher bound decreases with sample size. -/
 theorem rademacher_mono (vc n1 n2 : ℕ) (hn1 : 0 < n1) (h : n1 ≤ n2) :
     rademacherBound vc n2 ≤ rademacherBound vc n1 := by
@@ -85,8 +95,10 @@ theorem rademacher_mono (vc n1 n2 : ℕ) (hn1 : 0 < n1) (h : n1 ≤ n2) :
 
 
 
+
 /-- Teacher network size. -/
 def teacherParams (layers width : ℕ) : ℕ := layers * width * (width + 1)
+
 
 
 
@@ -95,11 +107,17 @@ def studentParams (depth width : ℕ) : ℕ := 4 * depth * width
 
 
 
+
 /-- Compression ratio. -/
 def compressionRatio (teacher student : ℕ) : ℕ := teacher / student
 
 
 
+
+/-- [Section: # CatalogBuild.EML.EMLAdvancedML
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 37] -/
 theorem distillation_compression (tl tw sd sw : ℕ)
     (htw : 5 ≤ tw) (hsd : 0 < sd)
     (h : sd * sw ≤ tl * tw) :
@@ -111,10 +129,12 @@ theorem distillation_compression (tl tw sd sw : ℕ)
 
 
 
+
 /-- Concrete: 10-layer width-100 teacher → depth-5 width-20 EML student. -/
 theorem distillation_concrete :
     teacherParams 10 100 = 101000 ∧ studentParams 5 20 = 400 := by
   constructor <;> simp [teacherParams, studentParams]
+
 
 
 
@@ -125,9 +145,11 @@ theorem distillation_ratio_concrete :
 
 
 
+
 /-- L2 regularized loss. -/
 def l2Loss (empirical : ℝ) (lambda : ℝ) (paramNorm : ℝ) : ℝ :=
   empirical + lambda * paramNorm ^ 2
+
 
 
 
@@ -140,9 +162,11 @@ theorem l2_loss_ge_empirical (empirical lambda paramNorm : ℝ)
 
 
 
+
 /-- EML structural regularization: fewer params → smaller norm bound. -/
 def emlNormBound (depth width : ℕ) (maxWeight : ℝ) : ℝ :=
   maxWeight ^ 2 * (4 * ↑depth * ↑width)
+
 
 
 
@@ -153,8 +177,10 @@ theorem eml_norm_advantage (depth width : ℕ) (maxW : ℝ)
 
 
 
+
 /-- Batch gradient variance: σ²/B. -/
 def batchVariance (sigma : ℝ) (B : ℕ) : ℝ := sigma ^ 2 / ↑B
+
 
 
 
@@ -167,8 +193,10 @@ theorem batch_variance_mono (sigma : ℝ) (B1 B2 : ℕ) (hs : 0 < sigma)
 
 
 
+
 /-- Batch gradient MSE bound: bias² + σ²/B. -/
 def batchMSE (bias sigma : ℝ) (B : ℕ) : ℝ := bias ^ 2 + sigma ^ 2 / ↑B
+
 
 
 
@@ -183,9 +211,11 @@ theorem batch_mse_mono (bias sigma : ℝ) (B1 B2 : ℕ) (hs : 0 < sigma)
 
 
 
+
 /-- Ensemble of k EML models with disagreement rate. -/
 def ensembleError (individual : ℝ) (disagreement : ℝ) : ℝ :=
   individual - disagreement
+
 
 
 
@@ -197,8 +227,10 @@ theorem ensemble_improvement (individual disagreement : ℝ)
 
 
 
+
 /-- k-model majority vote error bound. -/
 def majorityVoteBound (p : ℝ) (k : ℕ) : ℝ := (4 * p * (1 - p)) ^ (k / 2)
+
 
 
 
@@ -211,14 +243,17 @@ theorem majority_vote_nonneg (p : ℝ) (k : ℕ) (hp0 : 0 ≤ p) (hp1 : p ≤ 1)
 
 
 
+
 /-- When individual error rate < 50%, the base < 1. -/
 theorem majority_vote_quality (p : ℝ) (hph : p < 1/2) (hp0 : 0 ≤ p) :
     4 * p * (1 - p) < 1 := by nlinarith [sq_nonneg (2 * p - 1)]
 
 
 
+
 /-- Shapley-style: 2^d coalitions for d features. -/
 def featureCoalitions (d : ℕ) : ℕ := 2 ^ d
+
 
 
 
@@ -230,8 +265,10 @@ theorem feature_coalitions_growth (d : ℕ) :
 
 
 
+
 /-- EML trees have at most 4d features (structured). -/
 def emlFeatureCount (d : ℕ) : ℕ := 4 * d
+
 
 
 
@@ -242,8 +279,10 @@ theorem eml_feature_tractable (d : ℕ) (hd : 5 ≤ d) :
 
 
 
+
 /-- Transfer error bound: source_error + domain_distance. -/
 def transferBound (sourceErr domainDist : ℝ) : ℝ := sourceErr + domainDist
+
 
 
 
@@ -254,10 +293,12 @@ theorem transfer_bound_ge_source (se dd : ℝ) (hdd : 0 ≤ dd) :
 
 
 
+
 /-- If domains are close, transfer works. -/
 theorem transfer_close_domains (se eps : ℝ) (hse : se ≤ eps) :
     transferBound se 0 ≤ eps := by
   simp only [transferBound]; linarith
+
 
 
 

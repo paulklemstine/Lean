@@ -17,6 +17,11 @@ theorem vandermonde_det_eq_prod_diff {n : ℕ} (v : Fin n → ℝ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Algebra.EigenvalueRepulsion
+Auto-generated from theorem catalog database.
+Domain: Algebra
+Declarations: 9] -/
 theorem vandermonde_det_zero_iff {n : ℕ} (v : Fin n → ℝ) :
     (vandermonde v).det = 0 ↔ ∃ i j : Fin n, i ≠ j ∧ v i = v j := by
   -- By definition of Vandermonde determinant, if two eigenvalues are equal, say $v^i = v^j$ for some $i < j$, then the determinant is zero due to repeated columns.
@@ -27,6 +32,7 @@ theorem vandermonde_det_zero_iff {n : ℕ} (v : Fin n → ℝ) :
 
 
 
+
 theorem vandermonde_det_sq {n : ℕ} (v : Fin n → ℝ) :
     (vandermonde v).det ^ 2 = ∏ i : Fin n, ∏ j ∈ Ioi i, (v j - v i) ^ 2 := by
   simp +decide only [vandermonde_det_eq_prod_diff, prod_pow]
@@ -34,14 +40,17 @@ theorem vandermonde_det_sq {n : ℕ} (v : Fin n → ℝ) :
 -- Non-negative Boltzmann weight.
 
 
+
 theorem vandermonde_det_sq_nonneg {n : ℕ} (v : Fin n → ℝ) :
     0 ≤ (vandermonde v).det ^ 2 := sq_nonneg _
+
 
 
 
 theorem vandermonde_det_pos_of_strictMono {n : ℕ} (v : Fin n → ℝ)
     (hv : StrictMono v) : 0 < (vandermonde v).det := by
   rw [ vandermonde_det_eq_prod_diff v ] ; exact Finset.prod_pos fun i hi => Finset.prod_pos fun j hj => sub_pos.2 <| hv <| Finset.mem_Ioi.1 hj;
+
 
 
 
@@ -57,10 +66,12 @@ theorem log_abs_vandermonde_eq_sum {n : ℕ} (v : Fin n → ℝ)
 
 
 
+
 theorem repulsion_stronger_at_higher_beta {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1)
     {β₁ β₂ : ℝ} (hβ : β₁ < β₂) (hβ₁ : 0 < β₁) :
     x ^ β₂ < x ^ β₁ := by
   exact Real.rpow_lt_rpow_of_exponent_gt hx0 hx1 hβ
+
 
 
 
@@ -71,6 +82,8 @@ theorem vandermonde_two (a b : ℝ) :
 -- Symmetry of the squared gap under eigenvalue exchange.
 
 
+
 theorem eigenvalue_gap_sq_symm (a b : ℝ) :
     (a - b) ^ 2 = (b - a) ^ 2 := by ring
+
 

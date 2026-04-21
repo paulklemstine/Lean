@@ -18,9 +18,11 @@ structure MetaPredictor where
 
 
 
+
 /-- Calibration: among predictions with confidence p, fraction p are correct -/
 def isCalibrated (errorRate : ℝ → ℝ) (confidence : ℝ → ℝ) : Prop :=
   ∀ p : ℝ, 0 ≤ p → p ≤ 1 → errorRate p = 1 - confidence p
+
 
 
 
@@ -33,6 +35,7 @@ theorem perfect_calibration_accuracy (errorRate confidence : ℝ → ℝ)
 
 
 
+
 /-- No meta-predictor can perfectly predict its own accuracy on all inputs.
 This is a diagonal argument: for any enumeration of predictors,
 there exists a function that differs from every predictor at its own index. -/
@@ -40,6 +43,7 @@ theorem meta_prediction_incompleteness
     (predictors : ℕ → (ℕ → Bool)) :
     ∃ f : ℕ → Bool, ∀ n, f n ≠ predictors n n := by
   exact ⟨fun n => !predictors n n, fun n => by simp⟩
+
 
 
 
@@ -56,12 +60,14 @@ theorem quality_estimation_limit
 
 
 
+
 /-- The Brier score decomposes into calibration + resolution - uncertainty -/
 theorem brier_decomposition (calibration resolution uncertainty brierScore : ℝ)
     (h : brierScore = calibration - resolution + uncertainty)
     (hcal : 0 ≤ calibration) (hres : 0 ≤ resolution) :
     brierScore ≥ uncertainty - resolution := by
   linarith
+
 
 
 
@@ -75,10 +81,12 @@ theorem overconfidence_penalty (p_claimed p_actual : ℝ)
 
 
 
+
 /-- A prediction hierarchy: level 0 predicts the target,
 level k+1 predicts the error of level k -/
 def predictionHierarchy (errors : ℕ → ℝ) : Prop :=
   ∀ k, |errors (k + 1)| ≤ |errors k| / 2
+
 
 
 
@@ -99,6 +107,11 @@ theorem hierarchy_converges (errors : ℕ → ℝ) (h : predictionHierarchy erro
 
 
 
+
+/-- [Section: # CatalogBuild.MachineLearning.Prediction.MetaPrediction
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/Prediction
+Declarations: 12] -/
 theorem hierarchy_total_bounded (errors : ℕ → ℝ) (h : predictionHierarchy errors) :
     ∀ n, |errors n| ≤ |errors 0| / 2 ^ n := by
   -- We proceed by induction on $n$.
@@ -109,9 +122,11 @@ theorem hierarchy_total_bounded (errors : ℕ → ℝ) (h : predictionHierarchy 
 
 
 
+
 /-- A self-aware predictor: one whose confidence equals its actual accuracy -/
 def isSelfAware (accuracy confidence : ℝ) : Prop :=
   accuracy = confidence
+
 
 
 
@@ -126,6 +141,7 @@ theorem calibration_fixed_point
     · exact hcont.continuousOn.sub continuousOn_id;
     · constructor <;> linarith;
   exact ⟨ h_ivt.choose, h_ivt.choose_spec.1.1, h_ivt.choose_spec.1.2, sub_eq_zero.mp h_ivt.choose_spec.2 ⟩
+
 
 
 

@@ -15,9 +15,11 @@ def OracleReducesTo {alpha beta : Type*} (A : OracleDecision alpha) (B : OracleD
 
 
 
+
 /-- Oracle reduction is reflexive. -/
 theorem oracle_reduces_refl {alpha : Type*} (A : OracleDecision alpha) :
     OracleReducesTo A A := ⟨id, rfl⟩
+
 
 
 
@@ -32,9 +34,11 @@ theorem oracle_reduces_trans {alpha beta gamma : Type*}
 
 
 
+
 /-- Oracle equivalence: mutual reducibility. -/
 def OracleEquiv {alpha beta : Type*} (A : OracleDecision alpha) (B : OracleDecision beta) : Prop :=
   OracleReducesTo A B ∧ OracleReducesTo B A
+
 
 
 
@@ -47,8 +51,14 @@ theorem oracle_equiv_refl {alpha : Type*} (A : OracleDecision alpha) :
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.OracleComplexity
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 17] -/
 theorem oracle_equiv_symm {alpha beta : Type*} (A : OracleDecision alpha) (B : OracleDecision beta) :
     OracleEquiv A B → OracleEquiv B A := fun ⟨h1, h2⟩ => ⟨h2, h1⟩
+
 
 
 
@@ -59,9 +69,11 @@ theorem oracle_equiv_trans {alpha beta gamma : Type*}
 
 
 
+
 theorem query_bound_card (k : ℕ) :
     Fintype.card (Fin k → Bool) = 2 ^ k := by
       norm_num +zetaDelta at *
+
 
 
 
@@ -69,6 +81,7 @@ theorem query_bound_card (k : ℕ) :
 structure QueryStrategy (alpha beta : Type*) (k : ℕ) where
   queries : Fin k → alpha
   decide : (Fin k → Bool) → beta
+
 
 
 
@@ -80,9 +93,11 @@ theorem query_strategy_output_bound {alpha beta : Type*} [DecidableEq beta] (k :
 
 
 
+
 /-- Oracle composition. -/
 def OracleComp {alpha : Type*} (f g : OracleDecision alpha → OracleDecision alpha) :
     OracleDecision alpha → OracleDecision alpha := f ∘ g
+
 
 
 
@@ -92,7 +107,9 @@ theorem oracle_comp_assoc {alpha : Type*}
 
 
 
+
 def OracleIdentity {alpha : Type*} : OracleDecision alpha → OracleDecision alpha := id
+
 
 
 
@@ -101,8 +118,10 @@ theorem oracle_comp_id_left {alpha : Type*} (f : OracleDecision alpha → Oracle
 
 
 
+
 theorem oracle_comp_id_right {alpha : Type*} (f : OracleDecision alpha → OracleDecision alpha) :
     OracleComp f OracleIdentity = f := rfl
+
 
 
 
@@ -112,9 +131,11 @@ theorem oracle_entropy_finite_bound (n : ℕ) :
 
 
 
+
 /-- Two oracles that agree everywhere are equal. -/
 theorem oracle_ext_finite {n : ℕ} (A B : OracleDecision (Fin n))
     (h : ∀ i, A i = B i) : A = B := funext h
+
 
 
 

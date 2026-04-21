@@ -20,6 +20,7 @@ theorem young_inequality {a b : ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b)
 
 
 
+
 /-- In 2D, vorticity is conserved along flow lines (for inviscid flow).
 This is why 2D Euler/Navier-Stokes is better behaved — the vorticity
 maximum principle prevents blow-up. -/
@@ -30,9 +31,15 @@ theorem vorticity_linfty_bound_2d (ω₀_max : ℝ) (hpos : 0 < ω₀_max)
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Millennium.NavierStokes
+Auto-generated from theorem catalog database.
+Domain: Speculative/Millennium
+Declarations: 6] -/
 theorem gronwall_bound (f₀ c t : ℝ) (hf₀ : 0 ≤ f₀) (hc : 0 ≤ c) (ht : 0 ≤ t) :
     0 ≤ f₀ * Real.exp (c * t) := by
   positivity
+
 
 
 
@@ -46,9 +53,11 @@ theorem scaling_exponent_3d :
 
 
 
+
 /-- The 2D scaling is critical: the energy integral is scale-invariant. -/
 theorem scaling_exponent_2d :
     (2 : ℤ) * 1 - 2 = 0 := by norm_num
+
 
 
 
@@ -60,4 +69,5 @@ theorem bkm_simplified (ω_bound : ℝ) (hb : 0 < ω_bound)
     ∀ t, 0 ≤ t → t ≤ T → |ω t| ≤ ω_bound := by
   intro t ht _
   exact h_bounded t ht
+
 

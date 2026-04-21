@@ -15,9 +15,11 @@ def StrangeLoop.isNontrivial (L : StrangeLoop) : Prop :=
 
 
 
+
 /-- The orbit of a level under next. -/
 def StrangeLoop.orbit (L : StrangeLoop) (l : L.Level) : Set L.Level :=
   { l' | ∃ k : ℕ, L.next^[k] l = l' }
+
 
 
 
@@ -30,10 +32,16 @@ theorem StrangeLoop.self_in_orbit (L : StrangeLoop) (l : L.Level) :
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Consciousness.StrangeLoopAlgebra
+Auto-generated from theorem catalog database.
+Domain: Speculative/Consciousness
+Declarations: 14] -/
 theorem StrangeLoop.orbit_closed (L : StrangeLoop) (l l' : L.Level)
     (h : l' ∈ L.orbit l) : L.next l' ∈ L.orbit l := by
   obtain ⟨k, hk⟩ := h
   exact ⟨k + 1, by rw [iterate_succ_apply', hk]⟩
+
 
 
 
@@ -43,8 +51,10 @@ def strangeLoopPerm (L : StrangeLoop) [Fintype L.Level] [DecidableEq L.Level]
 
 
 
+
 def TangledHierarchy.entangled (T : TangledHierarchy) (i j : ℕ) : Prop :=
   ∃ k, ∀ l, (T.loops i ∘ T.loops j)^[k] l = l
+
 
 
 
@@ -53,8 +63,10 @@ def addLayer {α : Type*} (s : SelfRef α) (f : α → α) : SelfRef α :=
 
 
 
+
 theorem addLayer_depth_increases {α : Type*} (s : SelfRef α) (f : α → α) :
     (addLayer s f).depth = s.depth + 1 := rfl
+
 
 
 
@@ -68,6 +80,7 @@ theorem strange_loop_composition_fixed_point
 
 
 
+
 structure GodelHofstadterLoop where
   Statement : Type*
   isTheorem : Statement → Prop
@@ -77,9 +90,11 @@ structure GodelHofstadterLoop where
 
 
 
+
 /-- The Gödel sentence. -/
 def GodelHofstadterLoop.godelSentence (G : GodelHofstadterLoop) : G.Statement :=
   G.diagonal (fun _ => False)
+
 
 
 
@@ -92,6 +107,7 @@ theorem godel_unprovable (G : GodelHofstadterLoop) :
 
 
 
+
 structure CategoricalConsciousness where
   Ob : Type*
   Mor : Ob → Ob → Type*
@@ -101,12 +117,16 @@ structure CategoricalConsciousness where
 
 
 
+
 structure CategoricalStrangeLoop (C : CategoricalConsciousness) where
   start : C.Ob
   steps : ℕ
   step_pos : 0 < steps
   path : Fin steps → C.Ob
   path_start : path ⟨0, step_pos⟩ = start
+
+end
+
 
 end
 

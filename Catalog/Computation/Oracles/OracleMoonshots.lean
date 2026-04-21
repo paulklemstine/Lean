@@ -16,16 +16,25 @@ Declarations: 15] -/
 theorem fermat_sum_two_sq_5' : ∃ a b : ℕ, a ^ 2 + b ^ 2 = 5 := ⟨1, 2, by norm_num⟩
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.OracleMoonshots
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 15] -/
 theorem fermat_sum_two_sq_13' : ∃ a b : ℕ, a ^ 2 + b ^ 2 = 13 := ⟨2, 3, by norm_num⟩
+
 
 
 theorem fermat_sum_two_sq_17' : ∃ a b : ℕ, a ^ 2 + b ^ 2 = 17 := ⟨1, 4, by norm_num⟩
 
 
+
 theorem fermat_sum_two_sq_29' : ∃ a b : ℕ, a ^ 2 + b ^ 2 = 29 := ⟨2, 5, by norm_num⟩
 
 
+
 theorem fermat_sum_two_sq_37' : ∃ a b : ℕ, a ^ 2 + b ^ 2 = 37 := ⟨1, 6, by norm_num⟩
+
 
 
 
@@ -34,8 +43,10 @@ theorem gaussian_factoring_info' :
 
 
 
+
 theorem brahmagupta_fibonacci_v2 (a b c d : ℤ) :
     (a ^ 2 + b ^ 2) * (c ^ 2 + d ^ 2) = (a * c - b * d) ^ 2 + (a * d + b * c) ^ 2 := by ring
+
 
 
 
@@ -48,13 +59,16 @@ theorem proof_compression_ratio' (n : ℕ) (k : ℕ) (hk : 0 < k) :
 
 
 
+
 def OraclesAgreeV2 {X : Type*} (O₁ O₂ : X → X) : Prop :=
   ∃ x, O₁ x = x ∧ O₂ x = x
 
 
 
+
 def OraclesStronglyAgreeV2 {X : Type*} (O₁ O₂ : X → X) : Prop :=
   {x | O₁ x = x} = {x | O₂ x = x}
+
 
 
 
@@ -68,8 +82,10 @@ theorem strong_agreement_compose' {X : Type*} (O₁ O₂ : X → X)
 
 
 
+
 theorem truth_aware_compression' (n k : ℕ) (_hk : 0 < k) (hkn : k ≤ n) :
     Nat.log 2 k ≤ Nat.log 2 n := Nat.log_mono_right hkn
+
 
 
 
@@ -78,7 +94,9 @@ theorem sigmoid_positive (x b : ℝ) (_hx : 0 < x) (_hb : 0 < b) :
 
 
 
+
 theorem nat_self_consistent' : ∀ n : ℕ, n + 0 = n := Nat.add_zero
+
 
 
 
@@ -91,6 +109,7 @@ theorem grand_unified_oracle' {n : ℕ} (_hn : 0 < n) (O : Fin n → Fin n)
       exact Finset.eq_of_subset_of_card_le ( Finset.subset_univ _ ) ( by simpa );
     exact Finite.injective_iff_surjective.mpr ( by simpa [ Finset.ext_iff ] using h_image );
   · rw [ Finset.card_image_of_injective _ h, Finset.card_fin ]
+
 
 
 

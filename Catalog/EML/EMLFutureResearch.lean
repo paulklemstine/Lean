@@ -14,10 +14,12 @@ def emlGmap (z : ℝ) : ℝ := Real.exp 1 - Real.log z
 
 
 
+
 /-- The e-tower: e↑↑n (iterated exponential). -/
 def emlETower : ℕ → ℝ
   | 0 => 1
   | n + 1 => Real.exp (emlETower n)
+
 
 
 
@@ -26,8 +28,10 @@ def emlTrop (x y : ℝ) : ℝ := max x (-y)
 
 
 
+
 /-- The EML Hessian metric coefficient in the x-direction: exp(x). -/
 def emlHessXX (x : ℝ) : ℝ := Real.exp x
+
 
 
 
@@ -36,9 +40,15 @@ def emlHessYY (y : ℝ) : ℝ := y⁻¹ ^ 2
 
 
 
+
+/-- [Section: # CatalogBuild.EML.EMLFutureResearch
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 15] -/
 theorem emlGmap_pos (z : ℝ) (hz : 0 < z) (hz2 : z < Real.exp (Real.exp 1)) :
     0 < emlGmap z := by
   exact sub_pos_of_lt ( Real.log_lt_iff_lt_exp hz |>.2 hz2 )
+
 
 
 
@@ -55,9 +65,11 @@ theorem emlGmap_fixedpoint_equation :
 
 
 
+
 theorem emlGmap_contraction (z : ℝ) (hz : 1 < z) :
     |(-z⁻¹ : ℝ)| < 1 := by
   rw [ abs_of_neg ] <;> nlinarith [ inv_mul_cancel₀ ( by linarith : z ≠ 0 ) ]
+
 
 
 
@@ -67,9 +79,11 @@ theorem emlHessian_pos_def (x y : ℝ) (hy : 0 < y) :
 
 
 
+
 theorem emlETower_strictMono : StrictMono emlETower := by
   refine' strictMono_nat_of_lt_succ _;
   exact fun n => Nat.recOn n ( by norm_num [ Real.exp_pos, emlETower ] ) fun n ih => by exact Real.exp_lt_exp.mpr ih;
+
 
 
 
@@ -82,14 +96,17 @@ theorem emlETower_superexp (n : ℕ) : emlETower (n + 2) ≥ Real.exp (2 ^ n) :=
 
 
 
+
 theorem emlTrop_idempotent_nonneg (x : ℝ) (hx : 0 ≤ x) :
     emlTrop x (-x) = x := by
   exact max_eq_left ( by linarith )
 
 
 
+
 theorem emlTrop_not_comm : ∃ x y : ℝ, emlTrop x y ≠ emlTrop y x := by
   exact ⟨ 1, 2, by unfold emlTrop; norm_num ⟩
+
 
 
 
@@ -99,8 +116,10 @@ theorem emlTrop_avg_bound (x y : ℝ) :
 
 
 
+
 theorem emlETower_eml (n : ℕ) : emlETower (n + 1) = eml (emlETower n) 1 := by
   unfold eml; aesop;
+
 
 
 

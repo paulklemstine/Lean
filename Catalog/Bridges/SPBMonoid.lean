@@ -18,15 +18,25 @@ theorem spb_rat (p q r s : ℤ) (hq : (q : ℝ) ≠ 0) (hs : (s : ℝ) ≠ 0)
   field_simp
 
 
+
+/-- [Section: # CatalogBuild.Bridges.SPBMonoid
+Auto-generated from theorem catalog database.
+Domain: Bridges
+Declarations: 12] -/
 theorem spb_half_third : spb (1/2 : ℝ) (1/3) = 1 := by unfold spb; norm_num
+
 
 theorem spb_half_half : spb (1/2 : ℝ) (1/2) = 4/3 := by unfold spb; norm_num
 
+
 theorem spb_third_third : spb (1/3 : ℝ) (1/3) = 3/4 := by unfold spb; norm_num
+
 
 theorem spb_quarter_quarter : spb (1/4 : ℝ) (1/4) = 8/15 := by unfold spb; norm_num
 
+
 theorem spb_fifth_fifth : spb (1/5 : ℝ) (1/5) = 5/12 := by unfold spb; norm_num
+
 
 
 /-- (1 + spb(x,y)²) = (1+x²)(1+y²)/(1-xy)². -/
@@ -35,10 +45,12 @@ theorem norm_sq_identity (x y : ℝ) (h : 1 - x * y ≠ 0) :
   unfold spb; field_simp; ring
 
 
+
 /-- Half-angle quadratic: if s = spb(t,t), then s·t²+2t-s = 0. -/
 theorem half_angle_quadratic (s t : ℝ) (h : 1 - t ^ 2 ≠ 0) (hs : s = spb t t) :
     s * t ^ 2 + 2 * t - s = 0 := by
   rw [hs]; unfold spb; field_simp; ring
+
 
 
 theorem spb_involution (x a : ℝ) (h1 : 1 - x * a ≠ 0)
@@ -46,6 +58,7 @@ theorem spb_involution (x a : ℝ) (h1 : 1 - x * a ≠ 0)
     spb (spb x a) (-a) = x := by
   unfold spb at *;
   grind
+
 
 
 theorem spb_injective_on (a x y : ℝ) (hx : 1 - x * a ≠ 0) (hy : 1 - y * a ≠ 0)
@@ -60,10 +73,12 @@ theorem spb_injective_on (a x y : ℝ) (hx : 1 - x * a ≠ 0) (hy : 1 - y * a �
   nlinarith
 
 
+
 theorem spb_subtraction_formula (x y : ℝ) (h : 1 + x * y ≠ 0) :
     spb x (-y) = (x - y) / (1 + x * y) := by
   unfold spb;
   ring
+
 
 
 theorem tan_add_is_spb (α β : ℝ)
@@ -73,6 +88,7 @@ theorem tan_add_is_spb (α β : ℝ)
     Real.tan (α + β) = spb (Real.tan α) (Real.tan β) := by
   rw [ Real.tan_add, spb ];
   grind +splitImp
+
 
 
 end

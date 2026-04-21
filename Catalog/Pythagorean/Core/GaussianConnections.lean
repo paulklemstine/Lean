@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/Core
-Declarations: 34
+Declarations: 33
 -/
 
 import Mathlib
@@ -14,9 +14,11 @@ theorem pyth_iff_gaussNorm_sq (a b c : ℤ) :
 
 
 
+
 /-- Conjugate product gives the norm: (a+bi)(a-bi) = a² + b². -/
 theorem gauss_conj_product (a b : ℤ) :
     (a + b) * (a - b) = a ^ 2 - b ^ 2 := by ring
+
 
 
 
@@ -26,9 +28,11 @@ theorem gaussNorm_nonneg (a b : ℤ) : 0 ≤ gaussNorm a b := by
 
 
 
+
 /-- If a² + b² = c², then (c-a)(c+a) = b². -/
 theorem factor_from_leg_b (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (c - a) * (c + a) = b ^ 2 := by nlinarith
+
 
 
 
@@ -38,11 +42,13 @@ theorem factor_from_leg_a (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 /-- Every primitive Pythagorean triple arises from (m,n) with
 a = m² - n², b = 2mn, c = m² + n². This is the standard parametrization.
 The associated 2×2 matrix is [[m, -n], [n, m]] with det = m² + n². -/
 def paramMatrix (m n : ℤ) : Matrix (Fin 2) (Fin 2) ℤ :=
   !![m, -n; n, m]
+
 
 
 
@@ -56,6 +62,7 @@ theorem paramMatrix_det (m n : ℤ) :
 
 
 
+
 /-- The product of two param matrices corresponds to Gaussian multiplication. -/
 theorem paramMatrix_mul (m₁ n₁ m₂ n₂ : ℤ) :
     paramMatrix m₁ n₁ * paramMatrix m₂ n₂ =
@@ -65,9 +72,11 @@ theorem paramMatrix_mul (m₁ n₁ m₂ n₂ : ℤ) :
 
 
 
+
 /-- Triple from parameters (a, b, c) = (m²-n², 2mn, m²+n²). -/
 def tripleFromParams (m n : ℤ) : Fin 3 → ℤ :=
   ![m ^ 2 - n ^ 2, 2 * m * n, m ^ 2 + n ^ 2]
+
 
 
 
@@ -79,15 +88,23 @@ theorem param_triple_pythagorean (m n : ℤ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.Core.GaussianConnections
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Core
+Declarations: 34] -/
 theorem S_det : Matrix.det S_mat = 1 := by native_decide
+
 
 
 theorem T_det : Matrix.det T_mat = 1 := by native_decide
 
 
+
 /-- S corresponds to rotation by π/2, swapping (m,n) → (-n,m). -/
 theorem S_as_param : S_mat = paramMatrix 0 1 := by
   ext i j; fin_cases i <;> fin_cases j <;> simp [S_mat, paramMatrix]
+
 
 
 
@@ -97,14 +114,10 @@ theorem B₂_boost_cosh : B₂ 2 2 = 3 := by native_decide
 
 
 
-/-- The trace of a Lorentz boost matrix relates to the rapidity.
-For B₂: tr = 1 + 1 + 3 = 5 = 1 + 2·cosh(φ) in the continuous case. -/
-theorem B₂_trace : Matrix.trace B₂ = 5 := by native_decide
-
-
 
 /-- B₁ is a proper Lorentz transformation (det = +1). -/
 theorem B₁_proper : Matrix.det B₁ = 1 := by native_decide
+
 
 
 
@@ -113,8 +126,10 @@ theorem B₂_improper : Matrix.det B₂ = -1 := by native_decide
 
 
 
+
 /-- B₃ is a proper Lorentz transformation (det = +1). -/
 theorem B₃_proper : Matrix.det B₃ = 1 := by native_decide
+
 
 
 
@@ -123,13 +138,16 @@ theorem B₂_sq_proper : Matrix.det (B₂ * B₂) = 1 := by native_decide
 
 
 
+
 /-- B₂² preserves the Lorentz form. -/
 theorem B₂_sq_preserves_Q : (B₂ * B₂)ᵀ * Q * (B₂ * B₂) = Q := by native_decide
 
 
 
+
 /-- The "cosh" of the double boost: (B₂²)₂₂ = 17 = 2·9 - 1 = 2·cosh²(φ) - 1. -/
 theorem B₂_sq_cosh : (B₂ * B₂) 2 2 = 17 := by native_decide
+
 
 
 
@@ -139,10 +157,12 @@ theorem B₂_subluminal : B₂ 2 0 < B₂ 2 2 := by native_decide
 
 
 
+
 /-- If N = a² + b² (sum of two squares), and we find a Pythagorean triple with
 hypotenuse N, then leg gives a factorization. -/
 theorem sum_of_squares_factor (N a b : ℤ) (h : N = a ^ 2 + b ^ 2) :
     N = (a + b) ^ 2 - 2 * a * b := by ring_nf; linarith
+
 
 
 
@@ -154,9 +174,11 @@ theorem descent_decreases (a b c : ℤ)
 
 
 
+
 /-- The inverse Berggren descent preserves the Pythagorean property. -/
 theorem B₃_inv_preserves (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (-a + 2*b + 2*c)^2 + (-2*a + b + 2*c)^2 = (-2*a + 2*b + 3*c)^2 := by nlinarith
+
 
 
 
@@ -170,9 +192,11 @@ theorem power_preserves_Q (d : Matrix (Fin 3) (Fin 3) ℤ) (k : ℕ) (hd : dᵀ 
 
 
 
+
 /-- B₂ powers give increasingly large boosts, all preserving Q. -/
 theorem B₂_power_preserves (k : ℕ) : (B₂ ^ k)ᵀ * Q * (B₂ ^ k) = Q :=
   power_preserves_Q B₂ k (by native_decide)
+
 
 
 
@@ -181,8 +205,10 @@ theorem B₂_power_growth_base : (B₂ ^ 2) 2 2 = 17 := by native_decide
 
 
 
+
 /-- The (2,2) entry of B₂³ = 99. -/
 theorem B₂_cube_entry : (B₂ ^ 3) 2 2 = 99 := by native_decide
+
 
 
 
@@ -194,10 +220,12 @@ theorem leg_sum_bound (a b c : ℤ)
 
 
 
+
 /-- Hypotenuse is largest: c > a for positive triples. -/
 theorem hypotenuse_largest_a (a b c : ℤ)
     (h : a ^ 2 + b ^ 2 = c ^ 2) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
     c > a := by nlinarith [sq_nonneg b]
+
 
 
 
@@ -208,9 +236,11 @@ theorem hypotenuse_largest_b (a b c : ℤ)
 
 
 
+
 theorem primitive_not_both_even (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     (hprim : Int.gcd a b = 1) : ¬ (2 ∣ a ∧ 2 ∣ b) := by
   exact fun h' => absurd ( Int.dvd_coe_gcd h'.left h'.right ) ( by norm_num [ hprim ] )
+
 
 
 
@@ -218,5 +248,6 @@ theorem primitive_not_both_even (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
 theorem gaussNorm_of_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     gaussNorm a b = c ^ 2 := by
   simp [gaussNorm]; linarith
+
 
 

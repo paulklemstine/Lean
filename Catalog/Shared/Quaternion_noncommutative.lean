@@ -16,11 +16,13 @@ theorem quaternion_noncommutative :
 
 
 
+
 /-- Quaternion norm is non-negative. -/
 theorem quaternion_normSq_nonneg (q : Quaternion ℝ) :
     0 ≤ Quaternion.normSq q := by
   simp [Quaternion.normSq_def']
   positivity
+
 
 
 
@@ -32,6 +34,7 @@ theorem quaternion_norm_sq_mul (a b : Quaternion ℝ) :
 
 
 
+
 /-- The explicit formula for quaternion multiplication. -/
 theorem quaternion_mul_components (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℝ) :
     (⟨a₁, a₂, a₃, a₄⟩ : Quaternion ℝ) * ⟨b₁, b₂, b₃, b₄⟩ =
@@ -40,5 +43,6 @@ theorem quaternion_mul_components (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℝ
      a₁*b₃ - a₂*b₄ + a₃*b₁ + a₄*b₂,
      a₁*b₄ + a₂*b₃ - a₃*b₂ + a₄*b₁⟩ := by
   ext <;> simp <;> ring
+
 
 

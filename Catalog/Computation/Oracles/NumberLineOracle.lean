@@ -15,9 +15,11 @@ structure FormalSystem' (Statement Proof : Type*) where
 
 
 
+
 /-- The set of provable statements (theorems) of a formal system. -/
 def FormalSystem'.theorems {S P : Type*} (F : FormalSystem' S P) : Set S :=
   { s | ∃ p, F.isProof p s }
+
 
 
 
@@ -28,10 +30,12 @@ structure GodelEncoding (Formula : Type*) where
 
 
 
+
 /-- The "truth set" on the number line: the image of provable formulas under Gödel encoding. -/
 def truthSet' {Formula Proof : Type*} (F : FormalSystem' Formula Proof)
     (G : GodelEncoding Formula) : Set ℕ :=
   G.encode '' F.theorems
+
 
 
 
@@ -43,11 +47,13 @@ def oracleReal (S : Finset ℕ) : ℚ :=
 
 
 
+
 /-- The oracle real is non-negative. -/
 theorem oracleReal_nonneg (S : Finset ℕ) : 0 ≤ oracleReal S := by
   apply Finset.sum_nonneg
   intro n _
   positivity
+
 
 
 
@@ -61,10 +67,12 @@ structure ChaitinOmega where
 
 
 
+
 /-- Ω approximations are non-decreasing. -/
 theorem omega_monotone (Ω : ChaitinOmega) (m n : ℕ) (h : m ≤ n) :
     Ω.approx m ≤ Ω.approx n :=
   Ω.monotone h
+
 
 
 
@@ -75,9 +83,11 @@ structure NumberLineOracle where
 
 
 
+
 /-- The set of "true points" on the number line. -/
 def NumberLineOracle.trueSet (O : NumberLineOracle) : Set ℕ :=
   { n | O.truthValue n = true }
+
 
 
 
@@ -87,9 +97,11 @@ def NumberLineOracle.agreeOn (O₁ O₂ : NumberLineOracle) (S : Set ℕ) : Prop
 
 
 
+
 /-- Agreement is reflexive. -/
 theorem agree_refl (O : NumberLineOracle) (S : Set ℕ) :
     O.agreeOn O S := fun _ _ => rfl
+
 
 
 
@@ -100,6 +112,7 @@ theorem agree_symm {O₁ O₂ : NumberLineOracle} {S : Set ℕ}
 
 
 
+
 /-- Agreement is transitive. -/
 theorem agree_trans {O₁ O₂ O₃ : NumberLineOracle} {S : Set ℕ}
     (h₁₂ : O₁.agreeOn O₂ S) (h₂₃ : O₂.agreeOn O₃ S) : O₁.agreeOn O₃ S :=
@@ -107,9 +120,11 @@ theorem agree_trans {O₁ O₂ O₃ : NumberLineOracle} {S : Set ℕ}
 
 
 
+
 /-- Composition of number-line oracles via logical operations. -/
 def NumberLineOracle.and (O₁ O₂ : NumberLineOracle) : NumberLineOracle where
   truthValue n := O₁.truthValue n && O₂.truthValue n
+
 
 
 
@@ -122,8 +137,14 @@ def NumberLineOracle.or (O₁ O₂ : NumberLineOracle) : NumberLineOracle where
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.NumberLineOracle
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 40] -/
 def NumberLineOracle.not (O : NumberLineOracle) : NumberLineOracle where
   truthValue n := !O.truthValue n
+
 
 
 
@@ -135,11 +156,13 @@ theorem and_trueSet' (O₁ O₂ : NumberLineOracle) :
 
 
 
+
 /-- The true set of (O₁ ∨ O₂) is the union. -/
 theorem or_trueSet' (O₁ O₂ : NumberLineOracle) :
     (O₁.or O₂).trueSet = O₁.trueSet ∪ O₂.trueSet := by
   ext n
   simp [NumberLineOracle.trueSet, NumberLineOracle.or, Bool.or_eq_true]
+
 
 
 
@@ -151,6 +174,7 @@ theorem not_trueSet' (O : NumberLineOracle) :
 
 
 
+
 /-- De Morgan's law for number-line oracles (AND). -/
 theorem deMorgan_and' (O₁ O₂ : NumberLineOracle) :
     (O₁.and O₂).not.trueSet = O₁.not.trueSet ∪ O₂.not.trueSet := by
@@ -158,10 +182,12 @@ theorem deMorgan_and' (O₁ O₂ : NumberLineOracle) :
 
 
 
+
 /-- De Morgan's law for number-line oracles (OR). -/
 theorem deMorgan_or' (O₁ O₂ : NumberLineOracle) :
     (O₁.or O₂).not.trueSet = O₁.not.trueSet ∩ O₂.not.trueSet := by
   rw [not_trueSet', or_trueSet', Set.compl_union, not_trueSet', not_trueSet']
+
 
 
 
@@ -175,11 +201,13 @@ structure ProblemSpace where
 
 
 
+
 /-- Convert a problem space to a number-line oracle. -/
 def ProblemSpace.toOracle (PS : ProblemSpace) : NumberLineOracle where
   truthValue n := match PS.decode n with
     | some p => PS.isSolved p
     | none => false
+
 
 
 
@@ -190,10 +218,12 @@ theorem solved_is_true (PS : ProblemSpace) (p : PS.Problem) (h : PS.isSolved p =
 
 
 
+
 /-- Every unsolved problem appears as a false point. -/
 theorem unsolved_is_false (PS : ProblemSpace) (p : PS.Problem) (h : PS.isSolved p = false) :
     PS.toOracle.truthValue (PS.encode p) = false := by
   simp [ProblemSpace.toOracle, PS.encode_decode, h]
+
 
 
 
@@ -203,10 +233,12 @@ def truthDensity (O : NumberLineOracle) (N : ℕ) : ℚ :=
 
 
 
+
 /-- Truth density is non-negative. -/
 theorem truthDensity_nonneg (O : NumberLineOracle) (N : ℕ) :
     0 ≤ truthDensity O N := by
   unfold truthDensity; positivity
+
 
 
 
@@ -220,6 +252,7 @@ theorem truthDensity_le_one (O : NumberLineOracle) (N : ℕ) (hN : 0 < N) :
 
 
 
+
 /-- The "all true" oracle has density 1. -/
 theorem all_true_density (N : ℕ) (hN : 0 < N) :
     truthDensity ⟨fun _ => true⟩ N = 1 := by
@@ -229,10 +262,12 @@ theorem all_true_density (N : ℕ) (hN : 0 < N) :
 
 
 
+
 /-- The "all false" oracle has density 0. -/
 theorem all_false_density (N : ℕ) :
     truthDensity ⟨fun _ => false⟩ N = 0 := by
   unfold truthDensity NumberLineOracle.truthValue; simp
+
 
 
 
@@ -250,10 +285,12 @@ theorem uncountably_many_oracles :
 
 
 
+
 /-- An oracle approximation sequence: increasingly accurate partial oracles. -/
 structure OracleApprox where
   level : ℕ → NumberLineOracle
   refines : ∀ n, (level n).trueSet ⊆ (level (n + 1)).trueSet
+
 
 
 
@@ -263,11 +300,13 @@ def OracleApprox.limit (A : OracleApprox) : Set ℕ :=
 
 
 
+
 /-- Every level is contained in the limit. -/
 theorem approx_level_subset_limit (A : OracleApprox) (n : ℕ) :
     (A.level n).trueSet ⊆ A.limit := by
   intro x hx
   exact Set.mem_iUnion.mpr ⟨n, hx⟩
+
 
 
 
@@ -280,9 +319,11 @@ theorem approx_monotone (A : OracleApprox) (m n : ℕ) (h : m ≤ n) :
 
 
 
+
 /-- The ordering is reflexive. -/
 theorem nlo_le_refl (O : NumberLineOracle) : O ≤ O :=
   Set.Subset.refl _
+
 
 
 
@@ -290,6 +331,7 @@ theorem nlo_le_refl (O : NumberLineOracle) : O ≤ O :=
 theorem nlo_le_trans (O₁ O₂ O₃ : NumberLineOracle)
     (h₁₂ : O₁ ≤ O₂) (h₂₃ : O₂ ≤ O₃) : O₁ ≤ O₃ :=
   Set.Subset.trans h₁₂ h₂₃
+
 
 
 
@@ -303,6 +345,7 @@ theorem and_is_glb (O₁ O₂ : NumberLineOracle) :
 
 
 
+
 /-- OR is the join (least upper bound). -/
 theorem or_is_lub (O₁ O₂ : NumberLineOracle) :
     O₁ ≤ (O₁.or O₂) ∧ O₂ ≤ (O₁.or O₂) := by
@@ -310,6 +353,7 @@ theorem or_is_lub (O₁ O₂ : NumberLineOracle) :
     simp [NumberLineOracle.trueSet, NumberLineOracle.or, Bool.or_eq_true]
   · left; exact hn
   · right; exact hn
+
 
 
 

@@ -17,10 +17,12 @@ structure QuantumResources where
 
 
 
+
 /-- Whether a quantum computer can execute an attack -/
 def canExecute (available required : QuantumResources) : Prop :=
   available.logical_qubits ≥ required.logical_qubits ∧
   available.physical_qubits ≥ required.physical_qubits
+
 
 
 
@@ -29,6 +31,7 @@ theorem insufficient_blocks_attack (available required : QuantumResources)
     (h : available.physical_qubits < required.physical_qubits) :
     ¬ canExecute available required := by
   unfold canExecute; omega
+
 
 
 
@@ -41,6 +44,7 @@ inductive AttackStep where
   | classical_extract_pubkey
   | quantum_mine (difficulty : ℕ)
   deriving Repr
+
 
 
 
@@ -57,8 +61,10 @@ def stepResources : AttackStep → QuantumResources
 
 
 
+
 /-- A complete attack is a list of steps -/
 def Attack := List AttackStep
+
 
 
 
@@ -68,9 +74,11 @@ def maxStepQubits (attack : Attack) : ℕ :=
 
 
 
+
 /-- Total runtime of the attack (sum of all steps). -/
 def totalRuntime (attack : Attack) : ℕ :=
   attack.map (fun s => (stepResources s).runtime_seconds) |>.foldl (· + ·) 0
+
 
 
 
@@ -83,11 +91,13 @@ def transactionTheftAttack : Attack :=
 
 
 
+
 /-- **Theorem**: The bottleneck is the quantum ECDLP step. -/
 theorem theft_bottleneck_is_ecdlp :
     maxStepQubits transactionTheftAttack =
     (stepResources (AttackStep.quantum_ecdlp 256)).physical_qubits := by
   native_decide
+
 
 
 
@@ -98,10 +108,12 @@ theorem theft_physical_qubits :
 
 
 
+
 /-- **Theorem**: Total attack time ≈ 338 seconds at 10⁶ T-gates/s. -/
 theorem theft_total_runtime :
     totalRuntime transactionTheftAttack = 338 := by
   native_decide
+
 
 
 
@@ -112,6 +124,7 @@ theorem theft_fits_bitcoin_window :
 
 
 
+
 /-- **Theorem**: For Ethereum (permanent exposure), time is not a constraint. -/
 theorem theft_fits_ethereum :
     totalRuntime transactionTheftAttack < 10^9 := by
@@ -119,10 +132,12 @@ theorem theft_fits_ethereum :
 
 
 
+
 /-- Catchup probability for a miner with hash power fraction q_num/q_den
 after k blocks. -/
 def catchup_prob (q_num q_den : ℕ) (k : ℕ) : ℚ :=
   (q_num : ℚ) ^ k / (q_den : ℚ) ^ k
+
 
 
 
@@ -136,6 +151,7 @@ theorem catchup_decreasing (k : ℕ) :
 
 
 
+
 /-- **Theorem**: After 7 confirmations, a miner with 1/9 of hash power
 has catchup probability < 10⁻⁶. -/
 theorem seven_confirmations_safe :
@@ -143,10 +159,12 @@ theorem seven_confirmations_safe :
 
 
 
+
 /-- **Theorem**: Grover mining cannot achieve >50% advantage unless the
 attacker already has >25% of classical hash power. -/
 theorem grover_threshold :
     (25 : ℕ) * 4 = 100 := by norm_num
+
 
 
 
@@ -159,9 +177,11 @@ def required_confirmations_quantum (quantum_advantage_pct : ℕ) : ℕ :=
 
 
 
+
 /-- **Theorem**: Standard 6 confirmations suffice for < 10% quantum advantage. -/
 theorem standard_confirmations_ok :
     required_confirmations_quantum 5 = 6 := by native_decide
+
 
 
 
@@ -175,6 +195,7 @@ inductive ContractVulnerability where
 
 
 
+
 /-- Quantum security level for each vulnerability type (bits). -/
 def contractQuantumSecurity : ContractVulnerability → ℕ
   | ContractVulnerability.ecrecover_dependency => 0
@@ -184,9 +205,11 @@ def contractQuantumSecurity : ContractVulnerability → ℕ
 
 
 
+
 /-- **Theorem**: ECDSA-dependent contracts have zero quantum security. -/
 theorem ecrecover_zero_security :
     contractQuantumSecurity ContractVulnerability.ecrecover_dependency = 0 := rfl
+
 
 
 
@@ -197,9 +220,11 @@ theorem hash_commitment_survives :
 
 
 
+
 /-- Estimated DeFi TVL at risk from quantum ECDSA attacks: ~$45B of $50B. -/
 theorem defi_risk_fraction :
     90 * 50 / 100 = (45 : ℕ) := by norm_num
+
 
 
 
@@ -207,6 +232,7 @@ theorem defi_risk_fraction :
 theorem flashloan_quantum_zero_capital
     (profit repayment : ℕ) (h : profit > repayment) :
     profit - repayment > 0 := by omega
+
 
 
 
@@ -218,9 +244,11 @@ structure BitcoinAtRisk where
 
 
 
+
 /-- Current estimated at-risk Bitcoin. -/
 def currentBitcoinAtRisk : BitcoinAtRisk :=
   ⟨5900, 5300, 7800⟩
+
 
 
 
@@ -231,9 +259,11 @@ theorem total_at_risk_btc :
 
 
 
+
 /-- **Theorem**: At-risk fraction ≈ 57% of total supply. -/
 theorem at_risk_fraction :
     (11200 : ℕ) * 100 / 19500 = 57 := by native_decide
+
 
 
 
@@ -243,14 +273,17 @@ theorem unrevealed_safe :
 
 
 
+
 /-- Ethereum: ~250M unique addresses have transacted (all at risk). -/
 def ethereum_at_risk_addresses : ℕ := 250000000
+
 
 
 
 /-- The long-range attack total time for N addresses. -/
 def long_range_total_time (n_addresses ecdlp_seconds : ℕ) : ℕ :=
   n_addresses * ecdlp_seconds
+
 
 
 
@@ -261,9 +294,11 @@ theorem long_range_bitcoin_time :
 
 
 
+
 /-- **Theorem**: Targeting top 100 richest addresses: ~9.3 hours. -/
 theorem targeted_attack_top100 :
     long_range_total_time 100 335 = 33500 := by native_decide
+
 
 
 
@@ -276,12 +311,14 @@ theorem targeted_attack_hours :
 
 
 
+
 /-- MEV extraction advantage types -/
 inductive MEVAdvantage where
   | speed
   | cryptographic
   | optimization
   deriving DecidableEq, Repr
+
 
 
 
@@ -293,9 +330,11 @@ def mevAdvantage : MEVAdvantage → ℕ
 
 
 
+
 /-- **Theorem**: Quantum MEV speed advantage is negligible. -/
 theorem quantum_mev_speed_negligible :
     mevAdvantage MEVAdvantage.speed = 1 := rfl
+
 
 
 
@@ -305,9 +344,11 @@ theorem commit_reveal_mev_safe :
 
 
 
+
 /-- **Theorem**: Quantum optimization provides at most 2× advantage. -/
 theorem quantum_optimization_modest :
     mevAdvantage MEVAdvantage.optimization ≤ 2 := by norm_num [mevAdvantage]
+
 
 
 
@@ -318,6 +359,7 @@ inductive ThreatLevel where
   | moderate
   | negligible
   deriving DecidableEq, Repr
+
 
 
 
@@ -333,12 +375,14 @@ def attackThreatLevel : String → ThreatLevel
 
 
 
+
 /-- **Theorem**: Only Shor-based attacks are existential threats. -/
 theorem only_shor_existential :
     attackThreatLevel "shor_ecdsa" = ThreatLevel.existential ∧
     attackThreatLevel "grover_mining" = ThreatLevel.negligible ∧
     attackThreatLevel "grover_hash" = ThreatLevel.moderate := by
   simp [attackThreatLevel]
+
 
 
 
@@ -351,11 +395,13 @@ def defensePriority : ThreatLevel → ℕ
 
 
 
+
 /-- **Theorem**: Existential threats have highest priority. -/
 theorem existential_highest_priority :
     defensePriority ThreatLevel.existential < defensePriority ThreatLevel.severe ∧
     defensePriority ThreatLevel.severe < defensePriority ThreatLevel.moderate ∧
     defensePriority ThreatLevel.moderate < defensePriority ThreatLevel.negligible := by
   simp [defensePriority]
+
 
 

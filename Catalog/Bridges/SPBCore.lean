@@ -14,9 +14,11 @@ def spbF {F : Type*} [Field F] (x y : F) : F := (x + y) / (1 - x * y)
 
 
 
+
 /-- SPB over a field is commutative. -/
 theorem spbF_comm {F : Type*} [Field F] (x y : F) : spbF x y = spbF y x := by
   simp [spbF, add_comm, mul_comm]
+
 
 
 
@@ -26,9 +28,11 @@ theorem spbF_zero_right {F : Type*} [Field F] (x : F) : spbF x 0 = x := by
 
 
 
+
 /-- SPB inverse over a field. -/
 theorem spbF_neg_self {F : Type*} [Field F] (x : F) : spbF x (-x) = 0 := by
   simp [spbF]
+
 
 
 
@@ -47,6 +51,7 @@ theorem spbF_assoc {F : Type*} [Field F] (x y z : F)
   · grind;
   · exact sub_ne_zero_of_ne ( Ne.symm hxyz );
   · exact sub_ne_zero_of_ne h1
+
 
 
 

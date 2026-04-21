@@ -21,9 +21,11 @@ theorem d_squared_zero' {R M₀ M₁ M₂ : Type*} [CommRing R]
 
 
 
+
 /-- For a two-term complex, χ = rank(C₀) - rank(C₁). -/
 theorem euler_char_two' (r₀ r₁ : ℤ) :
     (-1) ^ 0 * r₀ + (-1) ^ 1 * r₁ = r₀ - r₁ := by ring
+
 
 
 
@@ -33,8 +35,10 @@ theorem euler_char_three' (r₀ r₁ r₂ : ℤ) :
 
 
 
+
 /-- Betti numbers of a torus: b₀ = 1, b₁ = 2, b₂ = 1, χ = 0. -/
 theorem torus_euler_char' : (1 : ℤ) - 2 + 1 = 0 := by ring
+
 
 
 
@@ -43,13 +47,16 @@ theorem sphere_euler_char' : (1 : ℤ) - 0 + 1 = 2 := by ring
 
 
 
+
 /-- Euler characteristic of genus-g surface: χ = 2 - 2g. -/
 theorem genus_euler_char (g : ℤ) : (1 : ℤ) - 2 * g + 1 = 2 - 2 * g := by ring
 
 
 
+
 /-- Betti numbers of RP²: χ = 1. -/
 theorem rp2_euler_char' : (1 : ℤ) - 0 + 0 = 1 := by ring
+
 
 
 
@@ -68,4 +75,5 @@ theorem ses_rank_nullity' {K : Type*} [Field K]
   rw [ ← LinearMap.finrank_range_add_finrank_ker g ];
   rw [ ← h_exact, add_comm ];
   rw [ LinearMap.finrank_range_of_inj hf, LinearMap.range_eq_top.mpr hg ] ; simp +decide [ hf, hg ]
+
 

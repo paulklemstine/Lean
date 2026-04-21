@@ -19,8 +19,14 @@ structure TropicalMotive (n : ℕ) where
 
 
 
+
+/-- [Section: # CatalogBuild.Tropical.Langlands.PeriodsMotives
+Auto-generated from theorem catalog database.
+Domain: Tropical/Langlands
+Declarations: 29] -/
 def totalWeight (n : ℕ) (M : TropicalMotive n) : ℝ :=
   ∑ i : Fin n, M.weights i
+
 
 
 
@@ -30,8 +36,10 @@ theorem totalWeight_nonneg (n : ℕ) (M : TropicalMotive n) :
 
 
 
+
 def tropicalPeriod (n : ℕ) (gamma : Fin n → ℤ) (omega : Fin n → ℝ) : ℝ :=
   ∑ i : Fin n, (gamma i : ℝ) * omega i
+
 
 
 
@@ -44,10 +52,12 @@ theorem period_add_cycle (n : ℕ) (g1 g2 : Fin n → ℤ) (omega : Fin n → �
 
 
 
+
 theorem period_add_form (n : ℕ) (gamma : Fin n → ℤ) (o1 o2 : Fin n → ℝ) :
     tropicalPeriod n gamma (o1 + o2) =
     tropicalPeriod n gamma o1 + tropicalPeriod n gamma o2 := by
   simp [tropicalPeriod, Pi.add_apply, mul_add, Finset.sum_add_distrib]
+
 
 
 
@@ -57,14 +67,17 @@ theorem period_zero_cycle (n : ℕ) (omega : Fin n → ℝ) :
 
 
 
+
 theorem period_zero_form (n : ℕ) (gamma : Fin n → ℤ) :
     tropicalPeriod n gamma (fun _ => (0 : ℝ)) = 0 := by
   simp [tropicalPeriod]
 
 
 
+
 def motivicLFunction (n : ℕ) (M : TropicalMotive n) (s : ℝ) : ℝ :=
   ∑ i : Fin n, M.weights i * s
+
 
 
 
@@ -74,15 +87,18 @@ theorem motivicLFunction_eq (n : ℕ) (M : TropicalMotive n) (s : ℝ) :
 
 
 
+
 theorem motivicLFunction_at_one (n : ℕ) (M : TropicalMotive n) :
     motivicLFunction n M 1 = totalWeight n M := by
   simp [motivicLFunction_eq]
 
 
 
+
 theorem motivicLFunction_at_zero (n : ℕ) (M : TropicalMotive n) :
     motivicLFunction n M 0 = 0 := by
   simp [motivicLFunction_eq]
+
 
 
 
@@ -93,10 +109,12 @@ def galoisAction (n : ℕ) (sigma : Equiv.Perm (Fin n)) (M : TropicalMotive n) :
 
 
 
+
 theorem galoisAction_preserves_totalWeight (n : ℕ) (sigma : Equiv.Perm (Fin n))
     (M : TropicalMotive n) :
     totalWeight n (galoisAction n sigma M) = totalWeight n M := by
   exact Equiv.sum_comp sigma M.weights
+
 
 
 
@@ -107,9 +125,11 @@ theorem galoisAction_preserves_LFunction (n : ℕ) (sigma : Equiv.Perm (Fin n))
 
 
 
+
 theorem galoisAction_id (n : ℕ) (M : TropicalMotive n) :
     galoisAction n 1 M = M := by
   simp [galoisAction, Function.comp_id]
+
 
 
 
@@ -120,8 +140,10 @@ structure TropicalHodgeStructure (n : ℕ) where
 
 
 
+
 def hodgeDimension (n : ℕ) (H : TropicalHodgeStructure n) : ℕ :=
   ∑ k : Fin (n + 1), H.hodgeNumbers k
+
 
 
 
@@ -133,9 +155,11 @@ def weight1Hodge (g : ℕ) : TropicalHodgeStructure 1 where
 
 
 
+
 theorem weight1Hodge_dimension (g : ℕ) :
     hodgeDimension 1 (weight1Hodge g) = 2 * g := by
   simp [hodgeDimension, weight1Hodge, Fin.sum_univ_two]; ring
+
 
 
 
@@ -145,8 +169,10 @@ def periodEquivalent (n : ℕ) (M1 M2 : TropicalMotive n) : Prop :=
 
 
 
+
 theorem periodEquivalent_refl (n : ℕ) (M : TropicalMotive n) :
     periodEquivalent n M M := fun _ => rfl
+
 
 
 
@@ -156,10 +182,12 @@ theorem periodEquivalent_symm (n : ℕ) (M1 M2 : TropicalMotive n)
 
 
 
+
 theorem periodEquivalent_trans (n : ℕ) (M1 M2 M3 : TropicalMotive n)
     (h12 : periodEquivalent n M1 M2) (h23 : periodEquivalent n M2 M3) :
     periodEquivalent n M1 M3 :=
   fun gamma => (h12 gamma).trans (h23 gamma)
+
 
 
 
@@ -174,6 +202,7 @@ theorem periodEquiv_same_LFunction (n : ℕ) (M1 M2 : TropicalMotive n)
 
 
 
+
 def tropicalBetti (genus : ℕ) (k : ℕ) : ℕ :=
   match k with
   | 0 => 1
@@ -182,8 +211,10 @@ def tropicalBetti (genus : ℕ) (k : ℕ) : ℕ :=
 
 
 
+
 def tropicalEuler (vertices edges : ℕ) : ℤ :=
   (vertices : ℤ) - (edges : ℤ)
+
 
 
 
@@ -193,9 +224,11 @@ theorem tree_genus_zero (n : ℕ) (hn : n ≥ 1) :
 
 
 
+
 theorem tree_euler (n : ℕ) (hn : n ≥ 1) :
     tropicalEuler n (n - 1) = 1 := by
   unfold tropicalEuler; cases n <;> aesop;
+
 
 
 

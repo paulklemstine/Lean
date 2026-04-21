@@ -17,8 +17,10 @@ theorem radical_decomposition_full (a b c d : ℤ)
 
 
 
+
 /-- abc connection: (d-c) + (d+c) = 2d. -/
 theorem abc_triple_sum (c d : ℤ) : (d - c) + (d + c) = 2 * d := by ring
+
 
 
 
@@ -34,6 +36,7 @@ theorem perfect_square_dc (a b c d s : ℤ)
 
 
 
+
 /-- When d+c is also a perfect square, a²+b² is a perfect square. -/
 theorem double_perfect_square (a b c d s t : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2)
@@ -45,6 +48,7 @@ theorem double_perfect_square (a b c d s t : ℤ)
 
 
 
+
 /-- Thin quadruple: if d - c = 1, then a² + b² = 2d - 1. -/
 theorem thin_quadruple_sum (a b d : ℤ)
     (h : a ^ 2 + b ^ 2 + (d - 1) ^ 2 = d ^ 2) :
@@ -52,10 +56,12 @@ theorem thin_quadruple_sum (a b d : ℤ)
 
 
 
+
 /-- The "fat" quadruple case: c = 0 reduces to a Pythagorean triple. -/
 theorem fat_quadruple (a b d : ℤ)
     (h : a ^ 2 + b ^ 2 + 0 ^ 2 = d ^ 2) :
     a ^ 2 + b ^ 2 = d ^ 2 := by linarith
+
 
 
 
@@ -67,6 +73,7 @@ theorem qdf_brahmagupta (a b c d p q r s : ℤ)
   have h1 : (d - c) * (d + c) = a ^ 2 + b ^ 2 := by nlinarith
   rw [hp, hr] at h1
   linarith [brahmagupta_fibonacci p q r s]
+
 
 
 
@@ -86,6 +93,7 @@ theorem qdf_euler_composition (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
 
 
 
+
 /-- Component bound: a² ≤ d². -/
 theorem component_bound (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
@@ -93,10 +101,12 @@ theorem component_bound (a b c d : ℤ)
 
 
 
+
 /-- Pair bound: a² + b² ≤ d². -/
 theorem component_bound_tight (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     a ^ 2 + b ^ 2 ≤ d ^ 2 := by nlinarith [sq_nonneg c]
+
 
 
 
@@ -108,6 +118,7 @@ theorem nonneg_component_bound (a b c d : ℤ)
 
 
 
+
 /-- Each component lies in [-d, d]. -/
 theorem component_range (d : ℕ) (hd : d > 0)
     (a b c : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 = (d : ℤ) ^ 2) :
@@ -116,11 +127,13 @@ theorem component_range (d : ℕ) (hd : d > 0)
 
 
 
+
 /-- If d is even, then a² + b² + c² ≡ 0 mod 4. -/
 theorem mod4_even_d (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) (hd : 2 ∣ d) :
     4 ∣ (a ^ 2 + b ^ 2 + c ^ 2) := by
   obtain ⟨k, rfl⟩ := hd; rw [h]; exact ⟨k ^ 2, by ring⟩
+
 
 
 
@@ -133,11 +146,13 @@ theorem coprime_gcd_bound (a c d : ℤ) :
 
 
 
+
 /-- Shared-hypotenuse difference identity. -/
 theorem shared_hyp_gcd (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
     (h1 : a₁ ^ 2 + b₁ ^ 2 + c₁ ^ 2 = d ^ 2)
     (h2 : a₂ ^ 2 + b₂ ^ 2 + c₂ ^ 2 = d ^ 2) :
     c₁ ^ 2 - c₂ ^ 2 = (a₂ ^ 2 + b₂ ^ 2) - (a₁ ^ 2 + b₁ ^ 2) := by linarith
+
 
 
 
@@ -152,6 +167,7 @@ theorem sphere_inner_product_int (a₁ b₁ c₁ a₂ b₂ c₂ d₁ d₂ : ℤ)
 
 
 
+
 /-- Orthogonality condition. -/
 theorem orthogonal_quadruples (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ)
     (horth : a₁ * a₂ + b₁ * b₂ + c₁ * c₂ = 0) :
@@ -159,10 +175,12 @@ theorem orthogonal_quadruples (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ)
 
 
 
+
 /-- Berggren M₁ preserves the Pythagorean property. -/
 theorem berggren_sphere_action (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (a - 2 * b + 2 * c) ^ 2 + (2 * a - b + 2 * c) ^ 2 = (2 * a - 2 * b + 3 * c) ^ 2 := by
   nlinarith
+
 
 
 
@@ -179,6 +197,7 @@ theorem berggren_M1_composed (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 /-- A descent chain of length 2. -/
 theorem descent_chain_2 (d g₁ g₂ : ℕ)
     (hd : d > 0) (hg₁ : g₁ > 1) (hg₂ : g₂ > 1)
@@ -190,11 +209,13 @@ theorem descent_chain_2 (d g₁ g₂ : ℕ)
 
 
 
+
 /-- Triple embedding: any Pythagorean triple lifts to quadruples. -/
 theorem triple_quadruple_embed (a b c k d : ℤ)
     (h_triple : a ^ 2 + b ^ 2 = c ^ 2)
     (h_lift : c ^ 2 + k ^ 2 = d ^ 2) :
     a ^ 2 + b ^ 2 + k ^ 2 = d ^ 2 := by linarith
+
 
 
 
@@ -206,10 +227,12 @@ theorem quadruple_triple_project (a b c d e : ℤ)
 
 
 
+
 /-- Mixed product identity: scaling one quadruple by a component of another. -/
 theorem mixed_product_identity (a₁ a₂ b₂ c₂ d₂ : ℤ)
     (h2 : a₂^2 + b₂^2 + c₂^2 = d₂^2) :
     (a₁ * a₂)^2 + (a₁ * b₂)^2 + (a₁ * c₂)^2 = (a₁ * d₂)^2 := by nlinarith [sq_nonneg a₁]
+
 
 
 
@@ -221,6 +244,7 @@ theorem mod_p_cascade (a b c d p : ℤ)
   obtain ⟨kd, rfl⟩ := hpd
   obtain ⟨kc, rfl⟩ := hpc
   exact ⟨kd ^ 2 - kc ^ 2, by linarith⟩
+
 
 
 
@@ -236,6 +260,7 @@ theorem mod_p_triple_cascade (a b c d p : ℤ)
 
 
 
+
 /-- Energy gap: same-hypotenuse quadruples have zero-sum component differences. -/
 theorem energy_gap (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
     (h1 : a₁ ^ 2 + b₁ ^ 2 + c₁ ^ 2 = d ^ 2)
@@ -245,8 +270,10 @@ theorem energy_gap (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
 
 
 
+
 /-- Base: 1² + 2² + 2² = 3². -/
 theorem family_base_1_2_2 : (1 : ℤ) ^ 2 + 2 ^ 2 + 2 ^ 2 = 3 ^ 2 := by norm_num
+
 
 
 
@@ -255,14 +282,17 @@ theorem family_base_2_3_6 : (2 : ℤ) ^ 2 + 3 ^ 2 + 6 ^ 2 = 7 ^ 2 := by norm_num
 
 
 
+
 /-- Example: (3, 4, 12, 13). -/
 theorem quadratic_family_3_4_12 : (3 : ℤ) ^ 2 + 4 ^ 2 + 12 ^ 2 = 13 ^ 2 := by norm_num
+
 
 
 
 /-- Even-odd family: (2n)² + (2n+1)² + (2n(2n+1))² = (4n²+2n+1)². -/
 theorem even_odd_family (n : ℤ) :
     (2*n)^2 + (2*n+1)^2 + (2*n*(2*n+1))^2 = (4*n^2 + 2*n + 1)^2 := by ring
+
 
 
 
@@ -273,9 +303,11 @@ theorem new_channel (a b k d : ℤ)
 
 
 
+
 /-- Divisibility cascade: if g | d, then g² | d². -/
 theorem divisibility_cascade (d g : ℤ) (hgd : g ∣ d) :
     g ^ 2 ∣ d ^ 2 := by obtain ⟨k, rfl⟩ := hgd; exact ⟨k ^ 2, by ring⟩
+
 
 
 
@@ -290,10 +322,12 @@ theorem double_bridge (a b c k₁ d₁ k₂ d₂ : ℤ)
 
 
 
+
 /-- Bridge triangle inequality. -/
 theorem bridge_triangle (c k d : ℤ)
     (h : c ^ 2 + k ^ 2 = d ^ 2) (hd : d ≥ 0) (hc : c ≥ 0) :
     d ≥ c := by nlinarith [sq_nonneg k]
+
 
 
 
@@ -303,10 +337,12 @@ theorem family_hypotenuse_growth (n : ℕ) :
 
 
 
+
 /-- Every integer appears as a component in some quadruple. -/
 theorem universal_component (n : ℤ) :
     ∃ b c d : ℤ, n ^ 2 + b ^ 2 + c ^ 2 = d ^ 2 :=
   ⟨2 * n, 2 * n, 3 * n, by ring⟩
+
 
 
 
@@ -319,6 +355,7 @@ theorem cross_quadruple_product (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
 
 
 
+
 /-- Sextuple gives 5 independent factorizations. -/
 theorem sextuple_five_factorizations (a b c d e f : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 + e ^ 2 = f ^ 2) :
@@ -328,5 +365,6 @@ theorem sextuple_five_factorizations (a b c d e f : ℤ)
     (f - b) * (f + b) = a ^ 2 + c ^ 2 + d ^ 2 + e ^ 2 ∧
     (f - a) * (f + a) = b ^ 2 + c ^ 2 + d ^ 2 + e ^ 2 := by
   refine ⟨by nlinarith, by nlinarith, by nlinarith, by nlinarith, by nlinarith⟩
+
 
 

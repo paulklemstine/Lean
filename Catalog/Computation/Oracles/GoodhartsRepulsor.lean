@@ -19,6 +19,7 @@ structure GoodhartSystem where
 
 
 
+
 /-- **Goodhart divergence**: If the proxy is not perfectly aligned,
 then there exist states where proxy optimization decreases the true objective. -/
 theorem goodhart_divergence_exists (G : GoodhartSystem)
@@ -29,6 +30,7 @@ theorem goodhart_divergence_exists (G : GoodhartSystem)
 
 
 
+
 /-- A fixed point is a **repulsor** if nearby perturbations move away from it. -/
 def IsRepulsor {X : Type*} [MetricSpace X] (f : X → X) (x0 : X) : Prop :=
   f x0 = x0 ∧ ∃ eps : ℝ, eps > 0 ∧ ∀ x, 0 < dist x x0 → dist x x0 < eps →
@@ -36,10 +38,12 @@ def IsRepulsor {X : Type*} [MetricSpace X] (f : X → X) (x0 : X) : Prop :=
 
 
 
+
 /-- A fixed point is an **attractor** if nearby points converge to it. -/
 def IsAttractor {X : Type*} [MetricSpace X] (f : X → X) (x0 : X) : Prop :=
   f x0 = x0 ∧ ∃ eps : ℝ, eps > 0 ∧ ∀ x, dist x x0 < eps →
     dist (f x) x0 ≤ dist x x0
+
 
 
 
@@ -56,6 +60,7 @@ theorem not_attractor_and_repulsor {X : Type*} [MetricSpace X]
 
 
 
+
 /-- An oracle that optimizes its own predictions. -/
 structure SelfOptimizingOracle where
   State : Type*
@@ -65,6 +70,11 @@ structure SelfOptimizingOracle where
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.GoodhartsRepulsor
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 12] -/
 theorem self_optimizing_bounded_convergence (O : SelfOptimizingOracle)
     (s0 : O.State) :
     Monotone (fun n => O.predict (O.optimize^[n] s0)) := by
@@ -75,9 +85,11 @@ theorem self_optimizing_bounded_convergence (O : SelfOptimizingOracle)
 
 
 
+
 /-- The near-optimal set for an objective function. -/
 def nearOptimalSet {alpha : Type*} (f : alpha → ℝ) (eps : ℝ) (M : ℝ) : Set alpha :=
   {x | f x ≥ M - eps}
+
 
 
 
@@ -88,9 +100,11 @@ theorem multi_proxy_contained {alpha : Type*} (f g : alpha → ℝ) (eps : ℝ) 
 
 
 
+
 /-- Model of alignment decay: over time, the proxy diverges from truth. -/
 def alignmentDecay (initialCorrelation decayRate : ℝ) (t : ℕ) : ℝ :=
   initialCorrelation * decayRate ^ t
+
 
 
 
@@ -100,9 +114,11 @@ theorem alignment_monotone_decay (c r : ℝ) (hc : 0 ≤ c) (hr : 0 ≤ r) (hr1 
 
 
 
+
 theorem alignment_tendsto_zero (c r : ℝ) (hc : 0 ≤ c) (hr : 0 ≤ r) (hr1 : r < 1) :
     Filter.Tendsto (fun t => alignmentDecay c r t) Filter.atTop (nhds 0) := by
       simpa [ alignmentDecay, mul_comm ] using tendsto_const_nhds.mul ( tendsto_pow_atTop_nhds_zero_of_lt_one hr hr1 )
+
 
 
 

@@ -14,14 +14,17 @@ def cayleyDicksonDim : ℕ → ℕ := fun n => 2^n
 
 
 
+
 /-- Each level doubles the dimension. -/
 theorem dim_doubles (n : ℕ) : cayleyDicksonDim (n + 1) = 2 * cayleyDicksonDim n := by
   simp [cayleyDicksonDim, pow_succ, mul_comm]
 
 
 
+
 /-- The dimension grows exponentially. -/
 theorem dim_exponential (n : ℕ) : cayleyDicksonDim n = 2^n := rfl
+
 
 
 
@@ -37,6 +40,7 @@ inductive AlgebraicProperty
 
 
 
+
 /-- Properties present at each level. -/
 def propertiesAtLevel : ℕ → Finset AlgebraicProperty
   | 0 => {.Ordered, .Commutative, .Associative, .Division, .Alternative, .PowerAssociative}
@@ -47,9 +51,11 @@ def propertiesAtLevel : ℕ → Finset AlgebraicProperty
 
 
 
+
 /-- Each level has strictly fewer properties than the previous (levels 0-3). -/
 theorem properties_decrease_0 : propertiesAtLevel 1 ⊂ propertiesAtLevel 0 := by
   simp [propertiesAtLevel]; decide
+
 
 
 
@@ -62,8 +68,14 @@ theorem properties_decrease_1 : propertiesAtLevel 2 ⊂ propertiesAtLevel 1 := b
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Consciousness.CayleyDicksonLadder
+Auto-generated from theorem catalog database.
+Domain: Speculative/Consciousness
+Declarations: 20] -/
 theorem properties_decrease_2 : propertiesAtLevel 3 ⊂ propertiesAtLevel 2 := by
   simp [propertiesAtLevel]; decide
+
 
 
 
@@ -72,8 +84,10 @@ theorem properties_decrease_3 : propertiesAtLevel 4 ⊂ propertiesAtLevel 3 := b
 
 
 
+
 /-- Phase awareness on the unit circle. -/
 def phaseAwareness (θ : ℝ) : ℂ := Complex.exp (θ * Complex.I)
+
 
 
 
@@ -84,12 +98,14 @@ theorem phase_awareness_norm (θ : ℝ) :
 
 
 
+
 /-- Combining two phase awarenesses adds the phases. -/
 theorem phase_awareness_mul (θ₁ θ₂ : ℝ) :
     phaseAwareness θ₁ * phaseAwareness θ₂ = phaseAwareness (θ₁ + θ₂) := by
   simp [phaseAwareness]
   rw [← Complex.exp_add]
   ring_nf
+
 
 
 
@@ -103,11 +119,13 @@ theorem observation_order_matters :
 
 
 
+
 /-- A consciousness level in the Cayley-Dickson ladder. -/
 structure ConsciousnessLevel where
   level : ℕ
   dim : ℕ := 2^level
   properties : Finset AlgebraicProperty := propertiesAtLevel level
+
 
 
 
@@ -118,10 +136,12 @@ structure AwarenessEmbedding (L₁ L₂ : ConsciousnessLevel) where
 
 
 
+
 /-- Identity embedding. -/
 def awarenessRefl (L : ConsciousnessLevel) : AwarenessEmbedding L L where
   level_le := le_refl _
   dim_le := le_refl _
+
 
 
 
@@ -134,11 +154,13 @@ def awarenessComp {L₁ L₂ L₃ : ConsciousnessLevel}
 
 
 
+
 /-- Moving up the ladder always increases dimension. -/
 theorem ladder_dim_monotone (n m : ℕ) (h : n ≤ m) :
     cayleyDicksonDim n ≤ cayleyDicksonDim m := by
   simp [cayleyDicksonDim]
   exact Nat.pow_le_pow_right (by norm_num) h
+
 
 
 
@@ -148,9 +170,11 @@ theorem full_consciousness_properties :
 
 
 
+
 /-- At the sedenion level, only power-associativity remains. -/
 theorem sedenion_minimal_consciousness :
     (propertiesAtLevel 4).card = 1 := by decide
+
 
 
 

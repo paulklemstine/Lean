@@ -16,9 +16,15 @@ theorem exp_tropPow (a : ℝ) (n : ℕ) : exp (tropPow a n) = (exp a) ^ n := by
 
 
 
+
+/-- [Section: # CatalogBuild.Tropical.Core.TropicalAgentAlpha
+Auto-generated from theorem catalog database.
+Domain: Tropical/Core
+Declarations: 8] -/
 theorem softmax_ge_max (a b : ℝ) :
     max a b ≤ Real.log (exp a + exp b) := by
       cases max_cases a b <;> linarith [ Real.log_exp a, Real.log_exp b, Real.log_le_log ( by positivity ) ( by linarith [ Real.exp_pos a, Real.exp_pos b ] : Real.exp a + Real.exp b ≥ Real.exp a ), Real.log_le_log ( by positivity ) ( by linarith [ Real.exp_pos a, Real.exp_pos b ] : Real.exp a + Real.exp b ≥ Real.exp b ) ]
+
 
 
 
@@ -31,8 +37,10 @@ theorem softmax_le_max_add_log2 (a b : ℝ) :
 
 
 
+
 def IsTropicalContraction (f : ℝ → ℝ) (c : ℝ) : Prop :=
   0 ≤ c ∧ c < 1 ∧ ∀ x y, |f x - f y| ≤ c * |x - y|
+
 
 
 
@@ -45,10 +53,12 @@ theorem tropical_contraction_unique (f : ℝ → ℝ) (c : ℝ) (hf : IsTropical
 
 
 
+
 theorem exp_sum_sandwich {n : ℕ} (v : Fin (n+1) → ℝ) :
     exp (Finset.sup' Finset.univ ⟨0, Finset.mem_univ 0⟩ v) ≤ ∑ i, exp (v i) := by
   obtain ⟨k, _, hk⟩ := Finset.exists_mem_eq_sup' ⟨(0 : Fin (n+1)), Finset.mem_univ 0⟩ v
   rw [hk]; exact Finset.single_le_sum (fun _ _ => exp_nonneg _) (Finset.mem_univ k)
+
 
 
 
@@ -60,7 +70,9 @@ theorem exp_sum_upper {n : ℕ} (v : Fin (n+1) → ℝ) :
 
 
 
+
 theorem expressivity_gap (w L : ℕ) :
     (2 * w) ^ (L + 1) = 2 * w * (2 * w) ^ L := by ring
+
 
 

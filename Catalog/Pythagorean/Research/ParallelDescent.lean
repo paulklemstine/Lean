@@ -14,6 +14,7 @@ theorem B1_B2_distinct_hyp (a b c : ℤ) (hb : 0 < b) :
 
 
 
+
 /-- [Section: # CatalogBuild.Pythagorean.Research.ParallelDescent
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/Research
@@ -24,8 +25,14 @@ theorem B1_B3_distinct_hyp (a b c : ℤ) (hab : a ≠ b) :
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.Research.ParallelDescent
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Research
+Declarations: 10] -/
 theorem B2_B3_distinct_hyp (a b c : ℤ) (ha : 0 < a) :
     2*a + 2*b + 3*c ≠ -2*a + 2*b + 3*c := by linarith
+
 
 
 
@@ -36,10 +43,12 @@ theorem unique_parent (a b c : ℤ) :
 
 
 
+
 /-- B₁⁻¹/B₂⁻¹ and B₃⁻¹ have opposite-sign first components. -/
 theorem inv_first_comp_exclusive (a b c : ℤ) :
     ¬(0 < a + 2*b - 2*c ∧ 0 < -a - 2*b + 2*c) := by
   intro ⟨h1, h2⟩; linarith
+
 
 
 
@@ -48,8 +57,10 @@ theorem tree_branching (k : ℕ) : 3 ^ k ≥ 1 := Nat.one_le_pow k 3 (by norm_nu
 
 
 
+
 /-- Parallelism multiplies coverage. -/
 theorem parallel_visits (d : ℕ) : 3 * d ≥ d := by omega
+
 
 
 
@@ -59,13 +70,16 @@ theorem multistart_count :
 
 
 
+
 /-- gcd(p, pq) = p. -/
 theorem independent_gcd (p q : ℕ) :
     Nat.gcd p (p * q) = p := Nat.gcd_eq_left (dvd_mul_right p q)
 
 
 
+
 /-- Difference of squares identity. -/
 theorem leg_diff_sq (m n : ℤ) : m ^ 2 - n ^ 2 = (m - n) * (m + n) := by ring
+
 
 

@@ -18,6 +18,7 @@ theorem sheffer_depth_comp_le (e₁ e₂ : ShefferExpr) :
 
 
 
+
 /-- Composition Bound (Theorem C): If f has a Sheffer expression of depth d_f
 and g has a Sheffer expression of depth d_g, then f ∘ g has a Sheffer
 expression of depth at most d_f + d_g. -/
@@ -25,6 +26,7 @@ theorem sheffer_composition_depth_bound (e_f e_g : ShefferExpr) :
     ∃ e : ShefferExpr, (∀ x, e.eval x = e_f.eval (e_g.eval x)) ∧
       e.depth ≤ e_f.depth + e_g.depth :=
   ⟨ShefferExpr.comp e_f e_g, fun _ => rfl, le_refl _⟩
+
 
 
 
@@ -38,6 +40,11 @@ theorem softplus_tendsto_zero_atBot :
 
 
 
+
+/-- [Section: # CatalogBuild.EML.FutureTheorems
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 20] -/
 theorem softplus_not_polynomial' :
     ¬ ∃ (p : Polynomial ℝ), ∀ x : ℝ, p.eval x = softplus x := by
   rintro ⟨ p, hp ⟩;
@@ -53,6 +60,7 @@ theorem softplus_not_polynomial' :
 
 
 
+
 theorem softplus_lipschitz : LipschitzWith 1 softplus := by
   have h_deriv : ∀ x, deriv softplus x = logisticSigmoid x := by
     exact?;
@@ -63,6 +71,7 @@ theorem softplus_lipschitz : LipschitzWith 1 softplus := by
 
 
 
+
 /-- Sigmoid satisfies S(x) + S(-x) = 1 -/
 theorem sigmoid_complement (x : ℝ) : logisticSigmoid x + logisticSigmoid (-x) = 1 := by
   have := logisticSigmoid_symmetry x
@@ -70,9 +79,11 @@ theorem sigmoid_complement (x : ℝ) : logisticSigmoid x + logisticSigmoid (-x) 
 
 
 
+
 theorem sigmoid_strictMono : StrictMono logisticSigmoid := by
   intro a b hab;
   rw [ logisticSigmoid, logisticSigmoid, div_lt_div_iff₀ ] <;> nlinarith [ Real.exp_pos a, Real.exp_lt_exp.2 hab ]
+
 
 
 
@@ -84,11 +95,13 @@ theorem sigmoid_product_identity (x : ℝ) :
 
 
 
+
 /-- σ(x) + σ(-x) = 2σ(x) - x -/
 theorem softplus_sum_identity (x : ℝ) :
     softplus x + softplus (-x) = 2 * softplus x - x := by
   have := softplus_reflection x
   linarith
+
 
 
 
@@ -99,10 +112,12 @@ theorem softplus_exp_sum (x y : ℝ) :
 
 
 
+
 /-- σ(x) = log(eˣ + e⁰) -/
 theorem softplus_as_logsumexp (x : ℝ) :
     softplus x = Real.log (exp x + exp 0) := by
   simp [softplus, exp_zero, add_comm]
+
 
 
 
@@ -115,8 +130,10 @@ theorem softplus_sheffer_degree_le : shefferDegree softplus ≤ 1 := by
 
 
 
+
 theorem softplus_uniformContinuous : UniformContinuous softplus := by
   convert softplus_lipschitz.uniformContinuous using 1
+
 
 
 
@@ -125,10 +142,12 @@ def softplus_temp (β : ℝ) (x : ℝ) : ℝ := (1 / β) * Real.log (1 + Real.ex
 
 
 
+
 /-- For β = 1, the temperature softplus equals standard softplus -/
 theorem softplus_temp_one : softplus_temp 1 = softplus := by
   ext x
   simp [softplus_temp, softplus]
+
 
 
 
@@ -141,10 +160,12 @@ theorem softplus_temp_pos {β : ℝ} (hβ : β > 0) (x : ℝ) : softplus_temp β
 
 
 
+
 /-- Width of an affine combination is the sum of widths -/
 theorem sheffer_width_affine_comb (α β γ : ℝ) (e₁ e₂ : ShefferExpr) :
     (ShefferExpr.affine_comb α β γ e₁ e₂).width = e₁.width + e₂.width := by
   simp [ShefferExpr.width]
+
 
 
 
@@ -155,6 +176,7 @@ theorem sheffer_width_comp (e₁ e₂ : ShefferExpr) :
 
 
 
+
 /-- Affine pre-composition preserves width -/
 theorem sheffer_width_affine_pre (a b : ℝ) (e : ShefferExpr) :
     (ShefferExpr.affine_pre a b e).width = e.width := by
@@ -162,10 +184,12 @@ theorem sheffer_width_affine_pre (a b : ℝ) (e : ShefferExpr) :
 
 
 
+
 /-- Affine pre-composition preserves depth -/
 theorem sheffer_depth_affine_pre (a b : ℝ) (e : ShefferExpr) :
     (ShefferExpr.affine_pre a b e).depth = e.depth := by
   simp [ShefferExpr.depth]
+
 
 
 

@@ -16,15 +16,18 @@ theorem int_floor_idempotent (n : ℤ) : ⌊(n : ℝ)⌋ = n :=
 
 
 
+
 /-- Ceiling is similarly idempotent. -/
 theorem ceil_idempotent (x : ℝ) : ⌈(⌈x⌉ : ℝ)⌉ = ⌈x⌉ :=
   Int.ceil_intCast ⌈x⌉
 
 
 
+
 /-- Quantize a real number to the nearest multiple of δ. -/
 def quantize (δ : ℝ) (hδ : 0 < δ) (x : ℝ) : ℝ :=
   δ * ⌊x / δ + 1/2⌋
+
 
 
 
@@ -35,6 +38,7 @@ theorem quantize_on_grid (δ : ℝ) (hδ : 0 < δ) (x : ℝ) :
 
 
 
+
 /-- **Information Collapse Theorem (Finite Version)**: An idempotent map on a
 finite set cannot increase the cardinality of the image.
 Equivalently: |range(f)| ≤ |α| with equality iff f = id. -/
@@ -42,6 +46,7 @@ theorem idempotent_image_card_le {α : Type*} [Fintype α] [DecidableEq α]
     (f : α → α) (hf : ∀ x, f (f x) = f x) :
     Finset.card (Finset.image f Finset.univ) ≤ Fintype.card α := by
   exact Finset.card_image_le.trans (le_of_eq Finset.card_univ)
+
 
 
 
@@ -59,6 +64,11 @@ theorem idempotent_full_image_is_id {α : Type*} [Fintype α] [DecidableEq α]
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.IdempotentCollapse.InformationCollapse
+Auto-generated from theorem catalog database.
+Domain: Speculative/IdempotentCollapse
+Declarations: 9] -/
 theorem compose_idempotent_image_le {α : Type*} [Fintype α] [DecidableEq α]
     (f g : α → α)
     (hf : ∀ x, f (f x) = f x) (hg : ∀ x, g (g x) = g x) :
@@ -69,6 +79,7 @@ theorem compose_idempotent_image_le {α : Type*} [Fintype α] [DecidableEq α]
   split_ifs with h;
   · exact Finset.card_le_card ( show Finset.image ( g ∘ f ) Finset.univ ⊆ Finset.image g ( Finset.image f Finset.univ ) from fun x hx => by aesop ) |> le_trans <| Finset.card_image_le;
   · exact Finset.card_le_card fun x hx => by aesop;
+
 
 
 
@@ -84,11 +95,13 @@ theorem idempotent_range_intersection {α : Type*}
 
 
 
+
 /-- For matrices, an idempotent matrix has rank equal to its trace.
 This connects information content (rank) to the collapse structure (trace). -/
 theorem idempotent_matrix_rank_trace {n : ℕ} (P : Matrix (Fin n) (Fin n) ℝ)
     (hP : P * P = P) :
     P.trace = P.trace := rfl  -- The deep theorem rank = trace needs more machinery
+
 
 
 

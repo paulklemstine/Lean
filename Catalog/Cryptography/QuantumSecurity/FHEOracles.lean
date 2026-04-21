@@ -22,9 +22,15 @@ structure FHEScheme (Plaintext Ciphertext : Type) where
 
 
 
+
+/-- [Section: # CatalogBuild.Cryptography.QuantumSecurity.FHEOracles
+Auto-generated from theorem catalog database.
+Domain: Cryptography/QuantumSecurity
+Declarations: 13] -/
 def IsAdditivelyHomomorphic {P C : Type} [Add P]
     (fhe : FHEScheme P C) : Prop :=
   ∀ a b : P, fhe.decrypt (fhe.homAdd (fhe.encrypt a) (fhe.encrypt b)) = a + b
+
 
 
 
@@ -34,9 +40,11 @@ def IsMultiplicativelyHomomorphic {P C : Type} [Mul P]
 
 
 
+
 def IsFullyHomomorphic {P C : Type} [Add P] [Mul P]
     (fhe : FHEScheme P C) : Prop :=
   IsAdditivelyHomomorphic fhe ∧ IsMultiplicativelyHomomorphic fhe
+
 
 
 
@@ -49,9 +57,11 @@ structure NoisyFHE where
 
 
 
+
 theorem additive_noise_bound (nfhe : NoisyFHE) (k : ℕ) :
     0 ≤ (k : ℝ) * nfhe.initialNoise :=
   mul_nonneg (by exact_mod_cast k.zero_le) nfhe.hInitialNoise
+
 
 
 
@@ -59,6 +69,7 @@ theorem max_depth_exists (nfhe : NoisyFHE) (hInit : 0 < nfhe.initialNoise) :
     ∃ d : ℕ, (d : ℝ) * nfhe.initialNoise ≥ nfhe.maxNoise := by
   obtain ⟨d, hd⟩ := exists_nat_ge (nfhe.maxNoise / nfhe.initialNoise)
   exact ⟨d, by rwa [ge_iff_le, ← div_le_iff₀ hInit]⟩
+
 
 
 
@@ -72,8 +83,10 @@ structure PrivateAMMTrade where
 
 
 
+
 noncomputable def privateTradeOutput (trade : PrivateAMMTrade) : ℝ :=
   trade.poolReserveY * trade.actualAmount / (trade.poolReserveX + trade.actualAmount)
+
 
 
 
@@ -82,6 +95,7 @@ theorem private_trade_output_pos (trade : PrivateAMMTrade) :
   unfold privateTradeOutput
   apply div_pos (mul_pos trade.hRY trade.hAmount)
   linarith [trade.hRX, trade.hAmount]
+
 
 
 
@@ -96,6 +110,7 @@ theorem fhe_prevents_sandwich (trade : PrivateAMMTrade)
 
 
 
+
 structure ThresholdParams where
   n : ℕ
   t : ℕ
@@ -105,9 +120,11 @@ structure ThresholdParams where
 
 
 
+
 theorem threshold_security (tp : ThresholdParams) (colluders : Finset (Fin tp.n))
     (h_insufficient : colluders.card < tp.t) :
     colluders.card < tp.t := h_insufficient
+
 
 
 

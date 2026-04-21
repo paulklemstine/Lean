@@ -22,6 +22,11 @@ theorem most_sets_uncomputable :
 
 
 
+
+/-- [Section: # CatalogBuild.Logic.ComputationAndMind
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 8] -/
 theorem lfp_is_fixed {α : Type*} [CompleteLattice α]
     (f : α → α) (hf : Monotone f) :
     f (sInf {x | f x ≤ x}) = sInf {x | f x ≤ x} := by
@@ -33,10 +38,12 @@ theorem lfp_is_fixed {α : Type*} [CompleteLattice α]
 
 
 
+
 theorem finite_pigeonhole (n : ℕ) :
     ¬ ∃ f : Fin (n + 1) → Fin n, Injective f := by
       simp +zetaDelta at *;
       exact fun f hf => absurd ( Fintype.card_le_of_injective f hf ) ( by simp +arith +decide )
+
 
 
 
@@ -45,8 +52,10 @@ theorem nat_prod_countable : Cardinal.mk (ℕ × ℕ) = Cardinal.mk ℕ := by
 
 
 
+
 theorem rationals_dense : Dense (Set.range (fun q : ℚ => (q : ℝ))) := by
   exact Rat.isDenseEmbedding_coe_real.dense
+
 
 
 
@@ -54,6 +63,7 @@ theorem hilbert_hotel : ∃ f : ℕ → {n : ℕ | n ≠ 0}, Bijective f := by
   fconstructor;
   exact fun n => ⟨ n + 1, Nat.succ_ne_zero n ⟩;
   exact ⟨ fun a b h => by simpa using congr_arg Subtype.val h, fun a => ⟨ a - 1, by rcases a with ⟨ _ | a, ha ⟩ <;> trivial ⟩ ⟩
+
 
 
 
@@ -65,8 +75,10 @@ theorem evens_equinumerous :
 
 
 
+
 theorem int_equinumerous_nat :
     Cardinal.mk ℤ = Cardinal.mk ℕ := by
       simp +zetaDelta at *
+
 
 

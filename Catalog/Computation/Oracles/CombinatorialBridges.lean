@@ -17,9 +17,15 @@ theorem triangular_eq_choose (n : ℕ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.CombinatorialBridges
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 7] -/
 theorem hockey_stick (r n : ℕ) :
     ∑ i ∈ range (n + 1), (r + i).choose r = (r + n + 1).choose (r + 1) := by
       induction' n with n ih generalizing r <;> simp_all +arith +decide [ Nat.choose, add_comm, add_left_comm, Finset.sum_range_succ ]
+
 
 
 
@@ -29,9 +35,11 @@ theorem pascal_row_sum (n : ℕ) :
 
 
 
+
 theorem alternating_row_sum (n : ℕ) (hn : 0 < n) :
     ∑ k ∈ range (n + 1), ((-1 : ℤ) ^ k * ↑(n.choose k)) = 0 := by
       exact mod_cast by erw [ Int.alternating_sum_range_choose ] ; aesop;
+
 
 
 
@@ -44,9 +52,11 @@ theorem consecutive_product_div_factorial (n k : ℕ) (hk : k ≤ n) :
 
 
 
+
 theorem binomial_symmetry (n k : ℕ) (hk : k ≤ n) :
     n.choose k = n.choose (n - k) := by
       rw [ Nat.choose_symm hk ]
+
 
 
 
@@ -55,4 +65,5 @@ theorem sum_binomial_squares (n : ℕ) :
       rw [ two_mul, Nat.add_choose_eq ];
       rw [ Finset.Nat.sum_antidiagonal_eq_sum_range_succ fun i j => Nat.choose n i * Nat.choose n j ];
       exact Finset.sum_congr rfl fun x hx => by rw [ sq, Nat.choose_symm ( Finset.mem_range_succ_iff.mp hx ) ] ;
+
 

@@ -15,6 +15,7 @@ def kardashevNumber (P : ℝ) : ℝ :=
 
 
 
+
 /-- [Section: # CatalogBuild.Speculative.SciFi.KardashevScale
 Auto-generated from theorem catalog database.
 Domain: Speculative/SciFi
@@ -25,10 +26,16 @@ theorem kardashev_mono {P₁ P₂ : ℝ} (h₁ : 0 < P₁) (h : P₁ < P₂) :
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.SciFi.KardashevScale
+Auto-generated from theorem catalog database.
+Domain: Speculative/SciFi
+Declarations: 4] -/
 theorem kardashev_typeI :
     kardashevNumber (10 ^ 16 : ℝ) = 1 := by
   unfold kardashevNumber; norm_num; ring_nf; norm_num;
   rw [ show ( 10000000000000000 : ℝ ) = 10 ^ 16 by norm_num, Real.log_pow ] ; norm_num
+
 
 
 
@@ -39,6 +46,7 @@ theorem power_density_inverse_square (L R₁ R₂ : ℝ)
   have h_sq : R₂ ^ 2 ≤ R₁ ^ 2 := by
     rw [ div_le_div_iff₀ ] at h <;> nlinarith [ show 0 < 4 * Real.pi * R₁ ^ 2 by positivity, show 0 < 4 * Real.pi * R₂ ^ 2 by positivity, mul_pos h.2 ( show 0 < 4 * Real.pi by positivity ) ];
   nlinarith
+
 
 
 

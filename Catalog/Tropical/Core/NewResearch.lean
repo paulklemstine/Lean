@@ -16,7 +16,13 @@ Declarations: 23] -/
 theorem tropPow_zero (a : ℝ) : tropPow a 0 = 0 := by simp [tropPow]
 
 
+
+/-- [Section: # CatalogBuild.Tropical.Core.NewResearch
+Auto-generated from theorem catalog database.
+Domain: Tropical/Core
+Declarations: 23] -/
 theorem tropPow_one (a : ℝ) : tropPow a 1 = a := by simp [tropPow]
+
 
 
 
@@ -26,9 +32,11 @@ theorem tropPow_succ (a : ℝ) (n : ℕ) :
 
 
 
+
 theorem tropPow_add (a : ℝ) (m n : ℕ) :
     tropPow a (m + n) = tropPow a m + tropPow a n := by
   simp [tropPow]; ring
+
 
 
 
@@ -40,10 +48,12 @@ theorem no_max_absorbing : ¬ ∃ e : ℝ, ∀ a : ℝ, max a e = a := by
 
 
 
+
 /-- Tropical polynomial evaluation: max_i (a_i + i * x) -/
 def tropPolyEval {n : ℕ} [NeZero n] (coeffs : Fin n → ℝ) (x : ℝ) : ℝ :=
   Finset.sup' Finset.univ Finset.univ_nonempty
     (fun i => coeffs i + (i : ℕ) * x)
+
 
 
 
@@ -55,8 +65,10 @@ theorem tropPolyEval_ge_term {n : ℕ} [NeZero n] (coeffs : Fin n → ℝ)
 
 
 
+
 /-- Tropical matrix type -/
 abbrev TropMatrix (n : ℕ) := Fin n → Fin n → ℝ
+
 
 
 
@@ -65,11 +77,13 @@ def tropMatLE {n : ℕ} (A B : TropMatrix n) : Prop := ∀ i j, A i j ≤ B i j
 
 
 
+
 theorem tropMatMul_mono_left {n : ℕ} [NeZero n] (A A' B : TropMatrix n)
     (h : tropMatLE A A') : tropMatLE (tropMatMul A B) (tropMatMul A' B) := by
   intro i j;
   convert Finset.sup'_le _ _ _;
   exact fun k _ => le_trans ( add_le_add ( h i k ) le_rfl ) ( Finset.le_sup' ( fun k => A' i k + B k j ) ( Finset.mem_univ k ) )
+
 
 
 
@@ -85,8 +99,10 @@ theorem tropMatMul_mono_right {n : ℕ} [NeZero n] (A B B' : TropMatrix n)
 
 
 
+
 theorem max_eq_relu_form (a b : ℝ) : max a b = a + relu (b - a) := by
   unfold relu; cases max_cases a b <;> cases max_cases ( b - a ) 0 <;> linarith;
+
 
 
 
@@ -97,8 +113,10 @@ theorem relu_boundary (w b x : ℝ) :
 
 
 
+
 /-- A tropical halfspace -/
 def tropHalfspace (c : ℝ) : Set ℝ := {x | x ≥ c}
+
 
 
 
@@ -107,9 +125,11 @@ theorem tropHalfspace_convex (c : ℝ) : Convex ℝ (tropHalfspace c) := by
 
 
 
+
 /-- Tropical expectation: max_i (logP(i) + X(i)) -/
 def tropExpectation {n : ℕ} [NeZero n] (logProb : Fin n → ℝ) (X : Fin n → ℝ) : ℝ :=
   Finset.sup' Finset.univ Finset.univ_nonempty (fun i => logProb i + X i)
+
 
 
 
@@ -120,6 +140,7 @@ theorem tropExpectation_mono {n : ℕ} [NeZero n] (logProb : Fin n → ℝ)
   have h_add : ∀ i, logProb i + X i ≤ logProb i + Y i := by
     grind;
   exact Finset.sup'_le _ _ fun i _ => le_trans ( h_add i ) ( Finset.le_sup' ( fun i => logProb i + Y i ) ( Finset.mem_univ i ) )
+
 
 
 
@@ -136,11 +157,13 @@ theorem tropExpectation_shift {n : ℕ} [NeZero n] (logProb : Fin n → ℝ)
 
 
 
+
 /-- Individual term bounded by tropical expectation -/
 theorem tropExpectation_ge_term {n : ℕ} [NeZero n] (logProb : Fin n → ℝ)
     (X : Fin n → ℝ) (i : Fin n) :
     logProb i + X i ≤ tropExpectation logProb X := by
   exact Finset.le_sup' (fun i => logProb i + X i) (Finset.mem_univ i)
+
 
 
 
@@ -151,9 +174,11 @@ def tropVariance {n : ℕ} [NeZero n] (logProb : Fin n → ℝ) (X : Fin n → �
 
 
 
+
 /-- LogSumExp with temperature -/
 def logSumExpTemp {n : ℕ} [NeZero n] (β : ℝ) (v : Fin n → ℝ) : ℝ :=
   (1 / β) * Real.log (∑ i, Real.exp (β * v i))
+
 
 
 
@@ -164,7 +189,9 @@ theorem logSumExpTemp_one {n : ℕ} [NeZero n] (v : Fin n → ℝ) :
 
 
 
+
 theorem max_circuit_size (n : ℕ) (hn : 1 ≤ n) : n - 1 + 1 = n := by omega
+
 
 
 

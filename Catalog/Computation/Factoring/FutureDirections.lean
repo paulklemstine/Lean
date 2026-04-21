@@ -14,6 +14,7 @@ theorem multi_lens_advantage (S : ℕ) (k : ℕ) (hS : 0 < S) (hk : 1 ≤ k) :
 
 
 
+
 /-- The advantage grows without bound: for any target ε > 0, sufficiently
 many lenses reduce below ε. -/
 theorem advantage_unbounded (S : ℕ) (hS : 0 < S) :
@@ -24,14 +25,17 @@ theorem advantage_unbounded (S : ℕ) (hS : 0 < S) :
 
 
 
+
 /-- Information-theoretic bound: log₂(2^k) = k bits of information. -/
 theorem information_bound (k : ℕ) : Nat.log 2 (2 ^ k) = k :=
   Nat.log_pow (by norm_num) k
 
 
 
+
 /-- With 7 lenses (the MetaFactoring count), the reduction factor is 128. -/
 theorem seven_lens_factor : 2 ^ 7 = 128 := by norm_num
+
 
 
 
@@ -42,9 +46,11 @@ theorem fib_sq_sum (n : ℕ) :
 
 
 
+
 /-- Fibonacci divisibility: m | n implies F(m) | F(n). -/
 theorem fib_divisibility (m n : ℕ) (h : m ∣ n) :
     Nat.fib m ∣ Nat.fib n := Nat.fib_dvd m n h
+
 
 
 
@@ -58,6 +64,11 @@ theorem golden_ratio_bound (n : ℕ) (hn : 1 ≤ n) :
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Factoring.FutureDirections
+Auto-generated from theorem catalog database.
+Domain: Computation/Factoring
+Declarations: 19] -/
 theorem pisano_split_case (p : ℕ) (hp : Nat.Prime p) (hp5 : p % 5 = 1 ∨ p % 5 = 4) :
     p ∣ Nat.fib (p - 1) := by
   haveI := Fact.mk hp ;
@@ -96,6 +107,7 @@ theorem pisano_split_case (p : ℕ) (hp : Nat.Prime p) (hp5 : p % 5 = 1 ∨ p % 
     · grind;
   simp_all +decide [ ← ZMod.natCast_eq_zero_iff ];
   rw [ ZMod.pow_card_sub_one_eq_one, ZMod.pow_card_sub_one_eq_one ] <;> aesop
+
 
 
 
@@ -185,9 +197,11 @@ theorem pisano_inert_case (p : ℕ) (hp : Nat.Prime p) (hp5 : p % 5 = 2 ∨ p % 
 
 
 
+
 theorem fib_at_least_linear (k : ℕ) : k + 1 ≤ Nat.fib (k + 2) := by
   induction k <;> simp +arith +decide [ *, Nat.fib_add_two ];
   cases ‹ℕ› <;> norm_num [ fib_add_two ] at * ; linarith
+
 
 
 
@@ -198,11 +212,13 @@ theorem two_reps_factoring (a b c d N : ℤ)
 
 
 
+
 theorem fermat_two_square (p : ℕ) (hp : Nat.Prime p) (hmod : p % 4 = 1) :
     ∃ a b : ℕ, a ^ 2 + b ^ 2 = p := by
   have := Fact.mk hp;
   have := @Nat.Prime.sq_add_sq p;
   convert this ( by rw [ hmod ] ; decide )
+
 
 
 
@@ -223,6 +239,7 @@ theorem degen_eight_square
 
 
 
+
 /-- AM-GM for divisor pairs: 4N ≤ (d + N/d)². -/
 theorem divisor_sum_am_gm (N d : ℕ) (hN : 0 < N) (hd : d ∣ N) (hd_pos : 0 < d) :
     4 * N ≤ (d + N / d) ^ 2 := by
@@ -230,10 +247,12 @@ theorem divisor_sum_am_gm (N d : ℕ) (hN : 0 < N) (hd : d ∣ N) (hd_pos : 0 < 
 
 
 
+
 /-- Any element of a finite group has order dividing |G|. -/
 theorem order_divides_group_size {G : Type*} [Group G] [Fintype G] (g : G) :
     g ^ Fintype.card G = 1 :=
   pow_card_eq_one
+
 
 
 
@@ -245,6 +264,7 @@ theorem wilson (p : ℕ) (hp : Nat.Prime p) :
 
 
 
+
 theorem euler_criterion (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2)
     (a : ZMod p) (ha : a ≠ 0) :
     a ^ ((p - 1) / 2) = 1 ∨ a ^ ((p - 1) / 2) = -1 := by
@@ -253,8 +273,10 @@ theorem euler_criterion (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2)
 
 
 
+
 /-- CRT cardinality: m·n = m·n (product structure). -/
 theorem crt_cardinality (m n : ℕ) : m * n = m * n := rfl
+
 
 
 
@@ -262,5 +284,6 @@ theorem crt_cardinality (m n : ℕ) : m * n = m * n := rfl
 theorem bezout {a b : ℤ} (h : IsCoprime a b) :
     ∃ s t : ℤ, s * a + t * b = 1 := by
   obtain ⟨s, t, hst⟩ := h; exact ⟨s, t, hst⟩
+
 
 

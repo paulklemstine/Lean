@@ -14,15 +14,18 @@ def spbH_hyp (x y : ℝ) : ℝ := (x + y) / (1 + x * y)
 
 
 
+
 /-- Hyperbolic distance in the Poincaré disk model.
 d(x, y) = arctanh(|spbH(x, -y)|) = arctanh(|(x-y)/(1-xy)|). -/
 def hypDist (x y : ℝ) : ℝ := Real.log ((1 + |spbH_hyp x (-y)|) / (1 - |spbH_hyp x (-y)|)) / 2
 
 
 
+
 /-- spbH(x, -y) simplifies to (x-y)/(1-xy). -/
 theorem spbH_diff (x y : ℝ) : spbH_hyp x (-y) = (x - y) / (1 - x * y) := by
   unfold spbH_hyp; ring_nf
+
 
 
 
@@ -41,10 +44,12 @@ theorem hypDist_symm (x y : ℝ) : hypDist x y = hypDist y x := by
 
 
 
+
 /-- Hyperbolic distance from a point to itself is 0. -/
 theorem hypDist_self (x : ℝ) : hypDist x x = 0 := by
   unfold hypDist spbH_hyp
   simp
+
 
 
 
@@ -55,13 +60,16 @@ theorem spbH_hyp_comm (x y : ℝ) : spbH_hyp x y = spbH_hyp y x := by
 
 
 
+
 /-- Identity element. -/
 theorem spbH_hyp_zero (x : ℝ) : spbH_hyp x 0 = x := by simp [spbH_hyp]
 
 
 
+
 /-- Inverse element. -/
 theorem spbH_hyp_neg (x : ℝ) : spbH_hyp x (-x) = 0 := by simp [spbH_hyp]
+
 
 
 
@@ -75,9 +83,11 @@ theorem spbH_hyp_subluminal (x y : ℝ) (hx : |x| < 1) (hy : |y| < 1) :
 
 
 
+
 /-- The double formula: spbH(x, x) = 2x/(1+x²). -/
 theorem spbH_hyp_double (x : ℝ) : spbH_hyp x x = 2 * x / (1 + x ^ 2) := by
   unfold spbH_hyp; ring
+
 
 
 
@@ -91,10 +101,12 @@ theorem spbH_conformal_factor (x : ℝ) :
 
 
 
+
 /-- The Klein model velocity: if v is a Poincaré disk coordinate,
 then the Klein model coordinate is u = 2v/(1+v²) = spbH(v,v). -/
 theorem klein_from_poincare (v : ℝ) :
     spbH_hyp v v = 2 * v / (1 + v ^ 2) := spbH_hyp_double v
+
 
 
 

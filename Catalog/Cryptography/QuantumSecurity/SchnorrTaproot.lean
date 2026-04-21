@@ -12,11 +12,13 @@ def schnorr_sign (k e d : ZMod n) : ZMod n := k + e * d
 
 
 
+
 /-- **Theorem (Schnorr Completeness)**: The verification equation holds. -/
 theorem schnorr_completeness (k e d s : ZMod n)
     (hs : s = schnorr_sign k e d) :
     s = k + e * d := by
   simp [schnorr_sign] at hs; exact hs
+
 
 
 
@@ -27,6 +29,7 @@ theorem schnorr_key_from_nonce (k e d s : ZMod n)
     (hs : s = schnorr_sign k e d) :
     d = (s - k) * e⁻¹ := by
   simp [schnorr_sign] at hs; grobner
+
 
 
 
@@ -42,10 +45,12 @@ theorem schnorr_nonce_reuse (k e₁ e₂ d s₁ s₂ : ZMod n)
 
 
 
+
 /-- Taproot output key derivation. -/
 def taproot_output_key {n : ℕ} [Fact (Nat.Prime n)]
     (internal_key tweak : ZMod n) : ZMod n :=
   internal_key + tweak
+
 
 
 
@@ -61,10 +66,12 @@ theorem taproot_internal_key_recovery {n : ℕ} [Fact (Nat.Prime n)]
 
 
 
+
 /-- Exposure model for different Bitcoin output types -/
 inductive BitcoinOutputType where
   | p2pkh | p2sh | p2wpkh | p2wsh | p2tr
   deriving DecidableEq, Repr
+
 
 
 
@@ -78,12 +85,14 @@ def quantumAttackWindow : BitcoinOutputType → ℕ
 
 
 
+
 /-- **Theorem (Taproot Permanent Exposure)**: Taproot outputs have
 strictly longer quantum attack windows than all legacy types. -/
 theorem taproot_worse_exposure (t : BitcoinOutputType)
     (h : t ≠ BitcoinOutputType.p2tr) :
     quantumAttackWindow t < quantumAttackWindow BitcoinOutputType.p2tr := by
   cases t <;> simp_all [quantumAttackWindow]
+
 
 
 
@@ -96,8 +105,10 @@ theorem taproot_privacy_quantum_tradeoff :
 
 
 
+
 /-- Estimated number of Taproot UTXOs (thousands) -/
 def taproot_utxos_thousands : ℕ := 4000
+
 
 
 
@@ -107,9 +118,11 @@ theorem all_taproot_vulnerable :
 
 
 
+
 /-- **Theorem**: MuSig2 m-of-m provides m× quantum resistance amplification. -/
 theorem musig2_amplification (m qubits : ℕ) (hm : m > 0) :
     m * qubits ≥ qubits := Nat.le_mul_of_pos_left qubits hm
+
 
 
 
@@ -117,6 +130,7 @@ theorem musig2_amplification (m qubits : ℕ) (hm : m > 0) :
 inductive SpendCondition where
   | schnorrSig | hashPreimage | timelock | multiCondition
   deriving DecidableEq, Repr
+
 
 
 
@@ -129,10 +143,12 @@ def conditionQuantumSecurity : SpendCondition → ℕ
 
 
 
+
 /-- **Theorem**: Hash-preimage script conditions survive quantum attacks. -/
 theorem hash_scripts_quantum_safe :
     conditionQuantumSecurity SpendCondition.hashPreimage ≥ 128 := by
   norm_num [conditionQuantumSecurity]
+
 
 
 
@@ -145,11 +161,13 @@ theorem emergency_script_path
 
 
 
+
 /-- FROST threshold parameters. -/
 structure FROSTParams where
   threshold : ℕ
   total : ℕ
   h_valid : threshold ≤ total
+
 
 
 
@@ -161,8 +179,10 @@ theorem frost_quantum_threshold (params : FROSTParams) (single_cost : ℕ) :
 
 
 
+
 /-- **Theorem**: FROST provides t× quantum resistance amplification. -/
 theorem frost_amplification (t : ℕ) (ht : t > 0) (cost : ℕ) :
     t * cost ≥ cost := Nat.le_mul_of_pos_left cost ht
+
 
 

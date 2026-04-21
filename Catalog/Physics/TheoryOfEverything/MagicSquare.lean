@@ -16,6 +16,7 @@ def divisionAlgebraDims : Fin 4 → ℕ
 
 
 
+
 /-- Each division algebra dimension is a power of 2 -/
 theorem divisionAlgDim_isPowerOfTwo :
     ∀ i : Fin 4, ∃ k : ℕ, divisionAlgebraDims i = 2 ^ k := by
@@ -27,9 +28,11 @@ theorem divisionAlgDim_isPowerOfTwo :
 
 
 
+
 /-- The sum of all division algebra dimensions is 15 -/
 theorem divisionAlgDim_sum :
     (Finset.univ : Finset (Fin 4)).sum divisionAlgebraDims = 15 := by native_decide
+
 
 
 
@@ -37,6 +40,7 @@ theorem divisionAlgDim_sum :
 theorem cayleyDickson_doubling :
     ∀ i : Fin 3, divisionAlgebraDims i.castSucc * 2 = divisionAlgebraDims i.succ := by
   intro i; fin_cases i <;> simp [divisionAlgebraDims]
+
 
 
 
@@ -50,12 +54,14 @@ def derDim : Fin 4 → ℕ
 
 
 
+
 /-- Imaginary part dimension: im(𝕂) = dim(𝕂) - 1 -/
 def imDim : Fin 4 → ℕ
   | 0 => 0  -- ℝ
   | 1 => 1  -- ℂ
   | 2 => 3  -- ℍ
   | 3 => 7  -- 𝕆
+
 
 
 
@@ -80,10 +86,12 @@ def magicSquareDim : Fin 4 → Fin 4 → ℕ
 
 
 
+
 /-- The Magic Square is symmetric: 𝔏(𝕂₁, 𝕂₂) ≅ 𝔏(𝕂₂, 𝕂₁) -/
 theorem magicSquare_symmetric :
     ∀ i j : Fin 4, magicSquareDim i j = magicSquareDim j i := by
   intro i j; fin_cases i <;> fin_cases j <;> simp [magicSquareDim]
+
 
 
 
@@ -95,11 +103,13 @@ theorem magicSquare_diagonal :
 
 
 
+
 /-- Dimensions increase along rows and columns -/
 theorem magicSquare_monotone_row (i : Fin 4) :
     ∀ j₁ j₂ : Fin 4, j₁ ≤ j₂ → magicSquareDim i j₁ ≤ magicSquareDim i j₂ := by
   intro j₁ j₂ h
   fin_cases i <;> fin_cases j₁ <;> fin_cases j₂ <;> simp_all [magicSquareDim]
+
 
 
 
@@ -113,6 +123,7 @@ def exceptionalDim : Fin 5 → ℕ
 
 
 
+
 /-- Ranks of the exceptional Lie groups -/
 def exceptionalRank : Fin 5 → ℕ
   | 0 => 2   -- G₂
@@ -123,11 +134,13 @@ def exceptionalRank : Fin 5 → ℕ
 
 
 
+
 /-- Number of roots = dim - rank for each exceptional group -/
 theorem exceptional_roots :
     ∀ i : Fin 5, exceptionalDim i - exceptionalRank i =
     match i with | 0 => 12 | 1 => 48 | 2 => 72 | 3 => 126 | 4 => 240 := by
   intro i; fin_cases i <;> simp [exceptionalDim, exceptionalRank]
+
 
 
 
@@ -142,8 +155,10 @@ theorem octonionic_column_exceptional :
 
 
 
+
 /-- G₂ = Der(𝕆) = Aut(𝕆): its dimension equals derDim of 𝕆 -/
 theorem g2_is_derO : derDim 3 = 14 := by rfl
+
 
 
 
@@ -152,9 +167,11 @@ theorem g2_from_octonions : derDim 3 = exceptionalDim 0 := by rfl
 
 
 
+
 /-- Sum of all exceptional dimensions is 525 -/
 theorem exceptional_dim_sum :
     (Finset.univ : Finset (Fin 5)).sum exceptionalDim = 525 := by native_decide
+
 
 
 
@@ -169,10 +186,12 @@ def breakingChainDim : Fin 6 → ℕ
 
 
 
+
 /-- The breaking chain is strictly decreasing -/
 theorem breakingChain_decreasing :
     ∀ i : Fin 5, breakingChainDim i.castSucc > breakingChainDim i.succ := by
   intro i; fin_cases i <;> simp [breakingChainDim]
+
 
 
 
@@ -182,8 +201,10 @@ theorem broken_generators : breakingChainDim 0 - breakingChainDim 5 = 236 := by
 
 
 
+
 /-- The Standard Model has 12 gauge bosons -/
 theorem standard_model_dim : breakingChainDim 5 = 12 := by rfl
+
 
 
 
@@ -192,13 +213,16 @@ theorem sm_gauge_group_decomposition : (8 : ℕ) + 3 + 1 = 12 := by omega
 
 
 
+
 /-- SO(n) dimension: n(n-1)/2 -/
 theorem so10_dim : 10 * 9 / 2 = 45 := by omega
 
 
 
+
 /-- SU(n) dimension: n²-1 -/
 theorem su5_dim : 5^2 - 1 = 24 := by omega
+
 
 
 /-- [Section: # CatalogBuild.Physics.TheoryOfEverything.MagicSquare
@@ -208,8 +232,10 @@ Declarations: 49] -/
 theorem su3_dim : 3^2 - 1 = 8 := by omega
 
 
+
 /-- Critical spacetime dimension for each division algebra -/
 def criticalDim (i : Fin 4) : ℕ := divisionAlgebraDims i + 2
+
 
 
 
@@ -221,13 +247,16 @@ theorem critical_dimensions :
 
 
 
+
 /-- Superstring theory critical dimension from octonions -/
 theorem superstring_dim : criticalDim 3 = 10 := by simp [criticalDim, divisionAlgebraDims]
 
 
 
+
 /-- Our spacetime dimension from complex numbers -/
 theorem spacetime_dim : criticalDim 1 = 4 := by simp [criticalDim, divisionAlgebraDims]
+
 
 
 
@@ -237,9 +266,11 @@ theorem dimension_split : criticalDim 3 = criticalDim 1 + criticalDim 2 := by
 
 
 
+
 /-- Dimension of J₃(𝕂) for division algebra of dimension d:
 3 diagonal ℝ entries + 3 off-diagonal 𝕂 entries = 3 + 3d -/
 def jordanAlgebraDim (d : ℕ) : ℕ := 3 + 3 * d
+
 
 
 
@@ -248,8 +279,10 @@ theorem exceptional_jordan_dim : jordanAlgebraDim 8 = 27 := by simp [jordanAlgeb
 
 
 
+
 /-- J₃(ℝ) is 6-dimensional -/
 theorem real_jordan_dim : jordanAlgebraDim 1 = 6 := by simp [jordanAlgebraDim]
+
 
 
 
@@ -258,8 +291,10 @@ theorem complex_jordan_dim : jordanAlgebraDim 2 = 9 := by simp [jordanAlgebraDim
 
 
 
+
 /-- J₃(ℍ) is 15-dimensional -/
 theorem quaternion_jordan_dim : jordanAlgebraDim 4 = 15 := by simp [jordanAlgebraDim]
+
 
 
 
@@ -268,8 +303,10 @@ theorem particle_count_per_generation : (6 : ℕ) + 3 + 3 + 2 + 1 + 1 = 16 := by
 
 
 
+
 /-- Number of Type I roots: C(8,2) × 2² = 112 -/
 theorem e8_typeI_roots : Nat.choose 8 2 * 2^2 = 112 := by native_decide
+
 
 
 
@@ -278,8 +315,10 @@ theorem e8_typeII_roots : 2^8 / 2 = 128 := by norm_num
 
 
 
+
 /-- Total roots: 112 + 128 = 240 -/
 theorem e8_total_roots : 112 + 128 = 240 := by omega
+
 
 
 
@@ -288,8 +327,10 @@ theorem e8_dim_from_roots : 240 + 8 = 248 := by omega
 
 
 
+
 /-- Dimension of E₈ × E₈ = 496 -/
 theorem heterotic_gauge_dim : 248 + 248 = 496 := by omega
+
 
 
 
@@ -298,8 +339,10 @@ theorem heterotic_perfect_number : 496 = 2^4 * (2^5 - 1) := by norm_num
 
 
 
+
 /-- 31 = 2⁵ - 1 is prime (Mersenne prime) -/
 theorem mersenne_prime_31 : Nat.Prime 31 := by decide
+
 
 
 
@@ -308,8 +351,10 @@ theorem bosonic_string_dim : (24 : ℕ) + 2 = 26 := by omega
 
 
 
+
 /-- 240 (E₈ roots) divides 196560 (Leech lattice kissing number) -/
 theorem e8_divides_leech : 240 ∣ 196560 := ⟨819, by omega⟩
+
 
 
 
@@ -323,11 +368,13 @@ theorem chain_in_magic_square :
 
 
 
+
 /-- Sum of all Magic Square dimensions -/
 theorem magic_square_total_dim :
     (Finset.univ : Finset (Fin 4 × Fin 4)).sum
       (fun p => magicSquareDim p.1 p.2) = 987 := by
   native_decide
+
 
 
 
@@ -341,10 +388,12 @@ theorem master_number :
 
 
 
+
 /-- The number of exceptional entries (dim ≥ 52) in the Magic Square -/
 theorem exceptional_entries :
     (Finset.univ.filter (fun p : Fin 4 × Fin 4 =>
       magicSquareDim p.1 p.2 ≥ 52)).card = 8 := by
   native_decide
+
 
 

@@ -14,11 +14,13 @@ class Diagonalizable (S : FormalSystem) where
 
 
 
+
 /-- In a diagonalizable system, there exists a sentence that is true iff unprovable —
 Gödel's first incompleteness theorem in abstract form. -/
 theorem goedel_abstract (S : FormalSystem) [D : Diagonalizable S] :
     ∃ σ : S.Sentence, S.Provable σ ↔ ¬ S.Provable σ → False :=
   ⟨D.diagonal (fun _ => True), by simp [D.diagonal_spec]⟩
+
 
 
 
@@ -33,6 +35,7 @@ theorem no_universal_membership :
 
 
 
+
 /-- Abstract model of computation with string output -/
 structure ComputationModel where
   Program : Type
@@ -43,11 +46,13 @@ structure ComputationModel where
 
 
 
+
 /-- In a computation model with a self-application operator, Quines exist. -/
 theorem quine_existence_with_selfapp (M : ComputationModel)
     (selfapp : ∀ p : M.Program, ∃ q : M.Program, M.run q = M.source q)
     (p₀ : M.Program) :
     ∃ p : M.Program, M.run p = M.source p :=
   selfapp p₀
+
 
 

@@ -14,6 +14,7 @@ def QGaussNorm (a b : ℤ) : ℤ := a ^ 2 + b ^ 2
 
 
 
+
 /-- Gaussian norm is multiplicative. -/
 theorem QGaussNorm_mul (a b c d : ℤ) :
     QGaussNorm a b * QGaussNorm c d = QGaussNorm (a * c - b * d) (a * d + b * c) := by
@@ -21,9 +22,11 @@ theorem QGaussNorm_mul (a b c d : ℤ) :
 
 
 
+
 /-- Pauli-X entry norm sum. -/
 theorem pauli_x_norm_sum : QGaussNorm 0 0 + QGaussNorm 1 0 +
     QGaussNorm 1 0 + QGaussNorm 0 0 = 2 := by simp [QGaussNorm]
+
 
 
 
@@ -34,10 +37,12 @@ theorem pauli_y_norm_sum :
 
 
 
+
 /-- Scaled Hadamard entry norm sum. -/
 theorem hadamard_scaled_norm_sum :
     QGaussNorm 1 0 + QGaussNorm 1 0 + QGaussNorm 1 0 + QGaussNorm (-1) 0 = 4 := by
   simp [QGaussNorm]
+
 
 
 
@@ -46,9 +51,11 @@ def QQuatNorm (a b c d : ℤ) : ℤ := a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2
 
 
 
+
 /-- Quaternion norm is non-negative. -/
 theorem QQuatNorm_nonneg (a b c d : ℤ) : 0 ≤ QQuatNorm a b c d := by
   simp [QQuatNorm]; positivity
+
 
 
 
@@ -62,6 +69,7 @@ theorem QQuatNorm_zero_iff (a b c d : ℤ) :
     have hc := sq_nonneg c; have hd := sq_nonneg d
     refine ⟨?_, ?_, ?_, ?_⟩ <;> exact_mod_cast sq_eq_zero_iff.mp (by omega)
   · rintro ⟨rfl, rfl, rfl, rfl⟩; simp
+
 
 
 
@@ -79,6 +87,7 @@ theorem unit_quat_closed (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
 
 
 
+
 /-- Integer quaternion multiplication closure. -/
 theorem hurwitz_int_mul_closed (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ) :
     ∃ a₃ b₃ c₃ d₃ : ℤ,
@@ -87,6 +96,7 @@ theorem hurwitz_int_mul_closed (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ) :
       c₃ = a₁*c₂ - b₁*d₂ + c₁*a₂ + d₁*b₂ ∧
       d₃ = a₁*d₂ + b₁*c₂ - c₁*b₂ + d₁*a₂ :=
   ⟨_, _, _, _, rfl, rfl, rfl, rfl⟩
+
 
 
 
@@ -99,9 +109,11 @@ theorem solovay_kitaev_gate_count (ε : ℝ) (hε : 0 < ε) (hε1 : ε < 1) :
 
 
 
+
 /-- T-gate denominator growth. -/
 theorem t_gate_denom_growth (n : ℕ) :
     1 ≤ 2 ^ n := Nat.one_le_pow n 2 (by norm_num)
+
 
 
 
@@ -112,8 +124,10 @@ theorem s_gate_entries :
 
 
 
+
 /-- T-gate entry (1+i) has Gaussian norm 2. -/
 theorem t_gate_entry_norm : QGaussNorm 1 1 = 2 := by simp [QGaussNorm]
+
 
 
 
@@ -123,9 +137,11 @@ theorem classical_embeds_quantum (n : ℤ) :
 
 
 
+
 /-- Gaussian integers embed in quaternions. -/
 theorem gauss_embeds_quat (a b : ℤ) :
     QQuatNorm a b 0 0 = QGaussNorm a b := by simp [QQuatNorm, QGaussNorm]
+
 
 
 
@@ -136,9 +152,11 @@ theorem compilation_hierarchy (n : ℤ) :
 
 
 
+
 /-- Per-component crystallization error ≤ 1/2. -/
 theorem quantum_crystal_error_real (x : ℝ) :
     |x - ↑(round x)| ≤ 1 / 2 := abs_sub_round x
+
 
 
 
@@ -151,6 +169,7 @@ theorem quantum_crystal_error_bound (a b : ℝ) :
   have hbnn := abs_nonneg (b - ↑(round b))
   nlinarith [sq_abs (a - ↑(round a)), sq_abs (b - ↑(round b)),
              mul_self_le_mul_self hann ha, mul_self_le_mul_self hbnn hb]
+
 
 
 

@@ -19,11 +19,17 @@ theorem Oracle.is_retraction {X : Type*} (O : Oracle X) :
 
 
 
+
+/-- [Section: # CatalogBuild.Physics.Classical.GravityAI
+Auto-generated from theorem catalog database.
+Domain: Physics/Classical
+Declarations: 76] -/
 theorem Oracle.truthSet_eq_range {X : Type*} (O : Oracle X) :
     O.truthSet = range O.op := by
   ext y; constructor
   · intro hy; exact ⟨y, hy⟩
   · rintro ⟨x, rfl⟩; exact O.idem x
+
 
 
 
@@ -39,9 +45,11 @@ theorem Oracle.iterate_eq {X : Type*} (O : Oracle X) (n : ℕ) (hn : 1 ≤ n) (x
 
 
 
+
 theorem Oracle.one_query {X : Type*} (O : Oracle X) (x : X) :
     O.op x ∈ O.truthSet ∧ ∀ n, 1 ≤ n → O.op^[n] x = O.op x :=
   ⟨O.output_is_truth x, fun n hn => O.iterate_eq n hn x⟩
+
 
 
 
@@ -51,9 +59,11 @@ theorem identity_no_compression {X : Type*} :
 
 
 
+
 theorem constant_oracle_singleton {X : Type*} (c : X) :
     (⟨fun _ => c, fun _ => rfl⟩ : Oracle X).truthSet = {c} := by
   ext x; simp [Oracle.truthSet]
+
 
 
 
@@ -64,10 +74,12 @@ theorem Oracle.truth_set_le_input {X : Type*} [Fintype X] [DecidableEq X]
 
 
 
+
 structure MinkowskiEvent where
   x : ℝ
   y : ℝ
   t : ℝ
+
 
 
 
@@ -76,7 +88,9 @@ def MinkowskiEvent.quadForm (e : MinkowskiEvent) : ℝ :=
 
 
 
+
 def MinkowskiEvent.isNull (e : MinkowskiEvent) : Prop := e.quadForm = 0
+
 
 
 
@@ -87,8 +101,10 @@ theorem light_cone_scaling (e : MinkowskiEvent) (s : ℝ) (h : e.isNull) :
 
 
 
+
 theorem origin_is_null : (⟨0, 0, 0⟩ : MinkowskiEvent).isNull := by
   simp [MinkowskiEvent.isNull, MinkowskiEvent.quadForm]
+
 
 
 
@@ -98,10 +114,12 @@ theorem parametric_photon (m n : ℝ) :
 
 
 
+
 theorem null_self_orthogonal (e : MinkowskiEvent) (h : e.isNull) :
     minkowskiInner e e = 0 := by
   simp [minkowskiInner, MinkowskiEvent.isNull, MinkowskiEvent.quadForm] at *
   nlinarith
+
 
 
 
@@ -114,19 +132,24 @@ theorem sum_null_iff_orthogonal (e₁ e₂ : MinkowskiEvent)
 
 
 
+
 structure BlackHole where
   mass : ℝ
   mass_pos : 0 < mass
 
 
 
+
 def BlackHole.horizonArea (bh : BlackHole) : ℝ := 16 * π * bh.mass ^ 2
+
 
 
 def BlackHole.entropy (bh : BlackHole) : ℝ := 4 * π * bh.mass ^ 2
 
 
+
 def BlackHole.temperature (bh : BlackHole) : ℝ := 1 / (8 * π * bh.mass)
+
 
 
 
@@ -136,9 +159,11 @@ theorem BlackHole.horizonArea_pos (bh : BlackHole) :
 
 
 
+
 theorem BlackHole.entropy_pos (bh : BlackHole) :
     0 < bh.entropy := by
   exact mul_pos ( mul_pos zero_lt_four Real.pi_pos ) ( sq_pos_of_pos bh.mass_pos )
+
 
 
 
@@ -148,9 +173,11 @@ theorem BlackHole.temperature_pos (bh : BlackHole) :
 
 
 
+
 theorem BlackHole.entropy_eq_area_div_4 (bh : BlackHole) :
     bh.entropy = bh.horizonArea / 4 := by
   simp [entropy, horizonArea]; ring
+
 
 
 
@@ -162,10 +189,12 @@ theorem BlackHole.second_law (bh₁ bh₂ : BlackHole) :
 
 
 
+
 theorem BlackHole.smaller_is_hotter (bh₁ bh₂ : BlackHole)
     (h : bh₁.mass < bh₂.mass) :
     bh₂.temperature < bh₁.temperature := by
   exact one_div_lt_one_div_of_lt ( mul_pos ( mul_pos ( by norm_num ) Real.pi_pos ) bh₁.mass_pos ) ( mul_lt_mul_of_pos_left h ( by positivity ) )
+
 
 
 
@@ -176,14 +205,17 @@ theorem BlackHole.larger_more_entropy (bh₁ bh₂ : BlackHole)
 
 
 
+
 theorem redshift_positive (M r : ℝ) (hr : 0 < r) (hMr : 2 * M < r) :
     0 < 1 - 2 * M / r := by
   rw [sub_pos, div_lt_one hr]; linarith
 
 
 
+
 def Oracle.commutes {X : Type*} (O₁ O₂ : Oracle X) : Prop :=
   ∀ x, O₁.op (O₂.op x) = O₂.op (O₁.op x)
+
 
 
 
@@ -196,16 +228,20 @@ theorem Oracle.comp_of_commuting {X : Type*} (O₁ O₂ : Oracle X)
 
 
 
+
 def Oracle.setoid {X : Type*} (O : Oracle X) : Setoid X where
   r x y := O.op x = O.op y
   iseqv := ⟨fun _ => rfl, fun h => h.symm, fun h1 h2 => h1.trans h2⟩
 
 
 
+
 def vanillaStep (eta grad theta : ℝ) : ℝ := theta - eta * grad
 
 
+
 def naturalStep (eta grad g theta : ℝ) : ℝ := theta - eta * (grad / g)
+
 
 
 
@@ -219,9 +255,11 @@ theorem natural_gradient_invariant (eta grad g alpha : ℝ)
 
 
 
+
 theorem geodesic_oracle_at_critical (eta g theta : ℝ) :
     naturalStep eta 0 g (naturalStep eta 0 g theta) = naturalStep eta 0 g theta := by
   simp [naturalStep]
+
 
 
 
@@ -231,8 +269,10 @@ structure TwoLayerNet (input hidden output : ℕ) where
 
 
 
+
 def TwoLayerNet.forward {i h o : ℕ} (net : TwoLayerNet i h o) : Fin i → Fin o :=
   net.layer2 ∘ net.layer1
+
 
 
 
@@ -245,9 +285,11 @@ theorem bottleneck_compression {i h o : ℕ} (net : TwoLayerNet i h o) :
 
 
 
+
 theorem numbers_to_light (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (⟨(a : ℝ), (b : ℝ), (c : ℝ)⟩ : MinkowskiEvent).isNull := by
   rw [null_iff_pythagorean]; push_cast; exact_mod_cast h
+
 
 
 
@@ -256,9 +298,11 @@ theorem numbers_to_gravity : ∀ n : ℤ, ⌊(n : ℝ)⌋ = n :=
 
 
 
+
 theorem photon_multiplication (a1 b1 a2 b2 : ℤ) :
     (a1 ^ 2 + b1 ^ 2) * (a2 ^ 2 + b2 ^ 2) =
     (a1 * a2 - b1 * b2) ^ 2 + (a1 * b2 + b1 * a2) ^ 2 := by ring
+
 
 
 
@@ -269,9 +313,11 @@ theorem light_cone_closed_mul (a1 b1 c1 a2 b2 c2 : ℤ)
 
 
 
+
 theorem bekenstein_radius_scaling (R E : ℝ) :
     bekensteinBound (2 * R) E = 2 * bekensteinBound R E := by
   unfold bekensteinBound; ring
+
 
 
 
@@ -281,9 +327,11 @@ theorem holographic_sphere (R : ℝ) :
 
 
 
+
 theorem holographic_beats_volume (R : ℝ) (hR : 3 < R) :
     π * R ^ 2 < (4 / 3) * π * R ^ 3 := by
   nlinarith [ Real.pi_pos, mul_le_mul_of_nonneg_left hR.le Real.pi_pos.le, pow_pos ( sub_pos.mpr hR ) 2 ]
+
 
 
 
@@ -292,8 +340,10 @@ theorem universe_fixed_point {X : Type*} (O : Oracle X) (U : X)
 
 
 
+
 theorem strange_loop {X : Type*} (O : Oracle X) :
     ∀ x ∈ O.truthSet, O.op x = x := fun _ hx => hx
+
 
 
 
@@ -306,14 +356,17 @@ theorem oracle_determined_by_truth {X : Type*} (O1 O2 : Oracle X)
 
 
 
+
 def oracleLE {X : Type*} (O1 O2 : Oracle X) : Prop :=
   O1.truthSet ⊆ O2.truthSet
+
 
 
 
 theorem identity_oracle_top {X : Type*} (O : Oracle X) :
     oracleLE O ⟨id, fun _ => rfl⟩ := by
   intro x _; simp [Oracle.truthSet]
+
 
 
 
@@ -335,23 +388,30 @@ theorem double_oracle_same_truth {X : Type*} (O : Oracle X) :
 
 
 
+
 def isSumOfTwoSquares (n : ℕ) : Prop := ∃ a b : ℕ, a ^ 2 + b ^ 2 = n
+
 
 
 
 theorem zero_sos : isSumOfTwoSquares 0 := ⟨0, 0, by norm_num⟩
 
 
+
 theorem one_sos : isSumOfTwoSquares 1 := ⟨0, 1, by norm_num⟩
+
 
 
 theorem two_sos : isSumOfTwoSquares 2 := ⟨1, 1, by norm_num⟩
 
 
+
 theorem five_sos : isSumOfTwoSquares 5 := ⟨1, 2, by norm_num⟩
 
 
+
 theorem twentyfive_sos : isSumOfTwoSquares 25 := ⟨3, 4, by norm_num⟩
+
 
 
 
@@ -365,13 +425,16 @@ theorem sos_mul (m n : ℕ) (hm : isSumOfTwoSquares m) (hn : isSumOfTwoSquares n
 
 
 
+
 theorem square_sos (n : ℕ) : isSumOfTwoSquares (n ^ 2) := ⟨0, n, by ring⟩
+
 
 
 
 theorem degenerate_light_cone (n : ℕ) :
     (⟨0, (n : ℝ), (n : ℝ)⟩ : MinkowskiEvent).isNull := by
   simp [MinkowskiEvent.isNull, MinkowskiEvent.quadForm]
+
 
 
 
@@ -382,8 +445,10 @@ structure WeightedGraph (n : ℕ) where
 
 
 
+
 def WeightedGraph.degree {n : ℕ} (G : WeightedGraph n) (i : Fin n) : ℝ :=
   ∑ j, G.weight i j
+
 
 
 
@@ -393,14 +458,17 @@ theorem WeightedGraph.degree_nonneg {n : ℕ} (G : WeightedGraph n) (i : Fin n) 
 
 
 
+
 theorem WeightedGraph.totalWeight_eq_sum_degree {n : ℕ} (G : WeightedGraph n) :
     ∑ i, ∑ j, G.weight i j = ∑ i, G.degree i := by
   simp [WeightedGraph.degree]
 
 
 
+
 def compressionDistortion {n : ℕ} (O : Oracle (Fin n)) (d : Fin n → Fin n → ℝ) : ℝ :=
   (∑ i : Fin n, d i (O.op i)) / n
+
 
 
 
@@ -411,6 +479,7 @@ theorem zero_distortion_on_truth {n : ℕ} (O : Oracle (Fin n))
 
 
 
+
 theorem identity_zero_distortion {n : ℕ} (d : Fin n → Fin n → ℝ)
     (hd : ∀ x, d x x = 0) :
     compressionDistortion ⟨id, fun _ => rfl⟩ d = 0 := by
@@ -418,7 +487,9 @@ theorem identity_zero_distortion {n : ℕ} (d : Fin n → Fin n → ℝ)
 
 
 
+
 def deflectionAngle (M b : ℝ) : ℝ := 4 * M / b
+
 
 
 
@@ -427,7 +498,9 @@ theorem deflection_pos (M b : ℝ) (hM : 0 < M) (hb : 0 < b) :
 
 
 
+
 def einsteinRingRadius (M D : ℝ) : ℝ := Real.sqrt (4 * M / D)
+
 
 
 
@@ -441,6 +514,7 @@ theorem einstein_ring_monotone (M1 M2 D : ℝ)
 
 
 
+
 theorem idempotent_kernel_part {K : Type*} [Field K] {V : Type*}
     [AddCommGroup V] [Module K V]
     (P : V →ₗ[K] V) (hP : P ∘ₗ P = P) (v : V) :
@@ -449,10 +523,12 @@ theorem idempotent_kernel_part {K : Type*} [Field K] {V : Type*}
 
 
 
+
 theorem idempotent_image_fixed {K : Type*} [Field K] {V : Type*}
     [AddCommGroup V] [Module K V]
     (P : V →ₗ[K] V) (hP : P ∘ₗ P = P) (v : V) :
     P (P v) = P v := by rw [← LinearMap.comp_apply, hP]
+
 
 
 
@@ -467,14 +543,17 @@ theorem measurement_binary {K : Type*} [Field K] {V : Type*}
 
 
 
+
 theorem meta_oracle_stable {X : Type*} (O : Oracle X) :
     ∀ x, O.op (O.op (O.op x)) = O.op x := by
   intro x; rw [O.idem (O.op x)]; exact O.idem x
 
 
 
+
 theorem research_converges {X : Type*} (O : Oracle X) (n : ℕ) (hn : 1 ≤ n) :
     ∀ x, O.op^[n] x = O.op x := O.iterate_eq n hn
+
 
 
 
@@ -486,6 +565,7 @@ theorem gravity_ai_axiom {X : Type*} (O : Oracle X) :
   constructor
   · intro h; have := O.idem x; rw [h] at this; exact this.symm
   · intro h; rw [h, h]
+
 
 
 

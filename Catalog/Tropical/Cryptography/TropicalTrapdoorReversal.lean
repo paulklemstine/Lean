@@ -25,6 +25,7 @@ theorem min_preimage_char (a b c : ℝ) :
 
 
 
+
 /-- Characterization of max preimage -/
 theorem max_preimage_char (a b c : ℝ) :
     max a b = c ↔ (a = c ∧ b ≤ c) ∨ (b = c ∧ a ≤ c) := by
@@ -41,15 +42,18 @@ theorem max_preimage_char (a b c : ℝ) :
 
 
 
+
 /-- Add gate reversal: a + b = c gives b = c - a -/
 theorem add_preimage_char (a b c : ℝ) :
     a + b = c ↔ b = c - a := by constructor <;> intro h <;> linarith
 
 
 
+
 /-- Add gate preserves full information (invertible given one input) -/
 theorem add_no_info_loss (a b c : ℝ) (h : a + b = c) :
     b = c - a ∧ a = c - b := by constructor <;> linarith
+
 
 
 
@@ -61,6 +65,7 @@ inductive TropConstraint where
 
 
 
+
 /-- Satisfaction of a tropical constraint -/
 def satisfiesConstraint (x : ℕ → ℝ) : TropConstraint → Prop
   | .LeShift i j c => x i ≤ x j + c
@@ -69,8 +74,10 @@ def satisfiesConstraint (x : ℕ → ℝ) : TropConstraint → Prop
 
 
 
+
 /-- A tropical polyhedron is defined by a list of constraints -/
 abbrev TropPolyhedron := List TropConstraint
+
 
 
 
@@ -80,9 +87,11 @@ def feasibleSet (poly : TropPolyhedron) : Set (ℕ → ℝ) :=
 
 
 
+
 /-- Empty constraint list gives the whole space -/
 theorem feasible_empty : feasibleSet ([] : TropPolyhedron) = Set.univ := by
   ext x; simp [feasibleSet]
+
 
 
 
@@ -91,6 +100,7 @@ theorem feasible_mono (poly : TropPolyhedron) (c : TropConstraint) :
     feasibleSet (c :: poly) ⊆ feasibleSet poly := by
   intro x hx constr hconstr
   exact hx constr (List.mem_cons_of_mem c hconstr)
+
 
 
 
@@ -103,12 +113,14 @@ inductive LinearizedGate where
 
 
 
+
 /-- Evaluate a linearized gate -/
 def evalLinearized (lg : LinearizedGate) (a b : ℝ) : ℝ :=
   match lg with
   | .TakeLeft => a
   | .TakeRight => b
   | .Add => a + b
+
 
 
 
@@ -119,10 +131,12 @@ theorem linearize_min_left (a b : ℝ) (h : a ≤ b) :
 
 
 
+
 /-- Linearized min gate (select right) agrees with min when b ≤ a -/
 theorem linearize_min_right (a b : ℝ) (h : b ≤ a) :
     evalLinearized .TakeRight a b = min a b := by
   simp [evalLinearized, min_eq_right h]
+
 
 
 
@@ -133,10 +147,12 @@ theorem linearize_max_left (a b : ℝ) (h : b ≤ a) :
 
 
 
+
 /-- Linearized max gate (select right) agrees with max when a ≤ b -/
 theorem linearize_max_right (a b : ℝ) (h : a ≤ b) :
     evalLinearized .TakeRight a b = max a b := by
   simp [evalLinearized, max_eq_right h]
+
 
 
 
@@ -146,15 +162,18 @@ theorem linearize_add (a b : ℝ) :
 
 
 
+
 /-- A min-gate selection is consistent if the selected value is indeed the minimum -/
 def minSelectionConsistent (a b : ℝ) (selectLeft : Bool) : Prop :=
   if selectLeft then a ≤ b else b ≤ a
 
 
 
+
 /-- A max-gate selection is consistent if the selected value is indeed the maximum -/
 def maxSelectionConsistent (a b : ℝ) (selectLeft : Bool) : Prop :=
   if selectLeft then b ≤ a else a ≤ b
+
 
 
 
@@ -166,11 +185,13 @@ theorem min_has_consistent_selection (a b : ℝ) :
 
 
 
+
 /-- Every max has at least one consistent selection -/
 theorem max_has_consistent_selection (a b : ℝ) :
     maxSelectionConsistent a b true ∨ maxSelectionConsistent a b false := by
   simp [maxSelectionConsistent]
   exact le_total b a
+
 
 
 
@@ -181,6 +202,7 @@ theorem min_equal_both_consistent (a : ℝ) :
 
 
 
+
 /-- When inputs are equal, both selections are consistent for max -/
 theorem max_equal_both_consistent (a : ℝ) :
     maxSelectionConsistent a a true ∧ maxSelectionConsistent a a false := by
@@ -188,10 +210,12 @@ theorem max_equal_both_consistent (a : ℝ) :
 
 
 
+
 /-- n-gate composition: reversal complexity is 2^n -/
 theorem n_gate_selections (n : ℕ) :
     Fintype.card (Fin n → Bool) = 2 ^ n := by
   simp [Fintype.card_fin, Fintype.card_bool]
+
 
 
 
@@ -203,11 +227,13 @@ theorem max_affine_conditional (a₁ b₁ a₂ b₂ x : ℝ) :
 
 
 
+
 /-- The min of two affine functions expressed as a conditional -/
 theorem min_affine_conditional (a₁ b₁ a₂ b₂ x : ℝ) :
     min (a₁ * x + b₁) (a₂ * x + b₂) =
       if a₁ * x + b₁ ≤ a₂ * x + b₂ then a₁ * x + b₁ else a₂ * x + b₂ := by
   simp only [min_def]
+
 
 
 
@@ -221,6 +247,7 @@ theorem max_boundary_point (a₁ b₁ a₂ b₂ : ℝ) (hne : a₁ ≠ a₂) :
 
 
 
+
 /-- For strict inequalities, min has a unique selection -/
 theorem min_strict_unique (a b : ℝ) (h : a < b) :
     min a b = a ∧ min a b ≠ b := by
@@ -228,10 +255,12 @@ theorem min_strict_unique (a b : ℝ) (h : a < b) :
 
 
 
+
 /-- For strict inequalities, max has a unique selection -/
 theorem max_strict_unique (a b : ℝ) (h : a < b) :
     max a b = b ∧ max a b ≠ a := by
   exact ⟨max_eq_right (le_of_lt h), by rw [max_eq_right (le_of_lt h)]; linarith⟩
+
 
 
 

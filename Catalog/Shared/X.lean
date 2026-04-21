@@ -16,4 +16,5 @@ Declarations: 1] -/
 noncomputable def σ₁ (n : ℕ) : ℕ := ∑ d ∈ n.divisors, d
 
 
+
 end

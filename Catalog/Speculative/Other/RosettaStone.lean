@@ -16,7 +16,13 @@ Declarations: 20] -/
 noncomputable def cayley_real_part (t : ℝ) : ℝ := (t ^ 2 - 1) / (t ^ 2 + 1)
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.RosettaStone
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 20] -/
 noncomputable def cayley_imag_part (t : ℝ) : ℝ := (2 * t) / (t ^ 2 + 1)
+
 
 
 
@@ -29,22 +35,29 @@ theorem rotation_preserves_circle (x₁ y₁ x₂ y₂ : ℝ)
 
 
 
+
 theorem fermat_christmas_5 : ∃ a b : ℤ, a ^ 2 + b ^ 2 = 5 := ⟨1, 2, by norm_num⟩
+
 
 
 theorem fermat_christmas_13 : ∃ a b : ℤ, a ^ 2 + b ^ 2 = 13 := ⟨2, 3, by norm_num⟩
 
 
+
 theorem fermat_christmas_17 : ∃ a b : ℤ, a ^ 2 + b ^ 2 = 17 := ⟨1, 4, by norm_num⟩
+
 
 
 theorem fermat_christmas_29 : ∃ a b : ℤ, a ^ 2 + b ^ 2 = 29 := ⟨2, 5, by norm_num⟩
 
 
+
 theorem fermat_christmas_37 : ∃ a b : ℤ, a ^ 2 + b ^ 2 = 37 := ⟨1, 6, by norm_num⟩
 
 
+
 theorem fermat_christmas_41 : ∃ a b : ℤ, a ^ 2 + b ^ 2 = 41 := ⟨4, 5, by norm_num⟩
+
 
 
 
@@ -58,8 +71,10 @@ theorem pell_product (x₁ y₁ x₂ y₂ : ℤ) (D : ℤ)
 
 
 
+
 noncomputable def cross_ratio (a b c d : ℝ) : ℝ :=
   ((a - c) * (b - d)) / ((a - d) * (b - c))
+
 
 
 
@@ -74,13 +89,16 @@ theorem stereo_double_angle (t : ℝ) :
 
 
 
+
 theorem golden_ratio_property (φ : ℝ) (hφ : φ ^ 2 = φ + 1) :
     φ ^ 4 = 3 * φ + 2 := by nlinarith [sq_nonneg φ]
 
 
 
+
 theorem golden_ratio_fibonacci_connection (φ : ℝ) (hφ : φ ^ 2 = φ + 1) :
     φ ^ 3 = 2 * φ + 1 := by nlinarith [sq_nonneg φ]
+
 
 
 
@@ -93,6 +111,7 @@ theorem hopf_on_sphere (a b c d : ℝ) (h : a^2 + b^2 + c^2 + d^2 = 1) :
 
 
 
+
 /-- Sum of squares in ℚ(√2): the algebraic structure -/
 theorem algebraic_sum_of_squares (a b c d : ℤ) :
     (a ^ 2 + 2 * b ^ 2 + c ^ 2 + 2 * d ^ 2) =
@@ -100,9 +119,11 @@ theorem algebraic_sum_of_squares (a b c d : ℤ) :
 
 
 
+
 /-- Lorentz form vanishes on Pythagorean triples -/
 theorem lorentz_form_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     a ^ 2 + b ^ 2 - c ^ 2 = 0 := by linarith
+
 
 
 
@@ -114,10 +135,12 @@ theorem lorentz_boost_composition (x₁ y₁ x₂ y₂ : ℝ)
 
 
 
+
 /-- Brahmagupta-Fibonacci: the generating function of the decoder -/
 theorem decoder_count_multiplicative (a b c d : ℤ) :
     (a ^ 2 + b ^ 2) * (c ^ 2 + d ^ 2) =
     (a * c - b * d) ^ 2 + (a * d + b * c) ^ 2 := by ring
+
 
 
 
@@ -134,6 +157,7 @@ theorem ford_circle_tangency (p q r s : ℤ) (hq : (q : ℚ) ≠ 0) (hs : (s : �
   have h' : ((p : ℚ) * s - q * r) ^ 2 = 1 := by exact_mod_cast h
   field_simp
   nlinarith [sq_nonneg ((p : ℚ) * s - q * r), sq_nonneg ((p : ℚ) * s + q * r)]
+
 
 
 end

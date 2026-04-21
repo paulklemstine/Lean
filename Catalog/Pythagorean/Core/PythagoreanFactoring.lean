@@ -20,6 +20,7 @@ structure DivisorPair (n : ℕ) where
 
 
 
+
 /-- [Section: # CatalogBuild.Pythagorean.Core.PythagoreanFactoring
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/Core
@@ -47,6 +48,11 @@ noncomputable def divisorPairToTriple {n : ℕ} (hn : 0 < n) (dp : DivisorPair n
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.Core.PythagoreanFactoring
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Core
+Declarations: 12] -/
 noncomputable def tripleToDivisorPair {n : ℕ} (hn : 1 < n) (t : PythTriple n) :
     DivisorPair n where
   d := t.c - t.b
@@ -61,9 +67,11 @@ noncomputable def tripleToDivisorPair {n : ℕ} (hn : 1 < n) (t : PythTriple n) 
 
 
 
+
 theorem diff_of_squares_pyth {n b c : ℤ} (h : n ^ 2 + b ^ 2 = c ^ 2) :
     (c - b) * (c + b) = n ^ 2 := by
       linarith
+
 
 
 
@@ -74,10 +82,12 @@ theorem divisor_pair_gives_triple {n d e : ℤ} (hprod : d * e = n ^ 2)
 
 
 
+
 theorem gcd_factor_of_n {n d e : ℕ} (hn : 1 < n) (hprod : d * e = n ^ 2)
     (hgcd_gt : 1 < Nat.gcd d n) (hgcd_lt : Nat.gcd d n < n) :
     Nat.gcd d n ∣ n ∧ 1 < Nat.gcd d n ∧ Nat.gcd d n < n := by
       exact ⟨ Nat.gcd_dvd_right _ _, hgcd_gt, hgcd_lt ⟩
+
 
 
 
@@ -88,6 +98,7 @@ theorem semiprime_factor_triple {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q
     let e := p * q ^ 2
     d * e = n ^ 2 ∧ Nat.gcd d n = p := by
       exact ⟨ by ring, Nat.gcd_eq_left ( dvd_mul_right _ _ ) ⟩
+
 
 
 
@@ -105,6 +116,7 @@ theorem prime_unique_triple (p : ℕ) (hp : Nat.Prime p) (hodd : p % 2 = 1) :
         · grind +revert;
         · rcases p with ( _ | _ | p ) <;> simp_all +decide [ ne_of_gt ];
       grind
+
 
 
 
@@ -132,6 +144,7 @@ theorem composite_multiple_triples (n : ℕ) (hn : 1 < n) (hodd : n % 2 = 1)
       · exact Nat.le_sub_one_of_lt ( by nlinarith only [ hn ] );
       · nlinarith only [ Nat.div_mul_cancel ( show 2 ∣ n ^ 2 + 1 from even_iff_two_dvd.mp ( by simpa [ parity_simps ] using Nat.odd_iff.mpr hodd ) ), Nat.div_mul_cancel ( show 2 ∣ n ^ 2 - 1 from even_iff_two_dvd.mp ( by rw [ Nat.even_sub ( by nlinarith only [ hn ] ) ] ; simpa [ parity_simps ] using Nat.odd_iff.mpr hodd ) ), Nat.sub_add_cancel ( by nlinarith only [ hn ] : 1 ≤ n ^ 2 ) ];
       · intro h; omega;
+
 
 
 
@@ -174,6 +187,7 @@ theorem parametrize_primitive (a b c : ℕ) (ha : a % 2 = 1) (hb : b % 2 = 0)
 
 
 
+
 theorem prime_triple_params (p : ℕ) (hp : Nat.Prime p) (hodd : p % 2 = 1) (hp3 : 3 ≤ p) :
     let m := (p + 1) / 2
     let n := (p - 1) / 2
@@ -183,11 +197,13 @@ theorem prime_triple_params (p : ℕ) (hp : Nat.Prime p) (hodd : p % 2 = 1) (hp3
 
 
 
+
 theorem berggren_depth_prime (p : ℕ) (hp : Nat.Prime p) (hodd : p % 2 = 1) (hp5 : 5 ≤ p) :
     let m := (p + 1) / 2
     -- The Berggren tree depth = m - 2 = (p - 3) / 2
     m ≥ 2 ∧ m - 2 = (p - 3) / 2 := by
       lia
+
 
 
 end

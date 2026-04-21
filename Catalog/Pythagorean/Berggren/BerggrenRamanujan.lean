@@ -18,8 +18,10 @@ inductive BDir where
 
 
 
+
 /-- A position in the Berggren tree is a finite word over {left, mid, right}. -/
 abbrev BPos := List BDir
+
 
 
 
@@ -33,9 +35,11 @@ def berggrenStep (d : BDir) (t : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
 
 
 
+
 /-- The Pythagorean triple at a given position (path applied left-to-right from root). -/
 def berggrenAt (path : BPos) : ℤ × ℤ × ℤ :=
   path.foldl (fun t d => berggrenStep d t) (3, 4, 5)
+
 
 
 
@@ -45,6 +49,7 @@ theorem berggrenStep_preserves_pyth (d : BDir) (a b c : ℤ)
     let (a', b', c') := berggrenStep d (a, b, c)
     a' ^ 2 + b' ^ 2 = c' ^ 2 := by
   cases d <;> simp [berggrenStep] <;> nlinarith [sq_nonneg (a - b), sq_nonneg (a + b)]
+
 
 
 
@@ -67,9 +72,11 @@ theorem berggrenAt_pyth (path : BPos) :
 
 
 
+
 /-- Berggren matrix B₁. -/
 def berggrenB₁ : Matrix (Fin 3) (Fin 3) ℤ :=
   !![1, -2, 2; 2, -1, 2; 2, -2, 3]
+
 
 
 
@@ -79,9 +86,11 @@ def berggrenB₂ : Matrix (Fin 3) (Fin 3) ℤ :=
 
 
 
+
 /-- Berggren matrix B₃. -/
 def berggrenB₃ : Matrix (Fin 3) (Fin 3) ℤ :=
   !![(-1), 2, 2; (-2), 1, 2; (-2), 2, 3]
+
 
 
 
@@ -90,8 +99,10 @@ theorem det_berggrenB₁ : Matrix.det berggrenB₁ = 1 := by native_decide
 
 
 
+
 /-- B₂ has determinant -1. -/
 theorem det_berggrenB₂ : Matrix.det berggrenB₂ = -1 := by native_decide
+
 
 
 
@@ -100,9 +111,11 @@ theorem det_berggrenB₃ : Matrix.det berggrenB₃ = 1 := by native_decide
 
 
 
+
 /-- All Berggren matrices are invertible over ℤ (|det| = 1). -/
 theorem berggrenB₁_invertible : IsUnit (Matrix.det berggrenB₁) := by
   rw [det_berggrenB₁]; exact isUnit_one
+
 
 
 
@@ -115,8 +128,14 @@ theorem berggrenB₂_invertible : IsUnit (Matrix.det berggrenB₂) := by
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.Berggren.BerggrenRamanujan
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Berggren
+Declarations: 59] -/
 theorem berggrenB₃_invertible : IsUnit (Matrix.det berggrenB₃) := by
   rw [det_berggrenB₃]; exact isUnit_one
+
 
 
 
@@ -126,9 +145,11 @@ def berggren_Q : Matrix (Fin 3) (Fin 3) ℤ :=
 
 
 
+
 /-- B₁ preserves the Lorentz form: B₁ᵀ Q B₁ = Q. -/
 theorem berggrenB₁_lorentz : berggrenB₁ᵀ * berggren_Q * berggrenB₁ = berggren_Q := by
   native_decide
+
 
 
 
@@ -138,9 +159,11 @@ theorem berggrenB₂_lorentz : berggrenB₂ᵀ * berggren_Q * berggrenB₂ = ber
 
 
 
+
 /-- B₃ preserves the Lorentz form. -/
 theorem berggrenB₃_lorentz : berggrenB₃ᵀ * berggren_Q * berggrenB₃ = berggren_Q := by
   native_decide
+
 
 
 
@@ -153,6 +176,7 @@ theorem berggren_in_lorentz :
 
 
 
+
 /-- The generators are pairwise distinct. -/
 theorem berggren_distinct :
     berggrenB₁ ≠ berggrenB₂ ∧ berggrenB₁ ≠ berggrenB₃ ∧ berggrenB₂ ≠ berggrenB₃ := by
@@ -160,10 +184,12 @@ theorem berggren_distinct :
 
 
 
+
 /-- No generator is the identity. -/
 theorem berggren_ne_one :
     berggrenB₁ ≠ 1 ∧ berggrenB₂ ≠ 1 ∧ berggrenB₃ ≠ 1 := by
   exact ⟨by native_decide, by native_decide, by native_decide⟩
+
 
 
 
@@ -178,6 +204,7 @@ theorem berggren_not_involutions :
 
 
 
+
 /-- No product of two distinct generators is the identity. -/
 theorem berggren_product2_ne_one :
     berggrenB₁ * berggrenB₂ ≠ 1 ∧ berggrenB₁ * berggrenB₃ ≠ 1 ∧
@@ -188,8 +215,10 @@ theorem berggren_product2_ne_one :
 
 
 
+
 /-- The Ramanujan bound for a d-regular graph: 2√(d-1). -/
 noncomputable def ramanujanBound (d : ℕ) : ℝ := 2 * Real.sqrt (d - 1 : ℝ)
+
 
 
 
@@ -199,9 +228,11 @@ theorem ramanujanBound_three : ramanujanBound 3 = 2 * Real.sqrt 2 := by
 
 
 
+
 /-- For d = 4, the Ramanujan bound is 2√3. -/
 theorem ramanujanBound_four : ramanujanBound 4 = 2 * Real.sqrt 3 := by
   simp [ramanujanBound]; norm_num
+
 
 
 
@@ -212,10 +243,12 @@ theorem ramanujanBound_three_sq : (2 * Real.sqrt 2) ^ 2 = 8 := by
 
 
 
+
 /-- The Ramanujan bound squared for d = 4 is 12. -/
 theorem ramanujanBound_four_sq : (2 * Real.sqrt 3) ^ 2 = 12 := by
   rw [mul_pow, Real.sq_sqrt (by positivity : (3:ℝ) ≥ 0)]
   norm_num
+
 
 
 
@@ -224,8 +257,10 @@ noncomputable def spectralGap3 : ℝ := 3 - 2 * Real.sqrt 2
 
 
 
+
 /-- The spectral gap of a 4-regular Ramanujan graph: 4 - 2√3. -/
 noncomputable def spectralGap4 : ℝ := 4 - 2 * Real.sqrt 3
+
 
 
 
@@ -240,6 +275,7 @@ theorem spectralGap3_pos : spectralGap3 > 0 := by
 
 
 
+
 /-- The 4-regular spectral gap is positive: 4 - 2√3 > 0.
 Proof: 2√3 = √12 < √16 = 4. -/
 theorem spectralGap4_pos : spectralGap4 > 0 := by
@@ -251,10 +287,12 @@ theorem spectralGap4_pos : spectralGap4 > 0 := by
 
 
 
+
 /-- The Berggren tree adjacency relation: two positions are adjacent
 if one extends the other by exactly one step. -/
 def berggrenAdj (p q : BPos) : Prop :=
   (∃ d : BDir, q = p ++ [d]) ∨ (∃ d : BDir, p = q ++ [d])
+
 
 
 
@@ -264,10 +302,12 @@ theorem berggrenAdj_symm (p q : BPos) : berggrenAdj p q ↔ berggrenAdj q p := b
 
 
 
+
 /-- Adjacency is irreflexive. -/
 theorem berggrenAdj_irrefl (p : BPos) : ¬berggrenAdj p p := by
   simp only [berggrenAdj, not_or]
   constructor <;> intro ⟨d, h⟩ <;> have := congr_arg List.length h <;> simp at this
+
 
 
 
@@ -288,8 +328,10 @@ theorem root_neighbors :
 
 
 
+
 /-- The hypotenuse component of the root triple is 5. -/
 theorem root_hypotenuse : (berggrenAt []).2.2 = 5 := by rfl
+
 
 
 
@@ -303,6 +345,7 @@ theorem child_hypotenuses :
 
 
 
+
 /-- All children have strictly larger hypotenuse than their parent (at the root). -/
 theorem root_children_hyp_grow :
     (berggrenAt [BDir.left]).2.2 > (berggrenAt []).2.2 ∧
@@ -312,8 +355,10 @@ theorem root_children_hyp_grow :
 
 
 
+
 /-- The trace of B₁. -/
 theorem trace_berggrenB₁ : Matrix.trace berggrenB₁ = 3 := by native_decide
+
 
 
 
@@ -322,8 +367,10 @@ theorem trace_berggrenB₂ : Matrix.trace berggrenB₂ = 5 := by native_decide
 
 
 
+
 /-- The trace of B₃. -/
 theorem trace_berggrenB₃ : Matrix.trace berggrenB₃ = 3 := by native_decide
+
 
 
 
@@ -332,8 +379,10 @@ theorem trace_B₁B₂ : Matrix.trace (berggrenB₁ * berggrenB₂) = 17 := by n
 
 
 
+
 /-- The trace of B₁B₃. -/
 theorem trace_B₁B₃ : Matrix.trace (berggrenB₁ * berggrenB₃) = 15 := by native_decide
+
 
 
 
@@ -342,14 +391,18 @@ theorem trace_B₂B₃ : Matrix.trace (berggrenB₂ * berggrenB₃) = 17 := by n
 
 
 
+
 /-- Product determinants. -/
 theorem det_B₁B₂ : Matrix.det (berggrenB₁ * berggrenB₂) = -1 := by native_decide
+
 
 
 theorem det_B₁B₃ : Matrix.det (berggrenB₁ * berggrenB₃) = 1 := by native_decide
 
 
+
 theorem det_B₂B₃ : Matrix.det (berggrenB₂ * berggrenB₃) = -1 := by native_decide
+
 
 
 
@@ -365,10 +418,12 @@ theorem berggren_product_lorentz (M N : Matrix (Fin 3) (Fin 3) ℤ)
 
 
 
+
 /-- The mixing time of a random walk on a graph with n vertices and spectral gap γ
 is O(log(n)/γ). -/
 noncomputable def berggrenMixingTime (depth : ℕ) : ℝ :=
   Real.log ((3 ^ (depth + 1) - 1 : ℝ) / 2) / spectralGap3
+
 
 
 
@@ -378,9 +433,11 @@ noncomputable def cheegerBound3 : ℝ := spectralGap3 / 2
 
 
 
+
 /-- The Cheeger bound is positive. -/
 theorem cheegerBound3_pos : cheegerBound3 > 0 := by
   exact div_pos spectralGap3_pos (by positivity)
+
 
 
 
@@ -389,8 +446,10 @@ theorem ihara_q_three : (3 : ℕ) - 1 = 2 := by norm_num
 
 
 
+
 /-- The Ihara parameter q for a 4-regular graph. -/
 theorem ihara_q_four : (4 : ℕ) - 1 = 3 := by norm_num
+
 
 
 
@@ -399,8 +458,10 @@ theorem two_sqrt_two_sq : (2 * Real.sqrt 2) ^ 2 = 8 := ramanujanBound_three_sq
 
 
 
+
 /-- 2√3 is approximately 3.464. We verify (2√3)² = 12. -/
 theorem two_sqrt_three_sq : (2 * Real.sqrt 3) ^ 2 = 12 := ramanujanBound_four_sq
+
 
 
 
@@ -413,6 +474,7 @@ theorem spectralGap3_sq : spectralGap3 ^ 2 = 17 - 12 * Real.sqrt 2 := by
 
 
 
+
 /-- The inverse Berggren steps are well-defined since all matrices are in GL(3,ℤ). -/
 theorem berggrenStep_injective (d : BDir) :
     Function.Injective (berggrenStep d) := by
@@ -422,6 +484,7 @@ theorem berggrenStep_injective (d : BDir) :
     obtain ⟨h1, h2, h3⟩ := h
     ext <;> linarith
   }
+
 
 
 

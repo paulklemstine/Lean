@@ -16,10 +16,12 @@ theorem notCircuit_size {n : ℕ} (c : NandCircuit n) :
 
 
 
+
 /-- Size of an AND circuit. -/
 theorem andCircuit_size {n : ℕ} (c₁ c₂ : NandCircuit n) :
     (andCircuit c₁ c₂).size = 3 + 2 * c₁.size + 2 * c₂.size := by
   simp [andCircuit, notCircuit, NandCircuit.size]; omega
+
 
 
 
@@ -30,15 +32,18 @@ theorem orCircuit_size {n : ℕ} (c₁ c₂ : NandCircuit n) :
 
 
 
+
 /-- Size is always nonneg (trivial but useful). -/
 theorem NandCircuit.size_nonneg {n : ℕ} (c : NandCircuit n) :
     0 ≤ c.size := Nat.zero_le _
 
 
 
+
 /-- Inputs have size 0. -/
 theorem input_size {n : ℕ} (i : Fin n) :
     (NandCircuit.input i).size = 0 := rfl
+
 
 
 
@@ -49,9 +54,11 @@ theorem single_nand_size {n : ℕ} (i j : Fin n) :
 
 
 
+
 /-- A literal circuit: if polarity is true, return input; if false, return NOT input. -/
 def litCircuit {n : ℕ} (i : Fin n) (polarity : Bool) : NandCircuit n :=
   if polarity then .input i else notCircuit (.input i)
+
 
 
 
@@ -61,10 +68,12 @@ def minterm2 (p₀ p₁ : Bool) : NandCircuit 2 :=
 
 
 
+
 /-- Literal circuit evaluates correctly. -/
 theorem litCircuit_correct {n : ℕ} (i : Fin n) (polarity : Bool) (assign : Fin n → Bool) :
     (litCircuit i polarity).eval assign = (if polarity then assign i else !(assign i)) := by
   simp [litCircuit]; split <;> simp [notCircuit_correct, NandCircuit.eval]
+
 
 
 
@@ -76,9 +85,11 @@ theorem minterm2_correct (p₀ p₁ : Bool) (assign : Fin 2 → Bool) :
 
 
 
+
 /-- A constant TRUE circuit (for 2 inputs). -/
 def constTrue2 : NandCircuit 2 :=
   .nand (.input 0) (notCircuit (.input 0))
+
 
 
 
@@ -87,6 +98,7 @@ theorem constTrue2_correct (assign : Fin 2 → Bool) :
     constTrue2.eval assign = true := by
   simp only [constTrue2, NandCircuit.eval, notCircuit, bNand]
   cases assign 0 <;> decide
+
 
 
 
@@ -116,6 +128,7 @@ def dnfCircuit2 (v00 v01 v10 v11 : Bool) : NandCircuit 2 :=
 
 
 
+
 /-- [Section: # CatalogBuild.Logic.Advanced
 Auto-generated from theorem catalog database.
 Domain: Logic
@@ -131,12 +144,18 @@ theorem dnfCircuit2_correct (v00 v01 v10 v11 : Bool) (assign : Fin 2 → Bool) :
 
 
 
+
+/-- [Section: # CatalogBuild.Logic.Advanced
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 34] -/
 theorem all_2input_from_nand :
     ∀ f : (Fin 2 → Bool) → Bool,
     ∃ c : NandCircuit 2, ∀ assign : Fin 2 → Bool, c.eval assign = f assign := by
   intro f
   use dnfCircuit2 (f ![false, false]) (f ![false, true]) (f ![true, false]) (f ![true, true]);
   native_decide +revert
+
 
 
 
@@ -148,11 +167,13 @@ theorem opticalNand_closed (a b : Bool) :
 
 
 
+
 /-- optHigh ≠ optLow: the two signal levels are distinct. -/
 theorem optHigh_ne_optLow : optHigh ≠ optLow := by
   intro h
   have := congr_arg OpticalSignal.intensity h
   simp [optHigh, optLow] at this
+
 
 
 
@@ -167,10 +188,12 @@ theorem noise_margin :
 
 
 
+
 /-- When both inputs are HIGH, the combined intensity is exactly 2. -/
 theorem both_high_combined :
     (boolToOpt true).intensity + (boolToOpt true).intensity = 2 := by
   simp [boolToOpt, optHigh]; norm_num
+
 
 
 
@@ -182,10 +205,12 @@ theorem threshold_separates :
 
 
 
+
 /-- Composing two MZIs in series: apply MZ₁ then MZ₂. -/
 def MachZehnder.compose (mz₁ mz₂ : MachZehnder) (i₁ i₂ : ℝ) : ℝ × ℝ :=
   let (o₁, o₂) := mz₁.output i₁ i₂
   mz₂.output o₁ o₂
+
 
 
 
@@ -198,10 +223,12 @@ theorem MachZehnder.compose_conserves (mz₁ mz₂ : MachZehnder) (i₁ i₂ : �
 
 
 
+
 /-- The identity MZ composed with any MZ equals that MZ. -/
 theorem MachZehnder.identity_compose (mz : MachZehnder) (i₁ i₂ : ℝ) :
     (MachZehnder.mk 0).compose mz i₁ i₂ = mz.output i₁ i₂ := by
   simp [MachZehnder.compose, MachZehnder.identity]
+
 
 
 
@@ -211,10 +238,12 @@ theorem MachZehnder.swap_swap (i₁ i₂ : ℝ) :
 
 
 
+
 /-- boolToOpt is injective: distinct Booleans give distinct signals. -/
 theorem boolToOpt_injective : Injective boolToOpt := by
   intro a b h
   cases a <;> cases b <;> simp_all [boolToOpt, optHigh, optLow, OpticalSignal.mk.injEq]
+
 
 
 
@@ -226,10 +255,12 @@ theorem optical_encoding_faithful :
 
 
 
+
 /-- An optical circuit with no gates (just an input) is trivially correct. -/
 theorem input_circuit_trivial {n : ℕ} (i : Fin n) (assign : Fin n → Bool) :
     optToBool ((toOptCircuit (NandCircuit.input i)).eval (boolToOpt ∘ assign)) = assign i := by
   simp [toOptCircuit, OptCircuit.eval, optToBool_boolToOpt]
+
 
 
 
@@ -239,9 +270,11 @@ def CircuitEquiv {n : ℕ} (c₁ c₂ : NandCircuit n) : Prop :=
 
 
 
+
 /-- Circuit equivalence is reflexive. -/
 theorem CircuitEquiv.refl {n : ℕ} (c : NandCircuit n) : CircuitEquiv c c :=
   fun _ => rfl
+
 
 
 
@@ -252,10 +285,12 @@ theorem CircuitEquiv.symm {n : ℕ} {c₁ c₂ : NandCircuit n}
 
 
 
+
 /-- Circuit equivalence is transitive. -/
 theorem CircuitEquiv.trans {n : ℕ} {c₁ c₂ c₃ : NandCircuit n}
     (h₁ : CircuitEquiv c₁ c₂) (h₂ : CircuitEquiv c₂ c₃) : CircuitEquiv c₁ c₃ :=
   fun assign => (h₁ assign).trans (h₂ assign)
+
 
 
 
@@ -264,6 +299,7 @@ theorem double_negation {n : ℕ} (c : NandCircuit n) :
     CircuitEquiv (notCircuit (notCircuit c)) c := by
   intro assign
   simp [notCircuit_correct, Bool.not_not]
+
 
 
 
@@ -276,6 +312,7 @@ theorem de_morgan_nand {n : ℕ} (c₁ c₂ : NandCircuit n) :
 
 
 
+
 /-- Optical equivalence is preserved by circuit equivalence:
 equivalent circuits produce the same optical output. -/
 theorem circuit_equiv_optical {n : ℕ} (c₁ c₂ : NandCircuit n) (h : CircuitEquiv c₁ c₂)
@@ -283,6 +320,7 @@ theorem circuit_equiv_optical {n : ℕ} (c₁ c₂ : NandCircuit n) (h : Circuit
     (toOptCircuit c₁).eval (boolToOpt ∘ assign) =
     (toOptCircuit c₂).eval (boolToOpt ∘ assign) := by
   rw [opt_eval_eq_boolToOpt, opt_eval_eq_boolToOpt, h assign]
+
 
 
 

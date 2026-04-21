@@ -19,9 +19,11 @@ structure IntSU2 where
 
 
 
+
 /-- The Clifford+T gate set corresponds to quaternions over ℤ[1/√2].
 At the integer level, these are quaternions with norm 2^k. -/
 def isCliffordT_norm (d : ℕ) : Prop := ∃ k : ℕ, d = 2 ^ k
+
 
 
 
@@ -30,8 +32,10 @@ def isCliffordV_norm (d : ℕ) : Prop := ∃ k : ℕ, d = 5 ^ k
 
 
 
+
 /-- General gate set: norms are powers of a fixed prime p -/
 def isPrimeGateSet_norm (p : ℕ) (d : ℕ) : Prop := ∃ k : ℕ, d = p ^ k
+
 
 
 
@@ -42,6 +46,7 @@ theorem cliffordT_is_prime2 (d : ℕ) :
 
 
 
+
 /-- Clifford+V is the prime-5 gate set -/
 theorem cliffordV_is_prime5 (d : ℕ) :
     isCliffordV_norm d ↔ isPrimeGateSet_norm 5 d := by
@@ -49,8 +54,10 @@ theorem cliffordV_is_prime5 (d : ℕ) :
 
 
 
+
 /-- The σ = 1+i+j+k element used for descent -/
 def sigma_gate : Fin 4 → ℤ := ![1, 1, 1, 1]
+
 
 
 
@@ -60,8 +67,10 @@ theorem sigma_gate_norm : (sigma_gate 0) ^ 2 + (sigma_gate 1) ^ 2 +
 
 
 
+
 /-- The number of elementary gates in a decomposition equals the descent depth -/
 def gateCount (d : ℕ) : ℕ := Nat.log 2 d + 1
+
 
 
 
@@ -73,10 +82,12 @@ theorem gateCount_log (d : ℕ) (hd : 1 < d) :
 
 
 
+
 /-- For Clifford+T (norm 2^k), the gate count is at most k+1 -/
 theorem cliffordT_gateCount (k : ℕ) :
     gateCount (2 ^ k) ≤ k + 1 := by
   unfold gateCount; simp [Nat.log_pow]
+
 
 
 
@@ -88,8 +99,10 @@ def r4_count (d : ℕ) : ℕ :=
 
 
 
+
 /-- r₄(1) = 8 (the 8 Lipschitz units) -/
 theorem r4_one : r4_count 1 = 8 := by native_decide
+
 
 
 
@@ -98,8 +111,10 @@ theorem r4_two : r4_count 2 = 24 := by native_decide
 
 
 
+
 /-- r₄(3) = 32 -/
 theorem r4_three : r4_count 3 = 32 := by native_decide
+
 
 
 
@@ -108,13 +123,16 @@ theorem r4_four : r4_count 4 = 24 := by native_decide
 
 
 
+
 /-- r₄(5) = 48 -/
 theorem r4_five : r4_count 5 = 48 := by native_decide
 
 
 
+
 /-- The T gate corresponds to norm-2 quaternion (1,1,0,0) -/
 def T_quat : Fin 4 → ℤ := ![1, 1, 0, 0]
+
 
 
 
@@ -124,8 +142,10 @@ theorem T_quat_norm : (T_quat 0) ^ 2 + (T_quat 1) ^ 2 +
 
 
 
+
 /-- The Hadamard gate corresponds to norm-2 quaternion (1,0,0,1) -/
 def H_quat : Fin 4 → ℤ := ![1, 0, 0, 1]
+
 
 
 
@@ -135,8 +155,10 @@ theorem H_quat_norm : (H_quat 0) ^ 2 + (H_quat 1) ^ 2 +
 
 
 
+
 /-- The S gate (phase gate) corresponds to norm-1 quaternion (1,0,0,0) -/
 def S_quat : Fin 4 → ℤ := ![1, 0, 0, 0]
+
 
 
 
@@ -146,10 +168,12 @@ theorem S_quat_norm : (S_quat 0) ^ 2 + (S_quat 1) ^ 2 +
 
 
 
+
 /-- For Clifford+T, the descent from norm 2^k takes at most k steps -/
 theorem cliffordT_T_count_bound (k : ℕ) :
     ∃ depth : ℕ, depth ≤ k ∧ ∀ n : ℕ, n = 2 ^ k → n < 2 ^ (depth + 1) :=
   ⟨k, le_refl k, fun n hn => by subst hn; exact Nat.pow_lt_pow_right (by omega) (by omega)⟩
+
 
 
 
@@ -161,6 +185,7 @@ structure GateSet where
 
 
 
+
 /-- The Clifford+T gate set -/
 def cliffordT_gateset : GateSet where
   generators := [T_quat, H_quat, S_quat]
@@ -169,14 +194,17 @@ def cliffordT_gateset : GateSet where
 
 
 
+
 /-- The V gate (fifth root of Z) corresponds to norm-5 quaternion (2,1,0,0) -/
 def V_quat : Fin 4 → ℤ := ![2, 1, 0, 0]
+
 
 
 
 /-- V gate has norm 5 -/
 theorem V_quat_norm : (V_quat 0) ^ 2 + (V_quat 1) ^ 2 +
     (V_quat 2) ^ 2 + (V_quat 3) ^ 2 = 5 := by native_decide
+
 
 
 
@@ -188,10 +216,12 @@ def cliffordV_gateset : GateSet where
 
 
 
+
 /-- For prime p gate set, depth to reach precision ε ~ 1/d is log_p(d) -/
 theorem prime_gateset_depth (p d : ℕ) (hp : 1 < p) (hd : 1 < d) :
     ∃ k : ℕ, d < p ^ k :=
   ⟨Nat.log p d + 1, Nat.lt_pow_succ_log_self hp d⟩
+
 
 
 
@@ -202,6 +232,7 @@ theorem cliffordT_depth (d : ℕ) (hd : 1 < d) :
 
 
 
+
 /-- Clifford+V depth grows as log₅(d), which is smaller -/
 theorem cliffordV_depth (d : ℕ) (hd : 1 < d) :
     ∃ k : ℕ, d < 5 ^ k ∧ k ≤ Nat.log 5 d + 1 :=
@@ -209,10 +240,12 @@ theorem cliffordV_depth (d : ℕ) (hd : 1 < d) :
 
 
 
+
 /-- log₅(d) ≤ log₂(d): Clifford+V uses fewer non-Clifford gates -/
 theorem cliffordV_fewer_layers (d : ℕ) :
     Nat.log 5 d ≤ Nat.log 2 d :=
   Nat.log_anti_left (by omega) (by omega)
+
 
 
 
@@ -225,9 +258,11 @@ def quat_mul (a b : Fin 4 → ℤ) : Fin 4 → ℤ :=
 
 
 
+
 /-- Squared norm of a quaternion -/
 def quat_sqnorm (a : Fin 4 → ℤ) : ℤ :=
   a 0 ^ 2 + a 1 ^ 2 + a 2 ^ 2 + a 3 ^ 2
+
 
 
 
@@ -240,13 +275,16 @@ theorem quat_mul_norm (a b : Fin 4 → ℤ) :
 
 
 
+
 /-- Composing two T-gates gives a norm-4 element -/
 theorem TT_norm : quat_sqnorm (quat_mul T_quat T_quat) = 4 := by native_decide
 
 
 
+
 /-- Composing T and H gives a norm-4 element -/
 theorem TH_norm : quat_sqnorm (quat_mul T_quat H_quat) = 4 := by native_decide
+
 
 
 
@@ -257,9 +295,11 @@ def IsDescentSeq (seq : List (Fin 4 → ℤ)) : Prop :=
 
 
 
+
 /-- A valid gate decomposition: the product of the factors equals the target -/
 def IsDecomposition (target : Fin 4 → ℤ) (factors : List (Fin 4 → ℤ)) : Prop :=
   factors.foldl quat_mul ![1, 0, 0, 0] = target
+
 
 
 
@@ -268,8 +308,10 @@ theorem T_squared : quat_mul T_quat T_quat = ![0, 2, 0, 0] := by native_decide
 
 
 
+
 /-- T⁴ has norm 16 -/
 def T4 : Fin 4 → ℤ := quat_mul (quat_mul T_quat T_quat) (quat_mul T_quat T_quat)
+
 
 
 
@@ -278,6 +320,7 @@ Auto-generated from theorem catalog database.
 Domain: Pythagorean/Applications
 Declarations: 47] -/
 theorem T4_norm : quat_sqnorm T4 = 16 := by native_decide
+
 
 
 
@@ -290,14 +333,17 @@ theorem T8_is_scalar :
 
 
 
+
 /-- Hurwitz has 3x more units than Lipschitz: 24 vs 8 -/
 theorem hurwitz_lipschitz_unit_ratio : (24 : ℕ) = 3 * 8 := by norm_num
+
 
 
 
 /-- The Hurwitz lattice provides denser approximation points at each norm level.
 This is reflected in r₄(2) = 24 giving the 24 vertices of the 24-cell. -/
 theorem hurwitz_24cell : r4_count 2 = 24 := r4_two
+
 
 
 
@@ -322,5 +368,6 @@ theorem quantum_gate_optimization_master :
   · native_decide
   · intro d hd; exact ⟨Nat.log 2 d + 1, Nat.lt_pow_succ_log_self (by omega) d⟩
   · intro d; exact cliffordV_fewer_layers d
+
 
 

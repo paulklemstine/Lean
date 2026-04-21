@@ -19,10 +19,16 @@ theorem stoch_rows (P : Matrix (Fin 2) (Fin 2) ℝ)
 -- Uniform stationary
 
 
+
+/-- [Section: # CatalogBuild.Algebra.StochasticProcesses
+Auto-generated from theorem catalog database.
+Domain: Algebra
+Declarations: 5] -/
 theorem uniform_stat (n : ℕ) (hn : 0 < n) :
     (1 : ℝ) / n * n = 1 := by field_simp
 
 -- Gambler's ruin
+
 
 
 theorem gamblers_ruin_prob (k N : ℕ) (hk : k ≤ N) (hN : 0 < N) :
@@ -32,12 +38,15 @@ theorem gamblers_ruin_prob (k N : ℕ) (hk : k ≤ N) (hN : 0 < N) :
 -- Put-call parity
 
 
+
 theorem put_call (C P S K_disc : ℝ) (h : C - P = S - K_disc) :
     C = P + S - K_disc := by linarith
 
 -- Pollard vs IOF
 
 
+
 theorem pollard_iof (N : ℕ) : Nat.sqrt N ≤ N := Nat.sqrt_le_self N
+
 
 

@@ -13,9 +13,11 @@ def BA : Matrix (Fin 3) (Fin 3) ℤ :=
 
 
 
+
 /-- Berggren matrix B_B (second generator) -/
 def BB : Matrix (Fin 3) (Fin 3) ℤ :=
   !![1, 2, 2; 2, 1, 2; 2, 2, 3]
+
 
 
 
@@ -25,9 +27,11 @@ def BC : Matrix (Fin 3) (Fin 3) ℤ :=
 
 
 
+
 /-- The Lorentz metric matrix: diag(1, 1, -1) -/
 def QLorentz : Matrix (Fin 3) (Fin 3) ℤ :=
   !![1, 0, 0; 0, 1, 0; 0, 0, (-1)]
+
 
 
 
@@ -37,9 +41,11 @@ theorem BA_preserves_lorentz : BAᵀ * QLorentz * BA = QLorentz := by
 
 
 
+
 /-- **Theorem 3.1b**: B_B preserves the Lorentz form: B_Bᵀ Q B_B = Q -/
 theorem BB_preserves_lorentz : BBᵀ * QLorentz * BB = QLorentz := by
   native_decide
+
 
 
 
@@ -49,8 +55,10 @@ theorem BC_preserves_lorentz : BCᵀ * QLorentz * BC = QLorentz := by
 
 
 
+
 /-- det(B_A) = 1: B_A is in SO(2,1;ℤ) -/
 theorem det_BA : Matrix.det BA = 1 := by decide
+
 
 
 
@@ -59,8 +67,10 @@ theorem det_BB : Matrix.det BB = -1 := by decide
 
 
 
+
 /-- det(B_C) = 1: B_C is in SO(2,1;ℤ) -/
 theorem det_BC : Matrix.det BC = 1 := by decide
+
 
 
 
@@ -71,6 +81,7 @@ theorem BA_preserves_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 /-- **Theorem 3.2b**: B_B preserves the Pythagorean equation -/
 theorem BB_preserves_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (a + 2*b + 2*c) ^ 2 + (2*a + b + 2*c) ^ 2 = (2*a + 2*b + 3*c) ^ 2 := by
@@ -78,10 +89,12 @@ theorem BB_preserves_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 /-- **Theorem 3.2c**: B_C preserves the Pythagorean equation -/
 theorem BC_preserves_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (-a + 2*b + 2*c) ^ 2 + (-2*a + b + 2*c) ^ 2 = (-2*a + 2*b + 3*c) ^ 2 := by
   nlinarith [sq_nonneg (a - b), sq_nonneg (a + b)]
+
 
 
 
@@ -97,6 +110,7 @@ def tripleAt : BerggrenPath → ℤ × ℤ × ℤ
   | .stepC p =>
     let (a, b, c) := tripleAt p
     (-a + 2*b + 2*c, -2*a + b + 2*c, -2*a + 2*b + 3*c)
+
 
 
 
@@ -117,10 +131,12 @@ theorem tripleAt_is_pythagorean (p : BerggrenPath) :
 
 
 
+
 /-- **Theorem 3.4**: The factoring identity (c-b)(c+b) = a² -/
 theorem factoring_identity (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (c - b) * (c + b) = a ^ 2 := by
   nlinarith
+
 
 
 
@@ -132,11 +148,13 @@ def pellHyp : ℕ → ℤ
 
 
 
+
 /-- The first leg along the pure B-branch. -/
 def pellLegA : ℕ → ℤ
   | 0 => 3
   | 1 => 21
   | (n + 2) => 6 * pellLegA (n + 1) - pellLegA n
+
 
 
 
@@ -148,13 +166,21 @@ def pellLegB : ℕ → ℤ
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.Berggren.BerggrenLorentzPaper
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Berggren
+Declarations: 28] -/
 theorem pellHyp_2 : pellHyp 2 = 169 := by simp [pellHyp]
+
 
 
 theorem pellHyp_3 : pellHyp 3 = 985 := by simp [pellHyp]
 
 
+
 theorem pellHyp_4 : pellHyp 4 = 5741 := by simp [pellHyp]
+
 
 
 
@@ -173,10 +199,12 @@ theorem A_inv_consecutive_params (m : ℤ) (_hm : 2 ≤ m) :
 
 
 
+
 /-- Pythagorean triples lie on the null cone Q = 0 -/
 theorem pyth_null_cone {a b c : ℤ} (h : a ^ 2 + b ^ 2 = c ^ 2) :
     lorentzQ a b c = 0 := by
   unfold lorentzQ; omega
+
 
 
 
@@ -188,11 +216,13 @@ theorem BA_preserves_Q (a b c : ℤ) :
 
 
 
+
 /-- B_B preserves Q for arbitrary vectors -/
 theorem BB_preserves_Q (a b c : ℤ) :
     lorentzQ a b c =
     lorentzQ (a + 2*b + 2*c) (2*a + b + 2*c) (2*a + 2*b + 3*c) := by
   unfold lorentzQ; ring
+
 
 
 
@@ -204,10 +234,12 @@ theorem BC_preserves_Q (a b c : ℤ) :
 
 
 
+
 /-- For factoring: if N = a is odd and (a,b,c) is a PPT, then
 a² = (c-b)(c+b), which exposes divisors of a² as c±b. -/
 theorem sum_of_squares_factoring (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     a ^ 2 = (c - b) * (c + b) := by
   nlinarith
+
 
 

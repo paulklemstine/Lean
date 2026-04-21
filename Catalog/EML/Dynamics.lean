@@ -14,15 +14,18 @@ def oneMinusLog (x : ℝ) : ℝ := 1 - Real.log x
 
 
 
+
 /-- g(1) = 1: the point x = 1 is a fixed point. -/
 theorem oneMinusLog_fixed_one : oneMinusLog 1 = 1 := by
   simp [oneMinusLog, Real.log_one]
 
 
 
+
 /-- g(e) = 0. -/
 theorem oneMinusLog_at_e : oneMinusLog (Real.exp 1) = 0 := by
   simp [oneMinusLog, Real.log_exp]
+
 
 
 
@@ -33,10 +36,12 @@ theorem oneMinusLog_at_inv_e :
 
 
 
+
 /-- g(g(x)) = 1 - ln(1 - ln(x)) = the second iterate. -/
 theorem oneMinusLog_compose (x : ℝ) :
     oneMinusLog (oneMinusLog x) = 1 - Real.log (1 - Real.log x) := by
   simp [oneMinusLog]
+
 
 
 
@@ -49,9 +54,11 @@ theorem oneMinusLog_deriv (x : ℝ) (hx : x ≠ 0) :
 
 
 
+
 /-- |g'(1)| = 1, so x = 1 is a neutral (non-hyperbolic) fixed point. -/
 theorem oneMinusLog_neutral_fixed_point :
     |(-1 : ℝ) / 1| = 1 := by norm_num
+
 
 
 
@@ -65,6 +72,7 @@ theorem expTower_strictMono_step (x : ℝ) (hx : 0 < x) (n : ℕ) :
   | succ n ih =>
     simp only [expTower]
     exact Real.exp_strictMono ih
+
 
 
 
@@ -84,6 +92,7 @@ theorem expTower_unbounded (x : ℝ) (hx : 0 < x) :
 
 
 
+
 /-- The diagonal iteration: x_{n+1} = exp(x_n) - ln(x_n). -/
 def emlDiagIter (x₀ : ℝ) : ℕ → ℝ
   | 0 => x₀
@@ -91,6 +100,11 @@ def emlDiagIter (x₀ : ℝ) : ℕ → ℝ
 
 
 
+
+/-- [Section: # CatalogBuild.EML.Dynamics
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 17] -/
 theorem emlDiag_increases (x : ℝ) (hx : 0 < x) :
     Real.exp x - Real.log x > x := by
   by_contra! h_contra;
@@ -99,9 +113,11 @@ theorem emlDiag_increases (x : ℝ) (hx : 0 < x) :
 
 
 
+
 /-- The 2D EML map Φ(x, y) = (eml(x,y), eml(y,x)). -/
 def emlPhi (p : ℝ × ℝ) : ℝ × ℝ :=
   (Real.exp p.1 - Real.log p.2, Real.exp p.2 - Real.log p.1)
+
 
 
 
@@ -114,6 +130,7 @@ theorem emlPhi_jacobian (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
 
 
 
+
 /-- The trace of the Jacobian. -/
 theorem emlPhi_trace (x y : ℝ) :
     Real.exp x + Real.exp y > 0 := by
@@ -121,8 +138,10 @@ theorem emlPhi_trace (x y : ℝ) :
 
 
 
+
 /-- A period-2 point of g satisfies g(g(x)) = x. -/
 def isPeriod2 (x : ℝ) : Prop := oneMinusLog (oneMinusLog x) = x
+
 
 
 
@@ -132,10 +151,12 @@ theorem one_is_period2 : isPeriod2 1 := by
 
 
 
+
 /-- Any fixed point is also a period-2 point. -/
 theorem fixed_implies_period2 (x : ℝ) (hx : oneMinusLog x = x) :
     isPeriod2 x := by
   simp [isPeriod2, hx]
+
 
 
 

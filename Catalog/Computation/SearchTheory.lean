@@ -13,10 +13,12 @@ def SearchStrategy (α : Type*) := ℕ → α
 
 
 
+
 /-- The `searchImage` of a strategy after `n` rounds is the set of all
 guesses made in rounds 0 through n-1. -/
 def searchImage {α : Type*} [DecidableEq α] (s : SearchStrategy α) (n : ℕ) : Finset α :=
   (Finset.range n).image s
+
 
 
 
@@ -26,6 +28,7 @@ structure Attractor (α : Type*) where
   target : Set α
   search : SearchStrategy α
   finds  : ∀ n, search n ∈ target
+
 
 
 
@@ -41,10 +44,12 @@ structure Repulsor (α : Type*) where
 
 
 
+
 /-- **Trivial Attractor**: The identity function is a surjective search
 strategy on ℕ — it finds every natural number. -/
 theorem attractor_identity_surjective : Surjective (id : ℕ → ℕ) := by
   exact fun x => ⟨x, rfl⟩
+
 
 
 
@@ -53,6 +58,7 @@ a search strategy that finds elements of that set at every round. -/
 theorem infinite_set_searchable (S : Set ℕ) (hS : S.Infinite) :
     ∃ f : ℕ → ℕ, ∀ n, f n ∈ S := by
   exact ⟨fun _ => hS.nonempty.some, fun _ => hS.nonempty.some_mem⟩
+
 
 
 
@@ -70,12 +76,14 @@ theorem attractor_exists_for_infinite (S : Set ℕ) (hS : S.Infinite) :
 
 
 
+
 /-- **Finite Evasion Theorem**: Given any finite set of guesses,
 there exists a natural number not among them. This is the most
 basic form of the repulsor phenomenon. -/
 theorem finite_evasion (guesses : Finset ℕ) :
     ∃ t : ℕ, t ∉ guesses := by
   exact Finset.exists_notMem _
+
 
 
 
@@ -88,6 +96,7 @@ theorem evasion_bound (guesses : Finset ℕ) :
   exact absurd (Finset.card_le_card
     (show guesses ⊇ Finset.Icc 0 #guesses from fun x hx ↦ by aesop))
     (by simp +arith +decide)
+
 
 
 
@@ -108,6 +117,7 @@ theorem evasion_pigeonhole (n : ℕ) (guesses : Fin n → ℕ) :
 
 
 
+
 /-- **Diagonal Avoidance Theorem**: For any doubly-indexed family of
 natural numbers f(i, j), there exists a function g that differs
 from f(i, ·) at position i for every i. This is the engine of all
@@ -115,6 +125,7 @@ repulsor constructions. -/
 theorem diagonal_avoidance (f : ℕ → ℕ → ℕ) :
     ∃ g : ℕ → ℕ, ∀ i, g i ≠ f i i := by
   exact ⟨fun i => f i i + 1, fun i => Nat.succ_ne_self _⟩
+
 
 
 
@@ -135,6 +146,7 @@ theorem cantor_repulsor : ∀ f : ℕ → (ℕ → Bool), ¬ Surjective f := by
 
 
 
+
 /-- **Round-by-Round Evasion**: No matter what search strategy is used,
 at every round n there exists a point that has not been guessed in
 any of rounds 0 through n. -/
@@ -145,11 +157,13 @@ theorem evasion_game_round (search : ℕ → ℕ) (n : ℕ) :
 
 
 
+
 /-- **Search Monotonicity**: The set of discovered elements never shrinks.
 Adding more rounds of search can only increase coverage. -/
 theorem search_monotone (s : SearchStrategy ℕ) (m n : ℕ) (h : m ≤ n) :
     searchImage s m ⊆ searchImage s n := by
   exact Finset.image_subset_image <| Finset.range_mono h
+
 
 
 
@@ -165,11 +179,13 @@ theorem evasion_set_nonempty (search : ℕ → ℕ) (n : ℕ) :
 
 
 
+
 /-- **No Fixed Repulsor**: No single natural number can evade ALL search
 strategies. For any target t, the constant strategy s(n) = t finds it. -/
 theorem no_fixed_repulsor (t : ℕ) :
     ∃ (s : SearchStrategy ℕ) (n : ℕ), s n = t := by
   exact ⟨fun _ => t, 0, rfl⟩
+
 
 
 
@@ -181,6 +197,7 @@ with fixed search. -/
 theorem repulsor_requires_adaptation (s : SearchStrategy ℕ) (n : ℕ) :
     ∃ t : ℕ, ∀ i, i ≤ n → s i ≠ t := by
   exact evasion_game_round s n
+
 
 
 
@@ -197,6 +214,7 @@ theorem complement_evasion (s : SearchStrategy ℕ) (h : ¬ Surjective s) :
 
 
 
+
 /-- **Safe Position Count**: After making k guesses in {0, …, N-1},
 at least N - k positions remain "safe" (unchosen). -/
 theorem safe_positions_count (N k : ℕ) (guesses : Finset ℕ)
@@ -207,11 +225,13 @@ theorem safe_positions_count (N k : ℕ) (guesses : Finset ℕ)
 
 
 
+
 /-- **Evasion Probability Bound**: In a universe of size N with k guesses,
 the fraction of the universe that is "safe" is at least (N - k) / N. -/
 theorem evasion_ratio (N k : ℕ) (_hN : 0 < N) (hk : k ≤ N) :
     (N - k : ℚ) / N ≥ 0 := by
   exact div_nonneg (sub_nonneg.mpr (Nat.cast_le.mpr hk)) (Nat.cast_nonneg _)
+
 
 
 
@@ -224,6 +244,7 @@ theorem evasion_ratio_decreasing (N k : ℕ) (_hN : 0 < N) (_hk : k + 1 ≤ N) :
 -- ════════════════════════════════════════════════════════════════
 -- § 8. THE FUNDAMENTAL THEOREM OF SEARCH DUALITY
 -- ════════════════════════════════════════════════════════════════
+
 
 
 
@@ -245,6 +266,7 @@ theorem search_duality :
 
 
 
+
 /-- **Meta-Evasion**: Not only can we evade a single search, but for
 any countable family of search strategies, at every finite stage
 there exists a point evading ALL of them simultaneously. -/
@@ -256,6 +278,7 @@ theorem meta_evasion (strategies : ℕ → SearchStrategy ℕ) (n : ℕ) :
   exact ⟨h.choose, fun i hi j hj hij => h.choose_spec <| Finset.mem_image.mpr
     ⟨(i, j), Finset.mem_product.mpr ⟨Finset.mem_range.mpr (by linarith),
       Finset.mem_range.mpr (by linarith)⟩, hij⟩⟩
+
 
 
 
@@ -273,5 +296,6 @@ theorem repulsor_exists_bool_functions :
       have := congr_fun h n
       by_cases h' : s n n <;> simp +decide [h'] at this
   }
+
 
 

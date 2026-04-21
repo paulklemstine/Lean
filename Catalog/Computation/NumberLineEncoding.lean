@@ -14,6 +14,7 @@ def cantorPair (a b : ℕ) : ℕ := (a + b) * (a + b + 1) / 2 + b
 
 
 
+
 /-- The Cantor pairing function is injective. -/
 theorem cantorPair_injective : Function.Injective (fun p : ℕ × ℕ => cantorPair p.1 p.2) := by
   intro p q h;
@@ -24,11 +25,13 @@ theorem cantorPair_injective : Function.Injective (fun p : ℕ × ℕ => cantorP
 
 
 
+
 /-- Zigzag encoding: ℤ → ℕ.
 0 ↦ 0, 1 ↦ 1, -1 ↦ 2, 2 ↦ 3, -2 ↦ 4, ... -/
 def zigzagEncode : ℤ → ℕ
   | Int.ofNat n => 2 * n
   | Int.negSucc n => 2 * n + 1
+
 
 
 
@@ -41,9 +44,11 @@ theorem zigzagEncode_injective : Function.Injective zigzagEncode := by
 
 
 
+
 /-- Encode a Gaussian integer (photon state) as a natural number -/
 def encodeGaussian (z : ℤ × ℤ) : ℕ :=
   cantorPair (zigzagEncode z.1) (zigzagEncode z.2)
+
 
 
 
@@ -53,6 +58,7 @@ theorem encodeGaussian_injective : Function.Injective encodeGaussian := by
   have h_eq : (zigzagEncode x.1, zigzagEncode x.2) = (zigzagEncode y.1, zigzagEncode y.2) := by
     apply cantorPair_injective; assumption;
   exact Prod.ext ( zigzagEncode_injective <| by aesop ) ( zigzagEncode_injective <| by aesop )
+
 
 
 
@@ -87,9 +93,11 @@ theorem encodeGaussian_surjective : Function.Surjective encodeGaussian := by
 
 
 
+
 /-- A finite simple graph on n vertices, represented by its adjacency matrix. -/
 structure FiniteGraph (n : ℕ) where
   adjacency : Fin n → Fin n → Bool
+
 
 
 
@@ -98,6 +106,7 @@ def encodeGraph {n : ℕ} (G : FiniteGraph n) : ℕ :=
   ∑ i : Fin n, ∑ j : Fin n, if G.adjacency i j then 2^(i.val * n + j.val) else 0
 
 set_option maxHeartbeats 1600000 in
+
 
 
 /-- The graph encoding is injective: different graphs get different numbers. -/
@@ -148,11 +157,13 @@ theorem encodeGraph_injective (n : ℕ) :
 
 
 
+
 /-- A labeled photon event graph. -/
 structure LabeledPhotonGraph (n : ℕ) where
   coords : Fin n → ℤ × ℤ × ℤ
   connected : Fin n → Fin n → Bool
   entangled : Fin n → Fin n → Fin n → Bool
+
 
 
 
@@ -168,8 +179,10 @@ def encodeLabeledPhotonGraph {n : ℕ} (G : LabeledPhotonGraph n) : ℕ :=
 
 
 
+
 /-- A photon history: for each time step, did a photon event occur? -/
 def PhotonHistory := ℕ → Bool
+
 
 
 
@@ -179,9 +192,11 @@ noncomputable def encodeHistory (h : PhotonHistory) : ℝ :=
 
 
 
+
 /-- The encoded history is non-negative. -/
 theorem encodeHistory_nonneg (h : PhotonHistory) : 0 ≤ encodeHistory h := by
   exact tsum_nonneg fun _ => by positivity;
+
 
 
 
@@ -196,6 +211,7 @@ theorem encodeHistory_le_one (h : PhotonHistory) : encodeHistory h ≤ 1 := by
 
 
 
+
 /-- A history is "non-degenerate" if it is not eventually all-true.
 This avoids the 0.111... = 1.000... ambiguity. -/
 def PhotonHistory.nonDegenerate (h : PhotonHistory) : Prop :=
@@ -203,6 +219,11 @@ def PhotonHistory.nonDegenerate (h : PhotonHistory) : Prop :=
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.NumberLineEncoding
+Auto-generated from theorem catalog database.
+Domain: Computation
+Declarations: 20] -/
 theorem encodeHistory_injective_nonDegenerate :
     ∀ h₁ h₂ : PhotonHistory,
     h₁.nonDegenerate → h₂.nonDegenerate →
@@ -247,10 +268,12 @@ theorem encodeHistory_injective_nonDegenerate :
 
 
 
+
 theorem photon_codes_surjective :
     ∀ n : ℕ, ∃ z : ℤ × ℤ, encodeGaussian z = n := by
   intro n;
   convert encodeGaussian_surjective n using 1
+
 
 
 
@@ -261,6 +284,7 @@ The entire photon universe is indexed by the natural numbers. -/
 theorem photon_encoding_bijective :
     Function.Bijective encodeGaussian := by
   exact ⟨encodeGaussian_injective, fun n => photon_codes_surjective n⟩
+
 
 
 end

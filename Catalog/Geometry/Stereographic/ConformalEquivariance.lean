@@ -1,5 +1,3 @@
-import Mathlib
-
 /-! # CatalogBuild.Geometry.Stereographic.ConformalEquivariance
 
 Auto-generated from theorem catalog database.
@@ -7,6 +5,7 @@ Domain: Geometry/Stereographic
 Declarations: 17
 -/
 
+import Mathlib
 
 noncomputable section
 
@@ -16,9 +15,11 @@ def rotationAction (n : ℕ) (R : Fin n → Fin n → ℝ) (x : Fin n → ℝ) :
 
 
 
+
 /-- Dilation action: scales a vector by a positive factor. -/
 def dilationAction (lambda : ℝ) (n : ℕ) (x : Fin n → ℝ) : Fin n → ℝ :=
   fun i => lambda * x i
+
 
 
 
@@ -29,9 +30,11 @@ def inversionAction (n : ℕ) (x : Fin n → ℝ) : Fin n → ℝ :=
 
 
 
+
 /-- The squared norm of a vector. -/
 def vecSqNorm' (n : ℕ) (x : Fin n → ℝ) : ℝ :=
   ∑ i, (x i) ^ 2
+
 
 
 
@@ -39,6 +42,7 @@ def vecSqNorm' (n : ℕ) (x : Fin n → ℝ) : ℝ :=
 def stereoKernel' (n : ℕ) (x y : Fin n → ℝ) : ℝ :=
   (4 * ∑ i, x i * y i + (vecSqNorm' n x - 1) * (vecSqNorm' n y - 1)) /
   ((1 + vecSqNorm' n x) * (1 + vecSqNorm' n y))
+
 
 
 
@@ -59,6 +63,11 @@ theorem rotation_preserves_sqnorm (n : ℕ) (R : Fin n → Fin n → ℝ) (x : F
 
 
 
+
+/-- [Section: # CatalogBuild.Geometry.Stereographic.ConformalEquivariance
+Auto-generated from theorem catalog database.
+Domain: Geometry/Stereographic
+Declarations: 17] -/
 theorem rotation_preserves_inner (n : ℕ) (R : Fin n → Fin n → ℝ) (x y : Fin n → ℝ)
     (hR : ∀ i j, ∑ k, R k i * R k j = if i = j then 1 else 0) :
     ∑ i, rotationAction n R x i * rotationAction n R y i =
@@ -68,6 +77,7 @@ theorem rotation_preserves_inner (n : ℕ) (R : Fin n → Fin n → ℝ) (x y : 
     simp +decide only [Finset.sum_mul _ _ _, mul_sum, mul_left_comm, mul_comm];
     exact?;
   unfold rotationAction; aesop;
+
 
 
 
@@ -82,6 +92,7 @@ theorem rotationKernel_invariant (n : ℕ) (R : Fin n → Fin n → ℝ) (x y : 
 
 
 
+
 /-- The squared norm scales quadratically under dilation. -/
 theorem dilation_sqnorm (lambda : ℝ) (n : ℕ) (x : Fin n → ℝ) :
     vecSqNorm' n (dilationAction lambda n x) = lambda ^ 2 * vecSqNorm' n x := by
@@ -90,11 +101,13 @@ theorem dilation_sqnorm (lambda : ℝ) (n : ℕ) (x : Fin n → ℝ) :
 
 
 
+
 /-- The inner product scales linearly in each factor under dilation. -/
 theorem dilation_inner (lambda : ℝ) (n : ℕ) (x y : Fin n → ℝ) :
     ∑ i, dilationAction lambda n x i * y i = lambda * ∑ i, x i * y i := by
   unfold dilationAction
   simp [Finset.mul_sum, mul_assoc]
+
 
 
 
@@ -111,10 +124,12 @@ def conformalEquivariantLayer (seqLen d : ℕ) (T : ℝ)
 
 
 
+
 /-- Conformal weights are positive. -/
 theorem conformalWeight_pos (d : ℕ) (T : ℝ) (x y : Fin d → ℝ) :
     0 < Real.exp (stereoKernel' d x y / T) :=
   exp_pos _
+
 
 
 
@@ -126,11 +141,13 @@ theorem conformalWeight_sum_pos (seqLen d : ℕ) (T : ℝ)
 
 
 
+
 /-- Composing two equivariant layers yields an equivariant layer. -/
 def composedEquivariantLayers (seqLen d : ℕ) (T₁ T₂ : ℝ)
     (X V₁ V₂ : Fin seqLen → Fin d → ℝ) : Fin seqLen → Fin d → ℝ :=
   let intermediate := conformalEquivariantLayer seqLen d T₁ X V₁
   conformalEquivariantLayer seqLen d T₂ X intermediate
+
 
 
 
@@ -141,10 +158,12 @@ theorem conformal_factor_at_origin (d : ℕ) :
 
 
 
+
 /-- The conformal factor is always positive. -/
 theorem conformal_factor_pos' (d : ℕ) (x : Fin d → ℝ) :
     0 < 2 / (1 + vecSqNorm' d x) := by
   unfold vecSqNorm'; positivity
+
 
 
 
@@ -154,6 +173,7 @@ theorem conformal_factor_le_two' (d : ℕ) (x : Fin d → ℝ) :
   unfold vecSqNorm'
   exact div_le_self (by positivity)
     (le_add_of_nonneg_right (Finset.sum_nonneg fun _ _ => sq_nonneg _))
+
 
 
 

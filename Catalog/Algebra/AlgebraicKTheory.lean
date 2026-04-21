@@ -17,9 +17,15 @@ theorem z_units' : ∀ n : ℤ, IsUnit n → n = 1 ∨ n = -1 := by
 -- Steinberg relation
 
 
+
+/-- [Section: # CatalogBuild.Algebra.AlgebraicKTheory
+Auto-generated from theorem catalog database.
+Domain: Algebra
+Declarations: 6] -/
 theorem steinberg_neg1 : (-1 : ℤ) + 2 = 1 := by norm_num
 
 -- Atiyah-Singer index = Euler characteristic
+
 
 
 theorem index_euler' (b : Fin 3 → ℤ) :
@@ -29,10 +35,12 @@ theorem index_euler' (b : Fin 3 → ℤ) :
 -- Navier-Stokes energy bound
 
 
+
 theorem ns_energy_bound' (u0_squared : ℝ) (nu : ℝ) (hu : 0 < u0_squared) (hnu : 0 < nu) :
     u0_squared / (2 * nu) > 0 := by positivity
 
 -- NS scaling dimension
+
 
 
 theorem ns_scaling' : (-1 : ℤ) + 3 * (-1) + 2 * (-2) = -8 := by ring
@@ -40,6 +48,8 @@ theorem ns_scaling' : (-1 : ℤ) + 3 * (-1) + 2 * (-2) = -8 := by ring
 -- 2D NS has global regularity (Ladyzhenskaya)
 
 
+
 theorem ns_2d_regularity' : (2 : ℕ) < 3 := by norm_num
+
 
 

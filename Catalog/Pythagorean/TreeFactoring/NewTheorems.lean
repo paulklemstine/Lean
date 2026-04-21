@@ -17,12 +17,14 @@ theorem triple_channel_left_product (a b c d : ℤ)
 
 
 
+
 /-- **Triple Channel Right Product**: Similarly for (d+a)(d+b)(d+c). -/
 theorem triple_channel_right_product (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     (d + a) * (d + b) * (d + c) =
     d^3 + d^2*(a+b+c) + d*(a*b + a*c + b*c) + a*b*c := by
   ring
+
 
 
 
@@ -39,11 +41,13 @@ theorem full_channel_product (a b c d : ℤ)
 
 
 
+
 /-- **Channel Sum**: Sum of all three channels equals 2d². -/
 theorem channel_sum_eq_2d_sq (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     (a^2 + b^2) + (a^2 + c^2) + (b^2 + c^2) = 2 * d ^ 2 := by
   linarith
+
 
 
 
@@ -54,6 +58,7 @@ theorem channel_determined (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     b^2 + c^2 = 2 * d^2 - (a^2 + b^2) - (a^2 + c^2) := by
   linarith
+
 
 
 
@@ -69,6 +74,7 @@ theorem cross_channel_gcd_prime (a b c d : ℤ)
 
 
 
+
 /-- **Factor Cascade**: If p | (b²-c²) = (b-c)(b+c) and p is prime, then
 p | (b-c) or p | (b+c), giving direct information about b,c mod p. -/
 theorem factor_cascade (b c p : ℤ) (hp : Prime p) (hdvd : p ∣ (b^2 - c^2)) :
@@ -76,6 +82,7 @@ theorem factor_cascade (b c p : ℤ) (hp : Prime p) (hdvd : p ∣ (b^2 - c^2)) :
   have : b^2 - c^2 = (b - c) * (b + c) := by ring
   rw [this] at hdvd
   exact hp.dvd_or_dvd hdvd
+
 
 
 
@@ -91,10 +98,12 @@ theorem dual_channel_factor (a b c d : ℤ)
 
 
 
+
 /-- **Quadruple Scaling Preserves Channels**: Scaling (a,b,c,d) → (ka,kb,kc,kd)
 multiplies each channel value by k². -/
 theorem scaling_channels (a b c d k : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
     (k*a)^2 + (k*b)^2 = k^2 * (a^2 + b^2) := by ring
+
 
 
 
@@ -106,11 +115,13 @@ theorem product_d_factoring (d₁ d₂ : ℤ) :
 
 
 
+
 /-- **Mod-p Fingerprint**: For a prime p | d, the triple (a mod p, b mod p, c mod p)
 satisfies a² + b² + c² ≡ 0 (mod p²). This constrains the point to a conic mod p. -/
 theorem mod_p_fingerprint (a b c d p : ℤ) (h : a^2 + b^2 + c^2 = d^2)
     (hp : p ∣ d) : p^2 ∣ (a^2 + b^2 + c^2) := by
   rw [h]; exact pow_dvd_pow_of_dvd hp 2
+
 
 
 
@@ -126,6 +137,7 @@ theorem fingerprint_compatibility (a₁ b₁ c₁ a₂ b₂ c₂ d p : ℤ)
 
 
 
+
 /-- **Fingerprint Difference**: The difference of fingerprints is divisible by p². -/
 theorem fingerprint_difference (a₁ b₁ c₁ a₂ b₂ c₂ d p : ℤ)
     (h₁ : a₁^2 + b₁^2 + c₁^2 = d^2)
@@ -134,6 +146,7 @@ theorem fingerprint_difference (a₁ b₁ c₁ a₂ b₂ c₂ d p : ℤ)
     p^2 ∣ ((a₁^2 + b₁^2 + c₁^2) - (a₂^2 + b₂^2 + c₂^2)) := by
   have : (a₁^2 + b₁^2 + c₁^2) - (a₂^2 + b₂^2 + c₂^2) = 0 := by linarith
   simp [this]
+
 
 
 
@@ -148,11 +161,13 @@ structure PythagoreanQuintuple where
 
 
 
+
 /-- **Six Channels for Quintuples**: Each quintuple gives six channel values
 (one for each pair of the four spatial components). -/
 theorem quint_channel_ab (q : PythagoreanQuintuple) :
     (q.e - q.a) * (q.e + q.a) = q.b^2 + q.c^2 + q.d^2 := by
   have := q.quint_eq; nlinarith
+
 
 
 
@@ -166,10 +181,12 @@ theorem quint_channel_cd (q : PythagoreanQuintuple) :
 
 
 
+
 /-- **Quintuple Channel Sum**: Sum of all four single-variable channels = 3e². -/
 theorem quint_channel_sum (a b c d e : ℤ) (h : a^2 + b^2 + c^2 + d^2 = e^2) :
     (b^2+c^2+d^2) + (a^2+c^2+d^2) + (a^2+b^2+d^2) + (a^2+b^2+c^2) = 3 * e^2 := by
   linarith
+
 
 
 
@@ -180,8 +197,14 @@ theorem quint_pair_channel_ab (a b c d e : ℤ) (h : a^2 + b^2 + c^2 + d^2 = e^2
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.TreeFactoring.NewTheorems
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/TreeFactoring
+Declarations: 44] -/
 theorem quint_pair_channel_ac (a b c d e : ℤ) (h : a^2 + b^2 + c^2 + d^2 = e^2) :
     (e^2 - a^2 - c^2) = b^2 + d^2 := by linarith
+
 
 
 
@@ -190,8 +213,10 @@ theorem quint_pair_channel_ad (a b c d e : ℤ) (h : a^2 + b^2 + c^2 + d^2 = e^2
 
 
 
+
 theorem quint_pair_channel_bc (a b c d e : ℤ) (h : a^2 + b^2 + c^2 + d^2 = e^2) :
     (e^2 - b^2 - c^2) = a^2 + d^2 := by linarith
+
 
 
 
@@ -200,8 +225,10 @@ theorem quint_pair_channel_bd (a b c d e : ℤ) (h : a^2 + b^2 + c^2 + d^2 = e^2
 
 
 
+
 theorem quint_pair_channel_cd (a b c d e : ℤ) (h : a^2 + b^2 + c^2 + d^2 = e^2) :
     (e^2 - c^2 - d^2) = a^2 + b^2 := by linarith
+
 
 
 
@@ -209,6 +236,7 @@ theorem quint_pair_channel_cd (a b c d e : ℤ) (h : a^2 + b^2 + c^2 + d^2 = e^2
 theorem quint_six_channel_sum (a b c d e : ℤ) (h : a^2 + b^2 + c^2 + d^2 = e^2) :
     (c^2+d^2) + (b^2+d^2) + (b^2+c^2) + (a^2+d^2) + (a^2+c^2) + (a^2+b^2) = 3 * e^2 := by
   linarith
+
 
 
 
@@ -220,11 +248,13 @@ theorem primitive_parity (a b c d : ℤ)
 
 
 
+
 /-- **Two Quadruples Factor Extraction**: Given two quadruples (a₁,b₁,c₁,d) and
 (a₂,b₂,c₂,d), the value gcd(d-c₁, d-c₂) divides d when c₁ ≢ c₂ (mod d). -/
 theorem two_quad_gcd_divides (c₁ c₂ d : ℤ) :
     ∃ k : ℤ, (d - c₁) - (d - c₂) = c₂ - c₁ := by
   exact ⟨1, by ring⟩
+
 
 
 
@@ -240,6 +270,7 @@ theorem cross_rep_gcd_constraint (c₁ c₂ d g : ℤ)
 
 
 
+
 theorem no_balanced_quadruple (a d : ℤ) (ha : a ≠ 0)
     (h : a^2 + a^2 + a^2 = d^2) : False := by
   have h3 : 3 * a^2 = d^2 := by linarith
@@ -252,6 +283,7 @@ theorem no_balanced_quadruple (a d : ℤ) (ha : a ≠ 0)
 
 
 
+
 /-- **Near-Balanced Channels**: When two components are equal (a = b),
 we get 2a² + c² = d², i.e., (d-c)(d+c) = 2a². -/
 theorem near_balanced_channel (a c d : ℤ)
@@ -260,10 +292,12 @@ theorem near_balanced_channel (a c d : ℤ)
 
 
 
+
 /-- **Pell Connection**: The near-balanced case 2a² + c² = d² is a generalized Pell equation.
 When c = 1, 2a² + 1 = d² ↔ d² - 2a² = 1, which is the Pell equation for √2. -/
 theorem pell_connection (a d : ℤ) (h : a^2 + a^2 + 1 = d^2) :
     d^2 - 2 * a^2 = 1 := by linarith
+
 
 
 
@@ -278,6 +312,7 @@ theorem three_rep_difference (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
     (h₂ : a₂^2 + b₂^2 + c₂^2 = d^2) :
     (a₁^2 + b₁^2) - (a₂^2 + b₂^2) = c₂^2 - c₁^2 := by
   linarith
+
 
 
 
@@ -296,6 +331,7 @@ theorem channel_cross_product (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
 
 
 
+
 /-- **Brahmagupta Dual Representations from Two Quadruples**: The cross-product
 (a₁²+b₁²)(a₂²+b₂²) equals both (a₁a₂-b₁b₂)²+(a₁b₂+b₁a₂)² and
 (a₁a₂+b₁b₂)²+(a₁b₂-b₁a₂)². The difference between these two representations
@@ -304,6 +340,7 @@ the product of the four original components. -/
 theorem brahmagupta_cross_factoring (a₁ b₁ a₂ b₂ : ℤ) :
     (a₁*a₂ - b₁*b₂)^2 + (a₁*b₂ + b₁*a₂)^2 -
     ((a₁*a₂ + b₁*b₂)^2 + (a₁*b₂ - b₁*a₂)^2) = 0 := by ring
+
 
 
 
@@ -320,12 +357,14 @@ theorem multi_channel_congruence_c (c d p : ℤ)
 
 
 
+
 theorem multi_channel_congruence_c' (c d p : ℤ)
     (hp_d : p ∣ d) (hp_dc : p ∣ (d + c)) :
     p ∣ c := by
   have : c = (d + c) - d := by ring
   rw [this]
   exact dvd_sub hp_dc hp_d
+
 
 
 
@@ -341,9 +380,11 @@ theorem strengthened_dichotomy (a b c d p : ℤ)
 
 
 
+
 /-- **Norm Map**: Define N(a,b,c) = a²+b²+c² as the "quadruple norm".
 A Pythagorean quadruple is an integer point where N(a,b,c) is a perfect square. -/
 def quadNorm (a b c : ℤ) : ℤ := a^2 + b^2 + c^2
+
 
 
 
@@ -354,10 +395,12 @@ theorem quadNorm_nonneg (a b c : ℤ) : 0 ≤ quadNorm a b c := by
 
 
 
+
 /-- **Norm multiplicativity under scaling**. -/
 theorem quadNorm_scaling (a b c k : ℤ) :
     quadNorm (k*a) (k*b) (k*c) = k^2 * quadNorm a b c := by
   unfold quadNorm; ring
+
 
 
 
@@ -370,10 +413,12 @@ theorem quadNorm_sum (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ) :
 
 
 
+
 /-- **Representation Inner Product**: For two quadruples with the same d,
 define their inner product as a₁a₂ + b₁b₂ + c₁c₂. -/
 def repInnerProduct (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ) : ℤ :=
   a₁*a₂ + b₁*b₂ + c₁*c₂
+
 
 
 
@@ -386,6 +431,7 @@ theorem inner_product_sq_bound (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
 
 
 
+
 /-- **Difference Norm via Inner Product**: ‖v₁-v₂‖² = 2d² - 2⟨v₁,v₂⟩. -/
 theorem diff_norm_from_inner (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
     (h₁ : a₁^2 + b₁^2 + c₁^2 = d^2)
@@ -393,6 +439,7 @@ theorem diff_norm_from_inner (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
     quadNorm (a₁-a₂) (b₁-b₂) (c₁-c₂) =
     2 * d^2 - 2 * repInnerProduct a₁ b₁ c₁ a₂ b₂ c₂ := by
   unfold quadNorm repInnerProduct; nlinarith
+
 
 
 
@@ -408,5 +455,6 @@ theorem factor_orbit_reduction (a b c d p : ℤ) (hp : p ≠ 0)
   obtain ⟨b', rfl⟩ := hb
   obtain ⟨c', rfl⟩ := hc
   exact ⟨a', b', c', rfl, rfl, rfl, by nlinarith⟩
+
 
 

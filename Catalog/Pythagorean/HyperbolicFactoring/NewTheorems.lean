@@ -19,6 +19,7 @@ theorem pathMatrix_det_abs (p : BPath) : |Matrix.det (pathMatrix p)| = 1 := by
 
 
 
+
 /-- **Parallel Independence:** Subtree computations are independent. -/
 theorem parallel_independence (p₁ suffix : BPath) :
     tripleAt (p₁ ++ suffix) = pathMatrix p₁ *ᵥ (tripleAt suffix) := by
@@ -26,10 +27,12 @@ theorem parallel_independence (p₁ suffix : BPath) :
 
 
 
+
 /-- **Parallel Composition:** Workers can combine results via matrix multiplication. -/
 theorem parallel_composition (p₁ p₂ : BPath) :
     pathMatrix (p₁ ++ p₂) = pathMatrix p₁ * pathMatrix p₂ :=
   pathMatrix_append p₁ p₂
+
 
 
 
@@ -41,9 +44,11 @@ theorem parallel_det_compose (p₁ p₂ : BPath) :
 
 
 
+
 /-- **Branch Disjointness:** B₁ and B₂ produce distinct hypotenuses. -/
 theorem branch_disjoint_L_M (a b c : ℤ) (hb : b ≠ 0) :
     2 * a - 2 * b + 3 * c ≠ 2 * a + 2 * b + 3 * c := by omega
+
 
 
 
@@ -53,9 +58,11 @@ theorem branch_disjoint_L_R (a b c : ℤ) (hab : a ≠ b) :
 
 
 
+
 /-- B₂ and B₃ produce distinct hypotenuses when a ≠ 0. -/
 theorem branch_disjoint_M_R (a b c : ℤ) (ha : a ≠ 0) :
     2 * a + 2 * b + 3 * c ≠ -2 * a + 2 * b + 3 * c := by omega
+
 
 
 
@@ -65,13 +72,20 @@ theorem paths_at_depth (k : ℕ) : 3 ^ k ≥ 1 :=
 
 
 
+
 /-- The (3,1)-Lorentz metric. -/
 def η₄ : Matrix (Fin 4) (Fin 4) ℤ :=
   !![1, 0, 0, 0; 0, 1, 0, 0; 0, 0, 1, 0; 0, 0, 0, (-1)]
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.HyperbolicFactoring.NewTheorems
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/HyperbolicFactoring
+Declarations: 44] -/
 theorem η₄_involution : η₄ * η₄ = 1 := by native_decide
+
 
 
 
@@ -79,8 +93,10 @@ def Q₄ (a b c d : ℤ) : ℤ := a ^ 2 + b ^ 2 + c ^ 2 - d ^ 2
 
 
 
+
 theorem quad_null_cone (a b c d : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     Q₄ a b c d = 0 := by simp [Q₄]; linarith
+
 
 
 
@@ -90,10 +106,13 @@ def G₄ : Matrix (Fin 4) (Fin 4) ℤ :=
 
 
 
+
 theorem G₄_preserves_η₄ : G₄ᵀ * η₄ * G₄ = η₄ := by native_decide
 
 
+
 theorem G₄_det : Matrix.det G₄ = -1 := by native_decide
+
 
 
 
@@ -103,24 +122,31 @@ def G₄' : Matrix (Fin 4) (Fin 4) ℤ :=
 
 
 
+
 theorem G₄'_preserves_η₄ : G₄'ᵀ * η₄ * G₄' = η₄ := by native_decide
+
 
 
 theorem G₄'_det : Matrix.det G₄' = -1 := by native_decide
 
 
 
+
 theorem R₁₂_preserves_η₄ : R₁₂ᵀ * η₄ * R₁₂ = η₄ := by native_decide
+
 
 
 theorem R₁₂_det : Matrix.det R₁₂ = 1 := by native_decide
 
 
 
+
 theorem R₂₃_preserves_η₄ : R₂₃ᵀ * η₄ * R₂₃ = η₄ := by native_decide
 
 
+
 theorem R₂₃_det : Matrix.det R₂₃ = 1 := by native_decide
+
 
 
 
@@ -130,9 +156,11 @@ theorem compose_preserves_η₄ :
 
 
 
+
 /-- **Quadruple Factoring Identity.** -/
 theorem quad_factoring (a b c d : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     (d - c) * (d + c) = a ^ 2 + b ^ 2 := by nlinarith
+
 
 
 
@@ -145,10 +173,12 @@ theorem quad_triple_factoring (a b c d : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2
 
 
 
+
 theorem G₄_generates_quadruple :
     let v := (![1, 2, 2, 3] : Fin 4 → ℤ)
     let w := G₄ *ᵥ v
     w 0 ^ 2 + w 1 ^ 2 + w 2 ^ 2 = w 3 ^ 2 := by native_decide
+
 
 
 
@@ -157,9 +187,11 @@ theorem quad_branching (k : ℕ) : 4 ^ k ≥ 3 ^ k :=
 
 
 
+
 theorem berggren_lattice_automorphism (d : BDir) :
     IsUnit (Matrix.det (dirMatrix d)) := by
   cases d <;> simp [dirMatrix, B₁, B₂, B₃] <;> native_decide
+
 
 
 
@@ -173,18 +205,23 @@ theorem pathMatrix_lattice_automorphism (p : BPath) :
 
 
 
+
 theorem pythagorean_as_null_vector (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     a ^ 2 + b ^ 2 - c ^ 2 = 0 := by linarith
+
 
 
 
 theorem B₁_inv_correct : B₁_inv * B₁ = 1 := by native_decide
 
 
+
 theorem B₁_inv_correct' : B₁ * B₁_inv = 1 := by native_decide
 
 
+
 theorem B₁_inv_preserves_Q : B₁_invᵀ * Q * B₁_inv = Q := by native_decide
+
 
 
 
@@ -194,11 +231,13 @@ theorem perfect_lorentz_basis (p : BPath) :
 
 
 
+
 /-- **Descent Terminates.** -/
 theorem descent_terminates (a b c : ℤ)
     (hpyth : a ^ 2 + b ^ 2 = c ^ 2)
     (ha : 0 < a) (hb : 0 < b) (hc : 5 < c) :
     -2 * a - 2 * b + 3 * c < c := by nlinarith [sq_nonneg a, sq_nonneg b]
+
 
 
 
@@ -216,8 +255,10 @@ theorem quantum_vs_classical (k : ℕ) (hk : 0 < k) :
 
 
 
+
 theorem path_factorization (d : BDir) (ds : BPath) :
     pathMatrix (d :: ds) = dirMatrix d * pathMatrix ds := rfl
+
 
 
 
@@ -228,10 +269,12 @@ theorem quantum_walk_step_preserves (d : BDir) (p : BPath) :
 
 
 
+
 def countM : BPath → ℕ
   | [] => 0
   | .M :: ds => 1 + countM ds
   | _ :: ds => countM ds
+
 
 
 
@@ -248,12 +291,14 @@ theorem det_parity (p : BPath) :
 
 
 
+
 /-- LR paths (no M-steps). -/
 def isLRPath : BPath → Prop
   | [] => True
   | .L :: ds => isLRPath ds
   | .R :: ds => isLRPath ds
   | .M :: _ => False
+
 
 
 
@@ -270,6 +315,7 @@ theorem LR_path_det_one (p : BPath) (h : isLRPath p) :
 
 
 
+
 theorem shortcut_injective (p : BPath) :
     Function.Injective (fun v => pathMatrix p *ᵥ v) := by
   -- The determinant of the path matrix is either 1 or -1, which means the matrix is invertible.
@@ -283,6 +329,8 @@ theorem shortcut_injective (p : BPath) :
 
 
 
+
 theorem root_null : lorentzInner root root = 0 := by simp [lorentzInner, root]
+
 
 

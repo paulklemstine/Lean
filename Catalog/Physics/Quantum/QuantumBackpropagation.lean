@@ -17,10 +17,16 @@ def qbSinCost (a b d : ℝ) (θ : ℝ) : ℝ := a * cos θ + b * sin θ + d
 
 
 
+
+/-- [Section: # CatalogBuild.Physics.Quantum.QuantumBackpropagation
+Auto-generated from theorem catalog database.
+Domain: Physics/Quantum
+Declarations: 12] -/
 theorem qb_parameter_shift_rule (a b d θ : ℝ) :
     (qbSinCost a b d (θ + π / 2) - qbSinCost a b d (θ - π / 2)) / 2 =
     -a * sin θ + b * cos θ := by
   simp [qbSinCost, cos_add, cos_sub, sin_add, sin_sub, cos_pi_div_two, sin_pi_div_two]; ring
+
 
 
 
@@ -30,10 +36,13 @@ theorem qb_sinCost_deriv (a b d θ : ℝ) :
 
 
 
+
 theorem qb_gradient_eval_count (k : ℕ) : 2 * k = k + k := by ring
 
 
+
 theorem qb_gradient_cost (n L : ℕ) : 2 * (n * L) = 2 * n * L := by ring
+
 
 
 
@@ -42,7 +51,9 @@ theorem qb_cramer_rao_bound (n : ℕ) (F : ℝ) (hn : 0 < n) (hF : 0 < F) :
 
 
 
+
 theorem qb_heisenberg_vs_shot_noise (n : ℕ) (hn : 2 ≤ n) : n ^ 2 > n := by nlinarith
+
 
 
 
@@ -51,10 +62,13 @@ theorem qb_variational_principle (E₀ : ℝ) (C : ℝ → ℝ)
 
 
 
+
 theorem qb_qaoa_approx_ratio : (0.6924 : ℝ) > 1 / 2 := by norm_num
 
 
+
 theorem qb_measurement_count_bound (ε : ℝ) (hε : 0 < ε) : 1 / ε ^ 2 > 0 := by positivity
+
 
 
 
@@ -78,9 +92,11 @@ private lemma qb_two_pow_gt_cube (n : ℕ) (hn : 10 ≤ n) : 2 ^ n > n ^ 3 := by
 
 
 
+
 theorem qb_net_quantum_advantage (n k : ℕ) (hn : 10 ≤ n) (hk : k ≤ n ^ 2) :
     2 ^ n > 2 * k := by
   have h1 := qb_two_pow_gt_cube n hn; nlinarith [sq_nonneg n]
+
 
 
 

@@ -20,9 +20,11 @@ attribute [instance] ConjectureSystem.instLattice
 
 
 
+
 /-- The least pre-fixed point of the refinement map. -/
 def ConjectureSystem.leastFixedPoint (S : ConjectureSystem) : S.Conjecture :=
   sInf {x | S.refine x ≤ x}
+
 
 
 
@@ -36,6 +38,7 @@ theorem ConjectureSystem.refine_le_lfp (S : ConjectureSystem) :
 
 
 
+
 /-- The least pre-fixed point is a fixed point. -/
 theorem ConjectureSystem.lfp_is_fixed_point (S : ConjectureSystem) :
     S.refine S.leastFixedPoint = S.leastFixedPoint := by
@@ -46,10 +49,12 @@ theorem ConjectureSystem.lfp_is_fixed_point (S : ConjectureSystem) :
 
 
 
+
 /-- **Theorem Discovery**: Every monotone refinement system has a fixed point. -/
 theorem theorem_discovery (S : ConjectureSystem) :
     ∃ p : S.Conjecture, S.refine p = p :=
   ⟨S.leastFixedPoint, S.lfp_is_fixed_point⟩
+
 
 
 
@@ -64,6 +69,7 @@ structure QualityOracleSystem where
 
 
 
+
 /-- Quality is monotonically non-decreasing under iteration. -/
 theorem quality_mono_iter (S : QualityOracleSystem) (f : S.Oracle) (n : ℕ) :
     S.quality f ≤ S.quality (S.improve^[n] f) := by
@@ -72,6 +78,7 @@ theorem quality_mono_iter (S : QualityOracleSystem) (f : S.Oracle) (n : ℕ) :
   | succ n ih =>
     rw [Function.iterate_succ_apply']
     exact le_trans ih (S.improving _)
+
 
 
 
@@ -90,6 +97,7 @@ theorem quality_bounded_by_capacity (S : QualityOracleSystem)
 
 
 
+
 /-- A contraction on a metric space. -/
 structure ContractionMap (X : Type*) [MetricSpace X] where
   f : X → X
@@ -97,6 +105,7 @@ structure ContractionMap (X : Type*) [MetricSpace X] where
   k_nonneg : 0 ≤ k
   k_lt_one : k < 1
   contract : ∀ x y, dist (f x) (f y) ≤ k * dist x y
+
 
 
 
@@ -113,10 +122,16 @@ theorem ContractionMap.iterate_dist_le {X : Type*} [MetricSpace X]
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.MetaOracleFiveQuestions
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 15] -/
 theorem ContractionMap.consecutive_dist {X : Type*} [MetricSpace X]
     (C : ContractionMap X) (x : X) (n : ℕ) :
     dist (C.f^[n + 1] x) (C.f^[n] x) ≤ C.k ^ n * dist (C.f x) x := by
   convert ContractionMap.iterate_dist_le C ( C.f x ) x n using 1
+
 
 
 
@@ -125,6 +140,7 @@ theorem contraction_orbit_cauchy {X : Type*} [MetricSpace X]
     CauchySeq (fun n => C.f^[n] x) := by
   fapply cauchySeq_of_le_geometric;
   exacts [ C.k, dist ( C.f x ) x, C.k_lt_one, fun n => by simpa [ dist_comm, mul_comm ] using ContractionMap.consecutive_dist C x n ]
+
 
 
 
@@ -142,6 +158,7 @@ theorem epsilon_omega_convergence {X : Type*} [MetricSpace X] [CompleteSpace X]
 
 
 
+
 theorem contraction_fixed_point_unique {X : Type*} [MetricSpace X]
     (C : ContractionMap X) (p q : X) (hp : C.f p = p) (hq : C.f q = q) :
     p = q := by
@@ -150,10 +167,12 @@ theorem contraction_fixed_point_unique {X : Type*} [MetricSpace X]
 
 
 
+
 /-- The quadratic speedup ratio: √N < N for N > 1. -/
 theorem quadratic_speedup_ratio (N : ℕ) (hN : 1 < N) :
     Nat.sqrt N < N :=
   Nat.sqrt_lt_self hN
+
 
 
 

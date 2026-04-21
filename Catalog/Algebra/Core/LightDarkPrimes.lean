@@ -18,10 +18,12 @@ def hammingWt : ℕ → ℕ
 
 
 
+
 /-- The bit-length of a natural number: number of binary digits needed. -/
 def bitLen : ℕ → ℕ
   | 0 => 0
   | n + 1 => Nat.log 2 (n + 1) + 1
+
 
 
 
@@ -35,10 +37,12 @@ theorem light_dark_classification (p : ℕ) (hp : Nat.Prime p) :
 
 
 
+
 /-- Light and dark are mutually exclusive. -/
 theorem light_dark_exclusive (p : ℕ) : ¬(IsLightPrime p ∧ IsDarkPrime p) := by
   intro ⟨⟨_, hl⟩, ⟨_, hd⟩⟩
   omega
+
 
 
 
@@ -48,9 +52,11 @@ theorem three_is_light : IsLightPrime 3 := by
 
 
 
+
 /-- 7 = 111₂ is a light prime. -/
 theorem seven_is_light : IsLightPrime 7 := by
   refine ⟨by decide, ?_⟩; native_decide
+
 
 
 
@@ -60,9 +66,11 @@ theorem thirtyone_is_light : IsLightPrime 31 := by
 
 
 
+
 /-- 2 = 10₂ is dark. -/
 theorem two_is_dark : IsDarkPrime 2 := by
   refine ⟨by decide, ?_⟩; native_decide
+
 
 
 
@@ -72,12 +80,14 @@ theorem seventeen_is_dark : IsDarkPrime 17 := by
 
 
 
+
 /-- The oracle function: projects primes to their light/dark truth value. -/
 def lightDarkOracle : ℕ → ℕ
   | n => if Nat.Prime n then
            if 2 * hammingWt n > bitLen n then 1  -- light = truth
            else 0  -- dark = potential untruth
          else 2  -- not prime
+
 
 
 
@@ -91,15 +101,18 @@ theorem oracle_boolean_on_primes (p : ℕ) (hp : Nat.Prime p) :
 
 
 
+
 /-- A Mersenne prime is maximally light: all bits are 1. -/
 def IsMersennePrime (n : ℕ) : Prop :=
   ∃ p : ℕ, Nat.Prime p ∧ n = 2 ^ p - 1 ∧ Nat.Prime n
 
 
 
+
 /-- A Fermat-type prime (2^k + 1) is maximally dark among odd primes. -/
 def IsFermatTypePrime (n : ℕ) : Prop :=
   ∃ k : ℕ, 0 < k ∧ n = 2 ^ k + 1 ∧ Nat.Prime n
+
 
 
 
@@ -129,6 +142,11 @@ theorem mersenne_primes_are_light (p : ℕ) (hp : Nat.Prime p)
 
 
 
+
+/-- [Section: # CatalogBuild.Algebra.Core.LightDarkPrimes
+Auto-generated from theorem catalog database.
+Domain: Algebra/Core
+Declarations: 26] -/
 theorem fermat_type_primes_are_dark (k : ℕ) (hk : 3 ≤ k)
     (hp : Nat.Prime (2 ^ k + 1)) :
     IsDarkPrime (2 ^ k + 1) := by
@@ -160,15 +178,18 @@ theorem fermat_type_primes_are_dark (k : ℕ) (hk : 3 ≤ k)
 
 
 
+
 /-- A number is "fully illuminated" if all its prime factors are light. -/
 def FullyIlluminated (n : ℕ) : Prop :=
   ∀ p : ℕ, Nat.Prime p → p ∣ n → IsLightPrime p
 
 
 
+
 /-- A number is "fully dark" if all its prime factors are dark. -/
 def FullyDark (n : ℕ) : Prop :=
   ∀ p : ℕ, Nat.Prime p → p ∣ n → IsDarkPrime p
+
 
 
 
@@ -179,10 +200,12 @@ theorem one_fully_illuminated : FullyIlluminated 1 := by
 
 
 
+
 /-- 1 is vacuously fully dark. -/
 theorem one_fully_dark : FullyDark 1 := by
   intro p hp hd
   exact absurd (Nat.le_of_dvd one_pos hd) (not_le.mpr hp.one_lt)
+
 
 
 
@@ -196,11 +219,13 @@ theorem product_light_illuminated (a b : ℕ) (ha : FullyIlluminated a)
 
 
 
+
 /-- GCD preserves full illumination. -/
 theorem gcd_preserves_illumination (a b : ℕ)
     (ha : FullyIlluminated a) : FullyIlluminated (Nat.gcd a b) := by
   intro p hp hpg
   exact ha p hp (dvd_trans hpg (Nat.gcd_dvd_left a b))
+
 
 
 
@@ -226,9 +251,11 @@ theorem light_dark_partition (n : ℕ) :
 
 
 
+
 /-- The compression potential: how many zero-bits a number has. -/
 def compressionPotential (n : ℕ) : ℕ :=
   bitLen n - hammingWt n
+
 
 
 
@@ -238,8 +265,10 @@ theorem mod_oracle (a n : ℕ) : (a % n) % n = a % n :=
 
 
 
+
 /-- The identity is always an oracle. -/
 theorem id_oracle {α : Type*} (x : α) : id (id x) = id x := rfl
+
 
 
 
@@ -247,6 +276,7 @@ theorem id_oracle {α : Type*} (x : α) : id (id x) = id x := rfl
 theorem oracle_fixed_point :
     ∀ n : ℕ, lightDarkOracle (lightDarkOracle n) = lightDarkOracle (lightDarkOracle n) := by
   intro; rfl
+
 
 
 

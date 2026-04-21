@@ -13,6 +13,7 @@ def octonionNorm (a₁ a₂ a₃ a₄ a₅ a₆ a₇ a₈ : ℤ) : ℤ :=
 
 
 
+
 /-- The reverse product b·a gives a DIFFERENT valid eight-square decomposition.
 Since octonion multiplication is non-commutative, a·b ≠ b·a in general,
 but both have the same norm. This is the source of the "octonionic advantage":
@@ -36,6 +37,7 @@ theorem degen_eight_square_reverse
 
 
 
+
 /-- The octonion norm is multiplicative. -/
 theorem octonion_norm_multiplicative
     (a₁ a₂ a₃ a₄ a₅ a₆ a₇ a₈ b₁ b₂ b₃ b₄ b₅ b₆ b₇ b₈ : ℤ) :
@@ -44,6 +46,7 @@ theorem octonion_norm_multiplicative
       octonionNorm b₁ b₂ b₃ b₄ b₅ b₆ b₇ b₈ =
       octonionNorm c₁ c₂ c₃ c₄ c₅ c₆ c₇ c₈ := by
   exact ⟨_, _, _, _, _, _, _, _, degen_eight_square_identity ..⟩
+
 
 
 
@@ -62,11 +65,13 @@ theorem eight_square_product_closure (p q : ℤ)
 
 
 
+
 /-- An 8-tuple Pythagorean structure. -/
 structure Octo where
   x : Fin 8 → ℤ
   d : ℤ
   eq : (∑ i, (x i)^2) = d^2
+
 
 
 
@@ -80,6 +85,7 @@ theorem octo_peel_channel (t : Octo) (j : Fin 8) :
 
 
 
+
 /-- GCD from peel channel divides N. -/
 theorem octo_gcd_divides (t : Octo) (j : Fin 8) (N : ℤ) :
     ↑(Int.gcd (t.d - t.x j) N) ∣ N :=
@@ -87,8 +93,10 @@ theorem octo_gcd_divides (t : Octo) (j : Fin 8) (N : ℤ) :
 
 
 
+
 /-- 36 = 8 + C(8,2) factoring channels for octonionic tuples. -/
 theorem thirty_six_channels : 8 + Nat.choose 8 2 = 36 := by decide
+
 
 
 
@@ -106,5 +114,6 @@ theorem dual_octonionic_decomposition
         octonionNorm d₁ d₂ d₃ d₄ d₅ d₆ d₇ d₈ := by
   exact ⟨_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _,
     degen_eight_square_identity .., degen_eight_square_reverse ..⟩
+
 
 

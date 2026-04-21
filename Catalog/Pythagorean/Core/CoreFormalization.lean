@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/Core
-Declarations: 26
+Declarations: 23
 -/
 
 import Mathlib
@@ -13,9 +13,11 @@ def berggrenA_matrix : Matrix (Fin 3) (Fin 3) ℤ :=
 
 
 
+
 /-- Berggren matrix B (also called B₂): generates the "fast lane" branch. -/
 def berggrenB_matrix : Matrix (Fin 3) (Fin 3) ℤ :=
   !![1, 2, 2; 2, 1, 2; 2, 2, 3]
+
 
 
 
@@ -25,9 +27,11 @@ def berggrenC_matrix : Matrix (Fin 3) (Fin 3) ℤ :=
 
 
 
+
 /-- The Lorentz metric matrix Q = diag(1, 1, -1). -/
 def lorentzMetric : Matrix (Fin 3) (Fin 3) ℤ :=
   !![1, 0, 0; 0, 1, 0; 0, 0, (-1)]
+
 
 
 
@@ -38,15 +42,18 @@ theorem berggrenA_lorentz : berggrenA_matrix ᵀ * lorentzMetric * berggrenA_mat
 
 
 
+
 /-- **Theorem (Lorentz preservation for B):** Bᵀ_B · Q · B_B = Q. -/
 theorem berggrenB_lorentz : berggrenB_matrix ᵀ * lorentzMetric * berggrenB_matrix = lorentzMetric := by
   native_decide
 
 
 
+
 /-- **Theorem (Lorentz preservation for C):** Bᵀ_C · Q · B_C = Q. -/
 theorem berggrenC_lorentz : berggrenC_matrix ᵀ * lorentzMetric * berggrenC_matrix = lorentzMetric := by
   native_decide
+
 
 
 
@@ -58,10 +65,12 @@ theorem berggrenA_preserves_form (a b c : ℤ) :
 
 
 
+
 /-- The full Lorentz form is preserved by B for any integer vector. -/
 theorem berggrenB_preserves_form (a b c : ℤ) :
     lorentzQ (a + 2*b + 2*c) (2*a + b + 2*c) (2*a + 2*b + 3*c) = lorentzQ a b c := by
   unfold lorentzQ; ring
+
 
 
 
@@ -70,32 +79,6 @@ theorem berggrenC_preserves_form (a b c : ℤ) :
     lorentzQ (-a + 2*b + 2*c) (-2*a + b + 2*c) (-2*a + 2*b + 3*c) = lorentzQ a b c := by
   unfold lorentzQ; ring
 
-
-
-/-- **Core theorem:** Berggren A maps Pythagorean triples to Pythagorean triples. -/
-theorem berggrenA_pyth {a b c : ℤ} (h : a ^ 2 + b ^ 2 = c ^ 2) :
-    (a - 2*b + 2*c) ^ 2 + (2*a - b + 2*c) ^ 2 = (2*a - 2*b + 3*c) ^ 2 := by
-  have := berggrenA_preserves_form a b c
-  unfold lorentzQ at this
-  linarith
-
-
-
-/-- **Core theorem:** Berggren B maps Pythagorean triples to Pythagorean triples. -/
-theorem berggrenB_pyth {a b c : ℤ} (h : a ^ 2 + b ^ 2 = c ^ 2) :
-    (a + 2*b + 2*c) ^ 2 + (2*a + b + 2*c) ^ 2 = (2*a + 2*b + 3*c) ^ 2 := by
-  have := berggrenB_preserves_form a b c
-  unfold lorentzQ at this
-  linarith
-
-
-
-/-- **Core theorem:** Berggren C maps Pythagorean triples to Pythagorean triples. -/
-theorem berggrenC_pyth {a b c : ℤ} (h : a ^ 2 + b ^ 2 = c ^ 2) :
-    (-a + 2*b + 2*c) ^ 2 + (-2*a + b + 2*c) ^ 2 = (-2*a + 2*b + 3*c) ^ 2 := by
-  have := berggrenC_preserves_form a b c
-  unfold lorentzQ at this
-  linarith
 
 
 
@@ -108,8 +91,10 @@ def BPath.depth : BPath → ℕ
 
 
 
+
 /-- The hypotenuse at a given tree path. -/
 def hypAt (p : BPath) : ℤ := (tripleAt p).2.2
+
 
 
 
@@ -121,9 +106,11 @@ theorem tripleAt_pyth (p : BPath) :
 
 
 
+
 /-- The hypotenuse of a B-child is at least 3 times the parent's when legs are positive. -/
 theorem hyp_B_growth (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) :
     2*a + 2*b + 3*c ≥ 3 * c := by linarith
+
 
 
 
@@ -132,6 +119,7 @@ primitive triple with hypotenuse > 5. -/
 theorem descent_hyp_decrease (a b c : ℤ) (hpyth : a ^ 2 + b ^ 2 = c ^ 2)
     (ha : 0 < a) (hb : 0 < b) (hc5 : 5 < c) :
     -2*a - 2*b + 3*c < c := by nlinarith [sq_nonneg a, sq_nonneg b]
+
 
 
 
@@ -144,6 +132,7 @@ theorem diff_of_squares_identity (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 /-- The first few Pell hypotenuses. -/
 theorem pellHyp_values :
     pellHyp 0 = 5 ∧ pellHyp 1 = 29 ∧ pellHyp 2 = 169 ∧ pellHyp 3 = 985 := by
@@ -151,10 +140,12 @@ theorem pellHyp_values :
 
 
 
+
 /-- The Pell hypotenuses grow exponentially: c_n ≈ (3+2√2)ⁿ · 5.
 We prove the weaker bound c_{n+1} ≥ 5 · c_n for n ≥ 1. -/
 theorem pellHyp_growth : pellHyp 1 ≥ 5 * pellHyp 0 := by
   simp [pellHyp]
+
 
 
 
@@ -175,6 +166,7 @@ theorem A_branch_euclid_params (m : ℤ) :
 
 
 
+
 /-- The inverse A acts on consecutive parameters: (m, m-1) ↦ (m-1, m-2).
 This is the descent step for the "slow lane." -/
 theorem A_inv_consecutive (m : ℤ) :
@@ -191,8 +183,10 @@ theorem A_inv_consecutive (m : ℤ) :
 
 
 
+
 /-- The 3×3 Berggren A matrix has determinant 1 (it's in SO⁺(2,1;ℤ)). -/
 theorem det_berggrenA : Matrix.det berggrenA_matrix = 1 := by native_decide
+
 
 
 
@@ -201,7 +195,9 @@ theorem det_berggrenB : Matrix.det berggrenB_matrix = -1 := by native_decide
 
 
 
+
 /-- The 3×3 Berggren C matrix has determinant 1. -/
 theorem det_berggrenC : Matrix.det berggrenC_matrix = 1 := by native_decide
+
 
 

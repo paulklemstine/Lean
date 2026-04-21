@@ -13,15 +13,18 @@ def lorentz_metric : Matrix (Fin 4) (Fin 4) ℤ :=
 
 
 
+
 /-- The Lorentz inner product η(u,v) = u₀v₀ + u₁v₁ + u₂v₂ - u₃v₃ -/
 def lorentz_inner (u v : Fin 4 → ℤ) : ℤ :=
   u 0 * v 0 + u 1 * v 1 + u 2 * v 2 - u 3 * v 3
 
 
 
+
 /-- The Lorentz norm Q(v) = v₀² + v₁² + v₂² - v₃² -/
 def lorentz_norm (v : Fin 4 → ℤ) : ℤ :=
   v 0 ^ 2 + v 1 ^ 2 + v 2 ^ 2 - v 3 ^ 2
+
 
 
 
@@ -32,9 +35,11 @@ theorem lorentz_norm_eq_inner (v : Fin 4 → ℤ) :
 
 
 
+
 /-- A Pythagorean quadruple is a null vector of the Lorentz form -/
 def is_pythagorean_quad (v : Fin 4 → ℤ) : Prop :=
   v 0 ^ 2 + v 1 ^ 2 + v 2 ^ 2 = v 3 ^ 2
+
 
 
 
@@ -45,6 +50,7 @@ Declarations: 39] -/
 theorem pythagorean_iff_null (v : Fin 4 → ℤ) :
     is_pythagorean_quad v ↔ lorentz_norm v = 0 := by
   unfold is_pythagorean_quad lorentz_norm; omega
+
 
 
 
@@ -74,6 +80,7 @@ def allones_reflection : Matrix (Fin 4) (Fin 4) ℤ :=
 
 
 
+
 /-- The corrected all-ones reflection matrix -/
 def R₁ : Matrix (Fin 4) (Fin 4) ℤ :=
   !![0, -1, -1,  1;
@@ -83,9 +90,11 @@ def R₁ : Matrix (Fin 4) (Fin 4) ℤ :=
 
 
 
+
 /-- R₁ is an involution (R₁² = I) -/
 theorem R1_involution : R₁ * R₁ = 1 := by
   unfold R₁; native_decide
+
 
 
 
@@ -96,9 +105,11 @@ theorem R1_preserves_metric :
 
 
 
+
 /-- R₁ has determinant -1 (it's a reflection) -/
 theorem R1_det : R₁.det = -1 := by
   unfold R₁; native_decide
+
 
 
 
@@ -111,12 +122,14 @@ def P01 : Matrix (Fin 4) (Fin 4) ℤ :=
 
 
 
+
 /-- Transposition (0,2): swaps first and third spatial coordinates -/
 def P02 : Matrix (Fin 4) (Fin 4) ℤ :=
   !![0, 0, 1, 0;
      0, 1, 0, 0;
      1, 0, 0, 0;
      0, 0, 0, 1]
+
 
 
 
@@ -129,13 +142,21 @@ def P12 : Matrix (Fin 4) (Fin 4) ℤ :=
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.Core.O31_Generators
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Core
+Declarations: 39] -/
 theorem P01_involution : P01 * P01 = 1 := by unfold P01; native_decide
+
 
 
 theorem P02_involution : P02 * P02 = 1 := by unfold P02; native_decide
 
 
+
 theorem P12_involution : P12 * P12 = 1 := by unfold P12; native_decide
+
 
 
 
@@ -144,13 +165,16 @@ theorem P01_preserves_metric : P01.transpose * lorentz_metric * P01 = lorentz_me
 
 
 
+
 theorem P02_preserves_metric : P02.transpose * lorentz_metric * P02 = lorentz_metric := by
   unfold P02 lorentz_metric; native_decide
 
 
 
+
 theorem P12_preserves_metric : P12.transpose * lorentz_metric * P12 = lorentz_metric := by
   unfold P12 lorentz_metric; native_decide
+
 
 
 
@@ -163,7 +187,9 @@ def S0 : Matrix (Fin 4) (Fin 4) ℤ :=
 
 
 
+
 theorem S0_involution : S0 * S0 = 1 := by unfold S0; native_decide
+
 
 
 
@@ -172,9 +198,11 @@ theorem S0_preserves_metric : S0.transpose * lorentz_metric * S0 = lorentz_metri
 
 
 
+
 /-- The descent map for Pythagorean quadruples -/
 def descent_quad (v : Fin 4 → ℤ) : Fin 4 → ℤ :=
   ![v 3 - v 1 - v 2, v 3 - v 0 - v 2, v 3 - v 0 - v 1, 2 * v 3 - v 0 - v 1 - v 2]
+
 
 
 
@@ -186,9 +214,11 @@ theorem descent_eq_R1_mul (v : Fin 4 → ℤ) :
 
 
 
+
 /-- The descent preserves the Pythagorean property -/
 theorem descent_preserves_pythagorean (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
     (d-b-c)^2 + (d-a-c)^2 + (d-a-b)^2 = (2*d-a-b-c)^2 := by nlinarith
+
 
 
 
@@ -203,8 +233,10 @@ theorem descent_decreases_hyp (a b c d : ℤ)
 
 
 
+
 /-- The root quadruple (0,0,1,1) -/
 theorem root_quad : (0:ℤ)^2 + 0^2 + 1^2 = 1^2 := by norm_num
+
 
 
 
@@ -216,6 +248,7 @@ theorem root_characterization (a b c : ℤ)
   have hb1 : b ≤ 1 := by nlinarith
   have hc1 : c ≤ 1 := by nlinarith
   interval_cases a <;> interval_cases b <;> interval_cases c <;> simp_all
+
 
 
 
@@ -231,6 +264,7 @@ theorem generators_are_lorentz :
 
 
 
+
 /-- All generators are involutions -/
 theorem generators_are_involutions :
     R₁ * R₁ = 1 ∧ P01 * P01 = 1 ∧ P02 * P02 = 1 ∧
@@ -239,8 +273,10 @@ theorem generators_are_involutions :
 
 
 
+
 /-- R₁ composed with P01 gives a different descent direction -/
 def R_swap01 : Matrix (Fin 4) (Fin 4) ℤ := P01 * R₁ * P01
+
 
 
 
@@ -250,8 +286,10 @@ theorem R_swap01_preserves_metric :
 
 
 
+
 theorem MA_preserves : M_A.transpose * lorentz_metric * M_A = lorentz_metric := by
   unfold M_A; exact R1_preserves_metric
+
 
 
 
@@ -260,8 +298,10 @@ theorem MB_preserves : M_B.transpose * lorentz_metric * M_B = lorentz_metric := 
 
 
 
+
 theorem MC_preserves : M_C.transpose * lorentz_metric * M_C = lorentz_metric := by
   unfold M_C; native_decide
+
 
 
 
@@ -281,6 +321,7 @@ def listPrimQuads (N : ℕ) : List (ℕ × ℕ × ℕ × ℕ) := do
 
 
 
+
 /-- Apply descent and normalize -/
 def descentQuad (a b c d : ℕ) : ℕ × ℕ × ℕ × ℕ :=
   let a' := (d : Int) - b - c
@@ -290,6 +331,7 @@ def descentQuad (a b c d : ℕ) : ℕ × ℕ × ℕ × ℕ :=
   let vals := [a'.natAbs, b'.natAbs, c'.natAbs]
   let sorted := vals.mergeSort (· ≤ ·)
   (sorted[0]!, sorted[1]!, sorted[2]!, d'.natAbs)
+
 
 
 
@@ -305,5 +347,6 @@ def verifyDescentQuad (a b c d : ℕ) (fuel : ℕ) : Bool :=
       verifyDescentQuad a' b' c' d' fuel
 
 #eval (listPrimQuads 50).map (fun (a, b, c, d) => ((a, b, c, d), verifyDescentQuad a b c d 100))
+
 
 

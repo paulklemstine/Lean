@@ -20,9 +20,11 @@ structure OGDGoal where
 
 
 
+
 /-- A coupling between two goals. Positive = synergy, negative = conflict. -/
 structure GoalCoupling where
   strength : ℝ  -- G_ij
+
 
 
 
@@ -34,15 +36,18 @@ def singleGoalHamiltonian (k : ℝ) (g : OGDGoal) : ℝ :=
 
 
 
+
 /-- The potential energy of a goal toward its target: V = ½k·m·(q-τ)² -/
 def targetPotential (k : ℝ) (g : OGDGoal) : ℝ :=
   (1/2) * k * g.mass * (g.position - g.target)^2
 
 
 
+
 /-- Progress of a goal: distance remaining to target -/
 def distanceToTarget (g : OGDGoal) : ℝ :=
   |g.position - g.target|
+
 
 
 
@@ -55,9 +60,15 @@ theorem kineticEnergy_nonneg (g : OGDGoal) : 0 ≤ kineticEnergy g := by
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.OrbitalGoalDynamics
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 21] -/
 theorem targetPotential_nonneg (g : OGDGoal) (k : ℝ) (hk : 0 ≤ k) :
     0 ≤ targetPotential k g := by
   exact mul_nonneg ( mul_nonneg ( mul_nonneg ( by norm_num ) hk ) g.mass_pos.le ) ( sq_nonneg _ )
+
 
 
 
@@ -67,9 +78,11 @@ theorem hamiltonian_split (k : ℝ) (g : OGDGoal) :
 
 
 
+
 theorem hamiltonian_nonneg (g : OGDGoal) (k : ℝ) (hk : 0 ≤ k) :
     0 ≤ singleGoalHamiltonian k g := by
   exact hamiltonian_split k g ▸ add_nonneg ( kineticEnergy_nonneg g ) ( targetPotential_nonneg g k hk )
+
 
 
 
@@ -79,8 +92,10 @@ theorem hamiltonian_zero_at_target (k : ℝ) :
 
 
 
+
 theorem distanceToTarget_nonneg (g : OGDGoal) : 0 ≤ distanceToTarget g := by
   exact abs_nonneg _
+
 
 
 
@@ -90,9 +105,11 @@ def PlanningOperator (S : Type) := (S → ℝ) → (S → ℝ)
 
 
 
+
 /-- A fixed point of a planning operator: B(V) = V -/
 def isFixedPoint {S : Type} (B : PlanningOperator S) (V : S → ℝ) : Prop :=
   B V = V
+
 
 
 
@@ -101,9 +118,11 @@ theorem id_fixedPoint {S : Type} (V : S → ℝ) : isFixedPoint (id : PlanningOp
 
 
 
+
 theorem fixedPoint_idempotent {S : Type} (B : PlanningOperator S) (V : S → ℝ)
     (hV : isFixedPoint B V) : B (B V) = B V := by
   exact?
+
 
 
 
@@ -114,10 +133,12 @@ theorem synergy_reduces_distance (d₁ d₂ G : ℝ) (hd₁ : 0 < d₁) (hd₂ :
 
 
 
+
 /-- Two goals are in resonance when their frequency ratio is a simple
 rational number p/q with p + q ≤ 5. -/
 def inResonance (ω₁ ω₂ : ℝ) : Prop :=
   ∃ p q : ℕ, 0 < p ∧ 0 < q ∧ p + q ≤ 5 ∧ ω₁ * q = ω₂ * p
+
 
 
 
@@ -127,15 +148,18 @@ def goalFrequency (k : ℝ) (g : OGDGoal) : ℝ :=
 
 
 
+
 theorem equal_mass_equal_freq (k : ℝ) (g₁ g₂ : OGDGoal) (hm : g₁.mass = g₂.mass) :
     goalFrequency k g₁ = goalFrequency k g₂ := by
   unfold goalFrequency; aesop;
 
 
 
+
 theorem equal_mass_resonance (k : ℝ) (g₁ g₂ : OGDGoal) (hm : g₁.mass = g₂.mass) :
     inResonance (goalFrequency k g₁) (goalFrequency k g₂) := by
   exact ⟨ 1, 1, by norm_num, by norm_num, by norm_num, by rw [ equal_mass_equal_freq k g₁ g₂ hm ] ⟩
+
 
 
 
@@ -154,6 +178,7 @@ theorem god_oracle_uniqueness {S : Type} [Fintype S] [Nonempty S]
       exact pi_norm_le_iff_of_nonneg ( mul_nonneg ( show 0 ≤ γ by linarith [ hc.1 ] ) ( norm_nonneg _ ) ) |>.2 fun s => h_contraction s;
     nlinarith [ hc.1, hc.2.1 ];
   exact sub_eq_zero.mp ( norm_le_zero_iff.mp h_norm_zero )
+
 
 
 

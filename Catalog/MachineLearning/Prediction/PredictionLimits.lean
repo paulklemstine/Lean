@@ -14,9 +14,11 @@ def Predictor (α : Type*) := List α → α
 
 
 
+
 /-- A sequence is predictable by P if P always guesses the next element -/
 def isPredictable {α : Type*} [DecidableEq α] (seq : ℕ → α) (P : Predictor α) : Prop :=
   ∀ n, P (List.ofFn (fun i : Fin n => seq i)) = seq n
+
 
 
 
@@ -32,6 +34,7 @@ theorem exists_unpredictable_sequence :
 
 
 
+
 /-- The No-Free-Lunch Theorem for binary prediction -/
 theorem no_free_lunch_binary (P : Predictor Bool) :
     ∃ seq : ℕ → Bool, seq 0 ≠ P [] ∨ seq 1 ≠ P [seq 0] := by
@@ -44,11 +47,13 @@ theorem no_free_lunch_binary (P : Predictor Bool) :
 
 
 
+
 /-- Sensitive dependence on initial conditions -/
 structure ChaoticSystem where
   evolve : ℝ → ℕ → ℝ
   lyapunov : ℝ
   lyapunov_pos : 0 < lyapunov
+
 
 
 
@@ -66,11 +71,17 @@ theorem chaos_prediction_error_grows (S : ChaoticSystem)
 
 
 
+
+/-- [Section: # CatalogBuild.MachineLearning.Prediction.PredictionLimits
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/Prediction
+Declarations: 16] -/
 theorem fano_inequality_simplified (H_cond : ℝ) (n : ℕ) (hn : 2 < n)
     (error_prob : ℝ) (he : 0 ≤ error_prob)
     (h_fano : H_cond ≤ error_prob * Real.log (↑n - 1) + Real.log 2) :
     (H_cond - Real.log 2) / Real.log (↑n - 1) ≤ error_prob := by
   exact div_le_of_le_mul₀ ( Real.log_nonneg ( by linarith [ show ( n : ℝ ) ≥ 3 by norm_cast ] ) ) ( by positivity ) ( by linarith )
+
 
 
 
@@ -80,15 +91,18 @@ structure PredictionAggregator (n : ℕ) where
 
 
 
+
 /-- Unanimity: if all predictors agree, the aggregate agrees -/
 def isUnanimous {n : ℕ} (A : PredictionAggregator n) : Prop :=
   ∀ v : ℝ, A.aggregate (fun _ => v) = v
 
 
 
+
 /-- Monotonicity -/
 def isMonotone {n : ℕ} (A : PredictionAggregator n) : Prop :=
   ∀ f g : Fin n → ℝ, (∀ i, f i ≤ g i) → A.aggregate f ≤ A.aggregate g
+
 
 
 
@@ -99,12 +113,14 @@ noncomputable def weightedAverage {n : ℕ} (w : Fin n → ℝ)
 
 
 
+
 /-- Weighted average satisfies unanimity -/
 theorem weightedAverage_unanimous {n : ℕ} (w : Fin n → ℝ)
     (hw_sum : ∑ i, w i = 1) :
     isUnanimous (weightedAverage w hw_sum) := by
   intro v
   simp [weightedAverage, ← Finset.sum_mul, hw_sum]
+
 
 
 
@@ -118,6 +134,7 @@ theorem weightedAverage_monotone {n : ℕ} (w : Fin n → ℝ) (hw_nn : ∀ i, 0
 
 
 
+
 /-- Each level can solve strictly more problems -/
 def canSolve : OracleLevel → ℕ → Prop
   | .mortal, n => n < 10
@@ -128,9 +145,11 @@ def canSolve : OracleLevel → ℕ → Prop
 
 
 
+
 /-- God can solve everything mortals can -/
 theorem god_subsumes_mortal (n : ℕ) : canSolve .mortal n → canSolve .god n :=
   fun _ => trivial
+
 
 
 
@@ -142,6 +161,7 @@ theorem hierarchy_strict :
     (∃ n, canSolve .god n ∧ ¬canSolve .archangel n) := by
   exact ⟨⟨10, by simp [canSolve]⟩, ⟨100, by simp [canSolve]⟩,
          ⟨1000, by simp [canSolve]⟩, ⟨10000, by simp [canSolve]⟩⟩
+
 
 
 

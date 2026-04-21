@@ -12,9 +12,11 @@ theorem fermat_diff_sq (x y : ℤ) : x ^ 2 - y ^ 2 = (x - y) * (x + y) := by rin
 
 
 
+
 /-- If N = x² - y², then N = (x-y)(x+y). -/
 theorem fermat_factor_correct (N x y : ℤ) (h : N = x ^ 2 - y ^ 2) :
     N = (x - y) * (x + y) := by linarith [fermat_diff_sq x y]
+
 
 
 
@@ -29,12 +31,14 @@ theorem odd_fermat_rep (p q : ℤ) (hp : Odd p) (hq : Odd q) :
 
 
 
+
 /-- The factors from Fermat's method are nontrivial when the representation is
 nontrivial (i.e., y > 0 and x - y > 1). -/
 theorem fermat_nontrivial (N x y : ℤ) (hN : N = x ^ 2 - y ^ 2)
     (hy_pos : 0 < y) (hfactor : 1 < x - y) :
     1 < x - y ∧ 1 < x + y ∧ (x - y) * (x + y) = N := by
   refine ⟨hfactor, by linarith, by linarith [fermat_diff_sq x y]⟩
+
 
 
 
@@ -45,9 +49,15 @@ theorem sq_mod_eq (k m : ℤ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Physics.Classical.GeometricRepulsor
+Auto-generated from theorem catalog database.
+Domain: Physics/Classical
+Declarations: 15] -/
 theorem quad_residues_mod_64 (k : ℤ) :
     (k ^ 2) % 64 ∈ ({0, 1, 4, 9, 16, 17, 25, 33, 36, 41, 49, 57} : Set ℤ) := by
   rw [ sq, Int.mul_emod ] ; have := Int.emod_nonneg k ( by decide : ( 64 : ℤ ) ≠ 0 ) ; have := Int.emod_lt_of_pos k ( by decide : ( 64 : ℤ ) > 0 ) ; interval_cases k % 64 <;> trivial;
+
 
 
 
@@ -57,9 +67,11 @@ theorem quad_residues_mod_11 (k : ℤ) :
 
 
 
+
 theorem quad_residues_mod_13 (k : ℤ) :
     (k ^ 2) % 13 ∈ ({0, 1, 3, 4, 9, 10, 12} : Set ℤ) := by
   norm_num [ sq, Int.mul_emod ] ; have := Int.emod_nonneg k ( by decide : ( 13 : ℤ ) ≠ 0 ) ; have := Int.emod_lt_of_pos k ( by decide : ( 0 : ℤ ) < 13 ) ; interval_cases k % 13 <;> simp +decide ;
+
 
 
 
@@ -69,9 +81,11 @@ theorem quad_residues_mod_17 (k : ℤ) :
 
 
 
+
 theorem quad_residues_mod_19 (k : ℤ) :
     (k ^ 2) % 19 ∈ ({0, 1, 4, 5, 6, 7, 9, 11, 16, 17} : Set ℤ) := by
   norm_num [ sq, Int.mul_emod ] ; have := Int.emod_nonneg k ( by decide : ( 19 : ℤ ) ≠ 0 ) ; have := Int.emod_lt_of_pos k ( by decide : ( 0 : ℤ ) < 19 ) ; interval_cases k % 19 <;> trivial;
+
 
 
 
@@ -82,6 +96,7 @@ theorem sieve_sound_mod_64 (n : ℤ) (hn : ∃ k : ℤ, n = k ^ 2) :
     n % 64 ∈ ({0, 1, 4, 9, 16, 17, 25, 33, 36, 41, 49, 57} : Set ℤ) := by
   obtain ⟨k, rfl⟩ := hn
   exact quad_residues_mod_64 k
+
 
 
 
@@ -98,6 +113,7 @@ theorem sieve_sound_all (n : ℤ) (hn : ∃ k : ℤ, n = k ^ 2) :
 
 
 
+
 /-- The exact Fermat solution point for N = p * q (p, q odd, p ≤ q). -/
 theorem fermat_solution_point (p q : ℤ) (hp : Odd p) (hq : Odd q)
     (hpq : p ≤ q) (hp_pos : 0 < p) :
@@ -107,6 +123,7 @@ theorem fermat_solution_point (p q : ℤ) (hp : Odd p) (hq : Odd q)
   constructor
   · linarith [odd_fermat_rep p q hp hq]
   · omega
+
 
 
 
@@ -138,6 +155,7 @@ def fermatSearchSieved (N : ℕ) (x : ℕ) (fuel : ℕ) : Option (ℕ × ℕ) :=
 
 
 
+
 /-- Top-level Fermat factorization with sieving.
 Starts from ⌈√N⌉ and searches up to `maxSteps` candidates. -/
 def fermatFactorSieved (N : ℕ) (maxSteps : ℕ := 1000000) : Option (ℕ × ℕ) :=
@@ -155,4 +173,5 @@ def fermatFactorSieved (N : ℕ) (maxSteps : ℕ := 1000000) : Option (ℕ × �
 -- Larger examples showing the algorithm works for close primes
 #eval fermatFactorSieved (997 * 1009)    -- 1005973
 #eval fermatFactorSieved (10007 * 10009)
+
 

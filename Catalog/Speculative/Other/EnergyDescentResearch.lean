@@ -14,15 +14,18 @@ noncomputable def iofEnergy (N : ℤ) (k : ℤ) : ℤ := (N - 2 * k) ^ 2
 
 
 
+
 /-- Energy is always non-negative -/
 theorem iofEnergy_nonneg (N k : ℤ) : 0 ≤ iofEnergy N k := by
   unfold iofEnergy; positivity
 
 
 
+
 /-- Energy at step 0 equals N² -/
 theorem iofEnergy_zero (N : ℤ) : iofEnergy N 0 = N ^ 2 := by
   unfold iofEnergy; ring
+
 
 
 
@@ -33,10 +36,12 @@ theorem iofEnergy_strict_decrease (N k : ℤ) (h : 1 < N - 2 * k) :
 
 
 
+
 /-- The energy drop at each step is exactly 4(N - 2k) - 4 -/
 theorem iofEnergy_drop (N k : ℤ) :
     iofEnergy N k - iofEnergy N (k + 1) = 4 * (N - 2 * k) - 4 := by
   unfold iofEnergy; ring
+
 
 
 
@@ -47,6 +52,7 @@ theorem iofEnergy_drop_pos (N k : ℤ) (h : 1 < N - 2 * k) :
 
 
 
+
 /-- The energy at step k is exactly (N - 2k)² — trivially by definition,
 but this connects to the closed-form descent theorem -/
 theorem iofEnergy_closed_form (N k : ℤ) :
@@ -54,10 +60,12 @@ theorem iofEnergy_closed_form (N k : ℤ) :
 
 
 
+
 /-- Energy ratio between consecutive steps -/
 theorem iofEnergy_ratio (N k : ℤ) (_h : N - 2 * k ≠ 0) :
     iofEnergy N (k + 1) = iofEnergy N k - 4 * (N - 2 * k) + 4 := by
   unfold iofEnergy; ring
+
 
 
 
@@ -70,6 +78,7 @@ theorem iofEnergy_at_factor_step (N p : ℤ) (hodd : p % 2 = 1) (_hp : 3 ≤ p) 
 
 
 
+
 /-- When N = p * q, the energy at factor step -/
 theorem iofEnergy_at_factor_product (p q : ℤ) (hodd_p : p % 2 = 1)
     (hp : 3 ≤ p) :
@@ -78,11 +87,13 @@ theorem iofEnergy_at_factor_product (p q : ℤ) (hodd_p : p % 2 = 1)
 
 
 
+
 /-- If we know a factor bound p ≤ B, the energy at the latest factor step
 is at least (N - B + 1)² -/
 theorem iofEnergy_factor_bound (N B : ℤ) (hB : 3 ≤ B) (hodd : B % 2 = 1) :
     (N - B + 1) ^ 2 = iofEnergy N ((B - 1) / 2) := by
   rw [iofEnergy_at_factor_step N B hodd hB]
+
 
 
 
@@ -95,10 +106,12 @@ theorem iofEnergy_monotone_decreasing (N k₁ k₂ : ℤ)
 
 
 
+
 /-- Each step reduces energy by at least 4 when N-2k > 2 -/
 theorem iofEnergy_min_drop (N k : ℤ) (h : 2 < N - 2 * k) :
     4 ≤ iofEnergy N k - iofEnergy N (k + 1) := by
   rw [iofEnergy_drop]; linarith
+
 
 
 
@@ -109,6 +122,7 @@ theorem iofEnergy_max_drop (N k : ℤ) :
 
 
 
+
 /-- E(k) = 0 iff N = 2k (the odd leg has collapsed to zero) -/
 theorem iofEnergy_zero_iff (N k : ℤ) :
     iofEnergy N k = 0 ↔ N = 2 * k := by
@@ -116,6 +130,7 @@ theorem iofEnergy_zero_iff (N k : ℤ) :
   constructor
   · intro h; nlinarith [sq_nonneg (N - 2 * k)]
   · intro h; rw [h]; ring
+
 
 
 
@@ -130,10 +145,12 @@ theorem iofEnergy_lyapunov (N k : ℤ) (h : 1 < N - 2 * k) :
 
 
 
+
 /-- Telescoping energy: total drop from step 0 to step K -/
 theorem iofEnergy_telescope (N K : ℤ) :
     iofEnergy N 0 - iofEnergy N K = N ^ 2 - (N - 2 * K) ^ 2 := by
   unfold iofEnergy; ring
+
 
 
 
@@ -144,11 +161,13 @@ theorem iofEnergy_total_drop (N K : ℤ) :
 
 
 
+
 /-- At the factor step K = (p-1)/2 for odd p, total drop is N² - (N-p+1)² -/
 theorem iofEnergy_total_drop_at_factor (N p : ℤ) (hodd : p % 2 = 1) (hp : 3 ≤ p) :
     iofEnergy N 0 - iofEnergy N ((p - 1) / 2) =
     N ^ 2 - (N - p + 1) ^ 2 := by
   rw [iofEnergy_zero, iofEnergy_at_factor_step N p hodd hp]
+
 
 
 
@@ -161,11 +180,13 @@ theorem factor_step_periodic (p k : ℤ) (h : p ∣ (4 * k ^ 2 - 1)) :
 
 
 
+
 /-- Symmetry: if p | (4k² - 1), then p | (4(p - k)² - 1) -/
 theorem factor_step_symmetric (p k : ℤ) (h : p ∣ (4 * k ^ 2 - 1)) :
     p ∣ (4 * (p - k) ^ 2 - 1) := by
   obtain ⟨m, hm⟩ := h
   exact ⟨m + 4 * p - 8 * k, by nlinarith⟩
+
 
 
 
@@ -176,6 +197,7 @@ theorem iofEnergy_drop_linear (N k : ℤ) :
 
 
 
+
 /-- Two-step energy drop -/
 theorem iofEnergy_two_step_drop (N k : ℤ) :
     iofEnergy N k - iofEnergy N (k + 2) = 8 * (N - 2 * k) - 16 := by
@@ -183,10 +205,12 @@ theorem iofEnergy_two_step_drop (N k : ℤ) :
 
 
 
+
 /-- On the light cone (a²+b²=c²), the Lorentz form is zero before and after -/
 theorem on_light_cone_preserved (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     (a + 2*b - 2*c)^2 + (-2*a - b + 2*c)^2 = (-2*a - 2*b + 3*c)^2 := by
   have := lorentz_form_preserved a b c; linarith
+
 
 
 
@@ -199,9 +223,11 @@ theorem energy_at_detection_bound (N p : ℤ) (hodd : p % 2 = 1)
 
 
 
+
 /-- The descent preserves parity: if N is odd, N - 2k is odd -/
 theorem descent_preserves_parity (N k : ℤ) (hodd : N % 2 = 1) :
     (N - 2 * k) % 2 = 1 := by omega
+
 
 
 
@@ -211,9 +237,11 @@ theorem odd_leg_positive (N k : ℤ) (h : 2 * k < N) :
 
 
 
+
 /-- The number of steps (p-1)/2 is at most (N-1)/2 -/
 theorem step_count_bound (N p : ℕ) (hp_le : p ≤ N) :
     (p - 1) / 2 ≤ (N - 1) / 2 := by omega
+
 
 
 
@@ -222,8 +250,10 @@ theorem sieve_poly2 (k : ℤ) : 4 * k * (k - 1) = 4 * k ^ 2 - 4 * k := by ring
 
 
 
+
 /-- The third sieve polynomial -/
 theorem sieve_poly3 (k : ℤ) : 4 * k * (k + 1) = 4 * k ^ 2 + 4 * k := by ring
+
 
 
 
@@ -234,6 +264,7 @@ theorem sieve_poly2_factor (p k : ℤ) (hp : Prime p)
 
 
 
+
 /-- The crystallizer-IOF equivalence: integer stereographic projection
 gives the IOF starting triple (up to sign and scaling) -/
 theorem crystallizer_iof_bridge (N : ℤ) :
@@ -241,9 +272,11 @@ theorem crystallizer_iof_bridge (N : ℤ) :
 
 
 
+
 /-- The IOF starting triple is the denominator-cleared crystallizer output -/
 theorem iof_is_cleared_crystallizer (N : ℤ) :
     4 * N ^ 2 + (N ^ 2 - 1) ^ 2 = (N ^ 2 + 1) ^ 2 := by ring
+
 
 
 
@@ -254,9 +287,11 @@ theorem forward_B1_increases_hyp (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0
 
 
 
+
 /-- Forward Berggren B₂ increases the hypotenuse -/
 theorem forward_B2_increases_hyp (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
     c < 2 * a + 2 * b + 3 * c := by linarith
+
 
 
 
@@ -267,10 +302,12 @@ theorem quadratic_discriminant (a b c k : ℤ) :
 
 
 
+
 /-- Completing the square for the IOF polynomial 4k² - 1:
 discriminant is 16, which is always a perfect square -/
 theorem iof_discriminant :
     (0 : ℤ) ^ 2 - 4 * 4 * (-1 : ℤ) = 16 := by norm_num
+
 
 
 
@@ -279,6 +316,7 @@ theorem energy_gradient_linear (N k : ℤ) :
     iofEnergy N k - iofEnergy N (k + 1) -
     (iofEnergy N (k + 1) - iofEnergy N (k + 2)) = 8 := by
   unfold iofEnergy; ring
+
 
 
 
@@ -292,10 +330,12 @@ theorem energy_second_difference_constant (N k₁ k₂ : ℤ) :
 
 
 
+
 /-- Energy encodes factor size: if E = (N-p+1)², then the factor is p = N - √E + 1 -/
 theorem energy_encodes_factor (N p : ℤ) (hodd : p % 2 = 1) (hp : 3 ≤ p) :
     iofEnergy N ((p - 1) / 2) = (N - p + 1) ^ 2 :=
   iofEnergy_at_factor_step N p hodd hp
+
 
 
 
@@ -306,11 +346,13 @@ theorem energy_determines_factors (p q : ℤ) (hodd : p % 2 = 1) (hp : 3 ≤ p) 
 
 
 
+
 /-- Energy ratio at factor detection -/
 theorem energy_ratio_identity (N p : ℤ) (hodd : p % 2 = 1) (hp : 3 ≤ p) :
     iofEnergy N 0 - iofEnergy N ((p - 1) / 2) =
     (2 * N - p + 1) * (p - 1) := by
   rw [iofEnergy_zero, iofEnergy_at_factor_step N p hodd hp]; ring
+
 
 
 

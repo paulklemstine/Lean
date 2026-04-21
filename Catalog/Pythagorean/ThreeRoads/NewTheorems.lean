@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/ThreeRoads
-Declarations: 16
+Declarations: 15
 -/
 
 import Mathlib
@@ -48,6 +48,11 @@ theorem coprime_preserved_B1 (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.ThreeRoads.NewTheorems
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/ThreeRoads
+Declarations: 16] -/
 theorem coprime_preserved_B2 (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     (hcop : IsCoprime a b) :
     IsCoprime (a + 2 * b + 2 * c) (2 * a + b + 2 * c) := by
@@ -68,6 +73,7 @@ theorem coprime_preserved_B2 (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
   · grind;
   · grind;
   · grind
+
 
 
 
@@ -121,6 +127,7 @@ theorem coprime_preserved_B3 (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
 
 
 
+
 theorem B1_preserves_odd_first_leg (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     (ha_odd : ¬Even a) (hb_even : Even b) :
     ¬Even (a - 2 * b + 2 * c) := by
@@ -128,10 +135,12 @@ theorem B1_preserves_odd_first_leg (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
 
 
 
+
 theorem hypotenuse_strict_increase_B1 (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (h : a ^ 2 + b ^ 2 = c ^ 2) :
     c < 2 * a - 2 * b + 3 * c := by
   nlinarith
+
 
 
 
@@ -143,10 +152,12 @@ theorem hypotenuse_strict_increase_B2 (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (h
 
 
 
+
 theorem hypotenuse_strict_increase_B3 (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (h : a ^ 2 + b ^ 2 = c ^ 2) :
     c < -2 * a + 2 * b + 3 * c := by
   nlinarith
+
 
 
 
@@ -158,6 +169,7 @@ norm_num
 
 
 
+
 /-- If N² + b² = c² then (c - b) * (c + b) = N². -/
 theorem pyth_to_factorization (N b c : ℤ) (h : N ^ 2 + b ^ 2 = c ^ 2) :
     (c - b) * (c + b) = N ^ 2 := by
@@ -165,9 +177,11 @@ theorem pyth_to_factorization (N b c : ℤ) (h : N ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 theorem factor_same_parity (N b c : ℤ) (h : N ^ 2 + b ^ 2 = c ^ 2) (hN : ¬Even N) :
     (Even (c - b) ∧ Even (c + b)) ∨ (¬Even (c - b) ∧ ¬Even (c + b)) := by
   grind
+
 
 
 
@@ -183,6 +197,7 @@ theorem semiprime_four_divisor_pairs (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Pr
 
 
 
+
 /-- If N = a² + b² = c² + d² with ad ≠ bc, then gcd(a² - c², N) is non-trivial.
 This is Euler's factoring method applied to the Berggren tree context. -/
 theorem euler_factor_extraction (a b c d N : ℤ) (hN : 0 < N)
@@ -190,6 +205,7 @@ theorem euler_factor_extraction (a b c d N : ℤ) (hN : 0 < N)
     (h2 : c ^ 2 + d ^ 2 = N) :
     (a - c) * (a + c) = (d - b) * (d + b) := by
   nlinarith
+
 
 
 
@@ -201,12 +217,6 @@ theorem hypotenuse_lower_bound_iter (k : ℕ) :
 
 
 
-/-- The number of nodes at depth d in the Berggren tree is exactly 3^d. -/
-theorem nodes_at_depth (d : ℕ) :
-    (3 : ℕ) ^ d = 3 ^ d := by
-  rfl
-
-
 
 /-- For a prime p ≥ 5, the unique Pythagorean triple with leg p has parameters
 m = (p+1)/2, n = (p-1)/2, and the Berggren tree depth equals (p-3)/2. -/
@@ -216,10 +226,12 @@ theorem prime_triple_depth (p : ℕ) (hp : Nat.Prime p) (hp5 : 5 ≤ p) (hodd : 
 
 
 
+
 /-- If N is odd and d * e = N² with d < e and d ≡ e (mod 2),
 then (e-d)/2 and (e+d)/2 are well-defined naturals giving a Pythagorean triple. -/
 theorem divisor_pair_well_defined (N d e : ℕ) (hprod : d * e = N ^ 2)
     (hlt : d < e) (hparity : d % 2 = e % 2) :
     (e - d) % 2 = 0 ∧ (e + d) % 2 = 0 := by
   constructor <;> omega
+
 

@@ -20,6 +20,7 @@ theorem ordinal_trichotomy (o : Ordinal) :
 
 
 
+
 /-- ω + 1 ≠ ω — adding one AFTER ω creates a new ordinal.
 Together with the previous theorem, this demonstrates non-commutativity. -/
 theorem omega_add_one_ne_omega : Ordinal.omega0 + 1 ≠ Ordinal.omega0 :=
@@ -27,9 +28,11 @@ theorem omega_add_one_ne_omega : Ordinal.omega0 + 1 ≠ Ordinal.omega0 :=
 
 
 
+
 /-- ω + 1 > ω — the successor of ω is strictly larger. -/
 theorem omega_lt_omega_add_one : Ordinal.omega0 < Ordinal.omega0 + 1 :=
   lt_add_one _
+
 
 
 
@@ -49,9 +52,11 @@ theorem transfinite_induction (P : Ordinal → Prop)
 
 
 
+
 /-- ω is a limit ordinal — it has no predecessor. -/
 theorem omega_is_limit : Order.IsSuccLimit Ordinal.omega0 :=
   Ordinal.isSuccLimit_omega0
+
 
 
 
@@ -62,10 +67,12 @@ theorem omega_le_of_not_lt (o : Ordinal) (h : ¬ o < Ordinal.omega0) :
 
 
 
+
 /-- The natural number n, viewed as an ordinal, is less than ω.
 This connects finite counting to the transfinite. -/
 theorem nat_lt_omega (n : ℕ) : (n : Ordinal) < Ordinal.omega0 :=
   Ordinal.nat_lt_omega0 n
+
 
 
 
@@ -78,5 +85,6 @@ theorem omega_eq_iSup_nat : Ordinal.omega0 = ⨆ n : ℕ, (n : Ordinal) := by
       (Nat.cast_lt.mpr (Nat.lt_succ_self _))
       (le_ciSup (Ordinal.bddAbove_range fun n : ℕ => (n : Ordinal)) _)
   · exact ciSup_le fun n => le_of_lt (Ordinal.nat_lt_omega0 n)
+
 
 

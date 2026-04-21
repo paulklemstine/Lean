@@ -18,6 +18,7 @@ theorem pythagorean_identity (a b : ℤ) :
 
 
 
+
 /-- The generalized N-dimensional Pythagorean identity:
 `4·t²·S + (t² - S)² = (t² + S)²`.
 Here `t` represents the last coordinate of the integer vector and
@@ -30,10 +31,12 @@ theorem generalized_pythagorean_identity (t S : ℤ) :
 
 
 
+
 /-- The same identity over ℚ, used directly in the unit norm proof. -/
 theorem generalized_pythagorean_identity_rat (t S : ℚ) :
     4 * t ^ 2 * S + (t ^ 2 - S) ^ 2 = (t ^ 2 + S) ^ 2 := by
   ring
+
 
 
 
@@ -48,12 +51,14 @@ theorem generalized_pythagorean_identity_real (t S : ℝ) :
 
 
 
+
 /-- The 2D stereographic projection from integers to a rational point on S¹.
 Given integers (m, n) with m² + n² ≠ 0, produces the rational point
 (2mn/(m²+n²), (n²-m²)/(m²+n²)) on the unit circle. -/
 noncomputable def stereo2D (m n : ℤ) (_h : (m : ℚ) ^ 2 + (n : ℚ) ^ 2 ≠ 0) : ℚ × ℚ :=
   let c := (m : ℚ) ^ 2 + (n : ℚ) ^ 2
   (2 * m * n / c, ((n : ℚ) ^ 2 - (m : ℚ) ^ 2) / c)
+
 
 
 
@@ -65,6 +70,7 @@ theorem stereo2D_unit_norm (m n : ℤ) (h : (m : ℚ) ^ 2 + (n : ℚ) ^ 2 ≠ 0)
   simp only [stereo2D]
   field_simp
   ring
+
 
 
 
@@ -80,6 +86,11 @@ theorem projection_numerator_eq_sq (t : ℤ) (ms : List ℤ)
 
 
 
+
+/-- [Section: # CatalogBuild.Logic.HarmonicNetwork
+Auto-generated from theorem catalog database.
+Domain: Logic
+Declarations: 21] -/
 theorem sum_sq_proj_eq (t : ℤ) (ms : List ℤ) :
     (ms.map (fun mᵢ => (2 * mᵢ * t) ^ 2)).sum = 4 * t ^ 2 * (ms.map (· ^ 2)).sum := by
   induction ms <;> simp +decide [ List.sum_cons ] ; linarith
@@ -87,6 +98,7 @@ theorem sum_sq_proj_eq (t : ℤ) (ms : List ℤ) :
 -- =====================================================================
 -- SECTION 4: UNIT NORM OVER ℚ (DIVISION FORM)
 -- =====================================================================
+
 
 
 
@@ -105,10 +117,12 @@ theorem unit_norm_2d_div (m n : ℚ) (h : m ^ 2 + n ^ 2 ≠ 0) :
 
 
 
+
 /-- Every pair (m, n) with m > n > 0 generates a Pythagorean triple. -/
 theorem generates_pythagorean_triple (m n : ℤ) :
     (2 * m * n) ^ 2 + (m ^ 2 - n ^ 2) ^ 2 = (m ^ 2 + n ^ 2) ^ 2 := by
   ring
+
 
 
 
@@ -124,6 +138,7 @@ theorem pythagorean_triple_nonneg (m n : ℕ) (h : m ≥ n) :
 
 
 
+
 /-- The projection preserves rationality: integer inputs yield rational outputs.
 This is trivially true by construction since we divide integers. -/
 theorem projection_rational (m n : ℤ) (h : m ^ 2 + n ^ 2 ≠ 0) :
@@ -135,6 +150,7 @@ theorem projection_rational (m n : ℤ) (h : m ^ 2 + n ^ 2 ≠ 0) :
   · exact_mod_cast h
   · push_cast; ring
   · push_cast; ring
+
 
 
 
@@ -155,6 +171,7 @@ theorem projection_idempotent_2d (a b : ℚ) (h : a ^ 2 + b ^ 2 = 1) :
 
 
 
+
 /-- Rational points parameterized by the stereographic projection are dense
 on the unit circle. We prove this by showing that for any point on S¹
 and any ε > 0, there exists an integer pair whose projection is within ε.
@@ -170,6 +187,7 @@ theorem rational_circle_param (t : ℚ) :
 -- =====================================================================
 -- SECTION 8: THE "SNAP" OPERATION — ALGEBRAIC PROPERTIES
 -- =====================================================================
+
 
 
 
@@ -194,11 +212,13 @@ theorem snap_exact_unit_norm (m₁ m₂ : ℤ) (h : (m₁ : ℚ) ^ 2 + (m₂ : �
 
 
 
+
 /-- The Pythagorean identity holds in any commutative ring, showing it is
 a purely algebraic fact independent of number system. -/
 theorem pythagorean_identity_ring {R : Type*} [CommRing R] (a b : R) :
     (2 * a * b) ^ 2 + (a ^ 2 - b ^ 2) ^ 2 = (a ^ 2 + b ^ 2) ^ 2 := by
   ring
+
 
 
 
@@ -210,6 +230,7 @@ theorem generalized_identity_ring {R : Type*} [CommRing R] (t S : R) :
 -- =====================================================================
 -- SECTION 10: COMPOSITION OF PROJECTIONS (NETWORK DEPTH)
 -- =====================================================================
+
 
 
 
@@ -228,6 +249,7 @@ theorem unit_product_norm (a b c d : ℚ)
 
 
 
+
 /-- Two columns from the same projection matrix are automatically
 orthogonal when they come from orthogonal integer vectors.
 This is a consequence of the conformal property of stereographic projection. -/
@@ -238,6 +260,7 @@ theorem stereo_preserves_orthogonality (a₁ b₁ a₂ b₂ : ℚ)
     (a₁ * a₂ + b₁ * b₂) ^ 2 + (a₁ * b₂ - b₁ * a₂) ^ 2 =
     (a₁ ^ 2 + b₁ ^ 2) * (a₂ ^ 2 + b₂ ^ 2) := by
   nlinarith [sq_nonneg (a₁ * a₂ + b₁ * b₂), sq_nonneg (a₁ * b₂ - b₁ * a₂)]
+
 
 
 
@@ -256,10 +279,12 @@ theorem stereo_param_lipschitz (t₁ t₂ : ℝ) (_ht₁ : |t₁| ≤ 1) (_ht₂
 
 
 
+
 theorem rational_point_from_param (x y : ℚ) (h : x ^ 2 + y ^ 2 = 1) (hy : y ≠ -1) :
     ∃ t : ℚ, x = 2 * t / (1 + t ^ 2) ∧ y = (1 - t ^ 2) / (1 + t ^ 2) := by
   use x / ( 1 + y );
   grind
+
 
 
 end

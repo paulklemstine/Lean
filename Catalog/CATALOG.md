@@ -1,45 +1,45 @@
 # Master Theorem Catalog
 
-*Auto-generated 2026-04-16 23:46 UTC from the catalog database.*
+*Auto-generated 2026-04-21 23:47 UTC from the catalog database.*
 
 ## Project Statistics
 
 | Metric | Count |
 |--------|-------|
-| Total Lean files | 1,350 |
-| Total declarations | 25,855 |
-| Theorems & lemmas | 19,994 |
-| Definitions | 5,070 |
-| Structures/classes/inductives | 727 |
-| Total lines of Lean code | 179,717 |
-| Remaining `sorry` count | 5 |
-| Canonical declarations | 24,750 |
-| Duplicate groups resolved | 782 |
+| Total Lean files | 1,446 |
+| Total declarations | 28,797 |
+| Theorems & lemmas | 22,334 |
+| Definitions | 5,669 |
+| Structures/classes/inductives | 743 |
+| Total lines of Lean code | 178,634 |
+| Remaining `sorry` count | 3 |
+| Canonical declarations | 28,061 |
+| Duplicate groups resolved | 560 |
 | Consolidated domains | 13 |
 
 ## Domain Summary
 
 | Domain | Files | Declarations | Theorems | Defs | Structures |
 |--------|-------|-------------|----------|------|------------|
-| Algebra | 100 | 1,366 | 1,144 | 181 | 26 |
-| Bridges | 57 | 1,101 | 896 | 144 | 44 |
-| Computation | 150 | 3,082 | 2,374 | 596 | 108 |
-| Cryptography | 35 | 698 | 409 | 212 | 77 |
-| EML | 160 | 3,526 | 2,530 | 962 | 29 |
-| Geometry | 54 | 987 | 746 | 234 | 7 |
-| Logic | 72 | 1,429 | 969 | 363 | 90 |
-| MachineLearning | 88 | 1,223 | 996 | 164 | 63 |
-| Physics | 106 | 2,747 | 2,014 | 635 | 96 |
-| Pythagorean | 153 | 3,889 | 3,243 | 600 | 40 |
-| Shared | 51 | 225 | 188 | 37 | 0 |
-| Speculative | 272 | 4,137 | 3,425 | 607 | 100 |
+| Algebra | 100 | 1,365 | 1,143 | 181 | 26 |
+| Bridges | 45 | 965 | 785 | 133 | 44 |
+| Computation | 150 | 3,079 | 2,371 | 596 | 108 |
+| Cryptography | 36 | 741 | 452 | 212 | 77 |
+| EML | 218 | 4,530 | 3,253 | 1,232 | 40 |
+| Geometry | 60 | 1,053 | 805 | 241 | 7 |
+| Logic | 72 | 1,428 | 968 | 363 | 90 |
+| MachineLearning | 77 | 1,120 | 805 | 248 | 67 |
+| Physics | 114 | 2,830 | 2,088 | 644 | 96 |
+| Pythagorean | 209 | 6,038 | 5,092 | 894 | 43 |
+| Shared | 52 | 281 | 250 | 31 | 0 |
+| Speculative | 261 | 3,922 | 3,262 | 559 | 98 |
 | Tropical | 52 | 1,445 | 1,060 | 335 | 47 |
 
 ## Table of Contents
 
-- [Algebra](#algebra) — 100 files, 1365 declarations
+- [Algebra](#algebra) — 100 files, 1364 declarations
   - [Advanced](#algebraadvanced) — 3 files, 72 declarations
-  - [Core](#algebracore) — 18 files, 199 declarations
+  - [Core](#algebracore) — 18 files, 198 declarations
   - [Diophantine](#algebradiophantine) — 3 files, 29 declarations
   - [DivisionAlgebras](#algebradivisionalgebras) — 10 files, 369 declarations
   - [Factoring](#algebrafactoring) — 3 files, 36 declarations
@@ -55,78 +55,81 @@
   - [Fibonacci](#computationfibonacci) — 3 files, 41 declarations
   - [OctonionGates](#computationoctoniongates) — 2 files, 52 declarations
   - [Oracles](#computationoracles) — 81 files, 1796 declarations
-- [Cryptography](#cryptography) — 35 files, 698 declarations
+- [Cryptography](#cryptography) — 36 files, 733 declarations
   - [Core](#cryptographycore) — 1 files, 43 declarations
   - [Ethereum](#cryptographyethereum) — 13 files, 167 declarations
-  - [Factoring](#cryptographyfactoring) — 7 files, 70 declarations
+  - [Factoring](#cryptographyfactoring) — 8 files, 105 declarations
   - [QuantumSecurity](#cryptographyquantumsecurity) — 11 files, 371 declarations
   - [ZeroKnowledge](#cryptographyzeroknowledge) — 3 files, 47 declarations
-- [EML](#eml) — 155 files, 3346 declarations
-  - [AIResearch](#emlairesearch) — 37 files, 928 declarations
+- [EML](#eml) — 216 files, 4331 declarations
+  - [AIResearch](#emlairesearch) — 78 files, 1459 declarations
+  - [SPBExtended](#emlspbextended) — 8 files, 164 declarations
   - [SPBResearch](#emlspbresearch) — 9 files, 119 declarations
-  - [V10](#emlv10) — 5 files, 101 declarations
-  - [V11](#emlv11) — 5 files, 96 declarations
-  - [V12](#emlv12) — 6 files, 99 declarations
-  - [V9](#emlv9) — 2 files, 43 declarations
+  - [V10](#emlv10) — 5 files, 95 declarations
+  - [V11](#emlv11) — 5 files, 91 declarations
+  - [V12](#emlv12) — 6 files, 97 declarations
+  - [V9](#emlv9) — 2 files, 39 declarations
   - [v8](#emlv8) — 5 files, 108 declarations
-- [Geometry](#geometry) — 54 files, 976 declarations
+- [Geometry](#geometry) — 60 files, 1044 declarations
   - [PAdic](#geometrypadic) — 1 files, 35 declarations
   - [SphericalUniverse](#geometrysphericaluniverse) — 5 files, 111 declarations
-  - [Stereographic](#geometrystereographic) — 48 files, 830 declarations
+  - [Stereographic](#geometrystereographic) — 54 files, 898 declarations
 - [Logic](#logic) — 72 files, 1428 declarations
-- [MachineLearning](#machinelearning) — 60 files, 814 declarations
+- [MachineLearning](#machinelearning) — 73 files, 1071 declarations
   - [Consciousness](#machinelearningconsciousness) — 6 files, 58 declarations
-  - [Neural](#machinelearningneural) — 8 files, 219 declarations
+  - [Neural](#machinelearningneural) — 19 files, 403 declarations
   - [Prediction](#machinelearningprediction) — 21 files, 258 declarations
   - [QuantumTransformer](#machinelearningquantumtransformer) — 10 files, 127 declarations
-  - [ShefferFunction](#machinelearningshefferfunction) — 11 files, 76 declarations
-- [Physics](#physics) — 106 files, 2746 declarations
+  - [RSIL](#machinelearningrsil) — 6 files, 108 declarations
+  - [ShefferFunction](#machinelearningshefferfunction) — 7 files, 41 declarations
+- [Physics](#physics) — 114 files, 2824 declarations
   - [AlgebraicPhysics](#physicsalgebraicphysics) — 11 files, 266 declarations
   - [ArchitectureOfReality](#physicsarchitectureofreality) — 5 files, 82 declarations
-  - [ArithmeticPhotons](#physicsarithmeticphotons) — 19 files, 578 declarations
+  - [ArithmeticPhotons](#physicsarithmeticphotons) — 19 files, 576 declarations
   - [Classical](#physicsclassical) — 19 files, 559 declarations
   - [Quantum](#physicsquantum) — 33 files, 970 declarations
   - [Spacetime](#physicsspacetime) — 3 files, 53 declarations
   - [TheoryOfEverything](#physicstheoryofeverything) — 1 files, 49 declarations
-- [Pythagorean](#pythagorean) — 153 files, 3866 declarations
-  - [Agents](#pythagoreanagents) — 4 files, 89 declarations
+- [Pythagorean](#pythagorean) — 209 files, 5685 declarations
+  - [Agents](#pythagoreanagents) — 4 files, 87 declarations
   - [Applications](#pythagoreanapplications) — 4 files, 167 declarations
-  - [Berggren](#pythagoreanberggren) — 27 files, 708 declarations
-  - [Core](#pythagoreancore) — 26 files, 617 declarations
+  - [Berggren](#pythagoreanberggren) — 63 files, 1985 declarations
+  - [ClosedFormAncestor](#pythagoreanclosedformancestor) — 5 files, 88 declarations
+  - [Core](#pythagoreancore) — 26 files, 611 declarations
   - [Frameworks](#pythagoreanframeworks) — 2 files, 64 declarations
-  - [FutureResearch](#pythagoreanfutureresearch) — 6 files, 69 declarations
-  - [GravitationalFactoring](#pythagoreangravitationalfactoring) — 7 files, 150 declarations
-  - [HyperbolicFactoring](#pythagoreanhyperbolicfactoring) — 3 files, 90 declarations
+  - [FutureResearch](#pythagoreanfutureresearch) — 12 files, 247 declarations
+  - [GravitationalFactoring](#pythagoreangravitationalfactoring) — 7 files, 127 declarations
+  - [HyperbolicFactoring](#pythagoreanhyperbolicfactoring) — 3 files, 88 declarations
   - [InverseTree](#pythagoreaninversetree) — 4 files, 97 declarations
   - [LatticeTree](#pythagoreanlatticetree) — 9 files, 135 declarations
   - [ModularForms](#pythagoreanmodularforms) — 6 files, 461 declarations
   - [QDF](#pythagoreanqdf) — 6 files, 205 declarations
-  - [Quadruples](#pythagoreanquadruples) — 12 files, 275 declarations
-  - [Research](#pythagoreanresearch) — 9 files, 172 declarations
-  - [ThreeRoads](#pythagoreanthreeroads) — 5 files, 130 declarations
+  - [Quadruples](#pythagoreanquadruples) — 21 files, 586 declarations
+  - [Research](#pythagoreanresearch) — 9 files, 171 declarations
+  - [ThreeRoads](#pythagoreanthreeroads) — 5 files, 129 declarations
   - [TreeFactoring](#pythagoreantreefactoring) — 11 files, 359 declarations
-- [Shared](#shared) — 38 files, 119 declarations
-- [Speculative](#speculative) — 255 files, 3837 declarations
+- [Shared](#shared) — 41 files, 164 declarations
+- [Speculative](#speculative) — 261 files, 3907 declarations
   - [ArithmeticUniverse](#speculativearithmeticuniverse) — 5 files, 27 declarations
   - [Consciousness](#speculativeconsciousness) — 7 files, 109 declarations
-  - [Forbidden](#speculativeforbidden) — 11 files, 79 declarations
+  - [Forbidden](#speculativeforbidden) — 11 files, 78 declarations
   - [IdempotentCollapse](#speculativeidempotentcollapse) — 14 files, 160 declarations
   - [Millennium](#speculativemillennium) — 6 files, 68 declarations
-  - [OISCC](#speculativeoiscc) — 12 files, 185 declarations
+  - [OISCC](#speculativeoiscc) — 18 files, 264 declarations
   - [OpenProblems](#speculativeopenproblems) — 5 files, 26 declarations
-  - [Other](#speculativeother) — 73 files, 1606 declarations
-  - [RosettaStone](#speculativerosettastone) — 15 files, 213 declarations
+  - [Other](#speculativeother) — 73 files, 1603 declarations
+  - [RosettaStone](#speculativerosettastone) — 15 files, 212 declarations
   - [RudyRucker](#speculativerudyrucker) — 5 files, 29 declarations
   - [SPBBridge](#speculativespbbridge) — 4 files, 56 declarations
   - [SciFi](#speculativescifi) — 21 files, 103 declarations
   - [StereographicBridge](#speculativestereographicbridge) — 1 files, 8 declarations
   - [emlv10](#speculativeemlv10) — 2 files, 16 declarations
-- [Tropical](#tropical) — 52 files, 1445 declarations
+- [Tropical](#tropical) — 52 files, 1444 declarations
   - [Core](#tropicalcore) — 24 files, 687 declarations
   - [Cryptography](#tropicalcryptography) — 5 files, 154 declarations
   - [Langlands](#tropicallanglands) — 17 files, 381 declarations
-  - [NeuralNetworks](#tropicalneuralnetworks) — 6 files, 223 declarations
-- [Shared](#shared) — 16 files, 169 declarations
+  - [NeuralNetworks](#tropicalneuralnetworks) — 6 files, 222 declarations
+- [Shared](#shared) — 15 files, 94 declarations
 
 ## Algebra
 
@@ -477,10 +480,10 @@
 
 - **theorem** (13): `legendre_mul'`, `totient_mul_coprime'`, `sum_divisors_6`, `sum_divisors_28`, `pell_convergent_3_2'`, `pell_convergent_7_5'`, `pell_convergent_17_12'`, `pell_convergent_41_29'`, `goldbach_small`, `fermat_little_general'`, `crt_cardinality_check'`, `six_congruent` ... +1 more
 
-#### `NumberTheoryDeep.lean` — 21 declarations
+#### `NumberTheoryDeep.lean` — 20 declarations
 *Source: `Algebra/Core/NumberTheoryDeep.lean`*
 
-- **theorem** (21): `neg_one_qr_mod5`, `neg_one_not_qr_mod3`, `neg_one_qr_mod13`, `neg_one_not_qr_mod7`, `two_qr_mod7`, `two_not_qr_mod5`, `totient_mul_of_coprime`, `totient_prime_eq`, `totient_prime_sq'`, `sum_totient_divisors`, `crt_example_5`, `crt_example_23` ... +9 more
+- **theorem** (20): `neg_one_qr_mod5`, `neg_one_not_qr_mod3`, `neg_one_qr_mod13`, `neg_one_not_qr_mod7`, `two_qr_mod7`, `two_not_qr_mod5`, `totient_mul_of_coprime`, `totient_prime_eq`, `totient_prime_sq'`, `sum_totient_divisors`, `crt_example_5`, `crt_example_23` ... +8 more
 
 #### `PrimeSignatures.lean` — 4 declarations
 *Source: `Algebra/Core/PrimeSignatures.lean`*
@@ -1862,6 +1865,11 @@
 
 - **theorem** (9): `orbitSeq_eq_iterate`, `orbitSeq_zero`, `orbitSeq_succ`, `pollardMap_commutes_with_castHom`, `factor_from_mod_collision`, `factor_from_mod_collision_lt`, `collision_within_card`, `floyd_detection`, `orbit_map_commute`
 
+#### `CyclotomicChannelFactoring.lean` — 35 declarations
+*Source: `Cryptography/Factoring/CyclotomicChannelFactoring.lean`*
+
+- **theorem** (35): `cyclotomic_8`, `cyclotomic_12`, `multichannel_factoring_4`, `multichannel_factoring_6`, `multichannel_factoring_8`, `multichannel_factoring_12`, `cyclotomic_channel_count_2`, `cyclotomic_channel_count_6`, `cyclotomic_channel_count_12`, `cyclotomic_channel_count_24`, `cyclotomic_channel_count_60`, `cyclotomic_channel_count_120` ... +23 more
+
 #### `FactorQuadruples.lean` — 12 declarations
 *Source: `Cryptography/Factoring/FactorQuadruples.lean`*
 
@@ -2024,10 +2032,15 @@
 - **theorem** (7): `spb_reachable_id`, `spb_reachable_zero`, `spb_reachable_one`, `id_in_spbFunctions`, `const_in_spbFunctions`, `spbFunctions_closed_spb`, `spb_generates_double_angle`
 - **structure** (2): `SPBReachable`, `SPBTree`
 
-#### `Basic.lean` — 9 declarations
+#### `Barriers.lean` — 5 declarations
+*Source: `ShefferAI/Barriers.lean`*
+
+- **theorem** (4): `pow_not_mem_sheffer`, `sheffer_expr_tendsto_both`, `sheffer_expr_tendsto_atTop`, `softplus_sub_id_tendsto_zero_atTop`
+
+#### `Basic.lean` — 15 declarations
 *Source: `EML/Basic.lean`*
 
-- **theorem** (4): `spbH_neg_right`, `wick_duality`, `tan_add_eq_spb`, `SPBExpr.leaf_eq_node_succ`
+- **theorem** (9): `spbH_neg_right`, `wick_duality`, `tan_add_eq_spb`, `SPBExpr.leaf_eq_node_succ`, `logisticSigmoid_add_neg`, `hasDerivAt_softplus`, `sheffer_affinePrecomp`, `sheffer_affineComb`, `id_eq_softplus_diff`
 - **structure** (1): `SPBExpr`
 
 #### `BerggrenCharPoly.lean` — 26 declarations
@@ -2083,6 +2096,11 @@
 
 - **theorem** (16): `expTower_one`, `expTower_two`, `expTower_pos`, `expTower_strictMono`, `expTower_continuous`, `emlChainLeaves_linear`, `depth5_chain_leaves`, `eml_neuron_lipschitz_bound`, `eml_complexity_subadditive`, `eml_complexity_strictly_subadditive`, `real_subalgebra_self_adjoint`, `width_ratio_exponential` ... +4 more
 
+#### `DerivativeLimitPairs.lean` — 6 declarations
+*Source: `ShefferAI/DerivativeLimitPairs.lean`*
+
+- **theorem** (5): `sheffer_pair_fn_mem`, `sheffer_pair_fn_hasDerivAt`, `sheffer_pair_deriv_tendsto_atTop`, `sheffer_pair_deriv_tendsto_atBot`, `derivative_limit_pairs_surjective`
+
 #### `Dynamics.lean` — 17 declarations
 *Source: `EML/Dynamics.lean`*
 
@@ -2128,6 +2146,36 @@
 *Source: `EML/EMLSPBBridge.lean`*
 
 - **theorem** (10): `eml_generates_exp`, `eml_generates_neg_log`, `eml_identity`, `spb_identity_bridge`, `spb_inverse_bridge`, `spb_comm_bridge`, `exp_hom`, `tanh_hom`, `spb_assoc_bridge`, `spbH_double`
+
+#### `EMLv17Advanced.lean` — 29 declarations
+*Source: `EML/EMLv17Advanced.lean`*
+
+- **theorem** (29): `emlGmap_at_most_one_fixed_point`, `emlGmap_unique_fixed_point`, `emlGmap_lipschitz`, `sigmaEml_strictMono`, `sigmaEml_tendsto_atTop`, `sigmaEml_pos_of_ge_one`, `sigmaEml_lower_bound`, `eml_kl_divergence`, `reverse_kl_nonneg`, `reverse_kl_eq_zero_iff`, `emlDiag_at_one`, `emlDiag_at_e` ... +17 more
+
+#### `EMLv17Core.lean` — 69 declarations
+*Source: `EML/EMLv17Core.lean`*
+
+- **theorem** (65): `eml_def`, `emlDiag_def`, `eml_eq_diag`, `eml_at_one`, `eml_at_zero`, `eml_at_exp`, `eml_no_critical_points`, `eml_hasDerivAt_fst`, `eml_hasDerivAt_snd`, `eml_second_deriv_pos`, `eml_second_deriv_snd_pos`, `eml_strictMono_fst` ... +53 more
+
+#### `EMLv18Advanced.lean` — 25 declarations
+*Source: `EML/EMLv18Advanced.lean`*
+
+- **theorem** (25): `gradient_flow_x_identity`, `gradient_flow_y_domain`, `emlGmap_maps_interval`, `emlGmap_deriv_bound`, `fenchel_young_exp`, `eml_exp_distribute`, `eml_sum_log_prod`, `eml_tropical_lower`, `eml_tropical_neg`, `eml_fixed_fst`, `eml_fixed_snd_at_zero`, `eml_first_difference` ... +13 more
+
+#### `EMLv18Core.lean` — 39 declarations
+*Source: `EML/EMLv18Core.lean`*
+
+- **theorem** (38): `emlDiag_second_deriv_pos'`, `emlDiag_strictConvexOn`, `emlDiag_convexOn`, `eml_chain_identity`, `eml_triangle_decomposition`, `eml_complement`, `eml_value_complement`, `sigmaEml_hasDerivAt`, `sigmaEml_deriv_pos`, `sigmaEml_differentiable`, `sigmaEml_continuous`, `sigmaEml_le_one_of_nonpos` ... +26 more
+
+#### `EMLv19Advanced.lean` — 28 declarations
+*Source: `EML/EMLv19Advanced.lean`*
+
+- **theorem** (28): `sigmaEml_surjective`, `sigmaEml_bijective`, `eml_markov_bound`, `eml_chernoff_lower`, `eml_diff_quotient`, `eml_strict_gibbs`, `eml_exp_family`, `eml_power_series_term`, `eml_holder_type`, `eml_product_decomp`, `eml_gauss_curvature_pos`, `eml_symm_lower` ... +16 more
+
+#### `EMLv19Core.lean` — 39 declarations
+*Source: `EML/EMLv19Core.lean`*
+
+- **theorem** (36): `eml_strictConvexOn_snd`, `eml_convexOn_snd`, `eml_jensen_snd`, `eml_logSumExp`, `emlAlpha_at_one`, `emlAlpha_at_zero`, `emlAlpha_sum_neg`, `emlEntropy_eq`, `emlEntropy_ge_one`, `emlEntropy_eq_one_iff`, `emlEntropy_strictConvexOn`, `eml_harmonic_mean` ... +24 more
 
 #### `EMLv8Advanced.lean` — 30 declarations
 *Source: `EML/EMLv8Advanced.lean`*
@@ -2177,15 +2225,15 @@
 - **theorem** (12): `EMLCompTree.complexity_eq_nodes_succ`, `exp_eml_complexity`, `id_eml_complexity`, `const_eml_complexity`, `composition_complexity_additive`, `composition_bound`, `compression_ratio_50_leaves`, `compression_ratio_20_leaves`, `balanced_complexity`, `caterpillar_depth`, `depth_lt_complexity`, `storage_compression`
 - **structure** (2): `ElemExpr`, `EMLCompTree`
 
-#### `FundamentalTheory.lean` — 27 declarations
+#### `FundamentalTheory.lean` — 26 declarations
 *Source: `EML/FundamentalTheory.lean`*
 
-- **theorem** (24): `eml_one_minus`, `eml_sub`, `eml_add`, `eml_not_comm`, `eml_not_assoc`, `eml_no_left_identity`, `eml_no_right_identity`, `eml_gradient_fst`, `eml_gradient_snd`, `eml_continuous_x`, `eml_continuousOn_y`, `eml_diag_gt` ... +12 more
+- **theorem** (23): `eml_one_minus`, `eml_sub`, `eml_add`, `eml_not_comm`, `eml_not_assoc`, `eml_no_left_identity`, `eml_no_right_identity`, `eml_gradient_fst`, `eml_gradient_snd`, `eml_continuous_x`, `eml_continuousOn_y`, `eml_diag_gt` ... +11 more
 
-#### `FutureResearch.lean` — 37 declarations
+#### `FutureResearch.lean` — 36 declarations
 *Source: `EML/FutureResearch.lean`*
 
-- **theorem** (34): `emlDiag_deriv`, `emlDiag_second_deriv_pos`, `emlDiag_convex`, `emlDiag_gt_id`, `emlDiag_ge_two`, `emlDiag_tendsto_atTop`, `oml_fixed_one`, `oml_deriv`, `oml_compose`, `oml_at_e`, `oml_at_inv_e`, `oml_unique_fixed_point` ... +22 more
+- **theorem** (33): `emlDiag_deriv`, `emlDiag_second_deriv_pos`, `emlDiag_convex`, `emlDiag_gt_id`, `emlDiag_tendsto_atTop`, `oml_fixed_one`, `oml_deriv`, `oml_compose`, `oml_at_e`, `oml_at_inv_e`, `oml_unique_fixed_point`, `emlT_one` ... +21 more
 
 #### `FutureTheorems.lean` — 20 declarations
 *Source: `EML/FutureTheorems.lean`*
@@ -2233,6 +2281,11 @@
 
 - **theorem** (15): `euler_spb_pi`, `hutton_double`, `hutton_spb_pi`, `hutton_full`, `machin_step1`, `machin_step2`, `machin_step3`, `machin_full`, `stormer_step1`, `arctan_sum_spb`, `rational_circle_x`, `rational_circle_y` ... +3 more
 
+#### `NewResults.lean` — 6 declarations
+*Source: `ShefferAI/NewResults.lean`*
+
+- **theorem** (6): `softplus_surjOn_Ioi`, `softplus_orbit_strictMono`, `softplus_le_add_log2`, `softplus_ge_id`, `ShefferExpr.depth_pos`, `ShefferExpr.width_pos`
+
 #### `NewTheorems.lean` — 35 declarations
 *Source: `EML/NewTheorems.lean`*
 
@@ -2243,10 +2296,10 @@
 
 - **theorem** (8): `pythagorean_from_spb`, `pythagorean_triple`, `spb_integer_iff`, `spb_one_zero_int`, `spb_two_three`, `spb_one_two`, `spb_one_neg_two`, `brahmagupta_is_spb`
 
-#### `OISCC.lean` — 33 declarations
+#### `OISCC.lean` — 32 declarations
 *Source: `EML/OISCC.lean`*
 
-- **theorem** (23): `eml_recovers_exp`, `oiscc_computes_exp`, `eml_one_minus_log`, `oiscc_computes_one_minus_log`, `eml_recovers_ln`, `oiscc_computes_ln`, `eml_recovers_sub`, `eml_recovers_add`, `eml_mul_final`, `eml_div_final`, `rpow_via_eml`, `eml_fixed_point_equiv` ... +11 more
+- **theorem** (22): `eml_recovers_exp`, `oiscc_computes_exp`, `eml_one_minus_log`, `oiscc_computes_one_minus_log`, `eml_recovers_ln`, `oiscc_computes_ln`, `eml_recovers_sub`, `eml_recovers_add`, `eml_mul_final`, `eml_div_final`, `rpow_via_eml`, `eml_fixed_point_equiv` ... +10 more
 - **structure** (1): `OISCCInstr`
 
 #### `OpenProblems.lean` — 12 declarations
@@ -2258,6 +2311,11 @@
 *Source: `EML/OpenQuestions.lean`*
 
 - **theorem** (18): `softplus_contDiff`, `sheffer_expr_contDiff`, `sheffer_algebra_contDiff`, `sheffer_algebra_subset_smooth_lip`, `softplus_nat_mul_ineq`, `softplus_iter_zero_upper`, `softplus_iter_zero_lower`, `softplus_no_fixed_point`, `ring_completion_not_lipschitz`, `softplus_deriv_le_one`, `softplus_right_inverse`, `softplus_left_inverse` ... +6 more
+
+#### `OrbitDynamics.lean` — 7 declarations
+*Source: `ShefferAI/OrbitDynamics.lean`*
+
+- **theorem** (7): `softplus_iter_eq`, `softplus_iter_log_nat`, `softplus_iter_log_one`, `softplus_iter_hasDerivAt`, `softplus_iter_deriv_pos`, `softplus_iter_deriv_lt_one`, `softplus_iter_growth_decomp`
 
 #### `PACLearning.lean` — 17 declarations
 *Source: `EML/PACLearning.lean`*
@@ -2364,6 +2422,11 @@
 - **theorem** (6): `softplus_mem_sheffer`, `sheffer_affine_pre_closed`, `sheffer_affine_comb_closed`, `sheffer_comp_closed`, `const_mem_sheffer`, `id_mem_sheffer`
 - **structure** (1): `ShefferExpr`
 
+#### `SigmoidTanh.lean` — 5 declarations
+*Source: `ShefferAI/SigmoidTanh.lean`*
+
+- **theorem** (5): `log_sigmoid_eq`, `log_sigmoid_eq'`, `log_sigmoid_mem_sheffer`, `softplus_diff_shift_mem`, `bounded_sheffer_exists`
+
 #### `StructuralProperties.lean` — 17 declarations
 *Source: `EML/StructuralProperties.lean`*
 
@@ -2417,6 +2480,11 @@
 
 - **theorem** (33): `eml15_convex_fst`, `eml15_concave_snd`, `gmap15_strictAnti`, `gmap15_fixed_point_unique`, `h_strictMono`, `fixed_point_eq_unique`, `eml15_sum`, `eml15_prod_snd`, `eml15_reciprocal`, `eml15_zero_one`, `eml15_neg_fst`, `eml15_symmetrized_formula` ... +21 more
 
+#### `V16Research.lean` — 46 declarations
+*Source: `EML/V16Research.lean`*
+
+- **theorem** (42): `eml16_jointly_convex`, `gmap16_sub_id_continuousOn`, `gmap16_at_two_gt`, `gmap16_at_e_lt`, `gmap16_fixed_point_exists`, `gmap16_strictAnti`, `gmap16_fixed_point_unique`, `gmap16_fixed_point_unique_exists`, `symmetrized_eml_eq_two_iff`, `diag16_ge_two`, `diag16_tendsto_top`, `diag16_at_one` ... +30 more
+
 #### `V5Theorems.lean` — 64 declarations
 *Source: `EML/V5Theorems.lean`*
 
@@ -2450,15 +2518,26 @@
 
 ### AIResearch
 
+#### `ActiveLearningTheory.lean` — 12 declarations
+*Source: `EML/AIResearch/V17/ActiveLearningTheory.lean`*
+
+- **theorem** (6): `eml_acquisition_cheaper`, `larger_pool_costlier`, `eml_mc_dropout_cheaper`, `eml_al_cycle_cheaper`, `eml_batch_selection_cheaper`, `eml_coreset_cheaper`
+
+#### `AdversarialRobustness.lean` — 18 declarations
+*Source: `EML/AIResearch/V19/AdversarialRobustness.lean`*
+
+- **theorem** (12): `identity_lipschitz`, `constant_lipschitz`, `lipschitz_comp`, `certified_radius_nonneg`, `within_radius_bounded`, `tradeoff_monotone`, `adversarial_ge_clean`, `adv_gap_decreases`, `iterated_robustness_preservation`, `eml_layer_lipschitz`, `eml_fewer_to_regularize`, `eml_lower_reg_cost`
+
 #### `AdversarialRobustnessTheory.lean` — 15 declarations
 *Source: `EML/AIResearch/AdversarialRobustnessTheory.lean`*
 
 - **theorem** (10): `eml_lip_pos`, `eml_lip_monotone`, `eml_lip_unit_at_zero`, `deeper_higher_lipschitz`, `larger_margin_larger_radius`, `larger_budget_more_vulnerable`, `zero_perturbation_safe`, `eml_smoothing_cheaper`, `more_samples_costlier`, `eml_verify_cheaper`
 
-#### `AlignmentSafetyTheory.lean` — 28 declarations
+#### `AlignmentSafetyTheory.lean` — 49 declarations
 *Source: `EML/AIResearch/AlignmentSafetyTheory.lean`*
 
-- **theorem** (12): `eml_interpret_cheaper`, `eml_reward_compact`, `eml_lipschitz_pos`, `eml_lipschitz_bounded`, `eml_lower_alignment_tax`, `eml_more_corrigible`, `eml_value_sample_efficient`, `eml_oversight_cheaper`, `eml_less_deception_capacity`, `eml_constitutional_cheaper`, `eml_anomaly_cheaper`, `eml_grad_monitor_cheaper`
+- **theorem** (26): `eml_interpret_cheaper`, `eml_reward_compact`, `eml_lipschitz_pos`, `eml_lipschitz_bounded`, `eml_lower_alignment_tax`, `eml_more_corrigible`, `eml_value_sample_efficient`, `eml_oversight_cheaper`, `eml_less_deception_capacity`, `eml_constitutional_cheaper`, `eml_anomaly_cheaper`, `eml_grad_monitor_cheaper` ... +14 more
+- **structure** (1): `AlignedSystem`
 
 #### `ApproximationBounds.lean` — 13 declarations
 *Source: `EML/AIResearch/ApproximationBounds.lean`*
@@ -2475,10 +2554,25 @@
 
 - **theorem** (20): `eml_smaller_search_space`, `eml_eval_faster`, `eml_supernet_smaller`, `smaller_lipschitz_less_sensitive`, `zero_perturbation_stable`, `eml_transfer_cheaper`, `eml_zero_shot_cheaper`, `eml_pareto_better`, `eml_scales_better`, `eml_nas_early_stopping`, `eml_weight_sharing_cheaper`, `eml_search_smaller` ... +8 more
 
+#### `CausalDiscoveryTheory.lean` — 9 declarations
+*Source: `EML/AIResearch/V18/CausalDiscoveryTheory.lean`*
+
+- **theorem** (5): `eml_sem_cheaper`, `eml_search_cheaper`, `more_candidates_costlier_graph`, `eml_bootstrap_cheaper`, `eml_causal_pipeline_cheaper`
+
 #### `CausalInferenceTheory.lean` — 24 declarations
 *Source: `EML/AIResearch/CausalInferenceTheory.lean`*
 
 - **theorem** (11): `eml_sem_compact`, `eml_intervention_cheaper`, `eml_ate_sample_efficient`, `eml_counterfactual_cheaper`, `eml_discovery_cheaper`, `eml_iv_cheaper`, `eml_mediation_cheaper`, `stronger_confounding_weaker_bound`, `no_confounding_exact`, `eml_propensity_compact`, `eml_causal_rep_compact`
+
+#### `CausalRepresentationTheory.lean` — 16 declarations
+*Source: `EML/AIResearch/V16/CausalRepresentationTheory.lean`*
+
+- **theorem** (6): `eml_causal_encoder_compact`, `more_variables_costlier`, `eml_intervention_encoder_compact`, `eml_counterfactual_compact`, `eml_mi_estimator_compact`, `eml_causal_pipeline_compact`
+
+#### `ConstitutionalAITheory.lean` — 13 declarations
+*Source: `EML/AIResearch/V17/ConstitutionalAITheory.lean`*
+
+- **theorem** (6): `eml_critique_cheaper`, `more_principles_costlier`, `eml_cr_cycle_cheaper`, `eml_multi_round_cheaper`, `eml_rlaif_cheaper`, `eml_cai_pipeline_cheaper`
 
 #### `ContinualLearning.lean` — 16 declarations
 *Source: `EML/AIResearch/ContinualLearning.lean`*
@@ -2486,9 +2580,23 @@
 - **theorem** (6): `eml_less_forgetting`, `eml_cheaper_ewc`, `eml_more_tasks`, `eml_smaller_replay`, `eml_cheaper_growth`, `more_sharing_less_cost`
 
 #### `ContinualLearningTheory.lean` — 13 declarations
-*Source: `EML/AIResearch/V15/ContinualLearningTheory.lean`*
+*Source: `EML/AIResearch/ContinualLearningTheory.lean`*
 
 - **theorem** (8): `eml_replay_smaller`, `eml_ewc_cheaper`, `ewc_penalty_nonneg`, `eml_multitask_adapters_cheaper`, `more_tasks_more_params`, `eml_progressive_cheaper`, `fewer_params_less_forgetting`, `eml_consolidation_cheaper`
+
+#### `ConvergenceGuarantees.lean` — 4 declarations
+*Source: `EML/AIResearch/V18/ConvergenceGuarantees.lean`*
+
+
+#### `CurriculumLearningTheory.lean` — 9 declarations
+*Source: `EML/AIResearch/V18/CurriculumLearningTheory.lean`*
+
+- **theorem** (5): `eml_train_step_cheaper`, `eml_scoring_cheaper`, `more_samples_more_scoring`, `eml_curriculum_cheaper`, `eml_selfpaced_cheaper`
+
+#### `CurriculumSelfPlay.lean` — 10 declarations
+*Source: `EML/AIResearch/V18/CurriculumSelfPlay.lean`*
+
+- **structure** (2): `Curriculum`, `SelfPlaySystem`
 
 #### `DiffusionModelTheory.lean` — 48 declarations
 *Source: `EML/AIResearch/DiffusionModelTheory.lean`*
@@ -2509,6 +2617,27 @@
 *Source: `EML/AIResearch/EmbeddingTheory.lean`*
 
 - **theorem** (10): `eml_embedding_table_compact`, `eml_projection_compact`, `triplet_loss_nonneg`, `triplet_loss_zero_when_separated`, `closer_positive_smaller_loss`, `eml_dim_reduction_compact`, `fewer_bits_less_memory`, `eml_contextual_cheaper`, `eml_nn_search_cheaper`, `eml_composed_cheaper`
+
+#### `EmergentCapabilities.lean` — 7 declarations
+*Source: `EML/AIResearch/V18/EmergentCapabilities.lean`*
+
+- **theorem** (2): `eml_higher_effective_scale`, `at_critical_mass_emerges`
+- **structure** (1): `CapabilityTree`
+
+#### `EnergyBasedModelTheory.lean` — 16 declarations
+*Source: `EML/AIResearch/V16/EnergyBasedModelTheory.lean`*
+
+- **theorem** (9): `boltzmann_factor_pos`, `boltzmann_lower_energy_higher_prob`, `boltzmann_zero_energy`, `eml_energy_net_compact`, `eml_mcmc_cheaper`, `more_steps_costlier`, `eml_cdk_cheaper`, `eml_score_match_cheaper`, `eml_partition_cheaper`
+
+#### `EnsembleTheory.lean` — 10 declarations
+*Source: `EML/AIResearch/V18/EnsembleTheory.lean`*
+
+- **theorem** (6): `eml_ensemble_train_cheaper`, `more_members_costlier_train`, `eml_ensemble_memory_compact`, `eml_ensemble_inference_cheaper`, `eml_uncertainty_cheaper`, `eml_distill_from_ensemble_cheaper`
+
+#### `FederatedFineTuningTheory.lean` — 6 declarations
+*Source: `EML/AIResearch/V18/FederatedFineTuningTheory.lean`*
+
+- **theorem** (4): `eml_local_cheaper`, `more_clients_more_comm`, `eml_fed_total_cheaper`, `more_rounds_costlier_fed`
 
 #### `FederatedLearningTheory.lean` — 20 declarations
 *Source: `EML/AIResearch/FederatedLearningTheory.lean`*
@@ -2535,20 +2664,82 @@
 
 - **theorem** (19): `eml_message_efficiency`, `deeper_more_smooth`, `more_invertible_less_smooth`, `eml_gat_efficiency`, `eml_spectral_efficiency`, `eml_pooling_efficiency`, `eml_gt_efficiency`, `eml_gt_total_efficiency`, `eml_hetero_efficiency`, `eml_richer_features`, `eml_deeper_without_oversmoothing`, `eml_message_pass_compact` ... +7 more
 
+#### `HypernetworkTheory.lean` — 15 declarations
+*Source: `EML/AIResearch/V17/HypernetworkTheory.lean`*
+
+- **theorem** (6): `eml_hypernet_compact`, `eml_target_compact`, `eml_weight_gen_cheaper`, `hypernet_scales_better`, `eml_total_hyper_compact`, `eml_hyper_memory_efficient`
+
+#### `InformationBottleneckSelfLearning.lean` — 6 declarations
+*Source: `EML/AIResearch/V18/InformationBottleneckSelfLearning.lean`*
+
+- **theorem** (1): `kl_div_nonneg`
+- **structure** (1): `LayerwiseInfo`
+
 #### `InformationTheory.lean` — 17 declarations
 *Source: `EML/AIResearch/InformationTheory.lean`*
 
 - **theorem** (9): `eml_shorter_description`, `eml_retains_more_info`, `info_decays_with_depth`, `eml_higher_entropy`, `rate_distortion_tradeoff`, `eml_rate_advantage`, `pac_bayes_more_data`, `pac_bayes_simpler_model`, `eml_lower_kl`
 
 #### `KnowledgeDistillationTheory.lean` — 15 declarations
-*Source: `EML/AIResearch/V15/KnowledgeDistillationTheory.lean`*
+*Source: `EML/AIResearch/KnowledgeDistillationTheory.lean`*
 
 - **theorem** (8): `larger_teacher_higher_ratio`, `higher_temp_smaller_logit`, `unit_temp_identity`, `eml_feature_match_compact`, `more_teachers_costlier`, `eml_ensemble_distill_cheaper`, `more_stages_costlier`, `eml_pipeline_cheaper`
+
+#### `LongContextTheory.lean` — 15 declarations
+*Source: `EML/AIResearch/V17/LongContextTheory.lean`*
+
+- **theorem** (7): `eml_kv_cache_compact`, `longer_context_more_cache`, `sliding_window_cheaper`, `eml_compression_cheaper`, `eml_chunked_cheaper`, `longer_prefix_more_savings`, `eml_long_context_cheaper`
+
+#### `MemoryAugmentedTheory.lean` — 12 declarations
+*Source: `EML/AIResearch/V18/MemoryAugmentedTheory.lean`*
+
+- **theorem** (6): `eml_controller_compact`, `eml_read_cheaper`, `larger_memory_costlier`, `eml_write_cheaper`, `eml_multihead_cheaper`, `eml_mann_cheaper`
+
+#### `MetaCognitionTheory.lean` — 6 declarations
+*Source: `EML/AIResearch/V18/MetaCognitionTheory.lean`*
+
+- **structure** (1): `MetaCognitiveSystem`
+
+#### `MetaLearningTheory.lean` — 13 declarations
+*Source: `EML/AIResearch/V17/MetaLearningTheory.lean`*
+
+- **theorem** (7): `eml_maml_inner_cheaper`, `more_inner_steps_costlier`, `eml_maml_outer_cheaper`, `eml_prototype_cheaper`, `eml_fewshot_cheaper`, `eml_task_memory_cheaper`, `eml_second_order_cheaper`
+
+#### `MixtureOfDepthsTheory.lean` — 12 declarations
+*Source: `EML/AIResearch/V16/MixtureOfDepthsTheory.lean`*
+
+- **theorem** (7): `mod_saves_over_full`, `eml_mod_compound`, `fewer_routed_cheaper`, `lower_capacity_cheaper`, `mod_kv_cache_saves`, `eml_mod_total_cheaper`, `eml_mod_router_savings`
 
 #### `MixtureOfExpertsTheory.lean` — 24 declarations
 *Source: `EML/AIResearch/MixtureOfExpertsTheory.lean`*
 
 - **theorem** (11): `eml_expert_compact`, `eml_moe_total_savings`, `eml_router_compact`, `load_balance_nonneg`, `perfect_balance`, `fewer_experts_cheaper`, `eml_active_cheaper`, `higher_capacity_more_tokens`, `more_training_more_specialized`, `eml_fine_grained_advantage`, `eml_merge_cheaper`
+
+#### `ModelMergingTheory.lean` — 13 declarations
+*Source: `EML/AIResearch/V16/ModelMergingTheory.lean`*
+
+- **theorem** (7): `interp_at_zero`, `interp_at_one`, `interp_convex`, `more_models_costlier`, `eml_task_storage_cheaper`, `trimming_reduces`, `dare_reduces`
+
+#### `ModelRoutingTheory.lean` — 11 declarations
+*Source: `EML/AIResearch/V18/ModelRoutingTheory.lean`*
+
+- **theorem** (6): `more_models_more_routing`, `eml_portfolio_compact`, `more_models_more_memory`, `eml_routed_cheaper`, `eml_cascade_cheaper`, `eml_routed_system_cheaper`
+
+#### `MolecularGenerationTheory.lean` — 17 declarations
+*Source: `EML/AIResearch/V16/MolecularGenerationTheory.lean`*
+
+- **theorem** (8): `eml_mol_encoder_compact`, `eml_property_pred_compact`, `eml_screening_cheaper`, `more_molecules_costlier`, `eml_mol_gen_cheaper`, `eml_pareto_cheaper`, `eml_md_cheaper`, `longer_simulation_costlier`
+
+#### `MultiAgentSelfPlay.lean` — 19 declarations
+*Source: `EML/AIResearch/V19/MultiAgentSelfPlay.lean`*
+
+- **theorem** (12): `avg_performance_bounded`, `diversity_nonneg`, `zero_diversity_uniform`, `elo_conservation`, `selection_pressure_bounded`, `higher_pressure_more_competition`, `transfer_le_similarity`, `transfer_le_overlap`, `perfect_transfer`, `eml_more_agents`, `population_improves`, `avg_performance_improves`
+- **structure** (1): `AgentPopulation`
+
+#### `MultiAgentTheory.lean` — 12 declarations
+*Source: `EML/AIResearch/V17/MultiAgentTheory.lean`*
+
+- **theorem** (7): `eml_agent_cheaper`, `eml_multi_agent_cheaper`, `more_agents_costlier`, `eml_communication_cheaper`, `eml_debate_cheaper`, `more_debate_rounds_costlier`, `eml_specialized_cheaper`
 
 #### `MultiModalTheory.lean` — 21 declarations
 *Source: `EML/AIResearch/MultiModalTheory.lean`*
@@ -2560,10 +2751,40 @@
 
 - **theorem** (11): `eml_search_reduction`, `arch_space_exp_growth`, `eml_vs_standard_nas`, `eml_param_efficiency`, `eml_depth_cheaper_than_width`, `residual_gradient_pos`, `skip_prevents_vanishing`, `score_mono_accuracy`, `score_mono_params`, `eml_expressivity_triple`, `eml_expressivity_superlinear`
 
+#### `NeuralODETheory.lean` — 13 declarations
+*Source: `EML/AIResearch/V17/NeuralODETheory.lean`*
+
+- **theorem** (6): `eml_ode_func_compact`, `eml_solver_cheaper`, `eml_adjoint_cheaper`, `eml_cnf_cheaper`, `eml_stiff_cheaper`, `eml_sde_compact`
+
+#### `NeuralScalingLaws.lean` — 18 declarations
+*Source: `EML/AIResearch/V19/NeuralScalingLaws.lean`*
+
+- **theorem** (12): `loss_above_irreducible`, `larger_N_lower_loss`, `loss_nonneg`, `compute_tradeoff`, `compute_linear_D`, `better_scaling_lower_loss`, `marginal_improvement_nonneg`, `eml_parameter_efficiency`, `eml_wider_model`, `equal_exponents_interchangeable`, `data_more_valuable`, `params_more_valuable`
+
+#### `NeuroSymbolicTheory.lean` — 16 declarations
+*Source: `EML/AIResearch/V16/NeuroSymbolicTheory.lean`*
+
+- **theorem** (6): `eml_neural_encoder_compact`, `eml_decoder_compact`, `eml_graph_reasoner_compact`, `eml_concept_bottleneck_compact`, `fewer_rules_cheaper`, `symbolic_cost_preserved`
+
+#### `OnlineLearningTheory.lean` — 11 declarations
+*Source: `EML/AIResearch/V18/OnlineLearningTheory.lean`*
+
+- **theorem** (6): `eml_update_cheaper`, `eml_stream_cheaper`, `longer_stream_costlier`, `eml_replay_cheaper`, `eml_drift_cheaper`, `eml_online_pipeline_cheaper`
+
 #### `OptimizationTheory.lean` — 18 declarations
 *Source: `EML/AIResearch/OptimizationTheory.lean`*
 
 - **theorem** (10): `exp_decay_pos`, `exp_decay_mono`, `warmup_reaches_target`, `higher_momentum_more_velocity`, `clip_bounded`, `clip_preserves_small`, `clip_reduces_large`, `optimal_step_pos`, `eml_curvature_scales`, `eml_depth_helps_convergence`
+
+#### `PrefixTuningTheory.lean` — 11 declarations
+*Source: `EML/AIResearch/V18/PrefixTuningTheory.lean`*
+
+- **theorem** (5): `eml_prefix_compact`, `eml_multitask_cheaper`, `more_tasks_more_storage`, `eml_prefix_inference_cheaper`, `eml_prefix_train_cheaper`
+
+#### `ProgramSynthesisTheory.lean` — 10 declarations
+*Source: `EML/AIResearch/V18/ProgramSynthesisTheory.lean`*
+
+- **theorem** (6): `eml_codegen_cheaper`, `eml_multicand_cheaper`, `more_candidates_costlier`, `eml_refinement_cheaper`, `more_rounds_costlier_prog`, `eml_pipeline_cheaper_prog`
 
 #### `QuantizationTheory.lean` — 40 declarations
 *Source: `EML/AIResearch/QuantizationTheory.lean`*
@@ -2585,6 +2806,16 @@
 
 - **theorem** (11): `eml_embedding_compact`, `eml_query_proj_cheaper`, `eml_doc_encoder_cheaper`, `eml_cross_attn_cheaper`, `eml_index_smaller`, `eml_retrieval_faster`, `eml_reranker_cheaper`, `eml_chunk_embed_cheaper`, `eml_rag_cheaper`, `cosine_sim_zero_if_orthogonal`, `cosine_sim_one_if_aligned`
 
+#### `RewardHackingTheory.lean` — 10 declarations
+*Source: `EML/AIResearch/V18/RewardHackingTheory.lean`*
+
+- **theorem** (6): `eml_reward_ensemble_cheaper`, `more_reward_models_costlier`, `eml_monitoring_cheaper`, `eml_redteam_cheaper`, `eml_kl_cheaper`, `eml_safety_pipeline_cheaper`
+
+#### `RewardModelTheory.lean` — 14 declarations
+*Source: `EML/AIResearch/V16/RewardModelTheory.lean`*
+
+- **theorem** (8): `eml_reward_model_compact`, `eml_ppo_cheaper`, `larger_batch_costlier`, `eml_dpo_cheaper`, `dpo_cheaper_than_ppo`, `eml_kl_penalty_cheaper`, `eml_rlhf_cheaper`, `more_rounds_costlier`
+
 #### `RobustnessTheory.lean` — 17 declarations
 *Source: `EML/AIResearch/RobustnessTheory.lean`*
 
@@ -2596,27 +2827,69 @@
 - **theorem** (17): `loss_bounded_below`, `eml_less_data`, `eml_compute_savings`, `compute_linear_N`, `harder_tasks_bigger_models`, `eml_capacity_advantage`, `dominates_trans`, `eml_flop_efficiency`, `eml_data_efficiency`, `eml_param_scaling_linear`, `eml_compression_factor_sq`, `eml_moe_param_savings` ... +5 more
 
 #### `ScalingLawsTheory.lean` — 14 declarations
-*Source: `EML/AIResearch/V15/ScalingLawsTheory.lean`*
+*Source: `EML/AIResearch/ScalingLawsTheory.lean`*
 
 - **theorem** (9): `larger_model_lower_loss`, `scaling_loss_nonneg`, `more_data_lower_loss`, `eml_less_flops`, `more_data_more_flops`, `eml_cheaper_inference`, `eml_total_inference_cheaper`, `smaller_model_needs_less_data`, `larger_model_more_capable`
 
+#### `SelfLearningFoundations.lean` — 5 declarations
+*Source: `EML/AIResearch/V18/SelfLearningFoundations.lean`*
+
+- **structure** (1): `SelfLearningSystem`
+
 #### `SelfSupervisedTheory.lean` — 16 declarations
-*Source: `EML/AIResearch/V15/SelfSupervisedTheory.lean`*
+*Source: `EML/AIResearch/SelfSupervisedTheory.lean`*
 
 - **theorem** (8): `eml_proj_head_compact`, `eml_byol_smaller`, `eml_momentum_cheaper`, `eml_mae_decoder_compact`, `smaller_proj_cheaper_barlow`, `eml_dino_cheaper`, `more_crops_costlier`, `eml_ssl_cheaper`
+
+#### `SparseAutoencoderTheory.lean` — 15 declarations
+*Source: `EML/AIResearch/V16/SparseAutoencoderTheory.lean`*
+
+- **theorem** (7): `eml_sae_compact`, `larger_expansion_more_sae_params`, `eml_extraction_cheaper`, `smaller_dict_cheaper_penalty`, `eml_ablation_cheaper`, `tracking_grows_quadratically`, `eml_interp_pipeline_cheaper`
+
+#### `SpeculativeDecodingTheory.lean` — 14 declarations
+*Source: `EML/AIResearch/V17/SpeculativeDecodingTheory.lean`*
+
+- **theorem** (7): `eml_draft_compact`, `eml_spec_step_cheaper`, `more_draft_tokens_costlier`, `eml_total_spec_cheaper`, `more_accepted_fewer_steps`, `eml_better_ratio`, `eml_spec_fits_better`
 
 #### `StateSpaceModelTheory.lean` — 27 declarations
 *Source: `EML/AIResearch/StateSpaceModelTheory.lean`*
 
 - **theorem** (12): `ssm_transition_pos`, `negative_eigenvalue_contracts`, `more_negative_faster_decay`, `eml_ssm_efficiency`, `eml_mamba_efficiency`, `eml_kernel_efficiency`, `eml_parallel_scan_cheaper`, `memory_decays`, `higher_decay_more_memory`, `eml_init_cheaper`, `eml_hybrid_efficiency`, `smaller_step_less_error`
 
+#### `StochasticSelfImprovement.lean` — 20 declarations
+*Source: `EML/AIResearch/V19/StochasticSelfImprovement.lean`*
+
+- **theorem** (14): `noisy_contraction_residual_bound`, `stronger_contraction_lower_floor`, `lower_noise_lower_floor`, `polyak_average_constant`, `polyak_average_bounded`, `larger_epsilon_more_tolerance`, `stronger_contraction_less_tolerance`, `noise_within_tolerance`, `stoch_lyapunov_nonneg`, `stoch_lyapunov_steady_state`, `stoch_lyapunov_tighter_bound`, `eml_lower_gradient_noise` ... +2 more
+- **structure** (1): `NoisyImprovement`
+
+#### `SyntheticDataTheory.lean` — 11 declarations
+*Source: `EML/AIResearch/V17/SyntheticDataTheory.lean`*
+
+- **theorem** (5): `eml_synthetic_cheaper`, `eml_filter_cheaper`, `eml_self_instruct_cheaper`, `eml_augmentation_cheaper`, `eml_distill_data_cheaper`
+
+#### `TestTimeComputeTheory.lean` — 13 declarations
+*Source: `EML/AIResearch/V16/TestTimeComputeTheory.lean`*
+
+- **theorem** (8): `eml_more_candidates_same_budget`, `eml_bestofn_cheaper`, `eml_cot_cheaper`, `longer_chains_costlier`, `eml_beam_cheaper`, `wider_beam_costlier`, `eml_self_consistency_cheaper`, `eml_verifier_cheaper`
+
 #### `TimeSeriesTheory.lean` — 47 declarations
 *Source: `EML/AIResearch/TimeSeriesTheory.lean`*
 
 - **theorem** (24): `weights_decay`, `no_smoothing`, `full_smoothing`, `eml_temporal_efficient`, `perfect_prediction_no_anomaly`, `anomaly_nonneg`, `longer_horizon_more_error`, `eml_slower_error_growth`, `eml_fusion_cheaper`, `cusum_nonneg`, `cusum_resets`, `equal_weight_average` ... +12 more
 
+#### `TokenizationTheory.lean` — 14 declarations
+*Source: `EML/AIResearch/V16/TokenizationTheory.lean`*
+
+- **theorem** (6): `larger_vocab_more_params_std`, `eml_output_proj_compact`, `eml_output_dist_cheaper`, `byte_level_small`, `byte_level_eml_vs_std`, `eml_multimodal_embedding_compact`
+
+#### `TransferLearningBounds.lean` — 23 declarations
+*Source: `EML/AIResearch/V19/TransferLearningBounds.lean`*
+
+- **theorem** (14): `lower_divergence_tighter`, `zero_divergence_perfect_transfer`, `finetuning_advantage_pos`, `closer_fewer_steps`, `larger_lr_fewer_steps`, `negative_transfer_condition`, `positive_transfer_condition`, `multi_source_bounded`, `multi_source_lower_bound`, `progressive_bound_additive`, `progressive_benefit`, `eml_cheaper_transfer` ... +2 more
+- **structure** (1): `DomainDivergence`
+
 #### `TransferLearningTheory.lean` — 19 declarations
-*Source: `EML/AIResearch/V15/TransferLearningTheory.lean`*
+*Source: `EML/AIResearch/TransferLearningTheory.lean`*
 
 - **theorem** (8): `eml_finetune_cheaper`, `eml_lora_compact`, `eml_domain_proj_compact`, `eml_discriminator_compact`, `fewer_shots_cheaper`, `more_tasks_cheaper_amortized`, `eml_adapter_fusion_cheaper`, `larger_distance_larger_gap`
 
@@ -2635,6 +2908,53 @@
 *Source: `EML/AIResearch/VisionTransformerTheory.lean`*
 
 - **theorem** (9): `eml_patch_embed_compact`, `eml_pos_enc_compact`, `eml_self_attn_compact`, `eml_ffn_compact`, `eml_class_head_compact`, `smaller_window_cheaper`, `eml_multiscale_cheaper`, `eml_patch_merge_cheaper`, `eml_vit_total_cheaper`
+
+#### `WorldModelTheory.lean` — 11 declarations
+*Source: `EML/AIResearch/V17/WorldModelTheory.lean`*
+
+- **theorem** (5): `eml_encoder_compact`, `eml_dynamics_compact`, `eml_imagination_cheaper`, `eml_planning_cheaper`, `eml_multi_step_cheaper`
+
+### SPBExtended
+
+#### `AdvancedAlgebra.lean` — 26 declarations
+*Source: `EML/SPBExtended/AdvancedAlgebra.lean`*
+
+- **theorem** (24): `golden_ratio_sq`, `golden_pos`, `golden_inv`, `golden_continued_fraction`, `spbEntropy_zero`, `spbEntropy_neg`, `spbEntropy_add`, `hermann_s1`, `hermann_s2`, `hutton_s1`, `hutton_s2`, `strassnitzky_s1` ... +12 more
+
+#### `CauchyMeasure.lean` — 10 declarations
+*Source: `EML/SPBExtended/CauchyMeasure.lean`*
+
+- **theorem** (8): `cauchyDensity_even`, `cauchyDensity_zero`, `cauchy_density_transform`, `cauchyCDF_zero`, `cauchyCDF_shift`, `cauchyCDF_mono`, `score_squared`, `bernstein_cauchy`
+
+#### `FiniteFieldSPB.lean` — 31 declarations
+*Source: `EML/SPBExtended/FiniteFieldSPB.lean`*
+
+- **theorem** (31): `neg_one_qr_mod17`, `neg_one_qr_mod29`, `neg_one_qnr_mod3`, `neg_one_qnr_mod7`, `neg_one_qnr_mod11`, `neg_one_qnr_mod19`, `p5_poles`, `p5_nonpoles`, `p7_no_poles`, `p11_no_poles`, `p13_poles`, `p3_no_poles` ... +19 more
+
+#### `HyperbolicIsometry.lean` — 16 declarations
+*Source: `EML/SPBExtended/HyperbolicIsometry.lean`*
+
+- **theorem** (16): `spbHG_comm`, `spbHG_zero`, `spbHG_neg`, `spbHG_diff`, `one_sub_spbHG_mul`, `conformal_transform'`, `spbHG_bounded`, `cayley_homomorphism'`, `spbHG_jacobian_pos`, `artanh_additive_formula'`, `beltrami_klein_identity'`, `hyperbolic_cosine_identity'` ... +4 more
+
+#### `NewDiscoveries.lean` — 19 declarations
+*Source: `EML/SPBExtended/NewDiscoveries.lean`*
+
+- **theorem** (18): `spb_deriv_x_pos`, `spb_deriv_a_pos`, `spb_mixed_deriv`, `two_reps`, `two_sq_product'`, `one_plus_sq`, `three_fold`, `spb_moebius_det`, `edwards_curve_param`, `gauss_comp_D_neg1`, `gauss_comp_D_neg2`, `gauss_comp_general` ... +6 more
+
+#### `OneParmSubgroup.lean` — 26 declarations
+*Source: `EML/SPBExtended/OneParmSubgroup.lean`*
+
+- **theorem** (24): `boostJ_sq`, `boostJ_cube`, `boostJ_fourth`, `boostJ_trace`, `boostJ_det`, `hypMat_eq_cosh_plus_sinh_J`, `hypMat_zero`, `hypMat_det`, `hypMat_trace`, `hypMat_symmetric`, `hypMat_add`, `hypMat_mul_neg` ... +12 more
+
+#### `QuantumSignal.lean` — 19 declarations
+*Source: `EML/SPBExtended/QuantumSignal.lean`*
+
+- **theorem** (17): `phase_angle_composition`, `bloch_z_coord`, `su2_half_angle`, `allpass_mag_identity`, `cordic_gain`, `cordic_angle_0`, `cordic_sum_01`, `fresnel_is_spbH`, `fresnel_bounded`, `spbH_gradient_pos'`, `spbH_gradient_origin'`, `spb_code_advantage_7` ... +5 more
+
+#### `TangentIteration.lean` — 17 declarations
+*Source: `EML/SPBExtended/TangentIteration.lean`*
+
+- **theorem** (16): `spb_quintuple_check`, `machin_spb`, `gregory_leibniz_spb`, `spb_eighth`, `weierstrass_sin'`, `orbit_2_fifth`, `orbit_4_fifth`, `spb_period_4_check`, `ramanujan_machin_equiv`, `hermann_step1`, `hermann_step2`, `hutton_step1'` ... +4 more
 
 ### SPBResearch
 
@@ -2695,42 +3015,42 @@
 
 - **theorem** (21): `eml_entropy_decomp`, `eml_kl_decomp`, `eml_gibbs_inequality`, `eml_cross_entropy`, `eml_free_energy`, `eml_boltzmann`, `eml_partition_log`, `eml_exp_family_logpartition`, `eml_exp_family_conjugate`, `eml_loss_ge_one`, `eml_loss_at_zero`, `eml_loss_deriv_zero` ... +9 more
 
-#### `Convexity.lean` — 17 declarations
+#### `Convexity.lean` — 16 declarations
 *Source: `EML/V10/Convexity.lean`*
 
-- **theorem** (17): `eml_convex_x`, `eml_convex_y`, `eml_jointly_convex`, `emlSelfPair_ge_one`, `emlSelfPair_eq_one_iff`, `emlSelfPair_strict_convex`, `emlSelfPair_hasDerivAt`, `emlSelfPair_strictMono_nonneg`, `emlSelfPair_strictAnti_nonpos`, `eml_deriv_x`, `eml_deriv_y`, `bregman_exp_zero_iff` ... +5 more
+- **theorem** (16): `eml_convex_x`, `eml_convex_y`, `emlSelfPair_ge_one`, `emlSelfPair_eq_one_iff`, `emlSelfPair_strict_convex`, `emlSelfPair_hasDerivAt`, `emlSelfPair_strictMono_nonneg`, `emlSelfPair_strictAnti_nonpos`, `eml_deriv_x`, `eml_deriv_y`, `bregman_exp_zero_iff`, `emlSelfPair_critical_point` ... +4 more
 
-#### `Core.lean` — 31 declarations
+#### `Core.lean` — 28 declarations
 *Source: `EML/V10/Core.lean`*
 
-- **theorem** (31): `eml_def`, `eml_exp`, `eml_zero_first`, `eml_legendre`, `eml_self_pair_eq`, `emlSelfPair_strictConvex`, `emlSelfPair_deriv`, `emlDiag_ge_add_one`, `emlDiag_orbit_diverge`, `emlGap_ge_one`, `emlDiag_orbit_strictMono`, `eml_strictMono_x` ... +19 more
+- **theorem** (28): `eml_exp`, `eml_zero_first`, `eml_self_pair_eq`, `emlSelfPair_strictConvex`, `emlSelfPair_deriv`, `emlDiag_ge_add_one`, `emlDiag_orbit_diverge`, `emlGap_ge_one`, `emlDiag_orbit_strictMono`, `eml_strictMono_x`, `eml_strictAnti_y`, `eml_noncomm` ... +16 more
 
-#### `Dynamics.lean` — 13 declarations
+#### `Dynamics.lean` — 11 declarations
 *Source: `EML/V10/Dynamics.lean`*
 
-- **theorem** (13): `emlDiag_gt_z`, `emlDiag_ge_z_add_one`, `emlDiag_ge_two_pos`, `emlDiag_strong_bound`, `emlDiag_ge_half_exp`, `emlDiag_orbit_linear`, `emlDiag_orbit_ge_two`, `emlGmap_one`, `emlGmap_e`, `emlGmap_hasDerivAt`, `emlGmap_strictAnti`, `emlGap_deriv` ... +1 more
+- **theorem** (11): `emlDiag_ge_z_add_one`, `emlDiag_ge_two_pos`, `emlDiag_strong_bound`, `emlDiag_ge_half_exp`, `emlDiag_orbit_linear`, `emlDiag_orbit_ge_two`, `emlGmap_one`, `emlGmap_e`, `emlGmap_hasDerivAt`, `emlGap_deriv`, `emlDiag_lower_exp`
 
 ### V11
 
-#### `Composition.lean` — 26 declarations
+#### `Composition.lean` — 25 declarations
 *Source: `EML/V11/Composition.lean`*
 
-- **theorem** (26): `eml_log_first`, `eml_zero_exp`, `eml_one`, `eml_zero`, `eml_triple_exp`, `eTower_zero`, `eTower_one`, `eTower_two`, `eTower_ge_one`, `eml_eTower`, `emlDiagIter_zero`, `emlDiagIter_succ` ... +14 more
+- **theorem** (25): `eml_log_first`, `eml_zero_exp`, `eml_one`, `eml_zero`, `eml_triple_exp`, `eTower_zero`, `eTower_one`, `eTower_two`, `eTower_ge_one`, `eml_eTower`, `emlDiagIter_zero`, `emlDiagIter_succ` ... +13 more
 
 #### `Derivatives.lean` — 15 declarations
 *Source: `EML/V11/Derivatives.lean`*
 
 - **theorem** (15): `eml_differentiable_x`, `eml_differentiable_y_pos`, `emlSelfPair_differentiable`, `emlSelfPair_deriv_zero`, `emlSelfPair_deriv_pos`, `emlSelfPair_deriv_neg`, `emlSelfPair_second_deriv`, `eml_second_deriv_x_pos`, `eml_second_deriv_y_pos`, `emlDiag_strictMono_gt_one`, `emlDiag_deriv_pos`, `emlDiag_deriv_pos_ge_one` ... +3 more
 
-#### `Inequalities.lean` — 16 declarations
+#### `Inequalities.lean` — 13 declarations
 *Source: `EML/V11/Inequalities.lean`*
 
-- **theorem** (15): `eml_amgm`, `eml_amgm_form`, `eml_fundamental_ineq`, `eml_at_one_ge`, `eml_le_exp`, `bregmanExp_nonneg`, `bregmanExp_eq_zero_iff`, `bregmanExp_not_symmetric`, `young_ineq_special`, `emlSelfPair_ge_half_exp`, `emlDiag_at_one`, `emlDiag_ge_e_ge_one` ... +3 more
+- **theorem** (12): `eml_amgm`, `eml_amgm_form`, `eml_fundamental_ineq`, `eml_le_exp`, `bregmanExp_nonneg`, `bregmanExp_eq_zero_iff`, `bregmanExp_not_symmetric`, `young_ineq_special`, `emlSelfPair_ge_half_exp`, `emlDiag_ge_e_ge_one`, `eml_compose_bound`, `emlSelfPair_dominates_sq_unit`
 
-#### `InverseFunctions.lean` — 17 declarations
+#### `InverseFunctions.lean` — 16 declarations
 *Source: `EML/V11/InverseFunctions.lean`*
 
-- **theorem** (17): `eml_injective_x`, `eml_injective_y_pos`, `eml_range_lower`, `eml_not_surjective_x`, `eml_surjective_y`, `eml_y1_range_pos`, `eml_level_set`, `eml_level_set_pos`, `eml_fixed_x`, `eml_fixed_y_condition`, `eml_diag_eq`, `emlSelfPair_range_ge_one` ... +5 more
+- **theorem** (16): `eml_injective_x`, `eml_injective_y_pos`, `eml_range_lower`, `eml_not_surjective_x`, `eml_surjective_y`, `eml_y1_range_pos`, `eml_level_set_pos`, `eml_fixed_x`, `eml_fixed_y_condition`, `eml_diag_eq`, `emlSelfPair_range_ge_one`, `emlSelfPair_min` ... +4 more
 
 #### `MetricGeometry.lean` — 22 declarations
 *Source: `EML/V11/MetricGeometry.lean`*
@@ -2749,15 +3069,15 @@
 
 - **theorem** (13): `emlSelfPair_le_exp`, `emlSelfPair_eq`, `emlSelfPair_sandwich`, `emlSelfPair_over_exp_tendsto`, `emlSelfPair_ge_neg`, `emlSelfPair_approx_neg`, `emlDiag_ge_succ`, `emlDiag_exp_growth`, `eml_tendsto_top`, `emlSelfPair_tendsto_neg_top`, `eTower_ge_nat`, `eTower_exp_growth` ... +1 more
 
-#### `IntegralTheory.lean` — 11 declarations
+#### `IntegralTheory.lean` — 10 declarations
 *Source: `EML/V12/IntegralTheory.lean`*
 
-- **theorem** (11): `integral_exp_01`, `integral_id_01`, `integral_selfPair_01`, `emlSelfPair_intervalIntegrable`, `emlSelfPair_antideriv`, `integral_selfPair_exact`, `integral_selfPair_ge_length`, `emlSelfPair_sq_integrable`, `integral_selfPair_sq_ge`, `exp_remainder_nonneg`, `integral_exp_remainder_01`
+- **theorem** (10): `integral_id_01`, `integral_selfPair_01`, `emlSelfPair_intervalIntegrable`, `emlSelfPair_antideriv`, `integral_selfPair_exact`, `integral_selfPair_ge_length`, `emlSelfPair_sq_integrable`, `integral_selfPair_sq_ge`, `exp_remainder_nonneg`, `integral_exp_remainder_01`
 
-#### `OperatorAlgebra.lean` — 26 declarations
+#### `OperatorAlgebra.lean` — 25 declarations
 *Source: `EML/V12/OperatorAlgebra.lean`*
 
-- **theorem** (26): `eml_generates_translation`, `eml_double_composition`, `eml_log_exp`, `eml_as_difference`, `exp_of_eml`, `log_exp_eml`, `eml_sum_formula`, `eml_prod_expand`, `eml_sum_same_x`, `eml_sum_same_y`, `eml_add_exp`, `eml_zero_exp1` ... +14 more
+- **theorem** (25): `eml_generates_translation`, `eml_double_composition`, `eml_as_difference`, `exp_of_eml`, `log_exp_eml`, `eml_sum_formula`, `eml_prod_expand`, `eml_sum_same_x`, `eml_sum_same_y`, `eml_add_exp`, `eml_zero_exp1`, `eml_kernel` ... +13 more
 
 #### `TaylorApproximation.lean` — 16 declarations
 *Source: `EML/V12/TaylorApproximation.lean`*
@@ -2771,15 +3091,15 @@
 
 ### V9
 
-#### `Advanced.lean` — 25 declarations
+#### `Advanced.lean` — 24 declarations
 *Source: `EML/V9/Advanced.lean`*
 
-- **theorem** (21): `diagA_gt_z`, `diagA_ge_z_add_one`, `diagA_strong_bound`, `diagA_orbit_linear`, `diagA_orbit_gap_mono`, `eml_bregman_exp`, `eml_chain`, `eml_triple_chain`, `eml_shift`, `eml_power_snd`, `eml_integral_log`, `exp_sub_x_ge_one` ... +9 more
+- **theorem** (20): `diagA_gt_z`, `diagA_ge_z_add_one`, `diagA_strong_bound`, `diagA_orbit_linear`, `diagA_orbit_gap_mono`, `eml_bregman_exp`, `eml_chain`, `eml_triple_chain`, `eml_shift`, `eml_integral_log`, `exp_sub_x_ge_one`, `exp_sub_x_min_at_zero` ... +8 more
 
-#### `Core.lean` — 18 declarations
+#### `Core.lean` — 15 declarations
 *Source: `EML/V9/Core.lean`*
 
-- **theorem** (17): `eml_one_one`, `eml_self_pair`, `eml_power`, `emlNeg_involution`, `eml_negation_via_exp`, `eml_double_neg`, `emlSelfPair_min_achieved`, `eml_hasDerivAt_x`, `eml_hasDerivAt_y`, `eml_log_split`, `eml_log_ratio`, `eml_exp_sum` ... +5 more
+- **theorem** (14): `eml_one_one`, `eml_self_pair`, `emlNeg_involution`, `eml_negation_via_exp`, `emlSelfPair_min_achieved`, `eml_hasDerivAt_x`, `eml_hasDerivAt_y`, `eml_log_ratio`, `eml_exp_sum`, `eml_antisymm`, `eml_generates_e2`, `eml_generates_eee` ... +2 more
 
 ### v8
 
@@ -2878,6 +3198,11 @@
 
 - **theorem** (11): `stereo_expressiveness_lower_bound`, `parameterRatio_pos`, `parameterRatio_le_two`, `gradient_variance_bound`, `logSumExp_ge`, `depth_gradient_product_pos`, `depth_gradient_product_bounded`, `warmup_lr_nonneg`, `warmup_lr_monotone`, `stereo_vs_standard_flops`, `stereo_memory_linear_in_seq`
 
+#### `BlochSphere.lean` — 13 declarations
+*Source: `Geometry/Stereographic/BlochSphere.lean`*
+
+- **theorem** (12): `bloch_on_sphere`, `fidelity_chordal_identity`, `pauli_x_flips_z`, `antipodal_dot_neg_one`, `origin_maps_to_south_pole`, `plus_state_on_equator`, `hadamard_involution`, `bloch_distance_bounded`, `rotation_preserves_norm`, `rotation_preserves_z`, `two_qubit_on_s3`, `maximally_mixed_origin`
+
 #### `ConformalAnalysis.lean` — 9 declarations
 *Source: `Geometry/Stereographic/ConformalAnalysis.lean`*
 
@@ -2913,11 +3238,21 @@
 
 - **theorem** (13): `gaugeField_positive`, `gaugeField_le_two`, `gaugeField_sq`, `gaugeInvariantKernel_symm`, `gaugeConnection_parity`, `gaugeConnection_zero`, `gaugeCurvature_antisymm`, `gaugeCurvature_zero_origin`, `gaugeCovariantGrad_bounded`, `gaugeAction_nonneg`, `effectiveMass_formula`, `effectiveMass_at_origin` ... +1 more
 
+#### `GeodesicTheory.lean` — 12 declarations
+*Source: `Geometry/Stereographic/GeodesicTheory.lean`*
+
+- **theorem** (12): `invStereoN_sum_sq_first`, `pullback_metric_conformal`, `conformal_factor_product_bound`, `sphere_diameter_bound`, `stereoDenom_of_sum`, `stereoDenom_diff`, `sphere_orthogonality`, `midpoint_last_coord`, `chordal_decomposition`, `invStereoN_scale_first`, `great_circle_through_NP_last`, `equator_identity`
+
 #### `HolderMoebiusFlows.lean` — 20 declarations
 *Source: `Geometry/Stereographic/HolderMoebiusFlows.lean`*
 
 - **theorem** (11): `moebiusFlowParam_at_zero`, `moebiusFlowParam_at_one`, `moebiusFlowConformalFactor_pos`, `moebiusFlowConformalFactor_bounded`, `holderExponent_valid`, `holderBound_nonneg`, `holderBound_zero`, `flowInterpolation_monotone`, `flowVelocitySqNorm_nonneg`, `flowVelocityBounded`, `flowGradientStep_zero_lr`
 - **structure** (1): `MoebiusFlowParam`
+
+#### `HyperbolicBridge.lean` — 9 declarations
+*Source: `Geometry/Stereographic/HyperbolicBridge.lean`*
+
+- **theorem** (5): `poincare_on_hyperboloid`, `poincare_metric_conformal`, `stereo_poincare_factor_product`, `stereo_gnomonic_ratio`, `gnomonic_of_invStereo`
 
 #### `IntegerPoleCharts.lean` — 26 declarations
 *Source: `Geometry/Stereographic/IntegerPoleCharts.lean`*
@@ -3018,6 +3353,11 @@
 
 - **theorem** (3): `plane_image_on_sphere`, `hyperplane_image_characterization`, `invStereoN_2_surj_on_sphere`
 
+#### `QuaternionicProjection.lean` — 8 declarations
+*Source: `Geometry/Stereographic/QuaternionicProjection.lean`*
+
+- **theorem** (8): `hopf_preserves_sphere`, `quaternion_norm_product`, `hopf_fiber_north_pole`, `hopf_s1_invariance_z`, `hopf_linking_identity`, `hopf_of_stereo_on_sphere`, `invStereoN_neg_first`, `invStereoN_neg_last`
+
 #### `RationalPoints.lean` — 10 declarations
 *Source: `Geometry/Stereographic/RationalPoints.lean`*
 
@@ -3027,6 +3367,11 @@
 *Source: `Geometry/Stereographic/SPBDeepTheory.lean`*
 
 - **theorem** (10): `cocycle_norm_identity`, `cocycle_coboundary_simplified`, `spb_sum_conjugate`, `spb_prod_conjugate`, `spbH_internal`, `spb_of_spb_expanded`, `spb_gregory_leibniz`, `spb_double_fifth`, `spb_auto_neg`, `spb_auto_inv`
+
+#### `ScalarCurvature.lean` — 15 declarations
+*Source: `Geometry/Stereographic/ScalarCurvature.lean`*
+
+- **theorem** (15): `conformalFactor_times_denom`, `conformalFactor_sq`, `conformalFactor_product_le_four`, `conformalFactor_inv`, `log_conformal_gradient`, `scalar_curvature_sphere`, `yamabe_algebraic`, `sectional_curvature_identity`, `ricci_diagonal`, `volume_element_positive`, `equator_norm_identity`, `energy_density_formula` ... +3 more
 
 #### `SouthPole.lean` — 11 declarations
 *Source: `Geometry/Stereographic/SouthPole.lean`*
@@ -3053,6 +3398,11 @@
 
 - **theorem** (4): `stereo_inv_on_circle`, `stereo_y_upper_bound`, `stereo_y_lower_bound`, `stereo_frozen_crystal`
 
+#### `StereographicConvexity.lean` — 12 declarations
+*Source: `Geometry/Stereographic/StereographicConvexity.lean`*
+
+- **theorem** (10): `stereoMidpoint_comm`, `stereoMidpoint_self`, `chordalDistSq_comm`, `chordalDistSq_self`, `chordalDistSq_nonneg`, `chordalDistSq_le_four`, `kissing_number_constraint`, `unit_ball_southern`, `gradient_descent_denom_pos`, `stereoDenom_first_order`
+
 #### `StereographicDecoder.lean` — 4 declarations
 *Source: `Geometry/Stereographic/StereographicDecoder.lean`*
 
@@ -3078,10 +3428,10 @@
 
 - **theorem** (5): `stereo_proj_2d_unit_norm`, `stereo_identity`, `inverse_stereo_first_component`, `inverse_stereo_second_component`, `stereo_proj_unit_norm_general`
 
-#### `StereographicRationals.lean` — 14 declarations
+#### `StereographicRationals.lean` — 13 declarations
 *Source: `Geometry/Stereographic/StereographicRationals.lean`*
 
-- **theorem** (8): `stereo_on_circle`, `stereo_injective`, `stereo_inv_left`, `pythagorean_triple_parametric`, `circle_add_stereo_x`, `circle_add_stereo_y`, `ratRotation_det_one`, `farey_neighbor_det`
+- **theorem** (7): `stereo_on_circle`, `stereo_injective`, `stereo_inv_left`, `pythagorean_triple_parametric`, `circle_add_stereo_x`, `circle_add_stereo_y`, `ratRotation_det_one`
 
 #### `TrainingTheory.lean` — 13 declarations
 *Source: `Geometry/Stereographic/TrainingTheory.lean`*
@@ -3572,17 +3922,45 @@
 
 ### Neural
 
+#### `ArchitectureSearch.lean` — 16 declarations
+*Source: `MachineLearning/Neural/ArchitectureSearch.lean`*
+
+- **theorem** (4): `factorization_compressive`, `factorizationError_nonneg`, `factorizationError_zero_of_exact`, `combined_compression`
+- **structure** (4): `SparseTopology`, `FactorizationScheme`, `SearchConfig`, `VerifiedCandidate`
+
 #### `CompilationCompression.lean` — 48 declarations
 *Source: `MachineLearning/Neural/CompilationCompression.lean`*
 
 - **theorem** (37): `compilationError_nonneg`, `compilationError_zero_of_eq`, `compilationError_triangle`, `adaptive_switching_correct`, `polynomial_degree_exponential`, `polynomial_degree_strict_growth`, `relu_region_count_bound`, `tensor_rank_submultiplicative`, `koopman_preserves_constants`, `koopman_additive`, `koopman_smul`, `koopman_equivariant` ... +25 more
 - **structure** (2): `NNLayer`, `CompilationScheme`
 
+#### `CompressionPipeline.lean` — 16 declarations
+*Source: `MachineLearning/Neural/CompressionPipeline.lean`*
+
+- **theorem** (13): `compose_error_assoc`, `compose_ratio_assoc`, `quant_tradeoff`, `perplexity_pos'`, `perplexity_mono'`, `perplexity_degradation'`, `perplexity_ratio_bound'`, `perplexity_small_epsilon'`, `rate_distortion_nonneg'`, `rate_distortion_mono'`, `pipeline_uniform_error'`, `pipeline_compression_ratio'` ... +1 more
+- **structure** (1): `CompressionStage`
+
+#### `DistillationLoss.lean` — 16 declarations
+*Source: `MachineLearning/Neural/DistillationLoss.lean`*
+
+- **theorem** (12): `softmax_partition_pos'`, `softmax_nonneg'`, `softmax_sum_eq_one'`, `softmax_le_one'`, `softmax_pos'`, `klDiv_self'`, `softmax_constant_is_uniform'`, `distillationLoss_alpha_zero'`, `distillationLoss_alpha_one'`, `logit_match_zero_kl'`, `logitPerturbationSqBound_nonneg'`, `distillationLoss_mono_alpha'`
+
+#### `InferenceArithmetic.lean` — 25 declarations
+*Source: `MachineLearning/Neural/InferenceArithmetic.lean`*
+
+- **theorem** (17): `fixed_point_error`, `int8_mul_bound`, `int8_dot_product_fits_int32`, `int4_mul_bound`, `simd_128_int8_lanes`, `simd_256_int8_lanes`, `simd_128_int4_lanes`, `simd_512_int8_lanes`, `rowMajorOffset_bound'`, `rowMajorOffset_injective'`, `alignedRowStart_divisible`, `fp32_to_int8_ratio` ... +5 more
+- **structure** (1): `FixedPoint`
+
 #### `LLMSingleMatMul.lean` — 17 declarations
 *Source: `MachineLearning/Neural/LLMSingleMatMul.lean`*
 
 - **theorem** (16): `linear_collapse_two`, `linear_collapse_chain`, `linear_map_is_linear`, `linear_rep_implies_additive`, `relu_not_linear`, `finite_domain_is_matmul`, `onehot_matmul_lookup`, `function_space_cardinality`, `relu_region_upper_bound`, `compiled_degree`, `tensor_contraction_order`, `compilation_trilemma_linear_case` ... +4 more
 - **structure** (1): `PiecewiseAffineDecomp`
+
+#### `LipschitzForwardPass.lean` — 15 declarations
+*Source: `MachineLearning/Neural/LipschitzForwardPass.lean`*
+
+- **theorem** (11): `vecNormSq_nonneg`, `vecNorm_nonneg`, `id_lipschitz`, `lipschitz_compose`, `relu_lipschitz_scalar`, `relu_vecNorm_lipschitz`, `epsilon_approx_self`, `two_layer_error_bound`, `integrity_guardrail`, `vecNorm_triangle`, `residual_lipschitz`
 
 #### `NNCompilationExtended.lean` — 27 declarations
 *Source: `MachineLearning/Neural/NNCompilationExtended.lean`*
@@ -3600,20 +3978,52 @@
 
 - **theorem** (29): `alpha_relu_not_linear`, `alpha_relu_no_exact_linear_approx`, `alpha_linear_determined_by_one`, `alpha_relu_vec_not_linear`, `alpha_linear_composition_is_linear`, `beta_koopman_finite_lift`, `beta_koopman_matrix`, `beta_lifting_dimension_bound`, `beta_quadratic_lifting_dim`, `gamma_trop_add_comm`, `gamma_trop_add_assoc`, `gamma_trop_mul_comm` ... +17 more
 
-#### `NeuralCrystallizerFrontier.lean` — 32 declarations
+#### `NeuralCrystallizerFrontier.lean` — 31 declarations
 *Source: `MachineLearning/Neural/NeuralCrystallizerFrontier.lean`*
 
-- **theorem** (32): `crystallization_gradient_zero_at_int`, `crystallization_gradient_zero_at_half_int`, `crystallization_max_at_half_int`, `crystallization_double_angle`, `crystallization_pendulum_potential`, `gaussian_norm_multiplicative_real`, `gaussian_composition_unit`, `triple_gaussian_composition_unit`, `gaussian_composition_assoc`, `rotation_det_is_one`, `rotation_char_poly_discriminant`, `integer_points_in_range` ... +20 more
+- **theorem** (31): `crystallization_gradient_zero_at_int`, `crystallization_gradient_zero_at_half_int`, `crystallization_max_at_half_int`, `crystallization_double_angle`, `crystallization_pendulum_potential`, `gaussian_norm_multiplicative_real`, `gaussian_composition_unit`, `triple_gaussian_composition_unit`, `gaussian_composition_assoc`, `rotation_det_is_one`, `rotation_char_poly_discriminant`, `integer_points_in_range` ... +19 more
 
 #### `NeuralFactorSearch.lean` — 8 declarations
 *Source: `MachineLearning/Neural/NeuralFactorSearch.lean`*
 
 - **theorem** (8): `four_k_sq_sub_one_eq`, `iof_soundness`, `iof_factor_exists`, `iof_gcd_nontrivial`, `residues_2k_minus_one`, `residues_2k_plus_one`, `iof_hit_count_mod_p`, `iof_loss_independent_of_factors`
 
+#### `PruningBounds.lean` — 18 declarations
+*Source: `MachineLearning/Neural/PruningBounds.lean`*
+
+- **theorem** (10): `pruningError_zero_of_kept`, `pruningError_eq_weight_of_pruned`, `pruningErrorFrobSq_nonneg`, `keep_plus_prune_eq_total`, `two_layer_error_bound'`, `uniform_layer_error_L1'`, `sparsityRatio_nonneg`, `row_structured_zero_rows`, `allKeepMask_identity`, `allPruneMask_zero`
+
+#### `QuantizationBounds.lean` — 10 declarations
+*Source: `MachineLearning/Neural/QuantizationBounds.lean`*
+
+- **theorem** (7): `quantize_error_bound`, `quantError_frobenius_bound`, `quantError_frobenius_norm_bound`, `adaptiveStepSize_le_base`, `adaptiveStepSize_pos`, `inner_sq_le_norm_sq_mul`, `kv_cache_score_bound`
+
+#### `SubQuadraticAttention.lean` — 16 declarations
+*Source: `MachineLearning/Neural/SubQuadraticAttention.lean`*
+
+- **theorem** (8): `blockSize_pos`, `blockSize_le`, `sparseAttendCount_le_2B`, `sparse_pairs_bound`, `sparse_strictly_subquadratic`, `sparse_complexity_lt_quadratic`, `frobeniusNormSq_nonneg`, `residual_frobenius_bound`
+
+#### `TransformerAlgebra.lean` — 22 declarations
+*Source: `MachineLearning/Neural/TransformerAlgebra.lean`*
+
+- **theorem** (11): `softmax_denom_pos`, `softmaxVec_nonneg`, `softmaxVec_sum_eq_one`, `softmaxVec_le_one`, `rotationMatrix2D_det`, `rotationMatrix2D_orthogonal`, `rotationMatrix2D_mul`, `ropeRotation_zero`, `attention_weights_stochastic`, `attention_weights_nonneg`, `forward_pass_deterministic`
+- **structure** (1): `DeterministicLayer`
+
+#### `TransformerApproximation.lean` — 18 declarations
+*Source: `MachineLearning/Neural/TransformerApproximation.lean`*
+
+- **theorem** (18): `block_sparse_subquadratic`, `block_sparse_at_most_half`, `linear_attention_cost`, `uniform_quantization_elementwise_bound`, `quantization_frobenius_bound`, `kv_cache_quantization_bound`, `lipschitz_comp_real`, `lipschitz_tower_induction`, `layer_perturbation_geom_bound`, `geometric_perturbation_bound`, `gqa_rank_bound`, `gqa_memory_reduction` ... +6 more
+
 #### `TropicalDeepLearningFoundations.lean` — 26 declarations
 *Source: `MachineLearning/Neural/TropicalDeepLearningFoundations.lean`*
 
 - **theorem** (18): `tropMul_tropAdd_distrib`, `tropAdd_tropMul_distrib`, `relu_eq_tropAdd_zero`, `relu_nonneg'`, `relu_not_affine'`, `relu_composition_tropical`, `width_linear`, `depth_exponential`, `depth_double_squares`, `lookup_exponential`, `exp_pos'`, `maslov_homomorphism` ... +6 more
+
+#### `VerifiedCompilation.lean` — 13 declarations
+*Source: `MachineLearning/Neural/VerifiedCompilation.lean`*
+
+- **theorem** (6): `matmul_assoc`, `gpuPartition_covers`, `gpuPartition_disjoint`, `allreduce_sum_equiv`, `lowrank_param_savings`, `matmul_weight_perturbation`
+- **structure** (2): `WeightProjection`, `LowRankProjection`
 
 ### Prediction
 
@@ -3787,6 +4197,38 @@
 
 - **theorem** (9): `tropical_add_identity`, `single_layer_regions`, `multi_layer_regions_bound`, `deep_region_exponential`, `relu_crystal_loss_pos`, `relu_crystal_loss_le_one`, `relu_crystal_loss_vanishes`, `const_is_monomial`, `affine_is_monomial`
 
+### RSIL
+
+#### `ConvergenceGuarantees.lean` — 18 declarations
+*Source: `MachineLearning/RSIL/ConvergenceGuarantees.lean`*
+
+- **theorem** (11): `contraction_converges`, `distance_to_fixed_point`, `lyapunov_zero_iff`, `lyapunov_decrease_implies_convergence`, `cumulative_regret_bounded`, `avg_regret_bound`, `no_free_lunch_self_improvement`, `exponential_improvement_monotone`, `exponential_below_ceiling`, `eml_faster_convergence_rate`, `eml_fewer_gradient_steps`
+
+#### `CurriculumSelfPlay.lean` — 19 declarations
+*Source: `MachineLearning/RSIL/CurriculumSelfPlay.lean`*
+
+- **theorem** (10): `avg_difficulty_bounded`, `zero_sum_payoff`, `self_play_zero_value`, `elo_expected_in_unit`, `elo_equal_ratings`, `elo_monotone`, `eml_self_play_cheaper`, `eml_more_games_per_compute`, `optimal_difficulty_at_competence`, `easy_task_less_improvement`
+
+#### `EmergentCapabilities.lean` — 16 declarations
+*Source: `MachineLearning/RSIL/EmergentCapabilities.lean`*
+
+- **theorem** (10): `emergence_in_unit`, `emergence_midpoint`, `steeper_sharper_transition`, `compositional_nonneg`, `compositional_le_one`, `compositional_le_min`, `weakest_link_highest_value`, `more_scale_more_capabilities`, `focus_accelerates_emergence`, `below_critical_mass_zero`
+
+#### `InformationBottleneckSelfLearning.lean` — 18 declarations
+*Source: `MachineLearning/RSIL/InformationBottleneckSelfLearning.lean`*
+
+- **theorem** (10): `kl_div_self_zero`, `kl_div_zero_iff`, `higher_beta_more_relevance`, `zero_beta_pure_compression`, `eml_natural_bottleneck`, `eml_compression_improves`, `pac_bayes_nonneg`, `lower_kl_tighter_bound`, `more_data_tighter_bound`, `phases_disjoint`
+
+#### `MetaCognitionTheory.lean` — 19 declarations
+*Source: `MachineLearning/RSIL/MetaCognitionTheory.lean`*
+
+- **theorem** (10): `metaCogError_nonneg`, `calibrated_implies_low_error`, `improvement_potential_decomposition`, `higher_exploration_weight_higher_value`, `zero_uncertainty_pure_exploitation`, `overconfidence_nonneg`, `perfect_calibration_no_overconfidence`, `eml_self_eval_cheaper`, `meta_learning_rate_increases`, `meta_learning_rate_limit`
+
+#### `SelfLearningFoundations.lean` — 18 declarations
+*Source: `MachineLearning/RSIL/SelfLearningFoundations.lean`*
+
+- **theorem** (8): `monotone_performance_bounded`, `finite_improvement_steps`, `eml_fewer_params`, `eml_search_space_reduction`, `compressed_improvement_cheaper`, `performance_gap_shrinks`, `mdl_generalization_bound`, `eml_tighter_mdl`
+
 ### ShefferFunction
 
 #### `Algebra.lean` — 14 declarations
@@ -3795,28 +4237,18 @@
 - **theorem** (7): `Expr.differentiable`, `Expr.id_eval`, `Expr.const_eval`, `Expr.activate_depth`, `Expr.expApprox_depth`, `Expr.expApprox_eval`, `Expr.identityExtract_depth`
 - **structure** (1): `Expr`
 
-#### `Barriers.lean` — 5 declarations
-*Source: `MachineLearning/ShefferFunction/Barriers.lean`*
-
-- **theorem** (4): `pow_not_mem_sheffer`, `sheffer_expr_tendsto_both`, `sheffer_expr_tendsto_atTop`, `softplus_sub_id_tendsto_zero_atTop`
-
-#### `Basic.lean` — 6 declarations
-*Source: `MachineLearning/ShefferFunction/Basic.lean`*
-
-- **theorem** (5): `logisticSigmoid_add_neg`, `hasDerivAt_softplus`, `sheffer_affinePrecomp`, `sheffer_affineComb`, `id_eq_softplus_diff`
-
 #### `Convexity.lean` — 5 declarations
 *Source: `MachineLearning/ShefferFunction/Convexity.lean`*
 
 - **theorem** (5): `logisticSigmoid_nonneg`, `logisticSigmoid_le_one`, `logisticSigmoid_complement`, `softplus_hasDerivAt`, `logisticSigmoid_variance_pos`
 
-#### `DerivativeLimitPairs.lean` — 9 declarations
+#### `DerivativeLimitPairs.lean` — 3 declarations
 *Source: `MachineLearning/ShefferFunction/DerivativeLimitPairs.lean`*
 
-- **theorem** (8): `sheffer_pair_fn_mem`, `sheffer_pair_fn_hasDerivAt`, `sheffer_pair_deriv_tendsto_atTop`, `sheffer_pair_deriv_tendsto_atBot`, `derivative_limit_pairs_surjective`, `softplus_deriv_limit_pair`, `id_deriv_limit_pair`, `sheffer_achieves_pair`
+- **theorem** (3): `softplus_deriv_limit_pair`, `id_deriv_limit_pair`, `sheffer_achieves_pair`
 
 #### `FourthBarrier.lean` — 5 declarations
-*Source: `MachineLearning/ShefferFunction/Lean/FourthBarrier.lean`*
+*Source: `MachineLearning/ShefferFunction/FourthBarrier.lean`*
 
 - **theorem** (5): `sigmoid_mem_of_tanh_mem`, `tanh_mem_of_sigmoid_mem`, `tanh_iff_sigmoid`, `no_higher_poly_in_sheffer'`, `exp_not_mem_sheffer'`
 
@@ -3825,25 +4257,15 @@
 
 - **theorem** (5): `one_plus_exp_pos'`, `softplus_identity_extraction`, `softplus_sum_formula`, `softplus_zero_double`, `softplus_scaled_identity`
 
-#### `NewResults.lean` — 6 declarations
-*Source: `MachineLearning/ShefferFunction/NewResults.lean`*
+#### `OrbitDynamics.lean` — 5 declarations
+*Source: `MachineLearning/ShefferFunction/OrbitDynamics.lean`*
 
-- **theorem** (6): `softplus_surjOn_Ioi`, `softplus_orbit_strictMono`, `softplus_le_add_log2`, `softplus_ge_id`, `ShefferExpr.depth_pos`, `ShefferExpr.width_pos`
-
-#### `OrbitDynamics.lean` — 12 declarations
-*Source: `MachineLearning/ShefferFunction/Lean/OrbitDynamics.lean`*
-
-- **theorem** (12): `softplus_iter_deriv`, `softplus_iter_deriv_bounds`, `softplus_orbit_addition`, `softplus_iter_growth_decomposition`, `softplus_iter_diff_formula`, `softplus_iter_eq`, `softplus_iter_log_nat`, `softplus_iter_log_one`, `softplus_iter_hasDerivAt`, `softplus_iter_deriv_pos`, `softplus_iter_deriv_lt_one`, `softplus_iter_growth_decomp`
+- **theorem** (5): `softplus_iter_deriv`, `softplus_iter_deriv_bounds`, `softplus_orbit_addition`, `softplus_iter_growth_decomposition`, `softplus_iter_diff_formula`
 
 #### `ReLUApproximation.lean` — 4 declarations
 *Source: `MachineLearning/ShefferFunction/ReLUApproximation.lean`*
 
 - **theorem** (4): `softplus_ge_relu`, `softplus_div_tendsto_relu_pos`, `softplus_div_tendsto_relu_neg`, `softplus_sub_id_tendsto`
-
-#### `SigmoidTanh.lean` — 5 declarations
-*Source: `MachineLearning/ShefferFunction/SigmoidTanh.lean`*
-
-- **theorem** (5): `log_sigmoid_eq`, `log_sigmoid_eq'`, `log_sigmoid_mem_sheffer`, `softplus_diff_shift_mem`, `bounded_sheffer_exists`
 
 ## Physics
 
@@ -3858,6 +4280,18 @@
 - **def** (1): `primeCountBP`
 - **theorem** (11): `bertrand_postulate`, `infinitely_many_primes`, `primes_unbounded`, `prime_gap_le`, `relative_prime_gap`, `legendre_verified_to_50`, `legendre_verified_to_100`, `legendre_witnesses`, `prime_count_pow2_ge_small`, `prime_counting_values`, `prime_density_decreasing`
 
+#### `CarmichaelKorselt.lean` — 8 declarations
+*Source: `Physics/CarmichaelKorselt.lean`*
+
+- **def** (1): `IsCarmichael`
+- **theorem** (7): `carmichael_561`, `carmichael_1105`, `carmichael_1729`, `korselt_561`, `korselt_1729`, `first_three_carmichael`, `no_carmichael_below_561`
+
+#### `ChebyshevBiasAnalysis.lean` — 6 declarations
+*Source: `Physics/ChebyshevBiasAnalysis.lean`*
+
+- **def** (1): `primeCountInClass`
+- **theorem** (5): `chebyshev_bias_mod4`, `chebyshev_bias_universality`, `chebyshev_bias_mod5`, `prime_race_mod4_milestones`, `prime_mod6_distribution`
+
 #### `DirichletSeriesFoundations.lean` — 12 declarations
 *Source: `Physics/DirichletSeriesFoundations.lean`*
 
@@ -3868,15 +4302,21 @@
 
 - **theorem** (5): `vonMangoldt_at_one`, `vonMangoldt_at_prime`, `vonMangoldt_at_prime_pow`, `prime_factorization_exists`, `vonMangoldt_sum`
 
+#### `ExtendedPrimeCounting.lean` — 14 declarations
+*Source: `Physics/ExtendedPrimeCounting.lean`*
+
+- **def** (1): `piCount'`
+- **theorem** (13): `prime_count_2000`, `prime_count_5000`, `goldbach_verified_to_2000`, `goldbach_odd_primes_2000`, `twin_prime_count_5000`, `sum_reciprocal_primes_exceeds_1`, `sum_reciprocal_primes_to_29`, `safe_prime_count_1000`, `safe_prime_mod12_1000`, `prime_gap_72`, `qr_count_3`, `qr_count_5` ... +1 more
+
 #### `GoldbachVerification.lean` — 13 declarations
 *Source: `Physics/GoldbachVerification.lean`*
 
 - **theorem** (13): `goldbach_verified_to_100`, `goldbach_verified_to_500`, `goldbach_verified_to_1000`, `goldbach_explicit_witnesses`, `weak_goldbach_verified_to_100`, `weak_goldbach_verified_to_500`, `twin_prime_count_100`, `twin_prime_count_1000`, `twin_primes_list`, `cousin_prime_count_100`, `sexy_prime_count_100`, `sophie_germain_count_100` ... +1 more
 
-#### `KorseltCriterion.lean` — 11 declarations
+#### `KorseltCriterion.lean` — 10 declarations
 *Source: `Physics/KorseltCriterion.lean`*
 
-- **def** (2): `IsCarmichael`, `SatisfiesKorselt`
+- **def** (1): `SatisfiesKorselt`
 - **theorem** (9): `carmichael_561_factors`, `carmichael_561_composite`, `carmichael_561_squarefree`, `korselt_561_divs`, `carmichael_1729_factors`, `hardy_ramanujan_1729`, `carmichael_1729_squarefree`, `korselt_1729_divs`, `first_carmichael_numbers`
 
 #### `KorseltCriterionFull.lean` — 16 declarations
@@ -3891,11 +4331,23 @@
 - **def** (1): `fermatNum`
 - **theorem** (20): `mersenne_prime_2`, `mersenne_prime_3`, `mersenne_prime_5`, `mersenne_prime_7`, `mersenne_prime_13`, `mersenne_prime_17`, `mersenne_prime_19`, `mersenne_composite_4`, `mersenne_composite_6`, `mersenne_composite_11`, `mersenne_prime_exponent_prime''`, `fermat_F0_prime` ... +8 more
 
-#### `MillerRabinFoundations.lean` — 8 declarations
+#### `MillerRabinFoundations.lean` — 7 declarations
 *Source: `Physics/MillerRabinFoundations.lean`*
 
 - **def** (2): `IsMillerRabinWitness`, `IsStrongPseudoprime`
-- **theorem** (6): `odd_decomp`, `prime_passes_miller_rabin`, `fermat_pseudoprime_341`, `strong_pseudoprime_2047_base2`, `carmichael_561`, `carmichael_561_witness`
+- **theorem** (5): `odd_decomp`, `prime_passes_miller_rabin`, `fermat_pseudoprime_341`, `strong_pseudoprime_2047_base2`, `carmichael_561_witness`
+
+#### `PepinFermat.lean` — 12 declarations
+*Source: `Physics/PepinFermat.lean`*
+
+- **def** (1): `FermatNum`
+- **theorem** (11): `fermat_values`, `fermat_primes_0_to_4`, `fermat_5_composite`, `fermat_5_divisor_form`, `pepin_test_F1`, `pepin_test_F2`, `pepin_test_F3`, `pepin_test_F4`, `fermat_num_gt_one`, `fermat_coprime_small`, `fermat_pairwise_coprime_small`
+
+#### `PerfectNumberTheory.lean` — 11 declarations
+*Source: `Physics/PerfectNumberTheory.lean`*
+
+- **def** (2): `divisorSum'`, `IsPerfect'`
+- **theorem** (9): `perfect_6'`, `perfect_28'`, `perfect_496'`, `perfect_8128'`, `perfect_numbers_below_100'`, `abundancy_perfect'`, `abundant_numbers_small'`, `prime_deficient'`, `euclid_perfect_numbers'`
 
 #### `PrimeCountingBounds.lean` — 16 declarations
 *Source: `Physics/PrimeCountingBounds.lean`*
@@ -3914,6 +4366,17 @@
 
 - **theorem** (9): `prime_gaps_max_100`, `prime_gaps_max_1000`, `prime_gap_sizes_exist`, `prime_desert`, `gap2_count_1000`, `gap4_count_1000`, `gap6_count_1000`, `first_gap_occurrences`, `cramer_evidence`
 
+#### `PrimeMod6Structure.lean` — 12 declarations
+*Source: `Physics/PrimeMod6Structure.lean`*
+
+- **theorem** (12): `prime_mod6`, `twin_prime_mod6`, `cousin_prime_mod6`, `sexy_prime_both_residues`, `gap_residue_mod6_case2`, `gap_residue_mod6_case4`, `cousin_prime_count_1000`, `sexy_prime_count_1000`, `twin_prime_mod6_verified`, `cousin_prime_mod6_verified`, `gap8_prime_mod6_verified`, `gap10_prime_mod6_verified`
+
+#### `PrimorialAnalysis.lean` — 10 declarations
+*Source: `Physics/PrimorialAnalysis.lean`*
+
+- **def** (1): `myPrimorial`
+- **theorem** (9): `primorial_values`, `primorial_plus1_2`, `primorial_plus1_3`, `primorial_plus1_5`, `primorial_plus1_7`, `primorial_plus1_11`, `primorial_plus1_13_composite`, `primorial_plus1_13_smallest_factor`, `primorial_13_coprime`
+
 #### `RobinInequality.lean` — 9 declarations
 *Source: `Physics/RobinInequality.lean`*
 
@@ -3930,6 +4393,12 @@
 
 - **theorem** (13): `trial_division_correct`, `composite_small_factor`, `wilson_examples`, `wilson_composite_examples`, `wilson_all_primes_to_50`, `pratt_cert_7`, `pratt_cert_13`, `pratt_cert_101`, `sieve_correctness_small`, `sieve_count_500`, `sieve_count_1000`, `small_crypto_primes` ... +1 more
 - **structure** (1): `PrattCertificate`
+
+#### `WilsonPrimality.lean` — 9 declarations
+*Source: `Physics/WilsonPrimality.lean`*
+
+- **def** (2): `wilsonQuotient`, `IsWilsonPrime`
+- **theorem** (7): `wilson_primality_small`, `wilson_converse_small`, `wilson_prime_5`, `wilson_prime_13`, `wilson_prime_563`, `not_wilson_prime_small`, `wilson_primes_below_1000`
 
 ### AlgebraicPhysics
 
@@ -4127,17 +4596,17 @@
 
 - **theorem** (50): `hyperboloid_origin`, `boost_preserves_Q`, `boost_preserves_hyperboloid_Q`, `boosted_origin_on_hyperboloid`, `hyperboloid_inside_light_cone`, `hyperbolic_distance_base`, `hyperboloid_self_inner`, `hyperboloid_c_ge_one`, `boost_is_dilation_on_celestial`, `cross_ratio_dilation_invariant`, `mobius_translation`, `rotation_preserves_Q` ... +38 more
 
-#### `PhotonicInverseStereo.lean` — 10 declarations
+#### `PhotonicInverseStereo.lean` — 9 declarations
 *Source: `Physics/ArithmeticPhotons/PhotonicInverseStereo.lean`*
 
 - **theorem** (6): `conformal_factor_at_unit_circle`, `conformal_factor_le_four`, `chordal_distance_formula`, `pispd_fundamental_identity`, `invStereo_dot_product`, `pispd_lens_formula`
 - **structure** (1): `PISPDPhoton`
 
-#### `QuantumInformation.lean` — 35 declarations
+#### `QuantumInformation.lean` — 34 declarations
 *Source: `Physics/ArithmeticPhotons/QuantumInformation.lean`*
 
 - **def** (17): `quadToBloch`, `ratInvStereo`, `pauliI`, `blochUp`, `blochDown`, `blochPlus`, `blochMinus`, `hadamardBloch`, `sGateBloch`, `xGateBloch`, `zGateBloch`, `quaternionHopf` ... +5 more
-- **theorem** (17): `stereo_to_quad`, `pauliX_sq`, `pauliZ_sq`, `pauliXZ_anticommute`, `hadamard_involution`, `sGate_order_four`, `hadamard_preserves_quad`, `sGate_preserves_quad`, `hopf_is_parametrization`, `rot90z_orthogonal`, `hadamardRot_orthogonal`, `hadamard_maps_up_to_plus` ... +5 more
+- **theorem** (16): `stereo_to_quad`, `pauliX_sq`, `pauliZ_sq`, `pauliXZ_anticommute`, `sGate_order_four`, `hadamard_preserves_quad`, `sGate_preserves_quad`, `hopf_is_parametrization`, `rot90z_orthogonal`, `hadamardRot_orthogonal`, `hadamard_maps_up_to_plus`, `hadamard_maps_plus_to_up` ... +4 more
 - **structure** (1): `RatSpherePoint`
 
 ### Classical
@@ -4545,10 +5014,10 @@
 - **theorem** (15): `berggren_M2_pos_a`, `berggren_M2_pos_b`, `berggren_M2_pos_c`, `berggren_M1_pos_a`, `berggren_M1_pos_b`, `berggren_M3_pos_a`, `berggren_M3_pos_b`, `pathsAtDepth_length`, `m2_branch_pyth`, `children_hyp_sum`, `children_leg_a_sum`, `children_leg_b_sum` ... +3 more
 - **structure** (1): `TreePath`
 
-#### `AgentEpsilon_Synthesis.lean` — 22 declarations
+#### `AgentEpsilon_Synthesis.lean` — 20 declarations
 *Source: `Pythagorean/Agents/AgentEpsilon_Synthesis.lean`*
 
-- **theorem** (22): `rational_circle_point`, `stereographic_parametrization`, `stereographic_euclid`, `berggren_M1_lorentz_full`, `berggren_M2_lorentz_full`, `berggren_M3_lorentz_full`, `neg_one_qr_mod17`, `neg_one_qr_mod29`, `neg_one_nqr_mod3`, `neg_one_nqr_mod7`, `neg_one_nqr_mod11`, `neg_one_nqr_mod19` ... +10 more
+- **theorem** (20): `rational_circle_point`, `stereographic_parametrization`, `stereographic_euclid`, `berggren_M1_lorentz_full`, `berggren_M2_lorentz_full`, `berggren_M3_lorentz_full`, `neg_one_nqr_mod3`, `neg_one_nqr_mod7`, `neg_one_nqr_mod11`, `neg_one_nqr_mod19`, `euler_four_sq`, `pythagorean_triangle_ineq` ... +8 more
 
 #### `AgentResearch.lean` — 19 declarations
 *Source: `Pythagorean/Agents/AgentResearch.lean`*
@@ -4596,11 +5065,23 @@
 - **def** (3): `applyB₁`, `A_iter`, `A_closed`
 - **theorem** (6): `A_closed_recurrence`, `A_iter_eq_A_closed`, `A_branch_gap_all`, `A_branch_coprime`, `A_branch_coprime_vals`, `A_closed_pythagorean`
 
+#### `BerggrenB2Entries.lean` — 9 declarations
+*Source: `Pythagorean/Berggren/BerggrenB2Entries.lean`*
+
+- **def** (1): `BN2E`
+- **theorem** (8): `BN2E_cayley`, `BN2E_entry_recurrence`, `BN2E_nonneg`, `BN2E_eigenvector`, `BN2E_eigenvector_pow`, `BN2E_row_diff_0`, `BN2E_row_diff_1`, `BN2E_row_diff_2`
+
 #### `BerggrenB2TraceRecurrence.lean` — 7 declarations
 *Source: `Pythagorean/Berggren/BerggrenB2TraceRecurrence.lean`*
 
 - **def** (2): `BTR₂`, `trB2`
 - **theorem** (5): `BTR₂_cayley`, `trace_BTR₂_recurrence`, `trB2_eq_trace`, `trB2_vals`, `trace_BTR₂_base`
+
+#### `BerggrenB3ClosedForm.lean` — 9 declarations
+*Source: `Pythagorean/Berggren/BerggrenB3ClosedForm.lean`*
+
+- **def** (4): `BN3F`, `BN3_pow_closed`, `C_iterF`, `C_closedF`
+- **theorem** (5): `BN3_pow_eq_closed`, `BN3_pow_closed_check`, `C_iter_eq_closedF`, `C_closed_pythagoreanF`, `C_branch_gapF`
 
 #### `BerggrenCBranch.lean` — 22 declarations
 *Source: `Pythagorean/Berggren/BerggrenCBranch.lean`*
@@ -4614,6 +5095,13 @@
 - **def** (2): `C_odd`, `C_even`
 - **theorem** (2): `C_branch_coprime`, `C_branch_coprime_vals`
 
+#### `BerggrenCantorBoundary.lean` — 24 declarations
+*Source: `Pythagorean/Berggren/BerggrenCantorBoundary.lean`*
+
+- **def** (7): `cylinder`, `truncate`, `stepToFin3`, `applyFinPath`, `hypSequence`, `sigmaEncoding`, `berggrenShift`
+- **theorem** (15): `berggrenBoundary_compact`, `cylinder_nil`, `truncate_zero`, `truncate_length`, `applyFinPath_nil`, `hypSequence_zero`, `nodes_at_depth`, `sigmaEncoding_injective`, `sigmaEncoding_no_ff`, `berggrenShift_continuous`, `berggrenShift_surjective`, `shift_const_fixed` ... +3 more
+- **instance** (1): `berggrenBoundary_topSpace`
+
 #### `BerggrenCharPoly.lean` — 44 declarations
 *Source: `Pythagorean/Berggren/BerggrenCharPoly.lean`*
 
@@ -4625,6 +5113,19 @@
 
 - **def** (6): `invB1`, `invB2`, `invB3`, `fwdB1`, `fwdB2`, `fwdB3`
 - **theorem** (27): `invB1_fwdB1`, `invB2_fwdB2`, `invB3_fwdB3`, `fwdB1_invB1`, `fwdB2_invB2`, `fwdB3_invB3`, `invB1_preserves_pt`, `invB2_preserves_pt`, `invB3_preserves_pt`, `invB1_invB2_first_eq`, `invB3_neg_invB1_first`, `invB1_neg_invB2_second` ... +15 more
+
+#### `BerggrenCompletenessV13.lean` — 30 declarations
+*Source: `Pythagorean/Berggren/BerggrenCompletenessV13.lean`*
+
+- **def** (5): `applyStepC`, `applyPathC`, `invAC`, `invBC`, `invCC`
+- **theorem** (24): `fwd_invAC`, `fwd_invBC`, `fwd_invCC`, `invAC_pyth`, `invBC_pyth`, `invCC_pyth`, `parent_hyp_posC`, `parent_hyp_ltC`, `not_both_sigma_negC`, `sigma1_neg_sigma2_posC`, `sigma1_zero_impossibleC`, `sigma2_zero_rootC` ... +12 more
+- **structure** (1): `BStepC`
+
+#### `BerggrenDeficitClassification.lean` — 30 declarations
+*Source: `Pythagorean/Berggren/BerggrenDeficitClassification.lean`*
+
+- **def** (4): `IsPPT`, `deficit`, `excess`, `perim`
+- **theorem** (26): `deficit_times_sum`, `excess_times_sum`, `stepA_preserves_deficit`, `stepB_transforms_deficit`, `stepC_transforms_deficit`, `root_deficit_one`, `A_branch_deficit_chain`, `euclid_is_ppt`, `euclid_deficit`, `euclid_excess`, `euclid_deficit_is_square`, `near_isosceles_deficit` ... +14 more
 
 #### `BerggrenDepth3.lean` — 40 declarations
 *Source: `Pythagorean/Berggren/BerggrenDepth3.lean`*
@@ -4643,15 +5144,33 @@
 - **def** (6): `invAD`, `invBD`, `invCD`, `chAD`, `chBD`, `chCD`
 - **theorem** (16): `chAD_invAD`, `chBD_invBD`, `chCD_invCD`, `invAD_chAD`, `invBD_chBD`, `invCD_chCD`, `invAD_pyth`, `invBD_pyth`, `invCD_pyth`, `sigma_sum`, `not_both_sigma_nonpos`, `sigma1_neg_invC_works` ... +4 more
 
+#### `BerggrenEnumeration.lean` — 19 declarations
+*Source: `Pythagorean/Berggren/BerggrenEnumeration.lean`*
+
+- **def** (2): `applyStepE`, `applyPathE`
+- **theorem** (16): `step_pyth_E`, `step_pos_E`, `hyp_monotone_step`, `step_hyp_increase_by_2`, `path_valid_E`, `depth_bound_hyp`, `children_distinct`, `depth1_triples`, `depth2_AB`, `depth2_AC`, `depth2_BA`, `depth2_BC` ... +4 more
+- **structure** (1): `BStepE`
+
 #### `BerggrenFreeSemigroup.lean` — 57 declarations
 *Source: `Pythagorean/Berggren/BerggrenFreeSemigroup.lean`*
 
 - **theorem** (57): `BF1_ne_BF2`, `BF1_ne_BF3`, `BF2_ne_BF3`, `BF1_ne_one`, `BF2_ne_one`, `BF3_ne_one`, `BF12_ne_BF21`, `BF13_ne_BF31`, `BF23_ne_BF32`, `BF11_ne_one`, `BF12_ne_one`, `BF13_ne_one` ... +45 more
 
+#### `BerggrenFreeSemigroupV13.lean` — 16 declarations
+*Source: `Pythagorean/Berggren/BerggrenFreeSemigroupV13.lean`*
+
+- **def** (3): `fwdB1S`, `fwdB2S`, `fwdB3S`
+- **theorem** (13): `fwdB1_hyp_increase`, `fwdB2_hyp_increase`, `fwdB3_hyp_increase`, `fwdB1_pyth`, `fwdB2_pyth`, `fwdB3_pyth`, `fwdB1_injective`, `fwdB2_injective`, `fwdB3_injective`, `branches_distinct_12`, `branches_distinct_13`, `branches_distinct_23` ... +1 more
+
 #### `BerggrenGPS.lean` — 22 declarations
 *Source: `Pythagorean/Berggren/BerggrenGPS.lean`*
 
 - **theorem** (15): `zoneA_valid`, `zoneB_valid`, `zoneC_valid`, `zoneA_hyp_decreases`, `zoneB_hyp_decreases`, `zoneC_hyp_decreases`, `zoneA_preserves_pyth`, `silver_ratio_fixed_point`, `golden_ratio_step1`, `golden_ratio_step2`, `golden_ratio_two_cycle`, `arctan_half_plus_arctan_third` ... +3 more
+
+#### `BerggrenGaussianBridge.lean` — 22 declarations
+*Source: `Pythagorean/Berggren/BerggrenGaussianBridge.lean`*
+
+- **theorem** (22): `gaussian_norm_eq_sum_sq`, `pyth_iff_gaussian_norm`, `parametric_ppt`, `berggrenA_pyth`, `berggrenB_pyth`, `berggrenC_pyth`, `ppt_gaussian_rep`, `root_gaussian`, `root_is_square`, `norm_generator`, `mul_i_preserves_norm`, `sum_two_squares_iff_norm` ... +10 more
 
 #### `BerggrenGeneralTheorems.lean` — 12 declarations
 *Source: `Pythagorean/Berggren/BerggrenGeneralTheorems.lean`*
@@ -4664,11 +5183,23 @@
 - **def** (9): `berg_A`, `berg_B`, `berg_C`, `berg_S`, `vacuum`, `light`, `triple345`, `triple435`, `lorentz_Q`
 - **theorem** (30): `vacuum_pythagorean`, `vacuum_fixed_by_A`, `light_fixed_by_C`, `creation_B_vacuum`, `creation_B_light`, `creation_C_vacuum`, `creation_A_light`, `BC_degenerate_at_vacuum`, `AB_degenerate_at_light`, `swap_vacuum_light`, `swap_light_vacuum`, `swap_conjugates_A_to_C` ... +18 more
 
+#### `BerggrenLorentzGroup.lean` — 31 declarations
+*Source: `Pythagorean/Berggren/BerggrenLorentzGroup.lean`*
+
+- **def** (3): `BL₁`, `BL₂`, `BL₃`
+- **theorem** (28): `BL₁_lorentz`, `BL₂_lorentz`, `BL₃_lorentz`, `det_BL₁`, `det_BL₂`, `det_BL₃`, `det_BL₁_pow`, `det_BL₂_pow`, `det_BL₃_pow`, `lorentz_pow`, `BL₁_pow_lorentz`, `BL₂_pow_lorentz` ... +16 more
+
 #### `BerggrenLorentzPaper.lean` — 28 declarations
 *Source: `Pythagorean/Berggren/BerggrenLorentzPaper.lean`*
 
 - **def** (8): `BA`, `BB`, `BC`, `QLorentz`, `tripleAt`, `pellHyp`, `pellLegA`, `pellLegB`
 - **theorem** (20): `BA_preserves_lorentz`, `BB_preserves_lorentz`, `BC_preserves_lorentz`, `det_BA`, `det_BB`, `det_BC`, `BA_preserves_pyth`, `BB_preserves_pyth`, `BC_preserves_pyth`, `tripleAt_is_pythagorean`, `factoring_identity`, `pellHyp_2` ... +8 more
+
+#### `BerggrenMarkoffAnalogy.lean` — 34 declarations
+*Source: `Pythagorean/Berggren/BerggrenMarkoffAnalogy.lean`*
+
+- **def** (6): `IsMarkoff`, `markoffV1`, `markoffV2`, `markoffV3`, `markoff_disc`, `MarkoffUnicityConjecture`
+- **theorem** (28): `markoff_root`, `markoff_112`, `markoff_125`, `markoff_1_5_13`, `markoff_2_5_29`, `markoffV1_preserves`, `markoffV2_preserves`, `markoffV3_preserves`, `markoffV1_involution`, `markoffV2_involution`, `markoffV3_involution`, `markoff_sym12` ... +16 more
 
 #### `BerggrenNewDiscoveries.lean` — 34 declarations
 *Source: `Pythagorean/Berggren/BerggrenNewDiscoveries.lean`*
@@ -4688,6 +5219,25 @@
 - **def** (3): `BNP₁`, `NNP₁`, `A_br`
 - **theorem** (15): `NNP₁_cubed`, `NNP₁_eq`, `NNP₁_sq_ne_zero`, `NNP₁_sq`, `BNP₁_pow_2`, `BNP₁_pow_3`, `BNP₁_pow_4`, `A_br_pyth`, `A_br_consec`, `A_br_odd`, `A_br_even`, `A_br_hyp_odd` ... +3 more
 
+#### `BerggrenPathUniqueness.lean` — 23 declarations
+*Source: `Pythagorean/Berggren/BerggrenPathUniqueness.lean`*
+
+- **def** (2): `applyStepU`, `applyPathU`
+- **theorem** (20): `sigma1_stepA`, `sigma2_stepA`, `sigma1_stepB`, `sigma2_stepB`, `sigma1_stepC`, `sigma2_stepC`, `step_determined`, `applyStepU_injective`, `step_pyth`, `step_pos`, `step_hyp_increase`, `path_valid_aux` ... +8 more
+- **structure** (1): `BStepU`
+
+#### `BerggrenPellClosedForm.lean` — 30 declarations
+*Source: `Pythagorean/Berggren/BerggrenPellClosedForm.lean`*
+
+- **def** (3): `pellX`, `pellY`, `pellMatrix`
+- **theorem** (27): `pellX_2`, `pellX_3`, `pellX_4`, `pellY_2`, `pellY_3`, `pellY_4`, `pellX_rec`, `pellY_rec`, `pell_identity`, `pell_cross`, `pell_cross_identity`, `pellX_pos` ... +15 more
+
+#### `BerggrenPellSemigroup.lean` — 33 declarations
+*Source: `Pythagorean/Berggren/BerggrenPellSemigroup.lean`*
+
+- **def** (8): `pellX'`, `pellY'`, `pellProd`, `pellUnit`, `pellFund`, `pellNorm`, `pellPow`, `pellConj`
+- **theorem** (25): `pellProd_assoc`, `pellProd_unit_left`, `pellProd_unit_right`, `pellProd_comm`, `pellNorm_unit`, `pellNorm_fund`, `pellNorm_mul`, `pellPow_zero`, `pellPow_succ`, `pellPow_one`, `pellNorm_pow`, `pellNorm_fund_pow` ... +13 more
+
 #### `BerggrenPellStructure.lean` — 15 declarations
 *Source: `Pythagorean/Berggren/BerggrenPellStructure.lean`*
 
@@ -4699,6 +5249,12 @@
 
 - **def** (3): `BPF₁`, `NPF₁`, `NPF₁sq`
 - **theorem** (12): `NPF₁_eq_B₁_sub_I`, `NPF₁_sq_eq`, `NPF₁_sq_ne_zero`, `NPF₁_cubed_eq_zero`, `A_triple_pythagorean`, `A_triple_1`, `A_triple_2`, `A_triple_3`, `A_hyp_growth`, `A_hyp_pos`, `A_first_pos`, `A_second_pos`
+
+#### `BerggrenQuadraticForms.lean` — 30 declarations
+*Source: `Pythagorean/Berggren/BerggrenQuadraticForms.lean`*
+
+- **def** (4): `normForm`, `hypLegDiff`, `pptSimilar`, `perimeter`
+- **theorem** (26): `ppt_iff_lorentz_zero`, `lorentzForm_positive`, `lorentzForm_negative`, `lorentz_discriminant`, `stepA_preserves_form`, `stepB_preserves_form`, `stepC_preserves_form`, `normForm_nonneg`, `normForm_mul`, `ppt_iff_norm_square`, `ppt_a_mod4`, `root_deficit` ... +14 more
 
 #### `BerggrenQuadruples.lean` — 23 declarations
 *Source: `Pythagorean/Berggren/BerggrenQuadruples.lean`*
@@ -4712,11 +5268,28 @@
 - **theorem** (45): `berggrenStep_preserves_pyth`, `berggrenAt_pyth`, `det_berggrenB₁`, `det_berggrenB₂`, `det_berggrenB₃`, `berggrenB₁_invertible`, `berggrenB₂_invertible`, `berggrenB₃_invertible`, `berggrenB₁_lorentz`, `berggrenB₂_lorentz`, `berggrenB₃_lorentz`, `berggren_in_lorentz` ... +33 more
 - **structure** (1): `BDir`
 
+#### `BerggrenRootUniqueness.lean` — 4 declarations
+*Source: `Pythagorean/Berggren/BerggrenRootUniqueness.lean`*
+
+- **theorem** (4): `ppt_hyp_ge_5`, `ppt_c5_unique`, `root_unique`, `minimal_ppt`
+
+#### `BerggrenSpectralGeometry.lean` — 41 declarations
+*Source: `Pythagorean/Berggren/BerggrenSpectralGeometry.lean`*
+
+- **def** (3): `B₁`, `B₂`, `B_sum`
+- **theorem** (38): `B₁_det`, `B₂_det`, `B₃_det`, `B₁_trace`, `B₂_trace`, `B₃_trace`, `trace_sum`, `B₁_unipotent`, `B₃_unipotent`, `B₂_not_unipotent`, `B₁_unipotent_exact`, `B₃_unipotent_exact` ... +26 more
+
 #### `BerggrenTraceForAll.lean` — 17 declarations
 *Source: `Pythagorean/Berggren/BerggrenTraceForAll.lean`*
 
 - **def** (4): `BTA₁`, `BTA₃`, `NTA₁`, `NTA₃`
 - **theorem** (13): `trace_NTA₁`, `trace_NTA₃`, `trace_NTA₁_sq`, `trace_NTA₃_sq`, `NTA₁_cubed`, `NTA₃_cubed`, `BTA₁_eq`, `BTA₃_eq`, `trace_Nsq_mul_pow`, `trace_N_mul_pow`, `trace_one_add_nilp_pow`, `trace_BTA₁_pow` ... +1 more
+
+#### `BerggrenTraceFormula.lean` — 13 declarations
+*Source: `Pythagorean/Berggren/BerggrenTraceFormula.lean`*
+
+- **def** (3): `pellXt`, `traceTarget`, `BN₂t`
+- **theorem** (10): `pellXt_rec`, `traceTarget_0`, `traceTarget_1`, `traceTarget_2`, `traceTarget_recurrence`, `BN₂t_cayley_hamilton`, `BN₂t_trace_rec`, `traceB2_eq_pellX`, `BN₂t_trace_pos`, `BN₂t_trace_odd`
 
 #### `BerggrenTracelessGeneral.lean` — 37 declarations
 *Source: `Pythagorean/Berggren/BerggrenTracelessGeneral.lean`*
@@ -4742,6 +5315,146 @@
 - **def** (3): `invA'`, `invB'`, `invC'`
 - **theorem** (25): `step_inv_A`, `step_inv_B`, `step_inv_C`, `inv_step_A`, `inv_step_B`, `inv_step_C`, `invA'_pyth`, `invB'_pyth`, `invC'_pyth`, `parent_hyp_lt'`, `sigma1_neg_invC_pos`, `descent_exists_parent` ... +13 more
 
+#### `BerggrenZeta.lean` — 23 declarations
+*Source: `Pythagorean/Berggren/InvertedTree/BerggrenZeta.lean`*
+
+- **def** (1): `ghostMap`
+- **theorem** (22): `hyp_positive`, `density_lower`, `density_upper`, `two_reps_65`, `two_reps_85`, `two_reps_145`, `two_reps_185`, `three_reps_325`, `fermat_examples`, `primes_1_mod_4`, `ppt_c5`, `ppt_c13` ... +10 more
+
+#### `ErrorCorrection.lean` — 24 declarations
+*Source: `Pythagorean/Berggren/InvertedTree/ErrorCorrection.lean`*
+
+- **def** (1): `h`
+- **theorem** (23): `recover_a`, `recover_b`, `recover_c`, `detect_error_a`, `detect_error_b`, `detect_error_c`, `detect_error_p`, `detect_error_q`, `detect_error_h`, `ghost_pyth_preserved`, `syndrome_zero_1`, `syndrome_zero_2` ... +11 more
+
+#### `FactoringViaBerggren.lean` — 35 declarations
+*Source: `Pythagorean/Berggren/InvertedTree/FactoringViaBerggren.lean`*
+
+- **def** (1): `UP`
+- **theorem** (34): `ghost_diff_eq_ba_diff`, `ghost_sum`, `lorentz_norm_preservation`, `split_gp`, `split_gq`, `split_gh`, `split_triplet_fixed_point`, `divisor_gap_theorem`, `divisor_gap_zero_iff_equal`, `abs_divisor_gap`, `factoring_gp`, `factoring_gq` ... +22 more
+
+#### `GeneralTheorems.lean` — 19 declarations
+*Source: `Pythagorean/Berggren/InvertedTree/GeneralTheorems.lean`*
+
+- **def** (1): `ghostH`
+- **theorem** (18): `det_M`, `det_pow`, `pow_lorentz`, `M_symmetric`, `pow_symmetric`, `B2_M_eq_one`, `M_B2_eq_one`, `ghost_parity_a`, `ghost_parity_b`, `ghost_parity_c`, `ghost_pyth`, `recovery_a` ... +6 more
+
+#### `GhostAlgebra.lean` — 65 declarations
+*Source: `Pythagorean/Berggren/InvertedTree/GhostAlgebra.lean`*
+
+- **def** (5): `hParam`, `fourthGhost`, `invB₁`, `invB₂`, `invB₃`
+- **theorem** (60): `hParam_alt`, `pqh_pythagorean`, `fourthGhost_pythagorean`, `all_ghosts_same_hyp`, `invB₂_fst`, `invB₂_snd`, `invB₁_fst`, `invB₁_snd`, `invB₃_fst`, `invB₃_snd`, `fourthGhost_fst`, `fourthGhost_snd` ... +48 more
+
+#### `HyperbolicGeometry.lean` — 32 declarations
+*Source: `Pythagorean/Berggren/InvertedTree/HyperbolicGeometry.lean`*
+
+- **def** (1): `B3`
+- **theorem** (31): `lorentz_M4`, `lorentz_M5`, `lorentz_M6`, `null_cone_345`, `null_cone_51213`, `null_cone_81517`, `ghost_preserves_null`, `eigvec_spacelike`, `eigvec_neg1`, `M_on_110`, `center_hyperboloid`, `M_center` ... +19 more
+
+#### `InvertedTreeAdvanced.lean` — 90 declarations
+*Source: `Pythagorean/Berggren/InvertedTree/InvertedTreeAdvanced.lean`*
+
+- **def** (13): `fwdB₁`, `fwdB₂`, `fwdB₃`, `berggren_p`, `berggren_q`, `berggren_h`, `mB₁_inv`, `mB₂_inv`, `mB₃_inv`, `mB₁_fwd`, `mB₂_fwd`, `mB₃_fwd` ... +1 more
+- **theorem** (77): `invB₁_fst_eq_invB₂_fst`, `invB₂_snd_eq_invB₃_snd`, `all_hyp_eq₁₂`, `all_hyp_eq₂₃`, `invB₁_fst_eq_p`, `invB₁_snd_eq_neg_q`, `invB₂_snd_eq_q`, `invB₃_fst_eq_neg_p`, `inv_hyp_eq_h`, `invB₁_fst_neg_invB₃_fst`, `invB₁_snd_neg_invB₂_snd`, `invB₂_fst_neg_invB₃_fst` ... +65 more
+
+#### `InvertedTreeCore.lean` — 56 declarations
+*Source: `Pythagorean/Berggren/InvertedTree/InvertedTreeCore.lean`*
+
+- **def** (10): `invB₁'`, `invB₂'`, `invB₃'`, `B₁_inv_m`, `B₂_inv_m`, `B₃_inv_m`, `B₁_fwd_m`, `B₂_fwd_m`, `B₃_fwd_m`, `Q_lorentz_m`
+- **theorem** (46): `invB₁'_comp_fwdB₁_fst`, `invB₁'_comp_fwdB₁_snd_fst`, `invB₁'_comp_fwdB₁_snd_snd`, `invB₂'_comp_fwdB₂_fst`, `invB₂'_comp_fwdB₂_snd_fst`, `invB₂'_comp_fwdB₂_snd_snd`, `invB₃'_comp_fwdB₃_fst`, `invB₃'_comp_fwdB₃_snd_fst`, `invB₃'_comp_fwdB₃_snd_snd`, `invB₁'_preserves_lorentz`, `invB₂'_preserves_lorentz`, `invB₃'_preserves_lorentz` ... +34 more
+
+#### `InvertedTreeV3Research.lean` — 63 declarations
+*Source: `Pythagorean/Berggren/InvertedTree/InvertedTreeV3Research.lean`*
+
+- **def** (8): `p2`, `q2`, `h2`, `p3`, `q3`, `h3`, `descent`, `branchOf`
+- **theorem** (54): `p2_formula`, `q2_formula`, `h2_formula`, `p3_formula`, `q3_formula`, `h3_formula`, `leg_diff_M1`, `leg_diff_M2`, `leg_diff_M3`, `abs_leg_diff_preserved`, `Q_preserved_M1`, `Q_preserved_M2` ... +42 more
+- **structure** (1): `BranchLabel`
+
+#### `KleinFourAction.lean` — 34 declarations
+*Source: `Pythagorean/Berggren/InvertedTree/KleinFourAction.lean`*
+
+- **def** (4): `ghost_id`, `ghost_s1`, `ghost_s2`, `ghost_s12`
+- **theorem** (30): `ghost_id_pyth`, `ghost_s1_pyth`, `ghost_s2_pyth`, `ghost_s12_pyth`, `ghosts_same_hyp`, `s1_negates_q`, `s2_negates_p`, `orbit_distinct_01`, `orbit_distinct_02`, `orbit_distinct_03`, `orbit_distinct_12`, `orbit_distinct_13` ... +18 more
+
+#### `ModularPeriodicity.lean` — 71 declarations
+*Source: `Pythagorean/Berggren/InvertedTree/ModularPeriodicity.lean`*
+
+- **def** (2): `M_mod`, `eta_mod`
+- **theorem** (69): `cayley_hamilton_mod_2`, `cayley_hamilton_mod_3`, `cayley_hamilton_mod_5`, `cayley_hamilton_mod_7`, `order_mod_2`, `order_mod_3_divides`, `order_mod_3_not_2`, `order_mod_5_divides`, `order_mod_5_not_3`, `order_mod_5_not_2`, `order_mod_7_divides`, `order_mod_7_not_3` ... +57 more
+
+#### `NewResearchTheorems.lean` — 52 declarations
+*Source: `Pythagorean/Berggren/InvertedTree/NewResearchTheorems.lean`*
+
+- **def** (13): `nr_ghost_p`, `nr_ghost_q`, `nr_ghost_h`, `nr_quad_p₁`, `nr_quad_p₂`, `nr_quad_h`, `nr_quad_p₁_ac`, `nr_quad_p₂_ac`, `nr_quad_h_ac`, `nr_quad_p₁_bc`, `nr_quad_p₂_bc`, `nr_quad_h_bc` ... +1 more
+- **theorem** (39): `nr_ghost_pq_sum`, `nr_ghost_pq_diff`, `nr_ghost_trilinear`, `nr_ghost_pq_product`, `nr_ghost_lorentz`, `nr_ghost_pythagorean`, `nr_ghost_energy`, `nr_ghost_h_mod2`, `nr_quad_fixed_abs_p₁`, `nr_quad_fixed_abs_p₂`, `nr_quad_fixed_h`, `nr_quad_fixed_point_csq` ... +27 more
+
+#### `OpenQuestions.lean` — 29 declarations
+*Source: `Pythagorean/Berggren/InvertedTree/OpenQuestions.lean`*
+
+- **theorem** (29): `eigenvalue_neg1_check`, `eigenvector_neg1_scaled`, `leg_diff_projection`, `trace_seq`, `trace_formula_check_2`, `trace_formula_check_3`, `trace_formula_check_4`, `sum_formula`, `one_one_one_not_eigenvector`, `M_times_111`, `CH_recurrence_3`, `CH_recurrence_4` ... +17 more
+
+#### `OpenResearchTheorems.lean` — 17 declarations
+*Source: `Pythagorean/Berggren/InvertedTree/OpenResearchTheorems.lean`*
+
+- **theorem** (17): `linear_gp`, `linear_gq`, `linear_gh`, `linear_triplet_fixed_abs`, `deficit_factor_decomp`, `multi_triplet_diff_independence`, `factoring_h_grows`, `diff_gp`, `diff_gq`, `diff_gh`, `ghost_p_mod3`, `ghost_q_mod3` ... +5 more
+
+#### `PellClosedForm.lean` — 88 declarations
+*Source: `Pythagorean/Berggren/InvertedTree/PellClosedForm.lean`*
+
+- **theorem** (88): `M1_00_sq`, `M2_00_sq`, `M3_00_sq`, `M4_00_sq`, `M5_00_sq`, `M6_00_sq`, `M7_00_sq`, `M8_00_sq`, `comp_pell_rec_1`, `comp_pell_rec_2`, `comp_pell_rec_3`, `comp_pell_rec_4` ... +76 more
+
+#### `QuadrupleGhostStructure.lean` — 30 declarations
+*Source: `Pythagorean/Berggren/InvertedTree/QuadrupleGhostStructure.lean`*
+
+- **def** (6): `lorentzQ₄`, `quad_p₁`, `quad_p₂`, `quad_h`, `universalParentQuad`, `M₄_UP`
+- **theorem** (24): `ghost_quad_pythagorean`, `universalParentQuad_pythagorean`, `ghost_quad_preserves_lorentz`, `quad_sign_flips`, `quad_p₁_minus_p₂`, `quad_p₁_plus_p₂`, `quad_descent_gap`, `quad_p₁_parity`, `quad_p₂_parity`, `quad_h_parity`, `quad_projection_pythagorean`, `pyth_quad_1_2_2_3` ... +12 more
+
+#### `ReverseSolving.lean` — 22 declarations
+*Source: `Pythagorean/Berggren/V19_ReverseSolving/ReverseSolving.lean`*
+
+- **def** (4): `berggrenB1`, `berggrenB2`, `berggrenB3`, `IsPythTriple'`
+- **theorem** (18): `universal_parent_hyp_B1`, `universal_parent_hyp_B2`, `universal_parent_hyp_B3`, `ppt_sum_gt_hyp`, `descent_hyp_decreases`, `B2_fixed_point_ab_eq`, `B2_fixed_point_system`, `B2_fixed_point_trivial`, `B2sq_fixed_point_ab_eq`, `B2sq_fixed_point_trivial`, `branch1_discriminant`, `branch2_discriminant` ... +6 more
+
+#### `SpectralTheory.lean` — 66 declarations
+*Source: `Pythagorean/Berggren/InvertedTree/SpectralTheory.lean`*
+
+- **theorem** (66): `sum_correction`, `sum_not_preserved_example`, `sum_345`, `fwdB1_invB1_id`, `invB1_fwdB1_id`, `fwdB3_invB3_id`, `invB3_fwdB3_id`, `M5_eq`, `M6_eq`, `M7_eq`, `M8_eq`, `trace_M6` ... +54 more
+
+#### `UniversalParentInverse.lean` — 63 declarations
+*Source: `Pythagorean/Berggren/InvertedTree/UniversalParentInverse.lean`*
+
+- **def** (10): `ghost_p`, `ghost_q`, `ghost_h`, `upi_invB₁`, `upi_invB₂`, `upi_invB₃`, `upi_fwdB₁`, `upi_fwdB₂`, `upi_fwdB₃`, `M_UP`
+- **theorem** (53): `universalParent_pythagorean`, `universalParent_eq_branch1`, `universalParent_eq_branch2`, `universalParent_eq_branch3`, `klein_four_same_hyp`, `ghost_pq_sum`, `ghost_pq_diff`, `ghost_h_descent`, `universalParent_preserves_lorentz_norm`, `universalParent_energy`, `ghost_h_composed`, `ghost_p_composed` ... +41 more
+
+### ClosedFormAncestor
+
+#### `ClosedFormAncestor.lean` — 25 declarations
+*Source: `Pythagorean/ClosedFormAncestor/ClosedFormAncestor.lean`*
+
+- **def** (7): `pellNum`, `ghostMatrix`, `ghostMatrix_closed`, `ghostAncestor`, `ghost_p_G`, `ghost_q_G`, `ghost_h_G`
+- **theorem** (18): `compPell_rec`, `pellNum_rec`, `pell_sq_identity`, `ghostMatrix_closed_verified`, `ghost_leg_diff`, `ghost_ancestor_pythagorean`, `ghost_5_12_13_G1`, `ghost_119_120_169_G2`, `ghost_3_4_5_G1`, `ghostMatrix_det`, `ghostMatrix_trace`, `ghostMatrix_lorentz` ... +6 more
+
+#### `FactoringTheory.lean` — 28 declarations
+*Source: `Pythagorean/ClosedFormAncestor/FactoringTheory.lean`*
+
+- **def** (1): `twoCG`
+- **theorem** (27): `twoCG_factored`, `pell_plus_comp`, `twoCG_consecutive_pell`, `twoCG_1`, `twoCG_2`, `twoCG_3`, `twoCG_4`, `twoCG_5`, `two_p_G_leading_divisible`, `pell_product_1`, `pell_product_2`, `pell_product_3` ... +15 more
+
+#### `GhostMatrixInduction.lean` — 6 declarations
+*Source: `Pythagorean/ClosedFormAncestor/GhostMatrixInduction.lean`*
+
+- **theorem** (6): `compPell_step`, `pellNum_step`, `compPell_sq_step`, `pellNum_compPell_step`, `ghostMatrix_closed_mul_step`, `ghostMatrix_pow_eq_closed`
+
+#### `NewTheorems.lean` — 9 declarations
+*Source: `Pythagorean/ClosedFormAncestor/NewTheorems.lean`*
+
+- **theorem** (9): `ghostAncestor_zero`, `ghostAncestor_add`, `ghostMatrix_closed_det`, `ghostMatrix_closed_trace`, `pellNum_pos_of_pos`, `pell_product_succ`, `ghost_hypotenuse_formula`, `pellNum_add`, `compPell_add`
+
+#### `WilliamsEquivalence.lean` — 20 declarations
+*Source: `Pythagorean/ClosedFormAncestor/WilliamsEquivalence.lean`*
+
+- **theorem** (20): `pellNum_mod_periodic`, `factor_from_pell_zero`, `pell_rank_7`, `pell_rank_7_divides`, `pell_rank_3`, `pell_rank_3_divides`, `pell_rank_5`, `pell_rank_5_divides`, `pell_rank_17`, `pell_rank_17_divides`, `pell_rank_29`, `pell_rank_29_divides` ... +8 more
+
 ### Core
 
 #### `AdvancedFactoringResearch.lean` — 35 declarations
@@ -4757,11 +5470,11 @@
 - **theorem** (13): `trivial_triple_identity`, `parent_hyp_strictly_less`, `diff_of_squares_nat`, `B_eigenvalue_product`, `B_branch_recurrence_check`, `B_branch_superlinear`, `gcd_factor_extraction`, `semiprime_gcd_factor`, `consecutive_hyp_lower_bound`, `consecutive_hyp_upper_bound`, `consecutive_depth_bound`, `depth_log_upper_bound` ... +1 more
 - **structure** (1): `PPT`
 
-#### `CoreFormalization.lean` — 26 declarations
+#### `CoreFormalization.lean` — 23 declarations
 *Source: `Pythagorean/Core/CoreFormalization.lean`*
 
 - **def** (6): `berggrenA_matrix`, `berggrenB_matrix`, `berggrenC_matrix`, `lorentzMetric`, `BPath.depth`, `hypAt`
-- **theorem** (20): `berggrenA_lorentz`, `berggrenB_lorentz`, `berggrenC_lorentz`, `berggrenA_preserves_form`, `berggrenB_preserves_form`, `berggrenC_preserves_form`, `berggrenA_pyth`, `berggrenB_pyth`, `berggrenC_pyth`, `tripleAt_pyth`, `hyp_B_growth`, `descent_hyp_decrease` ... +8 more
+- **theorem** (17): `berggrenA_lorentz`, `berggrenB_lorentz`, `berggrenC_lorentz`, `berggrenA_preserves_form`, `berggrenB_preserves_form`, `berggrenC_preserves_form`, `tripleAt_pyth`, `hyp_B_growth`, `descent_hyp_decrease`, `diff_of_squares_identity`, `pellHyp_values`, `pellHyp_growth` ... +5 more
 
 #### `DescentTheory.lean` — 16 declarations
 *Source: `Pythagorean/Core/DescentTheory.lean`*
@@ -4775,11 +5488,11 @@
 - **def** (10): `Q21d`, `BB1d`, `BB2d`, `BB3d`, `r2_formula`, `QM1`, `QM3`, `QS`, `CayleyMat`, `berggrenFarey`
 - **theorem** (86): `BB1d_preserves`, `BB2d_preserves`, `BB3d_preserves`, `det_BB1d`, `det_BB2d`, `det_BB3d`, `root_quadruple`, `quad_2367`, `quadruple_param`, `product_preserves_Q21`, `BB1d_maps_345`, `BB2d_maps_345` ... +74 more
 
-#### `GaussianConnections.lean` — 34 declarations
+#### `GaussianConnections.lean` — 33 declarations
 *Source: `Pythagorean/Core/GaussianConnections.lean`*
 
 - **def** (2): `paramMatrix`, `tripleFromParams`
-- **theorem** (32): `pyth_iff_gaussNorm_sq`, `gauss_conj_product`, `gaussNorm_nonneg`, `factor_from_leg_b`, `factor_from_leg_a`, `paramMatrix_det`, `paramMatrix_mul`, `param_triple_pythagorean`, `S_det`, `T_det`, `S_as_param`, `B₂_boost_cosh` ... +20 more
+- **theorem** (31): `pyth_iff_gaussNorm_sq`, `gauss_conj_product`, `gaussNorm_nonneg`, `factor_from_leg_b`, `factor_from_leg_a`, `paramMatrix_det`, `paramMatrix_mul`, `param_triple_pythagorean`, `S_det`, `T_det`, `S_as_param`, `B₂_boost_cosh` ... +19 more
 
 #### `HigherDimDescent.lean` — 30 declarations
 *Source: `Pythagorean/Core/HigherDimDescent.lean`*
@@ -4809,10 +5522,10 @@
 
 - **theorem** (3): `exists_rat_between`, `rat_dense_in_real`, `rat_approx`
 
-#### `NewHypotheses.lean` — 25 declarations
+#### `NewHypotheses.lean` — 24 declarations
 *Source: `Pythagorean/Core/NewHypotheses.lean`*
 
-- **def** (6): `lorentzQ4`, `pellNum`, `pellComp`, `BA'`, `BA'_inv`, `QLorentz'`
+- **def** (5): `lorentzQ4`, `pellComp`, `BA'`, `BA'_inv`, `QLorentz'`
 - **theorem** (19): `quadruple_null_cone`, `fundamental_quadruple`, `quadruple_scaling`, `pellNum_0`, `pellNum_1`, `pellNum_2`, `pellNum_3`, `pellNum_5`, `pell_equation_holds`, `trivial_ppt_identity`, `hypotenuse_exceeds_leg`, `diff_squares_factor` ... +7 more
 
 #### `O31_Generators.lean` — 39 declarations
@@ -4884,10 +5597,10 @@
 
 - **theorem** (3): `two_is_sum_two_squares`, `prime_3mod4_not_sum_two_squares`, `square_is_sum_two_squares`
 
-#### `TeamResearch.lean` — 22 declarations
+#### `TeamResearch.lean` — 21 declarations
 *Source: `Pythagorean/Core/TeamResearch.lean`*
 
-- **theorem** (22): `pyth_diff_sq`, `stereo_at_neg_one`, `stereo_y_even`, `stereo_x_odd`, `sl2_det_mul`, `pauli_xz_anticommute`, `pauli_x_trace`, `pauli_z_trace`, `bloch_density_trace_one`, `bloch_purity`, `crystal_period_one`, `crystal_reflection_symmetry` ... +10 more
+- **theorem** (21): `pyth_diff_sq`, `stereo_at_neg_one`, `stereo_y_even`, `stereo_x_odd`, `sl2_det_mul`, `pauli_xz_anticommute`, `pauli_x_trace`, `pauli_z_trace`, `bloch_density_trace_one`, `bloch_purity`, `crystal_period_one`, `crystal_reflection_symmetry` ... +9 more
 
 #### `UniversalParent.lean` — 44 declarations
 *Source: `Pythagorean/Core/UniversalParent.lean`*
@@ -4911,6 +5624,17 @@
 
 ### FutureResearch
 
+#### `AdvancedTheorems.lean` — 24 declarations
+*Source: `Pythagorean/FutureResearch/AdvancedTheorems.lean`*
+
+- **theorem** (24): `B₂_mul_M`, `char_poly_factored`, `ghost_lorentz`, `ghost_descent`, `B₂_hyp_growth`, `factoring_dos`, `factoring_constant`, `ghost_trace_sum`, `pell_rank_3_hit`, `pell_rank_5_hit`, `pell_rank_7_hit`, `pell_rank_13_hit` ... +12 more
+
+#### `CryptographicApplications.lean` — 10 declarations
+*Source: `Pythagorean/FutureResearch/CryptographicApplications.lean`*
+
+- **def** (2): `pellH`, `pellP`
+- **theorem** (8): `pellP_double`, `pellH_double`, `pellP_add`, `pellH_from_pellP`, `vdf_verification`, `vdf_parity_detection`, `pell_norm_mul`, `pell_norm_compose`
+
 #### `DegenEightSquare.lean` — 9 declarations
 *Source: `Pythagorean/FutureResearch/DegenEightSquare.lean`*
 
@@ -4924,6 +5648,11 @@
 - **def** (1): `revealsFactorVia`
 - **theorem** (8): `factoring_set_is_AP`, `semiprime_factoring_channels`, `exists_revealing_value`, `gcd_divides_N'`, `prime_divides_gcd`, `single_gcd_suffices`, `remaining_sum_after_peel`, `more_channels_more_chances`
 
+#### `GhostMatrixPowers.lean` — 33 declarations
+*Source: `Pythagorean/FutureResearch/GhostMatrixPowers.lean`*
+
+- **theorem** (33): `M_B₂_inv`, `B₂_M_inv`, `B₁_inv_left`, `B₁_inv_right`, `B₃_inv_left`, `B₃_inv_right`, `M_pow4`, `M_pow5`, `trace_M1`, `trace_M2`, `trace_M3`, `trace_M4` ... +21 more
+
 #### `HurwitzQuaternions.lean` — 11 declarations
 *Source: `Pythagorean/FutureResearch/HurwitzQuaternions.lean`*
 
@@ -4936,15 +5665,32 @@
 - **def** (1): `totalChannels`
 - **theorem** (9): `gcd_symm'`, `two_channels_different_gcds`, `cross_collision_equation`, `channel_counts`, `octonionic_advantage_ratio`, `sedenionic_channels`, `gcd_is_binary_oracle`, `cofactor_determined`, `more_channels_better`
 
+#### `NewTheorems.lean` — 19 declarations
+*Source: `Pythagorean/FutureResearch/NewTheorems.lean`*
+
+- **def** (4): `ghostP`, `ghostQ`, `ghostHyp`, `ghostMat`
+- **theorem** (14): `pellH_rec`, `pellP_rec`, `pell_fundamental`, `pellH_pos`, `pellP_nonneg`, `pellP_pos`, `pellH_add`, `ghost_preserves_pyth`, `ghostMat_det`, `ghostMatClosed_trace`, `ghost_ancestor_compose_p`, `ghost_ancestor_compose_q` ... +2 more
+
 #### `OpenQuestions.lean` — 22 declarations
 *Source: `Pythagorean/FutureResearch/OpenQuestions.lean`*
 
 - **theorem** (22): `two_square_dual_decomposition`, `two_square_product_closure`, `inclusion_exclusion_count`, `density_lower_bound_nat`, `balanced_density_scaling`, `cross_collision_dos`, `cross_collision_gcd_divides`, `cross_channels_formula`, `grover_speedup_strict`, `quantum_advantage_nonneg`, `channel_efficiency`, `marginal_channel_gain` ... +10 more
 
+#### `OpenResearchTheorems.lean` — 64 declarations
+*Source: `Pythagorean/FutureResearch/OpenResearchTheorems.lean`*
+
+- **theorem** (64): `ghost_trace`, `factoring_trace`, `deficit_preservation`, `linear_triplet_deficit`, `linear_triplet_gp`, `linear_triplet_gq`, `linear_triplet_gh`, `linear_triplet_sq_p`, `linear_triplet_sq_q`, `linear_triplet_sq_h`, `linear_deficit_dvd_N`, `divisor_deficit_factored` ... +52 more
+
 #### `ParityObstructions.lean` — 8 declarations
 *Source: `Pythagorean/FutureResearch/ParityObstructions.lean`*
 
 - **theorem** (8): `parity_constraint_odd_N`, `even_peel_div_four`, `three_mod_four_not_sum_two_sq`, `seven_mod_eight_not_sum_three_sq`, `semiprime_peel_compatible`, `even_leg_channel_works`, `odd_peel_factor_is_odd`, `triple_parity`
+
+#### `RankDivisibility.lean` — 28 declarations
+*Source: `Pythagorean/FutureResearch/RankDivisibility.lean`*
+
+- **def** (2): `pellPmodIter`, `zsqrt2_norm`
+- **theorem** (26): `zsqrt2_norm_mul`, `zsqrt2_norm_pell`, `rank_3`, `rank_5`, `rank_7`, `rank_11`, `rank_13`, `rank_17`, `rank_19`, `rank_23`, `rank_29`, `rank_31` ... +14 more
 
 ### GravitationalFactoring
 
@@ -4972,15 +5718,15 @@
 - **def** (2): `factoringChannels'`, `cayleyDicksonDims`
 - **theorem** (14): `two_square_identity_alt`, `channels_triangular_formula`, `gaussian_factor_key`, `triple_peel`, `quadruple_peel`, `five_tuple_peel`, `quadruple_lifts_to_5tuple`, `five_tuple_shared_hyp`, `semiprime_r4_lower_bound`, `cayley_dickson_dims_correct`, `octonionic_factoring_advantage`, `oct_vs_gauss` ... +2 more
 
-#### `NewTheoremsV15.lean` — 19 declarations
+#### `NewTheoremsV15.lean` — 15 declarations
 *Source: `Pythagorean/GravitationalFactoring/NewTheoremsV15.lean`*
 
-- **theorem** (19): `sophie_germain_mod3`, `safe_prime_mod12`, `fermat_num_odd`, `fermat_prime_exp_power_of_two`, `fermat_product_identity`, `fermat_coprime_adjacent`, `fermat_coprime_general`, `prime_desert_explicit`, `goldbach_verified_2000`, `legendre_verified_200`, `chebyshev_bias_mod4`, `chebyshev_mod4_counts` ... +7 more
+- **theorem** (15): `sophie_germain_mod3`, `safe_prime_mod12`, `fermat_num_odd`, `fermat_prime_exp_power_of_two`, `fermat_product_identity`, `fermat_coprime_adjacent`, `fermat_coprime_general`, `prime_desert_explicit`, `goldbach_verified_2000`, `legendre_verified_200`, `chebyshev_mod4_counts`, `chebyshev_mod5_counts` ... +3 more
 
-#### `NewTheoremsV16.lean` — 42 declarations
+#### `NewTheoremsV16.lean` — 23 declarations
 *Source: `Pythagorean/GravitationalFactoring/NewTheoremsV16.lean`*
 
-- **theorem** (42): `fermat_num_gt_one`, `infinitude_of_primes_via_fermat`, `pi_ge_log2`, `twin_prime_mod6`, `cousin_prime_mod6`, `sexy_prime_both_residues`, `wilson_primality_small`, `wilson_converse_small`, `chebyshev_mod3_counts`, `chebyshev_bias_universality`, `pepin_test_F1`, `pepin_test_F2` ... +30 more
+- **theorem** (23): `infinitude_of_primes_via_fermat`, `pi_ge_log2`, `chebyshev_mod3_counts`, `primorial_plus_one_factor_2`, `primorial_plus_one_factor_6`, `primorial_plus_one_factor_30`, `primorial_plus_one_factor_210`, `primorial_plus_one_factor_2310`, `primorial_plus_one_factor_30030`, `fermat_divisor_form_F5`, `fermat_F5_other_factor`, `safe_primes_below_1000_classification` ... +11 more
 
 #### `SieveComplexity.lean` — 7 declarations
 *Source: `Pythagorean/GravitationalFactoring/SieveComplexity.lean`*
@@ -4990,11 +5736,11 @@
 
 ### HyperbolicFactoring
 
-#### `HyperbolicShortcuts.lean` — 27 declarations
+#### `HyperbolicShortcuts.lean` — 25 declarations
 *Source: `Pythagorean/HyperbolicFactoring/HyperbolicShortcuts.lean`*
 
 - **def** (4): `dirMatrix`, `pathMatrix`, `root`, `lorentzInner`
-- **theorem** (23): `B₁_preserves_Q`, `B₂_preserves_Q`, `B₃_preserves_Q`, `dir_preserves_Q`, `dir_det_abs`, `pathMatrix_preserves_Q`, `shortcut_det_abs`, `B₁_pyth`, `B₂_pyth`, `B₃_pyth`, `dir_preserves_pyth`, `tripleAt_pythagorean` ... +11 more
+- **theorem** (21): `B₁_preserves_Q`, `B₂_preserves_Q`, `B₃_preserves_Q`, `dir_preserves_Q`, `dir_det_abs`, `pathMatrix_preserves_Q`, `shortcut_det_abs`, `B₁_pyth`, `B₂_pyth`, `B₃_pyth`, `dir_preserves_pyth`, `tripleAt_pythagorean` ... +9 more
 
 #### `HyperbolicSkipAheadFactoring.lean` — 19 declarations
 *Source: `Pythagorean/HyperbolicFactoring/HyperbolicSkipAheadFactoring.lean`*
@@ -5166,10 +5912,40 @@
 - **def** (5): `sumSqCong`, `SumSqCongSet`, `quadResLattice`, `sumThreeSqLattice`, `lattice3D_basis`
 - **theorem** (16): `zero_mem_sumSqCongSet`, `mul_N_mem`, `sumSqCongSet_not_closed_add`, `quadResLattice_add_closed`, `quadResLattice_zero`, `quadResLattice_neg`, `quadResLattice_sum_sq`, `sumThreeSqLattice_add_closed`, `sumThreeSqLattice_zero`, `sumThreeSqLattice_divides`, `lattice3D_basis_det`, `basis_vec1_mem` ... +4 more
 
+#### `CanonicalTree.lean` — 42 declarations
+*Source: `Pythagorean/Quadruples/CanonicalTree.lean`*
+
+- **def** (6): `IsPQ`, `pqRoot`, `parentHyp23`, `parentHyp13`, `parentHyp12`, `greedyParentHyp`
+- **theorem** (36): `root_is_pq`, `root_all_positive`, `root_primitive`, `no_smaller_pq_d1`, `no_smaller_pq_d2`, `pq_d3_classification`, `greedy_selects_23`, `hyp_diff_12_13`, `hyp_diff_12_23`, `hyp_diff_13_23`, `two_largest_exceed`, `descent_strict` ... +24 more
+
+#### `DescentAlgebra.lean` — 32 declarations
+*Source: `Pythagorean/Quadruples/DescentAlgebra.lean`*
+
+- **def** (3): `mL23`, `mL13`, `mL12`
+- **theorem** (29): `det_mL23`, `det_mL13`, `det_mL12`, `trace_mL23`, `trace_mL13`, `trace_mL12`, `mL23_mL13_ne`, `mL23_mL12_ne`, `mL13_mL12_ne`, `mL23_sq_ne_one`, `mL13_sq_ne_one`, `mL12_sq_ne_one` ... +17 more
+
+#### `DescentTheory4D.lean` — 35 declarations
+*Source: `Pythagorean/Quadruples/DescentTheory4D.lean`*
+
+- **def** (5): `IsPQ4`, `M12`, `M13`, `M23`, `isPrimPQ4`
+- **theorem** (30): `best_plane_ordered`, `exclude_smallest_is_best`, `parentHyp23_alt`, `descent_when_sum_exceeds`, `two_largest_sum_exceeds_d`, `pq_1223`, `descent_2367_via_23`, `descent_1489_via_23`, `descent_26911_via_23`, `pq_3_6_22_23`, `descent_3_6_22_23`, `det_M12` ... +18 more
+
+#### `ErrorCorrection.lean` — 25 declarations
+*Source: `Pythagorean/Quadruples/ErrorCorrection.lean`*
+
+- **def** (1): `syndrome`
+- **theorem** (24): `valid_pq_syndrome`, `syndrome_zero_iff`, `syndrome_change_a`, `syndrome_change_b`, `syndrome_change_c`, `syndrome_change_d`, `error_detected_a`, `error_detected_d`, `undetectable_is_sign_flip`, `syndrome_sign_flip_a`, `syndrome_sign_flip_b`, `syndrome_sign_flip_c` ... +12 more
+
 #### `FactoringTheory.lean` — 7 declarations
 *Source: `Pythagorean/Quadruples/FactoringTheory.lean`*
 
 - **theorem** (7): `coprime_quotient_useless`, `factoring_works_iff`, `minkowski_worse_than_sqrt`, `optimal_dimension_is_two`, `quad_param_in_L4`, `coprime_lattice_intersection`, `quad_unit_sphere`
+
+#### `FiveDDescent.lean` — 27 declarations
+*Source: `Pythagorean/Quadruples/FiveDDescent.lean`*
+
+- **def** (1): `IsPQ5`
+- **theorem** (26): `pq5_1_2_2_4_5`, `pq5_1_1_1_1_2`, `pq5_2_2_2_2_4`, `pq5_0_0_3_4_5`, `sf5_a`, `sf5_b`, `sf5_c`, `sf5_d`, `sf5_all`, `perm5_12`, `perm5_13`, `perm5_14` ... +14 more
 
 #### `FiveTuples.lean` — 4 declarations
 *Source: `Pythagorean/Quadruples/FiveTuples.lean`*
@@ -5181,6 +5957,18 @@
 
 - **def** (15): `Q4`, `IsNullQ4`, `eta4`, `IsLorentz4`, `R1111`, `perm01`, `perm12`, `signFlip0`, `eulerParam`, `SameOrbit`, `berggrenR111`, `Q3` ... +3 more
 - **theorem** (20): `quad_eq_null`, `R1111_isLorentz`, `R1111_involution`, `perm01_isLorentz`, `perm12_isLorentz`, `signFlip0_isLorentz`, `R1111_preserves_Q4`, `R1111_preserves_null`, `sum_lt_twice_hyp`, `descent_strict_decrease`, `R1111_action`, `root_is_null` ... +8 more
+
+#### `GhostStructure4D.lean` — 75 declarations
+*Source: `Pythagorean/Quadruples/GhostStructure4D.lean`*
+
+- **def** (13): `isPQ`, `LQ4`, `lebParam`, `lift12`, `lift12_B1`, `lift12_B3`, `lift13`, `lift23`, `eta4D`, `inO31`, `mLift12`, `mLift13` ... +1 more
+- **theorem** (62): `isPQ_iff_LQ4`, `sf1`, `sf2`, `sf3`, `sf12`, `sf13`, `sf23`, `sf123`, `octahedral_ghost`, `pm12`, `pm13`, `pm23` ... +50 more
+
+#### `HigherDimGhost.lean` — 40 declarations
+*Source: `Pythagorean/Quadruples/HigherDimGhost.lean`*
+
+- **def** (8): `isPT3`, `isPQ4`, `isPQ5`, `lorentz3`, `lorentz4`, `lorentz5`, `parentHyp5_12`, `parentHyp5_34`
+- **theorem** (32): `ghost_3d_full`, `ghost_4d_full`, `ghost_5d_full`, `ghost_6d_full`, `lifting_planes_3d`, `lifting_planes_4d`, `lifting_planes_6d`, `lifting_planes_10d`, `berggren_branches_3d`, `berggren_branches_4d`, `pq5_3_4_0_0_5`, `sf5_1` ... +20 more
 
 #### `KTuples.lean` — 2 declarations
 *Source: `Pythagorean/Quadruples/KTuples.lean`*
@@ -5206,6 +5994,11 @@
 - **def** (1): `IntSphere`
 - **theorem** (21): `quadruple_perm_abc`, `quadruple_perm_acb`, `quad_1_2_2_3'`, `quad_1_4_8_9'`, `euler_four_square'`, `square_mod_8'`, `square_avoids_legendre'`, `quad_is_lattice_point`, `int_sphere_zero`, `sphere_rotation_symmetry`, `hopf_map_norm'`, `hopf_maps_sphere'` ... +9 more
 
+#### `Parametrization.lean` — 16 declarations
+*Source: `Pythagorean/Quadruples/Parametrization.lean`*
+
+- **theorem** (16): `triple_embedding`, `zero_component_param`, `pq_scale`, `verify_pq_0_0_1_1`, `verify_pq_1_2_2_3`, `verify_pq_0_3_4_5`, `verify_pq_2_3_6_7`, `verify_pq_1_4_8_9`, `verify_pq_4_4_7_9`, `verify_pq_2_6_9_11`, `verify_pq_6_6_7_11`, `verify_pq_3_4_12_13` ... +4 more
+
 #### `PythagoreanQuadruples.lean` — 39 declarations
 *Source: `Pythagorean/Quadruples/PythagoreanQuadruples.lean`*
 
@@ -5224,6 +6017,11 @@
 - **def** (8): `conj'`, `qmul`, `qadd`, `qneg`, `eulerFromQuat`, `R1111'`, `Q4'`, `IsPrimitiveQuad'`
 - **theorem** (21): `IntQuat.sqNorm_qmul`, `IntQuat.qmul_conj_im`, `IntQuat.qmul_conj_re`, `eulerFromQuat_is_pyth`, `euler_hyp_eq_sqNorm`, `sigma_sqNorm`, `minkowski_vs_quaternion_norm`, `R1111'_involution`, `descent_preserves_pyth`, `descent_reduces_hyp`, `four_square_is_norm_mult`, `identity_quat_gives_root` ... +9 more
 - **structure** (1): `IntQuat`
+
+#### `QuaternionGhost.lean` — 19 declarations
+*Source: `Pythagorean/Quadruples/QuaternionGhost.lean`*
+
+- **theorem** (19): `conj_i_action`, `conj_j_action`, `conj_k_action`, `sign_flip_a`, `sign_flip_b`, `sign_flip_c`, `sign_flip_all`, `pq_quat_norm`, `pq_as_norm_eq`, `reduced_norm_invariant`, `sum3sq_9`, `sum3sq_49` ... +7 more
 
 #### `SingleTree.lean` — 34 declarations
 *Source: `Pythagorean/Quadruples/SingleTree.lean`*
@@ -5266,11 +6064,11 @@
 
 - **theorem** (8): `divisor_pair_triple`, `gcd_divides`, `semiprime_shortcut`, `nontrivial_pair_implies_factor`, `factor_gives_pair`, `fermat_two_square_triple`, `four_pairs_semiprimes`, `optimal_start_params`
 
-#### `OpenQuestions_2.lean` — 30 declarations
+#### `OpenQuestions_2.lean` — 29 declarations
 *Source: `Pythagorean/Research/OpenQuestions_2.lean`*
 
 - **def** (7): `Q6`, `eta5_form`, `s5_a`, `s5_b`, `listPrimSextuples`, `descentStep6`, `verifyDescent6`
-- **theorem** (23): `null_cone_eta_even`, `descent_identity_k6`, `descent_strict_k6`, `root_sextuple`, `descent_terminates_k6`, `k5_uniform_reflection_fails`, `eta_sa`, `eta_sb`, `reflect_sb_integral`, `k5_allones_gives_rational`, `hurwitz_connection`, `octonion_case_fails` ... +11 more
+- **theorem** (22): `null_cone_eta_even`, `descent_identity_k6`, `descent_strict_k6`, `root_sextuple`, `descent_terminates_k6`, `k5_uniform_reflection_fails`, `eta_sa`, `eta_sb`, `reflect_sb_integral`, `k5_allones_gives_rational`, `hurwitz_connection`, `octonion_case_fails` ... +10 more
 
 #### `ParallelDescent.lean` — 10 declarations
 *Source: `Pythagorean/Research/ParallelDescent.lean`*
@@ -5295,10 +6093,10 @@
 
 - **theorem** (35): `smooth_density_gap_square`, `smooth_density_min_gap`, `B1_leg_sum`, `B2_leg_sum`, `B3_leg_sum`, `B2_leg_product_expanded`, `B2_det_value`, `berggren_product_det_one`, `berggren_path_det`, `B2_quadratic_discriminant`, `eigenvalue_one_B2`, `spectral_radius_B2_equation` ... +23 more
 
-#### `NewTheorems.lean` — 16 declarations
+#### `NewTheorems.lean` — 15 declarations
 *Source: `Pythagorean/ThreeRoads/NewTheorems.lean`*
 
-- **theorem** (16): `coprime_preserved_B1`, `coprime_preserved_B2`, `coprime_preserved_B3`, `B1_preserves_odd_first_leg`, `hypotenuse_strict_increase_B1`, `hypotenuse_strict_increase_B2`, `hypotenuse_strict_increase_B3`, `B1_det_one`, `pyth_to_factorization`, `factor_same_parity`, `semiprime_four_divisor_pairs`, `euler_factor_extraction` ... +4 more
+- **theorem** (15): `coprime_preserved_B1`, `coprime_preserved_B2`, `coprime_preserved_B3`, `B1_preserves_odd_first_leg`, `hypotenuse_strict_increase_B1`, `hypotenuse_strict_increase_B2`, `hypotenuse_strict_increase_B3`, `B1_det_one`, `pyth_to_factorization`, `factor_same_parity`, `semiprime_four_divisor_pairs`, `euler_factor_extraction` ... +3 more
 
 #### `OpenProblems.lean` — 21 declarations
 *Source: `Pythagorean/ThreeRoads/OpenProblems.lean`*
@@ -5417,6 +6215,20 @@
 
 - **theorem** (4): `eTower_strictMono`, `eTower_pos`, `eTower_ge_pow2`, `eTower_ge_n`
 
+#### `Eml.lean` — 17 declarations
+*Source: `Shared/Eml.lean`*
+
+- **theorem** (17): `eml_generates_neg_one`, `eml_compose_left`, `eml_generates_e`, `eml_produces_constants`, `eml_left_division`, `eml_geodesic_x_verify`, `eml_generates_zero`, `eml_right_division_unique`, `eml_iter_ee`, `eml_right_division`, `eml_negation`, `eml_left_division_domain` ... +5 more
+
+#### `EmlDiag.lean` — 3 declarations
+*Source: `Shared/EmlDiag.lean`*
+
+- **theorem** (3): `emlDiag_strictly_convex`, `emlDiag_has_minimum`, `emlDiag_gt`
+
+#### `EmlSelfPair.lean` — 1 declarations
+*Source: `Shared/EmlSelfPair.lean`*
+
+
 #### `Euclid_parametrization.lean` — 1 declarations
 *Source: `Shared/Euclid_parametrization.lean`*
 
@@ -5454,6 +6266,11 @@
 *Source: `Shared/Lagrange_four_squares.lean`*
 
 - **theorem** (1): `lagrange_four_squares`
+
+#### `LogisticSigmoid.lean` — 6 declarations
+*Source: `Shared/LogisticSigmoid.lean`*
+
+- **theorem** (2): `logisticSigmoid_zero`, `logisticSigmoid_symmetry`
 
 #### `Lucas.lean` — 2 declarations
 *Source: `Shared/Lucas.lean`*
@@ -5507,9 +6324,10 @@
 
 - **theorem** (1): `softplus_pos`
 
-#### `Spb.lean` — 1 declarations
+#### `Spb.lean` — 25 declarations
 *Source: `Shared/Spb.lean`*
 
+- **theorem** (24): `spb_linearization_error`, `spb_lissajous`, `spb_cross_ratio_invariant`, `spb_jacobian`, `spb_neg_first`, `spb_discriminant`, `spb_neg_right`, `spb_is_moebius`, `spb_assoc`, `spb_zero_right`, `spb_double`, `spb_parabolic_at_zero` ... +12 more
 
 #### `SpbA.lean` — 10 declarations
 *Source: `Shared/SpbA.lean`*
@@ -5535,11 +6353,6 @@
 *Source: `Shared/SpbMatrix.lean`*
 
 - **theorem** (7): `spbMatrix_det`, `spbMatrix_det_pos`, `spbMatrix_mul_eq_scaled`, `spbMatrix_mul_entries`, `spbMatrix_det_ne_zero`, `spbMatrix_zero`, `spbMatrix_det_mul`
-
-#### `Spb_comm.lean` — 6 declarations
-*Source: `Shared/Spb_comm.lean`*
-
-- **theorem** (6): `spb_neg_self`, `spb_tan_add`, `spb_self`, `spb_neg_neg`, `spb_cocycle`, `spb_cayley`
 
 #### `Spb_hasDerivAt_snd.lean` — 8 declarations
 *Source: `Shared/Spb_hasDerivAt_snd.lean`*
@@ -5660,10 +6473,10 @@
 
 - **theorem** (16): `sigma1_one`, `sigma0_one`, `sigma1_prime`, `sigma0_prime`, `sigma1_prime_power_geom`, `sigma0_prime_power`, `sigma1_multiplicative`, `sigma0_multiplicative`, `sigma1_lower_bound`, `sigma1_semiprime_factoring`, `factor_sum_from_sigma1`, `sigma1_three_prime_powers` ... +4 more
 
-#### `EMLAlgebra.lean` — 42 declarations
+#### `EMLAlgebra.lean` — 41 declarations
 *Source: `Speculative/EMLAlgebra.lean`*
 
-- **theorem** (30): `eml_recovers_e`, `emlR_recovers_exp`, `emlR_recovers_e`, `emlR_subtraction`, `antiEml_eq_neg_eml`, `eml_eq_neg_antiEml`, `emlR_not_comm`, `EMLExpr.leafCount_eq_nodeCount_succ`, `EMLExpr.leafCount_pos`, `EMLExpr.leafCount_le_pow_depth`, `masterParams_1`, `masterParams_2` ... +18 more
+- **theorem** (29): `eml_recovers_e`, `emlR_recovers_exp`, `emlR_recovers_e`, `emlR_subtraction`, `antiEml_eq_neg_eml`, `eml_eq_neg_antiEml`, `emlR_not_comm`, `EMLExpr.leafCount_eq_nodeCount_succ`, `EMLExpr.leafCount_pos`, `EMLExpr.leafCount_le_pow_depth`, `masterParams_1`, `masterParams_2` ... +17 more
 - **structure** (2): `EMLExpr`, `EMLClosureVar`
 
 #### `EllipticDivisibility.lean` — 7 declarations
@@ -5701,10 +6514,10 @@
 - **def** (1): `IsPerfect`
 - **theorem** (10): `perfect_6`, `perfect_28`, `perfect_496`, `perfect_8128`, `euclid_perfect`, `even_perfect_euler_form`, `euclid_euler_iff`, `no_small_odd_perfect_10000`, `perfect_not_prime`, `perfect_ge_6`
 
-#### `EulerDirectionComplete.lean` — 10 declarations
+#### `EulerDirectionComplete.lean` — 8 declarations
 *Source: `Speculative/EulerDirectionComplete.lean`*
 
-- **theorem** (9): `mersenne_prime_exponent_prime`, `sigma1'_prime`, `sigma1'_ge_one_plus`, `euler_m_equals_mersenne`, `six_is_perfect'`, `twentyeight_is_perfect'`, `perfect_496'`, `perfect_8128'`, `triangular_formula`
+- **theorem** (7): `mersenne_prime_exponent_prime`, `sigma1'_prime`, `sigma1'_ge_one_plus`, `euler_m_equals_mersenne`, `six_is_perfect'`, `twentyeight_is_perfect'`, `triangular_formula`
 
 #### `EvenPerfectNumbers.lean` — 14 declarations
 *Source: `Speculative/EvenPerfectNumbers.lean`*
@@ -5919,7 +6732,7 @@
 
 - **theorem** (29): `isSmooth_one`, `isSmooth_mul`, `peel_is_diff_of_squares`, `peel_factor_size_bound`, `peel_small_factor_bound`, `peel_smooth_of_factors_smooth`, `optimal_alpha_is_half`, `sieve_exponent_at_optimal`, `k_channels_reduce_tuples`, `lattice_gcd_invariant`, `lattice_factor_extraction`, `lattice_mod_factor` ... +17 more
 
-#### `SigmaArithmetic.lean` — 15 declarations
+#### `SigmaArithmetic.lean` — 14 declarations
 *Source: `Speculative/SigmaArithmetic.lean`*
 
 - **theorem** (11): `sigma1_zero'`, `sigma1_one'`, `sigma1_prime'`, `sigma1_ge_self'`, `sigma1_gt_self'`, `sigma1_prime_pow'`, `prime_is_deficient'`, `twelve_abundant'`, `six_perfect'`, `twentyeight_perfect'`, `abundancy_trichotomy`
@@ -6082,10 +6895,10 @@
 
 - **theorem** (5): `no_complete_oracle_catalog`, `diagonal_adversary_defeats_all`, `no_surjection_to_arrow_prop`, `halting_diagonal_surjection`, `constructive_fixed_point`
 
-#### `StrangeLoops.lean` — 9 declarations
+#### `StrangeLoops.lean` — 8 declarations
 *Source: `Speculative/Forbidden/StrangeLoops.lean`*
 
-- **theorem** (9): `finite_function_has_cycle`, `finite_periodic_point`, `min_period_divides`, `descending_chain_fixed_point`, `contraction_converges`, `idem_compose_comm`, `mathematical_quine`, `kleene_recursion`, `period3_orbit_fixed`
+- **theorem** (8): `finite_function_has_cycle`, `finite_periodic_point`, `min_period_divides`, `descending_chain_fixed_point`, `idem_compose_comm`, `mathematical_quine`, `kleene_recursion`, `period3_orbit_fixed`
 
 #### `TheForbiddenTheorem.lean` — 7 declarations
 *Source: `Speculative/Forbidden/TheForbiddenTheorem.lean`*
@@ -6224,6 +7037,36 @@
 - **theorem** (9): `real_simply_connected`, `simply_connected_of_trivial_pi1`, `euler_char_sphere`, `euler_char_torus`, `euler_char_from_betti_sphere`, `euler_char_k3`, `ricci_flow_sphere_collapse_time`, `fundamental_group_circle_infinite`, `simply_connected_prod`
 
 ### OISCC
+
+#### `ArcLength.lean` — 12 declarations
+*Source: `Speculative/OISCC/V13/ArcLength.lean`*
+
+- **theorem** (10): `g_arc_pos`, `g_arc_ge_exp`, `g_arc_ge_inv_sq`, `g_arc_ge_one`, `sqrtg_ge_one`, `sqrtg_ge_inv`, `g_arc_mul_sq_ge_one`, `g_arc_tendsto_atTop_zero`, `g_arc_tendsto_atTop`, `manifold_infinite_diameter`
+
+#### `EigenvalueAnalysis.lean` — 14 declarations
+*Source: `Speculative/OISCC/V13/EigenvalueAnalysis.lean`*
+
+- **theorem** (11): `lambda_plus_pos`, `lambda_plus_gt_exp`, `lambda_minus_pos`, `eigenvalue_gap_eq`, `eigenvalue_gap_pos`, `eigenvalue_sum_eq`, `eigenvalue_product_eq`, `eigenvalue_product_pos`, `discriminant_diag`, `lambda_plus_ge_minus`, `lambda_plus_orbit_growth`
+
+#### `EntropyTheory.lean` — 13 declarations
+*Source: `Speculative/OISCC/V13/EntropyTheory.lean`*
+
+- **theorem** (10): `f_ent_pos`, `f_ent_ge_one`, `fisher_pos`, `fisher_ge_one`, `f_ent_hasDerivAt`, `bregman_self`, `entropy_production_pos`, `eta_at_one`, `f_ent_at_one`, `f_ent_strictly_convex`
+
+#### `LyapunovExponent.lean` — 13 declarations
+*Source: `Speculative/OISCC/V13/LyapunovExponent.lean`*
+
+- **theorem** (10): `rho_pos`, `rho_gt_one`, `rho_ge_exp`, `rho_ge_e_plus_one`, `log_rho_ge_id`, `d_lyap_gt_id`, `rho_orbit_growth`, `log_lyapunov_ge_orbit`, `rho_strictMono_Ici`, `rho_tendsto_atTop`
+
+#### `OrbitIteration.lean` — 16 declarations
+*Source: `Speculative/OISCC/V13/OrbitIteration.lean`*
+
+- **theorem** (14): `d_oi_n_zero`, `d_oi_n_succ`, `d_oi_gt_id`, `d_oi_ge_two`, `d_oi_pos`, `d_oi_disp_ge_one`, `d_oi_n_pos`, `d_oi_n_strict_mono_step`, `d_oi_n_linear_escape`, `d_oi_n_tendsto`, `d_oi_double_escape`, `orbit_strictly_increasing` ... +2 more
+
+#### `TropicalLimit.lean` — 11 declarations
+*Source: `Speculative/OISCC/V13/TropicalLimit.lean`*
+
+- **theorem** (9): `d_trop_eq_abs`, `tropical_sum_nonneg`, `d_trop_fixed_iff`, `d_trop_nonneg`, `d_trop_ge_id`, `EML_trop_monotone_first`, `EML_trop_antitone_second`, `Phi_trop_sum_nonneg`, `tropical_exact_second`
 
 #### `V11_CriticalPoint.lean` — 15 declarations
 *Source: `Speculative/OISCC/V11_CriticalPoint.lean`*
@@ -6377,11 +7220,11 @@
 - **theorem** (8): `chebyT_zero`, `chebyT_one`, `chebyT_degree`, `chebyT_comp`, `pell_compose_assoc`, `pell_compose_trivial_left`, `sum_two_sq_mod`, `padic_val_add_ge_min`
 - **structure** (1): `PellSolution`
 
-#### `DeepResults.lean` — 48 declarations
+#### `DeepResults.lean` — 47 declarations
 *Source: `Speculative/Other/DeepResults.lean`*
 
 - **def** (1): `eulerCharSfc`
-- **theorem** (47): `totient_sum`, `totient_mul_coprime`, `totient_prime_sq`, `mobius_1`, `mobius_2`, `mobius_4`, `mobius_6`, `mobius_30`, `cyclotomic_1`, `handshaking`, `turan_triangle_free`, `friendship_universal` ... +35 more
+- **theorem** (46): `totient_sum`, `totient_mul_coprime`, `totient_prime_sq`, `mobius_1`, `mobius_2`, `mobius_4`, `mobius_6`, `mobius_30`, `cyclotomic_1`, `handshaking`, `turan_triangle_free`, `friendship_universal` ... +34 more
 
 #### `DickianMath.lean` — 11 declarations
 *Source: `Speculative/Other/DickianMath.lean`*
@@ -6454,10 +7297,10 @@
 - **theorem** (13): `spectrum_characterization`, `id_conscious_admitting`, `symmetric_conscious_admitting`, `knaster_tarski_consciousness`, `fixed_points_nonempty`, `doubly_stochastic_uniform_stationary`, `fixed_points_closed`, `conscious_set_is_closed`, `conscious_iff_finset_nonempty`, `periodic_orbit_from_any`, `finite_endo_periodic`, `gazing_pool_conjecture` ... +1 more
 - **structure** (2): `GazingPool'`, `StochMatrix`
 
-#### `GeodesicLLM.lean` — 13 declarations
+#### `GeodesicLLM.lean` — 12 declarations
 *Source: `Speculative/Other/GeodesicLLM.lean`*
 
-- **theorem** (13): `cramer_rao_motivation`, `geodesic_speedup`, `tropical_is_zero_temp_limit`, `conformal_factor_upper`, `spherical_compression_ratio`, `attention_layer_bound`, `idempotent_invariance`, `e8_density_advantage`, `lattice_bit_savings`, `hyperbolic_tree_embedding`, `hyperbolic_dim_reduction`, `combined_compression` ... +1 more
+- **theorem** (12): `cramer_rao_motivation`, `geodesic_speedup`, `tropical_is_zero_temp_limit`, `conformal_factor_upper`, `spherical_compression_ratio`, `attention_layer_bound`, `idempotent_invariance`, `e8_density_advantage`, `lattice_bit_savings`, `hyperbolic_tree_embedding`, `hyperbolic_dim_reduction`, `geometric_efficiency_gap`
 
 #### `IharaZeta.lean` — 11 declarations
 *Source: `Speculative/Other/IharaZeta.lean`*
@@ -6496,10 +7339,10 @@
 
 - **def** (1): `IsAntichain`
 
-#### `LandscapeTheory.lean` — 37 declarations
+#### `LandscapeTheory.lean` — 36 declarations
 *Source: `Speculative/Other/LandscapeTheory.lean`*
 
-- **theorem** (33): `allRightPredicted_pyth`, `allRightOddLeg_factors`, `allRight_base`, `allRight_depth1`, `allRight_depth2`, `pyth_fermat_factorization`, `euclid_odd_leg_factors`, `pyth_leg_factor`, `conformalFactor_at_zero`, `conformalFactor_symm`, `conformalFactor_antitone`, `stereoParam_root` ... +21 more
+- **theorem** (32): `allRightPredicted_pyth`, `allRightOddLeg_factors`, `allRight_base`, `allRight_depth1`, `allRight_depth2`, `pyth_fermat_factorization`, `euclid_odd_leg_factors`, `pyth_leg_factor`, `conformalFactor_at_zero`, `conformalFactor_symm`, `conformalFactor_antitone`, `stereoParam_root` ... +20 more
 
 #### `MathBiology.lean` — 6 declarations
 *Source: `Speculative/Other/MathBiology.lean`*
@@ -6716,10 +7559,10 @@
 - **theorem** (7): `tropical_path_idempotent`, `min_idempotent'`, `complement_code`, `orthogonal_codes_sum`, `pca_projection_property`, `crt_shares_sum_to_one`, `zmod6_idem_count`
 - **structure** (1): `QECC`
 
-#### `Bridge10_Research.lean` — 65 declarations
+#### `Bridge10_Research.lean` — 64 declarations
 *Source: `Speculative/RosettaStone/Bridge10_Research.lean`*
 
-- **theorem** (58): `prod_idempotent_iff`, `field_idempotent_iff`, `prime_two_idempotents_2`, `prime_two_idempotents_3`, `prime_two_idempotents_5`, `prime_two_idempotents_7`, `prime_two_idempotents_11`, `prime_two_idempotents_13`, `prod_idempotent_count_2_3`, `crt_idempotent_match`, `idem_compl`, `idem_meet_compl` ... +46 more
+- **theorem** (57): `prod_idempotent_iff`, `field_idempotent_iff`, `prime_two_idempotents_2`, `prime_two_idempotents_3`, `prime_two_idempotents_5`, `prime_two_idempotents_7`, `prime_two_idempotents_11`, `prime_two_idempotents_13`, `prod_idempotent_count_2_3`, `crt_idempotent_match`, `idem_compl`, `idem_meet_compl` ... +45 more
 - **structure** (2): `CSOI`, `InteriorOp`
 
 #### `Bridge1_Classical.lean` — 7 declarations
@@ -7237,7 +8080,7 @@
 
 ### NeuralNetworks
 
-#### `TropicalGeneralNetworks.lean` — 30 declarations
+#### `TropicalGeneralNetworks.lean` — 29 declarations
 *Source: `Tropical/NeuralNetworks/TropicalGeneralNetworks.lean`*
 
 - **theorem** (20): `reluLayer_eq`, `linear_compose_linear`, `transplant_exact_general`, `residual_tropical_compat`, `scaledSoftmax_nonneg`, `scaledSoftmax_sum_one`, `softmax_eq_scaled_one`, `softmax_preserves_order`, `attention_linear_in_query`, `general_region_bound`, `deep_network_exponential`, `relu_tropical_rank_le2` ... +8 more
@@ -7272,66 +8115,64 @@
 
 Declarations extracted from multiple domains (occurrence count >= threshold).
 
-#### `Eml.lean` — 21 declarations
+#### `Gh.lean` — 1 declarations
 
-- **theorem** (20): `eml_generates_neg_one`, `eml_lower_bound`, `eml_compose_left`, `eml_generates_e`, `eml_produces_constants`, `eml_left_division`, `eml_geodesic_x_verify`, `eml_generates_zero`, `eml_right_division_unique`, `eml_iter_ee`, `eml_right_division`, `eml_negation` ... +8 more
+- **def** (1): `gh`
 
-#### `EmlDiag.lean` — 4 declarations
+#### `Gp.lean` — 1 declarations
 
-- **theorem** (3): `emlDiag_strictly_convex`, `emlDiag_has_minimum`, `emlDiag_gt`
+- **def** (1): `gp`
 
-#### `EmlSelfPair.lean` — 1 declarations
+#### `Gq.lean` — 1 declarations
 
+- **def** (1): `gq`
 
-#### `LogisticSigmoid.lean` — 6 declarations
+#### `M.lean` — 8 declarations
 
-- **theorem** (2): `logisticSigmoid_zero`, `logisticSigmoid_symmetry`
+- **def** (1): `M`
+- **theorem** (7): `M_cayley_hamilton`, `M_trace`, `M_cube`, `M_det`, `M_sq`, `M_lorentz`, `M_mul_B₂`
 
-#### `LogisticSigmoid_lt_one.lean` — 6 declarations
+#### `P.lean` — 1 declarations
 
-- **theorem** (2): `logisticSigmoid_zero`, `logisticSigmoid_symmetry`
+- **def** (1): `p`
+
+#### `Q.lean` — 1 declarations
+
+- **def** (1): `q`
 
 #### `Softplus_convex.lean` — 9 declarations
 
-- **theorem** (9): `softplus_convex`, `softplus_deriv`, `softplus_exp_identity`, `softplus_strictMono`, `softplus_mono`, `softplus_zero`, `softplus_differentiable`, `softplus_gt_id`, `softplus_reflection`
+- **theorem** (9): `softplus_convex`, `softplus_exp_identity`, `softplus_reflection`, `softplus_gt_id`, `softplus_differentiable`, `softplus_strictMono`, `softplus_deriv`, `softplus_zero`, `softplus_mono`
 
 #### `Softplus_deriv.lean` — 9 declarations
 
-- **theorem** (9): `softplus_deriv`, `softplus_exp_identity`, `softplus_strictMono`, `softplus_mono`, `softplus_convex`, `softplus_zero`, `softplus_differentiable`, `softplus_gt_id`, `softplus_reflection`
+- **theorem** (9): `softplus_deriv`, `softplus_exp_identity`, `softplus_reflection`, `softplus_gt_id`, `softplus_differentiable`, `softplus_strictMono`, `softplus_convex`, `softplus_zero`, `softplus_mono`
 
 #### `Softplus_differentiable.lean` — 9 declarations
 
-- **theorem** (9): `softplus_differentiable`, `softplus_deriv`, `softplus_exp_identity`, `softplus_strictMono`, `softplus_mono`, `softplus_convex`, `softplus_zero`, `softplus_gt_id`, `softplus_reflection`
+- **theorem** (9): `softplus_differentiable`, `softplus_exp_identity`, `softplus_reflection`, `softplus_gt_id`, `softplus_strictMono`, `softplus_convex`, `softplus_deriv`, `softplus_mono`, `softplus_zero`
 
 #### `Softplus_exp_identity.lean` — 9 declarations
 
-- **theorem** (9): `softplus_exp_identity`, `softplus_deriv`, `softplus_strictMono`, `softplus_mono`, `softplus_convex`, `softplus_zero`, `softplus_differentiable`, `softplus_gt_id`, `softplus_reflection`
+- **theorem** (9): `softplus_exp_identity`, `softplus_reflection`, `softplus_gt_id`, `softplus_differentiable`, `softplus_strictMono`, `softplus_convex`, `softplus_deriv`, `softplus_zero`, `softplus_mono`
 
 #### `Softplus_gt_id.lean` — 9 declarations
 
-- **theorem** (9): `softplus_gt_id`, `softplus_deriv`, `softplus_exp_identity`, `softplus_strictMono`, `softplus_mono`, `softplus_convex`, `softplus_zero`, `softplus_differentiable`, `softplus_reflection`
+- **theorem** (9): `softplus_gt_id`, `softplus_exp_identity`, `softplus_reflection`, `softplus_differentiable`, `softplus_strictMono`, `softplus_convex`, `softplus_deriv`, `softplus_mono`, `softplus_zero`
 
 #### `Softplus_mono.lean` — 9 declarations
 
-- **theorem** (9): `softplus_mono`, `softplus_deriv`, `softplus_exp_identity`, `softplus_strictMono`, `softplus_convex`, `softplus_zero`, `softplus_differentiable`, `softplus_gt_id`, `softplus_reflection`
+- **theorem** (9): `softplus_mono`, `softplus_exp_identity`, `softplus_reflection`, `softplus_gt_id`, `softplus_differentiable`, `softplus_strictMono`, `softplus_convex`, `softplus_deriv`, `softplus_zero`
 
 #### `Softplus_reflection.lean` — 9 declarations
 
-- **theorem** (9): `softplus_reflection`, `softplus_deriv`, `softplus_exp_identity`, `softplus_strictMono`, `softplus_mono`, `softplus_convex`, `softplus_zero`, `softplus_differentiable`, `softplus_gt_id`
+- **theorem** (9): `softplus_reflection`, `softplus_exp_identity`, `softplus_gt_id`, `softplus_differentiable`, `softplus_strictMono`, `softplus_convex`, `softplus_deriv`, `softplus_mono`, `softplus_zero`
 
 #### `Softplus_strictMono.lean` — 9 declarations
 
-- **theorem** (9): `softplus_strictMono`, `softplus_deriv`, `softplus_exp_identity`, `softplus_mono`, `softplus_convex`, `softplus_zero`, `softplus_differentiable`, `softplus_gt_id`, `softplus_reflection`
+- **theorem** (9): `softplus_strictMono`, `softplus_exp_identity`, `softplus_reflection`, `softplus_gt_id`, `softplus_differentiable`, `softplus_convex`, `softplus_deriv`, `softplus_zero`, `softplus_mono`
 
 #### `Softplus_zero.lean` — 9 declarations
 
-- **theorem** (9): `softplus_zero`, `softplus_deriv`, `softplus_exp_identity`, `softplus_strictMono`, `softplus_mono`, `softplus_convex`, `softplus_differentiable`, `softplus_gt_id`, `softplus_reflection`
-
-#### `Spb.lean` — 25 declarations
-
-- **theorem** (24): `spb_linearization_error`, `spb_lissajous`, `spb_cross_ratio_invariant`, `spb_jacobian`, `spb_neg_first`, `spb_discriminant`, `spb_neg_right`, `spb_is_moebius`, `spb_assoc`, `spb_zero_right`, `spb_double`, `spb_parabolic_at_zero` ... +12 more
-
-#### `Spb_comm.lean` — 25 declarations
-
-- **theorem** (24): `spb_comm`, `spb_linearization_error`, `spb_lissajous`, `spb_cross_ratio_invariant`, `spb_jacobian`, `spb_neg_first`, `spb_discriminant`, `spb_neg_right`, `spb_is_moebius`, `spb_assoc`, `spb_zero_right`, `spb_double` ... +12 more
+- **theorem** (9): `softplus_zero`, `softplus_exp_identity`, `softplus_reflection`, `softplus_gt_id`, `softplus_differentiable`, `softplus_strictMono`, `softplus_convex`, `softplus_deriv`, `softplus_mono`
 

@@ -15,11 +15,13 @@ def stokesMinkowski (S₀ S₁ S₂ S₃ : ℝ) : ℝ :=
 
 
 
+
 /-- For fully polarized light, the Minkowski norm is zero. -/
 theorem fully_polarized_is_null (S₀ S₁ S₂ S₃ : ℝ)
     (h : S₀^2 = S₁^2 + S₂^2 + S₃^2) :
     stokesMinkowski S₀ S₁ S₂ S₃ = 0 := by
   unfold stokesMinkowski; linarith
+
 
 
 
@@ -31,10 +33,12 @@ theorem partially_polarized_is_timelike (S₀ S₁ S₂ S₃ : ℝ)
 
 
 
+
 /-- Unpolarized light has maximum "mass" in Stokes-Minkowski space. -/
 theorem unpolarized_maximum_mass (S₀ : ℝ) :
     stokesMinkowski S₀ 0 0 0 = S₀^2 := by
   simp [stokesMinkowski]
+
 
 
 
@@ -49,6 +53,7 @@ theorem collinear_photons_null (a b c t : ℝ)
 
 
 
+
 /-- Two anti-parallel photons of equal energy produce a massive particle. -/
 theorem antiparallel_photons_massive (a b c : ℝ) (hc : c > 0)
     (h : a^2 + b^2 = c^2) :
@@ -56,6 +61,7 @@ theorem antiparallel_photons_massive (a b c : ℝ) (hc : c > 0)
   unfold stokesMinkowski
   have : (2 * c)^2 > 0 := by positivity
   linarith [sq_nonneg c]
+
 
 
 
@@ -71,9 +77,11 @@ theorem combined_photon_mass (S₀ S₁ S₂ S₃ T₀ T₁ T₂ T₃ : ℝ)
 
 
 
+
 /-- The Minkowski inner product on Stokes space. -/
 def stokesInner (S₀ S₁ S₂ S₃ T₀ T₁ T₂ T₃ : ℝ) : ℝ :=
   S₀ * T₀ - S₁ * T₁ - S₂ * T₂ - S₃ * T₃
+
 
 
 
@@ -86,11 +94,13 @@ theorem h_v_stokes_inner :
 
 
 
+
 /-- Stokes inner product for linear polarizer at angle θ. -/
 theorem stokes_inner_product_formula (θ : ℝ) :
     stokesInner 1 1 0 0 1 (cos (2*θ)) (sin (2*θ)) 0 =
     1 - cos (2*θ) := by
   unfold stokesInner; ring
+
 
 
 
@@ -103,9 +113,11 @@ theorem malus_connection (θ : ℝ) :
 
 
 
+
 /-- The degree of polarization p ∈ [0,1]. -/
 def degree_of_pol (S₀ S₁ S₂ S₃ : ℝ) (hS₀ : S₀ ≠ 0) : ℝ :=
   Real.sqrt (S₁^2 + S₂^2 + S₃^2) / S₀
+
 
 
 
@@ -116,8 +128,10 @@ theorem unpol_degree_zero (S₀ : ℝ) (hS₀ : S₀ ≠ 0) :
 
 
 
+
 /-- Right circular polarization Stokes: (1, 0, 0, 1). -/
 def right_circular_stokes : ℝ × ℝ × ℝ × ℝ := (1, 0, 0, 1)
+
 
 
 
@@ -126,11 +140,13 @@ def left_circular_stokes : ℝ × ℝ × ℝ × ℝ := (1, 0, 0, -1)
 
 
 
+
 /-- Both circular polarizations are fully polarized. -/
 theorem rcp_fully_polarized :
     let s := right_circular_stokes
     s.1^2 = s.2.1^2 + s.2.2.1^2 + s.2.2.2^2 := by
   simp [right_circular_stokes]
+
 
 
 
@@ -145,10 +161,12 @@ theorem lcp_fully_polarized :
 
 
 
+
 /-- RCP and LCP Stokes inner product. -/
 theorem rcp_lcp_inner :
     stokesInner 1 0 0 1 1 0 0 (-1) = 2 := by
   unfold stokesInner; ring
+
 
 
 
@@ -161,12 +179,14 @@ theorem rcp_lcp_antipodal :
 
 
 
+
 /-- A Pythagorean triple gives a normalized polarization state. -/
 theorem pyth_to_linear_pol (a b c : ℝ) (h : a^2 + b^2 = c^2) (hc : c ≠ 0) :
     ((a^2 - b^2)/c^2)^2 + (2*a*b/c^2)^2 = 1^2 := by
   have hc2 : c^2 ≠ 0 := pow_ne_zero 2 hc
   field_simp
   nlinarith
+
 
 
 
@@ -177,10 +197,12 @@ theorem triple_345_pol :
 
 
 
+
 /-- (5, 12, 13) polarization parameters. -/
 theorem triple_51213_pol :
     ((5:ℝ)^2 - 12^2) / 13^2 = -119/169 ∧ (2 * 5 * 12) / 13^2 = 120/169 := by
   constructor <;> norm_num
+
 
 
 
@@ -190,9 +212,11 @@ theorem duality_rotation_preserves_norm (α : ℝ) :
 
 
 
+
 /-- A photon worldline in 2+1D. -/
 def photon_worldline (v : ℝ × ℝ × ℝ) : Prop :=
   v.1^2 + v.2.1^2 = v.2.2^2
+
 
 
 
@@ -202,10 +226,12 @@ theorem origin_on_worldline : photon_worldline (0, 0, 0) := by
 
 
 
+
 /-- Scaling a worldline point gives another worldline point (cone property). -/
 theorem worldline_scaling (x y t s : ℝ) (h : photon_worldline (x, y, t)) :
     photon_worldline (s*x, s*y, s*t) := by
   simp only [photon_worldline] at *; nlinarith [sq_nonneg s]
+
 
 
 
@@ -218,8 +244,10 @@ theorem speed_of_light_one (x y t : ℝ) (ht : t ≠ 0)
 
 
 
+
 /-- The Poincaré sphere has Euler characteristic 2. -/
 theorem poincare_sphere_euler : (2 : ℤ) = 2 - 2 * 0 := by norm_num
+
 
 
 
@@ -228,9 +256,11 @@ theorem berry_phase_great_circle : (2 : ℝ) * Real.pi / 2 = Real.pi := by ring
 
 
 
+
 /-- Berry phase for a small circle at latitude θ. -/
 theorem berry_phase_small_circle (θ : ℝ) :
     2 * Real.pi * (1 - cos θ) / 2 = Real.pi * (1 - cos θ) := by ring
+
 
 
 

@@ -15,9 +15,11 @@ def Mirror.fixedPoints {α : Type*} (m : Mirror α) : Set α :=
 
 
 
+
 /-- The set of "shattered" points — those moved by the mirror -/
 def Mirror.shatteredPoints {α : Type*} (m : Mirror α) : Set α :=
   {x | m.reflect x ≠ x}
+
 
 
 
@@ -42,6 +44,11 @@ theorem broken_mirror_odd_fixed_point {α : Type*} [Fintype α] [DecidableEq α]
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Forbidden.BrokenMirror
+Auto-generated from theorem catalog database.
+Domain: Speculative/Forbidden
+Declarations: 9] -/
 theorem mirror_shattered_even {α : Type*} [Fintype α] [DecidableEq α]
     (m : Mirror α) :
     Even (Finset.card (Finset.univ.filter (fun x => m.reflect x ≠ x))) := by
@@ -58,6 +65,7 @@ theorem mirror_shattered_even {α : Type*} [Fintype α] [DecidableEq α]
 
 
 
+
 theorem cantor_broken_mirror (α : Type*) : ¬ Surjective (fun (a : α) (b : α) => a = b) := by
   by_contra h_surjective
   obtain ⟨x, hx⟩ : ∃ x : α → Prop, ¬∃ a : α, x = fun b => a = b := by
@@ -67,11 +75,13 @@ theorem cantor_broken_mirror (α : Type*) : ¬ Surjective (fun (a : α) (b : α)
 
 
 
+
 theorem diagonal_shattering (α : Type*) (f : α → (α → Bool)) : ¬ Surjective f := by
   intro h;
   -- Define a new function g that differs from each f(a) at least at one point.
   set g : α → Bool := fun a => if f a a = Bool.true then Bool.false else Bool.true;
   cases' h g with a ha ; replace ha := congr_fun ha a ; aesop
+
 
 
 
@@ -90,11 +100,13 @@ theorem discrete_ivt (g : ℤ → ℤ) (n : ℕ) (hn : 0 < n)
 
 
 
+
 theorem no_perfect_self_mirror :
     ¬ ∃ (halt : (ℕ → Bool) → Bool),
       ∀ f : ℕ → Bool, halt f = true ↔ f 0 = halt f := by
   by_contra h;
   cases' h with halt h; have := h ( fun _ => Bool.true ) ; have := h ( fun _ => Bool.false ) ; simp +decide at *;
+
 
 
 
@@ -107,6 +119,7 @@ theorem involution_parity_fixed {α : Type*} [Fintype α] [DecidableEq α]
     convert mirror_shattered_even ⟨ f, hf ⟩ using 1;
   simp_all +decide [ Finset.filter_not, Finset.card_sdiff ];
   grind
+
 
 
 

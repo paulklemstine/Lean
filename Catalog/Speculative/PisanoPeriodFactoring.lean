@@ -15,6 +15,7 @@ theorem fib_matrix_base :
 
 
 
+
 /-- [Section: # CatalogBuild.Speculative.PisanoPeriodFactoring
 Auto-generated from theorem catalog database.
 Domain: Speculative
@@ -26,6 +27,11 @@ theorem fib_add (m n : ℕ) (hm : 0 < m) :
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.PisanoPeriodFactoring
+Auto-generated from theorem catalog database.
+Domain: Speculative
+Declarations: 9] -/
 theorem fib_mod_periodic (m : ℕ) (hm : 2 ≤ m) :
     ∃ T : ℕ, 0 < T ∧ T ≤ m * m ∧
     ∀ n, Nat.fib (n + T) % m = Nat.fib n % m := by
@@ -52,9 +58,11 @@ theorem fib_mod_periodic (m : ℕ) (hm : 2 ≤ m) :
 
 
 
+
 /-- F(0) ≡ 0 (mod m) and F(π(m)) ≡ 0 (mod m). The Pisano period
 always starts with F(0) = 0, F(1) = 1. -/
 theorem fib_zero_mod (m : ℕ) : Nat.fib 0 % m = 0 := by simp
+
 
 
 
@@ -78,6 +86,7 @@ theorem pisano_coprime_lcm (m₁ m₂ : ℕ) (hm1 : 2 ≤ m₁) (hm2 : 2 ≤ m�
   rw [ Nat.ModEq.symm ];
   rw [ ← Nat.modEq_and_modEq_iff_modEq_mul ] ; tauto;
   assumption
+
 
 
 
@@ -129,11 +138,13 @@ theorem pisano_factor_constraint (p : ℕ) (hp : Nat.Prime p) (hp5 : p ≠ 5) :
 
 
 
+
 theorem pisano_small_primes :
     (∀ n, Nat.fib (n + 3) % 2 = Nat.fib n % 2) ∧
     (∀ n, Nat.fib (n + 8) % 3 = Nat.fib n % 3) := by
   norm_num [ Nat.add_mod, Nat.mul_mod, Nat.pow_mod, Nat.fib_add_two ];
   grind
+
 
 
 
@@ -216,6 +227,7 @@ theorem pisano_legendre_bound (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2) (hp5 
 
 
 
+
 theorem wall_divides_pisano (p : ℕ) (hp : Nat.Prime p) (hp5 : p ≠ 5) :
     ∃ α T, 0 < α ∧ 0 < T ∧ p ∣ Nat.fib α ∧
     (∀ n, Nat.fib (n + T) % p = Nat.fib n % p) ∧
@@ -230,4 +242,5 @@ theorem wall_divides_pisano (p : ℕ) (hp : Nat.Prime p) (hp5 : p ≠ 5) :
   have h_div : p ∣ Nat.fib T := by
     simpa [ Nat.dvd_iff_mod_eq_zero ] using hT_period 0;
   exact ⟨ T, T, hT_pos, hT_pos, h_div, hT_period, dvd_rfl ⟩
+
 

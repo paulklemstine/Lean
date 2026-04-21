@@ -15,6 +15,7 @@ theorem hyperbola_symmetry {n d : ℕ} (hd : d ∣ n) :
 
 
 
+
 /-- d² ≤ n implies d ≤ n for any divisor d (the "small" divisor). -/
 theorem small_divisor_bound {n d : ℕ} (hd : d ∣ n) (hn : 0 < n) :
     d ≤ n :=
@@ -22,10 +23,12 @@ theorem small_divisor_bound {n d : ℕ} (hd : d ∣ n) (hn : 0 < n) :
 
 
 
+
 /-- The determinant is preserved under multiplication. -/
 theorem SL2Z.mul_det (M N : SL2Z) :
     (SL2Z.mul M N).a * (SL2Z.mul M N).d - (SL2Z.mul M N).b * (SL2Z.mul M N).c = 1 :=
   (SL2Z.mul M N).det_eq
+
 
 
 
@@ -39,10 +42,12 @@ theorem convergent_coprime_of_det_one {p q : ℤ} (hq : 0 < q)
 
 
 
+
 /-- The mediant of two fractions a/b and c/d is (a+c)/(b+d).
 If they are Farey neighbors, b+d > 0. -/
 theorem farey_mediant_denominator {b d : ℕ} (hb : 0 < b) (hd : 0 < d) :
     0 < b + d := by omega
+
 
 
 
@@ -56,12 +61,14 @@ theorem divisor_companion_reversed {d₁ d₂ n : ℕ}
 
 
 
+
 /-- If a is a nonzero quadratic residue mod p, then its square root is also nonzero. -/
 theorem quadratic_residue_nonzero {p : ℕ} (hp : Nat.Prime p)
     {a : ZMod p} (ha : a ≠ 0) (hsq : ∃ x : ZMod p, x * x = a) :
     ∃ x : ZMod p, x * x = a ∧ x ≠ 0 := by
   obtain ⟨x, hx⟩ := hsq
   exact ⟨x, hx, fun hx0 => ha (by rw [← hx, hx0, mul_zero])⟩
+
 
 
 
@@ -72,5 +79,6 @@ theorem crt_quadratic_residue {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
     (∃ xp : ZMod p, xp * xp = ZMod.castHom (dvd_mul_right p q) (ZMod p) a) := by
   intro ⟨x, hx⟩
   exact ⟨ZMod.castHom (dvd_mul_right p q) (ZMod p) x, by rw [← map_mul, hx]⟩
+
 
 

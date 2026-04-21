@@ -13,9 +13,11 @@ theorem stern_brocot_det' (a b c d : ℕ) (h : b * c = a * d + 1) :
 
 
 
+
 /-- Continued fraction Bézout identity -/
 theorem cf_bezout (p q p' q' : ℤ) (h : p * q' - p' * q = 1) :
     (p + p') * q' - (q + q') * p' = 1 := by linarith
+
 
 
 
@@ -25,9 +27,11 @@ theorem quad_residues_mod5 :
 
 
 
+
 /-- Quadratic residues mod 7 -/
 theorem quad_residues_mod7 :
     ∀ a : ZMod 7, a ^ 2 ∈ ({0, 1, 2, 4} : Set (ZMod 7)) := by decide
+
 
 
 
@@ -39,7 +43,13 @@ theorem sum_two_sq_41' : ∃ a b : ℕ, a ^ 2 + b ^ 2 = 41 := ⟨4, 5, by norm_n
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.NewExplorations
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 43] -/
 theorem wilson_13' : Nat.factorial 12 % 13 = 12 := by native_decide
+
 
 
 
@@ -50,13 +60,16 @@ theorem bertrand_postulate_ex' (n : ℕ) (hn : 1 ≤ n) :
 
 
 
+
 /-- π(10) = 4 -/
 theorem pi_10' : ((Finset.range 11).filter Nat.Prime).card = 4 := by native_decide
 
 
 
+
 /-- π(100) = 25 -/
 theorem pi_100' : ((Finset.range 101).filter Nat.Prime).card = 25 := by native_decide
+
 
 
 
@@ -67,9 +80,11 @@ theorem infinite_primes' (n : ℕ) : ∃ p, n ≤ p ∧ Nat.Prime p := by
 
 
 
+
 /-- Prime reciprocal sum lower bound -/
 theorem prime_reciprocal_lower' :
     (1 : ℚ) / 2 + 1 / 3 + 1 / 5 + 1 / 7 > 1 := by norm_num
+
 
 
 
@@ -78,9 +93,11 @@ def eisensteinNorm' (a b : ℤ) : ℤ := a ^ 2 - a * b + b ^ 2
 
 
 
+
 /-- Eisenstein norm is nonneg -/
 theorem eisenstein_norm_nonneg' (a b : ℤ) : 0 ≤ eisensteinNorm' a b := by
   unfold eisensteinNorm'; nlinarith [sq_nonneg (2 * a - b), sq_nonneg b]
+
 
 
 
@@ -92,10 +109,12 @@ theorem eisenstein_norm_mul' (a b c d : ℤ) :
 
 
 
+
 /-- Composition of bijections is a bijection -/
 theorem bij_comp' {α β γ : Type*} (f : α → β) (g : β → γ)
     (hf : Function.Bijective f) (hg : Function.Bijective g) :
     Function.Bijective (g ∘ f) := hg.comp hf
+
 
 
 
@@ -113,9 +132,11 @@ theorem finite_recurrence' {α : Type*} [Fintype α] [DecidableEq α]
 
 
 
+
 /-- Fixed point of involution -/
 theorem involution_period2' {α : Type*} (f : α → α) (h : ∀ x, f (f x) = x) (x : α) :
     f^[2] x = x := by simp [Function.iterate_succ, h]
+
 
 
 
@@ -127,9 +148,11 @@ theorem ap_hits_mod' (d p n : ℕ) :
 
 
 
+
 /-- Rank function submodularity -/
 theorem submodular_ineq' (rA rB rAuB rAnB : ℕ)
     (h : rAuB + rAnB ≤ rA + rB) : rAuB ≤ rA + rB - rAnB := by omega
+
 
 
 
@@ -139,9 +162,11 @@ theorem trop_distrib' (a b c : ℤ) :
 
 
 
+
 /-- Tropical Pythagorean equation -/
 theorem trop_pythagorean' (a b : ℤ) :
     min (2 * a) (2 * b) = 2 * min a b := by omega
+
 
 
 
@@ -151,14 +176,17 @@ theorem cayley_hamilton_disc' (a b c d : ℤ) :
 
 
 
+
 /-- Trace of Berggren B₁ -/
 theorem berggren_B1_trace' : (1 : ℤ) + (-1) + 3 = 3 := by norm_num
+
 
 
 
 /-- Symplectic form antisymmetry -/
 theorem symplectic_antisymm' (a b c d : ℤ) :
     (a * d - b * c) = -(c * b - d * a) := by ring
+
 
 
 
@@ -173,8 +201,10 @@ theorem area_preserving' (a b c d e f g h : ℤ)
 
 
 
+
 /-- ℤ is a PID -/
 theorem Z_is_PID'' : IsPrincipalIdealRing ℤ := inferInstance
+
 
 
 
@@ -185,8 +215,10 @@ theorem det_neg_one_exists' : ∃ (M : Matrix (Fin 2) (Fin 2) ℤ),
 
 
 
+
 /-- Kraft inequality example -/
 theorem kraft_example' : (1 : ℚ) / 2 + 1 / 4 + 1 / 4 = 1 := by norm_num
+
 
 
 
@@ -196,9 +228,11 @@ theorem data_processing'' {α β : Type*} [DecidableEq β] (S : Finset α) (f : 
 
 
 
+
 /-- Pythagorean cone equation -/
 theorem pythagorean_cone' (a b c : ℝ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     c ^ 2 - a ^ 2 - b ^ 2 = 0 := by linarith
+
 
 
 
@@ -207,8 +241,10 @@ theorem time_hierarchy' (n : ℕ) (hn : (1 : ℕ) < n) : n < n ^ 2 := by nlinari
 
 
 
+
 /-- Space hierarchy -/
 theorem space_hierarchy' (n : ℕ) : Nat.log 2 (2 ^ n) = n := Nat.log_pow (by norm_num) n
+
 
 
 
@@ -216,7 +252,9 @@ theorem space_hierarchy' (n : ℕ) : Nat.log 2 (2 ^ n) = n := Nat.log_pow (by no
 theorem factorial_lower_5' : 120 ≤ Nat.factorial 5 := by norm_num
 
 
+
 theorem factorial_lower_10' : 3628800 ≤ Nat.factorial 10 := by norm_num
+
 
 
 
@@ -227,10 +265,12 @@ theorem braid_relation' (a b c d e f : ℤ) :
 
 
 
+
 /-- Detection probability monotonicity -/
 theorem detection_monotone' (k : ℕ) (p : ℝ) (hp : 0 ≤ p) (hp1 : p ≤ 1) :
     (1 - p) ^ (k + 1) ≤ (1 - p) ^ k := by
   apply pow_le_pow_of_le_one (by linarith) (by linarith); omega
+
 
 
 
@@ -244,17 +284,21 @@ theorem four_square_identity' (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ) :
 
 
 
+
 /-- Lagrange four-square theorem: verified instances -/
 theorem four_squares_7' : ∃ a b c d : ℕ, a^2 + b^2 + c^2 + d^2 = 7 :=
   ⟨1, 1, 1, 2, by norm_num⟩
+
 
 
 theorem four_squares_15' : ∃ a b c d : ℕ, a^2 + b^2 + c^2 + d^2 = 15 :=
   ⟨1, 1, 2, 3, by norm_num⟩
 
 
+
 theorem four_squares_23' : ∃ a b c d : ℕ, a^2 + b^2 + c^2 + d^2 = 23 :=
   ⟨1, 2, 3, 3, by norm_num⟩
+
 
 
 
@@ -269,9 +313,11 @@ theorem frobenius_submult' (a b c d e f g h : ℝ) :
 
 
 
+
 /-- Symmetric matrices have nonneg discriminant -/
 theorem symmetric_real_eigenvalues' (a b d : ℝ) :
     0 ≤ (a - d) ^ 2 + 4 * b ^ 2 := by positivity
+
 
 
 
@@ -282,4 +328,5 @@ theorem neumann_series_partial' (r : ℝ) (n : ℕ) (hr : 0 ≤ r) (hr1 : r < 1)
   rw [le_div_iff₀ hpos]
   have key : (∑ i ∈ Finset.range n, r ^ i) * (r - 1) = r ^ n - 1 := geom_sum_mul r n
   nlinarith [pow_nonneg hr n]
+
 

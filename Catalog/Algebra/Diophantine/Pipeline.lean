@@ -13,6 +13,7 @@ def DiophantineSolution (p : ℤ → ℤ → ℤ) (a b : ℤ) : Prop := p a b = 
 
 
 
+
 /-- Verification is decidable: given a polynomial and a candidate, we can check. -/
 instance diophantine_verification_decidable (p : ℤ → ℤ → ℤ) (a b : ℤ) :
     Decidable (DiophantineSolution p a b) :=
@@ -20,9 +21,11 @@ instance diophantine_verification_decidable (p : ℤ → ℤ → ℤ) (a b : ℤ
 
 
 
+
 /-- A constant function is idempotent. -/
 theorem const_is_idempotent {α : Type*} (c : α) : IsIdempotent (fun _ => c) := by
   intro x; rfl
+
 
 
 
@@ -39,10 +42,16 @@ theorem idempotent_composition {α : Type*} (f g : α → α)
 
 
 
+
+/-- [Section: # CatalogBuild.Algebra.Diophantine.Pipeline
+Auto-generated from theorem catalog database.
+Domain: Algebra/Diophantine
+Declarations: 14] -/
 theorem idempotent_fixed_point_iff {α : Type*} (f : α → α)
     (hf : IsIdempotent f) (x : α) :
     f x = x ↔ ∃ y, f y = x := by
   aesop
+
 
 
 
@@ -52,8 +61,10 @@ theorem stereographic_on_circle (t : ℚ) (h : 1 + t ^ 2 ≠ 0) :
 
 
 
+
 /-- The base triple (3, 4, 5) satisfies the Pythagorean equation. -/
 theorem base_triple_pythagorean : (3 : ℤ) ^ 2 + (4 : ℤ) ^ 2 = (5 : ℤ) ^ 2 := by norm_num
+
 
 
 
@@ -64,6 +75,7 @@ theorem berggren_A_preserves_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 theorem berggren_B_preserves_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (a + 2 * b + 2 * c) ^ 2 + (2 * a + b + 2 * c) ^ 2 =
     (2 * a + 2 * b + 3 * c) ^ 2 := by
@@ -71,10 +83,12 @@ theorem berggren_B_preserves_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 
 
 
+
 theorem berggren_C_preserves_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (-a + 2 * b + 2 * c) ^ 2 + (-2 * a + b + 2 * c) ^ 2 =
     (-2 * a + 2 * b + 3 * c) ^ 2 := by
   lia
+
 
 
 
@@ -86,9 +100,11 @@ structure VerifiedSolution (p : ℤ → ℤ → ℤ) where
 
 
 
+
 /-- Example: (3, 4) is a verified solution to x² + y² = 25. -/
 def pythagorean_3_4 : VerifiedSolution (fun x y => x ^ 2 + y ^ 2 - 25) :=
   ⟨3, 4, by norm_num⟩
+
 
 
 
@@ -98,7 +114,9 @@ def pythagorean_5_12 : VerifiedSolution (fun x y => x ^ 2 + y ^ 2 - 169) :=
 
 
 
+
 /-- The pipeline is sound: if it outputs a VerifiedSolution, the solution is correct. -/
 theorem pipeline_soundness (p : ℤ → ℤ → ℤ) (sol : VerifiedSolution p) :
     p sol.x sol.y = 0 := sol.proof
+
 

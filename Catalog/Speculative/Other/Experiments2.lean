@@ -27,6 +27,11 @@ def fib : ℕ → ℕ
 
 
 
+
+/-- [Section: # CatalogBuild.Speculative.Other.Experiments2
+Auto-generated from theorem catalog database.
+Domain: Speculative/Other
+Declarations: 4] -/
 def ilog2 (n : ℕ) : ℕ :=
   if n ≤ 1 then 0
   else 1 + ilog2 (n / 2)
@@ -51,6 +56,7 @@ def ilog2 (n : ℕ) : ℕ :=
 
 
 
+
 def isPrime (n : ℕ) : Bool :=
   if n < 2 then false
   else Id.run do
@@ -62,6 +68,7 @@ def isPrime (n : ℕ) : Bool :=
     return result
 
 -- Check if n has a prime factor ≡ 3 (mod 4) to an odd power
+
 
 
 def hasBadFactor (n : ℕ) : Bool :=
@@ -95,5 +102,6 @@ def hasBadFactor (n : ℕ) : Bool :=
       mismatches := mismatches + 1
     total := total + 1
   return s!"Mismatches between r₂=0 and bad-factor prediction: {mismatches}/{total}"
+
 
 

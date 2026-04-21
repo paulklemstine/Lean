@@ -15,8 +15,10 @@ def gravWeight (n : ℕ) : ℕ := n.divisors.card
 
 
 
+
 /-- Weight of 1 is 1 (the lightest point). -/
 theorem gravWeight_one : gravWeight 1 = 1 := by native_decide
+
 
 
 
@@ -25,13 +27,16 @@ theorem gravWeight_two : gravWeight 2 = 2 := by native_decide
 
 
 
+
 /-- 12 is "heavier" than 7 on the number line. -/
 theorem gravWeight_12_gt_7 : gravWeight 12 > gravWeight 7 := by native_decide
 
 
 
+
 /-- 6 has weight 4 (divisors: 1,2,3,6). -/
 theorem gravWeight_6 : gravWeight 6 = 4 := by native_decide
+
 
 
 
@@ -45,10 +50,12 @@ theorem gravWeight_prime (p : ℕ) (hp : p.Prime) : gravWeight p = 2 := by
 
 
 
+
 /-- HYPOTHESIS α2: Gravitational attraction on the number line.
 Point n attracts point m with force proportional to weight(n)*weight(m) / distance². -/
 def gravAttraction (n m : ℕ) : ℝ :=
   (gravWeight n : ℝ) * (gravWeight m : ℝ) / ((n : ℝ) - (m : ℝ)) ^ 2
+
 
 
 
@@ -59,8 +66,10 @@ theorem gravAttraction_symm (n m : ℕ) :
 
 
 
+
 /-- The potential at 6 is 12 (1+2+3+6). -/
 theorem gravPotential_six : gravPotential 6 = 12 := by native_decide
+
 
 
 
@@ -69,8 +78,10 @@ def isGravEquilibrium (n : ℕ) : Prop := gravPotential n = 2 * n
 
 
 
+
 /-- 6 is a gravitational equilibrium (perfect number). -/
 theorem six_is_equilibrium : isGravEquilibrium 6 := by unfold isGravEquilibrium; native_decide
+
 
 
 
@@ -80,9 +91,11 @@ theorem twentyeight_is_equilibrium : isGravEquilibrium 28 := by
 
 
 
+
 /-- 496 is a gravitational equilibrium. -/
 theorem four96_is_equilibrium : isGravEquilibrium 496 := by
   unfold isGravEquilibrium; native_decide
+
 
 
 
@@ -93,8 +106,10 @@ structure GravParticle where
 
 
 
+
 /-- The mass of a particle is the gravitational weight at its position. -/
 def GravParticle.mass (p : GravParticle) : ℕ := gravWeight p.pos
+
 
 
 
@@ -103,9 +118,11 @@ abbrev GravUniverse := List GravParticle
 
 
 
+
 /-- The total mass of a universe. -/
 def totalMass (U : GravUniverse) : ℕ :=
   U.map GravParticle.mass |>.sum
+
 
 
 
@@ -116,10 +133,12 @@ def gravProject (n : ℕ) : ℕ :=
 
 
 
+
 /-- The projection maps multiples of 6 to themselves (fixed points). -/
 theorem gravProject_of_mul_six (k : ℕ) : gravProject (6 * k) = 6 * k := by
   simp [gravProject, Nat.add_div_right _ (by omega : 0 < 6)]
   omega
+
 
 
 
@@ -130,8 +149,10 @@ theorem gravProject_idempotent_on_image (k : ℕ) :
 
 
 
+
 /-- 0 is a fixed point of the projection. -/
 theorem gravProject_zero : gravProject 0 = 0 := by native_decide
+
 
 
 
@@ -140,8 +161,10 @@ theorem gravProject_six : gravProject 6 = 6 := by native_decide
 
 
 
+
 /-- 12 is a fixed point. -/
 theorem gravProject_twelve : gravProject 12 = 12 := by native_decide
+
 
 
 
@@ -152,10 +175,12 @@ def isGravAttractor (n : ℕ) : Prop :=
 
 
 
+
 /-- EXPERIMENT γ1a: 2 is an attractor. -/
 theorem attractor_2 : isGravAttractor 2 := by
   refine ⟨by omega, fun m hm hlt => ?_⟩
   interval_cases m; native_decide
+
 
 
 
@@ -166,10 +191,12 @@ theorem attractor_4 : isGravAttractor 4 := by
 
 
 
+
 /-- EXPERIMENT γ1c: 6 is an attractor. -/
 theorem attractor_6 : isGravAttractor 6 := by
   refine ⟨by omega, fun m hm hlt => ?_⟩
   interval_cases m <;> native_decide
+
 
 
 
@@ -180,21 +207,31 @@ theorem attractor_12 : isGravAttractor 12 := by
 
 
 
+
 /-- A number is "divisor stable" if applying the divisor-count function doesn't increase it. -/
 def isDivisorStable (n : ℕ) : Prop := gravWeight (gravWeight n) ≤ gravWeight n
 
 
 
+
+/-- [Section: # CatalogBuild.Physics.Classical.GravityAITeam
+Auto-generated from theorem catalog database.
+Domain: Physics/Classical
+Declarations: 53] -/
 theorem divisor_stable_1 : isDivisorStable 1 := by unfold isDivisorStable; native_decide
+
 
 
 theorem divisor_stable_2 : isDivisorStable 2 := by unfold isDivisorStable; native_decide
 
 
+
 theorem divisor_stable_6 : isDivisorStable 6 := by unfold isDivisorStable; native_decide
 
 
+
 theorem divisor_stable_12 : isDivisorStable 12 := by unfold isDivisorStable; native_decide
+
 
 
 
@@ -206,9 +243,11 @@ theorem gravWeight_multiplicative (m n : ℕ) (_hm : 0 < m) (_hn : 0 < n)
 
 
 
+
 /-- The "gravitational energy" between two numbers: -weight product / distance. -/
 def gravEnergy (a b : ℕ) : ℝ :=
   -((gravWeight a : ℝ) * (gravWeight b : ℝ)) / |(a : ℝ) - (b : ℝ)|
+
 
 
 
@@ -222,10 +261,12 @@ theorem gravEnergy_nonpos (a b : ℕ) :
 
 
 
+
 /-- Gödel encoding: encode a list of naturals as a single natural number. -/
 def godelEncode : List ℕ → ℕ
   | [] => 1
   | (n :: ns) => 2 ^ n * godelEncode ns + 1
+
 
 
 
@@ -236,9 +277,11 @@ theorem godelEncode_pos : ∀ l : List ℕ, 0 < godelEncode l
 
 
 
+
 /-- A universe state can be encoded as a single number on the number line. -/
 def encodeUniverse (U : GravUniverse) : ℕ :=
   godelEncode (U.map GravParticle.pos)
+
 
 
 
@@ -248,9 +291,11 @@ theorem encodeUniverse_pos (U : GravUniverse) : 0 < encodeUniverse U :=
 
 
 
+
 /-- The self-referential property: the encoded universe has its own gravitational weight. -/
 def universeSelfWeight (U : GravUniverse) : ℕ :=
   gravWeight (encodeUniverse U)
+
 
 
 
@@ -261,8 +306,10 @@ theorem universeSelfWeight_pos (U : GravUniverse) : 0 < universeSelfWeight U := 
 
 
 
+
 /-- The master oracle: σ₀ (divisor-count) as a dynamical system. -/
 def masterOracle (n : ℕ) : ℕ := gravWeight n
+
 
 
 
@@ -270,6 +317,7 @@ def masterOracle (n : ℕ) : ℕ := gravWeight n
 def masterOrbit (n : ℕ) : ℕ → ℕ
   | 0 => n
   | k + 1 => masterOracle (masterOrbit n k)
+
 
 
 
@@ -281,13 +329,16 @@ theorem masterOrbit_two : ∀ k, masterOrbit 2 k = 2 := by
 
 
 
+
 /-- 2 is a fixed point of the master oracle. -/
 theorem masterOracle_fixed_two : masterOracle 2 = 2 := by native_decide
 
 
 
+
 /-- 3 maps to 2 under the master oracle. -/
 theorem masterOracle_three : masterOracle 3 = 2 := by native_decide
+
 
 
 
@@ -303,6 +354,7 @@ theorem masterOracle_attracts_to_two (n : ℕ) (hn : 2 ≤ n) (hn' : n ≤ 10) :
 
 
 
+
 /-- The oracle "compresses" — applying σ₀ twice gives output ≤ 6 for n ≤ 30. -/
 theorem gravWeight_gravWeight_le (n : ℕ) (hn : 1 ≤ n) (hn' : n ≤ 30) :
     gravWeight (gravWeight n) ≤ 6 := by
@@ -310,9 +362,11 @@ theorem gravWeight_gravWeight_le (n : ℕ) (hn : 1 ≤ n) (hn' : n ≤ 30) :
 
 
 
+
 theorem euler_product_connection (p q : ℕ) (hp : p.Prime) (hq : q.Prime) (hpq : p ≠ q) :
     gravWeight (p * q) = gravWeight p * gravWeight q := by
   apply gravWeight_multiplicative p q hp.pos hq.pos (Nat.coprime_iff_gcd_eq_one.mpr <| by have := Nat.coprime_primes hp hq; tauto)
+
 
 
 
@@ -330,11 +384,13 @@ theorem oracle_compose_commuting {X : Type*} (O₁ O₂ : X → X)
 
 
 
+
 /-- Every orbit from [2..10] eventually cycles through 2. -/
 theorem every_orbit_cycles (n : ℕ) (hn : 2 ≤ n) (hn' : n ≤ 10) :
     ∃ k₁ k₂ : ℕ, k₁ < k₂ ∧ masterOrbit n k₁ = masterOrbit n k₂ := by
   obtain ⟨k, _, hk⟩ := masterOracle_attracts_to_two n hn hn'
   exact ⟨k, k + 1, by omega, by simp [masterOrbit, hk, masterOracle]; native_decide⟩
+
 
 
 
@@ -345,6 +401,7 @@ theorem zetaPartialSum_nonneg (N : ℕ) (s : ℝ) (_hs : 0 < s) :
   apply Finset.sum_nonneg
   intro n hn
   positivity
+
 
 
 

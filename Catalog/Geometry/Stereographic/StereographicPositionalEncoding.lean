@@ -1,5 +1,3 @@
-import Mathlib
-
 /-! # CatalogBuild.Geometry.Stereographic.StereographicPositionalEncoding
 
 Auto-generated from theorem catalog database.
@@ -7,6 +5,7 @@ Domain: Geometry/Stereographic
 Declarations: 12
 -/
 
+import Mathlib
 
 noncomputable section
 
@@ -17,6 +16,7 @@ def spiralPos (freq : ℝ) (pos : ℕ) : Fin 3 → ℝ := fun i =>
   | ⟨0, _⟩ => Real.sin t * Real.cos (t / 3)
   | ⟨1, _⟩ => Real.sin t * Real.sin (t / 3)
   | ⟨2, _⟩ => Real.cos t
+
 
 
 
@@ -31,6 +31,7 @@ theorem spiralPos_on_sphere (freq : ℝ) (pos : ℕ) :
 
 
 
+
 /-- Sum form of the on-sphere property. -/
 theorem spiralPos_on_sphere_sum (freq : ℝ) (pos : ℕ) :
     ∑ i : Fin 3, (spiralPos freq pos i) ^ 2 = 1 := by
@@ -39,8 +40,14 @@ theorem spiralPos_on_sphere_sum (freq : ℝ) (pos : ℕ) :
 
 
 
+
+/-- [Section: # CatalogBuild.Geometry.Stereographic.StereographicPositionalEncoding
+Auto-generated from theorem catalog database.
+Domain: Geometry/Stereographic
+Declarations: 12] -/
 def sphereInnerProd (p q : Fin 3 → ℝ) : ℝ :=
   ∑ i, p i * q i
+
 
 
 
@@ -51,8 +58,10 @@ theorem geodesicDist_le_pi (p q : Fin 3 → ℝ) :
 
 
 
+
 def stereoPosEnc (freq : ℝ) (pos1 pos2 : ℕ) : ℝ :=
   sphereInnerProd (spiralPos freq pos1) (spiralPos freq pos2)
+
 
 
 
@@ -60,6 +69,7 @@ theorem stereoPosEnc_symm (freq : ℝ) (pos1 pos2 : ℕ) :
     stereoPosEnc freq pos1 pos2 = stereoPosEnc freq pos2 pos1 := by
   unfold stereoPosEnc sphereInnerProd
   exact Finset.sum_congr rfl fun i _ => mul_comm _ _
+
 
 
 
@@ -71,14 +81,17 @@ theorem stereoPosEnc_self (freq : ℝ) (pos : ℕ) :
 
 
 
+
 def relativePosBias (freq decay : ℝ) (pos1 pos2 : ℕ) : ℝ :=
   Real.exp (-decay * geodesicDist (spiralPos freq pos1) (spiralPos freq pos2))
+
 
 
 
 theorem relativePosBias_pos (freq decay : ℝ) (pos1 pos2 : ℕ) :
     0 < relativePosBias freq decay pos1 pos2 := by
   unfold relativePosBias; exact exp_pos _
+
 
 
 
@@ -91,12 +104,14 @@ theorem relativePosBias_le_one (freq decay : ℝ) (pos1 pos2 : ℕ)
 
 
 
+
 theorem relativePosBias_self (freq decay : ℝ) (pos : ℕ) :
     relativePosBias freq decay pos pos = 1 := by
   unfold relativePosBias geodesicDist
   have : sphereInnerProd (spiralPos freq pos) (spiralPos freq pos) = 1 := by
     unfold sphereInnerProd; simp only [← sq]; exact spiralPos_on_sphere_sum freq pos
   simp [this, Real.arccos_one]
+
 
 
 

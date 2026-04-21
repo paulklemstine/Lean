@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: EML
-Declarations: 37
+Declarations: 36
 -/
 
 import Mathlib
@@ -14,13 +14,16 @@ def emlF (x y : ℝ) : ℝ := Real.exp x - Real.log y
 
 
 
+
 /-- The one-minus-log map: g(x) = 1 - ln(x). -/
 def oml (x : ℝ) : ℝ := 1 - Real.log x
 
 
 
+
 /-- The right-action map: T_c(x) = EML(x, c) = exp(x) - ln(c). -/
 def emlT (c : ℝ) (x : ℝ) : ℝ := Real.exp x - Real.log c
+
 
 
 
@@ -32,10 +35,12 @@ theorem emlDiag_deriv (z : ℝ) (hz : z ≠ 0) :
 
 
 
+
 /-- The second derivative of the diagonal map is exp(z) + 1/z². -/
 theorem emlDiag_second_deriv_pos (z : ℝ) (hz : 0 < z) :
     Real.exp z + z⁻¹ ^ 2 > 0 := by
   positivity
+
 
 
 
@@ -58,6 +63,11 @@ theorem emlDiag_convex : ConvexOn ℝ (Ioi 0) emlDiag := by
 
 
 
+
+/-- [Section: # CatalogBuild.EML.FutureResearch
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 37] -/
 theorem emlDiag_gt_id (z : ℝ) (hz : 0 < z) : emlDiag z > z := by
   unfold emlDiag;
   -- We'll use the fact that $e^z \geq 1 + z + \frac{z^2}{2}$ for all $z \geq 0$.
@@ -65,10 +75,6 @@ theorem emlDiag_gt_id (z : ℝ) (hz : 0 < z) : emlDiag z > z := by
     exact fun z a => quadratic_le_exp_of_nonneg a;
   nlinarith [ h_exp_ineq z hz.le, Real.log_le_sub_one_of_pos hz ]
 
-
-
-theorem emlDiag_ge_two (z : ℝ) (hz : 0 < z) : emlDiag z ≥ 2 := by
-  exact le_tsub_of_add_le_left ( by have := Real.add_one_le_exp z; have := Real.log_le_sub_one_of_pos hz; linarith )
 
 
 
@@ -87,9 +93,11 @@ theorem emlDiag_tendsto_atTop : Tendsto emlDiag atTop atTop := by
 
 
 
+
 /-- g(1) = 1: the point x = 1 is a fixed point of g. -/
 theorem oml_fixed_one : oml 1 = 1 := by
   simp [oml, Real.log_one]
+
 
 
 
@@ -103,10 +111,12 @@ theorem oml_deriv (x : ℝ) (hx : x ≠ 0) :
 
 
 
+
 /-- g(g(x)) = 1 - ln(1 - ln(x)) for x > 0 with 1 - ln(x) > 0. -/
 theorem oml_compose (x : ℝ) :
     oml (oml x) = 1 - Real.log (1 - Real.log x) := by
   simp [oml]
+
 
 
 
@@ -116,9 +126,11 @@ theorem oml_at_e : oml (Real.exp 1) = 0 := by
 
 
 
+
 /-- g(1/e) = 2. -/
 theorem oml_at_inv_e : oml (Real.exp (-1)) = 2 := by
   simp [oml, Real.log_exp]; ring
+
 
 
 
@@ -132,9 +144,11 @@ theorem oml_unique_fixed_point (x : ℝ) (hx : 0 < x) (hfx : oml x = x) : x = 1 
 
 
 
+
 /-- T_1(x) = exp(x). -/
 theorem emlT_one (x : ℝ) : emlT 1 x = Real.exp x := by
   simp [emlT, Real.log_one]
+
 
 
 
@@ -144,9 +158,11 @@ theorem emlT_exp (c x : ℝ) : emlT (Real.exp c) x = Real.exp x - c := by
 
 
 
+
 theorem emlT_noncomm : ∃ x : ℝ, emlT 1 (emlT (Real.exp 1) x) ≠ emlT (Real.exp 1) (emlT 1 x) := by
   use 0; norm_num [ emlT ];
   exact ne_of_lt ( by have := Real.exp_one_gt_d9.le; norm_num1 at *; linarith )
+
 
 
 
@@ -158,8 +174,10 @@ theorem emlT_strictMono (c : ℝ) (_hc : 0 < c) : StrictMono (emlT c) := by
 
 
 
+
 theorem emlT_one_no_fixed_point (x : ℝ) : emlT 1 x ≠ x := by
   exact fun hx => by have := Real.exp_pos x; unfold emlT at hx; norm_num at hx; linarith [ Real.add_one_le_exp x ] ;
+
 
 
 
@@ -169,9 +187,11 @@ theorem emlPhi_no_symmetric_fixed (x : ℝ) (hx : 0 < x) :
 
 
 
+
 theorem emlPhi_fst_pos (x y : ℝ) (hx : 0 ≤ x) (hy : 0 < y) (hy1 : y ≤ 1) :
     (emlPhi (x, y)).1 > 0 := by
       exact sub_pos.mpr <| lt_of_le_of_lt ( Real.log_le_sub_one_of_pos hy ) <| by linarith [ Real.add_one_le_exp x ] ;
+
 
 
 
@@ -202,15 +222,18 @@ theorem triple_exp_not_depth2 :
 
 
 
+
 /-- K_EML(e) = 1: eml(1, 1) = exp(1) - ln(1) = e. -/
 theorem keml_e : emlF 1 1 = Real.exp 1 := by
   simp [emlF, Real.log_one]
 
 
 
+
 /-- K_EML(0) = 3: eml(1, eml(eml(1,1), 1)) = 0. -/
 theorem keml_zero : emlF 1 (emlF (emlF 1 1) 1) = 0 := by
   simp [emlF, Real.log_one, Real.log_exp]
+
 
 
 
@@ -221,9 +244,11 @@ theorem keml_e_minus_1 : emlF 1 (emlF 1 1) = Real.exp 1 - 1 := by
 
 
 
+
 /-- K_EML(e^e) = 2: eml(eml(1,1), 1) = exp(e). -/
 theorem keml_exp_e : emlF (emlF 1 1) 1 = Real.exp (Real.exp 1) := by
   simp [emlF, Real.log_one]
+
 
 
 
@@ -233,10 +258,12 @@ theorem keml_exp_exp_e : emlF (emlF (emlF 1 1) 1) 1 = Real.exp (Real.exp (Real.e
 
 
 
+
 /-- K_EML(e^e - e) = 3: eml(eml(1,1), eml(eml(1,1),1)) = e^e - e. -/
 theorem keml_exp_e_minus_e :
     emlF (emlF 1 1) (emlF (emlF 1 1) 1) = Real.exp (Real.exp 1) - Real.exp 1 := by
   simp [emlF, Real.log_one, Real.log_exp]
+
 
 
 
@@ -249,11 +276,13 @@ theorem emlF_scale (x y z : ℝ) (hy : 0 < y) (hz : 0 < z) :
 
 
 
+
 /-- Translation: EML(x + c, y) = exp(c) · EML_shift, more precisely
 EML(x + c, y) = exp(c) · exp(x) - ln(y). -/
 theorem emlF_translate_first (x c y : ℝ) :
     emlF (x + c) y = Real.exp c * Real.exp x - Real.log y := by
   simp [emlF, Real.exp_add, mul_comm]
+
 
 
 
@@ -265,10 +294,12 @@ theorem emlF_zero_reciprocal (y : ℝ) (_hy : 0 < y) :
 
 
 
+
 /-- EML(x, 1) ≥ 1 + x (exponential lower bound). -/
 theorem emlF_one_ge (x : ℝ) : emlF x 1 ≥ 1 + x := by
   simp [emlF, Real.log_one]
   linarith [Real.add_one_le_exp x]
+
 
 
 
@@ -280,10 +311,12 @@ theorem emlF_general_lower (x y : ℝ) (_hy : 0 < y) :
 
 
 
+
 /-- EML(x, exp(x)) ≥ 1 for all x (the "residual" is always ≥ 1). -/
 theorem emlF_residual_ge_one (x : ℝ) : emlF x (Real.exp x) ≥ 1 := by
   simp [emlF, Real.log_exp]
   linarith [Real.add_one_le_exp x]
+
 
 
 
@@ -295,8 +328,10 @@ theorem emlF_strictMono_fst (y : ℝ) : StrictMono (fun x => emlF x y) := by
 
 
 
+
 theorem emlF_strictAnti_snd (x : ℝ) : StrictAntiOn (fun y => emlF x y) (Ioi 0) := by
   exact fun y hy z hz hyz => sub_lt_sub_left ( Real.log_lt_log hy hyz ) _
+
 
 
 

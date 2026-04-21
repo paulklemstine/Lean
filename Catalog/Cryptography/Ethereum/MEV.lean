@@ -18,6 +18,7 @@ structure PendingSwap where
 
 
 
+
 /-- Pool state (simplified) -/
 structure PoolState where
   x : ℝ
@@ -27,9 +28,11 @@ structure PoolState where
 
 
 
+
 /-- Swap output from a constant-product pool -/
 noncomputable def swapOutput (ps : PoolState) (dx : ℝ) : ℝ :=
   ps.y * dx / (ps.x + dx)
+
 
 
 
@@ -39,6 +42,7 @@ noncomputable def poolAfterSwap (ps : PoolState) (dx : ℝ) (hdx : 0 < dx) : Poo
   y := ps.x * ps.y / (ps.x + dx)
   hx := by linarith [ps.hx]
   hy := by exact div_pos (mul_pos ps.hx ps.hy) (by linarith [ps.hx])
+
 
 
 
@@ -59,6 +63,7 @@ noncomputable def sandwichProfit (pool : PoolState) (victim : PendingSwap)
 
 
 
+
 /-- [Section: # CatalogBuild.Cryptography.Ethereum.MEV
 Auto-generated from theorem catalog database.
 Domain: Cryptography/Ethereum
@@ -67,6 +72,7 @@ theorem sandwich_output_pos (pool : PoolState)
     (dx_front : ℝ) (hdx : 0 < dx_front) :
     0 < swapOutput pool dx_front := by
   exact div_pos ( mul_pos pool.hy hdx ) ( add_pos pool.hx hdx )
+
 
 
 
@@ -85,6 +91,7 @@ noncomputable def backrunProfit (pool : PoolState) (fairPrice : ℝ)
 
 
 
+
 /-- A bid in a priority gas auction -/
 structure PGABid where
   gasPrice : ℝ         -- Gas price offered
@@ -94,11 +101,17 @@ structure PGABid where
 
 
 
+
+/-- [Section: # CatalogBuild.Cryptography.Ethereum.MEV
+Auto-generated from theorem catalog database.
+Domain: Cryptography/Ethereum
+Declarations: 10] -/
 theorem pga_equilibrium_limit (profit : ℝ) (hProfit : 0 < profit)
     (n : ℕ) (hn : 2 ≤ n) :
     ∀ ε > 0, ∃ N : ℕ, N ≤ n →
       profit - profit * ((n - 1 : ℝ) / n) < ε := by
   exact fun ε hε => ⟨ n + 1, by norm_num ⟩
+
 
 
 
@@ -109,6 +122,7 @@ theorem mev_redistribution_improves_welfare
     (mev : ℝ) (α : ℝ) (hmev : 0 < mev) (hα0 : 0 < α) (hα1 : α ≤ 1) :
     0 < α * mev := by
   positivity
+
 
 
 

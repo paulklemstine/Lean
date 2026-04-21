@@ -18,9 +18,11 @@ structure ModularFormData where
 
 
 
+
 /-- A cuspidal modular form (a(0) = 0). -/
 structure CuspFormData extends ModularFormData where
   cuspidal : fourier 0 = 0
+
 
 
 
@@ -31,10 +33,12 @@ structure HeckeEigenform extends CuspFormData where
 
 
 
+
 /-- The Ramanujan-Petersson bound: |a(p)| ≤ 2p^{(k-1)/2}. -/
 def satisfiesRamanujanBound (f : ModularFormData) : Prop :=
   ∀ p : ℕ, Nat.Prime p →
     ‖f.fourier p‖ ≤ 2 * (p : ℝ) ^ ((f.weight - 1 : ℝ) / 2)
+
 
 
 
@@ -51,9 +55,11 @@ theorem ramanujan_weight2 (f : ModularFormData) (hk : f.weight = 2) (p : ℕ)
 
 
 
+
 /-- The partial L-function of a modular form. -/
 def modularLFunction (f : ModularFormData) (s : ℂ) (N : ℕ) : ℂ :=
   ∑ n ∈ Finset.range N, f.fourier (n + 1) * ((n + 1 : ℂ) ^ (-s))
+
 
 
 
@@ -64,6 +70,7 @@ def modularEulerFactor (f : ModularFormData) (p : ℕ) (s : ℂ) : ℂ :=
 
 
 
+
 /-- An elliptic curve over ℚ (by conductor and a_p values). -/
 structure EllipticCurveData where
   conductor : ℕ
@@ -71,10 +78,12 @@ structure EllipticCurveData where
 
 
 
+
 /-- The Hasse bound: |a_p| ≤ 2√p. -/
 def satisfiesHasseBound (E : EllipticCurveData) : Prop :=
   ∀ p : ℕ, Nat.Prime p → ¬(p ∣ E.conductor) →
     |(E.a_p p : ℝ)| ≤ 2 * Real.sqrt p
+
 
 
 
@@ -90,10 +99,12 @@ structure ModularityCorrespondence where
 
 
 
+
 /-- Simultaneous Hecke eigenvalues. -/
 structure HeckeEigenvalueSystem where
   level : ℕ
   eigenvalues : ℕ → ℂ
+
 
 
 
@@ -106,9 +117,11 @@ def strongMultiplicityOne (sys1 sys2 : HeckeEigenvalueSystem) : Prop :=
 
 
 
+
 /-- A Langlands oracle: given Galois data, predict automorphic data. -/
 structure LanglandsOracle where
   predict : ℤ → ℂ
+
 
 
 
@@ -118,9 +131,11 @@ def isExactOracle (oracle : LanglandsOracle) : Prop :=
 
 
 
+
 /-- The error of an approximate oracle. -/
 def oracleError (oracle : LanglandsOracle) (true_value : ℤ) : ℝ :=
   ‖oracle.predict true_value - (true_value : ℂ)‖
+
 
 
 
@@ -132,9 +147,11 @@ theorem exact_oracle_zero_error (oracle : LanglandsOracle)
 
 
 
+
 /-- The oracle accuracy metric. -/
 def oracleAccuracy (k : ℕ) (predictions ground_truth : Fin k → ℂ) (eps : ℝ) : ℝ :=
   ((Finset.univ.filter (fun i => ‖predictions i - ground_truth i‖ < eps)).card : ℝ) / k
+
 
 
 
@@ -145,6 +162,7 @@ Declarations: 18] -/
 theorem perfect_accuracy (k : ℕ) (hk : k > 0) (f : Fin k → ℂ) (eps : ℝ) (heps : eps > 0) :
     oracleAccuracy k f f eps = 1 := by
   unfold oracleAccuracy; aesop;
+
 
 
 

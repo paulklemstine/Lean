@@ -13,8 +13,10 @@ def NatSumTwoSq (n : ℕ) : Prop :=
 
 
 
+
 /-- 0 is a sum of two squares. -/
 theorem natS2S_zero : NatSumTwoSq 0 := ⟨0, 0, by ring⟩
+
 
 
 
@@ -23,8 +25,10 @@ theorem natS2S_one : NatSumTwoSq 1 := ⟨0, 1, by ring⟩
 
 
 
+
 /-- 2 is a sum of two squares. -/
 theorem natS2S_two : NatSumTwoSq 2 := ⟨1, 1, by ring⟩
+
 
 
 
@@ -33,8 +37,10 @@ theorem natS2S_five : NatSumTwoSq 5 := ⟨1, 2, by ring⟩
 
 
 
+
 /-- Every perfect square is a sum of two squares. -/
 theorem sq_is_natS2S (n : ℕ) : NatSumTwoSq (n ^ 2) := ⟨0, n, by ring⟩
+
 
 
 
@@ -47,8 +53,14 @@ theorem not_natS2S_three : ¬ NatSumTwoSq 3 := by
 
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.Core.SumOfSquares
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Core
+Declarations: 22] -/
 theorem not_natS2S_six : ¬ NatSumTwoSq 6 := by
   exact fun ⟨ a, b, h ⟩ ↦ by have := Nat.le_of_lt_succ ( show a < 3 by nlinarith ) ; have := Nat.le_of_lt_succ ( show b < 3 by nlinarith ) ; interval_cases a <;> interval_cases b <;> trivial;
+
 
 
 
@@ -58,6 +70,7 @@ theorem not_natS2S_seven : ¬ NatSumTwoSq 7 := by
 -- ═══════════════════════════════════════════════════════════════════════════════
 --  §2: THE BRAHMAGUPTA-FIBONACCI IDENTITY
 -- ═══════════════════════════════════════════════════════════════════════════════
+
 
 
 
@@ -72,10 +85,12 @@ theorem int_s2s_mul_closed (a b c d : ℤ) :
 
 
 
+
 /-- The norm of a Gaussian integer z = a + bi equals a² + b². -/
 theorem gaussInt_norm_formula (a b : ℤ) :
     Zsqrtd.norm (⟨a, b⟩ : GaussianInt) = a * a + b * b := by
   simp [Zsqrtd.norm]
+
 
 
 
@@ -86,8 +101,10 @@ theorem gaussInt_norm_mul (z w : GaussianInt) :
 
 
 
+
 theorem s2s_mod4_ne_3 (a b : ℤ) : (a ^ 2 + b ^ 2) % 4 ≠ 3 := by
   rcases Int.even_or_odd' a with ⟨ x, rfl | rfl ⟩ <;> rcases Int.even_or_odd' b with ⟨ y, rfl | rfl ⟩ <;> ring_nf <;> norm_num
+
 
 
 
@@ -100,10 +117,12 @@ theorem not_s2s_if_3_mod4 {n : ℤ} (hn : n % 4 = 3) :
 
 
 
+
 theorem prime_3_mod4_not_s2s {p : ℕ} (hmod : p % 4 = 3) :
     ¬ NatSumTwoSq p := by
   rintro ⟨ a, b, h ⟩;
   exact absurd ( congr_arg ( · % 4 ) h ) ( by norm_num [ Nat.add_mod, Nat.pow_mod, hmod ] ; have := Nat.mod_lt a zero_lt_four; have := Nat.mod_lt b zero_lt_four; interval_cases a % 4 <;> interval_cases b % 4 <;> trivial )
+
 
 
 
@@ -113,9 +132,11 @@ theorem sum_four_squares_small (n : ℕ) (hn : n < 10) :
 
 
 
+
 /-- 7 is a sum of four squares (but not two). -/
 theorem seven_sum_four_sq : ∃ a b c d : ℕ, a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 = 7 :=
   ⟨1, 1, 1, 2, by norm_num⟩
+
 
 
 
@@ -129,6 +150,7 @@ theorem fifteen_sum_four_sq : ∃ a b c d : ℕ, a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 =
 
 
 
+
 /-- Scaling a sum of two squares. -/
 theorem s2s_descent_helper (a b k : ℕ) :
     (k * a) ^ 2 + (k * b) ^ 2 = k ^ 2 * (a ^ 2 + b ^ 2) := by ring
@@ -139,10 +161,12 @@ theorem s2s_descent_helper (a b k : ℕ) :
 
 
 
+
 /-- Every hypotenuse² of a Pythagorean triple is a sum of two squares. -/
 theorem pyth_hyp_is_s2s (a b c : ℕ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     NatSumTwoSq (c ^ 2) :=
   ⟨a, b, h⟩
+
 
 
 
@@ -153,8 +177,10 @@ theorem mult5_is_hypotenuse (k : ℕ) (hk : 0 < k) :
 
 
 
+
 /-- Every multiple of 13 is a hypotenuse. -/
 theorem mult13_is_hypotenuse (k : ℕ) (hk : 0 < k) :
     ∃ a b : ℕ, a > 0 ∧ b > 0 ∧ a ^ 2 + b ^ 2 = (13 * k) ^ 2 :=
   ⟨5 * k, 12 * k, by omega, by omega, by ring⟩
+
 

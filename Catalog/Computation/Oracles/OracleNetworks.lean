@@ -15,10 +15,12 @@ def IsContracting (n : ℕ) (f : (Fin n → ℝ) → (Fin n → ℝ)) (c : ℝ) 
 
 
 
+
 /-- Iterated oracle update. -/
 def iterateOracle {n : ℕ} (f : (Fin n → ℝ) → (Fin n → ℝ)) (x₀ : Fin n → ℝ) : ℕ → Fin n → ℝ
   | 0 => x₀
   | k + 1 => f (iterateOracle f x₀ k)
+
 
 
 
@@ -37,15 +39,18 @@ theorem contracting_oracle_cauchy {n : ℕ} (f : (Fin n → ℝ) → (Fin n → 
 
 
 
+
 /-- A council of k oracles, each providing a real-valued estimate. -/
 structure OracleCouncil (k : ℕ) where
   estimates : Fin k → ℝ
 
 
 
+
 /-- The council's aggregate answer (mean). -/
 def OracleCouncil.mean {k : ℕ} (hk : 0 < k) (council : OracleCouncil k) : ℝ :=
   (∑ i, council.estimates i) / k
+
 
 
 
@@ -56,6 +61,11 @@ theorem variance_reduction (k : ℕ) (hk : 0 < k) (sigma_sq : ℝ) (hs : 0 ≤ s
 
 
 
+
+/-- [Section: # CatalogBuild.Computation.Oracles.OracleNetworks
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 14] -/
 theorem diminishing_returns (k : ℕ) (hk : 0 < k) (sigma_sq : ℝ) (hs : 0 < sigma_sq) :
     sigma_sq / k - sigma_sq / (k + 1) = sigma_sq / (k * (k + 1)) := by
       -- Combine the fractions over a common denominator.
@@ -64,8 +74,10 @@ theorem diminishing_returns (k : ℕ) (hk : 0 < k) (sigma_sq : ℝ) (hs : 0 < si
 
 
 
+
 /-- Error after k rounds of self-improvement with factor r reduction. -/
 def selfImprovementError (e0 r : ℝ) (k : ℕ) : ℝ := e0 * r ^ k
+
 
 
 
@@ -76,9 +88,11 @@ theorem selfImprovementError_nonneg (e0 r : ℝ) (he : 0 ≤ e0) (hr : 0 ≤ r) 
 
 
 
+
 theorem selfImprovementError_decreasing (e0 r : ℝ) (he : 0 < e0) (hr : 0 < r) (hr1 : r < 1) :
     StrictAnti (fun k => selfImprovementError e0 r k) := by
       exact strictAnti_nat_of_succ_lt fun k => mul_lt_mul_of_pos_left ( pow_lt_pow_right_of_lt_one₀ hr hr1 k.lt_succ_self ) he
+
 
 
 
@@ -88,9 +102,11 @@ theorem selfImprovementError_tendsto_zero (e0 r : ℝ) (he : 0 ≤ e0) (hr : 0 �
 
 
 
+
 /-- Total cost function: accuracy_loss + coordination_cost. -/
 def councilCost (sigma c : ℝ) (k : ℕ) : ℝ :=
   sigma / Real.sqrt k + c * k
+
 
 
 
@@ -100,9 +116,11 @@ theorem council_cost_grows (sigma c : ℝ) (hs : 0 < sigma) (hc : 0 < c) :
 
 
 
+
 theorem expected_degree_threshold (n : ℕ) (hn : 2 ≤ n) (p : ℝ) (hp : 0 ≤ p) (hp1 : p ≤ 1) :
     (n - 1 : ℝ) * p ≥ 1 ↔ p ≥ 1 / (n - 1 : ℝ) := by
       exact ⟨ fun h => by rw [ ge_iff_le, div_le_iff₀ ] <;> linarith [ show ( n : ℝ ) ≥ 2 by norm_cast ], fun h => by rw [ ge_iff_le, div_le_iff₀ ] at h <;> linarith [ show ( n : ℝ ) ≥ 2 by norm_cast ] ⟩
+
 
 
 

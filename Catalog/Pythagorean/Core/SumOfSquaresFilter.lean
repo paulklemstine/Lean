@@ -13,6 +13,7 @@ theorem two_is_sum_two_squares : IsSumTwoSquares 2 := by
 
 
 
+
 /-- [Section: # CatalogBuild.Pythagorean.Core.SumOfSquaresFilter
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/Core
@@ -23,7 +24,9 @@ theorem prime_3mod4_not_sum_two_squares (p : ℕ) (hp : Nat.Prime p) (hmod : p %
 
 
 
+
 /-- Any perfect square is a sum of two squares. -/
 theorem square_is_sum_two_squares (n : ℤ) : IsSumTwoSquares (n ^ 2) := by
   exact ⟨n, 0, by ring⟩
+
 

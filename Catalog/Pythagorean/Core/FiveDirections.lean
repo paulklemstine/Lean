@@ -13,9 +13,11 @@ def Q21d : Matrix (Fin 3) (Fin 3) ℤ :=
 
 
 
+
 /-- Berggren 3×3 matrix B₁. -/
 def BB1d : Matrix (Fin 3) (Fin 3) ℤ :=
   !![1, -2, 2; 2, -1, 2; 2, -2, 3]
+
 
 
 
@@ -25,9 +27,11 @@ def BB2d : Matrix (Fin 3) (Fin 3) ℤ :=
 
 
 
+
 /-- Berggren 3×3 matrix B₃. -/
 def BB3d : Matrix (Fin 3) (Fin 3) ℤ :=
   !![-1, 2, 2; -2, 1, 2; -2, 2, 3]
+
 
 
 
@@ -36,13 +40,16 @@ theorem BB1d_preserves : BB1dᵀ * Q21d * BB1d = Q21d := by native_decide
 
 
 
+
 /-- B₂ preserves the Lorentz form Q₂₁. -/
 theorem BB2d_preserves : BB2dᵀ * Q21d * BB2d = Q21d := by native_decide
 
 
 
+
 /-- B₃ preserves the Lorentz form Q₂₁. -/
 theorem BB3d_preserves : BB3dᵀ * Q21d * BB3d = Q21d := by native_decide
+
 
 
 
@@ -53,10 +60,17 @@ Declarations: 96] -/
 theorem det_BB1d : Matrix.det BB1d = 1 := by native_decide
 
 
+
+/-- [Section: # CatalogBuild.Pythagorean.Core.FiveDirections
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Core
+Declarations: 96] -/
 theorem det_BB2d : Matrix.det BB2d = -1 := by native_decide
 
 
+
 theorem det_BB3d : Matrix.det BB3d = 1 := by native_decide
+
 
 
 
@@ -65,8 +79,10 @@ theorem root_quadruple : IsPythQuad 1 2 2 3 := by unfold IsPythQuad; norm_num
 
 
 
+
 /-- The quadruple (2,3,6,7). -/
 theorem quad_2367 : IsPythQuad 2 3 6 7 := by unfold IsPythQuad; norm_num
+
 
 
 
@@ -74,6 +90,7 @@ theorem quad_2367 : IsPythQuad 2 3 6 7 := by unfold IsPythQuad; norm_num
 theorem quadruple_param (p q r s : ℤ) :
     (p^2 + q^2 - r^2 - s^2)^2 + (2*(p*s + q*r))^2 + (2*(q*s - p*r))^2
     = (p^2 + q^2 + r^2 + s^2)^2 := by ring
+
 
 
 
@@ -88,11 +105,13 @@ theorem product_preserves_Q21 (A B : Matrix (Fin 3) (Fin 3) ℤ)
 
 
 
+
 /-- B₁ maps (3,4,5) to another Pythagorean triple. -/
 theorem BB1d_maps_345 :
     let v := ![3, 4, 5]
     let w := BB1d *ᵥ v
     w 0 ^ 2 + w 1 ^ 2 = w 2 ^ 2 := by native_decide
+
 
 
 
@@ -104,11 +123,13 @@ theorem BB2d_maps_345 :
 
 
 
+
 /-- B₃ maps (3,4,5) to another Pythagorean triple. -/
 theorem BB3d_maps_345 :
     let v := ![3, 4, 5]
     let w := BB3d *ᵥ v
     w 0 ^ 2 + w 1 ^ 2 = w 2 ^ 2 := by native_decide
+
 
 
 
@@ -122,6 +143,7 @@ theorem seven_not_three_sq : ¬ ∃ a b c : ℕ, a^2 + b^2 + c^2 = 7 := by
 
 
 
+
 /-- 15 is not a sum of three squares (15 = 4⁰·(8·1+7)). -/
 theorem fifteen_not_three_sq : ¬ ∃ a b c : ℕ, a^2 + b^2 + c^2 = 15 := by
   intro ⟨a, b, c, h⟩
@@ -132,8 +154,10 @@ theorem fifteen_not_three_sq : ¬ ∃ a b c : ℕ, a^2 + b^2 + c^2 = 15 := by
 
 
 
+
 /-- 14 is a sum of three squares. -/
 theorem three_sq_14 : ∃ a b c : ℤ, a^2 + b^2 + c^2 = 14 := ⟨1, 2, 3, by norm_num⟩
+
 
 
 
@@ -142,13 +166,16 @@ theorem selberg_316_pos : (3 : ℝ) / 16 > 0 := by positivity
 
 
 
+
 /-- The optimal bound λ₁ = 1/4 is stronger than Selberg's 3/16. -/
 theorem optimal_gt_selberg : (1 : ℚ) / 4 > 3 / 16 := by norm_num
 
 
 
+
 /-- The Ramanujan bound at level 2: s(1-s) = λ₁ = 1/4 gives s = 1/2. -/
 theorem ramanujan_level2 : (1 : ℝ) / 2 * (1 - 1 / 2) = 1 / 4 := by ring
+
 
 
 
@@ -159,8 +186,10 @@ theorem mixing_exp : Real.sqrt (1 / 4 : ℝ) = 1 / 2 := by
 
 
 
+
 /-- The Cheeger constant bound: 4λ₁ = 1 when λ₁ = 1/4. -/
 theorem cheeger_bound : 4 * (1 / 4 : ℝ) = 1 := by ring
+
 
 
 
@@ -170,9 +199,11 @@ theorem lattice_pt_error : (1 : ℝ) - Real.sqrt (1 / 4) = 1 / 2 := by
 
 
 
+
 /-- The equidistribution exponent with λ₁ = 1/4 dominates Selberg's bound. -/
 theorem equidist_exp : Real.sqrt (1 / 4 : ℝ) ≥ Real.sqrt (3 / 16) := by
   apply Real.sqrt_le_sqrt; norm_num
+
 
 
 
@@ -182,8 +213,10 @@ theorem descent_const : 1 / Real.sqrt (1 / 4 : ℝ) = 2 := by
 
 
 
+
 /-- The hyperbolic area of the fundamental domain of Γ_θ is π. -/
 theorem fund_domain_area : 3 * (Real.pi / 3) = Real.pi := by ring
+
 
 
 
@@ -192,13 +225,17 @@ theorem ppt_counting_pos : (0 : ℝ) < 1 / (2 * Real.pi) := by positivity
 
 
 
+
 theorem chi4_zero : chi4 0 = 0 := by simp [chi4]
+
 
 
 theorem chi4_two : chi4 2 = 0 := by simp [chi4]
 
 
+
 theorem chi4_four : chi4 4 = 0 := by simp [chi4]
+
 
 
 /-- χ₋₄ has period 4. -/
@@ -207,9 +244,11 @@ theorem chi4_periodic (n : ℤ) : chi4 (n + 4) = chi4 n := by
 
 
 
+
 /-- The sum over a full period vanishes. -/
 theorem chi4_sum_period : chi4 0 + chi4 1 + chi4 2 + chi4 3 = 0 := by
   unfold chi4; norm_num
+
 
 
 
@@ -220,6 +259,7 @@ theorem chi4_mult_odd (m n : ℤ) (hm : m % 2 = 1) (hn : n % 2 = 1) :
 
 
 
+
 /-- The divisor sum formula for r₂ (computable version). -/
 def r2_formula (n : ℕ) : ℤ :=
   4 * ((Finset.Icc 1 n).filter (· ∣ n)).sum (fun d => chi4 d)
@@ -227,37 +267,49 @@ def r2_formula (n : ℕ) : ℤ :=
 -- Verified values of the r₂ formula
 
 
+
 theorem r2_val_1 : r2_formula 1 = 4 := by native_decide
+
 
 
 theorem r2_val_2 : r2_formula 2 = 4 := by native_decide
 
 
+
 theorem r2_val_3 : r2_formula 3 = 0 := by native_decide
+
 
 
 theorem r2_val_4 : r2_formula 4 = 4 := by native_decide
 
 
+
 theorem r2_val_5 : r2_formula 5 = 8 := by native_decide
+
 
 
 theorem r2_val_7 : r2_formula 7 = 0 := by native_decide
 
 
+
 theorem r2_val_10 : r2_formula 10 = 8 := by native_decide
+
 
 
 theorem r2_val_11 : r2_formula 11 = 0 := by native_decide
 
 
+
 theorem r2_val_13 : r2_formula 13 = 8 := by native_decide
+
 
 
 theorem r2_val_25 : r2_formula 25 = 12 := by native_decide
 
 
+
 theorem r2_val_50 : r2_formula 50 = 12 := by native_decide
+
 
 
 
@@ -271,9 +323,11 @@ theorem fermat_two_sq (p : ℕ) (hp : Nat.Prime p) (hmod : p % 4 = 1) :
 
 
 
+
 theorem no_sum_sq_3mod4 (p : ℕ) (hp : Nat.Prime p) (hmod : p % 4 = 3) :
     ¬ ∃ a b : ℕ, a ^ 2 + b ^ 2 = p := by
       exact fun ⟨ a, b, h ⟩ => by have := congr_arg ( · % 4 ) h; norm_num [ Nat.add_mod, Nat.pow_mod, hmod ] at this; have := Nat.mod_lt a zero_lt_four; have := Nat.mod_lt b zero_lt_four; interval_cases a % 4 <;> interval_cases b % 4 <;> contradiction;
+
 
 
 
@@ -282,8 +336,10 @@ theorem leibniz_positive : (0 : ℝ) < Real.pi / 4 := by positivity
 
 
 
+
 /-- Berggren matrix M₁. -/
 def QM1 : Matrix (Fin 2) (Fin 2) ℤ := !![2, -1; 1, 0]
+
 
 
 
@@ -292,18 +348,23 @@ def QM3 : Matrix (Fin 2) (Fin 2) ℤ := !![1, 2; 0, 1]
 
 
 
+
 /-- The S generator. -/
 def QS : Matrix (Fin 2) (Fin 2) ℤ := !![0, -1; 1, 0]
+
 
 
 
 theorem det_QM1 : Matrix.det QM1 = 1 := by native_decide
 
 
+
 theorem det_QM3 : Matrix.det QM3 = 1 := by native_decide
 
 
+
 theorem det_QS : Matrix.det QS = 1 := by native_decide
+
 
 
 
@@ -312,13 +373,16 @@ theorem QS_order_4 : QS ^ 4 = 1 := by native_decide
 
 
 
+
 /-- S² = -I. -/
 theorem QS_sq_neg_I : QS ^ 2 = -1 := by native_decide
 
 
 
+
 /-- M₁ = T² · S. -/
 theorem QM1_eq_T2S : QM1 = QM3 * QS := by native_decide
+
 
 
 
@@ -329,10 +393,12 @@ theorem QM1_frob_gap :
 
 
 
+
 /-- ‖M₃ - I‖² = 4. -/
 theorem QM3_frob_gap :
     (QM3 0 0 - 1)^2 + (QM3 0 1)^2 + (QM3 1 0)^2 + (QM3 1 1 - 1)^2 = 4 := by
   native_decide
+
 
 
 
@@ -343,8 +409,10 @@ theorem QS_frob_gap :
 
 
 
+
 /-- M₁ has a zero entry. -/
 theorem QM1_sparse : QM1 1 1 = 0 := by native_decide
+
 
 
 
@@ -353,13 +421,17 @@ theorem code_rate (n : ℕ) : 3 ^ n ≥ 1 := Nat.one_le_pow n 3 (by norm_num)
 
 
 
+
 theorem code_depth_3 : 3 ^ 3 = 27 := by norm_num
+
 
 
 theorem code_depth_5 : 3 ^ 5 = 243 := by norm_num
 
 
+
 theorem code_depth_10 : 3 ^ 10 = 59049 := by norm_num
+
 
 
 
@@ -370,9 +442,11 @@ theorem det_product_chain :
 
 
 
+
 /-- The three generators are pairwise distinct. -/
 theorem QM1_ne_QM3 : QM1 ≠ QM3 := by
   intro h; have := congr_fun (congr_fun h 0) 0; simp [QM1, QM3] at this
+
 
 
 
@@ -381,8 +455,10 @@ theorem QM1_ne_QS : QM1 ≠ QS := by
 
 
 
+
 theorem QM3_ne_QS : QM3 ≠ QS := by
   intro h; have := congr_fun (congr_fun h 0) 0; simp [QM3, QS] at this
+
 
 
 
@@ -391,7 +467,9 @@ def CayleyMat : Matrix (Fin 2) (Fin 2) ℤ := !![1, 1; 1, -1]
 
 
 
+
 theorem det_Cayley : Matrix.det CayleyMat = -2 := by native_decide
+
 
 
 
@@ -400,8 +478,10 @@ theorem trace_QM1 : Matrix.trace QM1 = 2 := by native_decide
 
 
 
+
 /-- Trace of M₃ is 2 (parabolic). -/
 theorem trace_QM3 : Matrix.trace QM3 = 2 := by native_decide
+
 
 
 
@@ -410,8 +490,10 @@ theorem trace_QS : Matrix.trace QS = 0 := by native_decide
 
 
 
+
 /-- M₁ · M₃ has trace 4 (hyperbolic). -/
 theorem trace_QM1_QM3 : Matrix.trace (QM1 * QM3) = 4 := by native_decide
+
 
 
 
@@ -422,9 +504,11 @@ theorem min_dist_depth1 :
 
 
 
+
 /-- The S-transformation λ ↦ 1-λ has λ = 1/2 as its unique fixed point. -/
 theorem lambda_S_fixed : ∀ x : ℚ, 1 - x = x → x = 1 / 2 := by
   intro x hx; linarith
+
 
 
 
@@ -433,8 +517,10 @@ theorem lambda_at_i : (1 : ℚ) / 2 = 1 - 1 / 2 := by norm_num
 
 
 
+
 /-- Discriminant vanishes at cusp λ = 0. -/
 theorem discrim_cusp_0 : (0 : ℚ)^2 * (1 - 0)^2 = 0 := by norm_num
+
 
 
 
@@ -443,8 +529,10 @@ theorem discrim_cusp_1 : (1 : ℚ)^2 * (1 - 1)^2 = 0 := by norm_num
 
 
 
+
 /-- The six anharmonic ratios form S₃. -/
 theorem anharmonic_S3 : Nat.factorial 3 = 6 := by norm_num
+
 
 
 
@@ -453,12 +541,15 @@ theorem lambda_leading : (16 : ℤ) = 2 ^ 4 := by norm_num
 
 
 
+
 /-- Gauss-Bonnet: Area(X_θ) = π. -/
 theorem gauss_bonnet : 3 * (Real.pi / 3) = Real.pi := by ring
 
 
 
+
 theorem area_positive : Real.pi > 0 := Real.pi_pos
+
 
 
 
@@ -467,29 +558,38 @@ def berggrenFarey (a b c : ℤ) : ℚ := (b : ℚ) / (a + c)
 
 
 
+
 theorem farey_345 : berggrenFarey 3 4 5 = 1 / 2 := by simp [berggrenFarey]; norm_num
+
 
 
 theorem farey_51213 : berggrenFarey 5 12 13 = 2 / 3 := by simp [berggrenFarey]; norm_num
 
 
+
 theorem farey_81517 : berggrenFarey 8 15 17 = 3 / 5 := by simp [berggrenFarey]; norm_num
+
 
 
 theorem farey_72425 : berggrenFarey 7 24 25 = 3 / 4 := by simp [berggrenFarey]; norm_num
 
 
 
+
 theorem two_sum_sq : ∃ a b : ℤ, a^2 + b^2 = 2 := ⟨1, 1, by norm_num⟩
 
 
+
 theorem five_sum_sq : ∃ a b : ℤ, a^2 + b^2 = 5 := ⟨1, 2, by norm_num⟩
+
 
 
 theorem thirteen_sum_sq : ∃ a b : ℤ, a^2 + b^2 = 13 := ⟨2, 3, by norm_num⟩
 
 
 
+
 theorem prime_density_pos : (1 : ℚ) / 2 > 0 := by norm_num
+
 
 

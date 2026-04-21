@@ -17,6 +17,7 @@ theorem wick_sign_flip (x y : ℝ) :
 
 
 
+
 /-- [Section: # CatalogBuild.EML.WickRotation
 Auto-generated from theorem catalog database.
 Domain: EML
@@ -25,6 +26,7 @@ theorem tan_add_is_spbCirc (α β : ℝ) (hα : Real.cos α ≠ 0) (hβ : Real.c
     Real.tan (α + β) = spbCirc (Real.tan α) (Real.tan β) := by
   simp +decide [ *, Real.tan_eq_sin_div_cos, Real.sin_add, Real.cos_add, spbCirc ];
   grind
+
 
 
 
