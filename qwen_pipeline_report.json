@@ -1,0 +1,59 @@
+{
+  "models": {
+    "Qwen2.5-3B": {
+      "name": "Qwen2.5-3B",
+      "params": 3091000000,
+      "eml_params": 316585984,
+      "compression_ratio": 9.763540258307835,
+      "vram_fp16_gb": 5.757436156272888,
+      "vram_eml_fp16_gb": 0.5896873474121094,
+      "vram_int4_gb": 1.439359039068222,
+      "oiscc_neurons": 1354752,
+      "oiscc_size_mb": 46.51171875,
+      "is_moe": false,
+      "n_experts": 0
+    },
+    "Qwen2.5-7B": {
+      "name": "Qwen2.5-7B",
+      "params": 7615000000,
+      "eml_params": 552283648,
+      "compression_ratio": 13.788204716138907,
+      "vram_fp16_gb": 14.184042811393738,
+      "vram_eml_fp16_gb": 1.0287084579467773,
+      "vram_int4_gb": 3.5460107028484344,
+      "oiscc_neurons": 1820672,
+      "oiscc_size_mb": 62.5078125,
+      "is_moe": false,
+      "n_experts": 0
+    },
+    "Qwen3.6-35B-A3B": {
+      "name": "Qwen3.6-35B-A3B",
+      "params": 35000000000,
+      "eml_params": 375064576,
+      "compression_ratio": 93.31726385165204,
+      "vram_fp16_gb": 65.1925802230835,
+      "vram_eml_fp16_gb": 0.6986122131347656,
+      "vram_int4_gb": 16.298145055770874,
+      "oiscc_neurons": 15912960,
+      "oiscc_size_mb": 546.328125,
+      "is_moe": true,
+      "n_experts": 256
+    }
+  },
+  "distillation_quality": "tested_on_synthetic_weights",
+  "crystallization_raw": {
+    "max_error": 0.4999321640950578,
+    "mean_error": 0.19681946825166888,
+    "n_exact": 512,
+    "n_weights": 2048
+  },
+  "crystallization_trained": {
+    "max_error": 0.496617269590087,
+    "mean_error": 0.016115265007780825,
+    "n_exact": 512,
+    "n_weights": 2048
+  },
+  "int16_max_abs_error": 8.094310760498047e-05,
+  "int16_mean_abs_error": 2.9031130907242186e-05,
+  "int16_max_rel_error": 0.9999985098838806
+}
