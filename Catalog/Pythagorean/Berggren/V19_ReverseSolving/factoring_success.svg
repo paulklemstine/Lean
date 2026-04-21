@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect x="0" y="0" width="800" height="500" fill="#1a1a2e" stroke="none" stroke-width="1" rx="0"/>
+  <text x="400" y="35" font-size="18" text-anchor="middle" fill="#e0e0ff" font-weight="bold" font-family="sans-serif">Factoring via Tree Descent: Performance Analysis</text>
+  <text x="110" y="290" font-size="11" text-anchor="middle" fill="#aaa" font-weight="normal" font-family="sans-serif">Range</text>
+  <rect x="130" y="80" width="90" height="180" fill="#4ecdc4" stroke="none" stroke-width="1" rx="3"/>
+  <text x="175" y="72" font-size="11" text-anchor="middle" fill="#4ecdc4" font-weight="bold" font-family="sans-serif">100%</text>
+  <text x="175" y="275" font-size="9" text-anchor="middle" fill="#aaa" font-weight="normal" font-family="sans-serif">9-100</text>
+  <text x="175" y="288" font-size="8" text-anchor="middle" fill="#888" font-weight="normal" font-family="sans-serif">n=25</text>
+  <rect x="240" y="80" width="90" height="180" fill="#4ecdc4" stroke="none" stroke-width="1" rx="3"/>
+  <text x="285" y="72" font-size="11" text-anchor="middle" fill="#4ecdc4" font-weight="bold" font-family="sans-serif">100%</text>
+  <text x="285" y="275" font-size="9" text-anchor="middle" fill="#aaa" font-weight="normal" font-family="sans-serif">100-500</text>
+  <text x="285" y="288" font-size="8" text-anchor="middle" fill="#888" font-weight="normal" font-family="sans-serif">n=130</text>
+  <rect x="350" y="80" width="90" height="180" fill="#4ecdc4" stroke="none" stroke-width="1" rx="3"/>
+  <text x="395" y="72" font-size="11" text-anchor="middle" fill="#4ecdc4" font-weight="bold" font-family="sans-serif">100%</text>
+  <text x="395" y="275" font-size="9" text-anchor="middle" fill="#aaa" font-weight="normal" font-family="sans-serif">500-1000</text>
+  <text x="395" y="288" font-size="8" text-anchor="middle" fill="#888" font-weight="normal" font-family="sans-serif">n=177</text>
+  <rect x="460" y="80" width="90" height="180" fill="#4ecdc4" stroke="none" stroke-width="1" rx="3"/>
+  <text x="505" y="72" font-size="11" text-anchor="middle" fill="#4ecdc4" font-weight="bold" font-family="sans-serif">100%</text>
+  <text x="505" y="275" font-size="9" text-anchor="middle" fill="#aaa" font-weight="normal" font-family="sans-serif">1000-2000</text>
+  <text x="505" y="288" font-size="8" text-anchor="middle" fill="#888" font-weight="normal" font-family="sans-serif">n=365</text>
+  <rect x="570" y="80" width="90" height="180" fill="#4ecdc4" stroke="none" stroke-width="1" rx="3"/>
+  <text x="615" y="72" font-size="11" text-anchor="middle" fill="#4ecdc4" font-weight="bold" font-family="sans-serif">100%</text>
+  <text x="615" y="275" font-size="9" text-anchor="middle" fill="#aaa" font-weight="normal" font-family="sans-serif">2000-5000</text>
+  <text x="615" y="288" font-size="8" text-anchor="middle" fill="#888" font-weight="normal" font-family="sans-serif">n=1134</text>
+  <line x1="115" y1="260" x2="670" y2="260" stroke="#555" stroke-width="1"/>
+  <text x="105" y="85" font-size="9" text-anchor="end" fill="#888" font-weight="normal" font-family="sans-serif">100%</text>
+  <text x="105" y="260" font-size="9" text-anchor="end" fill="#888" font-weight="normal" font-family="sans-serif">0%</text>
+  <text x="400" y="70" font-size="14" text-anchor="middle" fill="#e0e0ff" font-weight="normal" font-family="sans-serif">Success Rate by Number Range</text>
+  <text x="400" y="320" font-size="14" text-anchor="middle" fill="#e0e0ff" font-weight="normal" font-family="sans-serif">Average Steps to Factor</text>
+  <rect x="130" y="404" width="90" height="36" fill="#ff6b6b" stroke="none" stroke-width="1" rx="3"/>
+  <text x="175" y="396" font-size="10" text-anchor="middle" fill="#ff6b6b" font-weight="normal" font-family="sans-serif">1.2</text>
+  <text x="175" y="455" font-size="9" text-anchor="middle" fill="#aaa" font-weight="normal" font-family="sans-serif">9-100</text>
+  <rect x="240" y="388" width="90" height="52" fill="#ff6b6b" stroke="none" stroke-width="1" rx="3"/>
+  <text x="285" y="380" font-size="10" text-anchor="middle" fill="#ff6b6b" font-weight="normal" font-family="sans-serif">1.8</text>
+  <text x="285" y="455" font-size="9" text-anchor="middle" fill="#aaa" font-weight="normal" font-family="sans-serif">100-500</text>
+  <rect x="350" y="374" width="90" height="66" fill="#ff6b6b" stroke="none" stroke-width="1" rx="3"/>
+  <text x="395" y="366" font-size="10" text-anchor="middle" fill="#ff6b6b" font-weight="normal" font-family="sans-serif">2.2</text>
+  <text x="395" y="455" font-size="9" text-anchor="middle" fill="#aaa" font-weight="normal" font-family="sans-serif">500-1000</text>
+  <rect x="460" y="363" width="90" height="77" fill="#ff6b6b" stroke="none" stroke-width="1" rx="3"/>
+  <text x="505" y="355" font-size="10" text-anchor="middle" fill="#ff6b6b" font-weight="normal" font-family="sans-serif">2.6</text>
+  <text x="505" y="455" font-size="9" text-anchor="middle" fill="#aaa" font-weight="normal" font-family="sans-serif">1000-2000</text>
+  <rect x="570" y="341" width="90" height="99" fill="#ff6b6b" stroke="none" stroke-width="1" rx="3"/>
+  <text x="615" y="333" font-size="10" text-anchor="middle" fill="#ff6b6b" font-weight="normal" font-family="sans-serif">3.4</text>
+  <text x="615" y="455" font-size="9" text-anchor="middle" fill="#aaa" font-weight="normal" font-family="sans-serif">2000-5000</text>
+  <line x1="115" y1="440" x2="670" y2="440" stroke="#555" stroke-width="1"/>
+</svg>
