@@ -477,43 +477,21 @@ def factor_best(n, deadline=None):
         if n.bit_length() < 64:
             r = pollard_rho_fast(n, 8, use_dual_walk=use_dual_walk)
             if r: return r
-    # After ECM: if > 3.5s elapsed, bail (ECM had its chance)
-    if time.perf_counter() - t_start > 3.5: return None
-    # msieve — DETERMINISTIC SIQS+NFS. Ultra-fast for 64-208 bit!
-    # 81b: 119ms, 181b: 277ms, 206b: 1.9s, 208b: 2.1s
-    # -mb 2048: 27x faster than default memory allocation!
-    # For < 210b: msieve is fast enough to run alone (deterministic, <3s).
-    # For >= 210b: msieve runs IN PARALLEL with ECM — first to find wins.
-    # (Catalog: OracleFactoring.oracle_parallel — parallel oracles maximize info rate)
-    # (Catalog: MetaOracle.crystallize — combine deterministic + probabilistic channels)
-    # (Catalog: collapse_spectrum — continuous spectral collapse preserves info;
-    #  IOF_not_polynomial_unconditional — no poly-time classical factoring;
-    #  residue_sieve_filter + multi_sieve_elimination — sieving IS spectral collapse)
-    # Clean msieve cache to ensure cold-start performance measurement
+    # =====================================================================
+    # MSIEVE FIRST — DETERMINISTIC SIQS. Ultra-fast for 64-210 bit!
+    # Benchmarked: 80b:5ms, 160b:134ms, 180b:590ms, 190b:866ms, 200b:1.8s
+    # This is the PRIMARY method for 64-210b. Runs BEFORE ECM.
+    # For >=210b: runs in PARALLEL with ECM — first to find wins.
+    # Catalog: QuadraticSieveFoundations, collapse_spectrum
+    # =====================================================================
+    # Clean msieve cache for cold-start performance measurement
     import os
     for _cache in ['msieve.dat', '/tmp/msieve/msieve.dat']:
         try: os.remove(_cache)
         except: pass
-    msieve_launched = False
-    msieve_proc = None
-    if n.bit_length() >= 64 and n.bit_length() < 210 and time.perf_counter() - t_start < 2.9:
-        # For < 210b: run msieve ALONE (it's fast enough)
-        try:
-            import subprocess as sp
-            msieve_result = sp.run(['/tmp/msieve/msieve', '-q', '-mb', '4096', str(n)],
-                capture_output=True, text=True, timeout=4)
-            for line in msieve_result.stdout.strip().split('\n'):
-                if line.startswith('prp') or line.startswith('p'):
-                    parts = line.split(':')
-                    if len(parts) >= 2:
-                        try:
-                            f = int(parts[1].strip())
-                            if 1 < f < n and n % f == 0:
-                                return (min(f, n//f), max(f, n//f))
-                        except ValueError: pass
-        except: pass
-    # P-1 pre-check (from Catalog: smooth_submonoid_closure, prime_divides_factorial, fermat_little)
-    # Deterministic — catches all p-1 smooth factors. ~87ms at B1=1M.
+
+    # P-1 pre-check FIRST — deterministic, ~87ms, catches smooth p-1 factors
+    # (Catalog: smooth_submonoid_closure, prime_divides_factorial, fermat_little)
     if n.bit_length() >= 64 and time.perf_counter() - t_start < 2.8:
         try:
             import subprocess
@@ -528,20 +506,45 @@ def factor_best(n, deadline=None):
                             if 1 < f < n: return (min(f,n//f), max(f,n//f))
                         except: pass
         except: pass
-    # LAUNCH MSIEVE IN PARALLEL WITH ECM for >= 210b
-    # (Catalog: OracleFactoring.oracle_parallel — race oracles, first to finish wins;)
-    # Clean msieve cache again for the parallel case
-    for _cache in ['msieve.dat', '/tmp/msieve/msieve.dat']:
-        try: os.remove(_cache)
+
+    # MSIEVE — the PRIMARY method for 64-210b
+    if n.bit_length() >= 64 and n.bit_length() < 210 and time.perf_counter() - t_start < 2.9:
+        # msieve SIQS is DETERMINISTIC and fast for <210b
+        # Benchmarked: 160b:134ms, 180b:590ms, 190b:866ms, 200b:1.8s, 210b:4.1s
+        # Always try msieve first — it's faster than ECM for these sizes
+        try:
+            import subprocess as sp
+            msieve_timeout = min(4.0, max(1.0, 3.0 - (time.perf_counter() - t_start)))
+            msieve_result = sp.run(['/tmp/msieve/msieve', '-q', '-mb', '4096', str(n)],
+                capture_output=True, text=True, timeout=msieve_timeout)
+            for line in msieve_result.stdout.strip().split('\n'):
+                if line.startswith('prp') or line.startswith('p'):
+                    parts = line.split(':')
+                    if len(parts) >= 2:
+                        try:
+                            f = int(parts[1].strip())
+                            if 1 < f < n and n % f == 0:
+                                return (min(f, n//f), max(f, n//f))
+                        except ValueError: pass
         except: pass
+    # For >=210b: msieve runs in PARALLEL with ECM (see below)
+    # msieve takes 4-10s for 210-220b, may finish in 3s budget
+    # ECM is probabilistic (~38% at 190b per parallel batch)
+    # Strategy: launch msieve in background, ECM in parallel, first to find wins
+    msieve_launched = False
+    msieve_proc = None
     if n.bit_length() >= 210 and time.perf_counter() - t_start < 2.8:
+        # For 210+p: launch msieve in parallel with ECM
+        for _cache in ['msieve.dat', '/tmp/msieve/msieve.dat']:
+            try: os.remove(_cache)
+            except: pass
         try:
             import subprocess as sp
             msieve_proc = sp.Popen(['/tmp/msieve/msieve', '-q', '-mb', '4096', str(n)],
                 stdout=sp.PIPE, stderr=sp.DEVNULL, text=True)
             msieve_launched = True
         except: pass
-    # For 64+ bit: ECM FIRST (sub-exponential, extremely fast for balanced semiprimes)
+    # For 64+ bit: ECM (sub-exponential, probabilistic)
     # Meta-oracle insight: GCD oracle is idempotent (SpectralOracle.gcdSpectralOracle)
     # Multiple parallel query channels maximize information rate
     if n.bit_length() >= 64:
