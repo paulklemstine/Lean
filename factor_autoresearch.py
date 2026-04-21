@@ -450,72 +450,73 @@ def factor_best(n, deadline=None):
     if deadline is None:
         deadline = time.perf_counter() + 5  # 5s hard limit
     t_start = time.perf_counter()
-    for p in SP[:3000]:
-        if p*p > n: break
-        if n % p == 0: return (min(p,n//p), max(p,n//p))
-    for exp in range(2, min(n.bit_length(), 64)):
-        root = int(round(n**(1.0/exp)))
-        for r in range(max(2,root-1), root+2):
-            if pow(r, exp) == n: return (min(r,n//r), max(r,n//r))
-    if is_prime(n): return None
-    # Quick Fermat (50 steps)
-    a = int(math.isqrt(n)) + 1
-    for _ in range(50):
-        bsq = a*a-n; b = int(math.isqrt(bsq))
-        if b*b == bsq:
-            p,q = a-b, a+b
-            if 1 < p < n: return (min(p,q), max(p,q))
-        a += 1
-    # Quick rho ONLY for < 64 bit numbers.
-    # For 64+ bit: rho needs O(p^{1/2}) iterations which is ~2^42 at 170b
-    # — completely infeasible. ECM handles 64+ bit numbers.
-    if n.bit_length() >= 64:
-        # SKIP rho, go straight to deterministic methods
-        pass
+    bits = n.bit_length()
+    # For 64+ bit numbers, msieve SIQS is PRIMARY — skip slow preamble
+    if bits >= 64:
+        # Minimal trial division (only tiny primes for msieve compatibility)
+        for p in SP[:100]:
+            if p*p > n: break
+            if n % p == 0: return (min(p,n//p), max(p,n//p))
+        if is_prime(n): return None
     else:
-        use_dual_walk = n.bit_length() >= 56
-        if n.bit_length() < 64:
-            r = pollard_rho_fast(n, 8, use_dual_walk=use_dual_walk)
+        for p in SP[:3000]:
+            if p*p > n: break
+            if n % p == 0: return (min(p,n//p), max(p,n//p))
+        # Perfect power check
+        for exp in range(2, min(bits, 64)):
+            root = int(round(n**(1.0/exp)))
+            for r in range(max(2,root-1), root+2):
+                if pow(r, exp) == n: return (min(r,n//r), max(r,n//r))
+        if is_prime(n): return None
+        # Quick Fermat (50 steps)
+        a = int(math.isqrt(n)) + 1
+        for _ in range(50):
+            bsq = a*a-n; b = int(math.isqrt(bsq))
+            if b*b == bsq:
+                p,q = a-b, a+b
+                if 1 < p < n: return (min(p,q), max(p,q))
+            a += 1
+        # Quick rho for <64 bit
+        use_dual_walk = bits >= 56
+        r = pollard_rho_fast(n, 8, use_dual_walk=use_dual_walk)
+        if r: return r
+        # CRT lens + other methods
+        lens_mods = [3,5,7,8,11,13,17,19,23] if bits >= 56 else [3,5,7,8,11,13,17]
+        if time.perf_counter() - t_start < 3.0:
+            r = crt_lens_fermat(n, lens_mods, 200000)
             if r: return r
-    # =====================================================================
-    # MSIEVE FIRST — DETERMINISTIC SIQS. Ultra-fast for 64-210 bit!
-    # Benchmarked: 80b:5ms, 160b:134ms, 180b:590ms, 190b:866ms, 200b:1.8s
-    # This is the PRIMARY method for 64-210b. Runs BEFORE ECM.
-    # For >=210b: runs in PARALLEL with ECM — first to find wins.
-    # Catalog: QuadraticSieveFoundations, collapse_spectrum
-    # =====================================================================
-    # Clean msieve cache for cold-start performance measurement
+        if time.perf_counter() - t_start < 3.1:
+            r = pollard_pm1(n, 50000)
+            if r: return r
+        if time.perf_counter() - t_start < 3.2:
+            r = cyclotomic_channel_factor(n, 5000)
+            if r: return r
+        try:
+            from fibonacci_factor import fibonacci_channel_factor
+            if time.perf_counter() - t_start < 3.3:
+                r = fibonacci_channel_factor(n, 50000)
+                if r: return r
+        except: pass
+        r = ecm_factor(n, B1=50000, curves=5)
+        if r: return r
+        return None
+    # 64+ bit path: msieve SIQS is PRIMARY
     import os
     for _cache in ['msieve.dat', '/tmp/msieve/msieve.dat']:
         try: os.remove(_cache)
         except: pass
 
-    # P-1 pre-check FIRST — deterministic, ~87ms, catches smooth p-1 factors
-    # (Catalog: smooth_submonoid_closure, prime_divides_factorial, fermat_little)
-    if n.bit_length() >= 64 and time.perf_counter() - t_start < 2.8:
-        try:
-            import subprocess
-            result = subprocess.run(['ecm', '-pm1', '1000000'],
-                input=str(n), capture_output=True, text=True, timeout=2)
-            if 'Factor found' in result.stdout:
-                for line in result.stdout.split('\n'):
-                    if 'Factor found' in line and ':' in line:
-                        f_str = line.split(':')[-1].strip()
-                        try:
-                            f = int(f_str)
-                            if 1 < f < n: return (min(f,n//f), max(f,n//f))
-                        except: pass
-        except: pass
-
-    # MSIEVE — the PRIMARY method for 64-210b
-    if n.bit_length() >= 64 and n.bit_length() < 210 and time.perf_counter() - t_start < 2.9:
+    # MSIEVE SIQS — deterministic, fast for 64-210b
+    # P-1 pre-check is NOT run before msieve: msieve is deterministic, P-1's ~87ms
+    # overhead wastes time at the 203b+ boundary. P-1 runs after msieve for ECM path.
+    if bits < 210 and time.perf_counter() - t_start < 2.95:
         # msieve SIQS is DETERMINISTIC and fast for <210b
         # Benchmarked: 160b:134ms, 180b:590ms, 190b:866ms, 200b:1.8s, 210b:4.1s
         # Always try msieve first — it's faster than ECM for these sizes
         try:
             import subprocess as sp
-            msieve_timeout = min(4.0, max(1.0, 3.0 - (time.perf_counter() - t_start)))
-            msieve_result = sp.run(['/tmp/msieve/msieve', '-q', '-mb', '4096', str(n)],
+            msieve_timeout = min(4.5, max(1.0, 3.2 - (time.perf_counter() - t_start)))
+            msieve_result = sp.run(['/tmp/msieve/msieve', '-q', '-mb', '8192', str(n)],
                 capture_output=True, text=True, timeout=msieve_timeout)
             for line in msieve_result.stdout.strip().split('\n'):
                 if line.startswith('prp') or line.startswith('p'):
@@ -533,14 +534,14 @@ def factor_best(n, deadline=None):
     # Strategy: launch msieve in background, ECM in parallel, first to find wins
     msieve_launched = False
     msieve_proc = None
-    if n.bit_length() >= 210 and time.perf_counter() - t_start < 2.8:
+    if bits >= 210 and time.perf_counter() - t_start < 2.95:
         # For 210+p: launch msieve in parallel with ECM
         for _cache in ['msieve.dat', '/tmp/msieve/msieve.dat']:
             try: os.remove(_cache)
             except: pass
         try:
             import subprocess as sp
-            msieve_proc = sp.Popen(['/tmp/msieve/msieve', '-q', '-mb', '4096', str(n)],
+            msieve_proc = sp.Popen(['/tmp/msieve/msieve', '-q', '-mb', '8192', str(n)],
                 stdout=sp.PIPE, stderr=sp.DEVNULL, text=True)
             msieve_launched = True
         except: pass

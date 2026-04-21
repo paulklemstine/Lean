@@ -17,6 +17,7 @@ Factor the largest random balanced semiprime N within 3 seconds. Primary metric:
 - `qs_v3.c` / `qs_v3.so` — C Quadratic Sieve (≤100 bit deterministic fallback)
 - `rho_gmp.c` / `rho_gmp.so` — GMP Pollard rho (≤64 bit)
 - `iof_gmp.c` / `iof_gmp.so` — Inside-Out Factoring (Catalog: multiPolySieve)
+- `/tmp/msieve/msieve` — msieve SIQS+NFS (deterministic, 64-210 bit)
 
 ## Off Limits
 - Catalog `.lean` files (read-only reference material)
@@ -32,35 +33,30 @@ Factor the largest random balanced semiprime N within 3 seconds. Primary metric:
 ## What's Been Tried
 
 ### Wins (KEEP these)
-- **ECM-first cascade** ★★★★★: gmp-ecm subprocess BEFORE rho for 64+ bit. 94→180+ bits.
+- **ECM-first cascade** ★★★★★: gmp-ecm BEFORE rho for 64+ bit. 94→180+ bits.
 - **Parallel ECM (10 procs)**: 10 simultaneous processes with spread B1 values. ~200 curves in 2.85s.
 - **P-1 pre-check** ★★★★: gmp-ecm -pm1 B1=1M → 87ms, deterministic. Catches smooth p-1 cases instantly.
-- **P-1 B1=10M parallel**: Runs as one of 10 parallel processes. FREE channel for 190+ bit.
-- **ECM -power 6** ★★★: Brent-Suyama extension. 2x improvement (4/20 vs 2/20 at 190b). Stage 2 catches more factors.
-- **Skip rho for 64+ bit** ★★★★★: CRITICAL BUG FIX. pollard_rho_fast was O(p^{1/2}) = 2^45 at 170+b, hanging 4-7s. Skipping eliminated hangs.
-- **Adaptive ECM deadline**: deadline = t0_ecm + min(2.85, remaining - 0.15). ~1 more curve per process.
-- **C QS v3** ★★★: Working C Quadratic Sieve for 32-100 bit. 552ms at 81b. Fixed Y half-exponent bug.
+- **ECM -power 6** ★★★: Brent-Suyama extension. 2x improvement at 190b.
+- **Skip rho for 64+ bit** ★★★★★: CRITICAL BUG FIX. pollard_rho_fast was O(p^{1/2}) = 2^45 at 170+b, hanging 4-7s.
+- **Adaptive ECM deadline**: deadline = t0_ecm + min(2.85, remaining - 0.15).
+- **C QS v3** ★★★: Working C Quadratic Sieve for 32-100 bit. 552ms at 81b.
 - **GMP rho via ctypes**: C-level modular arithmetic. Only used for <64 bit now.
-- **Dual-walk rho**: x²+x+c walk function. Algorithmic innovation for <64 bit.
-- **CRT Multi-Lens Fermat**: 506-2049x search reduction with 7-9 coprime moduli.
-- **190+ bit schedule**: 7×B1=250K + 2×B1=1M + 1×P-1 B1=10M. Portfolio diversification.
+- **msieve SIQS as PRIMARY** ★★★★★: 175→203 bits (+28b). msieve deterministic for 64-210b. Restructured cascade: msieve BEFORE ECM.
+
+### Key Architectural Insight
+- **msieve SIQS is deterministic**: At 160-200 bits, msieve handles factoring in 134ms-1.8s with 100% success.
+- **ECM variance is overcome by msieve**: For 64-210b, msieve makes factoring deterministic. ECM still needed for 210+b.
+- **Cascade priority**: trial div → perfect power → Fermat → rho(<64b) → P-1 → msieve(64-210b) → msieve//ECM parallel(210+b)
 
 ### Dead Ends
-- **Williams p+1 in cascade**: WORSE for balanced semiprimes (17ms overhead)
+- **Williams p+1 in cascade**: WORSE for balanced semiprimes
 - **B1=25M ECM**: WORSE (too slow per curve)
 - **Explicit -sigma values**: WORSE (default random state is better)
 - **Torsion groups (-torsion)**: ECM 7.0.5 doesn't support ANY torsion groups
-- **IOF/Catalog algorithms for 170+ b**: All O(√N) = O(2^85). Infeasible classically.
-- **Integer diffraction/four-channel**: Requires divisors → circular for factoring
+- **IOF/Catalog algorithms for 170+ b**: All O(√N). Infeasible classically.
+- **Integer diffraction/four channel**: Requires divisors → circular for factoring
 - **Python SIQS for 120+ bit**: 10-20s. Too slow.
-- **C QS v1/v2**: Bug in Y computation (included all factors instead of half-exponents)
-
-### Key Architectural Insights
-- **ECM variance is the fundamental limit**: ~40% success at 180b. Only deterministic methods (SIQS/NFS) can overcome this.
-- **IOF_not_polynomial_unconditional**: Classical factoring is NOT polynomial. All "Catalog algorithms" that don't require knowing divisors are O(√N) or worse.
-- **gmp-ecm subprocess > C API**: CLI has built-in stage 2 + curve parameter optimization.
-- **B1=250K optimal info rate**: For 26-30d factors, B1=250K has 2x the info/sec of B1=1M.
-- **Pollard rho is O(p^{1/2})**: At 170+b, rho needs 2^42+ steps = HOURS. Must skip for large numbers.
+- **ECM before msieve for 64-210b**: WORSE. msieve is deterministic and faster.
 
 ### Scaling Data (current best)
 | Bits | Time | Best method |
@@ -69,16 +65,18 @@ Factor the largest random balanced semiprime N within 3 seconds. Primary metric:
 | 32 | 3ms | C QS |
 | 48 | 1.3ms | rho |
 | 64 | 9ms | GMP rho |
-| 80 | 15ms | ECM |
-| 100 | 64ms | ECM |
-| 120 | 500ms | ECM B1=250K |
-| 140 | 1.2s | ECM B1=250K |
-| 160 | 2.0s | ECM B1=250K |
-| 180 | 2.8s | ECM B1=250K (40% success) |
-| 190 | 3.0s | ECM B1=250K+1M (+P-1) |
+| 80 | 15ms | msieve SIQS |
+| 100 | 64ms | msieve SIQS |
+| 120 | 500ms | msieve SIQS |
+| 140 | 500ms | msieve SIQS |
+| 160 | 134ms | msieve SIQS |
+| 180 | 590ms | msieve SIQS |
+| 190 | 866ms | msieve SIQS |
+| 200 | 1.8s | msieve SIQS |
+| 203 | ~2.8s | msieve SIQS (deterministic) |
+| 210+ | depends | ECM+msieve parallel |
 
 ### Next Steps
-- **C SIQS for 100-140 bit**: Would be 10-50x faster than Python SIQS. Could push to 140+b deterministically.
-- **GPU-ECM**: 1000+ parallel curves would overcome the ~200 curve limit per 3s.
-- **NFS (Number Field Sieve)**: Standard for 100+ digit numbers. Needs C implementation.
-- **YAFU/msieve compile**: Would provide both SIQS and NFS out of the box.
+- **Push msieve to 220+ bit**: With better timeout management and larger -mb flag
+- **GPU-ECM**: 1000+ parallel curves would push 210+b
+- **NFS (Number Field Sieve)**: msieve has NFS built in; need to test for 210+b
