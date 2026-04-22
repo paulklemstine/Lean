@@ -1,0 +1,33 @@
+# Qwen Optimization Pipeline — Dependencies
+# Install: pip install -r requirements.txt
+
+# Core ML
+torch>=2.1.0
+transformers>=4.45.0
+accelerate>=0.34.0
+safetensors>=0.4.0
+
+# Quantization
+autoawq>=0.2.0
+auto-gptq>=0.7.0
+optimum>=1.17.0
+bitsandbytes>=0.43.0
+
+# Inference Engines
+vllm>=0.6.0
+
+# Datasets
+datasets>=2.19.0
+
+# Tokenizers
+sentencepiece>=0.2.0
+protobuf>=4.25.0
+tiktoken>=0.7.0
+
+# Monitoring & Telemetry
+psutil>=5.9.0
+gputil>=1.4.0
+
+# Utilities
+tqdm>=4.66.0
+huggingface_hub>=0.23.0
