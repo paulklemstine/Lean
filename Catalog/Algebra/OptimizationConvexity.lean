@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.OptimizationConvexity
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra
 Declarations: 10
 -/
 
-import Mathlib
 
 /-- [Section: # CatalogBuild.Algebra.OptimizationConvexity
 Auto-generated from theorem catalog database.

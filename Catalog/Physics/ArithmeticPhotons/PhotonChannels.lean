@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Physics.ArithmeticPhotons.PhotonChannels
 
 Auto-generated from theorem catalog database.
 Domain: Physics/ArithmeticPhotons
 Declarations: 30
 -/
-
-import Mathlib
 
 noncomputable section
 
@@ -20,9 +20,6 @@ inductive PhotonChannel where
   | photonNumber    -- Channel 7: Fock state occupation number n ∈ ℕ
   deriving DecidableEq, Fintype, Repr
 
-
-
-
 /-- [Section: # CatalogBuild.Physics.ArithmeticPhotons.PhotonChannels
 Auto-generated from theorem catalog database.
 Domain: Physics/ArithmeticPhotons
@@ -30,18 +27,12 @@ Declarations: 30] -/
 theorem PhotonChannel.card : Fintype.card PhotonChannel = 7 := by
   bound
 
-
-
-
 /-- Classification of Hilbert space dimension type for each channel. -/
 inductive HilbertDimType where
   | finite (d : ℕ)      -- Finite-dimensional (d-dimensional)
   | countablyInfinite    -- Countably infinite (ℓ²)
   | continuous           -- Continuous / uncountably infinite (L²)
   deriving DecidableEq, Repr
-
-
-
 
 /-- The Hilbert space dimension type of each photon channel.
 - Polarization: exactly 2-dimensional (helicity ±1)
@@ -60,9 +51,6 @@ def hilbertDimType : PhotonChannel → HilbertDimType
   | .direction => .continuous
   | .temporalMode => .continuous
 
-
-
-
 /-- [Section: # CatalogBuild.Physics.ArithmeticPhotons.PhotonChannels
 Auto-generated from theorem catalog database.
 Domain: Physics/ArithmeticPhotons
@@ -70,9 +58,6 @@ Declarations: 30] -/
 theorem polarization_unique_finite :
     ∀ c : PhotonChannel, (∃ d, hilbertDimType c = .finite d) ↔ c = .polarization := by
   intro c; unfold hilbertDimType; aesop;
-
-
-
 
 /-- The conjugate pair structure: channels linked by uncertainty relations. -/
 inductive ConjugatePair where
@@ -82,14 +67,8 @@ inductive ConjugatePair where
   | numPhase    -- Photon number ↔ Phase (Δn·Δφ ≥ 1/2)
   deriving DecidableEq, Fintype, Repr
 
-
-
-
 theorem ConjugatePair.card : Fintype.card ConjugatePair = 4 := by
   decide +kernel
-
-
-
 
 /-- Each conjugate pair involves a specific channel from our enumeration. -/
 def ConjugatePair.primaryChannel : ConjugatePair → PhotonChannel
@@ -98,18 +77,12 @@ def ConjugatePair.primaryChannel : ConjugatePair → PhotonChannel
   | .oamAngle => .orbitalAM
   | .numPhase => .photonNumber
 
-
-
-
 /-- The secondary channel in each conjugate pair. -/
 def ConjugatePair.secondaryChannel : ConjugatePair → PhotonChannel
   | .freqTime => .temporalMode
   | .dirPos => .direction      -- direction and position are conjugate
   | .oamAngle => .orbitalAM   -- OAM and angular position are conjugate
   | .numPhase => .photonNumber -- number and phase are conjugate
-
-
-
 
 /-- Information capacity (in bits) of each channel under realistic visible-light parameters.
 Assumptions: visible light (λ ≈ 500nm), 1-meter aperture, 1-second integration time,
@@ -124,22 +97,13 @@ noncomputable def channelInfoCapacity : PhotonChannel → ℝ
   | .temporalMode => 20    -- log₂(10⁶) time bins ≈ 20
   | .photonNumber => 3     -- log₂(6) ≈ 3 (n from 0 to 5)
 
-
-
-
 /-- The total information capacity of a single photon across all seven channels. -/
 noncomputable def totalInfoCapacity : ℝ :=
   (Finset.univ : Finset PhotonChannel).sum channelInfoCapacity
 
-
-
-
 theorem totalInfoCapacity_eq : totalInfoCapacity = 99 := by
   unfold totalInfoCapacity channelInfoCapacity;
   rw [ show ( Finset.univ : Finset PhotonChannel ) = { PhotonChannel.frequency, PhotonChannel.polarization, PhotonChannel.direction, PhotonChannel.orbitalAM, PhotonChannel.radialMode, PhotonChannel.temporalMode, PhotonChannel.photonNumber } by rfl, Finset.sum_insert, Finset.sum_insert, Finset.sum_insert, Finset.sum_insert, Finset.sum_insert, Finset.sum_insert ] <;> simp +decide ; linarith
-
-
-
 
 /-- Classification: which channels have a classical wave analogue? -/
 def hasClassicalAnalogue : PhotonChannel → Bool
@@ -151,32 +115,20 @@ def hasClassicalAnalogue : PhotonChannel → Bool
   | .temporalMode => true
   | .photonNumber => false
 
-
-
-
 theorem photonNumber_unique_nonclassical :
     ∀ c : PhotonChannel, hasClassicalAnalogue c = false ↔ c = .photonNumber := by
   decide +kernel
-
-
-
 
 /-- A photon channel is "bounded" if its practical Hilbert space dimension is finite. -/
 def isBounded : PhotonChannel → Bool
   | .polarization => true   -- exactly 2-dimensional
   | _ => false
 
-
-
-
 theorem polarization_unique_bounded :
     ∀ c : PhotonChannel, isBounded c = true ↔ c = .polarization := by
   intro c
   unfold isBounded
   aesop
-
-
-
 
 /-- The symmetry origin of each channel, classified by the relevant subgroup. -/
 inductive SymmetryOrigin where
@@ -189,9 +141,6 @@ inductive SymmetryOrigin where
   | gaugeSymmetry         -- U(1) gauge → photon number conservation
   deriving DecidableEq, Repr
 
-
-
-
 /-- Map from channels to their symmetry origins. -/
 def symmetryOrigin : PhotonChannel → SymmetryOrigin
   | .frequency => .timeTranslation
@@ -201,9 +150,6 @@ def symmetryOrigin : PhotonChannel → SymmetryOrigin
   | .radialMode => .scaleSymmetry
   | .temporalMode => .temporalStructure
   | .photonNumber => .gaugeSymmetry
-
-
-
 
 /-- ## The Uncertainty Product Structure
 For each conjugate pair, the product of uncertainties is bounded below.
@@ -215,14 +161,8 @@ noncomputable def uncertaintyBound : ConjugatePair → ℝ
   | .oamAngle => 1/2    -- Δℓ·Δφ ≥ 1/2
   | .numPhase => 1/2
 
-
-
-
 theorem uncertaintyBound_pos : ∀ p : ConjugatePair, uncertaintyBound p > 0 := by
   exact fun p => by cases p <;> unfold uncertaintyBound <;> norm_num;
-
-
-
 
 /-- ## Hyper-entanglement dimension
 When two photons are entangled across multiple channels simultaneously,
@@ -238,34 +178,19 @@ def practicalDim : PhotonChannel → ℕ
   | .temporalMode => 1000000 -- 10⁶ time bins
   | .photonNumber => 6
 
-
-
-
 theorem practicalDim_pos : ∀ c : PhotonChannel, practicalDim c > 0 := by
   exact fun c => by cases c <;> decide;
-
-
-
 
 /-- Hyper-entanglement dimension: the product of all channel dimensions. -/
 def hyperEntanglementDim : ℕ :=
   (Finset.univ : Finset PhotonChannel).prod practicalDim
 
-
-
-
 theorem hyperEntanglementDim_pos : hyperEntanglementDim > 0 := by
   decide +revert
-
-
-
 
 theorem massless_polarization_states (s : ℕ) (hs : s ≥ 1) :
     (2 : ℕ) ≤ 2 * s + 1 := by
   grind
-
-
-
 
 /-- ## Channel 7 and the Vacuum
 The vacuum state is characterized by Channel 7 = 0 for all modes.
@@ -276,21 +201,12 @@ We formalize a simple version: the zero-point energy of a single
 mode at frequency ω (in natural units where ℏ = 1). -/
 noncomputable def zeroPointEnergy (ω : ℝ) : ℝ := ω / 2
 
-
-
-
 theorem zeroPointEnergy_pos {ω : ℝ} (hω : ω > 0) : zeroPointEnergy ω > 0 := by
   exact div_pos hω zero_lt_two
-
-
-
 
 theorem zeroPointEnergy_mono {ω₁ ω₂ : ℝ} (h : ω₁ < ω₂) :
     zeroPointEnergy ω₁ < zeroPointEnergy ω₂ := by
   unfold zeroPointEnergy; linarith;
-
-
-
 
 theorem shannonCapacity_mono {d₁ d₂ : ℕ} (h : d₁ ≤ d₂) :
     shannonCapacity d₁ ≤ shannonCapacity d₂ := by
@@ -298,12 +214,7 @@ theorem shannonCapacity_mono {d₁ d₂ : ℕ} (h : d₁ ≤ d₂) :
   · exact Real.logb_nonneg ( by norm_num ) ( mod_cast Nat.one_le_iff_ne_zero.mpr h₂ );
   · gcongr ; norm_cast
 
-
-
-
 theorem shannonCapacity_polarization : shannonCapacity 2 = 1 := by
   unfold shannonCapacity; norm_num;
-
-
 
 end

@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.TopologyDynamics
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra
 Declarations: 20
 -/
 
-import Mathlib
 
 /-- [Section: # CatalogBuild.Algebra.TopologyDynamics
 Auto-generated from theorem catalog database.

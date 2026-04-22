@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.EML.SPBExtended.AdvancedAlgebra
 
 Auto-generated from theorem catalog database.
 Domain: EML/SPBExtended
 Declarations: 26
 -/
-
-import Mathlib
 
 noncomputable section
 
@@ -15,24 +15,20 @@ def φ' : ℝ := (1 + Real.sqrt 5) / 2
 -- § 1. SPB and the Golden Ratio
 -- ═══════════════════════════════════════════
 
-
 theorem golden_ratio_sq : φ' ^ 2 = φ' + 1 := by
   unfold φ'
   have h5 : (0 : ℝ) ≤ 5 := by norm_num
   have hsq : Real.sqrt 5 ^ 2 = 5 := Real.sq_sqrt h5
   nlinarith [hsq, sq_nonneg (Real.sqrt 5)]
 
-
 theorem golden_pos : φ' > 0 := by
   unfold φ'; linarith [Real.sqrt_nonneg 5]
-
 
 theorem golden_inv : 1 / φ' = φ' - 1 := by
   have hφ : φ' ≠ 0 := ne_of_gt golden_pos
   rw [div_eq_iff hφ]
   have := golden_ratio_sq
   nlinarith
-
 
 theorem golden_continued_fraction : φ' = 1 + 1 / φ' := by
   have hφ : φ' ≠ 0 := ne_of_gt golden_pos
@@ -44,16 +40,12 @@ theorem golden_continued_fraction : φ' = 1 + 1 / φ' := by
 -- § 2. SPB Entropy
 -- ═══════════════════════════════════════════
 
-
 def spbEntropy (x : ℝ) : ℝ := Real.log (1 + x ^ 2)
-
 
 theorem spbEntropy_zero : spbEntropy 0 = 0 := by simp [spbEntropy]
 
-
 theorem spbEntropy_neg (x : ℝ) : spbEntropy (-x) = spbEntropy x := by
   simp [spbEntropy]
-
 
 theorem spbEntropy_add (x y : ℝ) (h : 1 - x * y ≠ 0) :
     spbEntropy (spbA x y) =
@@ -99,7 +91,6 @@ theorem machin_s3 : spbA (120/119) (-1/239) = 1 := by norm_num [spbA]
 -- ═══════════════════════════════════════════
 -- § 4. SPB Power Series Structure
 -- ═══════════════════════════════════════════
-
 
 theorem spb_power_series_form (x y : ℝ) (h : 1 - x * y ≠ 0) :
     spbA x y = (x + y) * (1 / (1 - x * y)) := by
@@ -155,6 +146,5 @@ theorem four_fold_explicit (a b c d : ℤ) :
     ∃ e f : ℤ, (1 + a ^ 2) * (1 + b ^ 2) * (1 + c ^ 2) * (1 + d ^ 2) = e ^ 2 + f ^ 2 := by
   exact ⟨(a + b) * (c + d) + (1 - a * b) * (1 - c * d),
          (a + b) * (1 - c * d) - (1 - a * b) * (c + d), by ring⟩
-
 
 end

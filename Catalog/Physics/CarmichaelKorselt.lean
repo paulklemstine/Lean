@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Physics.CarmichaelKorselt
 
 Auto-generated from theorem catalog database.
@@ -5,13 +7,10 @@ Domain: Physics
 Declarations: 8
 -/
 
-import Mathlib
-
 /-- A Carmichael number: composite n where a^(n-1) ≡ 1 (mod n) for all a coprime to n. -/
 def IsCarmichael (n : ℕ) : Prop :=
   2 ≤ n ∧ ¬Nat.Prime n ∧
   ∀ a ∈ Finset.Icc 1 (n - 1), Nat.Coprime a n → a ^ (n - 1) % n = 1
-
 
 /-- 561 = 3 × 11 × 17 is a Carmichael number. -/
 theorem carmichael_561 : IsCarmichael 561 := by
@@ -19,20 +18,17 @@ theorem carmichael_561 : IsCarmichael 561 := by
   refine ⟨by omega, by native_decide, ?_⟩
   native_decide
 
-
 /-- 1105 = 5 × 13 × 17 is a Carmichael number. -/
 theorem carmichael_1105 : IsCarmichael 1105 := by
   unfold IsCarmichael
   refine ⟨by omega, by native_decide, ?_⟩
   native_decide
 
-
 /-- 1729 = 7 × 13 × 19 is a Carmichael number (Hardy-Ramanujan / taxicab number). -/
 theorem carmichael_1729 : IsCarmichael 1729 := by
   unfold IsCarmichael
   refine ⟨by omega, by native_decide, ?_⟩
   native_decide
-
 
 /-- Korselt's criterion: n is Carmichael iff n is squarefree and
 (p - 1) | (n - 1) for every prime factor p of n.
@@ -51,7 +47,6 @@ theorem korselt_561 :
   · norm_num
   · norm_num
 
-
 /-- Korselt verified for 1729. -/
 theorem korselt_1729 :
     1729 = 7 * 13 * 19 ∧
@@ -64,14 +59,12 @@ theorem korselt_1729 :
   · norm_num
   · norm_num
 
-
 /-- The first three Carmichael numbers are 561, 1105, 1729. -/
 theorem first_three_carmichael :
     561 = 3 * 11 * 17 ∧ ¬Nat.Prime 561 ∧
     1105 = 5 * 13 * 17 ∧ ¬Nat.Prime 1105 ∧
     1729 = 7 * 13 * 19 ∧ ¬Nat.Prime 1729 := by
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩ <;> first | norm_num | native_decide
-
 
 /-- No Carmichael number below 561 exists (every composite n < 561 has a Fermat witness). -/
 theorem no_carmichael_below_561 :

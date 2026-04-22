@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Speculative.ArithmeticFunctions
 
 Auto-generated from theorem catalog database.
@@ -5,24 +7,16 @@ Domain: Speculative
 Declarations: 18
 -/
 
-import Mathlib
-
 noncomputable section
 
 /-- φ(p) = p - 1 for prime p. -/
 theorem totient_prime' (p : ℕ) (hp : Nat.Prime p) : Nat.totient p = p - 1 :=
   Nat.totient_prime hp
 
-
-
-
 /-- φ is multiplicative for coprime arguments. -/
 theorem totient_multiplicative' (m n : ℕ) (hcop : Nat.Coprime m n) :
     Nat.totient (m * n) = Nat.totient m * Nat.totient n :=
   Nat.totient_mul hcop
-
-
-
 
 /-- [Section: # CatalogBuild.Speculative.ArithmeticFunctions
 Auto-generated from theorem catalog database.
@@ -33,28 +27,16 @@ theorem totient_prime_pow (p k : ℕ) (hp : Nat.Prime p) (hk : 0 < k) :
   rw [ Nat.totient_prime_pow hp hk ];
   rw [ mul_tsub, mul_one, ← pow_succ, Nat.sub_add_cancel hk ]
 
-
-
-
 /-- τ(n) = |{d : d | n}| -/
 noncomputable def tau (n : ℕ) : ℕ := n.divisors.card
-
-
-
 
 /-- τ(p) = 2 for prime p. -/
 theorem tau_prime (p : ℕ) (hp : Nat.Prime p) : tau p = 2 := by
   simp [tau, Nat.Prime.divisors hp, Finset.card_pair (Ne.symm hp.one_lt.ne')]
 
-
-
-
 /-- τ(1) = 1. -/
 theorem tau_one : tau 1 = 1 := by
   simp [tau]
-
-
-
 
 /-- [Section: # CatalogBuild.Speculative.ArithmeticFunctions
 Auto-generated from theorem catalog database.
@@ -64,24 +46,15 @@ theorem tau_prime_pow (p k : ℕ) (hp : Nat.Prime p) :
     tau (p ^ k) = k + 1 := by
   simp +decide [ tau, Nat.divisors_prime_pow hp ]
 
-
-
-
 theorem tau_multiplicative (m n : ℕ) (hm : 0 < m) (hn : 0 < n)
     (hcop : Nat.Coprime m n) :
     tau (m * n) = tau m * tau n := by
   unfold tau;
   exact?
 
-
-
-
 theorem mobius_at_prime (p : ℕ) (hp : Nat.Prime p) :
     ArithmeticFunction.moebius p = -1 := by
   rw [ ArithmeticFunction.moebius_apply_prime hp ]
-
-
-
 
 theorem mobius_inversion_statement :
     ∀ (f g : ℕ → ℤ),
@@ -122,48 +95,27 @@ theorem mobius_inversion_statement :
   rw [ Finset.sum_congr rfl fun x hx => by rw [ hg x ( Nat.pos_of_mem_divisors hx ) ] ];
   rw [ h_fubini, Finset.sum_congr rfl fun x hx => by rw [ h_inner x hx ] ] ; aesop
 
-
-
-
 /-- A k-multiperfect number has σ₁(n) = k·n. -/
 def IsMultiperfect (k n : ℕ) : Prop :=
   0 < n ∧ ∑ d ∈ n.divisors, d = k * n
-
-
-
 
 /-- 120 is 3-perfect (triperfect). -/
 theorem triperfect_120 : IsMultiperfect 3 120 := by
   refine ⟨by omega, ?_⟩; native_decide
 
-
-
-
 /-- 672 is 3-perfect (triperfect). -/
 theorem triperfect_672 : IsMultiperfect 3 672 := by
   refine ⟨by omega, ?_⟩; native_decide
 
-
-
-
 /-- An abundant number has σ₁(n) > 2n. -/
 def IsAbundant (n : ℕ) : Prop := 0 < n ∧ 2 * n < ∑ d ∈ n.divisors, d
-
-
-
 
 /-- 12 is abundant. -/
 theorem abundant_12 : IsAbundant 12 := by
   refine ⟨by omega, ?_⟩; native_decide
 
-
-
-
 /-- A deficient number has σ₁(n) < 2n. -/
 def IsDeficient (n : ℕ) : Prop := 0 < n ∧ ∑ d ∈ n.divisors, d < 2 * n
-
-
-
 
 /-- All primes are deficient. -/
 theorem prime_deficient (p : ℕ) (hp : Nat.Prime p) : IsDeficient p := by
@@ -171,15 +123,10 @@ theorem prime_deficient (p : ℕ) (hp : Nat.Prime p) : IsDeficient p := by
   · exact hp.pos
   · simp [hp.sum_divisors]; have := hp.one_lt; omega
 
-
-
-
 theorem smallest_abundant : ∀ n, 0 < n → n < 12 → ¬ IsAbundant n := by
   -- By definition of IsAbundant, we need to show that for any n < 12, the sum of its divisors is not greater than 2n.
   intros n hn_pos hn_lt_12
   simp [IsAbundant];
   interval_cases n <;> trivial
-
-
 
 end

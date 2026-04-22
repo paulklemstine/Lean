@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.MachineLearning.QuantumCompilation
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: MachineLearning
 Declarations: 19
 -/
 
-import Mathlib
 
 noncomputable section
 

@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Pythagorean.Quadruples.HigherDimGhost
 
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/Quadruples
 Declarations: 40
 -/
-
-import Mathlib
 
 /-- ═══════════════════════════════════════════════════════════════ Section 1: Concrete Dimension Definitions ═══════════════════════════════════════════════════════════════ -/
 def isPT3 (a b c : ℤ) : Prop := a^2 + b^2 = c^2
@@ -38,7 +38,6 @@ theorem ghost_6d_full : 120 * (2 : ℕ)^5 = 3840 := by norm_num
 -- Section 3: Number of Lifting Planes
 -- ═══════════════════════════════════════════════════════════════
 
-
 theorem lifting_planes_3d : Nat.choose 2 2 = 1 := by native_decide
 
 theorem lifting_planes_4d : Nat.choose 3 2 = 3 := by native_decide
@@ -60,14 +59,11 @@ theorem pq5_3_4_0_0_5 : isPQ5 3 4 0 0 5 := by unfold isPQ5; norm_num
 theorem sf5_1 (a b c d e : ℤ) (h : isPQ5 a b c d e) : isPQ5 (-a) b c d e := by
   simp [isPQ5] at *; nlinarith
 
-
 theorem sf5_2 (a b c d e : ℤ) (h : isPQ5 a b c d e) : isPQ5 a (-b) c d e := by
   simp [isPQ5] at *; nlinarith
 
-
 theorem sf5_3 (a b c d e : ℤ) (h : isPQ5 a b c d e) : isPQ5 a b (-c) d e := by
   simp [isPQ5] at *; nlinarith
-
 
 theorem sf5_4 (a b c d e : ℤ) (h : isPQ5 a b c d e) : isPQ5 a b c (-d) e := by
   simp [isPQ5] at *; nlinarith
@@ -76,14 +72,11 @@ theorem sf5_4 (a b c d e : ℤ) (h : isPQ5 a b c d e) : isPQ5 a b c (-d) e := by
 -- Section 6: 5D Permutation Symmetry
 -- ═══════════════════════════════════════════════════════════════
 
-
 theorem pm5_12 (a b c d e : ℤ) (h : isPQ5 a b c d e) : isPQ5 b a c d e := by
   simp [isPQ5] at *; linarith
 
-
 theorem pm5_13 (a b c d e : ℤ) (h : isPQ5 a b c d e) : isPQ5 c b a d e := by
   simp [isPQ5] at *; linarith
-
 
 theorem pm5_14 (a b c d e : ℤ) (h : isPQ5 a b c d e) : isPQ5 d b c a e := by
   simp [isPQ5] at *; linarith
@@ -92,18 +85,14 @@ theorem pm5_14 (a b c d e : ℤ) (h : isPQ5 a b c d e) : isPQ5 d b c a e := by
 -- Section 7: Dimension Embedding
 -- ═══════════════════════════════════════════════════════════════
 
-
 theorem embed_3_to_4 (a b c : ℤ) (h : isPT3 a b c) : isPQ4 a b 0 c := by
   simp [isPT3, isPQ4] at *; linarith
-
 
 theorem embed_4_to_5 (a b c d : ℤ) (h : isPQ4 a b c d) : isPQ5 a b c 0 d := by
   simp [isPQ4, isPQ5] at *; linarith
 
-
 theorem embed_3_to_5 (a b c : ℤ) (h : isPT3 a b c) : isPQ5 a b 0 0 c := by
   simp [isPT3, isPQ5] at *; linarith
-
 
 /-- Combining two triples into a quintuple. -/
 theorem combine_triples_5d (a b c d e f g : ℤ)
@@ -115,12 +104,10 @@ theorem combine_triples_5d (a b c d e f g : ℤ)
 -- Section 8: Triangle Inequality in Higher Dimensions
 -- ═══════════════════════════════════════════════════════════════
 
-
 theorem triangle_4d (a b c d : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (hd : 0 < d) (h : isPQ4 a b c d) : a + b + c > d := by
   simp [isPQ4] at h
   nlinarith [sq_nonneg (a - b), sq_nonneg (a - c), sq_nonneg (b - c)]
-
 
 def lorentz3 (a b c : ℤ) : ℤ := a^2 + b^2 - c^2
 
@@ -128,18 +115,14 @@ def lorentz4 (a b c d : ℤ) : ℤ := a^2 + b^2 + c^2 - d^2
 
 def lorentz5 (a b c d e : ℤ) : ℤ := a^2 + b^2 + c^2 + d^2 - e^2
 
-
 theorem pt3_iff_lorentz (a b c : ℤ) : isPT3 a b c ↔ lorentz3 a b c = 0 := by
   simp [isPT3, lorentz3]; omega
-
 
 theorem pq4_iff_lorentz (a b c d : ℤ) : isPQ4 a b c d ↔ lorentz4 a b c d = 0 := by
   simp [isPQ4, lorentz4]; omega
 
-
 theorem pq5_iff_lorentz (a b c d e : ℤ) : isPQ5 a b c d e ↔ lorentz5 a b c d e = 0 := by
   simp [isPQ5, lorentz5]; omega
-
 
 /-- Lorentz form is preserved by sign flips on spatial coordinates. -/
 theorem lorentz4_sf (a b c d : ℤ) (s₁ s₂ s₃ : ℤ) (hs₁ : s₁^2 = 1) (hs₂ : s₂^2 = 1)
@@ -151,7 +134,6 @@ theorem lorentz4_sf (a b c d : ℤ) (s₁ s₂ s₃ : ℤ) (hs₁ : s₁^2 = 1) 
 -- Section 10: Specific Large Examples
 -- ═══════════════════════════════════════════════════════════════
 
-
 theorem large_pq_1 : isPQ4 2 6 9 11 := by unfold isPQ4; norm_num
 
 theorem large_pq_2 : isPQ4 6 6 7 11 := by unfold isPQ4; norm_num
@@ -162,17 +144,14 @@ theorem large_pq_3 : isPQ4 3 6 22 23 := by unfold isPQ4; norm_num
 -- Section 11: Parent Hypotenuse in 5D
 -- ═══════════════════════════════════════════════════════════════
 
-
 /-- In 5D, the parent hypotenuse from the (i,j)-lifting plane is
 -2xᵢ - 2xⱼ + 3e, same formula as in 4D but with 6 choices of plane. -/
 def parentHyp5_12 (a b _c _d e : ℤ) : ℤ := -2*a - 2*b + 3*e
 
 def parentHyp5_34 (_a _b c d e : ℤ) : ℤ := -2*c - 2*d + 3*e
 
-
 theorem parentHyp5_12_val : parentHyp5_12 1 2 2 4 5 = 9 := by
   simp [parentHyp5_12]
-
 
 theorem parentHyp5_34_val : parentHyp5_34 1 2 2 4 5 = 3 := by
   simp [parentHyp5_34]

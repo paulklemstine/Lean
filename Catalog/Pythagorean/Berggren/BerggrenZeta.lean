@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Pythagorean.Berggren.BerggrenZeta
 
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/Berggren
 Declarations: 23
 -/
-
-import Mathlib
 
 theorem hyp_positive (m n : ℤ) (hm : 0 < m) (hn : 0 < n) :
     0 < m^2 + n^2 := by positivity
@@ -64,7 +64,6 @@ theorem fermat_examples :
     29 = 2^2 + 5^2 ∧ 37 = 1^2 + 6^2 ∧ 41 = 4^2 + 5^2 := by
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩ <;> norm_num
 
-
 theorem primes_1_mod_4 :
     5 % 4 = 1 ∧ 13 % 4 = 1 ∧ 17 % 4 = 1 ∧ 29 % 4 = 1 ∧
     37 % 4 = 1 ∧ 41 % 4 = 1 := by
@@ -73,7 +72,6 @@ theorem primes_1_mod_4 :
 -- ═══════════════════════════════════════════════════════════════
 -- Section 5: Small PPTs for Zeta Computation
 -- ═══════════════════════════════════════════════════════════════
-
 
 theorem ppt_c5 : (3 : ℤ)^2 + 4^2 = 5^2 := by norm_num
 
@@ -97,14 +95,12 @@ theorem ppt_c61 : (11 : ℤ)^2 + 60^2 = 61^2 := by norm_num
 -- Section 6: Ghost Map on Multiple Representations
 -- ═══════════════════════════════════════════════════════════════
 
-
 def ghostMap (a b c : ℤ) : ℤ × ℤ × ℤ := (a + 2*b - 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
 
 -- Different PPTs with hypotenuse 65 map to different ghost triples
 
 theorem ghost_65_1 : ghostMap 33 56 65 = (15, -8, 17) := by
   simp only [ghostMap]; ring_nf
-
 
 theorem ghost_65_2 : ghostMap 16 63 65 = (12, -35, 37) := by
   simp only [ghostMap]; ring_nf

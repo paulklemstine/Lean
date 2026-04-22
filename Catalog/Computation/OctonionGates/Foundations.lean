@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Computation.OctonionGates.Foundations
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Computation/OctonionGates
 Declarations: 37
 -/
 
-import Mathlib
 
 noncomputable section
 

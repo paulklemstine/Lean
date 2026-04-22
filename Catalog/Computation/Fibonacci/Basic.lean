@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Computation.Fibonacci.Basic
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Computation/Fibonacci
 Declarations: 21
 -/
 
-import Mathlib
 
 /-- Fibonacci numbers are positive for n ≥ 1. -/
 theorem fib_pos (n : ℕ) (hn : 1 ≤ n) : 0 < Nat.fib n := by

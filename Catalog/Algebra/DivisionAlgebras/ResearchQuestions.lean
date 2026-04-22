@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.DivisionAlgebras.ResearchQuestions
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/DivisionAlgebras
 Declarations: 45
 -/
 
-import Mathlib
 
 noncomputable section
 

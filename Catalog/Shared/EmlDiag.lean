@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Shared.EmlDiag
 
 Auto-generated from theorem catalog database.
 Domain: Shared
 Declarations: 3
 -/
-
-import Mathlib
 
 noncomputable section
 
@@ -24,9 +24,6 @@ theorem emlDiag_strictly_convex :
       exact fun z hz => h_second_deriv z hz ▸ by norm_num [ Real.differentiableAt_exp, differentiableAt_inv, hz.ne' ] ;
     exact fun x hx => h_second_deriv x ( interior_subset hx ) ▸ add_pos_of_pos_of_nonneg ( Real.exp_pos x ) ( by positivity )
 
-
-
-
 theorem emlDiag_has_minimum :
     ∃ z₀ ∈ Ioi (0 : ℝ), ∀ z ∈ Ioi (0 : ℝ), emlDiag z₀ ≤ emlDiag z := by
   -- To find the critical points, we solve $d'(z) = 0$, which gives $z e^z = 1$.
@@ -43,9 +40,6 @@ theorem emlDiag_has_minimum :
   have := Real.log_le_sub_one_of_pos ( div_pos hz hz₀.1 );
   rw [ Real.log_div ] at this <;> nlinarith [ Real.exp_pos z, Real.exp_pos z₀, mul_div_cancel₀ ( Real.exp z ) ( ne_of_gt ( Real.exp_pos z₀ ) ), mul_div_cancel₀ ( z ) ( ne_of_gt hz₀.1 ) ]
 
-
-
-
 theorem emlDiag_gt (z : ℝ) : emlDiag z > z := by
   by_cases hz : z ≤ 0;
   · unfold emlDiag;
@@ -56,8 +50,5 @@ theorem emlDiag_gt (z : ℝ) : emlDiag z > z := by
     have := Real.add_one_le_exp ( z - 1 );
     rw [ show z = 1 + ( z - 1 ) by ring, Real.exp_add ];
     nlinarith [ Real.add_one_le_exp 1, Real.log_le_sub_one_of_pos ( by linarith : 0 < 1 + ( z - 1 ) ) ]
-
-
-
 
 end

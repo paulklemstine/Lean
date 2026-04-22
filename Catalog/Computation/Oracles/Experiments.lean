@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Computation.Oracles.Experiments
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Computation/Oracles
 Declarations: 17
 -/
 
-import Mathlib
 
 noncomputable section
 

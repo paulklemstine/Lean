@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.EML.V16Research
 
 Auto-generated from theorem catalog database.
@@ -5,25 +7,19 @@ Domain: EML
 Declarations: 46
 -/
 
-import Mathlib
-
 noncomputable section
 
 /-- The EML operator: eml(x, y) = exp(x) − ln(y). -/
 def eml16 (x y : ℝ) : ℝ := Real.exp x - Real.log y
 
-
 /-- The diagonal map: d(z) = exp(z) − ln(z). -/
 def diag16 (z : ℝ) : ℝ := Real.exp z - Real.log z
-
 
 /-- The off-diagonal g-map: g(z) = e − ln(z). -/
 def gmap16 (z : ℝ) : ℝ := Real.exp 1 - Real.log z
 
-
 /-- The σ-EML activation function: σ_eml(x) = exp(x) - ln(1 + exp(-x)). -/
 def sigma_eml16 (x : ℝ) : ℝ := Real.exp x - Real.log (1 + Real.exp (-x))
-
 
 /-- [Section: ========================================================================
 Part I: Joint Convexity
@@ -45,21 +41,17 @@ theorem eml16_jointly_convex (x₁ x₂ y₁ y₂ t : ℝ) (ht0 : 0 ≤ t) (ht1 
           exact h_concave.2 hy₁ hy₂ ( by linarith ) ( by linarith ) ( by linarith );
         linarith
 
-
 /-- [Section: ========================================================================
 Part II: Fixed Point Existence and Uniqueness
 ========================================================================] -/
 theorem gmap16_sub_id_continuousOn : ContinuousOn (fun z => gmap16 z - z) (Set.Ioi 0) := by
   exact ContinuousOn.sub ( continuousOn_const.sub ( Real.continuousOn_log.mono fun x hx => ne_of_gt hx ) ) continuousOn_id
 
-
 theorem gmap16_at_two_gt : gmap16 2 > 2 := by
   exact lt_tsub_iff_left.mpr <| by have := Real.exp_one_gt_d9.le; have := Real.log_two_lt_d9.le; norm_num1 at *; linarith;
 
-
 theorem gmap16_at_e_lt : gmap16 (Real.exp 1) < Real.exp 1 := by
   unfold gmap16; norm_num [ Real.exp_pos ] ;
-
 
 theorem gmap16_fixed_point_exists :
     ∃ z : ℝ, 2 < z ∧ z < Real.exp 1 ∧ gmap16 z = z := by
@@ -73,22 +65,18 @@ theorem gmap16_fixed_point_exists :
       use z
       exact ⟨hz1.left, hz1.right, sub_eq_zero.mp hz2⟩
 
-
 theorem gmap16_strictAnti : StrictAntiOn gmap16 (Set.Ioi 0) := by
   exact fun x hx y hy hxy => sub_lt_sub_left ( Real.log_lt_log hx hxy ) _
-
 
 theorem gmap16_fixed_point_unique (z₁ z₂ : ℝ) (hz₁ : 0 < z₁) (hz₂ : 0 < z₂)
     (hfp₁ : gmap16 z₁ = z₁) (hfp₂ : gmap16 z₂ = z₂) : z₁ = z₂ := by
       exact le_antisymm ( le_of_not_gt fun h => by linarith [ gmap16_strictAnti ( show ( 0:ℝ ) < z₂ by linarith ) ( show ( 0:ℝ ) < z₁ by linarith ) h ] ) ( le_of_not_gt fun h => by linarith [ gmap16_strictAnti ( show ( 0:ℝ ) < z₁ by linarith ) ( show ( 0:ℝ ) < z₂ by linarith ) h ] )
-
 
 theorem gmap16_fixed_point_unique_exists :
     ∃ z : ℝ, 2 < z ∧ z < Real.exp 1 ∧ gmap16 z = z ∧
       ∀ w : ℝ, 0 < w → gmap16 w = w → w = z := by
         obtain ⟨ z, hz₁, hz₂, hz₃ ⟩ := gmap16_fixed_point_exists;
         exact ⟨ z, hz₁, hz₂, hz₃, fun w hw hw' => gmap16_fixed_point_unique w z hw ( by linarith ) hw' hz₃ ⟩
-
 
 theorem symmetrized_eml_eq_two_iff (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
     (a - Real.log a) + (b - Real.log b) = 2 ↔ a = 1 ∧ b = 1 := by
@@ -100,13 +88,11 @@ theorem symmetrized_eml_eq_two_iff (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
         · linarith [ sub_log_ge_one b hb ];
       · norm_num [ H ]
 
-
 /-- [Section: ========================================================================
 Part IV: Diagonal Analysis
 ========================================================================] -/
 theorem diag16_ge_two (z : ℝ) (hz : 0 < z) : diag16 z ≥ 2 := by
   exact le_tsub_of_add_le_left ( by have := Real.add_one_le_exp z; have := Real.log_le_sub_one_of_pos hz; linarith )
-
 
 theorem diag16_tendsto_top : Filter.Tendsto diag16 Filter.atTop Filter.atTop := by
   -- We'll use the fact that $e^z$ grows much faster than $\ln z$.
@@ -121,18 +107,14 @@ theorem diag16_tendsto_top : Filter.Tendsto diag16 Filter.atTop Filter.atTop := 
     exact ⟨ Max.max i 1, fun a ha => by linarith [ hi a ( le_trans ( le_max_left _ _ ) ha ), Real.log_le_sub_one_of_pos ( by linarith [ le_max_right i 1 ] : 0 < a ) ] ⟩;
   exact h_exp_ln
 
-
 theorem diag16_at_one : diag16 1 = Real.exp 1 := by
   unfold diag16; norm_num
-
 
 theorem diag16_at_e : diag16 (Real.exp 1) = Real.exp (Real.exp 1) - 1 := by
   unfold diag16; norm_num
 
-
 theorem diag16_ge_exp_sub (z : ℝ) (hz : 1 ≤ z) : diag16 z ≥ Real.exp z - z := by
   exact sub_le_sub_left ( le_trans ( Real.log_le_sub_one_of_pos ( by linarith ) ) ( by linarith ) ) _
-
 
 /-- [Section: ========================================================================
 Part V: Composition and Iteration
@@ -140,18 +122,14 @@ Part V: Composition and Iteration
 theorem eml16_at_zero_exp (t : ℝ) : eml16 0 (Real.exp t) = 1 - t := by
   unfold eml16; aesop;
 
-
 theorem eml16_at_one_one : eml16 1 1 = Real.exp 1 := by
   exact sub_eq_self.mpr ( by norm_num )
-
 
 theorem eml16_at_zero_one : eml16 0 1 = 1 := by
   unfold eml16; aesop;
 
-
 theorem eml16_at_ln2_2 : eml16 (Real.log 2) 2 = 2 - Real.log 2 := by
   unfold eml16; norm_num [ Real.exp_log ] ;
-
 
 theorem diag16_iterated_ge (z : ℝ) (hz : 0 < z) :
     diag16 (diag16 z) ≥ diag16 z := by
@@ -162,7 +140,6 @@ theorem diag16_iterated_ge (z : ℝ) (hz : 0 < z) :
         have := Real.exp_one_gt_d9.le ; norm_num1 at * ; rw [ show Real.exp w = Real.exp 1 * Real.exp ( w - 1 ) by rw [ ← Real.exp_add ] ; ring ] ; nlinarith [ Real.add_one_le_exp ( w - 1 ), Real.log_le_sub_one_of_pos zero_lt_two ];
       exact h_exp_ge_log _ ( diag16_ge_two _ hz )
 
-
 /-- [Section: ========================================================================
 Part VI: EML and Classical Inequalities
 ========================================================================] -/
@@ -170,16 +147,13 @@ theorem eml16_amgm_connection (a b : ℝ) (ha : 0 < a) (hb : 0 < b) :
     (a - Real.log a) + (b - Real.log b) ≥ 2 := by
       linarith [ sub_log_ge_one a ha, sub_log_ge_one b hb ]
 
-
 theorem eml16_young_diagonal (a : ℝ) (ha : 0 < a) :
     Real.exp a ≥ 1 + a := by
       linarith [ Real.add_one_le_exp a ]
 
-
 theorem eml16_lower_bound (x y : ℝ) :
     eml16 x y ≥ 1 + x - Real.log y := by
       exact sub_le_sub_right ( by linarith [ Real.add_one_le_exp x ] ) _
-
 
 /-- [Section: ========================================================================
 Part VII: Asymptotics and Limits
@@ -188,17 +162,14 @@ theorem eml16_zero_tendsto_top :
     Filter.Tendsto (fun y => eml16 0 y) (nhdsWithin 0 (Set.Ioi 0)) Filter.atTop := by
       exact Filter.Tendsto.add_atTop tendsto_const_nhds ( Filter.tendsto_neg_atBot_atTop.comp <| Real.tendsto_log_nhdsGT_zero )
 
-
 theorem eml16_one_tendsto_top :
     Filter.Tendsto (fun x => eml16 x 1) Filter.atTop Filter.atTop := by
       unfold eml16;
       simpa using Real.tendsto_exp_atTop
 
-
 theorem eml16_one_tendsto_zero :
     Filter.Tendsto (fun x => eml16 x 1) Filter.atBot (nhds 0) := by
       convert Real.tendsto_exp_atBot using 2 ; unfold eml16 ; aesop
-
 
 /-- [Section: ========================================================================
 Part VIII: g-Map Contraction
@@ -206,7 +177,6 @@ Part VIII: g-Map Contraction
 theorem gmap16_contraction_constant (z : ℝ) (hz : 2 ≤ z) :
     (1 : ℝ) / z ≤ 1 / 2 := by
       gcongr
-
 
 theorem gmap16_lipschitz (x y : ℝ) (hx : 2 ≤ x) (hy : 2 ≤ y) :
     |gmap16 x - gmap16 y| ≤ (1 / 2) * |x - y| := by
@@ -230,7 +200,6 @@ theorem gmap16_lipschitz (x y : ℝ) (hx : 2 ≤ x) (hy : 2 ≤ y) :
         rw [ div_eq_div_iff ] at hc <;> norm_num at * <;> try linarith [ hc.1.1, hc.1.2 ];
         constructor <;> nlinarith [ mul_div_cancel₀ 1 ( by linarith : ( 2 : ℝ ) ≠ 0 ) ]
 
-
 /-- [Section: ========================================================================
 Part IX: EML Functional Equations
 ========================================================================] -/
@@ -239,22 +208,18 @@ theorem eml16_log_shift (x y c : ℝ) (hy : 0 < y) :
       unfold eml16;
       rw [ Real.log_mul ( by positivity ) ( by positivity ), Real.log_exp ] ; ring
 
-
 theorem eml16_exp_shift (x y c : ℝ) :
     eml16 (x + c) y = Real.exp c * Real.exp x - Real.log y := by
       simp +decide [ eml16, Real.exp_add ] ; ring
-
 
 theorem eml16_prod_snd (x y z : ℝ) (hy : 0 < y) (hz : 0 < z) :
     eml16 x (y * z) = eml16 x y + eml16 x z - Real.exp x := by
       unfold eml16; rw [ Real.log_mul hy.ne' hz.ne' ] ; ring;
 
-
 theorem eml16_reciprocal (x y : ℝ) (hy : 0 < y) :
     eml16 x (1 / y) = eml16 x y + 2 * Real.log y := by
       unfold eml16;
       simpa using by ring
-
 
 /-- [Section: ========================================================================
 Part X: σ-EML Properties
@@ -262,22 +227,18 @@ Part X: σ-EML Properties
 theorem sigma_eml16_at_zero : sigma_eml16 0 = 1 - Real.log 2 := by
   unfold sigma_eml16; norm_num;
 
-
 theorem sigma_eml16_strictMono : StrictMono sigma_eml16 := by
   refine' fun x y hxy => sub_lt_sub _ _;
   · exact Real.exp_lt_exp.2 hxy;
   · gcongr
 
-
 theorem sigma_eml16_tendsto_top :
     Filter.Tendsto sigma_eml16 Filter.atTop Filter.atTop := by
       exact Filter.Tendsto.atTop_add ( Real.tendsto_exp_atTop ) ( Filter.Tendsto.neg ( Filter.Tendsto.log ( tendsto_const_nhds.add ( Real.tendsto_exp_atBot.comp Filter.tendsto_neg_atTop_atBot ) ) ( by norm_num ) ) )
 
-
 theorem sigma_eml16_large_x (x : ℝ) (hx : 0 ≤ x) :
     sigma_eml16 x ≥ Real.exp x - Real.log 2 := by
       exact sub_le_sub_left ( Real.log_le_log ( by positivity ) ( by linarith [ Real.exp_le_one_iff.mpr ( neg_nonpos.mpr hx ) ] ) ) _
-
 
 theorem sigma_eml16_pos_of_ge_one (x : ℝ) (hx : 1 ≤ x) :
     sigma_eml16 x > 0 := by
@@ -286,18 +247,15 @@ theorem sigma_eml16_pos_of_ge_one (x : ℝ) (hx : 1 ≤ x) :
         exact sub_pos_of_lt ( lt_of_le_of_lt ( Real.log_le_sub_one_of_pos ( by positivity ) ) ( by linarith [ Real.add_one_le_exp 1, Real.exp_pos ( -1 ), Real.exp_lt_one_iff.mpr ( show -1 < 0 by norm_num ) ] ) );
       exact h_sigma_eml16_ge_one.trans_le ( sigma_eml16_strictMono.monotone hx )
 
-
 /-- [Section: ========================================================================
 Part XI: EML Neutral Curve and Level Sets
 ========================================================================] -/
 theorem eml16_neutral : eml16 0 (Real.exp 1) = 0 := by
   unfold eml16; norm_num
 
-
 theorem eml16_zero_curve (x : ℝ) :
     eml16 x (Real.exp (Real.exp x)) = 0 := by
       unfold eml16; norm_num;
-
 
 theorem eml16_pos_below_curve (x y : ℝ) (hy : 0 < y) (hlt : y < Real.exp (Real.exp x)) :
     eml16 x y > 0 := by
@@ -305,20 +263,16 @@ theorem eml16_pos_below_curve (x y : ℝ) (hy : 0 < y) (hlt : y < Real.exp (Real
       simp [eml16];
       simpa using Real.log_lt_log hy hlt
 
-
 theorem eml16_neg_above_curve (x y : ℝ) (hgt : y > Real.exp (Real.exp x)) :
     eml16 x y < 0 := by
       exact sub_neg_of_lt ( by simpa using Real.log_lt_log ( by positivity ) hgt )
-
 
 theorem eml16_sum (x y z : ℝ) :
     eml16 x y + eml16 x z = 2 * Real.exp x - Real.log y - Real.log z := by
       unfold eml16; ring;
 
-
 theorem eml16_neg_fst (x y : ℝ) :
     eml16 (-x) y = 1 / Real.exp x - Real.log y := by
       rw [ one_div, ← Real.exp_neg, eml16 ]
-
 
 end

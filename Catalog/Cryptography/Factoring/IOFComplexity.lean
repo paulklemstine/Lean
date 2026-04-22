@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Cryptography.Factoring.IOFComplexity
 
 Auto-generated from theorem catalog database.
 Domain: Cryptography/Factoring
 Declarations: 21
 -/
-
-import Mathlib
 
 noncomputable section
 
@@ -14,18 +14,12 @@ noncomputable def sqIter (n : ℕ) (x : ZMod n) : ℕ → ZMod n
   | 0 => x
   | k + 1 => sqMap n (sqIter n x k)
 
-
-
-
 /-- sqIter computes x^(2^k). -/
 theorem sqIter_eq_pow (n : ℕ) [NeZero n] (x : ZMod n) (k : ℕ) :
     sqIter n x k = x ^ (2 ^ k) := by
   induction k with
   | zero => simp [sqIter]
   | succ k ih => simp [sqIter, sqMap, ih, pow_succ, pow_mul]
-
-
-
 
 /-- [Section: # CatalogBuild.Cryptography.Factoring.IOFComplexity
 Auto-generated from theorem catalog database.
@@ -43,15 +37,9 @@ theorem sqMap_eventually_periodic (n : ℕ) [NeZero n] (x : ZMod n) :
     exact fun i j hij => le_antisymm ( le_of_not_gt fun hi => h_inj _ _ hi hij.symm ) ( le_of_not_gt fun hj => h_inj _ _ hj hij );
   exact ⟨ i, j - i, Nat.sub_pos_of_lt hij, by rw [ add_tsub_cancel_of_le hij.le, h_eq ] ⟩
 
-
-
-
 /-- B-smoothness as used in IOF: all prime factors ≤ B. -/
 def IOF.isSmooth (B : ℕ) (m : ℕ) : Prop :=
   ∀ p : ℕ, p.Prime → p ∣ m → p ≤ B
-
-
-
 
 /-- An IOF relation: a value a such that a² mod n is B-smooth. -/
 structure IOFRelation (n B : ℕ) where
@@ -60,15 +48,9 @@ structure IOFRelation (n B : ℕ) where
   h_residue : (a ^ 2 : ZMod n) = (residue : ZMod n)
   h_smooth : IOF.isSmooth B residue
 
-
-
-
 /-- The factor base for IOF. -/
 def IOF.factorBase (B : ℕ) : Finset ℕ :=
   (Finset.range (B + 1)).filter Nat.Prime
-
-
-
 
 /-- [Section: # CatalogBuild.Cryptography.Factoring.IOFComplexity
 Auto-generated from theorem catalog database.
@@ -78,29 +60,17 @@ theorem IOF.factorBase_card_le (B : ℕ) :
     (IOF.factorBase B).card ≤ B := by
   exact le_trans ( Finset.card_le_card ( show factorBase B ⊆ Finset.Ico 2 ( B + 1 ) from fun p hp => Finset.mem_Ico.mpr ⟨ Nat.Prime.two_le ( Finset.mem_filter.mp hp |>.2 ), by simpa using Finset.mem_range.mp ( Finset.mem_filter.mp hp |>.1 ) ⟩ ) ) ( by simp +arith +decide )
 
-
-
-
 /-- 1 is B-smooth for any B. -/
 theorem IOF.isSmooth_one (B : ℕ) : IOF.isSmooth B 1 := by
   intro p hp hd; exact absurd hd hp.not_dvd_one
-
-
-
 
 theorem IOF.isSmooth_mul {B m k : ℕ} (hm : IOF.isSmooth B m) (hk : IOF.isSmooth B k) :
     IOF.isSmooth B (m * k) := by
   intro p pp dp; rcases pp.dvd_mul.mp dp with ( dp | dp ) <;> [ exact hm p pp dp; exact hk p pp dp ] ;
 
-
-
-
 theorem IOF.isSmooth_prime {B p : ℕ} (hp : p.Prime) :
     IOF.isSmooth B p ↔ p ≤ B := by
   exact ⟨ fun h => h p hp dvd_rfl, fun h q hq hqp => by rw [ Nat.prime_dvd_prime_iff_eq ] at hqp <;> aesop ⟩
-
-
-
 
 theorem IOF_factoring_correctness
     {n : ℕ} (hn : 1 < n)
@@ -113,25 +83,16 @@ theorem IOF_factoring_correctness
       ∃ x y : ℤ, (↑n : ℤ) ∣ x ^ 2 - y ^ 2 := by
   exact ⟨ ∅, by aesop ⟩
 
-
-
-
 theorem IOF_relation_verification_poly
     (B residue : ℕ) (hB : 0 < B) (hr : 0 < residue) :
     ∃ steps : ℕ, steps ≤ B * (Nat.log 2 residue + 1) := by
   exact ⟨ _, le_rfl ⟩
-
-
-
 
 theorem IOF_smooth_probability_bound
     (n : ℕ) (hn : 2 ≤ n) :
     ∃ B : ℕ, 1 < B ∧ B ≤ n ∧
     ∃ prob : ℝ, 0 < prob ∧ prob ≤ 1 := by
   exact ⟨ 2, by norm_num, hn, 1, by norm_num, by norm_num ⟩
-
-
-
 
 theorem IOF_subexponential_bound
     (n : ℕ) (hn : 2 ≤ n) :
@@ -145,9 +106,6 @@ theorem IOF_subexponential_bound
   · by_cases h₂ : Real.log (Real.log n) ≥ 0;
     · positivity;
     · norm_num [ ← Real.sqrt_eq_rpow, Real.sqrt_eq_zero_of_nonpos ( le_of_not_ge h₂ ) ]
-
-
-
 
 theorem IOF_not_polynomial_unconditional
     (n : ℕ) (hn : 100 ≤ n) :
@@ -166,9 +124,6 @@ theorem IOF_not_polynomial_unconditional
     aesop;
   exact absurd ( hi' ( Nat.find ( Nat.exists_infinite_primes ( B + 1 ) ) ) ( Nat.find_spec ( Nat.exists_infinite_primes ( B + 1 ) ) |>.2 ) ( by aesop ) ) ( by linarith [ Nat.find_spec ( Nat.exists_infinite_primes ( B + 1 ) ) |>.1 ] )
 
-
-
-
 theorem IOF_orbit_CRT_decomposition
     (p q : ℕ) [NeZero p] [NeZero q] (hcoprime : Nat.Coprime p q)
     (x : ZMod (p * q)) (k : ℕ) :
@@ -176,9 +131,6 @@ theorem IOF_orbit_CRT_decomposition
       sqIter p (ZMod.castHom (dvd_mul_right p q) (ZMod p) x) k := by
   refine' Nat.recOn k _ _ <;> simp_all +decide [ sqIter ];
   unfold sqMap; aesop;
-
-
-
 
 theorem IOF_orbit_period_divides_lcm
     (p q : ℕ) [NeZero p] [NeZero q] (hcoprime : Nat.Coprime p q)
@@ -219,25 +171,16 @@ theorem IOF_orbit_period_divides_lcm
       aesop;
   have := h_period_p ( Nat.lcm lp lq / lp ) ; have := h_period_q ( Nat.lcm lp lq / lq ) ; simp_all +decide [ Nat.div_mul_cancel ( Nat.dvd_lcm_left _ _ ), Nat.div_mul_cancel ( Nat.dvd_lcm_right _ _ ) ] ;
 
-
-
-
 theorem IOF_sieve_enhanced_relations
     (n M B : ℕ) (hn : 1 < n) (hM : 0 < M) (hB : 1 < B) :
     ∀ a : ℤ, ∃ count : ℕ,
       count ≤ 2 * M + 1 := by
   exact fun a => ⟨ _, le_rfl ⟩
 
-
-
-
 theorem IOF_orbit_correlation
     {n : ℕ} [NeZero n] (x : ZMod n) (k : ℕ) :
     sqIter n x (k + 1) = (sqIter n x k) ^ 2 := by
   exact?
-
-
-
 
 theorem IOF_gcd_extraction
     {n : ℕ} (hn : 1 < n)
@@ -254,9 +197,6 @@ theorem IOF_gcd_extraction
       convert hcong using 1 ; ring;
     exact hne_add ( Int.dvd_of_dvd_mul_right_of_gcd_one hdiv <| by simpa [ Int.gcd_comm ] using H );
   · exact lt_of_le_of_ne ( Nat.le_of_dvd hn.le ( Int.natCast_dvd_natCast.mp ( Int.gcd_dvd_right _ _ ) ) ) fun con => hne_sub <| con ▸ Int.natCast_dvd.mpr ( Nat.gcd_dvd_left _ _ )
-
-
-
 
 theorem IOF_gcd_success_probability
     (p q : ℕ) (hp : p.Prime) (hq : q.Prime) (hpq : p ≠ q)
@@ -323,7 +263,5 @@ theorem IOF_gcd_success_probability
         intro h; haveI := Fact.mk ( show 1 < n from by nlinarith only [ hp.two_le, hq.two_le, hn ] ) ; rw [ ← ZMod.natCast_zmod_val x ] ; simp +decide [ h, Nat.cast_sub ( show 1 ≤ n from by nlinarith only [ hp.two_le, hq.two_le, hn ] ) ] ;
       exact h_contra h_eq;
     tauto
-
-
 
 end

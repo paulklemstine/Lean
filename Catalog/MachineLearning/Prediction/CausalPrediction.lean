@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.MachineLearning.Prediction.CausalPrediction
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: MachineLearning/Prediction
 Declarations: 12
 -/
 
-import Mathlib
 
 noncomputable section
 

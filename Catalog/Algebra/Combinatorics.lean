@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.Combinatorics
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra
 Declarations: 10
 -/
 
-import Mathlib
 
 /-- **Generalized pigeonhole**: If `|A| > k * |B|`, any `f : A → B` has a fiber
 of size `> k`. -/

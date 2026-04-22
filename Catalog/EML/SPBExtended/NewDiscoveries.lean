@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.EML.SPBExtended.NewDiscoveries
 
 Auto-generated from theorem catalog database.
 Domain: EML/SPBExtended
 Declarations: 19
 -/
-
-import Mathlib
 
 noncomputable section
 
@@ -116,7 +116,6 @@ theorem gauss_comp_general (n : ℤ) (x₁ y₁ x₂ y₂ : ℤ) :
     (x₁ ^ 2 + n * y₁ ^ 2) * (x₂ ^ 2 + n * y₂ ^ 2) =
     (x₁ * x₂ - n * y₁ * y₂) ^ 2 + n * (x₁ * y₂ + y₁ * x₂) ^ 2 := by ring
 
-
 theorem spb_equation_solution (a b : ℝ) (h : 1 + a * b ≠ 0) :
     spbND (spbND b (-a)) a = b := by
       simp [spbND];
@@ -148,7 +147,6 @@ theorem spb_period_1 (x : ℝ) : spbND x 0 = x := by simp [spbND]
 -- § 7. New Identity: SPB and Bernstein Basis
 -- ═══════════════════════════════════════════
 
-
 theorem bernstein_cauchy' (x : ℝ) :
     x ^ 2 / (1 + x ^ 2) + 1 / (1 + x ^ 2) = 1 := by
   have h : (1 + x ^ 2) ≠ 0 := by positivity
@@ -175,6 +173,5 @@ theorem cocycle_sq_identity (x y : ℝ) :
 -- Wait, that's the inverse. Actually:
 -- 1/(1-xy)² = (1+spb²) / ((1+x²)(1+y²))
 -- This is the Cauchy invariance formula in disguise
-
 
 end

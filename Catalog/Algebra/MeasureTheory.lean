@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.MeasureTheory
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra
 Declarations: 7
 -/
 
-import Mathlib
 
 /-- The Lebesgue measure of [a,b] is b - a. -/
 theorem lebesgue_interval_measure (a b : ℝ) (h : a ≤ b) :

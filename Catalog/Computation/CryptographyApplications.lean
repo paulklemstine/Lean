@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Computation.CryptographyApplications
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Computation
 Declarations: 14
 -/
 
-import Mathlib
 
 /-- [Section: # CatalogBuild.Computation.CryptographyApplications
 Auto-generated from theorem catalog database.

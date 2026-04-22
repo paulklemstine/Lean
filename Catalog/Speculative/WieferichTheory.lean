@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Speculative.WieferichTheory
 
 Auto-generated from theorem catalog database.
@@ -5,17 +7,12 @@ Domain: Speculative
 Declarations: 19
 -/
 
-import Mathlib
-
 /-- A prime p is Wieferich iff 2^(p-1) % p² = 1. -/
 theorem wieferich_iff_mod (p : ℕ) (hp : Nat.Prime p) (hp3 : 3 ≤ p) :
     IsWieferich p ↔ 2 ^ (p - 1) % (p ^ 2) = 1 := by
   constructor
   · rintro ⟨_, _, h⟩; exact h
   · intro h; exact ⟨hp, hp3, h⟩
-
-
-
 
 /-- [Section: # CatalogBuild.Speculative.WieferichTheory
 Auto-generated from theorem catalog database.
@@ -25,9 +22,6 @@ theorem wieferich_1093_verified : IsWieferich 1093 := by
   refine ⟨by native_decide, by omega, ?_⟩
   native_decide
 
-
-
-
 /-- [Section: # CatalogBuild.Speculative.WieferichTheory
 Auto-generated from theorem catalog database.
 Domain: Speculative
@@ -36,92 +30,47 @@ theorem wieferich_3511_verified : IsWieferich 3511 := by
   refine ⟨by native_decide, by omega, ?_⟩
   native_decide
 
-
-
-
 theorem non_wieferich_3 : ¬ IsWieferich 3 := by
   intro ⟨_, _, h⟩; revert h; native_decide
-
-
-
 
 theorem non_wieferich_5 : ¬ IsWieferich 5 := by
   intro ⟨_, _, h⟩; revert h; native_decide
 
-
-
-
 theorem non_wieferich_7 : ¬ IsWieferich 7 := by
   intro ⟨_, _, h⟩; revert h; native_decide
-
-
-
 
 theorem non_wieferich_11 : ¬ IsWieferich 11 := by
   intro ⟨_, _, h⟩; revert h; native_decide
 
-
-
-
 theorem non_wieferich_13 : ¬ IsWieferich 13 := by
   intro ⟨_, _, h⟩; revert h; native_decide
-
-
-
 
 theorem non_wieferich_17 : ¬ IsWieferich 17 := by
   intro ⟨_, _, h⟩; revert h; native_decide
 
-
-
-
 theorem non_wieferich_19 : ¬ IsWieferich 19 := by
   intro ⟨_, _, h⟩; revert h; native_decide
-
-
-
 
 theorem non_wieferich_23 : ¬ IsWieferich 23 := by
   intro ⟨_, _, h⟩; revert h; native_decide
 
-
-
-
 theorem non_wieferich_29 : ¬ IsWieferich 29 := by
   intro ⟨_, _, h⟩; revert h; native_decide
-
-
-
 
 theorem non_wieferich_31 : ¬ IsWieferich 31 := by
   intro ⟨_, _, h⟩; revert h; native_decide
 
-
-
-
 theorem non_wieferich_37 : ¬ IsWieferich 37 := by
   intro ⟨_, _, h⟩; revert h; native_decide
-
-
-
 
 theorem non_wieferich_41 : ¬ IsWieferich 41 := by
   intro ⟨_, _, h⟩; revert h; native_decide
 
-
-
-
 theorem non_wieferich_43 : ¬ IsWieferich 43 := by
   intro ⟨_, _, h⟩; revert h; native_decide
 
-
-
-
 theorem non_wieferich_47 : ¬ IsWieferich 47 := by
   intro ⟨_, _, h⟩; revert h; native_decide
-
-
-
 
 theorem wieferich_iff_p_dvd_quotient (p : ℕ) (hp : Nat.Prime p) (hp3 : 3 ≤ p) :
     IsWieferich p ↔ (p : ℤ) ∣ fermatQuotient 2 p := by
@@ -140,9 +89,6 @@ theorem wieferich_iff_p_dvd_quotient (p : ℕ) (hp : Nat.Prime p) (hp3 : 3 ≤ p
     obtain ⟨ k, hk ⟩ := h_div; norm_num [ sub_eq_iff_eq_add'.mp hk ] ;
     rw [ Int.emod_eq_of_lt ] <;> nlinarith
 
-
-
-
 /-- Historical connection: If p is an odd prime not dividing xyz and
 x^p + y^p = z^p, then p must be Wieferich (Wieferich 1909).
 We state this as a formal proposition. -/
@@ -150,5 +96,4 @@ def WieferichFLTConnection : Prop :=
   ∀ p : ℕ, Nat.Prime p → p ≥ 3 →
     (∃ x y z : ℤ, x ^ p + y ^ p = z ^ p ∧ ¬ (p : ℤ) ∣ x * y * z) →
     IsWieferich p
-
 

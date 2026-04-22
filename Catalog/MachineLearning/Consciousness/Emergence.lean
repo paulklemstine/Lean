@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.MachineLearning.Consciousness.Emergence
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: MachineLearning/Consciousness
 Declarations: 13
 -/
 
-import Mathlib
 
 /-- A system with micro and macro levels -/
 structure MicroMacroSystem where

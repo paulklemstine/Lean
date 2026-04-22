@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.Diophantine.LinearDiophantine
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/Diophantine
 Declarations: 7
 -/
 
-import Mathlib
 
 /-- [Section: # CatalogBuild.Algebra.Diophantine.LinearDiophantine
 Auto-generated from theorem catalog database.

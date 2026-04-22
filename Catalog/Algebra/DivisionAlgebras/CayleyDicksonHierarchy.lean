@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.DivisionAlgebras.CayleyDicksonHierarchy
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/DivisionAlgebras
 Declarations: 63
 -/
 
-import Mathlib
 
 noncomputable section
 

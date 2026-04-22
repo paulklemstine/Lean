@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.Foundations.PolynomialTheory
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/Foundations
 Declarations: 13
 -/
 
-import Mathlib
 
 /-- [Section: # CatalogBuild.Algebra.Foundations.PolynomialTheory
 Auto-generated from theorem catalog database.

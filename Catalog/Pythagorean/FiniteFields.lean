@@ -1,12 +1,12 @@
+import Mathlib
+import Pythagorean.Core
+
 /-! # CatalogBuild.Pythagorean.FiniteFields
 
 Auto-generated from theorem catalog database.
 Domain: Pythagorean
 Declarations: 1
 -/
-
-import Mathlib
-import Pythagorean.Core
 
 noncomputable section
 
@@ -17,8 +17,5 @@ theorem neg_one_square_iff (hp2 : p ≠ 2) :
   rcases (Fact.out : Nat.Prime p).eq_two_or_odd with rfl | hodd
   · exact absurd rfl hp2
   · omega
-
-
-
 
 end

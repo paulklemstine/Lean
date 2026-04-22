@@ -1,12 +1,12 @@
+import Mathlib
+import EML.Basic
+
 /-! # CatalogBuild.EML.Barriers
 
 Auto-generated from theorem catalog database.
 Domain: EML
 Declarations: 5
 -/
-
-import Mathlib
-import EML.Basic
 
 noncomputable section
 
@@ -21,7 +21,6 @@ theorem pow_not_mem_sheffer {n : ℕ} (hn : 2 ≤ n) :
   rcases n with ( _ | _ | n ) <;> norm_num at *;
   rw [ abs_of_nonneg ( by positivity ) ] at this ; nlinarith [ show ( K : ℝ ) ≥ 0 by positivity, pow_le_pow_right₀ ( by linarith [ show ( K : ℝ ) ≥ 0 by positivity ] : 1 ≤ 2 * ( K : ℝ ) + 1 ) ( by linarith : n + 1 + 1 ≥ 2 ) ]
 
-
 /-- The asymptotic slopes at +∞ and -∞, computed together. -/
 def ShefferExpr.slopes : ShefferExpr → ℝ × ℝ
   | .base => (1, 0)
@@ -34,7 +33,6 @@ def ShefferExpr.slopes : ShefferExpr → ℝ × ℝ
     let (s1Top, s1Bot) := e₁.slopes
     let (s2Top, s2Bot) := e₂.slopes
     (α * s1Top + β * s2Top, α * s1Bot + β * s2Bot)
-
 
 /-- [Section: ## Barrier 3 Applications] -/
 theorem sheffer_expr_tendsto_both (e : ShefferExpr) :
@@ -101,14 +99,12 @@ theorem sheffer_expr_tendsto_both (e : ShefferExpr) :
   · norm_num [ ShefferExpr.eval ];
   · norm_num [ ShefferExpr.eval ]
 
-
 /-- Every Sheffer expression has a trichotomy at +∞. -/
 theorem sheffer_expr_tendsto_atTop (e : ShefferExpr) :
     (∃ L : ℝ, Tendsto e.eval atTop (𝓝 L)) ∨
     Tendsto e.eval atTop atTop ∨
     Tendsto e.eval atTop atBot :=
   (sheffer_expr_tendsto_both e).1
-
 
 /-- [Section: ## Barrier 4: Asymptotic Linear Structure] -/
 theorem softplus_sub_id_tendsto_zero_atTop :
@@ -117,6 +113,5 @@ theorem softplus_sub_id_tendsto_zero_atTop :
   · ext x; rw [ show ( Real.exp x ) ⁻¹ + 1 = ( 1 + Real.exp x ) / Real.exp x by ring_nf; norm_num [ Real.exp_ne_zero ] ] ; rw [ Real.log_div ( by positivity ) ( by positivity ) ] ; ring;
     unfold softplus; norm_num;
   · simpa using tendsto_inv_atTop_zero.comp Real.tendsto_exp_atTop |> Filter.Tendsto.add_const 1
-
 
 end

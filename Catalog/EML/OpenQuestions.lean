@@ -1,10 +1,3 @@
-/-! # CatalogBuild.EML.OpenQuestions
-
-Auto-generated from theorem catalog database.
-Domain: EML
-Declarations: 20
--/
-
 import EML.Lean.AdvancedTheorems
 import EML.Lean.ExtendedTheorems
 import EML.Lean.FutureTheorems
@@ -12,6 +5,13 @@ import EML.Lean.NewTheorems
 import EML.Lean.ShefferAlgebra
 import EML.Lean.SoftplusBasic
 import Mathlib
+
+/-! # CatalogBuild.EML.OpenQuestions
+
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 20
+-/
 
 noncomputable section
 
@@ -21,9 +21,6 @@ theorem softplus_contDiff : ContDiff ℝ ⊤ softplus := by
   unfold softplus
   exact ContDiff.log (contDiff_const.add Real.contDiff_exp)
     (fun x => ne_of_gt (one_plus_exp_pos x))
-
-
-
 
 /-- Every Sheffer expression defines a C∞ function.
 This is the **Higher Smoothness Barrier** (Q23): not only is every
@@ -41,18 +38,12 @@ theorem sheffer_expr_contDiff (e : ShefferExpr) : ContDiff ℝ ⊤ e.eval := by
   | comp e₁ e₂ ih₁ ih₂ =>
     exact ih₁.comp ih₂
 
-
-
-
 /-- Corollary: every function in the Sheffer algebra is C∞. -/
 theorem sheffer_algebra_contDiff {f : ℝ → ℝ} (hf : f ∈ ShefferAlgebra) :
     ContDiff ℝ ⊤ f := by
   obtain ⟨e, he⟩ := hf
   rw [he]
   exact sheffer_expr_contDiff e
-
-
-
 
 /-- The Sheffer algebra is contained in C∞ ∩ Lip.
 This is the **Two-Barrier Characterization** from the paper,
@@ -61,9 +52,6 @@ theorem sheffer_algebra_subset_smooth_lip {f : ℝ → ℝ} (hf : f ∈ ShefferA
     ContDiff ℝ ⊤ f ∧ (∃ C : ℝ, C ≥ 0 ∧ ∀ x y : ℝ, |f x - f y| ≤ C * |x - y|) := by
   obtain ⟨e, he⟩ := hf
   exact ⟨he ▸ sheffer_expr_contDiff e, he ▸ sheffer_expr_lipschitz e⟩
-
-
-
 
 /-- σ(n·x) ≤ n·σ(x) for all natural numbers n ≥ 1.
 Proof by induction using σ(x+y) ≤ σ(x) + σ(y). -/
@@ -82,9 +70,6 @@ theorem softplus_nat_mul_ineq (n : ℕ) (hn : n ≥ 1) (x : ℝ) :
       push_cast at *
       linarith
 
-
-
-
 /-- Iterated softplus at 0 is bounded above by (n+1) · log 2.
 Since σ(0) = log 2 and σ is subadditive with σ(x) ≤ x + log 2 for x ≥ 0. -/
 theorem softplus_iter_zero_upper (n : ℕ) :
@@ -102,9 +87,6 @@ theorem softplus_iter_zero_upper (n : ℕ) :
     push_cast at *
     linarith
 
-
-
-
 /-- Iterated softplus at 0 is bounded below: σⁿ(0) ≥ log 2 for n ≥ 1 -/
 theorem softplus_iter_zero_lower (n : ℕ) (hn : n ≥ 1) :
     softplus_iter n 0 ≥ Real.log 2 := by
@@ -121,16 +103,10 @@ theorem softplus_iter_zero_lower (n : ℕ) (hn : n ≥ 1) :
     rw [softplus_zero] at this
     exact this
 
-
-
-
 /-- Softplus has no fixed point: σ(x) ≠ x for all x.
 This follows because σ(x) > x for all x. -/
 theorem softplus_no_fixed_point : ∀ x : ℝ, softplus x ≠ x :=
   fun x => ne_of_gt (softplus_gt_id x)
-
-
-
 
 /-- [Section: # CatalogBuild.EML.OpenQuestions
 Auto-generated from theorem catalog database.
@@ -144,23 +120,14 @@ theorem ring_completion_not_lipschitz :
   · exact?;
   · exact fun x hx => ⟨ x + 1, 0, by rw [ abs_of_nonneg, abs_of_nonneg ] <;> nlinarith ⟩
 
-
-
-
 /-- The derivative of softplus is bounded by 1. -/
 theorem softplus_deriv_le_one (x : ℝ) : |deriv softplus x| ≤ 1 := by
   rw [softplus_deriv]
   rw [abs_of_pos (logisticSigmoid_pos x)]
   exact le_of_lt (logisticSigmoid_lt_one x)
 
-
-
-
 /-- The softplus inverse function: σ⁻¹(y) = log(eʸ - 1) for y > 0 -/
 def softplusInv (y : ℝ) : ℝ := Real.log (Real.exp y - 1)
-
-
-
 
 /-- σ(σ⁻¹(y)) = y for y > 0 -/
 theorem softplus_right_inverse {y : ℝ} (hy : y > 0) :
@@ -170,9 +137,6 @@ theorem softplus_right_inverse {y : ℝ} (hy : y > 0) :
   ring_nf
   rw [Real.log_exp]
 
-
-
-
 /-- σ⁻¹(σ(x)) = x for all x -/
 theorem softplus_left_inverse (x : ℝ) :
     softplusInv (softplus x) = x := by
@@ -181,14 +145,8 @@ theorem softplus_left_inverse (x : ℝ) :
   ring_nf
   rw [Real.log_exp]
 
-
-
-
 /-- The logit function: logit(p) = log(p/(1-p)) -/
 def logit (p : ℝ) : ℝ := Real.log (p / (1 - p))
-
-
-
 
 /-- [Section: # CatalogBuild.EML.OpenQuestions
 Auto-generated from theorem catalog database.
@@ -200,15 +158,9 @@ theorem logit_sigmoid_inverse (x : ℝ) :
   field_simp;
   norm_num
 
-
-
-
 /-- The zero function is in the Sheffer algebra -/
 theorem zero_mem_sheffer : (fun _ : ℝ => (0 : ℝ)) ∈ ShefferAlgebra :=
   const_mem_sheffer 0
-
-
-
 
 /-- The Sheffer algebra is closed under addition with constants -/
 theorem sheffer_add_const_closed {f : ℝ → ℝ} (hf : f ∈ ShefferAlgebra) (c : ℝ) :
@@ -216,9 +168,6 @@ theorem sheffer_add_const_closed {f : ℝ → ℝ} (hf : f ∈ ShefferAlgebra) (
   have hc := const_mem_sheffer c
   have := sheffer_affine_comb_closed hf hc 1 1 0
   convert this using 1; ext x; ring
-
-
-
 
 /-- Three-argument log-sum-exp associativity:
 log(eˣ + eʸ + eᶻ) = log(exp(log(eˣ + eʸ)) + eᶻ) -/
@@ -228,9 +177,6 @@ theorem logsumexp_assoc (x y z : ℝ) :
   congr 1
   rw [Real.exp_log (by positivity)]
 
-
-
-
 /-- The Sheffer algebra is infinite-dimensional: for each n ≠ m, σ(x+n) ≠ σ(x+m) -/
 theorem sheffer_infinite_dim : ∀ n m : ℕ, n ≠ m →
     (fun x => softplus (x + n)) ≠ (fun x => softplus (x + m)) := by
@@ -239,9 +185,6 @@ theorem sheffer_infinite_dim : ∀ n m : ℕ, n ≠ m →
   simp at this
   have := softplus_strictMono.injective this
   exact hnm (Nat.cast_injective this)
-
-
-
 
 /-- Every Sheffer expression has at most linear growth:
 there exist A, B such that |f(x)| ≤ A|x| + B for all x.
@@ -255,8 +198,5 @@ theorem sheffer_expr_linear_growth (e : ShefferExpr) :
   have h1 : |e.eval x| ≤ |e.eval x - e.eval 0| + |e.eval 0| := by
     linarith [abs_sub_abs_le_abs_sub (e.eval x) (e.eval 0)]
   linarith
-
-
-
 
 end

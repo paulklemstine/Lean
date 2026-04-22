@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Speculative.Other.InformationBounds
 
 Auto-generated from theorem catalog database.
 Domain: Speculative/Other
 Declarations: 4
 -/
-
-import Mathlib
 
 noncomputable section
 
@@ -24,22 +24,13 @@ theorem binaryEntropy_max :
     rw [ ← Real.exp_add ] at this ; norm_num [ Real.log_div, show p ≠ 0 by linarith, show ( 1 - p ) ≠ 0 by linarith ] at *;
     have := Real.log_le_log ( by positivity ) this ; norm_num at this ; linarith [ Real.log_exp ( - ( Real.log ( 1 - p ) * ( 1 - p ) ) + - ( Real.log p * p ) ) ]
 
-
-
-
 /-- Shannon entropy of a distribution. -/
 def ProbDist.entropy {n : ℕ} (d : ProbDist n) : ℝ :=
   -∑ i : Fin n, if d.prob i = 0 then 0 else d.prob i * Real.log (d.prob i)
 
-
-
-
 /-- The minimax detection probability for a uniform game is 1/n. -/
 theorem minimax_detection_value {n : ℕ} (hn : 2 ≤ n) :
     (1 : ℝ) / n > 0 := by positivity
-
-
-
 
 /-- [Section: # CatalogBuild.Speculative.Other.InformationBounds
 Auto-generated from theorem catalog database.
@@ -53,8 +44,5 @@ theorem infinite_horizon_optimal {n : ℕ} (hn : 2 ≤ n) (d : ProbDist n) :
     grind;
   have := Finset.sum_lt_sum_of_nonempty ⟨ ⟨ 0, by linarith ⟩, Finset.mem_univ _ ⟩ fun i hi => h_all_gt i; simp_all +decide [ Finset.sum_const, nsmul_eq_mul ] ;
   rw [ mul_inv_cancel₀ ( by positivity ), d.prob_sum ] at this ; linarith
-
-
-
 
 end

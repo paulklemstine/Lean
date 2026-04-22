@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Pythagorean.Berggren.BerggrenCBranchGCD
 
 Auto-generated from theorem catalog database.
@@ -5,17 +7,11 @@ Domain: Pythagorean/Berggren
 Declarations: 4
 -/
 
-import Mathlib
-
 /-- The C-branch odd leg -/
 def C_odd (n : ℕ) : ℤ := (2 * ↑n + 1) * (2 * ↑n + 3)
 
-
-
 /-- The C-branch even leg -/
 def C_even (n : ℕ) : ℤ := 4 * (↑n + 1)
-
-
 
 /-- [Section: ## Main Result] -/
 theorem C_branch_coprime (n : ℕ) : Int.gcd (C_odd n) (C_even n) = 1 := by
@@ -24,8 +20,6 @@ theorem C_branch_coprime (n : ℕ) : Int.gcd (C_odd n) (C_even n) = 1 := by
   norm_num [ ( by ring : 2 * n + 3 = 2 * n + 1 + 2 ), ( by ring : 4 * ( n + 1 ) = 2 * ( 2 * ( n + 1 ) ) ), Nat.coprime_mul_iff_left, Nat.coprime_mul_iff_right ];
   norm_num [ ( by ring : 2 * n + 1 + 2 = 2 * ( n + 1 ) + 1 ) ];
   norm_num [ ( by ring : 2 * n + 1 = n + ( n + 1 ) ) ]
-
-
 
 /-- [Section: ## Verification for small values] -/
 theorem C_branch_coprime_vals :

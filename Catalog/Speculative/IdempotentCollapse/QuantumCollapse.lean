@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Speculative.IdempotentCollapse.QuantumCollapse
 
 Auto-generated from theorem catalog database.
 Domain: Speculative/IdempotentCollapse
 Declarations: 9
 -/
-
-import Mathlib
 
 noncomputable section
 
@@ -19,9 +19,6 @@ namespace QProjection
 
 variable (P : QProjection V)
 
-
-
-
 /-- The complement Q = 1 - P is idempotent: Q(Qx) = Qx.
 Proof: P(x - Px) = Px - P²x = 0, so Q(Qx) = (x-Px) - P(x-Px) = (x-Px) - 0 = x - Px = Qx. -/
 theorem complementary_is_idempotent (x : V) :
@@ -32,17 +29,11 @@ theorem complementary_is_idempotent (x : V) :
     rw [map_sub]; simp [P.idem]
   simp [h]
 
-
-
-
 /-- Image = fixed-point set. -/
 theorem image_eq_fixed : {x | P.toFun x = x} = Set.range P.toFun := by
   ext x; constructor
   · intro h; exact ⟨x, h⟩
   · rintro ⟨y, rfl⟩; exact P.idem y
-
-
-
 
 /-- [Section: # CatalogBuild.Speculative.IdempotentCollapse.QuantumCollapse
 Auto-generated from theorem catalog database.
@@ -55,9 +46,6 @@ theorem norm_le (x : V) : ‖P.toFun x‖ ≤ ‖x‖ := by
     rw [ P.idem ];
   nlinarith [ norm_nonneg x, norm_nonneg ( P.toFun x ), abs_le.mp ( abs_real_inner_le_norm x ( P.toFun x ) ) ]
 
-
-
-
 /-- [Section: # CatalogBuild.Speculative.IdempotentCollapse.QuantumCollapse
 Auto-generated from theorem catalog database.
 Domain: Speculative/IdempotentCollapse
@@ -68,31 +56,19 @@ theorem pythagorean (x : V) :
       simp_all +decide [ inner_sub_left, inner_sub_right ];
       rw [ @norm_sub_sq ℝ ] ; simp_all +decide [ real_inner_comm, P.idem ] ; linarith;
 
-
-
-
 /-- Post-measurement stability. -/
 theorem post_measurement_stable (x : V) : P.toFun (P.toFun x) = P.toFun x := P.idem x
-
-
-
 
 theorem iterate_eq_self (n : ℕ) (hn : 1 ≤ n) (x : V) :
     (P.toFun)^[n] x = P.toFun x := by
       induction hn <;> simp_all +decide [ Function.iterate_succ_apply' ];
       exact P.idem x
 
-
-
-
 /-- A projection-valued measure models a quantum observable. -/
 structure PVM (V : Type*) [NormedAddCommGroup V] [InnerProductSpace ℝ V] (n : ℕ) where
   proj : Fin n → QProjection V
   orthogonal : ∀ i j, i ≠ j → ∀ x, (proj i).toFun ((proj j).toFun x) = 0
   complete : ∀ x, ∑ i : Fin n, (proj i).toFun x = x
-
-
-
 
 /-- Decoherence: diagonal extraction is idempotent. -/
 theorem decoherence_is_idempotent {n : ℕ} (ρ : Matrix (Fin n) (Fin n) ℝ) :
@@ -102,8 +78,5 @@ theorem decoherence_is_idempotent {n : ℕ} (ρ : Matrix (Fin n) (Fin n) ℝ) :
   ext i j
   simp only [Matrix.diagonal]
   by_cases h : i = j <;> simp [h]
-
-
-
 
 end

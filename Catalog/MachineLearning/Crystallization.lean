@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.MachineLearning.Crystallization
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: MachineLearning
 Declarations: 21
 -/
 
-import Mathlib
 
 noncomputable section
 

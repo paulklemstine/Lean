@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Pythagorean.Berggren.PellClosedForm
 
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/Berggren
 Declarations: 88
 -/
-
-import Mathlib
 
 theorem M1_00_sq : M 0 0 = 1^2 := by native_decide
 
@@ -179,7 +179,6 @@ theorem offdiag_alt_8 : (M ^ 8) 0 1 - (M ^ 8) 0 0 = -1 := by native_decide
 -- Section 5: M is symmetric
 -- ═══════════════════════════════════════════════════════════════
 
-
 theorem M_sym : M = M.transpose := by native_decide
 
 theorem M2_sym_full : M ^ 2 = (M ^ 2).transpose := by native_decide
@@ -255,10 +254,8 @@ theorem growth_oscillation_check :
 theorem CH_coeff_3 : M ^ 3 = (-1) • (1 : Matrix (Fin 3) (Fin 3) ℤ) + 5 • M + 5 • M ^ 2 := by
   native_decide
 
-
 theorem CH_coeff_4 : M ^ 4 = (-5) • (1 : Matrix (Fin 3) (Fin 3) ℤ) + 24 • M + 30 • M ^ 2 := by
   native_decide
-
 
 theorem CH_coeff_5 :
     M ^ 5 = (-30) • (1 : Matrix (Fin 3) (Fin 3) ℤ) + 145 • M + 174 • M ^ 2 := by

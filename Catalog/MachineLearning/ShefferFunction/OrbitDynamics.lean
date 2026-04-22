@@ -1,3 +1,10 @@
+import EML.Basic
+import EML.Lean.AdvancedTheorems
+import EML.Lean.GeneralIteratedSoftplus
+import EML.Lean.ShefferAlgebra
+import EML.Lean.SoftplusBasic
+import Mathlib
+
 /-! # CatalogBuild.MachineLearning.ShefferFunction.OrbitDynamics
 
 Auto-generated from theorem catalog database.
@@ -5,12 +12,6 @@ Domain: MachineLearning/ShefferFunction
 Declarations: 5
 -/
 
-import EML.Basic
-import EML.Lean.AdvancedTheorems
-import EML.Lean.GeneralIteratedSoftplus
-import EML.Lean.ShefferAlgebra
-import EML.Lean.SoftplusBasic
-import Mathlib
 
 noncomputable section
 

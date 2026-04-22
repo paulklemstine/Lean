@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.IntegerEnergy.RiemannConnection
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/IntegerEnergy
 Declarations: 36
 -/
 
-import Mathlib
 
 noncomputable section
 

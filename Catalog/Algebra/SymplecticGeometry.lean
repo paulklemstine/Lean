@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.SymplecticGeometry
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra
 Declarations: 15
 -/
 
-import Mathlib
 
 /-- [Section: # CatalogBuild.Algebra.SymplecticGeometry
 Auto-generated from theorem catalog database.

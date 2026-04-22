@@ -1,3 +1,6 @@
+import Geometry.Stereographic.Basic
+import Mathlib
+
 /-! # CatalogBuild.Geometry.Stereographic.QuaternionicProjection
 
 Auto-generated from theorem catalog database.
@@ -5,8 +8,6 @@ Domain: Geometry/Stereographic
 Declarations: 8
 -/
 
-import Geometry.Stereographic.Basic
-import Mathlib
 
 noncomputable section
 

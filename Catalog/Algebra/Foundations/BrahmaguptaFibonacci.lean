@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.Foundations.BrahmaguptaFibonacci
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/Foundations
 Declarations: 1
 -/
 
-import Mathlib
 
 /-- [Section: # CatalogBuild.Algebra.Foundations.BrahmaguptaFibonacci
 Auto-generated from theorem catalog database.

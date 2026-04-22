@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.MachineLearning.Consciousness.IntegratedInformation
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: MachineLearning/Consciousness
 Declarations: 11
 -/
 
-import Mathlib
 
 noncomputable section
 

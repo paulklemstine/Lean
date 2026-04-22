@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Computation.CompressionTheory
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Computation
 Declarations: 23
 -/
 
-import Mathlib
 
 /-- There is no injection from a larger Fin type to a smaller one. -/
 theorem no_injection_larger_to_smaller {m n : ℕ} (h : n < m) :

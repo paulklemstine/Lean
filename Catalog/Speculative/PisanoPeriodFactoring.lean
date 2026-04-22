@@ -1,11 +1,13 @@
+import Mathlib
+
+set_option maxHeartbeats 800000
+
 /-! # CatalogBuild.Speculative.PisanoPeriodFactoring
 
 Auto-generated from theorem catalog database.
 Domain: Speculative
 Declarations: 9
 -/
-
-import Mathlib
 
 /-- The Fibonacci recurrence can be written as matrix multiplication:
 [F(n+1), F(n); F(n), F(n-1)] = [[1,1],[1,0]]^n.

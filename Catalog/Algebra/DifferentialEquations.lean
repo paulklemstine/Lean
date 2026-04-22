@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.DifferentialEquations
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra
 Declarations: 6
 -/
 
-import Mathlib
 
 /-- [Section: # CatalogBuild.Algebra.DifferentialEquations
 Auto-generated from theorem catalog database.

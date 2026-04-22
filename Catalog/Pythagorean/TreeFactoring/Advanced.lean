@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Pythagorean.TreeFactoring.Advanced
 
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/TreeFactoring
 Declarations: 41
 -/
-
-import Mathlib
 
 /-- Product of all three channels equals (d²-a²)(d²-b²)(d²-c²). -/
 theorem triple_channel_product (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
@@ -16,16 +16,10 @@ theorem triple_channel_product (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
   have h3 : b^2 + c^2 = d^2 - a^2 := by linarith
   rw [h1, h2, h3]
 
-
-
-
 /-- Channel product sum: Σ ch_i · ch_j for i<j. -/
 theorem channel_product_sum (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
     (a^2+b^2)*(a^2+c^2) + (a^2+b^2)*(b^2+c^2) + (a^2+c^2)*(b^2+c^2) =
     d^4 + a^2*b^2 + a^2*c^2 + b^2*c^2 := by nlinarith
-
-
-
 
 /-- Two representations yield three channel difference identities. -/
 theorem cascade_opportunities (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
@@ -35,9 +29,6 @@ theorem cascade_opportunities (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
     (b₁^2 + c₁^2) - (b₂^2 + c₂^2) = a₂^2 - a₁^2 := by
   constructor <;> [linarith; constructor <;> linarith]
 
-
-
-
 /-- Cross-representation channel GCD: g | ch₁(ab) and g | ch₂(ab) implies g | (c₂²-c₁²). -/
 theorem cross_rep_channel_gcd (a₁ b₁ c₁ a₂ b₂ c₂ d g : ℤ)
     (h₁ : a₁^2 + b₁^2 + c₁^2 = d^2) (h₂ : a₂^2 + b₂^2 + c₂^2 = d^2)
@@ -45,9 +36,6 @@ theorem cross_rep_channel_gcd (a₁ b₁ c₁ a₂ b₂ c₂ d g : ℤ)
     g ∣ (c₂^2 - c₁^2) := by
   have : c₂^2 - c₁^2 = (a₁^2 + b₁^2) - (a₂^2 + b₂^2) := by linarith
   rw [this]; exact dvd_sub hg1 hg2
-
-
-
 
 /-- Three-way cascade: g divides all channel differences across 3 representations. -/
 theorem three_way_cascade (c₁ c₂ c₃ d g : ℤ)
@@ -61,9 +49,6 @@ theorem three_way_cascade (c₁ c₂ c₃ d g : ℤ)
   · have : c₂ - c₃ = (d - c₃) - (d - c₂) := by ring
     rw [this]; exact dvd_sub h3 h2
 
-
-
-
 /-- Three-way cascade: sum identities. -/
 theorem three_way_cascade_sums (c₁ c₂ c₃ d g : ℤ)
     (h1 : g ∣ (d - c₁)) (h2 : g ∣ (d - c₂)) (h3 : g ∣ (d - c₃)) :
@@ -76,9 +61,6 @@ theorem three_way_cascade_sums (c₁ c₂ c₃ d g : ℤ)
   · have eq : c₂ + c₃ - 2 * d = -((d - c₂) + (d - c₃)) := by ring
     rw [eq]; exact dvd_neg.mpr (dvd_add h2 h3)
 
-
-
-
 /-- If two quadruples share d and have p | c₁ and p | c₂, then p² | both AB-channels. -/
 theorem shared_factor_both_channels (a₁ b₁ c₁ a₂ b₂ c₂ d p : ℤ)
     (h₁ : a₁^2 + b₁^2 + c₁^2 = d^2) (h₂ : a₂^2 + b₂^2 + c₂^2 = d^2)
@@ -90,9 +72,6 @@ theorem shared_factor_both_channels (a₁ b₁ c₁ a₂ b₂ c₂ d p : ℤ)
   · have : a₂^2 + b₂^2 = d^2 - c₂^2 := by linarith
     rw [this]; exact dvd_sub (pow_dvd_pow_of_dvd hpd 2) (pow_dvd_pow_of_dvd hpc2 2)
 
-
-
-
 /-- Common factor of all components divides d². -/
 theorem common_factor_divides_d2 (a b c d g : ℤ)
     (h : a^2 + b^2 + c^2 = d^2) (ha : g ∣ a) (hb : g ∣ b) (hc : g ∣ c) :
@@ -100,16 +79,10 @@ theorem common_factor_divides_d2 (a b c d g : ℤ)
   obtain ⟨a', rfl⟩ := ha; obtain ⟨b', rfl⟩ := hb; obtain ⟨c', rfl⟩ := hc
   exact ⟨a'^2 + b'^2 + c'^2, by nlinarith⟩
 
-
-
-
 /-- If p | d, then a²+b²+c² ≡ 0 (mod p²). -/
 theorem channel_sum_mod_p2 (a b c d p : ℤ) (h : a^2 + b^2 + c^2 = d^2) (hp : p ∣ d) :
     p^2 ∣ (a^2 + b^2 + c^2) := by
   rw [h]; exact pow_dvd_pow_of_dvd hp 2
-
-
-
 
 /-- Channel mod p: if p | d and p | c, then p | (a²+b²). -/
 theorem channel_mod_p (a b c d p : ℤ) (h : a^2 + b^2 + c^2 = d^2)
@@ -119,15 +92,9 @@ theorem channel_mod_p (a b c d p : ℤ) (h : a^2 + b^2 + c^2 = d^2)
   rw [heq]
   exact dvd_sub (dvd_pow hpd (by norm_num : 2 ≠ 0)) (dvd_pow hpc (by norm_num : 2 ≠ 0))
 
-
-
-
 /-- Cascade sum identity: (d-c₁) + (d-c₂) = 2d - c₁ - c₂. -/
 theorem cascade_sum (c₁ c₂ d : ℤ) :
     (d - c₁) + (d - c₂) = 2 * d - (c₁ + c₂) := by ring
-
-
-
 
 /-- If g | (d-c₁) and g | (d-c₂), then g | (2d - c₁ - c₂). -/
 theorem cascade_sum_div (c₁ c₂ d g : ℤ)
@@ -136,28 +103,16 @@ theorem cascade_sum_div (c₁ c₂ d g : ℤ)
   have : 2*d - (c₁ + c₂) = (d - c₁) + (d - c₂) := by ring
   rw [this]; exact dvd_add h1 h2
 
-
-
-
 /-- Each channel value is at most d². -/
 theorem channel_bound (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
     a^2 + b^2 ≤ d^2 := by nlinarith [sq_nonneg c]
 
-
-
-
 /-- Each channel value is nonneg. -/
 theorem channel_nonneg (a b : ℤ) : 0 ≤ a^2 + b^2 := by positivity
-
-
-
 
 /-- Channel constraint: sum of channels = 2d². -/
 theorem channel_constraint (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
     (a^2 + b^2) + (a^2 + c^2) + (b^2 + c^2) = 2 * d^2 := by linarith
-
-
-
 
 /-- The sum of squared distances and squared sums = 4d². -/
 theorem distance_plus_sum_identity (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
@@ -165,17 +120,11 @@ theorem distance_plus_sum_identity (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
     (a₁ - a₂)^2 + (b₁ - b₂)^2 + (c₁ - c₂)^2 +
     (a₁ + a₂)^2 + (b₁ + b₂)^2 + (c₁ + c₂)^2 = 4 * d^2 := by nlinarith
 
-
-
-
 /-- The midpoint of two representations has norm ≤ d (squared form). -/
 theorem midpoint_norm_bound (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
     (h₁ : a₁^2 + b₁^2 + c₁^2 = d^2) (h₂ : a₂^2 + b₂^2 + c₂^2 = d^2) :
     (a₁ + a₂)^2 + (b₁ + b₂)^2 + (c₁ + c₂)^2 ≤ 4 * d^2 := by
   nlinarith [sq_nonneg (a₁ - a₂), sq_nonneg (b₁ - b₂), sq_nonneg (c₁ - c₂)]
-
-
-
 
 /-- Parallelogram law on the sphere. -/
 theorem sphere_parallelogram_law (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ) :
@@ -183,17 +132,11 @@ theorem sphere_parallelogram_law (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ) :
     (a₁ - a₂)^2 + (b₁ - b₂)^2 + (c₁ - c₂)^2 =
     2 * (a₁^2 + b₁^2 + c₁^2) + 2 * (a₂^2 + b₂^2 + c₂^2) := by ring
 
-
-
-
 /-- If d = p*q, then p² | (a²+b²+c²). -/
 theorem factor_appears_in_sum (a b c p q : ℤ)
     (h : a^2 + b^2 + c^2 = (p*q)^2) :
     p^2 ∣ (a^2 + b^2 + c^2) := by
   rw [h]; exact ⟨q^2, by ring⟩
-
-
-
 
 /-- 4D channel sum: 6 pair-channels sum to 3d². -/
 theorem dim4_channel_sum (a b c e d : ℤ)
@@ -201,18 +144,12 @@ theorem dim4_channel_sum (a b c e d : ℤ)
     (a^2+b^2) + (a^2+c^2) + (a^2+e^2) + (b^2+c^2) + (b^2+e^2) + (c^2+e^2) = 3*d^2 := by
   linarith
 
-
-
-
 /-- 4D cross-channel GCD. -/
 theorem dim4_cross_channel (x y z g : ℤ)
     (h1 : g ∣ (x^2 + y^2)) (h2 : g ∣ (x^2 + z^2)) :
     g ∣ (y^2 - z^2) := by
   have : y^2 - z^2 = (x^2 + y^2) - (x^2 + z^2) := by ring
   rw [this]; exact dvd_sub h1 h2
-
-
-
 
 /-- 4D: complementary channel pairs sum to d². -/
 theorem dim4_complementary_channels (a b c e d : ℤ)
@@ -222,9 +159,6 @@ theorem dim4_complementary_channels (a b c e d : ℤ)
     (a^2+e^2) + (b^2+c^2) = d^2 := by
   constructor <;> [linarith; constructor <;> linarith]
 
-
-
-
 /-- 5D: 10 pair-channels sum to 4d². -/
 theorem dim5_channel_sum (a b c e f d : ℤ)
     (h : a^2 + b^2 + c^2 + e^2 + f^2 = d^2) :
@@ -232,16 +166,10 @@ theorem dim5_channel_sum (a b c e f d : ℤ)
     (b^2+c^2) + (b^2+e^2) + (b^2+f^2) +
     (c^2+e^2) + (c^2+f^2) + (e^2+f^2) = 4*d^2 := by linarith
 
-
-
-
 /-- Cross-channel linking: component square differences sum to zero. -/
 theorem cross_channel_linking (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
     (h₁ : a₁^2 + b₁^2 + c₁^2 = d^2) (h₂ : a₂^2 + b₂^2 + c₂^2 = d^2) :
     (a₁^2 - a₂^2) + (b₁^2 - b₂^2) + (c₁^2 - c₂^2) = 0 := by linarith
-
-
-
 
 /-- If channel values are unequal, the difference factors via b²-c². -/
 theorem asymmetry_factors (a b c : ℤ) (hbc : b ≠ c) :
@@ -250,15 +178,9 @@ theorem asymmetry_factors (a b c : ℤ) (hbc : b ≠ c) :
   · ring
   · omega
 
-
-
-
 /-- Maximum channel: if c = ±1 then the AB-channel is d²-1. -/
 theorem max_channel_value (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) (hc : c^2 = 1) :
     a^2 + b^2 = d^2 - 1 := by linarith
-
-
-
 
 /-- Cascade propagation: gcd(d-c₁, c₂-c₁) divides d-c₂. -/
 theorem cascade_propagation (c₁ c₂ d g : ℤ)
@@ -266,9 +188,6 @@ theorem cascade_propagation (c₁ c₂ d g : ℤ)
     g ∣ (d - c₂) := by
   have : d - c₂ = (d - c₁) - (c₂ - c₁) := by ring
   rw [this]; exact dvd_sub h1 h2
-
-
-
 
 /-- Four representations yield 6 GCD values. -/
 theorem four_rep_cascade (c₁ c₂ c₃ c₄ d g : ℤ)
@@ -293,36 +212,21 @@ theorem four_rep_cascade (c₁ c₂ c₃ c₄ d g : ℤ)
   · have eq : c₃ - c₄ = (d - c₄) - (d - c₃) := by ring
     rw [eq]; exact dvd_sub h4 h3
 
-
-
-
 /-- Sum of all six linear factors: Σ(d±x) = 6d for x ∈ {a,b,c}. -/
 theorem sum_linear_factors (a b c d : ℤ) :
     (d-a) + (d+a) + (d-b) + (d+b) + (d-c) + (d+c) = 6*d := by ring
-
-
-
 
 /-- Product of same-sign factors is a cubic in d. -/
 theorem same_sign_product (a b c d : ℤ) :
     (d-a)*(d-b)*(d-c) = d^3 - (a+b+c)*d^2 + (a*b+a*c+b*c)*d - a*b*c := by ring
 
-
-
-
 /-- Product of opposite-sign factors. -/
 theorem opposite_sign_product (a b c d : ℤ) :
     (d+a)*(d+b)*(d+c) = d^3 + (a+b+c)*d^2 + (a*b+a*c+b*c)*d + a*b*c := by ring
 
-
-
-
 /-- Difference of same/opposite products. -/
 theorem product_difference (a b c d : ℤ) :
     (d+a)*(d+b)*(d+c) - (d-a)*(d-b)*(d-c) = 2*((a+b+c)*d^2 + a*b*c) := by ring
-
-
-
 
 /-- For any prime p | d, either p | c (and hence p | both d±c) or
 p ∤ c and Euclid's lemma applies to a²+b² = (d-c)(d+c). -/
@@ -340,45 +244,27 @@ theorem prime_factor_channel_dichotomy (a b c d p : ℤ) (h : a^2 + b^2 + c^2 = 
       rw [this] at hab
       exact hp.dvd_or_dvd hab
 
-
-
-
 /-- The ratio of two channels determines the third. -/
 theorem channel_ratio_determines (a b c : ℤ) :
     (a^2+b^2) + (b^2+c^2) - (a^2+c^2) = 2*b^2 := by ring
-
-
-
 
 /-- Channel values satisfy a triangle-like inequality. -/
 theorem channel_triangle (a b c : ℤ) :
     (a^2+b^2) ≤ (a^2+c^2) + (b^2+c^2) := by nlinarith [sq_nonneg c]
 
-
-
-
 /-- d² from channels. -/
 theorem d_from_channels (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
     2*d^2 = (a^2+b^2) + (a^2+c^2) + (b^2+c^2) := by linarith
-
-
-
 
 /-- Sum of channel squares in terms of components. -/
 theorem channel_sq_sum (a b c : ℤ) :
     (a^2+b^2)^2 + (a^2+c^2)^2 + (b^2+c^2)^2 =
     2*(a^4 + b^4 + c^4) + 2*(a^2*b^2 + a^2*c^2 + b^2*c^2) := by ring
 
-
-
-
 /-- The expanded channel product in terms of d. -/
 theorem channel_product_expanded (a b c d : ℤ) :
     (d^2-a^2)*(d^2-b^2)*(d^2-c^2) =
     d^6 - d^4*(a^2+b^2+c^2) + d^2*(a^2*b^2+a^2*c^2+b^2*c^2) - a^2*b^2*c^2 := by ring
-
-
-
 
 /-- [Section: # CatalogBuild.Pythagorean.TreeFactoring.Advanced
 Auto-generated from theorem catalog database.
@@ -389,21 +275,13 @@ theorem channel_product_simplified (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
     d^2*(a^2*b^2+a^2*c^2+b^2*c^2) - a^2*b^2*c^2 := by
       grind
 
-
-
-
 /-- Orthogonal representations maximize cascade effectiveness. -/
 theorem orthogonal_max_cascade (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
     (h₁ : a₁^2 + b₁^2 + c₁^2 = d^2) (h₂ : a₂^2 + b₂^2 + c₂^2 = d^2)
     (horth : a₁*a₂ + b₁*b₂ + c₁*c₂ = 0) :
     (a₁ - a₂)^2 + (b₁ - b₂)^2 + (c₁ - c₂)^2 = 2*d^2 := by nlinarith
 
-
-
-
 /-- Parallel representations give zero distance. -/
 theorem parallel_trivial (a b c : ℤ) :
     (a - a)^2 + (b - b)^2 + (c - c)^2 = 0 := by ring
-
-
 

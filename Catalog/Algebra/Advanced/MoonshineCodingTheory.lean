@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.Advanced.MoonshineCodingTheory
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/Advanced
 Declarations: 51
 -/
 
-import Mathlib
 
 noncomputable section
 

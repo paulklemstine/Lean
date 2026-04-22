@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Logic.DecoderApplications
 
 Auto-generated from theorem catalog database.
@@ -5,16 +7,11 @@ Domain: Logic
 Declarations: 13
 -/
 
-import Mathlib
-
 /-- The Gaussian integer norm satisfies a triangle-like inequality -/
 theorem gaussian_norm_submult (a₁ b₁ a₂ b₂ : ℤ) :
     (a₁ + a₂) ^ 2 + (b₁ + b₂) ^ 2 ≤
     2 * ((a₁ ^ 2 + b₁ ^ 2) + (a₂ ^ 2 + b₂ ^ 2)) := by
   nlinarith [sq_nonneg (a₁ - a₂), sq_nonneg (b₁ - b₂)]
-
-
-
 
 /-- The unit Gaussian integers: exactly 4 elements of norm 1 (kissing number = 4) -/
 theorem gaussian_lattice_neighbors (a b : ℤ) :
@@ -35,9 +32,6 @@ theorem gaussian_lattice_neighbors (a b : ℤ) :
     interval_cases a <;> interval_cases b <;> simp_all <;> omega
   · rintro (⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩) <;> norm_num
 
-
-
-
 /-- [Section: # CatalogBuild.Logic.DecoderApplications
 Auto-generated from theorem catalog database.
 Domain: Logic
@@ -48,9 +42,6 @@ theorem hex_lattice_neighbors (a b : ℤ) :
     (a = 0 ∧ b = 1) ∨ (a = 0 ∧ b = -1) ∨
     (a = 1 ∧ b = -1) ∨ (a = -1 ∧ b = 1) := by
   exact ⟨ fun h => by have : a ≤ 1 := Int.le_of_lt_add_one ( by nlinarith [ sq_nonneg ( a + b ) ] ) ; have : a ≥ -1 := Int.le_of_lt_add_one ( by nlinarith [ sq_nonneg ( a + b ) ] ) ; interval_cases a <;> ( have : b ≤ 1 := Int.le_of_lt_add_one ( by nlinarith ) ; have : b ≥ -1 := Int.le_of_lt_add_one ( by nlinarith ) ; interval_cases b <;> trivial ), by rintro ( ⟨ rfl, rfl ⟩ | ⟨ rfl, rfl ⟩ | ⟨ rfl, rfl ⟩ | ⟨ rfl, rfl ⟩ | ⟨ rfl, rfl ⟩ | ⟨ rfl, rfl ⟩ ) <;> trivial ⟩
-
-
-
 
 /-- Powers of 2 are sums of four squares — codewords for quantum gates -/
 theorem two_pow_sum_four_sq : ∀ n : ℕ,
@@ -65,18 +56,12 @@ theorem two_pow_sum_four_sq : ∀ n : ℕ,
                2 * (a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2) := by ring
     rw [key, h]; ring
 
-
-
-
 /-- If ω is a primitive 5th root of unity, then ω⁵ = 1 -/
 theorem root_of_unity_sum (ω : ℂ) (h : ω ^ 4 + ω ^ 3 + ω ^ 2 + ω + 1 = 0) :
     ω ^ 5 = 1 := by
   have key : ω ^ 5 - 1 = (ω - 1) * (ω ^ 4 + ω ^ 3 + ω ^ 2 + ω + 1) := by ring
   have h2 : ω ^ 5 - 1 = 0 := by rw [key, h, mul_zero]
   linear_combination h2
-
-
-
 
 /-- The torus T² = S¹ × S¹ parametrized by two stereographic coordinates -/
 theorem torus_parametrization (s t : ℝ) :
@@ -86,22 +71,13 @@ theorem torus_parametrization (s t : ℝ) :
   have ht : (0 : ℝ) < 1 + t ^ 2 := by positivity
   constructor <;> (field_simp; ring)
 
-
-
-
 /-- The Pythagorean comma: 12 perfect fifths ≈ 7 octaves -/
 theorem pythagorean_comma :
     (3 : ℚ) ^ 12 / 2 ^ 19 = 531441 / 524288 := by norm_num
 
-
-
-
 /-- The syntonic comma: 4 fifths vs 2 octaves + major third -/
 theorem syntonic_comma :
     (3 : ℚ) ^ 4 / (2 ^ 4 * 5) = 81 / 80 := by norm_num
-
-
-
 
 /-- [Section: # CatalogBuild.Logic.DecoderApplications
 Auto-generated from theorem catalog database.
@@ -110,28 +86,15 @@ Declarations: 13] -/
 theorem timelike_positive (a b c : ℤ) (h : a ^ 2 + b ^ 2 < c ^ 2) :
     c ^ 2 - a ^ 2 - b ^ 2 > 0 := by omega
 
-
-
-
 theorem lightlike_zero (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     c ^ 2 - a ^ 2 - b ^ 2 = 0 := by omega
-
-
-
 
 theorem quantum_dim_recursion (d : ℝ) (hd : d ^ 2 = d + 1) :
     d ^ 3 = 2 * d + 1 := by nlinarith
 
-
-
-
 theorem ads_conformal_factor (L z : ℝ) (hz : z ≠ 0) :
     (L / z) ^ 2 * z ^ 2 = L ^ 2 := by field_simp
 
-
-
-
 theorem legendre_P1_identity (x : ℝ) :
     x ^ 2 + (1 - x ^ 2) = 1 := by ring
-
 

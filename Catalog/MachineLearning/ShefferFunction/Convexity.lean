@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.MachineLearning.ShefferFunction.Convexity
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: MachineLearning/ShefferFunction
 Declarations: 5
 -/
 
-import Mathlib
 
 /-- Logistic sigmoid is bounded: 0 ≤ S(x) ≤ 1. -/
 theorem logisticSigmoid_nonneg (x : ℝ) : logisticSigmoid x ≥ 0 :=

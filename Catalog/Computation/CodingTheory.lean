@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Computation.CodingTheory
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Computation
 Declarations: 11
 -/
 
-import Mathlib
 
 noncomputable section
 

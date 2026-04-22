@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Tropical.Langlands.Foundations
 
 Auto-generated from theorem catalog database.
@@ -5,30 +7,19 @@ Domain: Tropical/Langlands
 Declarations: 22
 -/
 
-import Mathlib
-
 noncomputable section
 
 /-- The tropical semiring element type -/
 abbrev TropicalR := WithTop ℝ
 
-
-
-
 /-- ∞ is the tropical additive identity -/
 theorem trop_add_zero (a : TropicalR) : min a ⊤ = a :=
   min_top_right a
-
-
-
 
 /-- A tropical matrix is "invertible" if its tropical determinant is finite
 (i.e., the optimal assignment has finite cost) -/
 def tropInvertible (n : ℕ) (A : Fin n → Fin n → ℝ) : Prop :=
   tropDet n A ≠ 0
-
-
-
 
 /-- [Section: # CatalogBuild.Tropical.Langlands.Foundations
 Auto-generated from theorem catalog database.
@@ -41,9 +32,6 @@ theorem tropChar_determined_by_one (χ : TropicalCharacter) (n : ℤ) :
   · rw [ add_mul, one_mul, χ.map_add, ‹χ.toFun _ = _› ];
   · have := χ.map_add ( -↑‹ℕ› - 1 ) 1; norm_num at * ; linarith
 
-
-
-
 /-- The tropical characters on ℤ form a group under pointwise addition -/
 theorem tropChar_add_is_char (χ₁ χ₂ : TropicalCharacter) :
     ∀ a b : ℤ, (χ₁.toFun a + χ₂.toFun a) + (χ₁.toFun b + χ₂.toFun b) =
@@ -51,9 +39,6 @@ theorem tropChar_add_is_char (χ₁ χ₂ : TropicalCharacter) :
   intro a b
   rw [χ₁.map_add, χ₂.map_add]
   ring
-
-
-
 
 /-- The trivial valuation sends everything nonzero to 0 -/
 def trivialValuation (K : Type*) [Field K] [DecidableEq K] : TropicalValuation K where
@@ -73,9 +58,6 @@ def trivialValuation (K : Type*) [Field K] [DecidableEq K] : TropicalValuation K
         · subst hb; simp at hab; simp [hab]
         · simp [ha, hb]
 
-
-
-
 /-- [Section: # CatalogBuild.Tropical.Langlands.Foundations
 Auto-generated from theorem catalog database.
 Domain: Tropical/Langlands
@@ -93,31 +75,19 @@ theorem tropicalL_convex
   intro s t la hla hla'; unfold tropicalLFunction; simp_all +decide [ ← add_assoc, Finset.mul_sum _ _ _ ] ;
   simpa only [ ← Finset.sum_add_distrib ] using Finset.sum_le_sum fun p hp => hconvex p hp s t la hla hla'
 
-
-
-
 /-- Tropical convolution of two functions f, g : ℤ → ℝ -/
 def tropConvolution (f g : ℤ → ℝ) (n : ℤ) : ℝ :=
   ⨅ k : ℤ, f k + g (n - k)
-
-
-
 
 theorem tropConv_comm (f g : ℤ → ℝ) (n : ℤ) :
     tropConvolution f g n = tropConvolution g f n := by
   unfold tropConvolution;
   rw [ ← Equiv.iInf_comp ( Equiv.subLeft n ) ] ; norm_num [ add_comm ]
 
-
-
-
 /-- The tropical Satake transform maps a spherical function to its Newton polygon slopes -/
 def tropSatakeTransform (f : ℤ → ℝ) : ℝ × ℝ :=
   (⨅ n : ℤ, f n - n * (⨅ k : ℤ, f (k + 1) - f k),
    ⨆ n : ℤ, f n - n * (⨆ k : ℤ, f (k + 1) - f k))
-
-
-
 
 /-- A tropical automorphic datum consists of a PL function on ℤ^n with
 specified slopes (the tropical Hecke eigenvalues) -/
@@ -125,26 +95,17 @@ structure TropicalAutomorphicDatum (n : ℕ) where
   slopes : Fin n → ℝ
   sorted : ∀ i j : Fin n, i ≤ j → slopes i ≤ slopes j
 
-
-
-
 /-- A tropical Galois datum consists of a piecewise-linear action
 specified by its break-slopes -/
 structure TropicalGaloisDatum (n : ℕ) where
   breaks : Fin n → ℝ
   sorted : ∀ i j : Fin n, i ≤ j → breaks i ≤ breaks j
 
-
-
-
 /-- The tropical reciprocity map: send automorphic slopes to Galois breaks -/
 def tropReciprocity (n : ℕ) (aut : TropicalAutomorphicDatum n) :
     TropicalGaloisDatum n where
   breaks := aut.slopes
   sorted := aut.sorted
-
-
-
 
 /-- Tropical reciprocity is an involution -/
 theorem tropReciprocity_invol (n : ℕ) (aut : TropicalAutomorphicDatum n) :
@@ -153,9 +114,6 @@ theorem tropReciprocity_invol (n : ℕ) (aut : TropicalAutomorphicDatum n) :
     tropReciprocity n aut' = gal := by
   simp [tropReciprocity]
 
-
-
-
 theorem tropReciprocity_L_match (n : ℕ) (aut : TropicalAutomorphicDatum n)
     (localFactors : Fin n → ℝ → ℝ)
     (hfactors : ∀ i : Fin n, ∀ s : ℝ, localFactors i s = s - aut.slopes i) :
@@ -163,15 +121,9 @@ theorem tropReciprocity_L_match (n : ℕ) (aut : TropicalAutomorphicDatum n)
     ∀ s : ℝ, (∑ i : Fin n, localFactors i s) = (∑ i : Fin n, (s - gal.breaks i)) := by
   aesop
 
-
-
-
 /-- Legendre-Fenchel (convex conjugate) transform — the tropical Fourier transform -/
 def legendreFenchel (f : ℝ → ℝ) (p : ℝ) : ℝ :=
   ⨆ x : ℝ, p * x - f x
-
-
-
 
 theorem legendreFenchel_convex (f : ℝ → ℝ)
     (hbdd : ∀ p : ℝ, BddAbove (Set.range fun x => p * x - f x)) :
@@ -181,9 +133,6 @@ theorem legendreFenchel_convex (f : ℝ → ℝ)
   intro p q t ht₁ ht₂;
   refine' ciSup_le fun x => _;
   convert add_le_add ( mul_le_mul_of_nonneg_left ( le_ciSup ( hbdd p ) x ) ht₁ ) ( mul_le_mul_of_nonneg_left ( le_ciSup ( hbdd q ) x ) ( sub_nonneg.mpr ht₂ ) ) using 1 ; ring
-
-
-
 
 theorem legendreFenchel_biconjugate (f : ℝ → ℝ)
     (hconv : ∀ x y : ℝ, ∀ t : ℝ, 0 ≤ t → t ≤ 1 →
@@ -224,30 +173,18 @@ theorem legendreFenchel_biconjugate (f : ℝ → ℝ)
     · linarith;
     · exact hbdd_biconj x
 
-
-
-
 /-- A tropical apartment is an affine hyperplane arrangement in ℝ^n -/
 def TropicalApartment (n : ℕ) := Fin n → ℝ
-
-
-
 
 /-- The Weyl group action on a tropical apartment (permutation of coordinates) -/
 def weylAction (n : ℕ) (sigma : Equiv.Perm (Fin n)) (x : TropicalApartment n) :
     TropicalApartment n :=
   fun i => x (sigma i)
 
-
-
-
 theorem weylAction_mul (n : ℕ) (sigma tau : Equiv.Perm (Fin n))
     (x : TropicalApartment n) :
     weylAction n (sigma * tau) x = weylAction n tau (weylAction n sigma x) := by
   exact funext fun i => by simp +decide [ weylAction ] ;
-
-
-
 
 theorem apartment_retraction_isometry (n : ℕ)
     (d : TropicalApartment n → TropicalApartment n → ℝ)
@@ -257,8 +194,5 @@ theorem apartment_retraction_isometry (n : ℕ)
     d (weylAction n sigma x) (weylAction n sigma y) = d x y := by
   simp +decide only [hd, weylAction];
   conv_rhs => rw [ ← Equiv.sum_comp sigma ] ;
-
-
-
 
 end

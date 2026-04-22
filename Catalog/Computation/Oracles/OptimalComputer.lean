@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Computation.Oracles.OptimalComputer
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Computation/Oracles
 Declarations: 22
 -/
 
-import Mathlib
 
 noncomputable section
 

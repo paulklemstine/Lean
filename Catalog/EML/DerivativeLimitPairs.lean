@@ -1,13 +1,13 @@
+import Mathlib
+import EML.Barriers
+import EML.Basic
+
 /-! # CatalogBuild.EML.DerivativeLimitPairs
 
 Auto-generated from theorem catalog database.
 Domain: EML
 Declarations: 6
 -/
-
-import Mathlib
-import EML.Barriers
-import EML.Basic
 
 noncomputable section
 
@@ -16,14 +16,12 @@ f(x) = (a - b) · σ(x) + b · x -/
 def sheffer_pair_fn (a b : ℝ) : ℝ → ℝ :=
   fun x => (a - b) * softplus x + b * x
 
-
 /-- The pair function is in ShefferAlg. -/
 theorem sheffer_pair_fn_mem (a b : ℝ) : sheffer_pair_fn a b ∈ ShefferAlg := by
   unfold sheffer_pair_fn
   have hmem := sheffer_affineComb softplus_mem_sheffer id_mem_sheffer (a - b) b 0
   convert hmem using 1
   ext x; ring
-
 
 /-- The derivative of the pair function is (a-b)·S(x) + b. -/
 theorem sheffer_pair_fn_hasDerivAt (a b x : ℝ) :
@@ -34,11 +32,9 @@ theorem sheffer_pair_fn_hasDerivAt (a b x : ℝ) :
   convert h1.add h2 using 1
   ring
 
-
 theorem sheffer_pair_deriv_tendsto_atTop (a b : ℝ) :
     Tendsto (fun x => (a - b) * logisticSigmoid x + b) atTop (𝓝 a) := by
   convert Filter.Tendsto.add ( tendsto_const_nhds.mul ( logisticSigmoid_tendsto_one ) ) tendsto_const_nhds using 2 ; ring
-
 
 theorem sheffer_pair_deriv_tendsto_atBot (a b : ℝ) :
     Tendsto (fun x => (a - b) * logisticSigmoid x + b) atBot (𝓝 b) := by
@@ -46,7 +42,6 @@ theorem sheffer_pair_deriv_tendsto_atBot (a b : ℝ) :
   have h_logisticSigmoid_neg_inf : Tendsto logisticSigmoid atBot (𝓝 0) := by
     exact?;
   simpa using Filter.Tendsto.add ( h_logisticSigmoid_neg_inf.const_mul ( a - b ) ) tendsto_const_nhds
-
 
 /-- Q39 Resolved: Every (a, b) ∈ ℝ² is achievable as derivative limits. -/
 theorem derivative_limit_pairs_surjective (a b : ℝ) :
@@ -57,6 +52,5 @@ theorem derivative_limit_pairs_surjective (a b : ℝ) :
     fun x => (a - b) * logisticSigmoid x + b,
     sheffer_pair_fn_hasDerivAt a b,
     sheffer_pair_deriv_tendsto_atTop a b, sheffer_pair_deriv_tendsto_atBot a b⟩
-
 
 end

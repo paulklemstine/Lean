@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Computation.Oracles.SymmetryPrinciples
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Computation/Oracles
 Declarations: 6
 -/
 
-import Mathlib
 
 /-- [Section: # CatalogBuild.Computation.Oracles.SymmetryPrinciples
 Auto-generated from theorem catalog database.

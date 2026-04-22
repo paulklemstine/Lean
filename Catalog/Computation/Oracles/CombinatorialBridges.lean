@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Computation.Oracles.CombinatorialBridges
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Computation/Oracles
 Declarations: 7
 -/
 
-import Mathlib
 
 /-- [Section: # CatalogBuild.Computation.Oracles.CombinatorialBridges
 Auto-generated from theorem catalog database.

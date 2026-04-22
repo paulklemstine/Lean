@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.DivisionAlgebras.Channel5Sedenions
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/DivisionAlgebras
 Declarations: 49
 -/
 
-import Mathlib
 
 /-- The dimension of the k-th Cayley-Dickson algebra is 2^k. -/
 theorem cayley_dickson_dim (k : ℕ) : 2 ^ k ≥ 1 := Nat.one_le_two_pow

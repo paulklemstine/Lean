@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Pythagorean.Berggren.ErrorCorrection
 
 Auto-generated from theorem catalog database.
@@ -5,24 +7,19 @@ Domain: Pythagorean/Berggren
 Declarations: 24
 -/
 
-import Mathlib
-
 def h (a b c : ℤ) : ℤ := -2*a - 2*b + 3*c
 
 -- ═══════════════════════════════════════════════════════════════
 -- Section 1: Recovery Equations
 -- ═══════════════════════════════════════════════════════════════
 
-
 theorem recover_a (a b c : ℤ) :
     a = (p a b c) + 2 * (q a b c) + 2 * (h a b c) := by
   simp only [p, q, h]; ring
 
-
 theorem recover_b (a b c : ℤ) :
     b = 2 * (p a b c) + (q a b c) + 2 * (h a b c) := by
   simp only [p, q, h]; ring
-
 
 theorem recover_c (a b c : ℤ) :
     c = 2 * (p a b c) + 2 * (q a b c) + 3 * (h a b c) := by
@@ -76,7 +73,6 @@ theorem detect_error_h (a b c ε : ℤ) (hε : ε ≠ 0) :
 -- Section 3: Ghost Pythagorean Preservation
 -- ═══════════════════════════════════════════════════════════════
 
-
 theorem ghost_pyth_preserved (a b c : ℤ) (hp : a^2 + b^2 = c^2) :
     (p a b c)^2 + (q a b c)^2 = (h a b c)^2 := by
   simp only [p, q, h]; nlinarith
@@ -87,16 +83,13 @@ theorem ghost_pyth_preserved (a b c : ℤ) (hp : a^2 + b^2 = c^2) :
 -- For a valid six-tuple, all syndromes are zero.
 -- ═══════════════════════════════════════════════════════════════
 
-
 theorem syndrome_zero_1 (a b c : ℤ) :
     a - (p a b c + 2 * q a b c + 2 * h a b c) = 0 := by
   simp only [p, q, h]; ring
 
-
 theorem syndrome_zero_2 (a b c : ℤ) :
     b - (2 * p a b c + q a b c + 2 * h a b c) = 0 := by
   simp only [p, q, h]; ring
-
 
 theorem syndrome_zero_3 (a b c : ℤ) :
     c - (2 * p a b c + 2 * q a b c + 3 * h a b c) = 0 := by
@@ -172,17 +165,14 @@ theorem syndrome_q_s2 (a b c ε : ℤ) :
 -- Section 6: Concrete Examples
 -- ═══════════════════════════════════════════════════════════════
 
-
 theorem six_tuple_345 :
     p 3 4 5 = 1 ∧ q 3 4 5 = 0 ∧ h 3 4 5 = 1 := by
   simp only [p, q, h]; omega
-
 
 theorem recover_345 :
     1 + 2 * 0 + 2 * 1 = (3 : ℤ) ∧
     2 * 1 + 0 + 2 * 1 = (4 : ℤ) ∧
     2 * 1 + 2 * 0 + 3 * 1 = (5 : ℤ) := by omega
-
 
 theorem six_tuple_51213 :
     p 5 12 13 = 3 ∧ q 5 12 13 = -4 ∧ h 5 12 13 = 5 := by

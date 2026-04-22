@@ -1,12 +1,12 @@
+import Mathlib
+import Speculative.PisanoPeriodFactoring
+
 /-! # CatalogBuild.Shared.Fib_gcd_identity
 
 Auto-generated from theorem catalog database.
 Domain: Shared
 Declarations: 8
 -/
-
-import Mathlib
-import Speculative.PisanoPeriodFactoring
 
 /-- GCD identity: gcd(F(m), F(n)) = F(gcd(m,n)). -/
 theorem fib_gcd_identity (m n : ℕ) :
@@ -67,8 +67,8 @@ theorem fib_sq_mod_prime (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2) (hp5 : p �
     (Nat.fib p ^ 2) % p = 1 % p := by
   haveI := Fact.mk hp; norm_num [ ← ZMod.natCast_eq_natCast_iff' ] ; ring_nf;
   -- By definition of Fibonacci sequence, we know that $F_p = \frac{(1 + \sqrt{5})^p - (1 - \sqrt{5})^p}{2^p \sqrt{5}}$.
-  have h_fib_def : (fib p : ℤ) = ((1 + Real.sqrt 5) ^ p - (1 - Real.sqrt 5) ^ p) / (2 ^ p * Real.sqrt 5) := by
-    have h_fib_def : ∀ n, (fib n : ℝ) = ((1 + Real.sqrt 5) ^ n - (1 - Real.sqrt 5) ^ n) / (2 ^ n * Real.sqrt 5) := by
+  have h_fib_def : (Nat.fib p : ℤ) = ((1 + Real.sqrt 5) ^ p - (1 - Real.sqrt 5) ^ p) / (2 ^ p * Real.sqrt 5) := by
+    have h_fib_def : ∀ n, (Nat.fib n : ℝ) = ((1 + Real.sqrt 5) ^ n - (1 - Real.sqrt 5) ^ n) / (2 ^ n * Real.sqrt 5) := by
       intro n; induction' n using Nat.strong_induction_on with n ih; rcases n with ( _ | _ | n ) <;> norm_num [ Nat.fib_add_two ] at *;
       · ring_nf; norm_num;
       · rw [ ih n ( by linarith ), ih ( n + 1 ) ( by linarith ) ] ; repeat ring <;> norm_num [ pow_succ' ] ;
@@ -98,7 +98,7 @@ theorem fib_sq_mod_prime (p : ℕ) (hp : Nat.Prime p) (hp2 : p ≠ 2) (hp5 : p �
     · norm_num [ Nat.add_div, Finset.sum_range_succ ] at *;
       exact Finset.dvd_sum fun i hi => dvd_mul_of_dvd_left ( Int.dvd_of_emod_eq_zero ( h_fib_mod_simplified i ( Finset.mem_range.mp hi ) ) ) _;
   -- Let's simplify the expression for $F_p$ modulo $p$ further using the fact that $2^{p-1} \equiv 1 \pmod{p}$.
-  have h_fib_mod_final : (fib p : ℤ) * 2 ^ (p - 1) ≡ 5 ^ ((p - 1) / 2) [ZMOD p] := by
+  have h_fib_mod_final : (Nat.fib p : ℤ) * 2 ^ (p - 1) ≡ 5 ^ ((p - 1) / 2) [ZMOD p] := by
     convert h_fib_mod_simplified using 1;
     rw [ ← @Int.cast_inj ℝ ] ; aesop;
   have h_fermat : 2 ^ (p - 1) ≡ 1 [ZMOD p] ∧ 5 ^ (p - 1) ≡ 1 [ZMOD p] := by

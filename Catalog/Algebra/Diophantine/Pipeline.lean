@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.Diophantine.Pipeline
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/Diophantine
 Declarations: 14
 -/
 
-import Mathlib
 
 /-- A Diophantine equation in two variables is a polynomial `p(x, y)` with integer
 coefficients. A solution is a pair `(a, b) ∈ ℤ²` such that `p(a, b) = 0`. -/

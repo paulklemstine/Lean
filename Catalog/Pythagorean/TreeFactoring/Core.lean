@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Pythagorean.TreeFactoring.Core
 
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/TreeFactoring
 Declarations: 15
 -/
-
-import Mathlib
 
 /-- For any odd N, the triple (N, (N²-1)/2, (N²+1)/2) satisfies the Pythagorean equation. -/
 theorem trivial_triple_is_pyth (N : ℤ) (hN : N % 2 = 1) :
@@ -18,29 +18,17 @@ theorem trivial_triple_is_pyth (N : ℤ) (hN : N % 2 = 1) :
     have := h1; omega
   nlinarith [Int.ediv_mul_cancel h1, Int.ediv_mul_cancel h2]
 
-
-
-
 /-- B₁⁻¹ preserves the Pythagorean property. -/
 theorem inv_B1_preserves (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (a + 2*b - 2*c) ^ 2 + (-2*a - b + 2*c) ^ 2 = (-2*a - 2*b + 3*c) ^ 2 := by nlinarith
-
-
-
 
 /-- B₂⁻¹ preserves the Pythagorean property. -/
 theorem inv_B2_preserves (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (a + 2*b - 2*c) ^ 2 + (2*a + b - 2*c) ^ 2 = (-2*a - 2*b + 3*c) ^ 2 := by nlinarith
 
-
-
-
 /-- B₃⁻¹ preserves the Pythagorean property. -/
 theorem inv_B3_preserves (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (-a - 2*b + 2*c) ^ 2 + (2*a + b - 2*c) ^ 2 = (-2*a - 2*b + 3*c) ^ 2 := by nlinarith
-
-
-
 
 /-- B₁⁻¹ ∘ B₁ = Id (component-wise) -/
 theorem inv_B1_comp_B1 (a b c : ℤ) :
@@ -50,9 +38,6 @@ theorem inv_B1_comp_B1 (a b c : ℤ) :
     a' + 2*b' - 2*c' = a ∧ -2*a' - b' + 2*c' = b ∧ -2*a' - 2*b' + 3*c' = c :=
   ⟨by ring, by ring, by ring⟩
 
-
-
-
 /-- B₂⁻¹ ∘ B₂ = Id (component-wise) -/
 theorem inv_B2_comp_B2 (a b c : ℤ) :
     let a' := a + 2*b + 2*c
@@ -60,9 +45,6 @@ theorem inv_B2_comp_B2 (a b c : ℤ) :
     let c' := 2*a + 2*b + 3*c
     a' + 2*b' - 2*c' = a ∧ 2*a' + b' - 2*c' = b ∧ -2*a' - 2*b' + 3*c' = c :=
   ⟨by ring, by ring, by ring⟩
-
-
-
 
 /-- B₃⁻¹ ∘ B₃ = Id (component-wise) -/
 theorem inv_B3_comp_B3 (a b c : ℤ) :
@@ -72,32 +54,20 @@ theorem inv_B3_comp_B3 (a b c : ℤ) :
     (0 - a') - 2*b' + 2*c' = a ∧ 2*a' + b' - 2*c' = b ∧ (0 - 2*a') - 2*b' + 3*c' = c :=
   ⟨by ring, by ring, by ring⟩
 
-
-
-
 /-- If gcd(d, N) is non-trivial, it's a factor of N. -/
 theorem factor_from_gcd (N d : ℕ) (_hN : 1 < N)
     (hg_gt : 1 < Nat.gcd d N) (hg_lt : Nat.gcd d N < N) :
     Nat.gcd d N ∣ N ∧ 1 < Nat.gcd d N ∧ Nat.gcd d N < N :=
   ⟨Nat.gcd_dvd_right d N, hg_gt, hg_lt⟩
 
-
-
-
 /-- For a semiprime N = p*q, the divisor d = p gives gcd(d, N) = p. -/
 theorem semiprime_gcd (p q : ℕ) (_hp : Nat.Prime p) :
     Nat.gcd p (p * q) = p :=
   Nat.gcd_eq_left (dvd_mul_right p q)
 
-
-
-
 /-- At most one inverse Berggren map produces positive first and second components. -/
 theorem inv_B1_B2_exclusive (a b c : ℤ)
     (h1 : 0 < -2*a - b + 2*c) (h2 : 0 < 2*a + b - 2*c) : False := by linarith
-
-
-
 
 /-- [Section: # CatalogBuild.Pythagorean.TreeFactoring.Core
 Auto-generated from theorem catalog database.
@@ -107,9 +77,6 @@ theorem inv_B1_lorentz (a b c : ℤ) :
     (a + 2*b - 2*c)^2 + (-2*a - b + 2*c)^2 - (-2*a - 2*b + 3*c)^2 =
     a^2 + b^2 - c^2 := by ring
 
-
-
-
 /-- [Section: # CatalogBuild.Pythagorean.TreeFactoring.Core
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/TreeFactoring
@@ -118,15 +85,9 @@ theorem inv_B2_lorentz (a b c : ℤ) :
     (a + 2*b - 2*c)^2 + (2*a + b - 2*c)^2 - (-2*a - 2*b + 3*c)^2 =
     a^2 + b^2 - c^2 := by ring
 
-
-
-
 theorem inv_B3_lorentz (a b c : ℤ) :
     (-a - 2*b + 2*c)^2 + (2*a + b - 2*c)^2 - (-2*a - 2*b + 3*c)^2 =
     a^2 + b^2 - c^2 := by ring
-
-
-
 
 /-- The parent-finding function: returns which branch and the parent triple. -/
 def findParent' (a b c : ℤ) : ℕ × ℤ × ℤ × ℤ :=
@@ -137,9 +98,6 @@ def findParent' (a b c : ℤ) : ℕ × ℤ × ℤ × ℤ :=
   else
     let (a3, b3, c3) := (-a - 2*b + 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
     (3, a3, b3, c3)
-
-
-
 
 /-- Factor N by tree descent with fuel. -/
 def factorDescent (N : ℕ) (fuel : ℕ) : Option (ℕ × ℕ) :=
@@ -171,5 +129,4 @@ where
 #eval factorDescent 143 100   -- some (11, 13)
 #eval factorDescent 323 200   -- some (17, 19)
 #eval factorDescent 10403 500
-
 

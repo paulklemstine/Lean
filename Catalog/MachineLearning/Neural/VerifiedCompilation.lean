@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.MachineLearning.Neural.VerifiedCompilation
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: MachineLearning/Neural
 Declarations: 13
 -/
 
-import Mathlib
 
 noncomputable section
 

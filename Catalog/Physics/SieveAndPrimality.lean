@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Physics.SieveAndPrimality
 
 Auto-generated from theorem catalog database.
 Domain: Physics
 Declarations: 14
 -/
-
-import Mathlib
 
 /-- [Section: # CatalogBuild.Physics.SieveAndPrimality
 Auto-generated from theorem catalog database.
@@ -24,9 +24,6 @@ theorem trial_division_correct (n : ℕ) (hn : 1 < n) :
     cases' hk.1 with m hm;
     cases le_total k m <;> [ exact ⟨ k, hk.2.1, by nlinarith, hk.1 ⟩ ; exact ⟨ m, by nlinarith, by nlinarith, hm.symm ▸ dvd_mul_left _ _ ⟩ ]
 
-
-
-
 /-- [Section: # CatalogBuild.Physics.SieveAndPrimality
 Auto-generated from theorem catalog database.
 Domain: Physics
@@ -39,9 +36,6 @@ theorem composite_small_factor (n : ℕ) (hn : 1 < n) (hc : ¬ Nat.Prime n) :
   cases' hp_div with k hk;
   cases le_total p k <;> [ exact ⟨ p, hp_prime.one_lt, by nlinarith [ hp_prime.two_le ], hk.symm ▸ dvd_mul_right _ _ ⟩ ; exact ⟨ k, Nat.one_lt_iff_ne_zero_and_ne_one.mpr ⟨ by aesop_cat, by aesop_cat ⟩, by nlinarith [ hp_prime.two_le ], hk.symm ▸ dvd_mul_left _ _ ⟩ ]
 
-
-
-
 /-- Wilson's theorem: (p-1)! ≡ p-1 (mod p) for prime p.
 (Since p-1 ≡ -1 mod p, this is the standard statement.) -/
 theorem wilson_examples :
@@ -52,9 +46,6 @@ theorem wilson_examples :
     (10).factorial % 11 = 10 ∧
     (12).factorial % 13 = 12 := by
   native_decide
-
-
-
 
 /-- Wilson's theorem: the converse direction for composites.
 If n > 1 is composite, then (n-1)! ≡ 0 (mod n) (for most composites). -/
@@ -67,17 +58,11 @@ theorem wilson_composite_examples :
     (11).factorial % 12 = 0 := by
   native_decide
 
-
-
-
 /-- Wilson's theorem for all primes up to 50. -/
 theorem wilson_all_primes_to_50 :
     ∀ p ∈ (Finset.Icc 2 50).filter Nat.Prime,
       (p - 1).factorial % p = p - 1 := by
   native_decide
-
-
-
 
 /-- A Pratt certificate for primality of p consists of:
 1. A primitive root g modulo p
@@ -89,9 +74,6 @@ structure PrattCertificate (p : ℕ) where
   passes_all_tests : ∀ q ∈ (p - 1).primeFactorsList.toFinset,
     witness ^ ((p - 1) / q) % p ≠ 1
 
-
-
-
 /-- Pratt certificate for p = 7: witness g = 3.
 p - 1 = 6 = 2 × 3.
 3^3 mod 7 = 6 ≠ 1 (test for q=2)
@@ -99,9 +81,6 @@ p - 1 = 6 = 2 × 3.
 theorem pratt_cert_7 : ∃ g : ℕ, g ^ 6 % 7 = 1 ∧
     g ^ 3 % 7 ≠ 1 ∧ g ^ 2 % 7 ≠ 1 :=
   ⟨3, by native_decide, by native_decide, by native_decide⟩
-
-
-
 
 /-- Pratt certificate for p = 13: witness g = 2.
 p - 1 = 12 = 2² × 3.
@@ -111,9 +90,6 @@ theorem pratt_cert_13 : ∃ g : ℕ, g ^ 12 % 13 = 1 ∧
     g ^ 6 % 13 ≠ 1 ∧ g ^ 4 % 13 ≠ 1 :=
   ⟨2, by native_decide, by native_decide, by native_decide⟩
 
-
-
-
 /-- Pratt certificate for p = 101: witness g = 2.
 p - 1 = 100 = 2² × 5².
 2^50 mod 101 = 100 ≠ 1 (test for q=2)
@@ -122,41 +98,26 @@ theorem pratt_cert_101 : ∃ g : ℕ, g ^ 100 % 101 = 1 ∧
     g ^ 50 % 101 ≠ 1 ∧ g ^ 20 % 101 ≠ 1 :=
   ⟨2, by native_decide, by native_decide, by native_decide⟩
 
-
-
-
 /-- The sieve: numbers in [2, n] not divisible by any prime ≤ √n are prime. -/
 theorem sieve_correctness_small :
     -- Sieving {2,...,100} by {2,3,5,7} gives exactly the primes
     ((Finset.Icc 2 100).filter Nat.Prime).card = 25 := by
   native_decide
 
-
-
-
 /-- Sieve gives correct counts for larger ranges. -/
 theorem sieve_count_500 :
     ((Finset.Icc 2 500).filter Nat.Prime).card = 95 := by
   native_decide
 
-
-
-
 theorem sieve_count_1000 :
     ((Finset.Icc 2 1000).filter Nat.Prime).card = 168 := by
   native_decide
-
-
-
 
 /-- Verification of primality for cryptographically important sizes. -/
 theorem small_crypto_primes :
     Nat.Prime 251 ∧ Nat.Prime 509 ∧ Nat.Prime 1021 ∧
     Nat.Prime 2039 ∧ Nat.Prime 4093 ∧ Nat.Prime 8191 := by
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩ <;> native_decide
-
-
-
 
 /-- Numbers of the form 2^k - 1 that are prime (Mersenne primes). -/
 theorem mersenne_primality_table :
@@ -166,5 +127,4 @@ theorem mersenne_primality_table :
     ¬ Nat.Prime (2^8 - 1) ∧ ¬ Nat.Prime (2^9 - 1) ∧
     ¬ Nat.Prime (2^10 - 1) ∧ ¬ Nat.Prime (2^11 - 1) := by
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩ <;> native_decide
-
 

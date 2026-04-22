@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.Factoring.Basic
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/Factoring
 Declarations: 5
 -/
 
-import Mathlib
 
 noncomputable section
 

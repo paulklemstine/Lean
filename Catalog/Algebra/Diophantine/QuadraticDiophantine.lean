@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.Diophantine.QuadraticDiophantine
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/Diophantine
 Declarations: 8
 -/
 
-import Mathlib
 
 /-- [Section: # CatalogBuild.Algebra.Diophantine.QuadraticDiophantine
 Auto-generated from theorem catalog database.

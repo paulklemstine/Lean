@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Cryptography.QuantumSecurity.PostQuantumSignatures
 
 Auto-generated from theorem catalog database.
 Domain: Cryptography/QuantumSecurity
 Declarations: 11
 -/
-
-import Mathlib
 
 noncomputable section
 
@@ -19,9 +19,6 @@ structure SignatureScheme (Message PublicKey SecretKey Signature : Type) where
   verify : PublicKey → Message → Signature → Prop
   correctness : ∀ sk m, verify (keygen sk) m (sign sk m)
 
-
-
-
 /-- [Section: # CatalogBuild.Cryptography.QuantumSecurity.PostQuantumSignatures
 Auto-generated from theorem catalog database.
 Domain: Cryptography/QuantumSecurity
@@ -34,15 +31,9 @@ structure LatticeParams where
   hq : 1 < q
   hβ : 0 < β
 
-
-
-
 structure SISHardness where
   sisAdvantage : ℕ → ℝ
   isHard : ∀ c : ℕ, ∃ N : ℕ, ∀ n : ℕ, N ≤ n → |sisAdvantage n| < (1 / (n : ℝ)) ^ c
-
-
-
 
 /-- Security of lattice signature reduces to SIS hardness -/
 theorem lattice_sig_security (sis : SISHardness)
@@ -58,17 +49,9 @@ theorem lattice_sig_security (sis : SISHardness)
     have h3 : (0:ℝ) ≤ (1 / (n : ℝ)) ^ c := by positivity
     linarith⟩
 
-
-
-
 noncomputable def blsSigSize : ℝ := 48
 
-
-
 noncomputable def latticeSigSize (n : ℕ) : ℝ := 2 * (n : ℝ)
-
-
-
 
 theorem bls_more_compact_small (n : ℕ) (hn : n < 24) :
     latticeSigSize n < blsSigSize := by
@@ -76,17 +59,11 @@ theorem bls_more_compact_small (n : ℕ) (hn : n < 24) :
   have : (n : ℝ) < 24 := by exact_mod_cast hn
   linarith
 
-
-
-
 theorem lattice_larger_for_security (n : ℕ) (hn : 24 ≤ n) :
     blsSigSize ≤ latticeSigSize n := by
   unfold latticeSigSize blsSigSize
   have : (24 : ℝ) ≤ (n : ℝ) := by exact_mod_cast hn
   linarith
-
-
-
 
 theorem aggregation_space_saving (k : ℕ) (sigSize aggSize : ℝ)
     (hk : 1 < k) (hSig : 0 < sigSize)
@@ -95,24 +72,15 @@ theorem aggregation_space_saving (k : ℕ) (sigSize aggSize : ℝ)
   rw [div_lt_one (by positivity)]
   exact h_saving
 
-
-
-
 theorem quantum_lattice_exponential (n : ℕ) (hn : 2 ≤ n) :
     (1 : ℝ) < 2 ^ n := by
   have : (1:ℝ) < 2 := by norm_num
   exact one_lt_pow₀ this (by omega)
-
-
-
 
 theorem bls_quantum_broken
     (blsBreakComplexity : ℕ → ℝ)
     (h_shor : ∀ n, blsBreakComplexity n ≤ (n : ℝ) ^ 3) :
     ∀ n : ℕ, blsBreakComplexity n ≤ (n : ℝ) ^ 3 :=
   h_shor
-
-
-
 
 end

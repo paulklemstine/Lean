@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.Core.MontgomeryPairCorrelation
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/Core
 Declarations: 34
 -/
 
-import Mathlib
 
 noncomputable section
 

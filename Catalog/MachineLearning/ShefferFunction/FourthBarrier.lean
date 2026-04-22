@@ -1,3 +1,10 @@
+import EML.Lean.AdvancedTheorems
+import EML.Lean.OpenQuestions
+import EML.Lean.ShefferAlgebra
+import EML.Lean.SoftplusBasic
+import EML.Lean.ThirdBarrier
+import Mathlib
+
 /-! # CatalogBuild.MachineLearning.ShefferFunction.FourthBarrier
 
 Auto-generated from theorem catalog database.
@@ -5,12 +12,6 @@ Domain: MachineLearning/ShefferFunction
 Declarations: 5
 -/
 
-import EML.Lean.AdvancedTheorems
-import EML.Lean.OpenQuestions
-import EML.Lean.ShefferAlgebra
-import EML.Lean.SoftplusBasic
-import EML.Lean.ThirdBarrier
-import Mathlib
 
 noncomputable section
 

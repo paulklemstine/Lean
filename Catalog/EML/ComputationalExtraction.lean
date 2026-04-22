@@ -1,10 +1,3 @@
-/-! # CatalogBuild.EML.ComputationalExtraction
-
-Auto-generated from theorem catalog database.
-Domain: EML
-Declarations: 17
--/
-
 import Lean
 import argparse
 import json
@@ -17,6 +10,23 @@ import subprocess
 import sys
 import torch
 import traceback
+import os
+import sys
+import json
+import math
+import subprocess
+import shlex
+import traceback
+import argparse
+import logging
+import numpy as np
+
+/-! # CatalogBuild.EML.ComputationalExtraction
+
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 17
+-/
 
 /-- The formal computational extraction of the EML-SPB Dual-Agent Orchestrator.
 This string contains the complete reference Python implementation of the
@@ -63,18 +73,7 @@ Usage:
 
 from __future__ import annotations
 
-import os
-import sys
-import json
-import math
-import subprocess
-import shlex
-import traceback
-import argparse
-import logging
 from typing import Any, Dict, List, Optional, Tuple
-
-import numpy as np
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format='%(levelname)s | %(message)s')
@@ -94,9 +93,6 @@ MAX_REPL_HISTORY = 200          # sliding window for conversation state
 # 1. Mathematical Primitives
 # ---------------------------------------------------------------------------
 
-
-
-
 /-- [Section: # CatalogBuild.EML.ComputationalExtraction
 Auto-generated from theorem catalog database.
 Domain: EML
@@ -112,10 +108,6 @@ def spb(x: np.ndarray, delta: np.ndarray) -> np.ndarray:
     \"\"\"
     return (x + delta) / (1.0 - x * delta + EML_EPSILON)
 
-
-
-
-
 /-- [Section: # CatalogBuild.EML.ComputationalExtraction
 Auto-generated from theorem catalog database.
 Domain: EML
@@ -130,10 +122,6 @@ def spb_inverse(y: np.ndarray, delta: np.ndarray) -> np.ndarray:
     \"\"\"
     return (y - delta) / (1.0 + y * delta + EML_EPSILON)
 
-
-
-
-
 def eml(x: np.ndarray, y: np.ndarray) -> np.ndarray:
     \"\"\"EML operator: eml(x, y) = exp(x) - log(y).
 
@@ -141,29 +129,17 @@ def eml(x: np.ndarray, y: np.ndarray) -> np.ndarray:
     \"\"\"
     return np.exp(x) - np.log(np.maximum(y, EML_EPSILON))
 
-
-
-
-
 def tropical_max_plus(a: np.ndarray, b: np.ndarray) -> np.ndarray:
     \"\"\"Tropical addition in the (max, +) semiring.\"\"\"
     return np.maximum(a, b)
-
-
-
-
 
 def tropical_dot(a: np.ndarray, b: np.ndarray, axis: int = -1) -> np.ndarray:
     \"\"\"Tropical dot product:  max_j (a_j + b_j).\"\"\"
     return np.max(a + b, axis=axis)
 
-
 # ---------------------------------------------------------------------------
 # 2. Crystallization Engine
 # ---------------------------------------------------------------------------
-
-
-
 
 class CrystallizationEngine:
     \"\"\"Projects base-model weights into the SPB-compressed format.
@@ -257,13 +233,9 @@ class CrystallizationEngine:
         w_normed = spb_inverse(w_crystal, d_normed)
         return np.arctanh(np.clip(w_normed, -1 + EML_EPSILON, 1 - EML_EPSILON)) * scale_w
 
-
 # ---------------------------------------------------------------------------
 # 3. EML Neural Layer
 # ---------------------------------------------------------------------------
-
-
-
 
 class EMLLayer:
     \"\"\"A single EML neural layer.
@@ -291,13 +263,9 @@ class EMLLayer:
         pre2 = x @ self.w2.T + self.b2
         return eml(pre1, pre2)
 
-
 # ---------------------------------------------------------------------------
 # 4. Tropical Vision Transformer (TropicalViT) Attention
 # ---------------------------------------------------------------------------
-
-
-
 
 class TropicalAttention:
     \"\"\"Tropical (max, +) attention mechanism.
@@ -345,13 +313,9 @@ class TropicalAttention:
         out = weights @ V
         return out @ self.Wo.T
 
-
 # ---------------------------------------------------------------------------
 # 5. PythagoreanNeuralArch: Combined Model
 # ---------------------------------------------------------------------------
-
-
-
 
 class PythagoreanNeuralArch:
     \"\"\"Combines EML layers with Tropical attention into a small
@@ -376,13 +340,9 @@ class PythagoreanNeuralArch:
         h = self.eml2.forward(h)
         return h
 
-
 # ---------------------------------------------------------------------------
 # 6. Hugging Face Integration & Model Crystallization
 # ---------------------------------------------------------------------------
-
-
-
 
 def load_base_model(model_id: str, device: str = DEFAULT_DEVICE):
     \"\"\"Load a Hugging Face causal-LM and return its tokenizer and model.\"\"\"
@@ -402,10 +362,6 @@ def load_base_model(model_id: str, device: str = DEFAULT_DEVICE):
     model.eval()
     logger.info('Model loaded. Parameters: %s', sum(p.numel() for p in model.parameters()))
     return tokenizer, model
-
-
-
-
 
 def crystallize_model(model, rank: int = CRYSTALLIZATION_RANK) -> Dict[str, Any]:
     \"\"\"Crystallize all eligible weight matrices in a Hugging Face model.
@@ -438,10 +394,6 @@ def crystallize_model(model, rank: int = CRYSTALLIZATION_RANK) -> Dict[str, Any]
     )
     return crystal_state
 
-
-
-
-
 def generate_with_base_model(tokenizer, model, prompt: str, max_new_tokens: int = 256) -> str:
     \"\"\"Generate text using the base Hugging Face model.\"\"\"
     import torch
@@ -457,13 +409,9 @@ def generate_with_base_model(tokenizer, model, prompt: str, max_new_tokens: int 
     response = tokenizer.decode(outputs[0][inputs['input_ids'].shape[1]:], skip_special_tokens=True)
     return response.strip()
 
-
 # ---------------------------------------------------------------------------
 # 7. Tool Execution (for Agentic REPL)
 # ---------------------------------------------------------------------------
-
-
-
 
 class ToolExecutor:
     \"\"\"Executes shell commands in a sandboxed subprocess and captures output.\"\"\"
@@ -505,13 +453,9 @@ class ToolExecutor:
                 'returncode': -1,
             }
 
-
 # ---------------------------------------------------------------------------
 # 8. Agentic REPL Loop
 # ---------------------------------------------------------------------------
-
-
-
 
 class AgenticREPL:
     \"\"\"Interactive REPL that combines LLM inference with tool execution.
@@ -632,13 +576,9 @@ class AgenticREPL:
             except Exception:
                 traceback.print_exc()
 
-
 # ---------------------------------------------------------------------------
 # 9. Main Entry Point
 # ---------------------------------------------------------------------------
-
-
-
 
 def main() -> None:
     parser = argparse.ArgumentParser(description='EML-SPB Orchestrator')
@@ -668,18 +608,12 @@ def main() -> None:
     )
     repl.run()
 
-
 if __name__ == '__main__':
     main()
 "
-
-
-
 
 /-- The reference implementation string is non-empty, witnessing that the
 computational extraction is non-trivial. -/
 theorem orchestrator_is_well_formed : demo_orchestrator_python_code.length > 0 := by
   native_decide
-
-
 

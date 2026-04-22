@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Pythagorean.Berggren.UniversalParentInverse
 
 Auto-generated from theorem catalog database.
@@ -5,44 +7,34 @@ Domain: Pythagorean/Berggren
 Declarations: 63
 -/
 
-import Mathlib
-
 /-- The p-parameter of the ghost triple. -/
 def ghost_p (a b c : ℤ) : ℤ := a + 2 * b - 2 * c
-
 
 /-- The q-parameter of the ghost triple. -/
 def ghost_q (a b c : ℤ) : ℤ := 2 * a + b - 2 * c
 
-
 /-- The h-parameter (universal parent hypotenuse). -/
 def ghost_h (a b c : ℤ) : ℤ := 3 * c - 2 * (a + b)
-
 
 /-- Inverse Berggren transform B₁⁻¹. -/
 def upi_invB₁ (a b c : ℤ) : ℤ × ℤ × ℤ :=
   (ghost_p a b c, -ghost_q a b c, ghost_h a b c)
 
-
 /-- Inverse Berggren transform B₂⁻¹. -/
 def upi_invB₂ (a b c : ℤ) : ℤ × ℤ × ℤ :=
   (ghost_p a b c, ghost_q a b c, ghost_h a b c)
-
 
 /-- Inverse Berggren transform B₃⁻¹. -/
 def upi_invB₃ (a b c : ℤ) : ℤ × ℤ × ℤ :=
   (-ghost_p a b c, ghost_q a b c, ghost_h a b c)
 
-
 /-- Forward Berggren transform B₁. -/
 def upi_fwdB₁ (a b c : ℤ) : ℤ × ℤ × ℤ :=
   (a - 2 * b + 2 * c, 2 * a - b + 2 * c, 2 * a - 2 * b + 3 * c)
 
-
 /-- Forward Berggren transform B₂. -/
 def upi_fwdB₂ (a b c : ℤ) : ℤ × ℤ × ℤ :=
   (a + 2 * b + 2 * c, 2 * a + b + 2 * c, 2 * a + 2 * b + 3 * c)
-
 
 /-- Forward Berggren transform B₃. -/
 def upi_fwdB₃ (a b c : ℤ) : ℤ × ℤ × ℤ :=
@@ -51,7 +43,6 @@ def upi_fwdB₃ (a b c : ℤ) : ℤ × ℤ × ℤ :=
 -- ═══════════════════════════════════════════════════════════════
 -- Section 2: Ghost Triple (p, q, h) is Pythagorean
 -- ═══════════════════════════════════════════════════════════════
-
 
 /-- **Universal Parent is Pythagorean**: |p|² + |q|² = h². -/
 theorem universalParent_pythagorean (a b c : ℤ) (hpyth : a ^ 2 + b ^ 2 = c ^ 2) :
@@ -64,20 +55,17 @@ theorem universalParent_pythagorean (a b c : ℤ) (hpyth : a ^ 2 + b ^ 2 = c ^ 2
 -- Section 3: Universal Parent Equals Each Branch
 -- ═══════════════════════════════════════════════════════════════
 
-
 /-- **Branch 1**: When p > 0 and q < 0, universalParent = invB₁. -/
 theorem universalParent_eq_branch1 (a b c : ℤ)
     (hp : 0 < ghost_p a b c) (hq : ghost_q a b c < 0) :
     universalParent a b c = upi_invB₁ a b c := by
   simp only [universalParent, upi_invB₁, abs_of_pos hp, abs_of_neg hq]
 
-
 /-- **Branch 2**: When p > 0 and q > 0, universalParent = invB₂. -/
 theorem universalParent_eq_branch2 (a b c : ℤ)
     (hp : 0 < ghost_p a b c) (hq : 0 < ghost_q a b c) :
     universalParent a b c = upi_invB₂ a b c := by
   simp only [universalParent, upi_invB₂, abs_of_pos hp, abs_of_pos hq]
-
 
 /-- **Branch 3**: When p < 0 and q > 0, universalParent = invB₃. -/
 theorem universalParent_eq_branch3 (a b c : ℤ)
@@ -88,7 +76,6 @@ theorem universalParent_eq_branch3 (a b c : ℤ)
 -- ═══════════════════════════════════════════════════════════════
 -- Section 4: Fourth Ghost and Klein Four-Group
 -- ═══════════════════════════════════════════════════════════════
-
 
 /-- All four sign-flip variants share the same hypotenuse. -/
 theorem klein_four_same_hyp (a b c : ℤ) :
@@ -101,31 +88,26 @@ theorem klein_four_same_hyp (a b c : ℤ) :
 -- Section 5: Algebraic Identities
 -- ═══════════════════════════════════════════════════════════════
 
-
 /-- p + q = 3(a + b) - 4c. -/
 theorem ghost_pq_sum (a b c : ℤ) :
     ghost_p a b c + ghost_q a b c = 3 * (a + b) - 4 * c := by
   simp only [ghost_p, ghost_q]; ring
-
 
 /-- p - q = b - a (the leg difference is preserved!). -/
 theorem ghost_pq_diff (a b c : ℤ) :
     ghost_p a b c - ghost_q a b c = b - a := by
   simp only [ghost_p, ghost_q]; ring
 
-
 /-- c - h = 2(a + b - c) (descent gap). -/
 theorem ghost_h_descent (a b c : ℤ) :
     c - ghost_h a b c = 2 * (a + b - c) := by
   simp only [ghost_h]; ring
-
 
 /-- Lorentz norm is preserved. -/
 theorem universalParent_preserves_lorentz_norm (a b c : ℤ) :
     (universalParent a b c).1 ^ 2 + (universalParent a b c).2.1 ^ 2 -
     (universalParent a b c).2.2 ^ 2 = a ^ 2 + b ^ 2 - c ^ 2 := by
   simp only [universalParent, sq_abs, ghost_p, ghost_q, ghost_h]; ring
-
 
 /-- Energy identity: |p|² + |q|² + h² = 2h² for Pythagorean triples. -/
 theorem universalParent_energy (a b c : ℤ) (hpyth : a ^ 2 + b ^ 2 = c ^ 2) :
@@ -137,20 +119,17 @@ theorem universalParent_energy (a b c : ℤ) (hpyth : a ^ 2 + b ^ 2 = c ^ 2) :
 -- Section 6: Depth-2 Composition (Grandparent)
 -- ═══════════════════════════════════════════════════════════════
 
-
 /-- The depth-2 hypotenuse h(p, q, h) in terms of (a, b, c). -/
 theorem ghost_h_composed (a b c : ℤ) :
     ghost_h (ghost_p a b c) (ghost_q a b c) (ghost_h a b c) =
     -12 * a - 12 * b + 17 * c := by
   unfold ghost_h ghost_p ghost_q; ring
 
-
 /-- The depth-2 p-parameter. -/
 theorem ghost_p_composed (a b c : ℤ) :
     ghost_p (ghost_p a b c) (ghost_q a b c) (ghost_h a b c) =
     9 * a + 8 * b - 12 * c := by
   unfold ghost_p ghost_q ghost_h; ring
-
 
 /-- The depth-2 q-parameter. -/
 theorem ghost_q_composed (a b c : ℤ) :
@@ -162,26 +141,21 @@ theorem ghost_q_composed (a b c : ℤ) :
 -- Section 7: M_UP Matrix Properties
 -- ═══════════════════════════════════════════════════════════════
 
-
 /-- The "universal parent matrix" M_UP = B₂⁻¹. -/
 def M_UP : Matrix (Fin 3) (Fin 3) ℤ :=
   !![1, 2, -2; 2, 1, -2; -2, -2, 3]
-
 
 /-- M_UP preserves the Lorentz form. -/
 theorem M_UP_preserves_lorentz :
     M_UP.transpose * !![1, 0, 0; 0, 1, 0; 0, 0, -(1:ℤ)] * M_UP =
     !![1, 0, 0; 0, 1, 0; 0, 0, -(1:ℤ)] := by native_decide
 
-
 /-- M_UP² is the depth-2 descent matrix. -/
 theorem M_UP_squared :
     M_UP * M_UP = !![9, 8, -12; 8, 9, -12; -12, -12, 17] := by native_decide
 
-
 /-- M_UP determinant. -/
 theorem M_UP_det : Matrix.det M_UP = -1 := by native_decide
-
 
 /-- M_UP trace. -/
 theorem M_UP_trace : Matrix.trace M_UP = 5 := by native_decide
@@ -189,7 +163,6 @@ theorem M_UP_trace : Matrix.trace M_UP = 5 := by native_decide
 -- ═══════════════════════════════════════════════════════════════
 -- Section 8: Parity Conservation
 -- ═══════════════════════════════════════════════════════════════
-
 
 /-- [Section: # Universal Parent Inverse — The Single-Formula Berggren Descent
 ## Main Discovery
@@ -222,14 +195,12 @@ theorem upi_119_120_169 : universalParent 119 120 169 = (21, 20, 29) := by nativ
 
 theorem upi_root : universalParent 3 4 5 = (1, 0, 1) := by native_decide
 
-
 /-- All three children of (3,4,5) return to (3,4,5). -/
 theorem all_children_return :
     universalParent 5 12 13 = (3, 4, 5) ∧
     universalParent 21 20 29 = (3, 4, 5) ∧
     universalParent 15 8 17 = (3, 4, 5) :=
   ⟨upi_5_12_13, upi_21_20_29, upi_15_8_17⟩
-
 
 /-- Three-step descent: (9,40,41) → (7,24,25) → (5,12,13) → (3,4,5). -/
 theorem upi_three_step_descent :
@@ -242,7 +213,6 @@ theorem upi_three_step_descent :
 -- Section 10: Root Detection
 -- ═══════════════════════════════════════════════════════════════
 
-
 theorem root_ghost_p : ghost_p 3 4 5 = 1 := by simp [ghost_p]
 
 theorem root_ghost_q : ghost_q 3 4 5 = 0 := by simp [ghost_q]
@@ -252,7 +222,6 @@ theorem root_ghost_h : ghost_h 3 4 5 = 1 := by simp [ghost_h]
 -- ═══════════════════════════════════════════════════════════════
 -- Section 11: Leg Swap Symmetry
 -- ═══════════════════════════════════════════════════════════════
-
 
 /-- Swapping legs swaps the first two components of the universal parent. -/
 theorem universalParent_leg_swap (a b c : ℤ) :
@@ -265,67 +234,55 @@ theorem universalParent_leg_swap (a b c : ℤ) :
 -- Section 12: Descent Bounds
 -- ═══════════════════════════════════════════════════════════════
 
-
 /-- Descent always contracts: h < c. -/
 theorem ghost_descent_contracts (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
     (hpyth : a ^ 2 + b ^ 2 = c ^ 2) : ghost_h a b c < c := by
   have hab := ppt_triangle_ineq a b c ha hb hpyth
   have := ghost_h_descent a b c; linarith
 
-
 /-- h > 0 for c ≥ 5. -/
 theorem ghost_h_positive (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
     (hpyth : a ^ 2 + b ^ 2 = c ^ 2) (hc : 5 ≤ c) : 0 < ghost_h a b c := by
   simp only [ghost_h]; nlinarith only [ha, hb, hpyth, hc, sq_nonneg (a - b)]
-
 
 /-- Ghost p of B₁-child recovers a. -/
 theorem ghost_p_of_fwdB₁ (a b c : ℤ) :
     ghost_p (upi_fwdB₁ a b c).1 (upi_fwdB₁ a b c).2.1 (upi_fwdB₁ a b c).2.2 = a := by
   simp only [ghost_p, upi_fwdB₁]; ring
 
-
 /-- Ghost q of B₁-child recovers -b. -/
 theorem ghost_q_of_fwdB₁ (a b c : ℤ) :
     ghost_q (upi_fwdB₁ a b c).1 (upi_fwdB₁ a b c).2.1 (upi_fwdB₁ a b c).2.2 = -b := by
   simp only [ghost_q, upi_fwdB₁]; ring
-
 
 /-- Ghost h of B₁-child recovers c. -/
 theorem ghost_h_of_fwdB₁ (a b c : ℤ) :
     ghost_h (upi_fwdB₁ a b c).1 (upi_fwdB₁ a b c).2.1 (upi_fwdB₁ a b c).2.2 = c := by
   simp only [ghost_h, upi_fwdB₁]; ring
 
-
 theorem ghost_p_of_fwdB₂ (a b c : ℤ) :
     ghost_p (upi_fwdB₂ a b c).1 (upi_fwdB₂ a b c).2.1 (upi_fwdB₂ a b c).2.2 = a := by
   simp only [ghost_p, upi_fwdB₂]; ring
-
 
 theorem ghost_q_of_fwdB₂ (a b c : ℤ) :
     ghost_q (upi_fwdB₂ a b c).1 (upi_fwdB₂ a b c).2.1 (upi_fwdB₂ a b c).2.2 = b := by
   simp only [ghost_q, upi_fwdB₂]; ring
 
-
 theorem ghost_h_of_fwdB₂ (a b c : ℤ) :
     ghost_h (upi_fwdB₂ a b c).1 (upi_fwdB₂ a b c).2.1 (upi_fwdB₂ a b c).2.2 = c := by
   simp only [ghost_h, upi_fwdB₂]; ring
-
 
 theorem ghost_p_of_fwdB₃ (a b c : ℤ) :
     ghost_p (upi_fwdB₃ a b c).1 (upi_fwdB₃ a b c).2.1 (upi_fwdB₃ a b c).2.2 = -a := by
   simp only [ghost_p, upi_fwdB₃]; ring
 
-
 theorem ghost_q_of_fwdB₃ (a b c : ℤ) :
     ghost_q (upi_fwdB₃ a b c).1 (upi_fwdB₃ a b c).2.1 (upi_fwdB₃ a b c).2.2 = b := by
   simp only [ghost_q, upi_fwdB₃]; ring
 
-
 theorem ghost_h_of_fwdB₃ (a b c : ℤ) :
     ghost_h (upi_fwdB₃ a b c).1 (upi_fwdB₃ a b c).2.1 (upi_fwdB₃ a b c).2.2 = c := by
   simp only [ghost_h, upi_fwdB₃]; ring
-
 
 /-- UP(B₁(a,b,c)) = (|a|, |b|, c). -/
 theorem universalParent_of_fwdB₁ (a b c : ℤ) :
@@ -333,13 +290,11 @@ theorem universalParent_of_fwdB₁ (a b c : ℤ) :
     (|a|, |b|, c) := by
   simp only [universalParent, ghost_p_of_fwdB₁, ghost_q_of_fwdB₁, ghost_h_of_fwdB₁, abs_neg]
 
-
 /-- UP(B₂(a,b,c)) = (|a|, |b|, c). -/
 theorem universalParent_of_fwdB₂ (a b c : ℤ) :
     universalParent (upi_fwdB₂ a b c).1 (upi_fwdB₂ a b c).2.1 (upi_fwdB₂ a b c).2.2 =
     (|a|, |b|, c) := by
   simp only [universalParent, ghost_p_of_fwdB₂, ghost_q_of_fwdB₂, ghost_h_of_fwdB₂]
-
 
 /-- UP(B₃(a,b,c)) = (|a|, |b|, c). -/
 theorem universalParent_of_fwdB₃ (a b c : ℤ) :
@@ -347,20 +302,17 @@ theorem universalParent_of_fwdB₃ (a b c : ℤ) :
     (|a|, |b|, c) := by
   simp only [universalParent, ghost_p_of_fwdB₃, ghost_q_of_fwdB₃, ghost_h_of_fwdB₃, abs_neg]
 
-
 /-- **Left Inverse (B₁)**: For positive legs, UP(B₁(a,b,c)) = (a,b,c). -/
 theorem universalParent_left_inverse_B₁ (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) :
     universalParent (upi_fwdB₁ a b c).1 (upi_fwdB₁ a b c).2.1 (upi_fwdB₁ a b c).2.2 =
     (a, b, c) := by
   rw [universalParent_of_fwdB₁]; simp [abs_of_pos ha, abs_of_pos hb]
 
-
 /-- **Left Inverse (B₂)**: For positive legs, UP(B₂(a,b,c)) = (a,b,c). -/
 theorem universalParent_left_inverse_B₂ (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) :
     universalParent (upi_fwdB₂ a b c).1 (upi_fwdB₂ a b c).2.1 (upi_fwdB₂ a b c).2.2 =
     (a, b, c) := by
   rw [universalParent_of_fwdB₂]; simp [abs_of_pos ha, abs_of_pos hb]
-
 
 /-- **Left Inverse (B₃)**: For positive legs, UP(B₃(a,b,c)) = (a,b,c). -/
 theorem universalParent_left_inverse_B₃ (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) :
@@ -372,34 +324,28 @@ theorem universalParent_left_inverse_B₃ (a b c : ℤ) (ha : 0 < a) (hb : 0 < b
 -- Section 14: Euclid Parameters
 -- ═══════════════════════════════════════════════════════════════
 
-
 /-- p in Euclid parameters. -/
 theorem ghost_p_euclid (m n : ℤ) :
     ghost_p (m ^ 2 - n ^ 2) (2 * m * n) (m ^ 2 + n ^ 2) = -(m - n) * (m - 3 * n) := by
   simp only [ghost_p]; ring
-
 
 /-- q in Euclid parameters. -/
 theorem ghost_q_euclid (m n : ℤ) :
     ghost_q (m ^ 2 - n ^ 2) (2 * m * n) (m ^ 2 + n ^ 2) = 2 * n * (m - 2 * n) := by
   simp only [ghost_q]; ring
 
-
 /-- h in Euclid parameters: h = (m - 2n)² + n². -/
 theorem ghost_h_euclid (m n : ℤ) :
     ghost_h (m ^ 2 - n ^ 2) (2 * m * n) (m ^ 2 + n ^ 2) = (m - 2 * n) ^ 2 + n ^ 2 := by
   simp only [ghost_h]; ring
 
-
 /-- Branch 2: p·q > 0. -/
 theorem pq_sign_branch2 (a b c : ℤ) (hp : 0 < ghost_p a b c) (hq : 0 < ghost_q a b c) :
     0 < ghost_p a b c * ghost_q a b c := mul_pos hp hq
 
-
 /-- Branch 1: p·q < 0. -/
 theorem pq_sign_branch1 (a b c : ℤ) (hp : 0 < ghost_p a b c) (hq : ghost_q a b c < 0) :
     ghost_p a b c * ghost_q a b c < 0 := mul_neg_of_pos_of_neg hp hq
-
 
 /-- Branch 3: p·q < 0. -/
 theorem pq_sign_branch3 (a b c : ℤ) (hp : ghost_p a b c < 0) (hq : 0 < ghost_q a b c) :

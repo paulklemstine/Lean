@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Speculative.SigmaHardness
 
 Auto-generated from theorem catalog database.
 Domain: Speculative
 Declarations: 12
 -/
-
-import Mathlib
 
 /-- [Section: # CatalogBuild.Speculative.SigmaHardness
 Auto-generated from theorem catalog database.
@@ -25,9 +25,6 @@ theorem sigma1_determines_factors (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime
   simp_all +decide [ Nat.Prime.dvd_mul ];
   grind +suggestions
 
-
-
-
 /-- [Section: # CatalogBuild.Speculative.SigmaHardness
 Auto-generated from theorem catalog database.
 Domain: Speculative
@@ -45,23 +42,14 @@ theorem sigma1_gives_sum_product (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime 
   · exact ⟨ hpq, by nlinarith [ hp.two_le, hq.two_le ] ⟩;
   · exact ⟨ Ne.symm hp.ne_one, Ne.symm hq.ne_one, Nat.ne_of_lt ( one_lt_mul'' hp.one_lt hq.one_lt ) ⟩
 
-
-
-
 theorem factoring_gives_sigma1_prime (p : ℕ) (hp : Nat.Prime p) :
     σ₁ p = p + 1 := by
   unfold σ₁;
   rw [ hp.sum_divisors, add_comm ]
 
-
-
-
 theorem factoring_gives_sigma1_prime_sq (p : ℕ) (hp : Nat.Prime p) :
     σ₁ (p ^ 2) = 1 + p + p ^ 2 := by
   simp +arith +decide [ Nat.divisors_prime_pow hp, Finset.sum_range_succ', σ₁ ]
-
-
-
 
 theorem sigma1_three_primes (p q r : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
     (hr : Nat.Prime r) (hpq : p ≠ q) (hpr : p ≠ r) (hqr : q ≠ r) :
@@ -79,16 +67,10 @@ theorem sigma1_three_primes (p q r : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
   · exact ⟨ hq.ne_one, hr.ne_one, by intro t; have := Nat.prime_mul_iff.mp ( t ▸ hp ) ; aesop, by nlinarith [ hp.two_le, hq.two_le, hr.two_le, mul_pos hp.pos hq.pos ] ⟩;
   · exact ⟨ Ne.symm hp.ne_one, Ne.symm hq.ne_one, Ne.symm hr.ne_one, Nat.ne_of_lt ( one_lt_mul'' hp.one_lt hq.one_lt ), Nat.ne_of_lt ( one_lt_mul'' hp.one_lt hr.one_lt ), Nat.ne_of_lt ( one_lt_mul'' hq.one_lt hr.one_lt ), Nat.ne_of_lt ( one_lt_mul'' ( one_lt_mul'' hp.one_lt hq.one_lt ) hr.one_lt ) ⟩
 
-
-
-
 /-- If we know σ₁(N) exactly and N = pq, then (p+q)² - 4N = (p-q)² ≥ 0,
 so the discriminant determines the factors. -/
 theorem discriminant_is_square (p q : ℤ) :
     (p + q)^2 - 4 * (p * q) = (p - q)^2 := by ring
-
-
-
 
 theorem sigma1_semiprime_bounds (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
     (hpq : p ≠ q) :
@@ -98,38 +80,23 @@ theorem sigma1_semiprime_bounds (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q
   rcases p with ( _ | _ | p ) <;> rcases q with ( _ | _ | q ) <;> simp_all +arith +decide [ Nat.sum_divisors_eq_sum_properDivisors_add_self ];
   grind +extAll
 
-
-
-
 theorem sigma1_gap_reveals_sum (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
     (hpq : p ≠ q) :
     σ₁ (p * q) - (p * q) - 1 = p + q := by
   grind +suggestions
-
-
-
 
 theorem sigma1_prime_power_formula (p k : ℕ) (hp : Nat.Prime p) :
     σ₁ (p ^ k) = ∑ i ∈ Finset.range (k + 1), p ^ i := by
   unfold σ₁;
   norm_num [ Nat.divisors_prime_pow hp ]
 
-
-
-
 theorem sigma1_strictly_gt (n : ℕ) (hn : 1 < n) : n < σ₁ n := by
   unfold σ₁; rw [ Finset.sum_eq_sum_diff_singleton_add ( Nat.mem_divisors_self n hn.ne_bot ) ] ; simp +arith +decide; (
   exact Finset.single_le_sum ( fun x _ => Nat.zero_le x ) ( by aesop ));
 
-
-
-
 theorem divisor_count_le_sigma1 (n : ℕ) (hn : 0 < n) :
     n.divisors.card ≤ σ₁ n := by
   exact le_trans ( by norm_num ) ( Finset.sum_le_sum fun x hx => Nat.one_le_iff_ne_zero.mpr <| Nat.ne_of_gt <| Nat.pos_of_mem_divisors hx )
-
-
-
 
 /-- The complete reduction chain for semiprimes:
 1. Given σ₁(pq), compute s = σ₁(pq) - pq - 1 = p + q
@@ -141,5 +108,4 @@ directly rather than relying on Int.sqrt. -/
 theorem full_reduction_chain (p q : ℤ) (hp : 2 ≤ p) (hq : 2 ≤ q) (hpq : p ≤ q) :
     p = ((p + q) - (q - p)) / 2 := by
   omega
-
 

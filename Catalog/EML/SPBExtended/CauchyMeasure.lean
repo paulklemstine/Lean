@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.EML.SPBExtended.CauchyMeasure
 
 Auto-generated from theorem catalog database.
 Domain: EML/SPBExtended
 Declarations: 10
 -/
-
-import Mathlib
 
 noncomputable section
 
@@ -18,17 +18,14 @@ The Cauchy distribution dμ = dx/(π(1+x²)) is invariant under SPB translations
 - Fisher information structure] -/
 def spbCM (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
 
-
 def cauchyCDF (x : ℝ) : ℝ := Real.arctan x / π + 1/2
 
 -- ═══════════════════════════════════════════
 -- § 1. Density Properties
 -- ═══════════════════════════════════════════
 
-
 theorem cauchyDensity_even (x : ℝ) : cauchyDensity (-x) = cauchyDensity x := by
   simp [cauchyDensity]
-
 
 theorem cauchyDensity_zero : cauchyDensity 0 = 1 := by simp [cauchyDensity]
 
@@ -44,7 +41,6 @@ theorem cauchy_density_transform (x a : ℝ) (h : 1 - x * a ≠ 0) :
 -- ═══════════════════════════════════════════
 -- § 2. CDF
 -- ═══════════════════════════════════════════
-
 
 theorem cauchyCDF_zero : cauchyCDF 0 = 1/2 := by simp [cauchyCDF]
 
@@ -64,7 +60,6 @@ theorem cauchyCDF_mono : Monotone cauchyCDF := by
 -- § 3. Fisher Information
 -- ═══════════════════════════════════════════
 
-
 theorem score_squared (x θ : ℝ) :
     (2 * (x - θ) / (1 + (x - θ) ^ 2)) ^ 2 =
     4 * (x - θ) ^ 2 / (1 + (x - θ) ^ 2) ^ 2 := by
@@ -75,11 +70,9 @@ theorem score_squared (x θ : ℝ) :
 -- § 4. Bernstein-Cauchy Connection
 -- ═══════════════════════════════════════════
 
-
 theorem bernstein_cauchy (x : ℝ) :
     x ^ 2 / (1 + x ^ 2) + 1 / (1 + x ^ 2) = 1 := by
   have : (1 + x ^ 2) ≠ 0 := by positivity
   field_simp; ring
-
 
 end

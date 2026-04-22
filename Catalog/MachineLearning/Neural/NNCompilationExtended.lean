@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.MachineLearning.Neural.NNCompilationExtended
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: MachineLearning/Neural
 Declarations: 27
 -/
 
-import Mathlib
 
 /-- Any function satisfying f(0)=0, f(1)=1, f(-1)=0 cannot be affine.
 This captures both ReLU (exactly) and GELU (approximately). -/

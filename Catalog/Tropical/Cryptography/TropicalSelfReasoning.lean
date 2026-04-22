@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Tropical.Cryptography.TropicalSelfReasoning
 
 Auto-generated from theorem catalog database.
@@ -5,24 +7,16 @@ Domain: Tropical/Cryptography
 Declarations: 28
 -/
 
-import Mathlib
-
 noncomputable section
 
 /-- A tropical weight matrix as a function -/
 structure TropicalLayer (n m : ℕ) where
   weights : Fin n → Fin m → ℝ
 
-
-
-
 /-- Tropical matrix-vector multiplication (forward pass) -/
 def TropicalLayer.forward {n m : ℕ} [NeZero m] (L : TropicalLayer n m) (x : Fin m → ℝ) :
     Fin n → ℝ :=
   fun i => Finset.sup' Finset.univ Finset.univ_nonempty (fun j => L.weights i j + x j)
-
-
-
 
 /-- A tropical neural network is a sequence of layers -/
 structure TropicalNet where
@@ -33,9 +27,6 @@ structure TropicalNet where
 
 attribute [instance] TropicalNet.hwidth
 
-
-
-
 /-- Forward pass through the entire network -/
 def TropicalNet.forward (N : TropicalNet) (x : Fin N.width → ℝ) : Fin N.width → ℝ :=
   match N.depth, N.layers with
@@ -43,21 +34,12 @@ def TropicalNet.forward (N : TropicalNet) (x : Fin N.width → ℝ) : Fin N.widt
   | _ + 1, layers => List.foldl
       (fun acc i => (layers i).forward acc) x (List.finRange _)
 
-
-
-
 /-- Encode a single layer's weights as a vector (flattening the matrix) -/
 def TropicalLayer.encode {n m : ℕ} (L : TropicalLayer n m) : Fin (n * m) → ℝ :=
   fun k => L.weights (Fin.divNat k) (Fin.modNat k)
 
-
-
-
 /-- The self-encoding dimension: total number of weights -/
 def TropicalNet.encodingDim (N : TropicalNet) : ℕ := N.depth * N.width * N.width
-
-
-
 
 /-- A self-reasoning tropical net: width matches encoding dimension -/
 structure SelfReasoningNet where
@@ -67,16 +49,10 @@ structure SelfReasoningNet where
   /-- The critical constraint: width must accommodate self-encoding -/
   self_fits : depth * width * width ≤ width
 
-
-
-
 /-- A tropical map is order-preserving (monotone) if it respects the
 tropical order (which is ≤ on ℝ, since max is the join) -/
 def TropicalMonotone {n : ℕ} (f : (Fin n → ℝ) → (Fin n → ℝ)) : Prop :=
   ∀ x y : Fin n → ℝ, (∀ i, x i ≤ y i) → (∀ i, f x i ≤ f y i)
-
-
-
 
 /-- [Section: # CatalogBuild.Tropical.Cryptography.TropicalSelfReasoning
 Auto-generated from theorem catalog database.
@@ -93,24 +69,15 @@ theorem tropical_layer_monotone {n m : ℕ} [NeZero m] (L : TropicalLayer n m) :
     simpa using Finset.exists_max_image Finset.univ ( fun k => L.weights i k + x k ) Finset.univ_nonempty;
   exact ⟨ j, fun k => by linarith [ hj k, hxy j, hxy k ] ⟩
 
-
-
-
 /-- An idempotent tropical map: applying it twice gives the same result.
 This is the mathematical essence of stable self-reasoning. -/
 def TropicalIdempotent {n : ℕ} (f : (Fin n → ℝ) → (Fin n → ℝ)) : Prop :=
   ∀ x, f (f x) = f x
 
-
-
-
 /-- The tropical projection: component-wise max with a reference vector.
 This is idempotent by the idempotency of max. -/
 def tropicalProjection {n : ℕ} (ref : Fin n → ℝ) (x : Fin n → ℝ) : Fin n → ℝ :=
   fun i => max (ref i) (x i)
-
-
-
 
 /-- [Section: # CatalogBuild.Tropical.Cryptography.TropicalSelfReasoning
 Auto-generated from theorem catalog database.
@@ -120,15 +87,9 @@ theorem tropicalProjection_idem {n : ℕ} (ref : Fin n → ℝ) :
     TropicalIdempotent (tropicalProjection ref) := by
   exact fun x => funext fun i => max_eq_right ( le_max_left _ _ )
 
-
-
-
 theorem tropicalProjection_fixed_iff {n : ℕ} (ref x : Fin n → ℝ) :
     tropicalProjection ref x = x ↔ ∀ i, ref i ≤ x i := by
   constructor <;> intro h <;> simp_all +decide [ funext_iff, tropicalProjection ]
-
-
-
 
 /-- The self-evaluation map: given a network, produce its self-assessment.
 This takes the network's encoding, feeds it through the network itself,
@@ -137,18 +98,12 @@ def selfEval {n : ℕ} (f : (Fin n → ℝ) → (Fin n → ℝ)) (encoding : Fin
     Fin n → ℝ :=
   f encoding
 
-
-
-
 theorem self_reasoning_stable {n : ℕ}
     (f : (Fin n → ℝ) → (Fin n → ℝ))
     (hf : TropicalIdempotent f)
     (encoding : Fin n → ℝ) :
     selfEval f (selfEval f encoding) = selfEval f encoding := by
   exact hf _
-
-
-
 
 theorem self_reasoning_fixed_point {n : ℕ}
     (f : (Fin n → ℝ) → (Fin n → ℝ))
@@ -157,15 +112,9 @@ theorem self_reasoning_fixed_point {n : ℕ}
     f (f x) = f x := by
   exact hf x
 
-
-
-
 /-- A tropical quine for a map f is a fixed point -/
 def IsTropicalQuine {n : ℕ} (f : (Fin n → ℝ) → (Fin n → ℝ)) (v : Fin n → ℝ) : Prop :=
   f v = v
-
-
-
 
 theorem quine_set_closed {n : ℕ}
     (f : (Fin n → ℝ) → (Fin n → ℝ))
@@ -174,26 +123,17 @@ theorem quine_set_closed {n : ℕ}
     IsTropicalQuine f (f v) := by
   convert hv using 1
 
-
-
-
 /-- A tropical Gödel encoding maps networks to tropical vectors -/
 structure TropicalGodel (n : ℕ) where
   encode : ((Fin n → ℝ) → (Fin n → ℝ)) → (Fin n → ℝ)
   decode : (Fin n → ℝ) → ((Fin n → ℝ) → (Fin n → ℝ))
   roundtrip : ∀ f, decode (encode f) = f
 
-
-
-
 /-- Given a Gödel encoding, the diagonal map sends a network to
 its self-evaluation -/
 def diagonalMap {n : ℕ} (G : TropicalGodel n) :
     ((Fin n → ℝ) → (Fin n → ℝ)) → (Fin n → ℝ) :=
   fun f => f (G.encode f)
-
-
-
 
 theorem diagonal_produces_fixed_points {n : ℕ}
     (G : TropicalGodel n)
@@ -202,33 +142,21 @@ theorem diagonal_produces_fixed_points {n : ℕ}
     IsTropicalQuine f (diagonalMap G f) := by
   unfold diagonalMap IsTropicalQuine; aesop;
 
-
-
-
 /-- The tropical reflection map: feeds a vector through
 a function and takes the max with itself -/
 def tropicalReflect {n : ℕ} (f : (Fin n → ℝ) → (Fin n → ℝ)) (x : Fin n → ℝ) :
     Fin n → ℝ :=
   fun i => max (x i) (f x i)
 
-
-
-
 theorem tropicalReflect_ge {n : ℕ}
     (f : (Fin n → ℝ) → (Fin n → ℝ)) (x : Fin n → ℝ) :
     ∀ i, x i ≤ tropicalReflect f x i := by
   exact fun i => le_max_left _ _
 
-
-
-
 theorem tropicalReflect_ge_image {n : ℕ}
     (f : (Fin n → ℝ) → (Fin n → ℝ)) (x : Fin n → ℝ) :
     ∀ i, f x i ≤ tropicalReflect f x i := by
   exact fun i => le_max_right _ _
-
-
-
 
 theorem tropicalReflect_stable {n : ℕ}
     (f : (Fin n → ℝ) → (Fin n → ℝ))
@@ -238,16 +166,10 @@ theorem tropicalReflect_stable {n : ℕ}
   funext i; exact (by
   exact max_eq_left ( hf x i ))
 
-
-
-
 /-- Iterated self-evaluation -/
 def iterSelfEval {n : ℕ} (f : (Fin n → ℝ) → (Fin n → ℝ)) : ℕ → (Fin n → ℝ) → (Fin n → ℝ)
   | 0 => id
   | k + 1 => f ∘ iterSelfEval f k
-
-
-
 
 theorem iterSelfEval_stabilizes {n : ℕ}
     (f : (Fin n → ℝ) → (Fin n → ℝ))
@@ -261,9 +183,6 @@ theorem iterSelfEval_stabilizes {n : ℕ}
   · rcases k with ( _ | k ) <;> simp_all +decide [ iterSelfEval ];
     exact hf x
 
-
-
-
 theorem grand_self_reasoning {n : ℕ}
     (f : (Fin n → ℝ) → (Fin n → ℝ))
     (hf : TropicalIdempotent f) :
@@ -274,8 +193,5 @@ theorem grand_self_reasoning {n : ℕ}
     -- Any fixed point is preserved
     (∀ x, IsTropicalQuine f x → f x = x) := by
   exact ⟨ fun x => hf x, hf, fun x hx => hx ⟩
-
-
-
 
 end

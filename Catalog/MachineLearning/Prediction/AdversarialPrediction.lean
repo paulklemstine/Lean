@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.MachineLearning.Prediction.AdversarialPrediction
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: MachineLearning/Prediction
 Declarations: 14
 -/
 
-import Mathlib
 
 noncomputable section
 

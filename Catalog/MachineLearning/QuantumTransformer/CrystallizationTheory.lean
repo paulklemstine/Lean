@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.MachineLearning.QuantumTransformer.CrystallizationTheory
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: MachineLearning/QuantumTransformer
 Declarations: 22
 -/
 
-import Mathlib
 
 noncomputable section
 

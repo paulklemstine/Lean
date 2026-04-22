@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.DifferentialGeometry
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra
 Declarations: 9
 -/
 
-import Mathlib
 
 /-- Gauss-Bonnet for sphere: 2 * χ(S²) = 4. -/
 theorem gauss_bonnet_sphere : 2 * (2 : ℤ) = 4 := by norm_num

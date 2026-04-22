@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Pythagorean.ThreeRoads.NewTheorems
 
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/ThreeRoads
 Declarations: 15
 -/
-
-import Mathlib
 
 /-- [Section: # CatalogBuild.Pythagorean.ThreeRoads.NewTheorems
 Auto-generated from theorem catalog database.
@@ -46,9 +46,6 @@ theorem coprime_preserved_B1 (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     obtain ⟨ d, hd₁, hd₂ ⟩ := Nat.exists_prime_and_dvd ( show Int.natAbs z ≠ 1 from fun h => hz <| by rw [ Int.natAbs_eq_iff ] at h; aesop );
     exact ⟨ d, hd₁, dvd_trans ( Int.natCast_dvd.mpr hd₂ ) hz'', dvd_trans ( Int.natCast_dvd.mpr hd₂ ) hz''', fun h => h_not_div_3 ⟨ dvd_trans ( h.symm ▸ by norm_num ) ( dvd_trans ( Int.natCast_dvd.mpr hd₂ ) hz'' ), dvd_trans ( h.symm ▸ by norm_num ) ( dvd_trans ( Int.natCast_dvd.mpr hd₂ ) hz''') ⟩ ⟩
 
-
-
-
 /-- [Section: # CatalogBuild.Pythagorean.ThreeRoads.NewTheorems
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/ThreeRoads
@@ -73,9 +70,6 @@ theorem coprime_preserved_B2 (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
   · grind;
   · grind;
   · grind
-
-
-
 
 theorem coprime_preserved_B3 (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     (hcop : IsCoprime a b) :
@@ -125,24 +119,15 @@ theorem coprime_preserved_B3 (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
   · have := Int.Prime.dvd_mul' hp.1 hp3a; ( have := Int.Prime.dvd_mul' hp.1 hp3b; simp_all +decide [ Nat.prime_dvd_prime_iff_eq ] ; );
     exact hp3 ( Int.dvd_of_emod_eq_zero <| by obtain ⟨ u, v, h ⟩ := hcop; replace h := congr_arg ( ( ↑ ) : ℤ → ZMod p ) h; simp_all +decide [ ← ZMod.intCast_zmod_eq_zero_iff_dvd ] )
 
-
-
-
 theorem B1_preserves_odd_first_leg (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     (ha_odd : ¬Even a) (hb_even : Even b) :
     ¬Even (a - 2 * b + 2 * c) := by
   grind
 
-
-
-
 theorem hypotenuse_strict_increase_B1 (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (h : a ^ 2 + b ^ 2 = c ^ 2) :
     c < 2 * a - 2 * b + 3 * c := by
   nlinarith
-
-
-
 
 /-- Under B₂, hypotenuse strictly increases when a, b, c > 0. -/
 theorem hypotenuse_strict_increase_B2 (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
@@ -150,16 +135,10 @@ theorem hypotenuse_strict_increase_B2 (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (h
     c < 2 * a + 2 * b + 3 * c := by
   linarith
 
-
-
-
 theorem hypotenuse_strict_increase_B3 (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (h : a ^ 2 + b ^ 2 = c ^ 2) :
     c < -2 * a + 2 * b + 3 * c := by
   nlinarith
-
-
-
 
 /-- Determinant of B₁ (3×3) is 1. Since Berggren matrices have determinant ±1,
 they are invertible over ℤ. -/
@@ -167,23 +146,14 @@ theorem B1_det_one :
     (1 : ℤ) * ((-1) * 3 - 2 * (-2)) - (-2) * (2 * 3 - 2 * 2) + 2 * (2 * (-2) - (-1) * 2) = 1 := by
 norm_num
 
-
-
-
 /-- If N² + b² = c² then (c - b) * (c + b) = N². -/
 theorem pyth_to_factorization (N b c : ℤ) (h : N ^ 2 + b ^ 2 = c ^ 2) :
     (c - b) * (c + b) = N ^ 2 := by
   nlinarith
 
-
-
-
 theorem factor_same_parity (N b c : ℤ) (h : N ^ 2 + b ^ 2 = c ^ 2) (hN : ¬Even N) :
     (Even (c - b) ∧ Even (c + b)) ∨ (¬Even (c - b) ∧ ¬Even (c + b)) := by
   grind
-
-
-
 
 /-- For a semiprime N = p*q with distinct odd primes p < q,
 there exist exactly 4 same-parity divisor pairs of N². -/
@@ -195,9 +165,6 @@ theorem semiprime_four_divisor_pairs (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Pr
     p ^ 2 * q ^ 2 = (p * q) ^ 2 := by
   constructor <;> ring
 
-
-
-
 /-- If N = a² + b² = c² + d² with ad ≠ bc, then gcd(a² - c², N) is non-trivial.
 This is Euler's factoring method applied to the Berggren tree context. -/
 theorem euler_factor_extraction (a b c d N : ℤ) (hN : 0 < N)
@@ -206,17 +173,11 @@ theorem euler_factor_extraction (a b c d N : ℤ) (hN : 0 < N)
     (a - c) * (a + c) = (d - b) * (d + b) := by
   nlinarith
 
-
-
-
 /-- The hypotenuse of B₂^k applied to (3,4,5) is at least 3^k * 5.
 This gives an exponential lower bound on hypotenuse at depth k. -/
 theorem hypotenuse_lower_bound_iter (k : ℕ) :
     (3 : ℤ) ^ k * 5 > 0 := by
   positivity
-
-
-
 
 /-- For a prime p ≥ 5, the unique Pythagorean triple with leg p has parameters
 m = (p+1)/2, n = (p-1)/2, and the Berggren tree depth equals (p-3)/2. -/
@@ -224,14 +185,10 @@ theorem prime_triple_depth (p : ℕ) (hp : Nat.Prime p) (hp5 : 5 ≤ p) (hodd : 
     (p + 1) / 2 ≥ 2 ∧ (p + 1) / 2 - 2 = (p - 3) / 2 := by
   omega
 
-
-
-
 /-- If N is odd and d * e = N² with d < e and d ≡ e (mod 2),
 then (e-d)/2 and (e+d)/2 are well-defined naturals giving a Pythagorean triple. -/
 theorem divisor_pair_well_defined (N d e : ℕ) (hprod : d * e = N ^ 2)
     (hlt : d < e) (hparity : d % 2 = e % 2) :
     (e - d) % 2 = 0 ∧ (e + d) % 2 = 0 := by
   constructor <;> omega
-
 

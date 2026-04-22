@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.SpectralTheory
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra
 Declarations: 8
 -/
 
-import Mathlib
 
 /-- M₁ mod p has determinant 1. -/
 theorem M₁_det_mod (p : ℕ) :

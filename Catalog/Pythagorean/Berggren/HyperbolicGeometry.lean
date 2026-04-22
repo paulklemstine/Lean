@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Pythagorean.Berggren.HyperbolicGeometry
 
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/Berggren
 Declarations: 32
 -/
-
-import Mathlib
 
 theorem lorentz_M4 : (M^4).transpose * eta * (M^4) = eta := by native_decide
 
@@ -118,7 +118,6 @@ theorem disk_approaching : (408 : ℚ) * 408 * 2 < 578 * 578 := by norm_num
 -- ═══════════════════════════════════════════════════════════════
 -- Section 7: Berggren Tree as Tessellation
 -- ═══════════════════════════════════════════════════════════════
-
 
 def B3 : Matrix (Fin 3) (Fin 3) ℤ := !![-1, 2, 2; -2, 1, 2; -2, 2, 3]
 

@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Speculative.Millennium.Topology
 
 Auto-generated from theorem catalog database.
@@ -5,17 +7,12 @@ Domain: Speculative/Millennium
 Declarations: 9
 -/
 
-import Mathlib
-
 /-- [Section: # CatalogBuild.Speculative.Millennium.Topology
 Auto-generated from theorem catalog database.
 Domain: Speculative/Millennium
 Declarations: 9] -/
 theorem real_simply_connected : SimplyConnectedSpace ℝ := by
   infer_instance
-
-
-
 
 /-- [Section: # CatalogBuild.Speculative.Millennium.Topology
 Auto-generated from theorem catalog database.
@@ -26,21 +23,12 @@ theorem simply_connected_of_trivial_pi1 {X : Type*} [TopologicalSpace X]
     ∀ (x : X) (p : Path x x), p.Homotopic (Path.refl x) := by
   exact?
 
-
-
-
 /-- The Euler characteristic of a closed orientable surface of genus g is 2 - 2g.
 For g = 0 (sphere), χ = 2. This is a fundamental invariant. -/
 theorem euler_char_sphere : 2 - 2 * (0 : ℤ) = 2 := by ring
 
-
-
-
 /-- The Euler characteristic of a torus (genus 1) is 0. -/
 theorem euler_char_torus : 2 - 2 * (1 : ℤ) = 0 := by ring
-
-
-
 
 /-- For a compact manifold, the Euler characteristic equals the alternating
 sum of Betti numbers: χ = Σ (-1)^k b_k.
@@ -48,30 +36,18 @@ We verify this for the 2-sphere: b_0 = 1, b_1 = 0, b_2 = 1, so χ = 2. -/
 theorem euler_char_from_betti_sphere :
     (1 : ℤ) - 0 + 1 = 2 := by ring
 
-
-
-
 /-- For a K3 surface, the Hodge numbers give Euler characteristic = 24.
 h^{0,0} = 1, h^{1,0} = 0, h^{2,0} = 1, h^{1,1} = 20
 χ = 1 - 0 + (1 + 20 + 1) - 0 + 1 = 24 -/
 theorem euler_char_k3 :
     (1 : ℤ) - 0 + (1 + 20 + 1) - 0 + 1 = 24 := by ring
 
-
-
-
 theorem ricci_flow_sphere_collapse_time (r₀ : ℝ) (n : ℕ) (hr₀ : 0 < r₀) (hn : 2 ≤ n) :
     0 < r₀ ^ 2 / (2 * (↑n - 1)) := by
   exact div_pos ( sq_pos_of_pos hr₀ ) ( mul_pos zero_lt_two ( by norm_num; linarith ) )
 
-
-
-
 /-- The fundamental group of S¹ is ℤ (not simply connected). -/
 theorem fundamental_group_circle_infinite : Infinite ℤ := inferInstance
-
-
-
 
 theorem simply_connected_prod {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]
     [SimplyConnectedSpace X] [SimplyConnectedSpace Y] :
@@ -112,5 +88,4 @@ theorem simply_connected_prod {X Y : Type*} [TopologicalSpace X] [TopologicalSpa
                                                                                                                   exact ⟨ p.default.out, trivial ⟩ ) )⟧ ⟩
     generalize_proofs at *;
     rintro ⟨ p ⟩ ; exact Quotient.sound ( h_homotopy p _ ) ;
-
 

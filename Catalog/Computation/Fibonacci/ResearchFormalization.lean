@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Computation.Fibonacci.ResearchFormalization
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Computation/Fibonacci
 Declarations: 13
 -/
 
-import Mathlib
 
 /-- [Section: # CatalogBuild.Computation.Fibonacci.ResearchFormalization
 Auto-generated from theorem catalog database.

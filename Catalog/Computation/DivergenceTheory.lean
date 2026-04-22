@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Computation.DivergenceTheory
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Computation
 Declarations: 16
 -/
 
-import Mathlib
 
 noncomputable section
 

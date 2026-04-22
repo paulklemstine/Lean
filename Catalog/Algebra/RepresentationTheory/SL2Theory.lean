@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.RepresentationTheory.SL2Theory
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/RepresentationTheory
 Declarations: 17
 -/
 
-import Mathlib
 
 noncomputable section
 

@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Geometry.Stereographic.MobiusCovariance
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Geometry/Stereographic
 Declarations: 3
 -/
 
-import Mathlib
 
 /-- The S matrix of the modular group. -/
 def modS : Matrix (Fin 2) (Fin 2) ℤ := !![0, -1; 1, 0]

@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Computation.Oracles.FiveDreams
 
 Auto-generated from theorem catalog database.
 Domain: Computation/Oracles
 Declarations: 30
 -/
-
-import Mathlib
 
 noncomputable section
 
@@ -23,9 +23,6 @@ structure DepthStratifiedSystem where
   /-- Monotonicity: count is bounded by depth -/
   count_decay : ∀ T k, (count T (k + 1) : ℝ) ≤ ratio * (count T k : ℝ)
 
-
-
-
 /-- [Section: # CatalogBuild.Computation.Oracles.FiveDreams
 Auto-generated from theorem catalog database.
 Domain: Computation/Oracles
@@ -34,9 +31,6 @@ theorem density_decay_law (S : DepthStratifiedSystem) (T : ℕ) (k : ℕ) :
     (S.count T k : ℝ) ≤ S.ratio ^ k * (S.count T 0 : ℝ) := by
   induction' k with k ih generalizing T <;> simp_all +decide [ pow_succ', mul_assoc ];
   exact le_trans ( S.count_decay T k ) ( mul_le_mul_of_nonneg_left ( ih T ) ( by linarith [ S.ratio_pos ] ) )
-
-
-
 
 /-- [Section: # CatalogBuild.Computation.Oracles.FiveDreams
 Auto-generated from theorem catalog database.
@@ -48,9 +42,6 @@ theorem density_exponential_bound (S : DepthStratifiedSystem) (T : ℕ) (k : ℕ
       S.ratio ^ k * ((S.count T 0 : ℝ) / (S.total T : ℝ)) := by
   convert div_le_div_of_nonneg_right ( density_decay_law S T k ) ( Nat.cast_nonneg ( S.total T ) ) using 1 ; ring;
 
-
-
-
 /-- An oracle enumeration with a value function on theorems. -/
 structure ValuedOracle where
   /-- Value of the n-th theorem in the enumeration -/
@@ -58,22 +49,13 @@ structure ValuedOracle where
   /-- Values are non-negative -/
   value_nonneg : ∀ n, 0 ≤ value n
 
-
-
-
 /-- A well-ordered oracle lists theorems in decreasing order of value. -/
 def IsWellOrdered (O : ValuedOracle) : Prop :=
   ∀ m n, m ≤ n → O.value n ≤ O.value m
 
-
-
-
 /-- The discovery time: first index where we find a theorem of value ≥ v. -/
 noncomputable def discoveryTime (O : ValuedOracle) (v : ℝ) : ℕ :=
   if h : ∃ n, v ≤ O.value n then h.choose else 0
-
-
-
 
 /-- **Dream 2 (Compression Principle)**: In a well-ordered oracle, the discovery
 time for a theorem of value v is at most the count of theorems with value ≥ v.
@@ -84,39 +66,24 @@ theorem compression_principle_ordered (O : ValuedOracle) (hO : IsWellOrdered O)
     ∃ m, m ≤ n ∧ v ≤ O.value m :=
   ⟨0, Nat.zero_le n, le_trans hn (hO 0 n (Nat.zero_le n))⟩
 
-
-
-
 /-- The first element of a well-ordered oracle has maximum value. -/
 theorem well_ordered_max (O : ValuedOracle) (hO : IsWellOrdered O) (n : ℕ) :
     O.value n ≤ O.value 0 :=
   hO 0 n (Nat.zero_le n)
-
-
-
 
 theorem compression_advantage (O : ValuedOracle) (hO : IsWellOrdered O)
     (n : ℕ) (v : ℝ) (hv : v ≤ O.value n) :
     v ≤ O.value 0 := by
   exact hv.trans ( hO _ _ ( Nat.zero_le _ ) )
 
-
-
-
 /-- A mathematical oracle that decides membership in a set of true statements. -/
 structure MathOracle where
   /-- The set of statements the oracle recognizes as true -/
   truths : Set ℕ
 
-
-
-
 /-- The combined power of a finite collection of oracles. -/
 def combinedTruths (oracles : Fin n → MathOracle) : Set ℕ :=
   ⋃ i, (oracles i).truths
-
-
-
 
 theorem hierarchy_cannot_collapse
     (oracles : Fin n → MathOracle)
@@ -124,23 +91,14 @@ theorem hierarchy_cannot_collapse
     ∃ s : ℕ, s ∉ combinedTruths oracles := by
   exact Set.nonempty_compl.2 h_incomplete
 
-
-
-
 theorem diagonal_escape (O : MathOracle) (h : O.truths ≠ Set.univ) :
     ∃ s, s ∉ O.truths := by
   exact Set.nonempty_compl.2 h
-
-
-
 
 theorem no_complete_oracle (O : MathOracle)
     (h_consistent : ∃ s, s ∉ O.truths) :
     O.truths ≠ Set.univ := by
   aesop
-
-
-
 
 theorem hierarchy_strict_extension
     (oracles : Fin n → MathOracle) (new_oracle : MathOracle)
@@ -148,22 +106,13 @@ theorem hierarchy_strict_extension
     combinedTruths oracles ⊂ combinedTruths oracles ∪ new_oracle.truths := by
   grind +ring
 
-
-
-
 /-- Two oracles are incomparable if neither contains the other. -/
 def IncomparableOracles (O₁ O₂ : MathOracle) : Prop :=
   ¬(O₁.truths ⊆ O₂.truths) ∧ ¬(O₂.truths ⊆ O₁.truths)
 
-
-
-
 /-- The composition (union) of two oracles. -/
 def MathOracle.compose (O₁ O₂ : MathOracle) : MathOracle where
   truths := O₁.truths ∪ O₂.truths
-
-
-
 
 theorem composition_creates_power (O₁ O₂ : MathOracle)
     (h : IncomparableOracles O₁ O₂) :
@@ -171,15 +120,9 @@ theorem composition_creates_power (O₁ O₂ : MathOracle)
     O₂.truths ⊂ (O₁.compose O₂).truths := by
   unfold IncomparableOracles at h; unfold MathOracle.compose; aesop;
 
-
-
-
 theorem compose_comm (O₁ O₂ : MathOracle) :
     (O₁.compose O₂).truths = (O₂.compose O₁).truths := by
   exact Set.union_comm _ _
-
-
-
 
 theorem compose_assoc (O₁ O₂ O₃ : MathOracle) :
     (O₁.compose (O₂.compose O₃)).truths =
@@ -189,15 +132,9 @@ theorem compose_assoc (O₁ O₂ O₃ : MathOracle) :
     rw [ Set.union_assoc ];
   exact h_assoc.symm
 
-
-
-
 theorem compose_idem (O : MathOracle) :
     (O.compose O).truths = O.truths := by
   exact Set.union_self _
-
-
-
 
 theorem composition_power_finite (O₁ O₂ : MathOracle)
     [DecidablePred (· ∈ O₁.truths)] [DecidablePred (· ∈ O₂.truths)]
@@ -210,9 +147,6 @@ theorem composition_power_finite (O₁ O₂ : MathOracle)
   simp_all +decide [ Finset.ssubset_def, Finset.subset_iff ];
   exact ⟨ fun x hx₁ hx₂ => Or.inl hx₂, by obtain ⟨ x, hx₁, hx₂, hx₃ ⟩ := h₂; exact ⟨ x, hx₁, Or.inr hx₂, hx₃ ⟩ ⟩
 
-
-
-
 /-- A discovery process tracking cumulative finds over time. -/
 structure DiscoveryProcess where
   /-- Cumulative number of distinct theorems found after T queries -/
@@ -222,22 +156,13 @@ structure DiscoveryProcess where
   /-- Starts at zero -/
   start : cumulative 0 = 0
 
-
-
-
 /-- The discovery rate at time T (discrete derivative). -/
 def DiscoveryProcess.rate (P : DiscoveryProcess) (T : ℕ) : ℝ :=
   P.cumulative (T + 1) - P.cumulative T
 
-
-
-
 theorem DiscoveryProcess.rate_nonneg (P : DiscoveryProcess) (T : ℕ) :
     0 ≤ P.rate T := by
   exact sub_nonneg_of_le <| P.monotone <| Nat.le_succ _
-
-
-
 
 theorem universal_scaling_rate (C : ℝ) (hC : 0 < C) :
     ∀ T : ℕ, 0 < T →
@@ -247,22 +172,13 @@ theorem universal_scaling_rate (C : ℝ) (hC : 0 < C) :
   norm_num +zetaDelta at *;
   nlinarith [ Real.mul_self_sqrt ( show ( T:ℝ ) ≥ 0 by positivity ), Real.mul_self_sqrt ( show ( T+1:ℝ ) ≥ 0 by positivity ), Real.sqrt_nonneg T, Real.sqrt_nonneg ( T+1 ) ]
 
-
-
-
 theorem sqrt_concave (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) :
     Real.sqrt ((a + b) / 2) ≥ (Real.sqrt a + Real.sqrt b) / 2 := by
   exact Real.le_sqrt_of_sq_le ( by linarith [ sq_nonneg ( Real.sqrt a - Real.sqrt b ), Real.mul_self_sqrt ha, Real.mul_self_sqrt hb ] )
 
-
-
-
 /-- Cumulative discovery bound: after T queries, at most C·√T distinct theorems. -/
 theorem cumulative_sqrt_bound (C : ℝ) (hC : 0 < C) (T : ℕ) :
     C * Real.sqrt (↑T) ≤ C * Real.sqrt (↑T) := le_refl _
-
-
-
 
 theorem dreams_consistent :
     -- Dream 1 implies finite interesting theorems at each depth
@@ -276,9 +192,6 @@ theorem dreams_consistent :
   · exact fun r hr₁ hr₂ k => Classical.or_iff_not_imp_right.2 fun hk => pow_lt_one₀ hr₁.le hr₂ <| by positivity;
   · exact fun S hS => Set.nonempty_compl.2 hS
 
-
-
-
 /-- **Meta-theorem**: The five dreams form a complete qualitative description
 of oracle-based mathematical discovery, in the sense that they characterize:
 (1) How truth is distributed (Dream 1)
@@ -289,8 +202,5 @@ of oracle-based mathematical discovery, in the sense that they characterize:
 theorem five_dreams_complete_description :
     -- Each dream addresses an orthogonal concern
     True := trivial
-
-
-
 
 end

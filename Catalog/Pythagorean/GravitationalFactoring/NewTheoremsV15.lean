@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Pythagorean.GravitationalFactoring.NewTheoremsV15
 
 Auto-generated from theorem catalog database.
@@ -5,15 +7,11 @@ Domain: Pythagorean/GravitationalFactoring
 Declarations: 15
 -/
 
-import Mathlib
-
 /-- [Section: ## Sophie Germain and Safe Prime Structure] -/
 theorem sophie_germain_mod3 (p : ℕ) (hp : Nat.Prime p) (hp3 : 3 < p)
     (hsg : Nat.Prime (2 * p + 1)) : p % 3 = 2 := by
   have := Nat.mod_lt p three_pos; interval_cases _ : p % 3 <;> simp_all +decide [ ← Nat.dvd_iff_mod_eq_zero, hp.dvd_iff_eq ] ;
   exact absurd ( Nat.dvd_of_mod_eq_zero ( by norm_num [ *, Nat.add_mod, Nat.mul_mod ] : ( 2 * p + 1 ) % 3 = 0 ) ) ( by rw [ hsg.dvd_iff_eq ] <;> linarith )
-
-
 
 /-- [Section: # CatalogBuild.Pythagorean.GravitationalFactoring.NewTheoremsV15
 Auto-generated from theorem catalog database.
@@ -29,13 +27,9 @@ theorem safe_prime_mod12 (q : ℕ) (hq : Nat.Prime q) (hq7 : 7 < q)
     exact sophie_germain_mod3 _ hsafe ( by omega ) ( by convert hq using 1; omega );
   have := Nat.Prime.eq_two_or_odd hsafe; omega;
 
-
-
 /-- [Section: ## Fermat Number Theory] -/
 theorem fermat_num_odd (n : ℕ) : (2 ^ (2 ^ n) + 1) % 2 = 1 := by
   norm_num [ Nat.add_mod, Nat.pow_mod ]
-
-
 
 theorem fermat_prime_exp_power_of_two (n : ℕ) (hn : 0 < n)
     (hp : Nat.Prime (2 ^ n + 1)) : ∃ k : ℕ, n = 2 ^ k := by
@@ -52,21 +46,15 @@ theorem fermat_prime_exp_power_of_two (n : ℕ) (hn : 0 < n)
     simpa [ hm.1, pow_mul ] using hm.2.2.nat_add_dvd_pow_add_pow _ 1;
   simp_all +decide [ Nat.dvd_prime ]
 
-
-
 theorem fermat_product_identity (n : ℕ) :
     (∏ i ∈ Finset.range n, (2 ^ (2 ^ i) + 1)) + 2 = 2 ^ (2 ^ n) + 1 := by
   induction n <;> simp_all +decide [ Finset.prod_range_succ, pow_succ, pow_mul ];
   grind
 
-
-
 theorem fermat_coprime_adjacent (n : ℕ) :
     Nat.Coprime (2 ^ (2 ^ n) + 1) (2 ^ (2 ^ (n + 1)) + 1) := by
   norm_num [ show 2 ^ 2 ^ ( n + 1 ) + 1 = ( 2 ^ 2 ^ n + 1 ) * ( 2 ^ 2 ^ n - 1 ) + 2 by zify ; norm_num ; ring ];
   simp +decide [ parity_simps ]
-
-
 
 theorem fermat_coprime_general (m n : ℕ) (hmn : m ≠ n) :
     Nat.Coprime (2 ^ (2 ^ m) + 1) (2 ^ (2 ^ n) + 1) := by
@@ -82,14 +70,10 @@ theorem fermat_coprime_general (m n : ℕ) (hmn : m ≠ n) :
   obtain ⟨ k, hk ⟩ := h_div;
   norm_num [ show 2 ^ 2 ^ n + 1 = ( 2 ^ 2 ^ m + 1 ) * k + 2 by linarith [ Nat.sub_add_cancel ( Nat.one_le_pow ( 2 ^ n ) 2 zero_lt_two ) ] ]
 
-
-
 /-- [Section: ## Prime Desert — Strengthened] -/
 theorem prime_desert_explicit (k : ℕ) (hk : 2 ≤ k) (j : ℕ) (hj2 : 2 ≤ j) (hjk : j ≤ k + 1) :
     ¬ Nat.Prime ((k + 1).factorial + j) := by
   exact fun H => absurd ( Nat.dvd_of_mod_eq_zero ( show ( ( k + 1 ) ! + j ) % j = 0 from Nat.mod_eq_zero_of_dvd <| by simpa using Nat.dvd_factorial ( by linarith ) hjk ) ) ( by rw [ H.dvd_iff_eq ] <;> linarith [ Nat.self_le_factorial ( k + 1 ) ] )
-
-
 
 /-- Goldbach's conjecture verified for all even numbers in [4, 2000]:
 every even number ≥ 4 can be written as a sum of two primes. -/
@@ -99,15 +83,11 @@ theorem goldbach_verified_2000 :
         (fun p => Nat.Prime p ∧ Nat.Prime (2 * n - p) ∧ p ≤ 2 * n)).Nonempty := by
   native_decide
 
-
-
 /-- Legendre's conjecture: there is always a prime between n² and (n+1)² for n ≤ 200. -/
 theorem legendre_verified_200 :
     ∀ n ∈ Finset.Icc 1 200,
       ∃ p ∈ Finset.Ioc (n * n) ((n + 1) * (n + 1)), Nat.Prime p := by
   native_decide
-
-
 
 /-- Chebyshev bias mod 4: exact counts. -/
 theorem chebyshev_mod4_counts :
@@ -115,15 +95,11 @@ theorem chebyshev_mod4_counts :
     ((Finset.range 1000).filter (fun p => Nat.Prime p ∧ p % 4 = 3)).card = 87 := by
   constructor <;> native_decide
 
-
-
 /-- Chebyshev bias mod 5: exact counts. -/
 theorem chebyshev_mod5_counts :
     ((Finset.range 1000).filter (fun p => Nat.Prime p ∧ (p % 5 = 2 ∨ p % 5 = 3))).card = 89 ∧
     ((Finset.range 1000).filter (fun p => Nat.Prime p ∧ (p % 5 = 1 ∨ p % 5 = 4))).card = 78 := by
   constructor <;> native_decide
-
-
 
 /-- An arithmetic progression of 10 primes:
 199, 409, 619, 829, 1039, 1249, 1459, 1669, 1879, 2089
@@ -131,8 +107,6 @@ with common difference 210 = 2·3·5·7. -/
 theorem green_tao_10 :
     ∀ i ∈ Finset.range 10, Nat.Prime (199 + 210 * i) := by
   native_decide
-
-
 
 /-- Every residue class coprime to 10 contains a prime ≤ 100. -/
 theorem linnik_evidence_mod10 :
@@ -142,8 +116,6 @@ theorem linnik_evidence_mod10 :
     (∃ p ∈ Finset.Icc 1 100, Nat.Prime p ∧ p % 10 = 9) := by
   exact ⟨⟨11, by simp; decide⟩, ⟨3, by simp; decide⟩,
          ⟨7, by simp; decide⟩, ⟨19, by simp; decide⟩⟩
-
-
 
 /-- [Section: ## Cunningham Chain Modular Analysis] -/
 theorem cunningham_mod3_analysis :

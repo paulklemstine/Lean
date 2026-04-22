@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.MachineLearning.Neural.TropicalDeepLearningFoundations
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: MachineLearning/Neural
 Declarations: 26
 -/
 
-import Mathlib
 
 noncomputable section
 

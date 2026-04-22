@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Pythagorean.Berggren.OpenQuestions
 
 Auto-generated from theorem catalog database.
@@ -5,16 +7,12 @@ Domain: Pythagorean/Berggren
 Declarations: 29
 -/
 
-import Mathlib
-
 /-- Eigenvalue verification: −1 satisfies the char poly. -/
 theorem eigenvalue_neg1_check : (-1 : ℤ)^3 - 5*(-1)^2 - 5*(-1) + 1 = 0 := by norm_num
-
 
 /-- This is −1 times the original vector. -/
 theorem eigenvector_neg1_scaled :
     M.mulVec ![1, -1, 0] = (-1 : ℤ) • ![1, -1, 0] := by native_decide
-
 
 /-- The leg difference projection: for any (a,b,c),
 the inner product ⟨(1,−1,0), (a,b,c)⟩ = a−b. -/
@@ -24,7 +22,6 @@ theorem leg_diff_projection (a b c : ℤ) :
 -- ═══════════════════════════════════════════════════════════════
 -- Section 4: Q4 — Trace Formula Verification
 -- ═══════════════════════════════════════════════════════════════
-
 
 /-- The trace formula tr(Mⁿ) = (−1)ⁿ + αⁿ + βⁿ where α,β = 3±2√2.
 Since α + β = 6 and αβ = 1, we can verify the trace sequence
@@ -44,17 +41,14 @@ theorem trace_seq :
     Matrix.trace (M ^ 8) = 1331715 := by
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩ <;> native_decide
 
-
 /-- Verification of the trace formula via α² + β² = (α+β)² − 2αβ.
 With α+β = 6, αβ = 1: α² + β² = 34.
 tr(M²) = (−1)² + 34 = 35 ✓ -/
 theorem trace_formula_check_2 : (1 : ℤ) + (6^2 - 2*1) = 35 := by norm_num
 
-
 /-- α³ + β³ = (α+β)³ − 3αβ(α+β) = 216 − 18 = 198.
 tr(M³) = (−1)³ + 198 = 197 ✓ -/
 theorem trace_formula_check_3 : (-1 : ℤ) + (6^3 - 3*1*6) = 197 := by norm_num
-
 
 /-- α⁴ + β⁴ = (α²+β²)² − 2(αβ)² = 34² − 2 = 1154.
 tr(M⁴) = (−1)⁴ + 1154 = 1155 ✓ -/
@@ -64,16 +58,13 @@ theorem trace_formula_check_4 : (1 : ℤ) + ((6^2-2)^2 - 2*1^2) = 1155 := by nor
 -- Section 5: Q5 — Sum Non-Preservation
 -- ═══════════════════════════════════════════════════════════════
 
-
 /-- p + q + h = a + b − c ≠ a + b + c in general. -/
 theorem sum_formula (a b c : ℤ) : p a b c + q a b c + h a b c = a + b - c := by
   simp only [p, q, h]; ring
 
-
 /-- (1,1,1) is NOT an eigenvector of M. -/
 theorem one_one_one_not_eigenvector :
     M.mulVec ![1, 1, 1] ≠ (1 : ℤ) • ![1, 1, 1] := by native_decide
-
 
 /-- Explicit calculation: M · (1,1,1) = (1, 1, −1). -/
 theorem M_times_111 : M.mulVec ![1, 1, 1] = ![1, 1, -1] := by native_decide
@@ -82,7 +73,6 @@ theorem M_times_111 : M.mulVec ![1, 1, 1] = ![1, 1, -1] := by native_decide
 -- Section 6: Cayley-Hamilton Recurrence for Mⁿ
 -- ═══════════════════════════════════════════════════════════════
 
-
 /-- The Cayley-Hamilton identity: M³ = 5M² + 5M − I.
 This means Mⁿ = αₙI + βₙM + γₙM² where:
 αₙ₊₁ = −αₙ₋₂ + 5αₙ₋₁, etc.
@@ -90,22 +80,17 @@ Or equivalently: Mⁿ = 5Mⁿ⁻¹ + 5Mⁿ⁻² − Mⁿ⁻³ for n ≥ 3. -/
 theorem CH_recurrence_3 :
     M ^ 3 = 5 • (M ^ 2) + 5 • M - 1 := by native_decide
 
-
 theorem CH_recurrence_4 :
     M ^ 4 = 5 • (M ^ 3) + 5 • (M ^ 2) - M := by native_decide
-
 
 theorem CH_recurrence_5 :
     M ^ 5 = 5 • (M ^ 4) + 5 • (M ^ 3) - M ^ 2 := by native_decide
 
-
 theorem CH_recurrence_6 :
     M ^ 6 = 5 • (M ^ 5) + 5 • (M ^ 4) - M ^ 3 := by native_decide
 
-
 theorem CH_recurrence_7 :
     M ^ 7 = 5 • (M ^ 6) + 5 • (M ^ 5) - M ^ 4 := by native_decide
-
 
 theorem CH_recurrence_8 :
     M ^ 8 = 5 • (M ^ 7) + 5 • (M ^ 6) - M ^ 5 := by native_decide
@@ -114,13 +99,11 @@ theorem CH_recurrence_8 :
 -- Section 7: Spectral Decomposition Properties
 -- ═══════════════════════════════════════════════════════════════
 
-
 /-- The (1,1) eigenvector direction is preserved: checking M(1,1,−1).
 M · (1,1,−1) = (1+2+2, 2+1+2, −2−2−3) = (5, 5, −7).
 This is NOT a scalar multiple of (1,1,−1), so (1,1,−1) is not an eigenvector.
 The actual eigenvectors for λ = 3±2√2 involve irrational entries. -/
 theorem M_times_11m1 : M.mulVec ![1, 1, -1] = ![5, 5, -7] := by native_decide
-
 
 /-- The vector (1,1,0) is also not an eigenvector. -/
 theorem M_times_110 : M.mulVec ![1, 1, 0] = ![3, 3, -4] := by native_decide
@@ -129,7 +112,6 @@ theorem M_times_110 : M.mulVec ![1, 1, 0] = ![3, 3, -4] := by native_decide
 -- Section 8: Quadratic Factor and Silver Ratio
 -- ═══════════════════════════════════════════════════════════════
 
-
 /-- x² − 6x + 1 = 0 has roots 3 ± 2√2.
 Note: 3 + 2√2 = (1 + √2)², so the eigenvalue is the square of the silver ratio + 1.
 Verification: (1+√2)² = 1 + 2√2 + 2 = 3 + 2√2 ✓
@@ -137,14 +119,12 @@ The silver ratio δ_S = 1 + √2 ≈ 2.414...
 So the dominant eigenvalue is δ_S² ≈ 5.828... -/
 theorem silver_ratio_square : (1 : ℤ)^2 + 2 = 3 := by norm_num
 
-
 /-- Verification: (3+2√2)·(3−2√2) = 1 (eigenvalues are algebraic units). -/
 theorem eigenvalues_units : (3 : ℤ)^2 - (2*2)^2/2 = 1 := by norm_num
 
 -- ═══════════════════════════════════════════════════════════════
 -- Section 9: Growth Rate Verification
 -- ═══════════════════════════════════════════════════════════════
-
 
 /-- M⁶[0,0] · M⁴[0,0] > M⁵[0,0]²: the entry ratios oscillate around 3+2√2.
 The ratios M^{n+1}[0,0] / M^n[0,0] are:
@@ -156,14 +136,11 @@ theorem growth_oscillation :
 -- Section 10: M in the Lorentz Group O(2,1;ℤ)
 -- ═══════════════════════════════════════════════════════════════
 
-
 /-- M ∈ O(2,1;ℤ): preserves the indefinite form. -/
 theorem M_in_O21 : M.transpose * eta * M = eta := by native_decide
 
-
 /-- M has det −1, so M ∈ O(2,1;ℤ) \ SO(2,1;ℤ). -/
 theorem M_orientation_reversing : M.det = -1 := by native_decide
-
 
 /-- M² ∈ SO(2,1;ℤ) since det(M²) = 1. -/
 theorem M2_in_SO21 : (M ^ 2).det = 1 := by native_decide
@@ -171,7 +148,6 @@ theorem M2_in_SO21 : (M ^ 2).det = 1 := by native_decide
 -- ═══════════════════════════════════════════════════════════════
 -- Section 11: M² and M³ Explicit Values
 -- ═══════════════════════════════════════════════════════════════
-
 
 theorem M2_explicit : M ^ 2 = !![9, 8, -12; 8, 9, -12; -12, -12, 17] := by native_decide
 
@@ -184,7 +160,6 @@ theorem M4_explicit : M ^ 4 = !![289, 288, -408; 288, 289, -408; -408, -408, 577
 -- Section 12: Parity Conservation (deeper)
 -- ═══════════════════════════════════════════════════════════════
 
-
 /-- NSW numbers satisfy N_{k+1} = 6N_k − N_{k-1}.
 N₁ = 3, N₂ = 17, N₃ = 99, N₄ = 577, N₅ = 3363, N₆ = 19601.
 These are the (2,2) entries of Mⁿ. -/
@@ -192,7 +167,6 @@ theorem nsw_recurrence_full :
     99 = 6 * 17 - 3 ∧ 577 = 6 * 99 - 17 ∧
     3363 = 6 * 577 - 99 ∧ 19601 = 6 * 3363 - (577 : ℤ) := by
   refine ⟨?_, ?_, ?_, ?_⟩ <;> norm_num
-
 
 /-- NSW numbers are all odd. -/
 theorem nsw_odd : (3 : ℤ) % 2 = 1 ∧ (17 : ℤ) % 2 = 1 ∧

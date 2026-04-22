@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.Core.PrimeSignatures
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/Core
 Declarations: 4
 -/
 
-import Mathlib
 
 /-- [Section: # CatalogBuild.Algebra.Core.PrimeSignatures
 Auto-generated from theorem catalog database.

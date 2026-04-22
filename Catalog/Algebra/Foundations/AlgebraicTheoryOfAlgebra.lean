@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.Foundations.AlgebraicTheoryOfAlgebra
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/Foundations
 Declarations: 32
 -/
 
-import Mathlib
 
 /-- An algebraic signature: a type of operation symbols with arities -/
 structure AlgSignature where

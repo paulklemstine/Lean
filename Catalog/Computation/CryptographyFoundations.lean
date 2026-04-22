@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Computation.CryptographyFoundations
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Computation
 Declarations: 9
 -/
 
-import Mathlib
 
 /-- 2^10 ≡ 1 (mod 1023). -/
 theorem dlog_example_1 : (2 : ZMod 1023) ^ 10 = 1 := by native_decide

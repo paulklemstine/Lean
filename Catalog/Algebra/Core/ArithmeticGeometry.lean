@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.Core.ArithmeticGeometry
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/Core
 Declarations: 10
 -/
 
-import Mathlib
 
 /-- A natural number n is congruent if it is the area of a right triangle
 with rational sides. -/

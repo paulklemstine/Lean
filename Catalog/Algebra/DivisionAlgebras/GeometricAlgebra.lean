@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.DivisionAlgebras.GeometricAlgebra
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/DivisionAlgebras
 Declarations: 6
 -/
 
-import Mathlib
 
 /-- [Section: # CatalogBuild.Algebra.DivisionAlgebras.GeometricAlgebra
 Auto-generated from theorem catalog database.

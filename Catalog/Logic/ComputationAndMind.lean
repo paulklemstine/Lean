@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Logic.ComputationAndMind
 
 Auto-generated from theorem catalog database.
 Domain: Logic
 Declarations: 8
 -/
-
-import Mathlib
 
 /-- [Section: # CatalogBuild.Logic.ComputationAndMind
 Auto-generated from theorem catalog database.
@@ -20,9 +20,6 @@ theorem most_sets_uncomputable :
       set S : Set ℕ := {n | n∉f n} with hS_def;
       obtain ⟨ n, hn ⟩ := hf_surj S; have := Set.ext_iff.mp hn n; tauto;
 
-
-
-
 /-- [Section: # CatalogBuild.Logic.ComputationAndMind
 Auto-generated from theorem catalog database.
 Domain: Logic
@@ -36,36 +33,21 @@ theorem lfp_is_fixed {α : Type*} [CompleteLattice α]
       refine' le_antisymm h_ex _;
       exact sInf_le ( hf h_ex )
 
-
-
-
 theorem finite_pigeonhole (n : ℕ) :
     ¬ ∃ f : Fin (n + 1) → Fin n, Injective f := by
       simp +zetaDelta at *;
       exact fun f hf => absurd ( Fintype.card_le_of_injective f hf ) ( by simp +arith +decide )
 
-
-
-
 theorem nat_prod_countable : Cardinal.mk (ℕ × ℕ) = Cardinal.mk ℕ := by
   simp +decide [ Cardinal.mk_prod ]
 
-
-
-
 theorem rationals_dense : Dense (Set.range (fun q : ℚ => (q : ℝ))) := by
   exact Rat.isDenseEmbedding_coe_real.dense
-
-
-
 
 theorem hilbert_hotel : ∃ f : ℕ → {n : ℕ | n ≠ 0}, Bijective f := by
   fconstructor;
   exact fun n => ⟨ n + 1, Nat.succ_ne_zero n ⟩;
   exact ⟨ fun a b h => by simpa using congr_arg Subtype.val h, fun a => ⟨ a - 1, by rcases a with ⟨ _ | a, ha ⟩ <;> trivial ⟩ ⟩
-
-
-
 
 theorem evens_equinumerous :
     ∃ f : ℕ → {n : ℕ | Even n}, Bijective f := by
@@ -73,12 +55,7 @@ theorem evens_equinumerous :
       exact fun n => ⟨ 2 * n, even_two_mul n ⟩;
       exact ⟨ fun a b h => by simpa using congr_arg Subtype.val h, fun a => ⟨ a.1 / 2, by simpa [ Nat.mul_div_cancel' ( even_iff_two_dvd.mp a.2 ) ] ⟩ ⟩
 
-
-
-
 theorem int_equinumerous_nat :
     Cardinal.mk ℤ = Cardinal.mk ℕ := by
       simp +zetaDelta at *
-
-
 

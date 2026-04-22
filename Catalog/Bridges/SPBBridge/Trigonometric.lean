@@ -1,12 +1,12 @@
+import Mathlib
+import Pythagorean.Core
+
 /-! # CatalogBuild.Bridges.SPBBridge.Trigonometric
 
 Auto-generated from theorem catalog database.
 Domain: Bridges/SPBBridge
 Declarations: 5
 -/
-
-import Mathlib
-import Pythagorean.Core
 
 noncomputable section
 
@@ -16,22 +16,16 @@ theorem arctan_spb_hom (x y : ℝ) (hxy : x * y < 1) :
   unfold spb
   exact (Real.arctan_add hxy).symm
 
-
-
 /-- The double-angle SPB formula: spb(t,t) = 2t/(1-t²). -/
 theorem spb_double_is_tan_double (t : ℝ) :
     spb t t = 2 * t / (1 - t ^ 2) := by
   unfold spb; ring
-
-
 
 /-- Machin's formula restated: 4·arctan(1/5) - arctan(1/239) = π/4,
 equivalently spb(spb(spb(1/5, 1/5), spb(1/5, 1/5)), -1/239) = 1. -/
 theorem machin_via_spb :
     spb (spb (spb (1/5 : ℝ) (1/5)) (spb (1/5) (1/5))) (-1/239) = 1 := by
   unfold spb; norm_num
-
-
 
 /-- [Section: # SPB and Trigonometric Identities
 Connections between SPB and trigonometric functions.
@@ -48,8 +42,6 @@ theorem weierstrass_sin_via_tan (α : ℝ) (hcos : cos α ≠ 0) :
   field_simp;
   norm_num
 
-
-
 /-- [Section: # CatalogBuild.Bridges.SPBBridge.Trigonometric
 Auto-generated from theorem catalog database.
 Domain: Bridges/SPBBridge
@@ -59,7 +51,5 @@ theorem weierstrass_cos_via_tan (α : ℝ) (hcos : cos α ≠ 0) :
   rw [ Real.cos_two_mul, Real.tan_eq_sin_div_cos, div_pow ];
   field_simp;
   rw [ Real.sin_sq ] ; ring
-
-
 
 end

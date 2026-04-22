@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.Core.FLT4
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/Core
 Declarations: 3
 -/
 
-import Mathlib
 
 /-- **Fermat's Last Theorem for n = 4 (strong form).**
 The equation x⁴ + y⁴ = z² has no solutions in positive integers.

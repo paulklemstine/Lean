@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Speculative.BerggrenPythagoreanCore
 
 Auto-generated from theorem catalog database.
@@ -5,49 +7,26 @@ Domain: Speculative
 Declarations: 59
 -/
 
-import Mathlib
-
 /-- A triple (a,b,c) is Pythagorean if a² + b² = c². -/
 def IsPythag (a b c : ℤ) : Prop := a ^ 2 + b ^ 2 = c ^ 2
-
-
-
 
 /-- Berggren child A -/
 def bergA (a b c : ℤ) : ℤ × ℤ × ℤ := (a - 2*b + 2*c, 2*a - b + 2*c, 2*a - 2*b + 3*c)
 
-
-
-
 /-- Berggren child B -/
 def bergB (a b c : ℤ) : ℤ × ℤ × ℤ := (a + 2*b + 2*c, 2*a + b + 2*c, 2*a + 2*b + 3*c)
-
-
-
 
 /-- Berggren child C -/
 def bergC (a b c : ℤ) : ℤ × ℤ × ℤ := (-a + 2*b + 2*c, -2*a + b + 2*c, -2*a + 2*b + 3*c)
 
-
-
-
 /-- Inverse Berggren A: B₁⁻¹ = Q B₁ᵀ Q where Q = diag(1,1,-1) -/
 def invA (a b c : ℤ) : ℤ × ℤ × ℤ := (a + 2*b - 2*c, -2*a - b + 2*c, -2*a - 2*b + 3*c)
-
-
-
 
 /-- Inverse Berggren B -/
 def invB (a b c : ℤ) : ℤ × ℤ × ℤ := (a + 2*b - 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
 
-
-
-
 /-- Inverse Berggren C -/
 def invC (a b c : ℤ) : ℤ × ℤ × ℤ := (-a - 2*b + 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
-
-
-
 
 /-- [Section: # CatalogBuild.Speculative.BerggrenPythagoreanCore
 Auto-generated from theorem catalog database.
@@ -57,9 +36,6 @@ theorem bergA_pyth (a b c : ℤ) (h : IsPythag a b c) :
     IsPythag (bergA a b c).1 (bergA a b c).2.1 (bergA a b c).2.2 := by
   unfold IsPythag bergA at *; nlinarith [h]
 
-
-
-
 /-- [Section: # CatalogBuild.Speculative.BerggrenPythagoreanCore
 Auto-generated from theorem catalog database.
 Domain: Speculative
@@ -68,190 +44,105 @@ theorem bergB_pyth (a b c : ℤ) (h : IsPythag a b c) :
     IsPythag (bergB a b c).1 (bergB a b c).2.1 (bergB a b c).2.2 := by
   unfold IsPythag bergB at *; nlinarith [h]
 
-
-
-
 theorem bergC_pyth (a b c : ℤ) (h : IsPythag a b c) :
     IsPythag (bergC a b c).1 (bergC a b c).2.1 (bergC a b c).2.2 := by
   unfold IsPythag bergC at *; nlinarith [h]
-
-
-
 
 theorem bergA_preserves_Q (a b c : ℤ) :
     lorentzQ (bergA a b c).1 (bergA a b c).2.1 (bergA a b c).2.2 = lorentzQ a b c := by
   unfold lorentzQ bergA; ring
 
-
-
-
 theorem bergB_preserves_Q (a b c : ℤ) :
     lorentzQ (bergB a b c).1 (bergB a b c).2.1 (bergB a b c).2.2 = lorentzQ a b c := by
   unfold lorentzQ bergB; ring
-
-
-
 
 theorem bergC_preserves_Q (a b c : ℤ) :
     lorentzQ (bergC a b c).1 (bergC a b c).2.1 (bergC a b c).2.2 = lorentzQ a b c := by
   unfold lorentzQ bergC; ring
 
-
-
-
 def B₁_mat : Matrix (Fin 3) (Fin 3) ℤ := !![1, -2, 2; 2, -1, 2; 2, -2, 3]
-
-
 
 def B₂_mat : Matrix (Fin 3) (Fin 3) ℤ := !![1, 2, 2; 2, 1, 2; 2, 2, 3]
 
-
-
 def B₃_mat : Matrix (Fin 3) (Fin 3) ℤ := !![-1, 2, 2; -2, 1, 2; -2, 2, 3]
 
-
-
 def QLor : Matrix (Fin 3) (Fin 3) ℤ := !![1, 0, 0; 0, 1, 0; 0, 0, -1]
-
-
-
 
 /-- B₁, B₃ are in SO(2,1;ℤ) while B₂ is in O(2,1;ℤ) \ SO(2,1;ℤ) -/
 theorem det_asymmetry : Matrix.det B₁_mat = 1 ∧ Matrix.det B₂_mat = -1 ∧ Matrix.det B₃_mat = 1 :=
   ⟨det_B₁, det_B₂, det_B₃⟩
 
-
-
-
 /-- Product of Berggren matrices remains in O(2,1;ℤ) -/
 theorem B₁B₂_lorentz : (B₁_mat * B₂_mat).transpose * QLor * (B₁_mat * B₂_mat) = QLor := by
   native_decide
-
-
-
 
 theorem B₁B₂B₃_lorentz :
     (B₁_mat * B₂_mat * B₃_mat).transpose * QLor * (B₁_mat * B₂_mat * B₃_mat) = QLor := by
   native_decide
 
-
-
-
 theorem fwd_inv_A (a b c : ℤ) :
     invA (bergA a b c).1 (bergA a b c).2.1 (bergA a b c).2.2 = (a, b, c) := by
   simp only [bergA, invA, Prod.mk.injEq]; exact ⟨by ring, by ring, by ring⟩
-
-
-
 
 theorem fwd_inv_B (a b c : ℤ) :
     invB (bergB a b c).1 (bergB a b c).2.1 (bergB a b c).2.2 = (a, b, c) := by
   simp only [bergB, invB, Prod.mk.injEq]; exact ⟨by ring, by ring, by ring⟩
 
-
-
-
 theorem fwd_inv_C (a b c : ℤ) :
     invC (bergC a b c).1 (bergC a b c).2.1 (bergC a b c).2.2 = (a, b, c) := by
   simp only [bergC, invC, Prod.mk.injEq]; exact ⟨by ring, by ring, by ring⟩
-
-
-
 
 theorem inv_fwd_A (a b c : ℤ) :
     bergA (invA a b c).1 (invA a b c).2.1 (invA a b c).2.2 = (a, b, c) := by
   simp only [bergA, invA, Prod.mk.injEq]; exact ⟨by ring, by ring, by ring⟩
 
-
-
-
 theorem inv_fwd_B (a b c : ℤ) :
     bergB (invB a b c).1 (invB a b c).2.1 (invB a b c).2.2 = (a, b, c) := by
   simp only [bergB, invB, Prod.mk.injEq]; exact ⟨by ring, by ring, by ring⟩
-
-
-
 
 theorem inv_fwd_C (a b c : ℤ) :
     bergC (invC a b c).1 (invC a b c).2.1 (invC a b c).2.2 = (a, b, c) := by
   simp only [bergC, invC, Prod.mk.injEq]; exact ⟨by ring, by ring, by ring⟩
 
-
-
-
 theorem bergA_root : bergA 3 4 5 = (5, 12, 13) := by native_decide
-
-
 
 theorem bergB_root : bergB 3 4 5 = (21, 20, 29) := by native_decide
 
-
-
 theorem bergC_root : bergC 3 4 5 = (15, 8, 17) := by native_decide
-
-
-
 
 theorem invA_recovers : invA 5 12 13 = (3, 4, 5) := by native_decide
 
-
-
 theorem invB_recovers : invB 21 20 29 = (3, 4, 5) := by native_decide
-
-
 
 theorem invC_recovers : invC 15 8 17 = (3, 4, 5) := by native_decide
 
-
-
-
 theorem bergA_depth2 : bergA 5 12 13 = (7, 24, 25) := by native_decide
 
-
-
 theorem bergB_depth2 : bergB 21 20 29 = (119, 120, 169) := by native_decide
-
-
-
 
 theorem bergA_hyp_increase (a b c : ℤ) (ha : 0 < a) (_ : 0 < b) (_ : 0 < c)
     (_ : a < c) (hbc : b < c) :
     c < (bergA a b c).2.2 := by
   unfold bergA; nlinarith
 
-
-
-
 theorem bergB_hyp_increase (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
     c < (bergB a b c).2.2 := by
   unfold bergB; nlinarith
-
-
-
 
 theorem bergC_hyp_increase (a b c : ℤ) (_ : 0 < a) (hb : 0 < b) (_ : 0 < c)
     (hab : a < c) (_ : b < c) :
     c < (bergC a b c).2.2 := by
   unfold bergC; nlinarith
 
-
-
-
 theorem dvd_sq_hyp_of_dvd_legs (a b c d : ℤ) (h : IsPythag a b c)
     (ha : d ∣ a) (hb : d ∣ b) : d ^ 2 ∣ c ^ 2 := by
   exact h ▸ dvd_add ( pow_dvd_pow_of_dvd ha 2 ) ( pow_dvd_pow_of_dvd hb 2 )
-
-
-
 
 theorem dvd_hyp_of_dvd_legs (a b c d : ℤ) (h : IsPythag a b c)
     (ha : d ∣ a) (hb : d ∣ b) : d ∣ c := by
   obtain ⟨ k₁, rfl ⟩ := ha;
   obtain ⟨ k₂, rfl ⟩ := hb;
   exact Int.pow_dvd_pow_iff two_ne_zero |>.1 ⟨ k₁ ^ 2 + k₂ ^ 2, by linarith! [ h.symm ] ⟩
-
-
-
 
 theorem bergA_prim (a b c : ℤ) (h : IsPythag a b c) (hprim : Int.gcd a b = 1) :
     Int.gcd (bergA a b c).1 (bergA a b c).2.1 = 1 := by
@@ -266,9 +157,6 @@ theorem bergA_prim (a b c : ℤ) (h : IsPythag a b c) (hprim : Int.gcd a b = 1) 
   have h_inv : a = (bergA a b c).1 + 2 * (bergA a b c).2.1 - 2 * (bergA a b c).2.2 ∧ b = -2 * (bergA a b c).1 - (bergA a b c).2.1 + 2 * (bergA a b c).2.2 ∧ c = -2 * (bergA a b c).1 - 2 * (bergA a b c).2.1 + 3 * (bergA a b c).2.2 := by
     unfold bergA; ring_nf; aesop;
   exact Nat.Prime.not_dvd_one hp_prime ( hprim ▸ Int.natCast_dvd_natCast.mp ( Int.dvd_coe_gcd ( show ( p : ℤ ) ∣ a from h_inv.1.symm ▸ dvd_sub ( dvd_add hp_div.1 ( dvd_mul_of_dvd_right hp_div.2 _ ) ) ( dvd_mul_of_dvd_right hp_div_c _ ) ) ( show ( p : ℤ ) ∣ b from h_inv.2.1.symm ▸ dvd_add ( dvd_sub ( dvd_mul_of_dvd_right hp_div.1 _ ) hp_div.2 ) ( dvd_mul_of_dvd_right hp_div_c _ ) ) ) )
-
-
-
 
 theorem bergB_prim (a b c : ℤ) (h : IsPythag a b c) (hprim : Int.gcd a b = 1) :
     Int.gcd (bergB a b c).1 (bergB a b c).2.1 = 1 := by
@@ -290,9 +178,6 @@ theorem bergB_prim (a b c : ℤ) (h : IsPythag a b c) (hprim : Int.gcd a b = 1) 
     grind;
   exact Nat.Prime.not_dvd_one hp_prime ( hprim ▸ Int.natCast_dvd_natCast.mp ( Int.dvd_coe_gcd hp_div_a hp_div_b ) )
 
-
-
-
 theorem bergC_prim (a b c : ℤ) (h : IsPythag a b c) (hprim : Int.gcd a b = 1) :
     Int.gcd (bergC a b c).1 (bergC a b c).2.1 = 1 := by
   -- Let $d = \gcd(a - 2b + 2c, 2a - b + 2c)$.
@@ -310,22 +195,13 @@ theorem bergC_prim (a b c : ℤ) (h : IsPythag a b c) (hprim : Int.gcd a b = 1) 
     exact h_invC.2.1.symm ▸ dvd_sub ( dvd_add ( dvd_mul_of_dvd_right ( Int.gcd_dvd_left _ _ ) _ ) ( Int.gcd_dvd_right _ _ ) ) ( dvd_mul_of_dvd_right hd_div_c' _ );
   exact Nat.dvd_one.mp ( hprim ▸ Int.natCast_dvd_natCast.mp ( Int.dvd_coe_gcd hd_div_a hd_div_b ) )
 
-
-
-
 /-- B-branch hypotenuse sequence: c₀=5, c₁=29, c_{n+2} = 6c_{n+1} - cₙ -/
 def bHyp : ℕ → ℤ
   | 0 => 5
   | 1 => 29
   | n + 2 => 6 * bHyp (n + 1) - bHyp n
 
-
-
-
 theorem bHyp_recurrence (n : ℕ) : bHyp (n + 2) = 6 * bHyp (n + 1) - bHyp n := rfl
-
-
-
 
 theorem bHyp_values : bHyp 0 = 5 ∧ bHyp 1 = 29 ∧ bHyp 2 = 169 ∧ bHyp 3 = 985 ∧ bHyp 4 = 5741 := by
   constructor; · rfl
@@ -334,16 +210,10 @@ theorem bHyp_values : bHyp 0 = 5 ∧ bHyp 1 = 29 ∧ bHyp 2 = 169 ∧ bHyp 3 = 9
   constructor; · native_decide
   · native_decide
 
-
-
-
 /-- The Pell recurrence checks: 6·29-5=169, 6·169-29=985, 6·985-169=5741 -/
 theorem pell_checks :
     6 * 29 - 5 = (169 : ℤ) ∧ 6 * 169 - 29 = (985 : ℤ) ∧ 6 * 985 - 169 = (5741 : ℤ) := by
   omega
-
-
-
 
 theorem bHyp_increasing (n : ℕ) : bHyp n < bHyp (n + 1) := by
   -- We can prove this by induction on $n$.
@@ -351,15 +221,9 @@ theorem bHyp_increasing (n : ℕ) : bHyp n < bHyp (n + 1) := by
     intro n; induction n <;> simp_all +decide [ bHyp ] ; omega;
   exact h_ind n |>.2
 
-
-
-
 /-- Steps in the Berggren tree -/
 inductive BerggrenStep where | A | B | C
   deriving DecidableEq, Repr
-
-
-
 
 /-- Any Berggren step preserves the Pythagorean property -/
 theorem step_preserves_pyth (s : BerggrenStep) (a b c : ℤ) (h : IsPythag a b c) :
@@ -370,9 +234,6 @@ theorem step_preserves_pyth (s : BerggrenStep) (a b c : ℤ) (h : IsPythag a b c
   · exact bergB_pyth a b c h
   · exact bergC_pyth a b c h
 
-
-
-
 theorem path_preserves_pyth (path : List BerggrenStep) :
     let t := applyPath path
     IsPythag t.1 t.2.1 t.2.2 := by
@@ -381,61 +242,34 @@ theorem path_preserves_pyth (path : List BerggrenStep) :
   · convert step_preserves_pyth l _ _ _ ih using 1;
     unfold applyPath; aesop;
 
-
-
-
 /-- Binary expression tree -/
 inductive BinTree (α : Type*) where
   | leaf : α → BinTree α
   | node : BinTree α → BinTree α → BinTree α
 
-
-
-
 def BinTree.leaves : BinTree α → ℕ
   | .leaf _ => 1
   | .node l r => l.leaves + r.leaves
 
-
-
-
 def BinTree.internals : BinTree α → ℕ
   | .leaf _ => 0
   | .node l r => 1 + l.internals + r.internals
-
-
-
 
 theorem bin_tree_leaf_count (t : BinTree α) : t.leaves = t.internals + 1 := by
   induction t;
   · rfl;
   · simp +arith +decide [ *, BinTree.leaves, BinTree.internals ]
 
-
-
-
 /-- Euclid parametrization: (m,n) ↦ (m²-n², 2mn, m²+n²) -/
 def euclid (m n : ℤ) : ℤ × ℤ × ℤ := (m ^ 2 - n ^ 2, 2 * m * n, m ^ 2 + n ^ 2)
-
-
-
 
 theorem euclid_is_pythag (m n : ℤ) :
     IsPythag (euclid m n).1 (euclid m n).2.1 (euclid m n).2.2 := by
   unfold IsPythag euclid; ring
 
-
-
-
 theorem euclid_root : euclid 2 1 = (3, 4, 5) := by native_decide
-
-
 
 theorem euclid_5_12_13 : euclid 3 2 = (5, 12, 13) := by native_decide
 
-
-
 theorem euclid_8_15_17 : euclid 4 1 = (15, 8, 17) := by native_decide
-
-
 

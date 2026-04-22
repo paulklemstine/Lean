@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.SauerShelah
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra
 Declarations: 17
 -/
 
-import Mathlib
 
 /-- A family `F` of sets **shatters** a set `A` if every subset of `A` arises as
 `A ∩ S` for some `S ∈ F`. -/

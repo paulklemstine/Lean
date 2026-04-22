@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Computation.Oracles.CollatzExploration
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Computation/Oracles
 Declarations: 10
 -/
 
-import Mathlib
 
 /-- The Collatz function: n ↦ n/2 if even, 3n+1 if odd -/
 def collatz (n : ℕ) : ℕ :=

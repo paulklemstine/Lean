@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Bridges.SPBNewTheorems
 
 Auto-generated from theorem catalog database.
 Domain: Bridges
 Declarations: 25
 -/
-
-import Mathlib
 
 noncomputable section
 
@@ -17,9 +17,6 @@ theorem spb_expand_right (a b c : ℝ) (hbc : b * c ≠ 1) (h : a * spb b c ≠ 
   field_simp
   ring
 
-
-
-
 /-- The difference spb(x,ε) - x ≈ ε(1+x²) for small ε. Exact identity. -/
 theorem spb_linear_approx (x ε : ℝ) (hxε : x * ε ≠ 1) :
     spb x ε - x = ε * (1 + x^2) / (1 - x * ε) := by
@@ -27,9 +24,6 @@ theorem spb_linear_approx (x ε : ℝ) (hxε : x * ε ≠ 1) :
   have h : (1 - x * ε) ≠ 0 := sub_ne_zero.mpr (Ne.symm hxε)
   field_simp
   ring
-
-
-
 
 /-- SPB is anti-involutive: spb(x, y) + spb(-x, -y) = 0. -/
 theorem spb_anti_involution (x y : ℝ) :
@@ -39,9 +33,6 @@ theorem spb_anti_involution (x y : ℝ) :
   rw [this, div_add_div_same]
   simp [show x + y + (-x + -y) = 0 from by ring]
 
-
-
-
 /-- SPB satisfies the "cross-ratio" identity:
 spb(a,b) * spb(-a,-b) = ... when well-defined -/
 theorem spb_product_neg (a b : ℝ) (hab : a * b ≠ 1) :
@@ -50,18 +41,12 @@ theorem spb_product_neg (a b : ℝ) (hab : a * b ≠ 1) :
   simp [neg_mul, neg_neg]
   ring
 
-
-
-
 /-- Every Pythagorean triple (a² + b² = c²) can be generated from SPB.
 If t is rational, then ((1-t²)/(1+t²), 2t/(1+t²)) is a rational point
 on the unit circle. -/
 theorem spb_pythagorean_triple (m n : ℤ) (hn : m^2 + n^2 ≠ 0) :
     (m^2 - n^2)^2 + (2 * m * n)^2 = (m^2 + n^2)^2 := by
   ring
-
-
-
 
 /-- The Weierstrass substitution: t = tan(θ/2) gives
 cos θ = (1-t²)/(1+t²) and sin θ = 2t/(1+t²).
@@ -71,9 +56,6 @@ theorem weierstrass_unit_circle (t : ℝ) :
   have h : (1 + t^2) ≠ 0 := by positivity
   field_simp
   ring
-
-
-
 
 /-- SPB chain of three equal arguments:
 spb(x, spb(x, x)) = (3x - x³)/(1 - 3x²) when well-defined.
@@ -86,9 +68,6 @@ theorem spb_triple_chain (x : ℝ) (hx2 : x^2 ≠ 1) (hx3 : 3 * x^2 ≠ 1)
   field_simp
   ring
 
-
-
-
 /-- SPB chain of four equal arguments (quadruple angle):
 tan(4θ) = 4t(1-t²)/((1-t²)² - 4t²). -/
 theorem spb_quadruple_chain (t : ℝ) (ht : t^2 ≠ 1)
@@ -99,9 +78,6 @@ theorem spb_quadruple_chain (t : ℝ) (ht : t^2 ≠ 1)
   have h1 : (1 - t^2) ≠ 0 := sub_ne_zero.mpr (Ne.symm ht)
   field_simp
   ring
-
-
-
 
 /-- [Section: # CatalogBuild.Bridges.SPBNewTheorems
 Auto-generated from theorem catalog database.
@@ -118,17 +94,11 @@ theorem spb_second_deriv (x y : ℝ) (hxy : x * y ≠ 1) :
     · exact?;
   exact h_chain ▸ hasDerivAt_deriv_iff.mpr ( by norm_num [ show ( 1 - x * y ) ≠ 0 by contrapose! hxy; linarith ] )
 
-
-
-
 /-- Conjugation in the SPB group: spb(a, spb(x, -a)) simplifies. -/
 theorem spb_conjugation (a x : ℝ) (hax : a * x ≠ 1) (ha2 : a^2 ≠ 1)
     (h : a * ((x + (-a)) / (1 - x * (-a))) ≠ 1) :
     spb a (spb x (-a)) = spb a (spb x (-a)) := by
   rfl
-
-
-
 
 /-- Telescoping product for SPB: the product ∏(1 - x_i * x_{i+1})
 telescopes when the x_i form an SPB chain. -/
@@ -141,9 +111,6 @@ theorem spb_telescope_two (a b c : ℝ) (hab : a * b ≠ 1) (hbc : b * c ≠ 1) 
   field_simp
   ring
 
-
-
-
 /-- [Section: # CatalogBuild.Bridges.SPBNewTheorems
 Auto-generated from theorem catalog database.
 Domain: Bridges
@@ -153,9 +120,6 @@ theorem spb_half_angle (t θ : ℝ) (ht : t = tan (θ / 2))
     tan θ = (2 * t) / (1 - t^2) := by
   rw [ ht, ← Real.tan_two_mul ] ; ring
 
-
-
-
 /-- Define the n-th SPB power: repeated SPB of x with itself.
 spb_pow 0 x = 0, spb_pow 1 x = x, spb_pow 2 x = 2x/(1-x²), etc.
 This equals tan(n * arctan(x)) for x in the valid domain. -/
@@ -164,25 +128,14 @@ def spb_pow : ℕ → ℝ → ℝ
   | 1, x => x
   | n + 2, x => spb (spb_pow (n + 1) x) x
 
-
-
-
 theorem spb_pow_zero (x : ℝ) : spb_pow 0 x = 0 := rfl
 
-
-
 theorem spb_pow_one (x : ℝ) : spb_pow 1 x = x := rfl
-
-
-
 
 theorem spb_pow_two (x : ℝ) :
     spb_pow 2 x = (2 * x) / (1 - x * x) := by
   simp [spb_pow, spb]
   ring
-
-
-
 
 theorem spb_approx_sum (x y : ℝ) (hxy : |x * y| < 1) :
     |spb x y - (x + y)| ≤ |x * y| * |x + y| / (1 - |x * y|) := by
@@ -193,9 +146,6 @@ theorem spb_approx_sum (x y : ℝ) (hxy : |x * y| < 1) :
     · linarith;
     · grind +splitIndPred;
   · linarith [ abs_lt.mp hxy ]
-
-
-
 
 /-- The map z ↦ spb(a, z) has no real fixed points when a ≠ 0. -/
 theorem spb_no_fixed_point (a : ℝ) (ha : a ≠ 0) :
@@ -209,35 +159,20 @@ theorem spb_no_fixed_point (a : ℝ) (ha : a ≠ 0) :
   have : 1 + z^2 > 0 := by positivity
   exact ha (by nlinarith)
 
-
-
-
 /-- SPB over the complex numbers. -/
 def spbC (z w : ℂ) : ℂ := (z + w) / (1 - z * w)
-
-
-
 
 /-- Complex SPB is commutative. -/
 theorem spbC_comm (z w : ℂ) : spbC z w = spbC w z := by
   unfold spbC; ring_nf
 
-
-
-
 /-- Complex SPB has identity 0. -/
 theorem spbC_zero (z : ℂ) : spbC z 0 = z := by
   unfold spbC; simp
 
-
-
-
 /-- Complex SPB inverse. -/
 theorem spbC_neg (z : ℂ) : spbC z (-z) = 0 := by
   unfold spbC; simp
-
-
-
 
 /-- The ODE y' = 1 + y² has solution y = tan(x + C).
 This means: d/dx[tan(x)] = 1 + tan²(x), which is the
@@ -251,17 +186,11 @@ theorem spb_ode_generator (x : ℝ) (hx : cos x ≠ 0) :
   field_simp
   linarith [sin_sq_add_cos_sq x]
 
-
-
-
 theorem cayley_spb_mul (x y : ℝ) (hxy : x * y ≠ 1) :
     cayley (spb x y) = cayley x * cayley y := by
   unfold cayley spb; norm_num [ Complex.ext_iff ] ; ring;
   norm_num [ Complex.normSq, Complex.ext_iff ];
   grind +splitImp
-
-
-
 
 theorem generalized_spb_assoc (c : ℝ) (x y z : ℝ)
     (hxy : 1 + c * x * y ≠ 0) (hyz : 1 + c * y * z ≠ 0)
@@ -270,8 +199,5 @@ theorem generalized_spb_assoc (c : ℝ) (x y z : ℝ)
     ((x + y) / (1 + c * x * y) + z) / (1 + c * ((x + y) / (1 + c * x * y)) * z) =
     (x + (y + z) / (1 + c * y * z)) / (1 + c * x * ((y + z) / (1 + c * y * z))) := by
   grind
-
-
-
 
 end

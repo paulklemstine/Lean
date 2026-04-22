@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.EML.SPBAnalysis
 
 Auto-generated from theorem catalog database.
@@ -5,15 +7,10 @@ Domain: EML
 Declarations: 5
 -/
 
-import Mathlib
-
 noncomputable section
 
 /-- Cayley transform: maps ℝ → S¹ ⊂ ℂ -/
 def cayleyTransform (x : ℝ) : ℂ := (↑x - Complex.I) / (↑x + Complex.I)
-
-
-
 
 /-- [Section: # CatalogBuild.EML.SPBAnalysis
 Auto-generated from theorem catalog database.
@@ -29,9 +26,6 @@ theorem spb_strictMono_snd (a b₁ b₂ : ℝ)
     ring;
   exact lt_of_sub_pos ( diff_identity.symm ▸ div_pos ( mul_pos ( sub_pos.mpr hlt ) ( by positivity ) ) ( mul_pos h2 h1 ) )
 
-
-
-
 /-- [Section: # CatalogBuild.EML.SPBAnalysis
 Auto-generated from theorem catalog database.
 Domain: EML
@@ -41,9 +35,6 @@ theorem cayley_unit_modulus (x : ℝ) :
   norm_num [ Complex.normSq, Complex.norm_def, cayleyTransform ];
   exact ne_of_gt <| Real.sqrt_pos.mpr <| by nlinarith
 
-
-
-
 theorem spb_is_tan_addition (α β : ℝ)
     (hα : Real.cos α ≠ 0) (hβ : Real.cos β ≠ 0)
     (hab : Real.cos (α + β) ≠ 0) :
@@ -52,16 +43,10 @@ theorem spb_is_tan_addition (α β : ℝ)
   unfold spbA; rw [ div_mul_div_comm ] ; ring;
   grind
 
-
-
-
 /-- The SPB-ODE solution. -/
 theorem spb_ode_solution (a x₀ t : ℝ) :
     let x := Real.tan (Real.arctan x₀ + Real.arctan a * t)
     x = Real.tan (Real.arctan x₀ + Real.arctan a * t) := by
   rfl
-
-
-
 
 end

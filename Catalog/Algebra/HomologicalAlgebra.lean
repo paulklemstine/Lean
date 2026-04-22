@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.HomologicalAlgebra
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra
 Declarations: 8
 -/
 
-import Mathlib
 
 /-- d ∘ d = 0 is the fundamental property of chain complexes. -/
 theorem d_squared_zero' {R M₀ M₁ M₂ : Type*} [CommRing R]

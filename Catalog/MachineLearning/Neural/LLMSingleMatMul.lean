@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.MachineLearning.Neural.LLMSingleMatMul
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: MachineLearning/Neural
 Declarations: 17
 -/
 
-import Mathlib
 
 /-- Composition of two linear maps is a linear map.
 This is the mathematical basis for "collapsing" consecutive linear layers. -/

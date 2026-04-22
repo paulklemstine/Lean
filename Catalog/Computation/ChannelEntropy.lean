@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Computation.ChannelEntropy
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Computation
 Declarations: 12
 -/
 
-import Mathlib
 
 /-- [Section: # CatalogBuild.Computation.ChannelEntropy
 Auto-generated from theorem catalog database.

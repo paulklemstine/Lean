@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.MachineLearning.QuantumTransformer.Architecture
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: MachineLearning/QuantumTransformer
 Declarations: 8
 -/
 
-import Mathlib
 
 /-- A unitary quantum gate on d dimensions. -/
 structure UnitaryGate (d : ℕ) where

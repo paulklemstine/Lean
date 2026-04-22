@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.Foundations.AlgebraicStructures
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/Foundations
 Declarations: 15
 -/
 
-import Mathlib
 
 /-- Gaussian integer norm is multiplicative (Brahmagupta-Fibonacci). -/
 theorem gaussian_norm_mul' (a b c d : ℤ) :

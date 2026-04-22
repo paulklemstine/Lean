@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Speculative.BerggrenDescentComplete
 
 Auto-generated from theorem catalog database.
@@ -5,17 +7,12 @@ Domain: Speculative
 Declarations: 32
 -/
 
-import Mathlib
-
 /-- [Section: # CatalogBuild.Speculative.BerggrenDescentComplete
 Auto-generated from theorem catalog database.
 Domain: Speculative
 Declarations: 32] -/
 inductive BerggrenStep' | A | B | C
   deriving DecidableEq
-
-
-
 
 /-- [Section: # CatalogBuild.Speculative.BerggrenDescentComplete
 Auto-generated from theorem catalog database.
@@ -26,126 +23,70 @@ def childTriple' : BerggrenStep' → ℤ × ℤ × ℤ → ℤ × ℤ × ℤ
   | .B, (a, b, c) => (a + 2*b + 2*c, 2*a + b + 2*c, 2*a + 2*b + 3*c)
   | .C, (a, b, c) => (-a + 2*b + 2*c, -2*a + b + 2*c, -2*a + 2*b + 3*c)
 
-
-
-
 def parentTriple' : BerggrenStep' → ℤ × ℤ × ℤ → ℤ × ℤ × ℤ
   | .A, (a, b, c) => (a + 2*b - 2*c, -2*a - b + 2*c, -2*a - 2*b + 3*c)
   | .B, (a, b, c) => (a + 2*b - 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
   | .C, (a, b, c) => (-a - 2*b + 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
 
-
-
-
 theorem child_parent_cancel_A' (a b c : ℤ) :
     parentTriple' .A (childTriple' .A (a, b, c)) = (a, b, c) := by
   simp only [childTriple', parentTriple']; ext1; ring; ext1 <;> ring
-
-
-
 
 theorem child_parent_cancel_B' (a b c : ℤ) :
     parentTriple' .B (childTriple' .B (a, b, c)) = (a, b, c) := by
   simp only [childTriple', parentTriple']; ext1; ring; ext1 <;> ring
 
-
-
-
 theorem child_parent_cancel_C' (a b c : ℤ) :
     parentTriple' .C (childTriple' .C (a, b, c)) = (a, b, c) := by
   simp only [childTriple', parentTriple']; ext1; ring; ext1 <;> ring
-
-
-
 
 theorem parent_child_cancel_A' (a b c : ℤ) :
     childTriple' .A (parentTriple' .A (a, b, c)) = (a, b, c) := by
   simp only [childTriple', parentTriple']; ext1; ring; ext1 <;> ring
 
-
-
-
 theorem parent_child_cancel_B' (a b c : ℤ) :
     childTriple' .B (parentTriple' .B (a, b, c)) = (a, b, c) := by
   simp only [childTriple', parentTriple']; ext1; ring; ext1 <;> ring
-
-
-
 
 theorem parent_child_cancel_C' (a b c : ℤ) :
     childTriple' .C (parentTriple' .C (a, b, c)) = (a, b, c) := by
   simp only [childTriple', parentTriple']; ext1; ring; ext1 <;> ring
 
-
-
-
 theorem parent_hyp_shared'' (a b c : ℤ) (s : BerggrenStep') :
     (parentTriple' s (a, b, c)).2.2 = -2*a - 2*b + 3*c := by
   cases s <;> simp [parentTriple']
-
-
-
 
 theorem parent_hyp_positive' (a b c : ℤ) (h : a^2 + b^2 = c^2)
     (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
     0 < -2*a - 2*b + 3*c := by
   nlinarith [sq_nonneg (a - b), mul_pos ha hb]
 
-
-
-
 theorem parent_hyp_strict_decrease' (a b c : ℤ) (h : a^2 + b^2 = c^2)
     (ha : 0 < a) (hb : 0 < b) :
     -2*a - 2*b + 3*c < c := by
   nlinarith [mul_pos ha hb]
 
-
-
-
 theorem childA_preserves_pyth' (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     (a - 2*b + 2*c)^2 + (2*a - b + 2*c)^2 = (2*a - 2*b + 3*c)^2 := by nlinarith [h]
-
-
-
 
 theorem childB_preserves_pyth' (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     (a + 2*b + 2*c)^2 + (2*a + b + 2*c)^2 = (2*a + 2*b + 3*c)^2 := by nlinarith [h]
 
-
-
-
 theorem childC_preserves_pyth' (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     (-a + 2*b + 2*c)^2 + (-2*a + b + 2*c)^2 = (-2*a + 2*b + 3*c)^2 := by nlinarith [h]
-
-
-
 
 theorem parentA_preserves_pyth' (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     (a + 2*b - 2*c)^2 + (-2*a - b + 2*c)^2 = (-2*a - 2*b + 3*c)^2 := by nlinarith [h]
 
-
-
-
 theorem parentB_preserves_pyth' (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     (a + 2*b - 2*c)^2 + (2*a + b - 2*c)^2 = (-2*a - 2*b + 3*c)^2 := by nlinarith [h]
-
-
-
 
 theorem parentC_preserves_pyth' (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     (-a - 2*b + 2*c)^2 + (2*a + b - 2*c)^2 = (-2*a - 2*b + 3*c)^2 := by nlinarith [h]
 
-
-
-
 def sigma1' (a b c : ℤ) : ℤ := a + 2*b - 2*c
 
-
-
 def sigma2' (a b c : ℤ) : ℤ := 2*a + b - 2*c
-
-
-
 
 theorem not_both_sigma_nonpos' (a b c : ℤ) (h : a^2 + b^2 = c^2)
     (ha : 0 < a) (hb : 0 < b) :
@@ -153,18 +94,12 @@ theorem not_both_sigma_nonpos' (a b c : ℤ) (h : a^2 + b^2 = c^2)
   unfold sigma1' sigma2'; intro ⟨h1, h2⟩
   nlinarith [sq_nonneg (a - b), mul_pos ha hb]
 
-
-
-
 theorem root_classification' (a b : ℤ) (h : a^2 + b^2 = 25)
     (ha : 0 < a) (hb : 0 < b) (hcop : Int.gcd a b = 1) :
     (a = 3 ∧ b = 4) ∨ (a = 4 ∧ b = 3) := by
   have ha5 : a ≤ 4 := by nlinarith [sq_nonneg b]
   have hb5 : b ≤ 4 := by nlinarith [sq_nonneg a]
   interval_cases a <;> interval_cases b <;> simp_all
-
-
-
 
 /-- When σ₁ > 0 and σ₂ > 0, parentB has all positive components -/
 theorem parentB_positive_when' (a b c : ℤ)
@@ -177,9 +112,6 @@ theorem parentB_positive_when' (a b c : ℤ)
   simp [parentTriple', sigma1', sigma2'] at *
   exact ⟨by linarith, by linarith, by nlinarith [sq_nonneg (a - b), mul_pos ha hb]⟩
 
-
-
-
 /-- When σ₁ > 0 and σ₂ < 0, parentA has all positive components -/
 theorem parentA_positive_when' (a b c : ℤ)
     (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
@@ -190,9 +122,6 @@ theorem parentA_positive_when' (a b c : ℤ)
     0 < (parentTriple' .A (a, b, c)).2.2 := by
   simp [parentTriple', sigma1', sigma2'] at *
   exact ⟨by linarith, by linarith, by nlinarith [sq_nonneg (a - b), mul_pos ha hb]⟩
-
-
-
 
 /-- When σ₁ < 0 and σ₂ > 0, parentC has all positive components -/
 theorem parentC_positive_when' (a b c : ℤ)
@@ -205,9 +134,6 @@ theorem parentC_positive_when' (a b c : ℤ)
   simp [parentTriple', sigma1', sigma2'] at *
   exact ⟨by linarith, by linarith, by nlinarith [sq_nonneg (a - b), mul_pos ha hb]⟩
 
-
-
-
 /-- σ₁ = 0 implies 3a = 4b (the triple is a multiple of (4,3,5)) -/
 theorem sigma1_zero_forces (a b c : ℤ) (h : a^2 + b^2 = c^2)
     (ha : 0 < a) (hb : 0 < b) (hs1 : sigma1' a b c = 0) :
@@ -215,18 +141,12 @@ theorem sigma1_zero_forces (a b c : ℤ) (h : a^2 + b^2 = c^2)
   unfold sigma1' at hs1
   nlinarith [sq_nonneg (3*a - 4*b)]
 
-
-
-
 /-- σ₂ = 0 implies 4a = 3b (the triple is a multiple of (3,4,5)) -/
 theorem sigma2_zero_forces (a b c : ℤ) (h : a^2 + b^2 = c^2)
     (ha : 0 < a) (hb : 0 < b) (hs2 : sigma2' a b c = 0) :
     4 * a = 3 * b := by
   unfold sigma2' at hs2
   nlinarith [sq_nonneg (4*a - 3*b)]
-
-
-
 
 theorem sigma1_nonzero_primitive (a b c : ℤ) (h : a^2 + b^2 = c^2)
     (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) (hc5 : 5 < c)
@@ -242,9 +162,6 @@ theorem sigma1_nonzero_primitive (a b c : ℤ) (h : a^2 + b^2 = c^2)
   norm_num [ Int.gcd_mul_left, Int.gcd_mul_right ] at hcop;
   nlinarith only [ h, hc5, ha, abs_of_pos ha, hcop ]
 
-
-
-
 theorem sigma2_nonzero_primitive (a b c : ℤ) (h : a^2 + b^2 = c^2)
     (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) (hc5 : 5 < c)
     (hcop : Int.gcd a b = 1) :
@@ -259,9 +176,6 @@ theorem sigma2_nonzero_primitive (a b c : ℤ) (h : a^2 + b^2 = c^2)
     exact ⟨ b / 4, by omega, by omega ⟩;
   norm_num [ Int.gcd_mul_left, Int.gcd_mul_right ] at hcop;
   nlinarith [ abs_of_pos ( by linarith : 0 < k ) ]
-
-
-
 
 /-- For any primitive Pythagorean triple with c > 5, there exists a parent step
 producing a positive Pythagorean triple with strictly smaller hypotenuse -/
@@ -301,16 +215,10 @@ theorem descent_step_primitive (a b c : ℤ) (h : a^2 + b^2 = c^2)
         rw [parent_hyp_shared'']
         linarith [parent_hyp_strict_decrease' a b c h ha hb]⟩
 
-
-
-
 theorem legs_lt_hyp' (a b c : ℤ) (h : a^2 + b^2 = c^2)
     (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
     a < c ∧ b < c := by
   constructor <;> nlinarith [sq_nonneg b, sq_nonneg a]
-
-
-
 
 theorem hyp_ge_5' (a b c : ℤ) (h : a^2 + b^2 = c^2)
     (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) (hcop : Int.gcd a b = 1)
@@ -321,6 +229,4 @@ theorem hyp_ge_5' (a b c : ℤ) (h : a^2 + b^2 = c^2)
   have ha4 : a ≤ 3 := by nlinarith [sq_nonneg b]
   have hb4 : b ≤ 3 := by nlinarith [sq_nonneg a]
   interval_cases a <;> interval_cases b <;> interval_cases c <;> simp_all
-
-
 

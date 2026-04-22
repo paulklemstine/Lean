@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.RepresentationTheory.CategoryRepresentation
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/RepresentationTheory
 Declarations: 11
 -/
 
-import Mathlib
 
 /-- [Section: # CatalogBuild.Algebra.RepresentationTheory.CategoryRepresentation
 Auto-generated from theorem catalog database.

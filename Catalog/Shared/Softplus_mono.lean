@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Shared.Softplus_mono
 
 Auto-generated from theorem catalog database.
@@ -5,31 +7,20 @@ Domain: Shared
 Declarations: 9
 -/
 
-import Mathlib
-
 noncomputable section
 
 /-- Softplus is monotone increasing -/
 theorem softplus_mono : Monotone softplus :=
   softplus_strictMono.monotone
 
-
-
-
 /-- e^σ(x) = 1 + eˣ -/
 theorem softplus_exp_identity (x : ℝ) : Real.exp (softplus x) = 1 + Real.exp x := by
   unfold softplus
   rw [Real.exp_log (one_plus_exp_pos x)]
 
-
-
-
 theorem softplus_reflection (x : ℝ) : softplus x - x = softplus (-x) := by
   unfold softplus;
   rw [ show ( 1 + Real.exp ( -x ) ) = ( 1 + Real.exp x ) / Real.exp x by rw [ add_div, div_self <| ne_of_gt <| Real.exp_pos x ] ; rw [ Real.exp_neg ] ; ring, Real.log_div ( by positivity ) <| by positivity, Real.log_exp ]
-
-
-
 
 /-- Softplus is greater than x for all x -/
 theorem softplus_gt_id (x : ℝ) : softplus x > x := by
@@ -39,18 +30,12 @@ theorem softplus_gt_id (x : ℝ) : softplus x > x := by
     _ < Real.log (1 + Real.exp x) := by
         apply Real.log_lt_log (Real.exp_pos x) h1
 
-
-
-
 /-- Softplus is differentiable -/
 theorem softplus_differentiable : Differentiable ℝ softplus := by
   unfold softplus
   apply Differentiable.log
   · exact differentiable_const 1 |>.add Real.differentiable_exp
   · intro x; exact ne_of_gt (one_plus_exp_pos x)
-
-
-
 
 /-- Softplus is strictly monotone increasing -/
 theorem softplus_strictMono : StrictMono softplus := by
@@ -59,9 +44,6 @@ theorem softplus_strictMono : StrictMono softplus := by
   apply Real.log_lt_log
   · exact one_plus_exp_pos a
   · linarith [Real.exp_lt_exp.mpr hab]
-
-
-
 
 /-- [Section: # CatalogBuild.Shared.Softplus_differentiable
 Auto-generated from theorem catalog database.
@@ -78,9 +60,6 @@ theorem softplus_convex : ConvexOn ℝ Set.univ softplus := by
   · exact fun x hx => differentiableAt_of_deriv_ne_zero ( ne_of_gt ( h_hessian x ) ) |> DifferentiableAt.differentiableWithinAt;
   · exact fun x _ => le_of_lt ( h_hessian x )
 
-
-
-
 /-- [Section: # CatalogBuild.Shared.Softplus_convex
 Auto-generated from theorem catalog database.
 Domain: Shared
@@ -90,16 +69,10 @@ theorem softplus_deriv (x : ℝ) : deriv softplus x = logisticSigmoid x := by
   convert HasDerivAt.log ( HasDerivAt.add ( hasDerivAt_const _ _ ) ( Real.hasDerivAt_exp x ) ) _ using 1 <;> norm_num [ logisticSigmoid ];
   positivity
 
-
-
-
 /-- Softplus at zero equals log 2 -/
 theorem softplus_zero : softplus 0 = Real.log 2 := by
   unfold softplus
   simp [Real.exp_zero]
   norm_num
-
-
-
 
 end

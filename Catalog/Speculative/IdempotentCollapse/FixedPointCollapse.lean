@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Speculative.IdempotentCollapse.FixedPointCollapse
 
 Auto-generated from theorem catalog database.
 Domain: Speculative/IdempotentCollapse
 Declarations: 5
 -/
-
-import Mathlib
 
 noncomputable section
 
@@ -25,17 +25,11 @@ theorem limit_of_iteration_idempotent {α : Type*} [TopologicalSpace α] [T2Spac
     exact tendsto_nhds_unique ( by erw [ ← Filter.tendsto_add_atTop_iff_nat 1 ] ; simpa only [ Function.iterate_succ_apply' ] using hf_cont.continuousAt.tendsto.comp this ) ( hconv x );
   exact tendsto_nhds_of_eventually_eq ( Filter.eventually_atTop.mpr ⟨ 0, fun n hn => by induction hn <;> simp_all +decide [ Function.iterate_fixed ] ⟩ )
 
-
-
-
 /-- On any type, a monotone idempotent maps everything to fixed points. -/
 theorem monotone_idempotent_determined_by_fixed {α : Type*} [PartialOrder α]
     (f : α → α) (hf_mono : Monotone f) (hf_idem : ∀ x, f (f x) = f x) :
     ∀ x, f x ∈ {y | f y = y} := by
   intro x; simp; exact hf_idem x
-
-
-
 
 /-- [Section: # CatalogBuild.Speculative.IdempotentCollapse.FixedPointCollapse
 Auto-generated from theorem catalog database.
@@ -48,9 +42,6 @@ theorem monotone_iterate_stabilizes {n : ℕ} (f : Fin n → Fin n)
   -- By definition of negation, if $\neg P$ holds, then $P$ does not hold.
   push_neg at h;
   obtain ⟨ k, hk ⟩ := h 0 ; simp_all +decide [ Function.iterate_fixed ]
-
-
-
 
 theorem kleene_fixed_point_exists {α : Type*} [CompleteLattice α]
     (f : α → α) (hf : Monotone f) :
@@ -65,9 +56,6 @@ theorem kleene_fixed_point_exists {α : Type*} [CompleteLattice α]
       exact sSup_le fun x hx => hx.trans ( hf ( le_sSup hx ) );
     · exact sSup_le fun x hx => hx.trans ( hf ( le_sSup hx ) );
   exact h_knaster_tarski f hf
-
-
-
 
 theorem contraction_total_collapse {α : Type*} [MetricSpace α] [CompleteSpace α]
     [Nonempty α] (f : α → α)
@@ -95,8 +83,5 @@ theorem contraction_total_collapse {α : Type*} [MetricSpace α] [CompleteSpace 
   refine' ⟨ p, hp, fun q hq => _ ⟩
   generalize_proofs at *; (
   exact dist_le_zero.mp ( by have := hk₂ q p; norm_num [ hp, hq ] at this; nlinarith ) ▸ rfl;)))
-
-
-
 
 end

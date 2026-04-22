@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.Core.DiophantineApproximation
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/Core
 Declarations: 8
 -/
 
-import Mathlib
 
 /-- [Section: # CatalogBuild.Algebra.Core.DiophantineApproximation
 Auto-generated from theorem catalog database.

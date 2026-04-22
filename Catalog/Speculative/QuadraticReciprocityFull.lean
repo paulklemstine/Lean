@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Speculative.QuadraticReciprocityFull
 
 Auto-generated from theorem catalog database.
 Domain: Speculative
 Declarations: 13
 -/
-
-import Mathlib
 
 /-- [Section: # CatalogBuild.Speculative.QuadraticReciprocityFull
 Auto-generated from theorem catalog database.
@@ -27,9 +27,6 @@ theorem quadratic_reciprocity_legendre (p q : ℕ) [Fact (Nat.Prime p)] [Fact (N
   · assumption;
   · assumption
 
-
-
-
 /-- [Section: # CatalogBuild.Speculative.QuadraticReciprocityFull
 Auto-generated from theorem catalog database.
 Domain: Speculative
@@ -45,9 +42,6 @@ theorem legendre_sym_neg_one_val (p : ℕ) [Fact (Nat.Prime p)] (hp : p ≠ 2) :
     · ring_nf;
       exact?;
   · exact hp
-
-
-
 
 theorem legendre_sym_two_val (p : ℕ) [Fact (Nat.Prime p)] (hp : p ≠ 2) :
     legendreSym p 2 = (-1) ^ ((p ^ 2 - 1) / 8) := by
@@ -70,9 +64,6 @@ theorem legendre_sym_two_val (p : ℕ) [Fact (Nat.Prime p)] (hp : p ≠ 2) :
       norm_num [ show 49 + p / 8 * 112 + ( p / 8 ) ^ 2 * 64 - 1 = 8 * ( 6 + p / 8 * 14 + ( p / 8 ) ^ 2 * 8 ) by rw [ Nat.sub_eq_of_eq_add ] ; ring ];
       norm_num [ pow_add, pow_mul' ];
   · exact Nat.Prime.odd_of_ne_two Fact.out hp
-
-
-
 
 theorem sum_legendre_zero (p : ℕ) [hp : Fact (Nat.Prime p)] (hodd : p ≠ 2) :
     ∑ a ∈ Finset.range (p - 1), legendreSym p ((a : ℤ) + 1) = 0 := by
@@ -108,17 +99,11 @@ theorem sum_legendre_zero (p : ℕ) [hp : Fact (Nat.Prime p)] (hodd : p ≠ 2) :
     bv_omega;
   rcases p with ( _ | _ | p ) <;> simp_all +decide [ Finset.sum_range, ZMod, Fin.sum_univ_succ ]
 
-
-
-
 /-- Product of two quadratic non-residues is a quadratic residue. -/
 theorem qnr_product_is_qr (p : ℕ) [hp : Fact (Nat.Prime p)]
     (a b : ℤ) (ha : legendreSym p a = -1) (hb : legendreSym p b = -1) :
     legendreSym p (a * b) = 1 := by
   rw [legendreSym.mul p a b, ha, hb]; ring
-
-
-
 
 /-- Product of a QR and QNR is a QNR. -/
 theorem qr_qnr_product_is_qnr (p : ℕ) [hp : Fact (Nat.Prime p)]
@@ -126,17 +111,11 @@ theorem qr_qnr_product_is_qnr (p : ℕ) [hp : Fact (Nat.Prime p)]
     legendreSym p (a * b) = -1 := by
   rw [legendreSym.mul p a b, ha, hb]; ring
 
-
-
-
 theorem first_supplement (p : ℕ) [hp : Fact (Nat.Prime p)] (hodd : p ≠ 2) :
     legendreSym p (-1) = 1 ↔ p % 4 = 1 := by
   rw [ legendreSym.at_neg_one ];
   · rw [ ZMod.χ₄_nat_mod_four ] ; have := Nat.mod_lt p zero_lt_four; interval_cases p % 4 <;> simp +decide ;
   · assumption
-
-
-
 
 theorem second_supplement (p : ℕ) [hp : Fact (Nat.Prime p)] (hodd : p ≠ 2) :
     legendreSym p 2 = 1 ↔ p % 8 = 1 ∨ p % 8 = 7 := by
@@ -152,44 +131,28 @@ theorem second_supplement (p : ℕ) [hp : Fact (Nat.Prime p)] (hodd : p ≠ 2) :
         exact?;
     · exact hodd
 
-
-
-
 /-- Quadratic reciprocity verified for (3, 5). -/
 theorem qr_3_5 : @legendreSym 3 ⟨Nat.prime_iff.mpr (by decide)⟩ 5 *
     @legendreSym 5 ⟨Nat.prime_iff.mpr (by decide)⟩ 3 = (-1) ^ (1 * 2) := by
   native_decide
-
-
-
 
 /-- Quadratic reciprocity verified for (3, 7). -/
 theorem qr_3_7 : @legendreSym 3 ⟨Nat.prime_iff.mpr (by decide)⟩ 7 *
     @legendreSym 7 ⟨Nat.prime_iff.mpr (by decide)⟩ 3 = (-1) ^ (1 * 3) := by
   native_decide
 
-
-
-
 /-- Quadratic reciprocity verified for (5, 7). -/
 theorem qr_5_7 : @legendreSym 5 ⟨Nat.prime_iff.mpr (by decide)⟩ 7 *
     @legendreSym 7 ⟨Nat.prime_iff.mpr (by decide)⟩ 5 = (-1) ^ (2 * 3) := by
   native_decide
-
-
-
 
 /-- Quadratic reciprocity verified for (11, 13). -/
 theorem qr_11_13 : @legendreSym 11 ⟨Nat.prime_iff.mpr (by decide)⟩ 13 *
     @legendreSym 13 ⟨Nat.prime_iff.mpr (by decide)⟩ 11 = (-1) ^ (5 * 6) := by
   native_decide
 
-
-
-
 /-- Quadratic reciprocity verified for (5, 11). -/
 theorem qr_5_11 : @legendreSym 5 ⟨Nat.prime_iff.mpr (by decide)⟩ 11 *
     @legendreSym 11 ⟨Nat.prime_iff.mpr (by decide)⟩ 5 = (-1) ^ (2 * 5) := by
   native_decide
-
 

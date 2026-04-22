@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.MachineLearning.QuantumTransformer.QualityBounds
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: MachineLearning/QuantumTransformer
 Declarations: 9
 -/
 
-import Mathlib
 
 noncomputable section
 

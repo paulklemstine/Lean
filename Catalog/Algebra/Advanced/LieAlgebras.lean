@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.Advanced.LieAlgebras
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/Advanced
 Declarations: 13
 -/
 
-import Mathlib
 
 /-- [Section: # CatalogBuild.Algebra.Advanced.LieAlgebras
 Auto-generated from theorem catalog database.

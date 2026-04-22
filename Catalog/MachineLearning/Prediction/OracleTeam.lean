@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.MachineLearning.Prediction.OracleTeam
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: MachineLearning/Prediction
 Declarations: 5
 -/
 
-import Mathlib
 
 noncomputable section
 

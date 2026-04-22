@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Geometry.PAdic.PadicMobius
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Geometry/PAdic
 Declarations: 35
 -/
 
-import Mathlib
 
 noncomputable section
 

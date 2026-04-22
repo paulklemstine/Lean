@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.MachineLearning.ShefferFunction.Algebra
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: MachineLearning/ShefferFunction
 Declarations: 14
 -/
 
-import Mathlib
 
 noncomputable section
 

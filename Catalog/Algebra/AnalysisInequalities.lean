@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.AnalysisInequalities
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra
 Declarations: 14
 -/
 
-import Mathlib
 
 /-- [Section: # CatalogBuild.Algebra.AnalysisInequalities
 Auto-generated from theorem catalog database.

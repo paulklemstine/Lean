@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Speculative.IdempotentCollapse.OptimalCollapse
 
 Auto-generated from theorem catalog database.
@@ -5,16 +7,11 @@ Domain: Speculative/IdempotentCollapse
 Declarations: 4
 -/
 
-import Mathlib
-
 noncomputable section
 
 /-- Total displacement caused by a map on a finite metric space. -/
 def collapseDisplacement {α : Type*} [Fintype α] [PseudoMetricSpace α] (f : α → α) : ℝ :=
   ∑ x : α, dist x (f x)
-
-
-
 
 /-- [Section: # CatalogBuild.Speculative.IdempotentCollapse.OptimalCollapse
 Auto-generated from theorem catalog database.
@@ -28,9 +25,6 @@ theorem zero_displacement_is_id {α : Type*} [Fintype α] [MetricSpace α]
         rw [ eq_comm, collapseDisplacement ] at hd;
         exact fun x => hd.symm ▸ Finset.sum_eq_zero_iff_of_nonneg ( fun _ _ => dist_nonneg ) |>.1 rfl x ( Finset.mem_univ x );
       exact fun x => dist_eq_zero.mp ( h_zero x ) ▸ rfl
-
-
-
 
 /-- [Section: # CatalogBuild.Speculative.IdempotentCollapse.OptimalCollapse
 Auto-generated from theorem catalog database.
@@ -54,15 +48,9 @@ theorem collapse_transport_bound {α : Type*} [Fintype α] [PseudoMetricSpace α
       convert Finset.sum_le_sum fun x _ => h_dist_le_diam x using 1 ; simp +decide [ collapseDisplacement ];
       exact Or.inl rfl
 
-
-
-
 /-- Composing with any map can only shrink the range. -/
 theorem idempotent_range_inclusion {α : Type*} (f g : α → α) :
     range (f ∘ g) ⊆ range f := by
   intro x ⟨y, hy⟩; exact ⟨g y, hy⟩
-
-
-
 
 end

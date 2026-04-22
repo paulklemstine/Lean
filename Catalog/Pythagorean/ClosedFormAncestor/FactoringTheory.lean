@@ -1,3 +1,6 @@
+import Mathlib
+import Pythagorean.ClosedFormAncestor.ClosedFormAncestor
+
 /-! # CatalogBuild.Pythagorean.ClosedFormAncestor.FactoringTheory
 
 Auto-generated from theorem catalog database.
@@ -5,13 +8,9 @@ Domain: Pythagorean/ClosedFormAncestor
 Declarations: 28
 -/
 
-import Mathlib
-import Pythagorean.ClosedFormAncestor.ClosedFormAncestor
-
 /-- 2·C_G = -(H² + 2PH - ε). -/
 def twoCG (G : ℕ) : ℤ :=
   -(compPell G ^ 2 + 2 * pellNum G * compPell G - (-1 : ℤ) ^ G)
-
 
 /-- twoCG(G) = -2·P·(P+H), using the Pell identity H²-2P²=(-1)^G. -/
 theorem twoCG_factored (G : ℕ) :
@@ -20,12 +19,10 @@ theorem twoCG_factored (G : ℕ) :
   have h := pell_sq_identity G
   nlinarith [sq_nonneg (compPell G), sq_nonneg (pellNum G)]
 
-
 /-- Joint induction: P_n + H_n = P_{n+1} and H_{n+1} = P_{n+1} + P_n. -/
 theorem pell_plus_comp (n : ℕ) :
     pellNum n + compPell n = pellNum (n + 1) :=
   (pell_comp_both n).1
-
 
 /-- twoCG(G) = -2·P_G·P_{G+1}. -/
 theorem twoCG_consecutive_pell (G : ℕ) :
@@ -50,7 +47,6 @@ theorem twoCG_5 : twoCG 5 = -4060 := by native_decide
 -- ═══════════════════════════════════════════════════════════════
 -- Section 2: N divides the leading terms
 -- ═══════════════════════════════════════════════════════════════
-
 
 /-- N divides the "non-constant" part of 2·p_G(N). -/
 theorem two_p_G_leading_divisible (G : ℕ) (N : ℤ) :
@@ -108,7 +104,6 @@ theorem gcd_factor_899 :
 -- ═══════════════════════════════════════════════════════════════
 -- Section 4: Connection to Williams' p+1
 -- ═══════════════════════════════════════════════════════════════
-
 
 /-- The factoring succeeds when the Pell sequence mod p hits zero.
 The "rank of apparition" of p in the Pell sequence — the smallest k

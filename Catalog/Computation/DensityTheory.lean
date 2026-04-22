@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Computation.DensityTheory
 
 Auto-generated from theorem catalog database.
@@ -5,15 +7,16 @@ Domain: Computation
 Declarations: 15
 -/
 
-import Mathlib
 
 noncomputable section
 
 /-- The EML operation. -/
 def EMLd (a b : ℝ) : ℝ := Real.exp a - Real.log b
 
-
-
+/-- EML closure at depth n: start from seed set S and apply EMLd n times. -/
+def EMLClosure : ℕ → Set ℝ → Set ℝ
+  | 0, S => S
+  | n + 1, S => EMLClosure n S ∪ {z | ∃ a ∈ EMLClosure n S, ∃ b ∈ EMLClosure n S, z = EMLd a b}
 
 /-- The full EML closure (union over all depths). -/
 def fullEMLClosure (S : Set ℝ) : Set ℝ := ⋃ n, EMLClosure n S
@@ -166,9 +169,11 @@ theorem e_irrational : Irrational (Real.exp 1) := by
 
 
 
-/-- exp(exp(1)) is irrational. -/
-theorem exp_e_irrational : Irrational (Real.exp (Real.exp 1)) := by
-  sorry
+/- The irrationality of exp(exp(1)) = e^e is a well-known OPEN PROBLEM in mathematics.
+   It is conjectured to be true but no proof is known as of 2026.
+   The following statement is therefore commented out. -/
+/- theorem exp_e_irrational : Irrational (Real.exp (Real.exp 1)) := by
+  sorry -/
 
 
 

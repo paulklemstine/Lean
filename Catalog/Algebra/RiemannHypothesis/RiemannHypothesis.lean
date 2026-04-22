@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.RiemannHypothesis.RiemannHypothesis
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/RiemannHypothesis
 Declarations: 10
 -/
 
-import Mathlib
 
 noncomputable section
 

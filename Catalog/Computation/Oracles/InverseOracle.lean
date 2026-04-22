@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Computation.Oracles.InverseOracle
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Computation/Oracles
 Declarations: 22
 -/
 
-import Mathlib
 
 /-- An inverse oracle for `f : α → β` maps each output back to the set of all preimages. -/
 structure InverseOracle (α β : Type*) where

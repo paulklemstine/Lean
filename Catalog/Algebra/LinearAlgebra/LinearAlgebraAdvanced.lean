@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.LinearAlgebra.LinearAlgebraAdvanced
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/LinearAlgebra
 Declarations: 12
 -/
 
-import Mathlib
 
 /-- [Section: # CatalogBuild.Algebra.LinearAlgebra.LinearAlgebraAdvanced
 Auto-generated from theorem catalog database.

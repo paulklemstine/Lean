@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Pythagorean.Berggren.BerggrenB2TraceRecurrence
 
 Auto-generated from theorem catalog database.
@@ -5,12 +7,8 @@ Domain: Pythagorean/Berggren
 Declarations: 7
 -/
 
-import Mathlib
-
 /-- [Section: ## Definitions] -/
 def BTR₂ : Matrix (Fin 3) (Fin 3) ℤ := !![1, 2, 2; 2, 1, 2; 2, 2, 3]
-
-
 
 /-- The trace sequence tr(B₂ⁿ) defined by the recurrence -/
 def trB2 : ℕ → ℤ
@@ -19,12 +17,8 @@ def trB2 : ℕ → ℤ
   | 2 => 35
   | n + 3 => 5 * trB2 (n + 2) + 5 * trB2 (n + 1) - trB2 n
 
-
-
 /-- B₂³ = 5B₂² + 5B₂ - I (rearranged Cayley-Hamilton) -/
 theorem BTR₂_cayley : BTR₂ ^ 3 = 5 • BTR₂ ^ 2 + 5 • BTR₂ - 1 := by native_decide
-
-
 
 /-- [Section: ## Trace recurrence follows from Cayley-Hamilton] -/
 theorem trace_BTR₂_recurrence (n : ℕ) :
@@ -37,8 +31,6 @@ theorem trace_BTR₂_recurrence (n : ℕ) :
     · rw [ ← pow_add, add_comm, pow_add ];
     · norm_num [ add_mul, sub_mul, mul_assoc, pow_succ' ];
   rw [ h_matrix, Matrix.trace_sub, Matrix.trace_add, Matrix.trace_smul, Matrix.trace_smul ] ; norm_num
-
-
 
 /-- [Section: # CatalogBuild.Pythagorean.Berggren.BerggrenB2TraceRecurrence
 Auto-generated from theorem catalog database.
@@ -55,14 +47,10 @@ theorem trB2_eq_trace (n : ℕ) : trB2 n = Matrix.trace (BTR₂ ^ n) := by
     rw [ ih _ <| by linarith, ih _ <| by linarith, ih _ <| by linarith ];
     exact?
 
-
-
 /-- [Section: ## Verification of specific values] -/
 theorem trB2_vals :
     trB2 0 = 3 ∧ trB2 1 = 5 ∧ trB2 2 = 35 ∧
     trB2 3 = 197 ∧ trB2 4 = 1155 ∧ trB2 5 = 6725 := by native_decide
-
-
 
 theorem trace_BTR₂_base :
     Matrix.trace (BTR₂ ^ 0) = 3 ∧

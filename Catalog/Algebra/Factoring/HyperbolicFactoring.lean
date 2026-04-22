@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.Factoring.HyperbolicFactoring
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/Factoring
 Declarations: 16
 -/
 
-import Mathlib
 
 noncomputable section
 

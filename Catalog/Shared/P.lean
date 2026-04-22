@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Shared.P
 
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/Berggren
 Declarations: 1
 -/
-
-import Mathlib
 
 /-- [Section: # Error Detection and Correction via Berggren Six-Tuples
 This file formalizes the error detection capabilities of the Berggren six-tuple

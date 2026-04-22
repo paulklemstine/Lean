@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.MachineLearning.ShefferFunction.ReLUApproximation
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: MachineLearning/ShefferFunction
 Declarations: 4
 -/
 
-import Mathlib
 
 /-- [Section: # CatalogBuild.MachineLearning.ShefferFunction.ReLUApproximation
 Auto-generated from theorem catalog database.

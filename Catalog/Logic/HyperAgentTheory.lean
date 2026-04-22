@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Logic.HyperAgentTheory
 
 Auto-generated from theorem catalog database.
 Domain: Logic
 Declarations: 31
 -/
-
-import Mathlib
 
 noncomputable section
 
@@ -14,22 +14,13 @@ structure AgentOracle (Agent : Type*) where
   improve : Agent → Agent
   idem : ∀ a, improve (improve a) = improve a
 
-
-
-
 /-- The fixed-point set: agents that cannot be further improved. -/
 def AgentOracle.fixedAgents {Agent : Type*} (O : AgentOracle Agent) : Set Agent :=
   {a | O.improve a = a}
 
-
-
-
 /-- Every improved agent is already at a fixed point. -/
 theorem AgentOracle.improved_is_fixed {Agent : Type*} (O : AgentOracle Agent)
     (a : Agent) : O.improve a ∈ O.fixedAgents := O.idem a
-
-
-
 
 /-- The fixed-agent set equals the range of the improvement operator. -/
 theorem AgentOracle.fixed_eq_range {Agent : Type*} (O : AgentOracle Agent) :
@@ -38,9 +29,6 @@ theorem AgentOracle.fixed_eq_range {Agent : Type*} (O : AgentOracle Agent) :
   constructor
   · intro hy; exact ⟨y, hy⟩
   · rintro ⟨x, rfl⟩; exact O.idem x
-
-
-
 
 /-- Iterating self-improvement beyond the first step is redundant. -/
 theorem AgentOracle.iterate_stable {Agent : Type*} (O : AgentOracle Agent)
@@ -54,23 +42,14 @@ theorem AgentOracle.iterate_stable {Agent : Type*} (O : AgentOracle Agent)
     · subst h; simp
     · rw [ih (by omega)]; exact O.idem a
 
-
-
-
 /-- A strange loop in agent space: a self-modifier whose square equals itself. -/
 def IsStrangeLoop {X : Type*} (f : X → X) : Prop :=
   ∀ x, f (f x) = f x
-
-
-
 
 /-- Every AgentOracle is a strange loop. -/
 theorem oracle_is_strange_loop {X : Type*}
     (O : AgentOracle X) :
     IsStrangeLoop O.improve := O.idem
-
-
-
 
 /-- [Section: # CatalogBuild.Logic.HyperAgentTheory
 Auto-generated from theorem catalog database.
@@ -98,9 +77,6 @@ theorem monotone_bounded_convergence {Agent : Type*}
     exact h_bound _
   exact lt_irrefl bound (by linarith)
 
-
-
-
 /-- Lawvere's fixed-point theorem: if an agent can represent all self-modifications,
 every transformation has a fixed point. -/
 theorem lawvere_agent_fixpoint {Agent Behavior : Type*}
@@ -110,9 +86,6 @@ theorem lawvere_agent_fixpoint {Agent Behavior : Type*}
     ∃ b : Behavior, transform b = b := by
   obtain ⟨a, ha⟩ := h_surj (fun x => transform (represent x x))
   exact ⟨represent a a, by have := congr_fun ha a; simpa using this.symm⟩
-
-
-
 
 /-- [Section: # CatalogBuild.Logic.HyperAgentTheory
 Auto-generated from theorem catalog database.
@@ -130,31 +103,19 @@ theorem agent_lattice_fixpoint {Agent : Type*} [CompleteLattice Agent]
     obtain ⟨ a, ha₁, ha₂ ⟩ := h_least_fixed_point; exact ⟨ a, le_antisymm ( ha₁ ) ( ha₂ _ ( by aesop ) ) ⟩ ;
   exact h_fixed_point
 
-
-
-
 /-- An archive is a growing sequence of agent sets. -/
 structure Archive (Agent : Type*) where
   contents : ℕ → Finset Agent
   monotone_contents : ∀ n, contents n ⊆ contents (n + 1)
-
-
-
 
 /-- The archive grows monotonically in cardinality. -/
 theorem Archive.card_monotone {Agent : Type*} [DecidableEq Agent]
     (A : Archive Agent) : ∀ n, (A.contents n).card ≤ (A.contents (n + 1)).card :=
   fun n => Finset.card_le_card (A.monotone_contents n)
 
-
-
-
 /-- The limit archive: the union of all finite stages. -/
 def Archive.limit {Agent : Type*} (A : Archive Agent) : Set Agent :=
   ⋃ n, ↑(A.contents n)
-
-
-
 
 /-- Every finite stage is contained in the limit. -/
 theorem Archive.stage_subset_limit {Agent : Type*} (A : Archive Agent)
@@ -162,9 +123,6 @@ theorem Archive.stage_subset_limit {Agent : Type*} (A : Archive Agent)
   intro x hx
   simp [Archive.limit]
   exact ⟨n, hx⟩
-
-
-
 
 /-- The best performance in the archive is monotonically non-decreasing. -/
 theorem Archive.best_monotone {Agent : Type*} [DecidableEq Agent]
@@ -175,17 +133,11 @@ theorem Archive.best_monotone {Agent : Type*} [DecidableEq Agent]
   apply Finset.sup'_mono
   exact A.monotone_contents n
 
-
-
-
 /-- A domain transfer: a map between agent spaces with a section. -/
 structure DomainTransfer (A B : Type*) where
   transfer : A → B
   back : B → A
   section_prop : ∀ b, transfer (back b) = b
-
-
-
 
 /-- An oracle-preserving transfer: if improvement is idempotent in the source,
 the transferred improvement is idempotent in the target. -/
@@ -200,18 +152,12 @@ theorem transfer_preserves_oracle {A B : Type*}
   conv_lhs => rw [← hb]
   rw [← h_comm, ← h_comm, h_idem, h_comm, hb]
 
-
-
-
 /-- The imp@k metric: maximum improvement achieved within k iterations. -/
 noncomputable def improvement_at_k {Agent : Type*}
     (improve : Agent → Agent) (eval : Agent → ℝ)
     (a₀ : Agent) (k : ℕ) : ℝ :=
   (Finset.range (k + 1)).sup' ⟨0, Finset.mem_range.mpr (Nat.zero_lt_succ k)⟩
     (fun i => eval (improve^[i] a₀)) - eval a₀
-
-
-
 
 theorem improvement_monotone_k {Agent : Type*}
     (improve : Agent → Agent) (eval : Agent → ℝ)
@@ -220,17 +166,11 @@ theorem improvement_monotone_k {Agent : Type*}
   refine' sub_le_sub_right ( Finset.sup'_le _ _ _ ) _;
   exact fun i hi => Finset.le_sup' ( fun i => eval ( improve^[i] a₀ ) ) ( Finset.mem_range.mpr ( Nat.lt_succ_of_lt ( Finset.mem_range.mp hi ) ) )
 
-
-
-
 theorem no_universal_improver (Agent : Type*) [Nonempty Agent]
     (h_many : ∃ a b : Agent, a ≠ b) :
     ∀ improve : Agent → Agent,
     ∃ eval : Agent → ℤ, ∃ a : Agent, eval (improve a) ≤ eval a := by
   exact fun improve => ⟨ fun _ => 0, Classical.arbitrary _, by simp +decide ⟩
-
-
-
 
 /-- Tarski-style limitation: no hyperagent can define its own evaluation. -/
 theorem no_self_evaluation {Agent : Type*}
@@ -239,9 +179,6 @@ theorem no_self_evaluation {Agent : Type*}
   exact ⟨fun a => ¬ represent a a, fun a h => by
     have := congr_fun h a; simp at this⟩
 
-
-
-
 /-- Composition of domain transfers. -/
 def DomainTransfer.compose {A B C : Type*}
     (T₁ : DomainTransfer A B) (T₂ : DomainTransfer B C) :
@@ -249,9 +186,6 @@ def DomainTransfer.compose {A B C : Type*}
   transfer := T₂.transfer ∘ T₁.transfer
   back := T₁.back ∘ T₂.back
   section_prop := fun c => by simp [T₁.section_prop, T₂.section_prop]
-
-
-
 
 /-- Composed transfers preserve oracle structure transitively. -/
 theorem compound_transfer_oracle {A B C : Type*}
@@ -264,38 +198,23 @@ theorem compound_transfer_oracle {A B C : Type*}
   have h_idem_B := transfer_preserves_oracle T₁ imp_A h_idem_A imp_B h_AB
   exact transfer_preserves_oracle T₂ imp_B h_idem_B imp_C h_BC
 
-
-
-
 /-- A meta-oracle: an oracle on the space of improvement operators. -/
 def MetaOracle (Agent : Type*) :=
   AgentOracle (Agent → Agent)
-
-
-
 
 /-- The meta-oracle's fixed points are the "stable strategies" —
 improvement methods that cannot be further improved. -/
 def stableStrategies {Agent : Type*} (MO : MetaOracle Agent) : Set (Agent → Agent) :=
   MO.fixedAgents
 
-
-
-
 /-- Every meta-improved strategy is stable. -/
 theorem meta_improved_is_stable {Agent : Type*} (MO : MetaOracle Agent)
     (f : Agent → Agent) : MO.improve f ∈ stableStrategies MO :=
   MO.idem f
 
-
-
-
 /-- A fully self-referential system: the meta-oracle applied to id is stable. -/
 theorem meta_oracle_self_reference {Agent : Type*} (MO : MetaOracle Agent) :
     MO.improve (MO.improve id) = MO.improve id := MO.idem id
-
-
-
 
 /-- Diagonal argument for agent spaces. -/
 theorem agent_diagonal {Agent : Type*}
@@ -306,9 +225,6 @@ theorem agent_diagonal {Agent : Type*}
   have := congr_fun h a
   simp at this
 
-
-
-
 /-- Incompleteness for self-improving agents: no agent can predict the
 behavior of all agents, including itself. -/
 theorem hyperagent_incompleteness {Agent : Type*}
@@ -317,16 +233,10 @@ theorem hyperagent_incompleteness {Agent : Type*}
     ∃ behavior : Agent → Bool, ∀ a, behavior ≠ predict a :=
   agent_diagonal predict h_surj
 
-
-
-
 /-- A diversity metric on agents. -/
 def DiverseArchive {Agent : Type*} [DecidableEq Agent]
     (agents : Finset Agent) (eval : Agent → ℝ) (diversity : Agent → Agent → ℝ) : Prop :=
   ∀ a ∈ agents, ∀ b ∈ agents, a ≠ b → 0 < diversity a b
-
-
-
 
 /-- Quality-diversity trade-off: we cannot simultaneously maximize
 quality and diversity when agents are distinct. -/
@@ -336,8 +246,5 @@ theorem qd_tradeoff {Agent : Type*} [DecidableEq Agent] [Nonempty Agent]
     a ≠ b ∧ (eval a ≠ eval b ∨ eval a = eval b) := by
   obtain ⟨a, ha, b, hb, hab⟩ := Finset.one_lt_card.mp (by omega : 1 < agents.card)
   exact ⟨fun _ => 0, a, b, ha, hb, hab, Or.inr rfl⟩
-
-
-
 
 end

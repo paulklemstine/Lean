@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Computation.SearchInformationDuality
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Computation
 Declarations: 10
 -/
 
-import Mathlib
 
 noncomputable section
 

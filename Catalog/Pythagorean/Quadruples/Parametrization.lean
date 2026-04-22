@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Pythagorean.Quadruples.Parametrization
 
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/Quadruples
 Declarations: 16
 -/
-
-import Mathlib
 
 /-- Pythagorean triple embedding: (m²-n², 2mn, 0, m²+n²). -/
 theorem triple_embedding (m n : ℤ) :
@@ -14,7 +14,6 @@ theorem triple_embedding (m n : ℤ) :
     let d := m ^ 2 + n ^ 2
     a ^ 2 + b ^ 2 + (0 : ℤ) ^ 2 = d ^ 2 := by ring
 
-
 /-- Zero-component from triple. -/
 theorem zero_component_param (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     a ^ 2 + b ^ 2 + 0 ^ 2 = c ^ 2 := by linarith
@@ -22,7 +21,6 @@ theorem zero_component_param (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 -- ═══════════════════════════════════════════════════════════════
 -- Section 2: Scaling
 -- ═══════════════════════════════════════════════════════════════
-
 
 /-- [Section: # Parametrization of Pythagorean Quadruples
 ## Main Results
@@ -37,7 +35,6 @@ theorem pq_scale (a b c d k : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
 -- ═══════════════════════════════════════════════════════════════
 -- Section 3: Concrete PQ Verification
 -- ═══════════════════════════════════════════════════════════════
-
 
 theorem verify_pq_0_0_1_1 : (0:ℤ) ^ 2 + 0 ^ 2 + 1 ^ 2 = 1 ^ 2 := by norm_num
 
@@ -61,7 +58,6 @@ theorem verify_pq_3_4_12_13 : (3:ℤ) ^ 2 + 4 ^ 2 + 12 ^ 2 = 13 ^ 2 := by norm_n
 -- Section 4: Cauchy-Schwarz
 -- ═══════════════════════════════════════════════════════════════
 
-
 theorem cauchy_schwarz_pq (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
     (h₁ : a₁ ^ 2 + b₁ ^ 2 + c₁ ^ 2 = d₁ ^ 2)
     (h₂ : a₂ ^ 2 + b₂ ^ 2 + c₂ ^ 2 = d₂ ^ 2) :
@@ -74,7 +70,6 @@ theorem cauchy_schwarz_pq (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
 -- Section 5: Hypotenuse Universality
 -- ═══════════════════════════════════════════════════════════════
 
-
 /-- Every integer is a PQ hypotenuse (trivially: d² + 0² + 0² = d²). -/
 theorem every_int_is_hyp (d : ℤ) : ∃ a b c : ℤ, a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2 :=
   ⟨d, 0, 0, by ring⟩
@@ -82,7 +77,6 @@ theorem every_int_is_hyp (d : ℤ) : ∃ a b c : ℤ, a ^ 2 + b ^ 2 + c ^ 2 = d 
 -- ═══════════════════════════════════════════════════════════════
 -- Section 6: Norm Multiplicativity
 -- ═══════════════════════════════════════════════════════════════
-
 
 theorem pq_norm_product (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
     (h₁ : a₁ ^ 2 + b₁ ^ 2 + c₁ ^ 2 = d₁ ^ 2)
@@ -93,7 +87,6 @@ theorem pq_norm_product (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
 -- ═══════════════════════════════════════════════════════════════
 -- Section 7: Parity
 -- ═══════════════════════════════════════════════════════════════
-
 
 /-- In a PQ, the sum a²+b²+c² matches d² mod 4 (both are sums of squares). -/
 theorem pq_sum_eq_sq (a b c d : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :

@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Computation.TriangleInequality
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Computation
 Declarations: 19
 -/
 
-import Mathlib
 
 noncomputable section
 

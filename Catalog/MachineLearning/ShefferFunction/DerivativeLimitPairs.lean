@@ -1,10 +1,3 @@
-/-! # CatalogBuild.MachineLearning.ShefferFunction.DerivativeLimitPairs
-
-Auto-generated from theorem catalog database.
-Domain: MachineLearning/ShefferFunction
-Declarations: 3
--/
-
 import EML.Barriers
 import EML.Basic
 import EML.Lean.AdvancedTheorems
@@ -13,6 +6,14 @@ import EML.Lean.ShefferAlgebra
 import EML.Lean.SoftplusBasic
 import EML.Lean.ThirdBarrier
 import Mathlib
+
+/-! # CatalogBuild.MachineLearning.ShefferFunction.DerivativeLimitPairs
+
+Auto-generated from theorem catalog database.
+Domain: MachineLearning/ShefferFunction
+Declarations: 3
+-/
+
 
 noncomputable section
 

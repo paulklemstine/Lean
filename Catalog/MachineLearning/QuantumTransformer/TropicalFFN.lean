@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.MachineLearning.QuantumTransformer.TropicalFFN
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: MachineLearning/QuantumTransformer
 Declarations: 11
 -/
 
-import Mathlib
 
 noncomputable section
 

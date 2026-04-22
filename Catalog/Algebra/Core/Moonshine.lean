@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.Core.Moonshine
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/Core
 Declarations: 5
 -/
 
-import Mathlib
 
 /-- Berggren matrix M₁ in SL(2,ℤ). -/
 def berggren_M1 : Matrix.SpecialLinearGroup (Fin 2) ℤ :=

@@ -1,3 +1,9 @@
+import EML.Lean.AdvancedTheorems
+import EML.Lean.FutureTheorems
+import EML.Lean.ShefferAlgebra
+import EML.Lean.SoftplusBasic
+import Mathlib
+
 /-! # CatalogBuild.EML.NewTheorems
 
 Auto-generated from theorem catalog database.
@@ -5,25 +11,13 @@ Domain: EML
 Declarations: 35
 -/
 
-import EML.Lean.AdvancedTheorems
-import EML.Lean.FutureTheorems
-import EML.Lean.ShefferAlgebra
-import EML.Lean.SoftplusBasic
-import Mathlib
-
 noncomputable section
 
 /-- The EML operator. -/
 def emlN (x y : ℂ) : ℂ := Complex.exp x - Complex.log y
 
-
-
-
 /-- The real EML operator. -/
 def emlNR (x y : ℝ) : ℝ := Real.exp x - Real.log y
-
-
-
 
 /-- [Section: # CatalogBuild.EML.NewTheorems
 Auto-generated from theorem catalog database.
@@ -34,9 +28,6 @@ theorem emlNR_partial_x (x y : ℝ) (hy : 0 < y) :
   convert HasDerivAt.sub ( Real.hasDerivAt_exp x ) ( hasDerivAt_const _ _ ) using 1;
   ring
 
-
-
-
 /-- [Section: # CatalogBuild.EML.NewTheorems
 Auto-generated from theorem catalog database.
 Domain: EML
@@ -45,32 +36,20 @@ theorem emlNR_partial_y (x : ℝ) (y : ℝ) (hy : 0 < y) :
     HasDerivAt (fun y' => emlNR x y') (-1/y) y := by
   simpa [ div_eq_inv_mul ] using HasDerivAt.sub ( hasDerivAt_const _ _ ) ( Real.hasDerivAt_log hy.ne' )
 
-
-
-
 /-- Leaf count of an EML tree. -/
 def EMLTree.leaves : EMLTree → ℕ
   | .leaf => 1
   | .node l r => l.leaves + r.leaves
-
-
-
 
 /-- Internal node count. -/
 def EMLTree.nodes : EMLTree → ℕ
   | .leaf => 0
   | .node l r => 1 + l.nodes + r.nodes
 
-
-
-
 /-- Depth of an EML tree. -/
 def EMLTree.depth : EMLTree → ℕ
   | .leaf => 0
   | .node l r => 1 + max l.depth r.depth
-
-
-
 
 theorem EMLTree.leaves_eq_nodes_succ (t : EMLTree) :
     t.leaves = t.nodes + 1 := by
@@ -79,9 +58,6 @@ theorem EMLTree.leaves_eq_nodes_succ (t : EMLTree) :
     intro t; induction t; aesop;
     erw [ EMLTree.leaves, EMLTree.nodes ] ; linarith!;
   exact h_ind t
-
-
-
 
 theorem EMLTree.leaves_le_pow_depth (t : EMLTree) :
     t.leaves ≤ 2^t.depth := by
@@ -93,60 +69,33 @@ theorem EMLTree.leaves_le_pow_depth (t : EMLTree) :
     simp_all +arith +decide [ EMLTree.leaves, EMLTree.depth ];
     rw [ pow_succ' ] ; linarith [ pow_le_pow_right₀ ( by decide : 1 ≤ 2 ) ( le_max_left l.depth r.depth ), pow_le_pow_right₀ ( by decide : 1 ≤ 2 ) ( le_max_right l.depth r.depth ) ] ;
 
-
-
-
 theorem antiEml_eq_neg_swap (x y : ℂ) :
     (Complex.log x - Complex.exp y) = -(emlN y x) := by
   unfold emlN; ring;
-
-
-
 
 /-- exp is continuous. -/
 theorem emlN_exp_continuous : Continuous (fun p : ℂ × ℂ => Complex.exp p.1) :=
   Complex.continuous_exp.comp continuous_fst
 
-
-
-
 /-- Master formula parameter count. -/
 def emlMasterParams (n : ℕ) : ℕ := 5 * 2^n - 6
-
-
-
 
 /-- Level 1: 4 parameters. -/
 theorem emlMasterParams_one : emlMasterParams 1 = 4 := by native_decide
 
-
-
-
 /-- Level 2: 14 parameters. -/
 theorem emlMasterParams_two : emlMasterParams 2 = 14 := by native_decide
-
-
-
 
 /-- Level 3: 34 parameters. -/
 theorem emlMasterParams_three : emlMasterParams 3 = 34 := by native_decide
 
-
-
-
 /-- Level 4: 74 parameters. -/
 theorem emlMasterParams_four : emlMasterParams 4 = 74 := by native_decide
-
-
-
 
 theorem softplus_subadditive (x y : ℝ) :
     softplus (x + y) ≤ softplus x + softplus y := by
   unfold softplus;
   rw [ ← Real.log_mul, Real.log_le_log_iff ] <;> first | positivity | rw [ Real.exp_add ] ; nlinarith [ Real.exp_pos x, Real.exp_pos y ] ;
-
-
-
 
 theorem sq_not_mem_sheffer : (fun x : ℝ => x ^ 2) ∉ ShefferAlgebra := by
   intro h
@@ -156,9 +105,6 @@ theorem sq_not_mem_sheffer : (fun x : ℝ => x ^ 2) ∉ ShefferAlgebra := by
   contrapose! hC;
   norm_num [ ← he ];
   exact fun _ => ⟨ C + 1, 0, by rw [ abs_of_nonneg, abs_of_nonneg ] <;> nlinarith ⟩
-
-
-
 
 theorem sinh_not_mem_sheffer : (fun x : ℝ => Real.sinh x) ∉ ShefferAlgebra := by
   intro h;
@@ -180,15 +126,9 @@ theorem sinh_not_mem_sheffer : (fun x : ℝ => Real.sinh x) ∉ ShefferAlgebra :
   obtain ⟨ x, hx ⟩ := this.and ( Filter.eventually_gt_atTop 0 ) |> fun h => h.exists; specialize hC x 0; simp_all +decide [ abs_of_pos ] ;
   rw [ lt_div_iff₀ ] at hx <;> linarith
 
-
-
-
 /-- Softplus is injective -/
 theorem softplus_injective : Function.Injective softplus :=
   softplus_strictMono.injective
-
-
-
 
 theorem softplus_sub_id_tendsto_zero :
     Filter.Tendsto (fun x => softplus x - x) Filter.atTop (nhds 0) := by
@@ -197,18 +137,12 @@ theorem softplus_sub_id_tendsto_zero :
     exact?;
   simpa only [ h_reflection ] using Filter.Tendsto.comp ( softplus_tendsto_zero_atBot ) Filter.tendsto_neg_atTop_atBot
 
-
-
-
 /-- The Sheffer algebra is closed under addition -/
 theorem sheffer_add_closed {f g : ℝ → ℝ} (hf : f ∈ ShefferAlgebra) (hg : g ∈ ShefferAlgebra) :
     (fun x => f x + g x) ∈ ShefferAlgebra := by
   have := sheffer_affine_comb_closed hf hg 1 1 0
   convert this using 1
   ext x; ring
-
-
-
 
 /-- The Sheffer algebra is closed under scalar multiplication -/
 theorem sheffer_smul_closed {f : ℝ → ℝ} (hf : f ∈ ShefferAlgebra) (c : ℝ) :
@@ -218,9 +152,6 @@ theorem sheffer_smul_closed {f : ℝ → ℝ} (hf : f ∈ ShefferAlgebra) (c : �
   convert this using 1
   ext x; ring
 
-
-
-
 /-- The Sheffer algebra is closed under subtraction -/
 theorem sheffer_sub_closed {f g : ℝ → ℝ} (hf : f ∈ ShefferAlgebra) (hg : g ∈ ShefferAlgebra) :
     (fun x => f x - g x) ∈ ShefferAlgebra := by
@@ -228,24 +159,15 @@ theorem sheffer_sub_closed {f g : ℝ → ℝ} (hf : f ∈ ShefferAlgebra) (hg :
   convert this using 1
   ext x; ring
 
-
-
-
 /-- The Sheffer algebra contains all linear functions -/
 theorem linear_mem_sheffer (a : ℝ) : (fun x : ℝ => a * x) ∈ ShefferAlgebra := by
   have := affine_mem_sheffer a 0
   convert this using 1
   ext x; ring
 
-
-
-
 theorem sigmoid_product_le_quarter (x : ℝ) :
     logisticSigmoid x * (1 - logisticSigmoid x) ≤ 1 / 4 := by
   linarith [ sq_nonneg ( logisticSigmoid x - 1 / 2 ) ]
-
-
-
 
 /-- The sigmoid product S(x)(1-S(x)) achieves its maximum 1/4 at x = 0 -/
 theorem sigmoid_product_max_at_zero :
@@ -253,15 +175,9 @@ theorem sigmoid_product_max_at_zero :
   rw [logisticSigmoid_zero]
   norm_num
 
-
-
-
 theorem softplus_iter_strictly_increasing (n : ℕ) (x : ℝ) :
     softplus_iter (n + 1) x > softplus_iter n x := by
   exact softplus_gt_id _
-
-
-
 
 /-- The Lipschitz constant of a Sheffer expression can be bounded by its structure.
 For affine_pre(a,b,e), the Lipschitz constant is |a| * Lip(e). -/
@@ -271,18 +187,12 @@ def ShefferExpr.lipschitzBound : ShefferExpr → ℝ
   | .affine_comb α β _ e₁ e₂ => |α| * e₁.lipschitzBound + |β| * e₂.lipschitzBound
   | .comp e₁ e₂ => e₁.lipschitzBound * e₂.lipschitzBound
 
-
-
-
 theorem sheffer_lipschitz_bound_nonneg (e : ShefferExpr) : e.lipschitzBound ≥ 0 := by
   induction e;
   · exact zero_le_one;
   · exact mul_nonneg ( abs_nonneg _ ) ‹_›;
   · exact add_nonneg ( mul_nonneg ( abs_nonneg _ ) ‹_› ) ( mul_nonneg ( abs_nonneg _ ) ‹_› );
   · exact mul_nonneg ‹_› ‹_›
-
-
-
 
 theorem sheffer_lipschitz_bound_valid (e : ShefferExpr) :
     ∀ x y : ℝ, |e.eval x - e.eval y| ≤ e.lipschitzBound * |x - y| := by
@@ -307,31 +217,19 @@ theorem sheffer_lipschitz_bound_valid (e : ShefferExpr) :
     rename_i e₁ e₂ ih₁ ih₂;
     exact le_trans ( ih₁ _ _ ) ( by rw [ show ( e₁.comp e₂ |> ShefferExpr.lipschitzBound ) = e₁.lipschitzBound * e₂.lipschitzBound by rfl ] ; exact by rw [ mul_assoc ] ; exact mul_le_mul_of_nonneg_left ( ih₂ _ _ ) ( by exact le_trans ( by norm_num ) ( sheffer_lipschitz_bound_nonneg e₁ ) ) )
 
-
-
-
 /-- Softplus is a special case of log-sum-exp: σ(x) = log(e^0 + e^x) -/
 theorem softplus_eq_logsumexp (x : ℝ) :
     softplus x = Real.log (Real.exp 0 + Real.exp x) := by
   simp [softplus, exp_zero]
-
-
-
 
 theorem logsumexp_two (x y : ℝ) :
     Real.log (Real.exp x + Real.exp y) = x + softplus (y - x) := by
   unfold softplus; rw [ ← Real.log_exp x ] ; rw [ ← Real.log_mul ( by positivity ) ( by positivity ) ] ; ring;
   norm_num [ ← Real.exp_add ]
 
-
-
-
 /-- A Sheffer expression with all positive affine slopes defines a monotone function -/
 theorem sheffer_base_monotone : Monotone ShefferExpr.base.eval :=
   softplus_mono
-
-
-
 
 theorem sigmoid_integral (a b : ℝ) :
     ∫ t in a..b, logisticSigmoid t = softplus b - softplus a := by
@@ -339,8 +237,5 @@ theorem sigmoid_integral (a b : ℝ) :
   · exact funext softplus_deriv;
   · exact fun x hx => DifferentiableAt.log ( by norm_num [ Real.differentiableAt_exp ] ) ( by positivity );
   · exact Continuous.continuousOn ( by exact Continuous.div ( Real.continuous_exp ) ( by continuity ) fun x => by positivity )
-
-
-
 
 end

@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Speculative.OpenProblems.SPBMoebiusGroup
 
 Auto-generated from theorem catalog database.
 Domain: Speculative/OpenProblems
 Declarations: 6
 -/
-
-import Mathlib
 
 noncomputable section
 
@@ -17,15 +17,9 @@ theorem spb_circle_norm_mult (x y : ℝ) (h : 1 - x * y ≠ 0) :
   field_simp
   ring
 
-
-
-
 /-- SPB negation is inverse: spb(x, -x) = 0. -/
 theorem spbM_neg_cancel (x : ℝ) : spbM x (-x) = 0 := by
   simp [spbM]
-
-
-
 
 /-- SPB with itself: spb(x, x) = 2x/(1-x²), the double angle tangent. -/
 theorem spbM_self (x : ℝ) (h : 1 - x * x ≠ 0) :
@@ -33,9 +27,6 @@ theorem spbM_self (x : ℝ) (h : 1 - x * x ≠ 0) :
   unfold spbM
   field_simp
   ring
-
-
-
 
 /-- [Section: # CatalogBuild.Speculative.OpenProblems.SPBMoebiusGroup
 Auto-generated from theorem catalog database.
@@ -47,9 +38,6 @@ theorem spbM_cancel_right (x a : ℝ) (h1 : 1 - x * a ≠ 0)
   unfold spbM at *;
   grind
 
-
-
-
 /-- [Section: # CatalogBuild.Speculative.OpenProblems.SPBMoebiusGroup
 Auto-generated from theorem catalog database.
 Domain: Speculative/OpenProblems
@@ -59,17 +47,11 @@ theorem spbM_no_real_fixed_point (a x : ℝ) (ha : a ≠ 0) (h : 1 - x * a ≠ 0
   unfold spbM at hfix;
   rw [ div_eq_iff h ] at hfix; cases lt_or_gt_of_ne ha <;> cases lt_or_gt_of_ne h <;> nlinarith [ sq_nonneg x ] ;
 
-
-
-
 /-- The "angle" map: θ(x) = arctan(x). Under this map, SPB becomes addition:
 θ(spb(x,y)) = θ(x) + θ(y) when 1 - xy > 0. -/
 theorem spbM_angle_addition (x y : ℝ) (h : 0 < 1 - x * y) :
     arctan (spbM x y) = arctan x + arctan y := by
   unfold spbM
   rw [Real.arctan_add (by linarith)]
-
-
-
 
 end

@@ -1,10 +1,3 @@
-/-! # CatalogBuild.EML.ExtendedTheorems
-
-Auto-generated from theorem catalog database.
-Domain: EML
-Declarations: 19
--/
-
 import EML.Lean.AdvancedTheorems
 import EML.Lean.FutureTheorems
 import EML.Lean.NewTheorems
@@ -12,6 +5,13 @@ import EML.Lean.ShefferAlgebra
 import EML.Lean.SoftplusBasic
 import EML.Lean.UniversalApproximation
 import Mathlib
+
+/-! # CatalogBuild.EML.ExtendedTheorems
+
+Auto-generated from theorem catalog database.
+Domain: EML
+Declarations: 19
+-/
 
 noncomputable section
 
@@ -27,9 +27,6 @@ theorem sheffer_expr_continuous (e : ShefferExpr) : Continuous e.eval := by
     exact ((continuous_const.mul ih₁).add (continuous_const.mul ih₂)).add continuous_const
   | comp e₁ e₂ ih₁ ih₂ =>
     exact ih₁.comp ih₂
-
-
-
 
 /-- Every Sheffer expression defines a differentiable function.
 This is the "Smoothness Barrier": any non-differentiable function
@@ -47,9 +44,6 @@ theorem sheffer_expr_differentiable (e : ShefferExpr) : Differentiable ℝ e.eva
   | comp e₁ e₂ ih₁ ih₂ =>
     exact ih₁.comp ih₂
 
-
-
-
 /-- Corollary: every function in the Sheffer algebra is differentiable. -/
 theorem sheffer_algebra_differentiable {f : ℝ → ℝ} (hf : f ∈ ShefferAlgebra) :
     Differentiable ℝ f := by
@@ -57,16 +51,10 @@ theorem sheffer_algebra_differentiable {f : ℝ → ℝ} (hf : f ∈ ShefferAlge
   rw [he]
   exact sheffer_expr_differentiable e
 
-
-
-
 /-- Corollary: every function in the Sheffer algebra is continuous. -/
 theorem sheffer_algebra_continuous {f : ℝ → ℝ} (hf : f ∈ ShefferAlgebra) :
     Continuous f := by
   exact (sheffer_algebra_differentiable hf).continuous
-
-
-
 
 /-- [Section: # CatalogBuild.EML.ExtendedTheorems
 Auto-generated from theorem catalog database.
@@ -75,16 +63,10 @@ Declarations: 19] -/
 lemma abs_not_differentiableAt_zero : ¬ DifferentiableAt ℝ (fun x : ℝ => |x|) 0 := by
   exact not_differentiableAt_abs_zero
 
-
-
-
 /-- The absolute value function is NOT in the Sheffer algebra. -/
 theorem abs_not_mem_sheffer : (fun x : ℝ => |x|) ∉ ShefferAlgebra := by
   intro h
   exact abs_not_differentiableAt_zero (sheffer_algebra_differentiable h 0)
-
-
-
 
 /-- [Section: # CatalogBuild.EML.ExtendedTheorems
 Auto-generated from theorem catalog database.
@@ -98,18 +80,12 @@ lemma max_zero_not_differentiableAt_zero :
     cases max_cases ( 0 : ℝ ) ‹_› <;> cases abs_cases ‹_› <;> linarith;
   exact not_differentiableAt_abs_zero h_abs
 
-
-
-
 /-- ReLU (= max(0, x)) is NOT in the Sheffer algebra.
 This is a fundamental structural difference between softplus and ReLU:
 softplus is smooth, ReLU has a kink at 0. -/
 theorem relu_not_mem_sheffer : (fun x : ℝ => max 0 x) ∉ ShefferAlgebra := by
   intro h
   exact max_zero_not_differentiableAt_zero (sheffer_algebra_differentiable h 0)
-
-
-
 
 /-- σ(x) = log 2 if and only if x = 0 -/
 theorem softplus_eq_log2_iff (x : ℝ) : softplus x = Real.log 2 ↔ x = 0 := by
@@ -121,9 +97,6 @@ theorem softplus_eq_log2_iff (x : ℝ) : softplus x = Real.log 2 ↔ x = 0 := by
     rw [h]
     exact softplus_zero
 
-
-
-
 /-- σ(2x) ≤ 2σ(x): softplus of double is at most double of softplus.
 Immediate corollary of subadditivity σ(x+y) ≤ σ(x) + σ(y). -/
 theorem softplus_double_ineq (x : ℝ) : softplus (2 * x) ≤ 2 * softplus x := by
@@ -131,9 +104,6 @@ theorem softplus_double_ineq (x : ℝ) : softplus (2 * x) ≤ 2 * softplus x := 
   have : x + x = 2 * x := by ring
   rw [this] at h
   linarith
-
-
-
 
 /-- σ(3x) ≤ 3σ(x): subadditivity for triple -/
 theorem softplus_triple_ineq (x : ℝ) : softplus (3 * x) ≤ 3 * softplus x := by
@@ -143,18 +113,12 @@ theorem softplus_triple_ineq (x : ℝ) : softplus (3 * x) ≤ 3 * softplus x := 
   rw [this] at h12
   linarith
 
-
-
-
 /-- The Sheffer algebra is closed under negation -/
 theorem sheffer_neg_closed {f : ℝ → ℝ} (hf : f ∈ ShefferAlgebra) :
     (fun x => -f x) ∈ ShefferAlgebra := by
   have := sheffer_smul_closed hf (-1)
   convert this using 1
   ext x; ring
-
-
-
 
 /-- The Sheffer algebra is NOT closed under pointwise multiplication.
 Proof: x ∈ ShefferAlg (identity), so if closed under multiplication,
@@ -170,32 +134,20 @@ theorem sheffer_not_mul_closed :
   rw [h_eq] at hmul
   exact sq_not_mem_sheffer hmul
 
-
-
-
 theorem softplus_surjective_pos (y : ℝ) (hy : y > 0) :
     ∃ x : ℝ, softplus x = y := by
   use Real.log ( Real.exp y - 1 );
   unfold softplus; rw [ Real.exp_log ] <;> norm_num [ Real.exp_pos, hy ] ;
-
-
-
 
 theorem sigmoid_surjective_unit (y : ℝ) (hy0 : 0 < y) (hy1 : y < 1) :
     ∃ x : ℝ, logisticSigmoid x = y := by
   unfold logisticSigmoid;
   exact ⟨ Real.log ( y / ( 1 - y ) ), by rw [ Real.exp_log ( div_pos hy0 ( sub_pos.mpr hy1 ) ), div_eq_iff ] <;> nlinarith [ div_mul_cancel₀ y ( ne_of_gt ( sub_pos.mpr hy1 ) ) ] ⟩
 
-
-
-
 theorem sigmoid_logit_inverse (y : ℝ) (hy0 : 0 < y) (hy1 : y < 1) :
     logisticSigmoid (Real.log (y / (1 - y))) = y := by
   unfold logisticSigmoid;
   rw [ Real.exp_log ( div_pos hy0 ( sub_pos.mpr hy1 ) ), div_eq_iff ] <;> nlinarith [ div_mul_cancel₀ y ( by linarith : ( 1 - y ) ≠ 0 ) ]
-
-
-
 
 /-- |σ(x) - σ(y)| ≤ |x - y| restated without LipschitzWith -/
 theorem softplus_diff_le (x y : ℝ) :
@@ -205,9 +157,6 @@ theorem softplus_diff_le (x y : ℝ) :
   simp [dist_eq_norm, Real.norm_eq_abs] at this
   linarith
 
-
-
-
 /-- σ(x + c) is in the Sheffer algebra for any constant c -/
 theorem softplus_translate_mem_sheffer (c : ℝ) :
     (fun x => softplus (x + c)) ∈ ShefferAlgebra := by
@@ -215,14 +164,8 @@ theorem softplus_translate_mem_sheffer (c : ℝ) :
   convert this using 1
   ext x; simp
 
-
-
-
 /-- S(x) + S(-x) = 1 restated -/
 theorem sigmoid_sum_one (x : ℝ) : logisticSigmoid x + logisticSigmoid (-x) = 1 :=
   sigmoid_complement x
-
-
-
 
 end

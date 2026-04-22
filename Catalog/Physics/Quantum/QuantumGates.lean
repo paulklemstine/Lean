@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Physics.Quantum.QuantumGates
 
 Auto-generated from theorem catalog database.
@@ -5,14 +7,9 @@ Domain: Physics/Quantum
 Declarations: 4
 -/
 
-import Mathlib
-
 /-- A phase gate in the real channel is just multiplication by ±1 -/
 def phase_gate (s : Bool) (x : ℤ) : ℤ :=
   if s then -x else x
-
-
-
 
 /-- [Section: # CatalogBuild.Physics.Quantum.QuantumGates
 Auto-generated from theorem catalog database.
@@ -24,15 +21,9 @@ theorem phase_gate_involutive (s : Bool) (x : ℤ) :
   unfold phase_gate
   aesop
 
-
-
-
 /-- The four units of ℤ[i] -/
 def gaussian_units : List GaussianInt :=
   [⟨1, 0⟩, ⟨-1, 0⟩, ⟨0, 1⟩, ⟨0, -1⟩]
-
-
-
 
 /-- [Section: # CatalogBuild.Physics.Quantum.QuantumGates
 Auto-generated from theorem catalog database.
@@ -41,6 +32,4 @@ Declarations: 4] -/
 theorem gaussian_unit_norm (u : GaussianInt) (hu : u ∈ gaussian_units) :
     Zsqrtd.norm u = 1 := by
   unfold gaussian_units at hu; aesop;
-
-
 

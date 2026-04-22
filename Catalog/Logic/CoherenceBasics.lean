@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Logic.CoherenceBasics
 
 Auto-generated from theorem catalog database.
 Domain: Logic
 Declarations: 6
 -/
-
-import Mathlib
 
 noncomputable section
 
@@ -14,15 +14,9 @@ normalized to [0, 1]. For our formalization, we define it abstractly. -/
 def landscapeEntropy (H_spectral : ℝ) (n : ℕ) (hn : 0 < n) : ℝ :=
   H_spectral / n
 
-
-
-
 /-- The coherence C(f) = 1 - H(spectral distribution) / n. -/
 def coherenceMeasure (H_spectral : ℝ) (n : ℕ) (hn : 0 < n) : ℝ :=
   1 - H_spectral / n
-
-
-
 
 /-- [Section: # CatalogBuild.Logic.CoherenceBasics
 Auto-generated from theorem catalog database.
@@ -32,9 +26,6 @@ theorem coherence_add_landscape_eq_one (H_spectral : ℝ) (n : ℕ) (hn : 0 < n)
     coherenceMeasure H_spectral n hn + landscapeEntropy H_spectral n hn = 1 := by
   -- By definition of coherenceMeasure and landscapeEntropy, we have:
   simp [coherenceMeasure, landscapeEntropy]
-
-
-
 
 /-- [Section: # CatalogBuild.Logic.CoherenceBasics
 Auto-generated from theorem catalog database.
@@ -56,21 +47,12 @@ theorem shannonEntropy_le_log (p : Fin k → ℝ) (hp : ∀ i, 0 ≤ p i)
   simp_all +decide [ ← Finset.mul_sum _ _ _, ← Finset.sum_mul ];
   nlinarith [ inv_mul_cancel_left₀ ( by positivity : ( k : ℝ ) ≠ 0 ) ( Real.log k ), inv_mul_cancel₀ ( by positivity : ( k : ℝ ) ≠ 0 ) ]
 
-
-
-
 theorem coherence_nonneg (H_spectral : ℝ) (n : ℕ) (hn : 0 < n)
     (hH : H_spectral ≤ n) : 0 ≤ coherenceMeasure H_spectral n hn := by
   exact sub_nonneg_of_le ( div_le_one_of_le₀ hH <| Nat.cast_nonneg _ )
 
-
-
-
 theorem coherence_le_one (H_spectral : ℝ) (n : ℕ) (hn : 0 < n)
     (hH : 0 ≤ H_spectral) : coherenceMeasure H_spectral n hn ≤ 1 := by
   exact sub_le_self _ ( by positivity )
-
-
-
 
 end

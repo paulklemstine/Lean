@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Computation.Oracles.DivisibilityPatterns
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Computation/Oracles
 Declarations: 9
 -/
 
-import Mathlib
 
 /-- [Section: # CatalogBuild.Computation.Oracles.DivisibilityPatterns
 Auto-generated from theorem catalog database.

@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Tropical.NeuralNetworks.TropicalNetworkTheory
 
 Auto-generated from theorem catalog database.
 Domain: Tropical/NeuralNetworks
 Declarations: 24
 -/
-
-import Mathlib
 
 noncomputable section
 
@@ -14,9 +14,6 @@ theorem tropMatVec_ge_component {m n : ℕ} [NeZero n]
     (W : Fin m → Fin n → ℝ) (x : Fin n → ℝ) (i : Fin m) (j : Fin n) :
     W i j + x j ≤ tropMatVec W x i := by
   exact Finset.le_sup' (fun j => W i j + x j) (Finset.mem_univ j)
-
-
-
 
 /-- [Section: # CatalogBuild.Tropical.NeuralNetworks.TropicalNetworkTheory
 Auto-generated from theorem catalog database.
@@ -33,9 +30,6 @@ theorem tropLayer_comp {l m n : ℕ} [NeZero m] [NeZero n]
       · unfold tropMatVec tropMatMul at *;
         grind +suggestions
 
-
-
-
 /-- [Section: # CatalogBuild.Tropical.NeuralNetworks.TropicalNetworkTheory
 Auto-generated from theorem catalog database.
 Domain: Tropical/NeuralNetworks
@@ -50,36 +44,21 @@ theorem tropMatVec_mono_W {m n : ℕ} [NeZero n]
       apply Finset.sup'_le;
       exact fun j _ => le_trans ( h_add i j ) ( Finset.le_sup' ( fun j => W' i j + x j ) ( Finset.mem_univ j ) )
 
-
-
-
 /-- A set is tropically convex if it is closed under tropical linear combinations -/
 def IsTropConvex (S : Set (Fin n → ℝ)) : Prop :=
   ∀ x ∈ S, ∀ y ∈ S, ∀ a b : ℝ, (fun i => max (a + x i) (b + y i)) ∈ S
-
-
-
 
 /-- The whole space is tropically convex -/
 theorem tropConvex_univ (n : ℕ) : IsTropConvex (Set.univ : Set (Fin n → ℝ)) :=
   fun _ _ _ _ _ _ => Set.mem_univ _
 
-
-
-
 /-- A tropical classifier assigns class i = argmax of tropical layer output -/
 def tropClassify {m n : ℕ} [NeZero n] (W : Fin m → Fin n → ℝ) (x : Fin n → ℝ) :
     Fin m → ℝ := tropMatVec W x
 
-
-
-
 theorem tropClassify_eq_tropMatVec {m n : ℕ} [NeZero n]
     (W : Fin m → Fin n → ℝ) (x : Fin n → ℝ) :
     tropClassify W x = tropMatVec W x := rfl
-
-
-
 
 /-- A function f : ℝ → ℝ is piecewise linear if it is a finite max of affine functions -/
 def IsPiecewiseLinear1d (f : ℝ → ℝ) : Prop :=
@@ -87,24 +66,15 @@ def IsPiecewiseLinear1d (f : ℝ → ℝ) : Prop :=
     ∀ x, f x = Finset.sup' Finset.univ Finset.univ_nonempty
       (fun i : Fin (k+1) => slopes i * x + intercepts i)
 
-
-
-
 theorem max_affine_pwl (a₁ b₁ a₂ b₂ : ℝ) :
     IsPiecewiseLinear1d (fun x => max (a₁ * x + b₁) (a₂ * x + b₂)) := by
       use 1;
       use ![a₁, a₂], ![b₁, b₂];
       simp +decide [ Fin.univ_succ ]
 
-
-
-
 theorem relu_pwl : IsPiecewiseLinear1d (fun x => max x 0) := by
   use 1, ![1, 0], ![0, 0];
   norm_num [ Fin.univ_succ ]
-
-
-
 
 theorem identity_second_layer {n : ℕ} [NeZero n]
     (W : Fin n → Fin n → ℝ) (x : Fin n → ℝ)
@@ -114,35 +84,20 @@ theorem identity_second_layer {n : ℕ} [NeZero n]
     tropMatVec W x i ≥ x i := by
       exact le_trans ( by aesop ) ( tropMatVec_ge_component W x i i ) ;
 
-
-
-
 /-- A depth-d tropical network has at most w^d affine pieces per output -/
 theorem tropNetwork_pieces_bound (w d : ℕ) (hw : 0 < w) :
     1 ≤ w ^ d := Nat.one_le_pow d w hw
-
-
-
 
 /-- Wider networks have more pieces per layer -/
 theorem tropNetwork_width_bound (w₁ w₂ d : ℕ) (h : w₁ ≤ w₂) :
     w₁ ^ d ≤ w₂ ^ d := Nat.pow_le_pow_left h d
 
-
-
-
 /-- Deeper networks have exponentially more pieces -/
 theorem tropNetwork_depth_bound (w d₁ d₂ : ℕ) (hw : 1 ≤ w) (hd : d₁ ≤ d₂) :
     w ^ d₁ ≤ w ^ d₂ := Nat.pow_le_pow_right hw hd
 
-
-
-
 /-- ReLU is tropical addition with zero -/
 theorem relu_eq_tAdd_zero (x : ℝ) : relu x = tAdd x 0 := rfl
-
-
-
 
 /-- A ReLU layer is a tropical operation -/
 theorem relu_layer_is_tropical {m n : ℕ} (W : Fin m → Fin n → ℝ)
@@ -150,38 +105,23 @@ theorem relu_layer_is_tropical {m n : ℕ} (W : Fin m → Fin n → ℝ)
     max ((∑ j, W i j * x j) + b i) 0 =
     tAdd ((∑ j, W i j * x j) + b i) 0 := rfl
 
-
-
-
 /-- A function is tropically representable if it equals a finite max of affine functions -/
 def IsTropRep (f : ℝ → ℝ) : Prop :=
   ∃ (k : ℕ) (a b : Fin (k+1) → ℝ),
     ∀ x, f x = Finset.sup' Finset.univ Finset.univ_nonempty
       (fun i => a i * x + b i)
 
-
-
-
 theorem relu_isTropRep : IsTropRep relu := by
   refine' ⟨ 1, fun i => if i = 0 then 1 else 0, fun i => if i = 0 then 0 else 0, _ ⟩ ; simp +decide [ relu ];
   exact?
-
-
-
 
 theorem leakyRelu_isTropRep (alpha : ℝ) : IsTropRep (leakyRelu alpha) := by
   use 1;
   refine' ⟨ fun i => if i = 0 then 1 else alpha, fun i => if i = 0 then 0 else 0, fun x => _ ⟩ ; simp +decide [ Fin.univ_succ ] ; aesop;
 
-
-
-
 /-- Tropical eigenvalue: lam such that max_j(A_ij + x_j) = lam + x_i for all i -/
 def IsTropEigenvalue {n : ℕ} [NeZero n] (A : Fin n → Fin n → ℝ) (lam : ℝ) : Prop :=
   ∃ x : Fin n → ℝ, ∀ i, tropMatVec A x i = lam + x i
-
-
-
 
 theorem tropEigenvalue_diag_bound {n : ℕ} [NeZero n]
     (A : Fin n → Fin n → ℝ) (lam : ℝ) (hlam : IsTropEigenvalue A lam) (i : Fin n) :
@@ -193,16 +133,10 @@ theorem tropEigenvalue_diag_bound {n : ℕ} [NeZero n]
         exact hx ▸ tropMatVec_ge_component A x j j);
       linarith [h_add i]
 
-
-
-
 /-- Tropical rank: A has tropical rank ≤ k if it factors as B ⊙ C for k-wide matrices -/
 def hasTropRank {m n k : ℕ} [NeZero k] (A : Fin m → Fin n → ℝ) : Prop :=
   ∃ (B : Fin m → Fin k → ℝ) (C : Fin k → Fin n → ℝ),
     ∀ i j, A i j = tropMatMul B C i j
-
-
-
 
 theorem tropPoly_universal_1d (f : ℝ → ℝ)
     (h : IsPiecewiseLinear1d f) :
@@ -217,12 +151,6 @@ theorem tropPoly_universal_1d (f : ℝ → ℝ)
         simpa using Finset.exists_max_image Finset.univ ( fun i => slopes i * x + intercepts i ) ( Finset.univ_nonempty );
       exact ⟨ i, le_antisymm ( hs x ▸ Finset.sup'_le _ _ fun j _ => hi j ) ( hs x ▸ Finset.le_sup' ( fun j => slopes j * x + intercepts j ) ( Finset.mem_univ i ) ) ⟩
 
-
-
-
 theorem theorem_count : 0 < 30 := by omega
-
-
-
 
 end

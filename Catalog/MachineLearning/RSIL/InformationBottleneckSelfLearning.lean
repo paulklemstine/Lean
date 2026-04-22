@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.MachineLearning.RSIL.InformationBottleneckSelfLearning
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: MachineLearning/RSIL
 Declarations: 18
 -/
 
-import Mathlib
 
 noncomputable section
 

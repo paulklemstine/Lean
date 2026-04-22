@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Computation.Factoring.IntegerDecoder
 
 Auto-generated from theorem catalog database.
 Domain: Computation/Factoring
 Declarations: 12
 -/
-
-import Mathlib
 
 noncomputable section
 
@@ -14,9 +14,6 @@ noncomputable def r₂ (n : ℕ) : ℕ :=
   Finset.card (Finset.filter (fun p : ℤ × ℤ => p.1 ^ 2 + p.2 ^ 2 = ↑n)
     ((Finset.Icc (-(↑n : ℤ)) ↑n) ×ˢ (Finset.Icc (-(↑n : ℤ)) ↑n)))
 
-
-
-
 /-- Count representations of n as a sum of 4 squares: #{(a,b,c,d) ∈ ℤ⁴ : a²+b²+c²+d² = n} -/
 noncomputable def r₄ (n : ℕ) : ℕ :=
   Finset.card (Finset.filter
@@ -24,29 +21,17 @@ noncomputable def r₄ (n : ℕ) : ℕ :=
     ((Finset.Icc (-(↑n : ℤ)) ↑n) ×ˢ (Finset.Icc (-(↑n : ℤ)) ↑n) ×ˢ
      (Finset.Icc (-(↑n : ℤ)) ↑n) ×ˢ (Finset.Icc (-(↑n : ℤ)) ↑n)))
 
-
-
-
 /-- Count divisors of n that are ≡ 1 (mod 4) -/
 def d₁ (n : ℕ) : ℕ :=
   ((Nat.divisors n).filter (fun d => d % 4 = 1)).card
-
-
-
 
 /-- Count divisors of n that are ≡ 3 (mod 4) -/
 def d₃ (n : ℕ) : ℕ :=
   ((Nat.divisors n).filter (fun d => d % 4 = 3)).card
 
-
-
-
 /-- Jacobi's formula helper: sum of divisors of n not divisible by 4 -/
 def jacobi_sum (n : ℕ) : ℕ :=
   ((Nat.divisors n).filter (fun d => ¬(4 ∣ d))).sum id
-
-
-
 
 /-- The four-channel signature of a positive integer.
 Components: (is_square, channel_2_signal, channel_3_signal, channel_4_info) -/
@@ -61,9 +46,6 @@ structure FourChannelSig where
   octonionic_signal : ℤ
   deriving Repr
 
-
-
-
 /-- Compute the four-channel signature of n -/
 def fourChannelSig (n : ℕ) : FourChannelSig where
   is_square := Nat.sqrt n ^ 2 == n
@@ -72,9 +54,6 @@ def fourChannelSig (n : ℕ) : FourChannelSig where
   octonionic_signal :=
     ((Nat.divisors n).sum fun d =>
       if (n + d) % 2 == 0 then (↑d : ℤ) ^ 3 else -(↑d : ℤ) ^ 3)
-
-
-
 
 /-- [Section: # CatalogBuild.Computation.Factoring.IntegerDecoder
 Auto-generated from theorem catalog database.
@@ -85,9 +64,6 @@ theorem channel_2_implies_4 {n : ℕ}
     ∃ a b c d : ℤ, a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 = ↑n := by
   exact ⟨ h.choose, h.choose_spec.choose, 0, 0, by linear_combination h.choose_spec.choose_spec ⟩
 
-
-
-
 /-- [Section: # CatalogBuild.Computation.Factoring.IntegerDecoder
 Auto-generated from theorem catalog database.
 Domain: Computation/Factoring
@@ -95,9 +71,6 @@ Declarations: 12] -/
 theorem fermat_sum_two_squares {p : ℕ} (hp : Nat.Prime p) (hmod : p % 4 = 1) :
     ∃ a b : ℤ, a ^ 2 + b ^ 2 = ↑p := by
   have := Fact.mk hp; have := @Nat.Prime.sq_add_sq p; aesop;
-
-
-
 
 theorem eight_square_identity_exists (x y : Fin 8 → ℤ) :
     ∃ z : Fin 8 → ℤ,
@@ -122,14 +95,8 @@ theorem eight_square_identity_exists (x y : Fin 8 → ℤ) :
   use ![x1 * y1 - x2 * y2 - x3 * y3 - x4 * y4 - x5 * y5 - x6 * y6 - x7 * y7 - x8 * y8, x1 * y2 + x2 * y1 + x3 * y4 - x4 * y3 + x5 * y6 - x6 * y5 - x7 * y8 + x8 * y7, x1 * y3 - x2 * y4 + x3 * y1 + x4 * y2 + x5 * y7 + x6 * y8 - x7 * y5 - x8 * y6, x1 * y4 + x2 * y3 - x3 * y2 + x4 * y1 + x5 * y8 - x6 * y7 + x7 * y6 - x8 * y5, x1 * y5 - x2 * y6 - x3 * y7 - x4 * y8 + x5 * y1 + x6 * y2 + x7 * y3 + x8 * y4, x1 * y6 + x2 * y5 - x3 * y8 + x4 * y7 - x5 * y2 + x6 * y1 - x7 * y4 + x8 * y3, x1 * y7 + x2 * y8 + x3 * y5 - x4 * y6 - x5 * y3 + x6 * y4 + x7 * y1 - x8 * y2, x1 * y8 - x2 * y7 + x3 * y6 + x4 * y5 - x5 * y4 - x6 * y3 + x7 * y2 + x8 * y1];
   simpa [ Fin.sum_univ_succ ] using by ring!;
 
-
-
-
 theorem jacobi_sum_pos {n : ℕ} (hn : n ≥ 1) : jacobi_sum n ≥ 1 := by
   exact Finset.sum_pos ( fun x hx => Nat.pos_of_mem_divisors <| Finset.mem_filter.mp hx |>.1 ) ⟨ 1, Finset.mem_filter.mpr ⟨ Nat.mem_divisors.mpr ⟨ by norm_num, by linarith ⟩, by norm_num ⟩ ⟩
-
-
-
 
 theorem d₁_multiplicative {m n : ℕ} (hcop : Nat.Coprime m n) :
     d₁ (m * n) = d₁ m * d₁ n + d₃ m * d₃ n := by
@@ -152,7 +119,5 @@ theorem d₁_multiplicative {m n : ℕ} (hcop : Nat.Coprime m n) :
   rw [ Finset.sum_product, Finset.sum_mul, Finset.sum_mul ];
   simp +decide only [Finset.mul_sum _ _ _];
   simpa only [ ← Finset.sum_add_distrib ] using Finset.sum_congr rfl fun i hi => Finset.sum_congr rfl fun j hj => by norm_num [ Nat.mul_mod ] ; have := Nat.mod_lt i zero_lt_four; have := Nat.mod_lt j zero_lt_four; interval_cases i % 4 <;> interval_cases j % 4 <;> trivial;
-
-
 
 end

@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.Foundations.QuadraticForms
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/Foundations
 Declarations: 11
 -/
 
-import Mathlib
 
 /-- The discriminant of the quadratic form ax² + bxy + cy² is b² - 4ac. -/
 def form_discriminant (a b c : ℤ) : ℤ := b ^ 2 - 4 * a * c

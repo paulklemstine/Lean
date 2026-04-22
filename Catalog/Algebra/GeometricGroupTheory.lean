@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.GeometricGroupTheory
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra
 Declarations: 10
 -/
 
-import Mathlib
 
 /-- [Section: # CatalogBuild.Algebra.GeometricGroupTheory
 Auto-generated from theorem catalog database.

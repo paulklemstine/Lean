@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Computation.CompressionExtensions
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Computation
 Declarations: 16
 -/
 
-import Mathlib
 
 /-- **Double counting**: |A × B| = |A| · |B|.
 This is the basis for entropy subadditivity. -/

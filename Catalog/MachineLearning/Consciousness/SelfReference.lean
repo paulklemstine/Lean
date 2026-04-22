@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.MachineLearning.Consciousness.SelfReference
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: MachineLearning/Consciousness
 Declarations: 8
 -/
 
-import Mathlib
 
 /-- A reflexive structure: a type that can encode functions on itself -/
 structure ReflexiveDomain where

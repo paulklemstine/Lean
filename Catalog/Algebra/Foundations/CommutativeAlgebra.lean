@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.Foundations.CommutativeAlgebra
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/Foundations
 Declarations: 7
 -/
 
-import Mathlib
 
 /-- [Section: # CatalogBuild.Algebra.Foundations.CommutativeAlgebra
 Auto-generated from theorem catalog database.

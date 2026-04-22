@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Pythagorean.Berggren.GeneralTheorems
 
 Auto-generated from theorem catalog database.
@@ -5,18 +7,14 @@ Domain: Pythagorean/Berggren
 Declarations: 19
 -/
 
-import Mathlib
-
 def ghostH (a b c : ℤ) : ℤ := -2*a - 2*b + 3*c
 
 -- ═══════════════════════════════════════════════════════════════
 -- Section 1: Determinant Formula (general)
 -- ═══════════════════════════════════════════════════════════════
 
-
 /-- det(M) = −1. -/
 theorem det_M : M.det = -1 := by native_decide
-
 
 /-- det(M^n) = (−1)^n for all n. -/
 theorem det_pow (n : ℕ) : (M ^ n).det = (-1) ^ n := by
@@ -25,7 +23,6 @@ theorem det_pow (n : ℕ) : (M ^ n).det = (-1) ^ n := by
 -- ═══════════════════════════════════════════════════════════════
 -- Section 2: Lorentz Form Preservation (general)
 -- ═══════════════════════════════════════════════════════════════
-
 
 theorem pow_lorentz (n : ℕ) : (M ^ n).transpose * eta * (M ^ n) = eta := by
   induction' n with n ih;
@@ -37,10 +34,8 @@ theorem pow_lorentz (n : ℕ) : (M ^ n).transpose * eta * (M ^ n) = eta := by
 -- Section 3: Symmetry (general)
 -- ═══════════════════════════════════════════════════════════════
 
-
 /-- M is symmetric. -/
 theorem M_symmetric : M = M.transpose := by native_decide
-
 
 theorem pow_symmetric (n : ℕ) : (M ^ n) = (M ^ n).transpose := by
   rw [ eq_comm ];
@@ -52,7 +47,6 @@ theorem pow_symmetric (n : ℕ) : (M ^ n) = (M ^ n).transpose := by
 -- Section 4: B₂ · M = I (inverse relationship)
 -- ═══════════════════════════════════════════════════════════════
 
-
 theorem B2_M_eq_one : B2 * M = 1 := by native_decide
 
 theorem M_B2_eq_one : M * B2 = 1 := by native_decide
@@ -61,19 +55,15 @@ theorem M_B2_eq_one : M * B2 = 1 := by native_decide
 -- Section 5: Ghost Map Algebraic Properties (general)
 -- ═══════════════════════════════════════════════════════════════
 
-
 /-- Parity conservation. -/
 theorem ghost_parity_a (a b c : ℤ) : ghostP a b c % 2 = a % 2 := by
   unfold ghostP; omega
 
-
 theorem ghost_parity_b (a b c : ℤ) : ghostQ a b c % 2 = b % 2 := by
   unfold ghostQ; omega
 
-
 theorem ghost_parity_c (a b c : ℤ) : ghostH a b c % 2 = c % 2 := by
   unfold ghostH; omega
-
 
 /-- Pythagorean preservation. -/
 theorem ghost_pyth (a b c : ℤ) (hp : a^2 + b^2 = c^2) :
@@ -81,17 +71,14 @@ theorem ghost_pyth (a b c : ℤ) (hp : a^2 + b^2 = c^2) :
   have := ghost_lorentz a b c
   linarith
 
-
 /-- Forward B₂ applied to (p,q,h) recovers (a,b,c). -/
 theorem recovery_a (a b c : ℤ) :
     ghostP a b c + 2 * ghostQ a b c + 2 * ghostH a b c = a := by
   simp only [ghostP, ghostQ, ghostH]; ring
 
-
 theorem recovery_b (a b c : ℤ) :
     2 * ghostP a b c + ghostQ a b c + 2 * ghostH a b c = b := by
   simp only [ghostP, ghostQ, ghostH]; ring
-
 
 theorem recovery_c (a b c : ℤ) :
     2 * ghostP a b c + 2 * ghostQ a b c + 3 * ghostH a b c = c := by
@@ -101,7 +88,6 @@ theorem recovery_c (a b c : ℤ) :
 -- Section 7: Cayley-Hamilton
 -- ═══════════════════════════════════════════════════════════════
 
-
 theorem cayley_hamilton :
     M ^ 3 = 5 • (M ^ 2) + 5 • M - 1 := by native_decide
 
@@ -109,17 +95,14 @@ theorem cayley_hamilton :
 -- Section 8: Euclid Parameter Formulas
 -- ═══════════════════════════════════════════════════════════════
 
-
 /-- Ghost map in terms of Euclid parameters m, n. -/
 theorem ghostP_euclid (m n : ℤ) :
     ghostP (m^2 - n^2) (2*m*n) (m^2 + n^2) = -(m - n) * (m - 3*n) := by
   simp only [ghostP]; ring
 
-
 theorem ghostQ_euclid (m n : ℤ) :
     ghostQ (m^2 - n^2) (2*m*n) (m^2 + n^2) = 2*n*(m - 2*n) := by
   simp only [ghostQ]; ring
-
 
 theorem ghostH_euclid (m n : ℤ) :
     ghostH (m^2 - n^2) (2*m*n) (m^2 + n^2) = (m - 2*n)^2 + n^2 := by

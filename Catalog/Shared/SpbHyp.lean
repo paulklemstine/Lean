@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Shared.SpbHyp
 
 Auto-generated from theorem catalog database.
@@ -5,29 +7,18 @@ Domain: Shared
 Declarations: 6
 -/
 
-import Mathlib
-
 noncomputable section
 
 /-- The hyperbolic SPB (Einstein velocity addition). -/
 def spbHyp (x y : ℝ) : ℝ := (x + y) / (1 + x * y)
 
-
-
-
 /-- Hyperbolic SPB inverse. -/
 theorem spbHyp_neg (x : ℝ) : spbHyp x (-x) = 0 := by
   simp [spbHyp]
 
-
-
-
 /-- Hyperbolic SPB is commutative. -/
 theorem spbHyp_comm (x y : ℝ) : spbHyp x y = spbHyp y x := by
   simp [spbHyp, add_comm, mul_comm]
-
-
-
 
 /-- [Section: # CatalogBuild.Shared.SpbHyp
 Auto-generated from theorem catalog database.
@@ -39,9 +30,6 @@ theorem spbHyp_tanh_add (α β : ℝ) :
   rw [ Real.tanh_eq_sinh_div_cosh, Real.tanh_eq_sinh_div_cosh, Real.tanh_eq_sinh_div_cosh, Real.sinh_add, Real.cosh_add ];
   field_simp
 
-
-
-
 /-- [Section: # CatalogBuild.Shared.SpbHyp
 Auto-generated from theorem catalog database.
 Domain: Shared
@@ -52,14 +40,8 @@ theorem spbHyp_subluminal (x y : ℝ) (hx : |x| < 1) (hy : |y| < 1) :
   rw [ abs_lt ] at *;
   exact ⟨ by rw [ lt_div_iff₀ ] <;> nlinarith, by rw [ div_lt_iff₀ ] <;> nlinarith ⟩
 
-
-
-
 /-- Hyperbolic SPB identity. -/
 theorem spbHyp_zero (x : ℝ) : spbHyp x 0 = x := by
   simp [spbHyp]
-
-
-
 
 end

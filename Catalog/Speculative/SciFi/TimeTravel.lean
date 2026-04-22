@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Speculative.SciFi.TimeTravel
 
 Auto-generated from theorem catalog database.
 Domain: Speculative/SciFi
 Declarations: 3
 -/
-
-import Mathlib
 
 /-- [Section: # CatalogBuild.Speculative.SciFi.TimeTravel
 Auto-generated from theorem catalog database.
@@ -24,9 +24,6 @@ theorem monotone_has_fixed_point {L : Type*} [CompleteLattice L]
   obtain ⟨ x, hx ⟩ := h_least_fixed_point;
   exact ⟨ x, le_antisymm hx.1 ( hx.2 ( hf hx.1 ) ) ⟩
 
-
-
-
 /-- [Section: # CatalogBuild.Speculative.SciFi.TimeTravel
 Auto-generated from theorem catalog database.
 Domain: Speculative/SciFi
@@ -36,13 +33,8 @@ theorem iterate_at_fixed_point {X : Type*} (f : X → X)
     f^[n] x = x := by
   exact Function.iterate_fixed hx n
 
-
-
-
 theorem bootstrap_self_consistent {X : Type*} (f : X → X)
     (x : X) (hfx : f x = x) :
     f (f x) = f x := by
   grind +suggestions
-
-
 

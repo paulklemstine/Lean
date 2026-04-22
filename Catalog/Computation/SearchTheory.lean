@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Computation.SearchTheory
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Computation
 Declarations: 24
 -/
 
-import Mathlib
 
 /-- A `SearchStrategy` over a type `α` is a deterministic sequence of guesses,
 one per round. -/

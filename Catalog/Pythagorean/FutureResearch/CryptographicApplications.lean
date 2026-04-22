@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Pythagorean.FutureResearch.CryptographicApplications
 
 Auto-generated from theorem catalog database.
@@ -5,20 +7,16 @@ Domain: Pythagorean/FutureResearch
 Declarations: 10
 -/
 
-import Mathlib
-
 /-- [Section: ## Pell Sequence Definitions] -/
 def pellH : ℕ → ℤ
   | 0 => 1
   | 1 => 1
   | n + 2 => 2 * pellH (n + 1) + pellH n
 
-
 def pellP : ℕ → ℤ
   | 0 => 0
   | 1 => 1
   | n + 2 => 2 * pellP (n + 1) + pellP n
-
 
 /-- [Section: ## Correctness of Fast Doubling
 The fast doubling algorithm computes P_{2n} and H_{2n} from P_n and H_n.
@@ -34,13 +32,11 @@ theorem pellP_double (n : ℕ) : pellP (2 * n) = 2 * pellP n * pellH n := by
     grind;
   exact h ( h_ind n |>.1 )
 
-
 theorem pellH_double (n : ℕ) : pellH (2 * n) = 2 * pellH n ^ 2 - (-1 : ℤ) ^ n := by
   induction' n using Nat.strong_induction_on with n ih;
   rcases n with ( _ | _ | _ | n ) <;> simp +arith +decide [ *, ih ];
   have := ih n ( by linarith ) ; have := ih ( n + 1 ) ( by linarith ) ; have := ih ( n + 2 ) ( by linarith ) ; norm_num [ Nat.mul_succ, pow_succ, pellH ] at *;
   grind
-
 
 /-- [Section: ## Key Exchange Security
 The security of Pell-based key exchange relies on the hardness of:
@@ -64,14 +60,12 @@ theorem pellP_add (m n : ℕ) :
     rw [ show 1 + n = n + 1 by ring ] ; have := ih 1 ( by linarith ) ( m + n ) ; simp_all +decide [ Nat.add_comm, Nat.add_left_comm, Nat.add_assoc ] ; ring;
     rw [ show 1 + n = n + 1 by ring ] ; norm_num [ pellP, pellH ] at * ; linarith;
 
-
 theorem pellH_from_pellP (n : ℕ) :
     pellH n ^ 2 = 2 * pellP n ^ 2 + (-1 : ℤ) ^ n := by
   induction' n using Nat.strong_induction_on with n ih;
   rcases n with ( _ | _ | _ | n ) <;> simp_all +decide;
   have h₁ := ih ( n + 1 ) ( by linarith ) ; have h₂ := ih n ( by linarith ) ; norm_num [ pow_succ, pellP, pellH ] at *;
   have h₄ := ih ( n + 1 ) ( by linarith ) ; have h₅ := ih ( n + 2 ) ( by linarith ) ; norm_num [ pow_succ, pellP, pellH ] at * ; linarith
-
 
 /-- [Section: ## Verifiable Delay Function Properties
 A VDF based on Pell sequences: compute P_G mod N sequentially.
@@ -83,20 +77,17 @@ theorem vdf_verification (n : ℕ) :
   have := pellH_from_pellP ( n + 1 );
   linear_combination' this
 
-
 theorem vdf_parity_detection (n : ℕ) :
     (pellH n ^ 2 - 2 * pellP n ^ 2 = 1) ↔ Even n := by
   rw [ vdf_verification ];
   by_cases h : Even n <;> simp +decide [ h ];
   aesop
 
-
 /-- The Pell "norm" is multiplicative (pure algebra, no Pell sequences needed) -/
 theorem pell_norm_mul (a b c d : ℤ) :
     (a * c + 2 * b * d) ^ 2 - 2 * (b * c + a * d) ^ 2 =
     (a ^ 2 - 2 * b ^ 2) * (c ^ 2 - 2 * d ^ 2) := by
   ring
-
 
 /-- [Section: ## Modular Exponentiation Properties] -/
 theorem pell_norm_compose (m n : ℕ) :

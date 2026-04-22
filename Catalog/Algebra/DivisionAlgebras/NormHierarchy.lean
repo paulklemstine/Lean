@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.DivisionAlgebras.NormHierarchy
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/DivisionAlgebras
 Declarations: 37
 -/
 
-import Mathlib
 
 /-- The second form: (a²+b²)(c²+d²) = (ac+bd)²+(ad-bc)²
 Obtained by using z₁z̄₂ instead of z₁z₂, or equivalently by

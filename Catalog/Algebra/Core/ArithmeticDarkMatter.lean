@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.Core.ArithmeticDarkMatter
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/Core
 Declarations: 24
 -/
 
-import Mathlib
 
 /-- The Lorentz form Q(a,b,c) = a² + b² - c² -/
 def Q_form (a b c : ℤ) : ℤ := a ^ 2 + b ^ 2 - c ^ 2

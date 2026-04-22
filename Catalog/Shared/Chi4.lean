@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Shared.Chi4
 
 Auto-generated from theorem catalog database.
 Domain: Shared
 Declarations: 4
 -/
-
-import Mathlib
 
 noncomputable section
 
@@ -15,14 +15,8 @@ def chi4 (n : ℤ) : ℤ :=
   else if n % 4 = 1 then 1
   else -1
 
-
-
-
 /-- χ₄(1) = 1. -/
 theorem chi4_one : chi4 1 = 1 := by native_decide
-
-
-
 
 /-- [Section: # CatalogBuild.Shared.Chi4
 Auto-generated from theorem catalog database.
@@ -34,13 +28,7 @@ theorem chi4_mul_odd (a b : ℤ) (ha : a % 2 = 1) (hb : b % 2 = 1) :
   rw [ ← Int.emod_add_mul_ediv a 2, ← Int.emod_add_mul_ediv b 2, ha, hb ] ; ring_nf; norm_num;
   grind
 
-
-
-
 /-- χ₄(3) = -1. -/
 theorem chi4_three : chi4 3 = -1 := by native_decide
-
-
-
 
 end

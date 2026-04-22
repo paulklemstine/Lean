@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Speculative.Other.Evasion
 
 Auto-generated from theorem catalog database.
 Domain: Speculative/Other
 Declarations: 11
 -/
-
-import Mathlib
 
 noncomputable section
 
@@ -15,44 +15,26 @@ structure EvasionStrategy (α : Type*) where
   causal : ∀ (s₁ s₂ : ℕ → Set α) (n : ℕ),
     (∀ i, i < n → s₁ i = s₂ i) → hide s₁ n = hide s₂ n
 
-
-
-
 /-- Whether the evader is caught at step n. -/
 def EvasionStrategy.isCaught {α : Type*} (e : EvasionStrategy α)
     (search : ℕ → Set α) (n : ℕ) : Prop :=
   e.hide search n ∈ search n
-
-
-
 
 /-- An evasion strategy successfully evades forever. -/
 def EvasionStrategy.successfulEvasion {α : Type*} (e : EvasionStrategy α)
     (search : ℕ → Set α) : Prop :=
   ∀ n : ℕ, ¬(e.isCaught search n)
 
-
-
-
 /-- A perfect evasion strategy evades all searches. -/
 def EvasionStrategy.isPerfect {α : Type*} (e : EvasionStrategy α) : Prop :=
   ∀ search : ℕ → Set α, e.successfulEvasion search
 
-
-
-
 /-- An adaptive search strategy for a finite game on Fin n. -/
 def AdaptiveSearch (n : ℕ) := ℕ → Fin n
-
-
-
 
 /-- Whether search catches a static target within T steps. -/
 def catches (n : ℕ) (search : AdaptiveSearch n) (target : Fin n) (T : ℕ) : Prop :=
   ∃ t, t ≤ T ∧ search t = target
-
-
-
 
 /-- An exhaustive search catches any target within n steps. -/
 theorem exhaustive_search_catches {n : ℕ}
@@ -61,9 +43,6 @@ theorem exhaustive_search_catches {n : ℕ}
     catches n search target n := by
   obtain ⟨t, ht, heq⟩ := h_exhaustive target
   exact ⟨t, by omega, heq⟩
-
-
-
 
 /-- [Section: # CatalogBuild.Speculative.Other.Evasion
 Auto-generated from theorem catalog database.
@@ -80,16 +59,10 @@ theorem evasion_lower_bound (n : ℕ) (hn : 2 ≤ n) :
   · push_neg at h_targ;
     exact ⟨ h_targ.choose, fun ⟨ t, ht₁, ht₂ ⟩ => h_targ.choose_spec t ( by omega ) ht₂ ⟩
 
-
-
-
 /-- A transfinite evasion strategy indexed by ordinals. -/
 structure TransfiniteEvasion (α : Type*) where
   hide : Ordinal → α
   evasion_depth : Ordinal
-
-
-
 
 /-- [Section: # CatalogBuild.Speculative.Other.Evasion
 Auto-generated from theorem catalog database.
@@ -101,9 +74,6 @@ theorem transfinite_evasion_finite_bound {n : ℕ} (hn : 0 < n)
       search t = e.hide t := by
   exact ⟨ fun _ => e.hide 0, 0, Ordinal.omega0_pos, rfl ⟩
 
-
-
-
 /-- A computationally bounded evasion strategy. -/
 structure BoundedEvasionStrategy (α : Type*) extends EvasionStrategy α where
   complexity : ℕ → ℕ
@@ -113,8 +83,6 @@ end
 
 end
 
-
 end
-
 
 end

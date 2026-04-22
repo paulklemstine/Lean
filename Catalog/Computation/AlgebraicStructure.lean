@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Computation.AlgebraicStructure
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Computation
 Declarations: 21
 -/
 
-import Mathlib
 
 noncomputable section
 

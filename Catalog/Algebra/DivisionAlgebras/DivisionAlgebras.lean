@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.DivisionAlgebras.DivisionAlgebras
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/DivisionAlgebras
 Declarations: 16
 -/
 
-import Mathlib
 
 /-- The Cayley-Dickson construction. Given a type α with ring and star (conjugation)
 operations, construct a new type on α × α with doubled multiplication. -/

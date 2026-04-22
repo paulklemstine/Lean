@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Computation.InformationGeometry
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Computation
 Declarations: 5
 -/
 
-import Mathlib
 
 /-- [Section: # CatalogBuild.Computation.InformationGeometry
 Auto-generated from theorem catalog database.

@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Speculative.Forbidden.Area51
 
 Auto-generated from theorem catalog database.
 Domain: Speculative/Forbidden
 Declarations: 8
 -/
-
-import Mathlib
 
 noncomputable section
 
@@ -16,9 +16,6 @@ Declarations: 8] -/
 theorem euclid_infinitude : ∀ n : ℕ, ∃ p, p > n ∧ Nat.Prime p := by
   exact fun n => Nat.exists_infinite_primes ( n + 1 ) |> Exists.imp fun p => by aesop;
 
-
-
-
 /-- [Section: # CatalogBuild.Speculative.Forbidden.Area51
 Auto-generated from theorem catalog database.
 Domain: Speculative/Forbidden
@@ -28,34 +25,19 @@ theorem prime_gap_arbitrarily_large :
   intro k; use Nat.factorial ( k + 2 ) !; intro i hi; have := Nat.dvd_factorial ( by linarith ) ( show i + 2 ≤ ( k + 2 ) ! from by linarith [ Nat.self_le_factorial ( k + 2 ) ] ) ; simp_all +decide [ Nat.factorial_succ ] ;
   rw [ show ( ( k + 1 + 1 ) * ( ( k + 1 ) * k ! ) ) ! + i + 2 = ( i + 2 ) * ( ( ( k + 1 + 1 ) * ( ( k + 1 ) * k ! ) ) ! / ( i + 2 ) + 1 ) by linarith [ Nat.div_mul_cancel this ] ] ; exact Nat.not_prime_mul ( by linarith ) ( by linarith [ Nat.div_pos ( Nat.le_of_dvd ( by positivity ) this ) ( by linarith : 0 < i + 2 ) ] ) ;
 
-
-
-
 theorem wilson_forward (p : ℕ) (hp : Nat.Prime p) :
     (p - 1).factorial % p = p - 1 := by
   haveI := Fact.mk hp; simp +decide [ ← ZMod.val_natCast, Nat.cast_sub hp.pos ] ; (
   rcases p with ( _ | _ | p ) <;> norm_num at *);
 
-
-
-
 theorem div3_digit_sum (n : ℕ) : n % 3 = (n % 10 + n / 10) % 3 := by
   omega
-
-
-
 
 theorem div9_digit_sum (n : ℕ) : n % 9 = (n % 10 + n / 10) % 9 := by
   omega
 
-
-
-
 theorem sqrt2_irrational : Irrational (Real.sqrt 2) := by
   exact irrational_sqrt_two
-
-
-
 
 theorem pigeonhole_coprime (n : ℕ) (hn : 0 < n)
     (S : Finset ℕ) (hS : S.card = n + 1)
@@ -74,13 +56,7 @@ theorem pigeonhole_coprime (n : ℕ) (hn : 0 < n)
     rw [ Finset.card_union_of_disjoint h_disjoint, Finset.card_image_of_injective _ ( add_left_injective _ ) ] at h_union_size ; linarith;
   exact ⟨ a, ha, b, hb, hab.1, by simp +decide [ hab.2 ] ⟩
 
-
-
-
 theorem exists_prime_le (n : ℕ) (hn : 2 ≤ n) : ∃ p, Nat.Prime p ∧ p ≤ n := by
   exact ⟨ 2, Nat.prime_two, hn ⟩
-
-
-
 
 end

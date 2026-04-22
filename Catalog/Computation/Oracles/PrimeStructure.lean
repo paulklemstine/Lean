@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Computation.Oracles.PrimeStructure
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Computation/Oracles
 Declarations: 11
 -/
 
-import Mathlib
 
 /-- [Section: # CatalogBuild.Computation.Oracles.PrimeStructure
 Auto-generated from theorem catalog database.

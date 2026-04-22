@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.Core.GaussianIntegers
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/Core
 Declarations: 9
 -/
 
-import Mathlib
 
 /-- The Gaussian integer norm satisfies N(a + bi) = a² + b². -/
 theorem gaussian_norm_eq (a b : ℤ) :

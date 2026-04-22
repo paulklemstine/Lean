@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.EML.TrainingDynamics
 
 Auto-generated from theorem catalog database.
@@ -5,30 +7,19 @@ Domain: EML
 Declarations: 22
 -/
 
-import Mathlib
-
 noncomputable section
 
 /-- The exponential gradient component. -/
 def gradExpComp (w₁ b₁ x : ℝ) : ℝ := w₁ * Real.exp (w₁ * x + b₁)
 
-
-
-
 /-- The logarithmic gradient component. -/
 def gradLogComp (w₂ b₂ x : ℝ) : ℝ := w₂ / (w₂ * x + b₂)
-
-
-
 
 /-- Gradient of EML neuron w.r.t. x decomposes into exp and log parts. -/
 theorem gradient_decomposition (w₁ b₁ w₂ b₂ x : ℝ) :
     gradExpComp w₁ b₁ x - gradLogComp w₂ b₂ x =
     w₁ * Real.exp (w₁ * x + b₁) - w₂ / (w₂ * x + b₂) := by
   simp [gradExpComp, gradLogComp]
-
-
-
 
 /-- Partial derivative of EML neuron w.r.t. weight w₁.
 ∂f/∂w₁ = x · exp(w₁x + b₁). -/
@@ -42,9 +33,6 @@ theorem eml_grad_w1 (w₁ b₁ w₂ b₂ x : ℝ) (_h : w₂ * x + b₂ ≠ 0) :
     exact h1.exp.congr_deriv (by ring)
   exact this.sub_const _
 
-
-
-
 /-- Partial derivative of EML neuron w.r.t. bias b₁.
 ∂f/∂b₁ = exp(w₁x + b₁). -/
 theorem eml_grad_b1 (w₁ b₁ w₂ b₂ x : ℝ) (_h : w₂ * x + b₂ ≠ 0) :
@@ -55,9 +43,6 @@ theorem eml_grad_b1 (w₁ b₁ w₂ b₂ x : ℝ) (_h : w₂ * x + b₂ ≠ 0) :
       (hasDerivAt_id b₁).const_add _
     exact h1.exp.congr_deriv (by ring)
   exact this.sub_const _
-
-
-
 
 /-- Partial derivative of EML neuron w.r.t. weight w₂.
 ∂f/∂w₂ = −x / (w₂x + b₂). -/
@@ -72,9 +57,6 @@ theorem eml_grad_w2 (w₁ b₁ w₂ b₂ x : ℝ) (h : w₂ * x + b₂ ≠ 0) :
   convert (hasDerivAt_const w₂ (Real.exp (w₁ * x + b₁))).sub hlog using 1
   ring
 
-
-
-
 /-- Partial derivative of EML neuron w.r.t. bias b₂.
 ∂f/∂b₂ = −1 / (w₂x + b₂). -/
 theorem eml_grad_b2 (w₁ b₁ w₂ b₂ x : ℝ) (h : w₂ * x + b₂ ≠ 0) :
@@ -87,16 +69,10 @@ theorem eml_grad_b2 (w₁ b₁ w₂ b₂ x : ℝ) (h : w₂ * x + b₂ ≠ 0) :
   convert (hasDerivAt_const b₂ (Real.exp (w₁ * x + b₁))).sub hlog using 1
   ring
 
-
-
-
 /-- The exponential gradient component is always positive when w₁ > 0. -/
 theorem exp_gradient_pos (w₁ b₁ x : ℝ) (hw : 0 < w₁) :
     0 < gradExpComp w₁ b₁ x := by
   unfold gradExpComp; positivity
-
-
-
 
 /-- The logarithmic gradient magnitude is bounded when far from singularity. -/
 theorem log_gradient_bound (w₂ b₂ x : ℝ) (h : 1 ≤ |w₂ * x + b₂|) :
@@ -106,15 +82,9 @@ theorem log_gradient_bound (w₂ b₂ x : ℝ) (h : 1 ≤ |w₂ * x + b₂|) :
   exact div_le_of_le_mul₀ (abs_nonneg _) (abs_nonneg _)
     (le_mul_of_one_le_right (abs_nonneg _) h)
 
-
-
-
 /-- Mean squared error loss for a single EML neuron. -/
 def mseLoss (w₁ b₁ w₂ b₂ : ℝ) (data : List (ℝ × ℝ)) : ℝ :=
   (data.map fun ⟨x, y⟩ => (emlF w₁ b₁ w₂ b₂ x - y)^2).sum / data.length
-
-
-
 
 /-- MSE loss is always nonneg. -/
 theorem mse_nonneg (w₁ b₁ w₂ b₂ : ℝ) (data : List (ℝ × ℝ)) :
@@ -128,22 +98,13 @@ theorem mse_nonneg (w₁ b₁ w₂ b₂ : ℝ) (data : List (ℝ × ℝ)) :
     positivity
   · positivity
 
-
-
-
 /-- Maximum safe learning rate for the exponential component. -/
 def maxLRExp (w₁ b₁ M : ℝ) : ℝ :=
   1 / Real.exp (|w₁| * M + |b₁|)
 
-
-
-
 /-- The max learning rate is always positive. -/
 theorem maxLR_pos (w₁ b₁ M : ℝ) : 0 < maxLRExp w₁ b₁ M := by
   unfold maxLRExp; positivity
-
-
-
 
 /-- Smaller weights allow larger learning rates. -/
 theorem maxLR_weight_monotone (b₁ M : ℝ) (w₁ w₂ : ℝ)
@@ -153,23 +114,14 @@ theorem maxLR_weight_monotone (b₁ M : ℝ) (w₁ w₂ : ℝ)
   apply div_le_div_of_nonneg_left (by positivity) (by positivity)
   exact Real.exp_le_exp_of_le (by nlinarith)
 
-
-
-
 /-- The gradient through a depth-d chain accumulates multiplicatively. -/
 def chainGradMag (d : ℕ) (avgGrad : ℝ) : ℝ := avgGrad ^ d
-
-
-
 
 /-- If average gradient > 1, the chain gradient explodes. -/
 theorem chain_explodes (d : ℕ) (g : ℝ) (hg : 1 < g) (hd : 1 ≤ d) :
     g ≤ chainGradMag d g := by
   unfold chainGradMag
   exact le_self_pow₀ hg.le (by omega)
-
-
-
 
 /-- If average gradient ≤ 1, the chain gradient shrinks with depth. -/
 theorem chain_vanishes (d₁ d₂ : ℕ) (g : ℝ) (hg : 0 ≤ g) (hg1 : g ≤ 1)
@@ -178,15 +130,9 @@ theorem chain_vanishes (d₁ d₂ : ℕ) (g : ℝ) (hg : 0 ≤ g) (hg1 : g ≤ 1
   unfold chainGradMag
   exact pow_le_pow_of_le_one hg hg1 hd
 
-
-
-
 /-- The "gradient ratio" measures exp vs log dominance. -/
 def gradRatio (w₁ b₁ w₂ b₂ x : ℝ) (_h : gradLogComp w₂ b₂ x ≠ 0) : ℝ :=
   |gradExpComp w₁ b₁ x| / |gradLogComp w₂ b₂ x|
-
-
-
 
 /-- In exploration mode (ratio > 1), the exp component dominates. -/
 theorem exploration_mode (w₁ b₁ w₂ b₂ x : ℝ)
@@ -196,28 +142,16 @@ theorem exploration_mode (w₁ b₁ w₂ b₂ x : ℝ)
   unfold gradRatio at hbig
   rwa [lt_div_iff₀ (abs_pos.mpr h), one_mul] at hbig
 
-
-
-
 /-- The expressiveness of depth-d EML networks grows double-exponentially.
 A depth-d composition can produce exp^d(x) (tower of exponentials). -/
 theorem depth_expressiveness (d : ℕ) : d ≤ 2 ^ d :=
   Nat.lt_two_pow_self.le
 
-
-
-
 /-- Recommended maximum depth before gradient issues become critical. -/
 def recommendedMaxDepth : ℕ := 5
-
-
-
 
 /-- At depth 5, gradient magnitude can vary by exp(exp(exp(exp(exp(1))))) ≈ 10^(10^6).
 This motivates the depth-5 recommendation. -/
 theorem depth5_gradient_range : recommendedMaxDepth = 5 := rfl
-
-
-
 
 end

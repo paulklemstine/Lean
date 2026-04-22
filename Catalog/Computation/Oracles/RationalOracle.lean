@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Computation.Oracles.RationalOracle
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Computation/Oracles
 Declarations: 5
 -/
 
-import Mathlib
 
 /-- The fundamental Pythagorean triple identity from stereographic projection. -/
 theorem pythagorean_triple_identity (p q : ℤ) :

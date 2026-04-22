@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.EML.SPBExtended.QuantumSignal
 
 Auto-generated from theorem catalog database.
 Domain: EML/SPBExtended
 Declarations: 19
 -/
-
-import Mathlib
 
 noncomputable section
 
@@ -24,7 +24,6 @@ def spbHQ' (x y : ℝ) : ℝ := (x + y) / (1 + x * y)
 -- ═══════════════════════════════════════════
 -- § 1. Quantum Phase Gates
 -- ═══════════════════════════════════════════
-
 
 theorem phase_angle_composition (t₁ t₂ : ℝ) (h : t₁ * t₂ < 1) :
     Real.arctan (spbQS t₁ t₂) = Real.arctan t₁ + Real.arctan t₂ := by
@@ -59,7 +58,6 @@ theorem allpass_mag_identity (a c s : ℝ) (h : c ^ 2 + s ^ 2 = 1) :
 -- § 3. CORDIC
 -- ═══════════════════════════════════════════
 
-
 theorem cordic_gain (t : ℝ) : 1 + t ^ 2 > 0 := by positivity
 
 theorem cordic_angle_0 : Real.arctan 1 = π / 4 := Real.arctan_one
@@ -70,10 +68,8 @@ theorem cordic_sum_01 : spbQS 1 (1/2) = 3 := by norm_num [spbQS]
 -- § 4. Fresnel Coefficients
 -- ═══════════════════════════════════════════
 
-
 theorem fresnel_is_spbH (r₁ r₂ : ℝ) :
     (r₁ + r₂) / (1 + r₁ * r₂) = spbHQ' r₁ r₂ := rfl
-
 
 theorem fresnel_bounded (r₁ r₂ : ℝ) (h1 : |r₁| < 1) (h2 : |r₂| < 1) :
     |spbHQ' r₁ r₂| < 1 := by
@@ -86,13 +82,11 @@ theorem fresnel_bounded (r₁ r₂ : ℝ) (h1 : |r₁| < 1) (h2 : |r₂| < 1) :
 -- § 5. Neural Network Activation
 -- ═══════════════════════════════════════════
 
-
 theorem spbH_gradient_pos' (x w : ℝ) (hw : |w| < 1) (h : 1 + x * w ≠ 0) :
     (1 - w ^ 2) / (1 + x * w) ^ 2 > 0 := by
   apply div_pos
   · have := abs_lt.mp hw; nlinarith
   · positivity
-
 
 theorem spbH_gradient_origin' (w : ℝ) :
     (1 - w ^ 2) / (1 + 0 * w) ^ 2 = 1 - w ^ 2 := by ring
@@ -100,7 +94,6 @@ theorem spbH_gradient_origin' (w : ℝ) :
 -- ═══════════════════════════════════════════
 -- § 6. Coding Theory Advantage
 -- ═══════════════════════════════════════════
-
 
 theorem spb_code_advantage_7 : (7 : ℕ) + 1 > 7 - 1 := by omega
 
@@ -128,11 +121,9 @@ theorem hyperbolic_pythagorean (y : ℝ) :
 -- § 8. Joint Kinematics
 -- ═══════════════════════════════════════════
 
-
 theorem joint_circle (t : ℝ) :
     ((1 - t ^ 2) / (1 + t ^ 2)) ^ 2 + (2 * t / (1 + t ^ 2)) ^ 2 = 1 := by
   have : (1 + t ^ 2) ≠ 0 := by positivity
   field_simp; ring
-
 
 end

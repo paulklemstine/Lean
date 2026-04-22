@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Geometry.SphericalUniverse.GravitationalWaves
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Geometry/SphericalUniverse
 Declarations: 28
 -/
 
-import Mathlib
 
 noncomputable section
 

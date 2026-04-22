@@ -1,3 +1,6 @@
+import Mathlib
+import Pythagorean.Core
+
 /-! # CatalogBuild.Pythagorean.MachinClassification
 
 Auto-generated from theorem catalog database.
@@ -5,17 +8,11 @@ Domain: Pythagorean
 Declarations: 9
 -/
 
-import Mathlib
-import Pythagorean.Core
-
 noncomputable section
 
 /-- Euler's formula: spb(1/2, 1/3) = 1. -/
 theorem euler_formula : spb (1/2 : ℝ) (1/3) = 1 := by
   unfold spb; norm_num
-
-
-
 
 /-- Key algebraic reformulation: spb(1/a, 1/b) = 1 iff (a-1)(b-1) = 2. -/
 theorem two_leaf_criterion (a b : ℝ) (ha : a ≠ 0) (hb : b ≠ 0)
@@ -32,17 +29,11 @@ theorem two_leaf_criterion (a b : ℝ) (ha : a ≠ 0) (hb : b ≠ 0)
     field_simp
     nlinarith
 
-
-
-
 /-- Euler optimality: unique 2-leaf Machin formula. -/
 theorem euler_optimal (a b : ℤ) (ha : 2 ≤ a) (hb : 2 ≤ b) (hab : a ≤ b)
     (h : (a - 1) * (b - 1) = 2) :
     a = 2 ∧ b = 3 := by
   constructor <;> nlinarith
-
-
-
 
 /-- [Section: # CatalogBuild.Pythagorean.MachinClassification
 Auto-generated from theorem catalog database.
@@ -51,9 +42,6 @@ Declarations: 9] -/
 theorem three_leaf_2_4_13 : spb (spb (1/2 : ℝ) (1/4)) (1/13) = 1 := by
   unfold spb; norm_num
 
-
-
-
 /-- [Section: # CatalogBuild.Pythagorean.MachinClassification
 Auto-generated from theorem catalog database.
 Domain: Pythagorean
@@ -61,14 +49,8 @@ Declarations: 9] -/
 theorem three_leaf_2_5_8 : spb (spb (1/2 : ℝ) (1/5)) (1/8) = 1 := by
   unfold spb; norm_num
 
-
-
-
 theorem three_leaf_3_3_7 : spb (spb (1/3 : ℝ) (1/3)) (1/7) = 1 := by
   unfold spb; norm_num
-
-
-
 
 /-- Three-leaf algebraic criterion.
 spb(spb(1/a, 1/b), 1/c) = 1 iff (a+b)(c+1) = (ab-1)(c-1).
@@ -113,24 +95,15 @@ theorem three_leaf_criterion (a b c : ℤ) (ha : 2 ≤ a) (hb : 2 ≤ b) (hc : 2
   -- Step 3: Case-split on a and b, use omega for c
   interval_cases a <;> interval_cases b <;> omega
 
-
-
-
 /-- Machin's classical formula: 4·arctan(1/5) - arctan(1/239) = π/4. -/
 theorem machin_classical :
     spb (spb (spb (1/5 : ℝ) (1/5)) (spb (1/5) (1/5))) (-1/239) = 1 := by
   unfold spb; norm_num
-
-
-
 
 /-- Gauss's formula: 12·arctan(1/18) + 8·arctan(1/57) - 5·arctan(1/239) = π/4.
 We verify one simpler multi-leaf identity. -/
 theorem multi_leaf_identity :
     spb (spb (spb (1/2 : ℝ) (1/3)) 0) 0 = 1 := by
   unfold spb; norm_num
-
-
-
 
 end

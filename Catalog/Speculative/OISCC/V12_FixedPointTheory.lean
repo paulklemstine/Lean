@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Speculative.OISCC.V12_FixedPointTheory
 
 Auto-generated from theorem catalog database.
@@ -5,19 +7,13 @@ Domain: Speculative/OISCC
 Declarations: 13
 -/
 
-import Mathlib
-
 noncomputable section
 
 /-- The diagonal map d(x) = exp(x) - ln(x). -/
 def d_fp (x : ℝ) : ℝ := Real.exp x - Real.log x
 
-
-
 /-- The EML operation. -/
 def EML_fp (a b : ℝ) : ℝ := Real.exp a - Real.log b
-
-
 
 /-- [Section: # CatalogBuild.Speculative.OISCC.V12_FixedPointTheory
 Auto-generated from theorem catalog database.
@@ -28,20 +24,14 @@ theorem d_fp_gt_id (x : ℝ) (hx : 0 < x) : d_fp x > x := by
   rw [ show x = 1 + ( x - 1 ) by ring, Real.exp_add ] at *;
   nlinarith [ Real.add_one_le_exp 1, Real.add_one_le_exp ( x - 1 ), Real.log_le_sub_one_of_pos hx ]
 
-
-
 theorem displacement_ge_one (x : ℝ) (hx : 0 < x) : displacement x ≥ 1 := by
   unfold displacement;
   have := Real.add_one_le_exp ( x - 1 );
   rw [ Real.exp_sub ] at this;
   rw [ le_div_iff₀ ] at this <;> nlinarith [ Real.add_one_le_exp 1, Real.log_le_sub_one_of_pos hx ]
 
-
-
 theorem displacement_pos (x : ℝ) (hx : 0 < x) : displacement x > 0 := by
   exact lt_of_lt_of_le zero_lt_one ( displacement_ge_one x hx )
-
-
 
 theorem displacement_tendsto_atTop :
     Filter.Tendsto displacement atTop atTop := by
@@ -57,8 +47,6 @@ theorem displacement_tendsto_atTop :
     exact ⟨ Max.max i 2, fun a ha => by have := hi a ( le_trans ( le_max_left _ _ ) ha ) ; rw [ gt_iff_lt ] at this; rw [ lt_div_iff₀ ] at this <;> cases abs_cases b <;> nlinarith [ le_max_right i 2, Real.log_le_sub_one_of_pos ( by linarith [ le_max_right i 2 ] : 0 < a ) ] ⟩;
   exact ⟨ Max.max i 1, fun x hx => by unfold displacement; linarith [ hi x ( le_trans ( le_max_left _ _ ) hx ) ] ⟩
 
-
-
 theorem displacement_tendsto_atTop_at_zero :
     Filter.Tendsto displacement (nhdsWithin 0 (Ioi 0)) atTop := by
   -- To prove the limit is infinity, it suffices to show that $-\ln(x) \to \infty$ as $x \to 0^+$.
@@ -67,8 +55,6 @@ theorem displacement_tendsto_atTop_at_zero :
       exact tendsto_nhdsWithin_of_tendsto_nhds ( Continuous.tendsto' ( by continuity ) _ _ ( by norm_num ) );
     convert h_displacement.add_atTop h_ln using 2 ; unfold displacement ; ring;
   have := Real.tendsto_log_nhdsGT_zero; aesop;
-
-
 
 theorem displacement_convexOn : ConvexOn ℝ (Ioi 0) displacement := by
   apply_rules [ convexOn_of_deriv2_nonneg, convex_Ioi ];
@@ -84,25 +70,17 @@ theorem displacement_convexOn : ConvexOn ℝ (Ioi 0) displacement := by
       intro x hx; rw [ h_second_deriv x hx ] ; norm_num [ Real.differentiableAt_exp, differentiableAt_inv, hx.ne' ];
     exact fun x hx => h_second_deriv x ( interior_subset hx ) ▸ add_nonneg ( Real.exp_nonneg x ) ( one_div_nonneg.mpr ( sq_nonneg x ) )
 
-
-
 theorem EML_fp_expansion (x y : ℝ) (hx : 0 < x) (hy : 0 < y) (hy1 : y < 1) :
     EML_fp x y > x := by
   exact lt_tsub_iff_left.mpr ( by linarith [ Real.add_one_le_exp x, Real.log_le_sub_one_of_pos hy ] )
-
-
 
 theorem EML_fp_pos_small_y (x y : ℝ) (hx : 0 < x) (hy : 0 < y) (hy1 : y ≤ 1) :
     EML_fp x y > 0 := by
   exact sub_pos_of_lt ( lt_of_le_of_lt ( Real.log_nonpos hy.le hy1 ) ( by positivity ) )
 
-
-
 theorem d_fp_ge_two (x : ℝ) (hx : 0 < x) : d_fp x ≥ 2 := by
   unfold d_fp;
   linarith [ Real.add_one_le_exp x, Real.log_le_sub_one_of_pos hx ]
-
-
 
 theorem d_fp_strictMono_Ici : StrictMonoOn d_fp (Ici 1) := by
   -- The derivative of $d(x) = e^x - \ln(x)$ is $d'(x) = e^x - \frac{1}{x}$.
@@ -118,8 +96,6 @@ theorem d_fp_strictMono_Ici : StrictMonoOn d_fp (Ici 1) := by
     · exact DifferentiableOn.sub ( DifferentiableOn.exp differentiableOn_id ) ( DifferentiableOn.log differentiableOn_id fun x hx => by linarith [ hx.1 ] );
   intro x hx y hy hxy; obtain ⟨ c, hc₁, hc₂ ⟩ := h_mvt x y hx hxy; have := h_deriv_pos c ( by linarith [ hc₁.1, hx.out ] ) ; rw [ hc₂, lt_div_iff₀ ] at this <;> aesop
 
-
-
 theorem displacement_acceleration (x : ℝ) (hx : 1 ≤ x) :
     d_fp (d_fp x) - d_fp x ≥ d_fp x - x := by
   by_contra h_contra;
@@ -133,7 +109,5 @@ theorem displacement_acceleration (x : ℝ) (hx : 1 ≤ x) :
     have := exists_deriv_eq_slope displacement ht2;
     exact this ( continuousOn_of_forall_continuousAt fun t ht => by exact DifferentiableAt.continuousAt <| by exact differentiableAt_of_deriv_ne_zero <| ne_of_gt <| h_deriv_pos t <| by linarith [ ht.1 ] ) ( fun t ht => by exact DifferentiableAt.differentiableWithinAt <| by exact differentiableAt_of_deriv_ne_zero <| ne_of_gt <| h_deriv_pos t <| by linarith [ ht.1 ] ) |> fun ⟨ c, hc1, hc2 ⟩ => by nlinarith [ h_deriv_pos c <| by linarith [ hc1.1 ], mul_div_cancel₀ ( displacement t2 - displacement t1 ) ( sub_ne_zero_of_ne ht2.ne' ) ] ;
   exact h_contra <| le_of_lt <| h_monotone _ _ hx <| show d_fp x > x from d_fp_gt_id x <| lt_of_lt_of_le zero_lt_one hx;
-
-
 
 end

@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Speculative.Forbidden.TwistedMathematics
 
 Auto-generated from theorem catalog database.
 Domain: Speculative/Forbidden
 Declarations: 7
 -/
-
-import Mathlib
 
 noncomputable section
 
@@ -16,18 +16,12 @@ where this horror is true by default. -/
 noncomputable def evil_well_order (α : Type*) : LinearOrder α :=
   linearOrderOfSTO (WellOrderingRel)
 
-
-
-
 /-- **The Well-Ordering is Actually Well-Founded:**
 Not only can we linearly order any type, but we can well-order it.
 Every descending chain terminates. Chaos has a floor. -/
 theorem well_ordering_exists (α : Type*) :
     ∃ r : α → α → Prop, IsWellOrder α r := by
   exact ⟨WellOrderingRel, inferInstance⟩
-
-
-
 
 /-- [Section: # CatalogBuild.Speculative.Forbidden.TwistedMathematics
 Auto-generated from theorem catalog database.
@@ -38,9 +32,6 @@ theorem drinkers_paradox [Nonempty α] (drinks : α → Prop) :
   by_contra h;
   simp +zetaDelta at *;
   exact h ( Classical.arbitrary α ) |>.2.elim fun x hx => hx ( h x |>.1 )
-
-
-
 
 /-- [Section: # CatalogBuild.Speculative.Forbidden.TwistedMathematics
 Auto-generated from theorem catalog database.
@@ -96,16 +87,10 @@ theorem not_all_sets_measurable :
   simp_all +decide [ Cardinal.mk_real ];
   exact absurd h_measurable_card ( not_le_of_gt ( Cardinal.cantor _ ) )
 
-
-
-
 theorem hilbert_hotel_one_guest :
     ∃ f : ℕ → ℕ, Injective f ∧ 0 ∉ Set.range f := by
   -- Define a function that is injective and does not contain zero in its range.
   use fun n => n + 1; simp [Nat.succ_ne_zero, Function.Injective]
-
-
-
 
 theorem hilbert_hotel_countable :
     ∃ f : ℕ × ℕ → ℕ, Bijective f := by
@@ -114,14 +99,8 @@ theorem hilbert_hotel_countable :
     exact ( Cardinal.eq.1 <| by simp +decide );
   exact ⟨ _, h_countable.some.bijective ⟩
 
-
-
-
 theorem nat_self_similar :
     ∃ f : ℕ → ℕ, Injective f ∧ ¬ Surjective f := by
   exact ⟨ fun n => 2 * n, fun n m h => by linarith, fun h => by have := h ( 1 : ℕ ) ; obtain ⟨ n, hn ⟩ := this; linarith [ show n = 0 by linarith ] ⟩
-
-
-
 
 end

@@ -1,3 +1,8 @@
+import Mathlib
+import Pythagorean.ClosedFormAncestor.ClosedFormAncestor
+import Pythagorean.ClosedFormAncestor.FactoringTheory
+import Pythagorean.ClosedFormAncestor.GhostMatrixInduction
+
 /-! # CatalogBuild.Pythagorean.ClosedFormAncestor.NewTheorems
 
 Auto-generated from theorem catalog database.
@@ -5,16 +10,10 @@ Domain: Pythagorean/ClosedFormAncestor
 Declarations: 9
 -/
 
-import Mathlib
-import Pythagorean.ClosedFormAncestor.ClosedFormAncestor
-import Pythagorean.ClosedFormAncestor.FactoringTheory
-import Pythagorean.ClosedFormAncestor.GhostMatrixInduction
-
 /-- Ghost ancestor at depth 0 is the identity. -/
 theorem ghostAncestor_zero (a b c : ℤ) :
     ghostAncestor 0 a b c = (a, b, c) := by
   simp [ghostAncestor, compPell, pellNum]
-
 
 /-- [Section: ### Ghost Ancestor Composition] -/
 theorem ghostAncestor_add (m n : ℕ) (a b c : ℤ) :
@@ -30,19 +29,16 @@ theorem ghostAncestor_add (m n : ℕ) (a b c : ℤ) :
   simp +decide only [h_add] ; ring;
   rw [ show compPell m ^ 2 = 2 * pellNum m ^ 2 + ( -1 ) ^ m by linarith [ pell_sq_identity m ], show compPell n ^ 2 = 2 * pellNum n ^ 2 + ( -1 ) ^ n by linarith [ pell_sq_identity n ] ] ; ring
 
-
 /-- [Section: ### Determinant Formula] -/
 theorem ghostMatrix_closed_det (n : ℕ) :
     Matrix.det (ghostMatrix_closed n) = (-1 : ℤ) ^ n := by
   rw [ ← ghostMatrix_pow_eq_closed, Matrix.det_pow ];
   rfl
 
-
 /-- [Section: ### Trace Formula] -/
 theorem ghostMatrix_closed_trace (n : ℕ) :
     Matrix.trace (ghostMatrix_closed n) = 4 * compPell n ^ 2 - (-1 : ℤ) ^ n := by
   unfold ghostMatrix_closed; rw [ Matrix.trace ] ; simp +decide [ Fin.sum_univ_three ] ; ring;
-
 
 /-- [Section: ### Pellnum strictly positive for n ≥ 1] -/
 theorem pellNum_pos_of_pos {n : ℕ} (hn : 0 < n) : 0 < pellNum n := by
@@ -51,19 +47,16 @@ theorem pellNum_pos_of_pos {n : ℕ} (hn : 0 < n) : 0 < pellNum n := by
   · rw [ pellNum_step ];
     exact add_pos_of_pos_of_nonneg ih ( le_of_lt ( compPell_pos n ) )
 
-
 /-- [Section: ### Key Pell Product Identity] -/
 theorem pell_product_succ (n : ℕ) :
     pellNum n * pellNum (n + 2) = pellNum (n + 1) ^ 2 - (-1 : ℤ) ^ n := by
   exact Nat.recOn n ( by norm_num ) fun k ih => by norm_num [ pow_succ, pellNum_rec ] at * ; linarith;
-
 
 /-- The hypotenuse of the ghost ancestor is always positive for a PPT. -/
 theorem ghost_hypotenuse_formula (G : ℕ) (a b c : ℤ) :
     ghost_h_G G a b c =
     -2 * pellNum G * compPell G * (a + b) + (2 * compPell G ^ 2 - (-1 : ℤ) ^ G) * c := by
   unfold ghost_h_G ghostAncestor; ring
-
 
 /-- [Section: ### Additional Pell recurrence identities] -/
 theorem pellNum_add (m n : ℕ) :
@@ -78,7 +71,6 @@ theorem pellNum_add (m n : ℕ) :
     intro n; induction' n using Nat.strong_induction_on with n ih; rcases n with ( _ | _ | n ) <;> norm_num [ pow_succ' ] at *;
     rw [ show compPell ( n + 2 ) = 2 * compPell ( n + 1 ) + compPell n from rfl ] ; push_cast [ ih _ <| Nat.le_succ _, ih _ <| Nat.le_refl _ ] ; ring ; norm_num ; ring;
   push_cast [ ← @Int.cast_inj ℝ, h_pell_def, h_compPell_def ] ; ring
-
 
 theorem compPell_add (m n : ℕ) :
     compPell (m + n) = compPell m * compPell n + 2 * pellNum m * pellNum n := by

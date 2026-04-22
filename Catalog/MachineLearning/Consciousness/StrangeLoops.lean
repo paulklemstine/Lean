@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.MachineLearning.Consciousness.StrangeLoops
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: MachineLearning/Consciousness
 Declarations: 8
 -/
 
-import Mathlib
 
 /-- A hierarchical system with levels -/
 structure HierarchicalSystem where

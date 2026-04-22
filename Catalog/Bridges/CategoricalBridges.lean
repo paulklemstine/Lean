@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Bridges.CategoricalBridges
 
 Auto-generated from theorem catalog database.
 Domain: Bridges
 Declarations: 12
 -/
-
-import Mathlib
 
 noncomputable section
 
@@ -17,18 +17,12 @@ def bridge_composition {C D E : Type*}
     (F₁ ⋙ F₂) ⊣ (G₂ ⋙ G₁) :=
   adj₁.comp adj₂
 
-
-
-
 /-- The mathematical bridge hierarchy. -/
 inductive BridgeLevel where
   | setTheoretic | stone | gelfand | pontryagin | galois
   | tannaka | langlands | geometricLanglands | derivedLanglands
   | motivic | hott
   deriving DecidableEq
-
-
-
 
 /-- Numerical level of each bridge. -/
 def BridgeLevel.toNat : BridgeLevel → ℕ
@@ -44,16 +38,10 @@ def BridgeLevel.toNat : BridgeLevel → ℕ
   | .motivic => 9
   | .hott => 10
 
-
-
-
 /-- HoTT subsumes all previous bridges. -/
 theorem hott_subsumes_all (b : BridgeLevel) :
     b.toNat ≤ BridgeLevel.hott.toNat := by
   cases b <;> simp [BridgeLevel.toNat]
-
-
-
 
 /-- Analysis bridges have unique limits (Hausdorff uniqueness). -/
 theorem analysis_bridge_unique_limit {X : Type*} [TopologicalSpace X] [T2Space X]
@@ -61,15 +49,9 @@ theorem analysis_bridge_unique_limit {X : Type*} [TopologicalSpace X] [T2Space X
     (hb : Filter.Tendsto f Filter.atTop (nhds b)) : a = b :=
   tendsto_nhds_unique ha hb
 
-
-
-
 /-- The Riemann sum of f on [0,1] with n uniform subdivisions. -/
 def riemannSum (f : ℝ → ℝ) (n : ℕ) : ℝ :=
   (1 / (n : ℝ)) * ∑ k ∈ Finset.range n, f ((k : ℝ) / (n : ℝ))
-
-
-
 
 /-- [Section: # CatalogBuild.Bridges.CategoricalBridges
 Auto-generated from theorem catalog database.
@@ -108,23 +90,14 @@ theorem riemann_sum_converges (f : ℝ → ℝ) (hf : Continuous f) :
   rw [ ← Finset.sum_sub_distrib ] ; rw [ Finset.mul_sum _ _ _ ] ; refine' Finset.sum_congr rfl fun i hi => _ ; rw [ intervalIntegral.integral_sub ( by exact Continuous.intervalIntegrable ( by continuity ) .. ) ] <;> norm_num ; ring;
   norm_num
 
-
-
-
 /-- L-function data. -/
 structure LFunctionData where
   degree : ℕ
   conductor : ℕ
 
-
-
-
 /-- L-function equivalence is reflexive. -/
 theorem lfunc_equiv_refl (L : LFunctionData) : L.degree = L.degree ∧ L.conductor = L.conductor :=
   ⟨rfl, rfl⟩
-
-
-
 
 /-- A functional equation with root number. -/
 structure FunctionalEquation where
@@ -133,21 +106,12 @@ structure FunctionalEquation where
   root_number : ℂ
   root_number_norm_one : ‖root_number‖ = 1
 
-
-
-
 /-- The root number has norm 1. -/
 theorem root_number_unit (fe : FunctionalEquation) :
     ‖fe.root_number‖ = 1 := fe.root_number_norm_one
 
-
-
-
 /-- Self-dual L-functions have root number ±1. -/
 def FunctionalEquation.isSelfDual (fe : FunctionalEquation) : Prop :=
   fe.root_number = 1 ∨ fe.root_number = -1
-
-
-
 
 end

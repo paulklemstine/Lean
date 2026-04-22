@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.MachineLearning.Consciousness.GlobalWorkspace
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: MachineLearning/Consciousness
 Declarations: 7
 -/
 
-import Mathlib
 
 /-- A processor in the global workspace architecture -/
 structure GWProcessor where

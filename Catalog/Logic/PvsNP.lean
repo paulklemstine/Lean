@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Logic.PvsNP
 
 Auto-generated from theorem catalog database.
@@ -5,16 +7,11 @@ Domain: Logic
 Declarations: 12
 -/
 
-import Mathlib
-
 /-- The Subset Sum decision problem: given a list of integers and a target,
 does some subset sum to the target? -/
 def SubsetSum (weights : List ℤ) (target : ℤ) : Prop :=
   ∃ S : Finset (Fin weights.length),
     (∑ i ∈ S, weights.get i) = target
-
-
-
 
 /-- [Section: # CatalogBuild.Logic.PvsNP
 Auto-generated from theorem catalog database.
@@ -24,16 +21,10 @@ instance SubsetSum.instDecidable (weights : List ℤ) (target : ℤ) :
     Decidable (SubsetSum weights target) :=
   inferInstanceAs (Decidable (∃ S : Finset (Fin weights.length), _))
 
-
-
-
 /-- Given a candidate subset, we can verify the sum. -/
 def verifySubsetSum (weights : List ℤ) (target : ℤ)
     (S : Finset (Fin weights.length)) : Prop :=
   (∑ i ∈ S, weights.get i) = target
-
-
-
 
 /-- SubsetSum is equivalent to existence of a valid certificate. -/
 theorem subsetSum_iff_exists_certificate (weights : List ℤ) (target : ℤ) :
@@ -41,29 +32,17 @@ theorem subsetSum_iff_exists_certificate (weights : List ℤ) (target : ℤ) :
     ∃ S : Finset (Fin weights.length), verifySubsetSum weights target S := by
   simp [SubsetSum, verifySubsetSum]
 
-
-
-
 /-- The number of subsets of an n-element set is 2^n. -/
 theorem num_subsets (n : ℕ) : Fintype.card (Finset (Fin n)) = 2 ^ n := by
   simp [Fintype.card_finset, Fintype.card_fin]
-
-
-
 
 /-- Exponential growth: 2^n > n for all n. -/
 theorem exponential_exceeds_linear (n : ℕ) : n < 2 ^ n :=
   Nat.lt_two_pow_self
 
-
-
-
 /-- Berggren tree has at least one node at every depth. -/
 theorem berggren_nodes_at_depth (d : ℕ) : 3 ^ d ≥ 1 :=
   Nat.one_le_pow d 3 (by omega)
-
-
-
 
 /-- [Section: # CatalogBuild.Logic.PvsNP
 Auto-generated from theorem catalog database.
@@ -81,17 +60,11 @@ theorem berggren_superpolynomial (k : ℕ) : ∃ N, ∀ d, N ≤ d → d ^ k < 3
     simpa [ Real.exp_neg ] using Real.tendsto_pow_mul_exp_neg_atTop_nhds_zero k;
   exact Filter.eventually_atTop.mp ( h_exp_growth.eventually ( gt_mem_nhds zero_lt_one ) ) |> fun ⟨ N, hN ⟩ ↦ ⟨ N, fun n hn ↦ by have := hN n hn; rw [ div_lt_one ( by positivity ) ] at this; exact_mod_cast this ⟩
 
-
-
-
 /-- Any algorithm examining all subsets of an n-element set
 must consider 2^n candidates. No tree structure changes this. -/
 theorem subset_enumeration_exponential (n : ℕ) :
     Fintype.card (Finset (Fin n)) = 2 ^ n :=
   num_subsets n
-
-
-
 
 theorem no_poly_covering (k : ℕ) :
     ∃ N, ∀ n, N ≤ n → n ^ k < 2 ^ n := by
@@ -109,20 +82,12 @@ theorem no_poly_covering (k : ℕ) :
     simpa [ Real.exp_nat_mul, Real.exp_log ] using h_exp_growth;
   exact Filter.eventually_atTop.mp ( h_exp_growth.eventually ( gt_mem_nhds zero_lt_one ) ) |> fun ⟨ N, hN ⟩ ↦ ⟨ N, fun n hn ↦ by have := hN n hn; rw [ div_lt_one ( by positivity ) ] at this; exact_mod_cast this ⟩
 
-
-
-
 /-- The empty subset always sums to 0. -/
 theorem empty_subset_sum (weights : List ℤ) : SubsetSum weights 0 :=
   ⟨∅, by simp⟩
-
-
-
 
 /-- The full set sums to the total. -/
 theorem full_subset_sum (weights : List ℤ) :
     SubsetSum weights (∑ i : Fin weights.length, weights.get i) :=
   ⟨Finset.univ, by simp⟩
-
-
 

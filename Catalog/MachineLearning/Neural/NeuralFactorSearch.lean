@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.MachineLearning.Neural.NeuralFactorSearch
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: MachineLearning/Neural
 Declarations: 8
 -/
 
-import Mathlib
 
 /-- The fundamental algebraic identity: `4k² - 1 = (2k - 1)(2k + 1)`. -/
 theorem four_k_sq_sub_one_eq (k : ℤ) : 4 * k ^ 2 - 1 = (2 * k - 1) * (2 * k + 1) := by

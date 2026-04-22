@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Speculative.OISCC.LyapunovExponent
 
 Auto-generated from theorem catalog database.
@@ -5,35 +7,27 @@ Domain: Speculative/OISCC
 Declarations: 13
 -/
 
-import Mathlib
-
 noncomputable section
 
 /-- The diagonal map. -/
 def d_lyap (x : ℝ) : ℝ := Real.exp x - Real.log x
 
-
 /-- The single-step expansion rate (= larger eigenvalue on diagonal). -/
 def rho (x : ℝ) : ℝ := Real.exp x + x⁻¹
 
-
 /-- The log expansion rate. -/
 def log_rho (x : ℝ) : ℝ := Real.log (rho x)
-
 
 /-- ρ(x) > 0 for x > 0. -/
 theorem rho_pos (x : ℝ) (hx : 0 < x) : rho x > 0 := by
   unfold rho; positivity
 
-
 theorem rho_gt_one (x : ℝ) (hx : 0 < x) : rho x > 1 := by
   exact lt_add_of_le_of_pos ( Real.one_le_exp hx.le ) ( inv_pos.mpr hx )
-
 
 /-- ρ(x) ≥ exp(x) for x > 0. -/
 theorem rho_ge_exp (x : ℝ) (hx : 0 < x) : rho x ≥ Real.exp x := by
   unfold rho; linarith [inv_pos.mpr hx]
-
 
 theorem rho_ge_e_plus_one (x : ℝ) (hx : 1 ≤ x) :
     rho x ≥ Real.exp 1 + 1 := by
@@ -44,7 +38,6 @@ theorem rho_ge_e_plus_one (x : ℝ) (hx : 1 ≤ x) :
     nlinarith [ Real.add_one_le_exp 1, Real.add_one_le_exp ( x - 1 ) ];
   nlinarith [ inv_pos.mpr ( by linarith : 0 < x ), mul_inv_cancel₀ ( by linarith : x ≠ 0 ), Real.add_one_le_exp 1, Real.add_one_le_exp x ]
 
-
 /-- ln(ρ(x)) ≥ x for x ≥ 1. -/
 theorem log_rho_ge_id (x : ℝ) (hx : 1 ≤ x) : log_rho x ≥ x := by
   unfold log_rho
@@ -52,12 +45,10 @@ theorem log_rho_ge_id (x : ℝ) (hx : 1 ≤ x) : log_rho x ≥ x := by
         exact Real.log_le_log (Real.exp_pos x) (rho_ge_exp x (by linarith))
     _ = x := Real.log_exp x
 
-
 theorem d_lyap_gt_id (x : ℝ) (hx : 0 < x) : d_lyap x > x := by
   unfold d_lyap;
   rw [ show Real.exp x = Real.exp ( x - 1 ) * Real.exp 1 by rw [ ← Real.exp_add ] ; ring, mul_comm ];
   have := Real.exp_one_gt_d9.le ; norm_num1 at * ; nlinarith [ inv_pos.mpr hx, mul_inv_cancel₀ hx.ne', Real.add_one_le_exp ( x - 1 ), Real.log_le_sub_one_of_pos hx ]
-
 
 theorem rho_orbit_growth (x : ℝ) (hx : 1 ≤ x) :
     rho (d_lyap x) > rho x := by
@@ -75,12 +66,10 @@ theorem rho_orbit_growth (x : ℝ) (hx : 1 ≤ x) :
   · exact le_trans hx ( le_of_lt ( d_lyap_gt_id x ( by positivity ) ) );
   · exact d_lyap_gt_id x <| zero_lt_one.trans_le hx
 
-
 theorem log_lyapunov_ge_orbit (x : ℝ) (hx : 1 ≤ x) :
     log_rho (d_lyap x) ≥ d_lyap x := by
   apply log_rho_ge_id;
   exact le_trans hx ( le_of_lt ( d_lyap_gt_id x ( by positivity ) ) )
-
 
 theorem rho_strictMono_Ici : StrictMonoOn rho (Ici 1) := by
   norm_num [ StrictMonoOn ];
@@ -96,12 +85,10 @@ theorem rho_strictMono_Ici : StrictMonoOn rho (Ici 1) := by
     · exact fun x hx => DifferentiableAt.differentiableWithinAt ( by exact differentiableAt_of_deriv_ne_zero ( ne_of_gt ( h_deriv_pos x ( by linarith [ hx.1 ] ) ) ) );
   have := h_deriv_pos c ( by linarith [ hc.1.1 ] ) ; rw [ hc.2, lt_div_iff₀ ] at this <;> linarith;
 
-
 theorem rho_tendsto_atTop : Filter.Tendsto rho atTop atTop := by
   -- Since $\rho(x) \geq e^x$ for $x > 0$ and $e^x \to \infty$ as $x \to \infty$, it follows that $\rho(x) \to \infty$ as $x \to \infty$.
   have h_rho_ge_exp : ∀ x > 0, rho x ≥ Real.exp x := by
     exact fun x a => rho_ge_exp x a;
   exact Filter.tendsto_atTop_mono' Filter.atTop ( Filter.eventually_atTop.mpr ⟨ 1, fun x hx => h_rho_ge_exp x <| zero_lt_one.trans_le hx ⟩ ) <| Real.tendsto_exp_atTop
-
 
 end

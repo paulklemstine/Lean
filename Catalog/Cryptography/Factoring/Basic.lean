@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Cryptography.Factoring.Basic
 
 Auto-generated from theorem catalog database.
@@ -5,45 +7,28 @@ Domain: Cryptography/Factoring
 Declarations: 11
 -/
 
-import Mathlib
-
 noncomputable section
 
 /-- The orbit sequence of a function f starting at x₀. This is simply f^[n](x₀). -/
 noncomputable def orbitSeq {α : Type*} (f : α → α) (x₀ : α) (n : ℕ) : α :=
   f^[n] x₀
 
-
-
-
 /-- orbitSeq agrees with Function.iterate -/
 theorem orbitSeq_eq_iterate {α : Type*} (f : α → α) (x₀ : α) (n : ℕ) :
     orbitSeq f x₀ n = f^[n] x₀ := rfl
 
-
-
-
 /-- Base case: orbit at 0 is x₀ -/
 theorem orbitSeq_zero {α : Type*} (f : α → α) (x₀ : α) :
     orbitSeq f x₀ 0 = x₀ := rfl
-
-
-
 
 /-- Step case: orbit at n+1 is f applied to orbit at n -/
 theorem orbitSeq_succ {α : Type*} (f : α → α) (x₀ : α) (n : ℕ) :
     orbitSeq f x₀ (n + 1) = f (orbitSeq f x₀ n) := by
   simp [orbitSeq, iterate_succ_apply']
 
-
-
-
 /-- The Pollard map x ↦ x² + c on ZMod n -/
 def pollardMap (n : ℕ) (c : ZMod n) : ZMod n → ZMod n :=
   fun x => x * x + c
-
-
-
 
 /-- The Pollard map commutes with the canonical reduction ZMod n → ZMod p
 when p divides n. This is the fundamental commutation property. -/
@@ -52,9 +37,6 @@ theorem pollardMap_commutes_with_castHom {n p : ℕ} (hp : p ∣ n)
     ZMod.castHom hp (ZMod p) (pollardMap n c x) =
     pollardMap p (ZMod.castHom hp (ZMod p) c) (ZMod.castHom hp (ZMod p) x) := by
   simp [pollardMap, map_add, map_mul]
-
-
-
 
 /-- [Section: # CatalogBuild.Cryptography.Factoring.Basic
 Auto-generated from theorem catalog database.
@@ -70,9 +52,6 @@ theorem factor_from_mod_collision {n p : ℕ} {x y : ℤ}
     (hne : x ≠ y) :
     1 < Int.gcd (x - y) n := by
   exact lt_of_lt_of_le hp_gt ( Nat.le_of_dvd ( Int.gcd_pos_of_ne_zero_right _ ( by positivity ) ) ( Int.natCast_dvd_natCast.mp ( Int.dvd_coe_gcd hcoll hp_dvd_n ) ) )
-
-
-
 
 /-- [Section: # CatalogBuild.Cryptography.Factoring.Basic
 Auto-generated from theorem catalog database.
@@ -90,17 +69,11 @@ theorem factor_from_mod_collision_lt {n p : ℕ} {x y : ℤ}
   refine' lt_of_le_of_ne ( Nat.le_of_dvd ( by positivity ) ( Int.natCast_dvd_natCast.mp ( Int.gcd_dvd_right _ _ ) ) ) fun h => hnocoll _;
   exact Int.dvd_trans ( by norm_num ) ( h ▸ Int.gcd_dvd_left _ _ )
 
-
-
-
 theorem collision_within_card {α : Type*} [Fintype α] [DecidableEq α]
     (f : α → α) (x₀ : α) :
     ∃ i j, i < j ∧ j ≤ Fintype.card α ∧ f^[i] x₀ = f^[j] x₀ := by
   by_contra h_contra;
   exact absurd ( Finset.card_le_univ ( Finset.image ( fun i => f^[i] x₀ ) ( Finset.range ( Fintype.card α + 1 ) ) ) ) ( by rw [ Finset.card_image_of_injOn fun i hi j hj hij => le_antisymm ( not_lt.mp fun hi' => h_contra ⟨ j, i, hi', by linarith [ Finset.mem_range.mp hi, Finset.mem_range.mp hj ], hij.symm ⟩ ) ( not_lt.mp fun hj' => h_contra ⟨ i, j, hj', by linarith [ Finset.mem_range.mp hi, Finset.mem_range.mp hj ], hij ⟩ ) ] ; simp +decide )
-
-
-
 
 theorem floyd_detection {α : Type*} [Fintype α] [DecidableEq α]
     (f : α → α) (x₀ : α) :
@@ -128,15 +101,9 @@ theorem floyd_detection {α : Type*} [Fintype α] [DecidableEq α]
     convert h_eq_k' k' hk'.2.2.1 using 1 ; rw [ Nat.mul_div_cancel' ( Nat.dvd_of_mod_eq_zero hk'.2.2.2 ) ] ; ring;
   exact h_no_k ⟨ k', hk'.1, hk'.2.1, h_eq_k' ⟩
 
-
-
-
 theorem orbit_map_commute {α β : Type*} (f : α → α) (g : β → β) (π : α → β)
     (hcomm : ∀ x, π (f x) = g (π x)) (x₀ : α) (n : ℕ) :
     π (f^[n] x₀) = g^[n] (π x₀) := by
   induction n <;> simp +decide [ *, Function.iterate_succ_apply' ]
-
-
-
 
 end

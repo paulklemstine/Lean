@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.MachineLearning.Consciousness.Autopoiesis
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: MachineLearning/Consciousness
 Declarations: 11
 -/
 
-import Mathlib
 
 /-- A production network: components that produce other components -/
 structure ProductionNetwork where

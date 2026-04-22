@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Computation.Fibonacci.FibonacciArithmetic
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Computation/Fibonacci
 Declarations: 7
 -/
 
-import Mathlib
 
 /-- The fundamental Fibonacci recurrence, reinterpreted as the carry rule.
 This is the computational manifestation of φ² = φ + 1. -/

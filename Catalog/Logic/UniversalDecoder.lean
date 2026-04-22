@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Logic.UniversalDecoder
 
 Auto-generated from theorem catalog database.
 Domain: Logic
 Declarations: 16
 -/
-
-import Mathlib
 
 noncomputable section
 
@@ -24,23 +24,14 @@ theorem rational_density_quantitative (a b : ℝ) (hab : a < b) :
         · refine' ⟨ ⌊a * ( ⌊ ( b - a ) ⁻¹⌋₊ + 1 ) ⌋ + 1, _, _ ⟩ <;> push_cast <;> nlinarith [ Nat.lt_floor_add_one ( ( b - a ) ⁻¹ ), mul_inv_cancel₀ ( by linarith : ( b - a ) ≠ 0 ), Int.floor_le ( a * ( ⌊ ( b - a ) ⁻¹⌋₊ + 1 ) ), Int.lt_floor_add_one ( a * ( ⌊ ( b - a ) ⁻¹⌋₊ + 1 ) ) ];
       exact h_no_rational ⟨ hq.2.2.choose, q, hq.1, hq.2.1, by rw [ lt_div_iff₀ ( Nat.cast_pos.mpr hq.1 ) ] ; linarith [ hq.2.2.choose_spec ], by rw [ div_lt_iff₀ ( Nat.cast_pos.mpr hq.1 ) ] ; linarith [ hq.2.2.choose_spec ] ⟩
 
-
-
-
 /-- A simple continued fraction represented as a finite list of partial quotients -/
 def SimpleCF := List ℕ
-
-
-
 
 /-- Evaluate a simple continued fraction to a rational number -/
 def evalCF : SimpleCF → ℚ
   | [] => 0
   | [a] => a
   | (a :: rest) => a + 1 / (evalCF rest)
-
-
-
 
 /-- [Section: # CatalogBuild.Logic.UniversalDecoder
 Auto-generated from theorem catalog database.
@@ -67,9 +58,6 @@ theorem rat_has_cf (q : ℚ) (hq : 0 < q) :
           simp_all +decide [ ne_of_gt, add_div ];
       convert h_exists_cf ( show 0 < q.num.natAbs by exact Int.natAbs_pos.mpr ( ne_of_gt ( Rat.num_pos.mpr hq ) ) ) ( show 0 < q.den by exact q.pos ) ( q.reduced ) using 1 ; simp +decide [ abs_of_pos, hq, Rat.num_div_den ]
 
-
-
-
 /-- An element of SL(2,ℤ) represented by its four entries -/
 structure SL2Z where
   a : ℤ
@@ -78,26 +66,14 @@ structure SL2Z where
   d : ℤ
   det_one : a * d - b * c = 1
 
-
-
-
 /-- The identity element -/
 def SL2Z.one : SL2Z := ⟨1, 0, 0, 1, by ring⟩
-
-
-
 
 /-- The S generator: z ↦ -1/z -/
 def SL2Z.S : SL2Z := ⟨0, -1, 1, 0, by ring⟩
 
-
-
-
 /-- The T generator: z ↦ z + 1 -/
 def SL2Z.T : SL2Z := ⟨1, 1, 0, 1, by ring⟩
-
-
-
 
 /-- Matrix multiplication in SL(2,ℤ) -/
 def SL2Z.mul (A B : SL2Z) : SL2Z where
@@ -107,15 +83,9 @@ def SL2Z.mul (A B : SL2Z) : SL2Z where
   d := A.c * B.b + A.d * B.d
   det_one := by nlinarith [A.det_one, B.det_one]
 
-
-
-
 theorem SL2Z_S_sq : let S2 := SL2Z.mul SL2Z.S SL2Z.S
     S2.a = -1 ∧ S2.b = 0 ∧ S2.c = 0 ∧ S2.d = -1 := by
       exact ⟨ rfl, rfl, rfl, rfl ⟩
-
-
-
 
 theorem SL2Z_ST_order :
     let ST := SL2Z.mul SL2Z.S SL2Z.T
@@ -123,18 +93,12 @@ theorem SL2Z_ST_order :
     ST3.a = -1 ∧ ST3.b = 0 ∧ ST3.c = 0 ∧ ST3.d = -1 := by
       decide +kernel
 
-
-
-
 /-- The Möbius function -/
 noncomputable def moebius (n : ℕ) : ℤ :=
   if n = 0 then 0
   else if ¬ Squarefree n then 0
   else if Even (Nat.card (n.primeFactors)) then 1
   else -1
-
-
-
 
 theorem moebius_sum_eq_indicator (n : ℕ) (hn : 0 < n) :
     (∑ d ∈ Nat.divisors n, ArithmeticFunction.moebius (d : ℕ)) =
@@ -144,22 +108,13 @@ theorem moebius_sum_eq_indicator (n : ℕ) (hn : 0 < n) :
         exact?;
       aesop
 
-
-
-
 theorem euler_product_finite_sq (S : Finset ℕ) (hS : ∀ p ∈ S, Nat.Prime p) :
     ∀ p ∈ S, (1 : ℚ) - 1 / (p : ℚ)^2 ≠ 0 := by
       exact fun p hp => sub_ne_zero_of_ne <| ne_of_gt <| by rw [ div_lt_iff₀ ] <;> norm_cast <;> nlinarith [ Nat.Prime.one_lt <| hS p hp ] ;
 
-
-
-
 /-- The signed area of a triangle with vertices (x₁,y₁), (x₂,y₂), (x₃,y₃) -/
 def triangleArea (x₁ y₁ x₂ y₂ x₃ y₃ : ℚ) : ℚ :=
   (x₁ * (y₂ - y₃) + x₂ * (y₃ - y₁) + x₃ * (y₁ - y₂)) / 2
-
-
-
 
 theorem stereo_triangle_area (t₁ t₂ : ℚ) :
     let x₁ := (1 - t₁^2) / (1 + t₁^2)
@@ -172,7 +127,5 @@ theorem stereo_triangle_area (t₁ t₂ : ℚ) :
       -- Combine like terms and simplify the expression.
       field_simp
       ring
-
-
 
 end

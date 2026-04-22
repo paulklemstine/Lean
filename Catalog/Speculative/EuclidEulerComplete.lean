@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Speculative.EuclidEulerComplete
 
 Auto-generated from theorem catalog database.
@@ -5,41 +7,24 @@ Domain: Speculative
 Declarations: 11
 -/
 
-import Mathlib
-
 /-- A number n > 0 is perfect if σ₁(n) = 2n. -/
 def IsPerfect (n : ℕ) : Prop := 0 < n ∧ sigma1 n = 2 * n
-
-
-
 
 /-- 6 is perfect. -/
 theorem perfect_6 : IsPerfect 6 := by
   refine ⟨by omega, ?_⟩; decide
 
-
-
-
 /-- 28 is perfect. -/
 theorem perfect_28 : IsPerfect 28 := by
   refine ⟨by omega, ?_⟩; native_decide
-
-
-
 
 /-- 496 is perfect. -/
 theorem perfect_496 : IsPerfect 496 := by
   refine ⟨by omega, ?_⟩; native_decide
 
-
-
-
 /-- 8128 is perfect. -/
 theorem perfect_8128 : IsPerfect 8128 := by
   refine ⟨by omega, ?_⟩; native_decide
-
-
-
 
 /-- [Section: # CatalogBuild.Speculative.EuclidEulerComplete
 Auto-generated from theorem catalog database.
@@ -57,9 +42,6 @@ theorem euclid_perfect (p : ℕ) (hp : 1 < p) (hm : Nat.Prime (2 ^ p - 1)) :
   · zify ; norm_num ; ring;
   · assumption;
   · simpa [ Nat.one_le_iff_ne_zero, parity_simps ]
-
-
-
 
 /-- [Section: # CatalogBuild.Speculative.EuclidEulerComplete
 Auto-generated from theorem catalog database.
@@ -113,9 +95,6 @@ theorem even_perfect_euler_form (n : ℕ) (hperf : IsPerfect n) (heven : 2 ∣ n
         grind;
     nlinarith [ Nat.sub_add_cancel ( Nat.one_le_pow ( k + 1 ) 2 zero_lt_two ), Nat.sub_add_cancel ( Nat.one_le_iff_ne_zero.mpr ( show 2 ^ ( k + 1 ) - 1 ≠ 0 from Nat.sub_ne_zero_of_lt ( by norm_num ) ) ), Nat.pos_of_ne_zero ( show q ≠ 0 from by aesop_cat ) ]
 
-
-
-
 theorem euclid_euler_iff (n : ℕ) (heven : 2 ∣ n) :
     IsPerfect n ↔
     ∃ p : ℕ, Nat.Prime p ∧ Nat.Prime (2 ^ p - 1) ∧ n = 2 ^ (p - 1) * (2 ^ p - 1) := by
@@ -124,9 +103,6 @@ theorem euclid_euler_iff (n : ℕ) (heven : 2 ∣ n) :
   · rintro ⟨ p, hp₁, hp₂, rfl ⟩;
     convert euclid_perfect p hp₁.one_lt hp₂ using 1
 
-
-
-
 theorem no_small_odd_perfect_10000 (n : ℕ) (hn : 0 < n) (hodd : ¬ 2 ∣ n)
     (hsmall : n < 10000) (hperf : sigma1 n = 2 * n) : False := by
   -- By checking all odd numbers less than 10000, we can verify none of them are perfect.
@@ -134,20 +110,12 @@ theorem no_small_odd_perfect_10000 (n : ℕ) (hn : 0 < n) (hodd : ¬ 2 ∣ n)
     native_decide;
   exact h_check n ( Finset.mem_Ico.mpr ⟨ hn, hsmall ⟩ ) hodd hperf
 
-
-
-
 /-- Every perfect number ≥ 2 has at least 2 distinct prime factors. -/
 theorem perfect_not_prime (n : ℕ) (hn : 1 < n) (hperf : sigma1 n = 2 * n)
     (hp : Nat.Prime n) : False := by
   have : sigma1 n = n + 1 := by simp [sigma1, hp.sum_divisors]
   omega
 
-
-
-
 theorem perfect_ge_6 (n : ℕ) (hperf : IsPerfect n) : 6 ≤ n := by
   rcases n with ( _ | _ | _ | _ | _ | _ | _ | n ) <;> simp_all +arith +decide [ IsPerfect ]
-
-
 

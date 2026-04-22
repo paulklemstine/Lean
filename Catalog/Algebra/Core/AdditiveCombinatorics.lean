@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.Core.AdditiveCombinatorics
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra/Core
 Declarations: 6
 -/
 
-import Mathlib
 
 /-- The sumset A + B in an additive group. -/
 def sumset' {G : Type*} [Add G] [DecidableEq G] (A B : Finset G) : Finset G :=

@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Pythagorean.Quadruples.FiveDDescent
 
 Auto-generated from theorem catalog database.
 Domain: Pythagorean/Quadruples
 Declarations: 27
 -/
-
-import Mathlib
 
 /-- [Section: # 5D Pythagorean Quintuple Descent Theory
 ## Main Results
@@ -22,7 +22,6 @@ def IsPQ5 (a b c d e : ℤ) : Prop := a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 = e ^ 2
 -- Section 1: Examples
 -- ═══════════════════════════════════════════════════════════════
 
-
 theorem pq5_1_2_2_4_5 : IsPQ5 1 2 2 4 5 := by unfold IsPQ5; norm_num
 
 theorem pq5_1_1_1_1_2 : IsPQ5 1 1 1 1 2 := by unfold IsPQ5; norm_num
@@ -34,7 +33,6 @@ theorem pq5_0_0_3_4_5 : IsPQ5 0 0 3 4 5 := by unfold IsPQ5; norm_num
 -- ═══════════════════════════════════════════════════════════════
 -- Section 2: Sign-Flip Symmetry
 -- ═══════════════════════════════════════════════════════════════
-
 
 theorem sf5_a (a b c d e : ℤ) (h : IsPQ5 a b c d e) : IsPQ5 (-a) b c d e := by
   unfold IsPQ5 at *; nlinarith
@@ -48,7 +46,6 @@ theorem sf5_c (a b c d e : ℤ) (h : IsPQ5 a b c d e) : IsPQ5 a b (-c) d e := by
 theorem sf5_d (a b c d e : ℤ) (h : IsPQ5 a b c d e) : IsPQ5 a b c (-d) e := by
   unfold IsPQ5 at *; nlinarith
 
-
 theorem sf5_all (a b c d e : ℤ) (h : IsPQ5 a b c d e)
     (s₁ s₂ s₃ s₄ : ℤ) (hs₁ : s₁ = 1 ∨ s₁ = -1) (hs₂ : s₂ = 1 ∨ s₂ = -1)
     (hs₃ : s₃ = 1 ∨ s₃ = -1) (hs₄ : s₄ = 1 ∨ s₄ = -1) :
@@ -60,7 +57,6 @@ theorem sf5_all (a b c d e : ℤ) (h : IsPQ5 a b c d e)
 -- ═══════════════════════════════════════════════════════════════
 -- Section 3: Permutation Symmetry
 -- ═══════════════════════════════════════════════════════════════
-
 
 theorem perm5_12 (a b c d e : ℤ) (h : IsPQ5 a b c d e) : IsPQ5 b a c d e := by
   unfold IsPQ5 at *; linarith
@@ -81,7 +77,6 @@ theorem perm5_34 (a b c d e : ℤ) (h : IsPQ5 a b c d e) : IsPQ5 a b d c e := by
 -- Section 4: Triangle Inequality
 -- ═══════════════════════════════════════════════════════════════
 
-
 /-- Sum of all four spatial components exceeds hypotenuse. -/
 theorem triangle_5d (a b c d e : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (hd : 0 < d) (he : 0 < e) (hpq : IsPQ5 a b c d e) :
@@ -101,7 +96,6 @@ theorem triangle_5d (a b c d e : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
 -- Section 5: Two Largest Components
 -- ═══════════════════════════════════════════════════════════════
 
-
 /-- For ordered (a ≤ b ≤ c ≤ d), c + d ≥ e, with equality iff a=b=c=d. -/
 theorem two_largest_5d (a b c d e : ℤ) (ha : 0 < a) (hb : 0 < b)
     (hc : 0 < c) (hd : 0 < d) (he : 0 < e)
@@ -116,13 +110,11 @@ theorem two_largest_5d (a b c d e : ℤ) (ha : 0 < a) (hb : 0 < b)
 -- Section 6: Composition
 -- ═══════════════════════════════════════════════════════════════
 
-
 theorem compose_triples (a b c d e f g : ℤ)
     (h1 : a ^ 2 + b ^ 2 = f ^ 2) (h2 : c ^ 2 + d ^ 2 = g ^ 2)
     (h3 : f ^ 2 + g ^ 2 = e ^ 2) :
     IsPQ5 a b c d e := by
   unfold IsPQ5; linarith
-
 
 theorem extend_pq4 (a b c d : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     IsPQ5 a b c 0 d := by
@@ -132,11 +124,9 @@ theorem extend_pq4 (a b c d : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
 -- Section 7: Component Bounds
 -- ═══════════════════════════════════════════════════════════════
 
-
 theorem comp_bound_a (a b c d e : ℤ) (hpq : IsPQ5 a b c d e)
     (hb : 0 < b) (hc : 0 < c) (hd : 0 < d) : a ^ 2 < e ^ 2 := by
   unfold IsPQ5 at hpq; nlinarith [sq_nonneg b, sq_nonneg c, sq_nonneg d]
-
 
 theorem three_comp_bound (a b c d e : ℤ) (hpq : IsPQ5 a b c d e) (hd : 0 < d) :
     a ^ 2 + b ^ 2 + c ^ 2 < e ^ 2 := by
@@ -145,7 +135,6 @@ theorem three_comp_bound (a b c d e : ℤ) (hpq : IsPQ5 a b c d e) (hd : 0 < d) 
 -- ═══════════════════════════════════════════════════════════════
 -- Section 8: Cauchy-Schwarz
 -- ═══════════════════════════════════════════════════════════════
-
 
 theorem cauchy_schwarz_5d (a₁ b₁ c₁ d₁ e₁ a₂ b₂ c₂ d₂ e₂ : ℤ)
     (h₁ : IsPQ5 a₁ b₁ c₁ d₁ e₁) (h₂ : IsPQ5 a₂ b₂ c₂ d₂ e₂) :
@@ -162,7 +151,6 @@ theorem cauchy_schwarz_5d (a₁ b₁ c₁ d₁ e₁ a₂ b₂ c₂ d₂ e₂ : �
 -- Section 9: Ghost Group and Counting
 -- ═══════════════════════════════════════════════════════════════
 
-
 theorem ghost_5d_order : 24 * 16 = 384 := by norm_num
 
 theorem lifting_planes_5d : Nat.choose 4 2 = 6 := by native_decide
@@ -173,11 +161,9 @@ theorem berggren_branches_5d : 3 * 6 = 18 := by norm_num
 -- Section 10: Parity and Doubled Norm
 -- ═══════════════════════════════════════════════════════════════
 
-
 theorem pq5_parity (a b c d e : ℤ) (h : IsPQ5 a b c d e) :
     (a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2) % 2 = e ^ 2 % 2 := by
   unfold IsPQ5 at h; omega
-
 
 theorem pq5_doubled_norm (a b c d e : ℤ) (h : IsPQ5 a b c d e) :
     a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 + e ^ 2 = 2 * e ^ 2 := by

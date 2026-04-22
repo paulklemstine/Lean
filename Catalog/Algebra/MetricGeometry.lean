@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.MetricGeometry
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra
 Declarations: 7
 -/
 
-import Mathlib
 
 /-- [Section: # CatalogBuild.Algebra.MetricGeometry
 Auto-generated from theorem catalog database.

@@ -1,11 +1,11 @@
+import Mathlib
+
 /-! # CatalogBuild.Speculative.Forbidden.TheMatrix
 
 Auto-generated from theorem catalog database.
 Domain: Speculative/Forbidden
 Declarations: 8
 -/
-
-import Mathlib
 
 noncomputable section
 
@@ -18,9 +18,6 @@ theorem matrix_reality_criterion (a b c d : ℝ) :
     (a - d)^2 + 4 * b * c ≥ 0 := by
   constructor <;> intro h <;> linarith
 
-
-
-
 /-- [Section: # CatalogBuild.Speculative.Forbidden.TheMatrix
 Auto-generated from theorem catalog database.
 Domain: Speculative/Forbidden
@@ -32,29 +29,17 @@ theorem trace_sq_symmetric (n : ℕ) (A : Matrix (Fin n) (Fin n) ℝ)
   simp +decide [ Matrix.mul_apply, Matrix.diag ];
   exact Finset.sum_congr rfl fun i hi => Finset.sum_congr rfl fun j hj => by rw [ ← hA.apply ] ;
 
-
-
-
 theorem commutator_traceless (n : ℕ) (A B : Matrix (Fin n) (Fin n) ℝ) :
     Matrix.trace (A * B - B * A) = 0 := by
   rw [ Matrix.trace_sub, Matrix.trace_mul_comm, sub_self ]
-
-
-
 
 theorem cayley_hamilton_1x1 (a : ℝ) :
     !![a] - a • (1 : Matrix (Fin 1) (Fin 1) ℝ) = 0 := by
   ext i j ; fin_cases i ; fin_cases j ; norm_num
 
-
-
-
 theorem det_composition (n : ℕ) (A B : Matrix (Fin n) (Fin n) ℝ) :
     Matrix.det (A * B) = Matrix.det A * Matrix.det B := by
   exact Matrix.det_mul A B
-
-
-
 
 theorem idempotent_trace_eq_rank_nat (n : ℕ) (P : Matrix (Fin n) (Fin n) ℚ)
     (hP : P * P = P) :
@@ -83,21 +68,12 @@ theorem idempotent_trace_eq_rank_nat (n : ℕ) (P : Matrix (Fin n) (Fin n) ℚ)
   simp +decide [ Matrix.trace, LinearMap.toMatrix_apply ];
   rw [ eq_comm ]
 
-
-
-
 theorem det_transpose_eq (n : ℕ) (A : Matrix (Fin n) (Fin n) ℝ) :
     Matrix.det A.transpose = Matrix.det A := by
   apply Matrix.det_transpose
 
-
-
-
 theorem trace_additive (n : ℕ) (A B : Matrix (Fin n) (Fin n) ℝ) :
     Matrix.trace (A + B) = Matrix.trace A + Matrix.trace B := by
   exact?
-
-
-
 
 end

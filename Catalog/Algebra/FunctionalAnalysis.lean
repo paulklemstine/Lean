@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Algebra.FunctionalAnalysis
 
 Auto-generated from theorem catalog database.
@@ -5,7 +7,6 @@ Domain: Algebra
 Declarations: 9
 -/
 
-import Mathlib
 
 /-- Triangle inequality for norms. -/
 theorem norm_triangle' {E : Type*} [SeminormedAddCommGroup E] (x y : E) :

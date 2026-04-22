@@ -1,3 +1,5 @@
+import Mathlib
+
 /-! # CatalogBuild.Speculative.Other.KolmogorovComplexity
 
 Auto-generated from theorem catalog database.
@@ -5,32 +7,21 @@ Domain: Speculative/Other
 Declarations: 9
 -/
 
-import Mathlib
-
 noncomputable section
 
 /-- A description method is a partial function from binary strings to binary strings.
 We model binary strings as `List Bool`. -/
 def DescriptionMethod := List Bool → Option (List Bool)
 
-
-
-
 /-- The set of valid programs for a given output under a description method. -/
 def validPrograms (φ : DescriptionMethod) (x : List Bool) : Set (List Bool) :=
   {p | φ p = some x}
-
-
-
 
 /-- The descriptive complexity of `x` with respect to a description method `φ`:
 the length of the shortest program `p` such that `φ p = some x`.
 Returns `⊤` (infinity) if no such program exists. -/
 noncomputable def complexity (φ : DescriptionMethod) (x : List Bool) : ℕ∞ :=
   ⨅ (p : List Bool) (_ : φ p = some x), (p.length : ℕ∞)
-
-
-
 
 /-- A description method `U` is universal if it can simulate any other
 description method given a finite prefix (interpreter). -/
@@ -39,17 +30,11 @@ def IsUniversal (U : DescriptionMethod) : Prop :=
     ∀ p x : List Bool, φ p = some x →
       U (prefix_ ++ p) = some x
 
-
-
-
 /-- A description method `ψ` is optimal if for every other description method `φ`,
 there exists a constant `c` such that `K_ψ(x) ≤ K_φ(x) + c` for all x. -/
 def IsOptimal (ψ : DescriptionMethod) : Prop :=
   ∀ φ : DescriptionMethod, ∃ c : ℕ,
     ∀ x : List Bool, complexity ψ x ≤ complexity φ x + c
-
-
-
 
 /-- [Section: # CatalogBuild.Speculative.Other.KolmogorovComplexity
 Auto-generated from theorem catalog database.
@@ -69,9 +54,6 @@ theorem universal_is_optimal (U : DescriptionMethod) (hU : IsUniversal U) :
         by_cases hp : φ p = some x <;> simp_all +decide [ tsub_le_iff_right ];
       convert tsub_le_iff_right.mp h_inf_le using 1
 
-
-
-
 /-- [Section: # CatalogBuild.Speculative.Other.KolmogorovComplexity
 Auto-generated from theorem catalog database.
 Domain: Speculative/Other
@@ -87,15 +69,9 @@ theorem complexity_le_length (U : DescriptionMethod)
         refine' le_trans ( ciInf_le _ _ ) _ <;> norm_num [ hprefix ];
         exacts [ prefix_ ++ x, by simp [ hprefix, add_comm ] ]
 
-
-
-
 /-- A string is `c`-incompressible if K(x) ≥ |x| - c. -/
 def Incompressible (U : DescriptionMethod) (x : List Bool) (c : ℕ) : Prop :=
   complexity U x ≥ x.length - c
-
-
-
 
 theorem incompressible_exist (φ : DescriptionMethod) (n : ℕ) :
     ∃ x : List Bool, x.length = n ∧
@@ -115,8 +91,5 @@ theorem incompressible_exist (φ : DescriptionMethod) (n : ℕ) :
           rw [ Finset.card_image_of_injective ] at h_programs <;> norm_num [ Function.Injective ] at *;
           exact Nat.not_le_of_gt ( Nat.sub_lt ( by norm_num ) ( by norm_num ) ) h_programs;
         · intro x hx y hy; have := hp₂ x; have := hp₂ y; aesop;
-
-
-
 
 end
