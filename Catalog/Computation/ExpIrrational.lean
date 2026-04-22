@@ -4,11 +4,27 @@ import Mathlib
 
 This file establishes the irrationality of exp(n) for n ≥ 1 using
 Niven's integral method.
+
+## Key idea
+
+Define `K(a,b) = ∫₀ⁿ e^(n-t) t^a (n-t)^b dt`. Integration by parts gives
+the recurrence `K(a,b) = a · K(a-1,b) - b · K(a,b-1)` for `a, b ≥ 1`.
+
+The base cases `K(a,0)` and `K(0,b)` are integer combinations of `exp(n)` and 1
+(from the standard integration-by-parts formula for `∫ e^(n-t) t^k dt`).
+
+By induction on `min(a,b)`, we show `min(a,b)!` divides both coefficients of
+`K(a,b) = C · exp(n) + D`. Since `nivenI(n,s) = K(s,s)/s!`, the result
+`nivenI_integer_combo` follows.
 -/
 
 noncomputable section
 
 open MeasureTheory
+
+set_option maxHeartbeats 800000
+
+/-! ## Niven's auxiliary function and integral -/
 
 /-- Niven's auxiliary function. -/
 def nivenF (n s : ℕ) (t : ℝ) : ℝ := t ^ s * ((n : ℝ) - t) ^ s / s.factorial
@@ -65,56 +81,173 @@ lemma niven_bound_tendsto (n : ℕ) :
   · ring
   · exact Real.summable_pow_div_factorial _
 
-/-
-Helper: ∫₀ⁿ e^(n-t) t^k dt = k! * e^n - Σ_{i=0}^k (k!/i!) n^i.
-    Both k! and each (k!/i!) n^i are natural numbers, so the integral
-    is an integer linear combination of e^n and 1.
--/
-lemma integral_exp_pow (n : ℕ) (k : ℕ) :
-    ∃ A B : ℤ, ∫ t in (0 : ℝ)..(n : ℝ), Real.exp ((n : ℝ) - t) * t ^ k =
-    A * Real.exp n + B := by
-  induction' k with k ih;
-  · norm_num [ intervalIntegral.integral_comp_sub_left ];
-    exact ⟨ 1, -1, by ring ⟩;
-  · -- For the inductive step, we use integration by parts.
-    have h_parts : ∀ a b : ℝ, ∫ t in a..b, Real.exp (n - t) * t ^ (k + 1) = (b ^ (k + 1) * (-Real.exp (n - b))) - (a ^ (k + 1) * (-Real.exp (n - a))) - ∫ t in a..b, (-Real.exp (n - t)) * (k + 1) * t ^ k := by
-      intro a b; rw [ eq_sub_iff_add_eq ] ; rw [ ← intervalIntegral.integral_add ] ; rw [ intervalIntegral.integral_eq_sub_of_hasDerivAt ];
-      · intro x hx; convert HasDerivAt.mul ( hasDerivAt_pow ( k + 1 ) x ) ( HasDerivAt.neg ( HasDerivAt.exp ( hasDerivAt_id' x |> HasDerivAt.const_sub _ ) ) ) using 1 ; ring;
-        norm_num ; ring;
-      · exact Continuous.intervalIntegrable ( by continuity ) _ _;
-      · exact Continuous.intervalIntegrable ( by continuity ) _ _;
-      · exact Continuous.intervalIntegrable ( by continuity ) _ _;
-    simp_all +decide [ mul_assoc, mul_comm, mul_left_comm ];
-    obtain ⟨ A, B, h ⟩ := ih; use ( k + 1 ) * A, ( k + 1 ) * B - n ^ ( k + 1 ) ; push_cast; rw [ show ( fun x : ℝ => x ^ k * ( ( k + 1 ) * Real.exp ( n - x ) ) ) = fun x : ℝ => ( k + 1 ) * ( x ^ k * Real.exp ( n - x ) ) by ext; ring ] ; rw [ intervalIntegral.integral_const_mul ] ; rw [ h ] ; ring;
+/-! ## The K integral and its properties -/
 
-/-- nivenI is an integer linear combination of exp(n) and 1. -/
+/-- The generalized integral K(n, a, b) = ∫₀ⁿ e^(n-t) t^a (n-t)^b dt. -/
+def K (n : ℕ) (a b : ℕ) : ℝ :=
+  ∫ t in (0 : ℝ)..(n : ℝ), Real.exp ((n : ℝ) - t) * (t ^ a * ((n : ℝ) - t) ^ b)
+
+/-
+K(n, a, 0) is an integer combination of exp(n) and 1.
+-/
+lemma K_base_right (n : ℕ) (a : ℕ) :
+    ∃ C D : ℤ, K n a 0 = C * Real.exp n + D := by
+  induction' a with a ih generalizing n;
+  · unfold K;
+    norm_num [ intervalIntegral.integral_comp_sub_left ];
+    exact ⟨ 1, -1, by ring ⟩;
+  · -- By integration by parts, we have:
+    have h_parts : K n (a + 1) 0 = -n^(a + 1) + (a + 1) * K n a 0 := by
+      -- Apply integration by parts with $u = t^{a+1}$ and $dv = e^{n-t} dt$.
+      have h_parts : ∀ {a : ℕ} {n : ℕ}, ∫ t in (0 : ℝ)..n, t^(a + 1) * Real.exp (n - t) = -n^(a + 1) * Real.exp (n - n) + (a + 1) * ∫ t in (0 : ℝ)..n, t^a * Real.exp (n - t) := by
+        intros a n; rw [ intervalIntegral.integral_mul_deriv_eq_deriv_mul ];
+        any_goals intro x hx; exact hasDerivAt_pow _ _;
+        rotate_right;
+        use fun x => -Real.exp ( n - x );
+        · norm_num [ mul_assoc ];
+        · exact fun x hx => by simpa using HasDerivAt.neg ( HasDerivAt.exp ( hasDerivAt_id x |> HasDerivAt.const_sub _ ) ) ;
+        · norm_num;
+        · exact Continuous.intervalIntegrable ( by continuity ) _ _;
+      convert h_parts using 1 ; norm_num [ K ] ; ring!;
+      unfold K; norm_num [ mul_comm ] ;
+    obtain ⟨ C, D, hCD ⟩ := ih n; exact ⟨ ( a + 1 ) * C, ( a + 1 ) * D - n ^ ( a + 1 ), by push_cast [ h_parts, hCD ] ; ring ⟩ ;
+
+/-
+K(n, 0, b) is an integer combination of exp(n) and 1.
+-/
+lemma K_base_left (n : ℕ) (b : ℕ) :
+    ∃ C D : ℤ, K n 0 b = C * Real.exp n + D := by
+  revert n b;
+  intro n
+  induction' n with n ih
+  generalize_proofs at *;
+  · unfold K;
+    exact fun b => ⟨ 0, 0, by norm_num ⟩;
+  · intro b
+    have h_subst : ∀ b : ℕ, K (n + 1) 0 b = ∫ t in (0 : ℝ)..n + 1, Real.exp t * t ^ b := by
+      intro b
+      simp [K];
+      convert intervalIntegral.integral_comp_sub_left _ ( n + 1 : ℝ ) using 2 <;> norm_num
+    generalize_proofs at *; (
+    induction' b with b ih <;> simp_all +decide [ Nat.factorial_succ, mul_assoc, mul_comm, mul_left_comm, intervalIntegral.integral_comp_mul_right ];
+    · exact ⟨ 1, -1, by push_cast; ring ⟩;
+    · rw [ intervalIntegral.integral_mul_deriv_eq_deriv_mul ] <;> norm_num [ Real.differentiableAt_exp ];
+      any_goals intro x hx; exact hasDerivAt_pow _ _;
+      any_goals intro x hx; exact Real.hasDerivAt_exp x;
+      · norm_num [ mul_assoc ] at * ; obtain ⟨ C, D, hCD ⟩ := ih ; exact ⟨ ( n + 1 ) ^ ( b + 1 ) - ( b + 1 ) * C, - ( b + 1 ) * D, by push_cast; linear_combination' - ( b + 1 ) * hCD ⟩ ;
+      · norm_num);
+
+/-
+Integration by parts recurrence: K(n, a, b) = a · K(n, a-1, b) - b · K(n, a, b-1)
+    for a, b ≥ 1.
+-/
+lemma K_recurrence (n : ℕ) (a b : ℕ) (ha : 1 ≤ a) (hb : 1 ≤ b) :
+    K n a b = a * K n (a - 1) b - b * K n a (b - 1) := by
+  -- By integration by parts, we have:
+  have h_parts : ∀ t ∈ Set.Icc (0 : ℝ) n, deriv (fun t => -Real.exp (n - t) * t ^ a * (n - t) ^ b) t = Real.exp (n - t) * t ^ a * (n - t) ^ b - a * Real.exp (n - t) * t ^ (a - 1) * (n - t) ^ b + b * Real.exp (n - t) * t ^ a * (n - t) ^ (b - 1) := by
+    intro t ht; norm_num [ sub_eq_add_neg, mul_assoc, mul_comm, mul_left_comm ] ; ring;
+    norm_num [ Real.exp_add, Real.exp_neg, Real.differentiableAt_exp, mul_assoc, mul_comm, mul_left_comm, sub_eq_add_neg ] ; ring;
+    erw [ deriv_mul ] <;> norm_num [ Real.exp_ne_zero, Real.differentiableAt_exp, neg_add_eq_sub ] ; ring;
+    · erw [ deriv_comp ] <;> norm_num [ sub_eq_add_neg ] ; ring;
+      · erw [ deriv_pow, deriv_sub ] <;> norm_num ; ring;
+        simpa [ sq, mul_assoc, Real.exp_ne_zero ] using by ring;
+      · exact DifferentiableAt.pow ( differentiableAt_id ) _;
+      · exact differentiableAt_id.const_sub _;
+    · exact DifferentiableAt.pow ( differentiableAt_id.const_sub _ ) _;
+  -- Integrate both sides of the equation from $0$ to $n$.
+  have h_int_parts : ∫ t in (0 : ℝ)..n, deriv (fun t => -Real.exp (n - t) * t ^ a * (n - t) ^ b) t = (-Real.exp (n - n) * n ^ a * (n - n) ^ b) - (-Real.exp (n - 0) * 0 ^ a * (n - 0) ^ b) := by
+    rw [ intervalIntegral.integral_deriv_eq_sub ];
+    · fun_prop;
+    · apply_rules [ ContinuousOn.intervalIntegrable ];
+      fun_prop;
+  rw [ intervalIntegral.integral_congr fun x hx => h_parts x <| by simpa using hx ] at h_int_parts;
+  rw [ intervalIntegral.integral_add, intervalIntegral.integral_sub ] at h_int_parts <;> norm_num at *;
+  · simp_all +decide [ mul_assoc, K ];
+    cases a <;> cases b <;> norm_num at * ; linarith;
+  · exact Continuous.intervalIntegrable ( by continuity ) _ _;
+  · exact Continuous.intervalIntegrable ( by continuity ) _ _;
+  · exact Continuous.intervalIntegrable ( by continuity ) _ _;
+  · exact Continuous.intervalIntegrable ( by continuity ) _ _
+
+/-
+K(n, a, b) = C * exp(n) + D with min(a,b)! ∣ C and min(a,b)! ∣ D.
+-/
+lemma K_int_combo_with_divisibility (n : ℕ) (a b : ℕ) :
+    ∃ C D : ℤ, K n a b = C * Real.exp n + D ∧
+      ((min a b).factorial : ℤ) ∣ C ∧ ((min a b).factorial : ℤ) ∣ D := by
+  revert a b;
+  intro a b; induction' a using Nat.strong_induction_on with a ih generalizing b; induction' b using Nat.strong_induction_on with b ih';
+  rcases a with ( _ | a ) <;> rcases b with ( _ | b ) <;> simp_all +decide [ Nat.factorial_succ ];
+  · exact K_base_right n 0;
+  · exact K_base_left n _;
+  · exact K_base_right _ _;
+  · obtain ⟨ C₁, D₁, h₁, h₂, h₃ ⟩ := ih a le_rfl ( b + 1 ) ; obtain ⟨ C₂, D₂, h₄, h₅, h₆ ⟩ := ih' b le_rfl ; simp_all +decide [ K_recurrence ];
+    cases le_total a b <;> simp_all +decide [ Nat.factorial_succ, mul_assoc, mul_left_comm, mul_comm ];
+    · cases min_cases a ( b + 1 ) <;> cases min_cases ( a + 1 ) b <;> simp_all +decide [ Nat.factorial_succ ];
+      · refine' ⟨ ( a + 1 ) * C₁ - ( b + 1 ) * C₂, ( a + 1 ) * D₁ - ( b + 1 ) * D₂, _, _, _ ⟩ <;> norm_num [ mul_comm, mul_assoc, mul_left_comm ];
+        · ring;
+        · exact dvd_sub ( mul_dvd_mul h₂ dvd_rfl ) ( dvd_mul_of_dvd_left ( by simpa only [ mul_comm ] using h₅ ) _ );
+        · exact dvd_sub ( mul_dvd_mul h₃ dvd_rfl ) ( dvd_mul_of_dvd_left ( by simpa only [ mul_comm ] using h₆ ) _ );
+      · cases ‹b ≤ a + 1 ∧ b ≤ a›.2.eq_or_lt <;> first | linarith | simp_all +decide [ Nat.factorial_succ ];
+        exact ⟨ ( a + 1 ) * C₁ - ( a + 1 ) * C₂, ( a + 1 ) * D₁ - ( a + 1 ) * D₂, by push_cast; ring, by obtain ⟨ k, hk ⟩ := h₂; obtain ⟨ l, hl ⟩ := h₅; exact ⟨ k - l, by nlinarith ⟩, by obtain ⟨ k, hk ⟩ := h₃; obtain ⟨ l, hl ⟩ := h₆; exact ⟨ k - l, by nlinarith ⟩ ⟩;
+      · linarith;
+      · linarith;
+    · refine' ⟨ ( a + 1 ) * C₁ - ( b + 1 ) * C₂, ( a + 1 ) * D₁ - ( b + 1 ) * D₂, _, _, _ ⟩ <;> norm_num [ ← mul_assoc, ← Int.natCast_dvd_natCast ] at *;
+      · ring;
+      · cases le_iff_exists_add'.mp ‹_› ; simp_all +decide [ Nat.factorial_succ, mul_comm, mul_assoc, mul_left_comm, dvd_add_right, dvd_add_left, dvd_mul_of_dvd_right, dvd_mul_of_dvd_left ];
+        cases min_cases ( ‹_› + b ) ( b + 1 ) <;> simp_all +decide [ Nat.factorial_succ, mul_comm, mul_assoc, mul_left_comm, dvd_add_right, dvd_add_left, dvd_mul_of_dvd_right, dvd_mul_of_dvd_left ];
+        · cases ‹ℕ› <;> simp_all +decide [ Nat.factorial_succ, mul_comm, mul_assoc, mul_left_comm, dvd_add_right, dvd_add_left, dvd_mul_of_dvd_right, dvd_mul_of_dvd_left ];
+          · exact dvd_sub ( mul_dvd_mul h₂ dvd_rfl ) ( mul_dvd_mul h₅ dvd_rfl );
+          · simp_all +decide [ add_comm, add_left_comm, add_assoc ];
+            exact dvd_sub ( by obtain ⟨ k, hk ⟩ := h₂; exact ⟨ k * ( b + 2 ), by push_cast [ Nat.factorial_succ ] at *; nlinarith ⟩ ) ( by obtain ⟨ k, hk ⟩ := h₅; exact ⟨ k, by push_cast [ Nat.factorial_succ ] at *; nlinarith ⟩ );
+        · refine' dvd_sub ( dvd_mul_of_dvd_left h₂ _ ) _;
+          exact mul_dvd_mul ( by simpa [ min_eq_right ( by linarith : b ≤ ‹_› + b + 1 ) ] using h₅ ) dvd_rfl;
+      · cases le_iff_exists_add'.mp ‹_› ; simp_all +decide [ Nat.factorial_succ, mul_comm, mul_assoc, mul_left_comm, dvd_add_right, dvd_add_left, dvd_mul_of_dvd_right, dvd_mul_of_dvd_left ];
+        cases min_cases ( ‹_› + b ) ( b + 1 ) <;> simp_all +decide [ Nat.factorial_succ, mul_comm, mul_assoc, mul_left_comm, dvd_add_right, dvd_add_left, dvd_mul_of_dvd_right, dvd_mul_of_dvd_left ];
+        · cases ‹ℕ› <;> simp_all +decide [ Nat.factorial_succ, mul_comm, mul_assoc, mul_left_comm, dvd_add_right, dvd_add_left, dvd_mul_of_dvd_right, dvd_mul_of_dvd_left ];
+          · exact dvd_sub ( mul_dvd_mul h₃ dvd_rfl ) ( mul_dvd_mul h₆ dvd_rfl );
+          · simp_all +decide [ add_comm, add_left_comm, add_assoc ];
+            obtain ⟨ k, hk ⟩ := h₃; obtain ⟨ l, hl ⟩ := h₆; simp_all +decide [ Nat.factorial_succ, mul_assoc, mul_comm, mul_left_comm ] ;
+            exact ⟨ k * ( b + 2 ) - l, by ring ⟩;
+        · refine' dvd_sub ( dvd_mul_of_dvd_left h₃ _ ) _;
+          exact mul_dvd_mul ( dvd_trans ( by norm_num [ min_eq_right ( by linarith : b ≤ ‹_› + b + 1 ) ] ) h₆ ) dvd_rfl
+
+/-
+nivenI is an integer linear combination of exp(n) and 1.
+-/
 lemma nivenI_integer_combo (n s : ℕ) :
     ∃ A B : ℤ, nivenI n s = A * Real.exp n + B := by
-  sorry
+  -- By definition of nivenI, we have nivenI n s = K n s s / s.factorial.
+  have hnivenI_def : nivenI n s = K n s s / Nat.factorial s := by
+    unfold nivenI K nivenF; norm_num [ div_eq_inv_mul, mul_assoc, mul_comm, mul_left_comm, ← intervalIntegral.integral_const_mul ] ;
+  obtain ⟨ C, D, hCD, hC, hD ⟩ := K_int_combo_with_divisibility n s s;
+  cases' hC with A hA; cases' hD with B hB; use A, B; simp_all +decide [ min_eq_left ] ;
+  rw [ div_eq_iff ( by positivity ) ] ; ring
+
+/-! ## Main theorem -/
 
 /-
 exp(n) is irrational for n ≥ 1.
 -/
 theorem exp_nat_irrational (n : ℕ) (hn : 1 ≤ n) : Irrational (Real.exp (↑n)) := by
-  -- Assume for contradiction that $\exp(n)$ is rational.
-  by_contra h
-  obtain ⟨p, q, hpq⟩ : ∃ p q : ℕ, q > 0 ∧ Real.exp n = p / q := by
-    unfold Irrational at h;
-    simp +zetaDelta at *;
-    obtain ⟨ y, hy ⟩ := h; exact ⟨ y.num.natAbs, y.den, mod_cast y.pos, by simpa [ abs_of_nonneg ( Rat.num_nonneg.mpr ( show 0 ≤ y by exact_mod_cast hy.symm ▸ Real.exp_nonneg _ ) ), Rat.cast_def ] using hy.symm ⟩ ;
-  -- By nivenI_integer_combo, nivenI n s = A_s * exp(n) + B_s for integers A_s, B_s.
-  have h_nivenI : ∀ s : ℕ, ∃ A B : ℤ, nivenI n s = A * (p / q) + B := by
-    exact fun s => by obtain ⟨ A, B, h ⟩ := nivenI_integer_combo n s; exact ⟨ A, B, by rw [ ← hpq.2, h ] ⟩ ;
-  -- So q * nivenI n s = A_s * p + B_s * q, which is an integer.
-  have h_q_nivenI : ∀ s : ℕ, ∃ k : ℤ, q * nivenI n s = k := by
-    intro s; obtain ⟨ A, B, h ⟩ := h_nivenI s; use A * p + B * q; push_cast [ h ] ; ring_nf ;
-    simpa [ mul_assoc, mul_comm, mul_left_comm, hpq.1.ne' ] using by ring;
-  -- By nivenI_pos, nivenI n s > 0, so q * nivenI n s ≥ 1.
-  have h_q_nivenI_pos : ∀ s : ℕ, 1 ≤ q * nivenI n s := by
-    exact fun s => by obtain ⟨ k, hk ⟩ := h_q_nivenI s; exact hk.symm ▸ mod_cast Int.le_of_lt_add_one ( by rw [ ← @Int.cast_lt ℝ ] ; push_cast; nlinarith [ nivenI_pos n s hn, show ( q : ℝ ) ≥ 1 by exact_mod_cast hpq.1 ] ) ;
-  -- By nivenI_le and niven_bound_tendsto, nivenI n s → 0 as s → ∞.
-  have h_nivenI_zero : Filter.Tendsto (fun s : ℕ => nivenI n s) Filter.atTop (nhds 0) := by
-    exact squeeze_zero ( fun s => by exact intervalIntegral.integral_nonneg ( by positivity ) fun x hx => mul_nonneg ( Real.exp_nonneg _ ) ( nivenF_nonneg ( by linarith [ hx.1 ] ) ( by linarith [ hx.2 ] ) ) ) ( fun s => nivenI_le n s ) ( niven_bound_tendsto n );
-  exact absurd ( le_of_tendsto_of_tendsto' tendsto_const_nhds ( h_nivenI_zero.const_mul _ ) h_q_nivenI_pos ) ( by norm_num [ hpq.1.ne' ] )
+  by_contra h_contra;
+  -- Let $q$ be the denominator of $\exp n$.
+  obtain ⟨q, hq⟩ : ∃ q : ℕ, q > 0 ∧ ∃ p : ℤ, Real.exp n = p / q := by
+    obtain ⟨ p, hp ⟩ := Classical.not_not.1 h_contra;
+    exact ⟨ p.den, Nat.cast_pos.mpr p.pos, p.num, by simpa only [ Rat.cast_def ] using hp.symm ⟩;
+  -- Then $q \cdot I(s)$ is an integer for all $s$.
+  have hqI_int : ∀ s : ℕ, ∃ k : ℤ, q * nivenI n s = k := by
+    intro s
+    obtain ⟨A, B, hA⟩ := nivenI_integer_combo n s
+    use A * hq.right.choose + B * q
+    field_simp [hq.right.choose_spec] at hA ⊢;
+    have := hq.2.choose_spec; rw [ eq_div_iff ( Nat.cast_ne_zero.mpr hq.1.ne' ) ] at this; push_cast; rw [ hA ] ; linear_combination' this * A;
+  -- But $q \cdot I(s) \geq 1$ for all $s$.
+  have hqI_ge_one : ∀ s : ℕ, 1 ≤ q * nivenI n s := by
+    intro s; obtain ⟨ k, hk ⟩ := hqI_int s; exact hk.symm ▸ mod_cast ( show ( 1 : ℤ ) ≤ k from by exact_mod_cast hk ▸ mul_pos ( Nat.cast_pos.mpr hq.1 ) ( nivenI_pos n s hn ) ) ;
+  -- But $q \cdot I(s) \to 0$ as $s \to \infty$.
+  have hqI_zero : Filter.Tendsto (fun s : ℕ => q * nivenI n s) Filter.atTop (nhds 0) := by
+    exact squeeze_zero ( fun s => mul_nonneg ( Nat.cast_nonneg _ ) ( le_of_lt ( nivenI_pos n s hn ) ) ) ( fun s => mul_le_mul_of_nonneg_left ( nivenI_le n s ) ( Nat.cast_nonneg _ ) ) ( by simpa using tendsto_const_nhds.mul ( niven_bound_tendsto n ) );
+  exact absurd ( le_of_tendsto_of_tendsto' tendsto_const_nhds hqI_zero hqI_ge_one ) ( by norm_num )
 
 end
