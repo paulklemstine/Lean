@@ -276,9 +276,9 @@ class TropicalAttention(nn.Module):
         V = self.v_proj(value)  # (batch, src_len, embed_dim)
 
         # Reshape for multi-head attention
-        Q = Q.view(batch_size, tgt_len, self.num_heads, self.head_dim).transpose(1, 2)
-        K = K.view(batch_size, src_len, self.num_heads, self.head_dim).transpose(1, 2)
-        V = V.view(batch_size, src_len, self.num_heads, self.head_dim).transpose(1, 2)
+        Q = Q.view(batch_size, tgt_len, self.num_heads, self.head_dim).transpose(1, 2).contiguous()
+        K = K.view(batch_size, src_len, self.num_heads, self.head_dim).transpose(1, 2).contiguous()
+        V = V.view(batch_size, src_len, self.num_heads, self.head_dim).transpose(1, 2).contiguous()
         # (batch, num_heads, seq_len, head_dim)
 
         # Tropical attention scores: negative L1 distance
@@ -295,7 +295,7 @@ class TropicalAttention(nn.Module):
                 torch.ones(tgt_len, src_len, device=scores.device, dtype=torch.bool),
                 diagonal=1,
             )
-            scores = scores.masked_fill(causal_mask.unsqueeze(0).unsqueeze(0), float('-inf'))
+            scores = scores.masked_fill(causal_mask.unsqueeze(0).unsqueeze(0), -1e9)
 
         if attn_mask is not None:
             scores = scores + attn_mask
@@ -307,7 +307,7 @@ class TropicalAttention(nn.Module):
         # Apply attention to values
         # attn_weights: (batch, num_heads, tgt_len, src_len)
         # V: (batch, num_heads, src_len, head_dim)
-        attn_output = torch.matmul(attn_weights, V)  # (batch, num_heads, tgt_len, head_dim)
+        attn_output = torch.einsum('bhts,bhsd->bhtd', attn_weights, V)  # (batch, num_heads, tgt_len, head_dim)
 
         # Concatenate heads
         attn_output = attn_output.transpose(1, 2).contiguous().view(batch_size, tgt_len, self.embed_dim)

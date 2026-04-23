@@ -113,32 +113,33 @@ def stage_distill(
     teacher,
     tokenizer,
     device: str,
-    epochs: int = 1,
+    epochs: int = 3,
     batch_size: int = 2,
-    num_samples: int = 50,
+    num_samples: int = 100,
     temperature: float = 2.0,
     alpha: float = 0.5,
+    crystallization_weight: float = 0.005,
     output_dir: str = "./pipeline_results",
 ):
     """Distill teacher into a tropical student."""
     from qwen_optimizer.tropical_train import generate_synthetic_data, TextDataset, train_tropical_model
 
-    # Create tropical student
+    # Create tropical student (smaller for T4 compatibility)
     student_config = {
-        "vocab_size": tokenizer.vocab_size,
-        "d_model": 512,
-        "num_layers": 6,
-        "num_heads": 8,
-        "d_ff": 1024,
-        "max_seq_len": 2048,
+        "vocab_size": teacher.config.vocab_size,
+        "d_model": 256,
+        "num_layers": 4,
+        "num_heads": 4,
+        "d_ff": 512,
+        "max_seq_len": 512,
         "dropout": 0.1,
         "hard_attention": False,
     }
     tropical_model = TropicalModel(**student_config)
 
     # Generate synthetic data
-    texts = generate_synthetic_data(teacher, tokenizer, num_samples=num_samples)
-    dataset = TextDataset(texts, tokenizer, max_length=256)
+    texts = generate_synthetic_data(teacher, tokenizer, num_samples=num_samples, max_length=64)
+    dataset = TextDataset(texts, tokenizer, max_length=64)
 
     # Train
     trained = train_tropical_model(
@@ -150,6 +151,9 @@ def stage_distill(
         batch_size=batch_size,
         device=device,
         output_dir=output_dir,
+        temperature=temperature,
+        alpha=alpha,
+        crystallization_weight=crystallization_weight,
     )
     return trained
 
@@ -173,9 +177,12 @@ def main():
     parser.add_argument("--skip_prune", action="store_true")
     parser.add_argument("--skip_distill", action="store_true")
     parser.add_argument("--skip_crystallize", action="store_true")
-    parser.add_argument("--epochs", type=int, default=1)
+    parser.add_argument("--epochs", type=int, default=3)
     parser.add_argument("--batch_size", type=int, default=2)
-    parser.add_argument("--num_samples", type=int, default=50)
+    parser.add_argument("--num_samples", type=int, default=100)
+    parser.add_argument("--temperature", type=float, default=2.0)
+    parser.add_argument("--alpha", type=float, default=0.5)
+    parser.add_argument("--crystallization_weight", type=float, default=0.005)
     parser.add_argument("--prune_ratio", type=float, default=0.3)
     parser.add_argument("--unstructured", type=float, default=0.2)
     args = parser.parse_args()
@@ -243,6 +250,7 @@ def main():
         tropical_model, t, err = run_stage(
             "Distill", stage_distill, teacher, tokenizer, args.device,
             args.epochs, args.batch_size, args.num_samples,
+            args.temperature, args.alpha, args.crystallization_weight,
             output_dir=args.output_dir,
         )
         if not err:
