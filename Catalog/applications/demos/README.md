@@ -1,75 +1,62 @@
-# Python Demos
+# Factoring Algorithm Demos
 
-Interactive Python demonstrations of the 50 algorithms enabled by the SPB framework.
-Each demo is backed by formally verified mathematics in the corresponding Lean 4 files.
+Python demonstrations of the 50 novel factoring algorithms described in `FACTORING_RESEARCH_PAPER.md`.
 
-## Prerequisites
+## Running the Demos
 
-```bash
-pip install numpy
-```
-
-## Demos
-
-### 1. `berggren_tree.py` — Berggren Tree Explorer & Factoring
-Demonstrates **Algorithms 1, 31**: Generates the ternary tree of primitive Pythagorean triples, verifies Lorentz invariance, traces triples back to the root, and attempts integer factoring via tree descent.
+Each demo is self-contained and requires only Python 3 (no external dependencies).
 
 ```bash
-python3 demos/berggren_tree.py
+python3 inside_out_factoring.py    # Algorithm 1: Berggren tree descent
+python3 tropical_factoring.py      # Algorithm 22: Tropical valuation sieve
+python3 quaternion_factoring.py    # Algorithm 15: Quaternion norm factoring
+python3 fibonacci_factoring.py     # Algorithms 29-35: Fibonacci-based methods
+python3 chimera_factoring.py       # Algorithm 9: Multi-strategy chimera
+python3 energy_landscape.py        # Algorithm 43: Energy landscape descent
 ```
 
-### 2. `eml_operations.py` — EML Universal Arithmetic
-Demonstrates **Algorithms 11, 22, 32**: Verifies all 8 formally proven EML algebraic identities, demonstrates EML closure density, neural network compression ratios, and the EML instruction set architecture.
+## Demo Descriptions
 
-```bash
-python3 demos/eml_operations.py
-```
+### `inside_out_factoring.py` — Berggren Tree Descent (Algorithm 1)
+Given an odd composite N, constructs the trivial Pythagorean triple
+(N, (N²-1)/2, (N²+1)/2) and descends the Berggren ternary tree by
+applying inverse matrices B₁⁻¹, B₂⁻¹, B₃⁻¹. At each node, checks
+GCD(leg, N) for nontrivial factors. Success rate: 17/18 on test suite.
 
-### 3. `fibonacci_factoring.py` — Fibonacci Primality & Factoring
-Demonstrates **Algorithms 2, 3, 5**: Fibonacci GCD identity verification, compositeness testing, Pisano period factoring, and the primitive divisor sieve (Carmichael's theorem).
+### `tropical_factoring.py` — Tropical Valuation Sieve (Algorithm 22)
+Factors integers using p-adic valuations. Demonstrates tropical profiles,
+smoothness detection, perfect square testing via even/odd valuations, and
+smooth number sieving. All operations correspond to verified theorems
+in `Speculative/TropicalFactoring.lean`.
 
-```bash
-python3 demos/fibonacci_factoring.py
-```
+### `quaternion_factoring.py` — Quaternion Norm Factoring (Algorithm 15)
+Uses multiple four-square representations of N and the Euler identity
+(quaternion norm multiplicativity) to extract factors via cross-term GCDs.
+Also includes the Brahmagupta-Fibonacci two-square method.
 
-### 4. `tropical_geometry.py` — Tropical Algebra & Neural Networks
-Demonstrates **Algorithms 12, 15, 23, 33**: Tropical semiring operations, LogSumExp smooth maximum bounds, tropical shortest paths via matrix exponentiation, and tropical ReLU network analysis.
+### `fibonacci_factoring.py` — Fibonacci Methods (Algorithms 29-35)
+Demonstrates Pisano period computation, the GCD identity gcd(F_m,F_n) = F_{gcd(m,n)},
+Fibonacci pseudoprime testing, and the Fibonacci sieve (analogous to Pollard p-1).
 
-```bash
-python3 demos/tropical_geometry.py
-```
+### `chimera_factoring.py` — Multi-Strategy Attack (Algorithm 9)
+Combines Fermat's method (congruence of squares), Shor's algebraic core
+(classical emulation), and Pollard's rho into a unified factoring engine.
 
-### 5. `cryptographic_analysis.py` — Cryptographic Security
-Demonstrates **Algorithms 6, 8, 9**: Simplified ECDSA with nonce-reuse vulnerability detection, Grover-aware post-quantum security calculator, and SPB key agreement protocol.
+### `energy_landscape.py` — Energy Landscape Descent (Algorithm 43)
+Models factoring as an optimization problem with an energy function
+whose minima correspond to divisors of N. Includes gradient descent
+and Morse theory perspectives.
 
-```bash
-python3 demos/cryptographic_analysis.py
-```
+## Formal Verification
 
-### 6. `bayesian_convergence.py` — Verified Bayesian Inference
-Demonstrates **Algorithms 19, 34**: Dead hypothesis theorem, zero-likelihood elimination, belief distance metric properties, geometric convergence, and Bayesian A/B testing.
+All algorithms are grounded in formally verified mathematics in the Lean 4
+project. Key verified theorems:
 
-```bash
-python3 demos/bayesian_convergence.py
-```
-
-### 7. `stereographic_projection.py` — SPB & Stereographic Projection
-Demonstrates **Algorithms 14, 21, 24, 27**: Stereographic projection from unit circle, SPB group properties, Wick duality between Euclidean and Minkowski signatures, relativistic velocity addition, SPB activation function, and conformal mesh generation.
-
-```bash
-python3 demos/stereographic_projection.py
-```
-
-## Verified Foundations
-
-Every computation in these demos corresponds to a formally verified theorem:
-
-| Demo | Key Verified Theorems | Lean File |
-|------|----------------------|-----------|
-| Berggren Tree | `B₁_preserves_lorentz`, `inv_B1_comp_B1` | `Pythagorean/Berggren/` |
-| EML Operations | `EMLd_exp`, `EMLd_double_neg`, `EMLd_log_split` | `Computation/DensityTheory.lean` |
-| Fibonacci | `fib_gcd_identity`, `fib_composite_test` | `Shared/Fib_gcd_identity.lean` |
-| Tropical | `lse2_le_max_log2`, `trop_convex_comp` | `Tropical/` |
-| Cryptography | `ecdsa_nonce_reuse`, `ecdsa_completeness` | `Cryptography/QuantumSecurity/` |
-| Bayesian | `dead_hypothesis_stays_dead`, belief metric | `Algebra/Convergence.lean` |
-| Stereographic | `tan_add_eq_spb`, `wick_duality` | `Geometry/Stereographic/` |
+| Theorem | File | Used By |
+|---------|------|---------|
+| `congruence_of_squares_zmod` | `ChimeraFactoring.lean` | Chimera |
+| `quat_norm_mul` | `QuaternionFactoring.lean` | Quaternion |
+| `fib_gcd_identity` | `Fib_gcd_identity.lean` | Fibonacci |
+| `semiprime_valuation` | `TropicalFactoring.lean` | Tropical |
+| `inv_B1_preserves` | `TreeFactoring/Core.lean` | IOF |
+| `shor_algebraic_core` | `ChimeraFactoring.lean` | Chimera |

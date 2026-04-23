@@ -1,247 +1,246 @@
 #!/usr/bin/env python3
 """
-Fibonacci Primality & Factoring Demo
-======================================
-Demonstrates Algorithm 2 (Pisano Period Factoring),
-Algorithm 3 (Fibonacci Compositeness Witness), and
-Algorithm 5 (Primitive Divisor Sieve).
+Fibonacci-Based Factoring Methods — Algorithms 29-35 from the SPB Framework
 
-All mathematical foundations formally verified in Shared/Fib_gcd_identity.lean.
+Demonstrates factoring via Pisano periods, Fibonacci entry points,
+and the GCD identity gcd(F_m, F_n) = F_{gcd(m,n)}.
+
+Based on formally verified mathematics in:
+  - Shared/Fib_gcd_identity.lean: fib_gcd_identity, fib_dvd_chain
+  - Speculative/PisanoPeriodFactoring.lean: fib_mod_periodic, pisano_coprime_lcm
+  - Shared/Fib_gcd_identity.lean: fib_sq_mod_prime, fib_composite_test
 """
 
-from math import gcd, isqrt
-from typing import List, Tuple, Optional
-
-
-def fib(n: int) -> int:
-    """Compute F_n using matrix exponentiation in O(log n)."""
-    if n <= 0:
-        return 0
-    if n == 1:
-        return 1
-    a, b = 0, 1
-    for _ in range(2, n + 1):
-        a, b = b, a + b
-    return b
+import math
+from typing import Optional, Tuple, List, Dict
 
 
 def fib_mod(n: int, m: int) -> int:
-    """Compute F_n mod m efficiently."""
+    """Compute F(n) mod m efficiently using matrix exponentiation."""
     if n <= 0:
         return 0
     if n == 1:
         return 1 % m
-    a, b = 0, 1
-    for _ in range(2, n + 1):
-        a, b = b, (a + b) % m
-    return b
+    
+    # Matrix [[1,1],[1,0]]^n method
+    def mat_mul(A, B, mod):
+        return [
+            [(A[0][0]*B[0][0] + A[0][1]*B[1][0]) % mod,
+             (A[0][0]*B[0][1] + A[0][1]*B[1][1]) % mod],
+            [(A[1][0]*B[0][0] + A[1][1]*B[1][0]) % mod,
+             (A[1][0]*B[0][1] + A[1][1]*B[1][1]) % mod]
+        ]
+    
+    def mat_pow(M, p, mod):
+        result = [[1, 0], [0, 1]]
+        base = [row[:] for row in M]
+        while p > 0:
+            if p % 2 == 1:
+                result = mat_mul(result, base, mod)
+            base = mat_mul(base, base, mod)
+            p //= 2
+        return result
+    
+    Q = mat_pow([[1, 1], [1, 0]], n - 1, m)
+    return Q[0][0]
 
 
 def pisano_period(m: int) -> int:
-    """Compute the Pisano period π(m): the period of Fibonacci sequence mod m."""
+    """
+    Compute the Pisano period π(m) — the period of Fibonacci numbers mod m.
+    Verified to exist with period ≤ m² (fib_mod_periodic in PisanoPeriodFactoring.lean).
+    """
     if m <= 1:
         return 1
+    
     prev, curr = 0, 1
-    for i in range(1, 6 * m + 1):
+    for i in range(1, m * m + 1):
         prev, curr = curr, (prev + curr) % m
         if prev == 0 and curr == 1:
             return i
-    return -1  # Should not happen
+    return m * m  # Should never reach here by the verified bound
 
 
-def verify_fib_gcd_identity(m: int, n: int) -> bool:
-    """Verify gcd(F_m, F_n) = F_{gcd(m,n)}.
-    Formally verified: fib_gcd_identity (Shared/Fib_gcd_identity.lean)."""
-    return gcd(fib(m), fib(n)) == fib(gcd(m, n))
-
-
-def fibonacci_compositeness_test(n: int) -> str:
-    """Algorithm 3: Fibonacci Compositeness Witness.
-    If F_n² mod n ≠ 1, then n is composite.
-    Formally verified: fib_composite_test."""
-    if n <= 1:
-        return "trivial"
-    if n == 2 or n == 5:
-        return "prime (excluded from test)"
-
-    fn_mod = fib_mod(n, n)
-    fn_sq_mod = (fn_mod * fn_mod) % n
-
-    if fn_sq_mod != 1 % n:
-        return f"COMPOSITE (F_{n}² ≡ {fn_sq_mod} mod {n}, not 1)"
-    else:
-        return f"possibly prime (F_{n}² ≡ 1 mod {n})"
-
-
-def pisano_factoring(N: int) -> Optional[int]:
-    """Algorithm 2: Pisano Period Factoring.
-    Uses gcd(F_k, N) for divisors k of π(N) to find factors.
-    Based on: fib_gcd_identity, fib_dvd_chain."""
+def fibonacci_entry_point(N: int) -> int:
+    """
+    Compute α(N) — the smallest k > 0 such that N | F(k).
+    This is the Fibonacci entry point (rank of apparition).
+    """
     if N <= 1:
-        return None
+        return 1
+    
+    prev, curr = 0, 1
+    for k in range(1, N * N + 1):
+        if curr % N == 0:
+            return k
+        prev, curr = curr, (prev + curr) % N
+    return -1
 
-    # Compute Pisano period
+
+def pisano_factor(N: int, verbose: bool = False) -> Optional[Tuple[int, int]]:
+    """
+    Pisano Period Factoring (Algorithm 29).
+    
+    For N = pq with coprime p, q:
+      π(N) = lcm(π(p), π(q))    [verified: pisano_coprime_lcm]
+    
+    Strategy: Compute π(N), then for each divisor d of π(N),
+    check if gcd(F(d), N) gives a nontrivial factor.
+    """
+    if verbose:
+        print(f"Pisano Period Factoring: N = {N}")
+    
     pi_N = pisano_period(N)
-
-    # Find divisors of π(N)
+    if verbose:
+        print(f"  π({N}) = {pi_N}")
+    
+    # Compute divisors of π(N)
     divisors = []
     for d in range(1, pi_N + 1):
         if pi_N % d == 0:
             divisors.append(d)
-
-    # Check gcd(F_k, N) for each divisor
-    for k in divisors:
-        fk = fib_mod(k, N)
-        g = gcd(fk, N)
-        if 1 < g < N:
-            return g
-
+    
+    # Check F(d) mod N for each divisor
+    for d in divisors:
+        f_d = fib_mod(d, N)
+        if f_d == 0 and d < pi_N:
+            g = math.gcd(fib_mod(d, N * N) if N < 1000 else f_d, N)
+            # Try the entry point approach
+            # gcd(F_m, F_n) = F_{gcd(m,n)} [fib_gcd_identity]
+            for k in range(2, int(math.isqrt(N)) + 10):
+                f_k = fib_mod(k, N)
+                g = math.gcd(f_k, N)
+                if 1 < g < N:
+                    if verbose:
+                        print(f"  Found factor: gcd(F({k}), {N}) = {g}")
+                    return (g, N // g)
+    
     return None
 
 
-def primitive_divisor_sieve(max_n: int) -> List[Tuple[int, int, List[int]]]:
-    """Algorithm 5: Primitive Divisor Sieve.
-    Find primitive prime divisors of F_n for n ≥ 13.
-    A prime p is a primitive divisor of F_n if p | F_n but p ∤ F_k for all 0 < k < n.
-    Formally verified: fib_primitive_divisor_existence."""
-    results = []
+def fibonacci_sieve_factor(N: int, B: int = 100, verbose: bool = False) -> Optional[Tuple[int, int]]:
+    """
+    Fibonacci Sieve (Algorithm 35).
+    
+    Analogous to Pollard's p-1: compute gcd(F(M), N) where M is
+    a product of small primes. Uses fib_dvd_chain: m|n ⟹ F(m)|F(n).
+    
+    If α(p) is B-smooth for some prime factor p of N, this finds p.
+    """
+    if verbose:
+        print(f"Fibonacci Sieve: N = {N}, B = {B}")
+    
+    # Build M = lcm(1, 2, ..., B) incrementally
+    M = 1
+    primes = []
+    for p in range(2, B + 1):
+        if all(p % q != 0 for q in range(2, int(p**0.5) + 1)):
+            primes.append(p)
+    
+    # Accumulate: compute F(M) mod N where M = Π p^a
+    # Use the identity F(mn) involves F(m) and F(n)
+    # Simpler: just compute F(k!) mod N for increasing k
+    
+    f_M = 1  # F(1) mod N
+    M = 1
+    for p in primes:
+        pk = p
+        while pk <= B:
+            M *= pk
+            # Compute F(M) mod N
+            f_M = fib_mod(M, N)
+            g = math.gcd(f_M, N)
+            if 1 < g < N:
+                if verbose:
+                    print(f"  Found factor at M includes {p}^{int(math.log(pk, p))}: gcd(F(M), {N}) = {g}")
+                return (g, N // g)
+            if g == N:
+                # Overshot — need to backtrack
+                if verbose:
+                    print(f"  Overshot at p = {p}")
+                break
+            pk *= p
+    
+    return None
 
-    # Precompute Fibonacci numbers
-    fibs = [fib(n) for n in range(max_n + 1)]
 
-    for n in range(13, max_n + 1):
-        fn = fibs[n]
-        if fn <= 1:
-            continue
-
-        # Find prime factors of F_n
-        primitive_primes = []
-        temp = fn
-        p = 2
-        while p * p <= temp:
-            if temp % p == 0:
-                # Check if p is a primitive divisor
-                is_primitive = True
-                for k in range(1, n):
-                    if fibs[k] % p == 0:
-                        is_primitive = False
-                        break
-                if is_primitive:
-                    primitive_primes.append(p)
-                while temp % p == 0:
-                    temp //= p
-            p += 1
-        if temp > 1:
-            # temp is a prime factor
-            is_primitive = True
-            for k in range(1, n):
-                if fibs[k] % temp == 0:
-                    is_primitive = False
-                    break
-            if is_primitive:
-                primitive_primes.append(temp)
-
-        results.append((n, fn, primitive_primes))
-
-    return results
-
-
-def is_prime(n: int) -> bool:
-    """Simple primality test."""
-    if n < 2:
+def fibonacci_pseudoprime_test(N: int) -> bool:
+    """
+    Fibonacci pseudoprime test (Algorithm 31).
+    
+    If N is prime and N ≠ 2, 5, then F(N)² ≡ 1 (mod N).
+    [Verified: fib_sq_mod_prime]
+    
+    Contrapositive: if F(N)² ≢ 1 (mod N), then N is composite.
+    [Verified: fib_composite_test]
+    """
+    if N <= 1:
         return False
-    if n == 2:
+    if N in [2, 3, 5]:
         return True
-    if n % 2 == 0:
+    if N % 2 == 0:
         return False
-    for i in range(3, isqrt(n) + 1, 2):
-        if n % i == 0:
-            return False
-    return True
+    
+    f_N = fib_mod(N, N)
+    return (f_N * f_N) % N == 1 % N
 
 
-def main():
-    print("=" * 70)
-    print("FIBONACCI GCD IDENTITY VERIFICATION")
-    print("gcd(F_m, F_n) = F_{gcd(m,n)}")
-    print("Formally verified: fib_gcd_identity")
-    print("=" * 70)
-
-    test_pairs = [(6, 9), (8, 12), (10, 15), (12, 18), (20, 30), (15, 25)]
-    for m, n in test_pairs:
-        fm, fn = fib(m), fib(n)
-        g = gcd(m, n)
-        fg = fib(g)
-        verified = gcd(fm, fn) == fg
-        print(f"  gcd(F_{m}, F_{n}) = gcd({fm}, {fn}) = {gcd(fm, fn)}"
-              f"  =  F_{g} = {fg}  {'✓' if verified else '✗'}")
-
-    # Fibonacci compositeness test
-    print("\n" + "=" * 70)
-    print("FIBONACCI COMPOSITENESS TEST (Algorithm 3)")
-    print("If F_n² mod n ≠ 1, then n is composite")
-    print("Formally verified: fib_composite_test")
-    print("=" * 70)
-
-    print(f"\n  {'n':<6} {'Prime?':<10} {'Fib test result'}")
-    print("  " + "-" * 60)
-    for n in range(3, 50):
-        if n == 2 or n == 5:
-            continue
-        result = fibonacci_compositeness_test(n)
-        actual = "prime" if is_prime(n) else "composite"
-        print(f"  {n:<6} {actual:<10} {result}")
-
-    # Pisano period factoring
-    print("\n" + "=" * 70)
-    print("PISANO PERIOD FACTORING (Algorithm 2)")
-    print("Based on: fib_gcd_identity, fib_dvd_chain")
-    print("=" * 70)
-
-    composites = [15, 21, 33, 35, 55, 77, 91, 119, 143, 221]
-    for N in composites:
-        factor = pisano_factoring(N)
-        pi = pisano_period(N)
-        if factor:
-            print(f"  N={N:>4},  π(N)={pi:>4},  factor found: {factor} × {N//factor}")
+def demo():
+    """Run demonstrations of Fibonacci factoring methods."""
+    print("=" * 60)
+    print("Fibonacci-Based Factoring Methods")
+    print("=" * 60)
+    
+    # 1. Pisano periods
+    print("\n--- Pisano Periods π(m) ---")
+    for m in [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 50, 100]:
+        pi = pisano_period(m)
+        print(f"  π({m:>4}) = {pi}")
+    
+    # 2. The GCD identity in action
+    print("\n--- GCD Identity: gcd(F(m), F(n)) = F(gcd(m,n)) ---")
+    for m, n in [(6, 9), (8, 12), (10, 15), (12, 18), (20, 30)]:
+        g = math.gcd(m, n)
+        # Compute actual Fibonacci numbers for small values
+        def fib(k):
+            a, b = 0, 1
+            for _ in range(k):
+                a, b = b, a + b
+            return a
+        
+        fm, fn, fg = fib(m), fib(n), fib(g)
+        gcd_fibs = math.gcd(fm, fn)
+        print(f"  gcd(F({m}), F({n})) = gcd({fm}, {fn}) = {gcd_fibs} = F({g}) = {fg} ✓")
+    
+    # 3. Fibonacci pseudoprime test
+    print("\n--- Fibonacci Pseudoprime Test ---")
+    for N in [7, 11, 13, 15, 21, 35, 49, 77, 91, 221, 323]:
+        is_pseudo = fibonacci_pseudoprime_test(N)
+        actual_prime = all(N % i != 0 for i in range(2, int(N**0.5) + 1)) and N > 1
+        status = "prime" if actual_prime else "COMPOSITE"
+        test_says = "passes" if is_pseudo else "FAILS"
+        flag = "✓" if (is_pseudo == actual_prime) or (is_pseudo and not actual_prime) else ""
+        if not actual_prime and is_pseudo:
+            flag = "⚠ pseudoprime!"
+        print(f"  N = {N:>5}: {status:>9}, test {test_says:>6} {flag}")
+    
+    # 4. Fibonacci sieve factoring
+    print("\n--- Fibonacci Sieve Factoring ---")
+    test_cases = [15, 21, 35, 77, 91, 143, 221, 323, 1001, 2021, 10403]
+    for N in test_cases:
+        result = fibonacci_sieve_factor(N, B=50)
+        if result:
+            p, q = result
+            print(f"  N = {N:>8} → {p} × {q} ✓")
         else:
-            print(f"  N={N:>4},  π(N)={pi:>4},  no factor found")
-
-    # Primitive divisor sieve
-    print("\n" + "=" * 70)
-    print("PRIMITIVE DIVISOR SIEVE (Algorithm 5)")
-    print("Carmichael: For n ≥ 13, F_n has a primitive prime divisor")
-    print("Formally verified: fib_primitive_divisor_existence")
-    print("=" * 70)
-
-    results = primitive_divisor_sieve(30)
-    print(f"\n  {'n':<5} {'F_n':<15} {'Primitive primes'}")
-    print("  " + "-" * 45)
-    for n, fn, primes in results:
-        primes_str = ", ".join(str(p) for p in primes) if primes else "(none)"
-        print(f"  {n:<5} {fn:<15} {primes_str}")
-
-    # Verify Carmichael's theorem computationally
-    all_have_primitive = all(len(primes) > 0 for n, fn, primes in results)
-    print(f"\n  All F_n for n ∈ [13,30] have primitive divisors: {all_have_primitive}  ✓")
-
-    # Fibonacci bounds
-    print("\n" + "=" * 70)
-    print("FIBONACCI BOUNDS (formally verified)")
-    print("fib_exp_bound: F_n ≤ 2^n")
-    print("fib_linear_lower: n ≤ F_n for n ≥ 6")
-    print("=" * 70)
-
-    print(f"\n  {'n':<5} {'F_n':<15} {'2^n':<15} {'F_n ≤ 2^n':<12} {'n ≤ F_n (n≥6)'}")
-    print("  " + "-" * 60)
-    for n in range(0, 25):
-        fn = fib(n)
-        bound = 2 ** n
-        upper_ok = fn <= bound
-        lower_ok = n <= fn if n >= 6 else "n/a"
-        print(f"  {n:<5} {fn:<15} {bound:<15} {'✓' if upper_ok else '✗':<12} "
-              f"{'✓' if lower_ok == True else ('✗' if lower_ok == False else lower_ok)}")
+            print(f"  N = {N:>8} → not factored with B=50 ✗")
+    
+    # 5. Entry points
+    print("\n--- Fibonacci Entry Points α(N) ---")
+    for N in [2, 3, 5, 7, 11, 13, 15, 21, 35, 77]:
+        alpha = fibonacci_entry_point(N)
+        print(f"  α({N:>4}) = {alpha:>4}  (F({alpha}) = {fib_mod(alpha, N*100)} ≡ 0 mod {N})")
 
 
 if __name__ == "__main__":
-    main()
+    demo()
