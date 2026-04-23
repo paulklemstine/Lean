@@ -1,93 +1,60 @@
-# SPB Research Framework — Demos & Visuals
+# Python Demonstrations
 
-This directory contains Python demonstrations and SVG visualizations illustrating key algorithms and concepts from the Stereographic Pythagorean Bridge (SPB) research framework.
+Interactive Python demos that validate and illustrate the formally verified mathematics in the CatalogBuild framework.
 
-## Python Demos
+## Demos
 
-### `spb_demo.py` — Core SPB Operations
-Demonstrates the foundational SPB operation and its connections:
-- **Tangent/Hyperbolic tangent addition** — SPB as tanh addition, with Wick rotation to classical tangent
-- **Relativistic velocity addition** — SPB as Einstein's velocity composition formula
-- **Berggren tree generation** — All primitive Pythagorean triples from (3,4,5)
-- **Lorentz invariance** — Berggren matrices preserve x² + y² − z² = 0
-- **EML operations** — Exp-Minus-Log and its algebraic properties
-- **Tropical geometry** — LogSumExp as smooth max approximation
-- **Fibonacci compositeness test** — F(n)² ≡ 1 (mod n) for primes
-- **SPB group law** — Commutativity, associativity, identity, inverses
-- **EML closure density** — Reaching any real number from 1
+### `demo_spb_operations.py`
+The Stereographic Pythagorean Bridge and its connections:
+- SPB = tangent addition formula (with Wick rotation explanation)
+- SPB = relativistic velocity addition (always < c)
+- LogSumExp bounds (formally verified: max ≤ LSE ≤ max + ln 2)
+- Tropical deformation (temperature → 0 gives max)
+- EML identities (all formally verified in Lean 4)
+- Berggren tree generation with Lorentz form preservation
 
-```bash
-python3 spb_demo.py
-```
+### `demo_tropical_neural.py`
+The ReLU–tropical polynomial equivalence:
+- ReLU = tropical addition: max(0, x) = 0 ⊕ x
+- Single neuron as tropical polynomial
+- Two-layer network = tropical rational function
+- Lipschitz bound verification (formally verified composition rule)
+- Newton polygon analysis and breakpoints
+- Temperature annealing for tropical gradient descent
 
-### `crypto_demo.py` — Cryptography Applications
-Demonstrates cryptographic algorithms and vulnerabilities:
-- **ECDSA signing/verification** — Simplified demonstration with formal verification references
-- **Nonce reuse attack** — Formally verified private key recovery
-- **Fibonacci compositeness test** — Detection rates for composite numbers
-- **Quantum security analysis** — Classical vs quantum attack complexity comparison
+### `demo_eml_closure.py`
+EML closure density and Bayesian convergence:
+- EML closure growth from seed {1} (rapidly fills ℝ)
+- Distribution histogram of EML closure values
+- Verification of all formally proved EML identities
+- EML tree universal approximation
+- Bayesian convergence with geometric rate
+- Dead hypothesis preservation
 
-```bash
-python3 crypto_demo.py
-```
+### `demo_fibonacci_crypto.py`
+Number theory and cryptographic security:
+- Fibonacci GCD identity: gcd(F(m), F(n)) = F(gcd(m,n))
+- Fibonacci divisibility chains
+- Fibonacci bounds (linear lower, exponential upper)
+- Fibonacci compositeness test
+- Pisano period computation
+- ECDSA signature verification and nonce reuse vulnerability
 
-### `ml_tropical_demo.py` — Machine Learning & Tropical Geometry
-Demonstrates ML and tropical geometry connections:
-- **Tropical algebra basics** — Max-plus operations and distributivity
-- **LogSumExp smoothing** — Temperature-scaled smooth max with provable bounds
-- **ReLU ↔ tropical polynomials** — Neural networks as piecewise-linear functions
-- **EML universal approximation** — Approximating any real from {1}
-- **Lipschitz-certified networks** — Composition rules for adversarial robustness
-- **Bayesian convergence** — Formally verified belief update dynamics
+### `demo_berggren_visual.py`
+Generates the `pythagorean_circle.svg` visualization:
+- Computes 364 primitive Pythagorean triples (depth 5 Berggren tree)
+- Verifies all satisfy a² + b² = c²
+- Verifies Lorentz form preservation (x² + y² - z² = 0)
+- Plots triples on the unit circle as (a/c, b/c)
 
-```bash
-python3 ml_tropical_demo.py
-```
-
-## SVG Visualizations
-
-### `svg_berggren_tree.svg` — The Berggren Tree
-Visual representation of the ternary tree generating all primitive Pythagorean triples, showing:
-- Root (3,4,5) and first three levels
-- Berggren matrices B₁, B₂, B₃
-- Verification that a² + b² = c² for each node
-- Lorentz form preservation annotation
-
-### `svg_spb_connections.svg` — SPB Connection Map
-Hub-and-spoke diagram showing how SPB connects seven mathematical domains:
-- Number Theory (6,038 declarations)
-- Tropical Geometry (1,445 declarations)
-- Machine Learning (1,120 declarations)
-- Cryptography (741 declarations)
-- Physics (2,830 declarations)
-- EML Framework (4,530 declarations)
-- Computation (3,079 declarations)
-
-### `svg_tropical_neural.svg` — ReLU ↔ Tropical Polynomials
-Side-by-side visualization showing the equivalence between:
-- A ReLU neural network (left)
-- Its tropical polynomial representation (right)
-- The piecewise-linear function both compute
-
-### `svg_algorithm_taxonomy.svg` — 50 Algorithm Taxonomy
-Color-coded grid of all 50 novel algorithm applications:
-- Organized by domain (Number Theory, ML, Cryptography, Physics, Systems)
-- Color-coded by Technology Readiness Level (TRL 2-7)
-- Impact distribution statistics
-
-### `svg_eml_irrationality.svg` — Irrationality of e Proof
-Step-by-step visualization of the formally verified proof that e is irrational:
-- Four proof steps (assume, multiply, bound, contradict)
-- Key Lean 4 code highlights
-- Verification badge
-
-## Running All Demos
+## Running
 
 ```bash
-cd demos
-python3 spb_demo.py
-python3 crypto_demo.py
-python3 ml_tropical_demo.py
+python3 demo_spb_operations.py
+python3 demo_tropical_neural.py
+python3 demo_eml_closure.py
+python3 demo_fibonacci_crypto.py
+python3 demo_berggren_visual.py  # Generates ../visuals/pythagorean_circle.svg
 ```
 
-All demos are self-contained (no external dependencies beyond Python 3.6+ standard library).
+No external dependencies required (only Python 3 standard library).
