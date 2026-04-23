@@ -1,60 +1,75 @@
-# Python Demonstrations
+# Python Demos
 
-Interactive Python demos that validate and illustrate the formally verified mathematics in the CatalogBuild framework.
+Interactive Python demonstrations of the 50 algorithms enabled by the SPB framework.
+Each demo is backed by formally verified mathematics in the corresponding Lean 4 files.
+
+## Prerequisites
+
+```bash
+pip install numpy
+```
 
 ## Demos
 
-### `demo_spb_operations.py`
-The Stereographic Pythagorean Bridge and its connections:
-- SPB = tangent addition formula (with Wick rotation explanation)
-- SPB = relativistic velocity addition (always < c)
-- LogSumExp bounds (formally verified: max ≤ LSE ≤ max + ln 2)
-- Tropical deformation (temperature → 0 gives max)
-- EML identities (all formally verified in Lean 4)
-- Berggren tree generation with Lorentz form preservation
-
-### `demo_tropical_neural.py`
-The ReLU–tropical polynomial equivalence:
-- ReLU = tropical addition: max(0, x) = 0 ⊕ x
-- Single neuron as tropical polynomial
-- Two-layer network = tropical rational function
-- Lipschitz bound verification (formally verified composition rule)
-- Newton polygon analysis and breakpoints
-- Temperature annealing for tropical gradient descent
-
-### `demo_eml_closure.py`
-EML closure density and Bayesian convergence:
-- EML closure growth from seed {1} (rapidly fills ℝ)
-- Distribution histogram of EML closure values
-- Verification of all formally proved EML identities
-- EML tree universal approximation
-- Bayesian convergence with geometric rate
-- Dead hypothesis preservation
-
-### `demo_fibonacci_crypto.py`
-Number theory and cryptographic security:
-- Fibonacci GCD identity: gcd(F(m), F(n)) = F(gcd(m,n))
-- Fibonacci divisibility chains
-- Fibonacci bounds (linear lower, exponential upper)
-- Fibonacci compositeness test
-- Pisano period computation
-- ECDSA signature verification and nonce reuse vulnerability
-
-### `demo_berggren_visual.py`
-Generates the `pythagorean_circle.svg` visualization:
-- Computes 364 primitive Pythagorean triples (depth 5 Berggren tree)
-- Verifies all satisfy a² + b² = c²
-- Verifies Lorentz form preservation (x² + y² - z² = 0)
-- Plots triples on the unit circle as (a/c, b/c)
-
-## Running
+### 1. `berggren_tree.py` — Berggren Tree Explorer & Factoring
+Demonstrates **Algorithms 1, 31**: Generates the ternary tree of primitive Pythagorean triples, verifies Lorentz invariance, traces triples back to the root, and attempts integer factoring via tree descent.
 
 ```bash
-python3 demo_spb_operations.py
-python3 demo_tropical_neural.py
-python3 demo_eml_closure.py
-python3 demo_fibonacci_crypto.py
-python3 demo_berggren_visual.py  # Generates ../visuals/pythagorean_circle.svg
+python3 demos/berggren_tree.py
 ```
 
-No external dependencies required (only Python 3 standard library).
+### 2. `eml_operations.py` — EML Universal Arithmetic
+Demonstrates **Algorithms 11, 22, 32**: Verifies all 8 formally proven EML algebraic identities, demonstrates EML closure density, neural network compression ratios, and the EML instruction set architecture.
+
+```bash
+python3 demos/eml_operations.py
+```
+
+### 3. `fibonacci_factoring.py` — Fibonacci Primality & Factoring
+Demonstrates **Algorithms 2, 3, 5**: Fibonacci GCD identity verification, compositeness testing, Pisano period factoring, and the primitive divisor sieve (Carmichael's theorem).
+
+```bash
+python3 demos/fibonacci_factoring.py
+```
+
+### 4. `tropical_geometry.py` — Tropical Algebra & Neural Networks
+Demonstrates **Algorithms 12, 15, 23, 33**: Tropical semiring operations, LogSumExp smooth maximum bounds, tropical shortest paths via matrix exponentiation, and tropical ReLU network analysis.
+
+```bash
+python3 demos/tropical_geometry.py
+```
+
+### 5. `cryptographic_analysis.py` — Cryptographic Security
+Demonstrates **Algorithms 6, 8, 9**: Simplified ECDSA with nonce-reuse vulnerability detection, Grover-aware post-quantum security calculator, and SPB key agreement protocol.
+
+```bash
+python3 demos/cryptographic_analysis.py
+```
+
+### 6. `bayesian_convergence.py` — Verified Bayesian Inference
+Demonstrates **Algorithms 19, 34**: Dead hypothesis theorem, zero-likelihood elimination, belief distance metric properties, geometric convergence, and Bayesian A/B testing.
+
+```bash
+python3 demos/bayesian_convergence.py
+```
+
+### 7. `stereographic_projection.py` — SPB & Stereographic Projection
+Demonstrates **Algorithms 14, 21, 24, 27**: Stereographic projection from unit circle, SPB group properties, Wick duality between Euclidean and Minkowski signatures, relativistic velocity addition, SPB activation function, and conformal mesh generation.
+
+```bash
+python3 demos/stereographic_projection.py
+```
+
+## Verified Foundations
+
+Every computation in these demos corresponds to a formally verified theorem:
+
+| Demo | Key Verified Theorems | Lean File |
+|------|----------------------|-----------|
+| Berggren Tree | `B₁_preserves_lorentz`, `inv_B1_comp_B1` | `Pythagorean/Berggren/` |
+| EML Operations | `EMLd_exp`, `EMLd_double_neg`, `EMLd_log_split` | `Computation/DensityTheory.lean` |
+| Fibonacci | `fib_gcd_identity`, `fib_composite_test` | `Shared/Fib_gcd_identity.lean` |
+| Tropical | `lse2_le_max_log2`, `trop_convex_comp` | `Tropical/` |
+| Cryptography | `ecdsa_nonce_reuse`, `ecdsa_completeness` | `Cryptography/QuantumSecurity/` |
+| Bayesian | `dead_hypothesis_stays_dead`, belief metric | `Algebra/Convergence.lean` |
+| Stereographic | `tan_add_eq_spb`, `wick_duality` | `Geometry/Stereographic/` |

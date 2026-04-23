@@ -1,140 +1,158 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" font-family="Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" font-family="'Helvetica Neue', Arial, sans-serif">
   <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#0a0a2e;stop-opacity:1"/>
-      <stop offset="100%" style="stop-color:#1a1a4e;stop-opacity:1"/>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0e27"/>
+      <stop offset="100%" stop-color="#1a1e3a"/>
     </linearGradient>
-    <linearGradient id="nodeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#4ecdc4;stop-opacity:1"/>
-      <stop offset="100%" style="stop-color:#44b8a8;stop-opacity:1"/>
+    <linearGradient id="nodeGrad1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ff6b6b"/>
+      <stop offset="100%" stop-color="#ee5a24"/>
     </linearGradient>
-    <linearGradient id="rootGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:1"/>
-      <stop offset="100%" style="stop-color:#ee5a24;stop-opacity:1"/>
+    <linearGradient id="nodeGrad2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#48dbfb"/>
+      <stop offset="100%" stop-color="#0abde3"/>
+    </linearGradient>
+    <linearGradient id="nodeGrad3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#feca57"/>
+      <stop offset="100%" stop-color="#ff9f43"/>
+    </linearGradient>
+    <linearGradient id="rootGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#a29bfe"/>
+      <stop offset="100%" stop-color="#6c5ce7"/>
     </linearGradient>
     <filter id="glow">
-      <feGaussianBlur stdDeviation="3" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
     </filter>
     <filter id="shadow">
       <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.3"/>
     </filter>
   </defs>
 
-  <rect width="900" height="600" fill="url(#bg)"/>
+  <!-- Background -->
+  <rect width="1000" height="700" fill="url(#bgGrad)"/>
 
   <!-- Title -->
-  <text x="450" y="40" text-anchor="middle" fill="#fff" font-size="22" font-weight="bold">The Berggren Tree of Pythagorean Triples</text>
-  <text x="450" y="62" text-anchor="middle" fill="#aaa" font-size="13">Every primitive Pythagorean triple appears exactly once (formally verified)</text>
+  <text x="500" y="45" text-anchor="middle" fill="#fff" font-size="24" font-weight="bold" filter="url(#glow)">The Berggren Ternary Tree of Pythagorean Triples</text>
+  <text x="500" y="70" text-anchor="middle" fill="#8395a7" font-size="13">Formally verified: every primitive Pythagorean triple appears exactly once</text>
 
   <!-- Connection lines -->
-  <g stroke="#4ecdc4" stroke-opacity="0.4" stroke-width="2">
-    <!-- Root to depth 1 -->
-    <line x1="450" y1="120" x2="150" y2="230"/>
-    <line x1="450" y1="120" x2="450" y2="230"/>
-    <line x1="450" y1="120" x2="750" y2="230"/>
+  <!-- Root to depth 1 -->
+  <line x1="500" y1="140" x2="200" y2="260" stroke="#ff6b6b" stroke-width="2" opacity="0.6"/>
+  <line x1="500" y1="140" x2="500" y2="260" stroke="#48dbfb" stroke-width="2" opacity="0.6"/>
+  <line x1="500" y1="140" x2="800" y2="260" stroke="#feca57" stroke-width="2" opacity="0.6"/>
 
-    <!-- B1 children -->
-    <line x1="150" y1="260" x2="50" y2="370"/>
-    <line x1="150" y1="260" x2="150" y2="370"/>
-    <line x1="150" y1="260" x2="250" y2="370"/>
-
-    <!-- B2 children -->
-    <line x1="450" y1="260" x2="350" y2="370"/>
-    <line x1="450" y1="260" x2="450" y2="370"/>
-    <line x1="450" y1="260" x2="550" y2="370"/>
-
-    <!-- B3 children -->
-    <line x1="750" y1="260" x2="650" y2="370"/>
-    <line x1="750" y1="260" x2="750" y2="370"/>
-    <line x1="750" y1="260" x2="850" y2="370"/>
-  </g>
+  <!-- Depth 1 to depth 2 -->
+  <!-- B1 children -->
+  <line x1="200" y1="310" x2="80" y2="420" stroke="#ff6b6b" stroke-width="1.5" opacity="0.4"/>
+  <line x1="200" y1="310" x2="180" y2="420" stroke="#48dbfb" stroke-width="1.5" opacity="0.4"/>
+  <line x1="200" y1="310" x2="280" y2="420" stroke="#feca57" stroke-width="1.5" opacity="0.4"/>
+  <!-- B2 children -->
+  <line x1="500" y1="310" x2="400" y2="420" stroke="#ff6b6b" stroke-width="1.5" opacity="0.4"/>
+  <line x1="500" y1="310" x2="500" y2="420" stroke="#48dbfb" stroke-width="1.5" opacity="0.4"/>
+  <line x1="500" y1="310" x2="600" y2="420" stroke="#feca57" stroke-width="1.5" opacity="0.4"/>
+  <!-- B3 children -->
+  <line x1="800" y1="310" x2="720" y2="420" stroke="#ff6b6b" stroke-width="1.5" opacity="0.4"/>
+  <line x1="800" y1="310" x2="820" y2="420" stroke="#48dbfb" stroke-width="1.5" opacity="0.4"/>
+  <line x1="800" y1="310" x2="920" y2="420" stroke="#feca57" stroke-width="1.5" opacity="0.4"/>
 
   <!-- Root node: (3, 4, 5) -->
-  <g filter="url(#glow)">
-    <ellipse cx="450" cy="110" rx="55" ry="22" fill="url(#rootGrad)" filter="url(#shadow)"/>
-    <text x="450" y="115" text-anchor="middle" fill="#fff" font-size="15" font-weight="bold">(3, 4, 5)</text>
-  </g>
+  <circle cx="500" cy="120" r="38" fill="url(#rootGrad)" filter="url(#shadow)"/>
+  <text x="500" y="115" text-anchor="middle" fill="#fff" font-size="15" font-weight="bold">(3, 4, 5)</text>
+  <text x="500" y="133" text-anchor="middle" fill="#dfe6e9" font-size="10">root</text>
 
   <!-- Depth 1 nodes -->
-  <g filter="url(#shadow)">
-    <ellipse cx="150" cy="250" rx="60" ry="20" fill="url(#nodeGrad)"/>
-    <text x="150" y="255" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">(5, 12, 13)</text>
-    <text x="150" y="220" text-anchor="middle" fill="#ff6b6b" font-size="11">B₁</text>
-  </g>
-  <g filter="url(#shadow)">
-    <ellipse cx="450" cy="250" rx="65" ry="20" fill="url(#nodeGrad)"/>
-    <text x="450" y="255" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">(21, 20, 29)</text>
-    <text x="450" y="220" text-anchor="middle" fill="#ffd93d" font-size="11">B₂</text>
-  </g>
-  <g filter="url(#shadow)">
-    <ellipse cx="750" cy="250" rx="60" ry="20" fill="url(#nodeGrad)"/>
-    <text x="750" y="255" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">(15, 8, 17)</text>
-    <text x="750" y="220" text-anchor="middle" fill="#6c5ce7" font-size="11">B₃</text>
-  </g>
+  <!-- B1·(3,4,5) = (5, 12, 13) -->
+  <circle cx="200" cy="285" r="35" fill="url(#nodeGrad1)" filter="url(#shadow)"/>
+  <text x="200" y="280" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">(5, 12, 13)</text>
+  <text x="200" y="298" text-anchor="middle" fill="#fff" font-size="10" opacity="0.8">B₁</text>
 
-  <!-- Depth 2 nodes (B1 children) -->
-  <g filter="url(#shadow)">
-    <ellipse cx="50" cy="385" rx="48" ry="18" fill="#2d6a4f" opacity="0.9"/>
-    <text x="50" y="389" text-anchor="middle" fill="#fff" font-size="10">(7, 24, 25)</text>
-  </g>
-  <g filter="url(#shadow)">
-    <ellipse cx="150" cy="385" rx="55" ry="18" fill="#2d6a4f" opacity="0.9"/>
-    <text x="150" y="389" text-anchor="middle" fill="#fff" font-size="10">(55, 48, 73)</text>
-  </g>
-  <g filter="url(#shadow)">
-    <ellipse cx="250" cy="385" rx="55" ry="18" fill="#2d6a4f" opacity="0.9"/>
-    <text x="250" y="389" text-anchor="middle" fill="#fff" font-size="10">(45, 28, 53)</text>
-  </g>
+  <!-- B2·(3,4,5) = (21, 20, 29) -->
+  <circle cx="500" cy="285" r="35" fill="url(#nodeGrad2)" filter="url(#shadow)"/>
+  <text x="500" y="280" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">(21, 20, 29)</text>
+  <text x="500" y="298" text-anchor="middle" fill="#fff" font-size="10" opacity="0.8">B₂</text>
 
-  <!-- Depth 2 nodes (B2 children) -->
-  <g filter="url(#shadow)">
-    <ellipse cx="350" cy="385" rx="55" ry="18" fill="#2d6a4f" opacity="0.9"/>
-    <text x="350" y="389" text-anchor="middle" fill="#fff" font-size="10">(39, 80, 89)</text>
-  </g>
-  <g filter="url(#shadow)">
-    <ellipse cx="450" cy="385" rx="62" ry="18" fill="#2d6a4f" opacity="0.9"/>
-    <text x="450" y="389" text-anchor="middle" fill="#fff" font-size="10">(119, 120, 169)</text>
-  </g>
-  <g filter="url(#shadow)">
-    <ellipse cx="550" cy="385" rx="58" ry="18" fill="#2d6a4f" opacity="0.9"/>
-    <text x="550" y="389" text-anchor="middle" fill="#fff" font-size="10">(77, 36, 85)</text>
-  </g>
+  <!-- B3·(3,4,5) = (15, 8, 17) -->
+  <circle cx="800" cy="285" r="35" fill="url(#nodeGrad3)" filter="url(#shadow)"/>
+  <text x="800" y="280" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">(15, 8, 17)</text>
+  <text x="800" y="298" text-anchor="middle" fill="#fff" font-size="10" opacity="0.8">B₃</text>
 
-  <!-- Depth 2 nodes (B3 children) -->
-  <g filter="url(#shadow)">
-    <ellipse cx="650" cy="385" rx="55" ry="18" fill="#2d6a4f" opacity="0.9"/>
-    <text x="650" y="389" text-anchor="middle" fill="#fff" font-size="10">(33, 56, 65)</text>
-  </g>
-  <g filter="url(#shadow)">
-    <ellipse cx="750" cy="385" rx="55" ry="18" fill="#2d6a4f" opacity="0.9"/>
-    <text x="750" y="389" text-anchor="middle" fill="#fff" font-size="10">(65, 72, 97)</text>
-  </g>
-  <g filter="url(#shadow)">
-    <ellipse cx="850" cy="385" rx="55" ry="18" fill="#2d6a4f" opacity="0.9"/>
-    <text x="850" y="389" text-anchor="middle" fill="#fff" font-size="10">(35, 12, 37)</text>
-  </g>
+  <!-- Depth 2 nodes (smaller) -->
+  <!-- B1 children -->
+  <circle cx="80" cy="440" r="28" fill="url(#nodeGrad1)" opacity="0.8" filter="url(#shadow)"/>
+  <text x="80" y="436" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">(7, 24, 25)</text>
+  <text x="80" y="451" text-anchor="middle" fill="#fff" font-size="9" opacity="0.7">B₁B₁</text>
 
-  <!-- Ellipsis -->
-  <text x="150" y="440" text-anchor="middle" fill="#666" font-size="20">⋮</text>
-  <text x="450" y="440" text-anchor="middle" fill="#666" font-size="20">⋮</text>
-  <text x="750" y="440" text-anchor="middle" fill="#666" font-size="20">⋮</text>
+  <circle cx="180" cy="440" r="28" fill="url(#nodeGrad2)" opacity="0.8" filter="url(#shadow)"/>
+  <text x="180" y="436" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">(55, 48, 73)</text>
+  <text x="180" y="451" text-anchor="middle" fill="#fff" font-size="9" opacity="0.7">B₂B₁</text>
 
-  <!-- Legend -->
-  <g transform="translate(30, 470)">
-    <rect width="840" height="115" rx="10" fill="#0d0d3a" stroke="#4ecdc4" stroke-width="1" opacity="0.8"/>
-    <text x="420" y="25" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">Formally Verified Properties</text>
+  <circle cx="280" cy="440" r="28" fill="url(#nodeGrad3)" opacity="0.8" filter="url(#shadow)"/>
+  <text x="280" y="436" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold">(45, 28, 53)</text>
+  <text x="280" y="451" text-anchor="middle" fill="#fff" font-size="9" opacity="0.7">B₃B₁</text>
 
-    <text x="30" y="50" fill="#ff6b6b" font-size="12">▸ Lorentz Invariance:</text>
-    <text x="175" y="50" fill="#ccc" font-size="11">All Berggren matrices preserve x² + y² − z² (Minkowski form)</text>
+  <!-- B2 children -->
+  <circle cx="400" cy="440" r="28" fill="url(#nodeGrad1)" opacity="0.8" filter="url(#shadow)"/>
+  <text x="400" y="436" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">(39, 80, 89)</text>
+  <text x="400" y="451" text-anchor="middle" fill="#fff" font-size="9" opacity="0.7">B₁B₂</text>
 
-    <text x="30" y="70" fill="#ffd93d" font-size="12">▸ Completeness:</text>
-    <text x="145" y="70" fill="#ccc" font-size="11">Every primitive Pythagorean triple appears exactly once</text>
+  <circle cx="500" cy="440" r="28" fill="url(#nodeGrad2)" opacity="0.8" filter="url(#shadow)"/>
+  <text x="500" y="436" text-anchor="middle" fill="#fff" font-size="9" font-weight="bold">(119,120,169)</text>
+  <text x="500" y="451" text-anchor="middle" fill="#fff" font-size="9" opacity="0.7">B₂B₂</text>
 
-    <text x="30" y="90" fill="#6c5ce7" font-size="12">▸ Invertibility:</text>
-    <text x="140" y="90" fill="#ccc" font-size="11">Each B matrix has a verified inverse — unique path from any triple to (3,4,5)</text>
+  <circle cx="600" cy="440" r="28" fill="url(#nodeGrad3)" opacity="0.8" filter="url(#shadow)"/>
+  <text x="600" y="436" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">(77, 36, 85)</text>
+  <text x="600" y="451" text-anchor="middle" fill="#fff" font-size="9" opacity="0.7">B₃B₂</text>
 
-    <text x="30" y="108" fill="#4ecdc4" font-size="12">▸ 28,797 declarations</text>
-    <text x="195" y="108" fill="#888" font-size="11">across 1,446 Lean 4 files, 178,634 lines of verified code</text>
-  </g>
+  <!-- B3 children -->
+  <circle cx="720" cy="440" r="28" fill="url(#nodeGrad1)" opacity="0.8" filter="url(#shadow)"/>
+  <text x="720" y="436" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">(33, 56, 65)</text>
+  <text x="720" y="451" text-anchor="middle" fill="#fff" font-size="9" opacity="0.7">B₁B₃</text>
+
+  <circle cx="820" cy="440" r="28" fill="url(#nodeGrad2)" opacity="0.8" filter="url(#shadow)"/>
+  <text x="820" y="436" text-anchor="middle" fill="#fff" font-size="9" font-weight="bold">(91, 60, 109)</text>
+  <text x="820" y="451" text-anchor="middle" fill="#fff" font-size="9" opacity="0.7">B₂B₃</text>
+
+  <circle cx="920" cy="440" r="28" fill="url(#nodeGrad3)" opacity="0.8" filter="url(#shadow)"/>
+  <text x="920" y="436" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">(65, 32, 73)</text>
+  <text x="920" y="451" text-anchor="middle" fill="#fff" font-size="9" opacity="0.7">B₃B₃</text>
+
+  <!-- Ellipsis indicators -->
+  <text x="80" y="490" text-anchor="middle" fill="#636e72" font-size="18">⋮</text>
+  <text x="180" y="490" text-anchor="middle" fill="#636e72" font-size="18">⋮</text>
+  <text x="280" y="490" text-anchor="middle" fill="#636e72" font-size="18">⋮</text>
+  <text x="400" y="490" text-anchor="middle" fill="#636e72" font-size="18">⋮</text>
+  <text x="500" y="490" text-anchor="middle" fill="#636e72" font-size="18">⋮</text>
+  <text x="600" y="490" text-anchor="middle" fill="#636e72" font-size="18">⋮</text>
+  <text x="720" y="490" text-anchor="middle" fill="#636e72" font-size="18">⋮</text>
+  <text x="820" y="490" text-anchor="middle" fill="#636e72" font-size="18">⋮</text>
+  <text x="920" y="490" text-anchor="middle" fill="#636e72" font-size="18">⋮</text>
+
+  <!-- Matrix labels -->
+  <rect x="30" y="540" width="300" height="140" rx="10" fill="#1e272e" opacity="0.8" stroke="#dfe6e9" stroke-width="1"/>
+  <text x="180" y="565" text-anchor="middle" fill="#ff6b6b" font-size="13" font-weight="bold">B₁ Matrix</text>
+  <text x="180" y="588" text-anchor="middle" fill="#dfe6e9" font-size="12" font-family="monospace">┌  1  -2   2 ┐</text>
+  <text x="180" y="606" text-anchor="middle" fill="#dfe6e9" font-size="12" font-family="monospace">│  2  -1   2 │</text>
+  <text x="180" y="624" text-anchor="middle" fill="#dfe6e9" font-size="12" font-family="monospace">└  2  -2   3 ┘</text>
+  <text x="180" y="650" text-anchor="middle" fill="#636e72" font-size="10">Preserves x²+y²−z²</text>
+  <text x="180" y="666" text-anchor="middle" fill="#636e72" font-size="10">✓ B₁_preserves_lorentz</text>
+
+  <rect x="350" y="540" width="300" height="140" rx="10" fill="#1e272e" opacity="0.8" stroke="#dfe6e9" stroke-width="1"/>
+  <text x="500" y="565" text-anchor="middle" fill="#48dbfb" font-size="13" font-weight="bold">B₂ Matrix</text>
+  <text x="500" y="588" text-anchor="middle" fill="#dfe6e9" font-size="12" font-family="monospace">┌  1   2   2 ┐</text>
+  <text x="500" y="606" text-anchor="middle" fill="#dfe6e9" font-size="12" font-family="monospace">│  2   1   2 │</text>
+  <text x="500" y="624" text-anchor="middle" fill="#dfe6e9" font-size="12" font-family="monospace">└  2   2   3 ┘</text>
+  <text x="500" y="650" text-anchor="middle" fill="#636e72" font-size="10">Preserves x²+y²−z²</text>
+  <text x="500" y="666" text-anchor="middle" fill="#636e72" font-size="10">✓ B₂_preserves_lorentz</text>
+
+  <rect x="670" y="540" width="300" height="140" rx="10" fill="#1e272e" opacity="0.8" stroke="#dfe6e9" stroke-width="1"/>
+  <text x="820" y="565" text-anchor="middle" fill="#feca57" font-size="13" font-weight="bold">B₃ Matrix</text>
+  <text x="820" y="588" text-anchor="middle" fill="#dfe6e9" font-size="12" font-family="monospace">┌ -1   2   2 ┐</text>
+  <text x="820" y="606" text-anchor="middle" fill="#dfe6e9" font-size="12" font-family="monospace">│ -2   1   2 │</text>
+  <text x="820" y="624" text-anchor="middle" fill="#dfe6e9" font-size="12" font-family="monospace">└ -2   2   3 ┘</text>
+  <text x="820" y="650" text-anchor="middle" fill="#636e72" font-size="10">Preserves x²+y²−z²</text>
+  <text x="820" y="666" text-anchor="middle" fill="#636e72" font-size="10">✓ B₃_preserves_lorentz</text>
 </svg>
