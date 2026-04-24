@@ -32,7 +32,12 @@ class AristotleSDKClient:
     """Client using the official aristotlelib SDK."""
 
     def __init__(self, config: Dict[str, Any]):
-        self.api_key = config.get("api_key") or os.environ.get("ARISTOTLE_API_KEY", "")
+        raw_key = config.get("api_key", "")
+        # Handle ${VAR} placeholder by falling back to environment
+        if raw_key and raw_key.startswith("${") and raw_key.endswith("}"):
+            var_name = raw_key[2:-1]
+            raw_key = os.environ.get(var_name, raw_key)
+        self.api_key = raw_key or os.environ.get("ARISTOTLE_API_KEY", "")
         self.timeout = config.get("timeout_seconds", 300)
         self.polling_interval = config.get("polling_interval_seconds", 30)
 

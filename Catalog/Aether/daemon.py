@@ -66,6 +66,7 @@ class AetherDaemon:
         state_path: Optional[Path] = None,
     ):
         self.config = config
+        self._substitute_env_vars(self.config)
         self.domains = domains_config.get("domains", [])
         self.global_settings = domains_config.get("global_settings", {})
         self.state_path = state_path or Path("./logs/daemon_state.json")
@@ -99,6 +100,20 @@ class AetherDaemon:
 
         # Domain weights
         self._domain_weights = {d["id"]: d.get("weight", 1.0) for d in self.domains}
+
+    def _substitute_env_vars(self, obj: Any) -> None:
+        """Recursively substitute ${VAR} in config strings."""
+        import os
+        if isinstance(obj, dict):
+            for k, v in obj.items():
+                if isinstance(v, str) and v.startswith("${") and v.endswith("}"):
+                    var_name = v[2:-1]
+                    obj[k] = os.environ.get(var_name, v)
+                else:
+                    self._substitute_env_vars(v)
+        elif isinstance(obj, list):
+            for item in obj:
+                self._substitute_env_vars(item)
 
     def _load_state(self) -> DaemonState:
         if self.state_path.exists():
