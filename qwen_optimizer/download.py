@@ -1,9 +1,18 @@
 """Model download and Google Drive caching utilities."""
 
 import os
+import shutil
 from pathlib import Path
 from typing import Optional
+
 from huggingface_hub import snapshot_download
+
+
+def check_disk_space(path: str, required_gb: float = 10.0) -> bool:
+    """Check if the filesystem at path has at least required_gb free."""
+    stat = shutil.disk_usage(path)
+    free_gb = stat.free / (1024 ** 3)
+    return free_gb >= required_gb
 
 
 class ModelCache:
@@ -30,6 +39,7 @@ class ModelCache:
                 repo_id=repo_id,
                 local_dir=str(local_path),
                 local_dir_use_symlinks=False,
+                resume_download=True,
             )
             print(f"Cached to {local_path}")
         else:
@@ -46,3 +56,9 @@ class ModelCache:
             f.stat().st_size for f in local_path.rglob("*") if f.is_file()
         )
         return total / (1024 ** 3)
+
+    def drive_path(self, drive_mount: str = "/content/drive/MyDrive") -> Path:
+        """Return a cache path inside Google Drive if mounted."""
+        drive_cache = Path(drive_mount) / "CrystallineCache" / "models"
+        drive_cache.mkdir(parents=True, exist_ok=True)
+        return drive_cache

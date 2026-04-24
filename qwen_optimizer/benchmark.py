@@ -89,7 +89,58 @@ class BenchmarkSuite:
             notes=notes,
         )
 
-    def run_perplexity(
+    def run_throughput_benchmark(
+        self,
+        model,
+        stage_name: str,
+        quantization_label: str,
+        batch_sizes: List[int] = None,
+        max_tokens: int = 50,
+        notes: str = "",
+    ) -> List[BenchmarkResult]:
+        """Benchmark throughput at different batch sizes."""
+        if batch_sizes is None:
+            batch_sizes = [1, 4, 8]
+
+        results = []
+        for bs in batch_sizes:
+            prompts = [self.prompt] * bs
+            inputs = self.tokenizer(prompts, return_tensors="pt", padding=True).to(model.device)
+
+            # Warmup
+            with torch.no_grad():
+                _ = model.generate(**inputs, max_new_tokens=10, do_sample=False)
+            torch.cuda.synchronize()
+
+            t0 = time.time()
+            with torch.no_grad():
+                _ = model.generate(
+                    **inputs,
+                    max_new_tokens=max_tokens,
+                    do_sample=False,
+                    use_cache=True,
+                )
+            total_t = time.time() - t0
+
+            total_gen_tokens = bs * max_tokens
+            decode_tok_s = total_gen_tokens / total_t
+
+            results.append(BenchmarkResult(
+                stage=f"{stage_name}_batch{bs}",
+                quantization=quantization_label,
+                vram_mb=self._get_vram_mb(),
+                tokens_per_sec_prefill=0.0,
+                tokens_per_sec_decode=decode_tok_s,
+                perplexity=None,
+                latency_ttft_ms=0.0,
+                latency_tpot_ms=(total_t * 1000) / total_gen_tokens,
+                load_time_s=0.0,
+                notes=f"{notes} | batch_size={bs}",
+            ))
+
+        return results
+
+    def run_quality_benchmark(
         self,
         model,
         text: str,
@@ -124,3 +175,13 @@ class BenchmarkSuite:
 
         ppl = torch.exp(torch.stack(nlls).sum() / end_loc)
         return ppl.item()
+
+    def run_perplexity(
+        self,
+        model,
+        text: str,
+        max_length: Optional[int] = None,
+        stride: int = 512,
+    ) -> float:
+        """Alias for run_quality_benchmark for backward compatibility."""
+        return self.run_quality_benchmark(model, text, max_length, stride)
