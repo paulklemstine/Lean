@@ -57,6 +57,8 @@ class ExperimentRecord:
     pi_agent_model: str = ""
     pi_agent_concept_title: str = ""
     prompt_creativity_score: float = 0.0
+    novelty_score: float = 0.0
+    epicness_score: float = 0.0
 
 
 class TelemetryLogger:

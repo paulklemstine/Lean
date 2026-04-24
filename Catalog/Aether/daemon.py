@@ -202,17 +202,19 @@ class AetherDaemon:
         prompt: ResearchPrompt,
         lean_source: str,
         exp_id: str,
+        domain: str,
     ) -> AristotleResult:
-        """Create a project and dispatch to Aristotle with full Catalog context."""
+        """Create a project and dispatch to Aristotle with focused Catalog context."""
         project_dir = self.output_dir / f"job_{exp_id}"
         project_dir.mkdir(parents=True, exist_ok=True)
 
-        # Dispatch with full catalog context
+        # Dispatch with focused domain context
         result = await self.aristotle.submit_with_catalog_context(
             lean_source=lean_source,
             catalog_root=self.catalog_root,
             project_dir=project_dir,
             prompt=prompt.prompt_text,
+            domain=domain,
         )
         return result
 
@@ -324,7 +326,7 @@ class AetherDaemon:
         # Phase 5: Dispatch to Aristotle
         print(f"[Phase 5] Dispatching to Aristotle...")
         start_time = time.time()
-        result = await self._dispatch_to_aristotle(prompt, lean_source, exp_id)
+        result = await self._dispatch_to_aristotle(prompt, lean_source, exp_id, domain["id"])
         elapsed = time.time() - start_time
         print(f"[Phase 5] Aristotle result: {result.status} ({elapsed:.1f}s)")
         if result.error_message:

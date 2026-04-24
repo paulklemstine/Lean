@@ -4,7 +4,7 @@
 aristotle:
   api_base_url: "https://aristotle.harmonic.fun/api/v1"
   api_key: "${ARISTOTLE_API_KEY}"
-  timeout_seconds: 300
+  timeout_seconds: 1200
   max_retries: 3
   retry_backoff_base: 2.0
   concurrent_jobs: 2

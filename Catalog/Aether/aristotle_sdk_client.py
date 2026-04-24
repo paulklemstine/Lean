@@ -59,11 +59,29 @@ class AristotleSDKClient:
             )
             print(f"[Aristotle] Project created: {project.project_id} ({project.status})")
 
-            # Wait for completion
-            result_path = await project.wait_for_completion(
-                destination=str(project_dir / "result.tar.gz"),
-                polling_interval_seconds=self.polling_interval,
-            )
+            # Wait for completion with timeout
+            try:
+                result_path = await asyncio.wait_for(
+                    project.wait_for_completion(
+                        destination=str(project_dir / "result.tar.gz"),
+                        polling_interval_seconds=self.polling_interval,
+                    ),
+                    timeout=self.timeout,
+                )
+            except asyncio.TimeoutError:
+                elapsed = asyncio.get_event_loop().time() - start
+                print(f"[Aristotle] Timeout after {elapsed:.1f}s — project still {project.status}")
+                try:
+                    await project.cancel()
+                    print(f"[Aristotle] Cancelled project {project.project_id}")
+                except Exception:
+                    pass
+                return AristotleResult(
+                    project_id=project.project_id,
+                    status="timeout",
+                    error_message=f"Timed out after {self.timeout}s",
+                    latency_seconds=elapsed,
+                )
 
             elapsed = asyncio.get_event_loop().time() - start
 
@@ -126,6 +144,7 @@ class AristotleSDKClient:
             "jobs", "node_modules", "build", "lake-packages",
             ".lake", "lakefile.olean", "Manifesto",
             "CATALOG.md", "DECLARATION_INDEX.md", "ARISTOTLE_SUMMARY.md",
+            "Aether", "Tools", "test_job",
         }
 
         def ignore_patterns(src: str, names: list) -> set:
@@ -150,19 +169,84 @@ class AristotleSDKClient:
             else:
                 shutil.copy2(item, dest)
 
+    def _copy_domain_context(self, catalog_root: Path, project_dir: Path, domain: str) -> None:
+        """Copy only relevant domain + Shared into project."""
+        TOP_LEVEL_IGNORE = {
+            "aristotle_results", "__pycache__", "logs", "output",
+            "jobs", "node_modules", "build", "lake-packages",
+            ".lake", "lakefile.olean", "Manifesto",
+            "CATALOG.md", "DECLARATION_INDEX.md", "ARISTOTLE_SUMMARY.md",
+            "Aether", "Tools", "test_job",
+        }
+
+        def ignore_patterns(src: str, names: list) -> set:
+            return {
+                n for n in names
+                if n.startswith(".") or n in {
+                    "aristotle_results", "__pycache__", "*.pyc", "*.tar.gz",
+                    "result.tar.gz", "result_extracted", "logs", "output",
+                    "jobs", "*.output", "node_modules", "build", "lake-packages",
+                    ".lake", "lakefile.olean", "Manifesto",
+                } or n.endswith(".output")
+            }
+
+        # Map domain IDs to directory names
+        domain_dirs = {
+            "factoring": ["Pythagorean", "Cryptography", "Computation"],
+            "compression": ["Tropical", "Computation", "Logic"],
+            "AI": ["MachineLearning", "Logic", "Computation"],
+            "neural nets": ["MachineLearning", "Logic", "Computation"],
+            "quantum mechanics": ["Physics", "Cryptography", "Algebra"],
+            "computation": ["Computation", "Logic", "Bridges"],
+            "physics": ["Physics", "EML", "Bridges"],
+        }
+
+        dirs_to_copy = domain_dirs.get(domain, [])
+        if not dirs_to_copy:
+            # Fallback: copy all Lean source dirs
+            dirs_to_copy = [
+                "Algebra", "Applications", "Bridges", "Computation",
+                "Cryptography", "EML", "Geometry", "Logic",
+                "MachineLearning", "Physics", "Pythagorean",
+                "Shared", "Speculative", "Tropical",
+            ]
+
+        # Always include Shared/
+        if "Shared" not in dirs_to_copy:
+            dirs_to_copy.insert(0, "Shared")
+
+        for dir_name in dirs_to_copy:
+            src = catalog_root / dir_name
+            if not src.exists():
+                continue
+            dest = project_dir / dir_name
+            if dest.exists():
+                shutil.rmtree(dest)
+            shutil.copytree(src, dest, ignore=ignore_patterns)
+
+        # Copy top-level files
+        for file_name in ["lakefile.toml", "lean-toolchain", "README.md", "lake-manifest.json"]:
+            src = catalog_root / file_name
+            if src.exists():
+                shutil.copy2(src, project_dir / file_name)
+
     async def submit_with_catalog_context(
         self,
         lean_source: str,
         catalog_root: Path,
         project_dir: Path,
         prompt: str = "Fill in all the sorries",
+        domain: str = "",
     ) -> AristotleResult:
-        """Submit a Lean project with the full Catalog as context."""
+        """Submit a Lean project with focused Catalog context."""
         project_dir.mkdir(parents=True, exist_ok=True)
 
-        # Copy full catalog into project
-        print(f"[Aristotle] Copying catalog from {catalog_root} into {project_dir}...")
-        self._copy_catalog_into_project(catalog_root, project_dir)
+        if domain:
+            print(f"[Aristotle] Copying domain context for '{domain}' from {catalog_root} into {project_dir}...")
+            self._copy_domain_context(catalog_root, project_dir, domain)
+        else:
+            print(f"[Aristotle] Copying full catalog from {catalog_root} into {project_dir}...")
+            self._copy_catalog_into_project(catalog_root, project_dir)
         print(f"[Aristotle] Catalog copied.")
 
         # Write the target Lean source as Main.lean at project root
