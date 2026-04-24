@@ -37,8 +37,8 @@ def crystalline_distillation_loss(
     """
     # Hard loss
     hard_loss = F.cross_entropy(
-        student_logits.view(-1, student_logits.size(-1)),
-        labels.view(-1),
+        student_logits.reshape(-1, student_logits.size(-1)),
+        labels.reshape(-1),
         ignore_index=-100,
         reduction='mean',
     )
@@ -48,8 +48,8 @@ def crystalline_distillation_loss(
     teacher_probs = F.softmax(teacher_logits / temperature, dim=-1)
 
     kl_loss = F.kl_div(
-        student_probs.view(-1, student_logits.size(-1)),
-        teacher_probs.view(-1, student_logits.size(-1)),
+        student_probs.reshape(-1, student_logits.size(-1)),
+        teacher_probs.reshape(-1, student_logits.size(-1)),
         reduction='batchmean',
     )
 
@@ -126,11 +126,13 @@ def train_crystalline_model(
             labels = input_ids.clone()
             labels[labels == tokenizer.pad_token_id] = -100
 
-            # Student forward
-            student_logits, _ = student(input_ids, labels=None)
+            # Student forward (CrystallineModel returns single tensor when labels=None)
+            student_out = student(input_ids, labels=None)
+            student_logits = student_out if isinstance(student_out, torch.Tensor) else student_out[0]
 
             with torch.no_grad():
-                teacher_logits = teacher(input_ids, labels=None).logits
+                teacher_out = teacher(input_ids, labels=None)
+                teacher_logits = teacher_out.logits if hasattr(teacher_out, 'logits') else teacher_out
 
             # Distillation loss
             loss = crystalline_distillation_loss(
