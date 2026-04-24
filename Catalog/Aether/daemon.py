@@ -168,7 +168,7 @@ class AetherDaemon:
 
         # Use the lean guess from pi-agent, or build a generic sorry theorem
         lean_body = concept.lean_guess.strip()
-        if not lean_body or lean_body == "":
+        if not lean_body or lean_body == "" or "..." in lean_body or "theorem" not in lean_body:
             lean_body = textwrap.dedent(f"""\
                 theorem {concept.title.lower().replace(' ', '_')}_breakthrough
                     {{X : Type*}} [Inhabited X] :
