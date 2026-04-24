@@ -312,6 +312,8 @@ class AetherDaemon:
         result = await self._dispatch_to_aristotle(prompt, lean_source, exp_id)
         elapsed = time.time() - start_time
         print(f"[Phase 5] Aristotle result: {result.status} ({elapsed:.1f}s)")
+        if result.error_message:
+            print(f"[Phase 5] Aristotle error: {result.error_message}")
 
         # Phase 6: Process results
         project_dir = self.output_dir / f"job_{exp_id}"
