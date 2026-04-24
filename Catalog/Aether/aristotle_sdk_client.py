@@ -116,6 +116,13 @@ class AristotleSDKClient:
 
     def _copy_catalog_into_project(self, catalog_root: Path, project_dir: Path) -> None:
         """Copy the full Catalog source tree into the project directory."""
+        TOP_LEVEL_IGNORE = {
+            "aristotle_results", "__pycache__", "logs", "output",
+            "jobs", "node_modules", "build", "lake-packages",
+            ".lake", "lakefile.olean", "Manifesto",
+            "CATALOG.md", "DECLARATION_INDEX.md", "ARISTOTLE_SUMMARY.md",
+        }
+
         def ignore_patterns(src: str, names: list) -> set:
             return {
                 n for n in names
@@ -128,6 +135,8 @@ class AristotleSDKClient:
             }
 
         for item in catalog_root.iterdir():
+            if item.name in TOP_LEVEL_IGNORE:
+                continue
             dest = project_dir / item.name
             if item.is_dir():
                 if dest.exists():
