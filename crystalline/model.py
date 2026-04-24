@@ -1,10 +1,11 @@
 """Crystalline model: full transformer-like architecture using tropical primitives.
 
-Supports both standard blocks and DeltaNet blocks.
+Supports both standard blocks and DeltaNet blocks, plus a dedicated MoE variant
+for Qwen3.6-style architectures.
 """
 
 from dataclasses import dataclass
-from typing import Optional
+from typing import Optional, Dict, Tuple
 
 import torch
 import torch.nn as nn
@@ -224,3 +225,160 @@ class CrystallineModel(nn.Module):
             input_ids = torch.cat([input_ids, next_token], dim=1)
 
         return input_ids
+
+
+class CrystallineMoEModel(CrystallineModel):
+    """Crystalline model with explicit MoE support and monitoring.
+
+    Designed for Qwen3.6-style architectures with:
+    - Tropical DeltaNet attention blocks
+    - Mixture-of-Experts FFN layers
+    - Shared + routed expert pattern
+    - Expert offloading simulation
+    - Load balancing metrics
+
+    Args:
+        config: CrystallineConfig (num_experts > 1 required)
+    """
+
+    def __init__(self, config: CrystallineConfig):
+        if config.num_experts <= 1:
+            raise ValueError("CrystallineMoEModel requires num_experts > 1")
+        super().__init__(config)
+        self.expert_load_history: list[Dict[int, int]] = []
+
+    def forward(
+        self,
+        input_ids: torch.Tensor,
+        labels: Optional[torch.Tensor] = None,
+    ) -> torch.Tensor:
+        """Forward pass with expert load tracking."""
+        B, T = input_ids.shape
+
+        positions = torch.arange(T, device=input_ids.device).unsqueeze(0)
+        x = self.token_emb(input_ids) + self.pos_emb(positions)
+        x = self.dropout(x)
+
+        causal_mask = torch.triu(torch.ones(T, T, device=x.device), diagonal=1).bool()
+
+        # Track expert loads per block
+        for block in self.blocks:
+            x = block(x, mask=causal_mask)
+            if isinstance(block.ffn, CrystallineMoELayer):
+                # Capture routing decisions for monitoring
+                with torch.no_grad():
+                    indices, _ = block.ffn.router(x)
+                    flat_indices = indices.view(-1).tolist()
+                    load = {e: flat_indices.count(e) for e in range(self.config.num_experts)}
+                    self.expert_load_history.append(load)
+
+        x = self.norm(x)
+        logits = self.head(x)
+
+        if labels is not None:
+            loss = F.cross_entropy(
+                logits.view(-1, logits.size(-1)),
+                labels.view(-1),
+                ignore_index=-100,
+            )
+            return logits, loss
+
+        return logits
+
+    def get_expert_load_distribution(self) -> Optional[Dict[int, float]]:
+        """Return the average expert load distribution over all tracked steps.
+
+        Returns:
+            dict mapping expert index -> average load fraction,
+            or None if no history.
+        """
+        if not self.expert_load_history:
+            return None
+
+        total_tokens = sum(sum(load.values()) for load in self.expert_load_history)
+        if total_tokens == 0:
+            return None
+
+        avg_load = {e: 0.0 for e in range(self.config.num_experts)}
+        for load in self.expert_load_history:
+            for e, count in load.items():
+                avg_load[e] += count / total_tokens
+
+        return avg_load
+
+    def compute_load_balancing_loss(self) -> torch.Tensor:
+        """Auxiliary load balancing loss to encourage uniform expert usage.
+
+        Returns:
+            Scalar loss penalizing skewed expert loads.
+        """
+        if not self.expert_load_history:
+            return torch.tensor(0.0)
+
+        # Average load per expert
+        loads = self.get_expert_load_distribution()
+        if loads is None:
+            return torch.tensor(0.0)
+
+        values = torch.tensor(list(loads.values()), dtype=torch.float32)
+        target = torch.ones_like(values) / self.config.num_experts
+        return F.mse_loss(values, target)
+
+    def simulate_expert_offloading(
+        self,
+        num_experts: int = 256,
+        active_experts: int = 8,
+        vram_per_expert_mb: float = 60.0,
+    ) -> Dict[str, float]:
+        """Simulate VRAM savings from expert offloading.
+
+        Reference: Qwen3.6-35B-A3B has 256 experts, 8 active per token.
+
+        Args:
+            num_experts: Total number of experts
+            active_experts: Number active per token
+            vram_per_expert_mb: Approximate VRAM per expert in MB
+
+        Returns:
+            Simulation metrics dict
+        """
+        total_expert_vram = num_experts * vram_per_expert_mb
+        active_vram = active_experts * vram_per_expert_mb
+        offloaded = total_expert_vram - active_vram
+        return {
+            "total_experts": num_experts,
+            "active_experts": active_experts,
+            "total_expert_vram_mb": total_expert_vram,
+            "active_vram_mb": active_vram,
+            "offloaded_vram_mb": offloaded,
+            "offload_ratio": offloaded / total_expert_vram,
+        }
+
+    @staticmethod
+    def from_qwen3_6_config(
+        vocab_size: int = 151936,
+        d_model: int = 512,
+        num_layers: int = 6,
+        num_heads: int = 8,
+        d_ff: int = 1024,
+        num_experts: int = 8,
+        top_k: int = 2,
+    ) -> "CrystallineMoEModel":
+        """Factory method to create a CrystallineMoEModel sized for Colab T4.
+
+        Uses smaller dimensions than the real Qwen3.6 but preserves the MoE + DeltaNet
+        architecture pattern.
+        """
+        config = CrystallineConfig(
+            vocab_size=vocab_size,
+            d_model=d_model,
+            num_layers=num_layers,
+            num_heads=num_heads,
+            d_ff=d_ff,
+            max_seq_len=2048,
+            dropout=0.1,
+            use_delta_net=True,
+            num_experts=num_experts,
+            top_k=top_k,
+        )
+        return CrystallineMoEModel(config)

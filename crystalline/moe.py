@@ -126,7 +126,7 @@ class CrystallineMoELayer(nn.Module):
         return output
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        """MoE forward with top-k routing.
+        """MoE forward with top-k routing (vectorized).
 
         Args:
             x: (batch, seq_len, d_model)
@@ -138,16 +138,37 @@ class CrystallineMoELayer(nn.Module):
 
         indices, weights = self.router(x)  # (B, T, top_k)
 
-        output = torch.zeros_like(x)
+        # Flatten batch and time: (B*T, D)
+        x_flat = x.view(B * T, D)
+        indices_flat = indices.view(B * T, self.top_k)   # (B*T, top_k)
+        weights_flat = weights.view(B * T, self.top_k)   # (B*T, top_k)
 
-        for b in range(B):
-            for t in range(T):
-                token_out = torch.zeros(D, device=x.device, dtype=x.dtype)
-                for k in range(self.top_k):
-                    expert_idx = indices[b, t, k].item()
-                    weight = weights[b, t, k]
-                    expert_out = self._expert_forward(x[b, t].unsqueeze(0), expert_idx)
-                    token_out += weight * expert_out.squeeze(0)
-                output[b, t] = token_out
+        output_flat = torch.zeros(B * T, D, device=x.device, dtype=x.dtype)
 
+        # For each expert, find all tokens that route to it, process in batch
+        for expert_idx in range(self.num_experts):
+            # Find (flat_token_idx, k_slot) pairs that route to this expert
+            mask = (indices_flat == expert_idx)  # (B*T, top_k) bool
+            if not mask.any():
+                continue
+
+            # Gather tokens and weights for this expert
+            # Each token may route to the same expert multiple times (unlikely with top-k)
+            token_indices = mask.nonzero(as_tuple=False)[:, 0]  # (N,) flat token indices
+            k_slots = mask.nonzero(as_tuple=False)[:, 1]         # (N,) which top-k slot
+
+            expert_input = x_flat[token_indices]               # (N, D)
+            expert_weight = weights_flat[token_indices, k_slots]  # (N,)
+
+            # Forward through expert
+            expert_out = self._expert_forward(expert_input, expert_idx)  # (N, D)
+
+            # Weighted scatter-add back to output
+            output_flat.index_add_(
+                0,
+                token_indices,
+                expert_out * expert_weight.unsqueeze(-1),
+            )
+
+        output = output_flat.view(B, T, D)
         return self.dropout(output)

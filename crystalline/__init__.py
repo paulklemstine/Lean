@@ -25,7 +25,7 @@ from .crystallize import (
 )
 from .deltanet import CrystallineDeltaLayer
 from .moe import CrystallineMoELayer, CrystallineRouter
-from .model import CrystallineModel, CrystallineConfig
+from .model import CrystallineModel, CrystallineConfig, CrystallineMoEModel
 
 try:
     from .triton_kernels import (
@@ -53,6 +53,7 @@ __all__ = [
     "CrystallineRouter",
     "CrystallineModel",
     "CrystallineConfig",
+    "CrystallineMoEModel",
     "TRITON_AVAILABLE",
     "triton_tropical_matmul",
     "triton_tropical_state_update",

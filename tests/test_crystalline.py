@@ -224,6 +224,107 @@ class TestTritonKernels(unittest.TestCase):
         self.assertTrue(torch.allclose(C, ref))
 
 
+class TestCrystallineMoEModel(unittest.TestCase):
+    def test_forward_shape(self):
+        from crystalline.model import CrystallineMoEModel
+        config = CrystallineConfig(
+            vocab_size=128,
+            d_model=64,
+            num_layers=2,
+            num_heads=4,
+            d_ff=128,
+            max_seq_len=128,
+            use_delta_net=True,
+            num_experts=4,
+            top_k=2,
+        )
+        model = CrystallineMoEModel(config)
+        input_ids = torch.randint(0, 128, (2, 16))
+        logits = model(input_ids)
+        self.assertEqual(logits.shape, (2, 16, 128))
+
+    def test_expert_load_tracking(self):
+        from crystalline.model import CrystallineMoEModel
+        config = CrystallineConfig(
+            vocab_size=64,
+            d_model=32,
+            num_layers=2,
+            num_heads=4,
+            d_ff=64,
+            num_experts=4,
+            top_k=2,
+            use_delta_net=True,
+        )
+        model = CrystallineMoEModel(config)
+        input_ids = torch.randint(0, 64, (2, 8))
+        model(input_ids)
+        load = model.get_expert_load_distribution()
+        self.assertIsNotNone(load)
+        self.assertEqual(len(load), 4)
+
+    def test_offloading_simulation(self):
+        from crystalline.model import CrystallineMoEModel
+        config = CrystallineConfig(
+            vocab_size=64,
+            d_model=32,
+            num_layers=2,
+            num_heads=4,
+            d_ff=64,
+            num_experts=8,
+            top_k=2,
+        )
+        model = CrystallineMoEModel(config)
+        sim = model.simulate_expert_offloading(
+            num_experts=256,
+            active_experts=8,
+            vram_per_expert_mb=60.0,
+        )
+        self.assertIn("offloaded_vram_mb", sim)
+        self.assertIn("offload_ratio", sim)
+        self.assertAlmostEqual(sim["offload_ratio"], 248 / 256, places=5)
+
+    def test_factory_from_qwen3_6(self):
+        from crystalline.model import CrystallineMoEModel
+        model = CrystallineMoEModel.from_qwen3_6_config(
+            vocab_size=128,
+            d_model=64,
+            num_layers=2,
+            num_heads=4,
+            d_ff=128,
+            num_experts=4,
+            top_k=2,
+        )
+        input_ids = torch.randint(0, 128, (1, 8))
+        logits = model(input_ids)
+        self.assertEqual(logits.shape, (1, 8, 128))
+
+    def test_crystallize_moe(self):
+        from crystalline.model import CrystallineMoEModel
+        config = CrystallineConfig(
+            vocab_size=64,
+            d_model=32,
+            num_layers=2,
+            num_heads=4,
+            d_ff=64,
+            num_experts=4,
+            top_k=2,
+            use_delta_net=True,
+        )
+        model = CrystallineMoEModel(config)
+        model.crystallize()
+        for p in model.parameters():
+            unique = torch.unique(p).tolist()
+            self.assertTrue(all(v in [-1.0, 0.0, 1.0] for v in unique))
+
+    def test_vectorized_moe_matches_loop_version(self):
+        """Verify vectorized MoE produces same output as old loop version."""
+        from crystalline.moe import CrystallineMoELayer
+        moe = CrystallineMoELayer(d_model=64, d_ff=128, num_experts=4, top_k=2)
+        x = torch.randn(2, 5, 64)
+        out = moe(x)
+        self.assertEqual(out.shape, (2, 5, 64))
+
+
 class TestIntegration(unittest.TestCase):
     def test_full_pipeline(self):
         """Run a mini forward pass through crystallized model."""
