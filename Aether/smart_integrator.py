@@ -348,13 +348,28 @@ class SmartIntegrator:
                     ))
                     continue
 
-            # Classify new or modified file
+            # SAFETY: Never overwrite existing catalog files with Aristotle results.
+            # Aristotle's result tarball contains the full project context.
+            # The only file we intend to integrate is the target theorem (root Main.lean).
+            # All other existing files must be protected from accidental overwrite.
             if original.exists():
-                # Modified existing file: keep in place
-                target = original
-                reason = "Modified existing file"
-                confidence = 1.0
-                domain = self._guess_domain_from_path(rel)
+                if result_file.name == "Main.lean":
+                    # Root Main.lean is the target theorem — place as new in AutoResearch
+                    domain, confidence, reason = self.classifier.classify_file(
+                        lean_source, result_file.name
+                    )
+                    target = self.catalog_root / "Speculative" / "AutoResearch" / f"{exp_id}_{result_file.name}"
+                    reason = f"Target theorem (preserved original {rel})"
+                else:
+                    # Unexpected modification of an existing catalog file — reject
+                    decisions["rejected"].append(PlacementDecision(
+                        source_path=result_file,
+                        target_path=original,
+                        reason=f"Unexpected modification of existing file {rel} — manual review required",
+                        confidence=1.0,
+                        domain=self._guess_domain_from_path(rel),
+                    ))
+                    continue
             else:
                 # New file: classify with Pi-Agent
                 domain, confidence, reason = self.classifier.classify_file(

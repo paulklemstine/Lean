@@ -395,10 +395,10 @@ class CycleMaster:
 
                     # Copy to Catalog/ResearchOutput (git-tracked)
 
-                    # Also track catalog path for git commits
-                    artifacts[f"catalog_{artifact_type}"] = dest_cat
                     dest_cat = catalog_output_dir / src.name
                     shutil.copy2(src, dest_cat)
+                    # Also track catalog path for git commits
+                    artifacts[f"catalog_{artifact_type}"] = dest_cat
                     break
         return artifacts
 
