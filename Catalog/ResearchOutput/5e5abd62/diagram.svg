@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#16a34a"/>
+    </marker>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8fafc;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bgGrad)" rx="8"/>
+
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Georgia, serif" font-size="18" font-weight="bold" fill="#1e293b">
+    Differential Canonical Complex Conjecture
+  </text>
+  <text x="400" y="55" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#64748b">
+    Universal Property via Inhabited Type Contraction
+  </text>
+
+  <!-- ====== LEFT: The Canonical Complex (before contraction) ====== -->
+  <g transform="translate(0, 20)">
+    <!-- Box -->
+    <rect x="30" y="70" width="230" height="220" rx="12" fill="white" stroke="#cbd5e1" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="145" y="95" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#1e293b">Canonical Complex C•(X)</text>
+
+    <!-- Simplex visualization: a tetrahedron -->
+    <!-- Vertices -->
+    <circle cx="145" cy="140" r="6" fill="#ef4444" stroke="#991b1b" stroke-width="1.5"/>
+    <text x="145" y="132" text-anchor="middle" font-family="monospace" font-size="10" fill="#991b1b">x₀ (default)</text>
+
+    <circle cx="90" cy="220" r="5" fill="#3b82f6" stroke="#1e40af" stroke-width="1.5"/>
+    <text x="75" y="235" text-anchor="middle" font-family="monospace" font-size="10" fill="#1e40af">x₁</text>
+
+    <circle cx="200" cy="220" r="5" fill="#3b82f6" stroke="#1e40af" stroke-width="1.5"/>
+    <text x="215" y="235" text-anchor="middle" font-family="monospace" font-size="10" fill="#1e40af">x₂</text>
+
+    <circle cx="145" cy="260" r="5" fill="#3b82f6" stroke="#1e40af" stroke-width="1.5"/>
+    <text x="145" y="278" text-anchor="middle" font-family="monospace" font-size="10" fill="#1e40af">x₃</text>
+
+    <!-- Edges (1-simplices) -->
+    <line x1="145" y1="140" x2="90" y2="220" stroke="#94a3b8" stroke-width="1.5"/>
+    <line x1="145" y1="140" x2="200" y2="220" stroke="#94a3b8" stroke-width="1.5"/>
+    <line x1="145" y1="140" x2="145" y2="260" stroke="#94a3b8" stroke-width="1.5"/>
+    <line x1="90" y1="220" x2="200" y2="220" stroke="#94a3b8" stroke-width="1.5"/>
+    <line x1="90" y1="220" x2="145" y2="260" stroke="#94a3b8" stroke-width="1.5"/>
+    <line x1="200" y1="220" x2="145" y2="260" stroke="#94a3b8" stroke-width="1.5"/>
+
+    <!-- 2-simplex fill (triangular faces, semi-transparent) -->
+    <polygon points="145,140 90,220 200,220" fill="#bfdbfe" opacity="0.3" stroke="none"/>
+    <polygon points="145,140 90,220 145,260" fill="#dbeafe" opacity="0.3" stroke="none"/>
+    <polygon points="145,140 200,220 145,260" fill="#e0e7ff" opacity="0.3" stroke="none"/>
+    <polygon points="90,220 200,220 145,260" fill="#c7d2fe" opacity="0.3" stroke="none"/>
+  </g>
+
+  <!-- ====== CENTER: Contraction Arrow ====== -->
+  <g transform="translate(0, 20)">
+    <!-- Big contraction arrow -->
+    <line x1="280" y1="190" x2="370" y2="190" stroke="#16a34a" stroke-width="3" marker-end="url(#arrowGreen)"/>
+    <text x="325" y="175" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="bold" fill="#16a34a">contract</text>
+    <text x="325" y="210" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#16a34a">via default</text>
+  </g>
+
+  <!-- ====== RIGHT: Contracted point ====== -->
+  <g transform="translate(0, 20)">
+    <rect x="390" y="130" width="130" height="130" rx="12" fill="white" stroke="#cbd5e1" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="455" y="155" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#1e293b">Terminal</text>
+
+    <!-- Single point -->
+    <circle cx="455" cy="200" r="10" fill="#ef4444" stroke="#991b1b" stroke-width="2"/>
+    <text x="455" y="204" text-anchor="middle" font-family="monospace" font-size="10" fill="white" font-weight="bold">★</text>
+    <text x="455" y="240" text-anchor="middle" font-family="monospace" font-size="10" fill="#64748b">True.intro</text>
+  </g>
+
+  <!-- ====== FAR RIGHT: Prop category ====== -->
+  <g transform="translate(0, 20)">
+    <line x1="530" y1="190" x2="600" y2="190" stroke="#2563eb" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#arrowBlue)"/>
+    <text x="565" y="178" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#2563eb">≅</text>
+  </g>
+
+  <g transform="translate(0, 20)">
+    <rect x="610" y="130" width="160" height="130" rx="12" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="690" y="155" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#1e40af">Prop (Terminal)</text>
+
+    <circle cx="690" cy="200" r="10" fill="#2563eb" stroke="#1e40af" stroke-width="2"/>
+    <text x="690" y="204" text-anchor="middle" font-family="sans-serif" font-size="11" fill="white" font-weight="bold">⊤</text>
+    <text x="690" y="240" text-anchor="middle" font-family="monospace" font-size="10" fill="#1e40af">True : Prop</text>
+  </g>
+
+  <!-- ====== BOTTOM: Chain complex diagram ====== -->
+  <g transform="translate(0, 20)">
+    <rect x="30" y="320" width="740" height="120" rx="12" fill="white" stroke="#cbd5e1" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="400" y="345" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#1e293b">Chain Complex (Differential Structure)</text>
+
+    <!-- Chain complex: ... → C₃ → C₂ → C₁ → C₀ → 0 -->
+    <text x="80" y="385" text-anchor="middle" font-family="serif" font-size="14" fill="#64748b">⋯</text>
+
+    <text x="150" y="385" text-anchor="middle" font-family="serif" font-size="15" font-weight="bold" fill="#7c3aed">C₃</text>
+    <line x1="100" y1="380" x2="130" y2="380" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+    <text x="260" y="385" text-anchor="middle" font-family="serif" font-size="15" font-weight="bold" fill="#7c3aed">C₂</text>
+    <line x1="175" y1="380" x2="240" y2="380" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+    <text x="207" y="373" text-anchor="middle" font-family="serif" font-size="11" fill="#333">∂₃</text>
+
+    <text x="370" y="385" text-anchor="middle" font-family="serif" font-size="15" font-weight="bold" fill="#7c3aed">C₁</text>
+    <line x1="285" y1="380" x2="350" y2="380" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+    <text x="317" y="373" text-anchor="middle" font-family="serif" font-size="11" fill="#333">∂₂</text>
+
+    <text x="480" y="385" text-anchor="middle" font-family="serif" font-size="15" font-weight="bold" fill="#ef4444">C₀</text>
+    <line x1="395" y1="380" x2="460" y2="380" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+    <text x="427" y="373" text-anchor="middle" font-family="serif" font-size="11" fill="#333">∂₁</text>
+
+    <text x="570" y="385" text-anchor="middle" font-family="serif" font-size="15" font-weight="bold" fill="#64748b">0</text>
+    <line x1="505" y1="380" x2="555" y2="380" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+    <text x="530" y="373" text-anchor="middle" font-family="serif" font-size="11" fill="#333">∂₀</text>
+
+    <!-- Acyclicity annotation -->
+    <text x="400" y="425" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#16a34a" font-style="italic">
+      Hₖ(C•) = 0 for all k ≥ 1   (contractible via base point x₀)
+    </text>
+  </g>
+
+  <!-- ====== BOTTOM: Tropical degeneration ====== -->
+  <g transform="translate(0, 20)">
+    <rect x="30" y="455" width="740" height="80" rx="12" fill="#fefce8" stroke="#fde047" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="400" y="480" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#854d0e">Tropical Degeneration</text>
+
+    <!-- Piecewise linear function sketch -->
+    <polyline points="80,515 200,505 300,495 400,490 500,495 600,510 720,520"
+              fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="200" cy="505" r="3" fill="#f59e0b"/>
+    <circle cx="300" cy="495" r="3" fill="#f59e0b"/>
+    <circle cx="400" cy="490" r="3" fill="#f59e0b"/>
+    <circle cx="500" cy="495" r="3" fill="#f59e0b"/>
+    <circle cx="600" cy="510" r="3" fill="#f59e0b"/>
+
+    <text x="400" y="510" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#854d0e">
+      (min, +) algebra → piecewise-linear complexity landscape
+    </text>
+  </g>
+
+  <!-- Caption -->
+  <text x="400" y="580" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#475569" font-style="italic">
+    Figure: The canonical complex over an inhabited type X contracts to a point via the default element,
+  </text>
+  <text x="400" y="595" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#475569" font-style="italic">
+    yielding the terminal object True in Prop. Tropical degeneration reveals the combinatorial shadow.
+  </text>
+</svg>
