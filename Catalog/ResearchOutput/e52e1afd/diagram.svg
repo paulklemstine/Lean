@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <marker id="arrowhead-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowhead-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#dc2626"/>
+    </marker>
+    <marker id="arrowhead-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#16a34a"/>
+    </marker>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8fafc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bg)" rx="8"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Georgia, serif" font-size="18" font-weight="bold" fill="#1e293b">
+    Tropical Projective Transformation Hypothesis
+  </text>
+  <text x="400" y="55" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#64748b">
+    Universal Property in the Category of Entropy Algebras
+  </text>
+
+  <!-- ═══ LEFT: Tropical Semiring ═══ -->
+  <rect x="30" y="80" width="200" height="130" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text x="130" y="105" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#1e40af">𝕋 = (ℝ∪{-∞}, ⊕, ⊙)</text>
+  <text x="130" y="130" text-anchor="middle" font-family="monospace" font-size="12" fill="#1e40af">a ⊕ b = max(a, b)</text>
+  <text x="130" y="150" text-anchor="middle" font-family="monospace" font-size="12" fill="#1e40af">a ⊙ b = a + b</text>
+  <text x="130" y="175" text-anchor="middle" font-family="monospace" font-size="11" fill="#3b82f6">Tropical Semiring</text>
+  <text x="130" y="195" text-anchor="middle" font-family="monospace" font-size="10" fill="#64748b">idempotent, commutative</text>
+
+  <!-- ═══ RIGHT: Entropy Algebra ═══ -->
+  <rect x="570" y="80" width="200" height="130" rx="10" fill="#fce7f3" stroke="#db2777" stroke-width="2"/>
+  <text x="670" y="105" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#9d174d">H : 𝒫(X) → ℝ≥0</text>
+  <text x="670" y="130" text-anchor="middle" font-family="monospace" font-size="12" fill="#9d174d">H(A∪B) ≤ H(A)+H(B)</text>
+  <text x="670" y="150" text-anchor="middle" font-family="monospace" font-size="12" fill="#9d174d">A ⊆ B ⟹ H(A) ≤ H(B)</text>
+  <text x="670" y="175" text-anchor="middle" font-family="monospace" font-size="11" fill="#db2777">Entropy Algebra</text>
+  <text x="670" y="195" text-anchor="middle" font-family="monospace" font-size="10" fill="#64748b">subadditive, monotone</text>
+
+  <!-- ═══ CENTER: Tropical Projective Space ═══ -->
+  <rect x="270" y="100" width="260" height="90" rx="10" fill="#fef9c3" stroke="#ca8a04" stroke-width="2"/>
+  <text x="400" y="130" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#854d0e">𝕋ℙⁿ</text>
+  <text x="400" y="150" text-anchor="middle" font-family="monospace" font-size="11" fill="#854d0e">Tropical Projective Space</text>
+  <text x="400" y="170" text-anchor="middle" font-family="monospace" font-size="10" fill="#a16207">[x₀ : x₁ : ⋯ : xₙ] mod 𝕋-scalar</text>
+
+  <!-- Arrow: T -> TP^n -->
+  <line x1="230" y1="145" x2="268" y2="145" stroke="#2563eb" stroke-width="2" marker-end="url(#arrowhead-blue)"/>
+  
+  <!-- Arrow: TP^n -> Entropy -->
+  <line x1="532" y1="145" x2="568" y2="145" stroke="#dc2626" stroke-width="2" marker-end="url(#arrowhead-red)"/>
+
+  <!-- ═══ CATEGORICAL DIAGRAM (bottom half) ═══ -->
+  
+  <!-- Category label -->
+  <text x="400" y="260" text-anchor="middle" font-family="Georgia, serif" font-size="14" font-weight="bold" fill="#334155">
+    Categorical Diagram: Universal Property of φ
+  </text>
+
+  <!-- Object A (Entropy Algebra A) -->
+  <circle cx="180" cy="350" r="40" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="180" y="345" text-anchor="middle" font-family="monospace" font-size="16" font-weight="bold" fill="#166534">A</text>
+  <text x="180" y="365" text-anchor="middle" font-family="monospace" font-size="10" fill="#166534">Ent. Alg.</text>
+
+  <!-- Object B (Entropy Algebra B) -->
+  <circle cx="620" cy="350" r="40" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="620" y="345" text-anchor="middle" font-family="monospace" font-size="16" font-weight="bold" fill="#166534">B</text>
+  <text x="620" y="365" text-anchor="middle" font-family="monospace" font-size="10" fill="#166534">Ent. Alg.</text>
+
+  <!-- Object 1 (Terminal object = True) -->
+  <circle cx="400" cy="490" r="40" fill="#fef3c7" stroke="#d97706" stroke-width="3"/>
+  <text x="400" y="485" text-anchor="middle" font-family="monospace" font-size="18" font-weight="bold" fill="#92400e">𝟙</text>
+  <text x="400" y="505" text-anchor="middle" font-family="monospace" font-size="10" fill="#92400e">Terminal</text>
+
+  <!-- φ: the tropical projective transformation (center top) -->
+  <rect x="345" y="310" width="110" height="40" rx="8" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+  <text x="400" y="335" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#5b21b6">φ</text>
+
+  <!-- Arrow: A → φ -->
+  <line x1="220" y1="340" x2="343" y2="332" stroke="#16a34a" stroke-width="2" marker-end="url(#arrowhead-green)"/>
+  <text x="275" y="322" text-anchor="middle" font-family="monospace" font-size="11" fill="#16a34a">f</text>
+
+  <!-- Arrow: φ → B -->
+  <line x1="457" y1="332" x2="580" y2="340" stroke="#16a34a" stroke-width="2" marker-end="url(#arrowhead-green)"/>
+  <text x="525" y="322" text-anchor="middle" font-family="monospace" font-size="11" fill="#16a34a">g</text>
+
+  <!-- Arrow: A → 1 (unique) -->
+  <line x1="200" y1="385" x2="365" y2="475" stroke="#d97706" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#arrowhead)"/>
+  <text x="260" y="445" text-anchor="middle" font-family="monospace" font-size="11" fill="#d97706">!_A</text>
+
+  <!-- Arrow: B → 1 (unique) -->
+  <line x1="600" y1="385" x2="435" y2="475" stroke="#d97706" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#arrowhead)"/>
+  <text x="540" y="445" text-anchor="middle" font-family="monospace" font-size="11" fill="#d97706">!_B</text>
+
+  <!-- Arrow: φ → 1 (the key morphism) -->
+  <line x1="400" y1="352" x2="400" y2="448" stroke="#7c3aed" stroke-width="3" marker-end="url(#arrowhead)"/>
+  <text x="418" y="405" text-anchor="start" font-family="monospace" font-size="12" font-weight="bold" fill="#7c3aed">∃!</text>
+
+  <!-- Yoneda annotation -->
+  <rect x="550" y="440" width="220" height="55" rx="6" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1"/>
+  <text x="660" y="460" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#475569">By Yoneda: Hom(−, 𝟙) ≅ 1</text>
+  <text x="660" y="478" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#475569">⟹ φ satisfies universal property</text>
+  <text x="660" y="493" text-anchor="middle" font-family="Georgia, serif" font-size="10" font-style="italic" fill="#94a3b8">Terminal objects are Yoneda-representable</text>
+
+  <!-- Commutes label -->
+  <text x="320" y="405" text-anchor="middle" font-family="Georgia, serif" font-size="12" font-style="italic" fill="#64748b">commutes</text>
+
+  <!-- Caption -->
+  <rect x="50" y="555" width="700" height="35" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="400" y="577" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#475569">
+    Fig. 1: The tropical projective transformation φ factors through the terminal object 𝟙 (= True) in 𝒞_ent.
+    All morphisms !_A, !_B exist uniquely — this is the content of the formal Lean proof.
+  </text>
+</svg>
