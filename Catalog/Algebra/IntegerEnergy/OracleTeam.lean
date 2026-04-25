@@ -1,106 +1,80 @@
 import Mathlib
 
-/-! # CatalogBuild.Cryptography.Ethereum.OracleTeam
+/-! # CatalogBuild.MachineLearning.Prediction.OracleTeam
 
 Auto-generated from theorem catalog database.
-Domain: Cryptography/Ethereum
-Declarations: 12
+Domain: MachineLearning/Prediction
+Declarations: 5
 -/
+
 
 noncomputable section
 
-/-- An oracle that provides a recommendation with a confidence level -/
-structure OracleAdvice where
-  expectedProfit : ℝ       -- Expected profit per unit capital
-  confidence : ℝ           -- Confidence level ∈ [0, 1]
-  maxLoss : ℝ              -- Worst-case loss
-  hConf0 : 0 ≤ confidence
-  hConf1 : confidence ≤ 1
-  hLoss : maxLoss ≤ 0      -- Worst case is always non-positive
-
-/-- A strategy recommendation from the oracle council -/
-structure CouncilRecommendation where
-  oracles : Fin 5 → OracleAdvice
-  /-- Consensus: weighted average recommendation -/
-  consensusProfit : ℝ
-  /-- The council agrees it's profitable -/
-  unanimous : ∀ i, 0 < (oracles i).expectedProfit
-
-/-- **Hermes' Law**: In efficient markets with AMMs, the equilibrium price
-converges to the true price as arbitrageurs compete. -/
-theorem hermes_price_convergence
-    (true_price amm_price : ℝ)
-    (ht : 0 < true_price) (ha : 0 < amm_price)
-    (n_arbitrageurs : ℕ) (hn : 0 < n_arbitrageurs)
-    (fee_rate : ℝ) (hf0 : 0 ≤ fee_rate) (hf1 : fee_rate < 1) :
-    -- Price deviation after arbitrage is bounded by the fee
-    ∃ final_price : ℝ, |final_price - true_price| ≤ fee_rate * true_price := by
-  exact ⟨true_price, by simp; positivity⟩
-
-/-- **Athena's Bound**: The Kelly criterion gives the optimal bet size.
-For a binary outcome with probability p and odds b:1,
-optimal fraction f* = (bp - (1-p)) / b -/
-noncomputable def kellyFraction (p b : ℝ) : ℝ := (b * p - (1 - p)) / b
-
-/-- [Section: # CatalogBuild.Cryptography.Ethereum.OracleTeam
+/-- [Section: # CatalogBuild.MachineLearning.Prediction.OracleTeam
 Auto-generated from theorem catalog database.
-Domain: Cryptography/Ethereum
-Declarations: 12] -/
-theorem kelly_positive_iff (p b : ℝ) (hp0 : 0 < p) (hp1 : p < 1) (hb : 0 < b) :
-    0 < kellyFraction p b ↔ 1 < b * p + p := by
-  unfold kellyFraction;
-  constructor <;> intro h <;> rw [ lt_div_iff₀ hb ] at * <;> linarith
+Domain: MachineLearning/Prediction
+Declarations: 5] -/
+noncomputable def OracleCouncil.ensemblePrediction {n : ℕ}
+    (council : OracleCouncil n) (evidence : ℝ)
+    (total_conf_pos : 0 < ∑ i, (council.oracles i).confidence evidence) : ℝ :=
+  (∑ i, (council.oracles i).confidence evidence * (council.oracles i).predict evidence) /
+  (∑ i, (council.oracles i).confidence evidence)
 
-/-- [Section: # CatalogBuild.Cryptography.Ethereum.OracleTeam
-Auto-generated from theorem catalog database.
-Domain: Cryptography/Ethereum
-Declarations: 12] -/
-theorem diversification_reduces_variance
-    (μ σ : ℝ) (hσ : 0 < σ) (n : ℕ) (hn : 1 ≤ n) :
-    σ / Real.sqrt n ≤ σ := by
-  exact div_le_self hσ.le <| Real.le_sqrt_of_sq_le <| mod_cast hn
 
-/-- **Hephaestus' Revenue Theorem**: A protocol that charges fees on volume V
-with fee rate γ generates revenue R = γV. For this to be sustainable,
-the fee must not drive away all trading volume.
-Optimal fee maximizes γ * V(γ) where V is decreasing in γ. -/
-theorem fee_revenue_tradeoff (γ V_0 elasticity : ℝ)
-    (hγ : 0 < γ) (hV : 0 < V_0) (he : 0 < elasticity) :
-    let volume := V_0 * (1 - elasticity * γ)
-    let revenue := γ * volume
-    -- Revenue is quadratic in γ, maximized at γ* = 1/(2*elasticity)
-    revenue = γ * V_0 - elasticity * V_0 * γ^2 := by
-  ring
 
-/-- **Apollo's Information Theorem**: The value of seeing a transaction
-before it's mined (private mempool access) is bounded by the
-maximum price impact that transaction can cause. -/
-noncomputable def informationValue (tradeSize reserveX reserveY : ℝ) : ℝ :=
-  let priceImpact := tradeSize / (reserveX + tradeSize)
-  priceImpact * reserveY
 
-/-- Information value is positive for positive trades -/
-theorem information_value_pos (dx x y : ℝ) (hdx : 0 < dx) (hx : 0 < x) (hy : 0 < y) :
-    0 < informationValue dx x y := by
-  unfold informationValue
-  positivity
+/-- If all oracles agree, the ensemble agrees too -/
+theorem unanimous_council {n : ℕ} (hn : 0 < n)
+    (council : OracleCouncil n) (evidence : ℝ)
+    (v : ℝ) (h_unanimous : ∀ i, (council.oracles i).predict evidence = v)
+    (h_conf_pos : 0 < ∑ i, (council.oracles i).confidence evidence) :
+    council.ensemblePrediction evidence h_conf_pos = v := by
+  simp only [OracleCouncil.ensemblePrediction]
+  simp_rw [h_unanimous, ← Finset.sum_mul]
+  rw [mul_div_cancel_left₀]
+  exact ne_of_gt h_conf_pos
 
-/-- **Chronos' Gas Theorem**: In an EIP-1559 fee market, the base fee
-adjusts to target 50% block utilization. Gas price follows a
-multiplicative random walk bounded by 12.5% per block. -/
-noncomputable def baseFeeUpdate (currentBaseFee : ℝ) (utilization : ℝ) : ℝ :=
-  currentBaseFee * (1 + (utilization - 0.5) / 4)
 
-theorem base_fee_bounded (bf : ℝ) (u : ℝ) (hbf : 0 < bf) (hu0 : 0 ≤ u) (hu1 : u ≤ 1) :
-    bf * (1 - 1/8) ≤ baseFeeUpdate bf u ∧ baseFeeUpdate bf u ≤ bf * (1 + 1/8) := by
-  exact ⟨ by unfold baseFeeUpdate; nlinarith, by unfold baseFeeUpdate; nlinarith ⟩
 
-/-- **Solidarity Theorem**: When all oracles agree a strategy is profitable,
-and risks are bounded, the strategy achieves positive expected value. -/
-theorem council_solidarity (rec : CouncilRecommendation)
-    (h_bounded_loss : ∀ i, -1 ≤ (rec.oracles i).maxLoss) :
-    0 < rec.consensusProfit → ∃ strategy_value : ℝ, 0 < strategy_value := by
-  intro h
-  exact ⟨rec.consensusProfit, h⟩
+
+/-- The ensemble error is bounded by the weighted average of individual errors -/
+theorem ensemble_no_worse_than_best {n : ℕ}
+    (predictions : Fin n → ℝ) (truth : ℝ)
+    (weights : Fin n → ℝ) (hw_nn : ∀ i, 0 ≤ weights i)
+    (hw_sum : ∑ i, weights i = 1) :
+    let ensemble := ∑ i, weights i * predictions i
+    |ensemble - truth| ≤ ∑ i, weights i * |predictions i - truth| := by
+  simp only
+  calc |∑ i, weights i * predictions i - truth|
+      = |∑ i, weights i * predictions i - (∑ i, weights i) * truth| := by
+        rw [hw_sum, one_mul]
+    _ = |∑ i, (weights i * predictions i - weights i * truth)| := by
+        congr 1; rw [Finset.sum_sub_distrib]; congr 1; rw [Finset.sum_mul]
+    _ = |∑ i, weights i * (predictions i - truth)| := by
+        congr 1; congr 1; ext i; ring
+    _ ≤ ∑ i, |weights i * (predictions i - truth)| :=
+        Finset.abs_sum_le_sum_abs _ _
+    _ = ∑ i, weights i * |predictions i - truth| := by
+        congr 1; ext i; rw [abs_mul, abs_of_nonneg (hw_nn i)]
+
+
+
+
+/-- A hedge combines an aggressive and conservative prediction -/
+noncomputable def hedge (aggressive conservative lambda_param : ℝ) : ℝ :=
+  lambda_param * aggressive + (1 - lambda_param) * conservative
+
+
+
+
+/-- Hedging interpolates between predictions -/
+theorem hedge_interpolates (a c : ℝ) (hac : a ≤ c) (lambda_param : ℝ)
+    (hl0 : 0 ≤ lambda_param) (hl1 : lambda_param ≤ 1) :
+    a ≤ hedge a c lambda_param ∧ hedge a c lambda_param ≤ c := by
+  simp only [hedge]
+  constructor <;> nlinarith
+
+
+
 
 end
