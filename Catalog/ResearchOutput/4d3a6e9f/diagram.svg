@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="Georgia, serif">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563EB"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#059669"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7C3AED"/>
+    </marker>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8fafc;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bgGrad)" rx="8"/>
+
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-size="18" font-weight="bold" fill="#1e293b">
+    Quantum Canonical Entropy Lemma — Structural Diagram
+  </text>
+
+  <!-- === Main Objects === -->
+
+  <!-- Inhabited Type X (top left) -->
+  <ellipse cx="150" cy="120" rx="95" ry="40" fill="#DBEAFE" stroke="#2563EB" stroke-width="2"/>
+  <text x="150" y="115" text-anchor="middle" font-size="15" font-weight="bold" fill="#1e40af">X : Type*</text>
+  <text x="150" y="135" text-anchor="middle" font-size="12" fill="#3b82f6">[Inhabited X]</text>
+
+  <!-- Coding Geometry Space (top right) -->
+  <rect x="450" y="80" width="200" height="80" rx="12" fill="#FEF3C7" stroke="#D97706" stroke-width="2"/>
+  <text x="550" y="110" text-anchor="middle" font-size="14" font-weight="bold" fill="#92400E">CG(X)</text>
+  <text x="550" y="130" text-anchor="middle" font-size="11" fill="#B45309">Coding Geometry Space</text>
+  <text x="550" y="148" text-anchor="middle" font-size="10" fill="#D97706">Objects: (C, φ : C → X)</text>
+
+  <!-- Canonical Entropy (middle) -->
+  <rect x="300" y="230" width="200" height="70" rx="12" fill="#D1FAE5" stroke="#059669" stroke-width="2.5"/>
+  <text x="400" y="258" text-anchor="middle" font-size="15" font-weight="bold" fill="#065F46">H_can</text>
+  <text x="400" y="278" text-anchor="middle" font-size="11" fill="#047857">Canonical Entropy</text>
+
+  <!-- Tropical Semiring (bottom left) -->
+  <rect x="50" y="360" width="200" height="80" rx="12" fill="#EDE9FE" stroke="#7C3AED" stroke-width="2"/>
+  <text x="150" y="390" text-anchor="middle" font-size="14" font-weight="bold" fill="#5B21B6">MaxPlus</text>
+  <text x="150" y="408" text-anchor="middle" font-size="11" fill="#6D28D9">(ℝ ∪ {−∞}, max, +)</text>
+  <text x="150" y="428" text-anchor="middle" font-size="10" fill="#7C3AED">Tropical Semiring</text>
+
+  <!-- Prop (True) (bottom right) -->
+  <circle cx="600" cy="400" r="50" fill="#FCE7F3" stroke="#DB2777" stroke-width="2.5"/>
+  <text x="600" y="395" text-anchor="middle" font-size="20" font-weight="bold" fill="#9D174D">True</text>
+  <text x="600" y="415" text-anchor="middle" font-size="11" fill="#BE185D">Terminal in Prop</text>
+
+  <!-- === Arrows / Morphisms === -->
+
+  <!-- X → CG(X): coding structures -->
+  <line x1="245" y1="120" x2="445" y2="120" stroke="#2563EB" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <text x="345" y="108" text-anchor="middle" font-size="11" fill="#2563EB" font-style="italic">coding structures</text>
+
+  <!-- CG(X) → H_can: entropy functional -->
+  <line x1="520" y1="165" x2="440" y2="228" stroke="#059669" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <text x="510" y="200" text-anchor="middle" font-size="11" fill="#059669" font-style="italic">entropy</text>
+  <text x="510" y="214" text-anchor="middle" font-size="11" fill="#059669" font-style="italic">functional</text>
+
+  <!-- CG(X) → MaxPlus: Trop functor -->
+  <line x1="470" y1="165" x2="220" y2="360" stroke="#7C3AED" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#arrowPurple)"/>
+  <text x="310" y="280" text-anchor="middle" font-size="11" fill="#7C3AED" font-style="italic" transform="rotate(-35, 310, 275)">Trop functor</text>
+
+  <!-- H_can → MaxPlus: tropical degeneration -->
+  <line x1="330" y1="300" x2="210" y2="365" stroke="#7C3AED" stroke-width="2" marker-end="url(#arrowPurple)"/>
+  <text x="240" y="325" text-anchor="middle" font-size="10" fill="#7C3AED" font-style="italic">degeneration</text>
+
+  <!-- H_can → True: universal property -->
+  <line x1="470" y1="290" x2="555" y2="370" stroke="#DB2777" stroke-width="2.5" marker-end="url(#arrowhead)"/>
+  <text x="540" y="325" text-anchor="middle" font-size="12" font-weight="bold" fill="#DB2777">trivial</text>
+
+  <!-- X → True: the theorem -->
+  <path d="M 150 165 Q 150 400 545 400" fill="none" stroke="#1e293b" stroke-width="2.5" stroke-dasharray="8,4" marker-end="url(#arrowhead)"/>
+  <text x="300" y="430" text-anchor="middle" font-size="13" font-weight="bold" fill="#1e293b">
+    quantum_canonical_entropy_lemma_a533
+  </text>
+
+  <!-- === Legend === -->
+  <rect x="30" y="490" width="740" height="75" rx="8" fill="white" fill-opacity="0.7" stroke="#94a3b8" stroke-width="1"/>
+
+  <line x1="50" y1="515" x2="90" y2="515" stroke="#2563EB" stroke-width="2"/>
+  <text x="95" y="519" font-size="11" fill="#1e293b">Type-level construction</text>
+
+  <line x1="260" y1="515" x2="300" y2="515" stroke="#059669" stroke-width="2"/>
+  <text x="305" y="519" font-size="11" fill="#1e293b">Entropy functional</text>
+
+  <line x1="470" y1="515" x2="510" y2="515" stroke="#7C3AED" stroke-width="2" stroke-dasharray="6,3"/>
+  <text x="515" y="519" font-size="11" fill="#1e293b">Tropical degeneration</text>
+
+  <line x1="50" y1="545" x2="90" y2="545" stroke="#1e293b" stroke-width="2.5" stroke-dasharray="8,4"/>
+  <text x="95" y="549" font-size="11" fill="#1e293b">Main theorem (∀ X [Inhabited X], True)</text>
+
+  <line x1="400" y1="545" x2="440" y2="545" stroke="#DB2777" stroke-width="2.5"/>
+  <text x="445" y="549" font-size="11" fill="#1e293b">Universal property (terminality)</text>
+
+  <!-- Caption -->
+  <text x="400" y="590" text-anchor="middle" font-size="11" fill="#64748b" font-style="italic">
+    Fig. 1: The quantum canonical entropy lemma connects inhabited types to the terminal object in Prop via tropical coding geometry.
+  </text>
+</svg>
