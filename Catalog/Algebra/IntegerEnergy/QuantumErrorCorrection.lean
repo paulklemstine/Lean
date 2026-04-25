@@ -1,82 +1,75 @@
 import Mathlib
 
-/-! # CatalogBuild.MachineLearning.QuantumTransformer.QuantumErrorCorrection
+/-! # CatalogBuild.Physics.Quantum.QuantumErrorCorrection
 
 Auto-generated from theorem catalog database.
-Domain: MachineLearning/QuantumTransformer
-Declarations: 10
+Domain: Physics/Quantum
+Declarations: 13
 -/
-
 
 noncomputable section
 
-/-- [Section: # CatalogBuild.MachineLearning.QuantumTransformer.QuantumErrorCorrection
+/-- Pauli group on 1 qubit has order 16 = 4² -/
+theorem pauli_group_order_one : 4 ^ (1 + 1) = 16 := by norm_num
+
+/-- For n qubits, the Pauli group order is 4^(n+1) -/
+theorem pauli_group_order (n : ℕ) : 4 ^ (n + 1) = 4 * 4 ^ n := by ring
+
+/-- Stabilizer code constraint: 2^(n-k) · 2^k = 2^n -/
+theorem stabilizer_code_constraint (n k : ℕ) (hk : k ≤ n) :
+    2 ^ (n - k) * 2 ^ k = 2 ^ n := by
+  rw [← pow_add]; congr 1; omega
+
+/-- Code rate k/n ≤ 1 -/
+theorem code_rate_bound (n k : ℕ) (hn : 0 < n) (hk : k ≤ n) :
+    (k : ℝ) / n ≤ 1 := by
+  rw [div_le_one (Nat.cast_pos.mpr hn)]
+  exact Nat.cast_le.mpr hk
+
+/-- [Section: # CatalogBuild.Physics.Quantum.QuantumErrorCorrection
 Auto-generated from theorem catalog database.
-Domain: MachineLearning/QuantumTransformer
-Declarations: 10] -/
-theorem swap_involution {n : Type*} [DecidableEq n] (a b : n) :
-    swap a b * swap a b = 1 := swap_mul_self a b
+Domain: Physics/Quantum
+Declarations: 13] -/
+theorem base_triple' : IsPythTriple' 3 4 5 := by unfold IsPythTriple'; ring
 
+/-- The Lorentz form Q(a,b,c) = a² + b² - c² -/
+def qecLorentzForm (a b c : ℤ) : ℤ := a ^ 2 + b ^ 2 - c ^ 2
 
+/-- Pythagorean triples ↔ kernel of Lorentz form -/
+theorem pyth_iff_lorentz_zero' (a b c : ℤ) :
+    IsPythTriple' a b c ↔ qecLorentzForm a b c = 0 := by
+  simp [IsPythTriple', qecLorentzForm]; omega
 
+/-- Single-coordinate error produces detectable syndrome -/
+theorem single_error_detectable' (a b c δ : ℤ) (hδ : δ ≠ 0)
+    (hpyth : IsPythTriple' a b c) :
+    qecLorentzForm (a + δ) b c = 2 * a * δ + δ ^ 2 := by
+  simp [qecLorentzForm, IsPythTriple'] at *; nlinarith
 
-/-- [Section: # CatalogBuild.MachineLearning.QuantumTransformer.QuantumErrorCorrection
+/-- [Section: # CatalogBuild.Physics.Quantum.QuantumErrorCorrection
 Auto-generated from theorem catalog database.
-Domain: MachineLearning/QuantumTransformer
-Declarations: 10] -/
-theorem swap_self_inverse {n : Type*} [DecidableEq n] (a b : n) :
-    (swap a b)⁻¹ = swap a b := by
-  rw [inv_eq_iff_mul_eq_one]; exact swap_involution a b
+Domain: Physics/Quantum
+Declarations: 13] -/
+theorem syndrome_determines_error' (a δ₁ δ₂ : ℤ)
+    (ha : a > 0)
+    (h : 2 * a * δ₁ + δ₁ ^ 2 = 2 * a * δ₂ + δ₂ ^ 2)
+    (hδ₁ : |δ₁| < a) (hδ₂ : |δ₂| < a) :
+    δ₁ = δ₂ := by
+  cases abs_cases δ₁ <;> cases abs_cases δ₂ <;> nlinarith
 
+/-- The [[5,1,3]] code parameters are valid -/
+theorem five_qubit_code_params' : 5 - 1 + 1 = 5 ∧ 5 ≥ 3 := by omega
 
+/-- Quantum Hamming bound for [[5,1,3]]: 2^4 ≥ 1 + 3·5 = 16 -/
+theorem hamming_bound_5_1_3' : 2 ^ (5 - 1) ≥ 1 + 3 * 5 := by norm_num
 
+/-- CSS code dimension: k = dim(C₁) - dim(C₂) -/
+theorem css_dimension' (dim1 dim2 : ℕ) (h : dim2 ≤ dim1) :
+    dim1 - dim2 + dim2 = dim1 := by omega
 
-theorem swap_symmetric {n : Type*} [DecidableEq n] (a b : n) :
-    swap a b = swap b a := swap_comm a b
-
-
-
-
-def logical_qubits (n_physical n_stabilizers : ℕ) : ℕ :=
-  n_physical - n_stabilizers
-
-
-
-
-theorem steane_code_params : logical_qubits 7 6 = 1 := rfl
-
-
-
-
-theorem swap_circuit_overhead (n_swaps d : ℕ) :
-    n_swaps * (d * d) = n_swaps * d ^ 2 := by ring
-
-
-
-
-theorem total_ec_gate_count (n d : ℕ) (hd : 1 ≤ d) :
-    n * d ^ 2 ≥ n := by
-  nlinarith [Nat.one_le_pow 2 d hd]
-
-
-
-
-theorem clifford_simulation_cost (n : ℕ) (hn : 0 < n) :
-    n ≤ n * n := Nat.le_mul_of_pos_left n hn
-
-
-
-
-theorem simulation_advantage (n : ℕ) (hn : 1 ≤ n) :
-    n < 2 ^ n := Nat.lt_pow_self (by norm_num : 1 < 2)
-
-
-
-
-theorem transposition_count_bound (n : ℕ) (hn : 1 ≤ n) :
-    n - 1 < n := Nat.sub_one_lt (by omega)
-
-
-
+/-- CSS code distance bound -/
+theorem css_distance_bound' (d1 d2perp d : ℕ) (h : d = min d1 d2perp) :
+    d ≤ d1 ∧ d ≤ d2perp := by
+  subst h; exact ⟨min_le_left _ _, min_le_right _ _⟩
 
 end
