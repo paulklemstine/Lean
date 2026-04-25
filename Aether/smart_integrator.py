@@ -408,6 +408,81 @@ class SmartIntegrator:
 
         return decisions
 
+    def execute_integration_plan(
+        self,
+        plan: Any,  # IntegrationPlan from pi_agent_client
+        result_dir: Path,
+        exp_id: str,
+        dry_run: bool = False,
+    ) -> Dict[str, List[PlacementDecision]]:
+        """Execute a Pi-Agent integration plan.
+
+        The plan is a list of IntegrationDecision objects specifying
+        source file, action (keep/discard/rename), target path, and reason.
+        """
+        decisions = {
+            "placed": [],
+            "artifacts": [],
+            "unchanged": [],
+            "rejected": [],
+        }
+
+        for decision in plan.decisions:
+            source_path = result_dir / decision.source
+            if not source_path.exists():
+                decisions["rejected"].append(PlacementDecision(
+                    source_path=Path(decision.source),
+                    target_path=Path(decision.target),
+                    reason=f"Source file not found in result: {decision.source}",
+                    confidence=1.0,
+                ))
+                continue
+
+            if decision.action == "discard":
+                decisions["rejected"].append(PlacementDecision(
+                    source_path=source_path,
+                    target_path=Path(decision.target) if decision.target else source_path,
+                    reason=f"Pi-Agent discarded: {decision.reason}",
+                    confidence=1.0,
+                ))
+                continue
+
+            # Determine target path in catalog
+            target = self.catalog_root / decision.target
+
+            # SAFETY: Never overwrite existing files
+            if target.exists():
+                # Rename to avoid collision
+                stem = target.stem
+                suffix = target.suffix
+                renamed = target.parent / f"{stem}_{exp_id}{suffix}"
+                print(f"[SmartIntegrator] Collision: {target} exists. Renaming to {renamed}.")
+                target = renamed
+
+            if not dry_run:
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(source_path, target)
+
+            domain = self._guess_domain_from_path(Path(decision.target))
+            if source_path.suffix in {".md", ".py", ".svg", ".png", ".txt", ".json"}:
+                decisions["artifacts"].append(PlacementDecision(
+                    source_path=source_path,
+                    target_path=target,
+                    reason=f"Pi-Agent artifact: {decision.reason}",
+                    confidence=1.0,
+                    domain=domain,
+                ))
+            else:
+                decisions["placed"].append(PlacementDecision(
+                    source_path=source_path,
+                    target_path=target,
+                    reason=f"Pi-Agent: {decision.reason}",
+                    confidence=1.0,
+                    domain=domain,
+                ))
+
+        return decisions
+
     def _is_build_artifact(self, rel_path: Path) -> bool:
         """Check if a path is a build artifact."""
         parts = rel_path.parts

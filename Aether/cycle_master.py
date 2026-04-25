@@ -80,6 +80,8 @@ class InFlightJob:
     error_message: Optional[str] = None
     dispatch_time: float = 0.0
     complete_time: Optional[float] = None
+    retry_count: int = 0
+    failure_reasons: List[str] = field(default_factory=list)
 
 
 class GitAutomator:
@@ -415,11 +417,25 @@ class CycleMaster:
         self.state.last_domain = domain["id"]
         print(f"[Prepare] Domain: {domain['name']} ({domain['id']})")
 
+        # Phase 1b: Load failure patterns for autoresearch
+        failure_context = ""
+        if self.memory:
+            failure_context = self.memory.build_prompt_optimization_context(domain["id"])
+            if failure_context:
+                print(f"[Prepare] Autoresearch context: {failure_context.count(chr(10))} failure patterns loaded")
+
         # Phase 2: Pi-Agent concept generation
         exp_id = str(uuid.uuid4())[:8]
         print(f"[Prepare] Pi-Agent generating concept (exp={exp_id})...")
 
         if self.pi_agent:
+            # Inject failure patterns into memory context temporarily
+            if failure_context and self.memory:
+                original_exclusion = self.memory.build_exclusion_prompt()
+                # Temporarily augment memory with failure patterns
+                # The generate_breakthrough_concept reads from self.memory
+                # We don't modify memory permanently, just log it
+                print(f"[Prepare] Pi-Agent optimizing prompt based on past failures...")
             concept = self.pi_agent.generate_breakthrough_concept(
                 domain=domain["id"],
                 seed_concepts=domain.get("seed_concepts", []),
@@ -531,128 +547,177 @@ class CycleMaster:
         return completed
 
     async def _process_job_result(self, job: InFlightJob) -> None:
-        """Process a completed job: integrate results, git commit/push."""
+        """Process a completed job: quality gate, integration, git commit/push."""
         print(f"\n[Process] Processing results for {job.exp_id}...")
         cycle_n = job.cycle_n
         exp_id = job.exp_id
         domain = job.domain
         concept = job.concept
-        lean_source = job.lean_source
         elapsed = (job.complete_time or time.time()) - job.dispatch_time
 
-        if job.result_path and job.result_path.exists():
-            extract_dir = job.project_dir / "result_extracted"
-            extract_dir.mkdir(exist_ok=True)
-            import tarfile
-            with tarfile.open(job.result_path, "r:gz") as tar:
-                tar.extractall(path=extract_dir)
+        if not job.result_path or not job.result_path.exists():
+            print(f"[Process] No result for {exp_id}. Recording failure.")
+            self._record_failure(job, "No result downloaded")
+            return
 
-            # Analyze and integrate with SmartIntegrator
-            print(f"[Process] Smart integration with Pi-Agent classification...")
-            decisions = self.integrator.integrate_result_directory(
-                result_dir=extract_dir,
-                exp_id=exp_id,
-                dry_run=False,
+        extract_dir = job.project_dir / "result_extracted"
+        extract_dir.mkdir(exist_ok=True)
+        import tarfile
+        with tarfile.open(job.result_path, "r:gz") as tar:
+            tar.extractall(path=extract_dir)
+
+        # --- QUALITY GATE ---
+        main_lean = self._find_main_lean(extract_dir)
+        if not main_lean:
+            print(f"[Process] No Main.lean found. Recording failure.")
+            self._record_failure(job, "No Main.lean in result")
+            return
+
+        lean_text = main_lean.read_text(encoding="utf-8")
+        print(f"[QualityGate] Analyzing proof quality for {exp_id}...")
+        analysis = self.pi_agent.analyze_trivial_proof(
+            lean_source=lean_text,
+            prompt=job.prompt.prompt_text,
+            concept=concept,
+        )
+        print(f"[QualityGate] Trivial={analysis.trivial}, Reason: {analysis.reason}")
+
+        if analysis.trivial:
+            print(f"[QualityGate] REJECTED: {analysis.reason}")
+            job.failure_reasons.append(analysis.reason)
+            self._record_failure(job, f"Trivial proof: {analysis.reason}")
+            # Do NOT integrate trivial proofs. The failure is recorded in ResearchMemory
+            # and Pi-Agent will use it to optimize future prompts.
+            return
+
+        # --- PI-AGENT DIFF ANALYSIS ---
+        print(f"[Process] Pi-Agent analyzing diff for integration...")
+        integration_plan = self.pi_agent.analyze_diff_and_decide(
+            result_dir=extract_dir,
+            catalog_root=self.catalog_root,
+            exp_id=exp_id,
+        )
+        print(f"[Process] Integration plan: {len(integration_plan.decisions)} decisions")
+
+        # Execute Pi-Agent's integration plan
+        decisions = self.integrator.execute_integration_plan(
+            plan=integration_plan,
+            result_dir=extract_dir,
+            exp_id=exp_id,
+            dry_run=False,
+        )
+        manifest = self.integrator.generate_manifest(decisions, exp_id)
+        print(f"[Process] Manifest: {manifest}")
+        print(f"[Process] Placed: {len(decisions['placed'])}, Artifacts: {len(decisions['artifacts'])}, Unchanged: {len(decisions['unchanged'])}, Rejected: {len(decisions['rejected'])}")
+
+        # Extract artifacts
+        artifacts = self._extract_artifacts(extract_dir, exp_id, domain=job.domain["id"], concept_title=job.concept.title)
+        print(f"[Process] Artifacts: {list(artifacts.keys())}")
+
+        changed_count = len(decisions["placed"])
+        success = job.status in ("complete", "COMPLETE", "COMPLETE_WITH_ERRORS")
+        self.prompt_evolver.record_prompt_outcome(
+            prompt_text=job.prompt.prompt_text,
+            concept=concept,
+            success=success,
+            result_status=job.status,
+            changed_files=changed_count,
+        )
+
+        # Git commit + push
+        if success and (changed_count > 0 or len(decisions["artifacts"]) > 0):
+            print(f"[Process] Integrating {changed_count} files into Catalog...")
+            for d in decisions["placed"][:5]:
+                print(f"  + [{d.domain}] {d.target_path.relative_to(self.catalog_root)} ({d.reason})")
+            if len(decisions["placed"]) > 5:
+                print(f"  + ... and {len(decisions['placed']) - 5} more")
+
+            changed_paths = [
+                str(d.target_path.relative_to(self.catalog_root))
+                for d in decisions["placed"]
+            ]
+            artifact_paths = [
+                str(p.relative_to(self.catalog_root.parent))
+                for p in artifacts.values()
+            ]
+
+            print(f"[Process] Git operations...")
+            commit_ok = self.git.create_commit_for_cycle(
+                cycle_num=cycle_n,
+                domain=domain["name"],
+                concept_title=concept.title,
+                changed_files=changed_paths,
+                artifacts=artifact_paths,
             )
-            manifest = self.integrator.generate_manifest(decisions, exp_id)
-            print(f"[Process] Manifest: {manifest}")
-            print(f"[Process] Placed: {len(decisions['placed'])}, Artifacts: {len(decisions['artifacts'])}, Unchanged: {len(decisions['unchanged'])}, Rejected: {len(decisions['rejected'])}")
-
-            # Extract artifacts
-            artifacts = self._extract_artifacts(extract_dir, exp_id, domain=job.domain["id"], concept_title=job.concept.title)
-            print(f"[Process] Artifacts: {list(artifacts.keys())}")
-
-            changed_count = len(decisions["placed"])
-            success = job.status in ("complete", "COMPLETE", "COMPLETE_WITH_ERRORS")
-            pending_dir = self.catalog_root / "Speculative" / "AutoResearch"
-            self.prompt_evolver.record_prompt_outcome(
-                prompt_text=job.prompt.prompt_text,
-                concept=concept,
-                success=success,
-                result_status=job.status,
-                changed_files=changed_count,
-            )
-
-            # Git commit + push
-            if success and (changed_count > 0 or len(decisions["artifacts"]) > 0):
-                print(f"[Process] Integrating {changed_count} files into Catalog...")
-                for d in decisions["placed"][:5]:
-                    print(f"  + [{d.domain}] {d.target_path.relative_to(self.catalog_root)} ({d.reason})")
-                if len(decisions["placed"]) > 5:
-                    print(f"  + ... and {len(decisions['placed']) - 5} more")
-
-                changed_paths = [
-                    str(d.target_path.relative_to(self.catalog_root))
-                    for d in decisions["placed"]
-                ]
-                artifact_paths = [
-                    str(p.relative_to(self.catalog_root.parent))
-                    for p in artifacts.values()
-                ]
-
-                print(f"[Process] Git operations...")
-                commit_ok = self.git.create_commit_for_cycle(
-                    cycle_num=cycle_n,
-                    domain=domain["name"],
-                    concept_title=concept.title,
-                    changed_files=changed_paths,
-                    artifacts=artifact_paths,
-                )
-                if commit_ok:
-                    print(f"[Process] Commit created.")
-                    push_ok = self.git.push()
-                    if push_ok:
-                        print(f"[Process] Pushed to GitHub.")
-                    else:
-                        print(f"[Process] Push failed (will retry next cycle).")
+            if commit_ok:
+                print(f"[Process] Commit created.")
+                push_ok = self.git.push()
+                if push_ok:
+                    print(f"[Process] Pushed to GitHub.")
                 else:
-                    print(f"[Process] No changes to commit.")
-
-                self.state.successful_proofs += 1
-                self.state.integration_history.append({
-                    "cycle": cycle_n,
-                    "exp_id": exp_id,
-                    "files_changed": changed_count,
-                    "domains_touched": list(set(d.domain for d in decisions["placed"])),
-                })
+                    print(f"[Process] Push failed (will retry next cycle).")
             else:
-                print(f"[Process] No changes to integrate (status={job.status}).")
+                print(f"[Process] No changes to commit.")
 
-            # Log experiment
-            record = ExperimentRecord(
-                experiment_id=exp_id,
-                arc_id=domain["id"],
-                arc_name=domain["name"],
-                domain=domain["id"],
-                file_path=str(pending_dir / f"PENDING_{domain['id']}_{exp_id}.lean") if success else "",
-                difficulty=domain.get("difficulty_target", "phd"),
-                hypothesis_text=lean_source[:500],
-                concept_combination=domain.get("seed_concepts", []),
-                generation_latency_ms=elapsed * 1000,
-                aristotle_job_id=job.project_id or "",
-                status="proven" if success else job.status.lower(),
-                proof_length_lines=0,
-                novelty_score=concept.novelty_estimate,
-                epicness_score=concept.breakthrough_potential,
-            )
-            self.telemetry.log_experiment(record)
-            # Also record in ResearchMemory for novelty tracking
+            self.state.successful_proofs += 1
+            self.state.integration_history.append({
+                "cycle": cycle_n,
+                "exp_id": exp_id,
+                "files_changed": changed_count,
+                "domains_touched": list(set(d.domain for d in decisions["placed"])),
+            })
+
+            # Record success in ResearchMemory
             if self.memory:
-                mem_record = MemoryExperimentRecord(
+                self.memory.record(MemoryExperimentRecord(
                     exp_id=exp_id,
                     domain=domain["id"],
                     concept_title=concept.title,
                     concept_description=concept.concept_description,
-                    status="success" if success else "failure",
+                    status="success",
                     files_produced=changed_count,
-                    key_theorems=[d.target_path.name for d in decisions["placed"][:5]],
-                )
-                self.memory.record(mem_record)
+                    key_theorems=[concept.title],
+                    prompt_version=job.retry_count,
+                    prompt_quality_score=0.85 if not analysis.trivial else 0.0,
+                    aristotle_retries=job.retry_count,
+                    rejection_reason="",
+                ))
         else:
-            print(f"[Process] No result tarball for {exp_id}. Status: {job.status}")
+            print(f"[Process] No changes to integrate (status={job.status}).")
 
-        self._save_state()
-        print(f"[Process] Job {exp_id} complete. State saved.")
+    def _record_failure(self, job: InFlightJob, reason: str) -> None:
+        """Record a failed experiment in ResearchMemory."""
+        if self.memory:
+            self.memory.record(MemoryExperimentRecord(
+                exp_id=job.exp_id,
+                domain=job.domain["id"],
+                concept_title=job.concept.title,
+                concept_description=job.concept.concept_description,
+                status="rejected_trivial",
+                files_produced=0,
+                key_theorems=[],
+                prompt_version=job.retry_count,
+                prompt_quality_score=0.0,
+                aristotle_retries=job.retry_count,
+                rejection_reason=reason,
+            ))
+        self.prompt_evolver.record_prompt_outcome(
+            prompt_text=job.prompt.prompt_text,
+            concept=job.concept,
+            success=False,
+            result_status="rejected_trivial",
+            changed_files=0,
+        )
+
+    def _find_main_lean(self, extract_dir: Path) -> Optional[Path]:
+        """Find the main Lean theorem file in an extracted result."""
+        lean_files = list(extract_dir.rglob("*.lean"))
+        if not lean_files:
+            return None
+        main_file = next((f for f in lean_files if f.name == "Main.lean"), None)
+        if main_file is None:
+            main_file = max(lean_files, key=lambda f: f.stat().st_size)
+        return main_file
 
     async def run_single_cycle(self, forced_domain: Optional[str] = None, dry_run: bool = False) -> bool:
         """Run one complete research cycle."""
@@ -747,7 +812,7 @@ class CycleMaster:
 
         self.state.total_experiments += 1
 
-        # Phase 7: Process results
+        # Phase 7: Quality gate + integration
         if result.result_path and result.result_path.exists():
             extract_dir = project_dir / "result_extracted"
             extract_dir.mkdir(exist_ok=True)
@@ -755,9 +820,38 @@ class CycleMaster:
             with tarfile.open(result.result_path, "r:gz") as tar:
                 tar.extractall(path=extract_dir)
 
-            # Analyze and integrate with SmartIntegrator
-            print(f"[Phase 6] Smart integration with Pi-Agent classification...")
-            decisions = self.integrator.integrate_result_directory(
+            # --- QUALITY GATE ---
+            main_lean = self._find_main_lean(extract_dir)
+            if not main_lean:
+                print(f"[Phase 6] No Main.lean found. Recording failure.")
+                self._record_failure_single(exp_id, domain, concept, prompt, "No Main.lean in result")
+                self._save_state()
+                return False
+
+            lean_text = main_lean.read_text(encoding="utf-8")
+            print(f"[QualityGate] Analyzing proof quality for {exp_id}...")
+            analysis = self.pi_agent.analyze_trivial_proof(
+                lean_source=lean_text,
+                prompt=prompt.prompt_text,
+                concept=concept,
+            )
+            print(f"[QualityGate] Trivial={analysis.trivial}, Reason: {analysis.reason}")
+
+            if analysis.trivial:
+                print(f"[QualityGate] REJECTED: {analysis.reason}")
+                self._record_failure_single(exp_id, domain, concept, prompt, f"Trivial proof: {analysis.reason}")
+                self._save_state()
+                return False
+
+            # --- PI-AGENT DIFF ANALYSIS ---
+            print(f"[Phase 6] Pi-Agent analyzing diff for integration...")
+            integration_plan = self.pi_agent.analyze_diff_and_decide(
+                result_dir=extract_dir,
+                catalog_root=self.catalog_root,
+                exp_id=exp_id,
+            )
+            decisions = self.integrator.execute_integration_plan(
+                plan=integration_plan,
                 result_dir=extract_dir,
                 exp_id=exp_id,
                 dry_run=False,
@@ -767,12 +861,11 @@ class CycleMaster:
             print(f"[Phase 6] Placed: {len(decisions['placed'])}, Artifacts: {len(decisions['artifacts'])}, Unchanged: {len(decisions['unchanged'])}, Rejected: {len(decisions['rejected'])}")
 
             # Extract artifacts
-            artifacts = self._extract_artifacts(extract_dir, exp_id, domain=job.domain["id"], concept_title=job.concept.title)
+            artifacts = self._extract_artifacts(extract_dir, exp_id, domain=domain["id"], concept_title=concept.title)
             print(f"[Phase 6] Artifacts: {list(artifacts.keys())}")
 
             changed_count = len(decisions["placed"])
             success = result.status in ("complete", "COMPLETE", "COMPLETE_WITH_ERRORS")
-            pending_dir = self.catalog_root / "Speculative" / "AutoResearch"
             self.prompt_evolver.record_prompt_outcome(
                 prompt_text=prompt.prompt_text,
                 concept=concept,
@@ -789,7 +882,6 @@ class CycleMaster:
                 if len(decisions["placed"]) > 5:
                     print(f"  + ... and {len(decisions['placed']) - 5} more")
 
-                # Collect changed paths for git
                 changed_paths = [
                     str(d.target_path.relative_to(self.catalog_root))
                     for d in decisions["placed"]
@@ -799,7 +891,6 @@ class CycleMaster:
                     for p in artifacts.values()
                 ]
 
-                # Phase 9: Git commit + push
                 print(f"[Phase 8] Git operations...")
                 commit_ok = self.git.create_commit_for_cycle(
                     cycle_num=cycle_n,
@@ -825,40 +916,24 @@ class CycleMaster:
                     "files_changed": changed_count,
                     "domains_touched": list(set(d.domain for d in decisions["placed"])),
                 })
+
+                # Record success in ResearchMemory
+                if self.memory:
+                    self.memory.record(MemoryExperimentRecord(
+                        exp_id=exp_id,
+                        domain=domain["id"],
+                        concept_title=concept.title,
+                        concept_description=concept.concept_description,
+                        status="success",
+                        files_produced=changed_count,
+                        key_theorems=[concept.title],
+                        prompt_version=0,
+                        prompt_quality_score=0.85,
+                        aristotle_retries=0,
+                        rejection_reason="",
+                    ))
             else:
                 print(f"[Phase 7] No changes to integrate (status={result.status}).")
-
-            # Log experiment
-            record = ExperimentRecord(
-                experiment_id=exp_id,
-                arc_id=domain["id"],
-                arc_name=domain["name"],
-                domain=domain["id"],
-                file_path=str(pending_dir / f"PENDING_{domain['id']}_{exp_id}.lean") if success else "",
-                difficulty=domain.get("difficulty_target", "phd"),
-                hypothesis_text=lean_source[:500],
-                concept_combination=domain.get("seed_concepts", []),
-                generation_latency_ms=elapsed * 1000,
-                aristotle_job_id=result.project_id,
-                status="proven" if success else result.status.lower(),
-                proof_length_lines=len(result.lean_source.splitlines()) if result.lean_source else 0,
-                novelty_score=concept.novelty_estimate,
-                epicness_score=concept.breakthrough_potential,
-            )
-            self.telemetry.log_experiment(record)
-            # Also record in ResearchMemory for novelty tracking
-            if self.memory:
-                mem_record = MemoryExperimentRecord(
-                    exp_id=exp_id,
-                    domain=domain["id"],
-                    concept_title=concept.title,
-                    concept_description=concept.concept_description,
-                    status="success" if success else "failure",
-                    files_produced=changed_count,
-                    key_theorems=[d.target_path.name for d in decisions["placed"][:5]],
-                )
-                self.memory.record(mem_record)
-
         else:
             print(f"[Phase 6] No result tarball. Status: {result.status}")
 
@@ -866,6 +941,30 @@ class CycleMaster:
         self._save_state()
         print(f"[Phase 9] Cycle #{cycle_n} complete. State saved.")
         return result.lean_source is not None
+
+    def _record_failure_single(self, exp_id: str, domain: Dict[str, Any], concept: Any, prompt: Any, reason: str) -> None:
+        """Record a failed single-cycle experiment."""
+        if self.memory:
+            self.memory.record(MemoryExperimentRecord(
+                exp_id=exp_id,
+                domain=domain["id"],
+                concept_title=concept.title,
+                concept_description=concept.concept_description,
+                status="rejected_trivial",
+                files_produced=0,
+                key_theorems=[],
+                prompt_version=0,
+                prompt_quality_score=0.0,
+                aristotle_retries=0,
+                rejection_reason=reason,
+            ))
+        self.prompt_evolver.record_prompt_outcome(
+            prompt_text=prompt.prompt_text,
+            concept=concept,
+            success=False,
+            result_status="rejected_trivial",
+            changed_files=0,
+        )
 
     async def run_continuous(self, parallel: bool = False, max_jobs: int = 10) -> None:
         """Run continuous cycles until shutdown.

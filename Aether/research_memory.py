@@ -19,10 +19,14 @@ class ExperimentRecord:
     domain: str
     concept_title: str
     concept_description: str
-    status: str  # "success", "failure", "timeout"
+    status: str  # "success", "failure", "timeout", "rejected_trivial"
     files_produced: int = 0
     timestamp: str = ""
     key_theorems: List[str] = field(default_factory=list)
+    prompt_version: int = 0
+    prompt_quality_score: float = 0.0
+    aristotle_retries: int = 0
+    rejection_reason: str = ""
 
 
 class ResearchMemory:
@@ -56,6 +60,10 @@ class ResearchMemory:
                         files_produced=data.get("files_produced", 0),
                         timestamp=data.get("timestamp", ""),
                         key_theorems=data.get("key_theorems", []),
+                        prompt_version=data.get("prompt_version", 0),
+                        prompt_quality_score=data.get("prompt_quality_score", 0.0),
+                        aristotle_retries=data.get("aristotle_retries", 0),
+                        rejection_reason=data.get("rejection_reason", ""),
                     )
                     self._cache.append(record)
                     self._titles.add(record.concept_title.lower())
@@ -80,6 +88,10 @@ class ResearchMemory:
                 "files_produced": record.files_produced,
                 "timestamp": record.timestamp,
                 "key_theorems": record.key_theorems,
+                "prompt_version": record.prompt_version,
+                "prompt_quality_score": record.prompt_quality_score,
+                "aristotle_retries": record.aristotle_retries,
+                "rejection_reason": record.rejection_reason,
             }) + "\n")
 
     def has_been_explored(self, title: str, description: str) -> bool:
@@ -148,4 +160,30 @@ class ResearchMemory:
         lines = ["Successful concept patterns (EMULATE these):"]
         for r in successes:
             lines.append(f"  - {r.concept_title}: {r.concept_description[:80]}...")
+        return "\n".join(lines)
+
+    def get_failure_patterns(self, domain: str = "") -> List[str]:
+        """Summarize common failure reasons per domain."""
+        failures = [
+            r for r in self._cache
+            if r.status in ("failure", "timeout", "rejected_trivial")
+            and (not domain or r.domain == domain)
+        ]
+        if not failures:
+            return []
+        reasons = {}
+        for r in failures:
+            reason = r.rejection_reason or r.status
+            reasons[reason] = reasons.get(reason, 0) + 1
+        sorted_reasons = sorted(reasons.items(), key=lambda x: x[1], reverse=True)
+        return [f"{count}x: {reason}" for reason, count in sorted_reasons[:5]]
+
+    def build_prompt_optimization_context(self, domain: str = "") -> str:
+        """Build context for Pi-Agent prompt optimizer."""
+        patterns = self.get_failure_patterns(domain)
+        if not patterns:
+            return ""
+        lines = ["Previous failure patterns for this domain (AVOID these pitfalls):"]
+        for p in patterns:
+            lines.append(f"  - {p}")
         return "\n".join(lines)

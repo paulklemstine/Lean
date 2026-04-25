@@ -9,6 +9,13 @@ aristotle:
   retry_backoff_base: 2.0
   concurrent_jobs: 2
   demo_mode: false  # API key is available, use real Aristotle
+  max_aristotle_retries: 3
+
+quality_gate:
+  enabled: true
+  reject_trivial: true
+  reject_vacuous: true
+  max_retries: 3
 
 catalog:
   root_dir: "../"
