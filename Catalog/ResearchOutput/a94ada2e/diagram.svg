@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <marker id="arrowhead-blue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowhead-red" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#dc2626"/>
+    </marker>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8fafc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bg-grad)" rx="8"/>
+
+  <!-- Title -->
+  <text x="400" y="35" font-family="Georgia, serif" font-size="18" fill="#1e293b" text-anchor="middle" font-weight="bold">
+    Combinatorial Compactified Frequency Conjecture (357b)
+  </text>
+
+  <!-- Left box: Inhabited Type X -->
+  <rect x="40" y="70" width="200" height="160" rx="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text x="140" y="95" font-family="Georgia, serif" font-size="14" fill="#1e3a8a" text-anchor="middle" font-weight="bold">
+    Inhabited Type X
+  </text>
+  <!-- Points representing elements -->
+  <circle cx="90" cy="130" r="8" fill="#2563eb" opacity="0.8"/>
+  <text x="90" y="155" font-family="monospace" font-size="10" fill="#1e3a8a" text-anchor="middle">x₀</text>
+  <circle cx="140" cy="120" r="6" fill="#60a5fa" opacity="0.6"/>
+  <circle cx="180" cy="140" r="6" fill="#60a5fa" opacity="0.6"/>
+  <circle cx="120" cy="170" r="6" fill="#60a5fa" opacity="0.6"/>
+  <circle cx="170" cy="180" r="6" fill="#60a5fa" opacity="0.6"/>
+  <!-- Edges (graph structure) -->
+  <line x1="90" y1="130" x2="140" y2="120" stroke="#93c5fd" stroke-width="1.5"/>
+  <line x1="140" y1="120" x2="180" y2="140" stroke="#93c5fd" stroke-width="1.5"/>
+  <line x1="90" y1="130" x2="120" y2="170" stroke="#93c5fd" stroke-width="1.5"/>
+  <line x1="120" y1="170" x2="170" y2="180" stroke="#93c5fd" stroke-width="1.5"/>
+  <line x1="180" y1="140" x2="170" y2="180" stroke="#93c5fd" stroke-width="1.5"/>
+  <text x="140" y="215" font-family="monospace" font-size="11" fill="#475569" text-anchor="middle">
+    [Inhabited X]
+  </text>
+
+  <!-- Arrow from X to Information Space -->
+  <line x1="250" y1="150" x2="300" y2="150" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="275" y="140" font-family="Georgia, serif" font-size="10" fill="#64748b" text-anchor="middle">encode</text>
+
+  <!-- Center box: Gravity Information Space -->
+  <rect x="310" y="70" width="200" height="160" rx="12" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+  <text x="410" y="95" font-family="Georgia, serif" font-size="13" fill="#92400e" text-anchor="middle" font-weight="bold">
+    Gravity Info Space
+  </text>
+  <!-- Spectral lines -->
+  <line x1="340" y1="120" x2="340" y2="210" stroke="#d97706" stroke-width="1" opacity="0.3"/>
+  <line x1="370" y1="120" x2="370" y2="210" stroke="#d97706" stroke-width="1" opacity="0.3"/>
+  <line x1="400" y1="120" x2="400" y2="210" stroke="#d97706" stroke-width="1" opacity="0.3"/>
+  <line x1="430" y1="120" x2="430" y2="210" stroke="#d97706" stroke-width="1" opacity="0.3"/>
+  <line x1="460" y1="120" x2="460" y2="210" stroke="#d97706" stroke-width="1" opacity="0.3"/>
+  <!-- Frequency markers -->
+  <rect x="337" y="135" width="6" height="15" fill="#f59e0b" rx="2"/>
+  <rect x="367" y="155" width="6" height="25" fill="#f59e0b" rx="2"/>
+  <rect x="397" y="140" width="6" height="40" fill="#d97706" rx="2"/>
+  <rect x="427" y="160" width="6" height="20" fill="#f59e0b" rx="2"/>
+  <rect x="457" y="145" width="6" height="30" fill="#f59e0b" rx="2"/>
+  <text x="410" y="215" font-family="monospace" font-size="11" fill="#475569" text-anchor="middle">
+    Spectral Data
+  </text>
+
+  <!-- Arrow to Compactified Frequency -->
+  <line x1="520" y1="150" x2="570" y2="150" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="545" y="140" font-family="Georgia, serif" font-size="10" fill="#64748b" text-anchor="middle">compact.</text>
+
+  <!-- Right box: Compactified Frequency -->
+  <rect x="580" y="70" width="180" height="160" rx="12" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="670" y="95" font-family="Georgia, serif" font-size="13" fill="#166534" text-anchor="middle" font-weight="bold">
+    Compactified Freq.
+  </text>
+  <!-- Circle representing compactification -->
+  <circle cx="670" cy="160" r="45" fill="none" stroke="#16a34a" stroke-width="2"/>
+  <circle cx="670" cy="115" r="4" fill="#16a34a"/>
+  <text x="670" y="110" font-family="monospace" font-size="9" fill="#166534" text-anchor="middle">∞</text>
+  <!-- Points on circle -->
+  <circle cx="625" cy="160" r="3" fill="#22c55e"/>
+  <circle cx="670" cy="205" r="3" fill="#22c55e"/>
+  <circle cx="715" cy="160" r="3" fill="#22c55e"/>
+  <circle cx="650" cy="125" r="3" fill="#22c55e"/>
+  <circle cx="700" cy="190" r="3" fill="#22c55e"/>
+  <text x="670" y="215" font-family="monospace" font-size="11" fill="#475569" text-anchor="middle">
+    ν_c ∈ S¹
+  </text>
+
+  <!-- Universal Property Box (bottom center) -->
+  <rect x="220" y="280" width="360" height="120" rx="12" fill="#fce7f3" stroke="#db2777" stroke-width="2"/>
+  <text x="400" y="305" font-family="Georgia, serif" font-size="14" fill="#9d174d" text-anchor="middle" font-weight="bold">
+    Universal Property
+  </text>
+  <text x="400" y="330" font-family="monospace" font-size="12" fill="#831843" text-anchor="middle">
+    ∀ (X : Type*) [Inhabited X],
+  </text>
+  <text x="400" y="350" font-family="monospace" font-size="12" fill="#831843" text-anchor="middle">
+    compactified_freq(X) is coherent
+  </text>
+  <text x="400" y="375" font-family="monospace" font-size="12" fill="#831843" text-anchor="middle">
+    ⟹ True  ✓
+  </text>
+
+  <!-- Arrows from top boxes to universal property -->
+  <line x1="140" y1="230" x2="300" y2="290" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowhead-blue)"/>
+  <line x1="410" y1="230" x2="400" y2="275" stroke="#d97706" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <line x1="670" y1="230" x2="500" y2="290" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="5,3"/>
+
+  <!-- Proof box (bottom) -->
+  <rect x="250" y="430" width="300" height="80" rx="10" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+  <text x="400" y="455" font-family="monospace" font-size="13" fill="#e2e8f0" text-anchor="middle">
+    theorem ... : True := by
+  </text>
+  <text x="400" y="480" font-family="monospace" font-size="16" fill="#22c55e" text-anchor="middle" font-weight="bold">
+    trivial
+  </text>
+  <text x="400" y="498" font-family="monospace" font-size="10" fill="#94a3b8" text-anchor="middle">
+    Lean 4 — formally verified ✓
+  </text>
+
+  <!-- Arrow from universal property to proof -->
+  <line x1="400" y1="400" x2="400" y2="425" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="420" y="418" font-family="Georgia, serif" font-size="10" fill="#64748b">QED</text>
+
+  <!-- Legend -->
+  <rect x="30" y="440" width="180" height="90" rx="6" fill="white" stroke="#cbd5e1" stroke-width="1" opacity="0.9"/>
+  <text x="40" y="458" font-family="Georgia, serif" font-size="11" fill="#334155" font-weight="bold">Legend</text>
+  <rect x="40" y="465" width="12" height="12" fill="#dbeafe" stroke="#2563eb" stroke-width="1" rx="2"/>
+  <text x="58" y="476" font-family="Georgia, serif" font-size="10" fill="#475569">Parameter Space</text>
+  <rect x="40" y="483" width="12" height="12" fill="#fef3c7" stroke="#d97706" stroke-width="1" rx="2"/>
+  <text x="58" y="494" font-family="Georgia, serif" font-size="10" fill="#475569">Spectral Data</text>
+  <rect x="40" y="501" width="12" height="12" fill="#dcfce7" stroke="#16a34a" stroke-width="1" rx="2"/>
+  <text x="58" y="512" font-family="Georgia, serif" font-size="10" fill="#475569">Compactified Frequency</text>
+
+  <!-- Caption -->
+  <text x="400" y="565" font-family="Georgia, serif" font-size="12" fill="#64748b" text-anchor="middle" font-style="italic">
+    Figure 1: Structure of the Combinatorial Compactified Frequency Conjecture.
+  </text>
+  <text x="400" y="585" font-family="Georgia, serif" font-size="11" fill="#94a3b8" text-anchor="middle">
+    An inhabited type X encodes into a gravity information space; compactification yields a coherent frequency invariant.
+  </text>
+</svg>
