@@ -1,148 +1,187 @@
 import Mathlib
 
-/-! # CatalogBuild.Pythagorean.ThreeRoads.AdvancedTheorems
+/-! # CatalogBuild.Logic.AdvancedTheorems
 
 Auto-generated from theorem catalog database.
-Domain: Pythagorean/ThreeRoads
-Declarations: 23
+Domain: Logic
+Declarations: 26
 -/
 
-/-- [Section: # CatalogBuild.Pythagorean.ThreeRoads.AdvancedTheorems
+noncomputable section
+
+/-- Belief state on n hypotheses. -/
+def BState (n : ℕ) := Fin n → ℝ
+
+/-- Validity of a belief state: non-negative and sums to 1. -/
+def BState.Valid {n : ℕ} (b : BState n) : Prop :=
+  (∀ i, 0 ≤ b i) ∧ ∑ i : Fin n, b i = 1
+
+/-- L¹ distance between belief states. -/
+def bDist {n : ℕ} (b₁ b₂ : BState n) : ℝ :=
+  ∑ i : Fin n, |b₁ i - b₂ i|
+
+/-- Evidence (marginal likelihood). -/
+def bEvidence {n : ℕ} (b : BState n) (l : Fin n → ℝ) : ℝ :=
+  ∑ i : Fin n, b i * l i
+
+/-- Bayesian update operator. -/
+def bUpdate {n : ℕ} (b : BState n) (l : Fin n → ℝ) : BState n :=
+  if bEvidence b l = 0 then b
+  else fun i => (b i * l i) / bEvidence b l
+
+/-- A pure belief state concentrates all mass on hypothesis i. -/
+def bPure {n : ℕ} (i : Fin n) : BState n :=
+  fun j => if j = i then 1 else 0
+
+/-- Shannon entropy (using natural log). -/
+def bEntropy {n : ℕ} (b : BState n) : ℝ :=
+  -∑ i : Fin n, if b i = 0 then 0 else b i * Real.log (b i)
+
+/-- [Section: # CatalogBuild.Logic.AdvancedTheorems
 Auto-generated from theorem catalog database.
-Domain: Pythagorean/ThreeRoads
-Declarations: 23] -/
-theorem divisor_pair_to_triple (N d e : ℤ) (hprod : d * e = N ^ 2)
-    (hd_pos : 0 < d) (hle : d ≤ e) (hparity : Even (e - d)) :
-    N ^ 2 + ((e - d) / 2) ^ 2 = ((e + d) / 2) ^ 2 := by
-  cases abs_cases N <;> nlinarith [ Int.ediv_mul_cancel ( show 2 ∣ e - d from even_iff_two_dvd.mp hparity ), Int.ediv_mul_cancel ( show 2 ∣ e + d from even_iff_two_dvd.mp ( by simpa [ parity_simps ] using hparity ) ) ]
+Domain: Logic
+Declarations: 26] -/
+theorem uniform_likelihood_identity {n : ℕ} (hn : 0 < n) (b : BState n)
+    (hb : BState.Valid b) (c : ℝ) (hc : 0 < c) :
+    bUpdate b (fun _ => c) = b := by
+      unfold bUpdate bEvidence;
+      simp_all +decide [ ← Finset.sum_mul _ _ _, hb.2 ]
 
-/-- [Section: # CatalogBuild.Pythagorean.ThreeRoads.AdvancedTheorems
+/-- [Section: # CatalogBuild.Logic.AdvancedTheorems
 Auto-generated from theorem catalog database.
-Domain: Pythagorean/ThreeRoads
-Declarations: 23] -/
-theorem triple_to_divisor_pair (N b c : ℤ) (h : N ^ 2 + b ^ 2 = c ^ 2) :
-    (c - b) * (c + b) = N ^ 2 := by
-  grind
+Domain: Logic
+Declarations: 26] -/
+theorem support_preservation {n : ℕ} (b : BState n) (l : Fin n → ℝ)
+    (i : Fin n) (hi : b i = 0) :
+    bUpdate b l i = 0 := by
+      unfold bUpdate; aesop;
 
-theorem divisor_triple_roundtrip (N d e : ℤ) (hprod : d * e = N ^ 2)
-    (hparity : Even (e - d)) :
-    let b := (e - d) / 2
-    let c := (e + d) / 2
-    (c - b = d) ∧ (c + b = e) := by
-  grind
+theorem evidence_pos_of_support {n : ℕ} (b : BState n) (l : Fin n → ℝ)
+    (hb : BState.Valid b) (hl : ∀ i, 0 ≤ l i)
+    (hsupp : ∃ i, 0 < b i ∧ 0 < l i) :
+    0 < bEvidence b l := by
+      obtain ⟨ i, hi ⟩ := hsupp; exact lt_of_lt_of_le ( mul_pos hi.1 hi.2 ) ( Finset.single_le_sum ( fun j _ => mul_nonneg ( hb.1 j ) ( hl j ) ) ( Finset.mem_univ i ) ) ;
 
-theorem canonical_prime_triple (p : ℤ) (hp : 1 < p) (hodd : ¬Even p) :
-    p ^ 2 + ((p ^ 2 - 1) / 2) ^ 2 = ((p ^ 2 + 1) / 2) ^ 2 := by
-  cases abs_cases p <;> nlinarith [ Int.ediv_mul_cancel ( show 2 ∣ p ^ 2 - 1 from even_iff_two_dvd.mp <| by simp_all +decide [ parity_simps ] ), Int.ediv_mul_cancel ( show 2 ∣ p ^ 2 + 1 from even_iff_two_dvd.mp <| by simp_all +decide [ parity_simps ] ) ]
+theorem pure_fixed_point {n : ℕ} (i : Fin n) (l : Fin n → ℝ)
+    (hl : ∀ j, 0 ≤ l j) (hli : 0 < l i) :
+    bUpdate (bPure i) l = bPure i := by
+      unfold bUpdate bPure;
+      unfold bEvidence;
+      exact funext fun j => by by_cases hj : j = i <;> simp +decide [ hj, hli.ne' ] ;
 
-theorem trivial_factorization_triple (N : ℤ) (hN : 1 < N) (hodd : ¬Even N) :
-    N ^ 2 + ((N ^ 2 - 1) / 2) ^ 2 = ((N ^ 2 + 1) / 2) ^ 2 := by
-  exact canonical_prime_triple N hN hodd
+theorem dominant_weight_nondecreasing {n : ℕ} (b : BState n) (l : Fin n → ℝ)
+    (i : Fin n)
+    (hb : BState.Valid b) (hl : ∀ j, 0 ≤ l j)
+    (hli : 0 < l i)
+    (he : 0 < bEvidence b l)
+    (hdom : ∀ j, l j ≤ l i) :
+    b i ≤ bUpdate b l i := by
+      unfold bUpdate bEvidence at *;
+      split_ifs <;> simp_all +decide [ ne_of_gt, le_div_iff₀ ];
+      exact mul_le_mul_of_nonneg_left ( le_trans ( Finset.sum_le_sum fun _ _ => mul_le_mul_of_nonneg_left ( hdom _ ) ( hb.1 _ ) ) ( by simp +decide [ ← Finset.sum_mul _ _ _, hb.2 ] ) ) ( hb.1 _ )
 
-theorem B1_preserves_pythagorean (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
-    (a - 2*b + 2*c) ^ 2 + (2*a - b + 2*c) ^ 2 = (2*a - 2*b + 3*c) ^ 2 := by
-  grind
+theorem entropy_pure_zero {n : ℕ} (hn : 1 ≤ n) (i : Fin n) :
+    bEntropy (bPure i) = 0 := by
+      unfold bEntropy bPure; aesop;
 
-theorem B3_preserves_pythagorean (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
-    (-a + 2*b + 2*c) ^ 2 + (-2*a + b + 2*c) ^ 2 = (-2*a + 2*b + 3*c) ^ 2 := by
-  grind
+theorem entropy_nonneg' {n : ℕ} (b : BState n) (hb : BState.Valid b) :
+    0 ≤ bEntropy b := by
+      apply neg_nonneg.mpr;
+      exact Finset.sum_nonpos fun i _ => by split_ifs <;> [ norm_num; exact mul_nonpos_of_nonneg_of_nonpos ( hb.1 i ) ( Real.log_nonpos ( hb.1 i ) ( hb.2 ▸ Finset.single_le_sum ( fun a _ => hb.1 a ) ( Finset.mem_univ i ) ) ) ] ;
 
-theorem euclid_coprime (m n : ℤ) (hcop : IsCoprime m n)
-    (hparity : Even m ↔ ¬Even n) :
-    IsCoprime (m ^ 2 - n ^ 2) (2 * m * n) := by
-  refine' IsCoprime.symm _;
-  refine' IsCoprime.mul_left _ _;
-  · refine' IsCoprime.mul_left _ _;
-    · refine' Int.prime_two.coprime_iff_not_dvd.mpr _;
-      simp_all +decide [ ← even_iff_two_dvd, parity_simps ];
-      grind;
-    · -- Since $m$ and $n$ are coprime, $m$ and $n^2$ are also coprime.
-      have h_coprime_m_n2 : IsCoprime m (n ^ 2) := by
-        exact hcop.pow_right;
-      convert h_coprime_m_n2.neg_right.add_mul_right_right ( m ) using 1 ; ring;
-  · convert hcop.symm.pow_right.add_mul_right_right ( -n ) using 1 ; ring;
-    convert rfl
+theorem geometric_implies_finite {n : ℕ} (d : ℕ → ℝ)
+    (c : ℝ) (hc0 : 0 ≤ c) (hc1 : c < 1)
+    (hd0 : 0 ≤ d 0)
+    (hstep : ∀ k, d (k + 1) ≤ c * d k) :
+    ∀ k, d k ≤ c ^ k * d 0 := by
+      exact fun k => Nat.recOn k ( by norm_num ) fun k ih => by rw [ pow_succ', mul_assoc ] ; exact le_trans ( hstep k ) ( mul_le_mul_of_nonneg_left ih hc0 ) ;
 
-theorem two_triples_factor (N b₁ c₁ b₂ c₂ : ℤ)
-    (h₁ : N ^ 2 + b₁ ^ 2 = c₁ ^ 2)
-    (h₂ : N ^ 2 + b₂ ^ 2 = c₂ ^ 2) :
-    (c₁ - b₁) * (c₁ + b₁) = (c₂ - b₂) * (c₂ + b₂) := by
-  linarith
+theorem log_experiment_count (c d₀ ε : ℝ)
+    (hc0 : 0 < c) (hc1 : c < 1) (hd : 0 < d₀) (hε : 0 < ε) (hεd : ε ≤ d₀)
+    (k : ℕ) (hk : c ^ k ≤ ε / d₀) :
+    c ^ k * d₀ ≤ ε := by
+      rwa [ le_div_iff₀ hd ] at hk
 
-theorem leg_product_bound (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
-    (h : a ^ 2 + b ^ 2 = c ^ 2) :
-    2 * a * b < c ^ 2 := by
-  by_contra h_contra;
-  -- If $2ab = c^2$, then $(a - b)^2 = 0$, which implies $a = b$.
-  have h_eq : a = b := by
-    nlinarith;
-  -- Substitute $a = b$ into the equation $a^2 + b^2 = c^2$ to get $2a^2 = c^2$, which implies $c = \pm a\sqrt{2}$.
-  have h_c : c = a * Real.sqrt 2 ∨ c = -a * Real.sqrt 2 := by
-    exact or_iff_not_imp_left.mpr fun h => mul_left_cancel₀ ( sub_ne_zero_of_ne h ) <| by ring_nf; norm_num; norm_cast; subst h_eq; linarith;
-  obtain h | h := h_c <;> [ exact irrational_sqrt_two <| ⟨ c / a, by push_cast [ h ] ; rw [ mul_div_cancel_left₀ _ <| by positivity ] ⟩ ; exact irrational_sqrt_two <| ⟨ -c / a, by push_cast [ h ] ; rw [ div_eq_iff <| by positivity ] ; linarith ⟩ ]
+structure SciTheory (n : ℕ) where
+  belief : BState n
+  valid : BState.Valid belief
+  experiment_count : ℕ
 
-theorem leg_sum_sq_bound (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
-    (a + b) ^ 2 ≤ 2 * c ^ 2 := by
-  linarith [ sq_nonneg ( a - b ) ]
+def SciTheory.refine {n : ℕ} (T : SciTheory n) (l : Fin n → ℝ)
+    (hl_nn : ∀ i, 0 ≤ l i) (hl_pos : ∃ i, 0 < l i)
+    (he : 0 < bEvidence T.belief l)
+    (hvalid : BState.Valid (bUpdate T.belief l)) : SciTheory n where
+  belief := bUpdate T.belief l
+  valid := hvalid
+  experiment_count := T.experiment_count + 1
 
-theorem smooth_relation_product (s₁ s₂ N : ℤ) (hN : 0 < N) :
-    (s₁ * s₂) % N = ((s₁ % N) * (s₂ % N)) % N := by
-  rw [ Int.mul_emod ]
+theorem refinement_monotone {n : ℕ} (T : SciTheory n) (l : Fin n → ℝ)
+    (hl_nn : ∀ i, 0 ≤ l i) (hl_pos : ∃ i, 0 < l i)
+    (he : 0 < bEvidence T.belief l)
+    (hvalid : BState.Valid (bUpdate T.belief l)) :
+    T.experiment_count < (T.refine l hl_nn hl_pos he hvalid).experiment_count := by
+      exact Nat.lt_succ_self _
 
-theorem berggren_preserves_lorentz (a b c : ℤ) :
-    -- B₁ preserves Q
-    (a - 2*b + 2*c)^2 + (2*a - b + 2*c)^2 - (2*a - 2*b + 3*c)^2 = a^2 + b^2 - c^2 ∧
-    -- B₂ preserves Q
-    (a + 2*b + 2*c)^2 + (2*a + b + 2*c)^2 - (2*a + 2*b + 3*c)^2 = a^2 + b^2 - c^2 ∧
-    -- B₃ preserves Q
-    (-a + 2*b + 2*c)^2 + (-2*a + b + 2*c)^2 - (-2*a + 2*b + 3*c)^2 = a^2 + b^2 - c^2 := by
-  grind
+theorem sequential_evidence {n : ℕ} (b : BState n) (l₁ l₂ : Fin n → ℝ)
+    (hb : BState.Valid b) (hl₁ : ∀ i, 0 ≤ l₁ i) (hl₂ : ∀ i, 0 ≤ l₂ i)
+    (he₁ : bEvidence b l₁ ≠ 0) :
+    bEvidence (bUpdate b l₁) l₂ = (∑ i : Fin n, b i * l₁ i * l₂ i) / bEvidence b l₁ := by
+      unfold bEvidence bUpdate; simp_all +decide [ Finset.sum_div _ _ _, mul_div_assoc ] ; ring;
+      exact Finset.sum_congr rfl fun _ _ => by ring!;
 
-theorem min_hypotenuse_at_depth (d : ℕ) :
-    (3 : ℤ) ^ d * 5 ≥ 5 := by
-  nlinarith [ pow_pos ( by decide : 0 < 3 ) d ]
+structure OracleQuery (n : ℕ) where
+  response : Fin n → Bool
 
-theorem B1_parent_recovery (a b c : ℤ) :
-    let a' := a - 2*b + 2*c
-    let b' := 2*a - b + 2*c
-    let c' := 2*a - 2*b + 3*c
-    -- Inverse of B₁: recover (a, b, c) from (a', b', c')
-    (a' + 2*b' - 2*c' = a) ∧
-    (-2*a' - b' + 2*c' = b) ∧
-    (-2*a' - 2*b' + 3*c' = c) := by
-  grind
+theorem oracle_completeness {n : ℕ} (f : Fin n → Bool) :
+    ∃ l : Fin n → ℝ, (∀ i, l i = 0 ∨ l i = 1) ∧
+    (∀ i, f i = true ↔ l i = 1) := by
+      exact ⟨ fun i => if f i then 1 else 0, fun i => by by_cases hi : f i <;> simp +decide [ hi ], fun i => by by_cases hi : f i <;> simp +decide [ hi ] ⟩
 
-theorem gcd_factor_from_triples (N d₁ : ℤ) (hN : 0 < N) :
-    (Int.gcd d₁ N : ℤ) ∣ N := by
-  exact Int.gcd_dvd_right _ _
+theorem deterministic_idempotent {n : ℕ} (b : BState n) (l : Fin n → ℝ)
+    (hb : BState.Valid b) (hl01 : ∀ i, l i = 0 ∨ l i = 1)
+    (he : bEvidence b l ≠ 0) :
+    bUpdate (bUpdate b l) l = bUpdate b l := by
+      unfold bUpdate bEvidence at *;
+      split_ifs <;> simp_all +decide [ div_eq_mul_inv, mul_assoc, mul_comm, mul_left_comm, Finset.mul_sum _ _ _ ];
+      simp_all +decide [ ← mul_assoc, ← Finset.sum_mul ];
+      exact funext fun i => by rw [ show ( ∑ i, b i * l i * l i ) = ( ∑ i, b i * l i ) by exact Finset.sum_congr rfl fun _ _ => by cases hl01 ‹_› <;> simp +decide [ * ] ] ; cases hl01 i <;> simp +decide [ * ] ;
 
-theorem hypotenuse_mod_transform (a b c N : ℤ) (hN : 0 < N) :
-    (2*a + 2*b + 3*c) % N = (2*a + 2*b + 3*(c % N)) % N := by
-  simp +decide [ Int.add_emod, Int.mul_emod ]
+theorem evidence_upper_bound {n : ℕ} (b : BState n) (l : Fin n → ℝ)
+    (M : ℝ) (hb : BState.Valid b) (hM : ∀ i, l i ≤ M) (hl : ∀ i, 0 ≤ l i) :
+    bEvidence b l ≤ M := by
+      have h_evidence_le_M : bEvidence b l = ∑ i, b i * l i := by
+        rfl;
+      exact h_evidence_le_M ▸ le_trans ( Finset.sum_le_sum fun i _ => mul_le_mul_of_nonneg_left ( hM i ) ( hb.1 i ) ) ( by simp +decide [ ← Finset.sum_mul, hb.2 ] )
 
-theorem leg_difference_identity (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
-    a ^ 2 - b ^ 2 = 2 * a ^ 2 - c ^ 2 := by
-  grind
+theorem posterior_strict_dominance {n : ℕ} (hn : 1 < n) (b : BState n)
+    (l : Fin n → ℝ) (hstar : Fin n)
+    (hb : BState.Valid b) (hl : ∀ i, 0 ≤ l i)
+    (hpos : 0 < b hstar) (hnotpure : b hstar < 1)
+    (he : 0 < bEvidence b l)
+    (hdom : ∀ i, i ≠ hstar → l i < l hstar) :
+    b hstar < bUpdate b l hstar := by
+      -- By definition of $bUpdate$, we have $bUpdate b l hstar = (b hstar * l hstar) / bEvidence b l$.
+      have h_bUpdate : bUpdate b l hstar = (b hstar * l hstar) / bEvidence b l := by
+        unfold bUpdate; aesop;
+      -- Since $l(i) < l(hstar)$ for all $i \neq hstar$, we have $\sum_{i \neq hstar} b(i) * l(i) < \sum_{i \neq hstar} b(i) * l(hstar)$.
+      have h_sum_lt : ∑ i ∈ Finset.univ.erase hstar, b i * l i < ∑ i ∈ Finset.univ.erase hstar, b i * l hstar := by
+        apply Finset.sum_lt_sum
+        intro i hi
+        by_cases hi_eq : i = hstar
+        aesop
+        generalize_proofs at *; (
+        exact mul_le_mul_of_nonneg_left ( le_of_lt ( hdom i hi_eq ) ) ( hb.1 i ));
+        -- Since $b$ is a valid belief state, there must be at least one $i \neq hstar$ such that $b i > 0$.
+        obtain ⟨i, hi⟩ : ∃ i ≠ hstar, 0 < b i := by
+          contrapose! hnotpure;
+          have := hb.2; rw [ Finset.sum_eq_add_sum_diff_singleton ( Finset.mem_univ hstar ) ] at this; exact le_of_not_gt fun h => by linarith [ show ∑ i ∈ Finset.univ \ { hstar }, b i ≤ 0 from Finset.sum_nonpos fun i hi => hnotpure i <| by aesop ] ;
+        exact ⟨ i, Finset.mem_erase_of_ne_of_mem hi.1 ( Finset.mem_univ _ ), mul_lt_mul_of_pos_left ( hdom i hi.1 ) hi.2 ⟩;
+      simp_all +decide [ Finset.sum_mul _ _ _ ];
+      rw [ lt_div_iff₀ he ] ; simp_all +decide [ ← Finset.sum_mul _ _ _, bEvidence ] ; nlinarith [ hb.2 ] ;
 
-theorem both_legs_less (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
-    (h : a ^ 2 + b ^ 2 = c ^ 2) :
-    a < c ∧ b < c := by
-  constructor <;> nlinarith
+theorem geom_series_formula (c : ℝ) (hc : c ≠ 1) (n : ℕ) :
+    ∑ k ∈ Finset.range n, c ^ k = (1 - c ^ n) / (1 - c) := by
+      rw [ ← neg_div_neg_eq, geom_sum_eq ] ; aesop;
+      assumption
 
-theorem tree_nodes_at_depth (d : ℕ) : (3 : ℕ) ^ d ≥ 1 := by
-  exact Nat.one_le_pow _ _ ( by decide )
-
-theorem tree_total_nodes (d : ℕ) :
-    (3 ^ (d + 1) - 1) % 2 = 0 := by
-  exact Nat.mod_eq_zero_of_dvd ( by simpa using nat_sub_dvd_pow_sub_pow _ 1 _ )
-
-theorem gaussian_composition (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ)
-    (h₁ : a₁ ^ 2 + b₁ ^ 2 = c₁ ^ 2)
-    (h₂ : a₂ ^ 2 + b₂ ^ 2 = c₂ ^ 2) :
-    (a₁ * a₂ - b₁ * b₂) ^ 2 + (a₁ * b₂ + b₁ * a₂) ^ 2 = (c₁ * c₂) ^ 2 := by
-  linear_combination' h₁ * h₂
-
-theorem self_composition (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
-    (a ^ 2 - b ^ 2) ^ 2 + (2 * a * b) ^ 2 = c ^ 4 := by
-  linear_combination' h * h
-
+end
