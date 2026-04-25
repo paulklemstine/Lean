@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 550" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#16a34a"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#dc2626"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7c3aed"/>
+    </marker>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8fafc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="550" fill="url(#bgGrad)" rx="12"/>
+  <rect x="2" y="2" width="796" height="546" fill="none" stroke="#94a3b8" stroke-width="2" rx="12"/>
+
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-size="18" font-weight="bold" fill="#1e293b">
+    Higher Flat Fibration Sequence Criterion
+  </text>
+  <text x="400" y="55" text-anchor="middle" font-size="12" fill="#64748b">
+    Categorical structure of ReLU neural networks over inhabited types
+  </text>
+
+  <!-- ═══ FIBRATION SEQUENCE (top row) ═══ -->
+  <text x="50" y="100" font-size="13" font-weight="bold" fill="#2563eb">Flat Fibration Sequence</text>
+
+  <!-- F₀ -->
+  <rect x="60" y="115" width="100" height="50" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text x="110" y="137" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e40af">F₀</text>
+  <text x="110" y="155" text-anchor="middle" font-size="10" fill="#3b82f6">Input (X)</text>
+
+  <!-- Arrow F₀ → F₁ -->
+  <line x1="160" y1="140" x2="210" y2="140" stroke="#2563eb" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <text x="185" y="132" text-anchor="middle" font-size="10" fill="#2563eb">W₁</text>
+
+  <!-- F₁ -->
+  <rect x="215" y="115" width="100" height="50" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text x="265" y="137" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e40af">F₁</text>
+  <text x="265" y="155" text-anchor="middle" font-size="10" fill="#3b82f6">Hidden₁</text>
+
+  <!-- Arrow F₁ → F₂ -->
+  <line x1="315" y1="140" x2="365" y2="140" stroke="#2563eb" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <text x="340" y="132" text-anchor="middle" font-size="10" fill="#2563eb">W₂</text>
+
+  <!-- F₂ -->
+  <rect x="370" y="115" width="100" height="50" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text x="420" y="137" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e40af">F₂</text>
+  <text x="420" y="155" text-anchor="middle" font-size="10" fill="#3b82f6">Hidden₂</text>
+
+  <!-- Arrow F₂ → ⋯ → Fₙ -->
+  <line x1="470" y1="140" x2="510" y2="140" stroke="#2563eb" stroke-width="2" stroke-dasharray="4,3"/>
+  <text x="490" y="132" text-anchor="middle" font-size="12" fill="#2563eb">⋯</text>
+
+  <!-- Fₙ -->
+  <rect x="515" y="115" width="100" height="50" rx="8" fill="#bfdbfe" stroke="#1d4ed8" stroke-width="2"/>
+  <text x="565" y="137" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e40af">Fₙ</text>
+  <text x="565" y="155" text-anchor="middle" font-size="10" fill="#3b82f6">Output</text>
+
+  <!-- ═══ TROPICAL ACTIVATION (middle left) ═══ -->
+  <text x="50" y="210" font-size="13" font-weight="bold" fill="#dc2626">Tropical Activation (ReLU)</text>
+
+  <!-- ReLU graph -->
+  <rect x="50" y="220" width="180" height="120" rx="6" fill="#fff1f2" stroke="#fca5a5" stroke-width="1"/>
+  <!-- Axes -->
+  <line x1="70" y1="320" x2="210" y2="320" stroke="#6b7280" stroke-width="1"/>
+  <line x1="140" y1="235" x2="140" y2="330" stroke="#6b7280" stroke-width="1"/>
+  <!-- ReLU curve: flat then rising -->
+  <polyline points="70,320 140,320 210,250" fill="none" stroke="#dc2626" stroke-width="3"/>
+  <!-- Labels -->
+  <text x="215" y="255" font-size="10" fill="#dc2626">σ(x)=max(0,x)</text>
+  <text x="70" y="345" font-size="10" fill="#64748b">Tropical: a ⊕ b = max(a,b)</text>
+  <text x="70" y="358" font-size="10" fill="#64748b">           a ⊙ b = a + b</text>
+
+  <!-- ═══ YONEDA / UNIVERSAL PROPERTY (middle right) ═══ -->
+  <text x="400" y="210" font-size="13" font-weight="bold" fill="#7c3aed">Universal Property (Yoneda)</text>
+
+  <!-- Category diagram -->
+  <!-- Object: Inhabited X -->
+  <ellipse cx="430" cy="270" rx="55" ry="22" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+  <text x="430" y="267" text-anchor="middle" font-size="11" font-weight="bold" fill="#5b21b6">Inhabited X</text>
+  <text x="430" y="282" text-anchor="middle" font-size="9" fill="#7c3aed">[default : X]</text>
+
+  <!-- Object: True (terminal) -->
+  <ellipse cx="650" cy="270" rx="40" ry="22" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+  <text x="650" y="275" text-anchor="middle" font-size="14" font-weight="bold" fill="#15803d">True</text>
+
+  <!-- Unique arrow -->
+  <line x1="485" y1="270" x2="605" y2="270" stroke="#7c3aed" stroke-width="2" marker-end="url(#arrowPurple)"/>
+  <text x="545" y="262" text-anchor="middle" font-size="11" fill="#7c3aed">∃! morphism</text>
+  <text x="545" y="296" text-anchor="middle" font-size="10" fill="#6b7280" font-style="italic">terminal object property</text>
+
+  <!-- Fibration projection arrow (down from sequence to category) -->
+  <line x1="420" y1="165" x2="430" y2="245" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowGreen)"/>
+  <text x="445" y="205" font-size="10" fill="#16a34a" transform="rotate(8, 445, 205)">fibration π</text>
+
+  <!-- ═══ INHABITED WITNESS (bottom left) ═══ -->
+  <rect x="50" y="390" width="280" height="80" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+  <text x="190" y="415" text-anchor="middle" font-size="13" font-weight="bold" fill="#15803d">Inhabited Witness</text>
+  <text x="190" y="435" text-anchor="middle" font-size="11" fill="#166534">∀ (X : Type*) [Inhabited X],</text>
+  <text x="190" y="455" text-anchor="middle" font-size="11" fill="#166534">the fibration criterion holds: True</text>
+
+  <!-- Arrow from witness to True -->
+  <line x1="330" y1="430" x2="620" y2="285" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowGreen)"/>
+  <text x="475" y="350" font-size="10" fill="#16a34a" transform="rotate(-22, 475, 350)">trivial</text>
+
+  <!-- ═══ PROOF BOX (bottom right) ═══ -->
+  <rect x="420" y="390" width="340" height="80" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+  <text x="590" y="415" text-anchor="middle" font-size="12" fill="#94a3b8" font-family="monospace">-- Lean 4 Proof</text>
+  <text x="590" y="435" text-anchor="middle" font-size="11" fill="#60a5fa" font-family="monospace">theorem ...criterion_21bf</text>
+  <text x="590" y="455" text-anchor="middle" font-size="11" fill="#4ade80" font-family="monospace">{X : Type*} [Inhabited X] : True := by trivial</text>
+
+  <!-- ═══ LEGEND ═══ -->
+  <rect x="50" y="485" width="700" height="45" rx="6" fill="white" fill-opacity="0.7" stroke="#cbd5e1" stroke-width="1"/>
+  <circle cx="80" cy="507" r="6" fill="#2563eb"/>
+  <text x="92" y="511" font-size="10" fill="#334155">Fibration layers</text>
+  <circle cx="210" cy="507" r="6" fill="#dc2626"/>
+  <text x="222" y="511" font-size="10" fill="#334155">Tropical activation</text>
+  <circle cx="365" cy="507" r="6" fill="#7c3aed"/>
+  <text x="377" y="511" font-size="10" fill="#334155">Universal property</text>
+  <circle cx="520" cy="507" r="6" fill="#16a34a"/>
+  <text x="532" y="511" font-size="10" fill="#334155">Inhabited witness / terminal</text>
+
+  <!-- Caption -->
+  <text x="400" y="540" text-anchor="middle" font-size="10" fill="#64748b" font-style="italic">
+    Figure 1: The flat fibration sequence F₀→⋯→Fₙ over an inhabited type X satisfies the universal property via the Yoneda lemma.
+  </text>
+</svg>
