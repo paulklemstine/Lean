@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <linearGradient id="tropicalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a5276;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2ecc71;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="infoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e74c3c;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f39c12;stop-opacity:1" />
+    </linearGradient>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2980b9" />
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#27ae60" />
+    </marker>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#c0392b" />
+    </marker>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#8e44ad" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="#fafafa" rx="10"/>
+
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Georgia, serif" font-size="20" font-weight="bold" fill="#2c3e50">
+    Tropical Entropy Bound: Structure Diagram
+  </text>
+  <text x="400" y="55" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#7f8c8d">
+    log₂(rk_trop(φ(x))) ≤ K(x) + O(1)
+  </text>
+
+  <!-- === Left Column: Data Object === -->
+  <!-- Data Object Box -->
+  <rect x="40" y="90" width="160" height="80" rx="12" fill="#3498db" opacity="0.15" stroke="#2980b9" stroke-width="2"/>
+  <text x="120" y="120" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#2c3e50">Data Object</text>
+  <text x="120" y="140" text-anchor="middle" font-family="monospace" font-size="12" fill="#2980b9">x ∈ X</text>
+  <text x="120" y="158" text-anchor="middle" font-family="monospace" font-size="10" fill="#7f8c8d">[Inhabited X]</text>
+
+  <!-- === Center: Tropical Matrix === -->
+  <!-- Encoding arrow -->
+  <line x1="200" y1="130" x2="275" y2="130" stroke="#2980b9" stroke-width="2" marker-end="url(#arrowBlue)" stroke-dasharray="6,3"/>
+  <text x="238" y="120" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#2980b9">φ</text>
+  <text x="238" y="148" text-anchor="middle" font-family="Georgia, serif" font-size="9" fill="#7f8c8d">encode</text>
+
+  <!-- Tropical Matrix Box -->
+  <rect x="285" y="80" width="230" height="100" rx="12" fill="url(#tropicalGrad)" opacity="0.15" stroke="#1a5276" stroke-width="2"/>
+  <text x="400" y="108" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#1a5276">Tropical Matrix</text>
+  <text x="400" y="128" text-anchor="middle" font-family="monospace" font-size="12" fill="#27ae60">φ(x) ∈ T^{m×n}</text>
+
+  <!-- Matrix visualization (small grid) -->
+  <g transform="translate(340, 138)">
+    <rect x="0" y="0" width="18" height="14" fill="#2ecc71" opacity="0.3" stroke="#27ae60" stroke-width="1"/>
+    <rect x="20" y="0" width="18" height="14" fill="#2ecc71" opacity="0.5" stroke="#27ae60" stroke-width="1"/>
+    <rect x="40" y="0" width="18" height="14" fill="#2ecc71" opacity="0.7" stroke="#27ae60" stroke-width="1"/>
+    <rect x="60" y="0" width="18" height="14" fill="#2ecc71" opacity="0.2" stroke="#27ae60" stroke-width="1"/>
+    <rect x="80" y="0" width="18" height="14" fill="#2ecc71" opacity="0.6" stroke="#27ae60" stroke-width="1"/>
+    <text x="5" y="11" font-family="monospace" font-size="8" fill="#1a5276">3</text>
+    <text x="25" y="11" font-family="monospace" font-size="8" fill="#1a5276">7</text>
+    <text x="45" y="11" font-family="monospace" font-size="8" fill="#1a5276">2</text>
+    <text x="65" y="11" font-family="monospace" font-size="8" fill="#1a5276">−∞</text>
+    <text x="85" y="11" font-family="monospace" font-size="8" fill="#1a5276">5</text>
+  </g>
+
+  <!-- === Right Column: Kolmogorov Complexity === -->
+  <!-- Arrow to K(x) -->
+  <line x1="515" y1="130" x2="590" y2="130" stroke="#c0392b" stroke-width="2" marker-end="url(#arrowRed)" stroke-dasharray="6,3"/>
+  <text x="553" y="120" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#c0392b">bound</text>
+
+  <!-- K(x) Box -->
+  <rect x="600" y="90" width="160" height="80" rx="12" fill="url(#infoGrad)" opacity="0.15" stroke="#c0392b" stroke-width="2"/>
+  <text x="680" y="118" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#c0392b">Kolmogorov</text>
+  <text x="680" y="138" text-anchor="middle" font-family="monospace" font-size="12" fill="#e67e22">K(x)</text>
+  <text x="680" y="158" text-anchor="middle" font-family="monospace" font-size="10" fill="#7f8c8d">uncomputable</text>
+
+  <!-- === Rank Hierarchy (Center, below matrix) === -->
+  <!-- Tropical Rank Box -->
+  <rect x="120" y="240" width="200" height="70" rx="10" fill="#27ae60" opacity="0.12" stroke="#27ae60" stroke-width="2"/>
+  <text x="220" y="268" text-anchor="middle" font-family="monospace" font-size="13" font-weight="bold" fill="#1e8449">Tropical Rank</text>
+  <text x="220" y="290" text-anchor="middle" font-family="monospace" font-size="12" fill="#27ae60">rk_trop(φ(x))</text>
+  <text x="220" y="303" text-anchor="middle" font-family="monospace" font-size="9" fill="#7f8c8d">min factorization</text>
+
+  <!-- Max-Plus Rank Box -->
+  <rect x="480" y="240" width="200" height="70" rx="10" fill="#8e44ad" opacity="0.12" stroke="#8e44ad" stroke-width="2"/>
+  <text x="580" y="268" text-anchor="middle" font-family="monospace" font-size="13" font-weight="bold" fill="#6c3483">Max-Plus Rank</text>
+  <text x="580" y="290" text-anchor="middle" font-family="monospace" font-size="12" fill="#8e44ad">rk_mp(φ(x))</text>
+  <text x="580" y="303" text-anchor="middle" font-family="monospace" font-size="9" fill="#7f8c8d">Barvinok rank</text>
+
+  <!-- Arrow: Tropical Rank ≤ Max-Plus Rank -->
+  <line x1="320" y1="275" x2="475" y2="275" stroke="#8e44ad" stroke-width="2.5" marker-end="url(#arrowPurple)"/>
+  <text x="398" y="265" text-anchor="middle" font-family="Georgia, serif" font-size="14" font-weight="bold" fill="#6c3483">≤</text>
+
+  <!-- Arrows from matrix to ranks -->
+  <line x1="350" y1="180" x2="250" y2="238" stroke="#27ae60" stroke-width="1.5" marker-end="url(#arrowGreen)" stroke-dasharray="4,3"/>
+  <line x1="450" y1="180" x2="550" y2="238" stroke="#8e44ad" stroke-width="1.5" marker-end="url(#arrowPurple)" stroke-dasharray="4,3"/>
+
+  <!-- === Central Inequality === -->
+  <rect x="180" y="350" width="440" height="60" rx="15" fill="#f1c40f" opacity="0.15" stroke="#f39c12" stroke-width="2.5"/>
+  <text x="400" y="378" text-anchor="middle" font-family="Georgia, serif" font-size="16" font-weight="bold" fill="#d68910">
+    log₂(rk_trop(φ(x)))  ≤  K(x) + O(1)
+  </text>
+  <text x="400" y="400" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#7f8c8d">
+    The Tropical Entropy Bound
+  </text>
+
+  <!-- Arrows from ranks to central inequality -->
+  <line x1="220" y1="310" x2="300" y2="348" stroke="#27ae60" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+  <line x1="580" y1="310" x2="500" y2="348" stroke="#8e44ad" stroke-width="1.5" marker-end="url(#arrowPurple)"/>
+
+  <!-- === Max-Plus Semiring Box === -->
+  <rect x="50" y="440" width="300" height="100" rx="10" fill="#2c3e50" opacity="0.06" stroke="#2c3e50" stroke-width="1.5"/>
+  <text x="200" y="465" text-anchor="middle" font-family="Georgia, serif" font-size="13" font-weight="bold" fill="#2c3e50">Max-Plus Semiring (T, ⊕, ⊙)</text>
+  <line x1="80" y1="475" x2="320" y2="475" stroke="#bdc3c7" stroke-width="1"/>
+  <text x="200" y="495" text-anchor="middle" font-family="monospace" font-size="12" fill="#2980b9">a ⊕ b = max(a, b)</text>
+  <text x="200" y="515" text-anchor="middle" font-family="monospace" font-size="12" fill="#27ae60">a ⊙ b = a + b</text>
+  <text x="200" y="532" text-anchor="middle" font-family="monospace" font-size="10" fill="#7f8c8d">Identity: 0 = −∞ (add), 1 = 0 (mul)</text>
+
+  <!-- === Compression Ladder === -->
+  <rect x="450" y="440" width="300" height="100" rx="10" fill="#e74c3c" opacity="0.06" stroke="#e74c3c" stroke-width="1.5"/>
+  <text x="600" y="465" text-anchor="middle" font-family="Georgia, serif" font-size="13" font-weight="bold" fill="#c0392b">Compression Hierarchy</text>
+  <line x1="480" y1="475" x2="720" y2="475" stroke="#bdc3c7" stroke-width="1"/>
+
+  <!-- Compression bars -->
+  <rect x="480" y="485" width="40" height="12" rx="3" fill="#27ae60" opacity="0.6"/>
+  <text x="530" y="496" font-family="monospace" font-size="10" fill="#2c3e50">Low rank → High compression</text>
+
+  <rect x="480" y="505" width="120" height="12" rx="3" fill="#f39c12" opacity="0.6"/>
+  <text x="610" y="516" font-family="monospace" font-size="10" fill="#2c3e50">Medium rank → Moderate</text>
+
+  <rect x="480" y="525" width="210" height="12" rx="3" fill="#e74c3c" opacity="0.6"/>
+  <text x="700" y="536" font-family="monospace" font-size="10" fill="#2c3e50">Max</text>
+
+  <!-- Caption -->
+  <text x="400" y="575" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#7f8c8d">
+    Figure: The tropical entropy bound connects max-plus algebraic rank to Kolmogorov complexity,
+  </text>
+  <text x="400" y="592" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#7f8c8d">
+    providing a computable lower bound on the fundamental limit of lossless data compression.
+  </text>
+</svg>

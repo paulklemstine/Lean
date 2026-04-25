@@ -390,6 +390,9 @@ class CycleMaster:
                     artifacts[artifact_type] = dest_ws
 
                     # Copy to Catalog/ResearchOutput (git-tracked)
+
+                    # Also track catalog path for git commits
+                    artifacts[f"catalog_{artifact_type}"] = dest_cat
                     dest_cat = catalog_output_dir / src.name
                     shutil.copy2(src, dest_cat)
                     break
@@ -552,7 +555,7 @@ class CycleMaster:
             print(f"[Process] Placed: {len(decisions['placed'])}, Artifacts: {len(decisions['artifacts'])}, Unchanged: {len(decisions['unchanged'])}, Rejected: {len(decisions['rejected'])}")
 
             # Extract artifacts
-            artifacts = self._extract_artifacts(extract_dir, exp_id)
+            artifacts = self._extract_artifacts(extract_dir, exp_id, domain=job.domain["id"], concept_title=job.concept.title)
             print(f"[Process] Artifacts: {list(artifacts.keys())}")
 
             changed_count = len(decisions["placed"])
@@ -748,7 +751,7 @@ class CycleMaster:
             print(f"[Phase 6] Placed: {len(decisions['placed'])}, Artifacts: {len(decisions['artifacts'])}, Unchanged: {len(decisions['unchanged'])}, Rejected: {len(decisions['rejected'])}")
 
             # Extract artifacts
-            artifacts = self._extract_artifacts(extract_dir, exp_id)
+            artifacts = self._extract_artifacts(extract_dir, exp_id, domain=job.domain["id"], concept_title=job.concept.title)
             print(f"[Phase 6] Artifacts: {list(artifacts.keys())}")
 
             changed_count = len(decisions["placed"])

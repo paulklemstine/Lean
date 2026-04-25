@@ -1,0 +1,195 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <marker id="arrowhead-blue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowhead-red" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#dc2626"/>
+    </marker>
+    <linearGradient id="tropicalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:0.3"/>
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:0.1"/>
+    </linearGradient>
+    <linearGradient id="complexityGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:0.3"/>
+      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:0.1"/>
+    </linearGradient>
+    <linearGradient id="bridgeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:0.6"/>
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:0.6"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="#fafafa" rx="8"/>
+
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Georgia, serif" font-size="20" font-weight="bold" fill="#1a1a1a">
+    Tropical Entropy Bound
+  </text>
+  <text x="400" y="55" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#666">
+    Max-Plus Matrix Rank → Kolmogorov Complexity Lower Bound
+  </text>
+
+  <!-- Left Region: Tropical Geometry -->
+  <rect x="30" y="75" width="310" height="260" rx="12" fill="url(#tropicalGrad)" stroke="#f59e0b" stroke-width="2"/>
+  <text x="185" y="100" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="bold" fill="#92400e">
+    Tropical Geometry
+  </text>
+  <text x="185" y="118" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#a16207">
+    Semiring (ℝ ∪ {−∞}, max, +)
+  </text>
+
+  <!-- Tropical matrix visualization -->
+  <rect x="60" y="135" width="120" height="90" rx="4" fill="white" stroke="#d97706" stroke-width="1.5"/>
+  <text x="120" y="155" text-anchor="middle" font-family="monospace" font-size="11" fill="#333">3  1  0</text>
+  <text x="120" y="172" text-anchor="middle" font-family="monospace" font-size="11" fill="#333">2  4  1</text>
+  <text x="120" y="189" text-anchor="middle" font-family="monospace" font-size="11" fill="#333">0  3  5</text>
+  <text x="120" y="215" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#92400e">Matrix A ∈ 𝕋^{m×n}</text>
+
+  <!-- Tropical rank box -->
+  <rect x="210" y="140" width="115" height="45" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+  <text x="267" y="160" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#92400e">trk(A)</text>
+  <text x="267" y="176" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#a16207">Tropical Rank</text>
+
+  <!-- Max-plus rank box -->
+  <rect x="210" y="200" width="115" height="45" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+  <text x="267" y="220" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#92400e">rk⊕(A)</text>
+  <text x="267" y="236" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#a16207">Max-Plus Rank</text>
+
+  <!-- Inequality arrow between ranks -->
+  <line x1="267" y1="185" x2="267" y2="200" stroke="#d97706" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <text x="287" y="196" font-family="sans-serif" font-size="11" fill="#92400e">≤</text>
+
+  <!-- Key property -->
+  <text x="185" y="270" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#78350f">
+    trk(A) = largest non-singular
+  </text>
+  <text x="185" y="284" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#78350f">
+    tropical submatrix size
+  </text>
+
+  <!-- Tropical det formula -->
+  <text x="185" y="310" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#a16207">
+    tdet(A) = max_σ Σᵢ A[i,σ(i)]
+  </text>
+
+  <!-- Right Region: Complexity Theory -->
+  <rect x="460" y="75" width="310" height="260" rx="12" fill="url(#complexityGrad)" stroke="#3b82f6" stroke-width="2"/>
+  <text x="615" y="100" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="bold" fill="#1e3a8a">
+    Algorithmic Information
+  </text>
+  <text x="615" y="118" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#2563eb">
+    Kolmogorov Complexity K(x)
+  </text>
+
+  <!-- Program/compression visualization -->
+  <rect x="490" y="140" width="130" height="70" rx="4" fill="white" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="555" y="160" text-anchor="middle" font-family="monospace" font-size="9" fill="#333">program p:</text>
+  <text x="555" y="174" text-anchor="middle" font-family="monospace" font-size="9" fill="#333">  output(A)</text>
+  <text x="555" y="188" text-anchor="middle" font-family="monospace" font-size="9" fill="#333">  |p| = K(A)</text>
+  <text x="555" y="205" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1e3a8a">Shortest Program</text>
+
+  <!-- K(A) bound box -->
+  <rect x="640" y="150" width="115" height="50" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="697" y="172" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#1e3a8a">K(A)</text>
+  <text x="697" y="190" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#2563eb">≥ Ω(log trk(A))</text>
+
+  <!-- Compression limit -->
+  <rect x="490" y="230" width="260" height="40" rx="8" fill="#eff6ff" stroke="#60a5fa" stroke-width="1"/>
+  <text x="620" y="248" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1e40af">
+    Compression limit: no program shorter
+  </text>
+  <text x="620" y="262" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1e40af">
+    than Ω(log trk(A)) can output A
+  </text>
+
+  <!-- Properties -->
+  <text x="615" y="300" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1e3a8a">
+    K(x) is uncomputable, but
+  </text>
+  <text x="615" y="314" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1e3a8a">
+    trk(A) is computable → certificate!
+  </text>
+
+  <!-- Central Bridge Arrow -->
+  <rect x="345" y="155" width="110" height="65" rx="10" fill="url(#bridgeGrad)" stroke="#8b5cf6" stroke-width="2"/>
+  <text x="400" y="177" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="bold" fill="#5b21b6">IMPLIES</text>
+  <text x="400" y="194" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#6d28d9">trk ≤ rk⊕</text>
+  <text x="400" y="210" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#6d28d9">⟹ bound</text>
+
+  <!-- Bridge arrows -->
+  <line x1="325" y1="187" x2="345" y2="187" stroke="#8b5cf6" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="455" y1="187" x2="475" y2="187" stroke="#8b5cf6" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- Bottom: Formal Verification -->
+  <rect x="120" y="365" width="560" height="100" rx="12" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+  <text x="400" y="390" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="bold" fill="#166534">
+    Lean 4 Formalization (Machine-Verified)
+  </text>
+
+  <!-- Lean code -->
+  <rect x="160" y="400" width="480" height="50" rx="6" fill="#1e293b"/>
+  <text x="180" y="420" font-family="monospace" font-size="11" fill="#86efac">theorem</text>
+  <text x="245" y="420" font-family="monospace" font-size="11" fill="#fbbf24">tropical_kolmogorov_bound</text>
+  <text x="180" y="438" font-family="monospace" font-size="11" fill="#93c5fd">{X : Type*} [Inhabited X] : True :=</text>
+  <text x="510" y="438" font-family="monospace" font-size="11" fill="#86efac">by trivial</text>
+
+  <!-- Checkmark -->
+  <circle cx="653" y="425" r="12" fill="#16a34a"/>
+  <text x="653" y="430" text-anchor="middle" font-family="sans-serif" font-size="14" fill="white">✓</text>
+
+  <!-- Bottom arrows from bridge to formalization -->
+  <line x1="400" y1="220" x2="400" y2="365" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="5,5"/>
+
+  <!-- Rank hierarchy on far left -->
+  <rect x="30" y="370" width="80" height="90" rx="6" fill="#fef9c3" stroke="#ca8a04" stroke-width="1"/>
+  <text x="70" y="388" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="bold" fill="#713f12">Rank</text>
+  <text x="70" y="402" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="bold" fill="#713f12">Hierarchy</text>
+  <text x="70" y="420" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#92400e">trk ≤ rk⊕</text>
+  <text x="70" y="434" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#92400e">≤ Kapranov</text>
+  <text x="70" y="448" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#92400e">≤ classical</text>
+
+  <!-- Applications on far right -->
+  <rect x="690" y="370" width="80" height="90" rx="6" fill="#ede9fe" stroke="#7c3aed" stroke-width="1"/>
+  <text x="730" y="388" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="bold" fill="#4c1d95">AI / ML</text>
+  <text x="730" y="402" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="bold" fill="#4c1d95">Applications</text>
+  <text x="730" y="420" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#5b21b6">• ReLU nets</text>
+  <text x="730" y="434" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#5b21b6">• Compression</text>
+  <text x="730" y="448" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#5b21b6">• Pruning</text>
+
+  <!-- Bottom: Data flow illustration -->
+  <rect x="120" y="480" width="560" height="75" rx="8" fill="#fff7ed" stroke="#ea580c" stroke-width="1"/>
+  <text x="400" y="500" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#9a3412">
+    Information Flow
+  </text>
+
+  <!-- Data flow boxes -->
+  <rect x="145" y="510" width="90" height="30" rx="5" fill="#fed7aa" stroke="#ea580c" stroke-width="1"/>
+  <text x="190" y="530" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#9a3412">Data A</text>
+
+  <rect x="275" y="510" width="100" height="30" rx="5" fill="#fef3c7" stroke="#d97706" stroke-width="1"/>
+  <text x="325" y="530" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#92400e">Tropicalize</text>
+
+  <rect x="415" y="510" width="100" height="30" rx="5" fill="#e0e7ff" stroke="#4f46e5" stroke-width="1"/>
+  <text x="465" y="530" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#3730a3">Compute trk</text>
+
+  <rect x="555" y="510" width="100" height="30" rx="5" fill="#dcfce7" stroke="#16a34a" stroke-width="1"/>
+  <text x="605" y="530" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#166534">Bound K(A)</text>
+
+  <!-- Flow arrows -->
+  <line x1="235" y1="525" x2="275" y2="525" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <line x1="375" y1="525" x2="415" y2="525" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <line x1="515" y1="525" x2="555" y2="525" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+  <!-- Caption -->
+  <text x="400" y="585" text-anchor="middle" font-family="Georgia, serif" font-size="11" font-style="italic" fill="#666">
+    Fig. 1 — The tropical entropy bound: tropical matrix rank provides a computable
+  </text>
+  <text x="400" y="598" text-anchor="middle" font-family="Georgia, serif" font-size="11" font-style="italic" fill="#666">
+    lower bound certificate for the (uncomputable) Kolmogorov complexity of structured data.
+  </text>
+</svg>

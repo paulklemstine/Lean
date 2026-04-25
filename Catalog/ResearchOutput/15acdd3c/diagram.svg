@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <linearGradient id="primeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4a90d9;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#2c5f8a;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="compGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e8744f;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#c0392b;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="topGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2ecc71;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#27ae60;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="#fafafa" rx="10"/>
+
+  <!-- Title -->
+  <text x="400" y="40" text-anchor="middle" font-size="20" font-weight="bold" fill="#222">
+    Prime-Composite Dichotomy: The Corrected Factoring Oracle
+  </text>
+  <text x="400" y="62" text-anchor="middle" font-size="13" fill="#666" font-style="italic">
+    ∀ n &gt; 1: Nat.Prime n ∨ ∃ a b &gt; 1, a · b = n
+  </text>
+
+  <!-- Top node: n > 1 -->
+  <rect x="300" y="85" width="200" height="50" rx="25" fill="url(#topGrad)" stroke="#1a7a42" stroke-width="2"/>
+  <text x="400" y="115" text-anchor="middle" font-size="18" fill="white" font-weight="bold">n &gt; 1</text>
+
+  <!-- Branching arrows -->
+  <line x1="350" y1="135" x2="200" y2="195" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="450" y1="135" x2="600" y2="195" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- Decision label -->
+  <text x="260" y="165" text-anchor="middle" font-size="12" fill="#4a90d9" font-weight="bold">Nat.Prime n?</text>
+  <text x="540" y="165" text-anchor="middle" font-size="12" fill="#e8744f" font-weight="bold">¬ Nat.Prime n?</text>
+
+  <!-- Left branch: Prime -->
+  <rect x="80" y="200" width="240" height="55" rx="12" fill="url(#primeGrad)" stroke="#1a3d6b" stroke-width="2"/>
+  <text x="200" y="225" text-anchor="middle" font-size="16" fill="white" font-weight="bold">PRIME</text>
+  <text x="200" y="245" text-anchor="middle" font-size="12" fill="#cce0f5">Left disjunct: Or.inl</text>
+
+  <!-- Prime examples -->
+  <rect x="90" y="270" width="220" height="100" rx="8" fill="#e8f0fe" stroke="#4a90d9" stroke-width="1"/>
+  <text x="200" y="292" text-anchor="middle" font-size="13" fill="#2c5f8a" font-weight="bold">Examples</text>
+  <text x="200" y="315" text-anchor="middle" font-size="20" fill="#4a90d9">2, 3, 5, 7, 11, 13</text>
+  <text x="200" y="340" text-anchor="middle" font-size="11" fill="#666">No a, b &gt; 1 with a·b = n</text>
+  <text x="200" y="358" text-anchor="middle" font-size="11" fill="#c0392b" font-weight="bold">❌ Original theorem FAILS here</text>
+
+  <!-- Right branch: Composite -->
+  <rect x="480" y="200" width="240" height="55" rx="12" fill="url(#compGrad)" stroke="#7a1a1a" stroke-width="2"/>
+  <text x="600" y="225" text-anchor="middle" font-size="16" fill="white" font-weight="bold">COMPOSITE</text>
+  <text x="600" y="245" text-anchor="middle" font-size="12" fill="#f5d0c0">Right disjunct: Or.inr</text>
+
+  <!-- Composite examples with factorizations -->
+  <rect x="490" y="270" width="220" height="130" rx="8" fill="#fdf0ec" stroke="#e8744f" stroke-width="1"/>
+  <text x="600" y="292" text-anchor="middle" font-size="13" fill="#c0392b" font-weight="bold">Examples (a × b = n)</text>
+  <text x="600" y="315" text-anchor="middle" font-size="14" fill="#e8744f">4 = 2 × 2</text>
+  <text x="600" y="338" text-anchor="middle" font-size="14" fill="#e8744f">6 = 2 × 3</text>
+  <text x="600" y="361" text-anchor="middle" font-size="14" fill="#e8744f">15 = 3 × 5</text>
+  <text x="600" y="384" text-anchor="middle" font-size="14" fill="#e8744f">100 = 2 × 50</text>
+
+  <!-- Proof method box -->
+  <rect x="150" y="420" width="500" height="100" rx="10" fill="#f0f7ee" stroke="#27ae60" stroke-width="2"/>
+  <text x="400" y="445" text-anchor="middle" font-size="14" fill="#1a7a42" font-weight="bold">Proof Method (Lean 4 / Mathlib)</text>
+  <text x="400" y="468" text-anchor="middle" font-size="12" fill="#333">
+    1. Case split: by_cases h : Nat.Prime n
+  </text>
+  <text x="400" y="488" text-anchor="middle" font-size="12" fill="#333">
+    2. Composite case: Nat.exists_dvd_of_not_prime2 yields divisor k
+  </text>
+  <text x="400" y="508" text-anchor="middle" font-size="12" fill="#333">
+    3. Witness: a = k, b = n/k, both &gt; 1 (by nlinarith)
+  </text>
+
+  <!-- X mark on false original -->
+  <line x1="85" y1="410" x2="135" y2="410" stroke="#c0392b" stroke-width="3"/>
+  <text x="110" y="407" text-anchor="middle" font-size="10" fill="#c0392b">original false</text>
+
+  <!-- Check mark on corrected -->
+  <text x="680" y="410" text-anchor="middle" font-size="22" fill="#27ae60">✓</text>
+  <text x="680" y="428" text-anchor="middle" font-size="10" fill="#27ae60">corrected</text>
+
+  <!-- Caption -->
+  <text x="400" y="560" text-anchor="middle" font-size="12" fill="#555" font-style="italic">
+    Figure: The fundamental dichotomy for integers n &gt; 1. The original theorem omitted the prime case (blue),
+  </text>
+  <text x="400" y="578" text-anchor="middle" font-size="12" fill="#555" font-style="italic">
+    making it false. The corrected version is a disjunction covering both cases, formally verified in Lean 4.
+  </text>
+</svg>

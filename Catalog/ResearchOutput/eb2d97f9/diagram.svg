@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a1a4e;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="level0" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#2196F3;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#2196F3;stop-opacity:0.1" />
+    </linearGradient>
+    <linearGradient id="level1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#4CAF50;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#4CAF50;stop-opacity:0.1" />
+    </linearGradient>
+    <linearGradient id="level2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FF9800;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#FF9800;stop-opacity:0.1" />
+    </linearGradient>
+    <linearGradient id="level3" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#E91E63;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#E91E63;stop-opacity:0.1" />
+    </linearGradient>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#aaa" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bg)" rx="8"/>
+
+  <!-- Title -->
+  <text x="400" y="40" text-anchor="middle" font-family="Georgia, serif" font-size="22" fill="#e0e0e0" font-weight="bold">OISCC Temporal Hierarchy</text>
+  <text x="400" y="62" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#999">Oracle-Indexed Self-Consistent Computation</text>
+
+  <!-- Nested ellipses representing strict containment -->
+  <!-- CTC_3 (outermost) -->
+  <ellipse cx="400" cy="300" rx="340" ry="200" fill="url(#level3)" stroke="#E91E63" stroke-width="2" stroke-dasharray="8,4"/>
+  <text x="720" y="160" font-family="monospace" font-size="14" fill="#E91E63" font-weight="bold">CTC₃</text>
+
+  <!-- CTC_2 -->
+  <ellipse cx="380" cy="300" rx="270" ry="160" fill="url(#level2)" stroke="#FF9800" stroke-width="2" stroke-dasharray="6,3"/>
+  <text x="630" y="195" font-family="monospace" font-size="14" fill="#FF9800" font-weight="bold">CTC₂</text>
+
+  <!-- CTC_1 -->
+  <ellipse cx="360" cy="300" rx="200" ry="120" fill="url(#level1)" stroke="#4CAF50" stroke-width="2"/>
+  <text x="540" y="230" font-family="monospace" font-size="14" fill="#4CAF50" font-weight="bold">CTC₁</text>
+
+  <!-- CTC_0 (innermost) -->
+  <ellipse cx="340" cy="300" rx="120" ry="75" fill="url(#level0)" stroke="#2196F3" stroke-width="2"/>
+  <text x="340" y="295" text-anchor="middle" font-family="monospace" font-size="16" fill="#2196F3" font-weight="bold">CTC₀</text>
+  <text x="340" y="315" text-anchor="middle" font-family="monospace" font-size="11" fill="#6eb5f7">(Standard Oracle TM)</text>
+
+  <!-- Diagonal languages L_k separating levels -->
+  <!-- L_0 between CTC_0 and CTC_1 -->
+  <circle cx="480" cy="270" r="8" fill="#FFEB3B" stroke="#FDD835" stroke-width="1.5"/>
+  <text x="495" y="265" font-family="monospace" font-size="11" fill="#FFEB3B">L₀</text>
+  <text x="495" y="280" font-family="sans-serif" font-size="9" fill="#999">(separates 0↔1)</text>
+
+  <!-- L_1 between CTC_1 and CTC_2 -->
+  <circle cx="560" cy="330" r="8" fill="#FFEB3B" stroke="#FDD835" stroke-width="1.5"/>
+  <text x="575" y="325" font-family="monospace" font-size="11" fill="#FFEB3B">L₁</text>
+  <text x="575" y="340" font-family="sans-serif" font-size="9" fill="#999">(separates 1↔2)</text>
+
+  <!-- L_2 between CTC_2 and CTC_3 -->
+  <circle cx="640" cy="390" r="8" fill="#FFEB3B" stroke="#FDD835" stroke-width="1.5"/>
+  <text x="655" y="385" font-family="monospace" font-size="11" fill="#FFEB3B">L₂</text>
+  <text x="655" y="400" font-family="sans-serif" font-size="9" fill="#999">(separates 2↔3)</text>
+
+  <!-- CTC loops (curved arrows representing temporal feedback) -->
+  <!-- Loop for level 1 -->
+  <path d="M 250 230 C 200 180, 140 220, 180 270" fill="none" stroke="#4CAF50" stroke-width="1.5" marker-end="url(#arrowhead)" opacity="0.7"/>
+  <text x="150" y="210" font-family="sans-serif" font-size="9" fill="#4CAF50">1 CTC loop</text>
+
+  <!-- Loop for level 2 -->
+  <path d="M 180 190 C 110 130, 60 200, 120 260" fill="none" stroke="#FF9800" stroke-width="1.5" marker-end="url(#arrowhead)" opacity="0.7"/>
+  <text x="50" y="160" font-family="sans-serif" font-size="9" fill="#FF9800">2 CTC loops</text>
+
+  <!-- Loop for level 3 -->
+  <path d="M 140 150 C 50 80, 10 180, 80 250" fill="none" stroke="#E91E63" stroke-width="1.5" marker-end="url(#arrowhead)" opacity="0.7"/>
+  <text x="10" y="110" font-family="sans-serif" font-size="9" fill="#E91E63">3 CTC loops</text>
+
+  <!-- Strict containment arrows on right side -->
+  <line x1="750" y1="400" x2="750" y2="170" stroke="#aaa" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <text x="760" y="290" font-family="sans-serif" font-size="11" fill="#ccc" transform="rotate(90, 760, 290)">Increasing computational power</text>
+
+  <!-- Fixed-point equation -->
+  <text x="400" y="520" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#ccc">Self-consistency: x = F(x) at each CTC level</text>
+  <text x="400" y="540" text-anchor="middle" font-family="monospace" font-size="12" fill="#aaa">∀k: CTC_k ⊊ CTC_{k+1}  (strict temporal hierarchy)</text>
+
+  <!-- Caption -->
+  <rect x="50" y="560" width="700" height="30" rx="4" fill="rgba(255,255,255,0.05)"/>
+  <text x="400" y="580" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#888">
+    Fig 1. The OISCC temporal hierarchy. Each CTC level (colored ellipse) strictly contains the previous.
+  </text>
+  <text x="400" y="595" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#666">
+    Yellow dots mark diagonal languages L_k that witness each separation.
+  </text>
+</svg>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 550" width="800" height="550">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <linearGradient id="primeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#e74c3c;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#c0392b;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="compGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#2ecc71;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#27ae60;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="550" fill="#fafafa" rx="10"/>
+
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Georgia, serif" font-size="20" font-weight="bold" fill="#2c3e50">Non-Archimedean Factoring Oracle: Correctness Analysis</text>
+
+  <!-- The number line region -->
+  <text x="400" y="70" text-anchor="middle" font-family="Arial" font-size="14" fill="#7f8c8d">Natural numbers n &gt; 1 partitioned into Primes and Composites</text>
+
+  <!-- Number line -->
+  <line x1="50" y1="120" x2="750" y2="120" stroke="#bdc3c7" stroke-width="2"/>
+
+  <!-- Numbers on the line: primes in red, composites in green -->
+  <!-- 2 -->
+  <circle cx="90" cy="120" r="18" fill="url(#primeGrad)"/>
+  <text x="90" y="125" text-anchor="middle" font-family="Arial" font-size="14" fill="white" font-weight="bold">2</text>
+
+  <!-- 3 -->
+  <circle cx="150" cy="120" r="18" fill="url(#primeGrad)"/>
+  <text x="150" y="125" text-anchor="middle" font-family="Arial" font-size="14" fill="white" font-weight="bold">3</text>
+
+  <!-- 4 = 2×2 -->
+  <circle cx="210" cy="120" r="18" fill="url(#compGrad)"/>
+  <text x="210" y="125" text-anchor="middle" font-family="Arial" font-size="14" fill="white" font-weight="bold">4</text>
+
+  <!-- 5 -->
+  <circle cx="270" cy="120" r="18" fill="url(#primeGrad)"/>
+  <text x="270" y="125" text-anchor="middle" font-family="Arial" font-size="14" fill="white" font-weight="bold">5</text>
+
+  <!-- 6 = 2×3 -->
+  <circle cx="330" cy="120" r="18" fill="url(#compGrad)"/>
+  <text x="330" y="125" text-anchor="middle" font-family="Arial" font-size="14" fill="white" font-weight="bold">6</text>
+
+  <!-- 7 -->
+  <circle cx="390" cy="120" r="18" fill="url(#primeGrad)"/>
+  <text x="390" y="125" text-anchor="middle" font-family="Arial" font-size="14" fill="white" font-weight="bold">7</text>
+
+  <!-- 8 = 2×4 -->
+  <circle cx="450" cy="120" r="18" fill="url(#compGrad)"/>
+  <text x="450" y="125" text-anchor="middle" font-family="Arial" font-size="14" fill="white" font-weight="bold">8</text>
+
+  <!-- 9 = 3×3 -->
+  <circle cx="510" cy="120" r="18" fill="url(#compGrad)"/>
+  <text x="510" y="125" text-anchor="middle" font-family="Arial" font-size="14" fill="white" font-weight="bold">9</text>
+
+  <!-- 10 = 2×5 -->
+  <circle cx="570" cy="120" r="18" fill="url(#compGrad)"/>
+  <text x="570" y="125" text-anchor="middle" font-family="Arial" font-size="14" fill="white" font-weight="bold">10</text>
+
+  <!-- 11 -->
+  <circle cx="630" cy="120" r="18" fill="url(#primeGrad)"/>
+  <text x="630" y="125" text-anchor="middle" font-family="Arial" font-size="14" fill="white" font-weight="bold">11</text>
+
+  <!-- 12 -->
+  <circle cx="690" cy="120" r="18" fill="url(#compGrad)"/>
+  <text x="690" y="125" text-anchor="middle" font-family="Arial" font-size="14" fill="white" font-weight="bold">12</text>
+
+  <!-- Legend -->
+  <circle cx="250" cy="165" r="10" fill="url(#primeGrad)"/>
+  <text x="265" y="170" font-family="Arial" font-size="13" fill="#2c3e50">= Prime (counterexample to original)</text>
+
+  <circle cx="530" cy="165" r="10" fill="url(#compGrad)"/>
+  <text x="545" y="170" font-family="Arial" font-size="13" fill="#2c3e50">= Composite (theorem applies)</text>
+
+  <!-- Factorization arrows for composites -->
+  <!-- 4 = 2 × 2 -->
+  <line x1="210" y1="145" x2="210" y2="200" stroke="#27ae60" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="210" y="220" text-anchor="middle" font-family="monospace" font-size="12" fill="#27ae60">2 × 2</text>
+
+  <!-- 6 = 2 × 3 -->
+  <line x1="330" y1="145" x2="330" y2="200" stroke="#27ae60" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="330" y="220" text-anchor="middle" font-family="monospace" font-size="12" fill="#27ae60">2 × 3</text>
+
+  <!-- 8 = 2 × 4 -->
+  <line x1="450" y1="145" x2="450" y2="200" stroke="#27ae60" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="450" y="220" text-anchor="middle" font-family="monospace" font-size="12" fill="#27ae60">2 × 4</text>
+
+  <!-- 9 = 3 × 3 -->
+  <line x1="510" y1="145" x2="510" y2="200" stroke="#27ae60" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="510" y="220" text-anchor="middle" font-family="monospace" font-size="12" fill="#27ae60">3 × 3</text>
+
+  <!-- 10 = 2 × 5 -->
+  <line x1="570" y1="145" x2="570" y2="200" stroke="#27ae60" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="570" y="220" text-anchor="middle" font-family="monospace" font-size="12" fill="#27ae60">2 × 5</text>
+
+  <!-- 12 = 2 × 6 -->
+  <line x1="690" y1="145" x2="690" y2="200" stroke="#27ae60" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="690" y="220" text-anchor="middle" font-family="monospace" font-size="12" fill="#27ae60">2 × 6</text>
+
+  <!-- Counterexample box for n=2 -->
+  <rect x="50" y="260" width="330" height="120" rx="8" fill="#fdf2f2" stroke="#e74c3c" stroke-width="2"/>
+  <text x="215" y="285" text-anchor="middle" font-family="Georgia" font-size="15" font-weight="bold" fill="#c0392b">✗ Original Statement (FALSE)</text>
+  <text x="215" y="310" text-anchor="middle" font-family="Arial" font-size="12" fill="#333">∀ n &gt; 1, ∃ a b &gt; 1, a × b = n</text>
+  <text x="215" y="335" text-anchor="middle" font-family="Arial" font-size="12" fill="#e74c3c">Counterexample: n = 2 (prime)</text>
+  <text x="215" y="358" text-anchor="middle" font-family="Arial" font-size="11" fill="#e74c3c">If a,b ≥ 2 then a×b ≥ 4 &gt; 2  ⊥</text>
+
+  <!-- Corrected theorem box -->
+  <rect x="420" y="260" width="330" height="120" rx="8" fill="#eafaf1" stroke="#2ecc71" stroke-width="2"/>
+  <text x="585" y="285" text-anchor="middle" font-family="Georgia" font-size="15" font-weight="bold" fill="#27ae60">✓ Corrected Statement (TRUE)</text>
+  <text x="585" y="310" text-anchor="middle" font-family="Arial" font-size="12" fill="#333">∀ composite n &gt; 1, ∃ a b &gt; 1, a × b = n</text>
+  <text x="585" y="335" text-anchor="middle" font-family="Arial" font-size="12" fill="#27ae60">Proof: Nat.exists_dvd_of_not_prime2</text>
+  <text x="585" y="358" text-anchor="middle" font-family="Arial" font-size="11" fill="#27ae60">extracts k with 1 &lt; k &lt; n, k | n</text>
+
+  <!-- Proof flow diagram -->
+  <text x="400" y="415" text-anchor="middle" font-family="Georgia" font-size="16" font-weight="bold" fill="#2c3e50">Proof Flow</text>
+
+  <!-- Step boxes -->
+  <rect x="50" y="435" width="160" height="50" rx="6" fill="#3498db" opacity="0.9"/>
+  <text x="130" y="455" text-anchor="middle" font-family="Arial" font-size="11" fill="white">n &gt; 1 ∧ ¬Prime n</text>
+  <text x="130" y="472" text-anchor="middle" font-family="Arial" font-size="10" fill="white">(hypotheses)</text>
+
+  <line x1="210" y1="460" x2="260" y2="460" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <rect x="260" y="435" width="160" height="50" rx="6" fill="#9b59b6" opacity="0.9"/>
+  <text x="340" y="455" text-anchor="middle" font-family="Arial" font-size="11" fill="white">∃ k, k | n ∧</text>
+  <text x="340" y="472" text-anchor="middle" font-family="Arial" font-size="10" fill="white">1 &lt; k &lt; n</text>
+
+  <line x1="420" y1="460" x2="470" y2="460" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <rect x="470" y="435" width="140" height="50" rx="6" fill="#e67e22" opacity="0.9"/>
+  <text x="540" y="455" text-anchor="middle" font-family="Arial" font-size="11" fill="white">a = k, b = n/k</text>
+  <text x="540" y="472" text-anchor="middle" font-family="Arial" font-size="10" fill="white">(construct pair)</text>
+
+  <line x1="610" y1="460" x2="640" y2="460" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <rect x="640" y="435" width="120" height="50" rx="6" fill="#27ae60" opacity="0.9"/>
+  <text x="700" y="455" text-anchor="middle" font-family="Arial" font-size="11" fill="white">a×b = n ∧</text>
+  <text x="700" y="472" text-anchor="middle" font-family="Arial" font-size="10" fill="white">a &gt; 1 ∧ b &gt; 1  ∎</text>
+
+  <!-- Caption -->
+  <text x="400" y="530" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#7f8c8d" font-style="italic">
+    Figure: The factoring oracle theorem — primes (red) are counterexamples to the original claim;
+  </text>
+  <text x="400" y="545" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#7f8c8d" font-style="italic">
+    composites (green) admit non-trivial factorizations, as proven in Lean 4.
+  </text>
+</svg>

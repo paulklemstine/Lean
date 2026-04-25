@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" width="900" height="620">
+  <defs>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#dc2626"/>
+    </marker>
+    <marker id="arrowGray" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6b7280"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#16a34a"/>
+    </marker>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8fafc"/>
+      <stop offset="100%" style="stop-color:#e2e8f0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="620" fill="url(#bgGrad)" rx="12"/>
+  <rect x="2" y="2" width="896" height="616" fill="none" stroke="#94a3b8" stroke-width="1" rx="12"/>
+
+  <!-- Title -->
+  <text x="450" y="35" text-anchor="middle" font-family="Georgia, serif" font-size="20" font-weight="bold" fill="#1e293b">
+    Backpropagation as the Cotangent Lift
+  </text>
+  <text x="450" y="55" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#64748b" font-style="italic">
+    Contravariant functoriality of T* reverses composition order
+  </text>
+
+  <!-- ═══════════ TOP ROW: Forward Pass (Tangent / Covariant) ═══════════ -->
+  <text x="30" y="105" font-family="monospace" font-size="12" fill="#2563eb" font-weight="bold">FORWARD PASS</text>
+  <text x="30" y="120" font-family="monospace" font-size="11" fill="#2563eb">(Tangent Functor T — covariant)</text>
+
+  <!-- Manifolds M_0 ... M_L -->
+  <ellipse cx="130" cy="170" rx="55" ry="30" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text x="130" y="167" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#1e40af">M₀</text>
+  <text x="130" y="184" text-anchor="middle" font-family="monospace" font-size="10" fill="#3b82f6">(input)</text>
+
+  <ellipse cx="310" cy="170" rx="55" ry="30" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text x="310" y="167" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#1e40af">M₁</text>
+  <text x="310" y="184" text-anchor="middle" font-family="monospace" font-size="10" fill="#3b82f6">(hidden)</text>
+
+  <ellipse cx="490" cy="170" rx="55" ry="30" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text x="490" y="175" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#1e40af">⋯</text>
+
+  <ellipse cx="670" cy="170" rx="55" ry="30" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text x="670" y="167" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#1e40af">M_L</text>
+  <text x="670" y="184" text-anchor="middle" font-family="monospace" font-size="10" fill="#3b82f6">(output)</text>
+
+  <!-- Forward arrows -->
+  <line x1="188" y1="170" x2="252" y2="170" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
+  <text x="220" y="160" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#2563eb" font-style="italic">f₁</text>
+
+  <line x1="368" y1="170" x2="432" y2="170" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
+  <text x="400" y="160" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#2563eb" font-style="italic">f₂</text>
+
+  <line x1="548" y1="170" x2="612" y2="170" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
+  <text x="580" y="160" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#2563eb" font-style="italic">f_L</text>
+
+  <!-- Loss -->
+  <line x1="728" y1="170" x2="792" y2="170" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arrowGreen)"/>
+  <rect x="795" y="150" width="60" height="40" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="825" y="175" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="#166534">ℒ</text>
+  <text x="825" y="205" text-anchor="middle" font-family="monospace" font-size="9" fill="#16a34a">loss ∈ ℝ</text>
+
+  <!-- ═══════════ MIDDLE: Duality arrows ═══════════ -->
+  <text x="450" y="255" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#6b7280">
+    ⟱ Cotangent duality: T*f = (df)ᵀ ⟱
+  </text>
+
+  <!-- Vertical duality arrows -->
+  <line x1="130" y1="205" x2="130" y2="320" stroke="#6b7280" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowGray)"/>
+  <line x1="310" y1="205" x2="310" y2="320" stroke="#6b7280" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowGray)"/>
+  <line x1="490" y1="205" x2="490" y2="320" stroke="#6b7280" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowGray)"/>
+  <line x1="670" y1="205" x2="670" y2="320" stroke="#6b7280" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowGray)"/>
+
+  <!-- ═══════════ BOTTOM ROW: Backward Pass (Cotangent / Contravariant) ═══════════ -->
+  <text x="30" y="310" font-family="monospace" font-size="12" fill="#dc2626" font-weight="bold">BACKWARD PASS</text>
+  <text x="30" y="325" font-family="monospace" font-size="11" fill="#dc2626">(Cotangent Functor T* — contravariant)</text>
+
+  <!-- Cotangent bundles -->
+  <ellipse cx="130" cy="370" rx="55" ry="30" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+  <text x="130" y="367" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="#991b1b">T*M₀</text>
+  <text x="130" y="384" text-anchor="middle" font-family="monospace" font-size="10" fill="#ef4444">(gradient)</text>
+
+  <ellipse cx="310" cy="370" rx="55" ry="30" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+  <text x="310" y="375" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="#991b1b">T*M₁</text>
+
+  <ellipse cx="490" cy="370" rx="55" ry="30" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+  <text x="490" y="375" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="#991b1b">⋯</text>
+
+  <ellipse cx="670" cy="370" rx="55" ry="30" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+  <text x="670" y="367" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="#991b1b">T*M_L</text>
+  <text x="670" y="384" text-anchor="middle" font-family="monospace" font-size="10" fill="#ef4444">(dℒ)</text>
+
+  <!-- Backward arrows (REVERSED direction!) -->
+  <line x1="252" y1="370" x2="188" y2="370" stroke="#dc2626" stroke-width="2.5" marker-end="url(#arrowRed)"/>
+  <text x="220" y="360" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#dc2626" font-style="italic">T*f₁</text>
+
+  <line x1="432" y1="370" x2="368" y2="370" stroke="#dc2626" stroke-width="2.5" marker-end="url(#arrowRed)"/>
+  <text x="400" y="360" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#dc2626" font-style="italic">T*f₂</text>
+
+  <line x1="612" y1="370" x2="548" y2="370" stroke="#dc2626" stroke-width="2.5" marker-end="url(#arrowRed)"/>
+  <text x="580" y="360" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#dc2626" font-style="italic">T*f_L</text>
+
+  <!-- dL arrow from loss -->
+  <path d="M 825 195 C 825 280, 740 340, 728 370" stroke="#16a34a" stroke-width="2" fill="none" stroke-dasharray="4,3" marker-end="url(#arrowGreen)"/>
+  <text x="800" y="280" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#16a34a">dℒ</text>
+
+  <!-- ═══════════ BOTTOM: Key equation ═══════════ -->
+  <rect x="80" y="440" width="740" height="70" rx="10" fill="#fefce8" stroke="#ca8a04" stroke-width="2"/>
+
+  <text x="450" y="465" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="#854d0e" font-weight="bold">
+    Functoriality (Chain Rule):
+  </text>
+  <text x="450" y="495" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#92400e">
+    T*(f_L ∘ ⋯ ∘ f₁) = T*f₁ ∘ ⋯ ∘ T*f_L    ← Composition reverses!
+  </text>
+
+  <!-- ═══════════ Legend ═══════════ -->
+  <rect x="80" y="530" width="740" height="55" rx="8" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1"/>
+
+  <circle cx="120" cy="557" r="8" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text x="135" y="562" font-family="monospace" font-size="11" fill="#1e40af">Forward (covariant)</text>
+
+  <circle cx="330" cy="557" r="8" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+  <text x="345" y="562" font-family="monospace" font-size="11" fill="#991b1b">Backward (contravariant)</text>
+
+  <circle cx="570" cy="557" r="8" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="585" y="562" font-family="monospace" font-size="11" fill="#166534">Loss / terminal covector</text>
+
+  <!-- Caption -->
+  <text x="450" y="610" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#475569" font-style="italic">
+    Figure: The forward pass composes layers covariantly (left→right); backpropagation applies cotangent lifts contravariantly (right→left).
+  </text>
+</svg>
