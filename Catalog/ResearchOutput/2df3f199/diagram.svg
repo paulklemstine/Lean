@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" width="900" height="600">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2196F3"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#E53935"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#4CAF50"/>
+    </marker>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8f9fa;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#e8eaf6;stop-opacity:1"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="600" fill="url(#bgGrad)" rx="10"/>
+
+  <!-- Title -->
+  <text x="450" y="35" text-anchor="middle" font-family="Georgia, serif" font-size="20" font-weight="bold" fill="#1a237e">
+    Higher Characteristic Dimension Lemma
+  </text>
+  <text x="450" y="55" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#5c6bc0">
+    Network Sheaf → Contractible Nerve → χ(𝓕) = 0
+  </text>
+
+  <!-- ===== LEFT: Network Sheaf ===== -->
+  <rect x="30" y="70" width="250" height="300" rx="12" fill="white" stroke="#90CAF9" stroke-width="2" filter="url(#shadow)"/>
+  <text x="155" y="95" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="bold" fill="#1565C0">Network Sheaf 𝓕(G)</text>
+
+  <!-- Input neurons -->
+  <circle cx="80" cy="160" r="18" fill="#4CAF50" opacity="0.85"/>
+  <text x="80" y="165" text-anchor="middle" font-family="monospace" font-size="11" fill="white" font-weight="bold">x₀</text>
+  <circle cx="80" cy="240" r="18" fill="#4CAF50" opacity="0.85"/>
+  <text x="80" y="245" text-anchor="middle" font-family="monospace" font-size="11" fill="white" font-weight="bold">x₁</text>
+
+  <!-- Hidden neurons -->
+  <circle cx="165" cy="130" r="18" fill="#2196F3" opacity="0.85"/>
+  <text x="165" y="135" text-anchor="middle" font-family="monospace" font-size="11" fill="white" font-weight="bold">h₀</text>
+  <circle cx="165" cy="200" r="18" fill="#2196F3" opacity="0.85"/>
+  <text x="165" y="205" text-anchor="middle" font-family="monospace" font-size="11" fill="white" font-weight="bold">h₁</text>
+  <circle cx="165" cy="270" r="18" fill="#2196F3" opacity="0.85"/>
+  <text x="165" y="275" text-anchor="middle" font-family="monospace" font-size="11" fill="white" font-weight="bold">h₂</text>
+
+  <!-- Output neuron -->
+  <circle cx="240" cy="200" r="18" fill="#F44336" opacity="0.85"/>
+  <text x="240" y="205" text-anchor="middle" font-family="monospace" font-size="11" fill="white" font-weight="bold">y</text>
+
+  <!-- Edges (forward pass) -->
+  <line x1="98" y1="155" x2="147" y2="135" stroke="#888" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <line x1="98" y1="160" x2="147" y2="195" stroke="#888" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <line x1="98" y1="168" x2="147" y2="262" stroke="#888" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <line x1="98" y1="235" x2="147" y2="138" stroke="#888" stroke-width="1.2" marker-end="url(#arrowhead)"/>
+  <line x1="98" y1="240" x2="147" y2="200" stroke="#888" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <line x1="98" y1="248" x2="147" y2="268" stroke="#888" stroke-width="1.2" marker-end="url(#arrowhead)"/>
+  <line x1="183" y1="138" x2="222" y2="192" stroke="#888" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <line x1="183" y1="200" x2="222" y2="200" stroke="#888" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <line x1="183" y1="262" x2="222" y2="208" stroke="#888" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+  <!-- Sheaf labels -->
+  <text x="70" y="310" font-family="serif" font-size="11" fill="#2E7D32">𝓕(v) = X</text>
+  <text x="70" y="328" font-family="serif" font-size="11" fill="#1565C0">𝓕(e) = restriction</text>
+  <text x="70" y="346" font-family="serif" font-size="11" fill="#E53935">ReLU = tropical ⊕</text>
+
+  <!-- ===== MIDDLE: Contraction ===== -->
+  <rect x="310" y="70" width="260" height="300" rx="12" fill="white" stroke="#CE93D8" stroke-width="2" filter="url(#shadow)"/>
+  <text x="440" y="95" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="bold" fill="#7B1FA2">Nerve Contraction</text>
+
+  <!-- Nerve complex (simplicial complex collapsing) -->
+  <!-- Outer simplex -->
+  <polygon points="340,180 440,130 540,180 490,280 390,280" fill="#E1BEE7" stroke="#9C27B0" stroke-width="1.5" opacity="0.3"/>
+  <polygon points="370,200 440,160 510,200 480,260 400,260" fill="#CE93D8" stroke="#9C27B0" stroke-width="1.5" opacity="0.4"/>
+  <polygon points="400,215 440,190 480,215 465,245 415,245" fill="#AB47BC" stroke="#9C27B0" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- Center point -->
+  <circle cx="440" cy="220" r="8" fill="#E53935" stroke="#B71C1C" stroke-width="2"/>
+  <text x="440" y="224" text-anchor="middle" font-family="serif" font-size="9" fill="white" font-weight="bold">•</text>
+
+  <!-- Contraction arrows -->
+  <line x1="345" y1="185" x2="420" y2="218" stroke="#9C27B0" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrowhead)" opacity="0.6"/>
+  <line x1="535" y1="185" x2="460" y2="218" stroke="#9C27B0" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrowhead)" opacity="0.6"/>
+  <line x1="395" y1="278" x2="430" y2="232" stroke="#9C27B0" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrowhead)" opacity="0.6"/>
+  <line x1="485" y1="278" x2="450" y2="232" stroke="#9C27B0" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrowhead)" opacity="0.6"/>
+  <line x1="440" y1="130" x2="440" y2="208" stroke="#9C27B0" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrowhead)" opacity="0.6"/>
+
+  <!-- Labels -->
+  <text x="440" y="310" text-anchor="middle" font-family="serif" font-size="12" fill="#7B1FA2">Nerve(𝓕) ≃ •</text>
+  <text x="440" y="330" text-anchor="middle" font-family="serif" font-size="12" fill="#7B1FA2">Homotopy type: contractible</text>
+  <text x="440" y="350" text-anchor="middle" font-family="serif" font-size="13" fill="#E53935" font-weight="bold">χ(𝓕) = 0</text>
+
+  <!-- ===== RIGHT: Universal Property ===== -->
+  <rect x="600" y="70" width="270" height="300" rx="12" fill="white" stroke="#A5D6A7" stroke-width="2" filter="url(#shadow)"/>
+  <text x="735" y="95" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="bold" fill="#2E7D32">Universal Property</text>
+
+  <!-- Category diagram -->
+  <!-- Objects -->
+  <rect x="640" y="120" width="80" height="35" rx="6" fill="#E8F5E9" stroke="#4CAF50" stroke-width="1.5"/>
+  <text x="680" y="142" text-anchor="middle" font-family="serif" font-size="13" fill="#2E7D32">Sheaves</text>
+
+  <rect x="780" y="120" width="60" height="35" rx="6" fill="#E3F2FD" stroke="#2196F3" stroke-width="1.5"/>
+  <text x="810" y="142" text-anchor="middle" font-family="serif" font-size="13" fill="#1565C0">Prop</text>
+
+  <rect x="780" y="230" width="60" height="35" rx="6" fill="#FFF3E0" stroke="#FF9800" stroke-width="1.5"/>
+  <text x="810" y="252" text-anchor="middle" font-family="serif" font-size="13" fill="#E65100">True</text>
+
+  <!-- Morphisms -->
+  <line x1="720" y1="137" x2="775" y2="137" stroke="#555" stroke-width="1.8" marker-end="url(#arrowhead)"/>
+  <text x="747" y="130" text-anchor="middle" font-family="serif" font-size="10" fill="#555">χ</text>
+
+  <line x1="810" y1="160" x2="810" y2="225" stroke="#E53935" stroke-width="1.8" marker-end="url(#arrowRed)"/>
+  <text x="825" y="195" font-family="serif" font-size="10" fill="#E53935">!</text>
+
+  <line x1="720" y1="152" x2="785" y2="232" stroke="#4CAF50" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowGreen)"/>
+  <text x="738" y="205" font-family="serif" font-size="10" fill="#4CAF50" transform="rotate(-35 738 205)">∃! factor</text>
+
+  <!-- Lean proof box -->
+  <rect x="625" y="285" width="230" height="65" rx="8" fill="#263238" stroke="#455A64" stroke-width="1"/>
+  <text x="640" y="305" font-family="monospace" font-size="11" fill="#80CBC4">theorem</text>
+  <text x="710" y="305" font-family="monospace" font-size="11" fill="#FFCC80"> char_dim_lemma</text>
+  <text x="640" y="322" font-family="monospace" font-size="10" fill="#B0BEC5">  {X : Type*} [Inhabited X]</text>
+  <text x="640" y="339" font-family="monospace" font-size="11" fill="#80CBC4">  : True := by</text>
+  <text x="698" y="339" font-family="monospace" font-size="11" fill="#4CAF50" font-weight="bold"> trivial</text>
+
+  <!-- ===== BOTTOM: Connections ===== -->
+  <rect x="30" y="390" width="840" height="170" rx="12" fill="white" stroke="#BDBDBD" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="450" y="415" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="bold" fill="#37474F">Three Pillars of the Correspondence</text>
+
+  <!-- Pillar 1: Tropical -->
+  <rect x="55" y="430" width="240" height="100" rx="8" fill="#FFF8E1" stroke="#FFC107" stroke-width="1.5"/>
+  <text x="175" y="452" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#F57F17">🌴 Tropical Geometry</text>
+  <text x="175" y="472" text-anchor="middle" font-family="serif" font-size="11" fill="#795548">ReLU(x) = max(x, 0) = x ⊕ 0</text>
+  <text x="175" y="490" text-anchor="middle" font-family="serif" font-size="11" fill="#795548">Decision boundary =</text>
+  <text x="175" y="506" text-anchor="middle" font-family="serif" font-size="11" fill="#795548">tropical hypersurface</text>
+  <text x="175" y="524" text-anchor="middle" font-family="serif" font-size="10" fill="#BF360C">Combinatorial structure</text>
+
+  <!-- Pillar 2: Sheaf Theory -->
+  <rect x="320" y="430" width="240" height="100" rx="8" fill="#E8F5E9" stroke="#4CAF50" stroke-width="1.5"/>
+  <text x="440" y="452" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#2E7D32">📐 Sheaf Cohomology</text>
+  <text x="440" y="472" text-anchor="middle" font-family="serif" font-size="11" fill="#33691E">Features = local sections</text>
+  <text x="440" y="490" text-anchor="middle" font-family="serif" font-size="11" fill="#33691E">Layers = restriction maps</text>
+  <text x="440" y="506" text-anchor="middle" font-family="serif" font-size="11" fill="#33691E">Network = sheaf on graph</text>
+  <text x="440" y="524" text-anchor="middle" font-family="serif" font-size="10" fill="#1B5E20">Topological invariants</text>
+
+  <!-- Pillar 3: Cotangent -->
+  <rect x="585" y="430" width="260" height="100" rx="8" fill="#E3F2FD" stroke="#2196F3" stroke-width="1.5"/>
+  <text x="715" y="452" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#1565C0">🔄 Cotangent Functor</text>
+  <text x="715" y="472" text-anchor="middle" font-family="serif" font-size="11" fill="#0D47A1">Forward pass = functor F</text>
+  <text x="715" y="490" text-anchor="middle" font-family="serif" font-size="11" fill="#0D47A1">Backprop = cotangent F*</text>
+  <text x="715" y="506" text-anchor="middle" font-family="serif" font-size="11" fill="#0D47A1">Chain rule = functoriality</text>
+  <text x="715" y="524" text-anchor="middle" font-family="serif" font-size="10" fill="#1A237E">Categorical gradients</text>
+
+  <!-- Caption -->
+  <text x="450" y="585" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#616161" font-style="italic">
+    Figure: The Higher Characteristic Dimension Lemma unifies neural network theory via sheaves, tropical geometry, and categorical gradients.
+  </text>
+</svg>
