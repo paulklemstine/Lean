@@ -471,6 +471,7 @@ class CycleMaster:
 
             changed_count = len(decisions["placed"])
             success = result.status in ("complete", "COMPLETE", "COMPLETE_WITH_ERRORS")
+            pending_dir = self.catalog_root / "Speculative" / "AutoResearch"
             self.prompt_evolver.record_prompt_outcome(
                 prompt_text=prompt.prompt_text,
                 concept=concept,
