@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 650" width="900" height="650">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#16a34a"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#9333ea"/>
+    </marker>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8fafc;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#00000022"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="650" fill="url(#bgGrad)" rx="10"/>
+
+  <!-- Title -->
+  <text x="450" y="35" text-anchor="middle" font-family="Georgia, serif" font-size="18" font-weight="bold" fill="#1e293b">
+    Algebraic Embedded Approximation Construction
+  </text>
+  <text x="450" y="55" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#64748b">
+    Network Sheaf Theory via Tropical Degeneration
+  </text>
+
+  <!-- ================================================================ -->
+  <!-- LEFT: Network Sheaf (Computational Graph)                        -->
+  <!-- ================================================================ -->
+  <text x="190" y="90" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="bold" fill="#2563eb">
+    Network Sheaf 𝓕 on Graph G
+  </text>
+
+  <!-- Input node -->
+  <circle cx="190" cy="140" r="28" fill="#dbeafe" stroke="#2563eb" stroke-width="2" filter="url(#shadow)"/>
+  <text x="190" y="137" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#1e40af">𝓕(input)</text>
+  <text x="190" y="152" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#3b82f6">ℝ³</text>
+
+  <!-- Hidden1 node -->
+  <circle cx="100" cy="250" r="28" fill="#dbeafe" stroke="#2563eb" stroke-width="2" filter="url(#shadow)"/>
+  <text x="100" y="247" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1e40af">𝓕(h₁)</text>
+  <text x="100" y="262" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#3b82f6">ℝ²</text>
+
+  <!-- Hidden2 node -->
+  <circle cx="280" cy="250" r="28" fill="#dbeafe" stroke="#2563eb" stroke-width="2" filter="url(#shadow)"/>
+  <text x="280" y="247" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1e40af">𝓕(h₂)</text>
+  <text x="280" y="262" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#3b82f6">ℝ²</text>
+
+  <!-- Output node -->
+  <circle cx="190" cy="360" r="28" fill="#dbeafe" stroke="#2563eb" stroke-width="2" filter="url(#shadow)"/>
+  <text x="190" y="357" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1e40af">𝓕(out)</text>
+  <text x="190" y="372" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#3b82f6">ℝ¹</text>
+
+  <!-- Edges with labels -->
+  <line x1="170" y1="165" x2="115" y2="225" stroke="#2563eb" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <text x="130" y="188" font-family="sans-serif" font-size="9" fill="#2563eb" transform="rotate(-40 130 188)">W₁ ∈ ℝ²ˣ³</text>
+
+  <line x1="210" y1="165" x2="265" y2="225" stroke="#2563eb" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <text x="248" y="188" font-family="sans-serif" font-size="9" fill="#2563eb" transform="rotate(40 248 188)">W₂ ∈ ℝ²ˣ³</text>
+
+  <line x1="115" y1="275" x2="175" y2="335" stroke="#2563eb" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <text x="132" y="312" font-family="sans-serif" font-size="9" fill="#2563eb" transform="rotate(40 132 312)">W₃ ∈ ℝ¹ˣ²</text>
+
+  <line x1="265" y1="275" x2="205" y2="335" stroke="#2563eb" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <text x="248" y="312" font-family="sans-serif" font-size="9" fill="#2563eb" transform="rotate(-40 248 312)">W₄ ∈ ℝ¹ˣ²</text>
+
+  <!-- Sheaf condition label -->
+  <rect x="100" y="400" width="180" height="40" rx="5" fill="#eff6ff" stroke="#2563eb" stroke-width="1" stroke-dasharray="4,2"/>
+  <text x="190" y="416" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1e40af">Sheaf condition:</text>
+  <text x="190" y="432" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#1e40af">δ⁰(s)(e) = 𝓕(e)(sᵤ) − sᵥ = 0</text>
+
+  <!-- ================================================================ -->
+  <!-- CENTER: Tropical Degeneration Arrow                               -->
+  <!-- ================================================================ -->
+  <rect x="355" y="180" width="190" height="200" rx="10" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="450" y="205" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#16a34a">
+    Tropical Degeneration
+  </text>
+
+  <!-- Maslov dequantization formula -->
+  <text x="450" y="235" text-anchor="middle" font-family="serif" font-size="11" fill="#166534">
+    lim h→0⁺
+  </text>
+  <text x="450" y="255" text-anchor="middle" font-family="serif" font-size="11" fill="#166534">
+    h·log(eᵃ/ʰ + eᵇ/ʰ) = max(a,b)
+  </text>
+
+  <!-- ReLU = tropical -->
+  <line x1="380" y1="275" x2="520" y2="275" stroke="#16a34a" stroke-width="1"/>
+  <text x="450" y="300" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#166534">
+    ReLU(x) = max(0, x)
+  </text>
+  <text x="450" y="320" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#166534">
+    = tropical identity
+  </text>
+
+  <!-- Semiring -->
+  <line x1="380" y1="335" x2="520" y2="335" stroke="#16a34a" stroke-width="1"/>
+  <text x="450" y="355" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="bold" fill="#15803d">
+    (ℝ ∪ {−∞}, max, +)
+  </text>
+  <text x="450" y="372" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#166534">
+    max-plus semiring
+  </text>
+
+  <!-- Connecting arrows -->
+  <path d="M 310 250 Q 333 250 350 250" fill="none" stroke="#16a34a" stroke-width="2" marker-end="url(#arrowGreen)"/>
+
+  <!-- ================================================================ -->
+  <!-- RIGHT: Spectral Sequence / Universal Property                     -->
+  <!-- ================================================================ -->
+  <text x="720" y="90" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="bold" fill="#9333ea">
+    Spectral Sequence
+  </text>
+
+  <!-- E2 page grid -->
+  <rect x="620" y="110" width="200" height="160" rx="5" fill="#faf5ff" stroke="#9333ea" stroke-width="2" filter="url(#shadow)"/>
+
+  <!-- Grid lines -->
+  <line x1="620" y1="160" x2="820" y2="160" stroke="#e9d5ff" stroke-width="1"/>
+  <line x1="620" y1="210" x2="820" y2="210" stroke="#e9d5ff" stroke-width="1"/>
+  <line x1="687" y1="110" x2="687" y2="270" stroke="#e9d5ff" stroke-width="1"/>
+  <line x1="753" y1="110" x2="753" y2="270" stroke="#e9d5ff" stroke-width="1"/>
+
+  <!-- Axis labels -->
+  <text x="650" y="130" text-anchor="middle" font-family="serif" font-size="10" fill="#7e22ce">p=0</text>
+  <text x="720" y="130" text-anchor="middle" font-family="serif" font-size="10" fill="#7e22ce">p=1</text>
+  <text x="790" y="130" text-anchor="middle" font-family="serif" font-size="10" fill="#7e22ce">p=2</text>
+
+  <text x="615" y="190" text-anchor="end" font-family="serif" font-size="10" fill="#7e22ce">q=1</text>
+  <text x="615" y="240" text-anchor="end" font-family="serif" font-size="10" fill="#7e22ce">q=0</text>
+
+  <!-- E2 terms -->
+  <text x="650" y="245" text-anchor="middle" font-family="serif" font-size="12" font-weight="bold" fill="#7e22ce">H⁰</text>
+  <text x="720" y="245" text-anchor="middle" font-family="serif" font-size="12" fill="#a855f7">H¹</text>
+  <text x="790" y="245" text-anchor="middle" font-family="serif" font-size="12" fill="#d8b4fe">0</text>
+  <text x="650" y="195" text-anchor="middle" font-family="serif" font-size="12" fill="#a855f7">ℋ¹</text>
+  <text x="720" y="195" text-anchor="middle" font-family="serif" font-size="12" fill="#d8b4fe">0</text>
+  <text x="790" y="195" text-anchor="middle" font-family="serif" font-size="12" fill="#d8b4fe">0</text>
+
+  <!-- Differential arrow -->
+  <path d="M 700 240 Q 680 220 660 200" fill="none" stroke="#9333ea" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#arrowPurple)"/>
+  <text x="665" y="220" font-family="serif" font-size="9" fill="#9333ea">d₂</text>
+
+  <!-- E2 label -->
+  <text x="720" y="290" text-anchor="middle" font-family="serif" font-size="12" fill="#7e22ce">
+    E₂ page: Hᵖ(G, ℋᵍ(𝓕))
+  </text>
+
+  <!-- Universal Property box -->
+  <rect x="610" y="310" width="220" height="100" rx="8" fill="#faf5ff" stroke="#9333ea" stroke-width="2" filter="url(#shadow)"/>
+  <text x="720" y="335" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#7e22ce">
+    Universal Property
+  </text>
+  <text x="720" y="358" text-anchor="middle" font-family="serif" font-size="11" fill="#6b21a8">
+    ∀ s ∈ Γ(G, 𝓕),
+  </text>
+  <text x="720" y="378" text-anchor="middle" font-family="serif" font-size="11" fill="#6b21a8">
+    ∃! ŝ : embedded approx
+  </text>
+  <text x="720" y="398" text-anchor="middle" font-family="serif" font-size="11" fill="#6b21a8">
+    with ŝ = lim(local approx)
+  </text>
+
+  <!-- ================================================================ -->
+  <!-- BOTTOM: Cotangent Functor (Backpropagation)                       -->
+  <!-- ================================================================ -->
+  <rect x="100" y="470" width="700" height="100" rx="10" fill="#fef2f2" stroke="#dc2626" stroke-width="2" filter="url(#shadow)"/>
+
+  <text x="450" y="498" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="bold" fill="#dc2626">
+    Cotangent Functor Ω¹ (Backpropagation)
+  </text>
+
+  <!-- Forward pass -->
+  <text x="200" y="530" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#991b1b">Forward:</text>
+  <text x="200" y="548" text-anchor="middle" font-family="serif" font-size="11" fill="#b91c1c">
+    x → 𝓕(e₁)(x) → 𝓕(e₂)(·) → y
+  </text>
+
+  <!-- Arrow between -->
+  <text x="450" y="540" text-anchor="middle" font-family="sans-serif" font-size="20" fill="#dc2626">⟷</text>
+
+  <!-- Backward pass -->
+  <text x="700" y="530" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#991b1b">Backward (Ω¹):</text>
+  <text x="700" y="548" text-anchor="middle" font-family="serif" font-size="11" fill="#b91c1c">
+    δL/δx ← 𝓕(e₁)ᵀ(·) ← 𝓕(e₂)ᵀ(δL/δy)
+  </text>
+
+  <!-- Functoriality label -->
+  <text x="450" y="558" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#991b1b">
+    Ω¹(𝓕(e₂) ∘ 𝓕(e₁)) = Ω¹(𝓕(e₁)) ∘ Ω¹(𝓕(e₂))  — contravariant functoriality
+  </text>
+
+  <!-- ================================================================ -->
+  <!-- BOTTOM: Compression Invariant                                     -->
+  <!-- ================================================================ -->
+  <rect x="250" y="590" width="400" height="35" rx="5" fill="#fefce8" stroke="#ca8a04" stroke-width="1.5"/>
+  <text x="450" y="612" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#854d0e">
+    Compression Invariant:  χ(𝓕) = Σᵢ (−1)ⁱ dim Hⁱ(G, 𝓕) = const
+  </text>
+
+  <!-- Caption -->
+  <text x="450" y="645" text-anchor="middle" font-family="Georgia, serif" font-size="11" font-style="italic" fill="#64748b">
+    Figure 1: The algebraic embedded approximation construction connects network sheaves (blue),
+  </text>
+  <text x="450" y="660" text-anchor="middle" font-family="Georgia, serif" font-size="11" font-style="italic" fill="#64748b">
+    tropical geometry (green), spectral sequences (purple), and backpropagation (red).
+  </text>
+</svg>
