@@ -965,7 +965,10 @@ async def main():
         for sig in (__import__("signal").SIGINT, __import__("signal").SIGTERM):
             loop.add_signal_handler(sig, master.request_shutdown)
         try:
-            await master.run_continuous()
+            await master.run_continuous(
+                parallel=args.parallel,
+                max_jobs=args.max_jobs,
+            )
         except asyncio.CancelledError:
             pass
 
