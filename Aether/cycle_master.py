@@ -350,25 +350,48 @@ class CycleMaster:
             lean_body += "\n  sorry\n"
         return header + "\n" + lean_body
 
-    def _extract_artifacts(self, result_dir: Path, exp_id: str) -> Dict[str, Path]:
-        """Extract research artifacts."""
+    def _extract_artifacts(self, result_dir: Path, exp_id: str, domain: str = "", concept_title: str = "") -> Dict[str, Path]:
+        """Extract research artifacts to both workspace and Catalog/ResearchOutput."""
         artifacts: Dict[str, Path] = {}
         patterns = {
             "research_report": ["RESEARCH_REPORT.md", "*report*.md"],
             "python_demo": ["demo.py", "*demo*.py"],
             "svg_demo": ["diagram.svg", "*.svg"],
             "sciam_discussion": ["DISCUSSION.md", "*discussion*.md"],
+            "summary": ["ARISTOTLE_SUMMARY.md", "*summary*.md"],
+            "readme": ["README.md"],
         }
+
+        # 1. Save to workspace (outside git)
         exp_dir = self.artifacts_dir / exp_id
         exp_dir.mkdir(parents=True, exist_ok=True)
+
+        # 2. Save to Catalog/ResearchOutput (inside git)
+        catalog_output_dir = self.catalog_root / "ResearchOutput" / exp_id
+        catalog_output_dir.mkdir(parents=True, exist_ok=True)
+
+        # Write metadata
+        meta = {
+            "experiment_id": exp_id,
+            "domain": domain,
+            "concept": concept_title,
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+        }
+        (catalog_output_dir / "metadata.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
+
         for artifact_type, filenames in patterns.items():
             for pattern in filenames:
                 matches = list(result_dir.rglob(pattern))
                 if matches:
                     src = matches[0]
-                    dest = exp_dir / src.name
-                    shutil.copy2(src, dest)
-                    artifacts[artifact_type] = dest
+                    # Copy to workspace
+                    dest_ws = exp_dir / src.name
+                    shutil.copy2(src, dest_ws)
+                    artifacts[artifact_type] = dest_ws
+
+                    # Copy to Catalog/ResearchOutput (git-tracked)
+                    dest_cat = catalog_output_dir / src.name
+                    shutil.copy2(src, dest_cat)
                     break
         return artifacts
 
