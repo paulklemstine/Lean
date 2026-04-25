@@ -1,110 +1,144 @@
 import Mathlib
 
-/-! # CatalogBuild.Bridges.TropicalNeuralBridge
+/-! # Tropical–Neural Network Bridge
 
-Auto-generated from theorem catalog database.
-Domain: Bridges
-Declarations: 22
+New theorems formalizing the connection between tropical algebra and neural networks.
+ReLU networks compute piecewise-linear functions, which are precisely the functions
+expressible as differences of tropical polynomials. This file establishes key
+theoretical foundations.
+
+## Main Results
+
+- `relu_max_form`: ReLU(x) = max(0, x)
+- `relu_lipschitz`: ReLU is 1-Lipschitz
+- `relu_idempotent`: ReLU(ReLU(x)) = ReLU(x)
+- `relu_homogeneous`: ReLU(c·x) = c·ReLU(x) for c ≥ 0
+- `max_as_relu`: max(a,b) = b + ReLU(a - b)
+- `tropical_add_comm/assoc`: max is commutative and associative (tropical addition)
+- `softplus_bounds`: Softplus approximation bounds
+- `composition_lipschitz_bridge`: Composition of Lipschitz functions bound
 -/
 
 noncomputable section
 
-/-- A piecewise-linear function with n pieces on ℝ. -/
-structure PiecewiseLinear where
-  breakpoints : List ℝ
-  slopes : List ℝ
-  intercepts : List ℝ
+open Real
 
-/-- The number of linear regions of a piecewise-linear function. -/
-def numRegions (f : PiecewiseLinear) : ℕ := f.breakpoints.length + 1
+/-- The ReLU (Rectified Linear Unit) function. -/
+def relu (x : ℝ) : ℝ := max 0 x
 
-/-- The max of two piecewise-linear functions has at most n₁ + n₂ - 1 breakpoints. -/
-theorem max_breakpoints_bound (n₁ n₂ : ℕ) :
-    n₁ + n₂ + 1 ≤ (n₁ + 1) * (n₂ + 1) := by nlinarith
+/-- ReLU(x) = max(0, x). -/
+@[simp] theorem relu_eq_max (x : ℝ) : relu x = max 0 x := rfl
 
-/-- A single neuron with ReLU creates at most 2 linear regions. -/
-theorem single_neuron_regions : 1 + 1 = (2 : ℕ) := rfl
+/-- ReLU(x) ≥ 0. -/
+theorem relu_nonneg (x : ℝ) : 0 ≤ relu x := le_max_left 0 x
 
-/-- A layer of w neurons can create at most 2^w regions. -/
-theorem layer_max_regions (w : ℕ) : 2 ^ w ≥ 1 := Nat.one_le_two_pow
+/-- ReLU(x) ≥ x. -/
+theorem relu_ge (x : ℝ) : x ≤ relu x := le_max_right 0 x
 
-/-- Depth d with width w gives at most w^d regions (simplified bound). -/
-theorem depth_width_bound (w d : ℕ) (hw : 1 ≤ w) (hd : 1 ≤ d) :
-    1 ≤ w ^ d := Nat.one_le_pow d w hw
+/-- ReLU(0) = 0. -/
+@[simp] theorem relu_zero : relu 0 = 0 := by simp [relu]
 
-/-- Tropical addition of two functions (pointwise max). -/
-def tropicalAdd (f g : ℝ → ℝ) : ℝ → ℝ := fun x => max (f x) (g x)
+/-- ReLU is idempotent: ReLU(ReLU(x)) = ReLU(x). -/
+theorem relu_idempotent (x : ℝ) : relu (relu x) = relu x := by
+  simp [relu]
 
-/-- Tropical multiplication of two functions (pointwise addition). -/
-def tropicalMul (f g : ℝ → ℝ) : ℝ → ℝ := fun x => f x + g x
+/-
+ReLU is positively homogeneous: ReLU(c·x) = c·ReLU(x) for c ≥ 0.
+-/
+theorem relu_pos_homogeneous (c x : ℝ) (hc : 0 ≤ c) :
+    relu (c * x) = c * relu x := by
+  unfold relu;
+  cases max_cases ( 0 : ℝ ) x <;> cases max_cases ( 0 : ℝ ) ( c * x ) <;> nlinarith
 
-/-- Tropical addition is commutative. -/
-theorem tropicalAdd_comm (f g : ℝ → ℝ) :
-    tropicalAdd f g = tropicalAdd g f := by
-  ext x; simp [tropicalAdd, max_comm]
+/-
+max(a, b) = b + ReLU(a - b) — expressing max via ReLU.
+-/
+theorem max_as_relu (a b : ℝ) : max a b = b + relu (a - b) := by
+  cases max_cases a b <;> cases max_cases 0 ( a - b ) <;> linarith!
 
-/-- Tropical addition is associative. -/
-theorem tropicalAdd_assoc (f g h : ℝ → ℝ) :
-    tropicalAdd (tropicalAdd f g) h = tropicalAdd f (tropicalAdd g h) := by
-  ext x; simp [tropicalAdd, max_assoc]
+/-
+ReLU is 1-Lipschitz: |ReLU(x) - ReLU(y)| ≤ |x - y|.
+-/
+theorem relu_lipschitz (x y : ℝ) : |relu x - relu y| ≤ |x - y| := by
+  unfold relu;
+  cases max_cases ( 0 : ℝ ) x <;> cases max_cases ( 0 : ℝ ) y <;> cases abs_cases ( x - y ) <;> cases abs_cases ( max 0 x - max 0 y ) <;> linarith
 
-/-- Tropical addition is idempotent. -/
-theorem tropicalAdd_idem (f : ℝ → ℝ) :
-    tropicalAdd f f = f := by
-  ext x; simp [tropicalAdd]
+/-
+Composition of Lipschitz functions: if f is L₁-Lipschitz and g is L₂-Lipschitz,
+    then f ∘ g is (L₁ · L₂)-Lipschitz.
+-/
+theorem composition_lipschitz_bridge {f g : ℝ → ℝ} {L₁ L₂ : ℝ}
+    (hf : ∀ x y, |f x - f y| ≤ L₁ * |x - y|)
+    (hg : ∀ x y, |g x - g y| ≤ L₂ * |x - y|)
+    (hL₁ : 0 ≤ L₁) :
+    ∀ x y, |f (g x) - f (g y)| ≤ L₁ * L₂ * |x - y| := by
+  exact fun x y => le_trans ( hf _ _ ) ( by rw [ mul_assoc ] ; exact mul_le_mul_of_nonneg_left ( hg _ _ ) hL₁ )
 
-/-- Tropical multiplication is commutative. -/
-theorem tropicalMul_comm (f g : ℝ → ℝ) :
-    tropicalMul f g = tropicalMul g f := by
-  ext x; simp [tropicalMul, add_comm]
+/-- The softplus function: softplus(x) = ln(1 + e^x). -/
+def softplus (x : ℝ) : ℝ := Real.log (1 + Real.exp x)
 
-/-- Tropical multiplication is associative. -/
-theorem tropicalMul_assoc (f g h : ℝ → ℝ) :
-    tropicalMul (tropicalMul f g) h = tropicalMul f (tropicalMul g h) := by
-  ext x; simp [tropicalMul, add_assoc]
+/-
+softplus(x) > 0 for all x.
+-/
+theorem softplus_pos (x : ℝ) : 0 < softplus x := by
+  exact Real.log_pos ( by linarith [ Real.exp_pos x ] )
 
-/-- Tropical multiplication distributes over tropical addition. -/
-theorem tropicalMul_distrib (f g h : ℝ → ℝ) :
-    tropicalMul f (tropicalAdd g h) = tropicalAdd (tropicalMul f g) (tropicalMul f h) := by
-  ext x; simp [tropicalMul, tropicalAdd, max_add_add_left]
+/-
+softplus(x) ≥ ReLU(x).
+-/
+theorem softplus_ge_relu (x : ℝ) : relu x ≤ softplus x := by
+  unfold relu softplus;
+  cases max_cases ( 0 : ℝ ) x <;> simp +decide [ * ];
+  · exact Real.log_nonneg ( by linarith [ Real.exp_pos x ] );
+  · rw [ Real.le_log_iff_exp_le ] <;> linarith [ Real.exp_pos x ]
 
-/-- A single ReLU neuron: x ↦ max(w·x + b, 0). -/
-def reluNeuron (w b : ℝ) : ℝ → ℝ := fun x => max (w * x + b) 0
+/-
+softplus(x) ≤ ReLU(x) + ln(2).
+-/
+theorem softplus_le_relu_add_log2 (x : ℝ) :
+    softplus x ≤ relu x + Real.log 2 := by
+  unfold softplus relu;
+  rw [ Real.log_le_iff_le_exp ];
+  · cases max_cases ( 0 : ℝ ) x <;> simp +decide [ *, Real.exp_add, Real.exp_log ];
+    · linarith [ Real.exp_le_one_iff.2 ( by linarith : x ≤ 0 ) ];
+    · linarith [ Real.add_one_le_exp x ];
+  · positivity
 
-/-- ReLU neuron at origin with unit weight. -/
-theorem reluNeuron_unit : reluNeuron 1 0 = fun x => max x 0 := by
-  ext x; simp [reluNeuron]
+/-- Tropical addition (max) is commutative. -/
+theorem trop_add_comm (a b : ℝ) : max a b = max b a := max_comm a b
 
-/-- Composing a linear map with ReLU gives a tropical linear function. -/
-theorem linear_then_relu (a b : ℝ) :
-    (fun x => max (a * x + b) 0) = reluNeuron a b := by
-  ext x; simp [reluNeuron]
+/-- Tropical addition (max) is associative. -/
+theorem trop_add_assoc (a b c : ℝ) : max (max a b) c = max a (max b c) :=
+  max_assoc a b c
 
-/-- Softmax for two values (the quantum version of argmax). -/
-def softmax2 (x y : ℝ) : ℝ × ℝ :=
-  (exp x / (exp x + exp y), exp y / (exp x + exp y))
+/-
+Tropical multiplication (addition) distributes over tropical addition (max):
+    a + max(b, c) = max(a + b, a + c).
+-/
+theorem trop_mul_dist (a b c : ℝ) :
+    a + max b c = max (a + b) (a + c) := by
+  cases max_cases b c <;> cases max_cases ( a + b ) ( a + c ) <;> linarith
 
-/-- Softmax components sum to 1. -/
-theorem softmax2_sum (x y : ℝ) :
-    (softmax2 x y).1 + (softmax2 x y).2 = 1 := by
-  simp [softmax2]
-  rw [← add_div, div_self (ne_of_gt (by positivity : exp x + exp y > 0))]
+/-- LogSumExp is the smooth approximation of max. -/
+def logSumExp (a b : ℝ) : ℝ := Real.log (Real.exp a + Real.exp b)
 
-/-- Softmax components are non-negative. -/
-theorem softmax2_nonneg (x y : ℝ) :
-    0 ≤ (softmax2 x y).1 ∧ 0 ≤ (softmax2 x y).2 := by
-  constructor <;> simp [softmax2] <;> positivity
+/-
+LogSumExp ≥ max.
+-/
+theorem lse_ge_max (a b : ℝ) : max a b ≤ logSumExp a b := by
+  unfold logSumExp;
+  cases max_cases a b <;> linarith [ Real.log_exp a, Real.log_exp b, Real.log_le_log ( by positivity ) ( by linarith [ Real.exp_pos a, Real.exp_pos b ] : Real.exp a ≤ Real.exp a + Real.exp b ), Real.log_le_log ( by positivity ) ( by linarith [ Real.exp_pos a, Real.exp_pos b ] : Real.exp b ≤ Real.exp a + Real.exp b ) ]
 
-/-- Softmax components are at most 1. -/
-theorem softmax2_le_one (x y : ℝ) :
-    (softmax2 x y).1 ≤ 1 ∧ (softmax2 x y).2 ≤ 1 := by
-  have hsum := softmax2_sum x y
-  have ⟨h1, h2⟩ := softmax2_nonneg x y
-  constructor <;> linarith
+/-
+LogSumExp ≤ max + ln(2).
+-/
+theorem lse_le_max_log2 (a b : ℝ) : logSumExp a b ≤ max a b + Real.log 2 := by
+  rw [ logSumExp, ← Real.log_exp ( max a b ) ];
+  rw [ ← Real.log_mul ( by positivity ) ( by positivity ) ] ; gcongr;
+  cases max_cases a b <;> linarith [ Real.exp_le_exp.2 ( le_max_left a b ), Real.exp_le_exp.2 ( le_max_right a b ) ]
 
-/-- ReLU is tropically convex. -/
-theorem relu_tropically_convex :
-    TropicallyConvex (fun x => max x 0) :=
-  monotone_tropically_convex _ (fun _ _ h => max_le_max h le_rfl)
+/-- LogSumExp is commutative. -/
+theorem lse_comm (a b : ℝ) : logSumExp a b = logSumExp b a := by
+  unfold logSumExp; ring_nf
 
 end
