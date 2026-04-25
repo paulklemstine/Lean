@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <marker id="arrowhead-blue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowhead-red" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#dc2626"/>
+    </marker>
+    <marker id="arrowhead-green" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#16a34a"/>
+    </marker>
+    <linearGradient id="descent-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:0.2"/>
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.05"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="#fafafa" rx="8"/>
+
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Georgia, serif" font-size="18" font-weight="bold" fill="#1e293b">
+    Computable Completed Descent Hypothesis
+  </text>
+  <text x="400" y="55" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#64748b">
+    Tropical Compression Descent over Inhabited Types
+  </text>
+
+  <!-- === LEFT: Coding Geometry Space C(X) === -->
+  <g transform="translate(0, 10)">
+    <!-- Outer ellipse: C(X) -->
+    <ellipse cx="160" cy="200" rx="120" ry="150" fill="url(#descent-grad)" stroke="#3b82f6" stroke-width="2" filter="url(#shadow)"/>
+    <text x="160" y="80" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#2563eb">𝒞(X)</text>
+    <text x="160" y="95" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#64748b">Coding Geometry Space</text>
+
+    <!-- Nested descent levels -->
+    <ellipse cx="160" cy="220" rx="90" ry="110" fill="none" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="5,3"/>
+    <text x="85" y="130" font-family="monospace" font-size="10" fill="#6366f1">𝒞₃(X)</text>
+
+    <ellipse cx="160" cy="240" rx="65" ry="80" fill="none" stroke="#8b5cf6" stroke-width="1.5" stroke-dasharray="5,3"/>
+    <text x="108" y="175" font-family="monospace" font-size="10" fill="#8b5cf6">𝒞₂(X)</text>
+
+    <ellipse cx="160" cy="260" rx="40" ry="50" fill="none" stroke="#a855f7" stroke-width="1.5" stroke-dasharray="5,3"/>
+    <text x="130" y="225" font-family="monospace" font-size="10" fill="#a855f7">𝒞₁(X)</text>
+
+    <!-- Terminal point: True -->
+    <circle cx="160" cy="280" r="12" fill="#16a34a" stroke="#15803d" stroke-width="2"/>
+    <text x="160" y="284" text-anchor="middle" font-family="monospace" font-size="10" font-weight="bold" fill="white">⊤</text>
+    <text x="160" y="305" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#15803d">True (terminal)</text>
+
+    <!-- Descent arrows -->
+    <path d="M 120 135 C 100 160, 105 190, 118 210" fill="none" stroke="#dc2626" stroke-width="1.5" marker-end="url(#arrowhead-red)"/>
+    <path d="M 118 210 C 115 230, 120 250, 135 265" fill="none" stroke="#dc2626" stroke-width="1.5" marker-end="url(#arrowhead-red)"/>
+    <path d="M 200 135 C 215 160, 210 190, 200 210" fill="none" stroke="#dc2626" stroke-width="1.5" marker-end="url(#arrowhead-red)"/>
+    <path d="M 200 210 C 195 230, 190 250, 180 265" fill="none" stroke="#dc2626" stroke-width="1.5" marker-end="url(#arrowhead-red)"/>
+
+    <text x="80" y="198" font-family="sans-serif" font-size="9" fill="#dc2626" transform="rotate(-70, 80, 198)">φ₃</text>
+    <text x="100" y="258" font-family="sans-serif" font-size="9" fill="#dc2626" transform="rotate(-60, 100, 258)">φ₂</text>
+  </g>
+
+  <!-- === CENTER: Tropical Matrix === -->
+  <g transform="translate(310, 90)">
+    <rect x="0" y="0" width="180" height="160" rx="8" fill="white" stroke="#f59e0b" stroke-width="2" filter="url(#shadow)"/>
+    <text x="90" y="20" text-anchor="middle" font-family="monospace" font-size="12" font-weight="bold" fill="#b45309">Tropical Matrix</text>
+    <text x="90" y="35" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#92400e">(max-plus semiring)</text>
+
+    <!-- Matrix entries -->
+    <text x="30" y="65" font-family="monospace" font-size="13" fill="#1e293b">⎡ 3  5  2 ⎤</text>
+    <text x="30" y="85" font-family="monospace" font-size="13" fill="#1e293b">⎢ 7  1  4 ⎥</text>
+    <text x="30" y="105" font-family="monospace" font-size="13" fill="#1e293b">⎣ 2  6  3 ⎦</text>
+
+    <!-- Rank annotation -->
+    <text x="90" y="130" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#b45309">trop.rank = proxy for K(x)</text>
+    <text x="90" y="145" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#b45309">a ⊕ b = max(a,b)</text>
+    <text x="90" y="158" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#b45309">a ⊙ b = a + b</text>
+  </g>
+
+  <!-- === RIGHT: Convergence Graph === -->
+  <g transform="translate(540, 75)">
+    <rect x="0" y="0" width="230" height="180" rx="8" fill="white" stroke="#16a34a" stroke-width="2" filter="url(#shadow)"/>
+    <text x="115" y="20" text-anchor="middle" font-family="monospace" font-size="12" font-weight="bold" fill="#15803d">Descent Convergence</text>
+
+    <!-- Axes -->
+    <line x1="35" y1="155" x2="210" y2="155" stroke="#333" stroke-width="1.5"/>
+    <line x1="35" y1="155" x2="35" y2="35" stroke="#333" stroke-width="1.5"/>
+    <text x="125" y="175" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#64748b">descent step n</text>
+    <text x="15" y="95" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#64748b" transform="rotate(-90, 15, 95)">tropical rank</text>
+
+    <!-- Convergence curve -->
+    <polyline points="45,45 75,65 105,85 135,110 155,130 175,145 195,150"
+              fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Data points -->
+    <circle cx="45" cy="45" r="4" fill="#2563eb"/>
+    <circle cx="75" cy="65" r="4" fill="#2563eb"/>
+    <circle cx="105" cy="85" r="4" fill="#6366f1"/>
+    <circle cx="135" cy="110" r="4" fill="#8b5cf6"/>
+    <circle cx="155" cy="130" r="4" fill="#a855f7"/>
+    <circle cx="175" cy="145" r="4" fill="#16a34a"/>
+    <circle cx="195" cy="150" r="5" fill="#16a34a" stroke="#15803d" stroke-width="2"/>
+
+    <!-- Rank 1 line -->
+    <line x1="35" y1="150" x2="210" y2="150" stroke="#16a34a" stroke-width="1" stroke-dasharray="4,3"/>
+    <text x="215" y="153" font-family="sans-serif" font-size="8" fill="#16a34a">rank = 1</text>
+
+    <!-- Labels -->
+    <text x="45" y="40" text-anchor="middle" font-family="monospace" font-size="8" fill="#2563eb">r=6</text>
+    <text x="195" y="143" text-anchor="middle" font-family="monospace" font-size="8" fill="#16a34a">r=1 ✓</text>
+  </g>
+
+  <!-- === BOTTOM: The Three Pillars === -->
+  <g transform="translate(0, 420)">
+    <!-- Pillar 1: Compression -->
+    <rect x="30" y="0" width="220" height="100" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="140" y="22" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#1d4ed8">COMPRESSION</text>
+    <text x="140" y="40" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#3b82f6">Kolmogorov complexity K(x)</text>
+    <text x="140" y="55" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#3b82f6">Optimal encoding</text>
+    <text x="140" y="70" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#3b82f6">Shannon entropy bound</text>
+    <text x="140" y="90" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#64748b">Data → minimal description</text>
+
+    <!-- Pillar 2: Tropical Geometry -->
+    <rect x="290" y="0" width="220" height="100" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="400" y="22" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#b45309">TROPICAL GEOMETRY</text>
+    <text x="400" y="40" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#d97706">Max-plus semiring (ℝ∪{-∞}, ⊕, ⊙)</text>
+    <text x="400" y="55" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#d97706">Tropical varieties</text>
+    <text x="400" y="70" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#d97706">Combinatorial degenerations</text>
+    <text x="400" y="90" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#64748b">Algebra → combinatorics</text>
+
+    <!-- Pillar 3: Number Theory -->
+    <rect x="550" y="0" width="220" height="100" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+    <text x="660" y="22" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#15803d">NUMBER THEORY</text>
+    <text x="660" y="40" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#16a34a">Descent methods</text>
+    <text x="660" y="55" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#16a34a">Mordell-Weil theorem</text>
+    <text x="660" y="70" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#16a34a">Rational point enumeration</text>
+    <text x="660" y="90" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#64748b">Varieties → finite generation</text>
+
+    <!-- Connecting arrows between pillars -->
+    <line x1="250" y1="50" x2="290" y2="50" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+    <line x1="510" y1="50" x2="550" y2="50" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+    <!-- Bridge labels -->
+    <text x="270" y="42" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#64748b">tropical</text>
+    <text x="270" y="52" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#64748b">rank</text>
+    <text x="530" y="42" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#64748b">descent</text>
+    <text x="530" y="52" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#64748b">hypothesis</text>
+  </g>
+
+  <!-- === Central connecting arrow from top to bottom === -->
+  <path d="M 400 280 L 400 410" fill="none" stroke="#333" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#arrowhead)"/>
+  <text x="415" y="350" font-family="sans-serif" font-size="10" fill="#64748b" font-style="italic">unifies</text>
+
+  <!-- Caption -->
+  <text x="400" y="565" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#475569" font-style="italic">
+    Figure: The completed descent over 𝒞(X) converges to the terminal object ⊤ (True),
+  </text>
+  <text x="400" y="582" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#475569" font-style="italic">
+    unifying compression, tropical geometry, and number-theoretic descent.
+  </text>
+</svg>
