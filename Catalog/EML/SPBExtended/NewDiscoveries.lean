@@ -1,177 +1,176 @@
 import Mathlib
 
-/-! # CatalogBuild.EML.SPBExtended.NewDiscoveries
+/-! # CatalogBuild.Computation.NewDiscoveries
 
 Auto-generated from theorem catalog database.
-Domain: EML/SPBExtended
-Declarations: 19
+Domain: Computation
+Declarations: 21
 -/
+
 
 noncomputable section
 
-/-- [Section: # New SPB Discoveries and Open Problem Solutions
-## Key New Results
-1. SPB Derivative Chain Rule: ∂spb/∂x = (1+a²)/(1-xa)², always positive
-2. SPB and Fermat's Two-Square Theorem via norm identity
-3. SPB as Möbius transformation with det = 1+a²
-4. Edwards curve addition law factors through SPB
-5. Gauss composition of binary quadratic forms via SPB
-6. SPB fixed point theory and "SPB square root"
-7. SPB period-4 orbit verification] -/
-def spbND (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
+/-- [Section: # CatalogBuild.Computation.NewDiscoveries
+Auto-generated from theorem catalog database.
+Domain: Computation
+Declarations: 21] -/
+def EML_new (a b : ℝ) : ℝ := Real.exp a - Real.log b
 
--- ═══════════════════════════════════════════
--- § 1. SPB Derivative Properties
--- ═══════════════════════════════════════════
 
--- ∂spb/∂x = (1+a²)/(1-xa)² > 0
 
-theorem spb_deriv_x_pos (x a : ℝ) (h : 1 - x * a ≠ 0) :
-    (1 + a ^ 2) / (1 - x * a) ^ 2 > 0 := by positivity
 
--- ∂spb/∂a = (1+x²)/(1-xa)² > 0
+/-- [Section: # CatalogBuild.Computation.NewDiscoveries
+Auto-generated from theorem catalog database.
+Domain: Computation
+Declarations: 21] -/
+theorem EML_conjugation (a b c : ℝ) :
+    EML_new a (Real.exp (EML_new b c)) = Real.exp a - Real.exp b + Real.log c := by
+  simp [EML_new, Real.log_exp]; ring
 
-theorem spb_deriv_a_pos (x a : ℝ) (h : 1 - x * a ≠ 0) :
-    (1 + x ^ 2) / (1 - x * a) ^ 2 > 0 := by positivity
 
--- Product of partial derivatives
 
-theorem spb_mixed_deriv (x a : ℝ) (h : (1 - x * a) ^ 2 ≠ 0) :
-    ((1 + a ^ 2) / (1 - x * a) ^ 2) * ((1 + x ^ 2) / (1 - x * a) ^ 2) =
-    (1 + x ^ 2) * (1 + a ^ 2) / (1 - x * a) ^ 4 := by
-  rw [div_mul_div_comm]
-  congr 1
-  · ring
-  · ring
 
--- ═══════════════════════════════════════════
--- § 2. Two-Square Theorem via SPB
--- ═══════════════════════════════════════════
+theorem EML_self_conjugation (a c : ℝ) :
+    EML_new a (Real.exp (EML_new a c)) = Real.log c := by
+  rw [EML_conjugation]; ring
 
--- Two representations of (1+a²)(1+b²)
 
-theorem two_reps (a b : ℝ) :
-    (1 + a ^ 2) * (1 + b ^ 2) = (a + b) ^ 2 + (1 - a * b) ^ 2 ∧
-    (1 + a ^ 2) * (1 + b ^ 2) = (a - b) ^ 2 + (1 + a * b) ^ 2 := by
-  constructor <;> ring
 
--- Integer version
 
-theorem two_sq_product' (a b : ℤ) :
-    ∃ c d : ℤ, (1 + a ^ 2) * (1 + b ^ 2) = c ^ 2 + d ^ 2 :=
-  ⟨a + b, 1 - a * b, by ring⟩
+theorem EML_diagonal_quadratic_bound (x : ℝ) (hx : 0 < x) :
+    EML_new x x ≥ x ^ 2 / 2 + 2 := by
+  unfold EML_new
+  nlinarith [quadratic_le_exp_of_nonneg hx.le, Real.log_le_sub_one_of_pos hx]
 
--- Every 1+a² is trivially sum of two squares
 
-theorem one_plus_sq (a : ℤ) : ∃ c d : ℤ, 1 + a ^ 2 = c ^ 2 + d ^ 2 :=
-  ⟨1, a, by ring⟩
 
--- Three-fold product
 
-theorem three_fold (a b c : ℤ) :
-    (1 + a ^ 2) * (1 + b ^ 2) * (1 + c ^ 2) =
-    ((a + b) * c + (1 - a * b)) ^ 2 + ((a + b) - (1 - a * b) * c) ^ 2 := by ring
+theorem EML_diagonal_strictMono_ge_one :
+    StrictMonoOn (fun x => EML_new x x) (Set.Ici 1) := by
+  -- To prove strict monotonicity, we show that the derivative of $EML_new x x$ is positive for $x \geq 1$.
+  have h_deriv_pos : ∀ x : ℝ, 1 ≤ x → deriv (fun x => Real.exp x - Real.log x) x > 0 := by
+    intro x hx; norm_num [ Real.differentiableAt_exp, Real.differentiableAt_log, ne_of_gt ( zero_lt_one.trans_le hx ) ];
+    nlinarith [ Real.add_one_le_exp x, mul_inv_cancel₀ ( ne_of_gt ( zero_lt_one.trans_le hx ) ) ];
+  -- Apply the fact that if the derivative of a function is positive on an interval, then the function is strictly increasing on that interval.
+  have h_strict_mono : StrictMonoOn (fun x => Real.exp x - Real.log x) (Set.Ici 1) := by
+    have : ∀ x ∈ Set.Ici 1, deriv (fun x => Real.exp x - Real.log x) x > 0 := h_deriv_pos
+    apply_rules [ strictMonoOn_of_deriv_pos ];
+    · exact convex_Ici _;
+    · exact continuousOn_of_forall_continuousAt fun x hx => ContinuousAt.sub ( Real.continuous_exp.continuousAt ) ( Real.continuousAt_log ( by linarith [ hx.out ] ) );
+    · exact fun x hx => this x <| interior_subset hx;
+  exact fun x hx y hy hxy => h_strict_mono hx hy hxy
 
--- ═══════════════════════════════════════════
--- § 3. SPB as Möbius Transformation
--- ═══════════════════════════════════════════
 
--- spb(x, a) = (1·x + a)/((-a)·x + 1), a Möbius transformation
 
-theorem spb_moebius_det (a : ℝ) : 1 * 1 - a * (-a) = 1 + a ^ 2 := by ring
 
--- Möbius transformations preserve cross-ratio ⟹ Schwarzian = 0
--- This is the deep reason SPB translations are conformal maps
+def EML_divergence (x y : ℝ) : ℝ := EML_new x y + EML_new y x - 2
 
--- ═══════════════════════════════════════════
--- § 4. Edwards Curve Connection
--- ═══════════════════════════════════════════
 
--- The unit circle parametrization cos²+sin²=1 via half-angle
 
-theorem edwards_curve_param (t : ℝ) :
-    (2 * t / (1 + t ^ 2)) ^ 2 + ((1 - t ^ 2) / (1 + t ^ 2)) ^ 2 = 1 := by
-  have h : (1 + t ^ 2) ≠ 0 := by positivity
-  field_simp; ring
 
--- ═══════════════════════════════════════════
--- § 5. Gauss Composition of Quadratic Forms
--- ═══════════════════════════════════════════
+theorem EML_divergence_symm (x y : ℝ) : EML_divergence x y = EML_divergence y x := by
+  simp [EML_divergence, EML_new]; ring
 
--- For D=-1 (Gaussian integers)
 
-theorem gauss_comp_D_neg1 (x₁ y₁ x₂ y₂ : ℤ) :
-    (x₁ ^ 2 + y₁ ^ 2) * (x₂ ^ 2 + y₂ ^ 2) =
-    (x₁ * x₂ - y₁ * y₂) ^ 2 + (x₁ * y₂ + y₁ * x₂) ^ 2 := by ring
 
--- For D=-2
 
-theorem gauss_comp_D_neg2 (x₁ y₁ x₂ y₂ : ℤ) :
-    (x₁ ^ 2 + 2 * y₁ ^ 2) * (x₂ ^ 2 + 2 * y₂ ^ 2) =
-    (x₁ * x₂ - 2 * y₁ * y₂) ^ 2 + 2 * (x₁ * y₂ + y₁ * x₂) ^ 2 := by ring
+theorem EML_divergence_pos (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
+    EML_divergence x y > 0 := by
+  simp only [EML_divergence, EML_new]
+  nlinarith [quadratic_le_exp_of_nonneg hx.le, quadratic_le_exp_of_nonneg hy.le,
+    Real.log_le_sub_one_of_pos hx, Real.log_le_sub_one_of_pos hy,
+    sq_nonneg x, sq_nonneg y]
 
--- General n
 
-theorem gauss_comp_general (n : ℤ) (x₁ y₁ x₂ y₂ : ℤ) :
-    (x₁ ^ 2 + n * y₁ ^ 2) * (x₂ ^ 2 + n * y₂ ^ 2) =
-    (x₁ * x₂ - n * y₁ * y₂) ^ 2 + n * (x₁ * y₂ + y₁ * x₂) ^ 2 := by ring
 
-theorem spb_equation_solution (a b : ℝ) (h : 1 + a * b ≠ 0) :
-    spbND (spbND b (-a)) a = b := by
-      simp [spbND];
-      rw [ div_eq_iff ] <;> ring_nf at *;
-      · grind;
-      · cases lt_or_gt_of_ne h <;> nlinarith [ inv_mul_cancel₀ h ]
 
--- The "SPB square root" equation spb(x,x) = c reduces to cx²+2x-c=0
--- Discriminant: 4+4c² = 4(1+c²) > 0, so always two real solutions
+def symmetryDefect (a b : ℝ) : ℝ := EML_new a b - EML_new b a
 
-theorem spb_sqrt_discriminant (c : ℝ) :
-    4 + 4 * c ^ 2 = 4 * (1 + c ^ 2) := by ring
 
--- Period-4 verification: iterating spb(·, 1) four times returns to start
 
-theorem spb_period_4 :
-    spbND (spbND (spbND (spbND 0 1) 1) 1) 1 = 0 := by norm_num [spbND]
 
--- Period-1: spb(x, 0) = x
+theorem symmetryDefect_formula (a b : ℝ) :
+    symmetryDefect a b = (Real.exp a - Real.exp b) + (Real.log a - Real.log b) := by
+  simp [symmetryDefect, EML_new]; ring
 
-theorem spb_period_1 (x : ℝ) : spbND x 0 = x := by simp [spbND]
 
--- The SPB orbit traces:
--- spb(0, 1) = 1
--- spb(1, 1) = undefined (pole at 1-1=0 in ℝ, but = ∞ in ℝP¹)
--- On the extended line, we get 0 → 1 → ∞ → -1 → 0 (period 4)
 
--- ═══════════════════════════════════════════
--- § 7. New Identity: SPB and Bernstein Basis
--- ═══════════════════════════════════════════
 
-theorem bernstein_cauchy' (x : ℝ) :
-    x ^ 2 / (1 + x ^ 2) + 1 / (1 + x ^ 2) = 1 := by
-  have h : (1 + x ^ 2) ≠ 0 := by positivity
-  field_simp; ring
+theorem symmetryDefect_antisymm (a b : ℝ) :
+    symmetryDefect a b = -symmetryDefect b a := by
+  simp [symmetryDefect, EML_new]
 
--- The Cauchy kernel 1/(1+x²) is a Bernstein basis function
--- under the substitution u = x²/(1+x²) ∈ [0,1)
 
--- ═══════════════════════════════════════════
--- § 8. SPB Cocycle and Group Cohomology
--- ═══════════════════════════════════════════
 
--- The SPB cocycle c(x,y) = 1/(1-xy) satisfies the 1-cocycle condition:
--- c(x, spb(y,z)) · c(y,z) = c(spb(x,y), z) · c(x,y)
--- (when all terms are defined)
 
--- Verification of the cocycle squared identity
+theorem symmetryDefect_self (a : ℝ) : symmetryDefect a a = 0 := by
+  simp [symmetryDefect]
 
-theorem cocycle_sq_identity (x y : ℝ) :
-    (1 - x * y) ^ 2 + (x + y) ^ 2 = (1 + x ^ 2) * (1 + y ^ 2) := by ring
 
--- The cocycle relates to the Cauchy kernel:
--- |c(x,y)|² = (1+spb(x,y)²) / ((1+x²)(1+y²)·|1-xy|²)
--- Wait, that's the inverse. Actually:
--- 1/(1-xy)² = (1+spb²) / ((1+x²)(1+y²))
--- This is the Cauchy invariance formula in disguise
+
+
+theorem exp_minus_id_minus_log_pos (c : ℝ) (hc : 0 < c) :
+    Real.exp c - c - Real.log c > 0 := by
+  nlinarith [quadratic_le_exp_of_nonneg hc.le, Real.log_le_sub_one_of_pos hc, sq_nonneg c]
+
+
+
+
+theorem EML_depth2_e_minus_1 : EML_new 1 (Real.exp 1) = Real.exp 1 - 1 := by
+  simp [EML_new, Real.log_exp]
+
+
+
+
+theorem EML_depth2_exp_e : EML_new (Real.exp 1) 1 = Real.exp (Real.exp 1) := by
+  simp [EML_new, Real.log_one]
+
+
+
+
+theorem EML_depth2_exp_e_minus_1 :
+    EML_new (Real.exp 1) (Real.exp 1) = Real.exp (Real.exp 1) - 1 := by
+  simp [EML_new, Real.log_exp]
+
+
+
+
+theorem K_EML_2_gt_1 : EML_new 1 1 ≠ 2 := by
+  simp [EML_new, Real.log_one]; intro h; linarith [Real.exp_one_gt_d9]
+
+
+
+
+theorem e_minus_one_lt_two : Real.exp 1 - 1 < 2 := by linarith [Real.exp_one_lt_d9]
+
+
+
+theorem e_gt_two : Real.exp 1 > 2 := by linarith [Real.exp_one_gt_d9]
+
+
+
+
+/-- EML amplification for non-negative first argument:
+If a ≥ 0 and δ > 0, the change in EML exceeds δ.
+This is because exp(a) ≥ 1 when a ≥ 0. -/
+theorem EML_amplification (a b δ : ℝ) (ha : 0 ≤ a) (hδ : 0 < δ) :
+    EML_new (a + δ) b - EML_new a b > δ := by
+  simp only [EML_new]
+  -- Need: exp(a+δ) - exp(a) > δ
+  -- = exp(a)(exp(δ) - 1) ≥ 1 * (exp(δ) - 1) ≥ 1 * (δ + δ²/2) > δ
+  have h1 := Real.exp_add a δ
+  have h2 := quadratic_le_exp_of_nonneg hδ.le
+  have h3 : Real.exp a ≥ 1 := Real.one_le_exp ha
+  nlinarith [sq_nonneg δ]
+
+
+
+
+theorem EML_legendre_form (u v : ℝ) :
+    EML_new u (Real.exp v) = Real.exp u - v := by
+  simp [EML_new, Real.log_exp]
+
+
+
 
 end
