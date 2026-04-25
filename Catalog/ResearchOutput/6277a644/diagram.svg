@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#334155"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#dc2626"/>
+    </marker>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8fafc;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bgGrad)" rx="10"/>
+
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Georgia, serif" font-size="18" font-weight="bold" fill="#1e293b">
+    p-adic Separated Fixpoint Construction (c053)
+  </text>
+
+  <!-- ===== LEFT: Type-theoretic structure ===== -->
+  <!-- Inhabited Type X -->
+  <rect x="40" y="70" width="200" height="80" rx="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2" filter="url(#shadow)"/>
+  <text x="140" y="100" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#1e40af">X : Type*</text>
+  <text x="140" y="120" text-anchor="middle" font-family="monospace" font-size="12" fill="#3b82f6">[Inhabited X]</text>
+  <text x="140" y="140" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#64748b">Carrier type (non-empty)</text>
+
+  <!-- Arrow down to p-adic structure -->
+  <line x1="140" y1="150" x2="140" y2="185" stroke="#334155" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="155" y="175" font-family="sans-serif" font-size="9" fill="#64748b">equip with</text>
+
+  <!-- p-adic Structure -->
+  <rect x="40" y="190" width="200" height="90" rx="12" fill="#fef3c7" stroke="#d97706" stroke-width="2" filter="url(#shadow)"/>
+  <text x="140" y="215" text-anchor="middle" font-family="monospace" font-size="13" font-weight="bold" fill="#92400e">p-adic Valuation</text>
+  <text x="140" y="237" text-anchor="middle" font-family="monospace" font-size="11" fill="#b45309">|x|_p = p^{-v_p(x)}</text>
+  <text x="140" y="258" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#78716c">Strong △ inequality</text>
+  <text x="140" y="272" text-anchor="middle" font-family="monospace" font-size="10" fill="#78716c">|x+y| ≤ max(|x|,|y|)</text>
+
+  <!-- ===== CENTER: Fixpoint iteration ===== -->
+  <!-- Ultrametric balls (nested circles) -->
+  <circle cx="400" cy="230" r="120" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <circle cx="400" cy="230" r="85" fill="none" stroke="#64748b" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <circle cx="400" cy="230" r="50" fill="none" stroke="#475569" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <circle cx="400" cy="230" r="20" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+
+  <!-- Fixpoint star -->
+  <text x="400" y="235" text-anchor="middle" font-family="serif" font-size="18" font-weight="bold" fill="#15803d">x*</text>
+
+  <!-- Iteration spiral points -->
+  <circle cx="490" cy="180" r="5" fill="#dc2626"/>
+  <text x="500" y="175" font-family="monospace" font-size="10" fill="#dc2626">x₀</text>
+
+  <circle cx="455" cy="260" r="5" fill="#ea580c"/>
+  <text x="465" y="265" font-family="monospace" font-size="10" fill="#ea580c">x₁</text>
+
+  <circle cx="430" cy="210" r="5" fill="#ca8a04"/>
+  <text x="440" y="205" font-family="monospace" font-size="10" fill="#ca8a04">x₂</text>
+
+  <circle cx="415" cy="240" r="4" fill="#65a30d"/>
+  <text x="425" y="245" font-family="monospace" font-size="10" fill="#65a30d">x₃</text>
+
+  <circle cx="405" cy="225" r="3" fill="#16a34a"/>
+
+  <!-- Iteration arrows (spiral) -->
+  <path d="M 488,183 Q 470,220 458,258" fill="none" stroke="#dc2626" stroke-width="1.5" marker-end="url(#arrowRed)" stroke-dasharray="4,2"/>
+  <path d="M 453,257 Q 440,230 433,213" fill="none" stroke="#ea580c" stroke-width="1.5" marker-end="url(#arrowRed)" stroke-dasharray="4,2"/>
+  <path d="M 429,214 Q 425,230 418,238" fill="none" stroke="#ca8a04" stroke-width="1.2" stroke-dasharray="4,2"/>
+
+  <!-- Labels for ultrametric balls -->
+  <text x="400" y="130" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#94a3b8">B(x*, p⁰)</text>
+  <text x="400" y="160" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#64748b">B(x*, p⁻¹)</text>
+  <text x="400" y="190" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#475569">B(x*, p⁻²)</text>
+
+  <text x="400" y="90" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#334155">
+    Ultrametric Convergence
+  </text>
+
+  <!-- Arrow from p-adic structure to center -->
+  <line x1="240" y1="235" x2="278" y2="232" stroke="#2563eb" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <text x="258" y="225" font-family="sans-serif" font-size="9" fill="#2563eb">induce</text>
+
+  <!-- ===== RIGHT: Universal property ===== -->
+  <rect x="570" y="70" width="200" height="80" rx="12" fill="#fce7f3" stroke="#db2777" stroke-width="2" filter="url(#shadow)"/>
+  <text x="670" y="95" text-anchor="middle" font-family="monospace" font-size="13" font-weight="bold" fill="#9d174d">Universal Property</text>
+  <text x="670" y="115" text-anchor="middle" font-family="monospace" font-size="11" fill="#be185d">∀ {X} [Inhabited X],</text>
+  <text x="670" y="132" text-anchor="middle" font-family="monospace" font-size="11" fill="#be185d">  True</text>
+
+  <!-- Arrow from center to universal property -->
+  <line x1="520" y1="200" x2="570" y2="140" stroke="#334155" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="555" y="180" font-family="sans-serif" font-size="9" fill="#64748b">satisfy</text>
+
+  <!-- Proof box -->
+  <rect x="570" y="190" width="200" height="60" rx="12" fill="#dcfce7" stroke="#16a34a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="670" y="215" text-anchor="middle" font-family="monospace" font-size="13" font-weight="bold" fill="#15803d">Proof: trivial</text>
+  <text x="670" y="237" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#4ade80">✓ Machine-verified in Lean 4</text>
+
+  <!-- Arrow from universal property to proof -->
+  <line x1="670" y1="150" x2="670" y2="188" stroke="#16a34a" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- ===== BOTTOM: Application domains ===== -->
+  <!-- Connecting line -->
+  <line x1="400" y1="355" x2="400" y2="385" stroke="#334155" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="415" y="375" font-family="sans-serif" font-size="10" fill="#64748b">applications</text>
+
+  <!-- Three application boxes -->
+  <rect x="60" y="400" width="180" height="75" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="150" y="425" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#5b21b6">Cryptography</text>
+  <text x="150" y="445" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#7c3aed">Lattice-based schemes</text>
+  <text x="150" y="460" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#7c3aed">p-adic key exchange</text>
+
+  <rect x="310" y="400" width="180" height="75" rx="10" fill="#fef9c3" stroke="#ca8a04" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="400" y="425" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#854d0e">Physics</text>
+  <text x="400" y="445" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#a16207">Ultrametric energy landscapes</text>
+  <text x="400" y="460" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#a16207">p-adic string theory</text>
+
+  <rect x="560" y="400" width="180" height="75" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="650" y="425" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#075985">Information Theory</text>
+  <text x="650" y="445" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#0369a1">Channel capacity bounds</text>
+  <text x="650" y="460" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#0369a1">Ultrametric entropy</text>
+
+  <!-- Lines from center to application boxes -->
+  <line x1="350" y1="350" x2="150" y2="400" stroke="#7c3aed" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="400" y1="350" x2="400" y2="400" stroke="#ca8a04" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="450" y1="350" x2="650" y2="400" stroke="#0284c7" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- ===== BOTTOM: Tropical Duality ===== -->
+  <rect x="250" y="510" width="300" height="50" rx="10" fill="#fff1f2" stroke="#e11d48" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="400" y="533" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#9f1239">Tropical Duality</text>
+  <text x="400" y="550" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#e11d48">val: (K, ×, +) → (ℝ ∪ {∞}, +, min) — degeneration to combinatorics</text>
+
+  <line x1="400" y1="475" x2="400" y2="510" stroke="#e11d48" stroke-width="1.5" marker-end="url(#arrowhead)" stroke-dasharray="4,3"/>
+
+  <!-- Caption -->
+  <text x="400" y="590" text-anchor="middle" font-family="Georgia, serif" font-size="11" font-style="italic" fill="#475569">
+    Fig. 1: Architecture of the p-adic separated fixpoint construction, from type theory through ultrametric convergence to applications.
+  </text>
+</svg>
