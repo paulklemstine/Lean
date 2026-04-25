@@ -6,8 +6,9 @@
 /Catalog/.lake
 /Catalog/Aether/output
 /Catalog/Aether/logs
-/Catalog/Aether/__pycache__
-/Catalog/Aether/artifacts
+/Aether/__pycache__
+/Aether/artifacts
+/workspace
 /Catalog/Aether/manual_jobs
 *.tar.gz
 *.output
