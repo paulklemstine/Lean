@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <marker id="arrowhead-blue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowhead-red" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#dc2626"/>
+    </marker>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8fafc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bg-grad)" rx="8"/>
+
+  <!-- Title -->
+  <text x="400" y="40" text-anchor="middle" font-family="Georgia, serif" font-size="18" font-weight="bold" fill="#1e293b">
+    Differential Proper Frequency Characterization
+  </text>
+  <text x="400" y="60" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#64748b">
+    Universal Property via Tropical Duality
+  </text>
+
+  <!-- ============ LEFT: Inhabited Type Space ============ -->
+  <g transform="translate(130, 180)">
+    <!-- Outer circle representing the type -->
+    <ellipse cx="0" cy="0" rx="90" ry="70" fill="#dbeafe" stroke="#2563eb" stroke-width="2" filter="url(#shadow)"/>
+    <!-- Elements -->
+    <circle cx="-30" cy="-20" r="8" fill="#3b82f6" opacity="0.8"/>
+    <circle cx="20" cy="-15" r="8" fill="#3b82f6" opacity="0.8"/>
+    <circle cx="-10" cy="20" r="8" fill="#3b82f6" opacity="0.8"/>
+    <circle cx="35" cy="15" r="8" fill="#3b82f6" opacity="0.8"/>
+    <!-- Default element (starred) -->
+    <circle cx="-30" cy="-20" r="12" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-dasharray="3,3"/>
+    <text x="-30" y="-35" text-anchor="middle" font-family="monospace" font-size="9" fill="#1d4ed8">default</text>
+
+    <text x="0" y="-80" text-anchor="middle" font-family="Georgia, serif" font-size="14" font-weight="bold" fill="#1e40af">
+      X : Type*
+    </text>
+    <text x="0" y="-65" text-anchor="middle" font-family="monospace" font-size="10" fill="#3b82f6">
+      [Inhabited X]
+    </text>
+    <text x="0" y="60" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#475569">
+      Inhabited Type Space
+    </text>
+  </g>
+
+  <!-- ============ CENTER: Differential Operator ============ -->
+  <g transform="translate(400, 160)">
+    <rect x="-70" y="-40" width="140" height="80" rx="12" fill="#fef3c7" stroke="#d97706" stroke-width="2" filter="url(#shadow)"/>
+    <text x="0" y="-10" text-anchor="middle" font-family="Georgia, serif" font-size="13" font-weight="bold" fill="#92400e">
+      Differential
+    </text>
+    <text x="0" y="8" text-anchor="middle" font-family="Georgia, serif" font-size="13" font-weight="bold" fill="#92400e">
+      Structure
+    </text>
+    <text x="0" y="25" text-anchor="middle" font-family="monospace" font-size="10" fill="#b45309">
+      ∂ : X → X
+    </text>
+  </g>
+
+  <!-- ============ RIGHT: Frequency Domain ============ -->
+  <g transform="translate(660, 180)">
+    <!-- Spectral region -->
+    <ellipse cx="0" cy="0" rx="85" ry="65" fill="#dcfce7" stroke="#16a34a" stroke-width="2" filter="url(#shadow)"/>
+    <!-- Frequency bars -->
+    <rect x="-50" y="10" width="12" height="25" fill="#22c55e" opacity="0.7" rx="2"/>
+    <rect x="-30" y="-5" width="12" height="40" fill="#22c55e" opacity="0.7" rx="2"/>
+    <rect x="-10" y="-20" width="12" height="55" fill="#22c55e" opacity="0.7" rx="2"/>
+    <rect x="10" y="-10" width="12" height="45" fill="#22c55e" opacity="0.7" rx="2"/>
+    <rect x="30" y="5" width="12" height="30" fill="#22c55e" opacity="0.7" rx="2"/>
+
+    <text x="0" y="-75" text-anchor="middle" font-family="Georgia, serif" font-size="14" font-weight="bold" fill="#15803d">
+      Frequency Domain
+    </text>
+    <text x="0" y="-60" text-anchor="middle" font-family="monospace" font-size="10" fill="#16a34a">
+      Spec(∂)
+    </text>
+    <text x="0" y="55" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#475569">
+      Proper Frequencies
+    </text>
+  </g>
+
+  <!-- ============ ARROWS ============ -->
+  <!-- X → Differential -->
+  <line x1="225" y1="175" x2="325" y2="165" stroke="#2563eb" stroke-width="2" marker-end="url(#arrowhead-blue)"/>
+  <text x="275" y="158" text-anchor="middle" font-family="Georgia, serif" font-size="10" fill="#2563eb">equip</text>
+
+  <!-- Differential → Frequency -->
+  <line x1="475" y1="165" x2="570" y2="175" stroke="#16a34a" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="523" y="158" text-anchor="middle" font-family="Georgia, serif" font-size="10" fill="#16a34a">spectral</text>
+
+  <!-- ============ BOTTOM: Terminal Object (True) ============ -->
+  <g transform="translate(400, 370)">
+    <circle cx="0" cy="0" r="45" fill="#fce7f3" stroke="#db2777" stroke-width="3" filter="url(#shadow)"/>
+    <text x="0" y="-8" text-anchor="middle" font-family="Georgia, serif" font-size="22" font-weight="bold" fill="#be185d">
+      True
+    </text>
+    <text x="0" y="12" text-anchor="middle" font-family="monospace" font-size="10" fill="#db2777">
+      trivial
+    </text>
+  </g>
+
+  <!-- Arrows to True -->
+  <!-- From X -->
+  <path d="M 130 255 Q 200 340 355 370" fill="none" stroke="#6366f1" stroke-width="1.8" stroke-dasharray="6,3" marker-end="url(#arrowhead)"/>
+  <text x="210" y="320" text-anchor="middle" font-family="Georgia, serif" font-size="10" fill="#6366f1" transform="rotate(-20, 210, 320)">∀ inhabited</text>
+
+  <!-- From Frequency -->
+  <path d="M 660 250 Q 590 340 445 370" fill="none" stroke="#6366f1" stroke-width="1.8" stroke-dasharray="6,3" marker-end="url(#arrowhead)"/>
+  <text x="590" y="315" text-anchor="middle" font-family="Georgia, serif" font-size="10" fill="#6366f1" transform="rotate(20, 590, 315)">well-defined</text>
+
+  <!-- From Differential -->
+  <line x1="400" y1="205" x2="400" y2="320" stroke="#db2777" stroke-width="2.5" marker-end="url(#arrowhead-red)"/>
+  <text x="415" y="265" font-family="Georgia, serif" font-size="11" font-weight="bold" fill="#db2777">universal</text>
+  <text x="415" y="280" font-family="Georgia, serif" font-size="11" font-weight="bold" fill="#db2777">property</text>
+
+  <!-- ============ TROPICAL DUALITY BOX ============ -->
+  <g transform="translate(400, 490)">
+    <rect x="-160" y="-30" width="320" height="60" rx="8" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="0" y="-8" text-anchor="middle" font-family="Georgia, serif" font-size="12" font-weight="bold" fill="#6d28d9">
+      Tropical Duality
+    </text>
+    <text x="0" y="12" text-anchor="middle" font-family="monospace" font-size="10" fill="#7c3aed">
+      (ℝ, +, ×) ↔ (ℝ ∪ {∞}, min, +)  ⟹  collapse to terminal
+    </text>
+  </g>
+
+  <!-- Arrow from True to Tropical -->
+  <line x1="400" y1="415" x2="400" y2="455" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrowhead)"/>
+
+  <!-- ============ p-ADIC CONNECTION (small annotation) ============ -->
+  <g transform="translate(700, 490)">
+    <rect x="-55" y="-22" width="110" height="44" rx="6" fill="#fff1f2" stroke="#e11d48" stroke-width="1" opacity="0.9"/>
+    <text x="0" y="-5" text-anchor="middle" font-family="monospace" font-size="9" fill="#be123c">p-adic</text>
+    <text x="0" y="10" text-anchor="middle" font-family="monospace" font-size="9" fill="#be123c">χ₀: ℤₚ → ℂₚ</text>
+  </g>
+  <line x1="562" y1="490" x2="642" y2="490" stroke="#e11d48" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#arrowhead-red)"/>
+
+  <!-- ============ CAPTION ============ -->
+  <text x="400" y="570" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#64748b">
+    Figure 1: The differential proper frequency characterization factors through the terminal object True,
+  </text>
+  <text x="400" y="585" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#64748b">
+    establishing a universal property for inhabited type spaces via tropical duality.
+  </text>
+</svg>
