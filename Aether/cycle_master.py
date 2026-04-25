@@ -39,6 +39,7 @@ from pi_agent_client import PiAgentClient, ResearchConcept
 from prompt_engine import PromptEngine, ArtifactRequests
 from aristotle_sdk_client import AristotleSDKClient
 from lean_catalog_builder import LeanCatalogBuilder
+from smart_integrator import SmartIntegrator
 from telemetry import TelemetryLogger, ExperimentRecord
 
 
@@ -134,106 +135,6 @@ class GitAutomator:
         """)
 
         return self.commit(message)
-
-
-class IntegrationAnalyzer:
-    """Analyze Aristotle results and determine what to integrate."""
-
-    def __init__(self, catalog_root: Path, pi_agent: Optional[PiAgentClient] = None):
-        self.catalog_root = Path(catalog_root)
-        self.pi_agent = pi_agent
-
-    def analyze_result_directory(self, result_dir: Path) -> Dict:
-        """Compare result directory against catalog and identify changes."""
-        changes = {
-            "new_files": [],
-            "modified_files": [],
-            "unchanged_files": [],
-            "artifacts": [],
-            "summary": "",
-        }
-
-        for result_file in result_dir.rglob("*"):
-            if not result_file.is_file():
-                continue
-            rel = result_file.relative_to(result_dir)
-            original = self.catalog_root / rel
-
-            # Skip build artifacts and lake files
-            if self._is_artifact(rel):
-                changes["artifacts"].append(str(rel))
-                continue
-
-            if not original.exists():
-                changes["new_files"].append(str(rel))
-            else:
-                orig_text = original.read_text(encoding="utf-8", errors="ignore")
-                result_text = result_file.read_text(encoding="utf-8", errors="ignore")
-                if orig_text != result_text:
-                    changes["modified_files"].append({
-                        "path": str(rel),
-                        "diff_summary": self._quick_diff_summary(orig_text, result_text),
-                    })
-                else:
-                    changes["unchanged_files"].append(str(rel))
-
-        # Generate summary
-        changes["summary"] = (
-            f"New: {len(changes['new_files'])}, "
-            f"Modified: {len(changes['modified_files'])}, "
-            f"Artifacts: {len(changes['artifacts'])}"
-        )
-        return changes
-
-    def _is_artifact(self, rel_path: Path) -> bool:
-        """Check if a file is an artifact rather than source code."""
-        name = rel_path.name.lower()
-        return any(
-            name.endswith(ext) for ext in
-            [".md", ".py", ".svg", ".png", ".txt", ".json", ".yaml", ".yml"]
-        ) or name in {"demo", "diagram", "report", "discussion"}
-
-    def _quick_diff_summary(self, old: str, new: str) -> str:
-        """Quick summary of changes."""
-        old_sorry = old.count("sorry")
-        new_sorry = new.count("sorry")
-        sorry_delta = old_sorry - new_sorry
-
-        old_lines = old.count("\n")
-        new_lines = new.count("\n")
-
-        if sorry_delta > 0:
-            return f"-{sorry_delta} sorry, {new_lines - old_lines:+d} lines"
-        return f"{new_lines - old_lines:+d} lines"
-
-    def integrate_changes(
-        self,
-        changes: Dict,
-        result_dir: Path,
-        dry_run: bool = False,
-    ) -> List[Path]:
-        """Copy changed/new files back into the catalog."""
-        integrated: List[Path] = []
-
-        # Integrate new files
-        for rel_path in changes.get("new_files", []):
-            src = result_dir / rel_path
-            dest = self.catalog_root / rel_path
-            if not dry_run:
-                dest.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copy2(src, dest)
-            integrated.append(dest)
-
-        # Integrate modified files
-        for item in changes.get("modified_files", []):
-            rel_path = item["path"]
-            src = result_dir / rel_path
-            dest = self.catalog_root / rel_path
-            if not dry_run:
-                shutil.copy2(src, dest)
-            integrated.append(dest)
-
-        return integrated
 
 
 class PromptEvolver:
@@ -360,7 +261,7 @@ class CycleMaster:
         self.telemetry = TelemetryLogger(config.get("telemetry", {}))
         self.lean_builder = LeanCatalogBuilder(self.catalog_root)
         self.git = GitAutomator(self.catalog_root.parent)  # repo root
-        self.integrator = IntegrationAnalyzer(self.catalog_root, self.pi_agent)
+        self.integrator = SmartIntegrator(self.catalog_root, self.pi_agent, self.workspace)
         self.prompt_evolver = PromptEvolver(self.pi_agent, self.workspace)
 
         # Control
@@ -553,17 +454,22 @@ class CycleMaster:
             with tarfile.open(result.result_path, "r:gz") as tar:
                 tar.extractall(path=extract_dir)
 
-            # Analyze changes
-            print(f"[Phase 6] Analyzing changes...")
-            changes = self.integrator.analyze_result_directory(extract_dir)
-            print(f"[Phase 6] {changes['summary']}")
+            # Analyze and integrate with SmartIntegrator
+            print(f"[Phase 6] Smart integration with Pi-Agent classification...")
+            decisions = self.integrator.integrate_result_directory(
+                result_dir=extract_dir,
+                exp_id=exp_id,
+                dry_run=False,
+            )
+            manifest = self.integrator.generate_manifest(decisions, exp_id)
+            print(f"[Phase 6] Manifest: {manifest}")
+            print(f"[Phase 6] Placed: {len(decisions['placed'])}, Artifacts: {len(decisions['artifacts'])}, Unchanged: {len(decisions['unchanged'])}, Rejected: {len(decisions['rejected'])}")
 
             # Extract artifacts
             artifacts = self._extract_artifacts(extract_dir, exp_id)
             print(f"[Phase 6] Artifacts: {list(artifacts.keys())}")
 
-            # Record prompt outcome
-            changed_count = len(changes.get("new_files", [])) + len(changes.get("modified_files", []))
+            changed_count = len(decisions["placed"])
             success = result.status in ("complete", "COMPLETE", "COMPLETE_WITH_ERRORS")
             self.prompt_evolver.record_prompt_outcome(
                 prompt_text=prompt.prompt_text,
@@ -573,28 +479,26 @@ class CycleMaster:
                 changed_files=changed_count,
             )
 
-            # Phase 8: Integrate changes into catalog
-            if success and changed_count > 0:
-                print(f"[Phase 7] Integrating {changed_count} changed files into Catalog...")
-                integrated = self.integrator.integrate_changes(changes, extract_dir, dry_run=False)
-                for p in integrated[:5]:
-                    print(f"  + {p.relative_to(self.catalog_root)}")
-                if len(integrated) > 5:
-                    print(f"  + ... and {len(integrated) - 5} more")
+            # Phase 8: Git commit + push
+            if success and (changed_count > 0 or len(decisions["artifacts"]) > 0):
+                print(f"[Phase 7] Integrating {changed_count} files into Catalog...")
+                for d in decisions["placed"][:5]:
+                    print(f"  + [{d.domain}] {d.target_path.relative_to(self.catalog_root)} ({d.reason})")
+                if len(decisions["placed"]) > 5:
+                    print(f"  + ... and {len(decisions['placed']) - 5} more")
 
-                # Save main proof as pending
-                if result.lean_source:
-                    pending_dir = self.catalog_root / "Speculative" / "AutoResearch"
-                    pending_dir.mkdir(parents=True, exist_ok=True)
-                    pending_file = pending_dir / f"PENDING_{domain['id']}_{exp_id}.lean"
-                    pending_file.write_text(result.lean_source, encoding="utf-8")
-                    print(f"[Phase 7] Pending proof: {pending_file.name}")
+                # Collect changed paths for git
+                changed_paths = [
+                    str(d.target_path.relative_to(self.catalog_root))
+                    for d in decisions["placed"]
+                ]
+                artifact_paths = [
+                    str(p.relative_to(self.catalog_root.parent))
+                    for p in artifacts.values()
+                ]
 
                 # Phase 9: Git commit + push
                 print(f"[Phase 8] Git operations...")
-                changed_paths = [str(p.relative_to(self.catalog_root)) for p in integrated]
-                artifact_paths = [str(p.relative_to(self.catalog_root.parent)) for p in artifacts.values()]
-
                 commit_ok = self.git.create_commit_for_cycle(
                     cycle_num=cycle_n,
                     domain=domain["name"],
@@ -617,6 +521,7 @@ class CycleMaster:
                     "cycle": cycle_n,
                     "exp_id": exp_id,
                     "files_changed": changed_count,
+                    "domains_touched": list(set(d.domain for d in decisions["placed"])),
                 })
             else:
                 print(f"[Phase 7] No changes to integrate (status={result.status}).")
