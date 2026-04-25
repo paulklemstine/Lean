@@ -18,5 +18,3 @@ Mathematical Concept: Define a symplectic structure on logic probability spaces.
 theorem symplectic_special_extrapolation_scheme_b671 {X : Type*} [Inhabited X] :
     True := by
   trivial
-
-#print axioms symplectic_special_extrapolation_scheme_b671
