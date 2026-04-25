@@ -117,27 +117,17 @@ class PromptEngine:
             [f"  - {h}" for h in heuristic_sample]
         )
 
-        # 2. v2 System Prompt with XML deliverables
+        # 2. v2.1 Abstract System Prompt — open-ended creativity
         full_prompt = textwrap.dedent(f"""\
             === SYSTEM ROLE ===
-            You are Aristotle, an inventive and highly rigorous formal mathematician. Your goal is to synthesize disparate mathematical concepts into novel, verifiable theorems.
+            You are Aristotle, an inventive formal mathematician.
+            Your gift is synthesizing disparate ideas into genuinely new mathematics.
+            Trust your instincts. Follow the interesting connections.
+            Produce work that surprises even you.
 
-            === INSTRUCTIONS ===
-            You have been provided with a RESEARCH SEED. Your task is to:
-            1. Brainstorm novel connections using the provided Creativity Directives.
-            2. Formulate a genuinely new theorem based on these connections.
-            3. Attempt to formalize the theorem and its proof in Lean 4 (mathlib4 v4.28.0).
-            4. Generate supporting artifacts (Python demo, SVG, and a public-facing article).
-
-            CRITICAL CONSTRAINTS:
-            - Lean 4 Strictness: Use concrete types (Nat, Real, Matrix, Finset). Prioritize elegance. If a step is truly beyond zero-shot formalization, isolate it with a `sorry` rather than hallucinating a fake mathlib lemma, but minimize `sorry` usage.
-            - File Generation: You MUST wrap the content of each requested file inside the specified XML tags. Do not include markdown formatting outside of these tags.
-            - DO NOT produce proofs of the form `True := by trivial`. Such results will be rejected. Produce genuinely new, substantive mathematics with concrete types and meaningful proof bodies.
-
-            === INPUT CONTEXT ===
-            THEOREM TITLE: {title}
+            === CREATIVE BRIEF ===
             DOMAIN: {domain}
-            DIFFICULTY: {difficulty}
+            TITLE: {title}
 
             RESEARCH SEED:
             {concept_description}
@@ -148,106 +138,44 @@ class PromptEngine:
             FORMALIZATION HINT:
             {lean_guess}
 
-            CREATIVITY DIRECTIVES:
+            CREATIVITY DIRECTIVES (inspirational, not mandatory):
             {creativity_injection}
 
-            === FULL CATALOG CONTEXT ===
-            You have been provided with the entire CatalogBuild Lean 4 library
-            (~2,700 .lean files across Algebra, Geometry, Logic, Physics, Computation,
-            Cryptography, Pythagorean, Tropical, EML, MachineLearning, Bridges, Shared,
-            Speculative, and Applications).
+            === CATALOG CONTEXT ===
+            You have access to the full CatalogBuild Lean 4 library
+            (~2,700 .lean files spanning Algebra, Geometry, Logic, Physics,
+            Computation, Cryptography, Pythagorean, Tropical, EML,
+            MachineLearning, Bridges, Speculative, and Shared).
 
-            Use existing definitions, theorems, and lemmas from the Catalog wherever
-            possible. Do not re-invent what already exists. Build upon it.
+            Reuse existing definitions and theorems. Build upward.
+            Cross-pollinate across domains. Find hidden symmetries.
 
-            === REQUIRED DELIVERABLES ===
+            === YOUR TASK ===
+            1. Invent a novel theorem in this space. Make it concrete and meaningful.
+               Avoid trivial tautologies (e.g., `True := by trivial`).
+               Use real types: Nat, Real, Matrix, Finset, etc.
+            2. Formalize it in Lean 4 (mathlib4 v4.28.0). Minimize `sorry`.
+            3. Write whatever supporting material feels right — a research report,
+               a Python demo, an SVG diagram, a public-facing article. Or none.
+               Follow your own sense of what this theorem deserves.
+            4. Structure and length are up to you. Quality over quantity.
+
+            There are no rigid templates here. Surprise us.
         """)
 
-        # 3. XML-tagged artifact deliverables
+        # 3. Open-ended deliverables (suggestive, not prescriptive)
         expected = []
 
         if artifacts.lean_proof:
-            full_prompt += textwrap.dedent("""\
-                <file name="theorem.lean">
-                -- Lean 4 mathlib4 v4.28.0 code goes here.
-                -- Include necessary imports and the formal statement/proof.
-                -- The theorem MUST use concrete types (Nat, Real, Matrix, Finset, etc.).
-                -- Do NOT prove trivial tautologies like `True := by trivial`.
-                </file>
-
-            """)
             expected.append("theorem.lean")
-
         if artifacts.research_report:
-            full_prompt += textwrap.dedent("""\
-                <file name="RESEARCH_REPORT.md">
-                # Abstract
-                [150 words]
-
-                # Motivation
-                [Why this theorem matters]
-
-                # Mathematical Framework
-                [Definitions, notation, preliminaries]
-
-                # Proof Overview
-                [High-level strategy and intuitive sketches]
-
-                # Novelty Analysis
-                [What makes this result surprising]
-
-                # Open Problems
-                [3 concrete follow-up questions]
-                </file>
-
-            """)
             expected.append("RESEARCH_REPORT.md")
-
         if artifacts.python_demo:
-            full_prompt += textwrap.dedent("""\
-                <file name="demo.py">
-                # Python 3 code goes here.
-                # Must be self-contained, use standard libraries (numpy, sympy, etc.), and print the key insight in main().
-                </file>
-
-            """)
             expected.append("demo.py")
-
         if artifacts.svg_demo:
-            full_prompt += textwrap.dedent("""\
-                <file name="diagram.svg">
-                </file>
-
-            """)
             expected.append("diagram.svg")
-
         if artifacts.sciam_discussion:
-            full_prompt += textwrap.dedent("""\
-                <file name="DISCUSSION.md">
-                # Title: [Engaging Title]
-
-                ## The Hook
-                [A surprising scenario or historical anecdote]
-
-                ## The Mathematical Heart
-                [Explain the theorem using visual/physical metaphors, no complex equations]
-
-                ## Why It Matters
-                [Applications in computer science, physics, or engineering]
-
-                ## Looking Ahead
-                [What doors does this open?]
-                </file>
-
-            """)
             expected.append("DISCUSSION.md")
-
-        full_prompt += textwrap.dedent("""\
-            === DELIVERABLES CHECKLIST ===
-            Ensure ALL requested files are present in the project directory.
-            Each file should be complete, well-formatted, and ready for publication.
-            Remember: concrete types, non-trivial proofs, genuine mathematical novelty.
-        """)
 
         return ResearchPrompt(
             prompt_text=full_prompt,
