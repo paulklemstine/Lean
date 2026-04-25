@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <marker id="arrowhead-blue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowhead-red" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#dc2626"/>
+    </marker>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8fafc;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bg-gradient)" rx="8"/>
+
+  <!-- Title -->
+  <text x="400" y="40" text-anchor="middle" font-family="Georgia, serif" font-size="20" font-weight="bold" fill="#1e293b">
+    Higher Generic Amplitude Corollary — Universal Property
+  </text>
+
+  <!-- Category: Inhabited Types (left) -->
+  <g transform="translate(120, 160)">
+    <!-- Oval for category -->
+    <ellipse cx="0" cy="80" rx="90" ry="120" fill="#dbeafe" stroke="#2563eb" stroke-width="2" opacity="0.7"/>
+    <text x="0" y="-50" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#2563eb">
+      InhabitedType
+    </text>
+
+    <!-- Objects in category -->
+    <circle cx="-30" cy="20" r="8" fill="#3b82f6" stroke="#1d4ed8" stroke-width="1.5"/>
+    <text x="-30" y="45" text-anchor="middle" font-family="monospace" font-size="11" fill="#1e40af">X₁</text>
+
+    <circle cx="30" cy="40" r="8" fill="#3b82f6" stroke="#1d4ed8" stroke-width="1.5"/>
+    <text x="30" y="65" text-anchor="middle" font-family="monospace" font-size="11" fill="#1e40af">X₂</text>
+
+    <circle cx="-10" cy="100" r="8" fill="#3b82f6" stroke="#1d4ed8" stroke-width="1.5"/>
+    <text x="-10" y="125" text-anchor="middle" font-family="monospace" font-size="11" fill="#1e40af">X₃</text>
+
+    <circle cx="25" cy="130" r="8" fill="#3b82f6" stroke="#1d4ed8" stroke-width="1.5"/>
+    <text x="25" y="155" text-anchor="middle" font-family="monospace" font-size="11" fill="#1e40af">Xₙ</text>
+
+    <!-- Dots indicating more -->
+    <text x="10" y="165" text-anchor="middle" font-family="serif" font-size="16" fill="#64748b">⋮</text>
+
+    <!-- Default element indicators -->
+    <circle cx="-30" cy="20" r="3" fill="#fbbf24"/>
+    <circle cx="30" cy="40" r="3" fill="#fbbf24"/>
+    <circle cx="-10" cy="100" r="3" fill="#fbbf24"/>
+    <circle cx="25" cy="130" r="3" fill="#fbbf24"/>
+  </g>
+
+  <!-- Legend for default element -->
+  <circle cx="60" cy="460" r="5" fill="#fbbf24" stroke="#f59e0b" stroke-width="1"/>
+  <text x="72" y="464" font-family="sans-serif" font-size="11" fill="#78716c">= default (Inhabited witness)</text>
+
+  <!-- Functor arrow: InhabitedType → Prop -->
+  <line x1="230" y1="240" x2="430" y2="240" stroke="#333" stroke-width="2.5" marker-end="url(#arrowhead)"/>
+  <text x="330" y="225" text-anchor="middle" font-family="monospace" font-size="13" font-weight="bold" fill="#333">
+    GenericAmplitude
+  </text>
+  <text x="330" y="260" text-anchor="middle" font-family="serif" font-size="12" fill="#64748b">
+    (∀ X [Inhabited X], Prop)
+  </text>
+
+  <!-- Category: Prop (right) -->
+  <g transform="translate(560, 160)">
+    <ellipse cx="0" cy="80" rx="90" ry="120" fill="#fce7f3" stroke="#dc2626" stroke-width="2" opacity="0.7"/>
+    <text x="0" y="-50" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#dc2626">
+      Prop
+    </text>
+
+    <!-- True (terminal object, emphasized) -->
+    <circle cx="0" cy="40" r="18" fill="#22c55e" stroke="#15803d" stroke-width="2.5"/>
+    <text x="0" y="45" text-anchor="middle" font-family="monospace" font-size="13" font-weight="bold" fill="white">True</text>
+    <text x="0" y="75" text-anchor="middle" font-family="serif" font-size="11" fill="#15803d">⊤ (terminal)</text>
+
+    <!-- False -->
+    <circle cx="0" cy="140" r="14" fill="#fca5a5" stroke="#dc2626" stroke-width="1.5"/>
+    <text x="0" y="144" text-anchor="middle" font-family="monospace" font-size="11" fill="#7f1d1d">False</text>
+    <text x="0" y="170" text-anchor="middle" font-family="serif" font-size="11" fill="#dc2626">⊥ (initial)</text>
+  </g>
+
+  <!-- All arrows converge to True -->
+  <g stroke="#22c55e" stroke-width="1.8" stroke-dasharray="6,3">
+    <line x1="98" y1="180" x2="543" y2="200" marker-end="url(#arrowhead)"/>
+    <line x1="158" y1="200" x2="543" y2="200" marker-end="url(#arrowhead)"/>
+    <line x1="118" y1="260" x2="543" y2="200" marker-end="url(#arrowhead)"/>
+    <line x1="153" y1="290" x2="543" y2="200" marker-end="url(#arrowhead)"/>
+  </g>
+
+  <!-- Proof box -->
+  <g transform="translate(300, 370)">
+    <rect x="-130" y="0" width="260" height="90" rx="8" fill="#f0fdf4" stroke="#22c55e" stroke-width="2"/>
+    <text x="0" y="25" text-anchor="middle" font-family="monospace" font-size="13" font-weight="bold" fill="#15803d">
+      Proof: trivial
+    </text>
+    <text x="0" y="48" text-anchor="middle" font-family="monospace" font-size="11" fill="#166534">
+      True.intro : True
+    </text>
+    <text x="0" y="72" text-anchor="middle" font-family="serif" font-size="11" fill="#64748b">
+      Unique morphism to terminal object
+    </text>
+  </g>
+
+  <!-- Universal property annotation -->
+  <g transform="translate(640, 410)">
+    <rect x="-85" y="0" width="170" height="65" rx="6" fill="#fefce8" stroke="#ca8a04" stroke-width="1.5"/>
+    <text x="0" y="22" text-anchor="middle" font-family="serif" font-size="12" font-weight="bold" fill="#854d0e">
+      Universal Property
+    </text>
+    <text x="0" y="42" text-anchor="middle" font-family="serif" font-size="11" fill="#78716c">
+      ∀ X, ∃! morphism
+    </text>
+    <text x="0" y="57" text-anchor="middle" font-family="serif" font-size="11" fill="#78716c">
+      X → True
+    </text>
+  </g>
+
+  <!-- Caption -->
+  <text x="400" y="560" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#475569">
+    Every inhabited type maps to True under the generic amplitude functor.
+  </text>
+  <text x="400" y="580" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#94a3b8">
+    The universal property is trivially satisfied — True is the terminal object in Prop.
+  </text>
+</svg>
