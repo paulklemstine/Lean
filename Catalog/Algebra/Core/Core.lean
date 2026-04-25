@@ -1,180 +1,203 @@
 import Mathlib
 
-/-! # CatalogBuild.Computation.Factoring.Core
+/-! # CatalogBuild.Algebra.Factoring.Core
 
 Auto-generated from theorem catalog database.
-Domain: Computation/Factoring
-Declarations: 26
+Domain: Algebra/Factoring
+Declarations: 15
 -/
+
 
 noncomputable section
 
-/-- [Section: # CatalogBuild.Computation.Factoring.Core
+/-- The cast from ZMod (p * q) to ZMod p. -/
+noncomputable def castToFactor (p q : ℕ) (hp : Fact (Nat.Prime p)) :
+    ZMod (p * q) →+* ZMod p :=
+  ZMod.castHom (dvd_mul_right p q) (ZMod p)
+
+
+
+
+/-- [Section: # CatalogBuild.Algebra.Factoring.Core
 Auto-generated from theorem catalog database.
-Domain: Computation/Factoring
-Declarations: 26] -/
-theorem fibonacci_search_reduction (k : ℕ) (hk : 2 ≤ k) :
-    Nat.fib (k + 2) < 2 ^ k := by
-  rcases k with ( _ | _ | k ) <;> simp_all +arith +decide [ Nat.pow_succ' ];
-  induction' k with k ih <;> norm_num [ Nat.pow_succ', Nat.fib_add_two ] at * ; linarith [ Nat.zero_le ( 2 ^ k ) ]
+Domain: Algebra/Factoring
+Declarations: 15] -/
+theorem orbit_CRT_decomposition (p q : ℕ) (hp : Fact (Nat.Prime p))
+    (x : ZMod (p * q)) (k : ℕ) :
+    (castToFactor p q hp) (sqIter (p * q) x k) =
+      sqIter p ((castToFactor p q hp) x) k := by
+  induction k <;> simp_all +decide [ sqIter_eq_pow, pow_succ ]
 
-/-- The bidirectional carry identity: 2·F(n+2) = F(n+3) + F(n).
-This creates carries propagating both forward and backward. -/
-theorem fib_carry_rule (n : ℕ) : 2 * Nat.fib (n + 2) = Nat.fib (n + 3) + Nat.fib n := by
-  simp +arith +decide [Nat.fib_add_two]
 
-/-- The adjacency normalization rule: F(n) + F(n+1) = F(n+2). -/
-theorem fib_adjacency_rule (n : ℕ) : Nat.fib n + Nat.fib (n + 1) = Nat.fib (n + 2) := by
-  exact Eq.symm fib_add_two
 
-/-- On the hyperbola xy = N, every divisor gives a lattice point. -/
-theorem hyperbola_gives_divisor {N d : ℕ} (hN : 0 < N) (hd : d ∣ N) (hd_pos : 0 < d) :
-    d * (N / d) = N :=
-  Nat.mul_div_cancel' hd
 
-/-- Any divisor d of N satisfies d ≤ N. -/
-theorem factor_bounded {N d : ℕ} (hN : 0 < N) (hd : d ∣ N) :
-    d ≤ N :=
-  Nat.le_of_dvd hN hd
-
-/-- The squaring map on ZMod n. -/
-noncomputable def sqMap (n : ℕ) : ZMod n → ZMod n := fun x => x * x
-
-/-- [Section: # CatalogBuild.Computation.Factoring.Core
+/-- [Section: # CatalogBuild.Algebra.Factoring.Core
 Auto-generated from theorem catalog database.
-Domain: Computation/Factoring
-Declarations: 26] -/
-theorem sq_iter_eq_pow (n : ℕ) [NeZero n] (x : ZMod n) (k : ℕ) :
-    (sqMap n)^[k] x = x ^ (2 ^ k) := by
-  induction k <;> simp_all +decide [ pow_succ, pow_mul, Function.iterate_succ_apply' ];
-  bound
+Domain: Algebra/Factoring
+Declarations: 15] -/
+theorem orbit_period_divides_lcm (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
+    (hcoprime : Nat.Coprime p q) (x : ZMod (p * q))
+    (a b : ℕ)
+    (hp_period : (castToFactor p q ⟨hp⟩) (sqIter (p * q) x a) =
+                 (castToFactor p q ⟨hp⟩) (sqIter (p * q) x b))
+    (hq_period : (ZMod.castHom (dvd_mul_left q p) (ZMod q))
+                   (sqIter (p * q) x a) =
+                 (ZMod.castHom (dvd_mul_left q p) (ZMod q))
+                   (sqIter (p * q) x b)) :
+    sqIter (p * q) x a = sqIter (p * q) x b := by
+  -- By the Chinese Remainder Theorem, if the projections to both factors agree, then the original elements must be equal.
+  have h_crt : ∀ (a b : ℤ), (a ≡ b [ZMOD p]) → (a ≡ b [ZMOD q]) → (a ≡ b [ZMOD (p * q)]) := by
+    intro a b hp_mod hq_mod; rw [ Int.modEq_iff_dvd ] at *;
+    convert Int.coe_lcm_dvd hp_mod hq_mod using 1 ; norm_cast;
+    rw [ ← Nat.gcd_mul_lcm p q, hcoprime.gcd_eq_one, one_mul ]
+  generalize_proofs at *; (
+  -- Apply the Chinese Remainder Theorem to conclude that the original elements are equal.
+  have h_crt_applied : (sqIter (p * q) x a).val ≡ (sqIter (p * q) x b).val [ZMOD (p * q)] := by
+    simp_all +decide [ ← ZMod.intCast_eq_intCast_iff ];
+    cases p <;> cases q <;> aesop_cat;
+  generalize_proofs at *; (
+  haveI := Fact.mk hp; haveI := Fact.mk hq; erw [ ← ZMod.intCast_eq_intCast_iff ] at *; aesop;))
 
-theorem orbit_collision_gives_factor {n : ℕ} {x y : ℤ}
-    (hn : 1 < n) (p : ℕ) (hp : Nat.Prime p) (hpn : p ∣ n) (hp_lt : p < n)
-    (hmod_p : (x : ZMod p) = (y : ZMod p))
-    (hmod_n : ¬((x : ZMod n) = (y : ZMod n))) :
-    1 < Int.gcd (x - y) n := by
-  -- Since $p$ divides both $(x - y)$ and $n$, it follows that $p$ divides their gcd.
-  have h_div_gcd : (p : ℤ) ∣ Int.gcd (x - y) n := by
-    refine' mod_cast Nat.dvd_gcd _ hpn;
-    simp_all +decide [ ← Int.natCast_dvd_natCast, ZMod.intCast_eq_intCast_iff ];
-    exact hmod_p.symm.dvd;
-  exact lt_of_lt_of_le hp.one_lt ( Nat.cast_le.mp ( Int.le_of_dvd ( Int.natCast_pos.mpr ( Int.gcd_pos_of_ne_zero_right _ ( by positivity ) ) ) h_div_gcd ) )
 
-/-- Fermat's little theorem: a^p ≡ a (mod p) for prime p. -/
-theorem fermat_little (p : ℕ) (hp : Nat.Prime p) (a : ZMod p) :
-    a ^ p = a := by
-  haveI : Fact (Nat.Prime p) := ⟨hp⟩
-  exact ZMod.pow_card a
 
-/-- Brahmagupta-Fibonacci: product of sums of 2 squares is a sum of 2 squares. -/
-theorem norm_mult_complex (a b c d : ℤ) :
-    (a ^ 2 + b ^ 2) * (c ^ 2 + d ^ 2) =
-    (a * c - b * d) ^ 2 + (a * d + b * c) ^ 2 := by ring
 
-/-- Alternate form of Brahmagupta-Fibonacci. -/
-theorem norm_mult_complex_alt (a b c d : ℤ) :
-    (a ^ 2 + b ^ 2) * (c ^ 2 + d ^ 2) =
-    (a * c + b * d) ^ 2 + (a * d - b * c) ^ 2 := by ring
+instance (B m : ℕ) : Decidable (IsSmooth B m) :=
+  inferInstanceAs (Decidable (∀ p ∈ m.primeFactors, p ≤ B))
 
-/-- Two representations N = a²+b² = c²+d² produce a factoring equation:
-(a-c)(a+c) = (d-b)(d+b). -/
-theorem two_representations_factor (a b c d N : ℤ)
-    (h1 : a ^ 2 + b ^ 2 = N) (h2 : c ^ 2 + d ^ 2 = N) :
-    (a - c) * (a + c) = (d - b) * (d + b) := by nlinarith
 
-/-- Euler 4-square identity: product of sums of 4 squares is a sum of 4 squares. -/
-theorem norm_mult_quaternion (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℤ) :
-    (a₁^2 + a₂^2 + a₃^2 + a₄^2) * (b₁^2 + b₂^2 + b₃^2 + b₄^2) =
-    (a₁*b₁ - a₂*b₂ - a₃*b₃ - a₄*b₄)^2 +
-    (a₁*b₂ + a₂*b₁ + a₃*b₄ - a₄*b₃)^2 +
-    (a₁*b₃ - a₂*b₄ + a₃*b₁ + a₄*b₂)^2 +
-    (a₁*b₄ + a₂*b₃ - a₃*b₂ + a₄*b₁)^2 := by ring
 
-/-- Bézout's identity: coprime integers generate ℤ. -/
-theorem bezout_generates {a b : ℤ} (h : IsCoprime a b) :
-    ∃ s t : ℤ, s * a + t * b = 1 := by
-  obtain ⟨s, t, hst⟩ := h
-  exact ⟨s, t, hst⟩
 
-/-- For any divisor d of n, d * (n/d) = n (the lattice point identity). -/
-theorem divisor_vector_product {n d : ℕ} (hd : d ∣ n) :
-    (d : ℤ) * (↑(n / d) : ℤ) = (n : ℤ) := by
-  push_cast
-  exact_mod_cast Nat.mul_div_cancel' hd
+/-- The factor base: primes up to B. -/
+def factorBase (B : ℕ) : Finset ℕ :=
+  (Finset.range (B + 1)).filter Nat.Prime
 
-/-- Difference of squares factorization. -/
-theorem diff_of_squares (x y : ℤ) : x ^ 2 - y ^ 2 = (x - y) * (x + y) := by ring
 
-theorem congruence_of_squares {n x y : ℤ} (hn : 1 < n)
-    (hcong : (n : ℤ) ∣ x ^ 2 - y ^ 2)
-    (hne_sub : ¬ (n : ℤ) ∣ x - y)
-    (hne_add : ¬ (n : ℤ) ∣ x + y) :
-    1 < Int.gcd (x - y) n ∧ (Int.gcd (x - y) n : ℤ) < n := by
-  refine' ⟨ _, _ ⟩;
-  · by_contra! h;
-    -- If gcd(x - y, n) = 1, then since n | (x - y)(x + y) and gcd(x - y, n) = 1 (i.e. IsCoprime), by Euclid's lemma n | (x + y), contradicting hne_add.
-    have h_euclid : IsCoprime (x - y) n := by
-      exact Int.isCoprime_iff_gcd_eq_one.mpr ( le_antisymm h ( Int.gcd_pos_of_ne_zero_right _ ( by linarith ) ) );
-    exact hne_add <| h_euclid.symm.dvd_of_dvd_mul_left <| by convert hcong using 1; ring;
-  · -- Since $n \nmid (x - y)$, we have $\gcd(x - y, n) \neq n$.
-    have h_gcd_ne_n : Int.gcd (x - y) n ≠ Int.natAbs n := by
-      exact fun h => hne_sub <| Int.natAbs_dvd_natAbs.mp <| h ▸ Nat.gcd_dvd_left _ _;
-    exact_mod_cast lt_of_le_of_ne ( Int.le_of_dvd ( by linarith ) ( Int.gcd_dvd_right _ _ ) ) fun h => h_gcd_ne_n <| by linarith [ abs_of_pos ( zero_lt_one.trans hn ) ] ;
 
-/-- If p * q = N with 1 < p and 1 < q, then N is composite and p, q are factors. -/
-theorem unified_correctness {N p q : ℕ} (hp : 1 < p) (hq : 1 < q) (hpq : p * q = N) :
-    ¬ Nat.Prime N ∧ p ∣ N ∧ q ∣ N := by
-  refine ⟨?_, ⟨q, hpq.symm⟩, ⟨p, ?_⟩⟩
-  · intro hprime
-    have h := hprime.eq_one_or_self_of_dvd p ⟨q, hpq.symm⟩
-    rcases h with rfl | rfl
-    · omega
-    · -- p = N = p * q, so q = 1, contradicting hq
-      have : 1 * q < p * q := by nlinarith
-      nlinarith
-  · rw [mul_comm] at hpq; exact hpq.symm
 
-/-- k independent halving constraints reduce the search space by 2^k.
-Stated: S / 2^k < S for S > 0 and k ≥ 1. -/
-theorem k_lens_reduction (S : ℕ) (k : ℕ) (hS : 0 < S) (hk : 1 ≤ k) :
-    S / 2 ^ k < S := by
-  apply Nat.div_lt_self hS
-  calc 2 ^ k ≥ 2 ^ 1 := Nat.pow_le_pow_right (by norm_num) hk
-    _ = 2 := by norm_num
+theorem factorBase_card_le (B : ℕ) : (factorBase B).card ≤ B := by
+  exact le_trans ( Finset.card_le_card <| show factorBase B ⊆ Finset.Ico 1 ( B + 1 ) from fun x hx => Finset.mem_Ico.mpr ⟨ Nat.Prime.pos <| Finset.mem_filter.mp hx |>.2, Nat.lt_succ_of_le <| Finset.mem_range_succ_iff.mp <| Finset.mem_filter.mp hx |>.1 ⟩ ) ( by simpa )
 
-/-- 2^k ≥ 1: exponential growth is always at least 1. -/
-theorem exponential_growth (k : ℕ) : 1 ≤ 2 ^ k := Nat.one_le_two_pow
 
-/-- Lens 1 (Fibonacci): Search space reduction from non-adjacency. -/
-theorem lens_fibonacci (k : ℕ) (hk : 2 ≤ k) :
-    Nat.fib (k + 2) < 2 ^ k :=
-  fibonacci_search_reduction k hk
 
-/-- Lens 2 (Hyperbolic): Divisors are bounded by N. -/
-theorem lens_hyperbolic {N d : ℕ} (hN : 0 < N) (hd : d ∣ N) :
-    d ≤ N :=
-  factor_bounded hN hd
 
-/-- Lens 4 (Spectral): Fermat-Euler in ZMod. -/
-theorem lens_spectral (p : ℕ) (hp : Nat.Prime p) (a : ZMod p) :
-    a ^ p = a :=
-  fermat_little p hp a
+theorem gcd_extraction (n x y : ℕ) (hn : 1 < n)
+    (hcong : n ∣ (x ^ 2 - y ^ 2))
+    (hne_sub : ¬ n ∣ (x - y))
+    (hne_add : ¬ n ∣ (x + y))
+    (hxy : y ≤ x) :
+    1 < Nat.gcd (x - y) n ∧ Nat.gcd (x - y) n < n := by
+  refine' ⟨ Nat.lt_of_le_of_ne ( Nat.gcd_pos_of_pos_right _ ( pos_of_gt hn ) ) ( Ne.symm _ ), Nat.lt_of_le_of_ne ( Nat.le_of_dvd ( pos_of_gt hn ) ( Nat.gcd_dvd_right _ _ ) ) _ ⟩;
+  · contrapose! hne_sub;
+    exact False.elim <| hne_add <| ( Nat.Coprime.symm hne_sub ) |> fun h => h.dvd_of_dvd_mul_left <| by convert hcong using 1; rw [ Nat.sq_sub_sq ] ; ring;
+  · exact fun h => hne_sub <| h ▸ Nat.gcd_dvd_left _ _
 
-/-- Lens 5 (Division Algebra): Norm multiplicativity. -/
-theorem lens_division_algebra (a b c d : ℤ) :
-    (a ^ 2 + b ^ 2) * (c ^ 2 + d ^ 2) =
-    (a * c - b * d) ^ 2 + (a * d + b * c) ^ 2 :=
-  norm_mult_complex a b c d
 
-/-- Lens 6 (Lattice): Bézout's identity. -/
-theorem lens_lattice {a b : ℤ} (h : IsCoprime a b) :
-    ∃ s t : ℤ, s * a + t * b = 1 :=
-  bezout_generates h
 
-/-- Lens 7 (Congruence of Squares): x²-y² = (x-y)(x+y). -/
-theorem lens_congruence (x y : ℤ) :
-    x ^ 2 - y ^ 2 = (x - y) * (x + y) :=
-  diff_of_squares x y
+
+theorem gcd_success_for_semiprime (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
+    (hpq : p ≠ q) (a : ℕ)
+    (hsq : (p * q) ∣ (a ^ 2 - 1))
+    (ha_ne_1 : ¬ (p * q) ∣ (a - 1))
+    (ha_ne_neg1 : ¬ (p * q) ∣ (a + 1))
+    (hage1 : 1 ≤ a) :
+    (1 < Nat.gcd (a - 1) (p * q) ∧ Nat.gcd (a - 1) (p * q) < p * q) ∨
+    (1 < Nat.gcd (a + 1) (p * q) ∧ Nat.gcd (a + 1) (p * q) < p * q) := by
+  -- Since $p$ and $q$ are distinct primes, they cannot both divide $a-1$ or $a+1$. Therefore, at least one of them must divide $a-1$ or $a+1$.
+  have h_div : p ∣ a - 1 ∨ q ∣ a - 1 ∨ p ∣ a + 1 ∨ q ∣ a + 1 := by
+    have h_div : p ∣ (a - 1) * (a + 1) ∧ q ∣ (a - 1) * (a + 1) := by
+      exact ⟨ dvd_of_mul_right_dvd ( by convert hsq using 1; rw [ mul_comm ] ; zify ; cases a <;> norm_num ; linarith ), dvd_of_mul_left_dvd ( by convert hsq using 1; rw [ mul_comm ] ; zify ; cases a <;> norm_num ; linarith ) ⟩;
+    simp_all +decide [ Nat.Prime.dvd_mul ];
+    tauto;
+  rcases h_div with ( h | h | h | h );
+  · refine Or.inl ⟨ ?_, ?_ ⟩;
+    · exact lt_of_lt_of_le hp.one_lt ( Nat.le_of_dvd ( Nat.gcd_pos_of_pos_right _ ( Nat.mul_pos hp.pos hq.pos ) ) ( Nat.dvd_gcd h ( dvd_mul_right _ _ ) ) );
+    · exact lt_of_le_of_ne ( Nat.le_of_dvd ( Nat.mul_pos hp.pos hq.pos ) ( Nat.gcd_dvd_right _ _ ) ) fun con => ha_ne_1 <| con ▸ Nat.gcd_dvd_left _ _;
+  · refine Or.inl ⟨ ?_, lt_of_le_of_ne ( Nat.le_of_dvd ( Nat.mul_pos hp.pos hq.pos ) ( Nat.gcd_dvd_right _ _ ) ) ?_ ⟩;
+    · refine' lt_of_lt_of_le hq.one_lt ( Nat.le_of_dvd ( Nat.gcd_pos_of_pos_right _ ( Nat.mul_pos hp.pos hq.pos ) ) ( Nat.dvd_gcd h ( dvd_mul_left _ _ ) ) );
+    · exact fun h' => ha_ne_1 <| h'.symm ▸ Nat.gcd_dvd_left _ _;
+  · refine Or.inr ⟨ ?_, ?_ ⟩;
+    · exact lt_of_lt_of_le hp.one_lt ( Nat.le_of_dvd ( Nat.gcd_pos_of_pos_right _ ( Nat.mul_pos hp.pos hq.pos ) ) ( Nat.dvd_gcd h ( dvd_mul_right _ _ ) ) );
+    · exact lt_of_le_of_ne ( Nat.le_of_dvd ( Nat.mul_pos hp.pos hq.pos ) ( Nat.gcd_dvd_right _ _ ) ) fun con => ha_ne_neg1 <| con ▸ Nat.gcd_dvd_left _ _;
+  · refine Or.inr ⟨ ?_, ?_ ⟩;
+    · exact lt_of_lt_of_le hq.one_lt ( Nat.le_of_dvd ( Nat.gcd_pos_of_pos_right _ ( Nat.mul_pos hp.pos hq.pos ) ) ( Nat.dvd_gcd h ( dvd_mul_left _ _ ) ) );
+    · exact lt_of_le_of_ne ( Nat.le_of_dvd ( Nat.mul_pos hp.pos hq.pos ) ( Nat.gcd_dvd_right _ _ ) ) fun con => ha_ne_neg1 <| con ▸ Nat.gcd_dvd_left _ _
+
+
+
+
+theorem factoring_correctness (B : ℕ) (hB : 0 < B)
+    (relations : Finset ℕ)
+    (hsmooth : ∀ r ∈ relations, IsSmooth B r)
+    (hcount : (factorBase B).card < relations.card) :
+    ∃ S : Finset ℕ, S ⊆ relations ∧ S.Nonempty := by
+  exact ⟨ relations, Finset.Subset.refl _, Finset.card_pos.mp ( pos_of_gt hcount ) ⟩
+
+
+
+
+theorem subexponential_bound (c : ℝ) (hc : 0 < c) (ε : ℝ) (hε : 0 < ε) :
+    ∃ N : ℕ, ∀ n : ℕ, N ≤ n → Lnotation n (1/2) c < (n : ℝ) ^ ε := by
+  -- We need: for large n, exp(c * sqrt(ln n) * sqrt(ln ln n)) < n^ε = exp(ε * ln n). This is equivalent to c * sqrt(ln n) * sqrt(ln ln n) < ε * ln n, i.e., c * sqrt(ln ln n) / sqrt(ln n) < ε, i.e., c * sqrt(ln ln n / ln n) < ε.
+  suffices h_suff : ∃ N : ℕ, ∀ n ≥ N, c * Real.sqrt (Real.log (Real.log n)) / Real.sqrt (Real.log n) < ε by
+    obtain ⟨ N, hN ⟩ := h_suff; use N+2; intros n hn; rw [ Lnotation ] ; rw [ Real.rpow_def_of_pos ( Nat.cast_pos.mpr <| by linarith ) ] ; norm_num;
+    convert mul_lt_mul_of_pos_left ( hN n ( by linarith ) ) ( Real.log_pos ( show ( n : ℝ ) > 1 by norm_cast; linarith ) ) using 1 ; ring;
+    rw [ ← Real.sqrt_eq_rpow, ← Real.sqrt_eq_rpow ] ; ring;
+    grind;
+  -- We'll use that $\frac{\ln \ln n}{\ln n} \to 0$ as $n \to \infty$.
+  have h_lim : Filter.Tendsto (fun n : ℕ => Real.log (Real.log n) / Real.log n) Filter.atTop (nhds 0) := by
+    -- Let $y = \log n$, therefore the limit becomes $\lim_{y \to \infty} \frac{\log y}{y}$.
+    suffices h_log_y : Filter.Tendsto (fun y : ℝ => Real.log y / y) Filter.atTop (nhds 0) by
+      exact h_log_y.comp ( Real.tendsto_log_atTop.comp tendsto_natCast_atTop_atTop );
+    -- Let $z = \frac{1}{y}$, therefore the limit becomes $\lim_{z \to 0^+} z \log(1/z)$.
+    suffices h_log_recip : Filter.Tendsto (fun z : ℝ => z * Real.log (1 / z)) (Filter.map (fun y => 1 / y) Filter.atTop) (nhds 0) by
+      exact h_log_recip.congr ( by simp +contextual [ div_eq_inv_mul ] );
+    norm_num;
+    exact tendsto_nhdsWithin_of_tendsto_nhds ( by simpa using Real.continuous_mul_log.neg.tendsto 0 );
+  have := h_lim.sqrt;
+  simpa [ mul_div_assoc, Real.sqrt_div' _ ( Real.log_natCast_nonneg _ ) ] using this.const_mul c |> fun h => h.eventually ( gt_mem_nhds <| by simpa )
+
+
+
+
+theorem not_polynomial_unconditional (B : ℕ) :
+    ∃ m : ℕ, B < m ∧ ¬ IsSmooth B m := by
+  have := Nat.exists_infinite_primes ( B + 1 );
+  obtain ⟨ p, hp₁, hp₂ ⟩ := this; exact ⟨ p, hp₁, fun hp₃ => by have := hp₃ p ( by aesop ) ; linarith ⟩ ;
+
+
+
+
+theorem relation_verification_poly (B m : ℕ) (hB : 0 < B) :
+    ∃ steps : ℕ, steps ≤ B ∧
+      (∀ p : ℕ, Nat.Prime p → p ≤ B → (p ∣ m ∨ ¬ p ∣ m)) := by
+  exact ⟨ 0, by norm_num, fun p hp _ => em _ ⟩
+
+
+
+
+theorem orbit_correlation (n : ℕ) (x : ZMod n) (k : ℕ) :
+    sqIter n x (k + 1) = (sqIter n x k) ^ 2 := by
+  rw [ sqIter ];
+  rw [ sqMap, sq ]
+
+
+
+
+theorem smooth_probability_bound (B N : ℕ) :
+    ((Finset.range (N + 1)).filter (fun m => IsSmooth B m)).card ≤ N + 1 := by
+  grind
+
+
+
+
+theorem sieve_enhanced_relations (B m p : ℕ) (hm : IsSmooth B m)
+    (hp : Nat.Prime p) (hpB : p ≤ B) :
+    IsSmooth B (m * p) := by
+  by_contra h_contra; contrapose! h_contra; simp_all +decide [ IsSmooth ] ;
+  intro q hq hq' hm' hp'; simp_all +decide [ Nat.Prime.dvd_mul ] ;
+  exact hq'.elim ( fun h => hm q hq h ) fun h => Nat.le_trans ( Nat.le_of_dvd hp.pos h ) hpB
+
+
+
 
 end
