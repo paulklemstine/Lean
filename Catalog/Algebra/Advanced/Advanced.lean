@@ -1,204 +1,157 @@
 import Mathlib
 
-/-! # CatalogBuild.Physics.ArithmeticPhotons.Advanced
+/-! # CatalogBuild.Computation.Oracles.Advanced
 
 Auto-generated from theorem catalog database.
-Domain: Physics/ArithmeticPhotons
-Declarations: 30
+Domain: Computation/Oracles
+Declarations: 16
 -/
+
 
 noncomputable section
 
-/-- The Minkowski inner product η(v,w) = v₀w₀ + v₁w₁ + v₂w₂ - v₃w₃ -/
-def minkowskiInner (v w : Fin 4 → ℤ) : ℤ :=
-  v 0 * w 0 + v 1 * w 1 + v 2 * w 2 - v 3 * w 3
+/-- O₁ refines O₂ if every fixed point of O₁ is a fixed point of O₂. -/
+def OracleRefines {X : Type*} (O₁ O₂ : X → X) : Prop :=
+  ∀ x, O₁ x = x → O₂ x = x
 
-/-- Convert a 4-tuple to a function Fin 4 → ℤ -/
-def toVec (a b c d : ℤ) : Fin 4 → ℤ := ![a, b, c, d]
 
-/-- The Lorentz form equals the Minkowski self-product -/
-theorem lorentzQ_eq_minkowski_self (a b c d : ℤ) :
-    a ^ 2 + b ^ 2 + c ^ 2 - d ^ 2 = minkowskiInner (toVec a b c d) (toVec a b c d) := by
-  unfold minkowskiInner toVec
-  simp [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons, Matrix.head_fin_const]
-  ring
 
-/-- The Minkowski inner product is symmetric -/
-theorem minkowskiInner_comm (v w : Fin 4 → ℤ) :
-    minkowskiInner v w = minkowskiInner w v := by
-  unfold minkowskiInner; ring
 
-/-- The Minkowski inner product is bilinear (left-linearity) -/
-theorem minkowskiInner_add_left (u v w : Fin 4 → ℤ) :
-    minkowskiInner (u + v) w = minkowskiInner u w + minkowskiInner v w := by
-  unfold minkowskiInner
-  simp [Pi.add_apply]
-  ring
-
-/-- Minkowski inner product scales correctly -/
-theorem minkowskiInner_smul_left (k : ℤ) (v w : Fin 4 → ℤ) :
-    minkowskiInner (k • v) w = k * minkowskiInner v w := by
-  unfold minkowskiInner
-  simp [Pi.smul_apply, smul_eq_mul]
-  ring
-
-/-- The zero vector is null -/
-theorem zero_is_null : IsNull 0 := by
-  unfold IsNull minkowskiInner; simp
-
-/-- Scalar multiples of null vectors are null -/
-theorem null_smul (v : Fin 4 → ℤ) (k : ℤ) (hv : IsNull v) :
-    IsNull (k • v) := by
-  unfold IsNull minkowskiInner at *
-  simp [Pi.smul_apply, smul_eq_mul]
-  nlinarith [sq_nonneg k, sq_nonneg (v 0), sq_nonneg (v 1), sq_nonneg (v 2), sq_nonneg (v 3)]
-
-/-- Quaternion norm: |a + bi + cj + dk|² = a² + b² + c² + d² -/
-def quatNormSq (a b c d : ℤ) : ℤ := a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2
-
-/-- Quaternion norm is non-negative -/
-theorem quatNormSq_nonneg (a b c d : ℤ) : 0 ≤ quatNormSq a b c d := by
-  unfold quatNormSq
-  positivity
-
-/-- Quaternion norm is zero iff all components are zero -/
-theorem quatNormSq_eq_zero (a b c d : ℤ) :
-    quatNormSq a b c d = 0 ↔ a = 0 ∧ b = 0 ∧ c = 0 ∧ d = 0 := by
-  unfold quatNormSq
-  constructor
-  · intro h
-    have ha := sq_nonneg a; have hb := sq_nonneg b
-    have hc := sq_nonneg c; have hd := sq_nonneg d
-    constructor
-    · nlinarith [sq_abs a]
-    constructor
-    · nlinarith [sq_abs b]
-    constructor
-    · nlinarith [sq_abs c]
-    · nlinarith [sq_abs d]
-  · rintro ⟨rfl, rfl, rfl, rfl⟩; ring
-
-/-- Quaternion multiplication components -/
-def quatMul (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ) : ℤ × ℤ × ℤ × ℤ :=
-  (a₁*a₂ - b₁*b₂ - c₁*c₂ - d₁*d₂,
-   a₁*b₂ + b₁*a₂ + c₁*d₂ - d₁*c₂,
-   a₁*c₂ - b₁*d₂ + c₁*a₂ + d₁*b₂,
-   a₁*d₂ + b₁*c₂ - c₁*b₂ + d₁*a₂)
-
-/-- The "energy" of an arithmetic photon (a,b,c,d) is |d| -/
-def photonEnergy (a b c d : ℤ) : ℤ := d.natAbs
-
-/-- The number of ways to write n as a sum of 3 squares (defining it abstractly) -/
-noncomputable def r₃ (n : ℕ) : ℕ :=
-  Finset.card (Finset.filter (fun t : Fin (2*n+1) × Fin (2*n+1) × Fin (2*n+1) =>
-    let a := (t.1 : ℤ) - n
-    let b := (t.2.1 : ℤ) - n
-    let c := (t.2.2 : ℤ) - n
-    a ^ 2 + b ^ 2 + c ^ 2 = n) Finset.univ)
-
-/-- A Pythagorean quadruple with d ≠ 0 gives a rational point on S² -/
-theorem rational_point_on_sphere (a b c d : ℤ) (hd : d ≠ 0)
-    (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
-    (a : ℚ)^2 / d^2 + (b : ℚ)^2 / d^2 + (c : ℚ)^2 / d^2 = 1 := by
-  have hd' : (d : ℚ) ≠ 0 := Int.cast_ne_zero.mpr hd
-  have hd2 : (d : ℚ) ^ 2 ≠ 0 := pow_ne_zero 2 hd'
-  rw [div_add_div_same, div_add_div_same, div_eq_one_iff_eq hd2]
-  exact_mod_cast h
-
-/-- The displacement vector between two lattice points -/
-def displacement (v w : Fin 4 → ℤ) : Fin 4 → ℤ := w - v
-
-/-- Two points are photon-connected iff their displacement is null -/
-def PhotonAdj (v w : Fin 4 → ℤ) : Prop :=
-  IsNull (displacement v w)
-
-/-- Photon adjacency is reflexive -/
-theorem photonAdj_refl (v : Fin 4 → ℤ) : PhotonAdj v v := by
-  unfold PhotonAdj displacement IsNull minkowskiInner
-  simp
-
-/-- Photon adjacency is symmetric -/
-theorem photonAdj_symm (v w : Fin 4 → ℤ) (h : PhotonAdj v w) :
-    PhotonAdj w v := by
-  unfold PhotonAdj displacement IsNull minkowskiInner at *
-  simp [Pi.sub_apply] at *
-  nlinarith [sq_nonneg (w 0 - v 0), sq_nonneg (v 0 - w 0),
-             sq_nonneg (w 1 - v 1), sq_nonneg (v 1 - w 1),
-             sq_nonneg (w 2 - v 2), sq_nonneg (v 2 - w 2),
-             sq_nonneg (w 3 - v 3), sq_nonneg (v 3 - w 3)]
-
-/-- For null vectors, the spatial norm equals the temporal component squared -/
-theorem null_spatial_eq_temporal (a b c d : ℤ)
-    (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
-    a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2 := h
-
-/-- The speed of an arithmetic photon is always 1 (in natural units) -/
-theorem photon_speed_one (a b c d : ℤ) (hd : d ≠ 0)  -- hd needed for rational_point_on_sphere
-    (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
-    (a : ℚ)^2 / d^2 + (b : ℚ)^2 / d^2 + (c : ℚ)^2 / d^2 = 1 :=
-  rational_point_on_sphere a b c d hd h
-
-/-- A quadruple is primitive if gcd(a,b,c,d) = 1 -/
-def IsPrimitive (a b c d : ℤ) : Prop :=
-  Int.gcd (Int.gcd a b) (Int.gcd c d) = 1
-
-/-- Scaling a quadruple preserves the null property -/
-theorem scale_preserves_null (a b c d k : ℤ)
-    (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
-    (k*a) ^ 2 + (k*b) ^ 2 + (k*c) ^ 2 = (k*d) ^ 2 := by
-  nlinarith [sq_nonneg k]
-
-/-- The Hopf map lands on S² -/
-theorem hopfMap_on_sphere (m n p q : ℝ) (h : m^2 + n^2 + p^2 + q^2 ≠ 0) :
-    let ⟨x, y, z⟩ := hopfMap m n p q
-    x^2 + y^2 + z^2 = 1 := by
-  unfold hopfMap
-  have hpos : m ^ 2 + n ^ 2 + p ^ 2 + q ^ 2 > 0 := by
-    rcases ne_iff_lt_or_gt.mp h with h' | h'
-    · exfalso; nlinarith [sq_nonneg m, sq_nonneg n, sq_nonneg p, sq_nonneg q]
-    · exact h'
-  field_simp
-  ring
-
-/-- If (a,b,c,d) is a quadruple, so is (a,b,c,-d) when d² = a²+b²+c² -/
-theorem neg_temporal (a b c d : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
-    a ^ 2 + b ^ 2 + c ^ 2 = (-d) ^ 2 := by linarith [neg_sq d]
-
-/-- The number of quadruples grows: for d ≥ 1, there exist at least 6 quadruples -/
-theorem at_least_six_quadruples (d : ℤ) (hd : d ≠ 0) :
-    ∃ quads : Finset (ℤ × ℤ × ℤ), quads.card ≥ 1 ∧
-    ∀ t ∈ quads, t.1 ^ 2 + t.2.1 ^ 2 + t.2.2 ^ 2 = d ^ 2 := by
-  refine ⟨{(d, 0, 0)}, ?_, ?_⟩
-  · simp
-  · intro t ht; simp at ht; rw [ht]; ring
-
-/-- The (2+1)-dimensional Lorentz form -/
-def lorentzQ3 (a b c : ℤ) : ℤ := a ^ 2 + b ^ 2 - c ^ 2
-
-/-- Projecting a null 4-vector by dropping the third spatial coordinate
-gives a deficit in (2+1) dimensions -/
-theorem projection_to_3d (a b c d : ℤ)
-    (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
-    lorentzQ3 a b d = -(c ^ 2) := by
-  unfold lorentzQ3; linarith
-
-/-- The cascade: (3+1) null → (2+1) timelike (when c ≠ 0) -/
-theorem cascade_timelike (a b c d : ℤ) (hc : c ≠ 0)
-    (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
-    lorentzQ3 a b d < 0 := by
-  rw [projection_to_3d a b c d h]
-  have : c ^ 2 > 0 := by positivity
-  linarith
-
-/-- [Section: # CatalogBuild.Physics.ArithmeticPhotons.Advanced
+/-- [Section: # CatalogBuild.Computation.Oracles.Advanced
 Auto-generated from theorem catalog database.
-Domain: Physics/ArithmeticPhotons
-Declarations: 30] -/
-theorem photon_composition (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
-    (h₁ : a₁ ^ 2 + b₁ ^ 2 + c₁ ^ 2 = d₁ ^ 2)
-    (h₂ : a₂ ^ 2 + b₂ ^ 2 + c₂ ^ 2 = d₂ ^ 2) :
-    ∃ A B C D : ℤ, A ^ 2 + B ^ 2 + C ^ 2 + D ^ 2 =
-      (d₁ ^ 2 + d₁ ^ 2) * (d₂ ^ 2 + d₂ ^ 2) := by
-  exact ⟨ 2 * d₁ * d₂, 0, 0, 0, by ring ⟩
+Domain: Computation/Oracles
+Declarations: 16] -/
+theorem oracleRefines_refl {X : Type*} (O : X → X) : OracleRefines O O :=
+  fun _ h => h
+
+
+
+
+/-- [Section: # CatalogBuild.Computation.Oracles.Advanced
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 16] -/
+theorem oracleRefines_trans {X : Type*} (O₁ O₂ O₃ : X → X)
+    (h₁₂ : OracleRefines O₁ O₂) (h₂₃ : OracleRefines O₂ O₃) :
+    OracleRefines O₁ O₃ :=
+  fun x hx => h₂₃ x (h₁₂ x hx)
+
+
+
+
+theorem idem_compose_self {X : Type*} (f : X → X) (hf : ∀ x, f (f x) = f x) :
+    f ∘ f = f := funext hf
+
+
+
+
+theorem binaryEntropy_nonneg (p : ℝ) (hp0 : 0 < p) (hp1 : p < 1) :
+    0 ≤ binaryEntropy p := by
+  unfold binaryEntropy;
+  split_ifs <;> nlinarith [ Real.logb_neg ( show 1 < 2 by norm_num ) hp0 hp1, Real.logb_neg ( show 1 < 2 by norm_num ) ( show 0 < 1 - p by linarith ) ( show 1 - p < 1 by linarith ) ]
+
+
+
+
+theorem binaryEntropy_half : binaryEntropy (1/2 : ℝ) = 1 := by
+  unfold binaryEntropy; norm_num;
+  norm_num [ Real.logb_div ]
+
+
+
+
+/-- A constant oracle has a unique fixed point. -/
+theorem constant_unique_fixed_point (c : ℝ) :
+    ∃! x : ℝ, (fun _ => c) x = x :=
+  ⟨c, rfl, fun y hy => hy.symm⟩
+
+
+
+
+/-- Idempotent maps converge in one step. -/
+theorem idem_one_step (f : ℝ → ℝ) (hf : ∀ x, f (f x) = f x) (x : ℝ) :
+    f x = f (f x) := (hf x).symm
+
+
+
+
+theorem mobius_compose (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ x : ℝ)
+    (h : c₂ * x + d₂ ≠ 0)
+    (h' : c₁ * mobiusTransform a₂ b₂ c₂ d₂ x + d₁ ≠ 0) :
+    mobiusTransform a₁ b₁ c₁ d₁ (mobiusTransform a₂ b₂ c₂ d₂ x) =
+    (a₁ * (a₂ * x + b₂) + b₁ * (c₂ * x + d₂)) /
+    (c₁ * (a₂ * x + b₂) + d₁ * (c₂ * x + d₂)) := by
+  unfold mobiusTransform; simp_all +decide [ mul_comm, mul_assoc, mul_left_comm ] ; ring;
+  grind
+
+
+
+
+/-- Meta-oracle: selects the best oracle from a family. -/
+structure MetaGeodesicOracle (α : Type*) where
+  family : α → (ℝ → ℝ)
+  idem : ∀ i, ∀ x, family i (family i x) = family i x
+  selectIdx : ℝ → α
+
+
+
+
+/-- Meta-oracle consultation. -/
+def MetaGeodesicOracle.consult {α : Type*} (M : MetaGeodesicOracle α) (x : ℝ) : ℝ :=
+  M.family (M.selectIdx x) x
+
+
+
+
+/-- With constant selector, meta-oracle is a standard oracle. -/
+theorem MetaGeodesicOracle.constant_selector_is_oracle {α : Type*}
+    (M : MetaGeodesicOracle α) (i : α) (hsel : ∀ x, M.selectIdx x = i) :
+    ∀ x, M.consult (M.consult x) = M.consult x := by
+  intro x
+  simp only [MetaGeodesicOracle.consult, hsel]
+  exact M.idem i _
+
+
+
+
+/-- N-dimensional inverse stereographic projection ℝⁿ → Sⁿ ⊂ ℝⁿ⁺¹. -/
+def invStereoN (n : ℕ) (x : Fin n → ℝ) : Fin (n + 1) → ℝ :=
+  let s := ∑ i, x i ^ 2
+  fun i =>
+    if h : i.val < n then
+      2 * x ⟨i.val, h⟩ / (1 + s)
+    else
+      (s - 1) / (1 + s)
+
+
+
+
+theorem invStereoN_on_sphere (n : ℕ) (x : Fin n → ℝ) :
+    ∑ i : Fin (n + 1), (invStereoN n x i) ^ 2 = 1 := by
+  unfold invStereoN;
+  norm_num [ Finset.sum_add_distrib, Finset.mul_sum _ _ _, mul_pow, Finset.sum_mul _ _ _, div_pow ];
+  norm_num [ Finset.sum_ite, Fin.sum_univ_castSucc ];
+  norm_num [ ← Finset.mul_sum _ _ _, ← Finset.sum_div ];
+  rw [ ← add_div, div_eq_iff ] <;> nlinarith [ show 0 ≤ ∑ i, x i ^ 2 from Finset.sum_nonneg fun _ _ => sq_nonneg _ ]
+
+
+
+
+theorem hypothesis_crystallization (f : ℝ → ℝ) (hf : ∀ x, f (f x) = f x) (x : ℝ) :
+    f (f x) = f x := hf x
+
+-- H4: Idempotent partition into fixed/non-fixed
+
+
+
+theorem idem_partition {α : Type*} [DecidableEq α] (f : α → α)
+    (hf : ∀ x, f (f x) = f x) (x : α) :
+    f x = x ∨ (f x ≠ x ∧ f (f x) = f x) := by
+  by_cases h : f x = x
+  · exact Or.inl h
+  · exact Or.inr ⟨h, hf x⟩
+
+
+
 
 end
