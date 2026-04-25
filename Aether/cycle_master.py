@@ -42,6 +42,7 @@ from lean_catalog_builder import LeanCatalogBuilder
 from smart_integrator import SmartIntegrator
 from telemetry import TelemetryLogger, ExperimentRecord
 
+from research_memory import ResearchMemory, ExperimentRecord as MemoryExperimentRecord
 
 @dataclass
 class CycleState:
@@ -271,8 +272,11 @@ class CycleMaster:
         self.state = self._load_state()
 
         # Subsystems
+        self.memory = ResearchMemory(self.workspace)
+
         self.pi_agent = PiAgentClient(
-            model=config.get("pi_agent", {}).get("model", "fingpt-7b:latest"),
+            memory=self.memory,
+            model=config.get("pi_agent", {}).get("model", "kimi-k2.6:cloud"),
         ) if self.global_settings.get("pi_agent_enabled", True) else None
 
         self.prompt_engine = PromptEngine(config.get("prompts", {}))
@@ -632,6 +636,18 @@ class CycleMaster:
                 epicness_score=concept.breakthrough_potential,
             )
             self.telemetry.log_experiment(record)
+            # Also record in ResearchMemory for novelty tracking
+            if self.memory:
+                mem_record = MemoryExperimentRecord(
+                    exp_id=exp_id,
+                    domain=domain["id"],
+                    concept_title=concept.title,
+                    concept_description=concept.concept_description,
+                    status="success" if success else "failure",
+                    files_produced=changed_count,
+                    key_theorems=[d.target_path.name for d in decisions["placed"][:5]],
+                )
+                self.memory.record(mem_record)
         else:
             print(f"[Process] No result tarball for {exp_id}. Status: {job.status}")
 
@@ -830,6 +846,18 @@ class CycleMaster:
                 epicness_score=concept.breakthrough_potential,
             )
             self.telemetry.log_experiment(record)
+            # Also record in ResearchMemory for novelty tracking
+            if self.memory:
+                mem_record = MemoryExperimentRecord(
+                    exp_id=exp_id,
+                    domain=domain["id"],
+                    concept_title=concept.title,
+                    concept_description=concept.concept_description,
+                    status="success" if success else "failure",
+                    files_produced=changed_count,
+                    key_theorems=[d.target_path.name for d in decisions["placed"][:5]],
+                )
+                self.memory.record(mem_record)
 
         else:
             print(f"[Phase 6] No result tarball. Status: {result.status}")
