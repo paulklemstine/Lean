@@ -1,0 +1,727 @@
+#!/usr/bin/env python3
+"""CycleMaster: Continuous autonomous research engine.
+
+Orchestrates a never-ending loop:
+1. PI-AGENT analyzes past experiments and evolves better Aristotle prompts
+2. PI-AGENT generates a novel breakthrough concept
+3. Lean-only catalog is built and dispatched to Aristotle
+4. When Aristotle returns results, PI-AGENT analyzes what changed
+5. Integration agent merges changes back into Catalog
+6. Git commit + push
+7. Repeat
+
+Usage:
+    python3 cycle_master.py --workspace ../workspace
+    python3 cycle_master.py --single-cycle --dry-run
+"""
+
+import argparse
+import asyncio
+import difflib
+import json
+import os
+import re
+import shutil
+import subprocess
+import sys
+import textwrap
+import time
+import uuid
+from dataclasses import dataclass, field, asdict
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Dict, List, Optional, Set, Tuple, Any
+
+import yaml
+
+# Aether subsystems
+from pi_agent_client import PiAgentClient, ResearchConcept
+from prompt_engine import PromptEngine, ArtifactRequests
+from aristotle_sdk_client import AristotleSDKClient
+from lean_catalog_builder import LeanCatalogBuilder
+from telemetry import TelemetryLogger, ExperimentRecord
+
+
+@dataclass
+class CycleState:
+    """Persisted state for the continuous cycle."""
+    cycle_count: int = 0
+    last_domain: str = ""
+    total_experiments: int = 0
+    successful_proofs: int = 0
+    prompt_evolution_history: List[Dict] = field(default_factory=list)
+    integration_history: List[Dict] = field(default_factory=list)
+    best_prompts: List[Dict] = field(default_factory=list)
+
+    def to_json(self) -> str:
+        return json.dumps(asdict(self), indent=2)
+
+    @classmethod
+    def from_json(cls, raw: str) -> "CycleState":
+        return cls(**json.loads(raw))
+
+
+class GitAutomator:
+    """Automate git add, commit, push."""
+
+    def __init__(self, repo_root: Path):
+        self.repo_root = Path(repo_root)
+
+    def _run(self, cmd: List[str], cwd: Optional[Path] = None) -> Tuple[bool, str]:
+        try:
+            result = subprocess.run(
+                cmd,
+                cwd=cwd or self.repo_root,
+                capture_output=True,
+                text=True,
+                timeout=60,
+            )
+            return result.returncode == 0, result.stdout + result.stderr
+        except Exception as e:
+            return False, str(e)
+
+    def status(self) -> str:
+        ok, out = self._run(["git", "status", "--short"])
+        return out
+
+    def add(self, pathspec: str) -> bool:
+        ok, _ = self._run(["git", "add", pathspec])
+        return ok
+
+    def commit(self, message: str) -> bool:
+        ok, out = self._run(["git", "commit", "-m", message])
+        return ok
+
+    def push(self, remote: str = "origin", branch: str = "master") -> bool:
+        ok, out = self._run(["git", "push", remote, branch])
+        if not ok:
+            # Try with -u if first push
+            ok, out = self._run(["git", "push", "-u", remote, branch])
+        return ok
+
+    def create_commit_for_cycle(
+        self,
+        cycle_num: int,
+        domain: str,
+        concept_title: str,
+        changed_files: List[str],
+        artifacts: List[str],
+    ) -> bool:
+        """Create a nicely formatted commit for a research cycle."""
+        # Stage all changes
+        self.add(".")
+
+        # Build commit message
+        changed_list = "\n".join(f"  - {c}" for c in changed_files[:10])
+        if len(changed_files) > 10:
+            changed_list += f"\n  - ... and {len(changed_files) - 10} more"
+
+        artifact_list = "\n".join(f"  - {a}" for a in artifacts[:5])
+
+        message = textwrap.dedent(f"""\
+            AETHER cycle #{cycle_num}: {concept_title}
+
+            Domain: {domain}
+            Concept: {concept_title}
+
+            New / changed files:
+            {changed_list}
+
+            Artifacts:
+            {artifact_list}
+
+            Co-Authored-By: Aristotle (Harmonic) <aristotle-harmonic@harmonic.fun>
+        """)
+
+        return self.commit(message)
+
+
+class IntegrationAnalyzer:
+    """Analyze Aristotle results and determine what to integrate."""
+
+    def __init__(self, catalog_root: Path, pi_agent: Optional[PiAgentClient] = None):
+        self.catalog_root = Path(catalog_root)
+        self.pi_agent = pi_agent
+
+    def analyze_result_directory(self, result_dir: Path) -> Dict:
+        """Compare result directory against catalog and identify changes."""
+        changes = {
+            "new_files": [],
+            "modified_files": [],
+            "unchanged_files": [],
+            "artifacts": [],
+            "summary": "",
+        }
+
+        for result_file in result_dir.rglob("*"):
+            if not result_file.is_file():
+                continue
+            rel = result_file.relative_to(result_dir)
+            original = self.catalog_root / rel
+
+            # Skip build artifacts and lake files
+            if self._is_artifact(rel):
+                changes["artifacts"].append(str(rel))
+                continue
+
+            if not original.exists():
+                changes["new_files"].append(str(rel))
+            else:
+                orig_text = original.read_text(encoding="utf-8", errors="ignore")
+                result_text = result_file.read_text(encoding="utf-8", errors="ignore")
+                if orig_text != result_text:
+                    changes["modified_files"].append({
+                        "path": str(rel),
+                        "diff_summary": self._quick_diff_summary(orig_text, result_text),
+                    })
+                else:
+                    changes["unchanged_files"].append(str(rel))
+
+        # Generate summary
+        changes["summary"] = (
+            f"New: {len(changes['new_files'])}, "
+            f"Modified: {len(changes['modified_files'])}, "
+            f"Artifacts: {len(changes['artifacts'])}"
+        )
+        return changes
+
+    def _is_artifact(self, rel_path: Path) -> bool:
+        """Check if a file is an artifact rather than source code."""
+        name = rel_path.name.lower()
+        return any(
+            name.endswith(ext) for ext in
+            [".md", ".py", ".svg", ".png", ".txt", ".json", ".yaml", ".yml"]
+        ) or name in {"demo", "diagram", "report", "discussion"}
+
+    def _quick_diff_summary(self, old: str, new: str) -> str:
+        """Quick summary of changes."""
+        old_sorry = old.count("sorry")
+        new_sorry = new.count("sorry")
+        sorry_delta = old_sorry - new_sorry
+
+        old_lines = old.count("\n")
+        new_lines = new.count("\n")
+
+        if sorry_delta > 0:
+            return f"-{sorry_delta} sorry, {new_lines - old_lines:+d} lines"
+        return f"{new_lines - old_lines:+d} lines"
+
+    def integrate_changes(
+        self,
+        changes: Dict,
+        result_dir: Path,
+        dry_run: bool = False,
+    ) -> List[Path]:
+        """Copy changed/new files back into the catalog."""
+        integrated: List[Path] = []
+
+        # Integrate new files
+        for rel_path in changes.get("new_files", []):
+            src = result_dir / rel_path
+            dest = self.catalog_root / rel_path
+            if not dry_run:
+                dest.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(src, dest)
+            integrated.append(dest)
+
+        # Integrate modified files
+        for item in changes.get("modified_files", []):
+            rel_path = item["path"]
+            src = result_dir / rel_path
+            dest = self.catalog_root / rel_path
+            if not dry_run:
+                shutil.copy2(src, dest)
+            integrated.append(dest)
+
+        return integrated
+
+
+class PromptEvolver:
+    """Evolve Aristotle prompts based on past success/failure."""
+
+    def __init__(self, pi_agent: PiAgentClient, workspace: Path):
+        self.pi_agent = pi_agent
+        self.workspace = Path(workspace)
+        self.workspace.mkdir(parents=True, exist_ok=True)
+        self.history_file = self.workspace / "prompt_history.jsonl"
+
+    def record_prompt_outcome(
+        self,
+        prompt_text: str,
+        concept: ResearchConcept,
+        success: bool,
+        result_status: str,
+        changed_files: int,
+    ) -> None:
+        """Record a prompt and its outcome."""
+        entry = {
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "concept": concept.title,
+            "domain": concept.domain,
+            "success": success,
+            "status": result_status,
+            "changed_files": changed_files,
+            "prompt_length": len(prompt_text),
+        }
+        with open(self.history_file, "a", encoding="utf-8") as f:
+            f.write(json.dumps(entry) + "\n")
+
+    def load_history(self) -> List[Dict]:
+        """Load prompt history."""
+        if not self.history_file.exists():
+            return []
+        entries = []
+        with open(self.history_file, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if line:
+                    entries.append(json.loads(line))
+        return entries
+
+    def evolve_prompt_for_domain(self, domain: str) -> Dict[str, str]:
+        """Use Pi-Agent to generate an improved prompt strategy for a domain."""
+        history = self.load_history()
+        domain_history = [h for h in history if h.get("domain") == domain][-10:]
+
+        if len(domain_history) < 3:
+            return {}  # Not enough data
+
+        successes = [h for h in domain_history if h.get("success")]
+        failures = [h for h in domain_history if not h.get("success")]
+
+        system = textwrap.dedent("""\
+            You are a meta-prompt engineer specializing in formal mathematics.
+            Your job is to analyze prompt outcomes and suggest improvements.
+            Output ONLY structured JSON.
+        """)
+
+        user = textwrap.dedent(f"""\
+            Domain: {domain}
+
+            Successful cycles ({len(successes)}):
+            {json.dumps(successes, indent=2)}
+
+            Failed cycles ({len(failures)}):
+            {json.dumps(failures, indent=2)}
+
+            Based on this history, suggest improvements to the Aristotle prompt strategy.
+            Respond with ONLY this JSON:
+            {{
+              "creativity_boosters": ["specific instruction 1", "instruction 2"],
+              "style_adjustments": "How to rephrase prompts for this domain",
+              "artifact_focus": "Which artifacts matter most",
+              "theorem_structure_hint": "How to structure the Lean guess for better results"
+            }}
+        """)
+
+        raw = self.pi_agent._call_ollama(system, user)
+        try:
+            match = re.search(r'\{.*\}', raw, re.DOTALL)
+            if match:
+                return json.loads(match.group())
+        except Exception:
+            pass
+        return {}
+
+
+class CycleMaster:
+    """Continuous research cycle orchestrator."""
+
+    def __init__(
+        self,
+        config: Dict[str, Any],
+        domains_config: Dict[str, Any],
+        workspace: Path,
+    ):
+        self.config = config
+        self.domains = domains_config.get("domains", [])
+        self.global_settings = domains_config.get("global_settings", {})
+        self.workspace = Path(workspace)
+        self.workspace.mkdir(parents=True, exist_ok=True)
+
+        # Paths
+        self.catalog_root = Path(config.get("catalog", {}).get("root_dir", "../Catalog")).resolve()
+        self.state_path = self.workspace / "cycle_state.json"
+        self.output_dir = self.workspace / "output"
+        self.output_dir.mkdir(parents=True, exist_ok=True)
+        self.artifacts_dir = self.workspace / "artifacts"
+        self.artifacts_dir.mkdir(parents=True, exist_ok=True)
+
+        # State
+        self.state = self._load_state()
+
+        # Subsystems
+        self.pi_agent = PiAgentClient(
+            model=config.get("pi_agent", {}).get("model", "fingpt-7b:latest"),
+        ) if self.global_settings.get("pi_agent_enabled", True) else None
+
+        self.prompt_engine = PromptEngine(config.get("prompts", {}))
+        self.aristotle = AristotleSDKClient(config.get("aristotle", {}))
+        self.telemetry = TelemetryLogger(config.get("telemetry", {}))
+        self.lean_builder = LeanCatalogBuilder(self.catalog_root)
+        self.git = GitAutomator(self.catalog_root.parent)  # repo root
+        self.integrator = IntegrationAnalyzer(self.catalog_root, self.pi_agent)
+        self.prompt_evolver = PromptEvolver(self.pi_agent, self.workspace)
+
+        # Control
+        self._shutdown_requested = False
+        self._domain_weights = {d["id"]: d.get("weight", 1.0) for d in self.domains}
+
+    def _load_state(self) -> CycleState:
+        if self.state_path.exists():
+            try:
+                return CycleState.from_json(self.state_path.read_text(encoding="utf-8"))
+            except Exception:
+                pass
+        return CycleState()
+
+    def _save_state(self) -> None:
+        self.state_path.write_text(self.state.to_json(), encoding="utf-8")
+
+    def _select_domain(self) -> Dict[str, Any]:
+        """Weighted random, avoiding immediate repeats."""
+        candidates = [d for d in self.domains if d["id"] != self.state.last_domain]
+        if not candidates:
+            candidates = self.domains
+        weights = [self._domain_weights.get(d["id"], 1.0) for d in candidates]
+        total = sum(weights)
+        if total == 0:
+            import random
+            return random.choice(candidates)
+        import random
+        r = random.uniform(0, total)
+        cumulative = 0.0
+        for d, w in zip(candidates, weights):
+            cumulative += w
+            if r <= cumulative:
+                return d
+        return candidates[-1]
+
+    def _generate_lean_source(self, concept: ResearchConcept) -> str:
+        """Generate Lean source from concept."""
+        exp_id = str(uuid.uuid4())[:8]
+        header = textwrap.dedent(f"""\
+            import Mathlib
+
+            /-! # CatalogBuild.Speculative.AutoResearch.{concept.title}
+
+            Auto-generated by CycleMaster (Pi-Agent + Aristotle).
+            Domain: {concept.domain}
+            Novelty: {concept.novelty_estimate:.2f}
+            Experiment: {exp_id}
+            Date: {datetime.now(timezone.utc).isoformat()}
+            -/
+
+            /-
+            {concept.concept_description}
+
+            Mathematical Concept: {concept.mathematical_framing}
+            -/
+        """)
+        lean_body = concept.lean_guess.strip()
+        if not lean_body or "theorem" not in lean_body:
+            lean_body = textwrap.dedent(f"""\
+                theorem {concept.title.lower().replace(' ', '_')}_breakthrough
+                    {{X : Type*}} [Inhabited X] :
+                    True := by
+                  sorry
+            """)
+        if "sorry" not in lean_body:
+            lean_body += "\n  sorry\n"
+        return header + "\n" + lean_body
+
+    def _extract_artifacts(self, result_dir: Path, exp_id: str) -> Dict[str, Path]:
+        """Extract research artifacts."""
+        artifacts: Dict[str, Path] = {}
+        patterns = {
+            "research_report": ["RESEARCH_REPORT.md", "*report*.md"],
+            "python_demo": ["demo.py", "*demo*.py"],
+            "svg_demo": ["diagram.svg", "*.svg"],
+            "sciam_discussion": ["DISCUSSION.md", "*discussion*.md"],
+        }
+        exp_dir = self.artifacts_dir / exp_id
+        exp_dir.mkdir(parents=True, exist_ok=True)
+        for artifact_type, filenames in patterns.items():
+            for pattern in filenames:
+                matches = list(result_dir.rglob(pattern))
+                if matches:
+                    src = matches[0]
+                    dest = exp_dir / src.name
+                    shutil.copy2(src, dest)
+                    artifacts[artifact_type] = dest
+                    break
+        return artifacts
+
+    async def run_single_cycle(self, forced_domain: Optional[str] = None, dry_run: bool = False) -> bool:
+        """Run one complete research cycle."""
+        self.state.cycle_count += 1
+        cycle_n = self.state.cycle_count
+        print(f"\n{'='*70}")
+        print(f"CYCLE MASTER — Cycle #{cycle_n}")
+        print(f"{'='*70}")
+
+        # Phase 1: Domain selection
+        domain = self._select_domain() if forced_domain is None else next(
+            (d for d in self.domains if d["id"] == forced_domain), self.domains[0]
+        )
+        self.state.last_domain = domain["id"]
+        print(f"[Phase 1] Domain: {domain['name']} ({domain['id']})")
+
+        # Phase 2: Prompt evolution (if we have history)
+        evolved_hints = {}
+        if self.pi_agent and cycle_n > 3:
+            print(f"[Phase 1b] Evolving prompt strategy for {domain['id']}...")
+            evolved_hints = self.prompt_evolver.evolve_prompt_for_domain(domain["id"])
+            if evolved_hints:
+                print(f"[Phase 1b] Evolved hints: {list(evolved_hints.keys())}")
+
+        # Phase 3: Pi-Agent concept generation
+        exp_id = str(uuid.uuid4())[:8]
+        print(f"[Phase 2] Pi-Agent generating concept (exp={exp_id})...")
+
+        if self.pi_agent:
+            concept = self.pi_agent.generate_breakthrough_concept(
+                domain=domain["id"],
+                seed_concepts=domain.get("seed_concepts", []),
+                target="theorem",
+            )
+        else:
+            concept = ResearchConcept(
+                title=f"auto_concept_{exp_id}",
+                domain=domain["id"],
+                concept_description="Auto-generated placeholder.",
+                mathematical_framing="TBD",
+            )
+        print(f"[Phase 2] Concept: {concept.title} (novelty={concept.novelty_estimate:.2f})")
+
+        # Phase 4: Build prompt
+        print(f"[Phase 3] Building Aristotle prompt...")
+        prompt = self.prompt_engine.build_prompt(
+            title=concept.title,
+            domain=domain["id"],
+            concept_description=concept.concept_description,
+            mathematical_framing=concept.mathematical_framing,
+            lean_guess=concept.lean_guess,
+            difficulty=domain.get("difficulty_target", "phd"),
+            artifacts=ArtifactRequests(
+                research_report=True,
+                python_demo=True,
+                svg_demo=True,
+                sciam_discussion=True,
+                lean_proof=True,
+            ),
+        )
+        print(f"[Phase 3] Prompt: {len(prompt.prompt_text)} chars")
+
+        # Phase 5: Generate Lean source
+        lean_source = self._generate_lean_source(concept)
+        print(f"[Phase 4] Lean source: {len(lean_source)} chars")
+
+        if dry_run:
+            print("\n[DRY RUN] Stopping before dispatch.")
+            return True
+
+        # Phase 6: Build lean-only project and dispatch
+        project_dir = self.output_dir / f"job_{exp_id}"
+        project_dir.mkdir(parents=True, exist_ok=True)
+
+        print(f"[Phase 5] Building lean-only catalog...")
+        self.lean_builder.build_lean_project(
+            project_dir=project_dir,
+            domain=domain["id"],
+            lean_source=lean_source,
+        )
+
+        print(f"[Phase 5] Dispatching to Aristotle...")
+        start_time = time.time()
+        result = await self.aristotle.submit_lean_project(
+            prompt=prompt.prompt_text,
+            project_dir=project_dir,
+        )
+        elapsed = time.time() - start_time
+        print(f"[Phase 5] Aristotle: {result.status} ({elapsed:.1f}s)")
+        if result.error_message:
+            print(f"[Phase 5] Error: {result.error_message}")
+
+        self.state.total_experiments += 1
+
+        # Phase 7: Process results
+        if result.result_path and result.result_path.exists():
+            extract_dir = project_dir / "result_extracted"
+            extract_dir.mkdir(exist_ok=True)
+            import tarfile
+            with tarfile.open(result.result_path, "r:gz") as tar:
+                tar.extractall(path=extract_dir)
+
+            # Analyze changes
+            print(f"[Phase 6] Analyzing changes...")
+            changes = self.integrator.analyze_result_directory(extract_dir)
+            print(f"[Phase 6] {changes['summary']}")
+
+            # Extract artifacts
+            artifacts = self._extract_artifacts(extract_dir, exp_id)
+            print(f"[Phase 6] Artifacts: {list(artifacts.keys())}")
+
+            # Record prompt outcome
+            changed_count = len(changes.get("new_files", [])) + len(changes.get("modified_files", []))
+            success = result.status in ("complete", "COMPLETE", "COMPLETE_WITH_ERRORS")
+            self.prompt_evolver.record_prompt_outcome(
+                prompt_text=prompt.prompt_text,
+                concept=concept,
+                success=success,
+                result_status=result.status,
+                changed_files=changed_count,
+            )
+
+            # Phase 8: Integrate changes into catalog
+            if success and changed_count > 0:
+                print(f"[Phase 7] Integrating {changed_count} changed files into Catalog...")
+                integrated = self.integrator.integrate_changes(changes, extract_dir, dry_run=False)
+                for p in integrated[:5]:
+                    print(f"  + {p.relative_to(self.catalog_root)}")
+                if len(integrated) > 5:
+                    print(f"  + ... and {len(integrated) - 5} more")
+
+                # Save main proof as pending
+                if result.lean_source:
+                    pending_dir = self.catalog_root / "Speculative" / "AutoResearch"
+                    pending_dir.mkdir(parents=True, exist_ok=True)
+                    pending_file = pending_dir / f"PENDING_{domain['id']}_{exp_id}.lean"
+                    pending_file.write_text(result.lean_source, encoding="utf-8")
+                    print(f"[Phase 7] Pending proof: {pending_file.name}")
+
+                # Phase 9: Git commit + push
+                print(f"[Phase 8] Git operations...")
+                changed_paths = [str(p.relative_to(self.catalog_root)) for p in integrated]
+                artifact_paths = [str(p.relative_to(self.catalog_root.parent)) for p in artifacts.values()]
+
+                commit_ok = self.git.create_commit_for_cycle(
+                    cycle_num=cycle_n,
+                    domain=domain["name"],
+                    concept_title=concept.title,
+                    changed_files=changed_paths,
+                    artifacts=artifact_paths,
+                )
+                if commit_ok:
+                    print(f"[Phase 8] Commit created.")
+                    push_ok = self.git.push()
+                    if push_ok:
+                        print(f"[Phase 8] Pushed to GitHub.")
+                    else:
+                        print(f"[Phase 8] Push failed (will retry next cycle).")
+                else:
+                    print(f"[Phase 8] No changes to commit.")
+
+                self.state.successful_proofs += 1
+                self.state.integration_history.append({
+                    "cycle": cycle_n,
+                    "exp_id": exp_id,
+                    "files_changed": changed_count,
+                })
+            else:
+                print(f"[Phase 7] No changes to integrate (status={result.status}).")
+
+            # Log experiment
+            record = ExperimentRecord(
+                experiment_id=exp_id,
+                arc_id=domain["id"],
+                arc_name=domain["name"],
+                domain=domain["id"],
+                file_path=str(pending_dir / f"PENDING_{domain['id']}_{exp_id}.lean") if success else "",
+                difficulty=domain.get("difficulty_target", "phd"),
+                hypothesis_text=lean_source[:500],
+                concept_combination=domain.get("seed_concepts", []),
+                generation_latency_ms=elapsed * 1000,
+                aristotle_job_id=result.project_id,
+                status="proven" if success else result.status.lower(),
+                proof_length_lines=len(result.lean_source.splitlines()) if result.lean_source else 0,
+                novelty_score=concept.novelty_estimate,
+                epicness_score=concept.breakthrough_potential,
+            )
+            self.telemetry.log_experiment(record)
+
+        else:
+            print(f"[Phase 6] No result tarball. Status: {result.status}")
+
+        # Save state
+        self._save_state()
+        print(f"[Phase 9] Cycle #{cycle_n} complete. State saved.")
+        return result.lean_source is not None
+
+    async def run_continuous(self) -> None:
+        """Run continuous cycles until shutdown."""
+        print("="*70)
+        print("CYCLE MASTER: CONTINUOUS RESEARCH ENGINE STARTED")
+        print(f"Workspace: {self.workspace}")
+        print(f"Catalog: {self.catalog_root}")
+        print("Press Ctrl+C to shutdown.")
+        print("="*70)
+
+        interval = self.global_settings.get("cycle_interval_seconds", 300)
+
+        while not self._shutdown_requested:
+            try:
+                await self.run_single_cycle()
+            except Exception as e:
+                print(f"[ERROR] Cycle failed: {e}")
+                import traceback
+                traceback.print_exc()
+
+            if self._shutdown_requested:
+                break
+
+            print(f"[CYCLE MASTER] Sleeping {interval}s before next cycle...")
+            await asyncio.sleep(interval)
+
+        print("[CYCLE MASTER] Shutdown complete.")
+
+    def request_shutdown(self) -> None:
+        print("[CYCLE MASTER] Shutdown requested...")
+        self._shutdown_requested = True
+
+
+async def main():
+    parser = argparse.ArgumentParser(description="CycleMaster: Continuous Aristotle Research")
+    parser.add_argument("--config", default="config.yaml", help="Path to config.yaml")
+    parser.add_argument("--domains", default="research_domains.json", help="Path to research_domains.json")
+    parser.add_argument("--workspace", default="../workspace", help="Workspace directory (outside catalog)")
+    parser.add_argument("--single-cycle", action="store_true", help="Run one cycle and exit")
+    parser.add_argument("--domain", help="Force a specific domain")
+    parser.add_argument("--dry-run", action="store_true", help="Generate but do not dispatch")
+
+    args = parser.parse_args()
+
+    config_path = Path(args.config)
+    config = yaml.safe_load(config_path.read_text(encoding="utf-8")) if config_path.exists() else {}
+
+    domains_path = Path(args.domains)
+    domains_config = json.loads(domains_path.read_text(encoding="utf-8")) if domains_path.exists() else {}
+
+    # Override paths to workspace
+    config["catalog"] = config.get("catalog", {})
+    config["catalog"]["root_dir"] = "../Catalog"
+
+    master = CycleMaster(
+        config=config,
+        domains_config=domains_config,
+        workspace=Path(args.workspace).resolve(),
+    )
+
+    if args.single_cycle:
+        success = await master.run_single_cycle(
+            forced_domain=args.domain,
+            dry_run=args.dry_run,
+        )
+        sys.exit(0 if success else 1)
+    else:
+        loop = asyncio.get_event_loop()
+        for sig in (__import__("signal").SIGINT, __import__("signal").SIGTERM):
+            loop.add_signal_handler(sig, master.request_shutdown)
+        try:
+            await master.run_continuous()
+        except asyncio.CancelledError:
+            pass
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

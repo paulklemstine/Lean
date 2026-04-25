@@ -8,7 +8,7 @@ aristotle:
   max_retries: 3
   retry_backoff_base: 2.0
   concurrent_jobs: 2
-  demo_mode: true  # Set to false when Aristotle API is available
+  demo_mode: false  # API key is available, use real Aristotle
 
 catalog:
   root_dir: "../"
