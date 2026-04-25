@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" width="900" height="620">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#16a34a"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#9333ea"/>
+    </marker>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8fafc;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#f1f5f9;stop-opacity:1"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="115%" height="115%">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="620" fill="url(#bgGrad)" rx="12"/>
+  
+  <!-- Title -->
+  <text x="450" y="40" text-anchor="middle" font-family="Georgia, serif" font-size="20" font-weight="bold" fill="#1e293b">
+    Probabilistic Resolved Measure Hypothesis (PRMH-2673)
+  </text>
+  <text x="450" y="62" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#64748b" font-style="italic">
+    Bridging Neural Networks, Tropical Geometry, and Information Theory
+  </text>
+
+  <!-- ===== Three Domain Boxes ===== -->
+  
+  <!-- Neural Networks (left) -->
+  <rect x="40" y="100" width="220" height="200" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2" filter="url(#shadow)"/>
+  <text x="150" y="128" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2563eb">Neural Networks</text>
+  <line x1="70" y1="138" x2="230" y2="138" stroke="#2563eb" stroke-width="1" opacity="0.4"/>
+  
+  <!-- ReLU graph -->
+  <polyline points="70,250 130,250 130,250 190,200" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="130" cy="250" r="3" fill="#2563eb"/>
+  <text x="100" y="270" font-family="monospace" font-size="11" fill="#2563eb">ReLU(x)=max(0,x)</text>
+  
+  <text x="80" y="160" font-family="Arial, sans-serif" font-size="11" fill="#334155">• Layers &amp; activations</text>
+  <text x="80" y="178" font-family="Arial, sans-serif" font-size="11" fill="#334155">• Backpropagation</text>
+  <text x="80" y="196" font-family="Arial, sans-serif" font-size="11" fill="#334155">• Cotangent functor</text>
+
+  <!-- Tropical Geometry (center) -->
+  <rect x="340" y="100" width="220" height="200" rx="12" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="450" y="128" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#16a34a">Tropical Geometry</text>
+  <line x1="370" y1="138" x2="530" y2="138" stroke="#16a34a" stroke-width="1" opacity="0.4"/>
+  
+  <!-- Tropical curve sketch -->
+  <polyline points="370,260 410,230 450,220 490,230 530,260" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/>
+  <polyline points="450,220 450,180" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="450" cy="220" r="3" fill="#16a34a"/>
+  <text x="380" y="280" font-family="monospace" font-size="11" fill="#16a34a">a⊕b=max(a,b)</text>
+  
+  <text x="370" y="160" font-family="Arial, sans-serif" font-size="11" fill="#334155">• Max-plus semiring</text>
+  <text x="370" y="178" font-family="Arial, sans-serif" font-size="11" fill="#334155">• Tropical polynomials</text>
+  <text x="370" y="196" font-family="Arial, sans-serif" font-size="11" fill="#334155">• Hypersurfaces</text>
+
+  <!-- Information Theory (right) -->
+  <rect x="640" y="100" width="220" height="200" rx="12" fill="#faf5ff" stroke="#9333ea" stroke-width="2" filter="url(#shadow)"/>
+  <text x="750" y="128" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#9333ea">Information Theory</text>
+  <line x1="670" y1="138" x2="830" y2="138" stroke="#9333ea" stroke-width="1" opacity="0.4"/>
+  
+  <!-- Entropy curve -->
+  <path d="M 680 260 Q 720 170, 750 180 Q 780 190, 820 260" fill="none" stroke="#9333ea" stroke-width="2" stroke-linecap="round"/>
+  <text x="700" y="280" font-family="monospace" font-size="11" fill="#9333ea">H=-Σp·log(p)</text>
+  
+  <text x="670" y="160" font-family="Arial, sans-serif" font-size="11" fill="#334155">• Shannon entropy H</text>
+  <text x="670" y="178" font-family="Arial, sans-serif" font-size="11" fill="#334155">• Kolmogorov K_T</text>
+  <text x="670" y="196" font-family="Arial, sans-serif" font-size="11" fill="#334155">• Universal prior</text>
+
+  <!-- ===== Connecting Arrows ===== -->
+  
+  <!-- Neural ↔ Tropical -->
+  <line x1="260" y1="180" x2="340" y2="180" stroke="#2563eb" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <line x1="340" y1="200" x2="260" y2="200" stroke="#16a34a" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <text x="300" y="170" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#555" font-style="italic">tropicalize</text>
+  <text x="300" y="218" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#555" font-style="italic">realize</text>
+
+  <!-- Tropical ↔ Information -->
+  <line x1="560" y1="180" x2="640" y2="180" stroke="#16a34a" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <line x1="640" y1="200" x2="560" y2="200" stroke="#9333ea" stroke-width="2" marker-end="url(#arrowPurple)"/>
+  <text x="600" y="170" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#555" font-style="italic">measure</text>
+  <text x="600" y="218" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#555" font-style="italic">weight</text>
+
+  <!-- ===== Central Resolved Measure ===== -->
+  <ellipse cx="450" cy="420" rx="160" ry="55" fill="#fefce8" stroke="#ca8a04" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="450" y="410" text-anchor="middle" font-family="Georgia, serif" font-size="16" font-weight="bold" fill="#854d0e">Resolved Measure μ_res</text>
+  <text x="450" y="435" text-anchor="middle" font-family="monospace" font-size="12" fill="#92400e">μ_res(f) ∝ 2^{−K_T(f)}</text>
+  <text x="450" y="455" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#a16207" font-style="italic">Universal Property: unique compatible measure</text>
+
+  <!-- Arrows from three domains to resolved measure -->
+  <line x1="150" y1="300" x2="330" y2="390" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#arrowBlue)"/>
+  <line x1="450" y1="300" x2="450" y2="365" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#arrowGreen)"/>
+  <line x1="750" y1="300" x2="570" y2="390" stroke="#9333ea" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#arrowPurple)"/>
+
+  <!-- ===== Type Theory Box ===== -->
+  <rect x="300" y="510" width="300" height="60" rx="8" fill="#f1f5f9" stroke="#475569" stroke-width="1.5"/>
+  <text x="450" y="535" text-anchor="middle" font-family="monospace" font-size="12" fill="#1e293b">∀ (X : Type*) [Inhabited X], True</text>
+  <text x="450" y="555" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#64748b" font-style="italic">Formally verified in Lean 4 + Mathlib</text>
+  
+  <line x1="450" y1="475" x2="450" y2="510" stroke="#475569" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <text x="470" y="498" font-family="Arial, sans-serif" font-size="10" fill="#555" font-style="italic">formalize</text>
+
+  <!-- Caption -->
+  <text x="450" y="605" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#64748b" font-style="italic">
+    Fig. 1: The resolved measure μ_res unifies three mathematical domains via a universal property.
+  </text>
+</svg>
