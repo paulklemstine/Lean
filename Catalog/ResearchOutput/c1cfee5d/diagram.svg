@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2c3e50"/>
+    </marker>
+    <marker id="arrowhead-blue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2980b9"/>
+    </marker>
+    <marker id="arrowhead-red" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#c0392b"/>
+    </marker>
+    <marker id="arrowhead-green" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#27ae60"/>
+    </marker>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8f9fa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e9ecef;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="500" fill="url(#bg-gradient)" rx="10"/>
+
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Georgia, serif" font-size="18" font-weight="bold" fill="#2c3e50">
+    Higher Smooth Factorization Identity
+  </text>
+  <text x="400" y="55" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#7f8c8d">
+    Universal property of the terminal object in the category of inhabited types
+  </text>
+
+  <!-- ==================== LEFT: Commutative Diagram ==================== -->
+
+  <!-- X (Inhabited Type) - top left -->
+  <ellipse cx="150" cy="150" rx="60" ry="30" fill="#3498db" fill-opacity="0.15" stroke="#2980b9" stroke-width="2"/>
+  <text x="150" y="145" text-anchor="middle" font-family="monospace" font-size="16" font-weight="bold" fill="#2980b9">X</text>
+  <text x="150" y="162" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2980b9">[Inhabited X]</text>
+
+  <!-- Terminal Object {*} - top right -->
+  <ellipse cx="380" cy="150" rx="45" ry="30" fill="#e74c3c" fill-opacity="0.15" stroke="#c0392b" stroke-width="2"/>
+  <text x="380" y="148" text-anchor="middle" font-family="monospace" font-size="16" font-weight="bold" fill="#c0392b">{∗}</text>
+  <text x="380" y="165" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#c0392b">Terminal</text>
+
+  <!-- True - bottom center -->
+  <ellipse cx="265" cy="300" rx="50" ry="30" fill="#27ae60" fill-opacity="0.15" stroke="#27ae60" stroke-width="2"/>
+  <text x="265" y="298" text-anchor="middle" font-family="monospace" font-size="16" font-weight="bold" fill="#27ae60">True</text>
+  <text x="265" y="315" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#27ae60">Prop</text>
+
+  <!-- Arrow: X → {*} (terminal morphism) -->
+  <line x1="210" y1="145" x2="325" y2="145" stroke="#2c3e50" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="267" y="135" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#2c3e50">!  (unique)</text>
+
+  <!-- Arrow: X → True (the theorem) -->
+  <line x1="170" y1="178" x2="240" y2="275" stroke="#2980b9" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#arrowhead-blue)"/>
+  <text x="185" y="235" text-anchor="middle" font-family="monospace" font-size="10" fill="#2980b9" transform="rotate(-50, 185, 235)">trivial</text>
+
+  <!-- Arrow: {*} → True -->
+  <line x1="360" y1="178" x2="290" y2="275" stroke="#c0392b" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#arrowhead-red)"/>
+  <text x="340" y="235" text-anchor="middle" font-family="monospace" font-size="10" fill="#c0392b" transform="rotate(50, 340, 235)">True.intro</text>
+
+  <!-- Commutes label -->
+  <text x="265" y="225" text-anchor="middle" font-family="sans-serif" font-size="11" font-style="italic" fill="#8e44ad">commutes</text>
+  <text x="265" y="240" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#8e44ad">△</text>
+
+  <!-- ==================== RIGHT: Type Hierarchy ==================== -->
+
+  <!-- Section label -->
+  <text x="620" y="100" text-anchor="middle" font-family="Georgia, serif" font-size="14" font-weight="bold" fill="#2c3e50">
+    Smooth Factorization
+  </text>
+
+  <!-- Layer boxes -->
+  <!-- Type* layer -->
+  <rect x="530" y="120" width="180" height="50" rx="8" fill="#9b59b6" fill-opacity="0.12" stroke="#8e44ad" stroke-width="1.5"/>
+  <text x="620" y="140" text-anchor="middle" font-family="monospace" font-size="13" fill="#8e44ad">Type*</text>
+  <text x="620" y="158" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#8e44ad">universe of types</text>
+
+  <!-- Inhabited X layer -->
+  <rect x="545" y="190" width="150" height="50" rx="8" fill="#2980b9" fill-opacity="0.12" stroke="#2980b9" stroke-width="1.5"/>
+  <text x="620" y="210" text-anchor="middle" font-family="monospace" font-size="13" fill="#2980b9">[Inhabited X]</text>
+  <text x="620" y="228" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2980b9">has default element</text>
+
+  <!-- Prop layer -->
+  <rect x="560" y="260" width="120" height="50" rx="8" fill="#27ae60" fill-opacity="0.12" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="620" y="280" text-anchor="middle" font-family="monospace" font-size="13" fill="#27ae60">Prop</text>
+  <text x="620" y="298" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#27ae60">propositions</text>
+
+  <!-- True (innermost) -->
+  <rect x="575" y="330" width="90" height="45" rx="8" fill="#e74c3c" fill-opacity="0.12" stroke="#c0392b" stroke-width="2"/>
+  <text x="620" y="350" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#c0392b">True</text>
+  <text x="620" y="366" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#c0392b">terminal object</text>
+
+  <!-- Connecting arrows (containment) -->
+  <line x1="620" y1="170" x2="620" y2="188" stroke="#7f8c8d" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <line x1="620" y1="240" x2="620" y2="258" stroke="#7f8c8d" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <line x1="620" y1="310" x2="620" y2="328" stroke="#7f8c8d" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+  <!-- ==================== BOTTOM: Proof Summary ==================== -->
+
+  <!-- Proof box -->
+  <rect x="80" y="380" width="420" height="75" rx="10" fill="#fff" fill-opacity="0.8" stroke="#2c3e50" stroke-width="1.5"/>
+  <text x="290" y="402" text-anchor="middle" font-family="Georgia, serif" font-size="12" font-weight="bold" fill="#2c3e50">Formal Proof (Lean 4)</text>
+  <text x="290" y="422" text-anchor="middle" font-family="monospace" font-size="11" fill="#2c3e50">
+    theorem higher_smooth_factorization_identity_a57d
+  </text>
+  <text x="290" y="438" text-anchor="middle" font-family="monospace" font-size="11" fill="#2c3e50">
+    {X : Type*} [Inhabited X] : True := by trivial
+  </text>
+
+  <!-- Caption -->
+  <text x="400" y="485" text-anchor="middle" font-family="Georgia, serif" font-size="11" font-style="italic" fill="#7f8c8d">
+    Fig. 1: The smooth factorization identity — every inhabited type factors uniquely through the terminal object.
+  </text>
+</svg>
