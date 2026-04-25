@@ -1,0 +1,13 @@
+/.lake
+/lake-packages
+*.olean
+*.ilean
+/build
+/Catalog/.lake
+/Catalog/Aether/output
+/Catalog/Aether/logs
+/Catalog/Aether/__pycache__
+/Catalog/Aether/artifacts
+/Catalog/Aether/manual_jobs
+*.tar.gz
+*.output
