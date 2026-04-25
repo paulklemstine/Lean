@@ -44,10 +44,7 @@ class LeanCatalogBuilder:
             else:
                 item.unlink()
 
-        # Domain filter
-        domain_dirs = self._domain_dirs(domain)
-
-        # Copy .lean files
+        # Copy ALL .lean files (full catalog context for Aristotle v2)
         lean_files_copied = 0
         for src in self.catalog_root.rglob("*.lean"):
             rel = src.relative_to(self.catalog_root)
@@ -56,18 +53,12 @@ class LeanCatalogBuilder:
             if self._should_ignore(rel):
                 continue
 
-            # Domain filter
-            if domain_dirs and not any(
-                str(rel).startswith(d) for d in domain_dirs
-            ):
-                continue
-
             dest = project_dir / rel
             dest.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(src, dest)
             lean_files_copied += 1
 
-        print(f"[LeanCatalog] Copied {lean_files_copied} .lean files")
+        print(f"[LeanCatalog] Copied {lean_files_copied} .lean files (full catalog)")
 
         # Copy lake config
         for fname in ["lakefile.toml", "lean-toolchain", "lake-manifest.json"]:
@@ -81,19 +72,6 @@ class LeanCatalogBuilder:
             main_file.write_text(lean_source, encoding="utf-8")
 
         return project_dir
-
-    def _domain_dirs(self, domain: str) -> list:
-        """Return top-level dirs for a domain."""
-        mapping = {
-            "factoring": ["Pythagorean", "Cryptography", "Computation", "Shared"],
-            "compression": ["Tropical", "Computation", "Logic", "Shared"],
-            "AI": ["MachineLearning", "Logic", "Computation", "Shared"],
-            "neural nets": ["MachineLearning", "Logic", "Computation", "Shared"],
-            "quantum mechanics": ["Physics", "Cryptography", "Algebra", "Shared"],
-            "computation": ["Computation", "Logic", "Bridges", "Shared"],
-            "physics": ["Physics", "EML", "Bridges", "Shared"],
-        }
-        return mapping.get(domain, [])
 
     def _should_ignore(self, rel_path: Path) -> bool:
         """Check if a relative path should be ignored."""

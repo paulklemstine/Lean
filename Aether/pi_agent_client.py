@@ -47,29 +47,6 @@ class OptimizedPrompt:
     target_difficulty: str = "phd"
 
 
-@dataclass
-class AnalysisResult:
-    """Result of Pi-Agent analyzing a proof for triviality."""
-    trivial: bool
-    reason: str
-    suggested_improvement: str
-
-
-@dataclass
-class IntegrationDecision:
-    """Single file decision from Pi-Agent diff analysis."""
-    source: str
-    action: str  # keep, discard, rename
-    target: str
-    reason: str
-
-
-@dataclass
-class IntegrationPlan:
-    """Full integration plan from Pi-Agent."""
-    decisions: List[IntegrationDecision]
-
-
 class PiAgentClient:
     """Autoresearch client using ollama for concept generation."""
 
@@ -77,7 +54,9 @@ class PiAgentClient:
         self.model = model
         self.timeout = timeout
         self.memory = memory
+        self._ollama_proc = None
         self._check_ollama()
+        self._launch_ollama()
 
     def _check_ollama(self) -> bool:
         """Check if ollama is available."""
@@ -133,11 +112,9 @@ class PiAgentClient:
         # Build dynamic context from research memory
         memory_context = ""
         direction_hint = ""
-        optimization_context = ""
         if self.memory:
             memory_context = self.memory.build_exclusion_prompt()
             direction_hint = self.memory.suggest_novel_direction(domain)
-            optimization_context = self.memory.build_prompt_optimization_context(domain)
 
         system = textwrap.dedent("""\
             You are Pi-Agent, an elite mathematical autoresearch engine.
@@ -158,8 +135,6 @@ class PiAgentClient:
 
             {memory_context}
 
-            {optimization_context}
-
             REQUIREMENTS (strict):
             1. Must be formalizable in Lean 4 with mathlib4.
             2. Must connect AT LEAST TWO distinct mathematical areas that are rarely combined.
@@ -167,7 +142,6 @@ class PiAgentClient:
             4. Novelty should be genuinely high (0.85-1.0).
             5. The theorem name must be a NEW, NEVER-USED identifier (snake_case).
             6. Avoid repeating any concept from the "Previously explored" list above.
-            7. AVOID the failure patterns listed above — do not generate concepts that have previously produced trivial proofs.
 
             INVENTIVENESS DIRECTIVES:
             - If the domain is algebra, try connecting to topology or logic.
@@ -204,7 +178,7 @@ class PiAgentClient:
         concept: ResearchConcept,
         style: str = "breakthrough",
     ) -> OptimizedPrompt:
-        """Transform a concept into an Aristotle-optimized brainstorm prompt."""
+        """Transform a concept into an Aristotle-optimized prompt package."""
 
         creativity_block = textwrap.dedent(f"""\
             INVENTIVENESS DIRECTIVE (follow strictly):
@@ -218,34 +192,18 @@ class PiAgentClient:
         """)
 
         theorem_prompt = textwrap.dedent(f"""\
-            === RESEARCH BRAINSTORM ===
+            You are proving a BREAKTHROUGH theorem in {concept.domain}.
 
-            You are Aristotle, the world's most inventive formal mathematician.
-            You have access to a vast catalog of mathematical ideas spanning:
-            algebra, geometry, computation, cryptography, machine learning, physics,
-            tropical geometry, number theory, and logic.
-
-            RESEARCH SEED:
-            {concept.concept_description}
-
-            POTENTIAL CONNECTIONS:
+            THEOREM: {concept.title}
             {concept.mathematical_framing}
 
+            {concept.concept_description}
+
+            TASK: Provide a COMPLETE formal proof in Lean 4 (mathlib4 v4.28.0).
+            Fill every `sorry` with a rigorous, inventive proof.
+            Do NOT modify theorem statements or definitions.
+
             {creativity_block}
-
-            YOUR TASK:
-            1. BRAINSTORM 2-3 novel research avenues that mix ideas from the seed above.
-            2. PICK the most promising avenue — one that could yield a real theorem.
-            3. STATE the theorem precisely in Lean 4. Use CONCRETE types.
-               Make a REAL claim: an inequality, an equivalence, a bound, an algorithm.
-               DO NOT prove "True" — that is vacuous.
-            4. PROVE it rigorously with at least 3 non-trivial steps.
-
-            RULES:
-            - The theorem name should be snake_case and genuinely novel.
-            - Prefer unexpected, elegant strategies over brute force.
-            - Use advanced mathlib4 lemmas where possible.
-            - End with `#print axioms` to verify no hidden assumptions.
         """)
 
         research_report_request = textwrap.dedent(f"""\
@@ -338,214 +296,6 @@ class PiAgentClient:
             scores["elegance"] = max(0.0, 1.0 - len(proof_lines) / 100.0)
 
         return scores
-
-    def analyze_trivial_proof(
-        self,
-        lean_source: str,
-        prompt: str,
-        concept: ResearchConcept,
-    ) -> AnalysisResult:
-        """Analyze whether Aristotle returned a trivial or vacuous proof."""
-        system = textwrap.dedent("""\
-            You are Pi-Agent, a senior mathematical proof reviewer.
-            Assess whether a Lean 4 proof is mathematically trivial or vacuous.
-            Return STRICT JSON with fields: trivial (bool), reason (str), suggested_improvement (str).
-        """)
-
-        user = textwrap.dedent(f"""\
-            Aristotle (an AI theorem prover) just returned this Lean 4 proof:
-
-            ```lean
-            {lean_source}
-            ```
-
-            The original concept was:
-            Title: {concept.title}
-            Description: {concept.concept_description}
-            Framing: {concept.mathematical_framing}
-
-            The original Aristotle prompt was:
-            {prompt[:1000]}
-
-            Assess whether this proof is mathematically trivial or vacuous.
-            Specifically, check:
-            1. Does the theorem statement reduce to "True" with no real mathematical claim?
-            2. Is the proof body just "trivial" or "sorry"?
-            3. Could the theorem be strengthened to a concrete inequality, bound, or algorithm?
-            4. Does the theorem use overly abstract parameters (e.g., {{X : Type*}} [Inhabited X]) with no concrete structure?
-
-            Return STRICT JSON:
-            {{
-              "trivial": true/false,
-              "reason": "concise explanation",
-              "suggested_improvement": "how to rewrite the prompt for a stronger result"
-            }}
-        """)
-
-        raw = self._call_ollama(system, user)
-        try:
-            match = re.search(r'\{.*\}', raw, re.DOTALL)
-            if match:
-                data = json.loads(match.group())
-                return AnalysisResult(
-                    trivial=bool(data.get("trivial", False)),
-                    reason=data.get("reason", "No analysis provided"),
-                    suggested_improvement=data.get("suggested_improvement", ""),
-                )
-        except Exception:
-            pass
-
-        # Fallback heuristic: detect trivial patterns
-        lean_lower = lean_source.lower()
-        is_trivial = (
-            "true := by\n  trivial" in lean_lower
-            or "true := by trivial" in lean_lower
-            or lean_source.count("sorry") == lean_source.count("theorem ")
-        )
-        return AnalysisResult(
-            trivial=is_trivial,
-            reason="Heuristic: proof body is trivial or all theorems end in sorry" if is_trivial else "Heuristic: proof appears non-trivial",
-            suggested_improvement="Rewrite the prompt to demand a concrete inequality or bound with specific types.",
-        )
-
-    def optimize_prompt_for_quality(
-        self,
-        concept: ResearchConcept,
-        failure_history: List[str],
-    ) -> str:
-        """Generate a stronger Aristotle prompt after a trivial proof failure."""
-        system = textwrap.dedent("""\
-            You are Pi-Agent, a prompt engineer specializing in formal mathematics.
-            Rewrite an Aristotle prompt to force a concrete, non-trivial result.
-            Return ONLY the new prompt text, no JSON.
-        """)
-
-        failures = "\n".join(f"- {f}" for f in failure_history[-5:])
-
-        user = textwrap.dedent(f"""\
-            The following research brainstorm failed to produce a non-trivial proof from Aristotle:
-
-            Concept: {concept.title}
-            Description: {concept.concept_description}
-            Mathematical framing: {concept.mathematical_framing}
-
-            Previous failure reasons:
-            {failures}
-
-            Rewrite the Aristotle RESEARCH BRAINSTORM prompt to force a concrete, non-trivial result.
-            Rules:
-            - The prompt should guide Aristotle to INVENT a theorem, not prove a pre-selected one.
-            - Emphasize that the theorem must make a REAL claim: inequality, equivalence, bound, algorithm.
-            - Demand at least 3 non-trivial proof steps in the response.
-            - Reference specific catalog theorems to ground the work.
-            - Explicitly forbid proofs of "True" or one-line "trivial" proofs.
-            - Require the theorem to use concrete types (e.g., Nat, Real, Matrix) not arbitrary Type*.
-            - Include the research avenues (Structural Bridge, Algorithmic Extraction, Duality, Compositional Explosion, Counter-Intuitive Limit).
-
-            Return ONLY the new prompt text.
-        """)
-
-        raw = self._call_ollama(system, user)
-        return raw.strip() if raw.strip() else concept.mathematical_framing
-
-    def analyze_diff_and_decide(
-        self,
-        result_dir: Path,
-        catalog_root: Path,
-        exp_id: str,
-    ) -> IntegrationPlan:
-        """Ask Pi-Agent to analyze the diff and decide what to integrate."""
-        # Build a summary of all files in the result
-        result_files = []
-        for f in sorted(result_dir.rglob("*")):
-            if not f.is_file():
-                continue
-            rel = f.relative_to(result_dir)
-            catalog_path = catalog_root / rel
-            exists = catalog_path.exists()
-            result_files.append({
-                "path": str(rel),
-                "size": f.stat().st_size,
-                "exists_in_catalog": exists,
-            })
-
-        # Sample file contents for context
-        samples = []
-        for item in result_files[:30]:
-            fpath = result_dir / item["path"]
-            if fpath.suffix == ".lean":
-                text = fpath.read_text(encoding="utf-8")[:500]
-                samples.append(f"--- {item['path']} ---\n{text}\n")
-
-        system = textwrap.dedent("""\
-            You are Pi-Agent, a mathematical librarian integrating new research into an existing catalog.
-            Analyze a set of files produced by Aristotle and decide which to keep.
-            Return STRICT JSON with a "files" array.
-        """)
-
-        user = textwrap.dedent(f"""\
-            Existing catalog root: {catalog_root}
-            New result directory: {result_dir}
-            Experiment ID: {exp_id}
-
-            Files in the result:
-            {json.dumps(result_files, indent=2)}
-
-            Sample Lean file contents:
-            {''.join(samples[:5])}
-
-            For each file, decide:
-            - KEEP: integrate into the catalog (provide target path)
-            - DISCARD: skip (provide reason)
-            - RENAME: keep with a modified name (provide new name and reason)
-
-            Rules:
-            - NEVER overwrite an existing catalog file.
-            - Main.lean is the target theorem; place it in Speculative/AutoResearch/{exp_id}_Main.lean.
-            - .md, .py, .svg artifacts go to ResearchOutput/{exp_id}/.
-            - Supporting .lean files that do not exist in the catalog may be kept if they add new lemmas.
-            - Reject copies of existing catalog files.
-            - Discard build artifacts (.lake, build/, lake-packages/, etc.).
-
-            Return STRICT JSON:
-            {{
-              "files": [
-                {{
-                  "source": "Main.lean",
-                  "action": "keep",
-                  "target": "Speculative/AutoResearch/{exp_id}_Main.lean",
-                  "reason": "Target theorem"
-                }}
-              ]
-            }}
-        """)
-
-        raw = self._call_ollama(system, user)
-        try:
-            match = re.search(r'\{.*\}', raw, re.DOTALL)
-            if match:
-                data = json.loads(match.group())
-                decisions = []
-                for item in data.get("files", []):
-                    decisions.append(IntegrationDecision(
-                        source=item.get("source", ""),
-                        action=item.get("action", "discard"),
-                        target=item.get("target", ""),
-                        reason=item.get("reason", ""),
-                    ))
-                return IntegrationPlan(decisions=decisions)
-        except Exception:
-            pass
-
-        # Fallback: keep only Main.lean and known artifacts
-        return IntegrationPlan(decisions=[
-            IntegrationDecision(
-                source="Main.lean",
-                action="keep",
-                target=f"Speculative/AutoResearch/{exp_id}_Main.lean",
-                reason="Fallback: target theorem",
-            ),
-        ])
 
     def _parse_concept_json(self, raw: str, domain: str) -> ResearchConcept:
         """Extract JSON from raw ollama output."""
@@ -676,6 +426,148 @@ class PiAgentClient:
             breakthrough_potential=round(random.uniform(0.80, 0.95), 2),
             key_references=["AETHER AutoResearch 2026"],
         )
+
+
+    # ------------------------------------------------------------------
+    # v2: Persistent ollama launch + diff analysis + prompt improvement
+    # ------------------------------------------------------------------
+
+    def _launch_ollama(self):
+        """Launch ollama in background to keep model warm in VRAM."""
+        try:
+            self._ollama_proc = subprocess.Popen(
+                ["ollama", "launch", "pi", "--model", self.model],
+                stdin=subprocess.PIPE,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+            )
+            print(f"[Pi-Agent] Launched ollama pi with {self.model} (PID {self._ollama_proc.pid})")
+        except Exception as e:
+            print(f"[Pi-Agent] Failed to launch ollama pi: {e}")
+            self._ollama_proc = None
+
+    def analyze_diff_for_integration(
+        self,
+        result_files: List[Dict[str, Any]],
+        catalog_root: Path,
+    ) -> List[Dict[str, str]]:
+        """Ask Pi-Agent to analyze a diff and decide file placements.
+
+        result_files: list of dicts with keys:
+            path, status (new/modified/unchanged), content_preview
+        Returns: list of dicts with keys:
+            source, action (place|reject|artifact), target, reason
+        """
+        # Build catalog structure summary
+        domain_dirs = ["Algebra", "Applications", "Bridges", "Computation",
+                       "Cryptography", "EML", "Geometry", "Logic",
+                       "MachineLearning", "Physics", "Pythagorean",
+                       "Shared", "Speculative", "Tropical"]
+        catalog_summary = "\n".join(f"  - {d}/" for d in domain_dirs)
+
+        # Build file analysis text
+        file_lines = []
+        for rf in result_files:
+            file_lines.append(
+                f"  - {rf['path']} ({rf['status']}):\n"
+                f"    {rf.get('content_preview', '')[:200]}..."
+            )
+        files_text = "\n".join(file_lines)
+
+        system = textwrap.dedent("""\
+            You are a mathematical librarian. Analyze Aristotle output and
+            decide how to integrate each file into the Catalog.
+            Output ONLY structured JSON.
+        """)
+
+        user = textwrap.dedent(f"""\
+            CATALOG STRUCTURE:
+            {catalog_summary}
+
+            FILES TO ANALYZE:
+            {files_text}
+
+            RULES:
+            1. For NEW .lean files: classify into the correct domain/subdirectory
+            2. For MODIFIED existing files: only accept if genuine improvement
+            3. For artifacts (.md, .py, .svg): action = artifact
+            4. NEVER overwrite a catalog file with a trivial proof
+            5. If Main.lean proves something new, place in Speculative/AutoResearch/
+            6. Reject files with null bytes, unbalanced braces, or no declarations
+
+            Return JSON array:
+            [
+              {{"source": "path", "action": "place|reject|artifact",
+                "target": "catalog/path", "reason": "brief explanation"}}
+            ]
+        """)
+
+        raw = self._call_ollama(system, user)
+        try:
+            match = re.search(r'\[.*\]', raw, re.DOTALL)
+            if match:
+                return json.loads(match.group())
+        except Exception:
+            pass
+        return []
+
+    def suggest_prompt_improvement(
+        self,
+        concept: ResearchConcept,
+        previous_prompt: str,
+        failure_reason: str,
+    ) -> Dict[str, Any]:
+        """Ask Pi-Agent to analyze a failed/trivial proof and suggest improvements.
+
+        Returns dict with:
+            revised_concept: str
+            revised_prompt: str
+            confidence: float
+        """
+        system = textwrap.dedent("""\
+            You are a meta-prompt engineer specializing in formal mathematics.
+            Analyze why an Aristotle prompt failed and suggest improvements.
+            Output ONLY structured JSON.
+        """)
+
+        user = textwrap.dedent(f"""\
+            The previous prompt produced a {failure_reason}.
+
+            CONCEPT: {concept.title}
+            DESCRIPTION: {concept.concept_description}
+            MATHEMATICAL FRAMING: {concept.mathematical_framing}
+
+            PREVIOUS PROMPT (excerpt):
+            {previous_prompt[:1000]}...
+
+            Analyze why this failed and suggest:
+            1. A stronger, more concrete theorem statement
+            2. A better prompt strategy for Aristotle
+            3. Specific mathlib lemmas or catalog theorems to reference
+            4. A revised creativity directive
+
+            Return JSON:
+            {{
+              "revised_concept": "new theorem description",
+              "revised_prompt": "full improved prompt text",
+              "confidence": 0.0-1.0
+            }}
+        """)
+
+        raw = self._call_ollama(system, user)
+        try:
+            match = re.search(r'\{{.*\}}', raw, re.DOTALL)
+            if match:
+                data = json.loads(match.group())
+                return {
+                    "revised_concept": data.get("revised_concept", ""),
+                    "revised_prompt": data.get("revised_prompt", ""),
+                    "confidence": float(data.get("confidence", 0.0)),
+                }
+        except Exception:
+            pass
+        return {"revised_concept": "", "revised_prompt": "", "confidence": 0.0}
 
 
 import random  # noqa: E402, used only in fallback

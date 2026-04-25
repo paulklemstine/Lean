@@ -289,12 +289,140 @@ class SmartIntegrator:
     ) -> Dict[str, List[PlacementDecision]]:
         """Integrate all files from a result directory.
 
+        v2: Uses Pi-Agent diff analysis when available, with heuristic fallback.
         Returns a dict of:
         - placed: files that were integrated into the catalog
         - artifacts: research artifacts (reports, demos, SVGs)
         - unchanged: files that didn't change
         - rejected: files that failed validation
         """
+        # Try Pi-Agent diff analysis first (v2)
+        if self.classifier.pi_agent:
+            try:
+                return self._integrate_with_pi_agent(result_dir, exp_id, dry_run)
+            except Exception as e:
+                print(f"[SmartIntegrator] Pi-Agent analysis failed: {e}. Falling back to heuristic.")
+
+        return self._integrate_heuristic(result_dir, exp_id, dry_run)
+
+    def _integrate_with_pi_agent(
+        self,
+        result_dir: Path,
+        exp_id: str,
+        dry_run: bool = False,
+    ) -> Dict[str, List[PlacementDecision]]:
+        """v2: Pi-Agent guided file-by-file integration."""
+        decisions = {
+            "placed": [],
+            "artifacts": [],
+            "unchanged": [],
+            "rejected": [],
+        }
+
+        # Build file analysis list for Pi-Agent
+        result_files = []
+        for result_file in result_dir.rglob("*"):
+            if not result_file.is_file():
+                continue
+            rel = result_file.relative_to(result_dir)
+
+            # Skip build artifacts
+            if self._is_build_artifact(rel):
+                continue
+
+            original = self.catalog_root / rel
+            if original.exists():
+                orig_text = original.read_text(encoding="utf-8")
+                new_text = result_file.read_text(encoding="utf-8")
+                if orig_text == new_text:
+                    status = "unchanged"
+                else:
+                    status = "modified"
+            else:
+                status = "new"
+
+            preview = ""
+            if result_file.suffix == ".lean":
+                preview = result_file.read_text(encoding="utf-8")[:200]
+            elif result_file.suffix in {".md", ".py"}:
+                preview = result_file.read_text(encoding="utf-8")[:100]
+
+            result_files.append({
+                "path": str(rel),
+                "status": status,
+                "content_preview": preview,
+            })
+
+        # Call Pi-Agent for decisions
+        pi_decisions = self.classifier.pi_agent.analyze_diff_for_integration(
+            result_files, self.catalog_root
+        )
+
+        # Apply Pi-Agent decisions
+        for pd in pi_decisions:
+            src_path = result_dir / pd.get("source", "")
+            if not src_path.exists():
+                continue
+            action = pd.get("action", "reject")
+            target_str = pd.get("target", "")
+            reason = pd.get("reason", "Pi-Agent decision")
+
+            if action == "artifact":
+                artifact_dir = self.workspace / "artifacts" / exp_id
+                if not dry_run:
+                    artifact_dir.mkdir(parents=True, exist_ok=True)
+                    dest = artifact_dir / src_path.name
+                    shutil.copy2(src_path, dest)
+                decisions["artifacts"].append(PlacementDecision(
+                    source_path=src_path,
+                    target_path=artifact_dir / src_path.name,
+                    reason=reason,
+                    confidence=0.9,
+                    domain="artifacts",
+                ))
+            elif action == "place":
+                target = self.catalog_root / target_str
+                if src_path.suffix == ".lean":
+                    lean_source = src_path.read_text(encoding="utf-8")
+                    validation = self._validate_lean_file(lean_source)
+                    if not validation["ok"]:
+                        decisions["rejected"].append(PlacementDecision(
+                            source_path=src_path,
+                            target_path=target,
+                            reason=f"Validation failed: {validation['error']}",
+                            confidence=0.0,
+                            domain="",
+                        ))
+                        continue
+                if not dry_run:
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(src_path, target)
+                domain = self._guess_domain_from_path(Path(target_str))
+                decisions["placed"].append(PlacementDecision(
+                    source_path=src_path,
+                    target_path=target,
+                    reason=reason,
+                    confidence=0.9,
+                    domain=domain,
+                ))
+            else:
+                decisions["rejected"].append(PlacementDecision(
+                    source_path=src_path,
+                    target_path=self.catalog_root / target_str if target_str else src_path,
+                    reason=reason,
+                    confidence=0.9,
+                    domain="",
+                ))
+
+        return decisions
+
+    def _integrate_heuristic(
+        self,
+        result_dir: Path,
+        exp_id: str,
+        dry_run: bool = False,
+    ) -> Dict[str, List[PlacementDecision]]:
+        """Fallback heuristic integration (v1 behavior)."""
         decisions = {
             "placed": [],
             "artifacts": [],
@@ -349,19 +477,14 @@ class SmartIntegrator:
                     continue
 
             # SAFETY: Never overwrite existing catalog files with Aristotle results.
-            # Aristotle's result tarball contains the full project context.
-            # The only file we intend to integrate is the target theorem (root Main.lean).
-            # All other existing files must be protected from accidental overwrite.
             if original.exists():
                 if result_file.name == "Main.lean":
-                    # Root Main.lean is the target theorem — place as new in AutoResearch
                     domain, confidence, reason = self.classifier.classify_file(
                         lean_source, result_file.name
                     )
                     target = self.catalog_root / "Speculative" / "AutoResearch" / f"{exp_id}_{result_file.name}"
                     reason = f"Target theorem (preserved original {rel})"
                 else:
-                    # Unexpected modification of an existing catalog file — reject
                     decisions["rejected"].append(PlacementDecision(
                         source_path=result_file,
                         target_path=original,
@@ -371,12 +494,10 @@ class SmartIntegrator:
                     ))
                     continue
             else:
-                # New file: classify with Pi-Agent
+                # New file: classify with heuristic
                 domain, confidence, reason = self.classifier.classify_file(
                     lean_source, result_file.name
                 )
-
-                # Determine target path
                 target = self._choose_target_path(
                     result_file, domain, lean_source, exp_id
                 )
@@ -405,81 +526,6 @@ class SmartIntegrator:
                 confidence=confidence,
                 domain=domain,
             ))
-
-        return decisions
-
-    def execute_integration_plan(
-        self,
-        plan: Any,  # IntegrationPlan from pi_agent_client
-        result_dir: Path,
-        exp_id: str,
-        dry_run: bool = False,
-    ) -> Dict[str, List[PlacementDecision]]:
-        """Execute a Pi-Agent integration plan.
-
-        The plan is a list of IntegrationDecision objects specifying
-        source file, action (keep/discard/rename), target path, and reason.
-        """
-        decisions = {
-            "placed": [],
-            "artifacts": [],
-            "unchanged": [],
-            "rejected": [],
-        }
-
-        for decision in plan.decisions:
-            source_path = result_dir / decision.source
-            if not source_path.exists():
-                decisions["rejected"].append(PlacementDecision(
-                    source_path=Path(decision.source),
-                    target_path=Path(decision.target),
-                    reason=f"Source file not found in result: {decision.source}",
-                    confidence=1.0,
-                ))
-                continue
-
-            if decision.action == "discard":
-                decisions["rejected"].append(PlacementDecision(
-                    source_path=source_path,
-                    target_path=Path(decision.target) if decision.target else source_path,
-                    reason=f"Pi-Agent discarded: {decision.reason}",
-                    confidence=1.0,
-                ))
-                continue
-
-            # Determine target path in catalog
-            target = self.catalog_root / decision.target
-
-            # SAFETY: Never overwrite existing files
-            if target.exists():
-                # Rename to avoid collision
-                stem = target.stem
-                suffix = target.suffix
-                renamed = target.parent / f"{stem}_{exp_id}{suffix}"
-                print(f"[SmartIntegrator] Collision: {target} exists. Renaming to {renamed}.")
-                target = renamed
-
-            if not dry_run:
-                target.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copy2(source_path, target)
-
-            domain = self._guess_domain_from_path(Path(decision.target))
-            if source_path.suffix in {".md", ".py", ".svg", ".png", ".txt", ".json"}:
-                decisions["artifacts"].append(PlacementDecision(
-                    source_path=source_path,
-                    target_path=target,
-                    reason=f"Pi-Agent artifact: {decision.reason}",
-                    confidence=1.0,
-                    domain=domain,
-                ))
-            else:
-                decisions["placed"].append(PlacementDecision(
-                    source_path=source_path,
-                    target_path=target,
-                    reason=f"Pi-Agent: {decision.reason}",
-                    confidence=1.0,
-                    domain=domain,
-                ))
 
         return decisions
 

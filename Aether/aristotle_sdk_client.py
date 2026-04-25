@@ -290,15 +290,12 @@ class AristotleSDKClient:
         prompt: str = "Fill in all the sorries",
         domain: str = "",
     ) -> AristotleResult:
-        """Submit a Lean project with focused Catalog context."""
+        """Submit a Lean project with full Catalog context (v2: always full catalog)."""
         project_dir.mkdir(parents=True, exist_ok=True)
 
-        if domain:
-            print(f"[Aristotle] Copying domain context for '{domain}' from {catalog_root} into {project_dir}...")
-            self._copy_domain_context(catalog_root, project_dir, domain)
-        else:
-            print(f"[Aristotle] Copying full catalog from {catalog_root} into {project_dir}...")
-            self._copy_catalog_into_project(catalog_root, project_dir)
+        # v2: Always pass the entire catalog for maximum context
+        print(f"[Aristotle] Copying full catalog from {catalog_root} into {project_dir}...")
+        self._copy_catalog_into_project(catalog_root, project_dir)
         print(f"[Aristotle] Catalog copied.")
 
         # Write the target Lean source as Main.lean at project root
