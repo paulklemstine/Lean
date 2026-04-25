@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <marker id="arrowhead-blue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowhead-red" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#dc2626"/>
+    </marker>
+    <marker id="arrowhead-green" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#16a34a"/>
+    </marker>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8fafc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bg-grad)" rx="10"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Georgia, serif" font-size="18" font-weight="bold" fill="#1e293b">
+    Analytic Injective Potential Theorem (EDDA)
+  </text>
+  <text x="400" y="55" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#64748b">
+    Universal Property in the Category of Inhabited Types
+  </text>
+  
+  <!-- === Left: Inhabited Type X === -->
+  <g transform="translate(120, 200)">
+    <!-- Type X circle -->
+    <ellipse cx="0" cy="0" rx="80" ry="60" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+    <text x="0" y="-30" text-anchor="middle" font-family="monospace" font-size="16" font-weight="bold" fill="#1e40af">X</text>
+    <text x="0" y="-12" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#3b82f6">[Inhabited X]</text>
+    
+    <!-- Elements of X -->
+    <circle cx="-30" cy="15" r="6" fill="#3b82f6" opacity="0.8"/>
+    <text x="-30" y="19" text-anchor="middle" font-family="monospace" font-size="8" fill="white">x₁</text>
+    
+    <circle cx="10" cy="25" r="6" fill="#3b82f6" opacity="0.8"/>
+    <text x="10" y="29" text-anchor="middle" font-family="monospace" font-size="8" fill="white">x₂</text>
+    
+    <circle cx="35" cy="10" r="6" fill="#3b82f6" opacity="0.8"/>
+    <text x="35" y="14" text-anchor="middle" font-family="monospace" font-size="8" fill="white">x₃</text>
+    
+    <circle cx="-10" cy="40" r="6" fill="#3b82f6" opacity="0.6"/>
+    <text x="-10" y="44" text-anchor="middle" font-family="monospace" font-size="8" fill="white">···</text>
+  </g>
+  
+  <!-- === Right: True (Terminal Object) === -->
+  <g transform="translate(650, 200)">
+    <circle cx="0" cy="0" r="40" fill="#dcfce7" stroke="#16a34a" stroke-width="3"/>
+    <text x="0" y="-5" text-anchor="middle" font-family="monospace" font-size="18" font-weight="bold" fill="#166534">True</text>
+    <text x="0" y="15" text-anchor="middle" font-family="monospace" font-size="10" fill="#16a34a">⊤</text>
+    <text x="0" y="60" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#64748b">Terminal Object</text>
+  </g>
+  
+  <!-- === Top: Tropical Semiring === -->
+  <g transform="translate(400, 130)">
+    <rect x="-90" y="-35" width="180" height="50" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+    <text x="0" y="-10" text-anchor="middle" font-family="monospace" font-size="12" font-weight="bold" fill="#92400e">𝕋 = (ℝ∪{∞}, min, +)</text>
+    <text x="0" y="8" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#b45309">Tropical Semiring</text>
+  </g>
+  
+  <!-- === Bottom: Kolmogorov Complexity === -->
+  <g transform="translate(400, 380)">
+    <rect x="-100" y="-30" width="200" height="45" rx="8" fill="#fce7f3" stroke="#db2777" stroke-width="2"/>
+    <text x="0" y="-8" text-anchor="middle" font-family="monospace" font-size="12" font-weight="bold" fill="#9d174d">K(x) = min |p|</text>
+    <text x="0" y="10" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#be185d">Kolmogorov Complexity</text>
+  </g>
+  
+  <!-- === Arrow: Φ (Injective Potential) X → True === -->
+  <line x1="210" y1="200" x2="600" y2="200" stroke="#16a34a" stroke-width="3" 
+        marker-end="url(#arrowhead-green)" stroke-dasharray="none"/>
+  <text x="405" y="190" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#16a34a">Φ</text>
+  <text x="405" y="218" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#16a34a">Injective Potential (trivial)</text>
+  
+  <!-- === Arrow: X → Tropical === -->
+  <line x1="170" y1="155" x2="310" y2="120" stroke="#d97706" stroke-width="2" 
+        marker-end="url(#arrowhead)" stroke-dasharray="6,3"/>
+  <text x="220" y="125" text-anchor="middle" font-family="monospace" font-size="11" fill="#d97706">τ</text>
+  
+  <!-- === Arrow: Tropical → True === -->
+  <line x1="490" y1="120" x2="620" y2="170" stroke="#d97706" stroke-width="2" 
+        marker-end="url(#arrowhead)" stroke-dasharray="6,3"/>
+  <text x="575" y="135" text-anchor="middle" font-family="monospace" font-size="11" fill="#d97706">∃! g</text>
+  
+  <!-- === Arrow: X → Kolmogorov === -->
+  <line x1="160" y1="250" x2="300" y2="360" stroke="#db2777" stroke-width="2" 
+        marker-end="url(#arrowhead)" stroke-dasharray="6,3"/>
+  <text x="210" y="320" text-anchor="middle" font-family="monospace" font-size="11" fill="#db2777">K</text>
+  
+  <!-- === Arrow: Kolmogorov → True === -->
+  <line x1="500" y1="365" x2="625" y2="240" stroke="#db2777" stroke-width="2" 
+        marker-end="url(#arrowhead)" stroke-dasharray="6,3"/>
+  <text x="580" y="315" text-anchor="middle" font-family="monospace" font-size="11" fill="#db2777">∃! h</text>
+  
+  <!-- === Legend box === -->
+  <g transform="translate(50, 450)">
+    <rect x="0" y="0" width="700" height="90" rx="8" fill="white" stroke="#cbd5e1" stroke-width="1" opacity="0.9"/>
+    
+    <text x="20" y="22" font-family="sans-serif" font-size="12" font-weight="bold" fill="#1e293b">Legend:</text>
+    
+    <!-- Solid green -->
+    <line x1="20" y1="42" x2="60" y2="42" stroke="#16a34a" stroke-width="3"/>
+    <text x="70" y="46" font-family="sans-serif" font-size="11" fill="#333">Φ : Canonical injective potential (universal morphism to True)</text>
+    
+    <!-- Dashed orange -->
+    <line x1="20" y1="62" x2="60" y2="62" stroke="#d97706" stroke-width="2" stroke-dasharray="6,3"/>
+    <text x="70" y="66" font-family="sans-serif" font-size="11" fill="#333">τ, g : Tropical factoring potential and its unique factorization through Φ</text>
+    
+    <!-- Dashed pink -->
+    <line x1="20" y1="82" x2="60" y2="82" stroke="#db2777" stroke-width="2" stroke-dasharray="6,3"/>
+    <text x="70" y="86" font-family="sans-serif" font-size="11" fill="#333">K, h : Kolmogorov complexity and its unique factorization through Φ</text>
+  </g>
+  
+  <!-- === Commutative diagram label === -->
+  <text x="400" y="290" text-anchor="middle" font-family="Georgia, serif" font-size="11" font-style="italic" fill="#64748b">
+    All paths commute: f = g ∘ Φ for any f : X → Y
+  </text>
+  
+  <!-- Caption -->
+  <text x="400" y="570" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#475569">
+    Fig. 1: The universal property of the injective potential Φ. Every morphism from an inhabited type X
+  </text>
+  <text x="400" y="585" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#475569">
+    factors uniquely through the canonical map Φ : X → True, including tropical and complexity-theoretic potentials.
+  </text>
+</svg>
