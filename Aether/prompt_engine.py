@@ -117,35 +117,79 @@ class PromptEngine:
             [f"  - {h}" for h in heuristic_sample]
         )
 
-        # 2. Main theorem prompt
+        # 2. Main research brainstorm prompt
         theorem_section = textwrap.dedent(f"""\
-            === THEOREM PROOF TASK ===
+            === RESEARCH BRAINSTORM ===
 
             You are Aristotle, the world's most inventive formal mathematician.
-            Prove the following breakthrough theorem in Lean 4 (mathlib4 v4.28.0).
+            You have been given the FULL CONTEXT of a large mathematical research catalog
+            containing theorems and definitions across algebra, geometry, computation,
+            cryptography, machine learning, physics, tropical geometry, and more.
 
-            THEOREM: {title}
-            DOMAIN: {domain}
-            DIFFICULTY: {difficulty}
+            Your task is NOT to prove a pre-selected theorem. Instead:
 
-            DESCRIPTION:
+            1. EXPLORE the catalog ideas below.
+            2. BRAINSTORM novel connections and research avenues.
+            3. IDENTIFY a genuinely new theorem or algorithm that emerges from mixing these ideas.
+            4. FORMALIZE it as a rigorous Lean 4 proof (mathlib4 v4.28.0).
+
+            ---
+
+            RESEARCH SEED:
             {concept_description}
 
-            MATHEMATICAL FRAMEWORK:
+            POTENTIAL CONNECTIONS:
             {mathematical_framing}
-
-            FORMALIZATION HINT:
-            {lean_guess}
 
             CREATIVITY DIRECTIVES:
             {creativity_injection}
 
+            ---
+
+            RESEARCH AVENUES TO EXPLORE (pick one or invent your own):
+
+            Avenue A — Structural Bridge:
+            Can a theorem from one domain be reinterpreted in another?
+            Example: What if a cryptographic hardness assumption becomes a topological invariant?
+
+            Avenue B — Algorithmic Extraction:
+            Is there an algorithm hidden inside a proof? Can you make it explicit,
+            bound its complexity, and prove correctness?
+
+            Avenue C — Duality / Symmetry:
+            Does a known theorem have an unexpected dual? A contrapositive in a
+            non-standard model? A Galois correspondence nobody noticed?
+
+            Avenue D — Compositional Explosion:
+            Take two catalog concepts. Compose them. Does the composition yield
+            a new algebraic structure, a new complexity class, or a new physical law?
+
+            Avenue E — Counter-Intuitive Limit:
+            Push a theorem to an extreme case. Does it break? Does it reveal a
+            new universal property? Does it connect to a different branch of math?
+
+            ---
+
+            OUTPUT INSTRUCTIONS:
+
+            Step 1 — OVERVIEW (1 paragraph):
+            Explain the high-level idea. Why is it new? What does it connect?
+
+            Step 2 — THEOREM STATEMENT:
+            State the theorem precisely in Lean 4. Use CONCRETE types (Nat, Real, Matrix, Finset)
+            when possible, not just {{X : Type*}}. Make a real claim:
+            an inequality, an equivalence, a complexity bound, an algorithmic correctness.
+
+            Step 3 — PROOF:
+            Provide a complete, rigorous proof. At least 3 non-trivial steps.
+            Use tactics like `have`, `calc`, `convert`, `apply`, `nlinarith`.
+            DO NOT end with `trivial` or `sorry` unless the theorem truly requires it.
+
             RULES:
-            1. Fill EVERY `sorry` with a complete, rigorous proof.
-            2. Do NOT modify theorem statements or definitions.
-            3. Prefer unexpected, elegant proof strategies over brute force.
-            4. Use advanced mathlib4 lemmas where possible.
-            5. The proof should be concise but complete.
+            - Do NOT prove "True" — that is vacuous and useless.
+            - Prefer unexpected, elegant strategies over brute force.
+            - Use advanced mathlib4 lemmas where possible.
+            - The theorem name should be snake_case and genuinely novel.
         """)
 
         # 3. Artifact generation prompts

@@ -204,7 +204,7 @@ class PiAgentClient:
         concept: ResearchConcept,
         style: str = "breakthrough",
     ) -> OptimizedPrompt:
-        """Transform a concept into an Aristotle-optimized prompt package."""
+        """Transform a concept into an Aristotle-optimized brainstorm prompt."""
 
         creativity_block = textwrap.dedent(f"""\
             INVENTIVENESS DIRECTIVE (follow strictly):
@@ -218,18 +218,34 @@ class PiAgentClient:
         """)
 
         theorem_prompt = textwrap.dedent(f"""\
-            You are proving a BREAKTHROUGH theorem in {concept.domain}.
+            === RESEARCH BRAINSTORM ===
 
-            THEOREM: {concept.title}
-            {concept.mathematical_framing}
+            You are Aristotle, the world's most inventive formal mathematician.
+            You have access to a vast catalog of mathematical ideas spanning:
+            algebra, geometry, computation, cryptography, machine learning, physics,
+            tropical geometry, number theory, and logic.
 
+            RESEARCH SEED:
             {concept.concept_description}
 
-            TASK: Provide a COMPLETE formal proof in Lean 4 (mathlib4 v4.28.0).
-            Fill every `sorry` with a rigorous, inventive proof.
-            Do NOT modify theorem statements or definitions.
+            POTENTIAL CONNECTIONS:
+            {concept.mathematical_framing}
 
             {creativity_block}
+
+            YOUR TASK:
+            1. BRAINSTORM 2-3 novel research avenues that mix ideas from the seed above.
+            2. PICK the most promising avenue — one that could yield a real theorem.
+            3. STATE the theorem precisely in Lean 4. Use CONCRETE types.
+               Make a REAL claim: an inequality, an equivalence, a bound, an algorithm.
+               DO NOT prove "True" — that is vacuous.
+            4. PROVE it rigorously with at least 3 non-trivial steps.
+
+            RULES:
+            - The theorem name should be snake_case and genuinely novel.
+            - Prefer unexpected, elegant strategies over brute force.
+            - Use advanced mathlib4 lemmas where possible.
+            - End with `#print axioms` to verify no hidden assumptions.
         """)
 
         research_report_request = textwrap.dedent(f"""\
@@ -407,7 +423,7 @@ class PiAgentClient:
         failures = "\n".join(f"- {f}" for f in failure_history[-5:])
 
         user = textwrap.dedent(f"""\
-            The following concept failed to produce a non-trivial proof from Aristotle:
+            The following research brainstorm failed to produce a non-trivial proof from Aristotle:
 
             Concept: {concept.title}
             Description: {concept.concept_description}
@@ -416,14 +432,15 @@ class PiAgentClient:
             Previous failure reasons:
             {failures}
 
-            Rewrite the Aristotle prompt to force a concrete, non-trivial result.
+            Rewrite the Aristotle RESEARCH BRAINSTORM prompt to force a concrete, non-trivial result.
             Rules:
-            - Do not ask for abstract structures without a specific claim.
-            - Include a concrete inequality, bound, or algorithmic specification.
+            - The prompt should guide Aristotle to INVENT a theorem, not prove a pre-selected one.
+            - Emphasize that the theorem must make a REAL claim: inequality, equivalence, bound, algorithm.
             - Demand at least 3 non-trivial proof steps in the response.
             - Reference specific catalog theorems to ground the work.
             - Explicitly forbid proofs of "True" or one-line "trivial" proofs.
             - Require the theorem to use concrete types (e.g., Nat, Real, Matrix) not arbitrary Type*.
+            - Include the research avenues (Structural Bridge, Algorithmic Extraction, Duality, Compositional Explosion, Counter-Intuitive Limit).
 
             Return ONLY the new prompt text.
         """)
