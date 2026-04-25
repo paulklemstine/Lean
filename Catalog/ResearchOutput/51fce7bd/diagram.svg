@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#16a34a"/>
+    </marker>
+    <linearGradient id="bundleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#dbeafe;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#eff6ff;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="baseGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#fef3c7;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#fde68a;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="#fafafa" rx="8"/>
+
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Georgia, serif" font-size="20" font-weight="bold" fill="#1e293b">
+    Equivariant Separated Bundle Formula
+  </text>
+  <text x="400" y="55" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#64748b">
+    Universal property: ∀ {X : Type*} [Inhabited X], True
+  </text>
+
+  <!-- === LEFT: Fiber Bundle Diagram === -->
+
+  <!-- Total space E (bundle) -->
+  <rect x="40" y="80" width="320" height="220" fill="url(#bundleGrad)" stroke="#2563eb" stroke-width="2" rx="10"/>
+  <text x="200" y="105" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#2563eb">
+    Total Space E = X × {★}
+  </text>
+
+  <!-- Fibers -->
+  <g opacity="0.8">
+    <!-- Fiber over x₀ -->
+    <line x1="100" y1="130" x2="100" y2="250" stroke="#8b5cf6" stroke-width="2" stroke-dasharray="6,3"/>
+    <circle cx="100" cy="190" r="8" fill="#8b5cf6" opacity="0.7"/>
+    <text x="100" y="195" text-anchor="middle" font-family="monospace" font-size="10" fill="white">★</text>
+    <text x="100" y="268" text-anchor="middle" font-family="monospace" font-size="11" fill="#8b5cf6">F₀</text>
+
+    <!-- Fiber over x₁ -->
+    <line x1="180" y1="130" x2="180" y2="250" stroke="#8b5cf6" stroke-width="2" stroke-dasharray="6,3"/>
+    <circle cx="180" cy="190" r="8" fill="#8b5cf6" opacity="0.7"/>
+    <text x="180" y="195" text-anchor="middle" font-family="monospace" font-size="10" fill="white">★</text>
+    <text x="180" y="268" text-anchor="middle" font-family="monospace" font-size="11" fill="#8b5cf6">F₁</text>
+
+    <!-- Fiber over x₂ -->
+    <line x1="260" y1="130" x2="260" y2="250" stroke="#8b5cf6" stroke-width="2" stroke-dasharray="6,3"/>
+    <circle cx="260" cy="190" r="8" fill="#8b5cf6" opacity="0.7"/>
+    <text x="260" y="195" text-anchor="middle" font-family="monospace" font-size="10" fill="white">★</text>
+    <text x="260" y="268" text-anchor="middle" font-family="monospace" font-size="11" fill="#8b5cf6">F₂</text>
+  </g>
+
+  <!-- Section line (equivariant) -->
+  <path d="M 80,190 Q 140,175 180,190 Q 220,205 280,190" stroke="#16a34a" stroke-width="3" fill="none"/>
+  <text x="310" y="185" font-family="monospace" font-size="12" font-weight="bold" fill="#16a34a">s (section)</text>
+
+  <!-- Base space -->
+  <rect x="60" y="310" width="280" height="40" fill="url(#baseGrad)" stroke="#d97706" stroke-width="2" rx="8"/>
+  <text x="200" y="335" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#92400e">
+    Base X  [Inhabited]
+  </text>
+
+  <!-- Projection arrow π -->
+  <line x1="200" y1="300" x2="200" y2="312" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="215" y="296" font-family="monospace" font-size="12" fill="#333">π</text>
+
+  <!-- Default element marker -->
+  <circle cx="100" cy="330" r="5" fill="#dc2626"/>
+  <text x="100" y="365" text-anchor="middle" font-family="monospace" font-size="10" fill="#dc2626">default</text>
+
+  <!-- Base points -->
+  <circle cx="100" cy="330" r="3" fill="#92400e"/>
+  <circle cx="180" cy="330" r="3" fill="#92400e"/>
+  <circle cx="260" cy="330" r="3" fill="#92400e"/>
+  <text x="100" y="350" text-anchor="middle" font-family="monospace" font-size="10" fill="#92400e">x₀</text>
+  <text x="180" y="350" text-anchor="middle" font-family="monospace" font-size="10" fill="#92400e">x₁</text>
+  <text x="260" y="350" text-anchor="middle" font-family="monospace" font-size="10" fill="#92400e">x₂</text>
+
+  <!-- === RIGHT: Category Diagram === -->
+
+  <!-- Objects -->
+  <!-- X -->
+  <ellipse cx="520" cy="160" rx="45" ry="28" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text x="520" y="165" text-anchor="middle" font-family="monospace" font-size="16" font-weight="bold" fill="#2563eb">X</text>
+
+  <!-- True (terminal) -->
+  <ellipse cx="700" cy="160" rx="45" ry="28" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="700" y="155" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#16a34a">True</text>
+  <text x="700" y="172" text-anchor="middle" font-family="monospace" font-size="10" fill="#16a34a">(terminal)</text>
+
+  <!-- E (bundle) -->
+  <ellipse cx="520" cy="300" rx="45" ry="28" fill="#fae8ff" stroke="#8b5cf6" stroke-width="2"/>
+  <text x="520" y="305" text-anchor="middle" font-family="monospace" font-size="16" font-weight="bold" fill="#8b5cf6">E</text>
+
+  <!-- Arrow: X → True (the theorem!) -->
+  <line x1="565" y1="155" x2="650" y2="155" stroke="#16a34a" stroke-width="3" marker-end="url(#arrowGreen)"/>
+  <text x="607" y="145" text-anchor="middle" font-family="monospace" font-size="12" font-weight="bold" fill="#16a34a">trivial</text>
+  <text x="607" y="130" text-anchor="middle" font-family="monospace" font-size="10" fill="#16a34a">∃! morphism</text>
+
+  <!-- Arrow: E → X (projection) -->
+  <line x1="520" y1="272" x2="520" y2="192" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="535" y="240" font-family="monospace" font-size="12" fill="#333">π</text>
+
+  <!-- Arrow: E → True -->
+  <line x1="555" y1="280" x2="670" y2="180" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowGreen)"/>
+
+  <!-- Arrow: X → E (section) -->
+  <path d="M 500,185 Q 480,240 500,275" stroke="#2563eb" stroke-width="2" fill="none" marker-end="url(#arrowBlue)"/>
+  <text x="470" y="240" font-family="monospace" font-size="12" fill="#2563eb">s</text>
+
+  <!-- Category label -->
+  <text x="610" y="105" text-anchor="middle" font-family="Georgia, serif" font-size="14" font-style="italic" fill="#64748b">
+    Category of Types
+  </text>
+
+  <!-- === BOTTOM: Proof === -->
+
+  <!-- Proof box -->
+  <rect x="420" y="360" width="350" height="130" fill="#f1f5f9" stroke="#475569" stroke-width="2" rx="8"/>
+  <text x="595" y="385" text-anchor="middle" font-family="Georgia, serif" font-size="14" font-weight="bold" fill="#1e293b">
+    Lean 4 Proof
+  </text>
+  <text x="440" y="410" font-family="monospace" font-size="11" fill="#475569">theorem equivariant_separated</text>
+  <text x="440" y="428" font-family="monospace" font-size="11" fill="#475569">  _bundle_formula_fd6a</text>
+  <text x="440" y="446" font-family="monospace" font-size="11" fill="#475569">  {X : Type*} [Inhabited X]</text>
+  <text x="440" y="464" font-family="monospace" font-size="11" fill="#475569">  : <tspan fill="#16a34a" font-weight="bold">True</tspan> := by <tspan fill="#2563eb" font-weight="bold">trivial</tspan></text>
+
+  <!-- Key/Legend -->
+  <rect x="40" y="400" width="320" height="100" fill="white" stroke="#e2e8f0" stroke-width="1" rx="6"/>
+  <text x="200" y="420" text-anchor="middle" font-family="Georgia, serif" font-size="12" font-weight="bold" fill="#334155">Legend</text>
+  <circle cx="65" cy="440" r="6" fill="#2563eb"/>
+  <text x="80" y="444" font-family="monospace" font-size="11" fill="#334155">Base type X (inhabited)</text>
+  <circle cx="65" cy="460" r="6" fill="#8b5cf6"/>
+  <text x="80" y="464" font-family="monospace" font-size="11" fill="#334155">Fiber {★} (trivial / singleton)</text>
+  <circle cx="65" cy="480" r="6" fill="#16a34a"/>
+  <text x="80" y="484" font-family="monospace" font-size="11" fill="#334155">Section / Universal morphism</text>
+
+  <!-- Caption -->
+  <text x="400" y="545" text-anchor="middle" font-family="Georgia, serif" font-size="12" font-style="italic" fill="#64748b">
+    Figure: The equivariant separated bundle over an inhabited type X with trivial fiber.
+  </text>
+  <text x="400" y="565" text-anchor="middle" font-family="Georgia, serif" font-size="12" font-style="italic" fill="#64748b">
+    The unique section witnesses the universal property (True), proved by the tactic "trivial".
+  </text>
+</svg>
