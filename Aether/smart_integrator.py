@@ -55,7 +55,7 @@ class CatalogClassifier:
     def __init__(self, pi_agent: Optional[PiAgentClient] = None):
         self.pi_agent = pi_agent
 
-    def classify_file(self, lean_source: str, file_name: str) -> Tuple[str, float, str]:
+    def classify_file(self, lean_source: str, file_name: str, use_pi_agent: bool = False) -> Tuple[str, float, str]:
         """Classify a Lean file into a catalog domain.
 
         Returns (domain_dir, confidence, reason).
@@ -63,8 +63,9 @@ class CatalogClassifier:
         # Fast heuristic classification first
         heuristic_domain, heuristic_conf = self._heuristic_classify(lean_source)
 
-        # If Pi-Agent is available, get a second opinion
-        if self.pi_agent:
+        # Pi-Agent classification is expensive (ollama call).
+        # Only use it if explicitly requested.
+        if use_pi_agent and self.pi_agent:
             agent_domain, agent_conf, agent_reason = self._pi_agent_classify(
                 lean_source, file_name
             )
