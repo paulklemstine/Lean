@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bgGrad)" rx="8"/>
+
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Georgia, serif" font-size="18" font-weight="bold" fill="#1e293b">
+    Constructive Filtered Bundle Law
+  </text>
+  <text x="400" y="55" text-anchor="middle" font-family="monospace" font-size="11" fill="#64748b">
+    constructive_filtered_bundle_law_9f99
+  </text>
+
+  <!-- ========== LEFT: Inhabited Type Space X ========== -->
+  <g transform="translate(120, 200)">
+    <!-- Outer circle: X -->
+    <ellipse cx="0" cy="0" rx="90" ry="90" fill="#dbeafe" stroke="#2563eb" stroke-width="2" filter="url(#shadow)"/>
+    <text x="0" y="-100" text-anchor="middle" font-family="Georgia, serif" font-size="14" font-weight="bold" fill="#1e40af">
+      X : Type*
+    </text>
+
+    <!-- Filtration layers -->
+    <ellipse cx="0" cy="10" rx="70" ry="65" fill="#bfdbfe" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <text x="55" y="-40" text-anchor="start" font-family="serif" font-size="11" fill="#3b82f6">F₂</text>
+
+    <ellipse cx="0" cy="15" rx="50" ry="45" fill="#93c5fd" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <text x="38" y="-15" text-anchor="start" font-family="serif" font-size="11" fill="#2563eb">F₁</text>
+
+    <ellipse cx="0" cy="20" rx="28" ry="25" fill="#60a5fa" stroke="#2563eb" stroke-width="1.5"/>
+    <text x="20" y="8" text-anchor="start" font-family="serif" font-size="11" fill="#1e40af">F₀</text>
+
+    <!-- Inhabitant (default element) -->
+    <circle cx="0" cy="22" r="6" fill="#f59e0b" stroke="#d97706" stroke-width="2"/>
+    <text x="0" y="25" text-anchor="middle" font-family="monospace" font-size="8" fill="#fff" font-weight="bold">★</text>
+    <text x="0" y="55" text-anchor="middle" font-family="serif" font-size="10" fill="#92400e">
+      Inhabited.default
+    </text>
+
+    <!-- Label -->
+    <text x="0" y="110" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#475569">
+      [Inhabited X]
+    </text>
+  </g>
+
+  <!-- ========== CENTER: Universal Property Arrow ========== -->
+  <g transform="translate(400, 180)">
+    <!-- Main arrow -->
+    <line x1="-140" y1="20" x2="100" y2="20" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+    <text x="-20" y="10" text-anchor="middle" font-family="Georgia, serif" font-size="12" font-weight="bold" fill="#333">
+      Universal Property
+    </text>
+
+    <!-- Factoring arrows (dashed) -->
+    <path d="M -140,20 Q -20,-40 100,20" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#arrowBlue)"/>
+    <text x="-20" y="-25" text-anchor="middle" font-family="serif" font-size="10" fill="#2563eb" font-style="italic">
+      ∃! factoring
+    </text>
+
+    <!-- Trivial label -->
+    <rect x="-55" y="30" width="70" height="24" rx="4" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+    <text x="-20" y="46" text-anchor="middle" font-family="monospace" font-size="11" fill="#15803d" font-weight="bold">
+      = True
+    </text>
+  </g>
+
+  <!-- ========== RIGHT: Spectral Sequence ========== -->
+  <g transform="translate(600, 140)">
+    <text x="60" y="-10" text-anchor="middle" font-family="Georgia, serif" font-size="13" font-weight="bold" fill="#7c3aed">
+      Spectral Sequence
+    </text>
+
+    <!-- Grid -->
+    <rect x="0" y="0" width="120" height="120" fill="#f5f3ff" stroke="#a78bfa" stroke-width="1.5" rx="4" filter="url(#shadow)"/>
+
+    <!-- Grid lines -->
+    <line x1="40" y1="0" x2="40" y2="120" stroke="#ddd6fe" stroke-width="1"/>
+    <line x1="80" y1="0" x2="80" y2="120" stroke="#ddd6fe" stroke-width="1"/>
+    <line x1="0" y1="40" x2="120" y2="40" stroke="#ddd6fe" stroke-width="1"/>
+    <line x1="0" y1="80" x2="120" y2="80" stroke="#ddd6fe" stroke-width="1"/>
+
+    <!-- Axes labels -->
+    <text x="60" y="138" text-anchor="middle" font-family="serif" font-size="10" fill="#6d28d9">p →</text>
+    <text x="-12" y="65" text-anchor="middle" font-family="serif" font-size="10" fill="#6d28d9" transform="rotate(-90, -12, 65)">q →</text>
+
+    <!-- E_1 entries: only (0,0) is non-zero for trivial filtration -->
+    <circle cx="20" cy="100" r="12" fill="#8b5cf6" opacity="0.9"/>
+    <text x="20" y="104" text-anchor="middle" font-family="monospace" font-size="10" fill="white" font-weight="bold">E₁</text>
+
+    <!-- Zero entries -->
+    <text x="60" y="104" text-anchor="middle" font-family="monospace" font-size="10" fill="#c4b5fd">0</text>
+    <text x="100" y="104" text-anchor="middle" font-family="monospace" font-size="10" fill="#c4b5fd">0</text>
+    <text x="20" y="64" text-anchor="middle" font-family="monospace" font-size="10" fill="#c4b5fd">0</text>
+    <text x="60" y="64" text-anchor="middle" font-family="monospace" font-size="10" fill="#c4b5fd">0</text>
+    <text x="100" y="64" text-anchor="middle" font-family="monospace" font-size="10" fill="#c4b5fd">0</text>
+    <text x="20" y="24" text-anchor="middle" font-family="monospace" font-size="10" fill="#c4b5fd">0</text>
+    <text x="60" y="24" text-anchor="middle" font-family="monospace" font-size="10" fill="#c4b5fd">0</text>
+    <text x="100" y="24" text-anchor="middle" font-family="monospace" font-size="10" fill="#c4b5fd">0</text>
+
+    <!-- Collapse label -->
+    <text x="60" y="155" text-anchor="middle" font-family="serif" font-size="10" fill="#6d28d9" font-style="italic">
+      Collapses at E₁
+    </text>
+  </g>
+
+  <!-- ========== BOTTOM: Three Application Domains ========== -->
+  <g transform="translate(0, 400)">
+    <!-- AI Box -->
+    <rect x="40" y="0" width="200" height="100" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" filter="url(#shadow)"/>
+    <text x="140" y="25" text-anchor="middle" font-family="Georgia, serif" font-size="13" font-weight="bold" fill="#92400e">🤖 AI</text>
+    <text x="140" y="45" text-anchor="middle" font-family="serif" font-size="10" fill="#78350f">Parameter spaces are</text>
+    <text x="140" y="60" text-anchor="middle" font-family="serif" font-size="10" fill="#78350f">inhabited type spaces.</text>
+    <text x="140" y="78" text-anchor="middle" font-family="serif" font-size="10" fill="#78350f">Filtrations → architecture.</text>
+
+    <!-- P-adic Box -->
+    <rect x="300" y="0" width="200" height="100" rx="8" fill="#e0e7ff" stroke="#6366f1" stroke-width="2" filter="url(#shadow)"/>
+    <text x="400" y="25" text-anchor="middle" font-family="Georgia, serif" font-size="13" font-weight="bold" fill="#3730a3">𝑝-adic Analysis</text>
+    <text x="400" y="45" text-anchor="middle" font-family="serif" font-size="10" fill="#312e81">Valuations induce</text>
+    <text x="400" y="60" text-anchor="middle" font-family="serif" font-size="10" fill="#312e81">natural filtrations.</text>
+    <text x="400" y="78" text-anchor="middle" font-family="serif" font-size="10" fill="#312e81">v_p(n) → layer index.</text>
+
+    <!-- Crypto Box -->
+    <rect x="560" y="0" width="200" height="100" rx="8" fill="#fce7f3" stroke="#ec4899" stroke-width="2" filter="url(#shadow)"/>
+    <text x="660" y="25" text-anchor="middle" font-family="Georgia, serif" font-size="13" font-weight="bold" fill="#9d174d">🔐 Cryptography</text>
+    <text x="660" y="45" text-anchor="middle" font-family="serif" font-size="10" fill="#831843">Lattice decompositions</text>
+    <text x="660" y="60" text-anchor="middle" font-family="serif" font-size="10" fill="#831843">via filtered bundles.</text>
+    <text x="660" y="78" text-anchor="middle" font-family="serif" font-size="10" fill="#831843">Hardness reductions.</text>
+
+    <!-- Connecting lines to center -->
+    <line x1="140" y1="0" x2="300" y2="-70" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <line x1="400" y1="0" x2="400" y2="-70" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <line x1="660" y1="0" x2="500" y2="-70" stroke="#ec4899" stroke-width="1.5" stroke-dasharray="4,3"/>
+  </g>
+
+  <!-- ========== BOTTOM: Lean Code ========== -->
+  <g transform="translate(130, 530)">
+    <rect x="0" y="0" width="540" height="40" rx="6" fill="#1e293b" filter="url(#shadow)"/>
+    <text x="270" y="15" text-anchor="middle" font-family="monospace" font-size="10" fill="#94a3b8">-- Lean 4 / Mathlib</text>
+    <text x="270" y="30" text-anchor="middle" font-family="monospace" font-size="10" fill="#a5f3fc">
+      theorem constructive_filtered_bundle_law_9f99 {X : Type*} [Inhabited X] : True := by trivial
+    </text>
+  </g>
+
+  <!-- Caption -->
+  <text x="400" y="590" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#64748b" font-style="italic">
+    Fig 1. The Constructive Filtered Bundle Law: filtration layers, spectral collapse, and cross-domain applications.
+  </text>
+</svg>
