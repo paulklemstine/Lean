@@ -1,0 +1,106 @@
+# AETHER Configuration
+# Autonomous Math Research Engine
+
+aristotle:
+  api_base_url: "https://aristotle.harmonic.fun/api/v1"
+  api_key: "${ARISTOTLE_API_KEY}"
+  timeout_seconds: 300
+  max_retries: 3
+  retry_backoff_base: 2.0
+  concurrent_jobs: 2
+  demo_mode: true  # Set to false when Aristotle API is available
+
+catalog:
+  root_dir: "../"
+  db_path: "../Tools/output/catalog.json"
+  build_dir: "../../CatalogBuild"
+  lean_version: "v4.28.0"
+  mathlib_version: "v4.28.0"
+  shared_threshold: 5
+
+research:
+  arcs:
+    - id: "gravitational_factoring"
+      name: "Gravitational Factoring"
+      description: "Using geometric/spacetime structures for integer factorization"
+      seed_domains: ["Pythagorean", "Geometry", "Algebra"]
+      frontier: "Tropical analogues of gravitational lenses"
+      target_sorry_reduction: 5
+
+    - id: "quantum_pythagoras"
+      name: "Quantum Pythagoras"
+      description: "Formalizing quantum computing on Berggren tree structures"
+      seed_domains: ["Pythagorean", "Cryptography", "Computation"]
+      frontier: "QDF (Quantum Diophantine Factoring)"
+      target_sorry_reduction: 3
+
+    - id: "tropical_langlands"
+      name: "Tropical Langlands"
+      description: "Tropical geometry meets representation theory"
+      seed_domains: ["Tropical", "Algebra", "Bridges"]
+      frontier: "Tropical automorphic forms"
+      target_sorry_reduction: 2
+
+    - id: "neural_proof_mining"
+      name: "Neural Proof Mining"
+      description: "ML-guided theorem discovery"
+      seed_domains: ["MachineLearning", "Logic", "Computation"]
+      frontier: "RSIL adaptive distillation"
+      target_sorry_reduction: 4
+
+    - id: "temporal_computation"
+      name: "Temporal Computation"
+      description: "Time-travel logic and reversible computation"
+      seed_domains: ["Logic", "Computation", "Speculative"]
+      frontier: "OISCC oracle hierarchies"
+      target_sorry_reduction: 3
+
+    - id: "eml_cosmology"
+      name: "EML Cosmology"
+      description: "Emergent meta-language as universe model"
+      seed_domains: ["EML", "Physics", "Bridges"]
+      frontier: "Self-pairing in curved spacetime"
+      target_sorry_reduction: 2
+
+    - id: "cryptographic_gravity"
+      name: "Cryptographic Gravity"
+      description: "Post-quantum crypto via geometric invariants"
+      seed_domains: ["Cryptography", "Geometry", "Pythagorean"]
+      frontier: "Lattice reduction in Berggren trees"
+      target_sorry_reduction: 3
+
+    - id: "speculative_scifi"
+      name: "Speculative Sci-Fi Mathematics"
+      description: "Formalizing science-fictional mathematical concepts"
+      seed_domains: ["Speculative", "Physics", "MachineLearning"]
+      frontier: "Formal models of hyperspace and alien computation"
+      target_sorry_reduction: 10
+
+  difficulty_levels: ["undergraduate", "graduate", "phd", "master", "open_problem"]
+  generation_batch_size: 5
+  max_proposals_per_arc: 3
+
+telemetry:
+  log_dir: "./logs"
+  experiment_registry: "./logs/experiments.jsonl"
+  benchmark_file: "./logs/benchmarks.json"
+  report_output: "./logs/telemetry_report.html"
+  metrics_interval_seconds: 60
+
+integration:
+  auto_merge: false
+  require_human_review: true
+  rollback_on_failure: true
+  validation_checks:
+    - syntax
+    - semantic
+    - deduplication
+    - import_graph
+    - thematic_placement
+
+prompts:
+  template_dir: "./prompts"
+  default_template: "master_theorem_prover"
+  max_context_theorems: 8
+  max_context_defs: 5
+  include_proof_hints: true

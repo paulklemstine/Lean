@@ -1,0 +1,97 @@
+Concept: tropical_entropy_bound
+lean_guess: theorem tropical_kolmogorov_bound {X : Type*} [Inhabited X] :
+    True := by
+  sorry
+Prompt length: 3837
+--- PROMPT ---
+          === THEOREM PROOF TASK ===
+
+          You are Aristotle, the world's most inventive formal mathematician.
+          Prove the following breakthrough theorem in Lean 4 (mathlib4 v4.28.0).
+
+          THEOREM: tropical_entropy_bound
+          DOMAIN: compression
+          DIFFICULTY: phd
+
+          DESCRIPTION:
+          Tropical geometry provides a lower bound on Kolmogorov complexity via max-plus matrix rank.
+
+          MATHEMATICAL FRAMEWORK:
+           tropical matrix rank <= max-plus rank implies compression limit.
+
+          FORMALIZATION HINT:
+          theorem tropical_kolmogorov_bound {X : Type*} [Inhabited X] :
+  True := by
+sorry
+
+          CREATIVITY DIRECTIVES:
+            - Use tropical matrix rank as a proxy for Kolmogorov complexity.
+- What is the max-plus entropy of a language?
+- Can sheaf cohomology measure information redundancy?
+- If the obvious approach fails, take the Galois dual.
+- Reframe the problem in the category of sheaves over a site.
+- Look for a hidden group action or symmetry.
+- Try to prove the contrapositive in a non-standard model.
+- Use tropicalization to degenerate the problem to a combinatorial one.
+
+          RULES:
+          1. Fill EVERY `sorry` with a complete, rigorous proof.
+          2. Do NOT modify theorem statements or definitions.
+          3. Prefer unexpected, elegant proof strategies over brute force.
+          4. Use advanced mathlib4 lemmas where possible.
+          5. The proof should be concise but complete.
+
+
+=== RESEARCH REPORT ===
+Create a file named `RESEARCH_REPORT.md` with:
+1. ABSTRACT (~150 words, accessible but precise)
+2. MOTIVATION (why this theorem matters for science/engineering)
+3. MATHEMATICAL FRAMEWORK (definitions, notation, preliminaries)
+4. PROOF OVERVIEW (high-level strategy, key lemmas, intuitive sketches)
+5. NOVELTY ANALYSIS (what makes this result new and surprising)
+6. OPEN PROBLEMS (3 concrete follow-up questions)
+7. REFERENCES (real or plausible citations in standard format)
+
+
+=== PYTHON DEMO ===
+Create a file named `demo.py` that:
+1. Illustrates the theorem numerically or visually.
+2. Uses standard libraries (numpy, matplotlib, sympy if needed).
+3. Is self-contained: `python3 demo.py` runs without errors.
+4. Prints the key insight in the `main()` function.
+5. Includes rich comments linking code to the formal proof.
+6. If visualization is natural, save a PNG or generate an inline plot.
+
+
+=== SVG DIAGRAM ===
+Create a file named `diagram.svg` that:
+1. Visualizes the theorem's key structure geometrically or algebraically.
+2. Uses pure SVG (no external libraries, self-contained).
+3. Is renderable in any modern browser.
+4. Labels important points, regions, morphisms, or mappings.
+5. Includes a caption at the bottom.
+6. Use color to distinguish different mathematical objects.
+
+
+=== SCIENTIFIC AMERICAN ARTICLE ===
+Create a file named `DISCUSSION.md`:
+Title: "tropical_entropy_bound: When compression Meets the Future"
+
+Tone: Accessible to scientifically literate general readers.
+Avoid excessive notation. Use analogies, metaphors, and vivid imagery.
+
+Structure:
+- LEDE (hook): A surprising scenario, historical anecdote, or futuristic vignette.
+- THE MATHEMATICAL HEART: Explain the theorem without equations, using visual and physical metaphors.
+- WHY IT MATTERS: Real or imagined applications in AI, physics, cryptography, or space exploration.
+- THE BEAUTY: What makes this elegant? What symmetry or unexpected connection does it reveal?
+- LOOKING AHEAD: What doors does this open? What might the next century of math look like?
+- CLOSING: A philosophical reflection on mathematical truth and human curiosity.
+
+Length: ~1200 words.
+
+
+=== DELIVERABLES CHECKLIST ===
+Ensure ALL requested files are present in the project directory.
+Each file should be complete, well-formatted, and ready for publication.
+

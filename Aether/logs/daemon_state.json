@@ -1,0 +1,49 @@
+{
+  "cycle_count": 15,
+  "last_domain": "factoring",
+  "completed_experiments": [
+    "e1e0e055",
+    "43f2b884",
+    "65ba1017",
+    "b42bf6d2"
+  ],
+  "failed_experiments": [
+    "e392f776",
+    "de85c0e9",
+    "c7e9f5f8",
+    "7a1c3582",
+    "70e75586",
+    "873f4b67",
+    "13e6003a",
+    "7e8b7657",
+    "a88d06f5",
+    "be2847a6",
+    "792e4f50"
+  ],
+  "domain_stats": {
+    "AI": {
+      "attempts": 2,
+      "successes": 0
+    },
+    "compression": {
+      "attempts": 4,
+      "successes": 0
+    },
+    "factoring": {
+      "attempts": 4,
+      "successes": 2
+    },
+    "neural nets": {
+      "attempts": 3,
+      "successes": 1
+    },
+    "physics": {
+      "attempts": 1,
+      "successes": 0
+    },
+    "quantum mechanics": {
+      "attempts": 1,
+      "successes": 1
+    }
+  }
+}

@@ -1,0 +1,49 @@
+[
+  {
+    "experiment_id": "7f108b1d",
+    "arc_id": "speculative_scifi",
+    "title": "dark_energy_tropical_polynomial_roots",
+    "domain": "Speculative/SciFi",
+    "difficulty": "phd",
+    "type": "theorem",
+    "target_file": "Speculative/SciFi/AutoGen/dark_energy_tropical_polynomial_roots.lean",
+    "narrative": "Dark energy drives cosmic acceleration. We model its equation of state as a positive cubic polynomial and prove a tropical bound on the number of phase transitions, connecting cosmology with tropical algebraic geometry.",
+    "conjecture_lean": "theorem dark_energy_tropical_polynomial_roots (p : Polynomial ℝ)\n    (hp : p.degree = 3) (h_pos : ∀ x, p.eval x > 0) :\n    ∃ (trop_roots : Finset ℝ), trop_roots.card ≤ 3 := by\n  -- A tropical analogue: the dark energy equation of state, modeled as a\n  -- positive cubic polynomial, has at most 3 tropical roots corresponding to\n  -- phase transitions in cosmic expansion.\n  sorry",
+    "concept_combination": [
+      "polynomial",
+      "tropical",
+      "roots"
+    ],
+    "novelty_estimate": 0.9
+  },
+  {
+    "experiment_id": "5c41a28b",
+    "arc_id": "speculative_scifi",
+    "title": "hyperdimensional_data_compression_limit",
+    "domain": "Speculative/SciFi",
+    "difficulty": "phd",
+    "type": "theorem",
+    "target_file": "Speculative/SciFi/AutoGen/hyperdimensional_data_compression_limit.lean",
+    "narrative": "Shannon's source coding theorem sets limits on data compression. In hyperdimensional spaces, we conjecture that any non-zero dataset can be compressed to at most half its dimensions while preserving structure, formalizing a speculative bound on lossy compression.",
+    "conjecture_lean": "theorem hyperdimensional_data_compression_limit (d : ℕ) (hd : d > 0)\n    (data : Fin d → ℝ) :\n    ∃ (compressed : Fin (d / 2) → ℝ), compressed ≠ 0 := by\n  -- In d-dimensional space, any non-zero dataset can be compressed to at most\n  -- d/2 dimensions while preserving some non-trivial structure. This is the\n  -- hyperdimensional analogue of the Shannon source coding theorem.\n  sorry",
+    "concept_combination": [
+      "compression",
+      "dimension",
+      "Shannon"
+    ],
+    "novelty_estimate": 0.85
+  },
+  {
+    "experiment_id": "184c136c",
+    "arc_id": "speculative_scifi",
+    "title": "exp_speculative_scifi_e46dce54",
+    "domain": "Computation",
+    "difficulty": "undergraduate",
+    "type": "experiment",
+    "target_file": "Computation/Experiments/exp_speculative_scifi_e46dce54.lean",
+    "narrative": "A computational experiment designed to empirically explore properties in Speculative Sci-Fi Mathematics. The experiment generates data that can be analyzed for patterns and conjectures.",
+    "conjecture_lean": "-- Computational experiment: benchmark Speculative Sci-Fi Mathematics\ndef experiment_exp_speculative_scifi_e46dce54 (n_max : ℕ) : List (ℕ × ℝ) :=\n  sorry\n\ntheorem experiment_monotonic (n : ℕ) :\n    (experiment_exp_speculative_scifi_e46dce54 (n + 1)).length >= (experiment_exp_speculative_scifi_e46dce54 n).length := sorry",
+    "concept_combination": [],
+    "novelty_estimate": 0.5
+  }
+]

@@ -1,0 +1,30 @@
+Config aristotle section: {
+  "api_base_url": "https://aristotle.harmonic.fun/api/v1",
+  "api_key": "arstl_1wk9UpHWAPWO2b6It0cSy2kxKlVN7S4ll5xVJ82WGFI",
+  "timeout_seconds": 300,
+  "max_retries": 3,
+  "retry_backoff_base": 2.0,
+  "concurrent_jobs": 2,
+  "demo_mode": true
+}
+Concept: tropical_entropy_bound
+lean_guess: theorem tropical_kolmogorov_bound {X : Type*} [Inhabited X] :
+    True := by
+  sorry
+Prompt length: 3837
+Client api_key present: True
+Client timeout: 300
+Client polling_interval: 30
+Catalog root: /home/raver1975/lean/Catalog
+Project dir: output/job_debug_test
+Dispatching...
+[Aristotle] Copying catalog from /home/raver1975/lean/Catalog into output/job_debug_test...
+[Aristotle] Catalog copied.
+[Aristotle] Project created: 5c164bab-895e-4ffe-b42f-accef309400e (ProjectStatus.QUEUED)
+
+
+
+[2A[KProject 5c164bab-895e-4ffe-b42f-accef309400e
+[KStatus: QUEUED (started 0s ago)
+[2A[KProject 5c164bab-895e-4ffe-b42f-accef309400e
+[KStatus: QUEUED (started 31s ago)

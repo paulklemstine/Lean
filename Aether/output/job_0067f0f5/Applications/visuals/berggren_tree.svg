@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e"/>
+      <stop offset="100%" style="stop-color:#16213e"/>
+    </linearGradient>
+    <linearGradient id="nodeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e94560"/>
+      <stop offset="100%" style="stop-color:#ff6b6b"/>
+    </linearGradient>
+    <linearGradient id="factorGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f3460"/>
+      <stop offset="100%" style="stop-color:#533483"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="620" fill="url(#bg)"/>
+  
+  <!-- Title -->
+  <text x="450" y="40" text-anchor="middle" fill="#e94560" font-size="22" font-weight="bold" filter="url(#glow)">
+    Berggren Tree: Inside-Out Factoring
+  </text>
+  <text x="450" y="62" text-anchor="middle" fill="#a0a0c0" font-size="12">
+    Every primitive Pythagorean triple appears exactly once · Formally verified in Lean 4
+  </text>
+
+  <!-- Tree edges -->
+  <g stroke="#4a4a6a" stroke-width="2" opacity="0.7">
+    <!-- Root to level 1 -->
+    <line x1="450" y1="120" x2="180" y2="220"/>
+    <line x1="450" y1="120" x2="450" y2="220"/>
+    <line x1="450" y1="120" x2="720" y2="220"/>
+    
+    <!-- Level 1 to level 2 -->
+    <line x1="180" y1="250" x2="80" y2="350"/>
+    <line x1="180" y1="250" x2="180" y2="350"/>
+    <line x1="180" y1="250" x2="280" y2="350"/>
+    
+    <line x1="450" y1="250" x2="370" y2="350"/>
+    <line x1="450" y1="250" x2="450" y2="350"/>
+    <line x1="450" y1="250" x2="530" y2="350"/>
+    
+    <line x1="720" y1="250" x2="620" y2="350"/>
+    <line x1="720" y1="250" x2="720" y2="350"/>
+    <line x1="720" y1="250" x2="820" y2="350"/>
+  </g>
+
+  <!-- Branch labels -->
+  <g fill="#a0a0c0" font-size="11" font-style="italic">
+    <text x="295" y="165">B₁</text>
+    <text x="440" y="175">B₂</text>
+    <text x="590" y="165">B₃</text>
+  </g>
+
+  <!-- Root node: (3, 4, 5) -->
+  <g filter="url(#shadow)">
+    <rect x="395" y="85" width="110" height="40" rx="20" fill="url(#nodeGrad)"/>
+    <text x="450" y="110" text-anchor="middle" fill="white" font-size="16" font-weight="bold">(3, 4, 5)</text>
+  </g>
+
+  <!-- Level 1 nodes -->
+  <g filter="url(#shadow)">
+    <rect x="115" y="210" width="130" height="40" rx="20" fill="url(#factorGrad)"/>
+    <text x="180" y="235" text-anchor="middle" fill="white" font-size="14" font-weight="bold">(5, 12, 13)</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="385" y="210" width="130" height="40" rx="20" fill="url(#factorGrad)"/>
+    <text x="450" y="235" text-anchor="middle" fill="white" font-size="14" font-weight="bold">(21, 20, 29)</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="655" y="210" width="130" height="40" rx="20" fill="url(#factorGrad)"/>
+    <text x="720" y="235" text-anchor="middle" fill="white" font-size="14" font-weight="bold">(15, 8, 17)</text>
+  </g>
+
+  <!-- Level 2 nodes -->
+  <g fill="url(#factorGrad)" font-size="11">
+    <rect x="25" y="345" width="115" height="32" rx="16" opacity="0.8"/>
+    <text x="82" y="365" text-anchor="middle" fill="white">(7, 24, 25)</text>
+    
+    <rect x="128" y="345" width="115" height="32" rx="16" opacity="0.8"/>
+    <text x="185" y="365" text-anchor="middle" fill="white">(55, 48, 73)</text>
+    
+    <rect x="228" y="345" width="115" height="32" rx="16" opacity="0.8"/>
+    <text x="285" y="365" text-anchor="middle" fill="white">(45, 28, 53)</text>
+    
+    <rect x="318" y="345" width="115" height="32" rx="16" opacity="0.8"/>
+    <text x="375" y="365" text-anchor="middle" fill="white">(39, 80, 89)</text>
+    
+    <rect x="400" y="345" width="115" height="32" rx="16" opacity="0.8"/>
+    <text x="457" y="365" text-anchor="middle" fill="white">(119,120,169)</text>
+    
+    <rect x="490" y="345" width="115" height="32" rx="16" opacity="0.8"/>
+    <text x="547" y="365" text-anchor="middle" fill="white">(77, 36, 85)</text>
+    
+    <rect x="570" y="345" width="115" height="32" rx="16" opacity="0.8"/>
+    <text x="627" y="365" text-anchor="middle" fill="white">(33, 56, 65)</text>
+    
+    <rect x="670" y="345" width="115" height="32" rx="16" opacity="0.8"/>
+    <text x="727" y="365" text-anchor="middle" fill="white">(65, 72, 97)</text>
+    
+    <rect x="770" y="345" width="115" height="32" rx="16" opacity="0.8"/>
+    <text x="827" y="365" text-anchor="middle" fill="white">(35, 12, 37)</text>
+  </g>
+
+  <!-- Factoring explanation box -->
+  <rect x="50" y="420" width="800" height="180" rx="12" fill="#0f3460" opacity="0.3" stroke="#e94560" stroke-width="1"/>
+  
+  <text x="450" y="450" text-anchor="middle" fill="#e94560" font-size="16" font-weight="bold">
+    Inside-Out Factoring Algorithm
+  </text>
+  
+  <g fill="#c0c0e0" font-size="13">
+    <text x="80" y="478">1. Given odd composite N, build trivial triple: (N, (N²−1)/2, (N²+1)/2)</text>
+    <text x="80" y="500">2. Apply inverse Berggren matrices B₁⁻¹, B₂⁻¹, B₃⁻¹ to descend the tree</text>
+    <text x="80" y="522">3. At each node (a, b, c), compute gcd(a, N) and gcd(b, N)</text>
+    <text x="80" y="544">4. A nontrivial GCD reveals a factor of N</text>
+  </g>
+  
+  <text x="80" y="578" fill="#a0a0c0" font-size="11" font-style="italic">
+    Formally verified: inv_B1_preserves, inv_B2_preserves, inv_B3_preserves preserve a² + b² = c²
+  </text>
+  <text x="80" y="595" fill="#a0a0c0" font-size="11" font-style="italic">
+    Lorentz invariance: B₁, B₂, B₃ preserve the form a² + b² − c² = 0 (connection to special relativity)
+  </text>
+</svg>

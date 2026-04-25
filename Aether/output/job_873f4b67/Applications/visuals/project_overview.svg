@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" font-family="Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg6" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a2e"/>
+      <stop offset="50%" style="stop-color:#151540"/>
+      <stop offset="100%" style="stop-color:#1a1a4e"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1000" height="600" fill="url(#bg6)"/>
+
+  <!-- Title -->
+  <text x="500" y="40" text-anchor="middle" fill="#fff" font-size="24" font-weight="bold">CatalogBuild: Formally Verified Mathematics at Scale</text>
+  <text x="500" y="62" text-anchor="middle" fill="#aaa" font-size="13">The Stereographic Pythagorean Bridge Framework</text>
+
+  <!-- Big numbers row -->
+  <g transform="translate(50, 90)">
+    <!-- Files -->
+    <g>
+      <text x="90" y="35" text-anchor="middle" fill="#4ecdc4" font-size="36" font-weight="bold">1,446</text>
+      <text x="90" y="55" text-anchor="middle" fill="#8ee" font-size="12">Lean 4 files</text>
+    </g>
+    <!-- Declarations -->
+    <g transform="translate(230, 0)">
+      <text x="90" y="35" text-anchor="middle" fill="#ffd93d" font-size="36" font-weight="bold">28,797</text>
+      <text x="90" y="55" text-anchor="middle" fill="#ffe" font-size="12">declarations</text>
+    </g>
+    <!-- Theorems -->
+    <g transform="translate(460, 0)">
+      <text x="90" y="35" text-anchor="middle" fill="#ff6b6b" font-size="36" font-weight="bold">22,334</text>
+      <text x="90" y="55" text-anchor="middle" fill="#faa" font-size="12">theorems proved</text>
+    </g>
+    <!-- Lines -->
+    <g transform="translate(680, 0)">
+      <text x="90" y="35" text-anchor="middle" fill="#a29bfe" font-size="36" font-weight="bold">178,634</text>
+      <text x="90" y="55" text-anchor="middle" fill="#c5b8ff" font-size="12">lines of code</text>
+    </g>
+  </g>
+
+  <!-- Domain bars -->
+  <g transform="translate(50, 170)">
+    <text x="450" y="0" text-anchor="middle" fill="#fff" font-size="16" font-weight="bold">Theorems by Domain</text>
+
+    <!-- Bar chart -->
+    <g transform="translate(0, 20)">
+      <!-- Pythagorean -->
+      <text x="110" y="17" text-anchor="end" fill="#ccc" font-size="11">Pythagorean</text>
+      <rect x="120" y="5" width="378" height="16" fill="#4ecdc4" rx="3" opacity="0.8"/>
+      <text x="505" y="17" fill="#4ecdc4" font-size="10">5,092</text>
+
+      <!-- EML -->
+      <text x="110" y="39" text-anchor="end" fill="#ccc" font-size="11">EML</text>
+      <rect x="120" y="27" width="241" height="16" fill="#ffd93d" rx="3" opacity="0.8"/>
+      <text x="368" y="39" fill="#ffd93d" font-size="10">3,253</text>
+
+      <!-- Speculative -->
+      <text x="110" y="61" text-anchor="end" fill="#ccc" font-size="11">Speculative</text>
+      <rect x="120" y="49" width="242" height="16" fill="#e17055" rx="3" opacity="0.8"/>
+      <text x="369" y="61" fill="#e17055" font-size="10">3,262</text>
+
+      <!-- Computation -->
+      <text x="110" y="83" text-anchor="end" fill="#ccc" font-size="11">Computation</text>
+      <rect x="120" y="71" width="176" height="16" fill="#fd79a8" rx="3" opacity="0.8"/>
+      <text x="303" y="83" fill="#fd79a8" font-size="10">2,371</text>
+
+      <!-- Physics -->
+      <text x="110" y="105" text-anchor="end" fill="#ccc" font-size="11">Physics</text>
+      <rect x="120" y="93" width="155" height="16" fill="#00cec9" rx="3" opacity="0.8"/>
+      <text x="282" y="105" fill="#00cec9" font-size="10">2,088</text>
+
+      <!-- Algebra -->
+      <text x="110" y="127" text-anchor="end" fill="#ccc" font-size="11">Algebra</text>
+      <rect x="120" y="115" width="85" height="16" fill="#a29bfe" rx="3" opacity="0.8"/>
+      <text x="212" y="127" fill="#a29bfe" font-size="10">1,143</text>
+
+      <!-- Tropical -->
+      <text x="110" y="149" text-anchor="end" fill="#ccc" font-size="11">Tropical</text>
+      <rect x="120" y="137" width="79" height="16" fill="#81ecec" rx="3" opacity="0.8"/>
+      <text x="206" y="149" fill="#81ecec" font-size="10">1,060</text>
+
+      <!-- Others -->
+      <text x="110" y="171" text-anchor="end" fill="#ccc" font-size="11">Others (6)</text>
+      <rect x="120" y="159" width="111" height="16" fill="#636e72" rx="3" opacity="0.8"/>
+      <text x="238" y="171" fill="#999" font-size="10">4,065</text>
+    </g>
+  </g>
+
+  <!-- Right side: Key results -->
+  <g transform="translate(570, 190)">
+    <rect width="400" height="220" rx="12" fill="#0d0d2a" stroke="#ffd93d" stroke-width="1" opacity="0.9"/>
+    <text x="200" y="25" text-anchor="middle" fill="#ffd93d" font-size="14" font-weight="bold">Key Verified Results</text>
+
+    <g transform="translate(15, 40)">
+      <circle cx="8" cy="5" r="4" fill="#4ecdc4"/>
+      <text x="20" y="9" fill="#ccc" font-size="11">Berggren tree completeness &amp; Lorentz invariance</text>
+
+      <circle cx="8" cy="28" r="4" fill="#ffd93d"/>
+      <text x="20" y="32" fill="#ccc" font-size="11">SPB = tan addition = relativistic velocity addition</text>
+
+      <circle cx="8" cy="51" r="4" fill="#ff6b6b"/>
+      <text x="20" y="55" fill="#ccc" font-size="11">Irrationality of e (complete formal proof)</text>
+
+      <circle cx="8" cy="74" r="4" fill="#a29bfe"/>
+      <text x="20" y="78" fill="#ccc" font-size="11">Neural network Lipschitz composition bounds</text>
+
+      <circle cx="8" cy="97" r="4" fill="#e17055"/>
+      <text x="20" y="101" fill="#ccc" font-size="11">ECDSA completeness &amp; nonce reuse vulnerability</text>
+
+      <circle cx="8" cy="120" r="4" fill="#00cec9"/>
+      <text x="20" y="124" fill="#ccc" font-size="11">Tropical trace formula (GL₁ case)</text>
+
+      <circle cx="8" cy="143" r="4" fill="#fd79a8"/>
+      <text x="20" y="147" fill="#ccc" font-size="11">Bayesian convergence &amp; scientific method</text>
+
+      <circle cx="8" cy="166" r="4" fill="#55efc4"/>
+      <text x="20" y="170" fill="#ccc" font-size="11">LogSumExp bounds: max ≤ LSE ≤ max + ln 2</text>
+    </g>
+  </g>
+
+  <!-- Bottom: SPB formula showcase -->
+  <g transform="translate(50, 440)">
+    <rect width="900" height="60" rx="10" fill="#0d0d3a" stroke="#ff6b6b" stroke-width="1.5" opacity="0.9"/>
+    <text x="450" y="22" text-anchor="middle" fill="#ff6b6b" font-size="14" font-weight="bold">The Stereographic Pythagorean Bridge</text>
+    <text x="450" y="45" text-anchor="middle" fill="#fff" font-size="13">
+      spb(x, y) = (x + y) / (1 + xy)  =  tan(α+β)  =  v₁ ⊕ v₂ (relativistic)  =  lim_{ε→0} tropical deformation
+    </text>
+  </g>
+
+  <!-- Bottom stats -->
+  <g transform="translate(50, 520)">
+    <rect width="900" height="55" rx="10" fill="#0a0a1a" stroke="#333" stroke-width="1"/>
+    <text x="150" y="22" text-anchor="middle" fill="#4ecdc4" font-size="12" font-weight="bold">Lean 4.28.0</text>
+    <text x="150" y="40" text-anchor="middle" fill="#888" font-size="10">Proof Assistant</text>
+
+    <text x="350" y="22" text-anchor="middle" fill="#ffd93d" font-size="12" font-weight="bold">Mathlib v4.28.0</text>
+    <text x="350" y="40" text-anchor="middle" fill="#888" font-size="10">Math Library</text>
+
+    <text x="550" y="22" text-anchor="middle" fill="#ff6b6b" font-size="12" font-weight="bold">13 Domains</text>
+    <text x="550" y="40" text-anchor="middle" fill="#888" font-size="10">Cross-Domain Bridges</text>
+
+    <text x="750" y="22" text-anchor="middle" fill="#a29bfe" font-size="12" font-weight="bold">50 AI Applications</text>
+    <text x="750" y="40" text-anchor="middle" fill="#888" font-size="10">Novel Algorithms</text>
+  </g>
+</svg>

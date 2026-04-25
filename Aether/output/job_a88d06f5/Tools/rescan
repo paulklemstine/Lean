@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Rescan Catalog/ for new/modified theorems, update the database, and rebuild CatalogBuild/
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
+
+DB="${PROJECT_ROOT}/tools/output/catalog.json"
+SOURCE="${PROJECT_ROOT}"
+OUTPUT_DIR="${PROJECT_ROOT}/../CatalogBuild"
+
+exec python3 "${SCRIPT_DIR}/catalog.py" rescan \
+  --source "$SOURCE" \
+  --db "$DB" \
+  --output-dir "$OUTPUT_DIR" \
+  --shared-threshold 5 \
+  "$@"

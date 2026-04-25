@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 750" font-family="'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0c1445"/>
+      <stop offset="100%" stop-color="#1a0a3e"/>
+    </linearGradient>
+    <linearGradient id="coreGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6c5ce7"/>
+      <stop offset="100%" stop-color="#a29bfe"/>
+    </linearGradient>
+    <linearGradient id="numGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#00b894"/>
+      <stop offset="100%" stop-color="#55efc4"/>
+    </linearGradient>
+    <linearGradient id="mlGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e17055"/>
+      <stop offset="100%" stop-color="#fab1a0"/>
+    </linearGradient>
+    <linearGradient id="cryptoGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0984e3"/>
+      <stop offset="100%" stop-color="#74b9ff"/>
+    </linearGradient>
+    <linearGradient id="physGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fdcb6e"/>
+      <stop offset="100%" stop-color="#ffeaa7"/>
+    </linearGradient>
+    <linearGradient id="tropGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e84393"/>
+      <stop offset="100%" stop-color="#fd79a8"/>
+    </linearGradient>
+    <filter id="glow2">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1000" height="750" fill="url(#bg2)"/>
+
+  <!-- Title -->
+  <text x="500" y="40" text-anchor="middle" fill="#fff" font-size="22" font-weight="bold">The Stereographic Pythagorean Bridge Framework</text>
+  <text x="500" y="62" text-anchor="middle" fill="#b2bec3" font-size="12">28,797 verified declarations · 13 domains · 1,446 files</text>
+
+  <!-- Central SPB node -->
+  <circle cx="500" cy="280" r="80" fill="url(#coreGrad)" opacity="0.9" filter="url(#glow2)"/>
+  <text x="500" y="265" text-anchor="middle" fill="#fff" font-size="18" font-weight="bold">SPB Core</text>
+  <text x="500" y="285" text-anchor="middle" fill="#dfe6e9" font-size="11">spb(x,y) = (x+y)/(1+xy)</text>
+  <text x="500" y="305" text-anchor="middle" fill="#dfe6e9" font-size="10">EML(a,b) = eᵃ − ln b</text>
+
+  <!-- Connection lines (curved) -->
+  <!-- To Number Theory -->
+  <path d="M 420 260 Q 250 180 180 160" fill="none" stroke="#55efc4" stroke-width="2.5" opacity="0.6"/>
+  <!-- To ML -->
+  <path d="M 420 300 Q 250 380 180 430" fill="none" stroke="#fab1a0" stroke-width="2.5" opacity="0.6"/>
+  <!-- To Crypto -->
+  <path d="M 580 260 Q 750 180 820 160" fill="none" stroke="#74b9ff" stroke-width="2.5" opacity="0.6"/>
+  <!-- To Physics -->
+  <path d="M 580 300 Q 750 380 820 430" fill="none" stroke="#ffeaa7" stroke-width="2.5" opacity="0.6"/>
+  <!-- To Tropical -->
+  <path d="M 500 360 Q 500 500 500 530" fill="none" stroke="#fd79a8" stroke-width="2.5" opacity="0.6"/>
+
+  <!-- Number Theory Domain -->
+  <rect x="50" y="100" width="260" height="120" rx="15" fill="url(#numGrad)" opacity="0.15" stroke="#55efc4" stroke-width="1.5"/>
+  <text x="180" y="130" text-anchor="middle" fill="#55efc4" font-size="16" font-weight="bold">Number Theory</text>
+  <text x="180" y="150" text-anchor="middle" fill="#b2bec3" font-size="11">Berggren tree factoring</text>
+  <text x="180" y="167" text-anchor="middle" fill="#b2bec3" font-size="11">Fibonacci GCD identity</text>
+  <text x="180" y="184" text-anchor="middle" fill="#b2bec3" font-size="11">Pisano period analysis</text>
+  <text x="180" y="201" text-anchor="middle" fill="#b2bec3" font-size="11">Irrationality of e</text>
+
+  <!-- Machine Learning Domain -->
+  <rect x="50" y="380" width="260" height="120" rx="15" fill="url(#mlGrad)" opacity="0.15" stroke="#fab1a0" stroke-width="1.5"/>
+  <text x="180" y="410" text-anchor="middle" fill="#fab1a0" font-size="16" font-weight="bold">Machine Learning</text>
+  <text x="180" y="430" text-anchor="middle" fill="#b2bec3" font-size="11">EML neural compression</text>
+  <text x="180" y="447" text-anchor="middle" fill="#b2bec3" font-size="11">Lipschitz verified training</text>
+  <text x="180" y="464" text-anchor="middle" fill="#b2bec3" font-size="11">Quantization error bounds</text>
+  <text x="180" y="481" text-anchor="middle" fill="#b2bec3" font-size="11">Bayesian convergence</text>
+
+  <!-- Cryptography Domain -->
+  <rect x="690" y="100" width="260" height="120" rx="15" fill="url(#cryptoGrad)" opacity="0.15" stroke="#74b9ff" stroke-width="1.5"/>
+  <text x="820" y="130" text-anchor="middle" fill="#74b9ff" font-size="16" font-weight="bold">Cryptography</text>
+  <text x="820" y="150" text-anchor="middle" fill="#b2bec3" font-size="11">ECDSA formal analysis</text>
+  <text x="820" y="167" text-anchor="middle" fill="#b2bec3" font-size="11">Nonce reuse detection</text>
+  <text x="820" y="184" text-anchor="middle" fill="#b2bec3" font-size="11">Grover/BBBV bounds</text>
+  <text x="820" y="201" text-anchor="middle" fill="#b2bec3" font-size="11">SPB key exchange</text>
+
+  <!-- Physics Domain -->
+  <rect x="690" y="380" width="260" height="120" rx="15" fill="url(#physGrad)" opacity="0.15" stroke="#ffeaa7" stroke-width="1.5"/>
+  <text x="820" y="410" text-anchor="middle" fill="#ffeaa7" font-size="16" font-weight="bold">Physics</text>
+  <text x="820" y="430" text-anchor="middle" fill="#b2bec3" font-size="11">Bloch sphere ↔ stereographic</text>
+  <text x="820" y="447" text-anchor="middle" fill="#b2bec3" font-size="11">Lorentz invariance</text>
+  <text x="820" y="464" text-anchor="middle" fill="#b2bec3" font-size="11">E₈ lattice / Magic Square</text>
+  <text x="820" y="481" text-anchor="middle" fill="#b2bec3" font-size="11">Octonion quantum gates</text>
+
+  <!-- Tropical Geometry Domain -->
+  <rect x="350" y="530" width="300" height="120" rx="15" fill="url(#tropGrad)" opacity="0.15" stroke="#fd79a8" stroke-width="1.5"/>
+  <text x="500" y="560" text-anchor="middle" fill="#fd79a8" font-size="16" font-weight="bold">Tropical Geometry</text>
+  <text x="500" y="580" text-anchor="middle" fill="#b2bec3" font-size="11">Tropical Langlands correspondence</text>
+  <text x="500" y="597" text-anchor="middle" fill="#b2bec3" font-size="11">ReLU = tropical polynomial</text>
+  <text x="500" y="614" text-anchor="middle" fill="#b2bec3" font-size="11">LogSumExp ≈ max + O(ln 2)</text>
+  <text x="500" y="631" text-anchor="middle" fill="#b2bec3" font-size="11">Tropical shortest paths</text>
+
+  <!-- Key equations -->
+  <rect x="100" y="670" width="800" height="55" rx="8" fill="#1e272e" opacity="0.6" stroke="#636e72" stroke-width="1"/>
+  <text x="500" y="690" text-anchor="middle" fill="#dfe6e9" font-size="12" font-weight="bold">Key Verified Equations</text>
+  <text x="250" y="712" text-anchor="middle" fill="#55efc4" font-size="11">tan(α+β) = spb(tanα, tanβ)</text>
+  <text x="500" y="712" text-anchor="middle" fill="#fd79a8" font-size="11">max(a,b) ≤ LSE(a,b) ≤ max(a,b)+ln2</text>
+  <text x="750" y="712" text-anchor="middle" fill="#74b9ff" font-size="11">gcd(F_m,F_n) = F_{gcd(m,n)}</text>
+
+  <!-- Algorithm count badges -->
+  <circle cx="310" cy="160" r="18" fill="#00b894" opacity="0.8"/>
+  <text x="310" y="165" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">5</text>
+
+  <circle cx="310" cy="440" r="18" fill="#e17055" opacity="0.8"/>
+  <text x="310" y="445" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">10</text>
+
+  <circle cx="690" cy="160" r="18" fill="#0984e3" opacity="0.8"/>
+  <text x="690" y="165" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">5</text>
+
+  <circle cx="690" cy="440" r="18" fill="#fdcb6e" opacity="0.8"/>
+  <text x="690" y="445" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">5</text>
+
+  <circle cx="500" cy="530" r="18" fill="#e84393" opacity="0.8"/>
+  <text x="500" y="535" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">10</text>
+
+  <!-- Legend -->
+  <text x="45" y="670" fill="#636e72" font-size="10">Algorithms</text>
+  <text x="45" y="685" fill="#636e72" font-size="10">per domain →</text>
+</svg>
