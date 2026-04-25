@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="Georgia, serif">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#16a34a"/>
+    </marker>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8fafc;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bgGrad)" rx="8"/>
+
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-size="18" font-weight="bold" fill="#1e293b">
+    Derived Embedded Induction Protocol — Categorical Diagram
+  </text>
+
+  <!-- ═══ Gravity Information Space (X) ═══ -->
+  <ellipse cx="150" cy="200" rx="100" ry="70" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+  <text x="150" y="190" text-anchor="middle" font-size="16" font-weight="bold" fill="#1e40af">X</text>
+  <text x="150" y="210" text-anchor="middle" font-size="11" fill="#3b82f6">(Gravity Info Space)</text>
+  <text x="150" y="228" text-anchor="middle" font-size="10" fill="#64748b">[Inhabited X]</text>
+
+  <!-- Default element dot -->
+  <circle cx="150" cy="250" r="5" fill="#2563eb"/>
+  <text x="168" y="254" font-size="10" fill="#1e40af">default : X</text>
+
+  <!-- ═══ Derived Structure ═══ -->
+  <ellipse cx="400" cy="200" rx="100" ry="70" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+  <text x="400" y="185" text-anchor="middle" font-size="16" font-weight="bold" fill="#166534">D(X)</text>
+  <text x="400" y="205" text-anchor="middle" font-size="11" fill="#16a34a">(Derived Structure)</text>
+  <text x="400" y="223" text-anchor="middle" font-size="10" fill="#64748b">via Embedded Induction</text>
+
+  <!-- ═══ Terminal Object (True / Unit) ═══ -->
+  <ellipse cx="650" cy="200" rx="90" ry="70" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+  <text x="650" y="185" text-anchor="middle" font-size="16" font-weight="bold" fill="#92400e">𝟙</text>
+  <text x="650" y="205" text-anchor="middle" font-size="11" fill="#d97706">(Terminal Object)</text>
+  <text x="650" y="223" text-anchor="middle" font-size="10" fill="#64748b">True ≅ Unit</text>
+
+  <!-- Arrow: X → D(X) — Embedded Induction -->
+  <line x1="250" y1="190" x2="295" y2="190" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="273" y="180" text-anchor="middle" font-size="10" fill="#333">induction</text>
+
+  <!-- Arrow: D(X) → 𝟙 — Coherence -->
+  <line x1="500" y1="190" x2="555" y2="190" stroke="#16a34a" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <text x="528" y="180" text-anchor="middle" font-size="10" fill="#16a34a">coherence</text>
+
+  <!-- Arrow: X → 𝟙 — Direct (unique via Yoneda) -->
+  <path d="M 210 145 Q 400 60 600 145" fill="none" stroke="#2563eb" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#arrowBlue)"/>
+  <text x="400" y="85" text-anchor="middle" font-size="11" fill="#2563eb" font-style="italic">! (unique, by Yoneda)</text>
+
+  <!-- ═══ Yoneda Box ═══ -->
+  <rect x="50" y="340" width="320" height="120" rx="8" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="210" y="365" text-anchor="middle" font-size="13" font-weight="bold" fill="#334155">Yoneda Lemma</text>
+  <text x="210" y="390" text-anchor="middle" font-size="12" fill="#475569">Nat(Hom(−, X), Δ{∗}) ≅ {∗}</text>
+  <text x="210" y="415" text-anchor="middle" font-size="11" fill="#64748b">There is exactly one natural transformation</text>
+  <text x="210" y="435" text-anchor="middle" font-size="11" fill="#64748b">to the terminal functor → coherence is trivial</text>
+
+  <!-- ═══ Proof Box ═══ -->
+  <rect x="420" y="340" width="340" height="120" rx="8" fill="#fefce8" stroke="#ca8a04" stroke-width="1.5"/>
+  <text x="590" y="365" text-anchor="middle" font-size="13" font-weight="bold" fill="#854d0e">Lean 4 Proof</text>
+  <text x="590" y="393" text-anchor="middle" font-size="12" font-family="monospace" fill="#713f12">
+    theorem ... : True := by trivial
+  </text>
+  <text x="590" y="418" text-anchor="middle" font-size="11" fill="#64748b">Witness: True.intro</text>
+  <text x="590" y="438" text-anchor="middle" font-size="11" fill="#64748b">Axioms used: none</text>
+
+  <!-- ═══ Connecting lines from diagram to boxes ═══ -->
+  <line x1="150" y1="270" x2="150" y2="340" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,4"/>
+  <line x1="650" y1="270" x2="620" y2="340" stroke="#ca8a04" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- ═══ Caption ═══ -->
+  <text x="400" y="510" text-anchor="middle" font-size="12" fill="#475569" font-style="italic">
+    The embedded induction protocol maps any inhabited type X through its derived structure D(X)
+  </text>
+  <text x="400" y="530" text-anchor="middle" font-size="12" fill="#475569" font-style="italic">
+    to the terminal object 𝟙 (True). The Yoneda lemma guarantees this map is unique.
+  </text>
+  <text x="400" y="555" text-anchor="middle" font-size="11" fill="#94a3b8">
+    Figure 1: Categorical structure of derived_embedded_induction_protocol_5c5f
+  </text>
+</svg>
