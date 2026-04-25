@@ -62,6 +62,25 @@ class CycleState:
         return cls(**json.loads(raw))
 
 
+@dataclass
+class InFlightJob:
+    """Track an Aristotle job from dispatch to completion."""
+    cycle_n: int
+    exp_id: str
+    domain: Dict[str, Any]
+    concept: Any  # ResearchConcept
+    prompt: Any  # PromptEngine result
+    lean_source: str
+    project_dir: Path
+    project_id: Optional[str] = None
+    status: str = "queued"
+    percent_complete: int = 0
+    result_path: Optional[Path] = None
+    error_message: Optional[str] = None
+    dispatch_time: float = 0.0
+    complete_time: Optional[float] = None
+
+
 class GitAutomator:
     """Automate git add, commit, push."""
 
@@ -353,6 +372,246 @@ class CycleMaster:
                     break
         return artifacts
 
+    async def _prepare_job(self, forced_domain: Optional[str] = None) -> Optional[InFlightJob]:
+        """Prepare a job: select domain, generate concept, build prompt, prepare lean project.
+        Returns InFlightJob ready for dispatch, or None if preparation fails."""
+        self.state.cycle_count += 1
+        cycle_n = self.state.cycle_count
+
+        # Phase 1: Domain selection
+        domain = self._select_domain() if forced_domain is None else next(
+            (d for d in self.domains if d["id"] == forced_domain), self.domains[0]
+        )
+        self.state.last_domain = domain["id"]
+        print(f"[Prepare] Domain: {domain['name']} ({domain['id']})")
+
+        # Phase 2: Pi-Agent concept generation
+        exp_id = str(uuid.uuid4())[:8]
+        print(f"[Prepare] Pi-Agent generating concept (exp={exp_id})...")
+
+        if self.pi_agent:
+            concept = self.pi_agent.generate_breakthrough_concept(
+                domain=domain["id"],
+                seed_concepts=domain.get("seed_concepts", []),
+                target="theorem",
+            )
+        else:
+            concept = ResearchConcept(
+                title=f"auto_concept_{exp_id}",
+                domain=domain["id"],
+                concept_description="Auto-generated placeholder.",
+                mathematical_framing="TBD",
+            )
+        print(f"[Prepare] Concept: {concept.title} (novelty={concept.novelty_estimate:.2f})")
+
+        # Phase 3: Build prompt
+        print(f"[Prepare] Building Aristotle prompt...")
+        prompt = self.prompt_engine.build_prompt(
+            title=concept.title,
+            domain=domain["id"],
+            concept_description=concept.concept_description,
+            mathematical_framing=concept.mathematical_framing,
+            lean_guess=concept.lean_guess,
+            difficulty=domain.get("difficulty_target", "phd"),
+            artifacts=ArtifactRequests(
+                research_report=True,
+                python_demo=True,
+                svg_demo=True,
+                sciam_discussion=True,
+                lean_proof=True,
+            ),
+        )
+        print(f"[Prepare] Prompt: {len(prompt.prompt_text)} chars")
+
+        # Phase 4: Generate Lean source
+        lean_source = self._generate_lean_source(concept)
+        print(f"[Prepare] Lean source: {len(lean_source)} chars")
+
+        # Phase 5: Build lean-only project
+        project_dir = self.output_dir / f"job_{exp_id}"
+        project_dir.mkdir(parents=True, exist_ok=True)
+
+        print(f"[Prepare] Building lean-only catalog...")
+        self.lean_builder.build_lean_project(
+            project_dir=project_dir,
+            domain=domain["id"],
+            lean_source=lean_source,
+        )
+
+        return InFlightJob(
+            cycle_n=cycle_n,
+            exp_id=exp_id,
+            domain=domain,
+            concept=concept,
+            prompt=prompt,
+            lean_source=lean_source,
+            project_dir=project_dir,
+            dispatch_time=time.time(),
+        )
+
+    async def _dispatch_job(self, job: InFlightJob) -> None:
+        """Dispatch a prepared job to Aristotle (non-blocking)."""
+        print(f"[Dispatch] Submitting {job.exp_id} to Aristotle...")
+        try:
+            project_id = await self.aristotle.submit_lean_project_only(
+                prompt=job.prompt.prompt_text,
+                project_dir=job.project_dir,
+            )
+            job.project_id = project_id
+            job.status = "queued"
+            self.state.total_experiments += 1
+            print(f"[Dispatch] {job.exp_id} queued as {project_id}")
+        except Exception as e:
+            job.status = "failed"
+            job.error_message = str(e)
+            print(f"[Dispatch] {job.exp_id} failed: {e}")
+
+    async def _poll_jobs(self, jobs: List[InFlightJob]) -> List[InFlightJob]:
+        """Poll all in-flight jobs. Returns list of newly completed jobs."""
+        completed = []
+        for job in jobs:
+            if job.status in ("complete", "failed", "timeout", "error"):
+                continue
+            if not job.project_id:
+                continue
+
+            try:
+                info = await self.aristotle.poll_project(job.project_id)
+                job.status = info["status"]
+                job.percent_complete = info.get("percent_complete", 0)
+
+                if info.get("complete"):
+                    print(f"[Poll] {job.exp_id} ({job.project_id}) is complete ({job.percent_complete}%)")
+                    result_path = await self.aristotle.download_result(
+                        job.project_id, job.project_dir
+                    )
+                    job.result_path = result_path
+                    job.complete_time = time.time()
+                    completed.append(job)
+                elif info.get("error"):
+                    print(f"[Poll] {job.exp_id} ({job.project_id}) error: {info['error']}")
+                    job.status = "error"
+                    job.error_message = info["error"]
+                    completed.append(job)
+                else:
+                    print(f"[Poll] {job.exp_id} ({job.project_id}) {job.status} {job.percent_complete}%")
+            except Exception as e:
+                print(f"[Poll] {job.exp_id} poll error: {e}")
+
+        return completed
+
+    async def _process_job_result(self, job: InFlightJob) -> None:
+        """Process a completed job: integrate results, git commit/push."""
+        print(f"\n[Process] Processing results for {job.exp_id}...")
+        cycle_n = job.cycle_n
+        exp_id = job.exp_id
+        domain = job.domain
+        concept = job.concept
+        lean_source = job.lean_source
+        elapsed = (job.complete_time or time.time()) - job.dispatch_time
+
+        if job.result_path and job.result_path.exists():
+            extract_dir = job.project_dir / "result_extracted"
+            extract_dir.mkdir(exist_ok=True)
+            import tarfile
+            with tarfile.open(job.result_path, "r:gz") as tar:
+                tar.extractall(path=extract_dir)
+
+            # Analyze and integrate with SmartIntegrator
+            print(f"[Process] Smart integration with Pi-Agent classification...")
+            decisions = self.integrator.integrate_result_directory(
+                result_dir=extract_dir,
+                exp_id=exp_id,
+                dry_run=False,
+            )
+            manifest = self.integrator.generate_manifest(decisions, exp_id)
+            print(f"[Process] Manifest: {manifest}")
+            print(f"[Process] Placed: {len(decisions['placed'])}, Artifacts: {len(decisions['artifacts'])}, Unchanged: {len(decisions['unchanged'])}, Rejected: {len(decisions['rejected'])}")
+
+            # Extract artifacts
+            artifacts = self._extract_artifacts(extract_dir, exp_id)
+            print(f"[Process] Artifacts: {list(artifacts.keys())}")
+
+            changed_count = len(decisions["placed"])
+            success = job.status in ("complete", "COMPLETE", "COMPLETE_WITH_ERRORS")
+            pending_dir = self.catalog_root / "Speculative" / "AutoResearch"
+            self.prompt_evolver.record_prompt_outcome(
+                prompt_text=job.prompt.prompt_text,
+                concept=concept,
+                success=success,
+                result_status=job.status,
+                changed_files=changed_count,
+            )
+
+            # Git commit + push
+            if success and (changed_count > 0 or len(decisions["artifacts"]) > 0):
+                print(f"[Process] Integrating {changed_count} files into Catalog...")
+                for d in decisions["placed"][:5]:
+                    print(f"  + [{d.domain}] {d.target_path.relative_to(self.catalog_root)} ({d.reason})")
+                if len(decisions["placed"]) > 5:
+                    print(f"  + ... and {len(decisions['placed']) - 5} more")
+
+                changed_paths = [
+                    str(d.target_path.relative_to(self.catalog_root))
+                    for d in decisions["placed"]
+                ]
+                artifact_paths = [
+                    str(p.relative_to(self.catalog_root.parent))
+                    for p in artifacts.values()
+                ]
+
+                print(f"[Process] Git operations...")
+                commit_ok = self.git.create_commit_for_cycle(
+                    cycle_num=cycle_n,
+                    domain=domain["name"],
+                    concept_title=concept.title,
+                    changed_files=changed_paths,
+                    artifacts=artifact_paths,
+                )
+                if commit_ok:
+                    print(f"[Process] Commit created.")
+                    push_ok = self.git.push()
+                    if push_ok:
+                        print(f"[Process] Pushed to GitHub.")
+                    else:
+                        print(f"[Process] Push failed (will retry next cycle).")
+                else:
+                    print(f"[Process] No changes to commit.")
+
+                self.state.successful_proofs += 1
+                self.state.integration_history.append({
+                    "cycle": cycle_n,
+                    "exp_id": exp_id,
+                    "files_changed": changed_count,
+                    "domains_touched": list(set(d.domain for d in decisions["placed"])),
+                })
+            else:
+                print(f"[Process] No changes to integrate (status={job.status}).")
+
+            # Log experiment
+            record = ExperimentRecord(
+                experiment_id=exp_id,
+                arc_id=domain["id"],
+                arc_name=domain["name"],
+                domain=domain["id"],
+                file_path=str(pending_dir / f"PENDING_{domain['id']}_{exp_id}.lean") if success else "",
+                difficulty=domain.get("difficulty_target", "phd"),
+                hypothesis_text=lean_source[:500],
+                concept_combination=domain.get("seed_concepts", []),
+                generation_latency_ms=elapsed * 1000,
+                aristotle_job_id=job.project_id or "",
+                status="proven" if success else job.status.lower(),
+                proof_length_lines=0,
+                novelty_score=concept.novelty_estimate,
+                epicness_score=concept.breakthrough_potential,
+            )
+            self.telemetry.log_experiment(record)
+        else:
+            print(f"[Process] No result tarball for {exp_id}. Status: {job.status}")
+
+        self._save_state()
+        print(f"[Process] Job {exp_id} complete. State saved.")
+
     async def run_single_cycle(self, forced_domain: Optional[str] = None, dry_run: bool = False) -> bool:
         """Run one complete research cycle."""
         self.state.cycle_count += 1
@@ -554,17 +813,28 @@ class CycleMaster:
         print(f"[Phase 9] Cycle #{cycle_n} complete. State saved.")
         return result.lean_source is not None
 
-    async def run_continuous(self) -> None:
-        """Run continuous cycles until shutdown."""
+    async def run_continuous(self, parallel: bool = False, max_jobs: int = 10) -> None:
+        """Run continuous cycles until shutdown.
+
+        parallel=True: dispatch up to max_jobs concurrently to Aristotle.
+        parallel=False: run one cycle at a time sequentially.
+        """
         print("="*70)
         print("CYCLE MASTER: CONTINUOUS RESEARCH ENGINE STARTED")
         print(f"Workspace: {self.workspace}")
         print(f"Catalog: {self.catalog_root}")
+        print(f"Mode: {'PARALLEL (max %d jobs)' % max_jobs if parallel else 'SEQUENTIAL'}")
         print("Press Ctrl+C to shutdown.")
         print("="*70)
 
-        interval = self.global_settings.get("cycle_interval_seconds", 300)
+        if parallel:
+            await self._run_parallel(max_jobs=max_jobs)
+        else:
+            await self._run_sequential()
 
+    async def _run_sequential(self) -> None:
+        """Original sequential mode."""
+        interval = self.global_settings.get("cycle_interval_seconds", 300)
         while not self._shutdown_requested:
             try:
                 await self.run_single_cycle()
@@ -581,6 +851,75 @@ class CycleMaster:
 
         print("[CYCLE MASTER] Shutdown complete.")
 
+    async def _run_parallel(self, max_jobs: int = 10) -> None:
+        """Parallel mode: keep up to max_jobs in flight with Aristotle."""
+        poll_interval = self.global_settings.get("polling_interval_seconds", 30)
+        in_flight: List[InFlightJob] = []
+
+        print(f"[PARALLEL] Starting with max {max_jobs} concurrent jobs")
+
+        while not self._shutdown_requested:
+            # Fill queue up to max_jobs
+            while len(in_flight) < max_jobs and not self._shutdown_requested:
+                print(f"[PARALLEL] Queue: {len(in_flight)}/{max_jobs} — dispatching new job...")
+                try:
+                    job = await self._prepare_job()
+                    if job:
+                        await self._dispatch_job(job)
+                        in_flight.append(job)
+                        print(f"[PARALLEL] Dispatched {job.exp_id} ({job.project_id})")
+                    else:
+                        print("[PARALLEL] Job preparation failed, will retry.")
+                        break
+                except Exception as e:
+                    print(f"[ERROR] Prepare/dispatch failed: {e}")
+                    import traceback
+                    traceback.print_exc()
+                    break
+
+            if self._shutdown_requested:
+                break
+
+            # Poll all jobs
+            print(f"[PARALLEL] Polling {len(in_flight)} jobs...")
+            completed = await self._poll_jobs(in_flight)
+
+            # Process completed jobs
+            for job in completed:
+                try:
+                    await self._process_job_result(job)
+                except Exception as e:
+                    print(f"[ERROR] Processing {job.exp_id} failed: {e}")
+                    import traceback
+                    traceback.print_exc()
+                in_flight.remove(job)
+
+            # Also remove failed/error jobs that won't complete
+            to_remove = [j for j in in_flight if j.status in ("failed", "error", "timeout")]
+            for job in to_remove:
+                print(f"[PARALLEL] Removing failed job {job.exp_id} ({job.status})")
+                in_flight.remove(job)
+
+            print(f"[PARALLEL] Queue: {len(in_flight)}/{max_jobs} jobs in flight")
+            print(f"[PARALLEL] Sleeping {poll_interval}s before next poll...")
+            await asyncio.sleep(poll_interval)
+
+        # Process any remaining jobs at shutdown
+        if in_flight:
+            print(f"[PARALLEL] Waiting for {len(in_flight)} remaining jobs...")
+            while in_flight and not self._shutdown_requested:
+                completed = await self._poll_jobs(in_flight)
+                for job in completed:
+                    try:
+                        await self._process_job_result(job)
+                    except Exception as e:
+                        print(f"[ERROR] Processing {job.exp_id} failed: {e}")
+                    in_flight.remove(job)
+                if in_flight:
+                    await asyncio.sleep(poll_interval)
+
+        print("[CYCLE MASTER] Shutdown complete.")
+
     def request_shutdown(self) -> None:
         print("[CYCLE MASTER] Shutdown requested...")
         self._shutdown_requested = True
@@ -594,6 +933,8 @@ async def main():
     parser.add_argument("--single-cycle", action="store_true", help="Run one cycle and exit")
     parser.add_argument("--domain", help="Force a specific domain")
     parser.add_argument("--dry-run", action="store_true", help="Generate but do not dispatch")
+    parser.add_argument("--parallel", action="store_true", help="Dispatch up to 10 jobs concurrently")
+    parser.add_argument("--max-jobs", type=int, default=10, help="Max concurrent Aristotle jobs (default: 10)")
 
     args = parser.parse_args()
 

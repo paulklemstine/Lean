@@ -44,6 +44,58 @@ class AristotleSDKClient:
         if self.api_key:
             aristotlelib.set_api_key(self.api_key)
 
+    async def submit_lean_project_only(
+        self,
+        prompt: str,
+        project_dir: Path,
+    ) -> str:
+        """Submit a Lean project and return immediately with project_id."""
+        project = await Project.create_from_directory(
+            prompt=prompt,
+            project_dir=str(project_dir),
+        )
+        print(f"[Aristotle] Project queued: {project.project_id} ({project.status})")
+        return project.project_id
+
+    async def poll_project(self, project_id: str) -> Dict[str, Any]:
+        """Poll a project by ID. Returns dict with status, percent_complete."""
+        try:
+            project = await Project.from_id(project_id)
+            await project.refresh()
+            return {
+                "project_id": project.project_id,
+                "status": project.status.value if hasattr(project.status, "value") else str(project.status),
+                "percent_complete": project.percent_complete or 0,
+                "complete": project.status in (ProjectStatus.COMPLETE, ProjectStatus.COMPLETE_WITH_ERRORS),
+                "error": None,
+            }
+        except Exception as e:
+            return {
+                "project_id": project_id,
+                "status": "error",
+                "percent_complete": 0,
+                "complete": False,
+                "error": str(e),
+            }
+
+    async def download_result(
+        self,
+        project_id: str,
+        project_dir: Path,
+    ) -> Optional[Path]:
+        """Download result tarball for a completed project."""
+        try:
+            project = await Project.from_id(project_id)
+            await project.refresh()
+            if project.status not in (ProjectStatus.COMPLETE, ProjectStatus.COMPLETE_WITH_ERRORS):
+                return None
+            dest = project_dir / "result.tar.gz"
+            await project.get_solution(destination=str(dest))
+            return dest if dest.exists() else None
+        except Exception as e:
+            print(f"[Aristotle] Download error for {project_id}: {e}")
+            return None
+
     async def submit_lean_project(
         self,
         prompt: str,
