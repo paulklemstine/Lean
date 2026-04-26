@@ -10,14 +10,13 @@ Pi-Agent (glm-5.1:cloud) drives ALL decisions:
 - Whether results are good enough
 - Where to place output files
 
-The orchestrator is the I/O body — it handles filesystem, git,
-Aristotle API, and coordination. Pi-Agent is the brain.
+Supports parallel dispatching: up to 10 jobs in Aristotle's queue,
+with fire-and-forget dispatch and async polling.
 
 Usage:
     python3 -m aether.pi_orchestrator --single-cycle
     python3 -m aether.pi_orchestrator --single-cycle --domain algebra --dry-run
-    python3 -m aether.pi_orchestrator --continuous
-    python3 -m aether.pi_orchestrator --continuous --parallel --max-jobs 3
+    python3 -m aether.pi_orchestrator --continuous --max-jobs 10
 """
 
 import argparse
@@ -63,23 +62,21 @@ class OrchestratorState:
 
 
 @dataclass
-class CycleResult:
-    """Result of one complete research cycle."""
-    cycle_id: str
-    domain: str
-    concept_title: str
-    research_mode: str
-    aristotle_project_id: str = ""
-    aristotle_status: str = ""
-    files_placed: List[str] = field(default_factory=list)
-    artifacts_placed: List[str] = field(default_factory=list)
-    prompt_hash: str = ""
-    catalog_references: List[str] = field(default_factory=list)
-    proof_quality: str = ""  # "trivial" | "partial" | "substantial"
-    quality_score: float = 0.0
-    elapsed_seconds: float = 0.0
-    retry_of: str = ""
-    retry_count: int = 0
+class InFlightJob:
+    """Track a job from concept creation through Aristotle result."""
+    exp_id: str
+    cycle_n: int
+    concept: Any  # ResearchConcept
+    prompt: str
+    lean_source: str
+    references: List[str]
+    project_dir: Path
+    project_id: Optional[str] = None
+    status: str = "prepared"  # prepared | queued | running | complete | failed | timeout
+    dispatch_time: float = 0.0
+    complete_time: Optional[float] = None
+    result_path: Optional[Path] = None
+    error_message: Optional[str] = None
 
 
 class PiAgentOrchestrator:
@@ -87,6 +84,9 @@ class PiAgentOrchestrator:
 
     The orchestrator handles I/O (filesystem, git, Aristotle API, ollama).
     Pi-Agent handles ALL decisions (domain, concept, prompt, quality, placement).
+
+    Supports parallel mode: dispatch up to max_jobs to Aristotle concurrently,
+    poll for completions, process results as they arrive.
     """
 
     def __init__(
@@ -157,56 +157,37 @@ class PiAgentOrchestrator:
     def _save_state(self) -> None:
         self.state_path.write_text(self.state.to_json(), encoding="utf-8")
 
-    async def run_single_cycle(self, forced_domain: Optional[str] = None, dry_run: bool = False) -> bool:
-        """Run one complete research cycle. Pi-Agent drives all decisions."""
+    # ------------------------------------------------------------------
+    # Job preparation (Pi-Agent concept generation + prompt writing)
+    # ------------------------------------------------------------------
+
+    async def _prepare_job(self, forced_domain: Optional[str] = None) -> Optional[InFlightJob]:
+        """Prepare a job: generate concept, write prompt, build lean project.
+        Returns InFlightJob ready for dispatch, or None if preparation fails."""
         self.state.cycle_count += 1
         cycle_n = self.state.cycle_count
         exp_id = str(uuid.uuid4())[:8]
-        start_time = time.time()
 
-        print(f"\n{'='*70}")
-        print(f"AETHER v3 — Cycle #{cycle_n} (exp={exp_id})")
-        print(f"{'='*70}")
+        print(f"\n[Prepare #{cycle_n}] exp={exp_id}")
 
-        # ---------------------------------------------------------------
-        # Phase 1: ANALYZE — Pi-Agent selects research direction
-        # ---------------------------------------------------------------
-        print(f"[Phase 1] Pi-Agent analyzing catalog and selecting direction...")
-
-        # Get optimization hints from autoresearch
+        # Phase 1: Pi-Agent selects research direction
         best_strategy = self.autoresearch.get_best_strategy()
-        print(f"[Phase 1] Best strategy: domain={best_strategy['best_domain']}, "
-              f"mode={best_strategy['best_research_mode']}, "
-              f"success_rate={best_strategy['success_rate']:.1%}")
 
-        # Scan catalog for @ references
+        self.catalog_analyzer.invalidate_cache()
         self.catalog_analyzer.scan()
-        print(f"[Phase 1] Catalog scanned: {len(self.catalog_analyzer._summaries or [])} files")
 
-        # Pi-Agent selects direction
         concept = self.pi_agent.select_research_direction(
             domains=self.domains,
             recent_history=self._get_recent_history(),
         )
-        print(f"[Phase 1] Concept: {concept.title}")
-        print(f"[Phase 1] Domain: {concept.domain}, Mode: {concept.research_mode}")
-        print(f"[Phase 1] Novelty: {concept.novelty_estimate:.2f}, "
-              f"Breakthrough: {concept.breakthrough_potential:.2f}")
-
-        # Override domain if forced
         if forced_domain:
             concept.domain = forced_domain
-            print(f"[Phase 1] Domain overridden to: {forced_domain}")
 
-        # ---------------------------------------------------------------
-        # Phase 2: REFERENCE — Select @ file references
-        # ---------------------------------------------------------------
-        print(f"[Phase 2] Selecting @ file references...")
+        print(f"[Prepare #{cycle_n}] Concept: {concept.title} | Domain: {concept.domain} | Mode: {concept.research_mode}")
 
-        # Use Pi-Agent's references if provided, otherwise select from catalog
+        # Phase 2: Select @ references
         if concept.catalog_references:
             references = concept.catalog_references[:12]
-            print(f"[Phase 2] Using Pi-Agent's references: {references[:5]}...")
         else:
             references = self.catalog_analyzer.select_references(
                 concept_domain=concept.domain,
@@ -214,16 +195,10 @@ class PiAgentOrchestrator:
                 concept_description=concept.concept_description,
                 research_mode=concept.research_mode,
             )
-            print(f"[Phase 2] Selected {len(references)} references from catalog analysis")
 
-        # Build catalog context string
         catalog_context = self.catalog_analyzer.build_catalog_context_string(references)
 
-        # ---------------------------------------------------------------
-        # Phase 3: WRITE — Pi-Agent dynamically writes Aristotle prompt
-        # ---------------------------------------------------------------
-        print(f"[Phase 3] Pi-Agent writing Aristotle prompt...")
-
+        # Phase 3: Pi-Agent writes the prompt dynamically
         prompt = self.pi_agent.write_aristotle_prompt(
             concept=concept,
             catalog_references=references,
@@ -231,111 +206,129 @@ class PiAgentOrchestrator:
             recent_successes=self._get_recent_successes(),
             recent_failures=self._get_recent_failures(),
         )
-        print(f"[Phase 3] Prompt: {len(prompt)} chars, {len(references)} @ references")
+        print(f"[Prepare #{cycle_n}] Prompt: {len(prompt)} chars, {len(references)} @ refs")
 
-        if dry_run:
-            print(f"\n[DRY RUN] Stopping before dispatch.")
-            print(f"  Concept: {concept.title}")
-            print(f"  Domain: {concept.domain}")
-            print(f"  Mode: {concept.research_mode}")
-            print(f"  References: {references}")
-            print(f"  Prompt length: {len(prompt)} chars")
-            self._save_state()
-            return True
-
-        # ---------------------------------------------------------------
-        # Phase 4: BUILD & DISPATCH — Lean project + Aristotle
-        # ---------------------------------------------------------------
-        print(f"[Phase 4] Building lean-only catalog...")
+        # Phase 4: Build lean project
         project_dir = self.output_dir / f"job_{exp_id}"
         project_dir.mkdir(parents=True, exist_ok=True)
 
-        # Generate lean source from concept
         lean_source = self._generate_lean_source(concept, exp_id)
-        print(f"[Phase 4] Lean source: {len(lean_source)} chars")
 
-        # Build the lean-only project with full catalog context
         self.lean_builder.build_lean_project(
             project_dir=project_dir,
             domain=concept.domain,
             lean_source=lean_source,
         )
 
-        print(f"[Phase 4] Dispatching to Aristotle...")
-        dispatch_start = time.time()
-        result = await self.aristotle.submit_lean_project(
+        self.state.last_domain = concept.domain
+
+        return InFlightJob(
+            exp_id=exp_id,
+            cycle_n=cycle_n,
+            concept=concept,
             prompt=prompt,
+            lean_source=lean_source,
+            references=references,
             project_dir=project_dir,
         )
-        dispatch_elapsed = time.time() - dispatch_start
-        print(f"[Phase 4] Aristotle: {result.status} ({dispatch_elapsed:.1f}s)")
-        if result.error_message:
-            print(f"[Phase 4] Error: {result.error_message}")
 
-        self.state.total_experiments += 1
+    # ------------------------------------------------------------------
+    # Fire-and-forget dispatch
+    # ------------------------------------------------------------------
 
-        # ---------------------------------------------------------------
-        # Phase 5: EVALUATE — Pi-Agent assesses result quality
-        # ---------------------------------------------------------------
-        result_lean = result.lean_source or ""
+    async def _dispatch_job(self, job: InFlightJob) -> None:
+        """Dispatch a job to Aristotle using fire-and-forget submit_lean_project_only."""
+        print(f"[Dispatch] {job.exp_id} -> Aristotle...")
+        job.dispatch_time = time.time()
+        try:
+            project_id = await self.aristotle.submit_lean_project_only(
+                prompt=job.prompt,
+                project_dir=job.project_dir,
+            )
+            job.project_id = project_id
+            job.status = "queued"
+            self.state.total_experiments += 1
+            print(f"[Dispatch] {job.exp_id} queued as {project_id}")
+        except Exception as e:
+            job.status = "failed"
+            job.error_message = str(e)
+            print(f"[Dispatch] {job.exp_id} FAILED: {e}")
+
+    # ------------------------------------------------------------------
+    # Polling
+    # ------------------------------------------------------------------
+
+    async def _poll_jobs(self, jobs: List[InFlightJob]) -> List[InFlightJob]:
+        """Poll all in-flight jobs. Returns list of newly completed jobs."""
+        completed = []
+        for job in jobs:
+            if job.status in ("complete", "failed", "timeout", "error", "cancelled"):
+                continue
+            if not job.project_id:
+                continue
+
+            try:
+                info = await self.aristotle.poll_project(job.project_id)
+                prev_status = job.status
+                job.status = info.get("status", job.status)
+
+                if info.get("complete"):
+                    print(f"[Poll] {job.exp_id} ({job.project_id}) COMPLETE")
+                    result_path = await self.aristotle.download_result(
+                        job.project_id, job.project_dir
+                    )
+                    job.result_path = result_path
+                    job.complete_time = time.time()
+                    job.status = "complete"
+                    completed.append(job)
+                elif info.get("error"):
+                    print(f"[Poll] {job.exp_id} ({job.project_id}) ERROR: {info['error']}")
+                    job.status = "error"
+                    job.error_message = info["error"]
+                    completed.append(job)
+                elif prev_status != job.status:
+                    print(f"[Poll] {job.exp_id} ({job.project_id}) {job.status}")
+                # Still queued or running — just wait
+            except Exception as e:
+                print(f"[Poll] {job.exp_id} poll error: {e}")
+
+        return completed
+
+    # ------------------------------------------------------------------
+    # Process a completed job
+    # ------------------------------------------------------------------
+
+    async def _process_completed_job(self, job: InFlightJob) -> None:
+        """Process a completed Aristotle job: evaluate, organize, record, git."""
+        exp_id = job.exp_id
+        concept = job.concept
+        cycle_n = job.cycle_n
+        elapsed = (job.complete_time or time.time()) - job.dispatch_time
+        print(f"\n[Process] {exp_id} — evaluating and organizing...")
+
+        # Evaluate quality
+        result_lean = ""
         quality_assessment = {"quality": "unknown", "should_retry": False, "confidence": 0.0, "analysis": ""}
 
-        if result_lean:
-            print(f"[Phase 5] Pi-Agent evaluating result quality...")
-            quality_assessment = self.pi_agent.evaluate_result_quality(
-                result_lean=result_lean,
-                concept=concept,
-                prompt=prompt,
-            )
-            print(f"[Phase 5] Quality: {quality_assessment.get('quality', 'unknown')} "
-                  f"(confidence: {quality_assessment.get('confidence', 0):.2f})")
-            print(f"[Phase 5] Analysis: {quality_assessment.get('analysis', 'N/A')[:200]}")
-        else:
-            print(f"[Phase 5] No Lean source in result. Skipping quality evaluation.")
-
-        # Retry logic
-        proof_quality = quality_assessment.get("quality", "unknown")
-        should_retry = quality_assessment.get("should_retry", False) and concept.research_mode != "sorry_fill"
-        max_retries = self.global_settings.get("max_retries_per_cycle", 2)
-
-        if should_retry and self.state.cycle_count <= max_retries + 1:
-            print(f"[Phase 5] Quality insufficient. Requesting retry from Pi-Agent...")
-            retry_result = self.pi_agent.suggest_retry_improvement(
-                concept=concept,
-                previous_prompt=prompt,
-                result_lean=result_lean,
-                quality_assessment=quality_assessment,
-            )
-            if retry_result.get("confidence", 0) >= 0.5:
-                # Update concept with revised info
-                concept.concept_description = retry_result.get(
-                    "revised_concept_description", concept.concept_description
-                )
-                concept.research_mode = retry_result.get(
-                    "revised_research_mode", concept.research_mode
-                )
-                concept.catalog_references = retry_result.get(
-                    "revised_catalog_references", concept.catalog_references
-                )
-                prompt = retry_result.get("revised_prompt", prompt)
-                print(f"[Phase 5] Retry with revised concept. Mode: {concept.research_mode}")
-            else:
-                print(f"[Phase 5] Retry confidence too low. Proceeding with original.")
-
-        # ---------------------------------------------------------------
-        # Phase 6: ORGANIZE — Place output files professionally
-        # ---------------------------------------------------------------
-        files_placed = []
-        artifacts_placed = []
-
-        if result.result_path and result.result_path.exists():
-            print(f"[Phase 6] Organizing output files...")
-            extract_dir = project_dir / "result_extracted"
+        if job.result_path and job.result_path.exists():
+            extract_dir = job.project_dir / "result_extracted"
             extract_dir.mkdir(exist_ok=True)
             import tarfile
-            with tarfile.open(result.result_path, "r:gz") as tar:
+            with tarfile.open(job.result_path, "r:gz") as tar:
                 tar.extractall(path=extract_dir)
 
+            # Read Main.lean if present
+            result_main = extract_dir / "Main.lean"
+            if result_main.exists():
+                result_lean = result_main.read_text(encoding="utf-8")
+                quality_assessment = self.pi_agent.evaluate_result_quality(
+                    result_lean=result_lean,
+                    concept=concept,
+                    prompt=job.prompt,
+                )
+                print(f"[Process] Quality: {quality_assessment.get('quality', 'unknown')}")
+
+            # Organize output
             decisions = self.output_organizer.organize_results(
                 result_dir=extract_dir,
                 exp_id=exp_id,
@@ -343,7 +336,8 @@ class PiAgentOrchestrator:
                 dry_run=False,
             )
 
-            # Summarize placement
+            files_placed = []
+            artifacts_placed = []
             for category, items in decisions.items():
                 for d in items:
                     if d.artifact_type == "theorem":
@@ -356,31 +350,24 @@ class PiAgentOrchestrator:
             demo_count = len(decisions.get("demos", []))
             visual_count = len(decisions.get("visuals", []))
             article_count = len(decisions.get("articles", []))
-            print(f"[Phase 6] Placed: {placed_count} theorems, {paper_count} papers, "
+            print(f"[Process] Placed: {placed_count} thms, {paper_count} papers, "
                   f"{demo_count} demos, {visual_count} visuals, {article_count} articles")
-
-            manifest = self.output_organizer.generate_manifest(decisions, exp_id)
-            manifest_path = self.workspace / f"manifest_{exp_id}.json"
-            manifest_path.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
         else:
-            print(f"[Phase 6] No result tarball. Status: {result.status}")
+            files_placed = []
+            artifacts_placed = []
+            print(f"[Process] No result tarball for {exp_id}")
 
-        # ---------------------------------------------------------------
-        # Phase 7: RECORD — ResearchMemory, Telemetry, Autoresearch
-        # ---------------------------------------------------------------
-        print(f"[Phase 7] Recording experiment...")
-
-        # Calculate quality score for autoresearch
+        # Record
+        proof_quality = quality_assessment.get("quality", "unknown")
         quality_score = self.autoresearch.evaluate_concept_quality(
             concept_title=concept.title,
             concept_domain=concept.domain,
             quality_assessment=quality_assessment,
             catalog_references=concept.catalog_references,
             research_mode=concept.research_mode,
-            prompt_length=len(prompt),
+            prompt_length=len(job.prompt),
         )
 
-        # Record in ResearchMemory
         if self.memory:
             mem_record = MemoryExperimentRecord(
                 exp_id=exp_id,
@@ -390,14 +377,13 @@ class PiAgentOrchestrator:
                 status="success" if proof_quality == "substantial" else "partial" if proof_quality == "partial" else "failure",
                 files_produced=len(files_placed),
                 key_theorems=[str(p) for p in files_placed[:5]],
-                prompt_text=prompt[:500],
+                prompt_text=job.prompt[:500],
                 proof_quality=proof_quality,
                 retry_of="",
                 retry_count=0,
             )
             self.memory.record(mem_record)
 
-        # Record in Autoresearch
         self.autoresearch.log_result(
             exp_id=exp_id,
             concept_title=concept.title,
@@ -406,11 +392,10 @@ class PiAgentOrchestrator:
             quality=proof_quality,
             quality_score=quality_score,
             catalog_references=concept.catalog_references,
-            prompt_length=len(prompt),
+            prompt_length=len(job.prompt),
             files_placed=len(files_placed),
         )
 
-        # Record in Telemetry
         record = ExperimentRecord(
             experiment_id=exp_id,
             arc_id=concept.domain,
@@ -418,10 +403,10 @@ class PiAgentOrchestrator:
             domain=concept.domain,
             file_path=str(self.catalog_root / "Speculative" / "AutoResearch" / f"v3_{concept.domain}_{exp_id}.lean"),
             difficulty="phd",
-            hypothesis_text=lean_source[:500],
+            hypothesis_text=job.lean_source[:500],
             concept_combination=concept.key_references[:5],
-            generation_latency_ms=int((time.time() - start_time) * 1000),
-            aristotle_job_id=result.project_id or "",
+            generation_latency_ms=int(elapsed * 1000),
+            aristotle_job_id=job.project_id or "",
             status="proven" if proof_quality == "substantial" else proof_quality,
             proof_length_lines=len(result_lean.splitlines()) if result_lean else 0,
             novelty_score=concept.novelty_estimate,
@@ -429,13 +414,9 @@ class PiAgentOrchestrator:
         )
         self.telemetry.log_experiment(record)
 
-        # ---------------------------------------------------------------
-        # Phase 8: GIT — Commit and push
-        # ---------------------------------------------------------------
+        # Git
         success = proof_quality in ("substantial", "partial") and len(files_placed) > 0
-
         if success:
-            print(f"[Phase 8] Git operations...")
             commit_ok = self.git.create_commit_for_cycle(
                 cycle_num=cycle_n,
                 domain=concept.domain,
@@ -445,77 +426,180 @@ class PiAgentOrchestrator:
                 version="v3",
             )
             if commit_ok:
-                print(f"[Phase 8] Commit created.")
+                print(f"[Process] Commit created.")
                 push_ok = self.git.push()
                 if push_ok:
-                    print(f"[Phase 8] Pushed to GitHub.")
-                else:
-                    print(f"[Phase 8] Push failed (will retry next cycle).")
-            else:
-                print(f"[Phase 8] No changes to commit.")
-
+                    print(f"[Process] Pushed to GitHub.")
             self.state.successful_proofs += 1
-            self.state.integration_history.append({
-                "cycle": cycle_n,
-                "exp_id": exp_id,
-                "concept": concept.title,
-                "domain": concept.domain,
-                "research_mode": concept.research_mode,
-                "quality": proof_quality,
-                "quality_score": quality_score,
-                "files_placed": len(files_placed),
-                "artifacts_placed": len(artifacts_placed),
-            })
         else:
-            print(f"[Phase 8] No changes to commit (quality={proof_quality}).")
+            print(f"[Process] No commit (quality={proof_quality}).")
 
-        self.state.last_domain = concept.domain
+        self.state.integration_history.append({
+            "cycle": cycle_n,
+            "exp_id": exp_id,
+            "concept": concept.title,
+            "domain": concept.domain,
+            "research_mode": concept.research_mode,
+            "quality": proof_quality,
+            "quality_score": quality_score,
+            "files_placed": len(files_placed),
+            "artifacts_placed": len(artifacts_placed),
+        })
         self._save_state()
+        print(f"[Process] {exp_id} done. Quality={proof_quality} Score={quality_score:.2f}")
 
-        elapsed = time.time() - start_time
-        print(f"\n{'='*70}")
-        print(f"CYCLE #{cycle_n} COMPLETE ({elapsed:.1f}s)")
-        print(f"  Concept: {concept.title}")
-        print(f"  Domain: {concept.domain} | Mode: {concept.research_mode}")
-        print(f"  Quality: {proof_quality} ({quality_score:.2f})")
-        print(f"  Files: {len(files_placed)} placed, {len(artifacts_placed)} artifacts")
-        print(f"{'='*70}")
+    # ------------------------------------------------------------------
+    # Single cycle (for --single-cycle mode, still uses blocking dispatch)
+    # ------------------------------------------------------------------
 
-        return proof_quality in ("substantial", "partial")
+    async def run_single_cycle(self, forced_domain: Optional[str] = None, dry_run: bool = False) -> bool:
+        """Run one complete research cycle sequentially."""
+        job = await self._prepare_job(forced_domain=forced_domain)
+        if not job:
+            return False
 
-    async def run_continuous(self, parallel: bool = False, max_jobs: int = 3) -> None:
-        """Run continuous cycles until shutdown."""
-        interval = self.global_settings.get("cycle_interval_seconds", 300)
+        if dry_run:
+            print(f"\n[DRY RUN] Concept: {job.concept.title}")
+            print(f"  Domain: {job.concept.domain} | Mode: {job.concept.research_mode}")
+            print(f"  References: {job.references}")
+            print(f"  Prompt: {len(job.prompt)} chars")
+            self._save_state()
+            return True
+
+        # Dispatch and wait
+        await self._dispatch_job(job)
+
+        if job.status == "failed":
+            return False
+
+        # Poll until complete (with generous timeout)
+        max_wait = self.config.get("aristotle", {}).get("timeout_seconds", 3600)
+        poll_interval = self.config.get("aristotle", {}).get("polling_interval_seconds", 30)
+        deadline = time.time() + max_wait
+
+        while job.status not in ("complete", "failed", "timeout", "error", "cancelled"):
+            if time.time() > deadline:
+                job.status = "timeout"
+                job.error_message = f"Timed out after {max_wait}s"
+                print(f"[Cycle] Job {job.exp_id} timed out")
+                break
+            completed = await self._poll_jobs([job])
+            if completed:
+                break
+            await asyncio.sleep(poll_interval)
+
+        if job.status in ("complete",):
+            await self._process_completed_job(job)
+            return True
+        else:
+            print(f"[Cycle] Job {job.exp_id} ended with status: {job.status}")
+            return False
+
+    # ------------------------------------------------------------------
+    # Continuous parallel mode (the main production mode)
+    # ------------------------------------------------------------------
+
+    async def run_continuous(self, max_jobs: int = 10) -> None:
+        """Run continuously with parallel dispatching to Aristotle.
+
+        Keeps up to max_jobs in flight at all times:
+        1. Prepare new jobs (Pi-Agent concept + prompt)
+        2. Dispatch to Aristotle (fire-and-forget)
+        3. Poll all in-flight jobs
+        4. Process completed jobs as they arrive
+        5. Fill the queue back up to max_jobs
+        6. Repeat
+        """
+        poll_interval = self.config.get("aristotle", {}).get("polling_interval_seconds", 30)
+        fill_batch = max(1, max_jobs // 3)  # prepare this many jobs per fill cycle
 
         print("=" * 70)
-        print("AETHER v3: PI-AGENT CENTERED RESEARCH ENGINE")
+        print("AETHER v3: PI-AGENT CENTERED RESEARCH ENGINE (PARALLEL)")
         print(f"Workspace: {self.workspace}")
         print(f"Catalog: {self.catalog_root}")
         print(f"Model: {self.pi_agent.model}")
-        print(f"Mode: {'PARALLEL' if parallel else 'SEQUENTIAL'}")
+        print(f"Max jobs: {max_jobs}")
+        print(f"Poll interval: {poll_interval}s")
         print("Press Ctrl+C to shutdown.")
         print("=" * 70)
 
+        in_flight: List[InFlightJob] = []
+
         while not self._shutdown_requested:
-            try:
-                await self.run_single_cycle()
-            except KeyboardInterrupt:
-                print("\n[SHUTDOWN] Ctrl+C received.")
-                self._shutdown_requested = True
-                break
-            except Exception as e:
-                print(f"[ERROR] Cycle failed: {e}")
-                import traceback
-                traceback.print_exc()
+            # --- Fill the queue up to max_jobs ---
+            slots = max_jobs - len(in_flight)
+            if slots > 0:
+                # Prepare and dispatch in batches
+                for _ in range(min(slots, fill_batch)):
+                    try:
+                        job = await self._prepare_job()
+                        if job:
+                            await self._dispatch_job(job)
+                            if job.project_id:
+                                in_flight.append(job)
+                            else:
+                                print(f"[Queue] {job.exp_id} dispatch failed, skipping")
+                    except Exception as e:
+                        print(f"[ERROR] Prepare/dispatch failed: {e}")
+                        import traceback
+                        traceback.print_exc()
 
             if self._shutdown_requested:
                 break
 
-            print(f"[ORCHESTRATOR] Sleeping {interval}s before next cycle...")
-            await asyncio.sleep(interval)
+            print(f"[Queue] {len(in_flight)}/{max_jobs} jobs in flight")
+
+            # --- Poll all in-flight jobs ---
+            try:
+                completed = await self._poll_jobs(in_flight)
+            except Exception as e:
+                print(f"[ERROR] Poll failed: {e}")
+                completed = []
+
+            # --- Process completed jobs ---
+            for job in completed:
+                try:
+                    if job.status == "complete":
+                        await self._process_completed_job(job)
+                    else:
+                        print(f"[Process] {job.exp_id} ended: {job.status} — skipping")
+                except Exception as e:
+                    print(f"[ERROR] Processing {job.exp_id} failed: {e}")
+                    import traceback
+                    traceback.print_exc()
+                in_flight.remove(job)
+
+            # Remove permanently failed jobs from queue
+            failed = [j for j in in_flight if j.status in ("failed", "error", "cancelled")]
+            for j in failed:
+                print(f"[Queue] Removing failed job {j.exp_id} ({j.status})")
+                in_flight.remove(j)
+
+            # --- Sleep before next poll ---
+            if in_flight or not self._shutdown_requested:
+                await asyncio.sleep(poll_interval)
+
+        # --- Drain remaining jobs at shutdown ---
+        if in_flight:
+            print(f"[Shutdown] Waiting for {len(in_flight)} remaining jobs...")
+            while in_flight and not self._shutdown_requested:
+                completed = await self._poll_jobs(in_flight)
+                for job in completed:
+                    try:
+                        if job.status == "complete":
+                            await self._process_completed_job(job)
+                    except Exception as e:
+                        print(f"[ERROR] Final processing {job.exp_id}: {e}")
+                    in_flight.remove(job)
+                if in_flight:
+                    await asyncio.sleep(poll_interval)
 
         print("[ORCHESTRATOR] Shutdown complete.")
         self._save_state()
+
+    # ------------------------------------------------------------------
+    # Helpers
+    # ------------------------------------------------------------------
 
     def _generate_lean_source(self, concept: ResearchConcept, exp_id: str) -> str:
         """Generate Lean source from concept."""
@@ -591,8 +675,8 @@ async def main():
     parser.add_argument("--single-cycle", action="store_true", help="Run one cycle and exit")
     parser.add_argument("--domain", help="Force a specific domain")
     parser.add_argument("--dry-run", action="store_true", help="Generate but do not dispatch")
-    parser.add_argument("--parallel", action="store_true", help="Run cycles in parallel (not yet implemented)")
-    parser.add_argument("--max-jobs", type=int, default=3, help="Max concurrent Aristotle jobs")
+    parser.add_argument("--max-jobs", type=int, default=10, help="Max concurrent Aristotle jobs (default: 10)")
+    parser.add_argument("--poll-interval", type=int, default=30, help="Seconds between polls (default: 30)")
 
     args = parser.parse_args()
 
@@ -605,6 +689,10 @@ async def main():
     # Override paths
     config["catalog"] = config.get("catalog", {})
     config["catalog"]["root_dir"] = config["catalog"].get("root_dir", "../Catalog")
+
+    # Apply CLI overrides
+    if args.poll_interval:
+        config.setdefault("aristotle", {})["polling_interval_seconds"] = args.poll_interval
 
     orchestrator = PiAgentOrchestrator(
         config=config,
@@ -624,7 +712,6 @@ async def main():
             loop.add_signal_handler(sig, orchestrator.request_shutdown)
         try:
             await orchestrator.run_continuous(
-                parallel=args.parallel,
                 max_jobs=args.max_jobs,
             )
         except asyncio.CancelledError:

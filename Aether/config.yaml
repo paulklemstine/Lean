@@ -19,10 +19,11 @@ pi_agent:
 aristotle:
   api_base_url: "https://aristotle.harmonic.fun/api/v1"
   api_key: "${ARISTOTLE_API_KEY}"
-  timeout_seconds: 1200
+  timeout_seconds: 7200
+  polling_interval_seconds: 30
   max_retries: 3
   retry_backoff_base: 2.0
-  concurrent_jobs: 2
+  concurrent_jobs: 10
   demo_mode: false
 
 catalog:
