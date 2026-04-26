@@ -1,24 +1,27 @@
 #!/usr/bin/env python3
-"""PiAgentClient: Autoresearch engine for mathematical breakthrough generation.
+"""PiAgentClient v3: Pi-Agent as the central brain using glm-5.1:cloud.
 
-Interfaces with ollama (or other LLM backends) to:
-1. Generate novel mathematical concepts in target domains
-2. Optimize Aristotle prompts for maximum inventiveness
-3. Draft research reports and demo specifications
-4. Evaluate novelty and breakthrough potential of ideas
-
-Domains: factoring, compression, AI, neural nets, quantum mechanics,
-         computation, physics, tropical geometry, cryptography.
+Key changes from v2:
+- Uses httpx HTTP API (not subprocess) to call ollama
+- Model: glm-5.1:cloud
+- Dynamically writes Aristotle prompts (no templates)
+- Has full Catalog awareness via CatalogAnalyzer
+- Evaluates Aristotle results for quality
+- Classifies file placement into domain directories
+- Supports research modes: prove, formalize, counterexample, sorry_fill
 """
 
 import json
 import re
-import subprocess
 import textwrap
+import time
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Dict, List, Optional, Any
 
+import httpx
+
+from catalog_analyzer import CatalogAnalyzer, CatalogFileSummary
 from research_memory import ResearchMemory
 
 
@@ -33,541 +36,677 @@ class ResearchConcept:
     novelty_estimate: float = 0.0
     breakthrough_potential: float = 0.0
     key_references: List[str] = field(default_factory=list)
+    catalog_references: List[str] = field(default_factory=list)
+    research_mode: str = "prove"  # prove | formalize | counterexample | sorry_fill
 
 
-@dataclass
-class OptimizedPrompt:
-    """Aristotle-optimized prompt package."""
-    theorem_prompt: str
-    research_report_request: str
-    python_demo_request: str
-    svg_demo_request: str
-    sciam_discussion_request: str
-    creativity_instructions: str
-    target_difficulty: str = "phd"
+# System prompts for each Pi-Agent function
+_DIRECTION_SYSTEM_PROMPT = textwrap.dedent("""\
+    You are Pi-Agent, an elite mathematical research director. Your role is to
+    analyze a theorem catalog, identify gaps and novel research directions, and
+    select the most promising area for investigation.
+
+    You have access to the full catalog summary and recent experiment history.
+    Your goal is to pick a domain and concept that will produce interesting,
+    novel, and formally provable results. Avoid repetition with recent experiments.
+
+    You MUST respond with valid JSON only. No markdown, no commentary outside the JSON.
+""")
+
+_PROMPT_WRITING_SYSTEM_PROMPT = textwrap.dedent("""\
+    You are Pi-Agent, an expert at crafting research briefs for a brilliant
+    formal mathematician named Aristotle. Aristotle works in Lean 4 and has
+    access to the full Mathlib library.
+
+    Your job is to write compelling, open-ended research briefs that inspire
+    Aristotle to produce interesting, novel, and rigorous mathematical results.
+    You are NOT writing a template or filling in blanks. You are writing a
+    genuine research communication from one mathematician to another.
+
+    Key principles:
+    - Be specific about what you want, but leave room for Aristotle's creativity
+    - Reference specific theorems, definitions, and structures from the catalog
+    - Explain WHY this direction is interesting, not just WHAT to prove
+    - Choose the research mode that best fits the concept:
+        - "prove": Prove a new theorem
+        - "formalize": Formalize informal mathematics from notes/papers
+        - "counterexample": Find a counterexample to a conjecture
+        - "sorry_fill": Complete existing proofs that have sorry placeholders
+    - The brief should feel like a research direction from a colleague, not a
+      homework assignment
+
+    You MUST respond with the complete prompt text only. No JSON wrapper, no
+    metadata, just the prompt that will be sent directly to Aristotle.
+""")
+
+_QUALITY_SYSTEM_PROMPT = textwrap.dedent("""\
+    You are Pi-Agent, evaluating the quality of a formal proof result from
+    Aristotle (a Lean 4 theorem prover). You must assess whether the result
+    is trivial, partial, or substantial.
+
+    Criteria:
+    - TRIVIAL: Proves tautologies (True := by trivial), uses only trivial tactics,
+      proves statements that are obviously true, or has no mathematical depth
+    - PARTIAL: Has some substance but contains many sorries, is incomplete, or
+      proves only simple corollaries while leaving the main claim unproven
+    - SUBSTANTIAL: Proves a non-trivial theorem with a complete or nearly complete
+      proof, uses interesting tactics or mathematical insights, contributes
+      genuinely new mathematics
+
+    You MUST respond with valid JSON only: {"quality": "trivial|partial|substantial",
+    "should_retry": bool, "retry_strategy": "...", "confidence": 0.0-1.0,
+    "analysis": "..."}
+""")
+
+_CLASSIFICATION_SYSTEM_PROMPT = textwrap.dedent("""\
+    You are Pi-Agent, classifying a Lean 4 theorem file into the correct domain
+    in a mathematical catalog. The catalog has these domains:
+
+    Algebra, Bridges, Computation, Cryptography, EML, Geometry, Logic,
+    MachineLearning, Physics, Pythagorean, Shared, Speculative, Tropical
+
+    Based on the mathematical content of the file, choose the most appropriate
+    domain and subdirectory. Consider the main definitions, theorem statements,
+    and mathematical concepts used.
+
+    You MUST respond with valid JSON only: {"domain": "...", "subdirectory": "...",
+    "target_path": "...", "is_complete_proof": bool, "confidence": 0.0-1.0,
+    "reason": "..."}
+""")
 
 
 class PiAgentClient:
-    """Autoresearch client using ollama for concept generation."""
+    """v3 Pi-Agent client: glm-5.1:cloud via ollama HTTP API.
 
-    def __init__(self, model: str = "kimi-k2.6:cloud", timeout: int = 120, memory: Optional[ResearchMemory] = None):
+    The brain of Aether v3. Handles:
+    - Research direction selection
+    - Dynamic prompt writing
+    - Result quality evaluation
+    - File classification and placement
+    """
+
+    OLLAMA_BASE_URL = "http://127.0.0.1:11434"
+
+    def __init__(
+        self,
+        model: str = "glm-5.1:cloud",
+        memory: Optional[ResearchMemory] = None,
+        catalog_root: Optional[Path] = None,
+        timeout: int = 300,
+    ):
         self.model = model
-        self.timeout = timeout
         self.memory = memory
-        self._ollama_proc = None
-        self._check_ollama()
-        self._launch_ollama()
+        self.catalog_root = Path(catalog_root) if catalog_root else None
+        self.timeout = timeout
+        self.client = httpx.Client(timeout=timeout)
 
-    def _check_ollama(self) -> bool:
-        """Check if ollama is available."""
-        try:
-            subprocess.run(["ollama", "list"], capture_output=True, check=True, timeout=5)
-            return True
-        except Exception:
-            return False
+        # CatalogAnalyzer for reference selection
+        self.catalog_analyzer: Optional[CatalogAnalyzer] = None
+        if self.catalog_root and self.catalog_root.exists():
+            self.catalog_analyzer = CatalogAnalyzer(self.catalog_root)
 
-    def _call_ollama(self, system_prompt: str, user_prompt: str) -> str:
-        """Call ollama with system + user prompts."""
+    def _call_ollama(self, system: str, user: str) -> str:
+        """Call ollama HTTP API with system + user prompts. Returns raw text."""
         payload = {
             "model": self.model,
-            "system": system_prompt,
-            "prompt": user_prompt,
+            "messages": [
+                {"role": "system", "content": system},
+                {"role": "user", "content": user},
+            ],
             "stream": False,
-            "options": {"temperature": 0.9, "top_p": 0.95, "num_predict": 2048},
+            "options": {
+                "temperature": 0.85,
+                "top_p": 0.92,
+                "num_predict": 4096,
+            },
         }
         try:
-            result = subprocess.run(
-                ["ollama", "run", self.model],
-                input=json.dumps(payload),
-                capture_output=True,
-                text=True,
+            response = self.client.post(
+                f"{self.OLLAMA_BASE_URL}/api/chat",
+                json=payload,
                 timeout=self.timeout,
             )
-            # Ollama run returns raw text; try to parse JSON if present
-            text_out = result.stdout.strip()
+            response.raise_for_status()
+            data = response.json()
+            content = data.get("message", {}).get("content", "")
+            if not content:
+                content = data.get("response", "")
+            return content
+        except httpx.TimeoutException:
+            return f"[OLLAMA_TIMEOUT: Request timed out after {self.timeout}s]"
+        except httpx.HTTPStatusError as e:
+            return f"[OLLAMA_HTTP_ERROR: {e.response.status_code} {e.response.text[:200]}]"
+        except Exception as e:
+            return f"[OLLAMA_ERROR: {e}]"
+
+    def _parse_json_response(self, raw: str) -> Optional[Dict[str, Any]]:
+        """Try to extract JSON from an LLM response."""
+        # Try direct parse
+        try:
+            return json.loads(raw.strip())
+        except json.JSONDecodeError:
+            pass
+
+        # Try to find JSON in markdown code block
+        json_match = re.search(r'```(?:json)?\s*\n?(.*?)\n?```', raw, re.DOTALL)
+        if json_match:
             try:
-                parsed = json.loads(text_out)
-                if "response" in parsed:
-                    return parsed["response"]
+                return json.loads(json_match.group(1).strip())
             except json.JSONDecodeError:
                 pass
-            # Fallback: just use the raw output
-            return text_out
-        except subprocess.TimeoutExpired:
-            return ""
-        except Exception as e:
-            return f"[ERROR: {e}]"
 
-    def generate_breakthrough_concept(
+        # Try to find JSON object anywhere in the text
+        json_match = re.search(r'\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}', raw, re.DOTALL)
+        if json_match:
+            try:
+                return json.loads(json_match.group())
+            except json.JSONDecodeError:
+                pass
+
+        return None
+
+    # ------------------------------------------------------------------
+    # Research direction selection
+    # ------------------------------------------------------------------
+
+    def select_research_direction(
         self,
-        domain: str,
-        seed_concepts: List[str],
-        target: str = "theorem",
+        domains: List[Dict[str, Any]],
+        recent_history: Optional[List[Dict]] = None,
     ) -> ResearchConcept:
-        """Generate a novel breakthrough concept in a target domain.
+        """Pi-Agent analyzes the Catalog and picks a research direction.
 
-        Uses ResearchMemory to avoid repeating previously explored ideas.
-        Falls back to randomized templates when ollama fails.
+        Returns a ResearchConcept with domain, concept details, catalog references,
+        and research_mode chosen by the LLM.
         """
-        # Build dynamic context from research memory
-        memory_context = ""
-        direction_hint = ""
+        # Build catalog summary
+        catalog_summary = ""
+        if self.catalog_analyzer:
+            self.catalog_analyzer.scan()
+            catalog_summary = self.catalog_analyzer.get_domain_summary_for_prompt()
+
+        # Build exclusion prompt from memory
+        exclusion = ""
         if self.memory:
-            memory_context = self.memory.build_exclusion_prompt()
-            direction_hint = self.memory.suggest_novel_direction(domain)
+            exclusion = self.memory.build_exclusion_prompt()
 
-        system = textwrap.dedent("""\
-            You are Pi-Agent, an elite mathematical autoresearch engine.
-            Your specialty is inventing novel, rigorous mathematical concepts
-            that bridge seemingly unrelated fields. You think in Lean 4,
-            algebraic geometry, number theory, tropical mathematics, and
-            theoretical computer science.
+        # Build success patterns from memory
+        success_patterns = ""
+        if self.memory:
+            success_patterns = self.memory.build_success_patterns()
 
-            CRITICAL: Output ONLY structured JSON. Never repeat previously explored ideas.
-            Be radically inventive — connect fields that have never been connected before.
-        """)
+        # Build domain list for prompt
+        domain_descriptions = []
+        for d in domains:
+            domain_descriptions.append(
+                f"- {d.get('id', d.get('name', '?'))}: {d.get('description', d.get('name', '?'))} "
+                f"(frontier: {d.get('frontier', 'open')}, "
+                f"seed domains: {', '.join(str(x) for x in d.get('seed_domains', d.get('seed_concepts', []))[:3])})"
+            )
 
-        user = textwrap.dedent(f"""\
-            Invent a BREAKTHROUGH {target.upper()} in the domain: {domain}.
-            Seed concepts to combine: {', '.join(seed_concepts)}.
+        user_prompt = textwrap.dedent(f"""\
+            Select the most promising research direction for this cycle.
 
-            {direction_hint}
+            ## Available Domains
+            {chr(10).join(domain_descriptions)}
 
-            {memory_context}
+            ## Catalog Summary
+            {catalog_summary if catalog_summary else "No catalog summary available."}
 
-            REQUIREMENTS (strict):
-            1. Must be formalizable in Lean 4 with mathlib4.
-            2. Must connect AT LEAST TWO distinct mathematical areas that are rarely combined.
-            3. Must have a compelling sci-fi or futuristic narrative framing.
-            4. Novelty should be genuinely high (0.85-1.0).
-            5. The theorem name must be a NEW, NEVER-USED identifier (snake_case).
-            6. Avoid repeating any concept from the "Previously explored" list above.
+            ## Recent Experiments (avoid repeating these)
+            {exclusion if exclusion else "No recent experiments."}
 
-            INVENTIVENESS DIRECTIVES:
-            - If the domain is algebra, try connecting to topology or logic.
-            - If the domain is geometry, try connecting to computation or number theory.
-            - If the domain is AI, try connecting to tropical geometry or p-adic analysis.
-            - Surprise me with an unexpected mathematical object or invariant.
+            ## Successful Patterns (emulate these)
+            {success_patterns if success_patterns else "No successful patterns yet."}
 
-            Respond with ONLY this JSON structure (no markdown, no extra text):
+            Select ONE domain and ONE specific concept to investigate. Choose something
+            novel, interesting, and likely to produce substantial formal mathematics.
+
+            Respond with JSON:
             {{
-              "title": "unique_snake_case_theorem_name",
-              "concept_description": "1-paragraph technical description",
-              "mathematical_framing": "The exact math: types, structures, statements",
-              "lean_guess": "A sketch of the Lean formalization",
-              "novelty_estimate": 0.92,
-              "breakthrough_potential": 0.88,
-              "key_references": ["Author Year: Title"]
+              "domain": "domain_id",
+              "concept_title": "snake_case_title_for_the_theorem",
+              "concept_description": "2-3 sentence description of the concept and why it matters",
+              "mathematical_framing": "formal mathematical statement or sketch",
+              "lean_guess": "optional Lean 4 sketch of the theorem statement",
+              "catalog_references": ["Domain/Subdir/File.lean", ...],
+              "research_mode": "prove|formalize|counterexample|sorry_fill",
+              "novelty_estimate": 0.0-1.0,
+              "breakthrough_potential": 0.0-1.0,
+              "key_references": ["reference1", "reference2"]
             }}
         """)
 
-        raw = self._call_ollama(system, user)
-        concept = self._parse_concept_json(raw, domain)
+        raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt)
+        parsed = self._parse_json_response(raw)
 
-        # Validate novelty against memory
-        if self.memory and self.memory.has_been_explored(concept.title, concept.concept_description):
-            print(f"[Pi-Agent] Concept '{concept.title}' already explored. Regenerating...")
-            concept = self._template_concept(domain, seed_concepts, target)
+        if parsed:
+            return ResearchConcept(
+                title=parsed.get("concept_title", "unnamed_concept"),
+                domain=parsed.get("domain", domains[0]["id"] if domains else "speculative"),
+                concept_description=parsed.get("concept_description", ""),
+                mathematical_framing=parsed.get("mathematical_framing", ""),
+                lean_guess=parsed.get("lean_guess", ""),
+                catalog_references=parsed.get("catalog_references", []),
+                research_mode=parsed.get("research_mode", "prove"),
+                novelty_estimate=float(parsed.get("novelty_estimate", 0.5)),
+                breakthrough_potential=float(parsed.get("breakthrough_potential", 0.5)),
+                key_references=parsed.get("key_references", []),
+            )
 
-        if concept.title == "fallback":
-            concept = self._template_concept(domain, seed_concepts, target)
-        return concept
+        # Fallback: pick a random domain
+        import random
+        domain = random.choice(domains) if domains else {"id": "speculative", "name": "Speculative"}
+        return ResearchConcept(
+            title=f"research_concept_{int(time.time())}",
+            domain=domain.get("id", "speculative"),
+            concept_description="Auto-generated research direction.",
+            mathematical_framing="TBD",
+            research_mode="prove",
+        )
 
-    def optimize_aristotle_prompt(
+    # ------------------------------------------------------------------
+    # Dynamic prompt writing
+    # ------------------------------------------------------------------
+
+    def write_aristotle_prompt(
         self,
         concept: ResearchConcept,
-        style: str = "breakthrough",
-    ) -> OptimizedPrompt:
-        """Transform a concept into an Aristotle-optimized prompt package."""
+        catalog_references: Optional[List[str]] = None,
+        catalog_context: str = "",
+        recent_successes: Optional[List[Dict]] = None,
+        recent_failures: Optional[List[Dict]] = None,
+    ) -> str:
+        """Dynamically write the full Aristotle prompt.
 
-        creativity_block = textwrap.dedent(f"""\
-            INVENTIVENESS DIRECTIVE (follow strictly):
-            1. Do not use standard textbook proofs. Seek an unexpected angle.
-            2. If the problem looks like it needs analysis, try algebra. If algebra, try geometry.
-            3. Use mathlib4's most advanced, recently-added lemmas. Prefer concise, elegant proofs.
-            4. The proof should feel like a "magic trick" — surprising but rigorous.
-            5. If stuck, reformulate the theorem in a dual category or adjoint setting.
-            6. Prefer constructive proofs over classical existence arguments.
-            7. Consider tropical, p-adic, or non-Archimedean interpretations.
-        """)
+        Pi-Agent receives the concept, the referenced Catalog files,
+        and research history. It writes the entire prompt text --
+        research brief, context, instructions, deliverables.
 
-        theorem_prompt = textwrap.dedent(f"""\
-            You are proving a BREAKTHROUGH theorem in {concept.domain}.
-
-            THEOREM: {concept.title}
-            {concept.mathematical_framing}
-
-            {concept.concept_description}
-
-            TASK: Provide a COMPLETE formal proof in Lean 4 (mathlib4 v4.28.0).
-            Fill every `sorry` with a rigorous, inventive proof.
-            Do NOT modify theorem statements or definitions.
-
-            {creativity_block}
-        """)
-
-        research_report_request = textwrap.dedent(f"""\
-            Additionally, write a RESEARCH REPORT titled "{concept.title}: A Breakthrough in {concept.domain}"
-            with these sections:
-            1. ABSTRACT (150 words)
-            2. MOTIVATION (why this matters)
-            3. MATHEMATAL FRAMEWORK (definitions, notation)
-            4. PROOF OVERVIEW (high-level strategy, key lemmas)
-            5. NOVELTY ANALYSIS (what makes this new)
-            6. OPEN PROBLEMS (3 follow-up questions)
-            7. REFERENCES (style: Author, Year, Title)
-            Save this as a Markdown file named `RESEARCH_REPORT.md`.
-        """)
-
-        python_demo_request = textwrap.dedent(f"""\
-            Create a PYTHON DEMO named `demo.py` that:
-            1. Illustrates the theorem numerically or visually.
-            2. Uses numpy, matplotlib, and/or manim if helpful.
-            3. Includes a `main()` that prints the key insight.
-            4. Is runnable standalone with `python3 demo.py`.
-            5. Has rich comments explaining the connection to the formal proof.
-        """)
-
-        svg_demo_request = textwrap.dedent(f"""\
-            Create an SVG DIAGRAM named `diagram.svg` that:
-            1. Visualizes the theorem's key geometric or algebraic structure.
-            2. Uses pure SVG (no external libraries).
-            3. Is self-contained and renderable in a browser.
-            4. Labels important points, regions, or mappings.
-            5. Has a caption at the bottom explaining what is shown.
-        """)
-
-        sciam_discussion = textwrap.dedent(f"""\
-            Write a SCIENTIFIC AMERICAN STYLE ARTICLE named `DISCUSSION.md`:
-            Title: "{concept.title}: When {concept.domain} Meets the Future"
-            Tone: Accessible to a scientifically literate but non-specialist audience.
-            Structure:
-            - Lede: A vivid hook (sci-fi scenario, historical anecdote, or surprising fact).
-            - Body: Explain the theorem using analogies, avoiding excessive notation.
-            - Visual Metaphors: Describe what the math "looks like" geometrically.
-            - Implications: What doors does this open? What could engineers do with it?
-            - Closing: A philosophical reflection on the nature of mathematical truth.
-            Length: ~1200 words.
-        """)
-
-        return OptimizedPrompt(
-            theorem_prompt=theorem_prompt,
-            research_report_request=research_report_request,
-            python_demo_request=python_demo_request,
-            svg_demo_request=svg_demo_request,
-            sciam_discussion_request=sciam_discussion,
-            creativity_instructions=creativity_block,
-            target_difficulty="phd" if concept.breakthrough_potential > 0.7 else "master",
-        )
-
-    def evaluate_novelty(self, lean_source: str, domain: str) -> Dict[str, float]:
-        """Heuristic novelty scoring of a Lean proof."""
-        scores = {
-            "syntactic_novelty": 0.0,
-            "conceptual_depth": 0.0,
-            "cross_domain": 0.0,
-            "elegance": 0.0,
-        }
-
-        lines = lean_source.splitlines()
-        tactic_set = set()
-        for line in lines:
-            for tactic in ["simp", "aesop", "linarith", "nlinarith", "field_simp", "norm_num",
-                           "ring", "group", "tauto", "finish", "apply", "exact", "convert",
-                           "have", "suffices", "by_contra", "induction", "cases", "rcases"]:
-                if tactic in line:
-                    tactic_set.add(tactic)
-
-        scores["syntactic_novelty"] = min(len(tactic_set) / 15.0, 1.0)
-
-        depth_markers = ["MeasureTheory", "CategoryTheory", "AlgebraicGeometry",
-                         "RepresentationTheory", "NumberTheory", "Tropical",
-                         "Padic", "DirichletCharacter", "Sheaf", "Cohomology"]
-        depth_hits = sum(1 for m in depth_markers if m in lean_source)
-        scores["conceptual_depth"] = min(depth_hits / 3.0, 1.0)
-
-        cross_markers = ["∧", "∨", "→", "∃", "∀", "∑", "∏", "∫", "∂", "∇", "ℂ", "ℝ", "ℚ", "ℤ"]
-        cross_hits = sum(1 for m in cross_markers if m in lean_source)
-        scores["cross_domain"] = min(cross_hits / 10.0, 1.0)
-
-        # Elegance: short proofs with high information density
-        proof_lines = [l for l in lines if l.strip() and not l.strip().startswith("/-") and not l.strip().startswith("--")]
-        if proof_lines:
-            scores["elegance"] = max(0.0, 1.0 - len(proof_lines) / 100.0)
-
-        return scores
-
-    def _parse_concept_json(self, raw: str, domain: str) -> ResearchConcept:
-        """Extract JSON from raw ollama output."""
-        # Try to find JSON block
-        json_match = re.search(r'\{.*\}', raw, re.DOTALL)
-        if not json_match:
-            return ResearchConcept(
-                title="fallback", domain=domain,
-                concept_description="", mathematical_framing="",
-            )
-        try:
-            data = json.loads(json_match.group())
-            return ResearchConcept(
-                title=data.get("title", "Untitled"),
-                domain=domain,
-                concept_description=data.get("concept_description", ""),
-                mathematical_framing=data.get("mathematical_framing", ""),
-                lean_guess=data.get("lean_guess", ""),
-                novelty_estimate=float(data.get("novelty_estimate", 0.5)),
-                breakthrough_potential=float(data.get("breakthrough_potential", 0.5)),
-                key_references=data.get("key_references", []),
-            )
-        except (json.JSONDecodeError, ValueError):
-            return ResearchConcept(
-                title="fallback", domain=domain,
-                concept_description="", mathematical_framing="",
-            )
-
-    def _template_concept(self, domain: str, seed_concepts: List[str], target: str) -> ResearchConcept:
-        """Fallback randomized concept generator when ollama fails.
-        Produces diverse concepts by combining random mathematical elements.
+        This replaces PromptEngine entirely. No templates.
         """
-        import random
-        import uuid
+        refs = catalog_references or concept.catalog_references or []
 
-        # Expansive vocabulary for novel concept generation
-        PREFIXES = [
-            "tropical", "p_adic", "quantum", "categorical", "nilpotent", "modular",
-            "spectral", "holomorphic", "symplectic", "derived", "stacky", "motivic",
-            "adic", "perfectoid", "condensed", "higher", "equivariant", "parametrized",
-            "noncommutative", "arithmetic", "geometric", "analytic", "homotopical",
-            "finitary", "computable", "constructive", "differential", "algebraic",
-            "probabilistic", "information_theoretic", "combinatorial", "graph_theoretic",
-        ]
+        # Build reference section
+        ref_section = ""
+        if refs and self.catalog_analyzer:
+            ref_section = self.catalog_analyzer.build_catalog_context_string(refs)
+        elif catalog_context:
+            ref_section = catalog_context
 
-        ADJECTIVES = [
-            "optimal", "universal", "canonical", "natural", "functorial", "invariant",
-            "recursive", "transfinite", "euclidean", "hyperbolic", "elliptic", "parabolic",
-            "graded", "filtered", "completed", "compactified", "resolved", "embedded",
-            "projective", "injective", "flat", "smooth", "etale", "proper", "separated",
-            "connected", "simply_connected", "nilpotent", "semisimple", "reductive",
-            "unipotent", "solvable", "perfect", "characteristic", "generic", "special",
-        ]
+        # Research mode instructions
+        mode_instructions = {
+            "prove": textwrap.dedent("""\
+                Research Mode: PROVE
 
-        NOUNS = [
-            "decomposition", "factorization", "lifting", "descent", "approximation",
-            "interpolation", "extrapolation", "continuation", "extension", "restriction",
-            "induction", "reduction", "transformation", "isomorphism", "equivalence",
-            "adjunction", "monad", "comonad", "algebra", "coalgebra", "bialgebra",
-            "operad", "PROP", "schema", "stack", "orbifold", "gerbe", "sheaf",
-            "bundle", "fibration", "cofibration", "fibration_sequence", "spectral_sequence",
-            "complex", "resolution", "derived_functor", "total_derivative", "jet_bundle",
-            "characteristic_class", "invariant", "obstruction", "fixpoint", "attractor",
-            "entropy", "capacity", "complexity", "dimension", "measure", "potential",
-            "action", "lagrangian", "hamiltonian", "tensor", "spinor", "twistor",
-            "amplitude", "phase", "frequency", "wavelength", "resonance", "interference",
-        ]
+                You are asked to discover and prove a new theorem. Start from the
+                mathematical context provided and find an interesting, non-trivial
+                result that can be formally proven in Lean 4. The theorem should be
+                specific enough to prove, but general enough to be mathematically
+                interesting. Avoid trivial tautologies.
+            """),
+            "formalize": textwrap.dedent("""\
+                Research Mode: FORMALIZE
 
-        SUFFIXES = [
-            "theorem", "lemma", "corollary", "principle", "law", "conjecture",
-            "hypothesis", "criterion", "algorithm", "protocol", "scheme", "method",
-            "construction", "characterization", "classification", "formula", "identity",
-        ]
+                You are given informal mathematical ideas, notes, or a paper excerpt.
+                Your task is to formalize these ideas in Lean 4. Translate the
+                informal mathematics into precise definitions and theorem statements,
+                then prove what you can. If some parts require new axioms, declare
+                them clearly and prove consequences.
+            """),
+            "counterexample": textwrap.dedent("""\
+                Research Mode: COUNTEREXAMPLE
 
-        DOMAIN_PAIRS = {
-            "factoring": [("number", "geometry"), ("algebra", "analysis"), ("logic", "probability")],
-            "compression": [("information", "topology"), ("entropy", "algebra"), ("coding", "geometry")],
-            "AI": [("learning", "category"), ("neural", "algebraic"), ("gradient", "differential")],
-            "neural nets": [("network", "sheaf"), ("backprop", "geometry"), ("activation", "tropical")],
-            "quantum mechanics": [("state", "number"), ("superposition", "graph"), ("entanglement", "information")],
-            "computation": [("complexity", "geometry"), ("algorithm", "homotopy"), ("logic", "probability")],
-            "physics": [("field", "algebra"), ("spacetime", "category"), ("gravity", "information")],
-            "cryptography": [("cipher", "topology"), ("protocol", "category"), ("security", "entropy")],
-            "tropical": [("geometry", "optimization"), ("algebra", "combinatorics"), ("matrix", "graph")],
-            "pythagorean": [("triple", "field"), ("descent", "category"), ("tree", "probability")],
-            "eml": [("self_pairing", "sheaf"), ("meta", "homotopy"), ("diagonal", "entropy")],
-            "machinelearning": [("distillation", "algebra"), ("attention", "geometry"), ("transformer", "category")],
-            "bridges": [("unification", "homotopy"), ("cross_domain", "sheaf"), ("analogue", "stack")],
-            "speculative": [("sci_fi", "number"), ("hyperspace", "topology"), ("consciousness", "information")],
+                You are asked to find a counterexample to a stated conjecture. If
+                the conjecture is false, provide a specific counterexample formalized
+                in Lean 4 and prove that it contradicts the conjecture. If the
+                conjecture is actually true, prove it instead.
+            """),
+            "sorry_fill": textwrap.dedent("""\
+                Research Mode: SORRY_FILL
+
+                You are given Lean 4 files that contain `sorry` placeholders. Your
+                task is to fill in all `sorry` placeholders with complete, rigorous
+                proofs. Use the surrounding context and imports to determine the
+                correct proof strategy. Do not change the theorem statements.
+            """),
         }
 
-        domain_key = domain.lower()
-        pairs = DOMAIN_PAIRS.get(domain_key, [("math", "structure")])
-        pair = random.choice(pairs)
+        mode_instruction = mode_instructions.get(concept.research_mode, mode_instructions["prove"])
 
-        # Generate a unique title using random combinations
-        prefix = random.choice(PREFIXES)
-        adj = random.choice(ADJECTIVES)
-        noun = random.choice(NOUNS)
-        suffix = random.choice(SUFFIXES)
+        # Build history section
+        history_section = ""
+        if recent_successes:
+            success_titles = [s.get("concept_title", s.get("title", "?")) for s in recent_successes[:5]]
+            history_section += f"\nRecent successful concepts: {', '.join(success_titles)}\n"
+        if recent_failures:
+            failure_titles = [f.get("concept_title", f.get("title", "?")) for f in recent_failures[:5]]
+            failure_reasons = [f.get("reason", "unknown") for f in recent_failures[:5]]
+            history_section += f"\nRecent failures (avoid these approaches): "
+            for title, reason in zip(failure_titles, failure_reasons):
+                history_section += f"\n  - {title}: {reason}"
 
-        # Ensure uniqueness by adding a random fragment
-        unique_frag = uuid.uuid4().hex[:4]
-        title = f"{prefix}_{adj}_{noun}_{suffix}_{unique_frag}"
+        user_prompt = textwrap.dedent(f"""\
+            Write a research brief for Aristotle, a brilliant Lean 4 formal
+            mathematician. The brief should be open-ended, inspiring, and specific.
 
-        # Generate diverse description
-        desc = (
-            f"A {prefix} approach to {pair[0]} {pair[1]} theory via {adj} {noun} {suffix}. "
-            f"Connects {domain} with {random.choice(['algebraic topology', 'tropical geometry', 'p-adic analysis', 'category theory', 'information theory', 'differential geometry', 'homotopy theory', 'representation theory'])}. "
-            f"Yields a new invariant or algorithm with applications to {random.choice(['cryptography', 'machine learning', 'quantum computing', 'compression', 'complexity theory', 'cosmology', 'number theory'])}."
-        )
+            ## Concept to Investigate
+            - Title: {concept.title}
+            - Domain: {concept.domain}
+            - Description: {concept.concept_description}
+            - Mathematical Framing: {concept.mathematical_framing}
+            {"- Lean Sketch: " + concept.lean_guess if concept.lean_guess else ""}
+            - Research Mode: {concept.research_mode}
 
-        math_framing = (
-            f"Define a {prefix} structure on {pair[0]} {pair[1]} spaces. "
-            f"Prove that the {adj} {noun} satisfies a universal property. "
-            f"Show equivalence to a known construction via {random.choice(['Yoneda lemma', 'adjunction', 'Kolmogorov complexity', 'tropical duality', 'spectral sequence'])}."
-        )
+            {mode_instruction}
 
-        lean = f"theorem {title} {{X : Type*}} [Inhabited X] :\n    True := by\n  sorry"
+            ## Catalog Context
+            The theorem catalog has these relevant files that you should study as
+            context. They contain existing theorems, definitions, and structures
+            that you can build upon:
 
-        return ResearchConcept(
-            title=title,
-            domain=domain,
-            concept_description=desc,
-            mathematical_framing=math_framing,
-            lean_guess=lean,
-            novelty_estimate=round(random.uniform(0.85, 0.99), 2),
-            breakthrough_potential=round(random.uniform(0.80, 0.95), 2),
-            key_references=["AETHER AutoResearch 2026"],
-        )
+            {ref_section if ref_section else "No specific files referenced. Use Mathlib and general knowledge."}
 
+            {history_section if history_section else ""}
+
+            ## Deliverables
+            Produce a complete Lean 4 file with:
+            1. All necessary imports (import Mathlib)
+            2. Any new definitions needed for the theorem
+            3. The theorem statement(s) with complete proofs
+            4. Brief comments explaining the proof strategy (using -- comments)
+
+            Additionally produce:
+            - A research report (RESEARCH_REPORT.md) explaining the mathematical
+              significance, the proof approach, and connections to existing work
+            - A Python demonstration (demo.py) showing the key idea with concrete
+              examples using only stdlib
+            - An SVG diagram (diagram.svg) visualizing the main concept
+            - A discussion article (DISCUSSION.md) written in Scientific American
+              style, accessible to a general audience
+
+            Write the complete research brief now. Be specific, creative, and
+            mathematically rigorous. This is a conversation between mathematicians,
+            not a homework assignment.
+        """)
+
+        raw = self._call_ollama(_PROMPT_WRITING_SYSTEM_PROMPT, user_prompt)
+        return raw if raw and not raw.startswith("[OLLAMA") else user_prompt
 
     # ------------------------------------------------------------------
-    # v2: Persistent ollama launch + diff analysis + prompt improvement
+    # Result quality evaluation
     # ------------------------------------------------------------------
 
-    def _launch_ollama(self):
-        """Launch ollama in background to keep model warm in VRAM."""
-        try:
-            self._ollama_proc = subprocess.Popen(
-                ["ollama", "launch", "pi", "--model", self.model],
-                stdin=subprocess.PIPE,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                text=True,
-            )
-            print(f"[Pi-Agent] Launched ollama pi with {self.model} (PID {self._ollama_proc.pid})")
-        except Exception as e:
-            print(f"[Pi-Agent] Failed to launch ollama pi: {e}")
-            self._ollama_proc = None
-
-    def analyze_diff_for_integration(
+    def evaluate_result_quality(
         self,
-        result_files: List[Dict[str, Any]],
-        catalog_root: Path,
-    ) -> List[Dict[str, str]]:
-        """Ask Pi-Agent to analyze a diff and decide file placements.
+        result_lean: str,
+        concept: ResearchConcept,
+        prompt: str,
+    ) -> Dict[str, Any]:
+        """Pi-Agent evaluates the quality of an Aristotle result.
 
-        result_files: list of dicts with keys:
-            path, status (new/modified/unchanged), content_preview
-        Returns: list of dicts with keys:
-            source, action (place|reject|artifact), target, reason
+        Returns: {
+            "quality": "trivial" | "partial" | "substantial",
+            "should_retry": bool,
+            "retry_strategy": str,
+            "confidence": float,
+            "analysis": str
+        }
         """
-        # Build catalog structure summary
-        domain_dirs = ["Algebra", "Applications", "Bridges", "Computation",
-                       "Cryptography", "EML", "Geometry", "Logic",
-                       "MachineLearning", "Physics", "Pythagorean",
-                       "Shared", "Speculative", "Tropical"]
-        catalog_summary = "\n".join(f"  - {d}/" for d in domain_dirs)
+        # Truncate very long results for the LLM
+        lean_preview = result_lean[:3000] if len(result_lean) > 3000 else result_lean
 
-        # Build file analysis text
-        file_lines = []
-        for rf in result_files:
-            file_lines.append(
-                f"  - {rf['path']} ({rf['status']}):\n"
-                f"    {rf.get('content_preview', '')[:200]}..."
-            )
-        files_text = "\n".join(file_lines)
+        # Quick heuristic pre-check
+        if self._is_trivially_obvious(lean_preview):
+            return {
+                "quality": "trivial",
+                "should_retry": True,
+                "retry_strategy": "Result is trivially obvious. Request a more specific, non-trivial theorem.",
+                "confidence": 0.9,
+                "analysis": "Heuristic: contains trivial proof patterns.",
+            }
 
-        system = textwrap.dedent("""\
-            You are a mathematical librarian. Analyze Aristotle output and
-            decide how to integrate each file into the Catalog.
-            Output ONLY structured JSON.
+        user_prompt = textwrap.dedent(f"""\
+            Evaluate this Lean 4 proof result.
+
+            ## Original Concept
+            - Title: {concept.title}
+            - Domain: {concept.domain}
+            - Research Mode: {concept.research_mode}
+            - Description: {concept.concept_description[:500]}
+
+            ## Lean 4 Result
+            ```lean
+            {lean_preview}
+            ```
+
+            Is this result trivial, partial, or substantial? Consider:
+            - Does it prove something mathematically interesting and non-obvious?
+            - Is the proof complete or does it have many sorries?
+            - Does it contribute new mathematics or just restate known facts?
+
+            Respond with JSON:
+            {{
+              "quality": "trivial|partial|substantial",
+              "should_retry": true/false,
+              "retry_strategy": "what to change if retrying",
+              "confidence": 0.0-1.0,
+              "analysis": "brief explanation"
+            }}
         """)
 
-        user = textwrap.dedent(f"""\
-            CATALOG STRUCTURE:
-            {catalog_summary}
+        raw = self._call_ollama(_QUALITY_SYSTEM_PROMPT, user_prompt)
+        parsed = self._parse_json_response(raw)
 
-            FILES TO ANALYZE:
-            {files_text}
+        if parsed:
+            return {
+                "quality": parsed.get("quality", "partial"),
+                "should_retry": parsed.get("should_retry", True),
+                "retry_strategy": parsed.get("retry_strategy", ""),
+                "confidence": float(parsed.get("confidence", 0.5)),
+                "analysis": parsed.get("analysis", ""),
+            }
 
-            RULES:
-            1. For NEW .lean files: classify into the correct domain/subdirectory
-            2. For MODIFIED existing files: only accept if genuine improvement
-            3. For artifacts (.md, .py, .svg): action = artifact
-            4. NEVER overwrite a catalog file with a trivial proof
-            5. If Main.lean proves something new, place in Speculative/AutoResearch/
-            6. Reject files with null bytes, unbalanced braces, or no declarations
+        # Fallback: heuristic evaluation
+        sorry_count = lean_preview.count("sorry")
+        theorem_count = lean_preview.count("theorem ") + lean_preview.count("lemma ")
+        if sorry_count == 0 and theorem_count > 0:
+            return {
+                "quality": "substantial",
+                "should_retry": False,
+                "retry_strategy": "",
+                "confidence": 0.6,
+                "analysis": "Fallback heuristic: no sorries, has theorems.",
+            }
+        elif sorry_count > 0 and theorem_count > 0:
+            return {
+                "quality": "partial",
+                "should_retry": True,
+                "retry_strategy": "Fill remaining sorries or simplify theorem.",
+                "confidence": 0.5,
+                "analysis": "Fallback heuristic: has sorries and theorems.",
+            }
+        else:
+            return {
+                "quality": "trivial",
+                "should_retry": True,
+                "retry_strategy": "Generate a more specific concept.",
+                "confidence": 0.4,
+                "analysis": "Fallback heuristic: no theorems found.",
+            }
 
-            Return JSON array:
-            [
-              {{"source": "path", "action": "place|reject|artifact",
-                "target": "catalog/path", "reason": "brief explanation"}}
-            ]
-        """)
+    def _is_trivially_obvious(self, lean_source: str) -> bool:
+        """Quick heuristic check for obviously trivial results."""
+        if "True := by trivial" in lean_source:
+            return True
+        if "True := by simp" in lean_source and "sorry" not in lean_source:
+            return True
+        lines = [l.strip() for l in lean_source.splitlines() if l.strip() and not l.strip().startswith("--")]
+        if len(lines) < 5:
+            trivial_tactics = {"trivial", "simp", "exact True.intro", "exact trivial", "rfl"}
+            if any(t in lean_source for t in trivial_tactics):
+                return True
+        if "theorem " in lean_source and "True :=" in lean_source:
+            return True
+        return False
 
-        raw = self._call_ollama(system, user)
-        try:
-            match = re.search(r'\[.*\]', raw, re.DOTALL)
-            if match:
-                return json.loads(match.group())
-        except Exception:
-            pass
-        return []
+    # ------------------------------------------------------------------
+    # Retry improvement
+    # ------------------------------------------------------------------
 
-    def suggest_prompt_improvement(
+    def suggest_retry_improvement(
         self,
         concept: ResearchConcept,
         previous_prompt: str,
-        failure_reason: str,
+        result_lean: str,
+        quality_assessment: Dict[str, Any],
     ) -> Dict[str, Any]:
-        """Ask Pi-Agent to analyze a failed/trivial proof and suggest improvements.
+        """Pi-Agent suggests how to improve a failed/trivial result.
 
-        Returns dict with:
-            revised_concept: str
-            revised_prompt: str
-            confidence: float
+        Returns dict with revised_concept_description, revised_prompt,
+        revised_catalog_references, revised_research_mode, confidence.
         """
-        system = textwrap.dedent("""\
-            You are a meta-prompt engineer specializing in formal mathematics.
-            Analyze why an Aristotle prompt failed and suggest improvements.
-            Output ONLY structured JSON.
-        """)
+        lean_preview = result_lean[:2000] if len(result_lean) > 2000 else result_lean
 
-        user = textwrap.dedent(f"""\
-            The previous prompt produced a {failure_reason}.
+        user_prompt = textwrap.dedent(f"""\
+            The previous research attempt produced a {quality_assessment.get('quality', 'unknown')} result.
 
-            CONCEPT: {concept.title}
-            DESCRIPTION: {concept.concept_description}
-            MATHEMATICAL FRAMING: {concept.mathematical_framing}
+            ## Original Concept
+            - Title: {concept.title}
+            - Domain: {concept.domain}
+            - Description: {concept.concept_description[:500]}
+            - Mode: {concept.research_mode}
 
-            PREVIOUS PROMPT (excerpt):
-            {previous_prompt[:1000]}...
+            ## Quality Assessment
+            - Quality: {quality_assessment.get('quality', 'unknown')}
+            - Analysis: {quality_assessment.get('analysis', 'N/A')}
+            - Retry strategy: {quality_assessment.get('retry_strategy', 'N/A')}
 
-            Analyze why this failed and suggest:
-            1. A stronger, more concrete theorem statement
-            2. A better prompt strategy for Aristotle
-            3. Specific mathlib lemmas or catalog theorems to reference
-            4. A revised creativity directive
+            ## Result (what went wrong)
+            ```lean
+            {lean_preview}
+            ```
 
-            Return JSON:
+            Suggest improvements. You can:
+            1. Make the concept more specific and mathematically precise
+            2. Change the research mode (e.g., from "prove" to "formalize" or "counterexample")
+            3. Select different catalog references that are more relevant
+            4. Completely change direction if the original concept was flawed
+
+            Respond with JSON:
             {{
-              "revised_concept": "new theorem description",
-              "revised_prompt": "full improved prompt text",
+              "revised_concept_description": "new, more specific description",
+              "revised_prompt": "full revised prompt text to send to Aristotle",
+              "revised_catalog_references": ["Domain/File.lean", ...],
+              "revised_research_mode": "prove|formalize|counterexample|sorry_fill",
               "confidence": 0.0-1.0
             }}
         """)
 
-        raw = self._call_ollama(system, user)
-        try:
-            match = re.search(r'\{{.*\}}', raw, re.DOTALL)
-            if match:
-                data = json.loads(match.group())
-                return {
-                    "revised_concept": data.get("revised_concept", ""),
-                    "revised_prompt": data.get("revised_prompt", ""),
-                    "confidence": float(data.get("confidence", 0.0)),
-                }
-        except Exception:
-            pass
-        return {"revised_concept": "", "revised_prompt": "", "confidence": 0.0}
+        raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt)
+        parsed = self._parse_json_response(raw)
 
+        if parsed:
+            return {
+                "revised_concept_description": parsed.get("revised_concept_description", concept.concept_description),
+                "revised_prompt": parsed.get("revised_prompt", previous_prompt),
+                "revised_catalog_references": parsed.get("revised_catalog_references", concept.catalog_references),
+                "revised_research_mode": parsed.get("revised_research_mode", concept.research_mode),
+                "confidence": float(parsed.get("confidence", 0.5)),
+            }
 
-import random  # noqa: E402, used only in fallback
+        # Fallback
+        return {
+            "revised_concept_description": concept.concept_description + " (retry: be more specific)",
+            "revised_prompt": previous_prompt,
+            "revised_catalog_references": concept.catalog_references,
+            "revised_research_mode": concept.research_mode,
+            "confidence": 0.3,
+        }
+
+    # ------------------------------------------------------------------
+    # File classification
+    # ------------------------------------------------------------------
+
+    def classify_file_placement(
+        self,
+        lean_source: str,
+        file_name: str,
+        concept: ResearchConcept,
+    ) -> Dict[str, Any]:
+        """Classify a Lean file into the correct Catalog location.
+
+        Returns dict with domain, subdirectory, target_path,
+        is_complete_proof, confidence, reason.
+        """
+        source_preview = lean_source[:3000] if len(lean_source) > 3000 else lean_source
+
+        # Get domain files for context
+        domain_files = ""
+        if self.catalog_analyzer:
+            self.catalog_analyzer.scan()
+            domain_files = self.catalog_analyzer.get_domain_summary_for_prompt()
+
+        user_prompt = textwrap.dedent(f"""\
+            Classify this Lean 4 file into the correct domain in the catalog.
+
+            ## File: {file_name}
+            ```lean
+            {source_preview}
+            ```
+
+            ## Concept Context
+            - Domain: {concept.domain}
+            - Research Mode: {concept.research_mode}
+
+            ## Catalog Domains
+            {domain_files if domain_files else "Algebra, Bridges, Computation, Cryptography, EML, Geometry, Logic, MachineLearning, Physics, Pythagorean, Shared, Speculative, Tropical"}
+
+            Choose the most appropriate domain and subdirectory. The file should go
+            where its mathematical content is most naturally at home.
+
+            Respond with JSON:
+            {{
+              "domain": "DomainName",
+              "subdirectory": "SubdirectoryName",
+              "target_path": "DomainName/SubdirectoryName/FileName.lean",
+              "is_complete_proof": true/false,
+              "confidence": 0.0-1.0,
+              "reason": "brief explanation"
+            }}
+        """)
+
+        raw = self._call_ollama(_CLASSIFICATION_SYSTEM_PROMPT, user_prompt)
+        parsed = self._parse_json_response(raw)
+
+        if parsed:
+            return {
+                "domain": parsed.get("domain", concept.domain),
+                "subdirectory": parsed.get("subdirectory", ""),
+                "target_path": parsed.get("target_path", f"{concept.domain}/AutoResearch/{file_name}"),
+                "is_complete_proof": parsed.get("is_complete_proof", "sorry" not in lean_source),
+                "confidence": float(parsed.get("confidence", 0.5)),
+                "reason": parsed.get("reason", ""),
+            }
+
+        # Fallback: use concept domain with heuristic
+        sorry_count = lean_source.count("sorry")
+        is_complete = sorry_count == 0
+        if is_complete:
+            return {
+                "domain": concept.domain,
+                "subdirectory": "",
+                "target_path": f"{concept.domain}/{file_name}",
+                "is_complete_proof": True,
+                "confidence": 0.4,
+                "reason": "Fallback: used concept domain, proof appears complete.",
+            }
+        else:
+            return {
+                "domain": "Speculative",
+                "subdirectory": "AutoResearch",
+                "target_path": f"Speculative/AutoResearch/{file_name}",
+                "is_complete_proof": False,
+                "confidence": 0.4,
+                "reason": f"Fallback: proof has {sorry_count} sorries, placed in Speculative.",
+            }

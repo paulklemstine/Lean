@@ -1,7 +1,8 @@
-"""AETHER: Automated Epic Theorem Hypothesis Engine & Research
+"""AETHER v3: Pi-Agent Centered Autonomous Math Research Engine
 
-Core package for autonomous mathematical discovery.
+Pi-Agent (glm-5.1:cloud) orchestrates research direction, prompt writing,
+result evaluation, and file placement. Aristotle (Harmonic) proves theorems.
 """
 
-__version__ = "0.1.0-alpha"
-__codename__ = "Prometheus"
+__version__ = "3.0.0"
+__codename__ = "Prometheus v3"

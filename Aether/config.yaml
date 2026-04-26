@@ -1,5 +1,20 @@
-# AETHER Configuration
-# Autonomous Math Research Engine
+# AETHER v3 Configuration
+# Pi-Agent Centered Autonomous Math Research Engine
+
+pi_agent:
+  model: "glm-5.1:cloud"
+  ollama_base_url: "http://127.0.0.1:11434"
+  timeout: 300
+  max_catalog_references: 12
+  max_lines_per_reference: 150
+  temperature: 0.85
+  top_p: 0.92
+  num_predict: 4096
+  research_modes:
+    - prove
+    - formalize
+    - counterexample
+    - sorry_fill
 
 aristotle:
   api_base_url: "https://aristotle.harmonic.fun/api/v1"
@@ -8,15 +23,32 @@ aristotle:
   max_retries: 3
   retry_backoff_base: 2.0
   concurrent_jobs: 2
-  demo_mode: false  # API key is available, use real Aristotle
+  demo_mode: false
 
 catalog:
-  root_dir: "../"
+  root_dir: "../Catalog"
   db_path: "../Tools/output/catalog.json"
   build_dir: "../../CatalogBuild"
   lean_version: "v4.28.0"
   mathlib_version: "v4.28.0"
   shared_threshold: 5
+
+output_organizer:
+  papers_dir: "Applications/Papers"
+  demos_dir: "Applications/Demos"
+  visuals_dir: "Applications/Visuals"
+  articles_dir: "Applications/Articles"
+  raw_output_dir: "ResearchOutput"
+  speculative_dir: "Speculative/AutoResearch"
+  require_pi_agent_classification: true
+  max_sorry_count_for_direct_placement: 0
+
+autoresearch:
+  enabled: true
+  metric_name: "concept_quality"
+  metric_unit: ""
+  direction: "higher"
+  max_retries: 3
 
 research:
   arcs:
@@ -26,6 +58,7 @@ research:
       seed_domains: ["Pythagorean", "Geometry", "Algebra"]
       frontier: "Tropical analogues of gravitational lenses"
       target_sorry_reduction: 5
+      difficulty: "phd"
 
     - id: "quantum_pythagoras"
       name: "Quantum Pythagoras"
@@ -33,6 +66,7 @@ research:
       seed_domains: ["Pythagorean", "Cryptography", "Computation"]
       frontier: "QDF (Quantum Diophantine Factoring)"
       target_sorry_reduction: 3
+      difficulty: "phd"
 
     - id: "tropical_langlands"
       name: "Tropical Langlands"
@@ -40,6 +74,7 @@ research:
       seed_domains: ["Tropical", "Algebra", "Bridges"]
       frontier: "Tropical automorphic forms"
       target_sorry_reduction: 2
+      difficulty: "master"
 
     - id: "neural_proof_mining"
       name: "Neural Proof Mining"
@@ -47,6 +82,7 @@ research:
       seed_domains: ["MachineLearning", "Logic", "Computation"]
       frontier: "RSIL adaptive distillation"
       target_sorry_reduction: 4
+      difficulty: "phd"
 
     - id: "temporal_computation"
       name: "Temporal Computation"
@@ -54,6 +90,7 @@ research:
       seed_domains: ["Logic", "Computation", "Speculative"]
       frontier: "OISCC oracle hierarchies"
       target_sorry_reduction: 3
+      difficulty: "phd"
 
     - id: "eml_cosmology"
       name: "EML Cosmology"
@@ -61,6 +98,7 @@ research:
       seed_domains: ["EML", "Physics", "Bridges"]
       frontier: "Self-pairing in curved spacetime"
       target_sorry_reduction: 2
+      difficulty: "master"
 
     - id: "cryptographic_gravity"
       name: "Cryptographic Gravity"
@@ -68,6 +106,7 @@ research:
       seed_domains: ["Cryptography", "Geometry", "Pythagorean"]
       frontier: "Lattice reduction in Berggren trees"
       target_sorry_reduction: 3
+      difficulty: "phd"
 
     - id: "speculative_scifi"
       name: "Speculative Sci-Fi Mathematics"
@@ -75,10 +114,12 @@ research:
       seed_domains: ["Speculative", "Physics", "MachineLearning"]
       frontier: "Formal models of hyperspace and alien computation"
       target_sorry_reduction: 10
+      difficulty: "open_problem"
 
   difficulty_levels: ["undergraduate", "graduate", "phd", "master", "open_problem"]
-  generation_batch_size: 5
-  max_proposals_per_arc: 3
+  max_concurrent_cycles: 10
+  cycle_interval_seconds: 300
+  max_retries_per_cycle: 3
 
 telemetry:
   log_dir: "./logs"
@@ -87,20 +128,6 @@ telemetry:
   report_output: "./logs/telemetry_report.html"
   metrics_interval_seconds: 60
 
-integration:
-  auto_merge: false
-  require_human_review: true
-  rollback_on_failure: true
-  validation_checks:
-    - syntax
-    - semantic
-    - deduplication
-    - import_graph
-    - thematic_placement
-
-prompts:
-  template_dir: "./prompts"
-  default_template: "master_theorem_prover"
-  max_context_theorems: 8
-  max_context_defs: 5
-  include_proof_hints: true
+git:
+  auto_push: true
+  commit_template: "AETHER v3 cycle #{cycle}: {concept_title}"
