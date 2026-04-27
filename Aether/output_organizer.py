@@ -610,15 +610,15 @@ class OutputOrganizer:
     def _heuristic_classify(self, lean_source: str) -> tuple:
         """Classify a .lean file by keyword matching. Returns (domain, confidence)."""
         content_lower = lean_source[:3000].lower()
-        best_domain = "Speculative"
+        best_domain_key = "speculative"
         best_score = 0
         for domain, keywords in DOMAIN_KEYWORDS.items():
             score = sum(1 for kw in keywords if kw in content_lower)
             if score > best_score:
                 best_score = score
-                best_domain = domain
+                best_domain_key = domain
         confidence = min(best_score / 3.0, 0.9)
-        return best_domain, confidence
+        return normalize_domain(best_domain_key), confidence
 
     def generate_manifest(
         self,
