@@ -242,8 +242,12 @@ class OutputOrganizer:
         sorry_count = lean_source.count("sorry")
         is_complete = sorry_count == 0
 
+        target_domain = getattr(concept, "domain", "Speculative")
+        target_subdir = ""
+        reason = "Heuristic classification"
+        confidence = 0.4
+
         # Try Pi-Agent classification
-        pi_classification = None
         if self.pi_agent:
             try:
                 pi_classification = self.pi_agent.classify_file_placement(
@@ -251,21 +255,14 @@ class OutputOrganizer:
                     file_name=source.name,
                     concept=concept,
                 )
+                if pi_classification and pi_classification.get("confidence", 0) >= 0.5:
+                    target_domain = pi_classification["domain"]
+                    target_subdir = pi_classification.get("subdirectory", "")
+                    is_complete = pi_classification.get("is_complete_proof", is_complete)
+                    reason = pi_classification.get("reason", "Pi-Agent classification")
+                    confidence = pi_classification["confidence"]
             except Exception:
                 pass
-
-        if pi_classification and pi_classification.get("confidence", 0) >= 0.5:
-            # Use Pi-Agent's classification
-            target_domain = pi_classification["domain"]
-            target_subdir = pi_classification.get("subdirectory", "")
-            is_complete = pi_classification.get("is_complete_proof", is_complete)
-            reason = pi_classification.get("reason", "Pi-Agent classification")
-            confidence = pi_classification["confidence"]
-        else:
-            # Heuristic fallback
-            target_domain = getattr(concept, "domain", "Speculative")
-            reason = "Heuristic classification"
-            confidence = 0.4
 
         # Determine final target path
         if is_complete:
