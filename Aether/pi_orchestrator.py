@@ -44,6 +44,7 @@ from research_context import ResearchContext
 from telemetry import TelemetryLogger, ExperimentRecord
 from git_automator import GitAutomator
 from output_organizer import normalize_domain
+from aristotle_loop import AristotleLoop
 
 
 @dataclass
@@ -147,6 +148,9 @@ class PiAgentOrchestrator:
                 direction=ar_cfg.get("direction", "higher"),
             )
 
+        # Aristotle Loop: principled UCB-based prompt selection
+        self.aristotle_loop = AristotleLoop(exploration_constant=1.5)
+
         # Control
         self._shutdown_requested = False
 
@@ -174,8 +178,29 @@ class PiAgentOrchestrator:
 
         print(f"\n[Prepare #{cycle_n}] exp={exp_id}")
 
-        # Phase 1: Pi-Agent selects research direction
+        # Phase 1: Pi-Agent selects research direction (with Aristotle Loop guidance)
         best_strategy = self.autoresearch.get_best_strategy()
+
+        # Use Aristotle Loop for principled domain selection
+        sorry_targets = []
+        sorry_files = self.catalog_analyzer.get_files_with_sorries()
+        if sorry_files:
+            sorry_targets = [f.relative_path for f in sorry_files[:5]]
+
+        loop_prompt = self.aristotle_loop.select_prompt(
+            forced_domain=forced_domain,
+            sorry_targets=sorry_targets,
+        )
+        loop_domain = loop_prompt["domain"]
+        loop_mode = loop_prompt["mode"]
+        ucb_score = loop_prompt["ucb_score"]
+
+        print(f"[Loop #{cycle_n}] UCB domain={loop_domain}, mode={loop_mode}, "
+              f"ucb_score={ucb_score:.3f}, synergy_bonus={loop_prompt['synergy_bonus']:.3f}, "
+              f"diminishing={loop_prompt['diminishing_returns']}")
+        if loop_prompt["recommended_bridges"]:
+            for d_exp, d_unexp, syn in loop_prompt["recommended_bridges"][:3]:
+                print(f"  Bridge: {d_exp} → {d_unexp} (synergy={syn:.2f})")
 
         self.catalog_analyzer.invalidate_cache()
         self.catalog_analyzer.scan()
@@ -197,6 +222,21 @@ class PiAgentOrchestrator:
                     "_priority_file": problem.get("file", ""),
                 })
 
+        # Inject Aristotle Loop's recommendation as a hint for Pi-Agent
+        loop_hint = {
+            "id": f"loop_{loop_domain}_{loop_mode}",
+            "name": f"Aristotle Loop: {loop_domain} ({loop_mode})",
+            "description": f"UCB-recommended direction: {loop_domain} with mode {loop_mode} "
+                          f"(UCB score: {ucb_score:.2f}, synergy bonus: {loop_prompt['synergy_bonus']:.2f})",
+            "frontier": loop_prompt.get("recommended_bridges", [(loop_domain, "", 0)])[0][1] if loop_prompt.get("recommended_bridges") else loop_domain,
+            "difficulty": "phd" if loop_mode == "sorry_fill" else "master",
+            "seed_domains": [loop_domain],
+            "_is_loop_recommendation": True,
+            "_ucb_score": ucb_score,
+            "_recommended_mode": loop_mode,
+        }
+        domains_with_findings.insert(0, loop_hint)  # Priority position
+
         concept = self.pi_agent.select_research_direction(
             domains=domains_with_findings,
             recent_history=self._get_recent_history(),
@@ -204,6 +244,9 @@ class PiAgentOrchestrator:
         )
         if forced_domain:
             concept.domain = forced_domain
+        elif concept.research_mode == "prove" and loop_mode == "sorry_fill" and sorry_targets:
+            # Override to sorry_fill when the Loop recommends it and there are sorry targets
+            concept.research_mode = "sorry_fill"
 
         print(f"[Prepare #{cycle_n}] Concept: {concept.title} | Domain: {concept.domain} | Mode: {concept.research_mode}")
         print(f"[Pi-Agent] Direction response:")
@@ -447,6 +490,25 @@ class PiAgentOrchestrator:
         # Record
         proof_quality = quality_assessment.get("quality", "unknown")
         print(f"[Process] {exp_id} recording experiment...")
+
+        # Count theorems and sorries from the result
+        result_theorem_count = 0
+        result_sorry_count = 0
+        result_has_cross_domain = False
+        if result_lean:
+            result_theorem_count = result_lean.count("theorem ") + result_lean.count("lemma ")
+            result_sorry_count = result_lean.count("sorry")
+            # Check for cross-domain: imports from multiple domain directories
+            import_lines = [l.strip() for l in result_lean.splitlines() if l.strip().startswith("import ")]
+            import_domains = set()
+            for imp in import_lines:
+                for d in ["Algebra", "Bridges", "Computation", "Cryptography", "EML",
+                          "Geometry", "Logic", "MachineLearning", "Physics",
+                          "Pythagorean", "Shared", "Speculative", "Tropical"]:
+                    if d in imp:
+                        import_domains.add(d)
+            result_has_cross_domain = len(import_domains) >= 2
+
         quality_score = self.autoresearch.evaluate_concept_quality(
             concept_title=concept.title,
             concept_domain=concept.domain,
@@ -454,7 +516,23 @@ class PiAgentOrchestrator:
             catalog_references=concept.catalog_references,
             research_mode=concept.research_mode,
             prompt_length=len(job.prompt),
+            theorem_count=result_theorem_count,
+            sorry_count=result_sorry_count,
+            has_cross_domain=result_has_cross_domain,
+            advances_open_problem=(concept.research_mode == "sorry_fill"),
         )
+
+        # Record discovery in Aristotle Loop
+        loop_result = self.aristotle_loop.record_discovery(
+            domain=normalize_domain(concept.domain),
+            mode=concept.research_mode,
+            reward=quality_score,
+            new_theorem_count=result_theorem_count,
+            cross_domain=result_has_cross_domain,
+        )
+        print(f"[Loop] regret={loop_result['regret_estimate']:.3f}, "
+              f"superadd={loop_result['superadditivity_ratio']:.3f}, "
+              f"status={loop_result['convergence_status']}")
 
         if self.memory:
             mem_record = MemoryExperimentRecord(
