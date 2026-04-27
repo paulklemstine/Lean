@@ -127,13 +127,19 @@ echo "Check 7: Research context accumulation..."
 python3 -c "
 from pathlib import Path
 from research_context import ResearchContext
-ctx = ResearchContext(Path('/tmp/aether_ctx_test'))
+import shutil, os
+ws = Path('/tmp/aether_ctx_test_v2')
+if ws.exists(): shutil.rmtree(ws)
+ws.mkdir()
+ctx = ResearchContext(ws)
 ctx.update_from_summary('e1', 1, 'tropical_hecke', 'tropical', 'prove', 'substantial', 0.9,
     {'key_theorems': ['thm1','thm2'], 'domains_touched': ['Tropical'], 'sorries_remaining': 0,
      'files_created': ['Tropical/Langlands/Hecke.lean'],
      'raw_text': 'Open problem: GL3 trace formula'})
 assert len(ctx.global_theorems_proved) == 2
-assert len(ctx.global_open_problems) >= 1
+assert len(ctx.discoveries) >= 1
+prompt = ctx.build_discoveries_prompt()
+assert 'tropical_hecke' in prompt, f'Should reference discovery in prompt'
 print('  OK')
 "
 
