@@ -1,2 +1,0 @@
-# Summary of changes for run c654f3e0-0f09-47fe-9d5a-5712ca4de395
-Replaced the `sorry` in `Main.lean` with `trivial`, which proves the `True` goal. The file builds successfully with no remaining sorries. I also fixed a minor lakefile version format issue (`"0.1"` → `"0.1.0"`) to allow the build to proceed.
