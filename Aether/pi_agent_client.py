@@ -586,10 +586,30 @@ class PiAgentClient:
             "sorry_fill": textwrap.dedent("""\
                 Research Mode: SORRY_FILL
 
-                You are given Lean 4 files that contain `sorry` placeholders. Your
-                task is to fill in all `sorry` placeholders with complete, rigorous
-                proofs. Use the surrounding context and imports to determine the
-                correct proof strategy. Do not change the theorem statements.
+                You are given Lean 4 files that contain `sorry` placeholders.
+                Your task is CRITICALLY IMPORTANT: fill ALL `sorry` placeholders
+                with complete, rigorous proofs. This closes known open problems.
+
+                ## Strategy for sorry_fill
+
+                1. READ the surrounding context. The theorem statement, imports,
+                   and nearby lemmas contain CRITICAL HINTS about proof strategy.
+
+                2. DO NOT change the theorem statement — only fill the `sorry`.
+
+                3. For HARD targets (Carmichael, Fibonacci, etc.), break the proof
+                   into helper lemmas first, then use them to fill the original sorry.
+
+                4. If you cannot complete the full proof, reduce the sorry count
+                   by replacing some with partial progress. This is still valuable.
+
+                5. Priority targets with known strategies:
+                   - CarmichaelComposite: Use entry-point theory + growth bounds
+                   - Fib_gcd_identity: Zsygmondy-type argument + entry point divides n
+                   - CarmichaelComputational: Same as CarmichaelComposite approach
+
+                6. Make sure your proof typechecks. A proof that compiles with
+                   fewer sorries is better than an ambitious proof that doesn't compile.
             """),
         }
 
