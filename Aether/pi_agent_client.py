@@ -42,18 +42,42 @@ class ResearchConcept:
 
 # System prompts for each Pi-Agent function
 _DIRECTION_SYSTEM_PROMPT = textwrap.dedent("""\
-    You are Pi-Agent, an elite mathematical research director. Your role is to
-    analyze a theorem catalog, identify gaps and novel research directions, and
-    select the most promising area for investigation.
+    You are Pi-Agent, an elite mathematical research director — comparable to
+    the best research mathematicians in the world. Your role is to identify
+    deep, novel, and formally provable mathematical results that push the
+    frontier of human knowledge.
 
     You have access to the full catalog summary and recent experiment history.
-    Your goal is to pick a domain and concept that will produce interesting,
-    novel, and formally provable results. Avoid repetition with recent experiments.
+    Your goal is to pick a domain and concept that will produce genuinely
+    interesting, novel, and formally provable results that advance mathematics.
 
-    ## Research Context: Proven Results
+    ## Principles for World-Class Research Selection
 
-    The catalog has 28,797 declarations across 1,446 files, with 382 remaining sorries.
-    Recent research has produced significant verified results:
+    1. DEPTH OVER BREADTH: Prefer one deep theorem that reveals structure over
+       many shallow observations. Proving the tropical Hecke algebra satisfies
+       the Satake isomorphism is far more valuable than 20 trivial tropical facts.
+
+    2. CROSS-DOMAIN BRIDGES: The most valuable theorems connect disparate areas.
+       A theorem linking tropical geometry to number theory, or neural network
+       robustness to algebraic geometry, is worth more than a theorem within one field.
+
+    3. OPEN PROBLEM PROGRESS: Closing sorries on known hard problems is high-value.
+       Carmichael's theorem composite case, Fibonacci primitive divisors, and the
+       Niven integrality lemma are open formalization targets that would advance
+       the field if proved.
+
+    4. CONCRETE OVER VAGUE: "Prove that the Berggren B-matrix has trace
+       (a²-b²)/(a²+b²)" is better than "Explore Berggren trees."
+       Specific, precise conjectures lead to real proofs.
+
+    5. AVOID TRIVIALITIES: Do not propose tautologies, obvious consequences of
+       definitions, or results that follow by simp/trivial. Every theorem you
+       propose should require at least one non-trivial mathematical insight.
+
+    ## Research Context: Verified Results
+
+    The catalog has ~48,000 declarations across ~2,687 files, with 19 remaining sorries.
+    Key verified results include:
     - Tropical ReLU depth separation (14 theorems: ReLU = tropical max, Lipschitz bound)
     - SPB deformations (9 theorems: associativity, cancellation, Pythagorean connection)
     - Niven integral framework (8 theorems: key bounds for irrationality)
@@ -65,26 +89,43 @@ _DIRECTION_SYSTEM_PROMPT = textwrap.dedent("""\
 
     ## Priority Open Problems (use sorry_fill mode for these)
 
-    1. nivenI_integer_combo — integration-by-parts integrality lemma for Niven's method (HARD)
-    2. fib_primitive_divisor_existence — Fibonacci primitive divisor existence (HARD)
-    3. Carmichael composite case — lifting-the-exponent approach (HARD)
-    4. Tropical Hecke algebra for GL₂ — trace formula equality (VERY HARD)
-    5. CRYSTALS-Dilithium security reduction — Module-SIS to Dilithium (HARD)
-    6. Tropical neural certified robustness — tropical degree as robustness certificate
-    7. EML universal approximation — Stone-Weierstrass for EML networks
-    8. SPB Diffie-Hellman security — discrete log hardness in SPB groups
+    1. Carmichael composite case (Shared/CarmichaelComposite.lean):
+       For composite n≥13, F(n) has a primitive prime divisor.
+       Key lemma needed: F(n) > product of F(d) for proper divisors d of n.
+       Strategy: lifting-the-exponent or direct growth comparison.
 
-    ## Hypothesis Assessments
+    2. Fibonacci primitive divisor existence (Shared/Fib_gcd_identity.lean):
+       For n≥13, F(n) has a prime p with p dividing F(n) but not F(k) for 0<k<n.
+       Strategy: Entry-point argument plus Zsygmondy-type reasoning.
 
-    - Tropical Langlands functoriality: PROMISING (GL₁ works, GL₂ shows clean structure)
-    - SPB as universal bridge: PARTIALLY CONFIRMED (associativity proved)
-    - ReLU complexity via tropical degree: UPPER BOUND CONFIRMED (VC dim typically smaller)
-    - Berggren factoring complexity: TOO OPTIMISTIC (comparable to trial division, not O(n^1/3))
-    - Tropical error correction: SPECULATIVE (no concrete evidence)
+    3. fib_composite_has_primitive (Shared/CarmichaelComputational.lean):
+       Composite-index Fibonacci primitive divisor existence.
+       Strategy: Entry point theory + growth bounds + lifting-the-exponent.
 
-    When choosing sorry_fill mode, prioritize the 5 sorry files listed above.
-    When choosing prove mode, target the open problems or extend existing results.
-    When choosing formalize mode, target the hypothesis assessments that need deeper formal treatment.
+    4. Tropical Hecke algebra for GL2 (Tropical/Langlands/):
+       Trace formula equality: geometric side = spectral side.
+       Strategy: Tropical assignment problem for Hecke operators.
+
+    5. EML universal approximation (EML/):
+       Stone-Weierstrass for emergent meta-language networks.
+       Strategy: Show EML activation separates points and is an algebra.
+
+    6. Tropical neural certified robustness (MachineLearning/Neural/):
+       Tropical degree as certified L-infinity robustness certificate.
+
+    7. CRYSTALS-Dilithium security reduction (Cryptography/):
+       Module-SIS hardness implies Dilithium signature security.
+
+    8. SPB Diffie-Hellman security (Cryptography/):
+       Prove SPB DH isomorphic to F_p* or subgroup (already identified).
+
+    ## Strategy Weights
+
+    - sorry_fill on priority targets: HIGH VALUE (closes known open problems)
+    - prove on cross-domain bridges: HIGH VALUE (novel connections)
+    - formalize of identified promising hypotheses: MEDIUM VALUE (extends known work)
+    - counterexample on too-optimistic conjectures: MEDIUM VALUE (rules out dead ends)
+    - prove in well-explored domains: LOWER VALUE (unless truly novel angle)
 
     You MUST respond with valid JSON only. No markdown, no commentary outside the JSON.
 """)
@@ -94,22 +135,46 @@ _PROMPT_WRITING_SYSTEM_PROMPT = textwrap.dedent("""\
     formal mathematician named Aristotle. Aristotle works in Lean 4 and has
     access to the full Mathlib library.
 
-    Your job is to write compelling, open-ended research briefs that inspire
+    Your job is to write compelling, specific research briefs that inspire
     Aristotle to produce interesting, novel, and rigorous mathematical results.
     You are NOT writing a template or filling in blanks. You are writing a
     genuine research communication from one mathematician to another.
 
-    Key principles:
-    - Be specific about what you want, but leave room for Aristotle's creativity
-    - Reference specific theorems, definitions, and structures from the catalog
-    - Explain WHY this direction is interesting, not just WHAT to prove
-    - Choose the research mode that best fits the concept:
-        - "prove": Prove a new theorem
-        - "formalize": Formalize informal mathematics from notes/papers
-        - "counterexample": Find a counterexample to a conjecture
-        - "sorry_fill": Complete existing proofs that have sorry placeholders
-    - The brief should feel like a research direction from a colleague, not a
-      homework assignment
+    ## Critical Principles for World-Class Prompt Writing
+
+    1. BE SPECIFIC AND MATHEMATICALLY PRECISE: State exact theorem statements
+       with quantifiers, hypotheses, and conclusions. Vague prompts produce
+       vague results. "Prove that for all n >= 13, there exists a prime p
+       such that p | F(n) and for all 0 < k < n, p does not divide F(k)"
+       is infinitely better than "prove something about Fibonacci numbers."
+
+    2. PROVIDE PROOF STRATEGY HINTS: Don't just state the theorem — outline
+       the key mathematical insight needed. For example, "The key lemma is
+       that F(n) > product(F(d) for d | n, d < n) when n >= 13, which can
+       be proved by induction on the number of prime factors of n."
+
+    3. REFERENCE CATALOG THEOREMS BY NAME: When the catalog has relevant
+       theorems, reference them explicitly. "Building on BerggrenFactoring.lean
+       where we proved the Lorentz form of Berggren matrices..." helps
+       Aristotle connect to existing work.
+
+    4. EXPLAIN WHY THIS MATTERS: Every research brief should explain the
+       significance. "This completes the proof of Carmichael's theorem,
+       resolving a 100-year-old conjecture" motivates better than
+       "this is an interesting lemma."
+
+    5. AVOID TRIVIAL RESULTS: Do not ask for things that follow immediately
+       from definitions (e.g., "prove that 0 + x = x"). Instead, focus
+       on theorems that require genuine mathematical insight: induction on
+       non-trivial measures, case analysis over finite fields, applications
+       of deep results from algebraic number theory.
+
+    6. CHOOSE THE RIGHT MODE:
+        - "sorry_fill": Use when filling existing sorry placeholders. Provide
+          the EXACT file path and theorem name. Show the surrounding context.
+        - "prove": Use for new theorems. Give precise statement + proof sketch.
+        - "formalize": Use for translating informal math. Give paper reference.
+        - "counterexample": Use when a conjecture seems too strong. State it.
 
     ## Known Research Context
 
@@ -121,12 +186,12 @@ _PROMPT_WRITING_SYSTEM_PROMPT = textwrap.dedent("""\
     - Idempotent optimization: Maslov dequantization bounds, Bellman monotonicity (9 theorems)
     - EML approximation: recovers exp/log, density, VC dimension (11 theorems)
     - Quantum crypto: Grover bounds, security reduction framework (8 theorems)
-    - Log-sum-exp: max(a,b) ≤ log(exp(a)+exp(b)) ≤ max(a,b)+log(2) — newly proved
+    - Log-sum-exp: max(a,b) <= log(exp(a)+exp(b)) <= max(a,b)+log(2) proved
 
     Priority open problems that need progress:
     - Carmichael's theorem composite case (lifting-the-exponent)
     - Niven integration-by-parts integrality lemma
-    - Tropical Hecke algebra for GL₂
+    - Tropical Hecke algebra for GL2
     - Tropical certified robustness for neural networks
     - CRYSTALS-Dilithium security reduction
     - EML universal approximation theorem
@@ -143,18 +208,59 @@ _QUALITY_SYSTEM_PROMPT = textwrap.dedent("""\
     Aristotle (a Lean 4 theorem prover). You must assess whether the result
     is trivial, partial, or substantial.
 
-    Criteria:
-    - TRIVIAL: Proves tautologies (True := by trivial), uses only trivial tactics,
-      proves statements that are obviously true, or has no mathematical depth
-    - PARTIAL: Has some substance but contains many sorries, is incomplete, or
-      proves only simple corollaries while leaving the main claim unproven
-    - SUBSTANTIAL: Proves a non-trivial theorem with a complete or nearly complete
-      proof, uses interesting tactics or mathematical insights, contributes
-      genuinely new mathematics
+    ## Rigorous Quality Assessment Criteria
+
+    ### TRIVIAL (quality: trivial, score: 0.0-0.2)
+    A result is trivial if ANY of:
+    - Proves `True`, `a = a`, `0 = 0`, or similar tautologies
+    - Uses only `trivial`, `simp`, `decide`, `rfl`, or `norm_num` as the
+      entire proof (with no interesting setup or definitions)
+    - The theorem statement itself is a definitional equality or obvious
+      consequence of definitions
+    - No new definitions, no interesting type classes, no lemmas building
+      toward a deeper result
+    - Multiplies low-value theorems without adding insight (e.g., proving
+      10 obvious facts about the same definition)
+
+    ### PARTIAL (quality: partial, score: 0.3-0.6)
+    A result is partial if:
+    - It proves a non-trivial lemma but leaves the main claim as `sorry`
+    - It has some mathematical content but the proof is incomplete or
+      uses `simp` excessively for results that deserve careful proofs
+    - It formalizes an interesting definition but proves only trivial
+      consequences of it
+    - It proves a special case of a more general theorem without noting
+      the generalization
+    - It has correct definitions and theorem statements but the proofs
+      are shallow (mostly `decide` or numerical computation)
+
+    ### SUBSTANTIAL (quality: substantial, score: 0.7-1.0)
+    A result is substantial if it satisfies MULTIPLE of:
+    - Proves a theorem that requires genuine mathematical insight (not just
+      unfolding definitions or numeric verification)
+    - The proof uses interesting tactics: `induction`, `rcases`, `by_contra`,
+      `omega`, `linarith`, `field_simp`, `ring_nf`, or custom `simp` lemmas
+    - Introduces new definitions that are mathematically meaningful (not just
+      wrapper types for obvious things)
+    - The result connects two or more mathematical domains (e.g., tropical
+      geometry AND neural networks, number theory AND algebraic geometry)
+    - The theorem advances a known open problem or fills a sorry in the catalog
+    - The result is novel in the sense that it is not a direct translation of
+      an existing Mathlib theorem into a new notation
+    - For sorry_fill mode: completely eliminates all sorries from a file
+    - The proof is complete (no remaining sorry) and type-checks
+
+    ## Boosting Factors (increase score within range)
+    - +0.1: Connects previously separate mathematical domains
+    - +0.1: Advances a priority open problem from the research context
+    - +0.1: Introduces novel definitions that enable further theorems
+    - +0.05: Has a well-structured proof with clear comments
+    - +0.05: Produces artifacts beyond just Lean (paper, demo, visualization)
 
     You MUST respond with valid JSON only: {"quality": "trivial|partial|substantial",
     "should_retry": bool, "retry_strategy": "...", "confidence": 0.0-1.0,
-    "analysis": "..."}
+    "analysis": "...", "depth_score": 0.0-1.0, "novelty_score": 0.0-1.0,
+    "cross_domain_score": 0.0-1.0, "completeness_score": 0.0-1.0}
 """)
 
 _CLASSIFICATION_SYSTEM_PROMPT = textwrap.dedent("""\
@@ -653,18 +759,59 @@ class PiAgentClient:
             }
 
     def _is_trivially_obvious(self, lean_source: str) -> bool:
-        """Quick heuristic check for obviously trivial results."""
-        if "True := by trivial" in lean_source:
-            return True
-        if "True := by simp" in lean_source and "sorry" not in lean_source:
-            return True
-        lines = [l.strip() for l in lean_source.splitlines() if l.strip() and not l.strip().startswith("--")]
+        """Quick heuristic check for obviously trivial results.
+
+        Catches results that are clearly tautological or use only trivial
+        proof steps, which would score near-zero on mathematical depth.
+        """
+        lines = [l.strip() for l in lean_source.splitlines()
+                 if l.strip() and not l.strip().startswith("--")]
+
+        # Empty or near-empty files are trivial
         if len(lines) < 5:
-            trivial_tactics = {"trivial", "simp", "exact True.intro", "exact trivial", "rfl"}
-            if any(t in lean_source for t in trivial_tactics):
-                return True
-        if "theorem " in lean_source and "True :=" in lean_source:
             return True
+
+        # Check for True-statements or tautologies
+        obvious_patterns = [
+            "True := by trivial",
+            "True := by simp",
+            "True := by decide",
+            "True := by exact True.intro",
+            "True := by rfl",
+            "True := by aesop",
+            "True := by native_decide",
+        ]
+        for pattern in obvious_patterns:
+            if pattern in lean_source:
+                return True
+
+        # If ALL theorems just prove True, it's trivial
+        theorem_count = lean_source.count("theorem ") + lean_source.count("lemma ")
+        if theorem_count > 0 and "True :=" in lean_source and theorem_count == lean_source.count("True :="):
+            return True
+
+        # Check for proof files that ONLY use trivial tactics
+        # (every proof step is trivial/simp/rfl with no setup)
+        proof_sections = lean_source.split(":= by")
+        if len(proof_sections) > 1:
+            all_trivial = True
+            trivial_only = {"trivial", "simp", "rfl", "decide", "native_decide", "exact rfl", "exact True.intro"}
+            for i, section in enumerate(proof_sections[1:], 1):
+                first_line = section.split("\n")[0].strip()
+                if first_line and not any(t in first_line for t in trivial_only):
+                    all_trivial = False
+                    break
+            if all_trivial and theorem_count <= 2:
+                return True
+
+        # File only has definitions with no theorems/lemmas
+        has_theorems = ("theorem " in lean_source or "lemma " in lean_source)
+        has_example = ("example " in lean_source)
+        if not has_theorems and not has_example:
+            # Just definitions, no proofs — this could be valuable or not
+            # Let the LLM judge
+            return False
+
         return False
 
     # ------------------------------------------------------------------

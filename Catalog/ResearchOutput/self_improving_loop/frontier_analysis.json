@@ -1,0 +1,394 @@
+{
+  "catalog_summary": {
+    "domains": 13,
+    "total_theorems": 22334,
+    "total_definitions": 5669,
+    "total_files": 1446
+  },
+  "knowledge_graph": {
+    "nodes": 13,
+    "edges": 21,
+    "bridges": [
+      {
+        "source": "Pythagorean",
+        "target": "Tropical",
+        "weight": 0.9,
+        "type": "structural"
+      },
+      {
+        "source": "Pythagorean",
+        "target": "Algebra",
+        "weight": 0.8,
+        "type": "structural"
+      },
+      {
+        "source": "Tropical",
+        "target": "MachineLearning",
+        "weight": 0.7,
+        "type": "structural"
+      },
+      {
+        "source": "Tropical",
+        "target": "Physics",
+        "weight": 0.6,
+        "type": "structural"
+      },
+      {
+        "source": "EML",
+        "target": "Tropical",
+        "weight": 0.8,
+        "type": "structural"
+      },
+      {
+        "source": "EML",
+        "target": "Algebra",
+        "weight": 0.5,
+        "type": "structural"
+      },
+      {
+        "source": "Algebra",
+        "target": "Cryptography",
+        "weight": 0.7,
+        "type": "structural"
+      },
+      {
+        "source": "Cryptography",
+        "target": "Computation",
+        "weight": 0.6,
+        "type": "structural"
+      },
+      {
+        "source": "Physics",
+        "target": "Geometry",
+        "weight": 0.5,
+        "type": "structural"
+      },
+      {
+        "source": "Logic",
+        "target": "Computation",
+        "weight": 0.7,
+        "type": "structural"
+      },
+      {
+        "source": "MachineLearning",
+        "target": "Computation",
+        "weight": 0.5,
+        "type": "structural"
+      },
+      {
+        "source": "Pythagorean",
+        "target": "Geometry",
+        "weight": 0.6,
+        "type": "structural"
+      },
+      {
+        "source": "Algebra",
+        "target": "Geometry",
+        "weight": 0.4,
+        "type": "reference"
+      },
+      {
+        "source": "Physics",
+        "target": "MachineLearning",
+        "weight": 0.3,
+        "type": "reference"
+      },
+      {
+        "source": "Speculative",
+        "target": "Physics",
+        "weight": 0.5,
+        "type": "reference"
+      },
+      {
+        "source": "Speculative",
+        "target": "Cryptography",
+        "weight": 0.4,
+        "type": "reference"
+      },
+      {
+        "source": "Bridges",
+        "target": "Tropical",
+        "weight": 0.9,
+        "type": "import"
+      },
+      {
+        "source": "Bridges",
+        "target": "Pythagorean",
+        "weight": 0.8,
+        "type": "import"
+      },
+      {
+        "source": "Bridges",
+        "target": "EML",
+        "weight": 0.7,
+        "type": "import"
+      },
+      {
+        "source": "Shared",
+        "target": "Algebra",
+        "weight": 0.6,
+        "type": "import"
+      },
+      {
+        "source": "Shared",
+        "target": "Pythagorean",
+        "weight": 0.7,
+        "type": "import"
+      }
+    ]
+  },
+  "frontiers": [
+    {
+      "type": "application",
+      "domain_a": "Computation",
+      "domain_b": "Computation",
+      "score": 5.4,
+      "description": "Computation has rich type infrastructure (108 structures)"
+    },
+    {
+      "type": "application",
+      "domain_a": "Speculative",
+      "domain_b": "Computation",
+      "score": 4.9,
+      "description": "Speculative has rich type infrastructure (98 structures)"
+    },
+    {
+      "type": "application",
+      "domain_a": "Physics",
+      "domain_b": "Computation",
+      "score": 4.800000000000001,
+      "description": "Physics has rich type infrastructure (96 structures)"
+    },
+    {
+      "type": "application",
+      "domain_a": "Logic",
+      "domain_b": "Computation",
+      "score": 4.5,
+      "description": "Logic has rich type infrastructure (90 structures)"
+    },
+    {
+      "type": "application",
+      "domain_a": "Cryptography",
+      "domain_b": "Computation",
+      "score": 3.85,
+      "description": "Cryptography has rich type infrastructure (77 structures)"
+    },
+    {
+      "type": "application",
+      "domain_a": "MachineLearning",
+      "domain_b": "Computation",
+      "score": 3.35,
+      "description": "MachineLearning has rich type infrastructure (67 structures)"
+    },
+    {
+      "type": "application",
+      "domain_a": "Tropical",
+      "domain_b": "Computation",
+      "score": 2.35,
+      "description": "Tropical has rich type infrastructure (47 structures)"
+    },
+    {
+      "type": "application",
+      "domain_a": "Bridges",
+      "domain_b": "Computation",
+      "score": 2.2,
+      "description": "Bridges has rich type infrastructure (44 structures)"
+    },
+    {
+      "type": "application",
+      "domain_a": "Pythagorean",
+      "domain_b": "Computation",
+      "score": 2.15,
+      "description": "Pythagorean has rich type infrastructure (43 structures)"
+    },
+    {
+      "type": "application",
+      "domain_a": "EML",
+      "domain_b": "Computation",
+      "score": 2.0,
+      "description": "EML has rich type infrastructure (40 structures)"
+    },
+    {
+      "type": "bridge",
+      "domain_a": "Pythagorean",
+      "domain_b": "Speculative",
+      "score": 1.4659248450981053,
+      "description": "No known bridge between Pythagorean and Speculative"
+    },
+    {
+      "type": "bridge",
+      "domain_a": "EML",
+      "domain_b": "Pythagorean",
+      "score": 1.4647103064197498,
+      "description": "No known bridge between EML and Pythagorean"
+    },
+    {
+      "type": "bridge",
+      "domain_a": "Computation",
+      "domain_b": "Pythagorean",
+      "score": 1.3321280854391757,
+      "description": "No known bridge between Computation and Pythagorean"
+    },
+    {
+      "type": "bridge",
+      "domain_a": "Physics",
+      "domain_b": "Pythagorean",
+      "score": 1.2822882620499714,
+      "description": "No known bridge between Physics and Pythagorean"
+    },
+    {
+      "type": "bridge",
+      "domain_a": "EML",
+      "domain_b": "Speculative",
+      "score": 1.2815348061231484,
+      "description": "No known bridge between EML and Speculative"
+    },
+    {
+      "type": "bridge",
+      "domain_a": "Computation",
+      "domain_b": "Speculative",
+      "score": 1.1655332117361796,
+      "description": "No known bridge between Computation and Speculative"
+    },
+    {
+      "type": "bridge",
+      "domain_a": "Computation",
+      "domain_b": "EML",
+      "score": 1.1645675516129508,
+      "description": "No known bridge between Computation and EML"
+    },
+    {
+      "type": "bridge",
+      "domain_a": "EML",
+      "domain_b": "Physics",
+      "score": 1.120996785609581,
+      "description": "No known bridge between EML and Physics"
+    },
+    {
+      "type": "bridge",
+      "domain_a": "Computation",
+      "domain_b": "Physics",
+      "score": 1.019526725013441,
+      "description": "No known bridge between Computation and Physics"
+    },
+    {
+      "type": "bridge",
+      "domain_a": "Logic",
+      "domain_b": "Pythagorean",
+      "score": 1.0181906994085876,
+      "description": "No known bridge between Logic and Pythagorean"
+    }
+  ],
+  "recommendations": [
+    {
+      "rank": 1,
+      "type": "application",
+      "domains": [
+        "Computation",
+        "Computation"
+      ],
+      "priority": 5.4,
+      "description": "Computation has rich type infrastructure (108 structures)",
+      "prompt_for_aristotle": "Develop computational algorithms for Computation. The 108 type structures provide a rich API. Formalize efficient algorithms and prove correctness."
+    },
+    {
+      "rank": 2,
+      "type": "application",
+      "domains": [
+        "Speculative",
+        "Computation"
+      ],
+      "priority": 4.9,
+      "description": "Speculative has rich type infrastructure (98 structures)",
+      "prompt_for_aristotle": "Develop computational algorithms for Speculative. The 98 type structures provide a rich API. Formalize efficient algorithms and prove correctness."
+    },
+    {
+      "rank": 3,
+      "type": "application",
+      "domains": [
+        "Physics",
+        "Computation"
+      ],
+      "priority": 4.8,
+      "description": "Physics has rich type infrastructure (96 structures)",
+      "prompt_for_aristotle": "Develop computational algorithms for Physics. The 96 type structures provide a rich API. Formalize efficient algorithms and prove correctness."
+    },
+    {
+      "rank": 4,
+      "type": "application",
+      "domains": [
+        "Logic",
+        "Computation"
+      ],
+      "priority": 4.5,
+      "description": "Logic has rich type infrastructure (90 structures)",
+      "prompt_for_aristotle": "Develop computational algorithms for Logic. The 90 type structures provide a rich API. Formalize efficient algorithms and prove correctness."
+    },
+    {
+      "rank": 5,
+      "type": "application",
+      "domains": [
+        "Cryptography",
+        "Computation"
+      ],
+      "priority": 3.85,
+      "description": "Cryptography has rich type infrastructure (77 structures)",
+      "prompt_for_aristotle": "Develop computational algorithms for Cryptography. The 77 type structures provide a rich API. Formalize efficient algorithms and prove correctness."
+    },
+    {
+      "rank": 6,
+      "type": "application",
+      "domains": [
+        "MachineLearning",
+        "Computation"
+      ],
+      "priority": 3.35,
+      "description": "MachineLearning has rich type infrastructure (67 structures)",
+      "prompt_for_aristotle": "Develop computational algorithms for MachineLearning. The 67 type structures provide a rich API. Formalize efficient algorithms and prove correctness."
+    },
+    {
+      "rank": 7,
+      "type": "application",
+      "domains": [
+        "Tropical",
+        "Computation"
+      ],
+      "priority": 2.35,
+      "description": "Tropical has rich type infrastructure (47 structures)",
+      "prompt_for_aristotle": "Develop computational algorithms for Tropical. The 47 type structures provide a rich API. Formalize efficient algorithms and prove correctness."
+    },
+    {
+      "rank": 8,
+      "type": "application",
+      "domains": [
+        "Bridges",
+        "Computation"
+      ],
+      "priority": 2.2,
+      "description": "Bridges has rich type infrastructure (44 structures)",
+      "prompt_for_aristotle": "Develop computational algorithms for Bridges. The 44 type structures provide a rich API. Formalize efficient algorithms and prove correctness."
+    },
+    {
+      "rank": 9,
+      "type": "application",
+      "domains": [
+        "Pythagorean",
+        "Computation"
+      ],
+      "priority": 2.15,
+      "description": "Pythagorean has rich type infrastructure (43 structures)",
+      "prompt_for_aristotle": "Develop computational algorithms for Pythagorean. The 43 type structures provide a rich API. Formalize efficient algorithms and prove correctness."
+    },
+    {
+      "rank": 10,
+      "type": "application",
+      "domains": [
+        "EML",
+        "Computation"
+      ],
+      "priority": 2.0,
+      "description": "EML has rich type infrastructure (40 structures)",
+      "prompt_for_aristotle": "Develop computational algorithms for EML. The 40 type structures provide a rich API. Formalize efficient algorithms and prove correctness."
+    }
+  ]
+}

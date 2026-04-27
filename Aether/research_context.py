@@ -60,8 +60,8 @@ class ResearchContext:
     a running summary of what was discovered and what's still open.
     """
 
-    MAX_DISCOVERIES = 30  # Keep last N discoveries for prompt context
-    MAX_OPEN_PROBLEMS = 20  # Track up to N distinct open problems
+    MAX_DISCOVERIES = 50  # Keep last N discoveries for prompt context (increased from 30)
+    MAX_OPEN_PROBLEMS = 30  # Track up to N distinct open problems (increased from 20)
 
     def __init__(self, workspace: Path):
         self.workspace = Path(workspace)
@@ -176,28 +176,33 @@ class ResearchContext:
 
         This gives Pi-Agent context about what was recently discovered so it
         can build on existing work instead of repeating or ignoring it.
+        Includes strategic guidance for maximizing research quality.
         """
         if not self.discoveries:
-            return "No previous research cycles completed yet."
+            return ("No previous research cycles completed yet. "
+                    "This is a cold start — prioritize sorry_fill on the "
+                    "priority targets (CarmichaelComposite, Fib_gcd_identity) "
+                    "to close known open problems, or target cross-domain "
+                    "bridge theorems for novelty.")
 
         recent = self.discoveries[-limit:]
         lines = [f"## Recent Research Discoveries ({len(recent)} cycles)"]
 
-        # Recent substantial discoveries
+        # Recent substantial discoveries — these are what to BUILD ON
         substantial = [d for d in recent if d.quality in ("substantial", "partial")]
         if substantial:
             lines.append("\n### Verified Theorems (build on these)")
-            for d in substantial[-5:]:
+            for d in substantial[-7:]:
                 theorems_str = ", ".join(d.key_theorems[:6]) if d.key_theorems else "no theorems listed"
                 lines.append(f"- **{d.concept_title}** ({d.domain}, {d.quality}): {theorems_str}")
                 if d.future_directions:
                     for fd in d.future_directions[:2]:
                         lines.append(f"  → Future direction: {fd}")
 
-        # Remaining open problems accumulated across cycles
+        # Remaining open problems accumulated across cycles — PRIORITIZE these
         if self.global_open_problems:
             lines.append("\n### Accumulated Open Problems (prioritize these)")
-            for problem in self.global_open_problems[-8:]:
+            for problem in self.global_open_problems[-10:]:
                 lines.append(f"  - {problem}")
 
         # Sorry count tracking
@@ -211,18 +216,38 @@ class ResearchContext:
                 self.domain_success_rates.items(),
                 key=lambda x: x[1].get("success", 0) / max(x[1].get("total", 1), 1),
                 reverse=True,
-            )[:8]:
+            )[:10]:
                 total = rates.get("total", 0)
                 success = rates.get("success", 0)
                 rate = success / total if total > 0 else 0
                 lines.append(f"  - {domain}: {success}/{total} successful ({rate:.0%})")
 
-        # Recent failures — avoid these
+        # Recent failures — AVOID similar approaches
         trivial = [d for d in recent if d.quality == "trivial"]
         if trivial:
             lines.append("\n### Recent Unproductive Cycles (avoid similar approaches)")
-            for d in trivial[-3:]:
-                lines.append(f"  - {d.concept_title} ({d.domain}): trivial result")
+            for d in trivial[-5:]:
+                lines.append(f"  - {d.concept_title} ({d.domain}): trivial result — "
+                             f"try a different angle, deeper concept, or sorry_fill instead")
+
+        # Strategic guidance for maximizing quality
+        lines.append("\n### Strategic Guidance")
+        if len(substantial) > len(trivial):
+            lines.append("- Recent cycles are productive. Keep pushing in successful domains "
+                        "but also explore cross-domain bridges.")
+        elif len(trivial) > len(substantial):
+            lines.append("- Many recent cycles produced trivial results. Switch strategy: "
+                        "use sorry_fill on priority targets, or target a different domain "
+                        "entirely. Avoid vague or overly general concepts.")
+        else:
+            lines.append("- Mixed results. Focus on depth over breadth. "
+                        "Target specific theorems with precise mathematical statements.")
+
+        # Recommend high-value targets
+        lines.append("- High-value targets: sorry_fill on CarmichaelComposite or "
+                     "Fib_gcd_identity to close known open problems.")
+        lines.append("- Cross-domain bridges (highest novelty): tropical geometry × "
+                     "neural networks, number theory × cryptography, EML × approximation theory.")
 
         return "\n".join(lines)
 

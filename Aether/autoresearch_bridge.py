@@ -133,39 +133,71 @@ echo "METRIC $QUALITY concept_quality"
         catalog_references: List[str],
         research_mode: str,
         prompt_length: int = 0,
+        theorem_count: int = 0,
+        sorry_count: int = 0,
+        has_cross_domain: bool = False,
+        advances_open_problem: bool = False,
     ) -> float:
         """Evaluate concept quality using a composite score.
 
-        Quality score (0-1) based on:
-        - Aristotle result quality: substantial=0.9, partial=0.5, trivial=0.1
-        - Novelty vs. history (ResearchMemory dedup)
-        - Number of @ Catalog references used (more = better context)
-        - Research mode appropriateness
+        Quality score (0-1) based on multiple dimensions:
+        - Aristotle result quality: substantial=0.85, partial=0.45, trivial=0.05
+        - Novelty: penalize repetition, reward unique concepts
+        - Mathematical depth: more theorems, fewer sorries = better
+        - Cross-domain bridges: bonus for connecting disparate fields
+        - Open problem progress: bonus for advancing known hard problems
+        - Research mode appropriateness: sorry_fill and counterexample get bonuses
+        - Catalog reference richness: more context = better grounded research
 
         Returns a float 0-1.
         """
         # Base quality from Aristotle result
         quality_map = {
-            "substantial": 0.9,
-            "partial": 0.5,
-            "trivial": 0.1,
+            "substantial": 0.85,
+            "partial": 0.45,
+            "trivial": 0.05,
         }
-        base_quality = quality_map.get(quality_assessment.get("quality", "partial"), 0.5)
+        base_quality = quality_map.get(quality_assessment.get("quality", "partial"), 0.45)
 
-        # Bonus for catalog references (more context = better research)
-        ref_bonus = min(len(catalog_references) * 0.02, 0.1)
+        # Mathematical depth bonus
+        # More theorems = deeper work; fewer sorries = more complete proof
+        depth_bonus = 0.0
+        if theorem_count > 0:
+            completeness = max(0, 1.0 - sorry_count / max(theorem_count, 1))
+            depth_bonus = min(theorem_count * 0.03, 0.15) * completeness
 
-        # Bonus for diverse research modes (not always "prove")
+        # Cross-domain bridge bonus (theses are genuinely novel)
+        cross_domain_bonus = 0.0
+        if has_cross_domain:
+            cross_domain_bonus = 0.08
+
+        # Open problem progress bonus
+        open_problem_bonus = 0.0
+        if advances_open_problem:
+            open_problem_bonus = 0.10
+
+        # Bonus for catalog references (more context = better grounded research)
+        ref_bonus = min(len(catalog_references) * 0.015, 0.08)
+
+        # Bonus for non-default research modes (variety and specificity)
         mode_bonus = 0.0
-        if research_mode in ("formalize", "counterexample", "sorry_fill"):
-            # Non-default modes get a small bonus for variety
-            mode_bonus = 0.05
+        if research_mode == "sorry_fill":
+            # sorry_fill that closes open problems is highest value
+            mode_bonus = 0.08
+        elif research_mode == "counterexample":
+            # Counterexamples prevent wasted effort on false conjectures
+            mode_bonus = 0.06
+        elif research_mode == "formalize":
+            # Formalizing existing informal work adds rigor
+            mode_bonus = 0.04
 
         # Penalty for very short prompts (likely not enough context)
         length_penalty = 0.0
         if prompt_length < 500:
-            length_penalty = 0.1
+            length_penalty = 0.20
         elif prompt_length < 1000:
+            length_penalty = 0.10
+        elif prompt_length < 1500:
             length_penalty = 0.05
 
         # Novelty check: penalize if we've seen similar concepts recently
@@ -174,21 +206,27 @@ echo "METRIC $QUALITY concept_quality"
             recent_titles = [
                 h.get("concept_title", "") for h in self.history[-10:]
             ]
-            # Simple similarity check
             title_lower = concept_title.lower()
             for recent in recent_titles:
                 recent_lower = recent.lower()
                 if title_lower == recent_lower:
-                    novelty_penalty = 0.3
+                    novelty_penalty = 0.40  # Exact repeat is very bad
                     break
-                # Check if too similar (shared words)
-                title_words = set(title_lower.split("_"))
-                recent_words = set(recent_lower.split("_"))
-                overlap = len(title_words & recent_words)
-                if overlap > len(title_words) * 0.7 and len(title_words) > 2:
-                    novelty_penalty = max(novelty_penalty, 0.15)
+                # Semantic overlap: high word overlap
+                title_words = set(title_lower.replace("_", " ").split())
+                recent_words = set(recent_lower.replace("_", " ").split())
+                if len(title_words) > 2 and len(recent_words) > 2:
+                    overlap = len(title_words & recent_words)
+                    union = len(title_words | recent_words)
+                    jaccard = overlap / union if union > 0 else 0
+                    if jaccard > 0.7:
+                        novelty_penalty = max(novelty_penalty, 0.30)
+                    elif jaccard > 0.5:
+                        novelty_penalty = max(novelty_penalty, 0.15)
 
-        score = base_quality + ref_bonus + mode_bonus - length_penalty - novelty_penalty
+        score = (base_quality + depth_bonus + cross_domain_bonus +
+                 open_problem_bonus + ref_bonus + mode_bonus -
+                 length_penalty - novelty_penalty)
         return max(0.0, min(1.0, score))
 
     def log_result(
@@ -299,31 +337,46 @@ echo "METRIC $QUALITY concept_quality"
             "total_experiments": int,
             "success_rate": float,
             "confidence": float,
+            "recommended_concepts": list[str],
+            "priority_sorry_targets": list[str],
         }
         """
         if not self.history:
+            # Default strategy for cold start
             return {
-                "best_domain": "speculative",
-                "best_research_mode": "prove",
+                "best_domain": "pythagorean",
+                "best_research_mode": "sorry_fill",
                 "best_avg_quality": 0.0,
-                "best_prompt_length_range": (1000, 3000),
+                "best_prompt_length_range": (2000, 4000),
                 "avg_references": 0.0,
                 "total_experiments": 0,
                 "success_rate": 0.0,
                 "confidence": 0.0,
+                "recommended_concepts": [
+                    "Carmichael composite case",
+                    "Fibonacci primitive divisor",
+                    "Tropical Hecke algebra GL2",
+                ],
+                "priority_sorry_targets": [
+                    "Shared/CarmichaelComposite.lean",
+                    "Shared/Fib_gcd_identity.lean",
+                ],
             }
 
-        # Aggregate by domain
+        # Aggregate by domain, mode, concept type
         domain_stats: Dict[str, List[float]] = {}
         mode_stats: Dict[str, List[float]] = {}
         prompt_lengths: List[int] = []
         ref_counts: List[int] = []
         successes = 0
+        substantial_count = 0
+        concept_keywords: Dict[str, int] = {}  # keyword -> count of substantial
 
         for entry in self.history:
             domain = entry.get("concept_domain", "unknown")
             mode = entry.get("research_mode", "prove")
             score = entry.get("quality_score", 0.0)
+            quality = entry.get("quality", "partial")
 
             domain_stats.setdefault(domain, []).append(score)
             mode_stats.setdefault(mode, []).append(score)
@@ -337,12 +390,24 @@ echo "METRIC $QUALITY concept_quality"
 
             if entry.get("status") == "keep":
                 successes += 1
+            if quality == "substantial":
+                substantial_count += 1
+
+            # Track concept keywords for substantial results
+            if quality == "substantial":
+                title = entry.get("concept_title", "")
+                for kw in title.replace("_", " ").split():
+                    concept_keywords[kw] = concept_keywords.get(kw, 0) + 1
 
         # Find best domain
-        best_domain = "speculative"
+        best_domain = "pythagorean"
         best_domain_avg = 0.0
         for domain, scores in domain_stats.items():
             avg = sum(scores) / len(scores)
+            # Weight recent results more
+            if len(scores) >= 2:
+                recent_avg = sum(scores[-3:]) / len(scores[-3:])
+                avg = 0.6 * recent_avg + 0.4 * avg
             if avg > best_domain_avg:
                 best_domain_avg = avg
                 best_domain = domain
@@ -365,13 +430,19 @@ echo "METRIC $QUALITY concept_quality"
                 sorted_lengths[min(len(sorted_lengths) - 1, mid + 5)],
             )
         else:
-            best_length_range = (1000, 3000)
+            best_length_range = (2000, 4000)
 
         # Calculate overall stats
         total = len(self.history)
         success_rate = successes / total if total > 0 else 0.0
         avg_refs = sum(ref_counts) / len(ref_counts) if ref_counts else 0.0
-        confidence = min(1.0, total / 20.0)  # Confidence grows with more experiments
+        confidence = min(1.0, total / 20.0)
+
+        # Recommend concepts based on what's worked
+        recommended = []
+        if concept_keywords:
+            sorted_kw = sorted(concept_keywords.items(), key=lambda x: -x[1])
+            recommended = [kw for kw, _ in sorted_kw[:5]]
 
         return {
             "best_domain": best_domain,
@@ -382,4 +453,9 @@ echo "METRIC $QUALITY concept_quality"
             "total_experiments": total,
             "success_rate": success_rate,
             "confidence": confidence,
+            "recommended_concepts": recommended,
+            "priority_sorry_targets": [
+                "Shared/CarmichaelComposite.lean",
+                "Shared/Fib_gcd_identity.lean",
+            ],
         }
