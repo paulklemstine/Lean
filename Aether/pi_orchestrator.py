@@ -517,6 +517,11 @@ class PiAgentOrchestrator:
             "artifacts_placed": len(artifacts_placed),
         })
         self._save_state()
+
+        # Mark job as processed so --reprocess skips it
+        processed_marker = job.project_dir / ".processed"
+        processed_marker.write_text(f"quality={proof_quality} score={quality_score:.2f} at {datetime.now(timezone.utc).isoformat()}\n")
+
         print(f"[Process] {exp_id} done. Quality={proof_quality} Score={quality_score:.2f}")
 
     # ------------------------------------------------------------------
@@ -543,20 +548,18 @@ class PiAgentOrchestrator:
         if job.status == "failed":
             return False
 
-        # Poll until complete (with generous timeout)
-        max_wait = self.config.get("aristotle", {}).get("timeout_seconds", 3600)
+        # Poll until complete — no timeout, Aristotle can take hours
         poll_interval = self.config.get("aristotle", {}).get("polling_interval_seconds", 30)
-        deadline = time.time() + max_wait
+        poll_count = 0
 
         while job.status not in ("complete", "failed", "timeout", "error", "cancelled"):
-            if time.time() > deadline:
-                job.status = "timeout"
-                job.error_message = f"Timed out after {max_wait}s"
-                print(f"[Cycle] Job {job.exp_id} timed out")
-                break
             completed = await self._poll_jobs([job])
+            poll_count += 1
             if completed:
                 break
+            if poll_count % 10 == 0:
+                elapsed = time.time() - job.dispatch_time
+                print(f"[Poll] {job.exp_id} still {job.status} after {elapsed:.0f}s ({poll_count} polls)")
             await asyncio.sleep(poll_interval)
 
         if job.status in ("complete",):
@@ -737,6 +740,112 @@ theorem {concept.title.lower().replace(' ', '_')}_breakthrough
         print("[ORCHESTRATOR] Shutdown requested...")
         self._shutdown_requested = True
 
+    # ------------------------------------------------------------------
+    # Reprocess unfinished jobs from previous runs
+    # ------------------------------------------------------------------
+
+    async def reprocess_unfinished_jobs(self) -> int:
+        """Scan workspace for job directories with result.tar.gz that haven't
+        been processed yet, and process them.
+
+        This handles the case where the orchestrator was killed or timed out
+        before processing completed Aristotle results.
+
+        Returns the number of jobs processed.
+        """
+        print("\n" + "=" * 70)
+        print("AETHER v3: REPROCESSING UNFINISHED JOBS")
+        print("=" * 70)
+
+        processed = 0
+        job_dirs = sorted(self.output_dir.glob("job_*"))
+
+        for job_dir in job_dirs:
+            exp_id = job_dir.name.replace("job_", "")
+            result_tar = job_dir / "result.tar.gz"
+            processed_marker = job_dir / ".processed"
+
+            # Skip if no result or already processed
+            if not result_tar.exists():
+                continue
+            if processed_marker.exists():
+                continue
+
+            print(f"\n[Reprocess] Found unprocessed result: {exp_id}")
+
+            # Extract the tarball to get context
+            extract_dir = job_dir / "result_extracted"
+            if not extract_dir.exists():
+                extract_dir.mkdir(exist_ok=True)
+                import tarfile
+                with tarfile.open(result_tar, "r:gz") as tar:
+                    tar.extractall(path=extract_dir)
+
+            # Find the actual result directory (may be nested)
+            result_dir = extract_dir
+            subdirs = [d for d in extract_dir.iterdir() if d.is_dir()]
+            if len(subdirs) == 1 and not (extract_dir / "Main.lean").exists():
+                result_dir = subdirs[0]
+
+            # Try to extract concept info from ARISTOTLE_SUMMARY.md
+            domain = "unknown"
+            concept_title = f"reprocessed_{exp_id}"
+            summary_data = self.output_organizer._parse_aristotle_summary(result_dir)
+            if summary_data:
+                domains = summary_data.get("domains_touched", [])
+                if domains:
+                    domain = domains[0]
+                theorems = summary_data.get("key_theorems", [])
+                if theorems:
+                    concept_title = theorems[0]
+
+            # Try to read Main.lean for lean_source
+            result_lean = ""
+            result_main = result_dir / "Main.lean"
+            if result_main.exists():
+                result_lean = result_main.read_text(encoding="utf-8", errors="replace")
+
+            concept = ResearchConcept(
+                title=concept_title,
+                domain=domain,
+                concept_description=f"Reprocessed from previous run (exp {exp_id})",
+                mathematical_framing="",
+                lean_guess=result_lean[:500] if result_lean else "",
+                research_mode="prove",
+            )
+            job = InFlightJob(
+                exp_id=exp_id,
+                cycle_n=self.state.cycle_count,
+                concept=concept,
+                prompt="(reprocessed)",
+                lean_source=result_lean[:500] if result_lean else "",
+                references=[],
+                project_dir=job_dir,
+                status="complete",
+                dispatch_time=0.0,
+                complete_time=time.time(),
+                result_path=result_tar,
+            )
+
+            try:
+                await self._process_completed_job(job)
+                # Mark as processed
+                processed_marker.write_text(f"reprocessed at {datetime.now(timezone.utc).isoformat()}\n")
+                processed += 1
+                self.state.cycle_count += 1
+            except Exception as e:
+                print(f"[Reprocess] Error processing {exp_id}: {e}")
+                import traceback
+                traceback.print_exc()
+
+        if processed:
+            self._save_state()
+            print(f"\n[Reprocess] Processed {processed} previously unfinished jobs")
+        else:
+            print(f"\n[Reprocess] No unfinished jobs found")
+
+        return processed
+
 
 async def main():
     parser = argparse.ArgumentParser(description="Aether v3: Pi-Agent Centered Research Engine")
@@ -748,6 +857,7 @@ async def main():
     parser.add_argument("--dry-run", action="store_true", help="Generate but do not dispatch")
     parser.add_argument("--max-jobs", type=int, default=10, help="Max concurrent Aristotle jobs (default: 10)")
     parser.add_argument("--poll-interval", type=int, default=30, help="Seconds between polls (default: 30)")
+    parser.add_argument("--reprocess", action="store_true", help="Reprocess unfinished jobs with result.tar.gz from previous runs")
 
     args = parser.parse_args()
 
@@ -771,7 +881,10 @@ async def main():
         workspace=Path(args.workspace).resolve(),
     )
 
-    if args.single_cycle:
+    if args.reprocess:
+        count = await orchestrator.reprocess_unfinished_jobs()
+        sys.exit(0 if count >= 0 else 1)
+    elif args.single_cycle:
         success = await orchestrator.run_single_cycle(
             forced_domain=args.domain,
             dry_run=args.dry_run,
