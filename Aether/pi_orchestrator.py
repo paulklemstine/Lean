@@ -206,6 +206,15 @@ class PiAgentOrchestrator:
             concept.domain = forced_domain
 
         print(f"[Prepare #{cycle_n}] Concept: {concept.title} | Domain: {concept.domain} | Mode: {concept.research_mode}")
+        print(f"[Pi-Agent] Direction response:")
+        print(f"  concept_title: {concept.title}")
+        print(f"  domain: {concept.domain}")
+        print(f"  description: {concept.concept_description[:200]}")
+        print(f"  mathematical_framing: {concept.mathematical_framing[:200]}")
+        print(f"  research_mode: {concept.research_mode}")
+        print(f"  novelty: {concept.novelty_estimate:.2f} | breakthrough: {concept.breakthrough_potential:.2f}")
+        print(f"  catalog_references: {concept.catalog_references[:6]}")
+        print(f"  key_references: {concept.key_references[:5]}")
 
         # Phase 2: Select @ references
         if concept.catalog_references:
@@ -230,6 +239,9 @@ class PiAgentOrchestrator:
             theorem_context=self.research_context.build_theorem_context(),
         )
         print(f"[Prepare #{cycle_n}] Prompt: {len(prompt)} chars, {len(references)} @ refs")
+        print(f"[Pi-Agent] Aristotle prompt (first 500 chars):")
+        print(prompt[:500])
+        print(f"[Pi-Agent] ... (total {len(prompt)} chars)")
 
         # Phase 4: Build lean project
         project_dir = self.output_dir / f"job_{exp_id}"
@@ -374,6 +386,10 @@ class PiAgentOrchestrator:
                 )
                 print(f"[Process] {exp_id} Quality: {quality_assessment.get('quality', 'unknown')} "
                       f"(confidence: {quality_assessment.get('confidence', 0):.2f})")
+                print(f"[Pi-Agent] Quality evaluation:")
+                print(f"  quality: {quality_assessment.get('quality', 'unknown')}")
+                print(f"  should_retry: {quality_assessment.get('should_retry', False)}")
+                print(f"  analysis: {quality_assessment.get('analysis', 'N/A')[:200]}")
             else:
                 # Search for any .lean file with theorems as fallback
                 lean_files = list(result_dir.rglob("*.lean"))
@@ -389,6 +405,10 @@ class PiAgentOrchestrator:
                     )
                     print(f"[Process] {exp_id} Quality: {quality_assessment.get('quality', 'unknown')} "
                           f"(confidence: {quality_assessment.get('confidence', 0):.2f})")
+                    print(f"[Pi-Agent] Quality evaluation:")
+                    print(f"  quality: {quality_assessment.get('quality', 'unknown')}")
+                    print(f"  should_retry: {quality_assessment.get('should_retry', False)}")
+                    print(f"  analysis: {quality_assessment.get('analysis', 'N/A')[:200]}")
                 else:
                     print(f"[Process] {exp_id} no Main.lean in result, skipping quality eval")
 

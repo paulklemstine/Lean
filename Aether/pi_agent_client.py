@@ -213,6 +213,14 @@ class PiAgentClient:
             timeout: Override timeout in seconds (uses self.timeout if None)
         """
         request_timeout = timeout or self.timeout
+
+        # Log the request
+        system_preview = system[:200].replace('\n', ' ')
+        user_preview = user[:500].replace('\n', ' ')
+        print(f"[Pi-Agent] → ollama request (model={self.model}, timeout={request_timeout}s)")
+        print(f"[Pi-Agent]   system: {system_preview}...")
+        print(f"[Pi-Agent]   user: {user_preview}...")
+
         payload = {
             "model": self.model,
             "messages": [
@@ -237,12 +245,21 @@ class PiAgentClient:
             content = data.get("message", {}).get("content", "")
             if not content:
                 content = data.get("response", "")
+
+            # Log the response
+            response_preview = content[:500].replace('\n', ' ')
+            print(f"[Pi-Agent] ← ollama response ({len(content)} chars)")
+            print(f"[Pi-Agent]   {response_preview}...")
+
             return content
         except httpx.TimeoutException:
+            print(f"[Pi-Agent] ← ollama TIMEOUT after {self.timeout}s")
             return f"[OLLAMA_TIMEOUT: Request timed out after {self.timeout}s]"
         except httpx.HTTPStatusError as e:
+            print(f"[Pi-Agent] ← ollama HTTP error: {e.response.status_code}")
             return f"[OLLAMA_HTTP_ERROR: {e.response.status_code} {e.response.text[:200]}]"
         except Exception as e:
+            print(f"[Pi-Agent] ← ollama error: {type(e).__name__}: {e}")
             return f"[OLLAMA_ERROR: {e}]"
 
     def _parse_json_response(self, raw: str) -> Optional[Dict[str, Any]]:
