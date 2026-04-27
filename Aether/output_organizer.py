@@ -74,9 +74,11 @@ class OutputOrganizer:
         self,
         catalog_root: Path,
         pi_agent: Optional[Any] = None,
+        pi_agent_timeout: int = 30,
     ):
         self.catalog_root = Path(catalog_root)
         self.pi_agent = pi_agent
+        self.pi_agent_timeout = pi_agent_timeout  # seconds per classification call
 
         # Ensure artifact directories exist
         self._ensure_directories()
@@ -101,6 +103,8 @@ class OutputOrganizer:
         dry_run: bool = False,
     ) -> Dict[str, List[PlacementDecision]]:
         """Organize all files from an Aristotle result directory.
+
+        Prints progress for each file to help diagnose hangs.
 
         Returns a dict with keys:
         - "theorems": .lean files placed in domain directories
@@ -130,6 +134,7 @@ class OutputOrganizer:
                 continue
 
             file_type = self._classify_artifact_type(result_file)
+            print(f"[Organizer] classifying {result_file.name} as {file_type}")
 
             if file_type == "theorem":
                 decision = self._place_lean_file(
@@ -247,22 +252,40 @@ class OutputOrganizer:
         reason = "Heuristic classification"
         confidence = 0.4
 
-        # Try Pi-Agent classification
+        # Try Pi-Agent classification (with timeout guard)
         if self.pi_agent:
             try:
-                pi_classification = self.pi_agent.classify_file_placement(
-                    lean_source=lean_source,
-                    file_name=source.name,
-                    concept=concept,
-                )
-                if pi_classification and pi_classification.get("confidence", 0) >= 0.5:
-                    target_domain = pi_classification["domain"]
-                    target_subdir = pi_classification.get("subdirectory", "")
-                    is_complete = pi_classification.get("is_complete_proof", is_complete)
-                    reason = pi_classification.get("reason", "Pi-Agent classification")
-                    confidence = pi_classification["confidence"]
-            except Exception:
-                pass
+                import signal
+                old_handler = None
+                try:
+                    def _timeout_handler(signum, frame):
+                        raise TimeoutError(f"Pi-Agent classification timed out after {self.pi_agent_timeout}s")
+                    old_handler = signal.signal(signal.SIGALRM, _timeout_handler)
+                    signal.alarm(self.pi_agent_timeout)
+                except (ValueError, OSError):
+                    old_handler = None  # Not in main thread — can't use signals
+
+                try:
+                    pi_classification = self.pi_agent.classify_file_placement(
+                        lean_source=lean_source,
+                        file_name=source.name,
+                        concept=concept,
+                    )
+                    if pi_classification and pi_classification.get("confidence", 0) >= 0.5:
+                        target_domain = pi_classification["domain"]
+                        target_subdir = pi_classification.get("subdirectory", "")
+                        is_complete = pi_classification.get("is_complete_proof", is_complete)
+                        reason = pi_classification.get("reason", "Pi-Agent classification")
+                        confidence = pi_classification["confidence"]
+                        print(f"[Organizer] {source.name} -> {target_domain}/{target_subdir or '.'} (pi-agent, conf={confidence:.2f})")
+                except (TimeoutError, Exception) as e:
+                    print(f"[Organizer] Pi-Agent classification failed for {source.name}: {e}")
+                finally:
+                    if old_handler is not None:
+                        signal.alarm(0)
+                        signal.signal(signal.SIGALRM, old_handler)
+            except Exception as e:
+                print(f"[Organizer] Pi-Agent classification error for {source.name}: {e}")
 
         # Determine final target path
         if is_complete:

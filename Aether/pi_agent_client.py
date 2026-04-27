@@ -145,8 +145,15 @@ class PiAgentClient:
         if self.catalog_root and self.catalog_root.exists():
             self.catalog_analyzer = CatalogAnalyzer(self.catalog_root)
 
-    def _call_ollama(self, system: str, user: str) -> str:
-        """Call ollama HTTP API with system + user prompts. Returns raw text."""
+    def _call_ollama(self, system: str, user: str, timeout: Optional[int] = None) -> str:
+        """Call ollama HTTP API with system + user prompts. Returns raw text.
+
+        Args:
+            system: System prompt
+            user: User prompt
+            timeout: Override timeout in seconds (uses self.timeout if None)
+        """
+        request_timeout = timeout or self.timeout
         payload = {
             "model": self.model,
             "messages": [
@@ -164,7 +171,7 @@ class PiAgentClient:
             response = self.client.post(
                 f"{self.OLLAMA_BASE_URL}/api/chat",
                 json=payload,
-                timeout=self.timeout,
+                timeout=request_timeout,
             )
             response.raise_for_status()
             data = response.json()
@@ -633,8 +640,12 @@ class PiAgentClient:
         lean_source: str,
         file_name: str,
         concept: ResearchConcept,
+        timeout_override: int = 60,
     ) -> Dict[str, Any]:
         """Classify a Lean file into the correct Catalog location.
+
+        Uses a shorter timeout than other calls since this is called
+        per-file during organization and shouldn't block the pipeline.
 
         Returns dict with domain, subdirectory, target_path,
         is_complete_proof, confidence, reason.
@@ -676,7 +687,7 @@ class PiAgentClient:
             }}
         """)
 
-        raw = self._call_ollama(_CLASSIFICATION_SYSTEM_PROMPT, user_prompt)
+        raw = self._call_ollama(_CLASSIFICATION_SYSTEM_PROMPT, user_prompt, timeout=timeout_override)
         parsed = self._parse_json_response(raw)
 
         if parsed:

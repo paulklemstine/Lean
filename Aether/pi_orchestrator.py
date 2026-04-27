@@ -304,13 +304,14 @@ class PiAgentOrchestrator:
         concept = job.concept
         cycle_n = job.cycle_n
         elapsed = (job.complete_time or time.time()) - job.dispatch_time
-        print(f"\n[Process] {exp_id} — evaluating and organizing...")
+        print(f"\n[Process] {exp_id} — start processing (elapsed={elapsed:.1f}s)")
 
         # Evaluate quality
         result_lean = ""
         quality_assessment = {"quality": "unknown", "should_retry": False, "confidence": 0.0, "analysis": ""}
 
         if job.result_path and job.result_path.exists():
+            print(f"[Process] {exp_id} extracting result tarball...")
             extract_dir = job.project_dir / "result_extracted"
             extract_dir.mkdir(exist_ok=True)
             import tarfile
@@ -321,20 +322,27 @@ class PiAgentOrchestrator:
             result_main = extract_dir / "Main.lean"
             if result_main.exists():
                 result_lean = result_main.read_text(encoding="utf-8")
+                print(f"[Process] {exp_id} evaluating quality ({len(result_lean)} chars)...")
                 quality_assessment = self.pi_agent.evaluate_result_quality(
                     result_lean=result_lean,
                     concept=concept,
                     prompt=job.prompt,
                 )
-                print(f"[Process] Quality: {quality_assessment.get('quality', 'unknown')}")
+                print(f"[Process] {exp_id} Quality: {quality_assessment.get('quality', 'unknown')} "
+                      f"(confidence: {quality_assessment.get('confidence', 0):.2f})")
+            else:
+                print(f"[Process] {exp_id} no Main.lean in result, skipping quality eval")
 
             # Organize output
+            print(f"[Process] {exp_id} organizing output files...")
+            t0 = time.time()
             decisions = self.output_organizer.organize_results(
                 result_dir=extract_dir,
                 exp_id=exp_id,
                 concept=concept,
                 dry_run=False,
             )
+            print(f"[Process] {exp_id} organized in {time.time()-t0:.1f}s")
 
             files_placed = []
             artifacts_placed = []
@@ -350,15 +358,16 @@ class PiAgentOrchestrator:
             demo_count = len(decisions.get("demos", []))
             visual_count = len(decisions.get("visuals", []))
             article_count = len(decisions.get("articles", []))
-            print(f"[Process] Placed: {placed_count} thms, {paper_count} papers, "
+            print(f"[Process] {exp_id} placed: {placed_count} thms, {paper_count} papers, "
                   f"{demo_count} demos, {visual_count} visuals, {article_count} articles")
         else:
             files_placed = []
             artifacts_placed = []
-            print(f"[Process] No result tarball for {exp_id}")
+            print(f"[Process] {exp_id} no result tarball, status={job.status}")
 
         # Record
         proof_quality = quality_assessment.get("quality", "unknown")
+        print(f"[Process] {exp_id} recording experiment...")
         quality_score = self.autoresearch.evaluate_concept_quality(
             concept_title=concept.title,
             concept_domain=concept.domain,
