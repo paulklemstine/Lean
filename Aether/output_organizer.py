@@ -19,7 +19,16 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Optional, Any, Tuple
 
-from catalog_analyzer import DOMAIN_DIRS
+try:
+    from catalog_analyzer import DOMAIN_DIRS as _DOMAIN_DIRS
+except ImportError:
+    _DOMAIN_DIRS = [
+        "Algebra", "Applications", "Bridges", "Computation", "Cryptography",
+        "EML", "Geometry", "Logic", "MachineLearning", "Physics",
+        "Pythagorean", "Shared", "Speculative", "Tropical",
+    ]
+
+DOMAIN_DIRS = _DOMAIN_DIRS
 
 
 @dataclass

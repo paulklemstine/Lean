@@ -340,8 +340,17 @@ class PiAgentOrchestrator:
             with tarfile.open(job.result_path, "r:gz") as tar:
                 tar.extractall(path=extract_dir)
 
+            # Aristotle tarballs contain a subdirectory like job_xxx_aristotle/
+            # Find the actual result directory (may be nested one level deep)
+            result_dir = extract_dir
+            subdirs = [d for d in extract_dir.iterdir() if d.is_dir()]
+            if len(subdirs) == 1 and not (extract_dir / "Main.lean").exists():
+                # Tarball had a single top-level directory — use that
+                result_dir = subdirs[0]
+                print(f"[Process] {exp_id} using nested result dir: {result_dir.name}")
+
             # Read Main.lean if present
-            result_main = extract_dir / "Main.lean"
+            result_main = result_dir / "Main.lean"
             if result_main.exists():
                 result_lean = result_main.read_text(encoding="utf-8")
                 print(f"[Process] {exp_id} evaluating quality ({len(result_lean)} chars)...")
@@ -353,13 +362,28 @@ class PiAgentOrchestrator:
                 print(f"[Process] {exp_id} Quality: {quality_assessment.get('quality', 'unknown')} "
                       f"(confidence: {quality_assessment.get('confidence', 0):.2f})")
             else:
-                print(f"[Process] {exp_id} no Main.lean in result, skipping quality eval")
+                # Search for any .lean file with theorems as fallback
+                lean_files = list(result_dir.rglob("*.lean"))
+                main_candidates = [f for f in lean_files if f.name == "Main.lean"]
+                if main_candidates:
+                    result_main = main_candidates[0]
+                    result_lean = result_main.read_text(encoding="utf-8")
+                    print(f"[Process] {exp_id} evaluating quality from {result_main.relative_to(extract_dir)} ({len(result_lean)} chars)...")
+                    quality_assessment = self.pi_agent.evaluate_result_quality(
+                        result_lean=result_lean,
+                        concept=concept,
+                        prompt=job.prompt,
+                    )
+                    print(f"[Process] {exp_id} Quality: {quality_assessment.get('quality', 'unknown')} "
+                          f"(confidence: {quality_assessment.get('confidence', 0):.2f})")
+                else:
+                    print(f"[Process] {exp_id} no Main.lean in result, skipping quality eval")
 
             # Organize output
             print(f"[Process] {exp_id} organizing output files...")
             t0 = time.time()
             decisions, summary_data = self.output_organizer.organize_results(
-                result_dir=extract_dir,
+                result_dir=result_dir,
                 exp_id=exp_id,
                 concept=concept,
                 dry_run=False,
