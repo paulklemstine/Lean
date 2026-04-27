@@ -300,6 +300,11 @@ class PiAgentOrchestrator:
                     result_path = await self.aristotle.download_result(
                         job.project_id, job.project_dir
                     )
+                    if result_path is None:
+                        # Download failed (SSL error, etc.) — keep polling, don't mark complete yet
+                        print(f"[Poll] {job.exp_id} ({job.project_id}) download failed, will retry next poll")
+                        job.status = prev_status  # Keep previous status to retry
+                        continue
                     job.result_path = result_path
                     job.complete_time = time.time()
                     job.status = "complete"
