@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" width="900" height="520" font-family="Georgia, serif">
+  <defs>
+    <!-- Arrowhead for forward pass -->
+    <marker id="arrowFwd" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2c5aa0"/>
+    </marker>
+    <!-- Arrowhead for cotangent/backward pass -->
+    <marker id="arrowBack" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="10 0, 0 3.5, 10 7" fill="#c0392b"/>
+    </marker>
+    <!-- Gradient for manifold blobs -->
+    <radialGradient id="manifoldGrad" cx="50%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#e8f4fd"/>
+      <stop offset="100%" stop-color="#aed6f1"/>
+    </radialGradient>
+    <radialGradient id="cotangentGrad" cx="50%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#fdebd0"/>
+      <stop offset="100%" stop-color="#f5b041"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="520" fill="#fafafa" rx="8"/>
+
+  <!-- Title -->
+  <text x="450" y="35" text-anchor="middle" font-size="18" font-weight="bold" fill="#2c3e50">
+    Backpropagation as Cotangent Lift
+  </text>
+  <text x="450" y="55" text-anchor="middle" font-size="12" fill="#7f8c8d" font-style="italic">
+    The contravariant functor T* reverses composition: (g∘f)* = f* ∘ g*
+  </text>
+
+  <!-- ═══════════ FORWARD PASS (top row) ═══════════ -->
+  <text x="450" y="90" text-anchor="middle" font-size="14" font-weight="bold" fill="#2c5aa0">
+    Forward Pass — Tangent Category
+  </text>
+
+  <!-- Manifold M (input) -->
+  <ellipse cx="130" cy="155" rx="70" ry="40" fill="url(#manifoldGrad)" stroke="#2c5aa0" stroke-width="2"/>
+  <text x="130" y="150" text-anchor="middle" font-size="16" font-weight="bold" fill="#2c5aa0">M</text>
+  <text x="130" y="168" text-anchor="middle" font-size="11" fill="#5d6d7e">(params ℝⁿ)</text>
+
+  <!-- Arrow f₁ -->
+  <line x1="205" y1="155" x2="280" y2="155" stroke="#2c5aa0" stroke-width="2" marker-end="url(#arrowFwd)"/>
+  <text x="242" y="145" text-anchor="middle" font-size="13" fill="#2c5aa0" font-style="italic">f₁</text>
+
+  <!-- Manifold N₁ (hidden 1) -->
+  <ellipse cx="350" cy="155" rx="60" ry="40" fill="url(#manifoldGrad)" stroke="#2c5aa0" stroke-width="2"/>
+  <text x="350" y="150" text-anchor="middle" font-size="16" font-weight="bold" fill="#2c5aa0">N₁</text>
+  <text x="350" y="168" text-anchor="middle" font-size="11" fill="#5d6d7e">(hidden)</text>
+
+  <!-- Arrow f₂ -->
+  <line x1="415" y1="155" x2="490" y2="155" stroke="#2c5aa0" stroke-width="2" marker-end="url(#arrowFwd)"/>
+  <text x="452" y="145" text-anchor="middle" font-size="13" fill="#2c5aa0" font-style="italic">f₂</text>
+
+  <!-- Manifold N₂ (hidden 2) -->
+  <ellipse cx="560" cy="155" rx="60" ry="40" fill="url(#manifoldGrad)" stroke="#2c5aa0" stroke-width="2"/>
+  <text x="560" y="150" text-anchor="middle" font-size="16" font-weight="bold" fill="#2c5aa0">N₂</text>
+  <text x="560" y="168" text-anchor="middle" font-size="11" fill="#5d6d7e">(hidden)</text>
+
+  <!-- Arrow f₃ (loss) -->
+  <line x1="625" y1="155" x2="700" y2="155" stroke="#2c5aa0" stroke-width="2" marker-end="url(#arrowFwd)"/>
+  <text x="662" y="145" text-anchor="middle" font-size="13" fill="#2c5aa0" font-style="italic">ℓ</text>
+
+  <!-- Manifold R (loss) -->
+  <ellipse cx="770" cy="155" rx="55" ry="40" fill="url(#manifoldGrad)" stroke="#2c5aa0" stroke-width="2"/>
+  <text x="770" y="150" text-anchor="middle" font-size="16" font-weight="bold" fill="#2c5aa0">ℝ</text>
+  <text x="770" y="168" text-anchor="middle" font-size="11" fill="#5d6d7e">(loss)</text>
+
+  <!-- ═══════════ FUNCTOR T* (middle) ═══════════ -->
+  <!-- Vertical arrows showing T* action -->
+  <text x="40" y="255" text-anchor="middle" font-size="14" font-weight="bold" fill="#8e44ad">T*</text>
+  <text x="40" y="275" text-anchor="middle" font-size="11" fill="#8e44ad">functor</text>
+
+  <line x1="130" y1="200" x2="130" y2="290" stroke="#8e44ad" stroke-width="1.5" stroke-dasharray="5,5"/>
+  <polygon points="125,288 130,300 135,288" fill="#8e44ad"/>
+
+  <line x1="350" y1="200" x2="350" y2="290" stroke="#8e44ad" stroke-width="1.5" stroke-dasharray="5,5"/>
+  <polygon points="345,288 350,300 355,288" fill="#8e44ad"/>
+
+  <line x1="560" y1="200" x2="560" y2="290" stroke="#8e44ad" stroke-width="1.5" stroke-dasharray="5,5"/>
+  <polygon points="555,288 560,300 565,288" fill="#8e44ad"/>
+
+  <line x1="770" y1="200" x2="770" y2="290" stroke="#8e44ad" stroke-width="1.5" stroke-dasharray="5,5"/>
+  <polygon points="765,288 770,300 775,288" fill="#8e44ad"/>
+
+  <!-- ═══════════ BACKWARD PASS (bottom row) ═══════════ -->
+  <text x="450" y="320" text-anchor="middle" font-size="14" font-weight="bold" fill="#c0392b">
+    Backward Pass — Cotangent Lift (= Backpropagation)
+  </text>
+
+  <!-- T*M -->
+  <ellipse cx="130" cy="385" rx="70" ry="40" fill="url(#cotangentGrad)" stroke="#c0392b" stroke-width="2"/>
+  <text x="130" y="380" text-anchor="middle" font-size="15" font-weight="bold" fill="#c0392b">T*M</text>
+  <text x="130" y="398" text-anchor="middle" font-size="11" fill="#7b241c">∇loss</text>
+
+  <!-- Arrow f₁* (backward) -->
+  <line x1="280" y1="385" x2="205" y2="385" stroke="#c0392b" stroke-width="2.5" marker-end="url(#arrowBack)"/>
+  <text x="242" y="375" text-anchor="middle" font-size="13" fill="#c0392b" font-weight="bold">f₁*</text>
+  <text x="242" y="410" text-anchor="middle" font-size="10" fill="#922b21">(Df₁)ᵀ</text>
+
+  <!-- T*N₁ -->
+  <ellipse cx="350" cy="385" rx="60" ry="40" fill="url(#cotangentGrad)" stroke="#c0392b" stroke-width="2"/>
+  <text x="350" y="380" text-anchor="middle" font-size="15" font-weight="bold" fill="#c0392b">T*N₁</text>
+  <text x="350" y="398" text-anchor="middle" font-size="11" fill="#7b241c">δ₁</text>
+
+  <!-- Arrow f₂* (backward) -->
+  <line x1="490" y1="385" x2="415" y2="385" stroke="#c0392b" stroke-width="2.5" marker-end="url(#arrowBack)"/>
+  <text x="452" y="375" text-anchor="middle" font-size="13" fill="#c0392b" font-weight="bold">f₂*</text>
+  <text x="452" y="410" text-anchor="middle" font-size="10" fill="#922b21">(Df₂)ᵀ</text>
+
+  <!-- T*N₂ -->
+  <ellipse cx="560" cy="385" rx="60" ry="40" fill="url(#cotangentGrad)" stroke="#c0392b" stroke-width="2"/>
+  <text x="560" y="380" text-anchor="middle" font-size="15" font-weight="bold" fill="#c0392b">T*N₂</text>
+  <text x="560" y="398" text-anchor="middle" font-size="11" fill="#7b241c">δ₂</text>
+
+  <!-- Arrow ℓ* (backward) -->
+  <line x1="700" y1="385" x2="625" y2="385" stroke="#c0392b" stroke-width="2.5" marker-end="url(#arrowBack)"/>
+  <text x="662" y="375" text-anchor="middle" font-size="13" fill="#c0392b" font-weight="bold">ℓ*</text>
+  <text x="662" y="410" text-anchor="middle" font-size="10" fill="#922b21">(Dℓ)ᵀ</text>
+
+  <!-- T*R -->
+  <ellipse cx="770" cy="385" rx="55" ry="40" fill="url(#cotangentGrad)" stroke="#c0392b" stroke-width="2"/>
+  <text x="770" y="380" text-anchor="middle" font-size="15" font-weight="bold" fill="#c0392b">T*ℝ</text>
+  <text x="770" y="398" text-anchor="middle" font-size="11" fill="#7b241c">η = 1</text>
+
+  <!-- ═══════════ Key equation ═══════════ -->
+  <rect x="180" y="440" width="540" height="35" rx="6" fill="#eaf2f8" stroke="#2c5aa0" stroke-width="1"/>
+  <text x="450" y="463" text-anchor="middle" font-size="14" fill="#2c3e50">
+    Backprop(x) = f₁* ∘ f₂* ∘ ℓ* (η)  =  (ℓ ∘ f₂ ∘ f₁)* (η)  =  ∇ₓ(ℓ ∘ f₂ ∘ f₁)
+  </text>
+
+  <!-- Caption -->
+  <text x="450" y="505" text-anchor="middle" font-size="11" fill="#7f8c8d" font-style="italic">
+    The cotangent functor T* reverses arrows: forward blue composition becomes backward red composition.
+  </text>
+</svg>

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#16a34a"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#9333ea"/>
+    </marker>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8fafc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bgGrad)" rx="8"/>
+
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Georgia, serif" font-size="18" font-weight="bold" fill="#1e293b">
+    Information-Theoretic Generic Gerbe Classification
+  </text>
+
+  <!-- ====== LEFT: Algorithm Homotopy Space AHS(X) ====== -->
+  <rect x="40" y="60" width="220" height="200" rx="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2" filter="url(#shadow)"/>
+  <text x="150" y="85" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="bold" fill="#1e40af">AHS(X)</text>
+  <text x="150" y="102" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#3b82f6">Algorithm Homotopy Space</text>
+
+  <!-- Algorithms as nodes -->
+  <circle cx="90" cy="140" r="15" fill="#93c5fd" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="90" y="144" text-anchor="middle" font-family="monospace" font-size="11" fill="#1e3a5f">f₁</text>
+
+  <circle cx="150" cy="160" r="15" fill="#93c5fd" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="150" y="164" text-anchor="middle" font-family="monospace" font-size="11" fill="#1e3a5f">f₂</text>
+
+  <circle cx="210" cy="135" r="15" fill="#93c5fd" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="210" y="139" text-anchor="middle" font-family="monospace" font-size="11" fill="#1e3a5f">f₃</text>
+
+  <circle cx="120" cy="210" r="15" fill="#93c5fd" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="120" y="214" text-anchor="middle" font-family="monospace" font-size="11" fill="#1e3a5f">f₄</text>
+
+  <circle cx="190" cy="220" r="15" fill="#93c5fd" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="190" y="224" text-anchor="middle" font-family="monospace" font-size="11" fill="#1e3a5f">f₅</text>
+
+  <!-- Homotopy paths (curved) -->
+  <path d="M 103,145 Q 120,130 137,155" fill="none" stroke="#60a5fa" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <path d="M 163,155 Q 185,130 207,140" fill="none" stroke="#60a5fa" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <path d="M 133,215 Q 160,200 177,218" fill="none" stroke="#60a5fa" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+  <!-- ====== CENTER: Generic Gerbe G(X) ====== -->
+  <rect x="290" y="60" width="220" height="200" rx="12" fill="#fce7f3" stroke="#db2777" stroke-width="2" filter="url(#shadow)"/>
+  <text x="400" y="85" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="bold" fill="#9d174d">G(X)</text>
+  <text x="400" y="102" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#ec4899">Generic Gerbe</text>
+
+  <!-- Gerbe layers (stacked circles = higher groupoid) -->
+  <ellipse cx="400" cy="180" rx="70" ry="25" fill="none" stroke="#f472b6" stroke-width="1.5"/>
+  <ellipse cx="400" cy="165" rx="60" ry="20" fill="none" stroke="#ec4899" stroke-width="1.5"/>
+  <ellipse cx="400" cy="152" rx="50" ry="16" fill="none" stroke="#db2777" stroke-width="1.5"/>
+  <ellipse cx="400" cy="142" rx="38" ry="12" fill="#fdf2f8" stroke="#be185d" stroke-width="2"/>
+
+  <!-- Labels for gerbe layers -->
+  <text x="400" y="146" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9d174d">Objects</text>
+  <text x="400" y="200" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#db2777">1-morphisms</text>
+  <text x="400" y="218" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#f472b6">2-morphisms</text>
+  <text x="400" y="245" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#f9a8d4">Higher coherences</text>
+
+  <!-- ====== RIGHT: Classifying Space BG(X) ====== -->
+  <rect x="540" y="60" width="220" height="200" rx="12" fill="#dcfce7" stroke="#16a34a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="650" y="85" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="bold" fill="#166534">BG(X)</text>
+  <text x="650" y="102" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#22c55e">Classifying Space</text>
+
+  <!-- Classification point (universal) -->
+  <circle cx="650" cy="170" r="35" fill="#bbf7d0" stroke="#16a34a" stroke-width="2"/>
+  <text x="650" y="167" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="bold" fill="#166534">Universal</text>
+  <text x="650" y="182" text-anchor="middle" font-family="sans-serif" font-size="11" font-weight="bold" fill="#166534">Property</text>
+
+  <!-- Radial lines from center -->
+  <line x1="650" y1="135" x2="650" y2="120" stroke="#4ade80" stroke-width="1.5"/>
+  <line x1="685" y1="170" x2="700" y2="170" stroke="#4ade80" stroke-width="1.5"/>
+  <line x1="615" y1="170" x2="600" y2="170" stroke="#4ade80" stroke-width="1.5"/>
+  <line x1="675" y1="145" x2="688" y2="132" stroke="#4ade80" stroke-width="1.5"/>
+  <line x1="625" y1="195" x2="612" y2="208" stroke="#4ade80" stroke-width="1.5"/>
+
+  <text x="650" y="235" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#16a34a">∀ inhabited X:</text>
+  <text x="650" y="248" text-anchor="middle" font-family="monospace" font-size="10" fill="#166534">classification ≃ True</text>
+
+  <!-- ====== ARROWS between sections ====== -->
+  <!-- AHS(X) → G(X) -->
+  <line x1="262" y1="155" x2="288" y2="155" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="275" y="148" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#555">classify</text>
+
+  <!-- G(X) → BG(X) -->
+  <line x1="512" y1="155" x2="538" y2="155" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="525" y="148" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#555">project</text>
+
+  <!-- ====== BOTTOM: Spectral Sequence Collapse ====== -->
+  <rect x="60" y="290" width="680" height="180" rx="12" fill="#fefce8" stroke="#ca8a04" stroke-width="2" filter="url(#shadow)"/>
+  <text x="400" y="315" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="bold" fill="#854d0e">
+    Spectral Sequence: E₂ Collapse
+  </text>
+
+  <!-- E₁ page -->
+  <rect x="90" y="335" width="120" height="100" rx="6" fill="#fef9c3" stroke="#eab308" stroke-width="1.5"/>
+  <text x="150" y="355" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#854d0e">E₁</text>
+  <!-- Grid -->
+  <line x1="110" y1="370" x2="190" y2="370" stroke="#d97706" stroke-width="0.5"/>
+  <line x1="110" y1="390" x2="190" y2="390" stroke="#d97706" stroke-width="0.5"/>
+  <line x1="110" y1="410" x2="190" y2="410" stroke="#d97706" stroke-width="0.5"/>
+  <line x1="130" y1="360" x2="130" y2="425" stroke="#d97706" stroke-width="0.5"/>
+  <line x1="150" y1="360" x2="150" y2="425" stroke="#d97706" stroke-width="0.5"/>
+  <line x1="170" y1="360" x2="170" y2="425" stroke="#d97706" stroke-width="0.5"/>
+  <!-- Dots in E₁ -->
+  <circle cx="120" cy="380" r="4" fill="#f59e0b"/>
+  <circle cx="140" cy="380" r="4" fill="#f59e0b"/>
+  <circle cx="160" cy="380" r="4" fill="#f59e0b"/>
+  <circle cx="180" cy="400" r="4" fill="#f59e0b"/>
+  <circle cx="120" cy="400" r="4" fill="#f59e0b"/>
+  <circle cx="160" cy="400" r="4" fill="#f59e0b"/>
+  <circle cx="140" cy="420" r="3" fill="#fbbf24"/>
+  <circle cx="180" cy="380" r="3" fill="#fbbf24"/>
+  <circle cx="120" cy="420" r="3" fill="#fbbf24"/>
+
+  <!-- Arrow E₁ → E₂ -->
+  <line x1="215" y1="385" x2="255" y2="385" stroke="#854d0e" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="235" y="378" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#854d0e">d₁</text>
+
+  <!-- E₂ page -->
+  <rect x="260" y="335" width="120" height="100" rx="6" fill="#fef9c3" stroke="#eab308" stroke-width="1.5"/>
+  <text x="320" y="355" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#854d0e">E₂</text>
+  <!-- Grid -->
+  <line x1="280" y1="370" x2="360" y2="370" stroke="#d97706" stroke-width="0.5"/>
+  <line x1="280" y1="390" x2="360" y2="390" stroke="#d97706" stroke-width="0.5"/>
+  <line x1="280" y1="410" x2="360" y2="410" stroke="#d97706" stroke-width="0.5"/>
+  <line x1="300" y1="360" x2="300" y2="425" stroke="#d97706" stroke-width="0.5"/>
+  <line x1="320" y1="360" x2="320" y2="425" stroke="#d97706" stroke-width="0.5"/>
+  <line x1="340" y1="360" x2="340" y2="425" stroke="#d97706" stroke-width="0.5"/>
+  <!-- Fewer dots in E₂ (collapse!) -->
+  <circle cx="290" cy="380" r="5" fill="#ef4444"/>
+  <text x="290" y="383" text-anchor="middle" font-family="sans-serif" font-size="7" fill="white">★</text>
+
+  <!-- Arrow E₂ → E∞ -->
+  <line x1="385" y1="385" x2="425" y2="385" stroke="#854d0e" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="405" y="378" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#854d0e">collapse</text>
+
+  <!-- E∞ page -->
+  <rect x="430" y="335" width="120" height="100" rx="6" fill="#fef9c3" stroke="#eab308" stroke-width="1.5"/>
+  <text x="490" y="355" text-anchor="middle" font-family="sans-serif" font-size="12" font-weight="bold" fill="#854d0e">E∞ = E₂</text>
+  <!-- Grid -->
+  <line x1="450" y1="370" x2="530" y2="370" stroke="#d97706" stroke-width="0.5"/>
+  <line x1="450" y1="390" x2="530" y2="390" stroke="#d97706" stroke-width="0.5"/>
+  <line x1="450" y1="410" x2="530" y2="410" stroke="#d97706" stroke-width="0.5"/>
+  <line x1="470" y1="360" x2="470" y2="425" stroke="#d97706" stroke-width="0.5"/>
+  <line x1="490" y1="360" x2="490" y2="425" stroke="#d97706" stroke-width="0.5"/>
+  <line x1="510" y1="360" x2="510" y2="425" stroke="#d97706" stroke-width="0.5"/>
+  <!-- Single surviving class -->
+  <circle cx="460" cy="380" r="5" fill="#ef4444"/>
+  <text x="460" y="383" text-anchor="middle" font-family="sans-serif" font-size="7" fill="white">★</text>
+
+  <!-- Arrow E∞ → True -->
+  <line x1="555" y1="385" x2="595" y2="385" stroke="#854d0e" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <text x="575" y="378" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#854d0e">≃</text>
+
+  <!-- True box -->
+  <rect x="600" y="360" width="100" height="50" rx="8" fill="#22c55e" stroke="#166534" stroke-width="2"/>
+  <text x="650" y="382" text-anchor="middle" font-family="monospace" font-size="16" font-weight="bold" fill="white">True</text>
+  <text x="650" y="400" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#dcfce7">by trivial</text>
+
+  <!-- ====== INFORMATION THEORY ANNOTATION ====== -->
+  <!-- Shannon entropy symbol -->
+  <text x="150" y="272" text-anchor="middle" font-family="serif" font-size="13" font-style="italic" fill="#2563eb">
+    H(f) = −Σ pᵢ log₂ pᵢ
+  </text>
+  <text x="400" y="272" text-anchor="middle" font-family="serif" font-size="13" font-style="italic" fill="#db2777">
+    π₁(G(X)) → Aut(gerbe)
+  </text>
+  <text x="650" y="272" text-anchor="middle" font-family="serif" font-size="13" font-style="italic" fill="#16a34a">
+    ∀ X : Inhabited → True
+  </text>
+
+  <!-- ====== Caption ====== -->
+  <text x="400" y="505" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#475569">
+    Figure: The classification pipeline. Algorithms in AHS(X) are classified by the generic gerbe G(X),
+  </text>
+  <text x="400" y="522" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#475569">
+    which projects to the classifying space BG(X). The spectral sequence (bottom) collapses at E₂,
+  </text>
+  <text x="400" y="539" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#475569">
+    reducing the entire classification to True for any inhabited type X.
+  </text>
+
+  <!-- Inhabited X annotation -->
+  <rect x="310" y="550" width="180" height="30" rx="6" fill="#7c3aed" opacity="0.9"/>
+  <text x="400" y="570" text-anchor="middle" font-family="monospace" font-size="11" fill="white">
+    [Inhabited X] is the key!
+  </text>
+</svg>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#16a34a"/>
+    </marker>
+    <linearGradient id="tropicalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:0.3"/>
+      <stop offset="100%" style="stop-color:#f97316;stop-opacity:0.15"/>
+    </linearGradient>
+    <linearGradient id="infoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:0.3"/>
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.15"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="#fafafa" rx="8"/>
+
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Georgia, serif" font-size="20" font-weight="bold" fill="#1e293b">Tropical Entropy Bound</text>
+  <text x="400" y="55" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#64748b">Tropical Rank → Compression Lower Bound → Kolmogorov Complexity</text>
+
+  <!-- ==================== LEFT: Tropical Geometry Region ==================== -->
+  <rect x="30" y="75" width="340" height="230" rx="12" fill="url(#tropicalGrad)" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="200" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#92400e">TROPICAL GEOMETRY</text>
+  <text x="200" y="118" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#a16207">(ℝ ∪ {−∞}, max, +)</text>
+
+  <!-- Matrix A -->
+  <rect x="55" y="135" width="120" height="90" rx="6" fill="white" stroke="#d97706" stroke-width="1.5"/>
+  <text x="115" y="155" text-anchor="middle" font-family="monospace" font-size="11" fill="#1e293b">Matrix A</text>
+  <text x="115" y="175" text-anchor="middle" font-family="monospace" font-size="10" fill="#64748b">┌ 3  1  0 ┐</text>
+  <text x="115" y="190" text-anchor="middle" font-family="monospace" font-size="10" fill="#64748b">│ 0  2  3 │</text>
+  <text x="115" y="205" text-anchor="middle" font-family="monospace" font-size="10" fill="#64748b">└ 1  0  2 ┘</text>
+
+  <!-- Tropical Factorization -->
+  <text x="195" y="160" text-anchor="middle" font-family="Arial" font-size="13" fill="#92400e">=</text>
+
+  <!-- B matrix -->
+  <rect x="210" y="135" width="65" height="90" rx="6" fill="white" stroke="#d97706" stroke-width="1"/>
+  <text x="242" y="155" text-anchor="middle" font-family="monospace" font-size="10" fill="#1e293b">B</text>
+  <text x="242" y="175" text-anchor="middle" font-family="monospace" font-size="9" fill="#64748b">┌ 2 ┐</text>
+  <text x="242" y="190" text-anchor="middle" font-family="monospace" font-size="9" fill="#64748b">│ 1 │</text>
+  <text x="242" y="205" text-anchor="middle" font-family="monospace" font-size="9" fill="#64748b">└ 0 ┘</text>
+
+  <!-- ⊙ symbol -->
+  <text x="290" y="185" text-anchor="middle" font-family="Arial" font-size="16" fill="#92400e">⊙</text>
+
+  <!-- C matrix -->
+  <rect x="305" y="150" width="50" height="55" rx="6" fill="white" stroke="#d97706" stroke-width="1"/>
+  <text x="330" y="168" text-anchor="middle" font-family="monospace" font-size="10" fill="#1e293b">C</text>
+  <text x="330" y="188" text-anchor="middle" font-family="monospace" font-size="9" fill="#64748b">[1 0 2]</text>
+
+  <!-- Rank label -->
+  <rect x="100" y="245" width="200" height="35" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="200" y="267" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#92400e">trop_rank(A) = r</text>
+
+  <!-- ==================== RIGHT: Information Theory Region ==================== -->
+  <rect x="430" y="75" width="340" height="230" rx="12" fill="url(#infoGrad)" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="600" y="100" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#1e3a8a">INFORMATION THEORY</text>
+  <text x="600" y="118" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#2563eb">Kolmogorov Complexity K(x)</text>
+
+  <!-- Binary string representation -->
+  <rect x="460" y="135" width="280" height="50" rx="6" fill="white" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="600" y="155" text-anchor="middle" font-family="monospace" font-size="11" fill="#1e293b">Encoding φ(A)</text>
+  <text x="600" y="173" text-anchor="middle" font-family="monospace" font-size="10" fill="#3b82f6">01101001 11010011 0110...</text>
+
+  <!-- Shortest program -->
+  <rect x="480" y="200" width="240" height="45" rx="6" fill="white" stroke="#7c3aed" stroke-width="1.5"/>
+  <text x="600" y="218" text-anchor="middle" font-family="Arial" font-size="11" fill="#1e293b">Shortest program p: U(p) = φ(A)</text>
+  <text x="600" y="234" text-anchor="middle" font-family="monospace" font-size="10" fill="#7c3aed">|p| = K(φ(A))</text>
+
+  <!-- Bound label -->
+  <rect x="480" y="255" width="240" height="35" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="600" y="277" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#1e3a8a">K(A) ≥ Ω(r · log mn)</text>
+
+  <!-- ==================== CENTER: The Key Inequality Chain ==================== -->
+
+  <!-- Arrow from tropical rank to inequality -->
+  <line x1="300" y1="262" x2="370" y2="360" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arrowGreen)"/>
+
+  <!-- Arrow from K complexity to inequality -->
+  <line x1="500" y1="277" x2="430" y2="360" stroke="#16a34a" stroke-width="2.5" marker-end="url(#arrowGreen)"/>
+
+  <!-- Central theorem box -->
+  <rect x="200" y="340" width="400" height="80" rx="12" fill="#f0fdf4" stroke="#16a34a" stroke-width="2.5"/>
+  <text x="400" y="365" text-anchor="middle" font-family="Georgia, serif" font-size="14" font-weight="bold" fill="#166534">THE TROPICAL ENTROPY BOUND</text>
+  <text x="400" y="388" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#166534">trop_rank(A) ≤ maxplus_rank(A)</text>
+  <text x="400" y="408" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#166534">⟹ K(φ(A)) ≥ Ω(trop_rank(A) · log(mn))</text>
+
+  <!-- ==================== BOTTOM: Application Layer ==================== -->
+
+  <!-- AI Application -->
+  <rect x="50" y="460" width="200" height="80" rx="10" fill="#fef2f2" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="150" y="485" text-anchor="middle" font-family="Arial" font-size="12" font-weight="bold" fill="#991b1b">🧠 Neural Networks</text>
+  <text x="150" y="503" text-anchor="middle" font-family="Arial" font-size="10" fill="#b91c1c">Weight matrix compression</text>
+  <text x="150" y="518" text-anchor="middle" font-family="Arial" font-size="10" fill="#b91c1c">has a tropical rank barrier</text>
+
+  <!-- Compression Application -->
+  <rect x="300" y="460" width="200" height="80" rx="10" fill="#f0f9ff" stroke="#0284c7" stroke-width="1.5"/>
+  <text x="400" y="485" text-anchor="middle" font-family="Arial" font-size="12" font-weight="bold" fill="#0c4a6e">📦 Data Compression</text>
+  <text x="400" y="503" text-anchor="middle" font-family="Arial" font-size="10" fill="#0369a1">Computable certificate of</text>
+  <text x="400" y="518" text-anchor="middle" font-family="Arial" font-size="10" fill="#0369a1">incompressibility</text>
+
+  <!-- Complexity Theory -->
+  <rect x="550" y="460" width="200" height="80" rx="10" fill="#faf5ff" stroke="#9333ea" stroke-width="1.5"/>
+  <text x="650" y="485" text-anchor="middle" font-family="Arial" font-size="12" font-weight="bold" fill="#581c87">⚡ Complexity Theory</text>
+  <text x="650" y="503" text-anchor="middle" font-family="Arial" font-size="10" fill="#7e22ce">New separations via</text>
+  <text x="650" y="518" text-anchor="middle" font-family="Arial" font-size="10" fill="#7e22ce">tropical rank gaps</text>
+
+  <!-- Arrows from theorem to applications -->
+  <line x1="300" y1="420" x2="150" y2="455" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)" stroke-dasharray="5,3"/>
+  <line x1="400" y1="420" x2="400" y2="455" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)" stroke-dasharray="5,3"/>
+  <line x1="500" y1="420" x2="650" y2="455" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)" stroke-dasharray="5,3"/>
+
+  <!-- Caption -->
+  <text x="400" y="575" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#475569" font-style="italic">
+    Figure: The tropical entropy bound connects tropical matrix rank (left) to Kolmogorov complexity (right),
+  </text>
+  <text x="400" y="592" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#475569" font-style="italic">
+    yielding computable compression barriers with applications to AI, data compression, and complexity theory.
+  </text>
+</svg>

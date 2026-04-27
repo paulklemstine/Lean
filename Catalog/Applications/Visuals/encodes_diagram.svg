@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" width="900" height="620" font-family="'Georgia', 'Times New Roman', serif">
+  
+  <!-- Background -->
+  <rect width="900" height="620" fill="#fafafa" rx="8"/>
+  
+  <!-- Title -->
+  <text x="450" y="35" text-anchor="middle" font-size="18" font-weight="bold" fill="#1a1a2e">
+    Backpropagation as Cotangent Lift
+  </text>
+  <text x="450" y="55" text-anchor="middle" font-size="13" fill="#555" font-style="italic">
+    Contravariant Functoriality of T* : Man^op → VectBun
+  </text>
+  
+  <!-- ====== FORWARD PASS (TOP) ====== -->
+  <text x="450" y="90" text-anchor="middle" font-size="15" font-weight="bold" fill="#2d6a4f">
+    Forward Pass (Covariant — Tangent Functor T)
+  </text>
+  
+  <!-- Manifold nodes - Forward -->
+  <!-- M₀ = R^d₀ -->
+  <ellipse cx="100" cy="155" rx="55" ry="30" fill="#d8f3dc" stroke="#2d6a4f" stroke-width="2"/>
+  <text x="100" y="152" text-anchor="middle" font-size="14" fill="#1b4332" font-weight="bold">M₀</text>
+  <text x="100" y="170" text-anchor="middle" font-size="10" fill="#555">ℝ^d₀</text>
+  
+  <!-- M₁ = R^d₁ -->
+  <ellipse cx="300" cy="155" rx="55" ry="30" fill="#d8f3dc" stroke="#2d6a4f" stroke-width="2"/>
+  <text x="300" y="152" text-anchor="middle" font-size="14" fill="#1b4332" font-weight="bold">M₁</text>
+  <text x="300" y="170" text-anchor="middle" font-size="10" fill="#555">ℝ^d₁</text>
+  
+  <!-- M₂ = R^d₂ -->
+  <ellipse cx="500" cy="155" rx="55" ry="30" fill="#d8f3dc" stroke="#2d6a4f" stroke-width="2"/>
+  <text x="500" y="152" text-anchor="middle" font-size="14" fill="#1b4332" font-weight="bold">M₂</text>
+  <text x="500" y="170" text-anchor="middle" font-size="10" fill="#555">ℝ^d₂</text>
+  
+  <!-- M₃ = R^d₃ -->
+  <ellipse cx="700" cy="155" rx="55" ry="30" fill="#d8f3dc" stroke="#2d6a4f" stroke-width="2"/>
+  <text x="700" y="152" text-anchor="middle" font-size="14" fill="#1b4332" font-weight="bold">M₃</text>
+  <text x="700" y="170" text-anchor="middle" font-size="10" fill="#555">ℝ^d₃</text>
+  
+  <!-- Forward arrows -->
+  <defs>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2d6a4f"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="10 0, 0 3.5, 10 7" fill="#c1121f"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1d3557"/>
+    </marker>
+    <marker id="arrowOrange" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="10 0, 0 3.5, 10 7" fill="#e76f51"/>
+    </marker>
+  </defs>
+  
+  <!-- f₁ arrow -->
+  <line x1="158" y1="150" x2="240" y2="150" stroke="#2d6a4f" stroke-width="2.5" marker-end="url(#arrowGreen)"/>
+  <text x="200" y="140" text-anchor="middle" font-size="13" fill="#2d6a4f" font-weight="bold">f₁</text>
+  
+  <!-- f₂ arrow -->
+  <line x1="358" y1="150" x2="440" y2="150" stroke="#2d6a4f" stroke-width="2.5" marker-end="url(#arrowGreen)"/>
+  <text x="400" y="140" text-anchor="middle" font-size="13" fill="#2d6a4f" font-weight="bold">f₂</text>
+  
+  <!-- f₃ arrow -->
+  <line x1="558" y1="150" x2="640" y2="150" stroke="#2d6a4f" stroke-width="2.5" marker-end="url(#arrowGreen)"/>
+  <text x="600" y="140" text-anchor="middle" font-size="13" fill="#2d6a4f" font-weight="bold">f₃</text>
+  
+  <!-- Composition label -->
+  <text x="830" y="155" text-anchor="middle" font-size="12" fill="#2d6a4f" font-style="italic">
+    Φ = f₃∘f₂∘f₁
+  </text>
+  
+  <!-- ====== DIVIDER ====== -->
+  <line x1="40" y1="210" x2="860" y2="210" stroke="#ccc" stroke-width="1" stroke-dasharray="6,4"/>
+  <text x="450" y="230" text-anchor="middle" font-size="11" fill="#888">
+    Cotangent functor T* reverses all arrows (contravariance)
+  </text>
+  
+  <!-- ====== COTANGENT BUNDLES (BOTTOM) ====== -->
+  <text x="450" y="265" text-anchor="middle" font-size="15" font-weight="bold" fill="#c1121f">
+    Backpropagation (Contravariant — Cotangent Functor T*)
+  </text>
+  
+  <!-- T*M₀ -->
+  <ellipse cx="100" cy="335" rx="55" ry="30" fill="#ffd7d7" stroke="#c1121f" stroke-width="2"/>
+  <text x="100" y="332" text-anchor="middle" font-size="14" fill="#780000" font-weight="bold">T*M₀</text>
+  <text x="100" y="350" text-anchor="middle" font-size="9" fill="#555">∇ℓ (input grad)</text>
+  
+  <!-- T*M₁ -->
+  <ellipse cx="300" cy="335" rx="55" ry="30" fill="#ffd7d7" stroke="#c1121f" stroke-width="2"/>
+  <text x="300" y="332" text-anchor="middle" font-size="14" fill="#780000" font-weight="bold">T*M₁</text>
+  <text x="300" y="350" text-anchor="middle" font-size="9" fill="#555">hidden grad</text>
+  
+  <!-- T*M₂ -->
+  <ellipse cx="500" cy="335" rx="55" ry="30" fill="#ffd7d7" stroke="#c1121f" stroke-width="2"/>
+  <text x="500" y="332" text-anchor="middle" font-size="14" fill="#780000" font-weight="bold">T*M₂</text>
+  <text x="500" y="350" text-anchor="middle" font-size="9" fill="#555">hidden grad</text>
+  
+  <!-- T*M₃ -->
+  <ellipse cx="700" cy="335" rx="55" ry="30" fill="#ffd7d7" stroke="#c1121f" stroke-width="2"/>
+  <text x="700" y="332" text-anchor="middle" font-size="14" fill="#780000" font-weight="bold">T*M₃</text>
+  <text x="700" y="350" text-anchor="middle" font-size="9" fill="#555">dℓ (loss grad)</text>
+  
+  <!-- Backward arrows (REVERSED direction!) -->
+  <!-- f₁* arrow (right to left) -->
+  <line x1="242" y1="330" x2="160" y2="330" stroke="#c1121f" stroke-width="2.5" marker-end="url(#arrowRed)"/>
+  <text x="200" y="320" text-anchor="middle" font-size="13" fill="#c1121f" font-weight="bold">f₁*</text>
+  
+  <!-- f₂* arrow -->
+  <line x1="442" y1="330" x2="360" y2="330" stroke="#c1121f" stroke-width="2.5" marker-end="url(#arrowRed)"/>
+  <text x="400" y="320" text-anchor="middle" font-size="13" fill="#c1121f" font-weight="bold">f₂*</text>
+  
+  <!-- f₃* arrow -->
+  <line x1="642" y1="330" x2="560" y2="330" stroke="#c1121f" stroke-width="2.5" marker-end="url(#arrowRed)"/>
+  <text x="600" y="320" text-anchor="middle" font-size="13" fill="#c1121f" font-weight="bold">f₃*</text>
+  
+  <!-- Composition label -->
+  <text x="830" y="335" text-anchor="middle" font-size="12" fill="#c1121f" font-style="italic">
+    Φ* = f₁*∘f₂*∘f₃*
+  </text>
+  
+  <!-- ====== VERTICAL CONNECTIONS (Bundle projection) ====== -->
+  <line x1="100" y1="188" x2="100" y2="302" stroke="#888" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="300" y1="188" x2="300" y2="302" stroke="#888" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="500" y1="188" x2="500" y2="302" stroke="#888" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="700" y1="188" x2="700" y2="302" stroke="#888" stroke-width="1" stroke-dasharray="3,3"/>
+  
+  <!-- ====== FUNCTORIALITY BOX ====== -->
+  <rect x="60" y="395" rx="10" ry="10" width="780" height="100" fill="#edf2fb" stroke="#1d3557" stroke-width="2"/>
+  <text x="450" y="420" text-anchor="middle" font-size="14" font-weight="bold" fill="#1d3557">
+    Contravariant Functoriality (Chain Rule for Cotangent Maps)
+  </text>
+  <text x="450" y="445" text-anchor="middle" font-size="14" fill="#1d3557" font-family="'Courier New', monospace">
+    (g ∘ f)* = f* ∘ g*     ← composition reversed!
+  </text>
+  <text x="450" y="470" text-anchor="middle" font-size="14" fill="#1d3557" font-family="'Courier New', monospace">
+    (f₃ ∘ f₂ ∘ f₁)* = f₁* ∘ f₂* ∘ f₃*    ← THIS IS BACKPROP
+  </text>
+  <text x="450" y="490" text-anchor="middle" font-size="11" fill="#555" font-style="italic">
+    Identity: (id_M)* = id_{T*M}  •  Composition: reverses order
+  </text>
+  
+  <!-- ====== INSIGHT BOX ====== -->
+  <rect x="150" y="515" rx="8" ry="8" width="600" height="55" fill="#fff3cd" stroke="#e76f51" stroke-width="2"/>
+  <text x="450" y="537" text-anchor="middle" font-size="13" font-weight="bold" fill="#e76f51">
+    ★ The reverse traversal of backprop is not an optimization trick —
+  </text>
+  <text x="450" y="557" text-anchor="middle" font-size="13" font-weight="bold" fill="#e76f51">
+    it is a mathematical theorem forced by cotangent contravariance. ★
+  </text>
+  
+  <!-- ====== FLOW ANNOTATIONS ====== -->
+  <!-- Forward flow indicator -->
+  <path d="M 80,110 Q 400,75 720,110" fill="none" stroke="#2d6a4f" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowGreen)"/>
+  <text x="400" y="95" text-anchor="middle" font-size="11" fill="#2d6a4f">data flows forward →</text>
+  
+  <!-- Backward flow indicator -->
+  <path d="M 720,375 Q 400,410 80,375" fill="none" stroke="#c1121f" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowRed)"/>
+  <text x="400" y="398" text-anchor="middle" font-size="11" fill="#c1121f">← gradients flow backward</text>
+  
+  <!-- Caption -->
+  <text x="450" y="600" text-anchor="middle" font-size="11" fill="#666" font-style="italic">
+    Fig. 1: The cotangent functor T* maps the forward composition Φ = f₃∘f₂∘f₁ to the reversed composition Φ* = f₁*∘f₂*∘f₃*, which is backpropagation.
+  </text>
+  
+</svg>

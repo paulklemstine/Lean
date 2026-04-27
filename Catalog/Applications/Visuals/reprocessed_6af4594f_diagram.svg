@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" width="900" height="700">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#444"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8fafc;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="700" fill="url(#bgGrad)" rx="12"/>
+
+  <!-- Title -->
+  <text x="450" y="38" text-anchor="middle" font-family="Georgia, serif" font-size="22" font-weight="bold" fill="#1e293b">
+    Quantum Berggren Superposition
+  </text>
+  <text x="450" y="58" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#64748b">
+    Pythagorean Triples as Quantum States on the Bloch Sphere
+  </text>
+
+  <!-- ======== LEFT: Berggren Tree ======== -->
+  <text x="220" y="95" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="bold" fill="#7c3aed">
+    Berggren Tree
+  </text>
+
+  <!-- Root node (3,4,5) -->
+  <rect x="170" y="108" width="100" height="32" rx="8" fill="#7c3aed" filter="url(#shadow)"/>
+  <text x="220" y="129" text-anchor="middle" font-family="monospace" font-size="13" fill="white">(3, 4, 5)</text>
+
+  <!-- Level 2 nodes -->
+  <line x1="195" y1="140" x2="95" y2="175" stroke="#7c3aed" stroke-width="2"/>
+  <line x1="220" y1="140" x2="220" y2="175" stroke="#7c3aed" stroke-width="2"/>
+  <line x1="245" y1="140" x2="345" y2="175" stroke="#7c3aed" stroke-width="2"/>
+
+  <rect x="45" y="175" width="100" height="28" rx="6" fill="#a78bfa"/>
+  <text x="95" y="194" text-anchor="middle" font-family="monospace" font-size="11" fill="white">(5, 12, 13)</text>
+
+  <rect x="170" y="175" width="100" height="28" rx="6" fill="#a78bfa"/>
+  <text x="220" y="194" text-anchor="middle" font-family="monospace" font-size="11" fill="white">(21, 20, 29)</text>
+
+  <rect x="295" y="175" width="100" height="28" rx="6" fill="#a78bfa"/>
+  <text x="345" y="194" text-anchor="middle" font-family="monospace" font-size="11" fill="white">(15, 8, 17)</text>
+
+  <!-- Level 3 (partial) -->
+  <line x1="70" y1="203" x2="30" y2="230" stroke="#c4b5fd" stroke-width="1.5"/>
+  <line x1="95" y1="203" x2="95" y2="230" stroke="#c4b5fd" stroke-width="1.5"/>
+  <line x1="120" y1="203" x2="160" y2="230" stroke="#c4b5fd" stroke-width="1.5"/>
+
+  <rect x="5" y="230" width="55" height="22" rx="4" fill="#ddd6fe"/>
+  <text x="32" y="245" text-anchor="middle" font-family="monospace" font-size="9" fill="#5b21b6">(7,24,25)</text>
+
+  <rect x="67" y="230" width="55" height="22" rx="4" fill="#ddd6fe"/>
+  <text x="95" y="245" text-anchor="middle" font-family="monospace" font-size="9" fill="#5b21b6">(55,48,73)</text>
+
+  <rect x="135" y="230" width="55" height="22" rx="4" fill="#ddd6fe"/>
+  <text x="162" y="245" text-anchor="middle" font-family="monospace" font-size="9" fill="#5b21b6">(45,28,53)</text>
+
+  <!-- Dots indicating continuation -->
+  <text x="220" y="275" text-anchor="middle" font-family="serif" font-size="18" fill="#7c3aed">⋮ ⋮ ⋮</text>
+
+  <!-- Matrix labels -->
+  <text x="140" y="162" text-anchor="middle" font-family="serif" font-size="11" font-style="italic" fill="#7c3aed">A</text>
+  <text x="225" y="162" text-anchor="middle" font-family="serif" font-size="11" font-style="italic" fill="#7c3aed">B</text>
+  <text x="300" y="162" text-anchor="middle" font-family="serif" font-size="11" font-style="italic" fill="#7c3aed">C</text>
+
+  <!-- ======== CENTER: Encoding Arrow ======== -->
+  <line x1="410" y1="180" x2="480" y2="180" stroke="#444" stroke-width="2.5" marker-end="url(#arrowhead)"/>
+  <text x="445" y="170" text-anchor="middle" font-family="serif" font-size="13" font-style="italic" fill="#444">Φ</text>
+  <text x="445" y="202" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#64748b">encode</text>
+
+  <!-- ======== RIGHT: Bloch Sphere (Unit Circle cross-section) ======== -->
+  <text x="670" y="95" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="bold" fill="#2563eb">
+    Bloch Sphere (φ=0 slice)
+  </text>
+
+  <!-- Unit circle -->
+  <circle cx="670" cy="200" r="100" fill="none" stroke="#2563eb" stroke-width="2" opacity="0.3"/>
+  <circle cx="670" cy="200" r="100" fill="#dbeafe" opacity="0.2"/>
+
+  <!-- Axes -->
+  <line x1="550" y1="200" x2="790" y2="200" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,4"/>
+  <line x1="670" y1="80" x2="670" y2="320" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="795" y="204" font-family="serif" font-size="12" fill="#64748b">|1⟩</text>
+  <text x="670" y="75" text-anchor="middle" font-family="serif" font-size="12" fill="#64748b">|0⟩</text>
+
+  <!-- Quantum states as points on the circle -->
+  <!-- (3,4,5): α=3/5=0.6, β=4/5=0.8 → θ=53.13° -->
+  <circle cx="750" cy="140" r="6" fill="#dc2626"/>
+  <text x="766" y="136" font-family="monospace" font-size="10" fill="#dc2626">(3,4,5)</text>
+
+  <!-- (5,12,13): α=5/13≈0.385, β=12/13≈0.923 → θ=67.38° -->
+  <circle cx="762" cy="162" r="5" fill="#ea580c"/>
+  <text x="778" y="158" font-family="monospace" font-size="9" fill="#ea580c">(5,12,13)</text>
+
+  <!-- (8,15,17): α=8/17≈0.471, β=15/17≈0.882 -->
+  <circle cx="758" cy="153" r="5" fill="#d97706"/>
+  <text x="767" y="148" font-family="monospace" font-size="9" fill="#d97706">(8,15,17)</text>
+
+  <!-- (21,20,29): α≈0.724, β≈0.690 -->
+  <circle cx="739" cy="127" r="5" fill="#16a34a"/>
+  <text x="748" y="122" font-family="monospace" font-size="9" fill="#16a34a">(21,20,29)</text>
+
+  <!-- (7,24,25): α=0.28, β=0.96 -->
+  <circle cx="766" cy="172" r="4" fill="#0891b2"/>
+
+  <!-- (20,21,29) -->
+  <circle cx="741" cy="130" r="4" fill="#7c3aed"/>
+
+  <!-- State vector from origin to (3,4,5) -->
+  <line x1="670" y1="200" x2="750" y2="140" stroke="#dc2626" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <text x="700" y="158" font-family="serif" font-size="11" font-style="italic" fill="#dc2626">|ψ₃₄₅⟩</text>
+
+  <!-- Normalization annotation -->
+  <text x="670" y="335" text-anchor="middle" font-family="serif" font-size="11" fill="#2563eb">
+    (a/c)² + (b/c)² = 1  ⟺  ⟨ψ|ψ⟩ = 1
+  </text>
+
+  <!-- ======== BOTTOM: Correspondence Table ======== -->
+  <rect x="50" y="370" width="800" height="260" rx="10" fill="white" stroke="#cbd5e1" stroke-width="1.5" filter="url(#shadow)"/>
+
+  <text x="450" y="400" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="bold" fill="#1e293b">
+    Number Theory ⟷ Quantum Mechanics Correspondence
+  </text>
+
+  <!-- Table headers -->
+  <line x1="80" y1="415" x2="820" y2="415" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="250" y="435" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#7c3aed">Number Theory</text>
+  <text x="650" y="435" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#2563eb">Quantum Mechanics</text>
+  <line x1="450" y1="415" x2="450" y2="610" stroke="#e2e8f0" stroke-width="1"/>
+  <line x1="80" y1="445" x2="820" y2="445" stroke="#e2e8f0" stroke-width="1"/>
+
+  <!-- Row 1 -->
+  <text x="250" y="468" text-anchor="middle" font-family="serif" font-size="12" fill="#334155">Pythagorean triple (a, b, c)</text>
+  <text x="650" y="468" text-anchor="middle" font-family="serif" font-size="12" fill="#334155">Quantum state |ψ⟩ = α|0⟩ + β|1⟩</text>
+
+  <!-- Row 2 -->
+  <text x="250" y="493" text-anchor="middle" font-family="serif" font-size="12" fill="#334155">a² + b² = c²</text>
+  <text x="650" y="493" text-anchor="middle" font-family="serif" font-size="12" fill="#334155">Normalization: ⟨ψ|ψ⟩ = 1</text>
+
+  <!-- Row 3 -->
+  <text x="250" y="518" text-anchor="middle" font-family="serif" font-size="12" fill="#334155">gcd(a, b, c) = 1 (coprime)</text>
+  <text x="650" y="518" text-anchor="middle" font-family="serif" font-size="12" fill="#334155">State irreducibility</text>
+
+  <!-- Row 4 -->
+  <text x="250" y="543" text-anchor="middle" font-family="serif" font-size="12" fill="#334155">Berggren matrices A, B, C</text>
+  <text x="650" y="543" text-anchor="middle" font-family="serif" font-size="12" fill="#334155">Quantum gates (unitary evolution)</text>
+
+  <!-- Row 5 -->
+  <text x="250" y="568" text-anchor="middle" font-family="serif" font-size="12" fill="#334155">Ternary tree structure</text>
+  <text x="650" y="568" text-anchor="middle" font-family="serif" font-size="12" fill="#334155">Circuit architecture</text>
+
+  <!-- Row 6 -->
+  <text x="250" y="593" text-anchor="middle" font-family="serif" font-size="12" fill="#334155">Dense in unit circle (depth → ∞)</text>
+  <text x="650" y="593" text-anchor="middle" font-family="serif" font-size="12" fill="#334155">Approximate universality</text>
+
+  <!-- Caption -->
+  <text x="450" y="660" text-anchor="middle" font-family="Georgia, serif" font-size="12" font-style="italic" fill="#64748b">
+    Figure 1: The Berggren tree generates all primitive Pythagorean triples, each encoding a normalized
+  </text>
+  <text x="450" y="678" text-anchor="middle" font-family="Georgia, serif" font-size="12" font-style="italic" fill="#64748b">
+    quantum state. Coprimality of components corresponds to irreducibility of the quantum state.
+  </text>
+</svg>

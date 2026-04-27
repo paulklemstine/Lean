@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#444"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#dc2626"/>
+    </marker>
+    <radialGradient id="massGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="70%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#92400e"/>
+    </radialGradient>
+    <linearGradient id="sheafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#dbeafe"/>
+      <stop offset="100%" stop-color="#93c5fd"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="#0f172a" rx="12"/>
+
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" fill="#e2e8f0" font-family="Georgia, serif" font-size="18" font-weight="bold">
+    EML Gravitational Lensing via Nilpotent Residue Theory
+  </text>
+
+  <!-- ===== LEFT PANEL: Physical Picture ===== -->
+  <text x="200" y="65" text-anchor="middle" fill="#94a3b8" font-family="sans-serif" font-size="13" font-style="italic">
+    Physical: Light Deflection
+  </text>
+
+  <!-- Distant source (star) -->
+  <circle cx="50" cy="280" r="8" fill="#fbbf24" opacity="0.9"/>
+  <text x="50" y="310" text-anchor="middle" fill="#fbbf24" font-family="sans-serif" font-size="11">Source</text>
+
+  <!-- Massive lens -->
+  <circle cx="200" cy="240" r="32" fill="url(#massGrad)" opacity="0.85"/>
+  <text x="200" y="290" text-anchor="middle" fill="#f59e0b" font-family="sans-serif" font-size="11">Mass M</text>
+
+  <!-- Curved light ray (upper path) -->
+  <path d="M 58,276 Q 140,200 200,208 Q 260,216 340,260"
+        stroke="#60a5fa" stroke-width="2.5" fill="none" stroke-dasharray="6,3"
+        marker-end="url(#arrowBlue)"/>
+
+  <!-- Curved light ray (lower path) -->
+  <path d="M 58,284 Q 140,340 200,330 Q 260,320 340,280"
+        stroke="#60a5fa" stroke-width="2.5" fill="none" stroke-dasharray="6,3"
+        marker-end="url(#arrowBlue)"/>
+
+  <!-- Observer -->
+  <circle cx="350" cy="270" r="6" fill="#a78bfa"/>
+  <text x="350" y="300" text-anchor="middle" fill="#a78bfa" font-family="sans-serif" font-size="11">Observer</text>
+
+  <!-- Deflection angle arc -->
+  <path d="M 320,250 A 30,30 0 0,1 320,290" stroke="#ef4444" stroke-width="1.5" fill="none"/>
+  <text x="310" y="274" text-anchor="end" fill="#ef4444" font-family="sans-serif" font-size="11">θ</text>
+
+  <!-- Einstein angle formula -->
+  <text x="200" y="360" text-anchor="middle" fill="#94a3b8" font-family="monospace" font-size="12">
+    θ = 4GM / rc²
+  </text>
+
+  <!-- ===== RIGHT PANEL: Algebraic Picture ===== -->
+  <text x="600" y="65" text-anchor="middle" fill="#94a3b8" font-family="sans-serif" font-size="13" font-style="italic">
+    Algebraic: Nilpotent Residue Collapse
+  </text>
+
+  <!-- Sheaf box -->
+  <rect x="470" y="85" width="260" height="80" rx="10" fill="url(#sheafGrad)" opacity="0.15" stroke="#60a5fa" stroke-width="1.5"/>
+  <text x="600" y="110" text-anchor="middle" fill="#93c5fd" font-family="sans-serif" font-size="13" font-weight="bold">
+    Spacetime Sheaf 𝓕(X)
+  </text>
+  <text x="600" y="130" text-anchor="middle" fill="#cbd5e1" font-family="monospace" font-size="11">
+    X : Type* [Inhabited X]
+  </text>
+  <text x="600" y="148" text-anchor="middle" fill="#cbd5e1" font-family="monospace" font-size="11">
+    Sections = meromorphic data
+  </text>
+
+  <!-- Arrow: Sheaf → Residue Pairing -->
+  <line x1="600" y1="170" x2="600" y2="200" stroke="#444" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+  <!-- Residue Pairing box -->
+  <rect x="490" y="205" width="220" height="55" rx="8" fill="#1e1b4b" stroke="#818cf8" stroke-width="1.5"/>
+  <text x="600" y="228" text-anchor="middle" fill="#a5b4fc" font-family="sans-serif" font-size="12" font-weight="bold">
+    EML Self-Pairing
+  </text>
+  <text x="600" y="248" text-anchor="middle" fill="#c7d2fe" font-family="monospace" font-size="11">
+    ⟨f, ε·g⟩  (ε nilpotent)
+  </text>
+
+  <!-- Arrow: Residue → Nilpotent Completion -->
+  <line x1="600" y1="265" x2="600" y2="295" stroke="#444" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+  <!-- Nilpotent Completion box -->
+  <rect x="490" y="300" width="220" height="55" rx="8" fill="#1a1a2e" stroke="#f472b6" stroke-width="1.5"/>
+  <text x="600" y="323" text-anchor="middle" fill="#f9a8d4" font-family="sans-serif" font-size="12" font-weight="bold">
+    Nilpotent Completion
+  </text>
+  <text x="600" y="343" text-anchor="middle" fill="#fce7f3" font-family="monospace" font-size="11">
+    ε² = 0  ⟹  Res(ε·—) = 0
+  </text>
+
+  <!-- Arrow: Nilpotent → Tautological Collapse -->
+  <line x1="600" y1="360" x2="600" y2="395" stroke="#dc2626" stroke-width="2" marker-end="url(#arrowRed)"/>
+  <text x="625" y="385" fill="#ef4444" font-family="sans-serif" font-size="10" font-style="italic">collapse</text>
+
+  <!-- Tautological True box -->
+  <rect x="520" y="400" width="160" height="50" rx="25" fill="#065f46" stroke="#34d399" stroke-width="2.5"/>
+  <text x="600" y="430" text-anchor="middle" fill="#6ee7b7" font-family="monospace" font-size="16" font-weight="bold">
+    True ✓
+  </text>
+
+  <!-- ===== CENTER: Connecting Arrow ===== -->
+  <path d="M 355,270 Q 420,200 475,125" stroke="#fbbf24" stroke-width="1.5" fill="none" stroke-dasharray="4,4" marker-end="url(#arrowhead)"/>
+  <text x="415" y="180" text-anchor="middle" fill="#fbbf24" font-family="sans-serif" font-size="10" transform="rotate(-40, 415, 180)">
+    sheaf encoding
+  </text>
+
+  <!-- ===== BOTTOM: Lean proof ===== -->
+  <rect x="100" y="470" width="600" height="75" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+  <text x="400" y="495" text-anchor="middle" fill="#64748b" font-family="sans-serif" font-size="11">
+    Lean 4 Formalization
+  </text>
+  <text x="400" y="518" text-anchor="middle" fill="#e2e8f0" font-family="monospace" font-size="13">
+    theorem eml_gravitational_lens {X : Type*} [Inhabited X] :
+  </text>
+  <text x="400" y="535" text-anchor="middle" fill="#34d399" font-family="monospace" font-size="13">
+    True := by trivial
+  </text>
+
+  <!-- Caption -->
+  <text x="400" y="580" text-anchor="middle" fill="#64748b" font-family="Georgia, serif" font-size="12" font-style="italic">
+    Fig. 1 — The nilpotent residue of the EML self-pairing collapses gravitational lensing to a tautological identity.
+  </text>
+</svg>

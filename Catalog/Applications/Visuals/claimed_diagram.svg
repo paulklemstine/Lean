@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <marker id="arrowhead-blue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563EB"/>
+    </marker>
+    <marker id="arrowhead-red" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#DC2626"/>
+    </marker>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8fafc;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bg-grad)" rx="8"/>
+
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Georgia, serif" font-size="20" font-weight="bold" fill="#1e293b">
+    Non-Archimedean Factoring Oracle
+  </text>
+  <text x="400" y="55" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#64748b">
+    Composite Number Factorization via Proper Divisor Extraction
+  </text>
+
+  <!-- ═══ LEFT PANEL: Classification of ℕ ═══ -->
+  <rect x="30" y="75" width="340" height="230" rx="10" fill="white" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="200" y="100" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#334155">
+    Classification of ℕ_{>1}
+  </text>
+
+  <!-- The number line -->
+  <line x1="60" y1="140" x2="340" y2="140" stroke="#cbd5e1" stroke-width="2"/>
+
+  <!-- Numbers on the line -->
+  <!-- Primes in red -->
+  <circle cx="80" cy="140" r="14" fill="#FEE2E2" stroke="#DC2626" stroke-width="2"/>
+  <text x="80" y="145" text-anchor="middle" font-family="monospace" font-size="12" fill="#DC2626" font-weight="bold">2</text>
+
+  <circle cx="115" cy="140" r="14" fill="#FEE2E2" stroke="#DC2626" stroke-width="2"/>
+  <text x="115" y="145" text-anchor="middle" font-family="monospace" font-size="12" fill="#DC2626" font-weight="bold">3</text>
+
+  <circle cx="185" cy="140" r="14" fill="#FEE2E2" stroke="#DC2626" stroke-width="2"/>
+  <text x="185" y="145" text-anchor="middle" font-family="monospace" font-size="12" fill="#DC2626" font-weight="bold">5</text>
+
+  <circle cx="255" cy="140" r="14" fill="#FEE2E2" stroke="#DC2626" stroke-width="2"/>
+  <text x="255" y="145" text-anchor="middle" font-family="monospace" font-size="12" fill="#DC2626" font-weight="bold">7</text>
+
+  <circle cx="325" cy="140" r="14" fill="#FEE2E2" stroke="#DC2626" stroke-width="2"/>
+  <text x="325" y="145" text-anchor="middle" font-family="monospace" font-size="12" fill="#DC2626" font-weight="bold">11</text>
+
+  <!-- Composites in blue -->
+  <rect x="138" y="126" width="28" height="28" rx="4" fill="#DBEAFE" stroke="#2563EB" stroke-width="2"/>
+  <text x="152" y="145" text-anchor="middle" font-family="monospace" font-size="12" fill="#2563EB" font-weight="bold">4</text>
+
+  <rect x="208" y="126" width="28" height="28" rx="4" fill="#DBEAFE" stroke="#2563EB" stroke-width="2"/>
+  <text x="222" y="145" text-anchor="middle" font-family="monospace" font-size="12" fill="#2563EB" font-weight="bold">6</text>
+
+  <rect x="278" y="126" width="28" height="28" rx="4" fill="#DBEAFE" stroke="#2563EB" stroke-width="2"/>
+  <text x="292" y="145" text-anchor="middle" font-family="monospace" font-size="12" fill="#2563EB" font-weight="bold">9</text>
+
+  <!-- Legend -->
+  <circle cx="75" cy="195" r="8" fill="#FEE2E2" stroke="#DC2626" stroke-width="1.5"/>
+  <text x="90" y="199" font-family="sans-serif" font-size="11" fill="#DC2626">
+    Prime: ¬∃ a,b > 1, a·b = n
+  </text>
+
+  <rect x="67" y="217" width="16" height="16" rx="3" fill="#DBEAFE" stroke="#2563EB" stroke-width="1.5"/>
+  <text x="90" y="230" font-family="sans-serif" font-size="11" fill="#2563EB">
+    Composite: ∃ a,b > 1, a·b = n  ✓
+  </text>
+
+  <!-- Crossed out original -->
+  <text x="60" y="275" font-family="monospace" font-size="10" fill="#94a3b8" text-decoration="line-through">
+    Original: ∀ n > 1, ∃ a,b > 1, a·b = n
+  </text>
+  <text x="320" y="275" font-family="sans-serif" font-size="11" fill="#DC2626" font-weight="bold">✗ FALSE</text>
+
+  <text x="60" y="295" font-family="monospace" font-size="10" fill="#059669">
+    Corrected: ∀ n > 1, ¬Prime n → ∃ a,b > 1, a·b = n
+  </text>
+  <text x="340" y="295" font-family="sans-serif" font-size="11" fill="#059669" font-weight="bold">✓</text>
+
+  <!-- ═══ RIGHT PANEL: Proof Flow ═══ -->
+  <rect x="390" y="75" width="380" height="230" rx="10" fill="white" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="580" y="100" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#334155">
+    Proof Structure
+  </text>
+
+  <!-- Step 1 -->
+  <rect x="420" y="115" width="320" height="35" rx="6" fill="#F0FDF4" stroke="#16A34A" stroke-width="1.5"/>
+  <text x="430" y="137" font-family="monospace" font-size="11" fill="#15803D">
+    ① n > 1 ∧ ¬Prime n
+  </text>
+
+  <line x1="580" y1="150" x2="580" y2="165" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+  <!-- Step 2 -->
+  <rect x="420" y="170" width="320" height="35" rx="6" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.5"/>
+  <text x="430" y="192" font-family="monospace" font-size="11" fill="#1D4ED8">
+    ② exists_dvd_of_not_prime2 → k | n, 1 &lt; k &lt; n
+  </text>
+
+  <line x1="580" y1="205" x2="580" y2="220" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+  <!-- Step 3 -->
+  <rect x="420" y="225" width="320" height="35" rx="6" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+  <text x="430" y="247" font-family="monospace" font-size="11" fill="#B45309">
+    ③ Set a := k, b := n/k,  a·b = n  ✓
+  </text>
+
+  <line x1="580" y1="260" x2="580" y2="275" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+  <!-- Step 4 -->
+  <rect x="420" y="280" width="150" height="15" rx="4" fill="#DCFCE7" stroke="#16A34A" stroke-width="1"/>
+  <text x="430" y="291" font-family="monospace" font-size="9" fill="#15803D">a > 1: from k > 1</text>
+
+  <rect x="590" y="280" width="150" height="15" rx="4" fill="#DCFCE7" stroke="#16A34A" stroke-width="1"/>
+  <text x="600" y="291" font-family="monospace" font-size="9" fill="#15803D">b > 1: nlinarith</text>
+
+  <!-- ═══ BOTTOM PANEL: p-adic Valuation View ═══ -->
+  <rect x="30" y="320" width="740" height="230" rx="10" fill="white" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="400" y="345" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#334155">
+    p-adic Valuation Perspective: v_p(n) = v_p(a) + v_p(b)
+  </text>
+
+  <!-- Example: n = 12 = 2 × 6 with p = 2 -->
+  <text x="60" y="375" font-family="sans-serif" font-size="12" fill="#475569">
+    Example: n = 12, p = 2
+  </text>
+
+  <!-- Bar chart for valuations -->
+  <!-- v_2(12) = 2 -->
+  <rect x="80" y="395" width="40" height="80" rx="4" fill="#7C3AED" opacity="0.8"/>
+  <text x="100" y="488" text-anchor="middle" font-family="monospace" font-size="10" fill="#7C3AED">v₂(12)</text>
+  <text x="100" y="502" text-anchor="middle" font-family="monospace" font-size="10" fill="#7C3AED">= 2</text>
+
+  <!-- = sign -->
+  <text x="145" y="440" text-anchor="middle" font-family="sans-serif" font-size="20" fill="#334155">=</text>
+
+  <!-- v_2(2) = 1 -->
+  <rect x="170" y="435" width="40" height="40" rx="4" fill="#2563EB" opacity="0.8"/>
+  <text x="190" y="488" text-anchor="middle" font-family="monospace" font-size="10" fill="#2563EB">v₂(2)</text>
+  <text x="190" y="502" text-anchor="middle" font-family="monospace" font-size="10" fill="#2563EB">= 1</text>
+
+  <!-- + sign -->
+  <text x="230" y="455" text-anchor="middle" font-family="sans-serif" font-size="20" fill="#334155">+</text>
+
+  <!-- v_2(6) = 1 -->
+  <rect x="250" y="435" width="40" height="40" rx="4" fill="#059669" opacity="0.8"/>
+  <text x="270" y="488" text-anchor="middle" font-family="monospace" font-size="10" fill="#059669">v₂(6)</text>
+  <text x="270" y="502" text-anchor="middle" font-family="monospace" font-size="10" fill="#059669">= 1</text>
+
+  <!-- Newton Polygon illustration -->
+  <text x="430" y="375" font-family="sans-serif" font-size="12" fill="#475569">
+    Newton Polygon of x² − 12 over ℚ₂
+  </text>
+
+  <!-- Axes -->
+  <line x1="430" y1="495" x2="730" y2="495" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <line x1="430" y1="495" x2="430" y2="385" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+  <text x="735" y="500" font-family="serif" font-size="11" fill="#64748b">i</text>
+  <text x="420" y="383" font-family="serif" font-size="11" fill="#64748b">v₂</text>
+
+  <!-- Points of Newton polygon -->
+  <!-- (0, v_2(-12)) = (0, 2) -->
+  <circle cx="470" cy="415" r="6" fill="#7C3AED"/>
+  <text x="455" y="410" font-family="monospace" font-size="9" fill="#7C3AED">(0,2)</text>
+
+  <!-- (1, v_2(0)) = no x term, skip -->
+
+  <!-- (2, v_2(1)) = (2, 0) -->
+  <circle cx="630" cy="495" r="6" fill="#DC2626"/>
+  <text x="635" y="490" font-family="monospace" font-size="9" fill="#DC2626">(2,0)</text>
+
+  <!-- Newton polygon edge -->
+  <line x1="470" y1="415" x2="630" y2="495" stroke="#7C3AED" stroke-width="2.5" stroke-dasharray="6,3"/>
+
+  <!-- Slope annotation -->
+  <text x="530" y="445" font-family="serif" font-size="11" fill="#7C3AED" transform="rotate(-20, 530, 445)">
+    slope = −1
+  </text>
+
+  <!-- Grid lines -->
+  <line x1="470" y1="495" x2="470" y2="490" stroke="#94a3b8" stroke-width="1"/>
+  <text x="470" y="510" text-anchor="middle" font-family="monospace" font-size="9" fill="#94a3b8">0</text>
+  <line x1="550" y1="495" x2="550" y2="490" stroke="#94a3b8" stroke-width="1"/>
+  <text x="550" y="510" text-anchor="middle" font-family="monospace" font-size="9" fill="#94a3b8">1</text>
+  <line x1="630" y1="495" x2="630" y2="490" stroke="#94a3b8" stroke-width="1"/>
+  <text x="630" y="510" text-anchor="middle" font-family="monospace" font-size="9" fill="#94a3b8">2</text>
+
+  <line x1="430" y1="455" x2="435" y2="455" stroke="#94a3b8" stroke-width="1"/>
+  <text x="420" y="459" text-anchor="middle" font-family="monospace" font-size="9" fill="#94a3b8">1</text>
+  <line x1="430" y1="415" x2="435" y2="415" stroke="#94a3b8" stroke-width="1"/>
+  <text x="420" y="419" text-anchor="middle" font-family="monospace" font-size="9" fill="#94a3b8">2</text>
+
+  <!-- Caption -->
+  <text x="400" y="565" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#475569" font-style="italic">
+    Figure: The factoring oracle extracts a proper divisor k from ¬Prime(n), yielding n = k × (n/k) with both factors > 1.
+  </text>
+  <text x="400" y="582" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#475569" font-style="italic">
+    The Newton polygon of x² − n over ℚ_p encodes the p-adic valuation structure of the factorization.
+  </text>
+</svg>

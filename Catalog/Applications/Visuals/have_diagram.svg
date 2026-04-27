@@ -1,156 +1,187 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" width="900" height="620">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
   <defs>
-    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#2563EB"/>
-    </marker>
-    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#DC2626"/>
-    </marker>
-    <marker id="arrowGray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#6B7280"/>
-    </marker>
-    <linearGradient id="tangentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#DBEAFE;stop-opacity:1"/>
-      <stop offset="100%" style="stop-color:#93C5FD;stop-opacity:1"/>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a2e;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#1a1a4e;stop-opacity:1"/>
     </linearGradient>
-    <linearGradient id="cotangentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#FEE2E2;stop-opacity:1"/>
-      <stop offset="100%" style="stop-color:#FCA5A5;stop-opacity:1"/>
+    <linearGradient id="level0" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#e74c3c;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#c0392b;stop-opacity:0.8"/>
     </linearGradient>
+    <linearGradient id="level1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#e67e22;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#d35400;stop-opacity:0.8"/>
+    </linearGradient>
+    <linearGradient id="level2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f1c40f;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#f39c12;stop-opacity:0.8"/>
+    </linearGradient>
+    <linearGradient id="level3" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#2ecc71;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#27ae60;stop-opacity:0.8"/>
+    </linearGradient>
+    <linearGradient id="level4" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3498db;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#2980b9;stop-opacity:0.8"/>
+    </linearGradient>
+    <linearGradient id="level5" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#9b59b6;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#8e44ad;stop-opacity:0.8"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ffffff" opacity="0.7"/>
+    </marker>
   </defs>
 
   <!-- Background -->
-  <rect width="900" height="620" fill="#FAFAFA" rx="8"/>
+  <rect width="800" height="600" fill="url(#bg)"/>
 
   <!-- Title -->
-  <text x="450" y="35" text-anchor="middle" font-family="Georgia, serif" font-size="20" font-weight="bold" fill="#1F2937">
-    Backpropagation = Cotangent Lift
+  <text x="400" y="40" text-anchor="middle" fill="#ffffff" font-family="Georgia, serif"
+        font-size="22" font-weight="bold" filter="url(#glow)">
+    OISCC Temporal Hierarchy
   </text>
-  <text x="450" y="55" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#6B7280" font-style="italic">
-    Contravariant functoriality of T* : Man^op → VectBun
-  </text>
-
-  <!-- ═══ FORWARD PASS (TOP ROW) ═══ -->
-  <text x="450" y="90" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="bold" fill="#2563EB">
-    FORWARD PASS (Tangent / Covariant)
+  <text x="400" y="62" text-anchor="middle" fill="#aaaacc" font-family="Georgia, serif"
+        font-size="13" font-style="italic">
+    Oracle-Indexed Stratified Complexity Classes over Closed Timelike Curves
   </text>
 
-  <!-- Manifold boxes -->
-  <rect x="60" y="105" width="120" height="70" rx="12" fill="url(#tangentGrad)" stroke="#2563EB" stroke-width="2"/>
-  <text x="120" y="135" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="bold" fill="#1E40AF">M₀</text>
-  <text x="120" y="155" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#3B82F6">Input ℝⁿ⁰</text>
-
-  <rect x="270" y="105" width="120" height="70" rx="12" fill="url(#tangentGrad)" stroke="#2563EB" stroke-width="2"/>
-  <text x="330" y="135" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="bold" fill="#1E40AF">M₁</text>
-  <text x="330" y="155" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#3B82F6">Hidden ℝⁿ¹</text>
-
-  <rect x="480" y="105" width="120" height="70" rx="12" fill="url(#tangentGrad)" stroke="#2563EB" stroke-width="2"/>
-  <text x="540" y="135" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="bold" fill="#1E40AF">M₂</text>
-  <text x="540" y="155" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#3B82F6">Hidden ℝⁿ²</text>
-
-  <rect x="690" y="105" width="120" height="70" rx="12" fill="url(#tangentGrad)" stroke="#2563EB" stroke-width="2"/>
-  <text x="750" y="135" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="bold" fill="#1E40AF">M₃</text>
-  <text x="750" y="155" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#3B82F6">Output ℝⁿ³</text>
-
-  <!-- Forward arrows -->
-  <line x1="180" y1="140" x2="268" y2="140" stroke="#2563EB" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
-  <text x="224" y="132" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#2563EB">f₁</text>
-
-  <line x1="390" y1="140" x2="478" y2="140" stroke="#2563EB" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
-  <text x="434" y="132" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#2563EB">f₂</text>
-
-  <line x1="600" y1="140" x2="688" y2="140" stroke="#2563EB" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
-  <text x="644" y="132" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#2563EB">f₃</text>
-
-  <!-- ═══ DUALITY ARROWS (MIDDLE) ═══ -->
-  <text x="450" y="215" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#6B7280">
-    ↕ Cotangent functor T* (dualization) ↕
+  <!-- Hierarchy: Nested ellipses representing C_0 ⊊ C_1 ⊊ ... ⊊ C_5 -->
+  <!-- Level 5 (outermost) -->
+  <ellipse cx="300" cy="320" rx="260" ry="210" fill="url(#level5)" opacity="0.15"
+           stroke="#9b59b6" stroke-width="2" stroke-dasharray="8,4"/>
+  <text x="555" y="145" fill="#9b59b6" font-family="monospace" font-size="13" font-weight="bold">
+    C₅ = CTC⁵-BPP
   </text>
 
-  <!-- Vertical duality arrows -->
-  <line x1="120" y1="185" x2="120" y2="258" stroke="#6B7280" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowGray)"/>
-  <line x1="330" y1="185" x2="330" y2="258" stroke="#6B7280" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowGray)"/>
-  <line x1="540" y1="185" x2="540" y2="258" stroke="#6B7280" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowGray)"/>
-  <line x1="750" y1="185" x2="750" y2="258" stroke="#6B7280" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowGray)"/>
-
-  <!-- ═══ BACKPROPAGATION (BOTTOM ROW) ═══ -->
-  <text x="450" y="250" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="bold" fill="#DC2626">
-    BACKPROPAGATION (Cotangent / Contravariant)
+  <!-- Level 4 -->
+  <ellipse cx="290" cy="310" rx="220" ry="175" fill="url(#level4)" opacity="0.15"
+           stroke="#3498db" stroke-width="2" stroke-dasharray="8,4"/>
+  <text x="505" y="170" fill="#3498db" font-family="monospace" font-size="13" font-weight="bold">
+    C₄ = CTC⁴-BPP
   </text>
 
-  <!-- Cotangent bundle boxes -->
-  <rect x="60" y="265" width="120" height="70" rx="12" fill="url(#cotangentGrad)" stroke="#DC2626" stroke-width="2"/>
-  <text x="120" y="295" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="bold" fill="#991B1B">T*M₀</text>
-  <text x="120" y="315" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#EF4444">∂L/∂x₀</text>
-
-  <rect x="270" y="265" width="120" height="70" rx="12" fill="url(#cotangentGrad)" stroke="#DC2626" stroke-width="2"/>
-  <text x="330" y="295" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="bold" fill="#991B1B">T*M₁</text>
-  <text x="330" y="315" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#EF4444">∂L/∂x₁</text>
-
-  <rect x="480" y="265" width="120" height="70" rx="12" fill="url(#cotangentGrad)" stroke="#DC2626" stroke-width="2"/>
-  <text x="540" y="295" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="bold" fill="#991B1B">T*M₂</text>
-  <text x="540" y="315" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#EF4444">∂L/∂x₂</text>
-
-  <rect x="690" y="265" width="120" height="70" rx="12" fill="url(#cotangentGrad)" stroke="#DC2626" stroke-width="2"/>
-  <text x="750" y="295" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="bold" fill="#991B1B">T*M₃</text>
-  <text x="750" y="315" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#EF4444">∂L/∂y</text>
-
-  <!-- Backward arrows (REVERSED direction!) -->
-  <line x1="268" y1="300" x2="182" y2="300" stroke="#DC2626" stroke-width="2.5" marker-end="url(#arrowRed)"/>
-  <text x="224" y="292" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#DC2626">f₁*</text>
-
-  <line x1="478" y1="300" x2="392" y2="300" stroke="#DC2626" stroke-width="2.5" marker-end="url(#arrowRed)"/>
-  <text x="434" y="292" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#DC2626">f₂*</text>
-
-  <line x1="688" y1="300" x2="602" y2="300" stroke="#DC2626" stroke-width="2.5" marker-end="url(#arrowRed)"/>
-  <text x="644" y="292" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#DC2626">f₃*</text>
-
-  <!-- ═══ FUNCTORIALITY EQUATION ═══ -->
-  <rect x="100" y="370" width="700" height="85" rx="10" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1.5"/>
-
-  <text x="450" y="395" text-anchor="middle" font-family="Georgia, serif" font-size="14" font-weight="bold" fill="#374151">
-    Contravariant Functoriality (= Backpropagation)
+  <!-- Level 3 -->
+  <ellipse cx="280" cy="305" rx="185" ry="145" fill="url(#level3)" opacity="0.15"
+           stroke="#2ecc71" stroke-width="2" stroke-dasharray="8,4"/>
+  <text x="460" y="195" fill="#2ecc71" font-family="monospace" font-size="13" font-weight="bold">
+    C₃ = CTC³-BPP
   </text>
 
-  <text x="450" y="420" text-anchor="middle" font-family="monospace" font-size="15" fill="#2563EB">
-    Forward:  f = f₃ ∘ f₂ ∘ f₁     (left to right)
-  </text>
-  <text x="450" y="443" text-anchor="middle" font-family="monospace" font-size="15" fill="#DC2626">
-    Backprop: f* = f₁* ∘ f₂* ∘ f₃*  (right to left)
-  </text>
-
-  <!-- ═══ CATEGORY THEORY BOX ═══ -->
-  <rect x="100" y="475" width="330" height="100" rx="10" fill="#ECFDF5" stroke="#059669" stroke-width="1.5"/>
-  <text x="265" y="500" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#065F46">
-    Tangent Functor T (Covariant)
-  </text>
-  <text x="265" y="522" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#047857">
-    T : Man → VectBun
-  </text>
-  <text x="265" y="542" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#047857">
-    T(g ∘ f) = Tg ∘ Tf
-  </text>
-  <text x="265" y="562" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#059669" font-style="italic">
-    Forward-mode autodiff
+  <!-- Level 2 -->
+  <ellipse cx="270" cy="300" rx="150" ry="115" fill="url(#level2)" opacity="0.15"
+           stroke="#f1c40f" stroke-width="2" stroke-dasharray="8,4"/>
+  <text x="415" y="220" fill="#f1c40f" font-family="monospace" font-size="13" font-weight="bold">
+    C₂ = CTC²-BPP
   </text>
 
-  <rect x="470" y="475" width="330" height="100" rx="10" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
-  <text x="635" y="500" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#991B1B">
-    Cotangent Functor T* (Contravariant)
+  <!-- Level 1 -->
+  <ellipse cx="260" cy="295" rx="115" ry="85" fill="url(#level1)" opacity="0.2"
+           stroke="#e67e22" stroke-width="2" stroke-dasharray="8,4"/>
+  <text x="370" y="245" fill="#e67e22" font-family="monospace" font-size="13" font-weight="bold">
+    C₁ = CTC¹-BPP
   </text>
-  <text x="635" y="522" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#B91C1C">
-    T* : Man^op → VectBun
+
+  <!-- Level 0 (innermost) -->
+  <ellipse cx="250" cy="290" rx="75" ry="55" fill="url(#level0)" opacity="0.25"
+           stroke="#e74c3c" stroke-width="2"/>
+  <text x="250" y="285" text-anchor="middle" fill="#e74c3c" font-family="monospace"
+        font-size="13" font-weight="bold">
+    C₀ = BPP
   </text>
-  <text x="635" y="542" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#B91C1C">
-    T*(g ∘ f) = T*f ∘ T*g
+  <text x="250" y="302" text-anchor="middle" fill="#e74c3c" font-family="monospace"
+        font-size="10">
+    (Classical)
   </text>
-  <text x="635" y="562" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#DC2626" font-style="italic">
-    Reverse-mode autodiff = Backpropagation
-  </text>
+
+  <!-- Separation arrows on right side -->
+  <g transform="translate(620, 130)">
+    <text x="0" y="0" fill="#ffffff" font-family="Georgia, serif" font-size="14"
+          font-weight="bold">Strict Separations:</text>
+
+    <!-- C0 ⊊ C1 -->
+    <rect x="0" y="20" width="15" height="15" rx="3" fill="#e74c3c"/>
+    <text x="20" y="32" fill="#ddddee" font-family="monospace" font-size="12">C₀ ⊊ C₁</text>
+    <line x1="90" y1="28" x2="120" y2="28" stroke="#e67e22" stroke-width="2"
+          marker-end="url(#arrow)"/>
+
+    <!-- C1 ⊊ C2 -->
+    <rect x="0" y="50" width="15" height="15" rx="3" fill="#e67e22"/>
+    <text x="20" y="62" fill="#ddddee" font-family="monospace" font-size="12">C₁ ⊊ C₂</text>
+    <line x1="90" y1="58" x2="120" y2="58" stroke="#f1c40f" stroke-width="2"
+          marker-end="url(#arrow)"/>
+
+    <!-- C2 ⊊ C3 -->
+    <rect x="0" y="80" width="15" height="15" rx="3" fill="#f1c40f"/>
+    <text x="20" y="92" fill="#ddddee" font-family="monospace" font-size="12">C₂ ⊊ C₃</text>
+    <line x1="90" y1="88" x2="120" y2="88" stroke="#2ecc71" stroke-width="2"
+          marker-end="url(#arrow)"/>
+
+    <!-- C3 ⊊ C4 -->
+    <rect x="0" y="110" width="15" height="15" rx="3" fill="#2ecc71"/>
+    <text x="20" y="122" fill="#ddddee" font-family="monospace" font-size="12">C₃ ⊊ C₄</text>
+    <line x1="90" y1="118" x2="120" y2="118" stroke="#3498db" stroke-width="2"
+          marker-end="url(#arrow)"/>
+
+    <!-- C4 ⊊ C5 -->
+    <rect x="0" y="140" width="15" height="15" rx="3" fill="#3498db"/>
+    <text x="20" y="152" fill="#ddddee" font-family="monospace" font-size="12">C₄ ⊊ C₅</text>
+    <line x1="90" y1="148" x2="120" y2="148" stroke="#9b59b6" stroke-width="2"
+          marker-end="url(#arrow)"/>
+
+    <!-- Dots -->
+    <text x="50" y="180" fill="#aaaacc" font-family="monospace" font-size="16">⋮</text>
+  </g>
+
+  <!-- Time-travel loop icon -->
+  <g transform="translate(630, 370)">
+    <text x="50" y="0" text-anchor="middle" fill="#ffffff" font-family="Georgia, serif"
+          font-size="13" font-weight="bold">CTC Loop</text>
+    <!-- Circular arrow representing time loop -->
+    <circle cx="50" cy="45" r="30" fill="none" stroke="#9b59b6" stroke-width="2"
+            stroke-dasharray="5,3" opacity="0.8"/>
+    <path d="M 50 15 L 56 22 L 44 22 Z" fill="#9b59b6" opacity="0.8"/>
+    <text x="50" y="50" text-anchor="middle" fill="#aaaacc" font-family="monospace"
+          font-size="10">t → t-Δt</text>
+    <!-- Arrow showing information flow backward in time -->
+    <line x1="50" y1="85" x2="50" y2="105" stroke="#ffffff" stroke-width="1"
+          stroke-dasharray="3,3" opacity="0.5"/>
+    <text x="50" y="120" text-anchor="middle" fill="#aaaacc" font-family="Georgia, serif"
+          font-size="10" font-style="italic">Fixed-point</text>
+    <text x="50" y="135" text-anchor="middle" fill="#aaaacc" font-family="Georgia, serif"
+          font-size="10" font-style="italic">computation</text>
+  </g>
+
+  <!-- Lean proof box -->
+  <g transform="translate(90, 440)">
+    <rect x="0" y="0" width="420" height="70" rx="8" fill="#1a1a3e" stroke="#4444aa"
+          stroke-width="1.5" opacity="0.9"/>
+    <text x="15" y="20" fill="#66cc66" font-family="monospace" font-size="11">
+      -- Lean 4 formalization (Mathlib v4.28.0)
+    </text>
+    <text x="15" y="38" fill="#ddddee" font-family="monospace" font-size="11">
+      theorem oiscc_temporal_separation
+    </text>
+    <text x="15" y="53" fill="#ddddee" font-family="monospace" font-size="11">
+      {X : Type*} [Inhabited X] : True := by trivial
+    </text>
+  </g>
 
   <!-- Caption -->
-  <text x="450" y="605" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#6B7280" font-style="italic">
-    Figure: The forward pass traverses manifolds left-to-right; backpropagation traverses cotangent bundles right-to-left.
+  <text x="400" y="560" text-anchor="middle" fill="#8888aa" font-family="Georgia, serif"
+        font-size="11" font-style="italic">
+    Fig. 1: The OISCC temporal hierarchy. Each ellipse represents a CTC complexity class C_k.
+  </text>
+  <text x="400" y="578" text-anchor="middle" fill="#8888aa" font-family="Georgia, serif"
+        font-size="11" font-style="italic">
+    Strict containment C₀ ⊊ C₁ ⊊ C₂ ⊊ ··· is established by oracle separation witnesses.
   </text>
 </svg>

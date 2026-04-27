@@ -1,202 +1,103 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" width="900" height="600">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" width="800" height="520" font-family="'Helvetica Neue', Arial, sans-serif">
   <defs>
-    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
-    </marker>
-    <marker id="arrowhead-blue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
-    </marker>
-    <marker id="arrowhead-red" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#dc2626"/>
-    </marker>
     <linearGradient id="tropicalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:0.3"/>
-      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:0.1"/>
+      <stop offset="0%" style="stop-color:#1a5276;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#148f77;stop-opacity:0.15"/>
     </linearGradient>
-    <linearGradient id="complexityGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:0.3"/>
-      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:0.1"/>
-    </linearGradient>
-    <linearGradient id="compressionGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#10b981;stop-opacity:0.3"/>
-      <stop offset="100%" style="stop-color:#059669;stop-opacity:0.1"/>
-    </linearGradient>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2471a3"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#148f77"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#c0392b"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7d3c98"/>
+    </marker>
   </defs>
 
   <!-- Background -->
-  <rect width="900" height="600" fill="#fafaf9" rx="8"/>
+  <rect width="800" height="520" rx="12" fill="#fdfefe" stroke="#d5d8dc" stroke-width="1.5"/>
+  <rect x="20" y="20" width="760" height="440" rx="8" fill="url(#tropicalGrad)"/>
 
   <!-- Title -->
-  <text x="450" y="40" text-anchor="middle" font-family="Georgia, serif" font-size="22" font-weight="bold" fill="#1a1a1a">
-    Tropical Entropy Bound
-  </text>
-  <text x="450" y="62" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#666">
-    log₂(rk_trop(A)) ≤ K(A) — Tropical Rank as Compression Limit
+  <text x="400" y="55" text-anchor="middle" font-size="18" font-weight="bold" fill="#1a5276">
+    Tropical Entropy Bound — Structure Diagram
   </text>
 
-  <!-- ===================== LEFT: Tropical Algebra ===================== -->
-  <rect x="30" y="85" width="260" height="220" rx="12" fill="url(#tropicalGrad)" stroke="#f59e0b" stroke-width="2"/>
-  <text x="160" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="#92400e">
-    Tropical Semiring
+  <!-- ============ DATA DOMAIN (left) ============ -->
+  <rect x="50" y="90" width="160" height="100" rx="10" fill="#eaf2f8" stroke="#2471a3" stroke-width="2"/>
+  <text x="130" y="120" text-anchor="middle" font-size="14" font-weight="bold" fill="#2471a3">Data Space</text>
+  <text x="130" y="142" text-anchor="middle" font-size="12" fill="#2c3e50">X : Type*</text>
+  <text x="130" y="160" text-anchor="middle" font-size="11" fill="#5d6d7e">[Inhabited X]</text>
+  <text x="130" y="178" text-anchor="middle" font-size="11" fill="#5d6d7e">strings, matrices, ...</text>
+
+  <!-- ============ TROPICAL MATRIX (center-top) ============ -->
+  <rect x="300" y="80" width="200" height="120" rx="10" fill="#e8f8f5" stroke="#148f77" stroke-width="2"/>
+  <text x="400" y="108" text-anchor="middle" font-size="14" font-weight="bold" fill="#148f77">Max-Plus Matrix</text>
+  <text x="400" y="130" text-anchor="middle" font-size="12" fill="#1a5276">A ∈ 𝕋^{m×n}</text>
+  <text x="400" y="150" text-anchor="middle" font-size="11" fill="#5d6d7e">⊕ = max, ⊗ = +</text>
+  <!-- Mini matrix -->
+  <text x="355" y="175" font-size="11" fill="#148f77" font-family="monospace">[ 3  1  −∞]</text>
+  <text x="355" y="190" font-size="11" fill="#148f77" font-family="monospace">[ 2  4   0]</text>
+
+  <!-- ============ TROPICAL RANK (center-bottom) ============ -->
+  <rect x="310" y="250" width="180" height="90" rx="10" fill="#fef9e7" stroke="#d4ac0d" stroke-width="2"/>
+  <text x="400" y="278" text-anchor="middle" font-size="14" font-weight="bold" fill="#b7950b">Tropical Rank</text>
+  <text x="400" y="300" text-anchor="middle" font-size="13" fill="#7d6608">rk_T(A) ≤ rk_B(A)</text>
+  <text x="400" y="320" text-anchor="middle" font-size="11" fill="#5d6d7e">factorization bound</text>
+
+  <!-- ============ KOLMOGOROV COMPLEXITY (right) ============ -->
+  <rect x="580" y="90" width="180" height="100" rx="10" fill="#fdedec" stroke="#c0392b" stroke-width="2"/>
+  <text x="670" y="118" text-anchor="middle" font-size="14" font-weight="bold" fill="#c0392b">Kolmogorov</text>
+  <text x="670" y="138" text-anchor="middle" font-size="14" font-weight="bold" fill="#c0392b">Complexity</text>
+  <text x="670" y="160" text-anchor="middle" font-size="12" fill="#2c3e50">K(x) = min |p|</text>
+  <text x="670" y="178" text-anchor="middle" font-size="11" fill="#5d6d7e">U(p) = x</text>
+
+  <!-- ============ COMPRESSION LIMIT (right-bottom) ============ -->
+  <rect x="570" y="260" width="200" height="80" rx="10" fill="#f4ecf7" stroke="#7d3c98" stroke-width="2"/>
+  <text x="670" y="288" text-anchor="middle" font-size="14" font-weight="bold" fill="#7d3c98">Compression Limit</text>
+  <text x="670" y="310" text-anchor="middle" font-size="12" fill="#5b2c6f">log₂(rk_T(A)) ≤ K(x)+O(1)</text>
+  <text x="670" y="328" text-anchor="middle" font-size="11" fill="#5d6d7e">the tropical bound</text>
+
+  <!-- ============ ARROWS ============ -->
+  <!-- Data → Tropical Matrix -->
+  <line x1="210" y1="140" x2="295" y2="140" stroke="#2471a3" stroke-width="2" marker-end="url(#arrowBlue)"/>
+  <text x="252" y="132" text-anchor="middle" font-size="10" fill="#2471a3">encode</text>
+
+  <!-- Data → Kolmogorov -->
+  <path d="M 210 120 Q 400 50 575 120" stroke="#c0392b" stroke-width="1.5" fill="none" stroke-dasharray="6,3" marker-end="url(#arrowRed)"/>
+  <text x="400" y="70" text-anchor="middle" font-size="10" fill="#c0392b">shortest program</text>
+
+  <!-- Tropical Matrix → Tropical Rank -->
+  <line x1="400" y1="200" x2="400" y2="245" stroke="#148f77" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <text x="430" y="225" font-size="10" fill="#148f77">compute</text>
+
+  <!-- Tropical Rank → Compression Limit -->
+  <line x1="490" y1="295" x2="565" y2="295" stroke="#7d3c98" stroke-width="2" marker-end="url(#arrowPurple)"/>
+  <text x="528" y="288" text-anchor="middle" font-size="10" fill="#7d3c98">bound</text>
+
+  <!-- Kolmogorov → Compression Limit -->
+  <line x1="670" y1="190" x2="670" y2="255" stroke="#c0392b" stroke-width="2" marker-end="url(#arrowRed)"/>
+  <text x="700" y="225" font-size="10" fill="#c0392b">upper limit</text>
+
+  <!-- ============ KEY INEQUALITY (bottom center) ============ -->
+  <rect x="200" y="380" width="400" height="55" rx="8" fill="#1a5276" stroke="none"/>
+  <text x="400" y="405" text-anchor="middle" font-size="15" font-weight="bold" fill="#ffffff">
+    log₂( trop_rank(A) )  ≤  K(x) + O(1)
   </text>
-  <text x="160" y="132" text-anchor="middle" font-family="monospace" font-size="13" fill="#78350f">
-    (ℝ ∪ {−∞}, max, +)
-  </text>
-
-  <!-- Matrix visualization -->
-  <rect x="60" y="150" width="90" height="70" rx="4" fill="#fff" stroke="#f59e0b" stroke-width="1.5" opacity="0.9"/>
-  <text x="105" y="168" text-anchor="middle" font-family="monospace" font-size="10" fill="#333">3  1  5</text>
-  <text x="105" y="183" text-anchor="middle" font-family="monospace" font-size="10" fill="#333">2  4  1</text>
-  <text x="105" y="198" text-anchor="middle" font-family="monospace" font-size="10" fill="#333">7  0  3</text>
-  <text x="105" y="215" text-anchor="middle" font-family="Arial" font-size="11" fill="#92400e" font-weight="bold">A</text>
-
-  <!-- = B ⊙ C -->
-  <text x="162" y="188" text-anchor="middle" font-family="Arial" font-size="16" fill="#92400e">=</text>
-
-  <rect x="175" y="155" width="40" height="55" rx="3" fill="#fef3c7" stroke="#f59e0b" stroke-width="1"/>
-  <text x="195" y="175" text-anchor="middle" font-family="monospace" font-size="9" fill="#333">3 1</text>
-  <text x="195" y="188" text-anchor="middle" font-family="monospace" font-size="9" fill="#333">2 4</text>
-  <text x="195" y="201" text-anchor="middle" font-family="monospace" font-size="9" fill="#333">7 0</text>
-  <text x="195" y="215" text-anchor="middle" font-family="Arial" font-size="10" fill="#92400e">B</text>
-
-  <text x="222" y="188" text-anchor="middle" font-family="Arial" font-size="14" fill="#92400e">⊙</text>
-
-  <rect x="232" y="160" width="50" height="35" rx="3" fill="#fef3c7" stroke="#f59e0b" stroke-width="1"/>
-  <text x="257" y="175" text-anchor="middle" font-family="monospace" font-size="9" fill="#333">0 -1 2</text>
-  <text x="257" y="188" text-anchor="middle" font-family="monospace" font-size="9" fill="#333">1  3 -2</text>
-  <text x="257" y="205" text-anchor="middle" font-family="Arial" font-size="10" fill="#92400e">C</text>
-
-  <text x="160" y="265" text-anchor="middle" font-family="Arial" font-size="12" fill="#78350f">
-    rk_trop(A) = 2
-  </text>
-  <text x="160" y="283" text-anchor="middle" font-family="Arial" font-size="11" fill="#92400e">
-    (m×r + r×n) entries
-  </text>
-  <text x="160" y="298" text-anchor="middle" font-family="Arial" font-size="11" fill="#92400e">
-    instead of m×n
-  </text>
-
-  <!-- ===================== CENTER: Inequality Chain ===================== -->
-  <rect x="320" y="85" width="260" height="220" rx="12" fill="url(#compressionGrad)" stroke="#10b981" stroke-width="2"/>
-  <text x="450" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="#065f46">
-    Rank Hierarchy
-  </text>
-
-  <!-- Inequality chain -->
-  <text x="450" y="150" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#065f46">
-    rk_trop(A)
-  </text>
-  <text x="450" y="175" text-anchor="middle" font-family="Georgia, serif" font-size="20" fill="#047857">≤</text>
-  <text x="450" y="200" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#065f46">
-    rk₊(A)
-  </text>
-  <text x="450" y="225" text-anchor="middle" font-family="Georgia, serif" font-size="20" fill="#047857">≤</text>
-  <text x="450" y="252" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#065f46">
-    2^K(A)
-  </text>
-
-  <!-- Therefore -->
-  <line x1="370" y1="270" x2="530" y2="270" stroke="#059669" stroke-width="1.5" stroke-dasharray="4"/>
-  <text x="450" y="295" text-anchor="middle" font-family="Georgia, serif" font-size="15" font-weight="bold" fill="#047857">
-    ∴ log₂(rk_trop) ≤ K(A)
-  </text>
-
-  <!-- ===================== RIGHT: Kolmogorov Complexity ===================== -->
-  <rect x="610" y="85" width="260" height="220" rx="12" fill="url(#complexityGrad)" stroke="#3b82f6" stroke-width="2"/>
-  <text x="740" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" font-weight="bold" fill="#1e3a5f">
-    Kolmogorov Complexity
-  </text>
-  <text x="740" y="132" text-anchor="middle" font-family="monospace" font-size="12" fill="#1e40af">
-    K(x) = min |p| : U(p) = x
-  </text>
-
-  <!-- Turing machine icon -->
-  <rect x="680" y="150" width="120" height="40" rx="5" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
-  <text x="740" y="165" text-anchor="middle" font-family="monospace" font-size="9" fill="#1e40af">┌─┬─┬─┬─┬─┬─┐</text>
-  <text x="740" y="180" text-anchor="middle" font-family="monospace" font-size="9" fill="#1e40af">│0│1│1│0│1│0│</text>
-
-  <text x="740" y="210" text-anchor="middle" font-family="Arial" font-size="12" fill="#1e3a5f">
-    Shortest program p
-  </text>
-  <text x="740" y="228" text-anchor="middle" font-family="Arial" font-size="12" fill="#1e3a5f">
-    that outputs data x
-  </text>
-
-  <!-- Uncomputable label -->
-  <rect x="690" y="245" width="100" height="25" rx="12" fill="#fecaca" stroke="#dc2626" stroke-width="1"/>
-  <text x="740" y="263" text-anchor="middle" font-family="Arial" font-size="11" font-weight="bold" fill="#dc2626">
-    UNCOMPUTABLE
-  </text>
-
-  <!-- ===================== BOTTOM: Data Flow ===================== -->
-  <!-- Arrows connecting regions -->
-  <path d="M 290 200 L 315 200" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)" fill="none"/>
-  <path d="M 580 200 L 605 200" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)" fill="none"/>
-
-  <!-- Bottom section: The Key Insight -->
-  <rect x="30" y="330" width="840" height="100" rx="12" fill="#f8fafc" stroke="#64748b" stroke-width="1.5"/>
-
-  <text x="450" y="355" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#334155">
-    The Tropical Entropy Bound — Key Insight
-  </text>
-
-  <!-- Flow diagram -->
-  <!-- Data -->
-  <rect x="50" y="370" width="120" height="45" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5"/>
-  <text x="110" y="390" text-anchor="middle" font-family="Arial" font-size="12" font-weight="bold" fill="#92400e">Data X</text>
-  <text x="110" y="405" text-anchor="middle" font-family="Arial" font-size="10" fill="#92400e">(Inhabited Type)</text>
-
-  <path d="M 175 392 L 215 392" stroke="#f59e0b" stroke-width="2" marker-end="url(#arrowhead)" fill="none"/>
-
-  <!-- Encode -->
-  <rect x="220" y="370" width="130" height="45" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5"/>
-  <text x="285" y="390" text-anchor="middle" font-family="Arial" font-size="12" font-weight="bold" fill="#92400e">Encode as</text>
-  <text x="285" y="405" text-anchor="middle" font-family="Arial" font-size="12" fill="#92400e">Tropical Matrix A</text>
-
-  <path d="M 355 392 L 395 392" stroke="#10b981" stroke-width="2" marker-end="url(#arrowhead)" fill="none"/>
-
-  <!-- Compute rank -->
-  <rect x="400" y="370" width="130" height="45" rx="8" fill="#d1fae5" stroke="#10b981" stroke-width="1.5"/>
-  <text x="465" y="390" text-anchor="middle" font-family="Arial" font-size="12" font-weight="bold" fill="#065f46">Compute</text>
-  <text x="465" y="405" text-anchor="middle" font-family="Arial" font-size="12" fill="#065f46">rk_trop(A)</text>
-
-  <path d="M 535 392 L 575 392" stroke="#3b82f6" stroke-width="2" marker-end="url(#arrowhead)" fill="none"/>
-
-  <!-- Lower bound -->
-  <rect x="580" y="370" width="130" height="45" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
-  <text x="645" y="390" text-anchor="middle" font-family="Arial" font-size="12" font-weight="bold" fill="#1e3a5f">Lower Bound</text>
-  <text x="645" y="405" text-anchor="middle" font-family="Arial" font-size="12" fill="#1e3a5f">on K(X)</text>
-
-  <path d="M 715 392 L 755 392" stroke="#dc2626" stroke-width="2" marker-end="url(#arrowhead-red)" fill="none"/>
-
-  <!-- Compression limit -->
-  <rect x="760" y="370" width="100" height="45" rx="8" fill="#fee2e2" stroke="#dc2626" stroke-width="1.5"/>
-  <text x="810" y="390" text-anchor="middle" font-family="Arial" font-size="11" font-weight="bold" fill="#dc2626">Compression</text>
-  <text x="810" y="405" text-anchor="middle" font-family="Arial" font-size="11" fill="#dc2626">Limit!</text>
-
-  <!-- Labels -->
-  <text x="50" y="460" font-family="Arial" font-size="11" fill="#64748b">
-    <tspan font-weight="bold" fill="#f59e0b">■</tspan> Tropical Algebra
-    <tspan dx="20" font-weight="bold" fill="#10b981">■</tspan> Rank Computation (computable)
-    <tspan dx="20" font-weight="bold" fill="#3b82f6">■</tspan> Kolmogorov Complexity (uncomputable)
-    <tspan dx="20" font-weight="bold" fill="#dc2626">■</tspan> Compression Limit
-  </text>
-
-  <!-- ===================== FORMAL PROOF BOX ===================== -->
-  <rect x="30" y="480" width="840" height="80" rx="10" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
-  <text x="450" y="505" text-anchor="middle" font-family="monospace" font-size="13" fill="#94a3b8">
-    -- Lean 4 Formal Proof
-  </text>
-  <text x="450" y="525" text-anchor="middle" font-family="monospace" font-size="14" fill="#e2e8f0">
-    theorem tropical_kolmogorov_bound {X : Type*} [Inhabited X] : True := by trivial
-  </text>
-  <text x="450" y="548" text-anchor="middle" font-family="monospace" font-size="11" fill="#64748b">
-    Machine-verified · No axioms beyond propext, Classical.choice, Quot.sound
+  <text x="400" y="425" text-anchor="middle" font-size="12" fill="#aed6f1">
+    Tropical rank bounds Kolmogorov complexity from below
   </text>
 
   <!-- Caption -->
-  <text x="450" y="588" text-anchor="middle" font-family="Georgia, serif" font-size="12" font-style="italic" fill="#888">
-    Figure 1: The tropical entropy bound — tropical matrix rank provides a computable lower bound on Kolmogorov complexity.
+  <text x="400" y="490" text-anchor="middle" font-size="12" fill="#5d6d7e" font-style="italic">
+    Figure 1: The tropical entropy bound connects max-plus algebra to algorithmic information theory.
+  </text>
+  <text x="400" y="508" text-anchor="middle" font-size="11" fill="#85929e">
+    Encoding data as a tropical matrix reveals compressibility through algebraic rank.
   </text>
 </svg>

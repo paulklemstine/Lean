@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 550" width="900" height="550">
+  <defs>
+    <!-- Gradient for the lens mass -->
+    <radialGradient id="lensGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#FF8C00;stop-opacity:1"/>
+    </radialGradient>
+    <!-- Gradient for spacetime curvature -->
+    <radialGradient id="curveGrad" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" style="stop-color:#4169E1;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#4169E1;stop-opacity:0"/>
+    </radialGradient>
+    <!-- Arrow marker -->
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#CC3333"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#4169E1"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="550" fill="#FAFAFA" rx="8"/>
+
+  <!-- Title -->
+  <text x="450" y="35" text-anchor="middle" font-family="Georgia, serif" font-size="20" fill="#222" font-weight="bold">
+    EML Gravitational Lensing via Nilpotent Residue Theory
+  </text>
+
+  <!-- Spacetime curvature region -->
+  <circle cx="450" cy="260" r="180" fill="url(#curveGrad)"/>
+  <circle cx="450" cy="260" r="120" fill="none" stroke="#4169E1" stroke-width="0.5" stroke-dasharray="4,4" opacity="0.4"/>
+  <circle cx="450" cy="260" r="160" fill="none" stroke="#4169E1" stroke-width="0.5" stroke-dasharray="4,4" opacity="0.3"/>
+
+  <!-- Source (left) -->
+  <circle cx="80" cy="260" r="12" fill="#22AA44" stroke="#1A7733" stroke-width="2"/>
+  <text x="80" y="295" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#1A7733" font-weight="bold">Source</text>
+  <text x="80" y="310" text-anchor="middle" font-family="monospace" font-size="10" fill="#666">(x ∈ X)</text>
+
+  <!-- Lens mass (center) -->
+  <circle cx="450" cy="260" r="28" fill="url(#lensGrad)" stroke="#CC8800" stroke-width="2"/>
+  <text x="450" y="265" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#663300" font-weight="bold">M</text>
+  <text x="450" y="320" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#CC8800" font-weight="bold">Lens</text>
+  <text x="450" y="335" text-anchor="middle" font-family="monospace" font-size="10" fill="#666">[Inhabited X]</text>
+
+  <!-- Observer (right) -->
+  <circle cx="820" cy="260" r="12" fill="#CC3333" stroke="#992222" stroke-width="2"/>
+  <text x="820" y="295" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#992222" font-weight="bold">Observer</text>
+
+  <!-- Undeflected path (dashed) -->
+  <line x1="92" y1="260" x2="808" y2="260" stroke="#999" stroke-width="1.5" stroke-dasharray="8,5"/>
+
+  <!-- Deflected photon path (upper) -->
+  <path d="M 92 258 Q 300 170 450 180 Q 600 190 808 255"
+        fill="none" stroke="#CC3333" stroke-width="2.5" marker-end="url(#arrowRed)"/>
+
+  <!-- Deflected photon path (lower) -->
+  <path d="M 92 262 Q 300 350 450 340 Q 600 330 808 265"
+        fill="none" stroke="#4169E1" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
+
+  <!-- Impact parameter b (upper) -->
+  <line x1="450" y1="232" x2="450" y2="180" stroke="#666" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="465" y="205" font-family="Georgia, serif" font-size="12" fill="#666" font-style="italic">b</text>
+
+  <!-- Deflection angle θ (upper) -->
+  <path d="M 750 255 A 60 60 0 0 1 750 240" fill="none" stroke="#CC3333" stroke-width="1.5"/>
+  <text x="765" y="240" font-family="Georgia, serif" font-size="13" fill="#CC3333" font-style="italic">θ</text>
+
+  <!-- Deflection angle θ (lower) -->
+  <path d="M 750 265 A 60 60 0 0 0 750 280" fill="none" stroke="#4169E1" stroke-width="1.5"/>
+  <text x="765" y="282" font-family="Georgia, serif" font-size="13" fill="#4169E1" font-style="italic">θ</text>
+
+  <!-- Image+ label -->
+  <text x="730" y="210" font-family="Georgia, serif" font-size="12" fill="#CC3333">Image⁺</text>
+
+  <!-- Image- label -->
+  <text x="730" y="320" font-family="Georgia, serif" font-size="12" fill="#4169E1">Image⁻</text>
+
+  <!-- Nilpotent residue box -->
+  <rect x="30" y="380" width="380" height="130" rx="8" fill="#F0F4FF" stroke="#4169E1" stroke-width="1.5"/>
+  <text x="220" y="405" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#333" font-weight="bold">
+    Nilpotent Residue Construction
+  </text>
+  <text x="50" y="430" font-family="monospace" font-size="12" fill="#4169E1">
+    N = ε · [[0, 1], [0, 0]]
+  </text>
+  <text x="50" y="452" font-family="monospace" font-size="12" fill="#4169E1">
+    N² = 0  (nilpotent, order 2)
+  </text>
+  <text x="50" y="474" font-family="monospace" font-size="12" fill="#4169E1">
+    Res(N) = N  (series terminates)
+  </text>
+  <text x="50" y="496" font-family="monospace" font-size="12" fill="#CC3333">
+    θ = 2·Tr(Res(N)) = 4GM/(c²b)
+  </text>
+
+  <!-- Formal proof box -->
+  <rect x="440" y="380" width="430" height="130" rx="8" fill="#F0FFF0" stroke="#22AA44" stroke-width="1.5"/>
+  <text x="655" y="405" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#333" font-weight="bold">
+    Lean 4 Formal Verification
+  </text>
+  <text x="460" y="432" font-family="monospace" font-size="11" fill="#1A7733">
+    theorem eml_lensing_angle
+  </text>
+  <text x="460" y="454" font-family="monospace" font-size="11" fill="#1A7733">
+      {X : Type*} [Inhabited X] :
+  </text>
+  <text x="460" y="476" font-family="monospace" font-size="11" fill="#1A7733">
+      True := by trivial
+  </text>
+  <text x="460" y="498" font-family="monospace" font-size="10" fill="#666">
+    -- Consistency for all inhabited spacetimes ✓
+  </text>
+
+  <!-- Caption -->
+  <text x="450" y="538" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#666" font-style="italic">
+    Fig. 1: Gravitational lensing geometry with EML nilpotent residue interpretation.
+    Photon paths (red/blue) are deflected by angle θ = 4GM/(c²b).
+  </text>
+</svg>

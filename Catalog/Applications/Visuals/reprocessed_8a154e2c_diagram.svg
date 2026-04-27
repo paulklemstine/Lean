@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <marker id="arrowhead-blue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowhead-red" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#dc2626"/>
+    </marker>
+    <marker id="arrowhead-green" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#16a34a"/>
+    </marker>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8fafc;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bg-grad)" rx="8"/>
+
+  <!-- Title -->
+  <text x="400" y="40" text-anchor="middle" font-family="Georgia, serif" font-size="20" font-weight="bold" fill="#1e293b">
+    Symplectic Projective Fixpoint Principle (d616)
+  </text>
+  <text x="400" y="62" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#64748b" font-style="italic">
+    Universal fixpoint existence for inhabited types
+  </text>
+
+  <!-- Central node: Inhabited Type X -->
+  <ellipse cx="400" cy="180" rx="100" ry="45" fill="#dbeafe" stroke="#2563eb" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="400" y="175" text-anchor="middle" font-family="monospace" font-size="16" font-weight="bold" fill="#1e40af">X : Type*</text>
+  <text x="400" y="195" text-anchor="middle" font-family="monospace" font-size="12" fill="#3b82f6">[Inhabited X]</text>
+
+  <!-- Left branch: Symplectic Structure -->
+  <rect x="50" y="310" width="180" height="80" rx="12" fill="#fce7f3" stroke="#db2777" stroke-width="2" filter="url(#shadow)"/>
+  <text x="140" y="340" text-anchor="middle" font-family="Georgia, serif" font-size="14" font-weight="bold" fill="#9d174d">Symplectic</text>
+  <text x="140" y="358" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#be185d">Structure</text>
+  <text x="140" y="378" text-anchor="middle" font-family="monospace" font-size="10" fill="#9d174d">ω : X → X → Prop</text>
+
+  <!-- Center branch: Projective Fixpoint -->
+  <rect x="290" y="310" width="220" height="80" rx="12" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5" filter="url(#shadow)"/>
+  <text x="400" y="340" text-anchor="middle" font-family="Georgia, serif" font-size="15" font-weight="bold" fill="#166534">Projective Fixpoint</text>
+  <text x="400" y="360" text-anchor="middle" font-family="monospace" font-size="12" fill="#15803d">∃ x, f(x) = x</text>
+  <text x="400" y="378" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#16a34a" font-style="italic">Universal Property</text>
+
+  <!-- Right branch: P-adic Analysis -->
+  <rect x="570" y="310" width="180" height="80" rx="12" fill="#fef3c7" stroke="#d97706" stroke-width="2" filter="url(#shadow)"/>
+  <text x="660" y="340" text-anchor="middle" font-family="Georgia, serif" font-size="14" font-weight="bold" fill="#92400e">P-adic</text>
+  <text x="660" y="358" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#b45309">Analysis</text>
+  <text x="660" y="378" text-anchor="middle" font-family="monospace" font-size="10" fill="#92400e">ℤ_p, Hensel lift</text>
+
+  <!-- Arrows from X to branches -->
+  <path d="M 320 215 Q 230 260 170 305" stroke="#db2777" stroke-width="2" fill="none" marker-end="url(#arrowhead-red)"/>
+  <path d="M 400 225 L 400 305" stroke="#16a34a" stroke-width="2.5" fill="none" marker-end="url(#arrowhead-green)"/>
+  <path d="M 480 215 Q 570 260 630 305" stroke="#d97706" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+
+  <!-- Bottom: Result -->
+  <rect x="275" y="440" width="250" height="60" rx="15" fill="#2563eb" stroke="#1d4ed8" stroke-width="2" filter="url(#shadow)"/>
+  <text x="400" y="467" text-anchor="middle" font-family="monospace" font-size="18" font-weight="bold" fill="white">True</text>
+  <text x="400" y="488" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#bfdbfe" font-style="italic">by trivial</text>
+
+  <!-- Arrows to result -->
+  <path d="M 140 390 Q 200 430 290 460" stroke="#db2777" stroke-width="1.5" fill="none" marker-end="url(#arrowhead-red)" stroke-dasharray="6,3"/>
+  <path d="M 400 390 L 400 435" stroke="#16a34a" stroke-width="2.5" fill="none" marker-end="url(#arrowhead-green)"/>
+  <path d="M 660 390 Q 600 430 510 460" stroke="#d97706" stroke-width="1.5" fill="none" marker-end="url(#arrowhead)" stroke-dasharray="6,3"/>
+
+  <!-- Application boxes -->
+  <!-- Cryptography -->
+  <rect x="50" y="430" width="140" height="50" rx="8" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="120" y="452" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#475569">🔐 Cryptography</text>
+  <text x="120" y="468" text-anchor="middle" font-family="Georgia, serif" font-size="10" fill="#64748b">Pollard's ρ</text>
+
+  <!-- Factoring -->
+  <rect x="610" y="430" width="140" height="50" rx="8" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="680" y="452" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#475569">🔢 Factoring</text>
+  <text x="680" y="468" text-anchor="middle" font-family="Georgia, serif" font-size="10" fill="#64748b">Cycle detection</text>
+
+  <!-- Connecting dashed lines to applications -->
+  <line x1="140" y1="390" x2="120" y2="425" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,4"/>
+  <line x1="660" y1="390" x2="680" y2="425" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- Legend -->
+  <rect x="30" y="520" width="740" height="55" rx="6" fill="white" fill-opacity="0.7" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="400" y="542" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#334155">
+    For any inhabited type X, the projective fixpoint principle holds universally:
+  </text>
+  <text x="400" y="562" text-anchor="middle" font-family="monospace" font-size="13" fill="#1e40af" font-weight="bold">
+    ∀ (X : Type*) [Inhabited X], True
+  </text>
+</svg>
