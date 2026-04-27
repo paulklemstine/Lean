@@ -31,6 +31,34 @@ class PlacementDecision:
     confidence: float = 0.0
 
 
+# Domain keyword mapping for heuristic classification
+DOMAIN_KEYWORDS = {
+    "algebra": ["ring", "field", "group", "module", "ideal", "homomorphism", "isomorphism",
+                 "galois", "polynomial", "matrix", "determinant", "eigenvalue", "linear"],
+    "bridges": ["bridge", "cross-domain", "unified", "interconnection", "morphism"],
+    "computation": ["algorithm", "complexity", "turing", "oracle", "recursive", "decidability",
+                     "computable", "finite", "automaton", "lambda", "functional"],
+    "cryptography": ["cipher", "encrypt", "decrypt", "hash", "rsa", "lattice", "discrete_log",
+                      "key_exchange", "signature", "zero_knowledge", "post_quantum"],
+    "eml": ["eml", "self_pairing", "spb", "softplus", "logistic", "sigmoid", "neural",
+             "activation", "emlv"],
+    "geometry": ["manifold", "curve", "surface", "stereographic", "projection", "metric",
+                  "euclidean", "hyperbolic", "sphere", "geodesic", "tangent"],
+    "logic": ["proposition", "predicate", "modal", "temporal", "proof_search", "decidable",
+               "independence", "consistency", "axiom", "boolean"],
+    "machinelearning": ["gradient", "loss", "optimizer", "layer", "neural", "training",
+                         "inference", "model", "dataset", "regularization", "dropout"],
+    "physics": ["energy", "momentum", "lagrangian", "hamiltonian", "spacetime", "quantum",
+                 "relativity", "gravity", "field", "particle", "wave"],
+    "pythagorean": ["pythagorean", "berggren", "triplet", "quadruple", "factoring", "spb",
+                     "parent", "descendant", "tree", "primitive"],
+    "speculative": ["speculative", "conjecture", "open_problem", "unknown", "novel",
+                     "experimental", "hypothetical", "exploratory"],
+    "tropical": ["tropical", "max_plus", "semiring", "min_plus", "idempotent", "trop",
+                  "minmax", "tropicalization"],
+    "shared": ["shared", "common", "utility", "helper", "lemma", "basic"],
+}
+
 # Artifact type detection patterns
 ARTIFACT_PATTERNS = {
     "paper": {
@@ -74,11 +102,9 @@ class OutputOrganizer:
         self,
         catalog_root: Path,
         pi_agent: Optional[Any] = None,
-        pi_agent_timeout: int = 30,
     ):
         self.catalog_root = Path(catalog_root)
-        self.pi_agent = pi_agent
-        self.pi_agent_timeout = pi_agent_timeout  # seconds per classification call
+        self.pi_agent = pi_agent  # kept for interface compat, not used for classification
 
         # Ensure artifact directories exist
         self._ensure_directories()
@@ -104,7 +130,8 @@ class OutputOrganizer:
     ) -> Dict[str, List[PlacementDecision]]:
         """Organize all files from an Aristotle result directory.
 
-        Prints progress for each file to help diagnose hangs.
+        Uses ARISTOTLE_SUMMARY.md (if present) to understand what Aristotle did,
+        then classifies and places each file accordingly.
 
         Returns a dict with keys:
         - "theorems": .lean files placed in domain directories
@@ -115,6 +142,12 @@ class OutputOrganizer:
         - "raw": everything else in ResearchOutput/{exp_id}/
         - "rejected": files that failed validation
         """
+        # Parse ARISTOTLE_SUMMARY.md for context about what Aristotle did
+        summary = self._parse_aristotle_summary(result_dir)
+        if summary:
+            print(f"[Organizer] Parsed ARISTOTLE_SUMMARY.md: {summary.get('domains_touched', [])} "
+                  f"domains, {summary.get('sorries_remaining', '?')} sorries remaining")
+
         decisions: Dict[str, List[PlacementDecision]] = {
             "theorems": [],
             "papers": [],
@@ -134,45 +167,47 @@ class OutputOrganizer:
                 continue
 
             file_type = self._classify_artifact_type(result_file)
-            print(f"[Organizer] classifying {result_file.name} as {file_type}")
 
             if file_type == "theorem":
                 decision = self._place_lean_file(
-                    result_file, exp_id, concept, dry_run
+                    result_file, exp_id, concept, dry_run, summary=summary
                 )
                 decisions["theorems"].append(decision)
+                print(f"[Organizer] {result_file.name} -> {decision.target_path} ({decision.artifact_type}, {decision.reason})")
 
             elif file_type == "paper":
                 decision = self._place_artifact(
                     result_file, "Applications/Papers", exp_id, concept, dry_run
                 )
                 decisions["papers"].append(decision)
+                print(f"[Organizer] {result_file.name} -> {decision.target_path} (paper)")
 
             elif file_type == "demo":
                 decision = self._place_artifact(
                     result_file, "Applications/Demos", exp_id, concept, dry_run
                 )
                 decisions["demos"].append(decision)
+                print(f"[Organizer] {result_file.name} -> {decision.target_path} (demo)")
 
             elif file_type == "visual":
                 decision = self._place_artifact(
                     result_file, "Applications/Visuals", exp_id, concept, dry_run
                 )
                 decisions["visuals"].append(decision)
+                print(f"[Organizer] {result_file.name} -> {decision.target_path} (visual)")
 
             elif file_type == "article":
                 decision = self._place_artifact(
                     result_file, "Applications/Articles", exp_id, concept, dry_run
                 )
                 decisions["articles"].append(decision)
+                print(f"[Organizer] {result_file.name} -> {decision.target_path} (article)")
 
             elif file_type == "metadata":
-                # Always goes to raw
                 decision = self._place_raw(result_file, exp_id, dry_run)
                 decisions["raw"].append(decision)
 
             else:
-                # Unknown type: preserve in ResearchOutput for provenance
                 decision = self._place_raw(result_file, exp_id, dry_run)
                 decisions["raw"].append(decision)
 
@@ -229,65 +264,162 @@ class OutputOrganizer:
 
         return "raw"
 
+    def _parse_aristotle_summary(self, result_dir: Path) -> Optional[Dict[str, Any]]:
+        """Parse ARISTOTLE_SUMMARY.md to understand what Aristotle did.
+
+        Returns a dict with:
+        - domains_touched: list of domain names Aristotle worked on
+        - files_created: list of file descriptions from the summary
+        - sorries_remaining: number of remaining sorries (if mentioned)
+        - key_theorems: list of theorem names mentioned
+        - raw_text: the full summary text (first 2000 chars)
+        """
+        summary_path = result_dir / "ARISTOTLE_SUMMARY.md"
+        if not summary_path.exists():
+            # Check subdirectories too
+            for sub in result_dir.iterdir():
+                if sub.is_dir():
+                    candidate = sub / "ARISTOTLE_SUMMARY.md"
+                    if candidate.exists():
+                        summary_path = candidate
+                        break
+
+        if not summary_path.exists():
+            return None
+
+        try:
+            raw_text = summary_path.read_text(encoding="utf-8", errors="replace")
+        except Exception:
+            return None
+
+        domains_touched = set()
+        files_created = []
+        sorries_remaining = 0
+        key_theorems = []
+
+        # Extract domains from directory structure in the result
+        for sub in result_dir.iterdir():
+            if sub.is_dir() and sub.name in DOMAIN_DIRS:
+                domains_touched.add(sub.name)
+
+        # Extract from summary text
+        text_lower = raw_text.lower()
+
+        # Look for domain mentions
+        for domain in DOMAIN_DIRS:
+            if domain.lower() in text_lower:
+                domains_touched.add(domain)
+
+        # Count remaining sorries
+        sorry_matches = re.findall(r'(\d+)\s+sorr(?:y|ies)', text_lower)
+        if sorry_matches:
+            sorries_remaining = int(sorry_matches[-1])
+
+        # Extract theorem names (theorem/lemma declarations mentioned in summary)
+        theorem_matches = re.findall(r'(?:theorem|lemma)\s+([a-zA-Z_]\w*)', raw_text)
+        key_theorems = theorem_matches[:20]
+
+        # Extract file descriptions (lines like "- **File.lean**" or "Created X.lean")
+        file_matches = re.findall(r'\*\*(\w+\.lean)\*\*', raw_text)
+        file_matches.extend(re.findall(r'(\w+\.lean)', raw_text))
+        files_created = list(dict.fromkeys(file_matches))[:30]  # dedupe, limit
+
+        return {
+            "domains_touched": sorted(domains_touched),
+            "files_created": files_created,
+            "sorries_remaining": sorries_remaining,
+            "key_theorems": key_theorems,
+            "raw_text": raw_text[:2000],
+        }
+
     def _place_lean_file(
         self,
         source: Path,
         exp_id: str,
         concept: Any,
         dry_run: bool,
+        summary: Optional[Dict[str, Any]] = None,
     ) -> PlacementDecision:
         """Place a .lean file into the correct domain directory.
 
-        - If the proof has no sorries: place in {domain}/{subdir}/
-        - If the proof has sorries: place in Speculative/AutoResearch/
+        Classification strategy (in priority order):
+        1. Directory path from Aristotle's output (if file is in Algebra/X.lean,
+           it goes to Algebra/)
+        2. ARISTOTLE_SUMMARY.md context (domains mentioned)
+        3. Concept domain (from Pi-Agent concept generation)
+        4. Fallback: Speculative/AutoResearch
 
-        Pi-Agent is consulted for domain classification.
+        No ollama calls — instant classification.
         """
         lean_source = source.read_text(encoding="utf-8", errors="replace")
         sorry_count = lean_source.count("sorry")
         is_complete = sorry_count == 0
 
-        target_domain = getattr(concept, "domain", "Speculative")
+        # Strategy 1: Use the directory path from Aristotle's output
+        # Aristotle puts files in Domain/Subdir/File.lean — use that directly
+        target_domain = ""
         target_subdir = ""
-        reason = "Heuristic classification"
-        confidence = 0.4
+        reason = "Path-based classification"
+        confidence = 0.9
 
-        # Try Pi-Agent classification (with timeout guard)
-        if self.pi_agent:
-            try:
-                import signal
-                old_handler = None
-                try:
-                    def _timeout_handler(signum, frame):
-                        raise TimeoutError(f"Pi-Agent classification timed out after {self.pi_agent_timeout}s")
-                    old_handler = signal.signal(signal.SIGALRM, _timeout_handler)
-                    signal.alarm(self.pi_agent_timeout)
-                except (ValueError, OSError):
-                    old_handler = None  # Not in main thread — can't use signals
+        # Walk up from source to find domain directory
+        # E.g., result_dir/Pythagorean/NewDiscoveries.lean -> domain=Pythagorean
+        # Or: result_dir/Algebra/Core/RingTheory.lean -> domain=Algebra, subdir=Core
+        try:
+            rel_to_result = source.relative_to(source.parent.parent)  # go up from file to result_dir
+            parts = list(source.parent.relative_to(source.parent.parent.parent).parts)
+            if parts and parts[0] in DOMAIN_DIRS:
+                target_domain = parts[0]
+                if len(parts) > 1:
+                    target_subdir = "/".join(parts[1:])
+                reason = f"Path-based: {source.parent.relative_to(source.parent.parent.parent)}"
+                confidence = 0.95
+        except (ValueError, IndexError):
+            pass
 
-                try:
-                    pi_classification = self.pi_agent.classify_file_placement(
-                        lean_source=lean_source,
-                        file_name=source.name,
-                        concept=concept,
-                    )
-                    if pi_classification and pi_classification.get("confidence", 0) >= 0.5:
-                        target_domain = pi_classification["domain"]
-                        target_subdir = pi_classification.get("subdirectory", "")
-                        is_complete = pi_classification.get("is_complete_proof", is_complete)
-                        reason = pi_classification.get("reason", "Pi-Agent classification")
-                        confidence = pi_classification["confidence"]
-                        print(f"[Organizer] {source.name} -> {target_domain}/{target_subdir or '.'} (pi-agent, conf={confidence:.2f})")
-                except (TimeoutError, Exception) as e:
-                    print(f"[Organizer] Pi-Agent classification failed for {source.name}: {e}")
-                finally:
-                    if old_handler is not None:
-                        signal.alarm(0)
-                        signal.signal(signal.SIGALRM, old_handler)
-            except Exception as e:
-                print(f"[Organizer] Pi-Agent classification error for {source.name}: {e}")
+        # If we couldn't determine domain from path, try direct parent
+        if not target_domain:
+            parent_name = source.parent.name
+            if parent_name in DOMAIN_DIRS:
+                target_domain = parent_name
+                reason = f"Parent-dir classification: {parent_name}"
+                confidence = 0.85
 
-        # Determine final target path
+        # Strategy 2: Use ARISTOTLE_SUMMARY.md context
+        if not target_domain and summary:
+            domains = summary.get("domains_touched", [])
+            if len(domains) == 1:
+                target_domain = domains[0]
+                reason = f"Summary-based: only domain mentioned"
+                confidence = 0.7
+            elif len(domains) > 1:
+                # Multiple domains — check which one this file's content matches
+                file_content_lower = lean_source[:2000].lower()
+                best_domain = ""
+                best_score = 0
+                for d in domains:
+                    score = sum(1 for kw in DOMAIN_KEYWORDS.get(d.lower(), []) if kw.lower() in file_content_lower)
+                    if score > best_score:
+                        best_score = score
+                        best_domain = d
+                if best_domain:
+                    target_domain = best_domain
+                    reason = f"Summary+keyword classification (score={best_score})"
+                    confidence = 0.6
+
+        # Strategy 3: Use concept domain
+        if not target_domain:
+            target_domain = getattr(concept, "domain", "Speculative")
+            reason = "Concept-domain fallback"
+            confidence = 0.4
+
+        # Strategy 4: Keyword heuristic as last resort
+        if target_domain == "Speculative" or target_domain == "Unknown":
+            heuristic_domain, heuristic_conf = self._heuristic_classify(lean_source)
+            if heuristic_conf > 0.5:
+                target_domain = heuristic_domain
+                reason = "Keyword-heuristic classification"
+                confidence = heuristic_conf
         if is_complete:
             # Complete proofs go to their domain directory
             if target_subdir:
@@ -387,6 +519,19 @@ class OutputOrganizer:
         if name.startswith("lake-manifest") or name.startswith("lakefile"):
             return True
         return False
+
+    def _heuristic_classify(self, lean_source: str) -> tuple:
+        """Classify a .lean file by keyword matching. Returns (domain, confidence)."""
+        content_lower = lean_source[:3000].lower()
+        best_domain = "Speculative"
+        best_score = 0
+        for domain, keywords in DOMAIN_KEYWORDS.items():
+            score = sum(1 for kw in keywords if kw in content_lower)
+            if score > best_score:
+                best_score = score
+                best_domain = domain
+        confidence = min(best_score / 3.0, 0.9)
+        return best_domain, confidence
 
     def generate_manifest(
         self,
