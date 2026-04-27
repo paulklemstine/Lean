@@ -98,6 +98,7 @@ class PiAgentOrchestrator:
         self.config = config
         self.domains = domains_config.get("domains", [])
         self.global_settings = domains_config.get("global_settings", {})
+        self.domains_config = domains_config
         self.workspace = Path(workspace)
         self.workspace.mkdir(parents=True, exist_ok=True)
 
@@ -176,8 +177,25 @@ class PiAgentOrchestrator:
         self.catalog_analyzer.invalidate_cache()
         self.catalog_analyzer.scan()
 
+        # Build augmented domain list with research findings context
+        domains_with_findings = list(self.domains)
+        research_findings = self.global_settings.get("research_findings", self.domains_config.get("research_findings", {}))
+        if research_findings:
+            # Inject open problems as high-priority sorry_fill domains
+            for problem in research_findings.get("open_problems", []):
+                domains_with_findings.append({
+                    "id": problem.get("id", problem.get("file", "").split("/")[-1].replace(".lean", "")),
+                    "name": problem.get("description", problem.get("id", "unknown"))[:60],
+                    "description": problem.get("description", ""),
+                    "frontier": problem.get("description", ""),
+                    "difficulty": problem.get("difficulty", "phd"),
+                    "seed_concepts": [problem.get("id", "")],
+                    "_is_open_problem": True,
+                    "_priority_file": problem.get("file", ""),
+                })
+
         concept = self.pi_agent.select_research_direction(
-            domains=self.domains,
+            domains=domains_with_findings,
             recent_history=self._get_recent_history(),
         )
         if forced_domain:

@@ -255,6 +255,55 @@ class CatalogAnalyzer:
             self.scan()
         return [s for s in self._summaries if s.has_sorries]
 
+    # Priority sorry targets from FUTURE_RESEARCH.md — these are the most
+    # impactful sorries to fill because they close open problems or complete proofs.
+    PRIORITY_SORRY_PATHS = {
+        "Shared/CarmichaelComposite.lean": 10,
+        "Speculative/CarmichaelPrimitiveDivisor.lean": 10,
+        "Shared/Fib_gcd_identity.lean": 9,
+        "Shared/CarmichaelComputational.lean": 9,
+        "Speculative/SciFi/PadicHyperdrive.lean": 7,
+        "Bridges/NivenIntegralFramework.lean": 8,
+    }
+
+    # Domain keywords that indicate high-impact sorry_fill targets
+    HIGH_IMPACT_KEYWORDS = {
+        "Carmichael", "primitive_divisor", "fib_primitive", "nivenI",
+        "Niven", "Hecke", "langlands", "dilithium", "robustness",
+        "universal_approximation", "EML_approx",
+    }
+
+    def get_priority_sorry_targets(self) -> List[CatalogFileSummary]:
+        """Get sorry files prioritized by research impact.
+
+        Files from PRIORITY_SORRY_PATHS are ranked highest, followed by files
+        whose declarations contain high-impact keywords, then by sorry count.
+        """
+        if self._summaries is None:
+            self.scan()
+
+        sorry_files = [s for s in self._summaries if s.has_sorries]
+
+        def priority_score(s: CatalogFileSummary) -> float:
+            score = 0.0
+            # Known priority paths get a big boost
+            if s.relative_path in self.PRIORITY_SORRY_PATHS:
+                score += self.PRIORITY_SORRY_PATHS[s.relative_path]
+            # High-impact keywords in declarations
+            for kw in self.HIGH_IMPACT_KEYWORDS:
+                for decl in s.declarations:
+                    if kw.lower() in decl.lower():
+                        score += 5.0
+                        break
+            # More sorries = more work to fill, but also more impactful
+            score += min(s.sorry_count, 10) * 0.5
+            # Files with more declarations are richer context
+            score += min(len(s.declarations), 30) * 0.1
+            return score
+
+        sorry_files.sort(key=priority_score, reverse=True)
+        return sorry_files
+
     def find_declaration(self, name: str) -> Optional[str]:
         """Find which file contains a declaration by name."""
         if self._summaries is None:

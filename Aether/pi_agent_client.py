@@ -50,6 +50,42 @@ _DIRECTION_SYSTEM_PROMPT = textwrap.dedent("""\
     Your goal is to pick a domain and concept that will produce interesting,
     novel, and formally provable results. Avoid repetition with recent experiments.
 
+    ## Research Context: Proven Results
+
+    The catalog has 28,797 declarations across 1,446 files, with 382 remaining sorries.
+    Recent research has produced significant verified results:
+    - Tropical ReLU depth separation (14 theorems: ReLU = tropical max, Lipschitz bound)
+    - SPB deformations (9 theorems: associativity, cancellation, Pythagorean connection)
+    - Niven integral framework (8 theorems: key bounds for irrationality)
+    - Berggren factoring (13 theorems: all 3 matrix transformations, Lorentz form)
+    - Idempotent optimization (9 theorems: Maslov dequantization bounds proved)
+    - EML approximation (11 theorems: recovers exp/log, density properties)
+    - Quantum crypto migration (8 theorems: Grover bounds, security reduction framework)
+    - Log-sum-exp bounds proved: max(a,b) ≤ log(exp(a)+exp(b)) ≤ max(a,b)+log(2)
+
+    ## Priority Open Problems (use sorry_fill mode for these)
+
+    1. nivenI_integer_combo — integration-by-parts integrality lemma for Niven's method (HARD)
+    2. fib_primitive_divisor_existence — Fibonacci primitive divisor existence (HARD)
+    3. Carmichael composite case — lifting-the-exponent approach (HARD)
+    4. Tropical Hecke algebra for GL₂ — trace formula equality (VERY HARD)
+    5. CRYSTALS-Dilithium security reduction — Module-SIS to Dilithium (HARD)
+    6. Tropical neural certified robustness — tropical degree as robustness certificate
+    7. EML universal approximation — Stone-Weierstrass for EML networks
+    8. SPB Diffie-Hellman security — discrete log hardness in SPB groups
+
+    ## Hypothesis Assessments
+
+    - Tropical Langlands functoriality: PROMISING (GL₁ works, GL₂ shows clean structure)
+    - SPB as universal bridge: PARTIALLY CONFIRMED (associativity proved)
+    - ReLU complexity via tropical degree: UPPER BOUND CONFIRMED (VC dim typically smaller)
+    - Berggren factoring complexity: TOO OPTIMISTIC (comparable to trial division, not O(n^1/3))
+    - Tropical error correction: SPECULATIVE (no concrete evidence)
+
+    When choosing sorry_fill mode, prioritize the 5 sorry files listed above.
+    When choosing prove mode, target the open problems or extend existing results.
+    When choosing formalize mode, target the hypothesis assessments that need deeper formal treatment.
+
     You MUST respond with valid JSON only. No markdown, no commentary outside the JSON.
 """)
 
@@ -74,6 +110,29 @@ _PROMPT_WRITING_SYSTEM_PROMPT = textwrap.dedent("""\
         - "sorry_fill": Complete existing proofs that have sorry placeholders
     - The brief should feel like a research direction from a colleague, not a
       homework assignment
+
+    ## Known Research Context
+
+    The catalog already has these verified results you can build upon:
+    - Tropical ReLU: ReLU = tropical max, Lipschitz bound, depth separation (14 theorems)
+    - SPB deformations: associativity, cancellation, Pythagorean triple connection (9 theorems)
+    - Niven integral: key bounds for irrationality, AM-GM, factorial dominance (8 theorems)
+    - Berggren factoring: all 3 matrix transformations, Lorentz form (13 theorems)
+    - Idempotent optimization: Maslov dequantization bounds, Bellman monotonicity (9 theorems)
+    - EML approximation: recovers exp/log, density, VC dimension (11 theorems)
+    - Quantum crypto: Grover bounds, security reduction framework (8 theorems)
+    - Log-sum-exp: max(a,b) ≤ log(exp(a)+exp(b)) ≤ max(a,b)+log(2) — newly proved
+
+    Priority open problems that need progress:
+    - Carmichael's theorem composite case (lifting-the-exponent)
+    - Niven integration-by-parts integrality lemma
+    - Tropical Hecke algebra for GL₂
+    - Tropical certified robustness for neural networks
+    - CRYSTALS-Dilithium security reduction
+    - EML universal approximation theorem
+
+    When writing sorry_fill briefs, reference the specific sorry'd files and explain
+    what the surrounding context suggests about the correct proof strategy.
 
     You MUST respond with the complete prompt text only. No JSON wrapper, no
     metadata, just the prompt that will be sent directly to Aristotle.
@@ -242,6 +301,17 @@ class PiAgentClient:
         if self.memory:
             success_patterns = self.memory.build_success_patterns()
 
+        # Build priority sorry targets
+        sorry_targets = ""
+        if self.catalog_analyzer:
+            priority_files = self.catalog_analyzer.get_priority_sorry_targets()
+            if priority_files:
+                sorry_targets = "\n".join(
+                    f"  - {f.relative_path} ({f.sorry_count} sorries, "
+                    f"domain: {f.domain}, declarations: {', '.join(f.declarations[:5])})"
+                    for f in priority_files[:8]
+                )
+
         # Build domain list for prompt
         domain_descriptions = []
         for d in domains:
@@ -266,8 +336,13 @@ class PiAgentClient:
             ## Successful Patterns (emulate these)
             {success_patterns if success_patterns else "No successful patterns yet."}
 
+            ## Priority Sorry Targets (use sorry_fill mode for these)
+            {sorry_targets if sorry_targets else "No priority sorry targets identified."}
+
             Select ONE domain and ONE specific concept to investigate. Choose something
             novel, interesting, and likely to produce substantial formal mathematics.
+            Consider sorry_fill mode for the priority targets above — filling existing
+            sorries builds on proven work and is high-value.
 
             Respond with JSON:
             {{

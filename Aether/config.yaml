@@ -117,6 +117,79 @@ research:
       target_sorry_reduction: 10
       difficulty: "open_problem"
 
+    # Research arcs derived from FUTURE_RESEARCH.md findings (v3 cycle results)
+    - id: "niven_integral_completion"
+      name: "Niven Integral Completion"
+      description: "Complete Niven's proof of irrationality via integration-by-parts recurrence lemma"
+      seed_domains: ["Bridges", "Algebra", "Pythagorean"]
+      frontier: "Integration-by-parts integrality lemma for Niven's method"
+      target_sorry_reduction: 3
+      difficulty: "phd"
+
+    - id: "carmichael_composite"
+      name: "Carmichael's Theorem Composite Case"
+      description: "Prove Fibonacci primitive divisor theorem for composite indices via lifting-the-exponent"
+      seed_domains: ["Pythagorean", "Algebra", "Cryptography"]
+      frontier: "Lifting-the-exponent lemma for Fibonacci primitive divisors"
+      target_sorry_reduction: 2
+      difficulty: "phd"
+
+    - id: "tropical_langlands_gl2"
+      name: "Tropical Langlands GL₂"
+      description: "Formalize tropical Hecke algebra for GL₂ and prove trace formula equality"
+      seed_domains: ["Tropical", "Algebra", "Bridges"]
+      frontier: "Tropical Hecke operators and Satake isomorphism for GL₂"
+      target_sorry_reduction: 4
+      difficulty: "open_problem"
+
+    - id: "tropical_neural_robustness"
+      name: "Tropical Neural Certified Robustness"
+      description: "Prove certified robustness bounds for neural networks via tropical degree"
+      seed_domains: ["MachineLearning", "Tropical", "Bridges"]
+      frontier: "Tropical degree as certified L-infinity robustness certificate"
+      target_sorry_reduction: 3
+      difficulty: "phd"
+
+    - id: "dilithium_security"
+      name: "CRYSTALS-Dilithium Security Reduction"
+      description: "Formalize the security reduction skeleton for CRYSTALS-Dilithium post-quantum scheme"
+      seed_domains: ["Cryptography", "Computation", "Physics"]
+      frontier: "Module-SIS to Dilithium security reduction"
+      target_sorry_reduction: 3
+      difficulty: "phd"
+
+    - id: "berggren_factoring_optimized"
+      name: "Optimized Berggren Factoring"
+      description: "Improve Berggren tree factoring with birthday-paradox collision detection"
+      seed_domains: ["Pythagorean", "Cryptography", "Computation"]
+      frontier: "Sub-exponential factoring via Berggren tree collision search"
+      target_sorry_reduction: 3
+      difficulty: "master"
+
+    - id: "eml_universal_approximation"
+      name: "EML Universal Approximation"
+      description: "Prove universal approximation theorem for EML neural networks"
+      seed_domains: ["MachineLearning", "Bridges", "EML"]
+      frontier: "EML network density and universal approximation via Stone-Weierstrass"
+      target_sorry_reduction: 2
+      difficulty: "master"
+
+    - id: "spb_cryptographic_protocol"
+      name: "SPB Cryptographic Protocol Security"
+      description: "Formalize security analysis of SPB-based Diffie-Hellman key exchange"
+      seed_domains: ["Cryptography", "Pythagorean", "Bridges"]
+      frontier: "Discrete logarithm hardness in SPB group structures"
+      target_sorry_reduction: 2
+      difficulty: "phd"
+
+    - id: "idempotent_optimization_deep"
+      name: "Deep Idempotent Optimization"
+      description: "Extend tropical semiring optimization to policy iteration and value iteration convergence"
+      seed_domains: ["Tropical", "MachineLearning", "Bridges"]
+      frontier: "Convergence guarantees for tropical policy iteration"
+      target_sorry_reduction: 3
+      difficulty: "phd"
+
   difficulty_levels: ["undergraduate", "graduate", "phd", "master", "open_problem"]
   max_concurrent_cycles: 10
   cycle_interval_seconds: 300

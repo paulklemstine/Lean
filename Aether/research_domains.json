@@ -69,11 +69,125 @@
       "difficulty_target": "phd",
       "frontier": "Formal models of spacetime emergent from algebraic self-pairing",
       "breakthrough_keywords": ["emergent gravity", "nilpotent lensing", "tropical horizon"]
+    },
+    {
+      "id": "niven_integral",
+      "name": "Niven Integral Completion",
+      "weight": 1.4,
+      "description": "Complete Niven's proof of irrationality by formalizing the integration-by-parts integrality lemma.",
+      "seed_concepts": ["Niven integrand", "integration by parts", "factorial dominance", "AM-GM inequality", "irrationality proof"],
+      "difficulty_target": "phd",
+      "frontier": "Integration-by-parts integrality lemma for Niven's method",
+      "breakthrough_keywords": ["niven integrality", "IBP recurrence", "irrationality certificate"]
+    },
+    {
+      "id": "carmichael",
+      "name": "Carmichael's Theorem Composite Case",
+      "weight": 1.5,
+      "description": "Prove Fibonacci primitive divisor theorem for composite indices via lifting-the-exponent or growth bounds.",
+      "seed_concepts": ["Fibonacci primitive divisor", "Carmichael theorem", "lifting the exponent", "Fibonacci entry point", "Zsigmondy theorem"],
+      "difficulty_target": "phd",
+      "frontier": "Lifting-the-exponent lemma for Fibonacci primitive divisors",
+      "breakthrough_keywords": ["carmichael composite", "primitive divisor existence", "entry point divisibility"]
+    },
+    {
+      "id": "tropical_langlands_gl2",
+      "name": "Tropical Langlands GL₂",
+      "weight": 1.6,
+      "description": "Formalize tropical Hecke algebra for GL₂, prove trace formula equality, extend from GL₁.",
+      "seed_concepts": ["tropical Hecke operator", "Satake transform", "trace formula GL2", "tropical orbital integral", "Maslov dequantization"],
+      "difficulty_target": "open_problem",
+      "frontier": "Tropical Hecke operators and Satake isomorphism for GL₂",
+      "breakthrough_keywords": ["tropical trace GL2", "Hecke eigenvalue", "Satake isomorphism"]
+    },
+    {
+      "id": "tropical_robustness",
+      "name": "Tropical Neural Certified Robustness",
+      "weight": 1.3,
+      "description": "Prove certified robustness bounds for neural networks using tropical degree upper bounds.",
+      "seed_concepts": ["tropical degree", "Lipschitz certificate", "ReLU region counting", "VC dimension bound", "certified robustness"],
+      "difficulty_target": "phd",
+      "frontier": "Tropical degree as certified L-infinity robustness certificate",
+      "breakthrough_keywords": ["tropical robustness", "certified bound", "linear region count"]
+    },
+    {
+      "id": "dilithium_security",
+      "name": "CRYSTALS-Dilithium Security Reduction",
+      "weight": 1.2,
+      "description": "Formalize Module-SIS to Dilithium security reduction skeleton in Lean 4.",
+      "seed_concepts": ["Module-SIS", "Dilithium signature", "lattice-based crypto", "security reduction", "post-quantum"],
+      "difficulty_target": "phd",
+      "frontier": "Module-SIS to Dilithium security reduction",
+      "breakthrough_keywords": ["dilithium reduction", "Module-SIS hardness", "lattice security"]
+    },
+    {
+      "id": "berggren_optimized",
+      "name": "Optimized Berggren Factoring",
+      "weight": 1.1,
+      "description": "Improve Berggren tree factoring with birthday-paradox collision detection and balanced semiprime handling.",
+      "seed_concepts": ["Berggren descent", "birthday collision", "GCD factoring", "difference of squares", "Lorentz form"],
+      "difficulty_target": "master",
+      "frontier": "Sub-exponential factoring via Berggren tree collision search",
+      "breakthrough_keywords": ["berggren collision", "birthday descent", "O(n^1/3) factoring"]
+    },
+    {
+      "id": "eml_approximation",
+      "name": "EML Universal Approximation",
+      "weight": 1.0,
+      "description": "Prove universal approximation theorem for EML neural networks via Stone-Weierstrass.",
+      "seed_concepts": ["EML operation", "universal approximation", "Stone-Weierstrass", "VC dimension", "density property"],
+      "difficulty_target": "master",
+      "frontier": "EML network density and universal approximation via Stone-Weierstrass",
+      "breakthrough_keywords": ["EML approximation", "universal density", "VC dimension bound"]
+    },
+    {
+      "id": "spb_crypto",
+      "name": "SPB Cryptographic Protocol Security",
+      "weight": 1.1,
+      "description": "Formalize security analysis of SPB-based Diffie-Hellman key exchange.",
+      "seed_concepts": ["SPB group", "Diffie-Hellman", "discrete logarithm", "finite field", "isomorphism security"],
+      "difficulty_target": "phd",
+      "frontier": "Discrete logarithm hardness in SPB group structures",
+      "breakthrough_keywords": ["SPB security", "DH reduction", "isomorphism attack"]
     }
   ],
+  "research_findings": {
+    "proven_results": [
+      "Tropical ReLU depth separation: 14 theorems, ReLU = tropical max",
+      "SPB deformations: 9 theorems, associativity + cancellation + Pythagorean connection",
+      "Niven integral framework: 8 theorems, key bounds for irrationality proof",
+      "Berggren factoring: 13 theorems, all 3 matrix transformations verified",
+      "Idempotent optimization: 9 theorems, Maslov dequantization bounds proved",
+      "EML approximation: 11 theorems, EML recovers exp/log, density properties",
+      "Quantum crypto migration: 8 theorems, Grover bounds + security reduction framework",
+      "Log-sum-exp bounds: max(a,b) ≤ log(exp(a)+exp(b)) ≤ max(a,b)+log(2)",
+      "Backpropagation = cotangent lift (proved, was trivially True)"
+    ],
+    "open_problems": [
+      {"id": "nivenI_integer_combo", "file": "Bridges/NivenIntegralFramework.lean", "difficulty": "hard", "description": "Integration-by-parts integrality lemma for Niven's method"},
+      {"id": "fib_primitive_divisor_existence", "file": "Shared/Fib_gcd_identity.lean", "difficulty": "hard", "description": "Fibonacci primitive divisor existence for all n >= 1"},
+      {"id": "Carmichael_composite", "file": "Shared/CarmichaelComposite.lean", "difficulty": "hard", "description": "Carmichael theorem composite case via lifting-the-exponent"},
+      {"id": "tropical_Hecke_GL2", "file": "Tropical/Langlands/", "difficulty": "very_hard", "description": "Tropical Hecke algebra for GL2 and trace formula equality"},
+      {"id": "dilithium_security_reduction", "file": "Cryptography/", "difficulty": "hard", "description": "Module-SIS to Dilithium security reduction formalization"}
+    ],
+    "hypothesis_assessments": [
+      {"id": "tropical_langlands_functoriality", "assessment": "promising", "note": "GL1 works, GL2 shows clean structure, tropical trace formula holds numerically"},
+      {"id": "spb_universal_bridge", "assessment": "partially_confirmed", "note": "Associativity and cancellation proved, tangent-addition-optimization deformation captured"},
+      {"id": "relu_complexity_tropical", "assessment": "upper_bound_confirmed", "note": "Tropical degree bounds linear regions but VC dimension is typically much smaller"},
+      {"id": "berggren_factoring_complexity", "assessment": "too_optimistic", "note": "Comparable to trial division, not O(n^1/3). Revised: O(n^1/2) worst case"},
+      {"id": "tropical_error_correction", "assessment": "speculative", "note": "E8 connection intriguing but no concrete evidence yet"}
+    ],
+    "priority_sorry_files": [
+      "Shared/CarmichaelComposite.lean",
+      "Speculative/CarmichaelPrimitiveDivisor.lean",
+      "Shared/Fib_gcd_identity.lean",
+      "Shared/CarmichaelComputational.lean",
+      "Speculative/SciFi/PadicHyperdrive.lean"
+    ]
+  },
   "global_settings": {
     "cycle_interval_seconds": 300,
-    "max_concurrent_jobs": 2,
+    "max_concurrent_jobs": 10,
     "artifact_retrieval": true,
     "auto_integrate": false,
     "require_human_review": true,
