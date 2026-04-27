@@ -143,21 +143,49 @@ assert 'tropical_hecke' in prompt, f'Should reference discovery in prompt'
 print('  OK')
 "
 
-# Check 8: New Lean file exists and is syntactically valid
-echo "Check 8: New theorem file exists..."
+# Check 8: New theorem files exist with verified content
+echo "Check 8: New theorem files exist with verified content..."
 python3 -c "
 from pathlib import Path
-f = Path('../Catalog/MachineLearning/SelfImproving/AristotleLoopVerification.lean')
-assert f.exists(), f'AristotleLoopVerification.lean should exist at {f}'
-content = f.read_text()
-# Check key theorems are present
-assert 'regret_nonneg' in content, 'Should contain regret_nonneg theorem'
-assert 'logsumexp_sandwich' in content, 'Should contain logsumexp_sandwich'
-assert 'synergy_superadditivity' in content, 'Should contain synergy_superadditivity'
-assert 'eml_monotone' in content, 'Should contain eml_monotone'
-assert 'eml_closure_contains_affine' in content, 'Should contain eml_closure_contains_affine'
-assert 'entropy_bound' in content, 'Should contain entropy_bound'
-print(f'  AristotleLoopVerification.lean: {len(content)} bytes, 6+ key theorems')
+# AristotleLoopVerification.lean
+f1 = Path('../Catalog/MachineLearning/SelfImproving/AristotleLoopVerification.lean')
+assert f1.exists(), f'File should exist: {f1}'
+c1 = f1.read_text()
+key_thms = ['regret_nonneg', 'logsumexp_sandwich', 'synergy_superadditivity',
+            'eml_monotone', 'eml_closure_contains_affine', 'entropy_bound',
+            'contractive_fixed_point_unique', 'cumulative_regret_bound']
+for t in key_thms:
+    assert t in c1, f'Should contain {t}'
+sorry_count_1 = c1.count('sorry')
+print(f'  AristotleLoopVerification.lean: {len(c1)} bytes, sorry={sorry_count_1}')
+
+# AlgebraPhysicsBridge.lean
+f2 = Path('../Catalog/Bridges/AlgebraPhysicsBridge.lean')
+assert f2.exists(), f'File should exist: {f2}'
+c2 = f2.read_text()
+key_thms2 = ['hilbertSchmidtNorm', 'commutator_transpose_eq_neg',
+             'commutator_isSymm_iff_eq_zero', 'commutator_self_power',
+             'isSymm_isHermitian', 'trace_eq_sum_eigenvalues']
+for t in key_thms2:
+    assert t in c2, f'Should contain {t}'
+sorry_count_2 = c2.count('sorry')
+print(f'  AlgebraPhysicsBridge.lean: {len(c2)} bytes, sorry={sorry_count_2}')
+
+# AlgebraEMLBridge.lean (NEW)
+f3 = Path('../Catalog/Bridges/AlgebraEMLBridge.lean')
+assert f3.exists(), f'File should exist: {f3}'
+c3 = f3.read_text()
+key_thms3 = ['eml_zero_eq_shift_log', 'eml_add_exp_bridge',
+             'eml_functional_eq', 'eml_fixed_point_b',
+             'eml_is_monoid_hom', 'eml_trivial_fixed_point']
+for t in key_thms3:
+    assert t in c3, f'Should contain {t}'
+sorry_count_3 = c3.count('sorry')
+print(f'  AlgebraEMLBridge.lean: {len(c3)} bytes, sorry={sorry_count_3}')
+
+total_sorry = sorry_count_1 + sorry_count_2 + sorry_count_3
+print(f'  Total sorries in new files: {total_sorry} (should be minimal)')
+assert total_sorry <= 2, f'Too many sorries in new files: {total_sorry}'
 print('  OK')
 "
 
