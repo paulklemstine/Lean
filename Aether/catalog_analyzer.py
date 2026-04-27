@@ -376,6 +376,112 @@ class CatalogAnalyzer:
                 return first_dir
         return "Unknown"
 
+    def detect_cross_domain_bridges(self) -> List[Dict]:
+        """Detect cross-domain bridges by analyzing import patterns.
+
+        A bridge exists when a file in domain A imports from domain B.
+        This reveals which domains are already connected and which
+        bridges are missing.
+
+        Returns list of dicts: {source_domain, target_domain, count, files}
+        sorted by bridge strength (count).
+        """
+        if self._summaries is None:
+            self.scan()
+
+        bridges: Dict[Tuple[str, str], List[str]] = {}
+
+        for summary in self._summaries:
+            source_domain = summary.domain
+            for imp in summary.imports:
+                # Parse import to extract domain
+                # Import format: "import Domain.Subdir.FileName"
+                parts = imp.replace("import ", "").strip().split(".")
+                if len(parts) >= 1:
+                    target_domain = parts[0]
+                    if target_domain in DOMAIN_DIRS and target_domain != source_domain:
+                        key = (source_domain, target_domain)
+                        if key not in bridges:
+                            bridges[key] = []
+                        bridges[key].append(summary.relative_path)
+
+        # Convert to list and sort
+        result = []
+        for (src, tgt), files in bridges.items():
+            result.append({
+                "source_domain": src,
+                "target_domain": tgt,
+                "count": len(set(files)),  # Deduplicate
+                "files": list(set(files))[:5],  # Top 5 examples
+            })
+        result.sort(key=lambda x: -x["count"])
+        return result
+
+    def compute_domain_connectivity(self) -> Dict[str, Dict[str, int]]:
+        """Compute domain connectivity matrix from import patterns.
+
+        Returns dict: {source_domain: {target_domain: count_of_files_connecting}}
+        """
+        bridges = self.detect_cross_domain_bridges()
+        connectivity: Dict[str, Dict[str, int]] = {
+            d: {} for d in DOMAIN_DIRS
+        }
+        for bridge in bridges:
+            src = bridge["source_domain"]
+            tgt = bridge["target_domain"]
+            connectivity.setdefault(src, {})[tgt] = bridge["count"]
+            connectivity.setdefault(tgt, {})[src] = bridge["count"]
+        return connectivity
+
+    def find_missing_bridges(self, limit: int = 10) -> List[Tuple[str, str, float]]:
+        """Find domain pairs that have no or weak connections.
+
+        These missing bridges represent the most promising opportunities
+        for novel cross-domain research.
+
+        Returns list of (domain_a, domain_b, potential_score) sorted by potential.
+        """
+        if self._summaries is None:
+            self.scan()
+
+        bridges = self.detect_cross_domain_bridges()
+        existing_bridges = set()
+        for b in bridges:
+            existing_bridges.add((b["source_domain"], b["target_domain"]))
+            existing_bridges.add((b["target_domain"], b["source_domain"]))
+
+        # Cross-domain keyword overlap = potential for bridge
+        domain_keywords: Dict[str, Set[str]] = {}
+        for summary in self._summaries:
+            domain = summary.domain
+            if domain not in domain_keywords:
+                domain_keywords[domain] = set()
+            for decl in summary.declarations:
+                # Extract keywords from declaration name
+                words = re.findall(r'[A-Z][a-z]*', decl)
+                domain_keywords[domain].update(w.lower() for w in words)
+
+        # Score missing bridges by keyword overlap
+        missing = []
+        for i, d_a in enumerate(DOMAIN_DIRS):
+            for d_b in DOMAIN_DIRS[i+1:]:
+                key = (d_a, d_b)
+                key_rev = (d_b, d_a)
+                if key not in existing_bridges and key_rev not in existing_bridges:
+                    # No bridge exists — compute potential from keyword overlap
+                    kw_a = domain_keywords.get(d_a, set())
+                    kw_b = domain_keywords.get(d_b, set())
+                    # Overlap in declaration keywords = shared concepts = bridge potential
+                    overlap = len(kw_a & kw_b)
+                    # Also consider domain sizes (larger = more theorems to bridge)
+                    files_a = len(self._domain_index.get(d_a, []))
+                    files_b = len(self._domain_index.get(d_b, []))
+                    potential = overlap * 0.3 + min(files_a, files_b) * 0.01
+                    missing.append((d_a, d_b, potential))
+
+        missing.sort(key=lambda x: -x[2])
+        return missing[:limit]
+
 
 def main():
     """CLI for standalone testing of catalog_analyzer."""

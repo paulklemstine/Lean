@@ -187,9 +187,13 @@ class PiAgentOrchestrator:
         if sorry_files:
             sorry_targets = [f.relative_path for f in sorry_files[:5]]
 
+        # Find missing cross-domain bridges for novel research targeting
+        missing_bridges = self.catalog_analyzer.find_missing_bridges(limit=10)
+
         loop_prompt = self.aristotle_loop.select_prompt(
             forced_domain=forced_domain,
             sorry_targets=sorry_targets,
+            missing_bridges=missing_bridges,
         )
         loop_domain = loop_prompt["domain"]
         loop_mode = loop_prompt["mode"]

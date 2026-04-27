@@ -402,13 +402,18 @@ class AristotleLoop:
         self,
         forced_domain: Optional[str] = None,
         sorry_targets: Optional[List[str]] = None,
+        missing_bridges: Optional[List[Tuple[str, str, float]]] = None,
     ) -> Dict[str, Any]:
-        """Select the next research prompt using UCB + synergy.
+        """Select the next research prompt using UCB + synergy + bridge analysis.
 
         This implements Phase 1 (Prompt) of the Aristotle Loop.
 
+        Args:
+            missing_bridges: Output from CatalogAnalyzer.find_missing_bridges(),
+                identifying domain pairs with no existing connections.
+
         Returns dict with: domain, mode, ucb_score, synergy_bonus,
-        diminishing_returns_detected, recommended_bridges.
+        diminishing_returns_detected, recommended_bridges, bridge_bonus.
         """
         self.cycle_count += 1
 
@@ -433,6 +438,18 @@ class AristotleLoop:
             if late_mean < early_mean * 0.7:
                 diminishing = True
 
+        # If diminishing returns detected, consider switching to a
+        # domain with missing bridges (novel cross-domain research)
+        bridge_bonus = 0.0
+        if diminishing and missing_bridges:
+            # Find the highest-potential missing bridge involving this domain
+            for d_a, d_b, potential in missing_bridges[:5]:
+                if d_a == domain or d_b == domain:
+                    other = d_b if d_a == domain else d_a
+                    domain = other  # Switch to the bridge-target domain
+                    bridge_bonus = potential * 0.01
+                    break
+
         # Get cross-domain bridge recommendations
         explored = [d for d in DOMAINS if self.ucb.domain_stats[d].n_selections > 0]
         bridges = self.synergy.get_bridge_recommendations(explored, limit=3)
@@ -450,6 +467,7 @@ class AristotleLoop:
             "ucb_score": ucb_score,
             "mode_score": mode_score,
             "synergy_bonus": synergy_bonus,
+            "bridge_bonus": bridge_bonus,
             "diminishing_returns": diminishing,
             "recommended_bridges": bridges,
             "cycle": self.cycle_count,
