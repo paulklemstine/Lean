@@ -796,14 +796,17 @@ class PiAgentClient:
         # Fallback: use concept domain with heuristic
         sorry_count = lean_source.count("sorry")
         is_complete = sorry_count == 0
+        # Normalize domain to PascalCase Catalog directory name
+        from output_organizer import normalize_domain
+        normalized_domain = normalize_domain(concept.domain)
         if is_complete:
             return {
-                "domain": concept.domain,
+                "domain": normalized_domain,
                 "subdirectory": "",
-                "target_path": f"{concept.domain}/{file_name}",
+                "target_path": f"{normalized_domain}/{file_name}",
                 "is_complete_proof": True,
                 "confidence": 0.4,
-                "reason": "Fallback: used concept domain, proof appears complete.",
+                "reason": f"Fallback: used concept domain ({concept.domain} -> {normalized_domain}), proof appears complete.",
             }
         else:
             return {
