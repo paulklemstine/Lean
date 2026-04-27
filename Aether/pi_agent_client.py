@@ -609,7 +609,8 @@ class PiAgentClient:
 
         user_prompt = textwrap.dedent(f"""\
             Write a research brief for Aristotle, a brilliant Lean 4 formal
-            mathematician. The brief should be open-ended, inspiring, and specific.
+            mathematician. The brief must be specific, mathematically precise,
+            and contain enough structure for Aristotle to produce a world-class result.
 
             ## Concept to Investigate
             - Title: {concept.title}
@@ -632,21 +633,35 @@ class PiAgentClient:
 
             {"## Previously Proved Theorems (build on these)\\n" + theorem_context if theorem_context else ""}
 
-            ## Deliverables
-            Produce a complete Lean 4 file with:
-            1. All necessary imports (import Mathlib)
-            2. Any new definitions needed for the theorem
-            3. The theorem statement(s) with complete proofs
-            4. Brief comments explaining the proof strategy (using -- comments)
+            ## Required Structure for the Research Brief
 
-            Additionally produce:
-            - A research report (RESEARCH_REPORT.md) explaining the mathematical
-              significance, the proof approach, and connections to existing work
-            - A Python demonstration (demo.py) showing the key idea with concrete
-              examples using only stdlib
-            - An SVG diagram (diagram.svg) visualizing the main concept
-            - A discussion article (DISCUSSION.md) written in Scientific American
-              style, accessible to a general audience
+            Your research brief MUST include these sections:
+
+            ### 1. Mathematical Background (2-3 paragraphs)
+            Explain the mathematical context, motivations, and why this result
+            matters. Reference specific theorems from the catalog or Mathlib.
+
+            ### 2. Precise Theorem Statement
+            Give the EXACT Lean 4 type signature of the main theorem, including
+            all hypotheses. Use quantifiers (∀ ∃), type class constraints, and
+            precise numerical bounds. No vagueness.
+
+            ### 3. Proof Strategy Outline
+            Describe the key mathematical insight and proof approach in 3-5 steps.
+            For example: "Step 1: Prove the growth bound F(n) > 2^(n/3) by strong
+            induction. Step 2: Show the entry point divides n using gcd properties.
+            Step 3: Conclude by showing the primitive part is > 1."
+
+            ### 4. Key Lemmas Needed
+            List the 2-4 specific lemmas that are needed to complete the proof,
+            with their Lean 4 type signatures.
+
+            ### 5. Expected Deliverables
+            - Complete Lean 4 file with imports, definitions, and proofs
+            - RESEARCH_REPORT.md explaining significance
+            - demo.py with concrete numerical examples
+            - diagram.svg visualizing the main concept
+            - DISCUSSION.md in Scientific American style
 
             Write the complete research brief now. Be specific, creative, and
             mathematically rigorous. This is a conversation between mathematicians,
