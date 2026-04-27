@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" width="900" height="620">
+  <defs>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563EB"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#DC2626"/>
+    </marker>
+    <marker id="arrowGray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6B7280"/>
+    </marker>
+    <linearGradient id="tangentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#DBEAFE;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#93C5FD;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="cotangentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FEE2E2;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#FCA5A5;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="620" fill="#FAFAFA" rx="8"/>
+
+  <!-- Title -->
+  <text x="450" y="35" text-anchor="middle" font-family="Georgia, serif" font-size="20" font-weight="bold" fill="#1F2937">
+    Backpropagation = Cotangent Lift
+  </text>
+  <text x="450" y="55" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#6B7280" font-style="italic">
+    Contravariant functoriality of T* : Man^op → VectBun
+  </text>
+
+  <!-- ═══ FORWARD PASS (TOP ROW) ═══ -->
+  <text x="450" y="90" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="bold" fill="#2563EB">
+    FORWARD PASS (Tangent / Covariant)
+  </text>
+
+  <!-- Manifold boxes -->
+  <rect x="60" y="105" width="120" height="70" rx="12" fill="url(#tangentGrad)" stroke="#2563EB" stroke-width="2"/>
+  <text x="120" y="135" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="bold" fill="#1E40AF">M₀</text>
+  <text x="120" y="155" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#3B82F6">Input ℝⁿ⁰</text>
+
+  <rect x="270" y="105" width="120" height="70" rx="12" fill="url(#tangentGrad)" stroke="#2563EB" stroke-width="2"/>
+  <text x="330" y="135" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="bold" fill="#1E40AF">M₁</text>
+  <text x="330" y="155" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#3B82F6">Hidden ℝⁿ¹</text>
+
+  <rect x="480" y="105" width="120" height="70" rx="12" fill="url(#tangentGrad)" stroke="#2563EB" stroke-width="2"/>
+  <text x="540" y="135" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="bold" fill="#1E40AF">M₂</text>
+  <text x="540" y="155" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#3B82F6">Hidden ℝⁿ²</text>
+
+  <rect x="690" y="105" width="120" height="70" rx="12" fill="url(#tangentGrad)" stroke="#2563EB" stroke-width="2"/>
+  <text x="750" y="135" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="bold" fill="#1E40AF">M₃</text>
+  <text x="750" y="155" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#3B82F6">Output ℝⁿ³</text>
+
+  <!-- Forward arrows -->
+  <line x1="180" y1="140" x2="268" y2="140" stroke="#2563EB" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
+  <text x="224" y="132" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#2563EB">f₁</text>
+
+  <line x1="390" y1="140" x2="478" y2="140" stroke="#2563EB" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
+  <text x="434" y="132" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#2563EB">f₂</text>
+
+  <line x1="600" y1="140" x2="688" y2="140" stroke="#2563EB" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
+  <text x="644" y="132" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#2563EB">f₃</text>
+
+  <!-- ═══ DUALITY ARROWS (MIDDLE) ═══ -->
+  <text x="450" y="215" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#6B7280">
+    ↕ Cotangent functor T* (dualization) ↕
+  </text>
+
+  <!-- Vertical duality arrows -->
+  <line x1="120" y1="185" x2="120" y2="258" stroke="#6B7280" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowGray)"/>
+  <line x1="330" y1="185" x2="330" y2="258" stroke="#6B7280" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowGray)"/>
+  <line x1="540" y1="185" x2="540" y2="258" stroke="#6B7280" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowGray)"/>
+  <line x1="750" y1="185" x2="750" y2="258" stroke="#6B7280" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowGray)"/>
+
+  <!-- ═══ BACKPROPAGATION (BOTTOM ROW) ═══ -->
+  <text x="450" y="250" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="bold" fill="#DC2626">
+    BACKPROPAGATION (Cotangent / Contravariant)
+  </text>
+
+  <!-- Cotangent bundle boxes -->
+  <rect x="60" y="265" width="120" height="70" rx="12" fill="url(#cotangentGrad)" stroke="#DC2626" stroke-width="2"/>
+  <text x="120" y="295" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="bold" fill="#991B1B">T*M₀</text>
+  <text x="120" y="315" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#EF4444">∂L/∂x₀</text>
+
+  <rect x="270" y="265" width="120" height="70" rx="12" fill="url(#cotangentGrad)" stroke="#DC2626" stroke-width="2"/>
+  <text x="330" y="295" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="bold" fill="#991B1B">T*M₁</text>
+  <text x="330" y="315" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#EF4444">∂L/∂x₁</text>
+
+  <rect x="480" y="265" width="120" height="70" rx="12" fill="url(#cotangentGrad)" stroke="#DC2626" stroke-width="2"/>
+  <text x="540" y="295" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="bold" fill="#991B1B">T*M₂</text>
+  <text x="540" y="315" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#EF4444">∂L/∂x₂</text>
+
+  <rect x="690" y="265" width="120" height="70" rx="12" fill="url(#cotangentGrad)" stroke="#DC2626" stroke-width="2"/>
+  <text x="750" y="295" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="bold" fill="#991B1B">T*M₃</text>
+  <text x="750" y="315" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#EF4444">∂L/∂y</text>
+
+  <!-- Backward arrows (REVERSED direction!) -->
+  <line x1="268" y1="300" x2="182" y2="300" stroke="#DC2626" stroke-width="2.5" marker-end="url(#arrowRed)"/>
+  <text x="224" y="292" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#DC2626">f₁*</text>
+
+  <line x1="478" y1="300" x2="392" y2="300" stroke="#DC2626" stroke-width="2.5" marker-end="url(#arrowRed)"/>
+  <text x="434" y="292" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#DC2626">f₂*</text>
+
+  <line x1="688" y1="300" x2="602" y2="300" stroke="#DC2626" stroke-width="2.5" marker-end="url(#arrowRed)"/>
+  <text x="644" y="292" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#DC2626">f₃*</text>
+
+  <!-- ═══ FUNCTORIALITY EQUATION ═══ -->
+  <rect x="100" y="370" width="700" height="85" rx="10" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1.5"/>
+
+  <text x="450" y="395" text-anchor="middle" font-family="Georgia, serif" font-size="14" font-weight="bold" fill="#374151">
+    Contravariant Functoriality (= Backpropagation)
+  </text>
+
+  <text x="450" y="420" text-anchor="middle" font-family="monospace" font-size="15" fill="#2563EB">
+    Forward:  f = f₃ ∘ f₂ ∘ f₁     (left to right)
+  </text>
+  <text x="450" y="443" text-anchor="middle" font-family="monospace" font-size="15" fill="#DC2626">
+    Backprop: f* = f₁* ∘ f₂* ∘ f₃*  (right to left)
+  </text>
+
+  <!-- ═══ CATEGORY THEORY BOX ═══ -->
+  <rect x="100" y="475" width="330" height="100" rx="10" fill="#ECFDF5" stroke="#059669" stroke-width="1.5"/>
+  <text x="265" y="500" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#065F46">
+    Tangent Functor T (Covariant)
+  </text>
+  <text x="265" y="522" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#047857">
+    T : Man → VectBun
+  </text>
+  <text x="265" y="542" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#047857">
+    T(g ∘ f) = Tg ∘ Tf
+  </text>
+  <text x="265" y="562" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#059669" font-style="italic">
+    Forward-mode autodiff
+  </text>
+
+  <rect x="470" y="475" width="330" height="100" rx="10" fill="#FEF2F2" stroke="#DC2626" stroke-width="1.5"/>
+  <text x="635" y="500" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#991B1B">
+    Cotangent Functor T* (Contravariant)
+  </text>
+  <text x="635" y="522" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#B91C1C">
+    T* : Man^op → VectBun
+  </text>
+  <text x="635" y="542" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#B91C1C">
+    T*(g ∘ f) = T*f ∘ T*g
+  </text>
+  <text x="635" y="562" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#DC2626" font-style="italic">
+    Reverse-mode autodiff = Backpropagation
+  </text>
+
+  <!-- Caption -->
+  <text x="450" y="605" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#6B7280" font-style="italic">
+    Figure: The forward pass traverses manifolds left-to-right; backpropagation traverses cotangent bundles right-to-left.
+  </text>
+</svg>
