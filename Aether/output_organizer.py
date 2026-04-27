@@ -70,6 +70,76 @@ DOMAIN_KEYWORDS = {
     "shared": ["shared", "common", "utility", "helper", "lemma", "basic"],
 }
 
+# Maps lowercase domain names to the correct Catalog directory names (PascalCase)
+LOWER_TO_CATALOG_DIR = {
+    "algebra": "Algebra",
+    "applications": "Applications",
+    "bridges": "Bridges",
+    "computation": "Computation",
+    "cryptography": "Cryptography",
+    "eml": "EML",
+    "geometry": "Geometry",
+    "logic": "Logic",
+    "machinelearning": "MachineLearning",
+    "machine_learning": "MachineLearning",
+    "neural nets": "MachineLearning",
+    "neural_nets": "MachineLearning",
+    "physics": "Physics",
+    "pythagorean": "Pythagorean",
+    "shared": "Shared",
+    "speculative": "Speculative",
+    "tropical": "Tropical",
+    # research_domains.json domain IDs -> Catalog dirs
+    "factoring": "Cryptography",
+    "compression": "Computation",
+    "ai": "MachineLearning",
+    "quantum mechanics": "Cryptography",
+    "quantum_mechanics": "Cryptography",
+    "computation_domain": "Computation",
+    "niven_integral": "Bridges",
+    "carmichael": "Pythagorean",
+    "tropical_langlands_gl2": "Tropical",
+    "tropical_robustness": "MachineLearning",
+    "dilithium_security": "Cryptography",
+    "berggren_optimized": "Pythagorean",
+    "eml_approximation": "EML",
+    "spb_crypto": "Cryptography",
+    "idempotent_optimization_deep": "Tropical",
+    "neural proof mining": "MachineLearning",
+    "gravitational factoring": "Cryptography",
+    "tropical compression theory": "Tropical",
+    "categorical neural networks": "MachineLearning",
+    "quantum pythagoras": "Cryptography",
+    "temporal computation": "Computation",
+    "eml cosmology": "EML",
+}
+
+
+def normalize_domain(domain: str) -> str:
+    """Normalize any domain name to the correct Catalog directory name.
+
+    Handles lowercase, research_domains.json IDs, and concept.domain values.
+    Falls back to checking DOMAIN_DIRS directly, then title case.
+    """
+    if not domain:
+        return "Speculative"
+
+    # Direct match with DOMAIN_DIRS (already correct case)
+    if domain in DOMAIN_DIRS:
+        return domain
+
+    # Check the mapping
+    lower = domain.lower().strip()
+    if lower in LOWER_TO_CATALOG_DIR:
+        return LOWER_TO_CATALOG_DIR[lower]
+
+    # Try title case as last resort
+    title_cased = domain.title().replace("_", "")
+    if title_cased in DOMAIN_DIRS:
+        return title_cased
+
+    return "Speculative"
+
 # Artifact type detection patterns
 ARTIFACT_PATTERNS = {
     "paper": {
@@ -382,8 +452,8 @@ class OutputOrganizer:
         try:
             rel_to_result = source.relative_to(source.parent.parent)  # go up from file to result_dir
             parts = list(source.parent.relative_to(source.parent.parent.parent).parts)
-            if parts and parts[0] in DOMAIN_DIRS:
-                target_domain = parts[0]
+            if parts and normalize_domain(parts[0]) in DOMAIN_DIRS:
+                target_domain = normalize_domain(parts[0])
                 if len(parts) > 1:
                     target_subdir = "/".join(parts[1:])
                 reason = f"Path-based: {source.parent.relative_to(source.parent.parent.parent)}"
@@ -394,16 +464,17 @@ class OutputOrganizer:
         # If we couldn't determine domain from path, try direct parent
         if not target_domain:
             parent_name = source.parent.name
-            if parent_name in DOMAIN_DIRS:
-                target_domain = parent_name
-                reason = f"Parent-dir classification: {parent_name}"
+            normalized_parent = normalize_domain(parent_name)
+            if normalized_parent in DOMAIN_DIRS:
+                target_domain = normalized_parent
+                reason = f"Parent-dir classification: {parent_name} -> {normalized_parent}"
                 confidence = 0.85
 
         # Strategy 2: Use ARISTOTLE_SUMMARY.md context
         if not target_domain and summary:
             domains = summary.get("domains_touched", [])
             if len(domains) == 1:
-                target_domain = domains[0]
+                target_domain = normalize_domain(domains[0])
                 reason = f"Summary-based: only domain mentioned"
                 confidence = 0.7
             elif len(domains) > 1:
@@ -417,21 +488,23 @@ class OutputOrganizer:
                         best_score = score
                         best_domain = d
                 if best_domain:
-                    target_domain = best_domain
+                    target_domain = normalize_domain(best_domain)
                     reason = f"Summary+keyword classification (score={best_score})"
                     confidence = 0.6
 
-        # Strategy 3: Use concept domain
+        # Strategy 3: Use concept domain (normalize from research_domains.json ID)
         if not target_domain:
-            target_domain = getattr(concept, "domain", "Speculative")
-            reason = "Concept-domain fallback"
+            raw_domain = getattr(concept, "domain", "Speculative")
+            target_domain = normalize_domain(raw_domain)
+            reason = f"Concept-domain fallback: {raw_domain} -> {target_domain}"
             confidence = 0.4
 
         # Strategy 4: Keyword heuristic as last resort
-        if target_domain == "Speculative" or target_domain == "Unknown":
+        if target_domain in ("Speculative", "Unknown"):
             heuristic_domain, heuristic_conf = self._heuristic_classify(lean_source)
+            normalized_heuristic = normalize_domain(heuristic_domain)
             if heuristic_conf > 0.5:
-                target_domain = heuristic_domain
+                target_domain = normalized_heuristic
                 reason = "Keyword-heuristic classification"
                 confidence = heuristic_conf
         if is_complete:

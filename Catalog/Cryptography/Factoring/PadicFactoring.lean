@@ -1,23 +1,41 @@
 import Mathlib
 
-/-! # Non-Archimedean Factoring Oracle
+/-! # p-Adic Factoring Oracle
 
-A p-adic lifting scheme that factors integers by analyzing the Newton polygon
-of a polynomial over Q_p.
+## Overview
 
-## Main Result
+This file formalizes a "p-adic factoring oracle" theorem. The original statement claimed
+that every natural number n > 1 admits a nontrivial factorization a * b = n with a > 1
+and b > 1. This is **false** for prime numbers.
 
-Every composite number n > 1 admits a non-trivial factorization into two
-factors both greater than 1. The original statement (without the compositeness
-hypothesis) is false for primes.
+We provide:
+1. `pAdic_factoring_oracle_false` — a formal disproof of the original (false) statement.
+2. `pAdic_factoring_oracle_corrected` — the corrected theorem: every *composite* number
+   n > 1 has a nontrivial factorization.
+
+## Mathematical context
+
+The original problem was motivated by p-adic methods (Newton polygons, Hensel's lemma)
+for integer factorization. While such methods are powerful in algorithmic number theory,
+the existence of a nontrivial factorization for composite numbers is a purely
+number-theoretic fact that does not require p-adic machinery.
 -/
 
 /-
-**Corrected version**: A composite number n > 1 that is not prime admits a non-trivial
-factorization. The hypothesis `¬ Nat.Prime n` is the minimal additional condition needed
-to make the statement true.
+The original theorem statement is **false**: the prime 2 is a counterexample.
+    For n = 2, there are no a, b > 1 with a * b = 2.
 -/
-theorem pAdic_factoring_oracle {p : ℕ} [Fact p.Prime] (n : ℕ) (hn : n > 1)
-    (hnp : ¬ Nat.Prime n) :
+theorem pAdic_factoring_oracle_false :
+    ¬ (∀ (p : ℕ) [Fact p.Prime] (n : ℕ), n > 1 →
+      ∃ a b : ℕ, a * b = n ∧ a > 1 ∧ b > 1) := by
+  simp +zetaDelta at *;
+  exact ⟨ ⟨ 2, ⟨ Nat.prime_two ⟩ ⟩, 2, by decide, fun a b h₁ h₂ => by nlinarith ⟩
+
+/-
+**Corrected theorem**: Every composite number n > 1 admits a nontrivial factorization.
+    The additional hypothesis `¬ Nat.Prime n` ensures n is composite.
+-/
+theorem pAdic_factoring_oracle_corrected {p : ℕ} [Fact p.Prime] (n : ℕ) (hn : n > 1)
+    (hc : ¬ Nat.Prime n) :
     ∃ a b : ℕ, a * b = n ∧ a > 1 ∧ b > 1 := by
-  rcases Nat.exists_dvd_of_not_prime2 hn hnp with ⟨ k, hk₁, hk₂ ⟩ ; exact ⟨ k, n/k, by rw [ Nat.mul_div_cancel' hk₁ ], by nlinarith [ Nat.div_mul_cancel hk₁ ], by nlinarith [ Nat.div_mul_cancel hk₁ ] ⟩
+  rcases Nat.exists_dvd_of_not_prime2 hn hc with ⟨ k, hk₁, hk₂ ⟩ ; exact ⟨ k, n / k, by rw [ Nat.mul_div_cancel' hk₁ ], Nat.one_lt_iff_ne_zero_and_ne_one.mpr ⟨ by aesop_cat, by aesop_cat ⟩, by nlinarith [ Nat.div_mul_cancel hk₁ ] ⟩

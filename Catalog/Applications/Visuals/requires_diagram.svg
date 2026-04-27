@@ -1,0 +1,208 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#555"/>
+    </marker>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#fff3e0;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#fff3e0;stop-opacity:0"/>
+    </radialGradient>
+    <linearGradient id="circleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3498db;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#9b59b6;stop-opacity:0.08"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="700" fill="#fafbfc" rx="8"/>
+
+  <!-- Title -->
+  <text x="450" y="35" text-anchor="middle" font-size="20" font-weight="bold" fill="#2c3e50">
+    Quantum Berggren Superposition
+  </text>
+  <text x="450" y="55" text-anchor="middle" font-size="12" fill="#7f8c8d">
+    Pythagorean Triples as Quantum States on S¹
+  </text>
+
+  <!-- ═══════════════ LEFT: Unit Circle ═══════════════ -->
+  <g transform="translate(200, 350)">
+    <!-- Glow effect -->
+    <circle cx="0" cy="0" r="160" fill="url(#glow)"/>
+
+    <!-- Unit circle background -->
+    <circle cx="0" cy="0" r="140" fill="url(#circleGrad)" stroke="#bdc3c7" stroke-width="1.5"/>
+
+    <!-- Axes -->
+    <line x1="-155" y1="0" x2="155" y2="0" stroke="#ccc" stroke-width="0.8"/>
+    <line x1="0" y1="-155" x2="0" y2="155" stroke="#ccc" stroke-width="0.8"/>
+
+    <!-- Unit circle arc (first quadrant emphasized) -->
+    <path d="M 140 0 A 140 140 0 0 0 0 -140" fill="none" stroke="#bdc3c7" stroke-width="1.5" stroke-dasharray="4,4"/>
+    <path d="M 140 0 A 140 140 0 0 1 0 140" fill="none" stroke="#bdc3c7" stroke-width="1.5" stroke-dasharray="4,4"/>
+    <path d="M 0 -140 A 140 140 0 0 0 -140 0" fill="none" stroke="#bdc3c7" stroke-width="1.5" stroke-dasharray="4,4"/>
+    <path d="M -140 0 A 140 140 0 0 0 0 140" fill="none" stroke="#bdc3c7" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+    <!-- First quadrant arc (bold) -->
+    <path d="M 140 0 A 140 140 0 0 0 0 -140" fill="none" stroke="#2c3e50" stroke-width="2.5"/>
+
+    <!-- Quantum states from Pythagorean triples -->
+    <!-- (3,4,5): α=0.6, β=0.8 → (84, -112) -->
+    <circle cx="84" cy="-112" r="8" fill="#e74c3c" stroke="#c0392b" stroke-width="1.5"/>
+    <text x="96" y="-118" font-size="10" fill="#c0392b" font-weight="bold">(3,4,5)</text>
+    <text x="96" y="-106" font-size="8" fill="#e74c3c">|ψ⟩ = 0.6|0⟩ + 0.8|1⟩</text>
+    <line x1="0" y1="0" x2="84" y2="-112" stroke="#e74c3c" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+
+    <!-- (5,12,13): α=0.385, β=0.923 → (54, -129) -->
+    <circle cx="54" cy="-129" r="7" fill="#3498db" stroke="#2980b9" stroke-width="1.5"/>
+    <text x="64" y="-134" font-size="9" fill="#2980b9">(5,12,13)</text>
+    <line x1="0" y1="0" x2="54" y2="-129" stroke="#3498db" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+
+    <!-- (8,15,17): α=0.471, β=0.882 → (66, -123) -->
+    <circle cx="66" cy="-123" r="6" fill="#2ecc71" stroke="#27ae60" stroke-width="1.5"/>
+    <text x="-50" y="-128" font-size="9" fill="#27ae60">(8,15,17)</text>
+    <line x1="0" y1="0" x2="66" y2="-123" stroke="#2ecc71" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+
+    <!-- (7,24,25): α=0.28, β=0.96 → (39, -134) -->
+    <circle cx="39" cy="-134" r="6" fill="#f39c12" stroke="#e67e22" stroke-width="1.5"/>
+    <text x="-48" y="-138" font-size="9" fill="#e67e22">(7,24,25)</text>
+    <line x1="0" y1="0" x2="39" y2="-134" stroke="#f39c12" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+
+    <!-- (20,21,29): α=0.69, β=0.724 → (97, -101) -->
+    <circle cx="97" cy="-101" r="6" fill="#9b59b6" stroke="#8e44ad" stroke-width="1.5"/>
+    <text x="107" y="-96" font-size="9" fill="#8e44ad">(20,21,29)</text>
+    <line x1="0" y1="0" x2="97" y2="-101" stroke="#9b59b6" stroke-width="1" stroke-dasharray="3,3" opacity="0.4"/>
+
+    <!-- Axis labels -->
+    <text x="148" y="15" font-size="11" fill="#2c3e50" font-weight="bold">α = a/c</text>
+    <text x="5" y="-148" font-size="11" fill="#2c3e50" font-weight="bold">β = b/c</text>
+    <text x="145" y="-3" font-size="9" fill="#888">1</text>
+    <text x="5" y="-143" font-size="9" fill="#888">1</text>
+
+    <!-- Angle arc for (3,4,5) -->
+    <path d="M 30 0 A 30 30 0 0 0 18 -24" fill="none" stroke="#e74c3c" stroke-width="1.5"/>
+    <text x="32" y="-8" font-size="9" fill="#e74c3c">θ</text>
+
+    <!-- Section label -->
+    <text x="0" y="175" text-anchor="middle" font-size="13" font-weight="bold" fill="#2c3e50">
+      Quantum State Space (S¹)
+    </text>
+    <text x="0" y="190" text-anchor="middle" font-size="10" fill="#7f8c8d">
+      a² + b² = c²  ⟺  |α|² + |β|² = 1
+    </text>
+  </g>
+
+  <!-- ═══════════════ RIGHT: Berggren Tree ═══════════════ -->
+  <g transform="translate(620, 120)">
+    <!-- Tree background -->
+    <rect x="-170" y="-30" width="340" height="430" rx="12" fill="#f8f9fa" stroke="#dee2e6" stroke-width="1"/>
+
+    <text x="0" y="-10" text-anchor="middle" font-size="14" font-weight="bold" fill="#2c3e50">
+      Berggren Tree (Quantum Circuit)
+    </text>
+
+    <!-- Root node -->
+    <circle cx="0" cy="40" r="22" fill="#e74c3c" stroke="#c0392b" stroke-width="2"/>
+    <text x="0" y="44" text-anchor="middle" font-size="10" fill="white" font-weight="bold">(3,4,5)</text>
+
+    <!-- Level 1 edges -->
+    <line x1="0" y1="62" x2="-100" y2="130" stroke="#555" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+    <line x1="0" y1="62" x2="0" y2="130" stroke="#555" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+    <line x1="0" y1="62" x2="100" y2="130" stroke="#555" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+
+    <!-- Gate labels -->
+    <rect x="-75" y="80" width="24" height="16" rx="3" fill="#3498db"/>
+    <text x="-63" y="92" text-anchor="middle" font-size="9" fill="white" font-weight="bold">B₁</text>
+
+    <rect x="-12" y="80" width="24" height="16" rx="3" fill="#2ecc71"/>
+    <text x="0" y="92" text-anchor="middle" font-size="9" fill="white" font-weight="bold">B₂</text>
+
+    <rect x="51" y="80" width="24" height="16" rx="3" fill="#f39c12"/>
+    <text x="63" y="92" text-anchor="middle" font-size="9" fill="white" font-weight="bold">B₃</text>
+
+    <!-- Level 1 nodes -->
+    <circle cx="-100" cy="150" r="18" fill="#3498db" stroke="#2980b9" stroke-width="1.5"/>
+    <text x="-100" y="154" text-anchor="middle" font-size="8" fill="white" font-weight="bold">(5,12,13)</text>
+
+    <circle cx="0" cy="150" r="18" fill="#2ecc71" stroke="#27ae60" stroke-width="1.5"/>
+    <text x="0" y="154" text-anchor="middle" font-size="8" fill="white" font-weight="bold">(21,20,29)</text>
+
+    <circle cx="100" cy="150" r="18" fill="#f39c12" stroke="#e67e22" stroke-width="1.5"/>
+    <text x="100" y="154" text-anchor="middle" font-size="8" fill="white" font-weight="bold">(15,8,17)</text>
+
+    <!-- Level 2 (abbreviated) -->
+    <!-- From (5,12,13) -->
+    <line x1="-100" y1="168" x2="-135" y2="230" stroke="#aaa" stroke-width="1"/>
+    <line x1="-100" y1="168" x2="-100" y2="230" stroke="#aaa" stroke-width="1"/>
+    <line x1="-100" y1="168" x2="-65" y2="230" stroke="#aaa" stroke-width="1"/>
+
+    <circle cx="-135" cy="245" r="12" fill="#5dade2" stroke="#2e86c1" stroke-width="1"/>
+    <text x="-135" y="248" text-anchor="middle" font-size="6" fill="white">(7,24,25)</text>
+
+    <circle cx="-100" cy="245" r="12" fill="#58d68d" stroke="#28b463" stroke-width="1"/>
+    <text x="-100" y="248" text-anchor="middle" font-size="6" fill="white">(55,48,73)</text>
+
+    <circle cx="-65" cy="245" r="12" fill="#f5b041" stroke="#d4940a" stroke-width="1"/>
+    <text x="-65" y="248" text-anchor="middle" font-size="6" fill="white">(45,28,53)</text>
+
+    <!-- From (21,20,29) -->
+    <line x1="0" y1="168" x2="-30" y2="230" stroke="#aaa" stroke-width="1"/>
+    <line x1="0" y1="168" x2="0" y2="230" stroke="#aaa" stroke-width="1"/>
+    <line x1="0" y1="168" x2="30" y2="230" stroke="#aaa" stroke-width="1"/>
+
+    <circle cx="-30" cy="245" r="10" fill="#aab7b8" stroke="#808b8d" stroke-width="1"/>
+    <circle cx="0" cy="245" r="10" fill="#aab7b8" stroke="#808b8d" stroke-width="1"/>
+    <circle cx="30" cy="245" r="10" fill="#aab7b8" stroke="#808b8d" stroke-width="1"/>
+
+    <!-- From (15,8,17) -->
+    <line x1="100" y1="168" x2="70" y2="230" stroke="#aaa" stroke-width="1"/>
+    <line x1="100" y1="168" x2="100" y2="230" stroke="#aaa" stroke-width="1"/>
+    <line x1="100" y1="168" x2="130" y2="230" stroke="#aaa" stroke-width="1"/>
+
+    <circle cx="70" cy="245" r="10" fill="#aab7b8" stroke="#808b8d" stroke-width="1"/>
+    <circle cx="100" cy="245" r="10" fill="#aab7b8" stroke="#808b8d" stroke-width="1"/>
+    <circle cx="130" cy="245" r="10" fill="#aab7b8" stroke="#808b8d" stroke-width="1"/>
+
+    <!-- Ellipsis -->
+    <text x="0" y="290" text-anchor="middle" font-size="14" fill="#888">⋮</text>
+    <text x="0" y="310" text-anchor="middle" font-size="10" fill="#7f8c8d">∞ primitive triples</text>
+
+    <!-- Annotations -->
+    <rect x="-155" y="330" width="310" height="55" rx="6" fill="#eaf2f8" stroke="#aed6f1" stroke-width="1"/>
+    <text x="0" y="348" text-anchor="middle" font-size="10" fill="#2c3e50" font-weight="bold">
+      Coprimality = Irreducibility
+    </text>
+    <text x="0" y="363" text-anchor="middle" font-size="9" fill="#5d6d7e">
+      gcd(a,b) = 1  ⟺  |ψ⟩ is an irreducible state
+    </text>
+    <text x="0" y="378" text-anchor="middle" font-size="9" fill="#5d6d7e">
+      B₁, B₂, B₃ invertible over ℤ  ⟺  reversible gates
+    </text>
+  </g>
+
+  <!-- ═══════════════ Bridge Arrow ═══════════════ -->
+  <g transform="translate(400, 340)">
+    <line x1="-30" y1="0" x2="30" y2="0" stroke="#e74c3c" stroke-width="2.5" marker-end="url(#arrowhead)"/>
+    <line x1="30" y1="0" x2="-30" y2="0" stroke="#3498db" stroke-width="2.5" marker-end="url(#arrowhead)"/>
+    <text x="0" y="-12" text-anchor="middle" font-size="10" fill="#2c3e50" font-weight="bold">≅</text>
+    <text x="0" y="18" text-anchor="middle" font-size="8" fill="#7f8c8d">correspondence</text>
+  </g>
+
+  <!-- ═══════════════ Legend ═══════════════ -->
+  <g transform="translate(50, 605)">
+    <rect x="0" y="0" width="800" height="55" rx="8" fill="#f0f3f5" stroke="#d5dbdb" stroke-width="1"/>
+    <circle cx="30" cy="20" r="6" fill="#e74c3c"/>
+    <text x="42" y="24" font-size="10" fill="#2c3e50">Root (3,4,5)</text>
+    <circle cx="150" cy="20" r="6" fill="#3498db"/>
+    <text x="162" y="24" font-size="10" fill="#2c3e50">B₁ children</text>
+    <circle cx="270" cy="20" r="6" fill="#2ecc71"/>
+    <text x="282" y="24" font-size="10" fill="#2c3e50">B₂ children</text>
+    <circle cx="390" cy="20" r="6" fill="#f39c12"/>
+    <text x="402" y="24" font-size="10" fill="#2c3e50">B₃ children</text>
+    <text x="530" y="24" font-size="10" fill="#7f8c8d" font-style="italic">
+      Verified in Lean 4 / Mathlib: berggren_quantum_state
+    </text>
+    <text x="400" y="45" text-anchor="middle" font-size="9" fill="#95a5a6">
+      Figure: The Berggren tree generates quantum states on S¹ via integer matrix "gates." Each node is a primitive Pythagorean triple encoding a normalized qubit amplitude.
+    </text>
+  </g>
+</svg>

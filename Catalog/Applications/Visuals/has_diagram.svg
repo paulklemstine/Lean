@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 550" width="800" height="550">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <linearGradient id="primeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e74c3c;stop-opacity:0.3"/>
+      <stop offset="100%" style="stop-color:#c0392b;stop-opacity:0.1"/>
+    </linearGradient>
+    <linearGradient id="compositeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2ecc71;stop-opacity:0.3"/>
+      <stop offset="100%" style="stop-color:#27ae60;stop-opacity:0.1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="550" fill="#fafafa" rx="10"/>
+
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Georgia, serif" font-size="20" font-weight="bold" fill="#2c3e50">
+    Non-Archimedean Factoring Oracle
+  </text>
+  <text x="400" y="55" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#7f8c8d">
+    ∀ n > 1, ¬Prime(n) → ∃ a b > 1, a × b = n
+  </text>
+
+  <!-- The naturals > 1, split into Primes and Composites -->
+  <!-- Big outer set: ℕ_{>1} -->
+  <rect x="50" y="80" width="700" height="350" rx="20" fill="none" stroke="#2c3e50" stroke-width="2" stroke-dasharray="8,4"/>
+  <text x="70" y="100" font-family="monospace" font-size="14" fill="#2c3e50" font-weight="bold">ℕ_{>1} = {2, 3, 4, 5, 6, 7, 8, 9, 10, ...}</text>
+
+  <!-- Prime region (left) -->
+  <ellipse cx="210" cy="260" rx="140" ry="130" fill="url(#primeGrad)" stroke="#e74c3c" stroke-width="2.5"/>
+  <text x="210" y="140" text-anchor="middle" font-family="Georgia, serif" font-size="16" font-weight="bold" fill="#c0392b">Primes</text>
+  <text x="210" y="158" text-anchor="middle" font-family="monospace" font-size="11" fill="#e74c3c">¬∃ a,b > 1: a×b = n</text>
+
+  <!-- Prime examples -->
+  <circle cx="170" cy="210" r="22" fill="#e74c3c" opacity="0.15" stroke="#e74c3c" stroke-width="1.5"/>
+  <text x="170" y="215" text-anchor="middle" font-family="monospace" font-size="16" font-weight="bold" fill="#c0392b">2</text>
+
+  <circle cx="250" cy="210" r="22" fill="#e74c3c" opacity="0.15" stroke="#e74c3c" stroke-width="1.5"/>
+  <text x="250" y="215" text-anchor="middle" font-family="monospace" font-size="16" font-weight="bold" fill="#c0392b">3</text>
+
+  <circle cx="170" cy="270" r="22" fill="#e74c3c" opacity="0.15" stroke="#e74c3c" stroke-width="1.5"/>
+  <text x="170" y="275" text-anchor="middle" font-family="monospace" font-size="16" font-weight="bold" fill="#c0392b">5</text>
+
+  <circle cx="250" cy="270" r="22" fill="#e74c3c" opacity="0.15" stroke="#e74c3c" stroke-width="1.5"/>
+  <text x="250" y="275" text-anchor="middle" font-family="monospace" font-size="16" font-weight="bold" fill="#c0392b">7</text>
+
+  <circle cx="210" cy="330" r="22" fill="#e74c3c" opacity="0.15" stroke="#e74c3c" stroke-width="1.5"/>
+  <text x="210" y="335" text-anchor="middle" font-family="monospace" font-size="16" font-weight="bold" fill="#c0392b">11</text>
+
+  <!-- Big red X over primes -->
+  <text x="210" y="400" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#c0392b">
+    ✗ Original theorem FALSE here
+  </text>
+
+  <!-- Composite region (right) -->
+  <ellipse cx="560" cy="260" rx="160" ry="140" fill="url(#compositeGrad)" stroke="#27ae60" stroke-width="2.5"/>
+  <text x="560" y="135" text-anchor="middle" font-family="Georgia, serif" font-size="16" font-weight="bold" fill="#1e8449">Composites</text>
+  <text x="560" y="153" text-anchor="middle" font-family="monospace" font-size="11" fill="#27ae60">∃ a,b > 1: a×b = n ✓</text>
+
+  <!-- Composite examples with factorizations -->
+  <circle cx="490" cy="210" r="22" fill="#2ecc71" opacity="0.15" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="490" y="208" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#1e8449">4</text>
+  <text x="490" y="222" text-anchor="middle" font-family="monospace" font-size="9" fill="#27ae60">2×2</text>
+
+  <circle cx="560" cy="210" r="22" fill="#2ecc71" opacity="0.15" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="560" y="208" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#1e8449">6</text>
+  <text x="560" y="222" text-anchor="middle" font-family="monospace" font-size="9" fill="#27ae60">2×3</text>
+
+  <circle cx="630" cy="210" r="22" fill="#2ecc71" opacity="0.15" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="630" y="208" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#1e8449">8</text>
+  <text x="630" y="222" text-anchor="middle" font-family="monospace" font-size="9" fill="#27ae60">2×4</text>
+
+  <circle cx="490" cy="280" r="22" fill="#2ecc71" opacity="0.15" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="490" y="278" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#1e8449">9</text>
+  <text x="490" y="292" text-anchor="middle" font-family="monospace" font-size="9" fill="#27ae60">3×3</text>
+
+  <circle cx="560" cy="280" r="22" fill="#2ecc71" opacity="0.15" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="560" y="278" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#1e8449">10</text>
+  <text x="560" y="292" text-anchor="middle" font-family="monospace" font-size="9" fill="#27ae60">2×5</text>
+
+  <circle cx="630" cy="280" r="22" fill="#2ecc71" opacity="0.15" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="630" y="278" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#1e8449">12</text>
+  <text x="630" y="292" text-anchor="middle" font-family="monospace" font-size="9" fill="#27ae60">2×6</text>
+
+  <circle cx="560" cy="350" r="22" fill="#2ecc71" opacity="0.15" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="560" y="348" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#1e8449">15</text>
+  <text x="560" y="362" text-anchor="middle" font-family="monospace" font-size="9" fill="#27ae60">3×5</text>
+
+  <text x="560" y="400" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#1e8449">
+    ✓ Corrected theorem TRUE here
+  </text>
+
+  <!-- Arrow showing the oracle -->
+  <path d="M 400 260 L 440 260" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)" fill="none"/>
+  <text x="420" y="250" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#555">Oracle</text>
+
+  <!-- The proof method box -->
+  <rect x="100" y="445" width="600" height="60" rx="8" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="1.5"/>
+  <text x="400" y="466" text-anchor="middle" font-family="monospace" font-size="12" fill="#2c3e50">
+    Proof: Nat.exists_dvd_of_not_prime2 → ∃ k, k ∣ n ∧ 1 &lt; k &lt; n
+  </text>
+  <text x="400" y="486" text-anchor="middle" font-family="monospace" font-size="12" fill="#2c3e50">
+    Then: a = k, b = n/k, verify a*b = n ∧ a > 1 ∧ b > 1
+  </text>
+
+  <!-- Caption -->
+  <text x="400" y="535" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#7f8c8d" font-style="italic">
+    Figure: The factoring oracle partitions ℕ_{>1} into primes (unfactorable) and composites (factorable).
+  </text>
+</svg>

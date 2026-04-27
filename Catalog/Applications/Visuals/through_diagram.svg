@@ -1,135 +1,155 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
   <defs>
+    <!-- Gradient for hierarchy levels -->
+    <linearGradient id="level0" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#4CAF50;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#81C784;stop-opacity:0.8"/>
+    </linearGradient>
+    <linearGradient id="level1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#2196F3;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#64B5F6;stop-opacity:0.8"/>
+    </linearGradient>
+    <linearGradient id="level2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#9C27B0;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#CE93D8;stop-opacity:0.8"/>
+    </linearGradient>
+    <linearGradient id="level3" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FF5722;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#FF8A65;stop-opacity:0.8"/>
+    </linearGradient>
+    <linearGradient id="levelN" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#607D8B;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#90A4AE;stop-opacity:0.8"/>
+    </linearGradient>
+    <!-- Arrow marker -->
     <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
       <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
     </marker>
     <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1565C0"/>
     </marker>
-    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#dc2626"/>
-    </marker>
-    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#16a34a"/>
-    </marker>
-    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#f8fafc;stop-opacity:1"/>
-      <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1"/>
-    </linearGradient>
-    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
-      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.15"/>
-    </filter>
   </defs>
 
   <!-- Background -->
-  <rect width="800" height="600" fill="url(#bgGrad)" rx="8"/>
+  <rect width="800" height="600" fill="#FAFAFA" rx="10"/>
 
   <!-- Title -->
-  <text x="400" y="35" text-anchor="middle" font-family="Georgia, serif" font-size="18" font-weight="bold" fill="#1e293b">
-    Noncommutative Embedded Obstruction Algorithm
+  <text x="400" y="35" text-anchor="middle" font-family="Georgia, serif" font-size="20" font-weight="bold" fill="#212121">
+    OISCC Temporal Hierarchy
   </text>
-  <text x="400" y="55" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#64748b">
-    Universal Property via Yoneda Embedding
+  <text x="400" y="55" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#666">
+    Oracle Levels ↔ Closed Timelike Curve Complexity Classes
   </text>
 
-  <!-- ═══ LEFT: Entropy Algebra E(X) ═══ -->
-  <rect x="40" y="80" width="200" height="180" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2" filter="url(#shadow)"/>
-  <text x="140" y="105" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#2563eb">E(X)</text>
-  <text x="140" y="125" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#475569">Entropy Algebra</text>
+  <!-- ═══ LEFT SIDE: Nested Oracle Hierarchy ═══ -->
+  <text x="200" y="85" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#333">
+    Oracle Hierarchy (⊂-chain)
+  </text>
 
-  <!-- Operations -->
-  <text x="60" y="155" font-family="monospace" font-size="12" fill="#1e40af">⊕ : commutative</text>
-  <text x="60" y="175" font-family="monospace" font-size="12" fill="#1e40af">⊗ : noncommutative</text>
+  <!-- Level 0 (innermost) -->
+  <rect x="145" y="380" width="110" height="40" rx="8" fill="url(#level0)" stroke="#388E3C" stroke-width="2"/>
+  <text x="200" y="405" text-anchor="middle" font-family="monospace" font-size="13" fill="white" font-weight="bold">CTC(0)</text>
 
-  <!-- Obstruction indicator -->
-  <rect x="60" y="195" width="160" height="50" rx="6" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
-  <text x="140" y="215" text-anchor="middle" font-family="monospace" font-size="11" fill="#dc2626">Obs = f⊗g − g⊗f</text>
-  <text x="140" y="233" text-anchor="middle" font-family="monospace" font-size="10" fill="#dc2626">∈ H²(Trop(X), E)</text>
+  <!-- Level 1 -->
+  <rect x="115" y="310" width="170" height="40" rx="8" fill="url(#level1)" stroke="#1565C0" stroke-width="2"/>
+  <text x="200" y="335" text-anchor="middle" font-family="monospace" font-size="13" fill="white" font-weight="bold">CTC(1)</text>
 
-  <!-- ═══ CENTER: Tropical Site Trop(X) ═══ -->
-  <rect x="300" y="80" width="200" height="180" rx="12" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" filter="url(#shadow)"/>
-  <text x="400" y="105" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#16a34a">Trop(X)</text>
-  <text x="400" y="125" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#475569">Tropical Site</text>
+  <!-- Level 2 -->
+  <rect x="85" y="240" width="230" height="40" rx="8" fill="url(#level2)" stroke="#7B1FA2" stroke-width="2"/>
+  <text x="200" y="265" text-anchor="middle" font-family="monospace" font-size="13" fill="white" font-weight="bold">CTC(2)</text>
 
-  <!-- Tropical lattice points -->
-  <circle cx="340" cy="170" r="6" fill="#22c55e" opacity="0.7"/>
-  <circle cx="370" cy="150" r="6" fill="#22c55e" opacity="0.7"/>
-  <circle cx="400" cy="190" r="6" fill="#22c55e" opacity="0.7"/>
-  <circle cx="430" cy="160" r="6" fill="#22c55e" opacity="0.7"/>
-  <circle cx="460" cy="180" r="6" fill="#22c55e" opacity="0.7"/>
-  <!-- Piecewise-linear connections -->
-  <line x1="340" y1="170" x2="370" y2="150" stroke="#16a34a" stroke-width="1" opacity="0.5"/>
-  <line x1="370" y1="150" x2="430" y2="160" stroke="#16a34a" stroke-width="1" opacity="0.5"/>
-  <line x1="430" y1="160" x2="460" y2="180" stroke="#16a34a" stroke-width="1" opacity="0.5"/>
-  <line x1="340" y1="170" x2="400" y2="190" stroke="#16a34a" stroke-width="1" opacity="0.5"/>
-  <line x1="400" y1="190" x2="460" y2="180" stroke="#16a34a" stroke-width="1" opacity="0.5"/>
+  <!-- Level 3 -->
+  <rect x="55" y="170" width="290" height="40" rx="8" fill="url(#level3)" stroke="#D84315" stroke-width="2"/>
+  <text x="200" y="195" text-anchor="middle" font-family="monospace" font-size="13" fill="white" font-weight="bold">CTC(3)</text>
 
-  <text x="400" y="230" text-anchor="middle" font-family="monospace" font-size="10" fill="#15803d">max-plus semiring</text>
-  <text x="400" y="248" text-anchor="middle" font-family="monospace" font-size="10" fill="#15803d">(ℝ∪{−∞}, max, +)</text>
+  <!-- Level n (outermost) -->
+  <rect x="25" y="100" width="350" height="40" rx="8" fill="url(#levelN)" stroke="#37474F" stroke-width="2"/>
+  <text x="200" y="125" text-anchor="middle" font-family="monospace" font-size="13" fill="white" font-weight="bold">CTC(n) ⊇ ··· ⊇ CTC(0)</text>
 
-  <!-- ═══ RIGHT: Sheaf Category Sh(Trop(X)) ═══ -->
-  <rect x="560" y="80" width="200" height="180" rx="12" fill="#faf5ff" stroke="#9333ea" stroke-width="2" filter="url(#shadow)"/>
-  <text x="660" y="105" text-anchor="middle" font-family="monospace" font-size="13" font-weight="bold" fill="#9333ea">Sh(Trop(X))</text>
-  <text x="660" y="125" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#475569">Sheaf Category</text>
+  <!-- Containment arrows (left side) -->
+  <line x1="200" y1="140" x2="200" y2="168" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <line x1="200" y1="210" x2="200" y2="238" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <line x1="200" y1="280" x2="200" y2="308" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+  <line x1="200" y1="350" x2="200" y2="378" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
 
-  <!-- Sheaf diagram -->
-  <ellipse cx="630" cy="175" rx="30" ry="20" fill="none" stroke="#9333ea" stroke-width="1.5" opacity="0.6"/>
-  <ellipse cx="690" cy="175" rx="30" ry="20" fill="none" stroke="#9333ea" stroke-width="1.5" opacity="0.6"/>
-  <ellipse cx="660" cy="210" rx="30" ry="20" fill="none" stroke="#9333ea" stroke-width="1.5" opacity="0.6"/>
-  <text x="660" y="248" text-anchor="middle" font-family="monospace" font-size="10" fill="#7e22ce">cohomology target</text>
+  <!-- ⊊ labels -->
+  <text x="215" y="158" font-family="monospace" font-size="11" fill="#555">⊊</text>
+  <text x="215" y="228" font-family="monospace" font-size="11" fill="#555">⊊</text>
+  <text x="215" y="298" font-family="monospace" font-size="11" fill="#555">⊊</text>
+  <text x="215" y="368" font-family="monospace" font-size="11" fill="#555">⊊</text>
 
-  <!-- ═══ ARROWS ═══ -->
+  <!-- ═══ RIGHT SIDE: Fixed-Point Structure ═══ -->
+  <text x="590" y="85" text-anchor="middle" font-family="monospace" font-size="14" font-weight="bold" fill="#333">
+    Fixed-Point Nesting
+  </text>
 
-  <!-- E(X) → Trop(X): tropicalization -->
-  <line x1="245" y1="155" x2="295" y2="155" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
-  <text x="270" y="145" text-anchor="middle" font-family="Georgia, serif" font-size="10" fill="#333" font-style="italic">trop</text>
+  <!-- Level 0: No loop -->
+  <rect x="510" y="380" width="160" height="40" rx="8" fill="#E8F5E9" stroke="#4CAF50" stroke-width="2"/>
+  <text x="590" y="400" text-anchor="middle" font-family="monospace" font-size="11" fill="#2E7D32">f(x) = x</text>
+  <text x="590" y="415" text-anchor="middle" font-family="monospace" font-size="9" fill="#666">no temporal loop</text>
 
-  <!-- Trop(X) → Sh(Trop(X)): Yoneda -->
-  <line x1="505" y1="155" x2="555" y2="155" stroke="#9333ea" stroke-width="2.5" marker-end="url(#arrowGreen)"/>
-  <text x="530" y="143" text-anchor="middle" font-family="monospace" font-size="11" font-weight="bold" fill="#9333ea">Y</text>
-  <text x="530" y="172" text-anchor="middle" font-family="Georgia, serif" font-size="9" fill="#7e22ce">Yoneda</text>
+  <!-- Level 1: One fixed point -->
+  <rect x="510" y="310" width="160" height="40" rx="8" fill="#E3F2FD" stroke="#2196F3" stroke-width="2"/>
+  <text x="590" y="330" text-anchor="middle" font-family="monospace" font-size="11" fill="#1565C0">Fix(f)</text>
+  <text x="590" y="345" text-anchor="middle" font-family="monospace" font-size="9" fill="#666">1 self-consistency</text>
 
-  <!-- ═══ BOTTOM: Universal Property Diagram ═══ -->
-  <rect x="120" y="310" width="560" height="220" rx="12" fill="white" stroke="#94a3b8" stroke-width="1.5" filter="url(#shadow)"/>
-  <text x="400" y="340" text-anchor="middle" font-family="Georgia, serif" font-size="14" font-weight="bold" fill="#1e293b">Universal Property (Base Case)</text>
+  <!-- Level 2: Nested fixed point -->
+  <rect x="510" y="240" width="160" height="40" rx="8" fill="#F3E5F5" stroke="#9C27B0" stroke-width="2"/>
+  <text x="590" y="260" text-anchor="middle" font-family="monospace" font-size="11" fill="#6A1B9A">Fix(Fix(f,·))</text>
+  <text x="590" y="275" text-anchor="middle" font-family="monospace" font-size="9" fill="#666">2 nested CTCs</text>
 
-  <!-- The commutative diagram -->
-  <!-- Node: X (Inhabited) -->
-  <rect x="170" y="370" width="120" height="45" rx="8" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
-  <text x="230" y="390" text-anchor="middle" font-family="monospace" font-size="13" font-weight="bold" fill="#2563eb">X</text>
-  <text x="230" y="407" text-anchor="middle" font-family="monospace" font-size="9" fill="#3b82f6">[Inhabited X]</text>
+  <!-- Level 3: Triple nested -->
+  <rect x="510" y="170" width="160" height="40" rx="8" fill="#FBE9E7" stroke="#FF5722" stroke-width="2"/>
+  <text x="590" y="190" text-anchor="middle" font-family="monospace" font-size="11" fill="#BF360C">Fix³(f)</text>
+  <text x="590" y="205" text-anchor="middle" font-family="monospace" font-size="9" fill="#666">3 nested CTCs</text>
 
-  <!-- Node: E₀(X) = 0 -->
-  <rect x="510" y="370" width="120" height="45" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
-  <text x="570" y="390" text-anchor="middle" font-family="monospace" font-size="13" font-weight="bold" fill="#16a34a">E₀(X) = 0</text>
-  <text x="570" y="407" text-anchor="middle" font-family="monospace" font-size="9" fill="#22c55e">trivial algebra</text>
+  <!-- Level n -->
+  <rect x="510" y="100" width="160" height="40" rx="8" fill="#ECEFF1" stroke="#607D8B" stroke-width="2"/>
+  <text x="590" y="120" text-anchor="middle" font-family="monospace" font-size="11" fill="#37474F">Fixⁿ(f)</text>
+  <text x="590" y="135" text-anchor="middle" font-family="monospace" font-size="9" fill="#666">n nested CTCs</text>
 
-  <!-- Node: True -->
-  <rect x="340" y="460" width="120" height="45" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
-  <text x="400" y="485" text-anchor="middle" font-family="monospace" font-size="16" font-weight="bold" fill="#d97706">True</text>
+  <!-- Correspondence arrows (center) -->
+  <line x1="375" y1="120" x2="508" y2="120" stroke="#1565C0" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowBlue)"/>
+  <line x1="345" y1="190" x2="508" y2="190" stroke="#1565C0" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowBlue)"/>
+  <line x1="315" y1="260" x2="508" y2="260" stroke="#1565C0" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowBlue)"/>
+  <line x1="285" y1="330" x2="508" y2="330" stroke="#1565C0" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowBlue)"/>
+  <line x1="255" y1="400" x2="508" y2="400" stroke="#1565C0" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowBlue)"/>
 
-  <!-- Arrow: X → E₀ -->
-  <line x1="293" y1="392" x2="505" y2="392" stroke="#333" stroke-width="1.5" marker-end="url(#arrowhead)"/>
-  <text x="400" y="383" text-anchor="middle" font-family="Georgia, serif" font-size="10" fill="#475569">trivial entropy</text>
+  <!-- Correspondence label -->
+  <text x="420" y="460" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#1565C0" font-style="italic">
+    bijection: oracle level ↔ fixed-point depth
+  </text>
 
-  <!-- Arrow: X → True -->
-  <line x1="250" y1="418" x2="355" y2="458" stroke="#2563eb" stroke-width="1.5" marker-end="url(#arrowBlue)" stroke-dasharray="5,3"/>
-  <text x="280" y="450" text-anchor="middle" font-family="Georgia, serif" font-size="10" fill="#2563eb">∃ x₀</text>
+  <!-- ═══ BOTTOM: Key Properties ═══ -->
+  <rect x="30" y="480" width="740" height="80" rx="8" fill="#FFF8E1" stroke="#FFA000" stroke-width="1.5"/>
 
-  <!-- Arrow: E₀ → True -->
-  <line x1="550" y1="418" x2="445" y2="458" stroke="#16a34a" stroke-width="1.5" marker-end="url(#arrowGreen)" stroke-dasharray="5,3"/>
-  <text x="520" y="450" text-anchor="middle" font-family="Georgia, serif" font-size="10" fill="#16a34a">Obs = 0</text>
+  <text x="400" y="500" text-anchor="middle" font-family="Georgia, serif" font-size="13" font-weight="bold" fill="#E65100">
+    Key Properties of the Temporal Hierarchy
+  </text>
 
-  <!-- QED symbol -->
-  <rect x="610" y="480" width="20" height="20" fill="#1e293b"/>
-  <text x="650" y="496" font-family="Georgia, serif" font-size="12" fill="#1e293b" font-style="italic">Q.E.D.</text>
+  <text x="160" y="522" text-anchor="middle" font-family="monospace" font-size="11" fill="#333">
+    Well-founded (ℕ-indexed)
+  </text>
+  <text x="400" y="522" text-anchor="middle" font-family="monospace" font-size="11" fill="#333">
+    Strictly separated
+  </text>
+  <text x="640" y="522" text-anchor="middle" font-family="monospace" font-size="11" fill="#333">
+    Fixed points exist (Inhabited X)
+  </text>
+
+  <text x="160" y="545" text-anchor="middle" font-family="monospace" font-size="9" fill="#888">
+    No infinite descent
+  </text>
+  <text x="400" y="545" text-anchor="middle" font-family="monospace" font-size="9" fill="#888">
+    CTC(n) ⊊ CTC(n+1) ∀n
+  </text>
+  <text x="640" y="545" text-anchor="middle" font-family="monospace" font-size="9" fill="#888">
+    Knaster–Tarski guarantee
+  </text>
 
   <!-- Caption -->
-  <text x="400" y="570" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#64748b">
-    Figure 1: The noncommutative obstruction vanishes for the trivial entropy algebra on any inhabited type,
-  </text>
-  <text x="400" y="587" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#64748b">
-    yielding the base case of the universal property via the Yoneda embedding.
+  <text x="400" y="590" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#999" font-style="italic">
+    Fig. 1: The OISCC temporal hierarchy. Left: nested complexity classes. Right: corresponding fixed-point depths.
   </text>
 </svg>

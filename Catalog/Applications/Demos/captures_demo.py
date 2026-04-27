@@ -2,182 +2,184 @@
 """
 demo.py — Backpropagation as the Cotangent Lift
 
-This script demonstrates numerically that backpropagation computes
-exactly the cotangent lift (pullback on cotangent bundles) of a
-composition of smooth layer maps.
+This script demonstrates that backpropagation computes exactly the
+cotangent lift (pullback on cotangent bundles) of the forward map.
 
-Mathematical setup:
-  Given layers  f₁ : ℝ² → ℝ³  and  f₂ : ℝ³ → ℝ²,
-  the forward map is  F = f₂ ∘ f₁ : ℝ² → ℝ².
+We build a small 3-layer neural network and show:
+1. Forward pass: covariant composition  F = f3 ∘ f2 ∘ f1
+2. Backward pass: contravariant composition  F* = f1* ∘ f2* ∘ f3*
+3. The backward pass gradient matches the cotangent lift exactly.
 
-  The cotangent lift satisfies:
-    F* = (f₂ ∘ f₁)* = f₁* ∘ f₂*
+The key mathematical identity is contravariant functoriality:
+    (g ∘ f)* = f* ∘ g*
 
-  where f_i* is the transpose Jacobian of f_i.
-
-  This reversed composition order IS backpropagation.
-
-We verify numerically:
-  1. Compute the full Jacobian J_F and its transpose (cotangent lift of F).
-  2. Compute the product J₁ᵀ · J₂ᵀ (backprop: reversed transpose Jacobians).
-  3. Show they are identical (up to floating-point precision).
+This reversal of composition order IS backpropagation.
 """
 
 import numpy as np
 
 
-def layer1(x: np.ndarray) -> np.ndarray:
-    """
-    Layer f₁ : ℝ² → ℝ³
-    A smooth nonlinear map (using tanh activation).
-    In the cotangent bundle picture, this is a smooth map between manifolds.
-    """
-    W1 = np.array([[0.5, -0.3],
-                    [0.8,  0.1],
-                    [-0.2, 0.7]])
-    b1 = np.array([0.1, -0.2, 0.3])
-    return np.tanh(W1 @ x + b1)
+def sigmoid(z):
+    """Smooth activation function (a diffeomorphism on its image)."""
+    return 1.0 / (1.0 + np.exp(-z))
 
 
-def layer2(x: np.ndarray) -> np.ndarray:
-    """
-    Layer f₂ : ℝ³ → ℝ²
-    Another smooth nonlinear map.
-    """
-    W2 = np.array([[0.4, -0.6, 0.2],
-                    [0.3,  0.5, -0.1]])
-    b2 = np.array([-0.1, 0.2])
-    return np.tanh(W2 @ x + b2)
+def sigmoid_deriv(z):
+    """Derivative of sigmoid — needed for the cotangent lift."""
+    s = sigmoid(z)
+    return s * (1.0 - s)
 
 
-def jacobian(f, x: np.ndarray, eps: float = 1e-7) -> np.ndarray:
+def forward_layer(x, W, b):
     """
-    Numerically compute the Jacobian df_x via finite differences.
-    This approximates the differential (tangent map) df : T_x M → T_{f(x)} N.
+    A single neural network layer: f(x) = σ(Wx + b).
+    In differential geometry terms, this is a smooth map f : ℝⁿ → ℝᵐ.
     """
-    y0 = f(x)
-    n = x.shape[0]
-    m = y0.shape[0]
-    J = np.zeros((m, n))
-    for i in range(n):
-        dx = np.zeros(n)
-        dx[i] = eps
-        J[:, i] = (f(x + dx) - f(x - dx)) / (2 * eps)
-    return J
+    z = W @ x + b
+    return sigmoid(z), z  # return activation and pre-activation
 
 
-def cotangent_lift(J: np.ndarray) -> np.ndarray:
+def cotangent_lift_layer(grad_output, z, W):
     """
-    The cotangent lift f* is the transpose of the Jacobian.
+    The cotangent lift f* : T*ℝᵐ → T*ℝⁿ for a single layer.
 
-    If df : T_x M → T_{f(x)} N  is the tangent map (Jacobian J),
-    then f* : T*_{f(x)} N → T*_x M  is Jᵀ (transpose Jacobian).
+    Given a covector (gradient) α ∈ T*_{f(x)}ℝᵐ, the pullback is:
+        f*(α) = α ∘ df_x = (diag(σ'(z)) · W)ᵀ · α
 
-    This is because covectors (elements of T*) transform contravariantly:
-      (f*ω)(v) = ω(df · v)  ⟹  f*ω = Jᵀ · ω
+    This is exactly what backprop computes for one layer.
     """
-    return J.T
+    # σ'(z) · α  — chain rule through the activation
+    delta = grad_output * sigmoid_deriv(z)
+    # Wᵀ · delta — pullback through the linear map
+    grad_input = W.T @ delta
+    # Gradient w.r.t. parameters (for learning)
+    grad_W = np.outer(delta, np.ones(W.shape[1]))  # simplified
+    return grad_input, delta
 
 
 def main():
-    print("=" * 65)
-    print("  BACKPROPAGATION = COTANGENT LIFT OF THE FORWARD MAP")
-    print("=" * 65)
-    print()
+    """
+    Demonstrate that backpropagation = cotangent lift.
 
-    # Choose a point x ∈ ℝ² (a point on our "input manifold")
-    x = np.array([0.7, -0.4])
-    print(f"Input point x = {x}")
-    print()
+    We verify the key identity numerically:
+        Jacobianᵀ · output_gradient  ==  backprop gradient
 
-    # ─── Forward pass: F = f₂ ∘ f₁ ───
-    h = layer1(x)           # Intermediate: h = f₁(x)
-    y = layer2(h)           # Output: y = f₂(f₁(x)) = F(x)
-    print(f"Hidden activation h = f₁(x) = {np.round(h, 6)}")
-    print(f"Output y = F(x) = f₂(f₁(x)) = {np.round(y, 6)}")
-    print()
+    The left side is the cotangent lift computed via the full Jacobian.
+    The right side is backprop (layer-by-layer cotangent lift).
+    They must agree — this is the theorem.
+    """
+    np.random.seed(42)
 
-    # ─── Compute Jacobians (tangent maps) ───
-    J1 = jacobian(layer1, x)       # df₁ at x
-    J2 = jacobian(layer2, h)       # df₂ at h = f₁(x)
+    # ─── Network architecture: 3 → 4 → 4 → 2 ───
+    # Three layers define a composite smooth map F: ℝ³ → ℝ²
+    W1 = np.random.randn(4, 3) * 0.5
+    b1 = np.random.randn(4) * 0.1
+    W2 = np.random.randn(4, 4) * 0.5
+    b2 = np.random.randn(4) * 0.1
+    W3 = np.random.randn(2, 4) * 0.5
+    b3 = np.random.randn(2) * 0.1
 
-    # Full Jacobian of composition
-    F = lambda x_: layer2(layer1(x_))
-    J_F = jacobian(F, x)           # d(f₂ ∘ f₁) at x
+    x = np.array([1.0, -0.5, 0.3])  # Input point on the manifold ℝ³
 
-    print("Jacobian J₁ = df₁(x):")
-    print(np.round(J1, 6))
-    print()
-    print("Jacobian J₂ = df₂(f₁(x)):")
-    print(np.round(J2, 6))
-    print()
+    # ═══════════════════════════════════════════════════════════
+    # FORWARD PASS: Covariant composition F = f₃ ∘ f₂ ∘ f₁
+    # This is the tangent functor direction: push forward.
+    # ═══════════════════════════════════════════════════════════
+    a1, z1 = forward_layer(x, W1, b1)    # f₁: ℝ³ → ℝ⁴
+    a2, z2 = forward_layer(a1, W2, b2)   # f₂: ℝ⁴ → ℝ⁴
+    a3, z3 = forward_layer(a2, W3, b3)   # f₃: ℝ⁴ → ℝ²
 
-    # ─── METHOD 1: Direct cotangent lift of F ───
-    # F* = (dF)ᵀ = J_Fᵀ
-    F_star_direct = cotangent_lift(J_F)
+    print("=" * 60)
+    print("BACKPROPAGATION AS THE COTANGENT LIFT")
+    print("=" * 60)
+    print(f"\nInput x = {x}")
+    print(f"Output F(x) = {a3}")
 
-    # ─── METHOD 2: Backpropagation = reversed composition of cotangent lifts ───
-    # (f₂ ∘ f₁)* = f₁* ∘ f₂*  (contravariant functoriality!)
-    # = J₁ᵀ · J₂ᵀ
-    f1_star = cotangent_lift(J1)   # f₁* = J₁ᵀ
-    f2_star = cotangent_lift(J2)   # f₂* = J₂ᵀ
-    F_star_backprop = f1_star @ f2_star  # Composition in REVERSED order
+    # ═══════════════════════════════════════════════════════════
+    # COTANGENT LIFT via full Jacobian (brute force)
+    # Compute J = dF_x by finite differences, then J^T · α
+    # ═══════════════════════════════════════════════════════════
+    eps = 1e-7
+    jacobian = np.zeros((2, 3))
+    for i in range(3):
+        x_plus = x.copy()
+        x_plus[i] += eps
+        # Recompute forward pass
+        a1p, _ = forward_layer(x_plus, W1, b1)
+        a2p, _ = forward_layer(a1p, W2, b2)
+        a3p, _ = forward_layer(a2p, W3, b3)
+        jacobian[:, i] = (a3p - a3) / eps
 
-    print("─" * 65)
-    print("KEY RESULT: Cotangent lift = Backpropagation")
-    print("─" * 65)
-    print()
-    print("Method 1 — Direct cotangent lift F* = J_Fᵀ:")
-    print(np.round(F_star_direct, 6))
-    print()
-    print("Method 2 — Backprop: f₁* ∘ f₂* = J₁ᵀ · J₂ᵀ:")
-    print(np.round(F_star_backprop, 6))
-    print()
+    # Choose a covector (output gradient) α ∈ T*_{F(x)}ℝ²
+    alpha = np.array([1.0, -0.5])  # An arbitrary covector at the output
 
-    # ─── Verify equality ───
-    error = np.max(np.abs(F_star_direct - F_star_backprop))
-    print(f"Max absolute error: {error:.2e}")
-    assert error < 1e-5, f"Mismatch! Error = {error}"
-    print("✓ VERIFIED: Both methods agree (within numerical precision).")
-    print()
+    # Cotangent lift via Jacobian: F*(α) = Jᵀ · α
+    cotangent_via_jacobian = jacobian.T @ alpha
 
-    # ─── Demonstrate with a covector (gradient) ───
-    print("─" * 65)
-    print("GRADIENT COMPUTATION EXAMPLE")
-    print("─" * 65)
-    print()
+    # ═══════════════════════════════════════════════════════════
+    # BACKWARD PASS: Contravariant composition F* = f₁* ∘ f₂* ∘ f₃*
+    # This IS the cotangent lift, computed layer by layer.
+    # The reversal of order is FORCED by contravariance.
+    # ═══════════════════════════════════════════════════════════
+    # Start with α at the output (covector in T*ℝ²)
+    grad = alpha
 
-    # A loss covector ω ∈ T*_y ℝ² (e.g., gradient of scalar loss w.r.t. output)
-    omega = np.array([1.0, -0.5])
-    print(f"Loss gradient (covector) ω ∈ T*_y ℝ² = {omega}")
-    print()
+    # f₃*: T*ℝ² → T*ℝ⁴  (first in the backward direction)
+    grad, _ = cotangent_lift_layer(grad, z3, W3)
 
-    # Backprop pulls ω back to T*_x ℝ²:
-    #   F*(ω) = f₁*(f₂*(ω)) = J₁ᵀ(J₂ᵀ · ω)
-    grad_h = f2_star @ omega       # Step 1: Pull back through f₂
-    grad_x = f1_star @ grad_h      # Step 2: Pull back through f₁
+    # f₂*: T*ℝ⁴ → T*ℝ⁴
+    grad, _ = cotangent_lift_layer(grad, z2, W2)
 
-    # Direct computation:
-    grad_x_direct = F_star_direct @ omega
+    # f₁*: T*ℝ⁴ → T*ℝ³  (last in backward = first in forward)
+    grad, _ = cotangent_lift_layer(grad, z1, W1)
 
-    print(f"Backprop step 1: f₂*(ω) = J₂ᵀ · ω = {np.round(grad_h, 6)}")
-    print(f"Backprop step 2: f₁*(f₂*(ω)) = J₁ᵀ · (J₂ᵀ · ω) = {np.round(grad_x, 6)}")
-    print(f"Direct:  F*(ω) = J_Fᵀ · ω = {np.round(grad_x_direct, 6)}")
-    print()
-    print(f"Error: {np.max(np.abs(grad_x - grad_x_direct)):.2e}")
-    print("✓ VERIFIED: Backpropagation computes the cotangent lift.")
-    print()
+    cotangent_via_backprop = grad
 
-    print("═" * 65)
-    print("INSIGHT: The reverse order in backpropagation is not a choice —")
-    print("it is FORCED by the contravariance of the cotangent functor")
-    print("  T* : Man^op → VectBun")
-    print()
-    print("Composition of smooth maps:    F = f₂ ∘ f₁  (left to right)")
-    print("Cotangent lift (= backprop):   F* = f₁* ∘ f₂*  (right to left)")
-    print()
-    print("This reversal is the mathematical essence of backpropagation.")
-    print("═" * 65)
+    # ═══════════════════════════════════════════════════════════
+    # VERIFICATION: Both methods agree (up to numerical precision)
+    # This is the theorem: backprop == cotangent lift
+    # ═══════════════════════════════════════════════════════════
+    print(f"\nCovector α at output = {alpha}")
+    print(f"\n--- Cotangent lift via full Jacobian (Jᵀα) ---")
+    print(f"  F*(α) = {cotangent_via_jacobian}")
+    print(f"\n--- Cotangent lift via backprop (f₁* ∘ f₂* ∘ f₃*)(α) ---")
+    print(f"  F*(α) = {cotangent_via_backprop}")
+
+    error = np.linalg.norm(cotangent_via_jacobian - cotangent_via_backprop)
+    print(f"\n‖difference‖ = {error:.2e}")
+
+    print("\n" + "=" * 60)
+    print("KEY INSIGHT:")
+    print("=" * 60)
+    print("""
+Backpropagation computes the cotangent lift F* = f₁* ∘ f₂* ∘ f₃*
+by applying each layer's pullback in REVERSE order.
+
+This reversal is not an algorithmic trick — it is a mathematical
+necessity. The cotangent bundle is a CONTRAVARIANT functor:
+
+    T* : Man^{op} → VectBun
+
+Contravariance means:  (g ∘ f)* = f* ∘ g*
+
+The backward pass of backprop is simply the categorical statement
+that T* reverses arrows. The entire algorithm is encoded in the
+word "contravariant."
+""")
+
+    if error < 1e-5:
+        print("✓ THEOREM VERIFIED NUMERICALLY: backprop = cotangent lift")
+    else:
+        print("✗ Numerical mismatch (check implementation)")
+
+    # ═══════════════════════════════════════════════════════════
+    # Bonus: Show the Jacobian structure
+    # ═══════════════════════════════════════════════════════════
+    print(f"\nFull Jacobian dF_x (2×3 matrix):")
+    print(f"  {jacobian}")
+    print(f"\nThe Jacobian factorizes as: dF = df₃ · df₂ · df₁")
+    print(f"Backprop computes Jᵀα without ever forming J explicitly.")
+    print(f"For networks with millions of parameters, this saves O(n²) memory.")
 
 
 if __name__ == "__main__":

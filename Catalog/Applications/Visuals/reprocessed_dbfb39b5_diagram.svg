@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <marker id="arrowhead-blue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowhead-green" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#16a34a"/>
+    </marker>
+    <linearGradient id="fiberGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#dbeafe;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#93c5fd;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="#fafafa" rx="8"/>
+
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-family="Georgia, serif" font-size="20" font-weight="bold" fill="#1e293b">
+    Combinatorial Solvable Fibration Law
+  </text>
+  <text x="400" y="55" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#64748b" font-style="italic">
+    For any inhabited type X, the fibration is universally solvable
+  </text>
+
+  <!-- ===== TOTAL SPACE E (top) ===== -->
+  <rect x="100" y="80" width="600" height="200" rx="12" fill="url(#fiberGrad)" stroke="#2563eb" stroke-width="2"/>
+  <text x="120" y="105" font-family="monospace" font-size="16" font-weight="bold" fill="#1e40af">E (Total Space)</text>
+
+  <!-- Fiber over x₀ -->
+  <rect x="140" y="120" width="100" height="140" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="190" y="140" text-anchor="middle" font-family="monospace" font-size="11" fill="#1d4ed8">Fiber(x₀)</text>
+  <circle cx="170" cy="170" r="8" fill="#f59e0b" stroke="#d97706" stroke-width="2"/>
+  <text x="185" y="174" font-family="monospace" font-size="10" fill="#92400e">★ default</text>
+  <circle cx="175" cy="200" r="6" fill="#e5e7eb" stroke="#9ca3af" stroke-width="1"/>
+  <circle cx="195" cy="225" r="6" fill="#e5e7eb" stroke="#9ca3af" stroke-width="1"/>
+
+  <!-- Fiber over x₁ -->
+  <rect x="280" y="120" width="100" height="140" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="330" y="140" text-anchor="middle" font-family="monospace" font-size="11" fill="#1d4ed8">Fiber(x₁)</text>
+  <circle cx="310" cy="175" r="8" fill="#f59e0b" stroke="#d97706" stroke-width="2"/>
+  <circle cx="340" cy="195" r="6" fill="#e5e7eb" stroke="#9ca3af" stroke-width="1"/>
+  <circle cx="315" cy="225" r="6" fill="#e5e7eb" stroke="#9ca3af" stroke-width="1"/>
+  <circle cx="345" cy="230" r="6" fill="#e5e7eb" stroke="#9ca3af" stroke-width="1"/>
+
+  <!-- Fiber over x₂ -->
+  <rect x="420" y="120" width="100" height="140" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="470" y="140" text-anchor="middle" font-family="monospace" font-size="11" fill="#1d4ed8">Fiber(x₂)</text>
+  <circle cx="455" cy="180" r="8" fill="#f59e0b" stroke="#d97706" stroke-width="2"/>
+  <circle cx="480" cy="210" r="6" fill="#e5e7eb" stroke="#9ca3af" stroke-width="1"/>
+
+  <!-- Fiber over x₃ -->
+  <rect x="560" y="120" width="100" height="140" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="610" y="140" text-anchor="middle" font-family="monospace" font-size="11" fill="#1d4ed8">Fiber(x₃)</text>
+  <circle cx="590" cy="185" r="8" fill="#f59e0b" stroke="#d97706" stroke-width="2"/>
+  <circle cx="615" cy="205" r="6" fill="#e5e7eb" stroke="#9ca3af" stroke-width="1"/>
+  <circle cx="595" cy="235" r="6" fill="#e5e7eb" stroke="#9ca3af" stroke-width="1"/>
+
+  <!-- ===== PROJECTION ARROW p ===== -->
+  <line x1="400" y1="290" x2="400" y2="350" stroke="#333" stroke-width="2.5" marker-end="url(#arrowhead)"/>
+  <text x="415" y="325" font-family="Georgia, serif" font-size="16" font-style="italic" fill="#333">p</text>
+
+  <!-- ===== BASE SPACE X (bottom) ===== -->
+  <rect x="100" y="360" width="600" height="80" rx="12" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+  <text x="120" y="385" font-family="monospace" font-size="16" font-weight="bold" fill="#166534">X (Base — Inhabited)</text>
+
+  <!-- Points in X -->
+  <circle cx="190" cy="415" r="10" fill="#16a34a" stroke="#15803d" stroke-width="2"/>
+  <text x="190" y="419" text-anchor="middle" font-family="monospace" font-size="11" fill="white" font-weight="bold">x₀</text>
+
+  <circle cx="330" cy="415" r="10" fill="#22c55e" stroke="#15803d" stroke-width="2"/>
+  <text x="330" y="419" text-anchor="middle" font-family="monospace" font-size="11" fill="white" font-weight="bold">x₁</text>
+
+  <circle cx="470" cy="415" r="10" fill="#22c55e" stroke="#15803d" stroke-width="2"/>
+  <text x="470" y="419" text-anchor="middle" font-family="monospace" font-size="11" fill="white" font-weight="bold">x₂</text>
+
+  <circle cx="610" cy="415" r="10" fill="#22c55e" stroke="#15803d" stroke-width="2"/>
+  <text x="610" y="419" text-anchor="middle" font-family="monospace" font-size="11" fill="white" font-weight="bold">x₃</text>
+
+  <!-- Default marker on x₀ -->
+  <text x="190" y="448" text-anchor="middle" font-family="monospace" font-size="10" fill="#166534">★ default</text>
+
+  <!-- ===== SECTION s (green dashed, going up) ===== -->
+  <path d="M 190 405 C 190 350, 170 300, 170 178" stroke="#16a34a" stroke-width="2" stroke-dasharray="6,4" fill="none" marker-end="url(#arrowhead-green)"/>
+  <path d="M 330 405 C 330 350, 310 310, 310 183" stroke="#16a34a" stroke-width="2" stroke-dasharray="6,4" fill="none" marker-end="url(#arrowhead-green)"/>
+  <path d="M 470 405 C 470 350, 455 310, 455 188" stroke="#16a34a" stroke-width="2" stroke-dasharray="6,4" fill="none" marker-end="url(#arrowhead-green)"/>
+  <path d="M 610 405 C 610 350, 590 310, 590 193" stroke="#16a34a" stroke-width="2" stroke-dasharray="6,4" fill="none" marker-end="url(#arrowhead-green)"/>
+
+  <text x="85" y="340" font-family="Georgia, serif" font-size="14" font-style="italic" fill="#16a34a" transform="rotate(-90, 85, 340)">section s</text>
+
+  <!-- ===== LEGEND ===== -->
+  <rect x="100" y="470" width="600" height="80" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+
+  <circle cx="130" cy="495" r="8" fill="#f59e0b" stroke="#d97706" stroke-width="2"/>
+  <text x="145" y="499" font-family="sans-serif" font-size="12" fill="#334155">Selected by section (canonical choice)</text>
+
+  <circle cx="130" cy="520" r="6" fill="#e5e7eb" stroke="#9ca3af" stroke-width="1"/>
+  <text x="145" y="524" font-family="sans-serif" font-size="12" fill="#334155">Other fiber elements</text>
+
+  <line x1="430" y1="492" x2="470" y2="492" stroke="#16a34a" stroke-width="2" stroke-dasharray="6,4"/>
+  <text x="478" y="496" font-family="sans-serif" font-size="12" fill="#334155">Global section s : X → E</text>
+
+  <line x1="430" y1="518" x2="470" y2="518" stroke="#333" stroke-width="2.5"/>
+  <text x="478" y="522" font-family="sans-serif" font-size="12" fill="#334155">Projection p : E → X</text>
+
+  <!-- Caption -->
+  <text x="400" y="575" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#475569" font-style="italic">
+    The solvable fibration law: every fibration over an inhabited base admits a global section.
+  </text>
+  <text x="400" y="593" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#94a3b8">
+    The Inhabited hypothesis guarantees X is non-empty, ensuring solvability (p ∘ s = id).
+  </text>
+</svg>

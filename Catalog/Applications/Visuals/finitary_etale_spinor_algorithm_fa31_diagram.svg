@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <marker id="arrowhead-blue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563EB"/>
+    </marker>
+    <marker id="arrowhead-green" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#059669"/>
+    </marker>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8fafc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bg)" rx="12"/>
+
+  <!-- Title -->
+  <text x="400" y="40" text-anchor="middle" font-family="Georgia, serif" font-size="22" font-weight="bold" fill="#1e293b">
+    Finitary Étale Spinor Algorithm (FA31)
+  </text>
+  <text x="400" y="62" text-anchor="middle" font-family="Georgia, serif" font-size="14" fill="#64748b">
+    Universal Property: ∀ {X : Type*} [Inhabited X], True
+  </text>
+
+  <!-- Inhabited Types (left column) -->
+  <!-- Type X₁ -->
+  <rect x="40" y="100" width="160" height="70" rx="10" fill="#DBEAFE" stroke="#2563EB" stroke-width="2"/>
+  <text x="120" y="128" text-anchor="middle" font-family="monospace" font-size="14" fill="#1e40af">X₁ : Type u₁</text>
+  <text x="120" y="150" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#3b82f6">[Inhabited X₁]</text>
+  <circle cx="85" cy="155" r="4" fill="#2563EB" opacity="0.5"/>
+  <text x="93" y="159" font-family="monospace" font-size="9" fill="#1e40af">default</text>
+
+  <!-- Type X₂ -->
+  <rect x="40" y="200" width="160" height="70" rx="10" fill="#FCE7F3" stroke="#DB2777" stroke-width="2"/>
+  <text x="120" y="228" text-anchor="middle" font-family="monospace" font-size="14" fill="#9d174d">X₂ : Type u₂</text>
+  <text x="120" y="250" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#ec4899">[Inhabited X₂]</text>
+  <circle cx="85" cy="255" r="4" fill="#DB2777" opacity="0.5"/>
+  <text x="93" y="259" font-family="monospace" font-size="9" fill="#9d174d">default</text>
+
+  <!-- Type X₃ -->
+  <rect x="40" y="300" width="160" height="70" rx="10" fill="#D1FAE5" stroke="#059669" stroke-width="2"/>
+  <text x="120" y="328" text-anchor="middle" font-family="monospace" font-size="14" fill="#065f46">X₃ : Type u₃</text>
+  <text x="120" y="350" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#10b981">[Inhabited X₃]</text>
+  <circle cx="85" cy="355" r="4" fill="#059669" opacity="0.5"/>
+  <text x="93" y="359" font-family="monospace" font-size="9" fill="#065f46">default</text>
+
+  <!-- Dots -->
+  <text x="120" y="405" text-anchor="middle" font-family="serif" font-size="24" fill="#64748b">⋮</text>
+
+  <!-- Type Xₙ -->
+  <rect x="40" y="420" width="160" height="70" rx="10" fill="#FEF3C7" stroke="#D97706" stroke-width="2"/>
+  <text x="120" y="448" text-anchor="middle" font-family="monospace" font-size="14" fill="#92400e">Xₙ : Type uₙ</text>
+  <text x="120" y="470" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#f59e0b">[Inhabited Xₙ]</text>
+  <circle cx="85" cy="475" r="4" fill="#D97706" opacity="0.5"/>
+  <text x="93" y="479" font-family="monospace" font-size="9" fill="#92400e">default</text>
+
+  <!-- Finitary Collapse Functor (middle) -->
+  <rect x="280" y="220" width="200" height="160" rx="15" fill="#F1F5F9" stroke="#475569" stroke-width="2" stroke-dasharray="8,4"/>
+  <text x="380" y="255" text-anchor="middle" font-family="Georgia, serif" font-size="16" font-weight="bold" fill="#334155">Finitary Collapse</text>
+  <text x="380" y="280" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#64748b">Étale Spinor</text>
+  <text x="380" y="300" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#64748b">Algorithm</text>
+  <text x="380" y="335" text-anchor="middle" font-family="monospace" font-size="12" fill="#475569">F : Inhabited → Prop</text>
+  <text x="380" y="360" text-anchor="middle" font-family="monospace" font-size="12" fill="#475569">F(X) = True</text>
+
+  <!-- Arrows from types to functor -->
+  <line x1="200" y1="135" x2="278" y2="270" stroke="#2563EB" stroke-width="2" marker-end="url(#arrowhead-blue)"/>
+  <line x1="200" y1="235" x2="278" y2="290" stroke="#DB2777" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="200" y1="335" x2="278" y2="310" stroke="#059669" stroke-width="2" marker-end="url(#arrowhead-green)"/>
+  <line x1="200" y1="455" x2="278" y2="340" stroke="#D97706" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- Terminal Object: True (right) -->
+  <circle cx="620" cy="300" r="60" fill="#ECFDF5" stroke="#059669" stroke-width="3"/>
+  <text x="620" y="290" text-anchor="middle" font-family="Georgia, serif" font-size="28" font-weight="bold" fill="#065f46">True</text>
+  <text x="620" y="315" text-anchor="middle" font-family="monospace" font-size="11" fill="#059669">: Prop</text>
+  <text x="620" y="340" text-anchor="middle" font-family="monospace" font-size="10" fill="#10b981">True.intro</text>
+
+  <!-- Arrow from functor to True -->
+  <line x1="480" y1="300" x2="558" y2="300" stroke="#333" stroke-width="3" marker-end="url(#arrowhead)"/>
+  <text x="519" y="290" text-anchor="middle" font-family="monospace" font-size="11" fill="#333">trivial</text>
+
+  <!-- Universal property label -->
+  <text x="620" y="215" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#059669">Terminal Object</text>
+  <text x="620" y="230" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#059669">in Prop</text>
+
+  <!-- Unique morphism annotation -->
+  <rect x="540" y="370" width="160" height="50" rx="8" fill="#F0FDF4" stroke="#059669" stroke-width="1"/>
+  <text x="620" y="390" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#065f46">∃! morphism to True</text>
+  <text x="620" y="408" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#065f46">(universal property)</text>
+
+  <!-- Axiom-free badge -->
+  <rect x="550" y="120" width="140" height="35" rx="17" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+  <text x="620" y="143" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="bold" fill="#92400e">⚡ Axiom-Free</text>
+
+  <!-- Universe polymorphism note -->
+  <rect x="40" y="510" width="720" height="35" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+  <text x="400" y="533" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#64748b">
+    Universe-polymorphic: holds for Type u₁, Type u₂, …, Type uₙ — all universe levels simultaneously
+  </text>
+
+  <!-- Caption -->
+  <text x="400" y="575" text-anchor="middle" font-family="Georgia, serif" font-size="13" font-style="italic" fill="#94a3b8">
+    Fig. 1: The finitary étale spinor algorithm maps all inhabited types to the terminal proposition True.
+  </text>
+</svg>

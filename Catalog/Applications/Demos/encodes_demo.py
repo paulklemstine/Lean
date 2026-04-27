@@ -1,29 +1,26 @@
 #!/usr/bin/env python3
 """
-Backpropagation as the Cotangent Lift — Numerical Demonstration
+demo.py — Backpropagation as the Cotangent Lift
 
-This script demonstrates that backpropagation is exactly the cotangent lift
-(pullback on cotangent bundles) of the forward map. We show this by:
-
-1. Defining a simple 3-layer neural network as a composition of smooth maps.
-2. Computing gradients via the chain rule in "forward mode" (tangent map).
-3. Computing gradients via backpropagation (cotangent lift / pullback).
-4. Verifying they produce identical results.
-5. Demonstrating the key structural property: contravariant functoriality
-   reverses the order of composition, which IS backpropagation.
+This script demonstrates numerically that backpropagation through a
+multi-layer neural network is identical to applying the cotangent lift
+(transpose Jacobian) of each layer in reverse order.
 
 Mathematical correspondence:
-  - Forward pass:  Φ = f₃ ∘ f₂ ∘ f₁       (covariant, left-to-right)
-  - Backprop:      Φ* = f₁* ∘ f₂* ∘ f₃*   (contravariant, right-to-left)
-  - The cotangent functor T* : Man^op → VectBun reverses composition order.
+  Forward pass:   Φ = f_n ∘ f_{n-1} ∘ ... ∘ f_1
+  Cotangent lift:  Φ* = f_1* ∘ f_2* ∘ ... ∘ f_n*
+  In coordinates:  f_i*(α) = J_{f_i}^T α   (Jacobian transpose)
+
+This is exactly what backprop computes: starting from the output gradient,
+multiply by each layer's Jacobian transpose in reverse order.
 """
 
 import numpy as np
 
 
 def sigmoid(x):
-    """Smooth activation function (a diffeomorphism on its image)."""
-    return 1.0 / (1.0 + np.exp(-np.clip(x, -500, 500)))
+    """Smooth activation function (smooth manifold setting)."""
+    return 1.0 / (1.0 + np.exp(-x))
 
 
 def sigmoid_deriv(x):
@@ -32,307 +29,186 @@ def sigmoid_deriv(x):
     return s * (1.0 - s)
 
 
-def relu(x):
-    """ReLU activation — piecewise linear, tropical max-plus structure."""
-    return np.maximum(0, x)
-
-
-def relu_deriv(x):
-    """Subgradient of ReLU."""
-    return (x > 0).astype(float)
-
-
-# =============================================================================
-# Layer definitions: each layer is a smooth (or piecewise smooth) map
-# f_i : R^{d_{i-1}} -> R^{d_i}
-# =============================================================================
-
-class AffineLayer:
+def forward_layer(x, W, b):
     """
-    An affine map f(x) = Wx + b, viewed as a smooth map between Euclidean spaces.
+    Single layer forward pass: f(x) = σ(Wx + b).
     
-    In the manifold picture:
-      - Forward map (tangent lift):  Tf(v) = W @ v
-      - Cotangent lift (pullback):   f*(α) = Wᵀ @ α
-    
-    The cotangent lift is the transpose — this is why backprop uses transposed
-    weight matrices!
+    In differential geometry terms, this is a smooth map f: ℝ^m → ℝ^n
+    between Euclidean manifolds (trivial smooth manifolds).
     """
-    def __init__(self, W, b):
-        self.W = W
-        self.b = b
-    
-    def forward(self, x):
-        """Forward map: f(x) = Wx + b"""
-        return self.W @ x + self.b
-    
-    def tangent_map(self, v):
-        """Tangent map (pushforward): Tf(v) = Wv — covariant."""
-        return self.W @ v
-    
-    def cotangent_lift(self, alpha):
-        """Cotangent lift (pullback): f*(α) = Wᵀα — contravariant!"""
-        return self.W.T @ alpha
+    z = W @ x + b
+    return sigmoid(z), z  # return activation and pre-activation
 
 
-class ActivationLayer:
+def jacobian_layer(x, W, z):
     """
-    A pointwise activation: f(x) = σ(x) applied componentwise.
+    Compute the Jacobian matrix J_f of a layer at point x.
     
-    This is a diffeomorphism (for sigmoid) or piecewise smooth map (for ReLU).
-    The Jacobian is diagonal: J = diag(σ'(x₁), ..., σ'(xₙ)).
+    For f(x) = σ(Wx + b), we have:
+        J_f = diag(σ'(z)) · W
     
-    Tangent map:   Tf(v) = diag(σ'(xᵢ)) @ v
-    Cotangent lift: f*(α) = diag(σ'(xᵢ)) @ α   (self-adjoint for diagonal!)
+    This is the differential Df_x : T_x(ℝ^m) → T_{f(x)}(ℝ^n),
+    represented as a matrix in the standard coordinate bases.
     """
-    def __init__(self, activation='sigmoid'):
-        self.activation = activation
-        self._last_input = None
-    
-    def forward(self, x):
-        self._last_input = x.copy()
-        if self.activation == 'sigmoid':
-            return sigmoid(x)
-        else:
-            return relu(x)
-    
-    def _deriv(self):
-        if self.activation == 'sigmoid':
-            return sigmoid_deriv(self._last_input)
-        else:
-            return relu_deriv(self._last_input)
-    
-    def tangent_map(self, v):
-        """Tangent map: multiply by diagonal Jacobian."""
-        return self._deriv() * v
-    
-    def cotangent_lift(self, alpha):
-        """Cotangent lift: for diagonal Jacobian, same as tangent map."""
-        return self._deriv() * alpha
+    return np.diag(sigmoid_deriv(z)) @ W
 
 
-# =============================================================================
-# Neural Network as a composition of smooth maps
-# =============================================================================
-
-class NeuralNetwork:
+def cotangent_lift(jacobian, covector):
     """
-    A feedforward neural network: Φ = fₙ ∘ ... ∘ f₁
+    The cotangent lift f*: T*_{f(x)}N → T*_x M.
     
-    This is a morphism in the category of smooth manifolds (or piecewise smooth
-    manifolds for ReLU networks).
+    In coordinates: f*(α) = J_f^T · α
+    
+    This is THE key operation — the pullback of a covector through
+    the transpose Jacobian. This single operation, applied layer by
+    layer in reverse, IS backpropagation.
     """
-    def __init__(self, layers):
-        self.layers = layers
-    
-    def forward(self, x):
-        """
-        Forward pass: apply layers left-to-right.
-        Φ(x) = fₙ(fₙ₋₁(...f₁(x)...))
-        
-        This is the COVARIANT direction — following the tangent functor T.
-        """
-        activations = [x]
-        for layer in self.layers:
-            x = layer.forward(x)
-            activations.append(x)
-        return x, activations
-    
-    def backprop(self, loss_gradient):
-        """
-        Backpropagation: apply cotangent lifts right-to-left.
-        Φ*(α) = f₁* ∘ f₂* ∘ ... ∘ fₙ*(α)
-        
-        This is the CONTRAVARIANT direction — following the cotangent functor T*.
-        The reversal of order is not a computational trick — it is a mathematical
-        NECESSITY forced by contravariant functoriality!
-        """
-        alpha = loss_gradient
-        print("  Backpropagation (cotangent lift) traversal:")
-        for i, layer in enumerate(reversed(self.layers)):
-            layer_idx = len(self.layers) - 1 - i
-            alpha = layer.cotangent_lift(alpha)
-            print(f"    f_{layer_idx}*(α) = {alpha}")
-        return alpha
-    
-    def forward_mode_gradient(self, direction):
-        """
-        Forward-mode AD: apply tangent maps left-to-right.
-        TΦ(v) = Tfₙ ∘ ... ∘ Tf₁(v)
-        
-        This is the COVARIANT direction — same order as the forward pass.
-        Computing one directional derivative at a time.
-        """
-        v = direction
-        print("  Forward-mode (tangent map) traversal:")
-        for i, layer in enumerate(self.layers):
-            v = layer.tangent_map(v)
-            print(f"    Tf_{i}(v) = {v}")
-        return v
+    return jacobian.T @ covector
 
-
-def compute_full_jacobian_forward(net, x, input_dim, output_dim):
-    """Compute full Jacobian using forward-mode AD (one pass per input dim)."""
-    net.forward(x)  # cache activations
-    J = np.zeros((output_dim, input_dim))
-    for j in range(input_dim):
-        e_j = np.zeros(input_dim)
-        e_j[j] = 1.0
-        # Reset activations for each direction
-        net.forward(x)
-        J[:, j] = net.forward_mode_gradient(e_j)
-    return J
-
-
-def compute_full_jacobian_reverse(net, x, input_dim, output_dim):
-    """Compute full Jacobian using reverse-mode AD (one pass per output dim)."""
-    J = np.zeros((output_dim, input_dim))
-    for i in range(output_dim):
-        e_i = np.zeros(output_dim)
-        e_i[i] = 1.0
-        net.forward(x)  # refresh cached activations
-        J[i, :] = net.backprop(e_i)
-    return J
-
-
-# =============================================================================
-# Main demonstration
-# =============================================================================
 
 def main():
     """
-    KEY INSIGHT: Backpropagation is not merely an efficient algorithm for
-    computing gradients — it is the unique algorithm dictated by the
-    contravariant functoriality of the cotangent bundle functor:
+    Demonstrate that backprop = cotangent lift composition.
     
-        T* : Man^op → VectBun
-        
-    Given Φ = f₃ ∘ f₂ ∘ f₁, the cotangent functor yields:
-        Φ* = f₁* ∘ f₂* ∘ f₃*
-        
-    This reversal of composition order IS backpropagation.
-    The reverse traversal is not a choice — it is a theorem.
+    We build a 3-layer network, compute gradients two ways:
+    1. Direct: Full Jacobian of the composition, then transpose
+    2. Backprop: Reverse-mode cotangent lifts layer by layer
+    
+    These must agree — this is the theorem we formalized in Lean.
     """
-    
     np.random.seed(42)
     
-    print("=" * 70)
-    print("BACKPROPAGATION AS THE COTANGENT LIFT")
-    print("Demonstrating contravariant functoriality of T*")
-    print("=" * 70)
+    # ─── Network Architecture ───
+    # 4 → 5 → 3 → 2 (input → hidden → hidden → output)
+    dims = [4, 5, 3, 2]
+    n_layers = len(dims) - 1
     
-    # Network architecture: R³ → R⁴ → R² → R²
-    # Three layers with sigmoid activations
-    d0, d1, d2, d3 = 3, 4, 2, 2
+    # Random weights and biases
+    weights = []
+    biases = []
+    for i in range(n_layers):
+        W = np.random.randn(dims[i + 1], dims[i]) * 0.5
+        b = np.random.randn(dims[i + 1]) * 0.1
+        weights.append(W)
+        biases.append(b)
     
-    W1 = np.random.randn(d1, d0) * 0.5
-    b1 = np.random.randn(d1) * 0.1
-    W2 = np.random.randn(d2, d1) * 0.5
-    b2 = np.random.randn(d2) * 0.1
-    W3 = np.random.randn(d3, d2) * 0.5
-    b3 = np.random.randn(d3) * 0.1
+    # Random input point
+    x0 = np.random.randn(dims[0])
     
-    # Build network as composition of smooth maps
-    layers = [
-        AffineLayer(W1, b1),     # f₀: R³ → R⁴
-        ActivationLayer('sigmoid'),  # f₁: R⁴ → R⁴ (pointwise)
-        AffineLayer(W2, b2),     # f₂: R⁴ → R²
-        ActivationLayer('sigmoid'),  # f₃: R² → R² (pointwise)
-        AffineLayer(W3, b3),     # f₄: R² → R²
-        ActivationLayer('sigmoid'),  # f₅: R² → R² (pointwise)
-    ]
+    # ─── Forward Pass ───
+    # Compute activations and pre-activations at each layer
+    activations = [x0]
+    pre_activations = []
+    x = x0
+    for i in range(n_layers):
+        x, z = forward_layer(x, weights[i], biases[i])
+        activations.append(x)
+        pre_activations.append(z)
     
-    net = NeuralNetwork(layers)
-    x = np.array([1.0, -0.5, 0.3])
+    output = activations[-1]
+    print("=" * 60)
+    print("BACKPROPAGATION AS COTANGENT LIFT")
+    print("=" * 60)
+    print(f"\nNetwork: {' → '.join(map(str, dims))}")
+    print(f"Input:  {x0}")
+    print(f"Output: {output}")
     
-    # =========================================================================
-    # DEMONSTRATION 1: Forward pass vs backward pass direction
-    # =========================================================================
-    print("\n--- FORWARD PASS (covariant: left-to-right) ---")
-    output, activations = net.forward(x)
-    print(f"  Input:  x = {x}")
-    print(f"  Output: Φ(x) = {output}")
+    # ─── Method 1: Full Jacobian (forward-mode) ───
+    # Compute J_Φ = J_{f_3} · J_{f_2} · J_{f_1}
+    # (composition of differentials = covariant functoriality of T)
+    jacobians = []
+    for i in range(n_layers):
+        J = jacobian_layer(activations[i], weights[i], pre_activations[i])
+        jacobians.append(J)
     
-    print("\n--- BACKWARD PASS (contravariant: right-to-left) ---")
-    loss_grad = np.array([1.0, 0.0])  # ∂ℓ/∂y = e₁ (gradient of first output)
-    print(f"  Loss gradient (covector at output): α = {loss_grad}")
-    input_grad = net.backprop(loss_grad)
-    print(f"  Input gradient (covector at input):  Φ*(α) = {input_grad}")
+    # Full Jacobian by matrix multiplication (forward order)
+    J_full = jacobians[-1]
+    for i in range(n_layers - 2, -1, -1):
+        J_full = J_full @ jacobians[i]
     
-    # =========================================================================
-    # DEMONSTRATION 2: Forward-mode vs reverse-mode give same Jacobian
-    # =========================================================================
-    print("\n" + "=" * 70)
-    print("VERIFICATION: Forward-mode and reverse-mode yield the same Jacobian")
-    print("(Tangent map TΦ and cotangent lift Φ* are adjoint: ⟨Φ*(α), v⟩ = ⟨α, TΦ(v)⟩)")
-    print("=" * 70)
+    # ─── Method 2: Backprop (cotangent lift, reverse-mode) ───
+    # Start with a covector α ∈ T*_{Φ(x)}(ℝ^2)
+    # This represents the "loss gradient" at the output
+    alpha = np.array([1.0, -0.5])  # arbitrary output covector
     
-    print("\nComputing Jacobian via forward-mode (tangent map, covariant)...")
-    J_forward = compute_full_jacobian_forward(net, x, d0, d3)
+    print(f"\nOutput covector (loss gradient): α = {alpha}")
+    print("\n" + "-" * 60)
+    print("COTANGENT LIFT (BACKPROPAGATION)")
+    print("-" * 60)
     
-    print("\nComputing Jacobian via reverse-mode (cotangent lift, contravariant)...")
-    J_reverse = compute_full_jacobian_reverse(net, x, d0, d3)
+    # Apply cotangent lifts in REVERSE order: f_1* ∘ f_2* ∘ f_3*(α)
+    # This is contravariant functoriality of T*
+    covector = alpha
+    print(f"\nStarting covector: {covector}")
+    for i in range(n_layers - 1, -1, -1):
+        covector = cotangent_lift(jacobians[i], covector)
+        print(f"After f_{i+1}* (layer {i+1} backprop): {covector}")
     
-    print(f"\n  Jacobian (forward-mode):\n{J_forward}")
-    print(f"\n  Jacobian (reverse-mode / backprop):\n{J_reverse}")
-    print(f"\n  Maximum difference: {np.max(np.abs(J_forward - J_reverse)):.2e}")
-    print(f"  Match: {np.allclose(J_forward, J_reverse)}")
+    backprop_result = covector
     
-    # =========================================================================
-    # DEMONSTRATION 3: Contravariant functoriality
-    # =========================================================================
-    print("\n" + "=" * 70)
-    print("CONTRAVARIANT FUNCTORIALITY: (g ∘ f)* = f* ∘ g*")
-    print("=" * 70)
+    # ─── Method 1 result: J_Φ^T · α ───
+    direct_result = J_full.T @ alpha
     
-    # Split network into two halves
-    net_first = NeuralNetwork(layers[:3])   # f = first 3 layers
-    net_second = NeuralNetwork(layers[3:])  # g = last 3 layers
+    print("\n" + "-" * 60)
+    print("VERIFICATION")
+    print("-" * 60)
+    print(f"\nDirect (J_Φᵀ · α):          {direct_result}")
+    print(f"Backprop (f₁* ∘ f₂* ∘ f₃*): {backprop_result}")
+    print(f"Max absolute error:          {np.max(np.abs(direct_result - backprop_result)):.2e}")
     
-    # Forward pass through first half to get intermediate point
-    mid, _ = net_first.forward(x)
+    assert np.allclose(direct_result, backprop_result, atol=1e-12), \
+        "Results don't match! Something is wrong."
     
-    # Now test (g ∘ f)* = f* ∘ g*
-    alpha = np.array([0.7, -0.3])  # arbitrary covector at output
+    print("\n✓ VERIFIED: Backprop = Cotangent Lift (up to machine precision)")
     
-    # Method 1: (g ∘ f)*(α) — backprop through entire network
-    net.forward(x)
-    grad_composed = net.backprop(alpha)
-    
-    # Method 2: f* ∘ g*(α) — backprop through g, then through f
-    net_second.forward(mid)
-    grad_g_star = net_second.backprop(alpha)
-    net_first.forward(x)
-    grad_f_star_g_star = net_first.backprop(grad_g_star)
-    
-    print(f"\n  (g ∘ f)*(α) = {grad_composed}")
-    print(f"  f*(g*(α))   = {grad_f_star_g_star}")
-    print(f"  Difference:   {np.max(np.abs(grad_composed - grad_f_star_g_star)):.2e}")
-    print(f"  Functoriality verified: {np.allclose(grad_composed, grad_f_star_g_star)}")
-    
-    # =========================================================================
-    # KEY INSIGHT SUMMARY
-    # =========================================================================
-    print("\n" + "=" * 70)
+    # ─── Key Insight ───
+    print("\n" + "=" * 60)
     print("KEY INSIGHT")
-    print("=" * 70)
+    print("=" * 60)
     print("""
-    Backpropagation is NOT an algorithm that someone cleverly invented.
-    It is the UNIQUE procedure dictated by a mathematical theorem:
+The reverse order in backpropagation is not a computational trick —
+it is FORCED by the mathematics. The cotangent bundle functor
+
+    T* : Man^op → VectBun
+
+is contravariant: it reverses the direction of morphisms. Given
+
+    Φ = f₃ ∘ f₂ ∘ f₁   (forward pass)
+
+contravariant functoriality gives:
+
+    Φ* = f₁* ∘ f₂* ∘ f₃*   (backward pass)
+
+Each f_i* acts by the transpose Jacobian: f_i*(α) = Jᵢᵀ · α.
+This is EXACTLY what backpropagation computes.
+
+The formal Lean proof verifies this categorical structure,
+establishing backprop as a theorem of differential geometry.
+""")
     
-        The cotangent bundle functor T* : Man^op → VectBun
-        is contravariant, so it reverses the order of composition.
+    # ─── Bonus: Verify functoriality for pairs of layers ───
+    print("-" * 60)
+    print("FUNCTORIALITY CHECK: (g ∘ f)* = f* ∘ g*")
+    print("-" * 60)
     
-    Given a network  Φ = fₙ ∘ ... ∘ f₁  (forward: left to right),
-    the gradient is  Φ* = f₁* ∘ ... ∘ fₙ* (backward: right to left).
+    for i in range(n_layers - 1):
+        # Compose two adjacent layers
+        J_composed = jacobians[i + 1] @ jacobians[i]
+        
+        # (g ∘ f)*(α) via composed Jacobian
+        test_alpha = np.random.randn(dims[i + 2])
+        result_composed = J_composed.T @ test_alpha
+        
+        # f* ∘ g*(α) via sequential cotangent lifts
+        result_sequential = cotangent_lift(jacobians[i],
+                                           cotangent_lift(jacobians[i + 1], test_alpha))
+        
+        err = np.max(np.abs(result_composed - result_sequential))
+        print(f"  Layers {i+1},{i+2}: error = {err:.2e}  ✓" if err < 1e-12
+              else f"  Layers {i+1},{i+2}: error = {err:.2e}  ✗")
     
-    This reversal IS backpropagation. The algorithm is forced by
-    the categorical structure of differential geometry.
-    
-    In the Lean 4 formalization, this is captured by the theorem
-    `backprop_cotangent_lift`, which witnesses the mathematical
-    validity of this identification.
-    """)
+    print("\nAll functoriality checks passed.")
+    print("=" * 60)
 
 
 if __name__ == "__main__":

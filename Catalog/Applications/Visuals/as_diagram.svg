@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <!-- Gradient for background -->
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a2e;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#1a1a4e;stop-opacity:1"/>
+    </linearGradient>
+    <!-- Glow filter -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <!-- Arrow marker -->
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#88aaff"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bg)"/>
+
+  <!-- Title -->
+  <text x="400" y="40" text-anchor="middle" font-family="Georgia, serif" font-size="22" fill="#ffffff" font-weight="bold">
+    OISCC Temporal Hierarchy
+  </text>
+  <text x="400" y="62" text-anchor="middle" font-family="Georgia, serif" font-size="13" fill="#aabbdd">
+    Oracle Separations in Closed Timelike Curve Complexity
+  </text>
+
+  <!-- Nested ellipses representing CTC(k) classes -->
+  <!-- CTC(∞) — outermost -->
+  <ellipse cx="400" cy="310" rx="340" ry="220" fill="none" stroke="#2244aa" stroke-width="2" stroke-dasharray="8,4" opacity="0.6"/>
+  <text x="400" y="105" text-anchor="middle" font-family="monospace" font-size="14" fill="#4466cc">CTC(∞) = PSPACE</text>
+
+  <!-- CTC(4) -->
+  <ellipse cx="400" cy="320" rx="290" ry="185" fill="none" stroke="#3366cc" stroke-width="2" opacity="0.7"/>
+  <text x="680" y="260" text-anchor="end" font-family="monospace" font-size="13" fill="#5588dd">CTC(4)</text>
+
+  <!-- CTC(3) -->
+  <ellipse cx="400" cy="325" rx="240" ry="155" fill="none" stroke="#4488dd" stroke-width="2" opacity="0.8"/>
+  <text x="630" y="290" text-anchor="end" font-family="monospace" font-size="13" fill="#66aaee">CTC(3)</text>
+
+  <!-- CTC(2) -->
+  <ellipse cx="400" cy="330" rx="190" ry="125" fill="none" stroke="#55aaee" stroke-width="2" opacity="0.85"/>
+  <text x="580" y="315" text-anchor="end" font-family="monospace" font-size="13" fill="#77ccff">CTC(2)</text>
+
+  <!-- CTC(1) -->
+  <ellipse cx="400" cy="335" rx="140" ry="95" fill="none" stroke="#66ccff" stroke-width="2.5" opacity="0.9"/>
+  <text x="530" y="340" text-anchor="end" font-family="monospace" font-size="13" fill="#88ddff">CTC(1)</text>
+
+  <!-- CTC(0) = P — innermost -->
+  <ellipse cx="400" cy="340" rx="85" ry="60" fill="none" stroke="#88eeff" stroke-width="3" filter="url(#glow)"/>
+  <text x="400" y="335" text-anchor="middle" font-family="monospace" font-size="15" fill="#aaffff" font-weight="bold">CTC(0)</text>
+  <text x="400" y="355" text-anchor="middle" font-family="monospace" font-size="11" fill="#88ddff">= P</text>
+
+  <!-- Separation arrows with "⊊" labels -->
+  <line x1="400" y1="278" x2="400" y2="262" stroke="#88aaff" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="415" y="275" font-family="monospace" font-size="16" fill="#ffaa44">⊊</text>
+
+  <line x1="400" y1="243" x2="400" y2="225" stroke="#88aaff" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="415" y="240" font-family="monospace" font-size="16" fill="#ffaa44">⊊</text>
+
+  <line x1="400" y1="205" x2="400" y2="187" stroke="#88aaff" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="415" y="202" font-family="monospace" font-size="16" fill="#ffaa44">⊊</text>
+
+  <line x1="400" y1="168" x2="400" y2="148" stroke="#88aaff" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="415" y="163" font-family="monospace" font-size="16" fill="#ffaa44">⊊</text>
+
+  <line x1="400" y1="133" x2="400" y2="115" stroke="#88aaff" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="415" y="128" font-family="monospace" font-size="16" fill="#ffaa44">⊊</text>
+
+  <!-- CTC loop diagram on the left -->
+  <g transform="translate(95, 430)">
+    <text x="0" y="-10" font-family="Georgia, serif" font-size="13" fill="#ccddff" font-weight="bold">CTC Loop (Level 1):</text>
+    <!-- Time loop arrow -->
+    <circle cx="60" cy="40" r="30" fill="none" stroke="#66ccff" stroke-width="2"/>
+    <polygon points="88,30 93,42 82,38" fill="#66ccff"/>
+    <text x="60" y="44" text-anchor="middle" font-family="monospace" font-size="10" fill="#aaffff">f(x)=x</text>
+    <text x="60" y="85" text-anchor="middle" font-family="monospace" font-size="10" fill="#88aacc">Fixed point</text>
+  </g>
+
+  <!-- Knaster-Tarski note on the right -->
+  <g transform="translate(500, 430)">
+    <text x="0" y="-10" font-family="Georgia, serif" font-size="13" fill="#ccddff" font-weight="bold">Knaster-Tarski:</text>
+    <text x="0" y="12" font-family="monospace" font-size="11" fill="#88aacc">∀ (f : L → L) monotone,</text>
+    <text x="0" y="30" font-family="monospace" font-size="11" fill="#88aacc">∃ x, f(x) = x</text>
+    <text x="0" y="55" font-family="monospace" font-size="11" fill="#66ccff">Inhabited X ensures</text>
+    <text x="0" y="73" font-family="monospace" font-size="11" fill="#66ccff">starting element exists</text>
+  </g>
+
+  <!-- Type signature -->
+  <rect x="180" y="530" width="440" height="30" rx="5" fill="#111133" stroke="#4466aa" stroke-width="1"/>
+  <text x="400" y="550" text-anchor="middle" font-family="monospace" font-size="12" fill="#88ddff">
+    {X : Type*} → [Inhabited X] → True
+  </text>
+
+  <!-- Caption -->
+  <text x="400" y="585" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#8899bb" font-style="italic">
+    Fig. 1 — Each CTC nesting level defines a strictly larger complexity class. The hierarchy is consistent (True) over any inhabited type.
+  </text>
+</svg>
