@@ -7,6 +7,7 @@ Uses the official Python SDK for directory-based project submission.
 import asyncio
 import os
 import shutil
+import ssl
 import tarfile
 import tempfile
 from dataclasses import dataclass
@@ -15,6 +16,10 @@ from typing import Optional, Dict, Any
 
 import aristotlelib
 from aristotlelib import Project, ProjectStatus
+
+# Maximum retries for transient SSL/network errors
+MAX_SSL_RETRIES = 3
+SSL_RETRY_DELAY = 5  # seconds between retries
 
 
 @dataclass
@@ -58,43 +63,78 @@ class AristotleSDKClient:
         return project.project_id
 
     async def poll_project(self, project_id: str) -> Dict[str, Any]:
-        """Poll a project by ID. Returns dict with status, percent_complete."""
-        try:
-            project = await Project.from_id(project_id)
-            await project.refresh()
-            return {
-                "project_id": project.project_id,
-                "status": project.status.value if hasattr(project.status, "value") else str(project.status),
-                "percent_complete": project.percent_complete or 0,
-                "complete": project.status in (ProjectStatus.COMPLETE, ProjectStatus.COMPLETE_WITH_ERRORS),
-                "error": None,
-            }
-        except Exception as e:
-            return {
-                "project_id": project_id,
-                "status": "error",
-                "percent_complete": 0,
-                "complete": False,
-                "error": str(e),
-            }
+        """Poll a project by ID. Returns dict with status, percent_complete.
+
+        Retries on transient SSL errors before giving up.
+        """
+        for attempt in range(MAX_SSL_RETRIES):
+            try:
+                project = await Project.from_id(project_id)
+                await project.refresh()
+                return {
+                    "project_id": project.project_id,
+                    "status": project.status.value if hasattr(project.status, "value") else str(project.status),
+                    "percent_complete": project.percent_complete or 0,
+                    "complete": project.status in (ProjectStatus.COMPLETE, ProjectStatus.COMPLETE_WITH_ERRORS),
+                    "error": None,
+                }
+            except ssl.SSLError as e:
+                if attempt < MAX_SSL_RETRIES - 1:
+                    print(f"[Aristotle] SSL error polling {project_id} (attempt {attempt+1}/{MAX_SSL_RETRIES}): {e}")
+                    await asyncio.sleep(SSL_RETRY_DELAY)
+                    continue
+                # Final attempt failed
+                print(f"[Aristotle] SSL error exhausted retries for {project_id}: {e}")
+                return {
+                    "project_id": project_id,
+                    "status": "error",
+                    "percent_complete": 0,
+                    "complete": False,
+                    "error": f"SSL error after {MAX_SSL_RETRIES} retries: {e}",
+                }
+            except Exception as e:
+                error_str = str(e)
+                # Don't treat transient network/SSL errors as terminal
+                if "SSL" in error_str or "CERTIFICATE" in error_str or "ConnectionReset" in error_str:
+                    if attempt < MAX_SSL_RETRIES - 1:
+                        print(f"[Aristotle] Transient error polling {project_id} (attempt {attempt+1}/{MAX_SSL_RETRIES}): {e}")
+                        await asyncio.sleep(SSL_RETRY_DELAY)
+                        continue
+                return {
+                    "project_id": project_id,
+                    "status": "error",
+                    "percent_complete": 0,
+                    "complete": False,
+                    "error": error_str,
+                }
 
     async def download_result(
         self,
         project_id: str,
         project_dir: Path,
     ) -> Optional[Path]:
-        """Download result tarball for a completed project."""
-        try:
-            project = await Project.from_id(project_id)
-            await project.refresh()
-            if project.status not in (ProjectStatus.COMPLETE, ProjectStatus.COMPLETE_WITH_ERRORS):
+        """Download result tarball for a completed project.
+
+        Retries on transient SSL errors before giving up.
+        """
+        for attempt in range(MAX_SSL_RETRIES):
+            try:
+                project = await Project.from_id(project_id)
+                await project.refresh()
+                if project.status not in (ProjectStatus.COMPLETE, ProjectStatus.COMPLETE_WITH_ERRORS):
+                    return None
+                dest = project_dir / "result.tar.gz"
+                await project.get_solution(destination=str(dest))
+                return dest if dest.exists() else None
+            except (ssl.SSLError, Exception) as e:
+                error_str = str(e)
+                is_ssl = isinstance(e, ssl.SSLError) or "SSL" in error_str or "CERTIFICATE" in error_str
+                if is_ssl and attempt < MAX_SSL_RETRIES - 1:
+                    print(f"[Aristotle] SSL error downloading {project_id} (attempt {attempt+1}/{MAX_SSL_RETRIES}): {e}")
+                    await asyncio.sleep(SSL_RETRY_DELAY)
+                    continue
+                print(f"[Aristotle] Download error for {project_id}: {e}")
                 return None
-            dest = project_dir / "result.tar.gz"
-            await project.get_solution(destination=str(dest))
-            return dest if dest.exists() else None
-        except Exception as e:
-            print(f"[Aristotle] Download error for {project_id}: {e}")
-            return None
 
     async def submit_lean_project(
         self,

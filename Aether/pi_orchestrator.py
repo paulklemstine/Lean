@@ -305,9 +305,16 @@ class PiAgentOrchestrator:
                     job.status = "complete"
                     completed.append(job)
                 elif info.get("error"):
-                    print(f"[Poll] {job.exp_id} ({job.project_id}) ERROR: {info['error']}")
-                    job.status = "error"
-                    job.error_message = info["error"]
+                    error_msg = info.get("error", "")
+                    # SSL/certificate errors are transient — don't kill the job
+                    if "SSL" in error_msg or "CERTIFICATE" in error_msg or "certificate" in error_msg.lower():
+                        print(f"[Poll] {job.exp_id} ({job.project_id}) transient SSL error, will retry next poll: {error_msg}")
+                        # Keep the job in its previous status so we retry next poll cycle
+                        job.status = prev_status
+                    else:
+                        print(f"[Poll] {job.exp_id} ({job.project_id}) ERROR: {error_msg}")
+                        job.status = "error"
+                        job.error_message = error_msg
                     completed.append(job)
                 elif prev_status != job.status:
                     print(f"[Poll] {job.exp_id} ({job.project_id}) {job.status}")
