@@ -279,8 +279,14 @@ class PiAgentClient:
         self,
         domains: List[Dict[str, Any]],
         recent_history: Optional[List[Dict]] = None,
+        research_context: Optional[str] = None,
     ) -> ResearchConcept:
         """Pi-Agent analyzes the Catalog and picks a research direction.
+
+        Args:
+            domains: Available research domains with metadata
+            recent_history: Recent experiment records
+            research_context: Formatted discoveries from ResearchContext.build_discoveries_prompt()
 
         Returns a ResearchConcept with domain, concept details, catalog references,
         and research_mode chosen by the LLM.
@@ -339,10 +345,15 @@ class PiAgentClient:
             ## Priority Sorry Targets (use sorry_fill mode for these)
             {sorry_targets if sorry_targets else "No priority sorry targets identified."}
 
+            ## Research Discoveries (build on these)
+            {research_context if research_context else "No previous research cycles completed yet."}
+
             Select ONE domain and ONE specific concept to investigate. Choose something
             novel, interesting, and likely to produce substantial formal mathematics.
             Consider sorry_fill mode for the priority targets above — filling existing
             sorries builds on proven work and is high-value.
+            When a recent discovery found an open problem or future direction, prioritize
+            extending or completing that line of research.
 
             Respond with JSON:
             {{
@@ -398,6 +409,7 @@ class PiAgentClient:
         catalog_context: str = "",
         recent_successes: Optional[List[Dict]] = None,
         recent_failures: Optional[List[Dict]] = None,
+        theorem_context: str = "",
     ) -> str:
         """Dynamically write the full Aristotle prompt.
 
@@ -406,6 +418,10 @@ class PiAgentClient:
         research brief, context, instructions, deliverables.
 
         This replaces PromptEngine entirely. No templates.
+
+        Args:
+            theorem_context: Previously proved theorems from ResearchContext,
+                           so Aristotle can build on existing results.
         """
         refs = catalog_references or concept.catalog_references or []
 
@@ -490,6 +506,8 @@ class PiAgentClient:
             {ref_section if ref_section else "No specific files referenced. Use Mathlib and general knowledge."}
 
             {history_section if history_section else ""}
+
+            {"## Previously Proved Theorems (build on these)\\n" + theorem_context if theorem_context else ""}
 
             ## Deliverables
             Produce a complete Lean 4 file with:

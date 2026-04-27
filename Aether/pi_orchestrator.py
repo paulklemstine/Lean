@@ -40,6 +40,7 @@ from autoresearch_bridge import AutoresearchBridge
 from aristotle_sdk_client import AristotleSDKClient
 from lean_catalog_builder import LeanCatalogBuilder
 from research_memory import ResearchMemory, ExperimentRecord as MemoryExperimentRecord
+from research_context import ResearchContext
 from telemetry import TelemetryLogger, ExperimentRecord
 from git_automator import GitAutomator
 
@@ -133,6 +134,7 @@ class PiAgentOrchestrator:
         )
         self.git = GitAutomator(self.catalog_root.parent)
         self.telemetry = TelemetryLogger(config.get("telemetry", {}))
+        self.research_context = ResearchContext(self.workspace)
         self.autoresearch = AutoresearchBridge(self.workspace)
 
         # Initialize autoresearch session
@@ -197,6 +199,7 @@ class PiAgentOrchestrator:
         concept = self.pi_agent.select_research_direction(
             domains=domains_with_findings,
             recent_history=self._get_recent_history(),
+            research_context=self.research_context.build_discoveries_prompt(),
         )
         if forced_domain:
             concept.domain = forced_domain
@@ -223,6 +226,7 @@ class PiAgentOrchestrator:
             catalog_context=catalog_context,
             recent_successes=self._get_recent_successes(),
             recent_failures=self._get_recent_failures(),
+            theorem_context=self.research_context.build_theorem_context(),
         )
         print(f"[Prepare #{cycle_n}] Prompt: {len(prompt)} chars, {len(references)} @ refs")
 
@@ -354,7 +358,7 @@ class PiAgentOrchestrator:
             # Organize output
             print(f"[Process] {exp_id} organizing output files...")
             t0 = time.time()
-            decisions = self.output_organizer.organize_results(
+            decisions, summary_data = self.output_organizer.organize_results(
                 result_dir=extract_dir,
                 exp_id=exp_id,
                 concept=concept,
@@ -422,6 +426,22 @@ class PiAgentOrchestrator:
             prompt_length=len(job.prompt),
             files_placed=len(files_placed),
         )
+
+        # Update research context with discoveries from this cycle
+        # This closes the feedback loop: discoveries inform next cycle's concept generation
+        self.research_context.update_from_summary(
+            exp_id=exp_id,
+            cycle_n=cycle_n,
+            concept_title=concept.title,
+            domain=concept.domain,
+            research_mode=concept.research_mode,
+            quality=proof_quality,
+            quality_score=quality_score,
+            summary_data=summary_data,
+        )
+        print(f"[Process] {exp_id} research context updated "
+              f"({len(self.research_context.global_theorems_proved)} total theorems, "
+              f"{len(self.research_context.global_open_problems)} open problems)")
 
         record = ExperimentRecord(
             experiment_id=exp_id,

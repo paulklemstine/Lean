@@ -17,7 +17,9 @@ import re
 import shutil
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Optional, Any
+from typing import Dict, List, Optional, Any, Tuple
+
+from catalog_analyzer import DOMAIN_DIRS
 
 
 @dataclass
@@ -127,20 +129,23 @@ class OutputOrganizer:
         exp_id: str,
         concept: Any,  # ResearchConcept
         dry_run: bool = False,
-    ) -> Dict[str, List[PlacementDecision]]:
+    ) -> Tuple[Dict[str, List[PlacementDecision]], Optional[Dict[str, Any]]]:
         """Organize all files from an Aristotle result directory.
 
         Uses ARISTOTLE_SUMMARY.md (if present) to understand what Aristotle did,
         then classifies and places each file accordingly.
 
-        Returns a dict with keys:
-        - "theorems": .lean files placed in domain directories
-        - "papers": research reports placed in Applications/Papers/
-        - "demos": Python demos placed in Applications/Demos/
-        - "visuals": SVG diagrams placed in Applications/Visuals/
-        - "articles": SciAm-style articles placed in Applications/Articles/
-        - "raw": everything else in ResearchOutput/{exp_id}/
-        - "rejected": files that failed validation
+        Returns a tuple of:
+        - decisions dict with keys:
+          - "theorems": .lean files placed in domain directories
+          - "papers": research reports placed in Applications/Papers/
+          - "demos": Python demos placed in Applications/Demos/
+          - "visuals": SVG diagrams placed in Applications/Visuals/
+          - "articles": SciAm-style articles placed in Applications/Articles/
+          - "raw": everything else in ResearchOutput/{exp_id}/
+          - "rejected": files that failed validation
+        - parsed ARISTOTLE_SUMMARY dict (or None), for feeding back into
+          the next research cycle via ResearchContext
         """
         # Parse ARISTOTLE_SUMMARY.md for context about what Aristotle did
         summary = self._parse_aristotle_summary(result_dir)
@@ -211,7 +216,7 @@ class OutputOrganizer:
                 decision = self._place_raw(result_file, exp_id, dry_run)
                 decisions["raw"].append(decision)
 
-        return decisions
+        return decisions, summary
 
     def _classify_artifact_type(self, file_path: Path) -> str:
         """Classify a file into its artifact type.
