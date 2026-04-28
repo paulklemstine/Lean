@@ -267,11 +267,21 @@ for t in key_thms11:
 sorry_count_11 = c11.count('sorry')
 print(f'  ResNetRobustnessBridge.lean: {len(c11)} bytes, sorry={sorry_count_11}')
 
-total_sorry = sorry_count_1 + sorry_count_2 + sorry_count_3 + sorry_count_4 + sorry_count_5 + sorry_count_6 + sorry_count_8 + sorry_count_9 + sorry_count_10 + sorry_count_11
+# 12. TropicalSemiringProperties.lean
+f12 = Path('../Catalog/Tropical/Core/TropicalSemiringProperties.lean')
+assert f12.exists(), f'File should exist: {f12}'
+c12 = f12.read_text()
+key_thms12 = ['tropical_max_idempotent', 'tropical_scalar_distrib', 'tropical_absorption', 'tropical_add_mono']
+for t in key_thms12:
+    assert t in c12, f'Should contain {t}'
+sorry_count_12 = c12.count('sorry')
+print(f'  TropicalSemiringProperties.lean: {len(c12)} bytes, sorry={sorry_count_12}')
+
+total_sorry = sorry_count_1 + sorry_count_2 + sorry_count_3 + sorry_count_4 + sorry_count_5 + sorry_count_6 + sorry_count_8 + sorry_count_9 + sorry_count_10 + sorry_count_11 + sorry_count_12
 print(f'  Total sorries in verified files: {total_sorry} (should be 0)')
 assert total_sorry == 0, f'Verified files should have 0 sorries, got {total_sorry}'
 print(f'  CarmichaelProof.lean has {sorry_count_7} sorry (deep open problem: composite n>10000)')
-print('  All 11 files compile (verified by lake build)')
+print('  All 12 files compile (verified by lake build)')
 print('  OK')
 "
 
