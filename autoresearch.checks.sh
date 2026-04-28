@@ -237,11 +237,21 @@ for t in key_thms8:
 sorry_count_8 = c8.count('sorry')
 print(f'  EMLTropicalBridge.lean: {len(c8)} bytes, sorry={sorry_count_8}')
 
-total_sorry = sorry_count_1 + sorry_count_2 + sorry_count_3 + sorry_count_4 + sorry_count_5 + sorry_count_6 + sorry_count_8
+# 9. SatakeEMLBridge.lean
+f9 = Path('../Catalog/Bridges/SatakeEMLBridge.lean')
+assert f9.exists(), f'File should exist: {f9}'
+c9 = f9.read_text()
+key_thms9 = ['logsumexp_two_point', 'softMax_decomposition', 'softMax_gap_upper', 'satake_soft_gap', 'soft_satake_ge_hard']
+for t in key_thms9:
+    assert t in c9, f'Should contain {t}'
+sorry_count_9 = c9.count('sorry')
+print(f'  SatakeEMLBridge.lean: {len(c9)} bytes, sorry={sorry_count_9}')
+
+total_sorry = sorry_count_1 + sorry_count_2 + sorry_count_3 + sorry_count_4 + sorry_count_5 + sorry_count_6 + sorry_count_8 + sorry_count_9
 print(f'  Total sorries in verified files: {total_sorry} (should be 0)')
 assert total_sorry == 0, f'Verified files should have 0 sorries, got {total_sorry}'
 print(f'  CarmichaelProof.lean has {sorry_count_7} sorry (deep open problem: composite n>10000)')
-print('  All 8 files compile (verified by lake build)')
+print('  All 9 files compile (verified by lake build)')
 print('  OK')
 "
 
