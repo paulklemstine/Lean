@@ -171,7 +171,21 @@ class PiAgentOrchestrator:
 
     async def _prepare_job(self, forced_domain: Optional[str] = None) -> Optional[InFlightJob]:
         """Prepare a job: generate concept, write prompt, build lean project.
-        Returns InFlightJob ready for dispatch, or None if preparation fails."""
+        Returns InFlightJob ready for dispatch, or None if preparation fails.
+        
+        Retries up to 2 times if concept validation rejects the Pi-Agent output.
+        """
+        for attempt in range(3):
+            result = await self._prepare_job_once(forced_domain, attempt)
+            if result is not None:
+                return result
+            if attempt < 2:
+                print(f"[Prepare] Retrying concept generation (attempt {attempt+2}/3)")
+                await asyncio.sleep(5)
+        return None
+
+    async def _prepare_job_once(self, forced_domain: Optional[str] = None, attempt: int = 0) -> Optional[InFlightJob]:
+        """Single attempt at preparing a job."""
         self.state.cycle_count += 1
         cycle_n = self.state.cycle_count
         exp_id = str(uuid.uuid4())[:8]
@@ -259,6 +273,16 @@ class PiAgentOrchestrator:
         elif concept.research_mode == "prove" and loop_mode == "sorry_fill" and sorry_targets:
             # Override to sorry_fill when the Loop recommends it and there are sorry targets
             concept.research_mode = "sorry_fill"
+
+        # Validate concept quality — reject garbage from LLM failures
+        if (concept.novelty_estimate < 0.1 or
+            concept.breakthrough_potential < 0.1 or
+            concept.title.startswith("research_concept_") or
+            concept.mathematical_framing in ("", "TBD", "N/A") or
+            len(concept.concept_description) < 20):
+            print(f"[Prepare #{cycle_n}] REJECTED low-quality concept: {concept.title} "
+                  f"(novelty={concept.novelty_estimate:.2f}, breakthrough={concept.breakthrough_potential:.2f})")
+            return None
 
         print(f"[Prepare #{cycle_n}] Concept: {concept.title} | Domain: {concept.domain} | Mode: {concept.research_mode}")
         print(f"[Pi-Agent] Direction response:")
