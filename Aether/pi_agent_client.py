@@ -673,6 +673,14 @@ class PiAgentClient:
         # ---- LLM ENRICHMENT ----
         # Ask Pi-Agent to enrich the direct prompt with deeper mathematical insight.
         # The output must still be a direct-to-Aristotle prompt, not a meta-instruction.
+        # Create a summary of the direct prompt for the enrichment step.
+        # The full direct prompt can be 50K+ chars with catalog references,
+        # which is too long for the LLM. We only send the task portion
+        # (first ~3000 chars, before the catalog context) to the LLM.
+        prompt_summary = direct_prompt[:3000]
+        if len(direct_prompt) > 3000:
+            prompt_summary += "\n\n[... catalog context omitted for brevity ...]"
+
         enrichment_request = textwrap.dedent(f"""\
             Below is a research prompt that will be sent directly to Aristotle (a
             Lean 4 theorem prover). Your job is to ENRICH it with deeper mathematical
@@ -680,17 +688,17 @@ class PiAgentClient:
             Do NOT add meta-instructions like "Write a brief" — the output goes
             directly to Aristotle, who is a theorem prover, not a person.
 
-            Keep all the existing sections. Add depth to:
+            Add depth to:
             - The precise theorem statement (give exact Lean 4 type signature)
             - The proof strategy (add 3-5 concrete proof steps with key lemmas)
             - The significance (explain why this matters to the research program)
 
             ---
-            {direct_prompt}
+            {prompt_summary}
             ---
 
-            Output the enriched prompt text ONLY. No preamble, no "Here is the
-            enriched prompt:", just the prompt itself.
+            Output the enriched TASK SECTIONS ONLY (no catalog references needed).
+            No preamble, no "Here is the enriched prompt:", just the task content.
         """)
 
         raw = self._call_ollama(_PROMPT_WRITING_SYSTEM_PROMPT, enrichment_request)
@@ -698,7 +706,18 @@ class PiAgentClient:
         if raw and not raw.startswith("[OLLAMA"):
             # Strip common LLM preamble patterns that would confuse Aristotle
             cleaned = self._strip_llm_preamble(raw)
-            return cleaned if cleaned else direct_prompt
+            if cleaned and len(cleaned) > 200:
+                # The LLM enriched the task section. Merge with catalog context.
+                # The enriched content replaces the task portion; catalog context
+                # is preserved from the direct prompt.
+                catalog_section = ""
+                if "### Catalog Context" in direct_prompt:
+                    # Extract everything from "### Catalog Context" onward
+                    idx = direct_prompt.find("### Catalog Context")
+                    catalog_section = "\n\n" + direct_prompt[idx:]
+                return cleaned + catalog_section
+            else:
+                return direct_prompt
         else:
             # Fallback: use the direct prompt (never a meta-instruction)
             return direct_prompt
