@@ -1,14 +1,18 @@
 import Mathlib
 import Tropical.NeuralNetworks.NDimLogSumExp
 import Tropical.NeuralNetworks.SoftMaxConvergence
+import Tropical.NeuralNetworks.TropicalSemiringHom
 
-/-! # Monotonicity and Symmetry of LogSumExp
+/-! # Convexity and Monotonicity of LogSumExp
 
-Fundamental analytical properties:
+Fundamental analytical properties of LSE:
 1. LSE is increasing in each argument (monotonicity)
 2. LSE is symmetric in its arguments
 3. softMax is symmetric in its arguments
-4. LSE exact gap formula (re-export)
+4. LSE exact gap formula (re-export from NDimLogSumExp)
+5. LSE sub-additivity (re-export from TropicalSemiringHom)
+6. LSE shift invariance (re-export from TropicalSemiringHom)
+7. Tropical max super-additivity (re-export from TropicalSemiringHom)
 -/
 
 noncomputable section
@@ -19,14 +23,14 @@ namespace LSEConvexity
 
 /-- LSE is increasing in the first argument -/
 theorem logsumexp_mono_left (a b a' : ℝ) (hab : a ≤ a') :
-    log (exp a + exp b) ≤ log (exp a' + exp b) := by
-  exact log_le_log (add_pos (exp_pos a) (exp_pos b))
+    log (exp a + exp b) ≤ log (exp a' + exp b) :=
+  log_le_log (add_pos (exp_pos a) (exp_pos b))
     (add_le_add (exp_le_exp.mpr hab) le_rfl)
 
 /-- LSE is increasing in the second argument -/
 theorem logsumexp_mono_right (a b b' : ℝ) (hbb' : b ≤ b') :
-    log (exp a + exp b) ≤ log (exp a + exp b') := by
-  exact log_le_log (add_pos (exp_pos a) (exp_pos b))
+    log (exp a + exp b) ≤ log (exp a + exp b') :=
+  log_le_log (add_pos (exp_pos a) (exp_pos b))
     (add_le_add le_rfl (exp_le_exp.mpr hbb'))
 
 /-- LSE is symmetric: LSE(a, b) = LSE(b, a) -/
@@ -40,19 +44,35 @@ theorem softMax_symm (c x₁ x₂ : ℝ) (_hc : 0 < c) :
   unfold SoftMaxConvergence.softMax
   rw [add_comm (exp (c * x₁)) (exp (c * x₂))]
 
-/-- LSE gap is exactly log(1 + exp(-|a-b|)), from max -/
+/-- LSE gap is exactly log(1 + exp(-|a-b|)) from max (re-export) -/
 theorem logsumexp_gap_from_max (a b : ℝ) :
     log (exp a + exp b) = max a b + log (1 + exp (-|a - b|)) :=
   NDimLogSumExp.logsumexp_two_point a b
 
-/-- LSE gap is at most log(2): re-export from NDimLogSumExp -/
+/-- LSE gap is non-negative (re-export) -/
+theorem logsumexp_gap_bounded_below (x₁ x₂ : ℝ) :
+    (0 : ℝ) ≤ log (exp x₁ + exp x₂) - max x₁ x₂ :=
+  NDimLogSumExp.logsumexp_gap_nonneg x₁ x₂
+
+/-- LSE gap is at most log(2) (re-export) -/
 theorem logsumexp_gap_bounded (x₁ x₂ : ℝ) :
     log (exp x₁ + exp x₂) - max x₁ x₂ ≤ log 2 :=
   NDimLogSumExp.logsumexp_gap_le x₁ x₂
 
-/-- LSE gap is non-negative: re-export from NDimLogSumExp -/
-theorem logsumexp_gap_bounded_below (x₁ x₂ : ℝ) :
-    (0 : ℝ) ≤ log (exp x₁ + exp x₂) - max x₁ x₂ :=
-  NDimLogSumExp.logsumexp_gap_nonneg x₁ x₂
+/-- LSE sub-additivity (re-export from TropicalSemiringHom) -/
+theorem logsumexp_subadd (a b c d : ℝ) :
+    log (exp (a + b) + exp (c + d)) ≤
+    log (exp a + exp c) + log (exp b + exp d) :=
+  TropicalSemiringHom.logsumexp_subadd a b c d
+
+/-- LSE shift invariance (re-export from TropicalSemiringHom) -/
+theorem logsumexp_shift (a b d : ℝ) :
+    log (exp (a + d) + exp (b + d)) = log (exp a + exp b) + d :=
+  TropicalSemiringHom.logsumexp_shift a b d
+
+/-- Tropical max super-additivity (re-export from TropicalSemiringHom) -/
+theorem tropical_max_superadd (x₁ x₂ y₁ y₂ : ℝ) :
+    max x₁ x₂ + max y₁ y₂ ≥ max (x₁ + y₁) (x₂ + y₂) :=
+  TropicalSemiringHom.tropical_max_superadd x₁ x₂ y₁ y₂
 
 end LSEConvexity
