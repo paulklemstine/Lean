@@ -74,29 +74,43 @@ _DIRECTION_SYSTEM_PROMPT = textwrap.dedent("""\
        definitions, or results that follow by simp/trivial. Every theorem you
        propose should require at least one non-trivial mathematical insight.
 
-    ## Research Context: Verified Results
+    6. WORLD-CLASS STANDARD: Target theorems that would be publishable in a
+       top venue (FOCS, STOC, JAMS, Annals). The Satake isomorphism for GL₂
+       and tropical certified robustness are examples of genuine research results.
+       Aim for depth, novelty, and significance — not just declaration count.
 
-    The catalog has ~48,000 declarations across ~2,687 files, with 19 remaining sorries.
-    Key verified results include:
-    - Tropical ReLU depth separation (14 theorems: ReLU = tropical max, Lipschitz bound)
-    - SPB deformations (9 theorems: associativity, cancellation, Pythagorean connection)
-    - Niven integral framework (8 theorems: key bounds for irrationality)
-    - Berggren factoring (13 theorems: all 3 matrix transformations, Lorentz form)
-    - Idempotent optimization (9 theorems: Maslov dequantization bounds proved)
-    - EML approximation (11 theorems: recovers exp/log, density properties)
-    - Quantum crypto migration (8 theorems: Grover bounds, security reduction framework)
-    - Log-sum-exp bounds proved: max(a,b) ≤ log(exp(a)+exp(b)) ≤ max(a,b)+log(2)
+    7. BUILD ON VERIFIED RESULTS: Extend theorems already proved in this project.
+       The verified results below are YOUR foundation — use them as stepping stones
+       to reach deeper theorems that single-cycle research cannot achieve.
 
-    ## Priority Open Problems (use sorry_fill mode for these)
+    ## Research Context: Verified Results (Aristotle + Manual)
 
-    1. Carmichael composite case (Shared/CarmichaelComposite.lean):
-       For composite n≥13, F(n) has a primitive prime divisor.
-       Key lemma needed: F(n) > product of F(d) for proper divisors d of n.
-       Strategy: lifting-the-exponent or direct growth comparison.
+    Recent world-class verified results from this project:
+    - Tropical certified robustness: 9 theorems proving r*=margin/(2Kd) for ReLU networks
+    - Tropical Satake isomorphism: 22 theorems formalizing tropical Hecke algebra for GL₂
+    - Carmichael computational verification: native_decide for n ∈ [13,10000]
+    - Aristotle Loop verification: UCB regret bounds, EML closure, superadditivity
+    - Algebra-EML bridge: 7 theorems connecting exp-log-logistic to algebraic structures
 
-    2. Fibonacci primitive divisor existence (Shared/Fib_gcd_identity.lean):
-       For n≥13, F(n) has a prime p with p dividing F(n) but not F(k) for 0<k<n.
-       Strategy: Entry-point argument plus Zsygmondy-type reasoning.
+    The catalog has ~48,000 declarations across ~2,687 files, with 17 remaining sorries.
+
+    ## Priority Research Directions (NOT just sorry_fill)
+
+    For PROVE mode — target novel, publishable results:
+    - Tropical-ML bridge: extend certified robustness to ResNets, multi-class, skip connections
+    - Tropical-Langlands: Satake for GL_n (n>2), connection to p-adic Satake
+    - EML-Physics: Stone-Weierstrass for EML closure, universal approximation theorem
+    - Algebra-Computation: integer factoring via tropical, Carmichael improvements
+
+    For FORMALIZE mode — formalize existing deep mathematical ideas:
+    - Lifting-the-exponent lemma for Fibonacci (enables Carmichael n>10000)
+    - Tropical Fenchel theorem for max-plus convex sets
+    - EML dynamical systems: fixed point theorems for EML iterations
+
+    For SORRY_fill mode (remaining targets):
+    - Carmichael composite n > 10000 (requires LTE lemma)
+    - PadicHyperdrive instability (Speculative/SciFi)
+    - TropicalBerggrenAnalysis (Speculative/AutoResearch)
 
     3. fib_composite_has_primitive (Shared/CarmichaelComputational.lean):
        Composite-index Fibonacci primitive divisor existence.
@@ -576,7 +590,7 @@ class PiAgentClient:
         # Cloud models often timeout on large prompts - local generator is faster
         if self.compact:
             # Cloud/compact mode: shorter timeout since we have local fallback
-            concept_raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=60)
+            concept_raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=150)
             parsed = self._parse_json_response(concept_raw) if concept_raw and not concept_raw.startswith("[OLLAMA") else None
         else:
             # Local model: give more time
@@ -937,7 +951,7 @@ class PiAgentClient:
             print(f"[Pi-Agent] Using direct prompt (compact mode, enrichment skipped)")
             return direct_prompt
 
-        raw = self._call_ollama(_PROMPT_WRITING_SYSTEM_PROMPT, enrichment_request, timeout=60)
+        raw = self._call_ollama(_PROMPT_WRITING_SYSTEM_PROMPT, enrichment_request, timeout=150)
 
         # For compact/cloud mode, skip enrichment if LLM is slow to respond
         # The direct prompt is already well-structured for Aristotle

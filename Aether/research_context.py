@@ -256,15 +256,47 @@ class ResearchContext:
 
         This gives Aristotle a running list of theorems it can reference
         in its proof work, so it builds on existing results.
+        Includes file locations so Aristotle can import them.
         """
         if not self.global_theorems_proved:
             return ""
 
+        # Map theorems to their source files for better referencing
+        theorem_file_map = {
+            # Our manually verified files
+            'regret_nonneg': 'MachineLearning/SelfImproving/AristotleLoopVerification',
+            'ucb_ge_mean': 'MachineLearning/SelfImproving/AristotleLoopVerification',
+            'information_bound': 'MachineLearning/SelfImproving/AristotleLoopVerification',
+            'eml_exp': 'Bridges/AlgebraEMLBridge',
+            'eml_add_bridge': 'Bridges/AlgebraEMLBridge',
+            'synergy_superadditivity': 'MachineLearning/SelfImproving/AristotleLoopVerification',
+            # Aristotle-verified files
+            'linftyNorm_nonneg': 'Tropical/NeuralNetworks/TropicalDegreeRobustness',
+            'tropical_monomial_lipschitz': 'Tropical/NeuralNetworks/TropicalDegreeRobustness',
+            'margin_preservation': 'Tropical/NeuralNetworks/TropicalDegreeRobustness',
+            'certifiedRobustness_from_margin': 'Tropical/NeuralNetworks/TropicalDegreeRobustness',
+            'tropicalLipschitzBound': 'Tropical/NeuralNetworks/TropicalDegreeRobustness',
+            'satakeImage_weyl_invariant': 'Tropical/Langlands/SatakeIsomorphism',
+            'satakeImage_eq_nsmul_max': 'Tropical/Langlands/SatakeIsomorphism',
+            'satakeTransform_bijective': 'Tropical/Langlands/SatakeIsomorphism',
+            'bridge_lemma': 'Shared/CarmichaelProof',
+            'fib_carmichael_composite': 'Shared/CarmichaelProof',
+            'primPart_implies_primitive': 'Shared/CarmichaelProof',
+        }
+
         # Deduplicate and limit
         unique = list(dict.fromkeys(self.global_theorems_proved))[:40]
-        return "Previously proved theorems in this project:\n" + "\n".join(
-            f"  - {t}" for t in unique
-        )
+
+        lines = ["Previously proved theorems (verified, compile via `lake build`):"]
+        lines.append("")
+        for t in unique:
+            file = theorem_file_map.get(t, "verified file")
+            lines.append(f"  - {t} (from {file})")
+
+        lines.append("")
+        lines.append("These theorems can be imported and USED in new proofs.")
+        lines.append("Build on them — extend verified results to new domains.")
+        return "\n".join(lines)
 
     def get_best_domains(self, limit: int = 5) -> List[str]:
         """Return domains with highest success rates for guiding concept selection."""

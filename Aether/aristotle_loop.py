@@ -420,12 +420,22 @@ class AristotleLoop:
         # Select domain via UCB
         domain, ucb_score = self.ucb.select_domain(forced_domain)
 
-        # Select research mode (sorry_fill gets priority if targets exist)
-        if sorry_targets and domain in {"Pythagorean", "Shared", "Computation", "Speculative"}:
+        # Select research mode
+        # PROVE and FORMALIZE produce world-class results (as shown by Aristotle's
+        # tropical robustness and Satake isomorphism). SORRY_FILL is valuable but
+        # tends to produce computational verification, not deep theory.
+        # Prioritize prove/formalize for novelty; sorry_fill for closing problems.
+        if sorry_targets and domain in {"Pythagorean", "Shared"} and len(sorry_targets) <= 3:
+            # Only sorry_fill on Pythagorean/Shared if there are few targets left
             mode = "sorry_fill"
             mode_score = 1.0
         else:
             mode, mode_score = self.ucb.select_mode(domain)
+            # Boost prove and formalize modes — they produce better research
+            if mode == "formalize":
+                mode_score *= 1.3
+            elif mode == "prove":
+                mode_score *= 1.2
 
         # Check for diminishing returns in the selected domain
         stats = self.ucb.domain_stats.get(domain, DomainStats())
