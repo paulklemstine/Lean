@@ -311,7 +311,8 @@ class PiAgentClient:
         self.catalog_root = Path(catalog_root) if catalog_root else None
         self.timeout = timeout
         self.compact = compact
-        self.client = httpx.Client(timeout=timeout)
+        # Use max timeout for client connection, use per-request timeouts for operations
+        self.client = httpx.Client(timeout=httpx.Timeout(connect=30.0, read=300.0, write=30.0, pool=30.0))
 
         # CatalogAnalyzer for reference selection
         self.catalog_analyzer: Optional[CatalogAnalyzer] = None
@@ -386,7 +387,7 @@ class PiAgentClient:
 
             return content
         except httpx.TimeoutException:
-            print(f"[Pi-Agent] ← ollama TIMEOUT after {self.timeout}s")
+            print(f"[Pi-Agent] ← ollama TIMEOUT after {request_timeout}s")
             return f"[OLLAMA_TIMEOUT: Request timed out after {self.timeout}s]"
         except httpx.HTTPStatusError as e:
             print(f"[Pi-Agent] ← ollama HTTP error: {e.response.status_code}")
