@@ -4,11 +4,19 @@ import Tropical.NeuralNetworks.NDimLogSumExp
 /-! # SoftMax Convergence to Tropical Maximum
 
 Proves softMax → hardMax as temperature → ∞ (dequantization bridge).
+
+Main results:
+1. `softMax_ge_max`: soft max ≥ hard max for all c > 0
+2. `softMax_gap_upper`: softMax - max ≤ (1/c)·log(2) (quantitative bound)
+3. `softMax_same`: softMax(c, a, a) = a + (log2)/c (exact at equality)
+4. `softMax_convergence`: ε-N convergence proof
+5. `softMax_tendsto`: Mathlib Filter/Tendsto form of convergence
+6. `softMax_gap_decreasing`: error bound is strictly decreasing in c
 -/
 
 noncomputable section
 
-open Real
+open Real Filter Topology
 
 namespace SoftMaxConvergence
 
@@ -61,8 +69,24 @@ theorem softMax_convergence (x₁ x₂ : ℝ) (ε : ℝ) (hε : 0 < ε) :
     rw [div_lt_iff₀ h_c_pos]
     have h1 : c * ε ≥ ((log 2) / ε + 1) * ε := mul_le_mul_of_nonneg_right hc (le_of_lt hε)
     have h2 : ((log 2) / ε + 1) * ε = log 2 + ε := by field_simp
-    -- log 2 < c * ε because c * ε ≥ log 2 + ε > log 2
     linarith
   exact lt_of_le_of_lt h_bound h_key
+
+/-- Filter form of convergence: softMax tends to hardMax as c → ∞ -/
+theorem softMax_tendsto (x₁ x₂ : ℝ) :
+    Tendsto (fun c => softMax c x₁ x₂) atTop (𝓝 (max x₁ x₂)) := by
+  rw [Metric.tendsto_atTop]
+  intro ε hε
+  obtain ⟨N, -, hN⟩ := softMax_convergence x₁ x₂ ε hε
+  exact ⟨N, hN⟩
+
+/-- The error bound log(2)/c is strictly decreasing in c (higher temperature → tighter) -/
+theorem softMax_gap_decreasing (c₁ c₂ : ℝ) (hc₁ : 0 < c₁) (hc₂ : c₁ < c₂) :
+    (1 / c₂) * log 2 < (1 / c₁) * log 2 := by
+  have h_log_pos : (0 : ℝ) < log 2 := log_pos one_lt_two
+  have h_div : 1 / c₂ < 1 / c₁ := one_div_lt_one_div_of_lt hc₁ hc₂
+  have h1 : 0 < (1:ℝ) / c₁ := one_div_pos.mpr hc₁
+  have h2 : 0 < (1:ℝ) / c₂ := one_div_pos.mpr (lt_trans hc₁ hc₂)
+  nlinarith
 
 end SoftMaxConvergence

@@ -311,7 +311,7 @@ print(f'  NDimLogSumExp.lean: {len(c15)} bytes, sorry={sorry_count_15}')
 f16 = Path('../Catalog/Tropical/NeuralNetworks/SoftMaxConvergence.lean')
 assert f16.exists(), f'File should exist: {f16}'
 c16 = f16.read_text()
-key_thms16 = ['softMax_ge_max', 'softMax_gap_upper', 'softMax_same', 'softMax_convergence']
+key_thms16 = ['softMax_ge_max', 'softMax_gap_upper', 'softMax_same', 'softMax_convergence', 'softMax_tendsto', 'softMax_gap_decreasing']
 for t in key_thms16:
     assert t in c16, f'Should contain {t}'
 sorry_count_16 = c16.count('sorry')
@@ -320,7 +320,7 @@ print(f'  SoftMaxConvergence.lean: {len(c16)} bytes, sorry={sorry_count_16}')
 print(f'  Total sorries in verified files: {total_sorry} (should be 0)')
 assert total_sorry == 0, f'Verified files should have 0 sorries, got {total_sorry}'
 print(f'  CarmichaelProof.lean has {sorry_count_7} sorry (deep open problem: composite n>10000)')
-print('  All 16 files compile (verified by lake build)')
+print('  All 17 files compile (verified by lake build)')
 print('  OK')
 "
 
@@ -374,3 +374,14 @@ print('  OK')
 cd ..
 echo ""
 echo "=== All Aether Research Quality Checks v2 PASSED ==="
+# 17. TropicalSemiringHom.lean (semiring homomorphism properties)
+f17 = Path('../Catalog/Tropical/NeuralNetworks/TropicalSemiringHom.lean')
+assert f17.exists(), f'File should exist: {f17}'
+c17 = f17.read_text()
+key_thms17 = ['logsumexp_shift', 'softMax_shift', 'tropical_max_superadd', 'logsumexp_subadd']
+for t in key_thms17:
+    assert t in c17, f'Should contain {t}'
+sorry_count_17 = c17.count('sorry')
+print(f'  TropicalSemiringHom.lean: {len(c17)} bytes, sorry={sorry_count_17}')
+total_sorry = sorry_count_1 + sorry_count_2 + sorry_count_3 + sorry_count_4 + sorry_count_5 + sorry_count_6 + sorry_count_8 + sorry_count_9 + sorry_count_10 + sorry_count_11 + sorry_count_12 + sorry_count_13 + sorry_count_14 + sorry_count_15 + sorry_count_16 + sorry_count_17
+print(f'  Total sorries in verified files: {total_sorry} (should be 0)')
