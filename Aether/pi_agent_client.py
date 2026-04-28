@@ -917,6 +917,12 @@ class PiAgentClient:
             No preamble, no "Here is the enriched prompt:", just the task content.
         """)
 
+        # For compact/cloud mode, skip enrichment entirely - it always times out
+        # The direct prompt is well-structured for Aristotle already
+        if self.compact:
+            print(f"[Pi-Agent] Using direct prompt (compact mode, enrichment skipped)")
+            return direct_prompt
+
         raw = self._call_ollama(_PROMPT_WRITING_SYSTEM_PROMPT, enrichment_request, timeout=60)
 
         # For compact/cloud mode, skip enrichment if LLM is slow to respond
