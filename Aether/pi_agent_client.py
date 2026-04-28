@@ -328,12 +328,15 @@ class PiAgentClient:
         """
         request_timeout = timeout or self.timeout
 
-        # In compact mode, truncate user prompts to keep total under ~4K chars
-        # Cloud reasoning models need shorter context to respond in time
-        if self.compact and len(user) > 3000:
-            user = user[:3000] + "\n[...context truncated for model efficiency...]"
-        if self.compact and len(system) > 1500:
-            system = system[:1500] + "\n[...system prompt truncated...]"
+        # In compact mode, truncate to keep total under ~6K chars
+        # Cloud reasoning models need shorter context for timely responses
+        if self.compact:
+            max_system = 4000
+            max_user = 2000
+            if len(system) > max_system:
+                system = system[:max_system] + "\n[...system prompt truncated for model efficiency...]"
+            if len(user) > max_user:
+                user = user[:max_user] + "\n[...context truncated for model efficiency...]"
 
         # Log the request
         system_preview = system[:200].replace('\n', ' ')
@@ -551,56 +554,21 @@ class PiAgentClient:
             )
 
         user_prompt = textwrap.dedent(f"""\
-            Select the most promising research direction for this cycle.
+            Select ONE domain and ONE specific concept for mathematical research.
 
-            ## Available Domains
-            {chr(10).join(domain_descriptions)}
+            Available domains:
+            {chr(10).join(domain_descriptions[:8])}
 
-            ## Catalog Summary
-            {catalog_summary if catalog_summary else "No catalog summary available."}
+            Sorry targets:
+            {sorry_targets if sorry_targets else "None identified"}
 
-            ## Recent Experiments (avoid repeating these)
-            {exclusion if exclusion else "No recent experiments."}
+            Recent history (avoid repeating):
+            {exclusion if exclusion else "First cycle."}
 
-            ## Successful Patterns (emulate these)
-            {success_patterns if success_patterns else "No successful patterns yet."}
+            Context: {research_context[:500] if research_context else "Cold start."}
 
-            ## Priority Sorry Targets (only for sorry_fill mode)
-            {sorry_targets if sorry_targets else "No priority sorry targets identified."}
-
-            ## Research Discoveries (build on these)
-            {research_context if research_context else "No previous research cycles completed yet."}
-
-            Select ONE domain and ONE specific concept to investigate. Choose something
-            novel, interesting, and likely to produce substantial formal mathematics.
-
-            IMPORTANT DIVERSITY RULES:
-            - Do NOT always select Carmichael/Fibonacci sorry_fill. That problem 
-              is already being worked on by other projects. Try OTHER domains.
-            - If the forced domain is NOT pythagorean/number-theory, select a 
-              concept WITHIN that domain, not Carmichael.
-            - For "prove" mode, find genuinely NEW theorems (not sorried ones).
-            - For "formalize" mode, formalize a novel mathematical idea.
-            - Only choose sorry_fill when the forced domain directly matches the 
-              sorry target's domain (e.g., Pythagorean for Carmichael).
-            - VARY your approach: try tropical, EML, algebra, physics, logic 
-              domains with prove/formalize modes.
-            - When a recent discovery found an open problem or future direction, 
-              prioritize extending or completing that line of research.
-
-            Respond with JSON:
-            {{
-              "domain": "domain_id",
-              "concept_title": "snake_case_title_for_the_theorem",
-              "concept_description": "2-3 sentence description of the concept and why it matters",
-              "mathematical_framing": "formal mathematical statement or sketch",
-              "lean_guess": "optional Lean 4 sketch of the theorem statement",
-              "catalog_references": ["Domain/Subdir/File.lean", ...],
-              "research_mode": "prove|formalize|counterexample|sorry_fill",
-              "novelty_estimate": 0.0-1.0,
-              "breakthrough_potential": 0.0-1.0,
-              "key_references": ["reference1", "reference2"]
-            }}
+            IMPORTANT: Choose sorry_fill only for Pythagorean/Number Theory domains. Vary domains.
+            Respond with JSON: {{"domain": "...", "concept_title": "...", "concept_description": "...", "mathematical_framing": "...", "lean_guess": "", "catalog_references": ["..."], "research_mode": "prove|sorry_fill", "novelty_estimate": 0.0-1.0, "breakthrough_potential": 0.0-1.0, "key_references": ["..."]}}
         """)
 
         raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=90)
