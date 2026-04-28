@@ -125,6 +125,7 @@ class PiAgentOrchestrator:
             memory=self.memory,
             catalog_root=self.catalog_root,
             timeout=pi_cfg.get("timeout", 300),
+            compact="cloud" in pi_cfg.get("model", "glm-5.1:cloud").lower(),
         )
 
         self.catalog_analyzer = CatalogAnalyzer(self.catalog_root)

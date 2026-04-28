@@ -304,11 +304,13 @@ class PiAgentClient:
         memory: Optional[ResearchMemory] = None,
         catalog_root: Optional[Path] = None,
         timeout: int = 300,
+        compact: bool = False,
     ):
         self.model = model
         self.memory = memory
         self.catalog_root = Path(catalog_root) if catalog_root else None
         self.timeout = timeout
+        self.compact = compact
         self.client = httpx.Client(timeout=timeout)
 
         # CatalogAnalyzer for reference selection
@@ -325,6 +327,13 @@ class PiAgentClient:
             timeout: Override timeout in seconds (uses self.timeout if None)
         """
         request_timeout = timeout or self.timeout
+
+        # In compact mode, truncate user prompts to keep total under ~4K chars
+        # Cloud reasoning models need shorter context to respond in time
+        if self.compact and len(user) > 3000:
+            user = user[:3000] + "\n[...context truncated for model efficiency...]"
+        if self.compact and len(system) > 1500:
+            system = system[:1500] + "\n[...system prompt truncated...]"
 
         # Log the request
         system_preview = system[:200].replace('\n', ' ')

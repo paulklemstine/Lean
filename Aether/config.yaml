@@ -4,7 +4,7 @@
 pi_agent:
   model: "kimi-k2.6:cloud"
   ollama_base_url: "http://127.0.0.1:11434"
-  timeout: 300
+  timeout: 600
   max_catalog_references: 12
   max_lines_per_reference: 150
   temperature: 0.85
