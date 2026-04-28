@@ -275,13 +275,30 @@ class PiAgentOrchestrator:
             concept.research_mode = "sorry_fill"
 
         # Validate concept quality — reject garbage from LLM failures
-        if (concept.novelty_estimate < 0.1 or
+        # Enhanced validation: reject concepts that will lead to trivial theorems
+        is_trivial_pattern = (
+            concept.novelty_estimate < 0.1 or
             concept.breakthrough_potential < 0.1 or
             concept.title.startswith("research_concept_") or
             concept.mathematical_framing in ("", "TBD", "N/A") or
-            len(concept.concept_description) < 20):
+            len(concept.concept_description) < 20 or
+            # Reject generic placeholder-style concepts
+            "{X : Type*}" in concept.lean_guess or
+            "[Inhabited X]" in concept.lean_guess or
+            "True :=" in concept.lean_guess
+        )
+        # Also reject if concept is too vague (no specific math)
+        is_too_vague = (
+            len(concept.key_references) == 0 and
+            len(concept.catalog_references) == 0 and
+            concept.research_mode != "sorry_fill"
+        )
+        if is_trivial_pattern:
             print(f"[Prepare #{cycle_n}] REJECTED low-quality concept: {concept.title} "
                   f"(novelty={concept.novelty_estimate:.2f}, breakthrough={concept.breakthrough_potential:.2f})")
+            return None
+        if is_too_vague and attempt > 0:
+            print(f"[Prepare #{cycle_n}] REJECTED vague concept (no refs): {concept.title}")
             return None
 
         print(f"[Prepare #{cycle_n}] Concept: {concept.title} | Domain: {concept.domain} | Mode: {concept.research_mode}")

@@ -221,6 +221,12 @@ _QUALITY_SYSTEM_PROMPT = textwrap.dedent("""\
       toward a deeper result
     - Multiplies low-value theorems without adding insight (e.g., proving
       10 obvious facts about the same definition)
+    - ANY theorem of the form `theorem name {X : Type*} [Inhabited X] : True :='
+      is ALWAYS trivial regardless of how impressive the name sounds
+    - Generic parameter `{X : Type*}` with only `[Inhabited X]` as instance
+      and proving `True` is the signature pattern of trivial placeholder outputs
+    - If the ONLY proof tactics are `trivial`, `exact True.intro`, `decide`,
+      or `rfl` for EVERY theorem, the result is trivial
 
     ### PARTIAL (quality: partial, score: 0.3-0.6)
     A result is partial if:
@@ -933,6 +939,20 @@ class PiAgentClient:
             # Just definitions, no proofs — this could be valuable or not
             # Let the LLM judge
             return False
+
+        # CRITICAL: Check for the signature pattern of placeholder triviality
+        # {X : Type*} [Inhabited X] : True := by trivial
+        # This is the #1 indicator of garbage output from lazy LLMs
+        import re as _re
+        trivial_pattern = _re.compile(
+            r'theorem\s+\w+[^:]*\{[^}]*Type\*?\}[^:]*\[Inhabited[^]]*\][^:]*:\s*True\s*:=\s*by\s*trivial'
+        )
+        if trivial_pattern.search(lean_source):
+            # Count how many theorems match this pattern vs total
+            trivial_matches = len(trivial_pattern.findall(lean_source))
+            if trivial_matches >= theorem_count * 0.5:
+                # More than half the theorems are this pattern — trivial output
+                return True
 
         return False
 
