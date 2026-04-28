@@ -536,11 +536,15 @@ class PiAgentClient:
     ) -> str:
         """Dynamically write the full Aristotle prompt.
 
-        Pi-Agent receives the concept, the referenced Catalog files,
-        and research history. It writes the entire prompt text --
-        research brief, context, instructions, deliverables.
+        Composes a prompt that is sent DIRECTLY to Aristotle (the theorem prover).
+        This is NOT a meta-instruction asking someone to write a brief — it is
+        the actual task description Aristotle receives.
 
-        This replaces PromptEngine entirely. No templates.
+        Strategy:
+        1. Build a complete direct-to-Aristotle prompt with all context
+        2. Ask the LLM (Pi-Agent) to enrich it with deeper mathematical insight
+        3. Strip any LLM preamble/echo before returning
+        4. Fall back to the direct prompt (never a meta-instruction) if LLM fails
 
         Args:
             theorem_context: Previously proved theorems from ResearchContext,
@@ -555,14 +559,14 @@ class PiAgentClient:
         elif catalog_context:
             ref_section = catalog_context
 
-        # Research mode instructions
+        # Research mode instructions (addressed directly to Aristotle)
         mode_instructions = {
             "prove": textwrap.dedent("""\
                 Research Mode: PROVE
 
-                You are asked to discover and prove a new theorem. Start from the
-                mathematical context provided and find an interesting, non-trivial
-                result that can be formally proven in Lean 4. The theorem should be
+                Discover and prove a new theorem. Start from the mathematical
+                context provided and find an interesting, non-trivial result
+                that can be formally proven in Lean 4. The theorem should be
                 specific enough to prove, but general enough to be mathematically
                 interesting. Avoid trivial tautologies.
             """),
@@ -570,18 +574,18 @@ class PiAgentClient:
                 Research Mode: FORMALIZE
 
                 You are given informal mathematical ideas, notes, or a paper excerpt.
-                Your task is to formalize these ideas in Lean 4. Translate the
-                informal mathematics into precise definitions and theorem statements,
-                then prove what you can. If some parts require new axioms, declare
-                them clearly and prove consequences.
+                Formalize these ideas in Lean 4. Translate the informal mathematics
+                into precise definitions and theorem statements, then prove what you
+                can. If some parts require new axioms, declare them clearly and prove
+                consequences.
             """),
             "counterexample": textwrap.dedent("""\
                 Research Mode: COUNTEREXAMPLE
 
-                You are asked to find a counterexample to a stated conjecture. If
-                the conjecture is false, provide a specific counterexample formalized
-                in Lean 4 and prove that it contradicts the conjecture. If the
-                conjecture is actually true, prove it instead.
+                Find a counterexample to a stated conjecture. If the conjecture is
+                false, provide a specific counterexample formalized in Lean 4 and
+                prove that it contradicts the conjecture. If the conjecture is
+                actually true, prove it instead.
             """),
             "sorry_fill": textwrap.dedent("""\
                 Research Mode: SORRY_FILL
@@ -605,7 +609,7 @@ class PiAgentClient:
 
                 5. Priority targets with known strategies:
                    - CarmichaelComposite: Use entry-point theory + growth bounds
-                   - Fib_gcd_identity: Zsygmondy-type argument + entry point divides n
+                   - Fib_gcd_identity: Zsigmondy-type argument + entry point divides n
                    - CarmichaelComputational: Same as CarmichaelComposite approach
 
                 6. Make sure your proof typechecks. A proof that compiles with
@@ -627,22 +631,27 @@ class PiAgentClient:
             for title, reason in zip(failure_titles, failure_reasons):
                 history_section += f"\n  - {title}: {reason}"
 
-        user_prompt = textwrap.dedent(f"""\
-            Write a research brief for Aristotle, a brilliant Lean 4 formal
-            mathematician. The brief must be specific, mathematically precise,
-            and contain enough structure for Aristotle to produce a world-class result.
-
-            ## Concept to Investigate
-            - Title: {concept.title}
-            - Domain: {concept.domain}
-            - Description: {concept.concept_description}
-            - Mathematical Framing: {concept.mathematical_framing}
-            {"- Lean Sketch: " + concept.lean_guess if concept.lean_guess else ""}
-            - Research Mode: {concept.research_mode}
+        # ---- DIRECT ARISTOTLE PROMPT ----
+        # This is the prompt sent directly to Aristotle. It addresses Aristotle
+        # as the theorem prover, not as a brief-writer intermediary.
+        direct_prompt = textwrap.dedent(f"""\
+            ## Research Task: {concept.title}
 
             {mode_instruction}
 
-            ## Catalog Context
+            ### Mathematical Objective
+            {concept.concept_description}
+
+            ### Precise Mathematical Framing
+            {concept.mathematical_framing}
+
+            {"### Lean 4 Sketch\\n" + concept.lean_guess if concept.lean_guess else ""}
+
+            ### Proof Strategy
+            This result is significant because it advances the {concept.domain} domain.
+            {"The goal is to fill existing `sorry` placeholders — do not change theorem statements." if concept.research_mode == "sorry_fill" else "Produce novel, non-trivial theorems with complete Lean 4 proofs."}
+
+            ### Catalog Context
             The theorem catalog has these relevant files that you should study as
             context. They contain existing theorems, definitions, and structures
             that you can build upon:
@@ -651,45 +660,94 @@ class PiAgentClient:
 
             {history_section if history_section else ""}
 
-            {"## Previously Proved Theorems (build on these)\\n" + theorem_context if theorem_context else ""}
+            {"### Previously Proved Theorems (build on these)\\n" + theorem_context if theorem_context else ""}
 
-            ## Required Structure for the Research Brief
-
-            Your research brief MUST include these sections:
-
-            ### 1. Mathematical Background (2-3 paragraphs)
-            Explain the mathematical context, motivations, and why this result
-            matters. Reference specific theorems from the catalog or Mathlib.
-
-            ### 2. Precise Theorem Statement
-            Give the EXACT Lean 4 type signature of the main theorem, including
-            all hypotheses. Use quantifiers (∀ ∃), type class constraints, and
-            precise numerical bounds. No vagueness.
-
-            ### 3. Proof Strategy Outline
-            Describe the key mathematical insight and proof approach in 3-5 steps.
-            For example: "Step 1: Prove the growth bound F(n) > 2^(n/3) by strong
-            induction. Step 2: Show the entry point divides n using gcd properties.
-            Step 3: Conclude by showing the primitive part is > 1."
-
-            ### 4. Key Lemmas Needed
-            List the 2-4 specific lemmas that are needed to complete the proof,
-            with their Lean 4 type signatures.
-
-            ### 5. Expected Deliverables
+            ### Expected Deliverables
             - Complete Lean 4 file with imports, definitions, and proofs
             - RESEARCH_REPORT.md explaining significance
             - demo.py with concrete numerical examples
             - diagram.svg visualizing the main concept
             - DISCUSSION.md in Scientific American style
-
-            Write the complete research brief now. Be specific, creative, and
-            mathematically rigorous. This is a conversation between mathematicians,
-            not a homework assignment.
         """)
 
-        raw = self._call_ollama(_PROMPT_WRITING_SYSTEM_PROMPT, user_prompt)
-        return raw if raw and not raw.startswith("[OLLAMA") else user_prompt
+        # ---- LLM ENRICHMENT ----
+        # Ask Pi-Agent to enrich the direct prompt with deeper mathematical insight.
+        # The output must still be a direct-to-Aristotle prompt, not a meta-instruction.
+        enrichment_request = textwrap.dedent(f"""\
+            Below is a research prompt that will be sent directly to Aristotle (a
+            Lean 4 theorem prover). Your job is to ENRICH it with deeper mathematical
+            insight, specific proof strategy hints, and precise Lean 4 type signatures.
+            Do NOT add meta-instructions like "Write a brief" — the output goes
+            directly to Aristotle, who is a theorem prover, not a person.
+
+            Keep all the existing sections. Add depth to:
+            - The precise theorem statement (give exact Lean 4 type signature)
+            - The proof strategy (add 3-5 concrete proof steps with key lemmas)
+            - The significance (explain why this matters to the research program)
+
+            ---
+            {direct_prompt}
+            ---
+
+            Output the enriched prompt text ONLY. No preamble, no "Here is the
+            enriched prompt:", just the prompt itself.
+        """)
+
+        raw = self._call_ollama(_PROMPT_WRITING_SYSTEM_PROMPT, enrichment_request)
+
+        if raw and not raw.startswith("[OLLAMA"):
+            # Strip common LLM preamble patterns that would confuse Aristotle
+            cleaned = self._strip_llm_preamble(raw)
+            return cleaned if cleaned else direct_prompt
+        else:
+            # Fallback: use the direct prompt (never a meta-instruction)
+            return direct_prompt
+
+    @staticmethod
+    def _strip_llm_preamble(text: str) -> str:
+        """Strip common LLM preamble/echo patterns from enriched prompts.
+
+        LLMs often echo instructions before the actual content. This removes:
+        - "Here is the enriched prompt:" style headers
+        - "Sure! Here's..." style acknowledgments
+        - Markdown code fences wrapping the entire output
+        - Leading instruction echoes like "Write a research brief..."
+        - Blank lines between preamble and content
+        """
+        import re
+        lines = text.strip().split('\n')
+
+        # Preamble patterns that indicate a line is NOT real content
+        preamble_patterns = [
+            r"here\s+is\s+the", r"here'?s\s+the", r"^sure!?$", r"^certainly!?$",
+            r"^of\s+course!?$", r"write\s+a\s+research\s+brief", r"i'?ll\s+write",
+            r"below\s+is\s+the", r"the\s+enriched\s+prompt", r"^```markdown$",
+            r"^```text$", r"^```\s*$",
+        ]
+
+        # Skip all leading preamble lines (including blank lines before content)
+        content_start = 0
+        for i, line in enumerate(lines):
+            if i >= 10:  # Don't strip more than 10 lines of preamble
+                break
+            stripped = line.strip()
+            stripped_lower = stripped.lower()
+            is_preamble = any(re.search(p, stripped_lower) for p in preamble_patterns)
+            is_blank = stripped == ""
+            if is_preamble or is_blank:
+                content_start = i + 1
+            else:
+                # Found the start of real content
+                break
+
+        result_lines = lines[content_start:]
+
+        # Strip trailing code fence if present
+        while result_lines and result_lines[-1].strip() == "```":
+            result_lines = result_lines[:-1]
+
+        result = '\n'.join(result_lines).strip()
+        return result if len(result) > 100 else text.strip()
 
     # ------------------------------------------------------------------
     # Result quality evaluation

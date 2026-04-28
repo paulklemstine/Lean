@@ -190,5 +190,52 @@ print('  OK')
 "
 
 cd ..
+
+# Check 9: Aristotle prompt addresses Aristotle directly (not meta-instructions)
+echo "Check 9: Aristotle prompt addresses Aristotle directly..."
+cd Aether
+python3 -c "
+from pi_agent_client import PiAgentClient, ResearchConcept
+
+# Test 1: The direct prompt should NOT start with 'Write a research brief'
+concept = ResearchConcept(
+    title='test_theorem',
+    domain='tropical',
+    concept_description='Test description',
+    mathematical_framing='Test framing',
+    lean_guess=None,
+    catalog_references=[],
+    research_mode='prove',
+    novelty_estimate=0.7,
+    breakthrough_potential=0.8,
+    key_references=[],
+)
+client = PiAgentClient()
+# Simulate ollama failure to get the fallback direct prompt
+import unittest.mock
+with unittest.mock.patch.object(client, '_call_ollama', return_value='[OLLAMA_ERROR: test]'):
+    prompt = client.write_aristotle_prompt(concept)
+    assert not prompt.strip().lower().startswith('write a research brief'), \
+        f'Prompt should not start with meta-instruction, got: {prompt[:60]}'
+    assert '## Research Task: test_theorem' in prompt, \
+        f'Prompt should have Research Task header, got: {prompt[:60]}'
+    print(f'  Fallback prompt starts with: {prompt.strip()[:60]}')
+
+# Test 2: Preamble stripping works
+test_input = 'Sure! Here is the enriched prompt:\n\n## Research Task: test\nContent here' * 5
+cleaned = PiAgentClient._strip_llm_preamble(test_input)
+assert cleaned.startswith('## Research Task'), f'Should strip preamble, got: {cleaned[:60]}'
+print(f'  Preamble stripping: OK')
+
+# Test 3: Mode instructions address Aristotle directly (not third person)
+import inspect
+src = inspect.getsource(client.write_aristotle_prompt)
+assert 'You are asked to' not in src or 'Your task is' in src, \
+    'Mode instructions should address Aristotle directly'
+print(f'  Mode instructions: address Aristotle directly')
+print('  OK')
+"
+
+cd ..
 echo ""
 echo "=== All Aether Research Quality Checks v2 PASSED ==="
