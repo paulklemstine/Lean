@@ -320,7 +320,7 @@ sorry_count_16 = c16.count('sorry')
 f17 = Path('../Catalog/Tropical/NeuralNetworks/TropicalSemiringHom.lean')
 assert f17.exists(), f'File should exist: {f17}'
 c17 = f17.read_text()
-key_thms17 = ['logsumexp_shift', 'softMax_shift', 'tropical_max_superadd', 'logsumexp_subadd']
+key_thms17 = ['logsumexp_shift', 'softMax_shift', 'tropical_max_superadd', 'logsumexp_subadd', 'weighted_logsumexp_upper', 'weighted_logsumexp_lower']
 for t in key_thms17:
     assert t in c17, f'Should contain {t}'
 sorry_count_17 = c17.count('sorry')
