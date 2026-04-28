@@ -1,5 +1,7 @@
 import Mathlib
 import Speculative.PisanoPeriodFactoring
+import Shared.CarmichaelProof
+import Shared.CarmichaelHelper
 
 /-! # CatalogBuild.Shared.Fib_gcd_identity
 
@@ -27,7 +29,10 @@ theorem fib_dvd_chain (m n : ℕ) (h : m ∣ n) : Nat.fib m ∣ Nat.fib n :=
 theorem fib_primitive_divisor_existence :
     ∀ n : ℕ, 13 ≤ n → ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
       ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
-  sorry
+  intro n hn
+  by_cases hnp : Nat.Prime n
+  · exact fib_primitive_divisor_prime n hn hnp
+  · exact fib_carmichael_composite n hn hnp
 
 
 

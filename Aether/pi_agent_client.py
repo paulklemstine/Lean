@@ -617,6 +617,9 @@ class PiAgentClient:
         return self._generate_local_concept(domains, sorry_targets_list=None,
                                             research_context=research_context)
 
+    # Class-level state to cycle through concepts (avoids always picking same one)
+    _concept_cycle_index: int = 0
+
     def _generate_local_concept(
         self,
         domains: List[Dict[str, Any]],
@@ -624,29 +627,36 @@ class PiAgentClient:
         research_context: Optional[str] = None,
     ) -> ResearchConcept:
         """Generate a research concept locally without LLM.
-        Uses catalog analysis, sorry targets, and Aristotle Loop
-        recommendations to create high-quality concepts deterministically.
-        """
-        import random
-        import hashlib
 
-        # Priority 1: sorry_fill on priority targets (highest value)
-        if self.catalog_analyzer:
+        Cycles through sorry_fill, cross-domain bridges, and research arcs
+        in a round-robin fashion to maximize diversity.
+        """
+        from output_organizer import normalize_domain
+        import random
+
+        # Determine which type of concept to generate this cycle
+        # 40% sorry_fill, 40% cross-domain bridge, 20% research arc
+        cycle = PiAgentClient._concept_cycle_index
+        PiAgentClient._concept_cycle_index += 1
+        mode = cycle % 5  # 0,1 = sorry_fill, 2,3 = bridge, 4 = arc
+
+        # Priority 1: sorry_fill on priority targets (cycles through all targets)
+        if mode < 2 and self.catalog_analyzer:
             sorry_files = self.catalog_analyzer.get_priority_sorry_targets()
             if sorry_files:
-                target = sorry_files[0]
-                domain = target.domain or "Shared"
-                # Normalize domain
-                from output_organizer import normalize_domain
-                domain = normalize_domain(domain)
+                # Round-robin through sorry files instead of always picking [0]
+                idx = (cycle // 2) % len(sorry_files)
+                target = sorry_files[idx]
+                domain = normalize_domain(target.domain or "Shared")
 
-                # Choose a research mode based on sorry targets
                 concept_title = f"{target.declarations[0]}_proof" if target.declarations else f"fill_{Path(target.relative_path).stem}"
                 concept_desc = (f"Fill the sorry in {target.relative_path} "
                                f"({target.sorry_count} sorries remaining). "
                                f"Key declarations: {', '.join(target.declarations[:5])}. "
                                f"This advances a known open problem in {domain}.")
                 math_framing = f"Complete the proof of {target.declarations[0]} in {target.relative_path}."
+
+                print(f"[Local] sorry_fill target {idx+1}/{len(sorry_files)}: {target.relative_path}")
 
                 return ResearchConcept(
                     title=concept_title,
@@ -662,26 +672,31 @@ class PiAgentClient:
                 )
 
         # Priority 2: Cross-domain bridges (highest novelty)
-        if self.catalog_analyzer:
-            bridges = self.catalog_analyzer.find_missing_bridges(limit=5)
+        if mode < 4 and self.catalog_analyzer:
+            bridges = self.catalog_analyzer.find_missing_bridges(limit=20)
             if bridges:
-                bridge = random.choice(bridges)
-                d_a, d_b, syn = bridge
-                from output_organizer import normalize_domain
+                # Cycle through bridges too
+                bridge_idx = (cycle // 5) % len(bridges)
+                d_a, d_b, syn = bridges[bridge_idx]
                 domain = normalize_domain(d_b)
                 concept_title = f"{d_a.lower()}_{d_b.lower()}_bridge_theorem"
                 concept_desc = (f"Formal bridge between {d_a} and {d_b} mathematics. "
                                f"Cross-domain synergy score: {syn:.2f}. "
-                               f"Prove a theorem connecting {d_a.lower()} structures "
-                               f"to {d_b.lower()} properties.")
-                math_framing = f"Theorem connecting {d_a} and {d_b}: existence of a structure-preserving map or shared invariant."
+                               f"Prove a theorem establishing a structure-preserving map, "
+                               f"shared algebraic invariant, or categorical equivalence "
+                               f"connecting {d_a.lower()} structures to {d_b.lower()} properties.")
+                math_framing = (f"Existence of a non-trivial map f: {d_a} → {d_b} preserving "
+                                f"key structure, or a shared invariant I(X) defined on "
+                                f"both {d_a} and {d_b} objects with functorial properties.")
 
-                # Find files from both domains
+                # Find files from both domains for context
                 refs = []
                 all_files = self.catalog_analyzer.scan()
-                d_a_files = [f for f in all_files if f.relative_path.lower().startswith(d_a.lower()[:8])][:3]
-                d_b_files = [f for f in all_files if f.relative_path.lower().startswith(d_b.lower()[:8])][:3]
+                d_a_files = [f for f in all_files if d_a.lower() in f.relative_path.lower()][:3]
+                d_b_files = [f for f in all_files if d_b.lower() in f.relative_path.lower()][:3]
                 refs = [f.relative_path for f in (d_a_files + d_b_files)[:6]]
+
+                print(f"[Local] bridge target {bridge_idx+1}/{len(bridges)}: {d_a} -> {d_b} (syn={syn:.1f})")
 
                 return ResearchConcept(
                     title=concept_title,
@@ -691,18 +706,17 @@ class PiAgentClient:
                     lean_guess="",
                     catalog_references=refs,
                     research_mode="prove",
-                    novelty_estimate=0.80,
-                    breakthrough_potential=0.85,
+                    novelty_estimate=0.80 + min(syn/1000, 0.15),
+                    breakthrough_potential=0.85 + min(syn/1000, 0.10),
                     key_references=[d_a, d_b],
                 )
 
         # Priority 3: Research arc from config (proven targets)
         if domains:
-            # Filter for research_findings/open_problems if available
             research_domains = [d for d in domains
                               if d.get("_is_open_problem") or d.get("_is_loop_recommendation")]
             if research_domains:
-                d = research_domains[0]
+                d = research_domains[cycle % len(research_domains)]
             else:
                 d = random.choice(domains)
 
@@ -710,7 +724,6 @@ class PiAgentClient:
             concept_desc = d.get('description', d.get('frontier', f"Research in {d.get('id', 'mathematics')}"))
             math_framing = d.get('frontier', concept_desc)
 
-            from output_organizer import normalize_domain
             return ResearchConcept(
                 title=concept_title,
                 domain=normalize_domain(d.get('id', 'speculative')),
