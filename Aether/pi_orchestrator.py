@@ -463,6 +463,42 @@ class PiAgentOrchestrator:
                     concept=concept,
                     prompt=job.prompt,
                 )
+                
+                # ---- Lean Compilation Verification ----
+                # Check if the result directory has a lakefile and can be built.
+                # This is the gold standard: a theorem that compiles is real.
+                result_lakefile = result_dir / "lakefile.toml"
+                if result_lakefile.exists():
+                    try:
+                        import subprocess
+                        print(f"[Process] {exp_id} verifying Lean compilation...")
+                        comp_result = subprocess.run(
+                            ["lake", "build", "Main"],
+                            cwd=str(result_dir),
+                            capture_output=True, text=True, timeout=120,
+                        )
+                        if comp_result.returncode == 0:
+                            print(f"[Process] {exp_id} ✓ LEAN COMPILATION PASSED")
+                            quality_assessment["quality"] = "substantial"
+                            quality_assessment["compiles"] = True
+                        else:
+                            print(f"[Process] {exp_id} ✗ Lean compilation failed")
+                            # Extract error count from output
+                            errors = comp_result.stderr.count("error:")
+                            print(f"[Process] {exp_id}   {errors} error(s)")
+                            if quality_assessment.get("quality") == "substantial":
+                                quality_assessment["quality"] = "partial"
+                            quality_assessment["compiles"] = False
+                            quality_assessment["compile_errors"] = errors
+                    except subprocess.TimeoutExpired:
+                        print(f"[Process] {exp_id} Lean compilation timed out (120s)")
+                        quality_assessment["compiles"] = False
+                    except FileNotFoundError:
+                        print(f"[Process] {exp_id} lake not found in PATH")
+                        quality_assessment["compiles"] = False
+                    except Exception as e:
+                        print(f"[Process] {exp_id} Lean compilation error: {e}")
+                        quality_assessment["compiles"] = False
                 print(f"[Process] {exp_id} Quality: {quality_assessment.get('quality', 'unknown')} "
                       f"(confidence: {quality_assessment.get('confidence', 0):.2f})")
                 print(f"[Pi-Agent] Quality evaluation:")

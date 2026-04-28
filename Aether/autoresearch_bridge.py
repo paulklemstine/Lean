@@ -224,9 +224,17 @@ echo "METRIC $QUALITY concept_quality"
                     elif jaccard > 0.5:
                         novelty_penalty = max(novelty_penalty, 0.15)
 
+        # ---- Lean Compilation Bonus (the gold standard) ----
+        # A theorem that actually compiles in Lean 4 is worth far more
+        # than one that just looks good textually. This is the 
+        # difference between "maybe correct" and "definitely correct".
+        compile_bonus = 0.0
+        if quality_assessment.get("compiles", False):
+            compile_bonus = 0.20  # Major bonus for compilable results
+
         score = (base_quality + depth_bonus + cross_domain_bonus +
-                 open_problem_bonus + ref_bonus + mode_bonus -
-                 length_penalty - novelty_penalty)
+                 open_problem_bonus + ref_bonus + mode_bonus +
+                 compile_bonus - length_penalty - novelty_penalty)
         return max(0.0, min(1.0, score))
 
     def log_result(
