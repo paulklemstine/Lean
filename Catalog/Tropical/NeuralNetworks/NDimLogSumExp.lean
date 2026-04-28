@@ -110,3 +110,4 @@ theorem softmax_loser_disadvantage (x₁ x₂ : ℝ) (h : x₁ < x₂) (c : ℝ)
     mul_le_mul_of_nonneg_left h₂ (by positivity)
 
 end NDimLogSumExp
+
