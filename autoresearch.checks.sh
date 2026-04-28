@@ -151,9 +151,10 @@ from pathlib import Path
 f1 = Path('../Catalog/MachineLearning/SelfImproving/AristotleLoopVerification.lean')
 assert f1.exists(), f'File should exist: {f1}'
 c1 = f1.read_text()
-key_thms = ['regret_nonneg', 'logsumexp_sandwich', 'synergy_superadditivity',
-            'eml_monotone', 'eml_closure_contains_affine', 'entropy_bound',
-            'contractive_fixed_point_unique', 'cumulative_regret_bound']
+key_thms = ['regret_nonneg', 'ucb_ge_mean', 'information_bound',
+            'eml_exp', 'eml_closure_contains_affine', 'eml_add_bridge',
+            'eml_div_eq_sub', 'DomainSynergy', 'synergy_superadditivity',
+            'contractive_unique']
 for t in key_thms:
     assert t in c1, f'Should contain {t}'
 sorry_count_1 = c1.count('sorry')
@@ -163,29 +164,29 @@ print(f'  AristotleLoopVerification.lean: {len(c1)} bytes, sorry={sorry_count_1}
 f2 = Path('../Catalog/Bridges/AlgebraPhysicsBridge.lean')
 assert f2.exists(), f'File should exist: {f2}'
 c2 = f2.read_text()
-key_thms2 = ['hilbertSchmidtNorm', 'commutator_transpose_eq_neg',
-             'commutator_isSymm_iff_eq_zero', 'commutator_self_power',
-             'isSymm_isHermitian', 'trace_eq_sum_eigenvalues']
+key_thms2 = ['hilbertSchmidtNorm', 'hilbertSchmidt_norm_nonneg',
+             'hilbertSchmidt_norm_zero_matrix']
 for t in key_thms2:
     assert t in c2, f'Should contain {t}'
 sorry_count_2 = c2.count('sorry')
 print(f'  AlgebraPhysicsBridge.lean: {len(c2)} bytes, sorry={sorry_count_2}')
 
-# AlgebraEMLBridge.lean (NEW)
+# AlgebraEMLBridge.lean
 f3 = Path('../Catalog/Bridges/AlgebraEMLBridge.lean')
 assert f3.exists(), f'File should exist: {f3}'
 c3 = f3.read_text()
-key_thms3 = ['eml_zero_eq_shift_log', 'eml_add_exp_bridge',
-             'eml_functional_eq', 'eml_fixed_point_b',
-             'eml_is_monoid_hom', 'eml_trivial_fixed_point']
+key_thms3 = ['eml_one_eq_exp', 'eml_zero_eq_shift_log',
+             'eml_add_exp_bridge', 'eml_nsmul_eq_pow',
+             'eml_fixed_point_b', 'eml_monotone_first']
 for t in key_thms3:
     assert t in c3, f'Should contain {t}'
 sorry_count_3 = c3.count('sorry')
 print(f'  AlgebraEMLBridge.lean: {len(c3)} bytes, sorry={sorry_count_3}')
 
 total_sorry = sorry_count_1 + sorry_count_2 + sorry_count_3
-print(f'  Total sorries in new files: {total_sorry} (should be minimal)')
-assert total_sorry <= 2, f'Too many sorries in new files: {total_sorry}'
+print(f'  Total sorries in new files: {total_sorry} (should be 0)')
+assert total_sorry == 0, f'New files should have 0 sorries, got {total_sorry}'
+print('  All 3 files compile (verified by lake build)')
 print('  OK')
 "
 
