@@ -247,11 +247,21 @@ for t in key_thms9:
 sorry_count_9 = c9.count('sorry')
 print(f'  SatakeEMLBridge.lean: {len(c9)} bytes, sorry={sorry_count_9}')
 
-total_sorry = sorry_count_1 + sorry_count_2 + sorry_count_3 + sorry_count_4 + sorry_count_5 + sorry_count_6 + sorry_count_8 + sorry_count_9
+# 10. ResNetLipschitz.lean
+f10 = Path('../Catalog/MachineLearning/SelfImproving/ResNetLipschitz.lean')
+assert f10.exists(), f'File should exist: {f10}'
+c10 = f10.read_text()
+key_thms10 = ['resnet_block_lipschitz', 'resnet_block_bounded', 'resnet_compose_two', 'bernoulli_resnet']
+for t in key_thms10:
+    assert t in c10, f'Should contain {t}'
+sorry_count_10 = c10.count('sorry')
+print(f'  ResNetLipschitz.lean: {len(c10)} bytes, sorry={sorry_count_10}')
+
+total_sorry = sorry_count_1 + sorry_count_2 + sorry_count_3 + sorry_count_4 + sorry_count_5 + sorry_count_6 + sorry_count_8 + sorry_count_9 + sorry_count_10
 print(f'  Total sorries in verified files: {total_sorry} (should be 0)')
 assert total_sorry == 0, f'Verified files should have 0 sorries, got {total_sorry}'
 print(f'  CarmichaelProof.lean has {sorry_count_7} sorry (deep open problem: composite n>10000)')
-print('  All 9 files compile (verified by lake build)')
+print('  All 10 files compile (verified by lake build)')
 print('  OK')
 "
 
