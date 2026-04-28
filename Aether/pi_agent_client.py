@@ -629,7 +629,8 @@ class PiAgentClient:
         # This avoids the 10-minute timeout when cloud models are slow
         print(f"[Pi-Agent] Using local concept generator (LLM unavailable/slow)")
         return self._generate_local_concept(domains, sorry_targets_list=None,
-                                            research_context=research_context)
+                                            research_context=research_context,
+                                            forced_domain=getattr(self, '_forced_domain', None))
 
     # Class-level state to cycle through concepts (avoids always picking same one)
     _concept_cycle_index: int = 0
@@ -639,6 +640,7 @@ class PiAgentClient:
         domains: List[Dict[str, Any]],
         sorry_targets_list: Optional[List] = None,
         research_context: Optional[str] = None,
+        forced_domain: Optional[str] = None,
     ) -> ResearchConcept:
         """Generate a research concept locally without LLM.
 
@@ -649,13 +651,23 @@ class PiAgentClient:
         import random
 
         # Determine which type of concept to generate this cycle
-        # 40% sorry_fill, 40% cross-domain bridge, 20% research arc
+        # Prioritize novel research over sorry_fill (which tends to produce
+        # computational verification, not deep theory). 
+        # 20% sorry_fill, 40% cross-domain bridge, 40% research arc
         cycle = PiAgentClient._concept_cycle_index
         PiAgentClient._concept_cycle_index += 1
-        mode = cycle % 5  # 0,1 = sorry_fill, 2,3 = bridge, 4 = arc
+        mode = cycle % 5  # 0 = sorry_fill, 1,2 = bridge, 3,4 = arc
 
-        # Priority 1: sorry_fill on priority targets (cycles through all targets)
-        if mode < 2 and self.catalog_analyzer:
+        # When forced_domain is not Pythagorean, skip sorry_fill entirely.
+        # We want novel theorems, not just sorry fixes.
+        is_pythagorean = forced_domain is not None and forced_domain.lower() in (
+            "pythagorean", "epythagorean", "shared", "number_theory"
+        )
+        if mode == 0 and not is_pythagorean:
+            mode = 3  # Skip to research arc
+
+        # Priority 1: sorry_fill on priority targets (only when domain matches)
+        if mode == 0 and self.catalog_analyzer:
             sorry_files = self.catalog_analyzer.get_priority_sorry_targets()
             if sorry_files:
                 # Round-robin through sorry files instead of always picking [0]
@@ -725,44 +737,68 @@ class PiAgentClient:
                     key_references=[d_a, d_b],
                 )
 
-        # Priority 3: Research arc from config (proven targets)
-        if domains:
-            research_domains = [d for d in domains
-                              if d.get("_is_open_problem") or d.get("_is_loop_recommendation")]
-            if research_domains:
-                d = research_domains[cycle % len(research_domains)]
-            else:
-                d = random.choice(domains)
-
-            concept_title = f"{d.get('id', 'research')}_{int(time.time()) % 10000:04d}"
-            concept_desc = d.get('description', d.get('frontier', f"Research in {d.get('id', 'mathematics')}"))
-            math_framing = d.get('frontier', concept_desc)
-
-            return ResearchConcept(
-                title=concept_title,
-                domain=normalize_domain(d.get('id', 'speculative')),
-                concept_description=concept_desc[:200],
-                mathematical_framing=math_framing[:200],
-                lean_guess="",
-                catalog_references=[],
-                research_mode=d.get("_recommended_mode", "prove"),
-                novelty_estimate=0.7,
-                breakthrough_potential=0.75,
-                key_references=d.get("seed_domains", d.get("seed_concepts", []))[:3],
-            )
-
-        # Ultimate fallback
+        # Priority 3: Research arc — extensions of our verified results
+        # These are the MOST promising targets because we already have 
+        # proven foundations to build on.
+        RESEARCH_ARCS = [
+            {
+                "title": "tropical_robustness_resnet",
+                "domain": "Tropical",
+                "desc": "Extend certified robustness to residual networks with skip connections",
+                "framing": "For ResNet with skip connections, the tropical degree bounds the Lipschitz constant of the residual path. Prove: certified_robustness_resnet with bound r* = margin/(2*K*(d+1)) where d+1 accounts for the skip.",
+                "mode": "prove",
+                "refs": ["Tropical/NeuralNetworks/TropicalDegreeRobustness.lean"],
+                "novelty": 0.90, "breakthrough": 0.88,
+            },
+            {
+                "title": "satake_gl3_weyl_invariant",
+                "domain": "Tropical",
+                "desc": "Extend tropical Satake isomorphism to GL₃ with S₃ Weyl group",
+                "framing": "For GL₃, the Weyl group is S₃ (6 elements). The Satake image of Tₙ maps to S₃-invariant tropical Laurent polynomials in 3 variables. Prove: satakeImage_gl3_weyl_invariant by permutation invariance.",
+                "mode": "formalize",
+                "refs": ["Tropical/Langlands/SatakeIsomorphism.lean"],
+                "novelty": 0.92, "breakthrough": 0.90,
+            },
+            {
+                "title": "eml_universal_approximation",
+                "domain": "EML",
+                "desc": "Prove the EML closure satisfies Stone-Weierstrass hypotheses",
+                "framing": "The EML closure A = span{compositions of EML(αᵢ,βᵢ) with affine maps} forms a subalgebra of C(K), separates points, and vanishes nowhere. By Stone-Weierstrass, A is dense in C(K).",
+                "mode": "prove",
+                "refs": ["Bridges/AlgebraEMLBridge.lean", "Bridges/EMLTropicalBridge.lean"],
+                "novelty": 0.88, "breakthrough": 0.87,
+            },
+            {
+                "title": "logsumexp_tropical_approximation_error",
+                "domain": "Bridges",
+                "desc": "Bound the LogSumExp-tropical max gap in higher dimensions",
+                "framing": "For n-dimensional input, max(x₁,...,xₙ) ≤ log(∑exp(xᵢ)) ≤ max(x₁,...,xₙ) + log(n). Prove: logsumexp_n_dim_gap with explicit bounds.",
+                "mode": "prove",
+                "refs": ["Bridges/EMLTropicalBridge.lean"],
+                "novelty": 0.85, "breakthrough": 0.80,
+            },
+            {
+                "title": "carmichael_lte_lemma",
+                "domain": "Pythagorean",
+                "desc": "Prove the Lifting-the-Exponent lemma for Fibonacci p-adic valuations",
+                "framing": "For prime p ≥ 5 and n ≥ 1, v_p(F(n)) = v_p(n) + v_p(F(p)). This would close the last sorry in CarmichaelProof.lean (composite n > 10000).",
+                "mode": "prove",
+                "refs": ["Shared/CarmichaelProof.lean"],
+                "novelty": 0.95, "breakthrough": 0.95,
+            },
+        ]
+        arc = RESEARCH_ARCS[cycle % len(RESEARCH_ARCS)]
         return ResearchConcept(
-            title=f"exploratory_{int(time.time()) % 10000:04d}",
-            domain="Tropical",
-            concept_description="Explore tropical geometry connections to other domains.",
-            mathematical_framing="Tropical max-plus algebra connects to neural networks and optimization.",
+            title=arc["title"],
+            domain=normalize_domain(arc["domain"]),
+            concept_description=arc["desc"],
+            mathematical_framing=arc["framing"],
             lean_guess="",
-            catalog_references=["Tropical/Core/TropicalSemiring.lean"],
-            research_mode="prove",
-            novelty_estimate=0.6,
-            breakthrough_potential=0.65,
-            key_references=["tropical", "neural"],
+            catalog_references=arc["refs"],
+            research_mode=arc["mode"],
+            novelty_estimate=arc["novelty"],
+            breakthrough_potential=arc["breakthrough"],
+            key_references=arc["refs"][:3],
         )
 
     # ------------------------------------------------------------------
