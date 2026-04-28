@@ -277,11 +277,21 @@ for t in key_thms12:
 sorry_count_12 = c12.count('sorry')
 print(f'  TropicalSemiringProperties.lean: {len(c12)} bytes, sorry={sorry_count_12}')
 
-total_sorry = sorry_count_1 + sorry_count_2 + sorry_count_3 + sorry_count_4 + sorry_count_5 + sorry_count_6 + sorry_count_8 + sorry_count_9 + sorry_count_10 + sorry_count_11 + sorry_count_12
+# 13. TropicalPolynomials.lean
+f13 = Path('../Catalog/Tropical/Core/TropicalPolynomials.lean')
+assert f13.exists(), f'File should exist: {f13}'
+c13 = f13.read_text()
+key_thms13 = ['tropicalLinear', 'tropical_linear_mono', 'tropical_quadratic_mono']
+for t in key_thms13:
+    assert t in c13, f'Should contain {t}'
+sorry_count_13 = c13.count('sorry')
+print(f'  TropicalPolynomials.lean: {len(c13)} bytes, sorry={sorry_count_13}')
+
+total_sorry = sorry_count_1 + sorry_count_2 + sorry_count_3 + sorry_count_4 + sorry_count_5 + sorry_count_6 + sorry_count_8 + sorry_count_9 + sorry_count_10 + sorry_count_11 + sorry_count_12 + sorry_count_13
 print(f'  Total sorries in verified files: {total_sorry} (should be 0)')
 assert total_sorry == 0, f'Verified files should have 0 sorries, got {total_sorry}'
 print(f'  CarmichaelProof.lean has {sorry_count_7} sorry (deep open problem: composite n>10000)')
-print('  All 12 files compile (verified by lake build)')
+print('  All 13 files compile (verified by lake build)')
 print('  OK')
 "
 
