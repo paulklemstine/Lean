@@ -147,7 +147,8 @@ print('  OK')
 echo "Check 8: New theorem files exist with verified content..."
 python3 -c "
 from pathlib import Path
-# AristotleLoopVerification.lean
+
+# 1. AristotleLoopVerification.lean
 f1 = Path('../Catalog/MachineLearning/SelfImproving/AristotleLoopVerification.lean')
 assert f1.exists(), f'File should exist: {f1}'
 c1 = f1.read_text()
@@ -160,7 +161,7 @@ for t in key_thms:
 sorry_count_1 = c1.count('sorry')
 print(f'  AristotleLoopVerification.lean: {len(c1)} bytes, sorry={sorry_count_1}')
 
-# AlgebraPhysicsBridge.lean
+# 2. AlgebraPhysicsBridge.lean
 f2 = Path('../Catalog/Bridges/AlgebraPhysicsBridge.lean')
 assert f2.exists(), f'File should exist: {f2}'
 c2 = f2.read_text()
@@ -171,7 +172,7 @@ for t in key_thms2:
 sorry_count_2 = c2.count('sorry')
 print(f'  AlgebraPhysicsBridge.lean: {len(c2)} bytes, sorry={sorry_count_2}')
 
-# AlgebraEMLBridge.lean
+# 3. AlgebraEMLBridge.lean
 f3 = Path('../Catalog/Bridges/AlgebraEMLBridge.lean')
 assert f3.exists(), f'File should exist: {f3}'
 c3 = f3.read_text()
@@ -183,7 +184,7 @@ for t in key_thms3:
 sorry_count_3 = c3.count('sorry')
 print(f'  AlgebraEMLBridge.lean: {len(c3)} bytes, sorry={sorry_count_3}')
 
-# LogicComputabilityBridge.lean
+# 4. LogicComputabilityBridge.lean
 f4 = Path('../Catalog/Bridges/LogicComputabilityBridge.lean')
 assert f4.exists(), f'File should exist: {f4}'
 c4 = f4.read_text()
@@ -194,7 +195,7 @@ for t in key_thms4:
 sorry_count_4 = c4.count('sorry')
 print(f'  LogicComputabilityBridge.lean: {len(c4)} bytes, sorry={sorry_count_4}')
 
-# TropicalDegreeRobustness.lean (Aristotle-generated)
+# 5. TropicalDegreeRobustness.lean (Aristotle)
 f5 = Path('../Catalog/Tropical/NeuralNetworks/TropicalDegreeRobustness.lean')
 assert f5.exists(), f'File should exist: {f5}'
 c5 = f5.read_text()
@@ -205,7 +206,7 @@ for t in key_thms5:
 sorry_count_5 = c5.count('sorry')
 print(f'  TropicalDegreeRobustness.lean: {len(c5)} bytes, sorry={sorry_count_5}')
 
-# SatakeIsomorphism.lean (Aristotle-generated)
+# 6. SatakeIsomorphism.lean (Aristotle)
 f6 = Path('../Catalog/Tropical/Langlands/SatakeIsomorphism.lean')
 assert f6.exists(), f'File should exist: {f6}'
 c6 = f6.read_text()
@@ -216,7 +217,7 @@ for t in key_thms6:
 sorry_count_6 = c6.count('sorry')
 print(f'  SatakeIsomorphism.lean: {len(c6)} bytes, sorry={sorry_count_6}')
 
-# CarmichaelProof.lean (Aristotle-generated, 1 sorry for n>10000)
+# 7. CarmichaelProof.lean (1 sorry for n>10000)
 f7 = Path('../Catalog/Shared/CarmichaelProof.lean')
 assert f7.exists(), f'File should exist: {f7}'
 c7 = f7.read_text()
@@ -226,11 +227,21 @@ for t in key_thms7:
 sorry_count_7 = c7.count('sorry')
 print(f'  CarmichaelProof.lean: {len(c7)} bytes, sorry={sorry_count_7}')
 
-total_sorry = sorry_count_1 + sorry_count_2 + sorry_count_3 + sorry_count_4 + sorry_count_5 + sorry_count_6
+# 8. EMLTropicalBridge.lean
+f8 = Path('../Catalog/Bridges/EMLTropicalBridge.lean')
+assert f8.exists(), f'File should exist: {f8}'
+c8 = f8.read_text()
+key_thms8 = ['logsumexp_same', 'eml_true', 'eml_false', 'exp_mul_truth', 'log_scaled']
+for t in key_thms8:
+    assert t in c8, f'Should contain {t}'
+sorry_count_8 = c8.count('sorry')
+print(f'  EMLTropicalBridge.lean: {len(c8)} bytes, sorry={sorry_count_8}')
+
+total_sorry = sorry_count_1 + sorry_count_2 + sorry_count_3 + sorry_count_4 + sorry_count_5 + sorry_count_6 + sorry_count_8
 print(f'  Total sorries in verified files: {total_sorry} (should be 0)')
 assert total_sorry == 0, f'Verified files should have 0 sorries, got {total_sorry}'
 print(f'  CarmichaelProof.lean has {sorry_count_7} sorry (deep open problem: composite n>10000)')
-print('  All 7 files compile (verified by lake build)')
+print('  All 8 files compile (verified by lake build)')
 print('  OK')
 "
 
