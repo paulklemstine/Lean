@@ -571,8 +571,16 @@ class PiAgentClient:
             Respond with JSON: {{"domain": "...", "concept_title": "...", "concept_description": "...", "mathematical_framing": "...", "lean_guess": "", "catalog_references": ["..."], "research_mode": "prove|sorry_fill", "novelty_estimate": 0.0-1.0, "breakthrough_potential": 0.0-1.0, "key_references": ["..."]}}
         """)
 
-        raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=90)
-        parsed = self._parse_json_response(raw)
+        # Concept generation: try LLM with short timeout, quick fallback to local
+        # Cloud models often timeout on large prompts - local generator is faster
+        if self.compact:
+            # Cloud/compact mode: shorter timeout since we have local fallback
+            concept_raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=60)
+            parsed = self._parse_json_response(concept_raw) if concept_raw and not concept_raw.startswith("[OLLAMA") else None
+        else:
+            # Local model: give more time
+            concept_raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=120)
+            parsed = self._parse_json_response(concept_raw)
 
         if parsed:
             # If partial parse (from reasoning text), fill in missing fields
