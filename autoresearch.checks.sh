@@ -257,11 +257,21 @@ for t in key_thms10:
 sorry_count_10 = c10.count('sorry')
 print(f'  ResNetLipschitz.lean: {len(c10)} bytes, sorry={sorry_count_10}')
 
-total_sorry = sorry_count_1 + sorry_count_2 + sorry_count_3 + sorry_count_4 + sorry_count_5 + sorry_count_6 + sorry_count_8 + sorry_count_9 + sorry_count_10
+# 11. ResNetRobustnessBridge.lean
+f11 = Path('../Catalog/Bridges/ResNetRobustnessBridge.lean')
+assert f11.exists(), f'File should exist: {f11}'
+c11 = f11.read_text()
+key_thms11 = ['resnet_identity_preservation', 'bernoulli_L_one', 'resnet_small_residual_total', 'resnet_growth_exceeds_linear']
+for t in key_thms11:
+    assert t in c11, f'Should contain {t}'
+sorry_count_11 = c11.count('sorry')
+print(f'  ResNetRobustnessBridge.lean: {len(c11)} bytes, sorry={sorry_count_11}')
+
+total_sorry = sorry_count_1 + sorry_count_2 + sorry_count_3 + sorry_count_4 + sorry_count_5 + sorry_count_6 + sorry_count_8 + sorry_count_9 + sorry_count_10 + sorry_count_11
 print(f'  Total sorries in verified files: {total_sorry} (should be 0)')
 assert total_sorry == 0, f'Verified files should have 0 sorries, got {total_sorry}'
 print(f'  CarmichaelProof.lean has {sorry_count_7} sorry (deep open problem: composite n>10000)')
-print('  All 10 files compile (verified by lake build)')
+print('  All 11 files compile (verified by lake build)')
 print('  OK')
 "
 
