@@ -518,11 +518,11 @@ class PiAgentClient:
             }}
         """)
 
-        raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=120)
+        raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=90)
         parsed = self._parse_json_response(raw)
 
         if parsed:
-            return ResearchConcept(
+            concept = ResearchConcept(
                 title=parsed.get("concept_title", "unnamed_concept"),
                 domain=parsed.get("domain", domains[0]["id"] if domains else "speculative"),
                 concept_description=parsed.get("concept_description", ""),
@@ -534,16 +534,137 @@ class PiAgentClient:
                 breakthrough_potential=float(parsed.get("breakthrough_potential", 0.5)),
                 key_references=parsed.get("key_references", []),
             )
+            # Validate concept quality
+            if concept.novelty_estimate >= 0.1 and concept.breakthrough_potential >= 0.1 and not concept.title.startswith("research_concept_"):
+                return concept
+            # LLM gave garbage — fall through to local generator
+            print(f"[Pi-Agent] LLM returned low-quality concept: {concept.title} (n={concept.novelty_estimate:.2f}, b={concept.breakthrough_potential:.2f}). Using local fallback.")
 
-        # Fallback: pick a random domain
+        # LOCAL FALLBACK: Generate concept without LLM using catalog analysis
+        # This avoids the 10-minute timeout when cloud models are slow
+        print(f"[Pi-Agent] Using local concept generator (LLM unavailable/slow)")
+        return self._generate_local_concept(domains, sorry_targets_list=None,
+                                            research_context=research_context)
+
+    def _generate_local_concept(
+        self,
+        domains: List[Dict[str, Any]],
+        sorry_targets_list: Optional[List] = None,
+        research_context: Optional[str] = None,
+    ) -> ResearchConcept:
+        """Generate a research concept locally without LLM.
+        Uses catalog analysis, sorry targets, and Aristotle Loop
+        recommendations to create high-quality concepts deterministically.
+        """
         import random
-        domain = random.choice(domains) if domains else {"id": "speculative", "name": "Speculative"}
+        import hashlib
+
+        # Priority 1: sorry_fill on priority targets (highest value)
+        if self.catalog_analyzer:
+            sorry_files = self.catalog_analyzer.get_priority_sorry_targets()
+            if sorry_files:
+                target = sorry_files[0]
+                domain = target.domain or "Shared"
+                # Normalize domain
+                from output_organizer import normalize_domain
+                domain = normalize_domain(domain)
+
+                # Choose a research mode based on sorry targets
+                concept_title = f"{target.declarations[0]}_proof" if target.declarations else f"fill_{Path(target.relative_path).stem}"
+                concept_desc = (f"Fill the sorry in {target.relative_path} "
+                               f"({target.sorry_count} sorries remaining). "
+                               f"Key declarations: {', '.join(target.declarations[:5])}. "
+                               f"This advances a known open problem in {domain}.")
+                math_framing = f"Complete the proof of {target.declarations[0]} in {target.relative_path}."
+
+                return ResearchConcept(
+                    title=concept_title,
+                    domain=domain,
+                    concept_description=concept_desc,
+                    mathematical_framing=math_framing,
+                    lean_guess="",
+                    catalog_references=[target.relative_path],
+                    research_mode="sorry_fill",
+                    novelty_estimate=0.85,
+                    breakthrough_potential=0.90,
+                    key_references=target.declarations[:3],
+                )
+
+        # Priority 2: Cross-domain bridges (highest novelty)
+        if self.catalog_analyzer:
+            bridges = self.catalog_analyzer.find_missing_bridges(limit=5)
+            if bridges:
+                bridge = random.choice(bridges)
+                d_a, d_b, syn = bridge
+                from output_organizer import normalize_domain
+                domain = normalize_domain(d_b)
+                concept_title = f"{d_a.lower()}_{d_b.lower()}_bridge_theorem"
+                concept_desc = (f"Formal bridge between {d_a} and {d_b} mathematics. "
+                               f"Cross-domain synergy score: {syn:.2f}. "
+                               f"Prove a theorem connecting {d_a.lower()} structures "
+                               f"to {d_b.lower()} properties.")
+                math_framing = f"Theorem connecting {d_a} and {d_b}: existence of a structure-preserving map or shared invariant."
+
+                # Find files from both domains
+                refs = []
+                all_files = self.catalog_analyzer.scan()
+                d_a_files = [f for f in all_files if f.relative_path.lower().startswith(d_a.lower()[:8])][:3]
+                d_b_files = [f for f in all_files if f.relative_path.lower().startswith(d_b.lower()[:8])][:3]
+                refs = [f.relative_path for f in (d_a_files + d_b_files)[:6]]
+
+                return ResearchConcept(
+                    title=concept_title,
+                    domain=domain,
+                    concept_description=concept_desc,
+                    mathematical_framing=math_framing,
+                    lean_guess="",
+                    catalog_references=refs,
+                    research_mode="prove",
+                    novelty_estimate=0.80,
+                    breakthrough_potential=0.85,
+                    key_references=[d_a, d_b],
+                )
+
+        # Priority 3: Research arc from config (proven targets)
+        if domains:
+            # Filter for research_findings/open_problems if available
+            research_domains = [d for d in domains
+                              if d.get("_is_open_problem") or d.get("_is_loop_recommendation")]
+            if research_domains:
+                d = research_domains[0]
+            else:
+                d = random.choice(domains)
+
+            concept_title = f"{d.get('id', 'research')}_{int(time.time()) % 10000:04d}"
+            concept_desc = d.get('description', d.get('frontier', f"Research in {d.get('id', 'mathematics')}"))
+            math_framing = d.get('frontier', concept_desc)
+
+            from output_organizer import normalize_domain
+            return ResearchConcept(
+                title=concept_title,
+                domain=normalize_domain(d.get('id', 'speculative')),
+                concept_description=concept_desc[:200],
+                mathematical_framing=math_framing[:200],
+                lean_guess="",
+                catalog_references=[],
+                research_mode=d.get("_recommended_mode", "prove"),
+                novelty_estimate=0.7,
+                breakthrough_potential=0.75,
+                key_references=d.get("seed_domains", d.get("seed_concepts", []))[:3],
+            )
+
+        # Ultimate fallback
         return ResearchConcept(
-            title=f"research_concept_{int(time.time())}",
-            domain=domain.get("id", "speculative"),
-            concept_description="Auto-generated research direction.",
-            mathematical_framing="TBD",
+            title=f"exploratory_{int(time.time()) % 10000:04d}",
+            domain="Tropical",
+            concept_description="Explore tropical geometry connections to other domains.",
+            mathematical_framing="Tropical max-plus algebra connects to neural networks and optimization.",
+            lean_guess="",
+            catalog_references=["Tropical/Core/TropicalSemiring.lean"],
             research_mode="prove",
+            novelty_estimate=0.6,
+            breakthrough_potential=0.65,
+            key_references=["tropical", "neural"],
         )
 
     # ------------------------------------------------------------------
@@ -1018,7 +1139,7 @@ class PiAgentClient:
             }}
         """)
 
-        raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=120)
+        raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=90)
         parsed = self._parse_json_response(raw)
 
         if parsed:

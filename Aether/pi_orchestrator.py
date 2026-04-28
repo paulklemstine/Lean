@@ -176,7 +176,7 @@ class PiAgentOrchestrator:
         
         Retries up to 2 times if concept validation rejects the Pi-Agent output.
         """
-        for attempt in range(3):
+        for attempt in range(2):  # Try LLM once, then local fallback
             result = await self._prepare_job_once(forced_domain, attempt)
             if result is not None:
                 return result
