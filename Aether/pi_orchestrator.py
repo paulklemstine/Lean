@@ -281,13 +281,17 @@ class PiAgentOrchestrator:
             concept.novelty_estimate < 0.1 or
             concept.breakthrough_potential < 0.1 or
             concept.title.startswith("research_concept_") or
-            concept.mathematical_framing in ("", "TBD", "N/A") or
             len(concept.concept_description) < 20 or
             # Reject generic placeholder-style concepts
             "{X : Type*}" in concept.lean_guess or
             "[Inhabited X]" in concept.lean_guess or
             "True :=" in concept.lean_guess
         )
+        # When mathematical_framing is missing but concept has a good description,
+        # it's likely from reasoning text extraction - don't reject outright
+        is_missing_framing = concept.mathematical_framing in ("", "TBD", "N/A")
+        if is_missing_framing and len(concept.concept_description) < 40:
+            is_trivial_pattern = True  # Too vague overall
         # Also reject if concept is too vague (no specific math)
         is_too_vague = (
             len(concept.key_references) == 0 and

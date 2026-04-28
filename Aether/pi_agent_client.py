@@ -470,6 +470,25 @@ class PiAgentClient:
         
         # If we extracted enough info, return it as a partial concept
         if extracted.get('domain') or extracted.get('concept_title'):
+            # Extract mathematical framing from reasoning text
+            # Look for mathematical statements or LaTeX in the reasoning
+            math_patterns = [
+                r'(?:prove|show|formalize|proving)[^.!]*?([A-Z][^.!]{10,200})',  # First sentence after prove/show
+                r'(?:theorem|lemma)[^.!]*?([^.!]{10,200})',  # Theorem statements
+                r'\$\$(.+?)\$\$',  # LaTeX display math
+                r'\$(.+?)\$',    # LaTeX inline math
+            ]
+            for pat in math_patterns:
+                match = _re.search(pat, raw)
+                if match:
+                    extracted['mathematical_framing'] = match.group(1).strip()[:300]
+                    break
+            
+            # Extract description from reasoning
+            desc_match = _re.search(r'(?:Justification|Rationale|Description):\s*(.{20,500})', raw, _re.DOTALL)
+            if desc_match:
+                extracted['concept_description'] = desc_match.group(1).strip()[:400]
+            
             print(f"[Pi-Agent] Extracted concept from reasoning text: {extracted}")
             return extracted
         
@@ -922,26 +941,23 @@ class PiAgentClient:
             No preamble, no "Here is the enriched prompt:", just the task content.
         """)
 
-        raw = self._call_ollama(_PROMPT_WRITING_SYSTEM_PROMPT, enrichment_request, timeout=90)
+        raw = self._call_ollama(_PROMPT_WRITING_SYSTEM_PROMPT, enrichment_request, timeout=60)
 
-        if raw and not raw.startswith("[OLLAMA"):
-            # Strip common LLM preamble patterns that would confuse Aristotle
+        # For compact/cloud mode, skip enrichment if LLM is slow to respond
+        # The direct prompt is already well-structured for Aristotle
+        use_enriched = raw and not raw.startswith("[OLLAMA") and not "TIMEOUT" in raw
+        if use_enriched:
             cleaned = self._strip_llm_preamble(raw)
             if cleaned and len(cleaned) > 200:
                 # The LLM enriched the task section. Merge with catalog context.
-                # The enriched content replaces the task portion; catalog context
-                # is preserved from the direct prompt.
                 catalog_section = ""
                 if "### Catalog Context" in direct_prompt:
-                    # Extract everything from "### Catalog Context" onward
                     idx = direct_prompt.find("### Catalog Context")
                     catalog_section = "\n\n" + direct_prompt[idx:]
                 return cleaned + catalog_section
-            else:
-                return direct_prompt
-        else:
-            # Fallback: use the direct prompt (never a meta-instruction)
-            return direct_prompt
+        # Fallback: use the direct prompt (never a meta-instruction)
+        print(f"[Pi-Agent] Using direct prompt (enrichment {'failed' if raw and 'TIMEOUT' in raw else 'skipped'})")
+        return direct_prompt
 
     @staticmethod
     def _strip_llm_preamble(text: str) -> str:
