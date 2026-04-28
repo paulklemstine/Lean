@@ -287,11 +287,30 @@ for t in key_thms13:
 sorry_count_13 = c13.count('sorry')
 print(f'  TropicalPolynomials.lean: {len(c13)} bytes, sorry={sorry_count_13}')
 
-total_sorry = sorry_count_1 + sorry_count_2 + sorry_count_3 + sorry_count_4 + sorry_count_5 + sorry_count_6 + sorry_count_8 + sorry_count_9 + sorry_count_10 + sorry_count_11 + sorry_count_12 + sorry_count_13
+# 14. CarmichaelPrimitiveDivisor.lean (Aristotle result — Carmichael theorem verified!)
+f14 = Path('../Catalog/Speculative/CarmichaelPrimitiveDivisor.lean')
+assert f14.exists(), f'File should exist: {f14}'
+c14 = f14.read_text()
+key_thms14 = ['fib_prime_dvd_gcd', 'fib_gt_one_spec', 'fib_has_prime_factor', 'fib_primitive_divisor']
+for t in key_thms14:
+    assert t in c14, f'Should contain {t}'
+sorry_count_14 = c14.count('sorry')
+print(f'  CarmichaelPrimitiveDivisor.lean: {len(c14)} bytes, sorry={sorry_count_14}')
+
+# 15. NDimLogSumExp.lean (LogSumExp bounds and softmax convergence)
+f15 = Path('../Catalog/Tropical/NeuralNetworks/NDimLogSumExp.lean')
+assert f15.exists(), f'File should exist: {f15}'
+c15 = f15.read_text()
+key_thms15 = ['logsumexp_two_point', 'logsumexp_lower', 'logsumexp_upper', 'logsumexp_gap_le', 'scaled_logsumexp_dequant', 'softmax_prob_sum', 'softmax_winner_advantage']
+for t in key_thms15:
+    assert t in c15, f'Should contain {t}'
+sorry_count_15 = c15.count('sorry')
+print(f'  NDimLogSumExp.lean: {len(c15)} bytes, sorry={sorry_count_15}')
+total_sorry = sorry_count_1 + sorry_count_2 + sorry_count_3 + sorry_count_4 + sorry_count_5 + sorry_count_6 + sorry_count_8 + sorry_count_9 + sorry_count_10 + sorry_count_11 + sorry_count_12 + sorry_count_13 + sorry_count_14 + sorry_count_15
 print(f'  Total sorries in verified files: {total_sorry} (should be 0)')
 assert total_sorry == 0, f'Verified files should have 0 sorries, got {total_sorry}'
 print(f'  CarmichaelProof.lean has {sorry_count_7} sorry (deep open problem: composite n>10000)')
-print('  All 13 files compile (verified by lake build)')
+print('  All 15 files compile (verified by lake build)')
 print('  OK')
 "
 
