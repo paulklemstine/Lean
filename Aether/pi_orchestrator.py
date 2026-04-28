@@ -248,6 +248,14 @@ class PiAgentOrchestrator:
         )
         if forced_domain:
             concept.domain = forced_domain
+            # If forced domain doesn't match the concept's natural domain,
+            # adjust catalog references to match the forced domain
+            if concept.research_mode == "sorry_fill" and forced_domain not in (
+                "pythagorean", "epythagorean", "number_theory",
+            ):
+                # Don't force sorry_fill onto unrelated domains
+                concept.research_mode = "prove"
+                concept.catalog_references = []  # Let Aristotle use the forced domain's files
         elif concept.research_mode == "prove" and loop_mode == "sorry_fill" and sorry_targets:
             # Override to sorry_fill when the Loop recommends it and there are sorry targets
             concept.research_mode = "sorry_fill"
@@ -797,6 +805,11 @@ class PiAgentOrchestrator:
         A stub `True := by sorry` is useless — Aristotle needs a concrete
         theorem statement with real types (Nat, Real, Finset, Matrix) and
         a meaningful conclusion to prove.
+
+        IMPORTANT: The actual research happens in the CATALOG FILES referenced
+        in the prompt. This Main.lean is a placeholder that compiles cleanly.
+        Aristotle reads the prompt, studies the catalog files, and fills sorries
+        or adds new theorems there. This file just needs to be valid Lean 4.
         """
         domain_dir = normalize_domain(concept.domain)
         header = f"""import Mathlib
@@ -815,63 +828,51 @@ Date: {datetime.now(timezone.utc).isoformat()}
 {concept.concept_description}
 
 Mathematical Framing: {concept.mathematical_framing}
+
+NOTE: The real work for this experiment happens in the catalog files
+referenced in the research prompt. This file is a valid placeholder.
 -/
-noncomputable section
 """
         lean_body = concept.lean_guess.strip()
-        has_real_theorem = lean_body and "theorem" in lean_body and "True" not in lean_body
+        has_real_theorem = (
+            lean_body and
+            "theorem" in lean_body and
+            "True :=" not in lean_body and
+            "sorry" not in lean_body
+        )
 
-        if not has_real_theorem:
-            # No real theorem from Pi-Agent. Derive one from the concept.
-            # This is critical: Aristotle needs a concrete problem to solve.
-            mode_prefix = {
-                "sorry_fill": f"/-! Mode: SORRY_FILL\n   Fill the sorry in the theorem below.\n   The surrounding context describes the proof strategy.\n   Do NOT change the theorem statement — only fill the sorry.\n-/\n",
-                "prove": "",
-                "formalize": f"/-! Mode: FORMALIZE\n   Formalize the mathematical idea described in the framing above\n   into a precise Lean 4 theorem with a complete proof.\n-/\n",
-                "counterexample": f"/-! Mode: COUNTEREXAMPLE\n   Find a specific counterexample or prove the statement.\n-/\n",
-            }.get(concept.research_mode, "")
-
-            # Generate a theorem from the mathematical_framing
-            # This is what Aristotle will actually try to prove
+        if has_real_theorem:
+            # Pi-Agent provided a compilable theorem — use it
+            return header + f"noncomputable section\n\n{lean_body}\n"
+        else:
+            # No compilable theorem from Pi-Agent.
+            # Create a minimal valid placeholder that compiles cleanly.
+            # Aristotle's real work is in the catalog files.
             title_slug = concept.title.lower().replace(' ', '_').replace('-', '_')
-            # Remove non-alphanumeric characters
             import re
             title_slug = re.sub(r'[^a-z0-9_]', '', title_slug)
 
-            # Build a meaningful default theorem based on the mode
             if concept.research_mode == "sorry_fill":
-                # For sorry_fill, create a theorem with a sorry that matches
-                # the mathematical framing description
-                framing = concept.mathematical_framing[:200] if concept.mathematical_framing else ""
-                lean_body = f"""{mode_prefix}
-/-- Key theorem: {concept.title}
+                # For sorry_fill, the target is the catalog files.
+                # This placeholder compiles but doesn't need to prove anything.
+                lean_body = f"""-- The sorry_fill target is in the catalog files referenced in the prompt.
+-- See: {', '.join(concept.catalog_references[:3]) if concept.catalog_references else 'referenced files'}
+-- Aristotle: fill the sorries in those files, not here.
 
-{framing}
--/
-theorem {title_slug} :
-    True := by
-  sorry
+/-- Placeholder for {concept.title} — the real proof target is in the catalog. -/
+theorem {title_slug}_placeholder : True := trivial
 """
             else:
-                # For prove/formalize, create a theorem stub asking Aristotle
-                # to find and prove a result matching the mathematical framing
-                framing = concept.mathematical_framing[:200] if concept.mathematical_framing else ""
-                lean_body = f"""{mode_prefix}
-/-- Research direction: {concept.title}
+                # For prove/formalize, ask Aristotle to prove something in this file
+                # OR in the catalog files.
+                lean_body = f"""-- Aristotle: prove a non-trivial theorem related to
+-- {concept.title}
+-- Use concrete types (Nat, Real, Finset, Matrix) and avoid tautologies.
+-- You may also add new theorems to catalog files.
 
-Based on the mathematical framing: {framing}
-
-Aristotle: Find and prove a non-trivial theorem related to this direction.
-Use concrete types (Nat, Real, Finset, Matrix) and avoid tautologies.
--/
-theorem {title_slug} :
-    True := by
-  sorry
+theorem {title_slug}_placeholder : True := trivial
 """
-
-        if "sorry" not in lean_body and concept.research_mode != "sorry_fill":
-            lean_body += "\n  sorry\n"
-        return header + "\n" + lean_body
+            return header + f"\n{lean_body}"
 
     def _get_recent_history(self, limit: int = 10) -> List[Dict]:
         """Get recent experiment history for Pi-Agent context."""

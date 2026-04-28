@@ -465,7 +465,7 @@ class PiAgentClient:
             ## Successful Patterns (emulate these)
             {success_patterns if success_patterns else "No successful patterns yet."}
 
-            ## Priority Sorry Targets (use sorry_fill mode for these)
+            ## Priority Sorry Targets (only for sorry_fill mode)
             {sorry_targets if sorry_targets else "No priority sorry targets identified."}
 
             ## Research Discoveries (build on these)
@@ -473,10 +473,20 @@ class PiAgentClient:
 
             Select ONE domain and ONE specific concept to investigate. Choose something
             novel, interesting, and likely to produce substantial formal mathematics.
-            Consider sorry_fill mode for the priority targets above — filling existing
-            sorries builds on proven work and is high-value.
-            When a recent discovery found an open problem or future direction, prioritize
-            extending or completing that line of research.
+
+            IMPORTANT DIVERSITY RULES:
+            - Do NOT always select Carmichael/Fibonacci sorry_fill. That problem 
+              is already being worked on by other projects. Try OTHER domains.
+            - If the forced domain is NOT pythagorean/number-theory, select a 
+              concept WITHIN that domain, not Carmichael.
+            - For "prove" mode, find genuinely NEW theorems (not sorried ones).
+            - For "formalize" mode, formalize a novel mathematical idea.
+            - Only choose sorry_fill when the forced domain directly matches the 
+              sorry target's domain (e.g., Pythagorean for Carmichael).
+            - VARY your approach: try tropical, EML, algebra, physics, logic 
+              domains with prove/formalize modes.
+            - When a recent discovery found an open problem or future direction, 
+              prioritize extending or completing that line of research.
 
             Respond with JSON:
             {{
@@ -493,7 +503,7 @@ class PiAgentClient:
             }}
         """)
 
-        raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt)
+        raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=120)
         parsed = self._parse_json_response(raw)
 
         if parsed:
@@ -701,7 +711,7 @@ class PiAgentClient:
             No preamble, no "Here is the enriched prompt:", just the task content.
         """)
 
-        raw = self._call_ollama(_PROMPT_WRITING_SYSTEM_PROMPT, enrichment_request)
+        raw = self._call_ollama(_PROMPT_WRITING_SYSTEM_PROMPT, enrichment_request, timeout=90)
 
         if raw and not raw.startswith("[OLLAMA"):
             # Strip common LLM preamble patterns that would confuse Aristotle
@@ -979,7 +989,7 @@ class PiAgentClient:
             }}
         """)
 
-        raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt)
+        raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=120)
         parsed = self._parse_json_response(raw)
 
         if parsed:
