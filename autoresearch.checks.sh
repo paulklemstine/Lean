@@ -183,10 +183,21 @@ for t in key_thms3:
 sorry_count_3 = c3.count('sorry')
 print(f'  AlgebraEMLBridge.lean: {len(c3)} bytes, sorry={sorry_count_3}')
 
-total_sorry = sorry_count_1 + sorry_count_2 + sorry_count_3
+# LogicComputabilityBridge.lean
+f4 = Path('../Catalog/Bridges/LogicComputabilityBridge.lean')
+assert f4.exists(), f'File should exist: {f4}'
+c4 = f4.read_text()
+key_thms4 = ['eml_true', 'eml_false', 'truth_multiplicativity',
+             'fib_recurrence', 'sum_nonneg_domain']
+for t in key_thms4:
+    assert t in c4, f'Should contain {t}'
+sorry_count_4 = c4.count('sorry')
+print(f'  LogicComputabilityBridge.lean: {len(c4)} bytes, sorry={sorry_count_4}')
+
+total_sorry = sorry_count_1 + sorry_count_2 + sorry_count_3 + sorry_count_4
 print(f'  Total sorries in new files: {total_sorry} (should be 0)')
 assert total_sorry == 0, f'New files should have 0 sorries, got {total_sorry}'
-print('  All 3 files compile (verified by lake build)')
+print('  All 4 files compile (verified by lake build)')
 print('  OK')
 "
 
