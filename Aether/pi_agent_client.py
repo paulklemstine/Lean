@@ -366,6 +366,15 @@ class PiAgentClient:
             content = data.get("message", {}).get("content", "")
             if not content:
                 content = data.get("response", "")
+            
+            # kimi-k2 reasoning models put reasoning in 'thinking' field
+            # and final answer in 'content'. If content is empty, the model
+            # may have put the answer in thinking instead. Try to extract it.
+            thinking = data.get("message", {}).get("thinking", "")
+            if not content and thinking:
+                # Model put answer in thinking field - try to extract JSON or useful content
+                content = thinking
+                print(f"[Pi-Agent] Content was empty, using thinking field ({len(thinking)} chars)")
 
             # Log the response
             response_preview = content[:500].replace('\n', ' ')
@@ -384,7 +393,11 @@ class PiAgentClient:
             return f"[OLLAMA_ERROR: {e}]"
 
     def _parse_json_response(self, raw: str) -> Optional[Dict[str, Any]]:
-        """Try to extract JSON from an LLM response."""
+        """Try to extract JSON from an LLM response.
+        
+        Handles: pure JSON, markdown-wrapped JSON, reasoning text with JSON at end,
+        and plain reasoning text (domain + concept extraction heuristic).
+        """
         # Try direct parse
         try:
             return json.loads(raw.strip())
@@ -403,10 +416,63 @@ class PiAgentClient:
         json_match = re.search(r'\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}', raw, re.DOTALL)
         if json_match:
             try:
-                return json.loads(json_match.group())
+                result = json.loads(json_match.group())
+                # Validate it looks like a concept or quality response
+                if isinstance(result, dict) and len(result) >= 2:
+                    return result
             except json.JSONDecodeError:
                 pass
 
+        # HEURISTIC: Extract concept from reasoning text when no JSON found
+        # kimi-k2.6:cloud often returns reasoning without JSON wrapper
+        import re as _re
+        
+        # Try to extract a domain name
+        domain_patterns = [
+            (r'(?:domain|Domain|DOMAIN)[:\s]+["\']?(\w+)["\'\s,]', 'domain'),
+            (r'Select\s+(?:the\s+)?(?:best|most\s+promising)\s+(?:research\s+)?(?:direction|domain)[^.]*?\b(\w+)\b', 'domain'),
+        ]
+        known_domains = {'algebra', 'bridges', 'computation', 'cryptography', 'eml', 
+                         'geometry', 'logic', 'machinelearning', 'physics', 
+                         'pythagorean', 'shared', 'speculative', 'tropical',
+                         'tropical_langlands', 'tropical_neural', 'carmichael',
+                         'niven', 'dilithium', 'spb'}
+        
+        extracted = {}
+        # Find domain mentions in the text
+        lower_raw = raw.lower()
+        for d in known_domains:
+            if d in lower_raw:
+                extracted['domain'] = d
+                break
+        
+        # Try to find concept_title or title
+        title_match = _re.search(r'(?:concept_title|title|Title)[:\s]+["\']([^"\'\n]+)["\'\s,]', raw)
+        if not title_match:
+            # Find bold/coded title like **tropical_langlands_gl2** or `tropical_langlands_gl2`
+            title_match = _re.search(r'[**`]+([a-z_]+[a-z0-9_]+)[**`]+', raw)
+        if title_match:
+            extracted['concept_title'] = title_match.group(1).strip()
+        
+        # Try to find novelty and breakthrough scores
+        novelty_match = _re.search(r'novelty[^0-9]*([0-9.]+)', raw)
+        if novelty_match:
+            try:
+                extracted['novelty_estimate'] = float(novelty_match.group(1))
+            except ValueError:
+                pass
+        breakthrough_match = _re.search(r'breakthrough[^0-9]*([0-9.]+)', raw)
+        if breakthrough_match:
+            try:
+                extracted['breakthrough_potential'] = float(breakthrough_match.group(1))
+            except ValueError:
+                pass
+        
+        # If we extracted enough info, return it as a partial concept
+        if extracted.get('domain') or extracted.get('concept_title'):
+            print(f"[Pi-Agent] Extracted concept from reasoning text: {extracted}")
+            return extracted
+        
         return None
 
     # ------------------------------------------------------------------
@@ -522,16 +588,25 @@ class PiAgentClient:
         parsed = self._parse_json_response(raw)
 
         if parsed:
+            # If partial parse (from reasoning text), fill in missing fields
+            domain = parsed.get("domain", "")
+            if domain:
+                from output_organizer import normalize_domain
+                domain = normalize_domain(domain)
+            else:
+                domain = domains[0]["id"] if domains else "speculative"
+            
             concept = ResearchConcept(
-                title=parsed.get("concept_title", "unnamed_concept"),
-                domain=parsed.get("domain", domains[0]["id"] if domains else "speculative"),
-                concept_description=parsed.get("concept_description", ""),
+                title=parsed.get("concept_title", parsed.get("title", "unnamed_concept")),
+                domain=domain,
+                concept_description=parsed.get("concept_description", 
+                    f"Research direction from LLM: {parsed.get('domain', 'unknown')} domain"),
                 mathematical_framing=parsed.get("mathematical_framing", ""),
                 lean_guess=parsed.get("lean_guess", ""),
                 catalog_references=parsed.get("catalog_references", []),
-                research_mode=parsed.get("research_mode", "prove"),
-                novelty_estimate=float(parsed.get("novelty_estimate", 0.5)),
-                breakthrough_potential=float(parsed.get("breakthrough_potential", 0.5)),
+                research_mode=parsed.get("research_mode", "prove" if not parsed.get("domain", "") else "sorry_fill" if any("sorry" in d.get("_priority_file","") for d in domains[:3]) else "prove"),
+                novelty_estimate=float(parsed.get("novelty_estimate", 0.5) or 0.5),
+                breakthrough_potential=float(parsed.get("breakthrough_potential", 0.5) or 0.5),
                 key_references=parsed.get("key_references", []),
             )
             # Validate concept quality
