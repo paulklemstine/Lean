@@ -5,14 +5,14 @@ import Tropical.NeuralNetworks.TropicalSemiringHom
 
 /-! # Convexity and Monotonicity of LogSumExp
 
-Fundamental analytical properties of LSE:
+Fundamental analytical properties:
 1. LSE is increasing in each argument (monotonicity)
 2. LSE is symmetric in its arguments
 3. softMax is symmetric in its arguments
-4. LSE exact gap formula (re-export from NDimLogSumExp)
-5. LSE sub-additivity (re-export from TropicalSemiringHom)
-6. LSE shift invariance (re-export from TropicalSemiringHom)
-7. Tropical max super-additivity (re-export from TropicalSemiringHom)
+4. LSE gap formula and bounds (re-exports)
+5. LSE sub-additivity and shift invariance (re-exports)
+6. Tropical max super-additivity (re-export)
+7. Weighted LSE bounds (re-exports)
 -/
 
 noncomputable section
@@ -59,20 +59,30 @@ theorem logsumexp_gap_bounded (x₁ x₂ : ℝ) :
     log (exp x₁ + exp x₂) - max x₁ x₂ ≤ log 2 :=
   NDimLogSumExp.logsumexp_gap_le x₁ x₂
 
-/-- LSE sub-additivity (re-export from TropicalSemiringHom) -/
+/-- LSE sub-additivity (re-export) -/
 theorem logsumexp_subadd (a b c d : ℝ) :
     log (exp (a + b) + exp (c + d)) ≤
     log (exp a + exp c) + log (exp b + exp d) :=
   TropicalSemiringHom.logsumexp_subadd a b c d
 
-/-- LSE shift invariance (re-export from TropicalSemiringHom) -/
+/-- LSE shift invariance (re-export) -/
 theorem logsumexp_shift (a b d : ℝ) :
     log (exp (a + d) + exp (b + d)) = log (exp a + exp b) + d :=
   TropicalSemiringHom.logsumexp_shift a b d
 
-/-- Tropical max super-additivity (re-export from TropicalSemiringHom) -/
+/-- Tropical max super-additivity (re-export) -/
 theorem tropical_max_superadd (x₁ x₂ y₁ y₂ : ℝ) :
     max x₁ x₂ + max y₁ y₂ ≥ max (x₁ + y₁) (x₂ + y₂) :=
   TropicalSemiringHom.tropical_max_superadd x₁ x₂ y₁ y₂
+
+/-- Weighted LSE upper bound (re-export) -/
+theorem weighted_logsumexp_upper (w₁ w₂ x₁ x₂ : ℝ) (hw₁ : 0 < w₁) (hw₂ : 0 < w₂) :
+    log (w₁ * exp x₁ + w₂ * exp x₂) ≤ max (x₁ + log w₁) (x₂ + log w₂) + log 2 :=
+  TropicalSemiringHom.weighted_logsumexp_upper w₁ w₂ x₁ x₂ hw₁ hw₂
+
+/-- Weighted LSE lower bound (re-export) -/
+theorem weighted_logsumexp_lower (w₁ w₂ x₁ x₂ : ℝ) (hw₁ : 0 < w₁) (hw₂ : 0 < w₂) :
+    max (x₁ + log w₁) (x₂ + log w₂) ≤ log (w₁ * exp x₁ + w₂ * exp x₂) :=
+  TropicalSemiringHom.weighted_logsumexp_lower w₁ w₂ x₁ x₂ hw₁ hw₂
 
 end LSEConvexity

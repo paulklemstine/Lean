@@ -332,7 +332,7 @@ print(f'  CarmichaelProof.lean has {sorry_count_7} sorry (deep open problem: com
 f18 = Path('../Catalog/Tropical/NeuralNetworks/LSEConvexity.lean')
 assert f18.exists(), f'File should exist: {f18}'
 c18 = f18.read_text()
-key_thms18 = ['logsumexp_mono_left', 'logsumexp_mono_right', 'logsumexp_symm', 'softMax_symm', 'logsumexp_gap_from_max', 'logsumexp_subadd', 'logsumexp_shift', 'tropical_max_superadd']
+key_thms18 = ['logsumexp_mono_left', 'logsumexp_mono_right', 'logsumexp_symm', 'softMax_symm', 'logsumexp_gap_from_max', 'logsumexp_subadd', 'logsumexp_shift', 'tropical_max_superadd', 'weighted_logsumexp_upper', 'weighted_logsumexp_lower']
 for t in key_thms18:
     assert t in c18, f'Should contain {t}'
 sorry_count_18 = c18.count('sorry')
