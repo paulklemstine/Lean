@@ -304,6 +304,218 @@ class CatalogAnalyzer:
         sorry_files.sort(key=priority_score, reverse=True)
         return sorry_files
 
+    def build_focused_context(
+        self,
+        domain: str,
+        concept_description: str,
+        max_theorems: int = 5,
+    ) -> str:
+        """Build focused context: the N most relevant theorem signatures for a concept.
+
+        Instead of dumping all 2,700 files into the prompt, this extracts specific
+        theorem/lemma signatures that are most relevant to the concept Pi is pursuing.
+        Pi uses this to write precise prompts that reference existing work.
+
+        Returns a structured string like:
+            Existing theorems you can build on:
+            1. relu_is_tropical_max : ∀ x : ℝ, max x 0 = tropMax x 0
+               (file: Tropical/NeuralNetworks/TropicalDegreeRobustness.lean)
+            2. certified_radius : ...
+        """
+        if self._summaries is None:
+            self.scan()
+
+        # Extract keywords from concept description for relevance scoring
+        desc_words = set(re.findall(r'\b[a-zA-Z]{3,}\b', concept_description.lower()))
+
+        # Score each file's declarations against the concept
+        scored_theorems: list = []
+        for summary in self._summaries:
+            # Base score: domain match
+            domain_score = 3.0 if summary.domain.lower() == domain.lower() else 0.0
+
+            for decl in summary.declarations:
+                decl_lower = decl.lower()
+                # Keyword overlap between concept description and declaration name
+                decl_words = set(re.findall(r'[a-z]{3,}', decl_lower))
+                overlap = len(desc_words & decl_words)
+                score = domain_score + overlap * 2.0
+
+                # Bonus for theorem/lemma names (vs definitions)
+                if any(kw in decl_lower for kw in ('theorem', 'lemma', 'bound', 'ineq')):
+                    score += 1.0
+
+                if score > 0:
+                    scored_theorems.append((score, decl, summary))
+
+        scored_theorems.sort(key=lambda x: x[0], reverse=True)
+
+        if not scored_theorems:
+            return "No specific existing theorems found for this concept."
+
+        # Extract full theorem signatures from the top-scored files
+        seen_files: set = set()
+        results = []
+        for score, decl_name, summary in scored_theorems:
+            if len(results) >= max_theorems:
+                break
+
+            # Read file to get the full theorem signature
+            if summary.relative_path in seen_files:
+                continue
+            seen_files.add(summary.relative_path)
+
+            try:
+                src = self.catalog_root / summary.relative_path
+                content = src.read_text(encoding="utf-8", errors="replace")
+            except Exception:
+                continue
+
+            # Extract theorem/lemma lines with their signatures
+            for line in content.splitlines():
+                stripped = line.strip()
+                if (stripped.startswith(("theorem ", "lemma ")) and
+                        decl_name in stripped):
+                    # Get the full signature (may span multiple lines)
+                    sig = stripped[:200]  # Cap length
+                    results.append(
+                        f"  {len(results)+1}. `{decl_name}` : {sig}\n"
+                        f"     (file: {summary.relative_path})"
+                    )
+                    break
+
+        if not results:
+            return "No specific theorem signatures matched this concept."
+
+        header = "Existing theorems you can build on:\n"
+        return header + "\n".join(results)
+
+    def collect_future_directions(self, limit: int = 5) -> str:
+        """Collect Aristotle's FUTURE_DIRECTIONS reports from previous cycles.
+
+        Aristotle includes a FUTURE_DIRECTIONS.md (or similar) in its output,
+        containing its own research recommendations. Pi reads these to guide
+        the next research cycle, creating a self-improving feedback loop.
+
+        Scans:
+        - Catalog/ResearchOutput/*/FUTURE_DIRECTIONS.md
+        - Catalog/ResearchOutput/*/future_directions*.md
+        - Catalog/ResearchOutput/*/research_paper.md (for "Future Directions" sections)
+
+        Returns the concatenated content of the most recent N reports.
+        """
+        future_dirs: list = []
+
+        # Scan ResearchOutput subdirectories
+        research_output_dir = self.catalog_root / "ResearchOutput"
+        if research_output_dir.exists():
+            for subdir in sorted(research_output_dir.iterdir()):
+                if not subdir.is_dir():
+                    continue
+
+                # Look for future directions files
+                candidates = []
+                for pattern in [
+                    "FUTURE_DIRECTIONS.md",
+                    "future_directions*.md",
+                ]:
+                    candidates.extend(subdir.glob(pattern))
+
+                for candidate in candidates:
+                    try:
+                        content = candidate.read_text(encoding="utf-8", errors="replace")
+                        # Only include if it has substantial content
+                        if len(content) > 100:
+                            future_dirs.append({
+                                "path": str(candidate.relative_to(self.catalog_root)),
+                                "content": content,
+                                "size": len(content),
+                            })
+                    except Exception:
+                        continue
+
+                # Also check research papers for "Future Directions" sections
+                for paper_name in ["research_paper.md", "RESEARCH_REPORT.md"]:
+                    paper = subdir / paper_name
+                    if paper.exists():
+                        try:
+                            content = paper.read_text(encoding="utf-8", errors="replace")
+                            # Extract "Future Directions" or "What We Don't Know" sections
+                            section = self._extract_section(content, [
+                                "Future Directions",
+                                "What We Don't Know",
+                                "Open Questions",
+                                "Open Problems",
+                                "What Could This Be Good For",
+                                "Looking Forward",
+                            ])
+                            if section and len(section) > 100:
+                                future_dirs.append({
+                                    "path": str(paper.relative_to(self.catalog_root)),
+                                    "content": section,
+                                    "size": len(section),
+                                })
+                        except Exception:
+                            continue
+
+        if not future_dirs:
+            return "No previous future directions reports found."
+
+        # Take the most recent N (sorted by size as a proxy for richness)
+        future_dirs.sort(key=lambda x: x["size"], reverse=True)
+        selected = future_dirs[:limit]
+
+        parts = []
+        for fd in selected:
+            # Truncate very long reports to keep prompt manageable
+            content = fd["content"]
+            if len(content) > 2000:
+                content = content[:2000] + "\n\n[... truncated for prompt size ...]"
+            parts.append(
+                f"### From: {fd['path']}\n\n{content}"
+            )
+
+        return "\n\n---\n\n".join(parts)
+
+    @staticmethod
+    def _extract_section(content: str, section_names: list) -> str:
+        """Extract a named section from a markdown document.
+
+        Looks for ## or ### headings matching any of the given names,
+        then returns everything until the next heading of equal or higher level.
+        """
+        lines = content.splitlines()
+        capturing = False
+        capture_level = 0
+        result_lines = []
+
+        for line in lines:
+            stripped = line.strip()
+
+            # Check for heading
+            if stripped.startswith("#"):
+                level = len(stripped) - len(stripped.lstrip("#"))
+                heading_text = stripped.lstrip("# ").strip()
+
+                if capturing:
+                    # Stop if we hit a heading at same or higher level
+                    if level <= capture_level:
+                        break
+                    # Otherwise keep capturing (sub-section)
+                    result_lines.append(line)
+                else:
+                    # Check if this heading matches any target section
+                    for name in section_names:
+                        if name.lower() in heading_text.lower():
+                            capturing = True
+                            capture_level = level
+                            result_lines.append(line)
+                            break
+            elif capturing:
+                result_lines.append(line)
+
+        return "\n".join(result_lines).strip()
+
     def find_declaration(self, name: str) -> Optional[str]:
         """Find which file contains a declaration by name."""
         if self._summaries is None:

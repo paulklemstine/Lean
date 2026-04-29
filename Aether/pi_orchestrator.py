@@ -505,13 +505,21 @@ class PiAgentOrchestrator:
                             quality_assessment["compiles"] = True
                         else:
                             print(f"[Process] {exp_id} ✗ Lean compilation failed")
-                            # Extract error count from output
+                            # Extract error count and specific error messages
                             errors = comp_result.stderr.count("error:")
                             print(f"[Process] {exp_id}   {errors} error(s)")
+                            # Extract specific error lines for feedback to Pi/Aristotle
+                            error_lines = [
+                                l.strip() for l in comp_result.stderr.splitlines()
+                                if "error:" in l.lower()
+                            ][:5]  # Top 5 errors
+                            for el in error_lines:
+                                print(f"[Process] {exp_id}     {el[:120]}")
                             if quality_assessment.get("quality") == "substantial":
                                 quality_assessment["quality"] = "partial"
                             quality_assessment["compiles"] = False
                             quality_assessment["compile_errors"] = errors
+                            quality_assessment["compile_errors_detail"] = error_lines
                     except subprocess.TimeoutExpired:
                         print(f"[Process] {exp_id} Lean compilation timed out (120s)")
                         quality_assessment["compiles"] = False
@@ -576,6 +584,29 @@ class PiAgentOrchestrator:
             article_count = len(decisions.get("articles", []))
             print(f"[Process] {exp_id} placed: {placed_count} thms, {paper_count} papers, "
                   f"{demo_count} demos, {visual_count} visuals, {article_count} articles")
+
+            # ---- Preserve FUTURE_DIRECTIONS.md for the next research cycle ----
+            # Aristotle's future directions report feeds back into Pi's
+            # concept selection, creating a self-improving research loop.
+            future_dir_file = None
+            for pattern in ["FUTURE_DIRECTIONS.md", "future_directions*.md"]:
+                candidates = list(result_dir.glob(pattern))
+                if not candidates:
+                    # Also check one level deep
+                    candidates = list(result_dir.rglob(pattern))
+                if candidates:
+                    future_dir_file = candidates[0]
+                    break
+
+            if future_dir_file and future_dir_file.exists():
+                import shutil
+                dest_dir = self.catalog_root / "ResearchOutput" / exp_id
+                dest_dir.mkdir(parents=True, exist_ok=True)
+                dest = dest_dir / "FUTURE_DIRECTIONS.md"
+                shutil.copy2(future_dir_file, dest)
+                print(f"[Process] {exp_id} ✓ saved FUTURE_DIRECTIONS.md for next cycle")
+            else:
+                print(f"[Process] {exp_id} no FUTURE_DIRECTIONS.md found in output")
         else:
             files_placed = []
             artifacts_placed = []

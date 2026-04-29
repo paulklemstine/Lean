@@ -548,6 +548,11 @@ class PiAgentClient:
         if self.memory:
             success_patterns = self.memory.build_success_patterns()
 
+        # Collect Aristotle's future directions from previous cycles
+        future_directions = ""
+        if self.catalog_analyzer:
+            future_directions = self.catalog_analyzer.collect_future_directions(limit=3)
+
         # Build priority sorry targets
         sorry_targets = ""
         if self.catalog_analyzer:
@@ -571,19 +576,43 @@ class PiAgentClient:
         user_prompt = textwrap.dedent(f"""\
             Select ONE domain and ONE specific concept for mathematical research.
 
-            Available domains:
+            ## Aristotle's Research Recommendations (from previous cycles)
+            These are Aristotle's own suggestions for what to research next,
+            based on what was discovered in previous cycles. Follow productive
+            threads or open genuinely new ground:
+
+            {future_directions if future_directions else "No previous recommendations (first cycle)."}
+
+            ## Catalog State
+            {catalog_summary if catalog_summary else "Catalog not available."}
+
+            ## Available Research Arcs
             {chr(10).join(domain_descriptions[:8])}
 
-            Sorry targets:
+            ## Sorry Targets (open problems with existing proofs)
             {sorry_targets if sorry_targets else "None identified"}
 
-            Recent history (avoid repeating):
-            {exclusion if exclusion else "First cycle."}
+            ## What Worked Before (emulate these approaches)
+            {success_patterns if success_patterns else "No prior successes recorded."}
 
-            Context: {research_context[:500] if research_context else "Cold start."}
+            ## What to Avoid (these failed or were trivial)
+            {exclusion if exclusion else "First cycle — no exclusions."}
 
-            IMPORTANT: Choose sorry_fill only for Pythagorean/Number Theory domains. Vary domains.
-            Respond with JSON: {{"domain": "...", "concept_title": "...", "concept_description": "...", "mathematical_framing": "...", "lean_guess": "", "catalog_references": ["..."], "research_mode": "prove|sorry_fill", "novelty_estimate": 0.0-1.0, "breakthrough_potential": 0.0-1.0, "key_references": ["..."]}}
+            ## Additional Context
+            {research_context[:500] if research_context else "Cold start."}
+
+            ## Instructions
+            Pick the MOST PROMISING direction by:
+            1. Following Aristotle's own future directions recommendations above
+            2. Building on verified results that are already in the catalog
+            3. Finding cross-domain connections (these have the highest novelty)
+            4. Filling sorries only when they close significant open problems
+
+            Be SPECIFIC and MATHEMATICAL. Don't say "explore X" — say
+            "prove that X has property Y using technique Z." Reference specific
+            catalog theorems by name.
+
+            Respond with JSON: {{"domain": "...", "concept_title": "...", "concept_description": "...", "mathematical_framing": "...", "lean_guess": "", "catalog_references": ["..."], "research_mode": "prove|formalize|sorry_fill", "novelty_estimate": 0.0-1.0, "breakthrough_potential": 0.0-1.0, "key_references": ["..."]}}
         """)
 
         # Concept generation: try LLM with short timeout, quick fallback to local
@@ -737,14 +766,25 @@ class PiAgentClient:
                     key_references=[d_a, d_b],
                 )
 
-        # Priority 3: Research arc — extensions of our verified results
-        # These are the MOST promising targets because we already have 
-        # proven foundations to build on.
+        # Priority 3: Directions from Aristotle's FUTURE_DIRECTIONS reports
+        # This is the self-improving feedback loop: Aristotle's own
+        # recommendations from past cycles guide the next concept.
+        if self.catalog_analyzer:
+            future_dirs_text = self.catalog_analyzer.collect_future_directions(limit=3)
+            if future_dirs_text and "No previous future directions" not in future_dirs_text:
+                # Extract concrete research directions from the reports
+                extracted = self._extract_future_direction_concepts(future_dirs_text, cycle)
+                if extracted:
+                    print(f"[Local] Using Aristotle's future direction: {extracted.title}")
+                    return extracted
+
+        # Priority 4: Research arc — static extensions of our verified results
+        # Last resort when no future directions are available.
         RESEARCH_ARCS = [
             {
                 "title": "tropical_robustness_resnet",
                 "domain": "Tropical",
-                "desc": "Extend certified robustness to residual networks with skip connections",
+                "desc": "Extend certified robustness to residual networks with skip connections. The tropical degree of a skip connection adds 1 to the depth factor.",
                 "framing": "For ResNet with skip connections, the tropical degree bounds the Lipschitz constant of the residual path. Prove: certified_robustness_resnet with bound r* = margin/(2*K*(d+1)) where d+1 accounts for the skip.",
                 "mode": "prove",
                 "refs": ["Tropical/NeuralNetworks/TropicalDegreeRobustness.lean"],
@@ -753,7 +793,7 @@ class PiAgentClient:
             {
                 "title": "satake_gl3_weyl_invariant",
                 "domain": "Tropical",
-                "desc": "Extend tropical Satake isomorphism to GL₃ with S₃ Weyl group",
+                "desc": "Extend tropical Satake isomorphism to GL₃ with S₃ Weyl group. The Satake image should map Hecke operators to S₃-invariant tropical Laurent polynomials in 3 variables.",
                 "framing": "For GL₃, the Weyl group is S₃ (6 elements). The Satake image of Tₙ maps to S₃-invariant tropical Laurent polynomials in 3 variables. Prove: satakeImage_gl3_weyl_invariant by permutation invariance.",
                 "mode": "formalize",
                 "refs": ["Tropical/Langlands/SatakeIsomorphism.lean"],
@@ -762,7 +802,7 @@ class PiAgentClient:
             {
                 "title": "eml_universal_approximation",
                 "domain": "EML",
-                "desc": "Prove the EML closure satisfies Stone-Weierstrass hypotheses",
+                "desc": "Prove the EML closure satisfies Stone-Weierstrass hypotheses: forms a subalgebra of C(K), separates points, and vanishes nowhere.",
                 "framing": "The EML closure A = span{compositions of EML(αᵢ,βᵢ) with affine maps} forms a subalgebra of C(K), separates points, and vanishes nowhere. By Stone-Weierstrass, A is dense in C(K).",
                 "mode": "prove",
                 "refs": ["Bridges/AlgebraEMLBridge.lean", "Bridges/EMLTropicalBridge.lean"],
@@ -771,7 +811,7 @@ class PiAgentClient:
             {
                 "title": "logsumexp_tropical_approximation_error",
                 "domain": "Bridges",
-                "desc": "Bound the LogSumExp-tropical max gap in higher dimensions",
+                "desc": "Bound the LogSumExp-tropical max gap in higher dimensions with tight constants.",
                 "framing": "For n-dimensional input, max(x₁,...,xₙ) ≤ log(∑exp(xᵢ)) ≤ max(x₁,...,xₙ) + log(n). Prove: logsumexp_n_dim_gap with explicit bounds.",
                 "mode": "prove",
                 "refs": ["Bridges/EMLTropicalBridge.lean"],
@@ -780,11 +820,57 @@ class PiAgentClient:
             {
                 "title": "carmichael_lte_lemma",
                 "domain": "Pythagorean",
-                "desc": "Prove the Lifting-the-Exponent lemma for Fibonacci p-adic valuations",
+                "desc": "Prove the Lifting-the-Exponent lemma for Fibonacci p-adic valuations, closing the last sorry in CarmichaelProof.lean.",
                 "framing": "For prime p ≥ 5 and n ≥ 1, v_p(F(n)) = v_p(n) + v_p(F(p)). This would close the last sorry in CarmichaelProof.lean (composite n > 10000).",
                 "mode": "prove",
                 "refs": ["Shared/CarmichaelProof.lean"],
                 "novelty": 0.95, "breakthrough": 0.95,
+            },
+            # New arcs from future_directions_paper.md:
+            {
+                "title": "tropical_feynman_multi_path",
+                "domain": "Physics",
+                "desc": "Extend tropical Feynman integrals to multi-path interference with caustic analysis. The tropical limit of the path integral should select the minimum-action path ensemble.",
+                "framing": "For n > 2 paths with distinct actions S₁ < S₂ < ... < Sₙ, prove that the soft-minimum converges to S₁ with rate ε·log(n). Show this generalizes the two-path case in TropicalFeynman.lean.",
+                "mode": "prove",
+                "refs": ["Physics/Quantum/TropicalFeynman.lean"],
+                "novelty": 0.91, "breakthrough": 0.89,
+            },
+            {
+                "title": "berggren_solovay_kitaev_density",
+                "domain": "Pythagorean",
+                "desc": "Prove that Berggren-generated Pythagorean gates are dense in SO(2). Use the equidistribution of arctan(b/a) for Pythagorean triples to show sub-degree approximation at depth d.",
+                "framing": "For Berggren tree of depth d generating O(3^d) triples, prove max_θ min_k |θ - arctan(b_k/a_k)| = O(1/3^d). This is a Solovay-Kitaev density result for rational gates.",
+                "mode": "prove",
+                "refs": ["Physics/Quantum/BerggrenLorentzSim.lean"],
+                "novelty": 0.93, "breakthrough": 0.92,
+            },
+            {
+                "title": "maslov_decoherence_rate",
+                "domain": "Bridges",
+                "desc": "Prove the tight ε·log(n) decoherence rate for Maslov dequantization. Show this bound is achieved by an n-state system with actions in arithmetic progression.",
+                "framing": "The Maslov softmin satisfies min_j S_j - ε·log(n) ≤ softmin_ε ≤ min_j S_j. Prove the lower bound is tight: there exists a configuration achieving equality.",
+                "mode": "prove",
+                "refs": ["Bridges/QuantumTropicalUnification.lean"],
+                "novelty": 0.89, "breakthrough": 0.88,
+            },
+            {
+                "title": "spb_finite_field_hardness",
+                "domain": "Cryptography",
+                "desc": "Analyze SPB discrete log problem over finite fields. The tropical DL is trivially solvable, but over GF(p) the problem may be hard.",
+                "framing": "Over ℝ, tropDiscreteLog_trivial shows n = arctan(SPB^n(g))/arctan(g). Over GF(p), formalize the SPB operation and show the discrete log reduces to a known hard problem.",
+                "mode": "formalize",
+                "refs": ["Cryptography/SPBQuantumCrypto.lean"],
+                "novelty": 0.90, "breakthrough": 0.91,
+            },
+            {
+                "title": "eml_boltzmann_tropical_pipeline",
+                "domain": "EML",
+                "desc": "Formalize the complete EML-Boltzmann-Tropical pipeline: quantum density → log-space evolution → tropical measurement → probability distribution.",
+                "framing": "Compose EML evolution (exp/log) with Boltzmann selection (softmax) with tropical measurement (argmin). Prove the full pipeline produces a valid probability distribution and converges to the maximum-density branch.",
+                "mode": "prove",
+                "refs": ["EML/QuantumDensityEstimation.lean", "Bridges/QuantumTropicalUnification.lean"],
+                "novelty": 0.87, "breakthrough": 0.86,
             },
         ]
         arc = RESEARCH_ARCS[cycle % len(RESEARCH_ARCS)]
@@ -832,23 +918,44 @@ class PiAgentClient:
         """
         refs = catalog_references or concept.catalog_references or []
 
-        # Build reference section
+        # Build focused catalog context (specific theorem signatures, not all files)
+        focused_context = ""
+        if self.catalog_analyzer:
+            focused_context = self.catalog_analyzer.build_focused_context(
+                domain=concept.domain,
+                concept_description=concept.concept_description,
+                max_theorems=5,
+            )
+
+        # Build reference section (full file contents for the most relevant files)
         ref_section = ""
         if refs and self.catalog_analyzer:
-            ref_section = self.catalog_analyzer.build_catalog_context_string(refs)
+            # Limit to 5 most relevant files to keep prompt focused
+            ref_section = self.catalog_analyzer.build_catalog_context_string(refs[:5])
         elif catalog_context:
             ref_section = catalog_context
+
+        # Collect Aristotle's future directions from past cycles
+        future_directions = ""
+        if self.catalog_analyzer:
+            future_directions = self.catalog_analyzer.collect_future_directions(limit=2)
 
         # Research mode instructions (addressed directly to Aristotle)
         mode_instructions = {
             "prove": textwrap.dedent("""\
                 Research Mode: PROVE
 
-                Discover and prove a new theorem. Start from the mathematical
-                context provided and find an interesting, non-trivial result
-                that can be formally proven in Lean 4. The theorem should be
-                specific enough to prove, but general enough to be mathematically
-                interesting. Avoid trivial tautologies.
+                Discover and prove new, non-trivial theorems that advance the
+                mathematical frontier. Start from the existing verified theorems
+                listed below and extend them into deeper territory. Every theorem
+                you prove should require genuine mathematical insight — not just
+                unfolding definitions or numeric verification.
+
+                Your Lean 4 files must:
+                - Use concrete types (ℕ, ℝ, Finset, Matrix, etc.)
+                - Build on existing catalog theorems (referenced below)
+                - Minimize `sorry` — isolate truly hard steps rather than leaving gaps
+                - Avoid trivial tautologies (no `True := by trivial`)
             """),
             "formalize": textwrap.dedent("""\
                 Research Mode: FORMALIZE
@@ -874,26 +981,11 @@ class PiAgentClient:
                 Your task is CRITICALLY IMPORTANT: fill ALL `sorry` placeholders
                 with complete, rigorous proofs. This closes known open problems.
 
-                ## Strategy for sorry_fill
-
-                1. READ the surrounding context. The theorem statement, imports,
-                   and nearby lemmas contain CRITICAL HINTS about proof strategy.
-
-                2. DO NOT change the theorem statement — only fill the `sorry`.
-
-                3. For HARD targets (Carmichael, Fibonacci, etc.), break the proof
-                   into helper lemmas first, then use them to fill the original sorry.
-
-                4. If you cannot complete the full proof, reduce the sorry count
-                   by replacing some with partial progress. This is still valuable.
-
-                5. Priority targets with known strategies:
-                   - CarmichaelComposite: Use entry-point theory + growth bounds
-                   - Fib_gcd_identity: Zsigmondy-type argument + entry point divides n
-                   - CarmichaelComputational: Same as CarmichaelComposite approach
-
-                6. Make sure your proof typechecks. A proof that compiles with
-                   fewer sorries is better than an ambitious proof that doesn't compile.
+                Strategy:
+                1. READ the surrounding context — theorem statements and imports are hints
+                2. DO NOT change theorem statements — only fill the `sorry`
+                3. Break hard proofs into helper lemmas first
+                4. A proof with fewer sorries is better than one that doesn't compile
             """),
         }
 
@@ -911,66 +1003,79 @@ class PiAgentClient:
             for title, reason in zip(failure_titles, failure_reasons):
                 history_section += f"\n  - {title}: {reason}"
 
+        # Known working tactic patterns from autoresearch.md
+        tactic_patterns = textwrap.dedent("""\
+            Known Working Lean 4 Tactics:
+            - `nlinarith [sq_nonneg X]` for quadratic inequalities
+            - `positivity` for positivity goals
+            - `field_simp` then `ring` for division
+            - `Real.exp_le_exp.mpr` for exp monotonicity
+            - `Real.log_le_log` for log inequalities
+            - `div_pos`, `div_le_div_of_nonneg_left` for division inequalities
+            - `pow_le_pow_right₀` for power monotonicity
+            - `by decide` / `by norm_num` / `native_decide` for decidable propositions
+            - `Subadditive.tendsto_lim` for Fekete's Lemma
+            - `ConvexOn.map_sum_le` for Jensen's inequality
+            - `exists_deriv_eq_slope` for MVT
+        """)
+
         # ---- DIRECT ARISTOTLE PROMPT ----
-        # This is the prompt sent directly to Aristotle. It addresses Aristotle
-        # as the theorem prover, not as a brief-writer intermediary.
+        # Structured: math first, then context, then deliverables
         direct_prompt = textwrap.dedent(f"""\
             ## Research Task: {concept.title}
 
             {mode_instruction}
 
-            ### Mathematical Objective
+            ### Research Direction
             {concept.concept_description}
 
             ### Precise Mathematical Framing
             {concept.mathematical_framing}
 
-            {"### Lean 4 Sketch\\n" + concept.lean_guess if concept.lean_guess else ""}
+            {"### Lean 4 Sketch" + chr(10) + concept.lean_guess if concept.lean_guess else ""}
 
-            ### Proof Strategy
-            This result is significant because it advances the {concept.domain} domain.
-            {"The goal is to fill existing `sorry` placeholders — do not change theorem statements." if concept.research_mode == "sorry_fill" else "Produce novel, non-trivial theorems with complete Lean 4 proofs."}
+            ### Existing Verified Theorems to Build On
+            {focused_context}
 
-            ### Catalog Context
-            The theorem catalog has these relevant files that you should study as
-            context. They contain existing theorems, definitions, and structures
-            that you can build upon:
-
-            {ref_section if ref_section else "No specific files referenced. Use Mathlib and general knowledge."}
+            {tactic_patterns}
 
             {history_section if history_section else ""}
 
-            {"### Previously Proved Theorems (build on these)\\n" + theorem_context if theorem_context else ""}
+            {"### Previously Proved Theorems" + chr(10) + theorem_context if theorem_context else ""}
 
-            ### What We Need From You
+            ### Required Deliverables
 
-            You are a world-class mathematician and software engineer. Use your
-            judgment on the best way to organize and present your work.
+            You are a world-class mathematician and software engineer. Create:
 
-            The mathematics comes FIRST. Excellent proofs trump everything else.
-            But great work deserves great presentation. We need:
-
-            1. **Formally verified mathematics** in Lean 4
-               - Prove non-trivial theorems with complete proofs
-               - Organize the Lean code however makes mathematical sense
+            1. **Lean 4 files** — formally verified theorems with complete proofs
+               - Use concrete types (ℕ, ℝ, Finset, Matrix, etc.)
+               - Build on the existing catalog theorems listed above
+               - Minimize `sorry` — isolate hard steps rather than leaving gaps
                - Use doc comments to explain the significance of key results
 
-            2. **Python demos** that bring the mathematics to life
-               - Working code with concrete numerical examples
+            2. **RESEARCH_REPORT.md** — paper explaining the discovery
+               - Mathematical significance and connections to existing work
+               - A Scientific American style discussion section
+               - Detailed proofs and explanations
+
+            3. **FUTURE_DIRECTIONS.md** — YOUR recommendations for what to research next
+               - Specific theorems or conjectures worth pursuing
+               - Which existing catalog results could be extended and how
+               - Cross-domain connections you noticed during this research
+               - Open problems you encountered but couldn't solve
+               - This report will guide the next research cycle
+
+            4. **demo.py** — Python demo with concrete numerical examples
+               - Working code that brings the math to life
                - Visualizations where they add insight
-               - Show the math in action — make it tangible
 
-            3. **A research paper** explaining the discovery
-               - Mathematical significance, connections to existing work
-               - A Scientific American style discussion section that makes
-                 the result accessible to a broad audience
-               - Future directions and applications
+            5. **diagram.svg** — visualization of key mathematical structures
 
-            4. **Useful applications** showing real-world relevance
-               - What can people DO with this result?
-               - Code, examples, or demonstrations
+            The mathematics comes FIRST. Excellent proofs trump everything else.
+            {"Fill existing `sorry` placeholders — do not change theorem statements." if concept.research_mode == "sorry_fill" else "Produce novel, non-trivial theorems with complete Lean 4 proofs."}
 
-            {"Fill existing `sorry` placeholders — do not change theorem statements. But also create demos and write up the significance." if concept.research_mode == "sorry_fill" else "Produce novel, non-trivial theorems with complete Lean 4 proofs. Make it real and useful."}
+            ### Catalog Reference Files
+            {ref_section if ref_section else "No specific files referenced. Use Mathlib and general knowledge."}
         """)
 
         # ---- LLM ENRICHMENT ----
@@ -1004,28 +1109,39 @@ class PiAgentClient:
             No preamble, no "Here is the enriched prompt:", just the task content.
         """)
 
-        # For compact/cloud mode, skip enrichment entirely - it always times out
-        # The direct prompt is well-structured for Aristotle already
+        # Compact mode: use a shorter, focused enrichment instead of skipping entirely
         if self.compact:
-            print(f"[Pi-Agent] Using direct prompt (compact mode, enrichment skipped)")
-            return direct_prompt
+            short_enrichment = textwrap.dedent(f"""\
+                Given this research concept, add mathematical precision:
+                Concept: {concept.title}
+                Domain: {concept.domain}
+                Description: {concept.concept_description[:500]}
+                Existing theorems: {focused_context[:500]}
+                Future directions from past cycles: {future_directions[:500] if future_directions else 'First cycle.'}
 
-        raw = self._call_ollama(_PROMPT_WRITING_SYSTEM_PROMPT, enrichment_request, timeout=150)
+                Add:
+                1. A specific theorem statement to prove (with Lean 4 type signature)
+                2. Three concrete proof strategy steps with Mathlib lemma names
+                3. Why this result matters to the research program
 
-        # For compact/cloud mode, skip enrichment if LLM is slow to respond
-        # The direct prompt is already well-structured for Aristotle
-        use_enriched = raw and not raw.startswith("[OLLAMA") and not "TIMEOUT" in raw
+                Output ONLY the enriched content. No preamble.
+            """)
+            raw = self._call_ollama(_PROMPT_WRITING_SYSTEM_PROMPT, short_enrichment, timeout=90)
+        else:
+            raw = self._call_ollama(_PROMPT_WRITING_SYSTEM_PROMPT, enrichment_request, timeout=150)
+
+        use_enriched = raw and not raw.startswith("[OLLAMA") and "TIMEOUT" not in raw
         if use_enriched:
             cleaned = self._strip_llm_preamble(raw)
             if cleaned and len(cleaned) > 200:
                 # The LLM enriched the task section. Merge with catalog context.
                 catalog_section = ""
-                if "### Catalog Context" in direct_prompt:
-                    idx = direct_prompt.find("### Catalog Context")
+                if "### Catalog Reference Files" in direct_prompt:
+                    idx = direct_prompt.find("### Catalog Reference Files")
                     catalog_section = "\n\n" + direct_prompt[idx:]
                 return cleaned + catalog_section
         # Fallback: use the direct prompt (never a meta-instruction)
-        print(f"[Pi-Agent] Using direct prompt (enrichment {'failed' if raw and 'TIMEOUT' in raw else 'skipped'})")
+        print(f"[Pi-Agent] Using direct prompt (enrichment {'failed' if raw and 'TIMEOUT' in raw else 'returned insufficient content'})")
         return direct_prompt
 
     @staticmethod
@@ -1264,6 +1380,16 @@ class PiAgentClient:
         """
         lean_preview = result_lean[:2000] if len(result_lean) > 2000 else result_lean
 
+        # Extract compile errors if available
+        compile_errors = quality_assessment.get("compile_errors_detail", [])
+        error_section = ""
+        if compile_errors:
+            error_section = (
+                "\n## Compilation Errors From Previous Attempt\n"
+                + "\n".join(f"- {e}" for e in compile_errors)
+                + "\n\nFix these specific errors in your revised approach.\n"
+            )
+
         user_prompt = textwrap.dedent(f"""\
             The previous research attempt produced a {quality_assessment.get('quality', 'unknown')} result.
 
@@ -1277,6 +1403,7 @@ class PiAgentClient:
             - Quality: {quality_assessment.get('quality', 'unknown')}
             - Analysis: {quality_assessment.get('analysis', 'N/A')}
             - Retry strategy: {quality_assessment.get('retry_strategy', 'N/A')}
+            {error_section}
 
             ## Result (what went wrong)
             ```lean
@@ -1288,6 +1415,7 @@ class PiAgentClient:
             2. Change the research mode (e.g., from "prove" to "formalize" or "counterexample")
             3. Select different catalog references that are more relevant
             4. Completely change direction if the original concept was flawed
+            {"5. Fix the specific compilation errors listed above" if compile_errors else ""}
 
             Respond with JSON:
             {{
