@@ -46,6 +46,7 @@ tracked_files = [
     'LSEConvexity.lean',
     'CarmichaelPrimitiveDivisor.lean',
     'TropicalSatakeGL3.lean',
+    'HeineCantorBridge.lean',
     'ResNetTropicalCertified.lean',
 ]
 
