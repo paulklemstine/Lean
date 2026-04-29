@@ -381,7 +381,7 @@ sorry_count_24 = c24.count('sorry')
 
 # 25. GronwallDiscreteBridge.lean (discrete Gronwall inequalities)
 c25 = Path('../Catalog/Bridges/GronwallDiscreteBridge.lean').read_text()
-key_thms25 = ['geometric_bound', 'geometric_convergence', 'linear_growth_bound', 'affine_fixed_point', 'gd_geometric_convergence', 'half_rate_decay']
+key_thms25 = ['geometric_bound', 'geometric_convergence', 'linear_growth_bound', 'affine_fixed_point', 'affine_geometric_decay', 'gd_geometric_convergence', 'resnet_growth_polynomial', 'half_rate_decay']
 for t in key_thms25:
     assert t in c25, f'Should contain {t}'
 sorry_count_25 = c25.count('sorry')
