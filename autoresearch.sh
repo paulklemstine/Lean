@@ -47,6 +47,7 @@ tracked_files = [
     'CarmichaelPrimitiveDivisor.lean',
     'TropicalSatakeGL3.lean',
     'HeineCantorBridge.lean',
+    'KnasterTarskiBridge.lean',
     'ResNetTropicalCertified.lean',
 ]
 
