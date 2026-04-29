@@ -413,13 +413,30 @@ key_thms29 = ['lipschitz_comp', 'lipschitz_add', 'lipschitz_sub', 'lipschitz_max
 for t in key_thms29:
     assert t in c29, f'Should contain {t}'
 sorry_count_29 = c29.count('sorry')
-total_sorry = sorry_count_1 + sorry_count_2 + sorry_count_3 + sorry_count_4 + sorry_count_5 + sorry_count_6 + sorry_count_8 + sorry_count_9 + sorry_count_10 + sorry_count_11 + sorry_count_12 + sorry_count_13 + sorry_count_14 + sorry_count_15 + sorry_count_16 + sorry_count_17 + sorry_count_18 + sorry_count_19 + sorry_count_20 + sorry_count_21 + sorry_count_22 + sorry_count_23 + sorry_count_24 + sorry_count_25 + sorry_count_26 + sorry_count_27 + sorry_count_28 + sorry_count_29
+
+# 30. IntermediateValueBridge.lean (IVT and decision boundaries)
+c30 = Path('../Catalog/Bridges/IntermediateValueBridge.lean').read_text()
+key_thms30 = ['ivt_image', 'ivt', 'zero_crossing', 'strict_zero_crossing', 'continuous_image_Icc', 'sign_change_implies_adversarial']
+for t in key_thms30:
+    assert t in c30, f'Should contain {t}'
+sorry_count_30 = c30.count('sorry')
+
+# 31. ExponentialBoundBridge.lean (exp and log bounds)
+c31 = Path('../Catalog/Bridges/ExponentialBoundBridge.lean').read_text()
+key_thms31 = ['exp_ge_add_one', 'exp_ge_one_add', 'exp_ge_one_nonneg', 'exp_strict_convex', 'exp_convex', 'log_le_sub_one', 'log_one_eq_zero', 'log_mono', 'exp_always_pos', 'exp_lower_chain', 'exp_zero_eq_one']
+for t in key_thms31:
+    assert t in c31, f'Should contain {t}'
+sorry_count_31 = c31.count('sorry')
+print(f'  IntermediateValueBridge.lean: {len(c30)} bytes, sorry={sorry_count_30}')
+print(f'  ExponentialBoundBridge.lean: {len(c31)} bytes, sorry={sorry_count_31}')
+
+total_sorry = sorry_count_1 + sorry_count_2 + sorry_count_3 + sorry_count_4 + sorry_count_5 + sorry_count_6 + sorry_count_8 + sorry_count_9 + sorry_count_10 + sorry_count_11 + sorry_count_12 + sorry_count_13 + sorry_count_14 + sorry_count_15 + sorry_count_16 + sorry_count_17 + sorry_count_18 + sorry_count_19 + sorry_count_20 + sorry_count_21 + sorry_count_22 + sorry_count_23 + sorry_count_24 + sorry_count_25 + sorry_count_26 + sorry_count_27 + sorry_count_28 + sorry_count_29 + sorry_count_30 + sorry_count_31
 print(f'  Total sorries in verified files: {total_sorry} (should be 0)')
 assert total_sorry == 0, f'Verified files should have 0 sorries, got {total_sorry}'
 print(f'  LSEConvexity.lean: {len(c18)} bytes, sorry={sorry_count_18}')
 print(f'  ResNetTropicalCertified.lean: {len(c19)} bytes, sorry={sorry_count_19}')
 print(f'  EMLStoneWeierstrassBridge.lean: {len(c20)} bytes, sorry={sorry_count_20}')
-print('  All 29 files compile (verified by lake build)')
+print('  All 31 files compile (verified by lake build)')
 print('  OK')
 "
 
