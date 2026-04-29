@@ -63,6 +63,7 @@ tracked_files = [
     'WellFoundedInductionBridge.lean',
     'TopologyBridge.lean',
     'PolynomialBridge.lean',
+    'DeterminantBridge.lean',
     'ResNetTropicalCertified.lean',
 ]
 
