@@ -343,12 +343,20 @@ key_thms19 = ['add_lipschitz', 'certified_radius_bound', 'resnet_certified_lipsc
 for t in key_thms19:
     assert t in c19, f'Should contain {t}'
 sorry_count_19 = c19.count('sorry')
-total_sorry = sorry_count_1 + sorry_count_2 + sorry_count_3 + sorry_count_4 + sorry_count_5 + sorry_count_6 + sorry_count_8 + sorry_count_9 + sorry_count_10 + sorry_count_11 + sorry_count_12 + sorry_count_13 + sorry_count_14 + sorry_count_15 + sorry_count_16 + sorry_count_17 + sorry_count_18 + sorry_count_19
+
+# 20. EMLStoneWeierstrassBridge.lean (universal approximation prerequisites)
+c20 = Path('../Catalog/Bridges/EMLStoneWeierstrassBridge.lean').read_text()
+key_thms20 = ['logistic_strict_mono', 'logistic_zero', 'logistic_pos', 'logistic_lt_one', 'exp_add_to_mul', 'const_in_EML', 'identity_from_EML', 'log_mul_additive', 'exp_separates', 'logistic_separates', 'EML_closed_under_mul', 'EML_contains_constants', 'EML_separates_points']
+for t in key_thms20:
+    assert t in c20, f'Should contain {t}'
+sorry_count_20 = c20.count('sorry')
+total_sorry = sorry_count_1 + sorry_count_2 + sorry_count_3 + sorry_count_4 + sorry_count_5 + sorry_count_6 + sorry_count_8 + sorry_count_9 + sorry_count_10 + sorry_count_11 + sorry_count_12 + sorry_count_13 + sorry_count_14 + sorry_count_15 + sorry_count_16 + sorry_count_17 + sorry_count_18 + sorry_count_19 + sorry_count_20
 print(f'  Total sorries in verified files: {total_sorry} (should be 0)')
 assert total_sorry == 0, f'Verified files should have 0 sorries, got {total_sorry}'
 print(f'  LSEConvexity.lean: {len(c18)} bytes, sorry={sorry_count_18}')
 print(f'  ResNetTropicalCertified.lean: {len(c19)} bytes, sorry={sorry_count_19}')
-print('  All 19 files compile (verified by lake build)')
+print(f'  EMLStoneWeierstrassBridge.lean: {len(c20)} bytes, sorry={sorry_count_20}')
+print('  All 20 files compile (verified by lake build)')
 print('  OK')
 "
 
