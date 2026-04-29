@@ -406,13 +406,20 @@ key_thms28 = ['pigeonhole', 'pigeonhole_finset', 'subset_card_le', 'finset_card_
 for t in key_thms28:
     assert t in c28, f'Should contain {t}'
 sorry_count_28 = c28.count('sorry')
-total_sorry = sorry_count_1 + sorry_count_2 + sorry_count_3 + sorry_count_4 + sorry_count_5 + sorry_count_6 + sorry_count_8 + sorry_count_9 + sorry_count_10 + sorry_count_11 + sorry_count_12 + sorry_count_13 + sorry_count_14 + sorry_count_15 + sorry_count_16 + sorry_count_17 + sorry_count_18 + sorry_count_19 + sorry_count_20 + sorry_count_21 + sorry_count_22 + sorry_count_23 + sorry_count_24 + sorry_count_25 + sorry_count_26 + sorry_count_27 + sorry_count_28
+
+# 29. NeuralCompositionBridge.lean (Lipschitz composition laws)
+c29 = Path('../Catalog/Bridges/NeuralCompositionBridge.lean').read_text()
+key_thms29 = ['lipschitz_comp', 'lipschitz_add', 'lipschitz_sub', 'lipschitz_max', 'continuous_comp', 'feedforward_composition_bound', 'lipschitz_composition_product']
+for t in key_thms29:
+    assert t in c29, f'Should contain {t}'
+sorry_count_29 = c29.count('sorry')
+total_sorry = sorry_count_1 + sorry_count_2 + sorry_count_3 + sorry_count_4 + sorry_count_5 + sorry_count_6 + sorry_count_8 + sorry_count_9 + sorry_count_10 + sorry_count_11 + sorry_count_12 + sorry_count_13 + sorry_count_14 + sorry_count_15 + sorry_count_16 + sorry_count_17 + sorry_count_18 + sorry_count_19 + sorry_count_20 + sorry_count_21 + sorry_count_22 + sorry_count_23 + sorry_count_24 + sorry_count_25 + sorry_count_26 + sorry_count_27 + sorry_count_28 + sorry_count_29
 print(f'  Total sorries in verified files: {total_sorry} (should be 0)')
 assert total_sorry == 0, f'Verified files should have 0 sorries, got {total_sorry}'
 print(f'  LSEConvexity.lean: {len(c18)} bytes, sorry={sorry_count_18}')
 print(f'  ResNetTropicalCertified.lean: {len(c19)} bytes, sorry={sorry_count_19}')
 print(f'  EMLStoneWeierstrassBridge.lean: {len(c20)} bytes, sorry={sorry_count_20}')
-print('  All 28 files compile (verified by lake build)')
+print('  All 29 files compile (verified by lake build)')
 print('  OK')
 "
 
