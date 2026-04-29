@@ -53,6 +53,7 @@ tracked_files = [
     'TopologicalConnectednessBridge.lean',
     'NumberTheoryBridge.lean',
     'FiniteFieldBridge.lean',
+    'SubadditiveSequenceBridge.lean',
     'ResNetTropicalCertified.lean',
 ]
 
