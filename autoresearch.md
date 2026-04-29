@@ -64,8 +64,22 @@ multiple domains — pure results in a single domain are equally valuable.
 - Subadditive sequences: 1 file (Fekete), complete
 - Continuous operations: 1 file, complete
 - Pigeonhole/injection: 1 file, complete
+- Differential calculus: 1 file (MVT, Rolle, monotonicity, convexity), complete
+- Transcendental derivatives: 1 file (exp/log chain rules), complete
+- Galois connections: 1 file (closure operators, lattice bounds), complete
+- Well-founded induction: 1 file (Zorn's lemma), complete
+- Topology foundations: 1 file (open/closed, compact Hausdorff), complete
 
-### Recent additions (runs 13-24, this session)
+### Recent additions (runs 23-29, this session)
+- PigeonholeInjectionBridge (6 thm): pigeonhole, injection/surjection bounds
+- ContinuousFunctionBridge (12 thm): continuous function algebra
+- DifferentialCalculusBridge (7 thm): MVT, Rolle, monotonicity, convexity from f''≥0
+- TranscendentalDerivativeBridge (9 thm): exp/log chain rules, exp is its own derivative
+- GaloisConnectionBridge (10 thm): Galois connections, closure operators, lattice bounds
+- WellFoundedInductionBridge (3 thm + 1 def): wf induction, Zorn's lemma
+- TopologyBridge (7 thm): open/closed duality, compact Hausdorff, closure
+
+### Older additions (runs 13-22)
 - HeineCantorBridge (6 thm): compact → uniform continuous
 - KnasterTarskiBridge (11 thm): order-theoretic fixed points
 - InnerProductBridge (9 thm): Cauchy-Schwarz, parallelogram law, polarization
