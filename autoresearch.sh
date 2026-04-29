@@ -52,6 +52,7 @@ tracked_files = [
     'BesselInequalityBridge.lean',
     'TopologicalConnectednessBridge.lean',
     'NumberTheoryBridge.lean',
+    'FiniteFieldBridge.lean',
     'ResNetTropicalCertified.lean',
 ]
 
