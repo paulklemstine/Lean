@@ -61,6 +61,7 @@ tracked_files = [
     'TranscendentalDerivativeBridge.lean',
     'GaloisConnectionBridge.lean',
     'WellFoundedInductionBridge.lean',
+    'TopologyBridge.lean',
     'ResNetTropicalCertified.lean',
 ]
 
