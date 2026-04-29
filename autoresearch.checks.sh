@@ -371,13 +371,20 @@ key_thms23 = ['am_gm_two', 'am_gm_squared', 'lse_ge_max', 'lse_le_max_add_log2',
 for t in key_thms23:
     assert t in c23, f'Should contain {t}'
 sorry_count_23 = c23.count('sorry')
-total_sorry = sorry_count_1 + sorry_count_2 + sorry_count_3 + sorry_count_4 + sorry_count_5 + sorry_count_6 + sorry_count_8 + sorry_count_9 + sorry_count_10 + sorry_count_11 + sorry_count_12 + sorry_count_13 + sorry_count_14 + sorry_count_15 + sorry_count_16 + sorry_count_17 + sorry_count_18 + sorry_count_19 + sorry_count_20 + sorry_count_21 + sorry_count_22 + sorry_count_23
+
+# 24. NormInequalityBridge.lean (norm comparison inequalities)
+c24 = Path('../Catalog/Bridges/NormInequalityBridge.lean').read_text()
+key_thms24 = ['linf_le_l1', 'young_inequality_p2', 'am_le_qm_squared', 'cauchy_schwarz_product', 'product_le_half_norm_sq', 'l1_le_sqrt2_l2_nonneg']
+for t in key_thms24:
+    assert t in c24, f'Should contain {t}'
+sorry_count_24 = c24.count('sorry')
+total_sorry = sorry_count_1 + sorry_count_2 + sorry_count_3 + sorry_count_4 + sorry_count_5 + sorry_count_6 + sorry_count_8 + sorry_count_9 + sorry_count_10 + sorry_count_11 + sorry_count_12 + sorry_count_13 + sorry_count_14 + sorry_count_15 + sorry_count_16 + sorry_count_17 + sorry_count_18 + sorry_count_19 + sorry_count_20 + sorry_count_21 + sorry_count_22 + sorry_count_23 + sorry_count_24
 print(f'  Total sorries in verified files: {total_sorry} (should be 0)')
 assert total_sorry == 0, f'Verified files should have 0 sorries, got {total_sorry}'
 print(f'  LSEConvexity.lean: {len(c18)} bytes, sorry={sorry_count_18}')
 print(f'  ResNetTropicalCertified.lean: {len(c19)} bytes, sorry={sorry_count_19}')
 print(f'  EMLStoneWeierstrassBridge.lean: {len(c20)} bytes, sorry={sorry_count_20}')
-print('  All 23 files compile (verified by lake build)')
+print('  All 24 files compile (verified by lake build)')
 print('  OK')
 "
 
