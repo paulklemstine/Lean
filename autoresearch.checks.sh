@@ -336,11 +336,19 @@ key_thms18 = ['logsumexp_mono_left', 'logsumexp_mono_right', 'logsumexp_symm', '
 for t in key_thms18:
     assert t in c18, f'Should contain {t}'
 sorry_count_18 = c18.count('sorry')
-total_sorry = sorry_count_1 + sorry_count_2 + sorry_count_3 + sorry_count_4 + sorry_count_5 + sorry_count_6 + sorry_count_8 + sorry_count_9 + sorry_count_10 + sorry_count_11 + sorry_count_12 + sorry_count_13 + sorry_count_14 + sorry_count_15 + sorry_count_16 + sorry_count_17 + sorry_count_18
+
+# 19. ResNetTropicalCertified.lean (certified robustness for ResNets)
+c19 = Path('../Catalog/Bridges/ResNetTropicalCertified.lean').read_text()
+key_thms19 = ['add_lipschitz', 'certified_radius_bound', 'resnet_certified_lipschitz', 'resnet_certified_radius', 'resnet_bernoulli', 'resnet_depth_two', 'feedforward_exceeds_resnet', 'pow_two_ge_self']
+for t in key_thms19:
+    assert t in c19, f'Should contain {t}'
+sorry_count_19 = c19.count('sorry')
+total_sorry = sorry_count_1 + sorry_count_2 + sorry_count_3 + sorry_count_4 + sorry_count_5 + sorry_count_6 + sorry_count_8 + sorry_count_9 + sorry_count_10 + sorry_count_11 + sorry_count_12 + sorry_count_13 + sorry_count_14 + sorry_count_15 + sorry_count_16 + sorry_count_17 + sorry_count_18 + sorry_count_19
 print(f'  Total sorries in verified files: {total_sorry} (should be 0)')
 assert total_sorry == 0, f'Verified files should have 0 sorries, got {total_sorry}'
 print(f'  LSEConvexity.lean: {len(c18)} bytes, sorry={sorry_count_18}')
-print('  All 18 files compile (verified by lake build)')
+print(f'  ResNetTropicalCertified.lean: {len(c19)} bytes, sorry={sorry_count_19}')
+print('  All 19 files compile (verified by lake build)')
 print('  OK')
 "
 
