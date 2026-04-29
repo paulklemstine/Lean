@@ -235,6 +235,68 @@ class KnowledgeExtractor:
         2. Python demos that bring the math to life
         3. A research paper with a Scientific American style discussion
         4. Useful applications showing real-world relevance
+
+        This is the sync version — safe to call from non-async code.
+        Use dispatch_async() when inside an already-running event loop.
+        """
+        job = self._prepare_dispatch(job, dry_run=dry_run)
+        if dry_run or job.status in ("failed", "dry_run"):
+            return job
+
+        # Dispatch to Aristotle
+        try:
+            project_id = asyncio.run(self._dispatch_to_aristotle(job))
+            job.project_id = project_id
+            job.status = "dispatched"
+            job.dispatch_time = time.time()
+            self.inflight[project_id] = job
+            print(f"[Dispatch] Aristotle project: {project_id}")
+        except RuntimeError as e:
+            if "already running" in str(e) or "cannot be called from a running event loop" in str(e):
+                # We're inside an async loop — caller should use dispatch_async
+                job.status = "failed"
+                job.error_message = f"Dispatch failed: nested event loop. Use dispatch_async() in async context."
+                print(f"[Dispatch] FAILED: nested event loop — use dispatch_async() from async code")
+            else:
+                job.status = "failed"
+                job.error_message = f"Dispatch failed: {e}"
+                print(f"[Dispatch] FAILED: {e}")
+        except Exception as e:
+            job.status = "failed"
+            job.error_message = f"Dispatch failed: {e}"
+            print(f"[Dispatch] FAILED: {e}")
+
+        return job
+
+    async def dispatch_async(self, job: ResearchJob, dry_run: bool = False) -> ResearchJob:
+        """Async version of dispatch() — call from inside an already-running event loop.
+
+        This is the version to use in run_continuous() and other async contexts.
+        """
+        job = self._prepare_dispatch(job, dry_run=dry_run)
+        if dry_run or job.status in ("failed", "dry_run"):
+            return job
+
+        # Dispatch to Aristotle (we're already in an async context, just await)
+        try:
+            project_id = await self._dispatch_to_aristotle(job)
+            job.project_id = project_id
+            job.status = "dispatched"
+            job.dispatch_time = time.time()
+            self.inflight[project_id] = job
+            print(f"[Dispatch] Aristotle project: {project_id}")
+        except Exception as e:
+            job.status = "failed"
+            job.error_message = f"Dispatch failed: {e}"
+            print(f"[Dispatch] FAILED: {e}")
+
+        return job
+
+    def _prepare_dispatch(self, job: ResearchJob, dry_run: bool = False) -> ResearchJob:
+        """Prepare a job for dispatch: build prompt, augment, create project dir.
+
+        Split out from dispatch() so both sync and async paths share the
+        same preparation logic.
         """
         print(f"[DISPATCH] job={job.job_id}, concept={job.concept.title}")
 
@@ -280,21 +342,6 @@ class KnowledgeExtractor:
             job.status = "failed"
             job.error_message = "Could not build project directory"
             return job
-
-        # Dispatch to Aristotle
-        try:
-            project_id = asyncio.get_event_loop().run_until_complete(
-                self._dispatch_to_aristotle(job)
-            )
-            job.project_id = project_id
-            job.status = "dispatched"
-            job.dispatch_time = time.time()
-            self.inflight[project_id] = job
-            print(f"[Dispatch] Aristotle project: {project_id}")
-        except Exception as e:
-            job.status = "failed"
-            job.error_message = f"Dispatch failed: {e}"
-            print(f"[Dispatch] FAILED: {e}")
 
         return job
 
@@ -771,13 +818,14 @@ Research mode: {concept.research_mode}
         return job
 
     def _await_job(self, job: ResearchJob, timeout: int = 7200, poll_interval: int = 30) -> ResearchJob:
-        """Block until Aristotle completes or times out."""
+        """Block until Aristotle completes or times out.
+
+        This is the SYNC version — only call from non-async code.
+        """
         start = time.time()
         while time.time() - start < timeout:
             try:
-                result = asyncio.get_event_loop().run_until_complete(
-                    self.aristotle.poll_project(job.project_id)
-                )
+                result = asyncio.run(self.aristotle.poll_project(job.project_id))
                 status = result.get("status", "unknown")
                 pct = result.get("percent_complete", 0)
 
@@ -836,9 +884,9 @@ Research mode: {concept.research_mode}
                 domain = domain_cycle[domain_idx % len(domain_cycle)]
                 domain_idx += 1
 
-                # Discover and dispatch
+                # Discover and dispatch (async version since we're in an event loop)
                 job = self.discover(forced_domain=domain)
-                job = self.dispatch(job)
+                job = await self.dispatch_async(job)
 
                 if job.project_id:
                     print(f"[Continuous] Dispatched {job.project_id[:8]}: {job.concept.title[:50]}")
