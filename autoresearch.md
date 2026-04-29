@@ -69,6 +69,9 @@ multiple domains — pure results in a single domain are equally valuable.
 - Galois connections: 1 file (closure operators, lattice bounds), complete
 - Well-founded induction: 1 file (Zorn's lemma), complete
 - Topology foundations: 1 file (open/closed, compact Hausdorff), complete
+- Polynomial degree: 1 file, complete
+- Determinant: 1 file, complete
+- Hilbert space: 1 file (sesquilinearity, orthonormal), complete
 
 ### Recent additions (runs 23-29, this session)
 - PigeonholeInjectionBridge (6 thm): pigeonhole, injection/surjection bounds
