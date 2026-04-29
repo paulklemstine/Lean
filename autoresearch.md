@@ -72,8 +72,28 @@ multiple domains — pure results in a single domain are equally valuable.
 - Polynomial degree: 1 file, complete
 - Determinant: 1 file, complete
 - Hilbert space: 1 file (sesquilinearity, orthonormal), complete
+- Group theory: 1 file (Lagrange, element orders), complete
+- Metric spaces: 1 file (Baire category theorem), complete
+- Ring theory: 1 file (maximal/prime ideals, quotient rings), complete
+- Elementary number theory: 1 file (GCD, coprimality), complete
 
-### Recent additions (runs 23-29, this session)
+### Session 3 Summary (runs 23-36, 14 new files)
+- PigeonholeInjectionBridge (6 thm): pigeonhole, injection/surjection bounds
+- ContinuousFunctionBridge (12 thm): continuous function algebra (ring structure)
+- DifferentialCalculusBridge (7 thm): MVT, Rolle, monotonicity from derivatives, f''≥0→convex
+- TranscendentalDerivativeBridge (9 thm): exp'=exp (FIXED POINT), chain rules for exp/log
+- GaloisConnectionBridge (10 thm): Galois connections, closure operators, lattice bounds
+- WellFoundedInductionBridge (3 thm+1 def): wf induction, Zorn's lemma (≡AC)
+- TopologyBridge (7 thm): open/closed duality, compact+Hausdorff, closure
+- PolynomialBridge (6 thm): deg(pq)=deg p+deg q, degree of powers
+- DeterminantBridge (5 thm): det(AB)=det(A)det(B), det transpose/negation/scalar
+- HilbertSpaceBridge (8 thm): sesquilinearity, norm from inner product, orthonormal
+- GroupTheoryBridge (4 thm): Lagrange's theorem, element orders, ZMod cardinality
+- MetricSpaceBridge (6 thm): metric axioms, BAIRE CATEGORY THEOREM
+- RingTheoryBridge (3 thm+1 inst): maximal⟹prime, R/I field⟺maximal, R/I domain⟺prime
+- ElementaryNumberTheoryBridge (7 thm): GCD comm/assoc/mul, coprime powers, divisibility
+
+### Earlier additions (runs 13-22)
 - PigeonholeInjectionBridge (6 thm): pigeonhole, injection/surjection bounds
 - ContinuousFunctionBridge (12 thm): continuous function algebra
 - DifferentialCalculusBridge (7 thm): MVT, Rolle, monotonicity, convexity from f''≥0
@@ -96,6 +116,16 @@ multiple domains — pure results in a single domain are equally valuable.
 - ContinuousFunctionBridge (12 thm): continuous function algebra
 
 ### Key Theorem Chains
+1. **Analysis chain**: DifferentialCalculus → TranscendentalDerivative → ExponentialBound → Jensen → Subadditive(Fekete)
+2. **Topology chain**: MetricSpace(Baire) → Topology → TopologicalRobustness → HeineCantor → ContinuousFunction → DifferentialCalculus
+3. **Algebra chain**: RingTheory(maximal/prime) → ElementaryNumberTheory(GCD) → NumberTheory(FLT/Wilson) → FiniteField(Frobenius) → GroupTheory(Lagrange)
+4. **Linear algebra chain**: InnerProduct(Cauchy-Schwarz) → Bessel → HilbertSpace(orthonormal) → Determinant(multiplicative)
+5. **Order theory chain**: WellFoundedInduction → KnasterTarski(LFP/GFP) → GaloisConnection(adjoints ↔ closure operators)
+6. **Robustness chain**: TopologicalRobustness → NeuralComposition → ResNetLipschitz → GronwallDiscrete(gd convergence)
+7. **Topology→Calculus chain**: Metric(Baire) → Topology(open/closed) → HeineCantor(uniform) → Connectedness(IVT) → ContinuousFunction(ring) → DifferentialCalculus(MVT)
+8. **Algebra→Geometry chain**: RingTheory(ideals) → Polynomial(degree) → Determinant(mul) → HilbertSpace(orthonormal)
+
+### Legacy Chains
 1. GronwallDiscrete → BanachFixedPoint: GD convergence via geometric decay
 2. TopologicalRobustness → HeineCantor → certified radius
 3. NeuralComposition → ResNetLipschitz: polynomial vs exponential growth
