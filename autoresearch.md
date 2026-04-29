@@ -12,15 +12,21 @@ multiple domains — pure results in a single domain are equally valuable.
 
 ## How to Run
 `bash autoresearch.sh` — checks compilation, counts theorems/sorries, reports metrics.
+`bash autoresearch.checks.sh` — verifies all 55 tracked files compile with 0 sorries.
+
+## Current State (36 experiments, 3 sessions)
+- **55 verified files**, **~466 theorems**, **0 sorries**
+- **8 major theorem chains** from foundations to applications
+- Verified by `lake build` with Mathlib v4.28.0
 
 ## Files in Scope
-- `Catalog/Bridges/*.lean` — domain-specific theorems
+- `Catalog/Bridges/*.lean` — domain-specific theorems (42 files)
 - `Catalog/MachineLearning/*/*.lean` — ML theory
-- `Catalog/Tropical/*/*.lean` — tropical geometry
+- `Catalog/Tropical/*/*.lean` — tropical geometry (12 files)
 - `Catalog/Shared/*.lean` — shared utilities
 - `Catalog/Speculative/*/*.lean` — speculative results
 - `Aether/*.py` — orchestration code
-- `autoresearch.checks.sh` — validation checks
+- `autoresearch.checks.sh` — validation checks (55 file checks)
 
 ## Off Limits
 - `Catalog/.lake/` — Lean build artifacts
@@ -28,58 +34,75 @@ multiple domains — pure results in a single domain are equally valuable.
 
 ## Constraints
 - All new theorems must compile via `lake env lean <file>` with 0 sorries
-- `bash autoresearch.checks.sh` must pass (24 verified file checks)
+- `bash autoresearch.checks.sh` must pass (55 verified file checks)
 - No overfitting to benchmark: don't create trivial variations or pad metrics
 - No cheating: don't duplicate existing theorems or create degenerate cases
-- Bridges across domains are valuable but NOT required — pure depth in one domain is equally good
+- Pure depth in one domain is equally good as bridging domains
 
-## What's Been Tried
-### Proven approaches (keep using these patterns):
+## Proven Lean 4 Proof Patterns
 - `nlinarith [sq_nonneg X]` for quadratic inequalities
 - `positivity` for positivity goals
 - `Real.exp_le_exp.mpr` for exp monotonicity
-- `Real.log_le_log` for log inequalities (0 < x, x ≤ y → log x ≤ log y)
+- `Real.log_le_log` for log inequalities
 - `div_pos`, `div_le_div_of_nonneg_left` for division inequalities
 - `pow_le_pow_right₀` for power monotonicity
-- `Real.sqrt_le_iff` for sqrt inequalities
 - `max_eq_left`, `max_eq_right` with `le_total`
 - `add_le_add`, `mul_le_mul_of_nonneg_left` for additive/multiplicative bounds
-- `bernoulli_resnet` (imported from ResNetLipschitz)
-- `mul_self_lt_mul` does NOT exist (use `nlinarith [sq_nonneg]` instead)
 - `by decide`/`by norm_num`/`native_decide` for decidable propositions
 - `field_simp` for division (closes goals sometimes without `ring`)
 
-### Saturated directions (diminishing returns):
-- Tropical/LSE/softmax: 6+ files, fully explored
-- Certified robustness/Lipschitz: 4+ files, diminishing returns
-- EML/Stone-Weierstrass: 1 file, prerequisites complete
-- Contraction mapping/GD: 1 file, complete
-- Convex analysis: 1 file (ConvexTropical), complete
-- Norm inequalities: 1 file (NormInequality), complete
-- Heine-Cantor/uniform continuity: 1 file, complete
-- Knaster-Tarski/fixed points: 1 file, complete
-- Inner product spaces: 2 files (InnerProduct, Bessel), complete
-- Number theory: 2 files (NumberTheory, FiniteField), well-developed
-- Connectedness: 1 file, complete
-- Subadditive sequences: 1 file (Fekete), complete
-- Continuous operations: 1 file, complete
-- Pigeonhole/injection: 1 file, complete
-- Differential calculus: 1 file (MVT, Rolle, monotonicity, convexity), complete
-- Transcendental derivatives: 1 file (exp/log chain rules), complete
-- Galois connections: 1 file (closure operators, lattice bounds), complete
-- Well-founded induction: 1 file (Zorn's lemma), complete
-- Topology foundations: 1 file (open/closed, compact Hausdorff), complete
-- Polynomial degree: 1 file, complete
-- Determinant: 1 file, complete
-- Hilbert space: 1 file (sesquilinearity, orthonormal), complete
-- Group theory: 1 file (Lagrange, element orders), complete
-- Metric spaces: 1 file (Baire category theorem), complete
-- Ring theory: 1 file (maximal/prime ideals, quotient rings), complete
-- Elementary number theory: 1 file (GCD, coprimality), complete
+### Key Mathlib API bindings discovered
+- `CompactSpace.uniformContinuous_of_continuous` for Heine-Cantor
+- `LipschitzWith.uniformContinuous` for Lipschitz → uniform continuity
+- `sInf_le` / `le_sInf_iff` / `le_antisymm` for Knaster-Tarski
+- `norm_add_pow_two_real` / `norm_sub_pow_two_real` for inner product
+- `norm_inner_le_norm` for Cauchy-Schwarz
+- `ZMod.units_pow_card_sub_one_eq_one` / `ZMod.wilsons_lemma` for FLT/Wilson
+- `add_pow_char` for Freshman's Dream in characteristic p
+- `Subadditive.tendsto_lim` for Fekete's Lemma
+- `ConvexOn.map_sum_le` for Jensen's inequality
+- `exists_deriv_eq_slope` / `exists_deriv_eq_zero` for MVT/Rolle
+- `monotoneOn_of_deriv_nonneg` / `convexOn_of_deriv2_nonneg` for derivative tests
+- `Real.hasDerivAt_exp` / `HasDerivAt.exp` / `HasDerivAt.log` for chain rules
+- `GaloisConnection.monotone_l` / `monotone_u` for adjoint monotonicity
+- `ClosureOperator.idempotent` / `.monotone` / `.le_closure` for closure operators
+- `WellFounded.induction` / `exists_maximal_of_chains_bounded` for Zorn
+- `IsCompact.isClosed` / `IsClosed.isOpen_compl` / `IsOpen.isClosed_compl` for topology
+- `Polynomial.degree_mul` / `.degree_pow` for polynomial degree
+- `Matrix.det_mul` / `.det_transpose` / `.det_neg` for determinant
+- `Orthonormal.norm_eq_one` / `.inner_eq_zero` for orthonormal families
+- `orderOf_dvd_card` / `pow_orderOf_eq_one` for Lagrange's theorem
+- `BaireSpace.of_completelyPseudoMetrizable` for Baire Category Theorem
+- `Ideal.IsMaximal.isPrime` / `Ideal.Quotient.field` / `.isDomain_iff_prime` for ring theory
+- `Nat.gcd_mul_left` / `Nat.Coprime.pow` for GCD/coprimality
 
-### Session 3 Summary (runs 23-36, 14 new files)
-- PigeonholeInjectionBridge (6 thm): pigeonhole, injection/surjection bounds
-- ContinuousFunctionBridge (12 thm): continuous function algebra (ring structure)
+## Saturated Directions (diminishing returns)
+All of the following have 1-2 files each and are considered "complete" at
+their current depth. New theorems in these domains add little novelty
+unless they form genuinely new chains:
+- Tropical/LSE/softmax, Certified robustness/Lipschitz, EML/Stone-Weierstrass
+- Contraction mapping/GD, Convex analysis, Norm inequalities
+- Heine-Cantor/uniform continuity, Knaster-Tarski/fixed points
+- Inner product spaces, Number theory, Finite fields
+- Connectedness, Subadditive sequences, Jensen, Pigeonhole
+- Continuous operations, Differential calculus, Transcendental derivatives
+- Galois connections, Well-founded induction, Topology foundations
+- Polynomial degree, Determinant, Hilbert space, Group theory
+- Metric spaces, Ring theory, Elementary number theory
+
+## Key Theorem Chains
+1. **Analysis**: DifferentialCalculus → TranscendentalDerivative → ExponentialBound → Jensen → Fekete
+2. **Topology→Calculus**: Baire → Topology → Robustness → HeineCantor → Connectedness → ContinuousFunction → DifferentialCalculus
+3. **Algebra**: RingTheory → ElementaryNT → NumberTheory → FiniteField → GroupTheory (Lagrange)
+4. **Linear Algebra**: InnerProduct(Cauchy-Schwarz) → Bessel → HilbertSpace → Determinant
+5. **Order Theory**: WellFoundedInduction → KnasterTarski → GaloisConnection
+6. **Robustness**: TopologicalRobustness → NeuralComposition → ResNetLipschitz → GronwallDiscrete
+7. **Algebra→Geometry**: RingTheory → Polynomial → Determinant → HilbertSpace
+8. **Tropical**: TropicalSemiring → Satake → EML → ConvexTropical
+
+## Session History
+
+### Session 3 (runs 23-36): 14 new files, broadest domain expansion
 - DifferentialCalculusBridge (7 thm): MVT, Rolle, monotonicity from derivatives, f''≥0→convex
 - TranscendentalDerivativeBridge (9 thm): exp'=exp (FIXED POINT), chain rules for exp/log
 - GaloisConnectionBridge (10 thm): Galois connections, closure operators, lattice bounds
@@ -92,97 +115,29 @@ multiple domains — pure results in a single domain are equally valuable.
 - MetricSpaceBridge (6 thm): metric axioms, BAIRE CATEGORY THEOREM
 - RingTheoryBridge (3 thm+1 inst): maximal⟹prime, R/I field⟺maximal, R/I domain⟺prime
 - ElementaryNumberTheoryBridge (7 thm): GCD comm/assoc/mul, coprime powers, divisibility
-
-### Earlier additions (runs 13-22)
 - PigeonholeInjectionBridge (6 thm): pigeonhole, injection/surjection bounds
-- ContinuousFunctionBridge (12 thm): continuous function algebra
-- DifferentialCalculusBridge (7 thm): MVT, Rolle, monotonicity, convexity from f''≥0
-- TranscendentalDerivativeBridge (9 thm): exp/log chain rules, exp is its own derivative
-- GaloisConnectionBridge (10 thm): Galois connections, closure operators, lattice bounds
-- WellFoundedInductionBridge (3 thm + 1 def): wf induction, Zorn's lemma
-- TopologyBridge (7 thm): open/closed duality, compact Hausdorff, closure
+- ContinuousFunctionBridge (12 thm): continuous function algebra (ring structure)
 
-### Older additions (runs 13-22)
+### Session 2 (runs 13-22): Deep analysis + new domains
 - HeineCantorBridge (6 thm): compact → uniform continuous
 - KnasterTarskiBridge (11 thm): order-theoretic fixed points
 - InnerProductBridge (9 thm): Cauchy-Schwarz, parallelogram law, polarization
 - BesselInequalityBridge (5 thm): Bessel, Gram determinant
 - TopologicalConnectednessBridge (7 thm): connectedness, generalized IVT
 - NumberTheoryBridge (15 thm): FLT, Wilson, CRT, totient, prime properties
-- FiniteFieldBridge (9 thm): Frobenius, Freshman's Dream, finite fields
+- FiniteFieldBridge (9 thm): Frobenius, Freshman's Dream
 - SubadditiveSequenceBridge (6 thm): Fekete's Lemma
 - JensenInequalityBridge (3 thm): Jensen, exp convex
-- PigeonholeInjectionBridge (6 thm): pigeonhole, injection/surjection bounds
-- ContinuousFunctionBridge (12 thm): continuous function algebra
 
-### Key Theorem Chains
-1. **Analysis chain**: DifferentialCalculus → TranscendentalDerivative → ExponentialBound → Jensen → Subadditive(Fekete)
-2. **Topology chain**: MetricSpace(Baire) → Topology → TopologicalRobustness → HeineCantor → ContinuousFunction → DifferentialCalculus
-3. **Algebra chain**: RingTheory(maximal/prime) → ElementaryNumberTheory(GCD) → NumberTheory(FLT/Wilson) → FiniteField(Frobenius) → GroupTheory(Lagrange)
-4. **Linear algebra chain**: InnerProduct(Cauchy-Schwarz) → Bessel → HilbertSpace(orthonormal) → Determinant(multiplicative)
-5. **Order theory chain**: WellFoundedInduction → KnasterTarski(LFP/GFP) → GaloisConnection(adjoints ↔ closure operators)
-6. **Robustness chain**: TopologicalRobustness → NeuralComposition → ResNetLipschitz → GronwallDiscrete(gd convergence)
-7. **Topology→Calculus chain**: Metric(Baire) → Topology(open/closed) → HeineCantor(uniform) → Connectedness(IVT) → ContinuousFunction(ring) → DifferentialCalculus(MVT)
-8. **Algebra→Geometry chain**: RingTheory(ideals) → Polynomial(degree) → Determinant(mul) → HilbertSpace(orthonormal)
+### Session 1 (runs 1-12): Foundation + ML bridges
+- GronwallDiscreteBridge (8 thm), HammingDistanceBridge (7 thm)
+- TopologicalRobustnessBridge (8 thm), CombinatorialBridge (6 thm)
+- NeuralCompositionBridge (7 thm), IntermediateValueBridge (6 thm)
+- ExponentialBoundBridge (11 thm)
+- TropicalSatakeGL3 (15 thm, via Aristotle pipeline)
 
-### Legacy Chains
-1. GronwallDiscrete → BanachFixedPoint: GD convergence via geometric decay
-2. TopologicalRobustness → HeineCantor → certified radius
-3. NeuralComposition → ResNetLipschitz: polynomial vs exponential growth
-4. IntermediateValue → certified robustness: adversarial examples exist
-5. ExponentialBound → ConvexTropical: log(x)≤x−1 gives AM-GM
-6. TropicalSatakeGL3 (Aristotle): GL₂ → GL₃ Satake
-7. Banach ↔ KnasterTarski: metric vs order-theoretic fixed points
-8. InnerProduct → Bessel: Cauchy-Schwarz → Gram → Bessel
-9. NumberTheory → FiniteField: FLT/Wilson from both perspectives
-10. Subadditive → Fekete: tropical min ↔ subadditive ↔ asymptotic average
-
-### Metrics Change
-- Removed bridge_count as metric and requirement (run 12)
-- Pure depth in a single domain is now equally valued
-
-### Aristotle Pipeline
+## Aristotle Pipeline
 - KnowledgeExtractor operational: Pi→Aristotle→Pi→Aether pipeline working
 - Aristotle project 95ba9fc7: tropical_langlands GL3 Satake (COMPLETED)
-
-## Session Progress (autoresearch runs 2-9)
-
-### New Bridges Added
-- **GronwallDiscreteBridge** (8 thm): Discrete Gronwall inequalities connecting iterative bounds to GD convergence
-  - Key: geometric_bound, affine_fixed_point, affine_geometric_decay, gd_geometric_convergence, resnet_growth_polynomial
-- **HammingDistanceBridge** (7 thm): Coding theory ↔ certified robustness via metric spaces
-  - Key: hamming_triangle (triangle inequality), minimum_distance_distinct (error detection ↔ certified margin)
-- **TopologicalRobustnessBridge** (8 thm): Continuous on compact → bounded (worst-case analysis foundation)
-  - Key: compact_attains_sup/inf, norm_bounded_on_compact, lipschitz_bounded
-- **CombinatorialBridge** (6 thm): Pigeonhole ←→ certified margin bounds
-  - Key: pigeonhole, union_card_le, no_injection_when_card_lt
-- **NeuralCompositionBridge** (7 thm): THE composition laws for neural network robustness
-  - Key: lipschitz_comp (Lip(f∘g) ≤ Kf·Kg), lipschitz_add (Lip ≤ 1+K for ResNet), lipschitz_max
-- **IntermediateValueBridge** (6 thm): IVT ↔ adversarial examples exist at decision boundaries
-  - Key: strict_zero_crossing, sign_change_implies_adversarial
-
-### Notable Theorem Chains
-1. GronwallDiscrete → BanachFixedPoint: GD convergence via geometric decay
-2. TopologicalRobustness → MultiClassCertification: compact → bounded → certified radius
-3. NeuralComposition → ResNetLipschitz: composition laws explain polynomial vs exponential growth
-4. IntermediateValue → certified robustness: IVT → adversarial examples exist at boundary
-5. ExponentialBound → ConvexTropical: log(x)≤x−1 gives AM-GM
-6. TropicalSatakeGL3 (Aristotle): extends SatakeIsomorphism from GL₂ to GL₃
-
-### Diminishing Returns Assessment
-- 30 verified files, ~248 theorems, 0 sorries
-- Each new bridge adds ~6-8 theorems but with decreasing novelty (saturation in certified robustness)
-- Future work should focus on: (a) closing the Carmichael sorry, (b) strengthening existing bridges, (c) waiting for Aristotle results
-
-### Aristotle Pipeline
-- KnowledgeExtractor operational: Pi→Aristotle→Pi→Aether pipeline working
-- Aristotle project 95ba9fc7: tropical_langlands GL3 Satake (in progress)
 - Key principle: Aristotle has creative freedom (outcomes, not filenames)
-
-### What's Still Saturated
-- Tropical/LSE/softmax: fully explored
-- Certified robustness/Lipschitz: diminishing (NeuralComposition is the final piece)
-- Contraction mapping/GD: complete (GronwallDiscrete completes it)
-- Convex analysis: complete
-- Norm inequalities: complete
-- Number theory (Carmichael): 1 sorry remaining (requires LTE, hard)
+- Continuous mode: `python3 research_loop.py --continuous --max-inflight 3`

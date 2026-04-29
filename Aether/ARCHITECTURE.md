@@ -1,8 +1,18 @@
 # AETHER: Automated Epic Theorem Hypothesis Engine & Research
 
-**Version:** 0.1.0-alpha  
+**Version:** 0.3.0  
 **Codename:** Project Prometheus  
 **Objective:** Autonomously generate, prove, and integrate novel master-level mathematics into the Catalog using Aristotle formal verification.
+
+---
+
+## Current State
+
+- **55 verified Lean 4 files** with **~466 theorems** and **0 sorries**
+- **8 major theorem chains** from foundations (Zorn's Lemma) to applications (GD convergence)
+- Pi-Agent (Ollama `kimi-k2.6:cloud`) for concept generation
+- Aristotle API integration for formal proof
+- Full autoresearch pipeline: `autoresearch.sh` + `autoresearch.checks.sh`
 
 ---
 
@@ -12,7 +22,7 @@ AETHER treats the Catalog not as a static archive but as a **living mathematical
 
 1. **Combinatorial Creativity**: Novel theorems emerge at the intersection of distant domains. The engine systematically discovers these bridges.
 2. **Formal Immortality**: Every generated hypothesis must survive Aristotle's verification crucible before earning a place in the Catalog.
-3. **Epic Narrative**: Research is not random. It follows thematic arcs — gravitational factoring, tropical geometry, quantum computation — producing coherent bodies of work, not isolated trivia.
+3. **Epic Narrative**: Research is not random. It follows thematic arcs — producing coherent bodies of work, not isolated trivia.
 
 ---
 
@@ -20,19 +30,42 @@ AETHER treats the Catalog not as a static archive but as a **living mathematical
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                              AETHER ENGINE                                   │
+│                              AETHER ENGINE v0.3                              │
+│                                                                              │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
 │  │  CONCEPT     │  │ HYPOTHESIS   │  │ ARISTOTLE    │  │ INTEGRATION  │      │
 │  │  MINER       │─▶│ GENERATOR    │─▶│ DISPATCHER   │─▶│ GATE         │      │
+│  │  (miner.py)  │  │ (generator)  │  │ (aristotle)  │  │ (integrator) │      │
 │  └──────────────┘  └──────────────┘  └──────────────┘  └──────────────┘      │
 │         │                  │                  │                 │              │
 │         ▼                  ▼                  ▼                 ▼              │
 │  ┌────────────────────────────────────────────────────────────────────┐     │
+│  │              AUTORESEARCH & KNOWLEDGE EXTRACTION                    │     │
+│  │  • research_loop.py  • knowledge_extractor.py  • autoresearch.sh   │     │
+│  │  • 55 verified files  • ~466 theorems  • 0 sorries  • 8 chains     │     │
+│  └────────────────────────────────────────────────────────────────────┘     │
+│                                                                              │
+│  ┌────────────────────────────────────────────────────────────────────┐     │
 │  │                     TELEMETRY & META-LEARNING                       │     │
-│  │  • Experiment registry  • Benchmark leaderboard  • Success models     │     │
+│  │  • autoresearch.jsonl  • concept_quality metric  • success models   │     │
 │  └────────────────────────────────────────────────────────────────────┘     │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
+
+### Data Flow
+
+```
+Aether (orchestrator)
+  → Pi (brains: decides WHAT to research)
+    → "Prove this theorem about X. Create python demos.
+       Write a research paper. Show useful applications."
+  → Aristotle (worker: proves theorems, creates all artifacts)
+  → Pi (integrator: evaluates quality, places in Catalog)
+  → Aether (commits, tracks metrics, loops)
+```
+
+Key principle: **Aristotle has creative freedom**. Tell it outcomes
+(verified math, demos, papers, applications) not HOW to organize files.
 
 ---
 
@@ -40,179 +73,165 @@ AETHER treats the Catalog not as a static archive but as a **living mathematical
 
 ### 1. ConceptMiner (`miner.py`)
 
-**Function:** Introspect the Catalog database to discover patterns, gaps, and fertile ground.
+Discovers patterns, gaps, and fertile ground in the Catalog:
+- Cross-Domain Bridge Detection
+- Hotspot Analysis (high fan-in/fan-out declarations)
+- Sorry Mining (rank open problems by strategic impact)
+- Axiom Dependency Graph
+- Theme Extraction
 
-**Operations:**
-- **Cross-Domain Bridge Detection**: Identify concept pairs appearing in multiple domains but lacking formal bridges
-- **Hotspot Analysis**: Find declarations with high fan-in (many dependents) and high fan-out (many dependencies)
-- **Sorry Mining**: Rank open problems by strategic impact (downstream theorem count × domain centrality)
-- **Axiom Dependency Graph**: Map which axioms are load-bearing; flag opportunities for reduction
-- **Theme Extraction**: Cluster declarations by semantic similarity to identify ongoing research narratives
-
-**Output:** `ResearchLandscape` — a JSON object describing the current frontier.
+**Output:** `ResearchLandscape` — JSON describing the current frontier.
 
 ### 2. HypothesisGenerator (`generator.py`)
 
-**Function:** Synthesize novel conjectures, algorithms, and experiments.
+Synthesizes novel conjectures, algorithms, and experiments in modes:
+- **Bridge Mode**: Given two domains, generate bridging theorems
+- **Generalization Mode**: Concrete → abstract categorical/tropical analogue
+- **Sci-Fi Mode**: Project mathematics into speculative frameworks
+- **Algorithm Mode**: Design algorithms with formal specifications
+- **Experiment Mode**: Propose computational experiments
 
-**Modes:**
-- **Bridge Mode**: Given two domains and a shared concept, generate bridging theorems
-- **Generalization Mode**: Take a concrete theorem and propose its abstract categorical / tropical / quantum analogue
-- **Sci-Fi Mode**: Project existing mathematics into speculative frameworks (e.g., "What if gravitational factoring worked in tropical geometry?")
-- **Algorithm Mode**: Design novel algorithms with formal specifications and complexity bounds
-- **Experiment Mode**: Propose computational experiments, benchmark suites, and statistical hypotheses
+### 3. PiAgentClient (`pi_agent_client.py`)
 
-**Prompt Architecture:**
-Each hypothesis is packaged with:
-- **Context Block**: Relevant existing theorems, definitions, and imports from the Catalog
-- **Conjecture Statement**: Formal Lean 4 type signature (with `sorry` for the proof)
-- **Narrative**: A short paper-style motivation connecting the conjecture to the broader research arc
-- **Difficulty Estimate**: Master / PhD / Graduate / Undergraduate
-- **Risk Assessment**: Probability of being true, interesting, or trivial
+LLM-powered research partner using Ollama:
+- Generates breakthrough concepts from catalog context
+- Evaluates Aristotle results for quality
+- Decides theorem placement in Catalog
+- Config: `kimi-k2.6:cloud` model via Ollama at `localhost:11434`
 
-**Output:** `ResearchProposal` — a structured document ready for Aristotle dispatch.
+### 4. AristotleDispatcher (`aristotle_sdk_client.py`)
 
-### 3. AristotleDispatcher (`aristotle_client.py`)
+Submits proposals to Harmonic's Aristotle agent:
+- Package → Submit → Poll → Receive → Validate
+- Manages job lifecycle with retry and backoff
+- Async polling with configurable intervals
 
-**Function:** Submit proposals to Harmonic's Aristotle agent and manage the proof lifecycle.
+### 5. KnowledgeExtractor (`knowledge_extractor.py`)
 
-**Workflow:**
-1. **Package**: Bundle the Lean 4 file (imports + context + conjecture) into a project-compatible format
-2. **Submit**: POST to Aristotle API with the research brief
-3. **Poll**: Check job status until completion, timeout, or failure
-4. **Receive**: Extract the patched Lean source, proof statistics, and verification report
-5. **Validate**: Run `lake build` on the result locally before acceptance
+7-phase pipeline: DISCOVER → DISPATCH → AWAIT → EXTRACT → EVALUATE → INTEGRATE → COMMIT
+- Orchestrates the full research loop
+- Manages catalog state, verified files, metrics
 
-**Structured Prompt Template:**
-```
-RESEARCH BRIEF: {title}
-DOMAIN: {domain}
-DIFFICULTY: {difficulty}
+### 6. IntegrationGate (`integrator.py`, `smart_integrator.py`)
 
-CONTEXT:
-{relevant_theorems}
-
-CONJECTURE TO PROVE:
-```lean
-{lean_code}
-```
-
-REQUIREMENTS:
-- Provide a complete formal proof in Lean 4
-- Use only mathlib4 (v4.28.0) and the provided context
-- Do not change the theorem statement (only fill the sorry)
-- If the theorem is false, explain why and suggest a corrected statement
-- Include proof strategy comments
-```
-
-### 4. IntegrationGate (`integrator.py`)
-
-**Function:** Safely merge Aristotle's output into the Catalog.
-
-**Checks:**
+Safely merges Aristotle output into Catalog:
 - Syntax validation (`lake build` passes)
-- Semantic validation (no new sorries introduced unless explicitly allowed)
-- Deduplication check (doesn't duplicate existing declarations)
-- Import graph integrity (no circular dependencies created)
-- Thematic placement (file and domain assignment)
+- Semantic validation (no new sorries)
+- Deduplication, import graph integrity
+- Thematic placement
 
-**Actions:**
-- **Accept**: Write to `Catalog/{domain}/{file}.lean`, run `rescan`
-- **Reject**: Log failure, update success model weights
-- **Retry**: If near-success (few sorries), resubmit with hints
+### 7. Autoresearch Bridge (`autoresearch_bridge.py`)
 
-### 5. Telemetry & Meta-Learning (`telemetry.py`)
-
-**Metrics:**
-- **Throughput**: Proposals submitted / hour, proofs completed / day
-- **Success Rate**: By domain, difficulty, concept combination type
-- **Time-to-Proof**: Latency distribution from submission to verification
-- **Novelty Score**: How many new declarations reference the new theorem
-- **Epicness Index**: Subjective quality score (human + LLM-judged)
-
-**Outputs:**
-- `logs/experiments.jsonl` — append-only experiment log
-- `logs/benchmarks.json` — rolling leaderboard
-- `logs/telemetry_report.html` — dashboard-ready summary
+Connects the Aristotle pipeline to the `autoresearch.sh` benchmark framework:
+- Tracks `concept_quality` metric (0-1, higher better)
+- Logs experiments to `autoresearch.jsonl` with ASI
+- Verification via `autoresearch.checks.sh` (55 file checks)
 
 ---
 
-## Research Arcs (Active Themes)
+## Theorem Chains (8 major chains)
 
-AETHER maintains a set of **research arcs** — long-running thematic programs that guide hypothesis generation:
-
-| Arc | Description | Current Frontier |
-|-----|-------------|------------------|
-| **Gravitational Factoring** | Using geometric/spacetime structures for integer factorization | Tropical analogues of gravitational lenses |
-| **Quantum Pythagoras** | Formalizing quantum computing on Berggren tree structures | QDF (Quantum Diophantine Factoring) |
-| **Tropical Langlands** | Tropical geometry meets representation theory | Tropical automorphic forms |
-| **Neural Proof Mining** | ML-guided theorem discovery | RSIL adaptive distillation |
-| **Temporal Computation** | Time-travel logic and reversible computation | OISCC oracle hierarchies |
-| **EML Cosmology** | Emergent meta-language as universe model | Self-pairing in curved spacetime |
-| **Cryptographic Gravity** | Post-quantum crypto via geometric invariants | Lattice reduction in Berggren trees |
-
----
-
-## Experiment Registry
-
-Each experiment receives a UUID and tracks:
-- Generation timestamp
-- Research arc affiliation
-- Concept combination provenance
-- Aristotle job ID
-- Final status (proven / counterexample-found / timeout / rejected)
-- Integration commit hash (if accepted)
-- Performance telemetry
+```
+ANALYSIS:        DifferentialCalculus → TranscendentalDeriv → ExpBound → Jensen → Fekete
+TOPOLOGY→CALC:   Baire → Topology → Robustness → HeineCantor → Connected → Continuous → MVT
+ALGEBRA:         RingTheory → ElementaryNT → NumberTheory → FiniteField → GroupTheory
+LINEAR ALGEBRA:  InnerProduct → Bessel → HilbertSpace → Determinant
+ORDER THEORY:    WellFounded → KnasterTarski → GaloisConnection
+ROBUSTNESS:      TopoRobust → NeuralComp → ResNet → Gronwall
+ALG→GEOMETRY:    RingTheory → Polynomial → Determinant → HilbertSpace
+TROPICAL:        Tropical → Satake → EML → ConvexTropical
+```
 
 ---
 
-## Configuration
+## Research Arcs
 
-See `config.yaml` for:
-- Aristotle API endpoint and credentials
-- Catalog database path
-- Research arc definitions
-- Difficulty thresholds
-- Retry policies
-- Telemetry destinations
+| Arc | Status | Key Results |
+|-----|--------|-------------|
+| Tropical Langlands | ✅ Completed | GL₃ Satake (15 theorems, Aristotle) |
+| Gravitational Factoring | Active | Berggren tree structure |
+| Quantum Pythagoras | Active | QDF factoring |
+| Neural Proof Mining | Active | RSIL adaptive distillation |
+| EML Cosmology | Active | Stone-Weierstrass bridge |
+| Speculative Sci-Fi | Pending | 5 sorry-depth theorems ready for Aristotle |
+
+---
+
+## Verified Catalog (55 files, ~466 theorems, 0 sorries)
+
+### By Domain
+
+| Domain | Files | Theorems | Highlights |
+|--------|-------|----------|-----------|
+| Analysis & Calculus | 6 | 48 | MVT, exp'=exp, Jensen, Fekete |
+| Topology & Metric | 6 | 40 | Baire Category, Heine-Cantor, IVT |
+| Algebra & Number Theory | 8 | 58 | Lagrange, GCD, ideal theory, FLT |
+| Linear Algebra & Hilbert | 4 | 27 | Cauchy-Schwarz, det(AB)=det(A)det(B) |
+| Order Theory & Foundations | 3 | 24 | Zorn's Lemma, Galois connections |
+| ML & Robustness | 7 | 49 | Neural composition, Gronwall, certified radius |
+| Tropical Geometry | 6 | 70 | Satake GL₃, LSE convexity |
+| EML & Approximation | 3 | 31 | Stone-Weierstrass |
+| Other | 12 | ~119 | ResNet, Hamming, norm inequalities |
 
 ---
 
 ## Usage
 
 ```bash
-# Run a single research cycle (mine → generate → dispatch → integrate)
-python3 -m aether.engine --mode single --arc "Quantum Pythagoras"
+# Continuous autonomous research (production)
+cd /home/raver1975/lean/Aether
+PYTHONPATH=. python3 research_loop.py --continuous --max-inflight 3
 
-# Run continuous autonomous research
-python3 -m aether.engine --mode daemon --arcs all
+# Single research cycle
+PYTHONPATH=. python3 research_loop.py --single-cycle
 
-# Generate proposals without dispatching (dry run)
-python3 -m aether.engine --mode generate --count 10
+# Dry run (concept generation only, no dispatch)
+PYTHONPATH=. python3 research_loop.py --dry-run
 
-# Dispatch pending proposals to Aristotle
-python3 -m aether.engine --mode dispatch
+# AetherDaemon (alternative orchestrator)
+PYTHONPATH=. python3 daemon.py --config config.yaml
 
-# Integrate completed Aristotle jobs
-python3 -m aether.engine --mode integrate
-
-# View telemetry dashboard
-python3 -m aether.telemetry --report html
+# Autoresearch verification and metrics
+cd /home/raver1975/lean
+bash autoresearch.sh
+bash autoresearch.checks.sh
 ```
 
----
+### Key Parameters
 
-## Integration with Existing Pipeline
-
-AETHER does not replace the catalog pipeline — it **feeds** it:
-
-1. AETHER writes new `.lean` files into `Catalog/`
-2. The user (or CI) runs `tools/rescan` to rebuild the database
-3. `lake build` verifies correctness
-4. The new theorems enter the next cycle of ConceptMiner analysis
-
-This creates a **closed loop** of autonomous mathematical discovery.
+| Flag | Default | Description |
+|------|---------|-------------|
+| `--continuous` | off | Run continuous loop |
+| `--max-inflight` | 3 | Max concurrent Aristotle jobs |
+| `--max-cycles` | 50 | Total dispatch cycles |
+| `--poll-interval` | 60 | Seconds between polls |
+| `--domain` | auto-rotate | Force specific research domain |
+| `--dry-run` | off | Show concepts without dispatching |
 
 ---
 
-*Generated by AETHER v0.1.0-alpha — Theorem Forge Initialized.*
+## Configuration
+
+See `config.yaml` for:
+- Aristotle API endpoint and credentials (`${ARISTOTLE_API_KEY}`)
+- Pi-Agent model and Ollama endpoint
+- Catalog database path
+- Research arc definitions
+- Difficulty thresholds, retry policies
+
+---
+
+## Prerequisites
+
+| Requirement | Status | Check |
+|-------------|--------|-------|
+| Lean 4 + Mathlib v4.28.0 | ✅ Compiled | `cd Catalog && lake build` |
+| Ollama + kimi-k2.6:cloud | ✅ Running | `curl localhost:11434/api/tags` |
+| ARISTOTLE_API_KEY | ✅ Set | `echo $ARISTOTLE_API_KEY` |
+| Python 3.10+ | ✅ Available | `python3 --version` |
+| 55 verified files, 0 sorries | ✅ All pass | `bash autoresearch.checks.sh` |
+
+---
+
+*AETHER v0.3.0 — Autonomous Mathematical Knowledge Discovery Engine.*  
+*55 verified files. 466 theorems. 0 sorries. 8 theorem chains.*
