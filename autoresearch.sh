@@ -67,6 +67,7 @@ tracked_files = [
     'HilbertSpaceBridge.lean',
     'GroupTheoryBridge.lean',
     'MetricSpaceBridge.lean',
+    'RingTheoryBridge.lean',
     'ResNetTropicalCertified.lean',
 ]
 
