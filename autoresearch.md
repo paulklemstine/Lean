@@ -70,3 +70,45 @@ contraction mapping, norm inequalities, etc.). Each theorem must compile with
 - EMLUniversalApproximation: requires Subalgebra construction, too complex
 - Fibonacci Cassini: algebraic manipulation in Lean too complex for quick fix
 - Lp norm inequalities: complex API issues with Mathlib
+
+## Session Progress (autoresearch runs 2-9)
+
+### New Bridges Added
+- **GronwallDiscreteBridge** (8 thm): Discrete Gronwall inequalities connecting iterative bounds to GD convergence
+  - Key: geometric_bound, affine_fixed_point, affine_geometric_decay, gd_geometric_convergence, resnet_growth_polynomial
+- **HammingDistanceBridge** (7 thm): Coding theory ↔ certified robustness via metric spaces
+  - Key: hamming_triangle (triangle inequality), minimum_distance_distinct (error detection ↔ certified margin)
+- **TopologicalRobustnessBridge** (8 thm): Continuous on compact → bounded (worst-case analysis foundation)
+  - Key: compact_attains_sup/inf, norm_bounded_on_compact, lipschitz_bounded
+- **CombinatorialBridge** (6 thm): Pigeonhole ←→ certified margin bounds
+  - Key: pigeonhole, union_card_le, no_injection_when_card_lt
+- **NeuralCompositionBridge** (7 thm): THE composition laws for neural network robustness
+  - Key: lipschitz_comp (Lip(f∘g) ≤ Kf·Kg), lipschitz_add (Lip ≤ 1+K for ResNet), lipschitz_max
+- **IntermediateValueBridge** (6 thm): IVT ↔ adversarial examples exist at decision boundaries
+  - Key: strict_zero_crossing, sign_change_implies_adversarial
+
+### Key Cross-Bridge Connections
+1. GronwallDiscrete ↔ BanachFixedPoint: GD convergence via geometric decay
+2. HammingDistance ↔ NormInequality: metric space axioms (triangle inequality)
+3. TopologicalRobustness ↔ MultiClassCertification: compact → bounded → certified radius
+4. NeuralComposition ↔ ResNetLipschitz: composition laws explain polynomial vs exponential growth
+5. IntermediateValue ↔ certified robustness: IVT → adversarial examples exist at boundary
+6. Combinatorial ↔ HammingDistance: pigeonhole → error detection bounds
+
+### Diminishing Returns Assessment
+- 30 verified files, ~248 theorems, 0 sorries
+- Each new bridge adds ~6-8 theorems but with decreasing novelty (saturation in certified robustness)
+- Future work should focus on: (a) closing the Carmichael sorry, (b) strengthening existing bridges, (c) waiting for Aristotle results
+
+### Aristotle Pipeline
+- KnowledgeExtractor operational: Pi→Aristotle→Pi→Aether pipeline working
+- Aristotle project 95ba9fc7: tropical_langlands GL3 Satake (in progress)
+- Key principle: Aristotle has creative freedom (outcomes, not filenames)
+
+### What's Still Saturated
+- Tropical/LSE/softmax: fully explored
+- Certified robustness/Lipschitz: diminishing (NeuralComposition is the final piece)
+- Contraction mapping/GD: complete (GronwallDiscrete completes it)
+- Convex analysis: complete
+- Norm inequalities: complete
+- Number theory (Carmichael): 1 sorry remaining (requires LTE, hard)
