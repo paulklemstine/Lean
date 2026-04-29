@@ -58,6 +58,7 @@ tracked_files = [
     'PigeonholeInjectionBridge.lean',
     'ContinuousFunctionBridge.lean',
     'DifferentialCalculusBridge.lean',
+    'TranscendentalDerivativeBridge.lean',
     'ResNetTropicalCertified.lean',
 ]
 
