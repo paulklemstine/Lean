@@ -4,47 +4,235 @@
 This file establishes the tropical analog of the Satake isomorphism for GL_n,
 connecting tropical symmetric functions to the structure of spherical Hecke algebras.
 
+Two complementary perspectives are developed:
+
+* **Max-plus convention** (root namespace): coweights in `ℤ` with tropical
+  addition = `max`.  The Satake map sends a dominant coweight λ to its
+  tropical elementary symmetric function values, and is injective on the
+  dominant cone.  Proved for GL₂ and GL₃.
+
+* **Min-plus convention** (`TropicalLanglands` namespace): Satake parameters
+  in `WithTop ℤ` with tropical addition = `min`.  This mirrors the classical
+  Satake isomorphism more directly (addition → min, multiplication → +).
+  The tropical Hecke eigenvalues and local L-factors are developed for GL₂.
+
 ## Main Results
 
+### Max-plus convention
 * `tropicalSatakeGL2_injective`: The tropical Satake map for GL₂ is injective
   on the dominant cone.
-
 * `tropicalSatakeGL3_injective`: The tropical Satake map for GL₃ is injective
   on the dominant cone.
-
-* `tropSymm1_invariant_GL2`, `tropSymm2_invariant_GL2`, etc.:
-  Tropical elementary symmetric functions are invariant under the Weyl group action.
-
-* `trop_e1_dominant_GL2`, `trop_e2_dominant_GL3`, etc.:
-  On the dominant cone, tropical symmetric functions simplify to partial sums.
-
 * `tropical_hecke_comm_GL2`: The tropical Hecke convolution for GL₂ is commutative.
-
 * `tropDominanceGL2_antisymm`: The tropical dominance order is antisymmetric
   on dominant coweights.
+
+### Min-plus convention
+* `tropical_satake_gl2`: Two ordered Satake parameter pairs give the same
+  tropical Hecke eigenvalues iff they are equal — the tropical Satake
+  correspondence for GL₂.
+* `tropical_newton_identity`: The tropical Newton identity p₂ = e₁² ⊕ e₂.
+* `tropical_L_factor`: The tropical local L-factor is s + e₁(α, β).
 
 ## Mathematical Context
 
 The classical Satake isomorphism identifies the spherical Hecke algebra
 H(G(F)//G(O)) with the representation ring Rep(Ĝ) for a reductive group G
 over a p-adic field F. In the tropical setting, we replace the polynomial ring
-with the tropical semiring (ℤ, max, +), and the Satake isomorphism becomes
-an injection from dominant coweights to tropical symmetric function values.
+with the tropical semiring (ℤ, max, +) or (WithTop ℤ, min, +), and the Satake
+isomorphism becomes an injection from dominant coweights to tropical symmetric
+function values.
 
 For GL_n, the Weyl group W = S_n acts on coweights ℤⁿ by permutation.
 The tropical elementary symmetric function e_k(x₁,...,xₙ) is defined as
-max over all k-element subsets S of Σ_{i∈S} xᵢ. On the dominant cone
-{x₁ ≥ x₂ ≥ ... ≥ xₙ}, this simplifies to x₁ + x₂ + ... + x_k.
+max over all k-element subsets S of Σ_{i∈S} xᵢ (max-plus) or
+min over all k-element subsets S of Σ_{i∈S} xᵢ (min-plus).
+On the dominant cone, these simplify to partial sums.
 
 The map λ ↦ (e₁(λ), ..., eₙ(λ)) from the dominant cone to ℤⁿ is an injection,
 which is the tropical analog of the Satake isomorphism.
 -/
 
 import Mathlib
+import RequestProject.TropicalSemiring
+import RequestProject.TropicalValuation
+
+set_option maxHeartbeats 800000
 
 open Finset
 
-/-! ## Section 1: Tropical Elementary Symmetric Functions for GL₂ -/
+namespace TropicalLanglands
+
+/-! ## Section 1: Tropical Symmetric Functions (Min-Plus Convention)
+
+The elementary symmetric polynomials in the tropical semiring are:
+- e₁(x, y) = x ⊕ y = min(x, y)
+- e₂(x, y) = x ⊙ y = x + y
+
+These are the tropical analogs of the classical symmetric polynomials
+e₁ = X + Y and e₂ = XY. By the fundamental theorem of symmetric
+polynomials, any symmetric polynomial can be written in terms of
+e₁ and e₂. The tropical analog holds with appropriate modifications.
+-/
+
+/-- The first tropical elementary symmetric function: e₁(x,y) = min(x,y).
+This is the tropical analog of e₁ = X + Y. -/
+noncomputable def tropE1 (x y : WithTop ℤ) : WithTop ℤ := min x y
+
+/-- The second tropical elementary symmetric function: e₂(x,y) = x + y.
+This is the tropical analog of e₂ = XY. -/
+noncomputable def tropE2 (x y : WithTop ℤ) : WithTop ℤ := x + y
+
+/-- The tropical elementary symmetric functions are indeed symmetric. -/
+theorem tropE1_symm (x y : WithTop ℤ) : tropE1 x y = tropE1 y x := by
+  simp [tropE1, min_comm]
+
+theorem tropE2_symm (x y : WithTop ℤ) : tropE2 x y = tropE2 y x := by
+  simp [tropE2, add_comm]
+
+/-- The tropical power sum p₁(x,y) = min(x,y) equals e₁. -/
+theorem tropical_power_sum_1 (x y : WithTop ℤ) :
+    min x y = tropE1 x y := by rfl
+
+/-
+The tropical power sum p₂(x,y) = min(2x, 2y).
+This equals 2 ⊙ e₁(x,y) in the tropical semiring, i.e., 2 + min(x,y).
+-/
+theorem tropical_power_sum_2 (x y : WithTop ℤ) :
+    min (x + x) (y + y) = tropE1 x y + tropE1 x y := by
+      unfold tropE1;
+      cases x ; cases y ; aesop;
+      · simp +decide [ min_def ];
+      · cases y <;> norm_cast;
+        grind
+
+/-
+**Tropical Newton's identity (GL₂ case)**:
+`p₂ = e₁² ⊕ (2 ⊙ e₂)` tropically, i.e.,
+`min(2x, 2y) = min(2·min(x,y), x+y)`.
+
+This is because 2·min(x,y) ≤ x+y always, so the min is 2·min(x,y).
+This is the tropical version of Newton's identity p₂ = e₁² - 2e₂.
+-/
+theorem tropical_newton_identity (x y : WithTop ℤ) :
+    min (x + x) (y + y) = min (tropE1 x y + tropE1 x y) (tropE2 x y) := by
+      cases x ; cases y ; aesop;
+      · unfold tropE1 tropE2; aesop;
+      · cases y ; simp +decide [ tropE1, tropE2 ];
+        unfold tropE1 tropE2; norm_cast;
+        grind
+
+/-! ## Section 2: Tropical Hecke Algebra for GL₂ (Min-Plus Convention)
+
+The Hecke algebra for GL₂(ℚ_p) modulo GL₂(ℤ_p) is generated by the
+double coset of diag(p, 1). In the tropical semiring, this generator
+corresponds to the tropical Hecke operator T_p.
+
+The tropical Satake isomorphism sends T_p to the first tropical
+elementary symmetric function e₁ of the Satake parameters.
+-/
+
+/-- The tropical Hecke eigenvalue for an unramified representation
+of GL₂ with Satake parameters (α, β) (where α = v_p(eigenvalue₁),
+β = v_p(eigenvalue₂)):
+
+The Hecke eigenvalue of T_p is min(α, β) = e₁(α, β).
+
+This is the tropical analog of the classical formula:
+  eigenvalue of T_p = p^(-α) + p^(-β)
+where in the tropical limit, the sum becomes a min. -/
+theorem tropical_hecke_eigenvalue (α β : WithTop ℤ) :
+    tropE1 α β = min α β := by rfl
+
+/-
+The tropical Hecke eigenvalue of T_{p²} involves both e₁ and e₂.
+Classically: eigenvalue of T_{p²} = p^{-2α} + p^{-(α+β)} + p^{-2β}.
+Tropically: min(2α, α+β, 2β) = min(2·e₁(α,β), e₂(α,β)).
+-/
+theorem tropical_hecke_eigenvalue_sq (α β : WithTop ℤ) :
+    min (min (α + α) (α + β)) (β + β) =
+    min (tropE1 α β + tropE1 α β) (tropE2 α β) := by
+      cases α ; cases β ; aesop;
+      · unfold tropE1 tropE2; aesop;
+      · cases β <;> simp_all +decide [ tropE1, tropE2 ];
+        norm_cast;
+        grind
+
+/-! ## Section 3: The Tropical Satake Correspondence for GL₂ (Min-Plus Convention)
+
+The Satake isomorphism for GL₂ identifies:
+- The spherical Hecke algebra ≅ ℂ[X±1, Y±1]^{S₂}
+- The generator T_p ↦ X + Y = e₁(X,Y)
+- The generator T_{p²} ↦ X² + XY + Y² = e₁² - e₂
+
+The tropical Satake correspondence replaces:
+- ℂ[X±1, Y±1]^{S₂} → Tropical symmetric functions in (α, β)
+- Addition → min
+- Multiplication → +
+- T_p ↦ min(α, β) = e₁(α, β)
+- T_{p²} ↦ min(2α, α+β, 2β) = min(2·e₁, e₂)
+
+The key theorem: the tropical Satake parameters (e₁, e₂) uniquely
+determine the unramified representation (up to Weyl group action).
+-/
+
+/-
+**The Tropical Satake Correspondence for GL₂**:
+Two pairs of Satake parameters (α₁, β₁) and (α₂, β₂) give the
+same tropical Hecke eigenvalues for ALL Hecke operators if and only
+if they have the same (ordered) elementary symmetric functions.
+
+This is the tropical analog of the Satake isomorphism: the map from
+Satake parameters to Hecke eigenvalues is injective on Weyl orbits.
+-/
+theorem tropical_satake_gl2 (α₁ β₁ α₂ β₂ : WithTop ℤ)
+    (h_e1 : tropE1 α₁ β₁ = tropE1 α₂ β₂)
+    (h_e2 : tropE2 α₁ β₁ = tropE2 α₂ β₂)
+    (h_ord1 : α₁ ≤ β₁) (h_ord2 : α₂ ≤ β₂) :
+    α₁ = α₂ ∧ β₁ = β₂ := by
+      simp_all +decide [ tropE1, tropE2 ];
+      cases α₂ <;> aesop
+
+/-! ## Section 4: Tropical Langlands Dual and L-functions (Min-Plus Convention)
+
+The Langlands dual of GL₂ is GL₂ itself. The Satake parameters
+(α, β) determine the local L-factor:
+
+  L(s, π_p) = 1/((1 - p^{-α-s})(1 - p^{-β-s}))
+
+In the tropical world, the L-factor becomes:
+
+  L_trop(s) = min(α + s, β + s) = s + min(α, β) = s + e₁(α, β)
+
+The functional equation relates L(s) to L(1-s), which tropically
+becomes a symmetry under s ↦ 1-s.
+-/
+
+/-- The tropical local L-factor is s + e₁(α, β).
+This is the tropical analog of the Euler factor
+`1/((1-p^{-α-s})(1-p^{-β-s}))`. -/
+theorem tropical_L_factor (s α β : WithTop ℤ) :
+    min (α + s) (β + s) = tropE1 α β + s := by
+  simp [tropE1, min_add_add_right]
+
+/-- The tropical L-factor satisfies a functional equation:
+swapping the Satake parameters doesn't change the L-factor.
+This is the tropical analog of the self-duality of GL₂. -/
+theorem tropical_L_factor_symmetric (s α β : WithTop ℤ) :
+    min (α + s) (β + s) = min (β + s) (α + s) :=
+  min_comm _ _
+
+/-- The tropical central value L(1/2) has a special form.
+In the tropical world, the "critical line" s = 1/2 doesn't make
+sense over ℤ, but we can state the analog for s = 0:
+the tropical L-factor at s = 0 is just e₁(α, β). -/
+theorem tropical_L_central_value (α β : WithTop ℤ) :
+    min (α + 0) (β + 0) = tropE1 α β := by
+  simp [tropE1]
+
+end TropicalLanglands
+
+/-! ## Section 5: Tropical Elementary Symmetric Functions for GL₂ (Max-Plus Convention) -/
 
 /-- Tropical first elementary symmetric function for GL₂: e₁(a,b) = max(a,b) -/
 def tropSymm1_GL2 (a b : ℤ) : ℤ := max a b
@@ -70,7 +258,7 @@ e₂ is invariant under S₂ (swap)
 theorem tropSymm2_invariant_GL2 (a b : ℤ) : tropSymm2_GL2 a b = tropSymm2_GL2 b a := by
   exact add_comm _ _
 
-/-! ## Section 2: Tropical Satake Map for GL₂ -/
+/-! ## Section 6: Tropical Satake Map for GL₂ (Max-Plus Convention) -/
 
 /-- The dominant cone for GL₂: pairs (a,b) with a ≥ b -/
 def DominantConeGL2 : Set (ℤ × ℤ) := {p | p.1 ≥ p.2}
@@ -114,7 +302,7 @@ theorem tropicalSatakeGL2_image (s t : ℤ) :
     unfold tropSymm1_GL2 tropSymm2_GL2;
     exact ⟨ s, t - s, by linarith, by simp +decide [ max_eq_left ( by linarith : s ≥ t - s ) ] ⟩
 
-/-! ## Section 3: Tropical Elementary Symmetric Functions for GL₃ -/
+/-! ## Section 7: Tropical Elementary Symmetric Functions for GL₃ (Max-Plus Convention) -/
 
 /-- Tropical first elementary symmetric function for GL₃: e₁(a,b,c) = max(a,b,c) -/
 def tropSymm1_GL3 (a b c : ℤ) : ℤ := max (max a b) c
@@ -187,7 +375,7 @@ theorem tropSymm3_GL3_cycle (a b c : ℤ) :
     tropSymm3_GL3 a b c = tropSymm3_GL3 b c a := by
   unfold tropSymm3_GL3; ring;
 
-/-! ## Section 4: Tropical Satake Map for GL₃ -/
+/-! ## Section 8: Tropical Satake Map for GL₃ (Max-Plus Convention) -/
 
 /-- The dominant cone for GL₃: triples (a,b,c) with a ≥ b ≥ c -/
 def DominantConeGL3 : Set (ℤ × ℤ × ℤ) := {p | p.1 ≥ p.2.1 ∧ p.2.1 ≥ p.2.2}
@@ -221,7 +409,7 @@ theorem tropicalSatakeGL3_injective :
   simp_all +decide [ Prod.ext_iff, DominantConeGL3 ];
   grind
 
-/-! ## Section 5: Tropical Hecke Convolution for GL₂ -/
+/-! ## Section 9: Tropical Hecke Convolution for GL₂ (Max-Plus Convention) -/
 
 /-- Tropical Hecke convolution for GL₂.
     This models the convolution in the spherical Hecke algebra
@@ -240,7 +428,6 @@ Tropical Hecke convolution for GL₂ is commutative.
 -/
 theorem tropical_hecke_comm_GL2 (p q : ℤ × ℤ) :
     tropHeckeConv_GL2 p q = tropHeckeConv_GL2 q p := by
-  -- By definition of tropHeckeConv_GL2, we have:
   unfold tropHeckeConv_GL2;
   grind
 
@@ -274,7 +461,7 @@ theorem tropicalSatakeGL2_conv (p q : ℤ × ℤ)
   simp +decide [ *, tropSymm1_GL2, tropSymm2_GL2 ];
   constructor <;> linarith
 
-/-! ## Section 6: Tropical Weyl Character Formula for GL₂ -/
+/-! ## Section 10: Tropical Weyl Character Formula for GL₂ (Max-Plus Convention) -/
 
 /-- The tropical Weyl character value for GL₂ at a dominant weight (a,b) with a ≥ b,
     evaluated at a point (x,y). This is max over the Weyl orbit of the inner product:
@@ -319,7 +506,7 @@ theorem tropWeylChar_GL2_std (x y : ℤ) :
     tropWeylChar_GL2 1 0 x y = max x y := by
   unfold tropWeylChar_GL2; ring_nf;
 
-/-! ## Section 7: Tropical Plancherel Formula for GL₂ -/
+/-! ## Section 11: Tropical Plancherel Formula for GL₂ (Max-Plus Convention) -/
 
 /-- The tropical Plancherel measure for GL₂ assigns to each dominant weight
     λ = (a,b) with a ≥ b the value 2(a-b), which is the tropical analog of
@@ -340,7 +527,7 @@ theorem tropPlancherel_GL2_zero_iff (a b : ℤ) (h : a ≥ b) :
     tropPlancherel_GL2 a b = 0 ↔ a = b := by
   exact ⟨ fun h' => by unfold tropPlancherel_GL2 at h'; linarith, fun h' => by unfold tropPlancherel_GL2; linarith ⟩
 
-/-! ## Section 8: Tropical Dominance Order -/
+/-! ## Section 12: Tropical Dominance Order (Max-Plus Convention) -/
 
 /-- The tropical dominance order: λ ≤_trop μ iff the partial sums of λ are ≤ those of μ.
     For GL₂, this means max(a₁,a₂) ≤ max(b₁,b₂) and a₁+a₂ ≤ b₁+b₂. -/

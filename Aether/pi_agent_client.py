@@ -615,11 +615,11 @@ class PiAgentClient:
         # Cloud models often timeout on large prompts - local generator is faster
         if self.compact:
             # Cloud/compact mode: shorter timeout since we have local fallback
-            concept_raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=300)
+            concept_raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=3000)
             parsed = self._parse_json_response(concept_raw) if concept_raw and not concept_raw.startswith("[OLLAMA") else None
         else:
             # Local model: give more time
-            concept_raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=300)
+            concept_raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=3000)
             parsed = self._parse_json_response(concept_raw)
 
         if parsed:
@@ -1270,9 +1270,9 @@ class PiAgentClient:
 
                 Output ONLY the enriched content. No preamble.
             """)
-            raw = self._call_ollama(_PROMPT_WRITING_SYSTEM_PROMPT, short_enrichment, timeout=300)
+            raw = self._call_ollama(_PROMPT_WRITING_SYSTEM_PROMPT, short_enrichment, timeout=3000)
         else:
-            raw = self._call_ollama(_PROMPT_WRITING_SYSTEM_PROMPT, enrichment_request, timeout=600)
+            raw = self._call_ollama(_PROMPT_WRITING_SYSTEM_PROMPT, enrichment_request, timeout=6000)
 
         use_enriched = raw and not raw.startswith("[OLLAMA") and "TIMEOUT" not in raw
         if use_enriched:
@@ -1571,7 +1571,7 @@ class PiAgentClient:
             }}
         """)
 
-        raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=300)
+        raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=3000)
         parsed = self._parse_json_response(raw)
 
         if parsed:
