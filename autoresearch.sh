@@ -62,6 +62,7 @@ tracked_files = [
     'GaloisConnectionBridge.lean',
     'WellFoundedInductionBridge.lean',
     'TopologyBridge.lean',
+    'PolynomialBridge.lean',
     'ResNetTropicalCertified.lean',
 ]
 
