@@ -456,16 +456,23 @@ key_thms35 = ['cauchy_schwarz', 'abs_cauchy_schwarz', 'parallelogram_law', 'pola
 for t in key_thms35:
     assert t in c35, f'Should contain {t}'
 sorry_count_35 = c35.count('sorry')
+
+# 36. BesselInequalityBridge.lean (Bessel inequality, Gram determinant)
+c36 = Path('../Catalog/Bridges/BesselInequalityBridge.lean').read_text()
+key_thms36 = ['bessel_one', 'gram_nonneg', 'inner_sq_le_norm_sq_mul', 'gram_eq_zero_right_zero']
+for t in key_thms36:
+    assert t in c36, f'Should contain {t}'
+sorry_count_36 = c36.count('sorry')
 print(f'  IntermediateValueBridge.lean: {len(c30)} bytes, sorry={sorry_count_30}')
 print(f'  ExponentialBoundBridge.lean: {len(c31)} bytes, sorry={sorry_count_31}')
 
-total_sorry = sorry_count_1 + sorry_count_2 + sorry_count_3 + sorry_count_4 + sorry_count_5 + sorry_count_6 + sorry_count_8 + sorry_count_9 + sorry_count_10 + sorry_count_11 + sorry_count_12 + sorry_count_13 + sorry_count_14 + sorry_count_15 + sorry_count_16 + sorry_count_17 + sorry_count_18 + sorry_count_19 + sorry_count_20 + sorry_count_21 + sorry_count_22 + sorry_count_23 + sorry_count_24 + sorry_count_25 + sorry_count_26 + sorry_count_27 + sorry_count_28 + sorry_count_29 + sorry_count_30 + sorry_count_31 + sorry_count_32 + sorry_count_33 + sorry_count_34 + sorry_count_35 + sorry_count_34
+total_sorry = sorry_count_1 + sorry_count_2 + sorry_count_3 + sorry_count_4 + sorry_count_5 + sorry_count_6 + sorry_count_8 + sorry_count_9 + sorry_count_10 + sorry_count_11 + sorry_count_12 + sorry_count_13 + sorry_count_14 + sorry_count_15 + sorry_count_16 + sorry_count_17 + sorry_count_18 + sorry_count_19 + sorry_count_20 + sorry_count_21 + sorry_count_22 + sorry_count_23 + sorry_count_24 + sorry_count_25 + sorry_count_26 + sorry_count_27 + sorry_count_28 + sorry_count_29 + sorry_count_30 + sorry_count_31 + sorry_count_32 + sorry_count_33 + sorry_count_34 + sorry_count_35 + sorry_count_36 + sorry_count_34
 print(f'  Total sorries in verified files: {total_sorry} (should be 0)')
 assert total_sorry == 0, f'Verified files should have 0 sorries, got {total_sorry}'
 print(f'  LSEConvexity.lean: {len(c18)} bytes, sorry={sorry_count_18}')
 print(f'  ResNetTropicalCertified.lean: {len(c19)} bytes, sorry={sorry_count_19}')
 print(f'  EMLStoneWeierstrassBridge.lean: {len(c20)} bytes, sorry={sorry_count_20}')
-print('  All 35 files compile (verified by lake build)')
+print('  All 36 files compile (verified by lake build)')
 print('  OK')
 "
 
