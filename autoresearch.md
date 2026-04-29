@@ -62,18 +62,21 @@ multiple domains — pure results in a single domain are equally valuable.
 - Number theory: 2 files (NumberTheory, FiniteField), well-developed
 - Connectedness: 1 file, complete
 - Subadditive sequences: 1 file (Fekete), complete
+- Continuous operations: 1 file, complete
+- Pigeonhole/injection: 1 file, complete
 
-### Recent additions (runs 10-21)
-- ExponentialBoundBridge (11 thm): exp/log bounds, strict convexity
-- TropicalSatakeGL3 (15 thm, Aristotle): tropical Satake for GL3
+### Recent additions (runs 13-24, this session)
 - HeineCantorBridge (6 thm): compact → uniform continuous
 - KnasterTarskiBridge (11 thm): order-theoretic fixed points
 - InnerProductBridge (9 thm): Cauchy-Schwarz, parallelogram law, polarization
 - BesselInequalityBridge (5 thm): Bessel, Gram determinant
 - TopologicalConnectednessBridge (7 thm): connectedness, generalized IVT
-- NumberTheoryBridge (15 thm): FLT, Wilson, CRT, totient
+- NumberTheoryBridge (15 thm): FLT, Wilson, CRT, totient, prime properties
 - FiniteFieldBridge (9 thm): Frobenius, Freshman's Dream, finite fields
 - SubadditiveSequenceBridge (6 thm): Fekete's Lemma
+- JensenInequalityBridge (3 thm): Jensen, exp convex
+- PigeonholeInjectionBridge (6 thm): pigeonhole, injection/surjection bounds
+- ContinuousFunctionBridge (12 thm): continuous function algebra
 
 ### Key Theorem Chains
 1. GronwallDiscrete → BanachFixedPoint: GD convergence via geometric decay
