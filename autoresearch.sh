@@ -51,6 +51,7 @@ tracked_files = [
     'InnerProductBridge.lean',
     'BesselInequalityBridge.lean',
     'TopologicalConnectednessBridge.lean',
+    'NumberTheoryBridge.lean',
     'ResNetTropicalCertified.lean',
 ]
 
