@@ -59,25 +59,33 @@ multiple domains — pure results in a single domain are equally valuable.
 - Heine-Cantor/uniform continuity: 1 file, complete
 - Knaster-Tarski/fixed points: 1 file, complete
 - Inner product spaces: 2 files (InnerProduct, Bessel), complete
-- Exponential/log bounds: 1 file, complete
+- Number theory: 2 files (NumberTheory, FiniteField), well-developed
+- Connectedness: 1 file, complete
+- Subadditive sequences: 1 file (Fekete), complete
 
-### Recent additions (runs 10-16)
-- **ExponentialBoundBridge** (11 thm): exp/log bounds, strict convexity, log(x)≤x-1
-- **TropicalSatakeGL3** (15 thm, Aristotle): S₃ invariance, dominant Weyl chamber, tropical Chevalley
-- **HeineCantorBridge** (6 thm): Continuous on compact → uniform continuous
-- **KnasterTarskiBridge** (11 thm): Order-theoretic fixed points on complete lattices (dual to Banach)
-- **InnerProductBridge** (9 thm): Cauchy-Schwarz, parallelogram law, polarization identity
-- **BesselInequalityBridge** (5 thm): Bessel inequality, Gram determinant
+### Recent additions (runs 10-21)
+- ExponentialBoundBridge (11 thm): exp/log bounds, strict convexity
+- TropicalSatakeGL3 (15 thm, Aristotle): tropical Satake for GL3
+- HeineCantorBridge (6 thm): compact → uniform continuous
+- KnasterTarskiBridge (11 thm): order-theoretic fixed points
+- InnerProductBridge (9 thm): Cauchy-Schwarz, parallelogram law, polarization
+- BesselInequalityBridge (5 thm): Bessel, Gram determinant
+- TopologicalConnectednessBridge (7 thm): connectedness, generalized IVT
+- NumberTheoryBridge (15 thm): FLT, Wilson, CRT, totient
+- FiniteFieldBridge (9 thm): Frobenius, Freshman's Dream, finite fields
+- SubadditiveSequenceBridge (6 thm): Fekete's Lemma
 
 ### Key Theorem Chains
 1. GronwallDiscrete → BanachFixedPoint: GD convergence via geometric decay
-2. TopologicalRobustness → HeineCantor → certified radius: compact → bounded → uniform continuous → certified
-3. NeuralComposition → ResNetLipschitz: composition laws explain polynomial vs exponential growth
-4. IntermediateValue → certified robustness: IVT → adversarial examples exist at boundary
+2. TopologicalRobustness → HeineCantor → certified radius
+3. NeuralComposition → ResNetLipschitz: polynomial vs exponential growth
+4. IntermediateValue → certified robustness: adversarial examples exist
 5. ExponentialBound → ConvexTropical: log(x)≤x−1 gives AM-GM
-6. TropicalSatakeGL3 (Aristotle): GL₂ → GL₃ Satake isomorphism
-7. BanachFixedPoint ↔ KnasterTarski: metric vs order-theoretic fixed points
-8. InnerProduct → Bessel: Cauchy-Schwarz → Gram determinant → Bessel inequality
+6. TropicalSatakeGL3 (Aristotle): GL₂ → GL₃ Satake
+7. Banach ↔ KnasterTarski: metric vs order-theoretic fixed points
+8. InnerProduct → Bessel: Cauchy-Schwarz → Gram → Bessel
+9. NumberTheory → FiniteField: FLT/Wilson from both perspectives
+10. Subadditive → Fekete: tropical min ↔ subadditive ↔ asymptotic average
 
 ### Metrics Change
 - Removed bridge_count as metric and requirement (run 12)

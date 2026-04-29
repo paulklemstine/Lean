@@ -54,6 +54,7 @@ tracked_files = [
     'NumberTheoryBridge.lean',
     'FiniteFieldBridge.lean',
     'SubadditiveSequenceBridge.lean',
+    'JensenInequalityBridge.lean',
     'ResNetTropicalCertified.lean',
 ]
 
