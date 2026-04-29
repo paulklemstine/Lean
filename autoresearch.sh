@@ -57,6 +57,7 @@ tracked_files = [
     'JensenInequalityBridge.lean',
     'PigeonholeInjectionBridge.lean',
     'ContinuousFunctionBridge.lean',
+    'DifferentialCalculusBridge.lean',
     'ResNetTropicalCertified.lean',
 ]
 
