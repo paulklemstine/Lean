@@ -412,10 +412,13 @@ Research mode: {concept.research_mode}
         for ref in refs:
             src = self.catalog_root / ref
             if src.exists():
-                # Create parent dirs in project
                 dst = dir_path / ref
-                dst.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copy2(src, dst)
+                if src.is_dir():
+                    shutil.copytree(src, dst, dirs_exist_ok=True)
+                else:
+                    # Create parent dirs in project
+                    dst.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(src, dst)
 
         # Write the prompt as a README for context
         (dir_path / "PROMPT.md").write_text(job.prompt)

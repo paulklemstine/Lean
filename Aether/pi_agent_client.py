@@ -334,8 +334,8 @@ class PiAgentClient:
             self.catalog_analyzer = CatalogAnalyzer(self.catalog_root)
 
     def _call_ollama(self, system: str, user: str, timeout: Optional[int] = None) -> str:
-        """Call ollama HTTP API with system + user prompts. Returns raw text.
-
+        """Call the pi coding agent CLI instead of HTTP Ollama.
+        
         Args:
             system: System prompt
             user: User prompt
@@ -343,71 +343,67 @@ class PiAgentClient:
         """
         request_timeout = timeout or self.timeout
 
-        # In compact mode, truncate to keep total under ~6K chars
-        # Cloud reasoning models need shorter context for timely responses
-        if self.compact:
-            max_system = 4000
-            max_user = 2000
-            if len(system) > max_system:
-                system = system[:max_system] + "\n[...system prompt truncated for model efficiency...]"
-            if len(user) > max_user:
-                user = user[:max_user] + "\n[...context truncated for model efficiency...]"
-
-        # Log the request
-        system_preview = system[:200].replace('\n', ' ')
-        user_preview = user[:500].replace('\n', ' ')
-        print(f"[Pi-Agent] → ollama request (model={self.model}, timeout={request_timeout}s)")
-        print(f"[Pi-Agent]   system: {system_preview}...")
-        print(f"[Pi-Agent]   user: {user_preview}...")
-
-        payload = {
-            "model": self.model,
-            "messages": [
-                {"role": "system", "content": system},
-                {"role": "user", "content": user},
-            ],
-            "stream": False,
-            "options": {
-                "temperature": 0.85,
-                "top_p": 0.92,
-                "num_predict": 4096,
-            },
-        }
+        # Combine system and user prompt
+        full_prompt = f"SYSTEM INSTRUCTIONS:\n{system}\n\nUSER PROMPT:\n{user}"
+        
+        import subprocess
+        import tempfile
+        import os
+        
+        print(f"[Pi-Agent] → calling pi CLI (model={self.model}, timeout={request_timeout}s)")
+        
         try:
-            response = self.client.post(
-                f"{self.OLLAMA_BASE_URL}/api/chat",
-                json=payload,
-                timeout=request_timeout,
-            )
-            response.raise_for_status()
-            data = response.json()
-            content = data.get("message", {}).get("content", "")
-            if not content:
-                content = data.get("response", "")
+            # We use a temporary file to avoid 'Argument list too long' for large prompts
+            with tempfile.NamedTemporaryFile(mode='w', suffix='.md', delete=False, encoding='utf-8') as f:
+                f.write(full_prompt)
+                temp_path = f.name
+                
+            cmd = [
+                "pi",
+                "--model", self.model,
+                "-nc", "--no-themes",
+                f"@{temp_path}",
+                "-p", "Please follow the instructions in the attached document."
+            ]
             
-            # kimi-k2 reasoning models put reasoning in 'thinking' field
-            # and final answer in 'content'. If content is empty, the model
-            # may have put the answer in thinking instead. Try to extract it.
-            thinking = data.get("message", {}).get("thinking", "")
-            if not content and thinking:
-                # Model put answer in thinking field - try to extract JSON or useful content
-                content = thinking
-                print(f"[Pi-Agent] Content was empty, using thinking field ({len(thinking)} chars)")
+            # Make sure Node 20 / pi is in the PATH if we installed it locally
+            env = os.environ.copy()
+            node_bin = os.path.expanduser("~/node-v20.12.2-linux-x64/bin")
+            if os.path.exists(node_bin) and node_bin not in env.get("PATH", ""):
+                env["PATH"] = f"{node_bin}:{env.get('PATH', '')}"
 
+            result = subprocess.run(
+                cmd,
+                capture_output=True,
+                text=True,
+                timeout=request_timeout,
+                check=False,
+                env=env
+            )
+            
+            # Clean up temp file
+            try:
+                os.unlink(temp_path)
+            except:
+                pass
+                
+            if result.returncode != 0:
+                print(f"[Pi-Agent] ← pi CLI error: {result.stderr}")
+                return f"[PI_ERROR: {result.stderr}]"
+                
+            content = result.stdout
+            
             # Log the response
             response_preview = content[:500].replace('\n', ' ')
-            print(f"[Pi-Agent] ← ollama response ({len(content)} chars)")
+            print(f"[Pi-Agent] ← pi response ({len(content)} chars)")
             print(f"[Pi-Agent]   {response_preview}...")
-
+            
             return content
-        except httpx.TimeoutException:
-            print(f"[Pi-Agent] ← ollama TIMEOUT after {request_timeout}s")
-            return f"[OLLAMA_TIMEOUT: Request timed out after {self.timeout}s]"
-        except httpx.HTTPStatusError as e:
-            print(f"[Pi-Agent] ← ollama HTTP error: {e.response.status_code}")
-            return f"[OLLAMA_HTTP_ERROR: {e.response.status_code} {e.response.text[:200]}]"
+        except subprocess.TimeoutExpired:
+            print(f"[Pi-Agent] ← pi CLI TIMEOUT after {request_timeout}s")
+            return f"[OLLAMA_TIMEOUT: Request timed out after {request_timeout}s]"
         except Exception as e:
-            print(f"[Pi-Agent] ← ollama error: {type(e).__name__}: {e}")
+            print(f"[Pi-Agent] ← pi CLI exception: {type(e).__name__}: {e}")
             return f"[OLLAMA_ERROR: {e}]"
 
     def _parse_json_response(self, raw: str) -> Optional[Dict[str, Any]]:
@@ -619,11 +615,11 @@ class PiAgentClient:
         # Cloud models often timeout on large prompts - local generator is faster
         if self.compact:
             # Cloud/compact mode: shorter timeout since we have local fallback
-            concept_raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=150)
+            concept_raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=300)
             parsed = self._parse_json_response(concept_raw) if concept_raw and not concept_raw.startswith("[OLLAMA") else None
         else:
             # Local model: give more time
-            concept_raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=120)
+            concept_raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=300)
             parsed = self._parse_json_response(concept_raw)
 
         if parsed:
@@ -886,6 +882,154 @@ class PiAgentClient:
             breakthrough_potential=arc["breakthrough"],
             key_references=arc["refs"][:3],
         )
+    # ------------------------------------------------------------------
+    # Extract concepts from Aristotle's FUTURE_DIRECTIONS reports
+    # ------------------------------------------------------------------
+
+    def _extract_future_direction_concepts(
+        self,
+        future_dirs_text: str,
+        cycle: int,
+    ) -> Optional['ResearchConcept']:
+        """Parse Aristotle's future directions reports and extract a concrete concept.
+
+        This is the self-improving feedback loop. When the LLM times out,
+        this method parses the markdown text of Aristotle's recommendations
+        and generates a ResearchConcept from them.
+
+        Strategy:
+        - Look for numbered lists of open questions/problems
+        - Look for section headers mentioning specific domains or theorems
+        - Extract the most concrete, actionable items
+        - Cycle through them round-robin to maintain diversity
+        """
+        from output_organizer import normalize_domain
+        import re
+
+        # Extract potential research directions from the text
+        directions = []
+
+        # Pattern 1: Numbered list items that describe open problems
+        # Match: "1. **Tropical QFT.** Our formalization handles..."
+        # Match: "2. **SPB cryptographic hardness.** Over the reals..."
+        numbered_items = re.findall(
+            r'\d+\.\s+\*\*([^*]+)\*\*[.:]\s*(.+?)(?=\n\d+\.|$)',
+            future_dirs_text,
+            re.DOTALL
+        )
+        for title, desc in numbered_items:
+            title_clean = title.strip().rstrip('.')
+            desc_clean = desc.strip()[:500]
+            if len(desc_clean) > 50:  # Substantial content
+                # Infer domain from keywords
+                domain = self._infer_domain_from_text(title_clean + " " + desc_clean)
+                # Infer refs from mentioned file paths
+                refs = re.findall(r'(\w+/\w+(?:/\w+)?\.lean)', desc_clean)
+
+                directions.append({
+                    "title": re.sub(r'[^a-z0-9_]', '_', title_clean.lower().replace(' ', '_'))[:50],
+                    "domain": domain,
+                    "desc": desc_clean,
+                    "framing": f"From Aristotle's own research recommendations: {title_clean}. {desc_clean[:200]}",
+                    "refs": refs or [],
+                    "novelty": 0.88,
+                    "breakthrough": 0.90,
+                })
+
+        # Pattern 2: Bullet list items with "prove" or "show" or "extend"
+        bullet_items = re.findall(
+            r'[-•]\s+(.+?)(?=\n[-•]|\n\n|$)',
+            future_dirs_text,
+        )
+        for item in bullet_items:
+            item_clean = item.strip()
+            if len(item_clean) > 50 and any(kw in item_clean.lower() for kw in
+                    ['prove', 'show', 'extend', 'formalize', 'conjecture', 'theorem', 'establish']):
+                domain = self._infer_domain_from_text(item_clean)
+                refs = re.findall(r'(\w+/\w+(?:/\w+)?\.lean)', item_clean)
+                title = re.sub(r'[^a-z0-9_]', '_', item_clean[:40].lower().replace(' ', '_'))
+
+                directions.append({
+                    "title": title,
+                    "domain": domain,
+                    "desc": item_clean[:500],
+                    "framing": f"From Aristotle's recommendations: {item_clean[:300]}",
+                    "refs": refs or [],
+                    "novelty": 0.85,
+                    "breakthrough": 0.87,
+                })
+
+        # Pattern 3: Section headers with research-like titles
+        section_headers = re.findall(
+            r'#{2,4}\s+(.+?)(?:\n)(.*?)(?=#{2,4}|$)',
+            future_dirs_text,
+            re.DOTALL
+        )
+        for header, body in section_headers:
+            header_clean = header.strip()
+            body_clean = body.strip()[:500]
+            if len(body_clean) > 100 and any(kw in header_clean.lower() for kw in
+                    ['open', 'future', 'direction', 'question', 'problem', 'extension', 'conjecture']):
+                domain = self._infer_domain_from_text(header_clean + " " + body_clean)
+                refs = re.findall(r'(\w+/\w+(?:/\w+)?\.lean)', body_clean)
+                title = re.sub(r'[^a-z0-9_]', '_', header_clean[:40].lower().replace(' ', '_'))
+
+                directions.append({
+                    "title": title,
+                    "domain": domain,
+                    "desc": f"{header_clean}: {body_clean[:400]}",
+                    "framing": body_clean[:300],
+                    "refs": refs or [],
+                    "novelty": 0.86,
+                    "breakthrough": 0.88,
+                })
+
+        if not directions:
+            return None
+
+        # Cycle through extracted directions
+        idx = cycle % len(directions)
+        d = directions[idx]
+
+        return ResearchConcept(
+            title=d["title"],
+            domain=normalize_domain(d["domain"]),
+            concept_description=d["desc"],
+            mathematical_framing=d["framing"],
+            lean_guess="",
+            catalog_references=d["refs"],
+            research_mode="prove",
+            novelty_estimate=d["novelty"],
+            breakthrough_potential=d["breakthrough"],
+            key_references=d["refs"][:3],
+        )
+
+    @staticmethod
+    def _infer_domain_from_text(text: str) -> str:
+        """Infer the most likely Catalog domain from text content."""
+        text_lower = text.lower()
+        domain_keywords = {
+            "Tropical": ["tropical", "min-plus", "semiring", "maslov", "dequantization"],
+            "Physics": ["quantum", "feynman", "path integral", "wave", "lorentz", "schrodinger"],
+            "Pythagorean": ["pythagorean", "berggren", "fibonacci", "carmichael", "prime", "number theory"],
+            "Cryptography": ["crypto", "spb", "diffie-hellman", "discrete log", "key exchange", "lattice"],
+            "EML": ["eml", "exponential", "multiplicative", "logarithmic", "density", "boltzmann"],
+            "Bridges": ["bridge", "cross-domain", "unification", "functor", "correspondence"],
+            "Algebra": ["algebra", "ring", "group", "field", "galois", "module", "spectral"],
+            "MachineLearning": ["neural", "network", "robustness", "lipschitz", "gradient", "resnet"],
+            "Geometry": ["geometry", "metric", "curvature", "manifold", "topolog"],
+            "Logic": ["logic", "decidab", "computab", "halting", "godel"],
+        }
+
+        scores = {}
+        for domain, keywords in domain_keywords.items():
+            score = sum(1 for kw in keywords if kw in text_lower)
+            if score > 0:
+                scores[domain] = score
+
+        if scores:
+            return max(scores, key=scores.get)
+        return "Bridges"  # Default to cross-domain research
 
     # ------------------------------------------------------------------
     # Dynamic prompt writing
@@ -1126,9 +1270,9 @@ class PiAgentClient:
 
                 Output ONLY the enriched content. No preamble.
             """)
-            raw = self._call_ollama(_PROMPT_WRITING_SYSTEM_PROMPT, short_enrichment, timeout=90)
+            raw = self._call_ollama(_PROMPT_WRITING_SYSTEM_PROMPT, short_enrichment, timeout=300)
         else:
-            raw = self._call_ollama(_PROMPT_WRITING_SYSTEM_PROMPT, enrichment_request, timeout=150)
+            raw = self._call_ollama(_PROMPT_WRITING_SYSTEM_PROMPT, enrichment_request, timeout=600)
 
         use_enriched = raw and not raw.startswith("[OLLAMA") and "TIMEOUT" not in raw
         if use_enriched:
@@ -1427,7 +1571,7 @@ class PiAgentClient:
             }}
         """)
 
-        raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=90)
+        raw = self._call_ollama(_DIRECTION_SYSTEM_PROMPT, user_prompt, timeout=300)
         parsed = self._parse_json_response(raw)
 
         if parsed:
