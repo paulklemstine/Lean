@@ -65,6 +65,7 @@ tracked_files = [
     'PolynomialBridge.lean',
     'DeterminantBridge.lean',
     'HilbertSpaceBridge.lean',
+    'GroupTheoryBridge.lean',
     'ResNetTropicalCertified.lean',
 ]
 
