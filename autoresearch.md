@@ -51,26 +51,41 @@ multiple domains — pure results in a single domain are equally valuable.
 
 ### Saturated directions (diminishing returns):
 - Tropical/LSE/softmax: 6+ files, fully explored
-- Certified robustness/Lipschitz: 3 files, diminishing returns
+- Certified robustness/Lipschitz: 4+ files, diminishing returns
 - EML/Stone-Weierstrass: 1 file, prerequisites complete
 - Contraction mapping/GD: 1 file, complete
 - Convex analysis: 1 file (ConvexTropical), complete
 - Norm inequalities: 1 file (NormInequality), complete
+- Heine-Cantor/uniform continuity: 1 file, complete
+- Knaster-Tarski/fixed points: 1 file, complete
+- Inner product spaces: 2 files (InnerProduct, Bessel), complete
+- Exponential/log bounds: 1 file, complete
 
-### Key verified files (24 total):
-- ResNetTropicalCertified (9 thms): γ/(2(1+L)) certified robustness
-- EMLStoneWeierstrassBridge (17 thms): Stone-Weierstrass prerequisites
-- BanachFixedPointBridge (10 thms): contraction + GD convergence
-- MultiClassCertificationBridge (9 thms): multi-class certified radius
-- ConvexTropicalBridge (9 thms): AM-GM + LSE bounds
-- NormInequalityBridge (12 thms): L∞≤L1≤√2L2 + Young's + AM-QM
-- Plus 18 earlier files (tropical, Satake, Carmichael, etc.)
+### Recent additions (runs 10-16)
+- **ExponentialBoundBridge** (11 thm): exp/log bounds, strict convexity, log(x)≤x-1
+- **TropicalSatakeGL3** (15 thm, Aristotle): S₃ invariance, dominant Weyl chamber, tropical Chevalley
+- **HeineCantorBridge** (6 thm): Continuous on compact → uniform continuous
+- **KnasterTarskiBridge** (11 thm): Order-theoretic fixed points on complete lattices (dual to Banach)
+- **InnerProductBridge** (9 thm): Cauchy-Schwarz, parallelogram law, polarization identity
+- **BesselInequalityBridge** (5 thm): Bessel inequality, Gram determinant
 
-### Dead ends:
-- Probability concentration: requires MeasureTheory, too heavy
-- EMLUniversalApproximation: requires Subalgebra construction, too complex
-- Fibonacci Cassini: algebraic manipulation in Lean too complex for quick fix
-- Lp norm inequalities: complex API issues with Mathlib
+### Key Theorem Chains
+1. GronwallDiscrete → BanachFixedPoint: GD convergence via geometric decay
+2. TopologicalRobustness → HeineCantor → certified radius: compact → bounded → uniform continuous → certified
+3. NeuralComposition → ResNetLipschitz: composition laws explain polynomial vs exponential growth
+4. IntermediateValue → certified robustness: IVT → adversarial examples exist at boundary
+5. ExponentialBound → ConvexTropical: log(x)≤x−1 gives AM-GM
+6. TropicalSatakeGL3 (Aristotle): GL₂ → GL₃ Satake isomorphism
+7. BanachFixedPoint ↔ KnasterTarski: metric vs order-theoretic fixed points
+8. InnerProduct → Bessel: Cauchy-Schwarz → Gram determinant → Bessel inequality
+
+### Metrics Change
+- Removed bridge_count as metric and requirement (run 12)
+- Pure depth in a single domain is now equally valued
+
+### Aristotle Pipeline
+- KnowledgeExtractor operational: Pi→Aristotle→Pi→Aether pipeline working
+- Aristotle project 95ba9fc7: tropical_langlands GL3 Satake (COMPLETED)
 
 ## Session Progress (autoresearch runs 2-9)
 

@@ -50,6 +50,7 @@ tracked_files = [
     'KnasterTarskiBridge.lean',
     'InnerProductBridge.lean',
     'BesselInequalityBridge.lean',
+    'TopologicalConnectednessBridge.lean',
     'ResNetTropicalCertified.lean',
 ]
 
