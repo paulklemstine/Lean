@@ -1,20 +1,20 @@
 # Aether: concept_quality optimization
 
 ## Objective
-Generate novel, formally-verified mathematical theorems in Lean 4 that bridge 
-multiple domains (certified robustness, tropical geometry, convex analysis, 
-contraction mapping, norm inequalities, etc.). Each theorem must compile with 
-0 sorries via `lake build`.
+Generate novel, formally-verified mathematical theorems in Lean 4.
+Each theorem must compile with 0 sorries via `lake build`.
+Theorems should be deep, correct, and interesting. They need NOT bridge
+multiple domains — pure results in a single domain are equally valuable.
 
 ## Metrics
-- **Primary**: concept_quality (0-1, higher is better) — novelty, depth, bridge value
-- **Secondary**: verified_decls, verified_files, bridge_count, sorry_files
+- **Primary**: concept_quality (0-1, higher is better) — novelty, depth, correctness
+- **Secondary**: verified_decls, verified_files, sorry_files
 
 ## How to Run
 `bash autoresearch.sh` — checks compilation, counts theorems/sorries, reports metrics.
 
 ## Files in Scope
-- `Catalog/Bridges/*.lean` — cross-domain bridges (primary output)
+- `Catalog/Bridges/*.lean` — domain-specific theorems
 - `Catalog/MachineLearning/*/*.lean` — ML theory
 - `Catalog/Tropical/*/*.lean` — tropical geometry
 - `Catalog/Shared/*.lean` — shared utilities
@@ -29,8 +29,9 @@ contraction mapping, norm inequalities, etc.). Each theorem must compile with
 ## Constraints
 - All new theorems must compile via `lake env lean <file>` with 0 sorries
 - `bash autoresearch.checks.sh` must pass (24 verified file checks)
-- No overfitting to benchmark: don't create trivial variations
+- No overfitting to benchmark: don't create trivial variations or pad metrics
 - No cheating: don't duplicate existing theorems or create degenerate cases
+- Bridges across domains are valuable but NOT required — pure depth in one domain is equally good
 
 ## What's Been Tried
 ### Proven approaches (keep using these patterns):
@@ -87,13 +88,13 @@ contraction mapping, norm inequalities, etc.). Each theorem must compile with
 - **IntermediateValueBridge** (6 thm): IVT ↔ adversarial examples exist at decision boundaries
   - Key: strict_zero_crossing, sign_change_implies_adversarial
 
-### Key Cross-Bridge Connections
-1. GronwallDiscrete ↔ BanachFixedPoint: GD convergence via geometric decay
-2. HammingDistance ↔ NormInequality: metric space axioms (triangle inequality)
-3. TopologicalRobustness ↔ MultiClassCertification: compact → bounded → certified radius
-4. NeuralComposition ↔ ResNetLipschitz: composition laws explain polynomial vs exponential growth
-5. IntermediateValue ↔ certified robustness: IVT → adversarial examples exist at boundary
-6. Combinatorial ↔ HammingDistance: pigeonhole → error detection bounds
+### Notable Theorem Chains
+1. GronwallDiscrete → BanachFixedPoint: GD convergence via geometric decay
+2. TopologicalRobustness → MultiClassCertification: compact → bounded → certified radius
+3. NeuralComposition → ResNetLipschitz: composition laws explain polynomial vs exponential growth
+4. IntermediateValue → certified robustness: IVT → adversarial examples exist at boundary
+5. ExponentialBound → ConvexTropical: log(x)≤x−1 gives AM-GM
+6. TropicalSatakeGL3 (Aristotle): extends SatakeIsomorphism from GL₂ to GL₃
 
 ### Diminishing Returns Assessment
 - 30 verified files, ~248 theorems, 0 sorries
