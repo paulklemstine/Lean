@@ -942,12 +942,35 @@ class PiAgentClient:
 
             {"### Previously Proved Theorems (build on these)\\n" + theorem_context if theorem_context else ""}
 
-            ### Expected Deliverables
-            - Complete Lean 4 file with imports, definitions, and proofs
-            - RESEARCH_REPORT.md explaining significance
-            - demo.py with concrete numerical examples
-            - diagram.svg visualizing the main concept
-            - DISCUSSION.md in Scientific American style
+            ### What We Need From You
+
+            You are a world-class mathematician and software engineer. Use your
+            judgment on the best way to organize and present your work.
+
+            The mathematics comes FIRST. Excellent proofs trump everything else.
+            But great work deserves great presentation. We need:
+
+            1. **Formally verified mathematics** in Lean 4
+               - Prove non-trivial theorems with complete proofs
+               - Organize the Lean code however makes mathematical sense
+               - Use doc comments to explain the significance of key results
+
+            2. **Python demos** that bring the mathematics to life
+               - Working code with concrete numerical examples
+               - Visualizations where they add insight
+               - Show the math in action — make it tangible
+
+            3. **A research paper** explaining the discovery
+               - Mathematical significance, connections to existing work
+               - A Scientific American style discussion section that makes
+                 the result accessible to a broad audience
+               - Future directions and applications
+
+            4. **Useful applications** showing real-world relevance
+               - What can people DO with this result?
+               - Code, examples, or demonstrations
+
+            {"Fill existing `sorry` placeholders — do not change theorem statements. But also create demos and write up the significance." if concept.research_mode == "sorry_fill" else "Produce novel, non-trivial theorems with complete Lean 4 proofs. Make it real and useful."}
         """)
 
         # ---- LLM ENRICHMENT ----
