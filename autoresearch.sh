@@ -55,6 +55,7 @@ tracked_files = [
     'FiniteFieldBridge.lean',
     'SubadditiveSequenceBridge.lean',
     'JensenInequalityBridge.lean',
+    'PigeonholeInjectionBridge.lean',
     'ResNetTropicalCertified.lean',
 ]
 
