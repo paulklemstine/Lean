@@ -60,6 +60,7 @@ tracked_files = [
     'DifferentialCalculusBridge.lean',
     'TranscendentalDerivativeBridge.lean',
     'GaloisConnectionBridge.lean',
+    'WellFoundedInductionBridge.lean',
     'ResNetTropicalCertified.lean',
 ]
 
