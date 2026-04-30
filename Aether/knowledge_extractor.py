@@ -442,22 +442,28 @@ Research mode: {concept.research_mode}
         return augmented
 
     def _build_project_dir(self, job: ResearchJob) -> Optional[Path]:
-        """Build a project directory for Aristotle with reference files."""
+        """Build a project directory for Aristotle with the full Lean Catalog.
+
+        Copies every .lean file from the Catalog into the project directory,
+        preserving the domain subdirectory structure (Algebra/, Tropical/, etc.).
+        This gives Aristotle maximum context to build on existing verified theorems.
+        """
         dir_path = self.workspace / f"projects/{job.job_id}"
         dir_path.mkdir(parents=True, exist_ok=True)
 
-        # Copy referenced catalog files for Aristotle's context
-        refs = job.concept.catalog_references or []
-        for ref in refs:
-            src = self.catalog_root / ref
-            if src.exists():
-                dst = dir_path / ref
-                if src.is_dir():
-                    shutil.copytree(src, dst, dirs_exist_ok=True)
-                else:
-                    # Create parent dirs in project
-                    dst.parent.mkdir(parents=True, exist_ok=True)
-                    shutil.copy2(src, dst)
+        # Copy the entire Lean-only Catalog into the project directory (skip .lake)
+        catalog_dst = dir_path / "Catalog"
+        lean_count = 0
+        for src_file in self.catalog_root.rglob("*.lean"):
+            if ".lake" in src_file.parts:
+                continue
+            rel = src_file.relative_to(self.catalog_root)
+            dst_file = catalog_dst / rel
+            dst_file.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(src_file, dst_file)
+            lean_count += 1
+
+        print(f"[Project] Copied {lean_count} .lean files from Catalog")
 
         # Write the prompt as a README for context
         (dir_path / "PROMPT.md").write_text(job.prompt)
