@@ -482,6 +482,10 @@ Research mode: {concept.research_mode}
         """Poll all in-flight jobs and return completed ones."""
         completed = []
         for pid, job in list(self.inflight.items()):
+            if job.status in ("completed", "failed", "integrated", "rejected"):
+                completed.append(job)
+                continue
+                
             try:
                 result = await self.aristotle.poll_project(pid)
                 status = result.get("status", "unknown")
@@ -503,10 +507,6 @@ Research mode: {concept.research_mode}
             except Exception as e:
                 print(f"[Poll] {pid[:8]} error: {e}")
 
-        # Remove completed/failed from inflight
-        for job in completed:
-            if job.project_id in self.inflight:
-                del self.inflight[job.project_id]
         if completed:
             self._save_inflight()
 
@@ -812,15 +812,18 @@ Research mode: {concept.research_mode}
             f"{job.concept.concept_description[:500]}"
         )
         try:
-            self.git.auto_commit()
+            self.git.add(".")
+            self.git.commit(commit_msg)
         except Exception as e:
             print(f"[Commit] Warning: {e}")
 
         # Update Aristotle Loop with reward
-        self.aristotle_loop.update(
+        self.aristotle_loop.record_discovery(
             domain=job.concept.domain,
             mode=job.concept.research_mode,
             reward=job.quality_score,
+            new_theorem_count=job.theorem_count,
+            cross_domain="Bridge" in (job.concept.title or "") or "bridge" in (job.concept.domain or "").lower()
         )
 
         # Record in memory
@@ -946,8 +949,16 @@ Research mode: {concept.research_mode}
                     job = self.evaluate(job)
                     job = self.integrate(job)
                     self.commit(job)
+                    
+                    if job.project_id in self.inflight:
+                        del self.inflight[job.project_id]
                 else:
                     self.failed_count += 1
+                    if job.project_id in self.inflight:
+                        del self.inflight[job.project_id]
+            
+            if completed:
+                self._save_inflight()
 
             # Dispatch new jobs to fill queue
             while len(self.inflight) < max_inflight and self.cycle_count < max_cycles:
