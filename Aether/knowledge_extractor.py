@@ -119,6 +119,8 @@ class KnowledgeExtractor:
         self.inflight: Dict[str, ResearchJob] = {}
         self.completed_count = 0
         self.failed_count = 0
+        
+        self._load_inflight()
 
     def _load_config(self, config_path: Optional[str]) -> Dict[str, Any]:
         if config_path:
@@ -144,6 +146,41 @@ class KnowledgeExtractor:
         elif isinstance(obj, list):
             for item in obj:
                 self._substitute_env_vars(item)
+
+    def _save_inflight(self):
+        """Save the inflight jobs to disk."""
+        path = self.workspace / "inflight_jobs.json"
+        data = {}
+        for pid, job in self.inflight.items():
+            d = {}
+            for k, v in job.__dict__.items():
+                if isinstance(v, Path):
+                    d[k] = str(v)
+                elif hasattr(v, '__dict__'):
+                    d[k] = v.__dict__
+                else:
+                    d[k] = v
+            data[pid] = d
+        path.write_text(json.dumps(data, indent=2))
+
+    def _load_inflight(self):
+        """Load the inflight jobs from disk on startup."""
+        path = self.workspace / "inflight_jobs.json"
+        if not path.exists():
+            return
+        try:
+            data = json.loads(path.read_text())
+            for pid, d in data.items():
+                concept_dict = d.pop('concept', {})
+                concept = ResearchConcept(**concept_dict)
+                d['concept'] = concept
+                if 'project_dir' in d and d['project_dir']:
+                    d['project_dir'] = Path(d['project_dir'])
+                self.inflight[pid] = ResearchJob(**d)
+            if self.inflight:
+                print(f"[Aether] Recovered {len(self.inflight)} inflight jobs from previous run")
+        except Exception as e:
+            print(f"[Aether] Warning: could not load inflight jobs: {e}")
 
     # ==================================================================
     # Phase 1: DISCOVER — Pi decides what to research
@@ -250,6 +287,7 @@ class KnowledgeExtractor:
             job.status = "dispatched"
             job.dispatch_time = time.time()
             self.inflight[project_id] = job
+            self._save_inflight()
             print(f"[Dispatch] Aristotle project: {project_id}")
         except RuntimeError as e:
             if "already running" in str(e) or "cannot be called from a running event loop" in str(e):
@@ -284,6 +322,7 @@ class KnowledgeExtractor:
             job.status = "dispatched"
             job.dispatch_time = time.time()
             self.inflight[project_id] = job
+            self._save_inflight()
             print(f"[Dispatch] Aristotle project: {project_id}")
         except Exception as e:
             job.status = "failed"
@@ -468,6 +507,8 @@ Research mode: {concept.research_mode}
         for job in completed:
             if job.project_id in self.inflight:
                 del self.inflight[job.project_id]
+        if completed:
+            self._save_inflight()
 
         return completed
 
@@ -486,6 +527,32 @@ Research mode: {concept.research_mode}
                 tar_path = asyncio.get_event_loop().run_until_complete(
                     self.aristotle.download_result(job.project_id, Path(tmpdir))
                 )
+                if not tar_path or not tar_path.exists():
+                    job.error_message = "Result download failed"
+                    return job
+
+                # Extract
+                extract_dir = Path(tmpdir) / "extracted"
+                with tarfile.open(tar_path, 'r:gz') as tar:
+                    tar.extractall(extract_dir)
+
+                # Parse the results
+                job = self._parse_aristotle_result(job, extract_dir)
+
+        except Exception as e:
+            job.error_message = f"Extraction failed: {e}"
+
+        return job
+
+    async def extract_async(self, job: ResearchJob) -> ResearchJob:
+        """Async version of extract — safe to call from within an active event loop."""
+        if not job.project_id:
+            job.error_message = "No project_id"
+            return job
+
+        try:
+            with tempfile.TemporaryDirectory() as tmpdir:
+                tar_path = await self.aristotle.download_result(job.project_id, Path(tmpdir))
                 if not tar_path or not tar_path.exists():
                     job.error_message = "Result download failed"
                     return job
@@ -875,7 +942,7 @@ Research mode: {concept.research_mode}
             completed = await self.poll_all()
             for job in completed:
                 if job.status == "completed":
-                    job = self.extract(job)
+                    job = await self.extract_async(job)
                     job = self.evaluate(job)
                     job = self.integrate(job)
                     self.commit(job)

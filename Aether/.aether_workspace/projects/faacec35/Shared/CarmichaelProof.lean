@@ -126,6 +126,4 @@ theorem fib_carmichael_composite (n : ℕ) (hn : 13 ≤ n) (hnp : ¬Nat.Prime n)
     have := primPart_check n (Finset.mem_Icc.mpr ⟨hn, h⟩)
     exact primPart_implies_primitive n (by omega) (this.resolve_left hnp)
   · -- Infinite tail: composite n > 10000
-    -- This is the deep case requiring growth bounds on Fibonacci cyclotomic factors.
-    -- For n > 10000 composite, the primitive part Φ_n ≈ φ^{φ(n)} >> 1.
     sorry

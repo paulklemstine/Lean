@@ -1,13 +1,9 @@
 import Mathlib
-import Speculative.AutoResearch.CarmichaelComposite
 
 /-! # Carmichael's Primitive Divisor Theorem for Fibonacci Numbers
 
 For n ≥ 13, F(n) has a primitive prime divisor: a prime p such that
 p | F(n) but p ∤ F(k) for all 0 < k < n.
-
-This file imports the full proof from `CarmichaelComposite` which handles
-both the prime and composite cases.
 -/
 
 set_option maxHeartbeats 800000
@@ -44,9 +40,8 @@ lemma non_primitive_to_proper_divisor (p n : ℕ) (_hp : Nat.Prime p)
   · calc Nat.gcd n k ≤ k := Nat.gcd_le_right n hk_pos
     _ < n := hk_lt
 
-/-- Carmichael's theorem: For n ≥ 13, F(n) has a primitive prime divisor.
-    This follows from the full proof in `CarmichaelComposite`. -/
+/-- Carmichael's theorem: For n ≥ 13, F(n) has a primitive prime divisor. -/
 theorem fib_primitive_divisor (n : ℕ) (hn : 13 ≤ n) :
     ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
-      ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) :=
-  fib_carmichael n hn
+      ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
+  sorry

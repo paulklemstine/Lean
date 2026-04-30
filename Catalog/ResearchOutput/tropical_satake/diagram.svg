@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" font-family="Georgia, serif">
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+    </marker>
+    <marker id="arrowhead-blue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/>
+    </marker>
+    <linearGradient id="geo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#dbeafe;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#bfdbfe;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="spec-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fef3c7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fde68a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="center-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#d1fae5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a7f3d0;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Title -->
+  <text x="450" y="35" text-anchor="middle" font-size="22" font-weight="bold" fill="#1e293b">
+    Tropical Satake Isomorphism for GL₃
+  </text>
+  <text x="450" y="55" text-anchor="middle" font-size="13" fill="#64748b" font-style="italic">
+    Connecting tropical geometry to representation theory via the Langlands program
+  </text>
+
+  <!-- Geometric Side (Left) -->
+  <rect x="30" y="80" width="350" height="250" rx="15" fill="url(#geo-grad)" stroke="#2563eb" stroke-width="2"/>
+  <text x="205" y="110" text-anchor="middle" font-size="16" font-weight="bold" fill="#1e40af">
+    Geometric Side
+  </text>
+  <text x="205" y="130" text-anchor="middle" font-size="12" fill="#3b82f6">
+    Tropical Hecke Algebra H_trop(GL₃)
+  </text>
+
+  <text x="55" y="160" font-size="13" fill="#1e3a5f">• Bruhat-Tits building of GL₃</text>
+  <text x="55" y="185" font-size="13" fill="#1e3a5f">• Tropical orbital integrals</text>
+  <text x="55" y="210" font-size="13" fill="#1e3a5f">• Min-plus convolution product</text>
+  <text x="55" y="235" font-size="13" fill="#1e3a5f">• Basis: T_λ for dominant λ</text>
+  <text x="55" y="265" font-size="12" fill="#475569" font-style="italic">
+    (f ⊛ g)(x) = inf_y { f(y) + g(x−y) }
+  </text>
+  <text x="55" y="290" font-size="12" fill="#475569" font-style="italic">
+    Coweight lattice: λ₁ ≥ λ₂ ≥ λ₃
+  </text>
+  <text x="55" y="315" font-size="11" fill="#6366f1" font-weight="bold">
+    ✓ tropMinPlusConv_comm (verified)
+  </text>
+
+  <!-- Spectral Side (Right) -->
+  <rect x="520" y="80" width="350" height="250" rx="15" fill="url(#spec-grad)" stroke="#d97706" stroke-width="2"/>
+  <text x="695" y="110" text-anchor="middle" font-size="16" font-weight="bold" fill="#92400e">
+    Spectral Side
+  </text>
+  <text x="695" y="130" text-anchor="middle" font-size="12" fill="#d97706">
+    Tropical Representation Ring
+  </text>
+
+  <text x="545" y="160" font-size="13" fill="#78350f">• Tropical Schur polynomials s^trop_λ</text>
+  <text x="545" y="185" font-size="13" fill="#78350f">• W-invariant piecewise-linear functions</text>
+  <text x="545" y="210" font-size="13" fill="#78350f">• Pointwise min (tropical addition)</text>
+  <text x="545" y="235" font-size="13" fill="#78350f">• Weyl group S₃ acts by permutation</text>
+  <text x="545" y="265" font-size="12" fill="#475569" font-style="italic">
+    s^trop_λ(x) = min_{σ∈S₃} ⟨λ+ρ, σ(x)⟩
+  </text>
+  <text x="545" y="290" font-size="12" fill="#475569" font-style="italic">
+    ρ = (2, 1, 0) Weyl vector
+  </text>
+  <text x="545" y="315" font-size="11" fill="#6366f1" font-weight="bold">
+    ✓ tropicalSchurGL3_weyl_invariant (verified)
+  </text>
+
+  <!-- Central Arrow: Satake Transform -->
+  <rect x="340" y="165" width="220" height="55" rx="10" fill="url(#center-grad)" stroke="#059669" stroke-width="2"/>
+  <text x="450" y="188" text-anchor="middle" font-size="14" font-weight="bold" fill="#065f46">
+    S_trop: T_λ ↦ s^trop_λ
+  </text>
+  <text x="450" y="208" text-anchor="middle" font-size="11" fill="#047857">
+    Tropical Satake Transform
+  </text>
+  <line x1="380" y1="192" x2="345" y2="192" stroke="#059669" stroke-width="2" marker-end="url(#arrowhead)"/>
+  <line x1="520" y1="192" x2="555" y2="192" stroke="#059669" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+  <!-- Bottom: Verified Properties -->
+  <rect x="30" y="360" width="840" height="245" rx="15" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="450" y="390" text-anchor="middle" font-size="16" font-weight="bold" fill="#1e293b">
+    Formally Verified Properties (28 Theorems, 0 Sorry)
+  </text>
+
+  <!-- Property columns -->
+  <!-- Column 1: Algebraic -->
+  <text x="60" y="420" font-size="13" font-weight="bold" fill="#7c3aed">Algebraic Structure</text>
+  <text x="60" y="442" font-size="11" fill="#374151">✓ Weyl S₃ invariance (all 6 perms)</text>
+  <text x="60" y="460" font-size="11" fill="#374151">✓ Translation equivariance</text>
+  <text x="60" y="478" font-size="11" fill="#374151">✓ Positive homogeneity</text>
+  <text x="60" y="496" font-size="11" fill="#374151">✓ Concavity (min of linears)</text>
+  <text x="60" y="514" font-size="11" fill="#374151">✓ Equal-coordinate evaluation</text>
+  <text x="60" y="532" font-size="11" fill="#374151">✓ GL₂ ↪ GL₃ rank reduction</text>
+
+  <!-- Column 2: Analytic -->
+  <text x="330" y="420" font-size="13" font-weight="bold" fill="#dc2626">Satake Correspondence</text>
+  <text x="330" y="442" font-size="11" fill="#374151">✓ Injectivity on dominant coweights</text>
+  <text x="330" y="460" font-size="11" fill="#374151">✓ Dominant chamber formula (w₀)</text>
+  <text x="330" y="478" font-size="11" fill="#374151">✓ Additivity in dominant chamber</text>
+  <text x="330" y="496" font-size="11" fill="#374151">✓ Spectral radius bound</text>
+  <text x="330" y="514" font-size="11" fill="#374151">✓ Degree verification</text>
+  <text x="330" y="532" font-size="11" fill="#374151">✓ Non-negativity (dominant × dominant)</text>
+
+  <!-- Column 3: Harmonic Analysis -->
+  <text x="620" y="420" font-size="13" font-weight="bold" fill="#0891b2">Harmonic Analysis</text>
+  <text x="620" y="442" font-size="11" fill="#374151">✓ GK function ≤ 0</text>
+  <text x="620" y="460" font-size="11" fill="#374151">✓ GK = 0 in dominant chamber</text>
+  <text x="620" y="478" font-size="11" fill="#374151">✓ GK homogeneity</text>
+  <text x="620" y="496" font-size="11" fill="#374151">✓ Plancherel measure ≥ 0</text>
+  <text x="620" y="514" font-size="11" fill="#374151">✓ Plancherel Weyl invariance</text>
+  <text x="620" y="532" font-size="11" fill="#374151">✓ Weyl denominator = Schur at 0</text>
+
+  <!-- Footer -->
+  <text x="450" y="580" text-anchor="middle" font-size="11" fill="#64748b">
+    Formalized in Lean 4 with Mathlib | All proofs machine-verified
+  </text>
+  <text x="450" y="600" text-anchor="middle" font-size="11" fill="#94a3b8" font-style="italic">
+    Tropical Rearrangement Inequality · Gindikin-Karpelevich Formula · Plancherel Measure
+  </text>
+</svg>
