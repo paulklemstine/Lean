@@ -1,86 +1,94 @@
 import Mathlib
 
-/-! # CatalogBuild.Pythagorean.Berggren.BerggrenTree
+/-! # CatalogBuild.Bridges.TropicalLanglands
 
 Auto-generated from theorem catalog database.
-Domain: Pythagorean/Berggren
-Declarations: 11
+Domain: Bridges
+Declarations: 15
 -/
 
-/-- Berggren matrix M₁ preserves the Pythagorean property. -/
-theorem berggren_A_pyth_eq (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
-    (a - 2 * b + 2 * c) ^ 2 + (2 * a - b + 2 * c) ^ 2 =
-    (2 * a - 2 * b + 3 * c) ^ 2 := by
-  nlinarith
+noncomputable section
 
-/-- Berggren matrix M₂ preserves the Pythagorean property. -/
-theorem berggren_B_pyth_eq (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
-    (a + 2 * b + 2 * c) ^ 2 + (2 * a + b + 2 * c) ^ 2 =
-    (2 * a + 2 * b + 3 * c) ^ 2 := by
-  nlinarith
+/-- Tree moves in the Berggren tree -/
+inductive BerggrenMove
+  | L  -- Apply M₁
+  | M  -- Apply M₂
+  | R  -- Apply M₃
+  deriving DecidableEq, Repr
 
-/-- Berggren matrix M₃ preserves the Pythagorean property. -/
-theorem berggren_C_pyth_eq (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
-    (-a + 2 * b + 2 * c) ^ 2 + (-2 * a + b + 2 * c) ^ 2 =
-    (-2 * a + 2 * b + 3 * c) ^ 2 := by
-  nlinarith
+/-- A path in the Berggren tree -/
+abbrev BerggrenPath := List BerggrenMove
 
-/-- The root of the Berggren tree: the triple (3, 4, 5). -/
-def rootTriple : PythTriple where
-  a := 3
-  b := 4
-  c := 5
-  pyth := by norm_num
+/-- Apply a single Berggren move to a triple -/
+def applyMove (m : BerggrenMove) (t : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
+  match m with
+  | .L => (t.1 - 2*t.2.1 + 2*t.2.2,
+           2*t.1 - t.2.1 + 2*t.2.2,
+           2*t.1 - 2*t.2.1 + 3*t.2.2)
+  | .M => (t.1 + 2*t.2.1 + 2*t.2.2,
+           2*t.1 + t.2.1 + 2*t.2.2,
+           2*t.1 + 2*t.2.1 + 3*t.2.2)
+  | .R => (-t.1 + 2*t.2.1 + 2*t.2.2,
+           -2*t.1 + t.2.1 + 2*t.2.2,
+           -2*t.1 + 2*t.2.1 + 3*t.2.2)
 
-/-- The depth of a tree path. -/
-def TreePath.depth : TreePath → ℕ
-  | .root    => 0
-  | .left p  => p.depth + 1
-  | .mid p   => p.depth + 1
-  | .right p => p.depth + 1
+/-- Apply a path (sequence of moves) to a triple -/
+def applyPath (path : BerggrenPath) (t : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
+  path.foldl (fun acc m => applyMove m acc) t
 
-/-- [Section: # CatalogBuild.Pythagorean.Berggren.BerggrenTree
+/-- Every move preserves the quadratic form a² + b² - c² -/
+theorem applyMove_quad_form (m : BerggrenMove) (a b c : ℤ) :
+    let t := applyMove m (a, b, c)
+    t.1^2 + t.2.1^2 - t.2.2^2 = a^2 + b^2 - c^2 := by
+  cases m <;> simp [applyMove] <;> ring
+
+/-- Every move preserves the Pythagorean relation -/
+theorem applyMove_preserves_pyth (m : BerggrenMove) (a b c : ℤ)
+    (h : a^2 + b^2 = c^2) :
+    let t := applyMove m (a, b, c)
+    t.1^2 + t.2.1^2 = t.2.2^2 := by
+  have := applyMove_quad_form m a b c
+  omega
+
+/-- The empty path is the identity -/
+theorem applyPath_nil (t : ℤ × ℤ × ℤ) : applyPath [] t = t := rfl
+
+/-- Concatenation of paths composes the actions -/
+theorem applyPath_append (p q : BerggrenPath) (t : ℤ × ℤ × ℤ) :
+    applyPath (p ++ q) t = applyPath q (applyPath p t) := by
+  simp [applyPath, List.foldl_append]
+
+/-- Under M₂, the hypotenuse strictly increases for positive triples -/
+theorem move_M_hyp_increase (a b c : ℤ)
+    (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
+    c < (applyMove .M (a, b, c)).2.2 := by
+  simp [applyMove]; linarith
+
+/-- The root (3,4,5) children -/
+theorem root_child_L : applyMove .L (3, 4, 5) = (5, 12, 13) := by decide
+
+/-- [Section: # CatalogBuild.Bridges.TropicalLanglands
 Auto-generated from theorem catalog database.
-Domain: Pythagorean/Berggren
-Declarations: 11] -/
-theorem berggrenTripleAux_pyth (p : TreePath) :
-    (berggrenA p) ^ 2 + (berggrenB p) ^ 2 = (berggrenC p) ^ 2 := by
-  -- We can prove this by induction on the tree path.
-  induction p with
-  | root => rfl
-  | left p ih =>
-  convert berggren_A_pyth_eq ( berggrenA p ) ( berggrenB p ) ( berggrenC p ) ih using 1
-  | mid p hp =>
-  convert berggren_B_pyth_eq ( berggrenA p ) ( berggrenB p ) ( berggrenC p ) hp using 1
-  | right p hp => convert
-  berggren_C_pyth_eq ( berggrenA p ) ( berggrenB p ) ( berggrenC p ) hp using 1
+Domain: Bridges
+Declarations: 15] -/
+theorem root_child_M : applyMove .M (3, 4, 5) = (21, 20, 29) := by decide
 
-/-- The set of all triples reachable at depth ≤ d. -/
-def treeTriplesAtDepth (d : ℕ) : Set (ℤ × ℤ × ℤ) :=
-  { t | ∃ p : TreePath, p.depth ≤ d ∧ berggrenTripleAux p = t }
-
-/-- [Section: # CatalogBuild.Pythagorean.Berggren.BerggrenTree
+/-- [Section: # CatalogBuild.Bridges.TropicalLanglands
 Auto-generated from theorem catalog database.
-Domain: Pythagorean/Berggren
-Declarations: 11] -/
-theorem berggren_A_iff (a b c : ℤ) :
-    (a - 2 * b + 2 * c) ^ 2 + (2 * a - b + 2 * c) ^ 2 =
-    (2 * a - 2 * b + 3 * c) ^ 2 ↔ a ^ 2 + b ^ 2 = c ^ 2 := by
-  grind
+Domain: Bridges
+Declarations: 15] -/
+theorem root_child_R : applyMove .R (3, 4, 5) = (15, 8, 17) := by decide
 
-theorem berggren_B_iff (a b c : ℤ) :
-    (a + 2 * b + 2 * c) ^ 2 + (2 * a + b + 2 * c) ^ 2 =
-    (2 * a + 2 * b + 3 * c) ^ 2 ↔ a ^ 2 + b ^ 2 = c ^ 2 := by
-  constructor <;> intro h <;> linarith [ berggren_B_pyth_eq a b c ( by linarith ) ]
+/-- Grandchildren -/
+theorem root_grandchild_LL :
+    applyPath [.L, .L] (3, 4, 5) = (7, 24, 25) := by decide
 
-theorem berggren_C_iff (a b c : ℤ) :
-    (-a + 2 * b + 2 * c) ^ 2 + (-2 * a + b + 2 * c) ^ 2 =
-    (-2 * a + 2 * b + 3 * c) ^ 2 ↔ a ^ 2 + b ^ 2 = c ^ 2 := by
-  constructor <;> intro h <;> linarith [ berggren_C_pyth_eq a b c ( by linarith ) ]
+theorem root_grandchild_LM :
+    applyPath [.L, .M] (3, 4, 5) = (55, 48, 73) := by decide
 
-/-- At depth d, the hypotenuse c of the M₂ child satisfies c' = 2a + 2b + 3c ≥ 3c
-when a, b > 0. This implies exponential growth: max hypotenuse at depth d ≥ 3^d · 5. -/
-theorem hypotenuse_growth (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) :
-    2 * a + 2 * b + 3 * c ≥ 3 * c := by
-  linarith
+theorem pyth_perimeter_even (a b c : ℤ) (h : a^2 + b^2 = c^2)
+    (hparity : (a % 2 = 0 ∧ b % 2 = 1) ∨ (a % 2 = 1 ∧ b % 2 = 0)) :
+    2 ∣ (a + b + c) := by
+  replace h := congr_arg ( · % 4 ) h ; rcases Int.even_or_odd' a with ⟨ k, rfl | rfl ⟩ <;> rcases Int.even_or_odd' b with ⟨ l, rfl | rfl ⟩ <;> rcases Int.even_or_odd' c with ⟨ m, rfl | rfl ⟩ <;> ring_nf at * <;> norm_num [ Int.add_emod, Int.mul_emod ] at *;
 
+end
