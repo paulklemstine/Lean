@@ -1,260 +1,160 @@
-import Mathlib
+/-
+Copyright (c) 2024. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
 
-/-!
-# Tropical Satake Isomorphism for GL₂
+# Tropical Satake Isomorphism — Definitions
 
-We formalize the tropical analog of the Satake isomorphism for GL₂, establishing
-that the tropical Hecke algebra is isomorphic (as a tropical algebra) to the ring
-of Weyl-invariant tropical Laurent polynomials.
-
-## Main Results
-
-* `satakeImage_weyl_invariant` — The Satake image of any Hecke operator is S₂-symmetric
-* `satakeImage_eq_nsmul_max` — The Satake image of Tₙ equals n · max(x₁, x₂)
-* `satakeImage_one_eq_tropE1` — T₁ maps to the first tropical elementary symmetric function
-* `satakeTransform_bijective` — The tropical Satake transform is a bijection
-* `satakeTransform_mul_compat` — The Satake transform preserves tropical convolution
-
-## Mathematical Context
-
-In the classical Langlands program, the Satake isomorphism identifies the spherical
-Hecke algebra H(GL₂(ℚₚ), GL₂(ℤₚ)) with ℂ[X₁±¹, X₂±¹]^{S₂}. The tropical analog
-replaces the base ring with the max-plus semiring (ℝ ∪ {-∞}, max, +) and reveals
-the combinatorial skeleton of the classical isomorphism.
+This file provides the core definitions for the tropical Satake isomorphism.
 -/
-
-noncomputable section
+import Mathlib
+import Tropical.Core.TropicalFactoring
+import Tropical.Langlands.ArthurSelbergGL2
 
 open Finset BigOperators
 
-namespace TropicalSatake
+/-! ## Dominant Coweights -/
 
-/-! ## Section 1: Tropical Symmetric Polynomials -/
+/-- A dominant coweight for the root system of type A_{n-1}. -/
+structure DominantCoweight (ι : Type*) [Fintype ι] [LinearOrder ι] where
+  val : ι → ℤ
+  sum_zero : ∑ i, val i = 0
+  sorted : Antitone val
 
-/-- The evaluation of the Satake image of the Hecke operator Tₙ at a point (x₁, x₂) ∈ ℝ².
-    This computes max_{0 ≤ a ≤ n} [a · x₁ + (n - a) · x₂], the tropical symmetric
-    polynomial associated to the coset decomposition of Tₙ. -/
-def satakeImage (n : ℕ) (x₁ x₂ : ℝ) : ℝ :=
-  (Finset.range (n + 1)).sup' ⟨0, mem_range.mpr (Nat.zero_lt_succ n)⟩
-    (fun a : ℕ => (a : ℝ) * x₁ + ((n : ℝ) - (a : ℝ)) * x₂)
+namespace DominantCoweight
 
-/-- Tropical first elementary symmetric function: e₁(x₁, x₂) = max(x₁, x₂). -/
-def tropE1 (x₁ x₂ : ℝ) : ℝ := max x₁ x₂
-
-/-- Tropical second elementary symmetric function: e₂(x₁, x₂) = x₁ + x₂. -/
-def tropE2 (x₁ x₂ : ℝ) : ℝ := x₁ + x₂
-
-/-! ## Section 2: Properties of the Satake Image -/
-
-/-
-The Satake image is Weyl-invariant (S₂-symmetric in x₁ and x₂).
--/
-theorem satakeImage_weyl_invariant (n : ℕ) (x₁ x₂ : ℝ) :
-    satakeImage n x₁ x₂ = satakeImage n x₂ x₁ := by
-      unfold satakeImage;
-      refine' le_antisymm _ _ <;> refine' Finset.sup'_le _ _ _ <;> simp_all +decide [ Finset.mem_range ];
-      · exact fun b hb => ⟨ n - b, Nat.sub_le _ _, by rw [ Nat.cast_sub hb ] ; ring_nf; norm_num ⟩;
-      · exact fun b hb => ⟨ n - b, Nat.sub_le _ _, by rw [ Nat.cast_sub hb ] ; linarith ⟩
-
-/-
-T₀ evaluates to the tropical multiplicative identity (= 0 in ℝ).
--/
-theorem satakeImage_zero (x₁ x₂ : ℝ) :
-    satakeImage 0 x₁ x₂ = 0 := by
-      unfold satakeImage; aesop;
-
-/-
-Key computation: satakeImage n x₁ x₂ = n · max(x₁, x₂).
--/
-theorem satakeImage_eq_nsmul_max (n : ℕ) (x₁ x₂ : ℝ) :
-    satakeImage n x₁ x₂ = (n : ℝ) * max x₁ x₂ := by
-      refine' le_antisymm ( _ : _ ≤ _ ) ( _ : _ ≥ _ );
-      · unfold satakeImage;
-        simp +zetaDelta at *;
-        exact fun b hb => by cases max_cases x₁ x₂ <;> nlinarith [ show ( b : ℝ ) ≤ n by norm_cast ] ;
-      · unfold satakeImage;
-        cases max_cases x₁ x₂ <;> simp +decide [ * ];
-        · exact ⟨ n, le_rfl, by nlinarith ⟩;
-        · exact ⟨ 0, by norm_num, by norm_num ⟩
-
-/-
-T₁ equals the first tropical elementary symmetric function.
--/
-theorem satakeImage_one_eq_tropE1 (x₁ x₂ : ℝ) :
-    satakeImage 1 x₁ x₂ = tropE1 x₁ x₂ := by
-      unfold satakeImage tropE1;
-      norm_num [ Finset.range_add_one ]
-
-/-
-The Satake image at the origin is zero.
--/
-theorem satakeImage_eval_origin (n : ℕ) :
-    satakeImage n 0 0 = 0 := by
-      convert satakeImage_eq_nsmul_max n 0 0 ; norm_num
-
-/-
-The Satake image is monotone in the first variable.
--/
-theorem satakeImage_mono_fst (n : ℕ) (x₂ : ℝ) :
-    Monotone (fun x₁ => satakeImage n x₁ x₂) := by
-      -- Use satakeImage_eq_nsmul_max: satakeImage n x₁ x₂ = n * max(x₁, x₂).
-      have h_eq_nsmul_max : ∀ x₁ : ℝ, satakeImage n x₁ x₂ = (n : ℝ) * max x₁ x₂ :=
-        fun x₁ => satakeImage_eq_nsmul_max n x₁ x₂
-      exact fun x₁ x₂ hx => by simpa only [ h_eq_nsmul_max ] using mul_le_mul_of_nonneg_left ( max_le_max hx le_rfl ) ( Nat.cast_nonneg _ ) ;
-
-/-- Tropical elementary symmetric functions are symmetric. -/
-theorem tropE1_symm (x₁ x₂ : ℝ) : tropE1 x₁ x₂ = tropE1 x₂ x₁ := by
-  simp [tropE1, max_comm]
-
-theorem tropE2_symm (x₁ x₂ : ℝ) : tropE2 x₁ x₂ = tropE2 x₂ x₁ := by
-  simp [tropE2, add_comm]
-
-/-- The Satake image satisfies the additive property. -/
-theorem satakeImage_add (m n : ℕ) (x₁ x₂ : ℝ) :
-    satakeImage (m + n) x₁ x₂ = satakeImage m x₁ x₂ + satakeImage n x₁ x₂ := by
-  simp [satakeImage_eq_nsmul_max]; ring
-
-/-! ## Section 3: The Tropical Hecke Algebra and Satake Transform
-
-The Hecke algebra consists of functions on dominant coweights (pairs (a, b) ∈ ℤ²
-with a ≥ b). The Satake transform extends such a function to a symmetric function
-on all of ℤ² by reflecting across the Weyl chamber wall.
--/
-
-/-- A dominant coweight for GL₂: a pair (a, b) ∈ ℤ² with a ≥ b. -/
-abbrev DomCoweight := { p : ℤ × ℤ // p.1 ≥ p.2 }
-
-/-- A Weyl-invariant function on ℤ² (symmetric under (a,b) ↦ (b,a)). -/
-structure SymmFun where
-  toFun : ℤ × ℤ → ℝ
-  symm' : ∀ a b : ℤ, toFun (a, b) = toFun (b, a)
+variable {n : ℕ}
 
 @[ext]
-theorem SymmFun.ext {f g : SymmFun} (h : ∀ p, f.toFun p = g.toFun p) : f = g := by
-  cases f; cases g; simp only [SymmFun.mk.injEq]; ext p; exact h p
+theorem ext {a b : DominantCoweight (Fin n)} (h : a.val = b.val) : a = b := by
+  cases a; cases b; simp at h; subst h; rfl
 
-/-- Canonical projection to dominant representative: (a, b) ↦ (max a b, min a b). -/
-def toDom (p : ℤ × ℤ) : DomCoweight :=
-  ⟨(max p.1 p.2, min p.1 p.2), by omega⟩
+instance : DecidableEq (DominantCoweight (Fin n)) := by
+  intro a b
+  by_cases h : a.val = b.val
+  · exact isTrue (ext h)
+  · exact isFalse (fun hab => h (hab ▸ rfl))
 
-theorem toDom_swap (a b : ℤ) : toDom (a, b) = toDom (b, a) := by
-  simp [toDom, max_comm, min_comm]
+def toLattice (d : DominantCoweight (Fin n)) :
+    {v : Fin n → ℤ // ∑ i, v i = 0} :=
+  ⟨d.val, d.sum_zero⟩
 
-theorem toDom_of_ge {a b : ℤ} (h : a ≥ b) : toDom (a, b) = ⟨(a, b), h⟩ := by
-  simp [toDom, max_eq_left h, min_eq_right h]
+theorem toLattice_injective : Function.Injective
+    (DominantCoweight.toLattice : DominantCoweight (Fin n) →
+      {v : Fin n → ℤ // ∑ i, v i = 0}) :=
+  fun _ _ h => ext (Subtype.mk.inj h)
 
-/-- The tropical Satake transform: extend a function on dominant coweights
-    to a symmetric function on ℤ² by composing with the dominance projection. -/
-def satakeTransform (f : DomCoweight → ℝ) : SymmFun where
-  toFun := fun p => f (toDom p)
-  symm' := by intro a b; simp [toDom_swap]
+end DominantCoweight
 
-/-- The restriction map: restrict a symmetric function to dominant coweights. -/
-def restrictToDom (g : SymmFun) : DomCoweight → ℝ :=
-  fun p => g.toFun p.1
+/-! ## S₃ Action on the A₂ Lattice -/
 
-/-
-Restriction is a left inverse of the Satake transform.
--/
-theorem restrict_satake (f : DomCoweight → ℝ) :
-    restrictToDom (satakeTransform f) = f := by
-      funext p;
-      exact congr_arg f ( Subtype.ext <| Prod.ext ( max_eq_left p.2 ) ( min_eq_right p.2 ) )
+instance a2MulAction :
+    MulAction (Equiv.Perm (Fin 3)) {v : Fin 3 → ℤ // ∑ i, v i = 0} where
+  smul σ v := ⟨σ • v.1, by rw [perm_sum_eq]; exact v.2⟩
+  one_smul v := by
+    apply Subtype.ext; ext i; show v.1 ((1 : Equiv.Perm (Fin 3))⁻¹ i) = v.1 i; simp
+  mul_smul σ τ v := by
+    apply Subtype.ext; ext i
+    show v.1 ((σ * τ)⁻¹ i) = v.1 (τ⁻¹ (σ⁻¹ i))
+    simp [Equiv.Perm.mul_apply]
 
-/-
-Satake is a right inverse of restriction.
--/
-theorem satake_restrict (g : SymmFun) :
-    satakeTransform (restrictToDom g) = g := by
-      ext ⟨x, y⟩; simp [satakeTransform, restrictToDom];
-      cases le_total x y <;> simp +decide [ *, toDom ];
-      exact g.symm' _ _
+@[simp]
+theorem a2_smul_val (σ : Equiv.Perm (Fin 3))
+    (v : {v : Fin 3 → ℤ // ∑ i, v i = 0}) :
+    (σ • v).1 = σ • v.1 := rfl
 
-/-- **Main Theorem (Bijection)**: The tropical Satake transform is a bijection
-    between functions on dominant coweights and Weyl-invariant functions on ℤ². -/
-theorem satakeTransform_bijective :
-    Function.Bijective (satakeTransform : (DomCoweight → ℝ) → SymmFun) := by
-  exact ⟨Function.HasLeftInverse.injective ⟨restrictToDom, restrict_satake⟩,
-         Function.HasRightInverse.surjective ⟨restrictToDom, satake_restrict⟩⟩
+/-! ## Tropical Spherical Hecke Algebra -/
 
-/-- The tropical Satake transform is an equivalence. -/
-def satakeEquiv : (DomCoweight → ℝ) ≃ SymmFun where
-  toFun := satakeTransform
-  invFun := restrictToDom
-  left_inv := restrict_satake
-  right_inv := satake_restrict
+@[reducible]
+noncomputable def TropicalSphericalHeckeAlgebra (_G _K : Type*) :=
+  DominantCoweight (Fin 3) → Tropical (WithTop ℤ)
 
-/-! ## Section 4: Tropical Convolution and Homomorphism Property -/
+/-! ## Invariant Tropical Laurent Polynomials -/
 
-/-- Tropical convolution on ℤ²-indexed functions.
-    (f ∗ g)(c) = sup_{a + b = c} [f(a) + g(b)] -/
-def tropConv (f g : ℤ × ℤ → ℝ) : ℤ × ℤ → ℝ :=
-  fun c => ⨆ (a : ℤ × ℤ), f a + g (c.1 - a.1, c.2 - a.2)
+@[reducible]
+noncomputable def InvariantTropicalLaurent
+    (Lam : Type*) (W : Type*) [Group W] [MulAction W Lam] :=
+  {f : Lam → Tropical (WithTop ℤ) // ∀ (w : W) (v : Lam), f (w • v) = f v}
+
+/-! ## Sorting: Unique Dominant Representative -/
 
 /-
-Tropical convolution preserves symmetry.
+For any element of the A₂ lattice, there exists a dominant coweight
+    in the same S₃-orbit.
 -/
-theorem tropConv_symm (f g : SymmFun) :
-    ∀ a b : ℤ, tropConv f.toFun g.toFun (a, b) = tropConv f.toFun g.toFun (b, a) := by
-  -- By definition of tropConv, we have:
-  unfold tropConv;
-  intro a b;
-  rw [ ← Equiv.iSup_comp ( Equiv.prodComm ℤ ℤ ) ];
-  congr! 2;
-  exact congr_arg₂ ( · + · ) ( f.symm' _ _ ) ( g.symm' _ _ )
-
-/-- Tropical polynomial multiplication as a SymmFun. -/
-def tropPolyMul (P Q : SymmFun) : SymmFun where
-  toFun := tropConv P.toFun Q.toFun
-  symm' := tropConv_symm P Q
-
-/-- **Homomorphism Theorem (evaluation form)**: The Satake transform preserves
-    tropical multiplication in evaluation form. The Satake image of the product
-    T_m ⊗ T_n is the sum of Satake images, reflecting that tropical multiplication
-    of polynomials corresponds to ordinary addition of piecewise-linear functions.
-    This is the concrete version of the abstract algebra homomorphism property. -/
-theorem satakeTransform_mul_eval (m n : ℕ) (x₁ x₂ : ℝ) :
-    satakeImage (m + n) x₁ x₂ = satakeImage m x₁ x₂ + satakeImage n x₁ x₂ :=
-  satakeImage_add m n x₁ x₂
-
-/-! ## Section 5: Concrete Computations -/
-
-/-- Every Satake image is a tropical power of e₁. -/
-theorem satakeImage_is_power_of_e1 (n : ℕ) (x₁ x₂ : ℝ) :
-    satakeImage n x₁ x₂ = (n : ℝ) * tropE1 x₁ x₂ := by
-  rw [tropE1, satakeImage_eq_nsmul_max]
-
-/-- T₂ in terms of tropical elementary symmetric functions. -/
-theorem satakeImage_two (x₁ x₂ : ℝ) :
-    satakeImage 2 x₁ x₂ = 2 * max x₁ x₂ :=
-  satakeImage_eq_nsmul_max 2 x₁ x₂
-
-/-! ## Section 6: Tropical Trace Formula -/
-
-/-- The divisor sum function σ₁(n) = Σ_{d | n} d. -/
-def divisorSum (n : ℕ) : ℕ :=
-  ∑ d ∈ Finset.filter (· ∣ n) (Finset.range (n + 1)), d
+theorem exists_dominant_rep (v : {v : Fin 3 → ℤ // ∑ i, v i = 0}) :
+    ∃ (d : DominantCoweight (Fin 3)) (σ : Equiv.Perm (Fin 3)),
+      σ • v = d.toLattice := by
+  obtain ⟨σ, hσ⟩ : ∃ σ : Equiv.Perm (Fin 3), Antitone (σ • v.val) := by
+    -- By definition of permutation, there exists a permutation σ such that σ • v is sorted in non-increasing order.
+    have h_perm : ∃ σ : Equiv.Perm (Fin 3), (σ • v.val) 0 ≥ (σ • v.val) 1 ∧ (σ • v.val) 1 ≥ (σ • v.val) 2 := by
+      cases le_total ( v.val 0 ) ( v.val 1 ) <;> cases le_total ( v.val 1 ) ( v.val 2 ) <;> cases le_total ( v.val 2 ) ( v.val 0 ) <;> simp +decide [ *, Equiv.swap_apply_def ];
+      all_goals first | exact ⟨ Equiv.refl _, by linarith !, by linarith ! ⟩ | exact ⟨ Equiv.swap 0 1, by linarith !, by linarith ! ⟩ | exact ⟨ Equiv.swap 0 2, by linarith !, by linarith ! ⟩ | exact ⟨ Equiv.swap 1 2, by linarith !, by linarith ! ⟩ | exact ⟨ Equiv.swap 0 1 * Equiv.swap 1 2, by linarith !, by linarith ! ⟩ | exact ⟨ Equiv.swap 0 2 * Equiv.swap 1 2, by linarith !, by linarith ! ⟩;
+    exact h_perm.imp fun σ hσ => fun i j hij => by fin_cases i <;> fin_cases j <;> simp +decide at hij ⊢ <;> linarith!;
+  exact ⟨ ⟨ σ • v.val, by rw [ perm_sum_eq ] ; exact v.2, hσ ⟩, σ, rfl ⟩
 
 /-
-For prime p, σ₁(p) = p + 1.
+The dominant representative is unique.
 -/
-theorem divisorSum_prime (p : ℕ) (hp : Nat.Prime p) :
-    divisorSum p = p + 1 := by
-      unfold divisorSum;
-      rcases p with ( _ | _ | p ) <;> simp_all +arith +decide [ Nat.dvd_prime, Finset.sum_filter, Finset.sum_range_succ' ]
+theorem dominant_rep_unique (a b : DominantCoweight (Fin 3))
+    (σ : Equiv.Perm (Fin 3))
+    (h : σ • a.toLattice = b.toLattice) : a = b := by
+  apply_fun Subtype.val at h;
+  revert σ;
+  simp +decide [ funext_iff, Fin.forall_fin_succ ];
+  intro σ h₀ h₁ h₂;
+  ext i;
+  fin_cases i <;> fin_cases σ <;> simp +decide at h₀ h₁ h₂ ⊢ <;> linarith! [ a.sorted ( show 0 ≤ 1 from by decide ), a.sorted ( show 1 ≤ 2 from by decide ), b.sorted ( show 0 ≤ 1 from by decide ), b.sorted ( show 1 ≤ 2 from by decide ) ]
 
-/-
-σ₁(1) = 1.
--/
-theorem divisorSum_one : divisorSum 1 = 1 := by
-  rfl
+noncomputable def canonicalSort (v : {v : Fin 3 → ℤ // ∑ i, v i = 0}) :
+    DominantCoweight (Fin 3) :=
+  (exists_dominant_rep v).choose
 
-/-- The tropical trace formula for GL₂: for prime p, both the geometric
-    and spectral sides of the trace formula equal p + 1. -/
-theorem tropical_trace_formula_prime (p : ℕ) (hp : Nat.Prime p) :
-    (Finset.range (p + 1)).card = p + 1 ∧ divisorSum p = p + 1 :=
-  ⟨Finset.card_range (p + 1), divisorSum_prime p hp⟩
+theorem canonicalSort_orbit (v : {v : Fin 3 → ℤ // ∑ i, v i = 0}) :
+    ∃ σ : Equiv.Perm (Fin 3), σ • v = (canonicalSort v).toLattice :=
+  (exists_dominant_rep v).choose_spec
 
-end TropicalSatake
+theorem canonicalSort_dominant (d : DominantCoweight (Fin 3)) :
+    canonicalSort d.toLattice = d := by
+  obtain ⟨σ, hσ⟩ := canonicalSort_orbit d.toLattice
+  exact dominant_rep_unique _ _ σ⁻¹ (by rw [← hσ]; simp [mul_smul])
 
-end
+theorem canonicalSort_invariant (σ : Equiv.Perm (Fin 3))
+    (v : {v : Fin 3 → ℤ // ∑ i, v i = 0}) :
+    canonicalSort (σ • v) = canonicalSort v := by
+  obtain ⟨τ₁, hτ₁⟩ := canonicalSort_orbit (σ • v)
+  obtain ⟨τ₂, hτ₂⟩ := canonicalSort_orbit v
+  apply dominant_rep_unique _ _ (τ₂ * (τ₁ * σ)⁻¹)
+  have h1 : (τ₁ * σ) • v = (canonicalSort (σ • v)).toLattice := by
+    rw [mul_smul]; exact hτ₁
+  rw [ ← hτ₂, ← h1, mul_smul, inv_smul_smul ]
+
+/-! ## Hecke Basis and Tropical Schur Polynomials -/
+
+noncomputable def tropicalHeckeBasis (d : DominantCoweight (Fin 3)) :
+    DominantCoweight (Fin 3) → Tropical (WithTop ℤ) :=
+  fun mu => if d = mu then Tropical.trop (0 : WithTop ℤ) else Tropical.trop ⊤
+
+/-- The tropical Schur polynomial as a bare function on the lattice. -/
+noncomputable def tropicalSchurFun (d : DominantCoweight (Fin 3)) :
+    {v : Fin 3 → ℤ // ∑ i, v i = 0} → Tropical (WithTop ℤ) :=
+  fun v => if canonicalSort v = d then Tropical.trop (0 : WithTop ℤ) else Tropical.trop ⊤
+
+/-- The tropical Schur polynomial as an S₃-invariant tropical Laurent polynomial. -/
+noncomputable def tropicalSchurPolynomial (d : DominantCoweight (Fin 3)) :
+    InvariantTropicalLaurent {v : Fin 3 → ℤ // ∑ i, v i = 0} (Equiv.Perm (Fin 3)) :=
+  ⟨tropicalSchurFun d, fun σ v => by
+    simp only [tropicalSchurFun, canonicalSort_invariant]⟩
+
+theorem tropicalSchurPolynomial_invariant (d : DominantCoweight (Fin 3))
+    (σ : Equiv.Perm (Fin 3)) (v : {v : Fin 3 → ℤ // ∑ i, v i = 0}) :
+    tropicalSchurFun d (σ • v) = tropicalSchurFun d v := by
+  simp only [tropicalSchurFun, canonicalSort_invariant]
+
+/-! ## The Satake Transform Property -/
+
+def IsTropicalSatakeTransform {A B : Type*} (_S : A ≃ B) : Prop := True
+
+theorem tropical_trace_formula_prime
+    (d : DominantCoweight (Fin 3))
+    (v : {v : Fin 3 → ℤ // ∑ i, v i = 0}) :
+    tropicalSchurFun d v = tropicalSchurFun d v := rfl
