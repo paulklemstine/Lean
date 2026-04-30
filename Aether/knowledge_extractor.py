@@ -826,19 +826,23 @@ Research mode: {concept.research_mode}
             cross_domain="Bridge" in (job.concept.title or "") or "bridge" in (job.concept.domain or "").lower()
         )
 
-        # Record in memory
-        self.memory.record_experiment({
-            "job_id": job.job_id,
-            "cycle": job.cycle_n,
-            "concept_title": job.concept.title,
-            "domain": job.concept.domain,
-            "mode": job.concept.research_mode,
-            "quality_score": job.quality_score,
-            "theorem_count": job.theorem_count,
-            "sorry_count": job.sorry_count,
-            "has_demo": bool(job.result_demo),
-            "has_paper": bool(job.result_paper),
-        })
+        from research_memory import ExperimentRecord
+        import datetime
+        status = "success" if job.quality_score > 0 else "trivial_rejected"
+        proof_quality = "substantial" if job.quality_score >= 0.8 else ("partial" if job.quality_score > 0 else "trivial")
+        
+        record = ExperimentRecord(
+            exp_id=job.job_id,
+            domain=job.concept.domain,
+            concept_title=job.concept.title,
+            concept_description=job.concept.concept_description,
+            status=status,
+            files_produced=job.theorem_count,
+            timestamp=datetime.datetime.now().isoformat(),
+            prompt_text=job.prompt,
+            proof_quality=proof_quality
+        )
+        self.memory.record(record)
 
         # Log to autoresearch
         self.autoresearch.log_result(
