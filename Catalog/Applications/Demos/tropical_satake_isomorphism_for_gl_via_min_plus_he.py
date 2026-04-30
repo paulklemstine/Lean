@@ -1,452 +1,440 @@
-#!/usr/bin/env python3
 """
-Tropical Satake Isomorphism for GL₃ — Interactive Demo
+Tropical Satake Isomorphism for GL₄ — Interactive Demonstration
+===============================================================
 
-This script demonstrates the tropical Satake isomorphism proved in Lean 4:
-the canonical bijection between dominant coweights (parametrizing double cosets
-in the tropical Hecke algebra) and S₃-invariant tropical Schur polynomials
-on the A₂ coweight lattice.
+This script demonstrates the formally verified tropical Satake isomorphism
+for GL₄ with concrete numerical examples and visualizations.
 
-Usage:
-    python demo_tropical_satake.py
+The main theorem states:
+    𝒮(1_{KμK}^{trop})(z) = s_{λ(μ)}^{trop}(z)
+
+where the Satake transform (geometric side) equals the tropical Schur
+polynomial (spectral side).
 """
 
 import itertools
 import numpy as np
-
-try:
-    import matplotlib
-    matplotlib.use('Agg')
-    import matplotlib.pyplot as plt
-    from matplotlib.patches import RegularPolygon
-    from matplotlib.collections import PatchCollection
-    HAS_MATPLOTLIB = True
-except ImportError:
-    HAS_MATPLOTLIB = False
-
+import matplotlib.pyplot as plt
+from matplotlib import cm
+from mpl_toolkits.mplot3d import Axes3D
 
 # ============================================================
-# §1  Core tropical algebra
+# Core Definitions (matching the Lean formalization)
 # ============================================================
 
-class TropicalInt:
-    """Min-plus tropical integer: addition = min, multiplication = +."""
-    def __init__(self, val):
-        self.val = val  # None means +∞ (additive identity / zero)
+def all_permutations(n):
+    """Generate all permutations of {0, 1, ..., n-1}."""
+    return list(itertools.permutations(range(n)))
 
-    def __repr__(self):
-        return "∞" if self.val is None else str(self.val)
+S4 = all_permutations(4)  # All 24 elements of S₄
 
-    def __add__(self, other):
-        """Tropical addition = min."""
-        if self.val is None:
-            return other
-        if other.val is None:
-            return self
-        return TropicalInt(min(self.val, other.val))
-
-    def __mul__(self, other):
-        """Tropical multiplication = +."""
-        if self.val is None or other.val is None:
-            return TropicalInt(None)
-        return TropicalInt(self.val + other.val)
-
-    def __eq__(self, other):
-        return self.val == other.val
-
-
-ZERO = TropicalInt(None)   # additive identity (+∞)
-ONE  = TropicalInt(0)      # multiplicative identity
-
-
-# ============================================================
-# §2  S₃ action and dominant coweights
-# ============================================================
-
-def all_perms_S3():
-    """All 6 permutations of {0,1,2} as tuples."""
-    return list(itertools.permutations(range(3)))
-
-def apply_perm(sigma, v):
-    """σ • v = (v[σ⁻¹(0)], v[σ⁻¹(1)], v[σ⁻¹(2)])."""
-    inv = [0]*3
-    for i, s in enumerate(sigma):
-        inv[s] = i
-    return tuple(v[inv[j]] for j in range(3))
-
-def is_dominant(v):
-    """Check v[0] >= v[1] >= v[2] (weakly decreasing)."""
-    return v[0] >= v[1] >= v[2]
-
-def is_sum_zero(v):
-    return sum(v) == 0
-
-def sort_descending(v):
-    """Return the unique dominant representative of the S₃-orbit of v."""
-    return tuple(sorted(v, reverse=True))
-
-
-# ============================================================
-# §3  Tropical Schur polynomials
-# ============================================================
-
-def tropical_schur(lam, x):
+def tropical_schur_polynomial(nu, z):
     """
-    Tropical Schur polynomial s_λ^trop(x) = min_{σ ∈ S₃} ⟨σ·λ, x⟩.
+    Tropical Schur polynomial: min over S₄ of ∑ᵢ ν(σ(i)) · z(i).
+
+    This is the tropicalization (Maslov dequantization) of the classical
+    monomial symmetric polynomial / Weyl orbit sum.
 
     Parameters
     ----------
-    lam : tuple of ints, dominant coweight (λ₁ ≥ λ₂ ≥ λ₃, sum = 0)
-    x   : tuple of ints, evaluation point in the A₂ lattice
+    nu : array-like of length 4
+        Dominant coweight (weakly decreasing integers).
+    z : array-like of length 4
+        Spectral variables (real numbers).
     """
-    vals = []
-    for sigma in all_perms_S3():
-        sigma_lam = apply_perm(sigma, lam)
-        vals.append(sum(sigma_lam[i] * x[i] for i in range(3)))
-    return min(vals)
+    nu, z = np.asarray(nu, dtype=float), np.asarray(z, dtype=float)
+    return min(sum(nu[sigma[i]] * z[i] for i in range(4)) for sigma in S4)
 
-
-def tropical_schur_indicator(lam, v):
+def basis_double_coset(mu, z):
     """
-    As a formal polynomial (element of the tropical polynomial ring),
-    the tropical Schur polynomial has coefficient trop(0)=1 at each
-    point in the S₃-orbit of λ, and trop(∞)=0 elsewhere.
+    Hecke basis element: min over S₄ of ∑ᵢ μ(i) · z(σ(i)).
 
-    Returns TropicalInt(0) if v is in the orbit of lam, else TropicalInt(None).
+    This represents the tropical indicator of the double coset KμK
+    in the Cartan decomposition G = KAK.
+
+    Parameters
+    ----------
+    mu : array-like of length 4
+        Dominant coweight.
+    z : array-like of length 4
+        Spectral variables.
     """
-    return ONE if sort_descending(v) == lam else ZERO
+    mu, z = np.asarray(mu, dtype=float), np.asarray(z, dtype=float)
+    return min(sum(mu[i] * z[sigma[i]] for i in range(4)) for sigma in S4)
 
+def satake_transform_GL4(f, z):
+    """
+    Tropical Satake transform: min over w ∈ S₄ of f(w · z).
+
+    Symmetrizes f over the Weyl group, implementing the tropical
+    Harish-Chandra homomorphism.
+
+    Parameters
+    ----------
+    f : callable
+        Function on the maximal torus (takes array of length 4).
+    z : array-like of length 4
+        Spectral variables.
+    """
+    z = np.asarray(z, dtype=float)
+    return min(f(np.array([z[w[i]] for i in range(4)])) for w in S4)
+
+def coweight_to_partition(mu):
+    """Identity map: the coweight IS the partition for GL₄."""
+    return np.array(mu, dtype=float)
 
 # ============================================================
-# §4  The Satake isomorphism
+# Verification of the Main Theorem
 # ============================================================
 
-def satake_forward(f_hecke):
-    """
-    Forward Satake map: extends a function on dominant coweights
-    to an S₃-invariant function on the A₂ lattice.
+def verify_isomorphism(mu, z, label=""):
+    """Verify that 𝒮(basisDoubleCoset(μ))(z) = tropicalSchur(μ)(z)."""
+    lhs = satake_transform_GL4(lambda z_: basis_double_coset(mu, z_), z)
+    rhs = tropical_schur_polynomial(coweight_to_partition(mu), z)
+    match = np.isclose(lhs, rhs, atol=1e-10)
+    status = "✓" if match else "✗"
+    print(f"  {status} {label:30s}  LHS = {lhs:10.4f}  RHS = {rhs:10.4f}")
+    return match
 
-    f_hecke : dict { dominant_coweight -> TropicalInt }
-    returns : function A₂-lattice -> TropicalInt
-    """
-    def g(v):
-        d = sort_descending(v)
-        return f_hecke.get(d, ZERO)
-    return g
+print("=" * 70)
+print("TROPICAL SATAKE ISOMORPHISM FOR GL₄ — NUMERICAL VERIFICATION")
+print("=" * 70)
+print()
+print("Theorem: 𝒮(1_{KμK}^{trop})(z) = s_{λ(μ)}^{trop}(z)")
+print()
 
-def satake_inverse(g_invariant, dominant_coweights):
-    """
-    Inverse Satake map: restricts an S₃-invariant function to
-    dominant coweights.
+# Test with various dominant coweights and spectral variables
+test_cases = [
+    # (coweight μ, spectral z, description)
+    ([4, 3, 2, 1], [1.0, 2.0, 3.0, 4.0], "μ=(4,3,2,1), z=(1,2,3,4)"),
+    ([3, 1, 0, -1], [0.5, -0.5, 1.5, -1.0], "μ=(3,1,0,-1), z mixed"),
+    ([5, 5, 2, 2], [1.0, 1.0, 1.0, 1.0], "μ with repeats, z uniform"),
+    ([10, 7, 3, 0], [0.1, 0.2, 0.3, 0.4], "large μ, small z"),
+    ([1, 0, 0, 0], [1.0, 2.0, 3.0, 4.0], "fundamental coweight ω₁"),
+    ([1, 1, 0, 0], [1.0, 2.0, 3.0, 4.0], "fundamental coweight ω₂"),
+    ([1, 1, 1, 0], [1.0, 2.0, 3.0, 4.0], "fundamental coweight ω₃"),
+    ([0, 0, 0, 0], [1.0, 2.0, 3.0, 4.0], "trivial coweight"),
+    ([3, 2, 1, 0], [-1.0, 0.5, 2.0, -0.5], "ρ-shift, mixed z"),
+]
 
-    g_invariant : function A₂-lattice -> TropicalInt
-    dominant_coweights : list of dominant coweight tuples
-    returns : dict { dominant_coweight -> TropicalInt }
-    """
-    return {lam: g_invariant(lam) for lam in dominant_coweights}
+all_pass = True
+print("Verification Results:")
+for mu, z, desc in test_cases:
+    if not verify_isomorphism(mu, z, desc):
+        all_pass = False
 
-
-# ============================================================
-# §5  Verification
-# ============================================================
-
-def verify_isomorphism():
-    """Verify the tropical Satake isomorphism on concrete examples."""
-    print("=" * 60)
-    print("TROPICAL SATAKE ISOMORPHISM FOR GL₃ — VERIFICATION")
-    print("=" * 60)
-
-    # Generate some dominant coweights with sum zero and small entries
-    dominant = []
-    for a in range(-5, 6):
-        for b in range(-5, 6):
-            c = -a - b
-            if a >= b >= c:
-                dominant.append((a, b, c))
-
-    print(f"\nDominant coweights with entries in [-5,5]: {len(dominant)}")
-    print(f"First few: {dominant[:8]}")
-
-    # Test 1: Tropical Schur polynomials are S₃-invariant
-    print("\n--- Test 1: S₃-invariance of tropical Schur polynomials ---")
-    lam = (2, 0, -2)
-    test_points = [(1, 0, -1), (-1, 1, 0), (0, -1, 1), (3, -1, -2)]
-    all_invariant = True
-    for x in test_points:
-        vals = set()
-        for sigma in all_perms_S3():
-            sx = apply_perm(sigma, x)
-            vals.add(tropical_schur(lam, sx))
-        if len(vals) != 1:
-            all_invariant = False
-            print(f"  FAIL at x={x}: values = {vals}")
-    if all_invariant:
-        print(f"  ✓ s^trop_{{(2,0,-2)}} is S₃-invariant at all test points")
-
-    # Test 2: Basis element maps to Schur polynomial
-    print("\n--- Test 2: Hecke basis → Schur polynomial ---")
-    for lam in [(1, 0, -1), (2, -1, -1), (2, 0, -2), (3, 0, -3)]:
-        f_basis = {lam: ONE}
-        g = satake_forward(f_basis)
-
-        match = True
-        # Check on the orbit of lam
-        for sigma in all_perms_S3():
-            v = apply_perm(sigma, lam)
-            if g(v) != ONE:
-                match = False
-        # Check on a non-orbit point
-        non_orbit = sort_descending((lam[0]+1, lam[1], lam[2]-1))
-        if non_orbit != lam:
-            if g(non_orbit) != ZERO:
-                match = False
-
-        status = "✓" if match else "✗"
-        print(f"  {status} S(c_{lam}) = s^trop_{lam}")
-
-    # Test 3: Round-trip (forward then inverse)
-    print("\n--- Test 3: Round-trip S⁻¹ ∘ S = id ---")
-    test_fns = [
-        {(1, 0, -1): TropicalInt(3), (2, -1, -1): TropicalInt(1)},
-        {(0, 0, 0): TropicalInt(0)},
-        {(3, 0, -3): TropicalInt(-2), (1, 0, -1): TropicalInt(5)},
-    ]
-    for f in test_fns:
-        g = satake_forward(f)
-        f_back = satake_inverse(g, list(f.keys()))
-        match = all(f.get(k, ZERO) == f_back.get(k, ZERO) for k in f)
-        status = "✓" if match else "✗"
-        print(f"  {status} Round-trip for f supported on {list(f.keys())}")
-
-    # Test 4: Invariance verification
-    print("\n--- Test 4: Satake image is S₃-invariant ---")
-    f = {(2, 0, -2): TropicalInt(1), (1, 0, -1): TropicalInt(3)}
-    g = satake_forward(f)
-    test_v = [(1, -1, 0), (0, 2, -2), (-1, 0, 1)]
-    all_ok = True
-    for v in test_v:
-        vals = set()
-        for sigma in all_perms_S3():
-            sv = apply_perm(sigma, v)
-            vals.add(g(sv).val)
-        if len(vals) != 1:
-            all_ok = False
-            print(f"  FAIL at v={v}: {vals}")
-    if all_ok:
-        print("  ✓ Image is S₃-invariant at all test points")
-
-    print("\n" + "=" * 60)
-    print("ALL TESTS PASSED — Tropical Satake isomorphism verified!")
-    print("=" * 60)
-
+print()
+if all_pass:
+    print("All tests PASSED ✓")
+else:
+    print("Some tests FAILED ✗")
 
 # ============================================================
-# §6  Visualization
+# Verification of W-invariance
 # ============================================================
 
-def visualize_a2_lattice():
-    """Visualize the A₂ lattice, dominant chamber, and Schur polynomial support."""
-    if not HAS_MATPLOTLIB:
-        print("\nSkipping visualization (matplotlib not available)")
-        return
+print()
+print("=" * 70)
+print("WEYL GROUP (S₄) INVARIANCE VERIFICATION")
+print("=" * 70)
+print()
 
-    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+mu = [4, 3, 1, 0]
+z = [1.0, 2.5, -0.5, 3.0]
+base_val = tropical_schur_polynomial(mu, z)
+print(f"Base: tropicalSchur({mu}, {z}) = {base_val:.4f}")
+print()
 
-    # Convert A₂ lattice point (a,b,c) with a+b+c=0 to 2D coordinates
-    # Using the projection: x = a - c, y = (2b - a - c)/√3
-    def to_2d(v):
-        a, b, c = v
-        x = a - c
-        y = (2*b - a - c) / np.sqrt(3)
-        return x, y
+# Check invariance under a few generators of S₄
+generators = [
+    ([1, 0, 2, 3], "swap(0,1)"),
+    ([0, 2, 1, 3], "swap(1,2)"),
+    ([0, 1, 3, 2], "swap(2,3)"),
+    ([3, 2, 1, 0], "reverse"),
+    ([1, 2, 3, 0], "cyclic shift"),
+]
 
-    # --- Panel 1: A₂ lattice with dominant chamber ---
-    ax = axes[0]
-    ax.set_title("A₂ Coweight Lattice\n& Dominant Chamber", fontsize=13)
+print("W-invariance of tropical Schur polynomial:")
+for perm, name in generators:
+    z_perm = [z[perm[i]] for i in range(4)]
+    val = tropical_schur_polynomial(mu, z_perm)
+    match = np.isclose(val, base_val)
+    print(f"  {'✓' if match else '✗'} {name:20s}: "
+          f"s(z_{{{','.join(str(p) for p in perm)}}}) = {val:.4f}")
 
-    lattice_pts = []
-    for a in range(-4, 5):
-        for b in range(-4, 5):
-            c = -a - b
-            if abs(c) <= 4:
-                lattice_pts.append((a, b, c))
+print()
+print("W-invariance of Hecke basis element:")
+for perm, name in generators:
+    z_perm = [z[perm[i]] for i in range(4)]
+    val = basis_double_coset(mu, z_perm)
+    base_hecke = basis_double_coset(mu, z)
+    match = np.isclose(val, base_hecke)
+    print(f"  {'✓' if match else '✗'} {name:20s}: "
+          f"1_KμK(z_{{{','.join(str(p) for p in perm)}}}) = {val:.4f}")
 
-    for v in lattice_pts:
-        x, y = to_2d(v)
-        color = '#2196F3' if is_dominant(v) else '#BDBDBD'
-        size = 40 if is_dominant(v) else 15
-        ax.scatter(x, y, c=color, s=size, zorder=3)
+# ============================================================
+# Visualization 1: 2D slice of the tropical Schur polynomial
+# ============================================================
 
-    # Draw Weyl chamber walls
-    origin = to_2d((0, 0, 0))
-    wall1_end = to_2d((4, -2, -2))
-    wall2_end = to_2d((2, 2, -4))
-    ax.plot([origin[0], wall1_end[0]], [origin[1], wall1_end[1]],
-            'b-', lw=2, alpha=0.5)
-    ax.plot([origin[0], wall2_end[0]], [origin[1], wall2_end[1]],
-            'b-', lw=2, alpha=0.5)
+print()
+print("=" * 70)
+print("GENERATING VISUALIZATIONS...")
+print("=" * 70)
 
+fig, axes = plt.subplots(2, 2, figsize=(14, 12))
+
+mu_examples = [
+    ([3, 2, 1, 0], "μ = (3,2,1,0) — Weyl vector"),
+    ([4, 2, 1, 0], "μ = (4,2,1,0)"),
+    ([3, 3, 0, 0], "μ = (3,3,0,0) — with repeats"),
+    ([1, 0, 0, 0], "μ = (1,0,0,0) — fundamental"),
+]
+
+for ax, (mu, title) in zip(axes.flat, mu_examples):
+    # Fix z₃ = 0, z₄ = 0, vary z₁ and z₂
+    z1_range = np.linspace(-3, 3, 200)
+    z2_range = np.linspace(-3, 3, 200)
+    Z1, Z2 = np.meshgrid(z1_range, z2_range)
+    V = np.zeros_like(Z1)
+
+    for ii in range(Z1.shape[0]):
+        for jj in range(Z1.shape[1]):
+            z_val = [Z1[ii, jj], Z2[ii, jj], 0.0, 0.0]
+            V[ii, jj] = tropical_schur_polynomial(mu, z_val)
+
+    cf = ax.contourf(Z1, Z2, V, levels=30, cmap='viridis')
+    ax.contour(Z1, Z2, V, levels=15, colors='white', linewidths=0.3, alpha=0.5)
+    plt.colorbar(cf, ax=ax, shrink=0.8)
+    ax.set_xlabel('z₁')
+    ax.set_ylabel('z₂')
+    ax.set_title(title, fontsize=11)
     ax.set_aspect('equal')
-    ax.set_xlabel('$e_1 - e_3$')
-    ax.set_ylabel('$(2e_2 - e_1 - e_3)/\\sqrt{3}$')
-    ax.grid(True, alpha=0.2)
 
-    # --- Panel 2: S₃ orbits ---
-    ax = axes[1]
-    ax.set_title("S₃ Orbits on A₂\n(one color per orbit)", fontsize=13)
-
-    colors_map = {}
-    color_list = ['#E53935', '#43A047', '#1E88E5', '#FB8C00',
-                  '#8E24AA', '#00ACC1', '#D81B60', '#FFB300']
-    cidx = 0
-    for v in lattice_pts:
-        d = sort_descending(v)
-        if d not in colors_map:
-            colors_map[d] = color_list[cidx % len(color_list)]
-            cidx += 1
-
-    for v in lattice_pts:
-        d = sort_descending(v)
-        x, y = to_2d(v)
-        ax.scatter(x, y, c=colors_map[d], s=30, zorder=3, edgecolors='k',
-                   linewidths=0.3)
-
-    ax.set_aspect('equal')
-    ax.set_xlabel('$e_1 - e_3$')
-    ax.grid(True, alpha=0.2)
-
-    # --- Panel 3: Tropical Schur polynomial support ---
-    ax = axes[2]
-    lam = (2, 0, -2)
-    ax.set_title(f"Tropical Schur Polynomial\n$s^{{\\mathrm{{trop}}}}_{{{lam}}}$ support",
-                 fontsize=13)
-
-    for v in lattice_pts:
-        x, y = to_2d(v)
-        if sort_descending(v) == lam:
-            ax.scatter(x, y, c='#E53935', s=80, zorder=3, marker='*',
-                       edgecolors='k', linewidths=0.5)
-        else:
-            ax.scatter(x, y, c='#E0E0E0', s=15, zorder=2)
-
-    # Label orbit points
-    for sigma in all_perms_S3():
-        v = apply_perm(sigma, lam)
-        x, y = to_2d(v)
-        ax.annotate(f'{v}', (x, y), textcoords="offset points",
-                    xytext=(5, 5), fontsize=7, color='#B71C1C')
-
-    ax.set_aspect('equal')
-    ax.set_xlabel('$e_1 - e_3$')
-    ax.grid(True, alpha=0.2)
-
-    plt.tight_layout()
-    plt.savefig('tropical_satake_GL3.png', dpi=150, bbox_inches='tight')
-    print("\n✓ Visualization saved to tropical_satake_GL3.png")
-
-
-def visualize_schur_heatmap():
-    """Visualize tropical Schur polynomial values as a heatmap."""
-    if not HAS_MATPLOTLIB:
-        return
-
-    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
-
-    lams = [(1, 0, -1), (2, 0, -2), (2, -1, -1)]
-
-    for idx, lam in enumerate(lams):
-        ax = axes[idx]
-
-        # Evaluate s^trop_λ(x) on a grid
-        xs = []
-        ys = []
-        vals = []
-        for a in range(-4, 5):
-            for b in range(-4, 5):
-                c = -a - b
-                if abs(c) <= 4:
-                    x = (a, b, c)
-                    v = tropical_schur(lam, x)
-                    x2d = a - c
-                    y2d = (2*b - a - c) / np.sqrt(3)
-                    xs.append(x2d)
-                    ys.append(y2d)
-                    vals.append(v)
-
-        scatter = ax.scatter(xs, ys, c=vals, cmap='viridis_r', s=50,
-                             edgecolors='k', linewidths=0.3)
-        plt.colorbar(scatter, ax=ax, shrink=0.8, label='min-plus value')
-        ax.set_title(f'$s^{{\\mathrm{{trop}}}}_{{{lam}}}(x)$', fontsize=13)
-        ax.set_aspect('equal')
-        ax.grid(True, alpha=0.2)
-
-    plt.tight_layout()
-    plt.savefig('tropical_schur_heatmaps.png', dpi=150, bbox_inches='tight')
-    print("✓ Schur heatmaps saved to tropical_schur_heatmaps.png")
-
+plt.suptitle('Tropical Schur Polynomials for GL₄\n'
+             '(2D slices: z₃ = z₄ = 0)', fontsize=14, fontweight='bold')
+plt.tight_layout()
+plt.savefig('demo/tropical_schur_contours.png', dpi=150, bbox_inches='tight')
+print("  Saved: demo/tropical_schur_contours.png")
+plt.close()
 
 # ============================================================
-# §7  Applications
+# Visualization 2: Satake transform verification heatmap
 # ============================================================
 
-def demo_applications():
-    """Demonstrate practical applications."""
-    print("\n" + "=" * 60)
-    print("APPLICATIONS OF THE TROPICAL SATAKE ISOMORPHISM")
-    print("=" * 60)
+fig, ax = plt.subplots(figsize=(10, 8))
 
-    # Application 1: Tropical convolution via Schur expansion
-    print("\n--- Application 1: Tropical Hecke Convolution ---")
-    print("Computing c_(1,0,-1) ⊗ c_(1,0,-1) in the tropical Hecke algebra")
-    lam = (1, 0, -1)
-    print(f"  s^trop_{lam}(x) = min over S₃ orbit of ⟨σλ, x⟩")
-    for x in [(1, 0, -1), (0, 1, -1), (2, -1, -1)]:
-        v = tropical_schur(lam, x)
-        print(f"    s^trop_{lam}({x}) = {v}")
+mu = [4, 3, 1, 0]
+z1_range = np.linspace(-2, 2, 80)
+z2_range = np.linspace(-2, 2, 80)
+Z1, Z2 = np.meshgrid(z1_range, z2_range)
+Diff = np.zeros_like(Z1)
 
-    # Tropical convolution: min_μ { s_λ(μ) + s_λ(x-μ) }
-    # For the indicator version, this counts if x is in the Minkowski sum of orbits
-    print("\n  Tropical convolution = pointwise min of shifted Schur polys")
+for ii in range(Z1.shape[0]):
+    for jj in range(Z1.shape[1]):
+        z_val = [Z1[ii, jj], Z2[ii, jj], 0.5, -0.5]
+        lhs = satake_transform_GL4(
+            lambda z_: basis_double_coset(mu, z_), z_val)
+        rhs = tropical_schur_polynomial(
+            coweight_to_partition(mu), z_val)
+        Diff[ii, jj] = abs(lhs - rhs)
 
-    # Application 2: Piecewise-linear geometry
-    print("\n--- Application 2: Piecewise-Linear Functions ---")
-    print("  Tropical Schur polynomials are piecewise-linear functions")
-    print("  on ℝ³ (restricted to the hyperplane x₁+x₂+x₃=0)")
-    print("  They form a basis for S₃-invariant PL functions.")
-    print("  This connects to:")
-    print("    • Newton polytopes and tropical geometry")
-    print("    • Convex optimization (min-plus linear algebra)")
-    print("    • Max-plus systems in control theory")
-
-    # Application 3: Representation theory
-    print("\n--- Application 3: Representation Theory ---")
-    print("  The tropical Satake isomorphism is the q→0 limit of")
-    print("  the classical Satake isomorphism for GL₃(F) over a")
-    print("  non-archimedean local field F.")
-    print("  Classical: H(GL₃(F)//GL₃(O)) ≅ ℂ[X₁±¹,X₂±¹,X₃±¹]^S₃")
-    print("  Tropical:  H_trop ≅ (Tropical Laurent polys)^S₃")
-    print()
-    print("  Each dominant coweight λ = (λ₁≥λ₂≥λ₃) with Σλᵢ=0")
-    print("  corresponds to an irreducible representation of GL₃(ℂ)")
-    print("  (or its Langlands dual). Examples:")
-    reps = {
-        (0, 0, 0): "trivial representation",
-        (1, 0, -1): "adjoint representation (dim 8)",
-        (2, -1, -1): "standard representation ∧² (dim 3)",
-        (1, 1, -2): "Sym² standard (dim 6)",
-        (2, 0, -2): "Sym² adjoint (dim 27)",
-    }
-    for lam, name in reps.items():
-        orbit_size = len(set(apply_perm(s, lam) for s in all_perms_S3()))
-        print(f"    λ={lam}: {name}, |S₃·λ|={orbit_size}")
-
+im = ax.imshow(Diff, extent=[-2, 2, -2, 2], origin='lower',
+               cmap='RdYlGn_r', vmin=0, vmax=1e-10)
+plt.colorbar(im, ax=ax, label='|LHS - RHS|')
+ax.set_xlabel('z₁')
+ax.set_ylabel('z₂')
+ax.set_title(f'Tropical Satake Isomorphism Verification\n'
+             f'μ = {mu}, z₃ = 0.5, z₄ = -0.5\n'
+             f'Max difference: {Diff.max():.2e}',
+             fontsize=12)
+plt.tight_layout()
+plt.savefig('demo/satake_verification_heatmap.png', dpi=150, bbox_inches='tight')
+print("  Saved: demo/satake_verification_heatmap.png")
+plt.close()
 
 # ============================================================
-# Main
+# Visualization 3: Piecewise-linear structure
 # ============================================================
 
-if __name__ == "__main__":
-    verify_isomorphism()
-    visualize_a2_lattice()
-    visualize_schur_heatmap()
-    demo_applications()
+fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+
+mu = [3, 2, 1, 0]
+z_fixed = [0.0, 0.0]  # z₃, z₄ fixed
+
+# Plot 1: 1D slice along z₁ (z₂ = z₃ = z₄ = 0)
+z1_vals = np.linspace(-4, 4, 500)
+schur_vals = [tropical_schur_polynomial(mu, [z1, 0, 0, 0]) for z1 in z1_vals]
+hecke_vals = [basis_double_coset(mu, [z1, 0, 0, 0]) for z1 in z1_vals]
+
+axes[0].plot(z1_vals, schur_vals, 'b-', linewidth=2, label='Tropical Schur')
+axes[0].plot(z1_vals, hecke_vals, 'r--', linewidth=2, label='Hecke basis', alpha=0.7)
+axes[0].set_xlabel('z₁')
+axes[0].set_ylabel('Value')
+axes[0].set_title('1D slice: z₂ = z₃ = z₄ = 0')
+axes[0].legend()
+axes[0].grid(True, alpha=0.3)
+
+# Plot 2: Along the diagonal z₁ = z₂ = t, z₃ = z₄ = 0
+t_vals = np.linspace(-3, 3, 500)
+schur_diag = [tropical_schur_polynomial(mu, [t, t, 0, 0]) for t in t_vals]
+hecke_diag = [basis_double_coset(mu, [t, t, 0, 0]) for t in t_vals]
+
+axes[1].plot(t_vals, schur_diag, 'b-', linewidth=2, label='Tropical Schur')
+axes[1].plot(t_vals, hecke_diag, 'r--', linewidth=2, label='Hecke basis', alpha=0.7)
+axes[1].set_xlabel('t (z₁ = z₂ = t)')
+axes[1].set_ylabel('Value')
+axes[1].set_title('Diagonal slice: z₁ = z₂ = t')
+axes[1].legend()
+axes[1].grid(True, alpha=0.3)
+
+# Plot 3: Individual permutation contributions
+axes[2].set_title('Permutation contributions\n(μ = (3,2,1,0), z₂=z₃=z₄=0)')
+z1_fine = np.linspace(-2, 2, 300)
+
+# Show a few representative permutations
+sample_perms = [(0,1,2,3), (3,2,1,0), (1,0,3,2), (2,3,0,1), (0,2,1,3)]
+colors = ['blue', 'red', 'green', 'orange', 'purple']
+
+for perm, color in zip(sample_perms, colors):
+    vals = [sum(mu[perm[i]] * ([z1, 0, 0, 0])[i] for i in range(4))
+            for z1 in z1_fine]
+    axes[2].plot(z1_fine, vals, color=color, alpha=0.4,
+                 label=f'σ={perm}')
+
+# The tropical Schur polynomial (the minimum envelope)
+env = [tropical_schur_polynomial(mu, [z1, 0, 0, 0]) for z1 in z1_fine]
+axes[2].plot(z1_fine, env, 'k-', linewidth=3, label='min (Schur)')
+axes[2].legend(fontsize=7, loc='upper left')
+axes[2].grid(True, alpha=0.3)
+axes[2].set_xlabel('z₁')
+
+plt.suptitle('Piecewise-Linear Structure of Tropical Polynomials',
+             fontsize=13, fontweight='bold')
+plt.tight_layout()
+plt.savefig('demo/piecewise_linear_structure.png', dpi=150, bbox_inches='tight')
+print("  Saved: demo/piecewise_linear_structure.png")
+plt.close()
+
+# ============================================================
+# Visualization 4: Tropical Newton polytope
+# ============================================================
+
+fig = plt.figure(figsize=(10, 8))
+ax = fig.add_subplot(111, projection='3d')
+
+mu = [3, 2, 1, 0]
+
+# The tropical Schur polynomial is piecewise linear, so its
+# "tropical hypersurface" (where the minimum is achieved by
+# at least two permutations) forms a polyhedral complex.
+# Let's visualize the 3D tropical variety by plotting the surface.
+
+z1_range = np.linspace(-2, 2, 60)
+z2_range = np.linspace(-2, 2, 60)
+Z1, Z2 = np.meshgrid(z1_range, z2_range)
+V = np.zeros_like(Z1)
+
+for ii in range(Z1.shape[0]):
+    for jj in range(Z1.shape[1]):
+        V[ii, jj] = tropical_schur_polynomial(mu, [Z1[ii,jj], Z2[ii,jj], 0, 0])
+
+ax.plot_surface(Z1, Z2, V, cmap='coolwarm', alpha=0.8, linewidth=0,
+                antialiased=True)
+ax.set_xlabel('z₁')
+ax.set_ylabel('z₂')
+ax.set_zlabel('s_μ^{trop}(z)')
+ax.set_title(f'Tropical Schur Polynomial Surface\nμ = {mu}, z₃ = z₄ = 0',
+             fontsize=12)
+ax.view_init(elev=25, azim=135)
+
+plt.tight_layout()
+plt.savefig('demo/tropical_surface_3d.png', dpi=150, bbox_inches='tight')
+print("  Saved: demo/tropical_surface_3d.png")
+plt.close()
+
+# ============================================================
+# Application: Tropical Convexity Check
+# ============================================================
+
+print()
+print("=" * 70)
+print("APPLICATION: TROPICAL CONVEXITY OF SCHUR POLYNOMIALS")
+print("=" * 70)
+print()
+
+mu = [4, 3, 1, 0]
+print(f"Testing tropical convexity of s_μ^trop for μ = {mu}")
+print()
+
+# A tropical polynomial is tropically convex if it satisfies:
+# f(min(x,y)) ≤ min(f(x), f(y))  (not generally true)
+# But the Hecke basis / Schur polynomial IS convex in the classical sense
+# (piecewise linear, inf of affine functions = concave, not convex)
+# Actually, inf of linear functions is concave.
+
+np.random.seed(42)
+n_tests = 1000
+concave_violations = 0
+
+for _ in range(n_tests):
+    z_a = np.random.randn(4)
+    z_b = np.random.randn(4)
+    t = np.random.rand()
+    z_mid = t * z_a + (1 - t) * z_b
+
+    f_a = tropical_schur_polynomial(mu, z_a)
+    f_b = tropical_schur_polynomial(mu, z_b)
+    f_mid = tropical_schur_polynomial(mu, z_mid)
+
+    # Concavity: f(t·a + (1-t)·b) ≥ t·f(a) + (1-t)·f(b)
+    if f_mid < t * f_a + (1 - t) * f_b - 1e-10:
+        concave_violations += 1
+
+print(f"Concavity test ({n_tests} random pairs):")
+print(f"  Violations: {concave_violations}")
+print(f"  Result: {'CONCAVE ✓' if concave_violations == 0 else 'NOT CONCAVE ✗'}")
+print()
+print("  (The tropical Schur polynomial is concave because it is")
+print("   the infimum of linear functions — a key structural property)")
+
+# ============================================================
+# Application: Tropical eigenvalue bounds
+# ============================================================
+
+print()
+print("=" * 70)
+print("APPLICATION: TROPICAL SPECTRAL BOUNDS")
+print("=" * 70)
+print()
+
+print("The tropical Satake isomorphism connects:")
+print("  • Geometric side: min-plus convolution on the affine building")
+print("  • Spectral side: tropical Schur polynomials (Weyl orbit sums)")
+print()
+print("This gives explicit bounds on 'tropical eigenvalues' of matrices")
+print("via the piecewise-linear structure of the Schur polynomial.")
+print()
+
+mu = [5, 3, 1, 0]
+z = np.array([1.0, 0.5, -0.5, -1.0])
+
+# The minimum is achieved by some permutation σ*
+vals_by_perm = []
+for sigma in S4:
+    v = sum(mu[sigma[i]] * z[i] for i in range(4))
+    vals_by_perm.append((v, sigma))
+
+vals_by_perm.sort()
+print(f"For μ = {mu}, z = {list(z)}:")
+print(f"  Tropical Schur value = {vals_by_perm[0][0]:.4f}")
+print(f"  Achieving permutation σ* = {vals_by_perm[0][1]}")
+print()
+print("  All permutation values (sorted):")
+for v, sigma in vals_by_perm[:6]:
+    print(f"    σ = {sigma} → ∑ μ(σ(i))·z(i) = {v:.4f}")
+print(f"    ... ({len(vals_by_perm) - 6} more)")
+
+print()
+print("=" * 70)
+print("DEMONSTRATION COMPLETE")
+print("=" * 70)
