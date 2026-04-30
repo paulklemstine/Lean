@@ -846,11 +846,15 @@ Research mode: {concept.research_mode}
 
         # Log to autoresearch
         self.autoresearch.log_result(
-            quality_score=job.quality_score,
+            exp_id=job.job_id,
             concept_title=job.concept.title,
-            domain=job.concept.domain,
-            theorem_count=job.theorem_count,
-            sorry_count=job.sorry_count,
+            concept_domain=job.concept.domain,
+            research_mode=job.concept.research_mode,
+            quality=proof_quality,
+            quality_score=job.quality_score,
+            catalog_references=job.concept.catalog_references or [],
+            prompt_length=len(job.prompt) if job.prompt else 0,
+            files_placed=job.theorem_count,
         )
 
         print(f"[Commit] Cycle #{job.cycle_n} complete: score={job.quality_score:.3f}")
