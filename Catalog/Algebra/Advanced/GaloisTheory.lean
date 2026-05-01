@@ -62,6 +62,3 @@ theorem tower_degree' (F K L : Type*) [Field F] [Field K] [Field L]
 
 theorem complex_over_real_degree' : Module.finrank ℝ ℂ = 2 :=
   Complex.finrank_real_complex
-
-
-

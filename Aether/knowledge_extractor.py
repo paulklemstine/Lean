@@ -774,6 +774,55 @@ Research mode: {concept.research_mode}
         self.completed_count += 1
         return job
 
+    async def cleanup_catalog_async(self, job: ResearchJob) -> ResearchJob:
+        """Run deduplication and use Pi to clean up the specific domain directory."""
+        if job.status != "integrated":
+            return job
+
+        print(f"[Cleanup] Running global deduplication script...")
+        try:
+            # 1. Run global deduplication first to remove byte-for-byte exact copies
+            dedup_script = self.workspace / "Aether/dedup_catalog.py"
+            if dedup_script.exists():
+                await asyncio.to_thread(
+                    subprocess.run, 
+                    ["python3", str(dedup_script)], 
+                    capture_output=True, 
+                    timeout=120
+                )
+            
+            # 2. Use Pi-Agent to semantically clean up the domain directory
+            if job.concept.domain:
+                domain_dir = self.catalog_root / job.concept.domain
+                if domain_dir.exists() and domain_dir.is_dir():
+                    print(f"[Cleanup] Asking Pi to semantically clean up domain: {job.concept.domain}")
+                    prompt = (
+                        "Review the Lean (.lean) files in this directory. Identify any "
+                        "duplicate theorems (same math, different names) or highly fragmented "
+                        "files. Combine them into well-structured, unified files and delete "
+                        "the redundant ones to clean up the catalog."
+                    )
+                    
+                    # Execute the pi CLI in the domain directory
+                    result = await asyncio.to_thread(
+                        subprocess.run,
+                        ["npx", "--yes", "@mariozechner/pi-coding-agent@latest", 
+                         "--model", self.pi.model, 
+                         "-p", prompt],
+                        cwd=str(domain_dir),
+                        capture_output=True,
+                        text=True,
+                        timeout=600
+                    )
+                    if result.returncode == 0:
+                        print(f"[Cleanup] Pi successfully cleaned {job.concept.domain}")
+                    else:
+                        print(f"[Cleanup] Pi cleanup completed with non-zero status.")
+        except Exception as e:
+            print(f"[Cleanup] Warning: {e}")
+            
+        return job
+
     def _split_lean_output(self, lean_source: str, concept: ResearchConcept) -> List[Tuple[str, str]]:
         """Split multi-file Lean output into individual files.
 
@@ -973,6 +1022,7 @@ Research mode: {concept.research_mode}
                     job = await self.extract_async(job)
                     job = self.evaluate(job)
                     job = self.integrate(job)
+                    job = await self.cleanup_catalog_async(job)
                     self.commit(job)
                     
                     if job.project_id in self.inflight:
