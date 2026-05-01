@@ -2,208 +2,166 @@
 """
 Applications of Carmichael's Primitive Divisor Theorem
 
-This module demonstrates practical applications of Fibonacci primitive
-divisor theory in number theory, cryptography, and algorithms.
+This script demonstrates practical applications:
+1. Fibonacci primality certificates
+2. Entry-point-based factorization
+3. LFSR period guarantees
 """
 
-from functools import lru_cache
-import math
+from carmichael_demo import fib, factorise, entry_point, is_primitive, proper_divisors
 
-@lru_cache(maxsize=None)
-def fib(n):
-    if n <= 1:
-        return n
-    a, b = 0, 1
-    for _ in range(2, n + 1):
-        a, b = b, a + b
-    return b
+# ─── Application 1: Primality certificates ────────────────────────────
 
-def prime_factors(n):
-    if n <= 1:
-        return {}
-    factors = {}
-    d = 2
-    while d * d <= n:
-        while n % d == 0:
-            factors[d] = factors.get(d, 0) + 1
-            n //= d
-        d += 1
-    if n > 1:
-        factors[n] = factors.get(n, 0) + 1
-    return factors
-
-def entry_point(p, limit=10000):
-    for k in range(1, limit + 1):
-        if fib(k) % p == 0:
-            return k
-    return None
-
-# ─── Application 1: Fibonacci Primality Certificates ────────────────
-
-def app_primality():
+def app_primality_certificate():
     """
-    APPLICATION: Fibonacci-based primality witnesses
-
-    By Carmichael's theorem, F(n) for n > 12 always has a prime factor
-    that didn't appear in any earlier F(k). This means that for each
-    composite n ≥ 13, there exists a prime p such that the multiplicative
-    order of the golden ratio modulo p is exactly n.
-
-    This provides a NUMBER-THEORETIC CERTIFICATE: if you can exhibit a
-    prime p with α(p) = n, you've proven that n has a specific algebraic
-    property (it's the "Fibonacci period" of p).
+    Carmichael's theorem provides primality certificates:
+    If we find a prime p with z(p) = n (primitive for F(n)),
+    then n must have no proper divisors d > 1 with d | z(p),
+    which constrains the factorization of n.
     """
-    print("=" * 65)
-    print("APPLICATION 1: Fibonacci Primality Certificates")
-    print("=" * 65)
+    print("=" * 70)
+    print("APPLICATION 1: PRIMALITY CERTIFICATES VIA ENTRY POINTS")
+    print("=" * 70)
     print()
-    print("For each n > 12, Carmichael guarantees a prime p with α(p) = n.")
-    print("This prime p serves as a 'witness' for the index n.")
+    print("Key property: z(p) | (p - 1) or z(p) | (p + 1) for p > 5.")
+    print("If z(p) = n, then n | (p ± 1), so p ≡ ±1 (mod n).")
+    print()
+    print("This gives 'primality witnesses': finding a prime p with z(p) = n")
+    print("proves that n divides p-1 or p+1.")
     print()
 
-    print(f"{'n':>4s}  {'Witness prime p':>16s}  {'F(n) mod p':>12s}  {'Entry point':>12s}")
-    print("-" * 50)
+    print(f"{'n':>5} {'Primitive p':>12} {'p mod n':>10} {'p-1 or p+1 div n?':>20}")
+    print("-" * 55)
+
+    for n in [13, 17, 19, 23, 29, 30, 42, 50]:
+        fn = fib(n)
+        factors = factorise(fn)
+        for p in sorted(factors.keys()):
+            if is_primitive(p, n):
+                p_mod_n = p % n
+                div_check = "p-1" if (p - 1) % n == 0 else ("p+1" if (p + 1) % n == 0 else "other")
+                print(f"{n:>5} {p:>12} {p_mod_n:>10} {div_check:>20}")
+                break
+
+# ─── Application 2: Fibonacci factorization ───────────────────────────
+
+def app_factorization():
+    """
+    Carmichael's theorem guarantees that F(n) always has 'new' prime factors
+    not appearing in any F(d) for proper d | n. This can guide factorization:
+    divide out gcd(F(n), F(d)) for proper d | n to isolate the primitive part.
+    """
+    print()
+    print("=" * 70)
+    print("APPLICATION 2: GUIDED FIBONACCI FACTORIZATION")
+    print("=" * 70)
+    print()
+    print("Strategy: compute gcd(F(n), F(d)) for each proper divisor d | n.")
+    print("The remaining 'primitive part' contains only new primes.")
+    print()
+
+    for n in [30, 42, 60]:
+        fn = fib(n)
+        print(f"F({n}) = {fn}")
+        print(f"  Proper divisors of {n}: {proper_divisors(n)}")
+
+        remaining = fn
+        for d in proper_divisors(n):
+            fd = fib(d)
+            if fd > 1:
+                import math
+                g = math.gcd(remaining, fd)
+                while g > 1:
+                    remaining //= g
+                    g = math.gcd(remaining, fd)
+
+        print(f"  After stripping non-primitive factors: {remaining}")
+        if remaining > 1:
+            prim_factors = factorise(remaining)
+            print(f"  Primitive primes: {list(prim_factors.keys())}")
+            for p in prim_factors:
+                print(f"    z({p}) = {entry_point(p)} {'= n ✓' if entry_point(p) == n else '≠ n ✗'}")
+        print()
+
+# ─── Application 3: LFSR period analysis ──────────────────────────────
+
+def app_lfsr():
+    """
+    Linear Feedback Shift Registers (LFSRs) with the Fibonacci feedback
+    polynomial x² - x - 1 over GF(p) have period related to the entry
+    point z(p). Carmichael's theorem guarantees that extending the LFSR
+    always introduces new periodicity.
+    """
+    print("=" * 70)
+    print("APPLICATION 3: LFSR PERIOD GUARANTEES")
+    print("=" * 70)
+    print()
+    print("An LFSR with characteristic polynomial x² - x - 1 over GF(p)")
+    print("has period dividing z(p), the Fibonacci entry point.")
+    print()
+    print("Carmichael's theorem ensures: for n > 12, there exists a prime p")
+    print("whose Fibonacci period z(p) = n exactly. This means the period")
+    print("structure of Fibonacci LFSRs always gains new structure at each step.")
+    print()
+
+    print(f"{'n':>5} {'Primitive p':>12} {'LFSR period z(p)':>18} {'Period = n?':>12}")
+    print("-" * 55)
+
     for n in range(13, 51):
         fn = fib(n)
-        factors = prime_factors(fn)
+        if fn <= 1:
+            continue
+        factors = factorise(fn)
         for p in sorted(factors.keys()):
-            ep = entry_point(p)
-            if ep == n:
-                print(f"{n:4d}  {p:16d}  {fn % p:12d}  {ep:12d}")
+            if is_primitive(p, n):
+                z = entry_point(p)
+                print(f"{n:>5} {p:>12} {z:>18} {'YES ✓' if z == n else 'NO':>12}")
                 break
-    print()
 
-# ─── Application 2: Large Prime Generation ──────────────────────────
-
-def app_large_primes():
-    """
-    APPLICATION: Generating large primes via Fibonacci factorization
-
-    Primitive prime divisors of F(n) tend to be large — often much larger
-    than n itself. For prime n, ALL prime factors of F(n) are primitive,
-    giving a natural source of primes in specific arithmetic progressions.
-
-    Key property: If p is a primitive divisor of F(n), then p ≡ ±1 (mod n)
-    when n is prime and n ≠ 5. This means Fibonacci numbers are a source
-    of primes in specific residue classes.
-    """
-    print("=" * 65)
-    print("APPLICATION 2: Large Prime Generation from Fibonacci Numbers")
-    print("=" * 65)
-    print()
-    print("Primitive primes of F(n) satisfy p ≡ ±1 (mod n) for prime n ≠ 5.")
-    print()
-
-    print(f"{'n (prime)':>10s}  {'Primitive prime p':>18s}  {'p mod n':>8s}  {'p/n ratio':>10s}")
-    print("-" * 55)
-    for n in [13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71]:
-        fn = fib(n)
-        factors = prime_factors(fn)
-        for p in sorted(factors.keys(), reverse=True):
-            ep = entry_point(p)
-            if ep == n:
-                print(f"{n:10d}  {p:18d}  {p % n:8d}  {p/n:10.1f}")
-                break
-    print()
-
-# ─── Application 3: GCD Algorithms ──────────────────────────────────
-
-def app_gcd():
-    """
-    APPLICATION: Fibonacci GCD identity in algorithm design
-
-    The identity gcd(F(m), F(n)) = F(gcd(m,n)) has algorithmic implications:
-    - Computing gcd of Fibonacci numbers reduces to gcd of indices
-    - This gives O(log min(m,n)) time for Fibonacci GCD
-    - Used in analysis of the Euclidean algorithm (Fibonacci numbers are
-      worst-case inputs for the Euclidean algorithm)
-    """
-    print("=" * 65)
-    print("APPLICATION 3: Fibonacci GCD Identity")
-    print("=" * 65)
-    print()
-    print("gcd(F(m), F(n)) = F(gcd(m, n))")
-    print()
-
-    pairs = [(6, 9), (10, 15), (12, 18), (20, 30), (15, 25), (14, 21)]
-    print(f"{'m':>4s}  {'n':>4s}  {'gcd(m,n)':>8s}  {'F(m)':>10s}  {'F(n)':>10s}  "
-          f"{'gcd(F(m),F(n))':>15s}  {'F(gcd(m,n))':>12s}  {'Match':>6s}")
-    print("-" * 80)
-    for m, n in pairs:
-        g = math.gcd(m, n)
-        fm, fn, fg = fib(m), fib(n), fib(g)
-        gcd_fib = math.gcd(fm, fn)
-        match = "✓" if gcd_fib == fg else "✗"
-        print(f"{m:4d}  {n:4d}  {g:8d}  {fm:10d}  {fn:10d}  "
-              f"{gcd_fib:15d}  {fg:12d}  {match:>6s}")
-    print()
-
-# ─── Application 4: Cryptographic Hardness ───────────────────────────
-
-def app_crypto():
-    """
-    APPLICATION: Implications for Fibonacci-based cryptographic constructions
-
-    The existence of primitive divisors constrains the algebraic structure
-    of Fibonacci numbers modulo primes. This has implications for:
-
-    1. The Pisano period π(p): the period of F(n) mod p.
-       Carmichael's theorem ensures that for each n > 12, there exist
-       primes with Pisano period exactly 2n (or n, depending on conditions).
-
-    2. Discrete logarithm in Fibonacci groups:
-       The group Z/pZ under "Fibonacci multiplication" has order related
-       to α(p). Primitive divisors ensure diverse group structures.
-    """
-    print("=" * 65)
-    print("APPLICATION 4: Pisano Periods and Fibonacci Cryptography")
-    print("=" * 65)
-    print()
-
-    def pisano_period(p):
-        """Compute the Pisano period π(p) = period of F(n) mod p."""
-        prev, curr = 0, 1
-        for i in range(1, p * p + 1):
-            prev, curr = curr, (prev + curr) % p
-            if prev == 0 and curr == 1:
-                return i
-        return None
-
-    print("Pisano periods π(p) for small primes:")
-    print(f"{'p':>5s}  {'α(p)':>5s}  {'π(p)':>6s}  {'π(p)/α(p)':>10s}")
-    print("-" * 35)
-    for p in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47,
-              53, 59, 61, 67, 71, 73, 79, 83, 89, 97]:
-        ep = entry_point(p)
-        pp = pisano_period(p)
-        if ep and pp:
-            print(f"{p:5d}  {ep:5d}  {pp:6d}  {pp/ep:10.0f}")
-    print()
-    print("Note: π(p) is always a multiple of α(p), and π(p)/α(p) ∈ {1, 2, 4}")
-    print("(a consequence of the structure of the Fibonacci group mod p).")
-    print()
+# ─── Main ──────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    app_primality()
-    app_large_primes()
-    app_gcd()
-    app_crypto()
+    app_primality_certificate()
+    app_factorization()
+    app_lfsr()
+
+    print()
+    print("=" * 70)
+    print("SUMMARY OF APPLICATIONS")
+    print("=" * 70)
+    print()
+    print("Carmichael's primitive divisor theorem is a workhorse result that:")
+    print()
+    print("1. PRIMALITY: Provides certificates that n divides p±1 for specific p")
+    print("2. FACTORING: Guides factorization by isolating 'new' prime content")
+    print("3. CRYPTO:    Ensures LFSR periods gain genuinely new structure")
+    print("4. ALGEBRA:   Connects to cyclotomic polynomials and Galois theory")
+    print()
+    print("The formal verification in Lean 4 ensures these applications rest")
+    print("on machine-checked mathematical foundations.")
 
 
 #!/usr/bin/env python3
 """
-Carmichael's Primitive Divisor Theorem — Interactive Demonstration
+Carmichael's Primitive Divisor Theorem — Interactive Demo
 
-Carmichael's theorem (1913): Every Fibonacci number F(n) with n > 12
-has at least one prime factor that does not divide any earlier Fibonacci
-number F(k) for 0 < k < n.
+For every Fibonacci number F(n) with n > 12, there exists at least one
+prime p that divides F(n) but does not divide F(k) for any 0 < k < n.
+Such a prime is called a "primitive prime divisor."
+
+This script demonstrates the theorem with concrete numerical examples,
+computes entry points, and visualizes the structure.
 """
 
 import math
+from collections import defaultdict
 from functools import lru_cache
+
+# ─── Fibonacci computation ────────────────────────────────────────────
 
 @lru_cache(maxsize=None)
 def fib(n):
+    """Compute the n-th Fibonacci number (F(0)=0, F(1)=1)."""
     if n <= 1:
         return n
     a, b = 0, 1
@@ -211,7 +169,10 @@ def fib(n):
         a, b = b, a + b
     return b
 
-def prime_factors(n):
+# ─── Factorisation & entry points ─────────────────────────────────────
+
+def factorise(n):
+    """Return the prime factorisation of n as a dict {p: e}."""
     if n <= 1:
         return {}
     factors = {}
@@ -225,71 +186,243 @@ def prime_factors(n):
         factors[n] = factors.get(n, 0) + 1
     return factors
 
-def entry_point(p, limit=10000):
-    for k in range(1, limit + 1):
+def entry_point(p):
+    """
+    Compute the Fibonacci entry point z(p): the smallest k > 0 with p | F(k).
+    Also called the rank of apparition or alpha(p).
+    """
+    if p <= 1:
+        return 0
+    for k in range(1, p * p + 2):
         if fib(k) % p == 0:
             return k
-    return None
+    return -1  # Should not happen for primes
 
-def primitive_primes(n):
-    fn = fib(n)
-    if fn <= 1:
-        return []
-    return [p for p in prime_factors(fn) if entry_point(p) == n]
+def is_primitive(p, n):
+    """Check if p is a primitive prime divisor of F(n)."""
+    if fib(n) % p != 0:
+        return False
+    return entry_point(p) == n
 
-def v_p(n, p):
-    if n == 0:
-        return float('inf')
-    v = 0
-    while n % p == 0:
-        v += 1
-        n //= p
-    return v
+def proper_divisors(n):
+    """Return the list of proper divisors of n (0 < d < n, d | n)."""
+    divs = []
+    for d in range(1, n):
+        if n % d == 0:
+            divs.append(d)
+    return divs
 
-def demo_theorem():
+# ─── Primitive part computation ────────────────────────────────────────
+
+def primitive_part(n):
+    """
+    Compute the primitive part Ψ(n) of F(n).
+
+    Ψ(n) = ∏_{d | n} F(d)^{μ(n/d)}
+
+    where μ is the Möbius function. Any prime dividing Ψ(n) is a
+    primitive prime divisor of F(n).
+    """
+    from sympy import mobius, divisors as sym_divisors
+    from fractions import Fraction
+
+    result = Fraction(1)
+    for d in sym_divisors(n):
+        mu = mobius(n // d)
+        if mu == 1:
+            result *= fib(d)
+        elif mu == -1:
+            if fib(d) == 0:
+                continue
+            result /= fib(d)
+    return int(result)
+
+# ─── Demo 1: Show primitive prime divisors for small n ─────────────────
+
+def demo_primitive_divisors():
     print("=" * 70)
-    print("CARMICHAEL'S PRIMITIVE DIVISOR THEOREM (1913)")
+    print("CARMICHAEL'S PRIMITIVE DIVISOR THEOREM — DEMONSTRATION")
     print("=" * 70)
     print()
-    print("Exceptions (F(n) has NO primitive prime divisor):")
-    for n in [1, 2, 6, 12]:
+    print("For n > 12, F(n) always has at least one 'primitive' prime divisor:")
+    print("a prime p | F(n) such that p does not divide F(k) for any 0 < k < n.")
+    print()
+
+    print(f"{'n':>4} {'F(n)':>12} {'Factorisation':>30} {'Primitive primes':>20} {'z(p)':>10}")
+    print("-" * 80)
+
+    for n in range(1, 31):
         fn = fib(n)
-        prims = primitive_primes(n)
-        print(f"  F({n}) = {fn}, primes: {list(prime_factors(fn).keys())}, "
-              f"primitive: {prims if prims else 'NONE'}")
+        if fn <= 1:
+            print(f"{n:>4} {fn:>12} {'—':>30} {'—':>20}")
+            continue
+
+        factors = factorise(fn)
+        fact_str = " · ".join(f"{p}^{e}" if e > 1 else str(p) for p, e in sorted(factors.items()))
+
+        prims = []
+        for p in factors:
+            if is_primitive(p, n):
+                prims.append(p)
+
+        prim_str = ", ".join(str(p) for p in prims) if prims else "NONE"
+        z_str = ", ".join(str(entry_point(p)) for p in prims) if prims else "—"
+
+        marker = " ✓" if n > 12 and prims else (" ✗ (n≤12)" if n <= 12 and not prims else "")
+        print(f"{n:>4} {fn:>12} {fact_str:>30} {prim_str:>20} {z_str:>10}{marker}")
+
     print()
-    print("Verification for n = 13..40:")
-    for n in range(13, 41):
+    print("Note: n = 1, 2, 6, 12 are the ONLY indices without primitive primes.")
+    print("For n > 12, Carmichael's theorem guarantees at least one exists.")
+
+# ─── Demo 2: Entry point distribution ──────────────────────────────────
+
+def demo_entry_points():
+    print()
+    print("=" * 70)
+    print("ENTRY POINTS (RANK OF APPARITION)")
+    print("=" * 70)
+    print()
+    print("The entry point z(p) is the smallest k > 0 with p | F(k).")
+    print("Key property: p | F(n) ⟺ z(p) | n")
+    print()
+
+    print(f"{'p':>5} {'z(p)':>6} {'F(z(p))':>12} {'z(p) divides':>30}")
+    print("-" * 60)
+
+    for p in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47,
+              53, 59, 61, 67, 71, 73, 79, 83, 89, 97]:
+        z = entry_point(p)
+        fz = fib(z)
+
+        # Find which F(n) for n ≤ 50 are divisible by p
+        divisible = [n for n in range(1, 51) if fib(n) % p == 0]
+        div_str = ", ".join(str(n) for n in divisible[:8])
+        if len(divisible) > 8:
+            div_str += ", ..."
+
+        print(f"{p:>5} {z:>6} {fz:>12} {div_str:>30}")
+
+# ─── Demo 3: Primitive part growth ─────────────────────────────────────
+
+def demo_primitive_part_growth():
+    print()
+    print("=" * 70)
+    print("PRIMITIVE PART Ψ(n) — GROWTH DEMONSTRATION")
+    print("=" * 70)
+    print()
+    print("Ψ(n) = ∏_{d|n} F(d)^{μ(n/d)} captures the 'new' prime content")
+    print("that appears at index n for the first time.")
+    print()
+    print("For composite n > 12: Ψ(n) > 1 (Carmichael's theorem)")
+    print("Approximate size: Ψ(n) ≈ φ^{φ(n)} where φ = golden ratio")
+    print()
+
+    try:
+        from sympy import totient
+        phi_golden = (1 + math.sqrt(5)) / 2
+
+        print(f"{'n':>5} {'composite?':>10} {'Ψ(n)':>15} {'φ(n)':>6} {'≈ φ^φ(n)':>12} {'Ψ(n)/φ^φ(n)':>12}")
+        print("-" * 70)
+
+        for n in range(2, 51):
+            is_comp = n > 1 and not all(n % i != 0 for i in range(2, n))
+            comp_str = "composite" if is_comp else "prime" if n > 1 else ""
+
+            try:
+                psi = primitive_part(n)
+            except Exception:
+                psi = None
+
+            tot = int(totient(n))
+            approx = phi_golden ** tot
+
+            if psi is not None and psi > 0:
+                ratio = psi / approx if approx > 0 else float('inf')
+                print(f"{n:>5} {comp_str:>10} {psi:>15} {tot:>6} {approx:>12.1f} {ratio:>12.4f}")
+            else:
+                print(f"{n:>5} {comp_str:>10} {'N/A':>15} {tot:>6}")
+    except ImportError:
+        print("(Install sympy for primitive part computation: pip install sympy)")
+
+# ─── Demo 4: Verification for larger n ────────────────────────────────
+
+def demo_large_verification():
+    print()
+    print("=" * 70)
+    print("VERIFICATION FOR LARGER INDICES")
+    print("=" * 70)
+    print()
+    print("Checking Carmichael's theorem for composite n up to 200:")
+    print()
+
+    failures = []
+    successes = 0
+
+    for n in range(14, 201):
+        # Skip primes
+        if all(n % i != 0 for i in range(2, int(n**0.5) + 1)):
+            continue
+
         fn = fib(n)
-        prims = primitive_primes(n)
-        print(f"  F({n:2d}) = {fn:>12d}  primitive primes: {prims}")
+        if fn <= 1:
+            continue
+
+        factors = factorise(fn)
+        has_primitive = False
+        for p in factors:
+            if is_primitive(p, n):
+                has_primitive = True
+                break
+
+        if has_primitive:
+            successes += 1
+        else:
+            failures.append(n)
+
+    print(f"  Composite indices checked: {successes + len(failures)}")
+    print(f"  All have primitive prime divisors: {'YES ✓' if not failures else 'NO ✗'}")
+    if failures:
+        print(f"  Failures at: {failures}")
     print()
 
-def demo_wall():
-    print("=" * 70)
-    print("WALL'S THEOREM (1960): v_p(F(mk)) = v_p(F(m)) + v_p(k)")
-    print("=" * 70)
-    for p, m in [(5, 5), (3, 4), (7, 8)]:
-        print(f"\np = {p}, α(p) = {m}:")
-        for k in range(1, 11):
-            actual = v_p(fib(m * k), p)
-            predicted = v_p(fib(m), p) + v_p(k, p)
-            print(f"  k={k:2d}: v_{p}(F({m*k:3d})) = {actual} "
-                  f"= v_{p}(F({m})) + v_{p}({k}) = {predicted}  "
-                  f"{'✓' if actual == predicted else '✗'}")
+    # Show a few specific examples
+    print("Selected examples:")
+    print(f"{'n':>5} {'F(n) digits':>12} {'Primitive prime':>15} {'z(p)':>6}")
+    print("-" * 45)
 
-def demo_growth():
-    print("\n" + "=" * 70)
-    print("FIBONACCI MULTIPLICATION INEQUALITY: F(ab) > F(a)·F(b)")
-    print("=" * 70)
-    for a in [2, 3, 5, 7]:
-        for b in [a, a + 1, a + 3]:
-            fa, fb, fab = fib(a), fib(b), fib(a * b)
-            ratio = fab / (fa * fb) if fa * fb > 0 else float('inf')
-            print(f"  F({a}·{b}) = F({a*b}) = {fab}, "
-                  f"F({a})·F({b}) = {fa*fb}, ratio = {ratio:.2f}")
+    for n in [30, 42, 100, 144, 200]:
+        fn = fib(n)
+        factors = factorise(fn)
+        for p in sorted(factors.keys()):
+            if is_primitive(p, n):
+                print(f"{n:>5} {len(str(fn)):>12} {p:>15} {entry_point(p):>6}")
+                break
+
+# ─── Main ──────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    demo_theorem()
-    demo_wall()
-    demo_growth()
+    demo_primitive_divisors()
+    demo_entry_points()
+    demo_large_verification()
+
+    # Try primitive part demo (requires sympy)
+    try:
+        demo_primitive_part_growth()
+    except Exception as e:
+        print(f"\n(Primitive part demo skipped: {e})")
+
+    print()
+    print("=" * 70)
+    print("CONCLUSION")
+    print("=" * 70)
+    print()
+    print("Carmichael's theorem (1913) states that for every n > 12,")
+    print("F(n) has at least one primitive prime divisor.")
+    print()
+    print("This is one of the fundamental results in the arithmetic")
+    print("of Fibonacci numbers, with applications in:")
+    print("  • Primality testing and factorisation algorithms")
+    print("  • Algebraic number theory (cyclotomic fields)")
+    print("  • Cryptographic key generation")
+    print("  • Coding theory (LFSR sequence analysis)")
