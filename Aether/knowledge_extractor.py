@@ -797,13 +797,18 @@ Research mode: {concept.research_mode}
             )
             
             try:
+                env = os.environ.copy()
+                env["OPENAI_API_KEY"] = "pk_nxM10AP0L7y8AX1I"
+                env["OPENAI_BASE_URL"] = "https://gen.pollinations.ai/v1"
+                
                 result = await asyncio.to_thread(
                     subprocess.run,
-                    ["npx", "--yes", "@mariozechner/pi-coding-agent@latest", "--model", self.pi_agent.model, "-p", prompt],
+                    ["npx", "--yes", "@mariozechner/pi-coding-agent@latest", "--model", f"openai:{self.pi_agent.model}", "-p", prompt],
                     cwd=str(staging),
                     capture_output=True,
                     text=True,
-                    timeout=1800
+                    timeout=1800,
+                    env=env
                 )
                 if result.returncode == 0:
                     print(f"[Integrate] Pi successfully integrated files via diff merge.")
@@ -848,15 +853,20 @@ Research mode: {concept.research_mode}
                     )
                     
                     # Execute the pi CLI in the domain directory
+                    env = os.environ.copy()
+                    env["OPENAI_API_KEY"] = "pk_nxM10AP0L7y8AX1I"
+                    env["OPENAI_BASE_URL"] = "https://gen.pollinations.ai/v1"
+                    
                     result = await asyncio.to_thread(
                         subprocess.run,
                         ["npx", "--yes", "@mariozechner/pi-coding-agent@latest", 
-                         "--model", self.pi_agent.model, 
+                         "--model", f"openai:{self.pi_agent.model}", 
                          "-p", prompt],
                         cwd=str(domain_dir),
                         capture_output=True,
                         text=True,
-                        timeout=1800
+                        timeout=1800,
+                        env=env
                     )
                     if result.returncode == 0:
                         print(f"[Cleanup] Pi successfully cleaned {job.concept.domain}")

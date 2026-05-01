@@ -314,7 +314,7 @@ class PiAgentClient:
 
     def __init__(
         self,
-        model: str = "glm-5.1:cloud",
+        model: str = "glm",
         memory: Optional[ResearchMemory] = None,
         catalog_root: Optional[Path] = None,
         timeout: int = 300,
@@ -334,7 +334,7 @@ class PiAgentClient:
             self.catalog_analyzer = CatalogAnalyzer(self.catalog_root)
 
     def _call_ollama(self, system: str, user: str, timeout: Optional[int] = None) -> str:
-        """Call the pi coding agent CLI instead of HTTP Ollama.
+        """Call the Pollinations API directly (replaces pi CLI).
         
         Args:
             system: System prompt
@@ -342,69 +342,48 @@ class PiAgentClient:
             timeout: Override timeout in seconds (uses self.timeout if None)
         """
         request_timeout = timeout or self.timeout
-
-        # Combine system and user prompt
-        full_prompt = f"SYSTEM INSTRUCTIONS:\n{system}\n\nUSER PROMPT:\n{user}"
+        print(f"[Pi-Agent] → calling Pollinations API (model={self.model}, timeout={request_timeout}s)")
         
-        import subprocess
-        import tempfile
-        import os
+        headers = {
+            "Authorization": "Bearer pk_nxM10AP0L7y8AX1I",
+            "Content-Type": "application/json"
+        }
         
-        print(f"[Pi-Agent] → calling pi CLI (model={self.model}, timeout={request_timeout}s)")
+        payload = {
+            "model": self.model,
+            "messages": [
+                {"role": "system", "content": system},
+                {"role": "user", "content": user}
+            ],
+            "temperature": 0.85,
+            "top_p": 0.92
+        }
         
         try:
-            # We use a temporary file to avoid 'Argument list too long' for large prompts
-            with tempfile.NamedTemporaryFile(mode='w', suffix='.md', delete=False, encoding='utf-8') as f:
-                f.write(full_prompt)
-                temp_path = f.name
-                
-            cmd = [
-                "pi",
-                "--model", self.model,
-                "-nc", "--no-themes",
-                f"@{temp_path}",
-                "-p", "Please follow the instructions in the attached document."
-            ]
-            
-            # Make sure Node 20 / pi is in the PATH if we installed it locally
-            env = os.environ.copy()
-            node_bin = os.path.expanduser("~/node-v20.12.2-linux-x64/bin")
-            if os.path.exists(node_bin) and node_bin not in env.get("PATH", ""):
-                env["PATH"] = f"{node_bin}:{env.get('PATH', '')}"
-
-            result = subprocess.run(
-                cmd,
-                capture_output=True,
-                text=True,
-                timeout=request_timeout,
-                check=False,
-                env=env
+            response = self.client.post(
+                "https://gen.pollinations.ai/v1/chat/completions",
+                headers=headers,
+                json=payload,
+                timeout=request_timeout
             )
-            
-            # Clean up temp file
-            try:
-                os.unlink(temp_path)
-            except:
-                pass
-                
-            if result.returncode != 0:
-                print(f"[Pi-Agent] ← pi CLI error: {result.stderr}")
-                return f"[PI_ERROR: {result.stderr}]"
-                
-            content = result.stdout
+            response.raise_for_status()
+            content = response.json()["choices"][0]["message"]["content"]
             
             # Log the response
             response_preview = content[:500].replace('\n', ' ')
-            print(f"[Pi-Agent] ← pi response ({len(content)} chars)")
+            print(f"[Pi-Agent] ← response ({len(content)} chars)")
             print(f"[Pi-Agent]   {response_preview}...")
             
             return content
-        except subprocess.TimeoutExpired:
-            print(f"[Pi-Agent] ← pi CLI TIMEOUT after {request_timeout}s")
-            return f"[OLLAMA_TIMEOUT: Request timed out after {request_timeout}s]"
+        except httpx.TimeoutException:
+            print(f"[Pi-Agent] ← API TIMEOUT after {request_timeout}s")
+            return f"[API_TIMEOUT: Request timed out after {request_timeout}s]"
         except Exception as e:
-            print(f"[Pi-Agent] ← pi CLI exception: {type(e).__name__}: {e}")
-            return f"[OLLAMA_ERROR: {e}]"
+            err_msg = str(e)
+            if hasattr(e, 'response') and e.response:
+                err_msg += f" - {e.response.text}"
+            print(f"[Pi-Agent] ← API exception: {type(e).__name__}: {err_msg}")
+            return f"[API_ERROR: {err_msg}]"
 
     def _parse_json_response(self, raw: str) -> Optional[Dict[str, Any]]:
         """Try to extract JSON from an LLM response.
