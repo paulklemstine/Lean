@@ -597,8 +597,26 @@ Research mode: {concept.research_mode}
                 if ".lake" in str(fp) or "lake-manifest" in f or "lakefile" in f:
                     continue
 
+                # Is this file identical to a local file?
+                is_modified = True
+                try:
+                    rel = fp.relative_to(extract_dir)
+                    # If Aristotle put it in Catalog/, compare against that
+                    if len(rel.parts) > 0 and rel.parts[0] == "Catalog":
+                        local_equiv = self.catalog_root / rel.relative_to("Catalog")
+                    else:
+                        local_equiv = self.catalog_root / rel
+                        
+                    if local_equiv.exists():
+                        if fp.read_bytes() == local_equiv.read_bytes():
+                            is_modified = False
+                except Exception:
+                    pass
+
                 if f == "ARISTOTLE_SUMMARY.md":
                     summary = fp.read_text()
+                elif not is_modified:
+                    continue  # Skip unchanged files!
                 elif f.endswith(".lean") and f != "Main.lean":
                     lean_files.append(fp)
                 elif f.endswith(".py"):
@@ -608,21 +626,14 @@ Research mode: {concept.research_mode}
 
         # Collect Lean sources — Aristotle decides which files contain the new theorems
         if lean_files:
-            # Prefer files that aren't just reference copies of catalog files
-            ref_stems = {Path(r).stem for r in (job.concept.catalog_references or [])}
-            new_lean = [f for f in lean_files if f.stem not in ref_stems]
-            if new_lean:
-                # Combine all new Lean files into the result
-                if len(new_lean) == 1:
-                    job.result_lean = new_lean[0].read_text()
-                else:
-                    # Multiple new files — combine them
-                    parts = []
-                    for f in sorted(new_lean):
-                        parts.append(f"-- File: {f.name}\n{f.read_text()}")
-                    job.result_lean = "\n\n".join(parts)
-            elif lean_files:
+            if len(lean_files) == 1:
                 job.result_lean = lean_files[0].read_text()
+            else:
+                # Multiple new/modified files — combine them
+                parts = []
+                for f in sorted(lean_files):
+                    parts.append(f"-- File: {f.name}\n{f.read_text()}")
+                job.result_lean = "\n\n".join(parts)
 
         # Collect Python artifacts — demos, applications, whatever Aristotle created
         if python_files:
