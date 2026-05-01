@@ -123,4 +123,3 @@ theorem double_commutator {R : Type*} [Ring R] (a b c : R) :
     a * (b * c - c * b) - (b * c - c * b) * a =
     a * b * c - a * c * b - b * c * a + c * b * a := by
   simp only [mul_sub, sub_mul, mul_assoc]; abel
-

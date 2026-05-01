@@ -133,4 +133,3 @@ theorem pisano_mod_3 :
   intro n; induction n with
   | zero => decide
   | succ n ih => simp only [Nat.fib_add_two]; omega
-

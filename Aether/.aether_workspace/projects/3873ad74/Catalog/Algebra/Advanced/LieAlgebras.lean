@@ -102,6 +102,3 @@ theorem sl2_not_abelian' : lieBracket2 sl2_e' sl2_f' ≠ 0 := by
   rw [sl2_ef']; intro h
   have := congr_fun (congr_fun h 0) 0
   simp [sl2_h'] at this
-
-
-
