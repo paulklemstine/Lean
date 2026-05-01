@@ -2,7 +2,7 @@
 # Pi-Agent Centered Autonomous Math Research Engine
 
 pi_agent:
-  model: "glm"
+  model: "openai-large"
   ollama_base_url: "http://127.0.0.1:11434"
   timeout: 600
   max_catalog_references: 12

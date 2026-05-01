@@ -314,7 +314,7 @@ class PiAgentClient:
 
     def __init__(
         self,
-        model: str = "glm",
+        model: str = "openai-large",
         memory: Optional[ResearchMemory] = None,
         catalog_root: Optional[Path] = None,
         timeout: int = 300,
@@ -496,6 +496,7 @@ class PiAgentClient:
         domains: List[Dict[str, Any]],
         recent_history: Optional[List[Dict]] = None,
         research_context: Optional[str] = None,
+        inflight_concepts: Optional[List[str]] = None,
     ) -> ResearchConcept:
         """Pi-Agent analyzes the Catalog and picks a research direction.
 
@@ -548,6 +549,19 @@ class PiAgentClient:
                 f"seed domains: {', '.join(str(x) for x in d.get('seed_domains', d.get('seed_concepts', []))[:3])})"
             )
 
+        # Format recent history
+        recent_history_str = ""
+        if recent_history:
+            recent_history_str = "\n".join(
+                f"- [{r.get('quality', 'unknown')}] {r.get('domain', 'unknown')}: {r.get('concept_title', 'unknown')}"
+                for r in recent_history
+            )
+            
+        # Format inflight concepts
+        inflight_str = ""
+        if inflight_concepts:
+            inflight_str = "\n".join(f"- {c}" for c in inflight_concepts)
+
         user_prompt = textwrap.dedent(f"""\
             Select ONE domain and ONE specific concept for mathematical research.
 
@@ -557,6 +571,14 @@ class PiAgentClient:
             threads or open genuinely new ground:
 
             {future_directions if future_directions else "No previous recommendations (first cycle)."}
+
+            ## Recently Finished Research
+            Examine what research was recently finished. If the quality was high, try to deeply EXTEND it:
+            {recent_history_str if recent_history_str else "No recent history."}
+
+            ## Currently In-flight Jobs (DO NOT REPEAT THESE)
+            These concepts are currently being worked on by parallel agents. You MUST pick something DIFFERENT to focus on:
+            {inflight_str if inflight_str else "None."}
 
             ## Catalog State
             {catalog_summary if catalog_summary else "Catalog not available."}
@@ -578,10 +600,11 @@ class PiAgentClient:
 
             ## Instructions
             Pick the MOST PROMISING direction by:
-            1. Following Aristotle's own future directions recommendations above
-            2. Building on verified results that are already in the catalog
-            3. Finding cross-domain connections (these have the highest novelty)
-            4. Filling sorries only when they close significant open problems
+            1. Examining recently finished research and extending it if it was productive.
+            2. Ensuring your selection is completely different from the Currently In-flight Jobs.
+            3. Following Aristotle's own future directions recommendations.
+            4. Finding cross-domain connections (these have the highest novelty).
+            5. Filling sorries only when they close significant open problems.
 
             Be SPECIFIC and MATHEMATICAL. Don't say "explore X" — say
             "prove that X has property Y using technique Z." Reference specific

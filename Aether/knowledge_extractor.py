@@ -243,11 +243,15 @@ class KnowledgeExtractor:
                 'quality': rec.proof_quality,
             })
 
+        # Inflight concepts (to avoid repeating requests)
+        inflight_concepts = [j.concept.title for j in self.inflight.values()] if hasattr(self, 'inflight') and self.inflight else []
+
         # Pi-Agent: THE BRAINS — selects the specific concept
         concept = self.pi_agent.select_research_direction(
             domains=domains_with_context,
             recent_history=recent_history,
             research_context=discoveries_prompt,
+            inflight_concepts=inflight_concepts,
         )
 
         print(f"[Pi] concept={concept.title}, domain={concept.domain}, "
