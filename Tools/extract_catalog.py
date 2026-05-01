@@ -698,8 +698,8 @@ def scan_catalog(catalog_root: str, verbose: bool = False) -> dict:
 
     # Collect all .lean files
     lean_files = sorted(root.rglob('*.lean'))
-    # Exclude tools/ directory
-    lean_files = [f for f in lean_files if 'tools' not in f.parts]
+    # Exclude tools/ and .lake/ directories
+    lean_files = [f for f in lean_files if 'tools' not in f.parts and '.lake' not in f.parts]
 
     if verbose:
         print(f"Found {len(lean_files)} .lean files to scan")
@@ -978,7 +978,7 @@ def file_fingerprints(catalog_root: str) -> dict:
     root = Path(catalog_root)
     fingerprints = {}
     for filepath in sorted(root.rglob('*.lean')):
-        if 'tools' in filepath.parts:
+        if 'tools' in filepath.parts or '.lake' in filepath.parts:
             continue
         rel_path = str(filepath.relative_to(root))
         try:
@@ -1035,7 +1035,7 @@ def scan_incremental(catalog_root: str, existing_db: dict, verbose: bool = False
     new_imports_by_file = {}
 
     for filepath in sorted(root.rglob('*.lean')):
-        if 'tools' in filepath.parts:
+        if 'tools' in filepath.parts or '.lake' in filepath.parts:
             continue
         rel_path = str(filepath.relative_to(root))
         if rel_path not in files_to_parse:
