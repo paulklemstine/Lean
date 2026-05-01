@@ -463,7 +463,17 @@ Research mode: {concept.research_mode}
             shutil.copy2(src_file, dst_file)
             lean_count += 1
 
-        print(f"[Project] Copied {lean_count} .lean files from Catalog")
+        # Copy Lean project configuration files
+        for cfg in ["lean-toolchain", "lakefile.toml", "lakefile.lean", "lake-manifest.json"]:
+            src_cfg = self.catalog_root / cfg
+            if src_cfg.exists():
+                # Copy to the project root (where Aristotle looks first)
+                shutil.copy2(src_cfg, dir_path / cfg)
+                # And inside the Catalog subdirectory for completeness
+                catalog_dst.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(src_cfg, catalog_dst / cfg)
+
+        print(f"[Project] Copied {lean_count} .lean files and project configs from Catalog")
 
         # Write the prompt as a README for context
         (dir_path / "PROMPT.md").write_text(job.prompt)
