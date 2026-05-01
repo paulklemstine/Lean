@@ -38,6 +38,3 @@ theorem no_square_legs_pyth : ∀ a b c : ℕ, 0 < a → 0 < b → 0 < c →
   subst ha2; subst hb2
   have : p ^ 4 + q ^ 4 = c ^ 2 := by nlinarith
   exact flt4_strong p q c hp hq hc this
-
-
-

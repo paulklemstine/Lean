@@ -1,44 +1,4 @@
 {
-  "ac8931cf-c72e-4aef-8fae-bcb0cf0e6cb3": {
-    "job_id": "f267aea1",
-    "cycle_n": 1,
-    "concept": {
-      "title": "Surjectivity of the Tropical Satake Transform for GL\u2082",
-      "domain": "Speculative",
-      "concept_description": "Complete the tropical Satake isomorphism for GL\u2082 by proving the tropical Satake transform is surjective onto the ring of Weyl-invariant tropical polynomials. Constructively exhibit the tropical Schur polynomials as the images of min-plus Hecke basis operators, establishing a bijection between the tropical Hecke algebra and the W-invariant tropical coordinate ring.",
-      "mathematical_framing": "Build on the 22-theorem tropical Hecke algebra formalization for GL\u2082 and the existing injectivity result for the tropical Satake transform. Prove surjectivity by showing that tropical Schur polynomials generate the full ring of W-invariant tropical polynomials under min-plus addition and tropical multiplication, and that each Schur polynomial is the transform of an explicit Hecke operator. Use a Bruhat-order descent on the coweight lattice to reduce general W-invariant piecewise-linear functions to the Schur basis, then lift via the tropical Hecke algebra multiplication table already verified for GL\u2082.",
-      "lean_guess": "theorem tropicalSatakeSurjective_GL2 {f : TropicalPolynomial (Coweight (ReflectionGroup GL\u2082))} (hf : IsWeylInvariant f) : \u2203 h : TropicalHecke GL\u2082, tropicalSatakeTransform h = f",
-      "novelty_estimate": 0.88,
-      "breakthrough_potential": 0.78,
-      "key_references": [
-        "Satake (1963) Theory of spherical functions on reductive algebraic groups over p-adic fields",
-        "Joseph-Lam (2021) Tropicalization of positive metrics and Hecke algebras",
-        "Vogiannou (2015) Spherical tropical geometry and spherical varieties"
-      ],
-      "catalog_references": [
-        "Tropical.Langlands.Satake.tropicalSatakeInjective_GL2",
-        "Tropical.Langlands.Hecke.tropicalHeckeAlgebra_GL2",
-        "Tropical.Langlands.Satake.tropicalSchurPolynomial",
-        "Tropical.Langlands.Hecke.minPlusConvolution_GL2"
-      ],
-      "research_mode": "prove"
-    },
-    "prompt": "            ## Research Task: Surjectivity of the Tropical Satake Transform for GL\u2082\n\n            Research Mode: PROVE\n\nDiscover and prove new, non-trivial theorems that advance the\nmathematical frontier. Start from the existing verified theorems\nlisted below and extend them into deeper territory. Every theorem\nyou prove should require genuine mathematical insight \u2014 not just\nunfolding definitions or numeric verification.\n\nYour Lean 4 files must:\n- Use concrete types (\u2115, \u211d, Finset, Matrix, etc.)\n- Build on existing catalog theorems (referenced below)\n- Minimize `sorry` \u2014 isolate truly hard steps rather than leaving gaps\n- Avoid trivial tautologies (no `True := by trivial`)\n\n\n            ### Research Direction\n            Complete the tropical Satake isomorphism for GL\u2082 by proving the tropical Satake transform is surjective onto the ring of Weyl-invariant tropical polynomials. Constructively exhibit the tropical Schur polynomials as the images of min-plus Hecke basis operators, establishing a bijection between the tropical Hecke algebra and the W-invariant tropical coordinate ring.\n\n            ### Precise Mathematical Framing\n            Build on the 22-theorem tropical Hecke algebra formalization for GL\u2082 and the existing injectivity result for the tropical Satake transform. Prove surjectivity by showing that tropical Schur polynomials generate the full ring of W-invariant tropical polynomials under min-plus addition and tropical multiplication, and that each Schur polynomial is the transform of an explicit Hecke operator. Use a Bruhat-order descent on the coweight lattice to reduce general W-invariant piecewise-linear functions to the Schur basis, then lift via the tropical Hecke algebra multiplication table already verified for GL\u2082.\n\n            ### Lean 4 Sketch\ntheorem tropicalSatakeSurjective_GL2 {f : TropicalPolynomial (Coweight (ReflectionGroup GL\u2082))} (hf : IsWeylInvariant f) : \u2203 h : TropicalHecke GL\u2082, tropicalSatakeTransform h = f\n\n            ### Existing Verified Theorems to Build On\n            Existing theorems you can build on:\n  1. `tropical_min_idem` : theorem tropical_min_idem (a : \u211d) : min a a = a := min_self a\n     (file: Speculative/Other/NewTheorems.lean)\n  2. `the_forbidden_theorem` : theorem the_forbidden_theorem (f : \u03b1 \u2192 \u03b1 \u2192 Prop) :\n     (file: Speculative/Forbidden/TheForbiddenTheorem.lean)\n  3. `tropical_satake_isomorphism_GL3` : theorem tropical_satake_isomorphism_GL3 :\n     (file: Tropical/Langlands/TropicalSatakeGL3.lean)\n  4. `tropical_schur_GL2_invariant` : theorem tropical_schur_GL2_invariant\n     (file: Tropical/TraceFormula/ArthurSelbergGL2.lean)\n  5. `tropical_satake_isomorphism_GL4` : theorem tropical_satake_isomorphism_GL4\n     (file: Tropical/Tropical_Satake_Isomorphism_for_GL\u2084_via_Min_Plus_Hecke_Algebra_and_Tropical_Schur_Basis.lean)\n\n            Known Working Lean 4 Tactics:\n- `nlinarith [sq_nonneg X]` for quadratic inequalities\n- `positivity` for positivity goals\n- `field_simp` then `ring` for division\n- `Real.exp_le_exp.mpr` for exp monotonicity\n- `Real.log_le_log` for log inequalities\n- `div_pos`, `div_le_div_of_nonneg_left` for division inequalities\n- `pow_le_pow_right\u2080` for power monotonicity\n- `by decide` / `by norm_num` / `native_decide` for decidable propositions\n- `Subadditive.tendsto_lim` for Fekete's Lemma\n- `ConvexOn.map_sum_le` for Jensen's inequality\n- `exists_deriv_eq_slope` for MVT\n\n\n\n\n            ### Previously Proved Theorems\nNo previous research cycles completed yet. This is a cold start \u2014 prioritize sorry_fill on the priority targets (CarmichaelComposite, Fib_gcd_identity) to close known open problems, or target cross-domain bridge theorems for novelty.\n\n            ### Required Deliverables\n\n            You are a world-class mathematician and software engineer. Create:\n\n            1. **Lean 4 files** \u2014 formally verified theorems with complete proofs\n               - Use concrete types (\u2115, \u211d, Finset, Matrix, etc.)\n               - Build on the existing catalog theorems listed above\n               - Minimize `sorry` \u2014 isolate hard steps rather than leaving gaps\n               - Use doc comments to explain the significance of key results\n\n            2. **RESEARCH_REPORT.md** \u2014 paper explaining the discovery\n               - Mathematical significance and connections to existing work\n               - A Scientific American style discussion section\n               - Detailed proofs and explanations\n\n            3. **FUTURE_DIRECTIONS.md** \u2014 YOUR recommendations for what to research next\n               - Specific theorems or conjectures worth pursuing\n               - Which existing catalog results could be extended and how\n               - Cross-domain connections you noticed during this research\n               - Open problems you encountered but couldn't solve\n               - This report will guide the next research cycle\n\n            4. **demo.py** \u2014 Python demo with concrete numerical examples\n               - Working code that brings the math to life\n               - Visualizations where they add insight\n\n            5. **diagram.svg** \u2014 visualization of key mathematical structures\n\n            The mathematics comes FIRST. Excellent proofs trump everything else.\n            Produce novel, non-trivial theorems with complete Lean 4 proofs.\n\n            ### Catalog Reference Files\n            No specific files referenced. Use Mathlib and general knowledge.\n\n\n### WHAT WE NEED FROM YOU\n\nYou are a world-class mathematician and software engineer. Use your judgment\non the best way to organize and present your work. We need:\n\n1. **Formally verified mathematics** in Lean 4\n   - Prove non-trivial theorems with complete proofs (no `sorry` in the final result)\n   - Organize the Lean code however makes sense \u2014 one file or several,\n     whatever serves the mathematics best\n   - Use doc comments to explain the significance of key results\n\n2. **Python demos** that bring the mathematics to life\n   - Create working Python code that demonstrates the theorems with\n     concrete numerical examples\n   - Visualizations (matplotlib, etc.) where they add insight\n   - Show the math in action \u2014 make it tangible and understandable\n   - Name and organize the demos however you see fit\n\n3. **A research paper** that explains the discovery\n   - Write this as a proper mathematical paper\n   - Include a Scientific American style discussion section that makes\n     the result accessible to a broad audience \u2014 use analogies,\n     intuition, and historical context\n   - Explain connections to existing work and future directions\n\n4. **Useful applications** \u2014 show how this math matters in practice\n   - What can people DO with this result?\n   - Where does it apply in the real world?\n   - Include code, examples, or demonstrations of applications\n\nThe mathematics comes FIRST. Excellent proofs trump everything else.\nBut great work deserves great presentation \u2014 make it real and useful.\n\nResearch domain: Speculative\nResearch mode: prove\n",
-    "project_dir": "/home/raver1975/lean/Aether/.aether_workspace/projects/f267aea1",
-    "project_id": "ac8931cf-c72e-4aef-8fae-bcb0cf0e6cb3",
-    "status": "completed",
-    "dispatch_time": 1777605728.9887965,
-    "complete_time": 1777607424.1277597,
-    "result_lean": null,
-    "result_demo": null,
-    "result_paper": null,
-    "result_summary": null,
-    "quality_score": 0.0,
-    "quality_assessment": null,
-    "sorry_count": 0,
-    "theorem_count": 0,
-    "error_message": null
-  },
   "45e7cac1-b8c6-45e4-b45a-a3c96fce84a2": {
     "job_id": "18b99617",
     "cycle_n": 2,
@@ -320,44 +280,6 @@
     "status": "dispatched",
     "dispatch_time": 1777607229.7809205,
     "complete_time": 0.0,
-    "result_lean": null,
-    "result_demo": null,
-    "result_paper": null,
-    "result_summary": null,
-    "quality_score": 0.0,
-    "quality_assessment": null,
-    "sorry_count": 0,
-    "theorem_count": 0,
-    "error_message": null
-  },
-  "9dca387c-5800-4480-99d0-bbfb4936a9f4": {
-    "job_id": "5379cf39",
-    "cycle_n": 9,
-    "concept": {
-      "title": "Stone-Weierstrass Theorem for EML Activation Closure",
-      "domain": "Computation",
-      "concept_description": "Close the final sorry in Computation/DensityTheory.lean by proving that the emergent meta-language (EML) activation algebra satisfies the Stone-Weierstrass hypotheses\u2014specifically that it contains the constants and separates points on a compact domain\u2014thereby establishing that EML networks are dense in the space of continuous functions and universally approximate any continuous map on [0,1]^d.",
-      "mathematical_framing": "Leverage the verified Algebra-EML bridge (7 theorems formalizing exp-log-logistic compositions as an algebraic structure) to verify the remaining Stone-Weierstrass condition: one_in_closure. Show that the pointwise algebra generated by EML activation functions contains all constant functions and separates points; invoke the Stone-Weierstrass theorem to conclude that the EML closure equals C([0,1]^d, \u211d), yielding a constructive universal approximation theorem for EML networks.",
-      "lean_guess": "",
-      "novelty_estimate": 0.82,
-      "breakthrough_potential": 0.78,
-      "key_references": [
-        "Stone-Weierstrass theorem for compact Hausdorff spaces",
-        "Universal approximation theorems for feedforward networks (Hornik, 1991)",
-        "Algebra-EML bridge: exponential-logarithmic-logistic algebraic structure"
-      ],
-      "catalog_references": [
-        "Algebra-EML bridge theorems (exp-log-logistic algebraic closure under addition, multiplication, and composition)",
-        "Computation/DensityTheory.lean (EMLClosure, one_in_closure, EMLClosure_mono, fullEMLClosure)"
-      ],
-      "research_mode": "sorry_fill"
-    },
-    "prompt": "Close the final sorry in `Computation/DensityTheory.lean` by proving the EML activation algebra satisfies the Stone\u2013Weierstrass hypotheses on the compact hypercube.\n\n**Target theorem**\n\n```lean\n-- Computation/DensityTheory.lean\ntheorem EML_Stone_Weierstrass_density {d : \u2115} (hd : 0 < d) :\n    Dense (EML_activation_algebra d) C(Set.Icc (0 : Fin d \u2192 \u211d) 1, \u211d) := by\n  sorry\n```\n\nHere `EML_activation_algebra d` is the uniform closure of finite EML network evaluations, viewed as a subalgebra of continuous real-valued functions on the hypercube, and `C(X, \u211d)` carries the sup-norm topology.\n\n**Proof strategy**\n\n1. **Constants.** Prove that `EML_activation_algebra d` contains every constant function. This follows immediately from `EML_contains_constants` (`Bridges/EMLStoneWeierstrassBridge.lean`), which shows that for each `c : \u211d` the constant map `fun _ => c` is realized by `c * exp 0`. This verifies the first Stone\u2013Weierstrass hypothesis. You will need `ContinuousMap.const_apply` and `Subalgebra.mem_top` to place the constant inside the algebra closure.\n\n2. **Point separation via diagonal quadratics.** For distinct points `x y : Fin d \u2192 \u211d` in `[0,1]^d`, choose the separating function\n   ```lean\n   let f := fun (z : Fin d \u2192 \u211d) => \u2211 i, (z i - x i) ^ 2\n   ```\n   Observe that `f x = 0` while `f y = \u2016y - x\u2016\u00b2 > 0` (use `norm_sub_pos_iff` and `sub_ne_zero_of_ne` on `x \u2260 y` to justify positivity). To show `f \u2208 EML_activation_algebra d`, decompose `f` into constants, linear coordinate evaluations, and pure quadratics. Constants are already available from Step 1; coordinate projections `z \u21a6 z i` belong to the affine skeleton of EML networks; and `EML_diagonal_quadratic_bound` (`Computation/NewDiscoveries.lean`) certifies that each squared coordinate map `z \u21a6 (z i) ^ 2` belongs to the algebra. Closure under addition and multiplication (which holds by the subalgebra structure already established earlier in `DensityTheory.lean`) assembles these into `f`. Since `f x \u2260 f y`, the algebra separates points.\n\n3. **Apply Stone\u2013Weierstrass.** Combine the subalgebra structure with Steps 1 and 2, and invoke `Mathlib.Topology.StoneWeierstrass.stoneWeierstrass` together with `isCompact_Icc` to deduce that `EML_activation_algebra d` is topologically dense in `C(Set.Icc 0 1, \u211d)`. Use `Dense` and `TopologicalClosure` lemmas to rewrite density in terms of the sup-norm: for every continuous `g` on `[0,1]^d` and every `\u03b5 > 0`, there exists an EML network whose uniform distance from `g` is less than `\u03b5`.\n\n**Why this matters**\n\nThis sorry is the last remaining obstruction to the EML universal approximation theorem. Once density is established, every continuous function on `[0,1]^d` is a uniform limit of EML networks. Combined with the existing VC-dimension and depth-hierarchy results in our catalog\u2014specifically the bounds in `Computation/DepthHierarchy.lean`\u2014this yields the first complete certified universal approximation framework for emergent meta-language activations. Closing it immediately enables the downstream tropical certified robustness pipeline, which is one of our active priority open problems, by guaranteeing that any continuous robustness specification can be finitely approximated by an EML network whose certificates transfer to the limit.\n\n### Catalog Reference Files\n            No specific files referenced. Use Mathlib and general knowledge.\n\n\n### WHAT WE NEED FROM YOU\n\nYou are a world-class mathematician and software engineer. Use your judgment\non the best way to organize and present your work. We need:\n\n1. **Formally verified mathematics** in Lean 4\n   - Prove non-trivial theorems with complete proofs (no `sorry` in the final result)\n   - Organize the Lean code however makes sense \u2014 one file or several,\n     whatever serves the mathematics best\n   - Use doc comments to explain the significance of key results\n\n2. **Python demos** that bring the mathematics to life\n   - Create working Python code that demonstrates the theorems with\n     concrete numerical examples\n   - Visualizations (matplotlib, etc.) where they add insight\n   - Show the math in action \u2014 make it tangible and understandable\n   - Name and organize the demos however you see fit\n\n3. **A research paper** that explains the discovery\n   - Write this as a proper mathematical paper\n   - Include a Scientific American style discussion section that makes\n     the result accessible to a broad audience \u2014 use analogies,\n     intuition, and historical context\n   - Explain connections to existing work and future directions\n\n4. **Useful applications** \u2014 show how this math matters in practice\n   - What can people DO with this result?\n   - Where does it apply in the real world?\n   - Include code, examples, or demonstrations of applications\n\nThe mathematics comes FIRST. Excellent proofs trump everything else.\nBut great work deserves great presentation \u2014 make it real and useful.\n\nResearch domain: Computation\nResearch mode: sorry_fill\n",
-    "project_dir": "/home/raver1975/lean/Aether/.aether_workspace/projects/5379cf39",
-    "project_id": "9dca387c-5800-4480-99d0-bbfb4936a9f4",
-    "status": "completed",
-    "dispatch_time": 1777607361.4300127,
-    "complete_time": 1777610262.351284,
     "result_lean": null,
     "result_demo": null,
     "result_paper": null,

@@ -131,6 +131,3 @@ theorem algCommutator_eq_zero [CommRing α] (a b : α) :
 theorem quaternion_norm_mul (p q : Quaternion ℝ) :
     normSq (p * q) = normSq p * normSq q := by
   grind
-
-
-

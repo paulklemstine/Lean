@@ -71,5 +71,3 @@ theorem linear_diophantine_coprime (a b c : ℤ)
 theorem linear_diophantine_zero (c : ℤ) :
     (∃ x y : ℤ, (0 : ℤ) * x + (0 : ℤ) * y = c) ↔ c = 0 := by
   grind
-
-

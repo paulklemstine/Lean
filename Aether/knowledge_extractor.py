@@ -775,7 +775,7 @@ Research mode: {concept.research_mode}
             try:
                 result = await asyncio.to_thread(
                     subprocess.run,
-                    ["npx", "--yes", "@mariozechner/pi-coding-agent@latest", "--model", self.pi.model, "-p", prompt],
+                    ["npx", "--yes", "@mariozechner/pi-coding-agent@latest", "--model", self.pi_agent.model, "-p", prompt],
                     cwd=str(staging),
                     capture_output=True,
                     text=True,
@@ -796,6 +796,8 @@ Research mode: {concept.research_mode}
         """Run deduplication and use Pi to clean up the specific domain directory."""
         if job.status != "integrated":
             return job
+            
+        import subprocess
 
         print(f"[Cleanup] Running global deduplication script...")
         try:
@@ -825,7 +827,7 @@ Research mode: {concept.research_mode}
                     result = await asyncio.to_thread(
                         subprocess.run,
                         ["npx", "--yes", "@mariozechner/pi-coding-agent@latest", 
-                         "--model", self.pi.model, 
+                         "--model", self.pi_agent.model, 
                          "-p", prompt],
                         cwd=str(domain_dir),
                         capture_output=True,

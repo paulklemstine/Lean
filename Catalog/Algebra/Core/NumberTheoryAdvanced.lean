@@ -95,5 +95,3 @@ theorem six_congruent : ((3 : ℚ) ^ 2 + 4 ^ 2 = 5 ^ 2) ∧ (3 * 4 / 2 = 6) :=
 theorem five_congruent :
     ((3/2 : ℚ) ^ 2 + (20/3) ^ 2 = (41/6) ^ 2) ∧ ((3/2 : ℚ) * (20/3) / 2 = 5) :=
   ⟨by norm_num, by norm_num⟩
-
-

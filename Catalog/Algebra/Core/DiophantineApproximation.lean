@@ -56,6 +56,3 @@ theorem liouville_ex :
 
 theorem z_r_close : ∀ x : ℝ, ∃ n : ℤ, |x - n| ≤ 1 / 2 := by
   intro x; exact ⟨round x, abs_sub_round x⟩
-
-
-
