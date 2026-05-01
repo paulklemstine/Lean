@@ -1,84 +1,93 @@
 import Mathlib
 
-/-! # CatalogBuild.Physics.ArchitectureOfReality.TropicalLanglands
+/-! # CatalogBuild.Bridges.TropicalLanglands
 
 Auto-generated from theorem catalog database.
-Domain: Physics/ArchitectureOfReality
-Declarations: 12
+Domain: Bridges
+Declarations: 15
 -/
 
 noncomputable section
 
-/-- A tropical character of a group G is a group homomorphism G → (ℝ, +). -/
-def IsTropChar {G : Type*} [Group G] (χ : G → ℝ) : Prop :=
-  χ 1 = 0 ∧ ∀ g h, χ (g * h) = χ g + χ h
+/-- Tree moves in the Berggren tree -/
+inductive BerggrenMove
+  | L  -- Apply M₁
+  | M  -- Apply M₂
+  | R  -- Apply M₃
+  deriving DecidableEq, Repr
 
-/-- The trivial tropical character sends everything to 0 -/
-theorem trop_char_trivial {G : Type*} [Group G] :
-    IsTropChar (fun (_ : G) => (0 : ℝ)) :=
-  ⟨rfl, fun _ _ => (add_zero 0).symm⟩
+/-- A path in the Berggren tree -/
+abbrev BerggrenPath := List BerggrenMove
 
-/-- Tropical character of the inverse: χ(g⁻¹) = -χ(g) -/
-theorem trop_char_inv {G : Type*} [Group G] (χ : G → ℝ) (hχ : IsTropChar χ)
-    (g : G) : χ g⁻¹ = -χ g := by
-  have h := hχ.2 g g⁻¹
-  simp only [mul_inv_cancel] at h
-  linarith [hχ.1]
+/-- Apply a single Berggren move to a triple -/
+def applyMove (m : BerggrenMove) (t : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
+  match m with
+  | .L => (t.1 - 2*t.2.1 + 2*t.2.2,
+           2*t.1 - t.2.1 + 2*t.2.2,
+           2*t.1 - 2*t.2.1 + 3*t.2.2)
+  | .M => (t.1 + 2*t.2.1 + 2*t.2.2,
+           2*t.1 + t.2.1 + 2*t.2.2,
+           2*t.1 + 2*t.2.1 + 3*t.2.2)
+  | .R => (-t.1 + 2*t.2.1 + 2*t.2.2,
+           -2*t.1 + t.2.1 + 2*t.2.2,
+           -2*t.1 + 2*t.2.1 + 3*t.2.2)
 
-/-- Tropical character of powers: χ(gⁿ) = n · χ(g) -/
-theorem trop_char_pow {G : Type*} [Group G] (χ : G → ℝ) (hχ : IsTropChar χ)
-    (g : G) (n : ℕ) : χ (g ^ n) = n * χ g := by
-  induction n with
-  | zero => simp [hχ.1]
-  | succ n ih => rw [pow_succ, hχ.2, ih]; push_cast; ring
+/-- Apply a path (sequence of moves) to a triple -/
+def applyPath (path : BerggrenPath) (t : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
+  path.foldl (fun acc m => applyMove m acc) t
 
-/-- [Section: # CatalogBuild.Physics.ArchitectureOfReality.TropicalLanglands
+/-- Every move preserves the quadratic form a² + b² - c² -/
+theorem applyMove_quad_form (m : BerggrenMove) (a b c : ℤ) :
+    let t := applyMove m (a, b, c)
+    t.1^2 + t.2.1^2 - t.2.2^2 = a^2 + b^2 - c^2 := by
+  cases m <;> simp [applyMove] <;> ring
+
+/-- Every move preserves the Pythagorean relation -/
+theorem applyMove_preserves_pyth (m : BerggrenMove) (a b c : ℤ)
+    (h : a^2 + b^2 = c^2) :
+    let t := applyMove m (a, b, c)
+    t.1^2 + t.2.1^2 = t.2.2^2 := by
+  have := applyMove_quad_form m a b c
+  omega
+
+/-- The empty path is the identity -/
+theorem applyPath_nil (t : ℤ × ℤ × ℤ) : applyPath [] t = t := rfl
+
+/-- Concatenation of paths composes the actions -/
+theorem applyPath_append (p q : BerggrenPath) (t : ℤ × ℤ × ℤ) :
+    applyPath (p ++ q) t = applyPath q (applyPath p t) := by
+  simp [applyPath, List.foldl_append]
+
+/-- Under M₂, the hypotenuse strictly increases for positive triples -/
+theorem move_M_hyp_increase (a b c : ℤ)
+    (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
+    c < (applyMove .M (a, b, c)).2.2 := by
+  simp [applyMove]; linarith
+
+/-- The root (3,4,5) children -/
+theorem root_child_L : applyMove .L (3, 4, 5) = (5, 12, 13) := by decide
+
+/-- [Section: # CatalogBuild.Bridges.TropicalLanglands
 Auto-generated from theorem catalog database.
-Domain: Physics/ArchitectureOfReality
-Declarations: 12] -/
-theorem trop_char_finite_trivial {G : Type*} [Group G] [Fintype G]
-    (χ : G → ℝ) (hχ : IsTropChar χ) (g : G) : χ g = 0 := by
-  simp_all +decide [ IsTropChar ];
-  -- By induction on $n$, we can show that $\chi(g^n) = n \cdot \chi(g)$ for any natural number $n$.
-  have h_ind : ∀ n : ℕ, χ (g ^ n) = n * χ g := by
-    intro n; induction n <;> simp_all +decide [ pow_succ, add_mul ] ;
-  specialize h_ind ( Fintype.card G ) ; simp_all +decide [ pow_card_eq_one ] ;
+Domain: Bridges
+Declarations: 15] -/
+theorem root_child_M : applyMove .M (3, 4, 5) = (21, 20, 29) := by decide
 
-/-- The sum of two tropical characters is a tropical character -/
-theorem trop_char_add {G : Type*} [Group G] (χ ψ : G → ℝ)
-    (hχ : IsTropChar χ) (hψ : IsTropChar ψ) :
-    IsTropChar (fun g => χ g + ψ g) := by
-  constructor
-  · simp [hχ.1, hψ.1]
-  · intro g h; simp [hχ.2 g h, hψ.2 g h]; ring
+/-- [Section: # CatalogBuild.Bridges.TropicalLanglands
+Auto-generated from theorem catalog database.
+Domain: Bridges
+Declarations: 15] -/
+theorem root_child_R : applyMove .R (3, 4, 5) = (15, 8, 17) := by decide
 
-/-- Scaling a tropical character gives a tropical character -/
-theorem trop_char_scale {G : Type*} [Group G] (χ : G → ℝ) (c : ℝ)
-    (hχ : IsTropChar χ) :
-    IsTropChar (fun g => c * χ g) := by
-  constructor
-  · simp [hχ.1]
-  · intro g h; simp [hχ.2 g h, mul_add]
+/-- Grandchildren -/
+theorem root_grandchild_LL :
+    applyPath [.L, .L] (3, 4, 5) = (7, 24, 25) := by decide
 
-/-- The tropical Fourier transform of f at character χ. -/
-def tropFourier {G : Type*} [Fintype G] [Nonempty G] [DecidableEq G]
-    (f : G → ℝ) (χ : G → ℝ) : ℝ :=
-  Finset.sup' Finset.univ Finset.univ_nonempty (fun g => f g + χ g)
+theorem root_grandchild_LM :
+    applyPath [.L, .M] (3, 4, 5) = (55, 48, 73) := by decide
 
-/-- The tropical convolution: (f ⊛ g)(h) = max_x {f(x) + g(x⁻¹h)} -/
-def tropConv {G : Type*} [Group G] [Fintype G] [Nonempty G] [DecidableEq G]
-    (f g : G → ℝ) (h : G) : ℝ :=
-  Finset.sup' Finset.univ Finset.univ_nonempty (fun x => f x + g (x⁻¹ * h))
+theorem pyth_perimeter_even (a b c : ℤ) (h : a^2 + b^2 = c^2)
+    (hparity : (a % 2 = 0 ∧ b % 2 = 1) ∨ (a % 2 = 1 ∧ b % 2 = 0)) :
+    2 ∣ (a + b + c) := by
+  replace h := congr_arg ( · % 4 ) h ; rcases Int.even_or_odd' a with ⟨ k, rfl | rfl ⟩ <;> rcases Int.even_or_odd' b with ⟨ l, rfl | rfl ⟩ <;> rcases Int.even_or_odd' c with ⟨ m, rfl | rfl ⟩ <;> ring_nf at * <;> norm_num [ Int.add_emod, Int.mul_emod ] at *;
 
-/-- A tropical Hecke operator acts on functions f : G → ℝ -/
-structure TropHeckeOp (G : Type*) where
-  action : (G → ℝ) → G → ℝ
-
-/-- A tropical eigenform satisfies T f = c + f (additive shift) -/
-def IsTropEigenform {G : Type*} (T : TropHeckeOp G) (f : G → ℝ) (eigenval : ℝ) : Prop :=
-  ∀ g, T.action f g = eigenval + f g
-
-/-- In the tropical semiring, every element is additively idempotent. -/
-theorem tropical_universal_idempotent (a : ℝ) : max a a = a := max_self a
-
-end

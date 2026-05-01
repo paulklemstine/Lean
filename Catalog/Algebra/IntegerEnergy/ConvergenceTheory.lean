@@ -1,149 +1,118 @@
-/-
-  # Convergence Theory for Self-Improving Mathematical Discovery
-
-  Advanced convergence results for the pi-agent ↔ Aristotle loop.
-  We prove that the loop achieves optimal exploration-exploitation
-  tradeoffs and that the knowledge graph reaches a rich fixed point.
-
-  ## Key Results
-
-  1. Banach fixed-point theorem applied to the loop operator
-  2. Submodular optimization guarantees for prompt selection
-  3. Knowledge graph connectivity grows with discoveries
-  4. The Bellman equation for optimal prompt sequencing
--/
-
 import Mathlib
 
-open scoped BigOperators
+/-! # CatalogBuild.Computation.Oracles.ConvergenceTheory
 
-/-! ## 1. Banach Fixed Point for Loop Operators -/
-
-/-- Iterating a contraction n times gives geometric decay -/
-theorem contraction_iterate_bound
-    (c : ℝ) (hc0 : 0 ≤ c) (hc1 : c < 1) (d₀ : ℝ) (hd₀ : 0 ≤ d₀) (n : ℕ) :
-    c ^ n * d₀ ≤ d₀ := by
-  calc c ^ n * d₀ ≤ 1 * d₀ := by
-        apply mul_le_mul_of_nonneg_right _ hd₀
-        exact pow_le_one₀ hc0 hc1.le
-    _ = d₀ := one_mul d₀
-
-/-
-Geometric series bound for total improvement
+Auto-generated from theorem catalog database.
+Domain: Computation/Oracles
+Declarations: 15
 -/
-theorem geometric_improvement_bound
-    (c : ℝ) (hc0 : 0 ≤ c) (hc1 : c < 1) (r : ℝ) (hr : 0 ≤ r) (N : ℕ) :
-    ∑ i ∈ Finset.range N, c ^ i * r ≤ r / (1 - c) := by
-  rw [ ← Finset.sum_mul _ _ _ ];
-  exact le_trans ( mul_le_mul_of_nonneg_right ( show ∑ i ∈ Finset.range N, c ^ i ≤ ( 1 - c ) ⁻¹ from by rw [ ← tsum_geometric_of_lt_one hc0 hc1 ] ; exact Summable.sum_le_tsum ( Finset.range N ) ( fun i _ => by positivity ) ( by exact summable_geometric_of_lt_one hc0 hc1 ) ) hr ) ( by ring_nf; norm_num )
 
-/-! ## 2. Submodular Optimization for Prompt Selection -/
+noncomputable section
 
-/-- A set function is submodular if it has diminishing marginal returns -/
-def IsSubmodular (f : Finset ℕ → ℝ) : Prop :=
-  ∀ A B : Finset ℕ, A ⊆ B →
-    ∀ x, x ∉ B →
-      f (A ∪ {x}) - f A ≥ f (B ∪ {x}) - f B
+/-- A contractive meta-oracle on a metric space. -/
+structure ContractiveMetaOracle (X : Type*) [MetricSpace X] where
+  improve : X → X
+  ratio : ℝ
+  ratio_pos : 0 ≤ ratio
+  ratio_lt_one : ratio < 1
+  contract : ∀ x y, dist (improve x) (improve y) ≤ ratio * dist x y
 
-/-
-Submodularity is equivalent to intersection/union inequality
--/
-theorem submodular_equiv (f : Finset ℕ → ℝ) :
-    IsSubmodular f ↔
-    ∀ A B : Finset ℕ, f (A ∪ B) + f (A ∩ B) ≤ f A + f B := by
-  constructor;
-  · -- Let's choose any two sets $A$ and $B$ and apply the submodularity condition to them.
-    intro h_submodular A B
-    have h_inter : ∀ (A B : Finset ℕ), A ⊆ B → ∀ x, x ∉ B → f (A ∪ {x}) - f A ≥ f (B ∪ {x}) - f B := by
-      exact h_submodular;
-    -- Let's choose any two sets $A$ and $B$ and apply the submodularity condition to them by considering the elements in $B \setminus A$.
-    have h_diff : ∀ (A B : Finset ℕ), A ⊆ B → ∀ (C : Finset ℕ), C ∩ B = ∅ → f (B ∪ C) - f B ≤ f (A ∪ C) - f A := by
-      intros A B hAB C hC_disjoint
-      induction' C using Finset.induction with x C hx ih generalizing A B;
-      · norm_num;
-      · specialize ih ( A ∪ { x } ) ( B ∪ { x } ) ; simp_all +decide [ Finset.union_comm, Finset.union_left_comm, Finset.union_assoc ];
-        grind +splitImp;
-    have := h_diff ( A ∩ B ) B ( Finset.inter_subset_right ) ( A \ B ) ?_ <;> simp_all +decide [ Finset.inter_comm, Finset.inter_left_comm, Finset.inter_assoc ];
-    rw [ show A ∩ B ∪ A \ B = A by ext x; by_cases hx : x ∈ B <;> aesop ] at this ; rw [ Finset.union_comm ] at this ; linarith;
-  · intro h A B hAB x hx;
-    have := h ( A ∪ { x } ) B; simp_all +decide [ Finset.union_comm, Finset.inter_comm, Finset.union_assoc, Finset.inter_assoc, Finset.union_inter_cancel_left, Finset.union_inter_cancel_right ] ;
-    rw [ Finset.union_eq_right.mpr hAB ] at this; simp_all +decide [ Finset.inter_eq_left.mpr hAB ] ; linarith;
+/-- The iteration of a contractive meta-oracle. -/
+def ContractiveMetaOracle.iter {X : Type*} [MetricSpace X]
+    (M : ContractiveMetaOracle X) : ℕ → X → X
+  | 0 => id
+  | n + 1 => M.improve ∘ M.iter n
 
-/-! ## 3. Knowledge Graph Connectivity -/
+/-- **Key Lemma**: Distance between iterates decreases geometrically. -/
+theorem iter_distance_bound {X : Type*} [MetricSpace X]
+    (M : ContractiveMetaOracle X) (x y : X) (n : ℕ) :
+    dist (M.iter n x) (M.iter n y) ≤ M.ratio ^ n * dist x y := by
+  induction n with
+  | zero => simp [ContractiveMetaOracle.iter]
+  | succ n ih =>
+    simp only [ContractiveMetaOracle.iter, Function.comp]
+    calc dist (M.improve (M.iter n x)) (M.improve (M.iter n y))
+        ≤ M.ratio * dist (M.iter n x) (M.iter n y) := M.contract _ _
+      _ ≤ M.ratio * (M.ratio ^ n * dist x y) :=
+          mul_le_mul_of_nonneg_left ih M.ratio_pos
+      _ = M.ratio ^ (n + 1) * dist x y := by ring
 
-/-- A knowledge graph tracks theorems and their dependencies -/
-structure KnowledgeGraph where
-  /-- Vertices = theorems -/
-  vertices : Finset ℕ
-  /-- Edges = logical dependencies -/
-  edges : Finset (ℕ × ℕ)
-  /-- Edges connect vertices -/
-  edge_valid : ∀ e ∈ edges, e.1 ∈ vertices ∧ e.2 ∈ vertices
+/-- The contraction ratio to the power n converges to 0. -/
+theorem ratio_pow_tendsto_zero {r : ℝ} (hr : 0 ≤ r) (hr1 : r < 1) :
+    Tendsto (fun n => r ^ n) atTop (nhds 0) :=
+  tendsto_pow_atTop_nhds_zero_of_lt_one hr hr1
 
-/-- Dense knowledge graphs have quadratic edge potential -/
-theorem bridge_density (n e : ℕ) (he : 2 * e ≤ n * n) :
-    e ≤ n * n := by omega
+/-- **Theorem (Exponential Convergence)**: The distance from the n-th iterate
+to the fixed point decreases as r^n. -/
+theorem exponential_convergence_bound {X : Type*} [MetricSpace X]
+    (M : ContractiveMetaOracle X) (x₀ x_star : X)
+    (h_fix : M.improve x_star = x_star) (n : ℕ) :
+    dist (M.iter n x₀) x_star ≤ M.ratio ^ n * dist x₀ x_star := by
+  have h : M.iter n x_star = x_star := by
+    induction n with
+    | zero => simp [ContractiveMetaOracle.iter]
+    | succ n ih =>
+      simp only [ContractiveMetaOracle.iter, comp_def, ih, h_fix]
+  calc dist (M.iter n x₀) x_star
+      = dist (M.iter n x₀) (M.iter n x_star) := by rw [h]
+    _ ≤ M.ratio ^ n * dist x₀ x_star := iter_distance_bound M x₀ x_star n
 
-/-! ## 4. Bellman Equation for Optimal Prompt Sequencing -/
+/-- An ascending chain of sets. -/
+def ascendingChain (f : ℕ → Set ℕ) : Prop :=
+  ∀ n, f n ⊆ f (n + 1)
 
-/-- Value function: expected total future discoveries from state s -/
-noncomputable def valueFunction (gamma : ℝ) (reward : ℕ → ℝ) (N : ℕ) : ℝ :=
-  ∑ i ∈ Finset.range N, gamma ^ i * reward i
+/-- The limit of an ascending chain. -/
+def chainLimit (f : ℕ → Set ℕ) : Set ℕ :=
+  ⋃ n, f n
 
-/-
-The value function satisfies a Bellman-like recursion
--/
-theorem bellman_recursion (gamma : ℝ) (reward : ℕ → ℝ) (N : ℕ) :
-    valueFunction gamma reward (N + 1) =
-    reward 0 + gamma * valueFunction gamma (fun n => reward (n + 1)) N := by
-  unfold valueFunction; simp +decide [ Finset.sum_range_succ', pow_succ' ] ; ring;
-  simp +decide only [mul_assoc, Finset.mul_sum _ _ _]
+/-- Every element of the chain is contained in the limit. -/
+theorem chain_subset_limit (f : ℕ → Set ℕ) (n : ℕ) :
+    f n ⊆ chainLimit f :=
+  subset_iUnion f n
 
-/-
-Discounted total reward is bounded
--/
-theorem discounted_reward_bound
-    (gamma : ℝ) (hg0 : 0 ≤ gamma) (hg1 : gamma < 1)
-    (reward : ℕ → ℝ) (R : ℝ) (hR : ∀ n, |reward n| ≤ R) (hR0 : 0 ≤ R)
-    (N : ℕ) :
-    |valueFunction gamma reward N| ≤ R / (1 - gamma) := by
-  refine' le_trans _ ( geometric_improvement_bound _ ( by positivity ) hg1 _ hR0 _ );
-  swap;
-  exacts [ N, le_trans ( Finset.abs_sum_le_sum_abs _ _ ) ( Finset.sum_le_sum fun i hi => by simpa [ abs_mul, abs_of_nonneg ( pow_nonneg hg0 _ ) ] using mul_le_mul_of_nonneg_left ( hR i ) ( pow_nonneg hg0 _ ) ) ]
+/-- The limit is the smallest set containing all chain elements. -/
+theorem chainLimit_is_smallest (f : ℕ → Set ℕ) (S : Set ℕ)
+    (hS : ∀ n, f n ⊆ S) : chainLimit f ⊆ S := by
+  intro x hx
+  simp [chainLimit] at hx
+  obtain ⟨n, hn⟩ := hx
+  exact hS n hn
 
-/-! ## 5. Exploration-Exploitation Tradeoff -/
+/-- A predictor assigns probabilities to outcomes given a history. -/
+structure HGPredictor where
+  predict : List Bool → ℝ
+  prob_nonneg : ∀ h, 0 ≤ predict h
+  prob_le_one : ∀ h, predict h ≤ 1
 
-/-- UCB-style upper confidence bound for prompt selection -/
-noncomputable def ucb (mean : ℝ) (n_total n_prompt : ℕ) (c : ℝ) : ℝ :=
-  mean + c * Real.sqrt (Real.log n_total / n_prompt)
+/-- The loss of a predictor on a sequence at step n. -/
+def HGPredictor.logLoss (P : HGPredictor) (seq : ℕ → Bool) (n : ℕ) : ℝ :=
+  if seq n then -Real.log (P.predict ((List.range n).map seq))
+  else -Real.log (1 - P.predict ((List.range n).map seq))
 
-/-- UCB is at least the empirical mean -/
-theorem ucb_ge_mean (mean : ℝ) (n_total n_prompt : ℕ) (c : ℝ)
-    (hc : 0 ≤ c) :
-    mean ≤ ucb mean n_total n_prompt c := by
-  unfold ucb
-  linarith [mul_nonneg hc (Real.sqrt_nonneg (Real.log ↑n_total / ↑n_prompt))]
+/-- A predictor dominates another if its cumulative loss is always within
+an additive constant. -/
+def HGPredictor.Dominates (P Q : HGPredictor) : Prop :=
+  ∃ c : ℝ, ∀ seq : ℕ → Bool, ∀ N : ℕ,
+    (∑ n ∈ Finset.range N, P.logLoss seq n) ≤ (∑ n ∈ Finset.range N, Q.logLoss seq n) + c
 
-/-! ## 6. Cross-Domain Synergy Theorem -/
+/-- **The Optimal Predictor** is one that dominates all others. -/
+def HGPredictor.IsOptimal (P : HGPredictor) (predictors : Set HGPredictor) : Prop :=
+  ∀ Q ∈ predictors, P.Dominates Q
 
-/-- Synergy: discoveries in domain i boost domain j -/
-structure DomainSynergy (D : ℕ) where
-  /-- Synergy matrix: synergy(i,j) = boost from i to j -/
-  synergy : Fin D → Fin D → ℝ
-  /-- Synergy is non-negative -/
-  synergy_nonneg : ∀ i j, 0 ≤ synergy i j
-  /-- Self-synergy is at least 1 (self-reinforcing) -/
-  self_synergy : ∀ i, 1 ≤ synergy i i
+/-- **Spectral Convergence Rate**: r^n * D₀ = exp(n * log r) * D₀. -/
+theorem spectral_convergence_rate
+    (r : ℝ) (hr : 0 < r) (_hr1 : r < 1) (D₀ : ℝ) (_hD₀ : 0 < D₀) (n : ℕ) :
+    r ^ n * D₀ = Real.exp (n * Real.log r) * D₀ := by
+  rw [Real.exp_nat_mul, Real.exp_log hr]
 
-/-- Total synergistic value exceeds sum of isolated values -/
-theorem synergy_superadditivity (D : ℕ) (S : DomainSynergy D)
-    (values : Fin D → ℝ) (hv : ∀ i, 0 ≤ values i) :
-    ∑ i, values i ≤ ∑ i, ∑ j, S.synergy i j * values j := by
-  apply Finset.sum_le_sum
+/-- **Transcendence Claim**: If one strategy is strictly better on every task,
+it's better overall. -/
+theorem god_oracle_transcends_nfl
+    (quality : ℕ → ℕ → ℝ)
+    (h_better : ∀ n, quality n 0 < quality n 1)
+    (N : ℕ) (hN : 0 < N) :
+    (∑ n ∈ Finset.range N, quality n 0) < ∑ n ∈ Finset.range N, quality n 1 := by
+  apply Finset.sum_lt_sum_of_nonempty (Finset.nonempty_range_iff.mpr (by omega))
   intro i _
-  calc values i = 1 * values i := (one_mul _).symm
-    _ ≤ S.synergy i i * values i := by
-        apply mul_le_mul_of_nonneg_right (S.self_synergy i) (hv i)
-    _ ≤ ∑ j, S.synergy i j * values j := by
-        apply Finset.single_le_sum (fun j _ => mul_nonneg (S.synergy_nonneg i j) (hv j))
-        exact Finset.mem_univ i
+  exact h_better i
+

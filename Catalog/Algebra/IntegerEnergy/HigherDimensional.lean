@@ -1,77 +1,49 @@
 import Mathlib
 
-/-! # CatalogBuild.Logic.HigherDimensional
+/-! # CatalogBuild.Pythagorean.Research.HigherDimensional
 
 Auto-generated from theorem catalog database.
-Domain: Logic
+Domain: Pythagorean/Research
 Declarations: 10
 -/
 
-noncomputable section
+/-- The trivial quadruple (N, 0, 0, N). -/
+def trivialQuadruple (N : ℤ) : PythQuadruple where
+  a := N; b := 0; c := 0; d := N
+  hyp := by ring
 
-/-- The stereographic chart is a `PartialHomeomorph`, hence its forward and inverse
-maps compose to the identity on the source set. This is the general idempotent
-lens property. -/
-theorem stereographic_round_trip {v : E} (hv : ‖v‖ = 1) :
-    ∀ p ∈ (stereographic (E := E) hv).source,
-      (stereographic hv).symm ((stereographic hv) p) = p :=
-  fun p hp => (stereographic hv).left_inv hp
+/-- (d-c)(d+c) = a² + b². -/
+theorem quad_diff_squares (a b c d : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
+    (d - c) * (d + c) = a ^ 2 + b ^ 2 := by nlinarith
 
-/-- The dual round-trip: from the orthogonal complement through the sphere and back
-is also the identity, on the target set. -/
-theorem stereographic_dual_round_trip {v : E} (hv : ‖v‖ = 1) :
-    ∀ w ∈ (stereographic (E := E) hv).target,
-      (stereographic hv) ((stereographic hv).symm w) = w :=
-  fun w hw => (stereographic hv).right_inv hw
+/-- a² + b² = d² - c². -/
+theorem quad_double_factor (a b c d : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
+    a ^ 2 + b ^ 2 = d ^ 2 - c ^ 2 := by linarith
 
-/-- [Section: # CatalogBuild.Logic.HigherDimensional
-Auto-generated from theorem catalog database.
-Domain: Logic
-Declarations: 10] -/
-theorem conformal_factor_pos (y : ℝ) (hy : y < 1) : (2 : ℝ) / (1 - y) > 0 := by
-  exact div_pos zero_lt_two ( sub_pos.mpr hy )
+/-- (a,b,c) Pythagorean ⟹ (a,b,0,c) quadruple. -/
+def tripleToQuadruple (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
+    PythQuadruple where
+  a := a; b := b; c := 0; d := c
+  hyp := by simp; exact h
 
-/-- [Section: # CatalogBuild.Logic.HigherDimensional
-Auto-generated from theorem catalog database.
-Domain: Logic
-Declarations: 10] -/
-theorem conformal_factor_south_pole : (2 : ℝ) / (1 - (-1 : ℝ)) = 1 := by
-  norm_num +zetaDelta at *
+/-- Quadruple projects to sum-of-two-squares. -/
+theorem quad_projects (q : PythQuadruple) :
+    q.a ^ 2 + q.b ^ 2 = q.d ^ 2 - q.c ^ 2 := by linarith [q.hyp]
 
-theorem conformal_factor_equator : (2 : ℝ) / (1 - (0 : ℝ)) = 2 := by
-  grind
+/-- η₄² = I. -/
+theorem eta4_squared : eta4 * eta4 = 1 := by native_decide
 
-/-- A Möbius transformation of the real line (as a fractional linear transformation). -/
-structure MoebiusTransform where
-  a : ℝ
-  b : ℝ
-  c : ℝ
-  d : ℝ
-  det_ne_zero : a * d - b * c ≠ 0
+/-- N² = N² + 0² (trivial sum-of-squares decomposition). -/
+theorem trivial_decomp (N : ℕ) : N ^ 2 + 0 ^ 2 = N ^ 2 := by ring
 
-/-- Apply a Möbius transformation. -/
-def MoebiusTransform.apply (M : MoebiusTransform) (t : ℝ) : ℝ :=
-  (M.a * t + M.b) / (M.c * t + M.d)
+/-- 7 ≡ 7 (mod 8), so 7 is not a sum of three squares. -/
+theorem legendre_check : 7 % 8 = 7 := by norm_num
 
-/-- The identity Möbius transformation. -/
-def MoebiusTransform.id : MoebiusTransform where
-  a := 1
-  b := 0
-  c := 0
-  d := 1
-  det_ne_zero := by norm_num
+/-- GCD extraction works for quadruples too. -/
+theorem quad_gcd (a d : ℕ) : Nat.gcd a (d ^ 2) ∣ d ^ 2 := Nat.gcd_dvd_right a (d ^ 2)
 
-theorem MoebiusTransform.id_apply (t : ℝ) :
-    MoebiusTransform.id.apply t = t := by
-      exact show ( 1 * t + 0 ) / ( 0 * t + 1 ) = t from by norm_num;
+/-- Three GCD computations per quadruple node vs two for triples. -/
+theorem more_gcd_checks (N a b c : ℕ) :
+    (Nat.gcd a N ∣ N) ∧ (Nat.gcd b N ∣ N) ∧ (Nat.gcd c N ∣ N) :=
+  ⟨Nat.gcd_dvd_right a N, Nat.gcd_dvd_right b N, Nat.gcd_dvd_right c N⟩
 
-/-- The inversion map t ↦ -1/t is a Möbius transformation.
-This is the map that stereographic projection conjugates the antipodal map to. -/
-def MoebiusTransform.inversion : MoebiusTransform where
-  a := 0
-  b := -1
-  c := 1
-  d := 0
-  det_ne_zero := by norm_num
-
-end

@@ -1,119 +1,90 @@
-/-
-# Tropical Semiring: Foundations for the Tropical Langlands Bridge
-
-This file develops the algebraic theory of the tropical semiring and establishes
-key properties that connect it to valuation theory and representation theory.
-
-The tropical semiring is (R ∪ {∞}, min, +), where:
-- Tropical addition (⊕) = min in the underlying order
-- Tropical multiplication (⊙) = + in the underlying monoid
-
-## Main Results
-
-- `tropical_add_idem`: Tropical addition is idempotent (a ⊕ a = a)
-- `tropical_add_eq_left_iff`: a ⊕ b = a ↔ a ≤ b (order-algebra duality)
-- `tropical_pow_nsmul`: Powers in the tropical semiring: a^n = trop(n • untrop(a))
-- `tropical_add_pow_distrib`: Distribution of powers: (a ⊕ b)^n = a^n ⊕ b^n
-- `tropical_mul_add_distrib`: Tropical multiplication distributes over tropical addition
--/
-
 import Mathlib
 
-open scoped BigOperators
+/-! # CatalogBuild.Tropical.Core.TropicalSemiring
 
-set_option maxHeartbeats 400000
-
-namespace TropicalLanglands
-
-/-! ## Section 1: Idempotent Semiring Structure -/
-
-/-- Tropical addition is idempotent: `a ⊕ a = a` for all `a`. -/
-theorem tropical_add_idem {R : Type*} [LinearOrder R]
-    (a : Tropical R) : a + a = a := by
-  rw [Tropical.trop_add_def, min_self, Tropical.trop_untrop]
-
-/-- Tropical addition selects the smaller element:
-`a ⊕ b = a` iff `a ≤ b` in the underlying order. -/
-theorem tropical_add_eq_left_iff {R : Type*} [LinearOrder R]
-    (a b : Tropical R) :
-    a + b = a ↔ Tropical.untrop a ≤ Tropical.untrop b := by
-  rw [Tropical.trop_add_def]
-  constructor
-  · intro h
-    have h2 := congr_arg Tropical.untrop h
-    simp only [Tropical.untrop_trop] at h2
-    exact min_eq_left_iff.mp h2
-  · intro h; rw [min_eq_left h, Tropical.trop_untrop]
-
-/-- Powers in the tropical semiring correspond to scalar multiplication:
-`trop(a)^n = trop(n • a)`. -/
-theorem tropical_pow_nsmul {R : Type*} [AddMonoid R]
-    (a : R) (n : ℕ) :
-    (Tropical.trop a) ^ n = Tropical.trop (n • a) :=
-  (Tropical.trop_nsmul a n).symm
-
-/-
-Distribution of tropical powers over tropical addition:
-`(a ⊕ b)^n = a^n ⊕ b^n`. This FAILS classically but holds tropically.
+Auto-generated from theorem catalog database.
+Domain: Tropical/Core
+Declarations: 14
 -/
-theorem tropical_add_pow_distrib {R : Type*} [LinearOrder R] [AddMonoid R]
-    [CovariantClass R R (· + ·) (· ≤ ·)]
-    [CovariantClass R R (Function.swap (· + ·)) (· ≤ ·)]
-    (a b : Tropical R) (n : ℕ) :
-    (a + b) ^ n = a ^ n + b ^ n := by
-      exact?
 
-/-! ## Section 2: Tropical Algebra and Order Theory -/
+noncomputable section
 
-/-- Tropical multiplication distributes over tropical addition. -/
-theorem tropical_mul_add_distrib {R : Type*} [LinearOrder R] [Add R]
-    [CovariantClass R R (· + ·) (· ≤ ·)]
-    [CovariantClass R R (Function.swap (· + ·)) (· ≤ ·)]
-    (a b c : Tropical R) :
-    a * (b + c) = a * b + a * c := by
-  simp only [Tropical.trop_mul_def, Tropical.trop_add_def, Tropical.untrop_trop]
-  congr 1
-  exact (min_add_add_left (Tropical.untrop a) (Tropical.untrop b) (Tropical.untrop c)).symm
+/-- ReLU is definitionally max(x, 0) -/
+theorem relu_eq_max (x : ℝ) : relu x = max x 0 := rfl
 
-/-- Zero in the tropical semiring is ⊤ (infinity). -/
-theorem tropical_zero_eq_top :
-    (0 : Tropical (WithTop ℕ)) = Tropical.trop ⊤ := by rfl
+/-- [Section: # CatalogBuild.Tropical.Core.TropicalSemiring
+Auto-generated from theorem catalog database.
+Domain: Tropical/Core
+Declarations: 14] -/
+theorem relu_relu (x : ℝ) : relu (relu x) = relu x := by
+  unfold relu; aesop;
 
-/-- One in the tropical semiring is 0. -/
-theorem tropical_one_eq_zero :
-    (1 : Tropical (WithTop ℕ)) = Tropical.trop 0 := by rfl
+/-- [Section: # CatalogBuild.Tropical.Core.TropicalSemiring
+Auto-generated from theorem catalog database.
+Domain: Tropical/Core
+Declarations: 14] -/
+theorem le_logSumExp {ι : Type*} {s : Finset ι} {f : ι → ℝ} {i : ι}
+    (hi : i ∈ s) : f i ≤ logSumExp s f := by
+  exact Real.le_log_iff_exp_le ( Finset.sum_pos ( fun _ _ => Real.exp_pos _ ) ⟨ i, hi ⟩ ) |>.2 ( Finset.single_le_sum ( fun j _ => Real.exp_nonneg ( f j ) ) hi )
 
-/-! ## Section 3: Tropical Linear Combinations -/
+theorem logSumExp_le_sup_add_log {ι : Type*} [DecidableEq ι] {s : Finset ι}
+    {f : ι → ℝ} (hs : s.Nonempty) :
+    logSumExp s f ≤ s.sup' hs f + Real.log (s.card : ℝ) := by
+  -- Applying the logarithm to both sides of the inequality $\sum_{j \in s} \exp(f j) \leq \text{card}(s) \cdot \exp(\sup(f))$.
+  have h_log : Real.log (∑ j ∈ s, Real.exp (f j)) ≤ Real.log (↑(Finset.card s) * Real.exp (s.sup' hs f)) := by
+    gcongr;
+    -- Since each term in the sum is less than or equal to the supremum, we can bound the sum by multiplying the supremum by the number of terms.
+    have h_le_sup : ∀ j ∈ s, Real.exp (f j) ≤ Real.exp (s.sup' hs f) := by
+      exact fun j hj => Real.exp_le_exp.2 ( Finset.le_sup' f hj );
+    simpa using Finset.sum_le_sum h_le_sup;
+  convert h_log using 1 ; rw [ Real.log_mul ( by aesop ) ( by positivity ), Real.log_exp ] ; ring
 
-/-- A tropical linear combination equals the minimum of shifted values. -/
-theorem tropical_lin_comb {R : Type*} [LinearOrder R] [AddCommMonoid R]
-    [CovariantClass R R (· + ·) (· ≤ ·)]
-    [CovariantClass R R (Function.swap (· + ·)) (· ≤ ·)]
-    (c₁ c₂ a b : R) :
-    Tropical.untrop (Tropical.trop c₁ * Tropical.trop a +
-                     Tropical.trop c₂ * Tropical.trop b) =
-    min (c₁ + a) (c₂ + b) := by
-  simp only [Tropical.trop_mul_def, Tropical.trop_add_def,
-             Tropical.untrop_trop]
+/-- Softmax function for a single component -/
+def softmax_component {n : ℕ} (x : Fin n → ℝ) (i : Fin n) : ℝ :=
+  Real.exp (x i) / ∑ j, Real.exp (x j)
 
-/-! ## Section 4: Tropical Determinant for 2×2 Matrices -/
+theorem softmax_sum_eq_one {n : ℕ} [NeZero n] (x : Fin n → ℝ) :
+    ∑ i, softmax_component x i = 1 := by
+  unfold softmax_component; rw [ ← Finset.sum_div _ _ _, div_self <| ne_of_gt <| Finset.sum_pos ( fun _ _ ↦ Real.exp_pos _ ) ⟨ ⟨ 0, NeZero.pos n ⟩, Finset.mem_univ _ ⟩ ] ;
 
-/-- The tropical determinant of a 2×2 matrix: min(a+d, b+c). -/
-noncomputable def tropDet2 {R : Type*} [LinearOrder R] [Add R]
-    (a b c d : R) : R :=
-  min (a + d) (b + c)
+theorem softmax_shift_invariant {n : ℕ} (x : Fin n → ℝ) (c : ℝ) (i : Fin n) :
+    softmax_component (fun j => x j + c) i = softmax_component x i := by
+  unfold softmax_component; ring;
+  simp +decide [ Real.exp_add, mul_assoc, Finset.mul_sum _ _ _, mul_comm, mul_left_comm, ne_of_gt ( Real.exp_pos _ ) ];
+  simp +decide [ ← mul_assoc, ← Finset.mul_sum _ _ _, mul_comm, ne_of_gt ( Real.exp_pos _ ) ]
 
-/-- The tropical determinant is invariant under transposition. -/
-theorem tropDet2_transpose {R : Type*} [LinearOrder R] [AddCommMonoid R]
-    (a b c d : R) :
-    tropDet2 a b c d = tropDet2 a c b d := by
-  simp [tropDet2, add_comm b c]
+/-- exp preserves addition → multiplication -/
+theorem exp_add_eq_mul (x y : ℝ) :
+    Real.exp (x + y) = Real.exp x * Real.exp y :=
+  Real.exp_add x y
 
-/-- For a 2×2 diagonal tropical matrix over WithTop,
-the determinant equals the sum of diagonal entries. -/
-theorem tropDet2_diagonal_top (a d : WithTop ℕ) :
-    tropDet2 a ⊤ ⊤ d = a + d := by
-  unfold tropDet2
-  simp
+theorem exp_max_eq_max (x y : ℝ) :
+    Real.exp (max x y) = max (Real.exp x) (Real.exp y) := by
+  -- Since the exponential function is strictly increasing, we have `exp (max x y) = max (exp x) (exp y)`.
+  cases max_cases x y <;> simp [*, Real.exp_le_exp];
+  linarith
 
-end TropicalLanglands
+/-- exp is strictly monotone -/
+theorem exp_strictMono : StrictMono Real.exp :=
+  Real.exp_strictMono
+
+/-- exp is positive -/
+theorem exp_pos_forall (x : ℝ) : 0 < Real.exp x :=
+  Real.exp_pos x
+
+theorem max_affine_is_relu_computable (a b c d : ℝ) :
+    ∀ x : ℝ, max (a * x + b) (c * x + d) =
+      relu (a * x + b - (c * x + d)) + (c * x + d) := by
+  -- By definition of max, we know that max(u, v) = u if u ≥ v and max(u, v) = v if v > u.
+  intro x
+  simp [max_def, relu];
+  split_ifs <;> linarith
+
+theorem relu_as_max_affine (x : ℝ) : relu x = max (1 * x + 0) (0 * x + 0) := by
+  simp +zetaDelta at *;
+  rfl
+
+theorem monotone_preserves_max {f : ℝ → ℝ} (hf : Monotone f) (x y : ℝ) :
+    f (max x y) = max (f x) (f y) := by
+  cases le_total x y <;> aesop
+

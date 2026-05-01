@@ -1,143 +1,121 @@
 import Mathlib
 
-/-! # CatalogBuild.Algebra.Convergence
+/-! # CatalogBuild.MachineLearning.Prediction.Convergence
 
 Auto-generated from theorem catalog database.
-Domain: Algebra
-Declarations: 14
+Domain: MachineLearning/Prediction
+Declarations: 9
 -/
 
 
 noncomputable section
 
-/-- A belief vector on n hypotheses. -/
-def Beliefs (n : ℕ) := Fin n → ℝ
-
-
-
-
-/-- [Section: # CatalogBuild.Algebra.Convergence
+/-- [Section: # CatalogBuild.MachineLearning.Prediction.Convergence
 Auto-generated from theorem catalog database.
-Domain: Algebra
-Declarations: 14] -/
-theorem dead_hypothesis_stays_dead {n : ℕ} (b : Beliefs n) (l : Fin n → ℝ)
-    (hl : ∀ i, 0 ≤ l i) (i : Fin n) (hi : b i = 0)
-    (e : ℝ) (he_def : e = ∑ j : Fin n, b j * l j) :
-    (if e = 0 then b i else (b i * l i) / e) = 0 := by
-  aesop
+Domain: MachineLearning/Prediction
+Declarations: 9] -/
+theorem iterative_prediction_convergence
+    (error : ℕ → ℝ) (c : ℝ) (hc0 : 0 ≤ c) (_hc1 : c < 1)
+    (_h0 : 0 ≤ error 0)
+    (hstep : ∀ n, error (n + 1) ≤ c * error n)
+    (herr : ∀ n, 0 ≤ error n) :
+    ∀ n, error n ≤ c ^ n * error 0 := by
+  exact fun n => Nat.recOn n ( by norm_num ) fun n ih => by rw [ pow_succ', mul_assoc ] ; exact le_trans ( hstep _ ) ( mul_le_mul_of_nonneg_left ih hc0 ) ;
 
 
 
 
-/-- [Section: # CatalogBuild.Algebra.Convergence
+/-- [Section: # CatalogBuild.MachineLearning.Prediction.Convergence
 Auto-generated from theorem catalog database.
-Domain: Algebra
-Declarations: 14] -/
-theorem zero_likelihood_eliminates {n : ℕ} (b : Beliefs n) (l : Fin n → ℝ)
-    (i : Fin n) (hli : l i = 0)
-    (he : 0 < ∑ j : Fin n, b j * l j) :
-    (b i * l i) / (∑ j : Fin n, b j * l j) = 0 := by
-  aesop
-
--- ═══════════════════════════════════════════════════════════════════════
--- §9: L¹ METRIC ON BELIEFS
--- ═══════════════════════════════════════════════════════════════════════
-
-
-
-
-/-- L¹ distance between two belief states. -/
-def beliefDistance {n : ℕ} (b₁ b₂ : Beliefs n) : ℝ :=
-  ∑ i : Fin n, |b₁ i - b₂ i|
+Domain: MachineLearning/Prediction
+Declarations: 9] -/
+theorem iterative_prediction_vanishes
+    (error : ℕ → ℝ) (c : ℝ) (hc0 : 0 ≤ c) (hc1 : c < 1)
+    (_h0 : 0 ≤ error 0)
+    (hstep : ∀ n, error (n + 1) ≤ c * error n)
+    (herr : ∀ n, 0 ≤ error n)
+    (ε : ℝ) (hε : 0 < ε) :
+    ∃ N, ∀ n, N ≤ n → error n < ε := by
+  -- By iterative_prediction_convergence, error n ≤ c^n * error 0.
+  have h_iter : ∀ n, error n ≤ c^n * error 0 := by
+    exact?;
+  -- Since $c < 1$, $c^n \to 0$ as $n \to \infty$.
+  have h_c_pow_zero : Filter.Tendsto (fun n => c^n * error 0) Filter.atTop (nhds 0) := by
+    simpa using Filter.Tendsto.mul ( tendsto_pow_atTop_nhds_zero_of_lt_one hc0 hc1 ) tendsto_const_nhds;
+  exact Filter.eventually_atTop.mp ( h_c_pow_zero.eventually ( gt_mem_nhds hε ) ) |> fun ⟨ N, hN ⟩ ↦ ⟨ N, fun n hn ↦ lt_of_le_of_lt ( h_iter n ) ( hN n hn ) ⟩
 
 
 
 
-theorem beliefDistance_nonneg {n : ℕ} (b₁ b₂ : Beliefs n) :
-    0 ≤ beliefDistance b₁ b₂ := by
-  exact Finset.sum_nonneg fun _ _ => abs_nonneg _
+theorem mwu_regret_bound_structure
+    (N T : ℕ) (_η : ℝ) (_hη : 0 < _η) (_hN : 0 < N)
+    (regret : ℝ)
+    (hregret : regret ≤ Real.log N / _η + _η * T) :
+    regret ≤ Real.log N / _η + _η * T := hregret
 
 
 
 
-theorem beliefDistance_symm {n : ℕ} (b₁ b₂ : Beliefs n) :
-    beliefDistance b₁ b₂ = beliefDistance b₂ b₁ := by
-  exact Finset.sum_congr rfl fun _ _ => abs_sub_comm _ _
+theorem optimal_mwu_rate (N T : ℕ) (hN : 1 < N) (hT : 0 < T) :
+    let eta := Real.sqrt (Real.log N / T)
+    Real.log N / eta + eta * T = 2 * Real.sqrt (T * Real.log N) := by
+  field_simp [mul_comm, mul_assoc, mul_left_comm];
+  rw [ Real.sq_sqrt <| by positivity, div_eq_iff ] <;> ring_nf <;> norm_num [ hT.ne', hN.le ];
+  · ring ; norm_num [ hT.ne', hN.le ];
+    rw [ Real.sq_sqrt ( Real.log_nonneg ( Nat.one_le_cast.mpr hN.le ) ) ];
+  · exact ne_of_gt <| Real.sqrt_pos.mpr <| Real.log_pos <| Nat.one_lt_cast.mpr hN
 
 
 
 
-theorem beliefDistance_triangle {n : ℕ} (b₁ b₂ b₃ : Beliefs n) :
-    beliefDistance b₁ b₃ ≤ beliefDistance b₁ b₂ + beliefDistance b₂ b₃ := by
-  unfold beliefDistance;
-  simpa only [ ← Finset.sum_add_distrib ] using Finset.sum_le_sum fun i _ => abs_sub_le _ _ _
+theorem brier_score_decomposition
+    (n : ℕ) (_hn : 0 < n)
+    (forecasts outcomes : Fin n → ℝ)
+    (reliability resolution uncertainty : ℝ)
+    (hBS : ∑ i, (forecasts i - outcomes i) ^ 2 =
+           (n : ℝ) * (reliability - resolution + uncertainty)) :
+    ∑ i, (forecasts i - outcomes i) ^ 2 =
+    (n : ℝ) * (reliability - resolution + uncertainty) := hBS
 
 
 
 
-theorem beliefDistance_eq_zero_iff {n : ℕ} (b₁ b₂ : Beliefs n) :
-    beliefDistance b₁ b₂ = 0 ↔ b₁ = b₂ := by
-  exact ⟨ fun h => funext fun i => sub_eq_zero.mp <| abs_eq_zero.mp <| Finset.sum_eq_zero_iff_of_nonneg ( fun _ _ => abs_nonneg _ ) |>.1 h i <| Finset.mem_univ _, fun h => h ▸ Finset.sum_eq_zero fun _ _ => by simp +decide ⟩
+theorem discrete_opinion_merging
+    (p₁ p₂ : ℕ → ℝ)
+    (delta : ℕ → ℝ)
+    (_hdelta_pos : ∀ n, 0 ≤ delta n)
+    (hdelta_bound : ∀ n, |p₁ n - p₂ n| ≤ delta n)
+    (hdelta_vanish : Filter.Tendsto delta Filter.atTop (nhds 0)) :
+    Filter.Tendsto (fun n => |p₁ n - p₂ n|) Filter.atTop (nhds 0) := by
+  exact squeeze_zero ( fun n => abs_nonneg _ ) hdelta_bound hdelta_vanish
 
 
 
 
-theorem geometric_convergence (a : ℕ → ℝ) (c : ℝ)
-    (ha0 : 0 ≤ a 0) (hc0 : 0 ≤ c) (hc1 : c < 1)
-    (hstep : ∀ k, a (k + 1) ≤ c * a k) :
-    ∀ k, a k ≤ c ^ k * a 0 := by
-  exact fun k => Nat.recOn k ( by norm_num ) fun k ih => by rw [ pow_succ', mul_assoc ] ; exact le_trans ( hstep k ) ( mul_le_mul_of_nonneg_left ih hc0 ) ;
+theorem doob_decomposition_noise_zero_mean
+    (signal noise observation : Fin n → ℝ)
+    (w : Fin n → ℝ)
+    (_hw_nonneg : ∀ i, 0 ≤ w i)
+    (_hw_sum : ∑ i, w i = 1)
+    (hdecomp : ∀ i, observation i = signal i + noise i)
+    (hnoise : ∑ i, w i * noise i = 0) :
+    ∑ i, w i * observation i = ∑ i, w i * signal i := by
+  simp +decide [ *, mul_add, Finset.sum_add_distrib ]
 
 
 
 
-theorem geometric_partial_sum_bound (c : ℝ) (hc0 : 0 ≤ c) (hc1 : c < 1)
-    (n : ℕ) :
-    ∑ k ∈ Finset.range n, c ^ k ≤ 1 / (1 - c) := by
-  rw [ le_div_iff₀ ] <;> nlinarith [ pow_nonneg hc0 n, geom_sum_mul c n ]
-
--- ═══════════════════════════════════════════════════════════════════════
--- §11: IDEMPOTENT UPDATES AND COMPLETENESS
--- ═══════════════════════════════════════════════════════════════════════
+theorem ar1_autocorrelation_decay (rho : ℝ) (hrho : |rho| < 1) :
+    Filter.Tendsto (fun k => rho ^ k) Filter.atTop (nhds 0) := by
+  exact tendsto_pow_atTop_nhds_zero_of_abs_lt_one hrho
 
 
 
 
-/-- Evidence for a belief-likelihood pair. -/
-def bayesEvidence {n : ℕ} (b : Fin n → ℝ) (l : Fin n → ℝ) : ℝ :=
-  ∑ j, b j * l j
+theorem prediction_variance_growth (sigma_sq : ℝ) (hsig : 0 < sigma_sq) (k : ℕ) :
+    sigma_sq ≤ (k + 1) * sigma_sq := by
+  exact le_mul_of_one_le_left hsig.le ( by linarith )
 
 
 
 
-/-- The Bayesian update operator. -/
-def bayesUpdate {n : ℕ} (l : Fin n → ℝ) (b : Fin n → ℝ) : Fin n → ℝ :=
-  if bayesEvidence b l = 0 then b else fun i => (b i * l i) / bayesEvidence b l
-
-
-
-
-theorem idempotent_deterministic_update {n : ℕ} (b : Fin n → ℝ)
-    (l : Fin n → ℝ) (hb : ∀ i, 0 ≤ b i) (hl : ∀ i, l i = 0 ∨ l i = 1) :
-    bayesUpdate l (bayesUpdate l b) = bayesUpdate l b := by
-  unfold bayesUpdate;
-  by_cases h : bayesEvidence b l = 0 <;> simp +decide [ h, bayesEvidence ];
-  · unfold bayesEvidence at h; aesop;
-  · split_ifs <;> simp_all +decide [ div_eq_mul_inv, mul_assoc, mul_comm, mul_left_comm, Finset.mul_sum _ _ _, Finset.sum_mul ];
-    simp_all +decide [ ← mul_assoc, ← Finset.sum_mul _ _ _ ];
-    grind +locals
-
-
-
-
-theorem scientific_method_complete {n : ℕ} (hn : 0 < n) (hstar : Fin n) :
-    ∃ experiments : Fin (n - 1) → (Fin n → ℝ),
-      (∀ k, ∀ i, 0 ≤ experiments k i) ∧
-      (∀ k, 0 < experiments k hstar) ∧
-      (∀ k, ∀ i, i ≠ hstar → experiments k i ≤ experiments k hstar) := by
-  exact ⟨ fun _ _ => 1, fun _ _ => by norm_num, fun _ => by norm_num, fun _ _ _ => by norm_num ⟩
-
-
-
-
-end

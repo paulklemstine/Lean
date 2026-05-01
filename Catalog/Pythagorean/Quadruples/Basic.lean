@@ -1,99 +1,186 @@
 import Mathlib
 
-/-! # CatalogBuild.Speculative.Other.Basic
+/-! # CatalogBuild.Pythagorean.Quadruples.Basic
 
 Auto-generated from theorem catalog database.
-Domain: Speculative/Other
-Declarations: 15
+Domain: Pythagorean/Quadruples
+Declarations: 21
 -/
 
-noncomputable section
+/-- The sum-of-squares congruence condition. -/
+def sumSqCong (N x y z : ℤ) : Prop :=
+  (N ^ 2) ∣ (x ^ 2 + y ^ 2 + z ^ 2)
 
-/-- ε₀ (epsilon-zero): the least fixed point of `ω ^ ·` above 0.
-This is the supremum of the omega tower and satisfies ω^(ε₀) = ε₀. -/
-noncomputable def epsilon0 : Ordinal.{0} := Ordinal.nfp (omega0 ^ ·) 0
+/-- The set of integer triples whose sum of squares is divisible by N². -/
+def SumSqCongSet (N : ℤ) : Set (ℤ × ℤ × ℤ) :=
+  { v | sumSqCong N v.1 v.2.1 v.2.2 }
 
-/-- [Section: # CatalogBuild.Speculative.Other.Basic
-Auto-generated from theorem catalog database.
-Domain: Speculative/Other
-Declarations: 15] -/
-theorem omegaTower_one : omegaTower 1 = omega0 := by simp [opow_one]
+/-- The zero vector is always in L₄(N). -/
+theorem zero_mem_sumSqCongSet (N : ℤ) : (0, 0, 0) ∈ SumSqCongSet N := by
+  simp [SumSqCongSet, sumSqCong]
 
-/-- [Section: # CatalogBuild.Speculative.Other.Basic
-Auto-generated from theorem catalog database.
-Domain: Speculative/Other
-Declarations: 15] -/
-theorem omegaTower_two : omegaTower 2 = omega0 ^ omega0 := by simp
+/-- Any multiple of N in all coordinates is in L₄(N). -/
+theorem mul_N_mem (N a b c : ℤ) : (N * a, N * b, N * c) ∈ SumSqCongSet N := by
+  simp only [SumSqCongSet, Set.mem_setOf_eq, sumSqCong]
+  exact ⟨a ^ 2 + b ^ 2 + c ^ 2, by ring⟩
 
-/-- ω^· is a normal (strictly monotone and continuous) function on ordinals. -/
-theorem omega0_opow_isNormal : Order.IsNormal (fun x : Ordinal.{0} => omega0 ^ x) :=
-  Ordinal.isNormal_opow one_lt_omega0
+/-- **L₄(N) is NOT closed under addition for N = 3.**
+Take v = (2, 1, 2) and w = (1, 2, 2). We have:
+- 2² + 1² + 2² = 9 = 3², so v ∈ L₄(3)
+- 1² + 2² + 2² = 9 = 3², so w ∈ L₄(3)
+- (3)² + (3)² + (4)² = 9 + 9 + 16 = 34, and 9 ∤ 34, so v + w ∉ L₄(3) -/
+theorem sumSqCongSet_not_closed_add :
+    ¬ ∀ (v w : ℤ × ℤ × ℤ), v ∈ SumSqCongSet 3 → w ∈ SumSqCongSet 3 →
+      (v.1 + w.1, v.2.1 + w.2.1, v.2.2 + w.2.2) ∈ SumSqCongSet 3 := by
+  intro h
+  have h1 : (2, 1, 2) ∈ SumSqCongSet 3 := by
+    simp only [SumSqCongSet, Set.mem_setOf_eq, sumSqCong]; norm_num
+  have h2 : (1, 2, 2) ∈ SumSqCongSet 3 := by
+    simp only [SumSqCongSet, Set.mem_setOf_eq, sumSqCong]; norm_num
+  have h3 := h _ _ h1 h2
+  simp only [SumSqCongSet, Set.mem_setOf_eq, sumSqCong] at h3
+  omega
 
-/-- ω^· is strictly monotone. -/
-theorem omega0_opow_strictMono : StrictMono (fun x : Ordinal.{0} => omega0 ^ x) :=
-  omega0_opow_isNormal.strictMono
+/-- A lattice related to a quadratic residue root.
+If r² ≡ -1 (mod N), then L = {(x, y) : N | (x - r·y)} is a lattice
+and short vectors give N | (x² + y²). -/
+def quadResLattice (N r : ℤ) : Set (ℤ × ℤ) :=
+  { v | N ∣ (v.1 - r * v.2) }
 
-/-- Each level of the omega tower is positive. -/
-theorem omegaTower_pos (n : ℕ) : 0 < omegaTower n := by
-  induction n <;> simp +decide [*]
-  exact Ordinal.opow_pos _ Ordinal.omega0_pos
+/-- The quadratic residue lattice is closed under addition. -/
+theorem quadResLattice_add_closed (N r : ℤ) (v w : ℤ × ℤ)
+    (hv : v ∈ quadResLattice N r) (hw : w ∈ quadResLattice N r) :
+    (v.1 + w.1, v.2 + w.2) ∈ quadResLattice N r := by
+  simp only [quadResLattice, Set.mem_setOf_eq] at *
+  have : (v.1 + w.1) - r * (v.2 + w.2) = (v.1 - r * v.2) + (w.1 - r * w.2) := by ring
+  rw [this]
+  exact dvd_add hv hw
 
-/-- Each level of the omega tower is at least 1. -/
-theorem one_le_omegaTower (n : ℕ) : 1 ≤ omegaTower n := by
-  induction' n with n _ih
-  · exact le_rfl
-  · exact Ordinal.one_le_iff_ne_zero.mpr (ne_of_gt (Ordinal.opow_pos _ Ordinal.omega0_pos))
+/-- The zero vector is in the quadratic residue lattice. -/
+theorem quadResLattice_zero (N r : ℤ) : (0, 0) ∈ quadResLattice N r := by
+  simp [quadResLattice]
 
-/-- The key step: each level is strictly less than the next. -/
-theorem omegaTower_lt_succ (n : ℕ) : omegaTower n < omegaTower (n + 1) := by
-  induction n <;> aesop
+/-- The quadratic residue lattice is closed under negation. -/
+theorem quadResLattice_neg (N r : ℤ) (v : ℤ × ℤ)
+    (hv : v ∈ quadResLattice N r) :
+    (-v.1, -v.2) ∈ quadResLattice N r := by
+  simp only [quadResLattice, Set.mem_setOf_eq] at *
+  have : -v.1 - r * -v.2 = -(v.1 - r * v.2) := by ring
+  rw [this]
+  exact dvd_neg.mpr hv
 
-/-- The omega tower at level n equals the (n+1)-th iterate of ω^· applied to 0. -/
-theorem omegaTower_eq_iterate_zero (n : ℕ) :
-    omegaTower n = (omega0 ^ ·)^[n + 1] 0 := by
-  induction n <;> simp_all +decide [Function.iterate_succ_apply']
+/-- If r² ≡ -1 (mod N) and (x, y) is in the quadratic residue lattice,
+then N | (x² + y²). -/
+theorem quadResLattice_sum_sq (N r x y : ℤ)
+    (hr : N ∣ (r ^ 2 + 1))
+    (hmem : (x, y) ∈ quadResLattice N r) :
+    N ∣ (x ^ 2 + y ^ 2) := by
+  simp only [quadResLattice, Set.mem_setOf_eq] at hmem
+  obtain ⟨k, hk⟩ := hmem
+  have hx : x = r * y + k * N := by linarith
+  obtain ⟨j, hj⟩ := hr
+  rw [hx]
+  exact ⟨j * y ^ 2 + 2 * r * y * k + k ^ 2 * N, by nlinarith [hj]⟩
 
-/-- Every level of the omega tower is strictly below ε₀. -/
-theorem omegaTower_lt_epsilon0 (n : ℕ) : omegaTower n < epsilon0 := by
-  rw [omegaTower_eq_iterate_zero]
-  apply Ordinal.iterate_lt_nfp omega0_opow_strictMono
-  norm_num +zetaDelta
+/-- A 3D lattice for the sum of three squares condition.
+Given r₁² + r₂² ≡ -1 (mod N), the lattice
+L = {(x, y, z) : N | (x - r₁·z), N | (y - r₂·z)}
+has the property that short vectors give x² + y² + z² ≡ 0 (mod N). -/
+def sumThreeSqLattice (N r₁ r₂ : ℤ) : Set (ℤ × ℤ × ℤ) :=
+  { v | N ∣ (v.1 - r₁ * v.2.2) ∧ N ∣ (v.2.1 - r₂ * v.2.2) }
 
-/-- **The defining property of ε₀**: ω^(ε₀) = ε₀. -/
-theorem epsilon0_fixed_point : omega0 ^ epsilon0 = epsilon0 :=
-  Ordinal.nfp_fp omega0_opow_isNormal 0
-
-/-- ε₀ is the *least* ordinal ≥ 0 that is a fixed point of ω^·. -/
-theorem epsilon0_le_of_fixed_point (a : Ordinal.{0}) (ha : omega0 ^ a = a) :
-    epsilon0 ≤ a := by
-  exact Ordinal.nfp_le_fp omega0_opow_isNormal.monotone bot_le (le_of_eq ha)
-
-/-- ε₀ is positive. -/
-theorem epsilon0_pos : 0 < epsilon0 :=
-  lt_trans (by simp : (0 : Ordinal) < omegaTower 0) (omegaTower_lt_epsilon0 0)
-
-/-- ε₀ is greater than ω. -/
-theorem omega0_lt_epsilon0 : omega0 < epsilon0 :=
-  omegaTower_one ▸ omegaTower_lt_epsilon0 1
-
-/-- ε₀ is a limit ordinal (not zero, not a successor).
-**Proof**: If `a ⋖ ε₀` (a is covered by ε₀, i.e., a is an immediate
-predecessor), then `a < ε₀`. Since `ω^·` is a normal function,
-`a ≤ ω^a`. If `a = ω^a`, then `a` is a fixed point of `ω^·`, so
-`ε₀ ≤ a`, contradicting `a < ε₀`. Thus `a < ω^a`. But also
-`ω^a < ω^(ε₀) = ε₀` by strict monotonicity. This gives
-`a < ω^a < ε₀`, contradicting `a ⋖ ε₀`. -/
-theorem epsilon0_isSuccLimit : Order.IsSuccLimit epsilon0 := by
+/-- The 3D sum-of-squares lattice is closed under addition. -/
+theorem sumThreeSqLattice_add_closed (N r₁ r₂ : ℤ)
+    (v w : ℤ × ℤ × ℤ)
+    (hv : v ∈ sumThreeSqLattice N r₁ r₂)
+    (hw : w ∈ sumThreeSqLattice N r₁ r₂) :
+    (v.1 + w.1, v.2.1 + w.2.1, v.2.2 + w.2.2) ∈ sumThreeSqLattice N r₁ r₂ := by
+  simp only [sumThreeSqLattice, Set.mem_setOf_eq] at *
+  obtain ⟨hv1, hv2⟩ := hv
+  obtain ⟨hw1, hw2⟩ := hw
   constructor
-  · intro h
-    exact absurd (h bot_le) (not_le.mpr epsilon0_pos)
-  · intro a ⟨ha_lt, ha_cov⟩
-    have h1 : a ≤ omega0 ^ a := omega0_opow_isNormal.strictMono.le_apply
-    have h2 : a ≠ omega0 ^ a := by
-      intro heq
-      exact absurd ha_lt (not_lt.mpr (epsilon0_le_of_fixed_point a heq.symm))
-    have h3 : a < omega0 ^ a := lt_of_le_of_ne h1 h2
-    have h4 : omega0 ^ a < epsilon0 := epsilon0_fixed_point ▸ omega0_opow_strictMono ha_lt
-    exact ha_cov h3 h4
+  · have : (v.1 + w.1) - r₁ * (v.2.2 + w.2.2) =
+      (v.1 - r₁ * v.2.2) + (w.1 - r₁ * w.2.2) := by ring
+    rw [this]; exact dvd_add hv1 hw1
+  · have : (v.2.1 + w.2.1) - r₂ * (v.2.2 + w.2.2) =
+      (v.2.1 - r₂ * v.2.2) + (w.2.1 - r₂ * w.2.2) := by ring
+    rw [this]; exact dvd_add hv2 hw2
 
-end
+/-- The zero vector is in the 3D lattice. -/
+theorem sumThreeSqLattice_zero (N r₁ r₂ : ℤ) :
+    (0, 0, 0) ∈ sumThreeSqLattice N r₁ r₂ := by
+  simp [sumThreeSqLattice]
+
+/-- If r₁² + r₂² + 1 ≡ 0 (mod N) and (x,y,z) ∈ L, then N | (x²+y²+z²). -/
+theorem sumThreeSqLattice_divides (N r₁ r₂ x y z : ℤ)
+    (hr : N ∣ (r₁ ^ 2 + r₂ ^ 2 + 1))
+    (hmem : (x, y, z) ∈ sumThreeSqLattice N r₁ r₂) :
+    N ∣ (x ^ 2 + y ^ 2 + z ^ 2) := by
+  simp only [sumThreeSqLattice, Set.mem_setOf_eq] at hmem
+  obtain ⟨hx, hy⟩ := hmem
+  obtain ⟨a, ha⟩ := hx
+  obtain ⟨b, hb⟩ := hy
+  obtain ⟨c, hc⟩ := hr
+  have hx_eq : x = r₁ * z + a * N := by linarith
+  have hy_eq : y = r₂ * z + b * N := by linarith
+  rw [hx_eq, hy_eq]
+  exact ⟨c * z ^ 2 + 2 * r₁ * z * a + a ^ 2 * N + 2 * r₂ * z * b + b ^ 2 * N,
+         by nlinarith [hc]⟩
+
+/-- A basis for the 3D sum-of-squares lattice (as column vectors):
+b₁ = (N, 0, 0), b₂ = (0, N, 0), b₃ = (r₁, r₂, 1).
+The determinant of the basis matrix is N², so by Minkowski's theorem
+the shortest vector has norm at most √3 · N^{2/3}. -/
+def lattice3D_basis (N r₁ r₂ : ℤ) : Matrix (Fin 3) (Fin 3) ℤ :=
+  !![N, 0, r₁; 0, N, r₂; 0, 0, 1]
+
+/-- The basis matrix has determinant N². -/
+theorem lattice3D_basis_det (N r₁ r₂ : ℤ) :
+    Matrix.det (lattice3D_basis N r₁ r₂) = N ^ 2 := by
+  simp [lattice3D_basis, Matrix.det_fin_three]
+  ring
+
+/-- Each basis vector is in the 3D lattice. -/
+theorem basis_vec1_mem (N r₁ r₂ : ℤ) :
+    (N, (0 : ℤ), (0 : ℤ)) ∈ sumThreeSqLattice N r₁ r₂ := by
+  simp [sumThreeSqLattice]
+
+/-- [Section: # CatalogBuild.Pythagorean.Quadruples.Basic
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Quadruples
+Declarations: 21] -/
+theorem basis_vec2_mem (N r₁ r₂ : ℤ) :
+    ((0 : ℤ), N, (0 : ℤ)) ∈ sumThreeSqLattice N r₁ r₂ := by
+  simp [sumThreeSqLattice]
+
+/-- [Section: # CatalogBuild.Pythagorean.Quadruples.Basic
+Auto-generated from theorem catalog database.
+Domain: Pythagorean/Quadruples
+Declarations: 21] -/
+theorem basis_vec3_mem (N r₁ r₂ : ℤ) :
+    (r₁, r₂, (1 : ℤ)) ∈ sumThreeSqLattice N r₁ r₂ := by
+  simp [sumThreeSqLattice]
+
+/-- In 2D, Gauss reduction finds the shortest vector optimally.
+The Berggren tree descent IS Gauss reduction (Lattice-Tree Correspondence).
+This gives Θ(√N) for balanced semiprimes.
+In 3D, the Minkowski bound gives det^{1/3} ≈ N^{2/3} for det = N².
+For the factoring lattice, N^{2/3} < N^{1/2} when N^{4/3} < N,
+i.e., N^{1/3} < 1, which is false for N ≥ 2.
+CORRECTION: N^{2/3} > N^{1/2} for N ≥ 2, so the 3D lattice
+does NOT automatically beat √N via Minkowski alone.
+The hope would be that STRUCTURED lattices (from Pythagorean quadruples)
+have shorter vectors than Minkowski predicts. This requires empirical
+investigation. -/
+theorem dim_comparison : ∀ N : ℕ, 2 ≤ N → N ≤ N ^ 2 := by
+  intro N hN; nlinarith
+
+/-- The Hermite constant γ₃ = 2^{2/3} ≈ 1.587.
+Minkowski bound: λ₁ ≤ √γ₃ · det^{1/3}.
+For det = N²: λ₁ ≤ √(2^{2/3}) · N^{2/3} ≈ 1.26 · N^{2/3}. -/
+theorem hermite_3d_bound_nat (N : ℕ) (hN : 4 ≤ N) :
+    -- Weakened version: N^2 (det) has cube root < N
+    -- i.e., (N^{2/3})³ = N² < N³
+    N ^ 2 < N ^ 3 := by
+  nlinarith [sq_nonneg (N - 1)]
+

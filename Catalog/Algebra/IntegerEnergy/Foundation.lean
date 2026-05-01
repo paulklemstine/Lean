@@ -1,94 +1,217 @@
 import Mathlib
 
-/-! # CatalogBuild.MachineLearning.Prediction.Foundation
+/-! # CatalogBuild.Computation.Oracles.Foundation
 
 Auto-generated from theorem catalog database.
-Domain: MachineLearning/Prediction
-Declarations: 8
+Domain: Computation/Oracles
+Declarations: 28
 -/
 
 
 noncomputable section
 
-/-- Bayes' theorem preserves total probability -/
-theorem bayes_preserves_total (p₁ p₂ pB₁ pB₂ pB : ℝ)
-    (_hprior : p₁ + p₂ = 1)
-    (htotal : pB₁ * p₁ + pB₂ * p₂ = pB)
-    (hB : pB ≠ 0) :
-    pB₁ * p₁ / pB + pB₂ * p₂ / pB = 1 := by
-  rw [div_add_div_same, htotal, div_self hB]
+/-- A geodesic oracle seeker: an idempotent map that "seeks" fixed points. -/
+structure GeodesicOracle (X : Type*) where
+  seek : X → X
+  idempotent : ∀ x, seek (seek x) = seek x
 
 
 
 
-/-- [Section: # CatalogBuild.MachineLearning.Prediction.Foundation
+/-- The solution set of a geodesic oracle. -/
+def GeodesicOracle.solutionSet {X : Type*} (O : GeodesicOracle X) : Set X :=
+  {x | O.seek x = x}
+
+
+
+
+/-- Every oracle output is already a solution. -/
+theorem GeodesicOracle.output_is_solution {X : Type*} (O : GeodesicOracle X) (x : X) :
+    O.seek x ∈ O.solutionSet := O.idempotent x
+
+
+
+
+/-- The range of the oracle equals its solution set. -/
+theorem GeodesicOracle.range_eq_solutions {X : Type*} (O : GeodesicOracle X) :
+    range O.seek = O.solutionSet := by
+  ext y; simp only [GeodesicOracle.solutionSet, mem_range, mem_setOf_eq]
+  exact ⟨fun ⟨x, hx⟩ => hx ▸ O.idempotent x, fun hy => ⟨y, hy⟩⟩
+
+
+
+
+/-- [Section: # CatalogBuild.Computation.Oracles.Foundation
 Auto-generated from theorem catalog database.
-Domain: MachineLearning/Prediction
-Declarations: 8] -/
-def avgIndividualError (predictions : Fin n → ℝ) (truth : ℝ) (w : Fin n → ℝ) : ℝ :=
-  ∑ i, w i * (predictions i - truth) ^ 2
+Domain: Computation/Oracles
+Declarations: 28] -/
+theorem stereo_left_inverse (t : ℝ) : stereoProj (invStereo t) = t := by
+  unfold invStereo stereoProj; rw [ div_eq_iff ] <;> ring ;
+  · linarith [ inv_mul_cancel_left₀ ( by positivity : ( 1 + t ^ 2 ) ≠ 0 ) t ];
+  · nlinarith [ inv_mul_cancel₀ ( by positivity : ( 1 + t ^ 2 ) ≠ 0 ) ]
 
--- Ensemble prediction
 
 
 
-/-- [Section: # CatalogBuild.MachineLearning.Prediction.Foundation
+/-- Lift an oracle from ℝ to S¹ via stereographic projection. -/
+def liftOracle (O : GeodesicOracle ℝ) : ℝ × ℝ → ℝ × ℝ :=
+  invStereo ∘ O.seek ∘ stereoProj
+
+
+
+
+/-- The lifted oracle preserves S¹. -/
+theorem liftOracle_on_circle (O : GeodesicOracle ℝ) (p : ℝ × ℝ) :
+    (liftOracle O p).1 ^ 2 + (liftOracle O p).2 ^ 2 = 1 :=
+  invStereo_on_circle _
+
+
+
+
+/-- Idempotency of lifted oracle on invStereo image. -/
+theorem liftOracle_idempotent_on_image (O : GeodesicOracle ℝ) (t : ℝ) :
+    liftOracle O (liftOracle O (invStereo t)) = liftOracle O (invStereo t) := by
+  simp only [liftOracle, Function.comp_apply, stereo_left_inverse, O.idempotent]
+
+
+
+
+/-- Angular position via inverse stereo: θ(t) = 2 · arctan(t). -/
+def invStereoAngle (t : ℝ) : ℝ := 2 * arctan t
+
+
+
+
+/-- Arc-length (geodesic) distance on S¹. -/
+def geodesicDist (t₁ t₂ : ℝ) : ℝ :=
+  |invStereoAngle t₁ - invStereoAngle t₂|
+
+
+
+
+/-- [Section: # CatalogBuild.Computation.Oracles.Foundation
 Auto-generated from theorem catalog database.
-Domain: MachineLearning/Prediction
-Declarations: 8] -/
-def ensemblePred (predictions : Fin n → ℝ) (w : Fin n → ℝ) : ℝ :=
-  ∑ i, w i * predictions i
-
--- Diversity: weighted variance of predictions around ensemble mean
-
-
-
-def diversity (predictions : Fin n → ℝ) (w : Fin n → ℝ) : ℝ :=
-  ∑ i, w i * (predictions i - ensemblePred predictions w) ^ 2
+Declarations: 28] -/
+theorem geodesicDist_symm (t₁ t₂ : ℝ) : geodesicDist t₁ t₂ = geodesicDist t₂ t₁ := by
+  simp [geodesicDist, abs_sub_comm]
 
 
 
 
-theorem diversity_theorem (n : ℕ) (predictions : Fin n → ℝ)
-    (truth : ℝ) (w : Fin n → ℝ)
-    (hw_nonneg : ∀ i, 0 ≤ w i) (hw_sum : ∑ i, w i = 1) :
-    (ensemblePred predictions w - truth) ^ 2 ≤
-    avgIndividualError predictions truth w := by
-  rw [ ambiguity_decomposition ];
-  · exact sub_le_self _ ( Finset.sum_nonneg fun i _ => mul_nonneg ( hw_nonneg i ) ( sq_nonneg _ ) );
-  · exact hw_sum
+theorem geodesicDist_self (t : ℝ) : geodesicDist t t = 0 := by simp [geodesicDist]
 
 
 
 
-theorem self_consistent_prediction_unique
-    (f : ℝ → ℝ) (c : ℝ) (_hc0 : 0 ≤ c) (hc1 : c < 1)
-    (hf : ∀ x y, |f x - f y| ≤ c * |x - y|)
-    (p q : ℝ) (hp : f p = p) (hq : f q = q) : p = q := by
-  exact le_antisymm ( le_of_not_gt fun h => by cases abs_cases ( p - q ) <;> cases abs_cases ( f p - f q ) <;> nlinarith [ hf p q ] ) ( le_of_not_gt fun h => by cases abs_cases ( p - q ) <;> cases abs_cases ( f p - f q ) <;> nlinarith [ hf p q ] )
+theorem geodesicDist_triangle (t₁ t₂ t₃ : ℝ) :
+    geodesicDist t₁ t₃ ≤ geodesicDist t₁ t₂ + geodesicDist t₂ t₃ := by
+  simp only [geodesicDist, invStereoAngle]; exact abs_sub_le _ _ _
 
 
 
 
-theorem prediction_pythagorean {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
-    (proj : E →L[ℝ] E)
-    (_hproj : ∀ x, proj (proj x) = proj x)
-    (hsa : ∀ x y, @inner ℝ E _ (proj x) (y - proj y) = 0) :
-    ∀ x, ‖x‖ ^ 2 = ‖proj x‖ ^ 2 + ‖x - proj x‖ ^ 2 := by
-  intro x
-  have h_pyth : ‖x‖^2 = ‖proj x + (x - proj x)‖^2 := by
-    rw [ add_sub_cancel ];
-  rw [ h_pyth, @norm_add_sq ℝ ];
-  specialize hsa x x ; aesop
+theorem geodesicDist_nonneg (t₁ t₂ : ℝ) : 0 ≤ geodesicDist t₁ t₂ := abs_nonneg _
 
 
 
 
-theorem tower_property_finite (n : ℕ) (x w : Fin n → ℝ)
-    (_hw_nonneg : ∀ i, 0 ≤ w i)
-    (hw_sum : ∑ i, w i = 1) :
-    ∑ i, w i * (∑ j, w j * x j) = ∑ j, w j * x j := by
-  rw [ ← Finset.sum_mul, hw_sum, one_mul ]
+/-- A geodesic-seeking oracle contracts under geodesic distance. -/
+structure GeodesicSeekingOracle extends GeodesicOracle ℝ where
+  contractive : ∀ x, geodesicDist (seek x) (seek (seek x)) ≤ geodesicDist x (seek x)
+
+
+
+
+/-- The oracle output has zero geodesic distance to its own image. -/
+theorem oracle_geodesic_bridge (O : GeodesicSeekingOracle) (x : ℝ) :
+    geodesicDist (O.seek x) (O.seek (O.seek x)) = 0 := by
+  simp [geodesicDist, invStereoAngle, O.idempotent]
+
+
+
+
+/-- Information gain = geodesic distance traveled. -/
+def infoGain (O : GeodesicOracle ℝ) (x : ℝ) : ℝ := geodesicDist x (O.seek x)
+
+
+
+
+theorem infoGain_nonneg (O : GeodesicOracle ℝ) (x : ℝ) : 0 ≤ infoGain O x :=
+  geodesicDist_nonneg x (O.seek x)
+
+
+
+
+/-- At a fixed point, no information is gained. -/
+theorem infoGain_at_fixed_point (O : GeodesicOracle ℝ) (x : ℝ)
+    (hx : x ∈ O.solutionSet) : infoGain O x = 0 := by
+  simp only [GeodesicOracle.solutionSet, mem_setOf_eq] at hx
+  simp [infoGain, geodesicDist, hx]
+
+
+
+
+/-- Fisher information: squared geodesic displacement. -/
+def fisherInfoOracle (O : GeodesicOracle ℝ) (x : ℝ) : ℝ :=
+  (geodesicDist x (O.seek x)) ^ 2
+
+
+
+
+theorem fisherInfoOracle_nonneg (O : GeodesicOracle ℝ) (x : ℝ) :
+    0 ≤ fisherInfoOracle O x := sq_nonneg _
+
+
+
+
+/-- At solutions, Fisher information is zero. -/
+theorem fisherInfoOracle_zero_at_solution (O : GeodesicOracle ℝ) (x : ℝ)
+    (hx : x ∈ O.solutionSet) : fisherInfoOracle O x = 0 := by
+  simp only [fisherInfoOracle, GeodesicOracle.solutionSet, mem_setOf_eq] at *
+  simp [geodesicDist, hx]
+
+
+
+
+def constOracle (c : ℝ) : GeodesicOracle ℝ where
+  seek := fun _ => c
+  idempotent _ := rfl
+
+
+
+
+def clampOracle : GeodesicOracle ℝ where
+  seek := fun x => max 0 (min x 1)
+  idempotent := by intro x; simp [max_def, min_def]; split_ifs <;> linarith
+
+
+
+
+def zeroOracle : GeodesicOracle ℝ where
+  seek := fun _ => 0
+  idempotent _ := rfl
+
+
+
+
+def sqrtOracle (a : ℝ) : GeodesicOracle ℝ where
+  seek := fun _ => Real.sqrt a
+  idempotent _ := rfl
+
+
+
+
+theorem geodesicDist_bounded (t₁ t₂ : ℝ) : geodesicDist t₁ t₂ < 2 * π := by
+  unfold geodesicDist invStereoAngle;
+  exact abs_lt.mpr ⟨ by linarith [ Real.neg_pi_div_two_lt_arctan t₁, Real.arctan_lt_pi_div_two t₁, Real.neg_pi_div_two_lt_arctan t₂, Real.arctan_lt_pi_div_two t₂ ], by linarith [ Real.neg_pi_div_two_lt_arctan t₁, Real.arctan_lt_pi_div_two t₁, Real.neg_pi_div_two_lt_arctan t₂, Real.arctan_lt_pi_div_two t₂ ] ⟩
+
+
+
+
+/-- The constant oracle information gain is the geodesic distance to the constant. -/
+theorem constOracle_info (c x : ℝ) :
+    infoGain (constOracle c) x = geodesicDist x c := by
+  simp [infoGain, constOracle]
 
 
 
