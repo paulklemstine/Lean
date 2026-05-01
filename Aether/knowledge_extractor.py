@@ -611,17 +611,39 @@ Research mode: {concept.research_mode}
                 is_modified = True
                 try:
                     rel = fp.relative_to(extract_dir)
-                    # If Aristotle put it in Catalog/, compare against that
-                    if len(rel.parts) > 0 and rel.parts[0] == "Catalog":
-                        local_equiv = self.catalog_root / rel.relative_to("Catalog")
+                    
+                    # Locate where the actual Catalog structure begins in the extracted path
+                    if "Catalog" in rel.parts:
+                        idx = rel.parts.index("Catalog")
+                        local_equiv = self.catalog_root / Path(*rel.parts[idx+1:])
                     else:
                         local_equiv = self.catalog_root / rel
                         
                     if local_equiv.exists():
-                        fp_text = fp.read_text(encoding='utf-8', errors='ignore').replace('\r\n', '\n').strip()
-                        local_text = local_equiv.read_text(encoding='utf-8', errors='ignore').replace('\r\n', '\n').strip()
-                        if fp_text == local_text:
+                        # Read text and ignore whitespace/CRLF differences
+                        import re
+                        fp_text = fp.read_text(encoding='utf-8', errors='ignore')
+                        local_text = local_equiv.read_text(encoding='utf-8', errors='ignore')
+                        
+                        # Normalize all whitespace for comparison
+                        fp_norm = re.sub(r'\s+', ' ', fp_text).strip()
+                        local_norm = re.sub(r'\s+', ' ', local_text).strip()
+                        
+                        if fp_norm == local_norm:
                             is_modified = False
+                        else:
+                            # It actually changed! Generate a diff
+                            import difflib
+                            diff = list(difflib.unified_diff(
+                                local_text.splitlines(keepends=True),
+                                fp_text.splitlines(keepends=True),
+                                fromfile=f"a/{local_equiv.relative_to(self.catalog_root)}",
+                                tofile=f"b/{local_equiv.relative_to(self.catalog_root)}"
+                            ))
+                            if diff:
+                                # We store the diff text instead of the full file to help Pi merge
+                                fp.write_text("".join(diff), encoding='utf-8')
+                                fp._is_diff = True
                 except Exception as e:
                     print(f"[Extract] Warning comparing {fp.name}: {e}")
 
@@ -637,15 +659,14 @@ Research mode: {concept.research_mode}
                     paper_files.append(fp)
 
         # Collect Lean sources — Aristotle decides which files contain the new theorems
+        # Collect Lean sources — Aristotle decides which files contain the new theorems
         if lean_files:
-            if len(lean_files) == 1:
-                job.result_lean = lean_files[0].read_text()
-            else:
-                # Multiple new/modified files — combine them
-                parts = []
-                for f in sorted(lean_files):
-                    parts.append(f"-- File: {f.name}\n{f.read_text()}")
-                job.result_lean = "\n\n".join(parts)
+            parts = []
+            for f in sorted(lean_files):
+                is_diff = getattr(f, "_is_diff", False)
+                header = f"-- DIFF: {f.name}\n" if is_diff else f"-- NEW_FILE: {f.name}\n"
+                parts.append(f"{header}{f.read_text(encoding='utf-8', errors='ignore')}")
+            job.result_lean = "\n\n".join(parts)
 
         # Collect Python artifacts — demos, applications, whatever Aristotle created
         if python_files:
@@ -767,11 +788,12 @@ Research mode: {concept.research_mode}
                 
             prompt = (
                 f"Examine ARISTOTLE_SUMMARY.md and PROMPT.md (README) to understand the research context. "
-                f"Your task is to integrate the generated files (.lean, .py, .md) into the Catalog at {self.catalog_root}. "
-                f"For .lean files without 'sorry', move them into the appropriate domain directory (e.g., {self.catalog_root}/Tropical/). "
-                f"For .lean files with 'sorry', move them into {self.catalog_root}/Speculative/AutoResearch/. "
+                f"Your task is to properly integrate the generated file diffs and new files (.lean, .py, .md) into the Catalog at {self.catalog_root}. "
+                f"For files marked as DIFF, you must properly MERGE the changes into the existing file at {self.catalog_root} so as to NOT overwrite parallel committed changes! "
+                f"For NEW_FILEs without 'sorry', move them into the appropriate domain directory (e.g., {self.catalog_root}/Tropical/). "
+                f"For NEW_FILEs with 'sorry', move them into {self.catalog_root}/Speculative/AutoResearch/. "
                 f"Move Python files to {self.catalog_root}/Applications/Demos/ and Markdown papers to {self.catalog_root}/Applications/Papers/. "
-                f"Do the integration in one step and ensure all generated files are correctly placed."
+                f"Do the integration securely and ensure all merges are clean."
             )
             
             try:
@@ -784,7 +806,7 @@ Research mode: {concept.research_mode}
                     timeout=1800
                 )
                 if result.returncode == 0:
-                    print(f"[Integrate] Pi successfully integrated files.")
+                    print(f"[Integrate] Pi successfully integrated files via diff merge.")
                 else:
                     print(f"[Integrate] Pi integration had a non-zero exit code.")
             except Exception as e:
