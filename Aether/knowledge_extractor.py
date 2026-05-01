@@ -716,69 +716,77 @@ Research mode: {concept.research_mode}
     # ==================================================================
 
     def integrate(self, job: ResearchJob) -> ResearchJob:
-        """Pi-Agent integrates Aristotle's output into the Catalog.
+        """Synchronous version of integrate."""
+        # Use a new event loop if none exists, else run directly if blocking is acceptable here
+        try:
+            loop = asyncio.get_event_loop()
+            if loop.is_running():
+                # We shouldn't be here in async context, but just in case
+                import warnings
+                warnings.warn("Calling sync integrate from running loop; this will block.")
+        except RuntimeError:
+            pass
+            
+        return asyncio.run(self.integrate_async(job))
 
-        Pi has freedom to place artifacts wherever makes sense:
-        - Lean theorems: Catalog/{Domain}/{Subdir}/ (Pi chooses domain & subdir)
-        - Python demos: Catalog/Applications/Demos/ (Pi names the file)
-        - Research papers: Catalog/Applications/Papers/ (Pi names the file)
-        - Any other artifacts Aristotle produced: wherever Pi decides
-
-        Pi uses classify_file_placement() to decide where Lean goes.
-        For other artifacts, we use a simple convention but let Aristotle's
-        naming influence the final placement.
+    async def integrate_async(self, job: ResearchJob) -> ResearchJob:
+        """Pi-Agent integrates Aristotle's output into the Catalog in one step.
         """
         if job.quality_score < 0.05:
             print(f"[Integrate] REJECTED: score too low ({job.quality_score:.3f})")
             job.status = "rejected"
             return job
 
-        # Primary artifact: Lean theorems
-        # Pi may have produced one file or several; we place each one.
-        if job.result_lean:
-            # Split multi-file output back into individual files if needed
-            files_to_place = self._split_lean_output(job.result_lean, job.concept)
-
-            for lean_content, suggested_name in files_to_place:
-                # Pi classifies where each file goes
-                placement = self.pi_agent.classify_file_placement(
-                    lean_source=lean_content,
-                    file_name=suggested_name,
-                    concept=job.concept,
+        print(f"[Integrate] Asking Pi-Agent to integrate files in one step...")
+        import tempfile
+        import subprocess
+        
+        with tempfile.TemporaryDirectory() as tmpdir:
+            staging = Path(tmpdir)
+            files_to_place = []
+            
+            if job.result_lean:
+                files_to_place = self._split_lean_output(job.result_lean, job.concept)
+                for content, name in files_to_place:
+                    (staging / name).write_text(content)
+                    
+            if job.result_demo:
+                demo_name = self._derive_artifact_name(job.concept, "py")
+                (staging / demo_name).write_text(job.result_demo)
+                
+            if job.result_paper:
+                paper_name = self._derive_artifact_name(job.concept, "md")
+                (staging / paper_name).write_text(job.result_paper)
+                
+            if job.result_summary:
+                (staging / "ARISTOTLE_SUMMARY.md").write_text(job.result_summary)
+            if job.prompt:
+                (staging / "PROMPT.md").write_text(job.prompt)
+                
+            prompt = (
+                f"Examine ARISTOTLE_SUMMARY.md and PROMPT.md (README) to understand the research context. "
+                f"Your task is to integrate the generated files (.lean, .py, .md) into the Catalog at {self.catalog_root}. "
+                f"For .lean files without 'sorry', move them into the appropriate domain directory (e.g., {self.catalog_root}/Tropical/). "
+                f"For .lean files with 'sorry', move them into {self.catalog_root}/Speculative/AutoResearch/. "
+                f"Move Python files to {self.catalog_root}/Applications/Demos/ and Markdown papers to {self.catalog_root}/Applications/Papers/. "
+                f"Do the integration in one step and ensure all generated files are correctly placed."
+            )
+            
+            try:
+                result = await asyncio.to_thread(
+                    subprocess.run,
+                    ["npx", "--yes", "@mariozechner/pi-coding-agent@latest", "--model", self.pi.model, "-p", prompt],
+                    cwd=str(staging),
+                    capture_output=True,
+                    text=True,
+                    timeout=600
                 )
-
-                target_path = self.catalog_root / placement["target_path"]
-                target_path.parent.mkdir(parents=True, exist_ok=True)
-
-                sorry_count = lean_content.count("sorry")
-                if sorry_count == 0:
-                    # Verified theorem — place directly in Catalog domain
-                    target_path.write_text(lean_content)
-                    print(f"[Integrate] Lean → {placement['target_path']} (verified, 0 sorries)")
+                if result.returncode == 0:
+                    print(f"[Integrate] Pi successfully integrated files.")
                 else:
-                    # Has sorries — place in Speculative
-                    speculative_name = suggested_name
-                    speculative_path = self.catalog_root / f"Speculative/AutoResearch/{speculative_name}"
-                    speculative_path.parent.mkdir(parents=True, exist_ok=True)
-                    speculative_path.write_text(lean_content)
-                    print(f"[Integrate] Lean → Speculative/AutoResearch/{speculative_name} ({sorry_count} sorries)")
-
-        # Secondary artifacts: Python demos, research papers, etc.
-        # Let Aristotle's organization guide our placement, with Pi deciding final location
-        if job.result_demo:
-            # Use Aristotle's suggested name or fall back to a descriptive name
-            demo_name = self._derive_artifact_name(job.concept, "py")
-            demo_path = self.catalog_root / f"Applications/Demos/{demo_name}"
-            demo_path.parent.mkdir(parents=True, exist_ok=True)
-            demo_path.write_text(job.result_demo)
-            print(f"[Integrate] Python demos → Applications/Demos/{demo_name}")
-
-        if job.result_paper:
-            paper_name = self._derive_artifact_name(job.concept, "md")
-            paper_path = self.catalog_root / f"Applications/Papers/{paper_name}"
-            paper_path.parent.mkdir(parents=True, exist_ok=True)
-            paper_path.write_text(job.result_paper)
-            print(f"[Integrate] Research paper → Applications/Papers/{paper_name}")
+                    print(f"[Integrate] Pi integration had a non-zero exit code.")
+            except Exception as e:
+                print(f"[Integrate] Pi integration failed: {e}")
 
         job.status = "integrated"
         self.completed_count += 1
@@ -1031,7 +1039,7 @@ Research mode: {concept.research_mode}
                 if job.status == "completed":
                     job = await self.extract_async(job)
                     job = self.evaluate(job)
-                    job = self.integrate(job)
+                    job = await self.integrate_async(job)
                     job = await self.cleanup_catalog_async(job)
                     self.commit(job)
                     

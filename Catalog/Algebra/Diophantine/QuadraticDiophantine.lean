@@ -71,5 +71,3 @@ theorem pell_composition (D x y a b : ℤ) (h1 : x ^ 2 - D * y ^ 2 = 1)
     (h2 : a ^ 2 - D * b ^ 2 = 1) :
     (x * a + D * y * b) ^ 2 - D * (x * b + y * a) ^ 2 = 1 := by
   linear_combination' h1 * h2
-
-

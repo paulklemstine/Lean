@@ -35,6 +35,3 @@ theorem compression_pigeonhole' {n m : ℕ} (h : m < n)
   have hle := Fintype.card_le_of_injective f hf
   simp at hle
   exact absurd hle (not_le.mpr (Nat.pow_lt_pow_right (by omega) h))
-
-
-

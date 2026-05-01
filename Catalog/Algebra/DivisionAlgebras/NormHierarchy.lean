@@ -395,6 +395,3 @@ theorem quaternion_cross_product_norm (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ N
   have hb : b₁^2 + (-b₂)^2 + (-b₃)^2 + (-b₄)^2 = N := by ring_nf; linarith
   rw [hb] at this
   linarith
-
-
-

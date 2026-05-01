@@ -44,6 +44,3 @@ theorem dedekind_expansion {S : Type*} [CommRing S] [IsDedekindDomain S]
 
 /-- 1728 = 12³, a fundamental constant in the theory of modular forms. -/
 theorem j_value_cube : (1728 : ℤ) = 12 ^ 3 := by norm_num
-
-
-

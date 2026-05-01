@@ -69,6 +69,3 @@ theorem neg_pell1 : (1 : ℤ) ^ 2 - 2 * 1 ^ 2 = -1 := by norm_num
 theorem roth_b (p q : ℤ) :
     p ^ 2 - 2 * q ^ 2 ≠ 0 → |p ^ 2 - 2 * q ^ 2| ≥ 1 := by
   intro h; exact Int.one_le_abs h
-
-
-

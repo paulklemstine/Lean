@@ -53,6 +53,3 @@ theorem channel_ratio_is_twice_eisenstein_norm (p : ℤ) :
 theorem sum_of_cubes_factor (p : ℤ) :
     (1 + p ^ 3) = (p + 1) * (p ^ 2 - p + 1) := by
   ring
-
-
-

@@ -434,6 +434,3 @@ theorem fock_dim_two_modes (n : ℕ) :
 /-- For m = 4 modes (Stokes-quaternionic), the Fock dimension grows polynomially. -/
 theorem fock_dim_four_modes_example :
     Nat.choose (3 + 3) 3 = 20 := by native_decide
-
-
-

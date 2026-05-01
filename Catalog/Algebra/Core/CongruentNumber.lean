@@ -58,5 +58,3 @@ theorem pyth_a_ne_b (a b c : ℕ) (ha : 0 < a) (_hb : 0 < b) (hc : 0 < c)
       have h_c : c = a * Real.sqrt 2 := by
         rw [ ← sq_eq_sq₀ ] <;> ring_nf <;> norm_num ; norm_cast ; nlinarith;
       exact irrational_sqrt_two <| ⟨ c / a, by push_cast [ h_c ] ; rw [ mul_div_cancel_left₀ _ <| by positivity ] ⟩
-
-
