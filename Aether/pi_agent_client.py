@@ -1601,7 +1601,7 @@ class PiAgentClient:
         lean_source: str,
         file_name: str,
         concept: ResearchConcept,
-        timeout_override: int = 60,
+        timeout_override: int = 600,
     ) -> Dict[str, Any]:
         """Classify a Lean file into the correct Catalog location.
 
