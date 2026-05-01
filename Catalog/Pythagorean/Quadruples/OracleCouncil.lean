@@ -149,4 +149,3 @@ theorem sum_four_sq_mul' (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ) :
     (a₁^2 + b₁^2 + c₁^2 + d₁^2) * (a₂^2 + b₂^2 + c₂^2 + d₂^2) =
     x₁^2 + x₂^2 + x₃^2 + x₄^2 :=
   ⟨_, _, _, _, euler_four_square' a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂⟩
-

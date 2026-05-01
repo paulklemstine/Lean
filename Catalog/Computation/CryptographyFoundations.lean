@@ -67,6 +67,3 @@ theorem minkowski_example : (1 : ℤ)^2 + 1^2 ≤ 2 := by norm_num
 /-- 2^2048 > 2^1024 (RSA-2048 vs RSA-1024). -/
 theorem rsa_2048_size : 2 ^ 2048 > 2 ^ 1024 :=
   Nat.pow_lt_pow_right (by norm_num : 1 < 2) (by norm_num)
-
-
-

@@ -74,4 +74,3 @@ theorem compositeness_certificate (N a b : ℤ) (hN_pos : N > 0)
     (h_lower : a - b > 1) (h_upper : a + b < N) :
     ∃ d : ℤ, d > 1 ∧ d < N ∧ d ∣ N := by
   exact ⟨ a + b, by linarith, by linarith, ⟨ a - b, by linarith ⟩ ⟩
-

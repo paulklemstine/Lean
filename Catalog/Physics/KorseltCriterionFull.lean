@@ -183,4 +183,3 @@ theorem korselt_forward (n : ℕ) (hk : SatisfiesKorseltCrit n) :
       have h_prod_prime_factors : ∏ p ∈ Nat.primeFactors n, (p : ℤ) = n := by
         rw [ ← Nat.cast_prod, Nat.prod_primeFactors_of_squarefree hk.2.2.1 ];
       rw [ ← h_prod_prime_factors ] ; exact Finset.prod_dvd_of_coprime ( fun p hp q hq hpq ↦ by have := Nat.coprime_primes ( Nat.prime_of_mem_primeFactors hp ) ( Nat.prime_of_mem_primeFactors hq ) ; aesop ) fun p hp ↦ h_cauchy p ( Nat.prime_of_mem_primeFactors hp ) ( Nat.dvd_of_mem_primeFactors hp ) ( by aesop ) ;
-

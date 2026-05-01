@@ -48,6 +48,3 @@ theorem put_call (C P S K_disc : ℝ) (h : C - P = S - K_disc) :
 
 
 theorem pollard_iof (N : ℕ) : Nat.sqrt N ≤ N := Nat.sqrt_le_self N
-
-
-

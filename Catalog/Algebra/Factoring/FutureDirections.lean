@@ -230,4 +230,3 @@ theorem crt_cardinality (m n : ℕ) : m * n = m * n := rfl
 theorem bezout {a b : ℤ} (h : IsCoprime a b) :
     ∃ s t : ℤ, s * a + t * b = 1 := by
   obtain ⟨s, t, hst⟩ := h; exact ⟨s, t, hst⟩
-

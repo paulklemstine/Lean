@@ -198,4 +198,3 @@ theorem cliff_even_3 : 2^(3-1) = (4 : ℕ) := by norm_num
 
 /-- Cl⁺(5,0) dimension = 16 (≅ M₂(ℍ)) -/
 theorem cliff_even_5 : 2^(5-1) = (16 : ℕ) := by norm_num
-

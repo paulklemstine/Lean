@@ -176,4 +176,3 @@ theorem ghost_preserves_lorentz (G : ℕ) (a b c : ℤ) :
 
 /-- pellNum is nonneg and eventually positive. -/
 theorem pellNum_nonneg (n : ℕ) : 0 ≤ pellNum n := (pellNum_nonneg_and_mono n).1
-

@@ -254,4 +254,3 @@ theorem sextuple_five_factorizations (a b c d e f : ℤ)
     (f - b) * (f + b) = a ^ 2 + c ^ 2 + d ^ 2 + e ^ 2 ∧
     (f - a) * (f + a) = b ^ 2 + c ^ 2 + d ^ 2 + e ^ 2 := by
   refine ⟨by nlinarith, by nlinarith, by nlinarith, by nlinarith, by nlinarith⟩
-

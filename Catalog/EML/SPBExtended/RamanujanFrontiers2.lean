@@ -406,4 +406,3 @@ theorem rfB₂'_hyperbolic_trace_seq :
     Matrix.trace (rfB₂' * rfB₂' * rfB₂') = 197 ∧
     Matrix.trace (rfB₂' * rfB₂' * rfB₂' * rfB₂') = 1155 := by
   exact ⟨by native_decide, by native_decide, by native_decide, by native_decide⟩
-

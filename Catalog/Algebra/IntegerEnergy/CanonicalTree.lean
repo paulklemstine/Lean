@@ -242,4 +242,3 @@ theorem root_parent_hyp_23 : parentHyp23 1 2 2 3 = 1 := by simp [parentHyp23]
 theorem root_parent_hyp_13 : parentHyp13 1 2 2 3 = 3 := by simp [parentHyp13]
 
 theorem root_parent_hyp_12 : parentHyp12 1 2 2 3 = 3 := by simp [parentHyp12]
-

@@ -101,4 +101,3 @@ theorem dne_is_tautology (n : ℕ) :
 theorem identity_is_tautology (n : ℕ) :
     PropForm.isTautology (.imp (.var n) (.var n)) := by
   intro v; simp [PropForm.eval]
-

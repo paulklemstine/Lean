@@ -30,4 +30,3 @@ theorem helicity_bound_tight (a : ℤ) (ha : a ≠ 0) :
 theorem helicity_bound_nat (a b c : ℕ) (h : a^2 + b^2 = c^2) :
     2 * a * b ≤ c^2 := by
   nlinarith [ sq_nonneg ( a - b : ℤ ) ]
-

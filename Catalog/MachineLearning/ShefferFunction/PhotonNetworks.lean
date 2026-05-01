@@ -152,4 +152,3 @@ theorem gaussian_prod_assoc (a₁ b₁ a₂ b₂ a₃ b₃ : ℤ) :
 theorem pyth_not_both_odd' (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
     (ha : ¬ 2 ∣ a) (hb : ¬ 2 ∣ b) : False := by
   exact absurd ( congr_arg ( · % 4 ) h ) ( by rcases Int.even_or_odd' a with ⟨ k, rfl | rfl ⟩ <;> rcases Int.even_or_odd' b with ⟨ l, rfl | rfl ⟩ <;> rcases Int.even_or_odd' c with ⟨ m, rfl | rfl ⟩ <;> ring_nf <;> norm_num [ Int.add_emod, Int.mul_emod ] at * ) ;
-

@@ -62,4 +62,3 @@ theorem quaternion_norm_multiplicative (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ 
     (a₁*b₂ + a₂*b₁ + a₃*b₄ - a₄*b₃)^2 +
     (a₁*b₃ - a₂*b₄ + a₃*b₁ + a₄*b₂)^2 +
     (a₁*b₄ + a₂*b₃ - a₃*b₂ + a₄*b₁)^2 := by ring
-

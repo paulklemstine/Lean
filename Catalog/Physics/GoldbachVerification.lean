@@ -103,4 +103,3 @@ theorem sophie_germain_examples :
     (Nat.Prime 89 ∧ Nat.Prime 179) := by
   refine ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩,
          ⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩⟩ <;> native_decide
-

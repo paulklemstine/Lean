@@ -616,4 +616,3 @@ if __name__ == '__main__':
 computational extraction is non-trivial. -/
 theorem orchestrator_is_well_formed : demo_orchestrator_python_code.length > 0 := by
   native_decide
-

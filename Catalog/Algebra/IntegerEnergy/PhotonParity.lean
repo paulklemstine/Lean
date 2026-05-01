@@ -37,4 +37,3 @@ theorem pyth_one_leg_even (a b c : ℕ) (h : a^2 + b^2 = c^2)
 theorem pyth_parametrization (m n : ℤ) :
     (m^2 - n^2)^2 + (2*m*n)^2 = (m^2 + n^2)^2 := by
   ring
-

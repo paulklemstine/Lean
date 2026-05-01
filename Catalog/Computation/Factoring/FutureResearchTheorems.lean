@@ -273,4 +273,3 @@ theorem seven_domains : Finset.card ({1, 2, 3, 4, 5, 6, 7} : Finset ℕ) = 7 := 
 
 /-- The extended framework with 9 lenses covers 9 domains. -/
 theorem nine_domains : Finset.card ({1, 2, 3, 4, 5, 6, 7, 8, 9} : Finset ℕ) = 9 := by decide
-

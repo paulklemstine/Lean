@@ -92,4 +92,3 @@ theorem ppt_first_quadrant (a b : ℤ) (ha : 0 < a) (hb : 0 < b) :
 theorem norm_conj_eq (a b : ℤ) :
     (⟨a, -b⟩ : GaussianInt).norm = (⟨a, b⟩ : GaussianInt).norm := by
   simp [Zsqrtd.norm_def]
-

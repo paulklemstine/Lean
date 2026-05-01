@@ -55,4 +55,3 @@ theorem tropical_separation (a b : ℝ) (hab : a < b) :
 theorem pruning_preserves_max (a b c : ℝ) (hc : c ≤ max a b) :
     max (max a b) c = max a b :=
   max_eq_left hc
-

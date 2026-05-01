@@ -85,6 +85,3 @@ theorem minimax_ex :
 theorem finite_argmax_exists {n : ℕ} (f : Fin (n + 1) → ℤ) :
     ∃ i : Fin (n + 1), ∀ j : Fin (n + 1), f j ≤ f i := by
   simpa using Finset.exists_max_image Finset.univ f ( Finset.univ_nonempty )
-
-
-

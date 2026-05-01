@@ -108,6 +108,3 @@ theorem iter_inj {α : Type*} (f : α → α) (hf : Function.Injective f) (n : �
     Function.Injective (f^[n]) := by
   -- Since $f$ is injective, the composition of $f$ with itself $n$ times is also injective.
   apply Function.Injective.iterate hf n
-
-
-

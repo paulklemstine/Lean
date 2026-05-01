@@ -52,5 +52,3 @@ theorem orthogonal_det {n : Type*} [DecidableEq n] [Fintype n]
     (A : Matrix n n ℝ) (hA : A * A.transpose = 1) :
     A.det = 1 ∨ A.det = -1 := by
       exact mul_self_eq_one_iff.mp ( by simpa [ Matrix.det_transpose ] using congr_arg Matrix.det hA )
-
-

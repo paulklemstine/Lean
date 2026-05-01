@@ -110,4 +110,3 @@ theorem associator_zero_of_assoc {R : Type*} [Ring R] (x y z : R) :
 /-- For quaternions, the associator is always zero (they are associative). -/
 theorem quaternion_associator_zero (x y z : Quaternion ℝ) :
     associator_ring x y z = 0 := associator_zero_of_assoc x y z
-

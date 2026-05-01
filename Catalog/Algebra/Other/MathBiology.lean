@@ -48,4 +48,3 @@ theorem herd_imm (R0 : ℝ) (hR0 : 1 < R0) :
 theorem hd_ess (V C : ℝ) (hC : 0 < C) (hVC : V < C) (hV : 0 < V) :
     0 < V / C ∧ V / C < 1 :=
   ⟨by positivity, (div_lt_one hC).mpr hVC⟩
-

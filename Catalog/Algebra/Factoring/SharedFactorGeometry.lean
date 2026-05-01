@@ -147,4 +147,3 @@ channel_1 - channel_2 = b² - c² = (b-c)(b+c). -/
 theorem cross_channel_gcd_factor (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
     (b - c) * (b + c) = (d-c)*(d+c) - (d-b)*(d+b) := by
   nlinarith
-

@@ -296,4 +296,3 @@ theorem quantum_security_bits :
 the attack cannot even begin. -/
 theorem qubit_bottleneck :
     shor_ecdlp_logical_qubits 256 > 1000 := by native_decide
-

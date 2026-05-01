@@ -62,6 +62,3 @@ theorem su3_dimension : (3 : ℕ) ^ 2 - 1 = 8 := by norm_num
 
 theorem instanton_charge_integer (k : ℤ) :
     8 * k = 8 * k := rfl
-
-
-

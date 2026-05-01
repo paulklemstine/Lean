@@ -97,4 +97,3 @@ theorem ads_conformal_factor (L z : ℝ) (hz : z ≠ 0) :
 
 theorem legendre_P1_identity (x : ℝ) :
     x ^ 2 + (1 - x ^ 2) = 1 := by ring
-

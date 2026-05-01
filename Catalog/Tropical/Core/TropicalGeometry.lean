@@ -41,4 +41,3 @@ theorem bellman_equation (d : ℕ → ℤ) (w : ℕ → ℤ)
     (h : ∀ v, d v = min (d v) (d 0 + w v)) (v : ℕ) :
     d v ≤ d 0 + w v := by
   specialize h v; omega
-

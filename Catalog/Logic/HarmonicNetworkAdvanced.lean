@@ -209,4 +209,3 @@ theorem projection_numerator_fin (n : ℕ) (t : ℤ) (m : Fin n → ℤ) :
     rw [Finset.mul_sum]
     congr 1; ext i; ring
   linarith [generalized_pythagorean_identity t (∑ i : Fin n, (m i) ^ 2)]
-

@@ -192,4 +192,3 @@ theorem parent_hyp_decreases (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
 /-- The hypotenuse decrease is exactly 2(a+b-c) -/
 theorem hyp_decrease_exact (a b c : ℤ) :
     c - (-2*a - 2*b + 3*c) = 2*(a + b) - 2*c := by ring
-

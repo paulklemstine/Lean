@@ -123,4 +123,3 @@ theorem quad_component_sum_sq (a b c d : ℤ)
     (a + b + c + d) ^ 2 =
     2 * (d ^ 2 + d * (a + b + c) + a * b + a * c + b * c) := by
   grind
-

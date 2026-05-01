@@ -44,4 +44,3 @@ theorem prime_race_mod4_milestones :
 theorem prime_mod6_distribution :
     primeCountInClass 1000 6 1 = 80 ∧ primeCountInClass 1000 6 5 = 86 := by
   unfold primeCountInClass; constructor <;> native_decide
-

@@ -52,4 +52,3 @@ theorem first_carmichael_numbers :
     6601 = 7 * 23 * 41 ∧
     8911 = 7 * 19 * 67 := by
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_⟩ <;> norm_num
-

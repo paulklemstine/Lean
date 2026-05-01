@@ -161,4 +161,3 @@ a² = (c-b)(c+b), which exposes divisors of a² as c±b. -/
 theorem sum_of_squares_factoring (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     a ^ 2 = (c - b) * (c + b) := by
   nlinarith
-

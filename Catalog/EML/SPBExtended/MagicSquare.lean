@@ -252,4 +252,3 @@ theorem exceptional_entries :
     (Finset.univ.filter (fun p : Fin 4 × Fin 4 =>
       magicSquareDim p.1 p.2 ≥ 52)).card = 8 := by
   native_decide
-

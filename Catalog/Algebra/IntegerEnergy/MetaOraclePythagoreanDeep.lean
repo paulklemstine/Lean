@@ -517,6 +517,3 @@ theorem grand_isomorphism_theorem :
          metaTree_pythagorean,
          oracleTree_pythagorean,
          oracle_embeds_in_meta⟩
-
-
-

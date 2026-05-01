@@ -68,4 +68,3 @@ theorem M2_root_params :
 
 theorem M3_root_params :
     BM2x2_3 * !![(2 : ℤ); 1] = !![(4 : ℤ); 1] := by native_decide
-

@@ -121,4 +121,3 @@ theorem ghostH_euclid (m n : ℤ) :
 #print axioms ghost_descent
 #print axioms recovery_a
 #print axioms ghostP_euclid
-

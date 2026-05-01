@@ -78,4 +78,3 @@ theorem cantor_cardinal (κ : Cardinal) : κ < 2 ^ κ := by
 
 theorem continuum_uncountable : ℵ₀ < 2 ^ ℵ₀ := by
   exact?
-

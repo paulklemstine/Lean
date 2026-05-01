@@ -65,5 +65,3 @@ theorem pigeonhole_simple (n : ℕ) (f : Fin (n + 2) → Fin (n + 1)) :
     ∃ i j, i ≠ j ∧ f i = f j := by
       by_contra! h;
       exact absurd ( Fintype.card_le_of_injective f fun i j hij => not_imp_not.mp ( h i j ) hij ) ( by simp +arith +decide )
-
-

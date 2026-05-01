@@ -87,6 +87,3 @@ theorem pauli_x_self_inverse :
     !![( 0 : ℤ), 1; 1, 0] * !![( 0 : ℤ), 1; 1, 0] = 1 := by
   ext i j; fin_cases i <;> fin_cases j <;>
     simp [Matrix.mul_apply, Fin.sum_univ_two, Matrix.one_apply] <;> rfl
-
-
-

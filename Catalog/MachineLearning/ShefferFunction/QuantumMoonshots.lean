@@ -110,4 +110,3 @@ def protein_assessment : MoonshotAssessment :=
 def quantum_ml_assessment : MoonshotAssessment :=
   { name := "Quantum ML Supremacy", trl := .level3,
     qubits_needed := 50, timeline_years := 5 }
-

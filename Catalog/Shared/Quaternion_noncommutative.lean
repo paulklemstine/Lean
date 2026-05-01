@@ -34,4 +34,3 @@ theorem quaternion_mul_components (a₁ a₂ a₃ a₄ b₁ b₂ b₃ b₄ : ℝ
      a₁*b₃ - a₂*b₄ + a₃*b₁ + a₄*b₂,
      a₁*b₄ + a₂*b₃ - a₃*b₂ + a₄*b₁⟩ := by
   ext <;> simp <;> ring
-

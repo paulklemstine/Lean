@@ -27,4 +27,3 @@ Domain: Shared
 Declarations: 3] -/
 theorem quatNorm_nonneg (a b c d : ℤ) : 0 ≤ quatNorm a b c d := by
   unfold quatNorm; positivity
-

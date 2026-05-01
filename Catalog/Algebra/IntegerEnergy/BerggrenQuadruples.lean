@@ -114,4 +114,3 @@ theorem swap12_preserves : swap12ᵀ * Q₄_matrix * swap12 = Q₄_matrix := by 
 witnessing non-trivial abelian structure in O(3,1;ℤ). -/
 theorem spatial_swaps_generate_S3 :
     swap01 * swap12 * swap01 = swap12 * swap01 * swap12 := by native_decide
-

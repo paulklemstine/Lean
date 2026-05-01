@@ -87,6 +87,3 @@ theorem retraction_has_fixed_points {α : Type} (f : α → α)
 theorem quine_exists_in_reflexive_domain (D : ReflexiveDomain) :
     ∃ x : D.carrier, D.decode x x = x := by
   have := reflexive_domain_fixed_point D ( fun x => D.decode x x ) ; aesop;
-
-
-

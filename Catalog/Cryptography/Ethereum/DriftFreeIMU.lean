@@ -25,4 +25,3 @@ theorem imu_checksum {n : ℕ} (L : List (GL (Fin n) ℝ)) :
     Matrix.trace ((L.prod : GL (Fin n) ℝ) * (L.map (·⁻¹)).reverse.prod).1 = (n : ℝ) := by
   rw [group_reversal_identity]
   convert trace_identity_eq n
-

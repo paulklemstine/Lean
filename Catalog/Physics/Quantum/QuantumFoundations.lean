@@ -40,4 +40,3 @@ theorem tensor_normalized (a b c d : ℂ)
     Complex.normSq (a * c) + Complex.normSq (a * d) +
     Complex.normSq (b * c) + Complex.normSq (b * d) = 1 := by
       simpa [ Complex.normSq_mul ] using by linear_combination' h1 * h2;
-

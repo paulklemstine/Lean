@@ -29,4 +29,3 @@ Auto-generated from theorem catalog database.
 Domain: EML
 Declarations: 5] -/
 theorem spbIterF_one (x : ZMod p) : spbIterF x 1 = x := by simp [spbIterF, spbF]
-

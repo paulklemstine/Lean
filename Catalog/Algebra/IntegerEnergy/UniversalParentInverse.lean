@@ -357,4 +357,3 @@ theorem pq_sign_branch3 (a b c : ℤ) (hp : ghost_p a b c < 0) (hq : 0 < ghost_q
 #print axioms universalParent_left_inverse_B₁
 #print axioms universalParent_leg_swap
 #print axioms ghost_h_composed
-

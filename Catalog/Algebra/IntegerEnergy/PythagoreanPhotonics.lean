@@ -189,4 +189,3 @@ theorem twentyfive_two_representations :
     ∃ a₁ b₁ a₂ b₂ : ℕ, a₁ ^ 2 + b₁ ^ 2 = 25 ∧ a₂ ^ 2 + b₂ ^ 2 = 25 ∧
     (a₁, b₁) ≠ (a₂, b₂) ∧ 0 < a₁ ∧ 0 < b₁ ∧ 0 < a₂ ∧ 0 < b₂ := by
   exists 3, 4, 4, 3
-

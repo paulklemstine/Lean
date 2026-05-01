@@ -57,4 +57,3 @@ theorem oracle_vandermonde (m n r : ℕ) :
     Nat.choose (m + n) r = ∑ k ∈ range (r + 1), Nat.choose m k * Nat.choose n (r - k) := by
   rw [ Nat.add_choose_eq ];
   rw [ Finset.Nat.sum_antidiagonal_eq_sum_range_succ fun i j => Nat.choose m i * Nat.choose n j ]
-

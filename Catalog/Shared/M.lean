@@ -30,4 +30,3 @@ theorem M_lorentz : Mᵀ * Q * M = Q := by native_decide
 
 /-- M is the left inverse of B₂ -/
 theorem M_mul_B₂ : M * B₂ = 1 := by native_decide
-

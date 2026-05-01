@@ -63,4 +63,3 @@ theorem dimension_advantage (d : ℕ) (hd : 3 ≤ d) :
     2 ^ d ≥ 8 := by
   calc 2 ^ d ≥ 2 ^ 3 := Nat.pow_le_pow_right (by norm_num) hd
     _ = 8 := by norm_num
-

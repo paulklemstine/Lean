@@ -103,4 +103,3 @@ theorem simon_gap_32 : 32 < 2 ^ (32 / 2) := by norm_num
 
 theorem counting_advantage (N S : ℕ) :
     Nat.sqrt (N / S) ≤ N / S := Nat.sqrt_le_self _
-

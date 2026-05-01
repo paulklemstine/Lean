@@ -145,4 +145,3 @@ theorem gaussian_composition (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ)
 theorem self_composition (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (a ^ 2 - b ^ 2) ^ 2 + (2 * a * b) ^ 2 = c ^ 4 := by
   linear_combination' h * h
-

@@ -105,4 +105,3 @@ theorem infinitely_many_triples_with_prime_leg (p : ℕ) (hp : Nat.Prime p) (hp2
   -- Consider the Pythagorean triple $(2kp, (kp)^2 - 1, (kp)^2 + 1)$.
   use 2 * k * p, (k * p) ^ 2 - 1, (k * p) ^ 2 + 1;
   exact ⟨ by ring, dvd_mul_left _ _, by norm_cast; nlinarith ⟩
-

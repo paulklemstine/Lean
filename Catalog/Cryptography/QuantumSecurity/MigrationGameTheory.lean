@@ -217,4 +217,3 @@ theorem hard_fork_optimal :
 /-- **Theorem**: Phased approach fits within quantum timeline. -/
 theorem phased_approach_covers_timeline :
     0 + 5 + 3 = 8 ∧ 8 < 13 := by norm_num
-

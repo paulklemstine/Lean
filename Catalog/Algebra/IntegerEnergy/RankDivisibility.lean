@@ -92,4 +92,3 @@ theorem rank_key_p23 : pellPmodIter 23 (23 - 1) = 0 := by native_decide
 theorem rank_key_p31 : pellPmodIter 31 (31 - 1) = 0 := by native_decide
 
 theorem rank_key_p41 : pellPmodIter 41 (41 - 1) = 0 := by native_decide
-

@@ -121,4 +121,3 @@ theorem trivial_diff_of_squares (N : ℤ) (hN : N % 2 = 1) :
   have hm : (N + 1) / 2 * 2 = N + 1 := Int.ediv_mul_cancel h2
   have hn : (N - 1) / 2 * 2 = N - 1 := Int.ediv_mul_cancel h3
   nlinarith [sq_abs ((N + 1) / 2), sq_abs ((N - 1) / 2)]
-

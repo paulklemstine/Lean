@@ -111,4 +111,3 @@ theorem C_branch_odd_leg_factored (n : ℕ) :
 theorem C_branch_even_leg_arith (n : ℕ) :
     (C_branch (n + 1)).2.1 - (C_branch n).2.1 = 4 := by
   simp only [C_branch]; push_cast; ring
-

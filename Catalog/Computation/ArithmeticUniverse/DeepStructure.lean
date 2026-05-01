@@ -72,4 +72,3 @@ This is the heartbeat of arithmetic inversion. -/
 theorem oracle_mobius_sum (n : ℕ) (_hn : 0 < n) :
     ∑ d ∈ Nat.divisors n, ArithmeticFunction.moebius d = if n = 1 then 1 else 0 := by
   rw [← ArithmeticFunction.coe_mul_zeta_apply]; aesop
-

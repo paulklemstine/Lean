@@ -104,4 +104,3 @@ theorem fg_subgroup_of_fg {G : Type*} [CommGroup G] [Group.FG G]
       exact?;
     exact h_abelian H;
   exact h_abelian H
-

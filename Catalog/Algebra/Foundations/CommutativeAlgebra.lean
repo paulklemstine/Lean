@@ -55,6 +55,3 @@ theorem crt_coprime' {R : Type*} [CommRing R] (I J : Ideal R) (h : I ⊔ J = ⊤
 theorem finite_domain_is_field' (R : Type*) [CommRing R] [IsDomain R]
     [Finite R] : IsField R :=
   Finite.isField_of_domain R
-
-
-

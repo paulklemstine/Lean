@@ -36,4 +36,3 @@ theorem idempotent_restrict_range (e : M →ₗ[R] M) (he : e ∘ₗ e = e)
 theorem trace_cyclic (n : ℕ) (A B : Matrix (Fin n) (Fin n) ℝ) :
     (A * B).trace = (B * A).trace :=
   Matrix.trace_mul_comm A B
-

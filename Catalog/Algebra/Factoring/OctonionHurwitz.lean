@@ -39,4 +39,3 @@ theorem full_dim_chain {N : ℝ} (hN : 2 ≤ N) :
   calc N ^ ((1:ℝ)/4) ≤ N ^ ((1:ℝ)/3) := dim_advantage_4_3 hN
     _ ≤ N ^ ((1:ℝ)/2) := dim_advantage_3_2 hN
     _ ≤ N := dim_advantage_2_1 hN
-

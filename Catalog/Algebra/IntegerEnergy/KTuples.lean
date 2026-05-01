@@ -25,4 +25,3 @@ theorem ktuple_even_hypotenuse_sq_div4 {k : ℕ} (v : Fin k → ℤ) (d : ℤ)
     (h : IsPythagoreanKTuple v d) (heven : 2 ∣ d) :
     4 ∣ ∑ i, (v i)^2 := by
   exact h.symm ▸ pow_dvd_pow_of_dvd heven 2
-

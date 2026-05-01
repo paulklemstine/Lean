@@ -66,4 +66,3 @@ d=3: O(N^{1/3}) — quadruple lattice
 d=4: O(N^{1/4}) — Pollard ρ equivalent
 d=6: O(N^{1/6}) — if lattice structure exists -/
 theorem improvement_chain : (1 : ℕ) * 6 < 2 * 6 ∧ 2 * 6 < 3 * 6 := by omega
-

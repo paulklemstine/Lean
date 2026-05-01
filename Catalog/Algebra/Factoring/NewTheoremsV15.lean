@@ -123,4 +123,3 @@ theorem cunningham_mod3_analysis :
     (∀ p, p % 3 = 1 → (2 * p + 1) % 3 = 0) ∧
     (∀ p, p % 3 = 2 → (2 * p + 1) % 3 = 2) := by
   grind
-

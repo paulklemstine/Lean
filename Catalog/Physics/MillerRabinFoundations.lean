@@ -85,4 +85,3 @@ For 561, base 7 is a Miller-Rabin witness. -/
 theorem carmichael_561_witness :
     (7 : ℕ) ^ 280 % 561 ≠ 1 ∧ (7 : ℕ) ^ 280 % 561 ≠ 560 := by
   constructor <;> native_decide
-

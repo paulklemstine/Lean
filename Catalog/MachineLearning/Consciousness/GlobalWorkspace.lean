@@ -73,6 +73,3 @@ Domain: MachineLearning/Consciousness
 Declarations: 7] -/
 theorem spotlight_always_on (sp : Spotlight) : ∃ c, sp.inSpotlight c := by
   exact sp.nonempty
-
-
-

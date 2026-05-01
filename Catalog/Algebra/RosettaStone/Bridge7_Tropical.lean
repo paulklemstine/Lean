@@ -39,4 +39,3 @@ theorem tropical_rat_idempotent (a : ℚ) : min a a = a := min_self a
 
 /-- Universal tropical idempotency for naturals. -/
 theorem tropical_nat_idempotent (a : ℕ) : min a a = a := min_self a
-

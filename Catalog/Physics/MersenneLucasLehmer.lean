@@ -106,4 +106,3 @@ theorem mersenne_exponent_table :
     (Nat.Prime 19 ∧ Nat.Prime (mersenne 19)) := by
   refine ⟨⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩,
          ⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩, ⟨?_, ?_⟩⟩ <;> native_decide
-

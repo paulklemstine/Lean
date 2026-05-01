@@ -66,5 +66,3 @@ theorem sum_binomial_squares (n : ℕ) :
       rw [ two_mul, Nat.add_choose_eq ];
       rw [ Finset.Nat.sum_antidiagonal_eq_sum_range_succ fun i j => Nat.choose n i * Nat.choose n j ];
       exact Finset.sum_congr rfl fun x hx => by rw [ sq, Nat.choose_symm ( Finset.mem_range_succ_iff.mp hx ) ] ;
-
-

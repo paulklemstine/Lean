@@ -32,4 +32,3 @@ Declarations: 4] -/
 theorem gaussian_unit_norm (u : GaussianInt) (hu : u ∈ gaussian_units) :
     Zsqrtd.norm u = 1 := by
   unfold gaussian_units at hu; aesop;
-

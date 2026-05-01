@@ -107,4 +107,3 @@ theorem polarization_density :
 theorem wave_particle_complementarity (a b c : ℤ) (hc : c ≠ 0) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     (a : ℚ) ^ 2 / (c : ℚ) ^ 2 + (b : ℚ) ^ 2 / (c : ℚ) ^ 2 = 1 := by
   rw [ ← add_div, div_eq_iff ] <;> norm_cast <;> aesop
-

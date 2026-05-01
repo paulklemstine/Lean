@@ -32,4 +32,3 @@ theorem peel_mod_structure (d x : ℤ) :
 
 /-- With k peel channels per tuple, each tuple provides k smooth candidates. -/
 theorem gravitational_advantage (k : ℕ) (hk : 2 ≤ k) : k ≥ 2 := hk
-

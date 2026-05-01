@@ -126,4 +126,3 @@ theorem quantum_gap_grows (N : ℕ) (hN : 4 ≤ N) :
 theorem circuit_space_exponential (g d : ℕ) (hg : 2 ≤ g) (hd : 1 ≤ d) :
     g ^ d ≥ 2 := by
   exact le_trans hg ( Nat.le_self_pow ( by linarith ) _ )
-

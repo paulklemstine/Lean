@@ -1,121 +1,86 @@
 import Mathlib
 
-/-! # CatalogBuild.Pythagorean.Core.NewHypotheses
+/-! # CatalogBuild.Speculative.IdempotentCollapse.NewHypotheses
 
 Auto-generated from theorem catalog database.
-Domain: Pythagorean/Core
-Declarations: 24
+Domain: Speculative/IdempotentCollapse
+Declarations: 12
 -/
 
-/-- The quadruple Lorentz form Q₄(a,b,c,d) = a² + b² + c² - d² -/
-def lorentzQ4 (a b c d : ℤ) : ℤ := a ^ 2 + b ^ 2 + c ^ 2 - d ^ 2
+noncomputable section
 
-/-- Pythagorean quadruples lie on the null cone Q₄ = 0 -/
-theorem quadruple_null_cone {a b c d : ℤ} (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
-    lorentzQ4 a b c d = 0 := by
-  unfold lorentzQ4; omega
-
-/-- The fundamental Pythagorean quadruple (1,2,2,3) -/
-theorem fundamental_quadruple : (1 : ℤ) ^ 2 + 2 ^ 2 + 2 ^ 2 = 3 ^ 2 := by norm_num
-
-/-- Scaling preserves quadruples -/
-theorem quadruple_scaling (a b c d k : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
-    (k * a) ^ 2 + (k * b) ^ 2 + (k * c) ^ 2 = (k * d) ^ 2 := by nlinarith [sq_nonneg k]
-
-/-- Companion Pell numbers: H(0)=1, H(1)=1, H(n+2)=2H(n+1)+H(n) -/
-def pellComp : ℕ → ℤ
-  | 0 => 1
-  | 1 => 1
-  | (n + 2) => 2 * pellComp (n + 1) + pellComp n
-
-/-- [Section: # CatalogBuild.Pythagorean.Core.NewHypotheses
+/-- [Section: # CatalogBuild.Speculative.IdempotentCollapse.NewHypotheses
 Auto-generated from theorem catalog database.
-Domain: Pythagorean/Core
-Declarations: 25] -/
-theorem pellNum_0 : pellNum 0 = 0 := rfl
+Domain: Speculative/IdempotentCollapse
+Declarations: 12] -/
+theorem maslov_lower (a b : ℝ) : max a b ≤ Real.log (Real.exp a + Real.exp b) := by
+  rw [ Real.le_log_iff_exp_le ( by positivity ) ];
+  cases max_cases a b <;> simp +decide [ * ] <;> linarith [ Real.exp_pos a, Real.exp_pos b ]
 
-/-- [Section: # CatalogBuild.Pythagorean.Core.NewHypotheses
+/-- [Section: # CatalogBuild.Speculative.IdempotentCollapse.NewHypotheses
 Auto-generated from theorem catalog database.
-Domain: Pythagorean/Core
-Declarations: 25] -/
-theorem pellNum_1 : pellNum 1 = 1 := rfl
+Domain: Speculative/IdempotentCollapse
+Declarations: 12] -/
+theorem maslov_upper (a b : ℝ) :
+    Real.log (Real.exp a + Real.exp b) ≤ max a b + Real.log 2 := by
+  rw [ Real.log_le_iff_le_exp, Real.exp_add, Real.exp_log ] <;> norm_num;
+  · linarith [ Real.exp_le_exp.2 ( le_max_left a b ), Real.exp_le_exp.2 ( le_max_right a b ) ];
+  · positivity
 
-theorem pellNum_2 : pellNum 2 = 2 := by simp [pellNum]
+/-- In the tropical semiring (ℝ, max, +), every element is idempotent under ⊕ = max. -/
+theorem tropical_all_idempotent (a : ℝ) : max a a = a := max_self a
 
-theorem pellNum_3 : pellNum 3 = 5 := by simp [pellNum]
+/-- Tropical addition is idempotent on integers too. -/
+theorem tropical_all_idempotent_int (a : ℤ) : max a a = a := max_self a
 
-theorem pellNum_5 : pellNum 5 = 29 := by simp [pellNum]
+/-- Tropical addition is idempotent on rationals. -/
+theorem tropical_all_idempotent_rat (a : ℚ) : max a a = a := max_self a
 
-theorem pell_equation_holds (n : ℕ) :
-    pellComp n ^ 2 - 2 * pellNum n ^ 2 = (-1 : ℤ) ^ n := by
-  induction n with
-  | zero => simp [pellComp, pellNum]
+/-- An endomorphism is idempotent if f ∘ f = f. -/
+def IsIdempotent' (f : α → α) : Prop := ∀ x, f (f x) = f x
+
+/-- Composition of commuting idempotents is idempotent. -/
+theorem idempotent_comp_of_comm (f g : α → α) (hf : IsIdempotent' f) (hg : IsIdempotent' g)
+    (hcomm : ∀ x, f (g x) = g (f x)) :
+    IsIdempotent' (f ∘ g) := by
+  intro x
+  simp only [comp_apply]
+  -- f(g(f(g(x)))) = f(g(g(f(x)))) by commutativity applied to g(x)
+  -- Wait: f(g(f(g(x)))) -- apply hcomm to get g(f(g(x))), then...
+  -- Actually: (f ∘ g)(f(g(x))) = f(g(f(g(x))))
+  -- = f(f(g(g(x))))  [using hcomm on the inner g(f(g(x))) = f(g(g(x)))]
+  -- Hmm, let's just use calc
+  calc f (g (f (g x)))
+      = f (f (g (g x))) := by rw [← hcomm]
+    _ = f (g (g x)) := by rw [hf]
+    _ = f (g x) := by rw [hg]
+
+/-- **The Core Identity**: ReLU(x) = x ⊕_T 0. Proof: reflexivity. -/
+theorem relu_is_tropical (x : ℝ) : relu' x = tropAdd x 0 := rfl
+
+/-- ReLU is idempotent on nonneg reals. -/
+theorem relu_idempotent_nonneg (x : ℝ) (hx : 0 ≤ x) : relu' (relu' x) = relu' x := by
+  simp [relu', max_eq_left hx]
+
+theorem quadruple_parity (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
+    Even (a + b + c + d) := by
+  apply_fun Even at h; simp_all +decide [ parity_simps ] ;
+
+/-- At q=1, Gaussian binomial = ordinary binomial. -/
+theorem gaussBinom_q1 (n k : ℕ) : gaussBinom n k 1 = Nat.choose n k := by
+  induction n generalizing k with
+  | zero => cases k <;> simp [gaussBinom, Nat.choose]
   | succ n ih =>
-    cases n with
-    | zero => simp [pellComp, pellNum]
-    | succ m =>
-      simp only [pellComp, pellNum, pow_succ]
-      -- By induction on $m$, we can show that $pellComp m = pellNum (m + 1) - pellNum m$.
-      have h_comp_num : ∀ m, pellComp m = pellNum (m + 1) - pellNum m := by
-        intro m; exact (by
-        induction' m using Nat.strong_induction_on with m ih; rcases m with ( _ | _ | m ) <;> simp_all +decide [ pellNum, pellComp ] ; ring;);
-      induction' m with m ih <;> simp_all +decide [ pow_succ ];
-      rw [ show pellNum ( m + 3 ) = 2 * pellNum ( m + 2 ) + pellNum ( m + 1 ) by rfl ] at * ; linarith
+    cases k with
+    | zero => simp [gaussBinom, Nat.choose]
+    | succ k =>
+      simp only [gaussBinom, Nat.choose, one_pow, one_mul]
+      rw [ih k, ih (k + 1)]
 
-/-- The trivial PPT identity: (2N)² + (N²-1)² = (N²+1)² -/
-theorem trivial_ppt_identity (N : ℤ) :
-    (2 * N) ^ 2 + (N ^ 2 - 1) ^ 2 = (N ^ 2 + 1) ^ 2 := by ring
+/-- Total "projections" at q=1 equals 2^n (Boolean lattice). -/
+theorem totalProj_q1 (n : ℕ) :
+    ∑ r ∈ Finset.range (n + 1), gaussBinom n r 1 = 2^n := by
+  simp only [gaussBinom_q1]
+  exact Nat.sum_range_choose n
 
-theorem hypotenuse_exceeds_leg (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
-    (hb : b ≠ 0) : a ^ 2 < c ^ 2 := by
-      nlinarith [ mul_self_pos.2 hb ]
-
-/-- Difference of squares factorization -/
-theorem diff_squares_factor (a b : ℤ) : a ^ 2 - b ^ 2 = (a - b) * (a + b) := by ring
-
-/-- Berggren matrix B_A -/
-def BA' : Matrix (Fin 3) (Fin 3) ℤ := !![1, -2, 2; 2, -1, 2; 2, -2, 3]
-
-/-- Inverse of B_A -/
-def BA'_inv : Matrix (Fin 3) (Fin 3) ℤ := !![1, 2, (-2); (-2), (-1), 2; (-2), (-2), 3]
-
-/-- The Lorentz metric -/
-def QLorentz' : Matrix (Fin 3) (Fin 3) ℤ := !![1, 0, 0; 0, 1, 0; 0, 0, (-1)]
-
-/-- B_A * B_A⁻¹ = I -/
-theorem BA'_mul_inv : BA' * BA'_inv = 1 := by native_decide
-
-/-- Inverse of B_A preserves Lorentz form -/
-theorem BA'_inv_preserves_lorentz : BA'_invᵀ * QLorentz' * BA'_inv = QLorentz' := by
-  native_decide
-
-/-- The lattice condition: (c-b)(c+b) = N² when N is a leg -/
-theorem lattice_condition' (N b c : ℤ) (h : N ^ 2 + b ^ 2 = c ^ 2) :
-    (c - b) * (c + b) = N ^ 2 := by nlinarith
-
-/-- GCD factor relation for semiprimes -/
-theorem gcd_factor_relation' (p q b c : ℤ)
-    (h : (p * q) ^ 2 + b ^ 2 = c ^ 2) :
-    (c - b) * (c + b) = p ^ 2 * q ^ 2 := by nlinarith
-
-/-- A⁻¹ maps consecutive-parameter PPTs down by one step -/
-theorem A_inv_descent (m : ℤ) :
-    let a := m ^ 2 - (m - 1) ^ 2
-    let b := 2 * m * (m - 1)
-    let c := m ^ 2 + (m - 1) ^ 2
-    let a' := a + 2 * b - 2 * c
-    let b' := -2 * a - b + 2 * c
-    let c' := -2 * a - 2 * b + 3 * c
-    a' = (m - 1) ^ 2 - (m - 2) ^ 2 ∧
-    b' = 2 * (m - 1) * (m - 2) ∧
-    c' = (m - 1) ^ 2 + (m - 2) ^ 2 := by
-  constructor <;> [skip; constructor] <;> ring
-
-/-- Quadruple parametrization: (2mp, 2mq, 2mr, ...) -/
-theorem three_square_factor' (m p q r : ℤ) :
-    (2 * m * p) ^ 2 + (2 * m * q) ^ 2 + (2 * m * r) ^ 2 =
-    4 * m ^ 2 * (p ^ 2 + q ^ 2 + r ^ 2) := by ring
-
-/-- For factoring: a² = (c-b)(c+b) from a²+b²=c² -/
-theorem sum_of_squares_factoring' (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
-    a ^ 2 = (c - b) * (c + b) := by nlinarith
+end

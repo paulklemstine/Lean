@@ -133,6 +133,3 @@ theorem order_prod_lcm (G H : Type*) [Group G] [Group H] (a : G) (b : H) :
 theorem card_prod_eq (G H : Type*) [Group G] [Group H] [Fintype G] [Fintype H] :
     Fintype.card (G × H) = Fintype.card G * Fintype.card H := by
   convert Fintype.card_prod G H using 1
-
-
-

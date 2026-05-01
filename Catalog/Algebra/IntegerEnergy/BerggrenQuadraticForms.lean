@@ -111,4 +111,3 @@ theorem ppt_leg_diff_identity (a b c : ℤ) (h : a^2 + b^2 = c^2) :
 /-- (a+b)² - 2ab = a² + b² = c² for PPTs -/
 theorem ppt_leg_sum_identity (a b c : ℤ) (h : a^2 + b^2 = c^2) :
     (a + b)^2 - 2 * a * b = c^2 := by nlinarith
-

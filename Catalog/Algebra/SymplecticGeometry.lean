@@ -104,6 +104,3 @@ theorem berg_B2 :
 theorem berg_B3 :
     (!![-1, 2, 2; -2, 1, 2; -2, 2, 3] : Matrix (Fin 3) (Fin 3) ℤ).det = 1 := by
   native_decide
-
-
-

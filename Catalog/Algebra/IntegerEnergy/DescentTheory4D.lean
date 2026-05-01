@@ -177,4 +177,3 @@ theorem guaranteed_descent_ordered (a b c d : ℤ) (ha : 0 < a) (hb : 0 < b) (hc
 #print axioms det_M12
 #print axioms pq_triangle
 #print axioms guaranteed_descent_ordered
-

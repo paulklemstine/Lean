@@ -1,93 +1,97 @@
 import Mathlib
-import Pythagorean.Core
 
-/-! # CatalogBuild.Pythagorean.NewDiscoveries
+/-! # CatalogBuild.Speculative.RosettaStone.NewDiscoveries
 
 Auto-generated from theorem catalog database.
-Domain: Pythagorean
-Declarations: 12
+Domain: Speculative/RosettaStone
+Declarations: 15
 -/
 
-noncomputable section
-
-/-- spb(x, a) = x iff a(x² + 1) = 0. -/
-theorem spb_fixed_point (x a : ℝ) (h : 1 - x * a ≠ 0) :
-    spb x a = x ↔ a * (x ^ 2 + 1) = 0 := by
-  constructor
-  · intro heq
-    unfold spb at heq
-    have := (div_eq_iff h).mp heq
-    nlinarith
-  · intro heq
-    unfold spb
-    rw [div_eq_iff h]
-    nlinarith
-
-/-- spb(x, y) · (1 - x·y) = x + y. -/
-theorem spb_clearing (x y : ℝ) (h : 1 - x * y ≠ 0) :
-    spb x y * (1 - x * y) = x + y := by
-  unfold spb; field_simp
-
-/-- spb(x,y)² · (1-xy)² = (x+y)². -/
-theorem spb_double_clearing (x y : ℝ) (h : 1 - x * y ≠ 0) :
-    spb x y ^ 2 * (1 - x * y) ^ 2 = (x + y) ^ 2 := by
-  unfold spb; field_simp
-
-/-- The SPB Jacobian satisfies multiplicativity. -/
-theorem jacobian_chain (x y z : ℝ) (hxy : 1 - x * y ≠ 0) (hyz : 1 - y * z ≠ 0) :
-    (1 - spb x y * z) * (1 - x * y) = (1 - x * spb y z) * (1 - y * z) := by
-  unfold spb at *; field_simp; ring
-
-/-- The derivative of spb(·, y) at x. -/
-theorem deriv_jacobian (x y : ℝ) (h : 1 - x * y ≠ 0) :
-    HasDerivAt (fun t => spb t y) ((1 + y ^ 2) / (1 - x * y) ^ 2) x := by
-  unfold spb
-  have := HasDerivAt.div
-    (HasDerivAt.add (hasDerivAt_id x) (hasDerivAt_const x y))
-    (HasDerivAt.sub (hasDerivAt_const x 1) (HasDerivAt.mul_const (hasDerivAt_id x) y))
-    h
-  convert this using 1; simp [id]; field_simp; ring
-
-/-- Parity: spb(-x, -y) = -spb(x, y). -/
-theorem spb_parity (x y : ℝ) : spb (-x) (-y) = -(spb x y) := by
-  unfold spb; ring
-
-/-- [Section: # CatalogBuild.Pythagorean.NewDiscoveries
+/-- [Section: # CatalogBuild.Speculative.RosettaStone.NewDiscoveries
 Auto-generated from theorem catalog database.
-Domain: Pythagorean
-Declarations: 13] -/
-theorem spb_inversion (x y : ℝ) (hx : x ≠ 0) (hy : y ≠ 0) (h : x * y ≠ 1) :
-    spb (1/x) (1/y) = -(spb x y) := by
-  unfold spb;
+Domain: Speculative/RosettaStone
+Declarations: 15] -/
+theorem idempotent_count_8 :
+    (Finset.univ.filter (fun e : ZMod 8 => e * e = e)).card = 2 := by decide
+
+/-- Product of idempotents is idempotent (= "meet"). -/
+theorem idempotent_mul (e f : R) (he : e * e = e) (hf : f * f = f) :
+    (e * f) * (e * f) = e * f := by
+  rw [mul_mul_mul_comm, he, hf]
+
+/-- [Section: # CatalogBuild.Speculative.RosettaStone.NewDiscoveries
+Auto-generated from theorem catalog database.
+Domain: Speculative/RosettaStone
+Declarations: 15] -/
+theorem idempotent_join (e f : R) (he : e * e = e) (hf : f * f = f) :
+    (e + f - e * f) * (e + f - e * f) = e + f - e * f := by
   grind
 
-/-- Corrected: spb(x, y) + spb(x, -y) = 2x(1+y²)/((1-xy)(1+xy)). -/
-theorem spb_pm_sum (x y : ℝ) (hc : 1 - x * y ≠ 0) (hh : 1 + x * y ≠ 0) :
-    spb x y + spb x (-y) =
-    2 * x * (1 + y ^ 2) / ((1 - x * y) * (1 + x * y)) := by
-  unfold spb
-  have hh' : 1 - x * (-y) ≠ 0 := by rwa [mul_neg, sub_neg_eq_add]
-  rw [div_add_div _ _ hc hh']
-  congr 1 <;> ring
+/-- The "one" idempotent. -/
+theorem one_idempotent : (1 : R) * 1 = 1 := mul_one 1
 
-/-- Every rational slope gives an SPB double formula. -/
-theorem pythagorean_spb (a b : ℝ) (hb : b ≠ 0) :
-    spb (a/b) (a/b) = 2 * a * b / (b ^ 2 - a ^ 2) := by
-  unfold spb; field_simp; ring
+/-- Idempotent ordering is transitive: if ef = e and fg = f, then eg = e. -/
+theorem idempotent_le_trans (e f g : R)
+    (hef : e * f = e) (hfg : f * g = f) :
+    e * g = e := by
+  calc e * g = (e * f) * g := by rw [hef]
+    _ = e * (f * g) := by rw [mul_assoc]
+    _ = e * f := by rw [hfg]
+    _ = e := hef
 
-/-- [Section: # CatalogBuild.Pythagorean.NewDiscoveries
-Auto-generated from theorem catalog database.
-Domain: Pythagorean
-Declarations: 12] -/
-theorem pythagorean_5_12_13 : spb (5/12 : ℝ) (5/12) = 120/119 := by
-  unfold spb; norm_num
+/-- Idempotent ordering is antisymmetric. -/
+theorem idempotent_le_antisymm (e f : R)
+    (hef : e * f = e) (hfe : f * e = f) :
+    e = f := by
+  rw [mul_comm] at hfe; rw [← hef, hfe]
 
-theorem spb_neg_example : spb (2 : ℝ) 3 = -1 := by
-  unfold spb; norm_num
+/-- Newton's method for idempotents: if e² ≈ e, then e' = 3e² - 2e³
+satisfies e'² - e' = (e² - e)² · (2e-3)(2e+1).
+The defect squares at each step — quadratic convergence! -/
+theorem newton_idempotent_step (e : R) :
+    let e' := 3 * e ^ 2 - 2 * e ^ 3
+    e' * e' - e' = (e * e - e) ^ 2 * ((2 * e - 3) * (2 * e + 1)) := by
+  dsimp only
+  ring
 
-/-- The norm identity: (1+spb(x,y)²)(1-xy)² = (1+x²)(1+y²). -/
-theorem spb_harmonic_norm (x y : ℝ) (h : 1 - x * y ≠ 0) :
-    (1 + spb x y ^ 2) * (1 - x * y) ^ 2 = (1 + x ^ 2) * (1 + y ^ 2) := by
-  unfold spb; field_simp; ring
+/-- Newton refinement preserves exact idempotents. -/
+theorem newton_preserves_idempotent (e : R) (he : e * e = e) :
+    3 * e ^ 2 - 2 * e ^ 3 = e := by
+  have h2 : e ^ 2 = e := by rw [sq, he]
+  have h3 : e ^ 3 = e := by
+    rw [show (3 : ℕ) = 2 + 1 from rfl, pow_add, h2, pow_one, he]
+  rw [h2, h3]; ring
 
-end
+/-- Tropical distributivity (left). -/
+theorem tropical_distrib_left (a b c : ℝ) :
+    a + min b c = min (a + b) (a + c) := by
+  simp [min_def]; split_ifs <;> linarith
+
+/-- Tropical distributivity (right). -/
+theorem tropical_distrib_right (a b c : ℝ) :
+    min b c + a = min (b + a) (c + a) := by
+  simp [min_def]; split_ifs <;> linarith
+
+/-- Every element decomposes via an idempotent. -/
+theorem fundamental_decomposition (e x : R) :
+    x = e * x + (1 - e) * x := by
+  simp [sub_mul, one_mul]
+
+/-- The two summands are orthogonal. -/
+theorem fundamental_orthogonality (e : R) (he : e * e = e) (y : R) :
+    e * ((1 - e) * y) = 0 := by
+  rw [← mul_assoc, mul_sub, mul_one, he, sub_self, zero_mul]
+
+/-- e acts as identity on eR. -/
+theorem idempotent_acts_as_identity (e : R) (he : e * e = e) (x : R) :
+    e * (e * x) = e * x := by rw [← mul_assoc, he]
+
+/-- The (1,1)-Peirce component is stable under left multiplication by e. -/
+theorem peirce_11_stable (e : R) (he : e * e = e) (x : R) :
+    e * (e * x * e) = e * x * e := by
+  rw [← mul_assoc, ← mul_assoc, he]
+
+/-- The (1,1)-Peirce component is stable under right multiplication by e. -/
+theorem peirce_11_stable_right (e : R) (he : e * e = e) (x : R) :
+    (e * x * e) * e = e * x * e := by
+  rw [mul_assoc, he]

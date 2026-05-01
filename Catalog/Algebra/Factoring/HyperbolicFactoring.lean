@@ -58,4 +58,3 @@ theorem crt_quadratic_residue {p q : ℕ} (hp : Nat.Prime p) (hq : Nat.Prime q)
     (∃ xp : ZMod p, xp * xp = ZMod.castHom (dvd_mul_right p q) (ZMod p) a) := by
   intro ⟨x, hx⟩
   exact ⟨ZMod.castHom (dvd_mul_right p q) (ZMod p) x, by rw [← map_mul, hx]⟩
-

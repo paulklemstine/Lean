@@ -118,4 +118,3 @@ theorem BT₂_self_conj : BT₂ = SwapT * BT₂ * SwapT := by native_decide
 
 /-- The swap matrix preserves the Lorentz form -/
 theorem SwapT_Lorentz : SwapTᵀ * QT * SwapT = QT := by native_decide
-

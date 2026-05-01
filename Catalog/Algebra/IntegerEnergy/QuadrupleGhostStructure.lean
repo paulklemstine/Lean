@@ -204,4 +204,3 @@ theorem quad_no_descent_1_2_2_3 : quad_h 1 2 2 3 = 3 := by simp [quad_h]
 #print axioms universalParentQuad_pythagorean
 #print axioms quad_sign_flips
 #print axioms M₄_UP_lorentz
-

@@ -268,4 +268,3 @@ theorem orthogonal_noise (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
 theorem modular_cascade (a b c d m₁ m₂ : ℤ) (h : IsPythQuad a b c d) :
     ((a^2 + b^2 + c^2) % m₁) % m₂ = (d^2 % m₁) % m₂ := by
   unfold IsPythQuad at h; rw [h]
-

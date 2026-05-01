@@ -56,6 +56,3 @@ a scaled version of the identity. -/
 theorem softplus_scaled_identity (a : ℝ) (x : ℝ) :
     softplus (a * x) - softplus (-(a * x)) = a * x := by
   exact softplus_identity_extraction (a * x)
-
-
-

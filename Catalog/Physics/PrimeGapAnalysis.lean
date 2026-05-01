@@ -84,4 +84,3 @@ The ratio gap/(log p)² is well below 1 for all primes in this range. -/
 theorem cramer_evidence :
     -- Max gap 20 at p = 887, and 20 < 48 ≈ (ln 1000)²
     (20 : ℕ) < 48 := by omega
-

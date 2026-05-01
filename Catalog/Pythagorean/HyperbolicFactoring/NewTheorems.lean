@@ -1,211 +1,205 @@
 import Mathlib
 
-/-! # CatalogBuild.Pythagorean.HyperbolicFactoring.NewTheorems
+/-! # CatalogBuild.Speculative.Other.NewTheorems
 
 Auto-generated from theorem catalog database.
-Domain: Pythagorean/HyperbolicFactoring
-Declarations: 44
+Domain: Speculative/Other
+Declarations: 46
 -/
 
-/-- [Section: # CatalogBuild.Pythagorean.HyperbolicFactoring.NewTheorems
+noncomputable section
+
+/-- [Section: # CatalogBuild.Speculative.Other.NewTheorems
 Auto-generated from theorem catalog database.
-Domain: Pythagorean/HyperbolicFactoring
-Declarations: 44] -/
-theorem pathMatrix_det_abs (p : BPath) : |Matrix.det (pathMatrix p)| = 1 := by
-  induction p with
-  | nil => simp [pathMatrix]
-  | cons d ds ih =>
-    simp only [pathMatrix, Matrix.det_mul, abs_mul, dir_det_abs, ih, one_mul]
+Domain: Speculative/Other
+Declarations: 46] -/
+theorem idempotent_count_3 : idempotentCount 3 = 2 := by native_decide
 
-/-- **Parallel Independence:** Subtree computations are independent. -/
-theorem parallel_independence (p₁ suffix : BPath) :
-    tripleAt (p₁ ++ suffix) = pathMatrix p₁ *ᵥ (tripleAt suffix) := by
-  simp [tripleAt, pathMatrix_append, mulVec_mulVec]
-
-/-- **Parallel Composition:** Workers can combine results via matrix multiplication. -/
-theorem parallel_composition (p₁ p₂ : BPath) :
-    pathMatrix (p₁ ++ p₂) = pathMatrix p₁ * pathMatrix p₂ :=
-  pathMatrix_append p₁ p₂
-
-/-- Determinant is multiplicative across parallel path segments. -/
-theorem parallel_det_compose (p₁ p₂ : BPath) :
-    Matrix.det (pathMatrix (p₁ ++ p₂)) =
-    Matrix.det (pathMatrix p₁) * Matrix.det (pathMatrix p₂) := by
-  rw [pathMatrix_append, Matrix.det_mul]
-
-/-- **Branch Disjointness:** B₁ and B₂ produce distinct hypotenuses. -/
-theorem branch_disjoint_L_M (a b c : ℤ) (hb : b ≠ 0) :
-    2 * a - 2 * b + 3 * c ≠ 2 * a + 2 * b + 3 * c := by omega
-
-/-- B₁ and B₃ produce distinct hypotenuses when a ≠ b. -/
-theorem branch_disjoint_L_R (a b c : ℤ) (hab : a ≠ b) :
-    2 * a - 2 * b + 3 * c ≠ -2 * a + 2 * b + 3 * c := by omega
-
-/-- B₂ and B₃ produce distinct hypotenuses when a ≠ 0. -/
-theorem branch_disjoint_M_R (a b c : ℤ) (ha : a ≠ 0) :
-    2 * a + 2 * b + 3 * c ≠ -2 * a + 2 * b + 3 * c := by omega
-
-/-- 3^k ≥ 1. -/
-theorem paths_at_depth (k : ℕ) : 3 ^ k ≥ 1 :=
-  Nat.one_le_pow k 3 (by norm_num)
-
-/-- The (3,1)-Lorentz metric. -/
-def η₄ : Matrix (Fin 4) (Fin 4) ℤ :=
-  !![1, 0, 0, 0; 0, 1, 0, 0; 0, 0, 1, 0; 0, 0, 0, (-1)]
-
-/-- [Section: # CatalogBuild.Pythagorean.HyperbolicFactoring.NewTheorems
+/-- [Section: # CatalogBuild.Speculative.Other.NewTheorems
 Auto-generated from theorem catalog database.
-Domain: Pythagorean/HyperbolicFactoring
-Declarations: 44] -/
-theorem η₄_involution : η₄ * η₄ = 1 := by native_decide
+Domain: Speculative/Other
+Declarations: 46] -/
+theorem idempotent_count_4 : idempotentCount 4 = 2 := by native_decide
 
-def Q₄ (a b c d : ℤ) : ℤ := a ^ 2 + b ^ 2 + c ^ 2 - d ^ 2
+theorem idempotent_count_5 : idempotentCount 5 = 2 := by native_decide
 
-theorem quad_null_cone (a b c d : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
-    Q₄ a b c d = 0 := by simp [Q₄]; linarith
+theorem idempotent_count_10 : idempotentCount 10 = 4 := by native_decide
 
-/-- A 4×4 generator extending B₂. -/
-def G₄ : Matrix (Fin 4) (Fin 4) ℤ :=
-  !![1, 2, 0, 2; 2, 1, 0, 2; 0, 0, 1, 0; 2, 2, 0, 3]
+theorem idempotent_count_12 : idempotentCount 12 = 4 := by native_decide
 
-theorem G₄_preserves_η₄ : G₄ᵀ * η₄ * G₄ = η₄ := by native_decide
+theorem idempotent_count_15 : idempotentCount 15 = 4 := by native_decide
 
-theorem G₄_det : Matrix.det G₄ = -1 := by native_decide
+theorem idempotent_count_210 : idempotentCount 210 = 16 := by native_decide
 
-/-- A second 4×4 generator: boost in the (1,3)-plane. -/
-def G₄' : Matrix (Fin 4) (Fin 4) ℤ :=
-  !![1, 0, 2, 2; 0, 1, 0, 0; 2, 0, 1, 2; 2, 0, 2, 3]
+theorem idem_meet {e f : R} (he : IsIdem e) (hf : IsIdem f) :
+    IsIdem (e * f) := by
+  unfold IsIdem at *; rw [mul_mul_mul_comm, he, hf]
 
-theorem G₄'_preserves_η₄ : G₄'ᵀ * η₄ * G₄' = η₄ := by native_decide
+theorem idem_join {e f : R} (he : IsIdem e) (hf : IsIdem f) :
+    IsIdem (e + f - e * f) := by
+  unfold IsIdem at *; ring_nf at *; simp_all +decide [ mul_assoc, sq ] ;
+  grind
 
-theorem G₄'_det : Matrix.det G₄' = -1 := by native_decide
+theorem idem_complement_orthogonal {e : R} (he : IsIdem e) :
+    e * (1 - e) = 0 := by
+  rw [ mul_sub, mul_one, he, sub_self ]
 
-theorem R₁₂_preserves_η₄ : R₁₂ᵀ * η₄ * R₁₂ = η₄ := by native_decide
+theorem orthogonal_idem_sum {e f : R} (he : IsIdem e) (hf : IsIdem f) (hef : e * f = 0) :
+    IsIdem (e + f) := by
+  unfold IsIdem at *; ring_nf at *; simp_all +decide [ mul_assoc, mul_comm, mul_left_comm ] ;
 
-theorem R₁₂_det : Matrix.det R₁₂ = 1 := by native_decide
+structure CompleteOrthogonalSystem (n : ℕ) (R : Type*) [Ring R] where
+  idems : Fin n → R
+  is_idem : ∀ i, idems i * idems i = idems i
+  orthogonal : ∀ i j, i ≠ j → idems i * idems j = 0
+  complete : ∑ i : Fin n, idems i = 1
 
-theorem R₂₃_preserves_η₄ : R₂₃ᵀ * η₄ * R₂₃ = η₄ := by native_decide
+def trivialSystem : CompleteOrthogonalSystem 1 R where
+  idems := fun _ => 1
+  is_idem := fun _ => mul_one 1
+  orthogonal := fun i j hij => absurd (Fin.ext_iff.mpr (by omega)) hij
+  complete := by simp
 
-theorem R₂₃_det : Matrix.det R₂₃ = 1 := by native_decide
+theorem peirce_full_decomp {n : ℕ} (sys : CompleteOrthogonalSystem n R) (x : R) :
+    x = ∑ i : Fin n, ∑ j : Fin n, sys.idems i * x * sys.idems j := by
+  have h_expand : x = (∑ i, sys.idems i) * x * (∑ j, sys.idems j) := by
+    rw [ sys.complete, one_mul, mul_one ];
+  exact h_expand.trans ( by simp +decide [ Finset.sum_mul _ _ _, Finset.mul_sum, mul_assoc ] )
 
-/-- Composition preserves η₄. -/
-theorem compose_preserves_η₄ :
-    (G₄ * R₁₂)ᵀ * η₄ * (G₄ * R₁₂) = η₄ := by native_decide
+theorem tropical_max_idem (a : ℝ) : max a a = a := max_self a
 
-/-- **Quadruple Factoring Identity.** -/
-theorem quad_factoring (a b c d : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
-    (d - c) * (d + c) = a ^ 2 + b ^ 2 := by nlinarith
+theorem tropical_min_idem (a : ℝ) : min a a = a := min_self a
 
-/-- **Enhanced Factoring:** Quadruples give THREE independent factoring identities. -/
-theorem quad_triple_factoring (a b c d : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
-    (d - c) * (d + c) = a ^ 2 + b ^ 2 ∧
-    (d - b) * (d + b) = a ^ 2 + c ^ 2 ∧
-    (d - a) * (d + a) = b ^ 2 + c ^ 2 := by
-  constructor <;> [skip; constructor] <;> nlinarith
+theorem tropical_max_distrib_min (a b c : ℝ) :
+    max a (min b c) = min (max a b) (max a c) :=
+  max_min_distrib_left a b c
 
-theorem G₄_generates_quadruple :
-    let v := (![1, 2, 2, 3] : Fin 4 → ℤ)
-    let w := G₄ *ᵥ v
-    w 0 ^ 2 + w 1 ^ 2 + w 2 ^ 2 = w 3 ^ 2 := by native_decide
+def reluFn (x : ℝ) : ℝ := max 0 x
 
-theorem quad_branching (k : ℕ) : 4 ^ k ≥ 3 ^ k :=
-  Nat.pow_le_pow_left (by norm_num : 3 ≤ 4) k
+theorem reluFn_idem : ∀ x, reluFn (reluFn x) = reluFn x := by
+  intro x; unfold reluFn
+  rcases le_total 0 x with h | h
+  · simp [max_eq_right (le_refl 0), max_eq_right h]
+  · simp [max_eq_left h]
 
-theorem berggren_lattice_automorphism (d : BDir) :
-    IsUnit (Matrix.det (dirMatrix d)) := by
-  cases d <;> simp [dirMatrix, B₁, B₂, B₃] <;> native_decide
+theorem reluFn_preserves_max (a b : ℝ) :
+    reluFn (max a b) = max (reluFn a) (reluFn b) := by
+  unfold reluFn; simp [max_assoc, max_comm, max_left_comm]
 
-theorem pathMatrix_lattice_automorphism (p : BPath) :
-    IsUnit (Matrix.det (pathMatrix p)) := by
-  induction p with
-  | nil => simp [pathMatrix]
-  | cons d ds ih =>
-    rw [pathMatrix, Matrix.det_mul]
-    exact IsUnit.mul (berggren_lattice_automorphism d) ih
+theorem reluFn_master : range reluFn = {x : ℝ | reluFn x = x} := by
+  ext y; constructor
+  · rintro ⟨x, rfl⟩; exact reluFn_idem x
+  · intro hy; exact ⟨y, hy⟩
 
-theorem pythagorean_as_null_vector (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
-    a ^ 2 + b ^ 2 - c ^ 2 = 0 := by linarith
+def vandermondeProd (n : ℕ) (v : Fin n → ℝ) : ℝ :=
+  ∏ i : Fin n, ∏ j ∈ (Finset.univ.filter (· > i)), (v j - v i)
 
-theorem B₁_inv_correct : B₁_inv * B₁ = 1 := by native_decide
+theorem vandermonde_collision {n : ℕ} (v : Fin n → ℝ)
+    {i j : Fin n} (hij : i < j) (hcoll : v i = v j) :
+    vandermondeProd n v = 0 := by
+  unfold vandermondeProd
+  apply Finset.prod_eq_zero (Finset.mem_univ i)
+  apply Finset.prod_eq_zero (i := j)
+  · simp [Finset.mem_filter, hij]
+  · simp [hcoll]
 
-theorem B₁_inv_correct' : B₁ * B₁_inv = 1 := by native_decide
+def gueJointDensity (n : ℕ) (v : Fin n → ℝ) : ℝ :=
+  (vandermondeProd n v) ^ 2 * Real.exp (-∑ i : Fin n, v i ^ 2 / 2)
 
-theorem B₁_inv_preserves_Q : B₁_invᵀ * Q * B₁_inv = Q := by native_decide
+theorem gue_vanishes_collision {n : ℕ} (v : Fin n → ℝ)
+    {i j : Fin n} (hij : i < j) (hcoll : v i = v j) :
+    gueJointDensity n v = 0 := by
+  unfold gueJointDensity; rw [vandermonde_collision v hij hcoll]; simp
 
-theorem perfect_lorentz_basis (p : BPath) :
-    (pathMatrix p)ᵀ * Q * (pathMatrix p) = Q :=
-  pathMatrix_preserves_Q p
+theorem gue_nonneg (n : ℕ) (v : Fin n → ℝ) : 0 ≤ gueJointDensity n v :=
+  mul_nonneg (sq_nonneg _) (le_of_lt (Real.exp_pos _))
 
-/-- **Descent Terminates.** -/
-theorem descent_terminates (a b c : ℤ)
-    (hpyth : a ^ 2 + b ^ 2 = c ^ 2)
-    (ha : 0 < a) (hb : 0 < b) (hc : 5 < c) :
-    -2 * a - 2 * b + 3 * c < c := by nlinarith [sq_nonneg a, sq_nonneg b]
+structure MathBridge' (C D : Type*) [Category C] [Category D] where
+  fwd : C ⥤ D
+  bwd : D ⥤ C
 
-theorem quantum_vs_classical (k : ℕ) (hk : 0 < k) :
-    3 ^ k > k := by
-  induction k with
-  | zero => omega
-  | succ n ih =>
-    cases n with
-    | zero => simp
-    | succ m =>
-      calc 3 ^ (m + 2) = 3 * 3 ^ (m + 1) := by ring
-        _ ≥ 3 * (m + 2) := by omega
-        _ ≥ m + 3 := by omega
+def MathBridge'.comp {C D E : Type*} [Category C] [Category D] [Category E]
+    (B₁ : MathBridge' C D) (B₂ : MathBridge' D E) : MathBridge' C E where
+  fwd := B₁.fwd ⋙ B₂.fwd
+  bwd := B₂.bwd ⋙ B₁.bwd
 
-theorem path_factorization (d : BDir) (ds : BPath) :
-    pathMatrix (d :: ds) = dirMatrix d * pathMatrix ds := rfl
+def MathBridge'.idBridge (C : Type*) [Category C] : MathBridge' C C where
+  fwd := 𝟭 C
+  bwd := 𝟭 C
 
-theorem quantum_walk_step_preserves (d : BDir) (p : BPath) :
-    ((dirMatrix d * pathMatrix p)ᵀ * Q * (dirMatrix d * pathMatrix p)) = Q := by
-  change (pathMatrix (d :: p))ᵀ * Q * pathMatrix (d :: p) = Q
-  exact pathMatrix_preserves_Q (d :: p)
+def MathBridge'.IsIdem {C : Type*} [Category C] (B : MathBridge' C C) : Prop :=
+  Nonempty ((B.comp B).fwd ≅ B.fwd)
 
-def countM : BPath → ℕ
-  | [] => 0
-  | .M :: ds => 1 + countM ds
-  | _ :: ds => countM ds
+theorem mathbridge_id_idempotent (C : Type*) [Category C] :
+    (MathBridge'.idBridge C).IsIdem :=
+  ⟨Functor.leftUnitor _⟩
 
-/-- **Determinant Parity Theorem.** -/
-theorem det_parity (p : BPath) :
-    Matrix.det (pathMatrix p) = (-1) ^ (countM p) := by
-  induction p with
-  | nil => simp [pathMatrix, countM]
-  | cons d ds ih =>
-    simp only [pathMatrix, Matrix.det_mul, ih]
-    cases d
-    all_goals simp [dirMatrix, countM, det_B₁, det_B₂, det_B₃]
-    ring
+structure KaroubiObj (C : Type*) [Category C] where
+  obj : C
+  idem : obj ⟶ obj
+  idem_eq : idem ≫ idem = idem
 
-/-- LR paths (no M-steps). -/
-def isLRPath : BPath → Prop
-  | [] => True
-  | .L :: ds => isLRPath ds
-  | .R :: ds => isLRPath ds
-  | .M :: _ => False
+structure KaroubiHom {C : Type*} [Category C] (X Y : KaroubiObj C) where
+  hom : X.obj ⟶ Y.obj
+  compat_left : X.idem ≫ hom = hom
+  compat_right : hom ≫ Y.idem = hom
 
-/-- **LR-Submonoid Theorem:** LR-paths have determinant +1. -/
-theorem LR_path_det_one (p : BPath) (h : isLRPath p) :
-    Matrix.det (pathMatrix p) = 1 := by
-  induction p with
-  | nil => simp [pathMatrix]
-  | cons d ds ih =>
-    cases d with
-    | L => simp [pathMatrix, dirMatrix, Matrix.det_mul, det_B₁, ih (by exact h)]
-    | R => simp [pathMatrix, dirMatrix, Matrix.det_mul, det_B₃, ih (by exact h)]
-    | M => exact absurd h (by simp [isLRPath])
+def karoubiEmbed {C : Type*} [Category C] (X : C) : KaroubiObj C where
+  obj := X
+  idem := 𝟙 X
+  idem_eq := Category.id_comp _
 
-theorem shortcut_injective (p : BPath) :
-    Function.Injective (fun v => pathMatrix p *ᵥ v) := by
-  -- The determinant of the path matrix is either 1 or -1, which means the matrix is invertible.
-  have h_det : Matrix.det (pathMatrix p) = 1 ∨ Matrix.det (pathMatrix p) = -1 := by
-    have h_det_abs : |Matrix.det (pathMatrix p)| = 1 := by
-      exact?;
-    grind;
-  cases' h_det with h_det h_det;
-  · exact fun v w h => by simpa [ h_det ] using congr_arg ( fun v => ( pathMatrix p ) ⁻¹.mulVec v ) h;
-  · exact fun v w h => by simpa [ h_det ] using congr_arg ( fun v => ( pathMatrix p ) ⁻¹.mulVec v ) h;
+def karoubiId {C : Type*} [Category C] (X : KaroubiObj C) : KaroubiHom X X where
+  hom := X.idem
+  compat_left := X.idem_eq
+  compat_right := X.idem_eq
 
-theorem root_null : lorentzInner root root = 0 := by simp [lorentzInner, root]
+def idemLE (e f : R) : Prop :=
+  e * e = e ∧ f * f = f ∧ e * f = e ∧ f * e = e
 
+theorem idemLE_refl (e : R) (he : e * e = e) : idemLE e e := ⟨he, he, he, he⟩
+
+theorem idemLE_trans (e f g : R)
+    (hef : idemLE e f) (hfg : idemLE f g) : idemLE e g := by
+  obtain ⟨he, _, hef1, hef2⟩ := hef
+  obtain ⟨_, hg, hfg1, hfg2⟩ := hfg
+  refine ⟨he, hg, ?_, ?_⟩
+  · calc e * g = e * f * g := by rw [hef1]
+      _ = e * (f * g) := by rw [mul_assoc]
+      _ = e * f := by rw [hfg1]
+      _ = e := hef1
+  · calc g * e = g * (f * e) := by rw [hef2]
+      _ = (g * f) * e := by rw [← mul_assoc]
+      _ = f * e := by rw [hfg2]
+      _ = e := hef2
+
+theorem idemLE_zero (e : R) (he : e * e = e) : idemLE 0 e :=
+  ⟨by simp, he, by simp, by simp⟩
+
+theorem idemLE_one (e : R) (he : e * e = e) : idemLE e 1 :=
+  ⟨he, one_mul 1, mul_one e, one_mul e⟩
+
+def tropicalFourier {G : Type*} [Fintype G] [Nonempty G] [DecidableEq G]
+    (f : G → ℝ) (χ : G → ℝ) : ℝ :=
+  Finset.sup' Finset.univ Finset.univ_nonempty (fun g => f g + χ g)
+
+theorem idem_identity_on_image {X : Type*} (O : X → X) (hO : ∀ x, O (O x) = O x)
+    (y : X) (hy : y ∈ range O) : O y = y := by
+  rw [master_equation' O hO] at hy; exact hy
+
+theorem idem_comp_comm {X : Type*} (O₁ O₂ : X → X)
+    (h1 : ∀ x, O₁ (O₁ x) = O₁ x)
+    (h2 : ∀ x, O₂ (O₂ x) = O₂ x)
+    (hcomm : ∀ x, O₁ (O₂ x) = O₂ (O₁ x)) :
+    ∀ x, (O₁ ∘ O₂) ((O₁ ∘ O₂) x) = (O₁ ∘ O₂) x := by
+  grind
+
+theorem image_comp_subset {X : Type*} (O₁ O₂ : X → X) :
+    range (O₁ ∘ O₂) ⊆ range O₁ := by
+  rintro y ⟨x, rfl⟩; exact ⟨O₂ x, rfl⟩
+
+theorem inf_universal_idem {S : Type*} [SemilatticeInf S] (a : S) : a ⊓ a = a := inf_idem a
+
+theorem sup_universal_idem {S : Type*} [SemilatticeSup S] (a : S) : a ⊔ a = a := sup_idem a
+
+end

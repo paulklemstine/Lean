@@ -181,4 +181,3 @@ theorem quantum_walk_speedup (d : ℕ) :
 Grover speedup, the search cost is O(√(N/k²)) = O(√N / k). -/
 theorem quantum_dimensional_speedup (N k : ℕ) :
     N / (k ^ 2) ≤ N := Nat.div_le_self N _
-

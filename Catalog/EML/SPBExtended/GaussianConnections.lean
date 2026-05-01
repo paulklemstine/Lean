@@ -154,4 +154,3 @@ theorem primitive_not_both_even (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2)
 theorem gaussNorm_of_pyth (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
     gaussNorm a b = c ^ 2 := by
   simp [gaussNorm]; linarith
-

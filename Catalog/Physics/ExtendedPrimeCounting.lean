@@ -92,4 +92,3 @@ theorem qr_count_5 :
 theorem qr_count_7 :
     ((Finset.Icc 1 6).filter (fun a =>
       decide (∃ x ∈ Finset.Icc 1 6, x * x % 7 = a))).card = 3 := by native_decide
-

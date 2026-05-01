@@ -46,6 +46,3 @@ theorem dft_size (n : ℕ) : n * n = n ^ 2 := by ring
 
 theorem peter_weyl (dims : List ℕ) :
     (dims.map (· ^ 2)).sum = (dims.map (· ^ 2)).sum := rfl
-
-
-

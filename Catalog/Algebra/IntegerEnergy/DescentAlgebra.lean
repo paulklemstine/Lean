@@ -155,4 +155,3 @@ the S₃ symmetry group acting on coordinate indices. -/
 theorem swap12_is_involution : swap12 * swap12 = 1 := by native_decide
 
 theorem swap12_det : swap12.det = -1 := by native_decide
-

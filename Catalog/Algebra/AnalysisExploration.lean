@@ -91,5 +91,3 @@ theorem bits_needed_16 : Nat.log 2 16 = 4 := by native_decide
 
 
 theorem bits_needed_1024 : Nat.log 2 1024 = 10 := by native_decide
-
-

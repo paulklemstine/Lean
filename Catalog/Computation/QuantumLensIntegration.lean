@@ -72,4 +72,3 @@ theorem physical_saving (k d : ℕ) :
 /-- For k = 5 logical qubits at d = 21: saving 4410 physical qubits. -/
 theorem rsa2048_physical_saving : 5 * physicalQubits 21 = 4410 := by
   simp [physicalQubits]
-

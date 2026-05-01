@@ -98,4 +98,3 @@ theorem det_BPS₂_pow :
 theorem b2_parity_a : ∀ n, (b2iter n).1 % 2 = 1 := fun n => (b2_parity_aux n).1
 
 theorem b2_parity_b : ∀ n, (b2iter n).2.1 % 2 = 0 := fun n => (b2_parity_aux n).2
-

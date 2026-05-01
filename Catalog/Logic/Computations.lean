@@ -40,4 +40,3 @@ def predicted_r₄ (n : ℕ) : ℕ := 8 * jacobiSumC n
 
 /-- Predicted r₈(n) = 16 * octonionicSignal(n) -/
 def predicted_r₈ (n : ℕ) : Int := 16 * octonionicSignal n
-

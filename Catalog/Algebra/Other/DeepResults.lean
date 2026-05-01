@@ -168,4 +168,3 @@ theorem hockey_stick_small :
 theorem lucas_small : Nat.choose 10 3 % 5 = 0 := by native_decide
 
 theorem wilson_13 : Nat.factorial 12 % 13 = 12 := by native_decide
-

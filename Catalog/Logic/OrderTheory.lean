@@ -44,4 +44,3 @@ theorem knaster_tarski_gfp' {α : Type*} [CompleteLattice α] (f : α → α)
 
 theorem nat_well_order' (S : Set ℕ) (hS : S.Nonempty) : ∃ m ∈ S, ∀ n ∈ S, m ≤ n :=
   ⟨sInf S, Nat.sInf_mem hS, fun n hn => Nat.sInf_le hn⟩
-

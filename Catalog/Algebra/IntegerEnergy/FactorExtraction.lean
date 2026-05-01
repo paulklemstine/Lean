@@ -55,4 +55,3 @@ theorem pipeline_sound (N g : ℤ) (hN : 1 < N)
     ∃ p q : ℤ, N = p * q ∧ 1 < p ∧ p < N := by
   obtain ⟨q, hq⟩ := hg
   exact ⟨g, q, by linarith, hg1, hgN⟩
-

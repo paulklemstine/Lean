@@ -68,4 +68,3 @@ theorem bertrand_10 : ∃ p, Nat.Prime p ∧ 10 < p ∧ p ≤ 20 :=
 /-- Bertrand's postulate for n = 50: there exists a prime between 50 and 100. -/
 theorem bertrand_50 : ∃ p, Nat.Prime p ∧ 50 < p ∧ p ≤ 100 :=
   ⟨53, by decide, by omega, by omega⟩
-

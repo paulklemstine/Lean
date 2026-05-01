@@ -141,4 +141,3 @@ theorem consecutive_inradius_num (n : ℤ) :
 (±1)² + (±2)² and (±2)² + (±1)². -/
 theorem five_reps : ∀ a b : ZMod 5, a ^ 2 + b ^ 2 = 0 →
     (a = 0 ∧ b = 0) ∨ (a ≠ 0 ∧ b ≠ 0) := by decide
-

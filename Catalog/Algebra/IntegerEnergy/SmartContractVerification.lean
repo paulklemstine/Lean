@@ -80,4 +80,3 @@ theorem swap_spec_output_bounded (spec : SwapSpec) :
     spec.outputDy < spec.reserveY := by
   rw [spec.hFormula]
   rw [ div_lt_iff₀ ] <;> nlinarith [ spec.hRX, spec.hRY, spec.hDx ]
-

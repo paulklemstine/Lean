@@ -261,4 +261,3 @@ theorem associator_alternating_12 :
      -(Oct.associator Oct.e2 Oct.e1 Oct.e4).c5,
      -(Oct.associator Oct.e2 Oct.e1 Oct.e4).c6,
      -(Oct.associator Oct.e2 Oct.e1 Oct.e4).c7⟩ := by decide
-

@@ -230,4 +230,3 @@ theorem quantum_gate_optimization_master :
   · native_decide
   · intro d hd; exact ⟨Nat.log 2 d + 1, Nat.lt_pow_succ_log_self (by omega) d⟩
   · intro d; exact cliffordV_fewer_layers d
-

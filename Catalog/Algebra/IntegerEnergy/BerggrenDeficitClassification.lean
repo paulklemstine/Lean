@@ -142,4 +142,3 @@ theorem inradius_via_deficit (a b c : ℤ) :
 /-- Near-isosceles inradius: a + b - c = 2n -/
 theorem near_isosceles_inradius (n : ℤ) :
     (2*n + 1) + (2*n^2 + 2*n) - (2*n^2 + 2*n + 1) = 2 * n := by ring
-

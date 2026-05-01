@@ -64,4 +64,3 @@ theorem triple_parity (a b c : ℤ) (h : a^2 + b^2 = c^2) (hc : ¬ 2 ∣ c) :
     exact h.symm ▸ Int.sq_mod_four_eq_one_of_odd ( by simpa [ ← even_iff_two_dvd ] using hc )
   generalize_proofs at *; (
   rcases Int.even_or_odd' a with ⟨ k, rfl | rfl ⟩ <;> rcases Int.even_or_odd' b with ⟨ l, rfl | rfl ⟩ <;> ring_nf at * <;> norm_num [ Int.ModEq ] at *;)
-

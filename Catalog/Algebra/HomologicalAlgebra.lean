@@ -76,5 +76,3 @@ theorem ses_rank_nullity' {K : Type*} [Field K]
   rw [ ← LinearMap.finrank_range_add_finrank_ker g ];
   rw [ ← h_exact, add_comm ];
   rw [ LinearMap.finrank_range_of_inj hf, LinearMap.range_eq_top.mpr hg ] ; simp +decide [ hf, hg ]
-
-

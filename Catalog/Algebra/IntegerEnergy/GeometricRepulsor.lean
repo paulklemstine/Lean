@@ -131,4 +131,3 @@ def fermatFactorSieved (N : ℕ) (maxSteps : ℕ := 1000000) : Option (ℕ × �
 -- Larger examples showing the algorithm works for close primes
 #eval fermatFactorSieved (997 * 1009)    -- 1005973
 #eval fermatFactorSieved (10007 * 10009)
-

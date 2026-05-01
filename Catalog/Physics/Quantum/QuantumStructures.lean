@@ -54,4 +54,3 @@ theorem crystallizer_lattice_bound (q n : ℕ) (hq : 2 ≤ q) (hn : 1 ≤ n) :
 theorem separable_partial_trace_rank
     (A B : Matrix (Fin 2) (Fin 2) ℂ) :
     Matrix.trace B • A = Matrix.trace B • A := rfl
-

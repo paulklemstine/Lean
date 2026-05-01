@@ -64,4 +64,3 @@ theorem sort_lower : 2 ^ 2 < Nat.factorial 3 := by norm_num
 /-- GCD reduction step -/
 theorem gcd_step (a b : ℕ) (hb : 0 < b) :
     a % b < b := Nat.mod_lt a hb
-

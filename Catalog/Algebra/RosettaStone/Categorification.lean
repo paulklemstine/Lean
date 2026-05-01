@@ -68,4 +68,3 @@ theorem k0_idempotent_correspondence {R : Type*} [CommRing R]
   · have : e * (1 - e) = e - e * e := by ring
     rw [this, he, sub_self]
   · ring
-

@@ -41,4 +41,3 @@ theorem pyth_factored (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 theorem B₂_on_345 :
     !![(1 : ℤ), 2, 2; 2, 1, 2; 2, 2, 3] *ᵥ ![3, 4, 5] = ![21, 20, 29] := by
   ext i; fin_cases i <;> simp [Matrix.mulVec, dotProduct, Fin.sum_univ_three]
-

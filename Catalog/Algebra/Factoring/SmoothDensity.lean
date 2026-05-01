@@ -97,4 +97,3 @@ theorem semiprime_pyth_factor (p q : ℕ) :
 /-- The tree density is bounded: 3^d nodes in a range of size ≥ 5 · 3^d. -/
 theorem tree_density_bounded (d : ℕ) :
     3 ^ d ≤ 5 * 3 ^ d := by omega
-

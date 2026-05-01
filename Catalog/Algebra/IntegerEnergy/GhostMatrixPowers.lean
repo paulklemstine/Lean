@@ -102,4 +102,3 @@ theorem M_eigenvec_neg1 : M.mulVec ![1, -1, 0] = ![-1, 1, 0] := by native_decide
 
 /-- (1,-1,0) is indeed a -1 eigenvector -/
 theorem M_eigenvec_neg1' : M.mulVec ![1, -1, 0] = (-1 : ℤ) • ![1, -1, 0] := by native_decide
-

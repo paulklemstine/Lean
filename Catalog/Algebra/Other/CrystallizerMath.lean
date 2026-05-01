@@ -126,4 +126,3 @@ theorem berggren_B_det :
 theorem berggren_C_det :
     let C : Matrix (Fin 3) (Fin 3) ℤ := !![-1, 2, 2; -2, 1, 2; -2, 2, 3]
     C.det = 1 := by native_decide
-

@@ -376,4 +376,3 @@ theorem do_nothing_zero_security :
 theorem all_defenses_adequate (s : DefenseStrategy) (h : s ≠ DefenseStrategy.doNothing) :
     strategySecurityBits s ≥ 80 := by
   cases s <;> simp_all [strategySecurityBits]
-

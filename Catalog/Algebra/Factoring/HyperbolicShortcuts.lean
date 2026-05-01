@@ -137,4 +137,3 @@ theorem path_preserves_lorentz (p : BPath) (u v : Fin 3 → ℤ) :
     rw [ ← hLorentzForm, ← hLorentzForm ];
     simp_all +decide [ Matrix.mul_assoc, Matrix.dotProduct_mulVec, Matrix.vecMul_mulVec ];
   exact hpathMatrix_preserves_lorentzInner p u v
-

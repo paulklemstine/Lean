@@ -64,4 +64,3 @@ theorem B2_leg_diff_3 : (B2_iter 3).1 - (B2_iter 3).2.1 = 1 := by native_decide
 /-- (1, -1, 0) is an eigenvector of B₂ with eigenvalue -1 -/
 theorem B2_eigenvector_neg1 :
     BM2_pell * !![1; -1; 0] = !![(-1 : ℤ); 1; 0] := by native_decide
-

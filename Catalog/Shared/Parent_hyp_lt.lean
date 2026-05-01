@@ -51,4 +51,3 @@ theorem parent_hyp_pos (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (hpt : IsPT a b c) : 0 < -2*a - 2*b + 3*c := by
   unfold IsPT at hpt
   nlinarith [sq_nonneg (3*c - 2*a - 2*b), sq_nonneg (a - b), mul_pos ha hb]
-

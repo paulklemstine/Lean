@@ -66,4 +66,3 @@ theorem composite_iff (n : ℕ) (hn : 2 ≤ n) :
   · rintro ⟨d, hd1, hd2, hd3⟩ hp
     have := hp.eq_one_or_self_of_dvd d hd3
     omega
-

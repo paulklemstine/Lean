@@ -116,6 +116,3 @@ theorem parity_constraint_period (n : ℕ) :
 theorem combined_pisano_mod6 (n : ℕ) :
     Nat.fib n % 6 = Nat.fib (n + 24) % 6 := by
   norm_num [ Nat.fib_add, Nat.add_mod, Nat.mul_mod, Nat.mod_self ]
-
-
-

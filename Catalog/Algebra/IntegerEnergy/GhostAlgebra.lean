@@ -343,4 +343,3 @@ theorem euclid_branch3_signs (m n : ℤ) (hn : 0 < n) (h1 : 3*n < m) :
 #print axioms double_descent_p
 #print axioms ghostMatrix_lorentz
 #print axioms pq_zero_iff_boundary
-

@@ -59,6 +59,3 @@ theorem harmonic_vals :
     (1 : ℚ) + 1/2 = 3/2 ∧
     (1 : ℚ) + 1/2 + 1/3 = 11/6 := by
   constructor <;> [rfl; constructor <;> norm_num]
-
-
-

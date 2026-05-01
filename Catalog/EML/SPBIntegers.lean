@@ -61,4 +61,3 @@ Integer verification: -/
 theorem hutton_step1 : (1 * 5 + 2 * 1 : ℤ) = 7 ∧ (2 * 5 - 1 * 1 : ℤ) = 9 := by omega
 
 theorem hutton_step2 : (7 * 8 + 9 * 1 : ℤ) = 9 * 8 - 7 * 1 := by ring
-

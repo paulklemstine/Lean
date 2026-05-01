@@ -141,4 +141,3 @@ theorem rsa_4096_d4 : 4096 / 4 = 1024 := by norm_num
 /-- The GNFS has sub-exponential complexity; lattice has polynomial
 exponent but worse base. Key comparison: -/
 theorem gnfs_vs_lattice : (341 : ℕ) < 512 ∧ 86 < 341 := by omega
-

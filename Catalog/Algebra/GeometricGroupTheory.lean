@@ -89,6 +89,3 @@ theorem berggren_growth' (depth : ℕ) :
   | succ n ih => calc 3 ^ (n + 1) = 3 * 3 ^ n := by ring
                    _ ≥ 3 * (n + 1) := by omega
                    _ ≥ n + 2 := by omega
-
-
-

@@ -208,4 +208,3 @@ theorem factor_from_pyth_triple (a b c : ℤ) (hpyth : a ^ 2 + b ^ 2 = c ^ 2)
     (hc : 0 < c) (ha : 0 < a) (hb : 0 < b) :
     a < c := by
   nlinarith
-

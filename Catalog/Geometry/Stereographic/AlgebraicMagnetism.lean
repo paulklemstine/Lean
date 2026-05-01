@@ -48,4 +48,3 @@ theorem commutant_bounds (N : ℕ) (hN : N ≥ 1) :
 theorem sum_naturals (n : ℕ) :
     2 * ∑ k ∈ Finset.range n, k = n * (n - 1) := by
   exact Eq.symm ( Nat.recOn n ( by norm_num ) fun n ih => by cases n <;> norm_num [ Finset.sum_range_succ ] at * ; linarith )
-

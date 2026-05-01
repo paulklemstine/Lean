@@ -93,4 +93,3 @@ theorem prime_descent_is_linear (p : ℕ) (hp : 5 ≤ p) (hodd : p % 2 = 1) :
 /-- Simple bound for semiprime depth. -/
 theorem semiprime_optimal_start (p q : ℕ) :
     q - p ≤ q := Nat.sub_le q p
-

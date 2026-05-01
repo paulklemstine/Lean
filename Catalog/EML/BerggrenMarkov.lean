@@ -80,4 +80,3 @@ example : bergA' 5 12 13 ≠ (3, 4, 5) := by native_decide
 theorem markov_5_13_194 : IsMarkov 5 13 194 := by unfold IsMarkov; ring
 
 theorem markov_2_29_169 : IsMarkov 2 29 169 := by unfold IsMarkov; ring
-

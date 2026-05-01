@@ -109,5 +109,3 @@ theorem three_sq_obstruction_23 :
   have hb : b ≤ 4 := by nlinarith [sq_nonneg a, sq_nonneg c]
   have hc : c ≤ 4 := by nlinarith [sq_nonneg a, sq_nonneg b]
   interval_cases a <;> interval_cases b <;> interval_cases c <;> omega
-
-

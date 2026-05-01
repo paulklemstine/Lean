@@ -67,4 +67,3 @@ def M₃_inv : Matrix (Fin 2) (Fin 2) ℤ :=
 theorem M₃_inv_M₁_eq_S : M₃_inv * M₁ = S_mat := by
   ext i j; fin_cases i <;> fin_cases j <;>
     simp [M₃_inv, M₁, S_mat, Matrix.mul_apply, Fin.sum_univ_two]
-

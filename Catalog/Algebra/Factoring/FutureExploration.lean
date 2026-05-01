@@ -179,4 +179,3 @@ theorem neg_one_qr_mod_4 (p : ℕ) [Fact (Nat.Prime p)] (hp4 : p % 4 = 1) :
 theorem all_up_to_B_smooth (B : ℕ) :
     ∀ n, 0 < n → n ≤ B → IsSmooth B n :=
   fun n hn hnB => smooth_all_below_base B n hn hnB
-

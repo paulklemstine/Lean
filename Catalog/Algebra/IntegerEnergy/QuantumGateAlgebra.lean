@@ -331,4 +331,3 @@ def surface_code (d : ℕ) (_hd : 2 ≤ d) : CSSCode where
   k₁ := d * d + (d - 1) * (d - 1) - 1
   k₂ := 0
   hk := by omega
-

@@ -66,4 +66,3 @@ theorem bootstrap_chain_monotone : ∀ n : ℕ, (n : ℤ) = Int.ofNat n := by
 theorem grand_bootstrap (n : ℕ) :
     ∃ z : ℂ, z = (n : ℂ) ∧ z.re = (n : ℝ) ∧ z.im = 0 := by
   aesop
-

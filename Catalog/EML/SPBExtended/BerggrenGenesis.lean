@@ -174,4 +174,3 @@ is itself a sum of squares. This underlies the Fibonacci-Pythagorean connection.
 theorem brahmagupta_fibonacci_genesis (a b c d : ℤ) :
     (a ^ 2 + b ^ 2) * (c ^ 2 + d ^ 2) =
     (a * c - b * d) ^ 2 + (a * d + b * c) ^ 2 := by ring
-

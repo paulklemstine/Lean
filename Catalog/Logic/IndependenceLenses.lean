@@ -46,4 +46,3 @@ theorem nine_primes_coprime :
     List.Pairwise Nat.Coprime [2, 3, 5, 7, 11, 13, 17, 19, 23] := by native_decide
 
 theorem rsa2048_lens_reduction : 1024 - 9 = 1015 := by norm_num
-

@@ -55,4 +55,3 @@ theorem channel_amplification (k : ℕ) (hk : 1 ≤ k) :
 /-- The quadratic term k² dominates for large k. -/
 theorem quadratic_dominance (k : ℕ) (hk : 2 ≤ k) :
     k ≤ k * k := by nlinarith
-

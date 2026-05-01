@@ -41,6 +41,3 @@ Domain: Computation/Oracles
 Declarations: 5] -/
 theorem three_not_sum_of_squares : ¬ IsSumOfTwoSquares 3 := by
   rintro ⟨ a, b, h ⟩ ; have := Nat.le_of_lt_succ ( show a < 2 by nlinarith ) ; have := Nat.le_of_lt_succ ( show b < 2 by nlinarith ) ; interval_cases a <;> interval_cases b <;> trivial
-
-
-

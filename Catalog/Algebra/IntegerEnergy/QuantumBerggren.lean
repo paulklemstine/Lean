@@ -199,4 +199,3 @@ theorem berggren_B2_preserves_form (a b c : ℤ) :
 theorem berggren_B3_preserves_form (a b c : ℤ) :
     let (a₃, b₃, c₃) := (-a + 2*b + 2*c, -2*a + b + 2*c, -2*a + 2*b + 3*c)
     a₃^2 + b₃^2 - c₃^2 = a^2 + b^2 - c^2 := by ring
-

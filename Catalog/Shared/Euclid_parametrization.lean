@@ -14,4 +14,3 @@ Declarations: 1] -/
 theorem euclid_parametrization (m n : ℤ) :
     IsPythTriple' (m^2 - n^2) (2*m*n) (m^2 + n^2) := by
   unfold IsPythTriple'; ring
-

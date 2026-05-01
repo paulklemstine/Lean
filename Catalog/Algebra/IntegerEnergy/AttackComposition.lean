@@ -267,4 +267,3 @@ theorem existential_highest_priority :
     defensePriority ThreatLevel.severe < defensePriority ThreatLevel.moderate ∧
     defensePriority ThreatLevel.moderate < defensePriority ThreatLevel.negligible := by
   simp [defensePriority]
-

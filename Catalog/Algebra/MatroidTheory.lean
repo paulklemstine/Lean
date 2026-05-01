@@ -58,5 +58,3 @@ theorem greedy_comparison' {n : ℕ} (w : Fin n → ℕ)
     (S T : Finset (Fin n)) :
     ∑ i ∈ S, w i ≤ ∑ i ∈ T, w i ∨ ∑ i ∈ T, w i ≤ ∑ i ∈ S, w i :=
   le_total _ _
-
-

@@ -225,6 +225,3 @@ theorem lossless_compression_limit (n : ℕ) (hn : 1 ≤ n)
 So "recompressing" achieves nothing — a bijection doesn't reduce size. -/
 theorem recompression_futile (N : ℕ) (f : Fin N → Fin N) (hf : Injective f) :
     Bijective f := Finite.injective_iff_bijective.mp hf
-
-
-

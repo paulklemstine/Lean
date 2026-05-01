@@ -207,4 +207,3 @@ theorem factor_221 : ∃ d : ℕ, d ≤ 10 ∧
     1 < g ∧ g < 221 := by
   use 6
   native_decide
-

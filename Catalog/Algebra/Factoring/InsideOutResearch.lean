@@ -132,4 +132,3 @@ def multiPolySieve (N : ℕ) (maxSteps : ℕ) : Option (ℕ × ℕ) := Id.run do
 #eval multiPolySieve 77 100         -- finds factor earlier
 #eval multiPolySieve 143 100
 #eval multiPolySieve 10403 200
-

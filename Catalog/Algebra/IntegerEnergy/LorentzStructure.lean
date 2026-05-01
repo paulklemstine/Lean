@@ -76,4 +76,3 @@ theorem B1_chain_proper (k : ℕ) : (1 : ℤ) ^ k = 1 := one_pow k
 theorem orientation_parity_B2 :
     Matrix.det (B2_mat * B2_mat) = 1 ∧ Matrix.det B2_mat = -1 :=
   ⟨B2_sq_proper, B2_3x3_det⟩
-

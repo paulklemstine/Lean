@@ -109,4 +109,3 @@ theorem depth_upper_bound (a b c : ℤ) (ha : 0 < a) (hb : 0 < b)
     (hpyth : a ^ 2 + b ^ 2 = c ^ 2) :
     -2 * a - 2 * b + 3 * c ≤ c - 1 := by
   nlinarith [sq_nonneg (a + b - c)]
-

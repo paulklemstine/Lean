@@ -309,6 +309,3 @@ theorem algebraicTheoryOfAlgebra_selfReference (α : Type*) :
     fun T₁ T₂ => ⟨theoryMeet_le_left T₁ T₂, theoryMeet_le_right T₁ T₂,
       fun S h₁ h₂ => le_theoryMeet S T₁ T₂ h₁ h₂⟩,
     theoryMeet_idem, theoryMeet_comm⟩
-
-
-

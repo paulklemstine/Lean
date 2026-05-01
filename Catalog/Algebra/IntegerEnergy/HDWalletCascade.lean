@@ -107,4 +107,3 @@ theorem xpub_total_compromise
 the attack surface. Each sharing increases exposure. -/
 theorem xpub_sharing_risk (n_services : ℕ) (h : n_services > 0) :
     n_services ≥ 1 := h
-

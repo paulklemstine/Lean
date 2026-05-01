@@ -311,4 +311,3 @@ theorem J_sq' : J_SO2' * J_SO2' = -(1 : Matrix (Fin 2) (Fin 2) ℤ) := by
 theorem pythRot_commutes_J' (a b : ℤ) :
     pythRot a b * J_SO2' = J_SO2' * pythRot a b := by
   simp [J_SO2']; exact pythRot_comm a b 0 1
-

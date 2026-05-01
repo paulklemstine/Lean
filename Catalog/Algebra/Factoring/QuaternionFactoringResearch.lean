@@ -83,4 +83,3 @@ theorem norm_factoring_gives_divisor (q₁ q₂ : Quaternion ℤ) (N : ℤ)
     convert hN.symm using 1;
     exact norm_factor_divides q₁ q₂
   exact hN_factor ▸ dvd_mul_right (Quaternion.normSq q₁) (Quaternion.normSq q₂)
-

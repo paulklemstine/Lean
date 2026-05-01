@@ -59,4 +59,3 @@ theorem effective_complexity_balanced (p : ℕ) (_hp : 2 ≤ p) :
 /-- Unbalanced semiprimes: p < p*q when q > 1. -/
 theorem effective_complexity_unbalanced (p q : ℕ) (_hp : 2 ≤ p) (hq : p < q) :
     p < p * q := by nlinarith
-

@@ -184,4 +184,3 @@ theorem cross_gcd_divides (c₁ c₂ N : ℤ) :
 /-- Cross-difference factors multiplicatively. -/
 theorem cross_diff_factors (c₁ c₂ : ℤ) :
     c₁ ^ 2 - c₂ ^ 2 = (c₁ - c₂) * (c₁ + c₂) := by ring
-

@@ -159,4 +159,3 @@ Declarations: 25] -/
 theorem minkowski_exponent_gap (d₁ d₂ : ℕ) (h1 : 1 ≤ d₁) (h2 : d₁ < d₂) :
     (1 : ℚ) / d₂ < 1 / d₁ := by
       gcongr
-

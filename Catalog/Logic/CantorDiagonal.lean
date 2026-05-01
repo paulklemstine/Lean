@@ -60,4 +60,3 @@ theorem reals_uncountable : ¬ ∃ f : ℕ → ℝ, Surjective f := by
   convert Cardinal.not_countable_real;
   constructor <;> intro h <;> rw [ Set.countable_iff_exists_subset_range ] at * ; aesop;
   exact ⟨ _, fun x => by simpa using h.choose_spec ( Set.mem_univ x ) ⟩
-

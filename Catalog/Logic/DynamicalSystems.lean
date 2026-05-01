@@ -53,4 +53,3 @@ theorem tent_period2 : ((2 : ℚ) * (2/5) = 4/5) ∧ ((2 : ℚ) * (1 - 4/5) = 2/
   constructor <;> norm_num
 
 theorem berggren_M1_fixed_eigenvalue' : (2 - 1 : ℤ) * (0 + 1) - 1 * 1 = 0 := by ring
-

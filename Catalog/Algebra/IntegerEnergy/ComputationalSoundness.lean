@@ -137,4 +137,3 @@ theorem rewinding_lemma (ε : ℝ) (challengeSize : ℕ)
     0 < ε * (ε - 1 / (challengeSize : ℝ)) := by
   apply mul_pos hε
   linarith
-

@@ -116,4 +116,3 @@ theorem all_commutators_traceless :
     Matrix.trace (BD₁ * BD₃ - BD₃ * BD₁) = 0 ∧
     Matrix.trace (BD₂ * BD₃ - BD₃ * BD₂) = 0 :=
   ⟨BD₁₂_commutator_trace, BD₁₃_commutator_trace, BD₂₃_commutator_trace⟩
-

@@ -45,4 +45,3 @@ theorem light_cone_triangulation (x₁ x₂ r₁ r₂ x y : ℝ)
     (hne : x₁ ≠ x₂) :
     x = (r₁^2 - r₂^2 + x₂^2 - x₁^2) / (2 * (x₂ - x₁)) := by
   rw [ eq_div_iff ] <;> cases lt_or_gt_of_ne hne <;> nlinarith
-

@@ -104,6 +104,3 @@ theorem iof_loss_independent_of_factors
     -- because N does not appear in the loss function at all
     (fun N : ℕ => loss) (p * q) = (fun N : ℕ => loss) (p' * q') := by
   simp
-
-
-

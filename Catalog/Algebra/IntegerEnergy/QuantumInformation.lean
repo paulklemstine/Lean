@@ -262,4 +262,3 @@ theorem rational_bloch_from_quadruple (p : RatSpherePoint) :
 theorem arithmetic_qubit_count (d : ℕ) (hd : 0 < d) :
     ∃ a b c : ℤ, a ^ 2 + b ^ 2 + c ^ 2 = (d : ℤ) ^ 2 := by
   exact ⟨d, 0, 0, by ring⟩
-

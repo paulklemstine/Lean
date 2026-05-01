@@ -92,6 +92,3 @@ theorem seifert_genus_bound (crossings genus : ℕ) (h : 2 * genus ≤ crossings
 
 
 theorem trefoil_genus : 2 * 1 ≤ (3 : ℕ) := by norm_num
-
-
-

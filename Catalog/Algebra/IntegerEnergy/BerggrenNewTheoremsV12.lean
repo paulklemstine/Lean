@@ -121,4 +121,3 @@ theorem BN₁_pow_closed_check :
   constructor
   · ext i j; fin_cases i <;> fin_cases j <;> simp [BN₁_pow_closed, BN₁]
   · ext i j; fin_cases i <;> fin_cases j <;> simp [BN₁_pow_closed]
-

@@ -41,4 +41,3 @@ def evalHomomorphism (X : Type*) (x : X) : (X → ℝ) →+* ℝ where
   map_mul' _ _ := rfl
   map_zero' := rfl
   map_add' _ _ := rfl
-

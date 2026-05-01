@@ -287,4 +287,3 @@ theorem grand_summary :
          fun N p q hN hp hpq => trial_division_tree_equivalence N p q hN hp hpq,
          quad_lattice_zero,
          dimensional_escape⟩
-

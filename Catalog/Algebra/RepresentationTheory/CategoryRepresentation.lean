@@ -97,6 +97,3 @@ theorem quotient_dim {F V : Type*} [Field F] [AddCommGroup V] [Module F V]
     [FiniteDimensional F V] (W : Submodule F V) :
     Module.finrank F V = Module.finrank F W + Module.finrank F (V ⧸ W) := by
   rw [ ← Submodule.finrank_quotient_add_finrank W, add_comm ]
-
-
-

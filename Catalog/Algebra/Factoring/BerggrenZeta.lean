@@ -120,4 +120,3 @@ theorem ghost_65_different_hyp :
 #print axioms two_reps_85
 #print axioms three_reps_325
 #print axioms ghost_65_different_hyp
-

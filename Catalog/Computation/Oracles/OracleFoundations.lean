@@ -94,4 +94,3 @@ def IsSelfReferential (O : Oracle) (f : Oracle → ℕ → Bool) : Prop :=
 theorem oracle_fixed_point_constant (b : ℕ → Bool) :
     ∃ O : Oracle, IsSelfReferential O (fun _ => b) := by
   exact ⟨b, fun _ => rfl⟩
-

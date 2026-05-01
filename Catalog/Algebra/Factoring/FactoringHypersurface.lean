@@ -76,4 +76,3 @@ theorem more_channels_more_chances (k₁ k₂ : ℕ) (hk : k₁ < k₂) :
   have : Nat.choose k₁ 2 ≤ Nat.choose k₂ 2 :=
     Nat.choose_le_choose 2 (le_of_lt hk)
   omega
-

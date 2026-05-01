@@ -116,4 +116,3 @@ theorem pell_sqrt2_fundamental : norm_sqrt2 3 2 = 1 := by decide
 
 /-- The next Pell solution: (17, 12). -/
 theorem pell_sqrt2_second : norm_sqrt2 17 12 = 1 := by decide
-

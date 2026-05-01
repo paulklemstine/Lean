@@ -111,4 +111,3 @@ theorem markoff_num_194 : IsMarkoff 5 13 194 := by norm_num [IsMarkoff]
 theorem markoff_growth :
     (1 : ℤ) < 2 ∧ 2 < 5 ∧ 5 < 13 ∧ 13 < 29 ∧ 29 < 34 ∧ 34 < 89 ∧ 89 < 169 ∧ 169 < 194 := by
   omega
-

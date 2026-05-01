@@ -94,4 +94,3 @@ theorem prime_density_decreasing :
     primeCountBP 100 * 1000 > primeCountBP 1000 * 100 := by
   unfold primeCountBP
   native_decide
-

@@ -1,132 +1,72 @@
 import Mathlib
 
-/-! # CatalogBuild.Pythagorean.TreeFactoring.Core
+/-! # CatalogBuild.Speculative.Other.Core
 
 Auto-generated from theorem catalog database.
-Domain: Pythagorean/TreeFactoring
-Declarations: 15
+Domain: Speculative/Other
+Declarations: 6
 -/
 
-/-- For any odd N, the triple (N, (N²-1)/2, (N²+1)/2) satisfies the Pythagorean equation. -/
-theorem trivial_triple_is_pyth (N : ℤ) (hN : N % 2 = 1) :
-    N ^ 2 + ((N ^ 2 - 1) / 2) ^ 2 = ((N ^ 2 + 1) / 2) ^ 2 := by
-  have h1 : (2 : ℤ) ∣ (N ^ 2 - 1) := by
-    have : N % 2 = 1 := hN
-    obtain ⟨k, hk⟩ : ∃ k, N = 2 * k + 1 := ⟨(N - 1) / 2, by omega⟩
-    subst hk; ring_nf; omega
-  have h2 : (2 : ℤ) ∣ (N ^ 2 + 1) := by
-    have := h1; omega
-  nlinarith [Int.ediv_mul_cancel h1, Int.ediv_mul_cancel h2]
-
-/-- B₁⁻¹ preserves the Pythagorean property. -/
-theorem inv_B1_preserves (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
-    (a + 2*b - 2*c) ^ 2 + (-2*a - b + 2*c) ^ 2 = (-2*a - 2*b + 3*c) ^ 2 := by nlinarith
-
-/-- B₂⁻¹ preserves the Pythagorean property. -/
-theorem inv_B2_preserves (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
-    (a + 2*b - 2*c) ^ 2 + (2*a + b - 2*c) ^ 2 = (-2*a - 2*b + 3*c) ^ 2 := by nlinarith
-
-/-- B₃⁻¹ preserves the Pythagorean property. -/
-theorem inv_B3_preserves (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
-    (-a - 2*b + 2*c) ^ 2 + (2*a + b - 2*c) ^ 2 = (-2*a - 2*b + 3*c) ^ 2 := by nlinarith
-
-/-- B₁⁻¹ ∘ B₁ = Id (component-wise) -/
-theorem inv_B1_comp_B1 (a b c : ℤ) :
-    let a' := a - 2*b + 2*c
-    let b' := 2*a - b + 2*c
-    let c' := 2*a - 2*b + 3*c
-    a' + 2*b' - 2*c' = a ∧ -2*a' - b' + 2*c' = b ∧ -2*a' - 2*b' + 3*c' = c :=
-  ⟨by ring, by ring, by ring⟩
-
-/-- B₂⁻¹ ∘ B₂ = Id (component-wise) -/
-theorem inv_B2_comp_B2 (a b c : ℤ) :
-    let a' := a + 2*b + 2*c
-    let b' := 2*a + b + 2*c
-    let c' := 2*a + 2*b + 3*c
-    a' + 2*b' - 2*c' = a ∧ 2*a' + b' - 2*c' = b ∧ -2*a' - 2*b' + 3*c' = c :=
-  ⟨by ring, by ring, by ring⟩
-
-/-- B₃⁻¹ ∘ B₃ = Id (component-wise) -/
-theorem inv_B3_comp_B3 (a b c : ℤ) :
-    let a' := -a + 2*b + 2*c
-    let b' := -2*a + b + 2*c
-    let c' := -2*a + 2*b + 3*c
-    (0 - a') - 2*b' + 2*c' = a ∧ 2*a' + b' - 2*c' = b ∧ (0 - 2*a') - 2*b' + 3*c' = c :=
-  ⟨by ring, by ring, by ring⟩
-
-/-- If gcd(d, N) is non-trivial, it's a factor of N. -/
-theorem factor_from_gcd (N d : ℕ) (_hN : 1 < N)
-    (hg_gt : 1 < Nat.gcd d N) (hg_lt : Nat.gcd d N < N) :
-    Nat.gcd d N ∣ N ∧ 1 < Nat.gcd d N ∧ Nat.gcd d N < N :=
-  ⟨Nat.gcd_dvd_right d N, hg_gt, hg_lt⟩
-
-/-- For a semiprime N = p*q, the divisor d = p gives gcd(d, N) = p. -/
-theorem semiprime_gcd (p q : ℕ) (_hp : Nat.Prime p) :
-    Nat.gcd p (p * q) = p :=
-  Nat.gcd_eq_left (dvd_mul_right p q)
-
-/-- At most one inverse Berggren map produces positive first and second components. -/
-theorem inv_B1_B2_exclusive (a b c : ℤ)
-    (h1 : 0 < -2*a - b + 2*c) (h2 : 0 < 2*a + b - 2*c) : False := by linarith
-
-/-- [Section: # CatalogBuild.Pythagorean.TreeFactoring.Core
+/-- [Section: # CatalogBuild.Speculative.Other.Core
 Auto-generated from theorem catalog database.
-Domain: Pythagorean/TreeFactoring
-Declarations: 15] -/
-theorem inv_B1_lorentz (a b c : ℤ) :
-    (a + 2*b - 2*c)^2 + (-2*a - b + 2*c)^2 - (-2*a - 2*b + 3*c)^2 =
-    a^2 + b^2 - c^2 := by ring
+Domain: Speculative/Other
+Declarations: 6] -/
+theorem adaptive_feedback_convergence
+    {α : Type*} [MetricSpace α] [CompleteSpace α] [Nonempty α]
+    {K : ℝ≥0} (f : α → α) (hf : ContractingWith K f) :
+    ∃! x : α, f x = x := by
+  have h_fixed_point : ∃ x : α, f x = x := by
+    convert hf.exists_fixedPoint;
+    constructor <;> intro h;
+    · exact?;
+    · exact Exists.elim ( h ( Classical.arbitrary α ) ( by simp +decide [ edist_dist ] ) ) fun x hx => ⟨ x, hx.1 ⟩;
+  refine' ⟨ h_fixed_point.choose, h_fixed_point.choose_spec, fun x hx => _ ⟩;
+  have := hf.dist_le_mul x h_fixed_point.choose;
+  simp_all +decide [ h_fixed_point.choose_spec ];
+  exact dist_le_zero.mp ( le_of_not_gt fun h => by nlinarith [ show ( K : ℝ ) < 1 from mod_cast hf.1, show ( 0 : ℝ ) ≤ dist x h_fixed_point.choose from dist_nonneg ] )
 
-/-- [Section: # CatalogBuild.Pythagorean.TreeFactoring.Core
+/-- [Section: # CatalogBuild.Speculative.Other.Core
 Auto-generated from theorem catalog database.
-Domain: Pythagorean/TreeFactoring
-Declarations: 15] -/
-theorem inv_B2_lorentz (a b c : ℤ) :
-    (a + 2*b - 2*c)^2 + (2*a + b - 2*c)^2 - (-2*a - 2*b + 3*c)^2 =
-    a^2 + b^2 - c^2 := by ring
+Domain: Speculative/Other
+Declarations: 6] -/
+theorem transport_composition_lipschitz
+    {α β γ : Type*} [PseudoEMetricSpace α] [PseudoEMetricSpace β] [PseudoEMetricSpace γ]
+    (f : α → β) (g : β → γ) (Kf Kg : ℝ≥0)
+    (hf : LipschitzWith Kf f) (hg : LipschitzWith Kg g) :
+    LipschitzWith (Kg * Kf) (g ∘ f) := by
+  exact hg.comp hf
 
-theorem inv_B3_lorentz (a b c : ℤ) :
-    (-a - 2*b + 2*c)^2 + (2*a + b - 2*c)^2 - (-2*a - 2*b + 3*c)^2 =
-    a^2 + b^2 - c^2 := by ring
+theorem self_repair_fixed_point
+    {α : Type*} [CompleteLattice α] (f : α →o α) :
+    ∃ x : α, f x = x := by
+  -- Let $x$ be the least fixed point of $f$.
+  use sInf {x | f x ≤ x};
+  refine' le_antisymm _ _;
+  · refine' le_sInf fun x hx => _;
+    exact le_trans ( f.mono ( sInf_le hx ) ) hx;
+  · refine' sInf_le _;
+    refine' f.monotone _;
+    exact le_sInf fun x hx => f.monotone ( sInf_le hx ) |> le_trans <| hx
 
-/-- The parent-finding function: returns which branch and the parent triple. -/
-def findParent' (a b c : ℤ) : ℕ × ℤ × ℤ × ℤ :=
-  let (a1, b1, c1) := (a + 2*b - 2*c, -2*a - b + 2*c, -2*a - 2*b + 3*c)
-  let (a2, b2, c2) := (a + 2*b - 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
-  if 0 < a1 && 0 < b1 then (1, a1, b1, c1)
-  else if 0 < a2 && 0 < b2 then (2, a2, b2, c2)
-  else
-    let (a3, b3, c3) := (-a - 2*b + 2*c, 2*a + b - 2*c, -2*a - 2*b + 3*c)
-    (3, a3, b3, c3)
+theorem shannon_entropy_term_nonneg (p : ℝ) (hp0 : 0 ≤ p) (hp1 : p ≤ 1) :
+    0 ≤ -(p * Real.log p) := by
+  by_cases h : p = 0 <;> simpa [ h ] using by nlinarith [ Real.log_nonpos hp0 hp1 ] ;
 
-/-- Factor N by tree descent with fuel. -/
-def factorDescent (N : ℕ) (fuel : ℕ) : Option (ℕ × ℕ) :=
-  if N % 2 == 0 || N < 9 then none
-  else
-    let m : ℤ := ((N : ℤ) + 1) / 2
-    let n_param : ℤ := ((N : ℤ) - 1) / 2
-    let a : ℤ := m ^ 2 - n_param ^ 2
-    let b : ℤ := 2 * m * n_param
-    let c : ℤ := m ^ 2 + n_param ^ 2
-    go N a b c fuel
-where
-  go (N : ℕ) : ℤ → ℤ → ℤ → ℕ → Option (ℕ × ℕ)
-    | _, _, _, 0 => none
-    | a, b, c, fuel' + 1 =>
-      let gA := Nat.gcd a.natAbs N
-      let gB := Nat.gcd b.natAbs N
-      if 1 < gA && gA < N then some (gA, N / gA)
-      else if 1 < gB && gB < N then some (gB, N / gB)
-      else if a == 3 && b == 4 && c == 5 then none
-      else
-        let (_, pa, pb, pc) := findParent' a b c
-        go N pa pb pc fuel'
+theorem iterative_refinement_geometric_convergence
+    {α : Type*} [PseudoEMetricSpace α]
+    (f : α → α) (K : ℝ≥0) (hf : LipschitzWith K f)
+    (x₀ x_fix : α) (hfix : f x_fix = x_fix) :
+    ∀ n : ℕ, edist (f^[n] x₀) x_fix ≤ (K : ℝ≥0∞) ^ n * edist x₀ x_fix := by
+  intro n;
+  induction' n with n ih;
+  · simp +decide;
+  · simpa [ hfix, pow_succ', mul_assoc, Function.iterate_succ_apply', mul_left_comm ] using hf.edist_le_mul _ _ |> le_trans <| mul_le_mul_left' ih K
 
--- Verify the algorithm works on concrete examples
-#eval factorDescent 15 100    -- some (3, 5)
-#eval factorDescent 21 100    -- some (3, 7)
-#eval factorDescent 77 100    -- some (7, 11)
-#eval factorDescent 143 100   -- some (11, 13)
-#eval factorDescent 323 200   -- some (17, 19)
-#eval factorDescent 10403 500
-
+theorem collaborative_convex_combination
+    {V : Type*} [NormedAddCommGroup V] [NormedSpace ℝ V]
+    (n : ℕ) (agents : Fin n → V) (weights : Fin n → ℝ)
+    (hw_nonneg : ∀ i, 0 ≤ weights i)
+    (hw_sum : ∑ i, weights i = 1) :
+    ∑ i, weights i • agents i ∈ convexHull ℝ (Set.range agents) := by
+  rw [ convexHull_eq ];
+  refine' ⟨ Fin n, Finset.univ, weights, agents, _, _, _, _ ⟩ <;> simp_all +decide [ Finset.centerMass ]

@@ -104,4 +104,3 @@ theorem no_nontrivial_boost (lam mu : ℤ) (h : lam ^ 2 - mu ^ 2 = 1) (hmu : mu 
   have hfact : (lam - mu) * (lam + mu) = 1 := by ring_nf; linarith
   have h1 := Int.eq_one_or_neg_one_of_mul_eq_one' hfact
   omega
-

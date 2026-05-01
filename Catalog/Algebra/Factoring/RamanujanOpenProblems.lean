@@ -468,4 +468,3 @@ theorem rop_lorentz5_closure (M N : Matrix (Fin 5) (Fin 5) ℤ)
   have : Nᵀ * Mᵀ * ropQ5 * (M * N) = Nᵀ * (Mᵀ * ropQ5 * M) * N := by
     simp [Matrix.mul_assoc]
   rw [this, hM, hN]
-

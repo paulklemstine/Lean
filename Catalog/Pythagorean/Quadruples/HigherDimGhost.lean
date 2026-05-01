@@ -168,4 +168,3 @@ theorem parentHyp5_34_val : parentHyp5_34 1 2 2 4 5 = 3 := by
 #print axioms embed_3_to_5
 #print axioms combine_triples_5d
 #print axioms lorentz4_sf
-

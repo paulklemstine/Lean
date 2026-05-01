@@ -32,4 +32,3 @@ theorem no_enumeration_of_subsets :
       swap;
       exact fun b => ¬b;
       grind
-

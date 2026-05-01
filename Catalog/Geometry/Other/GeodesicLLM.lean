@@ -85,4 +85,3 @@ theorem geometric_efficiency_gap (d L r : ℕ) (hd : 2 ≤ d) (hL : 2 ≤ L)
   suffices h_divided : r * (Nat.log 2 L + 1) < d * L by
     nlinarith;
   nlinarith [ show Nat.log 2 L < L from Nat.log_lt_of_lt_pow ( by linarith ) ( by exact Nat.recOn L ( by norm_num ) fun n ihn => by norm_num [ Nat.pow_succ ] at * ; nlinarith ) ]
-

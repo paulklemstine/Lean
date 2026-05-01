@@ -53,4 +53,3 @@ theorem independent_gcd (p q : ℕ) :
 
 /-- Difference of squares identity. -/
 theorem leg_diff_sq (m n : ℤ) : m ^ 2 - n ^ 2 = (m - n) * (m + n) := by ring
-

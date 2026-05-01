@@ -175,4 +175,3 @@ theorem S_not_commutes_B1 : SwapS * BM₁ ≠ BM₁ * SwapS := by native_decide
 /-- The "balanced" eigenvector (1,1,0) of S is preserved by B₂ up to scaling -/
 theorem B2_preserves_balanced_direction :
     BM₂ *ᵥ (![1, 1, 0] : Fin 3 → ℤ) = ![3, 3, 4] := by native_decide
-

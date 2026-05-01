@@ -124,5 +124,3 @@ theorem sl2_trace_f' : Matrix.trace sl2_f' = 0 := by
 
 theorem sl2_trace_h' : Matrix.trace sl2_h' = 0 := by
   simp [sl2_h', Matrix.trace, Matrix.diag, Fin.sum_univ_two]
-
-

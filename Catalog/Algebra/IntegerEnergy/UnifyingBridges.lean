@@ -38,4 +38,3 @@ theorem euler_totient_sum (n : ℕ) (hn : 0 < n) :
 theorem geometric_series_int (r : ℤ) (n : ℕ) :
     (r - 1) * ∑ i ∈ range n, r ^ i = r ^ n - 1 := by
       rw [ mul_comm, geom_sum_mul ]
-

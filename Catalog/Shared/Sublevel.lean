@@ -55,4 +55,3 @@ theorem sublevel_zero_is_divisors (N : ℕ) (hN : 0 < N) :
     exact ⟨hx, Nat.dvd_of_mod_eq_zero hmod⟩
   · rintro ⟨hx, hdvd⟩
     exact ⟨hx, Nat.mod_eq_zero_of_dvd hdvd⟩
-

@@ -72,4 +72,3 @@ theorem B1_cayley :
     BM1_u * BM1_u * BM1_u - 3 • (BM1_u * BM1_u) + 3 • BM1_u - 1
     = (0 : Matrix (Fin 3) (Fin 3) ℤ) := by
   native_decide
-

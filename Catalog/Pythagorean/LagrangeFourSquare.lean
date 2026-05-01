@@ -109,4 +109,3 @@ theorem info_theoretic_lower_bound (total_bits channels : ℕ)
 
 theorem channels_quadratic (k : ℕ) : k ≤ k + Nat.choose k 2 :=
   Nat.le_add_right k _
-

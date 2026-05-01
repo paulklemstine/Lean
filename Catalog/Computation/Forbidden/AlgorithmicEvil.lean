@@ -59,4 +59,3 @@ theorem involution_odd_fixed_point (n : ℕ) (f : Fin (2 * n + 1) → Fin (2 * n
       · ext x; aesop;
     obtain ⟨ S, hS₁, hS₂, hS₃ ⟩ := h_partition; rw [ hS₃, Finset.card_biUnion ] <;> aesop;
   simp_all +decide [ Finset.card_univ ]
-

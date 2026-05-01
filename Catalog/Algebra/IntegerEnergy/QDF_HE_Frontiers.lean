@@ -295,4 +295,3 @@ theorem qdf_double_compose (n : ℤ) :
     let d₂ := d₁ ^ 2 + d₁ + 1
     let d₃ := d₂ ^ 2 + d₂ + 1
     d₂ ^ 2 + (d₂ + 1) ^ 2 + (d₂ * (d₂ + 1)) ^ 2 = d₃ ^ 2 := by ring
-

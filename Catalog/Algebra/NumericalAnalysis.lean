@@ -34,6 +34,3 @@ theorem euler_stab (h_s : ℝ) (lam : ℝ) (hlam : lam < 0)
     (hh : 0 < h_s) (hstab : h_s * (-lam) < 2) :
     |1 + h_s * lam| < 1 := by
   rw [abs_lt]; constructor <;> nlinarith
-
-
-

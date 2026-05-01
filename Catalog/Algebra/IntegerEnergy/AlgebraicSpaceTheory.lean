@@ -105,4 +105,3 @@ theorem spec_connected_of_no_idempotents (R : Type*) [CommRing R]
   obtain ⟨f, hf⟩ : ∃ f : R, IsIdempotentElem f ∧ V = PrimeSpectrum.zeroLocus {f} := by
     exact?;
   cases h e he.1 <;> cases h f hf.1 <;> simp_all +decide [ Set.ext_iff ]
-

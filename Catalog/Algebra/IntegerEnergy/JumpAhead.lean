@@ -101,4 +101,3 @@ theorem lorentz_form_zero_descent (branches : List BerggrenBranch)
     lorentzForm (descentChain branches v) = 0 := by
   rw [lorentz_form_chain_preserved]
   exact lorentz_form_zero_of_pyth v h
-

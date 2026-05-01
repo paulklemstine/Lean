@@ -113,6 +113,3 @@ theorem x2_minus_2_irred : Irreducible (X ^ 2 - 2 : Polynomial ℚ) := by
 
 theorem sqrt2_irrat : Irrational (Real.sqrt 2) := by
   decide +kernel
-
-
-

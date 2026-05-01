@@ -170,4 +170,3 @@ theorem angle_resolution_bound (d : ℕ) (hd : 0 < d) :
     3 ^ d ≥ 3 := by
   calc 3 ^ d ≥ 3 ^ 1 := Nat.pow_le_pow_right (by norm_num) hd
     _ = 3 := by norm_num
-

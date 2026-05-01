@@ -86,4 +86,3 @@ theorem godel_second_incompleteness {S : Type*} (F : FormalSystem S)
   obtain ⟨s, hs⟩ : ∃ s : S, F.true_in_model s ↔ ¬ F.provable s := by
     exact hdiag _;
   grind +qlia
-

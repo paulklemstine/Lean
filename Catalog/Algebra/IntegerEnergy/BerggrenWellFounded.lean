@@ -120,4 +120,3 @@ theorem descent_72425 : invA' 7 24 25 = (5, 12, 13) := by simp [invA']
 theorem descent_72425_root :
     let t₁ := invA' 7 24 25
     invA' t₁.1 t₁.2.1 t₁.2.2 = (3, 4, 5) := by simp [invA']
-

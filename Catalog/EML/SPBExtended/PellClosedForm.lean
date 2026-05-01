@@ -273,4 +273,3 @@ theorem CH_coeff_5 :
 #print axioms growth_oscillation_check
 #print axioms CH_coeff_5
 #print axioms lorentz_col2_4
-

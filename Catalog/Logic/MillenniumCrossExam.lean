@@ -96,5 +96,3 @@ theorem oracle_powerset_card (α : Type*) [Fintype α] [DecidableEq α] :
 theorem oracle_binomial_sum (n : ℕ) :
     ∑ k ∈ range (n + 1), Nat.choose n k = 2 ^ n := by
   rw [ Nat.sum_range_choose ]
-
-

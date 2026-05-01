@@ -60,4 +60,3 @@ theorem primorial_13_coprime :
     ∀ p ∈ (Finset.Icc 2 13).filter Nat.Prime,
       ¬(p ∣ (myPrimorial 13 + 1)) := by
   unfold myPrimorial; native_decide
-

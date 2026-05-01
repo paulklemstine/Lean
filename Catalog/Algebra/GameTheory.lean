@@ -80,6 +80,3 @@ theorem shapley_efficiency_2player' (v_1 v_2 v_N : ℝ) :
 
 theorem finite_strategies' {n : ℕ} : Fintype.card (Fin n → Bool) = 2 ^ n := by
   simp [Fintype.card_fun, Fintype.card_bool]
-
-
-

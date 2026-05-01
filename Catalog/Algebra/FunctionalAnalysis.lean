@@ -99,5 +99,3 @@ theorem banach_fixed_point' {X : Type*} [MetricSpace X] [CompleteSpace X]
     exact Filter.Tendsto.comp ( show Filter.Tendsto f ( nhds x₀ ) ( nhds ( f x₀ ) ) from ContinuousAt.tendsto ( show ContinuousAt f x₀ from by rw [ Metric.continuousAt_iff ] ; intro ε εpos; exact ⟨ ε / 2, half_pos εpos, by intro y hy; exact lt_of_le_of_lt ( hf _ _ ) ( by nlinarith [ @dist_nonneg _ _ y x₀ ] ) ⟩ ) ) hx₀;
   refine' hnonunique ⟨ x₀, hx₀, fun x hx => _ ⟩;
   exact Classical.not_not.1 fun h => absurd ( hf x x₀ ) ( by simp [ * ] )
-
-

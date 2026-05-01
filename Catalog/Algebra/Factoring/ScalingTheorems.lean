@@ -146,4 +146,3 @@ theorem factor_10403 : 101 * 103 = 10403 := by norm_num
 theorem factoring_is_pythagorean_search (N : ℤ) :
     ∃ b c : ℤ, N^2 + b^2 = c^2 :=
   ⟨0, N, by ring⟩
-

@@ -46,6 +46,3 @@ theorem tern_tree (d : ℕ) : 3 ^ (d + 1) ≥ 2 * d + 1 := by
                    _ ≥ 3 * (2 * n + 1) := by omega
                    _ = 6 * n + 3 := by ring
                    _ ≥ 2 * (n + 1) + 1 := by omega
-
-
-

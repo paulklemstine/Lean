@@ -53,4 +53,3 @@ theorem fib_double_lucas (n : ℕ) :
 theorem fib_pseudoprime_finite (B : ℕ) :
     Set.Finite {n : ℕ | n < B ∧ IsFibPseudoprime n} := by
   exact Set.Finite.subset (Set.finite_Iio B) (fun n hn => hn.1)
-

@@ -31,4 +31,3 @@ theorem zero_in_quadLattice (N : ℤ) : inQuadLattice N 0 0 0 := by
 theorem neg_in_quadLattice (N : ℤ) (x y z : ℤ) (h : inQuadLattice N x y z) :
     inQuadLattice N (-x) (-y) (-z) := by
   simp_all +decide [ inQuadLattice ]
-

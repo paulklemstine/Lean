@@ -89,4 +89,3 @@ def pureQuatNorm (a b c : ℤ) : ℤ :=
 theorem pythQuad_is_quatNorm (a b c d : ℤ) :
     a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2 ↔ pureQuatNorm a b c = d ^ 2 := by
   simp [pureQuatNorm]
-

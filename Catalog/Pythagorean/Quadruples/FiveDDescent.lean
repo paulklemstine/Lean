@@ -168,4 +168,3 @@ theorem pq5_parity (a b c d e : ℤ) (h : IsPQ5 a b c d e) :
 theorem pq5_doubled_norm (a b c d e : ℤ) (h : IsPQ5 a b c d e) :
     a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 + e ^ 2 = 2 * e ^ 2 := by
   unfold IsPQ5 at h; linarith
-

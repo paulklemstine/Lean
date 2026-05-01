@@ -90,4 +90,3 @@ theorem dual_octonionic_decomposition
         octonionNorm d₁ d₂ d₃ d₄ d₅ d₆ d₇ d₈ := by
   exact ⟨_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _,
     degen_eight_square_identity .., degen_eight_square_reverse ..⟩
-

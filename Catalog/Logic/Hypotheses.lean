@@ -44,4 +44,3 @@ theorem matrix_product_identity' (a b c : ℤ) :
 
 /-- The Gaussian norm identity: |1+ai|² = 1+a². -/
 theorem gaussian_norm (a : ℤ) : 1 + a ^ 2 = 1 + a ^ 2 := rfl
-

@@ -76,6 +76,3 @@ theorem tower_4 : tower 4 = 65536 := by native_decide
 
 theorem tower_monotone : ∀ n, tower n < tower (n + 1) := by
   intro n; simp [tower]; exact Nat.lt_two_pow_self
-
-
-

@@ -139,4 +139,3 @@ theorem lightning_attack_minutes :
 theorem lightning_sequential_efficiency (n_channels : ℕ) :
     n_channels * lightning_attack_time = n_channels * 676 := by
   simp [lightning_attack_time]
-

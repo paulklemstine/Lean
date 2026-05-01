@@ -66,4 +66,3 @@ theorem at_least_one_step (N p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
     (hN : N = p * q) (hp2 : 2 < p) (hle : p ≤ q) :
     0 < (p - 1) / 2 := by
       grind
-

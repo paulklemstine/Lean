@@ -104,4 +104,3 @@ theorem quat_mul_assoc (p q r : IntQuaternion) :
     IntQuaternion.mul (IntQuaternion.mul p q) r =
     IntQuaternion.mul p (IntQuaternion.mul q r) := by
   ext <;> simp [IntQuaternion.mul] <;> ring
-

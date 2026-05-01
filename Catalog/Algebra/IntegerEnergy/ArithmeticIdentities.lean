@@ -46,4 +46,3 @@ theorem power_sum_telescope (n : ℕ) :
     3 * ∑ i ∈ range n, (i + 1) ^ 2 + 3 * ∑ i ∈ range n, (i + 1) + n =
     (n + 1) ^ 3 - 1 := by
       exact eq_tsub_of_add_eq <| by induction n <;> norm_num [ Finset.sum_range_succ ] at * ; linarith;
-

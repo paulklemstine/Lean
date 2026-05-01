@@ -65,5 +65,3 @@ Auto-generated from theorem catalog database.
 Domain: Algebra
 Declarations: 7] -/
 theorem cantor_dim_bounds : (1 : ℕ) < 2 ∧ (2 : ℕ) < 3 := by omega
-
-

@@ -1,60 +1,42 @@
 import Mathlib
 
-/-! # CatalogBuild.EML.NumberTheory
+/-! # CatalogBuild.EML.SPBResearch.NumberTheory
 
 Auto-generated from theorem catalog database.
-Domain: EML
-Declarations: 9
+Domain: EML/SPBResearch
+Declarations: 6
 -/
 
 noncomputable section
 
-/-- [Section: # CatalogBuild.EML.NumberTheory
-Auto-generated from theorem catalog database.
-Domain: EML
-Declarations: 9] -/
-def spbNT (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
+/-- Euler's two-term formula: spb(1/2, 1/3) = 1 -/
+theorem euler_two_term : spbNT (1/2) (1/3) = 1 := by norm_num [spbNT]
 
-/-- For rational t = a/b, the point ((b²-a²)/(b²+a²), 2ab/(b²+a²)) lies on S¹.
-These are the Pythagorean triples! -/
-theorem pythagorean_from_spb (a b : ℤ)
-    (hab : (a : ℝ) ^ 2 + (b : ℝ) ^ 2 ≠ 0) :
-    (((b : ℝ) ^ 2 - (a : ℝ) ^ 2) / ((b : ℝ) ^ 2 + (a : ℝ) ^ 2)) ^ 2 +
-    ((2 * (a : ℝ) * b) / ((b : ℝ) ^ 2 + (a : ℝ) ^ 2)) ^ 2 = 1 := by
-  have hab' : (b : ℝ) ^ 2 + (a : ℝ) ^ 2 ≠ 0 := by
-    rwa [show (b : ℝ) ^ 2 + (a : ℝ) ^ 2 = (a : ℝ) ^ 2 + (b : ℝ) ^ 2 from by ring]
-  rw [div_pow, div_pow, div_add_div_same, div_eq_one_iff_eq (pow_ne_zero 2 hab')]
-  ring
+/-- The "integer SPB" divisibility -/
+theorem spb_2_3_integer : (1 - 2 * 3 : ℤ) ∣ (2 + 3) := ⟨-1, by ring⟩
 
-/-- Classic Pythagorean parametrization. -/
-theorem pythagorean_triple (m n : ℤ) :
-    (m ^ 2 - n ^ 2) ^ 2 + (2 * m * n) ^ 2 = (m ^ 2 + n ^ 2) ^ 2 := by ring
-
-/-- When spb(a, b) is an integer for a, b ∈ ℤ, we need (1 - ab) | (a + b). -/
-theorem spb_integer_iff (a b : ℤ) (h : 1 - a * b ≠ 0) :
-    (∃ n : ℤ, a + b = n * (1 - a * b)) ↔ (1 - a * b) ∣ (a + b) := by
-  constructor
-  · rintro ⟨n, hn⟩; exact ⟨n, by linarith⟩
-  · rintro ⟨n, hn⟩; exact ⟨n, by linarith⟩
-
-/-- spb(1, 0) = 1. -/
-theorem spb_one_zero_int : spbNT 1 0 = 1 := by simp [spbNT]
-
-/-- spb(2, 3) = -1. -/
-theorem spb_two_three : spbNT 2 3 = -1 := by unfold spbNT; norm_num
-
-/-- spb(1, 2) = -3. -/
-theorem spb_one_two : spbNT 1 2 = -3 := by unfold spbNT; norm_num
-
-/-- spb(1, -2) = -1/3. Not an integer! -/
-theorem spb_one_neg_two : spbNT 1 (-2) = -(1/3) := by unfold spbNT; norm_num
-
-/-- The Brahmagupta–Fibonacci identity IS SPB composition in disguise. -/
-theorem brahmagupta_is_spb (a b c d : ℤ)
-    (ha : (a : ℝ) ≠ 0) (hc : (c : ℝ) ≠ 0)
-    (hd : (a : ℝ) * c - (b : ℝ) * d ≠ 0) :
-    spbNT ((b : ℝ) / a) ((d : ℝ) / c) =
-    ((a : ℝ) * d + b * c) / (a * c - b * d) := by
+/-- SPB norm is multiplicative -/
+theorem spb_norm_multiplicative (x y : ℝ) (h : 1 - x * y ≠ 0) :
+    1 + spbNT x y ^ 2 = (1 + x ^ 2) * (1 + y ^ 2) / (1 - x * y) ^ 2 := by
   unfold spbNT; field_simp; ring
+
+/-- Two-squares identity -/
+theorem two_squares_product (a b c d : ℤ) :
+    ∃ e f : ℤ, (a ^ 2 + b ^ 2) * (c ^ 2 + d ^ 2) = e ^ 2 + f ^ 2 :=
+  ⟨a * c - b * d, a * d + b * c, by ring⟩
+
+/-- Two representations of a product of sums of squares -/
+theorem two_representations (a b : ℤ) :
+    (1 + a ^ 2) * (1 + b ^ 2) = (1 - a * b) ^ 2 + (a + b) ^ 2 ∧
+    (1 + a ^ 2) * (1 + b ^ 2) = (1 + a * b) ^ 2 + (a - b) ^ 2 := by
+  constructor <;> ring
+
+/-- spb(1, n) divisibility: (1-n) | (1+n) iff (1-n) | 2 -/
+theorem spb_1_n_divisibility (n : ℤ) :
+    (1 - 1 * n) ∣ (1 + n) ↔ (1 - n) ∣ 2 := by
+  simp only [one_mul]
+  constructor
+  · rintro ⟨c, hc⟩; exact ⟨c + 1, by linarith⟩
+  · rintro ⟨c, hc⟩; exact ⟨c - 1, by linarith⟩
 
 end

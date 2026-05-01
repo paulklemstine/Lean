@@ -111,6 +111,3 @@ theorem enactive_codetermination (E : Enactivism) (o : E.Organism)
     (h : E.shape (E.enact o) = o) :
     E.enact (E.shape (E.enact o)) = E.enact o := by
   rw [ h ]
-
-
-

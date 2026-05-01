@@ -97,4 +97,3 @@ theorem photon_interval_zero (p : TetraPath) :
     (tetraEval p) 0 ^ 2 + (tetraEval p) 1 ^ 2 - (tetraEval p) 2 ^ 2 = 0 := by
   have h := tetrabranch_on_light_cone p
   simp [isNull, minkowskiQ] at h; linarith
-

@@ -109,4 +109,3 @@ theorem poly_roots_bound {R : Type*} [CommRing R] [IsDomain R]
 theorem fin_fun_finrank {F : Type*} [Field F] (d : ℕ) :
     Module.finrank F (Fin d → F) = d :=
   Module.finrank_fin_fun F
-

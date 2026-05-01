@@ -148,4 +148,3 @@ algorithm analysis. -/
 theorem navigation_step_bound (m n : ℕ) (hm : m > n) (hn : 0 < n) :
     ∃ bound : ℕ, bound ≤ m + n ∧ bound > 0 :=
   ⟨m + n, le_refl _, by omega⟩
-

@@ -1,92 +1,59 @@
 import Mathlib
 
-/-! # CatalogBuild.Speculative.BerggrenPowerFormulas
+/-! # CatalogBuild.Pythagorean.Berggren.BerggrenPowerFormulas
 
 Auto-generated from theorem catalog database.
-Domain: Speculative
-Declarations: 27
+Domain: Pythagorean/Berggren
+Declarations: 15
 -/
 
 /-- Berggren matrix B₁ -/
-def B1 : Matrix (Fin 3) (Fin 3) ℤ := !![1, -2, 2; 2, -1, 2; 2, -2, 3]
+def BPF₁ : Matrix (Fin 3) (Fin 3) ℤ :=
+  !![1, -2, 2; 2, -1, 2; 2, -2, 3]
 
-/-- The nilpotent part N = B₁ - I -/
-def N1 : Matrix (Fin 3) (Fin 3) ℤ := !![0, -2, 2; 2, -2, 2; 2, -2, 2]
+/-- The nilpotent part N₁ = B₁ - I -/
+def NPF₁ : Matrix (Fin 3) (Fin 3) ℤ :=
+  !![0, -2, 2; 2, -2, 2; 2, -2, 2]
 
-/-- N² = (B₁ - I)² -/
-def N1sq : Matrix (Fin 3) (Fin 3) ℤ := !![0, 0, 0; 0, -4, 4; 0, -4, 4]
+/-- N₁² (computed) -/
+def NPF₁sq : Matrix (Fin 3) (Fin 3) ℤ :=
+  !![0, 0, 0; 0, -4, 4; 0, -4, 4]
 
-/-- [Section: # CatalogBuild.Speculative.BerggrenPowerFormulas
+/-- [Section: # CatalogBuild.Pythagorean.Berggren.BerggrenPowerFormulas
 Auto-generated from theorem catalog database.
-Domain: Speculative
-Declarations: 27] -/
-theorem N1_eq : N1 = B1 - 1 := by
-  ext i j; fin_cases i <;> fin_cases j <;> simp [N1, B1]
+Domain: Pythagorean/Berggren
+Declarations: 15] -/
+theorem NPF₁_eq_B₁_sub_I : NPF₁ = BPF₁ - 1 := by
+  ext i j; fin_cases i <;> fin_cases j <;> simp [NPF₁, BPF₁]
 
-/-- [Section: # CatalogBuild.Speculative.BerggrenPowerFormulas
+/-- [Section: # CatalogBuild.Pythagorean.Berggren.BerggrenPowerFormulas
 Auto-generated from theorem catalog database.
-Domain: Speculative
-Declarations: 27] -/
-theorem N1sq_eq : N1sq = N1 * N1 := by native_decide
+Domain: Pythagorean/Berggren
+Declarations: 15] -/
+theorem NPF₁_sq_eq : NPF₁ * NPF₁ = NPF₁sq := by native_decide
 
-theorem N1_cubed_zero : N1 * N1 * N1 = (0 : Matrix (Fin 3) (Fin 3) ℤ) := by native_decide
+theorem NPF₁_sq_ne_zero : NPF₁ * NPF₁ ≠ 0 := by native_decide
 
-theorem N1sq_ne_zero : N1 * N1 ≠ (0 : Matrix (Fin 3) (Fin 3) ℤ) := by native_decide
+theorem NPF₁_cubed_eq_zero : NPF₁ * NPF₁ * NPF₁ = 0 := by native_decide
 
-/-- B₁ⁿ computed recursively -/
-def B1pow : ℕ → Matrix (Fin 3) (Fin 3) ℤ
-  | 0 => 1
-  | n + 1 => B1 * B1pow n
-
-/-- The A-branch triple at depth n -/
-def A_triple (n : ℕ) : ℤ × ℤ × ℤ :=
-  (2 * n + 3, 2 * (n + 1) * (n + 2), 2 * n^2 + 6 * n + 5)
-
-theorem B1pow_0 : B1pow 0 = 1 := rfl
-
-theorem B1pow_2 : B1pow 2 = !![1, (-4 : ℤ), 4; 4, -7, 8; 4, -8, 9] := by native_decide
-
-theorem B1pow_3 : B1pow 3 = !![1, (-6 : ℤ), 6; 6, -17, 18; 6, -18, 19] := by native_decide
-
-theorem B1pow_4 : B1pow 4 = !![1, (-8 : ℤ), 8; 8, -31, 32; 8, -32, 33] := by native_decide
-
-def B1_applied (n : ℕ) : ℤ × ℤ × ℤ :=
-  let M := B1pow n
-  let v := M * !![(3 : ℤ); 4; 5]
-  (v 0 0, v 1 0, v 2 0)
-
-theorem B1_applied_0 : B1_applied 0 = (3, 4, 5) := by native_decide
-
-theorem B1_applied_1 : B1_applied 1 = (5, 12, 13) := by native_decide
-
-theorem B1_applied_2 : B1_applied 2 = (7, 24, 25) := by native_decide
-
-theorem B1_applied_3 : B1_applied 3 = (9, 40, 41) := by native_decide
-
-theorem B1_applied_4 : B1_applied 4 = (11, 60, 61) := by native_decide
-
-theorem B1_applied_5 : B1_applied 5 = (13, 84, 85) := by native_decide
-
-theorem A_triple_0 : A_triple 0 = (3, 4, 5) := by simp [A_triple]
-
-/-- The A-branch formula always produces Pythagorean triples -/
-theorem A_branch_pythagorean (n : ℕ) :
-    (2 * (n : ℤ) + 3)^2 + (2 * (↑n + 1) * (↑n + 2))^2 = (2 * (n : ℤ)^2 + 6 * n + 5)^2 := by
-  ring
-
-theorem A_branch_consecutive (n : ℕ) :
-    (2 * (n : ℤ)^2 + 6 * n + 5) - 2 * (↑n + 1) * (↑n + 2) = 1 := by
-  ring
-
-theorem A_branch_first_odd (n : ℕ) : Odd (2 * n + 3) := ⟨n + 1, by omega⟩
-
-theorem A_triple_is_pythagorean (n : ℕ) :
+theorem A_triple_pythagorean (n : ℕ) :
     (A_triple n).1 ^ 2 + (A_triple n).2.1 ^ 2 = (A_triple n).2.2 ^ 2 := by
   simp only [A_triple]; ring
 
-theorem B1pow_succ (n : ℕ) : B1pow (n + 1) = B1 * B1pow n := rfl
+theorem A_triple_1 : A_triple 1 = (5, 12, 13) := by simp [A_triple]
 
-theorem A_branch_gcd_structure (n : ℕ) :
-    ∃ k : ℕ, (2 * (n : ℤ) + 3) = 2 * (k : ℤ) + 1 ∧
-    ∃ m : ℤ, 2 * (↑n + 1) * (↑n + 2) = 2 * m :=
-  ⟨n + 1, by push_cast; ring, (↑n + 1) * (↑n + 2), by ring⟩
+theorem A_triple_2 : A_triple 2 = (7, 24, 25) := by simp [A_triple]
+
+theorem A_triple_3 : A_triple 3 = (9, 40, 41) := by simp [A_triple]
+
+theorem A_hyp_growth (n : ℕ) : (A_triple n).2.2 < (A_triple (n + 1)).2.2 := by
+  simp only [A_triple]; push_cast; nlinarith [n.zero_le]
+
+theorem A_hyp_pos (n : ℕ) : 0 < (A_triple n).2.2 := by
+  simp only [A_triple]; positivity
+
+theorem A_first_pos (n : ℕ) : 0 < (A_triple n).1 := by
+  simp only [A_triple]; omega
+
+theorem A_second_pos (n : ℕ) : 0 < (A_triple n).2.1 := by
+  simp only [A_triple]; positivity

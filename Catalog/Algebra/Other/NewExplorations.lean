@@ -205,4 +205,3 @@ theorem neumann_series_partial' (r : ℝ) (n : ℕ) (hr : 0 ≤ r) (hr1 : r < 1)
   rw [le_div_iff₀ hpos]
   have key : (∑ i ∈ Finset.range n, r ^ i) * (r - 1) = r ^ n - 1 := geom_sum_mul r n
   nlinarith [pow_nonneg hr n]
-

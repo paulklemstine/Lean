@@ -36,5 +36,3 @@ theorem log_monotone_on : MonotoneOn (fun x : ℝ => Real.log x) (Set.Ioi 0) := 
 theorem binary_entropy_symmetric (p : ℝ) :
     binaryEntropy p = binaryEntropy (1 - p) := by
       unfold binaryEntropy; ring;
-
-

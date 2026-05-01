@@ -82,4 +82,3 @@ theorem relu_is_pwl (x : ℝ) :
 theorem koopman_add (T : ℝ → ℝ) (f g : ℝ → ℝ) :
     koopmanOp T (f + g) = koopmanOp T f + koopmanOp T g :=
   rfl
-

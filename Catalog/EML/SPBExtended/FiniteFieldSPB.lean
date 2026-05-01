@@ -119,4 +119,3 @@ theorem p19_pole_count :
 -- p=13 (≡1 mod 4): 2 poles → order 12 = 13-1 ✓
 -- p=17 (≡1 mod 4): 2 poles → order 16 = 17-1 ✓
 -- p=19 (≡3 mod 4): 0 poles → order 20 = 19+1 ✓
-

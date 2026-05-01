@@ -83,5 +83,3 @@ theorem combinatorial_line_exists (n : ℕ) (hn : 2 ≤ n) :
         f (fun j => if j = i then b else false) =
         f (fun j => if j = i then false else false) := by
   induction hn <;> simp_all +decide [ Fin.forall_fin_succ ]
-
-

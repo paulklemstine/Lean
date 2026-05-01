@@ -85,4 +85,3 @@ theorem bolzano_weierstrass_real (a : ℕ → ℝ) (M : ℝ) (hM : ∀ n, |a n| 
   have h_compact : IsCompact (Metric.closedBall (0 : ℝ) M) := by
     exact ProperSpace.isCompact_closedBall _ _;
   have := h_compact.isSeqCompact fun n => mem_closedBall_zero_iff.mpr ( hM n ) ; aesop;
-

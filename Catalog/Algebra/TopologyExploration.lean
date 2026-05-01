@@ -89,5 +89,3 @@ theorem cantor_diagonal' {α : Type*} (f : α → Set α) : ¬ Function.Surjecti
     exact ⟨ { x | ¬x ∈ f x }, fun ⟨ y, hy ⟩ => by have := congr_arg ( fun s => y ∈ s ) hy; simp +decide at this ⟩
   generalize_proofs at *; (
   exact hS ( h_surj S ))
-
-

@@ -126,4 +126,3 @@ theorem frost_quantum_threshold (params : FROSTParams) (single_cost : ℕ) :
 /-- **Theorem**: FROST provides t× quantum resistance amplification. -/
 theorem frost_amplification (t : ℕ) (ht : t > 0) (cost : ℕ) :
     t * cost ≥ cost := Nat.le_mul_of_pos_left cost ht
-

@@ -229,4 +229,3 @@ theorem lattice_tree_correspondence_summary :
     (∀ m n : ℤ, (berggrenM₃_inv.mulVec ![m, n]) 1 = n) ∧
     (∀ m n : ℤ, (berggrenM₁_inv.mulVec ![m, n]) 0 = n) := by
   exact ⟨M₃_inv_first_component, M₃_inv_preserves_n, M₁_inv_first_component⟩
-

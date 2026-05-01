@@ -269,4 +269,3 @@ def QF_listPrimQuads (N : ℕ) : List (ℕ × ℕ × ℕ × ℕ) := do
   QF_fullDescent (a, b, c, d) 30 == (0, 0, 1, 1)
 
 #eval (QF_listPrimQuads 50).length
-

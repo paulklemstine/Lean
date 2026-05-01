@@ -342,4 +342,3 @@ theorem h_swap (a b c : ℤ) : h b a c = h a b c := by simp only [h]; ring
 #print axioms fwdB2_ghostMap_id
 #print axioms three_step_descent_94041
 #print axioms h_lt_c
-

@@ -29,4 +29,3 @@ theorem C_branch_coprime_vals :
     Int.gcd (C_odd 3) (C_even 3) = 1 ∧
     Int.gcd (C_odd 4) (C_even 4) = 1 ∧
     Int.gcd (C_odd 5) (C_even 5) = 1 := by native_decide
-

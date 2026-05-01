@@ -84,5 +84,3 @@ theorem classical_attention_embeds_in_quantum (d : ℕ) (hd : 1 ≤ d) :
     (d - 1) ^ 2 ≤ d ^ 4 - d ^ 2 := by
       rcases d with ( _ | _ | d ) <;> norm_num at *;
       exact le_tsub_of_add_le_left ( by nlinarith [ sq d ] )
-
-

@@ -56,4 +56,3 @@ def productive_witness (f : ℕ → (ℕ → Prop)) : ℕ → Prop :=
 theorem productive_witness_not_in_range (f : ℕ → (ℕ → Prop)) :
     ∀ n : ℕ, productive_witness f ≠ f n := by
   intro n hn; have := congr_fun hn n; simp_all +decide [ productive_witness ] ;
-

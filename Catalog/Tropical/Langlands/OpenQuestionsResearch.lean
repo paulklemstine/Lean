@@ -176,4 +176,3 @@ theorem total_nine_lens_reduction : 2 ^ 9 = 512 := by norm_num
 theorem nine_lens_composition_invariant (S : ℕ) :
     S / 2 / 2 / 2 / 2 / 2 / 2 / 2 / 2 / 2 = S / 512 := by
   simp [Nat.div_div_eq_div_mul]
-

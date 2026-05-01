@@ -43,4 +43,3 @@ theorem lorentz_factor_requires_subluminal (v c : ℝ) (hc : 0 < c) (hv : 0 ≤ 
 theorem at_light_speed_gamma_diverges (c : ℝ) (hc : 0 < c) :
     1 - (c / c) ^ 2 = 0 := by
   norm_num [ hc.ne' ]
-

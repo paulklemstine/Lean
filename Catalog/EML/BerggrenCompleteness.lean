@@ -82,4 +82,3 @@ def parentB (a b c : ℤ) : ℤ × ℤ × ℤ := (a - 2*b - 2*c, 2*a - b - 2*c, 
 theorem parentA_check :
     let (a, b, c) := parentA 5 12 13
     (|a|, |b|, |c|) = (3, 4, 5) := by native_decide
-

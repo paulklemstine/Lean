@@ -60,4 +60,3 @@ theorem A_branch_coprime_vals :
 theorem A_closed_pythagorean (n : ℕ) :
     (A_closed n).1 ^ 2 + (A_closed n).2.1 ^ 2 = (A_closed n).2.2 ^ 2 := by
   simp only [A_closed]; ring
-

@@ -54,4 +54,3 @@ theorem countable_measure_zero' {s : Set ℝ} (hs : s.Countable) :
 theorem finite_measurable' {X : Type*} [MeasurableSpace X] [MeasurableSingletonClass X]
     {s : Set X} (hs : s.Finite) : MeasurableSet s :=
   hs.measurableSet
-

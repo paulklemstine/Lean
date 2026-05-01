@@ -92,4 +92,3 @@ theorem sg_count_1000 :
 theorem dh_subgroup_order (q : ℕ) (hq : IsSafePrime q) :
     ∃ g : ℕ, 1 < g ∧ g < q ∧ Nat.Prime ((q - 1) / 2) :=
   ⟨2, by omega, by linarith [hq.2.1], hq.2.2⟩
-

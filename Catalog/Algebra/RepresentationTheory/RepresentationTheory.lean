@@ -51,6 +51,3 @@ theorem mckay_first' : 196884 = 1 + 196883 := by norm_num
 
 
 theorem mckay_second' : 21493760 = 1 + 196883 + 21296876 := by norm_num
-
-
-

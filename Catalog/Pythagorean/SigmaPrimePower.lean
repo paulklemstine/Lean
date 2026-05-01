@@ -87,4 +87,3 @@ theorem sigma1_two_prime_powers (p q a b : ℕ)
   apply sigma1'_mult
   exact (hp.coprime_iff_not_dvd.mpr fun h =>
     hpq (hq.eq_one_or_self_of_dvd p h |>.resolve_left hp.one_lt.ne')).pow a b
-

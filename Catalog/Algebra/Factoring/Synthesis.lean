@@ -208,4 +208,3 @@ theorem OQ_depth_one_unique (N : ℤ) (hN : 0 < N)
 /-- The fundamental GCD property: gcd(leg, N) always divides N. -/
 theorem OQ_gcd_always_divides (a N : ℤ) : ↑(Int.gcd a N) ∣ N :=
   Int.gcd_dvd_right a N
-

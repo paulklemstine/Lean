@@ -91,4 +91,3 @@ theorem energy_factor (a N : ℤ) (h1 : 1 < (Int.gcd a N : ℤ)) (h2 : (Int.gcd 
 theorem euler_two_reps_identity (a b c d : ℤ)
     (h : a ^ 2 + b ^ 2 = c ^ 2 + d ^ 2) :
     (a - c) * (a + c) = (d - b) * (d + b) := by linarith
-

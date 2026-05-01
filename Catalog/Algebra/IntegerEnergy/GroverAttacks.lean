@@ -198,4 +198,3 @@ theorem severity_ranking :
     (ecdsa_shor_attack.classical_bits - ecdsa_shor_attack.quantum_bits) ≥
     (sha256_preimage_grover.classical_bits - sha256_preimage_grover.quantum_bits) := by
   simp [ecdsa_shor_attack, sha256_preimage_grover]
-

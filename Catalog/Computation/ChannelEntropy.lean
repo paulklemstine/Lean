@@ -105,5 +105,3 @@ theorem r4_pos (p : ℕ) : 0 < 8 * ((p : ℤ) + 1) := by
 theorem r8_gt_r4 (p : ℕ) (hp : 2 ≤ p) :
     8 * ((p : ℤ) + 1) < 16 * (1 + (p : ℤ) ^ 3) := by
   nlinarith [ sq p ]
-
-

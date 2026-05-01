@@ -26,6 +26,3 @@ Domain: Geometry/Stereographic
 Declarations: 3] -/
 theorem sin_int_mul_pi (n : ℤ) : Real.sin (n * Real.pi) = 0 := by
   exact Real.sin_int_mul_pi n
-
-
-

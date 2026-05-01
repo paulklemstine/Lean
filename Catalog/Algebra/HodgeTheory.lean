@@ -82,6 +82,3 @@ theorem ec_conductor_example' : 32 = 2 ^ 5 := by norm_num
 
 theorem ap_from_counting' (p N_E : ℤ) :
     p + 1 - N_E = p + 1 - N_E := rfl
-
-
-

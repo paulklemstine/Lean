@@ -152,6 +152,3 @@ theorem platonic_five :
     (p = 3 ∧ q = 3) ∨ (p = 3 ∧ q = 4) ∨ (p = 4 ∧ q = 3) ∨
     (p = 3 ∧ q = 5) ∨ (p = 5 ∧ q = 3) := by
   intro p q hp hq h; rcases p with ( _ | _ | _ | _ | _ | _ | p ) <;> rcases q with ( _ | _ | _ | _ | _ | _ | q ) <;> norm_num at * <;> nlinarith;
-
-
-

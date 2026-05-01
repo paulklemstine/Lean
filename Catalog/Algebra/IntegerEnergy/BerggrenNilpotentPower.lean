@@ -62,4 +62,3 @@ theorem A_br_b_matches_root (n : ℕ) :
 theorem A_br_c_matches_root (n : ℕ) :
     (A_br n).2.2 = (2 * ↑n) * 3 + (-2 * (↑n : ℤ)^2) * 4 + (1 + 2 * (↑n : ℤ)^2) * 5 := by
   simp [A_br]; ring
-

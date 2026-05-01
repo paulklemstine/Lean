@@ -82,4 +82,3 @@ theorem transitive_closure_idempotent {α : Type*} (r : α → α → Prop) :
     | single h => exact h
     | tail _ h ih => exact ih.trans h
   · intro h; exact Relation.TransGen.single h
-

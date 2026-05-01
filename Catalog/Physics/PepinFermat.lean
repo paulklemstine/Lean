@@ -81,4 +81,3 @@ theorem fermat_pairwise_coprime_small :
     ∀ i ∈ Finset.range 5, ∀ j ∈ Finset.range 5,
       i ≠ j → Nat.Coprime (FermatNum i) (FermatNum j) := by
   unfold FermatNum; native_decide
-

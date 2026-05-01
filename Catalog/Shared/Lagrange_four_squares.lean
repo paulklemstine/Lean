@@ -15,4 +15,3 @@ theorem lagrange_four_squares (n : ℕ) :
     ∃ a b c d : ℤ, (n : ℤ) = a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2 := by
   have := Nat.sum_four_squares n;
   exact ⟨ this.choose, this.choose_spec.choose, this.choose_spec.choose_spec.choose, this.choose_spec.choose_spec.choose_spec.choose, mod_cast this.choose_spec.choose_spec.choose_spec.choose_spec.symm ⟩
-

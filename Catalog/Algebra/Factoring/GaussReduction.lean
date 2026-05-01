@@ -50,4 +50,3 @@ theorem dim3_not_optimal (d : ℕ) (hd : 3 ≤ d) :
     2 ^ (d - 1) ≥ 4 := by
   calc 2 ^ (d - 1) ≥ 2 ^ 2 := Nat.pow_le_pow_right (by norm_num) (by omega)
     _ = 4 := by norm_num
-

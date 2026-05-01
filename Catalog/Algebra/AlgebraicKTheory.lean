@@ -51,6 +51,3 @@ theorem ns_scaling' : (-1 : ℤ) + 3 * (-1) + 2 * (-2) = -8 := by ring
 
 
 theorem ns_2d_regularity' : (2 : ℕ) < 3 := by norm_num
-
-
-

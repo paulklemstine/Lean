@@ -286,4 +286,3 @@ where
 -- Verify some Pythagorean quadruples (3+1D null vectors)
 #eval (1^2 + 2^2 + 2^2 : ℤ) == 3^2   -- true: (1,2,2,3)
 #eval (2^2 + 3^2 + 6^2 : ℤ) == 7^2   -- true: (2,3,6,7)
-

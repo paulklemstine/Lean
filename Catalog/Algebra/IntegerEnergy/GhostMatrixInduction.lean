@@ -48,4 +48,3 @@ theorem ghostMatrix_pow_eq_closed (n : ℕ) :
     exact ghostMatrix_closed_verified.1
   | succ n ih =>
     rw [pow_succ, ih, ghostMatrix_closed_mul_step]
-

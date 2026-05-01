@@ -137,4 +137,3 @@ theorem BU₂_factor1_ne_zero : BU₂ + 1 ≠ 0 := by native_decide
 For unipotent B₁: minpoly = (x-1)³ (since (B₁-I)² ≠ 0 but (B₁-I)³ = 0)
 For semisimple B₂: minpoly = (x+1)(x²-6x+1) (since B₂ has 3 distinct eigenvalues)] -/
 theorem BU₂_factor2_ne_zero : BU₂ ^ 2 - 6 • BU₂ + 1 ≠ 0 := by native_decide
-

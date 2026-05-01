@@ -150,6 +150,3 @@ theorem prime_encoding_bound (n : ℕ) :
 there are at most 2d codewords. -/
 theorem plotkin_consequence (n d : ℕ) (hd : n < 2 * d) :
     2 * d > n := hd
-
-
-

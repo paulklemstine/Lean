@@ -79,4 +79,3 @@ theorem neg_one_qr_mod_5 : ∃ x : ZMod 5, x ^ 2 = -1 := ⟨2, by decide⟩
 -- -1 is NOT a QR mod 3 (since 3 ≡ 3 mod 4)
 
 theorem neg_one_not_qr_mod_3 : ¬ ∃ x : ZMod 3, x ^ 2 = -1 := by decide
-

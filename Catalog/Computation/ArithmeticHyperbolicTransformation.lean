@@ -17,4 +17,3 @@ established via type-theoretic triviality in the category of propositions.
 theorem arithmetic_hyperbolic_transformation_method_a408 {X : Type*} [Inhabited X] :
   True := by
   trivial
-

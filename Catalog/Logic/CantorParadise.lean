@@ -71,4 +71,3 @@ theorem schroder_bernstein {α β : Type*}
           exact?;
         exact ⟨ h_schroeder ⟨ ⟨ f, hf ⟩, ⟨ g, hg ⟩ ⟩ |> Classical.choice, trivial ⟩;
       exact ⟨ h, h.bijective ⟩
-

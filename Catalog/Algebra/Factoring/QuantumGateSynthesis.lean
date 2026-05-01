@@ -203,4 +203,3 @@ theorem factor_45_example :
     let n := result 1
     m ^ 2 - n ^ 2 = 45 := by
   native_decide
-

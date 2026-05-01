@@ -1,67 +1,44 @@
 import Mathlib
-import Pythagorean.Core
 
-/-! # CatalogBuild.Pythagorean.TropicalSPB
+/-! # CatalogBuild.EML.TropicalSPB
 
 Auto-generated from theorem catalog database.
-Domain: Pythagorean
-Declarations: 9
+Domain: EML
+Declarations: 6
 -/
 
 noncomputable section
 
+/-- The tropical SPB: replaces + with min and × with +.
+tspb(x, y) = min(x, y) - max(0, x + y)
+Motivation: In standard SPB, spb(x,y) = (x+y)/(1-xy).
+Tropicalizing: numerator x+y → min(x,y), denominator 1-xy → min(0, -(x+y)) = -max(0, x+y).
+Division → subtraction, so tspb(x,y) = min(x,y) - max(0, x+y). -/
+def tropSPB (x y : ℝ) : ℝ := min x y - max 0 (x + y)
+
 /-- Tropical SPB is commutative. -/
-theorem tspb_comm (x y : ℝ) : tspb x y = tspb y x := by
-  unfold tspb; simp [max_comm, add_comm]
+theorem tropSPB_comm (x y : ℝ) : tropSPB x y = tropSPB y x := by
+  simp [tropSPB, min_comm, add_comm]
 
-/-- tspb for non-negative inputs: tspb(x,y) = -min(x,y) when x,y ≥ 0. -/
-theorem tspb_nonneg (x y : ℝ) (hx : 0 ≤ x) (hy : 0 ≤ y) :
-    tspb x y = -min x y := by
-  unfold tspb; cases le_total x y <;> simp +decide [ * ] ;
-  · rw [ max_eq_right ] <;> linarith;
-  · rw [ max_eq_right ] <;> linarith
+/-- For negative x, tropSPB(x, 0) = x. -/
+theorem tropSPB_zero_neg (x : ℝ) (hx : x < 0) :
+    tropSPB x 0 = x := by
+  unfold tropSPB
+  simp [min_eq_left (le_of_lt hx), max_eq_left (le_of_lt hx)]
 
-/-- tspb for non-positive inputs: tspb(x,y) = max(x,y). -/
-theorem tspb_nonpos (x y : ℝ) (hx : x ≤ 0) (hy : y ≤ 0) :
-    tspb x y = max x y := by
-  unfold tspb; cases max_cases x y <;> simp +decide [ * ] ;
-  · linarith;
-  · linarith
+/-- Alternative tropical SPB using max instead of min:
+tspb_max(x, y) = max(x, y) - max(0, x + y). -/
+def tropSPBMax (x y : ℝ) : ℝ := max x y - max 0 (x + y)
 
-/-- tspb(x, 0) = 0 for x ≥ 0 (0 absorbs nonnegative inputs). -/
-theorem tspb_zero_nonneg (x : ℝ) (hx : 0 ≤ x) : tspb x 0 = 0 := by
-  unfold tspb; grind
+/-- The max-tropical SPB is also commutative. -/
+theorem tropSPBMax_comm (x y : ℝ) : tropSPBMax x y = tropSPBMax y x := by
+  simp [tropSPBMax, max_comm, add_comm]
 
-/-- [Section: # CatalogBuild.Pythagorean.TropicalSPB
-Auto-generated from theorem catalog database.
-Domain: Pythagorean
-Declarations: 9] -/
-theorem tspb_zero_absorb (x : ℝ) : tspb x 0 = 0 := by
-  unfold tspb;
-  grind
-
-/-- [Section: # CatalogBuild.Pythagorean.TropicalSPB
-Auto-generated from theorem catalog database.
-Domain: Pythagorean
-Declarations: 9] -/
-theorem tspb_no_global_identity :
-    ¬ ∃ e : ℝ, ∀ x : ℝ, tspb x e = x := by
-  simp +zetaDelta at *;
-  intro x;
-  by_cases hx : x ≤ 0;
-  · unfold tspb;
-    exact ⟨ x - 1, by cases max_cases ( x - 1 ) x <;> cases max_cases 0 ( x - 1 + x ) <;> linarith ⟩;
-  · exact ⟨ 1, by unfold tspb; cases max_cases ( 1 : ℝ ) x <;> cases max_cases ( 0 : ℝ ) ( 1 + x ) <;> linarith ⟩
-
-theorem tspb_idempotent_nonpos (x : ℝ) (hx : x ≤ 0) : tspb x x = x := by
-  unfold tspb; norm_num; cases max_cases x x <;> cases max_cases 0 ( 2 * x ) <;> linarith;
-
-theorem tspb_self_nonneg (x : ℝ) (hx : 0 ≤ x) : tspb x x = -x := by
-  unfold tspb
-  simp [max_self, hx]
-
-/-- Specific computation: tspb(1,1) = -1. -/
-theorem tspb_one_one : tspb 1 1 = -1 := by
-  unfold tspb; norm_num [max_def]
+/-- For negative inputs, tropical SPB has a clean form. -/
+theorem tropSPB_neg_neg (x y : ℝ) (hx : x < 0) (hy : y < 0) :
+    tropSPB x y = min x y := by
+  unfold tropSPB
+  have hxy : x + y < 0 := by linarith
+  simp [max_eq_left (le_of_lt hxy)]
 
 end

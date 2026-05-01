@@ -85,5 +85,3 @@ theorem collatz_descent_engine (n : ℕ) (hn : n > 0) (ho : n % 2 = 1) :
   · norm_num [ Nat.factorization_eq_zero_iff, Nat.dvd_iff_mod_eq_zero, Nat.add_mod, Nat.mul_mod, ho ];
   · rw [ Nat.mul_div_cancel' ( Nat.ordProj_dvd _ _ ) ];
   · exact Nat.not_dvd_ordCompl ( by norm_num ) ( by norm_num )
-
-

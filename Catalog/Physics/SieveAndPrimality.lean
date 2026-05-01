@@ -127,4 +127,3 @@ theorem mersenne_primality_table :
     ¬ Nat.Prime (2^8 - 1) ∧ ¬ Nat.Prime (2^9 - 1) ∧
     ¬ Nat.Prime (2^10 - 1) ∧ ¬ Nat.Prime (2^11 - 1) := by
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩ <;> native_decide
-

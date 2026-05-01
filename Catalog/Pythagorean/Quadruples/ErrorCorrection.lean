@@ -141,4 +141,3 @@ theorem spatial_error_positive (a b c d e : ℤ) (he : 0 < e)
     syndrome (a + e) b c d > 0 := by
   rw [syndrome_change_a _ _ _ _ _ hpq]
   nlinarith
-

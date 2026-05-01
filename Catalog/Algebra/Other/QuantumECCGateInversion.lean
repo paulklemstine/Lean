@@ -103,4 +103,3 @@ theorem involution_list_inverse (gates : List (Matrix (Fin 2) (Fin 2) ℤ))
     gates.prod * gates.reverse.prod = 1 := by
   induction' gates using List.reverseRecOn with g gs ih <;> simp +decide [ *, mul_assoc ] at *;
   simp_all +decide [ ← mul_assoc ]
-

@@ -62,4 +62,3 @@ theorem surjective_comp' {α β γ : Type*} (f : β → γ) (g : α → β)
 theorem bijective_has_inverse {α β : Type*} (f : α → β) (hf : Function.Bijective f) :
     ∃ g : β → α, Function.LeftInverse g f ∧ Function.RightInverse g f := by
   exact Function.bijective_iff_has_inverse.mp hf
-

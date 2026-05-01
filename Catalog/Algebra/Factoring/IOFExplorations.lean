@@ -121,4 +121,3 @@ theorem invB3_form (a b c : ℤ) :
 
 theorem euclid_pyth (m n : ℤ) :
     (m^2 - n^2)^2 + (2*m*n)^2 = (m^2 + n^2)^2 := by ring
-

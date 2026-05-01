@@ -36,4 +36,3 @@ theorem de_morgan_union {α : Type*} (A B : Set α) :
 theorem de_morgan_inter {α : Type*} (A B : Set α) :
     (A ∩ B)ᶜ = Aᶜ ∪ Bᶜ := by
       grind
-

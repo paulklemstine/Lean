@@ -71,4 +71,3 @@ theorem lyapunov_termination (N : ℕ) (hN : 1 < N) (hOdd : Odd N) :
     ∀ k : ℕ, k < (N - 1) / 2 → energy (↑N) (k + 1) < energy (↑N) k := by
       intro k hk; convert energy_strict_decrease ( N : ℤ ) k _ using 1 ;
       unfold a; omega;
-

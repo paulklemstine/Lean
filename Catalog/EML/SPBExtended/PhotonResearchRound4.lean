@@ -275,4 +275,3 @@ theorem scale_compose (p : PhotonState') (j k : ℤ) :
     ((p.scale j).scale k).py = (p.scale (k * j)).py ∧
     ((p.scale j).scale k).energy = (p.scale (k * j)).energy := by
   simp [PhotonState'.scale]; constructor <;> [skip; constructor] <;> ring
-

@@ -24,4 +24,3 @@ theorem lucas_sub_binary (n : ℕ) (hn : 2 ≤ n) : lucas n < 2 ^ n := by
   induction' n using Nat.strong_induction_on with n ih;
   rcases hn with ( _ | _ | n ) <;> simp +arith +decide [ * ] at *;
   grind +locals
-

@@ -350,4 +350,3 @@ theorem master_unification (a b c d e f : ℤ)
     (a * d - b * e) ^ 2 + (a * e + b * d) ^ 2 = (c * f) ^ 2 := by
   nlinarith [sq_nonneg (a * d - b * e), sq_nonneg (a * e + b * d),
              sq_nonneg a, sq_nonneg b, sq_nonneg c, sq_nonneg d, sq_nonneg e, sq_nonneg f]
-

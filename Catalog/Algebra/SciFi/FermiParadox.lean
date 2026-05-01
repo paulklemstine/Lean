@@ -42,4 +42,3 @@ theorem detection_probability_monotone (p : ℝ) (hp : 0 < p) (hp1 : p < 1) :
 theorem detection_limit (p : ℝ) (hp : 0 < p) (hp1 : p < 1) (ε : ℝ) (hε : 0 < ε) :
     ∃ n : ℕ, (1 - p) ^ n < ε := by
   exact exists_pow_lt_of_lt_one hε ( by linarith )
-

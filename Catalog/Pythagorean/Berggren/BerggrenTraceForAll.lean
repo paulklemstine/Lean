@@ -81,4 +81,3 @@ theorem trace_BTA₁_pow (n : ℕ) : Matrix.trace (BTA₁ ^ n) = 3 := by
 theorem trace_BTA₃_pow (n : ℕ) : Matrix.trace (BTA₃ ^ n) = 3 := by
   rw [BTA₃_eq]
   exact trace_one_add_nilp_pow NTA₃ NTA₃_cubed trace_NTA₃ trace_NTA₃_sq n
-

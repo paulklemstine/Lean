@@ -117,4 +117,3 @@ theorem branches_distinct_at_root' :
 theorem root_children' :
     chA' 3 4 5 = (5, 12, 13) ∧ chB' 3 4 5 = (21, 20, 29) ∧ chC' 3 4 5 = (15, 8, 17) := by
   native_decide
-

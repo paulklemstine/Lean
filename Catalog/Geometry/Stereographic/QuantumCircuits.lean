@@ -216,4 +216,3 @@ theorem theta_circuits_at_depth (d : ℕ) : 4 ^ d ≥ 3 ^ d :=
 /-- At depth d, the Berggren tree has exactly 3^d leaf nodes. -/
 theorem berggren_leaves_at_depth (d : ℕ) : 3 ^ d ≥ 1 :=
   Nat.one_le_pow d 3 (by norm_num)
-

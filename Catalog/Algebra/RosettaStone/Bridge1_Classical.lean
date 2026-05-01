@@ -46,4 +46,3 @@ theorem zmod2_idempotents :
 /-- In ℤ/6ℤ, there are exactly 4 idempotents. -/
 theorem zmod6_idempotent_count :
     (Finset.univ.filter (fun e : ZMod 6 => e * e = e)).card = 4 := by decide
-

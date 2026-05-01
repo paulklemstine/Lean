@@ -118,6 +118,3 @@ theorem consciousness_requires_whole (S : MicroMacroSystem)
     (ec : EmergentConsciousness S) :
     ∃ m : S.Macro, ec.conscious m := by
   exact ec.exists_conscious
-
-
-

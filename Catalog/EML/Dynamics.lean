@@ -1,112 +1,98 @@
 import Mathlib
 
-/-! # CatalogBuild.EML.Dynamics
+/-! # CatalogBuild.EML.V10.Dynamics
 
 Auto-generated from theorem catalog database.
-Domain: EML
-Declarations: 17
+Domain: EML/V10
+Declarations: 11
 -/
 
 noncomputable section
 
-/-- The iteration g(x) = 1 - ln(x). This is eml(0, x). -/
-def oneMinusLog (x : ℝ) : ℝ := 1 - Real.log x
+/-- d(z) ≥ z + 1 for all z. -/
+theorem emlDiag_ge_z_add_one (z : ℝ) : emlDiag z ≥ z + 1 := by
+  unfold emlDiag
+  by_cases hz : 0 < z
+  · have h5 : Real.exp z ≥ 1 + z + z ^ 2 / 2 := by
+      rw [Real.exp_eq_exp_ℝ, NormedSpace.exp_eq_tsum_div]
+      exact le_trans (by norm_num [Finset.sum_range_succ])
+        (Summable.sum_le_tsum (Finset.range 3)
+          (fun i _ => by positivity) (Real.summable_pow_div_factorial z))
+    nlinarith [Real.log_le_sub_one_of_pos hz, sq_nonneg (z - 1)]
+  · push_neg at hz
+    by_cases hz0 : z = 0
+    · subst hz0; simp
+    · rw [show Real.log z = Real.log (-z) from by rw [← Real.log_neg_eq_log]]
+      linarith [Real.exp_pos z,
+        Real.log_le_sub_one_of_pos (neg_pos.mpr (lt_of_le_of_ne hz hz0))]
 
-/-- g(1) = 1: the point x = 1 is a fixed point. -/
-theorem oneMinusLog_fixed_one : oneMinusLog 1 = 1 := by
-  simp [oneMinusLog, Real.log_one]
+/-- d(z) ≥ 2 for z > 0. -/
+theorem emlDiag_ge_two_pos (z : ℝ) (hz : 0 < z) : emlDiag z ≥ 2 := by
+  unfold emlDiag
+  linarith [Real.add_one_le_exp z, Real.log_le_sub_one_of_pos hz]
 
-/-- g(e) = 0. -/
-theorem oneMinusLog_at_e : oneMinusLog (Real.exp 1) = 0 := by
-  simp [oneMinusLog, Real.log_exp]
+/-- Strong bound: d(z) ≥ exp(z) − z + 1 for z ≥ 1. -/
+theorem emlDiag_strong_bound (z : ℝ) (hz : 1 ≤ z) :
+    emlDiag z ≥ Real.exp z - z + 1 := by
+  unfold emlDiag
+  nlinarith [Real.log_le_sub_one_of_pos (by linarith : 0 < z)]
 
-/-- g(1/e) = 2. -/
-theorem oneMinusLog_at_inv_e :
-    oneMinusLog (Real.exp (-1)) = 2 := by
-  simp [oneMinusLog, Real.log_exp]; ring
+/-- For z ≥ 2: d(z) ≥ exp(z)/2. -/
+theorem emlDiag_ge_half_exp (z : ℝ) (hz : 2 ≤ z) :
+    emlDiag z ≥ Real.exp z / 2 := by
+  unfold emlDiag
+  have h5 : Real.exp z ≥ 1 + z + z ^ 2 / 2 := by
+    rw [Real.exp_eq_exp_ℝ, NormedSpace.exp_eq_tsum_div]
+    exact le_trans (by norm_num [Finset.sum_range_succ])
+      (Summable.sum_le_tsum (Finset.range 3)
+        (fun i _ => by positivity) (Real.summable_pow_div_factorial z))
+  have h2 := Real.log_le_sub_one_of_pos (show 0 < z by linarith)
+  -- exp(z)/2 ≤ exp(z) - log(z) iff exp(z)/2 ≥ log(z)
+  -- exp(z) ≥ 1 + z + z²/2 ≥ 2z (for z ≥ 2, since 1 - z + z²/2 = ((z-1)²+1)/2 > 0)
+  -- So exp(z)/2 ≥ z ≥ z-1 ≥ log(z)
+  nlinarith [sq_nonneg (z - 1)]
 
-/-- g(g(x)) = 1 - ln(1 - ln(x)) = the second iterate. -/
-theorem oneMinusLog_compose (x : ℝ) :
-    oneMinusLog (oneMinusLog x) = 1 - Real.log (1 - Real.log x) := by
-  simp [oneMinusLog]
-
-/-- The derivative of g is g'(x) = -1/x. -/
-theorem oneMinusLog_deriv (x : ℝ) (hx : x ≠ 0) :
-    HasDerivAt oneMinusLog (-x⁻¹) x := by
-  unfold oneMinusLog
-  convert hasDerivAt_const x 1 |>.sub (Real.hasDerivAt_log hx) using 1
-  ring
-
-/-- |g'(1)| = 1, so x = 1 is a neutral (non-hyperbolic) fixed point. -/
-theorem oneMinusLog_neutral_fixed_point :
-    |(-1 : ℝ) / 1| = 1 := by norm_num
-
-/-- The exp tower is strictly increasing in n for x > 0. -/
-theorem expTower_strictMono_step (x : ℝ) (hx : 0 < x) (n : ℕ) :
-    expTower x n < expTower x (n + 1) := by
+/-- Orbit linear divergence: dⁿ(z) ≥ z + n. -/
+theorem emlDiag_orbit_linear (z : ℝ) (n : ℕ) :
+    emlDiagIter n z ≥ z + n := by
   induction n with
-  | zero =>
-    simp [expTower]
-    linarith [Real.add_one_le_exp x]
+  | zero => simp [emlDiagIter]
   | succ n ih =>
-    simp only [expTower]
-    exact Real.exp_strictMono ih
+    simp only [emlDiagIter]; push_cast
+    linarith [emlDiag_ge_z_add_one (emlDiagIter n z)]
 
-/-- [Section: # CatalogBuild.EML.Dynamics
-Auto-generated from theorem catalog database.
-Domain: EML
-Declarations: 17] -/
-theorem expTower_unbounded (x : ℝ) (hx : 0 < x) :
-    ∀ M : ℝ, ∃ n : ℕ, M < expTower x n := by
-  -- By induction, we show that expTower x n ≥ n - 1 for all n.
-  have h_lower_bound : ∀ n : ℕ, expTower x n ≥ n - 1 := by
-    intro n;
-    induction' n with n ih <;> norm_num [ expTower ] at *;
-    · linarith;
-    · linarith [ Real.add_one_le_exp ( expTower x n ) ];
-  exact fun M => ⟨ ⌊M + 1⌋₊ + 1, by have := h_lower_bound ( ⌊M + 1⌋₊ + 1 ) ; push_cast at *; linarith [ Nat.lt_floor_add_one ( M + 1 ) ] ⟩
+/-- After one step from z > 0, all orbit points are ≥ 2. -/
+theorem emlDiag_orbit_ge_two (z : ℝ) (hz : 0 < z) (n : ℕ) (hn : 1 ≤ n) :
+    emlDiagIter n z ≥ 2 := by
+  have h1 : emlDiagIter 1 z ≥ 2 := emlDiag_ge_two_pos z hz
+  have hge : emlDiagIter n z ≥ emlDiagIter 1 z := by
+    have := (emlDiag_orbit_strictMono z).monotone
+    exact this (by omega)
+  linarith
 
-/-- The diagonal iteration: x_{n+1} = exp(x_n) - ln(x_n). -/
-def emlDiagIter (x₀ : ℝ) : ℕ → ℝ
-  | 0 => x₀
-  | n + 1 => Real.exp (emlDiagIter x₀ n) - Real.log (emlDiagIter x₀ n)
+/-- g(1) = e. -/
+theorem emlGmap_one : emlGmap 1 = Real.exp 1 := by simp [emlGmap, Real.log_one]
 
-/-- [Section: # CatalogBuild.EML.Dynamics
-Auto-generated from theorem catalog database.
-Domain: EML
-Declarations: 17] -/
-theorem emlDiag_increases (x : ℝ) (hx : 0 < x) :
-    Real.exp x - Real.log x > x := by
-  by_contra! h_contra;
-  rw [ show Real.exp x = Real.exp 1 * Real.exp ( x - 1 ) by rw [ ← Real.exp_add, add_sub_cancel ] ] at h_contra;
-  nlinarith [ Real.add_one_le_exp ( x - 1 ), Real.add_one_le_exp 1, Real.log_le_sub_one_of_pos hx ]
+/-- g(e) = e − 1. -/
+theorem emlGmap_e : emlGmap (Real.exp 1) = Real.exp 1 - 1 := by
+  simp [emlGmap, Real.log_exp]
 
-/-- The 2D EML map Φ(x, y) = (eml(x,y), eml(y,x)). -/
-def emlPhi (p : ℝ × ℝ) : ℝ × ℝ :=
-  (Real.exp p.1 - Real.log p.2, Real.exp p.2 - Real.log p.1)
+/-- The derivative of g at z > 0 is −1/z. -/
+theorem emlGmap_hasDerivAt (z : ℝ) (hz : 0 < z) :
+    HasDerivAt emlGmap (-z⁻¹) z := by
+  unfold emlGmap
+  exact ((hasDerivAt_const z (Real.exp 1)).sub (Real.hasDerivAt_log hz.ne')).congr_deriv (by ring)
 
-/-- The Jacobian of Φ at (x,y) with y > 0, x > 0. -/
-theorem emlPhi_jacobian (x y : ℝ) (hx : 0 < x) (hy : 0 < y) :
-    let J := !![Real.exp x, -1/y; -1/x, Real.exp y]
-    J.det = Real.exp x * Real.exp y - 1 / (x * y) := by
-  simp [Matrix.det_fin_two]
-  ring
+/-- Gap derivative at z > 0. -/
+theorem emlGap_deriv (z : ℝ) (hz : 0 < z) :
+    HasDerivAt (fun z => Real.exp z - Real.log z - z) (Real.exp z - z⁻¹ - 1) z := by
+  exact ((Real.hasDerivAt_exp z).sub (Real.hasDerivAt_log hz.ne')).sub (hasDerivAt_id z)
+    |>.congr_deriv (by ring)
 
-/-- The trace of the Jacobian. -/
-theorem emlPhi_trace (x y : ℝ) :
-    Real.exp x + Real.exp y > 0 := by
-  linarith [Real.exp_pos x, Real.exp_pos y]
-
-/-- A period-2 point of g satisfies g(g(x)) = x. -/
-def isPeriod2 (x : ℝ) : Prop := oneMinusLog (oneMinusLog x) = x
-
-/-- x = 1 is a period-2 point (it's actually a fixed point). -/
-theorem one_is_period2 : isPeriod2 1 := by
-  simp [isPeriod2, oneMinusLog, Real.log_one]
-
-/-- Any fixed point is also a period-2 point. -/
-theorem fixed_implies_period2 (x : ℝ) (hx : oneMinusLog x = x) :
-    isPeriod2 x := by
-  simp [isPeriod2, hx]
+/-- For z ≥ 2: d(z) ≥ eᶻ − z. -/
+theorem emlDiag_lower_exp (z : ℝ) (hz : 2 ≤ z) :
+    emlDiag z ≥ Real.exp z - z := by
+  unfold emlDiag
+  linarith [Real.log_le_sub_one_of_pos (by linarith : 0 < z)]
 
 end

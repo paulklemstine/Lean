@@ -57,4 +57,3 @@ theorem hypotenuse_product (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ)
     IsPythTriple' (a₁*a₂ - b₁*b₂) (a₁*b₂ + b₁*a₂) (c₁*c₂) := by
   unfold IsPythTriple' at *
   nlinarith [brahmagupta_fibonacci a₁ b₁ a₂ b₂]
-

@@ -80,5 +80,3 @@ theorem geometric_series_sum (r : ℝ) (hr : |r| < 1) :
 theorem cauchy_schwarz_finset {n : ℕ} (a b : Fin n → ℝ) :
     (∑ i, a i * b i) ^ 2 ≤ (∑ i, a i ^ 2) * (∑ i, b i ^ 2) := by
       exact?
-
-

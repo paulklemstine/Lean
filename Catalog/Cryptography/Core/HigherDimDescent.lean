@@ -193,4 +193,3 @@ def listPrimQuints (N : ℕ) : List (ℕ × ℕ × ℕ × ℕ × ℕ) := do
 
 #eval listPrimQuints 5
 #eval (listPrimQuints 10).length
-

@@ -67,4 +67,3 @@ theorem quad_unit_sphere (a b c d : ℤ) (hd : d ≠ 0)
   have hd2_ne : (d : ℚ) ^ 2 ≠ 0 := pow_ne_zero 2 hd_ne
   field_simp
   exact_mod_cast hpyth
-

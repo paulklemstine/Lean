@@ -29,4 +29,3 @@ Declarations: 3] -/
 theorem sublevel_monotone (N t₁ t₂ : ℕ) (h : t₁ ≤ t₂) :
     sublevel_set N t₁ ⊆ sublevel_set N t₂ := by
   exact fun x hx => Finset.mem_filter.mpr ⟨ Finset.mem_filter.mp hx |>.1, le_trans ( Finset.mem_filter.mp hx |>.2 ) h ⟩
-

@@ -112,4 +112,3 @@ theorem sum_of_squares_mul_two (a₁ a₂ b₁ b₂ : ℤ) :
 theorem gaussian_factorization (a b : ℤ) :
     (⟨a, b⟩ : GaussianInt) * ⟨a, -b⟩ = ⟨a^2 + b^2, 0⟩ := by
   ext <;> simp <;> ring
-

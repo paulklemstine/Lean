@@ -114,4 +114,3 @@ theorem norm_mult_pq (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
 #print axioms pq_cauchy_schwarz
 #print axioms conj_i_action
 #print axioms norm_mult_pq
-

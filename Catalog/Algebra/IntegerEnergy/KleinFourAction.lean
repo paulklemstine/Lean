@@ -216,4 +216,3 @@ theorem ghosts_20_21_29 :
 #print axioms syndrome_detects
 #print axioms cf_branch1
 #print axioms parent_hyp_binary_form
-

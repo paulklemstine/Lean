@@ -132,4 +132,3 @@ theorem compPell_pos' : ∀ n : ℕ, 0 < compPell n := fun n => (compPell_pos_an
 
 theorem compPell_growth' : ∀ n : ℕ, compPell n < compPell (n + 1) :=
   fun n => (compPell_pos_and_growth n).2
-

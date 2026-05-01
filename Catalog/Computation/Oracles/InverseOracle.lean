@@ -231,6 +231,3 @@ theorem oracle_integer_lookup [Encodable α] (O : Oracle α) (x : α) :
 
 /-- The primality oracle: answers "yes" iff the query is prime. -/
 def primeOracle : Oracle ℕ := ⟨{n | Nat.Prime n}⟩
-
-
-

@@ -72,4 +72,3 @@ theorem no_carmichael_below_561 :
       ∃ a ∈ Finset.Icc 2 (n - 1),
         Nat.Coprime a n ∧ a ^ (n - 1) % n ≠ 1 := by
   native_decide
-

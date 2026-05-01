@@ -91,4 +91,3 @@ theorem pq_norm_product (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℤ)
 /-- In a PQ, the sum a²+b²+c² matches d² mod 4 (both are sums of squares). -/
 theorem pq_sum_eq_sq (a b c d : ℤ) (h : a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2) :
     a ^ 2 + b ^ 2 + c ^ 2 = d ^ 2 := h
-

@@ -290,4 +290,3 @@ theorem quaternion_descent_master :
        3 ∣ (v 0 + v 1 + v 2 + v 3 + v 4 + v 5 + v 6 - v 7)) := by
   exact ⟨LipschitzInt.sqNorm_mul, sigmaQuat_sqNorm, eulerMap_pyth,
          lipschitz_mul_assoc, octonion_obstruction⟩
-

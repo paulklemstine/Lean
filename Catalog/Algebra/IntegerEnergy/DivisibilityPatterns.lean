@@ -70,5 +70,3 @@ theorem sum_odd_eq_square (n : ℕ) :
 theorem sum_even (n : ℕ) :
     ∑ i ∈ range n, (2 * (i + 1)) = n * (n + 1) := by
       induction n <;> simpa [ Finset.sum_range_succ ] using by linarith;
-
-

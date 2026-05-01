@@ -65,4 +65,3 @@ theorem euler_char_genus2 : euler_char_surface 2 = -2 := rfl
 
 theorem surface_classification (g : ℕ) :
     euler_char_surface g = 2 - 2 * (g : ℤ) := by simp [euler_char_surface]
-

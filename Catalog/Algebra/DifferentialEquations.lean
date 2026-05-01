@@ -80,5 +80,3 @@ theorem fib_bound' : ∀ n : ℕ, Nat.fib n ≤ 2 ^ n := by
 
 theorem euler_total_steps' (T : ℝ) (n : ℕ) (hn : (n : ℝ) ≠ 0) :
     T / n * n = T := by field_simp
-
-

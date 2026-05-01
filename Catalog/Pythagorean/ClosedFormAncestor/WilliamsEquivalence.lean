@@ -102,4 +102,3 @@ theorem compPell_double (n : ℕ) :
   have := ih ( n + 1 ) ( by linarith ) ; have := ih ( n + 2 ) ( by linarith ) ; simp_all +decide [ Nat.mul_succ, pow_succ' ] ;
   simp_all +decide [ Nat.mul_succ, pow_succ', compPell ];
   grind
-

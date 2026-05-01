@@ -178,4 +178,3 @@ theorem only_starks_ready (s : PQZKSystem)
 /-- SNARK→STARK proof size blowup: ~1000×. -/
 theorem snark_to_stark_blowup :
     200000 / 200 = (1000 : ℕ) := by norm_num
-

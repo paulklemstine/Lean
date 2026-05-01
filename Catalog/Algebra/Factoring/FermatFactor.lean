@@ -186,4 +186,3 @@ theorem berggren_fermat_guaranteed (N p q : ℕ)
     exact ⟨by nlinarith only [Nat.sub_add_cancel (by linarith : m ≤ n),
              Nat.sub_add_cancel (by omega : n - m ≤ m + n + 1)], by omega⟩
   exact ⟨0, .root, rfl.le, x, y, hx, by rw [Nat.sq_sub_sq] at hx; linarith, hy⟩
-

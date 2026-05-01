@@ -105,4 +105,3 @@ theorem five_tuple_cross_diff
     (h2 : b₁ ^ 2 + b₂ ^ 2 + b₃ ^ 2 + b₄ ^ 2 = d ^ 2) :
     a₄ ^ 2 - b₄ ^ 2 = (b₁ ^ 2 - a₁ ^ 2) + (b₂ ^ 2 - a₂ ^ 2) + (b₃ ^ 2 - a₃ ^ 2) := by
   linarith
-

@@ -46,5 +46,3 @@ theorem gram_schmidt_orthogonality (a : ℝ) : a - a * 1 = 0 := by
 theorem gram_schmidt_inner_product_zero (inner_uv inner_uu : ℝ) (hu : inner_uu = 1) :
     inner_uv - inner_uv * inner_uu = 0 := by
   rw [ hu, mul_one, sub_self ]
-
-

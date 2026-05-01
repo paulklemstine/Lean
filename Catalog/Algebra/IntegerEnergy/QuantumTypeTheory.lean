@@ -60,4 +60,3 @@ theorem compose_trace_preserving {n m k : ℕ}
     (hg : ∀ ρ, Matrix.trace (g ρ) = Matrix.trace ρ) :
     ∀ ρ, Matrix.trace (g (f ρ)) = Matrix.trace ρ := by
   aesop
-

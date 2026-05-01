@@ -60,4 +60,3 @@ theorem wilson_primes_below_1000 :
     ∀ p ∈ (Finset.Icc 2 999).filter Nat.Prime,
       (Nat.factorial (p - 1) + 1) % (p * p) = 0 ↔ p ∈ ({5, 13, 563} : Finset ℕ) := by
   native_decide
-

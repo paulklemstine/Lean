@@ -80,4 +80,3 @@ theorem descent_error_monotone (d₁ d₂ d₃ : ℕ)
     (h12 : d₁ ≤ d₂) (h23 : d₂ ≤ d₃) :
     (d₁ : ℚ) / d₃ ≤ (d₂ : ℚ) / d₃ := by
   gcongr
-

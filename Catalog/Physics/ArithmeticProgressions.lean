@@ -97,4 +97,3 @@ theorem linnik_evidence_mod_7 :
          ⟨11, by decide, by native_decide, by omega⟩,
          ⟨5, by decide, by native_decide, by omega⟩,
          ⟨13, by decide, by native_decide, by omega⟩⟩
-

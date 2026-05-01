@@ -55,4 +55,3 @@ theorem energy_mass_proportional (m c : ℝ) (hc : 0 < c) (hm : 0 < m) :
 theorem double_mass_double_energy (m c : ℝ) :
     (2 * m) * c ^ 2 = 2 * (m * c ^ 2) := by
   ring
-

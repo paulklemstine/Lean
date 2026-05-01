@@ -119,4 +119,3 @@ theorem master_equation_fixed_points (ρ_crit : ℝ) (hcrit : ρ_crit ≠ 0) (hc
 /-- At ρ = 1, the density is a fixed point. -/
 theorem rho_one_stable (ρ_crit : ℝ) :
     (1 : ℝ) * (1 - 1) * (1 - ρ_crit) = 0 := by ring
-

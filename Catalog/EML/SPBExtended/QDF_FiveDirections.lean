@@ -303,4 +303,3 @@ theorem qdf_midpoint_identity (a₁ b₁ c₁ a₂ b₂ c₂ d : ℤ)
     (h2 : a₂ ^ 2 + b₂ ^ 2 + c₂ ^ 2 = d ^ 2) :
     (a₁ + a₂) ^ 2 + (b₁ + b₂) ^ 2 + (c₁ + c₂) ^ 2 =
     2 * d ^ 2 + 2 * (a₁ * a₂ + b₁ * b₂ + c₁ * c₂) := by nlinarith
-

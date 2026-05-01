@@ -251,4 +251,3 @@ theorem oracle_conservation' (p : QPath) :
   · rename_i p hp;
     convert B₂'_preserves_pyth' _ _ _ hp using 1;
   · rename_i p ih; rw [ show qTriple p.child3 = ( - ( qTriple p |> Prod.fst ) + 2 * ( qTriple p |> Prod.snd |> Prod.fst ) + 2 * ( qTriple p |> Prod.snd |> Prod.snd ), -2 * ( qTriple p |> Prod.fst ) + ( qTriple p |> Prod.snd |> Prod.fst ) + 2 * ( qTriple p |> Prod.snd |> Prod.snd ), -2 * ( qTriple p |> Prod.fst ) + 2 * ( qTriple p |> Prod.snd |> Prod.fst ) + 3 * ( qTriple p |> Prod.snd |> Prod.snd ) ) from rfl ] ; linarith;
-

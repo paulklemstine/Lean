@@ -60,6 +60,3 @@ theorem softplus_sub_id_tendsto :
   suffices h_simp : Filter.Tendsto (fun x => Real.log (1 + Real.exp (-x))) Filter.atTop (nhds 0) by
     refine h_simp.congr' ( by filter_upwards [ Filter.eventually_gt_atTop 0 ] with x hx using by rw [ show ( 1 + Real.exp x ) = ( 1 + Real.exp ( -x ) ) * Real.exp x by nlinarith [ Real.exp_pos x, Real.exp_pos ( -x ), Real.exp_neg x, mul_inv_cancel₀ ( ne_of_gt ( Real.exp_pos x ) ) ], Real.log_mul ( by positivity ) ( by positivity ), Real.log_exp ] ; ring );
   convert Filter.Tendsto.log ( tendsto_const_nhds.add ( Real.tendsto_exp_atBot.comp Filter.tendsto_neg_atTop_atBot ) ) _ using 2 <;> norm_num
-
-
-

@@ -181,6 +181,3 @@ theorem kronecker_off_diag {n : ℕ} (i j : Fin n) (hij : i ≠ j) :
     (1 : Matrix (Fin n) (Fin n) ℤ) i j = 0 := by
   -- Since $i \neq j$, the entry at $(i, j)$ in the identity matrix is $0$.
   simp [Matrix.one_apply, hij]
-
-
-

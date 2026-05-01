@@ -56,4 +56,3 @@ theorem trace_BTR₂_base :
     Matrix.trace (BTR₂ ^ 0) = 3 ∧
     Matrix.trace (BTR₂ ^ 1) = 5 ∧
     Matrix.trace (BTR₂ ^ 2) = 35 := by native_decide
-

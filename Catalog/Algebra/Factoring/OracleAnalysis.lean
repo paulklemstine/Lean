@@ -70,6 +70,3 @@ theorem oracle_no_speedup (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q)
     (hpq : p ≤ q) (N : ℕ) (hN : N = p * q) :
     p ≤ N := by
   nlinarith [ hp.two_le, hq.two_le ]
-
-
-

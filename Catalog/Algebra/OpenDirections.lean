@@ -282,4 +282,3 @@ theorem k_halvings (S k : ℕ) :
     rw [Function.iterate_succ_apply', ih]
     simp only [halvingLens]
     rw [Nat.div_div_eq_div_mul, pow_succ]
-

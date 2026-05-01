@@ -46,6 +46,3 @@ theorem uniform_entropy_pos (a b : ℝ) (hab : a < b) : 0 < b - a := by linarith
 
 theorem iof_info (p : ℕ) (hp : 2 ≤ p) :
     (p - 1) / 2 + 1 ≥ 1 := by omega
-
-
-

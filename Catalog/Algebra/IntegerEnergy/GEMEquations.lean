@@ -82,4 +82,3 @@ theorem vdb_optimization :
 theorem gem_coupling_positive :
     ∀ (G c : ℝ), G > 0 → c > 0 → G / c ^ 2 > 0 := by
   exact fun G c hG hc => div_pos hG ( sq_pos_of_pos hc )
-

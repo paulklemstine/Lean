@@ -90,4 +90,3 @@ theorem coord_continuous (n : ℕ) : Continuous (fun (f : BerggrenBoundary) => f
 
 /-- The boundary is a product of copies of Fin 3 -/
 theorem boundary_eq_product : BerggrenBoundary = (ℕ → Fin 3) := rfl
-

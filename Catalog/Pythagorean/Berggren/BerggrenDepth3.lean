@@ -142,4 +142,3 @@ depth 3: {BᵢBⱼBₖ : i,j,k ∈ {1,2,3}} (27 words)
 All are distinct from each other (no collisions across depths).
 This is consistent with the free semigroup conjecture. -/
 theorem depth_0_to_3_summary : True := trivial
-

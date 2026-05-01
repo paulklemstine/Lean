@@ -252,4 +252,3 @@ theorem eigenvec_mod_11 : (M_mod 11).mulVec ![1, -1, 0] = ![-1, 1, 0] := by nati
 #print axioms order_mod_29_divides
 #print axioms lorentz_mod_7
 #print axioms eigenvec_mod_11
-

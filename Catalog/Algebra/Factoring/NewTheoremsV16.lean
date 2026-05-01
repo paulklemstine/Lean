@@ -152,4 +152,3 @@ theorem first_7_mersenne_primes :
     Nat.Prime (2 ^ 17 - 1) ∧
     Nat.Prime (2 ^ 19 - 1) := by
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_⟩ <;> native_decide
-

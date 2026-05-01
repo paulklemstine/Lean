@@ -116,5 +116,3 @@ theorem mass_gap_subquadratic {delta : ℕ → ℝ} {f : ℝ → ℝ}
   have h_f_lt_eps : f (delta N) < ε * (N : ℝ) ^ 2 := by
     simpa only [ div_lt_iff₀ hN_sq_pos ] using hN₀ N ( Nat.le_of_succ_le hN )
   exact h_f_lt_eps
-
-

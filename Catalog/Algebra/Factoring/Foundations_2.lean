@@ -103,4 +103,3 @@ theorem quadruple_euler_lift (q₁ q₂ : PythQuadruple) :
 theorem quadruple_composition_exists (q₁ q₂ : PythQuadruple) :
     ∃ (x y z : ℤ), x ^ 2 + y ^ 2 + z ^ 2 = (q₁.d * q₂.d) ^ 2 :=
   ⟨q₁.d * q₂.d, 0, 0, by ring⟩
-

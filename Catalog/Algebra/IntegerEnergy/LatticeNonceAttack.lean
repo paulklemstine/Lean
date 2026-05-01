@@ -180,4 +180,3 @@ theorem hardware_wallet_defense
     (constant_time rfc6979 isolated : Prop)
     (h1 : constant_time) (h2 : rfc6979) (h3 : isolated) :
     constant_time ∧ rfc6979 ∧ isolated := ⟨h1, h2, h3⟩
-

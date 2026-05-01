@@ -59,4 +59,3 @@ theorem four_pairs_semiprimes (p q : ℕ) :
 /-- Odd leg = difference of squares. -/
 theorem optimal_start_params (m n : ℤ) :
     m ^ 2 - n ^ 2 = (m - n) * (m + n) := by ring
-

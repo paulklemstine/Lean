@@ -298,4 +298,3 @@ theorem massless_dispersion (a b c : ℤ) (h : a ^ 2 + b ^ 2 = c ^ 2) :
 theorem momentum_conservation (a b c d : ℤ) :
     (a * c - b * d) ^ 2 + (a * d + b * c) ^ 2 =
     (a ^ 2 + b ^ 2) * (c ^ 2 + d ^ 2) := by ring
-

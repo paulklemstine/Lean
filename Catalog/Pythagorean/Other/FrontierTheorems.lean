@@ -146,4 +146,3 @@ theorem pell_3_next_solution : (7 : ℤ) ^ 2 - 3 * 4 ^ 2 = 1 := by norm_num
 (2,1)·(2,1) = (7,4) via the formula (a₁a₂+3b₁b₂, a₁b₂+a₂b₁). -/
 theorem pell_3_composition :
     2 * 2 + 3 * (1 * 1) = 7 ∧ 2 * 1 + 1 * 2 = 4 := by constructor <;> norm_num
-

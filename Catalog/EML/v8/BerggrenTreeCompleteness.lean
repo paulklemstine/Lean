@@ -109,4 +109,3 @@ theorem branches_injective_v8 :
     childB_v8 3 4 5 ≠ childC_v8 3 4 5 := by
   unfold childA_v8 childB_v8 childC_v8
   refine ⟨by decide, by decide, by decide⟩
-

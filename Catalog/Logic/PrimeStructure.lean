@@ -95,5 +95,3 @@ theorem oracle_euler_criterion (p : ℕ) (hp : Nat.Prime p) (hodd : p ≠ 2)
   rw [ ← hx, ← pow_mul, Nat.mul_div_cancel' ];
   · haveI := Fact.mk hp; exact ZMod.pow_card_sub_one_eq_one ( by rw [ ← ZMod.natCast_eq_zero_iff ] at ha; aesop ) ;
   · exact even_iff_two_dvd.mp ( hp.even_sub_one hodd )
-
-

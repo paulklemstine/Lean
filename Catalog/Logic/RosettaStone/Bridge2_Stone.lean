@@ -56,4 +56,3 @@ theorem finset_inter_idem {β : Type*} [DecidableEq β] (s : Finset β) :
 
 theorem finset_union_idem {β : Type*} [DecidableEq β] (s : Finset β) :
     s ∪ s = s := Finset.union_self s
-

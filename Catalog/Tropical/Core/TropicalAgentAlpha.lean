@@ -52,4 +52,3 @@ theorem exp_sum_upper {n : ℕ} (v : Fin (n+1) → ℝ) :
 
 theorem expressivity_gap (w L : ℕ) :
     (2 * w) ^ (L + 1) = 2 * w * (2 * w) ^ L := by ring
-

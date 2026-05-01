@@ -58,4 +58,3 @@ theorem evens_equinumerous :
 theorem int_equinumerous_nat :
     Cardinal.mk ℤ = Cardinal.mk ℕ := by
       simp +zetaDelta at *
-

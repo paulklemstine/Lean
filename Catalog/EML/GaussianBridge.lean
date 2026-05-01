@@ -77,4 +77,3 @@ theorem gaussian_product_pyth (a₁ b₁ c₁ a₂ b₂ c₂ : ℤ)
     IsPythTripleZ (a₁*a₂ - b₁*b₂) (a₁*b₂ + b₁*a₂) (c₁*c₂) := by
   unfold IsPythTripleZ at *
   nlinarith [brahmagupta_via_gaussian a₁ b₁ a₂ b₂]
-

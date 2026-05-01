@@ -233,4 +233,3 @@ def projectQuad12 (a b _c d : ℤ) : ℤ × ℤ × ℤ :=
 /-- The projection deficit: how far the projection is from being Pythagorean -/
 theorem projectionDeficit (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2) :
     a^2 + b^2 = d^2 - c^2 := by linarith
-

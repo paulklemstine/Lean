@@ -67,4 +67,3 @@ theorem dimensional_advantage {N : ℝ} (hN : 2 ≤ N) :
 theorem dim4_beats_dim3 {N : ℝ} (hN : 2 ≤ N) :
     N ^ ((1:ℝ)/4) ≤ N ^ ((1:ℝ)/3) := by
       exact Real.rpow_le_rpow_of_exponent_le ( by linarith ) ( by norm_num )
-

@@ -175,4 +175,3 @@ theorem quad_hyp_odd (a b c d : ℤ) (h : a^2 + b^2 + c^2 = d^2)
 theorem descent_well_founded' :
     WellFounded (fun (x y : ℕ) => x < y) :=
   Nat.lt_wfRel.wf
-

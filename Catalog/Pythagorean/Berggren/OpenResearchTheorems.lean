@@ -101,4 +101,3 @@ example : gp 1 77 77 = 1 := by simp only [gp]; norm_num
 #print axioms linear_triplet_fixed_abs
 #print axioms unit_probe_descent
 #print axioms deficit_factor_iff
-

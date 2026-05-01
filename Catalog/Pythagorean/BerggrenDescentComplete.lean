@@ -229,4 +229,3 @@ theorem hyp_ge_5' (a b c : ℤ) (h : a^2 + b^2 = c^2)
   have ha4 : a ≤ 3 := by nlinarith [sq_nonneg b]
   have hb4 : b ≤ 3 := by nlinarith [sq_nonneg a]
   interval_cases a <;> interval_cases b <;> interval_cases c <;> simp_all
-

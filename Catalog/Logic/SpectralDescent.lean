@@ -60,4 +60,3 @@ def descentOracle (k : ℕ) : (Fin (k+2) → ℝ) → (Fin (k+1) → ℝ) :=
 theorem descent_composition (k : ℕ) (v : Fin (k+3) → ℝ) :
     descentOracle k (descentOracle (k+1) v) = fun i => v ⟨i.val, by omega⟩ := by
   ext i; simp [descentOracle]
-

@@ -51,5 +51,3 @@ theorem stereo_proj_unit_norm_general (S m_n_sq c : ℝ)
     (hc_pos : c ≠ 0) (hc_def : c = S + m_n_sq) :
     (4 * S * m_n_sq + (m_n_sq - S) ^ 2) / c ^ 2 = 1 := by
   grind +ring
-
-

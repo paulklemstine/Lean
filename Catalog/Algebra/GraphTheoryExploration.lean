@@ -82,6 +82,3 @@ theorem k23_vertices : 2 + 3 = (5 : ℕ) := by norm_num
 
 
 theorem k23_edges : 2 * 3 = (6 : ℕ) := by norm_num
-
-
-

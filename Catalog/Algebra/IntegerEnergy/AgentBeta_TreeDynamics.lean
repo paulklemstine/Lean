@@ -144,4 +144,3 @@ def m2_perimeter (n : ℕ) : ℤ :=
 theorem min_hyp_growth (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (h : a ^ 2 + b ^ 2 = c ^ 2) :
     c + 2 ≤ 2 * a + 2 * b + 3 * c := by linarith
-

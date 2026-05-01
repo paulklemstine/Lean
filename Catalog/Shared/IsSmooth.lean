@@ -13,4 +13,3 @@ Auto-generated from theorem catalog database.
 Domain: Speculative
 Declarations: 1] -/
 def isSmooth (B n : ℕ) : Prop := ∀ p, Nat.Prime p → p ∣ n → p ≤ B
-

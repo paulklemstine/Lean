@@ -92,4 +92,3 @@ theorem rank_composition_bound {m n p : ℕ}
     (A : Matrix (Fin m) (Fin n) ℝ) (B : Matrix (Fin n) (Fin p) ℝ) :
     (A * B).rank ≤ min A.rank B.rank := by
       exact le_min ( Matrix.rank_mul_le_left _ _ ) ( Matrix.rank_mul_le_right _ _ )
-

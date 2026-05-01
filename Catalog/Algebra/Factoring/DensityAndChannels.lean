@@ -54,4 +54,3 @@ theorem peel_parity (d x : ℤ) :
 
 /-- 480 Fano planes × 36 channels per 8-tuple = 17280 total channels. -/
 theorem fano_plane_channels : 480 * (8 + Nat.choose 8 2) = 17280 := by decide
-

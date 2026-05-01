@@ -90,4 +90,3 @@ theorem factor_square_condition (N p : ℕ) (k : ℕ) (hp : Nat.Prime p) (hdvd :
       · norm_num [ ZMod.cast, ZMod.val ];
         rcases p with ( _ | _ | p ) <;> norm_num at *;
         erw [ Fin.val_mk ] ; norm_num
-

@@ -310,4 +310,3 @@ theorem farey_5_12_13 : berggren_to_farey 5 12 13 = 2/3 := by
 /-- The Farey fraction of (8,15,17) is 3/5 -/
 theorem farey_8_15_17 : berggren_to_farey 8 15 17 = 3/5 := by
   simp [berggren_to_farey]; norm_num
-

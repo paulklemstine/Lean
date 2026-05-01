@@ -297,6 +297,3 @@ theorem repulsor_exists_bool_functions :
       have := congr_fun h n
       by_cases h' : s n n <;> simp +decide [h'] at this
   }
-
-
-

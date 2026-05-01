@@ -392,4 +392,3 @@ theorem rf3B₂_trace_sixth :
 tr(B₂⁶) = 1 + 2·19601 = 39203. -/
 theorem chebyshev_n6 :
     (39203 : ℤ) = 1 + 2 * 19601 ∧ (19601 : ℤ) = 6 * 3363 - 577 := by omega
-

@@ -100,4 +100,3 @@ theorem hyp_29_mod4 : 29 % 4 = 1 := by decide
 theorem hyp_25_mod4 : 25 % 4 = 1 := by decide
 
 theorem hyp_37_mod4 : 37 % 4 = 1 := by decide
-
