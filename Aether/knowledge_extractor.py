@@ -618,10 +618,12 @@ Research mode: {concept.research_mode}
                         local_equiv = self.catalog_root / rel
                         
                     if local_equiv.exists():
-                        if fp.read_bytes() == local_equiv.read_bytes():
+                        fp_text = fp.read_text(encoding='utf-8', errors='ignore').replace('\r\n', '\n').strip()
+                        local_text = local_equiv.read_text(encoding='utf-8', errors='ignore').replace('\r\n', '\n').strip()
+                        if fp_text == local_text:
                             is_modified = False
-                except Exception:
-                    pass
+                except Exception as e:
+                    print(f"[Extract] Warning comparing {fp.name}: {e}")
 
                 if f == "ARISTOTLE_SUMMARY.md":
                     summary = fp.read_text()
@@ -779,7 +781,7 @@ Research mode: {concept.research_mode}
                     cwd=str(staging),
                     capture_output=True,
                     text=True,
-                    timeout=600
+                    timeout=1800
                 )
                 if result.returncode == 0:
                     print(f"[Integrate] Pi successfully integrated files.")
@@ -832,7 +834,7 @@ Research mode: {concept.research_mode}
                         cwd=str(domain_dir),
                         capture_output=True,
                         text=True,
-                        timeout=600
+                        timeout=1800
                     )
                     if result.returncode == 0:
                         print(f"[Cleanup] Pi successfully cleaned {job.concept.domain}")
