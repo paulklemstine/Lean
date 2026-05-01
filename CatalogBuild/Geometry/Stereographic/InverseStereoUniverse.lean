@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Geometry/Stereographic
-Declarations: 46
+Declarations: 45
 -/
 
 import Mathlib
@@ -420,15 +420,6 @@ theorem inv_stereo_Z2_x' (t : ℝ) :
 theorem inv_stereo_Z2_y' (t : ℝ) :
     (invStereoCircle' (-t)).2 = (invStereoCircle' t).2 := by
   simp [invStereoCircle']
-
-
-
-
-
-/-- The Pythagorean connection: for any integer n, the stereo map
-produces the Pythagorean identity (2n)² + (1−n²)² = (1+n²)². -/
-theorem pythagorean_from_stereo' (n : ℤ) :
-    (2 * n) ^ 2 + (1 - n ^ 2) ^ 2 = (1 + n ^ 2) ^ 2 := by ring
 
 
 

@@ -19,6 +19,30 @@ theorem softplus_deriv (x : ℝ) : deriv softplus x = logisticSigmoid x := by
   positivity
 
 
+/-- Softplus at zero equals log 2 -/
+theorem softplus_zero : softplus 0 = Real.log 2 := by
+  unfold softplus
+  simp [Real.exp_zero]
+  norm_num
+
+
+/-- Softplus is differentiable -/
+theorem softplus_differentiable : Differentiable ℝ softplus := by
+  unfold softplus
+  apply Differentiable.log
+  · exact differentiable_const 1 |>.add Real.differentiable_exp
+  · intro x; exact ne_of_gt (one_plus_exp_pos x)
+
+
+/-- Softplus is strictly monotone increasing -/
+theorem softplus_strictMono : StrictMono softplus := by
+  intro a b hab
+  unfold softplus
+  apply Real.log_lt_log
+  · exact one_plus_exp_pos a
+  · linarith [Real.exp_lt_exp.mpr hab]
+
+
 /-- Softplus is greater than x for all x -/
 theorem softplus_gt_id (x : ℝ) : softplus x > x := by
   unfold softplus
@@ -26,6 +50,15 @@ theorem softplus_gt_id (x : ℝ) : softplus x > x := by
   calc x = Real.log (Real.exp x) := (Real.log_exp x).symm
     _ < Real.log (1 + Real.exp x) := by
         apply Real.log_lt_log (Real.exp_pos x) h1
+
+
+/-- [Section: # CatalogBuild.Shared.Softplus_convex
+Auto-generated from theorem catalog database.
+Domain: Shared
+Declarations: 9] -/
+theorem softplus_reflection (x : ℝ) : softplus x - x = softplus (-x) := by
+  unfold softplus;
+  rw [ show ( 1 + Real.exp ( -x ) ) = ( 1 + Real.exp x ) / Real.exp x by rw [ add_div, div_self <| ne_of_gt <| Real.exp_pos x ] ; rw [ Real.exp_neg ] ; ring, Real.log_div ( by positivity ) <| by positivity, Real.log_exp ]
 
 
 /-- [Section: # CatalogBuild.Shared.Softplus_differentiable
@@ -49,43 +82,10 @@ theorem softplus_mono : Monotone softplus :=
   softplus_strictMono.monotone
 
 
-/-- [Section: # CatalogBuild.Shared.Softplus_convex
-Auto-generated from theorem catalog database.
-Domain: Shared
-Declarations: 9] -/
-theorem softplus_reflection (x : ℝ) : softplus x - x = softplus (-x) := by
-  unfold softplus;
-  rw [ show ( 1 + Real.exp ( -x ) ) = ( 1 + Real.exp x ) / Real.exp x by rw [ add_div, div_self <| ne_of_gt <| Real.exp_pos x ] ; rw [ Real.exp_neg ] ; ring, Real.log_div ( by positivity ) <| by positivity, Real.log_exp ]
-
-
-/-- Softplus is differentiable -/
-theorem softplus_differentiable : Differentiable ℝ softplus := by
-  unfold softplus
-  apply Differentiable.log
-  · exact differentiable_const 1 |>.add Real.differentiable_exp
-  · intro x; exact ne_of_gt (one_plus_exp_pos x)
-
-
-/-- Softplus at zero equals log 2 -/
-theorem softplus_zero : softplus 0 = Real.log 2 := by
-  unfold softplus
-  simp [Real.exp_zero]
-  norm_num
-
-
 /-- e^σ(x) = 1 + eˣ -/
 theorem softplus_exp_identity (x : ℝ) : Real.exp (softplus x) = 1 + Real.exp x := by
   unfold softplus
   rw [Real.exp_log (one_plus_exp_pos x)]
-
-
-/-- Softplus is strictly monotone increasing -/
-theorem softplus_strictMono : StrictMono softplus := by
-  intro a b hab
-  unfold softplus
-  apply Real.log_lt_log
-  · exact one_plus_exp_pos a
-  · linarith [Real.exp_lt_exp.mpr hab]
 
 
 end

@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Computation
-Declarations: 12
+Declarations: 11
 -/
 
 import Mathlib
@@ -44,12 +44,6 @@ def tropVal (x : ℝ) : ℝ := Real.log x
 theorem tropVal_EML_one (a : ℝ) :
     tropVal (EML_trop a 1) = a := by
   simp [tropVal, EML_trop, Real.log_one, Real.log_exp]
-
-
-
-
-
-def logSumExp (a b : ℝ) : ℝ := Real.log (Real.exp a + Real.exp b)
 
 
 

@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Speculative/IdempotentCollapse
-Declarations: 12
+Declarations: 11
 -/
 
 import Mathlib
@@ -60,10 +60,6 @@ theorem idempotent_comp_of_comm (f g : α → α) (hf : IsIdempotent' f) (hg : I
       = f (f (g (g x))) := by rw [← hcomm]
     _ = f (g (g x)) := by rw [hf]
     _ = f (g x) := by rw [hg]
-
-
-/-- **The Core Identity**: ReLU(x) = x ⊕_T 0. Proof: reflexivity. -/
-theorem relu_is_tropical (x : ℝ) : relu' x = tropAdd x 0 := rfl
 
 
 /-- ReLU is idempotent on nonneg reals. -/

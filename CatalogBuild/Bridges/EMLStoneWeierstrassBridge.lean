@@ -1,0 +1,103 @@
+/-! # CatalogBuild.Bridges.EMLStoneWeierstrassBridge
+
+Auto-generated from theorem catalog database.
+Domain: Bridges
+Declarations: 18
+-/
+
+import Mathlib
+
+noncomputable section
+
+/-- The logistic function σ(x) = 1/(1+exp(-x)) -/
+def logistic (x : ℝ) : ℝ := 1 / (1 + exp (-x))
+
+
+/-- logistic is strictly increasing -/
+theorem logistic_strict_mono : StrictMono logistic := by
+  intro x y hxy
+  show 1 / (1 + exp (-x)) < 1 / (1 + exp (-y))
+  have hexp : exp (-y) < exp (-x) := exp_lt_exp.mpr (by linarith : -y < -x)
+  have hy : 0 < 1 + exp (-y) := add_pos zero_lt_one (exp_pos (-y))
+  have : 1 + exp (-y) < 1 + exp (-x) := by linarith
+  exact one_div_lt_one_div_of_lt hy this
+
+
+/-- logistic(0) = 1/2 -/
+theorem logistic_zero : logistic 0 = 1 / 2 := by
+  unfold logistic; rw [neg_zero, exp_zero]; norm_num
+
+
+/-- logistic maps to (0, ∞) -/
+theorem logistic_pos (x : ℝ) : 0 < logistic x := by
+  show 0 < 1 / (1 + exp (-x))
+  exact div_pos zero_lt_one (add_pos zero_lt_one (exp_pos (-x)))
+
+
+/-- logistic maps to below 1 -/
+theorem logistic_lt_one (x : ℝ) : logistic x < 1 := by
+  show 1 / (1 + exp (-x)) < 1
+  have h : 0 < exp (-x) := exp_pos (-x)
+  have : 1 < 1 + exp (-x) := by linarith
+  have : 1 / (1 + exp (-x)) < 1 / 1 := one_div_lt_one_div_of_lt zero_lt_one this
+  rwa [div_one] at this
+
+
+/-- exp converts addition to multiplication -/
+theorem exp_add_to_mul (x y : ℝ) : exp (x + y) = exp x * exp y := exp_add x y
+
+
+/-- exp converts multiplication to addition (via log) -/
+theorem exp_mul_to_add (x y : ℝ) : exp x * exp y = exp (x + y) := (exp_add x y).symm
+
+
+/-- Constant 1 is in EML: exp(0) = 1 -/
+theorem one_in_EML : exp 0 = 1 := exp_zero
+
+
+/-- Any constant c is in EML: c = c * exp(0) = c * 1 -/
+theorem const_in_EML (c : ℝ) : c = c * exp 0 := by rw [exp_zero]; ring
+
+
+/-- Identity recoverable: log(exp(x)) = x -/
+theorem identity_from_EML (x : ℝ) : log (exp x) = x := Real.log_exp x
+
+
+/-- log is additive on nonzero products -/
+theorem log_mul_additive {x y : ℝ} (hx : x ≠ 0) (hy : y ≠ 0) :
+    log (x * y) = log x + log y := Real.log_mul hx hy
+
+
+/-- exp separates all distinct points -/
+theorem exp_separates {x y : ℝ} (hxy : x ≠ y) : exp x ≠ exp y :=
+  fun h => hxy (exp_injective h)
+
+
+/-- logistic separates all distinct points -/
+theorem logistic_separates {x y : ℝ} (hxy : x ≠ y) : logistic x ≠ logistic y :=
+  fun h => hxy (logistic_strict_mono.injective h)
+
+
+/-- exp is positive everywhere -/
+theorem exp_pos_all (x : ℝ) : 0 < exp x := exp_pos x
+
+
+/-- EML closed under multiplication (via exp homomorphism) -/
+theorem EML_closed_under_mul (x y : ℝ) : exp x * exp y = exp (x + y) := (exp_add x y).symm
+
+
+/-- EML contains all constants -/
+theorem EML_contains_constants (c : ℝ) : c = c * exp 0 := const_in_EML c
+
+
+/-- EML separates all pairs of distinct points (via exp) -/
+theorem EML_separates_points {x y : ℝ} (hxy : x ≠ y) : exp x ≠ exp y :=
+  exp_separates hxy
+
+
+/-- EML separates all pairs of distinct points (via logistic) -/
+theorem EML_separates_points_logistic {x y : ℝ} (hxy : x ≠ y) : logistic x ≠ logistic y :=
+  logistic_separates hxy
+
+
+end

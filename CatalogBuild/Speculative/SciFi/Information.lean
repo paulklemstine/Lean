@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Speculative/SciFi
-Declarations: 6
+Declarations: 5
 -/
 
 import Mathlib
@@ -13,14 +13,6 @@ Domain: Speculative/SciFi
 Declarations: 6] -/
 theorem deterministic_zero_entropy :
     -((1 : ℝ) * Real.log 1) = 0 := by
-  norm_num
-
-
-/-- [Section: # CatalogBuild.Speculative.SciFi.Information
-Auto-generated from theorem catalog database.
-Domain: Speculative/SciFi
-Declarations: 6] -/
-theorem log_one_eq_zero : Real.log 1 = 0 := by
   norm_num
 
 

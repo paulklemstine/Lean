@@ -2,16 +2,12 @@
 
 Auto-generated from theorem catalog database.
 Domain: Shared
-Declarations: 25
+Declarations: 19
 -/
 
 import Mathlib
 
 noncomputable section
-
-/-- [Section: ## Core Definitions] -/
-def spb (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
-
 
 /-- [Section: ## Section 24: SPB Linearization Error] -/
 theorem spb_linearization_error (x y : ℝ) (h : 1 - x * y ≠ 0) :
@@ -68,35 +64,15 @@ theorem spb_is_moebius (t x : ℝ) :
     spb x t = (1 * x + t) / ((-t) * x + 1) := by unfold spb; ring
 
 
-theorem spb_assoc (x y z : ℝ) (h1 : 1 - x * y ≠ 0) (h2 : 1 - y * z ≠ 0)
-    (h3 : 1 - spb x y * z ≠ 0) (h4 : 1 - x * spb y z ≠ 0) :
-    spb (spb x y) z = spb x (spb y z) := by
-  unfold spb at *; field_simp; ring
-
-
-theorem spb_zero_right (x : ℝ) : spb x 0 = x := by unfold spb; simp
-
-
-/-- [Section: ## Section 11: Multi-Angle Formulas] -/
-theorem spb_double (x : ℝ) : spb x x = 2 * x / (1 - x * x) := by unfold spb; ring
-
-
 theorem spb_parabolic_at_zero :
     (spbMat 0).trace ^ 2 = 4 * (spbMat 0).det := by
   rw [spbMat_trace, spbMat_det]; norm_num
-
-
-theorem spb_zero_left (x : ℝ) : spb 0 x = x := by unfold spb; simp
 
 
 theorem spb_triple (x : ℝ) (h1 : 1 - x * x ≠ 0) (h2 : 1 - spb x x * x ≠ 0) :
     spb (spb x x) x = (3 * x - x ^ 3) / (1 - 3 * x ^ 2) := by
   unfold spb;
   grind
-
-
-/-- [Section: ## Section 1: SPB Algebraic Structure] -/
-theorem spb_comm (x y : ℝ) : spb x y = spb y x := by unfold spb; ring
 
 
 theorem spb_moebius_det_pos (t : ℝ) : 1 * 1 - t * (-t) > 0 := by

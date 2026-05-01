@@ -2,24 +2,12 @@
 
 Auto-generated from theorem catalog database.
 Domain: Bridges
-Declarations: 63
+Declarations: 59
 -/
 
 import Mathlib
 
 noncomputable section
-
-/-- Tropical addition is commutative: a ⊕ b = b ⊕ a. -/
-theorem trop_add_comm (a b : ℝ) : max a b = max b a := max_comm a b
-
-
-/-- Tropical addition is associative: (a ⊕ b) ⊕ c = a ⊕ (b ⊕ c). -/
-theorem trop_add_assoc (a b c : ℝ) : max (max a b) c = max a (max b c) := max_assoc a b c
-
-
-/-- Tropical addition is idempotent: a ⊕ a = a. -/
-theorem trop_add_idem (a : ℝ) : max a a = a := max_self a
-
 
 /-- Tropical multiplication distributes over tropical addition:
 a ⊗ (b ⊕ c) = (a ⊗ b) ⊕ (a ⊗ c), i.e., a + max(b, c) = max(a + b, a + c). -/
@@ -164,20 +152,6 @@ theorem mobilenet_rank (k c : ℕ) (hk : 1 ≤ k) (hc : 1 ≤ c) :
 
 /-- LogSumExp at inverse temperature β > 0 for two elements. -/
 def LSE_two (beta x y : ℝ) : ℝ := (1 / beta) * Real.log (Real.exp (beta * x) + Real.exp (beta * y))
-
-
-/-- [Section: # CatalogBuild.Bridges.TropicalDeepLearningTheory
-Auto-generated from theorem catalog database.
-Domain: Bridges
-Declarations: 63] -/
-theorem lse_ge_max (beta x y : ℝ) (hbeta : 0 < beta) :
-    max x y ≤ LSE_two beta x y := by
-  unfold LSE_two
-  field_simp;
-  rw [ le_log_iff_exp_le ( by positivity ) ];
-  cases max_cases x y <;> simp +decide [ *, mul_comm ];
-  · positivity;
-  · positivity
 
 
 /-- Logarithmic cooling schedule. -/

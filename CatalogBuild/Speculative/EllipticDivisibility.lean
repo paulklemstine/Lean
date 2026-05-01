@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Speculative
-Declarations: 7
+Declarations: 6
 -/
 
 import Mathlib
@@ -43,9 +43,4 @@ theorem eds_divisibility (E : EDS) {p k : ℕ} (hk : 1 ≤ k)
     (hpk : (p : ℤ) ∣ E.val k) (n : ℕ) (hn : 1 ≤ n) :
     (p : ℤ) ∣ E.val (k * n) :=
   dvd_trans hpk (E.divides k n hk hn)
-
-
-theorem fib_dvd_fib_mul (m n : ℕ) : fib m ∣ fib (m * n) := by
-  induction n <;> simp_all +decide [ Nat.fib_dvd, Nat.mul_succ ]
-
 

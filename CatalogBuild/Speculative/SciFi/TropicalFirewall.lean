@@ -17,5 +17,5 @@ theorem tropical_firewall_determinism
     {R : Type*} [LinearOrder R]
     (a b c : R) (h : max a b = max a c) (hgt : a < max a b) :
     b = c := by
-  sorry
+  cases max_cases a b <;> cases max_cases a c <;> aesop
 

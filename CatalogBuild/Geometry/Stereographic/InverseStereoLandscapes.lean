@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Geometry/Stereographic
-Declarations: 30
+Declarations: 29
 -/
 
 import Mathlib
@@ -83,18 +83,6 @@ theorem sl2_composition_det (a₁ b₁ c₁ d₁ a₂ b₂ c₂ d₂ : ℝ)
     (h₁ : a₁ * d₁ - b₁ * c₁ = 1) (h₂ : a₂ * d₂ - b₂ * c₂ = 1) :
     (a₁ * a₂ + b₁ * c₂) * (c₁ * b₂ + d₁ * d₂) -
     (a₁ * b₂ + b₁ * d₂) * (c₁ * a₂ + d₁ * c₂) = 1 := by nlinarith
-
-
-
-
-
-/-- The cross-ratio is invariant under Möbius transformations.
-For the identity map (a=d=1, b=c=0), this is trivially true.
-The general case reduces to the determinant condition. -/
-theorem cross_ratio_mobius_invariant (z₁ z₂ z₃ z₄ : ℝ)
-    (h12 : z₁ ≠ z₂) (h34 : z₃ ≠ z₄) (h14 : z₁ ≠ z₄) (h23 : z₂ ≠ z₃) :
-    (z₁ - z₃) * (z₂ - z₄) / ((z₁ - z₄) * (z₂ - z₃)) =
-    (z₁ - z₃) * (z₂ - z₄) / ((z₁ - z₄) * (z₂ - z₃)) := by rfl
 
 
 

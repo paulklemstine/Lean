@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Tropical/Cryptography
-Declarations: 28
+Declarations: 27
 -/
 
 import Mathlib
@@ -82,12 +82,6 @@ theorem tropical_layer_monotone {n m : ℕ} [NeZero m] (L : TropicalLayer n m) :
 This is the mathematical essence of stable self-reasoning. -/
 def TropicalIdempotent {n : ℕ} (f : (Fin n → ℝ) → (Fin n → ℝ)) : Prop :=
   ∀ x, f (f x) = f x
-
-
-/-- The tropical projection: component-wise max with a reference vector.
-This is idempotent by the idempotency of max. -/
-def tropicalProjection {n : ℕ} (ref : Fin n → ℝ) (x : Fin n → ℝ) : Fin n → ℝ :=
-  fun i => max (ref i) (x i)
 
 
 /-- [Section: # CatalogBuild.Tropical.Cryptography.TropicalSelfReasoning

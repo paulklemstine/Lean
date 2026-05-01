@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Physics/ArchitectureOfReality
-Declarations: 12
+Declarations: 11
 -/
 
 import Mathlib
@@ -71,12 +71,6 @@ theorem trop_char_scale {G : Type*} [Group G] (χ : G → ℝ) (c : ℝ)
 def tropFourier {G : Type*} [Fintype G] [Nonempty G] [DecidableEq G]
     (f : G → ℝ) (χ : G → ℝ) : ℝ :=
   Finset.sup' Finset.univ Finset.univ_nonempty (fun g => f g + χ g)
-
-
-/-- The tropical convolution: (f ⊛ g)(h) = max_x {f(x) + g(x⁻¹h)} -/
-def tropConv {G : Type*} [Group G] [Fintype G] [Nonempty G] [DecidableEq G]
-    (f g : G → ℝ) (h : G) : ℝ :=
-  Finset.sup' Finset.univ Finset.univ_nonempty (fun x => f x + g (x⁻¹ * h))
 
 
 /-- A tropical Hecke operator acts on functions f : G → ℝ -/

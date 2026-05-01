@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Speculative
-Declarations: 45
+Declarations: 44
 -/
 
 import CatalogBuild.Speculative.OpenDirections
@@ -139,13 +139,6 @@ theorem qubit_savings (N k : ℕ) : Nat.log 2 (N / 2 ^ k) ≤ Nat.log 2 N :=
 
 /-- 9 lenses = 512× reduction. -/
 theorem nine_lens : 2 ^ 9 = 512 := by norm_num
-
-
-/-- Birthday bound: k samples give ≤ k² pairs. -/
-theorem birthday_bound (k : ℕ) : k * (k - 1) / 2 ≤ k ^ 2 := by
-  calc k * (k - 1) / 2 ≤ k * (k - 1) := Nat.div_le_self _ _
-    _ ≤ k * k := Nat.mul_le_mul_left k (Nat.sub_le k 1)
-    _ = k ^ 2 := by ring
 
 
 /-- k lenses give 2^k fold improvement. -/

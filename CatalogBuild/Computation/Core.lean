@@ -2,19 +2,12 @@
 
 Auto-generated from theorem catalog database.
 Domain: Computation
-Declarations: 24
+Declarations: 23
 -/
 
 import Mathlib
 
 noncomputable section
-
-/-- The EML operation: EML(a, b) = exp(a) - ln(b). -/
-def EML (a b : ℝ) : ℝ := Real.exp a - Real.log b
-
-
-
-
 
 /-- exp(a) = EML(a, 1). -/
 theorem EML_exp (a : ℝ) : EML a 1 = Real.exp a := by

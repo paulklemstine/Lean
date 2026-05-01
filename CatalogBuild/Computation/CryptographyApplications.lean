@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Computation
-Declarations: 14
+Declarations: 13
 -/
 
 import Mathlib
@@ -72,17 +72,6 @@ theorem hamming_self_zero {n : ℕ} (x : Fin n → Bool) :
     hammingDistance x x = 0 := by
   -- The Hamming distance between a string and itself is zero because there are no differing positions.
   simp [hammingDistance]
-
-
-
-
-
-theorem hamming_symmetric {n : ℕ} (x y : Fin n → Bool) :
-    hammingDistance x y = hammingDistance y x := by
-  -- The Hamming distance is symmetric because the set of positions where x and y differ is the same as the set of positions where y and x differ.
-  simp [hammingDistance];
-  -- Since equality is symmetric, the sets {i | ¬x i = y i} and {i | ¬y i = x i} are identical.
-  simp [eq_comm]
 
 
 

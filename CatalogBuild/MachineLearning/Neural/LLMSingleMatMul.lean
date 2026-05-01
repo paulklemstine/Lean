@@ -225,6 +225,3 @@ lookup via standard basis vectors. -/
 theorem fin_lifted_compilation (n : ℕ) (β : Type*) (f : Fin n → β) :
     ∃ (table : Fin n → β), ∀ i, f i = table i :=
   ⟨f, fun _ => rfl⟩
-
-
-

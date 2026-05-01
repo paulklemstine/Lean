@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Tropical/NeuralNetworks
-Declarations: 78
+Declarations: 76
 -/
 
 import Mathlib
@@ -146,10 +146,6 @@ theorem tropicality_gap_nonneg {ι : Type*} {s : Finset ι} {f : ι → ℝ}
 
 theorem exp_ge_one_plus (x : ℝ) : Real.exp x ≥ 1 + x := by
   linarith [ Real.add_one_le_exp x ]
-
-
-theorem exp_strict_convex : StrictConvexOn ℝ Set.univ Real.exp := by
-  exact strictConvexOn_exp
 
 
 theorem lse_stability_trick (a b : ℝ) :
@@ -353,12 +349,6 @@ theorem pos_neg_decomposition (x : ℝ) :
 
 theorem relu_subadditive (x y : ℝ) : relu (x + y) ≤ relu x + relu y := by
   unfold relu; cases max_cases x 0 <;> cases max_cases y 0 <;> cases max_cases ( x + y ) 0 <;> linarith;
-
-
-theorem relu_pos_homogeneous (α x : ℝ) (hα : 0 ≤ α) :
-    relu (α * x) = α * relu x := by
-      unfold relu;
-      cases max_cases x 0 <;> cases max_cases ( α * x ) 0 <;> nlinarith
 
 
 theorem relu_product_nonneg (x y : ℝ) : 0 ≤ relu x * relu y := by

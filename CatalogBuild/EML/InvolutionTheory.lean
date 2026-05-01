@@ -2,19 +2,12 @@
 
 Auto-generated from theorem catalog database.
 Domain: EML
-Declarations: 9
+Declarations: 8
 -/
 
 import Mathlib
 
 noncomputable section
-
-/-- [Section: # CatalogBuild.EML.InvolutionTheory
-Auto-generated from theorem catalog database.
-Domain: EML
-Declarations: 9] -/
-def spb_inv (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
-
 
 /-- spb(t, t) = 2t/(1-t²). -/
 theorem spb_half_angle_identity (t : ℝ) (h : 1 - t ^ 2 ≠ 0) :

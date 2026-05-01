@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Tropical/Core
-Declarations: 22
+Declarations: 21
 -/
 
 import Mathlib
@@ -108,10 +108,6 @@ def tropOR (a b : ℝ) : ℝ := max a b
 
 /-- Tropical AND gate -/
 def tropAND (a b : ℝ) : ℝ := min a b
-
-
-/-- Tropical NOT gate (on {0, 1}) -/
-def tropNOT (a : ℝ) : ℝ := 1 - a
 
 
 /-- Tropical NOT is an involution -/

@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Computation/Oracles
-Declarations: 47
+Declarations: 46
 -/
 
 import Mathlib
@@ -437,13 +437,6 @@ theorem oracle_composition_shared_fixedpoints {α : Type*}
 -- ============================================================================
 -- PART VIII: TROPICAL-GRAVITY SYNTHESIS
 -- ============================================================================
-
-
-
-
-
-/-- The tropical distance: |a - b| in tropical coordinates -/
-def tropDist (a b : ℝ) : ℝ := |a - b|
 
 
 

@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: EML
-Declarations: 40
+Declarations: 38
 -/
 
 import Mathlib
@@ -202,14 +202,6 @@ theorem emlSymmetricMap_diff (x y : ℝ) :
 theorem emlSymmetricMap_diagonal (z : ℝ) :
     emlSymmetricMap (z, z) = (emlDiagonal z, emlDiagonal z) := by
   exact?
-
-
-theorem exp_ge_one_add (x : ℝ) : Real.exp x ≥ 1 + x := by
-  linarith [ Real.add_one_le_exp x ]
-
-
-theorem log_le_sub_one (x : ℝ) (hx : 0 < x) : Real.log x ≤ x - 1 := by
-  exact Real.log_le_sub_one_of_pos hx
 
 
 theorem eml_x_expx_ge_one (x : ℝ) : emlE x (Real.exp x) ≥ 1 := by

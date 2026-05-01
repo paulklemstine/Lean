@@ -2,36 +2,24 @@
 
 Auto-generated from theorem catalog database.
 Domain: Shared
-Declarations: 3
+Declarations: 1
 -/
 
 import Mathlib
 
-/-- For prime n ≥ 13, any prime factor of F(n) is a primitive divisor.
-This is because the entry point must divide n, and since n is prime,
-the entry point is either 1 or n. But F(1) = 1, so no prime divides F(1).
-Therefore any prime dividing F(n) does not divide F(k) for 0 < k < n. -/
-theorem fib_primitive_divisor_prime (n : ℕ) (hn : 13 ≤ n) (hnp : Nat.Prime n) :
-    ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
-      ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
-  -- By definition of $fib$, we know that $fib(n) > 1$ for $n \geq 3$.
-  have h_fib_gt_one : 1 < Nat.fib n := by
-    exact lt_of_lt_of_le ( by decide ) ( Nat.fib_mono hn );
-  obtain ⟨ p, hp_prime, hp_div ⟩ := Nat.exists_prime_and_dvd h_fib_gt_one.ne';
-  refine' ⟨ p, hp_prime, hp_div, fun k hk₁ hk₂ hk₃ => _ ⟩;
-  -- By the properties of Fibonacci numbers, if $p$ divides both $F(n)$ and $F(k)$, then $p$ must also divide $F(\gcd(n, k))$.
-  have h_div_gcd : p ∣ Nat.fib (Nat.gcd n k) := by
-    exact Nat.dvd_gcd hp_div hk₃ |> fun h => h.trans ( by simp +decide [ Nat.fib_gcd ] );
-  -- Since $n$ is prime and $0 < k < n$, we have $\gcd(n, k) = 1$.
-  have h_gcd_one : Nat.gcd n k = 1 := by
-    exact hnp.coprime_iff_not_dvd.mpr ( Nat.not_dvd_of_pos_of_lt hk₁ hk₂ );
-  aesop
+/-- For prime n ≥ 13, every prime factor of F(n) is a primitive prime divisor.
+This is because for prime n, gcd(n, k) = 1 for all 0 < k < n,
+so if q | F(n) and q | F(k), then q | F(gcd(n,k)) = F(1) = 1, contradiction. -/
+theorem fib_primitive_divisor_prime (n : ℕ) (hn : 13 ≤ n) (hp : Nat.Prime n) :
+    ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧ ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
+  have hfn : 1 < Nat.fib n :=
+    lt_of_lt_of_le (by native_decide : 1 < Nat.fib 13) (Nat.fib_mono hn)
+  obtain ⟨q, hq_prime, hq_dvd⟩ := Nat.exists_prime_and_dvd hfn.ne'
+  refine ⟨q, hq_prime, hq_dvd, fun k hk hkn hqk => ?_⟩
+  have hcoprime : Nat.Coprime n k :=
+    hp.coprime_iff_not_dvd.mpr (fun h => not_lt.mpr (Nat.le_of_dvd hk h) hkn)
+  have hgcd : Nat.gcd n k = 1 := hcoprime
+  have : q ∣ Nat.fib 1 := hgcd ▸ (Nat.fib_gcd n k ▸ Nat.dvd_gcd hq_dvd hqk)
+  simp at this
+  exact hq_prime.one_lt.ne' this
 
-
-/-- [Section: # Helper lemmas for Carmichael's theorem on primitive Fibonacci divisors] -/
-lemma fib_gt_one (n : ℕ) (hn : 3 ≤ n) : 1 < Nat.fib n := by
-  exact Nat.le_trans ( by decide ) ( Nat.fib_mono hn )
-
-
-lemma exists_prime_dvd (n : ℕ) (hn : 1 < n) : ∃ p, Nat.Prime p ∧ p ∣ n := by
-  exact Nat.exists_prime_and_dvd hn.ne'

@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Tropical/Core
-Declarations: 14
+Declarations: 13
 -/
 
 import Mathlib
@@ -62,16 +62,6 @@ theorem min_of_affine_is_concave (a₁ b₁ a₂ b₂ : ℝ) (t : ℝ) (ht0 : 0 
     t * min (a₁ + b₁ * x) (a₂ + b₂ * x) +
     (1 - t) * min (a₁ + b₁ * y) (a₂ + b₂ * y) := by
   cases min_cases ( a₁ + b₁ * x ) ( a₂ + b₂ * x ) <;> cases min_cases ( a₁ + b₁ * y ) ( a₂ + b₂ * y ) <;> cases min_cases ( a₁ + b₁ * ( t * x + ( 1 - t ) * y ) ) ( a₂ + b₂ * ( t * x + ( 1 - t ) * y ) ) <;> nlinarith
-
-
-/-- [Section: # CatalogBuild.Tropical.Core.TropicalAlphabetFoundations
-Auto-generated from theorem catalog database.
-Domain: Tropical/Core
-Declarations: 14] -/
-theorem lse_le_max_add_log2 (a b : ℝ) :
-    Real.log (Real.exp a + Real.exp b) ≤ max a b + Real.log 2 := by
-  rw [ ← Real.log_exp ( Max.max a b ), ← Real.log_mul ( by positivity ) ( by positivity ) ];
-  exact Real.log_le_log ( by positivity ) ( by rw [ mul_two ] ; cases max_cases a b <;> linarith [ Real.exp_le_exp.2 ( by linarith : a ≤ Max.max a b ), Real.exp_le_exp.2 ( by linarith : b ≤ Max.max a b ) ] )
 
 
 /-- Boolean OR corresponds to tropical addition (min) under the embedding

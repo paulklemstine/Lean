@@ -6,6 +6,8 @@ Declarations: 8
 -/
 
 import Mathlib
+import Shared.CarmichaelHelper
+import Shared.CarmichaelProof
 import Speculative.PisanoPeriodFactoring
 
 /-- GCD identity: gcd(F(m), F(n)) = F(gcd(m,n)). -/
@@ -29,7 +31,10 @@ theorem fib_dvd_chain (m n : ℕ) (h : m ∣ n) : Nat.fib m ∣ Nat.fib n :=
 theorem fib_primitive_divisor_existence :
     ∀ n : ℕ, 13 ≤ n → ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧
       ∀ k, 0 < k → k < n → ¬(p ∣ Nat.fib k) := by
-  sorry
+  intro n hn
+  by_cases hnp : Nat.Prime n
+  · exact fib_primitive_divisor_prime n hn hnp
+  · exact fib_carmichael_composite n hn hnp
 
 
 

@@ -2,24 +2,10 @@
 
 Auto-generated from theorem catalog database.
 Domain: MachineLearning/ShefferFunction
-Declarations: 4
+Declarations: 3
 -/
 
 import Mathlib
-
-/-- [Section: # CatalogBuild.MachineLearning.ShefferFunction.ReLUApproximation
-Auto-generated from theorem catalog database.
-Domain: MachineLearning/ShefferFunction
-Declarations: 5] -/
-theorem softplus_ge_relu (x : ℝ) : softplus x ≥ max 0 x := by
-  unfold softplus;
-  cases max_cases ( 0 : ℝ ) x <;> simp +decide [ * ];
-  · exact Real.log_nonneg ( by linarith [ Real.exp_pos x ] );
-  · rw [ Real.le_log_iff_exp_le ] <;> linarith [ Real.exp_pos x ]
-
-
-
-
 
 /-- [Section: # CatalogBuild.MachineLearning.ShefferFunction.ReLUApproximation
 Auto-generated from theorem catalog database.

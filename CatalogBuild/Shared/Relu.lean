@@ -1,41 +1,54 @@
 /-! # CatalogBuild.Shared.Relu
 
 Auto-generated from theorem catalog database.
-Domain: Shared
-Declarations: 5
+Domain: Bridges
+Declarations: 6
 -/
 
 import Mathlib
 
 noncomputable section
 
-/-- ReLU function: the bridge between neural networks and tropical algebra. -/
-def relu (x : ℝ) : ℝ := max x 0
+/-- The ReLU (Rectified Linear Unit) function. -/
+def relu (x : ℝ) : ℝ := max 0 x
 
 
-/-- [Section: # CatalogBuild.Shared.Relu
-Auto-generated from theorem catalog database.
-Domain: Bridges
-Declarations: 5] -/
+/-- ReLU(x) ≥ 0. -/
+theorem relu_nonneg (x : ℝ) : 0 ≤ relu x := le_max_left 0 x
+
+
+/-- [Section: # Tropical–Neural Network Bridge
+New theorems formalizing the connection between tropical algebra and neural networks.
+ReLU networks compute piecewise-linear functions, which are precisely the functions
+expressible as differences of tropical polynomials. This file establishes key
+theoretical foundations.
+## Main Results
+- `relu_max_form`: ReLU(x) = max(0, x)
+- `relu_lipschitz`: ReLU is 1-Lipschitz
+- `relu_idempotent`: ReLU(ReLU(x)) = ReLU(x)
+- `relu_homogeneous`: ReLU(c·x) = c·ReLU(x) for c ≥ 0
+- `max_as_relu`: max(a,b) = b + ReLU(a - b)
+- `tropical_add_comm/assoc`: max is commutative and associative (tropical addition)
+- `softplus_bounds`: Softplus approximation bounds
+- `composition_lipschitz_bridge`: Composition of Lipschitz functions bound] -/
+theorem relu_pos_homogeneous (c x : ℝ) (hc : 0 ≤ c) :
+    relu (c * x) = c * relu x := by
+  unfold relu;
+  cases max_cases ( 0 : ℝ ) x <;> cases max_cases ( 0 : ℝ ) ( c * x ) <;> nlinarith
+
+
+/-- ReLU(x) ≥ x. -/
+theorem relu_ge (x : ℝ) : x ≤ relu x := le_max_right 0 x
+
+
 theorem relu_lipschitz (x y : ℝ) : |relu x - relu y| ≤ |x - y| := by
   unfold relu;
-  grind
+  cases max_cases ( 0 : ℝ ) x <;> cases max_cases ( 0 : ℝ ) y <;> cases abs_cases ( x - y ) <;> cases abs_cases ( max 0 x - max 0 y ) <;> linarith
 
 
-/-- ReLU is idempotent: applying it twice equals applying it once. -/
+/-- ReLU is idempotent: ReLU(ReLU(x)) = ReLU(x). -/
 theorem relu_idempotent (x : ℝ) : relu (relu x) = relu x := by
   simp [relu]
-
-
-/-- ReLU is non-negative. -/
-theorem relu_nonneg (x : ℝ) : 0 ≤ relu x := le_max_right x 0
-
-
-/-- ReLU fixed-point characterization: fixed iff non-negative. -/
-theorem relu_fixed_iff (x : ℝ) : relu x = x ↔ 0 ≤ x := by
-  constructor
-  · intro h; have := relu_nonneg x; linarith
-  · intro h; simp [relu, max_eq_left h]
 
 
 end

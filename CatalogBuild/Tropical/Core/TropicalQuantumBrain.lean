@@ -2,41 +2,16 @@
 
 Auto-generated from theorem catalog database.
 Domain: Tropical/Core
-Declarations: 32
+Declarations: 27
 -/
 
 import Mathlib
 
 noncomputable section
 
-/-- Tropical addition is max -/
-def tropAdd' (a b : ℝ) : ℝ := max a b
-
-
-/-- Tropical multiplication is ordinary addition -/
-def tropMul' (a b : ℝ) : ℝ := a + b
-
-
-/-- Tropical addition is commutative -/
-theorem tropAdd'_comm (a b : ℝ) : tropAdd' a b = tropAdd' b a := by
-  unfold tropAdd'; exact max_comm a b
-
-
-/-- Tropical addition is associative -/
-theorem tropAdd'_assoc (a b c : ℝ) :
-    tropAdd' (tropAdd' a b) c = tropAdd' a (tropAdd' b c) := by
-  unfold tropAdd'; exact max_assoc a b c
-
-
 /-- Tropical addition is idempotent: a ⊕ a = a -/
 theorem tropAdd'_idem (a : ℝ) : tropAdd' a a = a := by
   unfold tropAdd'; exact max_self a
-
-
-/-- Tropical multiplication distributes over tropical addition (left) -/
-theorem tropMul'_distrib_left (a b c : ℝ) :
-    tropMul' a (tropAdd' b c) = tropAdd' (tropMul' a b) (tropMul' a c) := by
-  simp [tropMul', tropAdd', max_add_add_left]
 
 
 /-- Tropical multiplication distributes over tropical addition (right) -/

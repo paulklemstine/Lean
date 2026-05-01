@@ -2,16 +2,12 @@
 
 Auto-generated from theorem catalog database.
 Domain: EML
-Declarations: 12
+Declarations: 11
 -/
 
 import Mathlib
 
 noncomputable section
-
-/-- The SPB operator. -/
-def spbOp (x y : ℝ) : ℝ := (x + y) / (1 - x * y)
-
 
 /-- The set of values reachable from a seed x using SPB and constants 0, 1. -/
 inductive SPBReachable (x : ℝ) : ℝ → Prop where

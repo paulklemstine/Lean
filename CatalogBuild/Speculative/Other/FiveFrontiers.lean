@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Speculative/Other
-Declarations: 30
+Declarations: 28
 -/
 
 import Mathlib
@@ -11,10 +11,6 @@ noncomputable section
 
 /-- Tropical addition: max -/
 def tadd (a b : ℝ) : ℝ := max a b
-
-
-/-- Tropical multiplication: + -/
-def tmul (a b : ℝ) : ℝ := a + b
 
 
 /-- The Core Identity: ReLU(x) = x ⊕_T 0 — definitional equality -/
@@ -36,11 +32,6 @@ theorem tadd_idem (a : ℝ) : tadd a a = a := max_self a
 
 /-- Tropical multiplication is commutative. -/
 theorem tmul_comm (a b : ℝ) : tmul a b = tmul b a := add_comm a b
-
-
-/-- Tropical multiplication is associative. -/
-theorem tmul_assoc (a b c : ℝ) : tmul (tmul a b) c = tmul a (tmul b c) := by
-  unfold tmul; ring
 
 
 /-- 0 is the tropical multiplicative identity. -/

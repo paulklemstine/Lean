@@ -2,23 +2,10 @@
 
 Auto-generated from theorem catalog database.
 Domain: Algebra/LinearAlgebra
-Declarations: 5
+Declarations: 4
 -/
 
 import Mathlib
-
-/-- [Section: # CatalogBuild.Algebra.LinearAlgebra.LinearAlgebra
-Auto-generated from theorem catalog database.
-Domain: Algebra/LinearAlgebra
-Declarations: 5] -/
-theorem det_mul_eq {n : Type*} [DecidableEq n] [Fintype n]
-    (A B : Matrix n n ℝ) :
-    (A * B).det = A.det * B.det := by
-      exact Matrix.det_mul A B
-
-
-
-
 
 /-- [Section: # CatalogBuild.Algebra.LinearAlgebra.LinearAlgebra
 Auto-generated from theorem catalog database.

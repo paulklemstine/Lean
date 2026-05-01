@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Tropical/NeuralNetworks
-Declarations: 54
+Declarations: 53
 -/
 
 import Mathlib
@@ -109,12 +109,6 @@ theorem softmax_le_one {n : ℕ} [NeZero n] (v : Fin n → ℝ) (i : Fin n) :
 /-- At β = 1, scaled softmax equals standard softmax -/
 theorem scaledSoftmax_one {n : ℕ} (v : Fin n → ℝ) (i : Fin n) :
     scaledSoftmax 1 v i = softmax v i := by simp [scaledSoftmax, softmax]
-
-
-/-- Sum of exp is positive -/
-theorem sum_exp_pos {n : ℕ} (v : Fin (n + 1) → ℝ) :
-    0 < ∑ i, exp (v i) :=
-  Finset.sum_pos (fun _ _ => exp_pos _) Finset.univ_nonempty
 
 
 theorem logSumExp_le {n : ℕ} (v : Fin (n + 1) → ℝ) :

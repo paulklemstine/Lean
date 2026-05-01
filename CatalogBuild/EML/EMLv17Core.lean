@@ -2,16 +2,12 @@
 
 Auto-generated from theorem catalog database.
 Domain: EML
-Declarations: 69
+Declarations: 65
 -/
 
 import Mathlib
 
 noncomputable section
-
-/-- [Section: ## Definitions] -/
-def eml (x y : ℝ) : ℝ := exp x - log y
-
 
 /-- [Section: # CatalogBuild.EML.EMLv17Core
 Auto-generated from theorem catalog database.
@@ -112,10 +108,6 @@ theorem eml_self_exp (x : ℝ) : eml x (exp x) = exp x - x := by simp [eml, log_
 
 
 theorem eml_legendre (x y : ℝ) : eml x (exp y) = exp x - y := by simp [eml, log_exp]
-
-
-theorem eml_log_split (x y z : ℝ) (hy : 0 < y) (hz : 0 < z) :
-    eml x (y * z) = eml x y - log z := by unfold eml; rw [log_mul hy.ne' hz.ne']; ring
 
 
 theorem eml_neg_fst (x y : ℝ) : eml (-x) y = exp (-x) - log y := rfl
@@ -297,11 +289,6 @@ theorem eml_eval_0_e : eml 0 (exp 1) = 0 := by simp [eml, log_exp]
 theorem eml_eval_1_e : eml 1 (exp 1) = exp 1 - 1 := by simp [eml, log_exp]
 
 
-/-- [Section: ## V17.21: Continuity and Differentiability] -/
-theorem eml_continuous_fst (y : ℝ) : Continuous (fun x => eml x y) := by
-  unfold eml; exact continuous_exp.sub continuous_const
-
-
 theorem eml_continuousOn_snd (x : ℝ) : ContinuousOn (fun y => eml x y) (Ioi 0) := by
   apply ContinuousOn.sub continuousOn_const
   exact continuousOn_log.mono (fun y hy => (mem_Ioi.mp hy).ne')
@@ -350,11 +337,6 @@ theorem emlGmap_fixed_point_exists :
 /-- [Section: ## V17.24: Bregman connection] -/
 theorem eml_bregman_identity (p : ℝ) :
     (p - log p) - 1 = (p - 1) - log p := by ring
-
-
-/-- [Section: ## V17.25: Double negation] -/
-theorem eml_double_neg (x : ℝ) : eml 0 (exp (eml 0 (exp x))) = x := by
-  unfold eml; simp [log_exp]
 
 
 end

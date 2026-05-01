@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: MachineLearning/QuantumTransformer
-Declarations: 22
+Declarations: 21
 -/
 
 import Mathlib
@@ -170,14 +170,6 @@ theorem at_most_one_large {n : ℕ} (w : Fin n → ℝ)
     (hw_sum : ∑ i, w i = 1)
     (i j : Fin n) (hi : 1 / 2 < w i) (hj : 1 / 2 < w j) : i = j := by
   exact Classical.not_not.1 fun away => absurd ( hw_sum ▸ Finset.sum_le_sum_of_subset_of_nonneg ( Finset.insert_subset_iff.mpr ⟨ Finset.mem_univ i, Finset.singleton_subset_iff.mpr ( Finset.mem_univ j ) ⟩ ) fun _ _ _ => hw_nn _ ) ( by norm_num [ Finset.sum_pair away ] ; linarith )
-
-
-
-
-
-/-- ReLU of a non-positive input is zero. -/
-theorem relu_of_nonpos (x : ℝ) (hx : x ≤ 0) : max x 0 = 0 :=
-  max_eq_right hx
 
 
 

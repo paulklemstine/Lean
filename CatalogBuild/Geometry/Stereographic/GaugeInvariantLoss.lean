@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Geometry/Stereographic
-Declarations: 16
+Declarations: 14
 -/
 
 import Mathlib
@@ -57,14 +57,6 @@ theorem geodesicLoss_zero_self (seqLen : ℕ) (x : Fin seqLen → ℝ) :
 
 
 
-/-- Conformal factor at a point. -/
-def confFactor (d : ℕ) (x : Fin d → ℝ) : ℝ :=
-  2 / (1 + ∑ i, (x i) ^ 2)
-
-
-
-
-
 /-- Conformal-weighted loss: each token's contribution is weighted by its
 conformal factor, giving points near the projection pole higher weight. -/
 def conformalWeightedLoss (seqLen d : ℕ)
@@ -72,14 +64,6 @@ def conformalWeightedLoss (seqLen d : ℕ)
     (losses : Fin seqLen → ℝ)
     (hlosses : ∀ i, 0 ≤ losses i) : ℝ :=
   ∑ i, confFactor d (X i) * losses i
-
-
-
-
-
-theorem confFactor_pos (d : ℕ) (x : Fin d → ℝ) :
-    0 < confFactor d x := by
-  unfold confFactor; positivity
 
 
 

@@ -2,19 +2,12 @@
 
 Auto-generated from theorem catalog database.
 Domain: EML/V10
-Declarations: 28
+Declarations: 27
 -/
 
 import Mathlib
 
 noncomputable section
-
-/-- [Section: # CatalogBuild.EML.V10.Core
-Auto-generated from theorem catalog database.
-Domain: EML/V10
-Declarations: 31] -/
-theorem eml_exp (x : ℝ) : eml x 1 = Real.exp x := by simp [eml, Real.log_one]
-
 
 /-- [Section: # CatalogBuild.EML.V10.Core
 Auto-generated from theorem catalog database.

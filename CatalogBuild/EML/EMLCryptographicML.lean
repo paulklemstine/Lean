@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: EML
-Declarations: 34
+Declarations: 33
 -/
 
 import Mathlib
@@ -15,11 +15,6 @@ def emlLipschitz (a b : ℝ) : ℝ := |a| * |b|
 
 /-- EML robustness radius: ε / L. -/
 def certifiedRadius (eps L : ℝ) : ℝ := eps / L
-
-
-/-- Certified radius is positive when both positive. -/
-theorem certified_radius_pos (eps L : ℝ) (he : 0 < eps) (hL : 0 < L) :
-    0 < certifiedRadius eps L := div_pos he hL
 
 
 /-- Smaller Lipschitz constant → larger certified radius. -/

@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Computation
-Declarations: 21
+Declarations: 20
 -/
 
 import Mathlib
@@ -74,14 +74,6 @@ theorem shannonInfo_max_uniform {α : Type*} [Fintype α] [Nonempty α]
 /-- Boltzmann entropy: S = k_B ln(Ω) where Ω is the number of microstates. -/
 def boltzmannEntropy (k_B : ℝ) (numMicrostates : ℕ) : ℝ :=
   k_B * Real.log numMicrostates
-
-
-
-
-
-/-- Gibbs entropy: S = -k_B ∑ pᵢ ln(pᵢ) -/
-def gibbsEntropy {α : Type*} [Fintype α] (k_B : ℝ) (p : α → ℝ) : ℝ :=
-  -k_B * ∑ x : α, if p x > 0 then p x * Real.log (p x) else 0
 
 
 

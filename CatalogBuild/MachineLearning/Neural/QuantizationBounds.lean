@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: MachineLearning/Neural
-Declarations: 10
+Declarations: 9
 -/
 
 import Mathlib
@@ -77,14 +77,6 @@ theorem adaptiveStepSize_pos (δ_base : ℝ) (hδ : 0 < δ_base)
     (entropy : ℝ) (hH : 0 ≤ entropy) :
     0 < adaptiveStepSize δ_base entropy := by
   unfold adaptiveStepSize; positivity
-
-
-
-/-- [Section: ## Section 3: KV-Cache Quantization] -/
-theorem inner_sq_le_norm_sq_mul (d : ℕ) (q k : Fin d → ℝ) :
-    (∑ j : Fin d, q j * k j) ^ 2 ≤
-    (∑ j : Fin d, q j ^ 2) * (∑ j : Fin d, k j ^ 2) := by
-  exact?
 
 
 

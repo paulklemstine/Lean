@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Speculative/ArithmeticUniverse
-Declarations: 5
+Declarations: 4
 -/
 
 import Mathlib
@@ -10,11 +10,6 @@ import Mathlib
 /-- Fibonacci numbers are monotone: m ≤ n → F(m) ≤ F(n). -/
 theorem fib_mono' {m n : ℕ} (hmn : m ≤ n) : Nat.fib m ≤ Nat.fib n :=
   Nat.fib_mono hmn
-
-
-/-- The Fibonacci recurrence: F(n+2) = F(n) + F(n+1). -/
-theorem fib_recurrence (n : ℕ) : Nat.fib (n + 2) = Nat.fib n + Nat.fib (n + 1) :=
-  Nat.fib_add_two
 
 
 /-- **Golden Ratio Identity**: ((1+√5)/2)² = (1+√5)/2 + 1.

@@ -2,14 +2,10 @@
 
 Auto-generated from theorem catalog database.
 Domain: EML
-Declarations: 11
+Declarations: 10
 -/
 
 import Mathlib
-
-/-- The Lorentz quadratic form Q(a,b,c) = a² + b² - c². -/
-def lorentzForm (a b c : ℤ) : ℤ := a ^ 2 + b ^ 2 - c ^ 2
-
 
 /-- [Section: # CatalogBuild.EML.PrimitivityPreservation
 Auto-generated from theorem catalog database.

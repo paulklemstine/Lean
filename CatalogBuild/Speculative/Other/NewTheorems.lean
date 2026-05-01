@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Speculative/Other
-Declarations: 46
+Declarations: 45
 -/
 
 import Mathlib
@@ -93,9 +93,6 @@ theorem tropical_min_idem (a : ℝ) : min a a = a := min_self a
 theorem tropical_max_distrib_min (a b c : ℝ) :
     max a (min b c) = min (max a b) (max a c) :=
   max_min_distrib_left a b c
-
-
-def reluFn (x : ℝ) : ℝ := max 0 x
 
 
 theorem reluFn_idem : ∀ x, reluFn (reluFn x) = reluFn x := by

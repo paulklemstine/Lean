@@ -2,23 +2,12 @@
 
 Auto-generated from theorem catalog database.
 Domain: Computation/Oracles
-Declarations: 16
+Declarations: 15
 -/
 
 import Mathlib
 
 noncomputable section
-
-/-- [Section: # CatalogBuild.Computation.Oracles.OracleNeuralNet
-Auto-generated from theorem catalog database.
-Domain: Computation/Oracles
-Declarations: 16] -/
-theorem relu_of_nonneg (x : ℝ) (hx : 0 ≤ x) : relu x = x := by
-  exact max_eq_left hx
-
-
-
-
 
 /-- [Section: # CatalogBuild.Computation.Oracles.OracleNeuralNet
 Auto-generated from theorem catalog database.

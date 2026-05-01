@@ -2,273 +2,161 @@
 
 Auto-generated from theorem catalog database.
 Domain: Logic
-Declarations: 34
+Declarations: 16
 -/
 
 import Mathlib
 
 noncomputable section
 
-/-- [Section: # CatalogBuild.Logic.Foundations
+/-- A temporal flow is a monoid action of T on S: a map Φ: T → (S → S) satisfying
+Φ(0) = id and Φ(s + t) = Φ(s) ∘ Φ(t).
+This captures the algebraic essence of time evolution. -/
+structure TemporalFlow (T : Type*) (S : Type*) [AddMonoid T] where
+  /-- The flow map: each time duration t gives an endomorphism of S -/
+  flow : T → S → S
+  /-- The present does nothing: Φ(0) = id -/
+  flow_zero : ∀ s : S, flow 0 s = s
+  /-- Time composition: Φ(a + b) = Φ(a) ∘ Φ(b) -/
+  flow_add : ∀ (a b : T) (s : S), flow (a + b) s = flow a (flow b s)
+
+
+/-- An entropy functional on a temporal flow is a real-valued function
+that never decreases along the flow. This is the algebraic second law. -/
+structure EntropyFunctional {T S : Type*} [AddMonoid T] (Φ : TemporalFlow T S) where
+  /-- The entropy function η: S → ℝ -/
+  entropy : S → ℝ
+  /-- Second law: entropy never decreases along the flow -/
+  monotone : ∀ (t : T) (s : S), entropy s ≤ entropy (Φ.flow t s)
+
+
+/-- [Section: # CatalogBuild.Physics.AlgebraicPhysics.Foundations
 Auto-generated from theorem catalog database.
-Domain: Logic
-Declarations: 34] -/
-theorem hammingWeight_le {n : ℕ} (x : BoolFn n) : hammingWeight x ≤ n := by
-  exact le_trans ( Finset.card_filter_le _ _ ) ( by norm_num )
+Domain: Physics/AlgebraicPhysics
+Declarations: 16] -/
+theorem arrow_of_time
+    {S : Type*}
+    (flow_t : S → S)        -- Φ(t): forward evolution
+    (backward : S → S)      -- Hypothetical Φ(-t): backward evolution
+    (entropy : S → ℝ)       -- η: entropy functional
+    (s : S)                  -- a non-equilibrium state
+    (h_strict : entropy s < entropy (flow_t s))
+    (h_inverse : backward (flow_t s) = s)
+    (h_backward_monotone : entropy (flow_t s) ≤ entropy (backward (flow_t s))) :
+    False := by
+  rw [h_inverse] at h_backward_monotone; linarith
 
 
-/-- [Section: # CatalogBuild.Logic.Foundations
+/-- Negation in an ordered additive commutative group reverses the order. -/
+theorem temporal_duality_order_reversal
+    {G : Type*} [AddCommGroup G] [PartialOrder G] [IsOrderedAddMonoid G]
+    (a b : G) (h : a ≤ b) : -b ≤ -a :=
+  neg_le_neg_iff.mpr h
+
+
+/-- Time reversal is an involution: --t = t -/
+theorem temporal_duality_involution
+    {G : Type*} [AddGroup G] (t : G) : -(-t) = t :=
+  neg_neg t
+
+
+/-- The flow at time 0 is the identity. -/
+theorem flow_identity {T S : Type*} [AddMonoid T] (Φ : TemporalFlow T S) (s : S) :
+    Φ.flow 0 s = s :=
+  Φ.flow_zero s
+
+
+/-- The semigroup law: composing two time steps equals one combined step. -/
+theorem flow_composition {T S : Type*} [AddMonoid T]
+    (Φ : TemporalFlow T S) (a b : T) (s : S) :
+    Φ.flow a (Φ.flow b s) = Φ.flow (a + b) s :=
+  Φ.flow_add a b s ▸ rfl
+
+
+/-- Triple composition: Φ(a) ∘ Φ(b) ∘ Φ(c) = Φ(a + b + c) -/
+theorem flow_triple_composition {T S : Type*} [AddMonoid T]
+    (Φ : TemporalFlow T S) (a b c : T) (s : S) :
+    Φ.flow a (Φ.flow b (Φ.flow c s)) = Φ.flow (a + b + c) s := by
+  rw [← Φ.flow_add, ← Φ.flow_add]
+
+
+/-- A reversible temporal flow is one where each Φ(t) is bijective,
+with Φ(-t) as the inverse. -/
+structure ReversibleFlow (G : Type*) (S : Type*) [AddGroup G]
+    extends TemporalFlow G S where
+  /-- Φ(-t) is the left inverse of Φ(t) -/
+  flow_neg_left : ∀ (t : G) (s : S), flow (-t) (flow t s) = s
+  /-- Φ(-t) is the right inverse of Φ(t) -/
+  flow_neg_right : ∀ (t : G) (s : S), flow t (flow (-t) s) = s
+
+
+/-- In a reversible flow, Φ(t) is injective. -/
+theorem reversible_flow_injective {G S : Type*} [AddGroup G]
+    (Φ : ReversibleFlow G S) (t : G) :
+    Function.Injective (Φ.flow t) := by
+  intro x y hxy
+  have hx := Φ.flow_neg_left t x
+  have hy := Φ.flow_neg_left t y
+  rw [hxy] at hx
+  rw [← hx, hy]
+
+
+/-- In a reversible flow, Φ(t) is surjective. -/
+theorem reversible_flow_surjective {G S : Type*} [AddGroup G]
+    (Φ : ReversibleFlow G S) (t : G) :
+    Function.Surjective (Φ.flow t) := by
+  intro y
+  exact ⟨Φ.flow (-t) y, Φ.flow_neg_right t y⟩
+
+
+/-- An equilibrium state is a fixed point of all flow maps. -/
+def IsEquilibrium {T S : Type*} [AddMonoid T] (Φ : TemporalFlow T S) (s : S) : Prop :=
+  ∀ t : T, Φ.flow t s = s
+
+
+/-- At equilibrium, entropy is constant. -/
+theorem entropy_constant_at_equilibrium
+    {T S : Type*} [AddMonoid T]
+    (Φ : TemporalFlow T S) (η : EntropyFunctional Φ) (s : S)
+    (h_eq : IsEquilibrium Φ s) (t : T) :
+    η.entropy (Φ.flow t s) = η.entropy s := by
+  rw [h_eq t]
+
+
+/-- Entropy at a later time is at least as large as at an earlier time. -/
+theorem entropy_monotone_trajectory
+    {T S : Type*} [AddMonoid T]
+    (Φ : TemporalFlow T S) (η : EntropyFunctional Φ) (a b : T) (s : S) :
+    η.entropy (Φ.flow a s) ≤ η.entropy (Φ.flow (b + a) s) := by
+  rw [Φ.flow_add]
+  exact η.monotone _ _
+
+
+/-- [Section: # CatalogBuild.Physics.AlgebraicPhysics.Foundations
 Auto-generated from theorem catalog database.
-Domain: Logic
-Declarations: 34] -/
-theorem hammingDist_triangle {n : ℕ} (x y z : BoolFn n) :
-    hammingDist x z ≤ hammingDist x y + hammingDist y z := by
-      -- If x_i ≠ z_i, then either x_i ≠ y_i or y_i ≠ z_i. So the filter set for x,z is contained in the union of filter sets for x,y and y,z. Then use card_union_le.
-      have h_filter : Finset.univ.filter (fun i => x i ≠ z i) ⊆ Finset.univ.filter (fun i => x i ≠ y i) ∪ Finset.univ.filter (fun i => y i ≠ z i) := by
-        grind;
-      exact le_trans ( Finset.card_le_card h_filter ) ( Finset.card_union_le _ _ )
-
-
-/-- [Section: # CatalogBuild.Logic.Foundations
-Auto-generated from theorem catalog database.
-Domain: Logic
-Declarations: 34] -/
-theorem hammingDist_eq_zero_iff {n : ℕ} (x y : BoolFn n) :
-    hammingDist x y = 0 ↔ x = y := by
-      simp +decide [ hammingDist, funext_iff ]
-
-
-theorem empty_certificate_of_const {n : ℕ} (f : BoolFn n → Bool) (x : BoolFn n)
-    (hconst : ∀ y, f y = f x) : IsCertificate f x ∅ := by
-      exact fun y hy => hconst y
-
-
-theorem full_certificate {n : ℕ} (f : BoolFn n → Bool) (x : BoolFn n) :
-    IsCertificate f x Finset.univ := by
-      exact fun y _ => by simp +decide [ show y = x from funext fun i => by simpa using ‹∀ i ∈ Finset.univ, y i = x i› i ( Finset.mem_univ i ) ] ;
-
-
-/-- Pointwise ordering on Boolean strings -/
-def boolLE {n : ℕ} (x y : BoolFn n) : Prop :=
-  ∀ i : Fin n, x i = true → y i = true
-
-
-theorem boolLE_refl {n : ℕ} (x : BoolFn n) : boolLE x x := by
-  exact fun i hi => hi
-
-
-theorem boolLE_trans {n : ℕ} (x y z : BoolFn n) :
-    boolLE x y → boolLE y z → boolLE x z := by
-      exact fun hxy hyz i hi => hyz i ( hxy i hi )
-
-
-theorem boolLE_antisymm {n : ℕ} (x y : BoolFn n) :
-    boolLE x y → boolLE y x → x = y := by
-      intros hxy hyx
-      funext i
-      by_cases hxi : x i = true;
-      · have := hxy i; have := hyx i; aesop;
-      · cases h : x i <;> cases h' : y i <;> simp_all +decide [ boolLE ]
-
-
-theorem influence_const {n : ℕ} (b : Bool) (i : Fin n) :
-    influence (fun _ : BoolFn n => b) i = 0 := by
-      unfold influence; aesop;
-
-
-/-- A hypothesis space is a finite type equipped with a partial order
-representing "explanatory power" — H₁ ≤ H₂ means H₂ explains
-everything H₁ does, and possibly more. -/
-structure HypothesisSpace where
-  /-- The type of hypotheses -/
-  Hyp : Type
-  /-- Fintype instance -/
-  fin : Fintype Hyp
-  /-- DecidableEq instance -/
-  deceq : DecidableEq Hyp
-  /-- Nonempty — there is at least one hypothesis -/
-  nonempty : Nonempty Hyp
-
-
-/-- A belief state assigns a non-negative weight to each hypothesis.
-We represent it as a function from hypotheses to non-negative reals. -/
-def BeliefState (n : ℕ) := Fin n → ℝ
-
-
-/-- A belief state is valid if all weights are non-negative and sum to 1. -/
-def BeliefState.IsValid {n : ℕ} (b : BeliefState n) : Prop :=
-  (∀ i, 0 ≤ b i) ∧ ∑ i : Fin n, b i = 1
-
-
-/-- An experiment outcome is a likelihood function: for each hypothesis,
-what is the probability of seeing this outcome? -/
-def Likelihood (n : ℕ) := Fin n → ℝ
-
-
-/-- A likelihood is valid if all values are non-negative and at least one is positive. -/
-def Likelihood.IsValid {n : ℕ} (l : Likelihood n) : Prop :=
-  (∀ i, 0 ≤ l i) ∧ ∃ i, 0 < l i
-
-
-/-- The evidence (marginal likelihood) for a belief-likelihood pair. -/
-def evidence {n : ℕ} (b : BeliefState n) (l : Likelihood n) : ℝ :=
-  ∑ i : Fin n, b i * l i
-
-
-/-- Bayesian update: posterior ∝ prior × likelihood.
-When evidence is zero, we return the prior unchanged. -/
-def bayesianUpdate {n : ℕ} (b : BeliefState n) (l : Likelihood n) : BeliefState n :=
-  let e := evidence b l
-  if e = 0 then b
-  else fun i => (b i * l i) / e
-
-
-theorem posterior_nonneg {n : ℕ} (b : BeliefState n) (l : Likelihood n)
-    (hb : ∀ i, 0 ≤ b i) (hl : ∀ i, 0 ≤ l i) :
-    ∀ i, 0 ≤ bayesianUpdate b l i := by
-  exact fun i => by unfold bayesianUpdate; split_ifs <;> [ exact hb _; exact div_nonneg ( mul_nonneg ( hb _ ) ( hl _ ) ) ( Finset.sum_nonneg fun _ _ => mul_nonneg ( hb _ ) ( hl _ ) ) ] ;
-
-
-theorem posterior_normalized {n : ℕ} (b : BeliefState n) (l : Likelihood n)
-    (hb : BeliefState.IsValid b) (hl : Likelihood.IsValid l)
-    (he : 0 < evidence b l) :
-    ∑ i : Fin n, bayesianUpdate b l i = 1 := by
-  unfold bayesianUpdate;
-  simp +decide [ ← Finset.sum_div, he.ne' ];
-  exact div_self he.ne'
-
-
-theorem bayesian_update_valid {n : ℕ} (b : BeliefState n) (l : Likelihood n)
-    (hb : BeliefState.IsValid b) (hl : Likelihood.IsValid l)
-    (he : 0 < evidence b l) :
-    BeliefState.IsValid (bayesianUpdate b l) := by
-  exact ⟨ fun i => posterior_nonneg b l hb.1 hl.1 i, posterior_normalized b l hb hl he ⟩
-
-
-/-- The scientific iteration: apply Bayesian update repeatedly. -/
-def scientificIteration {n : ℕ} (b₀ : BeliefState n)
-    (experiments : ℕ → Likelihood n) : ℕ → BeliefState n
-  | 0 => b₀
-  | k + 1 => bayesianUpdate (scientificIteration b₀ experiments k) (experiments k)
-
-
-/-- A hypothesis h* is the "true" hypothesis if every experiment's likelihood
-is maximized at h*. -/
-def IsTrueHypothesis {n : ℕ} (hstar : Fin n) (experiments : ℕ → Likelihood n) : Prop :=
-  ∀ k i, experiments k i ≤ experiments k hstar
-
-
-theorem true_hypothesis_weight_increases {n : ℕ} (b : BeliefState n)
-    (l : Likelihood n) (hstar : Fin n)
-    (hb : BeliefState.IsValid b) (hl : Likelihood.IsValid l)
-    (he : 0 < evidence b l)
-    (hpos : 0 < b hstar)
-    (hdom : ∀ i, i ≠ hstar → l i < l hstar) :
-    b hstar ≤ bayesianUpdate b l hstar := by
-  -- Since $e = \sum_{i} b_i l_i$ and $l_i < l_{hstar}$ for all $i \neq hstar$, we have $e \leq l_{hstar} \sum_{i} b_i = l_{hstar}$.
-  have he_le : evidence b l ≤ l hstar := by
-    convert Finset.sum_le_sum fun i _ => mul_le_mul_of_nonneg_left ( show l i ≤ l hstar from ?_ ) ( hb.1 i ) using 1;
-    · rw [ ← Finset.sum_mul _ _ _, hb.2, one_mul ];
-    · exact if hi : i = hstar then hi.symm ▸ le_rfl else le_of_lt ( hdom i hi );
-  unfold bayesianUpdate;
-  split_ifs <;> simp_all +decide [ ne_of_gt ];
-  rw [ le_div_iff₀ he ] ; nlinarith [ hb.1 hstar, hl.1 hstar ]
-
-
-/-- A belief state is a fixed point of Bayesian updating with likelihood l
-if updating doesn't change it. -/
-def IsFixedPoint {n : ℕ} (b : BeliefState n) (l : Likelihood n) : Prop :=
-  bayesianUpdate b l = b
-
-
-/-- A pure belief state concentrates all mass on one hypothesis. -/
-def pureBelief {n : ℕ} (i : Fin n) : BeliefState n :=
-  fun j => if j = i then 1 else 0
-
-
-theorem pure_belief_is_fixed_point {n : ℕ} (i : Fin n)
-    (l : Likelihood n) (hl : 0 < l i) :
-    IsFixedPoint (pureBelief i) l := by
-  refine' funext fun j => _;
-  unfold bayesianUpdate pureBelief;
-  unfold evidence; aesop;
-
-
-theorem fixed_point_is_pure {n : ℕ} (hn : 1 < n) (b : BeliefState n)
-    (hb : BeliefState.IsValid b)
-    (hfixed : ∀ l : Likelihood n, Likelihood.IsValid l →
-      0 < evidence b l → bayesianUpdate b l = b) :
-    ∃ i, b = pureBelief i := by
-  -- Assume there exist $i \ne j$ such that $b_i > 0$ and $b_j > 0$.
-  by_contra h
-  obtain ⟨i, j, hij, hi, hj⟩ : ∃ i j : Fin n, i ≠ j ∧ 0 < b i ∧ 0 < b j := by
-    obtain ⟨i, hi⟩ : ∃ i : Fin n, 0 < b i := by
-      exact not_forall_not.mp fun contra => by have := hb.2; exact absurd this ( by rw [ Finset.sum_eq_zero fun i _ => le_antisymm ( le_of_not_gt fun hi => contra i hi ) ( hb.1 i ) ] ; norm_num ) ;
-    obtain ⟨j, hj⟩ : ∃ j : Fin n, j ≠ i ∧ 0 < b j := by
-      by_cases h_eq : ∀ j : Fin n, j ≠ i → b j = 0;
-      · refine' False.elim ( h ⟨ i, funext fun j => _ ⟩ ) ; by_cases hj : j = i <;> simp_all +decide [ pureBelief ] ;
-        have := hb.2; rw [ Finset.sum_eq_single i ] at this <;> aesop;
-      · exact by push_neg at h_eq; obtain ⟨ j, hj₁, hj₂ ⟩ := h_eq; exact ⟨ j, hj₁, lt_of_le_of_ne ( hb.1 j ) ( Ne.symm hj₂ ) ⟩ ;
-    use i, j
-    aesop;
-  -- Construct a likelihood $l$ that distinguishes between $i$ and $j$: $l(i) = 1$ and $l(j) = 0$.
-  set l : Likelihood n := fun k => if k = i then 1 else if k = j then 0 else 0;
-  specialize hfixed l ; simp_all +decide [ bayesianUpdate ];
-  simp +zetaDelta at *;
-  unfold evidence at hfixed; simp_all +decide [ Finset.sum_ite, Finset.filter_eq', Finset.filter_ne' ] ;
-  specialize hfixed ⟨ fun k => by positivity, i, by aesop ⟩ hi.ne' ; have := congr_fun hfixed j ; aesop;
-
-
-/-- An oracle is a function answering yes/no queries. -/
-def SciOracle := ℕ → Bool
-
-
-/-- An experiment maps hypotheses to predicted outcomes. -/
-structure Experiment (n : ℕ) where
-  /-- The outcome observed -/
-  outcome : Bool
-  /-- Each hypothesis predicts whether this outcome should occur -/
-  prediction : Fin n → Bool
-
-
-/-- Convert an experiment to an oracle: the oracle answers whether
-hypothesis i predicts the observed outcome correctly. -/
-def Experiment.toOracle {n : ℕ} (e : Experiment n) : Fin n → Bool :=
-  fun i => e.prediction i == e.outcome
-
-
-theorem experiment_oracle_surjective {n : ℕ} (f : Fin n → Bool) :
-    ∃ e : Experiment n, e.toOracle = f := by
-  constructor;
-  swap;
-  constructor;
-  exact Bool.true;
-  exact fun i => if f i then Bool.true else Bool.false;
-  ext i; unfold Experiment.toOracle; aesop;
-
-
-/-- A scientific theory is a triple: hypothesis space, belief state, and
-a collection of validated experiments. -/
-structure ScientificTheory (n : ℕ) where
-  belief : BeliefState n
-  experiments : List (Likelihood n)
-  valid : BeliefState.IsValid belief
-
-
-/-- Theory refinement: incorporate a new experiment. -/
-def ScientificTheory.refine {n : ℕ} (T : ScientificTheory n)
-    (l : Likelihood n) (hl : Likelihood.IsValid l)
-    (he : 0 < evidence T.belief l) : ScientificTheory n where
-  belief := bayesianUpdate T.belief l
-  experiments := l :: T.experiments
-  valid := bayesian_update_valid T.belief l T.valid hl he
-
-
-theorem refinement_increases_experiments {n : ℕ} (T : ScientificTheory n)
-    (l : Likelihood n) (hl : Likelihood.IsValid l)
-    (he : 0 < evidence T.belief l) :
-    T.experiments.length < (T.refine l hl he).experiments.length := by
-  exact Nat.lt_succ_self _
+Domain: Physics/AlgebraicPhysics
+Declarations: 16] -/
+theorem group_monoid_dichotomy
+    {G S : Type*} [AddGroup G]
+    (Φ : ReversibleFlow G S)
+    (η : EntropyFunctional Φ.toTemporalFlow)
+    (s : S) (t : G)
+    (h_strict : η.entropy s < η.entropy (Φ.flow t s)) :
+    False := by
+  have h := η.monotone (-t) (Φ.flow t s)
+  rw [Φ.flow_neg_left] at h
+  linarith
+
+
+/-- A linear temporal flow on ℝ → ℝ given by multiplication by e^{at}. -/
+noncomputable def linearFlow (a : ℝ) : TemporalFlow ℝ ℝ where
+  flow := fun t x => Real.exp (a * t) * x
+  flow_zero := by
+    intro s
+    simp [mul_comm]
+  flow_add := by
+    intro t₁ t₂ s
+    simp [mul_add, Real.exp_add, mul_comm, mul_left_comm]
 
 
 end

@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: EML/AIResearch
-Declarations: 18
+Declarations: 16
 -/
 
 import Mathlib
@@ -14,32 +14,11 @@ def IsLipschitz (f : ℝ → ℝ) (L : ℝ) : Prop :=
   0 ≤ L ∧ ∀ x y, |f x - f y| ≤ L * |x - y|
 
 
-/-- Identity is 1-Lipschitz -/
-theorem identity_lipschitz : IsLipschitz id 1 := by
-  constructor
-  · linarith
-  · intro x y; simp
-
-
 /-- Constant functions are 0-Lipschitz -/
 theorem constant_lipschitz (c : ℝ) : IsLipschitz (fun _ => c) 0 := by
   constructor
   · linarith
   · intro x y; simp
-
-
-/-- Composition of Lipschitz functions -/
-theorem lipschitz_comp (f g : ℝ → ℝ) (Lf Lg : ℝ)
-    (hf : IsLipschitz f Lf) (hg : IsLipschitz g Lg) :
-    IsLipschitz (f ∘ g) (Lf * Lg) := by
-  constructor
-  · exact mul_nonneg hf.1 hg.1
-  · intro x y
-    simp only [Function.comp]
-    calc |f (g x) - f (g y)| ≤ Lf * |g x - g y| := hf.2 _ _
-      _ ≤ Lf * (Lg * |x - y|) := by
-          exact mul_le_mul_of_nonneg_left (hg.2 _ _) hf.1
-      _ = Lf * Lg * |x - y| := by ring
 
 
 /-- Certified radius is nonneg for positive Lipschitz constant and margin -/

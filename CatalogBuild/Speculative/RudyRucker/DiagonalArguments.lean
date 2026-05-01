@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Speculative/RudyRucker
-Declarations: 4
+Declarations: 3
 -/
 
 import Mathlib
@@ -37,15 +37,4 @@ theorem konig_cardinal {ι : Type*} (κ μ : ι → Cardinal)
     (h : ∀ i, κ i < μ i) :
     Cardinal.sum κ < Cardinal.prod μ := by
   convert Cardinal.sum_lt_prod _ _ _; aesop
-
-
-/-- Every order-preserving function on a complete lattice has a fixed point.
-(Knaster-Tarski theorem) -/
-theorem knaster_tarski {α : Type*} [CompleteLattice α] (f : α → α)
-    (hf : Monotone f) : ∃ x, f x = x := by
-  set x := sSup {a : α | f a ≥ a}
-  have hfx_ge_x : f x ≥ x :=
-    sSup_le fun a ha => le_trans ha (hf (le_sSup ha))
-  exact ⟨x, le_antisymm (le_sSup (by aesop)) hfx_ge_x⟩
-
 

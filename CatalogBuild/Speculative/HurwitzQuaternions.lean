@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Speculative
-Declarations: 39
+Declarations: 36
 -/
 
 import Mathlib
@@ -119,33 +119,6 @@ theorem channels_k16 : Nat.choose 16 2 + 16 ^ 2 = 376 := by decide
 theorem birthday_cross_collisions (m k : ℕ) :
     Nat.choose m 2 * k ^ 2 = m * (m - 1) / 2 * k ^ 2 := by
   rw [Nat.choose_two_right]
-
-
-/-- Berggren matrix A preserves Pythagorean property. -/
-theorem berggren_A (a b c p : ℤ) (hp : p ∣ (a ^ 2 + b ^ 2 - c ^ 2)) :
-    p ∣ ((a - 2 * b + 2 * c) ^ 2 + (2 * a - b + 2 * c) ^ 2 -
-         (2 * a - 2 * b + 3 * c) ^ 2) := by
-  have : (a - 2 * b + 2 * c) ^ 2 + (2 * a - b + 2 * c) ^ 2 -
-         (2 * a - 2 * b + 3 * c) ^ 2 = a ^ 2 + b ^ 2 - c ^ 2 := by ring
-  rw [this]; exact hp
-
-
-/-- Berggren matrix B preserves Pythagorean property. -/
-theorem berggren_B (a b c p : ℤ) (hp : p ∣ (a ^ 2 + b ^ 2 - c ^ 2)) :
-    p ∣ ((a + 2 * b + 2 * c) ^ 2 + (2 * a + b + 2 * c) ^ 2 -
-         (2 * a + 2 * b + 3 * c) ^ 2) := by
-  have : (a + 2 * b + 2 * c) ^ 2 + (2 * a + b + 2 * c) ^ 2 -
-         (2 * a + 2 * b + 3 * c) ^ 2 = a ^ 2 + b ^ 2 - c ^ 2 := by ring
-  rw [this]; exact hp
-
-
-/-- Berggren matrix C preserves Pythagorean property. -/
-theorem berggren_C (a b c p : ℤ) (hp : p ∣ (a ^ 2 + b ^ 2 - c ^ 2)) :
-    p ∣ ((-a + 2 * b + 2 * c) ^ 2 + (-2 * a + b + 2 * c) ^ 2 -
-         (-2 * a + 2 * b + 3 * c) ^ 2) := by
-  have : (-a + 2 * b + 2 * c) ^ 2 + (-2 * a + b + 2 * c) ^ 2 -
-         (-2 * a + 2 * b + 3 * c) ^ 2 = a ^ 2 + b ^ 2 - c ^ 2 := by ring
-  rw [this]; exact hp
 
 
 /-- Tree size at depth d. -/

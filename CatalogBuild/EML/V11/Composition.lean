@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: EML/V11
-Declarations: 25
+Declarations: 24
 -/
 
 import Mathlib
@@ -13,11 +13,6 @@ noncomputable section
 theorem eml_log_first (x y : ℝ) (hx : 0 < x) :
     eml (Real.log x) y = x - Real.log y := by
   simp [eml, Real.exp_log hx]
-
-
-/-- eml(0, exp(y)) = 1 - y. -/
-theorem eml_zero_exp (y : ℝ) : eml 0 (Real.exp y) = 1 - y := by
-  simp [eml, Real.log_exp]
 
 
 /-- eml(x, 1) = exp(x). -/

@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: EML
-Declarations: 12
+Declarations: 11
 -/
 
 import Mathlib
@@ -62,13 +62,6 @@ Auto-generated from theorem catalog database.
 Domain: EML
 Declarations: 12] -/
 theorem exp_strict_mono' : StrictMono Real.exp := Real.exp_strictMono
-
-
-/-- [Section: # CatalogBuild.EML.FixedPointTheory
-Auto-generated from theorem catalog database.
-Domain: EML
-Declarations: 12] -/
-theorem exp_convex' : ConvexOn ℝ Set.univ Real.exp := convexOn_exp
 
 
 /-- The EML iteration z_{n+1} = exp(z_n) - log(y). -/

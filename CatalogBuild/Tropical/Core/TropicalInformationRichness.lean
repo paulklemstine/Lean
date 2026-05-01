@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Tropical/Core
-Declarations: 50
+Declarations: 49
 -/
 
 import Mathlib
@@ -184,12 +184,6 @@ theorem tetration_dominates_exp (n : ℕ) : tetration 2 n ≥ n := by
     simp [tetration]
     calc 2 ^ tetration 2 k ≥ 2 ^ k := Nat.pow_le_pow_right (by omega) ih
       _ ≥ k + 1 := exponentiation_exponential_growth k
-
-
-/-- A depth-d ReLU network with width w computes a tropical polynomial
-of degree at most w^d -/
-theorem network_tropical_degree (w d : ℕ) (hw : 1 ≤ w) :
-    w ^ d ≥ 1 := Nat.one_le_pow d w hw
 
 
 /-- Deeper networks can express higher-degree tropical polynomials:

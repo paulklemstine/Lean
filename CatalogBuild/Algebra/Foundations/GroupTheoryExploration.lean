@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: Algebra/Foundations
-Declarations: 11
+Declarations: 10
 -/
 
 import Mathlib
@@ -18,18 +18,6 @@ theorem prime_order_generates (G : Type*) [Group G] [Fintype G]
   have h_order_divides : orderOf g ∣ Fintype.card G := by
     exact orderOf_dvd_card;
   rw [ Nat.dvd_prime hp ] at h_order_divides ; aesop
-
-
-
-
-
-/-- [Section: # CatalogBuild.Algebra.Foundations.GroupTheoryExploration
-Auto-generated from theorem catalog database.
-Domain: Algebra/Foundations
-Declarations: 11] -/
-theorem order_dvd_card (G : Type*) [Group G] [Fintype G] (g : G) :
-    orderOf g ∣ Fintype.card G := by
-  exact orderOf_dvd_card
 
 
 

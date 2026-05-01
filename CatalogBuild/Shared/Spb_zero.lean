@@ -2,19 +2,12 @@
 
 Auto-generated from theorem catalog database.
 Domain: Shared
-Declarations: 5
+Declarations: 3
 -/
 
 import Mathlib
 
 noncomputable section
-
-/-- [Section: # CatalogBuild.Shared.Spb_zero
-Auto-generated from theorem catalog database.
-Domain: EML
-Declarations: 5] -/
-theorem spb_zero (x : ℝ) : spb x 0 = x := by simp [spb]
-
 
 /-- [Section: # CatalogBuild.Shared.Spb_zero
 Auto-generated from theorem catalog database.
@@ -42,9 +35,6 @@ theorem spb_norm_ratio (x y : ℝ) (h : 1 - x * y ≠ 0) :
   field_simp
   have := spb_norm_identity x y h
   linarith
-
-
-theorem spb_neg (x : ℝ) : spb x (-x) = 0 := by simp [spb]
 
 
 end

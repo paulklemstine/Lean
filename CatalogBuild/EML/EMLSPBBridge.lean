@@ -2,7 +2,7 @@
 
 Auto-generated from theorem catalog database.
 Domain: EML
-Declarations: 12
+Declarations: 11
 -/
 
 import Mathlib
@@ -42,10 +42,6 @@ theorem spb_identity_bridge (x : ℝ) : spb_bridge x 0 = x := by simp [spb_bridg
 
 
 theorem spb_inverse_bridge (x : ℝ) : spb_bridge x (-x) = 0 := by simp [spb_bridge]
-
-
-theorem spb_comm_bridge (x y : ℝ) : spb_bridge x y = spb_bridge y x := by
-  simp [spb_bridge, add_comm, mul_comm]
 
 
 /-- exp is a homomorphism from (ℝ,+) to (ℝ₊,×). -/
