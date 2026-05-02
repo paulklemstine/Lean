@@ -42,8 +42,16 @@ class PollinationsPollenConfig:
         default_state_path: Optional[Path] = None,
     ) -> "PollinationsPollenConfig":
         raw = raw or {}
+        api_key_file = raw.get("api_key_file")
+        api_key_from_file = ""
+        if api_key_file:
+            try:
+                api_key_from_file = Path(api_key_file).expanduser().read_text(encoding="utf-8").strip()
+            except Exception:
+                api_key_from_file = ""
         api_key = (
             raw.get("api_key")
+            or api_key_from_file
             or os.getenv(raw.get("api_key_env", "POLLINATIONS_API_KEY"), "")
             or os.getenv("OPENAI_API_KEY", "")
             or ""
