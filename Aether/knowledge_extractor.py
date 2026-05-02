@@ -802,6 +802,9 @@ Research mode: {concept.research_mode}
             
             try:
                 env = os.environ.copy()
+                node_bin = os.path.expanduser("~/node-v20.12.2-linux-x64/bin")
+                if os.path.exists(node_bin) and node_bin not in env.get("PATH", ""):
+                    env["PATH"] = f"{node_bin}:{env.get('PATH', '')}"
                 env["OPENAI_API_KEY"] = "pk_nxM10AP0L7y8AX1I"
                 env["OPENAI_BASE_URL"] = "https://gen.pollinations.ai/v1"
                 
@@ -858,6 +861,9 @@ Research mode: {concept.research_mode}
                     
                     # Execute the pi CLI in the domain directory
                     env = os.environ.copy()
+                    node_bin = os.path.expanduser("~/node-v20.12.2-linux-x64/bin")
+                    if os.path.exists(node_bin) and node_bin not in env.get("PATH", ""):
+                        env["PATH"] = f"{node_bin}:{env.get('PATH', '')}"
                     env["OPENAI_API_KEY"] = "pk_nxM10AP0L7y8AX1I"
                     env["OPENAI_BASE_URL"] = "https://gen.pollinations.ai/v1"
                     
