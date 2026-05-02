@@ -6,6 +6,7 @@ from __future__ import annotations
 import json
 import os
 import time
+import uuid
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, Optional
@@ -28,6 +29,7 @@ class PollinationsPollenConfig:
     forecast_alpha: float = 0.25
     chat_input_chars_per_pollen: float = 250000.0
     pi_execution_input_chars_per_pollen: float = 50000.0
+    output_chars_per_pollen: float = 125000.0
     base_url: str = "https://gen.pollinations.ai"
     api_key: str = ""
     state_path: Optional[Path] = None
@@ -61,10 +63,22 @@ class PollinationsPollenConfig:
             forecast_alpha=float(raw.get("forecast_alpha", 0.25)),
             chat_input_chars_per_pollen=float(raw.get("chat_input_chars_per_pollen", 250000.0)),
             pi_execution_input_chars_per_pollen=float(raw.get("pi_execution_input_chars_per_pollen", 50000.0)),
+            output_chars_per_pollen=float(raw.get("output_chars_per_pollen", 125000.0)),
             base_url=raw.get("base_url", "https://gen.pollinations.ai").rstrip("/"),
             api_key=api_key,
             state_path=Path(state_path).expanduser() if state_path else default_state_path,
         )
+
+
+@dataclass
+class PollenReservation:
+    """A predicted pollen hold for one outbound Pollinations request."""
+
+    reservation_id: str
+    kind: str
+    input_chars: int
+    predicted_cost: float
+    balance_before: Optional[float] = None
 
 
 class PollinationsPollenGate:
@@ -88,6 +102,8 @@ class PollinationsPollenGate:
         self._balance_cache: Optional[Dict[str, Any]] = None
         self._balance_cache_at = 0.0
         self._remote_balance_unavailable = False
+        self._account_balance_unavailable = False
+        self._key_balance_unavailable = False
         self._forced_reset_at: Optional[float] = None
 
         if self.config.state_path:
@@ -109,21 +125,26 @@ class PollinationsPollenGate:
         *,
         kind: str = "chat",
         input_chars: int = 0,
-    ) -> float:
+    ) -> PollenReservation:
         """Wait until pollen is available, then reserve predicted hourly budget."""
         if not self.config.enabled:
-            return 0.0
+            return PollenReservation("", kind, input_chars, 0.0)
 
         cost = self.forecast_cost(kind=kind, input_chars=input_chars, fallback_cost=cost)
         while True:
-            wait_seconds, reason = self._seconds_until_available(cost)
+            wait_seconds, reason, balance_before = self._seconds_until_available(cost)
             if wait_seconds <= 0:
-                self._reserve_local(cost)
+                reservation = self._reserve_local(
+                    cost,
+                    kind=kind,
+                    input_chars=input_chars,
+                    balance_before=balance_before,
+                )
                 print(
                     f"[Pollen] Reserved {cost:.4f} pollen for {label} "
-                    f"(kind={kind}, input_chars={input_chars})."
+                    f"(kind={kind}, input_chars={input_chars}, available={self._available_label(balance_before)})."
                 )
-                return cost
+                return reservation
 
             reset_at = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.time() + wait_seconds))
             print(
@@ -131,7 +152,7 @@ class PollinationsPollenGate:
                 f"Waiting {wait_seconds:.0f}s until reset around {reset_at}."
             )
             if not self.config.defer_when_low:
-                return cost
+                return PollenReservation("", kind, input_chars, cost, balance_before)
             time.sleep(min(wait_seconds, max(1, self.config.max_sleep_seconds)))
 
     def forecast_cost(
@@ -172,21 +193,28 @@ class PollinationsPollenGate:
         *,
         kind: str = "chat",
         input_chars: int = 0,
+        reservation: Optional[PollenReservation] = None,
         predicted_cost: float = 0.0,
         actual_cost: Optional[float] = None,
         success: bool = True,
+        output_chars: int = 0,
     ) -> None:
         """Accumulate running averages used by future pollen forecasts."""
         if not self.config.enabled:
             return
 
+        if reservation is not None:
+            kind = reservation.kind
+            input_chars = reservation.input_chars
+            predicted_cost = reservation.predicted_cost
+
         observed = float(actual_cost) if actual_cost is not None else float(predicted_cost)
         if not success:
-            observed = max(observed, predicted_cost * 1.5, self._floor_cost(kind) * 2)
+            observed = max(observed, predicted_cost * 1.25, self._floor_cost(kind) * 2)
         observed = max(0.0, min(observed, self.config.hourly_allowance))
 
-        if actual_cost is not None and predicted_cost > 0:
-            self._adjust_local_reservation(predicted=float(predicted_cost), actual=observed)
+        if reservation is not None:
+            self._settle_local_reservation(reservation, actual=observed if success else 0.0)
 
         state = self._load_state()
         forecasts = state.setdefault("forecasts", {})
@@ -203,6 +231,7 @@ class PollinationsPollenGate:
         stats["last_cost"] = round(observed, 8)
         stats["last_predicted_cost"] = round(float(predicted_cost), 8)
         stats["last_input_chars"] = int(input_chars)
+        stats["last_output_chars"] = int(output_chars)
         stats["updated_at"] = time.time()
 
         if input_chars > 0:
@@ -215,6 +244,16 @@ class PollinationsPollenGate:
                 ewma(float(stats.get("avg_cost_per_char", 0.0) or 0.0), cost_per_char),
                 12,
             )
+        if output_chars > 0:
+            output_cost_per_char = observed / output_chars
+            stats["avg_output_chars"] = round(
+                ewma(float(stats.get("avg_output_chars", 0.0) or 0.0), float(output_chars)),
+                3,
+            )
+            stats["avg_cost_per_output_char"] = round(
+                ewma(float(stats.get("avg_cost_per_output_char", 0.0) or 0.0), output_cost_per_char),
+                12,
+            )
 
         self._save_state(state)
 
@@ -224,16 +263,32 @@ class PollinationsPollenGate:
         *,
         kind: str = "chat",
         input_chars: int = 0,
+        reservation: Optional[PollenReservation] = None,
         predicted_cost: float = 0.0,
+        response_json: Optional[Dict[str, Any]] = None,
     ) -> None:
         """Record request cost from response metadata when available."""
         actual_cost = self._extract_cost_from_response(response)
+        if actual_cost is None and reservation and reservation.balance_before is not None:
+            balance_after = self._get_remote_balance(force=True)
+            if balance_after is not None and reservation.balance_before >= balance_after:
+                actual_cost = reservation.balance_before - balance_after
+        if response_json is None:
+            try:
+                response_json = response.json()
+            except Exception:
+                response_json = None
+        if actual_cost is None:
+            actual_cost = self._estimate_cost_from_usage(response_json)
+        output_chars = self._extract_output_chars(response_json)
         self.record_observation(
             kind=kind,
             input_chars=input_chars,
+            reservation=reservation,
             predicted_cost=predicted_cost,
             actual_cost=actual_cost,
             success=response.status_code < 400,
+            output_chars=output_chars,
         )
 
     def mark_depleted_from_response(self, response: httpx.Response) -> None:
@@ -265,38 +320,81 @@ class PollinationsPollenGate:
                     pass
         return None
 
-    def _seconds_until_available(self, cost: float) -> tuple[float, str]:
+    def _estimate_cost_from_usage(self, data: Optional[Dict[str, Any]]) -> Optional[float]:
+        if not data:
+            return None
+        usage = data.get("usage") or {}
+        prompt_tokens = self._usage_number(usage, "prompt_tokens", "input_tokens", "input_text_tokens")
+        completion_tokens = self._usage_number(usage, "completion_tokens", "output_tokens", "output_text_tokens")
+        total_tokens = self._usage_number(usage, "total_tokens")
+        if total_tokens <= 0:
+            total_tokens = prompt_tokens + completion_tokens
+        if total_tokens <= 0:
+            return None
+
+        input_cost = (prompt_tokens * 4) / self.config.chat_input_chars_per_pollen
+        output_cost = (completion_tokens * 4) / self.config.output_chars_per_pollen
+        if input_cost + output_cost <= 0:
+            input_cost = (total_tokens * 4) / self.config.chat_input_chars_per_pollen
+        return min(self.config.hourly_allowance, max(self._floor_cost("chat"), input_cost + output_cost))
+
+    def _extract_output_chars(self, data: Optional[Dict[str, Any]]) -> int:
+        if not data:
+            return 0
+        total = 0
+        for choice in data.get("choices", []) or []:
+            message = choice.get("message") or {}
+            content = message.get("content") or ""
+            if isinstance(content, str):
+                total += len(content)
+        return total
+
+    @staticmethod
+    def _usage_number(usage: Dict[str, Any], *keys: str) -> float:
+        for key in keys:
+            value = usage.get(key)
+            if isinstance(value, (int, float)):
+                return float(value)
+        return 0.0
+
+    def _seconds_until_available(self, cost: float) -> tuple[float, str, Optional[float]]:
         now = time.time()
         if self._forced_reset_at and now < self._forced_reset_at:
-            return self._forced_reset_at - now, "Pollinations reported depleted pollen/rate limit"
+            return self._forced_reset_at - now, "Pollinations reported depleted pollen/rate limit", None
 
         self._roll_local_window(now)
-        state = self._load_state()
-        used = float(state.get("used", 0.0))
-        local_remaining = max(0.0, self.config.hourly_allowance - used)
-        if self.config.hourly_allowance > 0 and local_remaining + 1e-9 < cost:
+        remote_balance = self._get_remote_balance(force=True)
+        available = self._available_pollen(remote_balance)
+        if available + 1e-9 < cost:
             return self._next_hour_reset(now) - now, (
-                f"local hourly pollen remaining {local_remaining:.3f} < needed {cost:.3f}"
-            )
+                f"available pollen {available:.3f} < forecast {cost:.3f}"
+            ), remote_balance
 
-        remote_balance = self._get_remote_balance()
-        required_balance = max(cost, self.config.min_balance)
-        if remote_balance is not None and remote_balance + 1e-9 < required_balance:
-            return self._next_hour_reset(now) - now, (
-                f"remote pollen balance {remote_balance:.3f} < needed {required_balance:.3f}"
-            )
+        return 0.0, "", remote_balance
 
-        return 0.0, ""
-
-    def _get_remote_balance(self) -> Optional[float]:
+    def _get_remote_balance(self, *, force: bool = False) -> Optional[float]:
         if self._remote_balance_unavailable or not self.config.api_key:
             return None
 
         now = time.time()
-        if self._balance_cache and now - self._balance_cache_at < self.config.balance_cache_seconds:
+        if not force and self._balance_cache and now - self._balance_cache_at < self.config.balance_cache_seconds:
             return self._balance_cache.get("balance")
 
         client = self.client or httpx.Client(timeout=httpx.Timeout(10.0))
+        balance = self._get_account_balance(client)
+        if balance is None:
+            balance = self._get_key_budget(client)
+        if balance is not None:
+            self._balance_cache = {"balance": balance}
+            self._balance_cache_at = now
+            return balance
+
+        self._remote_balance_unavailable = self._account_balance_unavailable and self._key_balance_unavailable
+        return None
+
+    def _get_account_balance(self, client: httpx.Client) -> Optional[float]:
+        if self._account_balance_unavailable:
+            return None
         try:
             response = client.get(
                 f"{self.config.base_url}/account/balance",
@@ -304,10 +402,10 @@ class PollinationsPollenGate:
                 timeout=10.0,
             )
             if response.status_code in (401, 403, 404):
-                self._remote_balance_unavailable = True
+                self._account_balance_unavailable = True
                 print(
                     "[Pollen] Account balance endpoint unavailable for this key; "
-                    "using local hourly pollen tracking."
+                    "trying API key budget metadata."
                 )
                 return None
             if response.status_code == 402:
@@ -315,27 +413,90 @@ class PollinationsPollenGate:
                 return 0.0
             response.raise_for_status()
             data = response.json()
-            balance = float(data.get("balance"))
-            self._balance_cache = {"balance": balance}
-            self._balance_cache_at = now
-            return balance
+            return float(data.get("balance"))
         except Exception as exc:
-            self._remote_balance_unavailable = True
-            print(f"[Pollen] Could not read remote balance ({type(exc).__name__}); using local tracking.")
+            self._account_balance_unavailable = True
+            print(f"[Pollen] Could not read account balance ({type(exc).__name__}); trying key metadata.")
             return None
 
-    def _reserve_local(self, cost: float) -> None:
+    def _get_key_budget(self, client: httpx.Client) -> Optional[float]:
+        if self._key_balance_unavailable:
+            return None
+        try:
+            response = client.get(
+                f"{self.config.base_url}/account/key",
+                headers=self.auth_headers(),
+                timeout=10.0,
+            )
+            if response.status_code in (401, 403, 404):
+                self._key_balance_unavailable = True
+                print("[Pollen] API key budget metadata unavailable; using local hourly pollen tracking.")
+                return None
+            if response.status_code == 402:
+                self.mark_depleted_from_response(response)
+                return 0.0
+            response.raise_for_status()
+            data = response.json()
+            budget = data.get("pollenBudget")
+            if isinstance(budget, (int, float)):
+                return float(budget)
+            return None
+        except Exception as exc:
+            self._key_balance_unavailable = True
+            print(f"[Pollen] Could not read API key budget ({type(exc).__name__}); using local tracking.")
+            return None
+
+    def _available_pollen(self, remote_balance: Optional[float] = None) -> float:
+        state = self._load_state()
+        reserved = sum(float(item.get("cost", 0.0)) for item in state.get("reserved", {}).values())
+        if remote_balance is not None:
+            return max(0.0, min(self.config.hourly_allowance, remote_balance) - reserved)
+
+        spent = float(state.get("spent", state.get("used", 0.0)) or 0.0)
+        return max(0.0, self.config.hourly_allowance - spent - reserved)
+
+    def _available_label(self, remote_balance: Optional[float] = None) -> str:
+        return f"{self._available_pollen(remote_balance):.4f}"
+
+    def _reserve_local(
+        self,
+        cost: float,
+        *,
+        kind: str,
+        input_chars: int,
+        balance_before: Optional[float],
+    ) -> PollenReservation:
         self._roll_local_window(time.time())
         state = self._load_state()
-        state["used"] = round(float(state.get("used", 0.0)) + cost, 6)
+        reservation_id = uuid.uuid4().hex[:12]
+        state.setdefault("reserved", {})[reservation_id] = {
+            "cost": round(cost, 6),
+            "kind": kind,
+            "input_chars": int(input_chars),
+            "created_at": time.time(),
+            "balance_before": balance_before,
+        }
+        state["updated_at"] = time.time()
+        self._save_state(state)
+        return PollenReservation(reservation_id, kind, input_chars, cost, balance_before)
+
+    def _settle_local_reservation(self, reservation: PollenReservation, *, actual: float) -> None:
+        if not reservation.reservation_id:
+            return
+        self._roll_local_window(time.time())
+        state = self._load_state()
+        state.setdefault("reserved", {}).pop(reservation.reservation_id, None)
+        state["spent"] = round(float(state.get("spent", state.get("used", 0.0)) or 0.0) + actual, 6)
+        state["used"] = state["spent"]
         state["updated_at"] = time.time()
         self._save_state(state)
 
     def _adjust_local_reservation(self, *, predicted: float, actual: float) -> None:
         self._roll_local_window(time.time())
         state = self._load_state()
-        used = float(state.get("used", 0.0))
-        state["used"] = round(max(0.0, min(self.config.hourly_allowance, used - predicted + actual)), 6)
+        spent = float(state.get("spent", state.get("used", 0.0)) or 0.0)
+        state["spent"] = round(max(0.0, min(self.config.hourly_allowance, spent - predicted + actual)), 6)
+        state["used"] = state["spent"]
         state["updated_at"] = time.time()
         self._save_state(state)
 
@@ -355,7 +516,9 @@ class PollinationsPollenGate:
         if int(state.get("window_start", 0)) != current_window:
             self._save_state({
                 "window_start": current_window,
+                "spent": 0.0,
                 "used": 0.0,
+                "reserved": {},
                 "updated_at": now,
                 "forecasts": state.get("forecasts", {}),
             })
@@ -363,13 +526,29 @@ class PollinationsPollenGate:
 
     def _load_state(self) -> Dict[str, Any]:
         if not self.config.state_path or not self.config.state_path.exists():
-            return {"window_start": self._hour_window_start(time.time()), "used": 0.0, "forecasts": {}}
+            return {
+                "window_start": self._hour_window_start(time.time()),
+                "spent": 0.0,
+                "used": 0.0,
+                "reserved": {},
+                "forecasts": {},
+            }
         try:
             state = json.loads(self.config.state_path.read_text(encoding="utf-8"))
+            if "spent" not in state:
+                state["spent"] = float(state.get("used", 0.0) or 0.0)
+            state.setdefault("used", state.get("spent", 0.0))
+            state.setdefault("reserved", {})
             state.setdefault("forecasts", {})
             return state
         except Exception:
-            return {"window_start": self._hour_window_start(time.time()), "used": 0.0, "forecasts": {}}
+            return {
+                "window_start": self._hour_window_start(time.time()),
+                "spent": 0.0,
+                "used": 0.0,
+                "reserved": {},
+                "forecasts": {},
+            }
 
     def _save_state(self, state: Dict[str, Any]) -> None:
         if not self.config.state_path:

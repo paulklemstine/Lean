@@ -20,6 +20,7 @@ pi_agent:
     forecast_alpha: 0.25
     chat_input_chars_per_pollen: 250000
     pi_execution_input_chars_per_pollen: 50000
+    output_chars_per_pollen: 125000
   max_catalog_references: 12
   max_lines_per_reference: 150
   temperature: 0.85

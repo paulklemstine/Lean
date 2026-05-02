@@ -664,12 +664,12 @@ Research mode: {concept.research_mode}
                     paper_files.append(fp)
 
         # Collect Lean sources — Aristotle decides which files contain the new theorems
-        # Collect Lean sources — Aristotle decides which files contain the new theorems
         if lean_files:
             parts = []
             for f in sorted(lean_files):
                 is_diff = getattr(f, "_is_diff", False)
-                header = f"-- DIFF: {f.name}\n" if is_diff else f"-- NEW_FILE: {f.name}\n"
+                rel_path = f.relative_to(extract_dir) if extract_dir in f.parents else f.name
+                header = f"-- DIFF: {rel_path}\n" if is_diff else f"-- NEW_FILE: {rel_path}\n"
                 parts.append(f"{header}{f.read_text(encoding='utf-8', errors='ignore')}")
             job.result_lean = "\n\n".join(parts)
 
@@ -758,89 +758,106 @@ Research mode: {concept.research_mode}
         return asyncio.run(self.integrate_async(job))
 
     async def integrate_async(self, job: ResearchJob) -> ResearchJob:
-        """Pi-Agent integrates Aristotle's output into the Catalog in one step.
+        """Pi-Agent integrates Aristotle's output into the Catalog.
         """
         if job.quality_score < 0.05:
             print(f"[Integrate] REJECTED: score too low ({job.quality_score:.3f})")
             job.status = "rejected"
             return job
 
-        print(f"[Integrate] Asking Pi-Agent to integrate files in one step...")
-        import tempfile
+        if not job.result_lean and not job.result_demo and not job.result_paper:
+            print(f"[Integrate] No new/modified files to integrate.")
+            job.status = "integrated"
+            self.completed_count += 1
+            return job
+
+        print(f"[Integrate] Asking Pi-Agent to verify and integrate files...")
         import subprocess
         
-        with tempfile.TemporaryDirectory() as tmpdir:
-            staging = Path(tmpdir)
-            files_to_place = []
-            
-            if job.result_lean:
-                files_to_place = self._split_lean_output(job.result_lean, job.concept)
-                for content, name in files_to_place:
-                    (staging / name).write_text(content)
+        # 1. Parse out the diffs and new files
+        parts = []
+        if job.result_lean:
+            import re
+            # Split by either -- DIFF: or -- NEW_FILE:
+            blocks = re.split(r'(?=-- DIFF: |-- NEW_FILE: )', job.result_lean)
+            for block in blocks:
+                if not block.strip(): continue
+                lines = block.split("\n")
+                header = lines[0]
+                content = "\n".join(lines[1:]).strip()
+                if header.startswith("-- DIFF: "):
+                    parts.append({"type": "diff", "path": header.replace("-- DIFF: ", "").strip(), "content": content})
+                elif header.startswith("-- NEW_FILE: "):
+                    parts.append({"type": "new", "path": header.replace("-- NEW_FILE: ", "").strip(), "content": content})
                     
-            if job.result_demo:
-                demo_name = self._derive_artifact_name(job.concept, "py")
-                (staging / demo_name).write_text(job.result_demo)
-                
-            if job.result_paper:
-                paper_name = self._derive_artifact_name(job.concept, "md")
-                (staging / paper_name).write_text(job.result_paper)
-                
-            if job.result_summary:
-                (staging / "ARISTOTLE_SUMMARY.md").write_text(job.result_summary)
-            if job.prompt:
-                (staging / "PROMPT.md").write_text(job.prompt)
-                
-            prompt = (
-                f"Examine ARISTOTLE_SUMMARY.md and PROMPT.md (README) to understand the research context. "
-                f"Your task is to properly integrate the generated file diffs and new files (.lean, .py, .md) into the Catalog at {self.catalog_root}. "
-                f"For files marked as DIFF, you must properly MERGE the changes into the existing file at {self.catalog_root} so as to NOT overwrite parallel committed changes! "
-                f"For NEW_FILEs without 'sorry', move them into the appropriate domain directory (e.g., {self.catalog_root}/Tropical/). "
-                f"For NEW_FILEs with 'sorry', move them into {self.catalog_root}/Speculative/AutoResearch/. "
-                f"Move Python files to {self.catalog_root}/Applications/Demos/ and Markdown papers to {self.catalog_root}/Applications/Papers/. "
-                f"\n\nFINALLY, perform a cleanup of the domain directory: Review the Lean (.lean) files in the target domain directory. "
-                f"Identify any duplicate theorems (same math, different names) or highly fragmented files. "
-                f"Combine them into well-structured, unified files and delete the redundant ones to clean up the catalog. "
-                f"Do the integration and cleanup securely and ensure all merges are clean."
-            )
-            
-            try:
-                env = os.environ.copy()
-                node_bin = os.path.expanduser("~/node-v20.12.2-linux-x64/bin")
-                if os.path.exists(node_bin) and node_bin not in env.get("PATH", ""):
-                    env["PATH"] = f"{node_bin}:{env.get('PATH', '')}"
-                env["OPENAI_API_KEY"] = self.pi_agent.pollen_gate.api_key
-                env["OPENAI_BASE_URL"] = "https://gen.pollinations.ai/v1"
-                predicted_cost = await asyncio.to_thread(
-                    self.pi_agent.wait_for_pollinations_pollen,
-                    "pi-coding-agent integration",
-                    None,
-                    kind="pi_execution",
-                    input_chars=len(prompt),
-                )
-                
-                result = await asyncio.to_thread(
-                    subprocess.run,
-                    ["npx", "--yes", "@mariozechner/pi-coding-agent@latest", "--model", f"openai:{self.pi_agent.model}", "-p", prompt],
-                    cwd=str(staging),
-                    capture_output=True,
-                    text=True,
-                    timeout=1800,
-                    env=env
-                )
-                self.pi_agent.pollen_gate.record_observation(
-                    kind="pi_execution",
-                    input_chars=len(prompt),
-                    predicted_cost=predicted_cost,
-                    success=result.returncode == 0,
-                )
-                if result.returncode == 0:
-                    print(f"[Integrate] Pi successfully integrated files via diff merge.")
-                else:
-                    print(f"[Integrate] Pi integration had a non-zero exit code.")
-            except Exception as e:
-                print(f"[Integrate] Pi integration failed: {e}")
+        if job.result_demo:
+            parts.append({"type": "new", "path": f"Applications/Demos/{self._derive_artifact_name(job.concept, 'py')}", "content": job.result_demo})
+        if job.result_paper:
+            parts.append({"type": "new", "path": f"Applications/Papers/{self._derive_artifact_name(job.concept, 'md')}", "content": job.result_paper})
 
+        # 2. Ask Pi to review and authorize the placements
+        plan_prompt = (
+            f"Aristotle has generated the following files and diffs for the Catalog:\n"
+        )
+        for i, p in enumerate(parts):
+            plan_prompt += f"[{i}] {p['type'].upper()} -> {p['path']}\n"
+            
+        plan_prompt += (
+            f"\nReview these paths. Ensure Lean proofs with sorries go to Speculative/AutoResearch/.\n"
+            f"Respond ONLY with a JSON dictionary mapping the index (as string) to the authorized target path relative to the Catalog root.\n"
+            f"Example: {{\"0\": \"Tropical/MyFile.lean\"}}"
+        )
+        
+        raw_plan = await asyncio.to_thread(
+            self.pi_agent._call_ollama, 
+            "You are Pi-Agent, an expert integration manager. Output ONLY valid JSON.", 
+            plan_prompt, 
+            timeout=120
+        )
+        
+        import json
+        try:
+            # Simple JSON extraction
+            match = re.search(r'\{.*\}', raw_plan, re.DOTALL)
+            plan = json.loads(match.group(0)) if match else {}
+        except Exception:
+            plan = {}
+
+        # 3. Apply the changes
+        for i, p in enumerate(parts):
+            target_path = plan.get(str(i), p["path"])
+            # Remove leading Catalog/ if present
+            if target_path.startswith("Catalog/"):
+                target_path = target_path[8:]
+            elif target_path.startswith("extracted/Catalog/"):
+                target_path = target_path[18:]
+                
+            abs_target = self.catalog_root / target_path
+            abs_target.parent.mkdir(parents=True, exist_ok=True)
+            
+            if p["type"] == "new":
+                abs_target.write_text(p["content"], encoding="utf-8")
+                print(f"[Integrate] Created {target_path}")
+            elif p["type"] == "diff":
+                # Write diff to temporary file and use patch
+                import tempfile
+                with tempfile.NamedTemporaryFile("w", delete=False) as f:
+                    f.write(p["content"])
+                    patch_file = f.name
+                
+                try:
+                    # Apply diff
+                    result = subprocess.run(["patch", str(abs_target), patch_file], capture_output=True, text=True)
+                    if result.returncode == 0:
+                        print(f"[Integrate] Merged diff into {target_path}")
+                    else:
+                        print(f"[Integrate] Patch failed for {target_path}: {result.stderr}")
+                except Exception as e:
+                    print(f"[Integrate] Patch failed for {target_path}: {e}")
+                finally:
+                    os.unlink(patch_file)
+
+        print(f"[Integrate] Pi successfully integrated all files.")
         job.status = "integrated"
         self.completed_count += 1
         return job

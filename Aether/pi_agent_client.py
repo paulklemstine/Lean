@@ -374,7 +374,7 @@ class PiAgentClient:
         input_chars = len(system) + len(user)
         
         try:
-            predicted_cost = self.wait_for_pollinations_pollen(
+            reservation = self.wait_for_pollinations_pollen(
                 "Pi-Agent LLM request",
                 kind="chat",
                 input_chars=input_chars,
@@ -385,15 +385,21 @@ class PiAgentClient:
                 json=payload,
                 timeout=request_timeout
             )
+            response_json = None
+            try:
+                response_json = response.json()
+            except Exception:
+                response_json = None
             self.pollen_gate.record_response(
                 response,
                 kind="chat",
                 input_chars=input_chars,
-                predicted_cost=predicted_cost,
+                reservation=reservation,
+                response_json=response_json,
             )
             if response.status_code in (402, 429):
                 self.pollen_gate.mark_depleted_from_response(response)
-                predicted_cost = self.wait_for_pollinations_pollen(
+                reservation = self.wait_for_pollinations_pollen(
                     "Pi-Agent LLM retry",
                     kind="chat",
                     input_chars=input_chars,
@@ -404,14 +410,20 @@ class PiAgentClient:
                     json=payload,
                     timeout=request_timeout
                 )
+                try:
+                    response_json = response.json()
+                except Exception:
+                    response_json = None
                 self.pollen_gate.record_response(
                     response,
                     kind="chat",
                     input_chars=input_chars,
-                    predicted_cost=predicted_cost,
+                    reservation=reservation,
+                    response_json=response_json,
                 )
             response.raise_for_status()
-            content = response.json()["choices"][0]["message"]["content"]
+            data = response_json if response_json is not None else response.json()
+            content = data["choices"][0]["message"]["content"]
             
             # Log the response
             response_preview = content[:500].replace('\n', ' ')
@@ -436,7 +448,7 @@ class PiAgentClient:
         *,
         kind: str = "chat",
         input_chars: int = 0,
-    ) -> float:
+    ):
         """Defer Pollinations-backed Pi-Agent work until hourly pollen resets."""
         return self.pollen_gate.wait_and_reserve(
             label=label,
