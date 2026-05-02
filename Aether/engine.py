@@ -62,6 +62,7 @@ class AetherEngine:
         pi_cfg = self.config.get("pi_agent", {})
         self.pi_agent = PiAgentClient(
             model=pi_cfg.get("model", "fingpt-7b:latest"),
+            pollinations=pi_cfg.get("pollinations", {}),
         ) if pi_cfg.get("enabled", True) else None
 
         # New: Prompt engine

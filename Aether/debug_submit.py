@@ -41,7 +41,11 @@ async def main():
     config = load_config()
     print(f"Config aristotle section: {json.dumps(config.get('aristotle', {}), indent=2)}")
 
-    pi = PiAgentClient(model=config.get("pi_agent", {}).get("model", "fingpt-7b:latest"))
+    pi_cfg = config.get("pi_agent", {})
+    pi = PiAgentClient(
+        model=pi_cfg.get("model", "fingpt-7b:latest"),
+        pollinations=pi_cfg.get("pollinations", {}),
+    )
     concept = pi.generate_breakthrough_concept("compression", ["Tropical geometry", "Kolmogorov complexity"], "theorem")
     print(f"Concept: {concept.title}")
     print(f"lean_guess: {concept.lean_guess}")

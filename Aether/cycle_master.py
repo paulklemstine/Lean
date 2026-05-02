@@ -279,6 +279,7 @@ class CycleMaster:
         self.pi_agent = PiAgentClient(
             memory=self.memory,
             model=config.get("pi_agent", {}).get("model", "kimi-k2.6:cloud"),
+            pollinations=config.get("pi_agent", {}).get("pollinations", {}),
         ) if self.global_settings.get("pi_agent_enabled", True) else None
 
         self.prompt_engine = PromptEngine(config.get("prompts", {}))

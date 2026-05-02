@@ -105,6 +105,7 @@ class KnowledgeExtractor:
             catalog_root=self.catalog_root,
             timeout=pi_cfg.get("timeout", 300),
             compact="cloud" in pi_cfg.get("model", "kimi-k2.6:cloud").lower(),
+            pollinations=pi_cfg.get("pollinations", {}),
         )
 
         self.output_organizer = OutputOrganizer(
@@ -797,7 +798,10 @@ Research mode: {concept.research_mode}
                 f"For NEW_FILEs without 'sorry', move them into the appropriate domain directory (e.g., {self.catalog_root}/Tropical/). "
                 f"For NEW_FILEs with 'sorry', move them into {self.catalog_root}/Speculative/AutoResearch/. "
                 f"Move Python files to {self.catalog_root}/Applications/Demos/ and Markdown papers to {self.catalog_root}/Applications/Papers/. "
-                f"Do the integration securely and ensure all merges are clean."
+                f"\n\nFINALLY, perform a cleanup of the domain directory: Review the Lean (.lean) files in the target domain directory. "
+                f"Identify any duplicate theorems (same math, different names) or highly fragmented files. "
+                f"Combine them into well-structured, unified files and delete the redundant ones to clean up the catalog. "
+                f"Do the integration and cleanup securely and ensure all merges are clean."
             )
             
             try:
@@ -805,8 +809,19 @@ Research mode: {concept.research_mode}
                 node_bin = os.path.expanduser("~/node-v20.12.2-linux-x64/bin")
                 if os.path.exists(node_bin) and node_bin not in env.get("PATH", ""):
                     env["PATH"] = f"{node_bin}:{env.get('PATH', '')}"
-                env["OPENAI_API_KEY"] = "pk_nxM10AP0L7y8AX1I"
+                env["OPENAI_API_KEY"] = self.pi_agent.pollen_gate.api_key
                 env["OPENAI_BASE_URL"] = "https://gen.pollinations.ai/v1"
+                pi_cfg = self.config.get("pi_agent", {})
+                pollen_cfg = pi_cfg.get("pollinations", {})
+                execution_cost = float(pollen_cfg.get(
+                    "estimated_pollen_per_pi_execution",
+                    pollen_cfg.get("estimated_pollen_per_call", 0.4),
+                ))
+                await asyncio.to_thread(
+                    self.pi_agent.wait_for_pollinations_pollen,
+                    "pi-coding-agent integration",
+                    execution_cost,
+                )
                 
                 result = await asyncio.to_thread(
                     subprocess.run,
@@ -847,41 +862,9 @@ Research mode: {concept.research_mode}
                     timeout=120
                 )
             
-            # 2. Use Pi-Agent to semantically clean up the domain directory
+            # 2. Semantic cleanup is now handled during the integration step!
             if job.concept.domain:
-                domain_dir = self.catalog_root / job.concept.domain
-                if domain_dir.exists() and domain_dir.is_dir():
-                    print(f"[Cleanup] Asking Pi to semantically clean up domain: {job.concept.domain}")
-                    prompt = (
-                        "Review the Lean (.lean) files in this directory. Identify any "
-                        "duplicate theorems (same math, different names) or highly fragmented "
-                        "files. Combine them into well-structured, unified files and delete "
-                        "the redundant ones to clean up the catalog."
-                    )
-                    
-                    # Execute the pi CLI in the domain directory
-                    env = os.environ.copy()
-                    node_bin = os.path.expanduser("~/node-v20.12.2-linux-x64/bin")
-                    if os.path.exists(node_bin) and node_bin not in env.get("PATH", ""):
-                        env["PATH"] = f"{node_bin}:{env.get('PATH', '')}"
-                    env["OPENAI_API_KEY"] = "pk_nxM10AP0L7y8AX1I"
-                    env["OPENAI_BASE_URL"] = "https://gen.pollinations.ai/v1"
-                    
-                    result = await asyncio.to_thread(
-                        subprocess.run,
-                        ["npx", "--yes", "@mariozechner/pi-coding-agent@latest", 
-                         "--model", f"openai:{self.pi_agent.model}", 
-                         "-p", prompt],
-                        cwd=str(domain_dir),
-                        capture_output=True,
-                        text=True,
-                        timeout=1800,
-                        env=env
-                    )
-                    if result.returncode == 0:
-                        print(f"[Cleanup] Pi successfully cleaned {job.concept.domain}")
-                    else:
-                        print(f"[Cleanup] Pi cleanup completed with non-zero status.")
+                print(f"[Cleanup] Semantic cleanup was handled during the integration step.")
         except Exception as e:
             print(f"[Cleanup] Warning: {e}")
             

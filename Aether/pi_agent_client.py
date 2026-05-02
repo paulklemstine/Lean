@@ -12,6 +12,7 @@ Key changes from v2:
 """
 
 import json
+import os
 import re
 import textwrap
 import time
@@ -22,6 +23,7 @@ from typing import Dict, List, Optional, Any
 import httpx
 
 from catalog_analyzer import CatalogAnalyzer, CatalogFileSummary
+from pollinations_pollen import PollinationsPollenConfig, PollinationsPollenGate
 from research_memory import ResearchMemory
 
 
@@ -319,6 +321,7 @@ class PiAgentClient:
         catalog_root: Optional[Path] = None,
         timeout: int = 300,
         compact: bool = False,
+        pollinations: Optional[Dict[str, Any]] = None,
     ):
         self.model = model
         self.memory = memory
@@ -327,6 +330,16 @@ class PiAgentClient:
         self.compact = compact
         # Use max timeout for client connection, use per-request timeouts for operations
         self.client = httpx.Client(timeout=httpx.Timeout(connect=30.0, read=300.0, write=30.0, pool=30.0))
+        default_state_path = Path(__file__).parent / ".aether_workspace" / "pollinations_pollen_state.json"
+        if self.catalog_root:
+            default_state_path = self.catalog_root.parent / "Aether" / ".aether_workspace" / "pollinations_pollen_state.json"
+        pollen_config = PollinationsPollenConfig.from_dict(
+            pollinations,
+            default_state_path=default_state_path,
+        )
+        if not pollen_config.api_key:
+            pollen_config.api_key = os.getenv("POLLINATIONS_API_KEY") or os.getenv("OPENAI_API_KEY") or "pk_nxM10AP0L7y8AX1I"
+        self.pollen_gate = PollinationsPollenGate(pollen_config, client=self.client)
 
         # CatalogAnalyzer for reference selection
         self.catalog_analyzer: Optional[CatalogAnalyzer] = None
@@ -345,7 +358,7 @@ class PiAgentClient:
         print(f"[Pi-Agent] → calling Pollinations API (model={self.model}, timeout={request_timeout}s)")
         
         headers = {
-            "Authorization": "Bearer pk_nxM10AP0L7y8AX1I",
+            "Authorization": f"Bearer {self.pollen_gate.api_key}",
             "Content-Type": "application/json"
         }
         
@@ -360,12 +373,22 @@ class PiAgentClient:
         }
         
         try:
+            self.wait_for_pollinations_pollen("Pi-Agent LLM request")
             response = self.client.post(
                 "https://gen.pollinations.ai/v1/chat/completions",
                 headers=headers,
                 json=payload,
                 timeout=request_timeout
             )
+            if response.status_code in (402, 429):
+                self.pollen_gate.mark_depleted_from_response(response)
+                self.wait_for_pollinations_pollen("Pi-Agent LLM retry")
+                response = self.client.post(
+                    "https://gen.pollinations.ai/v1/chat/completions",
+                    headers=headers,
+                    json=payload,
+                    timeout=request_timeout
+                )
             response.raise_for_status()
             content = response.json()["choices"][0]["message"]["content"]
             
@@ -384,6 +407,10 @@ class PiAgentClient:
                 err_msg += f" - {e.response.text}"
             print(f"[Pi-Agent] ← API exception: {type(e).__name__}: {err_msg}")
             return f"[API_ERROR: {err_msg}]"
+
+    def wait_for_pollinations_pollen(self, label: str = "Pi-Agent execution", cost: Optional[float] = None) -> None:
+        """Defer Pollinations-backed Pi-Agent work until hourly pollen resets."""
+        self.pollen_gate.wait_and_reserve(label=label, cost=cost)
 
     def _parse_json_response(self, raw: str) -> Optional[Dict[str, Any]]:
         """Try to extract JSON from an LLM response.

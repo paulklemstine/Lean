@@ -5,6 +5,16 @@ pi_agent:
   model: "openai-large"
   ollama_base_url: "http://127.0.0.1:11434"
   timeout: 600
+  pollinations:
+    enabled: true
+    api_key_env: "POLLINATIONS_API_KEY"
+    hourly_allowance: 0.4
+    estimated_pollen_per_call: 0.4
+    estimated_pollen_per_pi_execution: 0.4
+    min_balance: 0.4
+    defer_when_low: true
+    balance_cache_seconds: 60
+    reset_buffer_seconds: 10
   max_catalog_references: 12
   max_lines_per_reference: 150
   temperature: 0.85
