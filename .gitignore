@@ -12,3 +12,4 @@
 /Catalog/Aether/manual_jobs
 *.tar.gz
 *.output
+/Aether/.aether_workspace
