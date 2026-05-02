@@ -804,6 +804,7 @@ Research mode: {concept.research_mode}
             
         plan_prompt += (
             f"\nReview these paths. Ensure Lean proofs with sorries go to Speculative/AutoResearch/.\n"
+            f"Lean files without sorries must go to their real Catalog domain directory, not Speculative/AutoResearch/.\n"
             f"Respond ONLY with a JSON dictionary mapping the index (as string) to the authorized target path relative to the Catalog root.\n"
             f"Example: {{\"0\": \"Tropical/MyFile.lean\"}}"
         )
@@ -826,11 +827,7 @@ Research mode: {concept.research_mode}
         # 3. Apply the changes
         for i, p in enumerate(parts):
             target_path = plan.get(str(i), p["path"])
-            # Remove leading Catalog/ if present
-            if target_path.startswith("Catalog/"):
-                target_path = target_path[8:]
-            elif target_path.startswith("extracted/Catalog/"):
-                target_path = target_path[18:]
+            target_path = self._authorize_integration_path(job, p, target_path)
                 
             abs_target = self.catalog_root / target_path
             abs_target.parent.mkdir(parents=True, exist_ok=True)
@@ -861,6 +858,60 @@ Research mode: {concept.research_mode}
         job.status = "integrated"
         self.completed_count += 1
         return job
+
+    def _authorize_integration_path(self, job: ResearchJob, part: Dict[str, Any], requested_path: str) -> str:
+        """Normalize Pi/Aristotle placement decisions into safe Catalog paths.
+
+        Pi is allowed to suggest paths, but no-sorry Lean files should not stay
+        buried under Speculative/AutoResearch simply because Aristotle emitted
+        them from a generated project directory. Speculative is reserved for
+        Lean files that still contain `sorry`.
+        """
+        target_path = self._strip_catalog_prefix(str(requested_path or part.get("path", "")))
+        suffix = Path(target_path).suffix.lower()
+
+        if suffix == ".lean" and part.get("type") == "new":
+            filename = Path(target_path).name
+            has_sorry = self._lean_contains_sorry(part.get("content", ""))
+            if has_sorry:
+                return f"Speculative/AutoResearch/{filename}"
+
+            domain = normalize_domain(job.concept.domain or self._domain_from_path(target_path) or "MachineLearning")
+            if not domain or domain == "Speculative":
+                domain = self._domain_from_path(target_path) or "MachineLearning"
+            return f"{domain}/{filename}"
+
+        return target_path
+
+    @staticmethod
+    def _strip_catalog_prefix(path: str) -> str:
+        path = path.replace("\\", "/").lstrip("/")
+        prefixes = (
+            "extracted/Catalog/",
+            "Catalog/",
+        )
+        for prefix in prefixes:
+            if path.startswith(prefix):
+                return path[len(prefix):]
+        return path
+
+    @staticmethod
+    def _lean_contains_sorry(content: str) -> bool:
+        import re
+        return bool(re.search(r'(?<![A-Za-z0-9_])sorry(?![A-Za-z0-9_])', content))
+
+    @staticmethod
+    def _domain_from_path(path: str) -> str:
+        parts = [p for p in path.replace("\\", "/").split("/") if p]
+        known_domains = {
+            "Algebra", "Applications", "Bridges", "Computation", "Cryptography",
+            "EML", "Geometry", "Logic", "MachineLearning", "Physics",
+            "Pythagorean", "Shared", "Speculative", "Tropical",
+        }
+        for part in parts:
+            if part in known_domains:
+                return part
+        return ""
 
     async def cleanup_catalog_async(self, job: ResearchJob) -> ResearchJob:
         """Run deduplication and use Pi to clean up the specific domain directory."""
