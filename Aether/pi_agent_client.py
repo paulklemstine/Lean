@@ -371,23 +371,44 @@ class PiAgentClient:
             "temperature": 0.85,
             "top_p": 0.92
         }
+        input_chars = len(system) + len(user)
         
         try:
-            self.wait_for_pollinations_pollen("Pi-Agent LLM request")
+            predicted_cost = self.wait_for_pollinations_pollen(
+                "Pi-Agent LLM request",
+                kind="chat",
+                input_chars=input_chars,
+            )
             response = self.client.post(
                 "https://gen.pollinations.ai/v1/chat/completions",
                 headers=headers,
                 json=payload,
                 timeout=request_timeout
             )
+            self.pollen_gate.record_response(
+                response,
+                kind="chat",
+                input_chars=input_chars,
+                predicted_cost=predicted_cost,
+            )
             if response.status_code in (402, 429):
                 self.pollen_gate.mark_depleted_from_response(response)
-                self.wait_for_pollinations_pollen("Pi-Agent LLM retry")
+                predicted_cost = self.wait_for_pollinations_pollen(
+                    "Pi-Agent LLM retry",
+                    kind="chat",
+                    input_chars=input_chars,
+                )
                 response = self.client.post(
                     "https://gen.pollinations.ai/v1/chat/completions",
                     headers=headers,
                     json=payload,
                     timeout=request_timeout
+                )
+                self.pollen_gate.record_response(
+                    response,
+                    kind="chat",
+                    input_chars=input_chars,
+                    predicted_cost=predicted_cost,
                 )
             response.raise_for_status()
             content = response.json()["choices"][0]["message"]["content"]
@@ -408,9 +429,21 @@ class PiAgentClient:
             print(f"[Pi-Agent] ← API exception: {type(e).__name__}: {err_msg}")
             return f"[API_ERROR: {err_msg}]"
 
-    def wait_for_pollinations_pollen(self, label: str = "Pi-Agent execution", cost: Optional[float] = None) -> None:
+    def wait_for_pollinations_pollen(
+        self,
+        label: str = "Pi-Agent execution",
+        cost: Optional[float] = None,
+        *,
+        kind: str = "chat",
+        input_chars: int = 0,
+    ) -> float:
         """Defer Pollinations-backed Pi-Agent work until hourly pollen resets."""
-        self.pollen_gate.wait_and_reserve(label=label, cost=cost)
+        return self.pollen_gate.wait_and_reserve(
+            label=label,
+            cost=cost,
+            kind=kind,
+            input_chars=input_chars,
+        )
 
     def _parse_json_response(self, raw: str) -> Optional[Dict[str, Any]]:
         """Try to extract JSON from an LLM response.

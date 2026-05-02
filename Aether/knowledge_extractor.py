@@ -811,16 +811,12 @@ Research mode: {concept.research_mode}
                     env["PATH"] = f"{node_bin}:{env.get('PATH', '')}"
                 env["OPENAI_API_KEY"] = self.pi_agent.pollen_gate.api_key
                 env["OPENAI_BASE_URL"] = "https://gen.pollinations.ai/v1"
-                pi_cfg = self.config.get("pi_agent", {})
-                pollen_cfg = pi_cfg.get("pollinations", {})
-                execution_cost = float(pollen_cfg.get(
-                    "estimated_pollen_per_pi_execution",
-                    pollen_cfg.get("estimated_pollen_per_call", 0.4),
-                ))
-                await asyncio.to_thread(
+                predicted_cost = await asyncio.to_thread(
                     self.pi_agent.wait_for_pollinations_pollen,
                     "pi-coding-agent integration",
-                    execution_cost,
+                    None,
+                    kind="pi_execution",
+                    input_chars=len(prompt),
                 )
                 
                 result = await asyncio.to_thread(
@@ -831,6 +827,12 @@ Research mode: {concept.research_mode}
                     text=True,
                     timeout=1800,
                     env=env
+                )
+                self.pi_agent.pollen_gate.record_observation(
+                    kind="pi_execution",
+                    input_chars=len(prompt),
+                    predicted_cost=predicted_cost,
+                    success=result.returncode == 0,
                 )
                 if result.returncode == 0:
                     print(f"[Integrate] Pi successfully integrated files via diff merge.")
