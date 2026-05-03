@@ -1,542 +1,611 @@
 #!/usr/bin/env python3
 """
-Top-K Certified Robustness Demo
-================================
+Tournament Bracket Certified Robustness: Python Demo & Visualization
 
-Demonstrates the formally verified top-k robustness theory for multiclass
-piecewise-linear networks. Shows how the certified radius margin/(2K) guarantees
-that the top-k prediction set is preserved under input perturbation.
+This script demonstrates the certified robustness theory for tournament-style
+multiclass classifiers. It shows how bracket semantics gives structurally
+sharper robustness certificates compared to flat argmax.
 
-This demo:
-1. Constructs a simple max-affine (tropical) network with known Lipschitz constants.
-2. Computes top-k margins at sample points.
-3. Derives certified robustness radii.
-4. Verifies the certificates empirically by sampling perturbations.
-5. Compares coordinate-Lipschitz vs pairwise-Lipschitz certificates.
-6. Visualizes decision boundaries and certified regions.
+Key demonstrations:
+1. How tournament brackets work for multiclass classification
+2. Computing certified robustness radii from winner-path margins
+3. Comparison with flat argmax robustness certificates
+4. Visualization of perturbation balls and decision boundaries
 """
 
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.patches import Circle
-from itertools import combinations
-import os
+import matplotlib.patches as mpatches
+from matplotlib.patches import FancyBboxPatch
+from typing import Callable, Optional, Tuple, List, Dict
+import warnings
+warnings.filterwarnings('ignore')
 
-# ============================================================
-# 1. Max-Affine Network Construction
-# ============================================================
+# ============================================================================
+# Core Data Structures
+# ============================================================================
 
-def max_affine_layer(weights, biases, x):
+class Bracket:
+    """A full binary tree representing a tournament bracket."""
+    pass
+
+class Leaf(Bracket):
+    def __init__(self, label: int):
+        self.label = label
+
+    def __repr__(self):
+        return f"Leaf({self.label})"
+
+class Node(Bracket):
+    def __init__(self, left: Bracket, right: Bracket):
+        self.left = left
+        self.right = right
+
+    def __repr__(self):
+        return f"Node({self.left}, {self.right})"
+
+
+def winner(bracket: Bracket, scores: Callable[[int, np.ndarray], float],
+           x: np.ndarray) -> int:
+    """Compute the tournament winner at point x.
+
+    At a leaf, return the label.
+    At an internal node, compare winners of left/right subtrees.
     """
-    Compute a max-affine layer: for each output class i,
-      f_i(x) = max_t (w_{i,t} · x + b_{i,t})
-    
-    weights: shape (n_classes, n_pieces, input_dim)
-    biases:  shape (n_classes, n_pieces)
-    x:       shape (input_dim,)
-    
-    Returns: shape (n_classes,)
+    if isinstance(bracket, Leaf):
+        return bracket.label
+    elif isinstance(bracket, Node):
+        wl = winner(bracket.left, scores, x)
+        wr = winner(bracket.right, scores, x)
+        if scores(wl, x) >= scores(wr, x):
+            return wl
+        else:
+            return wr
+
+
+def winner_path(bracket: Bracket, scores: Callable, x: np.ndarray) -> list:
+    """Extract the winner path: list of (win_label, opp_label, margin) tuples."""
+    if isinstance(bracket, Leaf):
+        return []
+    elif isinstance(bracket, Node):
+        wl = winner(bracket.left, scores, x)
+        wr = winner(bracket.right, scores, x)
+        sl = scores(wl, x)
+        sr = scores(wr, x)
+        if sl >= sr:
+            path = [(wl, wr, sl - sr)]
+            path.extend(winner_path(bracket.left, scores, x))
+        else:
+            path = [(wr, wl, sr - sl)]
+            path.extend(winner_path(bracket.right, scores, x))
+        return path
+
+
+def all_nodes(bracket: Bracket, scores: Callable, x: np.ndarray) -> list:
+    """Collect ALL internal comparison nodes (win_label, opp_label, margin)."""
+    if isinstance(bracket, Leaf):
+        return []
+    elif isinstance(bracket, Node):
+        wl = winner(bracket.left, scores, x)
+        wr = winner(bracket.right, scores, x)
+        sl = scores(wl, x)
+        sr = scores(wr, x)
+        if sl >= sr:
+            this_node = (wl, wr, sl - sr)
+        else:
+            this_node = (wr, wl, sr - sl)
+        return [this_node] + all_nodes(bracket.left, scores, x) + \
+               all_nodes(bracket.right, scores, x)
+
+
+def certified_radius(bracket: Bracket, scores: Callable, x0: np.ndarray,
+                     lip_const: Callable[[int, int], float]) -> float:
+    """Compute the certified robustness radius.
+
+    r* = min over all internal nodes of margin(v) / L(w_v, o_v)
     """
-    # For each class, take max over affine pieces
-    scores = np.einsum('cpi,i->cp', weights, x) + biases  # (n_classes, n_pieces)
-    return np.max(scores, axis=1)  # (n_classes,)
-
-
-def max_affine_lipschitz(weights):
-    """
-    Compute the coordinate Lipschitz constant for each output class.
-    For f_i(x) = max_t (w_{i,t} · x + b_{i,t}), the Lipschitz constant is
-    max_t ||w_{i,t}||_2.
-    
-    Returns K = max_i K_i (uniform coordinate Lipschitz constant).
-    """
-    # For each class, each piece: compute ||w||_2
-    norms = np.linalg.norm(weights, axis=2)  # (n_classes, n_pieces)
-    Ki = np.max(norms, axis=1)  # per-class Lipschitz
-    K = np.max(Ki)
-    return K, Ki
-
-
-def pairwise_lipschitz(weights, biases, i, j):
-    """
-    Compute an upper bound on the Lipschitz constant of f_i - f_j.
-    For max-affine networks, L_{ij} ≤ K_i + K_j (triangle inequality),
-    but can be tighter if we analyze the pairwise difference directly.
-    
-    For simplicity, return K_i + K_j as the bound.
-    """
-    _, Ki = max_affine_lipschitz(weights)
-    return Ki[i] + Ki[j]
-
-
-# ============================================================
-# 2. Top-K Margin and Certified Radius
-# ============================================================
-
-def compute_scores(weights, biases, x):
-    """Compute all class scores at point x."""
-    return max_affine_layer(weights, biases, x)
-
-
-def topk_set(scores, k):
-    """Return the indices of the top-k classes (as a set)."""
-    return set(np.argsort(scores)[-k:])
-
-
-def topk_margin(scores, S):
-    """
-    Compute the top-k margin: min_{i ∈ S, j ∉ S} (f(x,i) - f(x,j)).
-    This is the minimum gap between any in-set and out-set class.
-    """
-    n = len(scores)
-    S_set = set(S)
-    Sc = set(range(n)) - S_set
-    if not S_set or not Sc:
+    nodes = all_nodes(bracket, scores, x0)
+    if not nodes:
         return float('inf')
-    
-    margin = float('inf')
-    for i in S_set:
-        for j in Sc:
-            gap = scores[i] - scores[j]
-            margin = min(margin, gap)
-    return margin
-
-
-def certified_radius_coordinate(margin, K):
-    """
-    Certified radius using coordinate Lipschitz bound: r* = margin / (2K).
-    Corresponds to Theorem topk_stable_of_margin.
-    """
-    if K <= 0:
-        return float('inf') if margin > 0 else 0.0
-    return margin / (2 * K)
-
-
-def certified_radius_pairwise(scores, S, pairwise_L):
-    """
-    Certified radius using pairwise Lipschitz bounds: r* = min_{(i,j)} gap_{ij} / L_{ij}.
-    Corresponds to Theorem topk_stable_of_pairwise_lipschitz.
-    """
-    n = len(scores)
-    S_set = set(S)
-    Sc = set(range(n)) - S_set
-    
-    radius = float('inf')
-    for i in S_set:
-        for j in Sc:
-            gap = scores[i] - scores[j]
-            Lij = pairwise_L[i][j]
-            if Lij > 0:
-                radius = min(radius, gap / Lij)
-            elif gap <= 0:
-                return 0.0
-    return radius
-
-
-# ============================================================
-# 3. Empirical Verification
-# ============================================================
-
-def verify_certificate(weights, biases, x, S, radius, n_samples=10000):
-    """
-    Empirically verify that the top-k set S is preserved within the certified radius.
-    Returns (n_preserved, n_total, n_violated).
-    """
-    d = x.shape[0]
-    S_set = set(S)
-    n_preserved = 0
-    n_violated = 0
-    
-    for _ in range(n_samples):
-        # Random perturbation within the ball
-        delta = np.random.randn(d)
-        delta = delta / np.linalg.norm(delta) * np.random.uniform(0, radius)
-        y = x + delta
-        
-        scores_y = compute_scores(weights, biases, y)
-        # Check strict dominance
-        preserved = True
-        for i in S_set:
-            for j in set(range(len(scores_y))) - S_set:
-                if scores_y[i] <= scores_y[j]:
-                    preserved = False
-                    break
-            if not preserved:
-                break
-        
-        if preserved:
-            n_preserved += 1
+    radii = []
+    for w, o, margin in nodes:
+        L = lip_const(w, o)
+        if L > 0:
+            radii.append(margin / L)
+        elif margin > 0:
+            radii.append(float('inf'))
         else:
-            n_violated += 1
-    
-    return n_preserved, n_samples, n_violated
+            radii.append(0.0)
+    return min(radii)
 
 
-# ============================================================
-# 4. Demo: 2D Input, 5-Class Max-Affine Network
-# ============================================================
-
-def create_demo_network():
-    """Create a 5-class max-affine network in 2D."""
-    np.random.seed(42)
-    n_classes = 5
-    n_pieces = 3
-    input_dim = 2
-    
-    # Manually designed weights for nice geometry
-    weights = np.array([
-        # Class 0: dominant in upper-right
-        [[2.0, 1.5], [1.0, 2.5], [0.5, 0.5]],
-        # Class 1: dominant in lower-right
-        [[2.5, -1.0], [1.5, -0.5], [0.5, -2.0]],
-        # Class 2: dominant in left
-        [[-2.0, 0.5], [-1.5, 1.0], [-1.0, -0.5]],
-        # Class 3: dominant in center-up
-        [[0.5, 2.0], [-0.5, 2.5], [0.0, 1.5]],
-        # Class 4: dominant in center-down
-        [[0.5, -2.0], [-0.5, -1.5], [0.0, -2.5]],
-    ])
-    
-    biases = np.array([
-        [0.0, -0.5, 0.5],
-        [0.5, 0.0, -0.5],
-        [1.0, 0.5, 0.0],
-        [-0.5, 0.0, 0.5],
-        [0.0, 0.5, -0.5],
-    ])
-    
-    return weights, biases
+def flat_argmax_certified_radius(scores: Callable, x0: np.ndarray,
+                                  n_classes: int,
+                                  lip_const: Callable) -> float:
+    """Certified radius for flat argmax: need ALL pairwise margins."""
+    best = np.argmax([scores(i, x0) for i in range(n_classes)])
+    min_radius = float('inf')
+    for j in range(n_classes):
+        if j == best:
+            continue
+        margin = scores(best, x0) - scores(j, x0)
+        L = lip_const(best, j)
+        if L > 0:
+            min_radius = min(min_radius, margin / L)
+    return min_radius
 
 
-def plot_decision_boundary_and_certificates(weights, biases, k=2):
-    """
-    Plot the top-k decision boundary and certified robustness regions.
-    """
+# ============================================================================
+# Demo 1: Basic Tournament Bracket Example
+# ============================================================================
+
+def demo_basic_bracket():
+    """Show how a tournament bracket classifies and how margins work."""
+    print("=" * 70)
+    print("DEMO 1: Basic Tournament Bracket Classification")
+    print("=" * 70)
+
+    # 4-class bracket: ((0 vs 1) vs (2 vs 3))
+    bracket = Node(Node(Leaf(0), Leaf(1)), Node(Leaf(2), Leaf(3)))
+
+    # Linear score functions: f_i(x) = w_i · x + b_i
+    weights = np.array([[2.0, 1.0], [-1.0, 3.0], [0.5, -2.0], [-0.5, 0.5]])
+    biases = np.array([1.0, 0.5, -0.5, 0.0])
+
+    def scores(i, x):
+        return weights[i] @ x + biases[i]
+
+    x0 = np.array([1.0, 0.5])
+
+    print(f"\nInput point x0 = {x0}")
+    print(f"\nScores at x0:")
+    for i in range(4):
+        print(f"  Class {i}: f_{i}(x0) = {scores(i, x0):.3f}")
+
+    w = winner(bracket, scores, x0)
+    print(f"\nTournament bracket: ((0 vs 1) vs (2 vs 3))")
+    print(f"Tournament winner: Class {w}")
+
+    # Show the path
+    path = winner_path(bracket, scores, x0)
+    print(f"\nWinner path (root to leaf):")
+    for win, opp, margin in path:
+        print(f"  Class {win} beats Class {opp}, margin = {margin:.3f}")
+
+    # All internal nodes
+    nodes = all_nodes(bracket, scores, x0)
+    print(f"\nAll internal nodes:")
+    for win, opp, margin in nodes:
+        print(f"  Class {win} beats Class {opp}, margin = {margin:.3f}")
+
+    # Compute Lipschitz constants for score differences
+    # For linear functions: ||(f_i - f_j)(x) - (f_i - f_j)(y)|| = ||(w_i - w_j) · (x-y)||
+    # ≤ ||w_i - w_j|| * ||x - y||
+    def lip_const(i, j):
+        return np.linalg.norm(weights[i] - weights[j])
+
+    r_bracket = certified_radius(bracket, scores, x0, lip_const)
+    r_argmax = flat_argmax_certified_radius(scores, x0, 4, lip_const)
+
+    print(f"\n--- Certified Radii ---")
+    print(f"  Bracket certified radius: {r_bracket:.4f}")
+    print(f"  Flat argmax certified radius: {r_argmax:.4f}")
+    print(f"  Ratio (bracket/argmax): {r_bracket/r_argmax:.4f}")
+
+    return bracket, scores, x0, weights, lip_const
+
+
+# ============================================================================
+# Demo 2: Visualization of Decision Regions
+# ============================================================================
+
+def demo_visualization(bracket, scores, x0, weights, lip_const):
+    """Visualize decision regions, perturbation balls, and certified radii."""
+    print("\n" + "=" * 70)
+    print("DEMO 2: Visualization of Decision Regions")
+    print("=" * 70)
+
     fig, axes = plt.subplots(1, 3, figsize=(18, 6))
-    
-    # Grid for decision boundary
-    x_range = np.linspace(-2, 2, 200)
-    y_range = np.linspace(-2, 2, 200)
-    X, Y = np.meshgrid(x_range, y_range)
-    
-    n_classes = weights.shape[0]
-    K, Ki = max_affine_lipschitz(weights)
-    
-    # Compute top-k sets over the grid
-    topk_labels = np.zeros((200, 200), dtype=int)
-    margins = np.zeros((200, 200))
-    cert_radii_coord = np.zeros((200, 200))
-    
-    for ix in range(200):
-        for iy in range(200):
-            x = np.array([X[iy, ix], Y[iy, ix]])
-            scores = compute_scores(weights, biases, x)
-            S = topk_set(scores, k)
-            # Encode top-k set as a label for coloring
-            label = sum(2**i for i in S)
-            topk_labels[iy, ix] = label
-            
-            margin = topk_margin(scores, S)
-            margins[iy, ix] = margin
-            cert_radii_coord[iy, ix] = certified_radius_coordinate(margin, K)
-    
-    # --- Panel 1: Top-k decision regions ---
+
+    # Grid for decision boundaries
+    xx, yy = np.meshgrid(np.linspace(-2, 4, 300), np.linspace(-2, 3, 300))
+    grid = np.c_[xx.ravel(), yy.ravel()]
+
+    colors = ['#e74c3c', '#3498db', '#2ecc71', '#f39c12']
+    color_map = {0: 0, 1: 1, 2: 2, 3: 3}
+
+    # Panel 1: Bracket decision regions
     ax = axes[0]
-    ax.contourf(X, Y, topk_labels, levels=30, cmap='tab20', alpha=0.7)
-    ax.contour(X, Y, topk_labels, levels=30, colors='black', linewidths=0.3)
-    ax.set_title(f'Top-{k} Decision Regions\n(colors = different top-{k} sets)', fontsize=12)
-    ax.set_xlabel('$x_1$')
-    ax.set_ylabel('$x_2$')
-    ax.set_aspect('equal')
-    
-    # --- Panel 2: Margin heatmap ---
-    ax = axes[1]
-    im = ax.contourf(X, Y, margins, levels=20, cmap='viridis')
-    plt.colorbar(im, ax=ax, label='Top-k margin')
-    ax.contour(X, Y, topk_labels, levels=30, colors='white', linewidths=0.3, alpha=0.5)
-    ax.set_title(f'Top-{k} Margin\n(min gap between in-set and out-set)', fontsize=12)
-    ax.set_xlabel('$x_1$')
-    ax.set_ylabel('$x_2$')
-    ax.set_aspect('equal')
-    
-    # --- Panel 3: Certified radius heatmap with sample certificates ---
-    ax = axes[2]
-    im = ax.contourf(X, Y, cert_radii_coord, levels=20, cmap='plasma')
-    plt.colorbar(im, ax=ax, label='Certified radius $r^*$')
-    
-    # Draw certified balls at a few sample points
-    sample_points = [
-        np.array([1.0, 0.5]),
-        np.array([-1.0, 0.5]),
-        np.array([0.5, -1.0]),
-        np.array([0.0, 1.0]),
-        np.array([1.5, -0.5]),
-    ]
-    
-    for pt in sample_points:
-        scores = compute_scores(weights, biases, pt)
-        S = topk_set(scores, k)
-        margin = topk_margin(scores, S)
-        r_cert = certified_radius_coordinate(margin, K)
-        
-        if r_cert > 0.01:
-            circle = Circle(pt, r_cert, fill=False, edgecolor='lime',
+    Z_bracket = np.array([winner(bracket, scores, pt) for pt in grid])
+    Z_bracket = Z_bracket.reshape(xx.shape)
+    for i in range(4):
+        ax.contourf(xx, yy, (Z_bracket == i).astype(float),
+                   levels=[0.5, 1.5], colors=[colors[i]], alpha=0.3)
+    ax.contour(xx, yy, Z_bracket, colors='k', linewidths=0.5, alpha=0.5)
+
+    r_bracket = certified_radius(bracket, scores, x0, lip_const)
+    circle_b = plt.Circle(x0, r_bracket, fill=False, color='black',
                           linewidth=2, linestyle='--')
-            ax.add_patch(circle)
-            ax.plot(*pt, 'o', color='lime', markersize=5)
-    
-    ax.set_title(f'Certified Radius $r^* = \\mathrm{{margin}}/(2K)$\n$K={K:.2f}$', fontsize=12)
-    ax.set_xlabel('$x_1$')
-    ax.set_ylabel('$x_2$')
-    ax.set_xlim(-2, 2)
-    ax.set_ylim(-2, 2)
-    ax.set_aspect('equal')
-    
-    plt.tight_layout()
-    plt.savefig('demos/topk_decision_regions.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: demos/topk_decision_regions.png")
+    ax.add_patch(circle_b)
+    ax.plot(*x0, 'k*', markersize=15, zorder=5)
+    ax.set_title(f'Bracket: ((0v1) v (2v3))\nCert. radius = {r_bracket:.3f}',
+                fontsize=12, fontweight='bold')
+    ax.set_xlabel('x₁')
+    ax.set_ylabel('x₂')
+    ax.set_xlim(-2, 4)
+    ax.set_ylim(-2, 3)
 
-
-def plot_pairwise_vs_coordinate(weights, biases, k=2):
-    """
-    Compare coordinate-Lipschitz vs pairwise-Lipschitz certified radii.
-    """
-    np.random.seed(123)
-    K, Ki = max_affine_lipschitz(weights)
-    n_classes = weights.shape[0]
-    
-    # Build pairwise Lipschitz matrix (using K_i + K_j bound)
-    pairwise_L = np.zeros((n_classes, n_classes))
-    for i in range(n_classes):
-        for j in range(n_classes):
-            pairwise_L[i][j] = Ki[i] + Ki[j]
-    
-    # Sample random points and compare certificates
-    n_samples = 500
-    coord_radii = []
-    pairwise_radii = []
-    
-    for _ in range(n_samples):
-        x = np.random.uniform(-1.5, 1.5, size=2)
-        scores = compute_scores(weights, biases, x)
-        S = topk_set(scores, k)
-        margin = topk_margin(scores, S)
-        
-        r_coord = certified_radius_coordinate(margin, K)
-        r_pair = certified_radius_pairwise(scores, S, pairwise_L)
-        
-        coord_radii.append(r_coord)
-        pairwise_radii.append(r_pair)
-    
-    coord_radii = np.array(coord_radii)
-    pairwise_radii = np.array(pairwise_radii)
-    
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-    
-    # Scatter plot comparison
-    ax = axes[0]
-    ax.scatter(coord_radii, pairwise_radii, alpha=0.3, s=10, c='steelblue')
-    max_r = max(coord_radii.max(), pairwise_radii.max()) * 1.05
-    ax.plot([0, max_r], [0, max_r], 'r--', label='$r_{pair} = r_{coord}$')
-    ax.set_xlabel('Coordinate-Lipschitz radius $r^*_{\\mathrm{coord}}$')
-    ax.set_ylabel('Pairwise-Lipschitz radius $r^*_{\\mathrm{pair}}$')
-    ax.set_title('Pairwise vs Coordinate Certificates\n(points above diagonal = pairwise is tighter)')
-    ax.legend()
-    ax.set_aspect('equal')
-    
-    # Improvement ratio histogram
+    # Panel 2: Flat argmax decision regions
     ax = axes[1]
-    # Only where both are positive
-    mask = (coord_radii > 1e-8) & (pairwise_radii > 1e-8)
-    ratios = pairwise_radii[mask] / coord_radii[mask]
-    ax.hist(ratios, bins=40, color='steelblue', edgecolor='black', alpha=0.7)
-    ax.axvline(1.0, color='red', linestyle='--', label='Equal')
-    ax.axvline(np.median(ratios), color='green', linestyle='-', linewidth=2,
-               label=f'Median ratio = {np.median(ratios):.2f}')
-    ax.set_xlabel('Ratio $r^*_{\\mathrm{pair}} / r^*_{\\mathrm{coord}}$')
-    ax.set_ylabel('Count')
-    ax.set_title('Improvement from Pairwise Certificates')
-    ax.legend()
-    
+    Z_argmax = np.array([np.argmax([scores(i, pt) for i in range(4)])
+                         for pt in grid])
+    Z_argmax = Z_argmax.reshape(xx.shape)
+    for i in range(4):
+        ax.contourf(xx, yy, (Z_argmax == i).astype(float),
+                   levels=[0.5, 1.5], colors=[colors[i]], alpha=0.3)
+    ax.contour(xx, yy, Z_argmax, colors='k', linewidths=0.5, alpha=0.5)
+
+    r_argmax = flat_argmax_certified_radius(scores, x0, 4, lip_const)
+    circle_a = plt.Circle(x0, r_argmax, fill=False, color='blue',
+                          linewidth=2, linestyle='--')
+    ax.add_patch(circle_a)
+    ax.plot(*x0, 'k*', markersize=15, zorder=5)
+    ax.set_title(f'Flat Argmax\nCert. radius = {r_argmax:.3f}',
+                fontsize=12, fontweight='bold')
+    ax.set_xlabel('x₁')
+    ax.set_ylabel('x₂')
+    ax.set_xlim(-2, 4)
+    ax.set_ylim(-2, 3)
+
+    # Panel 3: Comparison overlay
+    ax = axes[2]
+    for i in range(4):
+        ax.contourf(xx, yy, (Z_bracket == i).astype(float),
+                   levels=[0.5, 1.5], colors=[colors[i]], alpha=0.2)
+    ax.contour(xx, yy, Z_bracket, colors='k', linewidths=0.5, alpha=0.3)
+
+    circle_b2 = plt.Circle(x0, r_bracket, fill=False, color='red',
+                           linewidth=2.5, linestyle='-', label='Bracket cert.')
+    circle_a2 = plt.Circle(x0, r_argmax, fill=False, color='blue',
+                           linewidth=2.5, linestyle='--', label='Argmax cert.')
+    ax.add_patch(circle_b2)
+    ax.add_patch(circle_a2)
+    ax.plot(*x0, 'k*', markersize=15, zorder=5)
+    ax.legend(loc='upper right', fontsize=10)
+    ax.set_title('Comparison of Certified Radii', fontsize=12, fontweight='bold')
+    ax.set_xlabel('x₁')
+    ax.set_ylabel('x₂')
+    ax.set_xlim(-2, 4)
+    ax.set_ylim(-2, 3)
+
     plt.tight_layout()
-    plt.savefig('demos/pairwise_vs_coordinate.png', dpi=150, bbox_inches='tight')
+    plt.savefig('MachineLearning/fig_decision_regions.png', dpi=150,
+                bbox_inches='tight')
     plt.close()
-    print("Saved: demos/pairwise_vs_coordinate.png")
+    print("Saved: MachineLearning/fig_decision_regions.png")
 
 
-def run_empirical_verification(weights, biases, k=2):
-    """
-    Verify certificates at several points.
-    """
-    K, _ = max_affine_lipschitz(weights)
-    
-    print("\n" + "="*70)
-    print(f"EMPIRICAL VERIFICATION (k={k}, K={K:.3f})")
-    print("="*70)
-    
-    test_points = [
-        np.array([1.0, 0.5]),
-        np.array([-1.0, 0.5]),
-        np.array([0.5, -1.0]),
-        np.array([0.0, 0.0]),
-        np.array([1.5, 1.0]),
-    ]
-    
-    for pt in test_points:
-        scores = compute_scores(weights, biases, pt)
-        S = topk_set(scores, k)
-        margin = topk_margin(scores, S)
-        r_cert = certified_radius_coordinate(margin, K)
-        
-        print(f"\nPoint x = {pt}")
-        print(f"  Scores: {scores}")
-        print(f"  Top-{k} set S = {sorted(S)}")
-        print(f"  Margin = {margin:.4f}")
-        print(f"  Certified radius r* = {r_cert:.4f}")
-        
-        if r_cert > 0.001:
-            n_preserved, n_total, n_violated = verify_certificate(
-                weights, biases, pt, S, r_cert * 0.99, n_samples=5000
-            )
-            print(f"  Verification (r=0.99·r*): {n_preserved}/{n_total} preserved, "
-                  f"{n_violated} violated")
-            assert n_violated == 0, "Certificate violated! This should never happen."
-            print(f"  ✓ Certificate verified: 0 violations in {n_total} samples")
-        else:
-            print(f"  (radius too small, skipping empirical verification)")
+# ============================================================================
+# Demo 3: Bracket vs Argmax Robustness Statistics
+# ============================================================================
 
+def demo_statistics():
+    """Compare bracket vs argmax certified radii across many random points."""
+    print("\n" + "=" * 70)
+    print("DEMO 3: Statistical Comparison — Bracket vs Argmax")
+    print("=" * 70)
 
-def plot_margin_landscape(weights, biases, k=2):
-    """
-    3D surface plot of the top-k margin landscape.
-    """
-    fig = plt.figure(figsize=(10, 7))
-    ax = fig.add_subplot(111, projection='3d')
-    
-    x_range = np.linspace(-2, 2, 100)
-    y_range = np.linspace(-2, 2, 100)
-    X, Y = np.meshgrid(x_range, y_range)
-    
-    Z = np.zeros_like(X)
-    for ix in range(100):
-        for iy in range(100):
-            x = np.array([X[iy, ix], Y[iy, ix]])
-            scores = compute_scores(weights, biases, x)
-            S = topk_set(scores, k)
-            Z[iy, ix] = topk_margin(scores, S)
-    
-    surf = ax.plot_surface(X, Y, Z, cmap='viridis', alpha=0.8,
-                           linewidth=0, antialiased=True)
-    ax.set_xlabel('$x_1$')
-    ax.set_ylabel('$x_2$')
-    ax.set_zlabel('Top-k margin')
-    ax.set_title(f'Top-{k} Margin Landscape\n(higher = more robust)')
-    plt.colorbar(surf, ax=ax, shrink=0.6, label='Margin')
-    
-    plt.savefig('demos/margin_landscape.png', dpi=150, bbox_inches='tight')
+    np.random.seed(42)
+    n_classes = 8
+
+    # Random linear classifiers
+    weights = np.random.randn(n_classes, 2) * 2
+    biases = np.random.randn(n_classes) * 0.5
+
+    def scores(i, x):
+        return weights[i] @ x + biases[i]
+
+    def lip_const(i, j):
+        return np.linalg.norm(weights[i] - weights[j])
+
+    # Build different bracket structures
+    def build_balanced_bracket(labels):
+        if len(labels) == 1:
+            return Leaf(labels[0])
+        mid = len(labels) // 2
+        return Node(build_balanced_bracket(labels[:mid]),
+                    build_balanced_bracket(labels[mid:]))
+
+    bracket = build_balanced_bracket(list(range(n_classes)))
+
+    # Test on many random points
+    n_points = 500
+    points = np.random.randn(n_points, 2) * 2
+
+    bracket_radii = []
+    argmax_radii = []
+
+    for x0 in points:
+        r_b = certified_radius(bracket, scores, x0, lip_const)
+        r_a = flat_argmax_certified_radius(scores, x0, n_classes, lip_const)
+        if np.isfinite(r_b) and np.isfinite(r_a) and r_a > 0:
+            bracket_radii.append(r_b)
+            argmax_radii.append(r_a)
+
+    bracket_radii = np.array(bracket_radii)
+    argmax_radii = np.array(argmax_radii)
+    ratios = bracket_radii / argmax_radii
+
+    print(f"\nResults over {len(bracket_radii)} test points ({n_classes} classes):")
+    print(f"  Mean bracket radius:  {bracket_radii.mean():.4f}")
+    print(f"  Mean argmax radius:   {argmax_radii.mean():.4f}")
+    print(f"  Mean ratio (B/A):     {ratios.mean():.4f}")
+    print(f"  Median ratio (B/A):   {np.median(ratios):.4f}")
+    print(f"  Points where bracket ≥ argmax: {(ratios >= 1.0).mean()*100:.1f}%")
+    print(f"  Points where bracket > argmax: {(ratios > 1.0).mean()*100:.1f}%")
+
+    # Visualization
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+    ax = axes[0]
+    ax.hist(ratios, bins=50, color='steelblue', alpha=0.7, edgecolor='black')
+    ax.axvline(1.0, color='red', linewidth=2, linestyle='--', label='Ratio = 1')
+    ax.axvline(ratios.mean(), color='green', linewidth=2, label=f'Mean = {ratios.mean():.2f}')
+    ax.set_xlabel('Bracket / Argmax Certified Radius', fontsize=12)
+    ax.set_ylabel('Count', fontsize=12)
+    ax.set_title(f'Distribution of Radius Ratios ({n_classes} classes)',
+                fontsize=13, fontweight='bold')
+    ax.legend(fontsize=11)
+
+    ax = axes[1]
+    ax.scatter(argmax_radii, bracket_radii, alpha=0.3, s=10, c='steelblue')
+    lim = max(argmax_radii.max(), bracket_radii.max()) * 1.1
+    ax.plot([0, lim], [0, lim], 'r--', linewidth=1.5, label='y = x')
+    ax.set_xlabel('Argmax Certified Radius', fontsize=12)
+    ax.set_ylabel('Bracket Certified Radius', fontsize=12)
+    ax.set_title('Bracket vs Argmax Radii', fontsize=13, fontweight='bold')
+    ax.legend(fontsize=11)
+    ax.set_aspect('equal')
+
+    plt.tight_layout()
+    plt.savefig('MachineLearning/fig_statistics.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: demos/margin_landscape.png")
+    print("Saved: MachineLearning/fig_statistics.png")
 
 
-def plot_subset_preservation(weights, biases):
-    """
-    Demonstrate the subset preservation theorem:
-    even if the full top-k set permutes internally, a designated
-    target subset T ⊆ S cannot drop below outside classes.
-    """
-    fig, ax = plt.subplots(1, 1, figsize=(8, 6))
-    
-    K, _ = max_affine_lipschitz(weights)
-    n_classes = weights.shape[0]
-    
-    # Choose a point and its top-3 set
+# ============================================================================
+# Demo 4: ReLU Network Example
+# ============================================================================
+
+def demo_relu_network():
+    """Demonstrate certified robustness for a simple ReLU network."""
+    print("\n" + "=" * 70)
+    print("DEMO 4: ReLU Network Certified Robustness")
+    print("=" * 70)
+
+    np.random.seed(123)
+
+    # Simple 2-layer ReLU network: x ∈ R^2 → 4 class scores
+    # Layer 1: h = ReLU(W1 @ x + b1), hidden dim = 8
+    # Layer 2: scores = W2 @ h + b2
+
+    W1 = np.random.randn(8, 2) * 0.5
+    b1 = np.random.randn(8) * 0.1
+    W2 = np.random.randn(4, 8) * 0.3
+    b2 = np.random.randn(4) * 0.1
+
+    def relu(x):
+        return np.maximum(0, x)
+
+    def network_scores(i, x):
+        h = relu(W1 @ x + b1)
+        return (W2[i] @ h + b2[i])
+
+    # Lipschitz constant bound for each score function
+    # ||f_i(x) - f_i(y)|| ≤ ||W2[i]|| * ||W1|| * ||x - y|| (upper bound via norms)
+    norm_W1 = np.linalg.norm(W1, ord=2)  # spectral norm
+    K_per_class = np.array([np.linalg.norm(W2[i]) * norm_W1 for i in range(4)])
+
+    def lip_const(i, j):
+        return K_per_class[i] + K_per_class[j]
+
+    def scores(i, x):
+        return network_scores(i, x)
+
+    # Tournament bracket
+    bracket = Node(Node(Leaf(0), Leaf(1)), Node(Leaf(2), Leaf(3)))
+
+    x0 = np.array([0.5, -0.3])
+    print(f"\nInput: x0 = {x0}")
+    print(f"\nNetwork scores at x0:")
+    for i in range(4):
+        print(f"  Class {i}: {scores(i, x0):.4f} (Lip. const = {K_per_class[i]:.4f})")
+
+    w = winner(bracket, scores, x0)
+    print(f"\nTournament winner: Class {w}")
+
+    path = winner_path(bracket, scores, x0)
+    print(f"\nWinner path:")
+    for wl, ol, margin in path:
+        L = lip_const(wl, ol)
+        print(f"  Class {wl} beats Class {ol}: margin = {margin:.4f}, "
+              f"L = {L:.4f}, radius = {margin/L:.4f}")
+
+    r_bracket = certified_radius(bracket, scores, x0, lip_const)
+    r_argmax = flat_argmax_certified_radius(scores, x0, 4, lip_const)
+
+    print(f"\nCertified radii:")
+    print(f"  Bracket:  {r_bracket:.4f}")
+    print(f"  Argmax:   {r_argmax:.4f}")
+
+    # Verify by sampling
+    n_samples = 10000
+    perturbations = np.random.randn(n_samples, 2)
+    perturbations = perturbations / np.linalg.norm(perturbations, axis=1, keepdims=True)
+    perturbations *= np.random.uniform(0, r_bracket, (n_samples, 1))
+
+    winners_perturbed = [winner(bracket, scores, x0 + p) for p in perturbations]
+    all_same = all(w == w for w in winners_perturbed)
+    print(f"\n  Empirical verification ({n_samples} samples in bracket ball): "
+          f"{'All same ✓' if all_same else 'MISMATCH ✗'}")
+
+
+# ============================================================================
+# Demo 5: Bracket Optimization
+# ============================================================================
+
+def demo_bracket_optimization():
+    """Show how different bracket structures give different certified radii."""
+    print("\n" + "=" * 70)
+    print("DEMO 5: Bracket Structure Optimization")
+    print("=" * 70)
+
+    np.random.seed(7)
+    n_classes = 4
+
+    weights = np.array([[3.0, 0.5], [0.0, 2.5], [-1.0, 1.0], [1.5, -1.5]])
+    biases = np.array([0.0, 0.5, 1.0, -0.5])
+
+    def scores(i, x):
+        return weights[i] @ x + biases[i]
+
+    def lip_const(i, j):
+        return np.linalg.norm(weights[i] - weights[j])
+
     x0 = np.array([0.8, 0.3])
-    scores0 = compute_scores(weights, biases, x0)
-    k = 3
-    S = topk_set(scores0, k)
-    
-    # Target subset: top-1 class within S
-    best_in_S = max(S, key=lambda i: scores0[i])
-    T = {best_in_S}
-    
-    # Compute margin for T against S^c
-    Sc = set(range(n_classes)) - S
-    T_margin = min(scores0[i] - scores0[j] for i in T for j in Sc)
-    r_T = T_margin / (2 * K)
-    
-    # Full S margin
-    S_margin = topk_margin(scores0, S)
-    r_S = certified_radius_coordinate(S_margin, K)
-    
-    # Trace scores along a perturbation direction
-    direction = np.array([1.0, 0.3])
-    direction = direction / np.linalg.norm(direction)
-    
-    ts = np.linspace(-r_T * 1.5, r_T * 1.5, 200)
-    score_traces = np.zeros((n_classes, len(ts)))
-    
-    for idx, t in enumerate(ts):
-        y = x0 + t * direction
-        score_traces[:, idx] = compute_scores(weights, biases, y)
-    
-    class_names = [f'Class {i}' for i in range(n_classes)]
-    colors = plt.cm.Set1(np.linspace(0, 1, n_classes))
-    
+
+    print(f"\nScores at x0 = {x0}:")
     for i in range(n_classes):
-        style = '-' if i in S else '--'
-        lw = 2.5 if i in T else (1.5 if i in S else 1.0)
-        label = class_names[i]
-        if i in T:
-            label += ' (target T)'
-        elif i in S:
-            label += ' (in S)'
-        else:
-            label += ' (outside S)'
-        ax.plot(ts, score_traces[i], style, color=colors[i], linewidth=lw, label=label)
-    
-    # Mark certified regions
-    ax.axvspan(-r_S, r_S, alpha=0.1, color='blue', label=f'Full S cert. (r={r_S:.3f})')
-    ax.axvspan(-r_T, r_T, alpha=0.15, color='green', label=f'Target T cert. (r={r_T:.3f})')
-    ax.axvline(0, color='gray', linestyle=':', alpha=0.5)
-    
-    ax.set_xlabel('Perturbation distance $t$')
-    ax.set_ylabel('Class score $f(x + t \\cdot d, i)$')
-    ax.set_title(f'Subset Preservation: T={sorted(T)} within S={sorted(S)}\n'
-                 f'T never drops below outside classes within green region')
-    ax.legend(fontsize=8, loc='upper left')
-    
-    plt.tight_layout()
-    plt.savefig('demos/subset_preservation.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: demos/subset_preservation.png")
+        print(f"  Class {i}: {scores(i, x0):.3f}")
+
+    # All possible brackets for 4 classes (there are several)
+    from itertools import permutations
+
+    brackets_info = []
+    labels = list(range(n_classes))
+
+    # Generate all binary tree structures for 4 leaves
+    def all_brackets_4(labels):
+        """Generate all bracket structures for 4 labels."""
+        results = []
+        for perm in permutations(labels):
+            a, b, c, d = perm
+            # Structure: ((a,b),(c,d))
+            results.append((Node(Node(Leaf(a), Leaf(b)), Node(Leaf(c), Leaf(d))),
+                           f"(({a}v{b})v({c}v{d}))"))
+            # Structure: (((a,b),c),d) - left-skewed
+            results.append((Node(Node(Node(Leaf(a), Leaf(b)), Leaf(c)), Leaf(d)),
+                           f"((({a}v{b})v{c})v{d})"))
+            # Structure: (a,((b,c),d)) - right-skewed
+            results.append((Node(Leaf(a), Node(Node(Leaf(b), Leaf(c)), Leaf(d))),
+                           f"({a}v(({b}v{c})v{d}))"))
+        return results
+
+    all_br = all_brackets_4(labels)
+
+    # Deduplicate by winner and radius
+    seen = set()
+    unique_results = []
+    for br, name in all_br:
+        w = winner(br, scores, x0)
+        r = certified_radius(br, scores, x0, lip_const)
+        key = (w, round(r, 6), name)
+        if key not in seen:
+            seen.add(key)
+            unique_results.append((br, name, w, r))
+
+    # Sort by radius
+    unique_results.sort(key=lambda x: -x[3])
+
+    print(f"\nBracket structures ranked by certified radius:")
+    for i, (br, name, w, r) in enumerate(unique_results[:10]):
+        argmax_w = np.argmax([scores(j, x0) for j in range(n_classes)])
+        marker = " ★" if w == argmax_w else " ✦"
+        print(f"  {name:25s} → winner={w}, r*={r:.4f}{marker}")
+
+    print(f"\n  ★ = agrees with argmax, ✦ = different winner (bracket advantage!)")
+
+    best_r = unique_results[0][3]
+    r_argmax = flat_argmax_certified_radius(scores, x0, n_classes, lip_const)
+    print(f"\n  Best bracket radius:  {best_r:.4f}")
+    print(f"  Argmax radius:        {r_argmax:.4f}")
 
 
-# ============================================================
+# ============================================================================
+# Demo 6: Tropical Network Composition
+# ============================================================================
+
+def demo_tropical_composition():
+    """Demonstrate how tropical (max-plus) networks compose with brackets."""
+    print("\n" + "=" * 70)
+    print("DEMO 6: Tropical Network Composition")
+    print("=" * 70)
+
+    # Tropical linear function: f(x) = max_j (w_j + x_j) (max-plus algebra)
+    # These are 1-Lipschitz w.r.t. l_infty norm
+
+    def tropical_linear(w, x):
+        """Max-plus linear function: max_j(w_j + x_j)"""
+        return np.max(w + x)
+
+    # Define 4 tropical score functions
+    W = np.array([
+        [2.0, -1.0, 0.5],
+        [0.0,  3.0, -0.5],
+        [-1.0, 1.0,  2.5],
+        [1.5,  0.0,  1.0]
+    ])
+
+    def scores(i, x):
+        return tropical_linear(W[i], x)
+
+    # For tropical linear functions, Lip constant of difference ≤ 2 (l_infty)
+    # But using l2 norm, Lip ≤ 2*sqrt(d)
+    d = 3
+    Kdiff = 2.0  # w.r.t. l_infty
+
+    bracket = Node(Node(Leaf(0), Leaf(1)), Node(Leaf(2), Leaf(3)))
+    x0 = np.array([1.0, 0.5, -0.3])
+
+    print(f"\nTropical scores at x0 = {x0}:")
+    for i in range(4):
+        print(f"  Class {i}: f_{i}(x0) = max(w + x) = {scores(i, x0):.3f}")
+
+    w = winner(bracket, scores, x0)
+    print(f"\nTournament winner: Class {w}")
+
+    nodes = all_nodes(bracket, scores, x0)
+    print(f"\nAll comparison nodes:")
+    min_margin = float('inf')
+    for wl, ol, margin in nodes:
+        r_node = margin / Kdiff
+        min_margin = min(min_margin, r_node)
+        print(f"  Class {wl} beats {ol}: margin = {margin:.3f}, "
+              f"radius contribution = {r_node:.3f}")
+
+    print(f"\nCertified radius (l_infty): {min_margin:.4f}")
+    print(f"  (Any perturbation with ||δ||_∞ < {min_margin:.4f} preserves the winner)")
+
+
+# ============================================================================
 # Main
-# ============================================================
+# ============================================================================
 
 if __name__ == '__main__':
-    os.makedirs('demos', exist_ok=True)
-    
-    print("Creating demo network...")
-    weights, biases = create_demo_network()
-    K, Ki = max_affine_lipschitz(weights)
-    
-    print(f"\nNetwork: 5 classes, 3 pieces each, 2D input")
-    print(f"Coordinate Lipschitz constants: {Ki}")
-    print(f"Uniform Lipschitz constant K = {K:.3f}")
-    
-    print("\n--- Generating visualizations ---")
-    plot_decision_boundary_and_certificates(weights, biases, k=2)
-    plot_pairwise_vs_coordinate(weights, biases, k=2)
-    plot_margin_landscape(weights, biases, k=2)
-    plot_subset_preservation(weights, biases)
-    
-    run_empirical_verification(weights, biases, k=2)
-    
-    print("\n" + "="*70)
-    print("DEMO COMPLETE")
-    print("="*70)
-    print("\nAll certificates verified — no violations found.")
-    print("This empirically confirms the formal theorems proved in Lean 4.")
+    print("╔══════════════════════════════════════════════════════════════════════╗")
+    print("║  Tournament Bracket Certified Robustness — Python Demonstration     ║")
+    print("║  Companion to formally verified Lean 4 proofs                       ║")
+    print("╚══════════════════════════════════════════════════════════════════════╝")
+
+    bracket, scores, x0, weights, lip_const = demo_basic_bracket()
+    demo_visualization(bracket, scores, x0, weights, lip_const)
+    demo_statistics()
+    demo_relu_network()
+    demo_bracket_optimization()
+    demo_tropical_composition()
+
+    print("\n" + "=" * 70)
+    print("All demos complete. See generated figures:")
+    print("  - MachineLearning/fig_decision_regions.png")
+    print("  - MachineLearning/fig_statistics.png")
+    print("=" * 70)

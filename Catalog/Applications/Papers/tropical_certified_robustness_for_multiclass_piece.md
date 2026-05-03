@@ -1,215 +1,225 @@
-# Tropical Certified Robustness for Multiclass Piecewise-Linear Networks under Top-K Decision via Order-Statistic Gaps
+# Certified Robustness for Tournament-Style Multiclass Classifiers: A Formally Verified Theory
 
 ## Abstract
 
-We present a formally verified theory of certified robustness for top-*k* prediction in multiclass neural networks, formalized in Lean 4 with Mathlib. The central contribution is a set-based formulation of top-*k* stability that avoids sorting machinery entirely, reducing order-statistic certification to finite pairwise comparisons over `Finset (Fin n)`. We prove four main theorems: (1) coordinate-Lipschitz top-*k* stability with certified radius `margin/(2K)`, (2) a sharper pairwise-difference Lipschitz variant that eliminates the factor-of-2 penalty when score differences have smaller Lipschitz constants due to cancellation, (3) a subset preservation theorem for hierarchical readouts, and (4) an order-statistic cardinality corollary. We also prove Lipschitz closure lemmas for `max`, ReLU, and finite max-pooling, connecting the abstract stability theory to tropical/piecewise-linear network architectures. All proofs are machine-verified and depend only on the standard axioms (`propext`, `Classical.choice`, `Quot.sound`).
+We develop and formally verify a certified robustness theory for tournament-style (bracket-based) multiclass classifiers with piecewise-linear score maps. Unlike standard argmax semantics, where robustness requires controlling *all* pairwise class gaps, tournament semantics requires only that the comparisons along the champion's elimination path remain stable under perturbation. We prove, in Lean 4 with Mathlib, that if every internal comparison in the bracket has a score gap exceeding the Lipschitz-controlled perturbation drift, the tournament winner is invariant on the entire perturbation ball. We derive a closed-form certified radius as the minimum margin-to-Lipschitz ratio across bracket nodes, and prove composition theorems bridging individual score Lipschitz constants to bracket-level certificates.
+
+**Keywords:** Certified robustness, tournament classifiers, tropical geometry, piecewise-linear networks, formal verification, Lean 4
+
+---
 
 ## 1. Introduction
 
-Certified robustness—providing mathematical guarantees that a classifier's prediction is stable under bounded input perturbations—is a cornerstone of trustworthy machine learning. While extensive work has addressed the binary and single-class argmax settings, the top-*k* prediction problem has received less formal attention despite its practical importance in retrieval, shortlist prediction, and hierarchical classification.
+Certified robustness — the mathematical guarantee that a classifier's output is invariant under bounded perturbations — is a cornerstone of trustworthy machine learning. For multiclass classifiers based on the argmax of score functions, the standard certification condition requires that the *minimum* pairwise margin between the winning class and *every* other class exceeds the worst-case perturbation drift. This involves checking O(C) class comparisons for C classes.
 
-The top-*k* prediction asks: which *k* classes receive the highest scores? This is fundamentally an order-statistic question. Previous approaches typically require formalizing the *k*-th and (*k*+1)-st sorted coordinates, introducing sorting permutations and their associated proof obligations. This is technically burdensome in a formal proof assistant.
+In this paper, we propose and formally verify a fundamentally different certification framework based on **tournament (elimination bracket) semantics**. Instead of a flat argmax, the decision is made by a binary elimination tree: at each internal node, two sub-tournament winners are compared, and the local winner advances. The final classification is the root winner of the tournament.
 
-**Our key insight** is that top-*k* set stability can be phrased entirely as a finite conjunction of pairwise comparisons: class *i* ∈ *S* dominates class *j* ∉ *S* if and only if *f(x,i) > f(x,j)*. This reduces the problem to finitely many scalar inequalities, each of which can be controlled by Lipschitz bounds. No sorting is needed.
+### Why tournaments?
 
-This formulation is especially natural for tropical (piecewise-linear) network architectures, where each output coordinate is a max-affine function and the Lipschitz constant admits clean compositional bounds through `max`, ReLU, and max-pooling operations.
+Tournament semantics is natural in several machine learning contexts:
+
+1. **Hierarchical classifiers**: Decision trees, cascaded detectors, and taxonomic classifiers often compare labels in a fixed tree structure rather than via global argmax.
+
+2. **Tropical and max-plus networks**: In tropical geometry, piecewise-linear functions compose via max and plus operations, naturally producing staged comparison structures.
+
+3. **Efficient inference**: For large label spaces (e.g., extreme classification with millions of classes), binary elimination reduces inference from O(C) to O(log C) comparisons.
+
+4. **Structured robustness**: Tournament robustness depends only on the comparisons actually used by the champion, offering certificates that exploit the bracket structure.
 
 ### Contributions
 
-1. **Sort-free top-*k* stability theory.** We define `StrictTopKSet f x S` as a predicate asserting that all classes in *S* strictly dominate all classes outside *S*, and prove stability theorems using only `Finset` quantification.
+We make the following contributions, all formally verified in Lean 4:
 
-2. **Pairwise-Lipschitz sharpening.** Our `topk_stable_of_pairwise_lipschitz` theorem uses individual Lipschitz constants *L*(*i*,*j*) for each score difference *f_i - f_j*, yielding strictly tighter certificates than the generic `margin/(2K)` bound when cancellation occurs.
+1. **Recursive Stabilization Theorem**: If a recursive margin certificate holds — meaning every internal bracket node has a score gap exceeding the Lipschitz-controlled drift — then the tournament winner is constant on the perturbation ball.
 
-3. **Subset preservation.** The `subset_of_topk_preserved` theorem guarantees that a designated subset *T* ⊆ *S* of classes cannot drop below outside classes, even if the internal ranking within *S* may permute.
+2. **Certified Radius Bound**: The certified radius is at least min_v (margin_v / L_v), where the minimum is over all internal nodes, margin_v is the score gap at node v, and L_v is the Lipschitz constant of the score difference.
 
-4. **Tropical closure.** Lipschitz closure for `max`, ReLU, and `Finset.sup'` enables compositional certification of piecewise-linear architectures.
+3. **Composition Theorems**: Individual per-class Lipschitz constants K_i compose to give bracket-level certificates via L(a,b) = K_a + K_b.
 
-5. **Complete machine verification.** All results are proved in Lean 4 using only standard axioms.
+4. **Uniform Lipschitz Corollary**: When all score differences share a common Lipschitz bound (as in ReLU/tropical networks), the certificate simplifies to a uniform check.
+
+---
 
 ## 2. Mathematical Framework
 
-### 2.1 Score Maps and Top-K Sets
+### 2.1 Bracket and Tournament Winner
 
-Let (α, d) be a pseudometric space and *f* : α → Fin *n* → ℝ a multiclass score map assigning *n* real-valued scores to each input.
-
-**Definition (Score Gap).** For classes *i*, *j* ∈ Fin *n*:
+**Definition (Bracket).** A *bracket* over labels α is a full binary tree:
 ```
-scoreGap(f, x, i, j) = f(x, i) - f(x, j)
+Bracket α ::= leaf(a : α) | node(l : Bracket α, r : Bracket α)
 ```
 
-**Definition (Strict Top-K Set).** A finset *S* ⊆ Fin *n* is a strict top-*k* set at *x* if:
-```
-StrictTopKSet(f, x, S) ⟺ ∀ i ∈ S, ∀ j ∉ S, f(x, j) < f(x, i)
-```
+**Definition (Tournament Winner).** Given score functions f : α → X → ℝ, the tournament winner of bracket T at input x is defined recursively:
+- winner(leaf(a), x) = a
+- winner(node(l, r), x) = w_l if f(w_l, x) ≥ f(w_r, x), else w_r
 
-**Definition (Top-K Margin).** The top-*k* margin is the minimum score gap between any in-set and any out-set class:
-```
-topkMargin'(f, x, S) = min { f(x,i) - f(x,j) | i ∈ S, j ∉ S }
-```
+where w_l = winner(l, x) and w_r = winner(r, x). Ties are broken in favor of the left subtree.
 
-This is formalized using `Finset.min'` over the image of the cross product *S* × *Sᶜ*, requiring only that both *S* and *Sᶜ* are nonempty.
+### 2.2 Lipschitz Score Differences
 
-### 2.2 The Pairwise Gap Perturbation Lemma
+We assume score functions whose pairwise differences are Lipschitz:
 
-The foundation of all stability results is a single inequality:
+**Definition.** A score family f is *difference-Lipschitz* with constants L : α → α → ℝ≥0 if for all labels a, b and inputs x, y:
+$$|(f(a,x) - f(b,x)) - (f(a,y) - f(b,y))| \leq L(a,b) \cdot \|x - y\|$$
 
-**Lemma (Pairwise Gap Perturbation).** If each coordinate *f_i* is *K*-Lipschitz, then for all *x*, *y* ∈ α and *i*, *j* ∈ Fin *n*:
+This is a natural condition for piecewise-linear and tropical score maps. When individual scores f(a, ·) are K_a-Lipschitz, the difference is (K_a + K_b)-Lipschitz (Lemma 1 below).
 
-```
-f(y,i) - f(y,j) ≥ (f(x,i) - f(x,j)) - 2K · d(x,y)
-```
+### 2.3 Recursive Margin Certificate
 
-*Proof.* From the Lipschitz bounds |*f(y,i)* − *f(x,i)*| ≤ *K* · *d*(*x*,*y*) and |*f(y,j)* − *f(x,j)*| ≤ *K* · *d*(*x*,*y*), we get:
+**Definition (Recursive Margin Certificate).** The predicate RecursiveMarginCert(f, x₀, r, L, T) is defined inductively:
+- **Leaf**: Always certified.
+- **Node (left wins)**: If f(w_l, x₀) ≥ f(w_r, x₀), require:
+  - RecursiveMarginCert(f, x₀, r, L, l)
+  - RecursiveMarginCert(f, x₀, r, L, r)
+  - L(w_l, w_r) · r < f(w_l, x₀) - f(w_r, x₀)
+- **Node (right wins)**: Symmetric.
 
-*f(y,i)* − *f(y,j)* = (*f(x,i)* − *f(x,j)*) + (*f(y,i)* − *f(x,i)*) − (*f(y,j)* − *f(x,j)*)
-≥ (*f(x,i)* − *f(x,j)*) − *K* · *d*(*x*,*y*) − *K* · *d*(*x*,*y*)
-= (*f(x,i)* − *f(x,j)*) − 2*K* · *d*(*x*,*y*). □
+---
 
-### 2.3 Main Stability Theorems
+## 3. Main Results
 
-**Theorem 1 (Coordinate-Lipschitz Stability).** If each *f_i* is *K*-Lipschitz and for every *i* ∈ *S*, *j* ∉ *S*:
-```
-2K · d(x,y) < f(x,i) - f(x,j)
-```
-then `StrictTopKSet(f, y, S)`.
+### 3.1 One-Step Comparison Stability
 
-**Theorem 2 (Margin Certificate).** If 2*K* · *r* < topkMargin'(*f*, *x*, *S*), then `StrictTopKSet(f, y, S)` for all *y* with *d*(*x*,*y*) ≤ *r*.
+**Lemma 1 (Score Gap Stability).** Let u, v : X → ℝ with |(u(y)-v(y)) - (u(x₀)-v(x₀))| ≤ L·‖y-x₀‖ for some L ≥ 0. If L·r < u(x₀) - v(x₀) and ‖y-x₀‖ ≤ r, then u(y) > v(y).
 
-**Theorem 3 (Pairwise-Lipschitz Stability).** If each score difference *f_i* − *f_j* has Lipschitz constant *L*(*i*,*j*), and for every *i* ∈ *S*, *j* ∉ *S*:
-```
-L(i,j) · d(x,y) < f(x,i) - f(x,j)
-```
-then `StrictTopKSet(f, y, S)`.
+*Proof.* From the Lipschitz bound:
+$$u(y) - v(y) \geq (u(x_0) - v(x_0)) - L\|y - x_0\| \geq (u(x_0) - v(x_0)) - Lr > 0$$
 
-This is strictly stronger than Theorem 1: it replaces 2*K* with *L*(*i*,*j*), which can be much smaller when *f_i* and *f_j* share structure (e.g., common subnetwork weights in a tropical architecture).
+**Lemma 2 (Difference Lipschitz from Individual).** If |f(a,x) - f(a,y)| ≤ K_a·‖x-y‖ and |f(b,x) - f(b,y)| ≤ K_b·‖x-y‖, then |(f(a,x)-f(b,x)) - (f(a,y)-f(b,y))| ≤ (K_a + K_b)·‖x-y‖.
 
-**Theorem 4 (Subset Preservation).** For *T* ⊆ *S*, if for every *i* ∈ *T*, *j* ∉ *S*:
-```
-2K · r < f(x,i) - f(x,j)
-```
-then for all *y* with *d*(*x*,*y*) ≤ *r* and every *i* ∈ *T*, *j* ∉ *S*: *f(y,j)* < *f(y,i)*.
+*Proof.* Triangle inequality: the difference of differences decomposes as (f(a,x)-f(a,y)) - (f(b,x)-f(b,y)).
 
-**Theorem 5 (Cardinal Stability).** If *S*.card = *k* and the conditions of Theorem 2 hold, then `StrictTopKSet(f, y, S) ∧ S.card = k` for all *y* with *d*(*x*,*y*) ≤ *r*.
+### 3.2 Recursive Stabilization Theorem
 
-### 2.4 Tropical Closure Lemmas
+**Theorem 1 (Main).** Let T be a bracket, f a score family with difference-Lipschitz constants L ≥ 0, x₀ a center point, and r ≥ 0. If RecursiveMarginCert(f, x₀, r, L, T) holds, then for all y with ‖y - x₀‖ ≤ r:
+$$\text{winner}(T, f, y) = \text{winner}(T, f, x_0)$$
 
-**Theorem (Lipschitz Max).** If *g*, *h* : α → ℝ are both *K*-Lipschitz, then *x* ↦ max(*g*(*x*), *h*(*x*)) is *K*-Lipschitz.
+*Proof.* By induction on the recursive margin certificate.
 
-**Theorem (ReLU is 1-Lipschitz).** The function *z* ↦ max(*z*, 0) is 1-Lipschitz.
+**Base case (leaf):** Immediate — winner(leaf(a), y) = a for all y.
 
-**Theorem (Finset Sup' Lipschitz).** If every *g_b* is *K*-Lipschitz for *b* in a nonempty finset *s*, then *x* ↦ sup'_s *g_b*(*x*) is *K*-Lipschitz.
+**Inductive case (node, left wins):** Let w_l = winner(l, x₀), w_r = winner(r, x₀). By induction:
+- winner(l, y) = w_l for all y with ‖y-x₀‖ ≤ r
+- winner(r, y) = w_r for all y with ‖y-x₀‖ ≤ r
 
-**Corollary (Certified Radius).** For a coordinate-*K*-Lipschitz network with positive top-*k* margin *m*, the certified radius is:
-```
-r* = m / (2K)
-```
-Within this radius, the top-*k* set is guaranteed to be preserved.
+The margin condition gives L(w_l, w_r)·r < f(w_l, x₀) - f(w_r, x₀). By Lemma 1, f(w_l, y) > f(w_r, y) for all y in the ball. Since the child winners are frozen:
+$$\text{winner}(\text{node}(l,r), y) = w_l = \text{winner}(\text{node}(l,r), x_0)$$
 
-## 3. Formalization Details
+The right-wins case is symmetric. ∎
 
-### 3.1 File Structure
+### 3.3 Certified Radius
 
-The Lean formalization consists of three files:
+**Theorem 2 (Certified Radius Bound).** Under the hypotheses of Theorem 1, with L(a,b) > 0 for all a, b, and all internal margins positive, the certified radius satisfies:
+$$r^*(x_0) \geq \min_v \frac{f(w_v, x_0) - f(o_v, x_0)}{L(w_v, o_v)}$$
 
-- **`Defs.lean`** (≈100 lines): Core definitions (`scoreGap`, `crossGaps`, `topkMargin'`, `IsTopKSet`, `StrictTopKSet`) and basic lemmas about `Finset` membership and margin bounds.
+where the minimum is over all internal bracket nodes v, and w_v, o_v are the winning and opposing labels at v.
 
-- **`Stability.lean`** (≈170 lines): The main stability theorems, including the pairwise gap perturbation lemma, coordinate-Lipschitz and pairwise-Lipschitz stability, subset preservation, and cardinal stability.
+### 3.4 Composition with Individual Lipschitz Constants
 
-- **`Tropical.lean`** (≈85 lines): Lipschitz closure lemmas for `max`, ReLU, and `Finset.sup'`, plus the certified radius corollary.
+**Theorem 3 (Bridge Theorem).** If each score f(a, ·) is K_a-Lipschitz and every internal node v satisfies:
+$$(K_{w_v} + K_{o_v}) \cdot r < f(w_v, x_0) - f(o_v, x_0)$$
 
-### 3.2 Design Decisions
+then winner(T, f, y) = winner(T, f, x₀) for all ‖y - x₀‖ ≤ r.
 
-**Sort-free formulation.** By defining top-*k* membership through pairwise dominance rather than sorted coordinates, we avoid needing a formalization of sorting, order statistics, or the connection between sorted positions and set membership. This makes every theorem statement a straightforward finite conjunction.
+This bridges per-class Lipschitz bounds (available from network architecture analysis) to bracket-level certificates.
 
-**`Finset.min'` for margins.** We use `Finset.min'` rather than `sInf` over a real-valued set, avoiding the need for `ConditionallyCompleteLinearOrder` lemmas and the subtleties of `sInf ∅`.
+---
 
-**NNReal for Lipschitz constants.** Following Mathlib convention, `LipschitzWith` takes an `NNReal` argument. We bridge to the user's `ℝ`-valued constants via `⟨K, hK⟩ : ℝ≥0` constructions.
+## 4. Formal Verification
 
-### 3.3 Axiom Audit
+All results are formalized in Lean 4 with Mathlib. The development consists of:
 
-All theorems depend only on:
-- `propext` (propositional extensionality)
-- `Classical.choice` (axiom of choice)
-- `Quot.sound` (quotient soundness)
+- **`BracketDefs.lean`** (~90 lines): Core definitions of `Bracket`, `winner`, `RecursiveMarginCert`, `WinnerPathNode`, `winnerPath`.
+- **`BracketRobustness.lean`** (~240 lines): All theorems and proofs.
 
-No `sorry`, `axiom`, or `@[implemented_by]` is used anywhere.
+The axiom footprint is minimal: only `propext`, `Classical.choice`, and `Quot.sound` — the standard foundations of Lean's logic with no additional axioms.
 
-## 4. Applications
+Key aspects of the formalization:
 
-### 4.1 Retrieval and Shortlist Prediction
+1. **Classical reasoning**: The `winner` function uses classical decidability of ≥ on ℝ, making it `noncomputable`. This is mathematically correct but means the function exists only as a mathematical object, not as executable code.
 
-In information retrieval, the system returns the top-*k* documents/items. A certified radius guarantees that small perturbations to the query embedding (e.g., from quantization, adversarial noise, or measurement error) do not change the returned set. This is critical for:
+2. **Induction on certificates**: The main theorem is proved by induction on the `RecursiveMarginCert` inductive predicate, which provides exactly the right structure for the proof.
 
-- **Search engines**: Ensuring ranking stability under query perturbation.
-- **Recommendation systems**: Guaranteeing shortlist consistency.
-- **Medical diagnosis**: When the top-*k* differential diagnoses must be preserved.
+3. **Arithmetic reasoning**: The core perturbation estimates use `nlinarith` (nonlinear arithmetic) combined with `abs_le` decomposition.
 
-### 4.2 Hierarchical Classification
+---
 
-The subset preservation theorem (Theorem 4) is designed for hierarchical readouts: given a coarse top-*k* set *S* (e.g., "this image is an animal") and a fine target *T* ⊂ *S* (e.g., "specifically a dog"), the theorem guarantees that the "dog" class cannot drop below any non-animal class within the certified radius, even if the internal animal ranking changes.
+## 5. Applications
 
-### 4.3 Tropical Network Certification
+### 5.1 Hierarchical Image Classification
 
-Max-affine (tropical) networks—ReLU networks viewed as tropical rational maps—admit especially clean Lipschitz analysis. Each output coordinate is a pointwise maximum of affine functions, so the Lipschitz constant is simply the maximum operator norm across pieces. The pairwise-Lipschitz variant is particularly valuable here: when two output classes share intermediate computations, their difference may have a much smaller Lipschitz constant than the sum of individual constants.
+In hierarchical classification (e.g., distinguishing animals → mammals → dogs → breeds), each level of the taxonomy corresponds to a bracket node. The certified radius tells us: "within this perturbation budget, the classifier will correctly navigate every branch of the hierarchy."
 
-### 4.4 Multi-Label Safety
+### 5.2 Tropical Neural Networks
 
-In safety-critical applications (autonomous driving, medical imaging), the decision rule is often "act if any of the top-*k* classes exceeds a threshold." Certified top-*k* stability ensures that the set of classes exceeding the threshold is invariant under bounded perturbation.
+Tropical (max-plus) neural networks compute piecewise-linear functions via max and plus operations. These naturally produce 1-Lipschitz score maps (w.r.t. ℓ∞ norm). Our uniform Lipschitz corollary gives immediate certified robustness: if all bracket margins exceed 2K·r, the classification is stable.
 
-## 5. Discussion: A Scientific American Perspective
+### 5.3 Efficient Certified Inference
 
-### What does "certified robustness" really mean?
+For large-scale classifiers (C classes), bracket certification checks O(log C) comparisons along the winner path versus O(C) pairwise comparisons for flat argmax. When combined with tree-structured score computation, this gives O(log C) total certification cost.
 
-Imagine you're using a medical AI that analyzes an X-ray and returns the three most likely diagnoses. You'd want to know: if the image is slightly blurry, or the lighting changes a bit, will those same three diagnoses still appear? Certified robustness gives you a mathematical guarantee—a "safety radius" around each input within which the prediction is provably unchanged.
+### 5.4 Adversarial Training with Bracket Objectives
 
-### The sorting problem
+The certified radius formula r* = min_v (margin_v / L_v) suggests a training objective: maximize the minimum margin-to-Lipschitz ratio across bracket nodes. This is a structured surrogate that can be optimized via gradient descent.
 
-Previous approaches to this problem faced a fundamental difficulty: defining "top-*k*" requires sorting all class scores, and sorting is surprisingly hard to reason about formally. It involves permutations, order statistics, and the delicate relationship between a score's value and its rank.
+---
 
-### Our insight: don't sort, just compare
+## 6. Discussion: Making Robustness Structural
 
-We realized that you don't need to know the *ranking* of scores—you only need to know that every class in your top set beats every class outside it. This is just a collection of pairwise comparisons, each of which is easy to bound. It's like the difference between knowing that Alice, Bob, and Charlie are the three tallest people in a room (which requires measuring everyone and sorting) versus simply checking that Alice is taller than Dave, Alice is taller than Eve, Bob is taller than Dave, and so on.
+*This section is written for a general audience.*
 
-### Why formal verification matters
+### The Tournament Metaphor
 
-These certificates are used in safety-critical systems. An error in the mathematical reasoning—a missed case, a wrong inequality direction—could lead to a false guarantee of safety. By formalizing the proofs in Lean 4 and having them machine-checked, we achieve the highest level of mathematical certainty available. Every step from the Lipschitz bound to the final stability guarantee is verified by the Lean kernel.
+Imagine a tennis tournament with a fixed bracket. The champion doesn't need to beat every other player — only those they actually face in the draw. A player seeded far from the champion might be beaten by someone else early on, and the champion never needs to worry about them.
 
-### The tropical connection
+This is exactly the insight behind tournament-style certified robustness. In traditional multiclass classification, proving a prediction is robust requires showing that the winning class beats *every* alternative class by a sufficient margin. But in a tournament bracket, the champion only faces a logarithmic number of opponents on their path to the title.
 
-The name "tropical" comes from a beautiful area of mathematics where the usual operations of addition and multiplication are replaced by maximum and addition. It turns out that ReLU neural networks—the most common type in practice—naturally compute tropical polynomials. This means their Lipschitz constants can be analyzed combinatorially, piece by piece, leading to tighter robustness certificates than generic bounds.
+### Why This Matters
 
-### Looking forward
+Modern machine learning systems make decisions with enormous consequence — in medical diagnosis, autonomous driving, and financial systems. When we certify that a neural network's prediction won't change under small input perturbations, we need mathematical guarantees, not just empirical testing.
 
-This work opens several directions:
-- **Compositional certification**: Build certified robustness for complex architectures by chaining Lipschitz closure lemmas.
-- **Approximate top-*k***: Extend to settings where we allow a small number of class swaps.
-- **Randomized smoothing integration**: Combine deterministic certificates with randomized smoothing for probabilistic guarantees.
-- **Tropical geometry of decision boundaries**: Use the tropical structure to characterize where certified radii are largest and smallest.
+Our contribution is showing that for systems whose decision logic has tree structure (which includes many real hierarchical classifiers), the certification problem decomposes along that structure. Each branch point needs its own local guarantee, and these compose to give a global certificate.
 
-## 6. Related Work
+### The Formal Verification Angle
 
-The margin-based approach to certified robustness traces back to the classical generalization bounds of Bartlett and Shawe-Taylor. In the deep learning context, Hein and Andriushchenko (2017) established Lipschitz-based certification for binary classifiers, extended to multiclass argmax by Weng et al. (2018) and Tsuzuku et al. (2018).
+We didn't just prove these theorems on paper — we formalized them in Lean 4, a proof assistant that mechanically verifies every logical step. This means our guarantees are as certain as mathematics can be: no hidden assumptions, no overlooked edge cases, no subtle sign errors in the perturbation bounds.
 
-Tropical approaches to neural network analysis were pioneered by Zhang et al. (2018), who showed that ReLU networks compute tropical rational maps. This viewpoint was developed further by Alfarra et al. (2020) for robustness certification and by Montúfar et al. for understanding the geometry of decision boundaries.
+This level of rigor is appropriate because certified robustness is ultimately about *trust*. When a safety-critical system claims it's robust to perturbations of size ε, that claim should be backed by machine-checked mathematics, not just careful-but-human reasoning.
 
-The formalization of Lipschitz conditions and metric space properties in Lean 4 / Mathlib provides the foundation for our work. The `LipschitzWith` predicate and its associated API in Mathlib are well-developed, enabling clean statements of our theorems.
+### Historical Context
 
-Our contribution is to bring these threads together with a sort-free formulation of top-*k* stability that is both mathematically natural and formally tractable, plus a pairwise-Lipschitz sharpening that exploits the structure of tropical architectures.
+Certified robustness for neural networks has been studied intensively since the discovery of adversarial examples by Szegedy et al. (2014). Key developments include:
+
+- **Lipschitz-based certificates**: Bounding the network's Lipschitz constant to guarantee stability.
+- **Randomized smoothing**: Converting any classifier into a provably robust one via Gaussian noise.
+- **Interval bound propagation**: Computing output bounds by propagating input intervals through the network.
+
+Our work adds a new structural dimension: exploiting the *decision topology* (bracket structure) rather than just the *score geometry* (Lipschitz constants and margins). This is analogous to how divide-and-conquer algorithms exploit problem structure for efficiency.
+
+### Future Directions
+
+1. **Optimal bracket design**: Given class-pair Lipschitz constants and typical margins, which bracket structure maximizes the certified radius? This is a combinatorial optimization problem with connections to Huffman-like tree constructions.
+
+2. **Adaptive brackets**: Instead of a fixed bracket, allow the elimination order to depend on the input. This connects to decision tree learning with robustness constraints.
+
+3. **Tropical bracket networks**: Design neural architectures where the bracket structure is intrinsic to the computation graph, enabling end-to-end differentiable training with built-in robustness certificates.
+
+4. **Beyond binary trees**: Extend to k-ary elimination tournaments, where each round compares k candidates. The theory generalizes straightforwardly with k-way Lipschitz gap conditions.
+
+---
 
 ## 7. Conclusion
 
-We have presented a formally verified theory of top-*k* certified robustness for multiclass piecewise-linear networks, implemented in Lean 4. The key innovation is a sort-free formulation that reduces order-statistic stability to finite pairwise comparisons, making formal verification tractable. The pairwise-Lipschitz variant provides strictly tighter certificates for tropical architectures where score differences have smaller Lipschitz constants than individual coordinates. All 11 theorems and lemmas are machine-verified with no sorry axioms, and the theory connects cleanly to tropical network analysis through Lipschitz closure lemmas for max, ReLU, and finite max-pooling.
+We have developed and formally verified a certified robustness theory for tournament-style multiclass classifiers. The key mathematical insight — that tournament robustness depends only on the champion's elimination path — gives a structurally sharper certification condition than flat argmax. Our Lean 4 formalization provides machine-checked guarantees with minimal axiom footprint, and our Python demonstrations show the theory in action on concrete examples.
+
+The certified radius formula r* ≥ min_v (margin_v / L_v) is immediately deployable for any piecewise-linear or Lipschitz classifier with bracket decision semantics, opening a new direction in certified robustness that exploits decision structure rather than just score geometry.
+
+---
 
 ## References
 
-1. Alfarra, M., Bibi, A., Torr, P.H.S., Ghanem, B. (2020). "On the Decision Boundaries of Neural Networks: A Tropical Geometry Perspective." *arXiv:2002.08838*.
-
-2. Hein, M., Andriushchenko, M. (2017). "Formal Guarantees on the Robustness of a Classifier against Adversarial Manipulation." *NeurIPS 2017*.
-
-3. Tsuzuku, Y., Sato, I., Sugiyama, M. (2018). "Lipschitz-Margin Training: Scalable Certification of Perturbation Invariance for Deep Neural Networks." *NeurIPS 2018*.
-
-4. Weng, L., Zhang, H., Chen, H., Song, Z., Hsieh, C.-J., Daniel, L., Boning, D., Dhillon, I. (2018). "Towards Fast Computation of Certified Robustness for ReLU Networks." *ICML 2018*.
-
-5. Zhang, L., Naitzat, G., Lim, L.-H. (2018). "Tropical Geometry of Deep Neural Networks." *ICML 2018*.
-
-6. The Mathlib Community. (2024). "Mathlib: The Lean 4 Mathematical Library." *https://github.com/leanprover-community/mathlib4*.
+1. Szegedy, C., et al. "Intriguing properties of neural networks." ICLR 2014.
+2. Hein, M., & Andriushchenko, M. "Formal guarantees on the robustness of a classifier against adversarial manipulation." NeurIPS 2017.
+3. Cohen, J., Rosenfeld, E., & Kolter, J.Z. "Certified adversarial robustness via randomized smoothing." ICML 2019.
+4. Zhang, L., et al. "Tropical geometry of deep neural networks." ICML 2018.
+5. Gowal, S., et al. "Scalable verified training for provably robust image classification." ICCV 2019.
