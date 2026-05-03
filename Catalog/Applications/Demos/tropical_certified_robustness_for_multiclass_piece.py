@@ -1,394 +1,550 @@
 #!/usr/bin/env python3
 """
-Top-k Certified Robustness Demo
-================================
+Tropical Certified Robustness for Hierarchical Max-Aggregation Trees
+=====================================================================
 
-Demonstrates the formally verified top-k robustness certificate for multiclass
-piecewise-linear networks. This script:
+This demo illustrates the formally verified theorems with concrete numerical
+examples, showing how hierarchical max-aggregation trees propagate Lipschitz
+constants and how subtree logit-gap certificates yield robustness radii.
 
-1. Computes kthLargest, topkGap, and topKSet for concrete score vectors
-2. Visualizes how perturbation affects the top-k gap
-3. Shows a certified robustness radius computation for a simple 2D network
-4. Demonstrates the compositional theorem with max-pooling aggregation
-
-All mathematical claims correspond to formally verified Lean 4 theorems.
+The Lean formalization proves these guarantees for arbitrary PseudoMetricSpaces.
+Here we specialize to ℝ^n with L∞ norm for concreteness.
 """
 
 import numpy as np
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from itertools import combinations
+from dataclasses import dataclass
+from typing import Callable, Union, List, Optional
+import os
 
-# ── Core Definitions ──────────────────────────────────────────────────────
+# ─── AggTree data structure ───────────────────────────────────────────────────
 
-def kth_largest(scores, k):
-    """
-    k-th largest value (0-indexed) of a score vector.
-    Corresponds to the Lean definition:
-      kthLargest s k = sup_{|S|=k+1} inf_{i in S} s(i)
-    which equals the (k+1)-th largest element when sorted descending.
-    """
-    sorted_desc = np.sort(scores)[::-1]
-    if k < len(scores):
-        return sorted_desc[k]
-    return 0.0
+@dataclass
+class Leaf:
+    """A leaf node: score function f : κ → ℝⁿ → ℝ, with Lipschitz constant L."""
+    f: Callable[[int, np.ndarray], float]  # f(class_idx, x) → score
+    L: float  # Lipschitz constant
+    name: str = ""
+
+@dataclass
+class Bin:
+    """A binary internal node: takes pointwise max of two subtrees."""
+    left: Union['Leaf', 'Bin']
+    right: Union['Leaf', 'Bin']
+
+AggTree = Union[Leaf, Bin]
+
+def eval_tree(T: AggTree, x: np.ndarray, i: int) -> float:
+    """Evaluate T at input x for class i."""
+    if isinstance(T, Leaf):
+        return T.f(i, x)
+    else:
+        return max(eval_tree(T.left, x, i), eval_tree(T.right, x, i))
+
+def lip(T: AggTree) -> float:
+    """Recursive Lipschitz bound (max across leaves)."""
+    if isinstance(T, Leaf):
+        return T.L
+    else:
+        return max(lip(T.left), lip(T.right))
+
+def gap(T: AggTree, x: np.ndarray, i: int, j: int) -> float:
+    """Logit gap: score(i) - score(j)."""
+    return eval_tree(T, x, i) - eval_tree(T, x, j)
+
+def cert_gap(T: AggTree, x: np.ndarray, i: int, j: int) -> float:
+    """Recursive certified gap (min over subtree gaps)."""
+    if isinstance(T, Leaf):
+        return T.f(i, x) - T.f(j, x)
+    else:
+        return min(cert_gap(T.left, x, i, j), cert_gap(T.right, x, i, j))
+
+def cert_radius(T: AggTree, x: np.ndarray, winner: int, classes: List[int]) -> float:
+    """Certified robustness radius: min over competitors of cert_gap / (2 * lip)."""
+    L = lip(T)
+    if L <= 0:
+        return float('inf')
+    competitors = [j for j in classes if j != winner]
+    if not competitors:
+        return float('inf')
+    return min(cert_gap(T, x, winner, j) / (2 * L) for j in competitors)
+
+def is_strict_winner(T: AggTree, x: np.ndarray, winner: int, classes: List[int]) -> bool:
+    """Check if winner beats all other classes."""
+    return all(eval_tree(T, x, winner) > eval_tree(T, x, j)
+               for j in classes if j != winner)
 
 
-def topk_gap(scores, k):
-    """
-    Gap between the k-th and (k+1)-th largest values.
-    topkGap s k = kthLargest s (k-1) - kthLargest s k
-    """
-    return kth_largest(scores, k - 1) - kth_largest(scores, k)
-
-
-def topk_set(scores, k):
-    """
-    Set of indices whose score exceeds the (k+1)-th largest.
-    Under positive gap, this has exactly k elements.
-    """
-    threshold = kth_largest(scores, k)
-    return set(i for i in range(len(scores)) if scores[i] > threshold)
-
-
-def certified_radius(scores, k, K, d):
-    """
-    Certified L∞ radius: within this ball, the top-k set is guaranteed invariant.
-    r = topkGap(scores, k) / (2 * K * d)
-    """
-    gap = topk_gap(scores, k)
-    if K * d <= 0:
-        return float('inf') if gap > 0 else 0.0
-    return gap / (2 * K * d)
-
-
-# ── Demo 1: Basic Order Statistics ────────────────────────────────────────
+# ─── Demo 1: Basic tree with linear score functions ──────────────────────────
 
 def demo_basic():
+    """
+    Demo 1: A simple hierarchical max-aggregation tree with 3 classes and 2D input.
+    
+    Tree structure:
+        root (max)
+        ├── left (max)
+        │   ├── leaf₁: f₁(i, x) = wᵢ · x + bᵢ  (L=2.0)
+        │   └── leaf₂: f₂(i, x) = vᵢ · x + cᵢ  (L=1.5)
+        └── right:
+            └── leaf₃: f₃(i, x) = uᵢ · x + dᵢ  (L=1.0)
+    """
     print("=" * 70)
-    print("DEMO 1: Basic Order Statistics")
+    print("DEMO 1: Basic Hierarchical Max-Aggregation Tree")
     print("=" * 70)
-
-    scores = np.array([5.0, 4.0, 2.0, 1.0])
-    C = len(scores)
-    print(f"\nScore vector: {scores}  (C = {C})")
-    print(f"Classes:       {list(range(C))}")
-    print()
-
-    for k in range(C):
-        print(f"  kthLargest(s, {k}) = {kth_largest(scores, k):.1f}  "
-              f"(the {k+1}-th largest value)")
-
-    print()
-    for k in range(1, C):
-        gap = topk_gap(scores, k)
-        tset = topk_set(scores, k)
-        print(f"  topkGap(s, {k}) = {gap:.1f},  topKSet(s, {k}) = {tset}")
-
-    # Example with ties
-    print("\n--- With ties ---")
-    scores_tied = np.array([5.0, 3.0, 3.0, 1.0])
-    print(f"Score vector: {scores_tied}")
-    for k in range(1, C):
-        gap = topk_gap(scores_tied, k)
-        tset = topk_set(scores_tied, k)
-        print(f"  topkGap(s, {k}) = {gap:.1f},  topKSet(s, {k}) = {tset}  "
-              f"{'(gap = 0, set may not have card k)' if gap == 0 else ''}")
-
-
-# ── Demo 2: Perturbation and Gap Degradation ──────────────────────────────
-
-def demo_perturbation():
-    print("\n" + "=" * 70)
-    print("DEMO 2: Gap Degradation Under Perturbation")
-    print("=" * 70)
-
-    scores = np.array([8.0, 5.0, 3.0, 1.0])
-    k = 2
-    gap_original = topk_gap(scores, k)
-    topk_original = topk_set(scores, k)
-
-    print(f"\nOriginal scores: {scores}")
-    print(f"topkGap(s, {k}) = {gap_original:.1f}")
-    print(f"topKSet(s, {k}) = {topk_original}")
-
-    # Apply perturbations of increasing magnitude
-    print(f"\n{'ε':>6} | {'Gap after':>10} | {'Gap bound':>10} | {'TopKSet':>15} | {'Preserved?':>10}")
-    print("-" * 65)
-
-    np.random.seed(42)
-    for eps in [0.0, 0.3, 0.5, 0.8, 1.0, 1.5, 2.0]:
-        # Random perturbation bounded by ε
-        delta = np.random.uniform(-eps, eps, size=len(scores))
-        perturbed = scores + delta
-
-        gap_perturbed = topk_gap(perturbed, k)
-        gap_bound = gap_original - 2 * eps  # Theorem: gap degrades by at most 2ε
-        topk_perturbed = topk_set(perturbed, k)
-        preserved = topk_perturbed == topk_original
-
-        print(f"{eps:6.2f} | {gap_perturbed:10.3f} | {gap_bound:10.3f} | "
-              f"{str(topk_perturbed):>15} | {'✓' if preserved else '✗':>10}")
-
-    print(f"\n  Theorem guarantee: gap degrades by at most 2ε")
-    print(f"  Certificate: top-{k} set preserved when 2ε < gap = {gap_original:.1f}, i.e., ε < {gap_original/2:.1f}")
-
-
-# ── Demo 3: Certified Radius Visualization ────────────────────────────────
-
-def demo_certified_radius():
-    print("\n" + "=" * 70)
-    print("DEMO 3: Certified Radius for a 2D Network")
-    print("=" * 70)
-
-    # Simple 2D → 4-class network: f(x) = W @ x + b
-    d = 2
-    C = 4
-    W = np.array([
-        [2.0, 1.0],
-        [1.0, 2.0],
-        [-1.0, 0.5],
-        [0.5, -1.0]
-    ])
-    b = np.array([1.0, 0.5, -0.5, 0.0])
-
-    def f(x):
-        return W @ x + b
-
-    # Lipschitz bound: |f(x+δ)_i - f(x)_i| = |W_i · δ| ≤ ||W_i||_1 * ||δ||_∞
-    # In the K*d*||δ|| form: K = max ||W_i||_1 / d
-    K = max(np.sum(np.abs(W[i])) for i in range(C)) / d
-
+    
+    # Define 3-class score functions on ℝ²
+    W1 = np.array([[2.0, 0.5], [-0.5, 1.0], [0.3, -0.8]])  # class weights for leaf 1
+    b1 = np.array([1.0, 0.5, -0.3])
+    
+    W2 = np.array([[0.8, 1.2], [1.0, -0.3], [-0.5, 0.7]])  # class weights for leaf 2
+    b2 = np.array([0.2, 0.8, 0.1])
+    
+    W3 = np.array([[0.5, 0.5], [0.3, 0.9], [-0.2, 0.4]])  # class weights for leaf 3
+    b3 = np.array([0.3, -0.1, 0.6])
+    
+    def make_linear(W, b, L):
+        def f(i, x):
+            return float(W[i] @ x + b[i])
+        return Leaf(f=f, L=L, name=f"linear(L={L})")
+    
+    leaf1 = make_linear(W1, b1, L=2.5)  # ||W1[i]||_1 ≤ 2.5
+    leaf2 = make_linear(W2, b2, L=2.0)
+    leaf3 = make_linear(W3, b3, L=1.4)
+    
+    left_node = Bin(leaf1, leaf2)
+    tree = Bin(left_node, leaf3)
+    
+    classes = [0, 1, 2]
     x0 = np.array([1.0, 0.5])
-    scores = f(x0)
-
-    print(f"\n  Network: f(x) = W·x + b, d = {d}, C = {C}")
-    print(f"  Lipschitz constant K = {K:.2f}")
-    print(f"  Input point x₀ = {x0}")
-    print(f"  Scores f(x₀) = {scores}")
-
-    for k in range(1, C):
-        gap = topk_gap(scores, k)
-        tset = topk_set(scores, k)
-        radius = certified_radius(scores, k, K, d)
-        print(f"\n  k = {k}: gap = {gap:.2f}, topKSet = {tset}, "
-              f"certified radius = {radius:.4f}")
-
-    # Visualization
-    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
-
-    for idx, k in enumerate([1, 2, 3]):
-        ax = axes[idx]
-        gap = topk_gap(scores, k)
-        radius = certified_radius(scores, k, K, d)
-
-        # Plot the decision regions
-        xx, yy = np.meshgrid(np.linspace(-1, 3, 200), np.linspace(-1, 2, 200))
-        grid = np.column_stack([xx.ravel(), yy.ravel()])
-
-        topk_labels = np.zeros(len(grid))
-        for i, pt in enumerate(grid):
-            s = f(pt)
-            ts = topk_set(s, k)
-            topk_labels[i] = sum(2**j for j in ts) if len(ts) == k else -1
-
-        topk_labels = topk_labels.reshape(xx.shape)
-        ax.contourf(xx, yy, topk_labels, levels=20, alpha=0.3, cmap='tab20')
-        ax.plot(x0[0], x0[1], 'k*', markersize=15, zorder=5)
-
-        if radius > 0 and radius < 10:
-            circle = plt.Circle(x0, radius, fill=False, color='red',
-                              linewidth=2, linestyle='--')
-            ax.add_patch(circle)
-            ax.set_title(f'Top-{k} Regions (r = {radius:.3f})', fontsize=12)
-        else:
-            ax.set_title(f'Top-{k} Regions (gap = {gap:.2f})', fontsize=12)
-
-        ax.set_xlabel('x₁')
-        ax.set_ylabel('x₂')
-        ax.set_aspect('equal')
-
-    plt.suptitle('Certified Top-k Robustness Regions', fontsize=14, fontweight='bold')
-    plt.tight_layout()
-    plt.savefig('demos/topk_certified_regions.png', dpi=150, bbox_inches='tight')
-    print(f"\n  → Saved visualization to demos/topk_certified_regions.png")
-
-
-# ── Demo 4: Compositional Theorem with Aggregation ────────────────────────
-
-def demo_composition():
-    print("\n" + "=" * 70)
-    print("DEMO 4: Compositional Theorem with 1-Lipschitz Aggregation")
-    print("=" * 70)
-
-    d = 3
-    m = 6
-    C = 4
-
-    # Hidden layer: h(x) = ReLU(V @ x + c)
-    np.random.seed(123)
-    V = np.random.randn(m, d) * 0.5
-    c = np.random.randn(m) * 0.1
-
-    def h(x):
-        return np.maximum(V @ x + c, 0)
-
-    # Aggregation: A(z) = W_agg @ z  (1-Lipschitz if ||W_agg||_{∞→∞} ≤ 1)
-    W_agg_raw = np.random.randn(C, m) * 0.3
-    # Normalize rows to make it 1-Lipschitz in L∞ → L∞
-    for i in range(C):
-        row_l1 = np.sum(np.abs(W_agg_raw[i]))
-        if row_l1 > 1:
-            W_agg_raw[i] /= row_l1
-
-    def A(z):
-        return W_agg_raw @ z
-
-    is_1lip = all(np.sum(np.abs(W_agg_raw[i])) <= 1.0 + 1e-10 for i in range(C))
-    print(f"\n  Aggregator A is 1-Lipschitz: {is_1lip}")
-
-    # Lipschitz constant for h: K such that |h(x+δ)_j - h(x)_j| ≤ K * d * ||δ||_∞
-    # For ReLU(V·x + c): |ReLU(a) - ReLU(b)| ≤ |a - b|, and |V_j · δ| ≤ ||V_j||_1 * ||δ||_∞
-    K_h = max(np.sum(np.abs(V[j])) for j in range(m)) / d
-
-    x0 = np.array([1.0, 0.5, -0.3])
-    scores = A(h(x0))
-
-    print(f"  Network: A ∘ ReLU ∘ V, d={d}, m={m}, C={C}")
-    print(f"  K = {K_h:.3f}")
-    print(f"  Input x₀ = {x0}")
-    print(f"  Composed scores = {scores.round(3)}")
-
-    for k in range(1, C):
-        gap = topk_gap(scores, k)
-        tset = topk_set(scores, k)
-        radius = certified_radius(scores, k, K_h, d)
-        print(f"\n  k = {k}: gap = {gap:.4f}, topKSet = {tset}, "
-              f"certified radius = {radius:.4f}")
-
-    # Empirical verification
-    k = 2
-    radius = certified_radius(scores, k, K_h, d)
-    topk_original = topk_set(scores, k)
+    
+    print(f"\nInput x₀ = {x0}")
+    print(f"Tree Lipschitz constant: L = {lip(tree):.2f}")
+    print(f"\nClass scores at x₀:")
+    for i in classes:
+        score = eval_tree(tree, x0, i)
+        print(f"  class {i}: score = {score:.4f}")
+    
+    winner = max(classes, key=lambda i: eval_tree(tree, x0, i))
+    print(f"\nPredicted class: {winner}")
+    
+    print(f"\nLogit gaps (winner vs. competitors):")
+    for j in classes:
+        if j != winner:
+            g = gap(tree, x0, winner, j)
+            cg = cert_gap(tree, x0, winner, j)
+            print(f"  gap({winner},{j}) = {g:.4f},  certGap({winner},{j}) = {cg:.4f}")
+    
+    r = cert_radius(tree, x0, winner, classes)
+    print(f"\nCertified robustness radius: r = {r:.4f}")
+    print(f"  → Any perturbation x' with ||x' - x₀||∞ < {r:.4f} preserves class {winner}")
+    
+    # Verify by sampling perturbations
+    print(f"\nVerification: sampling 10000 random perturbations within radius...")
     n_samples = 10000
-    n_violated = 0
-
+    n_stable = 0
     for _ in range(n_samples):
-        delta = np.random.uniform(-radius * 0.99, radius * 0.99, size=d)
-        perturbed_scores = A(h(x0 + delta))
-        if topk_set(perturbed_scores, k) != topk_original:
-            n_violated += 1
+        delta = np.random.uniform(-r * 0.99, r * 0.99, size=2)
+        x_pert = x0 + delta
+        if is_strict_winner(tree, x_pert, winner, classes):
+            n_stable += 1
+    print(f"  Stable predictions: {n_stable}/{n_samples} ({100*n_stable/n_samples:.1f}%)")
+    
+    return tree, x0, winner, classes, r
 
-    print(f"\n  Empirical verification (k={k}, radius={radius:.4f}):")
-    print(f"  {n_samples} random perturbations within 0.99×radius: "
-          f"{n_violated} violations (should be 0)")
 
+# ─── Demo 2: Visualizing the robustness certificate ─────────────────────────
 
-# ── Demo 5: Gap Degradation Plot ──────────────────────────────────────────
-
-def demo_gap_plot():
+def demo_visualization(tree, x0, winner, classes, r):
+    """
+    Demo 2: Visualize the certified robustness region and decision boundaries.
+    """
     print("\n" + "=" * 70)
-    print("DEMO 5: Gap Degradation Visualization")
+    print("DEMO 2: Robustness Certificate Visualization")
     print("=" * 70)
-
-    scores = np.array([10.0, 7.0, 4.0, 2.0, 1.0])
-    C = len(scores)
-
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-
-    # Left panel: gap vs perturbation magnitude
+    
+    fig, axes = plt.subplots(1, 3, figsize=(18, 5.5))
+    
+    # Panel 1: Decision regions with certified ball
     ax = axes[0]
-    epsilons = np.linspace(0, 5, 100)
-
-    for k in range(1, C):
-        gap_original = topk_gap(scores, k)
-        gap_bounds = np.maximum(gap_original - 2 * epsilons, 0)
-
-        # Monte Carlo worst-case gaps
-        np.random.seed(k * 42)
-        actual_gaps = []
-        for eps in epsilons:
-            gaps_mc = []
-            for _ in range(50):
-                delta = np.random.uniform(-eps, eps, size=C)
-                gaps_mc.append(topk_gap(scores + delta, k))
-            actual_gaps.append(np.min(gaps_mc))
-
-        ax.plot(epsilons, gap_bounds, '--', label=f'k={k} bound', alpha=0.7)
-        ax.plot(epsilons, actual_gaps, '-', label=f'k={k} worst', alpha=0.5)
-
-    ax.set_xlabel('Perturbation magnitude ε', fontsize=12)
-    ax.set_ylabel('Top-k gap', fontsize=12)
-    ax.set_title('Gap Degradation: Bound vs Actual', fontsize=13)
-    ax.legend(fontsize=9, ncol=2)
-    ax.axhline(y=0, color='red', linestyle=':', alpha=0.5)
-    ax.grid(True, alpha=0.3)
-
-    # Right panel: certified radius for different k values
+    grid_range = 3.0
+    resolution = 200
+    xx, yy = np.meshgrid(np.linspace(x0[0]-grid_range, x0[0]+grid_range, resolution),
+                          np.linspace(x0[1]-grid_range, x0[1]+grid_range, resolution))
+    
+    predictions = np.zeros_like(xx, dtype=int)
+    for ii in range(resolution):
+        for jj in range(resolution):
+            x = np.array([xx[ii, jj], yy[ii, jj]])
+            scores = [eval_tree(tree, x, i) for i in classes]
+            predictions[ii, jj] = np.argmax(scores)
+    
+    colors = ['#FF6B6B', '#4ECDC4', '#45B7D1']
+    cmap = plt.matplotlib.colors.ListedColormap(colors)
+    ax.contourf(xx, yy, predictions, levels=[-0.5, 0.5, 1.5, 2.5], colors=colors, alpha=0.3)
+    ax.contour(xx, yy, predictions, levels=[0.5, 1.5], colors='gray', linewidths=0.5)
+    
+    # Draw certified ball (L∞)
+    rect = plt.Rectangle((x0[0]-r, x0[1]-r), 2*r, 2*r,
+                          linewidth=2, edgecolor='black', facecolor='gold', alpha=0.3,
+                          label=f'Certified region (r={r:.3f})')
+    ax.add_patch(rect)
+    ax.plot(*x0, 'k*', markersize=15, label=f'x₀ (class {winner})')
+    ax.set_xlabel('x₁')
+    ax.set_ylabel('x₂')
+    ax.set_title('Decision Regions & Certified Ball')
+    ax.legend(fontsize=8)
+    ax.set_aspect('equal')
+    
+    # Panel 2: Score profiles along a perturbation direction
     ax = axes[1]
-    K_values = np.linspace(0.1, 5, 50)
-    d = 10
-
-    for k in range(1, C):
-        radii = [certified_radius(scores, k, K, d) for K in K_values]
-        ax.plot(K_values, radii, label=f'k={k}, gap={topk_gap(scores,k):.0f}')
-
-    ax.set_xlabel('Lipschitz constant K', fontsize=12)
-    ax.set_ylabel('Certified radius', fontsize=12)
-    ax.set_title(f'Certified Radius vs K (d={d})', fontsize=13)
-    ax.legend(fontsize=10)
+    direction = np.array([1.0, 0.0])  # perturb along x₁
+    epsilons = np.linspace(-2*r, 2*r, 300)
+    
+    for i in classes:
+        scores = [eval_tree(tree, x0 + eps * direction, i) for eps in epsilons]
+        ax.plot(epsilons, scores, label=f'Class {i}', linewidth=2)
+    
+    ax.axvline(-r, color='black', linestyle='--', alpha=0.5, label='±r boundary')
+    ax.axvline(r, color='black', linestyle='--', alpha=0.5)
+    ax.axvspan(-r, r, alpha=0.1, color='gold')
+    ax.set_xlabel('Perturbation ε (along x₁)')
+    ax.set_ylabel('Score')
+    ax.set_title('Score Profiles Under Perturbation')
+    ax.legend(fontsize=8)
     ax.grid(True, alpha=0.3)
-
-    plt.suptitle('Top-k Robustness Certificate Analysis', fontsize=14, fontweight='bold')
+    
+    # Panel 3: Gap degradation
+    ax = axes[2]
+    competitors = [j for j in classes if j != winner]
+    
+    for j in competitors:
+        gaps = [gap(tree, x0 + eps * direction, winner, j) for eps in epsilons]
+        ax.plot(epsilons, gaps, label=f'gap({winner},{j})', linewidth=2)
+        
+        # Theoretical lower bound: certGap - 2*L*|eps|
+        L = lip(tree)
+        cg = cert_gap(tree, x0, winner, j)
+        bounds = [cg - 2 * L * abs(eps) for eps in epsilons]
+        ax.plot(epsilons, bounds, '--', alpha=0.5, label=f'bound({winner},{j})')
+    
+    ax.axhline(0, color='red', linewidth=1, alpha=0.7)
+    ax.axvline(-r, color='black', linestyle='--', alpha=0.5)
+    ax.axvline(r, color='black', linestyle='--', alpha=0.5)
+    ax.axvspan(-r, r, alpha=0.1, color='gold')
+    ax.set_xlabel('Perturbation ε (along x₁)')
+    ax.set_ylabel('Gap')
+    ax.set_title('Gap Degradation & Certified Bounds')
+    ax.legend(fontsize=8)
+    ax.grid(True, alpha=0.3)
+    
     plt.tight_layout()
-    plt.savefig('demos/topk_gap_analysis.png', dpi=150, bbox_inches='tight')
-    print(f"  → Saved visualization to demos/topk_gap_analysis.png")
+    plt.savefig(os.path.join(os.path.dirname(__file__), 'robustness_certificate.png'), dpi=150)
+    plt.close()
+    print("  → Saved robustness_certificate.png")
 
 
-# ── Demo 6: Sup-of-Infima Definition Verification ────────────────────────
+# ─── Demo 3: Deep tree with many layers ─────────────────────────────────────
 
-def demo_sup_inf():
+def demo_deep_tree():
+    """
+    Demo 3: Deep hierarchical tree showing Lipschitz propagation.
+    
+    Builds a balanced binary tree of depth D, showing that the global
+    Lipschitz constant equals the maximum leaf constant (not the sum!).
+    """
     print("\n" + "=" * 70)
-    print("DEMO 6: Sup-of-Infima Definition Verification")
+    print("DEMO 3: Deep Tree Lipschitz Propagation")
     print("=" * 70)
+    
+    n_classes = 4
+    input_dim = 5
+    
+    def random_leaf(L_max=2.0):
+        """Create a random linear leaf with bounded Lipschitz constant."""
+        W = np.random.randn(n_classes, input_dim)
+        # Scale so L1 norm ≤ L_max
+        for i in range(n_classes):
+            norm = np.sum(np.abs(W[i]))
+            if norm > 0:
+                W[i] = W[i] / norm * np.random.uniform(0.5, L_max)
+        b = np.random.randn(n_classes) * 0.5
+        L = max(np.sum(np.abs(W[i])) for i in range(n_classes))
+        
+        def f(cls, x, W=W, b=b):
+            return float(W[cls] @ x + b[cls])
+        return Leaf(f=f, L=L)
+    
+    def build_balanced_tree(depth):
+        if depth == 0:
+            return random_leaf()
+        else:
+            return Bin(build_balanced_tree(depth - 1),
+                       build_balanced_tree(depth - 1))
+    
+    np.random.seed(42)
+    
+    print(f"\n{'Depth':<8} {'#Leaves':<10} {'Lip(T)':<12} {'Max leaf L':<12} {'Match?'}")
+    print("-" * 55)
+    
+    for depth in range(1, 7):
+        tree = build_balanced_tree(depth)
+        n_leaves = 2 ** depth
+        L_tree = lip(tree)
+        
+        # Collect all leaf Lipschitz constants
+        def collect_leaf_lips(T):
+            if isinstance(T, Leaf):
+                return [T.L]
+            return collect_leaf_lips(T.left) + collect_leaf_lips(T.right)
+        
+        leaf_lips = collect_leaf_lips(tree)
+        max_leaf_L = max(leaf_lips)
+        
+        match = "✓" if abs(L_tree - max_leaf_L) < 1e-10 else "✗"
+        print(f"{depth:<8} {n_leaves:<10} {L_tree:<12.6f} {max_leaf_L:<12.6f} {match}")
+    
+    print("\nKey insight: lip(T) = max over leaves, NOT sum!")
+    print("This is because max(a,b) is 1-Lipschitz in each argument,")
+    print("so composing max preserves the maximum Lipschitz constant.")
 
-    scores = np.array([7.0, 3.0, 5.0, 1.0, 4.0])
-    C = len(scores)
-    print(f"\n  Scores: {scores}  (sorted: {np.sort(scores)[::-1]})")
 
-    for k in range(C):
-        # Compute via sorting
-        sorted_val = np.sort(scores)[::-1][k]
+# ─── Demo 4: Comparing flat vs hierarchical certificates ────────────────────
 
-        # Compute via sup-of-infima
-        sup_inf_val = max(
-            min(scores[list(S)])
-            for S in combinations(range(C), k + 1)
-        )
+def demo_comparison():
+    """
+    Demo 4: Compare certified radii of flat vs. hierarchical aggregation.
+    
+    Shows that deeper trees can sometimes give tighter per-subtree gaps,
+    leading to more informative certificates.
+    """
+    print("\n" + "=" * 70)
+    print("DEMO 4: Flat vs. Hierarchical Certificates")
+    print("=" * 70)
+    
+    # 2 classes, 2D input
+    classes = [0, 1]
+    
+    # Four leaves with different specializations
+    def make_leaf(w0, b0, w1, b1, L):
+        def f(i, x):
+            if i == 0:
+                return float(w0 @ x + b0)
+            else:
+                return float(w1 @ x + b1)
+        return Leaf(f=f, L=L)
+    
+    leaves = [
+        make_leaf(np.array([1.0, 0.5]), 2.0,
+                  np.array([0.3, 0.2]), 0.5, 1.5),
+        make_leaf(np.array([0.5, 1.0]), 1.5,
+                  np.array([0.2, 0.8]), 0.3, 1.5),
+        make_leaf(np.array([0.8, 0.3]), 1.0,
+                  np.array([0.1, 0.4]), 0.8, 1.1),
+        make_leaf(np.array([0.3, 0.7]), 1.8,
+                  np.array([0.5, 0.1]), 0.2, 1.0),
+    ]
+    
+    x0 = np.array([0.5, 0.5])
+    
+    # Flat tree: max of all 4
+    flat = Bin(Bin(leaves[0], leaves[1]), Bin(leaves[2], leaves[3]))
+    
+    # Hierarchical: grouped differently
+    hier = Bin(Bin(leaves[0], leaves[2]), Bin(leaves[1], leaves[3]))
+    
+    print(f"\nInput x₀ = {x0}")
+    print(f"\nFlat grouping: ((leaf0, leaf1), (leaf2, leaf3))")
+    print(f"  Lip = {lip(flat):.4f}")
+    for j in classes:
+        if j != 0:
+            print(f"  certGap(0,{j}) = {cert_gap(flat, x0, 0, j):.4f}")
+            print(f"  gap(0,{j})     = {gap(flat, x0, 0, j):.4f}")
+    r_flat = cert_radius(flat, x0, 0, classes)
+    print(f"  certRadius = {r_flat:.4f}")
+    
+    print(f"\nHierarchical grouping: ((leaf0, leaf2), (leaf1, leaf3))")
+    print(f"  Lip = {lip(hier):.4f}")
+    for j in classes:
+        if j != 0:
+            print(f"  certGap(0,{j}) = {cert_gap(hier, x0, 0, j):.4f}")
+            print(f"  gap(0,{j})     = {gap(hier, x0, 0, j):.4f}")
+    r_hier = cert_radius(hier, x0, 0, classes)
+    print(f"  certRadius = {r_hier:.4f}")
+    
+    print(f"\nBoth groupings give the same eval (max is associative/commutative):")
+    for i in classes:
+        sf = eval_tree(flat, x0, i)
+        sh = eval_tree(hier, x0, i)
+        print(f"  class {i}: flat={sf:.4f}, hier={sh:.4f}, match={abs(sf-sh)<1e-10}")
+    
+    print(f"\nBut certificates may differ due to subtree gap structure!")
+    print(f"  certRadius(flat)  = {r_flat:.4f}")
+    print(f"  certRadius(hier)  = {r_hier:.4f}")
 
-        print(f"  k={k}: sorted[{k}] = {sorted_val:.1f}, "
-              f"sup-inf = {sup_inf_val:.1f}  "
-              f"{'✓' if abs(sorted_val - sup_inf_val) < 1e-10 else '✗'}")
+
+# ─── Demo 5: Application to ensemble model robustness ────────────────────────
+
+def demo_ensemble():
+    """
+    Demo 5: Certifying robustness of a max-ensemble of classifiers.
+    
+    This models a practical scenario: an ensemble of N classifiers where the
+    final prediction uses the maximum score across all models for each class.
+    """
+    print("\n" + "=" * 70)
+    print("DEMO 5: Ensemble Model Robustness Certification")
+    print("=" * 70)
+    
+    np.random.seed(123)
+    n_models = 8
+    n_classes = 5
+    input_dim = 10
+    
+    print(f"\nEnsemble: {n_models} models, {n_classes} classes, {input_dim}D input")
+    
+    # Create random linear classifiers
+    models = []
+    for m in range(n_models):
+        W = np.random.randn(n_classes, input_dim) * 0.5
+        b = np.random.randn(n_classes) * 0.2
+        L = max(np.sum(np.abs(W[i])) for i in range(n_classes))
+        
+        def f(cls, x, W=W, b=b):
+            return float(W[cls] @ x + b[cls])
+        
+        models.append(Leaf(f=f, L=L, name=f"model_{m}"))
+    
+    # Build balanced binary tree over models
+    def build_tree(leaves):
+        if len(leaves) == 1:
+            return leaves[0]
+        mid = len(leaves) // 2
+        return Bin(build_tree(leaves[:mid]), build_tree(leaves[mid:]))
+    
+    tree = build_tree(models)
+    classes = list(range(n_classes))
+    
+    # Test on multiple inputs
+    print(f"\nGlobal Lipschitz constant: L = {lip(tree):.4f}")
+    print(f"\nPer-model Lipschitz constants:")
+    for m, model in enumerate(models):
+        print(f"  model_{m}: L = {model.L:.4f}")
+    
+    print(f"\n{'Input':<8} {'Winner':<8} {'certRadius':<12} {'Min gap':<12} {'Min certGap':<12}")
+    print("-" * 55)
+    
+    for trial in range(10):
+        x = np.random.randn(input_dim) * 0.5
+        scores = [eval_tree(tree, x, i) for i in classes]
+        winner = np.argmax(scores)
+        
+        min_gap = min(gap(tree, x, winner, j) for j in classes if j != winner)
+        min_cg = min(cert_gap(tree, x, winner, j) for j in classes if j != winner)
+        r = cert_radius(tree, x, winner, classes)
+        
+        print(f"x_{trial:<5} {winner:<8} {r:<12.6f} {min_gap:<12.6f} {min_cg:<12.6f}")
 
 
-# ── Main ──────────────────────────────────────────────────────────────────
+# ─── Demo 6: Visualizing certificate tightness across space ─────────────────
 
-if __name__ == "__main__":
+def demo_radius_heatmap(tree, classes):
+    """
+    Demo 6: Heatmap of certified robustness radius across input space.
+    """
+    print("\n" + "=" * 70)
+    print("DEMO 6: Robustness Radius Heatmap")
+    print("=" * 70)
+    
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5.5))
+    
+    resolution = 150
+    x_range = np.linspace(-2, 3, resolution)
+    y_range = np.linspace(-2, 3, resolution)
+    
+    radius_map = np.zeros((resolution, resolution))
+    winner_map = np.zeros((resolution, resolution), dtype=int)
+    
+    for ii, x1 in enumerate(x_range):
+        for jj, x2 in enumerate(y_range):
+            x = np.array([x1, x2])
+            scores = [eval_tree(tree, x, i) for i in classes]
+            winner = np.argmax(scores)
+            winner_map[jj, ii] = winner
+            
+            competitors = [j for j in classes if j != winner]
+            if competitors:
+                r = cert_radius(tree, x, winner, classes)
+                radius_map[jj, ii] = max(0, r)
+            else:
+                radius_map[jj, ii] = 1.0
+    
+    # Panel 1: Decision regions
+    ax = axes[0]
+    colors = ['#FF6B6B', '#4ECDC4', '#45B7D1']
+    cmap = plt.matplotlib.colors.ListedColormap(colors[:len(classes)])
+    ax.contourf(x_range, y_range, winner_map, levels=np.arange(-0.5, len(classes)), 
+                colors=colors[:len(classes)], alpha=0.4)
+    ax.contour(x_range, y_range, winner_map, levels=np.arange(0.5, len(classes)-0.5),
+               colors='gray', linewidths=1)
+    ax.set_xlabel('x₁')
+    ax.set_ylabel('x₂')
+    ax.set_title('Decision Regions')
+    ax.set_aspect('equal')
+    
+    # Panel 2: Robustness radius heatmap
+    ax = axes[1]
+    im = ax.imshow(radius_map, extent=[-2, 3, -2, 3], origin='lower',
+                    cmap='viridis', aspect='equal')
+    ax.contour(x_range, y_range, winner_map, levels=np.arange(0.5, len(classes)-0.5),
+               colors='white', linewidths=1, linestyles='--')
+    plt.colorbar(im, ax=ax, label='Certified radius')
+    ax.set_xlabel('x₁')
+    ax.set_ylabel('x₂')
+    ax.set_title('Certified Robustness Radius')
+    
+    plt.tight_layout()
+    plt.savefig(os.path.join(os.path.dirname(__file__), 'radius_heatmap.png'), dpi=150)
+    plt.close()
+    print("  → Saved radius_heatmap.png")
+
+
+# ─── Main ────────────────────────────────────────────────────────────────────
+
+if __name__ == '__main__':
     print()
     print("╔══════════════════════════════════════════════════════════════════════╗")
-    print("║  Top-k Certified Robustness for Multiclass Neural Networks          ║")
-    print("║  Formally Verified in Lean 4 with Mathlib                           ║")
+    print("║  Tropical Certified Robustness for Max-Aggregation Trees           ║")
+    print("║  Companion demos for the Lean 4 formal verification               ║")
     print("╚══════════════════════════════════════════════════════════════════════╝")
     print()
-
-    demo_basic()
-    demo_perturbation()
-    demo_sup_inf()
-    demo_certified_radius()
-    demo_composition()
-    demo_gap_plot()
-
+    
+    tree, x0, winner, classes, r = demo_basic()
+    demo_visualization(tree, x0, winner, classes, r)
+    demo_deep_tree()
+    demo_comparison()
+    demo_ensemble()
+    demo_radius_heatmap(tree, classes)
+    
     print("\n" + "=" * 70)
-    print("All demos complete. Visualizations saved in demos/")
+    print("SUMMARY OF FORMALLY VERIFIED THEOREMS")
     print("=" * 70)
+    print("""
+    1. eval_lip: Max-aggregation preserves Lipschitz constants.
+       If each leaf is L_i-Lipschitz, the tree is (max_i L_i)-Lipschitz.
+
+    2. certGap_le_gap: Subtree certificate monotonicity.
+       min over subtree gaps ≤ root gap.
+
+    3. gap_perturb_lower_bound: Gap degradation bound.
+       gap(T, x', i, j) ≥ gap(T, x, i, j) - 2·L·dist(x, x').
+
+    4. argmax_stable: Classification stability.
+       If certGap > 2·L·dist for all competitors, prediction is stable.
+
+    5. certRadius_spec: Robustness radius certificate.
+       Within radius min_j certGap(y,j)/(2L), the winner is preserved.
+
+    All theorems are machine-verified in Lean 4 with Mathlib,
+    using only standard axioms (propext, Classical.choice, Quot.sound).
+    """)
