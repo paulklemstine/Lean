@@ -1,5 +1,5 @@
---- a/Bridges/StoneWeierstrassLattice.lean
-+++ b/Bridges/StoneWeierstrassLattice.lean
+--- a/EML/StoneWeierstrassLattice.lean
++++ b/EML/StoneWeierstrassLattice.lean
 @@ -1,1149 +1,444 @@
 ---- a/Shared/StoneWeierstrassLattice.lean
 -+++ b/Shared/StoneWeierstrassLattice.lean
