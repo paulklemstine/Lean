@@ -1,366 +1,450 @@
 """
-Deep Compositional Approximation Demo
-======================================
+Quantitative Algebraic-Compositional Approximation Calculus: Interactive Demo
 
-This script demonstrates the core mathematical results from the
-compositional universal approximation theory:
+This demo illustrates the key theorems from the Lean formalization:
+1. Leibniz product error bound
+2. Sharp max-Lipschitz inequality
+3. Error propagation through expression trees
+4. Log-sum-exp tropical bridge
 
-1. Error propagation through Lipschitz compositions
-2. The telescoping error formula for deep networks
-3. Coordinatewise approximation of vector-valued functions
-4. Visualization of the error bounds vs actual errors
-
-The key insight: if each layer of a deep network is approximated
-with error εᵢ, and each true layer has Lipschitz constant Lᵢ,
-then the total end-to-end error satisfies the recursive bound:
-
-    E(0) = 0,  E(n+1) = ε(n) + L(n) * E(n)
-
-which unfolds to: E(n) = Σᵢ εᵢ · Πⱼ>ᵢ Lⱼ
+Each section shows concrete numerical examples and generates visualizations.
 """
 
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from typing import List
+from matplotlib.gridspec import GridSpec
+import os
+
+# Ensure output directory exists
+os.makedirs("demos/figures", exist_ok=True)
 
 
-# ============================================================
-# Core mathematical functions
-# ============================================================
+# =============================================================================
+# Section 1: Elementary Inequalities
+# =============================================================================
 
-def deep_error_recursive(epsilons: List[float], lipschitz: List[float]) -> List[float]:
-    """Compute the recursive error bound E(0), E(1), ..., E(n).
-
-    E(0) = 0
-    E(k+1) = ε(k) + L(k) * E(k)
+def demo_leibniz_product_error():
     """
-    n = len(epsilons)
-    errors = [0.0]
-    for k in range(n):
-        errors.append(epsilons[k] + lipschitz[k] * errors[-1])
-    return errors
+    Demonstrates the Leibniz product error bound:
+    |f*g - F*G| <= |f|*|g - G| + |G|*|f - F|
+    """
+    print("=" * 70)
+    print("DEMO 1: Leibniz Product Error Bound")
+    print("=" * 70)
+    print()
+    print("Theorem: |f*g - F*G| <= |f|*|g-G| + |G|*|f-F|")
+    print("(Telescoping: f*g - F*G = f*(g-G) + G*(f-F))")
+    print()
 
+    test_cases = [
+        (3.0, 4.0, 3.1, 3.8),
+        (1.0, 2.0, 1.5, 2.5),
+        (-2.0, 3.0, -1.8, 3.2),
+        (10.0, 0.1, 10.5, 0.15),
+    ]
 
-def deep_error_sum(epsilons: List[float], lipschitz: List[float]) -> float:
-    """Closed-form: E(n) = Σᵢ εᵢ · Πⱼ>ᵢ Lⱼ."""
-    n = len(epsilons)
-    total = 0.0
-    for i in range(n):
-        prod = 1.0
-        for j in range(i + 1, n):
-            prod *= lipschitz[j]
-        total += epsilons[i] * prod
-    return total
+    print(f"{'f':>8} {'g':>8} {'F':>8} {'G':>8} | {'|fg-FG|':>10} {'<= bound':>10} {'gap':>8}")
+    print("-" * 70)
 
+    for f, g, F, G in test_cases:
+        actual = abs(f * g - F * G)
+        bound = abs(f) * abs(g - G) + abs(G) * abs(f - F)
+        gap = bound - actual
+        print(f"{f:8.2f} {g:8.2f} {F:8.2f} {G:8.2f} | {actual:10.4f} {bound:10.4f} {gap:8.4f}")
+        assert actual <= bound + 1e-10, "Bound violated!"
 
-def deep_error_uniform_bound(delta: float, L: float, n: int) -> float:
-    """Universal upper bound: n * δ * max(1, L)^n."""
-    return n * delta * max(1, L) ** n
+    print()
+    print("All bounds verified numerically.")
 
+    # Visualization
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
-# ============================================================
-# Demo 1: Error propagation through a deep composition
-# ============================================================
+    f_val, G_val = 2.0, 3.0
+    eps_f = np.linspace(0, 1, 100)
+    eps_g = np.linspace(0, 1, 100)
+    EF, EG = np.meshgrid(eps_f, eps_g)
+    bound_surface = abs(f_val) * EG + abs(G_val) * EF
 
-def demo_error_propagation():
-    """Demonstrate how errors accumulate through deep compositions."""
-    print("=" * 60)
-    print("Demo 1: Error Propagation Through Deep Compositions")
-    print("=" * 60)
+    ax = axes[0]
+    c = ax.contourf(EF, EG, bound_surface, levels=20, cmap='YlOrRd')
+    plt.colorbar(c, ax=ax, label='Error bound')
+    ax.set_xlabel('ef = |f - F|')
+    ax.set_ylabel('eg = |g - G|')
+    ax.set_title(f'Leibniz Bound: |f|*eg + |G|*ef\n(f={f_val}, G={G_val})')
 
-    n_layers = 5
-    epsilons = [0.01, 0.02, 0.015, 0.01, 0.025]
-    lipschitz = [2.0, 1.5, 3.0, 1.0, 2.0]
+    ax = axes[1]
+    np.random.seed(42)
+    n_samples = 500
+    f_s = np.random.uniform(-5, 5, n_samples)
+    g_s = np.random.uniform(-5, 5, n_samples)
+    ef_s = np.random.uniform(-1, 1, n_samples)
+    eg_s = np.random.uniform(-1, 1, n_samples)
+    F_s = f_s + ef_s
+    G_s = g_s + eg_s
 
-    errors = deep_error_recursive(epsilons, lipschitz)
-    closed_form = deep_error_sum(epsilons, lipschitz)
+    actual = np.abs(f_s * g_s - F_s * G_s)
+    bound = np.abs(f_s) * np.abs(eg_s) + np.abs(G_s) * np.abs(ef_s)
 
-    print(f"\nPer-layer errors:     {epsilons}")
-    print(f"Lipschitz constants:  {lipschitz}")
-    print(f"\nRecursive error bounds after each layer:")
-    for k, e in enumerate(errors):
-        print(f"  After layer {k}: E = {e:.6f}")
-    print(f"\nClosed-form total: {closed_form:.6f}")
-    print(f"Recursive total:   {errors[-1]:.6f}")
-    print(f"Match: {abs(closed_form - errors[-1]) < 1e-10}")
-
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-
-    ax1.plot(range(n_layers + 1), errors, 'b-o', linewidth=2, markersize=8, label='Recursive bound')
-    ax1.axhline(y=sum(epsilons), color='g', linestyle='--', alpha=0.7, label='Sum of εᵢ (no amplification)')
-    ax1.set_xlabel('Depth (number of layers)', fontsize=12)
-    ax1.set_ylabel('Error bound', fontsize=12)
-    ax1.set_title('Error Accumulation Through Deep Composition', fontsize=13)
-    ax1.legend(fontsize=11)
-    ax1.grid(True, alpha=0.3)
-
-    contributions = []
-    for i in range(n_layers):
-        prod = 1.0
-        for j in range(i + 1, n_layers):
-            prod *= lipschitz[j]
-        contributions.append(epsilons[i] * prod)
-
-    ax2.bar(range(n_layers), contributions, color='steelblue', alpha=0.8)
-    ax2.set_xlabel('Layer index i', fontsize=12)
-    ax2.set_ylabel('Contribution εᵢ · Πⱼ>ᵢ Lⱼ', fontsize=12)
-    ax2.set_title('Per-Layer Contribution to Total Error', fontsize=13)
-    ax2.grid(True, alpha=0.3, axis='y')
+    ax.scatter(bound, actual, alpha=0.3, s=10, c='steelblue')
+    max_val = max(bound.max(), actual.max())
+    ax.plot([0, max_val], [0, max_val], 'r--', label='y = x (tight)')
+    ax.set_xlabel('Bound: |f|*|g-G| + |G|*|f-F|')
+    ax.set_ylabel('Actual: |f*g - F*G|')
+    ax.set_title('Actual Error vs Leibniz Bound')
+    ax.legend()
 
     plt.tight_layout()
-    plt.savefig('demos/error_propagation.png', dpi=150, bbox_inches='tight')
+    plt.savefig('demos/figures/leibniz_bound.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("\nSaved: demos/error_propagation.png")
+    print("  -> Saved: demos/figures/leibniz_bound.png")
 
 
-# ============================================================
-# Demo 2: Actual vs bounded error for concrete functions
-# ============================================================
+def demo_max_lipschitz():
+    """
+    Demonstrates |max(a,b) - max(c,d)| <= max(|a-c|, |b-d|)
+    """
+    print("=" * 70)
+    print("DEMO 2: Sharp Max-Lipschitz Inequality")
+    print("=" * 70)
+    print()
+    print("Theorem: |max(a,b) - max(c,d)| <= max(|a-c|, |b-d|)")
+    print()
 
-def demo_concrete_approximation():
-    """Demonstrate the bound on concrete function compositions."""
-    print("\n" + "=" * 60)
-    print("Demo 2: Concrete Composition Approximation")
-    print("=" * 60)
+    test_cases = [
+        (5, 3, 4, 2),
+        (1, 7, 3, 6),
+        (-1, -2, 1, 0),
+        (0, 0, 0.1, -0.1),
+    ]
 
-    eps = [0.05, 0.03, 0.02]
-    lipschitz = [2.0, 1.0, 0.5]
+    print(f"{'a':>6} {'b':>6} {'c':>6} {'d':>6} | {'LHS':>8} {'<= RHS':>8} {'tight?':>8}")
+    print("-" * 55)
 
-    x = np.linspace(-2, 2, 1000)
+    for a, b, c, d in test_cases:
+        lhs = abs(max(a, b) - max(c, d))
+        rhs = max(abs(a - c), abs(b - d))
+        tight = "YES" if abs(lhs - rhs) < 1e-10 else "no"
+        print(f"{a:6.1f} {b:6.1f} {c:6.1f} {d:6.1f} | {lhs:8.4f} {rhs:8.4f} {tight:>8}")
 
-    # True layers
-    true_1 = np.tanh(2 * x)
-    true_2 = np.sin(true_1)
-    true_comp = 0.5 * true_2 + 0.3
+    print()
 
-    # Approximate layers
-    approx_1 = np.tanh(2 * x) + eps[0] * np.sin(10 * x)
-    approx_2 = np.sin(approx_1) + eps[1] * np.cos(5 * approx_1)
-    approx_comp = 0.5 * approx_2 + 0.3 + eps[2]
+    # Visualization
+    fig, ax = plt.subplots(1, 1, figsize=(8, 6))
+    np.random.seed(123)
+    n = 1000
+    vals = np.random.uniform(-5, 5, (n, 4))
+    a_s, b_s, c_s, d_s = vals[:, 0], vals[:, 1], vals[:, 2], vals[:, 3]
 
-    actual_error = np.abs(true_comp - approx_comp)
-    max_actual_error = np.max(actual_error)
+    lhs = np.abs(np.maximum(a_s, b_s) - np.maximum(c_s, d_s))
+    sharp = np.maximum(np.abs(a_s - c_s), np.abs(b_s - d_s))
+    additive = np.abs(a_s - c_s) + np.abs(b_s - d_s)
 
-    errors = deep_error_recursive(eps, lipschitz)
-    theoretical_bound = errors[-1]
-
-    print(f"\nLayers: tanh(2x) → sin(x) → 0.5x + 0.3")
-    print(f"Per-layer errors: {eps}")
-    print(f"Lipschitz constants: {lipschitz}")
-    print(f"\nMax actual error:    {max_actual_error:.6f}")
-    print(f"Theoretical bound:   {theoretical_bound:.6f}")
-    print(f"Bound is valid:      {max_actual_error <= theoretical_bound + 1e-10}")
-
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 8))
-
-    ax1.plot(x, true_comp, 'b-', linewidth=2, label='True: Φ₃ ∘ Φ₂ ∘ Φ₁')
-    ax1.plot(x, approx_comp, 'r--', linewidth=1.5, label='Approx: Ψ₃ ∘ Ψ₂ ∘ Ψ₁')
-    ax1.set_xlabel('x', fontsize=12)
-    ax1.set_ylabel('Output', fontsize=12)
-    ax1.set_title('True vs Approximate Deep Composition', fontsize=13)
-    ax1.legend(fontsize=11)
-    ax1.grid(True, alpha=0.3)
-
-    ax2.fill_between(x, 0, actual_error, alpha=0.3, color='red', label='Actual error')
-    ax2.axhline(y=theoretical_bound, color='blue', linestyle='--', linewidth=2,
-                label=f'Telescoping bound = {theoretical_bound:.4f}')
-    ax2.axhline(y=max_actual_error, color='red', linestyle=':', linewidth=1.5,
-                label=f'Max actual error = {max_actual_error:.4f}')
-    ax2.set_xlabel('x', fontsize=12)
-    ax2.set_ylabel('|Error|', fontsize=12)
-    ax2.set_title('Error Analysis: Actual vs Bound', fontsize=13)
-    ax2.legend(fontsize=11)
-    ax2.grid(True, alpha=0.3)
+    ax.scatter(sharp, lhs, alpha=0.3, s=10, c='blue', label='vs max(|a-c|,|b-d|) [sharp]')
+    ax.scatter(additive, lhs, alpha=0.15, s=10, c='orange', label='vs |a-c|+|b-d| [additive]')
+    max_val = max(additive.max(), sharp.max())
+    ax.plot([0, max_val], [0, max_val], 'r--', alpha=0.5)
+    ax.set_xlabel('Bound')
+    ax.set_ylabel('Actual |max(a,b) - max(c,d)|')
+    ax.set_title('Sharp vs Additive Max-Lipschitz Bound')
+    ax.legend()
 
     plt.tight_layout()
-    plt.savefig('demos/concrete_approximation.png', dpi=150, bbox_inches='tight')
+    plt.savefig('demos/figures/max_lipschitz.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: demos/concrete_approximation.png")
+    print("  -> Saved: demos/figures/max_lipschitz.png")
 
 
-# ============================================================
-# Demo 3: Depth vs error bound scaling
-# ============================================================
+# =============================================================================
+# Section 2: Expression Tree Error Propagation
+# =============================================================================
 
-def demo_depth_scaling():
-    """Show how error bounds scale with network depth."""
-    print("\n" + "=" * 60)
-    print("Demo 3: Error Bound Scaling with Depth")
-    print("=" * 60)
-
-    depths = range(1, 21)
-    delta = 0.01
-
-    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
-
-    for idx, (L_val, title) in enumerate([
-        (0.8, 'Contractive (L=0.8)'),
-        (1.0, 'Isometric (L=1.0)'),
-        (1.5, 'Expansive (L=1.5)')
-    ]):
-        bounds = [deep_error_uniform_bound(delta, L_val, d) for d in depths]
-        actual = [deep_error_recursive([delta]*d, [L_val]*d)[-1] for d in depths]
-        axes[idx].plot(list(depths), actual, 'b-o', markersize=4, label='Recursive bound')
-        axes[idx].plot(list(depths), bounds, 'r--', label='Uniform bound')
-        axes[idx].set_title(title, fontsize=13)
-        axes[idx].set_xlabel('Depth', fontsize=12)
-        if idx == 0:
-            axes[idx].set_ylabel('Error bound', fontsize=12)
-        axes[idx].legend()
-        axes[idx].grid(True, alpha=0.3)
-        if L_val > 1:
-            axes[idx].set_yscale('log')
-
-    plt.suptitle(f'Error Scaling with Depth (δ = {delta} per layer)', fontsize=14, y=1.02)
-    plt.tight_layout()
-    plt.savefig('demos/depth_scaling.png', dpi=150, bbox_inches='tight')
-    plt.close()
-
-    print(f"\nδ = {delta} per layer")
-    for L_val, name in [(0.8, 'Contractive'), (1.0, 'Isometric'), (1.5, 'Expansive')]:
-        err = deep_error_recursive([delta]*20, [L_val]*20)[-1]
-        print(f"  {name} (L={L_val}): Error at depth 20 = {err:.6f}")
-    print("Saved: demos/depth_scaling.png")
+class Var:
+    def __init__(self, i): self.i = i
+class Const:
+    def __init__(self, c): self.c = c
+class Add:
+    def __init__(self, l, r): self.left, self.right = l, r
+class Mul:
+    def __init__(self, l, r): self.left, self.right = l, r
+class ScalarMul:
+    def __init__(self, c, e): self.c, self.expr = c, e
+class MaxOp:
+    def __init__(self, l, r): self.left, self.right = l, r
 
 
-# ============================================================
-# Demo 4: Vector-valued coordinatewise approximation
-# ============================================================
+def eval_expr(e, v):
+    if isinstance(e, Var): return v[e.i]
+    if isinstance(e, Const): return np.full_like(list(v.values())[0], e.c) if v else e.c
+    if isinstance(e, Add): return eval_expr(e.left, v) + eval_expr(e.right, v)
+    if isinstance(e, Mul): return eval_expr(e.left, v) * eval_expr(e.right, v)
+    if isinstance(e, ScalarMul): return e.c * eval_expr(e.expr, v)
+    if isinstance(e, MaxOp): return np.maximum(eval_expr(e.left, v), eval_expr(e.right, v))
 
-def demo_vector_approx():
-    """Demonstrate coordinatewise approximation of vector-valued functions."""
-    print("\n" + "=" * 60)
-    print("Demo 4: Coordinatewise Vector-Valued Approximation")
-    print("=" * 60)
+def bound_val(e, B):
+    if isinstance(e, Var): return B[e.i]
+    if isinstance(e, Const): return abs(e.c)
+    if isinstance(e, Add): return bound_val(e.left, B) + bound_val(e.right, B)
+    if isinstance(e, Mul): return bound_val(e.left, B) * bound_val(e.right, B)
+    if isinstance(e, ScalarMul): return abs(e.c) * bound_val(e.expr, B)
+    if isinstance(e, MaxOp): return max(bound_val(e.left, B), bound_val(e.right, B))
 
-    x = np.linspace(-np.pi, np.pi, 500)
-    F_vals = np.array([np.sin(x), np.cos(x), x**2 / 10])
-    m = 3
+def err_bound(e, eps, B):
+    if isinstance(e, Var): return eps[e.i]
+    if isinstance(e, Const): return 0.0
+    if isinstance(e, Add): return err_bound(e.left, eps, B) + err_bound(e.right, eps, B)
+    if isinstance(e, Mul):
+        return bound_val(e.left, B) * err_bound(e.right, eps, B) + \
+               bound_val(e.right, B) * err_bound(e.left, eps, B)
+    if isinstance(e, ScalarMul): return abs(e.c) * err_bound(e.expr, eps, B)
+    if isinstance(e, MaxOp): return max(err_bound(e.left, eps, B), err_bound(e.right, eps, B))
 
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-    coord_names = ['sin(x)', 'cos(x)', 'x²/10']
+def expr_str(e):
+    if isinstance(e, Var): return f"x{e.i}"
+    if isinstance(e, Const): return f"{e.c}"
+    if isinstance(e, Add): return f"({expr_str(e.left)} + {expr_str(e.right)})"
+    if isinstance(e, Mul): return f"({expr_str(e.left)} * {expr_str(e.right)})"
+    if isinstance(e, ScalarMul): return f"{e.c}*{expr_str(e.expr)}"
+    if isinstance(e, MaxOp): return f"max({expr_str(e.left)}, {expr_str(e.right)})"
 
-    approx_coords = []
-    coord_errors = []
-    for i in range(m):
-        coeffs = np.polyfit(x, F_vals[i], 5)
-        approx = np.polyval(coeffs, x)
-        approx_coords.append(approx)
-        max_err = np.max(np.abs(F_vals[i] - approx))
-        coord_errors.append(max_err)
 
-        ax = axes[0, i] if i < 2 else axes[1, 0]
-        ax.plot(x, F_vals[i], 'b-', linewidth=2, label=f'F(x)[{i}] = {coord_names[i]}')
-        ax.plot(x, approx, 'r--', linewidth=1.5, label=f'Poly approx')
-        ax.set_title(f'Coordinate {i} (max err = {max_err:.4f})', fontsize=12)
-        ax.legend()
-        ax.grid(True, alpha=0.3)
+def demo_expression_tree():
+    print("=" * 70)
+    print("DEMO 3: Expression Tree Error Propagation")
+    print("=" * 70)
+    print()
 
-    approx_coords = np.array(approx_coords)
-    pointwise_errors = np.max(np.abs(F_vals - approx_coords), axis=0)
-    max_sup_error = np.max(pointwise_errors)
+    # Expression: max(x0 * x1 + 2*x2, x1 * x2)
+    expr = MaxOp(
+        Add(Mul(Var(0), Var(1)), ScalarMul(2.0, Var(2))),
+        Mul(Var(1), Var(2))
+    )
 
-    ax = axes[1, 1]
-    ax.plot(x, pointwise_errors, 'purple', linewidth=1.5, label='ℓ∞ error')
-    ax.axhline(y=max(coord_errors), color='red', linestyle='--',
-               label=f'max coord error = {max(coord_errors):.4f}')
-    ax.set_title('Vector-Valued Approximation Error', fontsize=12)
-    ax.set_xlabel('x')
+    B = {0: 3.0, 1: 2.0, 2: 4.0}
+    eps = {0: 0.1, 1: 0.05, 2: 0.2}
+
+    computed_err = err_bound(expr, eps, B)
+    print(f"Expression: {expr_str(expr)}")
+    print(f"Variable bounds:  B = {B}")
+    print(f"Variable errors:  eps = {eps}")
+    print(f"Computed errBound = {computed_err:.4f}")
+    print()
+
+    # Monte Carlo verification
+    np.random.seed(42)
+    n_samples = 10000
+    max_actual_err = 0
+
+    for _ in range(n_samples):
+        v_true = {i: np.array([np.random.uniform(-B[i], B[i])]) for i in range(3)}
+        v_approx = {i: v_true[i] + np.random.uniform(-eps[i], eps[i]) for i in range(3)}
+        true_val = eval_expr(expr, v_true).item()
+        approx_val = eval_expr(expr, v_approx).item()
+        max_actual_err = max(max_actual_err, abs(true_val - approx_val))
+
+    print(f"Monte Carlo ({n_samples} samples):")
+    print(f"  Max observed error: {max_actual_err:.6f}")
+    print(f"  Theoretical bound:  {computed_err:.6f}")
+    print(f"  Tightness ratio:    {max_actual_err / computed_err:.4f}")
+    print()
+
+    # Visualization
+    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
+
+    base_eps_range = np.linspace(0.001, 0.5, 50)
+    err_bounds_list = []
+    actual_maxes = []
+
+    for base_eps in base_eps_range:
+        eps_scaled = {i: base_eps * (i + 1) for i in range(3)}
+        eb = err_bound(expr, eps_scaled, B)
+        err_bounds_list.append(eb)
+
+        max_err = 0
+        for _ in range(300):
+            v_true = {i: np.array([np.random.uniform(-B[i], B[i])]) for i in range(3)}
+            v_approx = {i: v_true[i] + np.random.uniform(-eps_scaled[i], eps_scaled[i]) for i in range(3)}
+            true_val = eval_expr(expr, v_true).item()
+            approx_val = eval_expr(expr, v_approx).item()
+            max_err = max(max_err, abs(true_val - approx_val))
+        actual_maxes.append(max_err)
+
+    ax.fill_between(base_eps_range, 0, err_bounds_list, alpha=0.2, color='red')
+    ax.plot(base_eps_range, err_bounds_list, 'r-', linewidth=2, label='errBound (theoretical)')
+    ax.plot(base_eps_range, actual_maxes, 'b-', linewidth=2, label='Max observed error')
+    ax.set_xlabel('Base error scale')
+    ax.set_ylabel('Error')
+    ax.set_title(f'Error Propagation: {expr_str(expr)}')
     ax.legend()
     ax.grid(True, alpha=0.3)
 
-    plt.suptitle('Coordinatewise Approximation: F(x) = (sin x, cos x, x²/10)', fontsize=14)
     plt.tight_layout()
-    plt.savefig('demos/vector_approx.png', dpi=150, bbox_inches='tight')
+    plt.savefig('demos/figures/expr_tree_error.png', dpi=150, bbox_inches='tight')
     plt.close()
-
-    print(f"\nPer-coordinate max errors: {[f'{e:.4f}' for e in coord_errors]}")
-    print(f"Max ℓ∞ error: {max_sup_error:.4f}")
-    print(f"Key insight: ℓ∞ error = max of coordinate errors (no factor of m!)")
-    print("Saved: demos/vector_approx.png")
+    print("  -> Saved: demos/figures/expr_tree_error.png")
 
 
-# ============================================================
-# Demo 5: Error allocation strategy
-# ============================================================
+def demo_softmax_bridge():
+    print("=" * 70)
+    print("DEMO 4: Log-Sum-Exp Tropical Bridge")
+    print("=" * 70)
+    print()
 
-def demo_error_allocation():
-    """Show optimal error allocation across layers."""
-    print("\n" + "=" * 60)
-    print("Demo 5: Error Allocation Strategy")
-    print("=" * 60)
+    def softmax(a, b, tau):
+        m = np.maximum(a, b)
+        return tau * (m/tau + np.log(np.exp((a - m)/tau) + np.exp((b - m)/tau)))
 
-    n_layers = 6
-    target_error = 0.1
-    lipschitz = [2.0, 1.5, 3.0, 1.0, 2.5, 1.8]
+    a, b = 3.0, 1.0
+    taus = [2.0, 1.0, 0.5, 0.1, 0.01]
 
-    delta_uniform = target_error / n_layers
-    error_uniform = deep_error_recursive([delta_uniform]*n_layers, lipschitz)[-1]
+    print(f"a = {a}, b = {b}, max(a,b) = {max(a,b)}")
+    print(f"{'tau':>8} {'softmax':>12} {'error':>10} {'tau*ln2':>10}")
+    print("-" * 45)
 
-    weights = []
-    for i in range(n_layers):
-        prod = 1.0
-        for j in range(i + 1, n_layers):
-            prod *= lipschitz[j]
-        weights.append(prod)
-    total_weight = sum(weights)
-    delta_weighted = [target_error / total_weight] * n_layers
-    error_weighted = deep_error_recursive(delta_weighted, lipschitz)[-1]
+    for tau in taus:
+        sm = softmax(a, b, tau)
+        err = abs(sm - max(a, b))
+        bnd = tau * np.log(2)
+        print(f"{tau:8.3f} {sm:12.6f} {err:10.6f} {bnd:10.6f}")
 
-    delta_prop = [target_error / (n_layers * w) for w in weights]
-    error_prop = deep_error_recursive(delta_prop, lipschitz)[-1]
+    print()
 
-    print(f"\nTarget total error: {target_error}")
-    print(f"Lipschitz constants: {lipschitz}")
-    print(f"\nStrategy 1 (Uniform δ = {delta_uniform:.4f}): error = {error_uniform:.4f}")
-    print(f"Strategy 2 (Equal weight δ): error = {error_weighted:.4f}")
-    print(f"Strategy 3 (Proportional): error = {error_prop:.4f}")
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+    ax = axes[0]
+    x = np.linspace(-3, 3, 500)
+    for tau in [0.1, 0.5, 1.0, 2.0]:
+        sm_vals = softmax(x, 0.0, tau)
+        ax.plot(x, sm_vals, label=f'tau = {tau}', linewidth=1.5)
+    ax.plot(x, np.maximum(x, 0.0), 'k--', linewidth=2, label='max(x, 0)')
+    ax.set_xlabel('x')
+    ax.set_title('Soft-max converges to max')
+    ax.legend()
+    ax.grid(True, alpha=0.3)
 
-    x = np.arange(n_layers)
-    width = 0.25
-    ax1.bar(x - width, [delta_uniform]*n_layers, width, label='Uniform', alpha=0.8)
-    ax1.bar(x, delta_weighted, width, label='Equal weight', alpha=0.8)
-    ax1.bar(x + width, delta_prop, width, label='Proportional', alpha=0.8)
-    ax1.set_xlabel('Layer index', fontsize=12)
-    ax1.set_ylabel('Per-layer tolerance δᵢ', fontsize=12)
-    ax1.set_title('Error Allocation Strategies', fontsize=13)
-    ax1.legend()
-    ax1.grid(True, alpha=0.3, axis='y')
-
-    strategies = ['Uniform', 'Equal\nweight', 'Proportional']
-    total_errors = [error_uniform, error_weighted, error_prop]
-    colors = ['steelblue', 'darkorange', 'forestgreen']
-    ax2.bar(strategies, total_errors, color=colors, alpha=0.8)
-    ax2.axhline(y=target_error, color='red', linestyle='--', linewidth=2, label='Target')
-    ax2.set_ylabel('Total composition error', fontsize=12)
-    ax2.set_title('Resulting Total Error by Strategy', fontsize=13)
-    ax2.legend()
-    ax2.grid(True, alpha=0.3, axis='y')
+    ax = axes[1]
+    tau_range = np.linspace(0.01, 3, 200)
+    for a_val, b_val in [(3, 1), (2, 2), (0, -1)]:
+        errors = [abs(softmax(a_val, b_val, t) - max(a_val, b_val)) for t in tau_range]
+        ax.plot(tau_range, errors, linewidth=1.5, label=f'a={a_val}, b={b_val}')
+    ax.plot(tau_range, tau_range * np.log(2), 'k--', linewidth=2, label='tau*ln(2) bound')
+    ax.set_xlabel('tau')
+    ax.set_ylabel('|softmax - max|')
+    ax.set_title('Approximation Error vs Temperature')
+    ax.legend()
+    ax.grid(True, alpha=0.3)
 
     plt.tight_layout()
-    plt.savefig('demos/error_allocation.png', dpi=150, bbox_inches='tight')
+    plt.savefig('demos/figures/softmax_bridge.png', dpi=150, bbox_inches='tight')
     plt.close()
-    print("Saved: demos/error_allocation.png")
+    print("  -> Saved: demos/figures/softmax_bridge.png")
 
 
-# ============================================================
-# Main
-# ============================================================
+def demo_network_approximation():
+    print("=" * 70)
+    print("DEMO 5: Modular Network Approximation")
+    print("=" * 70)
+    print()
+
+    x = np.linspace(-1, 1, 1000)
+
+    f1_true = x ** 2
+    eps1 = 0.05
+    f1_approx = x ** 2 + eps1 * np.sin(5 * x)
+
+    f2_true = np.sin(np.pi * x)
+    eps2 = 0.08
+    f2_approx = np.sin(np.pi * x) + eps2 * np.cos(3 * x)
+
+    # Max composition
+    target = np.maximum(f1_true, f2_true)
+    composed = np.maximum(f1_approx, f2_approx)
+    theoretical_bound = max(eps1, eps2)
+    actual_max_error = np.max(np.abs(target - composed))
+
+    print(f"Target: max(x^2, sin(pi*x)) on [-1, 1]")
+    print(f"Sharp max bound: max(eps1, eps2) = {theoretical_bound}")
+    print(f"Actual max error: {actual_max_error:.6f}")
+    print()
+
+    # Product composition
+    B1, M2 = 1.0, 1.0 + eps2
+    product_target = f1_true * f2_true
+    product_approx = f1_approx * f2_approx
+    product_bound = B1 * eps2 + M2 * eps1
+    product_actual = np.max(np.abs(product_target - product_approx))
+
+    print(f"Product: x^2 * sin(pi*x)")
+    print(f"Leibniz bound: {product_bound:.4f}")
+    print(f"Actual error:  {product_actual:.6f}")
+    print()
+
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+
+    ax = axes[0, 0]
+    ax.plot(x, f1_true, 'b-', label='x^2', linewidth=2)
+    ax.plot(x, f1_approx, 'b--', label=f'approx (eps<={eps1})', alpha=0.7)
+    ax.plot(x, f2_true, 'r-', label='sin(pi*x)', linewidth=2)
+    ax.plot(x, f2_approx, 'r--', label=f'approx (eps<={eps2})', alpha=0.7)
+    ax.set_title('Individual Approximations')
+    ax.legend(fontsize=8)
+    ax.grid(True, alpha=0.3)
+
+    ax = axes[0, 1]
+    ax.plot(x, target, 'k-', linewidth=2, label='max(x^2, sin(pi*x))')
+    ax.plot(x, composed, 'g--', linewidth=2, label='composed approximation')
+    ax.fill_between(x, target - theoretical_bound, target + theoretical_bound,
+                    alpha=0.15, color='green')
+    ax.set_title(f'Max Composition (error <= {theoretical_bound})')
+    ax.legend(fontsize=8)
+    ax.grid(True, alpha=0.3)
+
+    ax = axes[1, 0]
+    ax.plot(x, product_target, 'k-', linewidth=2, label='x^2*sin(pi*x)')
+    ax.plot(x, product_approx, 'm--', linewidth=2, label='composed approximation')
+    ax.fill_between(x, product_target - product_bound, product_target + product_bound,
+                    alpha=0.15, color='purple')
+    ax.set_title(f'Product Composition (error <= {product_bound:.4f})')
+    ax.legend(fontsize=8)
+    ax.grid(True, alpha=0.3)
+
+    ax = axes[1, 1]
+    ax.plot(x, np.abs(target - composed), 'g-', label=f'max error (bound={theoretical_bound})')
+    ax.axhline(y=theoretical_bound, color='g', linestyle=':', alpha=0.7)
+    ax.plot(x, np.abs(product_target - product_approx), 'm-',
+            label=f'product error (bound={product_bound:.3f})')
+    ax.axhline(y=product_bound, color='m', linestyle=':', alpha=0.7)
+    ax.set_title('Pointwise Errors vs Bounds')
+    ax.legend(fontsize=8)
+    ax.grid(True, alpha=0.3)
+    ax.set_xlabel('x')
+
+    plt.tight_layout()
+    plt.savefig('demos/figures/network_approximation.png', dpi=150, bbox_inches='tight')
+    plt.close()
+    print("  -> Saved: demos/figures/network_approximation.png")
+
 
 if __name__ == "__main__":
-    print("Deep Compositional Approximation Theory — Numerical Demos")
-    print("=" * 60)
+    print()
+    print("=" * 70)
+    print("  Quantitative Algebraic-Compositional Approximation Calculus")
+    print("  Interactive Demonstration")
+    print("=" * 70)
+    print()
 
-    demo_error_propagation()
-    demo_concrete_approximation()
-    demo_depth_scaling()
-    demo_vector_approx()
-    demo_error_allocation()
+    demo_leibniz_product_error()
+    print()
+    demo_max_lipschitz()
+    print()
+    demo_expression_tree()
+    print()
+    demo_softmax_bridge()
+    print()
+    demo_network_approximation()
 
-    print("\n" + "=" * 60)
-    print("All demos complete!")
-    print("=" * 60)
+    print()
+    print("=" * 70)
+    print("All demonstrations complete! Figures saved to demos/figures/")
+    print("=" * 70)
