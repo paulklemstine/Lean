@@ -1,637 +1,315 @@
---- a/Tropical/Defs.lean
-+++ b/Tropical/Defs.lean
-@@ -1,482 +1,153 @@
----- a/Tropical/Defs.lean
--+++ b/Tropical/Defs.lean
--@@ -1,327 +1,153 @@
------ a/Tropical/Defs.lean
---+++ b/Tropical/Defs.lean
---@@ -1,172 +1,153 @@
------- a/MachineLearning/Defs.lean
----+++ b/MachineLearning/Defs.lean
----@@ -1,105 +1,86 @@
---- import Mathlib
---- 
---- /-!
-----# Top-K Robustness: Definitions
----+# Top-k Order Statistics and Robustness Definitions
---- 
-----Core definitions for the top-`k` certified robustness theory for multiclass
-----piecewise-linear networks. All definitions avoid sorting machinery and instead
-----phrase top-`k` membership via pairwise comparison against outside classes.
----+This file defines the core objects for top-k certified robustness:
---- 
-----## Main definitions
----+* `kthLargest s k` — the (k+1)-th largest value of `s : Fin C → ℝ` (0-indexed)
----+* `topkGap s k` — the gap between the k-th and (k+1)-th largest values
----+* `topKSet s k` — the set of indices with scores strictly above the (k+1)-th largest
---- 
-----* `scoreGap` — The score gap `f(x,i) - f(x,j)` between two classes.
-----* `finCompl` — The complement of a finset `S` in `Fin n`.
-----* `crossGaps` — The finite set of all score gaps between classes in `S` and classes outside `S`.
-----* `topkMargin'` — The minimum score gap across all (in, out) pairs, via `Finset.min'`.
-----* `IsTopKSet` — Predicate: all classes in `S` weakly dominate all classes outside `S`.
-----* `StrictTopKSet` — Predicate: all classes in `S` strictly dominate all classes outside `S`.
----+The k-th largest value is defined via the classical "sup of infima" characterization:
----+  `kthLargest s k = max_{|S|=k+1} min_{i ∈ S} s(i)`
----+
----+This definition is proof-friendly because the perturbation bound follows directly
----+from the monotonicity of inf and sup operations.
---- -/
----+
----+noncomputable section
---- 
---- open Finset
---- 
-----noncomputable section
----+/-! ## Auxiliary lemmas for powersetCard -/
---- 
-----variable {n : ℕ}
----+/-- Nonemptiness of powersetCard when k+1 ≤ C -/
----+lemma powersetCard_univ_nonempty {C : ℕ} (k : ℕ) (h : k < C) :
----+    ((univ : Finset (Fin C)).powersetCard (k + 1)).Nonempty := by
----+  rw [powersetCard_nonempty, card_univ, Fintype.card_fin]; omega
---- 
-----/-- The score gap between class `i` and class `j` at input `x`. -/
-----def scoreGap {α : Type*} (f : α → Fin n → ℝ) (x : α) (i j : Fin n) : ℝ :=
-----  f x i - f x j
----+/-- Any member of `powersetCard (k+1) univ` is nonempty -/
----+lemma nonempty_of_mem_powersetCard_succ {C : ℕ} {k : ℕ} {S : Finset (Fin C)}
----+    (hS : S ∈ (univ : Finset (Fin C)).powersetCard (k + 1)) : S.Nonempty := by
----+  rw [nonempty_iff_ne_empty]
----+  intro h
----+  have := (mem_powersetCard.mp hS).2
----+  rw [h, card_empty] at this; omega
---- 
-----/-- The complement of `S` in `Fin n`, as a `Finset`. -/
-----def finCompl (S : Finset (Fin n)) : Finset (Fin n) :=
-----  Finset.univ.filter fun j => j ∉ S
----+/-- Card of members of powersetCard -/
----+lemma card_of_mem_powersetCard {C : ℕ} {k : ℕ} {S : Finset (Fin C)}
----+    (hS : S ∈ (univ : Finset (Fin C)).powersetCard (k + 1)) : S.card = k + 1 :=
----+  (mem_powersetCard.mp hS).2
---- 
-----/-- The finite set of all score gaps `f(x,i) - f(x,j)` for `i ∈ S` and `j ∉ S`. -/
-----def crossGaps {α : Type*} (f : α → Fin n → ℝ) (x : α) (S : Finset (Fin n)) : Finset ℝ :=
-----  (S ×ˢ finCompl S).image (fun p => scoreGap f x p.1 p.2)
----+/-! ## Core Definitions -/
---- 
-----/-- Nonemptiness of `crossGaps` from nonemptiness of `S` and its complement. -/
-----theorem crossGaps_nonempty {α : Type*} (f : α → Fin n → ℝ) (x : α)
-----    (S : Finset (Fin n))
-----    (hS : S.Nonempty) (hSc : (finCompl S).Nonempty) :
-----    (crossGaps f x S).Nonempty := by
-----  rcases hS with ⟨i, hi⟩; rcases hSc with ⟨j, hj⟩
-----  exact ⟨scoreGap f x i j, Finset.mem_image.mpr
-----    ⟨(i, j), Finset.mem_product.mpr ⟨hi, hj⟩, rfl⟩⟩
----+/-- The k-th largest value (0-indexed) of a finite score function `s : Fin C → ℝ`.
----+    Defined as the maximum over all (k+1)-element subsets of `Fin C` of the
----+    minimum value of `s` on the subset:
----+      `kthLargest s k = sup_{|S|=k+1} inf_{i ∈ S} s(i)`
----+    Returns 0 if `k ≥ C`. -/
----+def kthLargest {C : ℕ} (s : Fin C → ℝ) (k : ℕ) : ℝ :=
----+  if h : k < C then
----+    ((univ : Finset (Fin C)).powersetCard (k + 1)).sup'
----+      (powersetCard_univ_nonempty k h)
----+      (fun S => if hne : S.Nonempty then S.inf' hne s else 0)
----+  else 0
---- 
-----/-- The minimum score gap across all `(i ∈ S, j ∉ S)` pairs.
-----This is the "top-k margin" — the smallest advantage any in-set class holds
-----over any out-set class. -/
-----def topkMargin' {α : Type*} (f : α → Fin n → ℝ) (x : α) (S : Finset (Fin n))
-----    (hS : S.Nonempty) (hSc : (finCompl S).Nonempty) : ℝ :=
-----  (crossGaps f x S).min' (crossGaps_nonempty f x S hS hSc)
----+/-- The top-k gap: the difference between the k-th largest and (k+1)-th largest values.
----+    For `k ≥ 1`, this measures the separation between the top-k scores and the rest.
----+    `topkGap s k = kthLargest s (k-1) - kthLargest s k` -/
----+def topkGap {C : ℕ} (s : Fin C → ℝ) (k : ℕ) : ℝ :=
----+  kthLargest s (k - 1) - kthLargest s k
---- 
-----/-- `S` is a (weak) top-k set at `x`: every class in `S` has score ≥ every class
-----outside `S`. -/
-----def IsTopKSet {α : Type*} (f : α → Fin n → ℝ) (x : α) (S : Finset (Fin n)) : Prop :=
-----  ∀ ⦃i j : Fin n⦄, i ∈ S → j ∉ S → f x j ≤ f x i
----+/-- The top-k set: the set of indices whose score strictly exceeds the (k+1)-th
----+    largest value. Under a positive gap condition, this has exactly k elements. -/
----+def topKSet {C : ℕ} (s : Fin C → ℝ) (k : ℕ) : Finset (Fin C) :=
----+  univ.filter (fun i => kthLargest s k < s i)
---- 
-----/-- `S` is a strict top-k set at `x`: every class in `S` has score strictly greater
-----than every class outside `S`. -/
-----def StrictTopKSet {α : Type*} (f : α → Fin n → ℝ) (x : α) (S : Finset (Fin n)) : Prop :=
-----  ∀ ⦃i j : Fin n⦄, i ∈ S → j ∉ S → f x j < f x i
----+/-! ## Basic kthLargest simplification -/
---- 
-----/-- A strict top-k set is also a weak top-k set. -/
-----theorem StrictTopKSet.isTopKSet {α : Type*} {f : α → Fin n → ℝ} {x : α}
-----    {S : Finset (Fin n)}
-----    (h : StrictTopKSet f x S) : IsTopKSet f x S :=
-----  fun _ _ hi hj => le_of_lt (h hi hj)
----+/-- Unfold kthLargest when k < C -/
----+lemma kthLargest_def {C : ℕ} (s : Fin C → ℝ) (k : ℕ) (hk : k < C) :
----+    kthLargest s k =
----+      ((univ : Finset (Fin C)).powersetCard (k + 1)).sup'
----+        (powersetCard_univ_nonempty k hk)
----+        (fun S => if hne : S.Nonempty then S.inf' hne s else 0) := by
----+  simp [kthLargest, hk]
---- 
-----/-- Membership in `crossGaps` unpacked. -/
-----theorem mem_crossGaps_iff {α : Type*} {f : α → Fin n → ℝ} {x : α}
-----    {S : Finset (Fin n)} {r : ℝ} :
-----    r ∈ crossGaps f x S ↔ ∃ i ∈ S, ∃ j, j ∉ S ∧ r = scoreGap f x i j := by
-----  simp only [crossGaps, Finset.mem_image, Finset.mem_product, finCompl,
-----    Finset.mem_filter, Finset.mem_univ, true_and]
-----  constructor
-----  · rintro ⟨⟨i, j⟩, ⟨hi, hj⟩, heq⟩
-----    exact ⟨i, hi, j, hj, heq.symm⟩
-----  · rintro ⟨i, hi, j, hj, heq⟩
-----    exact ⟨⟨i, j⟩, ⟨hi, hj⟩, heq.symm⟩
-----
-----/-- Every `(i, j)` gap with `i ∈ S`, `j ∉ S` is at least the top-k margin. -/
-----theorem topkMargin'_le_scoreGap {α : Type*} {f : α → Fin n → ℝ} {x : α}
-----    {S : Finset (Fin n)}
-----    {hS : S.Nonempty} {hSc : (finCompl S).Nonempty}
-----    {i j : Fin n} (hi : i ∈ S) (hj : j ∉ S) :
-----    topkMargin' f x S hS hSc ≤ scoreGap f x i j := by
-----  apply Finset.min'_le
-----  simp only [crossGaps, Finset.mem_image, Finset.mem_product, finCompl,
-----    Finset.mem_filter, Finset.mem_univ, true_and]
-----  exact ⟨⟨i, j⟩, ⟨hi, hj⟩, rfl⟩
-----
-----/-- Positive top-k margin implies `StrictTopKSet`. -/
-----theorem strictTopKSet_of_pos_margin {α : Type*} {f : α → Fin n → ℝ} {x : α}
-----    {S : Finset (Fin n)}
-----    {hS : S.Nonempty} {hSc : (finCompl S).Nonempty}
-----    (hpos : 0 < topkMargin' f x S hS hSc) :
-----    StrictTopKSet f x S := by
-----  intro i j hi hj
-----  have h : topkMargin' f x S hS hSc ≤ scoreGap f x i j :=
-----    topkMargin'_le_scoreGap hi hj
-----  simp only [scoreGap] at h
-----  linarith
----+/-- The sup' function on powersetCard evaluates to inf' on nonempty subsets -/
----+lemma kthLargest_eq_sup'_inf' {C : ℕ} (s : Fin C → ℝ) (k : ℕ) (hk : k < C) :
----+    kthLargest s k =
----+      ((univ : Finset (Fin C)).powersetCard (k + 1)).sup'
----+        (powersetCard_univ_nonempty k hk)
----+        (fun S => if hne : S.Nonempty then S.inf' hne s else 0) :=
----+  kthLargest_def s k hk
---- 
---- end+/-
---+Copyright (c) 2025. All rights reserved.
---+Released under Apache 2.0 license as described in the file LICENSE.
---+
---+# GL₃ Tropical Satake Surjectivity — Definitions
---+
---+This file provides the foundational definitions for the GL₃ tropical Satake
---+surjectivity theorem: dominant coweights, support data, tropical Hecke functions,
---+the Satake support extraction map, and the admissibility predicate.
---+-/
---+import Mathlib
---+
---+namespace GL3TropicalSatake
---+
---+/-! ## Sorting into Dominant Chamber -/
---+
---+/-- Sort three integers into weakly decreasing order: (max, mid, min). -/
---+def sort₃ (a b c : ℤ) : ℤ × ℤ × ℤ :=
---+  (max a (max b c),
---+   a + b + c - max a (max b c) - min a (min b c),
---+   min a (min b c))
---+
---+theorem sort₃_fst_ge_snd (a b c : ℤ) : (sort₃ a b c).1 ≥ (sort₃ a b c).2.1 := by
---+  simp only [sort₃]; omega
---+
---+theorem sort₃_snd_ge_thd (a b c : ℤ) : (sort₃ a b c).2.1 ≥ (sort₃ a b c).2.2 := by
---+  simp only [sort₃]; omega
---+
---+theorem sort₃_of_dominant {a b c : ℤ} (h1 : a ≥ b) (h2 : b ≥ c) :
---+    sort₃ a b c = (a, b, c) := by
---+  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
---+
---+theorem sort₃_sum (a b c : ℤ) :
---+    (sort₃ a b c).1 + (sort₃ a b c).2.1 + (sort₃ a b c).2.2 = a + b + c := by
---+  simp only [sort₃]; omega
---+
---+theorem sort₃_swap12 (a b c : ℤ) : sort₃ b a c = sort₃ a b c := by
---+  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
---+
---+theorem sort₃_cycle (a b c : ℤ) : sort₃ b c a = sort₃ a b c := by
---+  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
---+
---+theorem sort₃_idempotent (a b c : ℤ) :
---+    let s := sort₃ a b c
---+    sort₃ s.1 s.2.1 s.2.2 = s := by
---+  have h1 := sort₃_fst_ge_snd a b c
---+  have h2 := sort₃_snd_ge_thd a b c
---+  exact sort₃_of_dominant h1 h2
---+
---+/-! ## Dominant Coweights -/
---+
---+/-- A dominant coweight for GL₃ is a weakly decreasing triple of integers. -/
---+def GL3Dom := { μ : ℤ × ℤ × ℤ // μ.1 ≥ μ.2.1 ∧ μ.2.1 ≥ μ.2.2 }
---+
---+instance : DecidableEq GL3Dom := Subtype.instDecidableEq
---+
---+/-- Construct the dominant representative of any triple. -/
---+def toGL3Dom (a b c : ℤ) : GL3Dom :=
---+  ⟨sort₃ a b c, sort₃_fst_ge_snd a b c, sort₃_snd_ge_thd a b c⟩
---+
---+/-- The zero dominant coweight. -/
---+def GL3Dom.zero : GL3Dom := ⟨(0, 0, 0), le_refl _, le_refl _⟩
---+
---+instance : Zero GL3Dom := ⟨GL3Dom.zero⟩
---+
---+@[simp] theorem GL3Dom.zero_val : (0 : GL3Dom).1 = (0, 0, 0) := rfl
---+
---+/-- Componentwise addition of dominant coweights is dominant. -/
---+def GL3Dom.add (μ ν : GL3Dom) : GL3Dom :=
---+  ⟨(μ.1.1 + ν.1.1, μ.1.2.1 + ν.1.2.1, μ.1.2.2 + ν.1.2.2),
---+   by constructor <;> [linarith [μ.2.1, ν.2.1]; linarith [μ.2.2, ν.2.2]]⟩
---+
---+instance : Add GL3Dom := ⟨GL3Dom.add⟩
---+
---+@[simp] theorem GL3Dom.add_val (μ ν : GL3Dom) :
---+    (μ + ν).1 = (μ.1.1 + ν.1.1, μ.1.2.1 + ν.1.2.1, μ.1.2.2 + ν.1.2.2) := rfl
---+
---+/-- toGL3Dom of a dominant triple returns the original triple. -/
---+theorem toGL3Dom_of_dominant {a b c : ℤ} (h1 : a ≥ b) (h2 : b ≥ c) :
---+    toGL3Dom a b c = ⟨(a, b, c), h1, h2⟩ := by
---+  simp only [toGL3Dom]
---+  exact Subtype.ext (sort₃_of_dominant h1 h2)
---+
---+/-- toGL3Dom is invariant under transposition (12). -/
---+theorem toGL3Dom_swap12 (a b c : ℤ) : toGL3Dom b a c = toGL3Dom a b c := by
---+  exact Subtype.ext (sort₃_swap12 a b c)
---+
---+/-- toGL3Dom is invariant under the 3-cycle. -/
---+theorem toGL3Dom_cycle (a b c : ℤ) : toGL3Dom b c a = toGL3Dom a b c := by
---+  exact Subtype.ext (sort₃_cycle a b c)
---+
---+/-! ## Support Datum -/
---+
---+/-- A support datum is a function from dominant coweights to ℤ. -/
---+def SupportDatum := GL3Dom → ℤ
---+
---+instance : CoeFun SupportDatum (fun _ => GL3Dom → ℤ) := ⟨id⟩
---+
---+
---+
---+/-- Finite support means vanishing outside some finite set. -/
---+def FiniteSupport (h : SupportDatum) : Prop :=
---+  ∃ s : Finset GL3Dom, ∀ μ, μ ∉ s → h μ = 0
---+
---+/-! ## S₃-Invariant Functions (Tropical Hecke Functions) -/
---+
---+/-- A function f : ℤ³ → ℤ is S₃-invariant if it is invariant under
---+    transposition (12) and the 3-cycle (123). -/
---+def IsS3Invariant (f : ℤ → ℤ → ℤ → ℤ) : Prop :=
---+  (∀ a b c, f a b c = f b a c) ∧ (∀ a b c, f a b c = f b c a)
---+
---+/-- A tropical Hecke function for GL₃ is an S₃-invariant function ℤ³ → ℤ. -/
---+def TropicalHeckeGL3 := { f : ℤ → ℤ → ℤ → ℤ // IsS3Invariant f }
---+
---+instance : CoeFun TropicalHeckeGL3 (fun _ => ℤ → ℤ → ℤ → ℤ) := ⟨Subtype.val⟩
---+
---+/-- Extensionality for tropical Hecke functions. -/
---+@[ext] theorem TropicalHeckeGL3.ext {f g : TropicalHeckeGL3}
---+    (h : ∀ a b c, f.1 a b c = g.1 a b c) : f = g :=
---+  Subtype.ext (funext fun a => funext fun b => funext fun c => h a b c)
---+
---+/-! ## Satake Support Map -/
---+
---+/-- Extract the support datum: restrict a Hecke function to the dominant chamber. -/
---+def satakeSupport (f : TropicalHeckeGL3) : SupportDatum :=
---+  fun μ => f.1 μ.1.1 μ.1.2.1 μ.1.2.2
---+
---+/-! ## Satake Extension -/
---+
---+/-- Extend a support datum to an S₃-invariant function on ℤ³ via sorting. -/
---+def satakeExtend (h : SupportDatum) : ℤ → ℤ → ℤ → ℤ :=
---+  fun a b c => h (toGL3Dom a b c)
---+
---+theorem satakeExtend_invariant (h : SupportDatum) : IsS3Invariant (satakeExtend h) := by
---+  constructor
---+  · intro a b c; simp only [satakeExtend, toGL3Dom_swap12]
---+  · intro a b c; simp only [satakeExtend, toGL3Dom_cycle]
---+
---+/-- Lift a support datum to a tropical Hecke function. -/
---+def satakeExtendHecke (h : SupportDatum) : TropicalHeckeGL3 :=
---+  ⟨satakeExtend h, satakeExtend_invariant h⟩
---+
---+/-! ## S₃-invariant functions are determined by their dominant values -/
---+
---+/-
---+Any triple has the same S₃-invariant value as its sorted version.
---+-/
---+theorem s3_inv_eq_at_sort (f : ℤ → ℤ → ℤ → ℤ) (hf : IsS3Invariant f) (a b c : ℤ) :
---+    f a b c = f (sort₃ a b c).1 (sort₃ a b c).2.1 (sort₃ a b c).2.2 := by
---+  unfold sort₃; have := hf.1; have := hf.2; simp_all +decide [max_def, min_def] ;
---+  grind
---+
---+end GL3TropicalSatake+/-
--+Copyright (c) 2025. All rights reserved.
--+Released under Apache 2.0 license as described in the file LICENSE.
--+
--+# GL₃ Tropical Satake Surjectivity — Definitions
--+
--+This file provides the foundational definitions for the GL₃ tropical Satake
--+surjectivity theorem: dominant coweights, support data, tropical Hecke functions,
--+the Satake support extraction map, and the admissibility predicate.
--+-/
--+import Mathlib
--+
--+namespace GL3TropicalSatake
--+
--+/-! ## Sorting into Dominant Chamber -/
--+
--+/-- Sort three integers into weakly decreasing order: (max, mid, min). -/
--+def sort₃ (a b c : ℤ) : ℤ × ℤ × ℤ :=
--+  (max a (max b c),
--+   a + b + c - max a (max b c) - min a (min b c),
--+   min a (min b c))
--+
--+theorem sort₃_fst_ge_snd (a b c : ℤ) : (sort₃ a b c).1 ≥ (sort₃ a b c).2.1 := by
--+  simp only [sort₃]; omega
--+
--+theorem sort₃_snd_ge_thd (a b c : ℤ) : (sort₃ a b c).2.1 ≥ (sort₃ a b c).2.2 := by
--+  simp only [sort₃]; omega
--+
--+theorem sort₃_of_dominant {a b c : ℤ} (h1 : a ≥ b) (h2 : b ≥ c) :
--+    sort₃ a b c = (a, b, c) := by
--+  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
--+
--+theorem sort₃_sum (a b c : ℤ) :
--+    (sort₃ a b c).1 + (sort₃ a b c).2.1 + (sort₃ a b c).2.2 = a + b + c := by
--+  simp only [sort₃]; omega
--+
--+theorem sort₃_swap12 (a b c : ℤ) : sort₃ b a c = sort₃ a b c := by
--+  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
--+
--+theorem sort₃_cycle (a b c : ℤ) : sort₃ b c a = sort₃ a b c := by
--+  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
--+
--+theorem sort₃_idempotent (a b c : ℤ) :
--+    let s := sort₃ a b c
--+    sort₃ s.1 s.2.1 s.2.2 = s := by
--+  have h1 := sort₃_fst_ge_snd a b c
--+  have h2 := sort₃_snd_ge_thd a b c
--+  exact sort₃_of_dominant h1 h2
--+
--+/-! ## Dominant Coweights -/
--+
--+/-- A dominant coweight for GL₃ is a weakly decreasing triple of integers. -/
--+def GL3Dom := { μ : ℤ × ℤ × ℤ // μ.1 ≥ μ.2.1 ∧ μ.2.1 ≥ μ.2.2 }
--+
--+instance : DecidableEq GL3Dom := Subtype.instDecidableEq
--+
--+/-- Construct the dominant representative of any triple. -/
--+def toGL3Dom (a b c : ℤ) : GL3Dom :=
--+  ⟨sort₃ a b c, sort₃_fst_ge_snd a b c, sort₃_snd_ge_thd a b c⟩
--+
--+/-- The zero dominant coweight. -/
--+def GL3Dom.zero : GL3Dom := ⟨(0, 0, 0), le_refl _, le_refl _⟩
--+
--+instance : Zero GL3Dom := ⟨GL3Dom.zero⟩
--+
--+@[simp] theorem GL3Dom.zero_val : (0 : GL3Dom).1 = (0, 0, 0) := rfl
--+
--+/-- Componentwise addition of dominant coweights is dominant. -/
--+def GL3Dom.add (μ ν : GL3Dom) : GL3Dom :=
--+  ⟨(μ.1.1 + ν.1.1, μ.1.2.1 + ν.1.2.1, μ.1.2.2 + ν.1.2.2),
--+   by constructor <;> [linarith [μ.2.1, ν.2.1]; linarith [μ.2.2, ν.2.2]]⟩
--+
--+instance : Add GL3Dom := ⟨GL3Dom.add⟩
--+
--+@[simp] theorem GL3Dom.add_val (μ ν : GL3Dom) :
--+    (μ + ν).1 = (μ.1.1 + ν.1.1, μ.1.2.1 + ν.1.2.1, μ.1.2.2 + ν.1.2.2) := rfl
--+
--+/-- toGL3Dom of a dominant triple returns the original triple. -/
--+theorem toGL3Dom_of_dominant {a b c : ℤ} (h1 : a ≥ b) (h2 : b ≥ c) :
--+    toGL3Dom a b c = ⟨(a, b, c), h1, h2⟩ := by
--+  simp only [toGL3Dom]
--+  exact Subtype.ext (sort₃_of_dominant h1 h2)
--+
--+/-- toGL3Dom is invariant under transposition (12). -/
--+theorem toGL3Dom_swap12 (a b c : ℤ) : toGL3Dom b a c = toGL3Dom a b c := by
--+  exact Subtype.ext (sort₃_swap12 a b c)
--+
--+/-- toGL3Dom is invariant under the 3-cycle. -/
--+theorem toGL3Dom_cycle (a b c : ℤ) : toGL3Dom b c a = toGL3Dom a b c := by
--+  exact Subtype.ext (sort₃_cycle a b c)
--+
--+/-! ## Support Datum -/
--+
--+/-- A support datum is a function from dominant coweights to ℤ. -/
--+def SupportDatum := GL3Dom → ℤ
--+
--+instance : CoeFun SupportDatum (fun _ => GL3Dom → ℤ) := ⟨id⟩
--+
--+
--+
--+/-- Finite support means vanishing outside some finite set. -/
--+def FiniteSupport (h : SupportDatum) : Prop :=
--+  ∃ s : Finset GL3Dom, ∀ μ, μ ∉ s → h μ = 0
--+
--+/-! ## S₃-Invariant Functions (Tropical Hecke Functions) -/
--+
--+/-- A function f : ℤ³ → ℤ is S₃-invariant if it is invariant under
--+    transposition (12) and the 3-cycle (123). -/
--+def IsS3Invariant (f : ℤ → ℤ → ℤ → ℤ) : Prop :=
--+  (∀ a b c, f a b c = f b a c) ∧ (∀ a b c, f a b c = f b c a)
--+
--+/-- A tropical Hecke function for GL₃ is an S₃-invariant function ℤ³ → ℤ. -/
--+def TropicalHeckeGL3 := { f : ℤ → ℤ → ℤ → ℤ // IsS3Invariant f }
--+
--+instance : CoeFun TropicalHeckeGL3 (fun _ => ℤ → ℤ → ℤ → ℤ) := ⟨Subtype.val⟩
--+
--+/-- Extensionality for tropical Hecke functions. -/
--+@[ext] theorem TropicalHeckeGL3.ext {f g : TropicalHeckeGL3}
--+    (h : ∀ a b c, f.1 a b c = g.1 a b c) : f = g :=
--+  Subtype.ext (funext fun a => funext fun b => funext fun c => h a b c)
--+
--+/-! ## Satake Support Map -/
--+
--+/-- Extract the support datum: restrict a Hecke function to the dominant chamber. -/
--+def satakeSupport (f : TropicalHeckeGL3) : SupportDatum :=
--+  fun μ => f.1 μ.1.1 μ.1.2.1 μ.1.2.2
--+
--+/-! ## Satake Extension -/
--+
--+/-- Extend a support datum to an S₃-invariant function on ℤ³ via sorting. -/
--+def satakeExtend (h : SupportDatum) : ℤ → ℤ → ℤ → ℤ :=
--+  fun a b c => h (toGL3Dom a b c)
--+
--+theorem satakeExtend_invariant (h : SupportDatum) : IsS3Invariant (satakeExtend h) := by
--+  constructor
--+  · intro a b c; simp only [satakeExtend, toGL3Dom_swap12]
--+  · intro a b c; simp only [satakeExtend, toGL3Dom_cycle]
--+
--+/-- Lift a support datum to a tropical Hecke function. -/
--+def satakeExtendHecke (h : SupportDatum) : TropicalHeckeGL3 :=
--+  ⟨satakeExtend h, satakeExtend_invariant h⟩
--+
--+/-! ## S₃-invariant functions are determined by their dominant values -/
--+
--+/-
--+Any triple has the same S₃-invariant value as its sorted version.
--+-/
--+theorem s3_inv_eq_at_sort (f : ℤ → ℤ → ℤ → ℤ) (hf : IsS3Invariant f) (a b c : ℤ) :
--+    f a b c = f (sort₃ a b c).1 (sort₃ a b c).2.1 (sort₃ a b c).2.2 := by
--+  unfold sort₃; have := hf.1; have := hf.2; simp_all +decide [max_def, min_def] ;
--+  grind
--+
--+end GL3TropicalSatake+/-
-+Copyright (c) 2025. All rights reserved.
-+Released under Apache 2.0 license as described in the file LICENSE.
-+
-+# GL₃ Tropical Satake Surjectivity — Definitions
-+
-+This file provides the foundational definitions for the GL₃ tropical Satake
-+surjectivity theorem: dominant coweights, support data, tropical Hecke functions,
-+the Satake support extraction map, and the admissibility predicate.
-+-/
-+import Mathlib
-+
-+namespace GL3TropicalSatake
-+
-+/-! ## Sorting into Dominant Chamber -/
-+
-+/-- Sort three integers into weakly decreasing order: (max, mid, min). -/
-+def sort₃ (a b c : ℤ) : ℤ × ℤ × ℤ :=
-+  (max a (max b c),
-+   a + b + c - max a (max b c) - min a (min b c),
-+   min a (min b c))
-+
-+theorem sort₃_fst_ge_snd (a b c : ℤ) : (sort₃ a b c).1 ≥ (sort₃ a b c).2.1 := by
-+  simp only [sort₃]; omega
-+
-+theorem sort₃_snd_ge_thd (a b c : ℤ) : (sort₃ a b c).2.1 ≥ (sort₃ a b c).2.2 := by
-+  simp only [sort₃]; omega
-+
-+theorem sort₃_of_dominant {a b c : ℤ} (h1 : a ≥ b) (h2 : b ≥ c) :
-+    sort₃ a b c = (a, b, c) := by
-+  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
-+
-+theorem sort₃_sum (a b c : ℤ) :
-+    (sort₃ a b c).1 + (sort₃ a b c).2.1 + (sort₃ a b c).2.2 = a + b + c := by
-+  simp only [sort₃]; omega
-+
-+theorem sort₃_swap12 (a b c : ℤ) : sort₃ b a c = sort₃ a b c := by
-+  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
-+
-+theorem sort₃_cycle (a b c : ℤ) : sort₃ b c a = sort₃ a b c := by
-+  simp only [sort₃, Prod.mk.injEq]; constructor <;> [skip; constructor] <;> omega
-+
-+theorem sort₃_idempotent (a b c : ℤ) :
-+    let s := sort₃ a b c
-+    sort₃ s.1 s.2.1 s.2.2 = s := by
-+  have h1 := sort₃_fst_ge_snd a b c
-+  have h2 := sort₃_snd_ge_thd a b c
-+  exact sort₃_of_dominant h1 h2
-+
-+/-! ## Dominant Coweights -/
-+
-+/-- A dominant coweight for GL₃ is a weakly decreasing triple of integers. -/
-+def GL3Dom := { μ : ℤ × ℤ × ℤ // μ.1 ≥ μ.2.1 ∧ μ.2.1 ≥ μ.2.2 }
-+
-+instance : DecidableEq GL3Dom := Subtype.instDecidableEq
-+
-+/-- Construct the dominant representative of any triple. -/
-+def toGL3Dom (a b c : ℤ) : GL3Dom :=
-+  ⟨sort₃ a b c, sort₃_fst_ge_snd a b c, sort₃_snd_ge_thd a b c⟩
-+
-+/-- The zero dominant coweight. -/
-+def GL3Dom.zero : GL3Dom := ⟨(0, 0, 0), le_refl _, le_refl _⟩
-+
-+instance : Zero GL3Dom := ⟨GL3Dom.zero⟩
-+
-+@[simp] theorem GL3Dom.zero_val : (0 : GL3Dom).1 = (0, 0, 0) := rfl
-+
-+/-- Componentwise addition of dominant coweights is dominant. -/
-+def GL3Dom.add (μ ν : GL3Dom) : GL3Dom :=
-+  ⟨(μ.1.1 + ν.1.1, μ.1.2.1 + ν.1.2.1, μ.1.2.2 + ν.1.2.2),
-+   by constructor <;> [linarith [μ.2.1, ν.2.1]; linarith [μ.2.2, ν.2.2]]⟩
-+
-+instance : Add GL3Dom := ⟨GL3Dom.add⟩
-+
-+@[simp] theorem GL3Dom.add_val (μ ν : GL3Dom) :
-+    (μ + ν).1 = (μ.1.1 + ν.1.1, μ.1.2.1 + ν.1.2.1, μ.1.2.2 + ν.1.2.2) := rfl
-+
-+/-- toGL3Dom of a dominant triple returns the original triple. -/
-+theorem toGL3Dom_of_dominant {a b c : ℤ} (h1 : a ≥ b) (h2 : b ≥ c) :
-+    toGL3Dom a b c = ⟨(a, b, c), h1, h2⟩ := by
-+  simp only [toGL3Dom]
-+  exact Subtype.ext (sort₃_of_dominant h1 h2)
-+
-+/-- toGL3Dom is invariant under transposition (12). -/
-+theorem toGL3Dom_swap12 (a b c : ℤ) : toGL3Dom b a c = toGL3Dom a b c := by
-+  exact Subtype.ext (sort₃_swap12 a b c)
-+
-+/-- toGL3Dom is invariant under the 3-cycle. -/
-+theorem toGL3Dom_cycle (a b c : ℤ) : toGL3Dom b c a = toGL3Dom a b c := by
-+  exact Subtype.ext (sort₃_cycle a b c)
-+
-+/-! ## Support Datum -/
-+
-+/-- A support datum is a function from dominant coweights to ℤ. -/
-+def SupportDatum := GL3Dom → ℤ
-+
-+instance : CoeFun SupportDatum (fun _ => GL3Dom → ℤ) := ⟨id⟩
-+
-+
-+
-+/-- Finite support means vanishing outside some finite set. -/
-+def FiniteSupport (h : SupportDatum) : Prop :=
-+  ∃ s : Finset GL3Dom, ∀ μ, μ ∉ s → h μ = 0
-+
-+/-! ## S₃-Invariant Functions (Tropical Hecke Functions) -/
-+
-+/-- A function f : ℤ³ → ℤ is S₃-invariant if it is invariant under
-+    transposition (12) and the 3-cycle (123). -/
-+def IsS3Invariant (f : ℤ → ℤ → ℤ → ℤ) : Prop :=
-+  (∀ a b c, f a b c = f b a c) ∧ (∀ a b c, f a b c = f b c a)
-+
-+/-- A tropical Hecke function for GL₃ is an S₃-invariant function ℤ³ → ℤ. -/
-+def TropicalHeckeGL3 := { f : ℤ → ℤ → ℤ → ℤ // IsS3Invariant f }
-+
-+instance : CoeFun TropicalHeckeGL3 (fun _ => ℤ → ℤ → ℤ → ℤ) := ⟨Subtype.val⟩
-+
-+/-- Extensionality for tropical Hecke functions. -/
-+@[ext] theorem TropicalHeckeGL3.ext {f g : TropicalHeckeGL3}
-+    (h : ∀ a b c, f.1 a b c = g.1 a b c) : f = g :=
-+  Subtype.ext (funext fun a => funext fun b => funext fun c => h a b c)
-+
-+/-! ## Satake Support Map -/
-+
-+/-- Extract the support datum: restrict a Hecke function to the dominant chamber. -/
-+def satakeSupport (f : TropicalHeckeGL3) : SupportDatum :=
-+  fun μ => f.1 μ.1.1 μ.1.2.1 μ.1.2.2
-+
-+/-! ## Satake Extension -/
-+
-+/-- Extend a support datum to an S₃-invariant function on ℤ³ via sorting. -/
-+def satakeExtend (h : SupportDatum) : ℤ → ℤ → ℤ → ℤ :=
-+  fun a b c => h (toGL3Dom a b c)
-+
-+theorem satakeExtend_invariant (h : SupportDatum) : IsS3Invariant (satakeExtend h) := by
-+  constructor
-+  · intro a b c; simp only [satakeExtend, toGL3Dom_swap12]
-+  · intro a b c; simp only [satakeExtend, toGL3Dom_cycle]
-+
-+/-- Lift a support datum to a tropical Hecke function. -/
-+def satakeExtendHecke (h : SupportDatum) : TropicalHeckeGL3 :=
-+  ⟨satakeExtend h, satakeExtend_invariant h⟩
-+
-+/-! ## S₃-invariant functions are determined by their dominant values -/
-+
-+/-
-+Any triple has the same S₃-invariant value as its sorted version.
-+-/
-+theorem s3_inv_eq_at_sort (f : ℤ → ℤ → ℤ → ℤ) (hf : IsS3Invariant f) (a b c : ℤ) :
-+    f a b c = f (sort₃ a b c).1 (sort₃ a b c).2.1 (sort₃ a b c).2.2 := by
-+  unfold sort₃; have := hf.1; have := hf.2; simp_all +decide [max_def, min_def] ;
-+  grind
-+
-+end GL3TropicalSatake
+import Mathlib
+
+/-!
+# Tropical Certified Robustness for Multiclass Residual Networks
+
+This file develops a formal robustness theory for multiclass residual
+piecewise-linear (tropical) networks in the L∞ metric. The central result is
+that the predicted class is stable on an L∞ ball whose radius is controlled by
+the global one-vs-all logit gap divided by twice the network's Lipschitz constant.
+
+## Mathematical overview
+
+For a network `f : (Fin d → ℝ) → Fin C → ℝ` that is `K`-Lipschitz coordinatewise
+in the L∞ metric, and a point `x` where class `y` is the argmax with gap
+`γ = min_{j ≠ y} (f(x)(y) - f(x)(j))`, the classification is stable for all
+perturbations of L∞-radius `r < γ / (2K)`.
+
+The key algebraic ingredient specific to residual networks is the skip-connection
+Lipschitz bound: if `g` is `Kg`-Lipschitz, then `x ↦ x + g(x)` is `(1 + Kg)`-Lipschitz.
+Composing `n` such blocks gives Lipschitz constant `∏ᵢ (1 + Kᵢ)`.
+
+## Main definitions
+
+* `LinfDist` — L∞ distance between finite-dimensional real vectors
+* `LogitLipschitz` — coordinatewise Lipschitz condition
+* `IsArgmaxAt` — class `y` achieves maximum logit at `x`
+* `Margin` — pairwise logit margin `f(x)(y) - f(x)(j)`
+* `GapAtFinset` — minimum margin over all competitors
+* `ArgmaxStableOnBall` — argmax invariance on an L∞ ball
+
+## Main results
+
+* `residual_block_lipschitz` — skip-connection Lipschitz bound
+* `margin_lipschitz` — margins are `2K`-Lipschitz
+* `gap_le_margin` — the gap lower-bounds every individual margin
+* `certified_radius_lower_bound` — `r < γ/(2K) → ArgmaxStableOnBall`
+* `local_certified_radius_lower_bound` — local version with restricted Lipschitz
+* `residual_network_lipschitz_two_blocks` — composition of two residual blocks
+-/
+
+noncomputable section
+
+open Finset
+
+/-! ## Core Definitions -/
+
+/-- The L∞ distance between two vectors in `Fin d → ℝ`.
+Returns `0` when `d = 0` (trivial input space). -/
+def LinfDist {d : ℕ} (x y : Fin d → ℝ) : ℝ :=
+  if h : 0 < d then
+    Finset.sup' Finset.univ
+      (Finset.univ_nonempty_iff.mpr ⟨⟨0, h⟩⟩) (fun i => |x i - y i|)
+  else 0
+
+/-- Coordinatewise Lipschitz condition for a map `f : (Fin d → ℝ) → Fin C → ℝ`. -/
+def LogitLipschitz {d C : ℕ} (K : ℝ) (f : (Fin d → ℝ) → Fin C → ℝ) : Prop :=
+  0 ≤ K ∧ ∀ i x y, |f x i - f y i| ≤ K * LinfDist x y
+
+/-- Class `y` achieves maximum logit at input `x`. -/
+def IsArgmaxAt {d C : ℕ} (f : (Fin d → ℝ) → Fin C → ℝ)
+    (x : Fin d → ℝ) (y : Fin C) : Prop :=
+  ∀ j, f x j ≤ f x y
+
+/-- Pairwise margin: `f(x)(y) - f(x)(j)`. -/
+def Margin {d C : ℕ} (f : (Fin d → ℝ) → Fin C → ℝ)
+    (y j : Fin C) (x : Fin d → ℝ) : ℝ :=
+  f x y - f x j
+
+/-- The minimum margin (gap) over all competitors `j ≠ y`.
+Uses `Finset.inf'` on the nonempty set `univ.erase y` (requires `C ≥ 2`). -/
+def GapAtFinset {d C : ℕ} [Fact (2 ≤ C)]
+    (f : (Fin d → ℝ) → Fin C → ℝ) (x : Fin d → ℝ) (y : Fin C) : ℝ :=
+  Finset.inf' (Finset.univ.erase y)
+    (by
+      have hC : 2 ≤ C := Fact.out
+      obtain ⟨j, hj⟩ : ∃ j : Fin C, j ≠ y := by
+        by_contra h; push_neg at h
+        have : Fintype.card (Fin C) ≤ 1 := Fintype.card_le_one_iff.mpr
+          (fun a b => (h a).trans (h b).symm)
+        simp at this; omega
+      exact ⟨j, Finset.mem_erase.mpr ⟨hj, Finset.mem_univ _⟩⟩)
+    (fun j => Margin f y j x)
+
+/-- Classification is stable on the L∞ ball of radius `r` around `x`. -/
+def ArgmaxStableOnBall {d C : ℕ}
+    (f : (Fin d → ℝ) → Fin C → ℝ) (x : Fin d → ℝ)
+    (y : Fin C) (r : ℝ) : Prop :=
+  ∀ x', LinfDist x x' ≤ r → ∀ j, f x' j ≤ f x' y
+
+/-! ## Basic L∞ Distance Properties -/
+
+theorem LinfDist_nonneg {d : ℕ} (x y : Fin d → ℝ) : 0 ≤ LinfDist x y := by
+  unfold LinfDist;
+  split_ifs <;> [ exact le_trans ( by norm_num ) ( Finset.le_sup' _ ( Finset.mem_univ ⟨ 0, by linarith ⟩ ) ) ; norm_num ]
+
+theorem abs_sub_le_LinfDist {d : ℕ} (x y : Fin d → ℝ) (i : Fin d) :
+    |x i - y i| ≤ LinfDist x y := by
+  unfold LinfDist;
+  split_ifs <;> simp_all +decide;
+  · use i;
+  · exact absurd ‹_› ( Nat.ne_of_gt ( Fin.pos i ) )
+
+theorem LinfDist_self {d : ℕ} (x : Fin d → ℝ) : LinfDist x x = 0 := by
+  -- The supremum of a set of zeros is zero.
+  simp [LinfDist]
+
+/-! ## Section 1: Residual Block Lipschitz Calculus -/
+
+/-
+A residual block `x ↦ x + g(x)` is `(1 + Kg)`-Lipschitz coordinatewise
+when `g` is `Kg`-Lipschitz coordinatewise.
+
+**Proof sketch**: For each coordinate `i`,
+`|(x_i + g(x)_i) - (y_i + g(y)_i)| ≤ |x_i - y_i| + |g(x)_i - g(y)_i|`
+`≤ LinfDist(x,y) + Kg · LinfDist(x,y) = (1 + Kg) · LinfDist(x,y)`.
+-/
+theorem residual_block_lipschitz
+    {d : ℕ} {g : (Fin d → ℝ) → Fin d → ℝ} {Kg : ℝ}
+    (_hKg : 0 ≤ Kg)
+    (hg : ∀ x y i, |g x i - g y i| ≤ Kg * LinfDist x y) :
+    ∀ x y i,
+      |(x i + g x i) - (y i + g y i)| ≤ (1 + Kg) * LinfDist x y := by
+  intros x y i
+  have h_triangle : |x i + g x i - (y i + g y i)| ≤ |x i - y i| + |g x i - g y i| := by
+    cases abs_cases ( x i + g x i - ( y i + g y i ) ) <;> cases abs_cases ( x i - y i ) <;> cases abs_cases ( g x i - g y i ) <;> linarith
+  have h_abs_sub : |x i - y i| ≤ LinfDist x y :=
+    abs_sub_le_LinfDist x y i
+  have h_abs_g : |g x i - g y i| ≤ Kg * LinfDist x y := by
+    exact hg x y i
+  linarith [h_triangle, h_abs_sub, h_abs_g]
+
+/-
+Composition of two coordinatewise-Lipschitz maps: if `f₁` is `K₁`-Lipschitz
+and `f₂` is `K₂`-Lipschitz (both coordinatewise in L∞), then `f₂ ∘ f₁` is
+`(K₂ * K₁)`-Lipschitz.
+-/
+theorem comp_coordinate_lipschitz
+    {d₁ d₂ d₃ : ℕ} {K₁ K₂ : ℝ}
+    {f₁ : (Fin d₁ → ℝ) → Fin d₂ → ℝ}
+    {f₂ : (Fin d₂ → ℝ) → Fin d₃ → ℝ}
+    (hK₁ : 0 ≤ K₁) (hK₂ : 0 ≤ K₂)
+    (hf₁ : ∀ x y i, |f₁ x i - f₁ y i| ≤ K₁ * LinfDist x y)
+    (hf₂ : ∀ u v i, |f₂ u i - f₂ v i| ≤ K₂ * LinfDist u v) :
+    ∀ x y i, |f₂ (f₁ x) i - f₂ (f₁ y) i| ≤ (K₂ * K₁) * LinfDist x y := by
+  intro x y i;
+  refine' le_trans ( hf₂ _ _ _ ) _;
+  rw [ mul_assoc ];
+  unfold LinfDist;
+  split_ifs <;> norm_num;
+  · gcongr;
+    unfold LinfDist at hf₁; aesop;
+  · simp_all +decide [ show x = y by ext i; linarith [ Fin.is_lt i ] ];
+  · exact mul_nonneg hK₂ ( mul_nonneg hK₁ ( by exact le_trans ( by norm_num ) ( Finset.le_sup' ( fun i => |x i - y i| ) ( Finset.mem_univ ⟨ 0, by linarith ⟩ ) ) ) )
+
+/-
+Two sequential residual blocks `x ↦ x + g₁(x)` then `x ↦ x + g₂(x)` give
+a composite with Lipschitz constant `(1 + K₁) * (1 + K₂)`.
+-/
+theorem residual_network_lipschitz_two_blocks
+    {d : ℕ} {g₁ g₂ : (Fin d → ℝ) → Fin d → ℝ} {K₁ K₂ : ℝ}
+    (hK₁ : 0 ≤ K₁) (hK₂ : 0 ≤ K₂)
+    (hg₁ : ∀ x y i, |g₁ x i - g₁ y i| ≤ K₁ * LinfDist x y)
+    (hg₂ : ∀ x y i, |g₂ x i - g₂ y i| ≤ K₂ * LinfDist x y) :
+    let T₁ := fun x i => x i + g₁ x i
+    let T₂ := fun x i => x i + g₂ x i
+    ∀ x y i, |T₂ (T₁ x) i - T₂ (T₁ y) i| ≤ ((1 + K₂) * (1 + K₁)) * LinfDist x y := by
+  -- Apply the residual_block_lipschitz theorem to the first residual block.
+  have hT₁_lipschitz : ∀ x y i, |(x i + g₁ x i) - (y i + g₁ y i)| ≤ (1 + K₁) * LinfDist x y :=
+    residual_block_lipschitz hK₁ hg₁
+  have hT₂_lipschitz : ∀ x y i, |(x i + g₂ x i) - (y i + g₂ y i)| ≤ (1 + K₂) * LinfDist x y :=
+    residual_block_lipschitz hK₂ hg₂
+  convert comp_coordinate_lipschitz ( show 0 ≤ 1 + K₁ by linarith ) ( show 0 ≤ 1 + K₂ by linarith ) hT₁_lipschitz hT₂_lipschitz using 1
+
+/-! ## Section 2: Pairwise Margin Lipschitz Bounds -/
+
+/-
+The pairwise margin `Margin f y j` is `2K`-Lipschitz: the absolute change
+in margin is at most `2K · LinfDist(x, x')`.
+
+**Proof**: `|Margin f y j x - Margin f y j x'|`
+`= |(f(x)(y) - f(x)(j)) - (f(x')(y) - f(x')(j))|`
+`≤ |f(x)(y) - f(x')(y)| + |f(x)(j) - f(x')(j)|`
+`≤ K · d∞(x,x') + K · d∞(x,x') = 2K · d∞(x,x')`.
+-/
+theorem margin_lipschitz
+    {d C : ℕ} {f : (Fin d → ℝ) → Fin C → ℝ} {K : ℝ}
+    (_hK : 0 ≤ K)
+    (hf : ∀ i x y, |f x i - f y i| ≤ K * LinfDist x y) :
+    ∀ y j x x',
+      |Margin f y j x - Margin f y j x'| ≤ (2 * K) * LinfDist x x' := by
+  intro y j x x';
+  unfold Margin;
+  exact abs_le.mpr ⟨ by linarith [ abs_le.mp ( hf y x x' ), abs_le.mp ( hf j x x' ) ], by linarith [ abs_le.mp ( hf y x x' ), abs_le.mp ( hf j x x' ) ] ⟩
+
+/-
+One-sided margin bound: the margin at a perturbed point is at least
+the margin at the original point minus `2K · d∞(x, x')`.
+-/
+theorem margin_lower_bound_under_perturbation
+    {d C : ℕ} {f : (Fin d → ℝ) → Fin C → ℝ} {K : ℝ}
+    (_hK : 0 ≤ K)
+    (hf : ∀ i x y, |f x i - f y i| ≤ K * LinfDist x y) :
+    ∀ y j x x',
+      Margin f y j x' ≥ Margin f y j x - (2 * K) * LinfDist x x' := by
+  exact fun y j x x' => by linarith [ abs_le.mp ( margin_lipschitz _hK hf y j x x' ) ] ;
+
+/-! ## Section 3: Gap and Stability -/
+
+/-
+The gap lower-bounds every individual margin for `j ≠ y`.
+-/
+theorem gap_le_margin {d C : ℕ} [Fact (2 ≤ C)]
+    (f : (Fin d → ℝ) → Fin C → ℝ) (x : Fin d → ℝ) (y : Fin C)
+    (j : Fin C) (hj : j ≠ y) :
+    GapAtFinset f x y ≤ Margin f y j x := by
+  -- By definition of infimum, for any element j in the set (univ.erase y), the infimum is less than or equal to j.
+  apply Finset.inf'_le; simp [hj]
+
+/-
+If `y` is argmax at `x`, then the gap is nonneg.
+-/
+theorem gap_nonneg_of_argmax {d C : ℕ} [Fact (2 ≤ C)]
+    (f : (Fin d → ℝ) → Fin C → ℝ) (x : Fin d → ℝ) (y : Fin C)
+    (hy : IsArgmaxAt f x y) :
+    0 ≤ GapAtFinset f x y := by
+  exact Finset.le_inf' _ _ fun j hj => sub_nonneg_of_le <| hy j
+
+/-
+**Argmax stability from pairwise margin bounds**: if every competitor margin
+at `x` exceeds `2K · r`, then classification is stable on the L∞ ball of radius `r`.
+-/
+theorem argmax_stable_of_pairwise_margin_bound
+    {d C : ℕ}
+    {f : (Fin d → ℝ) → Fin C → ℝ} {K r : ℝ}
+    {x : Fin d → ℝ} {y : Fin C}
+    (_hK : 0 ≤ K)
+    (hf : ∀ i x x', |f x i - f x' i| ≤ K * LinfDist x x')
+    (hmargin : ∀ j, j ≠ y → 2 * K * r < Margin f y j x) :
+    ArgmaxStableOnBall f x y r := by
+  intro x' hx' j;
+  by_cases hj : j = y;
+  · rw [ hj ];
+  · have := margin_lower_bound_under_perturbation _hK hf y j x x';
+    unfold Margin at *; nlinarith [ hmargin j hj ] ;
+
+/-! ## Section 4: Main Certified Radius Theorems -/
+
+/-
+**The certified radius theorem**: if `f` is `K`-Lipschitz, `y` is argmax at `x`,
+and `r < gap / (2K)`, then classification is stable on the L∞ ball of radius `r`.
+
+This is the formal version of the certificate `r*(x) ≥ γ(x) / (2K)`.
+-/
+theorem certified_radius_lower_bound
+    {d C : ℕ} [Fact (2 ≤ C)]
+    {f : (Fin d → ℝ) → Fin C → ℝ} {K : ℝ}
+    {x : Fin d → ℝ} {y : Fin C}
+    (hK : 0 < K)
+    (hf : ∀ i x x', |f x i - f x' i| ≤ K * LinfDist x x')
+    (_hy : IsArgmaxAt f x y)
+    (_hgap : 0 < GapAtFinset f x y) :
+    ∀ r, r < GapAtFinset f x y / (2 * K) → ArgmaxStableOnBall f x y r := by
+  intro r hr;
+  apply argmax_stable_of_pairwise_margin_bound;
+  exact le_of_lt hK;
+  · assumption;
+  · exact fun j hj => by rw [ lt_div_iff₀ ( by positivity ) ] at hr; nlinarith [ gap_le_margin f x y j hj ] ;
+
+/-- Specialization to residual networks: certified radius using the residual
+Lipschitz constant. -/
+theorem residual_multiclass_certified_radius
+    {d C : ℕ} [Fact (2 ≤ C)]
+    {f : (Fin d → ℝ) → Fin C → ℝ}
+    {Kres : ℝ} {x : Fin d → ℝ} {y : Fin C}
+    (hKres : 0 < Kres)
+    (hf : ∀ i x x', |f x i - f x' i| ≤ Kres * LinfDist x x')
+    (hy : IsArgmaxAt f x y)
+    (hgap : 0 < GapAtFinset f x y) :
+    ∀ r, r < GapAtFinset f x y / (2 * Kres) → ArgmaxStableOnBall f x y r :=
+  certified_radius_lower_bound hKres hf hy hgap
+
+/-! ## Section 5: Local Certified Radius -/
+
+/-
+**Local certified radius**: if `f` is only `Kloc`-Lipschitz on a ball of radius `ρ`,
+then classification is stable for `r < min(ρ, gap/(2·Kloc))`.
+-/
+theorem local_certified_radius_lower_bound
+    {d C : ℕ} [Fact (2 ≤ C)]
+    {f : (Fin d → ℝ) → Fin C → ℝ} {Kloc : ℝ}
+    {x : Fin d → ℝ} {y : Fin C} {ρ : ℝ}
+    (hKloc : 0 < Kloc)
+    (hlocal : ∀ i x', LinfDist x x' ≤ ρ →
+      |f x i - f x' i| ≤ Kloc * LinfDist x x')
+    (hy : IsArgmaxAt f x y)
+    (_hgap : 0 < GapAtFinset f x y)
+    (_hρ : 0 < ρ) :
+    ∀ r, r < min ρ (GapAtFinset f x y / (2 * Kloc)) →
+      ArgmaxStableOnBall f x y r := by
+  intro r hr
+  have hr' : r < ρ := lt_of_lt_of_le hr (min_le_left _ _)
+  have hr'' : r < GapAtFinset f x y / (2 * Kloc) := lt_of_lt_of_le hr (min_le_right _ _)
+  have hIsArgmax := hy  -- explicitly bind to suppress linter
+  intro x' hx' i
+  by_cases h_eq : i = y;
+  · rw [h_eq]
+  · have := hlocal i x' (le_trans hx' hr'.le)
+    have := hlocal y x' (le_trans hx' hr'.le)
+    rw [lt_div_iff₀] at hr'' <;> nlinarith [
+      abs_le.mp ‹|f x i - f x' i| ≤ Kloc * LinfDist x x'›,
+      abs_le.mp ‹|f x y - f x' y| ≤ Kloc * LinfDist x x'›,
+      hIsArgmax i, hIsArgmax y,
+      show GapAtFinset f x y ≤ f x y - f x i from gap_le_margin f x y i h_eq]
+
+end
