@@ -1,86 +1,105 @@
 import Mathlib
 
 /-!
-# Top-k Order Statistics and Robustness Definitions
+# Top-K Robustness: Definitions
 
-This file defines the core objects for top-k certified robustness:
+Core definitions for the top-`k` certified robustness theory for multiclass
+piecewise-linear networks. All definitions avoid sorting machinery and instead
+phrase top-`k` membership via pairwise comparison against outside classes.
 
-* `kthLargest s k` — the (k+1)-th largest value of `s : Fin C → ℝ` (0-indexed)
-* `topkGap s k` — the gap between the k-th and (k+1)-th largest values
-* `topKSet s k` — the set of indices with scores strictly above the (k+1)-th largest
+## Main definitions
 
-The k-th largest value is defined via the classical "sup of infima" characterization:
-  `kthLargest s k = max_{|S|=k+1} min_{i ∈ S} s(i)`
-
-This definition is proof-friendly because the perturbation bound follows directly
-from the monotonicity of inf and sup operations.
+* `scoreGap` — The score gap `f(x,i) - f(x,j)` between two classes.
+* `finCompl` — The complement of a finset `S` in `Fin n`.
+* `crossGaps` — The finite set of all score gaps between classes in `S` and classes outside `S`.
+* `topkMargin'` — The minimum score gap across all (in, out) pairs, via `Finset.min'`.
+* `IsTopKSet` — Predicate: all classes in `S` weakly dominate all classes outside `S`.
+* `StrictTopKSet` — Predicate: all classes in `S` strictly dominate all classes outside `S`.
 -/
-
-noncomputable section
 
 open Finset
 
-/-! ## Auxiliary lemmas for powersetCard -/
+noncomputable section
 
-/-- Nonemptiness of powersetCard when k+1 ≤ C -/
-lemma powersetCard_univ_nonempty {C : ℕ} (k : ℕ) (h : k < C) :
-    ((univ : Finset (Fin C)).powersetCard (k + 1)).Nonempty := by
-  rw [powersetCard_nonempty, card_univ, Fintype.card_fin]; omega
+variable {n : ℕ}
 
-/-- Any member of `powersetCard (k+1) univ` is nonempty -/
-lemma nonempty_of_mem_powersetCard_succ {C : ℕ} {k : ℕ} {S : Finset (Fin C)}
-    (hS : S ∈ (univ : Finset (Fin C)).powersetCard (k + 1)) : S.Nonempty := by
-  rw [nonempty_iff_ne_empty]
-  intro h
-  have := (mem_powersetCard.mp hS).2
-  rw [h, card_empty] at this; omega
+/-- The score gap between class `i` and class `j` at input `x`. -/
+def scoreGap {α : Type*} (f : α → Fin n → ℝ) (x : α) (i j : Fin n) : ℝ :=
+  f x i - f x j
 
-/-- Card of members of powersetCard -/
-lemma card_of_mem_powersetCard {C : ℕ} {k : ℕ} {S : Finset (Fin C)}
-    (hS : S ∈ (univ : Finset (Fin C)).powersetCard (k + 1)) : S.card = k + 1 :=
-  (mem_powersetCard.mp hS).2
+/-- The complement of `S` in `Fin n`, as a `Finset`. -/
+def finCompl (S : Finset (Fin n)) : Finset (Fin n) :=
+  Finset.univ.filter fun j => j ∉ S
 
-/-! ## Core Definitions -/
+/-- The finite set of all score gaps `f(x,i) - f(x,j)` for `i ∈ S` and `j ∉ S`. -/
+def crossGaps {α : Type*} (f : α → Fin n → ℝ) (x : α) (S : Finset (Fin n)) : Finset ℝ :=
+  (S ×ˢ finCompl S).image (fun p => scoreGap f x p.1 p.2)
 
-/-- The k-th largest value (0-indexed) of a finite score function `s : Fin C → ℝ`.
-    Defined as the maximum over all (k+1)-element subsets of `Fin C` of the
-    minimum value of `s` on the subset:
-      `kthLargest s k = sup_{|S|=k+1} inf_{i ∈ S} s(i)`
-    Returns 0 if `k ≥ C`. -/
-def kthLargest {C : ℕ} (s : Fin C → ℝ) (k : ℕ) : ℝ :=
-  if h : k < C then
-    ((univ : Finset (Fin C)).powersetCard (k + 1)).sup'
-      (powersetCard_univ_nonempty k h)
-      (fun S => if hne : S.Nonempty then S.inf' hne s else 0)
-  else 0
+/-- Nonemptiness of `crossGaps` from nonemptiness of `S` and its complement. -/
+theorem crossGaps_nonempty {α : Type*} (f : α → Fin n → ℝ) (x : α)
+    (S : Finset (Fin n))
+    (hS : S.Nonempty) (hSc : (finCompl S).Nonempty) :
+    (crossGaps f x S).Nonempty := by
+  rcases hS with ⟨i, hi⟩; rcases hSc with ⟨j, hj⟩
+  exact ⟨scoreGap f x i j, Finset.mem_image.mpr
+    ⟨(i, j), Finset.mem_product.mpr ⟨hi, hj⟩, rfl⟩⟩
 
-/-- The top-k gap: the difference between the k-th largest and (k+1)-th largest values.
-    For `k ≥ 1`, this measures the separation between the top-k scores and the rest.
-    `topkGap s k = kthLargest s (k-1) - kthLargest s k` -/
-def topkGap {C : ℕ} (s : Fin C → ℝ) (k : ℕ) : ℝ :=
-  kthLargest s (k - 1) - kthLargest s k
+/-- The minimum score gap across all `(i ∈ S, j ∉ S)` pairs.
+This is the "top-k margin" — the smallest advantage any in-set class holds
+over any out-set class. -/
+def topkMargin' {α : Type*} (f : α → Fin n → ℝ) (x : α) (S : Finset (Fin n))
+    (hS : S.Nonempty) (hSc : (finCompl S).Nonempty) : ℝ :=
+  (crossGaps f x S).min' (crossGaps_nonempty f x S hS hSc)
 
-/-- The top-k set: the set of indices whose score strictly exceeds the (k+1)-th
-    largest value. Under a positive gap condition, this has exactly k elements. -/
-def topKSet {C : ℕ} (s : Fin C → ℝ) (k : ℕ) : Finset (Fin C) :=
-  univ.filter (fun i => kthLargest s k < s i)
+/-- `S` is a (weak) top-k set at `x`: every class in `S` has score ≥ every class
+outside `S`. -/
+def IsTopKSet {α : Type*} (f : α → Fin n → ℝ) (x : α) (S : Finset (Fin n)) : Prop :=
+  ∀ ⦃i j : Fin n⦄, i ∈ S → j ∉ S → f x j ≤ f x i
 
-/-! ## Basic kthLargest simplification -/
+/-- `S` is a strict top-k set at `x`: every class in `S` has score strictly greater
+than every class outside `S`. -/
+def StrictTopKSet {α : Type*} (f : α → Fin n → ℝ) (x : α) (S : Finset (Fin n)) : Prop :=
+  ∀ ⦃i j : Fin n⦄, i ∈ S → j ∉ S → f x j < f x i
 
-/-- Unfold kthLargest when k < C -/
-lemma kthLargest_def {C : ℕ} (s : Fin C → ℝ) (k : ℕ) (hk : k < C) :
-    kthLargest s k =
-      ((univ : Finset (Fin C)).powersetCard (k + 1)).sup'
-        (powersetCard_univ_nonempty k hk)
-        (fun S => if hne : S.Nonempty then S.inf' hne s else 0) := by
-  simp [kthLargest, hk]
+/-- A strict top-k set is also a weak top-k set. -/
+theorem StrictTopKSet.isTopKSet {α : Type*} {f : α → Fin n → ℝ} {x : α}
+    {S : Finset (Fin n)}
+    (h : StrictTopKSet f x S) : IsTopKSet f x S :=
+  fun _ _ hi hj => le_of_lt (h hi hj)
 
-/-- The sup' function on powersetCard evaluates to inf' on nonempty subsets -/
-lemma kthLargest_eq_sup'_inf' {C : ℕ} (s : Fin C → ℝ) (k : ℕ) (hk : k < C) :
-    kthLargest s k =
-      ((univ : Finset (Fin C)).powersetCard (k + 1)).sup'
-        (powersetCard_univ_nonempty k hk)
-        (fun S => if hne : S.Nonempty then S.inf' hne s else 0) :=
-  kthLargest_def s k hk
+/-- Membership in `crossGaps` unpacked. -/
+theorem mem_crossGaps_iff {α : Type*} {f : α → Fin n → ℝ} {x : α}
+    {S : Finset (Fin n)} {r : ℝ} :
+    r ∈ crossGaps f x S ↔ ∃ i ∈ S, ∃ j, j ∉ S ∧ r = scoreGap f x i j := by
+  simp only [crossGaps, Finset.mem_image, Finset.mem_product, finCompl,
+    Finset.mem_filter, Finset.mem_univ, true_and]
+  constructor
+  · rintro ⟨⟨i, j⟩, ⟨hi, hj⟩, heq⟩
+    exact ⟨i, hi, j, hj, heq.symm⟩
+  · rintro ⟨i, hi, j, hj, heq⟩
+    exact ⟨⟨i, j⟩, ⟨hi, hj⟩, heq.symm⟩
+
+/-- Every `(i, j)` gap with `i ∈ S`, `j ∉ S` is at least the top-k margin. -/
+theorem topkMargin'_le_scoreGap {α : Type*} {f : α → Fin n → ℝ} {x : α}
+    {S : Finset (Fin n)}
+    {hS : S.Nonempty} {hSc : (finCompl S).Nonempty}
+    {i j : Fin n} (hi : i ∈ S) (hj : j ∉ S) :
+    topkMargin' f x S hS hSc ≤ scoreGap f x i j := by
+  apply Finset.min'_le
+  simp only [crossGaps, Finset.mem_image, Finset.mem_product, finCompl,
+    Finset.mem_filter, Finset.mem_univ, true_and]
+  exact ⟨⟨i, j⟩, ⟨hi, hj⟩, rfl⟩
+
+/-- Positive top-k margin implies `StrictTopKSet`. -/
+theorem strictTopKSet_of_pos_margin {α : Type*} {f : α → Fin n → ℝ} {x : α}
+    {S : Finset (Fin n)}
+    {hS : S.Nonempty} {hSc : (finCompl S).Nonempty}
+    (hpos : 0 < topkMargin' f x S hS hSc) :
+    StrictTopKSet f x S := by
+  intro i j hi hj
+  have h : topkMargin' f x S hS hSc ≤ scoreGap f x i j :=
+    topkMargin'_le_scoreGap hi hj
+  simp only [scoreGap] at h
+  linarith
 
 end
