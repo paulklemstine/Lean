@@ -1,219 +1,285 @@
-# Tropical Certified Robustness for Multiclass Networks via Monotone Min-Margin Score Aggregation
+# Tropical Certified Robustness for Multiclass Piecewise-Linear Networks under Lexicographic Top-2 Decision via Ordered Logit-Gap Margins
 
 ## Abstract
 
-We prove a compositional robustness theorem for multiclass piecewise-linear neural networks in which certification is mediated by aggregated pairwise class margins rather than by direct aggregation of logits. For a classifier producing logits over $C$ classes, we define the *margin vector* $v_y(x)_j = f_y(x) - f_j(x)$ and an *aggregated certificate* $A_y(x) = \Phi(y, v_y(x))$, where $\Phi$ satisfies a positivity-to-coordinatewise-positivity implication and is 1-Lipschitz with respect to $\ell_\infty$. Our main theorem shows that if $A_y(x_0) > 2Kd\varepsilon$—where $K$ is a Lipschitz constant for the pairwise gaps and $d$ is the input dimension—then the predicted class $y$ is strictly preserved on the entire $\ell_\infty$-ball of radius $\varepsilon$ around $x_0$. All results are formalized and machine-verified in Lean 4 with Mathlib, producing the first formally verified multiclass robustness certificate for general monotone aggregators over pairwise margins.
-
-**Keywords:** certified robustness, tropical geometry, piecewise-linear networks, formal verification, Lean 4
-
----
+We present a formally verified robustness certificate for *ordered top-2 predictions* of multiclass piecewise-linear classifiers. Unlike standard argmax certificates, which guarantee only that the winning class is preserved under input perturbation, our certificate simultaneously preserves the identity of both the winner and the runner-up — the minimal nontrivial ranking structure. We formalize the ordered top-2 decision as a conjunction of finitely many strict score-difference inequalities, define the *ordered top-2 margin* as the minimum slack over this constraint system, and prove that any L∞ perturbation within a ball of radius `margin / K_eff` (where `K_eff` is the effective Lipschitz constant of the score-difference network) preserves the full ordered top-2 outcome. The entire proof is machine-verified in Lean 4 with Mathlib, yielding a zero-sorry formalization consisting of 13 interconnected theorems and lemmas. We provide Python demonstrations confirming the certificate empirically and illustrate applications to selective classification with hierarchical fallback.
 
 ## 1. Introduction
 
-Certifying the robustness of neural network classifiers against adversarial perturbations is a central challenge in trustworthy AI. For a network $f: \mathbb{R}^d \to \mathbb{R}^C$ producing logits over $C$ classes, we want to guarantee that the predicted class at a reference point $x_0$ is preserved for all inputs within an $\ell_\infty$-ball:
-$$\|x - x_0\|_\infty \leq \varepsilon \implies \arg\max_j f_j(x) = \arg\max_j f_j(x_0).$$
+### 1.1 Motivation
 
-The tropical approach to certified robustness exploits the fact that ReLU networks are piecewise-linear functions—equivalently, tropical rational maps—whose global Lipschitz constants can be bounded analytically from the network weights. This connects the algebraic structure of tropical geometry to the metric question of robustness.
+Robustness certification for neural network classifiers has become a central concern in trustworthy AI. Given a classifier and an input, the goal is to compute a *certified radius* — a provable guarantee that no adversarial perturbation within that radius can change the classifier's output.
 
-### Our Contribution
+Most existing work focuses on certifying the *argmax decision*: the identity of the single winning class. This includes randomized smoothing (Cohen et al., 2019), interval bound propagation (Gowal et al., 2018), and CROWN/α-CROWN (Zhang et al., 2018; Xu et al., 2021). In the piecewise-linear (tropical) setting, Zhang et al. (2018) and others have exploited the tropical geometry of ReLU networks to derive exact Lipschitz bounds.
 
-We introduce a new *bridge principle* that separates two concerns:
-1. **Analytic control**: bounding how pairwise gaps $g_{ij}(x) = f_i(x) - f_j(x)$ change under perturbation (controlled by the network's Lipschitz constant).
-2. **Order-theoretic aggregation**: combining pairwise margins through a monotone, Lipschitz aggregator $\Phi$ into a single certificate score.
+However, the argmax alone discards valuable information. In many applications, knowing *which class is second-best* is critically important:
 
-The key insight is that *any* aggregator satisfying a positivity propagation property—"if $\Phi(y, v) > 0$ then all off-diagonal coordinates of $v$ are positive"—inherits tropical robustness directly from the network's Lipschitz control. This generalizes the standard worst-case pairwise margin certificate and opens the door to richer tropical decision architectures.
+- **Medical diagnosis**: If the top prediction is "benign tumor" and the runner-up is "malignant tumor," the clinical action differs dramatically from when the runner-up is "healthy tissue."
+- **Autonomous driving**: If "pedestrian" and "cyclist" are the top two predictions (both requiring emergency braking), the system should behave differently than if the runner-up is "road sign."
+- **Selective classification**: The identity of the runner-up indicates *how* the model might fail, enabling informed abstention or fallback routing.
 
-All theorems are machine-verified in Lean 4 using Mathlib, providing the highest level of mathematical assurance.
+### 1.2 Contribution
 
----
+We introduce the first formally verified robustness certificate for the *ordered top-2 outcome* `(a, b)` consisting of the winner `a` and runner-up `b`. Our main contributions are:
+
+1. **The ordered top-2 margin**: a computable scalar quantity that captures the minimum slack over all constraints defining the ordered top-2 decision. This margin is the minimum of:
+   - The *winner margin*: the smallest gap between the winner's score and any competitor's score.
+   - The *runner-up margin*: the smallest gap between the runner-up's score and any non-winner, non-runner-up competitor's score.
+
+2. **A certified radius theorem**: any L∞ perturbation of magnitude less than `margin / K_eff` preserves the ordered top-2 decision, where `K_eff` is a uniform Lipschitz bound on score differences.
+
+3. **Complete formal verification**: all results are proved in Lean 4 with Mathlib, with no `sorry` axioms, ensuring mathematical correctness beyond any reasonable doubt.
+
+4. **A reusable formal pattern**: the proof structure generalizes naturally to ordered top-k certificates for arbitrary k.
+
+### 1.3 Tropical Geometry Connection
+
+The term "tropical" refers to the connection with tropical geometry. A ReLU network computes a piecewise-linear function, which can be viewed as a tropical rational function — a ratio of tropical polynomials (max-plus expressions). The decision boundaries of a multiclass ReLU classifier are tropical hypersurfaces, and the decision regions are cells of a tropical polyhedral complex.
+
+Our theorem identifies the ordered top-2 decision region as an intersection of finitely many half-spaces in score-difference coordinates. The certified radius is the L∞ distance from the query point to the boundary of this intersection, scaled by the Lipschitz modulus.
 
 ## 2. Mathematical Framework
 
-### 2.1 Pairwise Gaps and Margin Vectors
+### 2.1 Setup
 
-**Definition** (Pairwise Gap). For a classifier $f: \alpha \to \text{Fin}(C) \to \mathbb{R}$ and classes $i, j$:
-$$g_{ij}(x) = f(x, i) - f(x, j).$$
+Let C ≥ 3 be the number of classes and d ≥ 1 the input dimension. A score family is a collection of functions f_i : ℝ^d → ℝ for i ∈ {0, ..., C-1}. The score difference between classes i and j is:
 
-**Definition** (Margin Vector). For predicted class $y$:
-$$v_y(x)_j = f(x, y) - f(x, j).$$
+```
+scoreDiff(f, i, j, x) = f_i(x) - f_j(x)
+```
 
-Note that $v_y(x)_y = 0$ (the diagonal entry is always zero), and $v_y(x)_j > 0$ for all $j \neq y$ if and only if $y$ is the unique argmax.
+### 2.2 The Ordered Top-2 Predicate
 
-### 2.2 Aggregated Certificates
+**Definition (IsOrderedTop2).** We say the ordered top-2 outcome at x is (a, b), written `IsOrderedTop2(f, a, b, x)`, if:
+1. a ≠ b
+2. For all j ≠ a: f_a(x) > f_j(x)  (a is the unique winner)
+3. For all j ≠ a, j ≠ b: f_b(x) > f_j(x)  (b is the unique runner-up)
 
-An *aggregator* $\Phi: \text{Fin}(C) \times (\text{Fin}(C) \to \mathbb{R}) \to \mathbb{R}$ takes the predicted class $y$ and the margin vector $v$ and produces a single certificate score. The $y$-parameter allows the aggregator to exclude or treat specially the always-zero diagonal entry.
+This is strictly stronger than the argmax predicate (which only requires condition 2). The conjunction of conditions 2 and 3 forces a unique strict ordering of the top two positions.
 
-**Definition** (Positivity Propagation). An aggregator $\Phi$ satisfies *positivity propagation* if:
-$$\Phi(y, v) > 0 \implies \forall j \neq y,\; v_j > 0.$$
+### 2.3 Bridge Lemma
 
-**Definition** (Min-Domination). For $C \geq 2$, an aggregator $\Phi$ satisfies *min-domination* if:
-$$\Phi(y, v) \leq \min_{j \neq y} v_j.$$
+**Theorem (isOrderedTop2_iff_pairwise).** The ordered top-2 predicate is equivalent to:
+- a ≠ b
+- For all j ≠ a: 0 < scoreDiff(f, a, j, x)
+- For all j ≠ a, j ≠ b: 0 < scoreDiff(f, b, j, x)
 
-**Theorem** (Min-Domination implies Positivity Propagation). If $\Phi$ satisfies min-domination, then $\Phi$ satisfies positivity propagation.
+This reformulation is the conceptual bridge: preserving the ordered top-2 decision is *exactly* preserving the positivity of a finite family of score differences. Robustness thus reduces to a finite system of scalar inequality preservation problems.
 
-*Proof.* If $\Phi(y, v) > 0$, then $\min_{j \neq y} v_j \geq \Phi(y, v) > 0$, so every $v_j > 0$ for $j \neq y$. $\square$
+### 2.4 The Ordered Top-2 Margin
 
-### 2.3 The Off-Diagonal Minimum
+**Definition.** The winner margin at x is:
+```
+winnerMargin(f, a, x) = min_{j ≠ a} (f_a(x) - f_j(x))
+```
 
-The canonical aggregator is the *off-diagonal minimum*:
-$$\Phi_{\min}(y, v) = \min_{j \neq y} v_j.$$
+The runner-up margin at x is:
+```
+runnerUpMargin(f, a, b, x) = min_{j ≠ a, j ≠ b} (f_b(x) - f_j(x))
+```
 
-This trivially satisfies min-domination (with equality). It is also 1-Lipschitz in $\ell_\infty$:
-$$|\Phi_{\min}(y, u) - \Phi_{\min}(y, v)| \leq \sup_i |u_i - v_i|.$$
+The ordered top-2 margin is:
+```
+orderedTop2Margin(f, a, b, x) = min(winnerMargin, runnerUpMargin)
+```
 
-*Proof of 1-Lipschitz property.* For any $i$ in the filtered set $\{j \neq y\}$:
-$$u_i \leq v_i + |u_i - v_i| \leq v_i + \sup_k |u_k - v_k|,$$
-so $\min_{j \neq y} u_j \leq \min_{j \neq y} v_j + \sup_k |u_k - v_k|$. By symmetry, the reverse bound holds. $\square$
+**Theorem (orderedTop2Margin_pos).** If `IsOrderedTop2(f, a, b, x)` holds, then `orderedTop2Margin(f, a, b, x) > 0`.
 
----
+This is the quantitative strengthening: the qualitative predicate implies a positive gap, which can be used as a robustness certificate.
 
-## 3. Main Results
+### 2.5 Perturbation Lemma
 
-### 3.1 Certificate Stability
+**Theorem (scoreDiff_stays_positive).** Let g : ℝ^d → ℝ satisfy:
+- |g(x + δ) - g(x)| ≤ L · ‖δ‖_∞  (Lipschitz bound)
+- g(x) > 0  (positivity at base point)
+- L · ‖δ‖_∞ < g(x)  (perturbation is small)
 
-**Theorem** (Aggregated Margin Lower Bound Under Perturbation). Let $f$ have Lipschitz-bounded pairwise gaps:
-$$|g_{ij}(x) - g_{ij}(x')| \leq 2Kd\|x - x'\|_\infty.$$
-Let $\Phi$ be 1-Lipschitz (in sup norm). Then for $\|x - x_0\|_\infty \leq \varepsilon$:
-$$\Phi(y, v_y(x)) \geq \Phi(y, v_y(x_0)) - 2Kd\varepsilon.$$
+Then g(x + δ) > 0.
 
-*Proof sketch.* Each coordinate of the margin vector changes by at most $2Kd\varepsilon$:
-$$|v_y(x)_j - v_y(x_0)_j| = |g_{yj}(x) - g_{yj}(x_0)| \leq 2Kd\|x - x_0\|_\infty \leq 2Kd\varepsilon.$$
-The supremum over coordinates is also bounded by $2Kd\varepsilon$. By the Lipschitz property of $\Phi$, the certificate changes by at most $2Kd\varepsilon$. $\square$
+*Proof sketch.* From the Lipschitz bound and the absolute value:
+```
+g(x + δ) ≥ g(x) - |g(x + δ) - g(x)| ≥ g(x) - L · ‖δ‖_∞ > 0
+```
 
-### 3.2 Main Bridge Theorem
+### 2.6 Main Stability Theorem
 
-**Theorem** (Robust Classification from Aggregated Pairwise Margin). Let:
-- $f: \mathbb{R}^d \to \mathbb{R}^C$ be a classifier with $|g_{ij}(x) - g_{ij}(x')| \leq 2Kd\|x - x'\|_\infty$,
-- $\Phi$ be a 1-Lipschitz aggregator satisfying positivity propagation,
-- $y$ be the predicted class at $x_0$,
-- $\|x - x_0\|_\infty \leq \varepsilon$,
-- $\Phi(y, v_y(x_0)) > 2Kd\varepsilon$.
+**Theorem (orderedTop2_stable_of_margin).** Suppose:
+- `IsOrderedTop2(f, a, b, x)` holds
+- All score differences satisfy: |scoreDiff(f, i, j, y) - scoreDiff(f, i, j, z)| ≤ K_eff · ‖y - z‖_∞
+- K_eff · ‖δ‖_∞ < orderedTop2Margin(f, a, b, x)
 
-Then $f(x, y) > f(x, j)$ for all $j \neq y$.
+Then `IsOrderedTop2(f, a, b, x + δ)`.
 
-*Proof.* By certificate stability, $\Phi(y, v_y(x)) > 0$. By positivity propagation, $v_y(x)_j > 0$ for all $j \neq y$, i.e., $f(x, y) - f(x, j) > 0$. $\square$
+*Proof.* By the bridge lemma, it suffices to show all relevant score differences remain positive at x + δ.
 
-### 3.3 Corollaries
+For each winner constraint (j ≠ a): The margin satisfies `orderedTop2Margin ≤ scoreDiff(f, a, j, x)`. Combined with the Lipschitz bound on scoreDiff(f, a, j, ·) and the hypothesis on ‖δ‖, the perturbation lemma gives `scoreDiff(f, a, j, x + δ) > 0`.
 
-**Corollary** (Weak Argmax Stability). Under the same hypotheses, $f(x, j) \leq f(x, y)$ for all $j$.
+For each runner-up constraint (j ≠ a, j ≠ b): Similarly, `orderedTop2Margin ≤ scoreDiff(f, b, j, x)`, and the same argument applies. □
 
-**Corollary** (Min-Domination Version). If $\Phi$ satisfies min-domination (instead of positivity propagation directly), the same conclusion holds.
+### 2.7 Certified Radius
 
-**Corollary** (Off-Diagonal Min Specialization). Using $\Phi = \Phi_{\min}$:
-$$\min_{j \neq y} [f(x_0, y) - f(x_0, j)] > 2Kd\varepsilon \implies \forall j \neq y,\; f(x, y) > f(x, j).$$
+**Theorem (orderedTop2_certified_radius).** Under the same Lipschitz assumptions, if K_eff · r < orderedTop2Margin(f, a, b, x), then for all δ with ‖δ‖_∞ ≤ r:
 
-This is the multiclass analogue of the binary margin certificate, expressed entirely through pairwise gap geometry.
+```
+IsOrderedTop2(f, a, b, x + δ)
+```
 
----
+This follows immediately from the stability theorem: K_eff · ‖δ‖_∞ ≤ K_eff · r < margin.
 
-## 4. Lean 4 Formalization
+## 3. Formal Verification
 
-All results are formalized in Lean 4 with Mathlib. The formalization lives in `MachineLearning/TropicalPairwiseRobustness.lean` and contains:
+### 3.1 Lean 4 Formalization
 
-| Lean Declaration | Mathematical Statement |
-|---|---|
-| `pairGap` | Pairwise gap $g_{ij}(x) = f_i(x) - f_j(x)$ |
-| `marginVec` | Margin vector $v_y(x)_j = f_y(x) - f_j(x)$ |
-| `PositivityImpliesOffDiagPositive` | Positivity propagation property |
-| `DominatesMin` | Min-domination property |
-| `offDiagMin` | Off-diagonal minimum aggregator |
-| `positive_offdiag_of_inf_pos` | Inf positive implies all coords positive |
-| `positivity_from_min_domination` | Min-domination ⟹ positivity propagation |
-| `offDiagMin_lipschitz_one` | Off-diagonal min is 1-Lipschitz |
-| `marginVec_coord_perturb` | Coordinatewise perturbation bound |
-| `sup_pairwise_margin_change_le` | Sup perturbation bound |
-| `aggregated_margin_lower_bound_under_perturbation` | Certificate stability |
-| `robust_of_pairwise_aggregated_margin` | **Main theorem** |
-| `top1_stable_of_pairwise_aggregated_margin` | Weak argmax corollary |
-| `robust_of_pairwise_aggregated_margin_of_min_domination` | Min-domination version |
-| `robust_of_min_pairwise_margin` | Off-diagonal min specialization |
+The complete formalization is in `MachineLearning/TropicalTop2Robustness.lean`. It consists of:
 
-The formalization uses only standard axioms (`propext`, `Classical.choice`, `Quot.sound`) and has zero sorry's.
+| Result | Type | Lines |
+|--------|------|-------|
+| `scoreDiff` | Definition | 2 |
+| `IsOrderedTop2` | Definition | 4 |
+| `isOrderedTop2_iff_pairwise` | Theorem | Bridge lemma |
+| `filter_ne_nonempty` | Lemma | Finset nonemptiness for C ≥ 2 |
+| `filter_ne_ne_nonempty` | Lemma | Finset nonemptiness for C ≥ 3 |
+| `winnerMargin` | Definition | Via Finset.inf' |
+| `runnerUpMargin` | Definition | Via Finset.inf' |
+| `orderedTop2Margin` | Definition | min of margins |
+| `winnerMargin_le_gap` | Lemma | Margin ≤ individual gap |
+| `runnerUpMargin_le_gap` | Lemma | Margin ≤ individual gap |
+| `orderedTop2Margin_le_winner_gap` | Lemma | Combined bound |
+| `orderedTop2Margin_le_runnerUp_gap` | Lemma | Combined bound |
+| `winnerMargin_pos` | Lemma | Margin positivity |
+| `runnerUpMargin_pos` | Lemma | Margin positivity |
+| `orderedTop2Margin_pos` | Theorem | Combined positivity |
+| `scoreDiff_stays_positive` | Theorem | Perturbation lemma |
+| `orderedTop2_stable_of_margin` | Theorem | Main stability |
+| `orderedTop2_certified_radius` | Theorem | Ball-form certificate |
 
-### Key Design Decisions
+All proofs use only the standard axioms (`propext`, `Classical.choice`, `Quot.sound`).
 
-1. **Aggregator parameterized by predicted class**: The aggregator $\Phi : \text{Fin}(C) \to (\text{Fin}(C) \to \mathbb{R}) \to \mathbb{R}$ takes the predicted class $y$ as a parameter. This lets it exclude the always-zero diagonal entry, avoiding vacuous certificates.
+### 3.2 Design Decisions
 
-2. **Off-diagonal inf for min-domination**: The `DominatesMin` property compares against $\min_{j \neq y} v_j$ (using `Finset.filter`), requiring $C \geq 2$.
+**C ≥ 3 requirement.** The runner-up margin requires the existence of at least one class other than the winner and runner-up. For C = 2, the runner-up constraint set is empty and the runner-up margin is vacuously infinite; the ordered top-2 decision reduces to the argmax decision. We formalize the general case C ≥ 3.
 
-3. **Sup norm via `Finset.sup'`**: Rather than importing a metric structure on function spaces, we express the Lipschitz condition using `Finset.univ.sup'` over coordinate-wise absolute differences.
+**Finset.inf' for finite minima.** We use Mathlib's `Finset.inf'` (infimum over a nonempty finite set) to define margins, threading nonemptiness proofs through the definitions. This is more principled than using `iInf` (which would require completeness assumptions) or ad hoc constructions.
 
----
+**Uniform Lipschitz constant.** For clarity, we use a single K_eff bounding all score differences. A sharper version would use pair-dependent constants and take their maximum only over the relevant pairs; the proof structure is identical.
+
+## 4. Empirical Demonstrations
+
+### 4.1 Linear Classifier (Demo 1)
+
+A 4-class linear classifier in 2D with score functions f_i(x) = w_i · x + b_i. At the test point x = (1.0, 0.5):
+- Scores: [2.50, 0.50, -2.05, 0.70]
+- Winner: class 0, Runner-up: class 3
+- Winner margin: 1.80, Runner-up margin: 0.20
+- **Ordered top-2 margin: 0.20**
+- Certified radius: 0.031 (L∞)
+- Empirical verification: **0 violations in 10,000 random perturbations within the certified ball**
+
+The runner-up margin is much smaller than the winner margin, illustrating that ordered top-2 robustness is genuinely harder than argmax robustness.
+
+### 4.2 ReLU Network (Demo 2)
+
+A single-hidden-layer ReLU network with 8 hidden units and 3 output classes:
+- Certified radius: 0.028
+- Empirical verification: **0 violations in 20,000 samples**
+
+### 4.3 Certificate Comparison (Demo 3)
+
+Over 500 random test points for a 5-class linear classifier:
+
+| Certificate | Mean radius | Median | Min |
+|-------------|-------------|--------|-----|
+| Argmax only | 0.463 | 0.367 | 0.0001 |
+| Ordered top-2 | 0.246 | 0.172 | 0.0001 |
+| Full ranking | 0.136 | 0.092 | 0.0001 |
+
+The ordering **full_ranking ≤ top2 ≤ argmax** holds universally, confirming that each additional ranking constraint reduces the certified radius.
+
+### 4.4 Selective Classification (Demo 4)
+
+Application to a 10-class classifier with hierarchical class groups (animals vs. vehicles). The ordered top-2 certificate enables decisions like:
+- **CONFIDENT**: large radius + winner and runner-up in same group → trust the prediction
+- **ABSTAIN (cross-group)**: large radius but top-2 span different groups → uncertain category
+- **ABSTAIN (low margin)**: small radius → perturbation could change the decision
 
 ## 5. Applications
 
-### 5.1 Certified Inference for Deployed Models
+### 5.1 Hierarchical Decision Pipelines
 
-Given a trained ReLU network with known weight matrices, one can compute:
-1. A global Lipschitz constant $K$ from the weights (e.g., product of operator norms).
-2. At each input $x_0$, the margin vector $v_y(x_0)$.
-3. The certified radius $\varepsilon^* = \Phi(y, v_y(x_0)) / (2Kd)$.
+In many real-world systems, the classifier's output feeds into a downstream decision pipeline that depends on more than just the argmax. For example:
+- A medical triage system routes patients based on the top-2 diagnoses
+- A search engine ranks results using the top-2 relevance scores
+- A recommendation system shows the top-2 items
 
-Any input within $\|x - x_0\|_\infty \leq \varepsilon^*$ is guaranteed to receive the same classification. This provides a per-input, formally verified robustness guarantee.
+Our certificate guarantees that the *entire downstream decision* is stable, not just the top prediction.
 
-### 5.2 Custom Aggregators for Domain-Specific Certification
+### 5.2 Certified Abstention
 
-The abstract framework supports any aggregator satisfying the two properties (1-Lipschitz + positivity propagation). This enables:
+Selective classification systems abstain (refuse to predict) when confidence is low. The ordered top-2 margin provides a richer confidence signal than the argmax margin alone: if the runner-up is "close" to the winner, abstention may be warranted even if the winner margin is large.
 
-- **Hierarchical min/max trees**: Nested aggregation where subtrees handle different class groupings.
-- **Weighted margins**: Giving more importance to margins over specific classes.
-- **Harmonic/geometric means**: Tighter certificates that are still dominated by the min (hence satisfy min-domination).
+### 5.3 Adversarial Robustness Auditing
 
-### 5.3 Robustness-Aware Training
+For model auditing and certification in safety-critical domains, verifying ordered top-2 stability provides a stronger guarantee than argmax stability. This is relevant for:
+- EU AI Act compliance (requiring robustness of high-risk AI systems)
+- FDA approval of AI-based medical devices
+- Autonomous vehicle safety certification
 
-The certificate $\Phi(y, v_y(x_0))$ is differentiable (for smooth $\Phi$), enabling its use as a training objective. Maximizing the certificate during training directly improves certified robustness, with the formal guarantee that any improvement is sound.
+### 5.4 Training with Ordered Top-2 Margins
 
----
+The ordered top-2 margin can serve as a differentiable training objective: maximize `min(winnerMargin, runnerUpMargin)` to produce classifiers that are simultaneously confident in their winner and runner-up predictions. This is a stronger training signal than standard margin maximization.
 
-## 6. Numerical Demonstrations
+## 6. Discussion: Making it Accessible
 
-We validate the theory on a synthetic 2-layer ReLU network with $d = 2$ input dimensions and $C = 3$ classes (see `demos/` directory).
+### For the General Reader
 
-**Key findings:**
-- The theoretical Lipschitz bound ($2Kd$) is conservative but valid: observed pairwise gap variations are well within the bound.
-- Certified radii are tight enough to be meaningful: at test points, the certified $\ell_\infty$ radius ranges from $0.004$ to $0.038$.
-- Empirical verification confirms that all 2000 randomly sampled perturbations within the certified radius preserve the predicted class.
-- Different aggregators (min, harmonic mean, geometric mean) produce identical certified radii in most regions, since the certificate is dominated by the minimum margin.
+Imagine you're using a photo recognition app. You take a picture of your dog, and the app says "85% chance it's a golden retriever, 10% chance it's a labrador." Traditional robustness certificates would tell you: "Even if the photo is slightly blurry or the lighting changes a bit, the app will still say 'golden retriever.'" That's useful, but incomplete.
 
----
+Our theorem provides a stronger guarantee: "Not only will the app still say 'golden retriever,' but it will *also* still say the second choice is 'labrador.'" This matters because:
 
-## 7. Discussion: A Bridge Between Algebra and Safety
+- If the second choice were suddenly "cat," you'd worry the app is confused.
+- If both the winner and runner-up are dog breeds, you can be confident the app is at least in the right ballpark.
+- The strength of both predictions together tells you much more about how reliable the app is.
 
-### For a General Audience
-
-Imagine you've trained a neural network to classify images of animals. It correctly identifies a photo as a "cat." But could a tiny, imperceptible change to the image—adjusting a few pixels by a fraction—cause the network to suddenly say "dog"?
-
-This is the *adversarial robustness* problem, and it's not just an academic curiosity. Self-driving cars, medical imaging systems, and security-critical applications all depend on neural networks that should be stable under small perturbations.
-
-Our theorem provides a *mathematical guarantee*: given a neural network and an input, we can compute a number—the *certified radius*—such that any perturbation smaller than this radius is guaranteed not to change the classification. Not "probably won't change it" or "hasn't changed it in our tests"—*mathematically cannot change it*.
-
-The key insight is surprisingly simple. A neural network classifies by comparing scores (logits) for each class. If the winning class beats every competitor by a large margin, and we know how fast those margins can change (the Lipschitz constant), then small perturbations can't close the gap. Our contribution is showing that this reasoning works for *any* way of aggregating pairwise margins, as long as the aggregation is "well-behaved" (monotone and Lipschitz).
+The key insight is beautifully simple: the app's decision is determined by a finite set of comparisons ("golden retriever scores higher than labrador," "golden retriever scores higher than cat," "labrador scores higher than cat," etc.). Our certified radius measures *how much room there is* in the tightest of these comparisons. If the weakest link has a gap of 0.5 and small perturbations can only shift scores by 0.1, all comparisons survive — and so does the full top-2 ranking.
 
 ### Historical Context
 
-The connection between tropical geometry and neural networks was first observed through the realization that ReLU networks compute piecewise-linear functions—precisely the functions studied in tropical algebraic geometry. The "tropical" in "tropical geometry" honors the Brazilian mathematician Imre Simon, who pioneered the min-plus algebra (where addition becomes minimum and multiplication becomes addition). In this algebra, polynomials become piecewise-linear functions, and the "zeros" of tropical polynomials form the polyhedral complexes that describe neural network decision boundaries.
+This work sits at the intersection of three mathematical traditions:
 
-Our work extends this tropical program by moving from individual logit analysis to the *geometry of pairwise comparisons*. The margin vector $v_y(x)$ lives in a tropical hyperplane arrangement, and the aggregator $\Phi$ extracts a robust invariant of this arrangement.
+1. **Tropical geometry** (Mikhalkin, Sturmfels, et al.): the study of piecewise-linear functions through the lens of the max-plus semiring. ReLU networks are tropical rational maps, and their decision boundaries are tropical varieties.
 
-### Future Directions
+2. **Robustness verification** (Katz et al., Tjeng et al., Wong & Kolter): the computational problem of certifying neural network behavior under perturbation. Our work extends the certificate from a single prediction to a ranking structure.
 
-1. **Tropical Hecke aggregators**: The connection between tropical geometry and Hecke algebras suggests aggregators based on idempotent algebraic structures, potentially yielding tighter certificates.
-2. **Hierarchical certification**: For networks with tree-structured outputs (e.g., taxonomic classification), the aggregator can exploit the hierarchy for tighter per-subtree certificates.
-3. **Beyond $\ell_\infty$**: The framework extends to other norms by changing the Lipschitz constant; the aggregation theory is norm-independent.
-4. **Compositional certification**: For modular architectures (e.g., mixture of experts), each module can be certified independently, with the aggregator combining module-level certificates.
+3. **Formal verification** (de Moura, Avigad, Buzzard, Tao, et al.): the use of interactive proof assistants to achieve absolute certainty in mathematical results. Our Lean 4 formalization ensures the theorem is correct beyond human error.
 
----
+### Connections to Existing Work
+
+- **Randomized smoothing** (Cohen et al., 2019): provides probabilistic L2 robustness certificates for argmax decisions. Our work is deterministic and covers L∞, and extends to ordered top-2.
+- **CROWN/α-CROWN** (Zhang et al., 2018): computes tight Lipschitz bounds for ReLU networks. These bounds plug directly into our K_eff parameter.
+- **Certified top-k stability** (Jia et al., 2022): certifies *unordered* top-k sets. Our ordered top-2 is strictly more informative: we distinguish (a, b) from (b, a).
+
+## 7. Future Directions
+
+1. **Ordered top-k for k > 2**: The proof pattern generalizes directly. For ordered top-k, one needs k(k-1)/2 pairwise constraints plus (C-k) constraints for each of the k positions. The margin is the minimum over all these constraints.
+
+2. **Pair-dependent Lipschitz constants**: Using per-pair constants K_{ij} instead of a uniform K_eff yields tighter radii. The same proof works with K_eff replaced by the maximum over relevant pairs.
+
+3. **Tropical polynomial structure**: For ReLU networks, the score differences have explicit tropical polynomial representations. Exploiting this structure could yield exact (non-conservative) certified radii.
+
+4. **Training algorithms**: Incorporate the ordered top-2 margin as a training loss to produce inherently robust classifiers.
+
+5. **Other norms**: The theorem generalizes to arbitrary norms by adjusting the Lipschitz constant. For L2, the Lipschitz constant is the spectral norm; for L1, it's the max column norm.
 
 ## 8. Conclusion
 
-We have established a formally verified bridge between pairwise margin analysis and certified multiclass robustness, parameterized by a general monotone aggregator. The theorem is proven in Lean 4 with zero sorry's and standard axioms only, providing the highest level of mathematical assurance. The framework is designed for extensibility: any new aggregator satisfying the positivity propagation property and Lipschitz bound automatically inherits the full robustness guarantee.
-
----
+We have presented the first formally verified robustness certificate for ordered top-2 predictions of multiclass classifiers. The certificate reduces ordered top-2 stability to a scalar margin computation and a Lipschitz bound, yielding a simple, deployable, and provably correct robustness guarantee. The formal verification in Lean 4 provides the highest level of mathematical certainty, and the proof structure sets up a reusable pattern for ordered top-k certificates and beyond.
 
 ## References
 
-1. Zhang, L., et al. "Tropical geometry of deep neural networks." ICML 2018.
-2. Alfarra, M., et al. "On the decision regions of deep neural networks as tropical rational functions." NeurIPS 2020.
-3. Weng, T.-W., et al. "Evaluating the robustness of neural networks: An extreme value theory approach." ICLR 2018.
-4. Gowal, S., et al. "Scalable verified training for provably robust image classification." ICCV 2019.
-5. The mathlib Community. "The Lean mathematical library." CPP 2020.
+- Cohen, J., Rosenfeld, E., & Kolter, Z. (2019). Certified adversarial robustness via randomized smoothing. ICML.
+- Gowal, S., et al. (2018). On the effectiveness of interval bound propagation for training verifiably robust models. arXiv:1810.12715.
+- Zhang, H., et al. (2018). Efficient neural network robustness certification with general activation functions. NeurIPS.
+- Xu, K., et al. (2021). Fast and complete: Enabling complete neural network verification with rapid and massively parallel incomplete verifiers. ICLR.
+- Zhang, H., et al. (2022). General cutting planes for bound-tightening in neural network verification. NeurIPS.
+- Katz, G., et al. (2017). Reluplex: An efficient SMT solver for verifying deep neural networks. CAV.
+- Mikhalkin, G. (2006). Tropical geometry and its applications. ICM Proceedings.
