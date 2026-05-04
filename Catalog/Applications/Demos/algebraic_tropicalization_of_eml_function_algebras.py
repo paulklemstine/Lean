@@ -1,330 +1,373 @@
+#!/usr/bin/env python3
 """
-Tropical Stone–Weierstrass Theorem: Demonstrations and Visualizations
+Tropical Min-Plus Stone–Weierstrass: Demonstrations
 
-This script demonstrates the Tropical Stone–Weierstrass theorem through
-concrete numerical examples on [0,1]. It shows how finite max-min envelopes
-of shifted functions can uniformly approximate arbitrary continuous functions.
+This script demonstrates the core ideas formalized in our Lean 4 proof:
+1. The negation duality between min-plus and max-plus
+2. Uniform approximation of continuous functions by min-plus tropical polynomials
+3. Applications to shortest-path value functions and morphological erosions
 
-The theorem states: if A ⊆ C(X, ℝ) on a compact Hausdorff space is closed under
-pointwise max, pointwise min, constant shifts, contains all constants, and
-tropically separates points, then A is uniformly dense in C(X, ℝ).
+Author: Harmonic Research
 """
 
 import numpy as np
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
 import os
 
-# Create output directory
-os.makedirs("demos/figures", exist_ok=True)
+# ─── Configuration ───────────────────────────────────────────────────────────
+OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "figures")
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 
+# ─── Min-plus / max-plus operations ─────────────────────────────────────────
+def trop_min_add(f, g):
+    """Tropical addition: pointwise min."""
+    return np.minimum(f, g)
 
-# ============================================================================
-# Core tropical operations
-# ============================================================================
+def trop_min_mul(f, g):
+    """Tropical multiplication: pointwise sum."""
+    return f + g
 
-def affine_func(a, b):
-    """Return the affine function x ↦ ax + b."""
-    return lambda x: a * x + b
+def trop_neg(f):
+    """Order-reversing involution: f ↦ -f."""
+    return -f
 
-def tropical_sup_envelope(funcs, x):
-    """Compute pointwise max of a list of functions (tropical sum)."""
-    vals = np.array([f(x) for f in funcs])
-    return np.max(vals, axis=0)
-
-def tropical_inf_envelope(funcs, x):
-    """Compute pointwise min of a list of functions."""
-    vals = np.array([f(x) for f in funcs])
-    return np.min(vals, axis=0)
-
-
-def approximate_from_below(target_func, x_grid, n_pieces=10):
-    """
-    Build a piecewise-linear convex approximation from below using
-    sup of affine functions (tangent lines at sample points).
-    """
-    sample_points = np.linspace(x_grid[0], x_grid[-1], n_pieces)
-    h = 1e-8
-    funcs = []
-    for x0 in sample_points:
-        y0 = target_func(x0)
-        slope = (target_func(x0 + h) - target_func(x0 - h)) / (2 * h)
-        funcs.append(affine_func(slope, y0 - slope * x0))
-    return tropical_sup_envelope(funcs, x_grid), funcs
-
-
-def approximate_with_max_min(target_func, x_grid, n_inner=8, n_outer=8):
-    """
-    Two-pass approximation implementing the proof of Tropical Stone–Weierstrass:
-    1. For each anchor x_j, build an inf-envelope g_{x_j} ≤ f + ε near x_j
-    2. Take the sup of all inf-envelopes to get global approximation
-    """
-    anchors = np.linspace(x_grid[0], x_grid[-1], n_outer)
-    inner_points = np.linspace(x_grid[0], x_grid[-1], n_inner)
-    h = 1e-8
-    inf_envelopes = []
-    
-    for x_anchor in anchors:
-        affines = []
-        for x_inner in inner_points:
-            if abs(x_inner - x_anchor) < 1e-10:
-                y0 = target_func(x_anchor)
-                slope = (target_func(x_anchor + h) - target_func(x_anchor - h)) / (2 * h)
-            else:
-                y1 = target_func(x_anchor)
-                y2 = target_func(x_inner)
-                slope = (y2 - y1) / (x_inner - x_anchor)
-            intercept = target_func(x_anchor) - slope * x_anchor
-            affines.append(affine_func(slope, intercept))
-        
-        inf_env = tropical_inf_envelope(affines, x_grid)
-        inf_envelopes.append(inf_env)
-    
-    result = np.max(np.array(inf_envelopes), axis=0)
-    return result
-
-
-# ============================================================================
-# Figure 1: The two-pass construction visualized
-# ============================================================================
-
-def plot_two_pass_construction():
+# ─── Demo 1: Negation duality visualization ─────────────────────────────────
+def demo_negation_duality():
+    """Show that negation converts min-plus → max-plus and vice versa."""
     x = np.linspace(0, 1, 500)
-    target = lambda t: np.sin(2 * np.pi * t) * 0.5 + 0.3 * t
-    f = target(x)
-    
-    fig = plt.figure(figsize=(16, 10))
-    gs = GridSpec(2, 2, figure=fig, hspace=0.3, wspace=0.3)
-    
-    ax1 = fig.add_subplot(gs[0, 0])
-    ax1.plot(x, f, 'k-', linewidth=2, label='Target f(x)')
-    ax1.set_title('Target Function f(x) = sin(2πx)/2 + 0.3x', fontsize=11)
-    ax1.set_xlabel('x'); ax1.set_ylabel('f(x)')
-    ax1.legend(); ax1.grid(True, alpha=0.3)
-    
-    ax2 = fig.add_subplot(gs[0, 1])
-    ax2.plot(x, f, 'k-', linewidth=2, label='Target f')
-    anchors = [0.15, 0.4, 0.65, 0.9]
-    colors = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3']
-    inf_envs = []
-    
-    for anchor, color in zip(anchors, colors):
-        inner_pts = np.linspace(0, 1, 12)
-        affines = []
-        h = 1e-8
-        for xp in inner_pts:
-            y1 = target(anchor)
-            if abs(xp - anchor) < 1e-10:
-                slope = (target(anchor + h) - target(anchor - h)) / (2 * h)
-            else:
-                slope = (target(xp) - y1) / (xp - anchor)
-            intercept = y1 - slope * anchor
-            affines.append(affine_func(slope, intercept))
-        
-        inf_env = tropical_inf_envelope(affines, x)
-        inf_envs.append(inf_env)
-        ax2.plot(x, inf_env, color=color, linewidth=1.5, alpha=0.7,
-                label=f'inf-envelope at x={anchor}')
-        ax2.axvline(anchor, color=color, linestyle=':', alpha=0.3)
-    
-    ax2.set_title('Pass 1: Inf-Envelopes (min of affines)', fontsize=11)
-    ax2.set_xlabel('x'); ax2.legend(fontsize=8); ax2.grid(True, alpha=0.3)
-    
-    ax3 = fig.add_subplot(gs[1, 0])
-    sup_result = np.max(np.array(inf_envs), axis=0)
-    ax3.plot(x, f, 'k-', linewidth=2, label='Target f')
-    ax3.fill_between(x, f - 0.3, f + 0.3, alpha=0.1, color='gray', label='ε-tube (ε=0.3)')
-    ax3.plot(x, sup_result, 'r-', linewidth=2, label='sup of inf-envelopes')
-    ax3.set_title('Pass 2: Sup of Inf-Envelopes (4 anchors)', fontsize=11)
-    ax3.set_xlabel('x'); ax3.legend(fontsize=9); ax3.grid(True, alpha=0.3)
-    
-    ax4 = fig.add_subplot(gs[1, 1])
-    ax4.plot(x, f, 'k-', linewidth=2, label='Target f')
-    for n_outer, style, lbl in [(4, '--', '4'), (8, '-.', '8'), (16, '-', '16'), (32, '-', '32')]:
-        approx = approximate_with_max_min(target, x, n_inner=12, n_outer=n_outer)
-        err = np.max(np.abs(f - approx))
-        ax4.plot(x, approx, style, linewidth=1.5, alpha=0.8,
-                label=f'{lbl} anchors (err={err:.4f})')
-    
-    ax4.set_title('Convergence: More Anchors → Better Approximation', fontsize=11)
-    ax4.set_xlabel('x'); ax4.legend(fontsize=8); ax4.grid(True, alpha=0.3)
-    
-    fig.suptitle('Tropical Stone–Weierstrass: Two-Pass Construction', 
-                fontsize=14, fontweight='bold', y=0.98)
-    plt.savefig('demos/figures/two_pass_construction.png', dpi=150, bbox_inches='tight')
+    f = np.sin(4 * np.pi * x)
+    g = 0.5 * np.cos(2 * np.pi * x) + 0.3
+
+    fig, axes = plt.subplots(2, 2, figsize=(12, 8))
+    fig.suptitle("Negation Duality: Min-Plus ↔ Max-Plus", fontsize=14, fontweight='bold')
+
+    # Top-left: f and g
+    axes[0, 0].plot(x, f, 'b-', label='f(x)', linewidth=1.5)
+    axes[0, 0].plot(x, g, 'r-', label='g(x)', linewidth=1.5)
+    axes[0, 0].set_title('Original functions f, g')
+    axes[0, 0].legend()
+    axes[0, 0].grid(True, alpha=0.3)
+
+    # Top-right: min(f,g) — tropical addition
+    axes[0, 1].plot(x, f, 'b--', alpha=0.4, linewidth=0.8)
+    axes[0, 1].plot(x, g, 'r--', alpha=0.4, linewidth=0.8)
+    axes[0, 1].plot(x, trop_min_add(f, g), 'k-', label='f ⊕ g = min(f,g)', linewidth=2)
+    axes[0, 1].set_title('Tropical Addition (min)')
+    axes[0, 1].legend()
+    axes[0, 1].grid(True, alpha=0.3)
+
+    # Bottom-left: -f and -g
+    axes[1, 0].plot(x, -f, 'b-', label='-f(x)', linewidth=1.5)
+    axes[1, 0].plot(x, -g, 'r-', label='-g(x)', linewidth=1.5)
+    axes[1, 0].set_title('Negated functions -f, -g')
+    axes[1, 0].legend()
+    axes[1, 0].grid(True, alpha=0.3)
+
+    # Bottom-right: max(-f,-g) = -(min(f,g))
+    neg_min = trop_neg(trop_min_add(f, g))
+    max_neg = np.maximum(-f, -g)
+    axes[1, 1].plot(x, neg_min, 'k-', label='−(f ⊕ g) = max(−f,−g)', linewidth=2)
+    axes[1, 1].plot(x, max_neg, 'g--', label='max(−f,−g) [direct]', linewidth=1.5)
+    axes[1, 1].set_title('Duality: −min = max after negation')
+    axes[1, 1].legend()
+    axes[1, 1].grid(True, alpha=0.3)
+
+    # Verify identity
+    err = np.max(np.abs(neg_min - max_neg))
+    fig.text(0.5, 0.02,
+             f'Verification: ‖−min(f,g) − max(−f,−g)‖∞ = {err:.2e} (machine zero)',
+             ha='center', fontsize=11, style='italic')
+
+    plt.tight_layout(rect=[0, 0.05, 1, 0.95])
+    plt.savefig(os.path.join(OUTPUT_DIR, "negation_duality.png"), dpi=150, bbox_inches='tight')
     plt.close()
-    print("  Saved: demos/figures/two_pass_construction.png")
+    print("✓ Demo 1: Negation duality visualization saved.")
 
 
-# ============================================================================
-# Figure 2: Approximation of various functions
-# ============================================================================
-
-def plot_various_approximations():
-    x = np.linspace(0, 1, 500)
-    targets = [
-        (lambda t: np.sin(4 * np.pi * t), 'sin(4πx)', 'Oscillatory'),
-        (lambda t: np.exp(-10 * (t - 0.5)**2), 'exp(-10(x-0.5)²)', 'Gaussian bump'),
-        (lambda t: np.abs(t - 0.5) - 0.25, '|x-0.5| - 0.25', 'V-shape'),
-        (lambda t: t**3 - t**2 + 0.2*t, 'x³ - x² + 0.2x', 'Cubic'),
-    ]
-    
-    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-    for ax, (func, name, desc) in zip(axes.flat, targets):
-        f = func(x)
-        for n, color, label in [(8, '#377eb8', '8×8'), (16, '#e41a1c', '16×16'), 
-                                 (32, '#4daf4a', '32×32')]:
-            approx = approximate_with_max_min(func, x, n_inner=n, n_outer=n)
-            err = np.max(np.abs(f - approx))
-            ax.plot(x, approx, color=color, linewidth=1, alpha=0.8,
-                   label=f'{label}: err={err:.4f}')
-        ax.plot(x, f, 'k-', linewidth=2, label=f'f(x) = {name}')
-        ax.set_title(f'{desc}: {name}', fontsize=11)
-        ax.legend(fontsize=8); ax.grid(True, alpha=0.3)
-    
-    fig.suptitle('Tropical Approximation of Various Functions', fontsize=14, fontweight='bold')
-    plt.tight_layout()
-    plt.savefig('demos/figures/various_approximations.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("  Saved: demos/figures/various_approximations.png")
+# ─── Demo 2: Tropical polynomial approximation ──────────────────────────────
+def tropical_affine_combination(x, generators, weights):
+    """
+    Compute a tropical affine combination:
+       g(x) = inf_i (w_i + G_i(x))
+    This is a finite infimum (min) of shifted generators.
+    """
+    terms = np.array([w + gen(x) for w, gen in zip(weights, generators)])
+    return np.min(terms, axis=0)
 
 
-# ============================================================================
-# Figure 3: Convergence rate analysis
-# ============================================================================
-
-def plot_convergence_rates():
+def demo_tropical_approximation():
+    """
+    Approximate a target function by min-plus tropical polynomials
+    (finite infima of affine/shifted generator functions).
+    """
     x = np.linspace(0, 1, 1000)
-    targets = [
-        (lambda t: np.sin(2 * np.pi * t), 'sin(2πx)'),
-        (lambda t: t * (1 - t), 'x(1-x)'),
-        (lambda t: np.exp(-5 * (t - 0.3)**2), 'Gaussian'),
+
+    # Target function to approximate
+    target = lambda t: np.sin(2 * np.pi * t) + 0.5 * np.cos(6 * np.pi * t)
+
+    # Generator: identity function and constant
+    generators = [
+        lambda t: t,           # G_0(x) = x
+        lambda t: 1.0 - t,     # G_1(x) = 1-x
+        lambda t: np.abs(t - 0.5),  # G_2(x) = |x - 0.5|
     ]
-    
-    n_values = [4, 6, 8, 12, 16, 24, 32, 48, 64]
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-    
-    for func, name in targets:
-        f = func(x)
-        errors = []
-        for n in n_values:
-            approx = approximate_with_max_min(func, x, n_inner=n, n_outer=n)
-            err = np.max(np.abs(f - approx))
-            errors.append(max(err, 1e-16))
-        ax1.loglog(n_values, errors, 'o-', label=name, linewidth=2, markersize=6)
-    
-    ns = np.array(n_values, dtype=float)
-    ax1.loglog(ns, 2.0 / ns**2, 'k--', alpha=0.4, label='O(1/n²) reference')
-    ax1.set_xlabel('Number of pieces (n)', fontsize=12)
-    ax1.set_ylabel('Sup-norm error ‖f - g‖∞', fontsize=12)
-    ax1.set_title('Convergence Rate of Tropical Approximation', fontsize=12)
-    ax1.legend(fontsize=10); ax1.grid(True, alpha=0.3, which='both')
-    
-    func = lambda t: np.sin(2 * np.pi * t)
-    f = func(x)
-    for n, color in [(8, '#377eb8'), (16, '#e41a1c'), (32, '#4daf4a')]:
-        approx = approximate_with_max_min(func, x, n_inner=n, n_outer=n)
-        ax2.plot(x, np.abs(f - approx), color=color, linewidth=1.5,
-                label=f'n={n}', alpha=0.8)
-    ax2.set_xlabel('x', fontsize=12); ax2.set_ylabel('|f(x) - g(x)|', fontsize=12)
-    ax2.set_title('Pointwise Error for sin(2πx)', fontsize=12)
-    ax2.legend(fontsize=10); ax2.grid(True, alpha=0.3)
-    
+
+    # Increasing number of tropical terms
+    fig, axes = plt.subplots(2, 3, figsize=(15, 8))
+    fig.suptitle("Tropical Min-Plus Approximation of f(x) = sin(2πx) + ½cos(6πx)",
+                 fontsize=13, fontweight='bold')
+
+    # Use distance templates for approximation (McShane–Whitney style)
+    K = 20.0  # Lipschitz constant upper bound
+
+    for idx, n_points in enumerate([3, 5, 10, 20, 50, 200]):
+        ax = axes.flat[idx]
+
+        # Sample points for distance templates
+        sample_pts = np.linspace(0, 1, n_points)
+        f_target = target(x)
+        f_sample = target(sample_pts)
+
+        # Lower envelope: max over φ_a(x) = f(a) - K|x-a|
+        # Upper envelope: min over ψ_a(x) = f(a) + K|x-a|
+        upper_envelope = np.full_like(x, np.inf)
+        for a, fa in zip(sample_pts, f_sample):
+            template = fa + K * np.abs(x - a)
+            upper_envelope = np.minimum(upper_envelope, template)
+
+        err = np.max(np.abs(f_target - upper_envelope))
+
+        ax.plot(x, f_target, 'b-', label='target f', linewidth=1.5)
+        ax.plot(x, upper_envelope, 'r-', label=f'tropical approx', linewidth=1.2)
+        ax.fill_between(x, f_target, upper_envelope, alpha=0.15, color='red')
+        ax.set_title(f'N={n_points}, ‖f−g‖∞ = {err:.4f}')
+        ax.legend(fontsize=8)
+        ax.grid(True, alpha=0.3)
+
     plt.tight_layout()
-    plt.savefig('demos/figures/convergence_rates.png', dpi=150, bbox_inches='tight')
+    plt.savefig(os.path.join(OUTPUT_DIR, "tropical_approximation.png"), dpi=150, bbox_inches='tight')
     plt.close()
-    print("  Saved: demos/figures/convergence_rates.png")
+    print("✓ Demo 2: Tropical polynomial approximation saved.")
 
 
-# ============================================================================
-# Figure 4: Why inf closure is necessary
-# ============================================================================
+# ─── Demo 3: Norm invariance under negation ─────────────────────────────────
+def demo_norm_invariance():
+    """
+    Numerically verify the key transport lemma: ‖tropNeg f - tropNeg g‖ = ‖f - g‖.
+    """
+    x = np.linspace(0, 1, 10000)
+    np.random.seed(42)
 
-def plot_counterexample():
-    x = np.linspace(0.001, 0.999, 500)
-    f_func = lambda t: np.sqrt(t * (1 - t))
-    f = f_func(x)
-    
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-    
-    ax1.plot(x, f, 'k-', linewidth=2.5, label='f(x) = √(x(1-x)) (concave)')
-    for n_affines in [5, 10, 20]:
-        approx_below, _ = approximate_from_below(f_func, x, n_pieces=n_affines)
-        err = np.max(np.abs(f - approx_below))
-        ax1.plot(x, approx_below, '--', linewidth=1.5, alpha=0.7,
-                label=f'sup of {n_affines} affines (err={err:.4f})')
-    ax1.set_title('Sup-only (convex) approximation of concave f', fontsize=11)
-    ax1.set_xlabel('x'); ax1.legend(fontsize=8); ax1.grid(True, alpha=0.3)
-    
-    ax2.plot(x, f, 'k-', linewidth=2.5, label='f(x) = √(x(1-x))')
-    for n, color in [(8, '#377eb8'), (16, '#e41a1c'), (32, '#4daf4a')]:
-        approx = approximate_with_max_min(f_func, x, n_inner=n, n_outer=n)
-        err = np.max(np.abs(f - approx))
-        ax2.plot(x, approx, color=color, linewidth=1.5, alpha=0.8,
-                label=f'max-min {n}×{n} (err={err:.4f})')
-    ax2.set_title('Max-min approximation (with inf) succeeds', fontsize=11)
-    ax2.set_xlabel('x'); ax2.legend(fontsize=8); ax2.grid(True, alpha=0.3)
-    
-    fig.suptitle('Why Inf Closure Is Necessary', fontsize=12, fontweight='bold')
+    results = []
+    for trial in range(20):
+        # Random continuous functions (sums of sinusoids)
+        freqs_f = np.random.randn(5)
+        freqs_g = np.random.randn(5)
+        f = sum(a * np.sin((k+1) * np.pi * x) for k, a in enumerate(freqs_f))
+        g = sum(a * np.sin((k+1) * np.pi * x) for k, a in enumerate(freqs_g))
+
+        norm_fg = np.max(np.abs(f - g))
+        norm_neg = np.max(np.abs((-f) - (-g)))
+        results.append((norm_fg, norm_neg, abs(norm_fg - norm_neg)))
+
+    fig, ax = plt.subplots(figsize=(8, 6))
+    norms_orig = [r[0] for r in results]
+    norms_neg = [r[1] for r in results]
+    errors = [r[2] for r in results]
+
+    ax.scatter(norms_orig, norms_neg, c='blue', s=60, zorder=5, label='(‖f−g‖, ‖−f−(−g)‖)')
+    lim = max(max(norms_orig), max(norms_neg)) * 1.1
+    ax.plot([0, lim], [0, lim], 'r--', linewidth=1, label='y = x (perfect agreement)')
+    ax.set_xlabel('‖f − g‖∞', fontsize=12)
+    ax.set_ylabel('‖tropNeg(f) − tropNeg(g)‖∞', fontsize=12)
+    ax.set_title('Norm Invariance Under Negation (20 random trials)', fontsize=13, fontweight='bold')
+    ax.legend()
+    ax.grid(True, alpha=0.3)
+
+    max_err = max(errors)
+    ax.text(0.05, 0.95, f'Max discrepancy: {max_err:.2e}\n(machine precision)',
+            transform=ax.transAxes, fontsize=10, verticalalignment='top',
+            bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
+
     plt.tight_layout()
-    plt.savefig('demos/figures/counterexample_no_inf.png', dpi=150, bbox_inches='tight')
+    plt.savefig(os.path.join(OUTPUT_DIR, "norm_invariance.png"), dpi=150, bbox_inches='tight')
     plt.close()
-    print("  Saved: demos/figures/counterexample_no_inf.png")
+    print("✓ Demo 3: Norm invariance verification saved.")
 
 
-# ============================================================================
-# Figure 5: Tropical neural network application
-# ============================================================================
+# ─── Demo 4: Shortest-path value function approximation ─────────────────────
+def demo_shortest_path():
+    """
+    Application: Approximate a shortest-path value function
+    using tropical min-plus envelopes (distance templates).
 
-def plot_tropical_neural_network():
+    This demonstrates the connection to dynamic programming:
+    V(x) = inf_a [c(a) + K·d(x,a)] is exactly a tropical polynomial.
+    """
     x = np.linspace(0, 1, 500)
-    target = lambda t: 0.5 * np.sin(6 * np.pi * t) * np.exp(-2 * t) + 0.5
-    f = target(x)
-    
-    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
-    configs = [(4, 4), (8, 8), (16, 16)]
-    
-    for ax, (no, ni) in zip(axes, configs):
-        approx = approximate_with_max_min(target, x, n_inner=ni, n_outer=no)
-        err = np.max(np.abs(f - approx))
-        ax.plot(x, f, 'k-', linewidth=2, label='Target')
-        ax.plot(x, approx, 'r-', linewidth=1.5, label='Tropical NN')
-        ax.fill_between(x, f - err, f + err, alpha=0.1, color='blue')
-        ax.set_title(f'{no}×{ni} tropical neurons\n‖f-g‖∞ = {err:.5f}', fontsize=11)
-        ax.set_xlabel('x'); ax.legend(fontsize=9); ax.grid(True, alpha=0.3)
-    
-    fig.suptitle('Tropical Neural Network Universal Approximation\n'
-                '(guaranteed by Tropical Stone–Weierstrass)',
-                fontsize=13, fontweight='bold')
+
+    # "Cost landscape" — a complex value function
+    V = 2.0 * np.exp(-20 * (x - 0.3)**2) + 1.5 * np.exp(-30 * (x - 0.7)**2) + 0.5
+
+    # Approximate with distance templates (tropical min-plus polynomials)
+    K = 15.0
+    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+    fig.suptitle("Shortest-Path Value Function via Tropical Envelopes",
+                 fontsize=13, fontweight='bold')
+
+    for idx, n in enumerate([5, 15, 50]):
+        ax = axes[idx]
+        pts = np.linspace(0, 1, n)
+        V_pts = np.interp(pts, x, V)
+
+        # Upper tropical envelope: min_a [V(a) + K|x-a|]
+        envelope = np.full_like(x, np.inf)
+        for a, va in zip(pts, V_pts):
+            template = va + K * np.abs(x - a)
+            if idx == 1 and n == 15:  # Show individual templates for middle plot
+                ax.plot(x, template, 'gray', alpha=0.2, linewidth=0.5)
+            envelope = np.minimum(envelope, template)
+
+        err = np.max(np.abs(V - envelope))
+
+        ax.plot(x, V, 'b-', label='V(x) (value function)', linewidth=2)
+        ax.plot(x, envelope, 'r--', label=f'tropical approx (N={n})', linewidth=1.5)
+        ax.set_title(f'N={n} templates, ε = {err:.4f}')
+        ax.legend(fontsize=9)
+        ax.grid(True, alpha=0.3)
+        ax.set_xlabel('x')
+        ax.set_ylabel('V(x)')
+
     plt.tight_layout()
-    plt.savefig('demos/figures/tropical_neural_network.png', dpi=150, bbox_inches='tight')
+    plt.savefig(os.path.join(OUTPUT_DIR, "shortest_path_approx.png"), dpi=150, bbox_inches='tight')
     plt.close()
-    print("  Saved: demos/figures/tropical_neural_network.png")
+    print("✓ Demo 4: Shortest-path value function approximation saved.")
 
 
-# ============================================================================
-# Run all
-# ============================================================================
+# ─── Demo 5: Morphological erosion as tropical operation ─────────────────────
+def demo_morphological_erosion():
+    """
+    Application: Morphological erosion is a tropical min-plus operation.
+    Erosion of f by structuring element b:
+        (f ⊖ b)(x) = inf_y [f(y) - b(y-x)] = inf_y [f(y) + (-b)(y-x)]
+    This is a tropical (min-plus) convolution.
+    """
+    x = np.linspace(0, 1, 500)
 
-if __name__ == '__main__':
+    # Signal
+    signal = np.zeros_like(x)
+    signal[100:150] = 1.0
+    signal[200:350] = 0.7
+    signal[380:420] = 1.2
+
+    # Structuring elements of different radii
+    fig, axes = plt.subplots(1, 3, figsize=(15, 4.5))
+    fig.suptitle("Morphological Erosion as Tropical Min-Plus Convolution",
+                 fontsize=13, fontweight='bold')
+
+    for idx, radius in enumerate([10, 30, 60]):
+        ax = axes[idx]
+
+        # Erosion: slide a flat structuring element
+        eroded = np.full_like(signal, np.inf)
+        for shift in range(-radius, radius + 1):
+            shifted = np.roll(signal, shift)
+            # Handle boundary
+            if shift > 0:
+                shifted[:shift] = signal[0]
+            elif shift < 0:
+                shifted[shift:] = signal[-1]
+            eroded = np.minimum(eroded, shifted)
+
+        ax.plot(x, signal, 'b-', label='original signal', linewidth=1.5)
+        ax.plot(x, eroded, 'r-', label=f'erosion (r={radius})', linewidth=1.5)
+        ax.fill_between(x, eroded, signal, alpha=0.15, color='orange')
+        ax.set_title(f'Flat erosion, radius = {radius}')
+        ax.legend(fontsize=9)
+        ax.grid(True, alpha=0.3)
+        ax.set_ylim(-0.1, 1.4)
+
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUTPUT_DIR, "morphological_erosion.png"), dpi=150, bbox_inches='tight')
+    plt.close()
+    print("✓ Demo 5: Morphological erosion demonstration saved.")
+
+
+# ─── Demo 6: Convergence rate analysis ──────────────────────────────────────
+def demo_convergence_rate():
+    """
+    Analyze the convergence rate of tropical min-plus approximation
+    as a function of the number of template points, for Lipschitz functions.
+    """
+    x = np.linspace(0, 1, 5000)
+
+    # Test functions with known Lipschitz constants
+    test_fns = [
+        ("sin(2πx)", lambda t: np.sin(2*np.pi*t), 2*np.pi),
+        ("x²", lambda t: t**2, 2.0),
+        ("|x−½|", lambda t: np.abs(t - 0.5), 1.0),
+    ]
+
+    fig, ax = plt.subplots(figsize=(9, 6))
+    colors = ['blue', 'red', 'green']
+
+    for (name, fn, K), color in zip(test_fns, colors):
+        ns = np.array([2, 3, 5, 8, 12, 20, 35, 60, 100, 200, 500])
+        errors = []
+
+        f_target = fn(x)
+        for n in ns:
+            pts = np.linspace(0, 1, n)
+            f_pts = fn(pts)
+            envelope = np.full_like(x, np.inf)
+            for a, fa in zip(pts, f_pts):
+                envelope = np.minimum(envelope, fa + K * np.abs(x - a))
+            errors.append(np.max(np.abs(f_target - envelope)))
+
+        ax.loglog(ns, errors, 'o-', color=color, label=f'{name} (K={K:.1f})',
+                  linewidth=1.5, markersize=4)
+
+    # Reference line: O(1/n) convergence
+    ns_ref = np.array([2, 500])
+    ax.loglog(ns_ref, 5.0 / ns_ref, 'k--', alpha=0.5, label='O(1/N) reference')
+
+    ax.set_xlabel('Number of template points N', fontsize=12)
+    ax.set_ylabel('Approximation error ‖f − g‖∞', fontsize=12)
+    ax.set_title('Convergence Rate of Tropical Approximation', fontsize=13, fontweight='bold')
+    ax.legend(fontsize=10)
+    ax.grid(True, alpha=0.3, which='both')
+
+    plt.tight_layout()
+    plt.savefig(os.path.join(OUTPUT_DIR, "convergence_rate.png"), dpi=150, bbox_inches='tight')
+    plt.close()
+    print("✓ Demo 6: Convergence rate analysis saved.")
+
+
+# ─── Main ────────────────────────────────────────────────────────────────────
+if __name__ == "__main__":
     print("=" * 60)
-    print("Tropical Stone–Weierstrass Theorem: Demonstrations")
+    print("  Tropical Min-Plus Stone–Weierstrass Demonstrations")
     print("=" * 60)
-    
-    print("\n1. Two-pass construction visualization...")
-    plot_two_pass_construction()
-    print("2. Approximation of various functions...")
-    plot_various_approximations()
-    print("3. Convergence rate analysis...")
-    plot_convergence_rates()
-    print("4. Counterexample: why inf closure is needed...")
-    plot_counterexample()
-    print("5. Tropical neural network application...")
-    plot_tropical_neural_network()
-    
-    print("\n" + "=" * 60)
-    print("All demonstrations complete!")
-    print("Figures saved in demos/figures/")
-    print("=" * 60)
+    print()
+
+    demo_negation_duality()
+    demo_tropical_approximation()
+    demo_norm_invariance()
+    demo_shortest_path()
+    demo_morphological_erosion()
+    demo_convergence_rate()
+
+    print()
+    print(f"All figures saved to: {OUTPUT_DIR}/")
+    print()
+    print("Key takeaways:")
+    print("  1. Negation f ↦ −f is an exact algebraic + metric bridge")
+    print("     between min-plus and max-plus tropical structures.")
+    print("  2. Tropical min-plus polynomials (finite infima of shifted")
+    print("     generators) converge uniformly to any continuous function.")
+    print("  3. Distance templates give O(1/N) convergence for Lipschitz")
+    print("     functions — exactly the language of dynamic programming.")
+    print("  4. Morphological erosions are tropical min-plus convolutions,")
+    print("     so the Stone–Weierstrass theorem certifies their")
+    print("     approximation power.")
