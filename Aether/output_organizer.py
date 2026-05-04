@@ -36,7 +36,7 @@ class PlacementDecision:
     """Where a file should be placed in the Catalog."""
     source_path: Path
     target_path: Path
-    artifact_type: str  # "theorem" | "paper" | "demo" | "visual" | "article" | "raw" | "metadata"
+    artifact_type: str  # "theorem" | "paper" | "demo" | "visual" | "article" | "future_directions" | "webpage" | "raw" | "metadata"
     domain: str
     reason: str
     confidence: float = 0.0
@@ -155,8 +155,17 @@ ARTIFACT_PATTERNS = {
         "exts": [".svg", ".png"],
     },
     "article": {
-        "names": ["DISCUSSION", "discussion", "article", "sciam", "SCIAM"],
+        "names": ["DISCUSSION", "discussion", "article", "sciam", "SCIAM",
+                  "scientific_american", "SCIENTIFIC_AMERICAN"],
         "exts": [".md"],
+    },
+    "future_directions": {
+        "names": ["FUTURE_DIRECTIONS", "future_directions", "FUTURE-DIRECTIONS"],
+        "exts": [".md"],
+    },
+    "webpage": {
+        "names": ["index", "page", "interactive"],
+        "exts": [".html"],
     },
     "theorem": {
         "names": ["Main", "main", "Theorem", "theorem"],
@@ -197,6 +206,7 @@ class OutputOrganizer:
             self.catalog_root / "Applications" / "Demos",
             self.catalog_root / "Applications" / "Visuals",
             self.catalog_root / "Applications" / "Articles",
+            self.catalog_root / "Applications" / "Web",
             self.catalog_root / "ResearchOutput",
         ]
         for d in dirs:
@@ -287,6 +297,22 @@ class OutputOrganizer:
                 decisions["articles"].append(decision)
                 print(f"[Organizer] {result_file.name} -> {decision.target_path} (article)")
 
+            elif file_type == "future_directions":
+                decision = self._place_artifact(
+                    result_file, "Applications/Papers", exp_id, concept, dry_run,
+                    suffix_override="_future_directions.md"
+                )
+                decisions["papers"].append(decision)
+                print(f"[Organizer] {result_file.name} -> {decision.target_path} (future_directions)")
+
+            elif file_type == "webpage":
+                decision = self._place_artifact(
+                    result_file, "Applications/Web", exp_id, concept, dry_run,
+                    suffix_override=".html"
+                )
+                decisions.setdefault("webpages", []).append(decision)
+                print(f"[Organizer] {result_file.name} -> {decision.target_path} (webpage)")
+
             elif file_type == "metadata":
                 decision = self._place_raw(result_file, exp_id, dry_run)
                 decisions["raw"].append(decision)
@@ -300,8 +326,9 @@ class OutputOrganizer:
     def _classify_artifact_type(self, file_path: Path) -> str:
         """Classify a file into its artifact type.
 
-        Priority: .lean > name patterns > extension.
-        Returns: "theorem" | "paper" | "demo" | "visual" | "article" | "metadata" | "raw"
+        Priority: .lean > .html > name patterns > extension.
+        Returns: "theorem" | "paper" | "demo" | "visual" | "article" |
+                 "future_directions" | "webpage" | "metadata" | "raw"
         """
         name = file_path.stem
         suffix = file_path.suffix.lower()
@@ -310,13 +337,21 @@ class OutputOrganizer:
         if suffix == ".lean":
             return "theorem"
 
+        # .html files are web pages
+        if suffix == ".html":
+            return "webpage"
+
         # Check metadata
         if suffix == ".json" and "metadata" in name.lower():
             return "metadata"
 
-        # Check name patterns for papers vs articles (both .md)
+        # Check name patterns for .md files
         if suffix == ".md":
             name_lower = name.lower()
+            # Future directions: highest priority for .md
+            for pattern in ARTIFACT_PATTERNS["future_directions"]["names"]:
+                if pattern.lower() in name_lower:
+                    return "future_directions"
             # Papers: research reports
             for pattern in ARTIFACT_PATTERNS["paper"]["names"]:
                 if pattern.lower() in name_lower:
@@ -329,6 +364,8 @@ class OutputOrganizer:
             try:
                 content = file_path.read_text(encoding="utf-8", errors="replace")[:2000]
                 content_lower = content.lower()
+                if "future directions" in content_lower or "breakthrough opportunities" in content_lower:
+                    return "future_directions"
                 if "scientific american" in content_lower or "discussion" in content_lower:
                     return "article"
                 if "abstract" in content_lower or "research report" in content_lower:
@@ -541,14 +578,17 @@ class OutputOrganizer:
         exp_id: str,
         concept: Any,
         dry_run: bool,
+        suffix_override: str = "",
     ) -> PlacementDecision:
-        """Place a non-.lean artifact (paper, demo, visual, article)."""
+        """Place a non-.lean artifact (paper, demo, visual, article, etc.)."""
         # Generate a descriptive filename
         concept_title = getattr(concept, "title", "untitled")
         safe_title = re.sub(r'[^a-zA-Z0-9_]', '_', concept_title)[:50]
 
         suffix = source.suffix
-        if suffix == ".md" and target_dir_name == "Applications/Papers":
+        if suffix_override:
+            new_name = f"{safe_title}{suffix_override}"
+        elif suffix == ".md" and target_dir_name == "Applications/Papers":
             new_name = f"{safe_title}_paper.md"
         elif suffix == ".md" and target_dir_name == "Applications/Articles":
             new_name = f"{safe_title}_article.md"
@@ -556,6 +596,8 @@ class OutputOrganizer:
             new_name = f"{safe_title}_demo.py"
         elif suffix == ".svg":
             new_name = f"{safe_title}_diagram.svg"
+        elif suffix == ".html" and target_dir_name == "Applications/Web":
+            new_name = f"{safe_title}.html"
         else:
             new_name = source.name
 

@@ -6,10 +6,11 @@ and guide future research toward novel ground.
 """
 
 import json
+import re
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, List, Optional, Set
+from typing import Dict, List, Optional, Set, Tuple
 
 
 @dataclass
@@ -96,10 +97,82 @@ class ResearchMemory:
             }) + "\n")
 
     def has_been_explored(self, title: str, description: str) -> bool:
-        """Check if a concept has already been explored."""
+        """Check if a concept has already been explored (exact match)."""
         title_lower = title.lower()
         desc_snippet = description.lower()[:100]
         return title_lower in self._titles or desc_snippet in self._descriptions
+
+    def has_been_explored_fuzzy(self, title: str, description: str, domain: str = "") -> Tuple[bool, float]:
+        """Check if a concept has already been explored using fuzzy matching.
+
+        Returns (is_duplicate, similarity_score) where:
+        - similarity_score >= 0.7: definitely a duplicate
+        - similarity_score 0.5-0.7: suspiciously similar, add warning
+        - similarity_score < 0.5: likely novel
+
+        Matching strategy:
+        1. Exact match on title or description prefix (fast path)
+        2. Jaccard keyword overlap on title+description
+        3. Domain + keyword overlap combo
+        """
+        # Fast path: exact match
+        title_lower = title.lower()
+        if title_lower in self._titles:
+            return True, 1.0
+        desc_snippet = description.lower()[:100]
+        if desc_snippet in self._descriptions:
+            return True, 1.0
+
+        # Fuzzy match: keyword Jaccard similarity
+        new_keywords = self._extract_keywords(title + " " + description)
+        if not new_keywords:
+            return False, 0.0
+
+        best_score = 0.0
+        for record in self._cache:
+            existing_keywords = self._extract_keywords(
+                record.concept_title + " " + record.concept_description
+            )
+            if not existing_keywords:
+                continue
+
+            # Jaccard similarity
+            intersection = new_keywords & existing_keywords
+            union = new_keywords | existing_keywords
+            if union:
+                score = len(intersection) / len(union)
+            else:
+                score = 0.0
+
+            # Boost score if same domain
+            if domain and record.domain and domain.lower() == record.domain.lower():
+                score = min(1.0, score + 0.1)
+
+            best_score = max(best_score, score)
+            if best_score >= 0.7:
+                return True, best_score
+
+        is_dup = best_score >= 0.7
+        return is_dup, best_score
+
+    @staticmethod
+    def _extract_keywords(text: str) -> Set[str]:
+        """Extract significant keywords from text for dedup matching."""
+        stop_words = {
+            "the", "a", "an", "is", "are", "was", "were", "be", "been", "being",
+            "have", "has", "had", "do", "does", "did", "will", "would", "could",
+            "should", "may", "might", "shall", "can", "to", "of", "in", "for",
+            "on", "with", "at", "by", "from", "as", "into", "through", "during",
+            "before", "after", "above", "below", "between", "and", "but", "or",
+            "nor", "not", "so", "yet", "both", "either", "neither", "each",
+            "every", "all", "any", "few", "more", "most", "other", "some", "such",
+            "no", "only", "own", "same", "than", "too", "very", "just", "because",
+            "if", "when", "where", "how", "what", "which", "who", "whom", "this",
+            "that", "these", "those", "it", "its", "we", "our", "they", "them",
+            "prove", "show", "using", "via", "over", "also", "given", "let",
+        }
+        words = set(re.findall(r'[a-z]{3,}', text.lower()))
+        return words - stop_words
 
     def get_domain_history(self, domain: str, limit: int = 50) -> List[ExperimentRecord]:
         """Get recent experiments in a domain."""
@@ -144,13 +217,33 @@ class ResearchMemory:
             )
 
     def build_exclusion_prompt(self) -> str:
-        """Build a prompt fragment listing explored concepts to avoid."""
-        recent = self._cache[-20:] if len(self._cache) > 20 else self._cache
+        """Build a prompt fragment listing explored concepts to avoid.
+
+        Expanded from 20 to 50 entries with keyword overlap warnings.
+        """
+        recent = self._cache[-50:] if len(self._cache) > 50 else self._cache
         if not recent:
             return ""
+
         lines = ["Previously explored concepts (AVOID these exact ideas):"]
         for r in recent:
             lines.append(f"  - {r.concept_title} ({r.domain}): {r.concept_description[:80]}...")
+
+        # Add keyword patterns to help LLM avoid near-duplicates
+        if len(self._cache) > 10:
+            keyword_freq: Dict[str, int] = {}
+            for r in self._cache:
+                for kw in self._extract_keywords(r.concept_title + " " + r.concept_description):
+                    keyword_freq[kw] = keyword_freq.get(kw, 0) + 1
+
+            # Find overused keywords (appeared in >3 experiments)
+            overused = {kw: count for kw, count in keyword_freq.items() if count > 3}
+            if overused:
+                lines.append("")
+                lines.append("Overused concept keywords (AVOID recombining these with the same domains):")
+                for kw, count in sorted(overused.items(), key=lambda x: -x[1])[:15]:
+                    lines.append(f"  - \"{kw}\" (used {count} times)")
+
         return "\n".join(lines)
 
     def build_success_patterns(self) -> str:

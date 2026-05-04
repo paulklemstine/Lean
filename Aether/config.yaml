@@ -33,6 +33,7 @@ pi_agent:
     - counterexample
     - sorry_fill
     - discover
+    - millennial
 
 aristotle:
   api_base_url: "https://aristotle.harmonic.fun/api/v1"
@@ -273,7 +274,7 @@ research:
       target_sorry_reduction: 3
       difficulty: "phd"
 
-  difficulty_levels: ["undergraduate", "graduate", "phd", "master", "open_problem", "discover"]
+  difficulty_levels: ["undergraduate", "graduate", "phd", "master", "open_problem", "discover", "millennial"]
   max_concurrent_cycles: 10
   cycle_interval_seconds: 300
   max_retries_per_cycle: 3

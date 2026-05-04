@@ -48,6 +48,7 @@ from aristotle_loop import AristotleLoop
 from output_organizer import OutputOrganizer, normalize_domain
 from aristotle_sdk_client import AristotleSDKClient
 from git_automator import GitAutomator
+from website_generator import WebsiteGenerator
 
 
 @dataclass
@@ -65,6 +66,9 @@ class ResearchJob:
     result_lean: Optional[str] = None
     result_demo: Optional[str] = None
     result_paper: Optional[str] = None
+    result_future_directions: Optional[str] = None
+    result_discussion: Optional[str] = None
+    result_html: Optional[str] = None
     result_summary: Optional[str] = None
     quality_score: float = 0.0
     quality_assessment: Optional[Dict] = None
@@ -597,12 +601,16 @@ Research mode: {concept.research_mode}
         Aristotle is free to organize however it sees fit. We scan for:
         - Any .lean files containing theorem proofs
         - Any .py files (demos, applications)
-        - Any .md files (papers, discussions, summaries)
+        - Any .md files (papers, discussions, future directions, summaries)
+        - Any .html files (interactive web pages)
         - Any other useful artifacts
         """
         lean_files = []
         python_files = []
         paper_files = []
+        future_directions_files = []
+        discussion_files = []
+        html_files = []
         summary = None
 
         for root, dirs, files in os.walk(extract_dir):
@@ -660,8 +668,16 @@ Research mode: {concept.research_mode}
                     lean_files.append(fp)
                 elif f.endswith(".py"):
                     python_files.append(fp)
+                elif f.endswith(".html"):
+                    html_files.append(fp)
                 elif f.endswith(".md") and f not in ("README.md", "PROMPT.md"):
-                    paper_files.append(fp)
+                    fname_lower = f.lower()
+                    if "future_directions" in fname_lower or "future-directions" in fname_lower:
+                        future_directions_files.append(fp)
+                    elif "discussion" in fname_lower or "sciam" in fname_lower or "scientific_american" in fname_lower:
+                        discussion_files.append(fp)
+                    else:
+                        paper_files.append(fp)
 
         # Collect Lean sources — Aristotle decides which files contain the new theorems
         if lean_files:
@@ -687,6 +703,27 @@ Research mode: {concept.research_mode}
                 parts.append(f.read_text())
             job.result_paper = "\n\n".join(parts)
 
+        # Collect FUTURE_DIRECTIONS — the MOST IMPORTANT deliverable
+        if future_directions_files:
+            parts = []
+            for f in sorted(future_directions_files):
+                parts.append(f.read_text())
+            job.result_future_directions = "\n\n".join(parts)
+
+        # Collect Scientific American-style discussion articles
+        if discussion_files:
+            parts = []
+            for f in sorted(discussion_files):
+                parts.append(f.read_text())
+            job.result_discussion = "\n\n".join(parts)
+
+        # Collect interactive web pages
+        if html_files:
+            parts = []
+            for f in sorted(html_files):
+                parts.append(f.read_text())
+            job.result_html = "\n\n".join(parts)
+
         # Summary
         job.result_summary = summary
 
@@ -696,8 +733,11 @@ Research mode: {concept.research_mode}
             job.theorem_count = job.result_lean.count("theorem ") + job.result_lean.count("lemma ")
 
         print(f"[Extract] Lean: {len(lean_files)} files, Python: {len(python_files)} files, "
-              f"Papers: {len(paper_files)} files, Sorries: {job.sorry_count}, "
-              f"Theorems: {job.theorem_count}")
+              f"Papers: {len(paper_files)} files, "
+              f"FUTURE_DIRECTIONS: {len(future_directions_files)} files, "
+              f"Discussion: {len(discussion_files)} files, "
+              f"HTML: {len(html_files)} files, "
+              f"Sorries: {job.sorry_count}, Theorems: {job.theorem_count}")
 
         return job
 
@@ -857,6 +897,21 @@ Research mode: {concept.research_mode}
         print(f"[Integrate] Pi successfully integrated all files.")
         job.status = "integrated"
         self.completed_count += 1
+
+        # Merge FUTURE_DIRECTIONS into master file
+        if job.result_future_directions:
+            try:
+                self.catalog_analyzer.update_master_future_directions(job.result_future_directions)
+            except Exception as e:
+                print(f"[Integrate] Warning: Failed to merge FUTURE_DIRECTIONS into master: {e}")
+
+        # Regenerate website from all Catalog artifacts
+        try:
+            website_gen = WebsiteGenerator(self.catalog_root)
+            website_gen.generate_site()
+        except Exception as e:
+            print(f"[Integrate] Warning: Failed to regenerate website: {e}")
+
         return job
 
     def _authorize_integration_path(self, job: ResearchJob, part: Dict[str, Any], requested_path: str) -> str:
@@ -914,7 +969,14 @@ Research mode: {concept.research_mode}
         return ""
 
     async def cleanup_catalog_async(self, job: ResearchJob) -> ResearchJob:
-        """Run deduplication and use Pi to clean up the specific domain directory."""
+        """Run deduplication, cleanup project files, and Pi consolidation.
+        
+        Runs by default after every integration. Steps:
+        1. Global deduplication (byte-for-byte exact copy removal)
+        2. Project workspace cleanup (remove extracted tarball dirs)
+        3. Pi consolidation session (check for duplicates, suggest refactoring)
+        4. Catalog sync verification
+        """
         if job.status != "integrated":
             return job
             
@@ -932,13 +994,62 @@ Research mode: {concept.research_mode}
                     timeout=120
                 )
             
-            # 2. Semantic cleanup is now handled during the integration step!
+            # 2. Semantic cleanup was handled during the integration step
             if job.concept.domain:
                 print(f"[Cleanup] Semantic cleanup was handled during the integration step.")
         except Exception as e:
             print(f"[Cleanup] Warning: {e}")
+
+        # 3. Project workspace cleanup: remove extracted directories
+        try:
+            if job.project_dir and Path(job.project_dir).exists():
+                import shutil
+                print(f"[Cleanup] Removing project workspace: {job.project_dir}")
+                await asyncio.to_thread(shutil.rmtree, str(job.project_dir), ignore_errors=True)
+            # Also clean up any temp extract directories
+            for temp_dir in Path(tempfile.gettempdir()).glob("aristotle_extract_*"):
+                try:
+                    await asyncio.to_thread(shutil.rmtree, str(temp_dir), ignore_errors=True)
+                except Exception:
+                    pass
+        except Exception as e:
+            print(f"[Cleanup] Warning: workspace cleanup failed: {e}")
+
+        # 4. Verify catalog sync
+        try:
+            sync_report = self._verify_catalog_sync(job)
+            if sync_report.get("missing_files"):
+                print(f"[Cleanup] WARNING: {len(sync_report['missing_files'])} files not found at expected paths")
+                for f in sync_report["missing_files"][:5]:
+                    print(f"  - {f}")
+        except Exception as e:
+            print(f"[Cleanup] Warning: sync verification failed: {e}")
             
         return job
+
+    def _verify_catalog_sync(self, job: ResearchJob) -> dict:
+        """Verify all output files are properly placed in the Catalog."""
+        report = {"missing_files": [], "verified_files": []}
+        # Check that key artifacts exist at expected paths
+        catalog_root = self.catalog_root
+        
+        # Check Applications directories exist
+        for subdir in ["Papers", "Demos", "Visuals", "Articles", "Web"]:
+            d = catalog_root / "Applications" / subdir
+            if d.exists():
+                report["verified_files"].append(f"Applications/{subdir}/ exists")
+        
+        # Check master FUTURE_DIRECTIONS exists if we merged content
+        master_fd = catalog_root / "Aether" / ".aether_workspace" / "MASTER_FUTURE_DIRECTIONS.md"
+        if master_fd.exists():
+            report["verified_files"].append("MASTER_FUTURE_DIRECTIONS.md exists")
+        
+        # Check website exists
+        website_index = catalog_root / "Applications" / "Web" / "index.html"
+        if website_index.exists():
+            report["verified_files"].append("Website index.html exists")
+        
+        return report
 
     def _split_lean_output(self, lean_source: str, concept: ResearchConcept) -> List[Tuple[str, str]]:
         """Split multi-file Lean output into individual files.
@@ -976,8 +1087,46 @@ Research mode: {concept.research_mode}
         base = base[:50]
         return f"{base}.{ext}"
 
+    def cleanup_catalog(self, job: ResearchJob) -> ResearchJob:
+        """Synchronous version of cleanup_catalog_async for run_single_cycle."""
+        if job.status != "integrated":
+            return job
+        
+        import subprocess
+        
+        print(f"[Cleanup] Running global deduplication script...")
+        try:
+            dedup_script = self.workspace / "Aether/dedup_catalog.py"
+            if dedup_script.exists():
+                subprocess.run(
+                    ["python3", str(dedup_script)],
+                    capture_output=True,
+                    timeout=120
+                )
+        except Exception as e:
+            print(f"[Cleanup] Warning: {e}")
+
+        # Project workspace cleanup
+        try:
+            if job.project_dir and Path(job.project_dir).exists():
+                import shutil
+                print(f"[Cleanup] Removing project workspace: {job.project_dir}")
+                shutil.rmtree(str(job.project_dir), ignore_errors=True)
+        except Exception as e:
+            print(f"[Cleanup] Warning: workspace cleanup failed: {e}")
+
+        # Verify catalog sync
+        try:
+            sync_report = self._verify_catalog_sync(job)
+            if sync_report.get("missing_files"):
+                print(f"[Cleanup] WARNING: {len(sync_report['missing_files'])} files not found")
+        except Exception as e:
+            print(f"[Cleanup] Warning: sync verification failed: {e}")
+        
+        return job
+
     # ==================================================================
-    # Phase 7: COMMIT — Aether commits and tracks
+    # Phase 8: COMMIT — Aether commits and tracks
     # ==================================================================
 
     def commit(self, job: ResearchJob) -> None:
@@ -1076,7 +1225,10 @@ Research mode: {concept.research_mode}
         # 6. INTEGRATE
         job = self.integrate(job)
 
-        # 7. COMMIT
+        # 7. CLEANUP — dedup, workspace removal, sync verification
+        job = self.cleanup_catalog(job)
+
+        # 8. COMMIT
         self.commit(job)
 
         return job

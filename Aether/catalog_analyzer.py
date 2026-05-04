@@ -397,16 +397,27 @@ class CatalogAnalyzer:
         containing its own research recommendations. Pi reads these to guide
         the next research cycle, creating a self-improving feedback loop.
 
-        Scans:
-        - Catalog/ResearchOutput/*/FUTURE_DIRECTIONS.md
-        - Catalog/ResearchOutput/*/future_directions*.md
-        - Catalog/ResearchOutput/*/research_paper.md (for "Future Directions" sections)
+        Sources (in priority order):
+        1. Master FUTURE_DIRECTIONS — accumulated wisdom from all past cycles
+        2. Catalog/ResearchOutput/*/FUTURE_DIRECTIONS.md
+        3. Catalog/ResearchOutput/*/future_directions*.md
+        4. Catalog/ResearchOutput/*/research_paper.md (for "Future Directions" sections)
 
         Returns the concatenated content of the most recent N reports.
         """
         future_dirs: list = []
 
-        # Scan ResearchOutput subdirectories
+        # 1. Master FUTURE_DIRECTIONS (highest priority — accumulated wisdom)
+        master_content = self.get_master_future_directions()
+        if master_content and len(master_content) > 100:
+            future_dirs.append({
+                "path": "MASTER_FUTURE_DIRECTIONS.md",
+                "content": master_content,
+                "size": len(master_content),
+                "priority": 0,  # Highest priority
+            })
+
+        # 2. Scan ResearchOutput subdirectories
         research_output_dir = self.catalog_root / "ResearchOutput"
         if research_output_dir.exists():
             for subdir in sorted(research_output_dir.iterdir()):
@@ -430,6 +441,7 @@ class CatalogAnalyzer:
                                 "path": str(candidate.relative_to(self.catalog_root)),
                                 "content": content,
                                 "size": len(content),
+                                "priority": 1,
                             })
                     except Exception:
                         continue
@@ -454,6 +466,7 @@ class CatalogAnalyzer:
                                     "path": str(paper.relative_to(self.catalog_root)),
                                     "content": section,
                                     "size": len(section),
+                                    "priority": 2,
                                 })
                         except Exception:
                             continue
@@ -461,8 +474,8 @@ class CatalogAnalyzer:
         if not future_dirs:
             return "No previous future directions reports found."
 
-        # Take the most recent N (sorted by size as a proxy for richness)
-        future_dirs.sort(key=lambda x: x["size"], reverse=True)
+        # Take the most impactful N (master first, then richest per-project reports)
+        future_dirs.sort(key=lambda x: (x.get("priority", 1), -x["size"]))
         selected = future_dirs[:limit]
 
         parts = []
@@ -857,6 +870,115 @@ class CatalogAnalyzer:
                 )
 
         return "\n".join(lines)
+
+    def update_master_future_directions(self, new_content: str) -> str:
+        """Merge new FUTURE_DIRECTIONS content into the master file.
+
+        The master file accumulates insights from all past research cycles.
+        It lives at .aether_workspace/MASTER_FUTURE_DIRECTIONS.md.
+        Pi injects this into every research direction selection prompt
+        so it reasons more knowledgeably over time.
+
+        Deduplication: entries with >70% word overlap are merged (keep newer).
+        The file is capped at ~5000 chars to keep prompts manageable.
+        """
+        import datetime
+        master_path = self.catalog_root / "Aether" / ".aether_workspace" / "MASTER_FUTURE_DIRECTIONS.md"
+
+        # Read existing master
+        existing_content = ""
+        if master_path.exists():
+            try:
+                existing_content = master_path.read_text(encoding="utf-8", errors="replace")
+            except Exception:
+                existing_content = ""
+
+        # Parse existing entries (split by "##" headers)
+        existing_entries = []
+        if existing_content.strip():
+            # Skip the title line
+            for section in re.split(r'\n(?=## )', existing_content):
+                section = section.strip()
+                if section and not section.startswith("# MASTER FUTURE"):
+                    existing_entries.append(section)
+
+        # Parse new content into entries
+        new_entries = []
+        for section in re.split(r'\n(?=## )', new_content):
+            section = section.strip()
+            if section and len(section) > 50:
+                new_entries.append(section)
+
+        # Merge: add new entries that don't overlap with existing ones
+        def _word_set(text: str) -> set:
+            """Extract significant words from text for dedup."""
+            stop_words = {"the", "a", "an", "is", "are", "was", "were", "be",
+                         "been", "being", "have", "has", "had", "do", "does",
+                         "did", "will", "would", "could", "should", "may",
+                         "might", "shall", "can", "to", "of", "in", "for",
+                         "on", "with", "at", "by", "from", "as", "into",
+                         "through", "during", "before", "after", "above",
+                         "below", "between", "and", "but", "or", "nor",
+                         "not", "so", "yet", "both", "either", "neither",
+                         "each", "every", "all", "any", "few", "more",
+                         "most", "other", "some", "such", "no", "only",
+                         "own", "same", "than", "too", "very", "just",
+                         "because", "if", "when", "where", "how", "what",
+                         "which", "who", "whom", "this", "that", "these",
+                         "those", "it", "its", "we", "our", "they", "them"}
+            words = set(re.findall(r'[a-zA-Z]{3,}', text.lower()))
+            return words - stop_words
+
+        merged = list(existing_entries)
+        for new_entry in new_entries:
+            new_words = _word_set(new_entry)
+            is_dup = False
+            for i, existing in enumerate(existing_entries):
+                existing_words = _word_set(existing)
+                overlap = len(new_words & existing_words)
+                union = len(new_words | existing_words)
+                if union > 0 and overlap / union > 0.7:
+                    # Overlap >70% — keep the newer entry
+                    merged[i] = new_entry
+                    is_dup = True
+                    break
+            if not is_dup:
+                merged.append(new_entry)
+
+        # Cap at ~5000 chars by trimming oldest (shortest) entries
+        merged.sort(key=len, reverse=True)  # Keep richest entries
+        total_len = 0
+        kept = []
+        for entry in merged:
+            if total_len + len(entry) > 5000:
+                break
+            kept.append(entry)
+            total_len += len(entry)
+
+        # Write the master file
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+        master_text = f"# MASTER FUTURE DIRECTIONS — Accumulated Research Wisdom\n\n"
+        master_text += f"*Last updated: {timestamp}*\n\n"
+        master_text += "\n\n".join(kept)
+
+        master_path.parent.mkdir(parents=True, exist_ok=True)
+        master_path.write_text(master_text, encoding="utf-8")
+
+        print(f"[MasterFD] Updated master FUTURE_DIRECTIONS ({len(kept)} entries, {len(master_text)} chars)")
+        return master_text
+
+    def get_master_future_directions(self) -> str:
+        """Read the master FUTURE_DIRECTIONS file for injection into prompts."""
+        master_path = self.catalog_root / "Aether" / ".aether_workspace" / "MASTER_FUTURE_DIRECTIONS.md"
+        if master_path.exists():
+            try:
+                content = master_path.read_text(encoding="utf-8", errors="replace")
+                if len(content) > 3000:
+                    content = content[:3000] + "\n\n[... truncated for prompt size ...]"
+                return content
+            except Exception:
+                pass
+        return ""
 
 
 def main():

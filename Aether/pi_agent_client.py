@@ -204,6 +204,10 @@ _PROMPT_WRITING_SYSTEM_PROMPT = textwrap.dedent("""\
           ends, which is essential.
         - "discover": For exploring mathematical territory with no specific
           conjecture — find theorems, algorithms, or connections nobody expected.
+        - "millennial": For attacking sub-problems of famous unsolved problems
+          (Riemann Hypothesis, P vs NP, BSD, etc.). These are specific, concrete
+          targets derived from open problems that would be revolutionary if proved.
+          Be bold but precise — attack the sub-problem with every tool available.
 
     7. AVOID INCREMENTAL VARIANTS: If the catalog already has a result like
        "tropical certified robustness for ReLU networks," do NOT ask for
@@ -738,7 +742,7 @@ class PiAgentClient:
             "prove that X has property Y using technique Z." Reference specific
             catalog theorems by name.
 
-            Respond with JSON: {{"domain": "...", "concept_title": "...", "concept_description": "...", "mathematical_framing": "...", "lean_guess": "", "catalog_references": ["..."], "research_mode": "prove|formalize|discover|sorry_fill", "novelty_estimate": 0.0-1.0, "breakthrough_potential": 0.0-1.0, "key_references": ["..."]}}
+            Respond with JSON: {{"domain": "...", "concept_title": "...", "concept_description": "...", "mathematical_framing": "...", "lean_guess": "", "catalog_references": ["..."], "research_mode": "prove|formalize|discover|sorry_fill|millennial", "novelty_estimate": 0.0-1.0, "breakthrough_potential": 0.0-1.0, "key_references": ["..."]}}
         """)
 
         # Concept generation: try LLM with short timeout, quick fallback to local
@@ -776,7 +780,16 @@ class PiAgentClient:
             )
             # Validate concept quality
             if concept.novelty_estimate >= 0.1 and concept.breakthrough_potential >= 0.1 and not concept.title.startswith("research_concept_"):
-                return concept
+                # Fuzzy dedup check — reject near-duplicates
+                is_dup, similarity = self.memory.has_been_explored_fuzzy(
+                    concept.title, concept.concept_description, concept.domain
+                )
+                if is_dup:
+                    print(f"[Pi-Agent] Rejecting near-duplicate concept: {concept.title[:60]} (similarity={similarity:.2f})")
+                else:
+                    return concept
+                if similarity >= 0.5:
+                    print(f"[Pi-Agent] Warning: concept suspiciously similar to past work (similarity={similarity:.2f}). Falling back to local generator.")
             # LLM gave garbage — fall through to local generator
             print(f"[Pi-Agent] LLM returned low-quality concept: {concept.title} (n={concept.novelty_estimate:.2f}, b={concept.breakthrough_potential:.2f}). Using local fallback.")
 
@@ -786,36 +799,6 @@ class PiAgentClient:
         return self._generate_local_concept(domains, sorry_targets_list=None,
                                             research_context=research_context,
                                             forced_domain=getattr(self, '_forced_domain', None))
-
-    # Compatibility alias for daemon.py which calls generate_breakthrough_concept
-    def generate_breakthrough_concept(
-        self,
-        domain: str = "",
-        seed_concepts: Optional[List] = None,
-        target: str = "theorem",
-        recent_successes: Optional[List] = None,
-        recent_failures: Optional[List] = None,
-        inflight_concepts: Optional[List[str]] = None,
-        forced_domain: Optional[str] = None,
-    ) -> 'ResearchConcept':
-        """Alias for select_research_direction for backward compatibility."""
-        # Build domain list from seed_concepts if provided
-        domains = []
-        if seed_concepts:
-            domains = [{"id": domain or "unknown", "seed_concepts": seed_concepts}]
-        elif domain:
-            domains = [{"id": domain, "seed_concepts": []}]
-        # Combine successes and failures into recent_history
-        recent_history = []
-        if recent_successes:
-            recent_history.extend(recent_successes)
-        if recent_failures:
-            recent_history.extend(recent_failures)
-        return self.select_research_direction(
-            domains=domains or [{"id": "unknown", "seed_concepts": []}],
-            recent_history=recent_history or None,
-            inflight_concepts=inflight_concepts,
-        )
 
     # Class-level state to cycle through concepts (avoids always picking same one)
     _concept_cycle_index: int = 0
@@ -837,19 +820,21 @@ class PiAgentClient:
 
         # Determine which type of concept to generate this cycle
         # Visionary distribution: minimize sorry_fill, maximize breakthrough potential
-        # 5% sorry_fill, 25% visionary bridge, 30% visionary arc, 25% discovery, 15% future directions
+        # 5% sorry_fill, 20% bridge, 25% arc, 20% discovery, 15% millennial, 15% future
         cycle = PiAgentClient._concept_cycle_index
         PiAgentClient._concept_cycle_index += 1
-        mode_bucket = cycle % 20  # 0=sorry_fill(1), 1-5=bridge(5), 6-11=arc(6), 12-16=discovery(5), 17-19=future(3)
+        mode_bucket = cycle % 20  # 0=sorry(1), 1-4=bridge(4), 5-9=arc(5), 10-13=discover(4), 14-16=millennial(3), 17-19=future(3)
 
         if mode_bucket == 0:
             mode = "sorry_fill"
-        elif mode_bucket <= 5:
+        elif mode_bucket <= 4:
             mode = "bridge"
-        elif mode_bucket <= 11:
+        elif mode_bucket <= 9:
             mode = "arc"
-        elif mode_bucket <= 16:
+        elif mode_bucket <= 13:
             mode = "discover"
+        elif mode_bucket <= 16:
+            mode = "millennial"
         else:
             mode = "future"
 
@@ -995,7 +980,51 @@ class PiAgentClient:
                     key_references=refs[:3],
                 )
 
-        # Priority 4: Directions from Aristotle's FUTURE_DIRECTIONS reports
+        # Priority 4: Millennial problems — attack famous unsolved problems
+        # These are sub-problems of Millennium Prize and other famous conjectures.
+        # Each has a formal statement, proof strategies, and catalog connections.
+        if mode == "millennial":
+            try:
+                from millennial_problems import get_millennial_problem, format_problem_for_prompt
+                problem = get_millennial_problem(cycle)
+                domain = normalize_domain(problem.catalog_domains[0] if problem.catalog_domains else "Algebra")
+
+                # Find catalog references from relevant domains
+                refs = []
+                if self.catalog_analyzer:
+                    all_files = self.catalog_analyzer.scan()
+                    for d in problem.catalog_domains[:2]:
+                        d_files = [f.relative_path for f in all_files if d.lower() in f.relative_path.lower()][:3]
+                        refs.extend(d_files)
+
+                concept_title = problem.name.lower().replace(" ", "_") + "_sub_problem"
+                concept_desc = (f"Sub-problem of {problem.name}: {problem.sub_problem} "
+                               f"[{problem.difficulty}]")
+                math_framing = (f"ATTACK MILLENNIUM-LEVEL PROBLEM: {problem.name}. "
+                               f"{problem.description} "
+                               f"Your specific target: {problem.sub_problem} "
+                               f"Proof strategies: {'; '.join(problem.proof_strategy_hints[:2])}")
+
+                print(f"[Local] millennial problem: {problem.name} ({problem.difficulty})")
+
+                return ResearchConcept(
+                    title=concept_title,
+                    domain=domain,
+                    concept_description=concept_desc,
+                    mathematical_framing=math_framing,
+                    lean_guess=problem.sub_problem_formal,
+                    catalog_references=refs[:6],
+                    research_mode="prove",
+                    novelty_estimate=0.97,
+                    breakthrough_potential=0.98,
+                    key_references=problem.catalog_domains,
+                )
+            except ImportError:
+                print("[Local] millennial_problems module not available, falling through")
+            except Exception as e:
+                print(f"[Local] millennial mode error: {e}, falling through")
+
+        # Priority 5: Directions from Aristotle's FUTURE_DIRECTIONS reports
         # This is the self-improving feedback loop: Aristotle's own
         # recommendations from past cycles guide the next concept.
         if mode == "future" and self.catalog_analyzer:
@@ -1314,6 +1343,92 @@ class PiAgentClient:
     # Dynamic prompt writing
     # ------------------------------------------------------------------
 
+    def _build_assignment(self, concept: ResearchConcept) -> str:
+        """Build a directive assignment section for Aristotle.
+
+        Instead of exploratory language like "explore this space," this
+        produces concrete, boss-like assignments: "Prove X implies Y."
+        """
+        # Build the main theorem statement
+        theorem_target = concept.lean_guess.strip() if concept.lean_guess else ""
+
+        # Build proof strategies based on mode
+        mode = concept.research_mode
+        if mode == "millennial":
+            # For millennial problems, the lean_guess IS the assignment
+            assignment = (
+                f"**TARGET THEOREM**: {theorem_target}\n\n"
+                f"**DOMAIN**: {concept.domain}\n\n"
+                f"**PRECISE ASSIGNMENT**: Prove (or make maximum progress toward) "
+                f"the theorem stated above. This is a sub-problem of a Millennium Prize "
+                f"or famous open problem. Every lemma you prove is significant.\n\n"
+                f"**FAILURE MODE**: If you cannot prove the full statement, prove the "
+                f"strongest lemma you can. Do NOT fall back to trivial statements. "
+                f"State precise conjectures for steps you cannot prove."
+            )
+        elif mode == "sorry_fill":
+            assignment = (
+                f"**TARGET**: Fill all `sorry` placeholders in the referenced files.\n\n"
+                f"**PRECISE ASSIGNMENT**: Read the surrounding context. Every `sorry` "
+                f"represents a known open problem or gap in an existing proof. Fill them "
+                f"with complete, rigorous proofs.\n\n"
+                f"**FAILURE MODE**: If a sorry is genuinely beyond reach, add a helper lemma "
+                f"that simplifies the goal, then mark only THAT step with sorry. Never leave "
+                f"a sorry without at least attempting surrounding lemmas."
+            )
+        elif mode == "discover":
+            assignment = (
+                f"**TARGET DOMAIN**: {concept.domain}\n\n"
+                f"**PRECISE ASSIGNMENT**: Survey the catalog infrastructure in {concept.domain}. "
+                f"Identify the deepest structural result you can prove. Construct definitions "
+                f"that organize the territory, then prove theorems about them.\n\n"
+                f"**PROOF STRATEGY**: Start from the existing catalog theorems listed below. "
+                f"Look for patterns that suggest isomorphisms, functors, or equivalence "
+                f"results. Every theorem you prove should open a door to three more.\n\n"
+                f"**FAILURE MODE**: Do not produce trivial tautologies. If you cannot find "
+                f"deep structure, state precise conjectures about what you observe."
+            )
+        else:
+            # Default "prove" mode — specific, directive
+            if theorem_target:
+                assignment = (
+                    f"**TARGET THEOREM**: {theorem_target}\n\n"
+                    f"**PRECISE ASSIGNMENT**: Prove the theorem stated above, building on "
+                    f"the catalog theorems listed in the references.\n\n"
+                    f"**PROOF STRATEGY**: "
+                    f"1. Read the existing catalog theorems carefully — they are your foundation.\n"
+                    f"2. Identify the key lemma needed. Often the main theorem follows from "
+                    f"one clever intermediate result.\n"
+                    f"3. If the direct approach fails, try the contrapositive, a constructive "
+                    f"witness, or a structural induction.\n"
+                    f"4. Connect to at least one other domain (tropical, algebraic, computational, "
+                    f"physical) for cross-domain impact.\n\n"
+                    f"**FAILURE MODE**: If you cannot prove the full statement, prove the strongest "
+                    f"special case or lemma. State the remaining conjecture precisely."
+                )
+            else:
+                assignment = (
+                    f"**DOMAIN**: {concept.domain}\n\n"
+                    f"**CONCEPT**: {concept.concept_description}\n\n"
+                    f"**PRECISE ASSIGNMENT**: Formalize and prove the most important theorem "
+                    f"you can in this direction. Start from the catalog references below.\n\n"
+                    f"**PROOF STRATEGY**: Build on existing results. Every theorem should "
+                    f"connect to at least one other domain for cross-domain impact.\n\n"
+                    f"**FAILURE MODE**: Prove the strongest lemma you can. Never fall back "
+                    f"to trivial tautologies."
+                )
+
+        # Add catalog leverage
+        if concept.catalog_references:
+            refs_list = ", ".join(concept.catalog_references[:5])
+            assignment += f"\n\n**CATALOG INFRASTRUCTURE**: Build directly on: {refs_list}"
+
+        if concept.key_references:
+            key_refs = ", ".join(str(r) for r in concept.key_references[:3])
+            assignment += f"\n**KEY REFERENCES**: {key_refs}"
+
+        return assignment
+
     def write_aristotle_prompt(
         self,
         concept: ResearchConcept,
@@ -1431,6 +1546,26 @@ class PiAgentClient:
                 Think beyond current mathematical fashion. What would a civilization 200 years
                 more advanced prove? What connections would surprise specialists?
             """),
+            "millennial": textwrap.dedent("""\
+                Research Mode: MILLENNIAL
+
+                You are attacking a sub-problem of one of the most important open problems
+                in mathematics — a Millennium Prize problem or famous conjecture.
+
+                This is a DIRECT ASSIGNMENT. Prove the specific sub-problem stated below.
+                If you cannot prove the full sub-problem, prove the strongest lemma you can.
+                Do NOT fall back to trivial statements.
+
+                Strategy:
+                1. Read the precise formal statement below carefully
+                2. Study the proof strategy hints — they suggest concrete approaches
+                3. Build on the catalog theorems listed in the references
+                4. If the full statement is beyond reach, prove a meaningful special case
+                5. Every lemma you prove should advance toward the target
+
+                Even a partial result on a millennial problem is significant. Be bold but
+                precise. State precise conjectures for steps you cannot prove.
+            """),
         }
 
         mode_instruction = mode_instructions.get(concept.research_mode, mode_instructions["prove"])
@@ -1464,9 +1599,13 @@ class PiAgentClient:
         """)
 
         # ---- DIRECT ARISTOTLE PROMPT ----
-        # Structured: math first, then context, then deliverables
+        # Structured: assignment first, then context, then deliverables
+        assignment_section = self._build_assignment(concept)
+
         direct_prompt = textwrap.dedent(f"""\
-            ## Research Task: {concept.title}
+            ## YOUR ASSIGNMENT: {concept.title}
+
+            {assignment_section}
 
             {mode_instruction}
 
@@ -1522,10 +1661,16 @@ class PiAgentClient:
 
             2. **RESEARCH_REPORT.md** — paper explaining the discovery
                - Mathematical significance and connections to existing work
-               - A Scientific American style discussion section
                - Detailed proofs and explanations
 
-            3. **FUTURE_DIRECTIONS.md** — MANDATORY breakthrough research roadmap
+            3. **DISCUSSION.md** — MANDATORY Scientific American-style popular science article
+               - Written for a mathematically literate but non-specialist audience
+               - Use analogies, examples, and narrative to explain WHY this matters
+               - Include at least one surprising connection to everyday life or another field
+               - 1000-2000 words, accessible but not dumbed-down
+               - This makes your research accessible to a broad audience
+
+            4. **FUTURE_DIRECTIONS.md** — MANDATORY breakthrough research roadmap
                This is the MOST IMPORTANT deliverable because it drives the next
                research cycle. Structure it as:
 
@@ -1554,11 +1699,18 @@ class PiAgentClient:
                - Conjectures you can state precisely but not yet prove
                - Connections that seem to exist but need more catalog infrastructure
 
-            4. **demo.py** — Python demo with concrete numerical examples
+            5. **demo.py** — Python demo with concrete numerical examples
                - Working code that brings the math to life
                - Visualizations where they add insight
 
-            5. **diagram.svg** — visualization of key mathematical structures
+            6. **diagram.svg** — visualization of key mathematical structures
+
+            7. **index.html** — RECOMMENDED interactive web page
+               - Self-contained HTML file with MathJax for math rendering
+               - D3.js for interactive visualizations of key structures
+               - Linked sections: theorem, paper, discussion, demo
+               - No external dependencies except MathJax/D3.js CDNs
+               - Makes your research accessible and explorable
 
             {"Fill existing `sorry` placeholders — do not change theorem statements." if concept.research_mode == "sorry_fill" else "Produce novel, non-trivial theorems with complete Lean 4 proofs. Think big — aim for results that would appear in JAMS, Annals, or FOCS."}
 
