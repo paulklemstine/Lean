@@ -1,407 +1,468 @@
+#!/usr/bin/env python3
 """
-Compositional Robustness for Hierarchical Decision Trees:
-Concrete Numerical Demonstrations
+Hierarchical Classifier Robustness: Tournament Margin Decomposition Demo
 
-This script demonstrates the formally verified theorems from
-HierarchicalRobustness.lean with concrete numerical examples and
-visualizations.
+This script demonstrates the formally verified robustness theory for
+hierarchical multiclass classifiers built from binary elimination trees.
+
+Key results demonstrated:
+1. Tournament evaluation produces the global argmax
+2. Global margin certificate: min margin over all nodes
+3. Pathwise certificate: min margin along winner path only (sharper!)
+4. Heterogeneous Lipschitz constants per node
+5. Certified radius computation
+
+All results are backed by machine-verified Lean 4 proofs.
 """
 
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 from dataclasses import dataclass
-from typing import List, Tuple, Optional
+from typing import List
+import os
 
 # ============================================================
-# 1. Core Definitions (mirroring Lean formalization)
-# ============================================================
-
-def local_margin(go_right: bool, SL: float, SR: float) -> float:
-    """Local chosen-vs-other margin at a node.
-    Mirrors: def localMargin in Lean."""
-    return (SR - SL) if go_right else (SL - SR)
-
-
-def path_certificate(margins: List[float], K_values: List[float]) -> float:
-    """Certified robustness radius = min over nodes of margin/(2*K).
-    Mirrors: Finset.inf' (fun v => localMargin v x / (2 * K v))"""
-    return min(m / (2 * k) for m, k in zip(margins, K_values) if k > 0)
-
-
-# ============================================================
-# 2. Example: 3-level binary decision tree
+# Binary Elimination Tree
 # ============================================================
 
 @dataclass
-class TreeNode:
-    """A node in a binary decision tree."""
-    name: str
-    go_right: bool  # clean input's branch direction
-    K: float        # Lipschitz constant of score difference
-    SL_x: float     # left aggregate score at clean input
-    SR_x: float     # right aggregate score at clean input
+class HTree:
+    """Binary elimination tree with labeled leaves."""
+    pass
 
-    @property
-    def margin(self) -> float:
-        return local_margin(self.go_right, self.SL_x, self.SR_x)
+@dataclass
+class Leaf(HTree):
+    label: str
 
-    @property
-    def normalized_margin(self) -> float:
-        return self.margin / (2 * self.K) if self.K > 0 else float('inf')
+@dataclass
+class Node(HTree):
+    left: HTree
+    right: HTree
 
 
-def demo_three_level_tree():
-    """Demonstrate robustness certification on a 3-level decision tree.
-    
-    Tree structure:
-        Root (v0): "Is this a cat or dog-like animal?"
-          ├─ Left: v1: "Is it a domestic cat or wild cat?"
-          │   ├─ Left: Leaf → "domestic cat"
-          │   └─ Right: Leaf → "wild cat"
-          └─ Right: v2: "Is it a small dog or large dog?"
-              ├─ Left: Leaf → "small dog"
-              └─ Right: Leaf → "large dog"
-    
-    Clean input: a domestic cat image
-    Clean path: Root→Left, v1→Left → "domestic cat"
-    """
-    print("=" * 70)
-    print("DEMO 1: Three-Level Hierarchical Decision Tree")
-    print("=" * 70)
-
-    # Define the clean path: [Root, v1]
-    path = [
-        TreeNode("Root (cat vs dog)", go_right=False, K=2.5,
-                 SL_x=8.0, SR_x=3.0),   # margin = 8-3 = 5
-        TreeNode("v1 (domestic vs wild)", go_right=False, K=1.8,
-                 SL_x=6.5, SR_x=2.1),   # margin = 6.5-2.1 = 4.4
-    ]
-
-    print("\nClean input classification: domestic cat")
-    print("\nPath nodes:")
-    for node in path:
-        print(f"  {node.name}:")
-        print(f"    Branch: {'right' if node.go_right else 'left'}")
-        print(f"    SL(x) = {node.SL_x:.1f}, SR(x) = {node.SR_x:.1f}")
-        print(f"    Local margin Δ(x) = {node.margin:.2f}")
-        print(f"    Lipschitz K = {node.K:.1f}")
-        print(f"    Normalized margin Δ/(2K) = {node.normalized_margin:.4f}")
-
-    cert_radius = path_certificate(
-        [n.margin for n in path],
-        [n.K for n in path]
-    )
-    print(f"\n  ➤ Certified robustness radius r* = min(Δ/(2K)) = {cert_radius:.4f}")
-    print(f"    Bottleneck node: {min(path, key=lambda n: n.normalized_margin).name}")
-
-    # Verify: for perturbation within radius, all margins stay positive
-    print("\n  Verification: margins under perturbation")
-    test_radii = [0.0, 0.5, 0.9, cert_radius - 0.01, cert_radius, cert_radius + 0.1]
-    for r in test_radii:
-        min_perturbed = min(n.margin - n.K * r for n in path)
-        status = "✓ ROBUST" if min_perturbed > 0 else "✗ NOT CERTIFIED"
-        within = "≤ r*" if r <= cert_radius else "> r*"
-        print(f"    r = {r:.4f} ({within}): min perturbed margin = {min_perturbed:.4f} {status}")
-
-    return path, cert_radius
+def get_classes(tree: HTree) -> set:
+    if isinstance(tree, Leaf):
+        return {tree.label}
+    return get_classes(tree.left) | get_classes(tree.right)
 
 
-def demo_margin_preservation_visualization(path, cert_radius):
-    """Visualize how margins decay with perturbation radius."""
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+def evaluate(tree: HTree, scores: dict) -> str:
+    if isinstance(tree, Leaf):
+        return tree.label
+    u = evaluate(tree.left, scores)
+    v = evaluate(tree.right, scores)
+    return u if scores[u] >= scores[v] else v
 
-    # Left: Margin decay curves
-    ax = axes[0]
-    r_values = np.linspace(0, cert_radius * 1.5, 200)
 
-    colors = ['#2196F3', '#FF5722', '#4CAF50', '#9C27B0']
-    for i, node in enumerate(path):
-        # Worst-case perturbed margin: margin - K * r
-        perturbed = node.margin - node.K * r_values
-        ax.plot(r_values, perturbed, color=colors[i % len(colors)],
-                linewidth=2, label=f'{node.name}\n(K={node.K}, Δ={node.margin:.1f})')
+def path_margins(tree: HTree, scores: dict) -> List[float]:
+    if isinstance(tree, Leaf):
+        return []
+    u = evaluate(tree.left, scores)
+    v = evaluate(tree.right, scores)
+    margin = abs(scores[u] - scores[v])
+    if scores[u] >= scores[v]:
+        return [margin] + path_margins(tree.left, scores)
+    else:
+        return [margin] + path_margins(tree.right, scores)
 
-    ax.axhline(y=0, color='red', linestyle='--', alpha=0.7, label='Decision boundary')
-    ax.axvline(x=cert_radius, color='green', linestyle=':', linewidth=2,
-               label=f'r* = {cert_radius:.3f}')
-    ax.fill_between(r_values, -2, max(n.margin for n in path) + 1,
-                    where=r_values <= cert_radius, alpha=0.1, color='green')
-    ax.set_xlabel('Perturbation radius r', fontsize=12)
-    ax.set_ylabel('Worst-case margin lower bound', fontsize=12)
-    ax.set_title('Margin Decay Along Decision Path', fontsize=14)
-    ax.legend(fontsize=9, loc='upper right')
-    ax.set_ylim(-2, max(n.margin for n in path) + 1)
-    ax.grid(True, alpha=0.3)
 
-    # Right: 2D perturbation ball
-    ax = axes[1]
-    theta = np.linspace(0, 2 * np.pi, 100)
+def all_margins(tree: HTree, scores: dict) -> List[float]:
+    if isinstance(tree, Leaf):
+        return []
+    u = evaluate(tree.left, scores)
+    v = evaluate(tree.right, scores)
+    margin = abs(scores[u] - scores[v])
+    return [margin] + all_margins(tree.left, scores) + all_margins(tree.right, scores)
 
-    # Clean input at origin
-    ax.plot(0, 0, 'ko', markersize=10, zorder=5, label='Clean input x')
 
-    # Certified ball
-    ax.plot(cert_radius * np.cos(theta), cert_radius * np.sin(theta),
-            'g-', linewidth=2, label=f'Certified ball (r*={cert_radius:.3f})')
-    ax.fill(cert_radius * np.cos(theta), cert_radius * np.sin(theta),
-            alpha=0.15, color='green')
+def certified_radius(tree: HTree, scores: dict, lip_const: float) -> float:
+    margins = all_margins(tree, scores)
+    if not margins or lip_const <= 0:
+        return 0.0
+    return min(margins) / lip_const
 
-    # Per-node certified balls
-    for i, node in enumerate(path):
-        r_node = node.normalized_margin
-        ax.plot(r_node * np.cos(theta), r_node * np.sin(theta),
-                '--', color=colors[i % len(colors)], alpha=0.6,
-                label=f'{node.name} (r={r_node:.3f})')
 
-    ax.set_xlim(-2, 2)
-    ax.set_ylim(-2, 2)
-    ax.set_aspect('equal')
-    ax.set_xlabel('Perturbation δ₁', fontsize=12)
-    ax.set_ylabel('Perturbation δ₂', fontsize=12)
-    ax.set_title('Compositional Robustness Certificate', fontsize=14)
-    ax.legend(fontsize=9, loc='upper right')
-    ax.grid(True, alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig('hierarchical_robustness_demo.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("\n  [Saved: hierarchical_robustness_demo.png]")
+def path_certified_radius(tree: HTree, scores: dict, lip_const: float) -> float:
+    margins = path_margins(tree, scores)
+    if not margins or lip_const <= 0:
+        return 0.0
+    return min(margins) / lip_const
 
 
 # ============================================================
-# 3. Comparison: Flat vs Hierarchical certificates
+# LHTree: Labeled tree with per-node Lipschitz constants
 # ============================================================
 
-def demo_flat_vs_hierarchical():
-    """Compare flat argmax robustness with hierarchical path robustness."""
-    print("\n" + "=" * 70)
-    print("DEMO 2: Flat vs Hierarchical Robustness Certificates")
-    print("=" * 70)
+@dataclass
+class LHTree:
+    pass
 
-    # 4-class problem: {cat, dog, bird, fish}
-    # Flat argmax scores at clean input
-    scores = {'cat': 9.0, 'dog': 5.0, 'bird': 3.0, 'fish': 1.0}
-    K_flat = 2.0  # Lipschitz constant for each score
+@dataclass
+class LLeaf(LHTree):
+    label: str
 
-    # Flat certificate: min over non-winner classes of (s_winner - s_j) / (2K)
-    winner = 'cat'
-    flat_cert = min(
-        (scores[winner] - scores[c]) / (2 * 2 * K_flat)  # 2K because both scores move
-        for c in scores if c != winner
-    )
+@dataclass
+class LNode(LHTree):
+    lip_const: float
+    left: LHTree
+    right: LHTree
 
-    print(f"\n  Flat argmax scores: {scores}")
-    print(f"  Flat Lipschitz K = {K_flat}")
-    print(f"  Flat certified radius = {flat_cert:.4f}")
 
-    # Hierarchical: same classification, structured as tree
-    # Root: animal vs non-animal (cat,dog,bird vs fish) - trivial split
-    # Level 1: mammal vs bird (cat,dog vs bird)
-    # Level 2: cat vs dog
-    hier_path = [
-        TreeNode("mammal vs bird", go_right=False, K=1.5,
-                 SL_x=7.0, SR_x=3.0),   # margin = 4.0
-        TreeNode("cat vs dog", go_right=False, K=1.2,
-                 SL_x=9.0, SR_x=5.0),   # margin = 4.0
-    ]
+def levaluate(tree: LHTree, scores: dict) -> str:
+    if isinstance(tree, LLeaf):
+        return tree.label
+    u = levaluate(tree.left, scores)
+    v = levaluate(tree.right, scores)
+    return u if scores[u] >= scores[v] else v
 
-    hier_cert = path_certificate(
-        [n.margin for n in hier_path],
-        [n.K for n in hier_path]
-    )
 
-    print(f"\n  Hierarchical path: {[n.name for n in hier_path]}")
-    for n in hier_path:
-        print(f"    {n.name}: margin={n.margin:.1f}, K={n.K}, r_local={n.normalized_margin:.4f}")
-    print(f"  Hierarchical certified radius = {hier_cert:.4f}")
-
-    improvement = hier_cert / flat_cert if flat_cert > 0 else float('inf')
-    print(f"\n  ➤ Hierarchical improvement factor: {improvement:.2f}x")
-    print("    (Hierarchical exploits per-comparison Lipschitz constants)")
+def lpath_certified_radius(tree: LHTree, scores: dict) -> float:
+    if isinstance(tree, LLeaf):
+        return float('inf')
+    u = levaluate(tree.left, scores)
+    v = levaluate(tree.right, scores)
+    margin = abs(scores[u] - scores[v])
+    local_radius = margin / tree.lip_const if tree.lip_const > 0 else float('inf')
+    if scores[u] >= scores[v]:
+        child_radius = lpath_certified_radius(tree.left, scores)
+    else:
+        child_radius = lpath_certified_radius(tree.right, scores)
+    return min(local_radius, child_radius)
 
 
 # ============================================================
-# 4. Additive Budget Variant Demo
+# Demo 1: Basic Tournament Evaluation
 # ============================================================
 
-def demo_additive_budget():
-    """Demonstrate the summed-loss budget variant."""
-    print("\n" + "=" * 70)
-    print("DEMO 3: Additive Perturbation Budget Variant")
-    print("=" * 70)
+def demo_basic_evaluation():
+    print("=" * 60)
+    print("DEMO 1: Tournament Evaluation = Global Argmax")
+    print("=" * 60)
 
-    # 5-node path with heterogeneous perturbation budgets
-    nodes = [
-        ("Feature extraction", 0.5, 3.0),  # (name, K, margin)
-        ("Color channel", 0.3, 1.8),
-        ("Texture analysis", 0.8, 5.2),
-        ("Shape comparison", 0.4, 2.5),
-        ("Final discriminator", 0.6, 4.0),
-    ]
+    tree = Node(Node(Leaf("A"), Leaf("B")), Node(Leaf("C"), Leaf("D")))
+    scores = {"A": 3.0, "B": 7.0, "C": 5.0, "D": 2.0}
+    winner = evaluate(tree, scores)
+    argmax = max(scores, key=scores.get)
 
-    print("\n  Node budgets and margins:")
-    total_loss_budget = 2.0  # total perturbation budget
-    print(f"  Total loss budget L = {total_loss_budget}")
+    print(f"Scores: {scores}")
+    print(f"Tournament winner: {winner}")
+    print(f"Global argmax:     {argmax}")
+    print(f"Match: {winner == argmax}  (Formally verified: eval_score_ge)")
     print()
-    all_robust = True
-    for name, K, margin in nodes:
-        threshold = K * total_loss_budget
-        robust = threshold < margin
-        all_robust = all_robust and robust
-        status = "✓" if robust else "✗"
-        print(f"    {name}: K={K}, Δ(x)={margin}, K*L={threshold:.1f} {'<' if robust else '≥'} Δ(x) {status}")
-
-    print(f"\n  ➤ All nodes satisfy K·L < Δ(x): {all_robust}")
-    if all_robust:
-        print("    By hierarchical_robust_of_summed_losses, classifier is robust")
-        print(f"    for ANY perturbation with total loss ≤ {total_loss_budget}")
+    print("Tournament bracket:")
+    print(f"  Semi 1: A({scores['A']}) vs B({scores['B']}) -> B wins")
+    print(f"  Semi 2: C({scores['C']}) vs D({scores['D']}) -> C wins")
+    print(f"  Final:  B({scores['B']}) vs C({scores['C']}) -> B wins")
+    print()
 
 
 # ============================================================
-# 5. Scaling Analysis
+# Demo 2: Robustness Certificate Comparison
 # ============================================================
 
-def demo_scaling():
-    """Show how certificate quality scales with tree depth."""
-    print("\n" + "=" * 70)
-    print("DEMO 4: Certificate Quality vs Tree Depth")
-    print("=" * 70)
+def demo_robustness_comparison():
+    print("=" * 60)
+    print("DEMO 2: Global vs Pathwise Robustness Certificate")
+    print("=" * 60)
 
-    fig, ax = plt.subplots(figsize=(10, 6))
+    tree = Node(
+        Node(Node(Leaf("A"), Leaf("B")), Node(Leaf("C"), Leaf("D"))),
+        Node(Node(Leaf("E"), Leaf("F")), Node(Leaf("G"), Leaf("H")))
+    )
+    scores = {"A": 10.0, "B": 3.0, "C": 4.0, "D": 3.5,
+              "E": 6.0, "F": 5.0, "G": 2.0, "H": 1.0}
+    lip_const = 2.0
 
-    depths = range(1, 21)
-    scenarios = [
-        ("Uniform margins (Δ=5, K=1)", 5.0, 1.0, '#2196F3'),
-        ("High margin (Δ=10, K=1)", 10.0, 1.0, '#4CAF50'),
-        ("Tight margins (Δ=2, K=1)", 2.0, 1.0, '#FF5722'),
-        ("Low Lipschitz (Δ=5, K=0.5)", 5.0, 0.5, '#9C27B0'),
-    ]
+    winner = evaluate(tree, scores)
+    r_global = certified_radius(tree, scores, lip_const)
+    r_path = path_certified_radius(tree, scores, lip_const)
 
-    for label, margin, K, color in scenarios:
-        certs = [margin / (2 * K)] * len(list(depths))  # min doesn't decrease if uniform
-        ax.plot(list(depths), certs, 'o-', color=color, linewidth=2,
-                markersize=6, label=label)
-
-    # Non-uniform: decreasing margins
-    certs_decreasing = []
-    for d in depths:
-        margins = [5.0 / (1 + 0.2 * i) for i in range(d)]
-        Ks = [1.0] * d
-        certs_decreasing.append(path_certificate(margins, Ks))
-    ax.plot(list(depths), certs_decreasing, 's--', color='#795548', linewidth=2,
-            markersize=6, label='Decreasing margins (Δᵢ=5/(1+0.2i))')
-
-    ax.set_xlabel('Tree depth (path length)', fontsize=12)
-    ax.set_ylabel('Certified robustness radius r*', fontsize=12)
-    ax.set_title('How Tree Depth Affects Robustness Certificates', fontsize=14)
-    ax.legend(fontsize=10)
-    ax.grid(True, alpha=0.3)
-    ax.set_ylim(0, None)
-
-    plt.tight_layout()
-    plt.savefig('certificate_vs_depth.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("\n  [Saved: certificate_vs_depth.png]")
-    print("\n  Key insight: With uniform margins, the certificate does NOT degrade")
-    print("  with depth! The bottleneck is always the weakest node, not the")
-    print("  path length. This is the power of compositional certification.")
+    print(f"Scores: {scores}")
+    print(f"Winner: {winner}")
+    print(f"All node margins:    {[f'{m:.1f}' for m in all_margins(tree, scores)]}")
+    print(f"Path margins only:   {[f'{m:.1f}' for m in path_margins(tree, scores)]}")
+    print(f"Global cert. radius:  {r_global:.3f}")
+    print(f"Pathwise cert. radius: {r_path:.3f}")
+    print(f"Improvement factor:   {r_path/r_global:.1f}x")
+    print()
+    print("The pathwise certificate is sharper because the C-vs-D")
+    print("comparison (margin 0.5) is NOT on the winner path.")
+    print()
 
 
 # ============================================================
-# 6. Practical Application: ImageNet-style classifier
+# Demo 3: Perturbation Visualization
 # ============================================================
 
-def demo_imagenet_style():
-    """Simulate a realistic hierarchical classifier on ImageNet-style categories."""
-    print("\n" + "=" * 70)
-    print("DEMO 5: Practical Application — ImageNet-Style Hierarchy")
-    print("=" * 70)
+def demo_perturbation_visualization():
+    print("=" * 60)
+    print("DEMO 3: Perturbation Robustness Visualization")
+    print("=" * 60)
 
-    # Hierarchy: Animal → Mammal → Canine → Dog breed
+    tree = Node(Node(Leaf("A"), Leaf("B")), Node(Leaf("C"), Leaf("D")))
+    base_scores = {"A": 8.0, "B": 5.0, "C": 6.0, "D": 3.0}
+    lip_const = 2.0
+
+    r_path = path_certified_radius(tree, base_scores, lip_const)
+    r_global = certified_radius(tree, base_scores, lip_const)
+
+    n_trials = 5000
+    perturbation_levels = np.linspace(0, 3.0, 40)
+    stability_rates = []
+
     np.random.seed(42)
+    for eps in perturbation_levels:
+        stable = 0
+        for _ in range(n_trials):
+            perturbation = np.random.uniform(-eps, eps, 4)
+            perturbed = {k: base_scores[k] + perturbation[i]
+                        for i, k in enumerate(base_scores)}
+            if evaluate(tree, perturbed) == evaluate(tree, base_scores):
+                stable += 1
+        stability_rates.append(stable / n_trials)
 
-    # Simulate 100 test images classified as "Golden Retriever"
-    n_images = 100
-    path_nodes = ["Animal vs Object", "Mammal vs Other Animal",
-                  "Canine vs Feline", "Retriever vs Terrier"]
-
-    print(f"\n  Simulating {n_images} clean images classified as 'Golden Retriever'")
-    print(f"  Path: {' → '.join(path_nodes)}")
-
-    K_values = [1.2, 0.8, 1.5, 0.6]  # node Lipschitz constants
-
-    cert_radii = []
-    bottleneck_counts = {name: 0 for name in path_nodes}
-
-    for _ in range(n_images):
-        margins = [np.random.exponential(3.0 + 2.0 * (3 - i)) for i in range(4)]
-        normalized = [m / (2 * K) for m, K in zip(margins, K_values)]
-        cert_r = min(normalized)
-        cert_radii.append(cert_r)
-
-        bottleneck_idx = np.argmin(normalized)
-        bottleneck_counts[path_nodes[bottleneck_idx]] += 1
-
-    cert_radii = np.array(cert_radii)
-
-    print(f"\n  Certificate statistics:")
-    print(f"    Mean r* = {cert_radii.mean():.4f}")
-    print(f"    Median r* = {np.median(cert_radii):.4f}")
-    print(f"    Min r* = {cert_radii.min():.4f}")
-    print(f"    Max r* = {cert_radii.max():.4f}")
-    print(f"\n  Bottleneck distribution:")
-    for name, count in bottleneck_counts.items():
-        bar = '█' * (count // 2)
-        print(f"    {name:30s}: {count:3d}/100 {bar}")
-
-    # Visualization
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-
-    ax = axes[0]
-    ax.hist(cert_radii, bins=20, color='#2196F3', alpha=0.7, edgecolor='black')
-    ax.axvline(cert_radii.mean(), color='red', linestyle='--',
-               label=f'Mean = {cert_radii.mean():.3f}')
-    ax.axvline(np.median(cert_radii), color='green', linestyle=':',
-               label=f'Median = {np.median(cert_radii):.3f}')
-    ax.set_xlabel('Certified robustness radius r*', fontsize=12)
-    ax.set_ylabel('Count', fontsize=12)
-    ax.set_title('Distribution of Path Certificates', fontsize=14)
-    ax.legend()
-    ax.grid(True, alpha=0.3)
-
-    ax = axes[1]
-    names = list(bottleneck_counts.keys())
-    counts = list(bottleneck_counts.values())
-    colors = ['#2196F3', '#FF5722', '#4CAF50', '#9C27B0']
-    ax.barh(names, counts, color=colors)
-    ax.set_xlabel('Number of images where this node is bottleneck', fontsize=11)
-    ax.set_title('Bottleneck Node Distribution', fontsize=14)
-    ax.grid(True, alpha=0.3, axis='x')
-
+    fig, ax = plt.subplots(1, 1, figsize=(10, 6))
+    ax.plot(perturbation_levels, stability_rates, 'b-', linewidth=2,
+            label='Empirical stability rate')
+    ax.axvline(x=r_global, color='red', linestyle='--', linewidth=2,
+               label=f'Global cert. radius = {r_global:.2f}')
+    ax.axvline(x=r_path, color='green', linestyle='--', linewidth=2,
+               label=f'Pathwise cert. radius = {r_path:.2f}')
+    ax.fill_betweenx([0, 1.1], 0, r_path, alpha=0.1, color='green')
+    ax.set_xlabel('Perturbation magnitude (L∞)', fontsize=12)
+    ax.set_ylabel('Probability of unchanged winner', fontsize=12)
+    ax.set_title('Certified Robustness of Tournament Classifier\n'
+                 '(Green region: formally guaranteed stable)', fontsize=14)
+    ax.legend(fontsize=11)
+    ax.set_ylim(-0.05, 1.1)
+    ax.set_xlim(0, 3.0)
     plt.tight_layout()
-    plt.savefig('imagenet_certificates.png', dpi=150, bbox_inches='tight')
+    plt.savefig('demos/perturbation_robustness.png', dpi=150)
+    print("Saved: demos/perturbation_robustness.png")
     plt.close()
-    print("\n  [Saved: imagenet_certificates.png]")
+    print()
+
+
+# ============================================================
+# Demo 4: Heterogeneous Lipschitz Constants
+# ============================================================
+
+def demo_heterogeneous_lipschitz():
+    print("=" * 60)
+    print("DEMO 4: Heterogeneous Lipschitz Constants")
+    print("=" * 60)
+
+    tree_uniform = Node(Node(Leaf("A"), Leaf("B")), Node(Leaf("C"), Leaf("D")))
+    ltree = LNode(1.0,
+        LNode(3.0, LLeaf("A"), LLeaf("B")),
+        LNode(2.0, LLeaf("C"), LLeaf("D"))
+    )
+    scores = {"A": 10.0, "B": 6.0, "C": 7.0, "D": 3.0}
+    global_lip = 3.0
+
+    r_uniform = path_certified_radius(tree_uniform, scores, global_lip)
+    r_hetero = lpath_certified_radius(ltree, scores)
+
+    print(f"Scores: {scores}")
+    print(f"Winner: {evaluate(tree_uniform, scores)}")
+    print(f"Uniform Lipschitz ({global_lip}):  cert. radius = {r_uniform:.3f}")
+    print(f"Heterogeneous Lipschitz:    cert. radius = {r_hetero:.3f}")
+    print(f"Improvement: {r_hetero/r_uniform:.1f}x")
+    print()
+    print("Per-node analysis:")
+    print(f"  Root:  margin={abs(scores['A']-scores['C']):.1f}, lip=1.0, "
+          f"local_radius={abs(scores['A']-scores['C'])/1.0:.1f}")
+    print(f"  Semi1: margin={abs(scores['A']-scores['B']):.1f}, lip=3.0, "
+          f"local_radius={abs(scores['A']-scores['B'])/3.0:.2f}")
+    print(f"  Semi2: margin={abs(scores['C']-scores['D']):.1f}, lip=2.0, "
+          f"local_radius={abs(scores['C']-scores['D'])/2.0:.1f}")
+    print()
+
+
+# ============================================================
+# Demo 5: Scaling with Tree Depth
+# ============================================================
+
+def demo_depth_scaling():
+    print("=" * 60)
+    print("DEMO 5: Certificate Scaling with Tree Depth")
+    print("=" * 60)
+
+    depths = range(1, 8)
+    n_classes_list = [2**d for d in depths]
+    global_radii = []
+    path_radii = []
+    lip_const = 2.0
+
+    for depth in depths:
+        n = 2**depth
+        labels = [f"C{i}" for i in range(n)]
+        scores = {labels[i]: float(n - i) for i in range(n)}
+
+        def build_balanced(lst):
+            if len(lst) == 1:
+                return Leaf(lst[0])
+            mid = len(lst) // 2
+            return Node(build_balanced(lst[:mid]), build_balanced(lst[mid:]))
+
+        tree = build_balanced(labels)
+        global_radii.append(certified_radius(tree, scores, lip_const))
+        path_radii.append(path_certified_radius(tree, scores, lip_const))
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+    ax1.plot(n_classes_list, global_radii, 'ro-', linewidth=2, markersize=8,
+             label='Global certificate')
+    ax1.plot(n_classes_list, path_radii, 'gs-', linewidth=2, markersize=8,
+             label='Pathwise certificate')
+    ax1.set_xlabel('Number of classes', fontsize=12)
+    ax1.set_ylabel('Certified radius', fontsize=12)
+    ax1.set_title('Certificate vs. Number of Classes', fontsize=14)
+    ax1.legend(fontsize=11)
+    ax1.set_xscale('log', base=2)
+
+    ratios = [p/g if g > 0 else 1 for p, g in zip(path_radii, global_radii)]
+    ax2.bar(range(len(list(depths))), ratios, color='purple', alpha=0.7)
+    ax2.set_xticks(range(len(list(depths))))
+    ax2.set_xticklabels([f'{n}' for n in n_classes_list])
+    ax2.set_xlabel('Number of classes', fontsize=12)
+    ax2.set_ylabel('Pathwise / Global ratio', fontsize=12)
+    ax2.set_title('Improvement Factor of Pathwise Certificate', fontsize=14)
+    plt.tight_layout()
+    plt.savefig('demos/depth_scaling.png', dpi=150)
+    print("Saved: demos/depth_scaling.png")
+    plt.close()
+    print()
+
+
+# ============================================================
+# Demo 6: Application — Hierarchical Image Classifier
+# ============================================================
+
+def demo_application():
+    print("=" * 60)
+    print("DEMO 6: Application — Hierarchical Image Classifier")
+    print("=" * 60)
+
+    tree = Node(
+        Node(Node(Leaf("Cat"), Leaf("Dog")), Leaf("Bird")),
+        Leaf("Car")
+    )
+    scores = {"Cat": 4.2, "Dog": 2.8, "Bird": 1.5, "Car": -1.0}
+    lip_const = 1.5
+
+    winner = evaluate(tree, scores)
+    r_path = path_certified_radius(tree, scores, lip_const)
+    r_global = certified_radius(tree, scores, lip_const)
+
+    print(f"Classification: {winner}")
+    print(f"Score profile: {scores}")
+    print(f"Path margins: {[f'{m:.1f}' for m in path_margins(tree, scores)]}")
+    print(f"Certified radius (pathwise): {r_path:.3f}")
+    print(f"Certified radius (global):   {r_global:.3f}")
+    print()
+    print("Any input perturbation with L-infinity distance")
+    print(f"<= {r_path:.3f} is GUARANTEED to not change the classification.")
+    print()
+
+
+# ============================================================
+# Demo 7: Tree Visualization
+# ============================================================
+
+def demo_tree_visualization():
+    print("=" * 60)
+    print("DEMO 7: Tournament Tree Visualization")
+    print("=" * 60)
+
+    tree = Node(
+        Node(Node(Leaf("A"), Leaf("B")), Node(Leaf("C"), Leaf("D"))),
+        Node(Node(Leaf("E"), Leaf("F")), Leaf("G"))
+    )
+    scores = {"A": 9.0, "B": 4.0, "C": 7.0, "D": 6.0,
+              "E": 3.0, "F": 5.0, "G": 2.0}
+
+    fig, ax = plt.subplots(1, 1, figsize=(14, 8))
+
+    def draw_tree(t, x, y, dx, is_wp=True):
+        if isinstance(t, Leaf):
+            overall_winner = evaluate(tree, scores)
+            c = 'gold' if t.label == overall_winner else ('lightgreen' if is_wp else 'lightblue')
+            ax.add_patch(plt.Circle((x, y), 0.3, color=c, ec='black', lw=2, zorder=5))
+            ax.text(x, y, f"{t.label}\n{scores[t.label]:.0f}",
+                    ha='center', va='center', fontsize=10, fontweight='bold', zorder=6)
+            return
+
+        u = evaluate(t.left, scores)
+        v = evaluate(t.right, scores)
+        margin = abs(scores[u] - scores[v])
+        left_wins = scores[u] >= scores[v]
+
+        draw_tree(t.left, x - dx, y - 1.5, dx/2, is_wp and left_wins)
+        draw_tree(t.right, x + dx, y - 1.5, dx/2, is_wp and not left_wins)
+
+        lc = 'green' if (is_wp and left_wins) else 'gray'
+        rc = 'green' if (is_wp and not left_wins) else 'gray'
+        llw = 3 if (is_wp and left_wins) else 1
+        rlw = 3 if (is_wp and not left_wins) else 1
+
+        ax.plot([x, x-dx], [y-0.3, y-1.2], color=lc, linewidth=llw, zorder=3)
+        ax.plot([x, x+dx], [y-0.3, y-1.2], color=rc, linewidth=rlw, zorder=3)
+
+        nc = 'lightgreen' if is_wp else 'lightyellow'
+        ax.add_patch(plt.Circle((x, y), 0.3, color=nc, ec='black', lw=2, zorder=5))
+        ax.text(x, y, f"Δ={margin:.0f}", ha='center', va='center', fontsize=9, zorder=6)
+
+    draw_tree(tree, 7, 6, 3)
+
+    legend_elements = [
+        mpatches.Patch(facecolor='gold', edgecolor='black', label='Tournament Winner'),
+        mpatches.Patch(facecolor='lightgreen', edgecolor='black', label='Winner Path'),
+        mpatches.Patch(facecolor='lightblue', edgecolor='black', label='Non-path Leaves'),
+        mpatches.Patch(facecolor='lightyellow', edgecolor='black', label='Non-path Nodes'),
+    ]
+    ax.legend(handles=legend_elements, loc='upper right', fontsize=10)
+    ax.set_xlim(2, 12)
+    ax.set_ylim(-1, 7.5)
+    ax.set_aspect('equal')
+    ax.axis('off')
+    ax.set_title('Tournament Elimination Tree with Winner Path Highlighted\n'
+                 'Green path = certified by pathMargin (sharper certificate)',
+                 fontsize=14)
+    plt.tight_layout()
+    plt.savefig('demos/tournament_tree.png', dpi=150)
+    print("Saved: demos/tournament_tree.png")
+    plt.close()
+    print()
 
 
 # ============================================================
 # Main
 # ============================================================
 
-if __name__ == '__main__':
-    print("╔══════════════════════════════════════════════════════════════════════╗")
-    print("║  GL3 Tropical Satake: Compositional Hierarchical Robustness Demo   ║")
-    print("║  Certified robustness for hierarchical decision tree classifiers    ║")
-    print("╚══════════════════════════════════════════════════════════════════════╝")
+if __name__ == "__main__":
+    os.makedirs('demos', exist_ok=True)
 
-    path, cert_radius = demo_three_level_tree()
-    demo_margin_preservation_visualization(path, cert_radius)
-    demo_flat_vs_hierarchical()
-    demo_additive_budget()
-    demo_scaling()
-    demo_imagenet_style()
+    demo_basic_evaluation()
+    demo_robustness_comparison()
+    demo_perturbation_visualization()
+    demo_heterogeneous_lipschitz()
+    demo_depth_scaling()
+    demo_application()
+    demo_tree_visualization()
 
-    print("\n" + "=" * 70)
-    print("All demos complete. See generated PNG files for visualizations.")
-    print("=" * 70)
+    print("=" * 60)
+    print("ALL DEMOS COMPLETE")
+    print("=" * 60)
+    print()
+    print("Summary of formally verified theorems (Lean 4):")
+    print("  1. HTree.eval_stable        — Global margin robustness")
+    print("  2. HTree.eval_stable_of_pathDom — Pathwise domination robustness")
+    print("  3. HTree.pathMargin_sufficient  — Path margin certificate")
+    print("  4. HTree.eval_stable_of_lip     — Lipschitz parameterization")
+    print("  5. HTree.robust_radius_spec     — Tropical Hecke-score version")
+    print("  6. LHTree.eval_stable           — Heterogeneous Lipschitz")
+    print("  7. HTree.eval_score_ge          — Tournament = global argmax")
+    print("  8. HTree.allMarginsAbove_implies_pathDominates — Certificate hierarchy")
