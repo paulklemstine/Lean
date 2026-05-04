@@ -32,6 +32,7 @@ pi_agent:
     - formalize
     - counterexample
     - sorry_fill
+    - discover
 
 aristotle:
   api_base_url: "https://aristotle.harmonic.fun/api/v1"
@@ -207,7 +208,72 @@ research:
       target_sorry_reduction: 3
       difficulty: "phd"
 
-  difficulty_levels: ["undergraduate", "graduate", "phd", "master", "open_problem"]
+    # === VISIONARY ARCS: Paradigm-opening, science-fiction-level mathematics ===
+    - id: "tropical_information_theory"
+      name: "Tropical Information Theory"
+      description: "Found a new field: tropical information theory. Define tropical entropy, tropical mutual information, and prove a tropical data processing inequality."
+      seed_domains: ["Tropical", "Bridges", "MachineLearning"]
+      frontier: "Tropical Shannon theorem: tropical mutual information bounds the tropical channel capacity"
+      target_sorry_reduction: 5
+      difficulty: "open_problem"
+
+    - id: "pythagorean_quantum_advantage"
+      name: "Pythagorean Quantum Advantage"
+      description: "Prove that Berggren-based Pythagorean gate sets achieve provable quantum advantage for Hamiltonian simulation problems."
+      seed_domains: ["Pythagorean", "Physics", "Cryptography"]
+      frontier: "Berggren tree depth O(n log n) vs arbitrary gate depth Omega(n^2)"
+      target_sorry_reduction: 3
+      difficulty: "open_problem"
+
+    - id: "eml_thermodynamic_computation"
+      name: "EML Thermodynamic Computation"
+      description: "Prove that EML closures achieve universal computation with provable depth bounds related to Kolmogorov complexity. Connect EML to statistical mechanics."
+      seed_domains: ["EML", "MachineLearning", "Physics"]
+      frontier: "EML depth O(K(f)/epsilon) for epsilon-approximation of computable functions"
+      target_sorry_reduction: 3
+      difficulty: "open_problem"
+
+    - id: "tropical_cryptography"
+      name: "Tropical Cryptographic Primitives"
+      description: "Construct and verify one-way functions based on tropical matrix multiplication hardness. Connect to post-quantum security."
+      seed_domains: ["Cryptography", "Tropical", "Computation"]
+      frontier: "Tropical matrix inversion is as hard as integer factorization"
+      target_sorry_reduction: 4
+      difficulty: "phd"
+
+    - id: "berggren_spectral_theory"
+      name: "Berggren Spectral Theory"
+      description: "Prove that the Berggren tree generates a spectral decomposition of SL(2,Z). Define the Berggren zeta function and prove its functional equation."
+      seed_domains: ["Pythagorean", "Algebra", "Bridges"]
+      frontier: "Berggren eigenvalue distribution converges to the Plancherel measure of SL(2,R)"
+      target_sorry_reduction: 3
+      difficulty: "phd"
+
+    - id: "non_archimedean_probability"
+      name: "Non-Archimedean Probability Theory"
+      description: "Lay the algebraic foundation for probability theory over the tropical semiring. Prove a tropical law of large numbers and tropical central limit theorem."
+      seed_domains: ["Tropical", "Bridges", "Logic"]
+      frontier: "Tropical law of large numbers: P_trop(|S_n/n - mu| > epsilon) -> -infinity"
+      target_sorry_reduction: 4
+      difficulty: "open_problem"
+
+    - id: "tropical_neural_compiler"
+      name: "Tropical Neural Network Compiler"
+      description: "Construct a verified compiler from ReLU networks to tropical polynomial representations with certified Lipschitz bounds."
+      seed_domains: ["MachineLearning", "Tropical", "Computation"]
+      frontier: "Verified compiler: ReLU -> tropical polynomial with O(size(net)) compilation time"
+      target_sorry_reduction: 3
+      difficulty: "phd"
+
+    - id: "eml_phase_transition"
+      name: "EML-Tropical Phase Transition"
+      description: "Prove that the Maslov dequantization parameter epsilon is a thermodynamic temperature, and that epsilon -> 0 is a genuine phase transition in the mathematical physics sense."
+      seed_domains: ["EML", "Physics", "Tropical"]
+      frontier: "Specific heat C(epsilon) diverges at epsilon_c determined by spectral gap"
+      target_sorry_reduction: 3
+      difficulty: "phd"
+
+  difficulty_levels: ["undergraduate", "graduate", "phd", "master", "open_problem", "discover"]
   max_concurrent_cycles: 10
   cycle_interval_seconds: 300
   max_retries_per_cycle: 3

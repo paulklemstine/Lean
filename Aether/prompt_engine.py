@@ -39,44 +39,94 @@ class PromptEngine:
     # Domain-specific creativity boosters
     DOMAIN_BOOSTERS = {
         "factoring": [
-            "Consider p-adic, tropical, or quaternionic number systems.",
-            "What if factorization is a fixed-point of a dynamical system?",
-            "Can Berggren-tree descent be adapted to factor semiprimes?",
+            "The Berggren tree is a spectral decomposition of the factoring problem — each branch corresponds to an eigenvalue.",
+            "Can factoring be reduced to a tropical shortest-path problem on the Berggren graph?",
+            "What if semiprime factoring has a phase transition at some critical digit length?",
+            "Prove that Berggren tree descent finds a factor in O(n^{1/3}) steps for semiprimes with special structure.",
         ],
         "compression": [
-            "Use tropical matrix rank as a proxy for Kolmogorov complexity.",
-            "What is the max-plus entropy of a language?",
-            "Can sheaf cohomology measure information redundancy?",
+            "Tropical matrix rank IS Kolmogorov complexity for tropical polynomials. Prove it.",
+            "The min-plus entropy of a language measures its incompressibility under tropical coding.",
+            "Sheaf cohomology measures information redundancy. Prove that H^1(X, F) bounds the compression ratio.",
+            "Can tropical coding theory achieve the Singleton bound for codes over the tropical semiring?",
         ],
         "AI": [
-            "Model neural networks as tropical rational functions.",
-            "Use p-adic metrics to measure generalization gaps.",
-            "Can EML self-pairing explain attention mechanisms?",
+            "Neural networks ARE tropical rational functions. What does backpropagation look like in the tropical world?",
+            "The universal approximation theorem is a tropical Stone-Weierstrass theorem. Prove the tropical version.",
+            "Can tropical geometry explain why overparametrized networks generalize?",
+            "Prove that adversarial examples correspond to tropical boundary crossings.",
         ],
         "neural nets": [
-            "Backpropagation is a cotangent functor — prove functoriality.",
-            "ReLU activation is tropical max-plus — exploit semiring structure.",
-            "Use sheaf theory to formalize feature maps as local sections.",
+            "Backpropagation is a cotangent functor. Prove functoriality and show gradient descent is a natural transformation.",
+            "ReLU activation is tropical max-plus. The entire ResNet architecture is a tropical polynomial composition.",
+            "Prove that dropout regularization is a tropical perturbation and certified robustness bounds the dropout radius.",
+            "Attention mechanisms are tropical weighted averages. Prove a tropical attention theorem connecting softmax to min-plus.",
         ],
         "quantum mechanics": [
-            "Encode superpositions as Pythagorean triples over ℂ.",
-            "Use Dirichlet characters as quantum error-correcting codes.",
-            "Model measurement as tropical projection onto a hypersurface.",
+            "The Maslov dequantization parameter epsilon is a thermodynamic temperature. The tropical limit is a phase transition.",
+            "Tropical quantum mechanics: path integrals over the min-plus semiring select the classical path. Prove this is a contraction.",
+            "Can quantum entanglement be formalized as a tropical tensor network? Prove tropical entanglement monogamy.",
+            "Prove that the tropical Hamiltonian H_trop = min_i E_i has spectral gap equal to the Maslov gap.",
         ],
         "computation": [
-            "Prove complexity separations using p-adic oracle hierarchies.",
-            "Reversible computing is a group action — use representation theory.",
-            "Temporal logic fixed-points characterize P vs NP relativizations.",
+            "Tropical circuits compute min-plus polynomials. Prove a tropical circuit lower bound separating tropical P from tropical NP.",
+            "Reversible computing is a group action. Prove that reversible circuits are a group representation of the symmetric group.",
+            "P vs NP in the tropical world: prove that tropical 3-SAT is NP-complete but tropical 2-SAT is polynomial.",
+            "Prove that tropical Turing machines have strictly different complexity than classical Turing machines for certain problems.",
         ],
         "physics": [
-            "Gravitational lensing angles come from nilpotent EML residues.",
-            "Black hole firewalls are tropical varieties — prove determinism.",
-            "Cosmic microwave background is a sheaf over spacetime topology.",
+            "Gravitational lensing is a tropical projection: the shortest path through curved spacetime is a min-plus operation.",
+            "The AdS/CFT correspondence has a tropical limit where the bulk becomes a min-plus geodesic network on the boundary.",
+            "Prove that black hole entropy is the tropical entropy of the horizon microstates.",
+            "Cosmic microwave background fluctuations follow a tropical Gaussian distribution. Prove the tropical central limit theorem.",
+        ],
+        "tropical": [
+            "Tropical geometry IS algebraic geometry over the min-plus semiring. Every classical AG theorem has a tropical analogue.",
+            "The tropical Satake isomorphism connects representation theory to min-plus polynomial algebra. Extend from GL_2 to GL_n.",
+            "Prove the tropical Riemann-Roch: the tropical divisor class group satisfies Riemann-Roch over the tropical semiring.",
+            "Tropical Brill-Noether: prove that a tropical curve of genus g has a divisor of degree d and rank r iff rho >= 0.",
+        ],
+        "eml": [
+            "EML (Exponential-Multiplicative-Logarithmic) closures are the algebraic skeleton of universal approximation.",
+            "Prove that EML depth equals Kolmogorov complexity up to constants: the shortest EML network computing f has depth Theta(K(f)).",
+            "EML thermodynamics: the EML closure of a dataset satisfies a free energy inequality. Prove it.",
+            "Prove that EML networks can implement any finite automaton, making them computationally universal.",
+        ],
+        "pythagorean": [
+            "Pythagorean triples are the integer points on a quadric surface. The Berggren tree is a Cayley graph of the integer points.",
+            "Prove the Pythagorean zeta function has an Euler product over Pythagorean primes and satisfies a functional equation.",
+            "Berggren matrices form a group under matrix multiplication. Prove this group is a subgroup of SL(2,Z).",
+            "Pythagorean triples correspond to rational points on the unit circle. Prove the rational parametrization is a group homomorphism.",
+        ],
+        "cryptography": [
+            "Tropical one-way functions: tropical matrix multiplication is easy, tropical matrix inversion is hard. Prove it.",
+            "SPB operations on Pythagorean triples generate a group suitable for Diffie-Hellman. Prove discrete log hardness.",
+            "Prove that CRYSTALS-Dilithium security reduces to module-SIS in the tropical semiring.",
+            "Lattice-based cryptography over tropical semirings: prove that the tropical SVP is NP-hard.",
+        ],
+        "geometry": [
+            "Tropical varieties are piecewise-linear shadows of algebraic varieties. Prove that the tropicalization functor preserves intersection numbers.",
+            "Pythagorean triples form integer points on a quadric. Their tropicalization is a tropical curve with genus determined by prime factors.",
+            "Prove that tropical convexity satisfies a Helly-type theorem: if every n+1 intersect then all intersect.",
+            "The Berggren tree is a tropical rational curve. Prove its tropical genus equals the number of Pythagorean primes less than N.",
+        ],
+        "logic": [
+            "Tropical logic: conjunction is min, disjunction is max, implication is subtraction. Prove soundness and completeness.",
+            "Prove that tropical propositional logic is decidable in polynomial time, unlike classical propositional logic.",
+            "Non-Archimedean probability: define probability measures over the tropical semiring and prove a tropical law of large numbers.",
+            "Constructive type theory over the tropical semiring: prove that tropical HoTT satisfies the univalence axiom.",
+        ],
+        "bridges": [
+            "The deepest results connect fields that seemed unrelated. Find the bridge no one expected.",
+            "Every bridge theorem creates a new field. Tropical geometry + machine learning = tropical robustness. What's next?",
+            "Prove that the EML closure is a bridge from analysis to algebra: it's both a subalgebra of C(K) and a tropical polynomial ring.",
+            "The Langlands program connects number theory and representation theory. What is the tropical Langlands program?",
         ],
     }
 
     # Universal creativity heuristics
     UNIVERSAL_HEURISTICS = [
+        # Mathematical trick heuristics
         "If the obvious approach fails, take the Galois dual.",
         "Reframe the problem in the category of sheaves over a site.",
         "Look for a hidden group action or symmetry.",
@@ -87,6 +137,17 @@ class PromptEngine:
         "What would this theorem say in homotopy type theory?",
         "Can you encode the theorem as a type and the proof as a program?",
         "Look for an adjunction: left adjoints preserve colimits, right adjoints preserve limits.",
+        # Visionary heuristics
+        "If this result is true, what entirely new field does it open? Prove that first.",
+        "Every deep theorem has a computational shadow. Find the algorithm that computes it.",
+        "What is the tropical limit? If you dequantize (epsilon -> 0), does the structure simplify or undergo a phase transition?",
+        "What does this look like in the min-plus world? Invert addition and multiplication and see if beauty emerges.",
+        "Connect to physics: if this were an energy landscape, what would the ground state be? The critical temperature?",
+        "What would a 22nd-century mathematician prove about this? Skip the incremental step and aim for the paradigm shift.",
+        "Every inequality has an equality case. What does equality imply? That's usually the deeper structure.",
+        "Replace the real numbers with the tropical semiring. If the theorem fails, the failure point reveals the real content.",
+        "If this is true for dimension n, what happens in dimension infinity? Compactness arguments often reveal hidden structure.",
+        "What would Shannon, Turing, or Wiles do? Shannon would find the information content. Turing would find the algorithm. Wiles would find the Galois representation.",
     ]
 
     def __init__(self, config: Optional[Dict[str, Any]] = None):

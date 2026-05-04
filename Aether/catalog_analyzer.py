@@ -694,6 +694,170 @@ class CatalogAnalyzer:
         missing.sort(key=lambda x: -x[2])
         return missing[:limit]
 
+    def find_under_explored_domains(self) -> List[Dict]:
+        """Find domains with many declarations but few deep theorems.
+
+        A domain is under-explored if it has:
+        - Many declarations (definitions/structures) but few theorems
+        - Few or no sorry targets (meaning nobody has tried hard problems)
+        - High exploration_ratio = declarations / max(sorries, 1)
+
+        Returns list of dicts sorted by exploration_ratio (highest = most under-explored).
+        """
+        if self._summaries is None:
+            self.scan()
+
+        results = []
+        for domain, files in self._domain_index.items():
+            total_decls = sum(len(f.declarations) for f in files)
+            total_sorries = sum(f.sorry_count for f in files if hasattr(f, 'sorry_count'))
+            total_files = len(files)
+
+            # Count theorems vs definitions (rough approximation)
+            theorem_count = sum(
+                1 for f in files for d in f.declarations
+                if any(kw in d.lower() for kw in ('theorem', 'lemma'))
+            )
+
+            # Under-explored ratio: high declarations relative to sorries
+            # means nobody has pushed hard into this domain
+            exploration_ratio = total_decls / max(total_sorries, 1)
+
+            # Theorem density: low ratio means many definitions but few theorems
+            theorem_ratio = theorem_count / max(total_decls, 1)
+
+            results.append({
+                "domain": domain,
+                "total_files": total_files,
+                "total_declarations": total_decls,
+                "total_sorries": total_sorries,
+                "theorem_count": theorem_count,
+                "theorem_ratio": theorem_ratio,
+                "exploration_ratio": exploration_ratio,
+                "breakthrough_potential": (
+                    "HIGH" if exploration_ratio > 20 else
+                    "MEDIUM" if exploration_ratio > 10 else
+                    "LOW"
+                ),
+            })
+
+        results.sort(key=lambda x: -x["exploration_ratio"])
+        return results
+
+    def find_structural_opportunities(self) -> List[Dict]:
+        """Find pairs of domains with structural similarity but no bridge.
+
+        Two domains have structural opportunity when they share:
+        - Similar algebraic structures (rings, groups, functors) referenced
+        - Import patterns suggesting shared mathematical foundations
+        But NO existing bridge between them.
+
+        Returns list of opportunity dicts sorted by number of shared structures.
+        """
+        if self._summaries is None:
+            self.scan()
+
+        existing = self.detect_cross_domain_bridges()
+        existing_pairs = set()
+        for b in existing:
+            existing_pairs.add((b["source_domain"], b["target_domain"]))
+            existing_pairs.add((b["target_domain"], b["source_domain"]))
+
+        # Build structural signature per domain
+        structural_keywords = {
+            "Semiring", "semiring", "tropical",
+            "Group", "group", "Monoid", "monoid",
+            "Ring", "ring", "Field", "field",
+            "TopologicalSpace", "topology", "Topological",
+            "NormedSpace", "norm", "Normed",
+            "Measure", "measure",
+            "Category", "category", "Functor", "functor",
+            "Module", "module",
+            "Order", "lattice", "Lattice",
+            "MetricSpace", "metric",
+            "HilbertSpace", "hilbert",
+            "Manifold", "manifold",
+        }
+
+        domain_structures: Dict[str, set] = {}
+        for domain, files in self._domain_index.items():
+            structures = set()
+            for f in files:
+                try:
+                    content = (self.catalog_root / f.relative_path).read_text(
+                        encoding="utf-8", errors="replace"
+                    )
+                    for kw in structural_keywords:
+                        if kw in content:
+                            structures.add(kw.lower())
+                except Exception:
+                    continue
+            domain_structures[domain] = structures
+
+        # Find pairs with structural overlap but no bridge
+        opportunities = []
+        domain_list = list(self._domain_index.keys())
+        for i, d_a in enumerate(domain_list):
+            for d_b in domain_list[i+1:]:
+                if (d_a, d_b) in existing_pairs:
+                    continue
+                shared = domain_structures.get(d_a, set()) & domain_structures.get(d_b, set())
+                if shared:
+                    opportunities.append({
+                        "domain_a": d_a,
+                        "domain_b": d_b,
+                        "shared_structures": sorted(list(shared)),
+                        "existing_bridge": False,
+                        "opportunity": (
+                            f"Both {d_a} and {d_b} use {', '.join(sorted(shared))} "
+                            f"but no bridge exists between them"
+                        ),
+                    })
+
+        opportunities.sort(key=lambda x: -len(x["shared_structures"]))
+        return opportunities
+
+    def analyze_catalog_breakthrough_potential(self) -> str:
+        """Generate a breakthrough potential analysis of the catalog.
+
+        This is injected into the Pi-Agent direction selection prompt to guide
+        it toward under-explored territory and structural opportunities.
+
+        Returns a structured markdown string.
+        """
+        under_explored = self.find_under_explored_domains()
+        structural = self.find_structural_opportunities()
+        bridges = self.detect_cross_domain_bridges()
+        sorries = self.get_priority_sorry_targets()
+
+        lines = ["## Catalog Breakthrough Analysis\n"]
+
+        lines.append("### Under-Explored Domains (many declarations, few deep results)")
+        for ue in under_explored[:5]:
+            lines.append(
+                f"- {ue['domain']}: {ue['total_declarations']} declarations, "
+                f"{ue['total_sorries']} sorries, exploration ratio {ue['exploration_ratio']:.1f} "
+                f"({ue['breakthrough_potential']} potential)"
+            )
+
+        lines.append("\n### Structural Opportunities (shared structures, no bridge)")
+        for so in structural[:5]:
+            lines.append(f"- {so['domain_a']} <-> {so['domain_b']}: {so['opportunity']}")
+
+        lines.append("\n### Existing Bridges (for reference, do NOT repeat)")
+        for b in bridges[:8]:
+            lines.append(f"- {b['source_domain']} -> {b['target_domain']}: {b['count']} files")
+
+        if sorries:
+            lines.append(f"\n### Priority Sorry Targets ({len(sorries)} files with sorries)")
+            for s in sorries[:5]:
+                lines.append(
+                    f"- {s.relative_path}: {s.sorry_count} sorries, "
+                    f"declarations: {', '.join(s.declarations[:3])}"
+                )
+
+        return "\n".join(lines)
+
 
 def main():
     """CLI for standalone testing of catalog_analyzer."""
