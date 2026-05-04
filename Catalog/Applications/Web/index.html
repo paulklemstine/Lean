@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Aether Research</title>
+<link rel="stylesheet" href="style.css">
+<script>
+MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+<nav><a href="index.html">Home</a> <a href="future_directions.html">Future Directions</a>
+<a href="discussions.html">Articles</a></nav>
+<div class="container">
+<h1>Aether Research Dashboard</h1>
+<p>Autonomous mathematical research engine — theorems, papers, and discoveries.</p>
+<div class="stats">
+<div class="stat"><div class="number">2190</div><div class="label">Total Artifacts</div></div>
+<div class="stat"><div class="number">1946</div><div class="label">Theorems</div></div>
+<div class="stat"><div class="number">88</div><div class="label">Papers</div></div>
+<div class="stat"><div class="number">118</div><div class="label">Demos</div></div>
+</div>
+
+<h2>Research Domains</h2>
+<div class="domain-list">
+<a class="domain-chip" href="domain_algebra.html">Algebra (449)</a>
+<a class="domain-chip" href="domain_applications.html">Applications (245)</a>
+<a class="domain-chip" href="domain_bridges.html">Bridges (156)</a>
+<a class="domain-chip" href="domain_computation.html">Computation (136)</a>
+<a class="domain-chip" href="domain_cryptography.html">Cryptography (43)</a>
+<a class="domain-chip" href="domain_eml.html">EML (272)</a>
+<a class="domain-chip" href="domain_general.html">General (49)</a>
+<a class="domain-chip" href="domain_geometry.html">Geometry (83)</a>
+<a class="domain-chip" href="domain_logic.html">Logic (132)</a>
+<a class="domain-chip" href="domain_machinelearning.html">MachineLearning (79)</a>
+<a class="domain-chip" href="domain_physics.html">Physics (61)</a>
+<a class="domain-chip" href="domain_pythagorean.html">Pythagorean (96)</a>
+<a class="domain-chip" href="domain_shared.html">Shared (57)</a>
+<a class="domain-chip" href="domain_speculative.html">Speculative (169)</a>
+<a class="domain-chip" href="domain_tropical.html">Tropical (163)</a>
+</div>
+
+<h2>Recent Artifacts</h2>
+<div class="grid">
+<div class="card"><span class="badge badge-paper">paper</span> <span style="color:var(--muted);font-size:0.8em">Applications</span><h3>gl3_tropical_satake_certified_robustness_for_insta.md</h3><p>Modified: 2026-05-04 | Size: 14,214 bytes</p></div>
+<div class="card"><span class="badge badge-paper">paper</span> <span style="color:var(--muted);font-size:0.8em">Applications</span><h3>composite_index_fibonacci_primitive_divisors_via_e.md</h3><p>Modified: 2026-05-04 | Size: 12,266 bytes</p></div>
+<div class="card"><span class="badge badge-paper">paper</span> <span style="color:var(--muted);font-size:0.8em">Applications</span><h3>tropical_gelfandkolmogorov_duality_for_gl3_hecke_s.md</h3><p>Modified: 2026-05-04 | Size: 15,701 bytes</p></div>
+<div class="card"><span class="badge badge-paper">paper</span> <span style="color:var(--muted);font-size:0.8em">Applications</span><h3>quantum_berggren_spectral_gap_and_collision_separa.md</h3><p>Modified: 2026-05-04 | Size: 20,339 bytes</p></div>
+<div class="card"><span class="badge badge-paper">paper</span> <span style="color:var(--muted);font-size:0.8em">Applications</span><h3>algebraic_tropicalization_of_eml_function_algebras.md</h3><p>Modified: 2026-05-04 | Size: 11,768 bytes</p></div>
+<div class="card"><span class="badge badge-demo">demo</span> <span style="color:var(--muted);font-size:0.8em">Applications</span><h3>algebraic_tropicalization_of_eml_function_algebras.py</h3><p>Modified: 2026-05-04 | Size: 9,267 bytes</p></div>
+<div class="card"><span class="badge badge-demo">demo</span> <span style="color:var(--muted);font-size:0.8em">Applications</span><h3>tropical_gelfandkolmogorov_duality_for_gl3_hecke_s.py</h3><p>Modified: 2026-05-04 | Size: 27,406 bytes</p></div>
+<div class="card"><span class="badge badge-demo">demo</span> <span style="color:var(--muted);font-size:0.8em">Applications</span><h3>gl3_tropical_satake_certified_robustness_for_insta.py</h3><p>Modified: 2026-05-04 | Size: 14,624 bytes</p></div>
+<div class="card"><span class="badge badge-demo">demo</span> <span style="color:var(--muted);font-size:0.8em">Applications</span><h3>quantum_berggren_spectral_gap_and_collision_separa.py</h3><p>Modified: 2026-05-04 | Size: 14,396 bytes</p></div>
+<div class="card"><span class="badge badge-demo">demo</span> <span style="color:var(--muted);font-size:0.8em">Applications</span><h3>composite_index_fibonacci_primitive_divisors_via_e.py</h3><p>Modified: 2026-05-04 | Size: 19,403 bytes</p></div>
+<div class="card"><span class="badge badge-theorem">theorem</span> <span style="color:var(--muted);font-size:0.8em">Bridges</span><h3>TropicalRetractionDensity.lean</h3><p>Modified: 2026-05-04 | Size: 3,862 bytes</p></div>
+<div class="card"><span class="badge badge-theorem">theorem</span> <span style="color:var(--muted);font-size:0.8em">Bridges</span><h3>Multigraph.lean</h3><p>Modified: 2026-05-04 | Size: 2,216 bytes</p></div>
+<div class="card"><span class="badge badge-theorem">theorem</span> <span style="color:var(--muted);font-size:0.8em">Bridges</span><h3>EulerianTrail.lean</h3><p>Modified: 2026-05-04 | Size: 5,848 bytes</p></div>
+<div class="card"><span class="badge badge-theorem">theorem</span> <span style="color:var(--muted);font-size:0.8em">Bridges</span><h3>BeatpathRobustness.lean</h3><p>Modified: 2026-05-04 | Size: 10,059 bytes</p></div>
+<div class="card"><span class="badge badge-theorem">theorem</span> <span style="color:var(--muted);font-size:0.8em">Bridges</span><h3>TropicalStoneWeierstrassMinPlus.lean</h3><p>Modified: 2026-05-04 | Size: 7,855 bytes</p></div>
+<div class="card"><span class="badge badge-theorem">theorem</span> <span style="color:var(--muted);font-size:0.8em">Bridges</span><h3>TropicalStoneWeierstrass.lean</h3><p>Modified: 2026-05-04 | Size: 11,589 bytes</p></div>
+<div class="card"><span class="badge badge-theorem">theorem</span> <span style="color:var(--muted);font-size:0.8em">Bridges</span><h3>IRVStability.lean</h3><p>Modified: 2026-05-04 | Size: 10,736 bytes</p></div>
+<div class="card"><span class="badge badge-theorem">theorem</span> <span style="color:var(--muted);font-size:0.8em">Bridges</span><h3>Konigsberg.lean</h3><p>Modified: 2026-05-04 | Size: 3,106 bytes</p></div>
+<div class="card"><span class="badge badge-theorem">theorem</span> <span style="color:var(--muted);font-size:0.8em">Bridges</span><h3>StoneWeierstrassTropicalPolytope.lean</h3><p>Modified: 2026-05-04 | Size: 11,439 bytes</p></div>
+<div class="card"><span class="badge badge-theorem">theorem</span> <span style="color:var(--muted);font-size:0.8em">Bridges</span><h3>TropicalTensorProductUniversality.lean</h3><p>Modified: 2026-05-04 | Size: 16,758 bytes</p></div>
+<div class="card"><span class="badge badge-theorem">theorem</span> <span style="color:var(--muted);font-size:0.8em">Bridges</span><h3>TropicalScalar.lean</h3><p>Modified: 2026-05-04 | Size: 6,081 bytes</p></div>
+<div class="card"><span class="badge badge-theorem">theorem</span> <span style="color:var(--muted);font-size:0.8em">Cryptography</span><h3>BerggrenSpectralHash.lean</h3><p>Modified: 2026-05-04 | Size: 18,262 bytes</p></div>
+<div class="card"><span class="badge badge-theorem">theorem</span> <span style="color:var(--muted);font-size:0.8em">EML</span><h3>CompactRetractApprox.lean</h3><p>Modified: 2026-05-04 | Size: 9,733 bytes</p></div>
+<div class="card"><span class="badge badge-theorem">theorem</span> <span style="color:var(--muted);font-size:0.8em">Shared</span><h3>CarmichaelHelper.lean</h3><p>Modified: 2026-05-04 | Size: 1,340 bytes</p></div>
+<div class="card"><span class="badge badge-theorem">theorem</span> <span style="color:var(--muted);font-size:0.8em">Shared</span><h3>CarmichaelCompositeEntryPoint.lean</h3><p>Modified: 2026-05-04 | Size: 5,226 bytes</p></div>
+<div class="card"><span class="badge badge-theorem">theorem</span> <span style="color:var(--muted);font-size:0.8em">Shared</span><h3>FibonacciLTE.lean</h3><p>Modified: 2026-05-04 | Size: 22,486 bytes</p></div>
+<div class="card"><span class="badge badge-theorem">theorem</span> <span style="color:var(--muted);font-size:0.8em">Speculative</span><h3>CarmichaelComputational.lean</h3><p>Modified: 2026-05-04 | Size: 140,200 bytes</p></div>
+<div class="card"><span class="badge badge-theorem">theorem</span> <span style="color:var(--muted);font-size:0.8em">Speculative</span><h3>Primitive_Prime_Divisors_of_Composite_Index_Fibonacci_Numbers_via_LTE_and_Entry_Point_Theory.lean</h3><p>Modified: 2026-05-04 | Size: 693 bytes</p></div>
+<div class="card"><span class="badge badge-theorem">theorem</span> <span style="color:var(--muted);font-size:0.8em">Speculative</span><h3>FibPrimitive.lean</h3><p>Modified: 2026-05-04 | Size: 330,031 bytes</p></div>
+<div class="card"><span class="badge badge-theorem">theorem</span> <span style="color:var(--muted);font-size:0.8em">Speculative</span><h3>CarmichaelComposite.lean</h3><p>Modified: 2026-05-04 | Size: 345,464 bytes</p></div>
+</div>
+
+<h2>Accumulated Research Wisdom</h2>
+<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;max-height:400px;overflow:auto;"><p><h1>MASTER FUTURE DIRECTIONS — Accumulated Research Wisdom</h1></p><p><em>Last updated: 2026-05-04 16:48</em></p><p><h2>5. Algorithmic Extraction from Density Proofs</h2></p><p><strong>Statement</strong>: The constructive content of the density proof can be extracted into an explicit approximation algorithm: given f ∈ C(X × Y, ℝ) and ε &gt; 0, compute a max-plus combination of pure tensors within ε of f.</p><p><strong>Approach</strong>: The proof via the lattice Stone–Weierstrass theorem is inherently constructive — it builds approximants via two-point interpolation and finite coverings. Making this extraction explicit requires:
+<li>Bounding the number of terms in the tropical sum (related to covering numbers of X × Y).</li>
+<li>Choosing the separating functions optimally (related to tropical rank minimization).</li>
+<li>Implementing the construction as a certified algorithm in Lean with <code>#eval</code> support.</li></p><p><strong>Significance</strong>: Bridges the gap between existence theorems and practical approximation, enabling verified numerical tropical computation.</p><p><h2>3. Min-Plus / Max-Plus Duality for Tensor-Generated EML Algebras</h2></p><p><strong>Statement</strong>: The max-plus density theorem dualizes to a min-plus density theorem: the family generated by inf and addition (tropical "min-plus" operations) of pure tensors is also dense in C(X × Y, ℝ).</p><p><strong>Approach</strong>: Use the negation isomorphism max(a, b) = −min(−a, −b) to transport the max-plus result to the min-plus setting. The formal proof is a one-line corollary.</p><p><strong>Extensions</strong>: Prove that the max-plus and min-plus representations are dual in the sense of tropical convexity: every continuous function is both the supremum of max-plus linear functions and the infimum of min-plus linear functions.</p><p><h2>2. Tropical Low-Rank Complexity and Approximation Bounds</h2></p><p><strong>Definition</strong>: The <em>tropical rank</em> of f ∈ C(X × Y, ℝ) relative to families A, B is the minimum n such that f can be uniformly approximated to within ε by max₁≤ᵢ≤ₙ (cᵢ + aᵢ(x) + bᵢ(y)) with aᵢ ∈ A, bᵢ ∈ B.</p><p><strong>Conjectured bound</strong>: For Lipschitz functions on compact metric spaces, the tropical rank grows polynomially in 1/ε, in contrast to the exponential growth typical of classical polynomial approximation in high dimensions.</p><p><strong>Significance</strong>: Would give quantitative tropical Barron-type theorems, bounding the complexity of max-plus neural network approximations.</p><p><h2>1. Multivariate / n-fold Tensor-Product Extension</h2></p><p><strong>Statement</strong>: For compact Hausdorff spaces X₁, …, Xₙ with point-separating families Aᵢ ⊆ C(Xᵢ, ℝ), the max-plus family generated by all lifted functions from each Aᵢ is dense in C(X₁ × ⋯ × Xₙ, ℝ).</p><p><strong>Approach</strong>: Induction on n. The base case n = 2 is the theorem proved in this file. The inductive step identifies X₁ × ⋯ × Xₙ₊₁ with (X₁ × ⋯ × Xₙ) × Xₙ₊₁ and applies the bivariate result.</p><p><strong>Significance</strong>: Enables compositional multivariate tropical approximation from univariate building blocks, analogous to iterated tensor products in functional analysis.</p><p><h2>4. Retract-Valued and Manifold-Valued Extension</h2></p><p><strong>Statement</strong>: For compact Hausdorff space</p></div>
+
+</div>
+<footer>Generated by Aether Website Generator &mdash; Autonomous Mathematical Research Engine</footer>
+</body></html>
