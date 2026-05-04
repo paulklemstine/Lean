@@ -787,6 +787,36 @@ class PiAgentClient:
                                             research_context=research_context,
                                             forced_domain=getattr(self, '_forced_domain', None))
 
+    # Compatibility alias for daemon.py which calls generate_breakthrough_concept
+    def generate_breakthrough_concept(
+        self,
+        domain: str = "",
+        seed_concepts: Optional[List] = None,
+        target: str = "theorem",
+        recent_successes: Optional[List] = None,
+        recent_failures: Optional[List] = None,
+        inflight_concepts: Optional[List[str]] = None,
+        forced_domain: Optional[str] = None,
+    ) -> 'ResearchConcept':
+        """Alias for select_research_direction for backward compatibility."""
+        # Build domain list from seed_concepts if provided
+        domains = []
+        if seed_concepts:
+            domains = [{"id": domain or "unknown", "seed_concepts": seed_concepts}]
+        elif domain:
+            domains = [{"id": domain, "seed_concepts": []}]
+        # Combine successes and failures into recent_history
+        recent_history = []
+        if recent_successes:
+            recent_history.extend(recent_successes)
+        if recent_failures:
+            recent_history.extend(recent_failures)
+        return self.select_research_direction(
+            domains=domains or [{"id": "unknown", "seed_concepts": []}],
+            recent_history=recent_history or None,
+            inflight_concepts=inflight_concepts,
+        )
+
     # Class-level state to cycle through concepts (avoids always picking same one)
     _concept_cycle_index: int = 0
 
