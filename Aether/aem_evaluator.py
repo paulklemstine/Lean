@@ -168,14 +168,33 @@ class AEMEvaluator:
         score = 0.0
         details = {}
 
-        # 1. Sorry count (massive penalty)
+        # 1. Sorry count adjusted by sorry density (sorries per theorem)
+        # A file with 40 theorems and 1 sorry (2.5% density) is much more rigorous
+        # than a file with 2 theorems and 1 sorry (50% density).
         sorry_count = lean_source.lower().count("sorry")
+        theorem_matches = re.findall(r'(?:theorem|lemma)\s+(\w+)', lean_source)
+        theorem_count = len(theorem_matches)
+        sorry_density = sorry_count / max(theorem_count, 1)  # sorries per theorem
+        
         if sorry_count == 0:
             score += 3.0
             details["sorry_status"] = "no_sorries"
+        elif sorry_density < 0.1:
+            # Nearly complete: <10% sorry density (e.g., 1 sorry in 10+ theorems)
+            score += 2.5
+            details["sorry_status"] = f"nearly_complete({sorry_count}/{theorem_count}, density={sorry_density:.2f})"
+        elif sorry_density < 0.3:
+            # Mostly complete: 10-30% sorry density
+            score += 1.5
+            details["sorry_status"] = f"minor_gaps({sorry_count}/{theorem_count}, density={sorry_density:.2f})"
         elif sorry_count <= 2:
+            # Very few sorries regardless of density
             score += 1.5
             details["sorry_status"] = f"minor_gaps({sorry_count})"
+        elif sorry_density < 0.5:
+            # Significant but not overwhelming gaps
+            score += 0.5
+            details["sorry_status"] = f"significant_gaps({sorry_count}/{theorem_count}, density={sorry_density:.2f})"
         elif sorry_count <= 10:
             score += 0.5
             details["sorry_status"] = f"significant_gaps({sorry_count})"
@@ -184,8 +203,6 @@ class AEMEvaluator:
             details["sorry_status"] = f"major_gaps({sorry_count})"
 
         # 2. Theorem/lemma count and proof completeness
-        theorem_matches = re.findall(r'(?:theorem|lemma)\s+(\w+)', lean_source)
-        theorem_count = len(theorem_matches)
         if theorem_count == 0:
             score += 0.0
             details["theorem_count"] = "0"
@@ -211,8 +228,19 @@ class AEMEvaluator:
             abstraction_indicators += 1
         if re.search(r'universe\s+', lean_source):
             abstraction_indicators += 1
+        # Additional abstraction indicators
+        if re.search(r'\bextends\b', lean_source):
+            abstraction_indicators += 1  # Class inheritance (e.g., class Foo extends Bar)
+        if re.search(r'variable\s*\[', lean_source) and re.search(r'variable\s*\{', lean_source):
+            abstraction_indicators += 1  # Both explicit and implicit params = sophisticated abstraction
+        if re.search(r'\bwhere\b.*\bmatch\b|\bmatch\b.*\bwith\b', lean_source):
+            abstraction_indicators += 0  # match/with is too common, don't count
+        if re.search(r'\bclass\s+\w+\s+extends\b', lean_source):
+            abstraction_indicators += 1  # typeclass inheritance
+        if re.search(r'\binstance\b.*:.*\bwhere\b', lean_source):
+            abstraction_indicators += 1  # Instance definitions
 
-        abstraction_score = min(abstraction_indicators * 0.6, 2.0)
+        abstraction_score = min(abstraction_indicators * 0.6, 3.0)  # Max 3.0 for 5+ indicators
         score += abstraction_score
         details["abstraction_depth"] = str(abstraction_indicators)
 
