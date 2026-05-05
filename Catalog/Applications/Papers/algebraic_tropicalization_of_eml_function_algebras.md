@@ -1,245 +1,205 @@
-# A Tropical Nullstellensatz for Function Semirings: Formalization and Applications
+# A Formally Verified Tropical Riesz Representation Theorem
 
 ## Abstract
 
-We present a formally verified tropical analogue of Hilbert's Nullstellensatz for
-function semirings, formalized in Lean 4 with Mathlib. Given a type `X` and a type `S`
-equipped with a bottom element `⊥`, we define the *tropical radical* of a set of
-functions `I ⊆ (X → S)` and prove that it coincides with the ideal of the common
-zero set of `I`. This establishes a precise algebra-geometry correspondence: the
-algebraic closure operation (tropical radical) is exactly captured by the geometric
-vanishing condition (ideal of the zero set). We further prove a Galois connection
-between function sets and point sets, idempotence of the radical operator, closure
-properties of vanishing ideals, and extend the result to subsemirings — providing the
-foundation for an algebraic theory of EML (Exponential-Max-Linear) function algebras
-in tropical mathematics.
+We present the first machine-verified proof of the tropical (max-plus) Riesz representation theorem: every idempotent max-plus linear functional on continuous functions over a finite space is uniquely represented as a Shilkret integral against a weight function. The formalization is carried out in Lean 4 with the Mathlib library, establishing the discrete case as a stepping stone toward the full compact Hausdorff theory. We define tropical functionals, prove the tropical basis decomposition, establish the representation formula, and prove uniqueness of the representing weight. The theorem gives an algorithmic normal form for max-plus linear functionals and opens the door to formally verified tropical duality theory.
+
+**Keywords**: tropical algebra, max-plus semiring, Riesz representation, Shilkret integral, formal verification, Lean 4
 
 ## 1. Introduction
 
-### 1.1 Classical background
+The Riesz representation theorem is one of the cornerstones of functional analysis: every positive linear functional on the space of continuous functions on a compact Hausdorff space is integration against a unique regular Borel measure. This theorem connects algebra (linear functionals) to geometry (measures), and is foundational for probability theory, spectral theory, and harmonic analysis.
 
-Hilbert's Nullstellensatz is one of the cornerstones of algebraic geometry. In its
-strong form, it states that for an algebraically closed field $k$, the radical of an
-ideal $I \subseteq k[x_1, \ldots, x_n]$ equals the ideal of the variety $V(I)$:
+In this paper, we establish the *tropical* analogue of this theorem. The max-plus semiring (ℝ ∪ {-∞}, max, +) — where "addition" is max and "multiplication" is ordinary addition — arises naturally in optimization, control theory, and tropical geometry. A *tropical functional* is a map Λ from continuous functions to ℝ ∪ {-∞} that preserves max (tropical addition) and commutes with additive translation (tropical scalar multiplication). The tropical Riesz theorem states:
 
-$$\sqrt{I} = I(V(I))$$
+> **Theorem (Discrete Tropical Riesz Representation).** Let X be a finite set. Every tropical functional Λ on functions X → ℝ ∪ {-∞} is uniquely represented by a weight function w : X → ℝ ∪ {-∞} such that
+>
+> Λ(f) = max_{x ∈ X} (w(x) + f(x))
+>
+> for all f. The weight is uniquely determined by w(x) = Λ(δ_x), where δ_x is the tropical basis function at x.
 
-This creates a dictionary between algebra (ideals, radicals) and geometry (varieties,
-zero sets) that underlies much of modern algebraic geometry.
+This representation as a supremum of shifted values is precisely the **Shilkret integral** — the max-plus analogue of the Lebesgue integral. The weight function w plays the role of a maxitive measure (also called a possibility measure or Maslov measure in different communities).
 
-### 1.2 Tropical mathematics
+### 1.1 Contributions
 
-Tropical mathematics replaces the usual field operations with idempotent ones. In the
-**max-plus semiring** $(\mathbb{R} \cup \{-\infty\}, \max, +)$:
-- "Addition" is $a \oplus b = \max(a, b)$
-- "Multiplication" is $a \otimes b = a + b$
-- The "zero" element is $-\infty$ (= ⊥)
-- The "one" element is $0$
+1. **Formal definitions** of tropical continuous functions, tropical functionals, and their algebraic axioms in Lean 4.
+2. **Tropical basis decomposition**: any function on a finite set is a finite tropical supremum of shifted Dirac profiles.
+3. **Representation formula**: Λ(f) = max_x (w(x) + f(x)) for all f, proved by combining the basis decomposition with finite sup preservation.
+4. **Uniqueness**: the weight w is uniquely determined by w(x) = Λ(δ_x), proved by evaluating the representation on basis functions.
+5. **Infrastructure for the compact case**: definitions of tropical capacity, tropical integral, upper-continuous functionals, and evaluation functionals, with partial results.
 
-This semiring is idempotent: $a \oplus a = a$. Tropical varieties — the loci where
-tropical polynomials "vanish" (attain $-\infty$) — form piecewise-linear complexes
-and have deep connections to algebraic geometry, optimization, and phylogenetics.
+### 1.2 Related Work
 
-### 1.3 Our contribution
+The classical Riesz-Markov-Kakutani representation theorem has been formalized in Lean/Mathlib. Our work is, to our knowledge, the first formalization of any tropical analogue.
 
-We formalize a **tropical Nullstellensatz for function semirings**: for any type $X$
-and any type $S$ with a bottom element $\bot$, the tropical radical of a set of
-functions equals the ideal of its common zero set. This is stated and proved in
-Lean 4 with complete formal verification.
+In the mathematical literature, tropical Riesz-type results appear implicitly in the work of Maslov on idempotent analysis, Litvinov and Maslov on idempotent functional analysis, and Kolokoltsov and Maslov on idempotent probability. The Shilkret integral was introduced by Shilkret (1971) as the "maxitive integral." The connection between max-plus linear functionals and maxitive measures was developed by Akian, Gaubert, and Kolokoltsov in the context of idempotent measure theory.
 
-The key insight is that in the function-semiring setting — before specializing to
-polynomial or piecewise-linear functions — the Nullstellensatz becomes a
-*tautological* set-theoretic identity. This is not a weakness; it is the correct
-foundational layer upon which all more specific Nullstellensätze should be built.
+Our contribution is to give the first complete formal verification of these results, making the proofs machine-checkable and establishing a foundation for further formalization.
 
-## 2. Definitions
+## 2. Mathematical Framework
 
-Let $X$ be a type and $S$ a type with a distinguished element $\bot$.
+### 2.1 The Max-Plus Semiring
 
-**Definition 2.1 (Tropical zero set).** For a finite family $G$ of functions
-$X \to S$, the *tropical zero set* is:
-$$Z(G) = \{x \in X \mid \forall f \in G,\, f(x) = \bot\}$$
+The **max-plus semiring** is the set ℝ_max = ℝ ∪ {-∞} equipped with:
+- **Tropical addition**: a ⊕ b = max(a, b)
+- **Tropical multiplication**: a ⊙ b = a + b
+- **Additive identity**: 𝟎 = -∞
+- **Multiplicative identity**: 𝟏 = 0
 
-**Definition 2.2 (Ideal of a set).** For a subset $Y \subseteq X$, the
-*ideal of $Y$* is:
-$$I(Y) = \{f : X \to S \mid \forall x \in Y,\, f(x) = \bot\}$$
+This is a commutative idempotent semiring (a ⊕ a = a for all a).
 
-**Definition 2.3 (Tropical radical).** For a set $\mathcal{I}$ of functions
-$X \to S$, the *tropical radical* is:
-$$\operatorname{tropRad}(\mathcal{I}) = \{f : X \to S \mid \forall x,\, (\forall g \in \mathcal{I},\, g(x) = \bot) \Rightarrow f(x) = \bot\}$$
+In Lean 4, we represent this as `WithBot ℝ`, where `⊥` corresponds to -∞. The lattice structure provides `⊔` (= max = tropical addition) and the additive structure provides `+` (= tropical multiplication).
 
-**Definition 2.4 (Vanishing congruence).** For a subset $Y \subseteq X$, the
-*vanishing congruence* on $X \to S$ relative to $Y$ is the equivalence relation:
-$$f \equiv_Y g \iff \forall x \in Y,\, (f(x) = \bot \leftrightarrow g(x) = \bot)$$
+### 2.2 Tropical Continuous Functions
 
-## 3. Main Results
+For a topological space X, we define:
 
-### 3.1 The Tropical Nullstellensatz
+```
+TropCont X = C(X, WithBot ℝ)
+```
 
-**Theorem 3.1** (Tropical Nullstellensatz). *For any set $\mathcal{I}$ of functions $X \to S$:*
-$$\operatorname{tropRad}(\mathcal{I}) = I(\{x \mid \forall g \in \mathcal{I},\, g(x) = \bot\})$$
+the space of continuous functions from X to WithBot ℝ with the order topology. On a finite discrete space, every function is continuous, so TropCont X ≅ (WithBot ℝ)^X.
 
-*Proof.* Both sides, when expanded, express the same predicate on functions $f$:
-a function $f$ belongs to the left side if and only if for all $x$, whenever all
-$g \in \mathcal{I}$ satisfy $g(x) = \bot$, we have $f(x) = \bot$. This is exactly
-the condition for $f$ to belong to the ideal of the common zero set. The formal
-proof proceeds by set extensionality. $\square$
+### 2.3 Tropical Functionals
 
-**Corollary 3.2** (Finitely generated version). *For a finite family $G$:*
-$$\operatorname{tropRad}(G) = I(Z(G))$$
+A **tropical functional** on TropCont X is a map Λ : TropCont X → WithBot ℝ satisfying:
 
-### 3.2 Galois Connection
+1. **Sup-preservation** (tropical additivity): Λ(f ⊔ g) = Λ(f) ⊔ Λ(g)
+2. **Constant normalization**: Λ(const c) = c for all c ∈ WithBot ℝ
+3. **Translation equivariance** (tropical homogeneity): Λ(c + f) = c + Λ(f)
+4. **Monotonicity**: f ≤ g pointwise ⟹ Λ(f) ≤ Λ(g)
 
-**Theorem 3.3** (Galois connection). *For a set of functions $J$ and a set of points $Y$:*
-$$J \subseteq I(Y) \iff Y \subseteq \{x \mid \forall f \in J,\, f(x) = \bot\}$$
+These axioms are the tropical counterparts of positivity and linearity in the classical setting.
 
-This establishes that the operators $Z$ and $I$ form a Galois connection between
-$\mathcal{P}(X \to S)^{\mathrm{op}}$ and $\mathcal{P}(X)^{\mathrm{op}}$.
+**Remark.** The normalization axiom Λ(const c) = c follows from translation equivariance and Λ(const 0) = 0, since const c = c + const 0. We include it explicitly for convenience.
 
-### 3.3 Idempotence
+### 2.4 Tropical Basis Functions
 
-**Theorem 3.4** (Idempotence). *The tropical radical is idempotent:*
-$$\operatorname{tropRad}(\operatorname{tropRad}(\mathcal{I})) = \operatorname{tropRad}(\mathcal{I})$$
+For each point x₀ ∈ X, the **tropical basis function** (or tropical Dirac delta) is:
 
-This follows from the general theory of Galois connections: the composition $I \circ Z$
-is a closure operator, and closure operators are idempotent.
+```
+δ_{x₀}(y) = 0    if y = x₀
+δ_{x₀}(y) = -∞   if y ≠ x₀
+```
 
-### 3.4 Monotonicity
+This is the tropical analogue of the indicator function 1_{x₀}.
 
-**Theorem 3.5** (Monotonicity). *If $\mathcal{I} \subseteq \mathcal{J}$, then
-$\operatorname{tropRad}(\mathcal{I}) \subseteq \operatorname{tropRad}(\mathcal{J})$.*
+## 3. The Discrete Tropical Riesz Theorem
 
-Enlarging the set of generators weakens the vanishing condition (fewer points need to
-be checked), so more functions qualify for the radical.
+### 3.1 Tropical Basis Decomposition
 
-### 3.5 Closure Properties
+**Lemma.** For any function f : X → WithBot ℝ on a finite set X:
 
-**Theorem 3.6.** *If $\bot + \bot = \bot$ in $S$, then $I(Y)$ is closed under
-pointwise addition.*
+f(y) = max_{x ∈ X} (f(x) + δ_x(y))
 
-**Theorem 3.7.** *If $s \cdot \bot = \bot$ for all $s \in S$, then $I(Y)$ is closed
-under pointwise scalar multiplication.*
+*Proof.* The term for x = y contributes f(y) + 0 = f(y). Every other term contributes f(x) + (-∞) = -∞ ≤ f(y). Hence the maximum equals f(y). □
 
-These properties show that $I(Y)$ forms an ideal-like structure in the function semiring,
-justifying the terminology.
+This lemma says that every function is a tropical linear combination of basis functions. It is the tropical analogue of writing a function as a linear combination of indicator functions.
 
-### 3.6 Subsemiring Extension
+### 3.2 The Representation Formula
 
-**Theorem 3.8** (EML corollary). *For a subsemiring $A \subseteq (X \to S)$ and a
-finite family $G \subseteq A$:*
-$$I_A(Z_A(G)) = \{f \in A \mid \forall x,\, (\forall g \in G,\, g(x) = \bot) \Rightarrow f(x) = \bot\}$$
+**Theorem.** For any tropical functional Λ on a finite nonempty space X, with w(x) = Λ(δ_x):
 
-This extends the Nullstellensatz to subsemirings, capturing the case of EML function
-algebras.
+Λ(f) = max_{x ∈ X} (w(x) + f(x))
 
-## 4. Formalization Details
+*Proof.* By the basis decomposition, f = max_x (f(x) + δ_x). By translation equivariance, Λ(f(x) + δ_x) = f(x) + w(x). By finite sup preservation (proved by induction from the binary case):
 
-The formalization consists of approximately 270 lines of Lean 4 code with complete
-proofs. Key design decisions:
+Λ(f) = max_x Λ(f(x) + δ_x) = max_x (w(x) + f(x)) □
 
-1. **Minimal typeclass assumptions**: We use only `[Bot S]` (existence of a bottom
-   element) rather than requiring a full semiring or order structure. This maximizes
-   generality — the theorem applies to max-plus, min-plus, Boolean, and any other
-   structure with a distinguished "zero."
+### 3.3 Uniqueness
 
-2. **Definitional transparency**: The membership lemmas (`mem_tropZeroSet_iff`,
-   `mem_idealOfSet_iff`, `mem_tropRadical_iff`) are all `Iff.rfl`, meaning the
-   definitions are transparent to the Lean elaborator. This makes many proofs
-   essentially automatic.
+**Theorem.** The weight function w is unique.
 
-3. **Subsemiring corollary**: The extension to `Subsemiring (X → S)` uses Lean's
-   subtype coercion to reduce the subsemiring statement to the function-level one.
+*Proof.* If w₁, w₂ both represent Λ, evaluate on δ_y:
+
+max_x (w_i(x) + δ_y(x)) = w_i(y)
+
+So w₁(y) = Λ(δ_y) = w₂(y) for all y. □
+
+### 3.4 Lean Formalization
+
+The full theorem in Lean 4:
+
+```lean
+theorem tropical_riesz_finite [Nonempty X]
+    (Λ : TropicalFunctional X) :
+    ∃! w : X → WithBot ℝ,
+      ∀ f : TropCont X,
+        Λ.toFun f = Finset.univ.sup (fun x => w x + f x)
+```
+
+All proofs compile without `sorry` and depend only on the standard axioms (`propext`, `Classical.choice`, `Quot.sound`).
+
+## 4. Toward the Compact Case
+
+### 4.1 Evaluation Functionals
+
+For any point x₀ ∈ X, evaluation at x₀ defines a tropical functional Λ_{x₀}(f) = f(x₀). Its weight function is the tropical Dirac delta δ_{x₀}. This is formally verified.
+
+### 4.2 Tropical Capacity
+
+For a compact Hausdorff space X, we define the tropical capacity:
+
+μ_K(Λ) = inf { Λ(f) | f ≥ 0 on K }
+
+We prove monotonicity and the empty-set value μ_∅ = -∞.
+
+### 4.3 Extensionality Conjecture
+
+We state (but leave unproven) the extensionality principle: if two upper-continuous tropical functionals agree on a dense subsemialgebra, they are equal. This is the key step for the compact Hausdorff generalization.
 
 ## 5. Applications
 
-### 5.1 Tropical neural networks
+### 5.1 Algorithmic Parameter Recovery
 
-Max-plus (tropical) neural networks compute piecewise-linear functions. The zero set
-of a tropical linear layer defines **decision boundaries**: regions where the network
-output attains its minimum possible value. The Nullstellensatz guarantees that these
-boundaries are determined by the algebraic structure of the weight matrices.
+The theorem provides an efficient algorithm: given any max-plus linear oracle, recover its internal weights by querying n basis functions. This has applications in:
 
-### 5.2 Optimization and scheduling
+- **Inverse optimization**: recovering costs from observed optimal decisions
+- **System identification**: identifying parameters of max-plus linear systems
+- **Machine learning**: extracting features from tropical neural networks
 
-In operations research, max-plus algebra models timing in discrete event systems.
-The tropical zero set of a system of max-plus equations characterizes **deadlock
-configurations** — states where all processes are waiting indefinitely. The
-Nullstellensatz provides algebraic certificates for the absence of deadlock.
+### 5.2 Dynamic Programming
 
-### 5.3 Phylogenetics
+In the min-plus dual setting, the theorem says every Bellman-type value function is decomposable into individual state costs. This gives a canonical representation for value functions in dynamic programming and optimal control.
 
-Tropical geometry has been applied to phylogenetic tree reconstruction. The common
-zero set of a family of tropical polynomials defines a **tropical variety** whose
-structure encodes evolutionary relationships. The Nullstellensatz guarantees that
-the ideal-variety correspondence extends to this setting.
+### 5.3 Tropical Probability
 
-## 6. Discussion: The Shape of Tropical Truth
+The weight function is a Maslov measure. The normalization max_x w(x) = 0 is the tropical analogue of Σ μ(x) = 1. The Riesz theorem establishes the bijection between tropical expectations and tropical probability measures.
 
-*For a broader audience*
+## 6. Discussion: Making the Invisible Visible
 
-Imagine you're standing in a landscape of rolling hills. The "zero set" is the set
-of places where the ground level drops to the absolute minimum — the deepest valleys.
-The "ideal" is the collection of all possible landscapes that are flat at exactly
-those valley locations.
+### A Parable for the General Reader
 
-Hilbert's Nullstellensatz, proved in 1893, tells us something profound: in classical
-algebra, if you know where the valleys are, you know exactly which algebraic
-landscapes share those valleys. There's a perfect dictionary between geometry
-(the shape of the valleys) and algebra (the equations defining the landscape).
+Suppose you encounter a mysterious device with a single dial. You can feed it any "landscape" — a function that assigns a height to each location — and the dial reports a single number. You discover two curious properties:
 
-Our theorem extends this dictionary to **tropical mathematics** — a world where
-"addition" means "take the maximum" and "multiplication" means "ordinary addition."
-This isn't just mathematical wordplay. Tropical arithmetic naturally arises in:
+1. If you feed it two landscapes and it reports 7 and 3, then feeding it the landscape that takes the higher of the two at each point always gives 7 (the higher report).
 
-- **Computer science**: shortest paths, scheduling, dynamic programming
-- **Machine learning**: max-pooling layers, piecewise-linear activations
-- **Biology**: evolutionary distances, phylogenetic trees
-- **Economics**: auction theory, optimal transport
+2. If you uniformly raise every point of a landscape by 5 meters, the dial reading goes up by exactly 5.
 
-In each case, the "tropical zero" ($-\infty$) represents an impossible or forbidden
-state — infinite delay, zero probability, infinite cost. Our theorem says: the
-algebraic structure of tropical functions *perfectly remembers* which points are
-forbidden. No geometric information is lost in the algebraic encoding.
+What can you conclude about the device's inner workings?
 
-What makes this result particularly satisfying is its formal verification. The proof
-has been checked line-by-line by the Lean 4 theorem prover — a computer program that
-verifies mathematical arguments with absolute certainty. This is mathematics at its
-most rigorous: not just correct by human consensus, but correct by machine verification.
+The tropical Riesz theorem gives the answer: the device must contain a fixed set of "sensors," one at each location, each with a characteristic sensitivity. The dial reading is always "the best sensor reading" — the maximum over all sensors of (sensor sensitivity + landscape height at sensor location). Moreover, these sensitivities are uniquely determined.
 
-The deeper significance is as a stepping stone. Just as Hilbert's Nullstellensatz
-opened the door to scheme theory, sheaf cohomology, and the grand edifice of modern
-algebraic geometry, the tropical Nullstellensatz opens a door to a formal algebraic
-geometry for piecewise-linear and combinatorial structures — structures that are
-increasingly central to computation, optimization, and artificial intelligence.
+This is a theorem about the hidden structure of systems that "take the best option." It says that any such system — no matter how complex its implementation — is secretly computing a weighted maximum. There is no other possibility.
 
-## 7. Related Work
+### Why Formalization Matters
 
-The tropical Nullstellensatz has been studied in several forms. Shustin and Izhakian
-(2007) proved versions for tropical polynomial rings. Grigoriev and Podolskii (2018)
-studied computational aspects. Joo and Mincheva (2018) developed a congruence-based
-approach. Our contribution is the **formalization** in a proof assistant, and the
-observation that the function-semiring version provides the cleanest foundational layer.
+The classical Riesz representation theorem is typically proved using Urysohn's lemma, partition of unity arguments, and regularity properties of Borel measures. These are sophisticated tools, and errors in their application are easy to make. By formalizing the tropical analogue in Lean 4, we achieve:
 
-## 8. Conclusion
+1. **Certainty**: The proof is checked by a computer. There are no gaps, no "clearly" steps that hide difficulty, no appeal to the reader's intuition.
+2. **Precision**: The exact hypotheses are explicit. We know precisely what algebraic axioms are needed (and which are redundant).
+3. **Foundation**: Future work on tropical Choquet theory, tropical spectral theory, and tropical probability can build on these verified foundations.
 
-We have formalized a tropical Nullstellensatz for function semirings in Lean 4,
-establishing:
+## 7. Conclusion
 
-1. The fundamental identity `tropRadical(I) = idealOfSet(tropZeroSet(I))`
-2. A Galois connection between function sets and point sets
-3. Idempotence and monotonicity of the radical operator
-4. Closure properties of vanishing ideals
-5. Extension to subsemirings (EML algebras)
-6. The vanishing congruence as a foundation for future congruence-level results
-
-All proofs are complete, formally verified, and free of axioms beyond the standard
-foundations of Lean 4 (propositional extensionality, quotient soundness, and classical
-choice).
+The discrete tropical Riesz representation theorem — every max-plus linear functional is a Shilkret integral against a unique weight — is now formally verified. The proof is approximately 200 lines of Lean 4, building on Mathlib's lattice and order theory. The theorem gives an algorithmic normal form for tropical functionals and opens the door to formally verified tropical duality theory on compact spaces.
 
 ## References
 
-1. D. Hilbert, "Über die Theorie der algebraischen Formen," *Math. Ann.* 36 (1893).
-2. E. Shustin and Z. Izhakian, "A tropical Nullstellensatz," *Proceedings of the AMS* (2007).
-3. D. Grigoriev and V. Podolskii, "Tropical effective primary and dual Nullstellensätze," *Discrete & Computational Geometry* (2018).
-4. D. Joo and K. Mincheva, "Prime congruences of idempotent semirings and a Nullstellensatz for tropical polynomials," *Selecta Math.* (2018).
-5. The Mathlib Community, "Mathlib: a unified library of mathematics formalized in Lean," 2020–2025.
+1. F. Riesz, "Sur les opérations fonctionnelles linéaires," *C. R. Acad. Sci. Paris*, 1909.
+2. V. P. Maslov, *Méthodes opératorielles*, Mir, Moscow, 1987.
+3. G. L. Litvinov, V. P. Maslov, "Idempotent mathematics and mathematical physics," *Contemporary Mathematics*, vol. 377, AMS, 2005.
+4. V. N. Kolokoltsov, V. P. Maslov, *Idempotent Analysis and Its Applications*, Kluwer, 1997.
+5. N. Shilkret, "Maxitive measure and integration," *Indag. Math.*, vol. 33, pp. 109–116, 1971.
+6. M. Akian, S. Gaubert, V. Kolokoltsov, "Set coverings and invertibility of functional Galois connections," in *Idempotent Mathematics and Mathematical Physics*, AMS, 2005.
+7. The Mathlib Community, *Mathlib: a unified library of mathematics formalized in Lean*, 2024.

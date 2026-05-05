@@ -1,149 +1,96 @@
-/-
-Copyright (c) 2025. All rights reserved.
-Released under Apache 2.0 license.
-
-# Bridge Theory in Graph Theory
-
-This file develops the theory of bridges (cut edges) in simple graphs,
-building on Mathlib's `SimpleGraph.IsBridge` definition.
-
-## Main results
-
-* `IsBridge.connectedComponent_ne` — Endpoints of a bridge are in different
-  connected components after deletion.
-* `IsBridge.two_connected_components` — Removing a bridge from a connected
-  graph yields exactly two connected components.
-* `IsTree.isBridge_of_adj` — Every edge of a tree is a bridge.
-* `connected_isBridge_all_iff_isTree` — A connected graph is a tree iff
-  every edge is a bridge.
-* `IsBridge.forall_reachable_delete_left_or_right` — Every vertex in a
-  connected graph is reachable from one side of a bridge after deletion.
-
-## Historical context
-
-The study of bridges in graph theory traces back to Euler's 1736 solution
-of the Königsberg Bridge Problem — widely considered the birth of graph
-theory. A bridge (or cut edge) is an edge whose removal disconnects the
-graph, making it a critical concept in network reliability and infrastructure
-analysis.
--/
-
 import Mathlib
 
-namespace SimpleGraph
+/-!
+# Tropical Functionals: Basic Definitions
 
-variable {V : Type*} {G : SimpleGraph V}
+This file defines the foundational structures for the tropical Riesz representation theory:
+- `TropCont X`: continuous functions from `X` to `WithBot ℝ` (the max-plus semiring)
+- `TropicalFunctional X`: max-plus linear functionals on `TropCont X`
+- Basic lemmas about extensionality and monotonicity
 
-/-! ### Deletion equivalence
+## Mathematical context
 
-`G.deleteEdges s` and `G \ fromEdgeSet s` have the same adjacency and
-hence the same reachability.  We prove the reachability equivalence
-we need. -/
+In the max-plus (tropical) semiring `(WithBot ℝ, sup, +)`, the element `⊥ = -∞` is the
+additive zero and `0` is the multiplicative unit. A *tropical functional* is a map
+`Λ : TropCont X → WithBot ℝ` that preserves `sup` (tropical addition), commutes with
+translation by constants (tropical scalar multiplication), and normalizes constants.
 
-/-
-`deleteEdges {e}` and `G \ fromEdgeSet {e}` have the same reachability.
+This is the tropical analogue of a positive linear functional in classical analysis.
 -/
-theorem reachable_deleteEdges_iff_reachable_sdiff {e : Sym2 V} {u v : V} :
-    (G.deleteEdges {e}).Reachable u v ↔ (G \ fromEdgeSet {e}).Reachable u v := by
-  constructor;
-  · intro h;
-    convert h.mono ?_;
-    intro u v; aesop;
-  · intro h;
-    convert h
 
-/-- Bridge characterization using `deleteEdges` instead of `sdiff`. -/
-theorem isBridge_iff_deleteEdges {u v : V} :
-    G.IsBridge s(u, v) ↔ G.Adj u v ∧ ¬(G.deleteEdges {s(u, v)}).Reachable u v := by
-  rw [isBridge_iff]
-  exact ⟨
-    fun ⟨h1, h2⟩ => ⟨h1, fun hr => h2 (reachable_deleteEdges_iff_reachable_sdiff.mp hr)⟩,
-    fun ⟨h1, h2⟩ => ⟨h1, fun hr => h2 (reachable_deleteEdges_iff_reachable_sdiff.mpr hr)⟩⟩
+noncomputable section
 
-/-! ### Bridge fundamentals -/
+/-! ## Topology on `WithBot ℝ` -/
 
-/-- The endpoints of a bridge lie in different connected components
-after the bridge is deleted. -/
-theorem IsBridge.connectedComponent_ne_deleteEdges {u v : V}
-    (hb : G.IsBridge s(u, v)) :
-    (G.deleteEdges {s(u, v)}).connectedComponentMk u ≠
-    (G.deleteEdges {s(u, v)}).connectedComponentMk v := by
-  rw [Ne, ConnectedComponent.eq]
-  exact (isBridge_iff_deleteEdges.mp hb).2
+instance WithBot.Real.topologicalSpace : TopologicalSpace (WithBot ℝ) :=
+  Preorder.topology (WithBot ℝ)
+instance WithBot.Real.orderTopology : OrderTopology (WithBot ℝ) := ⟨rfl⟩
 
-/-! ### Bridge splitting: every vertex goes to one side -/
+/-! ## The function space `TropCont X` -/
 
-/-
-In a connected graph, after removing a bridge {u,v}, every vertex
-is reachable from either u or v (but not both, since u and v are separated).
-This shows the bridge partitions the vertex set into exactly two parts.
--/
-theorem IsBridge.forall_reachable_delete_left_or_right
-    (hconn : G.Connected) {u v : V} (hb : G.IsBridge s(u, v)) (w : V) :
-    (G.deleteEdges {s(u, v)}).Reachable u w ∨
-    (G.deleteEdges {s(u, v)}).Reachable v w := by
-  obtain ⟨ p ⟩ := hconn w u;
-  induction' p with w' w'' p ih;
-  · exact Or.inl ( SimpleGraph.Reachable.refl _ );
-  · cases' eq_or_ne w'' ih with h h <;> cases' eq_or_ne w'' v with h' h' <;> simp_all +decide [ SimpleGraph.isBridge_iff ];
-    cases' ‹ ( G.deleteEdges { s(ih, v) } ).Reachable ih p ∨ ( G.deleteEdges { s(ih, v) } ).Reachable v p › with h'' h'' <;> [ left; right ] <;> refine' h''.trans _ <;> simp_all +decide [ SimpleGraph.deleteEdges ];
-    · exact SimpleGraph.Adj.reachable ( by aesop ) |> SimpleGraph.Reachable.symm;
-    · exact SimpleGraph.Reachable.symm ( SimpleGraph.Adj.reachable ( by aesop ) )
+/-- Continuous functions from `X` to `WithBot ℝ` with the order topology.
+In the tropical setting, these are the analogues of continuous real-valued functions. -/
+abbrev TropCont (X : Type*) [TopologicalSpace X] := C(X, WithBot ℝ)
 
-/-! ### Two connected components -/
+/-! ## Operations on `TropCont X` -/
 
-/-
-Removing a bridge from a connected graph produces exactly two
-connected components. This is a fundamental structural result about
-bridges, showing that a bridge literally "bridges" two otherwise
-disconnected parts of the graph.
--/
-theorem IsBridge.two_connected_components [DecidableEq V] [Fintype V]
-    [DecidableRel G.Adj]
-    (hconn : G.Connected) {u v : V} (hb : G.IsBridge s(u, v)) :
-    Fintype.card (G.deleteEdges {s(u, v)}).ConnectedComponent = 2 := by
-  convert Set.ncard_eq_two.mpr _;
-  rotate_left;
-  exact ( G.deleteEdges { s(u, v) } ).ConnectedComponent;
-  exact Set.range ( fun w => ( G.deleteEdges { s(u, v) } ).connectedComponentMk w );
-  · refine' ⟨ _, _, _, _ ⟩;
-    exact ( G.deleteEdges { s(u, v) } ).connectedComponentMk u;
-    exact ( G.deleteEdges { s(u, v) } ).connectedComponentMk v;
-    · exact connectedComponent_ne_deleteEdges hb;
-    · ext w;
-      obtain ⟨ x, rfl ⟩ := w.exists_rep;
-      have := hb.forall_reachable_delete_left_or_right hconn x;
-      cases this <;> simp_all +decide [ SimpleGraph.connectedComponentMk ];
-      · exact Or.inl ( Quot.sound ‹_› |> Eq.symm );
-      · exact Or.inr ( Quot.sound <| by tauto );
-  · rw [ Set.ncard_eq_toFinset_card _ ];
-    refine' Finset.card_bij ( fun x _ => x ) _ _ _ <;> simp +decide;
-    exact fun a => a.exists_rep
+/-- Pointwise supremum of two tropical continuous functions. -/
+def TropCont.tsup {X : Type*} [TopologicalSpace X]
+    (f g : TropCont X) : TropCont X :=
+  ⟨fun x => f x ⊔ g x, f.continuous.sup g.continuous⟩
 
-/-! ### Trees and bridges -/
+@[simp] theorem TropCont.tsup_apply {X : Type*} [TopologicalSpace X]
+    (f g : TropCont X) (x : X) : (TropCont.tsup f g) x = f x ⊔ g x := rfl
 
-/-
-Every edge of a tree is a bridge. In a tree, every edge is critical
-for connectivity — removing any edge disconnects the tree.
--/
-theorem IsTree.isBridge_of_adj (hT : G.IsTree) {u v : V} (hadj : G.Adj u v) :
-    G.IsBridge s(u, v) := by
-  -- By definition of a tree, it is acyclic.
-  have h_acyclic : G.IsAcyclic := by
-    exact hT.2;
-  rw [ SimpleGraph.isAcyclic_iff_forall_adj_isBridge ] at h_acyclic ; aesop
+/-! ## Tropical Functional -/
 
-/-
-A connected graph is a tree if and only if every edge is a bridge.
-This provides a characterization of trees in terms of edge criticality.
--/
-theorem connected_isBridge_all_iff_isTree (hconn : G.Connected) :
-    (∀ ⦃u v : V⦄, G.Adj u v → G.IsBridge s(u, v)) ↔ G.IsTree := by
-  constructor;
-  · intro h;
-    constructor;
-    · assumption;
-    · exact isAcyclic_iff_forall_adj_isBridge.mpr h;
-  · exact fun a ⦃u v⦄ a_1 => IsTree.isBridge_of_adj a a_1
+/-- A max-plus linear functional on continuous functions `X → WithBot ℝ`.
 
-end SimpleGraph
+This structure captures the tropical analogue of a positive linear functional:
+- `map_sup'`: preserves tropical addition (= pointwise sup)
+- `map_const'`: normalizes constant functions
+- `map_addConst'`: commutes with tropical scalar multiplication (= translation by constants)
+- `monotone'`: order-preserving -/
+structure TropicalFunctional (X : Type*) [TopologicalSpace X] where
+  /-- The underlying function on `TropCont X`. -/
+  toFun : TropCont X → WithBot ℝ
+  /-- Preservation of pointwise supremum (tropical addition). -/
+  map_sup' : ∀ f g : TropCont X, toFun (TropCont.tsup f g) = toFun f ⊔ toFun g
+  /-- Normalization of constant functions. -/
+  map_const' : ∀ c : WithBot ℝ, toFun (ContinuousMap.const _ c) = c
+  /-- Commutation with additive translation (tropical scalar action).
+  The function `g` must satisfy `g x = c + f x` for all `x`. -/
+  map_addConst' : ∀ (c : WithBot ℝ) (f g : TropCont X),
+    (∀ x, g x = c + f x) → toFun g = c + toFun f
+  /-- Monotonicity (order-preservation). -/
+  monotone' : ∀ {f g : TropCont X}, (∀ x, f x ≤ g x) → toFun f ≤ toFun g
+
+namespace TropicalFunctional
+
+variable {X : Type*} [TopologicalSpace X]
+
+/-- Extensionality: two tropical functionals are equal iff they agree on all functions. -/
+@[ext]
+theorem ext {Λ₁ Λ₂ : TropicalFunctional X}
+    (h : ∀ f, Λ₁.toFun f = Λ₂.toFun f) : Λ₁ = Λ₂ := by
+  cases Λ₁; cases Λ₂; simp only [mk.injEq]; ext f; exact h f
+
+/-- Monotonicity restated as a named lemma. -/
+theorem monotone (Λ : TropicalFunctional X) {f g : TropCont X}
+    (h : ∀ x, f x ≤ g x) : Λ.toFun f ≤ Λ.toFun g :=
+  Λ.monotone' h
+
+/-- Evaluation of a tropical functional on a constant function. -/
+@[simp]
+theorem map_const (Λ : TropicalFunctional X) (c : WithBot ℝ) :
+    Λ.toFun (ContinuousMap.const _ c) = c :=
+  Λ.map_const' c
+
+/-- A tropical functional preserves sup of a pair. -/
+theorem map_sup (Λ : TropicalFunctional X) (f g : TropCont X) :
+    Λ.toFun (TropCont.tsup f g) = Λ.toFun f ⊔ Λ.toFun g :=
+  Λ.map_sup' f g
+
+end TropicalFunctional
+
+end

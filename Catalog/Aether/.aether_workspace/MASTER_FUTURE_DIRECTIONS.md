@@ -1,6 +1,58 @@
 # MASTER FUTURE DIRECTIONS — Accumulated Research Wisdom
 
-*Last updated: 2026-05-04 17:01*
+*Last updated: 2026-05-04 19:01*
+
+## Next Targets
+
+### 1. Tropical Choquet Theory on Compact Spaces
+
+**Goal**: Extend the representation theorem from finite discrete spaces to compact Hausdorff spaces.
+
+**Approach**: Define the tropical capacity `μ_K(Λ) = inf{Λ(f) | f ≥ 0 on K}` for compact sets K, prove maxitivity `μ(K ∪ L) = max(μ(K), μ(L))` using Urysohn separation, and establish the representation `Λ(f) = sup_K (μ(K) + inf_{x ∈ K} f(x))`.
+
+**Key challenge**: The upper-continuity hypothesis on functionals needs to be related to topological properties of the compact-open topology on `C(X, WithBot ℝ)`.
+
+**Status**: Infrastructure for capacity (`muK`) and tropical integral (`tropicalIntegral`) is defined. The `UCTropicalFunctional` structure with upper-continuity is formalized. The functional extensionality theorem is stated but unproven.
+
+### 2. Radon-Style Regularity for Maxitive Measures
+
+**Goal**: Show that the maxitive capacity arising from a tropical functional is inner regular on open sets and outer regular on compact sets.
+
+**Formalization target**:
+```
+∀ U : Set X, IsOpen U →
+  μ(U) = sSup {μ(K) | K ⊆ U ∧ IsCompact K}
+```
+
+This would enable passage between the compact-set capacity and a full set function, paralleling the classical Riesz-Markov-Kakutani theorem.
+
+### 3. Duality Between Tropical Ideals and Maxitive Measure Supports
+
+**Goal**: Establish a Gelfand-type duality in the tropical setting: closed tropical ideals in `TropCont(X)` correspond to closed subsets of X via the support of maxitive measures.
+
+**Formalization target**: Define the support of a maxitive measure as `supp(μ) = {x | μ({x}) ≠ ⊥}` and prove:
+- The kernel of a tropical functional equals `{f | f|_{supp(w)} = ⊥}` in the discrete case.
+- Two tropical functionals have the same support iff they agree up to tropical scalar multiple.
+
+### 4. Categorical Functoriality of Λ ↦ μ_Λ
+
+**Goal**: Show that the assignment sending a tropical functional to its representing measure is functorial with respect to continuous maps.
+
+Given `φ : X → Y` continuous, define the pushforward `φ_* μ` and pullback `φ* Λ`, and prove:
+- `μ_{φ* Λ} = φ_* (μ_Λ)` (the representing measure of the pullback functional is the pushforward measure).
+- This is natural in the categorical sense.
+
+### 5. Finite/Infinite Approximation with Certified Bounds
+
+**Goal**: Given a tropical functional Λ on `C(X, WithBot ℝ)` for compact X, approximate it by finite-dimensional tropical functionals with explicit error bounds.
+
+**Approach**: For a finite covering {U_1, ..., U_n} of X with mesh ε, construct a discrete functional Λ_ε and prove:
+```
+|Λ(f) - Λ_ε(f)| ≤ ω_f(ε)
+```
+where ω_f is the modulus of continuity of f. This gives certified reconstruction bounds.
+
+**Application**: Certified algorithms for recovering maxitive measures from finitely many function evaluations.
 
 ## 1. Congruence-Level Tropical Nullstellensatz
 
@@ -27,65 +79,3 @@ recovered from geometric data.
 3. Implementing the construction as a certified algorithm in Lean with `#eval` support.
 
 **Significance**: Bridges the gap between existence theorems and practical approximation, enabling verified numerical tropical computation.
-
-## 5. Certified Symbolic Robustness via Vanishing Ideals
-
-In machine learning applications, **robustness** means that small perturbations of
-inputs do not change the model's output. For tropical/max-plus models, this can be
-formalized algebraically:
-
-- A model is **tropically robust** at a point `x` if `x` is in the interior of a
-  decision region (complement of the tropical zero set).
-- A **robustness certificate** for a family `G` at point `x` is a proof that
-  `x ∉ tropZeroSet(G)`, which by the Nullstellensatz is equivalent to the existence
-  of some generator that does not vanish at `x`.
-
-**Concrete target**: Formalize the notion of tropical robustness for max-plus linear
-classifiers, prove that robustness is equivalent to non-membership in the zero set,
-and implement a certified robustness checker that outputs Lean proofs.
-
-## 3. Algorithmic Tropical Decision Region Extraction
-
-The Nullstellensatz has direct computational consequences. Given an EML model
-(e.g., a tropical neural network or max-plus linear map), the generators define a
-finite family of tropical functions. The theorem guarantees:
-
-- **Decision regions** are precisely the connected components of complements of
-  tropical zero sets.
-- **Certificates of invariance**: if a function belongs to the tropical radical,
-  it vanishes on the decision boundary — providing a symbolic proof that the
-  function is insensitive to inputs in that region.
-
-**Concrete target**: Implement (in Lean + Python) an algorithm that takes a finite
-family of max-plus affine functions and outputs the tropical zero set as a polyhedral
-complex, together with a Lean proof that the computed complex is correct.
-
-## 2. Spectral/Topological Duality for EML Tropical Function Algebras
-
-When `X` is a compact Hausdorff space and `A ⊆ C(X, S)` is a separating EML
-subalgebra, the tropical Nullstellensatz should yield a **Gelfand-type duality**:
-the space `X` can be reconstructed (up to homeomorphism) from the algebraic data
-of `A`. Concretely:
-
-- Define the **tropical spectrum** `Spec_trop(A)` as the set of maximal congruences
-  of `A`, equipped with the hull-kernel topology.
-- Prove that the natural map `X → Spec_trop(A)` sending `x` to `ker_x(f,g) ↔ f(x) = g(x)`
-  is a homeomorphism when `A` separates points and is closed under tropical operations.
-
-This would be a tropical analogue of the Gelfand–Kolmogorov theorem, providing a
-full algebra-geometry dictionary for EML function algebras.
-
-## 4. Min-Plus / Max-Plus Duality for Zero-Set Semantics
-
-The current formalization uses a general `Bot` type, which specializes to both
-max-plus (where `⊥ = -∞`) and min-plus (where `⊥ = +∞`) tropical semirings.
-An important structural result is that these two semantics are **order-dual**:
-
-- The zero set of a family in the max-plus semiring corresponds to the zero set
-  of the "negated" family in the min-plus semiring.
-- The Galois connection `(Z, I)` in one setting corresponds to the dual connection
-  in the other.
-
-**Concrete target**: Define an `OrderDual` isomorphism between max-plus and min-plus
-function semirings, and prove that `tropZeroSet` and `idealOfSet` transform covariantly
-under this duality.
