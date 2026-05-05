@@ -94,6 +94,19 @@ class AEMEvaluator:
         frozenset({"Analysis", "MachineLearning"}),
         frozenset({"Analysis", "Physics"}),
         frozenset({"Analysis", "InformationTheory"}),
+        # High-frequency bridge pairs now recognized
+        frozenset({"Cryptography", "Physics"}),
+        frozenset({"Cryptography", "EML"}),
+        frozenset({"Algebra", "Pythagorean"}),
+        frozenset({"MachineLearning", "Pythagorean"}),
+        frozenset({"Pythagorean", "Tropical"}),
+        frozenset({"EML", "Pythagorean"}),
+        frozenset({"Cryptography", "Tropical"}),
+        frozenset({"Cryptography", "NumberTheory"}),
+        frozenset({"Physics", "NumberTheory"}),
+        frozenset({"Algebra", "InformationTheory"}),
+        frozenset({"MachineLearning", "InformationTheory"}),
+        frozenset({"Physics", "InformationTheory"}),
     }
 
     # Theorems that advance known open problems
