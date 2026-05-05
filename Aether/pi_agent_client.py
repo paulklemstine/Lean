@@ -1930,11 +1930,60 @@ class PiAgentClient:
             cleaned = self._strip_llm_preamble(raw)
             if cleaned and len(cleaned) > 200:
                 # The LLM enriched the task section. Merge with catalog context.
+                # CRITICAL: Preserve the AEM QUALITY MANDATE and AEM SCORING sections
+                # from the direct prompt — the LLM enrichment may strip them.
+                aem_mandate = ""
+                if "**AEM QUALITY MANDATE**" in direct_prompt:
+                    idx_start = direct_prompt.find("**AEM QUALITY MANDATE**")
+                    # Find the end of the mandate section (next major section or end)
+                    mandate_text = direct_prompt[idx_start:]
+                    # Extract just the mandate (up to the next ### or end of mandate content)
+                    mandate_end_patterns = ["\n### ", "\n=== "]
+                    mandate_end = len(mandate_text)
+                    for pat in mandate_end_patterns:
+                        pos = mandate_text.find(pat, 10)  # Skip first few chars
+                        if pos > 0 and pos < mandate_end:
+                            mandate_end = pos
+                    aem_mandate = "\n\n" + mandate_text[:mandate_end]
+
+                # Also extract the AEM QUALITY SCORING section if present
+                aem_scoring = ""
+                if "=== AEM QUALITY SCORING" in direct_prompt:
+                    idx_start = direct_prompt.find("=== AEM QUALITY SCORING")
+                    idx_end = direct_prompt.find("===", idx_start + 30)  # End of section
+                    if idx_end > 0:
+                        aem_scoring = "\n\n" + direct_prompt[idx_start:idx_end]
+                    else:
+                        # Take until the next major section
+                        aem_scoring = "\n\n" + direct_prompt[idx_start:idx_start + 2000]
+
+                # Extract the mode instruction if present
+                mode_instruction = ""
+                for mode_kw in ["Research Mode: PROVE", "Research Mode: FORMALIZE",
+                                 "Research Mode: SORRY_FILL", "Research Mode: DISCOVER",
+                                 "Research Mode: MILLENNIAL", "Research Mode: COUNTEREXAMPLE"]:
+                    if mode_kw in direct_prompt:
+                        idx_start = direct_prompt.find(mode_kw)
+                        # Find end of mode instruction (next double newline + section header)
+                        idx_end = direct_prompt.find("\n===", idx_start)
+                        if idx_end < 0:
+                            idx_end = min(idx_start + 1000, len(direct_prompt))
+                        mode_instruction = "\n\n" + direct_prompt[idx_start:idx_end]
+                        break
+
                 catalog_section = ""
                 if "### Catalog Reference Files" in direct_prompt:
                     idx = direct_prompt.find("### Catalog Reference Files")
                     catalog_section = "\n\n" + direct_prompt[idx:]
-                return cleaned + catalog_section
+
+                # Compose: enriched content + preserved AEM sections + catalog
+                enriched_with_aem = (
+                    (aem_scoring + "\n\n" if aem_scoring else "") +
+                    cleaned +
+                    (aem_mandate if aem_mandate else "") +
+                    catalog_section
+                )
+                return enriched_with_aem
         # Fallback: use the direct prompt (never a meta-instruction)
         print(f"[Pi-Agent] Using direct prompt (enrichment {'failed' if raw and 'TIMEOUT' in raw else 'returned insufficient content'})")
         return direct_prompt
