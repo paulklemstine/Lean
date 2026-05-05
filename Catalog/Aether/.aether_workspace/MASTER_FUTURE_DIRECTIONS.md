@@ -54,28 +54,64 @@ where ω_f is the modulus of continuity of f. This gives certified reconstructio
 
 **Application**: Certified algorithms for recovering maxitive measures from finitely many function evaluations.
 
-## 1. Congruence-Level Tropical Nullstellensatz
+## Next Theorems to Formalize
 
-The current formalization establishes the set-theoretic tropical Nullstellensatz:
-`tropRadical(I) = idealOfSet(tropZeroSet(I))`. The next step is to lift this to a
-**congruence-level** statement. In classical algebra, the Nullstellensatz relates
-ideals to varieties; in the tropical/idempotent world, the natural replacement for
-ideals is **semiring congruences** (since tropical semirings lack additive inverses
-and hence lack proper two-sided ideals in the classical sense).
+### 1. Functoriality of the Tropical Spectrum
 
-**Concrete target**: Define a `radicalCongruence` on function semirings generated
-by a finite family, and prove it equals the `vanishingCongr` of the common zero set.
-The `vanishingCongr` is already defined in the current file; the missing piece is the
-notion of *generated congruence* and the proof that the radical congruence is exactly
-recovered from geometric data.
+Every continuous map `f : X → Y` between compact Hausdorff spaces induces a
+pullback map `f* : A_Y → A_X` on function algebras, which in turn induces a
+continuous map on tropical spectra. This should give a contravariant functor
+from CompHaus to the category of tropical spectral spaces.
 
-## 5. Algorithmic Extraction from Density Proofs
+```
+theorem tropSpec_functorial (f : C(X, Y)) :
+    Continuous (tropSpecMap f) ∧ tropSpecMap (ContinuousMap.id X) = id
+```
 
-**Statement**: The constructive content of the density proof can be extracted into an explicit approximation algorithm: given f ∈ C(X × Y, ℝ) and ε > 0, compute a max-plus combination of pure tensors within ε of f.
+### 2. Spectral Compactness
 
-**Approach**: The proof via the lattice Stone–Weierstrass theorem is inherently constructive — it builds approximants via two-point interpolation and finite coverings. Making this extraction explicit requires:
-1. Bounding the number of terms in the tropical sum (related to covering numbers of X × Y).
-2. Choosing the separating functions optimally (related to tropical rank minimization).
-3. Implementing the construction as a certified algorithm in Lean with `#eval` support.
+The tropical evaluation spectrum of a compact space is compact.
+This follows immediately from the homeomorphism theorem but could also
+be proved directly from the definition, which would give an independent
+proof of compactness of the congruence space.
 
-**Significance**: Bridges the gap between existence theorems and practical approximation, enabling verified numerical tropical computation.
+```
+theorem tropEvalSpec_compact [CompactSpace X] :
+    @CompactSpace (TropEvalSpec A eval) (tropEvalSpecTopology A eval)
+```
+
+### 3. Spectral Semisimplicity
+
+The intersection of all evaluation congruences is the diagonal (equality):
+```
+theorem tropSpec_semisimple
+    (hsep : ∀ x y : X, x ≠ y → ∃ f, eval x f ≠ eval y f) :
+    ⨅ x, evalCongr A eval x = ⊥
+```
+This formalizes the fact that the algebra detects all function-level distinctions.
+
+### 4. Tropical Structure Sheaf
+
+Define a structure presheaf on the tropical spectrum by assigning to each
+open set the algebra of "tropical regular functions" — sections of the
+natural projection from the function algebra. Prove it satisfies the sheaf
+condition.
+
+```
+def tropStructureSheaf : TopCat.Presheaf (Type*) (tropSpecTop A eval)
+theorem tropStructureSheaf_isSheaf : tropStructureSheaf.IsSheaf
+```
+
+### 5. Tropical Stone–Weierstrass on the Spectrum
+
+Show that the density results from tropical Stone–Weierstrass translate
+to a statement about the spectrum: every closed set in the spectrum is
+an intersection of tropical vanishing loci. This connects approximation
+theory to spectral geometry.
+
+```
+theorem tropVanishPair_generates_closed :
+    ∀ s : Set (TropEvalSpec A eval),
+      @IsClosed _ (tropEvalSpecTopology A eval) s ↔
+        ∃ I : Set (A × A), s = ⋂ p ∈ I, tropVanishPair A eval p.1 p.2
+```

@@ -33,19 +33,39 @@ a FUTURE_DIRECTIONS.md with breakthrough opportunities, open problems, and cross
 <code>`</code>
 |Λ(f) - Λ_ε(f)| ≤ ω_f(ε)
 <code>`</code>
-where ω_f is the modulus of continuity of f. This gives certified reconstruction bounds.</p><p><strong>Application</strong>: Certified algorithms for recovering maxitive measures from finitely many function evaluations.</p><p><h2>1. Congruence-Level Tropical Nullstellensatz</h2></p><p>The current formalization establishes the set-theoretic tropical Nullstellensatz:
-<code>tropRadical(I) = idealOfSet(tropZeroSet(I))</code>. The next step is to lift this to a
-<strong>congruence-level</strong> statement. In classical algebra, the Nullstellensatz relates
-ideals to varieties; in the tropical/idempotent world, the natural replacement for
-ideals is <strong>semiring congruences</strong> (since tropical semirings lack additive inverses
-and hence lack proper two-sided ideals in the classical sense).</p><p><strong>Concrete target</strong>: Define a <code>radicalCongruence</code> on function semirings generated
-by a finite family, and prove it equals the <code>vanishingCongr</code> of the common zero set.
-The <code>vanishingCongr</code> is already defined in the current file; the missing piece is the
-notion of <em>generated congruence</em> and the proof that the radical congruence is exactly
-recovered from geometric data.</p><p><h2>5. Algorithmic Extraction from Density Proofs</h2></p><p><strong>Statement</strong>: The constructive content of the density proof can be extracted into an explicit approximation algorithm: given f ∈ C(X × Y, ℝ) and ε &gt; 0, compute a max-plus combination of pure tensors within ε of f.</p><p><strong>Approach</strong>: The proof via the lattice Stone–Weierstrass theorem is inherently constructive — it builds approximants via two-point interpolation and finite coverings. Making this extraction explicit requires:
-<li>Bounding the number of terms in the tropical sum (related to covering numbers of X × Y).</li>
-<li>Choosing the separating functions optimally (related to tropical rank minimization).</li>
-<li>Implementing the construction as a certified algorithm in Lean with <code>#eval</code> support.</li></p><p><strong>Significance</strong>: Bridges the gap between existence theorems and practical approximation, enabling verified numerical tropical computation.</p></div>
+where ω_f is the modulus of continuity of f. This gives certified reconstruction bounds.</p><p><strong>Application</strong>: Certified algorithms for recovering maxitive measures from finitely many function evaluations.</p><p><h2>Next Theorems to Formalize</h2></p><p><h3>1. Functoriality of the Tropical Spectrum</h3></p><p>Every continuous map <code>f : X → Y</code> between compact Hausdorff spaces induces a
+pullback map <code>f* : A_Y → A_X</code> on function algebras, which in turn induces a
+continuous map on tropical spectra. This should give a contravariant functor
+from CompHaus to the category of tropical spectral spaces.</p><p><code>`</code>
+theorem tropSpec_functorial (f : C(X, Y)) :
+    Continuous (tropSpecMap f) ∧ tropSpecMap (ContinuousMap.id X) = id
+<code>`</code></p><p><h3>2. Spectral Compactness</h3></p><p>The tropical evaluation spectrum of a compact space is compact.
+This follows immediately from the homeomorphism theorem but could also
+be proved directly from the definition, which would give an independent
+proof of compactness of the congruence space.</p><p><code>`</code>
+theorem tropEvalSpec_compact [CompactSpace X] :
+    @CompactSpace (TropEvalSpec A eval) (tropEvalSpecTopology A eval)
+<code>`</code></p><p><h3>3. Spectral Semisimplicity</h3></p><p>The intersection of all evaluation congruences is the diagonal (equality):
+<code>`</code>
+theorem tropSpec_semisimple
+    (hsep : ∀ x y : X, x ≠ y → ∃ f, eval x f ≠ eval y f) :
+    ⨅ x, evalCongr A eval x = ⊥
+<code>`</code>
+This formalizes the fact that the algebra detects all function-level distinctions.</p><p><h3>4. Tropical Structure Sheaf</h3></p><p>Define a structure presheaf on the tropical spectrum by assigning to each
+open set the algebra of "tropical regular functions" — sections of the
+natural projection from the function algebra. Prove it satisfies the sheaf
+condition.</p><p><code>`</code>
+def tropStructureSheaf : TopCat.Presheaf (Type*) (tropSpecTop A eval)
+theorem tropStructureSheaf_isSheaf : tropStructureSheaf.IsSheaf
+<code>`</code></p><p><h3>5. Tropical Stone–Weierstrass on the Spectrum</h3></p><p>Show that the density results from tropical Stone–Weierstrass translate
+to a statement about the spectrum: every closed set in the spectrum is
+an intersection of tropical vanishing loci. This connects approximation
+theory to spectral geometry.</p><p><code>`</code>
+theorem tropVanishPair_generates_closed :
+    ∀ s : Set (TropEvalSpec A eval),
+      @IsClosed _ (tropEvalSpecTopology A eval) s ↔
+        ∃ I : Set (A × A), s = ⋂ p ∈ I, tropVanishPair A eval p.1 p.2
+<code>`</code></p></div>
 <h3>future_directions.html</h3>
 <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:16px;"><p>&lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
@@ -70,35 +90,23 @@ MathJax = {
 &lt;p&gt;Accumulated wisdom from all Aristotle research cycles. Each completed cycle produces
 a FUTURE_DIRECTIONS.md with breakthrough opportunities, open problems, and cross-domain bridges.&lt;/p&gt;
 &lt;h2&gt;Accumulated Research Wisdom&lt;/h2&gt;
-&lt;div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:24px;"&gt;&lt;p&gt;&lt;h1&gt;MASTER FUTURE DIRECTIONS — Accumulated Research Wisdom&lt;/h1&gt;&lt;/p&gt;&lt;p&gt;&lt;em&gt;Last updated: 2026-05-04 17:01&lt;/em&gt;&lt;/p&gt;&lt;p&gt;&lt;h2&gt;1. Congruence-Level Tropical Nullstellensatz&lt;/h2&gt;&lt;/p&gt;&lt;p&gt;The current formalization establishes the set-theoretic tropical Nullstellensatz:
+&lt;div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:24px;"&gt;&lt;p&gt;&lt;h1&gt;MASTER FUTURE DIRECTIONS — Accumulated Research Wisdom&lt;/h1&gt;&lt;/p&gt;&lt;p&gt;&lt;em&gt;Last updated: 2026-05-04 19:01&lt;/em&gt;&lt;/p&gt;&lt;p&gt;&lt;h2&gt;Next Targets&lt;/h2&gt;&lt;/p&gt;&lt;p&gt;&lt;h3&gt;1. Tropical Choquet Theory on Compact Spaces&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Goal&lt;/strong&gt;: Extend the representation theorem from finite discrete spaces to compact Hausdorff spaces.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Approach&lt;/strong&gt;: Define the tropical capacity &lt;code&gt;μ_K(Λ) = inf{Λ(f) | f ≥ 0 on K}&lt;/code&gt; for compact sets K, prove maxitivity &lt;code&gt;μ(K ∪ L) = max(μ(K), μ(L))&lt;/code&gt; using Urysohn separation, and establish the representation &lt;code&gt;Λ(f) = sup_K (μ(K) + inf_{x ∈ K} f(x))&lt;/code&gt;.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Key challenge&lt;/strong&gt;: The upper-continuity hypothesis on functionals needs to be related to topological properties of the compact-open topology on &lt;code&gt;C(X, WithBot ℝ)&lt;/code&gt;.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Status&lt;/strong&gt;: Infrastructure for capacity (&lt;code&gt;muK&lt;/code&gt;) and tropical integral (&lt;code&gt;tropicalIntegral&lt;/code&gt;) is defined. The &lt;code&gt;UCTropicalFunctional&lt;/code&gt; structure with upper-continuity is formalized. The functional extensionality theorem is stated but unproven.&lt;/p&gt;&lt;p&gt;&lt;h3&gt;2. Radon-Style Regularity for Maxitive Measures&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Goal&lt;/strong&gt;: Show that the maxitive capacity arising from a tropical functional is inner regular on open sets and outer regular on compact sets.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Formalization target&lt;/strong&gt;:
+&lt;code&gt;`&lt;/code&gt;
+∀ U : Set X, IsOpen U →
+  μ(U) = sSup {μ(K) | K ⊆ U ∧ IsCompact K}
+&lt;code&gt;`&lt;/code&gt;&lt;/p&gt;&lt;p&gt;This would enable passage between the compact-set capacity and a full set function, paralleling the classical Riesz-Markov-Kakutani theorem.&lt;/p&gt;&lt;p&gt;&lt;h3&gt;3. Duality Between Tropical Ideals and Maxitive Measure Supports&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Goal&lt;/strong&gt;: Establish a Gelfand-type duality in the tropical setting: closed tropical ideals in &lt;code&gt;TropCont(X)&lt;/code&gt; correspond to closed subsets of X via the support of maxitive measures.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Formalization target&lt;/strong&gt;: Define the support of a maxitive measure as &lt;code&gt;supp(μ) = {x | μ({x}) ≠ ⊥}&lt;/code&gt; and prove:
+&lt;li&gt;The kernel of a tropical functional equals &lt;code&gt;{f | f|_{supp(w)} = ⊥}&lt;/code&gt; in the discrete case.&lt;/li&gt;
+&lt;li&gt;Two tropical functionals have the same support iff they agree up to tropical scalar multiple.&lt;/li&gt;&lt;/p&gt;&lt;p&gt;&lt;h3&gt;4. Categorical Functoriality of Λ ↦ μ_Λ&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Goal&lt;/strong&gt;: Show that the assignment sending a tropical functional to its representing measure is functorial with respect to continuous maps.&lt;/p&gt;&lt;p&gt;Given &lt;code&gt;φ : X → Y&lt;/code&gt; continuous, define the pushforward &lt;code&gt;φ_&lt;em&gt; μ&lt;/code&gt; and pullback &lt;code&gt;φ&lt;/em&gt; Λ&lt;/code&gt;, and prove:
+&lt;li&gt;&lt;code&gt;μ_{φ&lt;em&gt; Λ} = φ_&lt;/em&gt; (μ_Λ)&lt;/code&gt; (the representing measure of the pullback functional is the pushforward measure).&lt;/li&gt;
+&lt;li&gt;This is natural in the categorical sense.&lt;/li&gt;&lt;/p&gt;&lt;p&gt;&lt;h3&gt;5. Finite/Infinite Approximation with Certified Bounds&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Goal&lt;/strong&gt;: Given a tropical functional Λ on &lt;code&gt;C(X, WithBot ℝ)&lt;/code&gt; for compact X, approximate it by finite-dimensional tropical functionals with explicit error bounds.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Approach&lt;/strong&gt;: For a finite covering {U_1, ..., U_n} of X with mesh ε, construct a discrete functional Λ_ε and prove:
+&lt;code&gt;`&lt;/code&gt;
+|Λ(f) - Λ_ε(f)| ≤ ω_f(ε)
+&lt;code&gt;`&lt;/code&gt;
+where ω_f is the modulus of continuity of f. This gives certified reconstruction bounds.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Application&lt;/strong&gt;: Certified algorithms for recovering maxitive measures from finitely many function evaluations.&lt;/p&gt;&lt;p&gt;&lt;h2&gt;1. Congruence-Level Tropical Nullstellensatz&lt;/h2&gt;&lt;/p&gt;&lt;p&gt;The current formalization establishes the set-theoretic tropical Nullstellensatz:
 &lt;code&gt;tropRadical(I) = idealOfSet(tropZeroSet(I))&lt;/code&gt;. The next step is to lift this to a
 &lt;strong&gt;congruence-level&lt;/strong&gt; statement. In classical algebra, the Nullstellensatz relates
 ideals to varieties; in the tropical/idempotent world, the natural replacement for
-ideals is &lt;strong&gt;semiring congruences&lt;/strong&gt; (since tropical semirings lack additive inverses
-and hence lack proper two-sided ideals in the classical sense).&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Concrete target&lt;/strong&gt;: Define a &lt;code&gt;radicalCongruence&lt;/code&gt; on function semirings generated
-by a finite family, and prove it equals the &lt;code&gt;vanishingCongr&lt;/code&gt; of the common zero set.
-The &lt;code&gt;vanishingCongr&lt;/code&gt; is already defined in the current file; the missing piece is the
-notion of &lt;em&gt;generated congruence&lt;/em&gt; and the proof that the radical congruence is exactly
-recovered from geometric data.&lt;/p&gt;&lt;p&gt;&lt;h2&gt;5. Algorithmic Extraction from Density Proofs&lt;/h2&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Statement&lt;/strong&gt;: The constructive content of the density proof can be extracted into an explicit approximation algorithm: given f ∈ C(X × Y, ℝ) and ε &amp;gt; 0, compute a max-plus combination of pure tensors within ε of f.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Approach&lt;/strong&gt;: The proof via the lattice Stone–Weierstrass theorem is inherently constructive — it builds approximants via two-point interpolation and finite coverings. Making this extraction explicit requires:
-&lt;li&gt;Bounding the number of terms in the tropical sum (related to covering numbers of X × Y).&lt;/li&gt;
-&lt;li&gt;Choosing the separating functions optimally (related to tropical rank minimization).&lt;/li&gt;
-&lt;li&gt;Implementing the construction as a certified algorithm in Lean with &lt;code&gt;#eval&lt;/code&gt; support.&lt;/li&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Significance&lt;/strong&gt;: Bridges the gap between existence theorems and practical approximation, enabling verified numerical tropical computation.&lt;/p&gt;&lt;p&gt;&lt;h2&gt;5. Certified Symbolic Robustness via Vanishing Ideals&lt;/h2&gt;&lt;/p&gt;&lt;p&gt;In machine learning applications, &lt;strong&gt;robustness&lt;/strong&gt; means that small perturbations of
-inputs do not change the model's output. For tropical/max-plus models, this can be
-formalized algebraically:&lt;/p&gt;&lt;p&gt;&lt;li&gt;A model is &lt;strong&gt;tropically robust&lt;/strong&gt; at a point &lt;code&gt;x&lt;/code&gt; if &lt;code&gt;x&lt;/code&gt; is in the interior of a&lt;/li&gt;
-  decision region (complement of the tropical zero set).
-&lt;li&gt;A &lt;strong&gt;robustness certificate&lt;/strong&gt; for a family &lt;code&gt;G&lt;/code&gt; at point &lt;code&gt;x&lt;/code&gt; is a proof that&lt;/li&gt;
-  &lt;code&gt;x ∉ tropZeroSet(G)&lt;/code&gt;, which by the Nullstellensatz is equivalent to the existence
-  of some generator that does not vanish at &lt;code&gt;x&lt;/code&gt;.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Concrete target&lt;/strong&gt;: Formalize the notion of tropical robustness for max-plus linear
-classifiers, prove that robustness is equivalent to non-membership in the zero set,
-and implement a certified robustness checker that outputs Lean proofs.&lt;/p&gt;&lt;p&gt;&lt;h2&gt;3. Algorithmic Tropical Decision Region Extraction&lt;/h2&gt;&lt;/p&gt;&lt;p&gt;The Nullstellensatz has direct computational consequences. Given an EML model
-(e.g., a tropical neural network or max-plus linear map), the generators define a
-finite family of tropical functions. The theorem guarantees:&lt;/p&gt;&lt;p&gt;&lt;li&gt;&lt;strong&gt;Decision regions&lt;/strong&gt; are precisely the connected components of complements of&lt;/li&gt;
-  tropical zero sets.
-&lt;li&gt;&lt;strong&gt;Certificates of invariance&lt;/strong&gt;: if a function belongs to the tropical radical,&lt;/li&gt;
-  it vanishes on the decision boundary — providing a symbolic proof that the
-  function is insensitive to inputs in that region.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Concrete target&lt;/strong&gt;: Implement (in Lean + Python) an algorithm that takes a finite
-family of max-plus affine functions and outputs the tropical zero set as a polyhedral
-complex, together wit</p></div>
+ideals is &lt;strong&gt;semiring congruences&lt;/strong&gt; (since tropical semirings lack </p></div>
 
 </div>
 <footer>Generated by Aether Website Generator &mdash; Autonomous Mathematical Research Engine</footer>

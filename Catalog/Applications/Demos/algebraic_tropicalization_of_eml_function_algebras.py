@@ -1,364 +1,452 @@
-#!/usr/bin/env python3
 """
-Tropical Riesz Representation Theorem: Interactive Demo
+Tropical Spectrum Duality — Interactive Demonstration
+=====================================================
 
-This script demonstrates the discrete tropical Riesz representation theorem:
-every max-plus linear functional on functions over a finite set is uniquely
-represented as a tropical integral against a weight function.
+This script demonstrates the core ideas of tropical spectrum duality
+using concrete numerical examples on finite spaces and the interval [0,1].
 
-In the max-plus algebra (ℝ ∪ {-∞}, max, +):
-- "addition" is max
-- "multiplication" is +
-- The zero element is -∞
-- The unit element is 0
+The main theorem (formalized in Lean 4) states:
+    For a compact Hausdorff space X and an algebra A of continuous functions
+    that kernel-separates points, the evaluation-to-spectrum map
+        x ↦ ker(evₓ)
+    is a homeomorphism from X to the tropical evaluation spectrum.
 
-The Riesz theorem says: for any functional Λ satisfying
-  Λ(f ∨ g) = Λ(f) ∨ Λ(g)     (preserves sup)
-  Λ(c + f) = c + Λ(f)          (commutes with translation)
-  Λ(const c) = c                (normalizes constants)
-
-there exists a unique weight w : X → ℝ ∪ {-∞} such that
-  Λ(f) = max_x (w(x) + f(x))
-
-This is the tropical analogue of: every positive linear functional is integration
-against a measure.
+We visualize:
+1. Evaluation congruences on a finite set
+2. Tropical vanishing loci
+3. The spectrum reconstruction for functions on [0,1]
+4. Kernel separation vs value separation
 """
 
 import numpy as np
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from itertools import product
+from matplotlib.patches import FancyBboxPatch
+from itertools import combinations
+import os
 
-# Represent -∞ as a very large negative number
-NEG_INF = float('-inf')
+# ─── 1. Evaluation Congruences on a Finite Set ────────────────────────────
 
-
-def trop_add(a, b):
-    """Tropical addition = max."""
-    return max(a, b)
-
-
-def trop_mult(a, b):
-    """Tropical multiplication = ordinary addition."""
-    if a == NEG_INF or b == NEG_INF:
-        return NEG_INF
-    return a + b
-
-
-def trop_integral(w, f):
+def demo_finite_congruences():
     """
-    Tropical integral: max_x (w(x) + f(x)).
-    
-    This is the Shilkret integral in the max-plus semiring.
-    Classical analogue: ∫ f dμ = Σ_x μ(x) · f(x)
-    Tropical analogue:  ∫ᵗ f dw = max_x (w(x) + f(x))
+    Demonstrate evaluation congruences on X = {0, 1, 2} with
+    A = {f₁, f₂, f₃} where fᵢ : X → ℝ.
     """
-    return max(trop_mult(w[i], f[i]) for i in range(len(w)))
+    print("=" * 60)
+    print("DEMO 1: Evaluation Congruences on a Finite Set")
+    print("=" * 60)
+
+    X = [0, 1, 2]
+    # Function algebra: three functions on X = {0, 1, 2}
+    # f₁(x) = x,  f₂(x) = x²,  f₃(x) = 2x
+    functions = {
+        'f₁': lambda x: x,
+        'f₂': lambda x: x**2,
+        'f₃': lambda x: 2*x,
+    }
+
+    print("\nFunction values:")
+    print(f"{'':>5} | {'f₁':>5} | {'f₂':>5} | {'f₃':>5}")
+    print("-" * 30)
+    for x in X:
+        vals = [f(x) for f in functions.values()]
+        print(f"x={x:>2} | {vals[0]:>5} | {vals[1]:>5} | {vals[2]:>5}")
+
+    print("\nEvaluation congruences (fᵢ ≡ fⱼ at point x):")
+    func_names = list(functions.keys())
+    for x in X:
+        equivs = []
+        for i, j in combinations(range(len(func_names)), 2):
+            fi, fj = list(functions.values())[i], list(functions.values())[j]
+            if fi(x) == fj(x):
+                equivs.append(f"{func_names[i]}≡{func_names[j]}")
+        cong = ", ".join(equivs) if equivs else "all distinct"
+        print(f"  ker(ev_{x}): {cong}")
+
+    # Check kernel separation
+    print("\nKernel separation check:")
+    for x, y in combinations(X, 2):
+        separated = False
+        for fi_name, fi in functions.items():
+            for fj_name, fj in functions.items():
+                if fi(x) == fj(x) and fi(y) != fj(y):
+                    print(f"  x={x}, y={y}: {fi_name}(x)={fj_name}(x) but "
+                          f"{fi_name}(y)≠{fj_name}(y) ✓")
+                    separated = True
+                    break
+            if separated:
+                break
+        if not separated:
+            print(f"  x={x}, y={y}: NOT kernel-separated ✗")
+
+    return True
 
 
-def delta_weight(Lambda, n, x):
+# ─── 2. Tropical Vanishing Loci ──────────────────────────────────────────
+
+def demo_vanishing_loci():
     """
-    Extract the weight at point x from functional Λ.
-    
-    w(x) = Λ(δ_x) where δ_x(y) = 0 if y=x, -∞ otherwise.
-    
-    This is the tropical analogue of: μ({x}) = Λ(1_{x}).
+    Visualize tropical vanishing loci V(f, g) = {x ∈ [0,1] | f(x) = g(x)}
+    and their relation to the spectrum topology.
     """
-    basis = [0.0 if i == x else NEG_INF for i in range(n)]
-    return Lambda(basis)
+    print("\n" + "=" * 60)
+    print("DEMO 2: Tropical Vanishing Loci on [0, 1]")
+    print("=" * 60)
+
+    x = np.linspace(0, 1, 1000)
+
+    # Define some continuous functions
+    f1 = np.sin(2 * np.pi * x)
+    f2 = np.cos(2 * np.pi * x)
+    f3 = 2 * x - 1
+    f4 = x * (1 - x) * 4 - 1
+
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+
+    # Plot 1: Functions
+    ax = axes[0, 0]
+    ax.plot(x, f1, label='f₁ = sin(2πx)', color='blue')
+    ax.plot(x, f2, label='f₂ = cos(2πx)', color='red')
+    ax.plot(x, f3, label='f₃ = 2x-1', color='green')
+    ax.set_title('Function Algebra on [0, 1]')
+    ax.legend()
+    ax.grid(True, alpha=0.3)
+    ax.set_xlabel('x')
+
+    # Plot 2: Vanishing locus V(f₁, f₂) = {x | sin = cos}
+    ax = axes[0, 1]
+    diff12 = np.abs(f1 - f2)
+    ax.fill_between(x, 0, 1, where=diff12 < 0.05, alpha=0.3, color='purple',
+                    label='V(f₁, f₂) ≈ {x | f₁(x) = f₂(x)}')
+    ax.plot(x, f1, 'b-', alpha=0.5, label='f₁')
+    ax.plot(x, f2, 'r-', alpha=0.5, label='f₂')
+    # Mark intersection points
+    crossings = np.where(np.diff(np.sign(f1 - f2)))[0]
+    for c in crossings:
+        ax.axvline(x[c], color='purple', linestyle='--', alpha=0.7)
+        ax.plot(x[c], f1[c], 'ko', markersize=8)
+    ax.set_title('Vanishing Locus V(f₁, f₂)')
+    ax.legend(fontsize=8)
+    ax.grid(True, alpha=0.3)
+
+    # Plot 3: Intersection of vanishing loci
+    ax = axes[1, 0]
+    diff13 = np.abs(f1 - f3)
+    both = (diff12 < 0.05) & (diff13 < 0.05)
+    ax.fill_between(x, 0, 1, where=diff12 < 0.05, alpha=0.2, color='purple',
+                    label='V(f₁, f₂)')
+    ax.fill_between(x, 0, 1, where=diff13 < 0.05, alpha=0.2, color='orange',
+                    label='V(f₁, f₃)')
+    ax.fill_between(x, 0, 1, where=both, alpha=0.5, color='red',
+                    label='V(f₁,f₂) ∩ V(f₁,f₃)')
+    ax.set_title('Intersection of Vanishing Loci')
+    ax.legend(fontsize=8)
+    ax.grid(True, alpha=0.3)
+
+    # Plot 4: Congruence classes at selected points
+    ax = axes[1, 1]
+    eval_points = [0.0, 0.125, 0.25, 0.5, 0.75, 1.0]
+    funcs = {'f₁': f1, 'f₂': f2, 'f₃': f3, 'f₄': f4}
+    func_names = list(funcs.keys())
+
+    # Create a matrix showing which functions agree at each point
+    n_funcs = len(func_names)
+    n_points = len(eval_points)
+
+    matrix = np.zeros((n_points, n_funcs))
+    for i, xp in enumerate(eval_points):
+        idx = np.argmin(np.abs(x - xp))
+        for j, fn in enumerate(funcs.values()):
+            matrix[i, j] = fn[idx]
+
+    im = ax.imshow(matrix, aspect='auto', cmap='RdYlBu')
+    ax.set_xticks(range(n_funcs))
+    ax.set_xticklabels(func_names)
+    ax.set_yticks(range(n_points))
+    ax.set_yticklabels([f'x={p:.3f}' for p in eval_points])
+    ax.set_title('Function Values (Evaluation Map)')
+    plt.colorbar(im, ax=ax, label='Value')
+
+    plt.suptitle('Tropical Spectrum Duality: Vanishing Loci & Evaluation Map',
+                 fontsize=14, fontweight='bold')
+    plt.tight_layout()
+
+    output_path = os.path.join(os.path.dirname(__file__), 'tropical_vanishing_loci.png')
+    plt.savefig(output_path, dpi=150, bbox_inches='tight')
+    print(f"\nFigure saved to {output_path}")
+    plt.close()
 
 
-def verify_representation(Lambda, n, num_tests=1000):
+# ─── 3. Spectrum Reconstruction ─────────────────────────────────────────
+
+def demo_spectrum_reconstruction():
     """
-    Verify the tropical Riesz representation theorem numerically.
-    
-    Extracts the weight function w and checks that
-    Λ(f) = max_x (w(x) + f(x)) for random functions f.
+    Demonstrate how the space X = [0, 1] can be reconstructed from
+    evaluation congruences of its function algebra.
     """
-    w = [delta_weight(Lambda, n, x) for x in range(n)]
-    
-    errors = []
-    for _ in range(num_tests):
-        f = []
+    print("\n" + "=" * 60)
+    print("DEMO 3: Spectrum Reconstruction")
+    print("=" * 60)
+
+    # Sample points from [0, 1]
+    n_points = 50
+    X_points = np.linspace(0, 1, n_points)
+
+    # Function algebra: polynomials up to degree 3
+    def make_polys(x):
+        return np.array([1, x, x**2, x**3, np.sin(np.pi*x)])
+
+    # Compute "distance" between congruences
+    # d(ker(evₓ), ker(evᵧ)) = sup_{f,g} |1_{f(x)=g(x)} - 1_{f(y)=g(y)}|
+    # In practice, use the metric: how different are the evaluation maps
+    n_funcs = 5
+    eval_matrix = np.array([make_polys(x) for x in X_points])
+
+    # Congruence distance: based on kernel disagreement
+    # Two points have the same congruence iff they give the same
+    # partition of functions into equality classes
+    def congruence_signature(vals, threshold=1e-10):
+        """Return a signature encoding which functions agree."""
+        n = len(vals)
+        sig = []
         for i in range(n):
-            if np.random.random() < 0.1:
-                f.append(NEG_INF)
-            else:
-                f.append(np.random.uniform(-10, 10))
-        
-        lhs = Lambda(f)
-        rhs = trop_integral(w, f)
-        
-        if lhs == NEG_INF and rhs == NEG_INF:
-            continue
-        if lhs == NEG_INF or rhs == NEG_INF:
-            errors.append(float('inf'))
-        else:
-            errors.append(abs(lhs - rhs))
-    
-    return w, max(errors) if errors else 0.0
+            for j in range(i+1, n):
+                sig.append(1 if abs(vals[i] - vals[j]) < threshold else 0)
+        return tuple(sig)
+
+    signatures = [congruence_signature(eval_matrix[i]) for i in range(n_points)]
+
+    # Check injectivity: all signatures should be distinct
+    unique_sigs = len(set(signatures))
+    print(f"\nPoints: {n_points}")
+    print(f"Distinct congruence signatures: {unique_sigs}")
+    print(f"Injective: {'YES ✓' if unique_sigs == n_points else 'NO ✗'}")
+
+    # Visualize the "spectral embedding"
+    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+
+    # Plot 1: Original space X = [0, 1]
+    ax = axes[0]
+    colors = plt.cm.viridis(X_points)
+    ax.scatter(X_points, np.zeros_like(X_points), c=colors, s=50)
+    ax.set_title('Original Space X = [0, 1]')
+    ax.set_xlabel('x')
+    ax.set_yticks([])
+    ax.set_xlim(-0.05, 1.05)
+
+    # Plot 2: Evaluation map image (in function space)
+    ax = axes[1]
+    ax.scatter(eval_matrix[:, 1], eval_matrix[:, 2], c=colors, s=50)
+    ax.set_title('Evaluation Image in Function Space')
+    ax.set_xlabel('f₂(x) = x')
+    ax.set_ylabel('f₃(x) = x²')
+
+    # Plot 3: Congruence distance matrix
+    ax = axes[2]
+    dist_matrix = np.zeros((n_points, n_points))
+    for i in range(n_points):
+        for j in range(n_points):
+            # Count disagreements between congruence signatures
+            dist_matrix[i, j] = sum(
+                1 for s1, s2 in zip(signatures[i], signatures[j]) if s1 != s2
+            )
+    im = ax.imshow(dist_matrix, cmap='hot', interpolation='nearest')
+    ax.set_title('Congruence Distance Matrix')
+    ax.set_xlabel('Point index')
+    ax.set_ylabel('Point index')
+    plt.colorbar(im, ax=ax, label='# kernel disagreements')
+
+    plt.suptitle('Reconstructing X from Evaluation Congruences',
+                 fontsize=14, fontweight='bold')
+    plt.tight_layout()
+
+    output_path = os.path.join(os.path.dirname(__file__), 'spectrum_reconstruction.png')
+    plt.savefig(output_path, dpi=150, bbox_inches='tight')
+    print(f"Figure saved to {output_path}")
+    plt.close()
 
 
-# ============================================================
-# DEMO 1: Explicit evaluation functional
-# ============================================================
-print("=" * 70)
-print("DEMO 1: Evaluation Functional (Tropical Dirac Delta)")
-print("=" * 70)
-print()
+# ─── 4. Kernel Separation vs Value Separation ───────────────────────────
 
-n = 5
-x0 = 2
+def demo_kernel_vs_value_separation():
+    """
+    Demonstrate the crucial difference between value separation
+    (eval x f ≠ eval y f) and kernel separation
+    (∃ f g, eval x f = eval x g ∧ eval y f ≠ eval y g).
 
-def eval_functional(f, x0=x0):
-    """Λ(f) = f(x₀): evaluation at point x₀."""
-    return f[x0]
+    Value separation is necessary but NOT sufficient for the
+    congruence map to be injective.
+    """
+    print("\n" + "=" * 60)
+    print("DEMO 4: Kernel Separation vs Value Separation")
+    print("=" * 60)
 
-w_eval, err_eval = verify_representation(eval_functional, n)
-print(f"Space: X = {{0, 1, 2, 3, 4}}")
-print(f"Functional: Λ(f) = f({x0})")
-print(f"Recovered weights: w = {w_eval}")
-print(f"Expected weights:  w = {[NEG_INF if i != x0 else 0.0 for i in range(n)]}")
-print(f"Max error over 1000 random tests: {err_eval:.2e}")
-print(f"Interpretation: w(x) = 0 at x={x0}, w(x) = -∞ elsewhere")
-print(f"  → The tropical Dirac measure at x={x0}")
-print()
+    # Example: A = {f} with f(0) = 0, f(1) = 1
+    # Value separation: f(0) ≠ f(1) ✓
+    # Kernel separation: NO, because with only one function,
+    # ker(ev₀) = ker(ev₁) = {(f,f)} (the trivial congruence)
 
-# ============================================================
-# DEMO 2: Weighted max functional
-# ============================================================
-print("=" * 70)
-print("DEMO 2: Weighted Maximum Functional")
-print("=" * 70)
-print()
+    print("\nExample 1: Single function f(x) = x on {0, 1}")
+    print("  f(0) = 0, f(1) = 1")
+    print("  Value separation: f(0) ≠ f(1) ✓")
+    print("  ker(ev₀) = {(f,f)} (trivial)")
+    print("  ker(ev₁) = {(f,f)} (trivial)")
+    print("  ker(ev₀) = ker(ev₁)  →  NOT kernel-separated ✗")
+    print("  → Congruence map is NOT injective!")
 
-weights = [1.0, -2.0, 3.0, 0.5, NEG_INF]
+    print("\nExample 2: Two functions f(x) = x, g(x) = 0 on {0, 1}")
+    print("  f(0) = 0, f(1) = 1, g(0) = 0, g(1) = 0")
+    print("  At x=0: f(0) = g(0) = 0, so f ≡ g in ker(ev₀)")
+    print("  At x=1: f(1) = 1 ≠ 0 = g(1), so f ≢ g in ker(ev₁)")
+    print("  ker(ev₀) ≠ ker(ev₁)  →  kernel-separated ✓")
+    print("  → Adding constants enables kernel separation!")
 
-def weighted_max_functional(f, w=weights):
-    return trop_integral(w, f)
+    print("\nKey Insight (Formalized in Lean):")
+    print("  kernel_sep_of_value_sep_and_constants:")
+    print("  Value separation + constant functions → Kernel separation")
 
-w_recovered, err_weighted = verify_representation(weighted_max_functional, n)
-print(f"Original weights:  w = {weights}")
-print(f"Recovered weights: w = {w_recovered}")
-print(f"Max error: {err_weighted:.2e}")
-print()
+    # Visualization
+    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
 
-# ============================================================
-# DEMO 3: Verifying the axioms
-# ============================================================
-print("=" * 70)
-print("DEMO 3: Verifying Tropical Linearity Axioms")
-print("=" * 70)
-print()
+    # Case 1: Not kernel-separated
+    ax = axes[0]
+    ax.set_title('NOT Kernel-Separated\n(Single function)', fontsize=11)
+    x = [0, 1]
+    ax.plot(x, [0, 1], 'bo-', markersize=10, label='f(x) = x')
+    ax.set_xlabel('x')
+    ax.set_ylabel('Function value')
 
-# Note: For Λ(const c) = c, we need max(w) = 0 (normalization).
-w_test = [0.0, -3.0, -2.0, -0.5]
-n_test = 4
+    # Draw congruence classes
+    ax.annotate('ker(ev₀) = ker(ev₁)\n= trivial', xy=(0.5, 0.3),
+                fontsize=10, ha='center',
+                bbox=dict(boxstyle='round', facecolor='lightyellow'))
+    ax.legend()
+    ax.grid(True, alpha=0.3)
 
-def Lambda(f, w=w_test):
-    return trop_integral(w, f)
+    # Case 2: Kernel-separated
+    ax = axes[1]
+    ax.set_title('Kernel-Separated\n(With constants)', fontsize=11)
+    ax.plot(x, [0, 1], 'bo-', markersize=10, label='f(x) = x')
+    ax.plot(x, [0, 0], 'rs-', markersize=10, label='g(x) = 0')
 
-print("Axiom 1: Λ(f ∨ g) = Λ(f) ∨ Λ(g)")
-for trial in range(5):
-    f = [np.random.uniform(-5, 5) for _ in range(n_test)]
-    g = [np.random.uniform(-5, 5) for _ in range(n_test)]
-    f_sup_g = [max(f[i], g[i]) for i in range(n_test)]
-    lhs = Lambda(f_sup_g)
-    rhs = max(Lambda(f), Lambda(g))
-    print(f"  Trial {trial+1}: Λ(f∨g) = {lhs:.4f}, Λ(f)∨Λ(g) = {rhs:.4f}, "
-          f"equal: {abs(lhs-rhs) < 1e-10}")
+    # Highlight the key point
+    ax.annotate('f(0) = g(0) = 0\nf ≡ g in ker(ev₀)',
+                xy=(0, 0), xytext=(0.2, -0.3),
+                fontsize=9, ha='center',
+                arrowprops=dict(arrowstyle='->', color='green'),
+                bbox=dict(boxstyle='round', facecolor='lightgreen'))
+    ax.annotate('f(1) = 1 ≠ 0 = g(1)\nf ≢ g in ker(ev₁)',
+                xy=(1, 0.5), xytext=(0.7, -0.3),
+                fontsize=9, ha='center',
+                arrowprops=dict(arrowstyle='->', color='red'),
+                bbox=dict(boxstyle='round', facecolor='lightsalmon'))
+    ax.legend()
+    ax.grid(True, alpha=0.3)
+    ax.set_xlabel('x')
 
-print()
-print("Axiom 2: Λ(c + f) = c + Λ(f)")
-for trial in range(5):
-    f = [np.random.uniform(-5, 5) for _ in range(n_test)]
-    c = np.random.uniform(-3, 3)
-    cf = [c + f[i] for i in range(n_test)]
-    lhs = Lambda(cf)
-    rhs = c + Lambda(f)
-    print(f"  Trial {trial+1}: c={c:.2f}, Λ(c+f) = {lhs:.4f}, c+Λ(f) = {rhs:.4f}, "
-          f"equal: {abs(lhs-rhs) < 1e-10}")
+    plt.suptitle('Kernel Separation: The Key Condition for Spectral Duality',
+                 fontsize=14, fontweight='bold')
+    plt.tight_layout()
 
-print()
-print("Axiom 3: Λ(const c) = c")
-for c in [-3.0, 0.0, 2.5, 7.0]:
-    f_const = [c] * n_test
-    result = Lambda(f_const)
-    print(f"  c = {c:.1f}: Λ(const {c:.1f}) = {result:.4f}, equal: {abs(result-c) < 1e-10}")
+    output_path = os.path.join(os.path.dirname(__file__), 'kernel_vs_value_separation.png')
+    plt.savefig(output_path, dpi=150, bbox_inches='tight')
+    print(f"\nFigure saved to {output_path}")
+    plt.close()
 
-# ============================================================
-# DEMO 4: Tropical basis decomposition
-# ============================================================
-print()
-print("=" * 70)
-print("DEMO 4: Tropical Basis Decomposition")
-print("=" * 70)
-print()
 
-f_example = [3.0, -1.0, 2.0, 5.0]
-print(f"Function f = {f_example}")
-print(f"Decomposition: f(y) = max_x (f(x) + δ_x(y))")
-print()
-for y in range(n_test):
-    terms = []
-    for x in range(n_test):
-        delta_val = 0.0 if y == x else NEG_INF
-        term = trop_mult(f_example[x], delta_val)
-        terms.append(term)
-    result = max(terms)
-    print(f"  f({y}) = max over x of (f(x) + δ_x({y})) = {result:.1f} = f({y}) ✓"
-          if abs(result - f_example[y]) < 1e-10
-          else f"  f({y}) = {result:.1f} ✗")
+# ─── 5. Application: Neural Network Decision Boundaries ─────────────────
 
-# ============================================================
-# DEMO 5: Uniqueness
-# ============================================================
-print()
-print("=" * 70)
-print("DEMO 5: Uniqueness of Representation")
-print("=" * 70)
-print()
+def demo_neural_network_application():
+    """
+    Show how tropical spectrum duality applies to understanding
+    ReLU neural network decision boundaries as tropical vanishing loci.
+    """
+    print("\n" + "=" * 60)
+    print("DEMO 5: Application — Neural Network Decision Boundaries")
+    print("=" * 60)
 
-w_original = [1.0, 2.0, -1.0]
-n_small = 3
-grid = np.arange(-3, 4, 0.5)
-found_alternatives = 0
+    # A simple max-plus (tropical) neural network
+    # f(x, y) = max(2x + y, x + 2y, 3)
+    # g(x, y) = max(x + y + 1, 2x, 2y)
 
-for w0, w1, w2 in product(grid, grid, grid):
-    w_candidate = [w0, w1, w2]
-    if all(abs(a - b) < 1e-10 for a, b in zip(w_candidate, w_original)):
-        continue
-    
-    same = True
-    for _ in range(100):
-        f_test = [np.random.uniform(-5, 5) for _ in range(n_small)]
-        if abs(trop_integral(w_original, f_test) - trop_integral(w_candidate, f_test)) > 1e-8:
-            same = False
-            break
-    
-    if same:
-        found_alternatives += 1
+    x = np.linspace(-2, 4, 200)
+    y = np.linspace(-2, 4, 200)
+    X, Y = np.meshgrid(x, y)
 
-print(f"Original weights: w = {w_original}")
-print(f"Searched {len(grid)**3:.0f} candidate weight vectors")
-print(f"Alternative representations found: {found_alternatives}")
-print(f"Uniqueness confirmed: {'YES' if found_alternatives == 0 else 'NO'}")
+    # Tropical polynomial functions (max-plus)
+    F = np.maximum(np.maximum(2*X + Y, X + 2*Y), 3)
+    G = np.maximum(np.maximum(X + Y + 1, 2*X), 2*Y)
 
-# ============================================================
-# DEMO 6: Application to shortest paths / DP
-# ============================================================
-print()
-print("=" * 70)
-print("DEMO 6: Application — Recovering Hidden Costs from an Oracle")
-print("=" * 70)
-print()
+    # The tropical vanishing locus V(F, G) = {(x,y) | F(x,y) = G(x,y)}
+    diff = F - G
 
-n_nodes = 4
-costs = [3.0, 1.0, 4.0, 2.0]
+    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
 
-def min_plus_functional(f, c=costs):
-    """Min-plus functional: Λ(f) = min_x (c(x) + f(x))."""
-    return min(c[i] + f[i] for i in range(len(c)))
+    # Plot F
+    ax = axes[0]
+    im = ax.contourf(X, Y, F, levels=20, cmap='viridis')
+    ax.set_title('f(x,y) = max(2x+y, x+2y, 3)')
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    plt.colorbar(im, ax=ax)
 
-recovered_costs = []
-for x in range(n_nodes):
-    indicator = [0.0 if i == x else 1e10 for i in range(n_nodes)]
-    recovered_costs.append(min_plus_functional(indicator))
+    # Plot G
+    ax = axes[1]
+    im = ax.contourf(X, Y, G, levels=20, cmap='viridis')
+    ax.set_title('g(x,y) = max(x+y+1, 2x, 2y)')
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    plt.colorbar(im, ax=ax)
 
-print(f"Hidden node costs:    {costs}")
-print(f"Recovered from oracle: {recovered_costs}")
-print(f"Exact recovery: {all(abs(a-b) < 1e-6 for a, b in zip(costs, recovered_costs))}")
-print()
-print("The tropical Riesz theorem guarantees that ANY min-plus linear oracle")
-print("can have its internal weights uniquely recovered by probing with")
-print("indicator functions. This is algorithmic tropical inference!")
+    # Plot the vanishing locus
+    ax = axes[2]
+    ax.contourf(X, Y, np.abs(diff), levels=[0, 0.1, 0.5, 1, 2, 5],
+                cmap='Reds_r', alpha=0.7)
+    ax.contour(X, Y, diff, levels=[0], colors='black', linewidths=2)
+    ax.set_title('V(f, g) = {(x,y) | f = g}\n(Tropical Vanishing Locus)')
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.annotate('Decision\nBoundary', xy=(1.5, 1.5), fontsize=10,
+                ha='center', fontweight='bold',
+                bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
 
-# ============================================================
-# VISUALIZATION
-# ============================================================
+    plt.suptitle('Neural Network Boundaries as Tropical Vanishing Loci',
+                 fontsize=14, fontweight='bold')
+    plt.tight_layout()
 
-fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-fig.suptitle('Tropical Riesz Representation Theorem', fontsize=16, fontweight='bold')
+    output_path = os.path.join(os.path.dirname(__file__), 'neural_network_tropical.png')
+    plt.savefig(output_path, dpi=150, bbox_inches='tight')
+    print(f"Figure saved to {output_path}")
+    plt.close()
 
-# Plot 1: Tropical basis functions
-ax = axes[0, 0]
-n_vis = 5
-for x0_vis in range(n_vis):
-    basis = [0 if i == x0_vis else -5 for i in range(n_vis)]
-    ax.bar([i + x0_vis * 0.15 - 0.3 for i in range(n_vis)], basis, width=0.12,
-           label=f'δ_{x0_vis}', alpha=0.7)
-ax.set_xlabel('y')
-ax.set_ylabel('δ_x(y)')
-ax.set_title('Tropical Basis Functions (Dirac Deltas)')
-ax.legend(fontsize=8)
-ax.set_xticks(range(n_vis))
-ax.set_ylim(-6, 1)
-ax.axhline(y=0, color='gray', linestyle='--', alpha=0.3)
+    print("\nInterpretation:")
+    print("  • Each ReLU network layer computes a max-plus linear function")
+    print("  • Decision boundaries = loci where two network outputs agree")
+    print("  • These are exactly the tropical vanishing loci V(f, g)")
+    print("  • The spectrum duality theorem says these loci generate")
+    print("    the topology of the input space")
+    print("  • This gives a rigorous algebraic framework for understanding")
+    print("    what neural networks 'see' in terms of input geometry")
 
-# Plot 2: Weight recovery
-ax = axes[0, 1]
-true_weights = [2.0, -1.0, 3.0, 0.5, 1.0]
-n_rec = len(true_weights)
-def Lambda_rec(f, w=true_weights):
-    return trop_integral(w, f)
-recovered = [delta_weight(Lambda_rec, n_rec, x) for x in range(n_rec)]
-x_pos = np.arange(n_rec)
-width = 0.35
-ax.bar(x_pos - width/2, true_weights, width, label='True weights', color='steelblue')
-ax.bar(x_pos + width/2, recovered, width, label='Recovered weights', color='coral')
-ax.set_xlabel('Point x')
-ax.set_ylabel('Weight w(x)')
-ax.set_title('Weight Recovery: w(x) = Λ(δ_x)')
-ax.legend()
-ax.set_xticks(x_pos)
 
-# Plot 3: Representation formula
-ax = axes[1, 0]
-f_vis = [3.0, -1.0, 2.0, 5.0, 0.0]
-w_vis = [1.0, 2.0, -0.5, 0.0, 3.0]
-n_v = len(f_vis)
-contributions = [w_vis[x] + f_vis[x] for x in range(n_v)]
-colors = ['lightcoral' if c < max(contributions) else 'forestgreen' for c in contributions]
-ax.bar(range(n_v), contributions, color=colors, alpha=0.7, edgecolor='black')
-ax.axhline(y=max(contributions), color='red', linestyle='--', linewidth=2,
-           label=f'Λ(f) = max = {max(contributions):.1f}')
-ax.set_xlabel('Point x')
-ax.set_ylabel('w(x) + f(x)')
-ax.set_title('Tropical Integral: Λ(f) = max_x (w(x) + f(x))')
-ax.legend()
-ax.set_xticks(range(n_v))
+# ─── Main ────────────────────────────────────────────────────────────────
 
-# Plot 4: Classical vs tropical comparison table
-ax = axes[1, 1]
-table_text = [
-    ['', 'Classical', 'Tropical'],
-    ['⊕ (add)', 'Sum (+)', 'Max (∨)'],
-    ['⊗ (mult)', 'Product (·)', 'Plus (+)'],
-    ['Zero', '0', '-∞'],
-    ['One', '1', '0'],
-    ['Functional', 'Σ μ(x)·f(x)', 'max(w(x)+f(x))'],
-    ['Repr.', 'Measure μ≥0', 'Weight w∈ℝ∪{-∞}'],
-]
-ax.axis('off')
-table = ax.table(cellText=table_text, loc='center', cellLoc='center')
-table.auto_set_font_size(False)
-table.set_fontsize(10)
-table.scale(1, 1.5)
-for i in range(len(table_text)):
-    for j in range(3):
-        cell = table[i, j]
-        if i == 0:
-            cell.set_facecolor('#4472C4')
-            cell.set_text_props(color='white', fontweight='bold')
-        elif j == 0:
-            cell.set_facecolor('#D6E4F0')
-            cell.set_text_props(fontweight='bold')
-        else:
-            cell.set_facecolor('#F2F2F2' if i % 2 == 0 else 'white')
-ax.set_title('Classical vs Tropical Riesz Theorem', fontsize=12, fontweight='bold')
+if __name__ == '__main__':
+    print("╔══════════════════════════════════════════════════════════╗")
+    print("║    TROPICAL SPECTRUM DUALITY — Interactive Demo          ║")
+    print("║    Formalized in Lean 4 with complete proofs             ║")
+    print("╚══════════════════════════════════════════════════════════╝")
 
-plt.tight_layout()
-plt.savefig('demos/tropical_riesz_visualization.png', dpi=150, bbox_inches='tight')
-print()
-print("Visualization saved to demos/tropical_riesz_visualization.png")
+    demo_finite_congruences()
+    demo_vanishing_loci()
+    demo_spectrum_reconstruction()
+    demo_kernel_vs_value_separation()
+    demo_neural_network_application()
+
+    print("\n" + "=" * 60)
+    print("All demos complete!")
+    print("Generated figures:")
+    print("  • tropical_vanishing_loci.png")
+    print("  • spectrum_reconstruction.png")
+    print("  • kernel_vs_value_separation.png")
+    print("  • neural_network_tropical.png")
+    print("=" * 60)
