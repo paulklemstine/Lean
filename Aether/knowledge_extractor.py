@@ -171,6 +171,14 @@ class KnowledgeExtractor:
         path = self.workspace / "inflight_jobs.json"
         if not path.exists():
             return
+        # Known fields on ResearchJob — ignore any extras (e.g., removed fields)
+        known_fields = {
+            'job_id', 'cycle_n', 'concept', 'prompt', 'project_dir', 'project_id',
+            'status', 'dispatch_time', 'complete_time', 'result_lean', 'result_demo',
+            'result_paper', 'result_future_directions', 'result_discussion',
+            'result_summary', 'quality_score', 'quality_assessment',
+            'sorry_count', 'theorem_count', 'error_message',
+        }
         try:
             data = json.loads(path.read_text())
             for pid, d in data.items():
@@ -179,6 +187,8 @@ class KnowledgeExtractor:
                 d['concept'] = concept
                 if 'project_dir' in d and d['project_dir']:
                     d['project_dir'] = Path(d['project_dir'])
+                # Strip unknown fields (e.g., removed result_html)
+                d = {k: v for k, v in d.items() if k in known_fields}
                 self.inflight[pid] = ResearchJob(**d)
             if self.inflight:
                 print(f"[Aether] Recovered {len(self.inflight)} inflight jobs from previous run")
