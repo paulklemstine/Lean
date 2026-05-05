@@ -44,17 +44,21 @@ a FUTURE_DIRECTIONS.md with breakthrough opportunities, open problems, and cross
 <li>Explore whether idempotency gives better bounds</li></p><p><h3>7. Applications to Neural Network Verification</h3></p><p>For max-plus neural networks (ReLU networks viewed over the tropical semiring):
 <li>Model network equivalence as congruence membership</li>
 <li>Use elimination to project out hidden-layer variables</li>
-<li>Derive certified bounds on network behavior from congruence certificates</li></p><p><h2>5. Computational Extraction: Codensity Assignments → Certified Reconstruction Algorithms</h2></p><p>The codensity round-trip (<code>measureToCodensity ∘ codensityToMeasure = id</code>) provides a <strong>certified reconstruction algorithm</strong>: given a codensity profile <code>c : X → ℝ≥0∞</code>, the maxitive measure <code>codensityToMeasure c</code> is the unique (among maxitive measures) set function with that profile. This can be turned into a verified program:
-<li><strong>Input:</strong> Observed codensity values at finitely many points</li>
-<li><strong>Output:</strong> A maxitive measure, with a formal certificate (Lean proof) that it is the unique maxitive measure consistent with the observations</li></p><p>This has applications in robust statistics (worst-case reasoning), reliability engineering (system failure analysis where events combine via max), and formal verification of probabilistic systems.</p><p><strong>Concrete next theorem:</strong>
-<code>`</code>
-theorem codensity_reconstruction_unique
-  {X : Type*} [Fintype X] [PartialOrder X]
-  (c : CodensityAssignment X)
-  (μ : Set X → ℝ≥0∞)
-  (hμ_max : IsMaxitiveSetFun μ) :
-  (∀ x, irreducibleClosedWeight μ x = c x) ↔ μ = codensityToMeasure c
-<code>`</code></p></div>
+<li>Derive certified bounds on network behavior from congruence certificates</li></p><p><h2>5. Building a Unified Algebraic Fixed-Point Correspondence Library</h2></p><p><strong>Current state</strong>: We have demonstrated the pattern for one instance (Galois theory).</p><p><strong>Next step</strong>: Create a systematic library of algebraic correspondences that are instances of closure operators:</p><p>| Construction | Ambient Lattice | Closure Operator | Closed Elements |
+|-------------|----------------|-----------------|-----------------|
+| Galois correspondence | Intermediate fields | fixedField ∘ fixingSubgroup | All (for Galois) |
+| Topological closure | Subsets | closure in topology | Closed sets |
+| Algebraic closure | Field extensions | algebraic closure | Algebraically closed |
+| Radical of an ideal | Ideals | radical | Radical ideals |
+| Normal closure | Subgroups | normal closure | Normal subgroups |
+| Bicommutant | Subalgebras | double commutant | Von Neumann algebras |
+| Convex hull | Subsets of vector space | convex hull | Convex sets |</p><p>For each row, instantiate <code>mkClosureOperator</code> and derive the complete lattice of closed elements. This would create a unified formalization pattern that dramatically reduces redundant effort.</p><p><strong>Concrete first targets</strong>:
+<code>`</code>lean
+-- Topological closure
+def topologicalClosureOp [TopologicalSpace α] : ClosureOperator (Set α) := sorry</p><p>-- Normal closure of subgroups  
+def normalClosureOp [Group G] : ClosureOperator (Subgroup G) := sorry</p><p>-- Radical of ideals
+def radicalClosureOp [CommRing R] : ClosureOperator (Ideal R) := sorry
+<code>`</code></p><p>Each instantiation would immediately yield a complete lattice theorem for the corresponding closed elements, with no additional proof effort beyond verifying the three closure properties.</p><p>---</p></div>
 <h3>future_directions.html</h3>
 <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:16px;"><p>&lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
@@ -102,16 +106,7 @@ a FUTURE_DIRECTIONS.md with breakthrough opportunities, open problems, and cross
 &lt;li&gt;Explore whether idempotency gives better bounds&lt;/li&gt;&lt;/p&gt;&lt;p&gt;&lt;h3&gt;7. Applications to Neural Network Verification&lt;/h3&gt;&lt;/p&gt;&lt;p&gt;For max-plus neural networks (ReLU networks viewed over the tropical semiring):
 &lt;li&gt;Model network equivalence as congruence membership&lt;/li&gt;
 &lt;li&gt;Use elimination to project out hidden-layer variables&lt;/li&gt;
-&lt;li&gt;Derive certified bounds on network behavior from congruence certificates&lt;/li&gt;&lt;/p&gt;&lt;/div&gt;
-&lt;h3&gt;future_directions.html&lt;/h3&gt;
-&lt;div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:16px;"&gt;&lt;p&gt;&amp;lt;!DOCTYPE html&amp;gt;
-&amp;lt;html lang="en"&amp;gt;
-&amp;lt;head&amp;gt;
-&amp;lt;meta charset="UTF-8"&amp;gt;&amp;lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&amp;gt;
-&amp;lt;title&amp;gt;Future Directions — Aether Research&amp;lt;/title&amp;gt;
-&amp;lt;link rel="stylesheet" href="style.css"&amp;gt;
-&amp;lt;script&amp;gt;
-MathJax = {</p></div>
+&lt;li&gt;Derive certified bounds on network behavior from congruence certificates&lt;/li&gt;&lt;/p&gt;&lt;p&gt;&lt;h2&gt;5. Computational Extraction: Codensity Assignments → Certified Reconstruction Algorithms&lt;/h2&gt;&lt;/p&gt;&lt;p&gt;The codensity round-trip (&lt;code&gt;measureToCodensity ∘ codensityToMeasure = id&lt;/code&gt;) provides a &lt;strong&gt;certified reconstruction algorithm&lt;/strong&gt;: given a codensity profile &lt;code&gt;c : X → ℝ≥0∞&lt;/code&gt;, the maxitive measure &lt;code&gt;codensityToMeasure c&lt;/code&gt; is the unique (among maxitive measures) set function with that profile. This can be turned into</p></div>
 
 </div>
 <footer>Generated by Aether Website Generator &mdash; Autonomous Mathematical Research Engine</footer>

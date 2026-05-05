@@ -59,20 +59,36 @@ For max-plus neural networks (ReLU networks viewed over the tropical semiring):
 - Use elimination to project out hidden-layer variables
 - Derive certified bounds on network behavior from congruence certificates
 
-## 5. Computational Extraction: Codensity Assignments → Certified Reconstruction Algorithms
+## 5. Building a Unified Algebraic Fixed-Point Correspondence Library
 
-The codensity round-trip (`measureToCodensity ∘ codensityToMeasure = id`) provides a **certified reconstruction algorithm**: given a codensity profile `c : X → ℝ≥0∞`, the maxitive measure `codensityToMeasure c` is the unique (among maxitive measures) set function with that profile. This can be turned into a verified program:
-- **Input:** Observed codensity values at finitely many points
-- **Output:** A maxitive measure, with a formal certificate (Lean proof) that it is the unique maxitive measure consistent with the observations
+**Current state**: We have demonstrated the pattern for one instance (Galois theory).
 
-This has applications in robust statistics (worst-case reasoning), reliability engineering (system failure analysis where events combine via max), and formal verification of probabilistic systems.
+**Next step**: Create a systematic library of algebraic correspondences that are instances of closure operators:
 
-**Concrete next theorem:**
+| Construction | Ambient Lattice | Closure Operator | Closed Elements |
+|-------------|----------------|-----------------|-----------------|
+| Galois correspondence | Intermediate fields | fixedField ∘ fixingSubgroup | All (for Galois) |
+| Topological closure | Subsets | closure in topology | Closed sets |
+| Algebraic closure | Field extensions | algebraic closure | Algebraically closed |
+| Radical of an ideal | Ideals | radical | Radical ideals |
+| Normal closure | Subgroups | normal closure | Normal subgroups |
+| Bicommutant | Subalgebras | double commutant | Von Neumann algebras |
+| Convex hull | Subsets of vector space | convex hull | Convex sets |
+
+For each row, instantiate `mkClosureOperator` and derive the complete lattice of closed elements. This would create a unified formalization pattern that dramatically reduces redundant effort.
+
+**Concrete first targets**:
+```lean
+-- Topological closure
+def topologicalClosureOp [TopologicalSpace α] : ClosureOperator (Set α) := sorry
+
+-- Normal closure of subgroups  
+def normalClosureOp [Group G] : ClosureOperator (Subgroup G) := sorry
+
+-- Radical of ideals
+def radicalClosureOp [CommRing R] : ClosureOperator (Ideal R) := sorry
 ```
-theorem codensity_reconstruction_unique
-  {X : Type*} [Fintype X] [PartialOrder X]
-  (c : CodensityAssignment X)
-  (μ : Set X → ℝ≥0∞)
-  (hμ_max : IsMaxitiveSetFun μ) :
-  (∀ x, irreducibleClosedWeight μ x = c x) ↔ μ = codensityToMeasure c
-```
+
+Each instantiation would immediately yield a complete lattice theorem for the corresponding closed elements, with no additional proof effort beyond verifying the three closure properties.
+
+---
