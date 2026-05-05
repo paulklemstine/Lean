@@ -1467,6 +1467,14 @@ class PiAgentClient:
             key_refs = ", ".join(str(r) for r in concept.key_references[:3])
             assignment += f"\n**KEY REFERENCES**: {key_refs}"
 
+        # Add AEM quality mandate for Aristotle's output
+        assignment += "\n\n**AEM QUALITY MANDATE**: Your output will be scored on 5 pillars. Optimize ALL:"\
+            "\n- RIGOR: 10+ theorems, diverse tactics (induction, rcases, by_contra, omega, linarith), ZERO sorries"\
+            "\n- AESTHETIC: Bridge 2+ domains in theorem names and doc comments. Use quantifier alternation."\
+            "\n- UTILITY: Define 5+ structures/instances. State explicit computational bounds (Lipschitz, convergence)."\
+            "\n- ORIGINALITY: Coin novel definitions beyond Mathlib. Inventive theorem names."\
+            "\n- IMPACT: Include keywords: certified_robustness, Lipschitz_bound, lattice_crypto, hamiltonian, entropy."
+
         return assignment
 
     def write_aristotle_prompt(
