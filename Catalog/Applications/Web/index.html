@@ -20,8 +20,8 @@ MathJax = {
 <h1>Aether Research Dashboard</h1>
 <p>Autonomous mathematical research engine — theorems, papers, and discoveries.</p>
 <div class="stats">
-<div class="stat"><div class="number">2255</div><div class="label">Total Artifacts</div></div>
-<div class="stat"><div class="number">1972</div><div class="label">Theorems</div></div>
+<div class="stat"><div class="number">2256</div><div class="label">Total Artifacts</div></div>
+<div class="stat"><div class="number">1973</div><div class="label">Theorems</div></div>
 <div class="stat"><div class="number">98</div><div class="label">Papers</div></div>
 <div class="stat"><div class="number">128</div><div class="label">Demos</div></div>
 </div>
@@ -37,7 +37,7 @@ MathJax = {
 <a class="domain-chip" href="domain_general.html">General (49)</a>
 <a class="domain-chip" href="domain_geometry.html">Geometry (83)</a>
 <a class="domain-chip" href="domain_logic.html">Logic (132)</a>
-<a class="domain-chip" href="domain_machinelearning.html">MachineLearning (81)</a>
+<a class="domain-chip" href="domain_machinelearning.html">MachineLearning (82)</a>
 <a class="domain-chip" href="domain_physics.html">Physics (61)</a>
 <a class="domain-chip" href="domain_pythagorean.html">Pythagorean (96)</a>
 <a class="domain-chip" href="domain_shared.html">Shared (57)</a>
@@ -80,7 +80,7 @@ MathJax = {
 </div>
 
 <h2>Accumulated Research Wisdom</h2>
-<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;max-height:400px;overflow:auto;"><p><h1>MASTER FUTURE DIRECTIONS — Accumulated Research Wisdom</h1></p><p><em>Last updated: 2026-05-04 22:04</em></p><p><h2>Next Targets</h2></p><p><h3>1. Tropical Choquet Theory on Compact Spaces</h3></p><p><strong>Goal</strong>: Extend the representation theorem from finite discrete spaces to compact Hausdorff spaces.</p><p><strong>Approach</strong>: Define the tropical capacity <code>μ_K(Λ) = inf{Λ(f) | f ≥ 0 on K}</code> for compact sets K, prove maxitivity <code>μ(K ∪ L) = max(μ(K), μ(L))</code> using Urysohn separation, and establish the representation <code>Λ(f) = sup_K (μ(K) + inf_{x ∈ K} f(x))</code>.</p><p><strong>Key challenge</strong>: The upper-continuity hypothesis on functionals needs to be related to topological properties of the compact-open topology on <code>C(X, WithBot ℝ)</code>.</p><p><strong>Status</strong>: Infrastructure for capacity (<code>muK</code>) and tropical integral (<code>tropicalIntegral</code>) is defined. The <code>UCTropicalFunctional</code> structure with upper-continuity is formalized. The functional extensionality theorem is stated but unproven.</p><p><h3>2. Radon-Style Regularity for Maxitive Measures</h3></p><p><strong>Goal</strong>: Show that the maxitive capacity arising from a tropical functional is inner regular on open sets and outer regular on compact sets.</p><p><strong>Formalization target</strong>:
+<div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;max-height:400px;overflow:auto;"><p><h1>MASTER FUTURE DIRECTIONS — Accumulated Research Wisdom</h1></p><p><em>Last updated: 2026-05-04 22:05</em></p><p><h2>Next Targets</h2></p><p><h3>1. Tropical Choquet Theory on Compact Spaces</h3></p><p><strong>Goal</strong>: Extend the representation theorem from finite discrete spaces to compact Hausdorff spaces.</p><p><strong>Approach</strong>: Define the tropical capacity <code>μ_K(Λ) = inf{Λ(f) | f ≥ 0 on K}</code> for compact sets K, prove maxitivity <code>μ(K ∪ L) = max(μ(K), μ(L))</code> using Urysohn separation, and establish the representation <code>Λ(f) = sup_K (μ(K) + inf_{x ∈ K} f(x))</code>.</p><p><strong>Key challenge</strong>: The upper-continuity hypothesis on functionals needs to be related to topological properties of the compact-open topology on <code>C(X, WithBot ℝ)</code>.</p><p><strong>Status</strong>: Infrastructure for capacity (<code>muK</code>) and tropical integral (<code>tropicalIntegral</code>) is defined. The <code>UCTropicalFunctional</code> structure with upper-continuity is formalized. The functional extensionality theorem is stated but unproven.</p><p><h3>2. Radon-Style Regularity for Maxitive Measures</h3></p><p><strong>Goal</strong>: Show that the maxitive capacity arising from a tropical functional is inner regular on open sets and outer regular on compact sets.</p><p><strong>Formalization target</strong>:
 <code>`</code>
 ∀ U : Set X, IsOpen U →
   μ(U) = sSup {μ(K) | K ⊆ U ∧ IsCompact K}
